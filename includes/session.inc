@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -114,14 +114,15 @@
     }
 
 
-// Set language to Spanish
+// Set language - defined in config.php or user variable above
 putenv ("LC_ALL=$Language");
 
 // Specify location of translation tables
-bindtextdomain ("messages", "./locale");
-
-// Choose domain
-textdomain ("messages");
+if (function_exists('bindtextdomain')){
+	bindtextdomain ("messages", "./locale");
+	// Choose domain
+	textdomain ("messages");
+}
 
 if (!function_exists('_')){
 	function _ ($text){

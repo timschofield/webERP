@@ -1,5 +1,6 @@
 <P>webERP Change Log
 
+<P>23/8/04 SelectOrderItems.php SelectCreditItems.php strrpos works differently in PHP 5 changed to use strpos
 <P>14/8/04 Changed ConfirmDispatch_Invoice.php to allow entry of consignment reference also changed PrintCustTrans.php and PDFPrintCustTransPageHeader.inc to print out the narrative on sales order lines and the consignment number
 <P>14/8/04 Changed SelectOrderItems.php to allow entry of narrative and update narrative entries also show warning when quick entries not processed.
 <P>14/8/04 Changed DefineCartClass.inc to have a Narrative variable in LineItems and a Consignment variable in the header

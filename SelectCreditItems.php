@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
 
@@ -127,7 +127,7 @@ if (isset($_POST['Select'])) {
 /*will only be true if page called from customer selection form
 parse the $Select string into customer code and branch code */
 
-	 $_SESSION['CreditItems']->Branch = substr($_POST['Select'],strrpos($_POST['Select']," - ")+3);
+	 $_SESSION['CreditItems']->Branch = substr($_POST['Select'],strpos($_POST['Select']," - ")+3);
 	 $_POST['Select'] = substr($_POST['Select'],0,strpos($_POST['Select']," - "));
 
 /*Now retrieve customer information - name, salestype, currency, terms etc */
@@ -518,6 +518,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			if (isset($_POST['Quantity_' . $StockItem->StockID])){
 
 				$Quantity = $_POST['Quantity_' . $StockItem->StockID];
+				$Narrative = $_POST['Narrative_' . $StockItem->StockID];
 
 				if (isset($_POST['Price_' . $StockItem->StockID])){
 					if ($_POST['Gross']==True){
@@ -534,7 +535,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			If ($Quantity<0 OR $Price <0 OR $DiscountPercentage >100 OR $DiscountPercentage <0){
 				echo "<BR>The item could not be updated because you are attempting to set the quantity credited to less than 0, or the price less than 0 or the discount more than 100% or less than 0%";
 			} elseif (isset($_POST['Quantity_' . $StockItem->StockID])) {
-				$_SESSION['CreditItems']->update_cart_item($StockItem->StockID, $Quantity, $Price, $DiscountPercentage/100);
+				$_SESSION['CreditItems']->update_cart_item($StockItem->StockID, $Quantity, $Price, $DiscountPercentage/100, $Narrative);
 			}
 		}
 
@@ -556,7 +557,15 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			   if ($AlreadyOnThisCredit!=1){
 
-				$sql = "SELECT StockMaster.Description, StockMaster.StockID,  StockMaster.Units, StockMaster.Volume, StockMaster.KGS, (Materialcost+Labourcost+Overheadcost) AS StandardCost, TaxLevel From StockMaster Where StockMaster.StockID = '". $_POST['NewItem'] . "'";
+				$sql = "SELECT StockMaster.Description,
+						StockMaster.StockID,
+						StockMaster.Units,
+						StockMaster.Volume,
+						StockMaster.KGS,
+						(Materialcost+Labourcost+Overheadcost) AS StandardCost,
+						TaxLevel
+					FROM StockMaster
+					WHERE StockMaster.StockID = '". $_POST['NewItem'] . "'";
 
 				$ErrMsg = "<BR>The item details could not be retrieved because: ";
 				$DbgMsg = "<BR>The SQL used to retrieve the item details but failed was:";
@@ -581,7 +590,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 									$myrow['Serialised'],
 									$myrow['DecimalPlaces']
 									)==1){
-					      		$_SESSION['CreditItems']->LineItems[$_POST['NewItem']]->StandardCost = $myrow["StandardCost"];
+					$_SESSION['CreditItems']->LineItems[$_POST['NewItem']]->StandardCost = $myrow["StandardCost"];
 
 $_SESSION['CreditItems']->LineItems[$_POST['NewItem']]->TaxRate = GetTaxRate($_SESSION['TaxAuthority'], $_SESSION['DispatchTaxAuthority'], $myrow['TaxLevel'],&$db);
 
@@ -624,20 +633,25 @@ $_SESSION['CreditItems']->LineItems[$_POST['NewItem']]->TaxRate = GetTaxRate($_S
 			   $DisplayLineTotal = number_format($LineTotal,2);
 
 			   if ($k==1){
-				    echo "<tr bgcolor='#CCCCCC'>";
-				    $k=0;
+				$RowStarter = "<tr bgcolor='#EEAABB'>";
+			   } elseif ($k==1){
+				$RowStarter = "<tr bgcolor='#CCCCCC'>";
+				$k=0;
 			   } else {
-				    echo "<tr bgcolor='#EEEEEE'>";
-				    $k=1;
+				$RowStarter = "<tr bgcolor='#EEEEEE'>";
+				$k=1;
 			   }
 
-			   echo "<TD>" . $StockItem->StockID . "</TD>
+
+			   echo $RowStarter . "<TD>" . $StockItem->StockID . "</TD>
 			   	<TD>" . $StockItem->ItemDescription . "</TD>";
+
 			   if ($StockItem->Controlled==0){
 			   	echo "<TD><INPUT TYPE=TEXT NAME='Quantity_" . $StockItem->StockID . "' MAXLENGTH=6 SIZE=6 VALUE=" . $StockItem->Quantity ."></TD>";
 			   } else {
 				echo "<TD ALIGN=RIGHT><A HREF='$rootpath/CreditItemsControlled.php?" . SID . "StockID=" . $StockItem->StockID . "'>" . $StockItem->Quantity ."</A><INPUT TYPE=HIDDEN NAME='Quantity_" . $StockItem->StockID . "' VALUE=" . $StockItem->Quantity ."></TD>";
 			   }
+
 			echo "<TD>" . $StockItem->Units . "</TD>
 			<TD><INPUT TYPE=TEXT NAME='Price_" . $StockItem->StockID . "' SIZE=8 MAXLENGTH=8 VALUE=" . $StockItem->Price . "></TD>
 			<TD><INPUT TYPE='CheckBox' NAME='Gross' VALUE=False></TD>
@@ -648,6 +662,10 @@ $_SESSION['CreditItems']->LineItems[$_POST['NewItem']]->TaxRate = GetTaxRate($_S
 			<TD ALIGN=RIGHT>" . number_format($LineTotal*(1+$StockItem->TaxRate),2) . "</TD>
 			<TD><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "Delete=" . $StockItem->StockID . "'>Delete</A></TD>
 			</TR>";
+
+			echo $RowStarter;
+			echo "<TD COLSPAN=11><TEXTAREA  NAME='Narrative_" . $StockItem->StockID . "' cols=100% rows=1>" . $StockItem->Narrative . "</TEXTAREA><BR><HR></TD></TR>";
+
 
 			$_SESSION['CreditItems']->total = $_SESSION['CreditItems']->total + $LineTotal;
 			$_SESSION['CreditItems']->totalVolume = $_SESSION['CreditItems']->totalVolume + $StockItem->Quantity * $StockItem->Volume; $_SESSION['CreditItems']->totalWeight = $_SESSION['CreditItems']->totalWeight + $StockItem->Quantity * $StockItem->Weight;
@@ -665,13 +683,25 @@ $_SESSION['CreditItems']->LineItems[$_POST['NewItem']]->TaxRate = GetTaxRate($_S
    			$_SESSION['FreightTaxRate']=$_POST['FreightTaxRate'];
 		}
 
-		echo "<TR><TD COLSPAN=7 ALIGN=RIGHT>Credit Freight</TD><TD><FONT SIZE=2><INPUT TYPE=TEXT SIZE=6 MAXLENGTH=6 NAME=ChargeFreight VALUE=" . $_POST['ChargeFreight'] . "></TD><TD><INPUT TYPE=TEXT SIZE=2 MAXLENGTH=2 NAME=FreightTaxRate VALUE=" . $_POST['FreightTaxRate'] . ">%</TD><TD ALIGN=RIGHT>" . number_format($_POST['FreightTaxRate']*$_POST['ChargeFreight']/100,2) . "</TD><TD ALIGN=RIGHT>" . number_format((100+$_POST['FreightTaxRate'])*$_POST['ChargeFreight']/100,2) . "</TD></TR>";
+		echo "<TR>
+			<TD COLSPAN=7 ALIGN=RIGHT>Credit Freight</TD>
+			<TD><FONT SIZE=2><INPUT TYPE=TEXT SIZE=6 MAXLENGTH=6 NAME=ChargeFreight VALUE=" . $_POST['ChargeFreight'] . "></TD>
+			<TD><INPUT TYPE=TEXT SIZE=2 MAXLENGTH=2 NAME=FreightTaxRate VALUE=" . $_POST['FreightTaxRate'] . ">%</TD>
+			<TD ALIGN=RIGHT>" . number_format($_POST['FreightTaxRate']*$_POST['ChargeFreight']/100,2) . "</TD>
+			<TD ALIGN=RIGHT>" . number_format((100+$_POST['FreightTaxRate'])*$_POST['ChargeFreight']/100,2) . "</TD>
+		</TR>";
 
 
 		$DisplayTotal = number_format($_SESSION['CreditItems']->total + $_POST['ChargeFreight'],2);
 		$TaxTotal += $_POST['FreightTaxRate']*$_POST['ChargeFreight']/100;
 
-		echo "<TR><TD COLSPAN=7 ALIGN=RIGHT>Credit Totals</TD><TD ALIGN=RIGHT><HR><B>$DisplayTotal</B><HR></TD><TD></TD><TD ALIGN=RIGHT><HR><B>" . number_format($TaxTotal,2) . "<HR></TD><TD ALIGN=RIGHT><HR><B>" . number_format($TaxTotal+($_SESSION['CreditItems']->total + $_POST['ChargeFreight']),2) . "</B><HR></TD></TR></TABLE>";
+		echo "<TR>
+			<TD COLSPAN=7 ALIGN=RIGHT>Credit Totals</TD>
+			<TD ALIGN=RIGHT><HR><B>$DisplayTotal</B><HR></TD>
+			<TD></TD>
+			<TD ALIGN=RIGHT><HR><B>" . number_format($TaxTotal,2) . "<HR></TD>
+			<TD ALIGN=RIGHT><HR><B>" . number_format($TaxTotal+($_SESSION['CreditItems']->total + $_POST['ChargeFreight']),2) . "</B><HR></TD>
+		</TR></TABLE>";
 
 /*Now show options for the credit note */
 
@@ -956,7 +986,8 @@ if (isset($_POST['ProcessCredit'])){
 					DiscountPercent,
 					StandardCost,
 					NewQOH,
-					HideMovt)
+					HideMovt,
+					Narrative)
 					VALUES
 					('" . $CreditLine->StockID . "',
 					11,
@@ -972,7 +1003,8 @@ if (isset($_POST['ProcessCredit'])){
 					" . $CreditLine->DiscountPercent . ",
 					" . $CreditLine->StandardCost . ",
 					" . $QtyOnHandPrior  . ",
-					1)";
+					1,
+					'" . $CreditLine->Narrative . "')";
 
 				$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Stock movement records could not be inserted because:";
 				$DbgMsg = "<BR>The following SQL to insert the stock movement records for the purpose of display on the credit note was used:";
@@ -996,7 +1028,8 @@ if (isset($_POST['ProcessCredit'])){
 							StandardCost,
 							Reference,
 							NewQOH,
-							TaxRate)
+							TaxRate,
+							Narrative)
 						VALUES (
 							'" . $CreditLine->StockID . "',
 							11,
@@ -1012,7 +1045,8 @@ if (isset($_POST['ProcessCredit'])){
 							" . $CreditLine->StandardCost . ",
 							'" . $_POST['CreditText'] . "',
 							" . ($QtyOnHandPrior + $CreditLine->Quantity) . ",
-							" . $CreditLine->TaxRate . "
+							" . $CreditLine->TaxRate . ",
+							'" . $CreditLine->Narrative . "'
 						)";
 
 			    	} else { /*its an assembly/kitset or dummy so don't attempt to figure out new qoh */
@@ -1030,7 +1064,8 @@ if (isset($_POST['ProcessCredit'])){
 							DiscountPercent,
 							StandardCost,
 							Reference,
-							TaxRate)
+							TaxRate,
+							Narrative)
 						VALUES (
 							'" . $CreditLine->StockID . "',
 							11,
@@ -1045,7 +1080,8 @@ if (isset($_POST['ProcessCredit'])){
 							" . $CreditLine->DiscountPercent . ",
 							" . $CreditLine->StandardCost . ",
 							'" . $_POST['CreditText'] . "',
-							" . $CreditLine->TaxRate . "
+							" . $CreditLine->TaxRate . ",
+							'" . $CreditLine->Narrative . "'
 							)";
 
 			    	}
@@ -1253,7 +1289,8 @@ if (isset($_POST['ProcessCredit'])){
 							StandardCost,
 							Reference,
 							Show_On_Inv_Crds,
-							NewQOH)
+							NewQOH,
+							Narrative)
 						VALUES (
 							'" . $CreditLine->StockID . "',
 							11,
@@ -1269,7 +1306,8 @@ if (isset($_POST['ProcessCredit'])){
 							" . $CreditLine->StandardCost . ",
 							'" . $_POST['CreditText'] . "',
 							0,
-							" . $QtyOnHandPrior . "
+							" . $QtyOnHandPrior . ",
+							'" . $CreditLine->Narrative . "'
 							)";
 
 				    } else { /* its an assembly, so dont figure out the new qoh */

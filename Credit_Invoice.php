@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $title = "Credit An Invoice ";
 
 $PageSecurity =3;
@@ -121,7 +121,8 @@ if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 					StockMoves.DiscountPercent,
 					StockMoves.TranDate,
 					StockMoves.TaxRate,
-					StockMaster.Materialcost + StockMaster.Labourcost + StockMaster.OverheadCost AS StandardCost
+					StockMaster.Materialcost + StockMaster.Labourcost + StockMaster.OverheadCost AS StandardCost,
+					StockMoves.Narrative
 				FROM StockMoves, StockMaster
 				WHERE StockMoves.StockID = StockMaster.StockID
 				AND StockMoves.TransNo =" . $_GET['InvoiceNumber'] . "
@@ -152,7 +153,8 @@ if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 								$myrow['DiscountCategory'],
 								$myrow['Controlled'],
 								$myrow['Serialised'],
-								$myrow['DecimalPlaces']
+								$myrow['DecimalPlaces'],
+								$myrow['Narrative']
 								);
 
 				$_SESSION['CreditItems']->LineItems[$myrow["StockID"]]->StandardCost= $myrow["StandardCost"];
@@ -206,6 +208,7 @@ If ($_SESSION['CreditItems']->ItemsOrdered > 0 OR isset($_POST['NewItem'])){
 
 		if (isset($_POST['Quantity_' . $StockItem->StockID])){
 
+			$Narrative = $_POST['Narrative_' . $StockItem->StockID];
 			$Quantity = $_POST['Quantity_' . $StockItem->StockID];
 			$Price = $_POST['Price_' . $StockItem->StockID];
 			$DiscountPercentage = $_POST['Discount_' . $StockItem->StockID];
@@ -216,6 +219,7 @@ If ($_SESSION['CreditItems']->ItemsOrdered > 0 OR isset($_POST['NewItem'])){
 				$_SESSION['CreditItems']->LineItems[$StockItem->StockID]->QtyDispatched=$Quantity;
 				$_SESSION['CreditItems']->LineItems[$StockItem->StockID]->Price=$Price;
 				$_SESSION['CreditItems']->LineItems[$StockItem->StockID]->DiscountPercent=($DiscountPercentage/100);
+				$_SESSION['CreditItems']->LineItems[$StockItem->StockID]->Narrative=$Narrative;
 			}
 		}
 	}
@@ -257,19 +261,22 @@ $k=0; //row colour counter
 foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 
 	if ($k==1){
-		echo "<tr bgcolor='#CCCCCC'>";
+		$RowStarter = "<tr bgcolor='#CCCCCC'>";
 		$k=0;
 	} else {
-		echo "<tr bgcolor='#EEEEEE'>";
+		$RowStarter = "<tr bgcolor='#EEEEEE'>";
 		$k=1;
 	}
 
 	$LineTotal =($LnItm->QtyDispatched * $LnItm->Price * (1 - $LnItm->DiscountPercent));
 
-	$_SESSION['CreditItems']->total = $_SESSION['CreditItems']->total + $LineTotal;														$_SESSION['CreditItems']->totalVolume = $_SESSION['CreditItems']->totalVolume + $LnItm->QtyDispatched * $LnItm->Volume;
+	$_SESSION['CreditItems']->total = $_SESSION['CreditItems']->total + $LineTotal;								$_SESSION['CreditItems']->totalVolume = $_SESSION['CreditItems']->totalVolume + $LnItm->QtyDispatched * $LnItm->Volume;
 	$_SESSION['CreditItems']->totalWeight = $_SESSION['CreditItems']->totalWeight + $LnItm->QtyDispatched * $LnItm->Weight;
 
-	echo "<TD>" . $LnItm->StockID . "</TD><TD>$LnItm->ItemDescription</TD><TD ALIGN=RIGHT>$LnItm->Quantity</TD><TD>$LnItm->Units</TD>";
+	echo $RowStarter .	"<TD>" . $LnItm->StockID . "</TD>
+				<TD>$LnItm->ItemDescription</TD>
+				<TD ALIGN=RIGHT>$LnItm->Quantity</TD>
+				<TD>$LnItm->Units</TD>";
 
 	if ($LnItm->Controlled==1){
 
@@ -290,8 +297,10 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 	<TD ALIGN=RIGHT>" . number_format($LineTotal*(1+$StockItem->TaxRate),2) . "</TD>
 	<TD><A HREF='". $_SERVER['PHP_SELF'] . "?" . SID . "Delete=" . $LnItm->StockID . "'>Delete</A></TD></TR>";
 
+	echo $RowStarter . "<TD COLSPAN=7><TEXTAREA  NAME='Narrative_" . $LnItm->StockID . "' cols=100% rows=1>" . $LnItm->Narrative . "</TEXTAREA><BR><HR></TD></TR>";
+
 	$TaxTotal += $LineTotal*$StockItem->TaxRate;
-}
+} /*end foreach loop displaying the invoice lines to credit */
 
 if (!isset($_POST['ChargeFreightCost'])){
 	$_POST['ChargeFreightCost']=0;
@@ -328,20 +337,6 @@ echo "<TR>
 </TR></TABLE>";
 
 $DefaultDispatchDate = Date($DefaultDateFormat);
-
-
-If (isset($_POST['Edit'])){
-
-	echo "<input type='hidden' name='StockID' value='" . $_SESSION['CreditItems']->LineItems[$_POST['Edit']]->StockID ."'>";
-	echo "<TABLE BORDER=1><TR><TD><B>Editing Item:</B></TD><TD>" . $_SESSION['CreditItems']->LineItems[$_POST['Edit']]->ItemDescription . "</TD></TR>";
-	echo "<TR><TD>Quantity:</TD><TD><input type='Text' SIZE=7 MAXLENGTH=6 name='Qty' value=" . $_SESSION['CreditItems']->LineItems[$_POST['Edit']]->Quantity . "></TD></TR>";
-	echo "<TR><TD>Discount %:</TD><TD><input type='Text' SIZE=5 MAXLENGTH=4 name='Disc' value=" . ($_SESSION['CreditItems']->LineItems[$_POST['Edit']]->DiscountPercent*100) . "></TD></TR>";
-	echo "<TR><TD>Price:</TD><TD><input type='Text' SIZE=15 MAXLENGTH=14 name='Price' value=" . $_SESSION['CreditItems']->LineItems[$_POST['Edit']]->Price . "></TD></TR>";
-
-	echo "</TABLE><CENTER><INPUT TYPE=SUBMIT NAME='UpdateItem' VALUE='Update'><INPUT TYPE=SUBMIT NAME='Delete' VALUE='Delete'></CENTER>";
-}
-
-
 
 
 if ($_POST['ProcessCredit']=="Process Credit"){
@@ -590,7 +585,8 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 								Qty,
 								StandardCost,
 								Show_On_Inv_Crds,
-								NewQOH)
+								NewQOH
+								)
 							VALUES ('" . $AssParts["Component"] . "',
 								11,
 								" . $CreditNo . ",
@@ -676,7 +672,8 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 								Qty,
 								DiscountPercent,
 								StandardCost,
-								NewQOH)
+								NewQOH,
+								Narrative)
 						VALUES ('" . $OrderLine->StockID . "',
 							11,
 							" . $CreditNo . ",
@@ -690,7 +687,9 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 							" . $OrderLine->QtyDispatched . ",
 							" . $OrderLine->DiscountPercent . ",
 							" . $OrderLine->StandardCost . ",
-							" .  ($QtyOnHandPrior + $OrderLine->QtyDispatched) . ")";
+							" .  ($QtyOnHandPrior + $OrderLine->QtyDispatched) . ",
+							'" . $OrderLine->Narrative . "'
+						)";
 
 				} else {
 
@@ -707,7 +706,8 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 							Reference,
 							Qty,
 							DiscountPercent,
-							StandardCost)
+							StandardCost,
+							Narrative)
 						VALUES ('" . $OrderLine->StockID . "',
 							11,
 							" . $CreditNo . ",
@@ -720,7 +720,9 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 							'Ex Inv - " . $_SESSION['ProcessingCredit'] . "',
 							" . $OrderLine->QtyDispatched . ",
 							" . $OrderLine->DiscountPercent . ",
-							" . $OrderLine->StandardCost . ")";
+							" . $OrderLine->StandardCost . ",
+							'" . $OrderLine->Narrative . "'
+						)";
 				}
 
 				$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Stock movement records could not be inserted because:";
@@ -747,7 +749,8 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 							Qty,
 							DiscountPercent,
 							StandardCost,
-							NewQOH)
+							NewQOH,
+							Narrative)
 					VALUES ('" . $OrderLine->StockID . "',
 						11,
 						" . $CreditNo . ",
@@ -761,7 +764,8 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 						" . $OrderLine->QtyDispatched . ",
 						" . $OrderLine->DiscountPercent . ",
 						" . $OrderLine->StandardCost . ",
-						" . ($QtyOnHandPrior +$OrderLine->QtyDispatched)  . "
+						" . ($QtyOnHandPrior +$OrderLine->QtyDispatched)  . ",
+						'" . $OrderLine->Narrative . "'
 						)";
 
 				$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Stock movement records could not be inserted because:";
@@ -783,7 +787,9 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 							DiscountPercent,
 							StandardCost,
 							Show_On_Inv_Crds,
-							NewQOH)
+							NewQOH,
+							Narrative
+							)
 					VALUES ('" . $OrderLine->StockID . "',
 						11,
 						" . $CreditNo . ",
@@ -798,7 +804,8 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 						" . $OrderLine->DiscountPercent . ",
 						" . $OrderLine->StandardCost . ",
 						0,
-						" . $QtyOnHandPrior . "
+						" . $QtyOnHandPrior . ",
+						'" . $OrderLine->Narrative . "'
 						)";
 
 
@@ -824,7 +831,8 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 							DiscountPercent,
 							StandardCost,
 							NewQOH,
-							HideMovt)
+							HideMovt,
+							Narrative)
 					VALUES ('" . $OrderLine->StockID . "',
 						11,
 						" . $CreditNo . ",
@@ -839,7 +847,8 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 						" . $OrderLine->DiscountPercent . ",
 						" . $OrderLine->StandardCost . ",
 						" . $QtyOnHandPrior  . ",
-						1
+						1,
+						'" . $OrderLine->Narrative . "'
 					)";
 
 

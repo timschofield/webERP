@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 if (isset($_GET['ModifyOrderNumber'])) {
 	$title = "Modifying Order " . $_GET['ModifyOrderNumber'];
 } else {
@@ -293,18 +293,18 @@ if ($_POST['SearchCust']=="Search Now" AND $_SESSION['RequireCustomerSelection']
 // record returned from a search so parse the $Select string into customer code and branch code */
 if (isset($_POST['Select']) AND $_POST['Select']!="") {
 
-	$_SESSION['Items']->Branch = substr($_POST['Select'],strrpos($_POST['Select']," - ")+3);
+	$_SESSION['Items']->Branch = substr($_POST['Select'],strpos($_POST['Select']," - ")+3);
 
 	$_POST['Select'] = substr($_POST['Select'],0,strpos($_POST['Select']," - "));
 
 	// Now check to ensure this account is not on hold */
-	$sql = "SELECT DebtorsMaster.Name, 
-			HoldReasons.DissallowInvoices, 
-			DebtorsMaster.SalesType, 
-			SalesTypes.Sales_Type, 
-			DebtorsMaster.CurrCode 
-		FROM DebtorsMaster, 
-			HoldReasons, 
+	$sql = "SELECT DebtorsMaster.Name,
+			HoldReasons.DissallowInvoices,
+			DebtorsMaster.SalesType,
+			SalesTypes.Sales_Type,
+			DebtorsMaster.CurrCode
+		FROM DebtorsMaster,
+			HoldReasons,
 			SalesTypes 
 		WHERE DebtorsMaster.SalesType=SalesTypes.TypeAbbrev 
 		AND DebtorsMaster.HoldReason=HoldReasons.ReasonCode 
@@ -843,7 +843,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 						$QuantityOfDiscCat += $StkItems_2->Quantity;
 					}
 				}
-				$result = DB_query("SELECT Max(DiscountRate) AS Discount FROM DiscountMatrix WHERE SalesType='" .  $_SESSION['Items']->DefaultSalesType . "' AND DiscountCategory ='" . $StockItem->DiscCat . "' AND QuantityBreak <" . $QuantityOfDiscCat,$db);
+				$result = DB_query("SELECT Max(DiscountRate) AS Discount
+							FROM DiscountMatrix
+							WHERE SalesType='" .  $_SESSION['Items']->DefaultSalesType . "'
+							AND DiscountCategory ='" . $StockItem->DiscCat . "'
+							AND QuantityBreak <" . $QuantityOfDiscCat,$db);
 				$myrow = DB_fetch_row($result);
 				if ($myrow[0]!=0){ /* need to update the lines affected */
 					foreach ($_SESSION['Items']->LineItems as $StkItems_2) {
@@ -893,9 +897,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 					$RowStarter = "<tr bgcolor='#EEEEEE'>";
 					$k=1;
 				}
-				
+
 				echo $RowStarter;
-				
+
 				echo "<TD><A target='_blank' HREF='$rootpath/StockStatus.php?" . SID . "StockID=" . $StockItem->StockID . "'>$StockItem->StockID</A></TD>
 					<TD>" . $StockItem->ItemDescription . "</TD>
 					<TD><INPUT TYPE=TEXT NAME='Quantity_" . $StockItem->StockID . "' SIZE=6 MAXLENGTH=6 VALUE=" . $StockItem->Quantity . "></TD>
@@ -915,8 +919,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 
 				echo $RowStarter;
 				echo "<TD COLSPAN=7><TEXTAREA  NAME='Narrative_" . $StockItem->StockID . "' cols=100% rows=1>" . $StockItem->Narrative . "</TEXTAREA><BR><HR></TD></TR>";
-				
-				
+
+
 				$_SESSION['Items']->total = $_SESSION['Items']->total + $LineTotal;
 				$_SESSION['Items']->totalVolume = $_SESSION['Items']->totalVolume + $StockItem->Quantity * $StockItem->Volume;
 				$_SESSION['Items']->totalWeight = $_SESSION['Items']->totalWeight + $StockItem->Quantity * $StockItem->Weight;

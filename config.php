@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -13,7 +13,7 @@
 //---------------------------------------------------
 
 // Application version
-$Version = "0.2.9";
+$Version = "0.2.10";
 
 // The company name to appear in the headings on each page displayed
 $CompanyName = "Web-ERP Demo";
