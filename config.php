@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.52 $ */
+/* $Revision: 1.53 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -35,7 +35,7 @@ $Version = '3.0rc1';
 $host = 'localhost';
 
 //The type of db server being used - currently only postgres or mysql
-$dbType = 'postgres';
+$dbType = 'mysql';
 //$dbType = 'postgres';
 //$dbType = 'mysql';
 

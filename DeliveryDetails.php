@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
 */
@@ -618,7 +618,7 @@ echo '<TR>
     address on the packlist */
 
 	echo '<TR><TD>' . _('Packlist Type') . ":</TD><TD><SELECT NAME='DeliverBlind'>";
-        for ($p = 0; $p <= 2; $p++) {
+        for ($p = 1; $p <= 2; $p++) {
             echo '<OPTION VALUE=' . $p;
             if ($p == $_SESSION['Items']->DeliverBlind) {
                 echo ' SELECTED>';
@@ -626,12 +626,10 @@ echo '<TR>
                 echo '>';
             }
             switch ($p) {
-                case 0:
-                    echo _('--select type--'); break;
-                case 1:
-                    echo _('Normal'); break;
                 case 2:
-                    echo _('Blind'); break;
+                    echo _('Hide Company Details/Logo'); break;
+                default:
+                    echo _('Show Company Details/Logo');
             }
         }
     echo '</SELECT></TD></TR>';
