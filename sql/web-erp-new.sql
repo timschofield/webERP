@@ -1669,7 +1669,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE SysTypes DISABLE KEYS */;
 LOCK TABLES SysTypes WRITE;
-INSERT INTO SysTypes VALUES (0,'Journal - GL',10),(1,'Payment - GL',18),(2,'Receipt - GL',3),(3,'Standing Journal',0),(10,'Sales Invoice',13),(11,'Credit Note',11),(12,'Receipt',2),(15,'Journal - Debtors',0),(16,'Location Transfer',8),(17,'Stock Adjustment',6),(18,'Purchase Order',0),(20,'Purchase Invoice',16),(21,'Debit Note',8),(22,'Creditors Payment',6),(23,'Creditors Journal',0),(25,'Purchase Order Delivery',17),(26,'Work Order Receipt',0),(28,'Work Order Issue',0),(29,'Work Order Variance',0),(30,'Sales Order',0),(31,'Shipment Close',8),(35,'Cost Update',6),(50,'Opening Balance',0);
+INSERT INTO SysTypes VALUES (0,'Journal - GL',10),(1,'Payment - GL',18),(2,'Receipt - GL',3),(3,'Standing Journal',0),(10,'Sales Invoice',13),(11,'Credit Note',11),(12,'Receipt',2),(15,'Journal - Debtors',0),(16,'Location Transfer',8),(17,'Stock Adjustment',6),(18,'Purchase Order',0),(20,'Purchase Invoice',17),(21,'Debit Note',8),(22,'Creditors Payment',7),(23,'Creditors Journal',0),(25,'Purchase Order Delivery',17),(26,'Work Order Receipt',0),(28,'Work Order Issue',0),(29,'Work Order Variance',0),(30,'Sales Order',0),(31,'Shipment Close',8),(35,'Cost Update',6),(50,'Opening Balance',0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE SysTypes ENABLE KEYS */;
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
@@ -8,7 +8,8 @@
 
 	echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">';
 	echo '<HTML><HEAD><TITLE>' . $title . '</TITLE>';
-	echo '<LINK REL="SHORTCUT ICON" HREF="favicon.ico">';
+	echo '<link REL="shortcut icon" HREF="favicon.ico">';
+	echo '<link REL="icon" HREF="favicon.ico">';
 	echo '<LINK HREF="css/'. $_SESSION['Theme'] .'/default.css" REL="stylesheet" TYPE="text/css">';
 	echo '</HEAD>';
 

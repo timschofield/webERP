@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 10;
 
@@ -157,7 +157,7 @@ if (isset($_POST['SelectedAccountGroup']) OR isset($_GET['SelectedAccountGroup']
 	echo '<CENTER><A HREF=' . $_SERVER['PHP_SELF'] . '?' . SID .'>' . _('Review Account Groups') . '</a></Center>';
 }
 
-echo'<P>';
+echo '<P>';
 
 if (! isset($_GET['delete'])) {
 

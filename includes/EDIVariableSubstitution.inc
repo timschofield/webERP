@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*Code to replace [Variables] in Message LineText with the value of the variable itself */
 
 	$PositionPointer = 0;
@@ -29,5 +29,5 @@
 
 	echo "<BR>$NewLineText";
 
-	fputs($fp, $NewLineText . '\n');
+	fputs($fp, $NewLineText . "\n");
 ?>

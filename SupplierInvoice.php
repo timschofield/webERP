@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -372,9 +372,7 @@ echo '<TR><TD>' . _('Invoice Total') . ':</TD><TD ALIGN=RIGHT><B>' . $DisplayTot
 echo '<TABLE><TR><TD>Comments</TD><TD><TEXTAREA NAME=Comments COLS=40 ROWS=2>' .
 	  $_SESSION['SuppTrans']->Comments . '</TEXTAREA></TD></TR></TABLE>';
 
-if ($_POST['PostInvoice'] != _('Enter Invoice') AND $InputError != 1){
-	echo "<P><INPUT TYPE=SUBMIT NAME='PostInvoice' VALUE='" . _('Enter Invoice') . "'>";
-}
+echo "<P><INPUT TYPE=SUBMIT NAME='PostInvoice' VALUE='" . _('Enter Invoice') . "'>";
 
 
 if ($_POST['PostInvoice'] == _('Enter Invoice') AND $InputError != 1){

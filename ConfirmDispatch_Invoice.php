@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
@@ -183,7 +183,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 		} else { /* there are no line items that have a quantity to deliver */
 			echo '<CENTER><A HREF="'. $rootpath. '/SelectSalesOrder.php?' . SID . '">' ._('Select a different sales order to invoice') .'</A></CENTER>';
 			echo '<P>';
-			prnMsg( _('There are no ordered items with a quantity left to deliver There is nothing left to invoice'));
+			prnMsg( _('There are no ordered items with a quantity left to deliver. There is nothing left to invoice'));
 			include('includes/footer.inc');
 			exit;
 
@@ -193,7 +193,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 	} else { /*end if the order was returned sucessfully */
 
 		echo '<P>'.
-		prnMsg( _('This order item could not be retrieved') . '. ' . _('Please select another order'), 'warn');
+		prnMsg( _('This order item could not be retrieved. Please select another order'), 'warn');
 		echo '<CENTER><A HREF="'. $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Select a different sales order to invoice'). '</A></CENTER>';
 		include ('includes/footer.inc');
 		exit;
@@ -349,7 +349,7 @@ if ($DoFreightCalc==True){
 			$BestShipper = $ShipperReturned[0];
 		} else {
 			echo '<P>';
-			prnMsg( _('We have a problem') . ' - ' . _('there are no shippers defined') . '. ' . _('Please use the link below to set up shipping freight companies') . ', ' . _('the system expects the shipping company to be selected or a default freight company to be used').'.');
+			prnMsg( _('We have a problem') . ' - ' . _('there are no shippers defined') . '. ' . _('Please use the link below to set up shipping freight companies') . ', ' . _('the system expects the shipping company to be selected or a default freight company to be used'),'error');
 			echo '<A HREF="' . $rootpath . 'Shippers.php">'. _('Enter') . '/' . _('Amend Freight Companies'). '</A>';
 		}
 	}
@@ -435,7 +435,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		WHERE CustBranch.DebtorNo ='". $_SESSION['Items']->DebtorNo . "'
 		AND CustBranch.BranchCode = '" . $_SESSION['Items']->Branch . "'";
 
-	$ErrMsg = _('We were unable to load Area where the Sale is to from the BRANCHES table') . '. ' . _('Please remedy this') . '.';
+	$ErrMsg = _('We were unable to load Area where the Sale is to from the BRANCHES table') . '. ' . _('Please remedy this');
 	$Result = DB_query($SQL,$db, $ErrMsg);
 	$myrow = DB_fetch_row($Result);
 	$Area = $myrow[0];
@@ -475,7 +475,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		}
 
 		echo '<P>';
-		prnMsg( _('This order has been changed or invoiced since this delivery was started to be confirmed') . '. ' . _('Processing halted') . '. ' . _('To enter and confirm this dispatch') . '/' . _('invoice the order must be re-selected and re-read again to update the changes made by the other user').'.', 'error');
+		prnMsg( _('This order has been changed or invoiced since this delivery was started to be confirmed') . '. ' . _('Processing halted') . '. ' . _('To enter and confirm this dispatch') . '/' . _('invoice the order must be re-selected and re-read again to update the changes made by the other user'), 'error');
 		echo '<BR>';
 
 		echo '<CENTER><A HREF="'. $rootpath/SelectSalesOrder.php.'?' . SID . '">'. _('Select a sales order for confirming deliveries and invoicing'). '</A></CENTER>';
@@ -498,7 +498,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				_('the session shows quantity of'). ' ' . $_SESSION['Items']->LineItems[$stkItm]->Quantity .
 				' ' . _('and quantity invoice of'). ' ' . $_SESSION['Items']->LineItems[$stkItm]->QtyInv;
 
-	                prnMsg( _('This order has been changed or invoiced since this delivery was started to be confirmed') . '. ' . _('Processing halted') . '. ' . _('To enter and confirm this dispatch') . '/' . _('invoice the order must be re-selected and re-read again to update the changes made by the other user').'.', 'error');
+	                prnMsg( _('This order has been changed or invoiced since this delivery was started to be confirmed') . ' ' . _('Processing halted.') . ' ' . _('To enter and confirm this dispatch, it must be re-selected and re-read again to update the changes made by the other user'), 'error');
         	        echo '<BR>';
 
                 	echo '<CENTER><A HREF="'. $rootpath/SelectSalesOrder.php.'?' . SID . '">'. _('Select a sales order for confirming deliveries and invoicing'). '</A></CENTER>';
@@ -535,7 +535,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 /*Update order header for invoice charged on */
 	$SQL = "UPDATE SalesOrders SET Comments = CONCAT(Comments,' Inv ','" . $InvoiceNo . "') WHERE OrderNo= " . $_SESSION['ProcessingOrder'];
 
-	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order header could not be updated with the invoice number');
+	$ErrMsg = _('CRITICAL ERROR') . ' ' _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order header could not be updated with the invoice number');
 	$DbgMsg = _('The following SQL to update the sales order was used');
 	$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 

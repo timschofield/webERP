@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 /*EDI configuration variables definition */
 
@@ -73,7 +73,7 @@ while ($LineDetails = DB_fetch_array($MessageLinesResult)){
 
 	echo "<BR>$NewLineText";
 
-	fputs($fp, $NewLineText .'\n');
+	fputs($fp, $NewLineText ."\n");
 }
 
 fclose($fp);

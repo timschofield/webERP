@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 7;
 
@@ -86,10 +86,10 @@ echo '<TR><TD COLSPAN=3>' . _('Choose outstanding') . ' ' . $TypeName . ' ' . _(
 
 if ($_POST["Ostg_or_All"]=='All'){
 	echo '<OPTION SELECTED Value="All">' . _('Show all') . ' ' . $TypeName . ' ' . _('in the date range');
-	echo '<OPTION Value="Ostdg">' . _('Show only unmatched') . ' ' . $TypeName;
+	echo '<OPTION Value="Ostdg">' . _('Show unmatched') . ' ' . $TypeName . ' ' . _('only');
 } else {
 	echo '<OPTION Value="All">' . _('Show all') . ' ' . $TypeName . ' ' . _('in the date range');
-	echo '<OPTION SELECTED Value="Ostdg">' . _('Show only unmatched') . ' ' . $TypeName;
+	echo '<OPTION SELECTED Value="Ostdg">' . _('Show unmatched') . ' ' . $TypeName . ' ' . _('only');
 }
 echo '</SELECT></TD></TR>';
 

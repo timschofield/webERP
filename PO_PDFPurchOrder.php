@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -167,20 +167,19 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 			$sql = "SELECT SupplierDescription FROM PurchData WHERE StockID='" .
 $POLine['ItemCode'] . "' AND SupplierNo ='" . $POHeader['SupplierNo'] . "'";
 			$SuppDescRslt = DB_query($sql,$db);
+	
+			$ItemDescription='';
+
 			if (DB_error_no($db)==0){
 				if (DB_num_rows($SuppDescRslt)==1){
 					$SuppDescRow = DB_fetch_row($SuppDescRslt);
 					if (strlen($SuppDescRow[0])>2){
 						$ItemDescription = $SuppDescRow[0];
-					} else {
-						$ItemDescritpion = $POLine["ItemDescription"];
 					}
-				} else {
-					$ItemDescritpion = $POLine["ItemDescription"];
 				}
-
-			} else {
-				$ItemDescription = $POLine["ItemDescription"];
+			}
+			if (strlen($ItemDescription)<2){
+				$ItemDescription = $POLine['ItemDescription'];
 			}
 
 			$DisplayQty = number_format($POLine['QuantityOrd'],$POLine['DecimalPlaces']);

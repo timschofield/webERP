@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 $db = mysql_connect($host , $dbuser, $dbpassword);
 mysql_select_db($DatabaseName,$db);
 
@@ -20,15 +20,15 @@ function DB_query ($SQL,
 		$DebugMessage = _('The SQL that failed was');
 	}
 	if (DB_error_no($Conn) != 0){
-		prnMsg($ErrorMessage.'<BR>' . DB_error_msg($Conn),'error', _('DB ERROR'));
+		prnMsg($ErrorMessage.'<BR>' . DB_error_msg($Conn),'error', _('Database Error'));
 		if ($debug==1){
-			echo '<BR>' . $DebugMessage. "<BR>$SQL<BR>";
+			prnMsg($DebugMessage. "<BR>$SQL<BR>",'error',_('Database SQL Failure'));
 		}
 		if ($Transaction){
 			$SQL = 'rollback';
 			$Result = DB_query($SQL,$Conn);
 			if (DB_error_no($Conn) !=0){
-				prnMsg('<br />'.  _('Error Rolling Back Transaction'), '', _('DB DEBUG') );
+				prnMsg(_('Error Rolling Back Transaction'), '', _('Database Rollback Error') );
 			}
 		}
 		if ($TrapErrors){

@@ -1,5 +1,5 @@
 WEB-ERP Installation
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 Upgrading
 
 A script is included under web-erp/sql to update an existing weberp database to the current version. The upgrade script assumes the weberp database is called weberp. The script must be edited to change the name of the database if this is not the case.
@@ -56,7 +56,7 @@ However, all files in this archive except files under the sql and doc directorie
 
 is the apache root directory under SuSE Linux.
 
-In windows it is C:\Program Files\Apache Group\Apache\htdocs
+In windows it could be C:\Program Files\Apache Group\Apache\htdocs
 Normally the Apache document root directory is called "htdocs"
 
 Under windows use winzip to extract the archive under the web server root directory.
@@ -92,7 +92,7 @@ From the MySQL manual (edited):
 	You can, in MySQL Version 3.22 and above, use the SET PASSWORD statement:
 
 	shell> mysql -u root mysql
-	mysql> SET PASSWORD FOR root=PASSWORD('new_password');
+	mysql> SET PASSWORD=PASSWORD('new_password');
 
 where 'new_password' is the new password you chose for the root user.
 

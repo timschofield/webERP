@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 include ('includes/class.pdf.php');
 
 /* A4_Landscape */
@@ -20,8 +20,8 @@ $pdf->selectFont('./fonts/Helvetica.afm');
 
 /* Standard PDF file creation header stuff */
 
-$pdf->addinfo('Author','WEB-ERP ' . $Version);
-$pdf->addinfo('Creator','WEB-ERP http://weberp.sourceforge.net - R&OS PHP-PDF http://www.ros.co.nz');
+$pdf->addinfo('Author','webERP ' . $Version);
+$pdf->addinfo('Creator','webERP http://www.weberp.org - R&OS PHP-PDF http://www.ros.co.nz');
 $pdf->addinfo('Title',$ReportSpec['ReportHeading']);
 $pdf->addinfo('Subject',_('Sales Analysis Report') . ' ' . $ReportSpec['ReportHeading']);
 
@@ -543,7 +543,7 @@ if ($_GET['ProduceCVSFile']==True){
 					$line.=stripcomma($myrow[$i]);
 				}
 			}
-			fputs($fp, $line.'\n');
+			fputs($fp, $line."\n");
 	      }
 	 }
 	 $title = _('Sales Analysis Comma Seperated File (CSV) Generation');

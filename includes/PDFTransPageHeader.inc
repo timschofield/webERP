@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /* R&OS PHP-pdf class code to head up a new page */
 
 $YPos = $Page_Height - $Top_Margin;
@@ -83,7 +83,7 @@ $YPos = $Page_Height - $Top_Margin;
 
 $FontSize=10;
 
-$pdf->addText($XPos, $YPos, $FontSize, 'Sold To:');
+$pdf->addText($XPos, $YPos, $FontSize, _('Sold To') . ':');
 $XPos +=80;
 
 if ($myrow['InvAddrBranch']==0){

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -156,8 +156,7 @@ if (isset($_POST['submit'])) {
 	//run the SQL from either of the above possibilites
 
 	$ErrMsg = _('The branch record could not be inserted or updated because');
-	$DbgMsg = _('The sql that failed was:');
-	$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+	$result = DB_query($sql,$db, $ErrMsg);
 
 	if (DB_error_no($db) ==0) {
 		prnMsg($msg,'success');

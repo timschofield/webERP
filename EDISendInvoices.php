@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity =15;
 
 include ('includes/session.inc');
@@ -101,7 +101,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 			write the output to a file one line at a time */
 
 		$sql = "SELECT Section, LineText FROM EDIMessageFormat WHERE PartnerCode='" . $CustDetails['DebtorNo'] . "' AND MessageType='INVOIC' ORDER BY SequenceNo";
-		$ErrMsg =  _('An error occurred in getting the EDI format template for') . ' ' . $CustDetails['DebtorNo'] . ' ' . _('beacuse');
+		$ErrMsg =  _('An error occurred in getting the EDI format template for') . ' ' . $CustDetails['DebtorNo'] . ' ' . _('because');
 		$MessageLinesResult = DB_query($sql, $db,$ErrMsg);
 
 

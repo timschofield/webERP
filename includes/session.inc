@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -12,6 +12,9 @@
     if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);
     }
+    
+    ini_set('session.gc_Maxlifetime',$SessionLifeTime);
+    
     session_start();
 
     include('includes/LanguageSetup.php');
