@@ -1905,7 +1905,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE `Locations` DISABLE KEYS */;
 LOCK TABLES `Locations` WRITE;
-INSERT INTO `Locations` VALUES ('DEN','Denver','532-536 Wentworth Street','Denver','Colorado','233 5532 216','233 5532 215','g.bovert@weberp.com','Graham Bouvert',1),('MEL','Melbourne Australia','3-5 Albert Road','Morriban','Melbourne Victoria','+61 3 4445 23554','+61 3 4554 23244','g.prewit@weberp.com','Greg Prewit',1),('MUC','Munich Test Facility','Unit H Grand Tourismo Ind Est','Munchen','','+49 5554 22 121','+49 5442 22132','','Herman',1);
+INSERT INTO `Locations` VALUES ('DEN','Denver','532-536 Wentworth Street','Denver','Colorado','233 5532 216','233 5532 215','g.bovert@weberp.com','Graham Bouvert',1),('MEL','Melbourne Australia','3-5 Albert Road','Morriban','Melbourne Victoria','+61 3 4445 23554','+61 3 4554 23244','g.prewit@weberp.com','Greg Prewit',1),('MUC','Munich Test Facility','Unit H Grand Tourismo Ind Est','Munchen','','+49 5554 22 121','+49 5442 22132','','Herman',5);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `Locations` ENABLE KEYS */;
 
@@ -2235,7 +2235,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE `Suppliers` DISABLE KEYS */;
 LOCK TABLES `Suppliers` WRITE;
-INSERT INTO `Suppliers` VALUES ('BHPSTEEL','Bright Helpful People Steel Co Gmbh','P O Box 67','Frankfurt','Germany','','DEM','1960-03-17','30',500.0000,'2003-02-01 00:00:00','','0','',0,1),('BIGBISC','Biga Engineering PLC','P O Box 8918','Brighton','West Sussex BGF 11G','England','GBP','2000-06-08','30',-100.0000,'2004-07-29 00:00:00','','0','',0,1),('FREDBLOW','Frederick Blowers & Co Inc','123 Road Close','Metropolis','','','USD','2003-06-29','20',0.0000,NULL,'','0','',0,1),('GREGCA','Gregor Capel Inc','P O Box 54','633 Groper Lane','Newmarket','England','GBP','1953-12-06','30',233.3300,'2004-12-06 00:00:00','','0','',0,1),('HISPUN','Hi-Spun Yarns Inc','PO Box 12','Great Harmton','Shetland','','GBP','2001-01-01','20',0.0000,NULL,'','0','',0,6),('MITOOI2','Mitsooy Corporation Inc','P O Box 8775','Baltimore','USA','','USD','1998-04-12','30',0.0000,NULL,'','0','',0,1);
+INSERT INTO `Suppliers` VALUES ('BHPSTEEL','Bright Helpful People Steel Co Gmbh','P O Box 67','Frankfurt','Germany','','DEM','1960-03-17','30',500.0000,'2003-02-01 00:00:00','','0','',0,1),('BIGBISC','Biga Engineering PLC','P O Box 8918','Brighton','West Sussex BGF 11G','England','GBP','2000-06-08','30',-100.0000,'2004-07-29 00:00:00','','0','',0,1),('BUCKROG','Buck Rogers Inc','123 Starship Enterprise Estate','Gandwanderland','','','USD','2004-12-26','30',0.0000,NULL,'','0','1244sdkdsl1',0,5),('FREDBLOW','Frederick Blowers & Co Inc','123 Road Close','Metropolis','','','USD','2003-06-29','20',0.0000,NULL,'','0','',0,1),('GREGCA','Gregor Capel Inc','P O Box 54','633 Groper Lane','Newmarket','England','GBP','1953-12-06','30',233.3300,'2004-12-06 00:00:00','','0','',0,1),('HISPUN','Hi-Spun Yarns Inc','PO Box 12','Great Harmton','Shetland','','GBP','2001-01-01','20',0.0000,NULL,'','0','',0,6),('MITOOI2','Mitsooy Corporation Inc','P O Box 8775','Baltimore','USA','','USD','1998-04-12','30',0.0000,NULL,'','0','',0,1);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `Suppliers` ENABLE KEYS */;
 
@@ -2279,7 +2279,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE `WWW_Users` DISABLE KEYS */;
 LOCK TABLES `WWW_Users` WRITE;
-INSERT INTO `WWW_Users` VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2004-12-25 11:04:48','','A4','1,1,1,1,1,1,1,1,',0,50,'fresh','en_GB'),('testy','weberp','Test Remote User','GRANHR','','','DEN',6,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en_GB');
+INSERT INTO `WWW_Users` VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2004-12-26 15:59:27','','A4','1,1,1,1,1,1,1,1,',0,50,'fresh','en_GB'),('NewOne','weberp','New User Admin','','','','DEN',7,'2004-12-26 14:15:05','','A4','1,1,1,1,1,1,1,1,',0,0,'fresh','en_GB'),('testy','weberp','Test Remote User','GRANHR','','','DEN',6,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en_GB');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `WWW_Users` ENABLE KEYS */;
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -77,13 +77,15 @@ if (isset($_GET['SupplierID'])){
 	$LocalTaxAuthResult = DB_query("SELECT TaxAuthority FROM Locations WHERE LocCode='" .
 	 										  $_SESSION['UserStockLocation'] . "'", $db);
 
-	$LocalTaxAuthRow = DB_fetch_row($LocalTaxAuthResult);
-
-	if(DB_num_rows($LocalTaxAuthRow)==0){
+	if(DB_num_rows($LocalTaxAuthResult)==0){
 		prnMsg(_('The tax authority associated with your user account has not been set up in this database. Tax calculations are based on the tax authority of the supplier and the tax authority of the user entering the invoice. The system administrator should redefine your account with a valid default stocking location and this location should refer to a valid tax authority'),'error');
 		include('includes/footer.inc');
 		exit;
 	}
+	
+	$LocalTaxAuthRow = DB_fetch_row($LocalTaxAuthResult);
+
+	
 	$_SESSION['SuppTrans']->TaxRate = GetTaxRate($myrow['TaxID'],$LocalTaxAuthRow[0], $DefaultTaxLevel, $db);
 	$_SESSION['SuppTrans']->TaxGLCode = $myrow['TaxGLCode'];
 

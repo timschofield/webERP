@@ -1637,7 +1637,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE `Locations` DISABLE KEYS */;
 LOCK TABLES `Locations` WRITE;
-INSERT INTO `Locations` VALUES ('DEN','Denver','532-536 Wentworth Street','Denver','Colorado','233 5532 216','233 5532 215','g.bovert@weberp.com','Graham Bouvert',1),('MEL','Melbourne Australia','3-5 Albert Road','Morriban','Melbourne Victoria','+61 3 4445 23554','+61 3 4554 23244','g.prewit@weberp.com','Greg Prewit',1),('MUC','Munich Test Facility','Unit H Grand Tourismo Ind Est','Munchen','','+49 5554 22 121','+49 5442 22132','','Herman',1);
+INSERT INTO `Locations` VALUES ('DEN','Denver','532-536 Wentworth Street','Denver','Colorado','233 5532 216','233 5532 215','g.bovert@weberp.com','Graham Bouvert',1),('MEL','Melbourne Australia','3-5 Albert Road','Morriban','Melbourne Victoria','+61 3 4445 23554','+61 3 4554 23244','g.prewit@weberp.com','Greg Prewit',1),('MUC','Munich Test Facility','Unit H Grand Tourismo Ind Est','Munchen','','+49 5554 22 121','+49 5442 22132','','Herman',5);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `Locations` ENABLE KEYS */;
 
@@ -1725,7 +1725,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE `WWW_Users` DISABLE KEYS */;
 LOCK TABLES `WWW_Users` WRITE;
-INSERT INTO `WWW_Users` VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2004-12-25 11:04:48','','A4','1,1,1,1,1,1,1,1,',0,50,'fresh','en_GB'),('testy','weberp','Test Remote User','GRANHR','','','DEN',6,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en_GB');
+INSERT INTO `WWW_Users` VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2004-12-26 15:59:27','','A4','1,1,1,1,1,1,1,1,',0,50,'fresh','en_GB'),('NewOne','weberp','New User Admin','','','','DEN',7,'2004-12-26 14:15:05','','A4','1,1,1,1,1,1,1,1,',0,0,'fresh','en_GB'),('testy','weberp','Test Remote User','GRANHR','','','DEN',6,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en_GB');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `WWW_Users` ENABLE KEYS */;
 
