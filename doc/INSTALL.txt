@@ -173,13 +173,13 @@ Open a browser and enter the URL for the web server directory where web-erp is i
 
 http://localhost/web-erp/index.php
 
-enter the user name of 'demonstration'
+enter the user name of 'demo'
 password 'weberp'
 
 (the quotation marks are not required).
 
 You can set up additional user accounts from the System Setup tab and change the password.
-Be careful not to delete the demonstration user until a new user has been set up.
+Be careful not to delete the demo user until a new user has been set up.
 If there are no users defined the next time you try to login you won't be able to!
 The only way then to create a user to login with is to manually edit the SQL table WWW_Users to insert a user.
 
