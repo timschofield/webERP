@@ -1634,7 +1634,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE CustBranch DISABLE KEYS */;
 LOCK TABLES CustBranch WRITE;
-INSERT INTO CustBranch VALUES ('1234','12345678','One Two Three Four Five Six Seven Eight','','','','',1,'AR','25',0,'','','','','DEN',1,10,0,'','','','',''),('GRAN','GRANHR','Gramtham Horton PLC','2 Growler Terraces','West Hemington','BE22 FD2','England',4,'UK','25',0,'','','Ed Heath','','MUC',6,1,0,'','','','',''),('JOHN','JOHNSON','San Diego','198 Greater Lofty Heights','San Diego','California','USA',2,'AR','25',0,'2412 22356','2412 23549','Rod Champion','rod.champion@johnson.com','DEN',5,1,0,'','','','',''),('JOHNTEMPE','JOHNSON','Johnson Vehicles Tempe','654 Roberto Street','Tempe','Arizona','USA',2,'AR','2',0,'56565 444 44','222 44 55','Holly Drako','','DEN',5,1,0,'','','','',''),('WALM','WALMON','Wallace Monterey - Sydney','309 Centennial Highway','Ballmain, Sydney','New South Wales 4133','Australia',16,'AR','25',0,'+61 2 3546 8875','+61 2 3546 8874','Phyllis Archibald','phyllis@WallMonterey.com.au','MEL',3,1,0,'','','','',''),('WALMOADEL','WALMON','Wallace Monterey - Adelaide','2-6 Devon Street','Clovelly Park','Adelaide South Australia 3122','Australia',18,'AR','25',0,'+61 3544 2113','+61 3544 2103','Brian Morrisey','brian@WallMonterey.com.au','MEL',3,1,0,'','','','',''),('WATT','WATTSGRP','Watts Motor Group Head Office and Admin','81 Trimble Road','Gimlet Rock','Greater Hampton','Arizona',2,'AR','25',0,'233 5442 3255','233 5442 3254','Bill Gobster','billg@watts.motors.com','MEL',5,1,0,'','','','',''),('WATTLA','WATTSGRP','Watts Group Los Angeles','922 Acton Lane','Reefston','Los Angeles','California',2,'CA','25',0,'235 446 998','235 446 654','Graham Bigglesworth','gbiggles@watts.motors.com','DEN',5,1,0,'','','','',''),('WATTSSAND','WATTSGRP','Watts Group San Diego','42 Grafton Place','San Diego','California','',2,'CA','25',0,'355 224 566','355 224 544','Sharon Stonely','sstonely@watts.motors.com','DEN',5,1,0,'','','','','');
+INSERT INTO CustBranch VALUES ('1234','12345678','One Two Three Four Five Six Seven Eight','','','','',1,'AR','25',0,'','','','','DEN',1,10,0,'','','','',''),('GRAN','GRANHR','Gramtham Horton PLC','2 Growler Terraces','West Hemington','BE22 FD2','England',4,'UK','25',0,'','','Ed Heath','','MUC',6,1,0,'','','','',''),('JOHN','JOHNSON','San Diego','198 Greater Lofty Heights','San Diego','California','USA',2,'AR','25',0,'2412 22356','2412 23549','Rod Champion','rod.champion@johnson.com','DEN',5,1,0,'','','','',''),('JOHNTEMPE','JOHNSON','Johnson Vehicles Tempe','654 Roberto Street','Tempe','Arizona','USA',2,'AR','2',0,'56565 444 44','222 44 55','Holly Drako','','DEN',5,1,0,'','','','',''),('WALM','WALMON','Wallace Monterey - Sydney','309 Centennial Highway','Ballmain, Sydney','New South Wales 4133','Australia',16,'AR','25',0,'+61 2 3546 8875','+61 2 3546 8874','Phyllis Archibald','phyllis@WallMonterey.com.au','MEL',1,1,0,'','','','',''),('WALMOADEL','WALMON','Wallace Monterey - Adelaide','2-6 Devon Street','Clovelly Park','Adelaide South Australia 3122','Australia',18,'AR','25',0,'+61 3544 2113','+61 3544 2103','Brian Morrisey','brian@WallMonterey.com.au','MEL',1,1,0,'','','','',''),('WATT','WATTSGRP','Watts Motor Group Head Office and Admin','81 Trimble Road','Gimlet Rock','Greater Hampton','Arizona',2,'AR','25',0,'233 5442 3255','233 5442 3254','Bill Gobster','billg@watts.motors.com','MEL',5,1,0,'','','','',''),('WATTLA','WATTSGRP','Watts Group Los Angeles','922 Acton Lane','Reefston','Los Angeles','California',2,'CA','25',0,'235 446 998','235 446 654','Graham Bigglesworth','gbiggles@watts.motors.com','DEN',5,1,0,'','','','',''),('WATTSSAND','WATTSGRP','Watts Group San Diego','42 Grafton Place','San Diego','California','',2,'CA','25',0,'355 224 566','355 224 544','Sharon Stonely','sstonely@watts.motors.com','DEN',5,1,0,'','','','','');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE CustBranch ENABLE KEYS */;
 
@@ -1839,7 +1839,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE PurchOrders DISABLE KEYS */;
 LOCK TABLES PurchOrders WRITE;
-INSERT INTO PurchOrders VALUES (1,'BHPSTEEL','','2003-01-20 00:00:00',2.3000,'2003-01-20 00:00:00',0,'pgd','6654 - hgb','DEN','532-536 Wentworth Street','Denver','Colorado','233 5532 216'),(2,'BIGBISC','test purchase order','2003-01-20 00:00:00',0.4300,'2003-01-20 00:00:00',0,'fdf','2323544','MEL','3-5 Albert Road','Morriban','Melbourne Victoria','+61 3 4445 23554'),(3,'MITOOI2','','2003-02-01 00:00:00',1.3350,'2003-02-01 00:00:00',0,'eric','98877','MEL','3-5 Albert Road','Morriban','Melbourne Victoria','+61 3 4445 23554'),(4,'BIGBISC','','2003-03-19 00:00:00',0.4300,'2003-03-19 00:00:00',0,'','','MEL','532-536 Wentworth Street','Denver','Colorado','233 5532 216'),(5,'BHPSTEEL','','2003-06-05 00:00:00',1.1900,'2003-07-28 00:00:00',0,'','','DEN','532-536 Wentworth Street','Denver','Colorado','233 5532 216'),(6,'BIGBISC','','2003-06-20 00:00:00',0.4300,'2003-06-20 00:00:00',0,'','','DEN','532-536 Wentworth Street','Denver','Colorado','233 5532 216'),(7,'GREGCA','','2003-06-21 00:00:00',0.4300,'2003-06-21 00:00:00',0,'phil','sdds','DEN','532-536 Wentworth Street','Denver','Colorado','233 5532 216'),(8,'BIGBISC','','2003-07-05 00:00:00',0.8000,'2004-01-28 00:00:00',0,'ewweew','we','DEN','532-536 Wentworth Street','Denver','Colorado','233 5532 216'),(9,'GREGCA','','2004-01-14 00:00:00',0.8000,NULL,1,'','','DEN','532-536 Wentworth Street','Denver','Colorado','233 5532 216'),(10,'GREGCA','','2004-01-14 00:00:00',0.8000,NULL,1,'','','DEN','532-536 Wentworth Street','Denver','Colorado','233 5532 216');
+INSERT INTO PurchOrders VALUES (1,'BHPSTEEL','','2003-01-20 00:00:00',2.3000,'2003-01-20 00:00:00',0,'pgd','6654 - hgb','DEN','532-536 Wentworth Street','Denver','Colorado','233 5532 216'),(2,'BIGBISC','test purchase order','2003-01-20 00:00:00',0.4300,'2003-01-20 00:00:00',0,'fdf','2323544','MEL','3-5 Albert Road','Morriban','Melbourne Victoria','+61 3 4445 23554'),(3,'MITOOI2','','2003-02-01 00:00:00',1.3350,'2003-02-01 00:00:00',0,'eric','98877','MEL','3-5 Albert Road','Morriban','Melbourne Victoria','+61 3 4445 23554'),(4,'BIGBISC','','2003-03-19 00:00:00',0.4300,'2003-03-19 00:00:00',0,'','','MEL','532-536 Wentworth Street','Denver','Colorado','233 5532 216'),(5,'BHPSTEEL','','2003-06-05 00:00:00',1.1900,'2004-02-25 00:00:00',0,'','','DEN','532-536 Wentworth Street','Denver','Colorado','233 5532 216'),(6,'BIGBISC','','2003-06-20 00:00:00',0.4300,'2003-06-20 00:00:00',0,'','','DEN','532-536 Wentworth Street','Denver','Colorado','233 5532 216'),(7,'GREGCA','','2003-06-21 00:00:00',0.4300,'2003-06-21 00:00:00',0,'phil','sdds','DEN','532-536 Wentworth Street','Denver','Colorado','233 5532 216'),(8,'BIGBISC','','2003-07-05 00:00:00',0.8000,'2004-01-28 00:00:00',0,'ewweew','we','DEN','532-536 Wentworth Street','Denver','Colorado','233 5532 216'),(9,'GREGCA','','2004-01-14 00:00:00',0.8000,'2004-02-25 00:00:00',0,'','','DEN','532-536 Wentworth Street','Denver','Colorado','233 5532 216'),(10,'GREGCA','','2004-01-14 00:00:00',0.8000,'2004-02-25 00:00:00',0,'','','DEN','532-536 Wentworth Street','Denver','Colorado','233 5532 216');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE PurchOrders ENABLE KEYS */;
 
@@ -1850,7 +1850,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE ReportColumns DISABLE KEYS */;
 LOCK TABLES ReportColumns WRITE;
-INSERT INTO ReportColumns VALUES (1,1,'Qty','Dec 03',0,48,48,'Quantity',0,0,'',1,'N',0),(1,2,'Value','dec 03',0,48,48,'Gross Value',0,0,'',1,'N',0),(1,3,'GP','Dec 03',0,48,48,'Gross Profit',0,0,'',1,'N',0);
+INSERT INTO ReportColumns VALUES (1,1,'Qty','Dec 03',0,48,48,'Quantity',0,0,'',1,'N',0),(1,2,'Value','dec 03',0,48,48,'Gross Value',0,0,'',1,'N',0),(1,3,'GP','Dec 03',0,48,48,'Gross Profit',0,0,'',1,'N',0),(2,1,'Value','',0,49,51,'Net Value',0,0,'',1,'N',0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE ReportColumns ENABLE KEYS */;
 
@@ -1861,7 +1861,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE ReportHeaders DISABLE KEYS */;
 LOCK TABLES ReportHeaders WRITE;
-INSERT INTO ReportHeaders VALUES (1,'Sales to Johnson Vehicles January 2003','Customer Code',0,'J','JZZZ','Product Code',0,'1','ZZZZZ','Not Used',0,'','','Not Used',0,'','');
+INSERT INTO ReportHeaders VALUES (1,'Sales to Johnson Vehicles January 2003','Customer Code',0,'J','JZZZ','Product Code',0,'1','ZZZZZ','Not Used',0,'','','Not Used',0,'',''),(2,'Sales in 2004','Customer Code',0,'0','zzzzzzz','Not Used',0,'','','Not Used',0,'','','Not Used',0,'','');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE ReportHeaders ENABLE KEYS */;
 
@@ -2079,7 +2079,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE TaxAuthLevels DISABLE KEYS */;
 LOCK TABLES TaxAuthLevels WRITE;
-INSERT INTO TaxAuthLevels VALUES (1,1,1,0.1),(1,1,2,0);
+INSERT INTO TaxAuthLevels VALUES (1,1,1,0.1),(1,1,2,0),(1,5,1,0),(1,5,2,0),(1,6,1,0),(1,6,2,0),(5,1,1,0),(5,1,2,0),(5,5,1,0),(5,5,2,0),(5,6,1,0),(5,6,2,0),(6,1,1,0),(6,1,2,0),(6,5,1,0),(6,5,2,0),(6,6,1,0.175),(6,6,2,0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE TaxAuthLevels ENABLE KEYS */;
 
@@ -2090,7 +2090,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE TaxAuthorities DISABLE KEYS */;
 LOCK TABLES TaxAuthorities WRITE;
-INSERT INTO TaxAuthorities VALUES (1,'GST',810000,890000),(3,'Not Taxable',890000,700000),(5,'Sales Tax',890000,890000),(6,'VAT',890000,890000);
+INSERT INTO TaxAuthorities VALUES (1,'Australian GST',810000,890000),(5,'Sales Tax',890000,890000),(6,'UK VAT',890000,890000);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE TaxAuthorities ENABLE KEYS */;
 
@@ -2121,7 +2121,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE WWW_Users DISABLE KEYS */;
 LOCK TABLES WWW_Users WRITE;
-INSERT INTO WWW_Users VALUES ('Admin','albundy','Phil Daintree','','','','DEN',7,'2004-02-23 22:16:38','','A4','1,1,1,1,1,1,1,1,',0),('demo','weberp','','','','','DEN',5,'2004-02-24 20:03:52','','A4','1,1,1,1,1,1,1,1,',0),('testy','weberp','','GRANHR','','','DEN',6,'2004-02-23 20:21:56','GRAN','A4','1,0,0,0,0,0,0,0,',0);
+INSERT INTO WWW_Users VALUES ('Admin','albundy','Phil Daintree','','','','DEN',7,'2004-02-26 20:15:28','','A4','1,1,1,1,1,1,1,1,',0),('demo','weberp','','','','','DEN',5,'2004-02-25 22:48:28','','A4','1,1,1,1,1,1,1,1,',0),('testy','weberp','','GRANHR','','','DEN',6,'2004-02-23 20:21:56','GRAN','A4','1,0,0,0,0,0,0,0,',0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE WWW_Users ENABLE KEYS */;
 

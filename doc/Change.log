@@ -1,5 +1,6 @@
 <P>webERP Change Log
 
+26/2/04 TaxAuthorityRates.php script for modifying tax rates for defined tax authorities/tax levels
 24/2/04 fixes to sales analysis reports with only one level of grouping - also error in ReportColumns storeage of datatype Select corrected.
 22/2/04 EDIMessageFormat script to set up invoice format only so far
 21/2/04 Foreign key defintions accross the board for all relations in all tables as necessary added to upgrade script 2.7-2.8

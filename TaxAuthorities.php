@@ -113,9 +113,11 @@ if ($_POST['submit']) {
 				echo "<P>Cannot delete this tax authority because there are inventory locations created with this tax authority - change the inventory location record first.";
 				echo "<br> There are " . $myrow[0] . " inventory locations referring to this authority";
 			} else {
-				$result = DB_query("DELETE FROM TaxAuthorities WHERE TaxID= " . $SelectedTaxID,$db);
+
 			/*Cascade deletes in TaxAuthLevels */
 				$result = DB_query("DELETE FROM TaxAuthLevels WHERE TaxAuthority= " . $SelectedTaxID,$db);
+				$result = DB_query("DELETE FROM TaxAuthLevels WHERE DispatchTaxAuthority= " . $SelectedTaxID,$db);
+				$result = DB_query("DELETE FROM TaxAuthorities WHERE TaxID= " . $SelectedTaxID,$db);
 				echo "<P>The selected tax authority record has been deleted ! <p>";
 				unset ($SelectedTaxID);
 			}
@@ -146,7 +148,7 @@ if (!isset($SelectedTaxID)) {
 
 		$DisplayTaxRate	= number_format($myrow[2] * 100, 2) . "%";
 
-		printf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><a href=\"%sSelectedTaxID=%s\">Edit</td><td><a href=\"%sSelectedTaxID=%s&delete=yes\">DELETE</td></tr>", $myrow[0],$myrow[1], $myrow[2], $myrow[3],$_SERVER['PHP_SELF'] . "?" . SID, $myrow[0], $_SERVER['PHP_SELF'] . "?" . SID, $myrow[0]);
+		printf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><td><a href=\"%sTaxAuthority=%s\">Edit Rates</a></td><td><a href=\"%sSelectedTaxID=%s\">Edit</a></td><td><a href=\"%sSelectedTaxID=%s&delete=yes\">Delete</a></td></tr>", $myrow[0],$myrow[1], $myrow[2], $myrow[3],$rootpath . "/TaxAuthorityRates?" . SID, $myrow[0], $_SERVER['PHP_SELF'] . "?" . SID, $myrow[0], $_SERVER['PHP_SELF'] . "?" . SID, $myrow[0]);
 
 	}
 	//END WHILE LIST LOOP

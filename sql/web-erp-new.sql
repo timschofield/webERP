@@ -1594,7 +1594,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE TaxAuthorities DISABLE KEYS */;
 LOCK TABLES TaxAuthorities WRITE;
-INSERT INTO TaxAuthorities VALUES (1,'GST',810000,890000),(3,'Not Taxable',890000,700000),(5,'Sales Tax',890000,890000),(6,'VAT',890000,890000);
+INSERT INTO TaxAuthorities VALUES (1,'Australian GST',810000,890000),(5,'Sales Tax',890000,890000),(6,'UK VAT',890000,890000);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE TaxAuthorities ENABLE KEYS */;
 
@@ -1605,7 +1605,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE TaxAuthLevels DISABLE KEYS */;
 LOCK TABLES TaxAuthLevels WRITE;
-INSERT INTO TaxAuthLevels VALUES (1,1,1,0.1),(1,1,2,0);
+INSERT INTO TaxAuthLevels VALUES (1,1,1,0.1),(1,1,2,0),(1,5,1,0),(1,5,2,0),(1,6,1,0),(1,6,2,0),(5,1,1,0),(5,1,2,0),(5,5,1,0),(5,5,2,0),(5,6,1,0),(5,6,2,0),(6,1,1,0),(6,1,2,0),(6,5,1,0),(6,5,2,0),(6,6,1,0.175),(6,6,2,0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE TaxAuthLevels ENABLE KEYS */;
 
@@ -1616,7 +1616,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE WWW_Users DISABLE KEYS */;
 LOCK TABLES WWW_Users WRITE;
-INSERT INTO WWW_Users VALUES ('Admin','albundy','Phil Daintree','','','','DEN',7,'2004-02-23 22:16:38','','A4','1,1,1,1,1,1,1,1,',0),('demo','weberp','','','','','DEN',5,'2004-02-24 20:03:52','','A4','1,1,1,1,1,1,1,1,',0),('testy','weberp','','GRANHR','','','DEN',6,'2004-02-23 20:21:56','GRAN','A4','1,0,0,0,0,0,0,0,',0);
+INSERT INTO WWW_Users VALUES ('Admin','albundy','Phil Daintree','','','','DEN',7,'2004-02-26 20:15:28','','A4','1,1,1,1,1,1,1,1,',0),('demo','weberp','','','','','DEN',5,'2004-02-25 22:48:28','','A4','1,1,1,1,1,1,1,1,',0),('testy','weberp','','GRANHR','','','DEN',6,'2004-02-23 20:21:56','GRAN','A4','1,0,0,0,0,0,0,0,',0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE WWW_Users ENABLE KEYS */;
 
