@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -82,7 +82,7 @@
     and charged  - is not used if DoFreightCalc == False */
     $FreightChargeAppliesIfLessThan = 1000;
 
-    /*The tax level to apply to Freight Charges */
+    /*The tax level to apply to Freight Charges and supplier invoices*/
 
     $DefaultTaxLevel =1;
 

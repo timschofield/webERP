@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*This page is very largely the same as the SupplierInvoice.php script
 the same result could have been acheived by using if statements in that script and just having the one
 SupplierTransaction.php script. However, to aid readability - variable names have been changed  -
@@ -70,7 +70,12 @@ if (isset($_GET['SupplierID'])){
 	 }
 	 $_SESSION['SuppTrans']->SupplierID = $_GET['SupplierID'];
 	 $_SESSION['SuppTrans']->TaxDescription = $myrow['TaxDesc'];
-	 $_SESSION['SuppTrans']->TaxRate = GetTaxRate($myrow['TaxID'],$DefaultTaxLevel,&$db);
+
+	 $LocalTaxAuthResult = DB_query("SELECT TaxAuthority FROM Locations WHERE LocCode='" . $_SESSION["UserStockLocation"] . "'",$db);
+	 $LocalTaxAuthRow = DB_fetch_row($LocalTaxAuthResult);
+
+	 $_SESSION['SuppTrans']->TaxRate = GetTaxRate($myrow['TaxID'],$LocalTaxAuthRow[0], $DefaultTaxLevel,$db);
+
 	 $_SESSION['SuppTrans']->TaxGLCode = $myrow['TaxGLCode'];
 
 

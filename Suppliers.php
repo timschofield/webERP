@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Supplier Maintenance";
 
 $PageSecurity=5;
@@ -292,11 +292,13 @@ if (isset($_GET['SupplierID'])){
 	$SupplierID = strtoupper($_GET['SupplierID']);
 } elseif (isset($_POST['SupplierID'])){
 	$SupplierID = strtoupper($_POST['SupplierID']);
+} else {
+	$SupplierID = '';
 }
 
 
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
