@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /*SelectOrderItems_IntoCart.inc
 
 This snippet is used to enter order line items into the cart object:
@@ -49,6 +49,12 @@ if ($AlreadyOnThisOrder!=1){
 
    if ($myrow = DB_fetch_array($result1)){
 
+   		if ($_SESSION['ExistingOrder']!=0){
+			$UpdateDB = "Yes";
+		} else {
+			$UpdateDB = "No";
+		}
+
    		if ($_SESSION['Items']->add_to_cart ($NewItem,
 							$NewItemQty,
 							$myrow["Description"],
@@ -65,7 +71,7 @@ if ($AlreadyOnThisOrder!=1){
 							0, /*Controlled - dont care */
 							0, /*serialised - dont care */
 							$myrow['DecimalPlaces'],
-							'Yes' /*Do please update the DB */
+							$UpdateDB
 							)==1){
 
 		      $_SESSION['Items']->LineItems[$NewItem]->StandardCost = $myrow["StandardCost"];

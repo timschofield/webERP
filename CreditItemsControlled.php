@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 $title = "Specifiy Credited Controlled Items";
 $PageSecurity = 3;
 
@@ -15,6 +15,7 @@ if ($_GET['CreditInvoice']=="Yes" OR $_POST['CreditInvoice']=="Yes"){
 } else {
 	$CreditLink = "SelectCreditItems.php";
 }
+
 
 if (isset($_GET['StockID'])){
 	$StockID = $_GET['StockID'];
@@ -93,7 +94,7 @@ echo "</TR></TABLE>";
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for dispatch */
-if ($CreditLink = "Credit_Invoice.php"){
+if ($CreditLink == "Credit_Invoice.php"){
 	$_SESSION['CreditItems']->LineItems[$StockID]->QtyDispatched = $TotalQuantity;
 } else {
 	$_SESSION['CreditItems']->LineItems[$StockID]->Quantity = $TotalQuantity;

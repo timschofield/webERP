@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
 
@@ -83,10 +83,28 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1){
 			   $SearchString = $SearchString. substr($_POST['Keywords'],$i)."%";
 
 
-			   $SQL = "SELECT CustBranch.DebtorNo, CustBranch.BrName, CustBranch.ContactName, CustBranch.PhoneNo, CustBranch.FaxNo, CustBranch.BranchCode FROM CustBranch WHERE CustBranch.BrName LIKE '$SearchString' AND DisableTrans=0";
+			   $SQL = "SELECT
+			   		CustBranch.DebtorNo,
+					CustBranch.BrName,
+					CustBranch.ContactName,
+					CustBranch.PhoneNo,
+					CustBranch.FaxNo,
+					CustBranch.BranchCode
+				FROM CustBranch
+				WHERE CustBranch.BrName LIKE '$SearchString'
+				AND DisableTrans=0";
 
 		  } elseif (strlen($_POST['CustCode'])>0){
-			   $SQL = "SELECT CustBranch.DebtorNo, CustBranch.BrName, CustBranch.ContactName, CustBranch.PhoneNo, CustBranch.FaxNo, CustBranch.BranchCode FROM CustBranch WHERE CustBranch.BranchCode LIKE '%" . $_POST['CustCode'] . "%' AND DisableTrans=0";
+			   $SQL = "SELECT
+			   		CustBranch.DebtorNo,
+					CustBranch.BrName,
+					CustBranch.ContactName,
+					CustBranch.PhoneNo,
+					CustBranch.FaxNo,
+					CustBranch.BranchCode
+				FROM CustBranch
+				WHERE CustBranch.BranchCode LIKE '%" . $_POST['CustCode'] . "%'
+				AND DisableTrans=0";
 		  }
 
 		  $result_CustSelect = DB_query($SQL,$db);
@@ -114,7 +132,15 @@ parse the $Select string into customer code and branch code */
 
 /*Now retrieve customer information - name, salestype, currency, terms etc */
 
-	 $sql = "SELECT DebtorsMaster.Name, DebtorsMaster.SalesType, DebtorsMaster.CurrCode, Currencies.Rate From DebtorsMaster, Currencies WHERE DebtorsMaster.CurrCode=Currencies.CurrAbrev AND DebtorsMaster.DebtorNo = '" . $_POST['Select'] . "'";
+	 $sql = "SELECT
+	 	DebtorsMaster.Name,
+		DebtorsMaster.SalesType,
+		DebtorsMaster.CurrCode,
+		Currencies.Rate
+		FROM DebtorsMaster,
+			Currencies
+		WHERE DebtorsMaster.CurrCode=Currencies.CurrAbrev
+		AND DebtorsMaster.DebtorNo = '" . $_POST['Select'] . "'";
 
 	 $result =DB_query($sql,$db);
 	 if (DB_error_no($db) !=0) {
@@ -141,7 +167,24 @@ defaulted from the entry of the userid and password.  */
 /*  default the branch information from the customer branches table CustBranch -particularly where the stock
 will be booked back into. */
 
-	 $sql = "SELECT CustBranch.BrName, CustBranch.BrAddress1, BrAddress2, BrAddress3, BrAddress4, CustBranch.PhoneNo, CustBranch.Email, CustBranch.DefaultLocation, TaxAuthorities.Description AS TaxDescription, TaxAuthorities.TaxID, TaxAuthorities.TaxGLCode, Locations.TaxAuthority AS DispatchTaxAuthority FROM CustBranch INNER JOIN TaxAuthorities ON CustBranch.TaxAuthority=TaxAuthorities.TaxID INNER JOIN Locations ON Locations.LocCode=CustBranch.DefaultLocation WHERE CustBranch.BranchCode='" . $_SESSION['CreditItems']->Branch . "' AND CustBranch.DebtorNo = '" . $_SESSION['CreditItems']->DebtorNo . "'";
+	 $sql = "SELECT
+	 		CustBranch.BrName,
+			CustBranch.BrAddress1,
+			BrAddress2,
+			BrAddress3,
+			BrAddress4,
+			CustBranch.PhoneNo,
+			CustBranch.Email,
+			CustBranch.DefaultLocation,
+			TaxAuthorities.Description AS TaxDescription,
+			TaxAuthorities.TaxID,
+			TaxAuthorities.TaxGLCode,
+			Locations.TaxAuthority AS DispatchTaxAuthority
+			FROM CustBranch
+			INNER JOIN TaxAuthorities ON CustBranch.TaxAuthority=TaxAuthorities.TaxID
+			INNER JOIN Locations ON Locations.LocCode=CustBranch.DefaultLocation
+			WHERE CustBranch.BranchCode='" . $_SESSION['CreditItems']->Branch . "'
+			AND CustBranch.DebtorNo = '" . $_SESSION['CreditItems']->DebtorNo . "'";
 
 	 $ErrMsg = "<BR>The customer branch record of the customer selected: " . $_POST['Select'] . " cannot be retrieved because:";
 	$DbgMsg = "<BR>SQL used to retrieve the branch details was:";
@@ -275,41 +318,84 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$SearchString = $SearchString. substr($_POST['Keywords'],$i)."%";
 
 			if ($_POST['StockCat']=="All"){
-				$SQL = "SELECT StockMaster.StockID, StockMaster.Description, StockMaster.Units FROM StockMaster, StockCategory WHERE StockMaster.CategoryID=StockCategory.CategoryID AND (StockCategory.StockType='F' OR StockCategory.StockType='D') AND StockMaster.Description LIKE '$SearchString' GROUP BY StockMaster.StockID, StockMaster.Description, StockMaster.Units ORDER BY StockMaster.StockID";
+				$SQL = "SELECT StockMaster.StockID,
+						StockMaster.Description,
+						StockMaster.Units
+					FROM StockMaster, StockCategory
+					WHERE StockMaster.CategoryID=StockCategory.CategoryID
+					AND (StockCategory.StockType='F' OR StockCategory.StockType='D')
+					AND StockMaster.Description LIKE '$SearchString'
+					GROUP BY StockMaster.StockID, StockMaster.Description, StockMaster.Units
+					ORDER BY StockMaster.StockID";
 			} else {
-				$SQL = "SELECT StockMaster.StockID, StockMaster.Description, StockMaster.Units FROM StockMaster, StockCategory WHERE StockMaster.CategoryID=StockCategory.CategoryID AND (StockCategory.StockType='F' OR StockCategory.StockType='D') AND StockMaster.Description LIKE '$SearchString' AND StockMaster.CategoryID='" . $_POST['StockCat'] . "'  GROUP BY StockMaster.StockID, StockMaster.Description, StockMaster.Units ORDER BY StockMaster.StockID";
+				$SQL = "SELECT StockMaster.StockID,
+						StockMaster.Description,
+						StockMaster.Units
+					FROM StockMaster, StockCategory
+					WHERE StockMaster.CategoryID=StockCategory.CategoryID
+					AND (StockCategory.StockType='F' OR StockCategory.StockType='D')
+					AND StockMaster.Description LIKE '$SearchString'
+					AND StockMaster.CategoryID='" . $_POST['StockCat'] . "'
+					GROUP BY StockMaster.StockID, StockMaster.Description, StockMaster.Units
+					ORDER BY StockMaster.StockID";
 			}
 
 		} elseif ($_POST['StockCode']!=""){
 			$_POST['StockCode'] = "%" . $_POST['StockCode'] . "%";
 			if ($_POST['StockCat']=="All"){
-				$SQL = "SELECT StockMaster.StockID, StockMaster.Description, StockMaster.Units FROM StockMaster, StockCategory WHERE StockMaster.CategoryID=StockCategory.CategoryID AND (StockCategory.StockType='F' OR StockCategory.StockType='D') AND  StockMaster.StockID like '" . $_POST['StockCode'] . "' GROUP BY StockMaster.StockID, StockMaster.Description, StockMaster.Units ORDER BY StockMaster.StockID";
+				$SQL = "SELECT StockMaster.StockID,
+						StockMaster.Description,
+						StockMaster.Units
+					FROM StockMaster, StockCategory
+					WHERE StockMaster.CategoryID=StockCategory.CategoryID
+					AND (StockCategory.StockType='F' OR StockCategory.StockType='D')
+					AND  StockMaster.StockID like '" . $_POST['StockCode'] . "'
+					GROUP BY StockMaster.StockID, StockMaster.Description, StockMaster.Units
+					ORDER BY StockMaster.StockID";
 			} else {
-				$SQL = "SELECT StockMaster.StockID, StockMaster.Description, StockMaster.Units FROM StockMaster, StockCategory WHERE StockMaster.CategoryID=StockCategory.CategoryID AND (StockCategory.StockType='F' OR StockCategory.StockType='D') AND StockMaster.StockID like '" . $_POST['StockCode'] . "' AND StockMaster.CategoryID='" . $_POST['StockCat'] . "'   GROUP BY StockMaster.StockID, StockMaster.Description, StockMaster.Units ORDER BY StockMaster.StockID";
+				$SQL = "SELECT StockMaster.StockID,
+						StockMaster.Description,
+						StockMaster.Units
+						FROM StockMaster, StockCategory
+						WHERE StockMaster.CategoryID=StockCategory.CategoryID
+						AND (StockCategory.StockType='F' OR StockCategory.StockType='D')
+						AND StockMaster.StockID like '" . $_POST['StockCode'] . "' AND StockMaster.CategoryID='" . $_POST['StockCat'] . "'
+						GROUP BY StockMaster.StockID, StockMaster.Description, StockMaster.Units
+						ORDER BY StockMaster.StockID";
 			}
 		} else {
 			if ($_POST['StockCat']=="All"){
-				$SQL = "SELECT StockMaster.StockID, StockMaster.Description, StockMaster.Units FROM StockMaster, StockCategory WHERE StockMaster.CategoryID=StockCategory.CategoryID AND (StockCategory.StockType='F' OR StockCategory.StockType='D') GROUP BY StockMaster.StockID, StockMaster.Description, StockMaster.Units  ORDER BY StockMaster.StockID";
+				$SQL = "SELECT StockMaster.StockID,
+						StockMaster.Description,
+						StockMaster.Units
+					FROM StockMaster, StockCategory
+					WHERE StockMaster.CategoryID=StockCategory.CategoryID
+					AND (StockCategory.StockType='F' OR StockCategory.StockType='D')
+					GROUP BY StockMaster.StockID, StockMaster.Description, StockMaster.Units
+					ORDER BY StockMaster.StockID";
 			} else {
-				$SQL = "SELECT StockMaster.StockID, StockMaster.Description, StockMaster.Units FROM StockMaster, StockCategory WHERE StockMaster.CategoryID=StockCategory.CategoryID AND (StockCategory.StockType='F' OR StockCategory.StockType='D') AND StockMaster.CategoryID='" . $_POST['StockCat'] . "'   GROUP BY StockMaster.StockID, StockMaster.Description, StockMaster.Units ORDER BY StockMaster.StockID";
+				$SQL = "SELECT StockMaster.StockID,
+						StockMaster.Description,
+						StockMaster.Units
+					FROM StockMaster, StockCategory
+					WHERE StockMaster.CategoryID=StockCategory.CategoryID
+					AND (StockCategory.StockType='F' OR StockCategory.StockType='D')
+					AND StockMaster.CategoryID='" . $_POST['StockCat'] . "'
+					GROUP BY StockMaster.StockID, StockMaster.Description, StockMaster.Units
+					ORDER BY StockMaster.StockID";
 			  }
 		}
 
-		$SearchResult = DB_query($SQL,$db);
-
-		if (DB_error_no($db)!=0){
-			   echo "<BR>There is a problem selecting the part records to display because - " . DB_error_msg($db);
-		}
+		$ErrMsg = "<BR>There is a problem selecting the part records to display because";
+		$SearchResult = DB_query($SQL,$db,$ErrMsg);
 
 		if (DB_num_rows($SearchResult)==0){
 			   echo "<BR>Sorry ... there are no products available that match the criteria specified";
-
 			   if ($debug==1){
 				    echo "<P>The SQL statement used was:<BR>$SQL";
 			   }
 		}
 		if (DB_num_rows($SearchResult)==1){
-
 			   $myrow=DB_fetch_array($SearchResult);
 			   $_POST['NewItem'] = $myrow["StockID"];
 			   DB_data_seek($SearchResult,0);
@@ -382,7 +468,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				if ($_SESSION['CreditItems']->add_to_cart ($_POST['NewItem'],
 										$NewItemQty,
 										$myrow["Description"],
-		GetPrice ($_POST["NewItem"], $_SESSION['CreditItems']->DebtorNo, $_SESSION['CreditItems']->Branch, &$db),
+										GetPrice 												($_POST["NewItem"],
+									$_SESSION['CreditItems']->DebtorNo,
+									$_SESSION['CreditItems']->Branch, 										&$db),
 										0,
 										$myrow["Units"],
 										$myrow["Volume"],
@@ -410,13 +498,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			   } else {
 				echo "<FONT COLOR=RED SIZE=4>The part code '" . $_POST['NewItem'] . "' does not exist in the database and cannot therefore be added to the credit note.</FONT><P>";
 			   }
-
 		   } /* end of if not already on the credit note */
-
 	     } while ($i<=$QuickEntries); /*loop to the next quick entry record */
 	     unset($_POST['NewItem']);
 	 } /* end of if quick entry */
-
 
 
 /* setup system defaults for looking up prices and the number of ordered items
@@ -434,20 +519,22 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				$Quantity = $_POST['Quantity_' . $StockItem->StockID];
 
-				if ($_POST['Gross']==True){
-					$Price = round($_POST['Price_' . $StockItem->StockID]/($StockItem->TaxRate + 1),2);
-				} else {
-					$Price = $_POST['Price_' . $StockItem->StockID];
-				}
-				$DiscountPercentage = $_POST['Discount_' . $StockItem->StockID];
+				if (isset($_POST['Price_' . $StockItem->StockID])){
+					if ($_POST['Gross']==True){
+						$Price = round($_POST['Price_' . $StockItem->StockID]/($StockItem->TaxRate + 1),2);
+					} else {
+						$Price = $_POST['Price_' . $StockItem->StockID];
+					}
 
-				$_SESSION['CreditItems']->LineItems[$StockItem->StockID]->TaxRate = $_POST['TaxRate_' . $StockItem->StockID]/100;
-
-				If ($Quantity<0 OR $Price <0 OR $DiscountPercentage >100 OR $DiscountPercentage <0){
-					echo "<BR>The item could not be updated because you are attempting to set the quantity credited to less than 0, or the price less than 0 or the discount more than 100% or less than 0%";
-				} else {
-					$_SESSION['CreditItems']->update_cart_item($StockItem->StockID, $Quantity, $Price, $DiscountPercentage/100);
+     					$DiscountPercentage = $_POST['Discount_' . $StockItem->StockID];
+					$_SESSION['CreditItems']->LineItems[$StockItem->StockID]->TaxRate = $_POST['TaxRate_' . $StockItem->StockID]/100;
 				}
+			}
+
+			If ($Quantity<0 OR $Price <0 OR $DiscountPercentage >100 OR $DiscountPercentage <0){
+				echo "<BR>The item could not be updated because you are attempting to set the quantity credited to less than 0, or the price less than 0 or the discount more than 100% or less than 0%";
+			} elseif (isset($_POST['Quantity_' . $StockItem->StockID])) {
+				$_SESSION['CreditItems']->update_cart_item($StockItem->StockID, $Quantity, $Price, $DiscountPercentage/100);
 			}
 		}
 
@@ -549,7 +636,7 @@ $_SESSION['CreditItems']->LineItems[$_POST['NewItem']]->TaxRate = GetTaxRate($_S
 			   if ($StockItem->Controlled==0){
 			   	echo "<TD><INPUT TYPE=TEXT NAME='Quantity_" . $StockItem->StockID . "' MAXLENGTH=6 SIZE=6 VALUE=" . $StockItem->Quantity ."></TD>";
 			   } else {
-				echo "<TD ALIGN=RIGHT><A HREF='$rootpath/CreditItemsControlled.php?" . SID . "StockID=" . $StockItem->StockID . "'>" . $StockItem->Quantity ."</A></TD>";
+				echo "<TD ALIGN=RIGHT><A HREF='$rootpath/CreditItemsControlled.php?" . SID . "StockID=" . $StockItem->StockID . "'>" . $StockItem->Quantity ."</A><INPUT TYPE=HIDDEN NAME='Quantity_" . $StockItem->StockID . "' VALUE=" . $StockItem->Quantity ."></TD>";
 			   }
 			echo "<TD>" . $StockItem->Units . "</TD>
 			<TD><INPUT TYPE=TEXT NAME='Price_" . $StockItem->StockID . "' SIZE=8 MAXLENGTH=8 VALUE=" . $StockItem->Price . "></TD>
@@ -703,7 +790,7 @@ $_SESSION['CreditItems']->LineItems[$_POST['NewItem']]->TaxRate = GetTaxRate($_S
 
 			  while ($myrow=DB_fetch_array($SearchResult)) {
 
-				   $ImageSource = $part_pics_dir . $myrow["StockID"] . ".jpg";
+				   $ImageSource = $part_pics_dir . "/" . $myrow["StockID"] . ".jpg";
 				   /* $part_pics_dir is a user defined variable in config.php */
 
 				   if ($k==1){

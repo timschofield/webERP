@@ -1,11 +1,12 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $title = "Confirm Dispatches and Invoice An Order";
 
 $PageSecurity = 2;
 
 include("includes/DefineCartClass.php");
+include("includes/DefineSerialItems.php");
 /* Session started in header.inc for password checking and authorisation level check */
 include("includes/session.inc");
 include("includes/header.inc");

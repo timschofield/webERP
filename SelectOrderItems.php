@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 if (isset($_GET['ModifyOrderNumber'])) {
 	$title = "Modifying Order " . $_GET['ModifyOrderNumber'];
 } else {
@@ -828,7 +828,17 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
-		echo "<CENTER><B>Order Summary</B><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1><TR BGCOLOR=#800000><TD class='tableheader'>Item Code</TD><TD class='tableheader'>Item Description</TD><TD class='tableheader'>Quantity</TD><TD class='tableheader'>Unit</TD><TD class='tableheader'>Price</TD><TD class='tableheader'>Discount</TD><TD class='tableheader'>Total</TD></TR>";
+		echo "<CENTER><B>Order Summary</B>
+			<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>
+			<TR BGCOLOR=#800000>
+			<TD class='tableheader'>Item Code</TD>
+			<TD class='tableheader'>Item Description</TD>
+			<TD class='tableheader'>Quantity</TD>
+			<TD class='tableheader'>Unit</TD>
+			<TD class='tableheader'>Price</TD>
+			<TD class='tableheader'>Discount</TD>
+			<TD class='tableheader'>Total</TD>
+			</TR>";
 
 		$_SESSION['Items']->total = 0;
 		$_SESSION['Items']->totalVolume = 0;
@@ -852,12 +862,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 				$k=1;
 			}
 
-			echo "<TD><A target='_blank' HREF='$rootpath/StockStatus.php?" . SID . "StockID=" . $StockItem->StockID . "'>$StockItem->StockID</A></TD><TD>" . $StockItem->ItemDescription . "</TD><TD><INPUT TYPE=TEXT NAME='Quantity_" . $StockItem->StockID . "' SIZE=6 MAXLENGTH=6 VALUE=" . $StockItem->Quantity . "></TD><TD>" . $StockItem->Units . "</TD>";
+			echo "<TD><A target='_blank' HREF='$rootpath/StockStatus.php?" . SID . "StockID=" . $StockItem->StockID . "'>$StockItem->StockID</A></TD>
+				<TD>" . $StockItem->ItemDescription . "</TD>
+				<TD><INPUT TYPE=TEXT NAME='Quantity_" . $StockItem->StockID . "' SIZE=6 MAXLENGTH=6 VALUE=" . $StockItem->Quantity . "></TD>
+				<TD>" . $StockItem->Units . "</TD>";
 
 			if (in_array(2,$SecurityGroups[$_SESSION['AccessLevel']])){
 				/*OK to display with discount if it is an internal user with appropriate permissions */
 
-				echo "<TD><INPUT TYPE=TEXT NAME='Price_" . $StockItem->StockID . "' SIZE=8 MAXLENGTH=8 VALUE=" . $StockItem->Price . "></TD><TD><INPUT TYPE=TEXT NAME='Discount_" . $StockItem->StockID . "' SIZE=3 MAXLENGTH=3 VALUE=" . ($StockItem->DiscountPercent * 100) . ">%</TD>";
+				echo "<TD><INPUT TYPE=TEXT NAME='Price_" . $StockItem->StockID . "' SIZE=8 MAXLENGTH=8 VALUE=" . $StockItem->Price . "></TD>
+				<TD><INPUT TYPE=TEXT NAME='Discount_" . $StockItem->StockID . "' SIZE=3 MAXLENGTH=3 VALUE=" . ($StockItem->DiscountPercent * 100) . ">%</TD>";
 
 			} else {
 				echo "<TD ALIGN=RIGHT>" . number_format($StockItem->Price,2) . "></TD><TD></TD>";
@@ -878,7 +892,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 		echo "<TABLE BORDER=1><TR><TD>Total Weight:</TD><TD>$DisplayWeight</TD><TD>Total Volume:</TD><TD>$DisplayVolume</TD></TR></TABLE>";
 
 
-		echo "<BR><INPUT TYPE=SUBMIT tab-index='5' NAME='Recalculate' Value='Re-Calculate'><INPUT TYPE=SUBMIT NAME='DeliveryDetails' VALUE='Enter Delivery Details and Confirm Order'><HR>";
+		echo "<BR><INPUT TYPE=SUBMIT NAME='Recalculate' Value='Re-Calculate'><INPUT TYPE=SUBMIT NAME='DeliveryDetails' VALUE='Enter Delivery Details and Confirm Order'><HR>";
 	} # end of if lines
 
 /* Now show the stock item selection search stuff below */
@@ -951,9 +965,32 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 
 
 				if (file_exists($_SERVER['DOCUMENT_ROOT'] . $ImageSource)){
-					printf("<td><FONT SIZE=1>%s</FONT></td><td><FONT SIZE=1>%s</FONT></td><td><FONT SIZE=1>%s</FONT></td><td><img src=%s></td><td><FONT SIZE=1><a href='%s/SelectOrderItems.php?%sNewItem=%s'>Order some</a></FONT></td></tr>", $myrow["StockID"], $myrow["Description"], $myrow["Units"], $ImageSource, $rootpath, SID, $myrow["StockID"]);
+					printf("<td><FONT SIZE=1>%s</FONT></td>
+						<td><FONT SIZE=1>%s</FONT></td>
+						<td><FONT SIZE=1>%s</FONT></td>
+						<td><img src=%s></td>
+						<td><FONT SIZE=1><a href='%s/SelectOrderItems.php?%sNewItem=%s'>Order some</a></FONT></td>
+						</tr>",
+						$myrow["StockID"],
+						$myrow["Description"],
+						$myrow["Units"],
+						$ImageSource,
+						$rootpath,
+						SID,
+						$myrow["StockID"]);
 				} else { /*no picture to display */
-					printf("<td><FONT SIZE=1>%s</FONT></td><td><FONT SIZE=1>%s</FONT></td><td><FONT SIZE=1>%s</FONT></td><td ALIGN=CENTER><i>NO PICTURE</i></td><td><FONT SIZE=1><a href='%s/SelectOrderItems.php?%sNewItem=%s'>Order some</a></FONT></td></tr>", $myrow["StockID"], $myrow["Description"], $myrow["Units"], $rootpath, SID, $myrow["StockID"]);
+					printf("<td><FONT SIZE=1>%s</FONT></td>
+						<td><FONT SIZE=1>%s</FONT></td>
+						<td><FONT SIZE=1>%s</FONT></td>
+						<td ALIGN=CENTER><i>NO PICTURE</i></td>
+						<td><FONT SIZE=1><a href='%s/SelectOrderItems.php?%sNewItem=%s'>Order some</a></FONT></td>
+						</tr>",
+						$myrow["StockID"],
+						$myrow["Description"],
+						$myrow["Units"],
+						$rootpath,
+						SID,
+						$myrow["StockID"]);
 				}
 
 				$j++;
@@ -970,14 +1007,22 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 	} /*end of PartSearch options to be displayed */
 	   else { /* show the quick entry form variable */
 		  /*FORM VARIABLES TO POST TO THE ORDER 8 AT A TIME WITH PART CODE AND QUANTITY */
-	     echo "<FONT SIZE=4 COLOR=BLUE><B>Quick Entry</B></FONT><BR><CENTER><TABLE BORDER=1><TR><TD class='tableheader'>Part Code</TD><TD class='tableheader'>Quantity</TD></TR>";
+	     echo "<FONT SIZE=4 COLOR=BLUE><B>Quick Entry</B></FONT><BR><CENTER>
+	     	<TABLE BORDER=1>
+		<TR>
+		<TD class='tableheader'>Part Code</TD>
+		<TD class='tableheader'>Quantity</TD>
+		</TR>";
 
 	    for ($i=1;$i<=$QuickEntries;$i++){
 
-	     	echo "<tr bgcolor='#CCCCCC'><TD><INPUT TYPE='text' name='part_" . $i . "' size=21 maxlength=20></TD><TD><INPUT TYPE='text' name='qty_" . $i . "' size=6 maxlength=6></TD></TR>";
+	     	echo "<tr bgcolor='#CCCCCC'>
+			<TD><INPUT TYPE='text' name='part_" . $i . "' size=21 maxlength=20></TD>
+			<TD><INPUT TYPE='text' name='qty_" . $i . "' size=6 maxlength=6></TD>
+			</TR>";
 	   }
 
-	     echo "</TABLE><INPUT TYPE='submit' tab-index='1' name='QuickEntry' value='Quick Entry'><INPUT TYPE='submit' name='PartSearch' value='Search Parts'>";
+	     echo "</TABLE><INPUT TYPE='submit' name='QuickEntry' value='Quick Entry'><INPUT TYPE='submit' name='PartSearch' value='Search Parts'>";
       }
 	if ($_SESSION['Items']->ItemsOrdered >=1){
       		echo "<CENTER><BR><INPUT TYPE=SUBMIT NAME='CancelOrder' VALUE='Cancel Whole Order'></CENTER>";

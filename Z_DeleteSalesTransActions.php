@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*Script to Delete all sales transactions*/
 
 $title = "UTILITY PAGE That deletes all records from selected transaction tables";
@@ -25,10 +25,17 @@ if (isset($_POST['ProcessDeletions'])){
 
 		echo "<BR>Deleting customer statement transactions and allocation records";
 
-		$sql = "TRUNCATE TABLE DebtorTrans";
-		$Result = DB_query($sql,$db);
+
 		$sql = "TRUNCATE TABLE CustAllocns";
 		$Result = DB_query($sql,$db);
+		$sql = "TRUNCATE TABLE DebtorTrans";
+		$Result = DB_query($sql,$db);
+
+		$Result = DB_query("TRUNCATE TABLE StockSerialMoves",$db);
+
+		$sql = "DELETE FROM StockMoves WHERE Type=10 OR Type=11";
+		$Result = DB_query($sql,$db);
+
 		if (DB_error_no($db)!=0){
 			echo "<BR>The SQL to delete customer transaction records failed, the SQL statement was:<BR>$sql";
 			exit;
@@ -50,6 +57,9 @@ if (isset($_POST['ProcessDeletions'])){
 			echo "<BR>The SQL to delete sales order detail records failed, the SQL statement was:<BR>$sql";
 			exit;
 		}
+		$sql = "TRUNCATE TABLE OrderDeliveryDifferencesLog";
+		$Result = DB_query($sql,$db);
+
 		$sql = "TRUNCATE TABLE SalesOrders";
 		$Result = DB_query($sql,$db);
 		if (DB_error_no($db)!=0){
@@ -120,6 +130,23 @@ if (isset($_POST['ProcessDeletions'])){
 			exit;
 		}
 	}
+	if ($_POST['GRNs']=="on"){
+
+		echo "<BR>Deleting all GRN records";
+
+		$sql = "TRUNCATE TABLE GRNs";
+		$Result = DB_query($sql,$db);
+		if (DB_error_no($db)!=0){
+			echo "<BR>The SQL to delete Sales Analysis records failed, the SQL statement was:<BR>$sql";
+			exit;
+		}
+		$sql = "UPDATE SysTypes SET TypeID =1 WHERE TypeNo =25";
+		$Result = DB_query($sql,$db);
+		if (DB_error_no($db)!=0){
+			echo "<BR>The SQL to update the transaction number of stock receipts has failed, the SQL statement was:<BR>$sql";
+			exit;
+		}
+	}
 	if ($_POST['PurchOrders']=="on"){
 
 		echo "<BR>Deleting all Purchase Orders";
@@ -160,23 +187,7 @@ if (isset($_POST['ProcessDeletions'])){
 			exit;
 		}
 	}
-	if ($_POST['GRNs']=="on"){
 
-		echo "<BR>Deleting all GRN records";
-
-		$sql = "TRUNCATE TABLE GRNs";
-		$Result = DB_query($sql,$db);
-		if (DB_error_no($db)!=0){
-			echo "<BR>The SQL to delete Sales Analysis records failed, the SQL statement was:<BR>$sql";
-			exit;
-		}
-		$sql = "UPDATE SysTypes SET TypeID =1 WHERE TypeNo =25";
-		$Result = DB_query($sql,$db);
-		if (DB_error_no($db)!=0){
-			echo "<BR>The SQL to update the transaction number of stock receipts has failed, the SQL statement was:<BR>$sql";
-			exit;
-		}
-	}
 }
 
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?=" . $SID . "' METHOD=POST>";
