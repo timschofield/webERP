@@ -6,7 +6,7 @@ $PageSecurity = 10;
 include("includes/session.inc");
 include("includes/header.inc");
 
-echo "<!-- \$Revision: 1.2 $ -->"
+echo "<!-- \$Revision: 1.3 $ -->"
 
 ?>
 
@@ -38,7 +38,7 @@ if ($_POST['submit']=="Enter Information") {
 		echo "<BR>The sequence in the TB must be less than 10,000";
 	}
 
-	if (isset($_POST['SelectedAccountGroup']) AND $InputError !=1) {
+	if ($_POST['SelectedAccountGroup']!='' AND $InputError !=1) {
 
 		/*SelectedAccountGroup could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
