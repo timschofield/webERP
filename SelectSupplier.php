@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $title = "Search Suppliers";
 
 $PageSecurity = 2;
@@ -21,9 +21,12 @@ if (!isset($_POST['PageOffset'])) {
   }
 }
 
-If ($_POST['Search']=="Search Now"){
+if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])){
 
-	$_POST['PageOffset'] = 1;
+	if (isset($_POST['SearchNow'])){
+		$_POST['PageOffset'] = 1;
+	}
+
 	If ($_POST['Keywords'] AND $_POST['SupplierCode']) {
 		$msg="<BR>Supplier name keywords have been used in preference to the Supplier code extract entered.";
 	}

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $title = "Search Customers";
 
 $PageSecurity = 2;
@@ -24,9 +24,10 @@ if (!isset($_POST['PageOffset'])) {
   }
 }
 
-if ($_POST['Search']=="Search Now"){
-
-	$_POST['PageOffset'] = 1;
+if ($_POST['Search']=="Search Now" OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])){
+	if ($_POST['Search']=="Search Now"){
+		$_POST['PageOffset'] = 1;
+	}
 	If ($_POST['Keywords'] AND $_POST['CustCode']) {
 		$msg="Customer name keywords have been used in preference to the customer code extract entered.";
 		$_POST["Keywords"] = strtoupper($_POST["Keywords"]);
@@ -195,7 +196,7 @@ If (isset($result)) {
   <INPUT TYPE=SUBMIT NAME="Go" VALUE="Go">
   <INPUT TYPE=SUBMIT NAME="Previous" VALUE="Previous">
   <INPUT TYPE=SUBMIT NAME="Next" VALUE="Next">
-  <INPUT TYPE=hidden NAME="Search" VALUE="Search Now">
+
 <?php
 
   echo "<br><br>";

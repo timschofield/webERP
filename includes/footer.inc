@@ -1,4 +1,4 @@
-<!-- \$Revision: 1.3 $ -->
+<!-- \$Revision: 1.4 $ -->
 				</td>
 		    </tr>
 		</table>
@@ -24,7 +24,7 @@
 		<td align="center"><img src="<?php echo "$rootpath/css/$theme/images/webERP+sm.gif";?>"></td>
 	</tr>
 	<tr>
-		<td align="center" class="footer">WEB-ERP Copyright Logic Works Ltd</td>
+		<td align="center" class="footer">webERP Copyright Logic Works Ltd</td>
 	</tr>
 </table>
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 $title = "User Settings";
 
 $PageSecurity=1;
@@ -50,7 +50,7 @@ echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 
 If (!isset($_POST['DisplayRecordsMax'])) {
 
-  $_POST['DisplayRecordsMax'] = $DefaultDisplayRecordsMax;
+  $_POST['DisplayRecordsMax'] = $_SESSION['DisplayRecordsMax'];
 
 }
 
