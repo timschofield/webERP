@@ -922,6 +922,8 @@ INSERT INTO config VALUES('AutoDebtorNo','0');
 INSERT INTO `config` VALUES ('HTTPS_Only', '0');
 INSERT INTO `config` VALUES ('DB_Maintenance_LastRun', '2005-03-01');
 INSERT INTO `config` VALUES ('DB_Maintenance', '1');
+INSERT INTO `config` VALUES ('DefaultBlindPackNote', '1');
+INSERT INTO `config` VALUES ('PackNoteFormat', '1');
 
 INSERT INTO systypes VALUES ( 500, 'Auto Debtor Number', 10000 );
 
@@ -982,4 +984,7 @@ ALTER TABLE salescatprod ADD INDEX (stockid);
 ALTER TABLE salescatprod ADD FOREIGN KEY (stockid) REFERENCES stockmaster (stockid);
 ALTER TABLE salescatprod ADD FOREIGN KEY (salescatid) REFERENCES salescat (salescatid);
 
+ALTER TABLE custbranch ADD deliverblind tinyint(1) default 1 AFTER defaultshipvia;
+
+ALTER TABLE salesorders ADD deliverblind tinyint(1) default 1 AFTER deliverto;
 

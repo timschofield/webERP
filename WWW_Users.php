@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -300,6 +300,17 @@ if (isset($SelectedUser)) {
 } else { //end of if $SelectedUser only do the else when a new record is being entered
 
 	echo '<CENTER><TABLE><TR><TD>' . _('User code') . ":</TD><TD><input type='Text' name='UserID' SIZE=22 MAXLENGTH=20 Value='" . $_POST['UserID'] . "'></TD></TR>";
+	
+	/*set the default modules to show to all 
+	this had trapped a few people previously*/
+	$i=0;
+	foreach($ModuleList as $ModuleName){
+		if ($i>0){
+			$_POST['ModulesAllowed'] .=',';
+		}
+		$_POST['ModulesAllowed'] .= '1';
+		$i++;
+	}
 }
 
 echo '<TR><TD>' . _('Password') . ":</TD>

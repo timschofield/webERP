@@ -1,8 +1,14 @@
-<P>webERP Change Log
-
+<P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
+<P>
+<P><B>Version 3.0
+<P>31st March 2005</B>
+<P>
+<P>31/3/05 Scott Rosa - Blind packing noted - system parameter to default all customer branches to blind - ie not to show the company and logo of the webERP company dispatching the product - useful for where the webERP system is dispatching to customers' of customers. Changes to SelectOrderItems.php DefineCartClass.php and DeliveryDetails.php to allow the default to be overridden and CustomerBranches.php to allow entry of the setting.
+<P>31/3/05 Defaulted new users to see all modules on screen - WWW_Users.php
+<P>31/3/05 Made new system parameter to set the PackNoteFormat - this ensures that the link to print the packing slip uses the correct script - the pre-printed stationery template script or the laser packing slip script.
 <P>27/3/05 Added a new configuration variable DB_Maintenance and DB_Maintenance_LastRun. This variable is checked in session.inc to see if it is set to maintain the DB using a new function in the DB specific include DB_Connect_XXXXX.inc (where XXXX is the $dbtype) - there is a new function in these files called DB_Maintenance($Conn) that runs the routines necessary to keep the DB on top form. pg needs regular vacuums to run optimally. Changes also in SystemParameters.php to allow the variable to be set.
 <P>26/3/05 Bug fix Lyndsay Roger - StockAdjustments.php could not enter quantity and part code for a stock adjustment without being asked to enter the quantity again ... fixed
-<P>25/3/05 Added a new config HTTPS_Only variable that requires a https connection in session.inc before allowing the page
+<P>25/3/05 Added a new config HTTPS_Only variable that requires a https connection in session.inc before allowing the page as suggested by Jesse Peterson
 <P>25/3/05 Z_DeleteSalesTrans.php fixed lower caseing of sql and trucate statements not liked by pg
 <P>25/3/05 Recurring sales orders new scripts for SelectRecurringSalesOrder.php RecurringSalesOrder.php and RecurringSalesOrdersProcess.php for selection, modification and processing of recurring sales orders.
 <P>11/03/05 Scott Rosa - Auto DebtorNo - Added a variable to config table and modified Customers.php to control the assignment 
@@ -22,13 +28,12 @@
 <P>20/2/05 Modification to DeliveryDetails.php to allow flagging of sales orders as quotations. Also modification to select outstanding orders to allow viewing of quotations
 <P>18/2/05 Bug fixes - <CENTER> on BankMatching.php, GLAccountInquiry.php integrity checking against wrong chartdetail record, lower casing errors in some Z scripts - Dick Stins, StockCostUpdate.php - OverheadCost added twice
 <P>17/2/05 maximum execution time now as a config.php parameter defaults to 2 mins - 120 seconds
-<P>12/2/05 sha1 encrypted passwords stored in the db now as per Danie's request
 <P>9/2/05 Customer login SelectCompletedOrder.php now shows just the orders for the customer without resort to a new script
 <P>9/2/05 Scott Rosa - Discount Category logic was not applied on quick entry - bug corrected
 <P>4/2/05 DB_escape_string function added to ConnectDB_xxx.inc database specific scripts and also modifications to Stocks.php Customers.php Currencies.php DeliveryDetails.php CustomerBranches.php to use this function on insert and updates as necessary.
 <P>4/2/05 db now stores sha1 hash of the password in the database rather than the password itself
-<P><29/1/05 Negative stocks report
-<P>25/1/05 Danie new config SystemParamters.php form for entry of config paramters - 99% of all config now in this form
+<P>29/1/05 Negative stocks report
+<P>25/1/05 Danie new config SystemParamters.php form for entry of config paramters - 99% of all config now in this form. Full description of the purpose of each parameter shown on the form
 <P>24/1/05 Janusz Dobrowolski <janusz@iron.from.pl> fixed CompanyPreferences.php had exchange diff account field twice!
 <P>24/1/05 "Ori Solomon" <ori@yzcompany.com> - Upload of part pictures code in Stocks.php
 <P>23/1/05 Danie units of measure now a table and array created from table new script for maintenance
@@ -40,7 +45,7 @@
 <P>11/1/05 Steve - check of sql changes quite a number of bug fixes resulting from change to lower case.
 <P>4/1/05 changing all SQL that used IF to CASE to enable more universal database compatibility 
 <P>3/1/05 changing all LastInsertID to add the necessary parameters to enable PG compatibility
-<P>2/1/05 changing all INTERVAL to use the DB specific function and new DBConnect_pg (Danie) and DB_Connect_mysql
+<P>2/1/05 changing all INTERVAL to use the DB specific function and new DB_Connect_postgres (Danie) and DB_Connect_mysql
 <P>19/1/05 Danie - Moved Account Sections to the db from config.php new table in db
 <P>26-30/12/04 Khattak/Phil lower case all sql and array elements of returns from DB_fetch_array to enable compatibility with postgres
 <P>

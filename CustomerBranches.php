@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -93,7 +93,8 @@ if (isset($_POST['submit'])) {
 						brpostaddr4 = '" . DB_escape_string($_POST['BrPostAddr4']) . "',
 						disabletrans=" . $_POST['DisableTrans'] . ",
 						defaultshipvia=" . $_POST['DefaultShipVia'] . ",
-						custbranchcode='" . $_POST['CustBranchCode'] ."'
+						custbranchcode='" . $_POST['CustBranchCode'] ."',
+						deliverblind=" . $_POST['DeliverBlind'] . "
 					WHERE branchcode = '$SelectedBranch' AND debtorno='$DebtorNo'";
 
 		$msg = $_POST['BrName'] . ' '._('branch  has been updated.');
@@ -125,7 +126,8 @@ if (isset($_POST['submit'])) {
 						brpostaddr4,
 						disabletrans,
 						defaultshipvia,
-						custbranchcode)
+						custbranchcode,
+                       			        deliverblind)
 				VALUES ('" . $_POST['BranchCode'] . "',
 					'" . $DebtorNo . "',
 					'" . DB_escape_string($_POST['BrName']) . "',
@@ -149,7 +151,9 @@ if (isset($_POST['submit'])) {
 					'" . DB_escape_string($_POST['BrPostAddr4']) . "',
 					" . $_POST['DisableTrans'] . ",
 					" . $_POST['DefaultShipVia'] . ",
-					'" . $_POST['CustBranchCode'] ."')";
+					'" . $_POST['CustBranchCode'] ."',
+					" . $_POST['DeliverBlind'] . "
+					)";
 
 		$msg = _('Customer branch').' '. $_POST['BrName'] . ' '._('has been added');
 	}
@@ -183,6 +187,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['BrPostAddr4']);
 		unset($_POST['DefaultShipVia']);
 		unset($_POST['CustBranchCode']);
+		unset($_POST['DeliverBlind']);
 		unset($SelectedBranch);
 	}
 
@@ -378,7 +383,8 @@ if (! isset($_GET['delete'])) {
 				brpostaddr4,
 				disabletrans,
 				defaultshipvia,
-				custbranchcode
+				custbranchcode,
+				deliverblind
 			FROM custbranch
 			WHERE branchcode='$SelectedBranch'
 			AND debtorno='$DebtorNo'";
@@ -409,6 +415,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['DefaultLocation'] = $myrow['defaultlocation'];
 		$_POST['DefaultShipVia'] = $myrow['defaultshipvia'];
 		$_POST['CustBranchCode'] = $myrow['custbranchcode'];
+		$_POST['DeliverBlind'] = $myrow['deliverblind'];
 
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedBranch' VALUE=" . $SelectedBranch . '>';
 		echo "<INPUT TYPE=HIDDEN NAME='BranchCode'  VALUE=" . $_POST['BranchCode'] . '>';
@@ -419,6 +426,7 @@ if (! isset($_GET['delete'])) {
 
 		echo '<CENTER><TABLE><TR><TD>'._('Branch Code').":</TD>
 				<TD><input type='Text' name='BranchCode' SIZE=12 MAXLENGTH=10 value=" . $_POST['BranchCode'] . '></TD></TR>';
+		$_POST['DeliverBlind'] = $_SESSION['DefaultBlindPackNote'];
 	}
 
 	//SQL to poulate account selection boxes
@@ -575,6 +583,26 @@ if (! isset($_GET['delete'])) {
 	}
 
 	echo '</SELECT></TD></TR>';
+
+	/* This field is a default value that will be used to set the value
+	on the sales order which will control whether or not to display the
+	company logo and address on the packlist */
+	echo '<TR><TD>' . _('Default Packlist') . ":</TD><TD><SELECT NAME='DeliverBlind'>";
+        for ($p = 1; $p <= 2; $p++) {
+            echo '<OPTION VALUE=' . $p;
+            if ($p == $_POST['DeliverBlind']) {
+                echo ' SELECTED>';
+            } else {
+                echo '>';
+            }
+            switch ($p) {
+                case 1:
+                    echo _('Show company details and logo'); break;
+                case 2:
+                    echo _('Hide company details and logo'); break;
+            }
+        }
+    echo '</SELECT></TD></TR>';
 
 	echo '<TR><TD>'._('Postal Address 1').':</TD>';
 	echo '<TD><input type="Text" name="BrPostAddr1" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrPostAddr1'].'"></TD></TR>';

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity=1;
 
@@ -112,7 +112,7 @@ echo '<TR>
 if (!function_exists('gettext')){
 	echo '<TR>
 	<TD COLSPAN=2><FONT SIZE=1><I>' . _('The GNU gettext system must be installed on the web-server for other languages to be displayed') . '<BR>' . _('Once gettext is installed an option to allow changes to the language will show') . '</I></FONT></TD></TR>';
-} else {	
+} else { 
 	
 	echo '<TR>
 	<TD>' . _('Language') . ":</TD>

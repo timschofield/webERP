@@ -1,12 +1,16 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /* pdf-php by R&OS code to set up a new sales order page */
 if ($PageNumber>1){
 	$pdf->newPage();
 }
 
 $XPos = $Page_Width/2 - 60;
-$pdf->addJpegFromFile('logo.jpg',$XPos+20,520,90,60);
+/* if the deliver blind flag is set on the order, we do not want to output
+the company logo */
+if ($DeliverBlind < 2) {
+    $pdf->addJpegFromFile('logo.jpg',$XPos+20,520,90,60);
+}
 $FontSize=18;
 
 if ($Copy=='Customer'){
@@ -14,15 +18,19 @@ if ($Copy=='Customer'){
 } else {
 	$pdf->addText($XPos-20, 500,$FontSize, _('Packing Slip') . ' - ' . _('Office Copy') );
 }
-$FontSize=14;
-$YPos = 480;
-$pdf->addText($XPos, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
-$FontSize =8;
-$pdf->addText($XPos, $YPos-12,$FontSize, $_SESSION['CompanyRecord']['postaladdress']);
-$pdf->addText($XPos, $YPos-21,$FontSize, $_SESSION['CompanyRecord']['regoffice1'] . ' ' . $_SESSION['CompanyRecord']['regoffice2']);
-$pdf->addText($XPos, $YPos-30,$FontSize, _('Ph') . ': ' . $_SESSION['CompanyRecord']['telephone'] . ' ' . _('Fax'). ': ' . $_SESSION['CompanyRecord']['fax']);
-$pdf->addText($XPos, $YPos-39,$FontSize, $_SESSION['CompanyRecord']['email']);
 
+/* if the deliver blind flag is set on the order, we do not want to output
+the company contact info */
+if ($DeliverBlind < 2) {
+    $FontSize=14;
+    $YPos = 480;
+    $pdf->addText($XPos, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
+    $FontSize =8;
+    $pdf->addText($XPos, $YPos-12,$FontSize, $_SESSION['CompanyRecord']['postaladdress']);
+    $pdf->addText($XPos, $YPos-21,$FontSize, $_SESSION['CompanyRecord']['regoffice1'] . ' ' . $_SESSION['CompanyRecord']['regoffice2']);
+    $pdf->addText($XPos, $YPos-30,$FontSize, _('Ph') . ': ' . $_SESSION['CompanyRecord']['telephone'] . ' ' . _('Fax'). ': ' . $_SESSION['CompanyRecord']['fax']);
+    $pdf->addText($XPos, $YPos-39,$FontSize, $_SESSION['CompanyRecord']['email']);
+}
 
 $XPos = 46;
 $YPos = 566;

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $PageSecurity =15;
 
 include('includes/session.inc');
@@ -185,10 +185,15 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['HTTPS_Only'] != $_POST['X_HTTPS_Only'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_HTTPS_Only'])."' WHERE confname = 'HTTPS_Only'";
 		}
-		if ($_SESSION['DB_Maintenance'] != $_POST['DB_Maintenance'] ) {
+		if ($_SESSION['DB_Maintenance'] != $_POST['X_DB_Maintenance'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_DB_Maintenance'])."' WHERE confname = 'DB_Maintenance'";
 		}
-		
+		if ($_SESSION['DefaultBlindPackNote'] != $_POST['X_DefaultBlindPackNote'] ) {
+			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_DefaultBlindPackNote'])."' WHERE confname = 'DefaultBlindPackNote'";
+		}
+		if ($_SESSION['PackNoteFormat'] != $_POST['X_PackNoteFormat'] ) {
+			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_PackNoteFormat'])."' WHERE confname = 'PackNoteFormat'";
+		}
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 0 ) {
 			$result = DB_query('BEGIN',$db,$ErrMsg);
@@ -231,7 +236,7 @@ echo '<TR><TD>' . _('DefaultDateFormat') . ' (' . _('for input and to appear on 
 	<TD>' . _('The default date format for entry of dates and display use d/m/Y for England/Australia/NZ or m/d/Y for US and Canada') . '</TD></TR>';
 
 // DefaultTheme
-echo '<TR><TD>' . _('Default Theme') . ':</TD>
+echo '<TR><TD>' . _('New Users Default Theme') . ':</TD>
 	 <TD><SELECT Name="X_DefaultTheme">';
 $ThemeDirectory = dir('css/');
 while (false != ($ThemeName = $ThemeDirectory->read())){
@@ -243,7 +248,7 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 	}
 }
 echo '</SELECT></TD>
-	<TD>' . _('The default theme is used for new users who have not defined the display colour scheme theme of their choice') . '</TD></TR>';
+	<TD>' . _('The default theme is used for new users who have not yet defined the display colour scheme theme of their choice') . '</TD></TR>';
 
 echo '<TR><TD COLSPAN=3 class="tableheader"><CENTER>' . _('Accounts Receivable/Payable Settings') . '</CENTER></TD></TR>';
 
@@ -280,6 +285,25 @@ echo '<TR><TD>' . _('Romalpa Clause') . ':</TD>
 echo '<TR><TD>' . _('Quick Entries') . ':</TD>
 	<TD><input type="Text" Name="X_QuickEntries" value="' . $_SESSION['QuickEntries'] . '" SIZE=3 MAXLENGTH=2></TD>
 	<TD>' . _('This parameter defines the layout of the sales order entry screen. The number of fields available for quick entries. Any number from 1 to 99 can be entered.') . '</TD></TR>';
+
+//Default Packing Note Format
+echo '<TR><TD>' . _('Format of Packing Slips') . ':</TD>
+	<TD><SELECT Name="X_PackNoteFormat">
+	<OPTION '.($_SESSION['PackNoteFormat']=='1'?'SELECTED ':'').'VALUE="1">'._('Laser Printed').'
+	<OPTION '.($_SESSION['PackNoteFormat']=='2'?'SELECTED ':'').'VALUE="2">'._('Special Stationery').'
+	</SELECT></TD>
+	<TD>' . _('Choose the format that packing notes should be printed by default') . '</TD>
+	</TR>';
+
+//Blind packing note 
+echo '<TR><TD>' . _('Show company details on packing slips') . ':</TD>
+	<TD><SELECT Name="X_DefaultBlindPackNote">
+	<OPTION '.($_SESSION['DefaultBlindPackNote']=="1"?'SELECTED ':'').'VALUE="1">'._('Show Company Details').'
+	<OPTION '.($_SESSION['DefaultBlindPackNote']=="2"?'SELECTED ':'').'VALUE="2">'._('Hide Company Details').'
+	</SELECT></TD>
+	<TD>' . _('Customer branches can be set by default not to print packing slips with the company logo and address. This is useful for companies that ship to customers customers and to show the source of the shipment would be inappropriate. There is an option on the setup of customer branches to ship blind, this setting is the default applied to all new customer branches') . '</TD>
+	</TR>';
+
 
 // DispatchCutOffTime
 echo '<TR><TD>' . _('Dispatch Cut-Off Time') . ':</TD>

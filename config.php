@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.51 $ */
+/* $Revision: 1.52 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -93,5 +93,6 @@ if (!function_exists('_')){
 		return ($text);
 	}
 }
-/*Make sure there is nothing -not even spaces after this last ?> */
+
+/*Make sure there is nothing - not even spaces after this last ?> */
 ?>

@@ -19,28 +19,20 @@ If (isset($_POST['Language'])) {
 }
  
 if (function_exists('gettext')){
-  //echo 'User Settings: ' . $_SESSION['Language'];
+  
+  //This maybe reqiured in some stubborn installations
   //	$Locale = setlocale (LC_ALL, $_SESSION['Language']);
 	
 	$Locale = setlocale (LC_CTYPE, $_SESSION['Language']);
-  //echo '&nbsp;&nbsp;LC_CTYPE Settings: ' . $_SESSION['locale'];
 	$Locale = setlocale (LC_MESSAGES, $_SESSION['Language']);
-  //echo '&nbsp;&nbsp;LC_MESSAGES Settings: ' . $_SESSION['locale'];
-  //if ($_SESSION['locale'] == FALSE) {
-  //  $_SESSION['locale'] = 'Locale not recognized on this server';
-  //}
 	
-  // possibly even if locale fails the language will still switch by using Language instead of locale variable
-  putenv('LANG=' . $_SESSION['Language']);
-  putenv('LANGUAGE=' . $_SESSION['Language']);
+	// possibly even if locale fails the language will still switch by using Language instead of locale variable
+	putenv('LANG=' . $_SESSION['Language']);
+	putenv('LANGUAGE=' . $_SESSION['Language']);
   //putenv('LANG=$Language_Country');
 	bindtextdomain ('messages', './locale');
 	textdomain ('messages');
 }
 
-if (!function_exists('_')){
-	function _($text){
-		return ($text);
-	}
-}
+	
 ?>

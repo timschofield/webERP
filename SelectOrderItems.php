@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 require('includes/DefineCartClass.php');
 
@@ -100,7 +100,8 @@ if (isset($_GET['ModifyOrderNumber'])
 				salesorders.fromstkloc,
 				salesorders.printedpackingslip,
 				salesorders.datepackingslipprinted,
-				salesorders.quotation
+				salesorders.quotation,
+				salesorders.deliverblind
 			FROM salesorders, 
 				debtorsmaster, 
 				salestypes
@@ -141,6 +142,7 @@ if (isset($_GET['ModifyOrderNumber'])
 		$_SESSION['Items']->Orig_OrderDate = $myrow['orddate'];
 		$_SESSION['PrintedPackingSlip'] = $myrow['printedpackingslip'];
 		$_SESSION['DatePackingSlipPrinted'] = $myrow['datepackingslipprinted'];
+		$_SESSION['Items']->DeliverBlind = $myrow['deliverblind'];
 
 /*need to look up customer name from debtors master then populate the line items array with the sales order details records */
 		$LineItemsSQL = "SELECT salesorderdetails.stkcode,
@@ -339,7 +341,8 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 				custbranch.phoneno,
 				custbranch.email,
 				custbranch.defaultlocation,
-				custbranch.defaultshipvia
+				custbranch.defaultshipvia,
+				custbranch.deliverblind
 			FROM custbranch
 			WHERE custbranch.branchcode='" . $_SESSION['Items']->Branch . "'
 			AND custbranch.debtorno = '" . $_POST['Select'] . "'";
@@ -369,6 +372,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 		$_SESSION['Items']->Email = $myrow[6];
 		$_SESSION['Items']->Location = $myrow[7];
 		$_SESSION['Items']->ShipVia = $myrow[8];
+		$_SESSION['Items']->DeliverBlind = $myrow[9];
 
 	} else {
 		prnMsg(_('The') . ' ' . $myrow[0] . ' ' . _('account is currently on hold please contact the credit control personnel to discuss'),'warn');
@@ -413,7 +417,8 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 			custbranch.braddress4,
 			custbranch.phoneno,
 			custbranch.email,
-			custbranch.defaultlocation
+			custbranch.defaultlocation,
+			custbranch.deliverblind
 			FROM custbranch
 			WHERE custbranch.branchcode='" . $_SESSION['Items']->Branch . "'
 			AND custbranch.debtorno = '" . $_SESSION['Items']->DebtorNo . "'";
@@ -431,6 +436,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 		$_SESSION['Items']->PhoneNo = $myrow[5];
 		$_SESSION['Items']->Email = $myrow[6];
 		$_SESSION['Items']->Location = $myrow[7];
+		$_SESSION['Items']->DeliverBlind = $myrow[8];
 
 	} else {
 		prnMsg(_('The') . ' ' . $myrow[0] . ' ' . _('account is') . ' <B>' . _('currently on hold') . ' </B>' . _('please contact the credit control personnel to discuss this account'),'warn');

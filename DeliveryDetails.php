@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
 */
@@ -63,6 +63,10 @@ If (isset($_POST['Update'])){
 		$InputErrors =1;
 		prnMsg( _('A recurring order cannot be made from a quotation'),'error');
 	}
+	If (($_POST['DeliverBlind'])<=0){
+		$InputErrors =1;
+		prnMsg(_('You must select the type of packlist to print'),'error');
+	}
 
 /*	If (strlen($_POST['BrAdd3'])==0 OR !isset($_POST['BrAdd3'])){
 		$InputErrors =1;
@@ -116,6 +120,7 @@ If (isset($_POST['Update'])){
 		$_SESSION['Items']->FreightCost = $_POST['FreightCost'];
 		$_SESSION['Items']->ShipVia = $_POST['ShipVia'];
 		$_SESSION['Items']->Quotation = $_POST['Quotation'];
+		$_SESSION['Items']->DeliverBlind = $_POST['DeliverBlind'];
 
 		/*$_SESSION['DoFreightCalc'] is a setting in the config.php file that the user can set to false to turn off freight calculations if necessary */
 
@@ -244,7 +249,8 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 				freightcost,
 				fromstkloc,
 				deliverydate,
-				quotation)
+				quotation,
+                		deliverblind)
 			VALUES (
 				'" . $_SESSION['Items']->DebtorNo . "',
 				'" . $_SESSION['Items']->Branch . "',
@@ -263,7 +269,9 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 				" . $_SESSION['Items']->FreightCost .",
 				'" . $_SESSION['Items']->Location ."',
 				'" . $DelDate . "',
-				" . $_SESSION['Items']->Quotation . ")";
+				" . $_SESSION['Items']->Quotation . ",
+				" . $_SESSION['Items']->DeliverBlind ."
+                )";
 
 	$ErrMsg = _('The order cannot be added because');
 	$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg);
@@ -350,7 +358,8 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 				fromstkloc = '" . $_SESSION['Items']->Location ."',
 				deliverydate = '" . $DelDate . "',
 				printedpackingslip = " . $_POST['ReprintPackingSlip'] . ",
-				quotation = " . $_SESSION['Items']->Quotation . "
+				quotation = " . $_SESSION['Items']->Quotation . ",
+				deliverblind = " . $_SESSION['Items']->DeliverBlind . "
 			WHERE salesorders.orderno=" . $_SESSION['ExistingOrder'];
 
 	$DbgMsg = _('The SQL that was used to update the order and failed was');
@@ -386,7 +395,9 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 	unset($_SESSION['Items']);
 
 	prnMsg(_('Order number') .' ' . $_SESSION['ExistingOrder'] . ' ' . _('has been updated'),'success');
-	echo "<BR><A HREF='$rootpath/PrintCustOrder.php?" . SID . '&TransNo=' . $_SESSION['ExistingOrder'] . "'>". _('Reprint packing slip') .'</A>';
+	
+	echo "<BR><A HREF='$rootpath/PrintCustOrder.php?" . SID . '&TransNo=' . $_SESSION['ExistingOrder'] . "'>". _('Reprint packing slip - pre-printed stationery') .'</A>';
+	echo "<BR><A  target='_blank' HREF='$rootpath/PrintCustOrder_generic.php?" . SID . '&TransNo=' . $OrderNo . "'>". _('Print packing slip') . ' (' . _('Laser') . ')' .'</A>';
 	echo "<P><A HREF='$rootpath/SelectSalesOrder.php?" . SID  . "'>". _('Select A Different Order') .'</A>';
 	include('includes/footer.inc');
 	exit;
@@ -603,6 +614,28 @@ echo '<TR>
 	<TD><TEXTAREA NAME=Comments COLS=31 ROWS=5>" . $_SESSION['Items']->Comments ."</TEXTAREA></TD>
 </TR>";
 
+	/* This field will control whether or not to display the company logo and
+    address on the packlist */
+
+	echo '<TR><TD>' . _('Packlist Type') . ":</TD><TD><SELECT NAME='DeliverBlind'>";
+        for ($p = 0; $p <= 2; $p++) {
+            echo '<OPTION VALUE=' . $p;
+            if ($p == $_SESSION['Items']->DeliverBlind) {
+                echo ' SELECTED>';
+            } else {
+                echo '>';
+            }
+            switch ($p) {
+                case 0:
+                    echo _('--select type--'); break;
+                case 1:
+                    echo _('Normal'); break;
+                case 2:
+                    echo _('Blind'); break;
+            }
+        }
+    echo '</SELECT></TD></TR>';
+    
 if ($_SESSION['PrintedPackingSlip']==1){
 
     echo '<TR>

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 2;
 
@@ -9,8 +9,6 @@ include('includes/session.inc');
 $title = _('Sales Analysis Reports Maintenance');
 
 include('includes/header.inc');
-
-
 
 Function GrpByDataOptions ($GroupByDataX){
 
@@ -298,7 +296,7 @@ while ($myrow = DB_fetch_array($result)) {
 
 	printf("<td>%s</td>
 		<td>%s</td>
-		<td><a href=\"%s?SelectedReport=%s\">" . _('Design') . "</A></td>
+		<td><a href=\"%s&SelectedReport=%s\">" . _('Design') . "</A></td>
 		<td><a href=\"%s/SalesAnalReptCols.php?" . SID . "&ReportID=%s\">" . _('Define Columns') . "</A></td>
 		<td><a href=\"%s/SalesAnalysis_UserDefined.php?" . SID . "&ReportID=%s&ProducePDF=True\">" . _('Make PDF Report') . "</A></td>
 		<td><a href=\"%s/SalesAnalysis_UserDefined.php?" . SID . "&ReportID=%s&ProduceCVSFile=True\">" . _('Make CSV File') . "</A></td>
