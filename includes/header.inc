@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
@@ -22,7 +22,7 @@
 				<table width="100%" border="1" cellpadding="0" cellspacing="0">
 					<tr>
 					<td class="quick_menu">
-<?
+<?php
 
 	if ($title AND substr($title,0,4)!="Help") {
 		echo "<table cellpadding='0' cellspacing='0'><tr>";

@@ -1,13 +1,14 @@
 <?php
-/* $Revision: 1.3 $ */
-$title = "Discount Categories Maintenance";
+/* $Revision: 1.4 $ */
+include("includes/session.inc");
+
+$title = _("Discount Categories Maintenance");
 
 $PageSecurity = 11;
 
-include("includes/session.inc");
 include("includes/header.inc");
 
-if ($_POST['submit']=="Enter Information") {
+if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
@@ -20,7 +21,7 @@ if ($_POST['submit']=="Enter Information") {
 	$result = DB_query("SELECT StockID FROM StockMaster WHERE MBflag <>'K' AND MBflag<>'D' AND StockID='" . $_POST['StockID'] . "'",$db);
 	if (DB_num_rows($result)==0){
 		$InputError = 1;
-		echo "<BR>The stock item entered must be set up as a stock item as either a manufactured, purchased or assembly item.";
+		echo "<BR>". _("The stock item entered must be set up as a stock item as either a manufactured, purchased or assembly item.");
 	}
 
 	if ($InputError !=1) {
@@ -29,7 +30,7 @@ if ($_POST['submit']=="Enter Information") {
 
 		$result = DB_query($sql,$db, "The discount category " . $_POST['DiscountCategory'] . " record for " . $_POST['StockID'] . " could not be updated because");
 
-		echo "<BR>The stock master has been updated with this discount category.";
+		echo "<BR>". _("The stock master has been updated with this discount category.");
 		unset($_POST['DiscountCategory']);
 		unset($_POST['StockID']);
 	}
@@ -40,7 +41,7 @@ if ($_POST['submit']=="Enter Information") {
 
 	$sql="UPDATE StockMaster SET DiscountCategory='' WHERE StockID='" . $_GET['StockID'] ."'";
 	$result = DB_query($sql,$db);
-	echo "<BR>The stock master record has been updated to no discount category! <p>";
+	echo "<BR>". _("The stock master record has been updated to no discount category!") ." <p>";
 }
 
 echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
@@ -49,7 +50,7 @@ $sql = "SELECT DISTINCT DiscountCategory FROM StockMaster WHERE DiscountCategory
 
 $result = DB_query($sql, $db);
 
-echo "<CENTER>Discount Category Code: ";
+echo "<CENTER>". _("Discount Category Code") .": ";
 
 echo "<SELECT NAME='DiscCat'>";
 
@@ -82,7 +83,7 @@ if ($_POST['DiscCat']!='0'){
 
 	echo "<table border=1>\n";
 	echo "<tr>
-		<td class='tableheader'>Discount<BR>Category</td><td class='tableheader'>Item</td>\n";
+		<td class='tableheader'>". _("Discount Category") ."</td><td class='tableheader'>". _("Item") ."</td>\n";
 
 	$k=0; //row colour counter
 
@@ -96,7 +97,7 @@ if ($_POST['DiscCat']!='0'){
 		}
 		$DeleteURL = $_SERVER['PHP_SELF'] . "?" . SID . "Delete=yes&StockID=" . $myrow['StockID'] . "&DiscountCategory=" . $myrow['DiscountCategory'];
 
-		printf("<td>%s</td><td>%s - %s</td><td><a href='%s'>Delete</td></tr>", $myrow['DiscountCategory'], $myrow['StockID'], $myrow['Description'], $DeleteURL);
+		printf("<td>%s</td><td>%s - %s</td><td><a href='%s'>". _("Delete") ."</td></tr>", $myrow['DiscountCategory'], $myrow['StockID'], $myrow['Description'], $DeleteURL);
 
 	}
 
@@ -104,21 +105,21 @@ if ($_POST['DiscCat']!='0'){
 
 } else { /* $_POST['DiscCat'] ==0 */
 
-	echo "</CENTER><BR>There are currently no discount categories defined. Enter a two character abbreviation for the discount category and the stock code to which this category will apply to. Discount rules can then be applied to this discount category.";
+	echo "</CENTER><BR>". _("There are currently no discount categories defined. Enter a two character abbreviation for the discount category and the stock code to which this category will apply to. Discount rules can then be applied to this discount category.");
 }
 
 echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 
 
-echo "<CENTER><TABLE><TR><TD>Discount Category Code:</TD><TD>";
+echo "<CENTER><TABLE><TR><TD>". _("Discount Category Code") .":</TD><TD>";
 
 echo "<INPUT TYPE='Text' NAME='DiscountCategory' MAXLENGTH=2 SIZE=2 VALUE='" . $_POST['DiscCat'] . "'></TD></TR>";
 
-echo "<TR><TD>Stock Code:</TD><TD><input type='Text' name='StockID' SIZE=20 MAXLENGTH=20></TD></TR>";
+echo "<TR><TD>". _("Stock Code") .":</TD><TD><input type='Text' name='StockID' SIZE=20 MAXLENGTH=20></TD></TR>";
 
 echo "</TABLE>";
 
-echo "<CENTER><input type='Submit' name='submit' value='Enter Information'></CENTER>";
+echo "<CENTER><input type='Submit' name='submit' value='". _("Enter Information") ."'></CENTER>";
 
 echo "</FORM>";
 

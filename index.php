@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 $PageSecurity = 1;
 
@@ -41,7 +41,7 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 							</tr>
 						</table>
 					</td>
-<?
+<?php
 	include("includes/footer.inc");
 	exit;
 } else {  /* Security settings DO allow seeing the main menu */
@@ -103,7 +103,7 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 			<td class="menu_group_area">
 				<table width="100%" >
 
-					<?php 
+					<?php
   					// displays the main area headings 
 					  OptionHeadings(); 
 					?>

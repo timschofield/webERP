@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 /*SelectOrderItems_IntoCart.inc
 
 This snippet is used to enter order line items into the cart object:
@@ -50,12 +50,12 @@ if ($AlreadyOnThisOrder!=1){
 
     if (DB_num_rows($result1)==0){
 
-		echo '<P><FONT COLOR=RED><B>' . _('Warning:') . '</FONT>' . _('The item code') . ' ' . $NewItem  . _('could not be found in the database - it has not been added to the order') . '</B>';
+		prnMsg(_('The item code') . ' ' . $NewItem  . ' '  . _('could not be found in the database - it has not been added to the order'),'warn',_('Item Does Not Exist'));
 
     } elseif ($myrow = DB_fetch_array($result1)){
 
     		if ($myrow['Discontinued']==1){
-			prnMsg(_('The item') . ' ' . $NewItem . ' ' . _('could not be added to the order because it has been flagged as obsolete'),'error','Obsolete Item');
+			prnMsg(_('The item') . ' ' . $NewItem . ' ' . _('could not be added to the order because it has been flagged as obsolete'),'error',_('Obsolete Item'));
 
 		} elseif (($AllowSalesOfZeroCostItems == false
 			AND $myrow['StandardCost']>0

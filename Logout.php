@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity =1;
 
 include("includes/session.inc");
@@ -27,7 +27,7 @@ include("includes/session.inc");
                     <table width="200" border="0" cellpadding="0" cellspacing="0">
 						<form action="<?php echo $_SERVER['PHP_SELF'];?>" name="loginform" method="post">
                         <tr>
-                            <td colspan="5" bgcolor="#FFFFFF"><img src="<?php echo "css/$theme/images/spacer.gif" ?> width="346" height="1"></td>
+                            <td colspan="5" bgcolor="#FFFFFF"><img src="<?php echo "css/$theme/images/spacer.gif" ?>" width="346" height="1"></td>
                         </tr>
 
                         <tr>

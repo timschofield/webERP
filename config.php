@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.36 $ */
+/* $Revision: 1.37 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -60,12 +60,12 @@ $PastDueDays2 = 60;
 $DefaultCreditLimit = 1000;
 
 
-	/*On statements if wish to show all settled transactions in the last month on statements for cash received and
-	credits allocated etc then set $Show_Settled_LastMonth = 1 */
+/*On statements if wish to show all settled transactions in the last month on statements for cash received and
+credits allocated etc then set $Show_Settled_LastMonth = 1 */
 $Show_Settled_LastMonth =1;
 
 /*The romalpa clause prints out on the invoice in small type - although of limited use can in some businesses help
-> recover bad debts */
+recover bad debts */
 $RomalpaClause = 'Ownership will not pass to the buyer until the goods have been paid for in full.';
 
 /* Types of receipts - only add or remove elements of the array as required*/
