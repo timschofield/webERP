@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 ?>
 <BR><BR><BR>
 				</td>
@@ -20,18 +20,17 @@
 </table>
 <font size=2><?php echo date("l " . $DefaultDateFormat . " | g:i A") ?></font>
 <table align="center" id="footer">
-	<tr>
-		<td align="center" class="footer"><?php echo $CompanyName;?></td>
-	</tr>
+	
 	<tr>
 		<td align="center">
 			<a href="http://www.weberp.org" target="_blank">
 			<img src="<?php echo $rootpath . '/css/' . $theme . '/images/webERP+sm.gif'; ?>" border=0>
 			</a>
+			<BR><?php echo _('Version') . ' - ' . $Version; ?>
 		</td>
 	</tr>
 	<tr>
-		<td align="center" class="footer">webERP <?php echo _('Copyright'); ?> &copy; Logic Works Ltd</td>
+		<td align="center" class="footer">webERP <?php echo _('Copyright'); ?> &copy; Logic Works Ltd - 2004</td>
 	</tr>
 </table>
 

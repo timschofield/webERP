@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.35 $ */
+/* $Revision: 1.36 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -21,7 +21,7 @@ if (!function_exists('_')){
 //---------------------------------------------------
 
 // Application version
-$Version = '0.2.9b';
+$Version = '2.9b';
 
 // The company name to appear in the headings on each page displayed
 $CompanyName = 'webERP Demo';

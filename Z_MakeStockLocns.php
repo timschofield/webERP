@@ -1,21 +1,21 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /* Script to make stock locations for all parts that do not have stock location records set up*/
 
 
 $PageSecurity=15;
 include ('includes/session.inc');
-$title = ('UTILITY PAGE Make Stock Location Records');
+$title = _('Make LocStock Records');
 include('includes/header.inc');
 
 
 echo '<BR><BR>' . _('This script makes stock location records for parts where they do not already exist');
 
-$sql = 'SELECT StockMaster.StockID 
-               FROM StockMaster LEFT JOIN LocStock 
-                    ON StockMaster.StockID=LocStock.StockID 
-                    RIGHT JOIN Locations 
-                          ON Locations.LocCode = LocStock.LocCode 
+$sql = 'SELECT StockMaster.StockID
+               FROM StockMaster LEFT JOIN LocStock
+                    ON StockMaster.StockID=LocStock.StockID
+                    RIGHT JOIN Locations
+                          ON Locations.LocCode = LocStock.LocCode
                 WHERE LocStock.StockID IS NULL';
 
 $ErrMsg = _('The items/locations that need stock location records created cannot be retrieved because');
