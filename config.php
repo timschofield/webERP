@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -8,6 +8,14 @@
 	|---------------------------------------------------|
 	|                                                   |
 	\--------------------------------------------------*/
+/*Dont modify this bit
+function required if gettext is not installed */
+
+if (!function_exists('_')){
+	function _($text){
+		return ($text);
+	}
+}
 
 // User configurable variables
 //---------------------------------------------------
@@ -277,6 +285,7 @@ This is the default value set in php.ini for most installations but just to be s
 turning on NOTICES destroys things */
 
 error_reporting (E_ALL ^E_NOTICE);
+
 
 /*Make sure there is nothing -not even spaces after this last ?> */
 ?>

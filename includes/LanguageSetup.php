@@ -19,11 +19,7 @@ if (function_exists('bindtextdomain')){
 }
 
 
-if (!function_exists('gettext')){
-	function _($text){
-		return ($text);
-	}
-} else {
+if (function_exists('gettext')){
 	if ($_SESSION['Language']=='en'){
 		setlocale (LC_ALL,'en_GB');
 	} else {

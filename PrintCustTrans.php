@@ -1,7 +1,12 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $PageSecurity = 1;
 
+if (!function_exists('_')){
+	function _($text){
+		return ($text);
+	}
+}
 
 if (isset($_GET["FromTransNo"])){
 	$FromTransNo = $_GET["FromTransNo"];
@@ -548,7 +553,7 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 			if ($InvOrCredit=="Invoice") {
 
 			   $sql = "SELECT 
-			   		DebtorTrans.TranDate, 
+			   		DebtorTrans.TranDate,
 					DebtorTrans.OvAmount, 
 					DebtorTrans.OvDiscount, 
 					DebtorTrans.OvFreight, 
@@ -717,7 +722,7 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 				   		StockMaster.Description, 
 						-StockMoves.Qty AS Quantity, 
 						StockMoves.DiscountPercent, 
-						((1 - StockMoves.DiscountPercent) * StockMoves.Price * " . $ExchRate . "* -StockMoves.Qty) AS FxNet, 
+						((1 - StockMoves.DiscountPercent) * StockMoves.Price * " . $ExchRate . "* -StockMoves.Qty) AS FxNet,
 						(StockMoves.Price * " . $ExchRate . ") AS FxPrice,
 						StockMoves.Narrative, 
 						StockMaster.Units 
@@ -918,7 +923,7 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 				} else {
 				     echo "<TR><TD Align=RIGHT><FONT COLOR=RED><B>TOTAL CREDIT</B></FONT></TD><TD ALIGN=RIGHT BGCOLOR='#EEEEEE'><FONT COLOR=RED><U><B>$DisplayTotal</B></U></FONT></TD></TR>";
 				}
-
+				echo '</TABLE>';
 			} /* end of check to see that there was an invoice record to print */
 			$FromTransNo++;
 		} /* end loop to print invoices */
@@ -930,10 +935,10 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 
 
 function PrintLinesToBottom () {
-	
+
 	global $pdf;
 	global $PageNumber;
-	
+
 /*draw the vertical column lines right to the bottom */
 	$pdf->line($Left_Margin+97, $TopOfColHeadings+12,$Left_Margin+97,$Bottom_Margin);
 

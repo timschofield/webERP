@@ -1,5 +1,8 @@
 <P>webERP Change Log
 
+<P><P>Version 2.10
+<P>19th September 2004
+
 <p>19/9/04 Stocks.php gettextified - DB_query changes also check no stock on hand before alteration to controlled and not dummy/assembly/kitset
 <P>19/9/04 Jesse - ConfirmDispatch_Invoice.php ConfirmDispatchControlled_Invoice.php CreditItemsControlled.php GoodReceivedControlled.php ConnectDB.inc DefineSerialItems.php InputSerialItemsFile.php - more extensive modifications too  InputSerialItemsKeyed.php, InputSerialItems.php StockAdjustmentsControlled.php StockAdjustments.php StockTransfers.php StockTransfersControlled.php all above gettextified and rationalisation of code in InputSerialItems.php includes
 <P>19/9/04 TaxAuthorities.php gettextification - TaxID in taxauthorities table made auto increment

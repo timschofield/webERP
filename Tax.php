@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity = 2;
 
@@ -19,12 +19,15 @@ Class Tax {
 	}
 }
 
+
 If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST['ToPeriod'])){
+
 
 	include("config.php");
 	include("includes/ConnectDB.inc");
-	include("includes/PDFStarter_ros.inc");
 	include("includes/DateFunctions.inc");
+	include("includes/PDFStarter_ros.inc");
+
 
 	$sql = "SELECT LastDate_In_Period FROM Periods WHERE PeriodNo=" . $_POST['ToPeriod'];
 	$ErrMsg = _('Could not determine the last date of the period selected. The sql returned the following error:');
