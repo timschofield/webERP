@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice or credit note
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing/crediting and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -33,7 +33,7 @@ if ($_POST['AddGLCodeToTrans'] == _('Enter GL Line')){
 	}
 
 	$sql = 'SELECT accountcode,
-			acccountname
+			accountname
 		FROM chartmaster
 		WHERE accountcode=' . $_POST['GLCode'];
 	$result = DB_query($sql, $db);

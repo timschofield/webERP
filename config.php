@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.45 $ */
+/* $Revision: 1.46 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -48,6 +48,14 @@ $dbpassword = 'weberp_db_pwd';
 //The maximum time that a login session can be idle before automatic logout
 //time is in seconds  3600 seconds in an hour
 $SessionLifeTime = 3600;
+
+//The maximum time that a script can execute for before the web-server should terminate it
+$MaximumExecutionTime =120;
+
+//The path to which session files should be stored in the server
+//this can be left commented out if only one company is running on the server
+//However if multiple webERP installations are on the same server then a separate session directory is required for each install
+//$SessionSavePath = '/tmp';
 
 
 // END OF USER CONFIGURABLE VARIABLES

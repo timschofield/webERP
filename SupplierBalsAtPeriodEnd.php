@@ -2,7 +2,7 @@
 include('includes/DateFunctions.inc');
 $PageSecurity = 2;
 
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POST['FromCriteria'])>=1 AND isset($_POST['ToCriteria']) AND
 strlen($_POST['ToCriteria'])>=1){
@@ -25,8 +25,8 @@ strlen($_POST['ToCriteria'])>=1){
 	$SQL = "SELECT suppliers.supplierid,
 			suppliers.suppname,
   			currencies.currency,
-			SUM((supptrans.ovamount + suppTrans.ovgst - supptrans.alloc)/supptrans.rate) AS balance,
-			SUM(supptrans.ovmount + suppTrans.ovgst - supptrans.alloc) AS fxbalance,
+			SUM((supptrans.ovamount + supptrans.ovgst - supptrans.alloc)/supptrans.rate) AS balance,
+			SUM(supptrans.ovmount + supptrans.ovgst - supptrans.alloc) AS fxbalance,
 			SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
 	(supptrans.ovamount + supptrans.ovgst)/supptrans.rate ELSE 0 END)
 	 AS afterdatetrans,
@@ -64,20 +64,20 @@ strlen($_POST['ToCriteria'])>=1){
 
 	While ($SupplierBalances = DB_fetch_array($SupplierResult,$db)){
 
-		$Balance = $SupplierBalances['Balance'] - $SupplierBalances['AfterDateTrans'];
-		$FXBalance = $SupplierBalances['FXBalance'] - $SupplierBalances['FXAfterDateTrans'];
+		$Balance = $SupplierBalances['balance'] - $SupplierBalances['afterdatetrans'];
+		$FXBalance = $SupplierBalances['fxbalance'] - $SupplierBalances['fxafterdatetrans'];
 
 		if (ABS($Balance)>0.009 OR ABS($FXBalance)>0.009) {
 
-			$DisplayBalance = number_format($SupplierBalances['Balance'] - $SupplierBalances['AfterDateTrans'],2);
-			$DisplayFXBalance = number_format($SupplierBalances['FXBalance'] - $SupplierBalances['FXAfterDateTrans'],2);
+			$DisplayBalance = number_format($SupplierBalances['balance'] - $SupplierBalances['afterdatetrans'],2);
+			$DisplayFXBalance = number_format($SupplierBalances['fxbalance'] - $SupplierBalances['fxafterdatetrans'],2);
 
 			$TotBal += $Balance;
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,220-$Left_Margin,$FontSize,$SupplierBalances['SupplierID'] . ' - ' . $SupplierBalances['SuppName'],'left');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,220-$Left_Margin,$FontSize,$SupplierBalances['supplierid'] . ' - ' . $SupplierBalances['suppname'],'left');
 			$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayBalance,'right');
 			$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayFXBalance,'right');
-			$LeftOvers = $pdf->addTextWrap(350,$YPos,100,$FontSize,$SupplierBalances['Currency'],'left');
+			$LeftOvers = $pdf->addTextWrap(350,$YPos,100,$FontSize,$SupplierBalances['currency'],'left');
 
 
 			$YPos -=$line_height;

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 5;
 
@@ -57,7 +57,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		AND supptrans.hold=0 
 		AND suppliers.currcode = '" . $_POST['Currency'] . "'
 		AND supptrans.supplierNo >= '" . $_POST['FromCriteria'] . "' 
-		AND supptrans.supplierno <= '" $_POST['ToCriteria'] . "'
+		AND supptrans.supplierno <= '" . $_POST['ToCriteria'] . "'
 		GROUP BY suppliers.supplierid
 		HAVING SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) > 0
 		ORDER BY suppliers.supplierid";
@@ -153,7 +153,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+15, $YPos, 340-$Left_Margin,$FontSize,$DislayTranDate . ' - ' . $DetailTrans['typename'] . ' - ' . $DetailTrans['suppreference'], 'left');
 
 			/*Positive is a favourable */
-			$DiffOnExch = ($DetailTrans['balance'] / $DetailTrans['rate']) -  ($DetailTrans['balance'] / $_POST['exrate']);
+			$DiffOnExch = ($DetailTrans['balance'] / $DetailTrans['rate']) -  ($DetailTrans['balance'] / $_POST['ExRate']);
 
 			$AccumBalance += $DetailTrans['balance'];
 			$AccumDiffOnExch += $DiffOnExch;

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 5;
 
@@ -493,7 +493,7 @@ if (!isset($SupplierID)) {
 	echo '<TR><TD>' . _('Bank reference') . ":</TD><TD><INPUT TYPE='text' NAME='BankRef' VALUE=0 SIZE=13 MAXLENGTH=12></TD></TR>";
 	echo '<TR><TD>' . _('Bank Account No') . ":</TD><TD><INPUT TYPE='text' NAME='BankAct' SIZE=17 MAXLENGTH=16></TD></TR>";
 
-	$result=DB_query('SELECT Terms, TermsIndicator FROM PaymentTerms', $db);
+	$result=DB_query('SELECT terms, termsindicator FROM paymentterms', $db);
 
 	echo '<TR><TD>' . _('Payment Terms') . ":</TD><TD><SELECT NAME='PaymentTerms'>";
 
@@ -503,7 +503,7 @@ if (!isset($SupplierID)) {
 	DB_data_seek($result, 0);
 	echo '</SELECT></TD></TR>';
 
-	$result=DB_query('SELECT currency, currAbrev FROM currencies', $db);
+	$result=DB_query('SELECT currency, currabrev FROM currencies', $db);
 	if (!isset($_POST['CurrCode'])){
 		$CurrResult = DB_query('SELECT currencydefault FROM companies WHERE coycode=1', $db);
 		$myrow = DB_fetch_row($CurrResult);

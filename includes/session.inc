@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -15,7 +15,8 @@
     }
     
     ini_set('session.gc_Maxlifetime',$SessionLifeTime);
-    
+    ini_set('max_execution_time',$MaximumExecutionTime);
+ 
     session_start();
     include('includes/GetConfig.php');
     // Un comment to turn off attempts counter
