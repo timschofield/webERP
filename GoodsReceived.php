@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $title = "Receive Purchase Orders";
 $PageSecurity = 11;
 
@@ -12,11 +12,12 @@ include("includes/header.inc");
 
 
 
-if (!$_GET['PONumber']>0 AND !isset($_SESSION['PO'])) {
+if ($_GET['PONumber']<=0 AND !isset($_SESSION['PO'])) {
 	/* This page can only be called with a purchase order number for invoicing*/
 	echo "<CENTER><A HREF='" . $rootpath . "/PO_SelectPurchOrder.php?" . SID . "'>Select a purchase order to receive</A></CENTER>";
-	die ("<BR>This page can only be opened if a purchase order has been selected. Please select a purchase order first.");
-
+	echo "<BR>This page can only be opened if a purchase order has been selected. Please select a purchase order first.";
+	include ("includes/footer.inc");
+	exit;
 } elseif ($_GET['PONumber']>0 AND !isset($_POST['Update'])) {
   /*Update only occurs if the user hits the button to refresh the data and recalc the value of goods recd*/
 
@@ -136,7 +137,7 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=="Process Goods Rec
 	$LineNo=1;
 	while ($myrow = DB_fetch_array($Result)) {
 
-		if ($_SESSION['PO']->LineItems[$LineNo]->GLCode != $myrow["GLCode"] OR $_SESSION['PO']->LineItems[$LineNo]->ShiptRef != $myrow["ShiptRef"] OR $_SESSION['PO']->LineItems[$LineNo]->JobRef != $myrow["JobRef"] OR $_SESSION['PO']->LineItems[$LineNo]->QtyInv != $myrow["QtyInvoiced"] OR $_SESSION['PO']->LineItems[$LineNo]->StockID != $myrow["ItemCode"] OR $_SESSION['PO']->LineItems[$LineNo]->Quantity != $myrow["QuantityOrd"] OR $_SESSION["PO"]->LineItems[$LineNo]->QtyReceived != $myrow["QuantityRecd"]) {
+		if ($_SESSION['PO']->LineItems[$LineNo]->GLCode != $myrow["GLCode"] OR 						$_SESSION['PO']->LineItems[$LineNo]->ShiptRef != $myrow["ShiptRef"] OR 					$_SESSION['PO']->LineItems[$LineNo]->JobRef != $myrow["JobRef"] OR 					$_SESSION['PO']->LineItems[$LineNo]->QtyInv != $myrow["QtyInvoiced"] OR 				$_SESSION['PO']->LineItems[$LineNo]->StockID != $myrow["ItemCode"] OR 					$_SESSION['PO']->LineItems[$LineNo]->Quantity != $myrow["QuantityOrd"] OR 				$_SESSION["PO"]->LineItems[$LineNo]->QtyReceived != $myrow["QuantityRecd"]) {
 
 
 			echo "<P>This order has been changed or invoiced since this delivery was started to be actioned. Processing halted. To enter a delivery against this purchase order, it must be re-selected and re-read again to update the changes made by the other user.<BR>";
@@ -183,12 +184,8 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=="Process Goods Rec
 			$LocalCurrencyPrice = ($OrderLine->Price / $_SESSION['PO']->ExRate);
 /*Update SalesOrderDetails for the new quantity received and the standard cost used for postings to GL and recorded in the stock movements for FIFO/LIFO stocks valuations*/
 
-			$CurrentStandardCost = $myrow[0];
-
-			if ($OrderLine->QtyReceived==0 AND $OrderLine->StockID!="") { /*This must be the first receipt of goods against this line */
-			   /*Need to get the standard cost as it is now so we can process GL jorunals later*/
-			   $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost = $CurrentStandardCost;
-
+			if ($OrderLine->StockID!="") { /*Its a stock item line */
+			   /*Need to get the current standard cost as it is now so we can process GL jorunals later*/
 			   $SQL = "SELECT MaterialCost + LabourCost + OverheadCost AS StdCost FROM StockMaster WHERE StockID='" . $OrderLine->StockID . "'";
 			   $Result = DB_query($SQL,$db);
 			   if (DB_error_no($db) !=0){
@@ -197,15 +194,17 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=="Process Goods Rec
 				if ($debug==1){
 					echo "<BR>The following SQL to retrieve the standard cost was used:<BR>$SQL<BR>";
 				}
-
-				$SQL = "Rollback";
-				$Result = DB_query($SQL,$db);
+				$Result = DB_query("Rollback",$db);
 				include("includes/footer.inc");
 				exit;
 			   }
 			   $myrow = DB_fetch_row($Result);
-			   $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost = $myrow[0];
-			} elseif ($OrderLine->QtyReceived==0 AND $OrderLine->StockID=="") { /*Its a nominal item being received */
+			   if ($OrderLine->QtyReceived==0){ //its the first receipt against this line
+			   	$_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost = $myrow[0];
+			   }
+			   $CurrentStandardCost = $myrow[0];
+			} elseif ($OrderLine->QtyReceived==0 AND $OrderLine->StockID=="") {
+				/*Its a nominal item being received */
 				/*Need to record the value of the order per unit in the standard cost field to ensure GRN account entries clear */
 				$_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost = $LocalCurrencyPrice;
 
@@ -303,9 +302,8 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=="Process Goods Rec
 
 /* If GLLink_Stock then insert GLTrans to debit the GL Code  and credit GRN Suspense account at standard cost*/
 
-			if ($_SESSION['PO']->GLLink==1 AND $OrderLine->GLCode !=0){ /*GLCode is set to 0 when the GLLink is not activated
-									      this covers a situation where the GLLink is now active
-									      but it wasn't when this PO was entered */
+			if ($_SESSION['PO']->GLLink==1 AND $OrderLine->GLCode !=0){ /*GLCode is set to 0 when the GLLink is not activated this covers a situation where the GLLink is now active but it wasn't when this PO was entered */
+
 /*first the debit using the GLCode in the PO detail record entry*/
 
 				$SQL = "INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (25, " . $GRN . ", '" . $_POST['DefaultReceivedDate'] . "', " . $PeriodNo . ", " . $OrderLine->GLCode . ", 'PO: " . $_SESSION['PO']->OrderNo . " " . $_SESSION['PO']->SupplierID . " - " . $OrderLine->StockID . " - " . $OrderLine->ItemDescription . " x " . $OrderLine->ReceiveQty . " @ " . number_format($CurrentStandardCost,2) . "', " . $CurrentStandardCost * $OrderLine->ReceiveQty . ")";
@@ -324,7 +322,7 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=="Process Goods Rec
 				}
 
 
-				/* If the CurrentStandardCost != UnitCost (the standard at the time the first delivery was booked in then the difference needs to be booked in against the stock adjustment account and its a stock item*/
+				/* If the CurrentStandardCost != UnitCost (the standard at the time the first delivery was booked in,  and its a stock item, then the difference needs to be booked in against the purchase price variance account*/
 
 				if ($UnitCost != $CurrentStandardCost AND $OrderLine->StockID!="") {
 

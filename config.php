@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -27,7 +27,7 @@
     // $host is the computer ip address or name where the database is located
     // assuming that the web server is also the sql server
     $host = "localhost";
-    $DatabaseName = "weberp";
+    $DatabaseName = "aquadux";
 
     // sql user & password
     $dbuser = "weberp_db_user";

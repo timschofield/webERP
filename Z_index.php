@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 	$title = "Special Fixes and Utilities -  Only System Administrator";
 	$PageSecurity = 15;
 
@@ -14,6 +14,9 @@
 	echo "<P><A HREF='$rootpath/Z_ChangeBranchCode.php?" . SID . "'>Change A Customer Branch Code</A>";
 	echo "<P><A HREF='$rootpath/Z_ChangeStockCode.php?" . SID . "'>Change An Inventory Item Code</A>";
 	echo "<P><A HREF='$rootpath/Z_PriceChanges.php?" . SID . "'>Bulk Change Customer Pricing</A>";
+
+	echo "<P><A HREF='$rootpath/Z_CurrencyDebtorsBalances.php?" . SID . "'>Show Local Currency Total Debtor Balances</A>";
+	echo "<P><A HREF='$rootpath/Z_CurrencySuppliersBalances.php?" . SID . "'>Show Local Currency Total Suppliers Balances</A>";
 
 	echo "<BR><BR><HR><BR>The stuff below is really quite dangerous!";
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 include("includes/DateFunctions.inc");
 
 $PageSecurity = 2;
@@ -99,11 +99,11 @@ if ($OrderNumber=="" OR !isset($OrderNumber)){
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['StockLocation'])){
 			if ($myrow["LocCode"] == $_POST['StockLocation']){
-			echo "<OPTION SELECTED Value='" . $myrow["LocCode"] . "'>" . $myrow["LocationName"];
+				echo "<OPTION SELECTED Value='" . $myrow["LocCode"] . "'>" . $myrow["LocationName"];
 			} else {
-			echo "<OPTION Value='" . $myrow["LocCode"] . "'>" . $myrow["LocationName"];
+				echo "<OPTION Value='" . $myrow["LocCode"] . "'>" . $myrow["LocationName"];
 			}
-		} elseif ($myrow["LocCode"]==$UserStockLocation){
+		} elseif ($myrow["LocCode"]== $_SESSION["UserStockLocation"]){
 			echo "<OPTION SELECTED Value='" . $myrow["LocCode"] . "'>" . $myrow["LocationName"];
 		} else {
 			echo "<OPTION Value='" . $myrow["LocCode"] . "'>" . $myrow["LocationName"];
