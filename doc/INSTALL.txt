@@ -1,5 +1,5 @@
 WEB-ERP Installation
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 Upgrading
 
 A script is included under web-erp/sql to update an existing weberp database to the current version. The upgrade script assumes the weberp database is called weberp. The script must be edited to change the name of the database if this is not the case.
@@ -63,7 +63,7 @@ Under windows use winzip to extract the archive under the web server root direct
 
 Under *nix copy the archive to the the web server's root directory and then run:
 
-gunzip -dc web-erp.tar.gz | tar -xvf -
+unzip web-erp.zip
 
 this will create the web-erp directory under the web server root directory and put all the scripts in that directory.
 
