@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*PDF page header for inventory valuation report */
 
 $PageNumber++;
@@ -18,12 +18,12 @@ $YPos -=$line_height;
 
 $FontSize =10;
 
-$pdf->addText($Left_Margin, $YPos, $FontSize, "Bill Of Material Listing for Parts Between " . $_POST['FromCriteria'] . " and " . $_POST['ToCriteria']);
+$pdf->addText($Left_Margin, $YPos, $FontSize, _('Bill Of Material Listing for Parts Between') . ' ' . $_POST['FromCriteria'] . ' ' . _('and') . ' ' . $_POST['ToCriteria']);
 
 
 
 $FontSize = 8;
-$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, "Printed: " . Date("d M Y") . "   Page " . $PageNumber);
+$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed:') . ' ' . Date($DefaultDateFormat) . '   ' . _('Page') . ' ' . $PageNumber);
 
 $YPos -=(2*$line_height);
 
@@ -36,12 +36,12 @@ $pdf->line($Left_Margin, $YPos+$line_height,$Left_Margin, $YPos-5);
 /*set up the headings */
 $Xpos = $Left_Margin+1;
 
-$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,320 - $Left_Margin,$FontSize,"Component Part/Description",'centre');
-$LeftOvers = $pdf->addTextWrap(300,$YPos,60,$FontSize,"Effective After",'centre');
-$LeftOvers = $pdf->addTextWrap(348,$YPos,60,$FontSize,"Effective To",'centre');
-$LeftOvers = $pdf->addTextWrap(403,$YPos,40,$FontSize,"Loc'n",'centre');
-$LeftOvers = $pdf->addTextWrap(435,$YPos,40,$FontSize,"Wrk Cntr",'centre');
-$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,"Quantity",'centre');
+$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,320 - $Left_Margin,$FontSize,_('Component Part/Description'),'centre');
+$LeftOvers = $pdf->addTextWrap(300,$YPos,60,$FontSize,_('Effective After'),'centre');
+$LeftOvers = $pdf->addTextWrap(348,$YPos,60,$FontSize,_('Effective To'),'centre');
+$LeftOvers = $pdf->addTextWrap(403,$YPos,40,$FontSize,_('Locn'),'centre');
+$LeftOvers = $pdf->addTextWrap(435,$YPos,40,$FontSize,_('Wrk Cntr'),'centre');
+$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,_('Quantity'),'centre');
 
 $YPos =$YPos - (2*$line_height);
 

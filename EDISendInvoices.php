@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $PageSecurity =15;
 
 include ("includes/session.inc");
@@ -9,7 +9,16 @@ include("includes/SQL_CommonFunctions.inc"); //need for EDITransNo
 include("includes/htmlMimeMail.php"); // need for sending email attachments
 
 /*Get the Customers who are enabled for EDI invoicing */
-$sql = "SELECT DebtorNo, EDIReference, EDITransport, EDIAddress, EDIServerUser, EDIServerPwd, DaysBeforeDue, DayInFollowingMonth FROM DebtorsMaster INNER JOIN PaymentTerms ON DebtorsMaster.PaymentTerms=PaymentTerms.TermsIndicator WHERE EDIInvoices=1";
+$sql = "SELECT DebtorNo,
+		EDIReference,
+		EDITransport,
+		EDIAddress,
+		EDIServerUser,
+		EDIServerPwd,
+		DaysBeforeDue,
+		DayInFollowingMonth
+	FROM DebtorsMaster INNER JOIN PaymentTerms ON DebtorsMaster.PaymentTerms=PaymentTerms.TermsIndicator
+	WHERE EDIInvoices=1";
 
 $EDIInvCusts = DB_query($sql,$db);
 
@@ -23,15 +32,33 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 
 	/*Figure out if there are any unset invoices or credits for the customer */
 
-	$sql = "SELECT DebtorTrans.ID, TransNo, Type, Order_, TranDate, OvGST, OvAmount, OvFreight, OvDiscount, DebtorTrans.BranchCode, CustBranchCode, InvText, ShipVia, Rate, BrName, BrAddress1, BrAddress2, BrAddress3,BrAddress4 FROM DebtorTrans INNER JOIN CustBranch ON CustBranch.DebtorNo = DebtorTrans.DebtorNo AND CustBranch.BranchCode = DebtorTrans.BranchCode WHERE (Type=10 OR Type=11) AND EDISent=0 AND DebtorTrans.DebtorNo='" . $CustDetails['DebtorNo'] . "'";
+	$sql = "SELECT DebtorTrans.ID,
+			TransNo,
+			Type,
+			Order_,
+			TranDate,
+			OvGST,
+			OvAmount,
+			OvFreight,
+			OvDiscount,
+			DebtorTrans.BranchCode,
+			CustBranchCode,
+			InvText,
+			ShipVia,
+			Rate,
+			BrName,
+			BrAddress1,
+			BrAddress2,
+			BrAddress3,
+			BrAddress4
+		FROM DebtorTrans INNER JOIN CustBranch ON CustBranch.DebtorNo = DebtorTrans.DebtorNo
+		AND CustBranch.BranchCode = DebtorTrans.BranchCode
+		WHERE (Type=10 OR Type=11)
+		AND EDISent=0
+		AND DebtorTrans.DebtorNo='" . $CustDetails['DebtorNo'] . "'";
 
-	$TransHeaders = DB_query($sql,$db);
-
-
-	if (DB_error_no($db)!=0){
-		echo "<P>There was a problem retrieving the customer transactions<BR>The error message returned from the SQL server was:" . DB_error_msg($db) . "<BR>The SQL that caused the error was:<BR>$sql";
-
-	}
+	$ErrMsg = _('There was a problem retrieving the customer transactions because');
+	$TransHeaders = DB_query($sql,$db,$ErrMsg);
 
 
 	if (DB_num_rows($TransHeaders)==0){
@@ -167,9 +194,9 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 				$MessageSent = $mail->send(array($CustDetails['EDIAddress']));
 
 				if ($MessageSent==True){
-					echo "<BR><BR>EDI Message $EDITransNo was sucessfully emailed";
+					echo '<BR><BR>' . _('EDI Message') . ' ' . $EDITransNo . ' ' . _('was sucessfully emailed');
 				} else {
-					echo "<BR><BR><FONT COLOR=RED>ERROR: EDI Message $EDITransNo could not be emailed to " . $CustDetails['EDIAddress'];
+					echo '<BR><BR><FONT COLOR=RED>' . _('ERROR: EDI Message') . ' ' . $EDITransNo . _('could not be emailed to') . ' ' . $CustDetails['EDIAddress'];
 				}
 			} else { /*it must be ftp transport */
 
@@ -177,15 +204,15 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
               			$conn_id = ftp_connect($CustDetails['EDIAddress']); // login with username and password
               			$login_result = ftp_login($conn_id, $CustDetails['EDIServerUser'], $CustDetails['EDIServerPwd']); // check connection
               			if ((!$conn_id) || (!$login_result)) {
-                  			echo "<BR>Ftp connection has failed!";
-                  			echo "<BR>Attempted to connect to " . $CustDetails['EDIAddress'] . " for user " . $CustDetails['EDIServerUser'];
+                  			echo '<BR>' . _('Ftp connection has failed!');
+                  			echo '<BR>' . _('Attempted to connect to') . ' ' . $CustDetails['EDIAddress'] . ' ' ._('for user') . ' ' . $CustDetails['EDIServerUser'];
                   			die;
               			}
               			$MessageSent = ftp_put($conn_id, $EDI_MsgPending . "/EDI_INV_" . $EDITransNo, "EDI_INV_" . $EDITransNo, FTP_ASCII); // check upload status
               			if (!$MessageSent) {
-                   			echo "<BR><BR><FONT COLOR=RED>ERROR: EDI Message $EDITransNo could not be ftp'd to " . $CustDetails['EDIAddress'];
+                   			echo '<BR><BR><FONT COLOR=RED>' . _('ERROR: EDI Message') . ' ' . $EDITransNo . ' ' . _('could not be ftp d to') .' ' . $CustDetails['EDIAddress'];
                    		} else {
-                   			echo "<BR><BR>Successfully uploaded EDI_INV_" . $EDITransNo . " via ftp to " . $CustDetails['EDIAddress'];
+                   			echo '<BR><BR>' . _('Successfully uploaded EDI_INV_') . $EDITransNo . ' ' . _('via ftp to') . ' ' . $CustDetails['EDIAddress'];
               			} // close the FTP stream
               			ftp_quit($conn_id);
 			}
@@ -199,12 +226,11 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 
 		} else {
 
-			echo "<BR>Cannot create EDI message since there is no EDI INVOIC message template set up for " . $CustDetails['DebtorNo'];
+			echo '<BR>' . _('Cannot create EDI message since there is no EDI INVOIC message template set up for') . ' ' . $CustDetails['DebtorNo'];
 		} /*End if there is a message template defined for the customer invoic*/
 	} /* loop around all the customer transactions to be sent */
 
 } /*loop around all the customers enabled for EDI Invoices */
 
 include ("includes/footer.inc");
-
 ?>

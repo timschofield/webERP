@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 $db = mysql_connect($host , $dbuser, $dbpassword);
 mysql_select_db($DatabaseName,$db);
 
@@ -22,7 +22,7 @@ function DB_query ($SQL,
 	if (DB_error_no($Conn) != 0){
 		prnMsg($ErrorMessage.'<BR>' . DB_error_msg($Conn),'error', _('DB ERROR:'));
 		if ($debug==1){
-			echo '<BR>' . $DebugMessage.'<BR>$SQL<BR>';
+			echo '<BR>' . $DebugMessage. "<BR>$SQL<BR>";
 		}
 		if ($Transaction){
 			$SQL = 'rollback';

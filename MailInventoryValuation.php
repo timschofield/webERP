@@ -1,5 +1,6 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
+$PageSecurity = 1;
 $FromCriteria ='1'; /*Category From */
 $ToCriteria ='zzzzzzzz'; /*Category To */
 $Location =  'All';  /* Location to report on */
@@ -12,16 +13,12 @@ $_POST['FromCriteria']=$FromCriteria; /* so PDFInventoryValnPageHeader.inc works
 $_POST['ToCriteria']=$ToCriteria; /* so PDFInventoryValnPageHeader.inc works too */
 $_POST["Location"] = $Location; /* so PDFInventoryValnPageHeader.inc works too */
 
-include("config.php");
-include("includes/ConnectDB.inc");
+include('config.php');
+include('includes/ConnectDB.inc');
+include ('includes/class.pdf.php');
 
-$p = PDF_new();
-PDF_open_file($p, "/tmp/InventoryReport.pdf");
+/* A4_Portrait */
 
-PDF_set_info($p, "Creator", "Inventory Valuation.php");
-PDF_set_info($p, "Title", "Inventory Valuation Listing");
-
-/*A4 portrait */
 $Page_Width=595;
 $Page_Height=842;
 $Top_Margin=30;
@@ -29,6 +26,21 @@ $Bottom_Margin=30;
 $Left_Margin=40;
 $Right_Margin=30;
 
+$PageSize = array(0,0,$Page_Width,$Page_Height);
+$pdf = & new Cpdf($PageSize);
+
+$PageNumber = 0;
+
+$pdf->selectFont('./fonts/Helvetica.afm');
+
+/* Standard PDF file creation header stuff */
+
+$pdf->addinfo('Author',"WEB-ERP " . $Version);
+$pdf->addinfo('Creator',"WEB-ERP http://weberp.sourceforge.net - R&OS PHP-PDF http://www.ros.co.nz");
+
+$FontSize=10;
+$pdf->addinfo('Title',_('Inventory Valuation Report'));
+$pdf->addinfo('Subject',_('Inventory Valuation'));
 
 $PageNumber=1;
 $line_height=12;
@@ -43,13 +55,13 @@ if ($Location=='All'){
 	$SQL = "SELECT StockMaster.CategoryID, StockCategory.CategoryDescription, StockMaster.StockID, StockMaster.Description, LocStock.Quantity As QtyOnHand, StockMaster.MaterialCost + StockMaster.LabourCost + StockMaster.OverheadCost AS UnitCost, LocStock.Quantity *(StockMaster.MaterialCost + StockMaster.LabourCost + StockMaster.OverheadCost) AS ItemTotal FROM StockMaster, StockCategory, LocStock WHERE StockMaster.StockID=LocStock.StockID AND StockMaster.CategoryID=StockCategory.CategoryID AND LocStock.Quantity!=0 AND StockMaster.CategoryID >= '" . $FromCriteria . "' AND StockMaster.CategoryID <= '" . $ToCriteria . "' AND LocStock.LocCode = '" . $Location . "' ORDER BY StockMaster.CategoryID, StockMaster.StockID";
 
 }
-$InventoryResult = DB_query($SQL,$db);
+$InventoryResult = DB_query($SQL,$db,'','',false,true);
 
 if (DB_error_no($db) !=0) {
-	$title = "Inventory Valuation - Problem Report.... ";
+	$title = _('Inventory Valuation - Problem Report');
 	include("includes/header.inc");
-	echo "The inventory valuation could not be retrieved by the SQL because - " . DB_error_msg($db);
-	echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>Back to the menu</A>";
+	echo _('The inventory valuation could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
+	echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
 	if ($debug==1){
 		echo "<BR>$SQL";
 	}
@@ -66,105 +78,105 @@ $CatTot_Val=0;
 While ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
 
 	if ($Category!=$InventoryValn["CategoryID"]){
-		$font = PDF_findfont($p,"Helvetica-Bold","host",0);
-		PDF_setfont($p,$font ,10.0);
+		$FontSize=10;
 		if ($Category!=""){ /*Then it's NOT the first time round */
-			/* need to print the total of previous category */
-			if ($DetailedReport=="Yes"){
-				$Ypos -= (2*$line_height);
-				PDF_show_boxed($p, "Total for " . $Category . " - " . $CategoryName,$Left_Margin, $Ypos, 260-$Left_Margin, $line_height,"left");
+
+		/* need to print the total of previous category */
+			if ($_POST["DetailedReport"]=="Yes"){
+				$YPos -= (2*$line_height);
+				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Category . " - " . $CategoryName);
 			}
+
 			$DisplayCatTotVal = number_format($CatTot_Val,2);
-			PDF_show_boxed($p, $DisplayCatTotVal,500, $Ypos,60,$line_height,"right");
-			$Ypos -=$line_height;
-			If ($DetailedReport=="Yes"){
-			/*draw a line under the cATEGORY TOTAL*/
-				PDF_moveto($p, $Left_Margin, $Ypos+$line_height-2);
-				PDF_lineto($p, $Page_Width-$Right_Margin, $Ypos+$line_height-2);
-				PDF_stroke($p);
-				$Ypos -=(2*$line_height);
+			$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, "right");
+			$YPos -=$line_height;
+
+			If ($_POST["DetailedReport"]=="Yes"){
+			/*draw a line under the CATEGORY TOTAL*/
+				$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
+				$YPos -=(2*$line_height);
 			}
 			$CatTot_Val=0;
 		}
-
-		PDF_show_boxed($p, $InventoryValn["CategoryID"] . " - " . $InventoryValn["CategoryDescription"],$Left_Margin, $Ypos, 260-$Left_Margin, $line_height,"left");
+		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,$InventoryValn["CategoryID"] . " - " . $InventoryValn["CategoryDescription"]);
 		$Category = $InventoryValn["CategoryID"];
 		$CategoryName = $InventoryValn["CategoryDescription"];
 	}
 
-	if ($DetailedReport=="Yes"){
-		$font = PDF_findfont($p,"Helvetica","host",0);
-		$Ypos -=$line_height;
-		PDF_setfont($p,$font ,8.0);
-		PDF_show_boxed($p, $InventoryValn["StockID"], $Left_Margin, $Ypos, 60, $line_height, "left");
-		PDF_show_boxed($p, $InventoryValn["Description"],120, $Ypos, 260, $line_height,"left");
+	if ($_POST["DetailedReport"]=="Yes"){
+		$YPos -=$line_height;
+		$FontSize=8;
+
+		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$InventoryValn["StockID"]);				$LeftOvers = $pdf->addTextWrap(120,$YPos,260,$FontSize,$InventoryValn["Description"]);
 		$DisplayUnitCost = number_format($InventoryValn["UnitCost"],2);
-		$DisplayQtyOnHand = number_format($InventoryValn["QtyOnHand"],2);
+		$DisplayQtyOnHand = number_format($InventoryValn["QtyOnHand"],0);
 		$DisplayItemTotal = number_format($InventoryValn["ItemTotal"],2);
 
-		PDF_show_boxed($p, $DisplayQtyOnHand,380, $Ypos,60,$line_height,"right");
-		PDF_show_boxed($p, $DisplayUnitCost,440, $Ypos,60,$line_height,"right");
-		PDF_show_boxed($p, $DisplayItemTotal,500, $Ypos,60,$line_height,"right");
-
+		$LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,$DisplayQtyOnHand,"right");
+		$LeftOvers = $pdf->addTextWrap(440,$YPos,60,$FontSize,$DisplayUnitCost, "right");
+		$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayItemTotal, "right");
 
 	}
 	$Tot_Val += $InventoryValn["ItemTotal"];
 	$CatTot_Val += $InventoryValn["ItemTotal"];
 
-	if ($Ypos < $Bottom_Margin + $line_height){
-		PDF_end_page($p);
-		$PageNumber++;
+	if ($YPos < $Bottom_Margin + $line_height){
 		include("includes/PDFInventoryValnPageHeader.inc");
 	}
 
 } /*end inventory valn while loop */
 
-$font = PDF_findfont($p,"Helvetica-Bold","host",0);
-PDF_setfont($p,$font ,10.0);
-
+$FontSize =10;
 /*Print out the category totals */
-if ($DetailedReport=="Yes"){
-	$Ypos -=$line_height;
-	PDF_show_boxed($p, "Total for " . $Category . " - " . $CategoryName,$Left_Margin, $Ypos, 260-$Left_Margin, $line_height,"left");
-
+if ($_POST["DetailedReport"]=="Yes"){
+	$YPos -=$line_height;
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize, _('Total for') . ' ' . $Category . " - " . $CategoryName, "left");
 }
 
 $DisplayCatTotVal = number_format($CatTot_Val,2);
-PDF_show_boxed($p, $DisplayCatTotVal,500, $Ypos,60,$line_height,"right");
-If ($DetailedReport=="Yes"){
-	/*draw a line under the cATEGORY TOTAL*/
-	PDF_moveto($p, $Left_Margin, $Ypos-2);
-	PDF_lineto($p, $Page_Width-$Right_Margin, $Ypos-2);
-	PDF_stroke($p);
+$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, "right");
+
+If ($_POST["DetailedReport"]=="Yes"){
+	/*draw a line under the CATEGORY TOTAL*/
+	$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
+	$YPos -=(2*$line_height);
 }
 
-
-$Ypos -= (2*$line_height);
+$YPos -= (2*$line_height);
 
 /*Print out the grand totals */
-PDF_show_boxed($p, "Grand Total Value",80, $Ypos, 260-$Left_Margin, $line_height,"right");
+$LeftOvers = $pdf->addTextWrap(80,$YPos,260-$Left_Margin,$FontSize,_('Grand Total Value'), 'right');
 $DisplayTotalVal = number_format($Tot_Val,2);
-
-PDF_show_boxed($p, $DisplayTotalVal,500, $Ypos,60,$line_height,"right");
-If ($DetailedReport=="Yes"){
-	PDF_moveto($p, $Left_Margin, $Ypos-2);
-	PDF_lineto($p, $Page_Width-$Right_Margin, $Ypos-2);
-	PDF_stroke($p);
+$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
+If ($_POST['DetailedReport']=='Yes'){
+	$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
+	$YPos -=(2*$line_height);
 }
-PDF_end_page($p);
-PDF_close($p);
 
-error_reporting(E_ALL);
+$pdfcode = $pdf->output();
+$len = strlen($pdfcode);
 
-include('includes/htmlMimeMail.php');
+if ($len<=20){
+	$title = _('Print Inventory Valuation Error');
+	include("includes/header.inc");
+	echo '<p>' . _('There were no items with any value to print out for the location specified');
+	echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+	include("includes/footer.inc");
+	exit;
+} else {
+	include('includes/htmlMimeMail.php');
 
-$mail = new htmlMimeMail();
-$attachment = $mail->getFile('/tmp/InventoryReport.pdf');
-$mail->setText('Please find herewith the stock valuation report');
-$mail->addAttachment($attachment, 'InventoryReport.pdf', 'application/pdf');
-$mail->setFrom('Postmaster <postmaster@localhost>');
-$result = $mail->send($Recipients);
+	$fp = fopen( $reports_dir . "/InventoryReport.pdf","wb");
+	fwrite ($fp, $pdfcode);
+	fclose ($fp);
 
-PDF_delete($p);
+	$mail = new htmlMimeMail();
+	$attachment = $mail->getFile( $reports_dir . '/InventoryReport.pdf');
+	$mail->setText(_('Please find herewith the stock valuation report'));
+	$mail->setSubject(_('Inventory Valuation Report'));
+	$mail->addAttachment($attachment, 'InventoryReport.pdf', 'application/pdf');
+	$mail->setFrom($CompanyName . "<" . $CompanyRecord['Email'] . ">");
+	$result = $mail->send($Recipients);
 
+}
 ?>

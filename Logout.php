@@ -1,16 +1,13 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity =1;
- // Uncomment to deactivate attempts counter
-//$_SESSION['AttemptsCounter'] = 0;
 
 include("includes/session.inc");
-
 
 ?>
 <html>
 <head>
-    <title><?php echo $CompanyName;?> - Log Off</title>
+    <title><?php echo $CompanyName;?> - <?php echo _('Log Off'); ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
     <link rel="stylesheet" href="css/<?php echo $theme;?>/login.css" type="text/css" />
 </head>
@@ -42,10 +39,10 @@ include("includes/session.inc");
                                 <table border="0" cellpadding="3" cellspacing="0" width="100%">
 									<tr>
 										<td align="center" class="loginText">
-											<br /><br />Thank you for using the webERP+ system<br /><br />
+											<br /><br /><?php echo _('Thank you for using webERP'); ?><br /><br />
 				<?php echo "$CompanyName";?>
 											<br />
-											<a href=" <?php echo $rootpath;?>/index.php? SID;?>"><b>Click here to Login Again</b></a>
+											<a href=" <?php echo $rootpath;?>/index.php? SID;?>"><b><?php echo _('Click here to Login Again'); ?></b></a>
 										</td>
 									</tr>
                                 </table>

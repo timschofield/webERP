@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*Now this is not secure so a malicious user could send multiple emails of the report to the intended receipients
 
 The intention is that this script is called from cron at intervals defined with a command like:
@@ -9,11 +9,11 @@ The intention is that this script is called from cron at intervals defined with 
 The configuration of this script requires the id of the sales analysis report to send
 and an array of the receipients */
 
-The Sales report to send */
-$ReportID = 4;
+/*The Sales report to send */
+$_GET['ReportID'] = 2;
 
 /*The people to receive the emailed report */
-$Recipients = array('"Root" <root@localhost>','"some one else" <someoneelese@sowhere.com>');
+$Recipients = array('"Root" <root@localhost>','"' . _('some one else') . '" <someoneelese@sowhere.com>');
 
 include("config.php");
 include("includes/ConnectDB.inc");
@@ -39,18 +39,16 @@ if ($Counter >0){ /* the number of lines of the sales report is more than 0  ie 
 	fclose ($fp);
 
 	$attachment = $mail->getFile( $reports_dir . "/SalesReport.pdf");
-	$mail->setText("Please find herewith sales report");
-	$mail->SetSubject("Sales Analysis Report");
+	$mail->setText(_('Please find herewith sales report'));
+	$mail->SetSubject(_('Sales Analysis Report'));
 	$mail->addAttachment($attachment, 'SalesReport.pdf', 'application/pdf');
 	$mail->setFrom($CompanyName . "<" . $CompanyRecord['Email'] . ">");
 	$result = $mail->send($Recipients);
 
 } else {
-	$mail->setText("Error running automated sales report number $ReportID");
+	$mail->setText(_('Error running automated sales report number') . ' ' . $ReportID);
 	$mail->setFrom($CompanyName . "<" . $CompanyRecord['Email'] . ">");
 	$result = $mail->send($Recipients);
 }
 
 ?>
-
-

@@ -1,9 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
-if (!isset($_POST['FromCat'])  OR $_POST['FromCat']=="") {
-	$title="Inventory Valuation Reporting";
-}
-
+/* $Revision: 1.4 $ */
 $PageSecurity = 2;
 
 If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POST['FromCriteria'])>=1 AND isset($_POST['ToCriteria']) AND strlen($_POST['ToCriteria'])>=1){
@@ -14,8 +10,8 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 
 
 	$FontSize=10;
-	$pdf->addinfo('Title',"Inventory Valuation Report");
-	$pdf->addinfo('Subject',"Inventory Valuation");
+	$pdf->addinfo('Title',_('Inventory Valuation Report'));
+	$pdf->addinfo('Subject',_('Inventory Valuation'));
 
 	$PageNumber=1;
 	$line_height=12;
@@ -26,12 +22,12 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 	} else {
 		$SQL = "SELECT StockMaster.CategoryID, StockCategory.CategoryDescription, StockMaster.StockID, StockMaster.Description, LocStock.Quantity As QtyOnHand, StockMaster.MaterialCost + StockMaster.LabourCost + StockMaster.OverheadCost AS UnitCost, LocStock.Quantity *(StockMaster.MaterialCost + StockMaster.LabourCost + StockMaster.OverheadCost) AS ItemTotal FROM StockMaster, StockCategory, LocStock WHERE StockMaster.StockID=LocStock.StockID AND StockMaster.CategoryID=StockCategory.CategoryID AND LocStock.Quantity!=0 AND StockMaster.CategoryID >= '" . $_POST['FromCriteria'] . "' AND StockMaster.CategoryID <= '" . $_POST['ToCriteria'] . "' AND LocStock.LocCode = '" . $_POST['Location'] . "' ORDER BY StockMaster.CategoryID, StockMaster.StockID";
 	}
-	$InventoryResult = DB_query($SQL,$db);
+	$InventoryResult = DB_query($SQL,$db,'','',false,true);
 
 	if (DB_error_no($db) !=0) {
-	  $title = "Inventory Valuation - Problem Report.... ";
+	  $title = _('Inventory Valuation - Problem Report');
 	  include("includes/header.inc");
-	   echo "The inventory valuation could not be retrieved by the SQL because - " . DB_error_msg($db);
+	   echo _('The inventory valuation could not be retrieved by the SQL because') . ' '  . DB_error_msg($db);
 	   echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>Back to the menu</A>";
 	   if ($debug==1){
 	      echo "<BR>$SQL";
@@ -49,11 +45,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 		if ($Category!=$InventoryValn["CategoryID"]){
 			$FontSize=10;
 			if ($Category!=""){ /*Then it's NOT the first time round */
-				
+
 				/* need to print the total of previous category */
 				if ($_POST["DetailedReport"]=="Yes"){
 					$YPos -= (2*$line_height);
-					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,"Total for " . $Category . " - " . $CategoryName);
+					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Category . " - " . $CategoryName);
 				}
 
 				$DisplayCatTotVal = number_format($CatTot_Val,2);
@@ -99,7 +95,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 /*Print out the category totals */
 	if ($_POST["DetailedReport"]=="Yes"){
 		$YPos -=$line_height;
-		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,"Total for " . $Category . " - " . $CategoryName, "left");
+		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize, _('Total for') . ' ' . $Category . " - " . $CategoryName, "left");
 	}
 	$DisplayCatTotVal = number_format($CatTot_Val,2);
 	$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, "right");
@@ -113,7 +109,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 	$YPos -= (2*$line_height);
 
 /*Print out the grand totals */
-	$LeftOvers = $pdf->addTextWrap(80,$YPos,260-$Left_Margin,$FontSize,"Grand Total Value", "right");
+	$LeftOvers = $pdf->addTextWrap(80,$YPos,260-$Left_Margin,$FontSize,_('Grand Total Value'), "right");
 	$DisplayTotalVal = number_format($Tot_Val,2);
 	$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, "right");
 	If ($_POST["DetailedReport"]=="Yes"){
@@ -125,10 +121,10 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 	$len = strlen($pdfcode);
 
       if ($len<=20){
-		$title = "Print Inventory Valuation Error";
+		$title = _('Print Inventory Valuation Error');
 		include("includes/header.inc");
-		echo "<p>There were no items with any value to print out for the location specified";
-		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>Back to the menu</A>";
+		echo '<p>' . _('There were no items with any value to print out for the location specified');
+		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
 		include("includes/footer.inc");
 		exit;
       } else {
@@ -145,6 +141,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 } else { /*The option to print PDF was not hit */
 
 	include("includes/session.inc");
+	$title=_('Inventory Valuation Reporting');
 	include("includes/header.inc");
 	include("includes/SQL_CommonFunctions.inc");
 	$CompanyRecord = ReadInCompanyRecord($db);
@@ -156,7 +153,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 
 		echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
 
-		echo "<TR><TD>From Inventory Category Code:</FONT></TD><TD><SELECT name=FromCriteria>";
+		echo '<TR><TD>' . _('From Inventory Category Code:') . '</FONT></TD><TD><SELECT name=FromCriteria>';
 
 		$sql="SELECT CategoryID, CategoryDescription FROM StockCategory ORDER BY CategoryID";
 		$CatResult= DB_query($sql,$db);
@@ -165,7 +162,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 		}
 		echo "</SELECT></TD></TR>";
 
-		echo "<TR><TD>To Inventory Category Code:</TD><TD><SELECT name=ToCriteria>";
+		echo '<TR><TD>' . _('To Inventory Category Code:') . '</TD><TD><SELECT name=ToCriteria>';
 
 		/*Set the index for the categories result set back to 0 */
 		DB_data_seek($CatResult,0);
@@ -175,23 +172,23 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 		}
 		echo "</SELECT></TD></TR>";
 
-		echo "<TR><TD>For Inventory in Location:</TD><TD><SELECT name='Location'>";
+		echo '<TR><TD>' . _('For Inventory in Location:') . "</TD><TD><SELECT name='Location'>";
 		$sql = "SELECT LocCode, LocationName FROM Locations";
 		$LocnResult=DB_query($sql,$db);
 
-		echo "<OPTION Value='All'>All Locations";
+		echo "<OPTION Value='All'>" . _('All Locations');
 
 		while ($myrow=DB_fetch_array($LocnResult)){
 		          echo "<OPTION Value='" . $myrow["LocCode"] . "'>" . $myrow["LocationName"];
 		      		}
 		echo "</SELECT></TD></TR>";
 
-		echo "<TR><TD>Summary or Detailed Report:</TD><TD><SELECT name='DetailedReport'>";
-		echo "<OPTION SELECTED Value='No'>Summary Report";
-		echo "<OPTION Value='Yes'>Detailed Report";
+		echo '<TR><TD>' . _('Summary or Detailed Report:') . "</TD><TD><SELECT name='DetailedReport'>";
+		echo "<OPTION SELECTED Value='No'>" . _('Summary Report');
+		echo "<OPTION Value='Yes'>" . _('Detailed Report');
 		echo "</SELECT></TD></TR>";
 
-		echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='Print PDF'></CENTER>";
+		echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";
 	}
 	include("includes/footer.inc");
 
