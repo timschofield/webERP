@@ -1,5 +1,6 @@
 <P>webERP Change Log
 
+<P>26/3/05 Bug fix Lyndsay Roger - StockAdjustments.php could not enter quantity and part code for a stock adjustment without being asked to enter the quantity again ... fixed
 <P>25/3/05 Added a new config HTTPS_Only variable that requires a https connection in session.inc before allowing the page
 <P>25/3/05 Z_DeleteSalesTrans.php fixed lower caseing of sql and trucate statements not liked by pg
 <P>25/3/05 Recurring sales orders new scripts for SelectRecurringSalesOrder.php RecurringSalesOrder.php and RecurringSalesOrdersProcess.php for selection, modification and processing of recurring sales orders.
