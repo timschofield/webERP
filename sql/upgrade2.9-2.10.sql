@@ -71,6 +71,6 @@ INSERT INTO `Scripts` (`PageID`, `FileName`, `PageDescription`) VALUES ('164', '
 INSERT INTO `Scripts` ( `PageID` , `FileName` , `PageDescription` )
 VALUES ('165', 'Tax.php', 'Creates a report of the ad-valoerm tax - GST/VAT - for the period selected from accounts payable and accounts receivable data');
 
-
+INSERT INTO `Scripts` (`PageID`, `FileName`, `PageDescription`) VALUES ('166', 'PDFCustomerList.php', 'Creates a report of the customer and branch information held. This report has options to print only customer branches in a specified sales area and sales person. Additional option allows to list only those customers with activity either under or over a specified amount, since a specified date.');
 
 COMMIT;

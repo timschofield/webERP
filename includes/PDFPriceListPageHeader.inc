@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*PDF page header for price list report */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -9,16 +9,16 @@ $FontSize=10;
 $YPos= $Page_Height-$Top_Margin;
 
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$CompanyName);
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,"Printed: " . Date("d M Y") . "   Page " . $PageNumber);
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize, _('Printed').': ' . Date($DefaultDateFormat) . '   '. _('Page'). ' ' . $PageNumber);
 
 $YPos -=$line_height;
+//Note, this is ok for multilang as this is the value of a Select, text in option is different
+if ($_POST['CustomerSpecials']=='Customer Special Prices Only'){
 
-if ($_POST['CustomerSpecials']=="Customer Special Prices Only"){
-
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize,"Special Prices for Inventory Categories between " . $_POST['FromCriteria'] . " and " . $_POST['ToCriteria'] . " for " . $CustomerName);
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize, _('Special Prices for Inventory Categories between').' ' . $_POST['FromCriteria'] . ' ' . _('and') . ' ' . $_POST['ToCriteria'] . ' ' . _('for') . ' ' . $CustomerName);
 
 } else {
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize,"Price List for Inventory Categories between " . $_POST['FromCriteria'] . " and " . $_POST['ToCriteria'] . " for " . $SalesTypeName);
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize, _('Price List for Inventory Categories between') . ' ' . $_POST['FromCriteria'] . ' ' . _('and'). ' ' . $_POST['ToCriteria'] . ' ' . _('for') . ' ' . $SalesTypeName);
 
 }
 
@@ -35,18 +35,18 @@ $pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Marg
 /*set up the headings */
 $Xpos = $Left_Margin+1;
 
-$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,300-$Left_Margin,$FontSize,"Category/Item", "centre");
+$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,300-$Left_Margin,$FontSize, _('Category/Item'), 'centre');
 
-if ($_POST["CustomerSpecials"]=="Customer Special Prices Only"){
+if ($_POST['CustomerSpecials']=='Customer Special Prices Only'){
 
-	$LeftOvers = $pdf->addTextWrap(300,$YPos,120,$FontSize,"Branch", "centre");
+	$LeftOvers = $pdf->addTextWrap(300,$YPos,120,$FontSize, _('Branch'), 'centre');
 
 }
 
-$LeftOvers = $pdf->addTextWrap(450,$YPos,60,$FontSize,"Price", "centre");
+$LeftOvers = $pdf->addTextWrap(450,$YPos,60,$FontSize, _('Price') , 'centre');
 
 if ($_POST['ShowGPPercentages']=='Yes'){
-	$LeftOvers = $pdf->addTextWrap(510,$YPos,60,$FontSize,"GP %", "centre");
+	$LeftOvers = $pdf->addTextWrap(510,$YPos,60,$FontSize, _('GP %'), 'centre');
 }
 
 

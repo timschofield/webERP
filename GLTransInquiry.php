@@ -1,10 +1,10 @@
 <?php
-/* $Revision: 1.3 $ */
-$title = _('General Ledger Transaction Inquiry');
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 8;
 
 include ("includes/session.inc");
+$title = _('General Ledger Transaction Inquiry');
 include("includes/header.inc");
 include("includes/DateFunctions.inc");
 
@@ -12,7 +12,7 @@ include("includes/DateFunctions.inc");
 if (!isset($_GET['TypeID']) OR !isset($_GET['TransNo'])) { /*Script was not passed the correct parameters */
 
 	echo '<P>'._('The script must be called with a valid transaction type and transaction number to review the general ledger postings for.');
-	echo '<P><A HREF="$rootpath/index.php?'. SID .'">'._('Back to Menu').'</A>';
+	echo "<P><A HREF='$rootpath/index.php?". SID ."'>" . _('Back to Menu') . '</A>';
 	exit;
 }
 
@@ -43,7 +43,19 @@ if ($myrow[1]<$_GET['TransNo']){
 echo '<BR><CENTER><FONT SIZE=4 COLOR=BLUE>'.$TransName.' ' . $_GET['TransNo'] . '</FONT>';
 
 
-$SQL = "SELECT TranDate, PeriodNo, AccountName, Narrative, Amount, Posted FROM GLTrans, ChartMaster WHERE GLTrans.Account = ChartMaster.AccountCode AND Type= " . $_GET['TypeID'] . " AND TypeNo = " . $_GET['TransNo'] . " ORDER BY CounterIndex";
+$SQL = "SELECT TranDate,
+		PeriodNo,
+		AccountName,
+		Narrative,
+		Amount,
+		Posted
+	FROM GLTrans,
+		ChartMaster
+	WHERE GLTrans.Account = ChartMaster.AccountCode
+	AND Type= " . $_GET['TypeID'] . "
+	AND TypeNo = " . $_GET['TransNo'] . "
+	ORDER BY CounterIndex";
+
 $TransResult = DB_query($SQL,$db);
 
 if (DB_error_no($db) !=0) {

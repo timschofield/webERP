@@ -1,42 +1,39 @@
 <?php
-/* $Revision: 1.2 $ */
-$title = "Customer Details Listing";
+/* $Revision: 1.3 $ */
 
 $PageSecurity = 2;
 
 if (isset($_POST['PrintPDF'])){
 
-	include("config.php");
-	include("includes/ConnectDB.inc");
-	include("includes/PDFStarter_ros.inc");
-	include("includes/DateFunctions.inc");
+	include('config.php');
+	include('includes/ConnectDB.inc');
+	include('includes/PDFStarter_ros.inc');
+	include('includes/DateFunctions.inc');
 
-	
+
 	if ($_POST['Activity']!='All'){
 		if (!is_numeric($_POST['ActivityAmount'])){
-			$title = "Customer List - Problem Report.... ";
-	  		include("includes/header.inc");
-	   		echo "<P>The acitivty amount is not numeric and you elected to print customer relative to a certain amount of activity - this level of activity must be specified in the local currency";
-			include("includes/footer.inc");
+			$title = _('Customer List - Problem Report....');
+	  		include('includes/header.inc');
+	   		echo '<P>';
+			prnMsg( _('The acitivty amount is not numeric and you elected to print customer relative to a certain amount of activity - this level of activity must be specified in the local currency') .'.', 'error');
+			include('includes/footer.inc');
 			exit;
 		}
 	}
-			
-	   
-	
-	
+
 	$PageNumber = 0;
 
 	$FontSize=10;
-	$pdf->addinfo('Title',"Customer Listing");
-	$pdf->addinfo('Subject',"Customer Listing");
+	$pdf->addinfo('Title', _('Customer Listing') );
+	$pdf->addinfo('Subject', _('Customer Listing') );
 
 	$line_height=12;
 
 	/* Now figure out the customer data to report for the selections made */
 
-	if (in_array("All", $_POST['Areas'])){
-		if (in_array("All", $_POST['SalesPeople'])){
+	if (in_array('All', $_POST['Areas'])){
+		if (in_array('All', $_POST['SalesPeople'])){
 			$SQL = "SELECT DebtorsMaster.DebtorNo,
 					DebtorsMaster.Name,
 					DebtorsMaster.Address1,
@@ -216,18 +213,18 @@ if (isset($_POST['PrintPDF'])){
 	$CustomersResult = DB_query($SQL,$db);
 
 	if (DB_error_no($db) !=0) {
-	  $title = "Customer List - Problem Report.... ";
-	  include("includes/header.inc");
-	   echo "The customer List could not be retrieved by the SQL because - " . DB_error_msg($db);
-	   echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>Back to the menu</A>";
+	  $title = _('Customer List - Problem Report....');
+	  include('includes/header.inc');
+	   prnMsg( _('The customer List could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db) );
+	   echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the Menu'). '</A>';
 	   if ($debug==1){
-	      echo "<BR>$SQL";
+	      echo '<BR>'. $SQL;
 	   }
-	   include("includes/footer.inc");
+	   include('includes/footer.inc');
 	   exit;
 	}
 
-	include("includes/PDFCustomerListPageHeader.inc");
+	include('includes/PDFCustomerListPageHeader.inc');
 
 	$Area ="";
 	$SalesPerson="";
@@ -245,7 +242,7 @@ if (isset($_POST['PrintPDF'])){
 				AND BranchCode='" . $Customers['BranchCode'] . "'
 				AND (Type=10 OR Type=11)
 				AND TranDate >='" . FormatDateForSQL($_POST['ActivitySince']). "'";
-			$ActivityResult = DB_query($SQL, $db, "Could not retrieve the activity of the branch because", "The failed SQL was:");
+			$ActivityResult = DB_query($SQL, $db, _('Could not retrieve the activity of the branch because'), _('The failed SQL was:'));
 
 			$ActivityRow = DB_fetch_row($ActivityResult);
 			$LocalCurrencyTurnover = $ActivityRow[0];
@@ -275,7 +272,7 @@ if (isset($_POST['PrintPDF'])){
 					include("includes/PDFCustomerListPageHeader.inc");
 				}
 				$pdf->selectFont('./fonts/Helvetica-Bold.afm');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,"Customers In " . $Customers["AreaDescription"]);
+				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Customers In') . ' ' . $Customers["AreaDescription"]);
 				$Area = $Customers["Area"];
 				$pdf->selectFont('./fonts/Helvetica.afm');
 				$FontSize=8;
@@ -306,17 +303,17 @@ if (isset($_POST['PrintPDF'])){
 			$LeftOvers = $pdf->addTextWrap(80,$YPos-30,150,$FontSize,$Customers["Address3"]);
 
 			$LeftOvers = $pdf->addTextWrap(230,$YPos,60,$FontSize,$Customers["BranchCode"]);
-			$LeftOvers = $pdf->addTextWrap(230,$YPos-10,60,$FontSize,"Price List: " . $Customers["SalesType"]);
+			$LeftOvers = $pdf->addTextWrap(230,$YPos-10,60,$FontSize, _('Price List:') . ' ' . $Customers["SalesType"]);
 
 			if ($_POST['Activity']!='All'){
-				$LeftOvers = $pdf->addTextWrap(230,$YPos-20,60,$FontSize,"Turnover",'right');
+				$LeftOvers = $pdf->addTextWrap(230,$YPos-20,60,$FontSize,_('Turnover'),'right');
 				$LeftOvers = $pdf->addTextWrap(230,$YPos-30,60,$FontSize,number_format($LocalCurrencyTurnover), 'right');
 			}
 
 			$LeftOvers = $pdf->addTextWrap(290,$YPos,150,$FontSize,$Customers["BrName"]);
 			$LeftOvers = $pdf->addTextWrap(290,$YPos-10,150,$FontSize,$Customers["ContactName"]);
-			$LeftOvers = $pdf->addTextWrap(290,$YPos-20,150,$FontSize,"Ph:" . $Customers["PhoneNo"]);
-			$LeftOvers = $pdf->addTextWrap(290,$YPos-30,150,$FontSize,"Fax:" . $Customers["FaxNo"]);
+			$LeftOvers = $pdf->addTextWrap(290,$YPos-20,150,$FontSize, _('Ph:'). ' ' . $Customers["PhoneNo"]);
+			$LeftOvers = $pdf->addTextWrap(290,$YPos-30,150,$FontSize, _('Fax:').' ' . $Customers["FaxNo"]);
 			$LeftOvers = $pdf->addTextWrap(440,$YPos,150,$FontSize,$Customers["BrAddress1"]);
 			$LeftOvers = $pdf->addTextWrap(440,$YPos-10,150,$FontSize,$Customers["BrAddress2"]);
 			$LeftOvers = $pdf->addTextWrap(440,$YPos-20,150,$FontSize,$Customers["BrAddress3"]);
@@ -336,74 +333,76 @@ if (isset($_POST['PrintPDF'])){
 	$len = strlen($pdfcode);
 
       if ($len<=20){
-		$title = "Print Customer List Error";
-		include("includes/header.inc");
-		echo "<p>There were no customers to print out for the selections specified";
-		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>Back to the menu</A>";
-		include("includes/footer.inc");
+		$title = _('Print Customer List Error');
+		include('includes/header.inc');
+		echo '<p>';
+		prnMsg( _('There were no customers to print out for the selections specified') );
+		echo '<BR><A HREF="'. $rootpath.' /index.php?' . SID . '">'. _('Back to the Menu'). '</A>';
+		include('includes/footer.inc');
 		exit;
 	} else {
-		header("Content-type: application/pdf");
-		header("Content-Length: " . $len);
-		header("Content-Disposition: inline; filename=CustomerList.pdf");
-		header("Expires: 0");
-		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-		header("Pragma: public");
+		header('Content-type: application/pdf');
+		header('Content-Length: ' . $len);
+		header('Content-Disposition: inline; filename=CustomerList.pdf');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Pragma: public');
 
 		$pdf->Stream();
 
 	}
 	exit;
-	
+
 } else {
-	
-	include("includes/session.inc");
-	include("includes/header.inc");
-	include("includes/SQL_CommonFunctions.inc");
+
+	include('includes/session.inc');
+	$title = _('Customer Details Listing');
+	include('includes/header.inc');
+	include('includes/SQL_CommonFunctions.inc');
 
 	$CompanyRecord = ReadInCompanyRecord($db);
-	
-	echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
-	echo "<TR><TD>For Sales Areas:</TD><TD><SELECT name=Areas[] multiple>";
+
+	echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . ' METHOD="POST"><CENTER><TABLE>';
+	echo '<TR><TD>' . _('For Sales Areas') . ':</TD><TD><SELECT name=Areas[] multiple>';
 
 	$sql="SELECT AreaCode, AreaDescription FROM Areas";
 	$AreasResult= DB_query($sql,$db);
 
-	echo "<OPTION SELECTED VALUE='All'>All Areas";
+	echo '<OPTION SELECTED VALUE="All">' . _('All Areas');
 
 	While ($myrow = DB_fetch_array($AreasResult)){
-		echo "<OPTION VALUE='" . $myrow["AreaCode"] . "'>" . $myrow['AreaDescription'];
+		echo '<OPTION VALUE="' . $myrow['AreaCode'] . '">' . $myrow['AreaDescription'];
 	}
-	echo "</SELECT></TD></TR>";
+	echo '</SELECT></TD></TR>';
 
-	echo "<TR><TD>For Sales folk:</TD><TD><SELECT name=SalesPeople[] multiple>";
+	echo '<TR><TD>' . _('For Sales folk'). ':</TD><TD><SELECT name=SalesPeople[] multiple>';
 
-	echo "<OPTION SELECTED VALUE='All'>All sales folk";
+	echo '<OPTION SELECTED VALUE="All">'. _('All sales folk');
 
 	$sql = "SELECT SalesmanCode, SalesmanName FROM Salesman";
 	$SalesFolkResult = DB_query($sql,$db);
 
 	While ($myrow = DB_fetch_array($SalesFolkResult)){
-		echo "<OPTION VALUE='" . $myrow["SalesmanCode"] . "'>" . $myrow['SalesmanName'];
+		echo '<OPTION VALUE="' . $myrow['SalesmanCode'] . '">' . $myrow['SalesmanName'];
 	}
-	echo "</SELECT></TD></TR>";
+	echo '</SELECT></TD></TR>';
 
-	echo "<TR><TD>Level Of Activity:</TD><TD><SELECT name='Activity'>";
+	echo '<TR><TD>' . _('Level Of Activity'). ':</TD><TD><SELECT name="Activity">';
 
-	echo "<OPTION SELECTED VALUE='All'>All customers";
-	echo "<OPTION VALUE='GreaterThan'>Sales Greater Than";
-	echo "<OPTION VALUE='LessThan'>Sales Less Than";
-	echo "</SELECT>";
+	echo '<OPTION SELECTED VALUE="All">'. _('All customers');
+	echo '<OPTION VALUE="GreaterThan">'. _('Sales Greater Than');
+	echo '<OPTION VALUE="LessThan">'. _('Sales Less Than');
+	echo '</SELECT>';
 
-	echo "<INPUT TYPE='text' NAME='ActivityAmount' SIZE=8 MAXLENGTH=8></TD></TR>";
+	echo '<INPUT TYPE="text" NAME="ActivityAmount" SIZE=8 MAXLENGTH=8></TD></TR>';
 
 	$DefaultActivitySince = Date($DefaultDateFormat, Mktime(0,0,0,Date("m")-6,0,Date("y")));
-	echo "<TR><TD>Activity Since:</TD><TD><INPUT TYPE='text' NAME='AvtivitySince' SIZE=10 MAXLENGTH=10 VALUE=" . $DefaultActivitySince . "></TD></TR>";
+	echo '<TR><TD>' . _('Activity Since'). ':</TD><TD><INPUT TYPE="text" NAME="ActivitySince" SIZE=10 MAXLENGTH=10
+		VALUE="' . $DefaultActivitySince . '"></TD></TR>';
 
+	echo '</TABLE><INPUT TYPE=Submit Name="PrintPDF" Value="'. _('Print PDF'). '"></CENTER>';
 
-	echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='Print PDF'></CENTER>";
-
-	include("includes/footer.inc");
+	include('includes/footer.inc');
 
 } /*end of else not PrintPDF */
 ?>

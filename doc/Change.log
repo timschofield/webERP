@@ -1,5 +1,9 @@
 <P>webERP Change Log
 
+<P>14/10/04 Gettextified Prices.php,Prices_Customer.php - Steve
+<P>14/10/04 Gettextified PDFCustomerList.php PDFPriceList.php, PDFStockCheckComparison.php, PDFStockLocTransfer.php  Jesse
+<P>14/10/04 Bug fixes GLTransInquiry.php Steve - $rootpath in single quotes, $title above include session.inc
+<P>14/10/04 Bug fixes DateFunctions.inc, SQL_CommonFunctions.inc Jesse - proper use of DB_query, prnMsg
 <P>12/10/04 StockTransfer.php serialised now works, gettextified: GLTrialBalance - Jake, GLAccountInquiry - Jake, Payments - Steve, PaymentTerms Steve PO_SelectOSPurchOrder.php Steve PeriodsInquiry.php Steve PO_SelectPurchOrder Steve
 <P>29/9/04 StockCostUpdate.php gettextified - fixed bug that would not allow update with zero stock on hand
 <P>29/9/04 New reports OrderStatus.php and OrderStatusPageHeader.inc allow reporting on orders, back orders by location and stock category for a specified date range.

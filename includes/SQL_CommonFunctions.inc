@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /* Common SQL Functions */
 
 
@@ -21,17 +21,13 @@ Also updates the transaction number
 
 	$GetTransNoResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
-	if (DB_error_no($db) !=0){
-		return 0;
-	} else {
-		$myrow = DB_fetch_row($GetTransNoResult);
-		$SQL = 'UPDATE SysTypes SET TypeNo = ' . ($myrow[0] + 1) . ' WHERE TypeID = ' . $TransType;
-		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The transaction number could not be incremented');
-		$DbgMsg =  _('The following SQL to increment the transaction number was used:');
-		$UpdTransNoResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+	$myrow = DB_fetch_row($GetTransNoResult);
+	$SQL = 'UPDATE SysTypes SET TypeNo = ' . ($myrow[0] + 1) . ' WHERE TypeID = ' . $TransType;
+	$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The transaction number could not be incremented');
+	$DbgMsg =  _('The following SQL to increment the transaction number was used:');
+	$UpdTransNoResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
-		return $myrow[0] + 1;
-	}
+	return $myrow[0] + 1;
 }
 
 
@@ -67,11 +63,9 @@ Function ReadInCompanyRecord (&$db) {
 	$ErrMsg = _('An error occurred accessing the database to retrieve the company information:');
 	$ReadCoyResult = DB_query($Query,$db,$ErrMsg);
 
-
-	if (DB_error_no($db)!=0){
-		return 0;
-	} elseif (DB_num_rows($ReadCoyResult)==0) {
-      		echo '<BR><B>' . _('CRITICAL PROBLEM: The company record has not yet been set up</B><BR>From the system setup tab, select company maintenance to enter the company infomation and system preferences');
+	if (DB_num_rows($ReadCoyResult)==0) {
+      		echo '<BR><B>';
+		prnMsg( _('The company record has not yet been set up</B><BR>From the system setup tab, select company maintenance to enter the company infomation and system preferences','error','CRITICAL PROBLEM') );
 		return 0;
 	} else {
 		$myrow = DB_fetch_array($ReadCoyResult);
@@ -96,12 +90,8 @@ Function GetStockGLCode ($StockID, &$db){
 	$ErrMsg =  _('The stock GL codes could not be retreived because');
 	$GetStkGLResult = DB_query($QuerySQL, $db, $ErrMsg);
 
-	if (DB_error_no($db) != 0){
-		return 0;
-	} else {
-		$myrow = DB_fetch_array($GetStkGLResult);
-		return $myrow;
-	}
+	$myrow = DB_fetch_array($GetStkGLResult);
+	return $myrow;
 }
 
 Function GetTaxRate ($TaxAuthority, $DispatchTaxAuthority, $TaxLevel, &$db){

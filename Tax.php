@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 2;
 
@@ -307,7 +307,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 	$pdf->addText($Left_Margin, $YPos, $FontSize, $ReportTitle . ' ' . _('Summary'));
 
 	$FontSize = 8;
-	$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed:') . ' ' . Date("d M Y") . '    ' . _('Page') . ' ' . $PageNumber);
+	$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed:') . ' ' . Date($DefaultDateFormat) . '    ' . _('Page') . ' ' . $PageNumber);
 
 	$YPos -=(3*$line_height);
 
@@ -395,7 +395,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 		$pdf->addText($Left_Margin, $YPos, $FontSize, $ReportTitle . ' ' . _('Warnings'));
 
 		$FontSize = 8;
-		$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed:') . ' ' . Date("d M Y") . '    ' . _('Page') . ' ' . $PageNumber);
+		$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed:') . ' ' . Date($DefaultDateFormat) . '    ' . _('Page') . ' ' . $PageNumber);
 
 		$YPos -=(3*$line_height);
 

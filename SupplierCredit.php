@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*This page is very largely the same as the SupplierInvoice.php script
 the same result could have been acheived by using if statements in that script and just having the one
 SupplierTransaction.php script. However, to aid readability - variable names have been changed  -
@@ -282,7 +282,7 @@ echo "</SELECT></TD></TR>";
 
 if ($_POST["OverRideTax"]=="Man"){
 	$_SESSION['SuppTrans']->OvGST = $_POST['OvGST'];
-	echo "<TR><TD><FONT COLOR=RED>Tax:</FONT></TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT SIZE=6 MAXLENGTH=6 NAME=OvGST VALUE=" . number_format($_SESSION['SuppTrans']->OvGST,2) . "></TD></TR>";
+	echo "<TR><TD><FONT COLOR=RED>Tax:</FONT></TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT SIZE=12 MAXLENGTH=12 NAME=OvGST VALUE=" . number_format($_SESSION['SuppTrans']->OvGST,2) . "></TD></TR>";
 } else {
 	echo "<TR><TD><FONT COLOR=RED>Tax:</FONT></TD><TD ALIGN=RIGHT>" . number_format($_SESSION['SuppTrans']->OvGST,2) . "</TD></TR>";
 }

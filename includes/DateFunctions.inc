@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 /*
 date validation and parsing functions
 
@@ -220,7 +220,6 @@ function ConvertEDIDate($DateEntry, $EDIFormatCode) {
 
 
 }
-
 
 
 
@@ -521,14 +520,10 @@ Dates are parsed using the DefaultDateFormat string */
 
 	$GetPrdSQL = "SELECT PeriodNo FROM Periods WHERE LastDate_in_Period < '" . Date("Y/m/d", $MonthAfterTransDate) . "' AND LastDate_in_Period >= '" . Date("Y/m/d", $TransDate) . "'";
 
-	$GetPrdResult = DB_query($GetPrdSQL,$db,'','',false,false);
+	$ErrMsg = _('An error occurred in retrieving the period number');
+	$GetPrdResult = DB_query($GetPrdSQL,$db,$ErrMsg);
 
-	If (DB_error_no($db) != 0){
-		echo _('An error occurred in retrieving the period number') . ':- ' . DB_error_msg($db);
-		return 0;
-		exit;
-
-	} elseif (DB_num_rows($GetPrdResult)==0) {
+	if (DB_num_rows($GetPrdResult)==0) {
 
 /*The date entered does not fall between currently defined period ranges.
 Need to insert some new periods */
@@ -560,27 +555,19 @@ Need to insert some new periods */
 
 				$LastPeriodNo = $LastPeriodNo + 1;
 
-				$GetPrdSQL = "INSERT INTO Periods (PeriodNo, LastDate_in_Period) VALUES (" . $LastPeriodNo . ", '" . Date("Y/m/d", $LastPeriodEnd) . "')";
-				$GetPrdResult = DB_query($GetPrdSQL,$db);
-				if (DB_error_no($db) != 0){
-				      echo "<BR>An error occurred in adding a new period number :- " . DB_error_msg($db);
-				      return 0;
-				      exit;
-				}
-
+				$GetPrdSQL = 'INSERT INTO Periods (PeriodNo, LastDate_in_Period) VALUES (' . $LastPeriodNo . ", '" . Date("Y/m/d", $LastPeriodEnd) . "')";
+				$ErrMsg = _('An error occurred in adding a new period number');
+				$GetPrdResult = DB_query($GetPrdSQL, $db, $ErrMsg);
 			}
 			return $LastPeriodNo;
 
 		} else {
 		/* then the transactions date must be before periods have been created for need to insert periods before currently defined periods */
 
-			$GetPrdSQL = "SELECT Min(LastDate_in_Period), Min(PeriodNo) FROM Periods";
+			$GetPrdSQL = 'SELECT Min(LastDate_in_Period), Min(PeriodNo) FROM Periods';
+			$ErrMsg = _('An error occurred in getting the first period number in the database');
 			$GetPrdResult = DB_query($GetPrdSQL,$db);
-			if (DB_error_no($db) != 0){
-			      echo "An error occurred in getting the first period number in the database:- " . DB_error_msg($db);
-			      return 0;
-			      exit;
-			}
+
 			$myrow = DB_fetch_row($GetPrdResult);
 
 			$Date_array = explode("-", $myrow[0]);
@@ -589,20 +576,16 @@ Need to insert some new periods */
 			$FirstPeriodNo = $myrow[1];
 
 
-			While (DateDiff(Date($DefaultDateFormat, $TransDate), Date($DefaultDateFormat, $FirstPeriodEnd), "d")<0){
+			While (DateDiff(Date($DefaultDateFormat, $TransDate), Date($DefaultDateFormat, $FirstPeriodEnd), 'd')<0){
 
 			/* The date of the first period is after the transaction date */
 
-				$FirstPeriodEnd = Mktime(0,0,0, Date("m",$FirstPeriodEnd), 0, Date("Y",$FirstPeriodEnd));
+				$FirstPeriodEnd = Mktime(0,0,0, Date('m',$FirstPeriodEnd), 0, Date('Y',$FirstPeriodEnd));
 
 				$FirstPeriodNo = $FirstPeriodNo - 1;
-				$GetPrdSQL = "INSERT INTO Periods (PeriodNo, LastDate_in_Period) VALUES (" . $FirstPeriodNo . ", '" . Date("Y/m/d", $FirstPeriodEnd) . "')";
-				if (DB_error_no($db) != 0){
-				      echo "An error occurred in inserting periods before the first period to accomodate back dated transactions:- " . DB_error_msg($db);
-				      return 0;
-				      exit;
-				}
-				$GetPrdResult = DB_query($GetPrdSQL,$db);
+				$GetPrdSQL = 'INSERT INTO Periods (PeriodNo, LastDate_in_Period) VALUES (' . $FirstPeriodNo . ", '" . Date("Y/m/d", $FirstPeriodEnd) . "')";
+				$ErrMsg = _('An error occurred in inserting periods before the first period to accomodate back dated transactions');
+				$GetPrdResult = DB_query($GetPrdSQL,$db, $ErrMsg);
 
 			}
 			return $FirstPeriodNo + 1 ;
