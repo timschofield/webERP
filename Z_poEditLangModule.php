@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 /* Steve Kitchen */
 
@@ -9,14 +9,6 @@ $PageSecurity = 15;
 
 include ('includes/session.inc');
 
-/* Was the Cancel button pressed the last time through ? */
-
-if (isset($_POST['cancel'])) {
-
-	header ('Location:' . $rootpath . '/Z_poAdmin.php?' . SID);
-	exit;
-
-}
 
 $title = _('UTILITY PAGE') . ' ' ._('to edit a language file module');
 
@@ -24,21 +16,32 @@ include('includes/header.inc');
 
 /* Your webserver user MUST have read/write access to here, 
 	otherwise you'll be wasting your time */
+	
+$PathToLanguage		= './locale/' . $_POST['language'] . '/LC_MESSAGES/messages.po';
+$PathToNewLanguage	= './locale/' . $_POST['language'] . '/LC_MESSAGES/messages.po.new';
+	
+if (isset($_POST['ReMergePO']) AND isset($_POST['language'])){
 
-if (isset($_POST['language']) AND isset($_POST['module'])) {	
+/*update the messages.po file with any new strings */	
 
-	$PathToLanguage		= './locale/' . $_POST['language'] . '/LC_MESSAGES/messages.po';
-	$PathToNewLanguage	= './locale/' . $_POST['language'] . '/LC_MESSAGES/messages.po.new';
-	
-	$PathToLanguage_mo = substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) . '.mo';
-		
-/*First off update the messages.po file with any new strings */	
-	
-	
+/*first rebuild the en_GB default with xgettext */
+
+	$PathToDefault = './locale/en_GB/LC_MESSAGES/messages.po';
 	$FilesToInclude	= '*php includes/*.php includes/*.inc';
-	$xgettextCmd	= 'xgettext --no-wrap -L php -x ' . $PathToLanguage . ' -j ' . $PathToLanguage . ' ' . $FilesToInclude;
+	$xgettextCmd		= 'xgettext --no-wrap -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
 
 	system($xgettextCmd);
+/*now merge the translated file with the new template to get new strings*/
+	
+	$msgMergeCmd = 'msgmerge ' . $PathToLanguage . ' ' . $PathToDefault . ' > ' . $PathToNewLanguage;
+	
+	system($msgMergeCmd);
+	$Result = rename($PathToNewLanguage, $PathToLanguage);
+}
+	
+if (isset($_POST['language']) AND isset($_POST['module'])) {	
+
+	$PathToLanguage_mo = substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) . '.mo';
 
 /* now read in the language file */
 
@@ -78,7 +81,7 @@ if (isset($_POST['language']) AND isset($_POST['module'])) {
 
 		prnMsg (_('Done') . '<BR>', 'info', ' ');
 
-		echo '<CENTER><INPUT TYPE="Submit" NAME="cancel" VALUE="' . _('Back to the menu') . '"></CENTER>';
+		echo "<CENTER><A HREF='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the menu') . "</A></CENTER>";
 		echo '</FORM>';
 		echo '</TD></TR></TABLE>';
 		echo '</CENTER>';
@@ -148,10 +151,11 @@ if (isset($_POST['language']) AND isset($_POST['module'])) {
 		prnMsg (_('Once you click on the Enter Information button the file will be rewritten') . '. ' . _('You will not get a second chance'), 'warn', _('WARNING'));
 		echo '<CENTER>';
 		echo '<INPUT TYPE="Submit" NAME="submit" VALUE="' . _('Enter Information') . '">&nbsp;&nbsp;';
-		echo '<INPUT TYPE="Submit" NAME="cancel" VALUE="' . _('Back to the menu') . '">';
-		echo '</CENTER>';
+		echo "<A HREF='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the menu') . "</A>";
+		
 		echo '<INPUT TYPE="hidden" NAME="language" VALUE="' . $_POST['language'] . '">';
 		echo '<INPUT TYPE="hidden" NAME="module" VALUE="' . $_POST['module'] . '">';
+		
 		echo '</FORM>';
 		echo '</CENTER>';
 	}
@@ -221,7 +225,8 @@ if (isset($_POST['language']) AND isset($_POST['module'])) {
 	echo '<BR>';
 	echo '<CENTER>';
 	echo '<INPUT TYPE="Submit" NAME="proceed" VALUE="' . _('Proceed') . '">&nbsp;&nbsp;';
-	echo '<INPUT TYPE="Submit" NAME="cancel" VALUE="' . _('Back to the menu') . '">';
+	echo "<A HREF='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the menu') . "</A>";
+	echo '<BR><BR><INPUT TYPE="Submit" NAME="ReMergePO" VALUE="' . _('Refresh messages with latest strings') . '">';
 	echo '</CENTER>';
 	echo '</FORM>';
 	echo '</TD></TR></TABLE>';

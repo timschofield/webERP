@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 /* Steve Kitchen */
 
@@ -7,25 +7,14 @@ $PageSecurity = 15;
 
 include ('includes/session.inc');
 
-/* Was the Cancel button pressed the last time through ? */
-
-if (isset($_POST['cancel'])) {
-
-	header ('Location:' . $rootpath . '/Z_poAdmin.php?' . SID);
-	exit;
-
-}
-
 $title = _('UTILITY PAGE') . ' ' . _('to rebuild the default language file');
 
 include('includes/header.inc');
 
-$DefaultLanguage = 'en';		// the default language IS English ...
-
 /* Your webserver user MUST have read/write access to here, 
 	otherwise you'll be wasting your time */
 	
-$PathToDefault		= './locale/' . $DefaultLanguage . '/LC_MESSAGES/messages.po';
+$PathToDefault		= './locale/en_GB/LC_MESSAGES/messages.po';
 $FilesToInclude	= '*php includes/*.php includes/*.inc';
 $xgettextCmd		= 'xgettext --no-wrap -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
 
@@ -43,7 +32,7 @@ if (isset($_POST['submit'])) {
 
 	prnMsg (_('Done') .  '. ' . _('You should now edit the default language file header') . '<BR>', 'info', ' ');
 
-	echo '<CENTER><INPUT TYPE="Submit" NAME="cancel" VALUE="' . _('Back to the menu') . '"></CENTER>';
+	echo "<CENTER><A HREF='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the menu') . "</A></CENTER>";
 	echo '</FORM>';
 	echo '</TD></TR></TABLE>';
 	echo '</CENTER>';
@@ -59,7 +48,7 @@ if (isset($_POST['submit'])) {
 
 	prnMsg (_('Once you click on the Proceed button the file will be recreated') . '. ' . _('You will not get a second warning'), 'warn', _('WARNING'));
 	echo '<INPUT TYPE="Submit" NAME="submit" VALUE="' . _('Proceed') . '">&nbsp;&nbsp;';
-	echo '<INPUT TYPE="Submit" NAME="cancel" VALUE="' . _('Back to the menu') . '">';
+	echo "<A HREF='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the menu') . "</A>";
 	echo '</FORM>';
 	echo '</CENTER>';
 

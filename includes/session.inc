@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -29,7 +29,7 @@
 	$_SESSION['AttemptsCounter'] = 0;
     } elseif ($_SESSION['AttemptsCounter'] >= 5) {
 	/*User blocked from future accesses until sysadmin releases */
-	$sql = 'UPDATE WWW_Users SET Blocked=1 WHERE UserID="' . $_POST['UserNameEntryField'] . '"';
+	$sql = "UPDATE WWW_Users SET WWW_Users.Blocked=1 WHERE WWW_Users.UserID='" . $_POST['UserNameEntryField'] . "'";
         $Auth_Result = DB_query($sql, $db);
         die(include('includes/FailedLogin.php'));
     }
@@ -62,21 +62,22 @@
         	exit;
         }
 
-        $sql = 'SELECT FullAccess,
-			CustomerID,
-			LastVisitDate,
-			PageSize,
-			DefaultLocation,
-			BranchCode,
-			ModulesAllowed,
-			Blocked,
-			RealName,
-			Theme,
-			DisplayRecordsMax,
-			UserID,
-			Language
+        $sql = "SELECT WWW_Users.FullAccess,
+			WWW_Users.CustomerID,
+			WWW_Users.LastVisitDate,
+			WWW_Users.PageSize,
+			WWW_Users.DefaultLocation,
+			WWW_Users.BranchCode,
+			WWW_Users.ModulesAllowed,
+			WWW_Users.Blocked,
+			WWW_Users.RealName,
+			WWW_Users.Theme,
+			WWW_Users.DisplayRecordsMax,
+			WWW_Users.UserID,
+			WWW_Users.Language
 		FROM WWW_Users
-		WHERE UserID="' . $_POST['UserNameEntryField'] . '" AND Password="' . $_POST['Password'] . '"';
+		WHERE WWW_Users.UserID='" . $_POST['UserNameEntryField'] . "' 
+		AND WWW_Users.Password='" . $_POST['Password'] . "'";
         $Auth_Result = DB_query($sql, $db);
 
         // Populate session variables with data base results
@@ -103,8 +104,9 @@
 			$_SESSION['DisplayRecordsMax'] = $DefaultDisplayRecordsMax;  // default comes from config.php
 		}
 
-		$sql = 'UPDATE WWW_Users SET LastVisitDate="'. date("Y-m-d H:i:s") .'" WHERE UserID="' .
-		$_POST['UserNameEntryField'] . '" AND Password="' . $_POST['Password'] .'"';
+		$sql = "UPDATE WWW_Users SET LastVisitDate='". date("Y-m-d H:i:s") ."' 
+			WHERE WWW_Users.UserID='" . $_POST['UserNameEntryField'] . "' 
+			AND WWW_Users.Password='" . $_POST['Password'] ."'";
 		$Auth_Result = DB_query($sql, $db);
 
         } else {     // Incorrect password
@@ -135,10 +137,16 @@
     if (!in_array($PageSecurity, $SecurityGroups[$_SESSION['AccessLevel']]) OR !isset($PageSecurity)) {
 
         include('header.inc');
-	echo '<TR><TD CLASS="menu_group_items"><TABLE WIDTH="100%" CLASS="table_index"><TR><TD CLASS="menu_group_item">';
+	echo '<TR>
+		<TD CLASS="menu_group_items">
+			<TABLE WIDTH="100%" CLASS="table_index">
+				<TR><TD CLASS="menu_group_item">';
 	echo '<B><FONT SIZE="+1"><CENTER>' . _('The security settings on your account do not permit you to access this function') . '</FONT></B></CENTER>';
 
-	echo '</TD></TR></TABLE></TD>';
+	echo '</TD>
+	</TR>
+	</TABLE>
+	</TD>';
 
 	include('footer.inc');
 	exit;

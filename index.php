@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 $PageSecurity = 1;
 
@@ -158,7 +158,7 @@ if (count($SecurityGroups[$_SESSION['AccessLevel']])==1){
 						<table width="100%">
 							<tr>
 							  <td>
-                                                       &nbsp;
+
 						        </td>
 							</tr>
 						</table>

@@ -1,20 +1,11 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 /* Steve Kitchen */
 
 $PageSecurity = 15;
 
 include ('includes/session.inc');
-
-/* Was the Cancel button pressed the last time through ? */
-
-if (isset($_POST['cancel'])) {
-
-	header ('Location:' . $rootpath . '/Z_poAdmin.php?' . SID);
-	exit;
-
-}
 
 $title = _('UTILITY PAGE') . ' ' ._('to edit a language file header');
 
@@ -67,7 +58,7 @@ if (isset($_POST['language'])) {
 
 		prnMsg (_('Done') . '<BR>', 'info', ' ');
 
-		echo '<CENTER><INPUT TYPE="Submit" NAME="cancel" VALUE="' . _('Back to the menu') . '"></CENTER>';
+		echo "<CENTER><A HREF='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the menu') . "</A></CENTER>";
 		echo '</FORM>';
 		echo '</TD></TR></TABLE>';
 		echo '</CENTER>';
@@ -97,7 +88,7 @@ if (isset($_POST['language'])) {
 		echo '</TABLE>';
 		prnMsg (_('Once you click on the Enter Information button the file will be rewritten') . '. ' . _('You will not get a second chance'), 'warn', _('WARNING'));
 		echo '<CENTER><INPUT TYPE="Submit" NAME="submit" VALUE="' . _('Enter Information') . '">&nbsp;&nbsp;';
-		echo '<INPUT TYPE="Submit" NAME="cancel" VALUE="' . _('Back to the menu') . '">';
+		echo "<A HREF='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the menu') . "</A>";
 		echo '<INPUT TYPE="hidden" NAME="language" VALUE="' . $_POST['language'] . '"></CENTER>';
 		echo '</FORM>';
 		echo '</CENTER>';
@@ -142,7 +133,7 @@ if (isset($_POST['language'])) {
 	echo '</TD></TR></TABLE>';
 	echo '<BR>';
 	echo '<INPUT TYPE="Submit" NAME="proceed" VALUE="' . _('Proceed') . '">&nbsp;&nbsp;';
-	echo '<INPUT TYPE="Submit" NAME="cancel" VALUE="' . _('Back to the menu') . '">';
+	echo "<A HREF='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the menu') . "</A>";
 	echo '</FORM>';
 	echo '</TD></TR></TABLE>';
 	echo '</CENTER>';

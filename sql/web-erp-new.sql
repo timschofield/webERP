@@ -1692,7 +1692,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE `SysTypes` DISABLE KEYS */;
 LOCK TABLES `SysTypes` WRITE;
-INSERT INTO `SysTypes` VALUES (0,'Journal - GL',10),(1,'Payment - GL',18),(2,'Receipt - GL',3),(3,'Standing Journal',0),(10,'Sales Invoice',13),(11,'Credit Note',11),(12,'Receipt',2),(15,'Journal - Debtors',0),(16,'Location Transfer',8),(17,'Stock Adjustment',6),(18,'Purchase Order',0),(20,'Purchase Invoice',17),(21,'Debit Note',8),(22,'Creditors Payment',7),(23,'Creditors Journal',0),(25,'Purchase Order Delivery',17),(26,'Work Order Receipt',0),(28,'Work Order Issue',0),(29,'Work Order Variance',0),(30,'Sales Order',0),(31,'Shipment Close',8),(35,'Cost Update',6),(50,'Opening Balance',0);
+INSERT INTO `SysTypes` VALUES (0,'Journal - GL',10),(1,'Payment - GL',18),(2,'Receipt - GL',3),(3,'Standing Journal',0),(10,'Sales Invoice',13),(11,'Credit Note',11),(12,'Receipt',3),(15,'Journal - Debtors',0),(16,'Location Transfer',8),(17,'Stock Adjustment',6),(18,'Purchase Order',0),(20,'Purchase Invoice',17),(21,'Debit Note',8),(22,'Creditors Payment',7),(23,'Creditors Journal',0),(25,'Purchase Order Delivery',17),(26,'Work Order Receipt',0),(28,'Work Order Issue',0),(29,'Work Order Variance',0),(30,'Sales Order',0),(31,'Shipment Close',8),(35,'Cost Update',6),(50,'Opening Balance',0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `SysTypes` ENABLE KEYS */;
 
@@ -1725,7 +1725,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE `WWW_Users` DISABLE KEYS */;
 LOCK TABLES `WWW_Users` WRITE;
-INSERT INTO `WWW_Users` VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2004-12-26 15:59:27','','A4','1,1,1,1,1,1,1,1,',0,50,'fresh','en_GB'),('NewOne','weberp','New User Admin','','','','DEN',7,'2004-12-26 14:15:05','','A4','1,1,1,1,1,1,1,1,',0,0,'fresh','en_GB'),('testy','weberp','Test Remote User','GRANHR','','','DEN',6,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en_GB');
+INSERT INTO `WWW_Users` VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2004-12-27 13:43:36','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','es_ES'),('NewOne','weberp','New User Admin','','','','DEN',7,'2004-12-26 14:15:05','','A4','1,1,1,1,1,1,1,1,',0,0,'fresh','en_GB'),('testy','weberp','Test Remote User','GRANHR','','','DEN',6,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en_GB');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `WWW_Users` ENABLE KEYS */;
 

@@ -1,7 +1,6 @@
 <?php
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
-include('includes/LanguageSetup.php');
 require('includes/DefineCartClass.php');
 
 $PageSecurity = 1;

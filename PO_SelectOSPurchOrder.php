@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 2;
 
@@ -70,11 +70,56 @@ if ($_POST['SearchParts']){
 		}
 		$SearchString = $SearchString. substr($_POST['Keywords'],$i)."%";
 
-		$SQL = "SELECT StockMaster.StockID, Description, Sum(LocStock.Quantity) AS QOH,  Units, Sum(PurchOrderDetails.QuantityOrd-PurchOrderDetails.QuantityRecd) AS QORD FROM StockMaster INNER JOIN LocStock ON StockMaster.StockID = LocStock.StockID INNER JOIN PurchOrderDetails ON StockMaster.StockID=PurchOrderDetails.ItemCode WHERE PurchOrderDetails.Completed=0 AND StockMaster.Description LIKE '$SearchString' AND CategoryID='" . $_POST['StockCat'] . "' GROUP BY StockMaster.StockID, Description, Units ORDER BY StockMaster.StockID";
+		$SQL = "SELECT StockMaster.StockID, 
+				Description, 
+				Sum(LocStock.Quantity) AS QOH,  
+				Units, 
+				Sum(PurchOrderDetails.QuantityOrd-PurchOrderDetails.QuantityRecd) AS QORD 
+			FROM StockMaster INNER JOIN LocStock 
+				ON StockMaster.StockID = LocStock.StockID 
+				INNER JOIN PurchOrderDetails 
+					ON StockMaster.StockID=PurchOrderDetails.ItemCode 
+			WHERE PurchOrderDetails.Completed=0 
+			AND StockMaster.Description LIKE '$SearchString' 
+			AND StockMaster.CategoryID='" . $_POST['StockCat'] . "' 
+			GROUP BY StockMaster.StockID, StockMaster.Description, StockMaster.Units 
+			ORDER BY StockMaster.StockID";
+			
+			
 	 } elseif ($_POST['StockCode']){
-		$SQL = "SELECT StockMaster.StockID, Description, Sum(LocStock.Quantity) AS QOH, Sum(PurchOrderDetails.QuantityOrd-PurchOrderDetails.QuantityRecd) AS QORD, Units FROM StockMaster INNER JOIN LocStock ON StockMaster.StockID = LocStock.StockID INNER JOIN PurchOrderDetails ON StockMaster.StockID=PurchOrderDetails.ItemCode WHERE PurchOrderDetails.Completed=0 AND StockMaster.StockID like '%" . $_POST['StockCode'] . "%' AND CategoryID='" . $_POST['StockCat'] . "' GROUP BY StockMaster.StockID, Description, Units ORDER BY StockMaster.StockID";
+		$SQL = "SELECT StockMaster.StockID, 
+				StockMaster.Description, 
+				Sum(LocStock.Quantity) AS QOH, 
+				Sum(PurchOrderDetails.QuantityOrd-PurchOrderDetails.QuantityRecd) AS QORD, 
+				StockMaster.Units 
+			FROM StockMaster INNER JOIN LocStock 
+				ON StockMaster.StockID = LocStock.StockID 
+				INNER JOIN PurchOrderDetails 
+					ON StockMaster.StockID=PurchOrderDetails.ItemCode 
+			WHERE PurchOrderDetails.Completed=0 
+			AND StockMaster.StockID like '%" . $_POST['StockCode'] . "%' 
+			AND StockMaster.CategoryID='" . $_POST['StockCat'] . "' 
+			GROUP BY StockMaster.StockID, 
+				StockMaster.Description, 
+				StockMaster.Units 
+			ORDER BY StockMaster.StockID";
+			
 	 } elseif (!$_POST['StockCode'] AND !$_POST['Keywords']) {
-		$SQL = "SELECT StockMaster.StockID, Description, Sum(LocStock.Quantity) AS QOH, Units, Sum(PurchOrderDetails.QuantityOrd-PurchOrderDetails.QuantityRecd) AS QORD FROM StockMaster INNER JOIN LocStock ON StockMaster.StockID = LocStock.StockID INNER JOIN PurchOrderDetails ON StockMaster.StockID=PurchOrderDetails.ItemCode WHERE PurchOrderDetails.Completed=0 AND CategoryID='" . $_POST['StockCat'] . "' GROUP BY StockMaster.StockID, Description, Units ORDER BY StockMaster.StockID";
+		$SQL = "SELECT StockMaster.StockID, 
+				StockMaster.Description, 
+				Sum(LocStock.Quantity) AS QOH, 
+				StockMaster.Units, 
+				Sum(PurchOrderDetails.QuantityOrd-PurchOrderDetails.QuantityRecd) AS QORD 
+			FROM StockMaster INNER JOIN LocStock 
+				ON StockMaster.StockID = LocStock.StockID 
+				INNER JOIN PurchOrderDetails 
+					ON StockMaster.StockID=PurchOrderDetails.ItemCode 
+			WHERE PurchOrderDetails.Completed=0 
+			AND StockMaster.CategoryID='" . $_POST['StockCat'] . "' 
+			GROUP BY StockMaster.StockID, 
+				StockMaster.Description, 
+				StockMaster.Units 
+			ORDER BY StockMaster.StockID";
 	 }
 
 	$ErrMsg = _('No stock items were returned by the SQL because');
@@ -211,7 +256,13 @@ If ($StockItemsResult) {
 			AND PurchOrders.SupplierNo = Suppliers.SupplierID
 			AND PurchOrderDetails.Completed=0
 			AND PurchOrders.OrderNo=". $OrderNumber ."
-			GROUP BY PurchOrders.OrderNo";
+			GROUP BY PurchOrders.OrderNo,
+				Suppliers.SuppName,
+				PurchOrders.OrdDate,
+				PurchOrders.Initiator,
+				PurchOrders.RequisitionNo,
+				PurchOrders.AllowPrint,
+				Suppliers.CurrCode";
 	} else {
 
 	      /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
@@ -236,7 +287,13 @@ If ($StockItemsResult) {
 					AND PurchOrderDetails.ItemCode='". $SelectedStockItem ."'
 					AND PurchOrders.SupplierNo='" . $SelectedSupplier ."'
 					AND PurchOrders.IntoStockLocation = '". $_POST['StockLocation'] . "'
-					GROUP BY PurchOrders.OrderNo";
+					GROUP BY PurchOrders.OrderNo,
+						Suppliers.SuppName,
+						PurchOrders.OrdDate,
+						PurchOrders.Initiator,
+						PurchOrders.RequisitionNo,
+						PurchOrders.AllowPrint,
+						Suppliers.CurrCode";
 			} else {
 				$SQL = "SELECT PurchOrders.OrderNo,
 						Suppliers.SuppName,
@@ -254,7 +311,13 @@ If ($StockItemsResult) {
 					AND PurchOrderDetails.Completed=0
 					AND PurchOrders.SupplierNo='" . $SelectedSupplier ."'
 					AND PurchOrders.IntoStockLocation = '". $_POST['StockLocation'] . "'
-					GROUP BY PurchOrders.OrderNo";
+					GROUP BY PurchOrders.OrderNo,
+						Suppliers.SuppName,
+						PurchOrders.OrdDate,
+						PurchOrders.Initiator,
+						PurchOrders.RequisitionNo,
+						PurchOrders.AllowPrint,
+						Suppliers.CurrCode";
 			}
 		} else { //no supplier selected
 			if (isset($SelectedStockItem)) {
@@ -274,7 +337,13 @@ If ($StockItemsResult) {
 					AND PurchOrderDetails.Completed=0
 					AND PurchOrderDetails.ItemCode='". $SelectedStockItem ."'
 					AND PurchOrders.IntoStockLocation = '". $_POST['StockLocation'] . "'
-					GROUP BY PurchOrders.OrderNo";
+					GROUP BY PurchOrders.OrderNo,
+						Suppliers.SuppName,
+						PurchOrders.OrdDate,
+						PurchOrders.Initiator,
+						PurchOrders.RequisitionNo,
+						PurchOrders.AllowPrint,
+						Suppliers.CurrCode";
 			} else {
 				$SQL = "SELECT PurchOrders.OrderNo,
 						Suppliers.SuppName,
@@ -291,7 +360,13 @@ If ($StockItemsResult) {
 					AND PurchOrders.SupplierNo = Suppliers.SupplierID
 					AND PurchOrderDetails.Completed=0
 					AND PurchOrders.IntoStockLocation = '". $_POST['StockLocation'] . "'
-					GROUP BY PurchOrders.OrderNo";
+					GROUP BY PurchOrders.OrderNo,
+						Suppliers.SuppName,
+						PurchOrders.OrdDate,
+						PurchOrders.Initiator,
+						PurchOrders.RequisitionNo,
+						PurchOrders.AllowPrint,
+						Suppliers.CurrCode";
 			}
 
 		} //end selected supplier

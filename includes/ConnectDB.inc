@@ -1,9 +1,10 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 $db = mysql_connect($host , $dbuser, $dbpassword);
 mysql_select_db($DatabaseName,$db);
 
 require_once ('includes/MiscFunctions.php');
+
 
 //DB wrapper functions to change only once for whole application
 
