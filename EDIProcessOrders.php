@@ -1,10 +1,12 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity =11;
-$title = 'Process EDI Orders';
 
 include ('includes/session.inc');
+
+$title = _('Process EDI Orders');
+
 include ('includes/header.inc');
 include ('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc'); // need for EDITransNo
@@ -112,7 +114,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $EDI_In
 
 		if ($SegTag != $Seg[$SegID]['SegTag']){
 
-			$EmailText .= "\n" . _('ERROR: Unable to identify segment tag') . ' ' . $SegTag . ' ' . _('from the message line') . '<BR>' . $LineText . '<BR><FONT COLOR=RED><B>' . _('This message processing has been aborted and seperate advice will be required from the customer to obtain details of the order') . '<B></FONT>';
+			$EmailText .= "\n" . _('ERROR') . ': ' . _('Unable to identify segment tag') . ' ' . $SegTag . ' ' . _('from the message line') . '<BR>' . $LineText . '<BR><FONT COLOR=RED><B>' . _('This message processing has been aborted and seperate advice will be required from the customer to obtain details of the order') . '<B></FONT>';
 
 			$TryNextFile = True;
 		}
@@ -121,8 +123,8 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $EDI_In
 		switch ($SegTag){
 			case 'UNH':
 				$UNH_elements = explode ('+',substr($LineText,4));
-				$Order->Comments .= _('Customer EDI Ref:') . ' ' . $UNH_elements[0];
-				$EmailText .= "\n" . _('EDI Message Ref') . ' ' . $UNH_elements[0];
+				$Order->Comments .= _('Customer EDI Ref') . ': ' . $UNH_elements[0];
+				$EmailText .= "\n" . _('EDI Message Ref') . ': ' . $UNH_elements[0];
 				if (substr($UNH_elements[1],0,6)!='ORDERS'){
 					$EmailText .= "\n" . _('This message is not an order');
 					$TryNextFile = True;
@@ -182,7 +184,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $EDI_In
 					echo '<BR>echo BGM_elements[1] ' .$BGM_elements[1];
 					$BGM_C106 = explode(':',$BGM_elements[1]);
 					$Order->CustRef = $BGM_C106[0];
-					$EmailText .= "\n" . _('Customers order ref:') . ' ' . $BGM_C106[0];
+					$EmailText .= "\n" . _('Customers order ref') . ': ' . $BGM_C106[0];
 				}
 				if (isset($BGM_elements[2])){
 					echo "<BR>echo BGM_elements[2] " .$BGM_elements[2];
@@ -192,7 +194,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $EDI_In
 
 					switch ($MsgFunction){
 						case '5':
-							$EmailText .= "\n\n" . _('REPLACEMENT order - MUST DELETE THE ORIGINAL ORDER MANUALLY');
+							$EmailText .= "\n\n" . _('REPLACEMENT order') . ' - ' . _('MUST DELETE THE ORIGINAL ORDER MANUALLY');
 							break;
 						case '6':
 							$EmailText .= "\n" . _('Confirmation of previously sent order');
@@ -202,25 +204,25 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $EDI_In
 							break;
 						case '16':
 							$CreateOrder = False; /*Dont create order in system */
-							$EmailText .= "\n\n" . _('Proposed order only no order created in web-erp');
+							$EmailText .= "\n\n" . _('Proposed order only no order created in web-ERP');
 							break;
 						case '31':
 							$CreateOrder = False; /*Dont create order in system */
-							$EmailText .= "\n" . _('COPY order only no order will be created in web-erp');
+							$EmailText .= "\n" . _('COPY order only no order will be created in web-ERP');
 							break;
 						case '42':
 							$CreateOrder = False; /*Dont create order in system */
-							$EmailText .= "\n" . _('Confirmation of order - not created in web-erp');
+							$EmailText .= "\n" . _('Confirmation of order') . ' - ' . _('not created in web-ERP');
 							break;
 						case '46':
 							$CreateOrder = False; /*Dont create order in system */
-							$EmailText .= "\n" . _('Provisional order only- not created in web-erp');
+							$EmailText .= "\n" . _('Provisional order only') . ' - ' . _('not created in web-ERP');
 							break;
 					}
 
 					if (isset($BGM_1225[1])){
 						$ResponseCode = $BGM_1225[1];
-						echo '<BR>' . _('Response Code:') . ' ' . $ResponseCode;
+						echo '<BR>' . _('Response Code') . ': ' . $ResponseCode;
 						switch ($ResponseCode) {
 							case 'AC':
 								$EmailText .= "\n" . _('Please acknowlege to customer with detail and changes made to the order');
@@ -302,7 +304,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $EDI_In
 					$EmailText .= "\n" . _('This order to be settled in accordance with the normal account trading terms');
 				}
 				if ($PAI_C534[1]=='20'){
-					$EmailText .= "\n" . _('The goods on this order - once delivered - will be held as security for the payment');
+					$EmailText .= "\n" . _('The goods on this order') . ' - ' . _('once delivered') . ' - ' . _('will be held as security for the payment');
 				}
 				if ($PAI_C534[2]=='42'){
 					$EmailText .= "\n" . _('Payment will be effected to bank account');
@@ -331,7 +333,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $EDI_In
 						$EmailText .= "\n" . _('Buying group conditions apply');
 						break;
 					case '137':
-						$EmailText .= "\n\n" . _('Cancel the order if complete delivery is not possible on the requested date/time');
+						$EmailText .= "\n\n" . _('Cancel the order if complete delivery is not possible on the requested date or time');
 						break;
 					case '73E':
 						$EmailText .= "\n" . _('Delivery subject to final authorisation');
@@ -364,39 +366,39 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $EDI_In
 						$MsgText = "\n" . _('Authorisation for expense no') . ' ' . $RFF[1];
 						break;
 					case 'BO':
-						$MsgText =  "\n" . _('Blanket Order #') . ' ' . $RFF[1];
+						$MsgText =  "\n" . _('Blanket Order') . ' # ' . $RFF[1];
 						break;
 					case 'CR':
 						$Order->CustRef = $RFF[1];
-						$MsgText =  "\n" . _('Customer Ref #') . ' ' . $RFF[1];
+						$MsgText =  "\n" . _('Customer Ref') . ' # ' . $RFF[1];
 						break;
 					case 'CT':
-						$MsgText =  "\n" . _('Contract #'). ' ' . $RFF[1];
+						$MsgText =  "\n" . _('Contract'). ' # ' . $RFF[1];
 						break;
 					case 'IP':
-						$MsgText =  "\n" . _('Import Licence #') . ' ' . $RFF[1];
+						$MsgText =  "\n" . _('Import Licence') . ' # ' . $RFF[1];
 						break;
 					case 'ON':
 						$Order->CustRef = $RFF[1];
-						$MsgText =  "\n" . _('Buyer order #') . ' ' . $RFF[1];
+						$MsgText =  "\n" . _('Buyer order') . ' # ' . $RFF[1];
 						break;
 					case 'PD':
-						$MsgText =  "\n" . _('Promo deal #') . ' ' . $RFF[1];
+						$MsgText =  "\n" . _('Promo deal') . ' # ' . $RFF[1];
 						break;
 					case 'PL':
-						$MsgText =  "\n" . _('Price List #') . ' ' . $RFF[1];
+						$MsgText =  "\n" . _('Price List') . ' # ' . $RFF[1];
 						break;
 					case 'UC':
 						$MsgText =  "\n" . _('Ultimate customer ref') . ' ' . $RFF[1];
 						break;
 					case 'VN':
-						$MsgText =  "\n" . _('Supplier Order #') . ' ' . $RFF[1];
+						$MsgText =  "\n" . _('Supplier Order') . ' # ' . $RFF[1];
 						break;
 					case 'AKO':
-						$MsgText =  "\n" . _('Action auth #') . ' ' . $RFF[1];
+						$MsgText =  "\n" . _('Action auth') . ' # ' . $RFF[1];
 						break;
 					case 'ANJ':
-						$MsgText =  "\n" . _('Authorisation #') . ' ' . $RFF[1];
+						$MsgText =  "\n" . _('Authorisation') . ' # ' . $RFF[1];
 						break;
 				}
 				if ($SegGroup == 1){
@@ -417,7 +419,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $EDI_In
 						/*if NAD_C082[2] must = 9 then NAD_C082[0] is the EAN Intnat Article Numbering Assocn code of the customer - look up the customer by EDIReference*/
 							$InvoiceeResult = DB_query("SELECT DebtorNo FROM DebtorsMaster WHERE EDIReference='" . $NAD_C082[0] . "' AND EDIOrders=1",$db);
 							if (DB_num_rows($InvoiceeResult)!=1){
-								$EmailText .= "\n" . _('The Buyer reference was specified as an EAN International Article Numbering Association code. Unfortunately, the field EDIReference of any of the customer is currently set up to receive EDI orders does not match with the code') . ' ' . $NAD_C082[0] . ' ' . _('used in this message. So, thats the end of the road for this message');
+								$EmailText .= "\n" . _('The Buyer reference was specified as an EAN International Article Numbering Association code') . '. ' . _('Unfortunately the field EDIReference of any of the customers currently set up to receive EDI orders does not match with the code') . ' ' . $NAD_C082[0] . ' ' . _('used in this message') . '. ' . _('So that is the end of the road for this message');
 								$TryNextFile = True; /* Look for other EDI msgs */
 								$CreateOrder = False; /*Dont create order in system */
 							} else {
@@ -435,7 +437,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $EDI_In
 						/*Supplier party details. This should be our EAN IANA number if not the message is not for us!! */
 						if ($NAD_C082[0]!= $EDIReference){
 							/* $EDIReference is set in config.php as our EDIReference it should be our EAN International Article Numbering Association code */
-							$EmailText .= "\n" . _('The supplier reference was specified as an EAN International Article Numbering Association code. Unfortunately,the company EDIReference') . ' - ' . $EDIReference  . ' ' . _('does not match with the code') . ' ' . $NAD_C082[0] . ' ' . _('used in this message. This implies that the EDI message if for some other supplier !! no further processing will be done');
+							$EmailText .= "\n" . _('The supplier reference was specified as an EAN International Article Numbering Association code') . '. ' . _('Unfortunately the company EDIReference') . ' - ' . $EDIReference  . ' ' . _('does not match with the code') . ' ' . $NAD_C082[0] . ' ' . _('used in this message') . '. ' . _('This implies that the EDI message is for some other supplier') . '. ' . _('No further processing will be done');
 							$TryNextFile = True; /* Look for other EDI msgs */
 							$CreateOrder = False; /*Dont create order in system */						}
 						break;
@@ -457,7 +459,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $EDI_In
 						/*Store Number - get the branch details from the store number - snag here too cos need to ensure got the Customer detail first before try looking up its branches */
 						$BranchResult = DB_query("SELECT BranchCode, BrName, BrAddress1,BrAddress2, BrAddress3, BrAddress4, ContactName, DefaultLocation, PhoneNo, Email FROM CustBranch INNER JOIN DebtorsMaster ON CustBranch.DebtorNo = CustBranch.DebtorNo WHERE CustBranchCode='" . $NAD_C082[0] . "' AND CustBranch.DebtorNo='" . $Order->DebtorNo . "' AND DebtorsMaster.EDIOrders=1",$db);
 						if (DB_num_rows($BranchResult)!=1){
-							$EmailText .= "\n" . _('The Store number was specified as') . ' ' . $NAD_C082[0] . ' ' . _('unfortunately, there is either no branches of customer code') . ' ' . $Order->DebtorNo . ' ' ._('or several that match this store number. This order could not be processed further');
+							$EmailText .= "\n" . _('The Store number was specified as') . ' ' . $NAD_C082[0] . ' ' . _('Unfortunately there are either no branches of customer code') . ' ' . $Order->DebtorNo . ' ' ._('or several that match this store number') . '. ' . _('This order could not be processed further');
 							$TryNextFile = True; /* Look for other EDI msgs */
 							$CreateOrder = False; /*Dont create order in system */						} else {
 							$BranchRow = DB_fetch_array($BranchResult);
@@ -490,10 +492,6 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $EDI_In
 
 
 			/* UP TO HERE NEED TESTER */
-
-
-
-
 
 
 

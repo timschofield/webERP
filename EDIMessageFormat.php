@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 10;
 
@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
 					LineText='" . $_POST['LineText'] . "'
 				WHERE ID = '" . $SelectedMessageLine . "'";
 
-		$msg = _('Message Line Updated');
+		$msg = _('Message line updated');
 
 	} elseif ($InputError !=1) {
 
@@ -95,11 +95,11 @@ if (isset($_POST['submit'])) {
 					" . $_POST['SequenceNo'] . ",
 					'" . $_POST['LineText'] . "'
 					)";
-		$msg = _('Message Line Added');
+		$msg = _('Message line added');
 	}
 	//run the SQL from either of the above possibilites
 	$result = DB_query($sql,$db);
-	echo "<BR><BR><FONT SIZE=4>$msg</FONT>";
+	prnMsg($msg,'success');
 	unset ($SelectedMessageLine);
 
 } elseif (isset($_GET['delete'])) {
@@ -108,7 +108,7 @@ if (isset($_POST['submit'])) {
 
 	$sql='DELETE FROM EDIMessageFormat WHERE ID=' . $_GET['delete'];
 	$result = DB_query($sql,$db);
-	echo '<BR><BR><FONT SIZE=4 COLOR=RED>' . _('The selected message line has been deleted !') . '</FONT>';
+	prnMsg(_('The selected message line has been deleted'),'success');
 
 }
 
@@ -158,8 +158,8 @@ or deletion of the records*/
 		printf("<td>%s</td>
 			<td ALIGN=RIGHT>%s</td>
 			<td>%s</td>
-			<td><a href=\"%sSelectedMessageLine=%s\">" . _('EDIT') . "</a></td>
-			<td><a href=\"%sdelete=%s\">" . _('DELETE') . "</a></td>
+			<td><a href=\"%s&SelectedMessageLine=%s\">" . _('Edit') . "</a></td>
+			<td><a href=\"%s&delete=%s\">" . _('Delete') . "</a></td>
 			</tr>",
 			$myrow[1],
 			$myrow[2],
@@ -244,12 +244,12 @@ echo '</select>';
 <TR><TD>Sequence Number:</TD>
 <TD><INPUT TYPE=TEXT NAME=SequenceNo SIZE=3 MAXLENGTH=3 VALUE=<?php echo $_POST['SequenceNo'] ?>>
 </TD></TR>
-<TR><TD><?php echo _('Line Text:'); ?></TD>
+<TR><TD><?php echo _('Line Text') . ':'; ?></TD>
 <TD>
 <INPUT TYPE="Text" name="LineText" SIZE=50 MAXLENGTH=50 VALUE=<?php echo  $_POST['LineText']; ?>>
 </TD></TR>
 </TABLE>
-<CENTER><input type="Submit" name="submit" value="Enter Information">
+<CENTER><input type="Submit" name="submit" value="<?php echo _('Enter Information'); ?>">
 
 </FORM>
 
