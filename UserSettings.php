@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity=1;
 
@@ -105,31 +105,39 @@ echo $_SESSION['UsersRealName'] . '</TD></TR>';
 echo '<TR>
 	<TD>' . _('Maximum Number of Records to Display') . ":</TD>
 	<TD><INPUT TYPE='Text' name='DisplayRecordsMax' VALUE=" . $_POST['DisplayRecordsMax'] . " SIZE=32 MAXLENGTH=30></TD>
-	</TR>
-	<TR>
-	<TD>" . _('Language') . ":</TD>
+	</TR>";
+	
+	
+	
+if (!function_exists('gettext')){
+	echo '<TR>
+	<TD COLSPAN=2><FONT SIZE=1><I>' . _('The GNU gettext system must be installed on the web-server for other languages to be displayed') . '<BR>' . _('Once gettext is installed an option to allow changes to the language will show') . '</I></FONT></TD></TR>';
+} else {	
+	
+	echo '<TR>
+	<TD>' . _('Language') . ":</TD>
 	<TD><SELECT name='Language'>";
 
+	$LangDirHandle = dir('locale/');
 
-$LangDirHandle = dir('locale/');
 
-
-while (false != ($LanguageEntry = $LangDirHandle->read())){
-
-	if (is_dir('locale/' . $LanguageEntry) AND $LanguageEntry != '..' AND $LanguageEntry != 'CVS' AND $LanguageEntry!='.'){
-
-		if ($_SESSION['Language'] == $LanguageEntry){
-			echo "<OPTION SELECTED VALUE='$LanguageEntry'>$LanguageEntry";
-		} else {
-			echo "<OPTION VALUE='$LanguageEntry'>$LanguageEntry";
+	while (false != ($LanguageEntry = $LangDirHandle->read())){
+	
+		if (is_dir('locale/' . $LanguageEntry) AND $LanguageEntry != '..' AND $LanguageEntry != 'CVS' AND $LanguageEntry!='.'){
+	
+			if ($_SESSION['Language'] == $LanguageEntry){
+				echo "<OPTION SELECTED VALUE='$LanguageEntry'>$LanguageEntry";
+			} else {
+				echo "<OPTION VALUE='$LanguageEntry'>$LanguageEntry";
+			}
 		}
 	}
+	
+	echo '</SELECT></TD></TR>';
 }
-
-echo "</SELECT></TD>
-</TR>
-<TR>
-	<TD>" . _('Theme') . ":</TD>
+	
+echo '<TR>
+	<TD>' . _('Theme') . ":</TD>
 	<TD><SELECT name='Theme'>";
 
 $ThemeDirectory = dir('css/');
