@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -128,8 +128,8 @@
     if (!is_array($SecurityGroups[$_SESSION['AccessLevel']])) {
 
         echo '<BR><BR><BR><CENTER><B>';
-		  echo _('Security settings have not been defined for your user account') . '. ' . _('Please advise your system administrator') . '</B>';
-        exit;
+		echo _('Security settings have not been defined for your user account') . '. ' . _('Please advise your system administrator') . '</B>';
+        	exit;
     }
 
     if (!in_array($PageSecurity, $SecurityGroups[$_SESSION['AccessLevel']]) OR !isset($PageSecurity)) {

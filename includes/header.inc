@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
@@ -45,7 +45,7 @@
 
 			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ALIGN="center" ACCESSKEY="4" HREF="' . $rootpath . '/SelectSupplier.php?' . SID . '"><U>4</U>. ' . _('Select Supplier') . '</A>&nbsp;&nbsp;</TD>';
 
-			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A TARGET="_blank" ALIGN="center" ACCESSKEY="5" HREF="' . $rootpath . '/doc/Manual/ManualContents.php?' . SID . '"><U>5</U>. ' . _('Manual') . '</A>&nbsp;&nbsp;</TD>';
+			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A TARGET="_blank" ALIGN="center" ACCESSKEY="8" HREF="' . $rootpath . '/doc/Manual/ManualContents.php?' . SID . '"><U>8</U>. ' . _('Manual') . '</A>&nbsp;&nbsp;</TD>';
 
 		}
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 	echo '<BR><BR>';
 	echo '</TD>';
@@ -18,7 +18,7 @@
 	echo '<IMG SRC="css/default/images/outline/r.gif" WIDTH="10" HEIGHT="10" ALT=""></TD>';
 	echo '</TR>';
 
-	echo '<TR';
+	echo '<TR>';
 	echo '<TD BACKGROUND="css/default/images/outline/bm.gif">';
 	echo '<IMG SRC="css/default/images/outline/bl.gif" WIDTH="10" HEIGHT="10" ALT=""></TD>';
 	echo '<TD BACKGROUND="css/default/images/outline/bm.gif">';

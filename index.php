@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 $PageSecurity = 1;
 
@@ -711,7 +711,7 @@ if (count($SecurityGroups[$_SESSION['AccessLevel']])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PeriodsInquiry.php?' . SID . "'><li>" . _('List Periods Defined') . ' <FONT SIZE=1>' . _('(Periods are automatically maintained)') . '</FONT></a>'; ?>
+								<?php echo "<a href='" . $rootpath . '/PeriodsInquiry.php?' . SID . "'><li>" . _('List Periods Defined') . ' <FONT SIZE=1>(' . _('Periods are automatically maintained') . ')</FONT></a>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -930,7 +930,7 @@ global $rootpath, $theme;
 		<table>
 			<tr>
 			<td>
-				<?php echo "<img src=$rootpath/css/$theme/images/reports.gif alt=" . _('Inquiries and Reports') . '>'; ?>
+				<?php echo '<img src=' . $rootpath . '/css/' . $theme . '/images/reports.gif alt="' . _('Inquiries and Reports') . '">'; ?>
 			</td>
 			<td class="menu_group_headers_text">
 				<?php echo _('Inquiries and Reports'); ?>

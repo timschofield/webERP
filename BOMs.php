@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $PageSecurity = 9;
 
 include('includes/session.inc');
@@ -143,15 +143,36 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	$Select = NULL;
 
 
-	$sql = "SELECT Description FROM StockMaster WHERE StockID='" . $SelectedParent . "'";
+	$sql = "SELECT StockMaster.Description,
+			StockMaster.MBflag
+		FROM StockMaster 
+		WHERE StockMaster.StockID='" . $SelectedParent . "'";
 
 	$ErrMsg = _('Could not retrieve the description of the parent part because');
 	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
 	$result=DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	$myrow=DB_fetch_row($result);
-
-	echo "<BR><FONT COLOR=BLUE SIZE=3><B>$SelectedParent - " . $myrow[0] . '</FONT></B>';
+	
+	$ParentMBflag = $myrow[1];
+	
+	switch ($ParentMBflag){
+		case 'A': 
+			$MBdesc = _('Assembly'); 
+			break;
+		case 'B': 
+			$MBdesc = _('Purchased'); 
+			break;
+		case 'M': 
+			$MBdesc = _('Manufactured'); 
+			break;
+		case 'K': 
+			$MBdesc = _('Kit Set'); 
+			break;
+	}
+	
+	echo "<BR><FONT COLOR=BLUE SIZE=3><B>$SelectedParent - " . $myrow[0] . ' ('. $MBdesc. ') </FONT></B>';
+	
 	echo '<BR><A HREF=' . $_SERVER['PHP_SELF'] . '?' . SID . '>' . _('Select a Different BOM') . '</A></CENTER>';
 
 	if (isset($SelectedParent)) {
@@ -190,13 +211,13 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		if (isset($SelectedParent) AND isset($SelectedComponent) AND $InputError != 1) {
 
 
-			$sql = "UPDATE BOM SET WorkCentreAdded='" . $_POST['WorkCentreAdded'] . "',
-						LocCode='" . $_POST['LocCode'] . "',
-						EffectiveAfter='" . $EffectiveAfterSQL . "',
-						EffectiveTo='" . $EffectiveToSQL . "',
-						Quantity= " . $_POST['Quantity'] . "
-					WHERE Parent='" . $SelectedParent . "'
-					AND Component='" . $SelectedComponent . "'";
+			$sql = "UPDATE BOM SET BOM.WorkCentreAdded='" . $_POST['WorkCentreAdded'] . "',
+						BOM.LocCode='" . $_POST['LocCode'] . "',
+						BOM.EffectiveAfter='" . $EffectiveAfterSQL . "',
+						BOM.EffectiveTo='" . $EffectiveToSQL . "',
+						BOM.Quantity= " . $_POST['Quantity'] . "
+					WHERE BOM.Parent='" . $SelectedParent . "'
+					AND BOM.Component='" . $SelectedComponent . "'";
 
 			$ErrMsg =  _('Could not update this BOM component because');
 			$DbgMsg =  _('The SQL used to update the component was');
@@ -332,9 +353,29 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			echo '<CENTER><TABLE><TR><TD>' . _('Component code') . ':</TD><TD>';
 			echo "<SELECT name='Component'>";
 
-			$sql = "SELECT StockID, Description FROM StockMaster WHERE MBflag !='D' AND MBflag !='K' AND MBflag !='A' AND StockID != '$SelectedParent' ORDER BY StockID";
-
-
+			
+			if ($ParentMBflag=='A'){ /*Its an assembly */
+				$sql = "SELECT StockMaster.StockID, 
+						StockMaster.Description 
+					FROM StockMaster 
+					WHERE StockMaster.MBflag !='D' 
+					AND StockMaster.MBflag !='K' 
+					AND StockMaster.MBflag !='A' 
+					AND StockMaster.Controlled = 0 
+					AND StockMaster.StockID != '$SelectedParent' 
+					ORDER BY StockMaster.StockID";
+			
+			} else { /*Its either a normal manufac item or a kitset - controlled items ok */
+				$sql = "SELECT StockMaster.StockID, 
+						StockMaster.Description 
+					FROM StockMaster 
+					WHERE StockMaster.MBflag !='D' 
+					AND StockMaster.MBflag !='K' 
+					AND StockMaster.MBflag !='A' 
+					AND StockMaster.StockID != '$SelectedParent' 
+					ORDER BY StockMaster.StockID";
+			}
+					
 			$ErrMsg = _('Could not retrieve the list of potential components because');
 			$DbgMsg = _('The SQL used to retrieve the list of potential components part was');
 			$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);

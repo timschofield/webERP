@@ -17,7 +17,7 @@
 
 body {
 	font-family: Verdana, Arial, Helvetica;
-	font-size: 8px;
+	font-size: 12px;
 	background-color: #F1FFDD; 
 	margin-left: 10px;
 	margin-top: 5px;
@@ -29,7 +29,7 @@ body {
 /*links before selection */
 a {
 	font-family: Verdana, Arial, Helvetica;
-	font-size: 10px;
+	font-size: 12px;
 	font-weight: bold;
 	text-decoration: none;
 	color: #000000;
@@ -48,17 +48,17 @@ table {
 /*table detail items default format */
 td {
 	font-family: Verdana, Arial, Helvetica;
-	font-size: 10px;
+	font-size: 12px;
 }
 
 input {
 	font-family: Verdana, Arial, Helvetica;
-	font-size: 10px;
+	font-size: 12px;
 }
 
 select {
 	font-family: Verdana, Arial, Helvetica;
-	font-size: 10px;
+	font-size: 12px;
 }
 
 
@@ -77,7 +77,7 @@ select {
 #page {
 	width: 100%;
 	color: #000000;
-	font-size: 8px;
+	font-size: 10px;
 	white-space: nowrap;
 	border: none;
 }
@@ -137,10 +137,10 @@ select {
 	margin: 0px;
 	padding: 0px;
  	color: #000000;
-	border-top: 2px #aaaaaa solid;
+	/*border-top: 2px #aaaaaa solid;
 	border-left: 2px #aaaaaa solid;
 	border-right: 2px #ffffff solid;
-	border-bottom: 4px #ffffff solid;
+	border-bottom: 4px #ffffff solid; */
 	text-align: right;
 	/* position: relative;
 	top: 3px; */
@@ -149,12 +149,11 @@ select {
 /*The main page heading left part before quick menu */
 .quick_menu_left {
 	font-family: Verdana, Arial, Helvetica;
-	font-size: 12px;
-	font-weight: bold;
+	font-size: 11px;
 	border: 0px;
 	white-space: nowrap;
 	margin: 2px;
-	padding: 2px;
+	padding: 0px;
 	color: #000000;
 }
 
@@ -183,8 +182,8 @@ select {
 }
 
 .system_menu_tabs a {
-	font-size: 10px;
-   color: #000000;
+	font-size: 12px;
+   	color: #000000;
 }
 
 .system_menu_tabs a:hover {
@@ -195,7 +194,7 @@ select {
 .main_area {
 	border: 2px inset #ffffff;
 	width: 100%;
-  background-color: #ffffff;
+  	background-color: #ffffff;
 }
 
 .main_menu {
@@ -212,7 +211,6 @@ select {
 .main_menu_unselected {
 	background-color: #617C4F;
 	border: 2px #f1ffdd outset;
-/*	position: relative; */
 	text-align: center;
 	white-space: nowrap;
 }
@@ -220,7 +218,6 @@ select {
 .main_menu_selected {
 	background-color: #617C4F;
 	border: 2px inset #41437D;
-/*	position: relative; */ 
 	text-align: center;
 	white-space: nowrap;
 }
@@ -342,7 +339,7 @@ a.footer {
 
 .titlebar {
 	font-family: "Times New Roman", Times, serif;
-	font-size: 9px;
+	font-size: 10px;
 	color: #FFFFFF;
   	background-color: #336699;
 }

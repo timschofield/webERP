@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
 */
@@ -47,18 +47,18 @@ If (isset($_POST['Update'])){
 	$InputErrors =0;
 	If (strlen($_POST['DeliverTo'])<=1){
 		$InputErrors =1;
-		prnMsg(_('You must enter the person or company to whom delivery should be made'),'warn');
+		prnMsg(_('You must enter the person or company to whom delivery should be made'),'error');
 	}
 	If (strlen($_POST['BrAdd1'])<=1){
 		$InputErrors =1;
-		prnMsg(_('You should enter the street address in the box provided') . '. ' . _('Orders cannot be accepted without a valid street address'),'warn');
+		prnMsg(_('You should enter the street address in the box provided') . '. ' . _('Orders cannot be accepted without a valid street address'),'error');
 	}
 	If (strpos($_POST['BrAdd1'],_('Box'))>0){
-		prnMsg(_('you have entered the word') . ' "' . _('Box') . '" ' . _('in the street address') . '. ' . _('Items cannot be delivered to') . ' ' ._('box') . ' ' . _('addresses'),'warn');
+		prnMsg(_('You have entered the word') . ' "' . _('Box') . '" ' . _('in the street address') . '. ' . _('Items cannot be delivered to') . ' ' ._('box') . ' ' . _('addresses'),'warn');
 	}
 	If (!is_numeric($_POST['FreightCost'])){
 		$InputErrors =1;
-		prnMsg( _('The freight cost entered is expected to be numeric'),'warn');
+		prnMsg( _('The freight cost entered is expected to be numeric'),'error');
 	}
 
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $PageSecurity = 11;
 
 /* Session started in header.inc for password checking and authorisation level check */
@@ -19,7 +19,7 @@ if ($_SESSION['SupplierID']!="" AND isset($_SESSION['SupplierID']) AND !isset($_
 }
 if (!isset($_POST['SupplierID']) OR $_POST['SupplierID']==""){
 	echo '<BR>' . _('This page is expected to be called after a supplier has been selected');
-	echo '<META HTTP-EQUIV="Refresh" CONTENT="0" URL="' . $rootpath . '/SelectSupplier.php?' . SID . '">';
+	echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . '/SelectSupplier.php?' . SID . "'>";
 	exit;
 } elseif ($_POST['SuppName']=="" OR !isset($_POST['SuppName'])) {
 	$sql = "SELECT SuppName FROM Suppliers WHERE SupplierID='" . $_SESSION['SupplierID'] . "'";

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -271,7 +271,7 @@ if (!isset($SelectedBranch)){
 	$myrow = DB_fetch_row($result);
 
 	if ($myrow) {
-		echo '<BR><B>'._('Branches Defined for'). ' '. $DebtorNo - $myrow[0] . '</B>';
+		echo '<BR><B>'._('Branches Defined for'). ' '. $DebtorNo . ' - ' . $myrow[0] . '</B>';
 		echo '<table border=1>';
 
 		echo "<tr><td class='tableheader'>"._('Code')."</td>
@@ -530,7 +530,7 @@ if (! isset($_GET['delete'])) {
 	echo '<TD><input type="Text" name="FaxNo" SIZE=22 MAXLENGTH=20 value="'. $_POST['FaxNo'].'"></TD></TR>';
 
 
-	echo '<TR><TD><a href="Mailto:"'. $_POST['Email'].'>'._('Email').':</a></TD>';
+	echo '<TR><TD><a href="Mailto:'. $_POST['Email'].'">'._('Email').':</a></TD>';
 	echo '<TD><input type="Text" name="Email" SIZE=56 MAXLENGTH=55 value="'. $_POST['Email'].'"></TD></TR>';
 
 	echo '<TR><TD>'._('Tax Authority').':</TD>';

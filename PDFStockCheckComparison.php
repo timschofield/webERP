@@ -1,9 +1,6 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity = 2;
-if (! isset($_POST['ReportOrClose'])){
-	$title= _('Inventory Comparison Comparison Report');
-}
 
 If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
@@ -343,6 +340,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 } else { /*The option to print PDF was not hit */
 
 	include('includes/session.inc');
+	$title= _('Inventory Comparison Comparison Report');
 	include('includes/header.inc');
 
 	echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '" METHOD="POST"><CENTER><TABLE>';
