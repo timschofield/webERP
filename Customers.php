@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 3;
 
@@ -29,9 +29,9 @@ if ($_POST['submit']) {
 	} elseif (strlen($_POST['DebtorNo']) ==0) {
 		$InputError = 1;
 		echo '<BR>' . _('The Debtor Code cannot be empty');
-	} elseif (strstr($_POST['DebtorNo'],"'") OR strstr($_POST['DebtorNo'],"+") OR strstr($_POST['DebtorNo'],"\"") OR strstr($_POST['DebtorNo'],"&") OR strstr($_POST['DebtorNo']," ")) {
+	} elseif (strstr($_POST['DebtorNo'],"'") OR strstr($_POST['DebtorNo'],"+") OR strstr($_POST['DebtorNo'],"\"") OR strstr($_POST['DebtorNo'],"&") OR strstr($_POST['DebtorNo']," ") OR strstr($_POST['DebtorNo'],"\\") OR strstr($_POST['DebtorNo'],".") OR strstr($_POST['DebtorNo'],'"')) {
 		$InputError = 1;
-		echo '<BR>' . _('The customer code cannot contain any of the following characters') . " - ' & + \" " . _('or a space');
+		echo '<BR>' . _('The customer code cannot contain any of the following characters') . " . - ' & + \" " . _('or a space');
 	} elseif (strstr($_POST['Address1'],"'") OR strstr($_POST['Address2'],"'") OR strstr($_POST['Address3'],"'") OR strstr($_POST['Address4'],"'")) {
 		$InputError = 1;
 		echo '<BR>' . _('No lines of the address must not contain the') . " ' " . _('character');

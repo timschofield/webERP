@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 11;
 
@@ -35,9 +35,9 @@ if (isset($_POST['submit'])) {
 	} elseif (strlen($StockID) ==0) {
 		$InputError = 1;
 		prnMsg (_('The Stock Item code cannot be empty'),'error');
-	}elseif (strstr($StockID," ") OR strstr($StockID,"'") OR strstr($StockID,"+") OR strstr($StockID,"\"") OR strstr($StockID,"&")) {
+	}elseif (strstr($StockID," ") OR strstr($StockID,"'") OR strstr($StockID,"+") OR strstr($StockID,"\\") OR strstr($StockID,"\"") OR strstr($StockID,"&") OR strstr($StockID,".") OR strstr($StockID,'"')) {
 		$InputError = 1;
-		prnMsg(_("The stock item code cannot contain any of the following characters - ' & + \" OR a space"),'error');
+		prnMsg(_("The stock item code cannot contain any of the following characters - ' & + \" \\ OR a space"),'error');
 
 	} elseif (strlen($_POST['Units']) >20) {
 		$InputError = 1;

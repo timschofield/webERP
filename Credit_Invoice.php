@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $PageSecurity =3;
 
 
@@ -383,6 +383,13 @@ if (isset($_POST['ProcessCredit'])){
 	$Result = DB_query($SQL,$db);
 	$myrow = DB_fetch_row($Result);
 
+
+	/*Do some rounding */
+
+	$_SESSION['CreditItems']->total = round($_SESSION['CreditItems']->total,2);
+	$_POST['ChargeFreightCost'] = round($_POST['ChargeFreightCost'],2);
+	$TaxTotal = round($TaxTotal,2);
+
 	$Allocate_amount=0;
 	$Settled =0;
 	$SettledInvoice=0;
@@ -472,7 +479,7 @@ if (isset($_POST['ProcessCredit'])){
 	foreach ($_SESSION['CreditItems']->LineItems as $OrderLine) {
 
 		if ($OrderLine->QtyDispatched >0){
-			$LocalCurrencyPrice= ($OrderLine->Price / $_SESSION['CurrencyRate']);
+			$LocalCurrencyPrice= round(($OrderLine->Price / $_SESSION['CurrencyRate']),2);
 
 			/*Determine the type of stock item being credited */
 			$SQL = "SELECT MBflag FROM StockMaster WHERE StockID = '" . $OrderLine->StockID . "'";
@@ -1032,7 +1039,7 @@ if (isset($_POST['ProcessCredit'])){
 							" . $PeriodNo . ",
 							" . $COGSAccount . ",
 							'" . $_SESSION['CreditItems']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
-							" . -($OrderLine->StandardCost * $OrderLine->QtyDispatched) . "
+							" . -round($OrderLine->StandardCost * $OrderLine->QtyDispatched,2) . "
 							)";
 
 				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The cost of sales GL posting could not be inserted because:');
@@ -1056,7 +1063,7 @@ if (isset($_POST['ProcessCredit'])){
 								" . $PeriodNo . ",
 								" . $_POST['WriteOffGLCode'] . ",
 								'" . $_SESSION['CreditItems']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
-								" . ($OrderLine->StandardCost * $OrderLine->QtyDispatched) . "
+								" . round($OrderLine->StandardCost * $OrderLine->QtyDispatched,2) . "
 								)";
 				} else {
 					$StockGLCode = GetStockGLCode($OrderLine->StockID, $db);
@@ -1073,7 +1080,7 @@ if (isset($_POST['ProcessCredit'])){
 								" . $PeriodNo . ",
 								" . $StockGLCode["StockAct"] . ",
 								'" . $_SESSION['CreditItems']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
-								" . ($OrderLine->StandardCost * $OrderLine->QtyDispatched) . "
+								" . round($OrderLine->StandardCost * $OrderLine->QtyDispatched,2) . "
 								)";
 				}
 
@@ -1102,7 +1109,7 @@ if (isset($_POST['ProcessCredit'])){
 							" . $PeriodNo . ",
 							" . $SalesGLAccounts["SalesGLCode"] . ",
 							'" . $_SESSION['CreditItems']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->Price . "',
-							" . ($OrderLine->Price * $OrderLine->QtyDispatched) . "
+							" . round($OrderLine->Price * $OrderLine->QtyDispatched,2) . "
 							)";
 
 				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The credit note GL posting could not be inserted because:');
@@ -1124,7 +1131,7 @@ if (isset($_POST['ProcessCredit'])){
 								" . $PeriodNo . ",
 								" . $SalesGLAccounts["DiscountGLCode"] . ",
 								'" . $_SESSION['CreditItems']->DebtorNo . " - " . $OrderLine->StockID . " @ " . ($OrderLine->DiscountPercent * 100) . "%',
-								" . -($OrderLine->Price * $OrderLine->QtyDispatched * $OrderLine->DiscountPercent) . "
+								" . -round($OrderLine->Price * $OrderLine->QtyDispatched * $OrderLine->DiscountPercent,2) . "
 								)";
 					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The credit note discount GL posting could not be inserted because:');
 					$DbgMsg = _('The following SQL to insert the GLTrans record was used:');
@@ -1152,7 +1159,7 @@ if (isset($_POST['ProcessCredit'])){
 						" . $PeriodNo . ",
 						" . $CompanyData["DebtorsAct"] . ",
 						'" . $_SESSION['CreditItems']->DebtorNo . "',
-						" . -($_SESSION['CreditItems']->total + $_POST['ChargeFreightCost'] + $TaxTotal) . "
+						" . -round($_SESSION['CreditItems']->total + $_POST['ChargeFreightCost'] + $TaxTotal,2) . "
 					)";
 
 			$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The total debtor GL posting for the credit note could not be inserted because:');

@@ -21,9 +21,9 @@ if (function_exists('bindtextdomain')){
 
 if (function_exists('gettext')){
 	if ($_SESSION['Language']=='en'){
-		setlocale (LC_ALL,'en_GB');
+		setlocale (LC_MESSAGES,'en_GB');
 	} else {
-		setlocale (LC_ALL, $_SESSION['Language'] . "_" . strtoupper($_SESSION['Language']));
+		setlocale (LC_MESSAGES, $_SESSION['Language'] . "_" . strtoupper($_SESSION['Language']));
 	}
 }
 

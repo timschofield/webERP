@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $title = "Supplier Maintenance";
 
 $PageSecurity=5;
@@ -314,9 +314,9 @@ if (isset($_POST['submit'])) {
 	} elseif (strlen($SupplierID) ==0) {
 		$InputError = 1;
 		echo "<BR>The Supplier Code cannot be empty";
-	} elseif (strstr($SupplierID,"'") OR strstr($SupplierID,"+") OR strstr($SupplierID,"\"") OR strstr($SupplierID,"&") OR strstr($SupplierID," ")) {
+	} elseif (strstr($SupplierID,"'") OR strstr($SupplierID,"+") OR strstr($SupplierID,"\"") OR strstr($SupplierID,"&") OR strstr($SupplierID," ") OR strstr($SupplierID,".") OR strstr($SupplierID,'"') OR strstr($SupplierID,"\\")) {
 		$InputError = 1;
-		echo "<BR>The supplier code cannot contain any of the following characters - ' & + \" or a space";
+		echo "<BR>The supplier code cannot contain any of the following characters - . ' & + \" \\ or a space";
 	} elseif (strlen($_POST['BankRef'])>12) {
 		$InputError = 1;
 		echo "<BR>The bank reference text must be less than 12 characters long";

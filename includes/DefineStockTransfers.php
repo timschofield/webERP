@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 /*Class to hold stock transfer records */
 
@@ -13,7 +13,13 @@ class StockTransfer {
 	Var $TranDate;
 	Var $TransferItem; /*Array of LineItems */
 
-	function StockTransfer($TrfID, $StockLocationFrom, $StockLocationFromName, $StockLocationTo, $StockLocationToName, $TranDate){
+	function StockTransfer($TrfID,
+				$StockLocationFrom,
+				$StockLocationFromName,
+				$StockLocationTo,
+				$StockLocationToName,
+				$TranDate )	{
+
 		$this->TrfID = $TrfID;
 		$this->StockLocationFrom = $StockLocationFrom;
 		$this->StockLocationFromName = $StockLocationFromName;

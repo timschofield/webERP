@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /* Common SQL Functions */
 
 
@@ -14,28 +14,24 @@ Also updates the transaction number
 
 */
 
-$SQL = "SELECT TypeNo FROM SysTypes WHERE TypeID = " . $TransType;
+	$SQL = "SELECT TypeNo FROM SysTypes WHERE TypeID = " . $TransType;
 
-$GetTransNoResult = DB_query($SQL,$db);
-if (DB_error_no($db) !=0){
-	  echo "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The next transaction number could not be retrieved from the database: -<BR>" . DB_error_msg($db);
-	  if ($debug==1){
-		   echo "<BR>The following SQL to retrieve the transaction number was used:<BR>$SQL<BR>";
-	  }
-	  return 0;
-}
+	$ErrMsg = _('CRITICAL ERROR - NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The next transaction number could not be retrieved from the database because');
+	$DbgMsg =  _('The following SQL to retrieve the transaction number was used');
 
-$myrow = DB_fetch_row($GetTransNoResult);
+	$GetTransNoResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
-$NextTransNumber = $myrow[0] + 1;
+	if (DB_error_no($db) !=0){
+		return 0;
+	} else {
+		$myrow = DB_fetch_row($GetTransNoResult);
+		$SQL = 'UPDATE SysTypes SET TypeNo = ' . ($myrow[0] + 1) . ' WHERE TypeID = ' . $TransType;
+		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The transaction number could not be incremented');
+		$DbgMsg =  _('The following SQL to increment the transaction number was used:');
+		$UpdTransNoResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
-$SQL = "UPDATE SysTypes SET TypeNo = " . $NextTransNumber . " WHERE TypeID = " . $TransType;
-$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The transaction number could not be incremented');
-$DbgMsg =  _('The following SQL to increment the transaction number was used:');
-$GetTransNoResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
-
-Return $NextTransNumber;
-
+		return $myrow[0] + 1;
+	}
 }
 
 
@@ -43,59 +39,80 @@ Function ReadInCompanyRecord (&$db) {
 
 /* Reads all the company data set up in the company record and returns an array */
 
-$Query="SELECT GSTNo, PostalAddress, RegOffice1, RegOffice2, RegOffice3, Telephone, Fax, Email, CurrencyDefault,DebtorsAct, PytDiscountAct, CreditorsAct, PayrollAct, GRNAct, ExchangeDiffAct, PurchasesExchangeDiffAct, RetainedEarnings, FreightAct, GLLink_Debtors, GLLink_Creditors, GLLink_Stock FROM Companies WHERE CoyCode=1";
+	$Query=	"SELECT
+		GSTNo,
+		PostalAddress,
+		RegOffice1,
+		RegOffice2,
+		RegOffice3,
+		Telephone,
+		Fax,
+		Email,
+		CurrencyDefault,
+		DebtorsAct,
+		PytDiscountAct,
+		CreditorsAct,
+		PayrollAct,
+		GRNAct,
+		ExchangeDiffAct,
+		PurchasesExchangeDiffAct,
+		RetainedEarnings,
+		FreightAct,
+		GLLink_Debtors,
+		GLLink_Creditors,
+		GLLink_Stock
+	FROM Companies
+	WHERE CoyCode=1";
+
+	$ErrMsg = _('An error occurred accessing the database to retrieve the company information:');
+	$ReadCoyResult = DB_query($Query,$db,$ErrMsg);
 
 
-$ReadCoyResult = DB_query($Query,$db);
-if (DB_error_no($db)!=0){
-	echo "<BR>An error occurred accessing the database to retrieve the company information: - " .DB_error_msg($db);
-	return 0;
-} elseif (DB_num_rows($ReadCoyResult)==0) {
-      echo "<BR><B>CRITICAL PROBLEM: The company record has not yet been set up</B><BR>From the system setup tab, select company maintenance to enter the company infomation and system preferences";
-      return 0;
-} else {
-	$myrow = DB_fetch_array($ReadCoyResult);
-	return $myrow;
-}
-
+	if (DB_error_no($db)!=0){
+		return 0;
+	} elseif (DB_num_rows($ReadCoyResult)==0) {
+      		echo '<BR><B>' . _('CRITICAL PROBLEM: The company record has not yet been set up</B><BR>From the system setup tab, select company maintenance to enter the company infomation and system preferences');
+		return 0;
+	} else {
+		$myrow = DB_fetch_array($ReadCoyResult);
+		return $myrow;
+	}
 }
 
 
 Function GetStockGLCode ($StockID, &$db){
 
 /*Gets the GL Codes relevant to the stock item account from the stock category record */
+	$QuerySQL = "SELECT StockAct,
+				AdjGLAct,
+				PurchPriceVarAct,
+				MaterialUseageVarAc,
+				WIPAct
+			FROM StockMaster,
+				StockCategory
+			WHERE StockMaster.CategoryID=StockCategory.CategoryID
+			AND StockMaster.StockID = '" . $StockID . "'";
 
-	$QuerySQL = "SELECT StockAct, AdjGLAct, PurchPriceVarAct, MaterialUseageVarAc, WIPAct FROM StockMaster, StockCategory WHERE StockMaster.CategoryID=StockCategory.CategoryID AND StockMaster.StockID = '" . $StockID . "'";
-
-
-	$GetStkGLResult = DB_query($QuerySQL,$db);
+	$ErrMsg =  _('The stock GL codes could not be retreived because');
+	$GetStkGLResult = DB_query($QuerySQL, $db, $ErrMsg);
 
 	if (DB_error_no($db) != 0){
-		echo "The stock GL codes could not be retreived because : - " . DB_error_msg($db) . " The SQL that was used to try to get this information was :<BR>" . $QuerySQL;
 		return 0;
+	} else {
+		$myrow = DB_fetch_array($GetStkGLResult);
+		return $myrow;
 	}
-	$myrow = DB_fetch_array($GetStkGLResult);
-
-	return $myrow;
-
 }
 
 Function GetTaxRate ($TaxAuthority, $DispatchTaxAuthority, $TaxLevel, &$db){
 
 /*Gets the Tax rate applicable to an item from the TaxAuthority of the branch and TaxLevel of the item */
-	Global $debug;
 
 	$QuerySQL = "SELECT TaxRate FROM TaxAuthLevels WHERE TaxAuthority=" . $TaxAuthority . " AND DispatchTaxAuthority=" . $DispatchTaxAuthority . " AND Level = " . $TaxLevel;
 
-	$GetTaxRateResult = DB_query($QuerySQL,$db);
+	$ErrMsg = _('The tax rate for this item could not be retreived because:');
+	$GetTaxRateResult = DB_query($QuerySQL,$db,$ErrMsg);
 
-	if (DB_error_no($db) != 0){
-		echo "<BR>The tax rate for this item could not be retreived because : - " . DB_error_msg($db);
-		if ($debug==1){
-			echo  "<BR>The SQL that was used to try to get this information was :<BR>" . $QuerySQL;
-		}
-		return 0;
-	}
 	if (DB_num_rows($GetTaxRateResult)==1){
 		$myrow = DB_fetch_row($GetTaxRateResult);
 		return $myrow[0];
@@ -105,7 +122,5 @@ Function GetTaxRate ($TaxAuthority, $DispatchTaxAuthority, $TaxLevel, &$db){
 	}
 
 }
-
-
 
 ?>

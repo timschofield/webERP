@@ -73,11 +73,31 @@ if(isset($_POST['ProcessTransfer'])){
 				}
 
 				/* Insert the stock movement for the stock going out of the from location */
-				$SQL = "INSERT INTO StockMoves (StockID, Type, TransNo, LocCode, TranDate, Prd, Reference, Qty, NewQOH) VALUES ('" . $TrfLine->StockID . "', 16, " . $_SESSION['Transfer']->TrfID . ", '" . $_SESSION['Transfer']->StockLocationFrom . "','" . $SQLTransferDate . "'," . $PeriodNo . ", 'To " . $_SESSION['Transfer']->StockLocationToName . "', " . -$TrfLine->Quantity . ", " . ($QtyOnHandPrior - $TrfLine->Quantity) . ")";
+				$SQL = "INSERT INTO StockMoves (
+							StockID,
+							Type,
+							TransNo,
+							LocCode,
+							TranDate,
+							Prd,
+							Reference,
+							Qty,
+							NewQOH)
+					VALUES (
+						'" . $TrfLine->StockID . "',
+						16,
+						" . $_SESSION['Transfer']->TrfID . ",
+						'" . $_SESSION['Transfer']->StockLocationFrom . "',
+						'" . $SQLTransferDate . "',
+						" . $PeriodNo . ",
+						'To " . $_SESSION['Transfer']->StockLocationToName . "',
+						" . -$TrfLine->Quantity . ",
+						" . ($QtyOnHandPrior - $TrfLine->Quantity) . "
+					)";
 
 				$ErrMsg = '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The stock movement record cannot be inserted because:');
 				$DbgMsg = '<BR>'. _('The following SQL to insert the stock movement record was used:');
-				$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg,True);
+				$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 
 				/*Get the ID of the StockMove... */
 				$StkMoveNo = DB_Last_Insert_ID($db);
@@ -295,17 +315,17 @@ if(isset($_GET['Trf_ID'])){
 	unset($_SESSION['Transfer']);
 
 	$sql = "SELECT LocTransfers.StockID,
-		StockMaster.Description,
-		StockMaster.Units,
-		StockMaster.Controlled,
-		StockMaster.Serialised,
-		StockMaster.DecimalPlaces,
-		LocTransfers.ShipQty,
-		LocTransfers.RecQty,
-		Locations.LocationName AS ShipLocationName,
-		RecLocations.LocationName AS RecLocationName,
-		LocTransfers.ShipLoc,
-		LocTransfers.RecLoc
+			StockMaster.Description,
+			StockMaster.Units,
+			StockMaster.Controlled,
+			StockMaster.Serialised,
+			StockMaster.DecimalPlaces,
+			LocTransfers.ShipQty,
+			LocTransfers.RecQty,
+			Locations.LocationName AS ShipLocationName,
+			RecLocations.LocationName AS RecLocationName,
+			LocTransfers.ShipLoc,
+			LocTransfers.RecLoc
 		FROM LocTransfers INNER JOIN Locations
 		ON LocTransfers.ShipLoc=Locations.LocCode
 		INNER JOIN Locations AS RecLocations
