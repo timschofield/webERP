@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+
 $PageSecurity = 2;
 
 if (!isset($_POST['FromCat'])  OR $_POST['FromCat']=="") {
@@ -11,10 +11,33 @@ strlen($_POST['ToCriteria'])>=1){
 
 	include("config.php");
 	include("includes/ConnectDB.inc");
-	include("includes/PDFStarter_ros.inc");
 	include("includes/DateFunctions.inc");
+        include ("includes/class.pdf.php");
 
-	$pdf->addinfo('Title',"Inventory Planning Report");
+	/* A4_Landscape */
+
+	$Page_Width=842;
+	$Page_Height=595;
+	$Top_Margin=20;
+	$Bottom_Margin=20;
+	$Left_Margin=25;
+	$Right_Margin=22;
+
+	$PageSize = array(0,0,$Page_Width,$Page_Height);
+	$pdf = & new Cpdf($PageSize);
+
+	$PageNumber = 0;
+
+	$pdf->selectFont('./fonts/Helvetica.afm');
+
+/* Standard PDF file creation header stuff */
+
+	$pdf->addinfo('Author',"WEB-ERP " . $Version);
+	$pdf->addinfo('Creator',"WEB-ERP http://weberp.sourceforge.net - R&OS PHP-PDF http://www.ros.co.nz");
+	$pdf->addinfo('Title',"Inventory Planning Report " . Date($DefaultDateFormat));
+
+	$line_height=12;
+
 	$pdf->addinfo('Subject',"Inventory Planning ");
 
 	$PageNumber=1;
@@ -41,7 +64,7 @@ strlen($_POST['ToCriteria'])>=1){
 	   include("includes/footer.inc");
 	   exit;
 	}
-
+	$Period_0_Name = Date("M",mktime(0,0,0,Date('m'),Date('d'),Date('Y')));
 	$Period_1_Name = Date("M",mktime(0,0,0,Date('m')-1,Date('d'),Date('Y')));
 	$Period_2_Name = Date("M",mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
 	$Period_3_Name = Date("M",mktime(0,0,0,Date('m')-3,Date('d'),Date('Y')));
@@ -76,13 +99,9 @@ strlen($_POST['ToCriteria'])>=1){
 
 
 		if ($_POST["Location"]=="All"){
-
-		$SQL = "SELECT Sum(CASE WHEN Prd=" . $Period_1 . " THEN -Qty ELSE 0 END) AS Prd1, Sum(CASE WHEN Prd=" . $Period_2 . " THEN -Qty ELSE 0 END) AS Prd2, Sum(CASE WHEN Prd=" . $Period_3 . " THEN -Qty ELSE 0 END) AS Prd3, Sum(CASE WHEN Prd=" . $Period_4 . " THEN -Qty ELSE 0 END) AS Prd4 FROM StockMoves WHERE StockID='" . $InventoryPlan["StockID"] . "' AND (Type=10 OR Type=11) AND StockMoves.HideMovt=0";
-
+   		   $SQL = "SELECT Sum(CASE WHEN Prd=" . $CurrentPeriod . " THEN -Qty ELSE 0 END) AS Prd0,Sum(CASE WHEN Prd=" . $Period_1 . " THEN -Qty ELSE 0 END) AS Prd1, Sum(CASE WHEN Prd=" . $Period_2 . " THEN -Qty ELSE 0 END) AS Prd2, Sum(CASE WHEN Prd=" . $Period_3 . " THEN -Qty ELSE 0 END) AS Prd3, Sum(CASE WHEN Prd=" . $Period_4 . " THEN -Qty ELSE 0 END) AS Prd4 FROM StockMoves WHERE StockID='" . $InventoryPlan["StockID"] . "' AND (Type=10 OR Type=11) AND StockMoves.HideMovt=0";
 		} else {
-
-		$SQL = "SELECT Sum(CASE WHEN Prd=" . $Period_1 . " THEN -Qty ELSE 0 END) AS Prd1, Sum(CASE WHEN Prd=" . $Period_2 . " THEN -Qty ELSE 0 END) AS Prd2, Sum(CASE WHEN Prd=" . $Period_3 . " THEN -Qty ELSE 0 END) AS Prd3, Sum(CASE WHEN Prd=" . $Period_4 . " THEN -Qty ELSE 0 END) AS Prd4 FROM StockMoves WHERE StockID='" . $InventoryPlan["StockID"] . "' AND LocCode ='" . $_POST["Location"] . "' AND (Type=10 OR Type=11) AND StockMoves.HideMovt=0";
-
+  		   $SQL = "SELECT Sum(CASE WHEN Prd=" . $CurrentPeriod . " THEN -Qty ELSE 0 END) AS Prd0, Sum(CASE WHEN Prd=" . $Period_1 . " THEN -Qty ELSE 0 END) AS Prd1, Sum(CASE WHEN Prd=" . $Period_2 . " THEN -Qty ELSE 0 END) AS Prd2, Sum(CASE WHEN Prd=" . $Period_3 . " THEN -Qty ELSE 0 END) AS Prd3, Sum(CASE WHEN Prd=" . $Period_4 . " THEN -Qty ELSE 0 END) AS Prd4 FROM StockMoves WHERE StockID='" . $InventoryPlan["StockID"] . "' AND LocCode ='" . $_POST["Location"] . "' AND (Type=10 OR Type=11) AND StockMoves.HideMovt=0";
 		}
 
 		$SalesResult=DB_query($SQL,$db);
@@ -121,15 +140,12 @@ strlen($_POST['ToCriteria'])>=1){
 	   		exit;
 		}
 
-
 //Also need to add in the demand as a component of an assembly items if this items has any assembly parents.
-
 
 		if ($_POST["Location"]=='All'){
 			$SQL = "SELECT Sum((SalesOrderDetails.Quantity-SalesOrderDetails.QtyInvoiced)*BOM.Quantity) AS DEM FROM SalesOrderDetails, BOM, StockMaster  WHERE SalesOrderDetails.StkCode=BOM.Parent AND SalesOrderDetails.Quantity-SalesOrderDetails.QtyInvoiced > 0 AND BOM.Component='" . $InventoryPlan["StockID"] . "' AND StockMaster.StockID=BOM.Parent AND StockMaster.MBflag='A' AND SalesOrderDetails.Completed=0";
 		} else {
 			$SQL = "SELECT Sum((SalesOrderDetails.Quantity-SalesOrderDetails.QtyInvoiced)*BOM.Quantity) AS DEM FROM SalesOrderDetails, SalesOrders, BOM, StockMaster  WHERE SalesOrderDetails.OrderNo=SalesOrders.OrderNo AND SalesOrderDetails.StkCode=BOM.Parent AND SalesOrderDetails.Quantity-SalesOrderDetails.QtyInvoiced > 0 AND BOM.Component='" . $InventoryPlan["StockID"] . "' AND StockMaster.StockID=BOM.Parent AND SalesOrders.FromStkLoc ='" . $_POST["Location"] . "' AND StockMaster.MBflag='A' AND SalesOrderDetails.Completed=0";
-
 		}
 
 		$BOMDemandResult = DB_query($SQL,$db);
@@ -145,7 +161,6 @@ strlen($_POST['ToCriteria'])>=1){
 	   		include("includes/footer.inc");
 	   		exit;
 		}
-
 
 		if ($_POST["Location"]=='All'){
 			$SQL = "SELECT Sum(PurchOrderDetails.QuantityOrd - PurchOrderDetails.QuantityRecd) AS QtyOnOrder FROM PurchOrderDetails, PurchOrders WHERE PurchOrderDetails.OrderNo = PurchOrders.OrderNo AND PurchOrderDetails.ItemCode = '" . $InventoryPlan["StockID"] . "' AND PurchOrderDetails.Completed = 0";
@@ -172,28 +187,29 @@ strlen($_POST['ToCriteria'])>=1){
 
 		$OnOrdRow = DB_fetch_array($OnOrdResult);
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 60,$FontSize,$InventoryPlan["StockID"],"left");
-		$LeftOvers = $pdf->addTextWrap(100, $YPos, 88,6,$InventoryPlan["Description"],"left");
-		$LeftOvers = $pdf->addTextWrap(190, $YPos, 40,$FontSize,number_format($SalesRow['Prd4'],0),"right");
-		$LeftOvers = $pdf->addTextWrap(231, $YPos, 40,$FontSize,number_format($SalesRow['Prd3'],0),"right");
-		$LeftOvers = $pdf->addTextWrap(272, $YPos, 40,$FontSize,number_format($SalesRow['Prd2'],0),"right");
-		$LeftOvers = $pdf->addTextWrap(313, $YPos, 40,$FontSize,number_format($SalesRow['Prd1'],0),"right");
+		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 60, $FontSize, $InventoryPlan["StockID"], "left");
+		$LeftOvers = $pdf->addTextWrap(100, $YPos, 150,6,$InventoryPlan["Description"],"left");
+		$LeftOvers = $pdf->addTextWrap(251, $YPos, 40,$FontSize,number_format($SalesRow['Prd4'],0),"right");
+		$LeftOvers = $pdf->addTextWrap(292, $YPos, 40,$FontSize,number_format($SalesRow['Prd3'],0),"right");
+		$LeftOvers = $pdf->addTextWrap(333, $YPos, 40,$FontSize,number_format($SalesRow['Prd2'],0),"right");
+		$LeftOvers = $pdf->addTextWrap(374, $YPos, 40,$FontSize,number_format($SalesRow['Prd1'],0),"right");
+		$LeftOvers = $pdf->addTextWrap(415, $YPos, 40,$FontSize,number_format($SalesRow['Prd0'],0),"right");
 
 		$MaxMthSales = Max($SalesRow["Prd1"], $SalesRow["Prd2"], $SalesRow["Prd3"], $SalesRow["Prd4"]);
 		$IdealStockHolding = $MaxMthSales * $_POST["NumberMonthsHolding"];
-		$LeftOvers = $pdf->addTextWrap(354, $YPos, 40,$FontSize,number_format($IdealStockHolding,0),"right");
-		$LeftOvers = $pdf->addTextWrap(395, $YPos, 40,$FontSize,number_format($InventoryPlan["QOH"],0),"right");
-		$LeftOvers = $pdf->addTextWrap(436, $YPos, 40,$FontSize,number_format($TotalDemand,0),"right");
+		$LeftOvers = $pdf->addTextWrap(456, $YPos, 40,$FontSize,number_format($IdealStockHolding,0),"right");
+		$LeftOvers = $pdf->addTextWrap(597, $YPos, 40,$FontSize,number_format($InventoryPlan["QOH"],0),"right");
+		$LeftOvers = $pdf->addTextWrap(638, $YPos, 40,$FontSize,number_format($TotalDemand,0),"right");
 
-		$LeftOvers = $pdf->addTextWrap(477, $YPos, 40,$FontSize,number_format($OnOrdRow["QtyOnOrder"],0),"right");
+		$LeftOvers = $pdf->addTextWrap(679, $YPos, 40,$FontSize,number_format($OnOrdRow["QtyOnOrder"],0),"right");
 
 		$SuggestedTopUpOrder = $IdealStockHolding - $InventoryPlan["QOH"] + $TotalDemand - $OnOrdRow["QtyOnOrder"];
 		if ($SuggestedTopUpOrder <=0){
-			$LeftOvers = $pdf->addTextWrap(518, $YPos, 40,$FontSize,'Nil','centre');
+			$LeftOvers = $pdf->addTextWrap(720, $YPos, 40,$FontSize,'Nil','centre');
 
 		} else {
 
-			$LeftOvers = $pdf->addTextWrap(518, $YPos, 40,$FontSize,number_format($SuggestedTopUpOrder,0),'right');
+			$LeftOvers = $pdf->addTextWrap(720, $YPos, 40,$FontSize,number_format($SuggestedTopUpOrder,0),'right');
 		}
 
 

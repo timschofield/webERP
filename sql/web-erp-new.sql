@@ -662,6 +662,29 @@ CREATE TABLE LocStock (
 ) TYPE=InnoDB;
 
 --
+-- Table structure for table `LocTransfers`
+--
+
+DROP TABLE IF EXISTS LocTransfers;
+CREATE TABLE LocTransfers (
+  Reference int(11) NOT NULL default '0',
+  StockID varchar(20) NOT NULL default '',
+  ShipQty int(11) NOT NULL default '0',
+  RecQty int(11) NOT NULL default '0',
+  ShipDate date NOT NULL default '0000-00-00',
+  RecDate date NOT NULL default '0000-00-00',
+  ShipLoc varchar(7) NOT NULL default '',
+  RecLoc varchar(7) NOT NULL default '',
+  KEY Reference (Reference,StockID),
+  KEY ShipLoc (ShipLoc),
+  KEY RecLoc (RecLoc),
+  KEY StockID (StockID),
+  CONSTRAINT `LocTransfers_ibfk_3` FOREIGN KEY (`StockID`) REFERENCES `StockMaster` (`StockID`),
+  CONSTRAINT `LocTransfers_ibfk_1` FOREIGN KEY (`ShipLoc`) REFERENCES `Locations` (`LocCode`),
+  CONSTRAINT `LocTransfers_ibfk_2` FOREIGN KEY (`RecLoc`) REFERENCES `Locations` (`LocCode`)
+) TYPE=InnoDB COMMENT='Stores Shipments To And From Locations';
+
+--
 -- Table structure for table `Locations`
 --
 
@@ -1614,7 +1637,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE SysTypes DISABLE KEYS */;
 LOCK TABLES SysTypes WRITE;
-INSERT INTO SysTypes VALUES (0,'Journal - GL',9),(1,'Payment - GL',17),(2,'Receipt - GL',3),(3,'Standing Journal',0),(10,'Sales Invoice',26),(11,'Credit Note',11),(12,'Receipt',18),(15,'Journal - Debtors',0),(16,'Location Transfer',4),(17,'Stock Adjustment',5),(18,'Purchase Order',0),(20,'Purchase Invoice',13),(21,'Debit Note',3),(22,'Creditors Payment',3),(23,'Creditors Journal',0),(25,'Purchase Order Delivery',7),(26,'Work Order Receipt',0),(28,'Work Order Issue',0),(29,'Work Order Variance',0),(30,'Sales Order',0),(31,'Shipment Close',2),(35,'Cost Update',3),(50,'Opening Balance',0);
+INSERT INTO SysTypes VALUES (0,'Journal - GL',9),(1,'Payment - GL',17),(2,'Receipt - GL',3),(3,'Standing Journal',0),(10,'Sales Invoice',26),(11,'Credit Note',11),(12,'Receipt',18),(15,'Journal - Debtors',0),(16,'Location Transfer',17),(17,'Stock Adjustment',5),(18,'Purchase Order',0),(20,'Purchase Invoice',13),(21,'Debit Note',3),(22,'Creditors Payment',3),(23,'Creditors Journal',0),(25,'Purchase Order Delivery',7),(26,'Work Order Receipt',0),(28,'Work Order Issue',0),(29,'Work Order Variance',0),(30,'Sales Order',0),(31,'Shipment Close',2),(35,'Cost Update',3),(50,'Opening Balance',0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE SysTypes ENABLE KEYS */;
 
@@ -1647,7 +1670,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE WWW_Users DISABLE KEYS */;
 LOCK TABLES WWW_Users WRITE;
-INSERT INTO WWW_Users VALUES ('Admin','albundy','Phil Daintree','','','','DEN',7,'2004-03-12 21:55:21','','A4','1,1,1,1,1,1,1,1,',0),('demo','weberp','','','','','DEN',5,'2004-03-26 21:52:32','','A4','1,1,1,1,1,1,1,1,',0),('testy','weberp','','GRANHR','','','DEN',6,'2004-02-23 20:21:56','GRAN','A4','1,0,0,0,0,0,0,0,',0);
+INSERT INTO WWW_Users VALUES ('Admin','albundy','Phil Daintree','','','','DEN',7,'2004-04-28 21:29:56','','A4','1,1,1,1,1,1,1,1,',0),('demo','weberp','','','','','DEN',5,'2004-04-29 20:44:29','','A4','1,1,1,1,1,1,1,1,',0),('testy','weberp','','GRANHR','','','DEN',6,'2004-02-23 20:21:56','GRAN','A4','1,0,0,0,0,0,0,0,',0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE WWW_Users ENABLE KEYS */;
 

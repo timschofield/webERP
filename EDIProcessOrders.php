@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity =11;
 $title = "Process EDI Orders";
@@ -25,7 +25,7 @@ Compare the SegTag in the flat file with the expected SegTag from EDI_ORDERS_Seg
 
 parse the data in the line of text from the flat file to enable the order to be created
 
-Compile an html email to the customer service person based on the location
+Create a html email to the customer service person based on the location
 of the customer doing the ordering and where it would be best to pick the order from
 
 Read the next line of the flat file ...
@@ -406,12 +406,15 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . "/" . $rootpath . "/" . $EDI_In
 				break;
 			case 'NAD':
 				$NAD = explode('+',substr($LineText,4));
-				if (strlen($NAD[1]>3)){ /*EAN Number reference is used for party details */
-					$NAD_C082 = explode(':', $NAD[1]);
-					switch ($NAD[0]){
-						case 'BY':
-						case 'IV':
-							/*Look up the EAN Code given $NAD[1] for the buyer */							/*NAD_C082[2] must = 9 too but that is the only option anyway?? */
+				$NAD_C082 = explode(':', $NAD[1]);
+				$NAD_C058 = explode(':', $NAD[2]); /*Not used according to MIG */
+				$NAD_C080 = explode(':', $NAD[3]);
+				$NAD_C059 = explode(':', $NAD[4]);
+				switch ($NAD[0]){
+					case 'IV': /* This Name and address detail is that of the party to be invoiced */
+						/*Look up the EAN Code given $NAD[1] for the buyer */
+						if ($NAD_C082[2] ==9){
+						/*if NAD_C082[2] must = 9 then NAD_C082[0] is the EAN Intnat Article Numbering Assocn code of the customer - look up the customer by EDIReference*/
 							$InvoiceeResult = DB_query("SELECT DebtorNo FROM DebtorsMaster WHERE EDIReference='" . $NAD_C082[0] . "' AND EDIOrders=1",$db);
 							if (DB_num_rows($InvoiceeResult)!=1){
 								$EmailText .= "\nThe Buyer reference was specified as an EAN International Article Numbering Association code. Unfortunately, the field EDIReference of any of the customer's currently set up to receive EDI orders does not match with the code " . $NAD_C082[0] . " used in this message. So, that's the end of the road for this message ... ";
@@ -422,17 +425,68 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . "/" . $rootpath . "/" . $EDI_In
 								$Order->DebtorNo = $CustRow['DebtorNo'];
 							}
 							break;
-						case 'SU':
-							/*Supplier party details. This should be our EAN IANA number if not the message is not for us!! */
-							if ($NAD_C082[0]!= $EDIReference){
-								/* $EDIReference is set in config.php as our EDIReference it should be our EAN International Article Numbering Association code */
-								$EmailText .= "\nThe supplier reference was specified as an EAN International Article Numbering Association code. Unfortunately,the company EDIReference - $EDIReference does not match with the code " . $NAD_C082[0] . " used in this message. This implies that the EDI message if for some other supplier !! no further processing will be done.";
-								$TryNextFile = True; /* Look for other EDI msgs */
-								$CreateOrder = False; /*Dont create order in system */						}
-							break;
-					}
+						}
+						if (strlen($NAD_C080[0])>0){
+							$Order->CustomerName = $NAD_C080[0];
+						}
+						break;
+
+					case 'SU':
+						/*Supplier party details. This should be our EAN IANA number if not the message is not for us!! */
+						if ($NAD_C082[0]!= $EDIReference){
+							/* $EDIReference is set in config.php as our EDIReference it should be our EAN International Article Numbering Association code */
+							$EmailText .= "\nThe supplier reference was specified as an EAN International Article Numbering Association code. Unfortunately,the company EDIReference - $EDIReference does not match with the code " . $NAD_C082[0] . " used in this message. This implies that the EDI message if for some other supplier !! no further processing will be done.";
+							$TryNextFile = True; /* Look for other EDI msgs */
+							$CreateOrder = False; /*Dont create order in system */						}
+						break;
+					case 'DP':
+						/*Delivery Party - get the address and name etc */
+
+						/*Snag here - how do I figure out what branch to charge */
+						if (strlen($NAD_C080[0])>0){
+							$Order->DeliverTo = $NAD_C080[0];
+						}
+						if (strlen($NAD_C059[0])>0){
+							$Order->DelAdd1 = $NAD_C059[0];
+							$Order->DelAdd2 = $NAD_C059[1];
+							$Order->DelAdd3 = $NAD_C059[2];
+							$Order->DelAdd4 = $NAD_C059[4];
+						}
+						break;
+					case 'SN':
+						/*Store Number - get the branch details from the store number - snag here too cos need to ensure got the Customer detail first before try looking up its branches */
+						$BranchResult = DB_query("SELECT BranchCode, BrName, BrAddress1,BrAddress2, BrAddress3, BrAddress4, ContactName, DefaultLocation, PhoneNo, Email FROM CustBranch INNER JOIN DebtorsMaster ON CustBranch.DebtorNo = CustBranch.DebtorNo WHERE CustBranchCode='" . $NAD_C082[0] . "' AND CustBranch.DebtorNo='" . $Order->DebtorNo . "' AND DebtorsMaster.EDIOrders=1",$db);
+						if (DB_num_rows($BranchResult)!=1){
+							$EmailText .= "\nThe Store number was specified as " . $NAD_C082[0] . " unfortunately, there is either no branches of customer code " . $Order->DebtorNo . " or several that match this store number. This order could not be processed further.";
+							$TryNextFile = True; /* Look for other EDI msgs */
+							$CreateOrder = False; /*Dont create order in system */						} else {
+							$BranchRow = DB_fetch_array($BranchResult);
+							$Order->BranchCode = $BranchRow['BranchCode'];
+							$Order->DeliverTo = $BranchRow['BrName'];
+							$Order->DelAdd1 = $BranchRow['BrAddress1'];
+							$Order->DelAdd2 = $BranchRow['BrAddress2'];
+							$Order->DelAdd3 = $BranchRow['BrAddress3'];
+							$Order->DelAdd4 = $BranchRow['BrAddress4'];
+							$Order->PhoneNo = $BranchRow['PhoneNo'];
+							$Order->Email = $BranchRow['Email'];
+							$Order->Location = $BranchRow['DefaultLocation'];
+						}
+						break;
+					case 'BY':
+						/* The buyer details - don't think we care about this */
+						break;
+					case 'CO':
+						/* The coporate office details - don't think we care about this either*/
+						break;
+					case 'SR':
+						/* Our (the suppliers) representative - don't think we care about this either*/
+						break;
+					case 'WH':
+						/* The warehouse keeper details - don't think we care about this either*/
+						break;
 				}
-				break;
+				break; /*end of NAD segment */
+			case '
 
 		} /*end case  Seg Tag*/
 	} /*end while get next line of message */

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 if (!isset($_POST['FromCat'])  OR $_POST['FromCat']=="") {
 	$title="Inventory Valuation Reporting";
 }
@@ -132,11 +132,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 		include("includes/footer.inc");
 		exit;
       } else {
-		header("Content-type: application/pdf");
+      		header("Content-type: application/pdf");
 		header("Content-Length: " . $len);
-		header("Content-Disposition: inline; filename=InventoryValuation.pdf");
+		header("Content-Disposition: inline; filename=Customer_trans.pdf");
 		header("Expires: 0");
-		header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+		header("Cache-Control: private, post-check=0, pre-check=0");
 		header("Pragma: public");
 
 		$pdf->Stream();

@@ -1,13 +1,29 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $db = mysql_connect($host , $dbuser, $dbpassword);
 mysql_select_db($DatabaseName,$db);
 
 //DB wrapper functions to change only once for whole application
 
-function DB_query ($SQL,&$Conn){
+function DB_query ($SQL,&$Conn, $ErrorMessage="", $DebugMessage="", $Transaction=false){
+	global $debug;
 	$result=mysql_query($SQL,$Conn);
+	if (DB_error_no($Conn) != 0){
+		prnMsg($ErrorMessage."\n<BR>" . DB_error_msg($Conn),"error");
+		if ($debug==1){
+			echo $DebugMessage."<BR>$SQL<BR>";
+		}
+		if ($Transaction){
+			$SQL = "rollback";
+			$Result = DB_query($SQL,$Conn);
+			if (DB_error_no($Conn) !=0){
+				prnErrMsg("<br />Error Rolling Back Transaction!!");
+			}
+		}
+		endWEBERP();
+	}
 	return $result;
+
 }
 
 function DB_fetch_row (&$ResultIndex) {
