@@ -1,13 +1,13 @@
 <?php
 
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
-$title = "Balance Sheet";
 
 $PageSecurity = 8;
 
 include ("includes/session.inc");
+$title = _("Balance Sheet");
 include("includes/header.inc");
 include("includes/DateFunctions.inc");
 include("includes/SQL_CommonFunctions.inc");
@@ -16,11 +16,11 @@ include("includes/SQL_CommonFunctions.inc");
 echo "<FORM METHOD='POST' ACTION=" . $_SERVER["PHP_SELF"] . "?" . SID . ">";
 
 
-if (! isset($_POST["BalancePeriodEnd"]) OR $_POST["SelectADifferentPeriod"]=="Select A Different Balance Date"){
+if (! isset($_POST["BalancePeriodEnd"]) OR isset($_POST["SelectADifferentPeriod"])){
 
 
 /*Show a form to allow input of criteria for TB to show */
-	echo "<CENTER><TABLE><TR><TD>Select The Balance Date:</TD><TD><SELECT Name='BalancePeriodEnd'>";
+	echo "<CENTER><TABLE><TR><TD>"._("Select The Balance Date").":</TD><TD><SELECT Name='BalancePeriodEnd'>";
 
 	$sql = "SELECT PeriodNo, LastDate_In_Period FROM Periods";
 	$Periods = DB_query($sql,$db);
@@ -36,14 +36,14 @@ if (! isset($_POST["BalancePeriodEnd"]) OR $_POST["SelectADifferentPeriod"]=="Se
 
 	echo "</SELECT></TD></TR>";
 
-	echo "<TR><TD>Detail Or Summary:</TD><TD><SELECT Name='Detail'>";
-		echo "<OPTION SELECTED VALUE='Summary'>Summary";
-		echo "<OPTION SELECTED VALUE='Detailed'>All Accounts";
+	echo "<TR><TD>"._("Detail Or Summary").":</TD><TD><SELECT Name='Detail'>";
+		echo "<OPTION SELECTED VALUE='Summary'>"._("Summary");
+		echo "<OPTION SELECTED VALUE='Detailed'>"._("All Accounts");
 	echo "</SELECT></TD></TR>";
 
 	echo "</TABLE>";
 
-	echo "<INPUT TYPE=SUBMIT Name='ShowBalanceSheet' Value='Show Balance Sheet'></CENTER>";
+	echo "<INPUT TYPE=SUBMIT Name='ShowBalanceSheet' Value='"._("Show Balance Sheet")."'></CENTER>";
 
 /*Now do the posting while the user is thinking about the period to select */
 
@@ -70,7 +70,7 @@ if (! isset($_POST["BalancePeriodEnd"]) OR $_POST["SelectADifferentPeriod"]=="Se
 		ON ChartMaster.AccountCode= ChartDetails.AccountCode
 		WHERE AccountGroups.PandL=1";
 
-	$AccumProfitResult = DB_query($SQL,$db,"<BR>The accumulated profits brought forward could not be calculated by the SQL because","<br>The SQL that failed was:");
+	$AccumProfitResult = DB_query($SQL,$db,_("The accumulated profits brought forward could not be calculated by the SQL because"),_("The SQL that failed was"));
 
 	$AccumProfitRow = DB_fetch_array($AccumProfitResult); /*should only be one row returned */
 
@@ -88,24 +88,24 @@ if (! isset($_POST["BalancePeriodEnd"]) OR $_POST["SelectADifferentPeriod"]=="Se
 			ChartMaster.AccountName
 		ORDER BY AccountGroups.SectionInAccounts, AccountGroups.SequenceInTB, ChartDetails.AccountCode";
 
-	$AccountsResult = DB_query($SQL,$db,"<BR>No general ledger accounts were returned by the SQL because","<br>The SQL that failed was:");
+	$AccountsResult = DB_query($SQL,$db,_("No general ledger accounts were returned by the SQL because"),_("The SQL that failed was"));
 
-	echo "<CENTER><FONT SIZE=4 COLOR=BLUE><B>Balance Sheet As At $BalanceDate</B></FONT><BR>";
+	echo "<CENTER><FONT SIZE=4 COLOR=BLUE><B>"._("Balance Sheet As At")." $BalanceDate</B></FONT><BR>";
 
 	echo "<TABLE CELLPADDING=2>";
 
 	if ($_POST['Detail']=='Detailed'){
 		$TableHeader = "<TR>
-				<TD class='tableheader'>Account</TD>
-				<TD class='tableheader'>Account Name</TD>
+				<TD class='tableheader'>"._("Account")."</TD>
+				<TD class='tableheader'>"._("Account Name")."</TD>
 				<TD COLSPAN=2 class='tableheader' ALIGN=CENTER>$BalanceDate</TD>
-				<TD COLSPAN=2 class='tableheader' ALIGN=CENTER>Last Year</TD>
+				<TD COLSPAN=2 class='tableheader' ALIGN=CENTER>"._('Last Year')."</TD>
 				</TR>";
 	} else { /*summary */
 		$TableHeader = "<TR>
 				<TD COLSPAN=2 class='tableheader'></TD>
 				<TD COLSPAN=2 class='tableheader' ALIGN=CENTER>$BalanceDate</TD>
-				<TD COLSPAN=2 class='tableheader' ALIGN=CENTER>Last Year</TD>
+				<TD COLSPAN=2 class='tableheader' ALIGN=CENTER>"._('Last Year')."</TD>
 				</TR>";
 	}
 
@@ -126,14 +126,14 @@ if (! isset($_POST["BalancePeriodEnd"]) OR $_POST["SelectADifferentPeriod"]=="Se
 	while ($myrow=DB_fetch_array($AccountsResult)) {
 
 		$AccountBalance = $myrow['BalanceCFwd'];
-		$LYAccountBalance = $myrow["LYBalanceCFwd"];
+		$LYAccountBalance = $myrow['LYBalanceCFwd'];
 
 		if ($myrow['AccountCode'] == $RetainedEarningsAct){
 			$AccountBalance += $AccumProfitRow['AccumProfitBFwd'];
 			$LYAccountBalance += $AccumProfitRow['LYAccumProfitBFwd'];
 		}
 
-		if ($myrow["GroupName"]!= $ActGrp AND $_POST['Detail']=='Summary' AND $ActGrp != "") {
+		if ($myrow["GroupName"]!= $ActGrp AND $_POST['Detail']=='Summary' AND $ActGrp != '') {
 
 			printf("<td COLSPAN=3>%s</td>
 			<td ALIGN=RIGHT>%s</td>
@@ -167,10 +167,10 @@ if (! isset($_POST["BalancePeriodEnd"]) OR $_POST["SelectADifferentPeriod"]=="Se
 				}
 
 				printf("<TR>
-				<TD COLSPAN=3><FONT SIZE=4>%s</FONT></td>
-				<TD ALIGN=RIGHT>%s</TD>
-				<TD></TD>
-				<TD ALIGN=RIGHT>%s</TD>
+					<TD COLSPAN=3><FONT SIZE=4>%s</FONT></td>
+					<TD ALIGN=RIGHT>%s</TD>
+					<TD></TD>
+					<TD ALIGN=RIGHT>%s</TD>
 				</TR>",
 				$Sections[$Section],
 				number_format($SectionBalance),
@@ -284,7 +284,7 @@ if (! isset($_POST["BalancePeriodEnd"]) OR $_POST["SelectADifferentPeriod"]=="Se
 		</TR>";
 
 	printf("<TR>
-		<TD COLSPAN=3>Check Total</FONT></td>
+		<TD COLSPAN=3>"._("Check Total<")."/FONT></td>
 		<TD ALIGN=RIGHT>%s</TD>
 		<TD></TD>
 		<TD ALIGN=RIGHT>%s</TD>
@@ -300,9 +300,8 @@ if (! isset($_POST["BalancePeriodEnd"]) OR $_POST["SelectADifferentPeriod"]=="Se
 		</TR>";
 
 	echo "</TABLE>";
-	echo "<INPUT TYPE=SUBMIT Name='SelectADifferentPeriod' Value='Select A Different Balance Date'></CENTER>";
+	echo "<INPUT TYPE=SUBMIT Name='SelectADifferentPeriod' Value='"._("Select A Different Balance Date")."'></CENTER>";
 }
 echo "</form>";
 include("includes/footer.inc");
-
 ?>

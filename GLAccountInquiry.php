@@ -1,10 +1,10 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /*As modified by Dirk Eversmann */
 
-$title = "General Ledger Account Inquiry";
 $PageSecurity = 8;
 include ("includes/session.inc");
+$title = _("General Ledger Account Inquiry");
 include("includes/header.inc");
 include("includes/DateFunctions.inc");
 include("includes/GLPostings.inc");
@@ -29,7 +29,7 @@ $DefaultPeriodDate = Date ("Y-m-d", Mktime(0,0,0,Date("m"),0,Date("Y")));
 /*Show a form to allow input of criteria for TB to show */
 echo "<CENTER><TABLE>
         <TR>
-         <TD>Account:</TD>
+         <TD>"._("Account").":</TD>
          <TD><SELECT Name='Account'>";
          $sql = "SELECT AccountCode, AccountName FROM ChartMaster ORDER BY AccountCode";
          $Account = DB_query($sql,$db);
@@ -42,7 +42,7 @@ echo "<CENTER><TABLE>
          }
          echo "</SELECT></TD></TR>
          <TR>
-         <TD>For Period range:</TD>
+         <TD>"._("For Period range").":</TD>
          <TD><SELECT Name=Period[] multiple>";
 	 $sql = "SELECT PeriodNo, LastDate_In_Period FROM Periods";
 	 $Periods = DB_query($sql,$db);
@@ -50,24 +50,27 @@ echo "<CENTER><TABLE>
          while ($myrow=DB_fetch_array($Periods,$db)){
 
             if($myrow["PeriodNo"] == $SelectedPeriod[$id]){
-              echo "<OPTION SELECTED VALUE=" . $myrow["PeriodNo"] . ">" . MonthAndYearFromSQLDate($myrow["LastDate_In_Period"]);
+              echo "<OPTION SELECTED VALUE=" . $myrow["PeriodNo"] . ">" . _(MonthAndYearFromSQLDate($myrow["LastDate_In_Period"]));
             $id++;
             } else {
-              echo "<OPTION VALUE=" . $myrow["PeriodNo"] . ">" . MonthAndYearFromSQLDate($myrow["LastDate_In_Period"]);
+              echo "<OPTION VALUE=" . $myrow["PeriodNo"] . ">" . _(MonthAndYearFromSQLDate($myrow["LastDate_In_Period"]));
             }
 
          }
          echo "</SELECT></TD>
         </TR>
 </TABLE><P>
-<INPUT TYPE=SUBMIT NAME='Show' VALUE='Show Account Transactions'></CENTER></FORM>";
+<INPUT TYPE=SUBMIT NAME='Show' VALUE='"._("Show Account Transactions")."'></CENTER></FORM>";
 
 /* End of the Form  rest of script is what happens if the show button is hit*/
 
-if ($_POST["Show"]=="Show Account Transactions"){
+if (isset($_POST["Show"])){
 
 	/*Is the account a balance sheet or a profit and loss account */
-	$result = DB_query("SELECT PandL FROM AccountGroups INNER JOIN ChartMaster ON AccountGroups.GroupName=ChartMaster.Group_ WHERE ChartMaster.AccountCode=$SelectedAccount",$db);
+	$result = DB_query("SELECT PandL
+				FROM AccountGroups
+				INNER JOIN ChartMaster ON AccountGroups.GroupName=ChartMaster.Group_
+				WHERE ChartMaster.AccountCode=$SelectedAccount",$db);
 	$PandLRow = DB_fetch_row($result);
 	if ($PandLRow[0]==1){
 		$PandLAccount = True;
@@ -93,40 +96,30 @@ if ($_POST["Show"]=="Show Account Transactions"){
 		AND PeriodNo<=$LastPeriodSelected
 		ORDER BY PeriodNo, CounterIndex";
 
-	$TransResult = DB_query($sql,$db);
-	if (DB_error_no($db) !=0) {
-		echo "<P>The transactions for account " . $SelectedAccount . " could not be retrieved.";
-		if ($debug==1){
-			echo "The SQL that failed was:<BR>$sql<BR><BR>The error returned was - " . DB_error_msg($db);
-		}
-		include ("includes/footer.inc");
-		exit;
-	}
+	$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
+	$DbgMsg = _('The SQL that failed was');
+	$TransResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+
 /*Get the ChartDetails balance b/fwd and the actual movement in the account for the period as recorded in the chart details - need to ensure integrity of transactions to the chart detail movements. Also, for a balance sheet account it is the balance carried forward that is important, not just the transactions*/
 
 	$sql = "SELECT BFwd, Actual FROM ChartDetails WHERE ChartDetails.AccountCode=$SelectedAccount AND ChartDetails.Period>=" . $FirstPeriodSelected . " AND ChartDetails.Period<=" . $LastPeriodSelected;
 
-	$ChartDetailsResult = DB_query($sql,$db);
-	if (DB_error_no($db) !=0) {
-		echo "<P>The chart details for account " . $SelectedAccount . " could not be retrieved.";
-		if ($debug==1){
-			echo "The SQL that failed was:<BR>$sql<BR><BR>The error returned was - " . DB_error_msg($db);
-		}
-		include ("includes/footer.inc");
-		exit;
-	}
+	$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
+	$DbgMsg = _('The SQL that failed was');
+	$ChartDetailsResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+
 	$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 
 	echo "<table>\n";
 
 	$TableHeader = "<TR>
-			<TD class='tableheader'>Type</TD>
-			<TD class='tableheader'>Number</TD>
-			<TD class='tableheader'>Date</TD>
-			<TD class='tableheader'>Debit</TD>
-			<TD class='tableheader'>Credit</TD>
-			<TD class='tableheader'>Narrative</TD>
-			</TR>";
+			<TD class='tableheader'>" . _('Type') . "</TD>
+			<TD class='tableheader'>" . _('Number') . "</TD>
+			<TD class='tableheader'>" . _('Date') . "</TD>
+			<TD class='tableheader'>" . _('Debit') . "</TD>
+			<TD class='tableheader'>" . _('Credit') . "</TD>
+			<TD class='tableheader'>" . _('Narrative') . '</TD>
+			</TR>';
 
 	echo $TableHeader;
 
@@ -135,9 +128,9 @@ if ($_POST["Show"]=="Show Account Transactions"){
 	} else {
 		$RunningTotal =$ChartDetailRow['BFwd'];
 		if ($RunningTotal < 0 ){ //its a credit balance b/fwd
-			echo "<TR bgcolor='#FDFEEF'><TD COLSPAN=3><B>Brought Forward Balance</B><TD></TD></TD><TD ALIGN=RIGHT><B>" . number_format(-$RunningTotal,2) . "</B></TD><TD></TD></TR>";
+			echo "<TR bgcolor='#FDFEEF'><TD COLSPAN=3><B>" . _('Brought Forward Balance') . '</B><TD></TD></TD><TD ALIGN=RIGHT><B>' . number_format(-$RunningTotal,2) . "</B></TD><TD></TD></TR>";
 		} else { //its a debit balance b/fwd
-			echo "<TR bgcolor='#FDFEEF'><TD COLSPAN=3><B>Brought Forward Balance</B></TD><TD ALIGN=RIGHT><B>" . number_format($RunningTotal,2) . "</B></TD><TD COLSPAN=2></TD></TR>";
+			echo "<TR bgcolor='#FDFEEF'><TD COLSPAN=3><B>" . _('Brought Forward Balance') . '</B></TD><TD ALIGN=RIGHT><B>' . number_format($RunningTotal,2) . '</B></TD><TD COLSPAN=2></TD></TR>';
 		}
 	}
 	$PeriodTotal = 0;
@@ -150,13 +143,13 @@ if ($_POST["Show"]=="Show Account Transactions"){
 
 		if ($myrow['PeriodNo']!=$PeriodNo){
 			If ($PeriodNo!=-9999){
-				echo "<TR bgcolor='#FDFEEF'><TD COLSPAN=3><B>Total for period $PeriodNo</B></TD>";
+				echo "<TR bgcolor='#FDFEEF'><TD COLSPAN=3><B>" . _('Total for period') . ' ' . $PeriodNo . '</B></TD>';
 				if ($PeriodTotal < 0 ){ //its a credit balance b/fwd
 					echo "<TD></TD><TD ALIGN=RIGHT><B>" . number_format(-$PeriodTotal,2) . "</B></TD><TD></TD></TR>";
 				} else { //its a debit balance b/fwd
 					echo "<TD ALIGN=RIGHT><B>" . number_format($PeriodTotal,2) . "</B></TD><TD COLSPAN=2></TD></TR>";
 				}
-				$IntegrityReport .= "<BR>Period: $PeriodNo Account movement Per Transactions: " . number_format($PeriodTotal,2) . " Movement Per ChartDetails record: " . number_format($ChartDetailRow['Actual'],2) . " Period difference: " . number_format($PeriodTotal -$ChartDetailRow['Actual'],3);
+				$IntegrityReport .= '<BR>' . _('Period:') . ' ' . $PeriodNo  . _('Account movement Per Transactions:') . ' '  . number_format($PeriodTotal,2) . ' ' . _('Movement Per ChartDetails record:') . ' ' . number_format($ChartDetailRow['Actual'],2) . ' ' . _('Period difference:') . ' ' . number_format($PeriodTotal -$ChartDetailRow['Actual'],3);
 				if (ABS($PeriodTotal -$ChartDetailRow['Actual'])>0.009){
 					$ShowIntegrityReport = True;
 				}
@@ -213,9 +206,9 @@ if ($_POST["Show"]=="Show Account Transactions"){
 
 	echo "<TR bgcolor='#FDFEEF'><TD COLSPAN=3><B>";
 	if ($PandLAccount==True){
-		echo "Total Period Movement";
+		echo _('Total Period Movement');
 	} else { /*its a balance sheet account*/
-		echo "Balance C/Fwd";
+		echo _('Balance C/Fwd');
 	}
 	echo "</B></TD>";
 
@@ -231,7 +224,7 @@ if ($_POST["Show"]=="Show Account Transactions"){
 
 if ($ShowIntegrityReport){
 
-	echo "<BR>WARNING: There are differences between the sum of the transactions and the recorded movements in the ChartDetails table. A log of the account differences for the periods report shows below:<P>$IntegrityReport";
+	echo '<BR>' . _('WARNING: There are differences between the sum of the transactions and the recorded movements in the ChartDetails table. A log of the account differences for the periods report shows below:') . '<P>' . $IntegrityReport;
 
 }
 include("includes/footer.inc");

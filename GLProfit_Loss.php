@@ -1,13 +1,13 @@
 <?php
 
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 /*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen while the user is selecting the criteria the system is posting any unposted transactions */
-$title = "Profit and Loss";
 
 $PageSecurity = 8;
 
 include ("includes/session.inc");
+$title = _("Profit and Loss");
 include("includes/header.inc");
 include("includes/DateFunctions.inc");
 include("includes/SQL_CommonFunctions.inc");
@@ -16,11 +16,11 @@ include("includes/SQL_CommonFunctions.inc");
 echo "<FORM METHOD='POST' ACTION=" . $_SERVER["PHP_SELF"] . "?" . SID . ">";
 
 if ($_POST["FromPeriod"] > $_POST["ToPeriod"]){
-	echo "<P>The selected period from is actually after the period to! Please re-select the reporting period.";
-	$_POST["SelectADifferentPeriod"]="Select A Different Period";
+	echo "<P>"._("The selected period from is actually after the period to! Please re-select the reporting period.");
+	$_POST["SelectADifferentPeriod"]=_("Select A Different Period");
 }
 
-if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["SelectADifferentPeriod"]=="Select A Different Period"){
+if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["SelectADifferentPeriod"]==_("Select A Different Period")){
 
 	if (Date("m") > $YearEnd){
 		/*Dates in SQL format */
@@ -30,7 +30,7 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 	}
 
 /*Show a form to allow input of criteria for TB to show */
-	echo "<CENTER><TABLE><TR><TD>Select Period From:</TD><TD><SELECT Name='FromPeriod'>";
+	echo "<CENTER><TABLE><TR><TD>"._("Select Period From").":</TD><TD><SELECT Name='FromPeriod'>";
 
 	$sql = "SELECT PeriodNo, LastDate_In_Period FROM Periods";
 	$Periods = DB_query($sql,$db);
@@ -63,7 +63,7 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 		$DefaultToPeriod = $_POST["ToPeriod"];
 	}
 
-	echo "<TR><TD>Select Period To:</TD><TD><SELECT Name='ToPeriod'>";
+	echo '<TR><TD>' . _('Select Period To:') . "</TD><TD><SELECT Name='ToPeriod'>";
 
 	$RetResult = DB_data_seek($Periods,0);
 
@@ -77,14 +77,14 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 	}
 	echo "</SELECT></TD></TR>";
 
-	echo "<TR><TD>Detail Or Summary:</TD><TD><SELECT Name='Detail'>";
-		echo "<OPTION SELECTED VALUE='Summary'>Summary";
-		echo "<OPTION SELECTED VALUE='Detailed'>All Accounts";
+	echo "<TR><TD>"._("Detail Or Summary").":</TD><TD><SELECT Name='Detail'>";
+		echo "<OPTION SELECTED VALUE='Summary'>"._("Summary");
+		echo "<OPTION SELECTED VALUE='Detailed'>"._("All Accounts");
 	echo "</SELECT></TD></TR>";
 
 	echo "</TABLE>";
 
-	echo "<INPUT TYPE=SUBMIT Name='ShowPL' Value='Show Statement of Profit and Loss'></CENTER>";
+	echo "<INPUT TYPE=SUBMIT Name='ShowPL' Value='"._("Show Statement of Profit and Loss")."'></CENTER>";
 
 /*Now do the posting while the user is thinking about the period to select */
 
@@ -97,7 +97,7 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 	$NumberOfMonths = $_POST["ToPeriod"] - $_POST["FromPeriod"] + 1;
 
 	if ($NumberOfMonths >12){
-		echo "<P>A period up to 12 months in duration can be specified - the system automatically shows a comparative for the same period from the previous year - it cannot do this if a period of more than 12 months is specified. Please select an alternative period range.";
+		echo "<P>"._('A period up to 12 months in duration can be specified - the system automatically shows a comparative for the same period from the previous year - it cannot do this if a period of more than 12 months is specified. Please select an alternative period range');
 		include("includes/footer.inc");
 		exit;
 	}
@@ -126,29 +126,29 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 			ChartMaster.AccountName
 		ORDER BY AccountGroups.SectionInAccounts, AccountGroups.SequenceInTB, ChartDetails.AccountCode";
 
-	$AccountsResult = DB_query($SQL,$db,"<BR>No general ledger accounts were returned by the SQL because","<br>The SQL that failed was:");
+	$AccountsResult = DB_query($SQL,$db,"<BR>"._("No general ledger accounts were returned by the SQL because"),_("The SQL that failed was:"));
 
-	echo "<CENTER><FONT SIZE=4 COLOR=BLUE><B>Statement of Profit and Loss for the $NumberOfMonths months to $PeriodToDate</B></FONT><BR>";
+	echo "<CENTER><FONT SIZE=4 COLOR=BLUE><B>" . _('Statement of Profit and Loss for the'). ' ' . $NumberOfMonths . ' ' . _("months to"). ' ' . $PeriodToDate . '</B></FONT><BR>';
 
 	/*show a table of the accounts info returned by the SQL
 	Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
 
 	echo "<TABLE CELLPADDING=2>";
 
-	if ($_POST['Detail']=='Detailed'){
+	if ($_POST['Detail']==_('Detailed')){
 		$TableHeader = "<TR>
-				<TD class='tableheader'>Account</TD>
-				<TD class='tableheader'>Account Name</TD>
-				<TD COLSPAN=2 class='tableheader'>Period Actual</TD>
-				<TD COLSPAN=2 class='tableheader'>Period Budget</TD>
-				<TD COLSPAN=2 class='tableheader'>Last Year</TD>
+				<TD class='tableheader'>"._("Account")."</TD>
+				<TD class='tableheader'>"._("Account Name")."</TD>
+				<TD COLSPAN=2 class='tableheader'>"._("Period Actual")."</TD>
+				<TD COLSPAN=2 class='tableheader'>"._("Period Budge")."t</TD>
+				<TD COLSPAN=2 class='tableheader'>"._("Last Year")."</TD>
 				</TR>";
 	} else { /*summary */
 		$TableHeader = "<TR>
 				<TD COLSPAN=2 class='tableheader'></TD>
-				<TD COLSPAN=2 class='tableheader'>Period Actual</TD>
-				<TD COLSPAN=2 class='tableheader'>Period Budget</TD>
-				<TD COLSPAN=2 class='tableheader'>Last Year</TD>
+				<TD COLSPAN=2 class='tableheader'>"._("Period Actual")."</TD>
+				<TD COLSPAN=2 class='tableheader'>"._("Period Budget")."</TD>
+				<TD COLSPAN=2 class='tableheader'>"._("Last Year")."</TD>
 				</TR>";
 	}
 
@@ -186,7 +186,7 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 
 				if ($Section ==1){ /*Income */
 					printf("<TR>
-						<TD COLSPAN=2><FONT SIZE=2>%s total</FONT></td>
+						<TD COLSPAN=2><FONT SIZE=2>%s "._("total")."</FONT></td>
 						<TD></TD>
 						<TD ALIGN=RIGHT>%s</TD>
 						<TD></TD>
@@ -200,7 +200,7 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 						number_format(-$GrpPrdLY));
 				} else { /*Costs */
 					printf("<TR>
-						<TD COLSPAN=2><FONT SIZE=2>%s total</FONT></td>
+						<TD COLSPAN=2><FONT SIZE=2>%s "._("total")."</FONT></td>
 						<TD ALIGN=RIGHT>%s</TD>
 						<TD></TD>
 						<TD ALIGN=RIGHT>%s</TD>
@@ -283,7 +283,7 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 						<TD COLSPAN=6><HR></TD>
 					</TR>";
 					printf("<TR>
-						<TD COLSPAN=2><FONT SIZE=4>Gross Profit</FONT></td>
+						<TD COLSPAN=2><FONT SIZE=4>"._("Gross Profit")."</FONT></td>
 						<TD></TD>
 						<TD ALIGN=RIGHT>%s</TD>
 						<TD></TD>
@@ -300,7 +300,7 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 						<TD COLSPAN=6><HR></TD>
 					</TR>";
 					printf("<TR>
-						<TD COLSPAN=2><FONT SIZE=2><I>Gross Profit Percent</I></FONT></td>
+						<TD COLSPAN=2><FONT SIZE=2><I>"._("Gross Profit Percent")."</I></FONT></td>
 						<TD></TD>
 						<TD ALIGN=RIGHT><I>%s</I></TD>
 						<TD></TD>
@@ -357,7 +357,7 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 		$SectionPrdActual +=$AccountPeriodActual;
 		$SectionPrdBudget +=$AccountPeriodBudget;
 
-		if ($_POST['Detail']=='Detailed'){
+		if ($_POST['Detail']==_('Detailed')){
 
 			if ($k==1){
 				echo "<tr bgcolor='#CCCCCC'>";
@@ -417,14 +417,14 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 			<TD COLSPAN=2></TD>
 			<TD COLSPAN=6><HR></TD>
 			</TR>";
-			$ActGrpLable = $ActGrp . " total";
+			$ActGrpLable = $ActGrp . " "._("total");
 		} else {
 			$ActGrpLable = $ActGrp;
 		}
 
 		if ($Section ==1){ /*Income */
 			printf("<TR>
-			<TD COLSPAN=2><FONT SIZE=2>%s total</FONT></td>
+			<TD COLSPAN=2><FONT SIZE=2>%s "._("total")."</FONT></td>
 			<TD></TD>
 			<TD ALIGN=RIGHT>%s</TD>
 			<TD></TD>
@@ -438,7 +438,7 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 			number_format(-$GrpPrdLY));
 		} else { /*Costs */
 			printf("<TR>
-				<TD COLSPAN=2><FONT SIZE=2>%s total</FONT></td>
+				<TD COLSPAN=2><FONT SIZE=2>%s "._("total")."</FONT></td>
 				<TD ALIGN=RIGHT>%s</TD>
 				<TD></TD>
 				<TD ALIGN=RIGHT>%s</TD>
@@ -510,7 +510,7 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 				<TD COLSPAN=6><HR></TD>
 			</TR>";
 			printf("<TR>
-				<TD COLSPAN=2><FONT SIZE=4>Gross Profit</FONT></td>
+				<TD COLSPAN=2><FONT SIZE=4>"._("Gross Profit")."</FONT></td>
 				<TD></TD>
 				<TD ALIGN=RIGHT>%s</TD>
 				<TD></TD>
@@ -527,7 +527,7 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 				<TD COLSPAN=6><HR></TD>
 			</TR>";
 			printf("<TR>
-				<TD COLSPAN=2><FONT SIZE=2><I>Gross Profit Percent</I></FONT></td>
+				<TD COLSPAN=2><FONT SIZE=2><I>"._("Gross Profit Percent")."</I></FONT></td>
 				<TD></TD>
 				<TD ALIGN=RIGHT><I>%s</I></TD>
 				<TD></TD>
@@ -542,7 +542,7 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 		}
 	}
 
-	if ($_POST['Detail']=="Detailed"){
+	if ($_POST['Detail']==_("Detailed")){
 		printf("<TR>
 			<td COLSPAN=6><FONT SIZE=4 COLOR=BLUE><B>%s</B></FONT></TD>
 			</TR>",
@@ -557,7 +557,7 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 		</TR>";
 
 	printf("<tr bgcolor='#ffffff'>
-		<td COLSPAN=2><FONT SIZE=4 COLOR=BLUE><B>Profit -Loss</B></FONT></td>
+		<td COLSPAN=2><FONT SIZE=4 COLOR=BLUE><B>"._("Profit -Loss")."</B></FONT></td>
 		<TD></TD>
 		<td ALIGN=RIGHT>%s</td>
 		<TD></TD>
@@ -576,7 +576,7 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 		</TR>";
 
 	echo "</TABLE>";
-	echo "<INPUT TYPE=SUBMIT Name='SelectADifferentPeriod' Value='Select A Different Period'></CENTER>";
+	echo "<INPUT TYPE=SUBMIT Name='SelectADifferentPeriod' Value='"._("Select A Different Period")."'></CENTER>";
 }
 echo "</form>";
 include("includes/footer.inc");
