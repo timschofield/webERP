@@ -195,3 +195,10 @@ Now the accounting starts....
 
 All the standing configuration data is defined from the system setup tab and each link should be reviewed to enter appropriate data for the business.
 
+
+_____________________________________________________________________
+
+
+Transferring a Windows MySQL Database to a *nix database
+
+Creating a database with the scripts provided will work with either a windows or *nix mysql server. However, if, after setting up a windows mysql database server you subsequently wish to transfer the database to a *nix database server, there is an issue with case sensitivity - *nix is case sensitive, windows is not. The setting of the variable lower_case_table_names in the my.cnf may be used to overcome this issue. See the MySQL manual if necessary.
