@@ -1,6 +1,12 @@
 <P>webERP Change Log
 
-27/3/04 GoodsReceived.php now takes account of changed standard cost at between bookings in of stock
+18/4/04 index.php now uses extra column where many options under one heading
+18/4/04 New scripts StockLocStatus.php - inquiry script that shows all stock items status in the selected category. StockLocMovements.php - inquiry script that shows all movements in the selected location and date range - default only one month - this script can return a lot of data and is a mistake to run over dial up on a business with many stock movemnts. Thanks to Chris Bice for these scripts. Also added links from index.php -
+2/4/04 config.php now over-rides php.ini to ensure tht NOTICES turned off.
+30/3/04 Z_ChangeStockCode, Z_ChangeDebtorCode, Z_ChangeBranchCode all required mods to work correctly with Foreign key checks in place.
+30/3/04 Stocks.php now prohibits stock codes containing a point .
+30/3/04 SelectOrderItems search products now defaults to stock category 'All'
+27/3/04 GoodsReceived.php now takes account of changed standard cost at between bookings in of stock - unbalanced GL journals corrected.
 16/3/04 Various scripts changed variables that are not initiated first to avoid NOTICES where NOTICES are enabled in php.ini - still a long way to go here
 16/3/04 All scripts now have a comment for CVS version number - Dick Stins
 16/3/04 Fixed bug on new system where sales and COGS GL posting tables not set up - auto create a default GL account - foreign key could give problem if account groups modified so now auto creates a sales account group first - thanks Dick Stins

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $PageSecurity = 1;
 
 
@@ -34,6 +34,8 @@ if (isset($_GET["FromTransNo"])){
 	$FromTransNo = $_GET["FromTransNo"];
 } elseif (isset($_POST["FromTransNo"])){
 	$FromTransNo = $_POST["FromTransNo"];
+} else {
+	$FromTransNo ="";
 }
 
 If (!isset($_POST['ToTransNo']) OR $_POST['ToTransNo']==""){

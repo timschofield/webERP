@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity =11;
 $title = "Process EDI Orders";
@@ -29,6 +29,8 @@ Compile an html email to the customer service person based on the location
 of the customer doing the ordering and where it would be best to pick the order from
 
 Read the next line of the flat file ...
+
+If the order processed ok then move the file to processed and go on to next file.
 
 */
 
@@ -68,7 +70,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . "/" . $rootpath . "/" . $EDI_In
 	$LastSeg = 0;
 	$FirstSegInGroup = 0;
 	$EmailText =""; /*Text of email to send to customer service person */
-	$CreateOrder = True; /*Assume create a sales order in the system for the message read */
+	$CreateOrder = True; /*Assume that we are to create a sales order in the system for the message read */
 
 	$Order = new cart;
 
@@ -268,7 +270,10 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . "/" . $rootpath . "/" . $EDI_In
 						$EmailText .= "\nOrder date " . $LocalFormatDate;
 						break;
 					case '171': /*A date relating to a RFF seg */
-						$EmailText .= "\nReference dated " . $LocalFormatDate;
+						/*This DTM segment follows a RFF seg so $RFF will be set
+						use the RFF seg to determine if the date refers to the
+						order */
+						$EmailText .= "\n dated " . $LocalFormatDate;
 						if ($SegGroup == 1){
 							$Order->Comments .= " dated " . $LocalFormatDate;
 						}
@@ -362,6 +367,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . "/" . $rootpath . "/" . $EDI_In
 						$MsgText =  "\nBlanket Order # " . $RFF[1];
 						break;
 					case 'CR':
+						$Order->CustRef = $RFF[1];
 						$MsgText =  "\nCustomer Ref # " . $RFF[1];
 						break;
 					case 'CT':
@@ -371,6 +377,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . "/" . $rootpath . "/" . $EDI_In
 						$MsgText =  "\nImport Licence # " . $RFF[1];
 						break;
 					case 'ON':
+						$Order->CustRef = $RFF[1];
 						$MsgText =  "\nBuyer order # " . $RFF[1];
 						break;
 					case 'PD':

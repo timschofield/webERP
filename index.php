@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $title="Main Menu";
 
 $PageSecurity = 1;
@@ -152,7 +152,9 @@ Case "AR": //Debtors Module
 						<a href="<?php echo $rootpath."/SelectCustomer.php?" . SID; ?>">Customer Transaction Inquiries</a><br />
 						<a href="<?php echo $rootpath."/CustWhereAlloc.php?" . SID; ?>">Where Allocated Inquiry</a><br />
 						<a href="<?php echo $rootpath."/PrintCustTrans.php?" . SID; ?>">Print Invoices or Credit Notes</a><br />
-						<a href="<?php echo $rootpath."/PrintCustStatements.php?" . SID; ?>">Print Statements</a><br />
+						<a href="<?php echo $rootpath."/PrintCustStatements.php?" . SID; ?>">Print Statements</a>
+					</td>
+					<td class="menu_group_items">
 						<a href="<?php echo $rootpath."/SalesAnalRepts.php?" . SID; ?>">Sales Analysis Reports</a><br />
 						<a href="<?php echo $rootpath."/AgedDebtors.php?" . SID; ?>">Aged Customer Balances/Overdues Report</a><br />
 						<a href="<?php echo $rootpath."/CustomerTransInquiry.php?" . SID; ?>">Transaction Inquiries</a><br />
@@ -360,8 +362,12 @@ Case "stock": //Inventory Module
 						<a href="<?php echo $rootpath."/StockStatus.php?" . SID; ?>">Inventory Item Status</a><br />
 						<a href="<?php echo $rootpath."/StockUsage.php?" . SID; ?>">Inventory Item Usage</a><br />
 						<a href="<?php echo $rootpath."/InventoryValuation.php?" . SID; ?>">Inventory Valuation Report</a><br />
-						<a href="<?php echo $rootpath."/InventoryPlanning.php?" . SID; ?>">Inventory Planning Report</a><br />
+						<a href="<?php echo $rootpath."/InventoryPlanning.php?" . SID; ?>">Inventory Planning Report</a>
+					</td>
+					<td class="menu_group_items">
 						<a href="<?php echo $rootpath."/StockCheck.php?" . SID; ?>">Inventory Stock Check Sheets</a><br />
+						<a href="<?php echo $rootpath."/StockLocMovements.php?" . SID; ?>">All Inventory Movements By Location/Date</a><br />
+						<a href="<?php echo $rootpath."/StockLocStatus.php?" . SID; ?>">List Inventory Status By Location/Category</a><br />
 						<a href="<?php echo $rootpath."/StockQties_csv.php?" . SID; ?>">Make Inventory Quantities CSV</a><br />
 						<a href="<?php echo $rootpath."/PDFStockCheckComparison.php?" . SID; ?>">Compare Counts Vs Stock Check Data</a><br />
 
@@ -522,6 +528,8 @@ Case "system": //System setup
 						<a href="<?php echo $rootpath."/SalesPeople.php?" . SID; ?>">Sales Persons Maintenance</a><br />
 						<a href="<?php echo $rootpath."/Areas.php?" . SID; ?>">Sales Areas Maintenance</a><br />
 						<a href="<?php echo $rootpath."/Shippers.php?" . SID;?>">Shipping Companies Maintenance</a><br />
+					</td>
+					<td class="menu_group_items">
 						<a href="<?php echo $rootpath."/FreightCosts.php?" . SID;?>">Freight Costs Maintenance</a><br />
 						<a href="<?php echo $rootpath."/TaxAuthorities.php?" . SID; ?>">Tax Types and Rates Maintenance</a><br />
 						<a href="<?php echo $rootpath."/SalesGLPostings.php?" . SID; ?>">Sales GL Interface Postings </a><br />
