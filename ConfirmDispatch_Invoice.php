@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
@@ -969,14 +969,14 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					cost=cost+" . ($OrderLine->StandardCost * $OrderLine->QtyDispatched) . ",
 					qty=qty +" . $OrderLine->QtyDispatched . ",
 					disc=disc+" . ($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . " 
-					WHERE salesanalysis.area='" . $myrow[2] . "' 
-					AND salesanalysis.salesperson='" . $myrow[3] . "'
+					WHERE salesanalysis.area='" . $myrow[5] . "' 
+					AND salesanalysis.salesperson='" . $myrow[8] . "'
 					AND typeabbrev ='" . $_SESSION['Items']->DefaultSalesType . "' 
 					AND periodno = " . $PeriodNo . "
 					AND cust " . LIKE . " '" . $_SESSION['Items']->DebtorNo . "' 
 					AND custbranch " . LIKE . " '" . $_SESSION['Items']->Branch . "' 
 					AND stockid " . LIKE . " '" . $OrderLine->StockID . "' 
-					AND salesanalysis.stkcategory ='" . $myrow[1] . "' 
+					AND salesanalysis.stkcategory ='" . $myrow[2] . "' 
 					AND budgetoractual=1";
 
 			} else { /* insert a new sales analysis record */

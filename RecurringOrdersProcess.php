@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 1;
 
@@ -47,7 +47,7 @@ $sql = 'SELECT recurringorders.recurrorderno,
 	AND recurringorders.debtorno = custbranch.debtorno
 	AND recurringorders.branchcode = custbranch.branchcode';
 
-$Result = DB_query($sql,$db,_('There was a problem retrieving the recurring sales order templates - the database reported:'));
+$Result = DB_query($sql,$db,_('There was a problem retrieving the recurring sales order templates. The database reported:'));
 
 while ($RecurrOrderRow = DB_fetch_array($Result)){
 
@@ -55,7 +55,7 @@ while ($RecurrOrderRow = DB_fetch_array($Result)){
 
 	$DaysSinceLastRecurrence = DateDiff($LastRecurrence,Date($_SESSION'DefaultDateFormat']),'d');
 
-	echo '<BR>The number of days since last recurrence for this order is ' . $DaysSinceLastRecurrence;
+	echo '<BR>' . _('The number of days since last recurrence for this order is') . ' ' . $DaysSinceLastRecurrence;
 
 	$PastStopDate = Date1GreaterThanDate2(ConvertSQLDate($RecurrOrderRow['stopdate']),Date($_SESSION'DefaultDateFormat']));
 
@@ -183,37 +183,34 @@ while ($RecurrOrderRow = DB_fetch_array($Result)){
                         $DispTaxAuth = $myrow[0];
 
 		/*Now Get the next invoice number - function in SQL_CommonFunctions*/
-
 			$InvoiceNo = GetNextTransNo(10, $db);
 			$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
-
 		/*Start an SQL transaction */
-
 			$SQL = "BEGIN";
 			$Result = DB_query($SQL,$db);
 
 			DB_data_seek($LineItemsResult,0);
-			while ($RecurrOrderLineRow=DB_fetch_array($LineItemsResult)) {
+			while ($RecurrOrderLineRow = DB_fetch_array($LineItemsResult)) {
 
 				$LineNetAmount = $RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity'] *(1- floatval($RecurrOrderLineRow['discountpercent']));
 
                                 /*Need to get tax level first of the item being invoiced */
                                 $SQL = 'SELECT taxlevel,
                                                categoryid
-                                        FROM stockmaster
+				       FROM stockmaster
                                         WHERE stockid ="' . DB_escape_string($RecurrOrderLineRow['stkcode']) . '"';
                                 $ErrMsg = _('The tax level of the item could not be retrieved because:');
                                 $Result = DB_query($SQL,$db,$ErrMsg);
                                 $myrow = DB_fetch_row($Result);
                                 $TaxLevel = $myrow[0];
                                 $CategoryID = $myrow[1];
+				
 
                                 $TaxRate = GetTaxRate($CustTaxAuth,$DispTaxAuth,$TaxLevel);
                                 $LineTaxAmount = $TaxRate *$LineNetAmount;
 
                  		/*Now update SalesOrderDetails for the quantity invoiced and the actual dispatch dates. */
-
                                 $SQL = "UPDATE salesorderdetails
 					SET qtyinvoiced = qtyinvoiced + " . $RecurrOrderLineRow['quantity'] . ",
 					actualdispatchdate = '" . $DelDate .  "',
@@ -221,273 +218,225 @@ while ($RecurrOrderRow = DB_fetch_array($Result)){
 					WHERE orderno = " . $OrderNo . "
 					AND stkcode = '" . $RecurrOrderLineRow['StkCode'] . "'";
 
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order detail record could not be updated because');
-					$DbgMsg = _('The following SQL to update the sales order detail record was used');
-					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order detail record could not be updated because');
+				$DbgMsg = _('The following SQL to update the sales order detail record was used');
+				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
+				// Insert stock movements - with unit cost
+				$LocalCurrencyPrice= ($RecurrOrderLineRow['unitprice'] *(1- floatval($RecurrOrderLineRow['discountpercent'])))/ $CurrencyRate;
 
-					// Insert stock movements - with unit cost
+                  		// its a dummy item dummies always have nil stock (by definition so new qty on hand will be nil
+				$SQL = "INSERT INTO stockmoves (
+				                    	stockid,
+							type,
+							transno,
+							loccode,
+							trandate,
+							debtorno,
+							branchcode,
+							price,
+							prd,
+							reference,
+							qty,
+							discountpercent,
+							standardcost,
+							taxrate,
+							narrative
+							)
+						VALUES (
+							'" . $RecurrOrderLineRow['stkcode'] . "',
+							10,
+							" . $InvoiceNo . ",
+							'" . $RecurrOrderRow['location'] . "',
+							'" . $DelDate . "',
+							'" . $RecurrOrderRow['debtorno'] . "',
+							'" . $RecurrOrderRow['branchcode'] . "',
+							" . $LocalCurrencyPrice . ",
+							" . $PeriodNo . ",
+							'" . $OrderNo . "',
+							" . -$RecurrOrderLineRow['quantity'] . ",
+							" . $RecurrOrderLineRow['discountpercent'] . ",
+							0,
+							" . $TaxRate . ",
+							'" . DB_escape_string($RecurrOrderLineRow['narrative'] . "'
+						)";
+					
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
+				$DbgMsg = _('The following SQL to insert the stock movement records was used');
+				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-					$LocalCurrencyPrice= ($RecurrOrderLineRow['unitprice'] *(1- floatval($RecurrOrderLineRow['discountpercent'])))/ $CurrencyRate;
+				/*Insert Sales Analysis records */
 
-                  			// its an assembly or dummy and assemblies/dummies always have nil stock (by definition they are made up at the time of dispatch  so new qty on hand will be nil
-					$SQL = "INSERT INTO stockmoves (
-					                    	stockid,
-								type,
-								transno,
-								loccode,
-								trandate,
-								debtorno,
-								branchcode,
-								price,
-								prd,
-								reference,
-								qty,
-								discountpercent,
-								standardcost,
-								taxrate,
-								narrative
-								)
-							VALUES (
-								'" . $RecurrOrderLineRow['stkcode'] . "',
-								10,
-								" . $InvoiceNo . ",
-								'" . $RecurrOrderRow['location'] . "',
-								'" . $DelDate . "',
-								'" . $RecurrOrderRow['debtorno'] . "',
-								'" . $RecurrOrderRow['branchcode'] . "',
-								" . $LocalCurrencyPrice . ",
-								" . $PeriodNo . ",
-								'" . $OrderNo . "',
-								" . -$RecurrOrderLineRow['quantity'] . ",
-								" . $RecurrOrderLineRow['discountpercent'] . ",
-								0,
-								" . $TaxRate . ",
-								'" . DB_escape_string($RecurrOrderLineRow['narrative'] . "'
-							)";
-					}
+				$SQL="SELECT COUNT(*),
+						salesanalysis.stkcategory,
+						salesanalysis.area,
+						salesanalysis.salesperson,
+						salesanalysis.periodno,
+						salesanalysis.typeabbrev,
+						salesanalysis.cust,
+						salesanalysis.custbranch,
+						salesanalysis.stockid
+					FROM salesanalysis,
+						custbranch,
+						stockmaster
+					WHERE salesanalysis.stkcategory=stockmaster.categoryid
+					AND salesanalysis.stockid=stockmaster.stockid
+					AND salesanalysis.cust=custbranch.debtorno
+					AND salesanalysis.custbranch=custbranch.branchcode
+					AND salesanalysis.area=custbranch.area
+					AND salesanalysis.salesperson=custbranch.salesman
+					AND salesanalysis.typeabbrev ='" . $RecurrOrderRow['ordertype'] . "'
+					AND salesanalysis.periodno=" . $PeriodNo . "
+					AND salesanalysis.cust " . LIKE . " '" . $RecurrOrderRow['debtorno'] . "'
+					AND salesanalysis.custbranch " . LIKE . " '" . $RecurrOrderRow['branchcode'] . "'
+					AND salesanalysis.stockid " . LIKE . " '" . $RecurrOrderLineRow['stkcode'] . "'
+					AND salesanalysis.budgetoractual=1
+					GROUP BY salesanalysis.stockid,
+						salesanalysis.stkcategory,
+						salesanalysis.cust,
+						salesanalysis.custbranch,
+						salesanalysis.area,
+						salesanalysis.periodno,
+						salesanalysis.typeabbrev,
+						salesanalysis.salesperson";
 
+				$ErrMsg = _('The count of existing Sales analysis records could not run because');
+				$DbgMsg = _('SQL to count the no of sales analysis records');
+				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the stock movement records was used');
-					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$myrow = DB_fetch_row($Result);
 
-		/*Insert Sales Analysis records */
+				if ($myrow[0]>0){  /*Update the existing record that already exists */
 
-					$SQL="SELECT COUNT(*),
-							salesanalysis.stockid,
-							salesanalysis.stkcategory,
-							salesanalysis.cust,
-							salesanalysis.custbranch,
-							salesanalysis.area,
-							salesanalysis.periodno,
-							salesanalysis.typeabbrev,
-							salesanalysis.salesperson
-						FROM salesanalysis,
+					$SQL = "UPDATE salesanalysis
+						SET amt=amt+" . ($RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity'] / $CurrencyRate) . ",
+						qty=qty +" . $RecurrOrderLineRow['quantity'] . ",
+						disc=disc+" . ($RecurrOrderLineRow['discountpercent'] * $RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity'] / $CurrencyRate) . "
+						WHERE salesanalysis.area='" . $myrow[2] . "'
+						AND salesanalysis.salesperson='" . $myrow[3] . "'
+						AND typeabbrev ='" . $RecurrOrderRow['ordertype'] . "'
+						AND periodno = " . $PeriodNo . "
+						AND cust " . LIKE . " '" . $RecurrOrderRow['debtorno'] . "'
+						AND custbranch " . LIKE . " '" . $RecurrOrderRow['branchcode'] . "'
+						AND stockid " . LIKE . " '" . $RecurrOrderLineRow['stkcode'] . "'
+						AND salesanalysis.stkcategory ='" . $myrow[1] . "'
+						AND budgetoractual=1";
+
+				} else { /* insert a new sales analysis record */
+
+					$SQL = "INSERT INTO salesanalysis (
+							typeabbrev,
+							periodno,
+							amt,
+							cost,
+							cust,
 							custbranch,
-							stockmaster
-						WHERE salesanalysis.stkcategory=stockmaster.categoryid
-						AND salesanalysis.stockid=stockmaster.stockid
-						AND salesanalysis.cust=custbranch.debtorno
-						AND salesanalysis.custbranch=custbranch.branchcode
-						AND salesanalysis.area=custbranch.area
-						AND salesanalysis.salesperson=custbranch.salesman
-						AND salesanalysis.typeabbrev ='" . $_SESSION['Items']->DefaultSalesType . "'
-						AND salesanalysis.periodno=" . $PeriodNo . "
-						AND salesanalysis.cust " . LIKE . " '" . $_SESSION['Items']->DebtorNo . "'
-						AND salesanalysis.custbranch " . LIKE . " '" . $_SESSION['Items']->Branch . "'
-						AND salesanalysis.stockid " . LIKE . " '" . $OrderLine->StockID . "'
-						AND salesanalysis.budgetoractual=1
-						GROUP BY salesanalysis.stockid,
-							salesanalysis.stkcategory,
-							salesanalysis.cust,
-							salesanalysis.custbranch,
-							salesanalysis.area,
-							salesanalysis.periodno,
-							salesanalysis.typeabbrev,
-							salesanalysis.salesperson";
+							qty,
+							disc,
+							stockid,
+							area,
+							budgetoractual,
+							salesperson,
+							stkcategory
+							)
+						SELECT '" . $RecurrOrderRow['ordertype']. "',
+							" . $PeriodNo . ",
+							" . ($RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity'] / $CurrencyRate) . ",
+							0,
+							'" . $RecurrOrderRow['debtorno'] . "',
+							'" . $RecurrOrderRow['branchcode'] . "',
+							" . $RecurrOrderLineRow['quantity'] . ",
+							" . ($RecurrOrderLineRow['discountpercent'] * $RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity'] / $CurrencyRate) . ",
+							'" . $RecurrOrderLineRow['stkcode'] . "',
+							custbranch.area,
+							1,
+							custbranch.salesman,
+							stockmaster.categoryid
+						FROM stockmaster,
+							custbranch
+						WHERE stockmaster.stockid = '" . $RecurrOrderLineRow['stkcode'] . "'
+						AND custbranch.debtorno = '" . $RecurrOrderRow['debtorno'] . "'
+						AND custbranch.branchcode='" . $RecurrOrderRow['branchcode'] . "'";
+				}
 
-					$ErrMsg = _('The count of existing Sales analysis records could not run because');
-					$DbgMsg = '<P>'. _('SQL to count the no of sales analysis records');
-					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$ErrMsg = _('Sales analysis record could not be added or updated because');
+				$DbgMsg = _('The following SQL to insert the sales analysis record was used');
+				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+	
+				if ($_SESSION['CompanyRecord']['gllink_debtors']==1 && $RecurrOrderLineRow['unitprice'] !=0){
 
-					$myrow = DB_fetch_row($Result);
+					//Post sales transaction to GL credit sales
+					$SalesGLAccounts = GetSalesGLAccount($Area, $RecurrOrderLineRow['stkcode'], $_SESSION['Items']->DefaultSalesType, $db);
 
-					if ($myrow[0]>0){  /*Update the existing record that already exists */
-
-						$SQL = "UPDATE salesanalysis
-							SET amt=amt+" . ($OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . ",
-							cost=cost+" . ($OrderLine->StandardCost * $OrderLine->QtyDispatched) . ",
-							qty=qty +" . $OrderLine->QtyDispatched . ",
-							disc=disc+" . ($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . "
-							WHERE salesanalysis.area='" . $myrow[2] . "'
-							AND salesanalysis.salesperson='" . $myrow[3] . "'
-							AND typeabbrev ='" . $_SESSION['Items']->DefaultSalesType . "'
-							AND periodno = " . $PeriodNo . "
-							AND cust " . LIKE . " '" . $_SESSION['Items']->DebtorNo . "'
-							AND custbranch " . LIKE . " '" . $_SESSION['Items']->Branch . "'
-							AND stockid " . LIKE . " '" . $OrderLine->StockID . "'
-							AND salesanalysis.stkcategory ='" . $myrow[1] . "'
-							AND budgetoractual=1";
-
-					} else { /* insert a new sales analysis record */
-
-						$SQL = "INSERT INTO salesanalysis (
-								typeabbrev,
+					$SQL = "INSERT INTO gltrans (
+								type,
+								typeno,
+								trandate,
 								periodno,
-								amt,
-								cost,
-								cust,
-								custbranch,
-								qty,
-								disc,
-								stockid,
-								area,
-								budgetoractual,
-								salesperson,
-								stkcategory
-								)
-							SELECT '" . $_SESSION['Items']->DefaultSalesType . "',
-								" . $PeriodNo . ",
-								" . ($OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . ",
-								" . ($OrderLine->StandardCost * $OrderLine->QtyDispatched) . ",
-								'" . $_SESSION['Items']->DebtorNo . "',
-								'" . $_SESSION['Items']->Branch . "',
-								" . $OrderLine->QtyDispatched . ",
-								" . ($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . ",
-								'" . $OrderLine->StockID . "',
-								custbranch.area,
-								1,
-								custbranch.salesman,
-								stockmaster.categoryid
-							FROM stockmaster,
-								custbranch
-							WHERE stockmaster.stockid = '" . $OrderLine->StockID . "'
-							AND custbranch.debtorno = '" . $_SESSION['Items']->DebtorNo . "'
-							AND custbranch.branchcode='" . $_SESSION['Items']->Branch . "'";
-					}
+								account,
+								narrative,
+								amount
+							)
+						VALUES (
+							10,
+							" . $InvoiceNo . ",
+							'" . $DelDate . "',
+							" . $PeriodNo . ",
+							" . $SalesGLAccounts['salesglcode'] . ",
+							'" . $RecurrOrderRow['debtorno'] . " - " . $RecurrOrderLineRow['stkcode'] . " x " . $RecurrOrderLineRow['quantity'] . " @ " . $RecurrOrderLineRow['unitprice'] . "',
+							" . (-$RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity']/$CurrencyRate) . "
+						)";
 
-					$ErrMsg = _('Sales analysis record could not be added or updated because');
-					$DbgMsg = _('The following SQL to insert the sales analysis record was used');
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales GL posting could not be inserted because');
+					$DbgMsg = '<BR>' ._('The following SQL to insert the GLTrans record was used');
 					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-		/* If GLLink_Stock then insert GLTrans to credit stock and debit cost of sales at standard cost*/
-
-					if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $OrderLine->StandardCost !=0){
-
-		/*first the cost of sales entry*/
+					if ($RecurrOrderLineRow['discountpercent'] !=0){
 
 						$SQL = "INSERT INTO gltrans (
-									type,
-									typeno,
-									trandate,
-									periodno,
-									account,
-									narrative,
-									amount
-									)
+								type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount
+							)
 							VALUES (
 								10,
 								" . $InvoiceNo . ",
-								'" . $DefaultDispatchDate . "',
+								'" . $DelDate . "',
 								" . $PeriodNo . ",
-								" . GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items']->DefaultSalesType, $db) . ",
-								'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
-								" . $OrderLine->StandardCost * $OrderLine->QtyDispatched . "
+								" . $SalesGLAccounts['discountglcode'] . ",
+								'" . $RecurrOrderRow['debtorno'] . " - " . $RecurrOrderLineRow['stkcode'] . " @ " . ($RecurrOrderLineRow['discountpercent'] * 100) . "%',
+								" . ($RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity'] * $RecurrOrderLineRow['discountpercent']/$CurrencyRate) . "
 							)";
 
-						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The cost of sales GL posting could not be inserted because');
+						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales discount GL posting could not be inserted because');
 						$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 						$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+					} /*end of if discount !=0 */
+				} /*end of if sales integrated with debtors */
 
-		/*now the stock entry*/
-						$StockGLCode = GetStockGLCode($OrderLine->StockID,$db);
-
-						$SQL = "INSERT INTO gltrans (
-									type,
-									typeno,
-									trandate,
-									periodno,
-									account,
-									narrative,
-									amount
-								)
-							VALUES (
-								10,
-								" . $InvoiceNo . ",
-								'" . $DefaultDispatchDate . "',
-								" . $PeriodNo . ",
-								" . $StockGLCode['stockact'] . ",
-								'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
-								" . (-$OrderLine->StandardCost * $OrderLine->QtyDispatched) . "
-							)";
-
-						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock side of the cost of sales GL posting could not be inserted because');
-						$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-						$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-					} /* end of if GL and stock integrated and standard cost !=0 */
-
-					if ($_SESSION['CompanyRecord']['gllink_debtors']==1 && $OrderLine->Price !=0){
-
-			//Post sales transaction to GL credit sales
-						$SalesGLAccounts = GetSalesGLAccount($Area, $OrderLine->StockID, $_SESSION['Items']->DefaultSalesType, $db);
-
-						$SQL = "INSERT INTO gltrans (
-									type,
-									typeno,
-									trandate,
-									periodno,
-									account,
-									narrative,
-									amount
-								)
-							VALUES (
-								10,
-								" . $InvoiceNo . ",
-								'" . $DefaultDispatchDate . "',
-								" . $PeriodNo . ",
-								" . $SalesGLAccounts['salesglcode'] . ",
-								'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->Price . "',
-								" . (-$OrderLine->Price * $OrderLine->QtyDispatched/$_SESSION['CurrencyRate']) . "
-							)";
-
-						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales GL posting could not be inserted because');
-						$DbgMsg = '<BR>' ._('The following SQL to insert the GLTrans record was used');
-						$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-
-						if ($OrderLine->DiscountPercent !=0){
-
-							$SQL = "INSERT INTO gltrans (
-									type,
-									typeno,
-									trandate,
-									periodno,
-									account,
-									narrative,
-									amount
-								)
-								VALUES (
-									10,
-									" . $InvoiceNo . ",
-									'" . $DefaultDispatchDate . "',
-									" . $PeriodNo . ",
-									" . $SalesGLAccounts['discountglcode'] . ",
-									'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " @ " . ($OrderLine->DiscountPercent * 100) . "%',
-									" . ($OrderLine->Price * $OrderLine->QtyDispatched * $OrderLine->DiscountPercent/$_SESSION['CurrencyRate']) . "
-								)";
-
-							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales discount GL posting could not be inserted because');
-							$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-							$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-						} /*end of if discount !=0 */
-					} /*end of if sales integrated with debtors */
-
-				} /*Quantity dispatched is more than 0 */
 			} /*end of OrderLine loop */
 
 
 			if ($_SESSION['CompanyRecord']['gllink_debtors']==1){
 
+			
+			
+			
+			
+			
+			
+			
+			
+			/* TO HERE */
+			
+			
+			
+			
+			
 		/*Post debtors transaction to GL debit debtors, credit freight re-charged and credit sales */
 				if (($_SESSION['Items']->total + $_POST['ChargeFreightCost'] + $TaxTotal) !=0) {
 					$SQL = "INSERT INTO gltrans (
@@ -505,8 +454,8 @@ while ($RecurrOrderRow = DB_fetch_array($Result)){
 								'" . $DefaultDispatchDate . "',
 								" . $PeriodNo . ",
 								" . $_SESSION['CompanyRecord']['debtorsact'] . ",
-								'" . $_SESSION['Items']->DebtorNo . "',
-								" . (($_SESSION['Items']->total + $_POST['ChargeFreightCost'] + $TaxTotal)/$_SESSION['CurrencyRate']) . "
+								'" . $RecurrOrderRow['debtorno'] . "',
+								" . (($_SESSION['Items']->total + $_POST['ChargeFreightCost'] + $TaxTotal)/$CurrencyRate) . "
 							)";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The total debtor GL posting could not be inserted because');
@@ -532,8 +481,8 @@ while ($RecurrOrderRow = DB_fetch_array($Result)){
 							'" . $DefaultDispatchDate . "',
 							" . $PeriodNo . ",
 							" . $_SESSION['CompanyRecord']['freightact'] . ",
-							'" . $_SESSION['Items']->DebtorNo . "',
-							" . (-($_POST['ChargeFreightCost'])/$_SESSION['CurrencyRate']) . "
+							'" . $RecurrOrderRow['debtorno'] . "',
+							" . (-($_POST['ChargeFreightCost'])/$CurrencyRate) . "
 						)";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The freight GL posting could not be inserted because');
@@ -556,8 +505,8 @@ while ($RecurrOrderRow = DB_fetch_array($Result)){
 							'" . $DefaultDispatchDate . "',
 							" . $PeriodNo . ",
 							" . $_SESSION['TaxGLCode'] . ",
-							'" . $_SESSION['Items']->DebtorNo . "',
-							" . (-$TaxTotal/$_SESSION['CurrencyRate']) . "
+							'" . $RecurrOrderRow['debtorno'] . "',
+							" . (-$TaxTotal/$CurrencyRate) . "
 						)";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The tax GL posting could not be inserted because');
@@ -656,15 +605,7 @@ while ($RecurrOrderRow = DB_fetch_array($Result)){
 		
 		
 		
-		}
+		} /*end if the recurring order is set to auto invoice */	 
 	}/*end if there was a recurring order that are due to have another order made up*/
-
 }/*end while there are recurring order templates to check */
-
-
-
-
-
-
-		
 ?>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*Functions to get the GL codes for customer transactions based on
 $Area, $StockID to determine the stock category and the SalesType (Price List)
 
@@ -15,7 +15,10 @@ Function GetCOGSGLAccount ($Area, $StockID, $SalesType, &$db) {
 
 /*Gets the GL Code for the COGS for a specific area and stock category. */
 
-	$SQL = "SELECT glcode FROM cogsglpostings WHERE area = '" . $Area . "' AND stkcat = '" . $StockCategory . "' AND salestype='" . $SalesType . "'";
+	$SQL = "SELECT glcode FROM cogsglpostings 
+			WHERE area = '" . $Area . "' 
+			AND stkcat = '" . $StockCategory . "' 
+			AND salestype='" . $SalesType . "'";
 	/*Need to determine if COGS GL codes set up for the stk cat, area and sales type of the item/customer branch and 	use the most appropriate GL Code.
 	If no match for all fields area, sales type, stock category then the rules for choosing the nearest match
 	are
@@ -59,7 +62,11 @@ Function GetCOGSGLAccount ($Area, $StockID, $SalesType, &$db) {
 	if (DB_num_rows($Result)==0){
 
 		DB_free_result($Result);
-		$SQL = "SELECT glcode FROM cogsglpostings WHERE area = 'AN' AND salestype='AN' AND stkcat = '$StockCategory'";
+		$SQL = "SELECT glcode 
+			FROM cogsglpostings 
+			WHERE area = 'AN' 
+			AND salestype='AN' 
+			AND stkcat = '$StockCategory'";
 	
 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 	}
@@ -67,14 +74,22 @@ Function GetCOGSGLAccount ($Area, $StockID, $SalesType, &$db) {
 	if (DB_num_rows($Result)==0){
 
 		DB_free_result($Result);
-		$SQL = "SELECT glcode FROM cogsglpostings WHERE area = '$Area' AND stkcat = 'ANY' AND salestype='AN'";
+		$SQL = "SELECT glcode 
+			FROM cogsglpostings 
+			WHERE area = '$Area' 
+			AND stkcat = 'ANY' 
+			AND salestype='AN'";
 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 	}
 
 	if (DB_num_rows($Result)==0){
 
 		DB_free_result($Result);
-		$SQL = "SELECT glcode FROM cogsglpostings WHERE area = 'AN' AND stkcat = 'ANY' AND salestype='AN'";
+		$SQL = "SELECT glcode 
+			FROM cogsglpostings 
+			WHERE area = 'AN' 
+			AND stkcat = 'ANY' 
+			AND salestype='AN'";
 		
 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 	}
@@ -100,7 +115,7 @@ Function GetCOGSGLAccount ($Area, $StockID, $SalesType, &$db) {
 			$SQL = "INSERT INTO chartmaster VALUES (1, 'Default Sales and COGS', 'Sales')";
 			$Result = DB_query($SQL,$db);
 		}
-		return array(1);
+		return 1;
 	}
 
 

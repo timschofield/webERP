@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 10;
 
@@ -166,7 +166,7 @@ if (!isset($_GET['delete'])) {
 	<CENTER><TABLE>
 	<TR><TD><?php echo _('Area'); ?>:</TD>
 	<TD><SELECT name="Area">
-	<OPTION VALUE="ANY"><?php echo _('Any Other'); ?>
+	<OPTION VALUE="AN"><?php echo _('Any Other'); ?>
 
 	<?php
 
