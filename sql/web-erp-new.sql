@@ -1528,7 +1528,7 @@ CREATE TABLE WWW_Users (
   ModulesAllowed varchar(20) NOT NULL default '',
   Blocked tinyint(4) NOT NULL default '0',
   DisplayRecordsMax int(11) NOT NULL default '0',
-  Theme varchar(30) NOT NULL default '''professional''',
+  Theme varchar(30) NOT NULL default 'fresh',
   Language char(2) NOT NULL default 'en',
   PRIMARY KEY  (UserID),
   KEY CustomerID (CustomerID),
@@ -1749,7 +1749,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE WWW_Users DISABLE KEYS */;
 LOCK TABLES WWW_Users WRITE;
-INSERT INTO WWW_Users VALUES ('Admin','weeping','Phil Daintree','','','','DEN',7,'2004-06-06 13:23:59','','A4','1,1,1,1,1,1,1,1,',0,0,'professional','en'),('demo','weberp','Demonstration user','','','','DEN',7,'2004-09-25 21:24:31','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en'),('testy','weberp','','GRANHR','','','DEN',6,'2004-02-23 20:21:56','GRAN','A4','1,0,0,0,0,0,0,0,',0,0,'professional','en');
+INSERT INTO WWW_Users VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2004-09-25 21:24:31','','A4','1,1,1,1,1,1,1,1,',0,50,'fresh','en');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE WWW_Users ENABLE KEYS */;
 

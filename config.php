@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -21,7 +21,7 @@ if (!function_exists('_')){
 //---------------------------------------------------
 
 // Application version
-$Version = "0.2.10";
+$Version = "0.2.9a";
 
 // The company name to appear in the headings on each page displayed
 $CompanyName = "Web-ERP Demo";
@@ -44,14 +44,14 @@ $DefaultDateFormat = "d/m/Y";
 // $host is the computer ip address or name where the database is located
 // assuming that the web server is also the sql server
 $host = "localhost";
-$DatabaseName = "testsys";
+$DatabaseName = "weberp";
 
 // sql user & password
 $dbuser = "weberp_db_user";
 $dbpassword = "weberp_db_pwd";
 
 // CSS GUI theme
-$DefaultTheme = "professional";
+$DefaultTheme = "fresh";
 
 // Accounts Receivable
 // Aging periods used on customer and supplier enquiry screens and aged listings*/
