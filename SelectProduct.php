@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $title = "Search Inventory Items";
 
 $PageSecurity = 2;
@@ -14,8 +14,9 @@ if (isset($_GET['StockID'])){  //The page is called with a StockID
 }
 
 if (isset($_GET['NewSearch'])){
-	$_SESSION['SelectedStockItem']="";
 	unset($StockID);
+	unset($_SESSION['SelectedStockItem']);
+	unset($_POST['Select']);
 }
 
 /*Always show the search facilities */
@@ -175,7 +176,7 @@ if (!isset($_POST['Search'])){
 }
 
 
-If (!$_POST['Search']=='Search Now' AND (isset($_POST['Select']) OR isset($_SESSION['SelectedStockItem']))) {
+If ($_POST['Search']!='Search Now' AND (isset($_POST['Select']) OR isset($_SESSION['SelectedStockItem']))) {
 
 	if (isset($_POST['Select'])){
 		$_SESSION['SelectedStockItem']= $_POST['Select'];

@@ -1,7 +1,11 @@
 <P>webERP Change Log
 
+Upgrade script 2.8 - 2.9 is necessary to be applied against a 2.8 database.
 
-5/5/04	Added new tables for Serialised stuff SerialStockItems SerialStockMoves and StockModules. Alterations to StockMaster for StockModClass and Serialised.
+
+
+5/5/04  session.inc now refers to MiscFunctions.php
+5/5/04	Added new tables for Serialised stuff SerialStockItems SerialStockMoves and StockModules. Alterations to StockMaster for StockModClass and Serialised. -
 5/5/04  Added includes/MiscFunctions.php for Jesse, DefineStockMaster.php class to hold all info about a stock item master record, Stocks.php script modified for Serialised and StockModClass. New directory under includes for StockModules definitions currently only GenericStockItem.php and CellPhoneItem.php - these contain validation routines for the class of item.
 29/4/04 StockLocTransferReceive.php to receive quantities set up to transfer from StockLocTransfer.php. Deletes the temporary table data holding the transfered items on creation of the stock movements necessary.
 28/4/04 RePostGL scripts added updating of ChartDetails.BFwdBudget field.
