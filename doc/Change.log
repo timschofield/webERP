@@ -1,5 +1,11 @@
 <P>webERP Change Log
 
+<P>Version 2.9b
+<P>
+<P>22/11/04-20/12/04 - Large changes throughout to ensure consistent use of prnMsg function of Jesse and to use the DB_query function with ErrMsg and DbgMsg parameters and to ensure all strings are enclosed in the gettext function
+<P>18/12/04 AgedDebtors.php uses CASE instead of IF to ensure ANSI SQL used.
+<P>18/12/04 modified Z_poEditLangModule.php  to check for new strings each time and to write a fresh .mo file after completing and edit
+<P>15/11/04 Kitch - new scripts to enable administration of language files and directories
 <P>22/11/04 GoodsReceived.php bug on receiving nominal items - value of CurrentStandardCost not set for nominal items - now fixed
 <P>8-22/11/04 Large amounts of gettext work too much to record here - most scripts re-worked some
 <P>8/11/04 Vitaliy - entering purchase orders now allows selection of all GRNs on a Purchase order in one hit or selected lines using checkboxes - much neater selection of all lines to be invoiced in one go. Gettextified this script - SuppInvGRNs.php

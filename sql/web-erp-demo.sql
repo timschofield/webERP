@@ -11,7 +11,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 /*!40101 SET NAMES utf8 */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE="NO_AUTO_VALUE_ON_ZERO" */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE="NO_AUTO_VALUE_ON_ZERO,MYSQL40" */;
 
 --
 -- Current Database: `weberp`
@@ -33,7 +33,7 @@ CREATE TABLE `AccountGroups` (
   `SequenceInTB` smallint(6) NOT NULL default '0',
   PRIMARY KEY  (`GroupName`),
   KEY `SequenceInTB` (`SequenceInTB`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `Areas`
@@ -44,7 +44,7 @@ CREATE TABLE `Areas` (
   `AreaCode` char(2) NOT NULL default '',
   `AreaDescription` varchar(25) NOT NULL default '',
   PRIMARY KEY  (`AreaCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `BOM`
@@ -71,7 +71,7 @@ CREATE TABLE `BOM` (
   CONSTRAINT `BOM_ibfk_2` FOREIGN KEY (`Component`) REFERENCES `StockMaster` (`StockID`),
   CONSTRAINT `BOM_ibfk_3` FOREIGN KEY (`WorkCentreAdded`) REFERENCES `WorkCentres` (`Code`),
   CONSTRAINT `BOM_ibfk_4` FOREIGN KEY (`LocCode`) REFERENCES `Locations` (`LocCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `BankAccounts`
@@ -87,7 +87,7 @@ CREATE TABLE `BankAccounts` (
   KEY `BankAccountName` (`BankAccountName`),
   KEY `BankAccountNumber` (`BankAccountNumber`),
   CONSTRAINT `BankAccounts_ibfk_1` FOREIGN KEY (`AccountCode`) REFERENCES `ChartMaster` (`AccountCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `BankTrans`
@@ -114,7 +114,7 @@ CREATE TABLE `BankTrans` (
   KEY `CurrCode` (`CurrCode`),
   CONSTRAINT `BankTrans_ibfk_1` FOREIGN KEY (`Type`) REFERENCES `SysTypes` (`TypeID`),
   CONSTRAINT `BankTrans_ibfk_2` FOREIGN KEY (`BankAct`) REFERENCES `BankAccounts` (`AccountCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `Buckets`
@@ -129,7 +129,7 @@ CREATE TABLE `Buckets` (
   KEY `WorkCentre` (`WorkCentre`),
   KEY `AvailDate` (`AvailDate`),
   CONSTRAINT `Buckets_ibfk_1` FOREIGN KEY (`WorkCentre`) REFERENCES `WorkCentres` (`Code`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `COGSGLPostings`
@@ -148,7 +148,7 @@ CREATE TABLE `COGSGLPostings` (
   KEY `StkCat` (`StkCat`),
   KEY `GLCode` (`GLCode`),
   KEY `SalesType` (`SalesType`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `ChartDetails`
@@ -166,7 +166,7 @@ CREATE TABLE `ChartDetails` (
   KEY `Period` (`Period`),
   CONSTRAINT `ChartDetails_ibfk_1` FOREIGN KEY (`AccountCode`) REFERENCES `ChartMaster` (`AccountCode`),
   CONSTRAINT `ChartDetails_ibfk_2` FOREIGN KEY (`Period`) REFERENCES `Periods` (`PeriodNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `ChartMaster`
@@ -182,7 +182,7 @@ CREATE TABLE `ChartMaster` (
   KEY `AccountName` (`AccountName`),
   KEY `Group_` (`Group_`),
   CONSTRAINT `ChartMaster_ibfk_1` FOREIGN KEY (`Group_`) REFERENCES `AccountGroups` (`GroupName`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `Companies`
@@ -215,7 +215,7 @@ CREATE TABLE `Companies` (
   `GLLink_Stock` tinyint(1) default '1',
   `FreightAct` int(11) NOT NULL default '0',
   PRIMARY KEY  (`CoyCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `ContractBOM`
@@ -237,7 +237,7 @@ CREATE TABLE `ContractBOM` (
   CONSTRAINT `ContractBOM_ibfk_1` FOREIGN KEY (`WorkCentreAdded`) REFERENCES `WorkCentres` (`Code`),
   CONSTRAINT `ContractBOM_ibfk_2` FOREIGN KEY (`LocCode`) REFERENCES `Locations` (`LocCode`),
   CONSTRAINT `ContractBOM_ibfk_3` FOREIGN KEY (`Component`) REFERENCES `StockMaster` (`StockID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `ContractReqts`
@@ -253,7 +253,7 @@ CREATE TABLE `ContractReqts` (
   PRIMARY KEY  (`ContractReqID`),
   KEY `Contract` (`Contract`),
   CONSTRAINT `ContractReqts_ibfk_1` FOREIGN KEY (`Contract`) REFERENCES `Contracts` (`ContractRef`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `Contracts`
@@ -290,7 +290,7 @@ CREATE TABLE `Contracts` (
   CONSTRAINT `Contracts_ibfk_1` FOREIGN KEY (`DebtorNo`, `BranchCode`) REFERENCES `CustBranch` (`DebtorNo`, `BranchCode`),
   CONSTRAINT `Contracts_ibfk_2` FOREIGN KEY (`CategoryID`) REFERENCES `StockCategory` (`CategoryID`),
   CONSTRAINT `Contracts_ibfk_3` FOREIGN KEY (`TypeAbbrev`) REFERENCES `SalesTypes` (`TypeAbbrev`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `Currencies`
@@ -305,7 +305,7 @@ CREATE TABLE `Currencies` (
   `Rate` double(16,4) NOT NULL default '1.0000',
   PRIMARY KEY  (`CurrAbrev`),
   KEY `Country` (`Country`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `CustAllocns`
@@ -324,7 +324,7 @@ CREATE TABLE `CustAllocns` (
   KEY `TransID_AllocTo` (`TransID_AllocTo`),
   CONSTRAINT `CustAllocns_ibfk_1` FOREIGN KEY (`TransID_AllocFrom`) REFERENCES `DebtorTrans` (`ID`),
   CONSTRAINT `CustAllocns_ibfk_2` FOREIGN KEY (`TransID_AllocTo`) REFERENCES `DebtorTrans` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `CustBranch`
@@ -372,7 +372,7 @@ CREATE TABLE `CustBranch` (
   CONSTRAINT `CustBranch_ibfk_4` FOREIGN KEY (`DefaultLocation`) REFERENCES `Locations` (`LocCode`),
   CONSTRAINT `CustBranch_ibfk_5` FOREIGN KEY (`TaxAuthority`) REFERENCES `TaxAuthorities` (`TaxID`),
   CONSTRAINT `CustBranch_ibfk_6` FOREIGN KEY (`DefaultShipVia`) REFERENCES `Shippers` (`Shipper_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `DebtorTrans`
@@ -416,7 +416,7 @@ CREATE TABLE `DebtorTrans` (
   CONSTRAINT `DebtorTrans_ibfk_1` FOREIGN KEY (`DebtorNo`) REFERENCES `CustBranch` (`DebtorNo`),
   CONSTRAINT `DebtorTrans_ibfk_2` FOREIGN KEY (`Type`) REFERENCES `SysTypes` (`TypeID`),
   CONSTRAINT `DebtorTrans_ibfk_3` FOREIGN KEY (`Prd`) REFERENCES `Periods` (`PeriodNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `DebtorsMaster`
@@ -461,7 +461,7 @@ CREATE TABLE `DebtorsMaster` (
   CONSTRAINT `DebtorsMaster_ibfk_2` FOREIGN KEY (`CurrCode`) REFERENCES `Currencies` (`CurrAbrev`),
   CONSTRAINT `DebtorsMaster_ibfk_3` FOREIGN KEY (`PaymentTerms`) REFERENCES `PaymentTerms` (`TermsIndicator`),
   CONSTRAINT `DebtorsMaster_ibfk_4` FOREIGN KEY (`SalesType`) REFERENCES `SalesTypes` (`TypeAbbrev`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `DiscountMatrix`
@@ -478,7 +478,7 @@ CREATE TABLE `DiscountMatrix` (
   KEY `DiscountCategory` (`DiscountCategory`),
   KEY `SalesType` (`SalesType`),
   CONSTRAINT `DiscountMatrix_ibfk_1` FOREIGN KEY (`SalesType`) REFERENCES `SalesTypes` (`TypeAbbrev`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `EDIItemMapping`
@@ -495,7 +495,7 @@ CREATE TABLE `EDIItemMapping` (
   KEY `StockID` (`StockID`),
   KEY `PartnerStockID` (`PartnerStockID`),
   KEY `SuppOrCust` (`SuppOrCust`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `EDIMessageFormat`
@@ -512,7 +512,7 @@ CREATE TABLE `EDIMessageFormat` (
   PRIMARY KEY  (`ID`),
   UNIQUE KEY `PartnerCode` (`PartnerCode`,`MessageType`,`SequenceNo`),
   KEY `Section` (`Section`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `EDI_ORDERS_Seg_Groups`
@@ -524,7 +524,7 @@ CREATE TABLE `EDI_ORDERS_Seg_Groups` (
   `MaxOccur` int(4) NOT NULL default '0',
   `ParentSegGroup` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`SegGroupNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `EDI_ORDERS_Segs`
@@ -539,7 +539,7 @@ CREATE TABLE `EDI_ORDERS_Segs` (
   PRIMARY KEY  (`ID`),
   KEY `SegTag` (`SegTag`),
   KEY `SegNo` (`SegGroup`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `FreightCosts`
@@ -564,7 +564,7 @@ CREATE TABLE `FreightCosts` (
   KEY `Destination_2` (`Destination`,`LocationFrom`,`ShipperID`),
   CONSTRAINT `FreightCosts_ibfk_1` FOREIGN KEY (`LocationFrom`) REFERENCES `Locations` (`LocCode`),
   CONSTRAINT `FreightCosts_ibfk_2` FOREIGN KEY (`ShipperID`) REFERENCES `Shippers` (`Shipper_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `GLTrans`
@@ -595,7 +595,7 @@ CREATE TABLE `GLTrans` (
   CONSTRAINT `GLTrans_ibfk_1` FOREIGN KEY (`Account`) REFERENCES `ChartMaster` (`AccountCode`),
   CONSTRAINT `GLTrans_ibfk_2` FOREIGN KEY (`Type`) REFERENCES `SysTypes` (`TypeID`),
   CONSTRAINT `GLTrans_ibfk_3` FOREIGN KEY (`PeriodNo`) REFERENCES `Periods` (`PeriodNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `GRNs`
@@ -619,7 +619,7 @@ CREATE TABLE `GRNs` (
   KEY `SupplierID` (`SupplierID`),
   CONSTRAINT `GRNs_ibfk_1` FOREIGN KEY (`SupplierID`) REFERENCES `Suppliers` (`SupplierID`),
   CONSTRAINT `GRNs_ibfk_2` FOREIGN KEY (`PODetailItem`) REFERENCES `PurchOrderDetails` (`PODetailItem`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `Help`
@@ -634,7 +634,7 @@ CREATE TABLE `Help` (
   PRIMARY KEY  (`ID`),
   KEY `PageID` (`PageID`),
   KEY `HelpType` (`HelpType`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `HoldReasons`
@@ -648,7 +648,7 @@ CREATE TABLE `HoldReasons` (
   PRIMARY KEY  (`ReasonCode`),
   KEY `ReasonCode` (`ReasonCode`),
   KEY `ReasonDescription` (`ReasonDescription`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `LastCostRollUp`
@@ -667,7 +667,7 @@ CREATE TABLE `LastCostRollUp` (
   `NewMatCost` decimal(20,4) NOT NULL default '0.0000',
   `NewLabCost` decimal(20,4) NOT NULL default '0.0000',
   `NewOheadCost` decimal(20,4) NOT NULL default '0.0000'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `LocStock`
@@ -683,7 +683,7 @@ CREATE TABLE `LocStock` (
   KEY `StockID` (`StockID`),
   CONSTRAINT `LocStock_ibfk_1` FOREIGN KEY (`LocCode`) REFERENCES `Locations` (`LocCode`),
   CONSTRAINT `LocStock_ibfk_2` FOREIGN KEY (`StockID`) REFERENCES `StockMaster` (`StockID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `LocTransfers`
@@ -706,7 +706,7 @@ CREATE TABLE `LocTransfers` (
   CONSTRAINT `LocTransfers_ibfk_1` FOREIGN KEY (`ShipLoc`) REFERENCES `Locations` (`LocCode`),
   CONSTRAINT `LocTransfers_ibfk_2` FOREIGN KEY (`RecLoc`) REFERENCES `Locations` (`LocCode`),
   CONSTRAINT `LocTransfers_ibfk_3` FOREIGN KEY (`StockID`) REFERENCES `StockMaster` (`StockID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Stores Shipments To And From Locations';
+) TYPE=InnoDB COMMENT='Stores Shipments To And From Locations';
 
 --
 -- Table structure for table `Locations`
@@ -725,7 +725,7 @@ CREATE TABLE `Locations` (
   `Contact` varchar(30) NOT NULL default '',
   `TaxAuthority` tinyint(4) NOT NULL default '1',
   PRIMARY KEY  (`LocCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `OrderDeliveryDifferencesLog`
@@ -748,7 +748,7 @@ CREATE TABLE `OrderDeliveryDifferencesLog` (
   CONSTRAINT `OrderDeliveryDifferencesLog_ibfk_1` FOREIGN KEY (`StockID`) REFERENCES `StockMaster` (`StockID`),
   CONSTRAINT `OrderDeliveryDifferencesLog_ibfk_2` FOREIGN KEY (`DebtorNo`, `Branch`) REFERENCES `CustBranch` (`DebtorNo`, `BranchCode`),
   CONSTRAINT `OrderDeliveryDifferencesLog_ibfk_3` FOREIGN KEY (`OrderNo`) REFERENCES `SalesOrders` (`OrderNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `PaymentTerms`
@@ -763,7 +763,7 @@ CREATE TABLE `PaymentTerms` (
   PRIMARY KEY  (`TermsIndicator`),
   KEY `DaysBeforeDue` (`DaysBeforeDue`),
   KEY `DayInFollowingMonth` (`DayInFollowingMonth`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `Periods`
@@ -775,7 +775,7 @@ CREATE TABLE `Periods` (
   `LastDate_in_Period` date NOT NULL default '0000-00-00',
   PRIMARY KEY  (`PeriodNo`),
   KEY `LastDate_in_Period` (`LastDate_in_Period`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `Prices`
@@ -797,7 +797,7 @@ CREATE TABLE `Prices` (
   CONSTRAINT `Prices_ibfk_1` FOREIGN KEY (`StockID`) REFERENCES `StockMaster` (`StockID`),
   CONSTRAINT `Prices_ibfk_2` FOREIGN KEY (`CurrAbrev`) REFERENCES `Currencies` (`CurrAbrev`),
   CONSTRAINT `Prices_ibfk_3` FOREIGN KEY (`TypeAbbrev`) REFERENCES `SalesTypes` (`TypeAbbrev`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `PurchData`
@@ -819,7 +819,7 @@ CREATE TABLE `PurchData` (
   KEY `Preferred` (`Preferred`),
   CONSTRAINT `PurchData_ibfk_1` FOREIGN KEY (`StockID`) REFERENCES `StockMaster` (`StockID`),
   CONSTRAINT `PurchData_ibfk_2` FOREIGN KEY (`SupplierNo`) REFERENCES `Suppliers` (`SupplierID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `PurchOrderDetails`
@@ -851,7 +851,7 @@ CREATE TABLE `PurchOrderDetails` (
   KEY `ShiptRef` (`ShiptRef`),
   KEY `Completed` (`Completed`),
   CONSTRAINT `PurchOrderDetails_ibfk_1` FOREIGN KEY (`OrderNo`) REFERENCES `PurchOrders` (`OrderNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `PurchOrders`
@@ -880,7 +880,7 @@ CREATE TABLE `PurchOrders` (
   KEY `AllowPrintPO` (`AllowPrint`),
   CONSTRAINT `PurchOrders_ibfk_1` FOREIGN KEY (`SupplierNo`) REFERENCES `Suppliers` (`SupplierID`),
   CONSTRAINT `PurchOrders_ibfk_2` FOREIGN KEY (`IntoStockLocation`) REFERENCES `Locations` (`LocCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `ReportColumns`
@@ -904,7 +904,7 @@ CREATE TABLE `ReportColumns` (
   `Constant` float NOT NULL default '0',
   PRIMARY KEY  (`ReportID`,`ColNo`),
   CONSTRAINT `ReportColumns_ibfk_1` FOREIGN KEY (`ReportID`) REFERENCES `ReportHeaders` (`ReportID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `ReportHeaders`
@@ -932,7 +932,7 @@ CREATE TABLE `ReportHeaders` (
   `Lower4` varchar(10) NOT NULL default '',
   PRIMARY KEY  (`ReportID`),
   KEY `ReportHeading` (`ReportHeading`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `SalesAnalysis`
@@ -965,7 +965,7 @@ CREATE TABLE `SalesAnalysis` (
   KEY `BudgetOrActual` (`BudgetOrActual`),
   KEY `Salesperson` (`Salesperson`),
   CONSTRAINT `SalesAnalysis_ibfk_1` FOREIGN KEY (`PeriodNo`) REFERENCES `Periods` (`PeriodNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `SalesGLPostings`
@@ -984,7 +984,7 @@ CREATE TABLE `SalesGLPostings` (
   KEY `Area` (`Area`),
   KEY `StkCat` (`StkCat`),
   KEY `SalesType` (`SalesType`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `SalesOrderDetails`
@@ -1008,7 +1008,7 @@ CREATE TABLE `SalesOrderDetails` (
   KEY `Completed` (`Completed`),
   CONSTRAINT `SalesOrderDetails_ibfk_1` FOREIGN KEY (`OrderNo`) REFERENCES `SalesOrders` (`OrderNo`),
   CONSTRAINT `SalesOrderDetails_ibfk_2` FOREIGN KEY (`StkCode`) REFERENCES `StockMaster` (`StockID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `SalesOrders`
@@ -1047,7 +1047,7 @@ CREATE TABLE `SalesOrders` (
   CONSTRAINT `SalesOrders_ibfk_1` FOREIGN KEY (`BranchCode`, `DebtorNo`) REFERENCES `CustBranch` (`BranchCode`, `DebtorNo`),
   CONSTRAINT `SalesOrders_ibfk_2` FOREIGN KEY (`ShipVia`) REFERENCES `Shippers` (`Shipper_ID`),
   CONSTRAINT `SalesOrders_ibfk_3` FOREIGN KEY (`FromStkLoc`) REFERENCES `Locations` (`LocCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `SalesTypes`
@@ -1059,7 +1059,7 @@ CREATE TABLE `SalesTypes` (
   `Sales_Type` char(20) NOT NULL default '',
   PRIMARY KEY  (`TypeAbbrev`),
   KEY `Sales_Type` (`Sales_Type`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `Salesman`
@@ -1075,7 +1075,7 @@ CREATE TABLE `Salesman` (
   `Breakpoint` decimal(20,4) NOT NULL default '0.0000',
   `CommissionRate2` double(16,4) NOT NULL default '0.0000',
   PRIMARY KEY  (`SalesmanCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `Scripts`
@@ -1088,7 +1088,7 @@ CREATE TABLE `Scripts` (
   `PageDescription` text NOT NULL,
   PRIMARY KEY  (`PageID`),
   KEY `FileName` (`FileName`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Index of all scripts';
+) TYPE=InnoDB COMMENT='Index of all scripts';
 
 --
 -- Table structure for table `ShipmentCharges`
@@ -1109,7 +1109,7 @@ CREATE TABLE `ShipmentCharges` (
   KEY `TransType_2` (`TransType`),
   CONSTRAINT `ShipmentCharges_ibfk_1` FOREIGN KEY (`ShiptRef`) REFERENCES `Shipments` (`ShiptRef`),
   CONSTRAINT `ShipmentCharges_ibfk_2` FOREIGN KEY (`TransType`) REFERENCES `SysTypes` (`TypeID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `Shipments`
@@ -1130,7 +1130,7 @@ CREATE TABLE `Shipments` (
   KEY `ShipperRef` (`VoyageRef`),
   KEY `Vessel` (`Vessel`),
   CONSTRAINT `Shipments_ibfk_1` FOREIGN KEY (`SupplierID`) REFERENCES `Suppliers` (`SupplierID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `Shippers`
@@ -1142,7 +1142,7 @@ CREATE TABLE `Shippers` (
   `ShipperName` char(40) NOT NULL default '',
   `MinCharge` double(16,4) NOT NULL default '0.0000',
   PRIMARY KEY  (`Shipper_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `StockCategory`
@@ -1161,7 +1161,7 @@ CREATE TABLE `StockCategory` (
   PRIMARY KEY  (`CategoryID`),
   KEY `CategoryDescription` (`CategoryDescription`),
   KEY `StockType` (`StockType`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `StockCheckFreeze`
@@ -1176,7 +1176,7 @@ CREATE TABLE `StockCheckFreeze` (
   KEY `LocCode` (`LocCode`),
   CONSTRAINT `StockCheckFreeze_ibfk_1` FOREIGN KEY (`StockID`) REFERENCES `StockMaster` (`StockID`),
   CONSTRAINT `StockCheckFreeze_ibfk_2` FOREIGN KEY (`LocCode`) REFERENCES `Locations` (`LocCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `StockCounts`
@@ -1194,7 +1194,7 @@ CREATE TABLE `StockCounts` (
   KEY `LocCode` (`LocCode`),
   CONSTRAINT `StockCounts_ibfk_1` FOREIGN KEY (`StockID`) REFERENCES `StockMaster` (`StockID`),
   CONSTRAINT `StockCounts_ibfk_2` FOREIGN KEY (`LocCode`) REFERENCES `Locations` (`LocCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `StockMaster`
@@ -1234,7 +1234,7 @@ CREATE TABLE `StockMaster` (
   KEY `Controlled` (`Controlled`),
   KEY `DiscountCategory` (`DiscountCategory`),
   CONSTRAINT `StockMaster_ibfk_1` FOREIGN KEY (`CategoryID`) REFERENCES `StockCategory` (`CategoryID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `StockMoves`
@@ -1276,7 +1276,7 @@ CREATE TABLE `StockMoves` (
   CONSTRAINT `StockMoves_ibfk_2` FOREIGN KEY (`Type`) REFERENCES `SysTypes` (`TypeID`),
   CONSTRAINT `StockMoves_ibfk_3` FOREIGN KEY (`LocCode`) REFERENCES `Locations` (`LocCode`),
   CONSTRAINT `StockMoves_ibfk_4` FOREIGN KEY (`Prd`) REFERENCES `Periods` (`PeriodNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `StockSerialItems`
@@ -1293,7 +1293,7 @@ CREATE TABLE `StockSerialItems` (
   KEY `LocCode` (`LocCode`),
   CONSTRAINT `StockSerialItems_ibfk_1` FOREIGN KEY (`StockID`) REFERENCES `StockMaster` (`StockID`),
   CONSTRAINT `StockSerialItems_ibfk_2` FOREIGN KEY (`LocCode`) REFERENCES `Locations` (`LocCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `StockSerialMoves`
@@ -1311,7 +1311,7 @@ CREATE TABLE `StockSerialMoves` (
   KEY `StockID_SN` (`StockID`,`SerialNo`),
   CONSTRAINT `StockSerialMoves_ibfk_1` FOREIGN KEY (`StockMoveNo`) REFERENCES `StockMoves` (`StkMoveNo`),
   CONSTRAINT `StockSerialMoves_ibfk_2` FOREIGN KEY (`StockID`, `SerialNo`) REFERENCES `StockSerialItems` (`StockID`, `SerialNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `SuppAllocs`
@@ -1330,7 +1330,7 @@ CREATE TABLE `SuppAllocs` (
   KEY `DateAlloc` (`DateAlloc`),
   CONSTRAINT `SuppAllocs_ibfk_1` FOREIGN KEY (`TransID_AllocFrom`) REFERENCES `SuppTrans` (`ID`),
   CONSTRAINT `SuppAllocs_ibfk_2` FOREIGN KEY (`TransID_AllocTo`) REFERENCES `SuppTrans` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `SuppTrans`
@@ -1366,7 +1366,7 @@ CREATE TABLE `SuppTrans` (
   KEY `Type` (`Type`),
   CONSTRAINT `SuppTrans_ibfk_1` FOREIGN KEY (`Type`) REFERENCES `SysTypes` (`TypeID`),
   CONSTRAINT `SuppTrans_ibfk_2` FOREIGN KEY (`SupplierNo`) REFERENCES `Suppliers` (`SupplierID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `SupplierContacts`
@@ -1386,7 +1386,7 @@ CREATE TABLE `SupplierContacts` (
   KEY `Contact` (`Contact`),
   KEY `SupplierID` (`SupplierID`),
   CONSTRAINT `SupplierContacts_ibfk_1` FOREIGN KEY (`SupplierID`) REFERENCES `Suppliers` (`SupplierID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `Suppliers`
@@ -1419,7 +1419,7 @@ CREATE TABLE `Suppliers` (
   CONSTRAINT `Suppliers_ibfk_1` FOREIGN KEY (`CurrCode`) REFERENCES `Currencies` (`CurrAbrev`),
   CONSTRAINT `Suppliers_ibfk_2` FOREIGN KEY (`PaymentTerms`) REFERENCES `PaymentTerms` (`TermsIndicator`),
   CONSTRAINT `Suppliers_ibfk_3` FOREIGN KEY (`TaxAuthority`) REFERENCES `TaxAuthorities` (`TaxID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `SysTypes`
@@ -1432,7 +1432,7 @@ CREATE TABLE `SysTypes` (
   `TypeNo` int(11) NOT NULL default '1',
   PRIMARY KEY  (`TypeID`),
   KEY `TypeNo` (`TypeNo`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `TaxAuthLevels`
@@ -1449,7 +1449,7 @@ CREATE TABLE `TaxAuthLevels` (
   KEY `DispatchTaxAuthority` (`DispatchTaxAuthority`),
   CONSTRAINT `TaxAuthLevels_ibfk_1` FOREIGN KEY (`TaxAuthority`) REFERENCES `TaxAuthorities` (`TaxID`),
   CONSTRAINT `TaxAuthLevels_ibfk_2` FOREIGN KEY (`DispatchTaxAuthority`) REFERENCES `TaxAuthorities` (`TaxID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `TaxAuthorities`
@@ -1466,7 +1466,7 @@ CREATE TABLE `TaxAuthorities` (
   KEY `PurchTaxGLAccount` (`PurchTaxGLAccount`),
   CONSTRAINT `TaxAuthorities_ibfk_1` FOREIGN KEY (`TaxGLCode`) REFERENCES `ChartMaster` (`AccountCode`),
   CONSTRAINT `TaxAuthorities_ibfk_2` FOREIGN KEY (`PurchTaxGLAccount`) REFERENCES `ChartMaster` (`AccountCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `WWW_Users`
@@ -1494,7 +1494,7 @@ CREATE TABLE `WWW_Users` (
   KEY `CustomerID` (`CustomerID`),
   KEY `DefaultLocation` (`DefaultLocation`),
   CONSTRAINT `WWW_Users_ibfk_1` FOREIGN KEY (`DefaultLocation`) REFERENCES `Locations` (`LocCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `WorkCentres`
@@ -1513,7 +1513,7 @@ CREATE TABLE `WorkCentres` (
   KEY `Description` (`Description`),
   KEY `Location` (`Location`),
   CONSTRAINT `WorkCentres_ibfk_1` FOREIGN KEY (`Location`) REFERENCES `Locations` (`LocCode`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `WorksOrders`
@@ -1541,7 +1541,7 @@ CREATE TABLE `WorksOrders` (
   KEY `WORef` (`WORef`,`LocCode`),
   CONSTRAINT `WorksOrders_ibfk_1` FOREIGN KEY (`LocCode`) REFERENCES `Locations` (`LocCode`),
   CONSTRAINT `WorksOrders_ibfk_2` FOREIGN KEY (`StockID`) REFERENCES `StockMaster` (`StockID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) TYPE=InnoDB;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
@@ -1562,7 +1562,7 @@ CREATE TABLE `WorksOrders` (
 /*!40101 SET NAMES utf8 */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE="NO_AUTO_VALUE_ON_ZERO" */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE="NO_AUTO_VALUE_ON_ZERO,MYSQL40" */;
 
 --
 -- Dumping data for table `AccountGroups`

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
@@ -535,7 +535,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 /*Update order header for invoice charged on */
 	$SQL = "UPDATE SalesOrders SET Comments = CONCAT(Comments,' Inv ','" . $InvoiceNo . "') WHERE OrderNo= " . $_SESSION['ProcessingOrder'];
 
-	$ErrMsg = _('CRITICAL ERROR') . ' ' _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order header could not be updated with the invoice number');
+	$ErrMsg = _('CRITICAL ERROR') . ' ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order header could not be updated with the invoice number');
 	$DbgMsg = _('The following SQL to update the sales order was used');
 	$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 

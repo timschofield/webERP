@@ -1,14 +1,15 @@
 <?php
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 $PageSecurity = 1;
 
 include('includes/session.inc');
 $title=_('Main Menu');
 
-/*ModuleList array with the text of modules now in config.php */
 /*The module link codes are hard coded in a switch statement below to determine the options to show for each tab */
 $ModuleLink = array('orders', 'AR', 'AP', 'PO', 'stock', 'manuf', 'GL', 'system');
+/*The headings showing on the tabs accross the main index used also in WWW_Users for defining what should be visible to the user */
+$ModuleList = array(_('Orders'), _('Receivables'), _('Payables'), _('Purchasing'), _('Inventory'), _('Manufacturing'), _('General Ledger'), _('Setup'));
 
 if (isset($_GET['Application'])){ /*This is sent by this page (to itself) when the user clicks on a tab */
 	$_SESSION['Module'] = $_GET['Application'];

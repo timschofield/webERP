@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 /* Steve Kitchen */
 
@@ -27,7 +27,7 @@ $DefaultLanguage = 'en';		// the default language IS English ...
 	
 $PathToDefault		= './locale/' . $DefaultLanguage . '/LC_MESSAGES/messages.po';
 $FilesToInclude	= '*php includes/*.php includes/*.inc';
-$xgettextCmd		= 'xgettext -s --no-wrap -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
+$xgettextCmd		= 'xgettext --no-wrap -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
 
 if (isset($_POST['submit'])) {
 

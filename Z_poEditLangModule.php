@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 /* Steve Kitchen */
 
@@ -29,8 +29,18 @@ if (isset($_POST['language']) && isset($_POST['module'])) {
 
 	$PathToLanguage		= './locale/' . $_POST['language'] . '/LC_MESSAGES/messages.po';
 	$PathToNewLanguage	= './locale/' . $_POST['language'] . '/LC_MESSAGES/messages.po.new';
+	
+	$PathToLanguage_mo = substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) . '.mo';
+		
+/*First off update the messages.po file with any new strings */	
+	
+	
+	$FilesToInclude	= '*php includes/*.php includes/*.inc';
+	$xgettextCmd	= 'xgettext --no-wrap -L php -x ' . $PathToLanguage . ' -j ' . $PathToLanguage . ' ' . $FilesToInclude;
 
-/* read in the language file */
+	system($xgettextCmd);
+
+/* now read in the language file */
 
 	$LangFile = file($PathToLanguage);
 	$LangFileEntries = sizeof($LangFile);
@@ -61,6 +71,10 @@ if (isset($_POST['language']) && isset($_POST['module'])) {
 
 		$Result = rename($PathToLanguage, $PathToLanguage . '.old');
 		$Result = rename($PathToNewLanguage, $PathToLanguage);
+		
+/*now need to create the .mo file from the .po file */
+		$msgfmtCommand = 'msgfmt ' . $PathToLanguage . ' -o ' . $PathToLanguage_mo;
+		system($msgfmtCommand);
 
 		prnMsg (_('Done') . '<BR>', 'info', ' ');
 
