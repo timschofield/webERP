@@ -60,9 +60,9 @@ the line #: AccountGroups.php:8 index.php:890
 
 means that the string following is used in the AccountGroups.php script on line 8 and the index.php script on line 890. It could be useful to understand the context of where the script is used. Strings that are used several times throughout the application only need to be translated once. In some cases the #: line showing where the string is used can be quite an extensive list of scripts.
 
-msgid "AccountGroups"
+msgid "An example string in English that needs to be translated"
 
-this line is the english string which is to be substituted by the text in msgstr. The value of msgstr in this example is empty - "". gettext will return the english string where no translation is entered.
+this line is the english string which is to be substituted by the text in msgstr. If the value of msgstr is empty - "". gettext will return the english string.
 
 The effort of the translation is to edit the messages.po file and enter the language translation within the inverted commas of the msgstr.
 
