@@ -1,5 +1,7 @@
 <P>webERP Change Log
 
+<P>12/9/04 Credit_Invoice.php gettextified - fixed bug where TaxRate was not recorded on StockMoves correctly
+<P>12/9/04 Tax.php and PDFTaxPageHeader.inc was started
 <P>12/9/04 GLPostings.inc was not adding new chart details when an account had been added - fixed
 <P>10/9/04 Steve - BOM.php,  BankMatching.php, BankReconciliation.php gettextified
 <P>8/9/04 Areas.php gettextified

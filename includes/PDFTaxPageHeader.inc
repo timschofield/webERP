@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.1 $ */
 /*PDF page header for aged analysis reports */
 $PageNumber++;
 if ($PageNumber>1){
@@ -14,7 +14,7 @@ $pdf->addText($Left_Margin, $YPos,$FontSize, $CompanyName);
 $YPos -=$line_height;
 
 $FontSize =10;
-$pdf->addText($Left_Margin, $YPos, $FontSize, _('Creditors Balances For Suppliers between') . ' ' . $_POST['FromCriteria'] . ' ' . _('and') . ' ' . $_POST['ToCriteria'] . ' ' . _('as at') . ' ' . ConvertSQLDate($_POST['PeriodEnd']));
+$pdf->addText($Left_Margin, $YPos, $FontSize, $ReportTitle);
 
 $FontSize = 8;
 $pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed:') . ' ' . Date("d M Y") . '    ' . _('Page') . ' ' . $PageNumber);
@@ -30,10 +30,10 @@ $pdf->line($Left_Margin, $YPos+$line_height,$Left_Margin, $YPos-5);
 /*set up the headings */
 $Xpos = $Left_Margin+1;
 
-$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,220 - $Left_Margin,$FontSize,_('Supplier'),'centre');
-$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,_('Balance'),'centre');
-$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,_('FX'),'centre');
-$LeftOvers = $pdf->addTextWrap(340,$YPos,60,$FontSize,_('Currency'),'centre');
+$LeftOvers = $pdf->addTextWrap(40,$YPos,100 - $Left_Margin,$FontSize,_('Transaction'),'centre');
+$LeftOvers = $pdf->addTextWrap(140,$YPos,60,$FontSize,_('Date'),'centre');
+$LeftOvers = $pdf->addTextWrap(320,$YPos,60,$FontSize,_('Net'),'centre');
+$LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,_('Tax'),'centre');
 
 $YPos =$YPos - (2*$line_height);
 

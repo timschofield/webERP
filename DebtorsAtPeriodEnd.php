@@ -2,11 +2,7 @@
 include("includes/DateFunctions.inc");
 $PageSecurity = 2;
 
-/* $Revision: 1.1 $ */
-
-if (!isset($_POST['FromCust'])  OR $_POST['FromCust']=="" OR !isset($_GET['FromCust'])) {
-	$title="Debtor Balances";
-}
+/* $Revision: 1.2 $ */
 
 
 If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POST['FromCriteria'])>=1 AND isset($_POST['ToCriteria']) AND
@@ -14,7 +10,6 @@ strlen($_POST['ToCriteria'])>=1){
 
 	include("config.php");
 	include("includes/ConnectDB.inc");
-
 	include("includes/PDFStarter_ros.inc");
 
 	$FontSize=12;
@@ -56,10 +51,10 @@ strlen($_POST['ToCriteria'])>=1){
 	$CustomerResult = DB_query($SQL,$db);
 
 	if (DB_error_no($db) !=0) {
-		$title = "Customer Balances - Problem Report.... ";
-		include("includes/header.inc");
-		echo "The customer details could not be retrieved by the SQL because - " . DB_error_msg($db);
-		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>Back to the menu</A>";
+		$title = _('Customer Balances - Problem Report');
+		include('includes/header.inc');
+		echo _('The customer details could not be retrieved by the SQL because') . DB_error_msg($db);
+		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _("Back To The Menu") . "</A>";
 		if ($debug==1){
 			echo "<BR>$SQL";
 		}
@@ -121,6 +116,7 @@ strlen($_POST['ToCriteria'])>=1){
 } else { /*The option to print PDF was not hit */
 
 	include("includes/session.inc");
+	$title=_("Debtor Balances");
 	include("includes/header.inc");
 	include("includes/SQL_CommonFunctions.inc");
 
@@ -133,13 +129,13 @@ strlen($_POST['ToCriteria'])>=1){
 
 		echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
 
-		echo "<TR><TD>From Customer Code:</FONT></TD><TD><input Type=text maxlength=6 size=7 name=FromCriteria value='1'></TD></TR>";
-		echo "<TR><TD>To Customer Code:</TD><TD><input Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></TD></TR>";
+		echo "<TR><TD>" . _("From Customer Code") .":</FONT></TD><TD><input Type=text maxlength=6 size=7 name=FromCriteria value='1'></TD></TR>";
+		echo "<TR><TD>" . _("To Customer Code") . ":</TD><TD><input Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></TD></TR>";
 
-		echo "<TR><TD>Balances As At:</TD><TD><SELECT Name='PeriodEnd'>";
+		echo "<TR><TD>" . _("Balances As At") . ":</TD><TD><SELECT Name='PeriodEnd'>";
 
 		$sql = "SELECT PeriodNo, LastDate_In_Period FROM Periods";
-		$Periods = DB_query($sql,$db,"Could not retrieve period data because","The SQL that failed to get the period data was:");
+		$Periods = DB_query($sql,$db,_("Could not retrieve period data because"),_("The SQL that failed to get the period data was:"));
 
 		while ($myrow = DB_fetch_array($Periods,$db)){
 
@@ -151,7 +147,7 @@ strlen($_POST['ToCriteria'])>=1){
 	echo "</SELECT></TD></TR>";
 
 
-	echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='Print PDF'></CENTER>";
+	echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='" . _("Print PDF") . "'></CENTER>";
 
 	include("includes/footer.inc");
 } /*end of else not PrintPDF */

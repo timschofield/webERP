@@ -1,37 +1,41 @@
 <?php
-/* $Revision: 1.7 $ */
-$title = "Credit An Invoice ";
-
+/* $Revision: 1.8 $ */
 $PageSecurity =3;
 
+
+
 /*Functions to get the GL codes to post the transaction to */
-include("includes/GetSalesTransGLCodes.inc");
+include('includes/GetSalesTransGLCodes.inc');
 /*defines the structure of the data required to hold the transaction as a session variable */
-include("includes/DefineCartClass.php");
-include("includes/DefineSerialItems.php");
+include('includes/DefineCartClass.php');
+include('includes/DefineSerialItems.php');
 /* Session started in header.inc for password checking and authorisation level check */
-include("includes/session.inc");
-include("includes/header.inc");
-include("includes/DateFunctions.inc");
-include("includes/SQL_CommonFunctions.inc");
+include('includes/session.inc');
+
+$title = _('Credit An Invoice');
+include('includes/header.inc');
+include('includes/DateFunctions.inc');
+include('includes/SQL_CommonFunctions.inc');
 
 
 if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 	/* This page can only be called with an invoice number for crediting*/
-	die ("This page can only be opened if an invoice has been selected for crediting. Please select an invoice first - from the customer inquiry screen click the link to credit an invoice.");
+	echo _('This page can only be opened if an invoice has been selected for crediting. Please select an invoice first - from the customer inquiry screen click the link to credit an invoice');
+	include('includes/footer.inc');
+	exit;
 
 } elseif ($_GET['InvoiceNumber']>0) {
 
 	unset($_SESSION['CreditItems']->LineItems);
 	unset($_SESSION['CreditItems']);
 
-	Session_register("CreditItems");
-	Session_register("ProcessingCredit");
-	Session_register("TaxRate");
-	Session_Register("TaxDescription");
-	Session_Register("CurrencyRate");
-	Session_Register("TaxGLCode");
-	Session_Register("Old_FreightCost");
+	Session_register('CreditItems');
+	Session_register('ProcessingCredit');
+	Session_register('TaxRate');
+	Session_Register('TaxDescription');
+	Session_Register('CurrencyRate');
+	Session_Register('TaxGLCode');
+	Session_Register('Old_FreightCost');
 
 	$_SESSION['ProcessingCredit'] = $_GET['InvoiceNumber'];
 	$_SESSION['CreditItems'] = new cart;
@@ -69,8 +73,8 @@ if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 			AND StockMoves.Type=10
 			AND StockMoves.TransNo=DebtorTrans.TransNo";
 
-	$ErrMsg = "<BR>A credit cannot be produced for the selected invoice. The invoice details cannot be retrieved because:";
-	$DbgMsg = "<BR>The SQL to retrieve the invoice details (and failed) was:";
+	$ErrMsg = _('A credit cannot be produced for the selected invoice. The invoice details cannot be retrieved because:');
+	$DbgMsg = _('The SQL to retrieve the invoice details (and failed) was:');
 	$GetInvHdrResult = DB_query($InvoiceHeaderSQL,$db,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($GetInvHdrResult)==1) {
@@ -78,22 +82,22 @@ if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 		$myrow = DB_fetch_array($GetInvHdrResult);
 
 /*CustomerID variable registered by header.inc */
-		$_SESSION['CustomerID'] = $myrow["DebtorNo"];
-		$_SESSION['CreditItems']->TransID = $myrow["TransID"];
-		$_SESSION['CreditItems']->Branch = $myrow["BranchCode"];
-		$_SESSION['CreditItems']->CustomerName = $myrow["Name"];
-		$_SESSION['CreditItems']->CustRef = $myrow["Reference"];
-		$_SESSION['CreditItems']->Comments = $myrow["InvText"];
-		$_SESSION['CreditItems']->DefaultSalesType =$myrow["Tpe"];
-		$_SESSION['CreditItems']->DefaultCurrency = $myrow["CurrCode"];
-		$_SESSION['CreditItems']->Location = $myrow["LocCode"];
-		$_SESSION['Old_FreightCost'] = $myrow["OvFreight"];
-		$_SESSION['TaxDescription'] = $myrow["Description"];
-		$_SESSION['TaxGLCode'] = $myrow["TaxGLCode"];
+		$_SESSION['CreditItems']->DebtorNo = $myrow['DebtorNo'];
+		$_SESSION['CreditItems']->TransID = $myrow['TransID'];
+		$_SESSION['CreditItems']->Branch = $myrow['BranchCode'];
+		$_SESSION['CreditItems']->CustomerName = $myrow['Name'];
+		$_SESSION['CreditItems']->CustRef = $myrow['Reference'];
+		$_SESSION['CreditItems']->Comments = $myrow['InvText'];
+		$_SESSION['CreditItems']->DefaultSalesType =$myrow['Tpe'];
+		$_SESSION['CreditItems']->DefaultCurrency = $myrow['CurrCode'];
+		$_SESSION['CreditItems']->Location = $myrow['LocCode'];
+		$_SESSION['Old_FreightCost'] = $myrow['OvFreight'];
+		$_SESSION['TaxDescription'] = $myrow['Description'];
+		$_SESSION['TaxGLCode'] = $myrow['TaxGLCode'];
 		$_SESSION['TaxAuthority'] = $myrow['TaxID'];
-		$_SESSION['CurrencyRate'] = $myrow["Currency_Rate"];
-		$_SESSION['CreditItems']->OrderNo = $myrow["Order_"];
-		$_SESSION['CreditItems']->ShipVia = $myrow["ShipVia"];
+		$_SESSION['CurrencyRate'] = $myrow['Currency_Rate'];
+		$_SESSION['CreditItems']->OrderNo = $myrow['Order_'];
+		$_SESSION['CreditItems']->ShipVia = $myrow['ShipVia'];
 
 		DB_free_result($GetInvHdrResult);
 
@@ -129,8 +133,8 @@ if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 				AND StockMoves.Type=10
 				AND StockMoves.Show_On_Inv_Crds=1";
 
-		$ErrMsg = "<P>This invoice can not be credited using this program. A manual credit note will need to be prepared. The line items of the order cannot be retrieved because:";
-		$Dbgmsg = "<P>The SQL used to get the transaction header was:";
+		$ErrMsg = _('This invoice can not be credited using this program. A manual credit note will need to be prepared. The line items of the order cannot be retrieved because:');
+		$Dbgmsg = _('The SQL used to get the transaction header was:');
 
 		$LineItemsResult = DB_query($LineItemsSQL,$db,$ErrMsg, $DbgMsg);
 
@@ -167,8 +171,8 @@ if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 						WHERE StockMoveNo=" . $myrow['StkMoveNo'] . "
 						AND StockID = '" . $myrow['StockID'] . "'";
 
-					$ErrMsg = "<P>This invoice can not be credited using this program. A manual credit note will need to be prepared. The line item " . $myrow['StockID'] . " is controlled, but the serial numbers/batch numbers could not be retrieved because:";
-					$Dbgmsg = "<P>The SQL used to get the controlled item details was:";
+					$ErrMsg = _('This invoice can not be credited using this program. A manual credit note will need to be prepared. The line item') . ' ' . $myrow['StockID'] . ' ' . _('is controlled, but the serial numbers/batch numbers could not be retrieved because:');
+					$DbgMsg = _('The SQL used to get the controlled item details was:');
 					$SerialItemsResult = DB_query($SQL,$db,$ErrMsg, $DbgMsg);
 
 					while ($SerialItemsRow = DB_fetch_array($SerialItemsResult)){
@@ -179,14 +183,14 @@ if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 
 		} else { /* there are no stock movement records created for that invoice */
 
-			echo "<CENTER><A HREF='$rootpath/index.php?" . SID . "'>Back to the menu</A></CENTER>";
-			echo "<P>There are no line items that were retrieved for this invoice. The automatic credit program can not create a credit note from this invoice.";
+			echo "<CENTER><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A></CENTER>';
+			echo '<BR>' . _('There are no line items that were retrieved for this invoice. The automatic credit program can not create a credit note from this invoice');
 			include("includes/footer.inc");
 			exit;
 		} //end of checks on returned data set
 		DB_free_result($LineItemsResult);
 	} else {
-		echo "<P>This invoice can not be credited using the automatic facility. <BR>CRITICAL ERROR: Please report that a duplicate DebtorTrans header record was found for invoice " . $SESSION['ProcessingCredit'];
+		echo '<BR>' . _('This invoice can not be credited using the automatic facility') . '<BR>' . _('CRITICAL ERROR: Please report that a duplicate DebtorTrans header record was found for invoice') . ' ' . $SESSION['ProcessingCredit'];
 		include("includes/footer.inc");
 		exit;
 	} //valid invoice record returned from the entered invoice number
@@ -214,7 +218,7 @@ If ($_SESSION['CreditItems']->ItemsOrdered > 0 OR isset($_POST['NewItem'])){
 			$DiscountPercentage = $_POST['Discount_' . $StockItem->StockID];
 
 			If ($Quantity<0 OR $Price <0 OR $DiscountPercentage >100 OR $DiscountPercentage <0){
-				echo "<BR>The item could not be updated because you are attempting to set the quantity credited to less than 0, or the price less than 0 or the discount more than 100% or less than 0%";
+				echo '<BR>' . _('The item could not be updated because you are attempting to set the quantity credited to less than 0, or the price less than 0 or the discount more than 100% or less than 0%');
 			} else {
 				$_SESSION['CreditItems']->LineItems[$StockItem->StockID]->QtyDispatched=$Quantity;
 				$_SESSION['CreditItems']->LineItems[$StockItem->StockID]->Price=$Price;
@@ -230,25 +234,25 @@ If ($_SESSION['CreditItems']->ItemsOrdered > 0 OR isset($_POST['NewItem'])){
 /* Always display credit quantities
 NB QtyDispatched in the LineItems array is used for the quantity to credit */
 
-echo "<FONT COLOR=BLUE><B>Credit Invoice " .$_SESSION['ProcessingCredit'] . "</B></FONT>
-	<CENTER><FONT SIZE=4><B><U>" . $_SESSION['CreditItems']->CustomerName . "</U></B></FONT>
-	<FONT SIZE=3> - Credit Note amounts stated in " . $_SESSION['CreditItems']->DefaultCurrency . "</CENTER><BR>";
+echo '<FONT COLOR=BLUE><B>' . _('Credit Invoice') . ' ' . $_SESSION['ProcessingCredit'] . '</B></FONT>
+	<CENTER><FONT SIZE=4><B><U>' . $_SESSION['CreditItems']->CustomerName . '</U></B></FONT>
+	<FONT SIZE=3> - ' . _('Credit Note amounts stated in') . ' ' . $_SESSION['CreditItems']->DefaultCurrency . "</CENTER><BR>";
 
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 
 
 echo "<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=0><TR>
-<TD class='tableheader'>Item Code</TD>
-<TD class='tableheader'>Item Description</TD>
-<TD class='tableheader'>Invoiced</TD>
-<TD class='tableheader'>Units</TD>
-<TD class='tableheader'>Credit<BR>Quantity</TD>
-<TD class='tableheader'>Price</TD>
-<TD class='tableheader'>Discount</TD>
-<TD class='tableheader'>Total<BR>Excl Tax</TD>
-<TD class='tableheader'>Tax %</TD>
-<TD class='tableheader'>Tax<BR>Amount</TD>
-<TD class='tableheader'>Total<BR>Incl Tax</TD></TR>";
+<TD class='tableheader'>" . _('Item Code') . "</TD>
+<TD class='tableheader'>" . _('Item Description') . "</TD>
+<TD class='tableheader'>" . _('Invoiced') . "</TD>
+<TD class='tableheader'>" . _('Units') . "</TD>
+<TD class='tableheader'>" . _('Credit<BR>Quantity') . "</TD>
+<TD class='tableheader'>" . _('Price') . "</TD>
+<TD class='tableheader'>" . _('Discount') . "</TD>
+<TD class='tableheader'>" . _('Total<BR>Excl Tax') . "</TD>
+<TD class='tableheader'>" . _('Tax %') . "</TD>
+<TD class='tableheader'>" . _('Tax<BR>Amount') . "</TD>
+<TD class='tableheader'>" . _('Total<BR>Incl Tax') . "</TD></TR>";
 
 $_SESSION['CreditItems']->total = 0;
 $_SESSION['CreditItems']->totalVolume = 0;
@@ -295,7 +299,7 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 	<TD ALIGN=RIGHT>$DisplayLineTotal</TD><TD ALIGN=RIGHT>" . round($StockItem->TaxRate * 100,2) . "%</TD>
 	<TD ALIGN=RIGHT>" . number_format($LineTotal*$StockItem->TaxRate,2) . "</TD>
 	<TD ALIGN=RIGHT>" . number_format($LineTotal*(1+$StockItem->TaxRate),2) . "</TD>
-	<TD><A HREF='". $_SERVER['PHP_SELF'] . "?" . SID . "Delete=" . $LnItm->StockID . "'>Delete</A></TD></TR>";
+	<TD><A HREF='". $_SERVER['PHP_SELF'] . "?" . SID . "Delete=" . $LnItm->StockID . "'>" . _('Delete') . '</A></TD></TR>';
 
 	echo $RowStarter . "<TD COLSPAN=7><TEXTAREA  NAME='Narrative_" . $LnItm->StockID . "' cols=100% rows=1>" . $LnItm->Narrative . "</TEXTAREA><BR><HR></TD></TR>";
 
@@ -312,11 +316,11 @@ if  (!isset($_POST['FreightTaxRate'])) {
 	$_SESSION['FreightTaxRate']=$_POST['FreightTaxRate'];
 }
 
-echo "<TR>
-	<TD COLSPAN=3 ALIGN=RIGHT>Freight Cost charged on invoice</TD>
-	<TD ALIGN=RIGHT>" . $_SESSION['Old_FreightCost'] . "</TD>
+echo '<TR>
+	<TD COLSPAN=3 ALIGN=RIGHT>' . _('Freight Cost charged on invoice') . '</TD>
+	<TD ALIGN=RIGHT>' . $_SESSION['Old_FreightCost'] . '</TD>
 	<TD></TD>
-	<TD COLSPAN=2 ALIGN=RIGHT>Credit Freight Cost</TD>
+	<TD COLSPAN=2 ALIGN=RIGHT>' . _('Credit Freight Cost') . "</TD>
 	<TD><INPUT TYPE=TEXT SIZE=6 MAXLENGTH=6 NAME='ChargeFreightCost' VALUE=" . $_POST['ChargeFreightCost'] . "></TD>";
 
 
@@ -328,8 +332,8 @@ echo "<TD><INPUT TYPE=TEXT SIZE=2 MAXLENGTH=2 NAME='FreightTaxRate' VALUE=" . $_
 $DisplayTotal = number_format($_SESSION['CreditItems']->total + $_POST['ChargeFreightCost'],2);
 $TaxTotal += $_POST['FreightTaxRate']*$_POST['ChargeFreightCost']/100;
 
-echo "<TR>
-	<TD COLSPAN=7 ALIGN=RIGHT>Credit Totals</TD>
+echo '<TR>
+	<TD COLSPAN=7 ALIGN=RIGHT>' . _('Credit Totals') . "</TD>
 	<TD ALIGN=RIGHT><HR><B>$DisplayTotal</B><HR></TD>
 	<TD></TD>
 	<TD ALIGN=RIGHT><HR><B>" . number_format($TaxTotal,2) . "<HR></TD>
@@ -339,11 +343,11 @@ echo "<TR>
 $DefaultDispatchDate = Date($DefaultDateFormat);
 
 
-if ($_POST['ProcessCredit']=="Process Credit"){
+if (isset($_POST['ProcessCredit'])){
 
 /* SQL to process the postings for sales credit notes... First Get the area where the credit note is to from the branches table */
 
-	$SQL = "SELECT Area FROM CustBranch WHERE CustBranch.DebtorNo ='". $_SESSION['CustomerID'] . "' AND CustBranch.BranchCode = '" . $_SESSION['CreditItems']->Branch . "'";
+	$SQL = "SELECT Area FROM CustBranch WHERE CustBranch.DebtorNo ='". $_SESSION['CreditItems']->DebtorNo . "' AND CustBranch.BranchCode = '" . $_SESSION['CreditItems']->Branch . "'";
 
 	$Result = DB_query($SQL,$db);
 	$myrow = DB_fetch_row($Result);
@@ -355,7 +359,7 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 	$CompanyData = ReadInCompanyRecord($db);
 	if ($CompanyData==0){
 		/*The company data and preferences could not be retrieved for some reason */
-		echo "<P>The company information and preferences could not be retrieved - see your system administrator";
+		echo '<P>' . _('The company information and preferences could not be retrieved - see your system administrator');
 		exit;
 	}
 
@@ -373,7 +377,9 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 
 	/*Calculate the allocation and see if it is possible to allocate to the invoice being credited */
 
-	$SQL = "SELECT (OvAmount+OvGST+OvFreight-OvDiscount-Alloc) AS BalToAllocate FROM DebtorTrans WHERE TransNo=" . $_SESSION['ProcessingCredit'] . " AND Type=10";
+	$SQL = "SELECT (OvAmount+OvGST+OvFreight-OvDiscount-Alloc) AS BalToAllocate
+		FROM DebtorTrans
+		WHERE TransNo=" . $_SESSION['ProcessingCredit'] . " AND Type=10";
 	$Result = DB_query($SQL,$db);
 	$myrow = DB_fetch_row($Result);
 
@@ -400,8 +406,8 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 			WHERE TransNo = " . $_SESSION['ProcessingCredit'] . "
 			AND Type=10";
 
-		$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The alteration to the invoice record to reflect the allocation of the credit note to the invoice could not be done because:";
-		$DbgMsg = "<BR>The following SQL to update the invoice allocation was used:";
+		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The alteration to the invoice record to reflect the allocation of the credit note to the invoice could not be done because:');
+		$DbgMsg = _('The following SQL to update the invoice allocation was used:');
 		$Result = DB_query($SQL,$db,$ErrMsg,DbgMsg,true);
 	}
 
@@ -425,7 +431,7 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 					Settled)
 		VALUES (". $CreditNo . ",
 			11,
-			'" . $_SESSION['CustomerID'] . "',
+			'" . $_SESSION['CreditItems']->DebtorNo . "',
 			'" . $_SESSION['CreditItems']->Branch . "',
 			'" . $DefaultDispatchDate . "',
 			" . $PeriodNo . ", 'Inv-" . $_SESSION['ProcessingCredit'] . "',
@@ -438,8 +444,8 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 			" . -$Allocate_amount . ",
 			" . $Settled . ")";
 
-	$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The customer credit note transaction could not be added to the database because:";
-	$DbgMsg = "<BR>The following SQL to insert the customer credit note was used:";
+	$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The customer credit note transaction could not be added to the database because:');
+	$DbgMsg = _('The following SQL to insert the customer credit note was used:');
 	$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 
 	$CreditTransID = DB_Last_Insert_ID($db);
@@ -455,8 +461,8 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 				" . $_SESSION['CreditItems']->TransID . ",
 				'" . Date("Y-m-d") . "')";
 
-		$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The allocation record for the credit note could not be added to the database because:";
-		$DbgMsg = "<BR>The following SQL to insert the allocation record for the credit note was used:";
+		$ErrMsg =  _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The allocation record for the credit note could not be added to the database because:');
+		$DbgMsg = _('The following SQL to insert the allocation record for the credit note was used:');
 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 	}
@@ -472,9 +478,8 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 			$SQL = "SELECT MBflag FROM StockMaster WHERE StockID = '" . $OrderLine->StockID . "'";
 			$Result = DB_query($SQL,
 					$db,
-					"<BR>Could not determine if the item " . $OrderLine->StockID . " is purchased or manufactured",
-					"<BR>The SQL used that failed is:",
-					true);
+					_('Could not determine if the item') . ' ' . $OrderLine->StockID . ' ' . _('is purchased or manufactured'),
+					_('The SQL used that failed was'),true);
 			$MBFlagRow = DB_fetch_row($Result);
 			$MBFlag = $MBFlagRow[0];
 			if ($MBFlag=="M" oR $MBFlag=="B"){
@@ -503,8 +508,8 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 					WHERE OrderNo = " . $_SESSION['ProcessingCredit'] . "
 					AND StkCode = '" . $OrderLine->StockID . "'";
 
-				$ErrMsg =  "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The sales order detail record could not be updated for the reduced quantity invoiced because:";
-				$DbgMsg = "<BR>The following SQL to update the sales order detail record was used:";
+				$ErrMsg =  _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The sales order detail record could not be updated for the reduced quantity invoiced because:');
+				$DbgMsg = _('The following SQL to update the sales order detail record was used:');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 				/* Update location stock records if not a dummy stock item */
 
@@ -516,8 +521,8 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 						WHERE LocStock.StockID = '" . $OrderLine->StockID . "'
 						AND LocCode = '" . $_SESSION['CreditItems']->Location . "'";
 
-					$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Location stock record could not be updated because:";
-					$DbgMsg = "<BR>The following SQL to update the location stock record was used:";
+					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Location stock record could not be updated because:');
+					$DbgMsg = _('The following SQL to update the location stock record was used:');
 					$Result = DB_query($SQL, $db, $ErrMsg,$DbgMsg,true);
 
 				} else if ($MBFlag=='A'){ /* its an assembly */
@@ -534,8 +539,8 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 					AND BOM.EffectiveTo > '" . Date("Y-m-d") . "'
 					AND BOM.EffectiveAfter < '" . Date("Y-m-d") . "'";
 
-				    $ErrMsg = "<BR>Could not retrieve assembly components from the database for " . $OrderLine->StockID . " because";
-				    $DbgMsg = "<BR>The SQL that failed was:";
+				    $ErrMsg = _('Could not retrieve assembly components from the database for') . ' ' . $OrderLine->StockID . ' ' . _('because');
+				    $DbgMsg = _('The SQL that failed was:');
 				    $AssResult = DB_query($sql,$db, $ErrMsg, $DbgMsg, true);
 
 				    while ($AssParts = DB_fetch_array($AssResult,$db)){
@@ -557,7 +562,7 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 							FROM LocStock
 							WHERE LocStock.StockID='" . $AssParts['Component'] . "'
 							AND LocCode= '" . $_SESSION['CreditItems']->Location . "'";
-			    			$Result = DB_query($SQL, $db, "<BR>Couldnt get the current location stock of the assembly component " . $AssParts['Component'],"<BR>The SQL that failed was:", true);
+			    			$Result = DB_query($SQL, $db, _('Couldnt get the current location stock of the assembly component') . ' ' . $AssParts['Component'], _('The SQL that failed was:'), true);
 			    			if (DB_num_rows($Result)==1){
 							$LocQtyRow = DB_fetch_row($Result);
 							$QtyOnHandPrior = $LocQtyRow[0];
@@ -592,10 +597,10 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 								" . $CreditNo . ",
 								'" . $_SESSION['CreditItems']->Location . "',
 								'" . $DefaultDispatchDate . "',
-								'" . $_SESSION['CustomerID'] . "',
+								'" . $_SESSION['CreditItems']->DebtorNo . "',
 								'" . $_SESSION['CreditItems']->Branch . "',
 								" . $PeriodNo . ",
-								'Ex Inv:  " . $_SESSION['ProcessingCredit'] . " Assemly: " . $OrderLine->StockID . "',
+								'" . _('Ex Inv:') . ' ' .  $_SESSION['ProcessingCredit'] . ' ' . _('Assembly:') . ' ' . $OrderLine->StockID . "',
 								" . $AssParts["Quantity"] * $OrderLine->QtyDispatched . ",
 								" . $AssParts["Standard"] . ",
 								0,
@@ -621,17 +626,17 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 							" . $CreditNo . ",
 							'" . $_SESSION['CreditItems']->Location . "',
 							'" . $DefaultDispatchDate . "',
-							'" . $_SESSION['CustomerID'] . "',
+							'" . $_SESSION['CreditItems']->DebtorNo . "',
 							'" . $_SESSION['CreditItems']->Branch . "',
 							" . $PeriodNo . ",
-							'Ex Inv:  " . $_SESSION['ProcessingCredit'] . " Assemly: " . $OrderLine->StockID . "',
+							'" . _('Ex Inv:') . ' ' . $_SESSION['ProcessingCredit'] . ' ' . _('Assembly:') . ' ' . $OrderLine->StockID . "',
 							" . $AssParts["Quantity"] * $OrderLine->QtyDispatched . ",
 							" . $AssParts["Standard"] . ",
 							0)";
 					    }
 
-					   $ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Stock movement records for the assembly components of $OrderLine->StockID could not be inserted because:";
-					   $DbgMsg = "<BR>The following SQL to insert the assembly components stock movement records was used:";
+					   $ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Stock movement records for the assembly components of $OrderLine->StockID could not be inserted because:');
+					   $DbgMsg = _('The following SQL to insert the assembly components stock movement records was used:');
 					   $Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
 
@@ -641,8 +646,8 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 							WHERE LocStock.StockID = '" . $AssParts["Component"] . "'
 							AND LocCode = '" . $_SESSION['CreditItems']->Location . "'";
 
-						$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Location stock record could not be updated for an assembly component because:";
-						$DbgMsg = "<BR>The following SQL to update the component's location stock record was used:";
+						$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Location stock record could not be updated for an assembly component because:');
+						$DbgMsg = _('The following SQL to update the component\'s location stock record was used:');
 						$Result = DB_query($SQL,
 								$db,
 								$ErrMsg,
@@ -673,13 +678,14 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 								DiscountPercent,
 								StandardCost,
 								NewQOH,
-								Narrative)
+								Narrative,
+								TaxRate)
 						VALUES ('" . $OrderLine->StockID . "',
 							11,
 							" . $CreditNo . ",
 							'" . $_SESSION['CreditItems']->Location . "',
 							'" . $DefaultDispatchDate . "',
-							'" . $_SESSION['CustomerID'] . "',
+							'" . $_SESSION['CreditItems']->DebtorNo . "',
 							'" . $_SESSION['CreditItems']->Branch . "',
 							" . $LocalCurrencyPrice . ",
 							" . $PeriodNo . ",
@@ -688,7 +694,8 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 							" . $OrderLine->DiscountPercent . ",
 							" . $OrderLine->StandardCost . ",
 							" .  ($QtyOnHandPrior + $OrderLine->QtyDispatched) . ",
-							'" . $OrderLine->Narrative . "'
+							'" . $OrderLine->Narrative . "',
+							" . $OrderLine->TaxRate . "
 						)";
 
 				} else {
@@ -707,13 +714,14 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 							Qty,
 							DiscountPercent,
 							StandardCost,
-							Narrative)
+							Narrative,
+							TaxRate)
 						VALUES ('" . $OrderLine->StockID . "',
 							11,
 							" . $CreditNo . ",
 							'" . $_SESSION['CreditItems']->Location . "',
 							'" . $DefaultDispatchDate . "',
-							'" . $_SESSION['CustomerID'] . "',
+							'" . $_SESSION['CreditItems']->DebtorNo . "',
 							'" . $_SESSION['CreditItems']->Branch . "',
 							" . $LocalCurrencyPrice . ",
 							" . $PeriodNo . ",
@@ -721,12 +729,13 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 							" . $OrderLine->QtyDispatched . ",
 							" . $OrderLine->DiscountPercent . ",
 							" . $OrderLine->StandardCost . ",
-							'" . $OrderLine->Narrative . "'
+							'" . $OrderLine->Narrative . "',
+							" . $OrderLine->TaxRate . "
 						)";
 				}
 
-				$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Stock movement records could not be inserted because:";
-				$DbgMsg = "<BR>The following SQL to insert the stock movement records was used:";
+				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Stock movement records could not be inserted because:');
+				$DbgMsg = _('The following SQL to insert the stock movement records was used:');
 				$Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
 
 
@@ -750,13 +759,14 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 							DiscountPercent,
 							StandardCost,
 							NewQOH,
-							Narrative)
+							Narrative,
+							TaxRate)
 					VALUES ('" . $OrderLine->StockID . "',
 						11,
 						" . $CreditNo . ",
 						'" . $_SESSION['CreditItems']->Location . "',
 						'" . $DefaultDispatchDate . "',
-						'" . $_SESSION['CustomerID'] . "',
+						'" . $_SESSION['CreditItems']->DebtorNo . "',
 						'" . $_SESSION['CreditItems']->Branch . "',
 						" . $LocalCurrencyPrice . ",
 						" . $PeriodNo . ",
@@ -765,11 +775,12 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 						" . $OrderLine->DiscountPercent . ",
 						" . $OrderLine->StandardCost . ",
 						" . ($QtyOnHandPrior +$OrderLine->QtyDispatched)  . ",
-						'" . $OrderLine->Narrative . "'
+						'" . $OrderLine->Narrative . "',
+						" . $OrderLine->TaxRate . "
 						)";
 
-				$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Stock movement records could not be inserted because:";
-				$DbgMsg = "<BR>The following SQL to insert the stock movement records was used:";
+				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Stock movement records could not be inserted because:');
+				$DbgMsg = _('The following SQL to insert the stock movement records was used:');
 				$Result = DB_query($SQL, $db,$ErrMsg, $DbgMsg, true);
 
 				$SQL = "INSERT INTO StockMoves (
@@ -795,11 +806,11 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 						" . $CreditNo . ",
 						'" . $_SESSION['CreditItems']->Location . "',
 						'" . $DefaultDispatchDate . "',
-						'" . $_SESSION['CustomerID'] . "',
+						'" . $_SESSION['CreditItems']->DebtorNo . "',
 						'" . $_SESSION['CreditItems']->Branch . "',
 						" . $LocalCurrencyPrice . ",
 						" . $PeriodNo . ",
-						'Written off ex Inv - " . $_SESSION['ProcessingCredit'] . "',
+						'" . _('Written off ex Inv') . ' - ' . $_SESSION['ProcessingCredit'] . "',
 						" . -$OrderLine->QtyDispatched . ",
 						" . $OrderLine->DiscountPercent . ",
 						" . $OrderLine->StandardCost . ",
@@ -809,9 +820,9 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 						)";
 
 
-				$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Stock movement records could not be inserted because:";
+				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Stock movement records could not be inserted because:');
 
-				$DbgMsg = "<BR>The following SQL to insert the stock movement records was used:";
+				$DbgMsg = _('The following SQL to insert the stock movement records was used:');
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
 			} elseif ($_POST['CreditType']=="ReverseOverCharge") {
@@ -832,13 +843,14 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 							StandardCost,
 							NewQOH,
 							HideMovt,
-							Narrative)
+							Narrative,
+							TaxRate)
 					VALUES ('" . $OrderLine->StockID . "',
 						11,
 						" . $CreditNo . ",
 						'" . $_SESSION['CreditItems']->Location . "',
 						'" . $DefaultDispatchDate . "',
-						'" . $_SESSION['CustomerID'] . "',
+						'" . $_SESSION['CreditItems']->DebtorNo . "',
 						'" . $_SESSION['CreditItems']->Branch . "',
 						" . $LocalCurrencyPrice . ",
 						" . $PeriodNo . ",
@@ -848,12 +860,13 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 						" . $OrderLine->StandardCost . ",
 						" . $QtyOnHandPrior  . ",
 						1,
-						'" . $OrderLine->Narrative . "'
+						'" . $OrderLine->Narrative . "',
+						" . $OrderLine->TaxRate . "
 					)";
 
 
-				$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Stock movement records could not be inserted because:";
-				$DbgMsg = "<BR>The following SQL to insert the stock movement records for the purpose of display on the credit note was used:";
+				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Stock movement records could not be inserted because:');
+				$DbgMsg = _('The following SQL to insert the stock movement records for the purpose of display on the credit note was used:');
 
 				$Result = DB_query($SQL, $db,$ErrMsg, $DbgMsg, true);
 			}
@@ -875,14 +888,14 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 			AND SalesAnalysis.Salesperson=CustBranch.Salesman
 			AND TypeAbbrev ='" . $_SESSION['CreditItems']->DefaultSalesType . "'
 			AND PeriodNo=" . $PeriodNo . "
-			AND Cust LIKE '" . $_SESSION['CustomerID'] . "'
+			AND Cust LIKE '" . $_SESSION['CreditItems']->DebtorNo . "'
 			AND CustBranch LIKE '" . $_SESSION['CreditItems']->Branch . "'
 			AND SalesAnalysis.StockID LIKE '" . $OrderLine->StockID . "'
 			AND BudgetOrActual=1
 			GROUP BY StkCategory, SalesAnalysis.Area, Salesperson";
 
-			$ErrMsg = "<BR>The count to check for existing Sales analysis records could not run because:";
-			$DbgMsg = "<P>SQL to count the no of sales analysis records:";
+			$ErrMsg = _('The count to check for existing Sales analysis records could not run because:');
+			$DbgMsg = _('SQL to count the no of sales analysis records:');
 
 			$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 
@@ -892,77 +905,181 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 
 				if ($_POST['CreditType']=="ReverseOverCharge"){
 
-					$SQL = "UPDATE SalesAnalysis SET Amt=Amt-" . ($OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . ", Disc=Disc-" . ($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . " WHERE SalesAnalysis.Area='" . $myrow[2] . "' AND SalesAnalysis.Salesperson='" . $myrow[3] . "' AND TypeAbbrev ='" . $_SESSION['CreditItems']->DefaultSalesType . "' AND PeriodNo = " . $PeriodNo . " AND Cust LIKE '" . $_SESSION['CustomerID'] . "' AND CustBranch LIKE '" . $_SESSION['CreditItems']->Branch . "' AND StockID LIKE '" . $OrderLine->StockID . "' AND SalesAnalysis.StkCategory ='" . $myrow[1] . "' AND BudgetOrActual=1";
+					$SQL = "UPDATE SalesAnalysis
+						SET Amt=Amt-" . ($OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . ",
+							Disc=Disc-" . ($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . "
+						WHERE SalesAnalysis.Area='" . $myrow[2] . "'
+						AND SalesAnalysis.Salesperson='" . $myrow[3] . "'
+						AND TypeAbbrev ='" . $_SESSION['CreditItems']->DefaultSalesType . "'
+						AND PeriodNo = " . $PeriodNo . "
+						AND Cust LIKE '" . $_SESSION['CreditItems']->DebtorNo . "'
+						AND CustBranch LIKE '" . $_SESSION['CreditItems']->Branch . "'
+						AND StockID LIKE '" . $OrderLine->StockID . "'
+						AND SalesAnalysis.StkCategory ='" . $myrow[1] . "'
+						AND BudgetOrActual=1";
 
 				} else {
 
-					$SQL = "UPDATE SalesAnalysis SET Amt=Amt-" . ($OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . ", Cost=Cost-" . ($OrderLine->StandardCost * $OrderLine->QtyDispatched) . ", Qty=Qty-" . $OrderLine->QtyDispatched . ", Disc=Disc-" . ($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . " WHERE SalesAnalysis.Area='" . $myrow[2] . "' AND SalesAnalysis.Salesperson='" . $myrow[3] . "' AND TypeAbbrev ='" . $_SESSION['CreditItems']->DefaultSalesType . "' AND PeriodNo = " . $PeriodNo . " AND Cust LIKE '" . $_SESSION['CustomerID'] . "' AND CustBranch LIKE '" . $_SESSION['CreditItems']->Branch . "' AND StockID LIKE '" . $OrderLine->StockID . "' AND SalesAnalysis.StkCategory ='" . $myrow[1] . "' AND BudgetOrActual=1";
+					$SQL = "UPDATE SalesAnalysis
+							SET Amt=Amt-" . ($OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . ",
+							Cost=Cost-" . ($OrderLine->StandardCost * $OrderLine->QtyDispatched) . ",
+							Qty=Qty-" . $OrderLine->QtyDispatched . ",
+							Disc=Disc-" . ($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . "
+						WHERE SalesAnalysis.Area='" . $myrow[2] . "'
+						AND SalesAnalysis.Salesperson='" . $myrow[3] . "'
+						AND TypeAbbrev ='" . $_SESSION['CreditItems']->DefaultSalesType . "'
+						AND PeriodNo = " . $PeriodNo . "
+						AND Cust LIKE '" . $_SESSION['CreditItems']->DebtorNo . "'
+						AND CustBranch LIKE '" . $_SESSION['CreditItems']->Branch . "'
+						AND StockID LIKE '" . $OrderLine->StockID . "'
+						AND SalesAnalysis.StkCategory ='" . $myrow[1] . "'
+						AND BudgetOrActual=1";
 				}
 
 			} else { /* insert a new sales analysis record */
 
 				if ($_POST['CreditType']=="ReverseOverCharge"){
 
-					$SQL = "INSERT SalesAnalysis (TypeAbbrev, PeriodNo, Amt, Cust, CustBranch, Qty, Disc, StockID, Area, BudgetOrActual, Salesperson, StkCategory) SELECT '" . $_SESSION['CreditItems']->DefaultSalesType . "', " . $PeriodNo . ", " . -($OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . ", '" . $_SESSION['CustomerID'] . "', '" . $_SESSION['CreditItems']->Branch . "', 0, " . -($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . ", '" . $OrderLine->StockID . "', CustBranch.Area, 1, CustBranch.Salesman, StockMaster.CategoryID FROM StockMaster, CustBranch WHERE StockMaster.StockID = '" . $OrderLine->StockID . "' AND CustBranch.DebtorNo = '" . $_SESSION['CustomerID'] . "' AND CustBranch.BranchCode='" . $_SESSION['CreditItems']->Branch . "'";
+					$SQL = "INSERT SalesAnalysis (TypeAbbrev,
+									PeriodNo,
+									Amt,
+									Cust,
+									CustBranch,
+									Qty,
+									Disc,
+									StockID,
+									Area,
+									BudgetOrActual,
+									Salesperson,
+									StkCategory)
+						SELECT '" . $_SESSION['CreditItems']->DefaultSalesType . "',
+							" . $PeriodNo . ",
+							" . -($OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . ",
+							'" . $_SESSION['CreditItems']->DebtorNo . "',
+							'" . $_SESSION['CreditItems']->Branch . "',
+							0,
+							" . -($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . ",
+							'" . $OrderLine->StockID . "',
+							CustBranch.Area,
+							1,
+							CustBranch.Salesman,
+							StockMaster.CategoryID
+						FROM StockMaster,
+							CustBranch
+						WHERE StockMaster.StockID = '" . $OrderLine->StockID . "'
+						AND CustBranch.DebtorNo = '" . $_SESSION['CreditItems']->DebtorNo . "'
+						AND CustBranch.BranchCode='" . $_SESSION['CreditItems']->Branch . "'";
 
 				} else {
 
-					$SQL = "INSERT SalesAnalysis (TypeAbbrev, PeriodNo, Amt, Cost, Cust, CustBranch, Qty, Disc, StockID, Area, BudgetOrActual, Salesperson, StkCategory) SELECT '" . $_SESSION['CreditItems']->DefaultSalesType . "', " . $PeriodNo . ", " . -($OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . ", " . -($OrderLine->StandardCost * $OrderLine->QtyDispatched) . ", '" . $_SESSION['CustomerID'] . "', '" . $_SESSION['CreditItems']->Branch . "', " . -$OrderLine->QtyDispatched . ", " . -($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . ", '" . $OrderLine->StockID . "', CustBranch.Area, 1, CustBranch.Salesman, StockMaster.CategoryID FROM StockMaster, CustBranch WHERE StockMaster.StockID = '" . $OrderLine->StockID . "' AND CustBranch.DebtorNo = '" . $_SESSION['CustomerID'] . "' AND CustBranch.BranchCode='" . $_SESSION['CreditItems']->Branch . "'";
+					$SQL = "INSERT SalesAnalysis (TypeAbbrev,
+									PeriodNo,
+									Amt,
+									Cost,
+									Cust,
+									CustBranch,
+									Qty,
+									Disc,
+									StockID,
+									Area,
+									BudgetOrActual,
+									Salesperson,
+									StkCategory)
+						SELECT '" . $_SESSION['CreditItems']->DefaultSalesType . "',
+							" . $PeriodNo . ", " . -($OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . ",
+							" . -($OrderLine->StandardCost * $OrderLine->QtyDispatched) . ",
+							'" . $_SESSION['CreditItems']->DebtorNo . "',
+							'" . $_SESSION['CreditItems']->Branch . "',
+							" . -$OrderLine->QtyDispatched . ",
+							" . -($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . ",
+							'" . $OrderLine->StockID . "',
+							CustBranch.Area,
+							1,
+							CustBranch.Salesman,
+							StockMaster.CategoryID
+						FROM StockMaster,
+							CustBranch
+						WHERE StockMaster.StockID = '" . $OrderLine->StockID . "'
+						AND CustBranch.DebtorNo = '" . $_SESSION['CreditItems']->DebtorNo . "'
+						AND CustBranch.BranchCode='" . $_SESSION['CreditItems']->Branch . "'";
 
 				}
 			}
 
-			$Result = DB_query($SQL,$db);
-			if (DB_error_no($db) !=0){
-					echo "<BR>The sales analysis record for this credit note could not be added because: -<BR>" . DB_error_msg($db);
-				if ($debug==1){
-					echo "<BR>The following SQL to insert the sales analysis record was used:<BR>$SQL<BR>";
-				}
-				$SQL = "Rollback";
-				$Result = DB_query($SQL,$db);
-				exit;
-			}
+			$ErrMsg = _('The sales analysis record for this credit note could not be added because:');
+			$DbgMsg = _('The following SQL to insert the sales analysis record was used:');
+			$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 
 
 /* If GLLink_Stock then insert GLTrans to credit stock and debit cost of sales at standard cost*/
 
-			if ($CompanyData["GLLink_Stock"]==1 AND $OrderLine->StandardCost !=0 AND $_POST['CreditType']!="ReverseOverCharge"){
+			if ($CompanyData["GLLink_Stock"]==1 AND $OrderLine->StandardCost !=0 AND $_POST['CreditType']!=_('ReverseOverCharge')){
 
 /*first the cost of sales entry*/
 
 				$COGSAccount = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['CreditItems']->DefaultSalesType, $db);
 
-				$SQL = "INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (11, " . $CreditNo . ", '" . $DefaultDispatchDate . "', " . $PeriodNo . ", " . $COGSAccount . ", '" . $_SESSION['CustomerID'] . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "', " . -($OrderLine->StandardCost * $OrderLine->QtyDispatched) . ")";
-				$Result = DB_query($SQL,$db);
-				if (DB_error_no($db) !=0){
-					echo "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The cost of sales GL posting could not be inserted because: -<BR>" . DB_error_msg($db);
-					if ($debug==1){
-						echo "<BR>The following SQL to insert the GLTrans record was used:<BR>$SQL<BR>";
-					}
-					$SQL = "rollback";
-					$Result = DB_query($SQL,$db);
-					exit;
-				}
+				$SQL = "INSERT INTO GLTrans (Type,
+								TypeNo,
+								TranDate,
+								PeriodNo,
+								Account,
+								Narrative,
+								Amount)
+						VALUES (11,
+							" . $CreditNo . ",
+							'" . $DefaultDispatchDate . "',
+							" . $PeriodNo . ",
+							" . $COGSAccount . ",
+							'" . $_SESSION['CreditItems']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
+							" . -($OrderLine->StandardCost * $OrderLine->QtyDispatched) . "
+							)";
+
+				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The cost of sales GL posting could not be inserted because:');
+				$DbgMsg = _('The following SQL to insert the GLTrans record was used:');
+				$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 
 /*now the stock entry*/
 
 
 				if ($_POST['CreditType']=="WriteOff"){
-					$SQL = "INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (11, " . $CreditNo . ", '" . $DefaultDispatchDate . "', " . $PeriodNo . ", " . $_POST['WriteOffGLCode'] . ", '" . $_SESSION['CustomerID'] . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "', " . ($OrderLine->StandardCost * $OrderLine->QtyDispatched) . ")";
+					$SQL = "INSERT INTO GLTrans (Type,
+									TypeNo,
+									TranDate,
+									PeriodNo,
+									Account,
+									Narrative,
+									Amount)
+							VALUES (11,
+								" . $CreditNo . ",
+								'" . $DefaultDispatchDate . "',
+								" . $PeriodNo . ",
+								" . $_POST['WriteOffGLCode'] . ",
+								'" . $_SESSION['CreditItems']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
+								" . ($OrderLine->StandardCost * $OrderLine->QtyDispatched) . "
+								)";
 				} else {
 					$StockGLCode = GetStockGLCode($OrderLine->StockID, $db);
-					$SQL = "INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (11, " . $CreditNo . ", '" . $DefaultDispatchDate . "', " . $PeriodNo . ", " . $StockGLCode["StockAct"] . ", '" . $_SESSION['CustomerID'] . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "', " . ($OrderLine->StandardCost * $OrderLine->QtyDispatched) . ")";
+					$SQL = "INSERT INTO GLTrans (Type,
+									TypeNo,
+									TranDate,
+									PeriodNo,
+									Account,
+									Narrative,
+									Amount)
+							VALUES (11,
+								" . $CreditNo . ",
+								'" . $DefaultDispatchDate . "',
+								" . $PeriodNo . ",
+								" . $StockGLCode["StockAct"] . ",
+								'" . $_SESSION['CreditItems']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
+								" . ($OrderLine->StandardCost * $OrderLine->QtyDispatched) . "
+								)";
 				}
-				$Result = DB_query($SQL,$db);
-				if (DB_error_no($db) !=0){
-					echo "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The stock side (or write off) of the cost of sales GL posting could not be inserted because: -<BR>" . DB_error_msg($db);
-					if ($debug==1){
-						echo "<BR>The following SQL to insert the GLTrans record was used:<BR>$SQL<BR>";
-					}
-					$SQL = "rollback";
-					$Result = DB_query($SQL,$db);
-					exit;
-				}
+
+				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The stock side (or write off) of the cost of sales GL posting could not be inserted because:');
+				$DbgMsg = _('The following SQL to insert the GLTrans record was used:');
+				$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 
 
 			} /* end of if GL and stock integrated and standard cost !=0 */
@@ -972,34 +1089,46 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 //Post sales transaction to GL credit sales
 				$SalesGLAccounts = GetSalesGLAccount($Area, $OrderLine->StockID, $_SESSION['CreditItems']->DefaultSalesType, $db);
 
-				$SQL = "INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (11, " . $CreditNo . ", '" . $DefaultDispatchDate . "', " . $PeriodNo . ", " . $SalesGLAccounts["SalesGLCode"] . ", '" . $_SESSION['CustomerID'] . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->Price . "', " . ($OrderLine->Price * $OrderLine->QtyDispatched) . ")";
+				$SQL = "INSERT INTO GLTrans (Type,
+								TypeNo,
+								TranDate,
+								PeriodNo,
+								Account,
+								Narrative,
+								Amount)
+						VALUES (11,
+							" . $CreditNo . ",
+							'" . $DefaultDispatchDate . "',
+							" . $PeriodNo . ",
+							" . $SalesGLAccounts["SalesGLCode"] . ",
+							'" . $_SESSION['CreditItems']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->Price . "',
+							" . ($OrderLine->Price * $OrderLine->QtyDispatched) . "
+							)";
 
-				$Result = DB_query($SQL,$db);
-				if (DB_error_no($db) !=0){
-					echo "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The credit note GL posting could not be inserted because: -<BR>" . DB_error_msg($db);
-
-					if ($debug==1){
-						echo "<BR>The following SQL to insert the GLTrans record was used:<BR>$SQL<BR>";
-					}
-					$SQL = "rollback";
-					$Result = DB_query($SQL,$db);
-					exit;
-				}
+				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The credit note GL posting could not be inserted because:');
+				$DbgMsg = _('The following SQL to insert the GLTrans record was used:');
+				$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 
 				if ($OrderLine->DiscountPercent !=0){
 
-					$SQL = "INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (11, " . $CreditNo . ", '" . $DefaultDispatchDate . "', " . $PeriodNo . ", " . $SalesGLAccounts["DiscountGLCode"] . ", '" . $_SESSION['CustomerID'] . " - " . $OrderLine->StockID . " @ " . ($OrderLine->DiscountPercent * 100) . "%', " . -($OrderLine->Price * $OrderLine->QtyDispatched * $OrderLine->DiscountPercent) . ")";
-					$Result = DB_query($SQL,$db);
-					if (DB_error_no($db) !=0){
-						echo "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The credit note discount GL posting could not be inserted because: -<BR>" . DB_error_msg($db);
-
-						if ($debug==1){
-							echo "<BR>The following SQL to insert the GLTrans record was used:<BR>$SQL<BR>";
-						}
-						$SQL = "Rollback";
-						$Result = DB_query($SQL,$db);
-						exit;
-					}
+					$SQL = "INSERT INTO GLTrans (Type,
+									TypeNo,
+									TranDate,
+									PeriodNo,
+									Account,
+									Narrative,
+									Amount)
+							VALUES (11,
+								" . $CreditNo . ",
+								'" . $DefaultDispatchDate . "',
+								" . $PeriodNo . ",
+								" . $SalesGLAccounts["DiscountGLCode"] . ",
+								'" . $_SESSION['CreditItems']->DebtorNo . " - " . $OrderLine->StockID . " @ " . ($OrderLine->DiscountPercent * 100) . "%',
+								" . -($OrderLine->Price * $OrderLine->QtyDispatched * $OrderLine->DiscountPercent) . "
+								)";
+					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The credit note discount GL posting could not be inserted because:');
+					$DbgMsg = _('The following SQL to insert the GLTrans record was used:');
+					$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 				} /*end of if discount !=0 */
 			} /*end of if sales integrated with debtors */
 		} /*Quantity dispatched is more than 0 */
@@ -1010,49 +1139,66 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 
 /*Post credit note transaction to GL credit debtors, debit freight re-charged and debit sales */
 		if (($_SESSION['CreditItems']->total + $_POST['ChargeFreightCost'] + $TaxTotal) !=0) {
-			$SQL = "INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (11, " . $CreditNo . ", '" . $DefaultDispatchDate . "', " . $PeriodNo . ", " . $CompanyData["DebtorsAct"] . ", '" . $_SESSION['CustomerID'] . "', " . -($_SESSION['CreditItems']->total + $_POST['ChargeFreightCost'] + $TaxTotal) . ")";
+			$SQL = "INSERT INTO GLTrans (Type,
+							TypeNo,
+							TranDate,
+							PeriodNo,
+							Account,
+							Narrative,
+							Amount)
+					VALUES (11,
+						" . $CreditNo . ",
+						'" . $DefaultDispatchDate . "',
+						" . $PeriodNo . ",
+						" . $CompanyData["DebtorsAct"] . ",
+						'" . $_SESSION['CreditItems']->DebtorNo . "',
+						" . -($_SESSION['CreditItems']->total + $_POST['ChargeFreightCost'] + $TaxTotal) . "
+					)";
 
-			$Result = DB_query($SQL,$db);
-			if (DB_error_no($db) !=0){
-				echo "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The total debtor GL posting for the credit note could not be inserted because: -<BR>" . DB_error_msg($db);
-
-				if ($debug==1){
-					echo "<BR>The following SQL to insert the GLTrans record was used:<BR>$SQL<BR>";
-				}
-				$SQL = "Rollback";
-				$Result = DB_query($SQL,$db);
-				exit;
-			}
+			$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The total debtor GL posting for the credit note could not be inserted because:');
+			$DbgMsg = _('The following SQL to insert the GLTrans record was used:');
+			$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 		}
 		if ($_POST['ChargeFreightCost'] !=0) {
-			$SQL = "INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (11, " . $CreditNo . ", '" . $DefaultDispatchDate . "', " . $PeriodNo . ", " . $CompanyData["FreightAct"] . ", '" . $_SESSION['CustomerID'] . "', " . $_POST['ChargeFreightCost'] . ")";
+			$SQL = "INSERT INTO GLTrans (Type,
+							TypeNo,
+							TranDate,
+							PeriodNo,
+							Account,
+							Narrative,
+							Amount)
+				VALUES (11,
+					" . $CreditNo . ",
+					'" . $DefaultDispatchDate . "',
+					" . $PeriodNo . ",
+					" . $CompanyData["FreightAct"] . ",
+					'" . $_SESSION['CreditItems']->DebtorNo . "',
+					" . $_POST['ChargeFreightCost'] . "
+					)";
 
-			$Result = DB_query($SQL,$db);
-			if (DB_error_no($db) !=0){
-				echo "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The freight GL posting for this credit note could not be inserted because: -<BR>" . DB_error_msg($db);
-
-				if ($debug==1){
-					echo "<BR>The following SQL to insert the GLTrans record was used:<BR>$SQL<BR>";
-				}
-				$SQL = "Rollback";
-				$Result = DB_query($SQL,$db);
-				exit;
-			}
+			$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The freight GL posting for this credit note could not be inserted because:');
+			$DbgMsg = _('The following SQL to insert the GLTrans record was used:');
 		}
 		if ($TaxTotal !=0){
-			$SQL = "INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (11, " . $CreditNo . ", '" . $DefaultDispatchDate . "', " . $PeriodNo . ", " . $_SESSION['TaxGLCode'] . ", '" . $_SESSION['CustomerID'] . "', " . $TaxTotal . ")";
+			$SQL = "INSERT INTO GLTrans (Type,
+							TypeNo,
+							TranDate,
+							PeriodNo,
+							Account,
+							Narrative,
+							Amount)
+				VALUES (11,
+					" . $CreditNo . ",
+					'" . $DefaultDispatchDate . "',
+					" . $PeriodNo . ",
+					" . $_SESSION['TaxGLCode'] . ",
+					'" . $_SESSION['CreditItems']->DebtorNo . "',
+					" . $TaxTotal . "
+					)";
 
-			$Result = DB_query($SQL,$db);
-			if (DB_error_no($db) !=0){
-				echo "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The tax GL posting for this credit note could not be inserted because: -<BR>" . DB_error_msg($db);
-
-				if ($debug==1){
-					echo "<BR>The following SQL to insert the GLTrans record was used:<BR>$SQL";
-				}
-				$SQL = "rollback";
-				$Result = DB_query($SQL,$db);
-				exit;
-			}
+			$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The tax GL posting for this credit note could not be inserted because:');
+			$DbgMsg = _('The following SQL to insert the GLTrans record was used:');
+			$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 		}
 	} /*end of if Sales and GL integrated */
 
@@ -1063,8 +1209,8 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 	unset($_SESSION['CreditItems']);
 	unset($_SESSION['ProcessingCredit']);
 
-	echo "Credit Note number $CreditNo processed<BR>";
-	echo "<A HREF='". $rootpath . "/PrintCustTrans.php?" . SID . "FromTransNo=" . $CreditNo . "&InvOrCredit=Credit&PrintPDF=True'>Print this Credit Note</A>";
+	echo _('Credit Note number') . ' ' . $CreditNo . ' ' . _('has been processed');
+	echo "<BR><A HREF='". $rootpath . "/PrintCustTrans.php?" . SID . "FromTransNo=" . $CreditNo . "&InvOrCredit=Credit&PrintPDF=True'>" . _('Print this Credit Note') . '</A>';
 
 /*end of process credit note */
 
@@ -1073,19 +1219,20 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 
 	echo "<TABLE>";
 
-	echo "<TR><TD>Credit Note Type</TD><TD><SELECT NAME=CreditType>";
+	echo '<TR><TD>' . _('Credit Note Type') . "</TD><TD><SELECT NAME=CreditType>";
+
 	if (!isset($_POST['CreditType']) OR $_POST['CreditType']=="Return"){
-		echo "<OPTION SELECTED VALUE='Return'>Goods returned to store";
-		echo "<OPTION VALUE='WriteOff'>Goods written off";
-		echo "<OPTION VALUE='ReverseOverCharge'>Reverse Over-Charge";
+		echo "<OPTION SELECTED VALUE='Return'>" . _('Goods returned to store');
+		echo "<OPTION VALUE='WriteOff'>" . _('Goods written off');
+		echo "<OPTION VALUE='ReverseOverCharge'>" . _('Reverse Over-Charge');
 	} elseif($_POST['CreditType']=="WriteOff") {
-		echo "<OPTION SELECTED VALUE='WriteOff'>Goods written off";
-		echo "<OPTION VALUE='Return'>Goods returned to store";
-		echo "<OPTION VALUE='ReverseOverCharge'>Reverse Over-Charge";
+		echo "<OPTION SELECTED VALUE='WriteOff'>" . _('Goods written off');
+		echo "<OPTION VALUE='Return'>" . _('Goods returned to store');
+		echo "<OPTION VALUE='ReverseOverCharge'>" . _('Reverse Over-Charge');
 	} else {
-		echo "<OPTION VALUE='WriteOff'>Goods written off";
-		echo "<OPTION VALUE='Return'>Goods returned to store";
-		echo "<OPTION SELECTED VALUE='ReverseOverCharge'>Reverse Over-Charge";
+		echo "<OPTION VALUE='WriteOff'>" . _('Goods written off');
+		echo "<OPTION VALUE='Return'>" . _('Goods returned to store');
+		echo "<OPTION SELECTED VALUE='ReverseOverCharge'>" . _('Reverse Over-Charge');
 	}
 	echo "</SELECT></TD></TR>";
 
@@ -1094,7 +1241,7 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 
 /*if the credit note is a return of goods then need to know which location to receive them into */
 
-		echo "<TR><TD>Goods Returned to Location</TD><TD><SELECT NAME=Location>";
+		echo '<TR><TD>' . _('Goods Returned to Location') . '</TD><TD><SELECT NAME=Location>';
 
 		$SQL="SELECT LocCode, LocationName FROM Locations";
 		$Result = DB_query($SQL,$db);
@@ -1114,9 +1261,10 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 
 	} elseif($_POST['CreditType']=='WriteOff') { /* the goods are to be written off to somewhere */
 
-		echo "<TR><TD>Write off the cost of the goods to</TD><TD><SELECT NAME=WriteOffGLCode>";
+		echo '<TR><TD>' . _('Write off the cost of the goods to') . '</TD><TD><SELECT NAME=WriteOffGLCode>';
 
 		$SQL="SELECT AccountCode, AccountName FROM ChartMaster, AccountGroups WHERE ChartMaster.Group_=AccountGroups.GroupName AND AccountGroups.PandL=1 ORDER BY AccountCode";
+
 		$Result = DB_query($SQL,$db);
 
 		while ($myrow = DB_fetch_array($Result)) {
@@ -1129,9 +1277,9 @@ if ($_POST['ProcessCredit']=="Process Credit"){
 		}
 		echo "</SELECT></TD></TR>";
 	}
-	echo "<TR><TD>Credit Note Text</TD><TD><TEXTAREA NAME=CreditText COLS=31 ROWS=5>" . $_POST['CreditText'] . "</TEXTAREA></TD></TR>";
-	echo "</TABLE><CENTER><INPUT TYPE=SUBMIT NAME=Update Value=Update><P>";
-	echo "<INPUT TYPE=SUBMIT NAME='ProcessCredit' Value='Process Credit'></CENTER>";
+	echo '<TR><TD>' . _('Credit Note Text') . '</TD><TD><TEXTAREA NAME=CreditText COLS=31 ROWS=5>' . $_POST['CreditText'] . '</TEXTAREA></TD></TR>';
+	echo '</TABLE><CENTER><INPUT TYPE=SUBMIT NAME=Update Value=' . _('Update') . '><P>';
+	echo "<INPUT TYPE=SUBMIT NAME='ProcessCredit' Value='" . _('Process Credit') ."'></CENTER>";
 
 }
 

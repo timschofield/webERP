@@ -2,12 +2,7 @@
 include("includes/DateFunctions.inc");
 $PageSecurity = 2;
 
-/* $Revision: 1.2 $ */
-
-if (!isset($_POST['FromSupplier'])  OR $_POST['FromSupplier']=="" OR !isset($_GET['FromSupplier'])) {
-	$title="Creditor Balances";
-}
-
+/* $Revision: 1.3 $ */
 
 If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POST['FromCriteria'])>=1 AND isset($_POST['ToCriteria']) AND
 strlen($_POST['ToCriteria'])>=1){
@@ -18,8 +13,8 @@ strlen($_POST['ToCriteria'])>=1){
 	include("includes/PDFStarter_ros.inc");
 
 	$FontSize=12;
-	$pdf->addinfo('Title',"Supplier Balance Listing");
-	$pdf->addinfo('Subject','Supplier Balances');
+	$pdf->addinfo('Title',_('Supplier Balance Listing'));
+	$pdf->addinfo('Subject',_('Supplier Balances'));
 
 	$PageNumber=0;
 	$line_height=12;
@@ -50,10 +45,10 @@ strlen($_POST['ToCriteria'])>=1){
 	$SupplierResult = DB_query($SQL,$db);
 
 	if (DB_error_no($db) !=0) {
-		$title = "Supplier Balances - Problem Report.... ";
-		include("includes/header.inc");
-		echo "The Supplier details could not be retrieved by the SQL because - " . DB_error_msg($db);
-		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>Back to the menu</A>";
+		$title = _('Supplier Balances - Problem Report');
+		include('includes/header.inc');
+		echo _('The Supplier details could not be retrieved by the SQL because') . ' ' . DB_error_msg($db);
+		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
 		if ($debug==1){
 			echo "<BR>$SQL";
 		}
@@ -115,6 +110,7 @@ strlen($_POST['ToCriteria'])>=1){
 } else { /*The option to print PDF was not hit */
 
 	include("includes/session.inc");
+	$title=_('Creditor Balances At A Period End');
 	include("includes/header.inc");
 	include("includes/SQL_CommonFunctions.inc");
 
@@ -127,13 +123,18 @@ strlen($_POST['ToCriteria'])>=1){
 
 		echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
 
-		echo "<TR><TD>From Supplier Code:</FONT></TD><TD><input Type=text maxlength=6 size=7 name=FromCriteria value='1'></TD></TR>";
-		echo "<TR><TD>To Supplier Code:</TD><TD><input Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></TD></TR>";
+		echo '<TR><TD>' . _('From Supplier Code:') . "</FONT></TD>
+			<TD><input Type=text maxlength=6 size=7 name=FromCriteria value='1'></TD></TR>";
+		echo '<TR><TD>' . _('To Supplier Code:') . "</TD>
+			<TD><input Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></TD></TR>";
 
-		echo "<TR><TD>Balances As At:</TD><TD><SELECT Name='PeriodEnd'>";
+		echo '<TR><TD>' . _('Balances As At:') . "</TD>
+			<TD><SELECT Name='PeriodEnd'>";
 
 		$sql = "SELECT PeriodNo, LastDate_In_Period FROM Periods";
-		$Periods = DB_query($sql,$db,"Could not retrieve period data because","The SQL that failed to get the period data was:");
+
+		$ErrMsg = _('Could not retrieve period data because');
+		$Periods = DB_query($sql,$db,$ErrMsg);
 
 		while ($myrow = DB_fetch_array($Periods,$db)){
 
@@ -145,7 +146,7 @@ strlen($_POST['ToCriteria'])>=1){
 	echo "</SELECT></TD></TR>";
 
 
-	echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='Print PDF'></CENTER>";
+	echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";
 
 	include("includes/footer.inc");
 } /*end of else not PrintPDF */
