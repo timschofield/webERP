@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -166,7 +166,7 @@ if (function_exists('bindtextdomain')){
 
 if (!function_exists('gettext')){
 	function _($text){
-		return gettext($text);
+		return ($text);
 	}
 }
 

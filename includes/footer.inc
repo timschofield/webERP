@@ -1,4 +1,4 @@
-<!-- \$Revision: 1.4 $ -->
+<!-- \$Revision: 1.5 $ -->
 				</td>
 		    </tr>
 		</table>
@@ -15,7 +15,7 @@
         <td width="10"><img src="css/default/images/outline/br.gif" width="10" height="10" alt="" /></td>
     </tr>
 </table>
-
+<font size=2><?php echo date("l " . $DefaultDateFormat . " | g:i A") ?></font>
 <table align="center" id="footer">
 	<tr>
 		<td align="center" class="footer"><?php echo $CompanyName;?></td>

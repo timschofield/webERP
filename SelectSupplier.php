@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $title = "Search Suppliers";
 
 $PageSecurity = 2;
@@ -216,13 +216,21 @@ If (isset($result)) {
   echo "<br><br>";
 
 	echo "<BR><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>";
-	$tableheader = "<TR class='tableheader'><TD class='tableheader'>Code</TD><TD class='tableheader'>Supplier Name</TD><TD class='tableheader'>Currency</TD><TD class='tableheader'>Address 1</TD><TD class='tableheader'>Address 2</TD></B><TD class='tableheader'>Address 3</TD><TD class='tableheader'>Address 4</TD></TR>";
+	$tableheader = "<TR class='tableheader'>
+				<TD class='tableheader'>Code</TD>
+				<TD class='tableheader'>Supplier Name</TD>
+				<TD class='tableheader'>Currency</TD>
+				<TD class='tableheader'>Address 1</TD>
+				<TD class='tableheader'>Address 2</TD>
+				<TD class='tableheader'>Address 3</TD>
+				<TD class='tableheader'>Address 4</TD>
+			</TR>";
 	echo $tableheader;
 
 	$j = 1;
 
   $RowIndex = 0;
-	
+
   if (DB_num_rows($result)<>0){
  	DB_data_seek($result, ($_POST['PageOffset']-1)*$_SESSION['DisplayRecordsMax']);
   }
@@ -247,7 +255,7 @@ If (isset($result)) {
 			$myrow["Address4"]);
 
 		$j++;
-		If ($j == 11 $RowIndex+1 != $_SESSION['DisplayRecordsMax'] ){
+		If ($j == 11 AND ($RowIndex+1 != $_SESSION['DisplayRecordsMax'])){
 			$j=1;
 			echo $tableheader;
 		}

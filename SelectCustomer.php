@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $title = "Search Customers";
 
 $PageSecurity = 2;
@@ -202,7 +202,15 @@ If (isset($result)) {
   echo "<br><br>";
 
 	echo "<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>";
-	$TableHeader = "<TR><TD Class='tableheader'>Code</TD><TD Class='tableheader'>Customer Name</TD><TD Class='tableheader'>Branch</TD><TD Class='tableheader'>Contact</TD><TD Class='tableheader'>Phone</TD><TD Class='tableheader'>Fax</TD></TR>";
+	$TableHeader = "<TR>
+				<TD Class='tableheader'>Code</TD>
+				<TD Class='tableheader'>Customer Name</TD>
+				<TD Class='tableheader'>Branch</TD>
+				<TD Class='tableheader'>Contact</TD>
+				<TD Class='tableheader'>Phone</TD>
+				<TD Class='tableheader'>Fax</TD>
+			</TR>";
+
 	echo $TableHeader;
 	$j = 1;
 	$k = 0; //row counter to determine background colour
@@ -222,10 +230,21 @@ If (isset($result)) {
 			$k=1;
 		}
 
-		printf("<td><FONT SIZE=1><INPUT TYPE=SUBMIT NAME='Select' VALUE='%s'</FONT></td><td><FONT SIZE=1>%s</FONT></td><td><FONT SIZE=1>%s</FONT></td><td><FONT SIZE=1>%s</FONT></td><td><FONT SIZE=1>%s</FONT></td><td><FONT SIZE=1>%s</FONT></td></tr>", $myrow["DebtorNo"],$myrow["Name"], $myrow["BrName"], $myrow["ContactName"], $myrow["PhoneNo"], $myrow["FaxNo"]);
+		printf("<td><FONT SIZE=1><INPUT TYPE=SUBMIT NAME='Select' VALUE='%s'</FONT></td>
+			<td><FONT SIZE=1>%s</FONT></td>
+			<td><FONT SIZE=1>%s</FONT></td>
+			<td><FONT SIZE=1>%s</FONT></td>
+			<td><FONT SIZE=1>%s</FONT></td>
+			<td><FONT SIZE=1>%s</FONT></td></tr>",
+			$myrow["DebtorNo"],
+			$myrow["Name"],
+			$myrow["BrName"],
+			$myrow["ContactName"],
+			$myrow["PhoneNo"],
+			$myrow["FaxNo"]);
 
 		$j++;
-		If ($j == 11 AND $RowIndex+1 != $_SESSION['DisplayRecordsMax']){
+		If ($j == 11 AND ($RowIndex+1 != $_SESSION['DisplayRecordsMax'])){
 			$j=1;
 			echo $TableHeader;
 		}
