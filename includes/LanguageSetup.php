@@ -16,7 +16,12 @@ if (function_exists('gettext')){
 		/*This wont work for fr_BE or where the country code is different to the language code */
 		$Language_Country = $_SESSION['Language'] . '_' . strtoupper($_SESSION['Language']);
 	}
-	setlocale (LC_MESSAGES, $Language_Country);
+	$LocaleSet = setlocale (LC_MESSAGES, $Language_Country);
+	if (!$LocaleSet) {
+		prnMsg(_('The locale could not be set to') . ' ' . $Language_Country . ' ' ._('this locale is not implemented on the web server'),'error');
+		$Language_Country = 'en_US';
+		$LocaleSet = setlocale (LC_MESSAGES, $Language_Country);
+	}
 	setlocale (LC_CTYPE,$Language_Country);
 	putenv("LANGUAGE=$Language_Country");
 	bindtextdomain ("messages", "./locale");
