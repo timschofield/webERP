@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
 */
@@ -305,7 +305,17 @@ echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?=" . $SID . "' METHOD=POST>";
 /*Display the order with or without discount depending on access level*/
 if (in_array(2,$SecurityGroups[$_SESSION['AccessLevel']])){
 
-	echo "<CENTER><B>Order Summary</B><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1><TR><TD class='tableheader'>Item Code</TD><TD class='tableheader'>Item Description</TD><TD class='tableheader'>Quantity</TD><TD class='tableheader'>Unit</TD><TD class='tableheader'>Price</TD><TD class='tableheader'>Discount %</TD><TD class='tableheader'>Total</TD></TR>";
+	echo "<CENTER><B>Order Summary</B>
+	<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>
+	<TR>
+		<TD class='tableheader'>Item Code</TD>
+		<TD class='tableheader'>Item Description</TD>
+		<TD class='tableheader'>Quantity</TD>
+		<TD class='tableheader'>Unit</TD>
+		<TD class='tableheader'>Price</TD>
+		<TD class='tableheader'>Discount %</TD>
+		<TD class='tableheader'>Total</TD>
+	</TR>";
 
 	$_SESSION['Items']->total = 0;
 	$_SESSION['Items']->totalVolume = 0;
@@ -317,7 +327,7 @@ if (in_array(2,$SecurityGroups[$_SESSION['AccessLevel']])){
 		$LineTotal = $StockItem->Quantity * $StockItem->Price * (1 - $StockItem->DiscountPercent);
 		$DisplayLineTotal = number_format($LineTotal,2);
 		$DisplayPrice = number_format($StockItem->Price,2);
-		$DisplayQuantity = number_format($StockItem->Quantity,2);
+		$DisplayQuantity = number_format($StockItem->Quantity,$StockItem->DecimalPlaces);
 		$DisplayDiscount = number_format(($StockItem->DiscountPercent * 100),2);
 
 
@@ -329,7 +339,14 @@ if (in_array(2,$SecurityGroups[$_SESSION['AccessLevel']])){
 			$k=1;
 		}
 
-		 echo "<TD>$StockItem->StockID</TD><TD>$StockItem->ItemDescription</TD><TD ALIGN=RIGHT>$DisplayQuantity</TD><TD>$StockItem->Units</TD><TD ALIGN=RIGHT>$DisplayPrice</TD><TD ALIGN=RIGHT>$DisplayDiscount</TD><TD ALIGN=RIGHT>$DisplayLineTotal</FONT></TD></TR>";
+		 echo "<TD>$StockItem->StockID</TD>
+		 	<TD>$StockItem->ItemDescription</TD>
+			<TD ALIGN=RIGHT>$DisplayQuantity</TD>
+			<TD>$StockItem->Units</TD>
+			<TD ALIGN=RIGHT>$DisplayPrice</TD>
+			<TD ALIGN=RIGHT>$DisplayDiscount</TD>
+			<TD ALIGN=RIGHT>$DisplayLineTotal</TD>
+		</TR>";
 
 		$_SESSION['Items']->total = $_SESSION['Items']->total + $LineTotal;
 		$_SESSION['Items']->totalVolume = $_SESSION['Items']->totalVolume + ($StockItem->Quantity * $StockItem->Volume);
@@ -337,17 +354,32 @@ if (in_array(2,$SecurityGroups[$_SESSION['AccessLevel']])){
 	}
 
 	$DisplayTotal = number_format($_SESSION['Items']->total,2);
-	echo "<TR><TD COLSPAN=6 ALIGN=RIGHT><B>TOTAL Excl Tax/Freight</B></TD><TD ALIGN=RIGHT>$DisplayTotal</TD></TR></TABLE>";
+	echo "<TR>
+		<TD COLSPAN=6 ALIGN=RIGHT><B>TOTAL Excl Tax/Freight</B></TD>
+		<TD ALIGN=RIGHT>$DisplayTotal</TD>
+	</TR></TABLE>";
 
 	$DisplayVolume = number_format($_SESSION['Items']->totalVolume,2);
 	$DisplayWeight = number_format($_SESSION['Items']->totalWeight,2);
-	echo "<TABLE BORDER=1><TR><TD>Total Weight:</TD><TD>$DisplayWeight</TD><TD>Total Volume:</TD><TD>$DisplayVolume</TD></TR></TABLE>";
+	echo "<TABLE BORDER=1><TR>
+		<TD>Total Weight:</TD>
+		<TD>$DisplayWeight</TD>
+		<TD>Total Volume:</TD>
+		<TD>$DisplayVolume</TD>
+	</TR></TABLE>";
 
 } else {
 
 /*Display the order without discount */
 
-	echo "<CENTER><B>Order Summary</B><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1><TR><TD class='tableheader'>Item Description</TD><TD class='tableheader'>Quantity</TD><TD class='tableheader'>Unit</TD><TD class='tableheader'>Price</TD><TD class='tableheader'>Total</TD></TR>";
+	echo "<CENTER><B>Order Summary</B>
+	<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1><TR>
+		<TD class='tableheader'>Item Description</TD>
+		<TD class='tableheader'>Quantity</TD>
+		<TD class='tableheader'>Unit</TD>
+		<TD class='tableheader'>Price</TD>
+		<TD class='tableheader'>Total</TD>
+	</TR>";
 
 	$_SESSION['Items']->total = 0;
 	$_SESSION['Items']->totalVolume = 0;
@@ -358,7 +390,7 @@ if (in_array(2,$SecurityGroups[$_SESSION['AccessLevel']])){
 		$LineTotal = $StockItem->Quantity * $StockItem->Price * (1 - $StockItem->DiscountPercent);
 		$DisplayLineTotal = number_format($LineTotal,2);
 		$DisplayPrice = number_format($StockItem->Price,2);
-		$DisplayQuantity = number_format($StockItem->Quantity,2);
+		$DisplayQuantity = number_format($StockItem->Quantity,$StockItem->DecimalPlaces);
 
 		if ($k==1){
 			echo "<tr bgcolor='#CCCCCC'>";
@@ -367,7 +399,12 @@ if (in_array(2,$SecurityGroups[$_SESSION['AccessLevel']])){
 			echo "<tr bgcolor='#EEEEEE'>";
 			$k=1;
 		}
-		echo "<TD>$StockItem->ItemDescription</TD><TD ALIGN=RIGHT>$DisplayQuantity</TD><TD>$StockItem->Units</TD><TD ALIGN=RIGHT>$DisplayPrice</TD><TD ALIGN=RIGHT>" . $DisplayLineTotal . "</FONT></TD></TR>";
+		echo "<TD>$StockItem->ItemDescription</TD>
+			<TD ALIGN=RIGHT>$DisplayQuantity</TD>
+			<TD>$StockItem->Units</TD>
+			<TD ALIGN=RIGHT>$DisplayPrice</TD>
+			<TD ALIGN=RIGHT>" . $DisplayLineTotal . "</FONT></TD>
+		</TR>";
 
 		$_SESSION['Items']->total = $_SESSION['Items']->total + $LineTotal;
 		$_SESSION['Items']->totalVolume = $_SESSION['Items']->totalVolume + $StockItem->Quantity * $StockItem->Volume;
@@ -376,17 +413,32 @@ if (in_array(2,$SecurityGroups[$_SESSION['AccessLevel']])){
 	}
 
 	$DisplayTotal = number_format($_SESSION['Items']->total,2);
-	echo "<TABLE><TR><TD>Total Weight:</TD><TD>$DisplayWeight</TD><TD>Total Volume:</TD><TD>$DisplayVolume</TD></TR></TABLE>";
+	echo "<TABLE><TR>
+		<TD>Total Weight:</TD>
+		<TD>$DisplayWeight</TD>
+		<TD>Total Volume:</TD>
+		<TD>$DisplayVolume</TD>
+	</TR></TABLE>";
 
 	$DisplayVolume = number_format($_SESSION['Items']->totalVolume,2);
 	$DisplayWeight = number_format($_SESSION['Items']->totalWeight,2);
-	echo "<TABLE BORDER=1><TR><TD>Total Weight:</TD><TD>$DisplayWeight</TD><TD>Total Volume:</TD><TD>$DisplayVolume</TD></TR></TABLE>";
+	echo "<TABLE BORDER=1><TR>
+		<TD>Total Weight:</TD>
+		<TD>$DisplayWeight</TD>
+		<TD>Total Volume:</TD>
+		<TD>$DisplayVolume</TD>
+	</TR></TABLE>";
 
 }
 
-echo "<TABLE><TR><TD>Deliver To:</TD><TD><input type=text size=42 max=40 name='DeliverTo' value='" . $_SESSION['Items']->DeliverTo . "'></TD></TR>";
+echo "<TABLE><TR>
+	<TD>Deliver To:</TD>
+	<TD><input type=text size=42 max=40 name='DeliverTo' value='" . $_SESSION['Items']->DeliverTo . "'></TD>
+</TR>";
 
-echo "<TR><TD>Deliver from the warehouse at:</TD><TD><Select name='Location'>";
+echo "<TR>
+	<TD>Deliver from the warehouse at:</TD>
+	<TD><Select name='Location'>";
 
 if ($_SESSION['Items']->Location=="" OR !isset($_SESSION['Items']->Location)) {
 	$_SESSION['Items']->Location = $DefaultStockLocation;
@@ -408,27 +460,53 @@ if (!$_SESSION['Items']->DeliveryDate) {
 	$_SESSION['Items']->DeliveryDate = Date($DefaultDateFormat,$EarliestDispatch);
 }
 
-echo "<TR><TD>Dispatch Date:</FONT></TD><TD><input type='Text' SIZE=15 MAXLENGTH=14 name='DeliveryDate' value=" . $_SESSION['Items']->DeliveryDate . "></TD></TR>";
+echo "<TR>
+	<TD>Dispatch Date:</TD>
+	<TD><input type='Text' SIZE=15 MAXLENGTH=14 name='DeliveryDate' value=" . $_SESSION['Items']->DeliveryDate . "></TD>
+</TR>";
 
-echo "<TR><TD>Street:</TD><TD><input type=text size=42 max=40 name='BrAdd1' value='" . $_SESSION['Items']->BrAdd1 . "'></TD></TR>";
+echo "<TR>
+	<TD>Street:</TD>
+	<TD><input type=text size=42 max=40 name='BrAdd1' value='" . $_SESSION['Items']->BrAdd1 . "'></TD>
+</TR>";
 
-echo "<TR><TD>Suburb:</TD><TD><input type=text size=22 max=20 name='BrAdd2' value='" . $_SESSION['Items']->BrAdd2 . "'></TD></TR>";
+echo "<TR>
+	<TD>Suburb:</TD>
+	<TD><input type=text size=22 max=20 name='BrAdd2' value='" . $_SESSION['Items']->BrAdd2 . "'></TD>
+</TR>";
 
-echo "<TR><TD>City/Region:</TD><TD><input type=text size=17 max=15 name='BrAdd3' value='" . $_SESSION['Items']->BrAdd3 . "'></TD></TR>";
+echo "<TR>
+	<TD>City/Region:</TD>
+	<TD><input type=text size=17 max=15 name='BrAdd3' value='" . $_SESSION['Items']->BrAdd3 . "'></TD>
+</TR>";
 
-echo "<TR><TD>Post Code:</TD><TD><input type=text size=17 max=15 name='BrAdd4' value='" . $_SESSION['Items']->BrAdd4 . "'></TD></TR>";
+echo "<TR>
+	<TD>Post Code:</TD>
+	<TD><input type=text size=17 max=15 name='BrAdd4' value='" . $_SESSION['Items']->BrAdd4 . "'></TD>
+</TR>";
 
-echo "<TR><TD>Contact Phone Number:</TD><TD><input type=text size=25 max=25 name='PhoneNo' value='" . $_SESSION['Items']->PhoneNo . "'></TD></TR>";
+echo "<TR>
+	<TD>Contact Phone Number:</TD>
+	<TD><input type=text size=25 max=25 name='PhoneNo' value='" . $_SESSION['Items']->PhoneNo . "'></TD>
+</TR>";
 
 /*echo "<TR><TD>Contact Email:</TD><TD><input type=text size=25 max=25 name='Email' value='" . $_SESSION['Items']->Email . "'></TD></TR>";
 */
-echo "<TR><TD>Customer Reference:</TD><TD><input type=text size=25 max=25 name='CustRef' value='" . $_SESSION['Items']->CustRef . "'></TD></TR>";
+echo "<TR>
+	<TD>Customer Reference:</TD>
+	<TD><input type=text size=25 max=25 name='CustRef' value='" . $_SESSION['Items']->CustRef . "'></TD>
+</TR>";
 
-echo "<TR><TD>Comments:</TD><TD><TEXTAREA NAME=Comments COLS=31 ROWS=5>" . $_SESSION['Items']->Comments ."</TEXTAREA></TD></TR>";
+echo "<TR>
+	<TD>Comments:</TD>
+	<TD><TEXTAREA NAME=Comments COLS=31 ROWS=5>" . $_SESSION['Items']->Comments ."</TEXTAREA></TD>
+</TR>";
 
 if ($_SESSION['PrintedPackingSlip']==1){
 
-    echo "<TR><TD>Re-print packing slip:</TD><TD><SELECT name='ReprintPackingSlip'>";
+    echo "<TR>
+    	<TD>Re-print packing slip:</TD>
+	<TD><SELECT name='ReprintPackingSlip'>";
     echo "<OPTION Value=0>Yes";
     echo "<OPTION SELECTED Value=1>No";
     echo "</SELECT>	Last printed: " . ConvertSQLDate($_SESSION['DatePackingSlipPrinted']) . "</TD></TR>";

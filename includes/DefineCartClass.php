@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /* Definition of the cart class
 this class can hold all the information for:
 
@@ -38,6 +38,7 @@ Class Cart {
 	var $TransID;
 	var $ShipVia;
 	var $FreightCost;
+	Var $OrderNo;
 
 	function Cart(){
 	/*Constructor function initialises a new shopping cart */
@@ -47,7 +48,22 @@ Class Cart {
 		$this->DefaltSalesType="";
 	}
 
-	function add_to_cart($StockID, $Qty, $Descr, $Price, $Disc, $UOM, $Volume, $Weight,$QOHatLoc=0, $MBflag='B', $ActDispatchDate=NULL, $QtyInvoiced=0, $DiscCat=''){
+	function add_to_cart($StockID,
+				$Qty,
+				$Descr,
+				$Price,
+				$Disc,
+				$UOM,
+				$Volume,
+				$Weight,
+				$QOHatLoc=0,
+				$MBflag='B',
+				$ActDispatchDate=NULL,
+				$QtyInvoiced=0,
+				$DiscCat='',
+				$Controlled=0,
+				$Serialised=0,
+				$DecimalPlaces=0){
 
 		if (isset($StockID) AND $StockID!="" AND $Qty>0 AND isset($Qty)){
 
@@ -55,7 +71,22 @@ Class Cart {
 				$Price=0;
 			}
 
-			$this->LineItems[$StockID] = new LineDetails($StockID, $Descr, $Qty, $Price, $Disc, $UOM, $Volume, $Weight, $QOHatLoc, $MBflag, $ActDispatchDate, $QtyInvoiced, $DiscCat);
+			$this->LineItems[$StockID] = new LineDetails($StockID,
+									$Descr,
+									$Qty,
+									$Price,
+									$Disc,
+									$UOM,
+									$Volume,
+									$Weight,
+									$QOHatLoc,
+									$MBflag,
+									$ActDispatchDate,
+									$QtyInvoiced,
+									$DiscCat,
+									$Controlled,
+									$Serialised,
+									$DecimalPlaces);
 			$this->ItemsOrdered++;
 
 			if ($_SESSION['ExistingOrder']!=0 AND !isset($_GET['ModifyOrderNumber'])){
@@ -66,8 +97,6 @@ Class Cart {
 				 GET['ModifyOrderNumber'] is only set when the items are first
 				being retrieved from the DB - dont want to add them again - would return
 				errors anyway */
-
-				echo "<BR>ExistingOrder = " . $_SESSION['ExistingOrder'] . " and ModifyOrderNumber = " . $_GET['ModifyOrderNumber'];
 
 				global $db;
 				$result = DB_query("INSERT INTO SalesOrderDetails (OrderNo, StkCode, Quantity, UnitPrice, DiscountPercent) VALUES(" . $_SESSION['ExistingOrder'] . ", '" . $StockID ."'," . $Qty . ", " . $Price . ", " . $Disc . ")" , $db , "<BR>The order line for " . $StockID . " could not be inserted");
@@ -156,8 +185,27 @@ Class LineDetails {
 	Var $MBflag;
 	Var $DiscCat; /* Discount Category of the item if any */
 	Var $TaxRate;
-	
-	function LineDetails ($StockItem, $Descr, $Qty, $Prc, $DiscPercent, $UOM, $Volume, $Weight, $QOHatLoc, $MBflag, $ActDispatchDate, $QtyInvoiced, $DiscCat){
+	Var $Controlled;
+	Var $Serialised;
+	Var $DecimalPlaces;
+	Var $SerialItems;
+
+	function LineDetails ($StockItem,
+				$Descr,
+				$Qty,
+				$Prc,
+				$DiscPercent,
+				$UOM,
+				$Volume,
+				$Weight,
+				$QOHatLoc,
+				$MBflag,
+				$ActDispatchDate,
+				$QtyInvoiced,
+				$DiscCat,
+				$Controlled,
+				$Serialised,
+				$DecimalPlaces){
 
 /* Constructor function to add a new LineDetail object with passed params */
 
@@ -171,11 +219,18 @@ Class LineDetails {
 		$this->Weight = $Weight;
 		$this->ActDispDate = $ActDispatchDate;
 		$this->QtyInv = $QtyInvoiced;
-		$this->QtyDispatched = $Qty - $QtyInvoiced;
+		if ($Controlled==1){
+			$this->QtyDispatched =0;
+		} else {
+			$this->QtyDispatched = $Qty - $QtyInvoiced;
+		}
 		$this->QOHatLoc = $QOHatLoc;
 		$this->MBflag = $MBflag;
 		$this->DiscCat = $DiscCat;
-
+		$this->Controlled = $Controlled;
+		$this->Serialised = $Serialised;
+		$this->DecimalPlaces = $DecimalPlaces;
+		$this->SerialItems = array();
 	}
 }
 

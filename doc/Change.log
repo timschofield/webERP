@@ -3,7 +3,7 @@
 Upgrade script 2.8 - 2.9 is necessary to be applied against a 2.8 database.
 
 
-
+24/5/04 ConfirmDispatch_Invoice.php ConfirmDispatchControlled_Invoice.php DefineSerialItems.php mods for controlled batch numbers and serial number input.
 21/5/04 GoodsReceived.php and GoodsReceivedControlled.php now allows for receiving controlled and controlled/serialised items.
 17/5/04 StockMoves remove field BundleID
 17/5/04 StockCheck.php now only prints stock sheets for items committed to the stockcheckfreeze table. Behaviour of this script was counter intuitive. Deletion of existing entries deleted all locations stock of the same range of categories - now corrected.
