@@ -540,6 +540,8 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Selection of Order Line Items</LI>
                 <LI>Delivery Details</LI>
                 <LI>Modfiying An Order</LI>
+		<LI>Quotations</LI>
+		<LI>Recurring Orders</LI>
               </UL>
               <BR>
             </LI>
