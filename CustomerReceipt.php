@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 include('includes/DefineReceiptClass.php');
 
 $PageSecurity = 3;
@@ -98,7 +98,7 @@ if (isset($_POST['CommitBatch'])){
 			$SQL= $SQL . "VALUES (" . $PaymentTransNo . ",
 						1,
 						" . $ReceiptItem->GLCode . ",
-						" . _('Act Transfer') .' - ' . $ReceiptItem->Narrative . "',
+						'" . _('Act Transfer') .' - ' . $ReceiptItem->Narrative . "',
 						" . $_SESSION['ReceiptBatch']->ExRate . " ,
 						'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
 						'" . $_SESSION['ReceiptBatch']->ReceiptType . "',
