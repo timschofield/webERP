@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 1;
 $FromCriteria ='1'; /*Category From */
 $ToCriteria ='zzzzzzzz'; /*Category To */
@@ -58,7 +58,7 @@ if ($Location=='All'){
 $InventoryResult = DB_query($SQL,$db,'','',false,true);
 
 if (DB_error_no($db) !=0) {
-	$title = _('Inventory Valuation - Problem Report');
+	$title = _('Inventory Valuation') . ' - ' . _('Problem Report');
 	include("includes/header.inc");
 	echo _('The inventory valuation could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
 	echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';

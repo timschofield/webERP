@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 5;
 
@@ -13,7 +13,7 @@ include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 
-if ($_GET['NewPayment']=="Yes"){
+if ($_GET['NewPayment']=='Yes'){
 	unset($_SESSION['PaymentDetail']->GLItems);
 	unset($_SESSION['PaymentDetail']);
 }
@@ -39,7 +39,8 @@ if (isset($_GET['SupplierID'])){
 
 	$Result = DB_query($SQL, $db);
 	if (DB_num_rows($Result)==0){
-		echo '<P>' . _('The supplier code that this payment page was called with is not a currently defined supplier code. If this page is called from the SelectSupplier page then this assures that a valid supplier is selected') . '.';
+		prnMsg( _('The supplier code that this payment page was called with is not a currently defined supplier code') . '. ' . _('If this page is called from the SelectSupplier page then this assures that a valid supplier is selected'),'warn');
+		include('includes/footer.inc');
 		exit;
 	} else {
 		$myrow = DB_fetch_array($Result);
@@ -81,7 +82,7 @@ if ($_POST['Discount']!=""){
 $CompanyRecord = ReadInCompanyRecord($db);
 
 if ($CompanyRecord==0){
-	prnMsg( _('The company has not yet been set up properly - this information is needed to process the payment. Processing has been cancelled'),'error');
+	prnMsg( _('The company has not yet been set up properly') . ' - ' . _('this information is needed to process the payment') . '. ' . _('Processing has been cancelled'),'error');
 	include('includes/footer.inc');
 	exit;
 }
@@ -110,7 +111,8 @@ foreach ($_SESSION['PaymentDetail']->GLItems AS $PaymentItem) {
 }
 
 if ($TotalAmount==0 AND ($_SESSION["PaymentDetail"]->Discount + $_SESSION["PaymentDetail"]->Amount)/$_SESSION['PaymentDetail']->ExRate ==0){
-	echo '<FONT SIZE=4 COLOR=RED>' . _('This payment has no amounts entered and will not be processed');
+	prnMsg( _('This payment has no amounts entered and will not be processed'),'warn');
+	include('includes/footer.inc');
 	exit;
 }
 
@@ -197,7 +199,7 @@ if ($TotalAmount==0 AND ($_SESSION["PaymentDetail"]->Discount + $_SESSION["Payme
 							" . $PaymentItem->Amount . ",
 							'" . $_SESSION['PaymentDetail']->Currency . "'
 						)";
-   				$ErrMsg = '<B>' . _('Problem Report') . ':</B><BR>' . _('Cannot insert a bank transaction because');
+   				$ErrMsg = _('Cannot insert a bank transaction because');
 				$DbgMsg =  _('Cannot insert a bank transaction with the SQL');
 				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
@@ -231,7 +233,7 @@ if ($TotalAmount==0 AND ($_SESSION["PaymentDetail"]->Discount + $_SESSION["Payme
 					'" . $_SESSION['PaymentDetail']->Narrative . "'
 				)";
 
-		$ErrMsg = '<B>' . _('Problem Report') . ':</B><BR>' . _('Cannot insert a payment transaction against the supplier because');
+		$ErrMsg =  _('Cannot insert a payment transaction against the supplier because');
 		$DbgMsg = _('Cannot insert a payment transaction against the supplier using the SQL');
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
@@ -243,13 +245,13 @@ if ($TotalAmount==0 AND ($_SESSION["PaymentDetail"]->Discount + $_SESSION["Payme
 
 
 
-		$ErrMsg = '<B>' . _('Problem Report') . ':</B><BR>' . _('Cannot update the supplier record for the date of the last payment made because');
+		$ErrMsg = _('Cannot update the supplier record for the date of the last payment made because');
 		$DbgMsg = _('Cannot update the supplier record for the date of the last payment made using the SQL');
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 		$_SESSION['PaymentDetail']->Narrative = $_SESSION['PaymentDetail']->SupplierID . "-" . $_SESSION['PaymentDetail']->Narrative;
 
-		if ($CompanyRecord["GLLink_Creditors"]==1){ /* then do the supplier control GLTrans */
+		if ($CompanyRecord['GLLink_Creditors']==1){ /* then do the supplier control GLTrans */
 	/* Now debit creditors account with payment + discount */
 			$SQL="INSERT INTO GLTrans ( Type,
 							TypeNo,
@@ -263,11 +265,11 @@ if ($TotalAmount==0 AND ($_SESSION["PaymentDetail"]->Discount + $_SESSION["Payme
 						" . $TransNo . ",
 						'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
 						" . $PeriodNo . ",
-						" . $CompanyRecord["CreditorsAct"] . ",
+						" . $CompanyRecord['CreditorsAct'] . ",
 						'" . $_SESSION['PaymentDetail']->Narrative . "',
 						" . $CreditorTotal . "
 					)";
-			$ErrMsg = '<B>' . _('Problem Report') . ':</B><BR>' . _('Cannot insert a GL transaction for the creditors account debit because');
+			$ErrMsg = _('Cannot insert a GL transaction for the creditors account debit because');
 			$DbgMsg = _('Cannot insert a GL transaction for the creditors account debit using the SQL');
 			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
@@ -288,8 +290,8 @@ if ($TotalAmount==0 AND ($_SESSION["PaymentDetail"]->Discount + $_SESSION["Payme
 						'" . $_SESSION['PaymentDetail']->Narrative . "',
 						" . (-$_SESSION['PaymentDetail']->Discount/$_SESSION['PaymentDetail']->ExRate) . "
 					)";
-				$ErrMsg = '<B>' . _('Problem Report') . ':</B><BR>' . _('Cannot insert a GL transaction for the payment discount credit because');
-				$DbgMsg =  _('Cannot insert a GL transaction for the payment discount credit using the SQL');
+				$ErrMsg = _('Cannot insert a GL transaction for the payment discount credit because');
+				$DbgMsg = _('Cannot insert a GL transaction for the payment discount credit using the SQL');
 				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 			}
 		}
@@ -315,8 +317,8 @@ if ($TotalAmount==0 AND ($_SESSION["PaymentDetail"]->Discount + $_SESSION["Payme
 						" . (-$_SESSION['PaymentDetail']->Amount/$_SESSION['PaymentDetail']->ExRate) . "
 					)";
 
-			$ErrMsg = '<B>' . _('Problem Report') . ':</B><BR>' . _('Cannot insert a GL transaction for the bank account credit because');
-			$DbgMsg = '<B>' . _('Problem Report') . ':</B><BR>' . _('Cannot insert a GL transaction for the bank account credit using the SQL');
+			$ErrMsg =  _('Cannot insert a GL transaction for the bank account credit because');
+			$DbgMsg =  _('Cannot insert a GL transaction for the bank account credit using the SQL');
 			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 		}
@@ -344,16 +346,16 @@ if ($TotalAmount==0 AND ($_SESSION["PaymentDetail"]->Discount + $_SESSION["Payme
 				'" . $_SESSION['PaymentDetail']->Currency . "'
 			)";
 
-	$ErrMsg = '<B>' . _('Problem Report') . ':</B><BR>' . _('Cannot insert a bank transaction because');
+	$ErrMsg = _('Cannot insert a bank transaction because');
 	$DbgMsg = _('Cannot insert a bank transaction using the SQL');
 	$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
    	$SQL = "Commit";
-   	$ErrMsg = '<B>' . _('Problem Report') . ':</B><BR>' . _('Cannot commit the changes because');
+   	$ErrMsg = _('Cannot commit the changes because');
 	$DbgMsg = _('The commit of the database transaction failed');
 	$result= DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
-	echo '<P>' . _('Payment') . ' ' . $TransNo . ' ' . _('has been sucessfully entered') . '.';
+	prnMsg(_('Payment') . ' ' . $TransNo . ' ' . _('has been sucessfully entered'),'success');
 
 	$lastSupplier = ($_SESSION['PaymentDetail']->SupplierID);
 
@@ -390,7 +392,7 @@ if ($TotalAmount==0 AND ($_SESSION["PaymentDetail"]->Discount + $_SESSION["Payme
 	$Result=DB_query($SQL,$db);
 
 	if (DB_num_rows($Result)==0){
-		prnMsg( _('The manual GL code entered does not exist in the database - so this GL analysis item could not be added'),'warn');
+		prnMsg( _('The manual GL code entered does not exist in the database') . ' - ' . _('so this GL analysis item could not be added'),'warn');
 		unset($_POST['GLManualCode']);
 	} else {
 		$myrow = DB_fetch_array($Result);
@@ -429,15 +431,15 @@ if ($_POST['DatePaid']=="" OR !Is_Date($_SESSION['PaymentDetail']->DatePaid)){
 if ($_SESSION['PaymentDetail']->Currency=="" AND $_SESSION['PaymentDetail']->SupplierID==""){
 /* find out what the functional currency of the company is */
 
-	$SQL = "SELECT CurrencyDefault FROM Companies WHERE CoyCode=1";
+	$SQL = 'SELECT CurrencyDefault FROM Companies WHERE CoyCode=1';
 	$result=DB_query($SQL,$db);
 	$myrow=DB_fetch_row($result);
-	$_SESSION["PaymentDetail"]->Currency=$myrow[0];
+	$_SESSION['PaymentDetail']->Currency=$myrow[0];
 	unset($result);
 }
 
 
-if (isset($_POST['BankAccount']) AND $_POST['BankAccount']!="") {
+if (isset($_POST['BankAccount']) AND $_POST['BankAccount']!='') {
 	$SQL = "SELECT BankAccountName
 			FROM BankAccounts,
 				ChartMaster
@@ -489,7 +491,9 @@ $AccountsResults = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 echo '<TR><TD>' . _('Bank Account') . ':</TD><TD><SELECT name="BankAccount">';
 
 if (DB_num_rows($AccountsResults)==0){
-	echo '</SELECT></TD></TR></TABLE><P>' . _('Bank Accounts have not yet been defined. You must first') . ' <A HREF="' . $rootpath . '/BankAccounts.php">' . _('define the bank accounts') . '</A> ' . _('and general ledger accounts to be affected') . '.';
+	echo '</SELECT></TD></TR></TABLE><P>';
+	prnMsg( _('Bank Accounts have not yet been defined. You must first') . ' <A HREF="' . $rootpath . '/BankAccounts.php">' . _('define the bank accounts') . '</A> ' . _('and general ledger accounts to be affected'),'warn');
+	include('includes/footer.inc');
 	exit;
 } else {
 	while ($myrow=DB_fetch_array($AccountsResults)){
@@ -515,7 +519,8 @@ if ($_SESSION['PaymentDetail']->SupplierID==""){
 	$result=DB_query($SQL,$db);
 
 	if (DB_num_rows($result)==0){
-	echo '</SELECT>' . _('No currencies are defined yet. Payments cannot be entered until a currency is defined') . '.</TD></TR>';
+		echo '</SELECT></TD></TR>';
+		prnMsg( _('No currencies are defined yet') . '. ' . _('Payments cannot be entered until a currency is defined'),'error');
 	} else {
 		while ($myrow=DB_fetch_array($result)){
 		if ($_SESSION['PaymentDetail']->Currency==$myrow["CurrAbrev"]){
@@ -561,7 +566,7 @@ if ($_POST['PaymentType']==$PaytType){
 echo '</SELECT></TD></TR>';
 
 
-echo '<TR><TD>' . _('Ref (eg. Cheque No)') . ':</TD><TD><INPUT TYPE="text" name="Narrative" maxlength=50 size=52 value="' . $_POST['Narrative'] . '"></TD></TR>';
+echo '<TR><TD>' . _('Ref') . ':</TD><TD><INPUT TYPE="text" name="Narrative" maxlength=50 size=52 value="' . $_POST['Narrative'] . '"></TD></TR>';
 echo '</TABLE>';
 
 
@@ -599,7 +604,8 @@ if ($CompanyRecord["GLLink_Creditors"]==1 AND $_SESSION['PaymentDetail']->Suppli
 	$SQL = "SELECT AccountCode, AccountName FROM ChartMaster ORDER BY AccountCode";
 	$result=DB_query($SQL,$db);
 	if (DB_num_rows($result)==0){
-	   echo '</SELECT>' . prnMsg(_('No General ledger accounts have been set up yet - payments cannot be analysed against GL accounts until the GL accounts are set up'),'error') . '.</TD></TR>';
+	   echo '</SELECT></TD></TR>';
+	   prnMsg(_('No General ledger accounts have been set up yet') . ' - ' . _('payments cannot be analysed against GL accounts until the GL accounts are set up'),'error');
 	} else {
 		while ($myrow=DB_fetch_array($result)){
 		    if ($_POST['GLCode']==$myrow["AccountCode"]){

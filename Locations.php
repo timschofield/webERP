@@ -1,13 +1,13 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 11;
 
-include("includes/session.inc");
+include('includes/session.inc');
 
 $title = _('Location Maintenance');
 
-include("includes/header.inc");
+include('includes/header.inc');
 
 if (isset($_GET['SelectedLocation'])){
 	$SelectedLocation = $_GET['SelectedLocation'];
@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-		echo _('The location record has been updated.');
+		prnMsg( _('The location record has been updated'),'success');
 		unset($_POST['LocCode']);
 		unset($_POST['LocationName']);
 		unset($_POST['DelAdd1']);
@@ -91,7 +91,7 @@ if (isset($_POST['submit'])) {
 		$Dbgmsg =  _('The SQL used to insert the location record was');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-		echo _('The new location record has been added');
+		prnMsg( _('The new location record has been added'),'success');
 
 	/* Also need to add LocStock records for all existing stock items */
 
@@ -110,7 +110,7 @@ if (isset($_POST['submit'])) {
 		$DbgMsg =  _('The SQL used to insert the new stock location records was');
 		$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
 
-		echo '<BR>........ ' . _('and new stock locations inserted for all existing stock items for the new location.');
+		echo '<BR>........ ' . _('and new stock locations inserted for all existing stock items for the new location');
 		unset($_POST['LocCode']);
 		unset($_POST['LocationName']);
 		unset($_POST['DelAdd1']);
@@ -125,25 +125,25 @@ if (isset($_POST['submit'])) {
 
 	/* Go through the tax authorities for all Locations deleting or adding TaxAuthLevel records as necessary */
 
-	$result = DB_query("SELECT COUNT(TaxID) FROM TaxAuthorities",$db);
+	$result = DB_query('SELECT COUNT(TaxID) FROM TaxAuthorities',$db);
 	$NoTaxAuths =DB_fetch_row($result);
 
-	$result = DB_query("SELECT TaxAuthority FROM Locations GROUP BY TaxAuthority",$db);
-	$Levels = DB_query("SELECT DISTINCT TaxLevel FROM StockMaster",$db);
+	$result = DB_query('SELECT TaxAuthority FROM Locations GROUP BY TaxAuthority',$db);
+	$Levels = DB_query('SELECT DISTINCT TaxLevel FROM StockMaster',$db);
 
 	while ($DispTaxAuths=DB_fetch_row($result)){
 
 		/*Check to see there are TaxAuthLevel records set up for this DispathTaxAuthority */
-		$NoTaxAuthLevels = DB_query("SELECT TaxAuthority FROM TaxAuthLevels WHERE DispatchTaxAuthority=" . $DispTaxAuths[0], $db);
+		$NoTaxAuthLevels = DB_query('SELECT TaxAuthority FROM TaxAuthLevels WHERE DispatchTaxAuthority=' . $DispTaxAuths[0], $db);
 
 		if (DB_num_rows($NoTaxAuthLevels) < $NoTaxAuths[0]){
 
 			/*First off delete any tax authoritylevels already existing */
-			$DelTaxAuths = DB_query("DELETE FROM TaxAuthLevels WHERE DispatchTaxAuthority=" . $DispTaxAuths[0],$db);
+			$DelTaxAuths = DB_query('DELETE FROM TaxAuthLevels WHERE DispatchTaxAuthority=' . $DispTaxAuths[0],$db);
 
 			/*Now add the new taxAuthLevels required */
 			while ($LevelRow = DB_fetch_row($Levels)){
-				$sql = "INSERT INTO TaxAuthLevels (TaxAuthority, DispatchTaxAuthority, Level) SELECT TaxID," . $DispTaxAuths[0] . ", " . $LevelRow[0] . " FROM TaxAuthorities";
+				$sql = 'INSERT INTO TaxAuthLevels (TaxAuthority, DispatchTaxAuthority, Level) SELECT TaxID,' . $DispTaxAuths[0] . ', ' . $LevelRow[0] . ' FROM TaxAuthorities';
 
 				$InsTaxAuths = DB_query($sql,$db);
 			}
@@ -164,7 +164,7 @@ if (isset($_POST['submit'])) {
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		$CancelDelete = 1;
-		echo '<BR>' . _('Cannot delete this location because stock movements have been created using this location');
+		prnMsg( _('Cannot delete this location because stock movements have been created using this location'),'warm');
 		echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock movements with this Location code');
 
 	} else {
@@ -173,7 +173,7 @@ if (isset($_POST['submit'])) {
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			$CancelDelete = 1;
-			echo '<BR>' . _('Cannot delete this location because location stock records exist that use this location and have a quantity on hand not equal to 0.');
+			prnMsg(_('Cannot delete this location because location stock records exist that use this location and have a quantity on hand not equal to 0'),'warn');
 			echo '<BR> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock items with stock on hand at this location code');
 		} else {
 			$sql= "SELECT COUNT(*) FROM WWW_Users WHERE WWW_Users.DefaultLocation='$SelectedLocation'";
@@ -181,7 +181,7 @@ if (isset($_POST['submit'])) {
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]>0) {
 				$CancelDelete = 1;
-				echo '<BR>' . _('Cannot delete this location because it is the default location for a user. The user record must be modified first');
+				prnMsg(_('Cannot delete this location because it is the default location for a user') . '. ' . _('The user record must be modified first'),'warn');
 				echo '<BR> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('users using this location as their default location');
 			} else {
 				$sql= "SELECT COUNT(*) FROM WorksOrders WHERE WorksOrders.LocCode='$SelectedLocation'";
@@ -189,7 +189,7 @@ if (isset($_POST['submit'])) {
 				$myrow = DB_fetch_row($result);
 				if ($myrow[0]>0) {
 					$CancelDelete = 1;
-					echo '<BR>' . _('Cannot delete this location because it is used by some work orders records.');
+					prnMsg( _('Cannot delete this location because it is used by some work orders records'),'warn');
 					echo '<BR> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('works orders using this location');
 				} else {
 					$sql= "SELECT COUNT(*) FROM WorkCentres WHERE WorkCentres.Location='$SelectedLocation'";
@@ -197,7 +197,7 @@ if (isset($_POST['submit'])) {
 					$myrow = DB_fetch_row($result);
 					if ($myrow[0]>0) {
 						$CancelDelete = 1;
-						echo '<BR>' . _('Cannot delete this location because it is used by some work centre records.');
+						prnMsg( _('Cannot delete this location because it is used by some work centre records'),'warn');
 						echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('works centres using this location');
 					} else {
 						$sql= "SELECT COUNT(*) FROM CustBranch WHERE CustBranch.DefaultLocation='$SelectedLocation'";
@@ -205,7 +205,7 @@ if (isset($_POST['submit'])) {
 						$myrow = DB_fetch_row($result);
 						if ($myrow[0]>0) {
 							$CancelDelete = 1;
-							echo '<BR>' . _('Cannot delete this location because it is used by some branch records as the default location to deliver from.');
+							prnMsg(_('Cannot delete this location because it is used by some branch records as the default location to deliver from'),'warn');
 							echo '<BR> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches set up to use this location by default');
 						}
 					}
@@ -223,13 +223,13 @@ if (isset($_POST['submit'])) {
 		$TaxAuthCount = DB_fetch_row($result);
 		if ($TaxAuthCount[0]==1){
 		/* if its the only location in this tax authority then delete the appropriate records in TaxAuthLevels */
-			$result = DB_query("DELETE FROM TaxAuthLevels WHERE DispatchTaxAuthority=" . $TaxAuthRow[0],$db);
+			$result = DB_query('DELETE FROM TaxAuthLevels WHERE DispatchTaxAuthority=' . $TaxAuthRow[0],$db);
 		}
 
 		$result = DB_query("DELETE FROM Locations WHERE LocCode='" . $SelectedLocation . "'",$db);
 		$result= DB_query("DELETE FROM LocStock WHERE LocCode ='" . $SelectedLocation . "'",$db);
 
-		echo '<BR><FONT COLOR=RED><B>' . _('Location') . ' ' . $SelectedLocation . ' ' . _('has been Deleted') . '!' . '</B></FONT><p>';
+		prnMsg( _('Location') . ' ' . $SelectedLocation . ' ' . _('has been deleted') . '!', 'success');
 		unset ($SelectedLocation);
 	} //end if Delete Location
 }
@@ -247,7 +247,7 @@ or deletion of the records*/
 		FROM Locations INNER JOIN TaxAuthorities ON Locations.TaxAuthority=TaxAuthorities.TaxID";
 	$result = DB_query($sql,$db);
 
-	echo "<CENTER><table border=1>\n";
+	echo '<CENTER><table border=1>';
 	echo '<tr><td class="tableheader">' . _('Location Code') . '</td>
 			<td class="tableheader">' . _('Location Name') . '</td>
 			<td class="tableheader">' . _('Tax Authority') . '</td>
@@ -301,7 +301,7 @@ if ($SelectedLocation) {  ?>
 
 if (!isset($_GET['delete'])) {
 
-	echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . "?" . SID . "'>";
+	echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 
 	if ($SelectedLocation) {
 		//editing an existing Location
@@ -322,19 +322,19 @@ if (!isset($_GET['delete'])) {
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
 
-		$_POST['LocCode'] = $myrow["LocCode"];
-		$_POST['LocationName']  = $myrow["LocationName"];
-		$_POST['DelAdd1'] = $myrow["DelAdd1"];
-		$_POST['DelAdd2'] = $myrow["DelAdd2"];
-		$_POST['DelAdd3'] = $myrow["DelAdd3"];
-		$_POST['Contact'] = $myrow["Contact"];
-		$_POST['Tel'] = $myrow["Tel"];
-		$_POST['Fax'] = $myrow["Fax"];
-		$_POST['Email'] = $myrow["Email"];
-		$_POST['TaxAuthority'] = $myrow["TaxAuthority"];
+		$_POST['LocCode'] = $myrow['LocCode'];
+		$_POST['LocationName']  = $myrow['LocationName'];
+		$_POST['DelAdd1'] = $myrow['DelAdd1'];
+		$_POST['DelAdd2'] = $myrow['DelAdd2'];
+		$_POST['DelAdd3'] = $myrow['DelAdd3'];
+		$_POST['Contact'] = $myrow['Contact'];
+		$_POST['Tel'] = $myrow['Tel'];
+		$_POST['Fax'] = $myrow['Fax'];
+		$_POST['Email'] = $myrow['Email'];
+		$_POST['TaxAuthority'] = $myrow['TaxAuthority'];
 
-		echo "<INPUT TYPE=HIDDEN NAME=SelectedLocation VALUE=" . $SelectedLocation . ">";
-		echo "<INPUT TYPE=HIDDEN NAME=LocCode VALUE=" . $_POST['LocCode'] . ">";
+		echo "<INPUT TYPE=HIDDEN NAME=SelectedLocation VALUE=" . $SelectedLocation . '>';
+		echo "<INPUT TYPE=HIDDEN NAME=LocCode VALUE=" . $_POST['LocCode'] . '>';
 		echo '<CENTER><TABLE> <TR><TD>' . _('Location Code') . ':</TD><TD>';
 		echo $_POST['LocCode'] . '</TD></TR>';
 	} else { //end of if $SelectedLocation only do the else when a new record is being entered
@@ -362,12 +362,12 @@ if (!isset($_GET['delete'])) {
 	<TD><?php echo _('Tax Authority') . ':'; ?></TD><TD><SELECT NAME='TaxAuthority'>
 
 	<?php
-	$TaxAuthResult = DB_query("SELECT TaxID,Description FROM TaxAuthorities",$db);
+	$TaxAuthResult = DB_query('SELECT TaxID,Description FROM TaxAuthorities',$db);
 	while ($myrow=DB_fetch_array($TaxAuthResult)){
 		if ($_POST['TaxAuthority']==$myrow['TaxID']){
-			echo "<OPTION SELECTED VALUE=" . $myrow['TaxID'] . ">" . $myrow['Description'];
+			echo '<OPTION SELECTED VALUE=' . $myrow['TaxID'] . '>' . $myrow['Description'];
 		} else {
-			echo "<OPTION VALUE=" . $myrow['TaxID'] . ">" . $myrow['Description'];
+			echo '<OPTION VALUE=' . $myrow['TaxID'] . '>' . $myrow['Description'];
 		}
 	}
 
@@ -381,5 +381,5 @@ if (!isset($_GET['delete'])) {
 
 <?php } //end if record deleted no point displaying form to add record
 
-include("includes/footer.inc");
+include('includes/footer.inc');
 ?>

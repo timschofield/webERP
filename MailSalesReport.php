@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*Now this is not secure so a malicious user could send multiple emails of the report to the intended receipients
 
 The intention is that this script is called from cron at intervals defined with a command like:
@@ -13,7 +13,7 @@ and an array of the receipients */
 $_GET['ReportID'] = 2;
 
 /*The people to receive the emailed report */
-$Recipients = array('"Root" <root@localhost>','"' . _('some one else') . '" <someoneelese@sowhere.com>');
+$Recipients = array('"Root" <root@localhost>','"' . _('someone else') . '" <someoneelese@sowhere.com>');
 
 include("config.php");
 include("includes/ConnectDB.inc");

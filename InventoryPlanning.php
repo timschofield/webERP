@@ -3,8 +3,11 @@
 $PageSecurity = 2;
 
 
-If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POST['FromCriteria'])>=1 AND isset($_POST['ToCriteria']) AND
-strlen($_POST['ToCriteria'])>=1){
+If (isset($_POST['PrintPDF'])
+	AND isset($_POST['FromCriteria'])
+	AND strlen($_POST['FromCriteria'])>=1
+	AND isset($_POST['ToCriteria'])
+	AND strlen($_POST['ToCriteria'])>=1){
 
 	include('config.php');
 	include('includes/ConnectDB.inc');
@@ -84,10 +87,10 @@ strlen($_POST['ToCriteria'])>=1){
 	$InventoryResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
-	  $title = _('Inventory Planning - Problem Report') . '....';
+	  $title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  include('includes/header.inc');
-	   echo '<BR>' . _('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
-	   echo "<BR><A HREF='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the Menu') . '</A>';
+	   prnMsg(_('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
+	   echo "<BR><A HREF='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</A>';
 	   if ($debug==1){
 	      echo "<BR>$SQL";
 	   }
@@ -154,9 +157,9 @@ strlen($_POST['ToCriteria'])>=1){
 		$SalesResult=DB_query($SQL,$db,'','',FALSE,FALSE);
 
 		if (DB_error_no($db) !=0) {
-	 		 $title = _('Inventory Planning - Problem Report') . '....';
+	 		 $title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
-	   		echo '<BR>' . _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
+	   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
 	   		echo "<BR><A HREF='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the menu') . '</A>';
 	   		if ($debug==1){
 	      			echo "<BR>$SQL";
@@ -187,10 +190,10 @@ strlen($_POST['ToCriteria'])>=1){
 		$DemandResult = DB_query($SQL,$db,'','',FALSE,FALSE);
 
 		if (DB_error_no($db) !=0) {
-	 		 $title = _('Inventory Planning - Problem Report') . '....';
+	 		 $title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
-	   		echo '<BR>' . _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
-	   		echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the Menu') . '</A>';
+	   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
+	   		echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
 	   		if ($debug==1){
 	      			echo "<BR>$SQL";
 	   		}
@@ -230,10 +233,10 @@ strlen($_POST['ToCriteria'])>=1){
 		$BOMDemandResult = DB_query($SQL,$db,'','',false,false);
 
 		if (DB_error_no($db) !=0) {
-	 		$title = _('Inventory Planning - Problem Report') . '....';
+	 		$title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
-	   		echo '<BR>' . _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
-	   		echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the Menu') . '</A>';
+	   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
+	   		echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
 	   		if ($debug==1){
 	      			echo "<BR>$SQL";
 	   		}
@@ -264,10 +267,10 @@ strlen($_POST['ToCriteria'])>=1){
 
 		$OnOrdResult = DB_query($SQL,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
-	 		 $title = _('Inventory Planning - Problem Report') . '....';
+	 		 $title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
 	  		include('includes/header.inc');
-	   		echo '<BR>' . _('The purchase order quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
-	   		echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the Menu') . '</A>';
+	   		prnMsg( _('The purchase order quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
+	   		echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
 	   		if ($debug==1){
 	      			echo "<BR>$SQL";
 	   		}
@@ -321,8 +324,8 @@ strlen($_POST['ToCriteria'])>=1){
 	if ($len<=20){
 		$title = _('Print Inventory Planning Report Empty');
 		include('includes/header.inc');
-		echo '<p>' . _('There were no items in the range and location specified');
-		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the Menu') . '</A>';
+		prnMsg( _('There were no items in the range and location specified'),'error');
+		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
 		include('includes/footer.inc');
 		exit;
 	} else {

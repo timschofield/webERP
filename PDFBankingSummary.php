@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 3;
 
 if (isset($_GET['BatchNo'])){
@@ -37,13 +37,13 @@ $SQL= 'SELECT BankAccountName,
 	AND BankTrans.Type=12';
 
 $ErrMsg = _('An error occurred getting the header information about the receipt batch number') . ' ' . $_POST['BatchNo'];
-$DbgMsg = _('The SQL used to get the receipt header information (that failed) was');
+$DbgMsg = _('The SQL used to get the receipt header information that failed was');
 $Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
 if (DB_num_rows($Result)==0){
 	$title = _('Create PDF Print-out For A Batch Of Receipts');
 	include ('includes/header.inc');
-	prnMsg(_('The receipt batch number') . ' ' . $_POST['BatchNo'] . ' ' . _('was not found in the database. Please try again selecting a different batch number.'),'error');
+	prnMsg(_('The receipt batch number') . ' ' . $_POST['BatchNo'] . ' ' . _('was not found in the database') . '. ' . _('Please try again selecting a different batch number'),'error');
 	include('includes/footer.inc');
 	exit;
 }
@@ -75,7 +75,7 @@ if (DB_error_no($db)!=0){
 	include ('includes/header.inc');
    	prnMsg(_('An error occurred getting the customer receipts for batch number') . ' ' . $_POST['BatchNo'],'error');
 	if ($debug==1){
-        	prnMsg(_('The SQL used to get the customer receipt information (that failed) was:') . '<BR>' . $SQL,'error');
+        	prnMsg(_('The SQL used to get the customer receipt information that failed was') . '<BR>' . $SQL,'error');
   	}
 	include('includes/footer.inc');
   	exit;
@@ -94,7 +94,7 @@ if (DB_error_no($db)!=0){
 	include ('includes/header.inc');
 	prnMsg(_('An error occurred getting the GL receipts for batch number') . ' ' . $_POST['BatchNo'],'error');
 	if ($debug==1){
-        	prnMsg(_('The SQL used to get the GL receipt information (that failed) was') . ':<BR>' . $SQL,'error');
+        	prnMsg(_('The SQL used to get the GL receipt information that failed was') . ':<BR>' . $SQL,'error');
 	}
 	include('includes/footer.inc');
   	exit;

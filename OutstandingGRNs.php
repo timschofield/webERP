@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 2;
 
 If (isset($_POST['PrintPDF'])
@@ -46,9 +46,9 @@ If (isset($_POST['PrintPDF'])
 	$GRNsResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
-	  $title = _('Outstanding GRN Valuation - Problem Report');
+	  $title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');
 	  include('includes/header.inc');
-	  echo '<BR>' . _('The outstanding GRNs valuation details could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
+	  prnMsg(_('The outstanding GRNs valuation details could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
 	   echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
 	   if ($debug==1){
 	      echo "<BR>$SQL";
@@ -135,7 +135,7 @@ If (isset($_POST['PrintPDF'])
       if ($len<=20){
 		$title = _('Outstanding GRNs Valuation Error');
 		include('includes/header.inc');
-		echo '<p>' . _('There were no GRNs with any value to print out for the specified supplier range');
+		prnMsg(_('There were no GRNs with any value to print out for the specified supplier range'),'info');
 		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
 		include('includes/footer.inc');
 		exit;
@@ -152,7 +152,7 @@ If (isset($_POST['PrintPDF'])
 } else { /*The option to print PDF was not hit */
 
 	include('includes/session.inc');
-	$title=_('Outstanding GRNs Reports');
+	$title=_('Outstanding GRNs Report');
 	include('includes/header.inc');
 	include('includes/SQL_CommonFunctions.inc');
 	$CompanyRecord = ReadInCompanyRecord($db);

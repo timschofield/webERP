@@ -1,26 +1,31 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 3;
 include('includes/SQL_CommonFunctions.inc');
 include('includes/DateFunctions.inc');
 include('config.php');
 
 $InputError=0;
-
-if (!Is_Date($_POST['FromDate'])){
-	$msg = _('The date entered was in an unrecognised format it must be specified in the format') . ' ' . $DefaultDateFormat;
+if (isset($_POST['FromDate']) AND !Is_Date($_POST['FromDate'])){
+	$msg = _('The date from must be specified in the format') . ' ' . $DefaultDateFormat;
 	$InputError=1;
+	unset($_POST['FromDate']);
 }
-if (!Is_Date($_POST['ToDate'])){
+if (!Is_Date($_POST['ToDate']) AND isset($_POST['ToDate'])){
 	$msg = _('The date to must be specified in the format') . ' ' . $DefaultDateFormat;
 	$InputError=1;
+	unset($_POST['ToDate']);
 }
 
-if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
+if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 
      include ('includes/session.inc');
      $title = _('Payment Listing');
      include ('includes/header.inc');
+
+     if ($InputError==1){
+	prnMsg($msg,'error');
+     }
 
      echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '>';
      echo '<CENTER><TABLE>
@@ -51,12 +56,11 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
      echo "<OPTION VALUE='Yes'>" . _('Yes');
      echo "</SELECT></TD></TR></TABLE><INPUT TYPE=SUBMIT NAME='Go' VALUE='" . _('Create PDF') . "'></CENTER>";
 
-     if ($InputError==1){
-     	echo $msg;
-     }
+
      include('includes/footer.inc');
      exit;
 } else {
+
 	include('includes/ConnectDB.inc');
 }
 
@@ -87,7 +91,7 @@ if (DB_error_no($db)!=0){
 	include('includes/header.inc');
 	prnMsg(_('An error occurred getting the payments'),'error');
 	if ($Debug==1){
-        	prnMsg(_('The SQL used to get the receipt header information (that failed) was') . ':<BR>' . $SQL,'error');
+        	prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<BR>' . $SQL,'error');
 	}
 	include('includes/footer.inc');
   	exit;
@@ -135,7 +139,7 @@ while ($myrow=DB_fetch_array($Result)){
 		include('includes/header.inc');
    		prnMsg(_('An error occurred getting the GL transactions'),'error');
 		if ($debug==1){
-        		prnMsg( _('The SQL used to get the receipt header information (that failed) was') . ':<BR>' . $sql, 'error');
+        		prnMsg( _('The SQL used to get the receipt header information that failed was') . ':<BR>' . $sql, 'error');
 		}
 		include('includes/footer.inc');
   		exit;

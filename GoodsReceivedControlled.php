@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
 
@@ -14,7 +14,7 @@ if (!isset($_SESSION['PO'])) {
 	/* This page can only be called with a purchase order number for receiving*/
 	echo '<CENTER><A HREF="' . $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . '">'.
 		_('Select a purchase order to receive'). '</A></CENTER><br>';
-	prnMsg('<BR>'. _('This page can only be opened if a purchase order and line item has been selected. Please do that first').'.<BR>','error');
+	prnMsg( _('This page can only be opened if a purchase order and line item has been selected') . '. ' . _('Please do that first'),'error');
 	include('includes/footer.inc');
 	exit;
 }
@@ -26,8 +26,7 @@ if ($_GET['LineNo']>0){
 } else {
 	echo '<CENTER><A HREF="' . $rootpath . '/GoodsReceived.php?' . SID . '">'.
 		_('Select a line Item to Receive').'</A></CENTER>';
-	prnMsg('<BR>'. _('This page can only be opened if a Line Item on a PO has been selected. Please do that first').
-		'.<BR>', 'error');
+	prnMsg( _('This page can only be opened if a Line Item on a PO has been selected') . '. ' . _('Please do that first'), 'error');
 	include( 'includes/footer.inc');
 	exit;
 }
@@ -39,7 +38,7 @@ if ($LineItem->Controlled !=1 ){ /*This page only relavent for controlled items 
 
 	echo '<CENTER><A HREF="' . $rootpath . '/GoodsReceived.php?' . SID . '">'.
 		_('Back to the Purchase Order'). '</A></CENTER>';
-	prnMsg('<BR>'. _('Notice - the line being recevied must be controlled as defined in the item defintion'), 'error');
+	prnMsg( _('The line being recevied must be controlled as defined in the item defintion'), 'error');
 	include('includes/footer.inc');
 	exit;
 }
@@ -50,10 +49,10 @@ if ($LineItem->Controlled !=1 ){ /*This page only relavent for controlled items 
 ********************************************/
 echo '<CENTER>';
 
-echo '<BR><A HREF="'.$rootpath.'/GoodsReceived.php?' . SID . '">'. _('Back To Purchase Order #'). ' '. $_SESSION['PO']->OrderNo . '</a>';
+echo '<BR><A HREF="'.$rootpath.'/GoodsReceived.php?' . SID . '">'. _('Back To Purchase Order'). ' # '. $_SESSION['PO']->OrderNo . '</a>';
 
 echo '<BR><FONT SIZE=2><B>'. _('Receive controlled item'). ' '. $LineItem->StockID  . ' - ' . $LineItem->ItemDescription .
-	' ' . _('on order ') . ' ' . $_SESSION['PO']->OrderNo . ' from ' . $_SESSION['PO']->SupplierName . '</B></FONT>';
+	' ' . _('on order') . ' ' . $_SESSION['PO']->OrderNo . ' ' . _('from') . ' ' . $_SESSION['PO']->SupplierName . '</B></FONT>';
 
 /** vars needed by InputSerialItem : **/
 $LocationOut = $_SESSION['Transfer']->StockLocationFrom;

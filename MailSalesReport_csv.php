@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*Now this is not secure so a malicious user could send multiple emails of the report to the intended receipients
 
 The intention is that this script is called from cron at intervals defined with a command like:
@@ -13,7 +13,7 @@ and an array of the receipients */
 $ReportID = 4;
 
 /*The people to receive the emailed report */
-$Recipients = array('"Root" <root@localhost>','"some one else" <someoneelese@sowhere.com>');
+$Recipients = array('"Root" <root@localhost>','"someone else" <someoneelese@sowhere.com>');
 
 /* ----------------------------------------------------------------------------------------------*/
 
@@ -36,7 +36,7 @@ $mail = new htmlMimeMail();
 $attachment = $mail->getFile( $reports_dir . "/SalesAnalysis.csv");
 $mail->setText(_('Please find herewith the comma seperated values sales report'));
 $mail->addAttachment($attachment, 'SalesAnalysis.csv', 'application/csv');
-$mail->setSubject(_('Sales Analysis - CSV Format'));
+$mail->setSubject(_('Sales Analysis') . ' - ' . _('CSV Format'));
 $mail->setFrom($CompanyName . "<" . $CompanyRecord['Email'] . ">");
 $result = $mail->send($Recipients);
 ?>

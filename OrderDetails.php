@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 2;
 
@@ -10,7 +10,9 @@ include('includes/session.inc');
 if (isset($_GET['OrderNumber'])) {
 	$title = _('Reviewing Sales Order Number') . ' ' . $_GET['OrderNumber'];
 } else {
-	die ('<BR><BR><BR>' . _('This page must be called with a sales order number to review') . '.<BR>' . _('i.e.') . ' http://????/OrderDetails.php?OrderNumber=<i>xyz</i><BR>' . _('Click on back') . '.');
+	echo '<BR><BR><BR>';
+	prnMsg(_('This page must be called with a sales order number to review') . '.<BR>' . _('i.e.') . ' http://????/OrderDetails.php?OrderNumber=<i>xyz</i><BR>' . _('Click on back') . '.','error');
+	exit;
 }
 
 include('includes/header.inc');
@@ -26,7 +28,7 @@ $_SESSION['Items'] = new cart;
 /*read in all the guff from the selected order into the Items cart  */
 
 
-$OrderHeaderSQL = "SELECT
+$OrderHeaderSQL = 'SELECT
 			SalesOrders.DebtorNo,
 			DebtorsMaster.Name,
 			SalesOrders.BranchCode,
@@ -51,7 +53,7 @@ $OrderHeaderSQL = "SELECT
 			DebtorsMaster
 		WHERE
 			SalesOrders.DebtorNo = DebtorsMaster.DebtorNo
-		AND SalesOrders.OrderNo = " . $_GET['OrderNumber'];
+		AND SalesOrders.OrderNo = ' . $_GET['OrderNumber'];
 
 $ErrMsg =  _('The order cannot be retrieved because');
 $DbgMsg = _('The SQL that failed to get the order header was');
@@ -61,27 +63,27 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 
 	$myrow = DB_fetch_array($GetOrdHdrResult);
 
-	$_SESSION['CustomerID'] = $myrow["DebtorNo"];
+	$_SESSION['CustomerID'] = $myrow['DebtorNo'];
 /*CustomerID defined in header.inc */
-	$_SESSION['Items']->Branch = $myrow["BranchCode"];
-	$_SESSION['Items']->CustomerName = $myrow["Name"];
-	$_SESSION['Items']->CustRef = $myrow["CustomerRef"];
-	$_SESSION['Items']->Comments = $myrow["Comments"];
+	$_SESSION['Items']->Branch = $myrow['BranchCode'];
+	$_SESSION['Items']->CustomerName = $myrow['Name'];
+	$_SESSION['Items']->CustRef = $myrow['CustomerRef'];
+	$_SESSION['Items']->Comments = $myrow['Comments'];
 
-	$_SESSION['Items']->DefaultSalesType =$myrow["OrderType"];
-	$_SESSION['Items']->DefaultCurrency = $myrow["CurrCode"];
-	$BestShipper = $myrow["ShipVia"];
-	$_SESSION['Items']->DeliverTo = $myrow["DeliverTo"];
-	$_SESSION['Items']->DeliveryDate = ConvertSQLDate($myrow["DeliveryDate"]);
-	$_SESSION['Items']->BrAdd1 = $myrow["DelAdd1"];
-	$_SESSION['Items']->BrAdd2 = $myrow["DelAdd2"];
-	$_SESSION['Items']->BrAdd3 = $myrow["DelAdd3"];
-	$_SESSION['Items']->BrAdd4 = $myrow["DelAdd4"];
-	$_SESSION['Items']->PhoneNo = $myrow["ContactPhone"];
-	$_SESSION['Items']->Email = $myrow["ContactEmail"];
-	$_SESSION['Items']->Location = $myrow["FromStkLoc"];
-	$FreightCost = $myrow["FreightCost"];
-	$_SESSION['Items']->Orig_OrderDate = $myrow["OrdDate"];
+	$_SESSION['Items']->DefaultSalesType =$myrow['OrderType'];
+	$_SESSION['Items']->DefaultCurrency = $myrow['CurrCode'];
+	$BestShipper = $myrow['ShipVia'];
+	$_SESSION['Items']->DeliverTo = $myrow['DeliverTo'];
+	$_SESSION['Items']->DeliveryDate = ConvertSQLDate($myrow['DeliveryDate']);
+	$_SESSION['Items']->BrAdd1 = $myrow['DelAdd1'];
+	$_SESSION['Items']->BrAdd2 = $myrow['DelAdd2'];
+	$_SESSION['Items']->BrAdd3 = $myrow['DelAdd3'];
+	$_SESSION['Items']->BrAdd4 = $myrow['DelAdd4'];
+	$_SESSION['Items']->PhoneNo = $myrow['ContactPhone'];
+	$_SESSION['Items']->Email = $myrow['ContactEmail'];
+	$_SESSION['Items']->Location = $myrow['FromStkLoc'];
+	$FreightCost = $myrow['FreightCost'];
+	$_SESSION['Items']->Orig_OrderDate = $myrow['OrdDate'];
 
 
 	/* SHOW ALL THE ORDER INFO IN ONE PLACE */
@@ -128,7 +130,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 	</TR>';
 	echo '<TR>
 		<TD COLSPAN=2></TD>
-		<TD>' . _('E-mail') . ':</TD>
+		<TD>' . _('Email') . ':</TD>
 		<TD><FONT COLOR=BLUE><B><A HREF="mailto:' . $_SESSION['Items']->Email . '">' . $_SESSION['Items']->Email . '</A></FONT></B></TD>
 	</TR>';
 	echo '</TABLE>';
@@ -137,7 +139,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 
 /*Now get the line items */
 
-	$LineItemsSQL = "SELECT
+	$LineItemsSQL = 'SELECT
 				StkCode,
 				StockMaster.Description,
 				StockMaster.Volume,
@@ -154,7 +156,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 				ActualDispatchDate,
 				QtyInvoiced
 			FROM SalesOrderDetails, StockMaster
-			WHERE SalesOrderDetails.StkCode = StockMaster.StockID AND OrderNo =" . $_GET['OrderNumber'];
+			WHERE SalesOrderDetails.StkCode = StockMaster.StockID AND OrderNo =' . $_GET['OrderNumber'];
 
 	$ErrMsg =  _('The line items of the order cannot be retrieved because');
 	$DbgMsg =  _('The SQL used to retrieve the line items, that failed was');
@@ -164,18 +166,18 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 
 		while ($myrow=db_fetch_array($LineItemsResult)) {
 
-			$_SESSION['Items']->add_to_cart($myrow["StkCode"],
-							$myrow["Quantity"],
-							$myrow["Description"],
-							$myrow["UnitPrice"],
-							$myrow["DiscountPercent"],
-							$myrow["Units"],
-							$myrow["Volume"],
-							$myrow["KGS"],
+			$_SESSION['Items']->add_to_cart($myrow['StkCode'],
+							$myrow['Quantity'],
+							$myrow['Description'],
+							$myrow['UnitPrice'],
+							$myrow['DiscountPercent'],
+							$myrow['Units'],
+							$myrow['Volume'],
+							$myrow['KGS'],
 							0,
 							$myrow['MBflag'],
-							$myrow["ActualDispatchDate"],
-							$myrow["QtyInvoiced"],
+							$myrow['ActualDispatchDate'],
+							$myrow['QtyInvoiced'],
 							$myrow['DiscountCategory'],
 							$myrow['Controlled'],
 							$myrow['Serialised'],
@@ -211,7 +213,7 @@ foreach ($_SESSION['Items']->LineItems as $StockItem) {
 	$DisplayLineTotal = number_format($LineTotal,2);
 	$DisplayPrice = number_format($StockItem->Price,2);
 	$DisplayQuantity = number_format($StockItem->Quantity,2);
-	$DisplayDiscount = number_format(($StockItem->DiscountPercent * 100),2) . "%";
+	$DisplayDiscount = number_format(($StockItem->DiscountPercent * 100),2) . '%';
 	$DisplayQtyInvoiced = number_format($StockItem->QtyInv,2);
 	if ($StockItem->QtyInv>0){
 		  $DisplayActualDeliveryDate = ConvertSQLDate($StockItem->ActDispDate);

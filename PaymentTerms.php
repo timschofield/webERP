@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 10;
 
@@ -28,19 +28,19 @@ if (isset($_POST['submit'])) {
 
 	if (strlen($_POST['TermsIndicator']) > 2) {
 		$InputError = 1;
-		echo '<br />' . _('The payment terms name must be two characters or less long');
+		prnMsg(_('The payment terms name must be two characters or less long'),'error');
 	} elseif (!is_long((int) $_POST['DayNumber'])){
 		$InputError = 1;
-		echo '<br />' . _('The number of days or the day in the following month must be numeric') . '.';
+		prnMsg( _('The number of days or the day in the following month must be numeric') ,'error');
 	} elseif (strlen($_POST['Terms']) > 40) {
 		$InputError = 1;
-		echo '<br />' . _('The terms description must be forty characters or less long');
+		prnMsg( _('The terms description must be forty characters or less long') ,'error');
 	} elseif ($_POST['DayNumber'] > 30 AND $_POST['DaysOrFoll']==1) {
 		$InputError = 1;
-		echo '<br />' . _('When the check box is not checked to indicate a day in the following month is the due date, the due date cannot be a day after the 30th. A number between 1 and 30 is expected') . '.';
+		prnMsg( _('When the check box is not checked to indicate a day in the following month is the due date') . ', ' . _('the due date cannot be a day after the 30th') . '. ' . _('A number between 1 and 30 is expected') ,'error');
 	} elseif ($_POST['DayNumber']>100 AND $_POST['DaysOrFoll'] ==0) {
 		$InputError = 1;
-		echo _('When the check box is checked to indicate that the term expects a number of days after which accounts are due, the number entered should be less than 100 days') . '.';
+		prnMsg( _('When the check box is checked to indicate that the term expects a number of days after which accounts are due') . ', ' . _('the number entered should be less than 100 days') ,'error');
 	}
 
 
@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedTerms could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
-		if ($_POST['DaysOrFoll']=="on") {
+		if ($_POST['DaysOrFoll']=='on') {
 			$sql = "UPDATE PaymentTerms SET
 					Terms='" . $_POST['Terms'] . "',
 					DayInFollowingMonth=0,
@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
 
 	/*Selected terms is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new payment terms form */
 
-		if ($_POST['DaysOrFoll']=="on") {
+		if ($_POST['DaysOrFoll']=='on') {
 			$sql = "INSERT INTO PaymentTerms (TermsIndicator,
 								Terms,
 								DaysBeforeDue,
@@ -95,7 +95,7 @@ if (isset($_POST['submit'])) {
 	}
 	//run the SQL from either of the above possibilites
 	$result = DB_query($sql,$db);
-	echo '<BR>' . $msg;
+	prnMsg($msg,'success');
 	unset($SelectedTerms);
 
 } elseif (isset($_GET['delete'])) {
@@ -107,21 +107,21 @@ if (isset($_POST['submit'])) {
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0] > 0) {
-		echo _('Cannot delete this payment term, because customer accounts have been created referring to this term');
+		prnMsg( _('Cannot delete this payment term because customer accounts have been created referring to this term'),'warn');
 		echo '<br> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('customer accounts that refer to this payment term');
 	} else {
 		$sql= "SELECT COUNT(*) FROM Suppliers WHERE Suppliers.PaymentTerms = '$SelectedTerms'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0] > 0) {
-			echo _('Cannot delete this payment term, because supplier accounts have been created referring to this term');
+			prnMsg( _('Cannot delete this payment term because supplier accounts have been created referring to this term'),'warn');
 			echo '<br> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('supplier accounts that refer to this payment term');
 		} else {
 			//only delete if used in neither customer or supplier accounts
 
 			$sql="DELETE FROM PaymentTerms WHERE TermsIndicator='$SelectedTerms'";
 			$result = DB_query($sql,$db);
-			echo '<BR>' . _('The payment term definition record has been deleted') . '! <p>';
+			prnMsg( _('The payment term definition record has been deleted') . '!','success');
 		}
 	}
 	//end if payment terms used in customer or supplier accounts
@@ -135,15 +135,15 @@ then none of the above are true and the list of payment termss will be displayed
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT TermsIndicator, Terms, DaysBeforeDue, DayInFollowingMonth FROM PaymentTerms";
+	$sql = 'SELECT TermsIndicator, Terms, DaysBeforeDue, DayInFollowingMonth FROM PaymentTerms';
 	$result = DB_query($sql, $db);
 
-	echo "<CENTER><table border=1>";
-	echo '<tr><td class="tableheader">' . _('Terms Code') . '</td>
+	echo '<CENTER><table border=1>';
+	echo '<tr><td class="tableheader">' . _('Term Code') . '</td>
 		<td class="tableheader">' . _('Description') . '</td>
 		<td class="tableheader">' . _('Following Month On') . '</td>
-		<td class="tableheader">' . _('Due After (Days)') . "</td>
-		</tr>";
+		<td class="tableheader">' . _('Due After (Days)') . '</td>
+		</tr>';
 
 	while ($myrow=DB_fetch_row($result)) {
 
@@ -163,8 +163,8 @@ or deletion of the records*/
 	        <td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
-		<td><a href=\"%s?SelectedTerms=%s\">" . _('EDIT') . "</a></td>
-		<td><a href=\"%s?SelectedTerms=%s&delete=1\">" . _('DELETE') . "</a></td>
+		<td><a href=\"%s?SelectedTerms=%s\">" . _('Edit') . "</a></td>
+		<td><a href=\"%s?SelectedTerms=%s&delete=1\">" . _('Delete') . "</a></td>
 		</tr>",
 		$myrow[0],
 		$myrow[1],
@@ -200,10 +200,10 @@ if (!isset($_GET['delete'])) {
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
 
-		$_POST['TermsIndicator'] = $myrow["TermsIndicator"];
-		$_POST['Terms']  = $myrow["Terms"];
-		$DaysBeforeDue  = $myrow["DaysBeforeDue"];
-		$DayInFollowingMonth  = $myrow["DayInFollowingMonth"];
+		$_POST['TermsIndicator'] = $myrow['TermsIndicator'];
+		$_POST['Terms']  = $myrow['Terms'];
+		$DaysBeforeDue  = $myrow['DaysBeforeDue'];
+		$DayInFollowingMonth  = $myrow['DayInFollowingMonth'];
 
 		echo '<INPUT TYPE=HIDDEN NAME="SelectedTerms" VALUE="' . $SelectedTerms . '">';
 		echo '<INPUT TYPE=HIDDEN NAME="TermsIndicator" VALUE="' . $_POST['TermsIndicator'] . '">';
@@ -212,7 +212,7 @@ if (!isset($_GET['delete'])) {
 
 	} else { //end of if $SelectedTerms only do the else when a new record is being entered
 
-		if (!isset($_POST['TermsIndicator'])) $_POST['TermsIndicator']="";
+		if (!isset($_POST['TermsIndicator'])) $_POST['TermsIndicator']='';
 		if (!isset($DaysBeforeDue)) $DaysBeforeDue=0;
 		if (!isset($DayInFollowingMonth)) $DayInFollowingMonth=0;
 		if (!isset($_POST['Terms'])) $_POST['Terms']='';
