@@ -1,4 +1,7 @@
 <?php
+
+/* $Revision: 1.2 $ */
+
 /**
 If the User has selected Keyed Entry, show them this special select list...
 it is just in the way if they are doing file imports
