@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -22,6 +22,15 @@
     // $DefaultDateFormat = "d/m/Y"; England/Australia/NZ
     // $DefaultDateFormat = "m/d/Y"; US and Canada
     $DefaultDateFormat = "d/m/Y";
+
+    // The timezone of the business - this allows the possibility of having
+    // the web-server on a overseas machine but record local time
+    // for a list of time zone codes see doc/zone.txt
+    // this is not necessary if you have your own server locally
+    // putenv("TZ=Europe/London");
+    // putenv("Australia/Melbourne");
+    // putenv("Australia/Sydney");
+    // putenv("TZ=Pacific/Auckland");
 
     // Connection information for the database
     // $host is the computer ip address or name where the database is located

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 if (!isset($_POST['FromCat'])  OR $_POST['FromCat']=="") {
 	$title="Price Listing";
 }
@@ -32,12 +32,35 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 			exit;
 		}
 
-		$SQL = "SELECT Name From DebtorsMaster WHERE DebtorNo = '" . $_SESSION['CustomerID'] . "'";
+		$SQL = "SELECT Name, SalesType From DebtorsMaster WHERE DebtorNo = '" . $_SESSION['CustomerID'] . "'";
 		$CustNameResult = DB_query($SQL,$db);
 		$CustNameRow = DB_fetch_row($CustNameResult);
 		$CustomerName = $CustNameRow[0];
+		$SalesType = $CustNameRow[1];
 
-		$SQL = "SELECT Prices.TypeAbbrev, Prices.StockID, StockMaster.Description, Prices.CurrAbrev, Prices.Price, StockMaster.MaterialCost+StockMaster.LabourCost+StockMaster.OverheadCost AS StandardCost, StockMaster.CategoryID, StockCategory.CategoryDescription, Prices.DebtorNo, Prices.BranchCode, CustBranch.BrName FROM StockMaster, StockCategory, Prices LEFT JOIN CustBranch ON Prices.DebtorNo=CustBranch.DebtorNo AND Prices.BranchCode=CustBranch.BranchCode WHERE StockMaster.StockID=Prices.StockID AND StockMaster.CategoryID=StockCategory.CategoryID AND StockMaster.CategoryID >= '" . $_POST['FromCriteria'] . "' AND StockMaster.CategoryID <= '" . $_POST['ToCriteria'] . "' AND Prices.DebtorNo='" . $_SESSION['CustomerID'] . "' ORDER BY Prices.CurrAbrev, StockMaster.CategoryID, StockMaster.StockID";
+		$SQL = "SELECT Prices.TypeAbbrev,
+			Prices.StockID, 
+			StockMaster.Description, 
+			Prices.CurrAbrev, 
+			Prices.Price, 
+			StockMaster.MaterialCost+StockMaster.LabourCost+StockMaster.OverheadCost AS StandardCost, 
+			StockMaster.CategoryID, 
+			StockCategory.CategoryDescription, 
+			Prices.DebtorNo, 
+			Prices.BranchCode, 
+			CustBranch.BrName 
+			FROM StockMaster, StockCategory, Prices LEFT JOIN CustBranch 
+			ON Prices.DebtorNo=CustBranch.DebtorNo 
+			AND Prices.BranchCode=CustBranch.BranchCode 
+			WHERE StockMaster.StockID=Prices.StockID 
+			AND StockMaster.CategoryID=StockCategory.CategoryID 
+			AND Prices.TypeAbbrev = '" . $SalesType . "' 
+			AND StockMaster.CategoryID >= '" . $_POST['FromCriteria'] . "' 
+			AND StockMaster.CategoryID <= '" . $_POST['ToCriteria'] . "' 
+			AND Prices.DebtorNo='" . $_SESSION['CustomerID'] . "' 
+			ORDER BY Prices.CurrAbrev, 
+				StockMaster.CategoryID, 
+				StockMaster.StockID";
 
 	} else { /* the sales type list only */
 

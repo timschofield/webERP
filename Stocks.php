@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $title = "Item Maintenance";
 
 $PageSecurity = 11;
@@ -280,19 +280,23 @@ if (isset($_POST['submit'])) {
 
 	}
 	if ($CancelDelete==0) {
-		$sql="DELETE FROM StockMaster WHERE StockID='$StockID'";
-		$result=DB_query($sql,$db);
+		$result = DB_query("BEGIN", $db);
+
+			/*Deletes LocStock records*/
+			$sql ="DELETE FROM LocStock WHERE StockID='$StockID'";
+			$result=DB_query($sql,$db,"Couldn't delete the location stock records because","",true);
+			/*and cascade deletes in PurchData */
+			$sql ="DELETE FROM PurchData WHERE StockID='$StockID'";
+			$result=DB_query($sql,$db,"Could not delete the purchasing data because","",true);
+			/*and cascade delete the bill of material if any */
+			$sql = "DELETE FROM BOM WHERE Parent='$StockID'";
+			$result=DB_query($sql,$db,"Could not delete the bill of material because","",true);
+			$sql="DELETE FROM StockMaster WHERE StockID='$StockID'";
+			$result=DB_query($sql,$db, "Could not delete the item record","",true);
+		$result = DB_query("COMMIT", $db);
+
 		echo "<BR>Deleted the stock master record for $StockID .... <BR>";
-		/*and cascade deletes in LocStock */
-		$sql ="DELETE FROM LocStock WHERE StockID='$StockID'";
-		$result=DB_query($sql,$db);
-		echo "<BR> . .and deleted all the location stock records set up for $StockID.... <BR>";
-		/*and cascade deletes in PurchData */
-		$sql ="DELETE FROM PurchData WHERE StockID='$StockID'";
-		$result=DB_query($sql,$db);
-		/*and cascade delete the bill of material if any */
-		$sql = "DELETE FROM BOM WHERE Parent='$StockID'";
-		$result=DB_query($sql,$db);
+		echo "<BR>. . and all the location stock records set up for the part<BR>";
 		echo "<BR>. . .and any bill of material that may have been set up for the part<BR>";
 		echo "<BR> . . . . and any purchasing data that may have been set up for the part<BR>";
 		unset($_POST['LongDescription']);

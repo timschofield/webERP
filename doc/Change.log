@@ -2,11 +2,13 @@
 
 Upgrade script 2.8 - 2.9 is necessary to be applied against a 2.8 database.
 
+
+19/6/04 GLBalanceSheet.php displays a html balance sheet for any period end.
 17/6/04 AccountGroups now uses an array for Section in accounts defined in config.php $Sections array. This array also used in GLProfit_Loss.php
 17/6/04 GLProfit_Loss.php added - index.php modified to add a link to this script
 8/6/04 DefineCartClass.inc updates to DB new parameters for delete, remove, add to cart class - changes to SelectIntoCartClass and other scripts to pass appropriate variables rather than rely on SESSION['ExistingOrder']. Also DecimalPlaces field added to order data in add_to_cart.
 8/6/04 Updates to SelectOrderItems.php now uses new DB_query error message/debug message parameters
-8/6/04 SelectCreditItems.php now uses Quantity not QtyDispatched
+8/6/04 SelectCreditItems.php now uses Quantity not QtyDispatched - bug corrected.
 5/6/04 New script StockSerialItems.php shows the stock status of serial or controlled items - the total shown should tie up with the StockStatus total quantities on hand.
 29/5/04 New script StockTransfersControlled.php allows input of serial items for stock transfers.
 29/5/04 New script StockAdjustmentsControlled.php allows input of serial items for stock adjustments.
@@ -20,7 +22,6 @@ Upgrade script 2.8 - 2.9 is necessary to be applied against a 2.8 database.
 17/5/04 StockCheck.php now only prints stock sheets for items committed to the stockcheckfreeze table. Behaviour of this script was counter intuitive. Deletion of existing entries deleted all locations stock of the same range of categories - now corrected.
 17/5/04 Added DecimalPlaces tinyint default 0 to StockMaster - this determines the number of decimal places to show for the stock item in all places where the item is displayed. Yet to update displaing throughout the system.
 12/5/04	DeliveryDetails.php SelectOrderItems.php DefineCartClass.php - deleting lines off an existing order was not working correctly. It was possible to delete completed order lines off an order in changing an outstanding order line. Bad bug corrected.
-5/5/04  session.inc now refers to MiscFunctions.php
 5/5/04	Added new tables for Serialised stuff StockSerialItems StockSerialMoves. Alterations to StockMaster for Serialised and DecimalPlaces - for displaying items with different decimal places
 5/5/04  Added includes/MiscFunctions.php for Jesse. Stocks.php script modified for Serialised and DecimalPlaces
 29/4/04 StockLocTransferReceive.php to receive quantities set up to transfer from StockLocTransfer.php. Deletes the temporary table data holding the transfered items on creation of the stock movements necessary.
@@ -39,7 +40,7 @@ Upgrade script 2.8 - 2.9 is necessary to be applied against a 2.8 database.
 30/3/04 SelectOrderItems search products now defaults to stock category 'All'
 27/3/04 GoodsReceived.php now takes account of changed standard cost at between bookings in of stock - unbalanced GL journals corrected. (this was wrong - fixed 22/4/04)
 16/3/04 Various scripts changed variables that are not initiated first to avoid NOTICES where NOTICES are enabled in php.ini - still a long way to go here
-16/3/04 All scripts now have a comment for CVS version number - Dick Stins
+16/3/04 All scripts now have a comment for CVS version number - Dick Stins suggestion
 16/3/04 Fixed bug on new system where sales and COGS GL posting tables not set up - auto create a default GL account - foreign key could give problem if account groups modified so now auto creates a sales account group first - thanks Dick Stins
 14/3/04 Added new tables for EDI_ORDERS_Segs and EDI_ORDERS_SegGroups that hold the defined segments for the EANCOM EDI ORDERS message and the segment groups info.
 14/3/04 AccountGroups.php modified to disallow & or ' - also fixed class='tableheader' as per css.

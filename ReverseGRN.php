@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $title = "Reverse Goods Received";
 $PageSecurity = 11;
 
@@ -21,7 +21,7 @@ if (!isset($_POST['SupplierID']) OR $_POST['SupplierID']==""){
 	exit;
 } elseif ($_POST['SuppName']=="" OR !isset($_POST['SuppName'])) {
 	$sql = "SELECT SuppName FROM Suppliers WHERE SupplierID='" . $_SESSION['SupplierID'] . "'";
-	$SuppResult = DB_query($sql,$db);
+	$SuppResult = DB_query($sql,$db, "Could not retrieve the supplier name for " . $_SESSION['SupplierID']);
 	$SuppRow = DB_fetch_row($SuppResult);
 	$_POST['SuppName'] = $SuppRow[0];
 }
@@ -70,10 +70,23 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 		include ("includes/footer.inc");
 		exit;
 	}
+
+	/*If the item is a stock item then need to check for Controlled or not ...
+	 if its controlled then need to check existence of the controlled items
+	 that came in with this GRN */
+
+
+	 $SQL = "SELECT Controlled FROM StockMaster WHERE StockID ='" . $GRN['ItemCode'] . "'";
+	 $CheckControlledResult = DB_query($SQL,$db,"<BR>Could not determine if the item was controlled or not because ");
+	 $ControlledRow = DB_fetch_row($CheckControlledResult);
+	 if ($ControlledRow[0]==1) { /*Then its a controlled item */
+		/*So check to ensure the serial items received on this GRN are still there */
+		$SQL = "SELECT
+
+	 }
 /*Start an SQL transaction */
 
-	$SQL = "Begin";
-	$Result = DB_query($SQL,$db);
+	$Result = DB_query("BEGIN",$db);
 
 	$PeriodNo = GetPeriod(ConvertSQLDate($GRN['DeliveryDate']), $db);
 

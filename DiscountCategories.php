@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Discount Categories Maintenance";
 
 $PageSecurity = 11;
@@ -25,9 +25,10 @@ if ($_POST['submit']=="Enter Information") {
 
 	if ($InputError !=1) {
 
-		$sql = "UPDATE StockMaster SET DiscountCategory='" . $_POST['DiscountCategory'] . "' WHERE StockID='" . $_POST['StockID'] . "')";
+		$sql = "UPDATE StockMaster SET DiscountCategory='" . $_POST['DiscountCategory'] . "' WHERE StockID='" . $_POST['StockID'] . "'";
 
-		$result = DB_query($sql,$db);
+		$result = DB_query($sql,$db, "The discount category " . $_POST['DiscountCategory'] . " record for " . $_POST['StockID'] . " could not be updated because");
+
 		echo "<BR>The stock master has been updated with this discount category.";
 		unset($_POST['DiscountCategory']);
 		unset($_POST['StockID']);
@@ -45,6 +46,7 @@ if ($_POST['submit']=="Enter Information") {
 echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 
 $sql = "SELECT DISTINCT DiscountCategory FROM StockMaster WHERE DiscountCategory <>''";
+
 $result = DB_query($sql, $db);
 
 echo "<CENTER>Discount Category Code: ";
@@ -57,41 +59,53 @@ while ($myrow = DB_fetch_array($result)){
 	} else {
 		echo "<OPTION VALUE='" . $myrow['DiscountCategory'] . "'>" . $myrow['DiscountCategory'];
 	}
+	echo "</OPTION>";
 }
-
-if (!isset($_POST['DiscCat'])){ /*set DiscCat to something to show results for first cat defined */
-	DB_data_seek($result,0);
-	$myrow = DB_fetch_array($result);
-	$_POST['DiscCat'] = $myrow['DiscountCategory'];
-}
-
 
 echo "</SELECT>";
 
+if (! isset($_POST['DiscCat'])){ /*set DiscCat to something to show results for first cat defined */
 
-$sql = "SELECT StockMaster.StockID, StockMaster.Description, DiscountCategory FROM StockMaster WHERE DiscountCategory='" . $_POST['DiscCat'] . "' ORDER BY StockMaster.StockID";
-$result = DB_query($sql,$db);
-
-echo "<table border=1>\n";
-echo "<tr><td class='tableheader'>Discount<BR>Category</td><td class='tableheader'>Item</td>\n";
-
-$k=0; //row colour counter
-
-while ($myrow = DB_fetch_array($result)) {
-	if ($k==1){
-		echo "<tr bgcolor='#CCCCCC'>";
-		$k=0;
+	if (DB_num_rows($result)>0){
+		DB_data_seek($result,0);
+		$myrow = DB_fetch_array($result);
+		$_POST['DiscCat'] = $myrow['DiscountCategory'];
 	} else {
-		echo "<tr bgcolor='#EEEEEE'>";
-		$k=1;
+		$_POST['DiscCat']='0';
 	}
-	$DeleteURL = $_SERVER['PHP_SELF'] . "?" . SID . "Delete=yes&StockID=" . $myrow['StockID'] . "&DiscountCategory=" . $myrow['DiscountCategory'];
-
-	printf("<td>%s</td><td>%s - %s</td><td><a href='%s'>Delete</td></tr>", $myrow['DiscountCategory'], $myrow['StockID'], $myrow['Description'], $DeleteURL);
-
 }
 
-echo "</TABLE>";
+if ($_POST['DiscCat']!='0'){
+
+	$sql = "SELECT StockMaster.StockID, StockMaster.Description, DiscountCategory FROM StockMaster WHERE DiscountCategory='" . $_POST['DiscCat'] . "' ORDER BY StockMaster.StockID";
+	$result = DB_query($sql,$db);
+
+	echo "<table border=1>\n";
+	echo "<tr>
+		<td class='tableheader'>Discount<BR>Category</td><td class='tableheader'>Item</td>\n";
+
+	$k=0; //row colour counter
+
+	while ($myrow = DB_fetch_array($result)) {
+		if ($k==1){
+			echo "<tr bgcolor='#CCCCCC'>";
+			$k=0;
+		} else {
+			echo "<tr bgcolor='#EEEEEE'>";
+			$k=1;
+		}
+		$DeleteURL = $_SERVER['PHP_SELF'] . "?" . SID . "Delete=yes&StockID=" . $myrow['StockID'] . "&DiscountCategory=" . $myrow['DiscountCategory'];
+
+		printf("<td>%s</td><td>%s - %s</td><td><a href='%s'>Delete</td></tr>", $myrow['DiscountCategory'], $myrow['StockID'], $myrow['Description'], $DeleteURL);
+
+	}
+
+	echo "</TABLE>";
+
+} else { /* $_POST['DiscCat'] ==0 */
+
+	echo "</CENTER><BR>There are currently no discount categories defined. Enter a two character abbreviation for the discount category and the stock code to which this category will apply to. Discount rules can then be applied to this discount category.";
+}
 
 echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 

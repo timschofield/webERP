@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $db = mysql_connect($host , $dbuser, $dbpassword);
 mysql_select_db($DatabaseName,$db);
 
@@ -7,9 +7,16 @@ require_once ("includes/MiscFunctions.php");
 
 //DB wrapper functions to change only once for whole application
 
-function DB_query ($SQL,&$Conn, $ErrorMessage="", $DebugMessage="", $Transaction=false, $TrapErrors=true){
+function DB_query ($SQL,
+		&$Conn,
+		$ErrorMessage="",
+		$DebugMessage="The SQL that failed was:",
+		$Transaction=false,
+		$TrapErrors=true){
+
 	global $debug;
 	$result=mysql_query($SQL,$Conn);
+
 	if (DB_error_no($Conn) != 0 AND $TrapErrors){
 		prnMsg($ErrorMessage."<BR>" . DB_error_msg($Conn),"error");
 		if ($debug==1){
