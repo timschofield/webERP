@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.38 $ */
+/* $Revision: 1.39 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -281,6 +281,22 @@ $ContributeHelpText = true;
 /* Default maximum number of records to display on a page but overridden by user setting if not 0 */
 
 $DefaultDisplayRecordsMax = 50;
+
+
+/*These variables need to be modified to set up for ftp of files to a radio beacon ftp server
+these variables are only used in the script FTP_RadioBeacon.php*/
+
+$StockLocation ='BL';
+$RadioBeaconHomeDir = '/home/RadioBeacon';
+$FileCounter = '/home/RadioBeacon/FileCounter';
+$FilePrefix = 'ORDXX';
+$ftp_server = '192.168.2.2';
+$ftp_user_name = 'RadioBeacon ftp server user name';
+$ftp_user_pass = 'Radio Beacon remote ftp server password';
+
+
+
+
 
 // END OF USER CONFIGURABLE VARIABLES
 

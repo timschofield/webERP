@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 8;
 include ('includes/session.inc');
@@ -96,20 +96,18 @@ if (isset($_POST['Show'])){
 		ORDER BY PeriodNo, CounterIndex";
 
 	$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
-	$DbgMsg = _('The SQL that failed was');
-	$TransResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$TransResult = DB_query($sql,$db,$ErrMsg);
 
 /*Get the ChartDetails balance b/fwd and the actual movement in the account for the period as recorded in the chart details - need to ensure integrity of transactions to the chart detail movements. Also, for a balance sheet account it is the balance carried forward that is important, not just the transactions*/
 
 	$sql = "SELECT BFwd, Actual FROM ChartDetails WHERE ChartDetails.AccountCode=$SelectedAccount AND ChartDetails.Period>=" . $FirstPeriodSelected . " AND ChartDetails.Period<=" . $LastPeriodSelected;
 
 	$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-	$DbgMsg = _('The SQL that failed was');
-	$ChartDetailsResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
 
 	$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 
-	echo '<table>\n';
+	echo '<table>';
 
 	$TableHeader = "<TR>
 			<TD class='tableheader'>" . _('Type') . "</TD>
@@ -148,7 +146,7 @@ if (isset($_POST['Show'])){
 				} else { //its a debit balance b/fwd
 					echo '<TD ALIGN=RIGHT><B>' . number_format($PeriodTotal,2) . '</B></TD><TD COLSPAN=2></TD></TR>';
 				}
-				$IntegrityReport .= '<BR>' . _('Period:') . ' ' . $PeriodNo  . _('Account movement Per Transactions:') . ' '  . number_format($PeriodTotal,2) . ' ' . _('Movement Per ChartDetails record:') . ' ' . number_format($ChartDetailRow['Actual'],2) . ' ' . _('Period difference:') . ' ' . number_format($PeriodTotal -$ChartDetailRow['Actual'],3);
+				$IntegrityReport .= '<BR>' . _('Period') . ': ' . $PeriodNo  . _('Account movement per transaction') . ': '  . number_format($PeriodTotal,2) . ' ' . _('Movement per ChartDetails record') . ': ' . number_format($ChartDetailRow['Actual'],2) . ' ' . _('Period difference') . ': ' . number_format($PeriodTotal -$ChartDetailRow['Actual'],3);
 				if (ABS($PeriodTotal -$ChartDetailRow['Actual'])>0.009){
 					$ShowIntegrityReport = True;
 				}
@@ -223,8 +221,8 @@ if (isset($_POST['Show'])){
 
 if ($ShowIntegrityReport){
 
-	echo '<BR>' . _('WARNING: There are differences between the sum of the transactions and the recorded movements in the ChartDetails table. A log of the account differences for the periods report shows below:') . '<P>' . $IntegrityReport;
-
+	prnMsg( _('There are differences between the sum of the transactions and the recorded movements in the ChartDetails table') . '. ' . _('A log of the account differences for the periods report shows below'),'warn');
+	echo '<P>'.$IntegrityReport;
 }
 include('includes/footer.inc');
 ?>

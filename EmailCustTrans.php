@@ -1,9 +1,9 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 2;
 
-include ("includes/session.inc");
+include ('includes/session.inc');
 
 if ($_GET['InvOrCredit']=='Invoice'){
 	$TransactionType = _('Invoice');
@@ -15,32 +15,34 @@ if ($_GET['InvOrCredit']=='Invoice'){
 $title=_('Email') . ' ' . $TransactionType . ' ' . _('Number') . ' ' . $_GET['FromTransNo'];
 
 if (isset($_POST['DoIt']) AND strlen($_POST['EmailAddr'])>3){
-	echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . "/PrintCustTrans.php?" . SID . "FromTransNo=" . $_POST['TransNo'] . "&PrintPDF=Yes&InvOrCredit=" . $_POST['InvOrCredit'] ."&Email=" . $_POST['EmailAddr'] . "'>";
-	echo '<P>' . _('The transaction should be emailed off. If this does not happen (if the browser does not support META Refresh)') . "<a href='" . $rootpath . "/PrintCustTrans.php?" . SID . "FromTransNo=" . $_POST['FromTransNo'] . "&PrintPDF=Yes&InvOrCredit=" . $_POST['InvOrCredit'] ."&Email=" . $_POST['EmailAddr'] . "'>" . _('click here') . '</a> ' . _('to email the customer tranaction') . '<BR>';
+	echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . '/PrintCustTrans.php?' . SID . '&FromTransNo=' . $_POST['TransNo'] . '&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . "'>";
+	prnMsg(_('The transaction should have been emailed off') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ')' . "<a href='" . $rootpath . '/PrintCustTrans.php?' . SID . '&FromTransNo=' . $_POST['FromTransNo'] . '&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . "'>" . _('click here') . '</a> ' . _('to email the customer tranaction'),'success');
 	exit;
 } elseif (isset($_POST['DoIt'])) {
 	$_GET['InvOrCredit'] = $_POST['InvOrCredit'];
 	$_GET['FromTransNo'] = $_POST['FromTransNo'];
-	$ErrorMessage = '<BR>' . _('The email address entered is too short to be a valid email address. The transaction was not emailed');
+	prnMsg(_('The email address entered is too short to be a valid email address') . '. ' . _('The transaction was not emailed'),'warn');
 }
 
-include ("includes/header.inc");
+include ('includes/header.inc');
 
 
-echo $ErrorMessage;
 
-echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
+
+echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD=POST>";
 
 echo "<INPUT TYPE=HIDDEN NAME='TransNo' VALUE=" . $_GET['FromTransNo'] . ">";
-echo "<INPUT TYPE=HIDDEN NAME='InvOrCredit' VALUE=" . $_GET['InvOrCredit'] . ">";
+echo "<INPUT TYPE=HIDDEN NAME='InvOrCredit' VALUE=" . $_GET['InvOrCredit'] . '>';
 
-echo "<CENTER><TABLE>";
+echo '<CENTER><P><TABLE>';
 
 
 $SQL = "SELECT Email
-		FROM CustBranch INNER JOIN DebtorTrans ON CustBranch.DebtorNo= DebtorTrans.DebtorNo AND CustBranch.BranchCode=DebtorTrans.BranchCode
-		WHERE DebtorTrans.Type=$TypeCode
-		AND DebtorTrans.TransNo=" .$_GET['FromTransNo'];
+		FROM CustBranch INNER JOIN DebtorTrans
+			ON CustBranch.DebtorNo= DebtorTrans.DebtorNo
+			AND CustBranch.BranchCode=DebtorTrans.BranchCode
+	WHERE DebtorTrans.Type=$TypeCode
+	AND DebtorTrans.TransNo=" .$_GET['FromTransNo'];
 
 $ErrMsg = _('There was a problem retrieving the contact details for the customer');
 $ContactResult=DB_query($SQL,$db,$ErrMsg);
@@ -49,10 +51,10 @@ if (DB_num_rows($ContactResult)>0){
 	$EmailAddrRow = DB_fetch_row($ContactResult);
 	$EmailAddress = $EmailAddrRow[0];
 } else {
-	$EmailAddress ="";
+	$EmailAddress ='';
 }
 
-echo '<TR><TD>' . _('Email to') . ":</TD>
+echo '<TR><TD>' . _('Email') . ' ' . $_GET['InvOrCredit'] . ' ' . _('number') . ' ' . $_GET['FromTransNo'] . ' ' . _('to') . ":</TD>
 	<TD><INPUT TYPE=TEXT NAME='EmailAddr' MAXLENGTH=60 SIZE=60 VALUE='" . $EmailAddress . "'</TD>
 	</TABLE>";
 
