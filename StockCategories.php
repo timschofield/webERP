@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 11;
 
@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The Sales category description must be twenty characters or less long'),'error');
 	} elseif ($_POST['StockType'] !='D' AND $_POST['StockType'] !='L' AND $_POST['StockType'] !='F' AND $_POST['StockType'] !='M') {
 		$InputError = 1;
-		prnMsg(_('The stock type selected must be one of') . ' "D" - ' . _('Dummy item') . ', "L" - ' . _('Labour stock item') . ', "F" - ' . _('Finished product or') . ' "M" - ' . _('Raw Materials'),'error');
+		prnMsg(_('The stock type selected must be one of') . ' "D" - ' . _('Dummy item') . ', "L" - ' . _('Labour stock item') . ', "F" - ' . _('Finished product') . ' ' . _('or') . ' "M" - ' . _('Raw Materials'),'error');
 	}
 
 	if ($SelectedCategory AND $InputError !=1) {
@@ -110,13 +110,13 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
-			prnMsg(_('Cannot delete this stock category because it is used by the sales - GL posting interface. Delete any records in the Sales GL Interface set up using this stock category first'),'warn');
+			prnMsg(_('Cannot delete this stock category because it is used by the sales') . ' - ' . _('GL posting interface') . '. ' . _('Delete any records in the Sales GL Interface set up using this stock category first'),'warn');
 		} else {
 			$sql = "SELECT COUNT(*) FROM COGSGLPostings WHERE StkCat='$SelectedCategory'";
 			$result = DB_query($sql,$db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]>0) {
-				prnMsg(_('Cannot delete this stock category because it is used by the cost of sales - GL posting interface. Delete any records in the Cost of Sales GL Interface set up using this stock category first'),'warn');
+				prnMsg(_('Cannot delete this stock category because it is used by the cost of sales') . ' - ' . _('GL posting interface') . '. ' . _('Delete any records in the Cost of Sales GL Interface set up using this stock category first'),'warn');
 			} else {
 				$sql="DELETE FROM StockCategory WHERE CategoryID='$SelectedCategory'";
 				$result = DB_query($sql,$db);
@@ -166,7 +166,7 @@ or deletion of the records*/
             		<td ALIGN=RIGHT>%s</td>
             		<td ALIGN=RIGHT>%s</td>
             		<td><a href=\"%sSelectedCategory=%s\">" . _('Edit') . "</td>
-            		<td><a href=\"%sSelectedCategory=%s&delete=yes\">" . _('DELETE') . "</td>
+            		<td><a href=\"%sSelectedCategory=%s&delete=yes\">" . _('Delete') . "</td>
             		</tr>",
             		$myrow[0],
             		$myrow[1],

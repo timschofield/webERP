@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /* contributed by Chris Bice */
 
 $PageSecurity = 11;
@@ -17,7 +17,7 @@ If (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 	$result = DB_query("SELECT * from LocTransfers WHERE Reference='" . $_POST['Trf_ID'] . "'",$db);
 	if (DB_num_rows($result)!=0){
 		$InputError = true;
-		$ErrorMessage = _('This transaction has already been entered. Please start over now.').'<BR>';
+		$ErrorMessage = _('This transaction has already been entered') . '. ' . _('Please start over now').'<BR>';
 		unset($_POST['submit']);
 		unset($_POST['EnterMoreItems']);
 		for ($i=$_POST['LinesCounter']-10;$i<$_POST['LinesCounter'];$i++){
@@ -32,17 +32,17 @@ If (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]==0){
 				$InputError = True;
-				$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('is not set up in the database. Only valid parts can be entered for transfers'). '<BR>';
+				$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('is not set up in the database') . '. ' . _('Only valid parts can be entered for transfers'). '<BR>';
 				$_POST['LinesCounter'] -= 10;
 			}
 			if (!is_numeric($_POST['StockQTY' . $i])){
 				$InputError = True;
-				$ErrorMessage .= _('The quantity entered of'). ' ' . $_POST['StockQTY' . $i] . ' '. _('for part code'). ' ' . $_POST['StockID' . $i] . ' '. _('is not numeric. The quantity entered for transfers is expected to be numeric').'<BR>';
+				$ErrorMessage .= _('The quantity entered of'). ' ' . $_POST['StockQTY' . $i] . ' '. _('for part code'). ' ' . $_POST['StockID' . $i] . ' '. _('is not numeric') . '. ' . _('The quantity entered for transfers is expected to be numeric').'<BR>';
 				$_POST['LinesCounter'] -= 10;
 			}
 			if ($_POST['StockQTY' . $i] <= 0){
 				$InputError = True;
-				$ErrorMessage .= _('The quantity entered for').' '. $_POST['StockID' . $i] . ' ' . _('is less than or equal to 0. Please correct this or remove the item.').'<BR>';
+				$ErrorMessage .= _('The quantity entered for').' '. $_POST['StockID' . $i] . ' ' . _('is less than or equal to 0') . '. ' . _('Please correct this or remove the item').'<BR>';
 
 			}
 			$TotalItems++;
@@ -50,33 +50,44 @@ If (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 	}//for all LinesCounter
 	if ($TotalItems == 0){
 		$InputError = True;
-		$ErrorMessage .= _('You must enter at least 1 Stock Item to Transfer!').'<BR>';
-	} 
+		$ErrorMessage .= _('You must enter at least 1 Stock Item to transfer').'<BR>';
+	}
 
 /*Ship location and Receive location are different */
 	If ($_POST['FromStockLocation']==$_POST['ToStockLocation']){
 		$InputError=True;
-		$ErrorMessage .= _('The transfer must have a different location to receive into and location sent from.');
+		$ErrorMessage .= _('The transfer must have a different location to receive into and location sent from');
 	}
 }
 
 if(isset($_POST['Submit']) AND $InputError==False){
 
-	$ErrMsg = _('CRITICAL ERROR! Unable to BEGIN Location Transfer transaction!');
+	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to BEGIN Location Transfer transaction');
 	DB_query('BEGIN',$db, $ErrMsg);
 	for ($i=0;$i < $_POST['LinesCounter'];$i++){
 
 		if($_POST['StockID' . $i] != ""){
-			$sql = "INSERT INTO LocTransfers (Reference, StockID, ShipQty, ShipDate, ShipLoc, RecLoc) VALUES ('" . $_POST['Trf_ID'] . "', '" . $_POST['StockID' . $i] . "', '" . $_POST['StockQTY' . $i] . "', '" . Date("Y-m-d") . "', '" . $_POST['FromStockLocation']  ."', '" . $_POST['ToStockLocation'] . "')";
-			$ErrMsg = _('CRITICAL ERROR! Unable to enter Location Transfer record for:'). ' '.$_POST['StockID' . $i];
+			$sql = "INSERT INTO LocTransfers (Reference,
+								StockID,
+								ShipQty,
+								ShipDate,
+								ShipLoc,
+								RecLoc)
+						VALUES ('" . $_POST['Trf_ID'] . "',
+							'" . $_POST['StockID' . $i] . "',
+							'" . $_POST['StockQTY' . $i] . "',
+							'" . Date("Y-m-d") . "',
+							'" . $_POST['FromStockLocation']  ."',
+							'" . $_POST['ToStockLocation'] . "')";
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$_POST['StockID' . $i];
 			$resultLocShip = DB_query($sql,$db, $ErrMsg);
 		}
 	}
-        $ErrMsg = _('CRITICAL ERROR! Unable to COMMIT Location Transfer transaction!');
+        $ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to COMMIT Location Transfer transaction');
         DB_query('BEGIN',$db, $ErrMsg);
 
-	echo '<P>'. _('The inventory transfer record(s) have been created successfully.');
-	echo '<P><A HREF="'.$rootpath.'/PDFStockLocTransfer.php?' . SID . 'TransferNo=' . $_POST['Trf_ID'] . '">'. 
+	prnMsg( _('The inventory transfer records have been created successfully'),'success');
+	echo '<P><A HREF="'.$rootpath.'/PDFStockLocTransfer.php?' . SID . 'TransferNo=' . $_POST['Trf_ID'] . '">'.
 		_('Print the Transfer Docket'). '</A>';
 	unset($_SESSION['DispatchingTransfer']);
 	unset($_SESSION['Transfer']);
@@ -98,12 +109,12 @@ if(isset($_POST['Submit']) AND $InputError==False){
 		echo '<BR>';
 		prnMsg($ErrorMessage, 'error');
 		echo '<BR>';
-	
+
 	}
 
 	echo '<HR><FORM ACTION="' . $_SERVER['PHP_SELF'] . '?'. SID . '" METHOD=POST>';
 
-	echo '<input type=HIDDEN NAME="Trf_ID" VALUE="' . $Trf_ID . '"><h2>'. _('Inventory Location Transfer Shipment Reference #').' '. $Trf_ID. '</h2>';
+	echo '<input type=HIDDEN NAME="Trf_ID" VALUE="' . $Trf_ID . '"><h2>'. _('Inventory Location Transfer Shipment Reference').' # '. $Trf_ID. '</h2>';
 
 	$sql = 'SELECT LocCode, LocationName FROM Locations';
 	$resultStkLocs = DB_query($sql,$db);
@@ -156,7 +167,10 @@ if(isset($_POST['Submit']) AND $InputError==False){
 				echo $tableheader;
 				$k=0;
 			}
-			echo '<TR><td><input type=text name="StockID' . $i .'" size=21  maxlength=20 Value="' . $_POST['StockID' . $i] . '"></td><td><input type=text name="StockQTY' . $i .'" size=5 maxlength=4 Value="' . $_POST['StockQTY' . $i] . '"></td></tr>';
+			echo '<TR>
+				<TD><input type=text name="StockID' . $i .'" size=21  maxlength=20 Value="' . $_POST['StockID' . $i] . '"></TD>
+				<TD><input type=text name="StockQTY' . $i .'" size=5 maxlength=4 Value="' . $_POST['StockQTY' . $i] . '"></TD>
+			</TR>';
 		}
 	}else {
 		$i = 0;
@@ -165,11 +179,15 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	$z=($i + 9);
 
 	while($i < $z) {
-		echo '<TR><td><input type=text name="StockID' . $i .'" size=21  maxlength=20 Value="' . $_POST['StockID' . $i] . '"></td><td><input type=text name="StockQTY' . $i .'" size=5 maxlength=4 Value="' . $_POST['StockQTY' . $i] . '"></td></tr>';
+		echo '<TR>
+			<td><input type=text name="StockID' . $i .'" size=21  maxlength=20 Value="' . $_POST['StockID' . $i] . '"></td>
+			<td><input type=text name="StockQTY' . $i .'" size=5 maxlength=4 Value="' . $_POST['StockQTY' . $i] . '"></td>
+		</tr>';
 		$i++;
 	}
 
-	echo '</table><br><input type=hidden name="LinesCounter" value='. $i .'><INPUT TYPE=SUBMIT NAME="EnterMoreItems" VALUE="'. _('Add More Items'). '"><INPUT TYPE=SUBMIT NAME="Submit" VALUE="'. _('Create Transfer Shipment'). '"><BR><HR>';
+	echo '</table><br>
+		<input type=hidden name="LinesCounter" value='. $i .'><INPUT TYPE=SUBMIT NAME="EnterMoreItems" VALUE="'. _('Add More Items'). '"><INPUT TYPE=SUBMIT NAME="Submit" VALUE="'. _('Create Transfer Shipment'). '"><BR><HR>';
 	echo '</FORM></CENTER>';
 	include('includes/footer.inc');
 }

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /* Contributed by Chris Bice - gettext by Kitch*/
 
 
@@ -17,7 +17,7 @@ $sql = 'SELECT CategoryID, CategoryDescription FROM StockCategory';
 $resultStkLocs = DB_query($sql, $db);
 
 echo '<CENTER><TABLE><TR>';
-echo '<TD>' . _('For Stock Category:') . "</TD>
+echo '<TD>' . _('For Stock Category') . ":</TD>
 	<TD><SELECT NAME='StockCategory'> ";
 
 while ($myrow=DB_fetch_array($resultStkLocs)){
@@ -36,7 +36,7 @@ echo '</SELECT></TD>';
 $sql = 'SELECT LocCode, LocationName FROM Locations';
 $resultStkLocs = DB_query($sql, $db);
 
-echo '<TD>' . _('For Stock Location:') . "</TD>
+echo '<TD>' . _('For Stock Location') . ":</TD>
 	<TD><SELECT NAME='StockLocation'> ";
 
 while ($myrow=DB_fetch_array($resultStkLocs)){
@@ -59,7 +59,7 @@ if (!isset($_POST['OnHandDate'])){
 	$_POST['OnHandDate'] = Date($DefaultDateFormat, Mktime(0,0,0,Date("m"),0,Date("y")));
 }
 
-echo '<TD>' . _("On-Hand On Date:") . "</TD>
+echo '<TD>' . _("On-Hand On Date") . ":</TD>
 	<TD><INPUT TYPE=TEXT NAME='OnHandDate' SIZE=12 MAXLENGTH=12 VALUE='" . $_POST['OnHandDate'] . "'></TD></TR>";
 echo "<TR><TD COLSPAN=6 ALIGN=CENTER><INPUT TYPE=SUBMIT NAME='ShowStatus' VALUE='" . _('Show Stock Status') ."'></TD></TR></TABLE>";
 echo '</FORM><HR>';
@@ -117,9 +117,22 @@ if(isset($_POST['ShowStatus']) AND is_date($_POST['OnHandDate']))
 			}
 
 			if($NumRows == 0){
-				printf("<TD><A TARGET='_blank' HREF='StockStatus.php?StockID=%s'>%s</TD><TD>%s</TD><TD ALIGN=RIGHT>%s</TD>", strtoupper($myrows['StockID']),strtoupper($myrows['StockID']),$myrows['Description'], 0);
+				printf("<TD><A TARGET='_blank' HREF='StockStatus.php?%s'>%s</TD>
+					<TD>%s</TD>
+					<TD ALIGN=RIGHT>%s</TD>",
+					SID . '&StockID=' . strtoupper($myrows['StockID']),
+					strtoupper($myrows['StockID']),
+					$myrows['Description'],
+					0);
 			} else {
-				printf("<TD><A TARGET='_blank' HREF='StockStatus.php?StockID=%s'>%s</TD><TD>%s</TD><TD ALIGN=RIGHT>%s</TD>", strtoupper($myrows['StockID']),strtoupper($myrows['StockID']),$myrows['Description'], number_format($LocQtyRow['NewQOH'],$myrows['DecimalPlaces']));
+				printf("<TD><A TARGET='_blank' HREF='StockStatus.php?%s'>%s</TD>
+					<TD>%s</TD>
+					<TD ALIGN=RIGHT>%s</TD>",
+					SID . '&StockID=' . strtoupper($myrows['StockID']),
+					strtoupper($myrows['StockID']),
+					$myrows['Description'],
+					number_format($LocQtyRow['NewQOH'],$myrows['DecimalPlaces']));
+
 				$TotalQuantity += $LocQtyRow['NewQOH'];
 			}
 			$j++;
@@ -131,7 +144,7 @@ if(isset($_POST['ShowStatus']) AND is_date($_POST['OnHandDate']))
 		}
 
 	}//end of while loop
-	echo '<TR><TD>' . _('Total Quantity:') . " " . $TotalQuantity . '</TD></TR></TABLE>';
+	echo '<TR><TD>' . _('Total Quantity') . ": " . $TotalQuantity . '</TD></TR></TABLE>';
 }
 
 include('includes/footer.inc');

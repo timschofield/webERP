@@ -1,9 +1,13 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 2;
 
 
-If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POST['FromCriteria'])>=1 AND isset($_POST['ToCriteria']) AND strlen($_POST['ToCriteria'])>=1){
+If (isset($_POST['PrintPDF'])
+		AND isset($_POST['FromCriteria'])
+		AND strlen($_POST['FromCriteria'])>=1
+		AND isset($_POST['ToCriteria'])
+		AND strlen($_POST['ToCriteria'])>=1){
 
 	include('config.php');
 	include('includes/ConnectDB.inc');
@@ -33,9 +37,9 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 
 		$result = DB_query($sql, $db,'','',false,false);
 		if (DB_error_no($db) !=0) {
-			$title = _('Stock Freeze - Problem Report') . '.... ';
+			$title = _('Stock Freeze') . ' - ' . _('Problem Report') . '.... ';
 			include('includes/header.inc');
-			echo '<BR>' . _('The inventory quantities could not be added to the freeze file because') . ' - ' . DB_error_msg($db);
+			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg($db),'error');
 			echo '<BR><A HREF="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</A>';
 			if ($debug==1){
 	      			echo '<BR>' . $sql;
@@ -54,9 +58,9 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 
 		$result = DB_query($sql,$db,'','',false,false);
 if (DB_error_no($db) !=0) {
-			$title = _('Stock Freeze - Problem Report') . '.... ';
+			$title = _('Stock Freeze') . ' - ' . _('Problem Report') . '.... ';
 			include('includes/header.inc');
-			echo '<BR>' . _('The old quantities could not be deleted from the freeze file because') . ' - ' . DB_error_msg($db);
+			prnMsg(_('The old quantities could not be deleted from the freeze file because') . ' ' . DB_error_msg($db),'error');
 			echo '<BR><A HREF="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</A>';
 			if ($debug==1){
 	      			echo '<BR>' . $sql;
@@ -82,9 +86,9 @@ if (DB_error_no($db) !=0) {
 
 		$result = DB_query($sql, $db,'','',false,false);
 		if (DB_error_no($db) !=0) {
-			$title = _('Stock Freeze - Problem Report') . '.... ';
+			$title = _('Stock Freeze') . ' - ' . _('Problem Report') . '.... ';
 			include('includes/header.inc');
-			echo '<BR>' . _('The inventory quantities could not be added to the freeze file because') . ' - ' . DB_error_msg($db);
+			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg($db),'error');
 			echo '<BR><A HREF="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</A>';
 			if ($debug==1){
 	      			echo '<BR>' . $sql;
@@ -95,7 +99,7 @@ if (DB_error_no($db) !=0) {
 			$title = _('Stock Check Freeze Update');
 			include('includes/header.inc');
 			echo '<P><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Print Check Sheets') . '</A>';
-			echo '<P>' . _('Added to the stock check file sucessfully');
+			prnMsg( _('Added to the stock check file sucessfully'),'success');
 			include('includes/footer.inc');
 			exit;
 		}
@@ -129,9 +133,9 @@ if (DB_error_no($db) !=0) {
 	$InventoryResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Stock Sheets - Problem Report') . '.... ';
+		$title = _('Stock Sheets') . ' - ' . _('Problem Report') . '.... ';
 		include('includes/header.inc');
-		echo '<BR>' . _('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
+		prnMsg( _('The inventory quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg($db),'error');
 		echo '<BR><A HREF="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</A>';
 		if ($debug==1){
 	      	echo '<BR>' . $SQL;
@@ -173,9 +177,9 @@ if (DB_error_no($db) !=0) {
 		$DemandResult = DB_query($SQL,$db,'','',false, false);
 
 		if (DB_error_no($db) !=0) {
-	 		 $title = _('Stock Check Sheets - Problem Report') . '.... ';
+	 		 $title = _('Stock Check Sheets') . ' - ' . _('Problem Report') . '.... ';
 	  		include('includes/header.inc');
-	   		echo '<BR>' . _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
+	   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg($db), 'error');
 	   		echo '<BR><A HREF="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</A>';
 	   		if ($debug==1){
 	      			echo '<BR>' . $SQL;
@@ -204,7 +208,7 @@ if (DB_error_no($db) !=0) {
 
 		$DemandResult = DB_query($sql,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
-			echo '<BR>' . _('The demand for this product from') . ' ' . $myrow['LocCode'] . ' ' . _('cannot be retrieved because') . ' - ' . DB_error_msg($db);
+			prnMsg(_('The demand for this product from') . ' ' . $myrow['LocCode'] . ' ' . _('cannot be retrieved because') . ' - ' . DB_error_msg($db),'error');
 			if ($debug==1){
 		   		echo '<BR>' . _('The SQL that failed was') . ' ' . $sql;
 			}
@@ -239,7 +243,7 @@ if (DB_error_no($db) !=0) {
       if ($len<=20){
 		$title = _('Print Price List Error');
 		include('includes/header.inc');
-		echo '<p>' . _('There were no stock check sheets to print out for the categor(y/ies) specified');
+		echo '<p>' . _('There were no stock check sheets to print out for the categories specified');
 		echo '<BR><A HREF="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</A>';
 		include('includes/footer.inc');
 		exit;

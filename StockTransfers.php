@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
 
@@ -15,6 +15,7 @@ $NewTransfer = false; /*initialise this first then determine from form inputs */
 
 if (isset($_GET['NewTransfer'])){
      unset($_SESSION['Transfer']);
+     unset($_SESSION['TransferItem']); /*this is defined in bulk transfers but needs to be unset for individual trsnsfers */
 }
 
 
@@ -66,7 +67,8 @@ if ($NewTransfer){
 		$_SESSION['Transfer']->TransferItem[0]->StandardCost = $myrow[3];
 
 		if ($myrow[2]=='D' OR $myrow[2]=='A' OR $myrow[2]=='K'){
-			echo '<P>'._('The part entered is either or a dummy part or an assembly/kit-set part. These parts are not physical parts and no stock holding is maintained for them. Stock Transfers are therefore not possible').'.<HR>';
+			prnMsg(_('The part entered is either or a dummy part or an assembly or a kit-set part') . '. ' . _('These parts are not physical parts and no stock holding is maintained for them') . '. ' . _('Stock Transfers are therefore not possible'),'warn');
+			echo '.<HR>';
 			echo "<A HREF='" . $rootpath . '/StockTransfers.php?' . SID ."&NewTransfer=Yes'>" . _('Enter another Transfer') . '</A>';
 			unset ($_SESSION['Transfer']);
 			include ('includes/footer.inc');
@@ -83,7 +85,7 @@ if ( isset($_POST['StockLocationFrom']) && $_POST['StockLocationFrom']!= $_SESSI
 	$_SESSION['Transfer']->StockLocationFrom = $_POST['StockLocationFrom'];
 	$_SESSION['Transfer']->TransferItem[0]->Quantity=0;
 	$_SESSION['Transfer']->TransferItem[0]->SerialItems=array();
-	prnMsg( _('You have set or changed the From location. You must re-enter the quantity and any Controlled Items now.') );
+	prnMsg( _('You have set or changed the From location') . '. ' . _('You must re-enter the quantity and any Controlled Items now') );
 }
 if ( isset($_POST['StockLocationTo']) ){
 	$_SESSION['Transfer']->StockLocationTo = $_POST['StockLocationTo'];
@@ -160,7 +162,7 @@ if ( isset($_POST['EnterTransfer']) ){
 					" . ($QtyOnHandPrior - $_SESSION['Transfer']->TransferItem[0]->Quantity) .
 				")";
 
-		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The stock movement record cannot be inserted because');
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
 		$DbgMsg =  _('The following SQL to insert the stock movement record was used');
 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
@@ -195,7 +197,7 @@ if ( isset($_POST['EnterTransfer']) ){
 						AND LocCode='" . $_SESSION['Transfer']->StockLocationFrom . "'
 						AND SerialNo='" . $Item->BundleRef . "'";
 
-					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock item record could not be updated because');
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . -('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
 					$DbgMsg = _('The following SQL to update the serial stock item record was used');
 					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 				} else {
@@ -209,7 +211,7 @@ if ( isset($_POST['EnterTransfer']) ){
 						'" . $Item->BundleRef . "',
 						" . -$Item->BundleQty . ")";
 
-					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock item record could not be updated because');
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . -('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . -('The serial stock item record could not be updated because');
 					$DbgMsg = _('The following SQL to update the serial stock item record was used');
 					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 				}
@@ -229,7 +231,7 @@ if ( isset($_POST['EnterTransfer']) ){
 							-" . $Item->BundleQty . "
 							)";
 
-				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock movement record could not be inserted because');
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . -('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
@@ -273,7 +275,7 @@ if ( isset($_POST['EnterTransfer']) ){
 					" . ($QtyOnHandPrior + $_SESSION['Transfer']->TransferItem[0]->Quantity) .
 				")";
 
-		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The stock movement record cannot be inserted because');
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . -('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . -('The stock movement record cannot be inserted because');
 		$DbgMsg = _('The following SQL to insert the stock movement record was used');
 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
@@ -308,7 +310,7 @@ if ( isset($_POST['EnterTransfer']) ){
 						AND LocCode='" . $_SESSION['Transfer']->StockLocationTo . "'
 						AND SerialNo='" . $Item->BundleRef . "'";
 
-					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock item record could not be updated because');
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . -('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . -('The serial stock item record could not be updated because');
 					$DbgMsg = _('The following SQL to update the serial stock item record was used');
 					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 				} else {
@@ -322,7 +324,7 @@ if ( isset($_POST['EnterTransfer']) ){
 						'" . $Item->BundleRef . "',
 						" . $Item->BundleQty . ")";
 
-					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock item record could not be updated because');
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . -('The serial stock item record could not be updated because');
 					$DbgMsg = _('The following SQL to update the serial stock item record was used:');
 					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 				}
@@ -331,7 +333,7 @@ if ( isset($_POST['EnterTransfer']) ){
 				/* now insert the serial stock movement */
 
 				$SQL = "INSERT INTO StockSerialMoves (StockMoveNo, StockID, SerialNo, MoveQty) VALUES (" . $StkMoveNo . ", '" . $_SESSION['Transfer']->TransferItem[0]->StockID . "', '" . $Item->BundleRef . "', " . $Item->BundleQty . ")";
-				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock movement record could not be inserted because');
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
@@ -344,7 +346,7 @@ if ( isset($_POST['EnterTransfer']) ){
 			WHERE StockID='" . $_SESSION['Transfer']->TransferItem[0]->StockID . "'
 			AND LocCode='" . $_SESSION['Transfer']->StockLocationFrom . "'";
 
-		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The location stock record could not be updated because');
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . -('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
 		$DbgMsg = _('The following SQL to update the location stock record was used');
 		$Result = DB_query($SQL,$db,$Errmsg,$DbgMsg,true);
 
@@ -354,14 +356,13 @@ if ( isset($_POST['EnterTransfer']) ){
 			AND LocCode='" . $_SESSION['Transfer']->StockLocationTo . "'";
 
 
-
-		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The location stock record could not be updated because');
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
 		$DbgMsg = _('The following SQL to update the location stock record was used');
 		$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 
 		$Result = DB_query('COMMIT',$db);
 
-		echo '<P>'. _('An inventory transfer of').' ' . $_SESSION['Transfer']->TransferItem[0]->StockID . ' - ' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' '. _('has been created from').' ' . $_SESSION['Transfer']->StockLocationFrom . ' '. _('to') . ' ' . $_SESSION['Transfer']->StockLocationTo . ' '._('for a quantity of').' ' . $_SESSION['Transfer']->TransferItem[0]->Quantity;
+		prnMsg(_('An inventory transfer of').' ' . $_SESSION['Transfer']->TransferItem[0]->StockID . ' - ' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' '. _('has been created from').' ' . $_SESSION['Transfer']->StockLocationFrom . ' '. _('to') . ' ' . $_SESSION['Transfer']->StockLocationTo . ' '._('for a quantity of').' ' . $_SESSION['Transfer']->TransferItem[0]->Quantity,'success');
 		unset ($_SESSION['Transfer']);
 		include ('includes/footer.inc');
 		exit;
@@ -384,7 +385,7 @@ if (strlen($_SESSION['Transfer']->TransferItem[0]->ItemDescription)>1){
 	echo '<TR><TD COLSPAN=3><FONT COLOR=BLUE SIZE=3>' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Transfer']->TransferItem[0]->PartUnit . ' )</FONT></TD></TR>';
 }
 
-echo '<TR><TD>' .('From Stock Location').': </TD><TD><SELECT name="StockLocationFrom">';
+echo '<TR><TD>' .('From Stock Location').':</TD><TD><SELECT name="StockLocationFrom">';
 
 $sql = 'SELECT LocCode, LocationName FROM Locations';
 $resultStkLocs = DB_query($sql,$db);
@@ -442,12 +443,12 @@ echo "</TABLE><BR><INPUT TYPE=SUBMIT NAME='EnterTransfer' VALUE='" . _('Enter St
 echo '<HR>';
 
 
-echo '<A HREF="'.$rootpath.'/StockStatus.php?' . SID . 'StockID=' . $_SESSION['Transfer']->TransferItem[0]->StockID . '">'._('Show Stock Status').'</A>';
-echo '<BR><A HREF="'.$rootpath.'/StockMovements.php?' . SID . 'StockID=' . $_SESSION['Transfer']->TransferItem[0]->StockID . '">'._('Show Movements').'</A>';
-echo '<BR><A HREF="'.$rootpath.'/StockUsage.php?' . SID . 'StockID=' . $_SESSION['Transfer']->TransferItem[0]->StockID . '&StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">'._('Show Stock Usage').'</A>';
-echo '<BR><A HREF="'.$rootpath.'/SelectSalesOrder.php?' . SID . 'SelectedStockItem=' . $_SESSION['Transfer']->TransferItem[0]->StockID . '&StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">'._('Search Outstanding Sales Orders').'</A>';
-echo '<BR><A HREF="'.$rootpath.'/SelectCompletedOrder.php?' . SID . 'SelectedStockItem=' . $_SESSION['Transfer']->TransferItem[0]->StockID . '">'._('Search Completed Sales Orders').'</A>';
+echo '<A HREF="'.$rootpath.'/StockStatus.php?' . SID . '&StockID=' . $_SESSION['Transfer']->TransferItem[0]->StockID . '">'._('Show Stock Status').'</A>';
+echo '<BR><A HREF="'.$rootpath.'/StockMovements.php?' . SID . '&StockID=' . $_SESSION['Transfer']->TransferItem[0]->StockID . '">'._('Show Movements').'</A>';
+echo '<BR><A HREF="'.$rootpath.'/StockUsage.php?' . SID . '&StockID=' . $_SESSION['Transfer']->TransferItem[0]->StockID . '&StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . _('Show Stock Usage') . '</A>';
+echo '<BR><A HREF="'.$rootpath.'/SelectSalesOrder.php?' . SID . '&SelectedStockItem=' . $_SESSION['Transfer']->TransferItem[0]->StockID . '&StockLocation=' . $_SESSION['Transfer']->StockLocationFrom . '">' . _('Search Outstanding Sales Orders') . '</A>';
+echo '<BR><A HREF="'.$rootpath.'/SelectCompletedOrder.php?' . SID . '&SelectedStockItem=' . $_SESSION['Transfer']->TransferItem[0]->StockID . '">'._('Search Completed Sales Orders').'</A>';
 
-echo '</form>';
+echo '</FORM>';
 include('includes/footer.inc');
 ?>

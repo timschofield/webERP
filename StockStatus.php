@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 2;
 
@@ -30,7 +30,7 @@ $result = DB_query("SELECT Description,
                            StockID='$StockID'",
                            $db, 
                            '<BR>' . _('Could not retrieve the requested item'),
-                           '<BR>' . _('The SQL used to retrieve the items was') . ':');
+                           '<BR>' . _('The SQL used to retrieve the items was'));
 
 $myrow = DB_fetch_row($result);
 
@@ -42,13 +42,13 @@ echo '<BR><FONT COLOR=BLUE SIZE=3><B>' . $StockID . ' - ' . $myrow[0] . ' </B>  
 $Its_A_KitSet_Assembly_Or_Dummy =False;
 if ($myrow[2]=='K'){
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
-	echo '<BR>' . _('This is a kitset part and cannot have a stock holding, only the total quantity on outstanding sales orders is shown') . '.';
+	prnMsg( _('This is a kitset part and cannot have a stock holding') . ', ' . _('only the total quantity on outstanding sales orders is shown'),'info');
 } elseif ($myrow[2]=='A'){
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
-	echo '<BR>' . _('This is an assembly part and cannot have a stock holding, only the total quantity on outstanding sales orders is shown') . '.';
+	prnMsg(_('This is an assembly part and cannot have a stock holding') . ', ' . -('only the total quantity on outstanding sales orders is shown'),'info');
 } elseif ($myrow[2]=='D'){
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
-	echo '<BR>' . _('This is an dummy part and cannot have a stock holding, only the total quantity on outstanding sales orders is shown') . '.';
+	prnMsg( _('This is an dummy part and cannot have a stock holding') . ', ' . -('only the total quantity on outstanding sales orders is shown'),'info');
 }
 
 echo '<HR><FORM ACTION="' . $_SERVER['PHP_SELF'] . '?'. SID . '" METHOD=POST>';
@@ -56,18 +56,17 @@ echo _('Stock Code') . ':<input type=text name="StockID" size=21 value="' . $Sto
 
 echo ' <INPUT TYPE=SUBMIT NAME="ShowStatus" VALUE="' . _('Show Stock Status') . '"><HR>';
 
-$sql = "SELECT LocStock.LocCode, 
-               Locations.LocationName, 
-               LocStock.Quantity, 
-               LocStock.ReorderLevel 
-               FROM LocStock, 
-                    Locations 
-               WHERE LocStock.LocCode=Locations.LocCode AND 
-                     LocStock.StockID = '" . $StockID . "' 
+$sql = "SELECT LocStock.LocCode,
+               Locations.LocationName,
+               LocStock.Quantity,
+               LocStock.ReorderLevel
+               FROM LocStock,
+                    Locations
+               WHERE LocStock.LocCode=Locations.LocCode AND
+                     LocStock.StockID = '" . $StockID . "'
                ORDER BY LocStock.LocCode";
 
-$ErrMsg = _('The stock held at each location cannot be retrieved because') . ':';
-$DbgMsg = '<BR>' . _('The SQL that failed was') . ':';
+$ErrMsg = _('The stock held at each location cannot be retrieved because');
 $LocStockResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 echo '<TABLE CELLPADDING=2 BORDER=0>';
@@ -101,17 +100,16 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 		$k=1;
 	}
 
-	$sql = "SELECT Sum(SalesOrderDetails.Quantity-SalesOrderDetails.QtyInvoiced) 
-                 AS DEM 
-                 FROM SalesOrderDetails, 
-                      SalesOrders  
-                 WHERE SalesOrders.OrderNo = SalesOrderDetails.OrderNo AND 
-                 SalesOrders.FromStkLoc='" . $myrow["LocCode"] . "' AND 
-                 SalesOrderDetails.Completed=0 AND 
+	$sql = "SELECT Sum(SalesOrderDetails.Quantity-SalesOrderDetails.QtyInvoiced)
+                 AS DEM
+                 FROM SalesOrderDetails,
+                      SalesOrders
+                 WHERE SalesOrders.OrderNo = SalesOrderDetails.OrderNo AND
+                 SalesOrders.FromStkLoc='" . $myrow["LocCode"] . "' AND
+                 SalesOrderDetails.Completed=0 AND
                  SalesOrderDetails.StkCode='" . $StockID . "'";
 
-	$ErrMsg = _('The demand for this product from') . ' ' . $myrow["LocCode"] . ' ' . _('cannot be retrieved because') . ':';
-	$Dbgmsg = '<BR>' . _('The SQL that failed was') . ':';
+	$ErrMsg = _('The demand for this product from') . ' ' . $myrow['LocCode'] . ' ' . _('cannot be retrieved because');
 	$DemandResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($DemandResult)==1){
@@ -122,21 +120,20 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 	}
 
 	//Also need to add in the demand as a component of an assembly items if this items has any assembly parents.
-	$sql = "SELECT Sum((SalesOrderDetails.Quantity-SalesOrderDetails.QtyInvoiced)*BOM.Quantity) 
-                 AS DEM 
-                 FROM SalesOrderDetails, 
-                      SalesOrders, 
-                      BOM, 
-                      StockMaster  
-                 WHERE SalesOrderDetails.StkCode=BOM.Parent AND 
-                       SalesOrders.OrderNo = SalesOrderDetails.OrderNo AND 
-                       SalesOrders.FromStkLoc='" . $myrow["LocCode"] . "' AND  
-                       SalesOrderDetails.Quantity-SalesOrderDetails.QtyInvoiced > 0 AND 
-                       BOM.Component='" . $StockID . "' AND StockMaster.StockID=BOM.Parent AND 
+	$sql = "SELECT Sum((SalesOrderDetails.Quantity-SalesOrderDetails.QtyInvoiced)*BOM.Quantity)
+                 AS DEM
+                 FROM SalesOrderDetails,
+                      SalesOrders,
+                      BOM,
+                      StockMaster
+                 WHERE SalesOrderDetails.StkCode=BOM.Parent AND
+                       SalesOrders.OrderNo = SalesOrderDetails.OrderNo AND
+                       SalesOrders.FromStkLoc='" . $myrow["LocCode"] . "' AND
+                       SalesOrderDetails.Quantity-SalesOrderDetails.QtyInvoiced > 0 AND
+                       BOM.Component='" . $StockID . "' AND StockMaster.StockID=BOM.Parent AND
                        StockMaster.MBflag='A'";
 
-	$ErrMsg = _('The demand for this product from') . ' ' . $myrow["LocCode"] . ' ' . _('cannot be retrieved because') . ':';
-	$Dbgmsg = '<BR>' . _('The SQL that failed was') . ':';
+	$ErrMsg = _('The demand for this product from') . ' ' . $myrow['LocCode'] . ' ' . _('cannot be retrieved because');
 	$DemandResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($DemandResult)==1){
@@ -148,14 +145,13 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 
 	if ($Its_A_KitSet_Assembly_Or_Dummy == False){
 
-		$sql = "SELECT Sum(PurchOrderDetails.QuantityOrd - PurchOrderDetails.QuantityRecd) 
-                   AS QOO 
-                   FROM PurchOrderDetails 
-                   INNER JOIN PurchOrders ON PurchOrderDetails.OrderNo=PurchOrders.OrderNo 
-                   WHERE PurchOrders.IntoStockLocation='" . $myrow["LocCode"] . "' AND 
+		$sql = "SELECT Sum(PurchOrderDetails.QuantityOrd - PurchOrderDetails.QuantityRecd)
+                   AS QOO
+                   FROM PurchOrderDetails
+                   INNER JOIN PurchOrders ON PurchOrderDetails.OrderNo=PurchOrders.OrderNo
+                   WHERE PurchOrders.IntoStockLocation='" . $myrow["LocCode"] . "' AND
                    PurchOrderDetails.ItemCode='" . $StockID . "'";
-		$ErrMsg = _('The quantity on order for this product to be received into') . ' ' . $myrow["LocCode"] . ' ' . _('cannot be retrieved because') . ':';
-		$DbgMsg = '<BR>' . _('The SQL that failed was') . ':';
+		$ErrMsg = _('The quantity on order for this product to be received into') . ' ' . $myrow['LocCode'] . ' ' . _('cannot be retrieved because');
 		$QOOResult = DB_query($sql,$db,$ErrMsg, $DbgMsg);
 
 		if (DB_num_rows($QOOResult)==1){
@@ -171,11 +167,11 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 			<td ALIGN=RIGHT>%s</td>
 			<td ALIGN=RIGHT>%s</td>
 			<td ALIGN=RIGHT>%s</td>",
-			$myrow["LocationName"],
-			number_format($myrow["Quantity"],$DecimalPlaces),
-			number_format($myrow["ReorderLevel"],$DecimalPlaces),
+			$myrow['LocationName'],
+			number_format($myrow['Quantity'],$DecimalPlaces),
+			number_format($myrow['ReorderLevel'],$DecimalPlaces),
 			number_format($DemandQty,$DecimalPlaces),
-			number_format($myrow["Quantity"] - $DemandQty,$DecimalPlaces),
+			number_format($myrow['Quantity'] - $DemandQty,$DecimalPlaces),
 			number_format($QOO,$DecimalPlaces)
 			);
 
@@ -206,12 +202,12 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 //end of while loop
 
 echo '</TABLE><HR>';
-echo '<A HREF="' . $rootpath . '/StockMovements.php?' . SID . 'StockID=' . $StockID . '">' . _('Show Movements') . '</A>';
-echo '<BR><A HREF="' . $rootpath . '/StockUsage.php?' . SID . 'StockID=' . $StockID . '">' . _('Show Usage') . '</A>';
-echo '<BR><A HREF="' . $rootpath . '/SelectSalesOrder.php?' . SID . 'SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</A>';
-echo '<BR><A HREF="' . $rootpath . '/SelectCompletedOrder.php?' . SID . 'SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</A>';
+echo '<A HREF="' . $rootpath . '/StockMovements.php?' . SID . '&StockID=' . $StockID . '">' . _('Show Movements') . '</A>';
+echo '<BR><A HREF="' . $rootpath . '/StockUsage.php?' . SID . '&StockID=' . $StockID . '">' . _('Show Usage') . '</A>';
+echo '<BR><A HREF="' . $rootpath . '/SelectSalesOrder.php?' . SID . '&SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</A>';
+echo '<BR><A HREF="' . $rootpath . '/SelectCompletedOrder.php?' . SID . '&SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</A>';
 if ($Its_A_KitSet_Assembly_Or_Dummy ==False){
-	echo '<BR><A HREF="' . $rootpath . '/PO_SelectOSPurchOrder.php?' .SID . 'SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Purchase Orders') . '</A>';
+	echo '<BR><A HREF="' . $rootpath . '/PO_SelectOSPurchOrder.php?' .SID . '&SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Purchase Orders') . '</A>';
 }
 
 echo '</form>';

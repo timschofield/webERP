@@ -1,12 +1,14 @@
 <?php
-/* $Revision: 1.5 $ */
-$title = "Stock Usage";
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 2;
 
-include("includes/session.inc");
-include("includes/header.inc");
-include("includes/DateFunctions.inc");
+include('includes/session.inc');
+
+$title = _('Stock Usage');
+
+include('includes/header.inc');
+include('includes/DateFunctions.inc');
 
 
 if (isset($_GET['StockID'])){
@@ -22,49 +24,49 @@ $myrow = DB_fetch_row($result);
 $DecimalPlaces = $myrow[3];
 
 $Its_A_KitSet_Assembly_Or_Dummy =False;
-if (($myrow[2]=="K") OR ($myrow[2]=="A") OR ($myrow[2]=="D")) {
+if (($myrow[2]=='K') OR ($myrow[2]=='A') OR ($myrow[2]=='D')) {
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
 	echo "<BR><FONT COLOR=BLUE SIZE=3><B>$StockID - $myrow[0] </B></FONT>";
 
-	echo "<BR>The selected item is a dummy, assembly or kitset item and cannot have a stock holding, please select a different item.";
+	echo '<BR>' . _('The selected item is a dummy or assembly or kit-set item and cannot have a stock holding') . '. ' . _('Please select a different item');
 
 	$StockID = '';
 } else {
-	echo "<BR><FONT COLOR=BLUE SIZE=3><B>$StockID - $myrow[0] </B>  (in units of $myrow[1])</FONT>";
+	echo "<BR><FONT COLOR=BLUE SIZE=3><B>$StockID - $myrow[0] </B> (" . _('in units of') . " $myrow[1])</FONT>";
 }
 
-echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?". SID ."' METHOD=POST>";
-echo "Stock Code:<input type=text name='StockID' size=21 maxlength=20 value='$StockID' >";
+echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?'. SID ."' METHOD=POST>";
+echo _('Stock Code') . ":<input type=text name='StockID' size=21 maxlength=20 value='$StockID' >";
 
-echo "  From Stock Location:<SELECT name='StockLocation'> ";
+echo _('From Stock Location') . ":<SELECT name='StockLocation'> ";
 
-$sql = "SELECT LocCode, LocationName FROM Locations";
+$sql = 'SELECT LocCode, LocationName FROM Locations';
 $resultStkLocs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation'])){
-		if ($myrow["LocCode"] == $_POST['StockLocation']){
-		     echo "<OPTION SELECTED Value='" . $myrow["LocCode"] . "'>" . $myrow["LocationName"];
+		if ($myrow['LocCode'] == $_POST['StockLocation']){
+		     echo "<OPTION SELECTED Value='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
 		} else {
-		     echo "<OPTION Value='" . $myrow["LocCode"] . "'>" . $myrow["LocationName"];
+		     echo "<OPTION Value='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
 		}
-	} elseif ($myrow["LocCode"]==$_SESSION['UserStockLocation']){
-		 echo "<OPTION SELECTED Value='" . $myrow["LocCode"] . "'>" . $myrow["LocationName"];
-		 $_POST['StockLocation']=$myrow["LocCode"];
+	} elseif ($myrow['LocCode']==$_SESSION['UserStockLocation']){
+		 echo "<OPTION SELECTED Value='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
+		 $_POST['StockLocation']=$myrow['LocCode'];
 	} else {
-		 echo "<OPTION Value='" . $myrow["LocCode"] . "'>" . $myrow["LocationName"];
+		 echo "<OPTION Value='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
 	}
 }
 if (isset($_POST['StockLocation'])){
-	if ("All"== $_POST['StockLocation']){
-	     echo "<OPTION SELECTED Value='All'>All Locations";
+	if ('All'== $_POST['StockLocation']){
+	     echo "<OPTION SELECTED Value='All'>" . _('All Locations');
 	} else {
-	     echo "<OPTION Value='All'>All Locations";
+	     echo "<OPTION Value='All'>" . _('All Locations');
 	}
 }
-echo "</SELECT>";
+echo '</SELECT>';
 
-echo " <INPUT TYPE=SUBMIT NAME='ShowUsage' VALUE='Show Stock Usage'>";
-echo "<HR>";
+echo " <INPUT TYPE=SUBMIT NAME='ShowUsage' VALUE='" . _('Show Stock Usage') . "'>";
+echo '<HR>';
 
 /* $NumberOfPeriodsOfStockUsage  is defined in config.php as a user definable variable
 config.php is loaded by header.inc */
@@ -79,15 +81,15 @@ if($_POST['StockLocation']=='All'){
 }
 $MovtsResult = DB_query($sql, $db);
 if (DB_error_no($db) !=0) {
-	echo "The stock usage for the selected criteria could not be retrieved because - " . DB_error_msg($db);
+	echo _('The stock usage for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db);
 	if ($debug==1){
-	   echo "<BR>The SQL that failed was $sql";
+	   echo '<BR>' . _('The SQL that failed was') . $sql;
 	}
 	exit;
 }
 
-echo "<TABLE CELLPADDING=2 BORDER=0>";
-$tableheader = "<TR><TD class='tableheader'>Month</TD><TD class='tableheader'>Usage</TD></TR>";
+echo '<TABLE CELLPADDING=2 BORDER=0>';
+$tableheader = "<TR><TD class='tableheader'>" . _('Month') . "</TD><TD class='tableheader'>" . _('Usage') . '</TD></TR>';
 echo $tableheader;
 
 $j = 1;
@@ -106,11 +108,11 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 		$k++;
 	}
 
-	$DisplayDate = MonthAndYearFromSQLDate($myrow["LastDate_in_Period"]);
+	$DisplayDate = MonthAndYearFromSQLDate($myrow['LastDate_in_Period']);
 
-	$TotalUsage += $myrow["QtyUsed"];
+	$TotalUsage += $myrow['QtyUsed'];
 	$PeriodsCounter++;
-	printf("<td>%s</td><td ALIGN=RIGHT>%s</td></tr>", $DisplayDate, number_format($myrow["QtyUsed"],$DecimalPlaces));
+	printf('<td>%s</td><td ALIGN=RIGHT>%s</td></tr>', $DisplayDate, number_format($myrow['QtyUsed'],$DecimalPlaces));
 
 	$j++;
 	If ($j == 12){
@@ -121,17 +123,17 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 }
 //end of while loop
 
-echo "</TABLE>";
+echo '</TABLE>';
 if ($TotalUsage>0 && $PeriodsCounter>0){
-   echo "<BR>Average Usage per month is " . number_format($TotalUsage/$PeriodsCounter);
+   echo '<BR>' . _('Average Usage per month is') . ' ' . number_format($TotalUsage/$PeriodsCounter);
 }
-echo "<HR><A HREF='$rootpath/StockStatus.php?". SID . "StockID=$StockID'>Show Stock Status</A>";
-echo "<BR><A HREF='$rootpath/StockMovements.php?". SID . "StockID=$StockID&StockLocation=" . $_POST['StockLocation'] . "'>Show Stock Movements</A>";
-echo "<BR><A HREF='$rootpath/SelectSalesOrder.php?". SID . "SelectedStockItem=$StockID&StockLocation=" . $_POST['StockLocation'] . "'>Search Outstanding Sales Orders</A>";
-echo "<BR><A HREF='$rootpath/SelectCompletedOrder.php?". SID . "SelectedStockItem=$StockID'>Search Completed Sales Orders</A>";
-echo "<BR><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" .SID . "SelectedStockItem=$StockID'>Search Outstanding Purchase Orders</A>";
+echo "<HR><A HREF='$rootpath/StockStatus.php?". SID . "&StockID=$StockID'>" . _('Show Stock Status') .'</A>';
+echo "<BR><A HREF='$rootpath/StockMovements.php?". SID . "&StockID=$StockID&StockLocation=" . $_POST['StockLocation'] . "'>" . _('Show Stock Movements') . '</A>';
+echo "<BR><A HREF='$rootpath/SelectSalesOrder.php?". SID . "&SelectedStockItem=$StockID&StockLocation=" . $_POST['StockLocation'] . "'>" . _('Search Outstanding Sales Orders') . '</A>';
+echo "<BR><A HREF='$rootpath/SelectCompletedOrder.php?". SID . "&SelectedStockItem=$StockID'>" . _('Search Completed Sales Orders') . '</A>';
+echo "<BR><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" .SID . "&SelectedStockItem=$StockID'>" . _('Search Outstanding Purchase Orders') . '</A>';
 
-echo "</form></center>";
-include("includes/footer.inc");
+echo '</form></center>';
+include('includes/footer.inc');
 
 ?>

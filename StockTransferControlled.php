@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
@@ -16,7 +16,7 @@ include('includes/header.inc');
 
 if (!isset($_SESSION['Transfer'])) {
 	/* This page can only be called when a stock Transfer is pending */
-	echo '<CENTER><A HREF="' . $rootpath . '/StockTransfer.php?' . SID . 'NewTransfer=Yes">'._('Enter A Stock Transfer').'</A><br>';
+	echo '<CENTER><A HREF="' . $rootpath . '/StockTransfers.php?' . SID . 'NewTransfer=Yes">'._('Enter A Stock Transfer').'</A><br>';
 	prnMsg( _('This page can only be opened if a Stock Transfer for a Controlled Item has been initiated').'<BR>','error');
 	echo '</CENTER>';
 	include('includes/footer.inc');
@@ -28,6 +28,7 @@ if (isset($_GET['TransferItem'])){
 	$TransferItem = $_GET['TransferItem'];
 	$_SESSION['TransferItem'] = $_GET['TransferItem'];
 } elseif (isset($_SESSION['TransferItem'])){
+	echo '<BR>Session Transfer item is set?';
 	$TransferItem = $_SESSION['TransferItem'];
 }
 
@@ -46,7 +47,7 @@ if ($LineItem->Controlled != 1 ){
 	} else {
 		echo '<CENTER><A HREF="' . $rootpath . '/StockTransfers.php?' . SID . 'NewTransfer=Yes">'._('Enter A Stock Transfer').'</A></CENTER>';
 	}
-	prnMsg('<BR>'. _('Notice - The transferred item must be defined as controlled to require input of the batch numbers or serial numbers being transferred'),'error');
+	prnMsg('<BR>'. _('Notice') . ' - ' . -('The transferred item must be defined as controlled to require input of the batch numbers or serial numbers being transferred'),'error');
 	include('includes/footer.inc');
 	exit;
 }
@@ -54,6 +55,10 @@ if ($LineItem->Controlled != 1 ){
 echo '<CENTER>';
 
 if (isset($TransferItem)){
+
+	echo 'Transfer Items is set equal to ' . $TransferItem;
+	echo '<BR>Session["TransferItem"] = ' . $_SESSION['TransferItem'];
+
 	echo '<br><a href="'.$rootpath.'/StockLocTransferReceive.php?'  . SID . '">'._('Back To Transfer Screen').'</A>';
 } else {
 	echo '<br><a href="'.$rootpath.'/StockTransfers.php?'  . SID . '">'._('Back To Transfer Screen').'</A>';

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 2; /*viewing possible with inquiries but not mods */
 
@@ -25,7 +25,7 @@ if (isset($_POST['UpdateData'])){
 	$result = DB_query("SELECT * FROM StockMaster WHERE StockID='$StockID'",$db);
 	$myrow = DB_fetch_row($result);
 	if (DB_num_rows($result)==0) {
-		prnMsg (_('The entered item code does not exist'),'error',_('Non-Existant Item'));
+		prnMsg (_('The entered item code does not exist'),'error',_('Non-existent Item'));
 	} elseif ($OldCost != $NewCost){
 
 		$SQL = "Begin";
@@ -40,16 +40,42 @@ if (isset($_POST['UpdateData'])){
 
 			$ValueOfChange = $_POST['QOH'] * ($NewCost - $OldCost);
 
-			$SQL = "INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (35, " . $CostUpdateNo . ", '" . Date('Y-m-d') . "', " . $PeriodNo . ", " . $StockGLCode["AdjGLAct"] . ", '" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' ' . $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $_POST['QOH'] . "', " . (-$ValueOfChange) . ")";
+			$SQL = "INSERT INTO GLTrans (Type,
+							TypeNo,
+							TranDate,
+							PeriodNo,
+							Account,
+							Narrative,
+							Amount)
+						VALUES (35,
+							" . $CostUpdateNo . ",
+							'" . Date('Y-m-d') . "',
+							" . $PeriodNo . ",
+							" . $StockGLCode["AdjGLAct"] . ",
+							'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' ' . $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $_POST['QOH'] . "',
+							" . (-$ValueOfChange) . ")";
 
-			$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The GL credit for the stock cost adjustment posting could not be inserted because:');
-			$DbgMsg = _('The following SQL to insert the GLTrans record was used:');
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL credit for the stock cost adjustment posting could not be inserted because');
+			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-			$SQL = "INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (35, " . $CostUpdateNo . ", '" . Date('Y-m-d') . "', " . $PeriodNo . ", " . $StockGLCode["StockAct"] . ", '" . $StockID . " cost was " . $OldCost . " changed to " . $NewCost . " x Quantity on hand of " . $_POST['QOH'] . "', " . $ValueOfChange . ")";
+			$SQL = "INSERT INTO GLTrans (Type,
+							TypeNo,
+							TranDate,
+							PeriodNo,
+							Account,
+							Narrative,
+							Amount)
+						VALUES (35,
+							" . $CostUpdateNo . ",
+							'" . Date('Y-m-d') . "',
+							" . $PeriodNo . ",
+							" . $StockGLCode['StockAct'] . ",
+							'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') .' ' . $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $_POST['QOH'] . "',
+							" . $ValueOfChange . ")";
 
-			$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The GL debit for stock cost adjustment posting could not be inserted because:');
-			$DbgMsg = _('The following SQL to insert the GLTrans record was used:');
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL debit for stock cost adjustment posting could not be inserted because');
+			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 		}
 
@@ -61,16 +87,15 @@ if (isset($_POST['UpdateData'])){
 			WHERE StockID='" . $StockID . "'";
 
 		$ErrMsg = _('The cost details for the stock item could not be updated because');
-		$DbgMsg = _('The SQL that failed was:');
+		$DbgMsg = _('The SQL that failed was');
 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-		$SQL = "commit";
-		$Result = DB_query($SQL,$db);
+		$Result = DB_query('COMMIT',$db);
 
    	}
 }
 
-$ErrMsg = _('The cost details for the stock item could not be retrieved because:');
+$ErrMsg = _('The cost details for the stock item could not be retrieved because');
 $DbgMsg = _('The SQL that failed was');
 
 $result = DB_query("SELECT Description,
@@ -113,7 +138,8 @@ if ($myrow["MBflag"]=='D' OR $myrow["MBflag"]=='A' OR $myrow["MBflag"]=='K'){
    } else if ($myrow["MBflag"]=='K'){
    	echo "<BR>$StockID " . _('is a kit set part');
    }
-   echo '<BR>' . _('Cost information cannot be modified for kits, assemblies or dummy parts. Please select a different part');
+   prnMsg(_('Cost information cannot be modified for kits assemblies or dummy parts') . '. ' . _('Please select a different part'),'warn');
+   include('includes/footer.inc');
    exit;
 }
 
@@ -124,7 +150,7 @@ echo '<INPUT TYPE=HIDDEN NAME=QOH VALUE=' . $myrow['TotalQOH'] .'>';
 
 echo '<CENTER><TABLE CELLPADDING=2 BORDER=2>';
 echo '<TR><TD>' . _('Last Cost') .':</TD><TD ALIGN=RIGHT>' . number_format($myrow['LastCost'],2) . '</TD></TR>';
-if (! in_array($UpdateSecurity,$SecurityGroups[$_SESSION["AccessLevel"]]) OR !isset($UpdateSecurity)){
+if (! in_array($UpdateSecurity,$SecurityGroups[$_SESSION['AccessLevel']]) OR !isset($UpdateSecurity)){
 	echo '<TR><TD>' . _('Cost') . ':</TD><TD ALIGN=RIGHT>' . number_format($myrow['MaterialCost']+$myrow['LabourCost']+$myrow['OverheadCost'],2) . '</TD></TR></TABLE>';
 } else {
 	echo '<TR><TD>' . _('Standard Material Cost Per Unit') .':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME=MaterialCost VALUE=' . $myrow['MaterialCost'] . '></TD></TR>';
@@ -139,12 +165,12 @@ if (! in_array($UpdateSecurity,$SecurityGroups[$_SESSION["AccessLevel"]]) OR !is
 
 echo "</TABLE><INPUT TYPE=SUBMIT NAME='UpdateData' VALUE='" . _('Update') . "'><HR>";
 }
-echo "<A HREF='$rootpath/StockStatus.php?" . SID . "StockID=$StockID'>" . _('Show Stock Status') . '</A>';
-echo "<BR><A HREF='$rootpath/StockMovements.php?" . SID . "StockID=$StockID'>" . _('Show Stock Movements') . '</A>';
-echo "<BR><A HREF='$rootpath/StockUsage.php?" . SID . "StockID=$StockID'>" . _('Show Stock Usage')  .'</A>';
-echo "<BR><A HREF='$rootpath/SelectSalesOrder.php?" . SID . "SelectedStockItem=$StockID'>" . _('Search Outstanding Sales Orders') . '</A>';
-echo "<BR><A HREF='$rootpath/SelectCompletedOrder.php?" . SID . "SelectedStockItem=$StockID'>" . _('Search Completed Sales Orders') . '</A>';
+echo "<A HREF='$rootpath/StockStatus.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Status') . '</A>';
+echo "<BR><A HREF='$rootpath/StockMovements.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Movements') . '</A>';
+echo "<BR><A HREF='$rootpath/StockUsage.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Usage')  .'</A>';
+echo "<BR><A HREF='$rootpath/SelectSalesOrder.php?" . SID . "&SelectedStockItem=$StockID'>" . _('Search Outstanding Sales Orders') . '</A>';
+echo "<BR><A HREF='$rootpath/SelectCompletedOrder.php?" . SID . "&SelectedStockItem=$StockID'>" . _('Search Completed Sales Orders') . '</A>';
 
-echo "</form>";
-include("includes/footer.inc");
+echo '</form>';
+include('includes/footer.inc');
 ?>

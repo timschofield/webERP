@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity = 2;
 
@@ -11,12 +11,21 @@ include('includes/header.inc');
 if (isset($_GET['StockID'])){
 	$StockID =$_GET['StockID'];
 } else {
-	prnMsg( _('This page must be called with parameters specifying the item to show the serial references and quantities. It cannot be displayed without the proper parameters being passed'),'error');
+	prnMsg( _('This page must be called with parameters specifying the item to show the serial references and quantities') . '. ' . _('It cannot be displayed without the proper parameters being passed'),'error');
 	include('includes/footer.inc');
 	exit;
 }
 
-$result = DB_query("SELECT Description, Units, MBflag, DecimalPlaces, Serialised, Controlled FROM StockMaster WHERE StockID='$StockID'",$db, _('Could not retrieve the requested item because'),_('The SQL used to retrieve the items was'));
+$result = DB_query("SELECT Description,
+			Units,
+			MBflag,
+			DecimalPlaces,
+			Serialised,
+			Controlled
+		FROM StockMaster
+		WHERE StockID='$StockID'",
+		$db,
+		_('Could not retrieve the requested item because'));
 
 $myrow = DB_fetch_row($result);
 
@@ -28,7 +37,7 @@ echo "<BR><FONT COLOR=BLUE SIZE=3><B>$StockID - $myrow[0] </B>  (" . _('In units
 
 if ($myrow[2]=='K' OR $myrow[2]=='A' OR $myrow[2]=='D'){
 
-	prnMsg(_('This item is either a kitset/assembly or dummy part and cannot have a stock holding. This page cannot be displayed. Only serialised or controlled items can be displayed in this page'),'error');
+	prnMsg(_('This item is either a kitset or assembly or a dummy part and cannot have a stock holding') . '. ' . _('This page cannot be displayed') . '. ' . _('Only serialised or controlled items can be displayed in this page'),'error');
 	include('includes/footer.inc');
 	exit;
 }
@@ -40,7 +49,12 @@ if ($Serialised==1){
 }
 
 
-$result = DB_query("SELECT LocationName FROM Locations WHERE LocCode='" . $_GET['Location'] . "'",$db,_('Could not retrieve the stock location of the item because'),_('The SQL used to lookup the location was'));
+$result = DB_query("SELECT LocationName
+			FROM Locations
+			WHERE LocCode='" . $_GET['Location'] . "'",
+			$db,
+			_('Could not retrieve the stock location of the item because'),
+			_('The SQL used to lookup the location was'));
 
 $myrow = DB_fetch_row($result);
 echo $myrow[0];
