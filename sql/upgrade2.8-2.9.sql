@@ -157,3 +157,24 @@ INSERT INTO `EDI_ORDERS_Seg_Groups` VALUES (46, 2, 43);
 INSERT INTO `EDI_ORDERS_Seg_Groups` VALUES (47, 1, 43);
 INSERT INTO `EDI_ORDERS_Seg_Groups` VALUES (48, 5, 43);
 INSERT INTO `EDI_ORDERS_Seg_Groups` VALUES (49, 10, 28);
+
+
+CREATE TABLE `LocTransfers` (
+  `Reference` int(11) NOT NULL default '0',
+  `StockID` varchar(20) NOT NULL default '',
+  `ShipQty` int(11) NOT NULL default '0',
+  `RecQty` int(11) NOT NULL default '0',
+  `ShipDate` date NOT NULL default '0000-00-00',
+  `RecDate` date NOT NULL default '0000-00-00',
+  `ShipLoc` varchar(7) NOT NULL default '',
+  `RecLoc` varchar(7) NOT NULL default '',
+  KEY `Reference` (`Reference`,`StockID`),
+  KEY `ShipLoc` (`ShipLoc`),
+  KEY `RecLoc` (`RecLoc`),
+  KEY `StockID` (`StockID`)
+) TYPE=InnoDB COMMENT='Stores Transfers To Other Locations';
+
+ALTER TABLE `LocTransfers`
+  ADD CONSTRAINT `LocTransfers_ibfk_3` FOREIGN KEY (`StockID`) REFERENCES `StockMaster` (`StockID`),
+  ADD CONSTRAINT `LocTransfers_ibfk_1` FOREIGN KEY (`ShipLoc`) REFERENCES `Locations` (`LocCode`),
+  ADD CONSTRAINT `LocTransfers_ibfk_2` FOREIGN KEY (`RecLoc`) REFERENCES `Locations` (`LocCode`);
