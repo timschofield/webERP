@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
@@ -411,7 +411,23 @@ foreach ($_SESSION['Items']->LineItems as $OrderLine) {
 
 if (isset($_POST['ProcessInvoice']) && $_POST['ProcessInvoice'] != ""){
 
-/* SQL to process the postings for sales invoices... First Get the area where the sale is to from the branches table */
+/* SQL to process the postings for sales invoices...
+
+/*First check there are lines on the dipatch with quantities to invoice
+invoices can have a zero amount but there must be a quantity to invoice */
+
+	$QuantityInvoicedIsPositive = false;
+
+	foreach ($_SESSION['Items']->LineItems as $OrderLine) {
+		if ($OrderLine->QtyDispatched > 0){
+			$QuantityInvoicedIsPositive =true;
+		}
+	}
+	echo '<BR><FONT SIZE=4 COLOR=RED>Error: </FONT>' . _('There are no lines on this order with a quantity to invoice. No further processing has been done');
+	include('includes/footer.inc');
+	exit;
+
+/* Now Get the area where the sale is to from the branches table */
 
 	$SQL = "SELECT Area, DefaultShipVia FROM CustBranch WHERE CustBranch.DebtorNo ='". $_SESSION['Items']->DebtorNo . "' AND CustBranch.BranchCode = '" . $_SESSION['Items']->Branch . "'";
 	$ErrMsg = _('We were unable to load Area where the Sale is to from the BRANCHES table. Please remedy this.');
@@ -428,7 +444,8 @@ if (isset($_POST['ProcessInvoice']) && $_POST['ProcessInvoice'] != ""){
 		/*The company data and preferences could not be retrieved for some reason */
 		echo '<P>';
 		prnMsg( _('The company infomation and preferences could not be retrieved - see your system administrator'), 'error');
-		include('includes/footer.inc'); exit;
+		include('includes/footer.inc');
+		exit;
 	}
 
 /*Now need to check that the order details are the same as they were when they were read into the Items array. If they've changed then someone else may have invoiced them  - as modified for bug pointed out by Sherif 1-7-03*/
@@ -479,9 +496,10 @@ if (isset($_POST['ProcessInvoice']) && $_POST['ProcessInvoice'] != ""){
 	                unset($_SESSION['Items']->LineItems);
         	        unset($_SESSION['Items']);
                 	unset($_SESSION['ProcessingOrder']);
-	                include('includes/footer.inc'); exit;
+	                include('includes/footer.inc');
+			exit;
 		}
-	} /*loop through all line items of the order to ensure none have been invoiced */
+	} /*loop through all line items of the order to ensure none have been invoiced since started looking at this order*/
 
 	DB_free_result($Result);
 

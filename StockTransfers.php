@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfer.php');
 
@@ -164,7 +164,7 @@ if ( isset($_POST['EnterTransfer']) ){
 					AND LocCode='" . $_SESSION['Transfer']->StockLocationFrom . "'
 					AND SerialNo='" . $Item->BundleRef . "'";
 
-				$ErrMsg = '<P>'. _('The entered item code does not exist').'.';
+				$ErrMsg =  _('The entered item code does not exist');
 				$Result = DB_query($SQL,$db,$ErrMsg);
 				$SerialItemExistsRow = DB_fetch_row($Result);
 
@@ -330,7 +330,7 @@ if ( isset($_POST['EnterTransfer']) ){
 		$DbgMsg = _('The following SQL to update the location stock record was used');
 		$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 
-		echo '<P>'. _('An inventory transfer of').' ' . $_SESSION['Transfer']->StockID . ' - ' . $_SESSION['Transfer']->PartDescription . ' '. _('has been created from').' ' . $_SESSION['Transfer']->StockLocationFrom . ' '._('to').' ' . $_SESSION['Transfer']->StockLocationTo . ' '._('for a quantity of').' ' . $_SESSION['Transfer']->Quantity;
+		echo '<P>'. _('An inventory transfer of').' ' . $_SESSION['Transfer']->StockID . ' - ' . $_SESSION['Transfer']->PartDescription . ' '. _('has been created from').' ' . $_SESSION['Transfer']->StockLocationFrom . ' '. _('to') . ' ' . $_SESSION['Transfer']->StockLocationTo . ' '._('for a quantity of').' ' . $_SESSION['Transfer']->Quantity;
 		unset ($_SESSION['Transfer']);
 		include ('includes/footer.inc');
 		exit;

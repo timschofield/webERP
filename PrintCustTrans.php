@@ -1,12 +1,6 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $PageSecurity = 1;
-
-if (!function_exists('_')){
-	function _($text){
-		return ($text);
-	}
-}
 
 if (isset($_GET["FromTransNo"])){
 	$FromTransNo = $_GET["FromTransNo"];
@@ -14,9 +8,6 @@ if (isset($_GET["FromTransNo"])){
 	$FromTransNo = $_POST["FromTransNo"];
 }
 
-if (!isset($FromTransNo)  || $FromTransNo=="") {
-	$title=_('Select Invoices/Credit Notes To Print');
-}
 
 if (isset($_GET["InvOrCredit"])){
 	$InvOrCredit = $_GET["InvOrCredit"];
@@ -477,10 +468,11 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 
 } else { /*The option to print PDF was not hit */
 
-	  include("includes/session.inc");
-	  include("includes/header.inc");
+	include("includes/session.inc");
+	$title=_('Select Invoices/Credit Notes To Print');
+	include("includes/header.inc");
 
-	  if (!isset($FromTransNo) OR $FromTransNo=="") {
+	if (!isset($FromTransNo) OR $FromTransNo=="") {
 
 
 	/*if FromTransNo is not set then show a form to allow input of either a single invoice number or a range of invoices to be printed. Also get the last invoice number created to show the user where the current range is up to */
