@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Stock Item Maintenance";
 
 $PageSecurity = 11;
@@ -16,7 +16,7 @@ if (isset($_GET['StockID'])){
 	$StockID =strtoupper($_POST['StockID']);
 }
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
@@ -142,9 +142,6 @@ if ($_POST['submit']) {
 
 		} else { //it is a NEW part
 
-			if ($hide_incomplete_features==True) {
-				$_POST['Controlled'] = 0;
-			}
 
 			$sql = "INSERT INTO StockMaster (StockID, Description, LongDescription, CategoryID, Units, MBFlag, EOQ, Discontinued, Controlled, Volume, KGS, BarCode, DiscountCategory, TaxLevel) VALUES ('$StockID', '" . $_POST['Description'] . "', '" . $_POST['LongDescription'] . "', '" . $_POST['CategoryID'] . "', '" . $_POST['Units'] . "', '" . $_POST['MBFlag'] . "', " . $_POST['EOQ'] . ", " . $_POST['Discontinued'] . ", " . $_POST['Controlled'] . ", " . $_POST['Volume'] . ", " . $_POST['KGS'] . ", '" . $_POST['BarCode'] . "','" . $_POST[', DiscountCategory'] . "'," . $_POST['TaxLevel'] . ")";
 
@@ -309,6 +306,9 @@ if (!isset($StockID) OR isset($_POST['New'])) {
 /*If the page was called without $StockID passed to page then assume a new stock item is to be entered show a form with a part Code field other wise the form showing the fields with the existing entries against the part will show for editing with only a hidden StockID field. New is set to flag that the page may have called itself and still be entering a new part, in which case the page needs to know not to go looking up details for an existing part*/
 
 	echo "<input type='Hidden' name='New' value='Yes'>";
+	if (!isset($StockID)){
+		$StockID='';
+	}
 
 	echo "<TR><TD>Item Code:</TD><TD><input type='Text' name='StockID' SIZE=21 MAXLENGTH=20 Value=$StockID></TD></TR>";
 
@@ -338,6 +338,12 @@ if (!isset($StockID) OR isset($_POST['New'])) {
 
 }
 
+if (!isset($_POST['Description'])){
+	$_POST['Description'] ='';
+}
+if (!isset($_POST['LongDescription'])){
+	$_POST['LongDescription'] ='';
+}
 echo "<TR><TD>Part Description (short):</TD><TD><input type='Text' name='Description' SIZE=52 MAXLENGTH=50 value='" . $_POST['Description'] . "'></TD></TR>";
 
 echo "<TR><TD>Part Description (long):</TD><TD><textarea name='LongDescription' cols=40 rows=4>" . $_POST['LongDescription'] . "</textarea></TD></TR>";
@@ -354,6 +360,10 @@ if (DB_error_no($db) !=0) {
 	}
 }
 
+if (!isset($_POST['CategoryID'])){
+	$_POST['CategoryID']='';
+}
+
 while ($myrow=DB_fetch_array($result)){
 	if ($myrow["CategoryID"]==$_POST['CategoryID']){
 		echo "<OPTION SELECTED VALUE='". $myrow["CategoryID"] . "'>" . $myrow["CategoryDescription"];
@@ -362,19 +372,26 @@ while ($myrow=DB_fetch_array($result)){
 	}
 }
 
-if ($_POST['EOQ']=="" or !isset($_POST['EOQ'])){
+if (!isset($_POST['EOQ'])){
     $_POST['EOQ']=0;
 }
 
-if ($_POST['Volume']=="" OR !isset($_POST['Volume'])){
+if (!isset($_POST['Volume'])){
     $_POST['Volume']=0;
 }
-if ($_POST['KGS']=="" OR !isset($_POST['KGS'])){
+if (!isset($_POST['KGS'])){
     $_POST['KGS']=0;
 }
 
-echo "</SELECT>    <a target='_blank' href='$rootpath/StockCategories.php?" . SID . "'>Add or Modify Stock Categories</a>";
+if (!isset($_POST['Controlled'])){
+    $_POST['Controlled']=0;
+}
+if (!isset($_POST['Discontinued'])){
+    $_POST['Discontinued']=0;
+}
 
+
+echo "</SELECT>    <a target='_blank' href='$rootpath/StockCategories.php?" . SID . "'>Add or Modify Stock Categories</a>";
 
 echo "</TR><TR><TD>Economic Order Quantity:</TD><TD><input type='Text' name='EOQ' SIZE=12 MAXLENGTH=10 Value=" . $_POST['EOQ'] . "></TD></TR>";
 
@@ -386,6 +403,9 @@ echo "<TR><TD>Units of Measure:</TD><TD><SELECT name='Units'>";
 
 /* The array StockUnits is set up in config.php for user modification
 possible units of measure can added or modifying the array definition by editing that file */
+if (!isset($_POST['Units'])){
+	$_POST['Units']='';
+}
 
 foreach ($StockUnits as $UOM) {
 
@@ -396,6 +416,10 @@ foreach ($StockUnits as $UOM) {
      }
 }
 echo "</SELECT></TD></TR>";
+
+if (!isset($_POST['MBFlag'])){
+	$_POST['MBFlag']='';
+}
 
 echo "<TR><TD>Make, Buy, Kit, Assembly or Dummy Part:</TD><TD><SELECT name='MBFlag'>";
 if ($_POST['MBFlag']=='A'){
@@ -435,18 +459,31 @@ echo "<OPTION VALUE=1>Obsolete";
 
 echo "</SELECT></TD></TR>";
 
-if ($hide_incomplete_features==False) {
+if (!isset($_POST['Controlled']))
+	$_POST['Controlled'] = 0;
 
 echo "<TR><TD>Single or Serialised:</TD><TD><SELECT name='Controlled'>";
-
-echo "<OPTION SELECTED VALUE=0>No Control Required";
-echo "<OPTION VALUE=1>Lot/Serialised Control Required";
-
+if ($_POST['Controlled']==0){
+	echo "<OPTION SELECTED VALUE=0>No Control Required";
+} else {
+	echo "<OPTION VALUE=0>No Control Required";
+}
+if ($_POST['Controlled']==1){
+	echo "<OPTION SELECTED VALUE=1>Lot/Serialised Control Required";
+} else {
+	echo "<OPTION VALUE=1>Lot/Serialised Control Required";
+}
 echo "</SELECT></TD></TR>";
 
+if (!isset($_POST['BarCode'])){
+	$_POST['BarCode'] ='';
 }
 
 echo "<TR><TD>Bar Code:</TD><TD><input type='Text' name='BarCode' SIZE=22 MAXLENGTH=20 value='" . $_POST['BarCode'] . "'></TD></TR>";
+
+if (!isset($_POST['DiscountCategory'])){
+	$_POST['DiscountCategory'] ='';
+}
 
 echo "<TR><TD>Discount Category:</TD><TD><input type='Text' name='DiscountCategory' SIZE=2 MAXLENGTH=2 value='" . $_POST['DiscountCategory'] . "'></TD></TR>";
 

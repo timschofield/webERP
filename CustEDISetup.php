@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Customer EDI Set Up";
 
 $PageSecurity = 11;
@@ -34,6 +34,12 @@ if ($_POST['submit']=='Update EDI Configuration') {
 
 	If ($InputError==0){ //ie no input errors
 
+		if (!isset($_POST['EDIServerUser'])){
+			$_POST['EDIServerUser']='';
+		}
+		if (!isset($_POST['EDIServerPwd'])){
+			$_POST['EDIServerPwd']='';
+		}
 		$sql = "UPDATE DebtorsMaster SET EDIInvoices =" . $_POST['EDIInvoices'] . ", EDIOrders =" . $_POST['EDIOrders'] . ", EDIReference='" . $_POST['EDIReference'] . "', EDITransport='" . $_POST['EDITransport'] . "', EDIAddress='" . $_POST['EDIAddress'] . "', EDIServerUser='" . $_POST['EDIServerUser'] . "', EDIServerPwd='" . $_POST['EDIServerPwd'] . "' WHERE DebtorNo = '" . $_SESSION['CustomerID'] . "'";
 
 		$result = DB_query($sql,$db);

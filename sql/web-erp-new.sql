@@ -651,8 +651,8 @@ CREATE TABLE LastCostRollUp (
 
 DROP TABLE IF EXISTS LocStock;
 CREATE TABLE LocStock (
-  LocCode char(5) NOT NULL default '',
-  StockID char(20) NOT NULL default '',
+  LocCode varchar(5) NOT NULL default '',
+  StockID varchar(20) NOT NULL default '',
   Quantity double(16,1) NOT NULL default '0.0',
   ReorderLevel bigint(20) NOT NULL default '0',
   PRIMARY KEY  (LocCode,StockID),
@@ -1647,7 +1647,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE WWW_Users DISABLE KEYS */;
 LOCK TABLES WWW_Users WRITE;
-INSERT INTO WWW_Users VALUES ('Admin','albundy','Phil Daintree','','','','DEN',7,'2004-03-12 21:55:21','','A4','1,1,1,1,1,1,1,1,',0),('demo','weberp','','','','','DEN',5,'2004-03-16 21:41:41','','A4','1,1,1,1,1,1,1,1,',0),('testy','weberp','','GRANHR','','','DEN',6,'2004-02-23 20:21:56','GRAN','A4','1,0,0,0,0,0,0,0,',0);
+INSERT INTO WWW_Users VALUES ('Admin','albundy','Phil Daintree','','','','DEN',7,'2004-03-12 21:55:21','','A4','1,1,1,1,1,1,1,1,',0),('demo','weberp','','','','','DEN',5,'2004-03-26 21:52:32','','A4','1,1,1,1,1,1,1,1,',0),('testy','weberp','','GRANHR','','','DEN',6,'2004-02-23 20:21:56','GRAN','A4','1,0,0,0,0,0,0,0,',0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE WWW_Users ENABLE KEYS */;
 
