@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-19 10:41+1300\n"
+"POT-Creation-Date: 2004-11-23 09:47+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -474,7 +474,7 @@ msgid "Component"
 msgstr ""
 
 #: BOMInquiry.php:47 BOMs.php:65 BOMs.php:497 CreditStatus.php:105
-#: CreditStatus.php:171 GoodsReceived.php:50 PDFOrderStatus.php:253
+#: CreditStatus.php:171 GoodsReceived.php:51 PDFOrderStatus.php:253
 #: PO_Items.php:743 PO_Items.php:852 PO_SelectOSPurchOrder.php:151
 #: PO_SelectPurchOrder.php:192 PaymentTerms.php:143 ReverseGRN.php:332
 #: SelectCreditItems.php:816 SelectOrderItems.php:1020 SelectProduct.php:299
@@ -851,7 +851,7 @@ msgid "On Hand"
 msgstr ""
 
 #: BOMs.php:499 ConfirmDispatch_Invoice.php:229 Credit_Invoice.php:248
-#: GoodsReceived.php:52 PO_Items.php:853 PO_SelectOSPurchOrder.php:154
+#: GoodsReceived.php:53 PO_Items.php:853 PO_SelectOSPurchOrder.php:154
 #: PO_SelectPurchOrder.php:195 SelectCreditItems.php:817
 #: SelectOrderItems.php:1021 SelectProduct.php:301 SelectSalesOrder.php:170
 #: Shipments.php:383 Shipments.php:463 Shipt_Select.php:193
@@ -1415,9 +1415,9 @@ msgid "Create GL entries for stock transactions (at standard cost)"
 msgstr ""
 
 #: CompanyPreferences.php:393 ConfirmDispatch_Invoice.php:1226
-#: Credit_Invoice.php:1288 PurchData.php:322 SelectCreditItems.php:766
-#: StockCostUpdate.php:140 StockReorderLevel.php:88 TaxAuthorityRates.php:61
-#: WorkOrderIssue.php:131
+#: Credit_Invoice.php:1288 GoodsReceived.php:547 PurchData.php:322
+#: SelectCreditItems.php:766 StockCostUpdate.php:140 StockReorderLevel.php:88
+#: TaxAuthorityRates.php:61 WorkOrderIssue.php:131
 msgid "Update"
 msgstr ""
 
@@ -1530,9 +1530,9 @@ msgid "Invoice amounts stated in"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:226 Credit_Invoice.php:245
-#: DeliveryDetails.php:375 OrderDetails.php:193 PO_Items.php:698
-#: PO_OrderDetails.php:118 ReverseGRN.php:331 SelectCreditItems.php:609
-#: SelectOrderItems.php:880 StockLocTransfer.php:147
+#: DeliveryDetails.php:375 GoodsReceived.php:50 OrderDetails.php:193
+#: PO_Items.php:698 PO_OrderDetails.php:118 ReverseGRN.php:331
+#: SelectCreditItems.php:609 SelectOrderItems.php:880 StockLocTransfer.php:147
 #: StockLocTransferReceive.php:389 StockQuantityByDate.php:88 Stocks.php:418
 #: SuppCreditGRNs.php:70 SuppCreditGRNs.php:142 SuppInvGRNs.php:104
 #: SuppInvGRNs.php:259 SupplierCredit.php:224 SupplierInvoice.php:207
@@ -1564,7 +1564,7 @@ msgid "This Dispatch"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:232 Credit_Invoice.php:250
-#: DeliveryDetails.php:379 DeliveryDetails.php:444 GoodsReceived.php:55
+#: DeliveryDetails.php:379 DeliveryDetails.php:444 GoodsReceived.php:56
 #: OrderDetails.php:197 PO_Items.php:703 PO_Items.php:756 PO_Items.php:781
 #: Prices.php:156 Prices.php:253 Prices_Customer.php:233 PurchData.php:181
 #: SelectCreditItems.php:613 SelectOrderItems.php:884 Shipments.php:386
@@ -1601,7 +1601,7 @@ msgstr ""
 msgid "Enter Serial No's"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:302 GoodsReceived.php:119
+#: ConfirmDispatch_Invoice.php:302 GoodsReceived.php:120
 msgid "Enter Batches"
 msgstr ""
 
@@ -1651,7 +1651,7 @@ msgid ""
 "Please remedy this."
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:446 GoodsReceived.php:180 ReverseGRN.php:40
+#: ConfirmDispatch_Invoice.php:446 GoodsReceived.php:181 ReverseGRN.php:40
 msgid ""
 "The company infomation and preferences could not be retrieved - see your "
 "system administrator"
@@ -1978,7 +1978,7 @@ msgid "Credit of Controlled Item"
 msgstr ""
 
 #: CreditItemsControlled.php:91 CustomerAllocations.php:388
-#: FreightCosts.php:236 GoodsReceived.php:45 StockLocTransferReceive.php:379
+#: FreightCosts.php:236 GoodsReceived.php:46 StockLocTransferReceive.php:379
 #: SuppShiptChgs.php:113 SupplierAllocations.php:386
 msgid "from"
 msgstr ""
@@ -2298,7 +2298,7 @@ msgstr ""
 msgid "Credit Note number"
 msgstr ""
 
-#: Credit_Invoice.php:1219 GoodsReceived.php:429 SupplierCredit.php:687
+#: Credit_Invoice.php:1219 GoodsReceived.php:532 SupplierCredit.php:687
 #: SupplierInvoice.php:709
 msgid "has been processed"
 msgstr ""
@@ -5504,73 +5504,82 @@ msgstr ""
 msgid "Check Totals"
 msgstr ""
 
-#: GoodsReceived.php:19 GoodsReceivedControlled.php:16
+#: GoodsReceived.php:12
+msgid "Receive Purchase Orders"
+msgstr ""
+
+#: GoodsReceived.php:20 GoodsReceivedControlled.php:16
 msgid "Select a purchase order to receive"
 msgstr ""
 
-#: GoodsReceived.php:20
+#: GoodsReceived.php:21
 msgid ""
 "This page can only be opened if a purchase order has been selected. Please "
 "select a purchase order first"
 msgstr ""
 
-#: GoodsReceived.php:45
+#: GoodsReceived.php:46
 msgid "Receive purchase order"
 msgstr ""
 
-#: GoodsReceived.php:51
+#: GoodsReceived.php:52
 msgid "Quantity<BR>Ordered"
 msgstr ""
 
-#: GoodsReceived.php:53
+#: GoodsReceived.php:54
 msgid "Already Received"
 msgstr ""
 
-#: GoodsReceived.php:54
+#: GoodsReceived.php:55
 msgid "This Delivery<BR>Quantity"
 msgstr ""
 
-#: GoodsReceived.php:56
-msgid "Total Value<BR>Received"
+#: GoodsReceived.php:57
+msgid "Total Value"
 msgstr ""
 
-#: GoodsReceived.php:116
+#: GoodsReceived.php:57 ReverseGRN.php:333 ReverseGRN.php:334
+#: Shipments.php:384 Shipments.php:464 SuppCreditGRNs.php:145
+msgid "Received"
+msgstr ""
+
+#: GoodsReceived.php:117
 msgid "Enter Serial Nos"
 msgstr ""
 
-#: GoodsReceived.php:129
+#: GoodsReceived.php:130
 msgid "Total value of goods received"
 msgstr ""
 
-#: GoodsReceived.php:164
+#: GoodsReceived.php:165
 msgid ""
 "There is nothing to process. Please enter valid quantities greater than zero"
 msgstr ""
 
-#: GoodsReceived.php:168
+#: GoodsReceived.php:169
 msgid ""
 "Entered quantities cannot be greater than the quantity entered on the "
 "purchase invoice including the allowed over-receive percentage"
 msgstr ""
 
-#: GoodsReceived.php:170
+#: GoodsReceived.php:171
 msgid ""
 "Modify the ordered items on the purchase invoice if you wish to increase the "
 "quantities"
 msgstr ""
 
-#: GoodsReceived.php:188
+#: GoodsReceived.php:200
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Could not check "
 "that the details of the purchase order had not been changed by another user "
 "because"
 msgstr ""
 
-#: GoodsReceived.php:189
+#: GoodsReceived.php:201
 msgid "The following SQL to retrieve the purchase order details was used"
 msgstr ""
 
-#: GoodsReceived.php:200
+#: GoodsReceived.php:218
 msgid ""
 "This order has been changed or invoiced since this delivery was started to "
 "be actioned. Processing halted. To enter a delivery against this purchase "
@@ -5578,121 +5587,160 @@ msgid ""
 "by the other user"
 msgstr ""
 
-#: GoodsReceived.php:214 GoodsReceived.php:430
+#: GoodsReceived.php:222
+msgid "GL Code of the Line Item"
+msgstr ""
+
+#: GoodsReceived.php:225
+msgid "ShiptRef of the Line Item"
+msgstr ""
+
+#: GoodsReceived.php:228
+msgid "Contract Reference of the Line Item"
+msgstr ""
+
+#: GoodsReceived.php:232
+msgid "Quantity Invoiced of the Line Item"
+msgstr ""
+
+#: GoodsReceived.php:235
+msgid "Stock Code of the Line Item"
+msgstr ""
+
+#: GoodsReceived.php:238
+msgid "Order Quantity of the Line Item"
+msgstr ""
+
+#: GoodsReceived.php:241
+msgid "Quantity of the Line Item Already Received"
+msgstr ""
+
+#: GoodsReceived.php:247 GoodsReceived.php:533
 msgid "Select a different purchase order for receiving goods against"
 msgstr ""
 
-#: GoodsReceived.php:216
-msgid "Re-Read the updated purchase order for receiving goods against"
+#: GoodsReceived.php:249
+msgid "Re-read the updated purchase order for receiving goods against"
 msgstr ""
 
-#: GoodsReceived.php:248
+#: GoodsReceived.php:281
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The standard cost "
 "of the item being received cannot be retrieved because"
 msgstr ""
 
-#: GoodsReceived.php:249
-msgid "<BR>The following SQL to retrieve the standard cost was used"
+#: GoodsReceived.php:282
+msgid "The following SQL to retrieve the standard cost was used"
 msgstr ""
 
-#: GoodsReceived.php:273
+#: GoodsReceived.php:319
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The purchase order "
 "detail record could not be updated with the quantity received because"
 msgstr ""
 
-#: GoodsReceived.php:274 ReverseGRN.php:131
+#: GoodsReceived.php:320 ReverseGRN.php:131
 msgid "The following SQL to update the purchase order detail record was used"
 msgstr ""
 
-#: GoodsReceived.php:301
+#: GoodsReceived.php:347
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: A GRN record could "
 "not be inserted. This receipt of goods has not been processed because"
 msgstr ""
 
-#: GoodsReceived.php:302 ReverseGRN.php:141
+#: GoodsReceived.php:348 ReverseGRN.php:141
 msgid "The following SQL to insert the GRN record was used"
 msgstr ""
 
-#: GoodsReceived.php:325 PDFStockCheckComparison.php:121 ReverseGRN.php:174
+#: GoodsReceived.php:375 PDFStockCheckComparison.php:121 ReverseGRN.php:174
 #: StockAdjustments.php:217 StockTransfers.php:347 StockTransfers.php:358
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The location stock "
 "record could not be updated because"
 msgstr ""
 
-#: GoodsReceived.php:326 ReverseGRN.php:175 SelectCreditItems.php:1191
+#: GoodsReceived.php:376 ReverseGRN.php:175 SelectCreditItems.php:1191
 #: StockTransfers.php:348 StockTransfers.php:359
 msgid "The following SQL to update the location stock record was used"
 msgstr ""
 
-#: GoodsReceived.php:354
+#: GoodsReceived.php:404
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: stock movement "
 "records could not be inserted because"
 msgstr ""
 
-#: GoodsReceived.php:355 ReverseGRN.php:205 SelectCreditItems.php:1105
+#: GoodsReceived.php:405 ReverseGRN.php:205 SelectCreditItems.php:1105
 msgid "The following SQL to insert the stock movement records was used"
 msgstr ""
 
-#: GoodsReceived.php:369
+#: GoodsReceived.php:426
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock "
 "item record could not be inserted because"
 msgstr ""
 
-#: GoodsReceived.php:370
+#: GoodsReceived.php:427
 msgid "The following SQL to insert the serial stock item records was used"
 msgstr ""
 
-#: GoodsReceived.php:377 StockAdjustments.php:207 StockTransfers.php:233
+#: GoodsReceived.php:440 SelectCreditItems.php:1169 StockAdjustments.php:206
+#: StockTransfers.php:232 StockTransfers.php:334
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock "
+"movement record could not be inserted because"
+msgstr ""
+
+#: GoodsReceived.php:441 StockAdjustments.php:207 StockTransfers.php:233
 #: StockTransfers.php:335
 msgid "The following SQL to insert the serial stock movement records was used"
 msgstr ""
 
-#: GoodsReceived.php:393
+#: GoodsReceived.php:470
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The purchase GL "
 "posting could not be inserted because"
 msgstr ""
 
-#: GoodsReceived.php:394 ReverseGRN.php:259
+#: GoodsReceived.php:471 ReverseGRN.php:259
 msgid "The following SQL to insert the purchase GLTrans record was used"
 msgstr ""
 
-#: GoodsReceived.php:406
+#: GoodsReceived.php:496
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The standard cost "
 "difference GL posting could not be inserted because"
 msgstr ""
 
-#: GoodsReceived.php:407
+#: GoodsReceived.php:497
 msgid "The following SQL to insert the cost difference GLTrans record was used"
 msgstr ""
 
-#: GoodsReceived.php:414 ReverseGRN.php:281
+#: GoodsReceived.php:517 ReverseGRN.php:281
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The GRN suspense "
 "side of the GL posting could not be inserted because"
 msgstr ""
 
-#: GoodsReceived.php:415 ReverseGRN.php:282
+#: GoodsReceived.php:518 ReverseGRN.php:282
 msgid "The following SQL to insert the GRN Suspense GLTrans record was used"
 msgstr ""
 
-#: GoodsReceived.php:429 ReverseGRN.php:289
+#: GoodsReceived.php:532 ReverseGRN.php:289
 msgid "GRN number"
 msgstr ""
 
-#: GoodsReceived.php:437
+#: GoodsReceived.php:540
 msgid "Modify Order Items"
 msgstr ""
 
-#: GoodsReceived.php:442
+#: GoodsReceived.php:545
 msgid "Date Goods/Service Received"
+msgstr ""
+
+#: GoodsReceived.php:548
+msgid "Process Goods Received"
 msgstr ""
 
 #: GoodsReceivedControlled.php:6
@@ -8983,11 +9031,6 @@ msgstr ""
 msgid "GRN #"
 msgstr ""
 
-#: ReverseGRN.php:333 ReverseGRN.php:334 Shipments.php:384 Shipments.php:464
-#: SuppCreditGRNs.php:145
-msgid "Received"
-msgstr ""
-
 #: ReverseGRN.php:336
 msgid "Quantity To"
 msgstr ""
@@ -9979,13 +10022,6 @@ msgstr ""
 #: StockAdjustments.php:184 StockAdjustments.php:198 StockTransfers.php:199
 #: StockTransfers.php:213 StockTransfers.php:312
 msgid "The following SQL to update the serial stock item record was used"
-msgstr ""
-
-#: SelectCreditItems.php:1169 StockAdjustments.php:206 StockTransfers.php:232
-#: StockTransfers.php:334
-msgid ""
-"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock "
-"movement record could not be inserted because"
 msgstr ""
 
 #: SelectCreditItems.php:1170
@@ -15888,35 +15924,35 @@ msgid ""
 "to show control totals for"
 msgstr ""
 
-#: config.php:242
+#: config.php:246
 msgid "Orders"
 msgstr ""
 
-#: config.php:242
+#: config.php:246
 msgid "Receivables"
 msgstr ""
 
-#: config.php:242
+#: config.php:246
 msgid "Payables"
 msgstr ""
 
-#: config.php:242
+#: config.php:246
 msgid "Purchasing"
 msgstr ""
 
-#: config.php:242
+#: config.php:246
 msgid "Inventory"
 msgstr ""
 
-#: config.php:242
+#: config.php:246
 msgid "Manufacturing"
 msgstr ""
 
-#: config.php:242
+#: config.php:246
 msgid "General Ledger"
 msgstr ""
 
-#: config.php:242
+#: config.php:246
 msgid "Setup"
 msgstr ""
 
@@ -16550,6 +16586,10 @@ msgstr ""
 msgid "records are invalid"
 msgstr ""
 
+#: includes/InputSerialItemsFile.php:148
+msgid "Validate File"
+msgstr ""
+
 #: includes/InputSerialItemsFile.php:153
 msgid "1st 10 Lines of File"
 msgstr ""
@@ -17049,29 +17089,29 @@ msgstr ""
 msgid "Logout"
 msgstr ""
 
-#: includes/session.inc:82
+#: includes/session.inc:84
 msgid "The SQL to retrieve the user details failed because :"
 msgstr ""
 
-#: includes/session.inc:83
+#: includes/session.inc:85
 msgid "The SQL used was :"
 msgstr ""
 
-#: includes/session.inc:117
+#: includes/session.inc:119
 msgid "incorrect password"
 msgstr ""
 
-#: includes/session.inc:117
+#: includes/session.inc:119
 msgid "The user/password combination<br> is not a valid user of the system"
 msgstr ""
 
-#: includes/session.inc:128
+#: includes/session.inc:130
 msgid ""
 "Security settings have not been defined for your user account. Please advise "
 "your system administrator"
 msgstr ""
 
-#: includes/session.inc:136
+#: includes/session.inc:138
 msgid ""
 "The security settings on your account do not permit you\n"
 "to access this function."

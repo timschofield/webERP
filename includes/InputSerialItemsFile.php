@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -100,7 +100,7 @@ $ShowFileInfo = false;
 	        $_SESSION['CurImportFile'] = $_FILES['ImportFile'];
 		$_SESSION['CurImportFile']['tmp_name'] = './reports/'.$LineItem->StockID.'_'.$LineNo.'_'.uniqid(4);
                 if (!move_uploaded_file($_FILES['ImportFile']['tmp_name'],$_SESSION['CurImportFile']['tmp_name'])){
-                        pErrMsg('<br />'._('Error Moving temporary file!!! Please check your configuration') );
+                        prnMsg('<br />'._('Error Moving temporary file!!! Please check your configuration'),'error' );
                         $LineItem->SerialItemsValid=false;
 			include('includes/footer.inc');
 			exit;
@@ -145,7 +145,7 @@ $ShowFileInfo = false;
 	        fclose($handle);
 	
 		echo '<br><form method=POST>
-		        <input type=submit name=ValidateFile value=ValidateFile>
+		        <input type=submit name=ValidateFile value=' ._('Validate File') . '>
 		        <input type=hidden name=LineNo value="' . $LineNo . '">
 		        <input type=hidden name=StockID value="' . $StockID . '">
 		        <input type=hidden name=EntryType value="FILE">
