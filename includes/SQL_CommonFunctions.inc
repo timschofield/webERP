@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /* Common SQL Functions */
 
 
@@ -65,7 +65,7 @@ Function ReadInCompanyRecord (&$db) {
 
 	if (DB_num_rows($ReadCoyResult)==0) {
       		echo '<BR><B>';
-		prnMsg( _('The company record has not yet been set up') . '</B><BR>' . _('From the system setup tab select company maintenance to enter the company infomation and system preferences'),'error',_('CRITICAL PROBLEM') );
+		prnMsg( _('The company record has not yet been set up') . '</B><BR>' . _('From the system setup tab select company maintenance to enter the company infomation and system preferences'),'error','CRITICAL PROBLEM');
 		return 0;
 	} else {
 		$myrow = DB_fetch_array($ReadCoyResult);

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 if ($PageNumber>1){
 	$pdf->newPage();
 }
@@ -26,7 +26,7 @@ if ($_POST['Location']!='All'){
 
 $XPos = $Page_Width-$Right_Margin-50;
 $YPos -=30;
-$pdf->addText($XPos, $YPos,$FontSize, _('Page:') . ' ' . $PageNumber);
+$pdf->addText($XPos, $YPos,$FontSize, _('Page') . ': ' . $PageNumber);
 
 /*Now print out the company name and address */
 $XPos = $Left_Margin;

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 /*SelectOrderItems_IntoCart.inc
 
 This snippet is used to enter order line items into the cart object:
@@ -21,7 +21,7 @@ if (count($_SESSION['Items']->LineItems)>0){
 
 		if (strcasecmp($OrderItem->StockID, $NewItem)==0) {
 			$AlreadyOnThisOrder = 1;
-			echo '<B>' . _('Warning:') . '</B> ' . _('the part') . ' ' . $NewItem . ' ' . _('is already on this order - the system will not allow the same item on the order more than once. However, you can change the quantity ordered of the existing line if necessary');
+			echo '<B>' . _('Warning') . ':</B> ' . _('the part') . ' ' . $NewItem . ' ' . _('is already on this order') . ' - ' . _('the system will not allow the same item on the order more than once') . '. ' . _('However you can change the quantity ordered of the existing line if necessary');
        		}
 	} /* end of the foreach loop to look for preexisting items of the same code */
 }
@@ -45,12 +45,12 @@ if ($AlreadyOnThisOrder!=1){
 	AND  StockMaster.StockID = '". $NewItem . "'";
 
     $ErrMsg = _('The details for') . ' ' . $NewItem . ' ' . _('could not be retrieved because');
-    $DbgMsg = '<BR>' . _('The SQL used to retrieve the pricing details but failed was:');
+    $DbgMsg = '<BR>' . _('The SQL used to retrieve the pricing details but failed was');
     $result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
     if (DB_num_rows($result1)==0){
 
-		prnMsg(_('The item code') . ' ' . $NewItem  . ' '  . _('could not be found in the database - it has not been added to the order'),'warn',_('Item Does Not Exist'));
+		prnMsg(_('The item code') . ' ' . $NewItem  . ' '  . _('could not be found in the database') . ' - ' . _('it has not been added to the order'),'warn',_('Item Does Not Exist'));
 
     } elseif ($myrow = DB_fetch_array($result1)){
 
@@ -99,7 +99,7 @@ if ($AlreadyOnThisOrder!=1){
 		      		$_SESSION['Items']->LineItems[$NewItem]->StandardCost = $myrow['StandardCost'];
 			}
              } else {
-			echo '<BR><FONT COLOR=RED SIZE=3><B>' . _('Warning:') . ' </FONT></B>' . _('the item code') . ' ' . $NewItem . ' ' . _('does not have a cost set up and order entry is set up to prohibit sales of items with no cost data entered');
+			echo '<BR><FONT COLOR=RED SIZE=3><B>' . _('Warning') . ': </FONT></B>' . _('the item code') . ' ' . $NewItem . ' ' . _('does not have a cost set up and order entry is set up to prohibit sales of items with no cost data entered');
 	     }
    }
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*PDF page header for aged analysis reports */
 if ($PageNumber >1){
 	$pdf->newPage();
@@ -8,21 +8,21 @@ $FontSize=10;
 $YPos= $Page_Height-$Top_Margin;
 
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$CompanyName);
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,"Printed: " . Date("d M Y") . "   Page " . $PageNumber);
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,_('Printed') . ': ' . Date('d M Y') . '   ' ._('Page') . ' ' . $PageNumber);
 
 $YPos -=$line_height;
 
 
-if ($_POST['PrintPDFAndProcess']=="Print and Process Payments"){
+if (isset($_POST['PrintPDFAndProcess'])){
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,450,$FontSize,"Final Payment Run For Supplier Codes between " . $_POST['FromCriteria'] . " and " . $_POST['ToCriteria']);
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,450,$FontSize,_('Final Payment Run For Supplier Codes between') . ' ' . $_POST['FromCriteria'] . ' ' . _('and') . ' ' . $_POST['ToCriteria']);
 
 } else {
-		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,450,$FontSize,"Payment Run (Print Only) For Supplier Codes between " . $_POST['FromCriteria'] . " and " . $_POST['ToCriteria']);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,450,$FontSize,_('Payment Run (Print Only) For Supplier Codes between') . ' ' . $_POST['FromCriteria'] . ' ' . _('and') . ' ' . $_POST['ToCriteria']);
 
 }
 $YPos -=$line_height;
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,450,$FontSize,"And Only Suppliers Trading in " . $_POST['Currency']);
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,450,$FontSize,_('And Only Suppliers Trading in') . ' ' . $_POST['Currency']);
 
 $YPos -=(2*$line_height);
 
@@ -36,9 +36,9 @@ $pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Marg
 /*set up the headings */
 $Xpos = $Left_Margin+1;
 
-$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,220-$Left_Margin,$FontSize,"Supplier", "centre");
-$LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize,$_POST['Currency'] . " Due", "centre");
-$LeftOvers = $pdf->addTextWrap(415,$YPos,60,$FontSize,"Ex Diff " . $CompanyRecord["CurrencyDefault"], "centre");
+$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,220-$Left_Margin,$FontSize,_('Supplier'), 'centre');
+$LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize,$_POST['Currency'] . ' ' . _('Due'), 'centre');
+$LeftOvers = $pdf->addTextWrap(415,$YPos,60,$FontSize,_('Ex Diff') . ' ' . $CompanyRecord['CurrencyDefault'], 'centre');
 
 
 $YPos =$YPos - (2*$line_height);

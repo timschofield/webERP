@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageNumber++;
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -16,7 +16,7 @@ $XPos = $Page_Width/2 - 80;
 $YPos -= 40;
 $pdf->addText($XPos, $YPos,$FontSize, _('Banking Summary'));
 $FontSize=12;
-$pdf->addText($XPos-50, $YPos-20,$FontSize, _('for Receipt Batch #') . ' ' . $_POST['BatchNo'] . ' ' . _('of') . ' ' . $BankTransType);
+$pdf->addText($XPos-50, $YPos-20,$FontSize, _('for Receipt Batch') . ' # ' . $_POST['BatchNo'] . ' ' . _('of') . ' ' . $BankTransType);
 
 $XPos = $Page_Width-$Right_Margin-50;
 $YPos -=30;

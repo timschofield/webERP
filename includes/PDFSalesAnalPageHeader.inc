@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*PDF page header for user defined sales reports */
 
 if ($PageNumber>0){
@@ -8,9 +8,9 @@ if ($PageNumber>0){
 $PageNumber++;
 
 $FontSize=12;
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$Page_Height-$Top_Margin,250,$FontSize,$ReportSpec["ReportHeading"]);
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$Page_Height-$Top_Margin,250,$FontSize,$ReportSpec['ReportHeading']);
 $LeftOvers = $pdf->addTextWrap($Page_Width/2 -60,$Page_Height-$Top_Margin,150,$FontSize,$CompanyName);
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-160,$Page_Height-$Top_Margin,150,$FontSize,"Printed: " . Date("d M Y") . "   Page " . $PageNumber);
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-160,$Page_Height-$Top_Margin,150,$FontSize,_('Printed') . ': ' . Date('d M Y') . '   ' . _('Page') . ' ' . $PageNumber);
 
 
 /*Draw a rectangle to put the headings in     */
@@ -31,9 +31,9 @@ $Ypos = $Page_Height - $Top_Margin - 24;
 
 DB_data_seek($ColsResult,0);
 while ($Cols=DB_fetch_array($ColsResult)){
-    $Xpos = 160 + $Cols["ColNo"]*60;
-    $LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize,$Cols["Heading1"], "centre");
-    $LeftOvers = $pdf->addTextWrap($Xpos,$Ypos - $line_height,60,$FontSize,$Cols["Heading2"], "centre");
+    $Xpos = 160 + $Cols['ColNo']*60;
+    $LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize,$Cols['Heading1'], 'centre');
+    $LeftOvers = $pdf->addTextWrap($Xpos,$Ypos - $line_height,60,$FontSize,$Cols['Heading2'], 'centre');
 }
 $Ypos =$Ypos - (2*$line_height);
 

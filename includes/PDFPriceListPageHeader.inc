@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*PDF page header for price list report */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -35,7 +35,7 @@ $pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Marg
 /*set up the headings */
 $Xpos = $Left_Margin+1;
 
-$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,300-$Left_Margin,$FontSize, _('Category/Item'), 'centre');
+$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,300-$Left_Margin,$FontSize, _('Category') . '/' . _('Item'), 'centre');
 
 if ($_POST['CustomerSpecials']=='Customer Special Prices Only'){
 
@@ -46,7 +46,7 @@ if ($_POST['CustomerSpecials']=='Customer Special Prices Only'){
 $LeftOvers = $pdf->addTextWrap(450,$YPos,60,$FontSize, _('Price') , 'centre');
 
 if ($_POST['ShowGPPercentages']=='Yes'){
-	$LeftOvers = $pdf->addTextWrap(510,$YPos,60,$FontSize, _('GP %'), 'centre');
+	$LeftOvers = $pdf->addTextWrap(510,$YPos,60,$FontSize, _('GP') .' %', 'centre');
 }
 
 

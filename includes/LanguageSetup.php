@@ -13,9 +13,9 @@ normally the lower case two character country code underscore uppercase
 // Specify location of translation tables
 
 if (function_exists('bindtextdomain')){
-	bindtextdomain ("messages", "./locale");
+	bindtextdomain ('messages', './locale');
 	// Choose domain
-	textdomain ("messages");
+	textdomain ('messages');
 }
 
 
@@ -23,7 +23,7 @@ if (function_exists('gettext')){
 	if ($_SESSION['Language']=='en'){
 		setlocale (LC_MESSAGES,'en_GB');
 	} else {
-		setlocale (LC_MESSAGES, $_SESSION['Language'] . "_" . strtoupper($_SESSION['Language']));
+		setlocale (LC_MESSAGES, $_SESSION['Language'] . '_' . strtoupper($_SESSION['Language']));
 	}
 }
 

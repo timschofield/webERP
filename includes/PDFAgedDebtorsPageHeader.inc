@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*PDF page header for aged analysis reports */
 $PageNumber++;
 if ($PageNumber>1){
@@ -23,7 +23,7 @@ $pdf->addText($Left_Margin, $YPos-$line_height,$FontSize, $HeadingLine2);
 
 $FontSize = 8;
 
-$DatePrintedString = _('Printed:') . ' ' . Date("d M Y") . '   ' . _('Page') . ' ' . $PageNumber;
+$DatePrintedString = _('Printed') . ': ' . Date("d M Y") . '   ' . _('Page') . ' ' . $PageNumber;
 $pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, $DatePrintedString);
 
 $YPos -=(3*$line_height);

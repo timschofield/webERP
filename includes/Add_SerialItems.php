@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 /*ProcessSerialItems.php takes the posted variables and adds to the SerialItems array
  in either the cartclass->LineItems->SerialItems or the POClass->LineItems->SerialItems */
 
@@ -30,7 +30,7 @@ if ( isset($_POST['AddBatches']) && $_POST['AddBatches']!='') {
 						} else {
 							echo '<BR>';
 						 	prnMsg (  _('There is only'). ' ' . $ExistingBundleQty . 
-							' '._('of') . ' ' . $_POST['SerialNo' . $i] . ' '. _('remaining. The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll'),'warn');
+							' '._('of') . ' ' . $_POST['SerialNo' . $i] . ' '. _('remaining') . '. ' . _('The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll'),'warn');
 							$_POST['Qty' . $i] = $ExistingBundleQty;
 							$AddThisBundle = true;
 						}
@@ -42,7 +42,7 @@ if ( isset($_POST['AddBatches']) && $_POST['AddBatches']!='') {
 				} /*end if ExistingBundleQty >0 */
 				else {
         	                        echo '<BR>';
-	                                prnMsg( $_POST['SerialNo'. $i] . ' ' ._(' not available...'),'', 'Notice' );
+	                                prnMsg( $_POST['SerialNo'. $i] . ' ' ._('not available') . '...' , '', 'Notice' );
 					unset($_POST['SerialNo' . $i]);
 				}
 			} // end of ItemMustExist
@@ -124,7 +124,7 @@ if ($_POST['EntryType']=='FILE' && isset($_POST['ValidateFile'])){
                                 	                $AddThisBundle = false;
 	                                        } else {
         	                                        echo '<BR>'. _('There is only') . ' ' . $ExistingBundleQty . ' '. 
-								_('of') . ' ' . $NewSerialNo . ' ' . _('remaining') . ' '. _('left. The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll');
+								_('of') . ' ' . $NewSerialNo . ' ' . _('remaining') . '. '. _('The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll');
                 	                                $NewQty = $ExistingBundleQty;
                         	                        $AddThisBundle = true;
                                 	        }
@@ -135,7 +135,7 @@ if ($_POST['EntryType']=='FILE' && isset($_POST['ValidateFile'])){
 	                        } /*end if ExistingBundleQty >0 */
 				else {
 					echo '<BR>';
-					prnMsg( $NewSerialNo . ' ' . _('not available...'),'', 'Notice' );
+					prnMsg( $NewSerialNo . ' ' . _('not available') . '...' ,'', 'Notice' );
 				}
         	                if (!$valid) $invalid_imports++;
 			// of MustExist

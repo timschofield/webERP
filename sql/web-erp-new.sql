@@ -1461,54 +1461,6 @@ CREATE TABLE TaxAuthorities (
 ) TYPE=InnoDB;
 
 --
--- Table structure for table `WOIssues`
---
-
-DROP TABLE IF EXISTS WOIssues;
-CREATE TABLE WOIssues (
-  IssueNo int(11) NOT NULL default '0',
-  WORef char(20) NOT NULL default '',
-  StockID char(20) NOT NULL default '',
-  IssueType char(1) NOT NULL default 'M',
-  WorkCentre char(5) NOT NULL default '',
-  QtyIssued double(16,4) NOT NULL default '0.0000',
-  StdCost decimal(20,4) NOT NULL default '0.0000',
-  KEY WorkCentre (WorkCentre),
-  KEY IssueNo (IssueNo),
-  KEY IssueNo_2 (IssueNo,WORef,StockID),
-  KEY StockID (StockID),
-  KEY IssueType (IssueType),
-  KEY WORef (WORef),
-  CONSTRAINT `WOIssues_ibfk_1` FOREIGN KEY (`WORef`) REFERENCES `WorksOrders` (`WORef`),
-  CONSTRAINT `WOIssues_ibfk_2` FOREIGN KEY (`StockID`) REFERENCES `StockMaster` (`StockID`),
-  CONSTRAINT `WOIssues_ibfk_3` FOREIGN KEY (`WorkCentre`) REFERENCES `WorkCentres` (`Code`)
-) TYPE=InnoDB;
-
---
--- Table structure for table `WORequirements`
---
-
-DROP TABLE IF EXISTS WORequirements;
-CREATE TABLE WORequirements (
-  ID int(11) NOT NULL auto_increment,
-  WORef char(20) NOT NULL default '',
-  StockID char(20) NOT NULL default '',
-  WrkCentre char(5) NOT NULL default '',
-  UnitsReq double(16,4) NOT NULL default '1.0000',
-  StdCost decimal(20,4) NOT NULL default '0.0000',
-  ResourceType char(1) NOT NULL default 'M',
-  PRIMARY KEY  (ID),
-  KEY WrkCentre (WrkCentre),
-  KEY ResourceType (ResourceType),
-  KEY WORef (WORef,StockID),
-  KEY StockID (StockID),
-  KEY WORef_2 (WORef),
-  CONSTRAINT `WORequirements_ibfk_1` FOREIGN KEY (`WORef`) REFERENCES `WorksOrders` (`WORef`),
-  CONSTRAINT `WORequirements_ibfk_2` FOREIGN KEY (`StockID`) REFERENCES `StockMaster` (`StockID`),
-  CONSTRAINT `WORequirements_ibfk_3` FOREIGN KEY (`WrkCentre`) REFERENCES `WorkCentres` (`Code`)
-) TYPE=InnoDB;
-
---
 -- Table structure for table `WWW_Users`
 --
 
@@ -1564,6 +1516,7 @@ CREATE TABLE WorksOrders (
   WORef char(20) NOT NULL default '',
   LocCode char(5) NOT NULL default '',
   UnitsReqd smallint(6) NOT NULL default '1',
+  UnitsRecd double NOT NULL default '0',
   StockID char(20) NOT NULL default '',
   StdCost decimal(20,4) NOT NULL default '0.0000',
   RequiredBy date NOT NULL default '0000-00-00',
@@ -1639,7 +1592,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE Currencies DISABLE KEYS */;
 LOCK TABLES Currencies WRITE;
-INSERT INTO Currencies VALUES ('Australian Dollars','AUD','Australia','cents',1.7000),('Deutsche','DEM','German','Pfenig',1.8000),('Pounds','GBP','England','Pence',0.8000),('Yen','JPY','Japan','Yen',150.0000),('N Z Dollars','NZD','New Zealand','Cents',2.0000),('US Dollars','USD','United States','Cents',1.0000);
+INSERT INTO Currencies VALUES ('Australian Dollars','AUD','Australia','cents',1.7000),('Deutsche','DEM','German','Pfenig',1.8000),('Pounds','GBP','England','Pence',0.8000),('N Z Dollars','NZD','New Zealand','Cents',2.0000),('US Dollars','USD','United States','Cents',1.0000);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE Currencies ENABLE KEYS */;
 
@@ -1650,7 +1603,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE HoldReasons DISABLE KEYS */;
 LOCK TABLES HoldReasons WRITE;
-INSERT INTO HoldReasons VALUES (1,'Good History',0),(20,'Watch',0),(30,'No more work until payment rec',1),(51,'In liquidation',1);
+INSERT INTO HoldReasons VALUES (1,'Good History',0),(20,'Watch',0),(51,'In liquidation',1);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE HoldReasons ENABLE KEYS */;
 
@@ -1716,7 +1669,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE SysTypes DISABLE KEYS */;
 LOCK TABLES SysTypes WRITE;
-INSERT INTO SysTypes VALUES (0,'Journal - GL',10),(1,'Payment - GL',17),(2,'Receipt - GL',3),(3,'Standing Journal',0),(10,'Sales Invoice',12),(11,'Credit Note',8),(12,'Receipt',1),(15,'Journal - Debtors',0),(16,'Location Transfer',7),(17,'Stock Adjustment',3),(18,'Purchase Order',0),(20,'Purchase Invoice',15),(21,'Debit Note',6),(22,'Creditors Payment',4),(23,'Creditors Journal',0),(25,'Purchase Order Delivery',15),(26,'Work Order Receipt',0),(28,'Work Order Issue',0),(29,'Work Order Variance',0),(30,'Sales Order',0),(31,'Shipment Close',4),(35,'Cost Update',3),(50,'Opening Balance',0);
+INSERT INTO SysTypes VALUES (0,'Journal - GL',10),(1,'Payment - GL',18),(2,'Receipt - GL',3),(3,'Standing Journal',0),(10,'Sales Invoice',13),(11,'Credit Note',11),(12,'Receipt',2),(15,'Journal - Debtors',0),(16,'Location Transfer',8),(17,'Stock Adjustment',6),(18,'Purchase Order',0),(20,'Purchase Invoice',16),(21,'Debit Note',8),(22,'Creditors Payment',6),(23,'Creditors Journal',0),(25,'Purchase Order Delivery',17),(26,'Work Order Receipt',0),(28,'Work Order Issue',0),(29,'Work Order Variance',0),(30,'Sales Order',0),(31,'Shipment Close',8),(35,'Cost Update',6),(50,'Opening Balance',0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE SysTypes ENABLE KEYS */;
 
@@ -1738,7 +1691,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE TaxAuthLevels DISABLE KEYS */;
 LOCK TABLES TaxAuthLevels WRITE;
-INSERT INTO TaxAuthLevels VALUES (1,1,1,0.1),(1,1,2,0),(1,5,1,0),(1,5,2,0),(1,6,1,0),(1,6,2,0),(5,1,1,0),(5,1,2,0),(5,5,1,0),(5,5,2,0),(5,6,1,0),(5,6,2,0),(6,1,1,0),(6,1,2,0),(6,5,1,0),(6,5,2,0),(6,6,1,0.175),(6,6,2,0);
+INSERT INTO TaxAuthLevels VALUES (1,1,1,0.1),(1,1,2,0),(1,1,5,0),(1,5,1,0),(1,5,2,0),(1,6,1,0),(1,6,2,0),(5,1,1,0),(5,1,2,0),(5,1,5,0),(5,5,1,0),(5,5,2,0),(5,6,1,0),(5,6,2,0),(6,1,1,0),(6,1,2,0),(6,1,5,0),(6,5,1,0),(6,5,2,0),(6,6,1,0.175),(6,6,2,0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE TaxAuthLevels ENABLE KEYS */;
 
@@ -1749,7 +1702,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE WWW_Users DISABLE KEYS */;
 LOCK TABLES WWW_Users WRITE;
-INSERT INTO WWW_Users VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2004-11-23 09:21:19','','A4','1,1,1,1,1,1,1,1,',0,50,'fresh','en'),('testy','weberp','Test Remote User','GRANHR','','','DEN',6,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en');
+INSERT INTO WWW_Users VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2004-12-06 06:41:34','','A4','1,1,1,1,1,1,1,1,',0,50,'fresh','en'),('testy','weberp','Test Remote User','GRANHR','','','DEN',6,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE WWW_Users ENABLE KEYS */;
 

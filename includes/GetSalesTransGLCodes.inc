@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*Functions to get the GL codes for customer transactions based on
 $Area, $StockID to determine the stock category and the SalesType (Price List)
 
@@ -16,8 +16,6 @@ Function GetCOGSGLAccount ($Area, $StockID, $SalesType, &$db) {
 /*Gets the GL Code for the COGS for a specific area and stock category. */
 
 	$SQL = "SELECT GLCode FROM COGSGLPostings WHERE Area = '" . $Area . "' AND StkCat = '" . $StockCategory . "' AND SalesType='" . $SalesType . "'";
-	$Result = DB_query($SQL,$db);
-
 	/*Need to determine if COGS GL codes set up for the stk cat, area and sales type of the item/customer branch and 	use the most appropriate GL Code.
 	If no match for all fields area, sales type, stock category then the rules for choosing the nearest match
 	are
@@ -32,46 +30,34 @@ Function GetCOGSGLAccount ($Area, $StockID, $SalesType, &$db) {
 
 	*/
 
+	$ErrMsg = _('Can not retrieve the cost of sales GL code because');
+	$DbgMsg =_('SQL to get the cost of sales GL Codes for sales and discounts');
+	$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
-	if (DB_error_no($db) !=0){
-		echo "<BR>Can not retrieve the cost of sales GL code because : - " . DB_error_msg($db);
-
-		if ($debug==1){
-			echo "<BR>SQL to get the cost of sales GL Codes for sales and discounts:<BR>$SQL<BR>";
-		}
-		return 0;
-	}
 	if (DB_num_rows($Result)==0){
 
 		DB_free_result($Result);
-		$SQL = "SELECT GLCode FROM COGSGLPostings WHERE Area = '" . $Area . "' AND StkCat = '" . $StockCategory . "' AND SalesType = 'AN'";
+		$SQL = "SELECT GLCode FROM COGSGLPostings
+			WHERE Area = '" . $Area . "'
+			AND StkCat = '" . $StockCategory . "'
+			AND SalesType = 'AN'";
 
-		$Result = DB_query($SQL,$db);
-
-		if (DB_error_no($db) !=0){
-			echo "<BR>Can not retrieve the cost of sales GL code because : - " . DB_error_msg($db);
-			if ($debug==1){
-				echo "<BR>SQL to get the cost of sales GL Codes for sales and discounts:<BR>$SQL<BR>";
-			}
-			return 0;
-		}
+		$ErrMsg = _('Can not retrieve the cost of sales GL code because');
+		$DbgMsg = _('SQL to get the cost of sales GL Codes for sales and discounts');
+		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
 	}
 
 	if (DB_num_rows($Result)==0){
 
 		DB_free_result($Result);
-		$SQL = "SELECT GLCode FROM COGSGLPostings WHERE Area = '" . $Area . "' AND StkCat = 'ANY' AND SalesType = '" . $SalesType . "'";
+		$SQL = "SELECT GLCode FROM COGSGLPostings
+			WHERE Area = '" . $Area . "'
+			AND StkCat = 'ANY' AND SalesType = '" . $SalesType . "'";
 
-		$Result = DB_query($SQL,$db);
-
-		if (DB_error_no($db) !=0){
-			echo "<BR>Can not retrieve the cost of sales GL code because : - " . DB_error_msg($db);
-			if ($debug==1){
-				echo "<BR>SQL to get the cost of sales GL Codes for sales and discounts:<BR>$SQL<BR>";
-			}
-			return 0;
-		}
+		$ErrMsg = _('Can not retrieve the cost of sales GL code because');
+		$DbgMsg = _('SQL to get the cost of sales GL Codes for sales and discounts');
+		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
 	}
 
@@ -79,46 +65,29 @@ Function GetCOGSGLAccount ($Area, $StockID, $SalesType, &$db) {
 
 		DB_free_result($Result);
 		$SQL = "SELECT GLCode FROM COGSGLPostings WHERE Area = 'AN' AND SalesType='AN' AND StkCat = '$StockCategory'";
-		$Result = DB_query($SQL,$db);
-
-		if (DB_error_no($db) !=0){
-			echo "<BR>Can not retrieve the cost of sales GL code because : - " . DB_error_msg($db);
-			if ($debug==1){
-				echo "<BR>SQL to get the cost of sales GL Codes for sales and discounts:<BR>$SQL<BR>";
-			}
-			return 0;
-		}
-
+		$ErrMsg = _('Can not retrieve the cost of sales GL code because');
+		$DbgMsg = _('SQL to get the cost of sales GL Codes for sales and discounts');
+		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 	}
 
 	if (DB_num_rows($Result)==0){
 
 		DB_free_result($Result);
 		$SQL = "SELECT GLCode FROM COGSGLPostings WHERE Area = '$Area' AND StkCat = 'ANY' AND SalesType='AN'";
-		$Result = DB_query($SQL,$db);
 
-		if (DB_error_no($db) !=0){
-			echo "<BR>Can not retrieve the cost of sales GL code because : - " . DB_error_msg($db);
-			if ($debug==1){
-				echo "<BR>SQL to get the cost of sales GL Codes for sales and discounts:<BR>$SQL<BR>";
-			}
-			return 0;
-		}
+		$ErrMsg = _('Can not retrieve the cost of sales GL code because');
+		$DbgMsg = _('SQL to get the cost of sales GL Codes for sales and discounts');
+		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 	}
 
 	if (DB_num_rows($Result)==0){
 
 		DB_free_result($Result);
 		$SQL = "SELECT GLCode FROM COGSGLPostings WHERE Area = 'AN' AND StkCat = 'ANY' AND SalesType='AN'";
-		$Result = DB_query($SQL,$db);
 
-		if (DB_error_no($db) !=0){
-			echo "<BR>Can not retrieve the cost of sales GL code because : - " . DB_error_msg($db);
-			if ($debug==1){
-				echo "<BR>SQL to get the cost of sales GL Codes for sales and discounts:<BR>$SQL<BR>";
-			}
-			return 0;
-		}
+		$ErrMsg = _('Can not retrieve the cost of sales GL code because') . '<BR>' . DB_error_msg($db);
+		$DbgMsg = _('SQL to get the cost of sales GL Codes for sales and discounts');
+		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 	}
 	if (DB_num_rows($Result)==0){ /*STILL!*/
 		/*The default if all else fails */
@@ -168,27 +137,17 @@ Function GetSalesGLAccount ($Area, $StockID, $SalesType, &$db) {
 
 	$SQL = "SELECT SalesGLCode, DiscountGLCode FROM SalesGLPostings WHERE Area = '" . $Area . "' AND StkCat = '" . $StockCategory . "' AND SalesType = '". $SalesType . "'";
 
-	$Result = DB_query($SQL,$db);
+	$ErrMsg = _('There was a problem retrieving the sales general ledger code because');
+	$DbgMsg =  _('SQL to get the sales GL Codes for sales and discounts');
+	$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
-	if (DB_error_no($db) !=0){
-		if ($debug==1){
-			echo "<BR>SQL to get the sales GL Codes for sales and discounts:<BR>$SQL<BR>";
-		}
-		return 0;
-	}
 	if (DB_num_rows($Result)==0){
 		DB_free_result($Result);
 		$SQL = "SELECT SalesGLCode, DiscountGLCode FROM SalesGLPostings WHERE Area = '" . $Area . "' AND StkCat = '" . $StockCategory . "' AND SalesType = 'AN'";
 
-		$Result = DB_query($SQL,$db);
-
-		if (DB_error_no($db) !=0){
-			echo "<BR>Can not retrieve the sales GL code because : - " . DB_error_msg($db);
-			if ($debug==1){
-				echo "<BR>SQL to get the sales GL Codes for sales and discounts:<BR>$SQL<BR>";
-			}
-			return 0;
-		}
+		$ErrMsg = _('Can not retrieve the sales GL code because');
+		$DbgMsg = _('SQL to get the sales GL Codes for sales and discounts');
+		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
 	}
 
@@ -196,60 +155,37 @@ Function GetSalesGLAccount ($Area, $StockID, $SalesType, &$db) {
 		DB_free_result($Result);
 		$SQL = "SELECT SalesGLCode, DiscountGLCode FROM SalesGLPostings WHERE Area = '" . $Area . "' AND StkCat = 'ANY' AND SalesType = '" . $SalesType . "'";
 
-		$Result = DB_query($SQL,$db);
-
-		if (DB_error_no($db) !=0){
-			echo "<BR>Can not retrieve the sales GL code because : - " . DB_error_msg($db);
-			if ($debug==1){
-				echo "<BR>SQL to get the sales GL Codes for sales and discounts:<BR>$SQL<BR>";
-			}
-			return 0;
-		}
+		$ErrMsg =_('Can not retrieve the sales GL code because');
+		$DbgMsg = _('SQL to get the sales GL Codes for sales and discounts');
+		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
 	}
 
 	if (DB_num_rows($Result)==0){
 		DB_free_result($Result);
 		$SQL = "SELECT SalesGLCode, DiscountGLCode FROM SalesGLPostings WHERE Area = 'AN' AND SalesType='AN' AND StkCat = '$StockCategory'";
-		$Result = DB_query($SQL,$db);
-
-		if (DB_error_no($db) !=0){
-			echo "<BR>Can not retrieve the sales GL code because : - " . DB_error_msg($db);
-			if ($debug==1){
-				echo "<BR>SQL to get the sales GL Codes for sales and discounts:<BR>$SQL<BR>";
-			}
-			return 0;
-		}
+		$ErrMsg = _('Can not retrieve the sales GL code because');
+		$DbgMsg = _('SQL to get the sales GL Codes for sales and discounts');
+		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
 	}
 
 	if (DB_num_rows($Result)==0){
 		DB_free_result($Result);
 		$SQL = "SELECT SalesGLCode, DiscountGLCode FROM SalesGLPostings WHERE Area = '$Area' AND StkCat = 'ANY' AND SalesType='AN'";
-		$Result = DB_query($SQL,$db);
+		$ErrMsg = _('Can not retrieve the sales GL code because');
+		$DbgMsg = _('SQL to get the sales GL Codes for sales and discounts');
+		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
-		if (DB_error_no($db) !=0){
-			echo "<BR>Can not retrieve the sales GL code because : - " . DB_error_msg($db);
-			if ($debug==1){
-				echo "<BR>SQL to get the sales GL Codes for sales and discounts:<BR>$SQL<BR>";
-			}
-			return 0;
-		}
 	}
 
 	if (DB_num_rows($Result)==0){
 
 		DB_free_result($Result);
 		$SQL = "SELECT SalesGLCode, DiscountGLCode FROM SalesGLPostings WHERE Area = 'AN' AND StkCat = 'ANY' AND SalesType='AN'";
-		$Result = DB_query($SQL,$db);
-
-		if (DB_error_no($db) !=0){
-			echo "<BR>Can not retrieve the sales GL code because : - " . DB_error_msg($db);
-			if ($debug==1){
-				echo "<BR>SQL to get the sales GL Codes for sales and discounts:<BR>$SQL<BR>";
-			}
-			return 0;
-		}
+		$ErrMsg = _('Can not retrieve the sales GL code because');
+		$DbgMsg = _('SQL to get the sales GL Codes for sales and discounts');
+		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 	}
 	if (DB_num_rows($Result)==0){ /*STILL!*/
 		/*The default if all else fails */

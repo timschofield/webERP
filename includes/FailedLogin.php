@@ -1,6 +1,6 @@
 <html>
 <head>
-<!-- \$Revision: 1.2 $ -->
+<!-- \$Revision: 1.3 $ -->
     <title>Failed Login</title>
     <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
     <link rel="stylesheet" href="css/default/login.css" type="text/css">
@@ -10,8 +10,13 @@
     <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
         <tr>
             <td>
-            <center><font size='4' color='red'><br /><br /><br /><b>Too many failed login attempts.</font>
-            You will have to see an authorised person to obtain access to the system.</b></p></center>
+            <center><font size='4' color='red'><br /><br /><br /><b>
+
+<?php
+		include('includes/LanguageSetup.php');
+		echo _('Too many failed login attempts') . '</font>';
+		echo '<P>' . _('You will have to see an authorised person to obtain access to the system') . '</b></p></center>';
+?>
             </td>
         </tr>
     </table>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 Function GetDataSQL($SQLData){
 
 /*This function determines the SQL to use to get the value for the columns defined */
@@ -145,15 +145,15 @@ $ColsResult = DB_query($GetColsSQL,$db);
 If (DB_num_rows($ColsResult)== 0) {
     $title = _('User Defined Sales Analysis Problem') . ' ....';
    include("includes/header.inc");
-    prnMsg (  _('The report does not have any output columns. You need to set up the data columns that you wish to show in the report'),'error',_('No Columns'));
+    prnMsg (  _('The report does not have any output columns') . '. ' . _('You need to set up the data columns that you wish to show in the report'),'error',_('No Columns'));
     echo "<BR><A HREF='$rootpath/SalesAnalReptCols.php?" . SID . "&ReportID=" . $_GET['ReportID'] . "'>" . _('Enter Columns for this report') . '</A>';
-    echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back To The Menu') . '</A>';
+    echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
     include("includes/footer.inc");
     Exit;
 } elseif (DB_num_rows($ColsResult) >10){
     $title = _('User Defined Sales Analysis Problem') . ' ....';
    include("includes/header.inc");
-    prnMsg (_('The report cannot have more than 10 columns in it. Please delete one or more columns before attempting to run it'),'error',_('Too Many Columns'));
+    prnMsg (_('The report cannot have more than 10 columns in it') . '. ' . _('Please delete one or more columns before attempting to run it'),'error',_('Too Many Columns'));
     echo "<BR><A HREF='$rootpath/SalesAnalReptCols.php?" . SID . "ReportID=" . $_GET['ReportID'] . "'>" . _('Maintain Columns for this report') . '</A>';
     echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
     include("includes/footer.inc");
@@ -228,7 +228,7 @@ while ($Cols = DB_fetch_array($ColsResult)){
 
 	     $title = _('User Defined Sales Analysis Problem') . ' ....';
 	    include("includes/header.inc");
-	     prnMsg(_('Calculated fields must use columns defined in the report specification. The numerator column number entered for this calculation is not defined in the report'),'error',_('Calculation With Undefined Column'));
+	     prnMsg(_('Calculated fields must use columns defined in the report specification') . '. ' . _('The numerator column number entered for this calculation is not defined in the report'),'error',_('Calculation With Undefined Column'));
 	     echo "<BR><A HREF='$rootpath/SalesAnalReptCols.php?" . SID . "&ReportID=" . $_GET['ReportID'] . "'>" . _('Maintain Columns for this report') . '</A>';
 	     include("includes/footer.inc");
 	     exit;
@@ -254,7 +254,7 @@ while ($Cols = DB_fetch_array($ColsResult)){
 
 	$length_ColDen = strpos($SQLSelectCls, "AS Col" . (($Cols["ColDenominator"]) + 8), 7);
 	 If ($length_ColDen == 0){
-	     prnMsg (_('Calculated fields must use columns defined in the report specification. The denominator column number entered for this calculation is not defined in the report'),'error',_('Calculation With Undefined Denominator'));
+	     prnMsg (_('Calculated fields must use columns defined in the report specification') . '. ' . _('The denominator column number entered for this calculation is not defined in the report'),'error',_('Calculation With Undefined Denominator'));
 	     Exit;
 	}
 
@@ -292,14 +292,14 @@ exit;
 */
 
 /*Now let her go .... */
-$ErrMsg = _('There was a problem running the SQL to retreive the sales analysis information:');
-$DbgMsg = _('The SQL that was used to retrieve the user defined sales analysis info was:');
+$ErrMsg = _('There was a problem running the SQL to retreive the sales analysis information');
+$DbgMsg = _('The SQL that was used to retrieve the user defined sales analysis info was');
 $result=DB_query($SQLTheLot, $db,$ErrMsg,$DbgMsg);
 
 if (DB_num_rows($result)==0){
     $title = _('User Defined Sales Analysis Problem') . ' ....';
    include("includes/header.inc");
-    prnMsg(_('The user defined sales analysis SQL did not return any rows - have another look at the criteria specified'),'error',_('Nothing To Report'));
+    prnMsg(_('The user defined sales analysis SQL did not return any rows') . ' - ' . _('have another look at the criteria specified'),'error',_('Nothing To Report'));
     echo "<BR><A HREF='$rootpath/SalesAnalRepts.php?" . SID . "&SelectedReport=" . $_GET['ReportID'] . "'>" . _('Look at the design of this report') . '</A>';
     echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
     include("includes/footer.inc");

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /* pdf-php by R&OS code to set up a new sales order page */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -10,9 +10,9 @@ $pdf->addJpegFromFile('logo.jpg',$XPos+20,520,90,60);
 $FontSize=18;
 
 if ($Copy=='Customer'){
-	$pdf->addText($XPos-20, 500,$FontSize, _('Packing Slip - Customer Copy') );
+	$pdf->addText($XPos-20, 500,$FontSize, _('Packing Slip') . ' - ' . _('Customer Copy') );
 } else {
-	$pdf->addText($XPos-20, 500,$FontSize, _('Packing Slip - Office Copy') );
+	$pdf->addText($XPos-20, 500,$FontSize, _('Packing Slip') . ' - ' . _('Office Copy') );
 }
 $FontSize=14;
 $YPos = 480;
@@ -20,7 +20,7 @@ $pdf->addText($XPos, $YPos,$FontSize, $CompanyName);
 $FontSize =8;
 $pdf->addText($XPos, $YPos-12,$FontSize, $CompanyRecord['PostalAddress']);
 $pdf->addText($XPos, $YPos-21,$FontSize, $CompanyRecord['RegOffice1'] . ' ' . $CompanyRecord['RegOffice2']);
-$pdf->addText($XPos, $YPos-30,$FontSize, _('Ph:') . ' ' . $CompanyRecord['Telephone'] . ' ' . _('Fax'). ': ' . $CompanyRecord['Fax']);
+$pdf->addText($XPos, $YPos-30,$FontSize, _('Ph') . ': ' . $CompanyRecord['Telephone'] . ' ' . _('Fax'). ': ' . $CompanyRecord['Fax']);
 $pdf->addText($XPos, $YPos-39,$FontSize, $CompanyRecord['Email']);
 
 

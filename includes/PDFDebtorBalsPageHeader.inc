@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 /*PDF page header for aged analysis reports */
 $PageNumber++;
 if ($PageNumber>1){
@@ -14,10 +14,10 @@ $pdf->addText($Left_Margin, $YPos,$FontSize, $CompanyName);
 $YPos -=$line_height;
 
 $FontSize =10;
-$pdf->addText($Left_Margin, $YPos, $FontSize, "Customer Balances For Customers between "  . $_POST['FromCriteria'] . " and " . $_POST['ToCriteria'] . " as at " . $PeriodEndDate);
+$pdf->addText($Left_Margin, $YPos, $FontSize, _('Customer Balances For Customers between') .    . $_POST['FromCriteria'] .   . _('and') . ' ' . $_POST['ToCriteria'] . ' ' . _('as at') . ' ' . $PeriodEndDate);
 
 $FontSize = 8;
-$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, "Printed: " . Date("d M Y") . "   Page " . $PageNumber);
+$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed') . ': ' . Date('d M Y') . '   ' . _('Page') . ' ' . $PageNumber);
 
 $YPos -=(3*$line_height);
 
@@ -30,10 +30,10 @@ $pdf->line($Left_Margin, $YPos+$line_height,$Left_Margin, $YPos-5);
 /*set up the headings */
 $Xpos = $Left_Margin+1;
 
-$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,220 - $Left_Margin,$FontSize,"Customer",'centre');
-$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,"Balance",'centre');
-$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,"FX",'centre');
-$LeftOvers = $pdf->addTextWrap(340,$YPos,60,$FontSize,"Currency",'centre');
+$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,220 - $Left_Margin,$FontSize,_('Customer'),'centre');
+$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,_('Balance'),'centre');
+$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,_('FX'),'centre');
+$LeftOvers = $pdf->addTextWrap(340,$YPos,60,$FontSize,_('Currency'),'centre');
 
 $YPos =$YPos - (2*$line_height);
 

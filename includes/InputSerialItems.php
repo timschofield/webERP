@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -78,7 +78,7 @@ if ($LineItem->Serialised==1){
 			</TR>';
 } else {
 	$tableheader = '<TR>
-			<TD class=tableheader>'. _('Batch/Roll/Bundle#'). '</TD>
+			<TD class=tableheader>'. _('Batch/Roll/Bundle'). ' #</TD>
 			<TD class=tableheader>'. _('Quantity'). '</TD>
 			</TR>';
 }

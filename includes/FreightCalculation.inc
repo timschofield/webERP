@@ -1,6 +1,5 @@
-
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*Function to calculate the freight cost. 
 Freight cost is determined by looking for a match of destination city from the Address2 and Address3 fields then looking through the freight company rates for the total KGs and Cubic meters  to figure out the least cost shipping company. */
 
@@ -14,18 +13,26 @@ Function CalcFreightCost ($TotalValue, $BrAdd2, $BrAdd3, $TotalVolume, $TotalWei
 	# make an array of all the words that could be the name of the destination city
 	$FindCity = explode(" ", $BrAdd2 . " " . $BrAdd3);
 
-	$sql = "Select ShipperID, KGRate *" . $TotalWeight . " AS KGCost, CubRate * " . $TotalVolume . " AS CubCost, FixedPrice, MinimumChg From FreightCosts Where LocationFrom = '$FromLocation'  AND MAXKGs > " . $TotalWeight . " AND MAXCub >" . $TotalVolume . " AND (";
+	$sql = "Select ShipperID,
+			KGRate *" . $TotalWeight . " AS KGCost,
+			CubRate * " . $TotalVolume . " AS CubCost,
+			FixedPrice, MinimumChg
+		FROM FreightCosts
+		WHERE LocationFrom = '$FromLocation'
+		AND MAXKGs > " . $TotalWeight . "
+		AND MAXCub >" . $TotalVolume . "
+		AND (";
 
 	foreach ($FindCity as $City) {
 
-		$sql = $sql . " Destination like '" . ucwords($City) . "%' OR";
+		$sql = $sql . " Destination LIKE '" . ucwords($City) . "%' OR";
 
 	}
 	$sql = substr($sql, 0, strrpos($sql," OR")) . ")";
 
 	$CalcFreightCostResult = DB_query($sql,$db);
 	if (DB_error_no($db) !=0) {
-		echo "The freight calculation for the destination city cannot be performed because - " . DB_error_msg($db);
+		echo _("The freight calculation for the destination city cannot be performed because") . " - " . DB_error_msg($db);
 	} elseif (DB_num_rows($CalcFreightCostResult)>0) {
 
 		$CalcFreightCost =9999999;
@@ -59,7 +66,7 @@ Function CalcFreightCost ($TotalValue, $BrAdd2, $BrAdd3, $TotalVolume, $TotalWei
 			}
 		}
 	} else {
-		$CalcFreightCost = "Unrecognised destination, delivery only to cities in " . $CountryOfOperation;
+		$CalcFreightCost = _("Unrecognised destination, delivery only to cities in") . " " . $CountryOfOperation;
 	}
 	if ($TotalValue >= $FreightChargeAppliesIfLessThan){
 

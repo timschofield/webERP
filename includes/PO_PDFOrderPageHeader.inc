@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*
 	R & OS PHP-PDF class code to set up a new page
 	a new page is implicit on the establishment of a new pdf object so
@@ -23,14 +23,14 @@ $pdf->addText($XPos,$YPos+$line_height,$FontSize, _('Purchase Order Number'). ' 
 
 if ($ViewingOnly!=0) {
 	$FontSize=16;
-	$pdf->addText($XPos,$YPos,$FontSize, _('FOR VIEWING ONLY, DO NOT SEND TO SUPPLIER') );
-	$pdf->addText($XPos,$YPos-$line_height,$FontSize, _('SUPPLIERS - THIS IN NOT AN ORDER') );
+	$pdf->addText($XPos,$YPos,$FontSize, _('FOR VIEWING ONLY') . ', ' . _('DO NOT SEND TO SUPPLIER') );
+	$pdf->addText($XPos,$YPos-$line_height,$FontSize, _('SUPPLIERS') . ' - ' . _('THIS IN NOT AN ORDER') );
 }
 
 $Ypos -= ($line_height*3);
 $FontSize=10;
 $XPos = $Page_Width-$Right_Margin-50;
-$pdf->addText($XPos,$YPos +40, $FontSize, _('Page:') . ' ' .$PageNumber);
+$pdf->addText($XPos,$YPos +40, $FontSize, _('Page') . ': ' .$PageNumber);
 
 
 /*Now print out the company name and address */
@@ -40,15 +40,15 @@ $pdf->addText($Left_Margin,$YPos, $FontSize, $TaxAuthorityReferenceName . ' ' . 
 $pdf->addText($Left_Margin,$YPos-$line_height, $FontSize, $CompanyName);
 $pdf->addText($Left_Margin,$YPos-(2*$line_height), $FontSize, $CompanyRecord['PostalAddress']);
 $pdf->addText($Left_Margin,$YPos-(3*$line_height), $FontSize, $CompanyRecord['RegOffice1'] . ' ' . $CompanyRecord['RegOffice2']);
-$pdf->addText($Left_Margin,$YPos-(4*$line_height), $FontSize, _('Ph:'). ' ' . $CompanyRecord['Telephone'] . ' ' ._('Fax:').' ' . $CompanyRecord['Fax'] );
-$pdf->addText($Left_Margin,$YPos-(5*$line_height), $FontSize, _('Email:'). ' ' . $CompanyRecord['Email']);
+$pdf->addText($Left_Margin,$YPos-(4*$line_height), $FontSize, _('Ph'). ': ' . $CompanyRecord['Telephone'] . ' ' ._('Fax').': ' . $CompanyRecord['Fax'] );
+$pdf->addText($Left_Margin,$YPos-(5*$line_height), $FontSize, _('Email'). ': ' . $CompanyRecord['Email']);
 
 
 /*Now the delivery details */
 $YPos -= 8;
 $XPos = $Page_Width/2 + 25;
 $FontSize=12;
-$pdf->addText($XPos+2,$YPos, $FontSize, _('Deliver To:') );
+$pdf->addText($XPos+2,$YPos, $FontSize, _('Deliver To') . ':' );
 $pdf->addText($XPos+2,$YPos-$line_height, $FontSize, $POHeader['DelAdd1']);
 $pdf->addText($XPos+2,$YPos-(2*$line_height), $FontSize, $POHeader['DelAdd2']);
 $pdf->addText($XPos+2,$YPos-(3*$line_height), $FontSize, $POHeader['DelAdd3']);
@@ -95,7 +95,7 @@ PDF_setfont($p, $font, 12.0);
 
 */
 $YPos -= 20;
-$pdf->addText($XPos+1,$YPos, $FontSize, _('To:').' ');
+$pdf->addText($XPos+1,$YPos, $FontSize, _('To').': ');
 
 $YPos-=$line_height;
 $pdf->addText($XPos+1,$YPos, $FontSize, $POHeader['SuppName']);
@@ -106,16 +106,16 @@ $pdf->addText($XPos+1,$YPos-(4*$line_height), $FontSize, $POHeader['Address4']);
 
 
 $XPos = $Page_Width/2 + 25;
-$pdf->addText($XPos,$YPos, $FontSize, _('Order Date:') );
+$pdf->addText($XPos,$YPos, $FontSize, _('Order Date') . ':' );
 $pdf->addText($XPos+70,$YPos, $FontSize, ConvertSQLDate($POHeader['OrdDate']));
 
 
 $YPos -= $line_height;
-$pdf->addText($XPos,$YPos, $FontSize, _('Initator:').' ');
+$pdf->addText($XPos,$YPos, $FontSize, _('Initator').': ');
 $pdf->addText($XPos+70,$YPos, $FontSize, $POHeader['Initiator']);
 
 $YPos -= $line_height;
-$pdf->addText($XPos,$YPos, $FontSize, _('Comments:') );
+$pdf->addText($XPos,$YPos, $FontSize, _('Comments') . ':' );
 $YPos -= $line_height;
 $LeftOvers = $pdf->addTextWrap($XPos, $YPos,250,$FontSize,$POHeader['Comments'], 'left');
 if (strlen($LeftOvers)>0){
@@ -141,7 +141,7 @@ $pdf->addText($Left_Margin+1,$YPos, $FontSize, _('Code') );
 $pdf->addText($Left_Margin+65,$YPos, $FontSize, _('Item Description') );
 $pdf->addText($Left_Margin+400,$YPos, $FontSize, _('Quantity') );
 $pdf->addText($Left_Margin+450,$YPos, $FontSize, _('Unit') );
-$pdf->addText($Left_Margin+485,$YPos, $FontSize, _("Date Req'd"));
+$pdf->addText($Left_Margin+485,$YPos, $FontSize, _('Date Reqd'));
 $pdf->addText($Left_Margin+600,$YPos, $FontSize, _('Price') );
 $pdf->addText($Left_Margin+680,$YPos, $FontSize, _('Total') );
 

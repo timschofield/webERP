@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -73,14 +73,14 @@ $ShowFileInfo = false;
                 $LineItem->SerialItemsValid=false;
         }
         if ($_FILES['ImportFile']['name'] == '' && $_SESSION['CurImportFile'] == ''){
-                $msg = _('Please Choose a file and then click "Set Entry Type" to upload a file for import');
+                $msg = _('Please Choose a file and then click Set Entry Type to upload a file for import');
 		prnMsg($msg);
                 $LineItem->SerialItemsValid=false;
 		include('includes/footer.inc');
 		exit();
         }
         if ($_FILES['ImportFile']['error'] != '' && !isset($_SESSION['CurImportFile'])){
-                echo _('There was a problem with the uploaded file. We received:<br>').
+                echo _('There was a problem with the uploaded file') . '. ' . _('We received').':<BR>'.
                          _('Name').':'.$_FILES['ImportFile']['name'].'<br>'.
                          _('Size').':'.number_format($_FILES['ImportFile']['size']/1024,2).'kb<br>'.
                          _('Type').':'.$_FILES['ImportFile']['type'].'<br>';
@@ -100,7 +100,7 @@ $ShowFileInfo = false;
 	        $_SESSION['CurImportFile'] = $_FILES['ImportFile'];
 		$_SESSION['CurImportFile']['tmp_name'] = './reports/'.$LineItem->StockID.'_'.$LineNo.'_'.uniqid(4);
                 if (!move_uploaded_file($_FILES['ImportFile']['tmp_name'],$_SESSION['CurImportFile']['tmp_name'])){
-                        prnMsg('<br />'._('Error Moving temporary file!!! Please check your configuration'),'error' );
+                        pErrMsg('<br />'._('Error moving temporary file') . '. ' . _('Please check your configuration') );
                         $LineItem->SerialItemsValid=false;
 			include('includes/footer.inc');
 			exit;
@@ -145,7 +145,7 @@ $ShowFileInfo = false;
 	        fclose($handle);
 	
 		echo '<br><form method=POST>
-		        <input type=submit name=ValidateFile value=' ._('Validate File') . '>
+		        <input type=submit name=ValidateFile value=ValidateFile>
 		        <input type=hidden name=LineNo value="' . $LineNo . '">
 		        <input type=hidden name=StockID value="' . $StockID . '">
 		        <input type=hidden name=EntryType value="FILE">

@@ -1,10 +1,10 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /*ProcessSerialItems.php takes the posted variables and adds to the SerialItems array
  in either the cartclass->LineItems->SerialItems or the POClass->LineItems->SerialItems */
 
 
-if ($_POST['AddBatches']=='Enter'){
+if (isset($_POST['AddBatches'])){
 
 	for ($i=0;$i < 10;$i++){
 		if(strlen($_POST['SerialNo' . $i])>0){
@@ -15,13 +15,13 @@ if ($_POST['AddBatches']=='Enter'){
 				the first entered one - no warning given though ? */
 				if ($_POST['Qty' . $i] > $ExistingBundleQty){
 					if ($LineItem->Serialised ==1){
-						echo "<BR>" . $_POST['SerialNo' . $i] . " has already been sold";
+						echo "<BR>" . $_POST['SerialNo' . $i] . " " . _('has already been sold');
 						$AddThisBundle = false;
 					} elseif ($ExistingBundleQty==0) { /* and its a batch */
 						echo "<BR>There is none of " . $_POST['SerialNo' . $i] . " left.";
 						$AddThisBundle = false;
 					} else {
-					 	echo "<BR>There is only " . $ExistingBundleQty . " of " . $_POST['SerialNo' . $i] . " left. The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll";
+					 	echo '<BR>' . _('There is only') . ' ' . $ExistingBundleQty . ' ' . _('of') . ' ' . $_POST['SerialNo' . $i] . ' ' . _('remaining') . '. ' . _('The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll');
 						$_POST['Qty' . $i] = $ExistingBundleQty;
 						$AddThisBundle = true;
 					}

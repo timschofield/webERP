@@ -1,38 +1,52 @@
 <?php
-/* $Revision: 1.8 $ */
-?>
-<BR><BR><BR>
-				</td>
-		    </tr>
-		</table>
 
-        </td>
-        <td background="css/default/images/outline/r.gif" colspan="3" align="right" valign="top"><img src="css/default/images/outline/tr.gif" width="10" height="10" alt="" /></td>
-    </tr>
-    <tr>
-        <td background="css/default/images/outline/r.gif" width="10"><img src="css/default/images/outline/r.gif" width="10" height="10" alt="" /></td>
-    </tr>
-    <tr>
-        <td background="css/default/images/outline/bm.gif"><img src="css/default/images/outline/bl.gif" width="10" height="10" alt="" /></td>
-        <td background="css/default/images/outline/bm.gif"><img src="css/default/images/outline/bm.gif" width="10" height="10" alt="" /></td>
-        <td width="10"><img src="css/default/images/outline/br.gif" width="10" height="10" alt="" /></td>
-    </tr>
-</table>
-<font size=2><?php echo date("l " . $DefaultDateFormat . " | g:i A") ?></font>
-<table align="center" id="footer">
+/* $Revision: 1.9 $ */
+
+	echo '<BR><BR>';
+	echo '</TD>';
+	echo '</TR>';
+	echo '</TABLE>';
+
+	echo '</TD>';
+
+	echo '<TD BACKGROUND="css/default/images/outline/r.gif" COLSPAN="3" ALIGN="right" VALIGN="top">';
+	echo '<IMG SRC="css/default/images/outline/tr.gif" WIDTH="10" HEIGHT="10" ALT=""></TD>';
+	echo '</TR>';
+
+	echo '<TR>';
+	echo '<TD BACKGROUND="css/default/images/outline/r.gif" WIDTH="10">';
+	echo '<IMG SRC="css/default/images/outline/r.gif" WIDTH="10" HEIGHT="10" ALT=""></TD>';
+	echo '</TR>';
+
+	echo '<TR';
+	echo '<TD BACKGROUND="css/default/images/outline/bm.gif">';
+	echo '<IMG SRC="css/default/images/outline/bl.gif" WIDTH="10" HEIGHT="10" ALT=""></TD>';
+	echo '<TD BACKGROUND="css/default/images/outline/bm.gif">';
+	echo '<IMG SRC="css/default/images/outline/bm.gif" WIDTH="10" HEIGHT="10" ALT=""></TD>';
+	echo '<TD WIDTH="10"><IMG SRC="css/default/images/outline/br.gif" WIDTH="10" HEIGHT="10" ALT=""></TD>';
+	echo '</TR>';
+
+	echo '</TABLE>';
+
+	echo '<FONT SIZE=2>' . date('l ' . $DefaultDateFormat . ' | g:i A') . '</FONT>';
+
+	echo '<TABLE ALIGN="center" ID="footer">';
 	
-	<tr>
-		<td align="center">
-			<a href="http://www.weberp.org" target="_blank">
-			<img src="<?php echo $rootpath . '/css/' . $theme . '/images/webERP+sm.gif'; ?>" border=0>
-			</a>
-			<BR><?php echo _('Version') . ' - ' . $Version; ?>
-		</td>
-	</tr>
-	<tr>
-		<td align="center" class="footer">webERP <?php echo _('Copyright'); ?> &copy; Logic Works Ltd - 2004</td>
-	</tr>
-</table>
+	echo '<TR>';
+	echo '<TD ALIGN="center">';
+	echo '<A HREF="http://www.weberp.org" TARGET="_blank">';
+	echo '<IMG SRC="' . $rootpath . '/css/' . $theme . '/images/webERP+sm.gif" BORDER="0">';
+	echo '</A>';
+	echo '<BR>' . _('Version') . ' - ' . $Version;
+	echo '</TD>';
+	echo '</TR>';
 
-</body>
-</html>
+	echo '<TR>';
+	echo '<TD ALIGN="center" CLASS="footer">webERP ' . _('Copyright') . ' &copy; Logic Works Ltd - 2004</TD>';
+	echo '</TR>';
+
+	echo '</TABLE>';
+	echo '</BODY>';
+	echo '</HTML>';
+
+?>

@@ -1,24 +1,24 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*Code to replace [Variables] in Message LineText with the value of the variable itself */
 
 	$PositionPointer = 0;
-	$NewLineText ="";
+	$NewLineText ='';
 	/* now get each occurence of [ in the line */
-	while (strpos ($MsgLineText,"[",$PositionPointer)!=False){
+	while (strpos ($MsgLineText,'[',$PositionPointer)!=False){
 		$LastPositionPointer = $PositionPointer;
-		$PositionPointer = strpos ($MsgLineText,"[",$PositionPointer);
+		$PositionPointer = strpos ($MsgLineText,'[',$PositionPointer);
 
 		$NewLineText = $NewLineText .  substr($MsgLineText,$LastPositionPointer,$PositionPointer-$LastPositionPointer);
 
 		$LastPositionPointer = $PositionPointer;
-		$PositionPointer = strpos ($MsgLineText,"]",$PositionPointer);
+		$PositionPointer = strpos ($MsgLineText,']',$PositionPointer);
 
 		$VariableName = substr($MsgLineText,$LastPositionPointer+1,$PositionPointer-$LastPositionPointer-1);
 
 		$PositionPointer++;
 
-		echo "<BR>The variable - " . $VariableName . " is set to " . $$VariableName;
+		echo '<BR>' . _('The variable') . ' - ' . $VariableName . ' ' . _('is set to') . ' ' . $$VariableName;
 
 		$NewLineText = $NewLineText . $$VariableName;
 
@@ -29,5 +29,5 @@
 
 	echo "<BR>$NewLineText";
 
-	fputs($fp, $NewLineText . "\n");
+	fputs($fp, $NewLineText . '\n');
 ?>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 $db = mysql_connect($host , $dbuser, $dbpassword);
 mysql_select_db($DatabaseName,$db);
 
@@ -17,10 +17,10 @@ function DB_query ($SQL,
 	global $debug;
 	$result=mysql_query($SQL,$Conn);
 	if ($DebugMessage == '') {
-		$DebugMessage = _('The SQL that failed was:');
+		$DebugMessage = _('The SQL that failed was');
 	}
 	if (DB_error_no($Conn) != 0){
-		prnMsg($ErrorMessage.'<BR>' . DB_error_msg($Conn),'error', _('DB ERROR:'));
+		prnMsg($ErrorMessage.'<BR>' . DB_error_msg($Conn),'error', _('DB ERROR'));
 		if ($debug==1){
 			echo '<BR>' . $DebugMessage. "<BR>$SQL<BR>";
 		}
@@ -28,7 +28,7 @@ function DB_query ($SQL,
 			$SQL = 'rollback';
 			$Result = DB_query($SQL,$Conn);
 			if (DB_error_no($Conn) !=0){
-				prnMsg('<br />'.  _('Error Rolling Back Transaction!!'), '', _('DB DEBUG:') );
+				prnMsg('<br />'.  _('Error Rolling Back Transaction'), '', _('DB DEBUG') );
 			}
 		}
 		if ($TrapErrors){

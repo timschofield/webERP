@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*PDF page header for aged analysis reports */
 $PageNumber++;
 if ($PageNumber>1){
@@ -45,7 +45,7 @@ if (in_array('All', $_POST['SalesPeople'])){
 	if (count($_POST['SalesPeople'])==1){
 		$Heading .= _('only') .' ' . $_POST['SalesPeople'][0];
 	} else {
-		$Heading .= _('Sales-people') .' ';
+		$Heading .= _('Salespeople') .' ';
 		$NoOfSalesfolk = count($_POST['SalesPeople']);
 		$i=1;
 		foreach ($_POST['SalesPeople'] as $Salesperson){
@@ -67,7 +67,7 @@ $pdf->addText($Left_Margin, $YPos, $FontSize, $Heading);
 $pdf->selectFont('./fonts/Helvetica.afm');
 
 $FontSize = 8;
-$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed'). ' ' . Date($DefaultDateFormat) . '   '. _('Page'). ' ' . $PageNumber);
+$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed'). ': ' . Date($DefaultDateFormat) . '   '. _('Page'). ' ' . $PageNumber);
 
 $YPos -=(3*$line_height);
 

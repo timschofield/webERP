@@ -1,6 +1,6 @@
 <?php
-/* $Revision: 1.6 $ */
-include ("includes/class.pdf.php");
+/* $Revision: 1.7 $ */
+include ('includes/class.pdf.php');
 
 if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);
@@ -12,7 +12,7 @@ include('includes/LanguageSetup.php');
 /* Standard PDF file creation header stuff */
 
 /*check security - $PageSecurity set in files where this script is included from */
-if (! in_array($PageSecurity,$SecurityGroups[$_SESSION["AccessLevel"]]) OR !isset($PageSecurity)){
+if (! in_array($PageSecurity,$SecurityGroups[$_SESSION['AccessLevel']]) OR !isset($PageSecurity)){
 	$title = _('Permission Denied Report');
 	include('includes/header.inc');
 	echo '<BR><BR><BR><BR><BR><BR><BR><CENTER><FONT COLOR=RED SIZE=4><B>' . _('The security settings on your account do not permit you to access this function') . '</B></FONT>';
@@ -112,7 +112,7 @@ switch ($PaperSize) {
 $PageSize = array(0,0,$Page_Width,$Page_Height);
 $pdf = & new Cpdf($PageSize);
 $pdf->selectFont('./fonts/Helvetica.afm');
-$pdf->addinfo('Author',"webERP " . $Version);
-$pdf->addinfo('Creator',"webERP http://www.weberp.org - R&OS PHP-PDF http://www.ros.co.nz");
+$pdf->addinfo('Author','webERP ' . $Version);
+$pdf->addinfo('Creator','webERP http://www.weberp.org - R&OS PHP-PDF http://www.ros.co.nz');
 
 ?>

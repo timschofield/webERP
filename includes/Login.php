@@ -1,11 +1,12 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 // Display demo user name and password within login form if "$allow_demo_mode" is true
+include('includes/LanguageSetup.php');
 
 if ($allow_demo_mode == True AND !isset($demo_text)) {
-	$demo_text = "login as user: <i>demo</i><BR>with password: <i>weberp</i>";
+	$demo_text = _('login as user') . ': <i>' . _('demo') . '</i><BR>' . _('with password') . ': <i>' . _('weberp') . '</i>';
 } elseif (!isset($demo_text)) {
-	$demo_text = "Please login here";
+	$demo_text = _('Please login here');
 }
 
 ?>
@@ -44,7 +45,7 @@ if ($allow_demo_mode == True AND !isset($demo_text)) {
 
                             <td background="css/default/images/outline/bg.gif" colspan="3" valign="top">
                                 <table border="0" cellpadding="3" cellspacing="0" width="100%">
-                                    
+
                                     <tr>
                                         <td class="loginText"><span>User name:</span><br />
                                          <input type="TEXT" name="UserNameEntryField"/><br />

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*PDF page header for aged analysis reports */
 $PageNumber++;
 if ($PageNumber>1){
@@ -17,7 +17,7 @@ $FontSize =10;
 $pdf->addText($Left_Margin, $YPos, $FontSize, $ReportTitle);
 
 $FontSize = 8;
-$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed:') . ' ' . Date("d M Y") . '    ' . _('Page') . ' ' . $PageNumber);
+$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed') . ': ' . Date("d M Y") . '    ' . _('Page') . ' ' . $PageNumber);
 
 $YPos -=(3*$line_height);
 
@@ -31,7 +31,7 @@ $pdf->line($Left_Margin, $YPos+$line_height,$Left_Margin, $YPos-5);
 $Xpos = $Left_Margin+1;
 
 $LeftOvers = $pdf->addTextWrap(40,$YPos,60 - $Left_Margin,$FontSize,_('Type'),'centre');
-$LeftOvers = $pdf->addTextWrap(100,$YPos,40 - $Left_Margin,$FontSize,_('No.'),'centre');
+$LeftOvers = $pdf->addTextWrap(100,$YPos,40 - $Left_Margin,$FontSize,_('No'),'centre');
 $LeftOvers = $pdf->addTextWrap(140,$YPos,60,$FontSize,_('Date'),'centre');
 $LeftOvers = $pdf->addTextWrap(410,$YPos,60,$FontSize,_('Net'),'centre');
 $LeftOvers = $pdf->addTextWrap(470,$YPos,60,$FontSize,_('Tax'),'centre');

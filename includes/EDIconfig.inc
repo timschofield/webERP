@@ -1,30 +1,30 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 /*EDI configuration variables definition */
 
 /*EDI Draft version 01B - Controlling agency is the UN - EAN version control number (EAN Code)
 this info is required in the header record of every message sent - prepended with the message type*/
 
-$EDIHeaderMsgId = "D:01B:UN:EAN010";
+$EDIHeaderMsgId = 'D:01B:UN:EAN010';
 
 /*EDI Reference of the company */
 
-$EDIReference = "WEBERP";
+$EDIReference = 'WEBERP';
 
 /* EDI Messages for sending directory */
 
-$EDI_MsgPending = "EDI_Pending";
+$EDI_MsgPending = 'EDI_Pending';
 
 /* EDI Messages sent directory */
 
-$EDI_MsgSent = "EDI_Sent";
+$EDI_MsgSent = 'EDI_Sent';
 
 
 
 //Testing variables
-include ("includes/session.inc");
-include ("includes/header.inc");
+include ('includes/session.inc');
+include ('includes/header.inc');
 $PartnerCode='WALMON';
 $MessageType ='INVOIC';
 
@@ -32,7 +32,7 @@ $MessageType ='INVOIC';
 
 /*end of testing variables / code */
 
-include("includes/SQL_CommonFunctions.inc");
+include('includes/SQL_CommonFunctions.inc');
 
 $EDITrans = GetNextTransNo(99,$db);
 
@@ -46,21 +46,21 @@ $sql = "SELECT Section, LineText FROM EDIMessageFormat WHERE PartnerCode='" . $P
 
 $MessageLinesResult = DB_query($sql, $db);
 
-$fp = fopen( $EDI_Pending . "/EDI_" . $MessageType . "_" . $EDITrans , "w");
+$fp = fopen( $EDI_Pending . '/EDI_' . $MessageType . '_' . $EDITrans , 'w');
 
 while ($LineDetails = DB_fetch_array($MessageLinesResult)){
 
 	$PoistionPointer = 0;
-	$NewLineText ="";
+	$NewLineText ='';
 	/* now get each occurence of [ in the line */
-	while (strpos ($LineDetails['LineText'],"[",$PoistionPointer)!=False){
+	while (strpos ($LineDetails['LineText'],'[',$PoistionPointer)!=False){
 		$LastPositionPointer = $PoistionPointer;
-		$PositionPointer = strpos ($LineDetails['LineText'],"[",$PoistionPointer);
+		$PositionPointer = strpos ($LineDetails['LineText'],'[',$PoistionPointer);
 
 		$NewLineText = $NewLineText .  substr($LineDetails['LineText'],$LastPositionPointer,$PoistionPointer-$LastPositionPointer);
 
 		$LastPositionPointer = $PoistionPointer;
-		$PositionPointer = strpos ($LineDetails['LineText'],"]",$PoistionPointer);
+		$PositionPointer = strpos ($LineDetails['LineText'],']',$PoistionPointer);
 
 		$VariableName = substr($LineDetails['LineText'],$LastPositionPointer,$PoistionPointer-$LastPositionPointer);
 
@@ -73,11 +73,11 @@ while ($LineDetails = DB_fetch_array($MessageLinesResult)){
 
 	echo "<BR>$NewLineText";
 
-	fputs($fp, $NewLineText ."\n");
+	fputs($fp, $NewLineText .'\n');
 }
 
 fclose($fp);
 
-include ("includes/footer.inc");
+include ('includes/footer.inc');
 
 ?>
