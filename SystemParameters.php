@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $PageSecurity =15;
 
 include('includes/session.inc');
@@ -265,7 +265,7 @@ echo '<TR><TD>' . _('Show Settled Last Month') . ':</TD>
 
 //RomalpaClause
 echo '<TR><TD>' . _('Romalpa Clause') . ':</TD>
-	<TD><textarea Name="X_RomalpaClause" rows=3 cols=40 MAXLENGTH=255>' . htmlentities($_SESSION['RomalpaClause']) . '</textarea></TD>
+	<TD><textarea Name="X_RomalpaClause" rows=3 cols=40>' . htmlentities($_SESSION['RomalpaClause']) . '</textarea></TD>
 	<TD>' . _('This text appears on invoices and credit notes in small print. Normally a reservation of title clause that gives the company rights to collect goods which have not been paid for - to give some protection for bad debts.') . '</TD></TR>';
 
 // QuickEntries
@@ -444,7 +444,7 @@ echo '<TR><TD>' . _('Default Maximum Number of Records to Show') . ':</TD>
 
 //MaxImageSize
 echo '<TR><TD>' . _('Maximum Size in KB of uploaded images') . ':</TD>
-	<TD><input type="Text" Name="X_MaxImageSize" SIZE=4 MAXLENGTH=3 value="' . $_SESSION['MaxImageSize'] . '"></TD><
+	<TD><input type="Text" Name="X_MaxImageSize" SIZE=4 MAXLENGTH=3 value="' . $_SESSION['MaxImageSize'] . '"></TD>
 	<TD>' . ('Picture files of items can be uploaded to the server. The system will check that files uploaded are less than this size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen.') .'</TD>
 </TR>';
 
@@ -519,7 +519,7 @@ echo '</SELECT></TD>
 	</TR>';
 
 
-echo '</TABLE><CENTER><input type="Submit" Name="submit" value="' . _('Update') . '">';
+echo '</TABLE><input type="Submit" Name="submit" value="' . _('Update') . '"></CENTER></FORM>';
 
 include('includes/footer.inc');
 ?>

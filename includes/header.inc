@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
@@ -38,21 +38,21 @@
 		echo '<IMG SRC="' . $rootpath . '/css/' . $theme .'/images/menucurve.gif" WIDTH="30" HEIGHT="30" alt=""></TD>';
 		echo '<TD CLASS="quick_menu_tabs">';
 		echo '<TABLE><TR>';
-		echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="1" ALIGN="center" HREF="' . $rootpath . '/index.php?' . SID . '"><U>1</U>. ' . _('Main  Menu') . '</A>&nbsp;&nbsp;</TD>';
+		echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="1" HREF="' . $rootpath . '/index.php?' . SID . '"><U>1</U>. ' . _('Main  Menu') . '</A>&nbsp;&nbsp;</TD>';
 
 		if (count($_SESSION['AllowedPageSecurityTokens'])>1){
 
-			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ALIGN="center" ACCESSKEY="2" HREF="' . $rootpath . '/SelectCustomer.php?' . SID . '"><U>2</U>. ' . _('Select Customer') . '</A>&nbsp;&nbsp;</TD>';
+			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="2" HREF="' . $rootpath . '/SelectCustomer.php?' . SID . '"><U>2</U>. ' . _('Select Customer') . '</A>&nbsp;&nbsp;</TD>';
 
-			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ALIGN="center" ACCESSKEY="3" HREF="' . $rootpath . '/SelectProduct.php?' . SID . '"><U>3</U>. ' . _('Select Item') . '</A>&nbsp;&nbsp;</TD>';
+			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="3" HREF="' . $rootpath . '/SelectProduct.php?' . SID . '"><U>3</U>. ' . _('Select Item') . '</A>&nbsp;&nbsp;</TD>';
 
-			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ALIGN="center" ACCESSKEY="4" HREF="' . $rootpath . '/SelectSupplier.php?' . SID . '"><U>4</U>. ' . _('Select Supplier') . '</A>&nbsp;&nbsp;</TD>';
+			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="4" HREF="' . $rootpath . '/SelectSupplier.php?' . SID . '"><U>4</U>. ' . _('Select Supplier') . '</A>&nbsp;&nbsp;</TD>';
 
-			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A TARGET="_blank" ALIGN="center" ACCESSKEY="8" HREF="' . $rootpath . '/doc/Manual/ManualContents.php?' . SID . '"><U>8</U>. ' . _('Manual') . '</A>&nbsp;&nbsp;</TD>';
+			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A TARGET="_blank" ACCESSKEY="8" HREF="' . $rootpath . '/doc/Manual/ManualContents.php?' . SID . '"><U>8</U>. ' . _('Manual') . '</A>&nbsp;&nbsp;</TD>';
 
 		}
 
-		echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ALIGN="center" ACCESSKEY="0" HREF="' . $rootpath . '/Logout.php?' . SID . '"><U>0</U>. ' . _('Logout') . '</A></TD>';
+		echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="0" HREF="' . $rootpath . '/Logout.php?' . SID . '"><U>0</U>. ' . _('Logout') . '</A></TD>';
 
 		echo '</TR></TABLE>';
 		echo '</TD></TR></TABLE>';

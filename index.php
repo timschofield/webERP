@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 $PageSecurity = 1;
 
@@ -37,7 +37,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 			</tr>
 										<tr>
 			<td class="menu_group_item">
-				<?php echo "<a href='" . $rootpath . '/SelectCompletedOrder.php?' .SID . "&SelectedCustomer=" . $_SESSION['CustomerID'] . "'><li>" . _('Order Status') . '</li></a>'; ?>
+				<?php echo "<li><a href='" . $rootpath . '/SelectCompletedOrder.php?' .SID . "&SelectedCustomer=" . $_SESSION['CustomerID'] . "'>" . _('Order Status') . '</a></li>'; ?>
 			</td>
 			</tr>
 		</table>
@@ -71,9 +71,9 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 				$_SESSION['Module']=$ModuleLink[$i];
 			}
 			if ($ModuleLink[$i] == $_SESSION['Module']){
-				echo "<td class='main_menu_selected'><a href='". $_SERVER['PHP_SELF'] .'?'. SID . '&Application='. $ModuleLink[$i] ."'>". $ModuleList[$i] .'</li></a></td>';
+				echo "<td class='main_menu_selected'><a href='". $_SERVER['PHP_SELF'] .'?'. SID . '&Application='. $ModuleLink[$i] ."'>". $ModuleList[$i] .'</a></td>';
 			} else {
-				echo "<td class='main_menu_unselected'><a href='". $_SERVER['PHP_SELF'] .'?'. SID . '&Application='. $ModuleLink[$i] ."'>". $ModuleList[$i] .'</li></a></td>';
+				echo "<td class='main_menu_unselected'><a href='". $_SERVER['PHP_SELF'] .'?'. SID . '&Application='. $ModuleLink[$i] ."'>". $ModuleList[$i] .'</a></td>';
 			}
 		}
 		$i++;
@@ -655,7 +655,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table>
 							<tr>
 							<td>
-								<?php echo "<img src=$rootpath/css/$theme/images/company.gif TITLE=" . _('General Setup Options') . '>'; ?>
+								<?php echo "<img src=$rootpath/css/$theme/images/company.gif TITLE=" . _('General Setup Options') . '" ALT="">'; ?>
 							</td>
 							<td class="menu_group_headers_text">
 								<?php echo _('General'); ?>
@@ -667,7 +667,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table>
 							<tr>
 							<td>
-								<?php echo "<img src=$rootpath/css/$theme/images/ar.gif TITLE=" . _('Receivables/Payables Setup') . '>'; ?>
+								<?php echo "<img src=$rootpath/css/$theme/images/ar.gif TITLE=" . _('Receivables/Payables Setup') . '" ALT="">'; ?>
 							</td>
 							<td class="menu_group_headers_text">
 								<?php echo _('Receivables/Payables'); ?>
@@ -680,7 +680,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table>
 							<tr>
 							<td>
-								<?php echo "<img src=$rootpath/css/$theme/images/inventory.gif TITLE=" . _('Inventory Setup') . '>'; ?>
+								<?php echo "<img src=$rootpath/css/$theme/images/inventory.gif TITLE='" . _('Inventory Setup') . "' ALT=''>"; ?>
 							</td>
 							<td class="menu_group_headers_text">
 								<?php echo _('Inventory Setup'); ?>
@@ -955,7 +955,7 @@ global $rootpath, $theme;
 		<table>
 			<tr>
 			<td>
-				<?php echo "<img src=$rootpath/css/$theme/images/transactions.gif TITLE=" . _('Transactions') . '>'; ?>
+				<?php echo "<img src=$rootpath/css/$theme/images/transactions.gif TITLE='" . _('Transactions') . "' ALT=''>"; ?>
 			</td>
 			<td class="menu_group_headers_text">
 				<?php echo _('Transactions'); ?>
@@ -967,7 +967,7 @@ global $rootpath, $theme;
 		<table>
 			<tr>
 			<td>
-				<?php echo '<img src=' . $rootpath . '/css/' . $theme . '/images/reports.gif TITLE="' . _('Inquiries and Reports') . '">'; ?>
+				<?php echo '<img src=' . $rootpath . '/css/' . $theme . '/images/reports.gif TITLE="' . _('Inquiries and Reports') . '" ALT="">'; ?>
 			</td>
 			<td class="menu_group_headers_text">
 				<?php echo _('Inquiries and Reports'); ?>
@@ -979,7 +979,7 @@ global $rootpath, $theme;
 		<table>
 			<tr>
 			<td>
-				<?php echo "<img src=$rootpath/css/$theme/images/maintenance.gif TITLE=" . _('Maintenance') . '>'; ?>
+				<?php echo "<img src=$rootpath/css/$theme/images/maintenance.gif TITLE='" . _('Maintenance') . "' ALT=''>"; ?>
 			</td>
 			<td class="menu_group_headers_text">
 				<?php echo _('Maintenance'); ?>
