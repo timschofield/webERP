@@ -1,0 +1,68 @@
+<br><br>
+
+<!-- Help Begin: Shipments -->
+
+<a name="Shipments"><font size="+3"><b>Shipments</b></font></a>
+<br><br>
+The shipment costing system is meant for use in situations where there are substantial freight costs on purchased products and the business wishes to keep track of the actual cost of these items. Many smaller businesses do these calculations on spreadsheets outside the integrated system. The advantage of bringing them inside the system is that the possibility for updating standards and calculation of variances from standard at the time the costing is completed.
+<br><br>
+Having selected a supplier the system allows outstanding purchase order items to be collated into a shipment of goods arriving altogether, the shipment is allocated a shipment number. By changing the expected time of arrival of the shipment (ETA) the delivery date of all purchase order lines on the shipment will be updated. The costs associated with landing and clearing this bundle of products can be entered against it from purchase invoice entry. Freight charges and cartage from the wharf, airfreight, unpacking, demurrage etc can be entered as costs of the shipment. The shipment costing inquiry will show these costs allocated against all of the items on the shipment, using the invoiced value of the items as the basis for apportionment. The actual shipment cost will show together with the existing standard cost and the variance.
+<br><br>
+<font size="+1"><b>Shipment General Ledger Posting</b></font>
+<br><br>
+Shipment charges are posted to the GRN suspense account at the time of entry of the purchase invoice. When the shipment is closed the costs of the shipment are compared against the standard cost of the shipment items taken into stock and the difference that was left in the GRN suspense account is taken to purchase variances.
+<br><br>
+If the option to update standard costs at the time of closing the shipment is used, the difference on the stock value is taken to the stock category - stock adjustment, general ledger account.
+<br><br>
+<font size="+1"><b>Creating Shipments</b></font>
+<br><br>
+After selecting the supplier from which the product has been sourced and having entered the purchase order(s) to initiate the transaction, from the select supplier menu, choose the link "Set up a New Shipment". Each time this page is called the system increments a shipment reference and shows the shipment number that will be used. The shipment page that shows allows, the details of the shipment to be entered.
+<br><br>
+<ul>
+<li>The name of the vessel on which the product has been loaded
+<li>The voyage reference - this could refer to the HAWB in the case of airfreight
+</ul>
+The above are not required if deemed unnecessary, but serve as a useful reference for following and tracking where product is currently and monitoring ETA through the shipping company who will need these details.
+<br><br>
+In addition to the above details the Expected Time of Arrival (ETA) is required to be entered.
+<br><br>
+It is important to hit the "Update Shipment Details" button after this data is entered. As clicking one of the add links will lose this information just entered otherwise.
+<br><br>
+When the shipment entry screen is first displayed there is facility to select the inventory location where the purchase order has been requested to arrive. By default the user's default inventory location will be used, but once the inputs above are entered the location can be changed and a click on the "Update" button will then show all the purchase order items defined to arrive at the new location.
+<br><br>
+Once a purchase order item has been selected to be part of the shipment the shipment entry screen will only allow other purchase order items that are also to be delivered to the same location. The location will be displayed on screen for informational purposes only.
+<br><br>
+The location into which the shipment is to be delivered follows the purchase order. It is not possible to set up a shipment with purchase order lines into different locations.
+<br><br>
+(NB. it is possible to change the location of a purchase order that has lines on it that are allocated to a shipment that also has other lines expected to be delivered into a different location. This could result in a problem)
+<br><br>
+The purchase order line items on outstanding orders that are yet to be invoiced and are not currently on a shipment are shown on the screen. Clicking on the link to "Add" will add the line to the shipment. The lines currently allocated to the shipment will show and a link to "Delete" the line. This allows the line to be taken off the shipment (it will not delete the purchase order line).
+
+<!-- Help End: Shipments -->
+
+<br><br>
+
+<!-- Help Begin: Shipt_Select -->
+
+<font size="+1"><b>Shipment Costings</b></font>
+<br><br>
+The costs of a shipment are recorded at the time of purchase invoice entry. Entering a purchase order from the supplier of the shipment, records the actual amount invoiced and the exchange rate at which it was invoiced against the shipment. It is important to ensure the shipment is defined before any of the item is invoiced. Once some of the item is invoiced it is not available for adding to a shipment. Nor can the item be taken off a shipment to which it was already set up against. The item must be credited before this can be done. The recording of the shipment cost happens invisibly behind the scenes for GRN items.
+<br><br>
+Freight charges, duty and cartage are recorded against the shipment at the time of the purchase invoice entry against the freight company. There is opportunity to enter invoices against a shipment and all open shipments show in a select box.
+<br><br>
+Selecting a shipment is done from the select supplier screen. The shipments defined for the supplier are shown for the users's default inventory location. The location can be changed to show shipments into other locations. By default only open shipments are shown but there is an option to show closed shipments as well. The vessel, voyage and ETA show for all shipments shown together with links to allow:
+<br><br>
+<ul>
+<li>Modification of the shipment lines or ETA or references.
+<li>Viewing the costing with invoiced amounts in local currency against each item together with the other general shipment charges - shown by supplier and invoice number.
+<li>Closing the shipment costing.
+</ul>
+
+<!-- Help End: Shipt_Select -->
+
+<!-- Help Begin: ShipmentCosting -->
+
+<font size="+1"><b>Closing a Shipment</b></font>
+<br><br>
+From the select Shipment screen, the link to close a shipment shows on all open shipments. Closing the shipment makes it impossible to post additional charges against it and also if general ledger stock integration is active, journals to take the variances from standard to the variance account and the GRN suspense are created. Closing a shipment also has an option to update the standard costs. By default this is set to yes. Again if stock GL integration is enabled (see company preferences) then the cost adjustment journals are posted in the same way as if the cost adjustment was processed separately.
+<!-- Help End: ShipmentCosting -->

@@ -1,0 +1,133 @@
+webERP Translations
+
+webERP can be translated to any language so that the entire web-interface is displayed in the language of any user. The system can display different languages for different users - all at the same time - depending on the setting of the language in the individual users' settings.
+
+Caveats: It is important to note that at the current time languages that require multi-byte fonts such as Chinese, Japanese, Arabic - whilst the browser screens will display the translations correctly, they will not be able to print pdf reports. PDF reports are created using the R & OS pdf.php class and this requires single byte .afm fonts.
+
+Further, some work is still required to get these reports working even for single byte character sets. This work can really only proceed when the development team have translations to work with.
+
+
+Procedure
+
+1. Join the mailing list at:
+
+http://lists.sourceforge.net/lists/listinfo/web-erp-translation
+
+Let the list know your wanting to help with a translation - someone may already be working on it. The list admin will send you the latest translation file to your subscribed email address normally within 24 hours.
+
+2. Edit the file provided entering the translations for the strings labelled msgid in the string labelled msgstr. Watch for html strings embedded inside the strings the html will also be required in the translated string. Please complete the translation file header information - with your details so that you are accorded proper recognition for your contribution.
+
+3. Return the file containing your translations to info@weberp.org
+
+4. An archive of the new language directory and instructions on how to use it will be emailed for your use. The new directory created by the project admin will be added to the webERP distribution for future releases
+
+
+Thats it! However, for the more curious and technically minded more detail is provided below.
+
+
+
+
+
+
+
+
+Technical Overview
+
+How is it Done
+
+webERP uses the GNU gettext package for language translations. PHP must be compiled with gettext functions to enable multi-language translations. However, it will produce english if the PHP interpreter does not have the gettext functions compiled in to the server.
+
+The gettext translation files are held in the locale directory, under this directory there are sub-directories for each locale, a two character code representing the language to be used. eg en for English, it for Italian etc. New directories will be made up on request if a translator wishes to have a local version for their language. Under the locale, two character abbreviation code directory there is a further sub-directory called LC_MESSAGES - this is where the translation files exist. There are two files in each of these directories:
+
+1. messages.po this file contains all the strings to be translated
+2. messages.mo this is a binary machine searchable tranlation file used by gettext. The .mo file is produced by a gettext utility using the .po. The effort is needed to get the .po file translated
+
+Any text editor can be used to edit the .po file GNU Emacs contains specific functionality for editing .po files there is a special PO-Mode
+
+
+Understanding the messages.po File
+
+The translation is performed by tranlating the strings in the messages.po file into the other language. It is important to work on the most recent messages.po file from the locale/en/LC_MESSAGES/ deirectory in the CVS.
+However, the most recent messages template file will be emailed on request to the project administrator at info@webrp.org
+
+The messages.po is made up of sections
+
+eg.
+
+#: AccountGroups.php:8 index.php:890
+msgid "Account Groups"
+msgstr ""
+
+the line #: AccountGroups.php:8 index.php:890
+
+means that the string following is used in the AccountGroups.php script on line 8 and the index.php script on line 890. It could be useful to understand the context of where the script is used. Strings that are used several times throughout the application only need to be translated once. In some cases the #: line showing where the string is used can be quite an extensive list of scripts.
+
+msgid "AccountGroups"
+
+this line is the english string which is to be substituted by the text in msgstr. The value of msgstr in this example is empty - "". gettext will return the english string where no translation is entered.
+
+The effort of the translation is to edit the messages.po file and enter the language translation within the inverted commas of the msgstr.
+
+
+The .po File Header
+
+The .po file starts with some initial comments which should also be completed
+
+"SOME DESCRIPTIVE TITLE", - should be replaced with webERP - LANGUAGE Translation File - where LANGUAGE is the language being translated into
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR. - should be your name and email address - with the year of the work being done
+
+
+Project-Id-Version
+Should be webERP - version number
+
+PO-Revision-Date
+This is the date of your last entries in the file
+
+Last-Translator
+This is your name and email address for users of this language to contact should some translations be unclear
+
+Content-Type
+Replace `CHARSET' with the character encoding used for your language, in your locale, or UTF-8.
+In the GNU system, the following encodings are frequently used for the corresponding languages:
+
+        * ISO-8859-1 for Afrikaans, Albanian, Basque, Catalan, Dutch, English, Estonian, Faroese, Finnish, French, Galician, German, Greenlandic, Icelandic, Indonesian, Irish, Italian, Malay, Norwegian, Portuguese, Spanish, Swedish,
+        * ISO-8859-2 for Croatian, Czech, Hungarian, Polish, Romanian, Serbian, Slovak, Slovenian,
+        * ISO-8859-3 for Maltese,
+        * ISO-8859-5 for Macedonian, Serbian,
+        * ISO-8859-6 for Arabic,
+        * ISO-8859-7 for Greek,
+        * ISO-8859-8 for Hebrew,
+        * ISO-8859-9 for Turkish,
+        * ISO-8859-13 for Latvian, Lithuanian,
+        * ISO-8859-15 for Basque, Catalan, Dutch, English, Finnish, French, Galician, German, Irish, Italian, Portuguese, Spanish, Swedish,
+        * KOI8-R for Russian,
+        * KOI8-U for Ukrainian,
+        * CP1251 for Bulgarian, Byelorussian,
+        * GB2312, GBK, GB18030 for simplified writing of Chinese,
+        * BIG5, BIG5-HKSCS for traditional writing of Chinese,
+        * EUC-JP for Japanese,
+        * EUC-KR for Korean,
+        * TIS-620 for Thai,
+        * UTF-8 for any language, including those listed above.
+
+When single quote characters or double quote characters are used in translations for your language, and your locale's encoding is one of the ISO-8859-* charsets, it is best if you create your PO files in UTF-8 encoding, instead of your locale's encoding. This is because in UTF-8 the real quote characters can be represented (single quote characters: U+2018, U+2019, double quote characters: U+201C, U+201D), whereas none of ISO-8859-* charsets has them all. Users in UTF-8 locales will see the real quote characters, whereas users in ISO-8859-* locales will see the vertical apostrophe and the vertical double quote instead (because that's what the character set conversion will transliterate them to).
+
+The character encoding name can be written in either upper or lower case. Usually upper case is preferred.
+
+Content-Transfer-Encoding
+Set this to 8bit
+
+
+Administration
+
+Once this exercise has been completed the file must be returned to the project administrator: info@weberp.org for the .mo file to be created. The new directory will be returned in a zip file for extraction from the web-erp directory. The language will then be added to the webERP system for the benefit of other users as well. Future archives will include the translations
+submitted.
+
+The UserSettings.php script reads the directories available for different languages and setting the language to the two letter language abbreviation will activate that language for the user from that point on. This setting is retained for all future sessions for this user.
+
+
+Other Resources
+
+The GNU gettext manual:
+
+http://www.gnu.org/software/gettext/manual/html_chapter/gettext_toc.html#SEC_Contents

@@ -1,0 +1,90 @@
+<br><br>
+<a name="SalesOrders"><font size="+3"><b>Sales Orders</b></font></a>
+<br><br>
+<font size="+2"><b>Functionality</b></font>
+<br><br>
+<ul>
+<li>Customer orders can be entered and maintained and referenced back to the customer's order number. 
+<li>The cumulative quantity on order for a stock item shows as a demand in stock status inquiries. 
+<li>The cumulative quantity on order for assembly items shows the demand against its components in the stock status inquiries.
+<li>The quantity of the order left to invoice is maintained and updated for invoices and credit notes raised against the order. 
+<li>The orders entered can be invoiced directly with little or no additional input. 
+<li>Multiple dispatches are possible from a single order. Order retains references to each dispatch.
+<li>Differences from the order are logged when dispatches are not the same as the ordered quantities for reporting delivery in full on time.
+<li>Pricing automatically returned based on the customer sales type, branch and currency.
+<li>Quantity break discounts across a range of products are automatically calculated based on the discount matrix.
+<li>Packing slips printable on laser or pre-printed stationery.
+<li>User selectable inventory location to pick from.
+<li>Free form entry of delivery addresses - defaulting to the customer branch physical address.
+</ul>
+
+<!-- Help Begin: SelectOrderItems -->
+
+<font size="+2"><b>Entry of Sales Orders</b></font>
+<br><br>
+From the main menu, Orders tab, click the Order Entry link.
+<br><br>
+<font size="+1"><b>Selection of the Customer and Branch</b></font>
+<br><br>
+Initially, the order entry page shows the options to allow selection of a customer and branch. The customer is the actual charge account to where the order should be billed and the branch contains all the information about delivery. The customer search facilities are similar to the select customer script, but the code actually looks up on the branch code of the customer, only branches are displayed with accompanying customer charge to information. Searching for a customer can be either by entering a letter or letters in the branch code or by entering some keywords (or section of) in the customer name. Searching in this way minimises the result set returned (possibly over a dial up connection) to ensure the response is as speedy as possible to the users browser. All branches matching the criteria entered and not flagged as disabled for transactions, are returned each one with a button on the customer code. Hitting the button for the desired customer/branch selects it as the customer and branch to deliver the order to. There is opportunity later to modify the delivery details if need be. The order now shows the quick entry screen headed up with the name of the customer and branch, together with the sales type of the customer.
+<br><br>
+<font size="+1"><b>Selection of Order Line Items</b></font>
+<br><br>
+There are two ways to select the line items for the order. 
+<br><br>
+<ul>
+<li>By default a "quick entry" screen shows allowing the direct entry of the inventory code and the quantity required for the order. The number of lines shown on this quick entry table is defined by a variable in config.php - $QuickEntryLines which is user modifiable. After the user has entered any number of lines into this table, hitting the Quick Entry button processes the items entered into the order. The prices are retrieved based on the sales type, the currency, customer branch and the charge to customer of the order. If there were insufficient lines to enter all part codes for the order, the same process can be repeated with the quick entry table shown below the order summary after the first quick entry has been processed.
+<li>On the quick entry screen there is a button to search parts. This button enables the user to search for a part based on the stock category and/or any part of the item's description and/or any element of the item's code. Hitting the search button after making appropriate entries in the code or description fields shows the part codes and descriptions together with picture of the item - if one has been uploaded to the server for all parts. Part pictures must be in .jpg format with a file name identical to the part code but with the extension .jpg, and it must reside in the directory specified in config.php for part_pics. The item code is displayed as a button and the system automatically puts one of the item selected onto the order. Additional parts can be selected in the same way.
+</ul>
+Having selected the parts for the order, it is possible to edit the quantities, price and discount applicable to each line of the order. To get the order values to re-calculate the "Recalulate" button must be clicked (this is the compromise of using server side scripting - PHP - to the exclusion of any client side - java - processing). Discounts will be calculated using the Discount Matrix functionality described under that section within the order based on the quantities that are entered. 
+<br><br>
+If a line entered, displays against a red background this means that the system inventory is showing insufficient stock to cover the order line, from the inventory location as defaulted from the customer branch record - as the most appropriate inventory location to draw the stock for this branch's orders. The item code displayed is also a link to a new browser window showing the stock status inquiry for the item, this shows the stock available at all locations.
+<br><br>
+A line can be deleted at any time by clicking on the link at the end of the line to delete it.
+<br><br>
+The whole order can be cancelled at any time by clicking on the "Cancel Whole Order" button.
+<br><br>
+The customer can also be changed at any time.
+<br><br>
+Once all the line items have been selected the Delivery Details button must be clicked. Note that there have been no changes to the database at all. The data entered exists only as a server side cookie - a file on the web-server. Delivery details must be confirmed before the order can be placed.
+<br><br>
+<font size="+1"><b>Delivery Details</b></font>
+<br><br>
+By default the delivery details are obtained from the physical address of the branch. However, any of the information in this screen can be over-ridden. This information prints on the dispatch/packing slip and on the invoice. 
+<br><br>
+The inventory location where the stock for the order is to be drawn from is defaulted from the customer branch record. However, it is possible to select an alternative inventory location if the order is to be picked from elsewhere.
+<br><br>
+The customer's order reference should be entered here and the most appropriate freight company should be selected. The system keeps track of the last freight company used to deliver to the branch and uses this as the default, if it is over-ridden then this new value is stored against the branch.
+<br><br>
+It is possible to go back to the line item entry screen retaining all the data entered on the delivery details screen by clicking on the modify line items button. If the inventory location to draw from has been changed the colouring of the background of the line items will be updated to reflect the stock available at the new location to pick from.
+<br><br>
+If the automatic freight calculations are being used - see the parameters in config.php, the freight cost will be calculated based on the sum of the whole order cubic metres and weight. The best shipping company will also be returned. The user can choose to charge the freight calculated or just use the cheapest freight company. The freight charge calculated can be over-ridden if required.
+<br><br>
+Once all details are entered correctly the Place Order button should be clicked. It is important to note that abandoning the order before this button is clicked there have been no updates to the database and nothing is saved. Clicking into some other screen loses the order as entered. Whilst it is perfectly acceptable to have several browser screens open looking at different inquiries at the same time. It is not possible to have two windows entering two separate sales orders at the same time, entries in the one window will over-write the other.
+
+<!-- Help End: SelectOrderItems -->
+
+<br><br>
+
+<!-- Help Begin: SelectSalesOrder -->
+
+<font size="+1"><b>Modfiying An Order</b></font>
+<br><br>
+Only Outstanding sales orders can be modified. Only these orders have any balance of a quantity remaining to be delivered and/or invoiced. Order lines that have been invoiced completely will not be available for modification. New items cannot be added to the order. Pricing cannot be altered if any amount of the line has already been delivered/invoiced. Quantities of an order line cannot be reduced below the quantity of the line already invoiced.
+<br><br>
+Note that changing the delivery address of an outstanding order that has already had some of the order delivered and invoiced will affect re-prints of the initial invoice - it will show as being delivered to the order delivery address that has been modified. Hard copy of original invoices are required.
+<br><br>
+<b>Selecting an Outstanding Sales Order</b>
+<br><br> 
+There are several ways:
+<br><br>
+<ul>
+<li>If the item ordered is known, sales orders can be selected that have the item on by first selecting the item in the Select Item page, once the item is selected a link to show outstanding sales orders is displayed.
+<li>If the customer is known, then first select this customer then use the link on the customer selection menu to show only the outstanding orders for the customer selected.
+<li>All outstanding orders can be displayed by entering the Outstanding Sales Orders screen without a customer or item directly from the main menu under the orders tab. The outstanding Sales Orders screen also has facilities for looking up a part directly as well.
+</ul>
+The Outstanding sales orders are shown by inventory location, the inventory location desired can be selected on this screen, by default the location defined as the default for the user is shown. The orders matching the criteria are only shown when the user clicks on the search orders button.
+<br><br>
+The orders displayed each show links to modify the line items, invoice the order or print the dispatch note. If the order has already been printed this link will show that it has already been printed to avoid printing several dispatch notes and risk doubling up deliveries.
+
+<!-- Help End: SelectSalesOrder -->

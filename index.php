@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 $PageSecurity = 1;
 
@@ -26,17 +26,17 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . "/CustomerInquiry.php?" . SID . "CustomerID=" . $_SESSION["CustomerID"] . "'><li>" . _("Account Status") . "</li></a>"; ?>
+								<?php echo "<a href='" . $rootpath . "/CustomerInquiry.php?" .SID . "&CustomerID=" . $_SESSION["CustomerID"] . "'><li>" . _("Account Status") . "</li></a>"; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . "/SelectOrderItems.php?" . SID . "NewOrder=Yes'><li>" . _("Place An Order") . "</li></a>"; ?>
+								<?php echo "<a href='" . $rootpath . "/SelectOrderItems.php?" .SID . "&NewOrder=Yes'><li>" . _("Place An Order") . "</li></a>"; ?>
 							</td>
 							</tr>
 														<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . "/SelectCompletedOrder_CUSTOMER.php?" . SID . "NewOrder=Yes'><li>" . _("Order Status") . "</li></a>"; ?>
+								<?php echo "<a href='" . $rootpath . "/SelectCompletedOrder_CUSTOMER.php?" .SID . "&NewOrder=Yes'><li>" . _("Order Status") . "</li></a>"; ?>
 							</td>
 							</tr>
 						</table>
@@ -70,9 +70,9 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 				$_SESSION['Module']=$ModuleLink[$i];
 			}
 			if ($ModuleLink[$i] == $_SESSION['Module']){
-				echo "<td class='main_menu_selected'><a href='". $_SERVER['PHP_SELF'] ."?". SID ."Application=". $ModuleLink[$i] ."'>". $ModuleList[$i] ."</li></a></td>";
+				echo "<td class='main_menu_selected'><a href='". $_SERVER['PHP_SELF'] ."?". SID . "&Application=". $ModuleLink[$i] ."'>". $ModuleList[$i] ."</li></a></td>";
 			} else {
-				echo "<td class='main_menu_unselected'><a href='". $_SERVER['PHP_SELF'] ."?". SID ."Application=". $ModuleLink[$i] ."'>". $ModuleList[$i] ."</li></a></td>";
+				echo "<td class='main_menu_unselected'><a href='". $_SERVER['PHP_SELF'] ."?". SID . "&Application=". $ModuleLink[$i] ."'>". $ModuleList[$i] ."</li></a></td>";
 			}
 		}
 		$i++;
@@ -113,7 +113,7 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . "/SelectOrderItems.php?" . SID . "NewOrder=Yes'><li>" . _('Sales Order Entry') . '</li></a>'; ?>
+								<?php echo "<a href='" . $rootpath . "/SelectOrderItems.php?" .SID . "&NewOrder=Yes'><li>" . _('Sales Order Entry') . '</li></a>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -123,7 +123,7 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . "/SpecialOrder.php?" . SID . "NewSpecial=Yes'><li>" . _("Special Order") . "</li></a>"; ?>
+								<?php echo "<a href='" . $rootpath . "/SpecialOrder.php?" .SID . "&NewSpecial=Yes'><li>" . _("Special Order") . "</li></a>"; ?>
 							</td>
 							</tr>
 						</table>
@@ -195,7 +195,7 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . "/SelectCreditItems.php?" . SID . "NewCredit=Yes'><li>" . _("Create A Credit Note") . "</li></a>"; ?>
+								<?php echo "<a href='" . $rootpath . "/SelectCreditItems.php?" .SID . "&NewCredit=Yes'><li>" . _("Create A Credit Note") . "</li></a>"; ?>
 							</td>
 							</tr>
 							<tr>
@@ -376,7 +376,7 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . "/PO_Header.php?" . SID . "NewOrder=Yes'><li>" . _("Purchase Order Entry") . "</li></a>"; ?>
+								<?php echo "<a href='" . $rootpath . "/PO_Header.php?" .SID . "&NewOrder=Yes'><li>" . _("Purchase Order Entry") . "</li></a>"; ?>
 							</td>
 							</tr>
 							<tr>
@@ -813,7 +813,7 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . "/Payments.php?" . SID . "NewPayment=Yes'><li>" . _("Bank Account Payments") . "</li></a>"; ?>
+								<?php echo "<a href='" . $rootpath . "/Payments.php?" .SID . "&NewPayment=Yes'><li>" . _("Bank Account Payments") . "</li></a>"; ?>
 							</td>
 							</tr>
 							<tr>
@@ -823,17 +823,17 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . "/GLJournal.php?" . SID . "NewJournal=Yes'><li>" . _("Journal Entry") . "</li></a>"; ?>
+								<?php echo "<a href='" . $rootpath . "/GLJournal.php?" .SID . "&NewJournal=Yes'><li>" . _("Journal Entry") . "</li></a>"; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . "/BankMatching.php?" . SID . "Type=Receipts'><li>" . _("Bank Deposits Matching") . "</li></a>"; ?>
+								<?php echo "<a href='" . $rootpath . "/BankMatching.php?" .SID . "&Type=Receipts'><li>" . _("Bank Deposits Matching") . "</li></a>"; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . "/BankMatching.php?" . SID . "Type=Payments'><li>" . _("Bank Payments Matching") . "</li></a>"; ?>
+								<?php echo "<a href='" . $rootpath . "/BankMatching.php?" .SID . "&Type=Payments'><li>" . _("Bank Payments Matching") . "</li></a>"; ?>
 							</td>
 							</tr>
 						</table>

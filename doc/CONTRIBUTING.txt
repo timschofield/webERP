@@ -38,17 +38,20 @@ http://lists.sourceforge.net/lists/listinfo/web-erp-developers
 
 Inform the list of your proposed developments and discuss the approach to be used. There are some knowlegable people on the list and they can contribute ideas if you let them. This is also good to avoid overlapping effort or combine efforts in working on different elements of the same project.
 
-2. Obtain the latest development scripts from CVS - see sourceforge instructions for anonymous cvs checkout the CVS files intially then updates daily - this only downloads any modified scripts, or update immediately before commencing any development. Do development work on the most recent scripts from CVS.
+2. Obtain the latest development scripts from CVS - see sourceforge instructions for anonymous cvs checkout the CVS files intially then updates daily - this only downloads any modified scripts, or update immediately before commencing any development.
+
+
+IMPORTANT: Only do development work on the most recent scripts from CVS and update your copy of the CVS regularly. Instructions on the use of CVS at sourceforge can be found at the following URL:
 
 http://sourceforge.net/docman/display_doc.php?docid=14033&group_id=1
 
-3. After any modifications to the scripts - email (only) the modified scripts (or ideally a diff file between the latest CVS scripts and your updated scripts) to daintree@sourceforge.net within 12 hours of your last update from CVS. The project admin will have to digest the modifications and ensure the coding style is consistent, test the scripts and consider the implications of the modifications in acheiving the goals noted above. Plenty of narrative explaining the modifications should be posted in the developers list so all can consider the implications. They will be committed to CVS as soon as possible after receipt and testing. Only the project admin has write access to CVS.
+3. After any modifications to the scripts - email (only) the modified scripts (and ideally a diff file between the latest CVS scripts and your updated scripts) to info@weberp.org within 12 hours of your last update from CVS. The project admin will have to digest the modifications and ensure the coding style is consistent, test the scripts and consider the implications of the modifications in acheiving the goals noted above. Plenty of narrative explaining the modifications should be posted in the developers list so all can consider the implications. They will be committed to CVS as soon as possible after receipt and testing.
 
 4. Where modifications span 10 or more scripts at the same time, request a stay on development from other developers using the list.
 
 5. All submissions of modifications or additions should be accompanied by a plain text change.log file describing the changes to each script. This explains to everyone the nature of the changes made. Each entry in the change log should state the developer name and date of the  change/addition. This file will be appended to the doc/change.log when the files are committed to CVS.
 
-6. Requests for modification of the database structure - with an extract of the SQL required to effect the changes should be made to daintree@sourgeforge.net These will be included in the version upgrage script as well as the latest database structure.
+6. Requests for modification of the database structure - with an extract of the SQL required to effect the changes should be made to info@weberp.org These will be included in the version upgrage script as well as the latest database structure.
 
 
 CODING STANDARDS
@@ -96,7 +99,7 @@ eg.
 </TABLE>
 
 
-HTML table cell tags  in echo statements should use carriage returns to keep cells together so it is easy to see what is in each cell.
+HTML table cell tags in echo statements should use carriage returns to keep cells together so it is easy to see what is in each cell.
 
 eg.
 
@@ -106,15 +109,27 @@ Would be more easily digested and should be written as:
 
 echo '<TABLE>
 	<TR>
-		<TD>Label text:</TD>
+		<TD>' . _('Label text') . ':</TD>
 		<TD>' . $SomeVariable . '</TD>
-		<TD>Some Other Label:</TD>
+		<TD>' . _('Some Other Label') . ':</TD>
 		<TD ALIGN=RIGHT>' . number_format($SomeNumber,2) . '</TD>
 	</TR>
       </TABLE>';
 
 Carriage returns should be used in a similar way for printf statements.
 
+
+Label Strings and Multi-Language
+
+Since webERP is a multi-language system it is important not to compromise this capability by having labels in your scripts that are not enclosed in the gettext function eg.
+
+echo 'Enter the quantity:<INPUT TYPE=TEXT NAME=Quantity>';
+
+should be written as:
+
+echo _('Enter the quantity') . ':<INPUT TYPE=TEXT NAME=Quantity>';
+
+note that there should be no trailing spaces or punctuation on the string to be translated inside the _() function call
 
 PHP Variables
 
@@ -211,8 +226,12 @@ are preferred. But all comments gratefully received!
 
 All scripts should have a comment in the first few lines with the script revision number in it if the following comment is pasted into it the CVS automatically updates the revision number.
 
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
+
+Messages
+
+The standard message function prnMsg should always be used for all messages to be echo'ed to the screen - this function has two parameters - the string to display and the message type , 'error', 'warn', 'success', 'info' - there is a third optional paramter which is a prefix heading for the message.
 
 Database Function Calls
 
@@ -246,12 +265,14 @@ $sql = "SELECT TransNo,
 	WHERE ";
 
 
-SQL kywords should be capitalised as above eg. SELECT, CASE, FROM, WHERE etc.
+SQL kywords should be capitalised as above eg. SELECT, CASE, FROM, WHERE, GROUP BY, ORDER BY etc.
+Line breaks after every comma and on major SQL reserved words as above.
+
+
 
 Constants
 
-Constants should always be all-uppercase, with underscores to separate
-words.
+Constants should always be all-uppercase, with underscores to separate words.
 
 
 PHP Code Tags

@@ -1,0 +1,71 @@
+<br><br>
+<a name="ARReports"><font size="+3"><b>Accounts Receivable Reports</b></font></a>
+<br><br>
+The system is designed for flexibility and to provide the framework of core functionality required to administer a debtors ledger system. The basic accounts receivable reports are available as standard since they are used by all businesses. However, since the database is open it is envisaged that the business will make use of ODBC drivers for database used and use Crystal Reports or Microsoft Access  or some other analysis software, where the user is on the same LAN as the server for specialised reports.
+<br><br> 
+
+<!-- Help Begin: AgedDebtors -->
+
+<font size="+1"><b>Aged Customer Balance Listing</b></font>
+<br><br>
+From the main menu select Customers, Reports, "Aged Customer Balances/Overdues Report".
+<br><br>
+This report calculates the balances of the customers' accounts according to the parameters specified in config.php $PastDueDays1 and $PastDueDays2. The report is generated in the currency of the customer. The currency of the report must first be selected and the range of customers accounts to print.
+<br><br>
+The report can be printed at two levels:
+<br><br>
+<ul>
+<li>The full detail of the all outstanding amounts on the account, transaction by transaction analysed into current, Due, $PastDueDays1 and PastDueDays2. The detailed report also shows the terms applicable to each customer.
+<li>A summary of the account balances split in the same aged groupings.
+</ul>
+This report recalculates the balance on the customer's account from the outstanding transactions and analyses each outstanding transaction based on the date of invoice plus the expected time to deliver to the branch invoiced.
+<br><br>
+The Aged Customer Balances can also be restricted to show just the accounts where there is some balance overdue. The same detail and summary reports are available. The resultant reports create pdf files that can be either saved or printed.
+
+<!-- Help End: AgedDebtors -->
+
+<br><br>
+
+<!-- Help Begin: PrintCustStatements -->
+
+<font size="+1"><b>Customer Statements</b></font>
+<br><br>
+The customer statement shows the outstanding transactions on the account. There is an option in config.php that allows transactions that have been settled at some time within the last month to be shown in a settled transactions section of the statement. The parameter, $Show_Settled_LastMonth should be set equal to 1 for this. If it is set to 0, then any settled transactions will not be shown on the statements. This saves printing zero balance statements and there is argument both ways as to which is best.
+<br><br>
+When transactions are created, the date of the transaction determines the period into which it is posted in the general ledger. The date of the transaction is also used in the aging calculations used on the statement. All transactions to the date of the statement are included. It is not possible to print a statement as at some prior date. It may be necessary to delay the start of invoicing for the new month until all receipts are entered and allocated and the statements printed before processing new invoices that should appear on the following month's statement.
+<br><br>
+Procedure - All receipts must be allocated for the aged analysis to be calculated correctly. Then from the main menu Accounts Receivable tab select from the reports and inquiries section, "Print Statements". The link will allow selection of a range of customers. A single customer's statement can be printed by selecting the same starting an finishing customer code. Statements will be printed in sequence of the Customer code set up in the customer details screen. A pdf file is created this can be saved or printed.
+
+<!-- Help End: PrintCustStatements -->
+
+<br><br>
+
+<!-- Help Begin: CustomerTransInquiry -->
+
+<font size="+1"><b>Customer Transaction Listing Options</b></font>
+<br><br>
+This is accessed from the main menu, accounts receivable tab under the link "Transaction Inquiries".
+<br><br>
+This inquiry allows transactions to be listed based on the selection of criteria on screen. The page allows listing of receipts, invoices or credit notes within any specified date range.
+<br><br>
+This listing is shown on the screen and can of course be printed from the browser if necessary.
+
+<!-- Help End: CustomerTransInquiry -->
+
+<!-- Help Begin: PrintCustTrans -->
+
+<br><br>
+<font size="+1"><b>Printing Invoices Or Credit Notes</b></font>
+<br><br>
+From the Main Menu select the Accounts Receivable tab, under Inquiries and Reports, "Print Invoices or Credit Notes".
+<br><br>
+This page shows the last invoice and credit note created and some brief instructions on how to use the page. By default the page assumes that invoices are required. However, if credit notes are required, they can be selected from the list field. 
+<br><br>
+If only one transaction is required then the number of the transaction should be entered in the field "Start invoice/credit note number to print". If a range of transactions is required then both fields are necessary to be completed.
+<br><br>
+There is also an option to print EDI invoices/credit notes. By default these are not printed as they will normally be dispatched electronically to the customer. However, some businesses and tax authorities require hard copy invoices and credit notes to be produced in any event.
+<br><br>
+Two options are available - Print, produces a html page of the invoice (or credit note), the resulting page can then be printed using the browser print functionality. The print PDF produces a PDF invoice (or credit note).
+
+<!-- Help End: PrintCustTrans -->
+

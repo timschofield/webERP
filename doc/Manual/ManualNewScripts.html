@@ -1,0 +1,58 @@
+<br><br>
+<a name="NewScripts"><font size="+3"><b>Developing New Scripts</b></font></a>
+<br><br>
+<font size="+2"><b>Directory Structure</b></font>
+<br><br>
+The scripts that make up the system are seperated into just two directories. The main root directory contains all the scripts that are called directly from links in the system. Scripts or portions of scripts that are included in one or more of the main scripts are held in the includes/ sub-directory. The scripts to create the database are held under the sql directory - these are sql scripts created by mysqldump. Documentation is under the doc/ sub-directory where this manual and the FAQ are held. Font files required by pdf.php the R&OS class file for creating pdf reports are held in the fonts/ sub-directory. Formatting style sheets are held under the css - see the themes section under getting started above.
+<br><br>
+Construction of new scripts should make use of the following building blocks that are used throughout the system.
+<br><br>
+<font size="+1"><b>session.inc</b></font>
+<br><br>
+This page must be included after the page has set the variable $PageSecurity to an appropriate integer (see the security schema section), session.inc has the following functons:
+<br><br>
+<ul>
+<li>Establishes a session if none already exists and checks that an authorised user is logged in - if so it checks that the user is authorised for the specific page being called, based on the value of $PageSecurity.
+<li>It in turn includes the scripts:
+<li>config.php - this script contains all the configuration settings for the system. Including session.inc in the script at the start ensures that all system variables defined in config.php are available to the script. 
+<li>ConnectDB.inc - this script initiates a connection to the database and contains all the database abstraction functions. When interacting with the database, only functions defined in this script are used not the mysql specific functions, since a change in database would be otherwise be difficult to effect. By using this file, only the functions in this script need to be modified for any other database to be used.
+</ul>
+<font size="+1"><b>header.inc</b></font>
+<br><br>
+This file should be included after the variable $title has been set to the name of the page. This file relies on config.php being already loaded, so session.inc (which in turn includes config.php) must be included before header.inc. The code in this script has the following functions:
+<br><br>
+<ul>
+<li>Sets up the normal system banner with the links to the menu, item selection, customer and supplier selection pages. 
+<li>Sets the style sheet used throughout the system.
+</ul>
+<font size="+1"><b>footer.inc</b></font>
+<br><br>
+This file contains the small logo, company name and copyright notice with the closing </body></html> tags.
+<br><br>
+<font size="+1"><b>config.php</b></font>
+<br><br>
+The developer should familiarise themselves with the variables in config.php as these are available to all scripts that have included session.inc. Of particular use is $rootpath which is the directory where the web server holds the system files. Having started the page with session.inc and header.inc - and then finishing with footer.inc much of the work to ensure a consistent look and feel is already done. 
+<br><br>
+<font size="+1"><b>PDFStarter_ros.inc</b></font>
+<br><br>
+The only time when it is not appropriate to include session.inc or header.inc is when a pdf script is to be created. Here the file PDFStarter_ros.inc contains the initiation of the session and the check for proper user authentication and authorisation for the specific page using the $PageSecurity variable which must be defined before PDFStarter_ros.inc is included. Normally, config.php and ConnectDB.inc are included seperately (and before PDF_starter_ros.inc) in PDF scripts.
+<br><br>
+<font size="+1"><b>Database Abstraction - ConnectDB.inc</b></font>
+<br><br>
+Whilst the system has been developed using MySql it has always been envisaged that users should not be forced to use Mysql - in keeping with open source principles. For this reason all requests of the database are made via abstraction functions in ConnectDB.inc. This policy has been rigorously maintained and developing extensions to the system which do not conform to this scheme would destroy the portability currently available between databases. Care has been taken to ensure that standards compliant SQL is used throughout, to ensure any database conversion issues are minimal.
+<br><br>
+<font size="+1"><b>DateFunctions.inc</b></font>
+<br><br>
+This script holds a number of functions for manipulating dates used throughout the system - amongst the most useful:
+<br><br>
+<ul>
+<li>DateDiff - calculates the difference between two dates has parameters for the number of days, weeks or months.
+<li>FormatDateForSQL converts a date in the format specified by $DefaultDateFormat in config.php to the format required for SQL - yyyy-mm-dd.
+<li>ConvertSQLDate - Converts a date in SQL format yyyy-mm-dd to the date defined in config.php $DefaultDateFormat
+<li>GetPeriodNo - Gets the period number for a given date by looking up the date in the period table - it creates new periods as necessary to ensure a valid period is returned.
+</ul>
+<font size="+1"><b>SQL_CommonFuctions.inc</b></font>
+<br><br>
+This script has some common functions used throughout the system - in particular:
+<br><br>
+ReadInCompanyRecord - returns an array of all the company record information.

@@ -1,0 +1,110 @@
+<br><br>
+
+<!-- Help Begin: SalesAnalRepts -->
+
+<a name="SalesAnalysis"><font size="+3"><b>Sales Analysis</b></font></a>
+<br><br>
+From the main menu under Accounts Receivable Reports and Inquiries options, "Sales Analysis Reports". A list of all previously defined sales reports shows with links to:
+<br><br>
+<ul>
+<li>Modify the design of the report - the header
+<li>Modify the columns of the report
+<li>Run the report and create a PDF file
+<li>Run the report to create CSV - comma seperated values report that can be read by any spreadsheet application.
+</ul>
+Also from the bottom of this page it is possible to make up new reports to show most combinations of sales data. A seperate table of sales data is maintained by the system to enable these reports to be run as quickly as possible. 
+<br><br>
+A sales analysis report is made up of:
+<br><br>
+<ul>
+<li>the report header defintion and
+<li>the report column definitions
+</ul>
+<b>Sales Analysis Report Headers</b>
+<br><br>
+The first step in creating a report is to enter the report header information. This includes:
+<br><br>
+<ul>
+<li>Report Heading - any combination of characters to describe the report.
+<li>Up to 4 levels of grouping and the criteria for each grouping.
+</ul>
+Each grouping consists of a selection of one of:
+<br><br>
+<ul>
+<li>Sales Area 
+<li>Product Code
+<li>Customer code - the actual charge account
+<li>Sales type (or price list)
+<li>Product type (or stock/inventory category)
+<li>Customer branch
+<li>Sales person
+</ul>
+The report groups on each level in sequence eg. A report with Group By 1 set to Product Code and Group By 2 set to Sales Area, would show the product code, then the areas underneath the product code where the item has been sold. Most often the more logical sequence might be to show the sales area as Group By 1 and the Product Code under the Group By 2 so that the sales of the product codes for each area appear together.
+<br><br>
+Each Group By section requires a range to be specified. All criteria specified must refer to the coding as specified in the setup section of the relevant Grouping. Eg Sales Areas criteria must be entered as the area code - not the area description. The criteria from should be less than the criteria to otherwise the report will have no output. 
+<br><br>
+<b>Sales Analysis Report Columns</b>
+<br><br>
+Having created a header for the report the columns can then be defined. Columns for existing reports can be modified at any time. From the main Sales Analysis Reports page - (Accounts Revceivable tab - Sales Analysis Reports) - there is a link on each report to "Define Columns". From this link the columns for the report selected are shown, together with a form to allow input of new columns. The following input is required for each column defined:
+<br><br>
+<ul>
+<li>A column number between 1 and 10. This number determines where abouts across the page the column is printed -1 is the closest to the left of the page and 10 is the closest to the right of the page.
+<li>Two fields are available for line 1 and 2 of the column heading. Any text can be input to a maximum of 15 characters in each.
+<li>Whether the column is a calculation or not. The input required for calculated columns is different from normal data columns.
+<li>For normal data columns -a range of periods to show the data for is required. The period from and to must be specified as the period number. Since periods are maintained almost invisibly by the system, there is a link provided from this screen to show the periods defined. If a single month is required then the period from will be the same as the period to.
+<li>The data to show in the column can then be selected from: Quantity, Gross Value, Net Value (after discounts), Gross Profit, Cost and Discount.
+<li>Budgeted sales or actual sales.
+</ul>
+If the column is defined as being a calculation the range of periods are not required, neither is the selection of the type of data to show and the budget or actual. Changing the Calculation field to yes then hitting the enter information button, show the fields required for a calculation:
+<br><br>
+<ul>
+<li>Numerator field - this the column number of the first parameter to the calculation- the numerator field is always required in a calculation.
+<li>Denominator field - this is the column number of the second parameter to the calculation if the calculation is to performed on two columns. If the operator of the calculation is to divide - then this column total will be on the bottom of the division calculation. If the calculation is to be done using a constant then this field can be left blank.
+<li>Calculation operator can be one of:
+<ol>
+<li>Numerator column divided by Denominator column
+<li>Numerator column divided by the constant
+<li>Numerator column multiplied by the constant
+<li>Numerator column plus the denominator column
+<li>Numerator column minus the denominator column
+</ol>
+<li>Constant can be any number for use in the calculations
+<li>Format type allows the output of the calculation to be expressed as either a percentage or a number.
+</ul>
+Hitting the Enter Information button adds the column to the report definition. It should then show in the list of defined columns and a blank form for entering a new column definition. If a column is no longer required the list of column definitions shown has a link that allows it to be deleted. 
+<br><br>
+The column number itself is a link to modify the definition of the column. The definition shows in the input form for alternation as necessary.
+<br><br>
+Clicking the link to maintain report headers shows the list of defined reports for modification or running. To run the report simply click on the Make PDF Report link.
+<br><br>
+These sales analysis reports have to look at a lot of information (and the reports are generated dynamically) as a result, they can take a minute or so to run on large databases. However, the design of the data has been done very carefully to ensure that reports generate dramatically faster than many such analysis engines.
+<br><br>
+<b>Automating Sales Reports</b>
+<br><br>
+Having created reports it is possible to email sales reports to defined recipients. A script called MailSalesReport.php is a template for doing this. There are no links to this script and no security level is set up for it. All that is required is to save this script to another file named anything with an extension of .php under the same directory as the other scripts. 
+<br><br>
+This script will need to be edited with the email addresses of the people to receive the report and the reportID - the system generated report number to be run. The lines to edit are:
+<br><br>
+/*The Sales report to send */
+<br>
+$ReportID = 4;
+<br><br>
+/*The people to receive the emailed report */
+<br>
+$Recipients = array('"Root" <root@localhost>','"some one else" <someoneelese@sowhere.com>');
+<br><br>
+The lines surrounded by /* and */ are comments.
+<br><br>
+Once edited to the ReportID or choice and the Recipients all entered the file should be saved.
+<br><br>
+To schedule the report to run an entry in crontab under a linux installation that would send the report at 0:0 each week day (assuming wget is installed in /usr/bin/wget and that the web server is on the same machine and the new script is called DailySalesReport.php) would be:
+<br>
+# Scheduled email of a daily sales report
+<br><br>
+0 0 * * 2-5 root /usr/bin/wget http://localhost/web-erp/DailySalesReport.php
+<br><br>
+since the page has no output - it would be pointless running it in a web browser although it would initiate another email to the defined recipients.
+<br><br>
+A similar template script is available called MailSalesReport_csv.php that mails the comma separated values file for a ReportID to the Recipients defined in the script in just the same way as MailSalesReport.php script above.
+
+<!-- Help End: SalesAnalRepts -->

@@ -1,0 +1,40 @@
+<br><br>
+
+<!-- Help Begin: CustomerInquiry -->
+
+<a name="ARInquiries"><font size="+3"><b>Accounts Receivable Inquiries</b></font></a>
+<br><br>
+<font size="+2"><b>Customer Inquiries</b></font>
+<br><br>
+Complete "drill down" inquiries are available to extract the full detail of transactions. The system maintains more data than many systems, preferring to minimise the use of consolidated or batch entries, in favour of the full detail of each transaction. The enquires can show the account history for a customer and from this inquiry it is possible to look at the details behind each transaction, from the detail of the transaction it is possible to look at the line items on the original invoice and which receipts paid the invoice. The original invoice or credit can be viewed directly from customer inquiries and the general ledger transactions that were created by the invoice, credit or receipt may also be inspected.
+<br><br>
+<font size="+1"><b>Customer Account inquiries</b></font>
+<br><br>
+From any page, click the "select customer" link. Having selected the customer all links applicable to the customer show. Among them the customer transactions inquiry.
+<br><br>
+By default the inquiry screen shows only those transactions after a date six months ago. The default period can be modified by simple editing of the script CustomerInquiry.php. If transactions further back are required only occasionally and not by default - the date after which all transactions will show can be altered at will. When the screen opens the customer's account is shown in the currency of the customer. The aged analysis based on the customer's terms is displayed. 
+<br><br>
+If the transaction is an invoice or a credit note a magnifying glass icon shows on the same line as the transaction. A click on this magnifying glass then opens a new window showing the detail of the invoice or credit note.
+<br><br>
+If the integration to the general ledger from accounts receivable - see the option to "Create GL entries for accounts receivable transactions" from the Company Preferences page under setup - then another link with the letters GL will show. This link shows a new page with the detail of the general ledger postings created by this transaction.
+<br><br>
+If the transaction is a receipt or a credit note and the user has appropriate access privileges, a book icon shows. Clicking this icon takes the user to the page for allocating receipts and credits - if the receipt or credit is already allocated then the detail of how the receipt/credit was allocated is shown together with other invoices that could be used for allocating against. Invoices that have previously been allocated will not show.
+<br><br>
+More (or less) history can be shown by changing the "Show all transactions after:
+<br><br>
+" date - then clicking the refresh button. The balance on the customer's account should balance to the sum of the amounts outstanding. The amount outstanding is used to represent:
+<br><br>
+<ul>
+<li>For Invoices, the amount which has not yet been settled by receipts or credit notes
+<li>For Receipts, the amount which has yet to be allocated (or matched off) against invoices.
+</ul>
+<font size="+1"><b>Transaction Detail inquiries</b></font>
+<br><br>
+The detail of transactions can be inspected via one of two avenues:
+<br><br>
+<ul>
+<li>From the Customer's Account inquiry - click on the magnifying glass or the GL link against the transaction required.
+<li>From the Transaction Enquires - from the Accounts Receivable tab, click on the magnifying glass to see the actual invoice or credit note.
+</ul> 
+
+<!-- Help End: CustomerInquiry -->

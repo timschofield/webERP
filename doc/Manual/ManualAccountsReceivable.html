@@ -1,0 +1,186 @@
+<br><br>
+<a name="AccountsReceivable"><font size="+3"><b>Accounts Receivable</b></font></a>
+<br><br>
+<font size="+2"><b>Overview</b></font>
+<br><br>
+A primary function of the system is to track the amounts owed to the business by customers in both local and foreign currency. The system shows, invoice-by-invoice, the balance on the account and does not lose the detail of what makes the account up in a balance brought forward - it is an "open item" system. When payments received from customers are entered and allocated to invoices, the differences on exchange are calculated and posted to the general ledger - that is only if integration to the general ledger is enabled from the company preferences page under the setup tab.
+<br><br>
+<font size="+2"><b>Features</b></font>
+<br><br>
+<ul>
+<li>Overdues inquiry that takes into account delivery days to the customer's branch and the actual terms applicable to the customer, supported by detailed inquiry of actual invoices overdue. 
+<li>Full on-screen inquiry on a customer's account, complete with invoice details and narrative which appeared on the invoice. Inquiries on payments received will show how a payment was allocated to invoices and the difference on exchange attributable to each invoice.
+<li>Full integration with stock records and general ledger -a full trail of journals for each transaction is maintained - a drill down to the general ledger transactions for each transaction on a customers account is available from the customer inquiry page.
+<li>Open item - full analysis of the outstanding balance is maintained and printed on statements for maximum information to the customer.
+<li>Flexible user definable sales analysis reports to pdf or spreadsheet (csv - comma separated values).
+<li>Retrospective - de-allocation and re-allocation of receipts or credit notes against charges with re-calculation of differences on exchange and corresponding general ledger journals
+<li>Any number of branch - delivery addresses can be added serviced by different sales people with different tax authorities and different areas for sales analysis purposes.
+</ul>
+
+<!-- Help Begin: Customers -->
+
+<font size="+2"><b>Entering New Customers</b></font>
+<br><br>
+From the menu Receivables tab, click on "Add A New Customer". The customer record is the actual charge account, any number of branches can be defined for each customer account. At least one branch must be defined for each customer. It is the branch details that record the local information about delivery address, tax authority, sales area and sales person.
+<br><br>
+<font size="+1"><b>Customer Code</b></font>
+<br><br>
+This field is used as a unique identifier for the customer which is small (maximum of 10 characters of text - letters or numbers). This allows faster searches for customers and keeps the size of the database at a minimum. 
+<br><br>
+Note: A customer code can be altered retrospectively but because of the large scale of the changes required to the system to update stock movement transactions, sales analysis records and sales orders it could present a significant drain on resources. The option to change a customer code is in the utility menu Z_index.php - which must be entered as a manual URL and is only accessible by the system administrator. Such changes should only be undertaken when there are no other users on the system.
+<br><br>
+<font size="+1"><b>Customer Name</b></font>
+<br><br>
+The name of the customer is used extensively in lookups and appears on invoices and statements exactly as typed (searches are independent of case). Proper capitalisation and use of the full name of the customer is recommended. The maximum length of the name is 40 characters.
+<br><br>
+<font size="+1"><b>Address Line 1, 2, 3 and 4</b></font>
+<br><br>
+This is the address of where invoices and statements are to be posted. A post office box should be entered if applicable. These fields will allow a maximum of 40 characters and are optional. If left out invoices will not show the customer's address which is a requirement for a valid GST or VAT invoice in some administrations. 
+<br><br>
+<font size="+1"><b>Currency</b></font>
+<br><br>
+This is a compulsory field that identifies the currency in which the customer is to be invoiced. All invoices created for the customer will use this currency and the rate will be used as set up in the currency master - accessible from the General Ledger module. The currency rates need to be maintained at least monthly.
+<br><br>
+Note: that the rate is recorded in the transaction not the currency. If a customer changes the currency in which they are invoiced it is possible to allocate a new currency receipt against invoices (invoiced in the old currency) in which case the system will calculate large differences on exchange. Note: There is no error check on this and care should be taken, should this occur, to ensure invoices are matched off in the currency in which they were originally created - the cross rate between the new and old currency will provide an equivalent amount of the old currency for entry and allocation.
+<br><br>
+<font size="+1"><b>Invoice Discount</b></font>
+<br><br>
+Customers can be set up with a general level of discount which applies to all sales. The percentage entered is used by default on all invoices to the customer. The discount rate can be manually overridden at the time of invoicing, which the system will use to calculate discount. The discount percentage used at invoice time will not be stored as the future default unless the customer details are amended. This field checks to ensure that the percentage is less than 100% and greater or equal to zero. 
+<br><br>
+This feature is not currently used/implemented.
+<br><br>
+<font size="+1"><b>Prompt Payment Discount</b></font>
+<br><br>
+Customers can be set up with individual prompt payment discount percentages. This field is for memorandum purposes only and shows on screen when customer receipts are entered. If the receipt is on time the discount can be calculated and input with the receipt.
+<br><br>
+<font size="+1"><b>Customer Since</b></font>
+<br><br>
+The default is the current date. This field is only used on certain reports where it can be used to restrict the customers shown, and also for credit reference inquiries. The system will only accept a date in this field. The date can be altered at any time. There is no error checking on this field.
+<br><br>
+<font size="+1"><b>Payment Terms</b></font>
+<br><br>
+A select box is provided showing the predefined payment terms. New ones can be created as necessary from the Setup tab of the menu. The terms are used to determine whether an account is overdue or not and a description of the terms prints out on invoices, and statements.
+<br><br>
+There are no restrictions on altering payment terms for a customer at any time. The next statement or invoice produced will show the new terms. The system will only look at the new terms in deciding whether or not invoices are overdue, no record of the terms is held in the transaction itself. 
+<br><br>
+<font size="+1"><b>Credit Status or Rating</b></font>
+<br><br>
+A lookup is available for this field and a button is available for creation of new credit status categories. Credit status's can be defined to stop any new invoices or indeed orders to the customer - irrespective of his/her credit limit.
+<br><br>
+A customers Credit Status can be altered at any time. 
+<br><br>
+Note: This will never show on any reports invoices, credits or statement intended for the customers eyes.
+<br><br>
+<font size="+1"><b>Credit Limit</b></font>
+<br><br>
+This is a required field which accepts any positive value. It is currently only for memorandum purposes.
+<br><br>
+<font size="+1"><b>Invoice Addressing</b></font>
+<br><br>
+This field is a flag that has two choices:
+<br><br>
+<ul>
+<li>To address invoices to the head office postal address. This is the postal address from the customer record as entered above. This is the default option.
+<li>To address invoices to the branch postal address. This addresses invoices charged to the customer to the branch of the customer, some customers may wish for the branch to authorise invoices before sending on to head office for payment. The branch postal address entered will be used for printing invoices.
+</ul>
+
+<!-- Help End: Customers -->
+
+<!-- Help Begin: CustomerBranches -->
+
+<font size="+2"><b>Entering Customer Branches</b></font>
+<br><br>
+A customer code entered on its own is insufficient to enter sales orders against. All customers must have at least one branch. The branch records contain the information about the delivery address, the sales area, the tax code, the sales representative and other regional information. New branches can be set up at any time. The first step will always be to select the customer, then to Add/Edit/Delete Customer Branch Records from the Customer menu. There is no limit to the number of branches that can be referenced against a single charge account (customer record). However, branches cannot be transferred between different customers. Only one statement will print per customer, but each invoice will be referenced to the branch it was delivered to.
+<br><br>
+<font size="+1"><b>Branch Name</b></font>
+<br><br> 
+The branch name can be up to 40 characters long. The branch name is used on packing slips to identify the name to where delivery should be made. It is also used in lookups in sales order entry as it is to the branch that the sale is ordered against. By selecting the branch from this lookup, the customer code and branch code is returned to the system for storing against the order.
+<br><br>
+<font size="+1"><b>Branch Code</b></font>
+<br><br>
+The branch code is stored in transactions. It can be up to 10 characters long and should uniquely identify the branch. Two branches cannot have the same code for the same customer. Branch codes (and other codes) cannot contain spaces, commas, & or - . There are checks in place to ensure no new codes are created containing these characters. However, if data is imported it is important to change any codes which contravene these rules.
+<br><br>
+Branch codes are not available for modification retrospectively. They exist in many tables throughout the database - sales analysis, orders, DebtorTrans and CustTrans and all data in these tables would need to be modified.
+<br><br>
+<font size="+1"><b>Branch Contact / Phone / Fax / Address</b></font>
+<br><br>
+The branch contact is the name of the purchasing manager to whom goods and inquiries would be addressed at the branch. A head office branch could be created to identify contact names for account inquiries. It doesn't matter that such a branch may not be invoiced to.
+<br><br>
+The address is the physical address of the branch for deliveries. As much detail as is required on labels to get the goods to the desired destination should be entered.
+<br><br>
+<font size="+1"><b>Sales Person</b></font>
+<br><br>
+A select box is available to enter the salesperson who services this branch. 
+<br><br>
+<font size="+1"><b>Draw Stock From</b></font>
+<br><br>
+Branches local to a particular warehouse can be associated with the local warehouse by setting this field to the preferred stocking location. This affects the entry of sales orders that default to the stock location entered here. It can be overridden at the time of order entry.
+<br><br>
+<font size="+1"><b>Forward Date From A Day In The Month</b></font>
+<br><br>
+This field is not currently used.
+<br><br>
+<font size="+1"><b>Delivery Days</b></font>
+<br><br>
+This field is not currently used.
+<br><br>
+<font size="+1"><b>Phone/Fax/Email</b></font>
+<br><br>
+These are the contact details applicable to the branch.
+<br><br>
+<font size="+1"><b>Tax Authority</b></font>
+<br><br>
+The tax authority of the branch determines the regime for tax calculations at invoice and credit time. 
+<br><br>
+Tax Authorities are the authority that collects the taxes. Different authorities in different countries mainly or different states in the USA. Say sales tax in New York is 10% and sales to customers in Michigan attract sales tax at a different rate payable to a different state tax authority. 
+<br><br>
+In the UK, Australia and NZ, the Inland Revenue, Australian Tax Office and  the IRD are the relevant tax authorities. Sales to customers that fall under the ATO from a company in NZ do not attract any tax - ie exempt export. However, the same customer who has a branch in Auckland NZ will fall under a different tax authority the NZ IRD - attracting GST @ 12.5% for the same item delivered there. 
+<br><br>
+So the tax authority is the factor relevant based on where the branch of the customer is who is receiving the supply.
+<br><br>
+The tax authorities are maintained in a separate table (available from the Setup tab) and the tax rate applicable to invoices and credits and the general ledger posting of tax is determined from the Tax Authority setting of the branch together with the applicable level of tax specified in the item (stock) master. 
+<br><br>
+A select box allows the appropriate tax authority for the branch to be selected.
+<br><br>
+<font size="+1"><b>Disable Transactions</b></font>
+<br><br>
+This flag - either enabled or disabled - either includes the branch as available for new sales orders or not. If it is set to disabled then the branch will not appear on the order entry branch lookup.
+<br><br>
+<font size="+1"><b>Default Freight Company</b></font>
+<br><br>
+A select box allows the selection of the freight company that is most cost/service effective for deliveries to this branch. The entry in this field serves as the default for future sales orders. If it is changed at order entry stage, the overridden entry become the new entry for this field.
+<br><br>
+<font size="+1"><b>Postal Address 1, 2, 3 and 4</b></font>
+<br><br>
+This is the postal address of the branch. There is no checking done to ensure this is entered. The only place this would be used is if the customer record required that invoices and credits be addressed to the branch.
+
+<!-- Help End: CustomerBranches -->
+
+<br><br>
+
+<!-- Help Begin: Customers -->
+
+<font size="+2"><b>Amending Customer Details</b></font>
+<br><br>
+The customer details can be modified at any time and any modifications made will be effective for all future transactions. First select the customer from the link provided on all pages, then select the link for Modify Customer Details. 
+<br><br>
+Points to note:
+<br><br>
+<ul>
+<li>Customer codes can be modified retrospectively using the facility in the utilities menu Z_index.php - this should be used only when all other users are off the system.
+<li>Changing the payment terms impacts immediately on the aged analysis since this is recalculated each time it is run or a statement is produced.
+<li>Changing the currency of the customer needs care since the exchange rate is recorded against each transaction. Allocations of one currency against another at different rates will produce differences on exchange. The system will not be able to distinguish at the transactions level which was in what currency only the rate against the functional currency.
+</ul>
+<!-- Help End: Customers -->
+
+<!-- Help Begin: Shippers -->
+<font size="+2"><b>Shippers</b></font>
+<br><br>
+This table is only used as a reference to the method of transportation that the invoice delivery was effected by. The shippers name is what is used in the look ups and the code is a system maintained counter which is stored in the database to reference the freight company used. The consignment note reference can be stored against the transaction in the reference field. In this way a full proof of delivery trail can be maintained. 
+<br><br>
+Shipment cost calculations can be automated and the result automatically added to invoices. The least cost shipper is calculated and modified on the order. This system requires active maintenance of the shipment costs tables for each shipper. The shipper costs table shows the cost per kg and metre cubed for freight to destination cities. A substantial amount of data is required. For the system to calculate freight, it also requires that each part have a defined volume and weight set up from which the total order weight and volume is determined for use in the freight calculations.
+<br><br>
+If freight cost calculations are to be performed at order entry stage, the data must be entered and the options in config.php enabled - see the config.php section.
+
+<!-- Help End: Shippers -->
+

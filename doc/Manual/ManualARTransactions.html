@@ -1,0 +1,190 @@
+<br><br>
+
+<!-- Help Begin: SelectSalesOrder -->
+
+<a name="ARTransactions"><font size="+3"><b>Accounts Receivable Transactions</b></font></a>
+<br><br>
+<font size="+2"><b>Invoicing An Order</b></font>
+<br><br>
+<font size="+1"><b>Selecting an Order To Invoice</b></font>
+<br><br>
+All invoices require a sales order to be entered first. 
+<br><br>
+From the main menu select the orders tab. Select Outstanding Sales Orders Maintenance. This page shows all the orders outstanding. If the order number is known it can be entered on this screen to select the order to invoice. Hit search orders and the order should show below, together with links to modify the order, print the packing slip and to invoice. Click the link to invoice the order.
+<br><br>
+<font size="+1"><b>Producing An Invoice From A Selected Order</b></font>
+<br><br>
+Having selected an order to invoice the order line comes up for confirming the quantities of the order that were dispatched. If the quantity dispatched differs from the order the difference is recorded in the table OrderDeliveryDifferencesLog - and a report is available to show the orders that were not able to be delivered with the first dispatch. There is also opportunity to enter the freight charge and if necessary enter the tax charge - which will normally be calculated automatically based on the tax authority of the customer branch being invoiced. The date of the invoice is defaulted based on the time of day and the settings in config.php. If the hour (in 24 hour format) is after the setting of $DispatchCutOffTime in config.php, then the following day is deemed to be the invoice date, alternatively the invoice date will default to today. Where not all lines on the order are being invoiced there are two choices with how to deal with the balance. 
+<br><br>
+<ul>
+<li>Put the balance on back order
+<li>Cancel the line on the order
+</ul>
+Finally there is also a field for entry of any text on the invoice. Hitting the process invoice button updates the order as instructed and produces all the entries including general ledger postings (if integration is enabled in the company preferences screen - see setup) to record the invoice. Until the process invoice button is hit, no entries have been saved to the database and it is safe to leave the page at any stage without having changed anything - the invoicing process can be cancelled at any time simply by following a link to another page. The processing that takes place once the Process Invoice button is hit includes:
+<br><br>
+<ul>
+<li>Creation of the stock movements for each line item on the order - or for the assemblies components - from the location entered at the time of the order, at the price as per the order. 
+<li>Creation of the DebtorTrans record that records the invoice against the customer's account.
+<li>Creation of the general ledger jorunals to record the sale and debtor etc.
+<li>Updating the order for amounts dispatched, and the invoice number.
+<li>Creating/updating the sales analysis records of the items being sold.
+<li>Updating the stock quantities for all lines of the invoice and the components of all assemblies included on the order.
+</ul>
+If the order is not to be invoiced to the customer or branch specified in the order, or pricing is to be changed then the order must be changed. These elements cannot be altered at the time of invoice, they must be altered in the order before it is confirmed for invoicing. Once an invoice is created it cannot be deleted or modified. The order is also updated with the invoice number that it was dispatched on.
+
+<!-- Help End: SelectSalesOrder -->
+
+<br><br>
+
+<!-- Help Begin: SelectCreditItems -->
+
+<font size="+2"><b>Credit Notes</b></font>
+<br><br>
+Credit notes can be created in one of two ways:
+<br><br>
+<ul>
+<li>From a customer inquiry screen if the user has the necessary permissions ( $PageSecurity=3 - see Security Schema) a link shows to allow an entire invoice to be credited. Having clicked this link there is opportunity to de-select some items from being credited so that only the part of the invoice that needs to be credited can be, with only minimal keying. The same credit note creation page as used in manual creation of credit notes will appear but with all the items from the orignal invoice already entered into the credit note.
+<li>Using the link on the main menu under the receivables tab, select the link to create a credit note. 
+</ul>
+<b>Important Note:</b>
+<br><br>
+It is important to use credit notes to correct incorrect invoices correctly. Crediting a small price against a part implies that the goods were returned and the customer only credited a fraction of their worth. This is not the correct way to credit an overcharge. By default credit notes return the stock to the location specified, so the stock records will be overstated by the goods returned to stock by the credit note. To correct a pricing error a credit note for the invoice line at the incorrect charge must be done and a new invoice at the correct charge must be made up. This ensures that sales analysis records are not corrupted for the quantities sold and that stock records are maintained correctly. A special pricing adjustment type of credit note is available that does not have any cost implications for the sales analysis and has no stock physical movement record associated with it.
+<br><br>
+The process for creating a credit note manually is:
+<br><br>
+<ul>
+<li>Select the customer to be credited, there are the usual selection options (a box to enter an extract of the customer's name and a box to enter an extract of the customer's code) 
+<li>Select the items to be credited and the prices to be used in crediting the customer - the same quick entry option is available as is used in order entry. - where the part code and quantity to be credited is entered directly. Pricing is automatically determined by reference to the customer's sales type, currency with regard to any special pricing for the customer (and branch) being credited. If the search for a part functions are used, then after each part is selected the quantity can be updated after the item is selected.
+<li>Having selected all the items it is possible to edit the items to be credited by clicking the button of the code of the item on the summary, then editing the price and quantity.
+<li>Amounts to be credited for freight can be entered directly (this would be entered directly from the original invoice if the credit an invoice option was used from the customer inquiry screen).
+<li>The tax amount to credit is calculated automatically by default based on the tax authority of the branch being credited and the total of the line items and freight to be credited. It is also possible to select the manual option. Once having selected manual, the user should hit update to allow free entry of any amount in the tax field.
+<li>By default it is assumed that the goods in the credit note are being returned to stock. The location to where the goods are being returned must be selected from the selection box.
+<li>If the goods are not being returned to stock, they are to be written off perhaps as samples or showroom display, damaged goods or whatever, the credit note type option should be changed to goods written off. After changing the credit note type and hitting the update button, a new select box will allow a general ledger code to be selected (assuming the general ledger interface to accounts receivable is active - it will not show if there is no integration). The appropriate general ledger code should be selected from this box. The location to return the stock to select box will disappear since it is no longer relevant. A third option is to credit a pricing adjustment - this type does not create any stock movements and the sales analysis updates only affect the value no cost of sales updates take place.
+<li>Any text describing the reasons for the credit note should be entered in the narrative box provided.
+<li>After completing all the inputs required, hit the Process Credit Note button to create the credit note. The created credit note number will be reported confirming that it has been processed.
+</ul>
+
+<!-- Help End: SelectCreditItems -->
+
+<!-- Help Begin: CustomerReceipt -->
+
+<font size="+2"><b>Entry Of Receipts</b></font>
+<br><br>
+This system tracks the invoices and credits which are outstanding (a so called open item system) in contrast to systems which use a balance brought forward from the previous month to add and subtract current month transactions. Experience has shown balance forward systems whilst intuitive, often result in queries for more information with the inevitable question from customers "what was this balance made up of ?" . The statements produced by this system show a full reconciliation of the amounts outstanding against invoices and credits that are yet to be settled totalling the amount of the customer's account. In order to provide the necessary information to track outstanding amounts, invoice by invoice, the detail of the make up of payments must be entered.
+<br><br>
+Payments received from customers are therefore entered in a two-stage process:
+<br><br>
+<ul>
+<li>The amount of the payment received is entered in foreign currency together with the exchange rate at which this has been banked into local currency. Any details pertinent to the receipt such as the date, method of payment and any details (which can be recalled from inquiries later) are entered at this stage.
+<li>The foreign currency received is allocated to the invoices (and debit journals) on the customer's account. Put another way, the invoices that the payment is meant to be settling are matched off against the payment.
+</ul>
+If the details of the make up of a payment received are not available at the time of banking, the receipt can still be entered to stage 1. However, the allocation must be done before the statement is produced if the account is to make sense.
+<br><br>
+Note: Differences on exchange are only calculated once the receipt is matched against the invoices it is paying.
+<br><br>
+Receipts relating to general ledger transactions can also be entered in the same batch as customer receipts.
+<br><br>
+The process of entering receipts is initiated from the main menu under the receivables tab - another link is also available from the general ledger tab. 
+<br><br>
+Firstly, the receipt header information is required, the bank account - one of the previously defined bank accounts (see setup), the date the batch of receipts are banked, the currency and exchange rate of the banking and the type of receipt together with any narrative. The currency can be selected from the defined currencies (see setup). The receipt types can also be selected - they are defined in config.php. Once this information is entered it must be accepted before the receipts in the batch can be entered.
+<br><br>
+<font size="+1"><b>Receipt - Customer</b></font>
+<br><br> 
+By default once the a customer has been selected the following information is displayed:
+<br><br>
+<ul>
+<li>The payment terms applicable, so amounts overdue can be easily noted from the allocation screen without having to go back and do an inquiry.
+<li>The payment discount percentage applicable. The user can then use this rate if applicable to calculate the discount applicable, depending on how much of the payment relates to "on time" invoices.
+<li>The currency that the currency is paying in.
+</ul>
+<font size="+1"><b>Receipt - Date</b></font>
+<br><br>
+The date that the receipt was received and banked. If a receipt is being entered retrospectively - or several days bankings are being done together, the default date (i.e. the current date) should be over written with the date the receipt was originally received. This date is used on the statement and the customer may not be able to tie up the receipt if an incorrect date is entered.
+<br><br>
+Customer account inquiries are shown in date order so the account will not show correctly if the date entered is not the date the money was received. The date is also used in the general ledger transaction created.
+<br><br>
+<font size="+1"><b>Receipts - Currency and Exchange Rate</b></font>
+<br><br>
+Selection of the customer automatically tells the system which currency to expect the receipt in. The customer's account is maintained in the currency selected in the customer maintenance screen. 
+<br><br>
+The correct rate at which the bank has converted the foreign currency to local currency must be input, the system shows the calculation of the local currency banked at the bottom of the screen. The receipt cannot (therefore) be entered until the amount in local currency is known. The exact rate to enter in this field will be the foreign currency figure divided by the local currency figure.
+<br><br>
+Eg banked 1212 local, in customer's currency this was 400. 
+<br><br>
+Rate is 400/1212 = 0.330033
+<br><br>
+The local currency calculated by the system should confirm that the rate entered is correct. The general ledger integration - if enabled - will produce a bank deposit for the local currency amount shown at the bottom of the screen, and reduce (credit) the Debtors Control account by the same amount. The system defaults the exchange rate to that set up against the currency in the currencies table.
+<br><br>
+When the receipt is matched to invoices, any differences between the local currency amounts banked against the local currency invoiced are recorded against the invoices and written off the general ledger Debtors Control Account and written into the profit and loss account - (specified in the company record of the customer concerned) if the general ledger integration is enabled from the module options screen.
+<br><br>
+<font size="+1"><b>Receipts - Payment Method</b></font>
+<br><br>
+The payment method is stored against the receipt and shows on the customer's statement. A banking report can also be run off based on the payment method to summarise the day's bankings, to automate the task of collating the different vouchers and summarising for the bank.
+<br><br>
+<font size="+1"><b>Receipts - Amount</b></font>
+<br><br>
+The amount of the receipt in foreign currency is entered here. This cannot be 0. Although, negative receipts are allowed (to reverse incorrect receipts). 
+<br><br>
+Note: Care should be taken when allocating negative receipts to ensure that only previous allocations are reversed, strange results could occur if allocations are made to invoices not previously allocated to positive receipts - although system integrity will be maintained.
+<br><br>
+<font size="+1"><b>Receipts - Discount</b></font>
+<br><br>
+The amount of discount on a receipt can be entered at this point and allocated together with the receipt as one amount. This is useful, where a customer pays an amount net of discount - quite correctly according to his terms and conditions, and the amount naturally will not tie up to invoices on its own without the addition of the discount. The system calculates the gross amount of the payment including discount to set off the customer's account.
+<br><br>
+<font size="+1"><b>Receipts - Allocating to Invoices</b></font>
+<br><br>
+Once all the details necessary have been entered for the receipt - the customer, the exchange rate and the amount in foreign currency, the receipt is ready to be allocated to the invoices which is to settle.
+<br><br>
+This concept can seem strange to businesses that have previously operated customer accounts where they are only interested in the current months' transactions and the balance brought forward from last month. The aim of this system is to remove the question from the customer's lips ... "What is that figure, balance brought forward made up of?". Under the "Balance Forward" system this question can be a tough one to answer, since there is no record of which invoices were paid by which payment. However, this system needs explicit instructions for each receipt on which transactions should be settled as a result.
+<br><br>
+From the menu under the Accounts Receivable tab - Click on the link to Allocate Receipts or Credits.
+<br><br>
+This page shows all outstanding receipts and credits that are yet to be allocated. Clicking on the links against these receipts and credits takes the user to the outstanding transactions on the customers account that are available for allocation. This screen shows all unallocated transactions but only invoices are available to allocate the receipt or credit note to.
+<br><br>
+Note that allocations of a receipt are not allowed to another receipt. If necessary, negative receipts can be used to reverse allocation against invoices and debit journals (although this is undesirable). Once entered, receipts cannot be deleted - (obviously this would be undesirable from the standpoint of proper internal controls).
+<br><br>
+If the whole of the receipt is not matched off against (allocated to) invoices and debit journals the system will prompt to ensure that this is what was intended. Unlike many systems, allocations can always be completed or amended later.
+<br><br>
+<font size="+1"><b>Differences on Exchange</b></font>
+<br><br>
+The process of allocating receipts to invoices gives the system the information necessary to calculate the difference on exchange since the receipt converted at the rate specified in the receipt screen will equate to a different amount to the local currency equivalent of the invoices it is matched to, unless both the receipt and the invoices it is allocated to are converted at the same rate. 
+<br><br>
+The difference calculated at the time of allocation can be seen on the receipt screen once the allocations are done and the screen closed and is itemised against the invoices to which it is allocated against. Unlike many systems the difference on exchange can be fully itemised transaction by transaction. Inquiries on the detail of receipts show the difference on exchange that the receipt is responsible for. Further the inquiry on where the receipt was allocated to will show the analysis of where the difference on exchange for the receipt under review came from.
+<br><br>
+Alterations to the allocations naturally alter the difference on exchange. The general ledger interface produces a journal for only the movement of the difference on exchange for a given receipt each time its allocations are altered.
+<br><br>
+<font size="+1"><b>Receipts Processing</b></font>
+<br><br>
+Many customer receipts can be entered at a time and mixed together with receipts for nominal items i.e. receipts from vending machine or sales of fixed assets reimbursement for private use of company assets etc. Once all receipts have been entered the processing can take place. The system only stores the data entered in a server side cookie called a session until such time as the Process button is clicked. 
+<br><br>
+The processing will give the batch of receipts a number and insert new receipt transactions against customer accounts and update the customer's record with the amount of and the date of the last payment. In addition if the general ledger interface is enabled, the journals to put the receipt into the bank account specified and to decrease the Debtors control account - specified in the company record are created. General Ledger journals are also created for the discount - if any, with the corresponding entry to the Debtors Control account. All the necessary account codes must be set up in the company preferences page under the setup tab and the bank account set up page.
+<br><br>
+<font size="+1"><b>Deposits Listing</b></font>
+<br><br>
+After processing has completed a link to print the deposit listing for the batch of receipts just entered is shown. The batch number is also reported. The listing shows the information required by banks in processing a batch of cheques. This deposit listing can be reprinted at any time from a link under the accounts receivable tab - reports and inquiries.
+
+<!-- Help End: CustomerReceipt -->
+
+<br><br>
+
+<!-- Help Begin: CustomerAllocations -->
+
+<font size="+2"><b>Allocate Credits To A Customer's Account</b></font>
+<br><br>
+This option allows any credit amount - be it a receipt or a credit notes to be allocated to debit amounts - invoices . Receipts or credits that have previously been allocated are available for alteration of their allocations if necessary. There are two ways to perform this function:
+<br><br>
+<ul>
+<li>From the menu select the accounts receivable tab and click the link to "Allocate Credits To Customer's Account". 
+<li>From the customer account inquiry - there is a link to allocate any customer receipt or credit where the user has appropriate privileges.
+</ul>
+Using the first method, by default the screen opens with only the receipts, credit notes and credit journals which have an amount outstanding left to allocate. If there are many receipts which have amounts outstanding and are not fully allocated to invoices and debit journals then this is an indication that there are allocations which need to be done. For the customer's statements to make sense, the allocations must be done. 
+<br><br>
+Double clicking the receipt to allocate will then open the form that allows the allocations to be made. This screen brings up all the invoices and journals that are outstanding on this customer's account. Invoices that have already been paid off will not show. However, existing allocations made from the selected receipt or credit will show. Clicking a receipt or credit note from the customer inquiry screen brings up this same page.
+<br><br>
+If a mistake was made with previous allocations these can be rectified by selecting the previous receipt which was wrongly allocated, all the invoices which the receipt was allocated to will show (together with other invoices which are yet to be allocated to). The amounts allocated against them can be amended at will.
+<br><br>
+Note: This is a complex area behind the scenes, to handle the changes that may result to the difference on exchange. The system calculates the alteration to the exchange difference which results from allocating the receipt to different invoices (or not being allocated at all) and creates the necessary journal in the general ledger - if the integration option is used - to ensure the debtors control account stays in balance with the list of balances. 
+<br><br>
+<b>It is recommended that help be sought if alterations in the program are required in this area.</b>
+
+<!-- Help End: CustomerAllocations -->

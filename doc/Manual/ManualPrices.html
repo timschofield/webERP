@@ -1,0 +1,49 @@
+<br><br>
+
+<!-- Help Begin: Prices -->
+
+<a name="Prices"><font size="+3"><b>Prices and Discounts</b></font></a>
+<br><br>
+<font size="+1"><b>Overview</b></font>
+<br><br>
+Prices are held by Sales Type and Currency. When setting up a customer account the sales type applicable to the customer is defined as is the currency applicable to invoices to the customer. There is no limit to the number of sales types that can be defined and therefore no limit to the number of different price lists that can be maintained. Further flexibility is available in that where necessary prices specific to a customer can also be defined, normally pricing will be specific to a customer but the system also has the capability of making prices specific to a particular branch of a customer. If a price is flagged as specific to a branch it will not be used for all other sales of the item to the customer, the default price of the item will be used. Further flexibility in discounting is available through the discount matrix (see below). If an item has an additional discount this can be entered at the time of order. The user also has the ability to change the price manually at the time of order. Sales analysis records allow reporting on sales types, so the analysis will report the volume of business done under each set of special pricing arrangements. 
+<br><br>
+<font size="+1"><b>Maintaining Prices</b></font>
+<br><br>
+To maintain pricing, first an item must be selected. This can be done from the link "Select an Item " on any page or from the inventory tab of the menu the link "Modify Or Delete An Inventory Item Or Item Pricing" allows for a part to be selected. Once selected the options available to work with the item are shown, there is a link to "Maintain Pricing". The pricing page displays, the sales type and the currency of all prices defined for the item. The existing prices can be deleted or modified from this screen and new prices can be entered. It is not possible to enter two prices for the same sales type and currency.
+<br><br>
+To enter prices for a specific customer and branch, the customer must first be selected. (See selecting customers). Going to the select an item page after having selected an item now shows an additional link to maintain the special pricing "Special Prices for customer - customer code". Clicking this link shows, the normal price for the sales type and currency of the customer selected and any special prices defined for this item/customer combination. If no special pricing is defined then the page shows only the normal price with a note that no special pricing is defined for this item and allows entry of the new special price. If a special price exists then it can be deleted or changed. A customer with many branches can have a special price for each branch or just a single branch having a special price beyond the special customer price. A special price applicable to only one branch will not apply to any of the other branches. Also, a special price set up for the customer account but with a blank branch field will apply to all branches unless there is a specific price set up for the branch.
+<br><br>
+Prices can be amended at any time. However, changes to a price do not automatically cascade into sales orders for the item that are yet to be delivered, these would have to be changed manually as necessary.
+<br><br>
+There is a utility page that has some options for making bulk changes to pricing avoiding extensive re-keying exercises. Great care should be taken with this facility. System administrator permission is required to access this page accordingly.
+<br><br>
+The script is called: Z_PriceChanges.php and is accessed from the Utilities index Z_index.php
+<br><br>
+This script allows bulk increase/decreases by percentage for specific or a range of stock categories and for specific sales types. There is the opportunity to update the pricing:
+<br><br>
+<ul>
+<li>For all prices for the sales type within the stock categories selected or
+<li>For only the default prices for the sales type within the stock categories selected or
+<li>For the selected customer special prices - provided the customer selected belongs to the sales type selected in the bulk change screen.
+</ul>
+Equally flexible options exist for printing price lists from the main menu under the orders tab under inquiries and reports.
+<br><br>
+<font size="+1"><b>Discount Matrix</b></font>
+<br><br>
+The discount matrix allows discounts to be set for quantity breaks across a range of products. Eg a business selling pens may have red, blue, black etc but offer a discount for orders greater than 100 irrespective of colour - even though these are separate items.
+<br><br>
+Items to have such discounting must be specified in the stock item details screen as belonging to the same Discount Category - this is a 2 character field in the stock master table. In the example above the item codes for blue, red and black pens should all be set to the same 2 character code.
+<br><br>
+Customers to whom the discount structure should apply are specified by the sales type (the price list) field. The entry in the Discount Matrix table should refer to the sales type and the 2 character DiscountCategory of parts, the quantity above which the discount is to apply and the rate of discount applicable. Several entries in the discount matrix can be made at increasing discounts and volumes, for the same Discount Category and Sales Type.
+<br><br>
+When an order is entered the system automatically reads the Discount Category of the parts and accumulates the quantities of like Discount Category parts to see if the order lines qualify for the discount. If special discount has been entered exceeding the discount matrix calculated rate - the higher manual entry over-rides the calculation. However, discount manually entered which is below the discount matrix calculation will be uplifted to the discount matrix rate.
+<br><br>
+To set up the discount matrix there are two elements:
+<br><br>
+<ol>
+<li>The discount categories - need to be defined. Individual stock items can be modified in the stock details form or a special facility is available under the set up tab of the main menu - under the inventory set up section. This screen allows stock codes to be entered and verified before changing to the selected discount category.
+<li>The discount matrix itself. This is modified from a link on the set up tab under accounts receivable set up. For each sales type/price list the quantity break and discount applicable must be entered.
+</ol>
+
+<!-- Help End: Prices -->

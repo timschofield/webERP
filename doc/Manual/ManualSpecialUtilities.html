@@ -1,0 +1,30 @@
+<br><br>
+<a name="SpecialUtilities"><font size="+3"><b>Special Utilities</b></font></a>
+<br><br>
+Any of these programs should only be run by the individual in the business who is allocated the task of administering the system, who has a thorough understanding of the system. If in doubt seek advice. Many of these utilities perform major changes to the database and it is always advisable to have a backup before attempting to run one. All these utilities have a page security setting of 15 by default (see security schema).
+<br><br>
+There are no links to the Utility menu so casual browsers cannot stumble upon this page even if they had the security privileges. The URL must be entered manually to Z_index.php. All utlity pages are prefixed with a Z_.
+<br><br>
+<font size="+2"><b>Re-Apply Standard Costs to Sales Analysis</b></font>
+<br><br>
+This utility allows a period to be selected for which the current standard cost is applied to the quantities recorded in the sales analysis as sold to re-calculate the cost of goods sold.
+<br><br>
+It is important to realise that this will destroy the integrity of the matching general ledger journals created at the time of invoicing and that the GL cost of sales will no longer match with the sales analysis cost of sales.
+<br><br>
+However, occasionally incorrect cost data that has made a monkey of the sales analysis and general ledger can only be rectified by running this utility.
+<br><br>
+<font size="+2"><b>Change A Customer Code</b></font>
+<br><br>
+This page requires the entry of an existing customer code and the new customer code. The system checks to see the new code entered doesn't already exist and that the code entered for the existing customer does exist. If all is well then the customer code data is changed in all tables through-out the system that refer to the customer code. Due to the extensive changes taking place throughout the database this utility should not be run during normal operating hours.
+<br><br>
+<font size="+2"><b>Change An Inventory Code</b></font>
+<br><br>
+This page requires the entry of an existing stock code and the new stock code. The system checks to see the new code entered doesn't already exist and that the code entered for the existing item does exist. If all is well then the stock code data is changed in all tables through-out the system. Sales analysis, stock movements, stock locations, Bills of Material, parent and component items, sales order details and purchase order details as well as the Stock Master, pricing and shipment charges. Due to the extensive changes taking place throughout the database this utility should not be run during normal operating hours.
+<br><br>
+<font size="+2"><b>Make Stock Locations</b></font>
+<br><br>
+If the inventory database is imported from some other system, the stock location records can be created for all locations currently defined by running the script Z_MakeStockLocns.php. 
+<br><br>
+<font size="+2"><b>Repost General Ledger from Period</b></font>
+<br><br>
+This script Z_RePostGLFromPeriod.php clears the actual data in the table ChartDetails - that contains the movements in each GL account, the movements are then re-calculated by setting all GLTrans to unposted and re-running the posting of all these transactions. This is a desperate measure that should only be undertaken in an extreme situation. Maybe a corrupt database or system crash etc that caused an out of balance trial balance.
