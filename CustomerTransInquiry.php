@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 2;
 
@@ -108,9 +108,9 @@ if (isset($_POST['ShowResults'])){
 
 		if ($_POST['TransType']==10){ /* invoices */
 
-			printf("$format_base<td><a target='_blank' href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice'><IMG SRC='%s' alt='" . _('Click to preview the invoice') . "'></a></td></tr>", $myrow['TransNo'], ConvertSQLDate($myrow['TranDate']),$myrow['DebtorNo'], $myrow['BranchCode'], $myrow['Reference'], $myrow['InvText'], $myrow['Order_'], $myrow['Rate'], number_format($myrow['TotalAmt'],2),$myrow['CurrCode'], $rootpath, $myrow['TransNo'], $rootpath.'/css/'.$theme.'/images/preview.png');
+			printf("$format_base<td><a target='_blank' href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice'><IMG SRC='%s' alt='" . _('Click to preview the invoice') . "'></a></td></tr>", $myrow['TransNo'], ConvertSQLDate($myrow['TranDate']),$myrow['DebtorNo'], $myrow['BranchCode'], $myrow['Reference'], $myrow['InvText'], $myrow['Order_'], $myrow['Rate'], number_format($myrow['TotalAmt'],2),$myrow['CurrCode'], $rootpath, $myrow['TransNo'], $rootpath.'/css/'.$theme.'/images/preview.gif');
 		} elseif ($_POST['TransType']==11){ /* credit notes */
-			printf("$format_base<td><a target='_blank' href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Credit'><IMG SRC='%s' alt='" . _('Click to preview the credit') . "'></a></td></tr>", $myrow['TransNo'], ConvertSQLDate($myrow['TranDate']),$myrow['DebtorNo'], $myrow['BranchCode'], $myrow['Reference'], $myrow['InvText'], $myrow['Order_'], $myrow['Rate'], number_format($myrow['TotalAmt'],2),$myrow['CurrCode'], $rootpath, $myrow['TransNo'],$rootpath.'/css/'.$theme.'/images/preview.png');
+			printf("$format_base<td><a target='_blank' href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Credit'><IMG SRC='%s' alt='" . _('Click to preview the credit') . "'></a></td></tr>", $myrow['TransNo'], ConvertSQLDate($myrow['TranDate']),$myrow['DebtorNo'], $myrow['BranchCode'], $myrow['Reference'], $myrow['InvText'], $myrow['Order_'], $myrow['Rate'], number_format($myrow['TotalAmt'],2),$myrow['CurrCode'], $rootpath, $myrow['TransNo'],$rootpath.'/css/'.$theme.'/images/preview.gif');
 		} else {  /* otherwise */
 			printf("$format_base</tr>", $myrow["TransNo"], ConvertSQLDate($myrow["TranDate"]),$myrow["DebtorNo"], $myrow["BranchCode"], $myrow["Reference"], $myrow["InvText"], $myrow["Order_"], $myrow["Rate"], number_format($myrow["TotalAmt"],2),$myrow["CurrCode"]);
 		}

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity = 1;
 
@@ -643,7 +643,7 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 						<table>
 							<tr>
 							<td>
-								<?php echo "<img src=$rootpath/css/$theme/images/company.png alt=" . _("General Setup Options") . ">"; ?>
+								<?php echo "<img src=$rootpath/css/$theme/images/company.gif alt=" . _("General Setup Options") . ">"; ?>
 							</td>
 							<td class="menu_group_headers_text">
 								<?php echo _("General"); ?>
@@ -655,7 +655,7 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 						<table>
 							<tr>
 							<td>
-								<?php echo "<img src=$rootpath/css/$theme/images/ar.png alt=" . _("Receivables/Payables Setup") . ">"; ?>
+								<?php echo "<img src=$rootpath/css/$theme/images/ar.gif alt=" . _("Receivables/Payables Setup") . ">"; ?>
 							</td>
 							<td class="menu_group_headers_text">
 								<?php echo _("Receivables/Payables"); ?>
@@ -668,7 +668,7 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 						<table>
 							<tr>
 							<td>
-								<?php echo "<img src=$rootpath/css/$theme/images/inventory.png alt=" . _("Inventory Setup") . ">"; ?>
+								<?php echo "<img src=$rootpath/css/$theme/images/inventory.gif alt=" . _("Inventory Setup") . ">"; ?>
 							</td>
 							<td class="menu_group_headers_text">
 								<?php echo _("Inventory Setup"); ?>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -235,11 +235,11 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				<td ALIGN=RIGHT>%s</td>
 				<td ALIGN=RIGHT>%s</td>
 				<td ALIGN=RIGHT>%s</td>";
-	$credit_invoice_str = "<td><a href='%s/Credit_Invoice.php?InvoiceNumber=%s'><IMG SRC='%s/credit.png' alt='" . _('Click to credit the invoice') . "'></a></td>";
-	$preview_invoice_str = "<td><a target='_blank' href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice'><IMG SRC='%s/preview.png' alt='" . _('Click to preview the invoice') . "'></a></td>
-				<td><a target='_blank' href='%s/EmailCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice'><IMG SRC='%s/email.png' alt='" . _('Click to email the invoice') . "'></a></td>";
-	$preview_credit_str = "<td><a target='_blank' href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Credit'><IMG SRC='%s/preview.png' alt='" . _('Click to preview the credit note') . "'></a></td>
-				<td><a target='_blank' href='%s/EmailCustTrans.php?FromTransNo=%s&InvOrCredit=Credit'><IMG SRC='%s/email.png' alt='" . _('Click to email the credit note') . "'></a></td>";
+	$credit_invoice_str = "<td><a href='%s/Credit_Invoice.php?InvoiceNumber=%s'><IMG SRC='%s/credit.gif' alt='" . _('Click to credit the invoice') . "'></a></td>";
+	$preview_invoice_str = "<td><a target='_blank' href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice'><IMG SRC='%s/preview.gif' alt='" . _('Click to preview the invoice') . "'></a></td>
+				<td><a target='_blank' href='%s/EmailCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice'><IMG SRC='%s/email.gif' alt='" . _('Click to email the invoice') . "'></a></td>";
+	$preview_credit_str = "<td><a target='_blank' href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Credit'><IMG SRC='%s/preview.gif' alt='" . _('Click to preview the credit note') . "'></a></td>
+				<td><a target='_blank' href='%s/EmailCustTrans.php?FromTransNo=%s&InvOrCredit=Credit'><IMG SRC='%s/email.gif' alt='" . _('Click to email the credit note') . "'></a></td>";
 
 	if (in_array(3,$SecurityGroups[$_SESSION['AccessLevel']]) && $myrow['Type']==10){ /*Show a link to allow an invoice to be credited */
 
@@ -323,7 +323,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 		if ($CompanyRecord['GLLink_Debtors']== 1 AND in_array(8,$SecurityGroups[$_SESSION['AccessLevel']])){
 			printf($base_formatstr .
 				$preview_credit_str .
-				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'><IMG SRC='%s/allocation.png' alt='" . _('Click to allocate funds') . "'></a></td>
+				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'><IMG SRC='%s/allocation.gif' alt='" . _('Click to allocate funds') . "'></a></td>
 				<td><A HREF='%s/GLTransInquiry.php?%sTypeID=%s&TransNo=%s'>" . _('GL') . '<A></td></tr>',
 				$myrow['TypeName'],
 				$myrow['TransNo'],
@@ -351,7 +351,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 		} else {
 			printf($base_formatstr .
 				$preview_credit_str .
-				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'><IMG SRC='%s/allocation.png' alt='" . _('Click to allocate funds') . "'></a></td>
+				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'><IMG SRC='%s/allocation.gif' alt='" . _('Click to allocate funds') . "'></a></td>
 				</tr>",
 				$myrow['TypeName'],
 				$myrow['TransNo'],
