@@ -93,6 +93,8 @@ then none of the above are true and the list of message lines will be displayed 
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
+	echo "<FONT SIZE=4>Defintion of " . $MessageType . " for " . $PartnerCode;
+
 	$sql = "SELECT ID, Section, SequenceNo, LineText FROM EDIMessageFormat WHERE PartnerCode='" . $PartnerCode . "' AND MessageType='" . $MessageType . "' ORDER BY SequenceNo";
 
 	$result = DB_query($sql,$db);
@@ -124,12 +126,6 @@ or deletion of the records*/
 
 
 
-if (isset($SelectedMessageLine)) {
-	echo "<Center><a href=" . $_SERVER['PHP_SELF'] . "?" . SID .">Review message lines</a></Center>";
-}
-
-echo"<P>";
-
 
 if (isset($SelectedMessageLine)) {
 	//editing an existing message line
@@ -144,9 +140,13 @@ if (isset($SelectedMessageLine)) {
 	$_POST['SequenceNo']  = $myrow["SequenceNo"];
 	$_POST['LineText']  = $myrow["LineText"];
 
+	echo "<FONT SIZE=4>Defintion of " . $myrow['MessageType'] . " for " . $myrow['PartnerCode'];
+
+	echo "<Center><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "MessageType=INVOIC&PartnerCode=" . $myrow['PartnerCode'] . "'>Review Message Lines</a></Center>";
+
 	echo "<INPUT TYPE=HIDDEN NAME='SelectedMessageLine' VALUE='" . $SelectedMessageLine . "'>";
-	echo "<INPUT TYPE=HIDDEN NAME='MessageType' VALUE='" . $myrow["MessageType"] . "'>";
-	echo "<INPUT TYPE=HIDDEN NAME='PartnerCode' VALUE='" . $myrow["PartnerCode"] . "'>";
+	echo "<INPUT TYPE=HIDDEN NAME='MessageType' VALUE='" . $myrow['MessageType'] . "'>";
+	echo "<INPUT TYPE=HIDDEN NAME='PartnerCode' VALUE='" . $myrow['PartnerCode'] . "'>";
 } else { //end of if $SelectedMessageLine only do the else when a new record is being entered
 	echo "<INPUT TYPE=HIDDEN NAME='MessageType' VALUE='" . $MessageType . "'>";
 	echo "<INPUT TYPE=HIDDEN NAME='PartnerCode' VALUE='" . $PartnerCode . "'>";

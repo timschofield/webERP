@@ -1,7 +1,7 @@
 <P>webERP Change Log
 
-22/2/04 EDIMessageFormat script to set up invoice format only.
-21/2/04 Foreign key defintions accross the board for all relations in all tables as necessary.
+22/2/04 EDIMessageFormat script to set up invoice format only so far
+21/2/04 Foreign key defintions accross the board for all relations in all tables as necessary added to upgrade script 2.7-2.8
 16/2/04 Referential integrity checks in Locations.php for changes in TaxAuthority to ensure existance of necessary records in TaxAuthLevels
 16/2/04 Referential integrity checks in Stocks.php for changes in TaxLevel to ensure exist in TaxAuthLevels
 16/2/04 Referential integrity checks in TaxAuthorities for deletions or additions of tax authorities to ensure that records exist (or are deleted) when Tax Authorities are added or deleted.
