@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $title = "Credit Status Code Maintenance";
 $PageSecurity = 3;
 include("includes/session.inc");
@@ -122,12 +122,14 @@ or deletion of the records*/
 	printf("<td>%s</td><td>%s</td><td>%s</td><td><a href=\"%s?SelectedReason=%s\">EDIT</a></td><td><a href=\"%s?SelectedReason=%s&delete=1\">DELETE</a></td></tr>", $myrow[0], $myrow[1], $DissallowText, $_SERVER['PHP_SELF'], $myrow[0], $_SERVER['PHP_SELF'], $myrow[0]);
 
 	} //END WHILE LIST LOOP
+	echo "</table></CENTER>";
+	
 } //end of ifs and buts!
 
 ?>
 
 
-</table></CENTER>
+
 <p>
 <?php if (isset($SelectedReason)) {  ?>
 	<Center><a href="<?php echo $_SERVER['PHP_SELF']; ?>">Show Defined Credit Status Codes</a></Center>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $title = "Sales People Maintenance";
 
@@ -162,11 +162,11 @@ or deletion of the records*/
 	printf("<tr><td><FONT SIZE=2>%s</td><td><FONT SIZE=2>%s</td><td><FONT SIZE=2>%s</FONT></td><td><FONT SIZE=2>%s</FONT></td><td><FONT SIZE=2>%s</FONT></td><td><FONT SIZE=2>%s</FONT></td><td><FONT SIZE=2>%s</FONT></td><td><a href=\"%sSelectedSaleperson=%s\">Edit</a></td><td><a href=\"%sSelectedSaleperson=%s&delete=1\">Delete</a></td></tr>", $myrow[0], $myrow[1], $myrow[2], $myrow[3], $myrow[4], $myrow[5], $myrow[6], $_SERVER['PHP_SELF'] . "?" . SID, $myrow[0],$_SERVER['PHP_SELF'] . "?" . SID,$myrow[0]);
 
 	} //END WHILE LIST LOOP
-
+	echo "</table></CENTER>";
 } //end of ifs and buts!
 
 ?>
-</table></CENTER>
+
 <p>
 <?php
 if (isset($SelectedSaleperson)) {	?>

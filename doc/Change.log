@@ -1,5 +1,8 @@
 <P>webERP Change Log
 
+
+<P>30/8/04 Fixed SalesPeople.php, CreditStatus.php Salestypes.php display issues on editing.
+<P>30/8/04 PO_Header.php fixed sequence of order deletion details then order header to allow for foreign key constraints. Thanks Victor! Also setup strings for multi-language and using DB_query error reporting.
 <P>28/8/04 PDFDeliveryDifferences.php had a few bugs in the sql fixed
 <P>28/8/04 Steve - PDFChequeListing.php PrintCustTrans.php PDFStockCheckComparison.php SuppPaymentRun.php all had display errors fixed.
 <P>28/8/04 PO_PDFPurchOrder.php purchase order printing corrected.

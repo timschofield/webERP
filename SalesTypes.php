@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $title = "Sales Types / Price List Maintenance";
 
@@ -153,13 +153,13 @@ while ($myrow = DB_fetch_row($result)) {
 
 	}
 	//END WHILE LIST LOOP
+	echo "</table></CENTER>";
 }
 
 //end of ifs and buts!
 
 ?>
 
-</table></CENTER>
 
 <p>
 <Center><P><a href="<?php echo $_SERVER['PHP_SELF'] . "?" . SID;?>">Show All Sales Types Defined</a></Center>
