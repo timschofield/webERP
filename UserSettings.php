@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity=1;
 
@@ -7,7 +7,7 @@ include("includes/session.inc");
 $title = _('User Settings');
 include("includes/header.inc");
 
-if ($_POST['Modify']) {
+if (isset($_POST['Modify'])) {
 	// no input errors assumed initially before we test
 	$InputError = 0;
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 10;
 
@@ -176,7 +176,7 @@ or deletion of the records*/
 		$myrow[0]);
 
 	} //END WHILE LIST LOOP
-	echo '<table></CENTER><P>';
+	echo '</TABLE></CENTER><P>';
 } //end of ifs and buts!
 
 if (isset($SelectedTerms)) {

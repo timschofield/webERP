@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
@@ -576,7 +576,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 	foreach ($_SESSION['Items']->LineItems as $OrderLine) {
 
-		if ($BOPolicy=='CAN'){
+		if ($_POST['BOPolicy']=='CAN'){
 
 			$SQL = "UPDATE SalesOrderDetails
 				SET Quantity = Quantity - " . ($OrderLine->Quantity - $OrderLine->QtyDispatched) . " WHERE OrderNo = " . $_SESSION['ProcessingOrder'] . " AND StkCode = '" . $OrderLine->StockID . "'";
@@ -647,7 +647,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		if ($OrderLine->QtyDispatched !=0 AND $OrderLine->QtyDispatched!="" AND $OrderLine->QtyDispatched) {
 
 			// Test above to see if the line is completed or not
-			if ($OrderLine->QtyDispatched>=($OrderLine->Quantity - $OrderLine->QtyInv) OR $BOPolicy=="CAN"){
+			if ($OrderLine->QtyDispatched>=($OrderLine->Quantity - $OrderLine->QtyInv) OR $_POST['BOPolicy']=="CAN"){
 				$SQL = "UPDATE SalesOrderDetails
 					SET QtyInvoiced = QtyInvoiced + " . $OrderLine->QtyDispatched . ",
 					ActualDispatchDate = '" . $DefaultDispatchDate .  "',
