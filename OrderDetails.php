@@ -59,7 +59,7 @@ if (DB_error_no($db) !=0) {
 	/* SHOW ALL THE ORDER INFO IN ONE PLACE */
 
 	echo "<BR><BR><CENTER><TABLE BGCOLOR='#CCCCCC'>";
-	echo "<TR><TD>Customer Code:</TD><TD><FONT COLOR=BLUE><B><A HREF='$rootpath/SelectCustomer?Select=" . $_SESSION['CustomerID'] . "'>" . $_SESSION['CustomerID'] . "</A></B></TD><TD>Customer Name:</TD><TD><FONT COLOR=BLUE><B>" . $_SESSION['Items']->CustomerName . "</B></TD></TR>";
+	echo "<TR><TD>Customer Code:</TD><TD><FONT COLOR=BLUE><B><A HREF='$rootpath/SelectCustomer.php?Select=" . $_SESSION['CustomerID'] . "'>" . $_SESSION['CustomerID'] . "</A></B></TD><TD>Customer Name:</TD><TD><FONT COLOR=BLUE><B>" . $_SESSION['Items']->CustomerName . "</B></TD></TR>";
 	echo "<TR><TD>Customer Reference:</TD><TD><FONT COLOR=BLUE><B>" . $_SESSION['Items']->CustRef . "</FONT></B><TD>Deliver To:</TD><TD><FONT COLOR=BLUE><B>" . $_SESSION['Items']->DeliverTo . "</B></TD></TR>";
 	echo "<TR><TD>Ordered On:</TD><TD><FONT COLOR=BLUE><B>" . ConvertSQLDate($_SESSION['Items']->Orig_OrderDate) . "</FONT></B></TD><TD>Delivery Address 1:</TD><TD><FONT COLOR=BLUE><B>" . $_SESSION['Items']->BrAdd1 . "</FONT></B></TD></TR>";
 	echo "<TR><TD>Requested Delivery:</TD><TD><FONT COLOR=BLUE><B>" . $_SESSION['Items']->DeliveryDate . "</FONT></B></TD><TD>Delivery Address 2:</TD><TD><FONT COLOR=BLUE><B>" . $_SESSION['Items']->BrAdd2 . "</FONT></B></TD></TR>";

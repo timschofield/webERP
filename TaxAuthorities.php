@@ -148,7 +148,7 @@ if (!isset($SelectedTaxID)) {
 
 		$DisplayTaxRate	= number_format($myrow[2] * 100, 2) . "%";
 
-		printf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><td><a href=\"%sTaxAuthority=%s\">Edit Rates</a></td><td><a href=\"%sSelectedTaxID=%s\">Edit</a></td><td><a href=\"%sSelectedTaxID=%s&delete=yes\">Delete</a></td></tr>", $myrow[0],$myrow[1], $myrow[2], $myrow[3],$rootpath . "/TaxAuthorityRates?" . SID, $myrow[0], $_SERVER['PHP_SELF'] . "?" . SID, $myrow[0], $_SERVER['PHP_SELF'] . "?" . SID, $myrow[0]);
+		printf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><td><a href=\"%sTaxAuthority=%s\">Edit Rates</a></td><td><a href=\"%sSelectedTaxID=%s\">Edit</a></td><td><a href=\"%sSelectedTaxID=%s&delete=yes\">Delete</a></td></tr>", $myrow[0],$myrow[1], $myrow[2], $myrow[3],$rootpath . "/TaxAuthorityRates.php?" . SID, $myrow[0], $_SERVER['PHP_SELF'] . "?" . SID, $myrow[0], $_SERVER['PHP_SELF'] . "?" . SID, $myrow[0]);
 
 	}
 	//END WHILE LIST LOOP

@@ -1,5 +1,20 @@
 WEB-ERP Installation
 
+Upgrading
+
+A script is included under web-erp/sql to update an existing weberp database to the current version. The upgrade script assumes the weberp database is called weberp. The script must be edited to change the name of the database if this is not the case.
+
+The upgrade script should be passed to mysql as follows:
+
+mysql --user=weberp_db_user --password='some_pass' < /web-erp/sql/upgradescriptname.sql
+
+the upgrade script name will be of the format upgrade(old version number)-(new version number).sql
+
+The old scripts should be deleted and the new scripts extracted to the web-erp installation directory under the web-server root directory. config.php will require modification for your database username and password and company specific details.
+
+
+New Installations
+
 Pre-requisites
 
 - A working PHP web server - with mysql and ftp
