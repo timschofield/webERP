@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /* Common SQL Functions */
 
 
@@ -30,16 +30,9 @@ $myrow = DB_fetch_row($GetTransNoResult);
 $NextTransNumber = $myrow[0] + 1;
 
 $SQL = "UPDATE SysTypes SET TypeNo = " . $NextTransNumber . " WHERE TypeID = " . $TransType;
-
-$GetTransNoResult = DB_query($SQL,$db);
-if (DB_error_no($db) !=0){
-	  echo "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The transaction number could not be incremented: -<BR>" . DB_error_msg($db);
-	  if ($debug==1){
-		   echo "<BR>The following SQL to increment the transaction number was used:<BR>$SQL<BR>";
-	  }
-	  return 0;
-}
-
+$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The transaction number could not be incremented');
+$DbgMsg =  _('The following SQL to increment the transaction number was used:');
+$GetTransNoResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
 Return $NextTransNumber;
 

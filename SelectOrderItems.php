@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 if (isset($_GET['ModifyOrderNumber'])) {
 	$title = "Modifying Order " . $_GET['ModifyOrderNumber'];
 } else {
@@ -589,6 +589,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 					WHERE StockMaster.CategoryID=StockCategory.CategoryID
 					AND (StockCategory.StockType='F' OR StockCategory.StockType='D')
 					AND StockMaster.Description LIKE '$SearchString'
+					AND StockMaster.Discontinued=0
 					ORDER BY StockMaster.StockID";
 			} else {
 				$SQL = "SELECT StockMaster.StockID,
@@ -597,6 +598,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 					FROM StockMaster, StockCategory
 					WHERE  StockMaster.CategoryID=StockCategory.CategoryID
 					AND (StockCategory.StockType='F' OR StockCategory.StockType='D')
+					AND StockMaster.Discontinued=0
 					AND StockMaster.Description LIKE '$SearchString'
 					AND StockMaster.CategoryID='" . $_POST['StockCat'] . "'
 					ORDER BY StockMaster.StockID";
@@ -614,6 +616,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 					WHERE StockMaster.CategoryID=StockCategory.CategoryID
 					AND (StockCategory.StockType='F' OR StockCategory.StockType='D')
 					AND StockMaster.StockID like '" . $_POST['StockCode'] . "'
+					AND StockMaster.Discontinued=0
 					ORDER BY StockMaster.StockID";
 			} else {
 				$SQL = "SELECT StockMaster.StockID,
@@ -623,6 +626,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 					WHERE StockMaster.CategoryID=StockCategory.CategoryID
 					AND (StockCategory.StockType='F' OR StockCategory.StockType='D')
 					AND StockMaster.StockID like '" . $_POST['StockCode'] . "'
+					AND StockMaster.Discontinued=0
 					AND StockMaster.CategoryID='" . $_POST['StockCat'] . "'
 					ORDER BY StockMaster.StockID";
 			}
@@ -635,6 +639,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 					FROM StockMaster, StockCategory
 					WHERE  StockMaster.CategoryID=StockCategory.CategoryID
 					AND (StockCategory.StockType='F' OR StockCategory.StockType='D')
+					AND StockMaster.Discontinued=0
 					ORDER BY StockMaster.StockID";
 			} else {
 				$SQL = "SELECT StockMaster.StockID,
@@ -643,6 +648,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 					FROM StockMaster, StockCategory
 					WHERE StockMaster.CategoryID=StockCategory.CategoryID
 					AND (StockCategory.StockType='F' OR StockCategory.StockType='D')
+					AND StockMaster.Discontinued=0
 					AND StockMaster.CategoryID='" . $_POST['StockCat'] . "'
 					ORDER BY StockMaster.StockID";
 			  }
@@ -704,7 +710,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 		   $DbgMsg = "<BR>The SQL that failed was:";
 		   $KitResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
 
-		   
+
 		   if (DB_num_rows($KitResult)==0){
 		   	echo "<BR><FONT COLOR=RED><B>Warning:</FONT>The item code $NewItem could not be retrieved from the database and has not been added to the order</B><BR>";
 		   }elseif ($myrow=DB_fetch_array($KitResult)){
@@ -755,7 +761,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 				$Price = $_POST['Price_' . $StockItem->StockID];
 				$DiscountPercentage = $_POST['Discount_' . $StockItem->StockID];
 				$Narrative = $_POST['Narrative_' . $StockItem->StockID];
-				
+
 				If ($Quantity<0 OR $Price <0 OR $DiscountPercentage >100 OR $DiscountPercentage <0){
 					echo "<BR>The item could not be updated because you are attempting to set the quantity ordered to less than 0, or the price less than 0 or the discount more than 100% or less than 0%";
 

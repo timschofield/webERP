@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /*SelectOrderItems_IntoCart.inc
 
 This snippet is used to enter order line items into the cart object:
@@ -7,7 +7,7 @@ This snippet is used to enter order line items into the cart object:
 Used only in: SelectOrderItems.php
 
 The reason that it is in this seperate file is because it is used within a loop to get kitset
-items into the cart as well as plain vanilla items outside of the kitset loop  
+items into the cart as well as plain vanilla items outside of the kitset loop
 */
 
 $AlreadyOnThisOrder =0;
@@ -21,7 +21,7 @@ if (count($_SESSION['Items']->LineItems)>0){
 
 		if (strcasecmp($OrderItem->StockID, $NewItem)==0) {
 			$AlreadyOnThisOrder = 1;
-			echo "<B>Warning:</B> the part " . $NewItem . " is already on this order - the system will not allow the same item on the order more than once. However, you can change the quantity ordered of the existing line if necessary";
+			echo '<B>' . _('Warning:') . '</B> ' . _('the part') . ' ' . $NewItem . ' ' . _('is already on this order - the system will not allow the same item on the order more than once. However, you can change the quantity ordered of the existing line if necessary');
        		}
 	} /* end of the foreach loop to look for preexisting items of the same code */
 }
@@ -43,23 +43,26 @@ if ($AlreadyOnThisOrder!=1){
 	WHERE LocStock.LocCode='" . $_SESSION['Items']->Location . "'
 	AND  StockMaster.StockID = '". $NewItem . "'";
 
-    $ErrMsg = "The details for " . $NewItem . " could not be retrieved because";
-    $DbgMsg = "<BR>The SQL used to retrieve the pricing details but failed was:<BR>$sql";
+    $ErrMsg = _('The details for') . ' ' . $NewItem . ' ' . _('could not be retrieved because');
+    $DbgMsg = '<BR>' . _('The SQL used to retrieve the pricing details but failed was:');
     $result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-    
+
     if (DB_num_rows($result1)==0){
-    		
-		echo "<P><FONT COLOR=RED><B>Warning:</FONT>The item code $NewItem could not be found in the database - it has not been added to the order</B>";
-    
+
+		echo '<P><FONT COLOR=RED><B>' . _('Warning:') . '</FONT>' . _('The item code') . ' ' . $NewItem  . _('could not be found in the database - it has not been added to the order') . '</B>';
+
     } elseif ($myrow = DB_fetch_array($result1)){
 
-   		if ($_SESSION['ExistingOrder']!=0){
-			$UpdateDB = "Yes";
-		} else {
-			$UpdateDB = "No";
-		}
+    		if (($AllowSalesOfZeroCostItems==false AND $myrow['StandardCost']>0 AND ($myrow['MBFlag']=='B' OR $myrow['MBFlag']=='M')) OR
+			$AllowSalesOfZeroCostItems==true) {
 
-   		if ($_SESSION['Items']->add_to_cart ($NewItem,
+		   	if ($_SESSION['ExistingOrder']!=0){
+				$UpdateDB = 'Yes';
+			} else {
+				$UpdateDB = 'No';
+			}
+
+   			if ($_SESSION['Items']->add_to_cart ($NewItem,
 							$NewItemQty,
 							$myrow["Description"],
 							GetPrice ($NewItem, $_SESSION['Items']->DebtorNo,$_SESSION['Items']->Branch, &$db),
@@ -79,9 +82,13 @@ if ($AlreadyOnThisOrder!=1){
 							$UpdateDB
 							)==1){
 
-		      $_SESSION['Items']->LineItems[$NewItem]->StandardCost = $myrow["StandardCost"];
-             }
-   } 
+		      		$_SESSION['Items']->LineItems[$NewItem]->StandardCost = $myrow["StandardCost"];
+			}
+             } else {
+			echo '<BR><FONT COLOR=RED<B>' . _('Warning:') . ' </FONT></B>' . _('the item code') . ' ' . $NewItem . _('does not have a cost set up and order entry is set up to prohibit sales of items with no cost data entered');
+
+	     }
+   }
 
 } /* end of if not already on the order */
 

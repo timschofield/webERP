@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $title = "Confirm Dispatches and Invoice An Order";
 
@@ -474,6 +474,8 @@ if (isset($_POST['ProcessInvoice'])){
 
 /*Now Get the next invoice number - function in SQL_CommonFunctions*/
 /*Start an SQL transaction */
+	$InvoiceNo = GetNextTransNo(10, $db);
+	$PeriodNo = GetPeriod($DefaultDispatchDate, $db);
 
 	$SQL = "Begin";
 	$Result = DB_query($SQL,$db);
@@ -483,9 +485,6 @@ if (isset($_POST['ProcessInvoice'])){
 		$result = DB_query($SQL,$db,_('ERROR: Could not update the default carrier for this branch because'),_('The SQL used to update the branch default carrier was'));
 	}
 
-	$InvoiceNo = GetNextTransNo(10, $db);
-
-	$PeriodNo = GetPeriod($DefaultDispatchDate, $db);
 	$DefaultDispatchDate = FormatDateForSQL($DefaultDispatchDate);
 
 /*Update order header for invoice charged on */

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -72,6 +72,11 @@ $QuickEntries = 10;
 
 /*orders placed after this hour (an integer from 0 to 23) will be dispatched the following day */
 $DispatchCutOffTime = 14;
+
+
+/*determines whether or not to allow sales orders to be entered for purchased or manufactured items that have no cost set up */
+$AllowSalesOfZeroCostItems = false;
+
 
 /*The price list to use if no price defined in the customers normal price list */
 $DefaultPriceList = "WS";

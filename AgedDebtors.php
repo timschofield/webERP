@@ -2,7 +2,7 @@
 
 $PageSecurity = 2;
 
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 if (!isset($_POST['FromCust'])  OR $_POST['FromCust']=="" OR !isset($_GET['FromCust'])) {
 	$title=_('Aged Debtor Analysis');
@@ -49,7 +49,7 @@ strlen($_POST['ToCriteria'])>=1){
 	GROUP BY DebtorsMaster.DebtorNo, DebtorsMaster.Name, Currencies.Currency, PaymentTerms.Terms, PaymentTerms.DaysBeforeDue, PaymentTerms.DayInFollowingMonth, DebtorsMaster.CreditLimit, HoldReasons.DissallowInvoices, HoldReasons.ReasonDescription
 	HAVING Sum(DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight + DebtorTrans.OvDiscount - DebtorTrans.Alloc) <>0";
 
-	} else {
+	} elseif ($_POST['All_Or_Overdues']=='OverduesOnly') {
 
 	      $SQL = "SELECT DebtorsMaster.DebtorNo, DebtorsMaster.Name, Currencies.Currency, PaymentTerms.Terms,
 	DebtorsMaster.CreditLimit, HoldReasons.DissallowInvoices, HoldReasons.ReasonDescription,
@@ -76,8 +76,32 @@ strlen($_POST['ToCriteria'])>=1){
 	CASE WHEN TO_DAYS(Now()) - TO_DAYS(DebtorTrans.TranDate) > PaymentTerms.DaysBeforeDue AND TO_DAYS(Now()) - TO_DAYS(DebtorTrans.TranDate) >= (PaymentTerms.DaysBeforeDue + " . $PastDueDays1 . ") THEN DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight + DebtorTrans.OvDiscount - DebtorTrans.Alloc ELSE 0 END,
 	CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(DebtorTrans.TranDate, INTERVAL 1  MONTH), INTERVAL (PaymentTerms.DayInFollowingMonth - DAYOFMONTH(DebtorTrans.TranDate)) DAY)) >= " . $PastDueDays1 . ") THEN DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight + DebtorTrans.OvDiscount - DebtorTrans.Alloc ELSE 0 END)) > 0";
 
-	}
+	} elseif ($_POST['All_Or_Overdues']=='HeldOnly'){
 
+		$SQL = "SELECT DebtorsMaster.DebtorNo, DebtorsMaster.Name, Currencies.Currency, PaymentTerms.Terms,
+	DebtorsMaster.CreditLimit, HoldReasons.DissallowInvoices, HoldReasons.ReasonDescription,
+	Sum(DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight + DebtorTrans.OvDiscount - DebtorTrans.Alloc) AS Balance,
+	Sum(IF (PaymentTerms.DaysBeforeDue > 0,
+	CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DebtorTrans.TranDate)) >= PaymentTerms.DaysBeforeDue  THEN DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight + DebtorTrans.OvDiscount - DebtorTrans.Alloc ELSE 0 END,
+	CASE WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(DebtorTrans.TranDate, INTERVAL 1 MONTH), INTERVAL (PaymentTerms.DayInFollowingMonth - DAYOFMONTH(DebtorTrans.TranDate)) DAY)) >= 0 THEN DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight + DebtorTrans.OvDiscount - DebtorTrans.Alloc ELSE 0 END
+	)) AS Due,
+	Sum(IF (PaymentTerms.DaysBeforeDue > 0,
+	CASE WHEN TO_DAYS(Now()) - TO_DAYS(DebtorTrans.TranDate) > PaymentTerms.DaysBeforeDue	AND TO_DAYS(Now()) - TO_DAYS(DebtorTrans.TranDate) >= (PaymentTerms.DaysBeforeDue + " . $PastDueDays1 . ") THEN DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight + DebtorTrans.OvDiscount - DebtorTrans.Alloc ELSE 0 END,
+	CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(DebtorTrans.TranDate, INTERVAL 1  MONTH), INTERVAL (PaymentTerms.DayInFollowingMonth - DAYOFMONTH(DebtorTrans.TranDate)) DAY)) >= " . $PastDueDays1 . ") THEN DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight + DebtorTrans.OvDiscount - DebtorTrans.Alloc ELSE 0 END
+	)) AS Overdue1,
+	Sum(IF (PaymentTerms.DaysBeforeDue > 0,
+	CASE WHEN TO_DAYS(Now()) - TO_DAYS(DebtorTrans.TranDate) > PaymentTerms.DaysBeforeDue	AND TO_DAYS(Now()) - TO_DAYS(DebtorTrans.TranDate) >= (PaymentTerms.DaysBeforeDue + " . $PastDueDays2 . ") THEN DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight + DebtorTrans.OvDiscount - DebtorTrans.Alloc ELSE 0 END,
+	CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(DebtorTrans.TranDate, INTERVAL 1  MONTH), INTERVAL (PaymentTerms.DayInFollowingMonth - DAYOFMONTH(DebtorTrans.TranDate)) DAY)) >= " . $PastDueDays2 . ") THEN DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight + DebtorTrans.OvDiscount - DebtorTrans.Alloc ELSE 0 END
+	)) AS Overdue2
+	FROM DebtorsMaster, PaymentTerms, HoldReasons, Currencies, DebtorTrans WHERE DebtorsMaster.PaymentTerms = PaymentTerms.TermsIndicator AND DebtorsMaster.CurrCode = Currencies.CurrAbrev AND DebtorsMaster.HoldReason = HoldReasons.ReasonCode AND DebtorsMaster.DebtorNo = DebtorTrans.DebtorNo
+	AND HoldReasons.DissallowInvoices=1
+	AND DebtorsMaster.DebtorNo >= '" . $_POST['FromCriteria'] . "'
+	AND DebtorsMaster.DebtorNo <= '" . $_POST['ToCriteria'] . "'
+	AND DebtorsMaster.CurrCode ='" . $_POST['Currency'] . "'
+	GROUP BY DebtorsMaster.DebtorNo, DebtorsMaster.Name, Currencies.Currency, PaymentTerms.Terms, PaymentTerms.DaysBeforeDue, PaymentTerms.DayInFollowingMonth, DebtorsMaster.CreditLimit, HoldReasons.DissallowInvoices, HoldReasons.ReasonDescription
+	HAVING Sum(DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight + DebtorTrans.OvDiscount - DebtorTrans.Alloc) <>0";
+
+	}
  	$CustomerResult = DB_query($SQL,$db,'','',False,False); /*dont trap errors handled below*/
 
 	if (DB_error_no($db) !=0) {
@@ -257,7 +281,10 @@ strlen($_POST['ToCriteria'])>=1){
 		echo "<TR><TD>" . _('All balances Or Overdues Only:') . "</TD><TD><SELECT name='All_Or_Overdues'>";
 		echo "<OPTION SELECTED Value='All'>" . _('All Customers with Balances');
 		echo "<OPTION Value='OverduesOnly'>" . _('Overdue Accounts Only');
+		echo "<OPTION Value='HeldOnly'>" . _('Held Accounts Only');
 		echo "</SELECT></TD></TR>";
+
+
 
 		echo '<TR><TD>' . _('Only Show Customers Trading in:') . "</TD><TD><SELECT name='Currency'>";
 

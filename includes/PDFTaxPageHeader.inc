@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 /*PDF page header for aged analysis reports */
 $PageNumber++;
 if ($PageNumber>1){
@@ -30,10 +30,11 @@ $pdf->line($Left_Margin, $YPos+$line_height,$Left_Margin, $YPos-5);
 /*set up the headings */
 $Xpos = $Left_Margin+1;
 
-$LeftOvers = $pdf->addTextWrap(40,$YPos,100 - $Left_Margin,$FontSize,_('Transaction'),'centre');
+$LeftOvers = $pdf->addTextWrap(40,$YPos,60 - $Left_Margin,$FontSize,_('Type'),'centre');
+$LeftOvers = $pdf->addTextWrap(100,$YPos,40 - $Left_Margin,$FontSize,_('No.'),'centre');
 $LeftOvers = $pdf->addTextWrap(140,$YPos,60,$FontSize,_('Date'),'centre');
-$LeftOvers = $pdf->addTextWrap(320,$YPos,60,$FontSize,_('Net'),'centre');
-$LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,_('Tax'),'centre');
+$LeftOvers = $pdf->addTextWrap(410,$YPos,60,$FontSize,_('Net'),'centre');
+$LeftOvers = $pdf->addTextWrap(470,$YPos,60,$FontSize,_('Tax'),'centre');
 
 $YPos =$YPos - (2*$line_height);
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 1;
 
@@ -835,7 +835,11 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 								<?php echo "<a href='" . $rootpath . "/GLBalanceSheet.php?" . SID . "'>" . _("Balance Sheet") . "</a>"; ?>
 							</td>
 							</tr>
-
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . "/Tax.php?" . SID . "'>" . _("GST Reports") . "</a>"; ?>
+							</td>
+							</tr>
 
 						</table>
 					</td>

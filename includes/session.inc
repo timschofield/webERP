@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -13,6 +13,8 @@
 	session_save_path($SessionSavePath);
     }
     session_start();
+
+    include('includes/LanguageSetup.php');
 
     // Un comment to turn off attempts counter
     //$_SESSION["AttemptsCounter"] = 0;
@@ -143,7 +145,4 @@
     } else {
         $debug = 0;
     }
-
-    include('includes/LanguageSetup.php');
-
 ?>
