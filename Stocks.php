@@ -1,6 +1,6 @@
 <?php
-/* $Revision: 1.7 $ */
-$title = "Stock Item Maintenance";
+/* $Revision: 1.8 $ */
+$title = "Item Maintenance";
 
 $PageSecurity = 11;
 
@@ -69,6 +69,9 @@ if ($_POST['submit']) {
 	}elseif ($_POST['Controlled']==0 AND $_POST['Serialised']==1){
 		$InputError = 1;
 		echo "<BR>The item can only be serialised if there is lot control enabled already. Batch control - with any number of items in a lot/bundle/roll is enabled when controlled is enabled. Serialised control requires that only one item is in the batch. For serialised control, both controlled and serialised must be enabled";
+	} elseif (($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K' OR $_POST['MBFlag']=="D") AND $_POST['Controlled']==1){
+		$InputError = 1;
+		echo "<BR>Assembly/Kitset/Dummy items cannot also be controlled items. Assemblies/Dummies and Kitsets are not physical items and batch/serial control is therefore not appropriate.";
 	}
 
 	if ($InputError !=1){
@@ -89,7 +92,6 @@ if ($_POST['submit']) {
 			$OldMBFlag = $myrow[0];
 			if ($OldMBFlag != $_POST['MBFlag']){
 				if (($OldMBFlag == "M" OR $OldMBFlag=="B") AND ($_POST['MBFlag']=="A" OR $_POST['MBFlag']=="K" OR $_POST['MBFlag']=="D")){ /*then need to check that there is no stock holding first */
-
 					$sql = "SELECT Sum(LocStock.Quantity) FROM LocStock WHERE StockID='$StockID'";
 					$result = DB_query($sql,$db);
 					$stkqtychk = DB_fetch_row($result);
@@ -128,6 +130,17 @@ if ($_POST['submit']) {
 					if ($ChkBOM[0]!=0){
 						$InputError = 1;
 						echo "<P><FONT SIZE=4 COLOR=RED><B>The make or buy flag cannot be changed from manufactured, kitset or assembly to " . $_POST["MBFlag"] . " where there is a bill of material set up for the item. Bills of material are not appropriate for purchased or dummy items.";
+					}
+				}
+
+				/*now check that if it was Manufac or Purchased and is being changed to assembly or kitset, it is not a component on an existing BOM */
+				if (($OldMBFlag=="M" OR $OldMBFlag =="B" OR $OldMBFlag=="D") AND ($_POST["MBFlag"]=="A" OR $_POST["MBFlag"]=="K")) {
+					$sql = "SELECT Count(*) FROM BOM WHERE Component = '$StockID'";
+					$result = DB_query($sql,$db);
+					$ChkBOM = DB_fetch_row($result);
+					if ($ChkBOM[0]!=0){
+						$InputError = 1;
+						echo "<P><FONT SIZE=4 COLOR=RED><B>The make or buy flag cannot be changed from manufactured, purchased or dummy to a kitset or assembly where the item is a component in a bill of material. Assembly and kitset items are not appropriate as componennts in a bill of materials";
 					}
 				}
 			}

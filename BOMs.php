@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Bill Of Materials Maintenance";
 
 $PageSecurity = 9;
@@ -17,14 +17,10 @@ ie the BOM is recursive otherwise false ie 0 */
 
 
 	$sql = "SELECT Component FROM BOM WHERE Parent='$ComponentToCheck'";
-	$result = DB_query($sql,$db);
-	If (DB_error_no($db) != 0){
-		echo "<BR>An error occurred in retrieving the components of the BOM during the check for recursion:- " . DB_error_msg($db);
-		if ($debug==1){
-			echo "<BR>The SQL that was used to retrieve the components of the BOM and that failed in the process was:<BR>$sql";
-		}
-		exit;
-	}
+	$ErrMsg = "<BR>An error occurred in retrieving the components of the BOM during the check for recursion:";
+	$DbgMsg = "<BR>The SQL that was used to retrieve the components of the BOM and that failed in the process was:";
+	$result = DB_query($sql,$db,$ErrMsg.$DbgMsg);
+
 	if ($result!=0) {
 		while ($myrow=DB_fetch_row($result)){
 			if ($myrow[0]==$UltimateParent){
@@ -44,17 +40,21 @@ ie the BOM is recursive otherwise false ie 0 */
 function DisplayBOMItems($SelectedParent, $db) {
 		$sql = "SELECT BOM.Component, StockMaster.Description, Locations.LocationName, WorkCentres.Description, Quantity, EffectiveAfter, EffectiveTo FROM BOM, StockMaster, Locations, WorkCentres WHERE BOM.Component=StockMaster.StockID AND BOM.LocCode = Locations.LocCode AND BOM.WorkCentreAdded=WorkCentres.Code AND BOM.Parent='$SelectedParent'";
 
-		$result = DB_query($sql,$db);
-		if (DB_error_no($db)!=0){
-			echo "Could not retrieve the BOM components because - " . DB_error_msg($db);
-			if ($debug==1){
-				 echo "The SQL used to retrieve the components was:<BR>$sql";
-			}
-			exit;
-		   }
+		$ErrMsg = "<BR>Could not retrieve the BOM components because ";
+		$DbgMsg = "<BR>The SQL used to retrieve the components was:";
+		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+
 		echo "<CENTER><table border=1>\n";
 
-		$TableHeader =  "<tr BGCOLOR =#800000><td class=tableheader>Code</td><td class=tableheader>Description</td><td class=tableheader>Location</td><td class=tableheader>Work Centre</td><td class=tableheader>Quantity</td><td class=tableheader>Effective After</td><td class=tableheader>Effective To</td></tr>\n";
+		$TableHeader =  "<tr BGCOLOR =#800000>
+				<td class=tableheader>Code</td>
+				<td class=tableheader>Description</td>
+				<td class=tableheader>Location</td>
+				<td class=tableheader>Work Centre</td>
+				<td class=tableheader>Quantity</td>
+				<td class=tableheader>Effective After</td>
+				<td class=tableheader>Effective To</td>
+				</tr>";
 
 		echo $TableHeader;
 		$RowCounter =0;
@@ -120,7 +120,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	$myrow=DB_fetch_row($result);
 
 	echo "<BR><FONT COLOR=BLUE SIZE=3><B>$SelectedParent - " . $myrow[0] . "</FONT></B>";
-	echo "<BR><A HREF=" . $_SERVER['PHP_SELF'] . "?" . SID . ">Select a Different BOM</A></CENTER>";	
+	echo "<BR><A HREF=" . $_SERVER['PHP_SELF'] . "?" . SID . ">Select a Different BOM</A></CENTER>";
 
 	if (isset($SelectedParent)) {
 		echo "<Center><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "Select=$SelectedParent'>Review Components</a></Center>";
@@ -155,15 +155,11 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 
 			$sql = "UPDATE BOM SET WorkCentreAdded='" . $_POST['WorkCentreAdded'] . "', LocCode='" . $_POST['LocCode'] . "', EffectiveAfter='" . $EffectiveAfterSQL . "', EffectiveTo='" . $EffectiveToSQL . "', Quantity= " . $_POST['Quantity'] . " WHERE Parent='" . $SelectedParent . "' AND Component='" . $SelectedComponent . "'";
-			if (DB_error_no($db)!=0){
-			   echo "Could not update this BOM component because - " . DB_error_msg($db);
-			   if ($debug==1){
-				 echo "<BR>The SQL used to update the component was:<BR>$sql";
-			   }
-			   exit;
-			}
 
-			$result = DB_query($sql,$db);
+			$ErrMsg = "<BR>Could not update this BOM component because:";
+			$DbgMsg = "<BR>The SQL used to update the component was:";
+
+			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 			$msg = "Details for - $SelectedComponent have been updated.";
 
 		} elseIf ($InputError !=1 AND ! isset($SelectedComponent) AND isset($SelectedParent)) {
@@ -176,15 +172,12 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 				/*Now check to see that the component is not already on the BOM */
 				$sql = "SELECT Component FROM BOM WHERE Parent='$SelectedParent' AND Component='" . $_POST['Component'] . "' AND WorkCentreAdded='" . $_POST['WorkCentreAdded'] . "' AND LocCode='" . $_POST['LocCode'] . "'" ;
-				$result = DB_query($sql,$db);
-				If (DB_error_no($db) != 0){
-					echo "<BR>An error occurred in checking the component is not already on the BOM :- " . DB_error_msg($db);
-					if ($debug==1){
-						echo "<BR>The SQL that was used to check the component was not already on the BOM and that failed in the process was:<BR>$sql";
-					}
-					exit;
-				}
-				
+
+				$ErrMsg = "<BR>An error occurred in checking the component is not already on the BOM :";
+				$DbgMsg = "<BR>The SQL that was used to check the component was not already on the BOM and that failed in the process was:";
+
+				$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+
 				if (DB_num_rows($result)==0) {
 
 					$sql = "INSERT INTO BOM (Parent, Component, WorkCentreAdded, LocCode, Quantity, EffectiveAfter, EffectiveTo) VALUES ('$SelectedParent', '" . $_POST['Component'] . "', '" . $_POST['WorkCentreAdded'] . "', '" . $_POST['LocCode'] . "', " . $_POST['Quantity'] . ", '" . $EffectiveAfterSQL . "', '" . $EffectiveToSQL . "')";
@@ -374,7 +367,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		}?>>
 
 		</TD></TR>
-		
+
 		<?php
 		if (!isset($_POST['EffectiveTo']) OR $_POST['EffectiveTo']=="") {
 			$_POST['EffectiveTo'] = Date($DefaultDateFormat,Mktime(0,0,0,Date("m"),Date("d"),(Date("y")+30)));

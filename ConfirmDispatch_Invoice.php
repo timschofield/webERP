@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $title = "Confirm Dispatches and Invoice An Order";
 
@@ -129,8 +129,10 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 		} //end of checks on returned data set
 		DB_free_result($LineItemsResult);
 	} else {
-		die ("<P><B>This order item could not be retrieved. Please select another order.</B>");
+		echo "<P><B>This order item could not be retrieved. Please select another order.</B>";
 		echo "<CENTER><A HREF='$rootpath/SelectSalesOrder.php?" . SID . "'>Select a different sales order to invoice</A></CENTER>";
+		include ("includes/footer.inc");
+		exit;
 	} //valid order returned from the entered order number
 } else {
 /* if processing, a dispatch page has been called and ${$StkItm->StockID} would have been set from the post */
@@ -468,7 +470,7 @@ if ($_POST['ProcessInvoice'] == "Process Invoice"){
 
 /*Now update SalesOrderDetails for the quantity invoiced and the actual dispatch dates. */
 
-		if ($OrderLine->QtyDispatched !=0 && $OrderLine->QtyDispatched!="" && $OrderLine->QtyDispatched) {
+		if ($OrderLine->QtyDispatched !=0 AND $OrderLine->QtyDispatched!="" AND $OrderLine->QtyDispatched) {
 
 			// Test above to see if the line is completed or not
 			if ($OrderLine->QtyDispatched>=($OrderLine->Quantity - $OrderLine->QtyInv) OR $BOPolicy=="CAN"){
@@ -550,6 +552,7 @@ if ($_POST['ProcessInvoice'] == "Process Invoice"){
 					$DbgMsg = "<BR>The following SQL to update the component's location stock record was used:";
 					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 				} /* end of assembly explosion and updates */
+
 				/*Update the cart with the recalculated standard cost from the explosion of the assembly's components*/
 				$_SESSION['Items']->LineItems[$OrderLine->StockID]->StandardCost = $StandardCost;
 				$OrderLine->StandardCost = $StandardCost;
@@ -569,6 +572,32 @@ if ($_POST['ProcessInvoice'] == "Process Invoice"){
 			$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Stock movement records could not be inserted because:";
 			$DbgMsg = "<BR>The following SQL to insert the stock movement records was used:";
 			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+
+/*Get the ID of the StockMove... */
+			$StkMoveNo = DB_Last_Insert_ID($db);
+
+/*Insert the StockSerialMovements and update the StockSerialItems  for controlled items*/
+
+			if ($OrderLine->Controlled ==1){
+				foreach($OrderLine->SerialItems as $Item){
+                                /*We need to add the StockSerialItem record and
+				The StockSerialMoves as well */
+
+					$SQL = "UPDATE StockSerialItems SET Quantity= Quantity - " . $Item->BundleQty . " WHERE StockID='" . $OrderLine->StockID . "' AND LocCode='" . $_SESSION['Items']->Location . "' AND SerialNo='" . $Item->BundleRef . "'";
+
+					$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock item record could not be updated because:";
+					$DbgMsg = "<BR>The following SQL to update the serial stock item record was used:";
+					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+
+					/* now insert the serial stock movement */
+
+					$SQL = "INSERT INTO StockSerialMoves (StockMoveNo, StockID, SerialNo, MoveQty) VALUES (" . $StkMoveNo . ", '" . $OrderLine->StockID . "', '" . $Item->BundleRef . "', " . -$Item->BundleQty . ")";
+					$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock movement record could not be inserted because:";
+					$DbgMsg = "<BR>The following SQL to insert the serial stock movement records was used:";
+					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+
+				}/* foreach controlled item in the serialitems array */
+			} /*end if the orderline is a controlled item */
 
 /*Insert Sales Analysis records */
 
