@@ -1,5 +1,7 @@
 <P>webERP Change Log
 
+<P>1/9/04 AccountGroups.php getextified.
+
 <P>1/9/04 PrintCustTrans.php now prints the Payment Terms on invoices and credit notes as contributed by Steve Ball
 <P>1/9/04 New script by Chris Bice StockQuantityByDate.php that shows the quantity on hand at any historical date selected for all items in a selected stock category
 <P>30/8/04 Fixed SalesPeople.php, CreditStatus.php Salestypes.php display issues on editing.

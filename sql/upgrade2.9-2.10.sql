@@ -53,8 +53,9 @@ ALTER TABLE `StockMoves` ADD `Narrative` TEXT NOT NULL;
 ALTER TABLE `SalesOrderDetails` ADD `Narrative` TEXT NOT NULL ;
 ALTER TABLE `DebtorTrans` ADD `Consignment` VARCHAR( 30 ) NOT NULL;
 ALTER TABLE WWW_Users ADD Language CHAR(2) DEFAULT 'en' NOT NULL;
-ALTER TABLE WWW_Users ADD Theme VARCHAR(30) NOT NULL;
+ALTER TABLE WWW_Users ADD Theme VARCHAR(30) DEFAULT 'professional' NOT NULL;
 ALTER TABLE WWW_Users ADD DisplayRecordsMax TINYINT DEFAULT 0 NOT NULL;
+UPDATE WWW_Users SET Theme='professional', Language='en';
 INSERT INTO `Scripts` ( `PageID` , `FileName` , `PageDescription` )
 VALUES ('162', 'UserSettings.php', 'Allows the user to change system wide defaults for the theme - appearance, the number of records to show in searches and the language to display messages in');
 INSERT INTO `Scripts` ( `PageID` , `FileName` , `PageDescription` )
