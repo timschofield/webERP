@@ -1,7 +1,8 @@
 <?php
 /*
 *	Wrapper for use R&OSpdf API with fpdf.org class
-*
+*	Janusz Dobrowolski <janusz@iron.from.pl>
+*	David Luo <davidluo188@yahoo.com.cn>
 */
 include ('fpdf.php');
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 $PageSecurity = 1;
 
 if (isset($_GET['FromTransNo'])){
@@ -59,9 +59,9 @@ If (isset($PrintPDF) AND $PrintPDF!='' AND isset($FromTransNo) AND isset($InvOrC
 
 	$PageSize = array(0,0,$Page_Width,$Page_Height);
 	$pdf = & new Cpdf($PageSize);
-	$pdf->selectFont('./fonts/Helvetica.afm');
+	$pdf->selectFont('helvetica');
 	$pdf->addinfo('Author','webERP ' . $Version);
-	$pdf->addinfo('Creator','webERP http://www.weberp.org - R&OS PHP-PDF http://www.ros.co.nz');
+	$pdf->addinfo('Creator','webERP http://www.weberp.org');
 
 	$FirstPage = true;
 
@@ -456,7 +456,6 @@ If (isset($PrintPDF) AND $PrintPDF!='' AND isset($FromTransNo) AND isset($InvOrC
 
 } else { /*The option to print PDF was not hit */
 
-	include('includes/session.inc');
 	$title=_('Select Invoices/Credit Notes To Print');
 	include('includes/header.inc');
 

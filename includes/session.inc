@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -13,12 +13,13 @@
     
     function CryptPass( $Password ) {
     	global $CryptFunction;
-    	if ( $CryptFunction == 'sha1' )
+    	if ( $CryptFunction == 'sha1' ) {
     		return sha1($Password);
-    	elseif ( $CryptFunction == 'md5' )
+    	} elseif ( $CryptFunction == 'md5' ) {
     		return md5($Password);
-    	else
+	} else {
     		return $Password;
+    	}
     }
     
     if (isset($SessionSavePath)){

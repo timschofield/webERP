@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 3;
 include ('includes/session.inc');
@@ -276,7 +276,7 @@ if ($_POST['Email']=='Yes'){
 	$attachment = $mail->getFile($_SESSION['reports_dir'] . '/DeliveryDifferences.pdf');
 	$mail->setText(_('Please find herewith delivery differences report from') . ' ' . $_POST['FromDate'] .  ' '. _('to') . ' ' . $_POST['ToDate']);
 	$mail->addAttachment($attachment, 'DeliveryDifferences.pdf', 'application/pdf');
-	$mail->setFrom(array('$_SESSION['CompanyRecord']['coyname'] <' . $_SESSION['CompanyRecord']['email'] .'>'));
+	$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] .'>');
 
 	/* $DelDiffsRecipients defined in config.php */
 	$result = $mail->send($DelDiffsRecipients);

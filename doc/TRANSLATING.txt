@@ -2,9 +2,6 @@ webERP Translations
 
 webERP can be translated to any language so that the entire web-interface is displayed in the language of any user. The system can display different languages for different users - all at the same time - depending on the setting of the language in the individual users' settings.
 
-Caveats: It is important to note that at the current time languages that require multi-byte fonts such as Chinese, Japanese, Arabic - whilst the browser screens will display the translations correctly, they will not be able to print pdf reports. PDF reports are created using the R & OS pdf.php class and this requires single byte .afm fonts. Reports would need to be re-written using an alternative pdf class - the FPDF class is understood to be capable in this regard.
-
-
 Procedure
 
 1. Join the mailing list at:
@@ -13,20 +10,67 @@ http://lists.sourceforge.net/lists/listinfo/web-erp-translation
 
 Let the list know you're wanting to help with a translation - someone may already be working on it. The list admin will send you the latest translation file to your subscribed email address normally within 24 hours.
 
-2. Edit the file provided entering the translations for the strings labelled msgid in the string labelled msgstr. Watch for html strings embedded inside the strings the html will also be required in the translated string. Please complete the translation file header information - with your details so that you are accorded proper recognition for your contribution.
-
-3. Return the file containing your translations to info@weberp.org
-
-4. An archive of the new language directory and instructions on how to use it will be emailed for your use. The new directory created by the project admin will be added to the webERP distribution for future releases
-
-
-That's it! However, for the more curious and technically minded more detail is provided below.
+2. If there is no-one else working on a translation there is a choice to make. Translate using the web based interface provided at http://www.weberp.org/translate/index.php or obtain the latest messages.po file to edit manually. There are tools available to edit this file quite efficiently and this is probably quicker in the longer run if there is only one person working on the translation.
 
 
 
+Editing the message.po Manually
+
+
+The latest messages.po file can be downloaded from:
+
+http://www.weberp.org/translate/locale/en_GB/LC_MESSAGES/message.po
+
+A user name of: translator
+With a password of: language
+
+is required to access this private area.
+
+Edit the file provided entering the translations for the strings labelled msgid in the string labelled msgstr. Watch for html strings embedded inside the strings the html will also be required in the translated string. Please complete the translation file header information - with your details so that you are accorded proper recognition for your contribution.
+
+Return the file containing your translations to info@weberp.org
+
+An archive of the new language directory and instructions on how to use it will be emailed for your use. The new directory created by the project admin will be added to the webERP distribution for future releases
 
 
 
+Using the WEB Based Tools To Translate Collaboratively
+
+Point your browser to:
+
+http://www.weberp.org/translate/index.php
+
+A user name of: translator
+With a password of: language
+
+is required to access this private area.
+
+The webERP username of:  demo
+and password of : weberp
+
+can be used to get into the system. It is then recommended that you create a new user for yourself by going to setup, User Accounts and entering some details as necessary. Logout from demo and login under the user name just created. Now click on your user name in the top left of the screen to modify your settings. All the languages that are being worked on are available for selection. If your language is there then select it. 
+
+If your language is not there already a new language can be created using the utilities and the new language code must be entered. The translation utilities are available from the quick menu at the very top of this screen.
+Language codes must follow the standard format for locales, 2 lower case characters for the language and then an underscore then a further 2 characters in upper case representing the country eg:
+
+en_GB - english underscore Great Britain
+en_US - english underscore United States
+en_AU - english underscore Australia
+
+For the translation to be used the locale code must be recognised by the machine (you can check the locales defined on a *nix machine by typing locale -a at the # prompt).
+
+Having created the new language change your user account to always use this language. The translation utilities refer to each script as a module. Each module can be selected for translation using the web interface and the translation together with the english string are shown for all the text strings on that page.
+
+It is important not to enter the " character in any translations.
+
+Once the translations are entered you can go to the page that has been translated and see the effect of your translations immediately in the system. The advantage of the web based system is that the changes are immediately obvious to another translator who will not duplicate work that has already been done.
+
+When there have been changes to the underlying scripts and new strings need to be translated these will need to be merged into the translation messages.po file you have been working on. Again this can be done from the translation utilites.
+
+It is recommended that translations start with the index.php module since this main menu is the most visible of all pages.
+
+
+That's it! However, for the more curious and technically minded more detail is provided below on the mechanics of the gettext system.
 
 
 Technical Overview

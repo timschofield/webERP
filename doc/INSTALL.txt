@@ -1,29 +1,32 @@
 WEB-ERP Installation
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 Upgrading
 
-A script is included under web-erp/sql to update an existing weberp database to the current version. The upgrade script assumes the weberp database is called weberp. The script must be edited to change the name of the database if this is not the case.
+A script is included under webERP/sql/mysql/ to update an existing mysql weberp database to the current version. The upgrade script assumes the weberp database is called weberp. The script must be edited to change the name of the database if this is not the case.
 
 The upgrade script should be passed to mysql as follows:
 
-mysql --user=weberp_db_user --password='some_pass' < /web-erp/sql/upgradescriptname.sql
+mysql --user=weberp_db_user --password='some_pass' < /webERP/sql/upgradescriptname.sql
 
 the upgrade script name will be of the format upgrade(old version number)-(new version number).sql
 
-The old scripts should be deleted and the new scripts extracted to the web-erp installation directory under the web-server root directory. config.php will require modification for your database username and password and company specific details.
+The old scripts should be deleted and the new scripts extracted to the webERP installation directory under the web-server root directory. config.php will require modification for your database username and password and company specific details.
+
+Upgrade scripts for postgres are included under webERP/sql/pg/
+
+
 
 
 New Installations
 
-Pre-requisites
+
+
+Pre-requisites:
 
 - A working PHP web server - v 4.3 or later - with mysql or postgres databases and ftp
 - A working MySQL or Postgres server (MySql version 4 or above - innodb tables must be enabled - this needs a my.cnf file - see the MySQL manual. Postgres v 7.4 or later).
 
-Getting these components installed are well covered elsewhere see the following links:
-
-http://logidac.com/apache/apache-install-rpm.phtml
-http://www.linux-sottises.net/en_apache_install.php
+Installing these components are well covered elsewhere.
 
 One critical aspect of the PHP installation is the setting of session.auto_start in the php.ini file
 Some .rpm distributions of PHP (as of 4.3.2) have the default setting of session.auto_start = 1
@@ -36,11 +39,11 @@ One more issue with php setup - by default the setting session.use_cookies is se
 
 There are a number of traps with PHP installation depending on the web-server - see the FAQ.
 
-The system could be used with many other database servers but it is tested and developed on MySQL.
+The system can be used with either MySQL or Postgres database servers - both work well. Instructions here are for mysql. However, the necessary scripts for postgres are also included under the webERP/sql/pg directory.
 
 ftp is only required for sending order files to a Radio Beacon ftp server for remote warehouse services.
 
-NB. Please try not to refer questions about PHP or MySQL configuration.
+NB. Please try not to refer questions about PHP or database configuration.
 
 The installation consists of:
 
@@ -48,7 +51,7 @@ The installation consists of:
 2. Creating the database and populating with initial data
 3. Editing config.php for the database connection information and any other requirements
 4. Logging into the system for the first time
-5. Setting up company specific information in the system.
+5. Setting up system parameters and company specific information in the system.
 
 
 1.  Copying all the PHP Scripts to the correct directory
@@ -61,15 +64,15 @@ However, all files in this archive except files under the sql and doc directorie
 is the apache root directory under SuSE Linux.
 
 In windows it could be C:\Program Files\Apache Group\Apache\htdocs
-Normally the Apache document root directory is called "htdocs"
+Normally the Apache document root directory is called "htdocs". However other web-servers can be used and their document root directory names will vary.
 
-Under windows use winzip to extract the archive under the web server root directory.
+Under windows use winzip (or XP's native abilites) to extract the archive under the web server root directory.
 
 Under *nix copy the archive to the the web server's root directory and then run:
 
-unzip web-erp.zip
+unzip webERP_XXX.zip
 
-this will create the web-erp directory under the web server root directory and put all the scripts in that directory.
+this will create the webERP directory under the web server root directory and put all the scripts in that directory.
 
 
 2. Creating the Database
@@ -113,22 +116,19 @@ Also from the MySQL manual (edited):
 	mysql> GRANT ALL PRIVILEGES ON *.* TO weberp_db_user@localhost
         	   IDENTIFIED BY 'some_pass' WITH GRANT OPTION;
 
-Where 'some_pass' is a password of your choice for the new user 'weberp_db_user'. Note that this user weberp_db_user can only connect from the local machine so if the web server is on a different machine to the MySQL server then you need to give privileges to connect from other computers.
-See the MySQL manual.
+Where 'some_pass' is a password of your choice for the new user 'weberp_db_user'. Note that this user weberp_db_user can only connect from the local machine so if the web server is on a different machine to the MySQL server then you need to give privileges to connect from other computers. See the MySQL manual.
 
-If you have an account set up already in MySQL and innodb tables enabled, then all you need to do is to run one of the sql scripts - under the sql directory as unpacked from the tar-ball.
+If you have an account set up already in MySQL and innodb tables enabled, then all you need to do is to run one of the sql scripts - under the sql directory as unpacked from the archive.
 
 Note: The scripts provided are created using mysqldump and contain comments. Unfortunately, phpMyAdmin doesn't like these comments so it is recommended to follow the instructions below.
 
 Two scripts are provided:
 
-1. web-erp-demo.sql  This has a minimal amount of demonstration data in a bogus company set up so that transactions can be tried to see how the
-system works.
-2. web-erp-new.sql This script has only the basic data necessary to start a new company system off. If you wish to set up your company on web-erp
-then this is the script to use.
+1. weberp-demo.sql  This has a minimal amount of demonstration data in a bogus company set up so that transactions can be tried to see how the system works.
+2. weberp-new.sql This script has only the basic data necessary to start a new company system off. If you wish to set up your company on webERP then this is the script to use.
 
 This creates a weberp database and populates it with only the very basic data to start off.
-The files web-erp-demo.sql and web-erp-new.sql should be in the directory with all the PHP scripts.
+The files weberp-demo.sql and weberp-new.sql should be in webERP/sql/mysql and the webERP/sql/pg directories.
 
 shell > mysql --user=weberp_db_user --password='some_pass' < /path_to_the_sql_script/weberp-demo.sql
 
@@ -140,50 +140,72 @@ as required.
 
 3. Editing config.php
 
-config.php contains a series of user defined variables that determine how the system behaves. Critically it contains the user and password of the MySQL connection required to connect to the MySQL server. There is no going forward without the system being provided with this data. It is important to ensure there are no trailing characters at the end of this file.
+config.php contains a series of user defined variables that determine how the system behaves. Critically it contains the user and password of the database connection and the type of database server being used. There is no going forward without the system being provided with this data. It is important to ensure there are no trailing characters at the end of this file.
 
-The file appears as follows and must be edited and saved in the web directory where the scripts are.
+The file appears as follows for reference purposes. The actual file config.php under the webERP directory with all the other scripts must be edited and saved. As you can see the file is well commented, the critical items are the computer $host, the $dbType the $DatabaseName, the $dbuser and the $dbpassword - other variables can in most cases be left at their defaults. Note that the sha1 encryption requires the PHP version 4.3 or greater.
 
-/*User Configurable variables
-********************************
-  Please modify at will (after the = only. Quotes are required and lines must finish with a semi colon;)*/
+// User configurable variables
+//---------------------------------------------------
 
-/* the company name to appear in the headings on each page displayed */
+//DefaultLanguage
+$DefaultLanguage ='en_GB';
 
-	$CompanyName = "WEB-ERP Demonstration System";
+// Whether to display the demo login and password or not 
+$allow_demo_mode = True;
 
-/*Connection Information for the database
-- host is the computer ip address or name where the database is the default is localhost assuming that the web server is also the sql server
-*/
-	$host = "localhost";
+// Application version
+$Version = '2.9c';
 
-/* - user is the user name under which the database should be accessed - need to change to the mysql (or other DB) user set up for purpose
-NB it is not secure to use root as the user with no password - a user with appropriate privileges must be set up
-*/
-	$dbuser = "weberp_db_user";
+// The timezone of the business - this allows the possibility of having
+// the web-server on a overseas machine but record local time
+// this is not necessary if you have your own server locally
+// putenv('TZ=Europe/London');
+// putenv('Australia/Melbourne');
+// putenv('Australia/Sydney');
+// putenv('TZ=Pacific/Auckland');
 
-/* - password is the password the user of the database requires to be sent to authorise the above database user
-*/
-	$dbpassword = "weberp_db_pwd";
-
-/* - DatabaseName is the name of the database as defined in the RDMS being used.
-     Typically RDMS allow many databases to be maintained under the same server.
-     The scripts for MySQL provided use the name web-erp
-*/
-	$DatabaseName = "weberp";
+// Connection information for the database
+// $host is the computer ip address or name where the database is located
+// assuming that the web server is also the sql server
+$host = 'localhost';
 
 //The type of db server being used - currently only postgres or mysql
-
 $dbType = 'mysql';
-
 //$dbType = 'postgres';
 //$dbType = 'mysql';
 
+$DatabaseName = 'weberp';
+
+// sql user & password
+$dbuser = 'weberp_db_user';
+$dbpassword = 'weberp_db_pwd';
+
+//The maximum time that a login session can be idle before automatic logout
+//time is in seconds  3600 seconds in an hour
+$SessionLifeTime = 3600;
+
+//The maximum time that a script can execute for before the web-server should terminate it
+$MaximumExecutionTime =120;
+
+//The path to which session files should be stored in the server
+//this can be left commented out if only one company is running on the server
+//However if multiple webERP installations are on the same server then a separate session directory is required for each install
+//$SessionSavePath = '/tmp';
+
+
+// which encryption function should be used
+//$CryptFunction = "md5"; // MD5 Hash
+$CryptFunction = "sha1"; // SHA1 Hash
+//$CryptFunction = ""; // Plain Text
+
+
+
+
 4. Logging In For the First Time
 
-Open a browser and enter the URL for the web server directory where web-erp is installed if the broswer is on the same machine as the server perhaps
+Open a browser and enter the URL for the web server directory where webERP is installed if the broswer is on the same machine as the server perhaps
 
-http://localhost/web-erp/index.php
+http://localhost/webERP/index.php
 
 enter the user name of 'demo'
 password 'weberp'
@@ -195,13 +217,19 @@ Be careful not to delete the demo user until a new user has been set up.
 If there are no users defined the next time you try to login you won't be able to!
 The only way then to create a user to login with is to manually edit the SQL table WWW_Users to insert a user.
 
-NB The importance of setting a password to use the SQL server otherwise anyone could modify WWW_Users and gain access to private company information.
+If for some reason the demo user is deleted before creating a new system administrator account, the following SQL can be used to create a new user with system administrator privileges - assuming a stock location 'DEN' exists - this should be changes to a valid stock location otherwise:
+
+INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-02-12 21:00:42','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
+
+NB The importance of setting a password to use the SQL server otherwise anyone could modify www_Users and gain access to private company information.
 
 A pdf reader - Acrobat should be installed on the client machines that will access the system. It is recommended that the preferences of Acrobat Reader be changed so as to open a seperate window for acrobat documents rather than display them in the browser.
 
-5. Setting Up Company Specific Data
+5. Setting Up System Parameters and Company Specific Data
 
 To have your company's logo printed on the top of reports and appear at the top left of the screen - all that is required is to copy a .jpg format file of your company's logo to logo.jpg in the scripts directory.
+
+From the main menu click on the Setup tab and then the Configuration Settings. Each of these settings together with the narrative explaining what each of the settings does should be reviewed in detail before starting off with the system.
 
 Now the accounting starts....
 
