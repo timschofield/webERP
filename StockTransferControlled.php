@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
@@ -34,11 +34,9 @@ if (isset($_GET['TransferItem'])){
 
 /*Save some typing by referring to the line item class object in short form */
 if (isset($TransferItem)){ /*we are in a bulk transfer */
-
 	$LineItem = &$_SESSION['Transfer']->TransferItem[$TransferItem];
-
 } else { /*we are in an individual transfer */
-	$LineItem = &$_SESSION['Transfer'];
+	$LineItem = &$_SESSION['Transfer']->TransferItem[0];
 }
 
 //Make sure this item is really controlled
