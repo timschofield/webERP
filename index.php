@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 $title="Main Menu";
 
 $PageSecurity = 1;
@@ -159,6 +159,7 @@ Case "AR": //Debtors Module
 						<a href="<?php echo $rootpath."/AgedDebtors.php?" . SID; ?>">Aged Customer Balances/Overdues Report</a><br />
 						<a href="<?php echo $rootpath."/CustomerTransInquiry.php?" . SID; ?>">Transaction Inquiries</a><br />
 						<a href="<?php echo $rootpath."/PDFBankingSummary.php?" . SID; ?>">Re-Print A Deposit Listing</a><br />
+						<a href="<?php echo $rootpath."/DebtorBalsAtPeriodEnd.php?" . SID; ?>">Debtor Balances At A Prior Month End</a><br />
 				    	</td>
 				    </tr>
 				</table>
@@ -225,6 +226,7 @@ Case "AP": //Creditors Module
 						<a href="<?php echo $rootpath ."/AgedSuppliers.php?" . SID; ?>">Aged Supplier Report</a><br />
 						<a href="<?php echo $rootpath ."/SuppPaymentRun.php?" . SID; ?>">Payment Run Report</a><br />
 						<a href="<?php echo $rootpath ."/OutstandingGRNs.php?" . SID; ?>">Outstanding GRNs Report</a><br />
+						<a href="<?php echo $rootpath."/SupplierBalsAtPeriodEnd.php?" . SID; ?>">Creditor Balances At A Prior Month End</a><br />
 				    	</td>
 				    </tr>
 				</table>

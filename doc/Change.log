@@ -1,5 +1,10 @@
 <P>webERP Change Log
 
+
+
+1/8/04 New scripts for reconciliation of GL for debtor and creditor balances as at the end of a prior period. DebtorsBalsAtPeriodEnd.php includes/PDFDebtorBalsPageHeader.inc SupplierBalsAtPeriodEnd.php includes/PDFSupplierBalsPageHeader.inc
+
+
 Version 2.9
 17th July 2004
 

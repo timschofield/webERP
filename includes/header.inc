@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
@@ -10,6 +10,7 @@
 	echo "</head> \n";
 
 ?>
+<body>
 <table class="callout_main" cellpadding="0" cellspacing="0">
     <tr>
         <td colspan="2" rowspan="2">
@@ -22,7 +23,7 @@
 						<td class="quick_menu">
 <?
 
-	if ($title){
+	if ($title AND substr($title,0,4)!="Help") {
 		echo "<table cellpadding='0' cellspacing='0'><tr>";
 		echo "<td align='left' width='100%' class='quick_menu_selected'>";
 		echo $DatabaseName . " : " .$_SESSION['UsersRealName'];
@@ -39,9 +40,7 @@
 			echo "<td class='quick_menu_tabs' align='center'><a href='$rootpath/SelectSupplier.php?". SID ."'>Select Supplier</a>&nbsp;</td>";
 		}
 
-		if (substr($title,0,4)!="Help"){
-			echo "<td class='quick_menu_tabs' align='center'><a target='_blank' href='$rootpath/Help.php?" . SID . "Page=" . substr(strrchr($_SERVER['PHP_SELF'],"/"),1) . "&Title=" . $title . "'>Help</a>&nbsp;</td>";
-		}
+		echo "<td class='quick_menu_tabs' align='center'><a target='_blank' href='$rootpath/Help.php?" . SID . "Page=" . substr(strrchr($_SERVER['PHP_SELF'],"/"),1) . "&Title=" . $title . "'>Help</a>&nbsp;</td>";
 		echo "<td class='quick_menu_tabs' align='center'><a href='$rootpath/Logout.php?" . SID . "'>Logout</a></td> \n";
 		echo "</td></tr></table> \n";
 		echo "</td></tr></table> \n";
