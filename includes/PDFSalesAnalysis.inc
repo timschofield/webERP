@@ -176,7 +176,7 @@ if ($ThisLineHasOutput==True){
 		}
 	}
 
-	if ($myrow["Col1"]!=$GrpData1  && $LastLine["Col3"]!="0"){
+	if ($myrow["Col1"]!=$GrpData1  && $myrow["Col3"]!="0"){
 		/*Totals only relevant to GrpByLevel 1 if GrpByLevel 2 also used */
 		if ($Counter > 0){ /*Dont want to print totals if this is the first record */
 			$TotalText = substr("TOTAL " . $LastLine["Col1"] . " - " . $LastLine["Col2"],0,46);

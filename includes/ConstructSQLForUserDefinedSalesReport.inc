@@ -144,7 +144,7 @@ If ($ReportSpec["GroupByData2"] != "Not Used") {
      $SQLHavingCls = $SQLHavingCls . " AND Col3 >= '" . $ReportSpec["Lower2"] . "' AND Col3 <= '" . $ReportSpec["Upper2"] . "'";
      $SQLGroupCls = $SQLGroupCls . ", " . GetGroupBySQL($ReportSpec["GroupByData2"]);
 } else {
-	$SQLGroupCls = $SQLGroupCls . ", 0 AS Col3, 0 As Col4";
+	$SQLSelectCls = $SQLSelectCls . ", 0 AS Col3, 0 AS Col4";
  	$ReportSpec["GroupByData3"] = "Not Used"; /*This is forced if no entry in Group By 2 */
 }
 

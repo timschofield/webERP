@@ -1,5 +1,6 @@
 <P>webERP Change Log
 
+24/2/04 fixes to sales analysis reports with only one level of grouping - also error in ReportColumns storeage of datatype Select corrected.
 22/2/04 EDIMessageFormat script to set up invoice format only so far
 21/2/04 Foreign key defintions accross the board for all relations in all tables as necessary added to upgrade script 2.7-2.8
 16/2/04 Referential integrity checks in Locations.php for changes in TaxAuthority to ensure existance of necessary records in TaxAuthLevels

@@ -31,7 +31,6 @@ if (DB_num_rows($result)>0){
 
 if ($_POST['EnterTransfer']=="Enter Stock Transfer"){
 
-	// Sherifoz 22.06.03 Check that the stock item is valid before doing a transfer
 	$result = DB_query("SELECT * FROM StockMaster WHERE StockID='$StockID'",$db);
 	$myrow = DB_fetch_row($result);
 	if (DB_num_rows($result)==0) {
@@ -57,18 +56,18 @@ if ($_POST['EnterTransfer']=="Enter Stock Transfer"){
 		$Result = DB_query($SQL,$db);
 
 		// Need to get the current location quantity will need it later for the stock movement
-		$SQL="SELECT LocStock.Quantity FROM LocStock WHERE LocStock.StockID='" . $StockID . "' AND LocCode= '" . $_POST['FromStockLocation'] . "'"; 
-		$Result = DB_query($SQL, $db); 
-		if (DB_num_rows($Result)==1){ 
-			$LocQtyRow = DB_fetch_row($Result); 
-			$QtyOnHandPrior = $LocQtyRow[0]; 
-		} else { 
+		$SQL="SELECT LocStock.Quantity FROM LocStock WHERE LocStock.StockID='" . $StockID . "' AND LocCode= '" . $_POST['FromStockLocation'] . "'";
+		$Result = DB_query($SQL, $db);
+		if (DB_num_rows($Result)==1){
+			$LocQtyRow = DB_fetch_row($Result);
+			$QtyOnHandPrior = $LocQtyRow[0];
+		} else {
 			// There must actually be some error this should never happen
-			$QtyOnHandPrior = 0; 
-		} 
+			$QtyOnHandPrior = 0;
+		}
 
 		// Insert the stock movement for the stock going out of the from location
-		$SQL = "INSERT INTO StockMoves (StockID, Type, TransNo, LocCode, TranDate, Prd, Reference, Qty, NewQOH) VALUES ('" . $StockID . "', 16, " . $TransferNumber . ", '" . $_POST['FromStockLocation'] . "','" . $SQLTransferDate . "'," . $PeriodNo . ", 'To " . $_POST['ToStockLocation'] ."', " . -$_POST['Quantity'] . ", " . ($QtyOnHandPrior - $_POST['Quantity']) . ")"; 
+		$SQL = "INSERT INTO StockMoves (StockID, Type, TransNo, LocCode, TranDate, Prd, Reference, Qty, NewQOH) VALUES ('" . $StockID . "', 16, " . $TransferNumber . ", '" . $_POST['FromStockLocation'] . "','" . $SQLTransferDate . "'," . $PeriodNo . ", 'To " . $_POST['ToStockLocation'] ."', " . -$_POST['Quantity'] . ", " . ($QtyOnHandPrior - $_POST['Quantity']) . ")";
 
 		$Result = DB_query($SQL,$db);
 		if (DB_error_no($db) !=0){
@@ -82,18 +81,18 @@ if ($_POST['EnterTransfer']=="Enter Stock Transfer"){
 		}
 
 		// Need to get the current location quantity will need it later for the stock movement
-		$SQL="SELECT LocStock.Quantity FROM LocStock WHERE LocStock.StockID='" . $StockID . "' AND LocCode= '" . $_POST['ToStockLocation'] . "'"; 
-		$Result = DB_query($SQL, $db); 
-		if (DB_num_rows($Result)==1){ 
-			$LocQtyRow = DB_fetch_row($Result); 
-			$QtyOnHandPrior = $LocQtyRow[0]; 
-		} else { 
+		$SQL="SELECT LocStock.Quantity FROM LocStock WHERE LocStock.StockID='" . $StockID . "' AND LocCode= '" . $_POST['ToStockLocation'] . "'";
+		$Result = DB_query($SQL, $db);
+		if (DB_num_rows($Result)==1){
+			$LocQtyRow = DB_fetch_row($Result);
+			$QtyOnHandPrior = $LocQtyRow[0];
+		} else {
 			// There must actually be some error this should never happen
-			$QtyOnHandPrior = 0; 
+			$QtyOnHandPrior = 0;
 		}
-		
+
 		// Insert the stock movement for the stock coming into the to location
-		$SQL = "INSERT INTO StockMoves (StockID, Type, TransNo, LocCode, TranDate, Prd, Reference, Qty, NewQOH) VALUES ('" . $StockID . "',16, " . $TransferNumber . ", '" . $_POST['ToStockLocation'] . "','" . $SQLTransferDate . "'," . $PeriodNo . ", 'From " . $_POST['FromStockLocation'] ."', " . $_POST['Quantity'] . ", " . ($QtyOnHandPrior + $_POST['Quantity']) . ")"; 
+		$SQL = "INSERT INTO StockMoves (StockID, Type, TransNo, LocCode, TranDate, Prd, Reference, Qty, NewQOH) VALUES ('" . $StockID . "',16, " . $TransferNumber . ", '" . $_POST['ToStockLocation'] . "','" . $SQLTransferDate . "'," . $PeriodNo . ", 'From " . $_POST['FromStockLocation'] ."', " . $_POST['Quantity'] . ", " . ($QtyOnHandPrior + $_POST['Quantity']) . ")";
 
 		$Result = DB_query($SQL,$db);
 		if (DB_error_no($db) !=0){
@@ -153,13 +152,13 @@ if (strlen($PartDescription)>1){
 	echo "<TR><TD COLSPAN=3><FONT COLOR=BLUE SIZE=3>" . $PartDescription . " (In Units of " . $PartUnit . " )</FONT></TD></TR>";
 }
 
-echo "<TR><TD>From Stock Location:</TD><TD><SELECT name='FromStockLocation'> ";
+echo "<TR><TD>From Stock Location: </TD><TD><SELECT name='FromStockLocation'> ";
 
 $sql = "SELECT LocCode, LocationName FROM Locations";
 $resultStkLocs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['FromStockLocation'])){
-		if ($myrow["LocCode"] == $_POST['StockLocation']){
+		if ($myrow["LocCode"] == $_POST['FromStockLocation']){
 		     echo "<OPTION SELECTED Value='" . $myrow["LocCode"] . "'>" . $myrow["LocationName"];
 		} else {
 		     echo "<OPTION Value='" . $myrow["LocCode"] . "'>" . $myrow["LocationName"];
@@ -174,7 +173,7 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 
 echo "</SELECT></TD></TR>";
 
-echo "<TR><TD>To Stock Location:</TD><TD><SELECT name='ToStockLocation'> ";
+echo "<TR><TD>To Stock Location: </TD><TD><SELECT name='ToStockLocation'> ";
 
 DB_data_seek($resultStkLocs,0);
 

@@ -25,24 +25,24 @@
 		    <table bgcolor="#FFFFFF" border="0" cellpadding="0" cellspacing="0">
 		        <tr>
 		            <td colspan="2" rowspan="2">
-                    <table width="346" border="0" cellpadding="0" cellspacing="0">
+                    <table width="200" border="0" cellpadding="0" cellspacing="0">
 						<form action="<?echo $_SERVER['PHP_SELF'];?>" name="loginform" method="post">
                         <tr>
-                            <td colspan="5" bgcolor="#FFFFFF"><img src="css/default/images/spacer.gif" width="346" height="1" alt="" /></td>
+                            <td colspan="5" bgcolor="#FFFFFF"><img src="css/default/images/spacer.gif" width="346" height="1"></td>
                         </tr>
 
                         <tr>
-                            <td><img src="css/default/images/loginImg.gif" width="101" height="200" alt="" /></td>
+                            <td><img src="logo.jpg"></td>
 
-                            <td bgcolor="#367CB5"><img src="css/default/images/spacer.gif" width="12" height="200" alt="" /></td>
+                            <td bgcolor="#367CB5"><img src="css/default/images/spacer.gif" width="12" /></td>
 
-                            <td background="css/default/images/outline/bg.gif" width="233" height="200" colspan="3" valign="top">
+                            <td background="css/default/images/outline/bg.gif" colspan="3" valign="top">
                                 <table border="0" cellpadding="3" cellspacing="0" width="100%">
 									<tr>
 										<td align="center" class="loginText">
-											<br /><br /><br />Thank you for using the webERP+ system<br /><br />
+											<br /><br />Thank you for using the webERP+ system<br /><br />
 											<?echo "$CompanyName";?>
-											<br /><br />
+											<br />
 											<a href="<?echo $rootpath;?>/index.php?<?echo SID;?>"><b>Click here to Login Again</b></a>
 										</td>
 									</tr>

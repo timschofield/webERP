@@ -11,34 +11,34 @@ Function DataOptions ($DataX){
 
 /*Sales analysis headers group by data options */
  if ($DataX == "Quantity"){
-     echo "<OPTION SELECTED 'Quantity'>Quantity";
+     echo "<OPTION SELECTED Value='Quantity'>Quantity";
  } else {
-    echo "<OPTION 'Quantity'>Quantity";
+    echo "<OPTION Value='Quantity'>Quantity";
  }
  if ($DataX == "Gross Value"){
-     echo "<OPTION SELECTED 'Gross Value'>Gross Value";
+     echo "<OPTION SELECTED Value='Gross Value'>Gross Value";
  } else {
-    echo "<OPTION 'Gross Value'>Gross Value";
+    echo "<OPTION Value='Gross Value'>Gross Value";
  }
  if ($DataX == "Net Value"){
-     echo "<OPTION SELECTED 'Net Value'>Net Value";
+     echo "<OPTION SELECTED Value='Net Value'>Net Value";
  } else {
-    echo "<OPTION 'Net Value'>Net Value";
+    echo "<OPTION Value='Net Value'>Net Value";
  }
  if ($DataX == "Gross Profit"){
-     echo "<OPTION SELECTED 'Gross Profit'>Gross Profit";
+     echo "<OPTION SELECTED Value='Gross Profit'>Gross Profit";
  } else {
-    echo "<OPTION 'Gross Profit'>Gross Profit";
+    echo "<OPTION Value='Gross Profit'>Gross Profit";
  }
  if ($DataX == "Cost"){
-     echo "<OPTION SELECTED 'Cost'>Cost";
+     echo "<OPTION SELECTED Value='Cost'>Cost";
  } else {
-    echo "<OPTION 'Cost'>Cost";
+    echo "<OPTION Value='Cost'>Cost";
  }
  if ($DataX == "Discount"){
-     echo "<OPTION SELECTED 'Discount'>Discount";
+     echo "<OPTION SELECTED Value='Discount'>Discount";
  } else {
-    echo "<OPTION 'Discount'>Discount";
+    echo "<OPTION Value='Discount'>Discount";
  }
 
 }
@@ -97,12 +97,14 @@ if ($_POST['submit']=='Enter Information') {
 		echo "<BR>The Period From must be before the Period To, otherwise the column will always have no value.";
 	}
 
-
+	
 	if ($SelectedCol AND $InputError !=1) {
 
 
 		$sql = "UPDATE ReportColumns SET Heading1='" . $_POST['Heading1'] . "', Heading2='" . $_POST['Heading2'] . "', Calculation=" . $_POST['Calculation'] . ", PeriodFrom=" . $_POST['PeriodFrom'] . ", PeriodTo=" . $_POST['PeriodTo'] . ", DataType='" . $_POST['DataType'] . "', ColNumerator=" . $_POST['ColNumerator'] . ", ColDenominator=" . $_POST['ColDenominator'] . ", CalcOperator='" . $_POST['CalcOperator'] . "', BudgetOrActual=" . $_POST['BudgetOrActual'] . ", ValFormat='" . $_POST['ValFormat'] . "', Constant = " . $_POST['Constant'] . " WHERE ReportID = $ReportID AND ColNo=$SelectedCol";
 		$result = DB_query($sql,$db);
+
+
 		if (DB_error_no($db)!=0){
 		   echo "<BR>The report column could not be updated because: " . DB_error_msg($db);
 		   if ($debug==1){
@@ -197,10 +199,10 @@ if (DB_num_rows($result)!=0){
 
 	$myrow = DB_fetch_array($result);
 	echo "<CENTER><B>" . $myrow["ReportHeading"] . "</B><BR><table border=1>\n";
-	echo "<tr><td BGCOLOR =#800000><FONT COLOR=#ffffff><B>Col #</B></td><td BGCOLOR =#800000><FONT COLOR=#ffffff><B>Heading 1</B></td><td BGCOLOR =#800000><FONT COLOR=#ffffff><B>Heading 2</B></td>";
-	echo "<td BGCOLOR =#800000><FONT COLOR=#ffffff><B>Calc'n</B></td><td BGCOLOR =#800000><FONT COLOR=#ffffff><B>Prd From</B></td><td BGCOLOR =#800000><FONT COLOR=#ffffff><B>Prd To</B></td>";
-	echo "<td BGCOLOR =#800000><FONT COLOR=#ffffff><B>Data</B></td><td BGCOLOR =#800000><FONT COLOR=#ffffff><B>Col #<BR><FONT SIZE=1>Numerator</FONT></B></td><td BGCOLOR =#800000><FONT COLOR=#ffffff><B>Col #<BR><FONT SIZE=1>Denominator</FONT></B></td>";
-	echo "<td BGCOLOR =#800000><FONT COLOR=#ffffff><B>Operator</B></td><td BGCOLOR =#800000><FONT COLOR=#ffffff><B>Budget<BR>Or Actual</B></td></TR>";
+	echo "<tr><td class='tableheader'>Col #</td><td class='tableheader'>Heading 1</td><td class='tableheader'>Heading 2</td>";
+	echo "<td class='tableheader'>Calc'n</td><td class='tableheader'>Prd From</td><td class='tableheader'>Prd To</td>";
+	echo "<td class='tableheader'>Data</td><td class='tableheader'>Col #<BR><FONT SIZE=1>Numerator</FONT></td><td class='tableheader'>Col #<BR><FONT SIZE=1>Denominator</FONT></td>";
+	echo "<td class='tableheader'>Operator</td><td class='tableheader'>Budget<BR>Or Actual</td></TR>";
 	$k=0; //row colour counter
 
 	do {
@@ -287,11 +289,11 @@ if (!isset($_GET['delete'])) {
 	}
 	echo "</SELECT></TD></TR>";
 
-	if ($_POST['Calculation']!=1){
+	if ($_POST['Calculation']==0){ /*Its not a calculated column */
 		echo "<TR><TD>From Period:</TD><TD><INPUT TYPE='TEXT' size=4 maxlength=3 name='PeriodFrom' value=" . $_POST['PeriodFrom'] . ">  <a target='_blank' href='$rootpath/PeriodsInquiry.php?" . SID . "'>View Periods</a></TD></TR>";
 		echo "<TR><TD>To Period:</TD><TD><INPUT TYPE='TEXT' size=4 maxlength=3 name='PeriodTo' value=" . $_POST['PeriodTo'] . "></TD></TR>";
 
-		echo "<TR><TD>Data to show:</TD><TD><SELECT name=DataType>";
+		echo "<TR><TD>Data to show:</TD><TD><SELECT name='DataType'>";
 		DataOptions($_POST['DataType']);
 		echo "</SELECT></TD></TR>";
 		echo "<TR><TD>Budget or Actual:</TD><TD><SELECT name=BudgetOrActual>";
@@ -305,7 +307,7 @@ if (!isset($_GET['delete'])) {
 		echo "</SELECT></TD></TR>";
 		echo "<INPUT TYPE=HIDDEN NAME='ValFormat' Value='N'><INPUT TYPE=HIDDEN NAME='ColNumerator' Value=0><INPUT TYPE=HIDDEN NAME='ColDenominator' Value=0><INPUT TYPE=HIDDEN NAME='CalcOperator' Value=''><INPUT TYPE=HIDDEN NAME='Constant' Value=0>";
 
-	} else {
+	} else {  /*it IS a calculated column */
 
 		echo "<TR><TD>Numerator Column #:</TD><TD><INPUT TYPE='TEXT' size=4 maxlength=3 name='ColNumerator' value=" . $_POST['ColNumerator'] . "></TD></TR>";
 		echo "<TR><TD>Denominator Column #:</TD><TD><INPUT TYPE='TEXT' size=4 maxlength=3 name='ColDenominator' value=" . $_POST['ColDenominator'] . "></TD></TR>";
