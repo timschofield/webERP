@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -31,6 +31,14 @@
         die(include("includes/FailedLogin.php"));
     }
 
+    If (isset($_POST['Theme'])) {
+ 	$_SESSION['Theme'] = $_POST['Theme'];
+	$theme = $_POST['Theme'];
+    } elseif (!isset($_SESSION['Theme'])) {
+	$theme = $DefaultTheme;
+    } else {
+	$theme = $_SESSION['Theme'];
+    }
     // Not logged in
     if ((!isset($_SESSION["AccessLevel"]) or $_SESSION["AccessLevel"] == "") or
     	(isset($_POST["UserNameEntryField"]) and $_POST["UserNameEntryField"] != "")) {
@@ -49,9 +57,22 @@
             exit;
         }
 
-        $sql = "SELECT FullAccess, CustomerID, LastVisitDate, PageSize, DefaultLocation, BranchCode" .
-        ", ModulesAllowed, Blocked, RealName FROM WWW_Users WHERE UserID=\"" . $_POST["UserNameEntryField"] .
-        "\" AND Password=\"" . $_POST["Password"] . "\"";
+        $sql = "SELECT FullAccess,
+			CustomerID,
+			LastVisitDate,
+			PageSize,
+			DefaultLocation,
+			BranchCode,
+			ModulesAllowed,
+			Blocked,
+			RealName,
+			Theme,
+			DisplayRecordsMax,
+			UserID,
+			Language
+		FROM WWW_Users
+		WHERE UserID=\"" . $_POST["UserNameEntryField"] . "\"
+		AND Password=\"" . $_POST["Password"] . "\"";
         $Auth_Result = DB_query($sql, $db);
 
         // Determine data base error
@@ -74,6 +95,16 @@
             $_SESSION['UserStockLocation'] = $myrow[4];
             $_SESSION['ModulesEnabled'] = explode(",", $myrow[6]);
 	    $_SESSION['UsersRealName'] = $myrow[8];
+	    $_SESSION['Theme'] = $myrow[9];
+	    $_SESSION['UserID'] = $myrow[11];
+	    $_SESSION['Language'] = $myrow[12];
+
+	    if ($myrow[10] <> 0) {
+	    	$_SESSION['DisplayRecordsMax'] = $myrow[10];
+	    } else {
+		$_SESSION['DisplayRecordsMax'] = $DefaultDisplayRecordsMax;  // default comes from config.php
+	    }
+
             $sql = "UPDATE WWW_Users SET LastVisitDate=\"". date("Y-m-d H:i:s") ."\" WHERE UserID=\"" .
             $_POST["UserNameEntryField"] . "\" AND Password=\"" . $_POST["Password"] ."\"";
             $Auth_Result = DB_query($sql, $db);

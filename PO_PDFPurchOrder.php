@@ -1,9 +1,7 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 include("includes/SQL_CommonFunctions.inc");
 include("includes/DateFunctions.inc");
-include("config.php");
-include("includes/ConnectDB.inc");
 
 $PageSecurity = 2;
 
@@ -37,6 +35,9 @@ if (($_POST['DoIt']=='OK' AND $_POST['PrintOrEmail']=='Print') OR $ViewingOnly==
 
 
 If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
+
+	include("config.php");
+	include("includes/ConnectDB.inc");
 
 	$PageSize = 'A4_Landscape';
 
@@ -167,7 +168,8 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 
     } else { /* must be MakingPDF to email it */
 
-    	include ("includes/header.inc");
+	include ("includes/session.inc");
+	include ("includes/header.inc");
 
     	$pdfcode = $pdf->output();
 	$fp = fopen( $reports_dir . "/PurchOrder.pdf","wb");
@@ -197,6 +199,7 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 
 } /* There was enough info to either print or email the purchase order */
  else { /*the user has just gone into the page need to ask the question whether to print the order or email it to the supplier */
+	include ("includes/session.inc");
 	include ("includes/header.inc");
 	echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 

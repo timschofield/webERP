@@ -1,12 +1,12 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
 	//  $title - should be defined in the page this file is included with
 
 	echo "<html> \n<head> \n<title>$title</title> \n";
-	echo "<link href='css/". $theme ."/default.css' rel='stylesheet' type='text/css' /> \n";
+	echo "<link href='css/". $_SESSION['Theme'] ."/default.css' rel='stylesheet' type='text/css' /> \n";
 	echo "</head> \n";
 
 ?>
@@ -26,7 +26,7 @@
 	if ($title AND substr($title,0,4)!="Help") {
 		echo "<table cellpadding='0' cellspacing='0'><tr>";
 			echo "<td align='left' width='100%' class='quick_menu_left'>";
-				echo  $CompanyName . ":" . $_SESSION['UsersRealName'];
+				echo  $CompanyName . ":<A HREF='$rootpath/UserSettings.php?" . SID . "'>" . $_SESSION['UsersRealName'] . "</A>";
 				echo "<BR>$title</td>";
 				echo "<td align='right'>";
 					echo "<img src='$rootpath/css/". $theme ."/images/menucurve.gif' width='30' height='30' alt='' />";

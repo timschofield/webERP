@@ -8,6 +8,7 @@ use weberp;
 #Using the new db scripts will of course generate dbs without this foreign key.
 
 
+
 ALTER TABLE `BankAccounts` CHANGE `AccountCode` `AccountCode` INT( 11 ) NOT NULL;
 
 ALTER TABLE TaxAuthorities ADD INDEX (TaxGLCode);

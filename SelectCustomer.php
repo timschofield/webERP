@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $title = "Search Customers";
 
 $PageSecurity = 2;
@@ -14,6 +14,14 @@ if (!isset($_SESSION['CustomerID'])){ //initialise if not already done
 
 if (!isset($_POST['Search'])){
 	$_POST['Search']="";
+}
+
+if (!isset($_POST['PageOffset'])) {
+  $_POST['PageOffset'] = 1;
+} else {
+  if ($_POST['PageOffset']==0) {
+    $_POST['PageOffset'] = 1;
+  }
 }
 
 if ($_POST['Search']=="Search Now"){
@@ -105,10 +113,34 @@ If ($_POST['Select']!="" OR ($_SESSION['CustomerID']!="" AND !isset($_POST['Keyw
 <TABLE CELLPADDING=3 COLSPAN=4>
 <TR>
 <TD>Text in the <B>name</B>:</TD>
-<TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25></TD>
+<TD>
+<?php
+if (isset($_POST['Keywords'])) {
+?>
+<INPUT TYPE="Text" NAME="Keywords" value="<?php echo $_POST['Keywords']?>" SIZE=20 MAXLENGTH=25>
+<?php
+} else {
+?>
+<INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25>
+<?php
+}
+?>
+</TD>
 <TD><FONT SIZE=3><B>OR</B></FONT></TD>
 <TD>Text extract in the customer <B>code</B>:</TD>
-<TD><INPUT TYPE="Text" NAME="CustCode" SIZE=15 MAXLENGTH=18></TD>
+<TD>
+<?php
+if (isset($_POST['CustCode'])) {
+?>
+<INPUT TYPE="Text" NAME="CustCode" value="<?php echo $_POST['CustCode'] ?>" SIZE=15 MAXLENGTH=18>
+<?php
+} else {
+?>
+<INPUT TYPE="Text" NAME="CustCode" SIZE=15 MAXLENGTH=18>
+<?php
+}
+?>
+</TD>
 </TR>
 </TABLE>
 <CENTER><INPUT TYPE=SUBMIT NAME="Search" VALUE="Search Now">
@@ -118,14 +150,67 @@ If ($_POST['Select']!="" OR ($_SESSION['CustomerID']!="" AND !isset($_POST['Keyw
 <?php
 
 If (isset($result)) {
+  $ListCount=DB_num_rows($result);
+  $ListPageMax=ceil($ListCount/$_SESSION['DisplayRecordsMax']);								
 
+  if (isset($_POST['Next'])) {
+    if ($_POST['PageOffset'] < $ListPageMax) {
+	    $_POST['PageOffset'] = $_POST['PageOffset'] + 1;
+    }
+	}
+
+  if (isset($_POST['Previous'])) {
+    if ($_POST['PageOffset'] > 1) {
+	    $_POST['PageOffset'] = $_POST['PageOffset'] - 1;
+    }
+  }
+	
+  echo "&nbsp;&nbsp;" . $_POST['PageOffset'] . " of " . $ListPageMax . " pages. Go to Page: ";
+?>	
+
+  <select name="PageOffset">
+
+<?php	
+  $ListPage=1;
+  while($ListPage<=$ListPageMax) {
+	  if ($ListPage==$_POST['PageOffset']) {
+?>
+
+  		<option value=<?php echo($ListPage); ?> selected><?php echo($ListPage); ?></option>
+
+<?php	
+	  } else {
+?>
+
+		  <option value=<?php echo($ListPage); ?>><?php echo($ListPage); ?></option>
+
+<?php 
+	  }
+	  $ListPage=$ListPage+1;
+  }
+?>
+
+  </select>
+  <INPUT TYPE=SUBMIT NAME="Go" VALUE="Go">
+  <INPUT TYPE=SUBMIT NAME="Previous" VALUE="Previous">
+  <INPUT TYPE=SUBMIT NAME="Next" VALUE="Next">
+  <INPUT TYPE=hidden NAME="Search" VALUE="Search Now">
+<?php
+  
+  echo "<br><br>";
+	
 	echo "<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>";
 	$TableHeader = "<TR><TD Class='tableheader'>Code</TD><TD Class='tableheader'>Customer Name</TD><TD Class='tableheader'>Branch</TD><TD Class='tableheader'>Contact</TD><TD Class='tableheader'>Phone</TD><TD Class='tableheader'>Fax</TD></TR>";
 	echo $TableHeader;
 	$j = 1;
 	$k = 0; //row counter to determine background colour
-
-	while ($myrow=DB_fetch_array($result)) {
+  $RowIndex = 0;
+	
+  if (DB_num_rows($result)<>0){
+    mysql_data_seek($result, ($_POST['PageOffset']-1)*$_SESSION['DisplayRecordsMax']);
+	}
+	
+	while (($myrow=DB_fetch_array($result)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 
 		if ($k==1){
 			echo "<tr bgcolor='#CCCCCC'>";
@@ -142,6 +227,8 @@ If (isset($result)) {
 			$j=1;
 			echo $TableHeader;
 		}
+
+    $RowIndex = $RowIndex + 1;
 //end of page full new headings if
 	}
 //end of while loop

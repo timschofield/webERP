@@ -1,5 +1,6 @@
 use weberp;
 
+
 INSERT INTO `Help` VALUES (3, 130, 'Enter the suppliers name and postal address, terms of payment', '');
 INSERT INTO `Help` VALUES (4, 160, 'The main menu is split into sections depending on the user\'s module selection from the tabs accross the top of the menu. The screen actually is different for different users depending on the modules that the system administrator has elected to let you see. Some or all of:\r\n<LI> Orders </LI>\r\n<LI> Receivables </LI>\r\n<LI> Payables </LI>\r\n<LI> Purchasing </LI>\r\n<LI> Inventory </LI>\r\n<LI> Manufacturing </LI>\r\n<LI> Set Up </LI>\r\n<P>Selecting any of these tabs then shows the options available grouped between transactions in the first box, then inquiries or reports in the middle box, then maintenance in the bottom section. Clicking on the text of any option on the main menu proceeds to perform that action.\r\n<P><B>Using the Short Cut Menu</B>\r\n<P>Most actions involving customers will require selection of a customer first, similarly for suppliers and inventory the supplier or item must be selected first. Having selected the customer/supplier/item the selection screens show a sub menu relavent to the selected customer/supplier/item for most transactions and inquiries this is the more direct method of actioning. The traditional menu is available to aid the transition to this method of navigation.\r\n', '');
 INSERT INTO `Help` VALUES (5, 93, 'Enter either a portion of the suppliers name or a portion of the suppliers code then hit the search now button.\r\nThe suppliers with the entered text in their name or code will show. Clicking on the button in the code column selects a supplier. Once a supplier has been selected then all the options relevant to the supplier show with links split into three columns - inquiries, transactions, maintenance:\r\n<LI>Supplier Account Inquiry</LI>\r\n<LI>Show this suppliers outstanding purchase orders</LI>\r\n<LI>Show all the suppliers purchase orders</LI>\r\n<LI>Show Shipments set up from the Supplier</LI>\r\n\r\nUnder Transactions Links there are links to enter a suppliers invoice, a debit (credit) note, a payment to the supplier or reverse goods received from a supplier.\r\n\r\nUnder Maintenance Links - the details of the supplier can be amended, new contacts together with email addresses can be maintained and new shipments initiated.\r\n', 'S');
@@ -50,5 +51,9 @@ INSERT INTO `Help` VALUES (51, 19, '<font size="+1"><b>EDI Setup</b></font>\r\n<
 
 ALTER TABLE `StockMoves` ADD `Narrative` TEXT NOT NULL;
 ALTER TABLE `SalesOrderDetails` ADD `Narrative` TEXT NOT NULL ;
-
 ALTER TABLE `DebtorTrans` ADD `Consignment` VARCHAR( 30 ) NOT NULL;
+ALTER TABLE WWW_Users ADD Language CHAR(2) DEFAULT 'en' NOT NULL;
+ALTER TABLE WWW_Users ADD Theme VARCHAR(30) NOT NULL;
+ALTER TABLE WWW_Users ADD DisplayRecordsMax TINYINT DEFAULT 0 NOT NULL;
+INSERT INTO `Scripts` ( `PageID` , `FileName` , `PageDescription` )
+VALUES ('162', 'UserSettings.php', 'Allows the user to change system wide defaults for the theme - appearance, the number of records to show in searches and the language to display messages in');

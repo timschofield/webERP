@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -19,11 +19,6 @@ $Version = "0.2.10";
 $CompanyName = "Web-ERP Demo";
 
 
-// Internationalization (I18n) support
-// Right now supports English (en_US)
-$Language = 'en';
-
-
 // The default date format for entry of dates and display
 // $DefaultDateFormat = "d/m/Y"; England/Australia/NZ
 // $DefaultDateFormat = "m/d/Y"; US and Canada
@@ -41,14 +36,14 @@ $DefaultDateFormat = "d/m/Y";
 // $host is the computer ip address or name where the database is located
 // assuming that the web server is also the sql server
 $host = "localhost";
-$DatabaseName = "weberp";
+$DatabaseName = "testsys";
 
 // sql user & password
 $dbuser = "weberp_db_user";
 $dbpassword = "weberp_db_pwd";
 
 // CSS GUI theme
-$theme = "professional";
+$DefaultTheme = "professional";
 
 // Accounts Receivable
 // Aging periods used on customer and supplier enquiry screens and aged listings*/
@@ -249,6 +244,10 @@ $EDI_Incoming_Orders = "EDI_Incoming_Orders";
 Please give generously!! */
 
 $ContributeHelpText = true;
+
+/* Default maximum number of records to display on a page but overridden by user setting if not 0 */
+
+$DefaultDisplayRecordsMax = 50;
 
 // END OF USER CONFIGURABLE VARIABLES
 

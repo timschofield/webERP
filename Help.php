@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 if (isset($_GET['Title'])){
 	$HelpPageTitle = $_GET['Title'];
@@ -15,6 +15,18 @@ include("includes/session.inc");
 include("includes/header.inc");
 include('includes/htmlMimeMail.php');
 
+
+?>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+// resize window
+window.resizeTo(900,500);
+window.moveTo(15,200);
+//-->
+</script>
+
+<?php
 if (isset($_GET['Page'])){
 	$Page = $_GET['Page'];
 } elseif (isset($_POST['Page'])){

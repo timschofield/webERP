@@ -7,7 +7,7 @@
 |---------------------------------------------------|
 | Developer:                                        |
 | Shane Barnaby                                     |
-|                                                   |
+| Steve Kaill                                       |
 |---------------------------------------------------|
 | Note:                                             |
 | Changes can be made to this CSS that will be      |
@@ -168,14 +168,34 @@ select {
 	text-align: right;
 }
 
-/*the Select Customer / Item / Supplier Menu link format */
-.quick_menu_tabs a {
-	font-weight: normal;
+
+/*the Select Customer / Item / Supplier Menu tabs */
+.system_menu_tabs {
+	background-color: #ffffff;
+	white-space: nowrap;
+	border: none;
+	margin-left: 6px;
+	margin-right: 6px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding: 0px;
+	text-align: center;
 }
 
-.quick_menu_tabs a:hover {
-	color: #0000aa;
-	text-decoration: underline;
+.system_menu_tabs a {
+	font-size: 10px;
+   color: #000000;
+}
+
+.system_menu_tabs a:hover {
+	font-size: 10px;
+	color: #000000;
+}
+
+.main_area {
+	border: 2px inset #ffffff;
+	width: 100%;
+  background-color: #ffffff;
 }
 
 .main_menu {
@@ -192,7 +212,7 @@ select {
 .main_menu_unselected {
 	background-color: #cccccc;
 	border: 2px outset #ffffff;
-/*	position: relative; */ 
+/*	position: relative; */
 	text-align: center;
 	white-space: nowrap;
 }

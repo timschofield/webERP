@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $title = "Search Suppliers";
 
 $PageSecurity = 2;
@@ -11,6 +11,14 @@ $msg="";
 
 if (!isset($_POST['Search'])){
 	$_POST['Search']="";
+}
+
+if (!isset($_POST['PageOffset'])) {
+  $_POST['PageOffset'] = 1;
+} else {
+  if ($_POST['PageOffset']==0) {
+    $_POST['PageOffset'] = 1;
+  }
 }
 
 If ($_POST['Search']=="Search Now"){
@@ -117,10 +125,34 @@ echo "<B>" . $msg;
 <TABLE CELLPADDING=3 COLSPAN=4>
 <TR>
 <TD>Text in the <B>NAME</B>:</FONT></TD>
-<TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25></TD>
+<TD>
+<?php
+if (isset($_POST['Keywords'])) {
+?>
+<INPUT TYPE="Text" NAME="Keywords" value="<?php echo $_POST['Keywords']?>" SIZE=20 MAXLENGTH=25>
+<?php
+} else {
+?>
+<INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25>
+<?php
+}
+?>
+</TD>
 <TD><B>OR</B></FONT></TD>
 <TD>Text in <B>CODE</B>:</FONT></TD>
-<TD><INPUT TYPE="Text" NAME="SupplierCode" SIZE=15 MAXLENGTH=18></TD>
+<TD>
+<?php
+if (isset($_POST['SupplierCode'])) {
+?>
+<INPUT TYPE="Text" NAME="SupplierCode" value="<?php echo $_POST['SupplierCode']?>" SIZE=15 MAXLENGTH=18>
+<?php
+} else {
+?>
+<INPUT TYPE="Text" NAME="SupplierCode" SIZE=15 MAXLENGTH=18>
+<?php
+}
+?>
+</TD>
 </TR>
 </TABLE>
 <CENTER><INPUT TYPE=SUBMIT NAME="Search" VALUE="Search Now">
@@ -130,6 +162,54 @@ echo "<B>" . $msg;
 <?php
 
 If (isset($result)) {
+  $ListCount=DB_num_rows($result);
+  $ListPageMax=ceil($ListCount/$_SESSION['DisplayRecordsMax']);								
+
+  if (isset($_POST['Next'])) {
+    if ($_POST['PageOffset'] < $ListPageMax) {
+	    $_POST['PageOffset'] = $_POST['PageOffset'] + 1;
+    }
+	}
+
+  if (isset($_POST['Previous'])) {
+    if ($_POST['PageOffset'] > 1) {
+	    $_POST['PageOffset'] = $_POST['PageOffset'] - 1;
+    }
+  }
+	
+  echo "&nbsp;&nbsp;" . $_POST['PageOffset'] . " of " . $ListPageMax . " pages. Go to Page: ";
+?>	
+
+  <select name="PageOffset">
+
+<?php	
+  $ListPage=1;
+  while($ListPage<=$ListPageMax) {
+	  if ($ListPage==$_POST['PageOffset']) {
+?>
+
+  		<option value=<?php echo($ListPage); ?> selected><?php echo($ListPage); ?></option>
+
+<?php	
+	  } else {
+?>
+
+		  <option value=<?php echo($ListPage); ?>><?php echo($ListPage); ?></option>
+
+<?php 
+	  }
+	  $ListPage=$ListPage+1;
+  }
+?>
+
+  </select>
+  <INPUT TYPE=SUBMIT NAME="Go" VALUE="Go">
+  <INPUT TYPE=SUBMIT NAME="Previous" VALUE="Previous">
+  <INPUT TYPE=SUBMIT NAME="Next" VALUE="Next">
+  <INPUT TYPE=hidden NAME="Search" VALUE="Search Now">
+<?php
+  
+  echo "<br><br>";
 
 	echo "<BR><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>";
 	$tableheader = "<TR class='tableheader'><TD class='tableheader'>Code</TD><TD class='tableheader'>Supplier Name</TD><TD class='tableheader'>Currency</TD><TD class='tableheader'>Address 1</TD><TD class='tableheader'>Address 2</TD></B><TD class='tableheader'>Address 3</TD><TD class='tableheader'>Address 4</TD></TR>";
@@ -137,7 +217,13 @@ If (isset($result)) {
 
 	$j = 1;
 
-	while ($myrow=DB_fetch_array($result)) {
+  $RowIndex = 0;
+	
+  if (DB_num_rows($result)<>0){
+    mysql_data_seek($result, ($_POST['PageOffset']-1)*$_SESSION['DisplayRecordsMax']);
+	}
+	
+	while (($myrow=DB_fetch_array($result)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 
 		printf("<tr><td><INPUT TYPE=SUBMIT NAME='Select' VALUE='%s'</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>", $myrow["SupplierID"], $myrow["SuppName"], $myrow["CurrCode"], $myrow["Address1"], $myrow["Address2"],$myrow["Address3"],$myrow["Address4"]);
 
@@ -146,6 +232,7 @@ If (isset($result)) {
 			$j=1;
 			echo $tableheader;
 		}
+    $RowIndex = $RowIndex + 1;
 //end of page full new headings if
 	}
 //end of while loop
