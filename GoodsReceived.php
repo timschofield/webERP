@@ -1,6 +1,6 @@
 <?php
-/* $Revision: 1.9 $ */
-$title = 'Receive Purchase Orders';
+/* $Revision: 1.10 $ */
+
 $PageSecurity = 11;
 
 /* Session started in header.inc for password checking and authorisation level check */
@@ -9,6 +9,7 @@ include('includes/DefineSerialItems.php');
 include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/session.inc');
+$title = _('Receive Purchase Orders');
 include('includes/header.inc');
 
 
@@ -25,7 +26,7 @@ if ($_GET['PONumber']<=0 AND !isset($_SESSION['PO'])) {
 
 	  $_GET['ModifyOrderNumber'] = $_GET['PONumber'];
 	  include('includes/PO_ReadInOrder.inc');
-} elseif (isset($_POST['Update']) OR $_POST['ProcessGoodsReceived']=='Process Goods Received') {
+} elseif (isset($_POST['Update']) OR isset($_POST['ProcessGoodsReceived'])) {
 
 /* if update quantities button is hit page has been called and ${$Line->LineNo} would have be
  set from the post to the quantity to be received in this receival*/
@@ -46,14 +47,14 @@ echo '<CENTER><FONT SIZE=4><B><U>'. _('Receive purchase order'). ' '. $_SESSION[
 echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
 
 echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>
-<TR><TD class="tableheader">Item Code</TD>
+<TR><TD class="tableheader">' . _('Item Code') . '</TD>
 	<TD class="tableheader">' . _('Description') . '</TD>
 	<TD class="tableheader">' . _('Quantity<BR>Ordered') . '</TD>
 	<TD class="tableheader">' . _('Units') . '</TD>
 	<TD class="tableheader">' . _('Already Received') . '</TD>
 	<TD class="tableheader">' . _('This Delivery<BR>Quantity') . '</TD>
 	<TD class="tableheader">' . _('Price') . '</TD>
-	<TD class="tableheader">' . _('Total Value<BR>Received') . '</TD>
+	<TD class="tableheader">' . _('Total Value') . '<BR>' . _('Received') . '</TD>
 	</TR>';
 /*show the line items on the order with the quantity being received for modification */
 
@@ -112,7 +113,7 @@ if (count($_SESSION['PO']->LineItems)>0){
 
 		if ($LnItm->Controlled == 1) {
 			if ($LnItm->Serialised==1){
-				echo '<TD><a href="GoodsReceivedControlled.php?LineNo=' . $LnItm->LineNo . '">'. 
+				echo '<TD><a href="GoodsReceivedControlled.php?LineNo=' . $LnItm->LineNo . '">'.
 					_('Enter Serial Nos'). '</a></TD>';
 			} else {
 				echo '<TD><a href="GoodsReceivedControlled.php?LineNo=' . $LnItm->LineNo . '">'.
@@ -126,9 +127,9 @@ if (count($_SESSION['PO']->LineItems)>0){
 }//If count(LineItems) > 0
 
 $DisplayTotal = number_format($_SESSION['PO']->total,2);
-echo '<TR><TD COLSPAN=7 ALIGN=RIGHT><B>' . _('Total value of goods received'). '</B></TD><TD ALIGN=RIGHT><FONT SIZE=2><B>'. 
-	$DisplayTotal. '</B></FONT></TD></TR>';
-echo '</TABLE>';
+echo '<TR><TD COLSPAN=7 ALIGN=RIGHT><B>' . _('Total value of goods received'). '</B></TD>
+	<TD ALIGN=RIGHT><FONT SIZE=2><B>'. $DisplayTotal. '</B></FONT></TD>
+</TR></TABLE>';
 
 $SomethingReceived = 0;
 if (count($_SESSION['PO']->LineItems)>0){
@@ -161,15 +162,15 @@ if (count($_SESSION['PO']->LineItems)>0){
 
 if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=='Process Goods Received'){ /*Then dont bother proceeding cos nothing to do ! */
 
-	echo '<BR>'. _('There is nothing to process. Please enter valid quantities greater than zero').'.';
+	prnMsg(_('There is nothing to process. Please enter valid quantities greater than zero'),'warn');
 
-} elseif ($DeliveryQuantityTooLarge==1 AND $_POST['ProcessGoodsReceived']=='Process Goods Received'){
+} elseif ($DeliveryQuantityTooLarge==1 AND isset($_POST['ProcessGoodsReceived'])){
 
-	echo '<BR>'. _('Entered quantities cannot be greater than the quantity entered on the purchase invoice including the allowed over-receive percentage'). ' ' . '(' . $OverReceiveProportion .'%)';
+	prnMsg(_('Entered quantities cannot be greater than the quantity entered on the purchase invoice including the allowed over-receive percentage'). ' ' . '(' . $OverReceiveProportion .'%)','error');
 	echo '<BR>';
-	echo '<BR>'. _('Modify the ordered items on the purchase invoice if you wish to increase the quantities').'.';
+	prnMsg(_('Modify the ordered items on the purchase invoice if you wish to increase the quantities').'info');
 
-} elseif ($_POST['ProcessGoodsReceived']=='Process Goods Received' AND $SomethingReceived==1 AND $InputError == false){
+} elseif (isset($_POST['ProcessGoodsReceived']) AND $SomethingReceived==1 AND $InputError == false){
 
 /* SQL to process the postings for goods received... */
 /* Read in company record to get information on GL Links and debtors GL account*/
@@ -177,16 +178,27 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=='Process Goods Rec
 	$CompanyData = ReadInCompanyRecord($db);
 	if ($CompanyData==0){
 		/*The company data and preferences could not be retrieved for some reason */
-		prnMsg('<P>'. _('The company infomation and preferences could not be retrieved - see your system administrator') , 'error');
+		prnMsg(_('The company infomation and preferences could not be retrieved - see your system administrator') , 'error');
 		include('includes/footer.inc');
 		exit;
 	}
 
 /*Now need to check that the order details are the same as they were when they were read into the Items array. If they've changed then someone else must have altered them */
 // Otherwise if you try to fullfill item quantities separately will give error.
-	$SQL = 'SELECT ItemCode, GLCode, QuantityOrd, QuantityRecd, QtyInvoiced, ShiptRef, JobRef FROM PurchOrderDetails WHERE OrderNo=' . (int) $_SESSION['PO']->OrderNo . ' AND Completed=0 ORDER BY PODetailItem';
-	$ErrMsg = '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Could not check that the details of the purchase order had not been changed by another user because'). ':';
-	$DbgMsg = '<BR>'. _('The following SQL to retrieve the purchase order details was used'). ':<BR>'.$SQL.'<BR>';
+	$SQL = 'SELECT ItemCode,
+			GLCode,
+			QuantityOrd,
+			QuantityRecd,
+			QtyInvoiced,
+			ShiptRef,
+			JobRef
+		FROM PurchOrderDetails
+		WHERE OrderNo=' . (int) $_SESSION['PO']->OrderNo . '
+		AND Completed=0
+		ORDER BY PODetailItem';
+
+	$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Could not check that the details of the purchase order had not been changed by another user because'). ':';
+	$DbgMsg = _('The following SQL to retrieve the purchase order details was used');
 	$Result=DB_query($SQL,$db, $ErrMsg, $DbgMsg);
 
 	$Changes=0;
@@ -194,26 +206,47 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=='Process Goods Rec
 
 	while ($myrow = DB_fetch_array($Result)) {
 
-		if ($_SESSION['PO']->LineItems[$LineNo]->GLCode != $myrow['GLCode'] OR 						$_SESSION['PO']->LineItems[$LineNo]->ShiptRef != $myrow['ShiptRef'] OR 					$_SESSION['PO']->LineItems[$LineNo]->JobRef != $myrow['JobRef'] OR 					$_SESSION['PO']->LineItems[$LineNo]->QtyInv != $myrow['QtyInvoiced'] OR 				$_SESSION['PO']->LineItems[$LineNo]->StockID != $myrow['ItemCode'] OR 					$_SESSION['PO']->LineItems[$LineNo]->Quantity != $myrow['QuantityOrd'] OR 				$_SESSION['PO']->LineItems[$LineNo]->QtyReceived != $myrow['QuantityRecd']) {
+		if ($_SESSION['PO']->LineItems[$LineNo]->GLCode != $myrow['GLCode'] OR
+			$_SESSION['PO']->LineItems[$LineNo]->ShiptRef != $myrow['ShiptRef'] OR
+			$_SESSION['PO']->LineItems[$LineNo]->JobRef != $myrow['JobRef'] OR
+			$_SESSION['PO']->LineItems[$LineNo]->QtyInv != $myrow['QtyInvoiced'] OR
+			$_SESSION['PO']->LineItems[$LineNo]->StockID != $myrow['ItemCode'] OR
+			$_SESSION['PO']->LineItems[$LineNo]->Quantity != $myrow['QuantityOrd'] OR
+			$_SESSION['PO']->LineItems[$LineNo]->QtyReceived != $myrow['QuantityRecd']) {
 
 
-			echo '<P>'. _('This order has been changed or invoiced since this delivery was started to be actioned. Processing halted. To enter a delivery against this purchase order, it must be re-selected and re-read again to update the changes made by the other user'). '.<BR>';
+			prnMsg(_('This order has been changed or invoiced since this delivery was started to be actioned. Processing halted. To enter a delivery against this purchase order, it must be re-selected and re-read again to update the changes made by the other user'),'warn');
 
 			if ($debug==1){
 				echo '<TABLE BORDER=1>';
-				echo '<TR><TD>GL Code of the Line Item:</TD><TD>' . $_SESSION['PO']->LineItems[$LineNo]->GLCode . '</TD><TD>' . $myrow['GLCode'] . '</TD></TR>';
-				echo '<TR><TD>ShiptRef of the Line Item:</TD><TD>' . $_SESSION['PO']->LineItems[$LineNo]->ShiptRef . '</TD><TD>' . $myrow['ShiptRef'] . '</TD></TR>';
-				echo '<TR><TD>Contract Reference of the Line Item:</TD><TD>' . $_SESSION['PO']->LineItems[$LineNo]->JobRef . '</TD><TD>' . $myrow['JobRef'] . '</TD></TR>';
-				echo '<TR><TD>Quantity Invoiced of the Line Item:</TD><TD>' . $_SESSION['PO']->LineItems[$LineNo]->QtyInv . '</TD><TD>' . $myrow['QtyInvoiced'] . '</TD></TR>';
-				echo '<TR><TD>Stock Code of the Line Item:</TD><TD>'. $_SESSION['PO']->LineItems[$LineNo]->StockID . '</TD><TD>' . $myrow['ItemCode'] . '</TD></TR>';
-				echo '<TR><TD>Order Quantity of the Line Item:</TD><TD>' . $_SESSION['PO']->LineItems[$LineNo]->Quantity . '</TD><TD>' . $myrow['QuantityOrd'] . '</TD></TR>';
-				echo '<TR><TD>Quantity of the Line Item Already Received:</TD><TD>' . $_SESSION['PO']->LineItems[$LineNo]->QtyReceived . '</TD><TD>' . $myrow['QuantityRecd'] . '</TD></TR>';
+				echo '<TR><TD>' . _('GL Code of the Line Item') . ':</TD>
+						<TD>' . $_SESSION['PO']->LineItems[$LineNo]->GLCode . '</TD>
+						<TD>' . $myrow['GLCode'] . '</TD></TR>';
+				echo '<TR><TD>' . _('ShiptRef of the Line Item') . ':</TD>
+					<TD>' . $_SESSION['PO']->LineItems[$LineNo]->ShiptRef . '</TD>
+					<TD>' . $myrow['ShiptRef'] . '</TD></TR>';
+				echo '<TR><TD>' . _('Contract Reference of the Line Item') . ':</TD>
+					<TD>' . $_SESSION['PO']->LineItems[$LineNo]->JobRef . '</TD>
+					<TD>' . $myrow['JobRef'] . '</TD>
+					</TR>';
+				echo '<TR><TD>' . _('Quantity Invoiced of the Line Item') . ':</TD>
+					<TD>' . $_SESSION['PO']->LineItems[$LineNo]->QtyInv . '</TD>
+					<TD>' . $myrow['QtyInvoiced'] . '</TD></TR>';
+				echo '<TR><TD>' . _('Stock Code of the Line Item') . ':</TD>
+					<TD>'. $_SESSION['PO']->LineItems[$LineNo]->StockID . '</TD>
+					<TD>' . $myrow['ItemCode'] . '</TD></TR>';
+				echo '<TR><TD>' . _('Order Quantity of the Line Item') . ':</TD>
+					<TD>' . $_SESSION['PO']->LineItems[$LineNo]->Quantity . '</TD>
+					<TD>' . $myrow['QuantityOrd'] . '</TD></TR>';
+				echo '<TR><TD>' . _('Quantity of the Line Item Already Received') . ':</TD>
+					<TD>' . $_SESSION['PO']->LineItems[$LineNo]->QtyReceived . '</TD>
+					<TD>' . $myrow['QuantityRecd'] . '</TD></TR>';
 				echo '</TABLE>';
 			}
 			echo "<CENTER><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . "'>".
 				_('Select a different purchase order for receiving goods against').'</A></CENTER>';
 			echo "<CENTER><A HREF='$rootpath/GoodsReceived.php?" . SID . "PONumber=" .
-				$_SESSION['PO']->OrderNumber . '">'. _('Re-Read the updated purchase order for receiving goods against'). '</A></CENTER>';
+				$_SESSION['PO']->OrderNumber . '">'. _('Re-read the updated purchase order for receiving goods against'). '</A></CENTER>';
 			unset($_SESSION['PO']->LineItems);
 			unset($_SESSION['PO']);
 			unset($_POST['ProcessGoodsReceived']);
@@ -243,18 +276,19 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=='Process Goods Rec
 /*Update SalesOrderDetails for the new quantity received and the standard cost used for postings to GL and recorded in the stock movements for FIFO/LIFO stocks valuations*/
 
 			if ($OrderLine->StockID!='') { /*Its a stock item line */
-			   /*Need to get the current standard cost as it is now so we can process GL jorunals later*/
-			   $SQL = "SELECT MaterialCost + LabourCost + OverheadCost AS StdCost FROM StockMaster WHERE StockID='" . $OrderLine->StockID . "'";
-			   $ErrMsg = '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The standard cost of the item being received cannot be retrieved because').':';
-			   $DbgMsg = _('<BR>The following SQL to retrieve the standard cost was used') .':';
-			   $Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				/*Need to get the current standard cost as it is now so we can process GL jorunals later*/
+				$SQL = "SELECT MaterialCost + LabourCost + OverheadCost AS StdCost FROM StockMaster WHERE StockID='" . $OrderLine->StockID . "'";
+				$ErrMsg =  _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The standard cost of the item being received cannot be retrieved because');
+				$DbgMsg = _('The following SQL to retrieve the standard cost was used');
+				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-			   $myrow = DB_fetch_row($Result);
+				$myrow = DB_fetch_row($Result);
 
-			   if ($OrderLine->QtyReceived==0){ //its the first receipt against this line
-			   	$_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost = $myrow[0];
-			   }
-			   $CurrentStandardCost = $myrow[0];
+				if ($OrderLine->QtyReceived==0){ //its the first receipt against this line
+					$_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost = $myrow[0];
+				}
+				$CurrentStandardCost = $myrow[0];
+
 			} elseif ($OrderLine->QtyReceived==0 AND $OrderLine->StockID=="") {
 				/*Its a nominal item being received */
 				/*Need to record the value of the order per unit in the standard cost field to ensure GRN account entries clear */
@@ -262,20 +296,32 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=='Process Goods Rec
 
 			}
 
+			if ($OrderLine->StockID=='') { /*Its a NOMINAL item line */
+				$CurrentStandardCost = $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost;
+			}
+
 /*Now the SQL to do the update to the PurchOrderDetails */
 
 			if ($OrderLine->ReceiveQty >= ($OrderLine->Quantity - $OrderLine->QtyReceived)){
-				$SQL = "UPDATE PurchOrderDetails SET QuantityRecd = QuantityRecd + " . $OrderLine->ReceiveQty . ", StdCostUnit=" . $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost . ", Completed=1 WHERE PODetailItem = " . $OrderLine->PODetailRec;
+				$SQL = "UPDATE PurchOrderDetails SET
+							QuantityRecd = QuantityRecd + " . $OrderLine->ReceiveQty . ",
+							StdCostUnit=" . $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost . ",
+							Completed=1
+					WHERE PODetailItem = " . $OrderLine->PODetailRec;
 			} else {
-				$SQL = "UPDATE PurchOrderDetails SET QuantityRecd = QuantityRecd + " . $OrderLine->ReceiveQty . ", StdCostUnit=" . $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost . ", Completed=0 WHERE PODetailItem = " . $OrderLine->PODetailRec;
+				$SQL = "UPDATE PurchOrderDetails SET
+							QuantityRecd = QuantityRecd + " . $OrderLine->ReceiveQty . ",
+							StdCostUnit=" . $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost . ",
+							Completed=0
+					WHERE PODetailItem = " . $OrderLine->PODetailRec;
 			}
 
-			$ErrMsg = '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The purchase order detail record could not be updated with the quantity received because'). ': -';
-			$DbgMsg = '<BR>'. _('The following SQL to update the purchase order detail record was used'). ':';
+			$ErrMsg =  _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The purchase order detail record could not be updated with the quantity received because');
+			$DbgMsg = _('The following SQL to update the purchase order detail record was used');
 			$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
 
 
-			if ($OrderLine->StockID !=""){ /*Its a stock item so use the standard cost for the journals */
+			if ($OrderLine->StockID !=''){ /*Its a stock item so use the standard cost for the journals */
 				$UnitCost = $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost;
 			} else {  /*otherwise its a nominal PO item so use the purchase cost converted to local currecny */
 				$UnitCost = $OrderLine->Price / $_SESSION['PO']->ExRate;
@@ -298,8 +344,8 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=='Process Goods Rec
 					" . $OrderLine->ReceiveQty . ",
 					'" . $_SESSION['PO']->SupplierID . "')";
 
-			$ErrMsg = '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: A GRN record could not be inserted. This receipt of goods has not been processed because'). ':';
-			$DbgMsg = '<BR>'. _('The following SQL to insert the GRN record was used'). ':';
+			$ErrMsg =  _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: A GRN record could not be inserted. This receipt of goods has not been processed because');
+			$DbgMsg =  _('The following SQL to insert the GRN record was used');
 			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
 			if ($OrderLine->StockID!=''){ /* if the order line is in fact a stock item */
@@ -307,7 +353,11 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=='Process Goods Rec
 /* Update location stock records - NB  a PO cannot be entered for a dummy/assembly/kit parts */
 
 /* Need to get the current location quantity will need it later for the stock movement */
-				$SQL="SELECT LocStock.Quantity FROM LocStock WHERE LocStock.StockID='" . $OrderLine->StockID . "' AND LocCode= '" . $_SESSION['PO']->Location . "'";
+				$SQL="SELECT LocStock.Quantity
+					FROM LocStock
+					WHERE LocStock.StockID='" . $OrderLine->StockID . "'
+					AND LocCode= '" . $_SESSION['PO']->Location . "'";
+
 				$Result = DB_query($SQL, $db);
 				if (DB_num_rows($Result)==1){
 					$LocQtyRow = DB_fetch_row($Result);
@@ -322,8 +372,8 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=='Process Goods Rec
 					WHERE LocStock.StockID = '" . $OrderLine->StockID . "'
 					AND LocCode = '" . $_SESSION['PO']->Location . "'";
 
-				$ErrMsg = '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The location stock record could not be updated because'). ':';
-				$DbgMsg = '<BR>'. _('The following SQL to update the location stock record was used').':';
+				$ErrMsg =  _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The location stock record could not be updated because');
+				$DbgMsg =  _('The following SQL to update the location stock record was used');
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
 
@@ -351,8 +401,8 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=='Process Goods Rec
 						" . $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost . ",
 						" . ($QtyOnHandPrior + $OrderLine->ReceiveQty) . ")";
 
-				$ErrMsg = '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: stock movement records could not be inserted because'). ':';
-				$DbgMsg = '<BR>'. _('The following SQL to insert the stock movement records was used'). ':';
+				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: stock movement records could not be inserted because');
+				$DbgMsg =  _('The following SQL to insert the stock movement records was used');
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
 				/*Get the ID of the StockMove... */
@@ -365,16 +415,30 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=='Process Goods Rec
 						We need to add the StockSerialItem record and
 						The StockSerialMoves as well */
 
-						$SQL = "INSERT INTO StockSerialItems (StockID, LocCode, SerialNo, Quantity) VALUES ('" . $OrderLine->StockID . "', '" . $_SESSION['PO']->Location . "', '" . $Item->BundleRef . "', " . $Item->BundleQty . ")";
-						$ErrMsg = '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock item record could not be inserted because'). ':';
-						$DbgMsg = '<BR>'. _('The following SQL to insert the serial stock item records was used'). ':';
+						$SQL = "INSERT INTO StockSerialItems (StockID,
+											LocCode,
+											SerialNo,
+											Quantity)
+										VALUES ('" . $OrderLine->StockID . "',
+											'" . $_SESSION['PO']->Location . "',
+											'" . $Item->BundleRef . "',
+											" . $Item->BundleQty . ")";
+						$ErrMsg =  _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock item record could not be inserted because');
+						$DbgMsg =  _('The following SQL to insert the serial stock item records was used');
 						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
 						/*now insert the serial stock movement */
 
-						$SQL = "INSERT INTO StockSerialMoves (StockMoveNo, StockID, SerialNo, MoveQty) VALUES (" . $StkMoveNo . ", '" . $OrderLine->StockID . "', '" . $Item->BundleRef . "', " . $Item->BundleQty . ")";
-						$ErrMsg = '<BR>'. ('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock movement record could not be inserted because'). ':';
-						$DbgMsg = '<BR>'. _('The following SQL to insert the serial stock movement records was used'). ':';
+						$SQL = "INSERT INTO StockSerialMoves (StockMoveNo,
+											StockID,
+											SerialNo,
+											MoveQty)
+									VALUES (" . $StkMoveNo . ",
+										'" . $OrderLine->StockID . "',
+										'" . $Item->BundleRef . "',
+										" . $Item->BundleQty . ")";
+						$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock movement record could not be inserted because');
+						$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
 						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
 
@@ -388,31 +452,70 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=='Process Goods Rec
 
 /*first the debit using the GLCode in the PO detail record entry*/
 
-				$SQL = "INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (25, " . $GRN . ", '" . $_POST['DefaultReceivedDate'] . "', " . $PeriodNo . ", " . $OrderLine->GLCode . ", 'PO: " . $_SESSION['PO']->OrderNo . " " . $_SESSION['PO']->SupplierID . " - " . $OrderLine->StockID . " - " . $OrderLine->ItemDescription . " x " . $OrderLine->ReceiveQty . " @ " . number_format($CurrentStandardCost,2) . "', " . $CurrentStandardCost * $OrderLine->ReceiveQty . ")";
+				$SQL = "INSERT INTO GLTrans (Type,
+								TypeNo,
+								TranDate,
+								PeriodNo,
+								Account,
+								Narrative,
+								Amount)
+						VALUES (25,
+							" . $GRN . ",
+							'" . $_POST['DefaultReceivedDate'] . "',
+							" . $PeriodNo . ",
+							" . $OrderLine->GLCode . ",
+							'PO: " . $_SESSION['PO']->OrderNo . " " . $_SESSION['PO']->SupplierID . " - " . $OrderLine->StockID . " - " . $OrderLine->ItemDescription . " x " . $OrderLine->ReceiveQty . " @ " . number_format($CurrentStandardCost,2) . "',
+							" . $CurrentStandardCost * $OrderLine->ReceiveQty . ")";
 
-				$ErrMsg = '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The purchase GL posting could not be inserted because'). ': -';
-+				$DbgMsg = '<BR>'. _('The following SQL to insert the purchase GLTrans record was used'). ':';
+				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The purchase GL posting could not be inserted because');
++				$DbgMsg = _('The following SQL to insert the purchase GLTrans record was used');
 +				$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 
 				/* If the CurrentStandardCost != UnitCost (the standard at the time the first delivery was booked in,  and its a stock item, then the difference needs to be booked in against the purchase price variance account*/
 
-				if ($UnitCost != $CurrentStandardCost AND $OrderLine->StockID!="") {
+				if ($UnitCost != $CurrentStandardCost AND $OrderLine->StockID!='') {
 
 					$UnitCostDifference = $UnitCost - $CurrentStandardCost;
 					$StockGLCodes = GetStockGLCode($OrderLine->StockID,$db);
 
-					$SQL = "INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (25, " . $GRN . ", '" . $_POST['DefaultReceivedDate'] . "', " . $PeriodNo . ", " . $StockGLCodes['PurchPriceVarAct'] . ", 'Cost diff on " . $_SESSION['PO']->SupplierID . " - " . $OrderLine->StockID . " " . $OrderLine->ReceiveQty . " @ (" . number_format($CurrentStandardCost,2) . " - Prev std " . number_format($UnitCost,2) . ")', " . ($UnitCostDifference * $OrderLine->ReceiveQty) . ")";
+					$SQL = "INSERT INTO GLTrans (Type,
+									TypeNo,
+									TranDate,
+									PeriodNo,
+									Account,
+									Narrative,
+									Amount)
+							VALUES (25,
+								" . $GRN . ",
+								'" . $_POST['DefaultReceivedDate'] . "',
+								" . $PeriodNo . ",
+								" . $StockGLCodes['PurchPriceVarAct'] . ",
+								'Cost diff on " . $_SESSION['PO']->SupplierID . " - " . $OrderLine->StockID . " " . $OrderLine->ReceiveQty . " @ (" . number_format($CurrentStandardCost,2) . " - Prev std " . number_format($UnitCost,2) . ")',
+								" . ($UnitCostDifference * $OrderLine->ReceiveQty) . ")";
 
-					$ErrMsg = '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The standard cost difference GL posting could not be inserted because'). ':';
-					$DbgMsg = '<BR>'. _('The following SQL to insert the cost difference GLTrans record was used'). ':';
+					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The standard cost difference GL posting could not be inserted because');
+					$DbgMsg = _('The following SQL to insert the cost difference GLTrans record was used');
 					$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
 				}
 
 	/*now the GRN suspense entry*/
-				$SQL = "INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (25, " . $GRN . ", '" . $_POST['DefaultReceivedDate'] . "', " . $PeriodNo . ", " . $CompanyData["GRNAct"] . ", 'PO: " . $_SESSION['PO']->OrderNo . " " . $_SESSION['PO']->SupplierID . " - " . $OrderLine->StockID . " - " . $OrderLine->ItemDescription . " x " . $OrderLine->ReceiveQty . " @ " . number_format($UnitCost,2) . "', " . -$UnitCost * $OrderLine->ReceiveQty . ")";
+				$SQL = "INSERT INTO GLTrans (Type,
+								TypeNo,
+								TranDate,
+								PeriodNo,
+								Account,
+								Narrative,
+								Amount)
+						VALUES (25,
+							" . $GRN . ",
+							'" . $_POST['DefaultReceivedDate'] . "',
+							" . $PeriodNo . ",
+							" . $CompanyData["GRNAct"] . ",
+							'PO: " . $_SESSION['PO']->OrderNo . " " . $_SESSION['PO']->SupplierID . " - " . $OrderLine->StockID . " - " . $OrderLine->ItemDescription . " x " . $OrderLine->ReceiveQty . " @ " . number_format($UnitCost,2) . "',
+							" . -$UnitCost * $OrderLine->ReceiveQty . ")";
 
-				$ErrMsg =  '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The GRN suspense side of the GL posting could not be inserted because'). ':';
-				$DbgMsg = '<BR>'. _('The following SQL to insert the GRN Suspense GLTrans record was used'). ':';
+				$ErrMsg =   _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The GRN suspense side of the GL posting could not be inserted because');
+				$DbgMsg =  _('The following SQL to insert the GRN Suspense GLTrans record was used');
 				$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg,true);
 
 			 } /* end of if GL and stock integrated and standard cost !=0 */
@@ -441,8 +544,8 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=='Process Goods Rec
 	}
 	echo '<TABLE><TR><TD>'. _('Date Goods/Service Received'). ':</TD><TD><INPUT TYPE=text MAXLENGTH=10 SIZE=10 name=DefaultReceivedDate value="' . $_POST['DefaultReceivedDate'] . '"></TD></TR>';
 
-	echo '</TABLE><CENTER><INPUT TYPE=SUBMIT NAME=Update Value=Update><P>';
-	echo '<INPUT TYPE=SUBMIT NAME="ProcessGoodsReceived" Value="Process Goods Received"></CENTER>';
+	echo '</TABLE><CENTER><INPUT TYPE=SUBMIT NAME=Update Value=' . _('Update') . '><P>';
+	echo '<INPUT TYPE=SUBMIT NAME="ProcessGoodsReceived" Value="' . _('Process Goods Received') . '"></CENTER>';
 }
 
 echo '</form>';

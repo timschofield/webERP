@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -7,8 +7,10 @@
 	| by Logic Works Ltd                                |
 	\--------------------------------------------------*/
 
-    include("config.php");
-    include("includes/ConnectDB.inc");
+    include('config.php');
+    ini_set('session.gc_Maxlifetime',$SessionLifeTime);
+    include('includes/ConnectDB.inc');
+
     if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);
     }

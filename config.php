@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.37 $ */
+/* $Revision: 1.38 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -52,6 +52,10 @@ $dbpassword = 'weberp_db_pwd';
 
 // CSS GUI theme
 $DefaultTheme = 'fresh';
+
+//The maximum time that a login session can be idle before automatic logout
+//time is in seconds  3600 seconds in an hour
+$SessionLifeTime = 3600;
 
 // Accounts Receivable
 // Aging periods used on customer and supplier enquiry screens and aged listings*/
