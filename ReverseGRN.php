@@ -1,10 +1,12 @@
 <?php
 
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $title = "Reverse Goods Received";
 $PageSecurity = 11;
 
 /* Session started in header.inc for password checking and authorisation level check */
+
+include("includes/DefineSerialItems.php");
 include("includes/DateFunctions.inc");
 include("includes/SQL_CommonFunctions.inc");
 include("includes/session.inc");
@@ -130,14 +132,13 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 		$DbgMsg = "<BR>The following SQL to update the location stock record was used:";
 		$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-	/* If its a stock item still .... Insert stock movements - with unit cost */
+	/* If its a stock item .... Insert stock movements - with unit cost */
 
 		$SQL = "INSERT INTO StockMoves (
 				StockID,
 				Type,
 				TransNo,
 				LocCode,
-				Bundle,
 				TranDate,
 				Prd,
 				Reference,
@@ -149,7 +150,6 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 				25,
 				" . $_GET['GRNNo'] . ",
 				'" . $GRN['IntoStockLocation'] . "',
-				1,
 				'" . $GRN['DeliveryDate'] . "',
 				" . $PeriodNo . ",
 				'GRN Reversal - " . $_POST['SupplierID'] . " - " . $_POST['SuppName'] . " - " . $GRN['OrderNo'] . "',

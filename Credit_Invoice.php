@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $title = "Credit An Invoice ";
 
 $PageSecurity =3;
@@ -33,7 +33,6 @@ if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 	Session_Register("TaxGLCode");
 	Session_Register("Old_FreightCost");
 
-	$_SESSION['ExistingOrder']=0; /*required to avoid adding to database in error */
 	$_SESSION['ProcessingCredit'] = $_GET['InvoiceNumber'];
 	$_SESSION['CreditItems'] = new cart;
 

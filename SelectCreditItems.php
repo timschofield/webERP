@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
 
@@ -43,7 +43,6 @@ if (!isset($_SESSION['CreditItems'])){
 	 Session_Register("TaxGLCode");
 	 $_SESSION['CreditItems'] = new cart;
 
-	 $_SESSION['ExistingOrder']=0; /*to ensure DB updates are not processed from the Cart class */
 	 $_SESSION['RequireCustomerSelection'] = 1;
 }
 
@@ -1046,7 +1045,7 @@ if (isset($_POST['ProcessCredit'])){
 				if ($CreditLine->MBflag=="B" OR $CreditLine->MBflag=="M") {
 
 					$SQL = "UPDATE LocStock
-						SET LocStock.Quantity = LocStock.Quantity + " . $CreditLine->QtyDispatched . "
+						SET LocStock.Quantity = LocStock.Quantity + " . $CreditLine->Quantity . "
 						WHERE LocStock.StockID = '" . $CreditLine->StockID . "'
 						AND LocCode = '" . $_SESSION['CreditItems']->Location . "'";
 
@@ -1120,9 +1119,9 @@ if (isset($_POST['ProcessCredit'])){
 							'" . $_SESSION['CreditItems']->Branch . "',
 							" . $PeriodNo . ",
 							'Assembly: " . $CreditLine->StockID . "',
-							" . $AssParts["Quantity"] * $CreditLine->QtyDispatched . ", " . $AssParts["Standard"] . ",
+							" . $AssParts["Quantity"] * $CreditLine->Quantity . ", " . $AssParts["Standard"] . ",
 							0,
-							" . ($QtyOnHandPrior + ($AssParts["Quantity"] * $CreditLine->QtyDispatched)) . "
+							" . ($QtyOnHandPrior + ($AssParts["Quantity"] * $CreditLine->Quantity)) . "
 							)";
 
 					$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Stock movement records for the assembly components of $CreditLine->StockID could not be inserted because:";
@@ -1131,7 +1130,7 @@ if (isset($_POST['ProcessCredit'])){
 
 					  /*Update the stock quantities for the assembly components */
 					 $SQL = "UPDATE LocStock
-					   		SET LocStock.Quantity = LocStock.Quantity + " . $AssParts["Quantity"] * $CreditLine->QtyDispatched . "
+					   		SET LocStock.Quantity = LocStock.Quantity + " . $AssParts["Quantity"] * $CreditLine->Quantity . "
 							WHERE LocStock.StockID = '" . $AssParts["Component"] . "'
 							AND LocCode = '" . $_SESSION['CreditItems']->Location . "'";
 

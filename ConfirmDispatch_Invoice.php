@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $title = "Confirm Dispatches and Invoice An Order";
 
@@ -37,7 +37,6 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 
 	$_SESSION['ProcessingOrder']=$_GET['OrderNumber'];
 	$_SESSION['Items'] = new cart;
-	$_SESSION['ExistingOrder']=0; /*required to ensure items not added to a previously modified order from SelectOrderItems.php when using add_to_cart */
 
 /*read in all the guff from the selected order into the Items cart  */
 
@@ -114,7 +113,9 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 						$myrow['DiscountCategory'],
 						$myrow['Controlled'],
 						$myrow['Serialised'],
-						$myrow['DecimalPlaces']);
+						$myrow['DecimalPlaces']
+						);
+						/*NB Update DB defaults to NO */
 
 				$_SESSION['Items']->LineItems[$myrow["StkCode"]]->StandardCost = $myrow["StandardCost"];
 

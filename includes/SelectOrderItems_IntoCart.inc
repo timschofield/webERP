@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*SelectOrderItems_IntoCart.inc
 
 This snippet is used to enter order line items into the cart object:
@@ -28,21 +28,45 @@ if (count($_SESSION['Items']->LineItems)>0){
 
 if ($AlreadyOnThisOrder!=1){
 
-    $sql = "SELECT StockMaster.Description, StockMaster.StockID, StockMaster.Units, StockMaster.Volume, StockMaster.KGS, (Materialcost+Labourcost+Overheadcost) AS StandardCost, LocStock.Quantity, StockMaster.MBflag, StockMaster.DiscountCategory FROM StockMaster INNER JOIN LocStock ON StockMaster.StockID=LocStock.StockID WHERE LocStock.LocCode='" . $_SESSION['Items']->Location . "' AND  StockMaster.StockID = '". $NewItem . "'";
+    $sql = "SELECT StockMaster.Description,
+    		StockMaster.StockID,
+		StockMaster.Units,
+		StockMaster.Volume,
+		StockMaster.KGS,
+		(Materialcost+Labourcost+Overheadcost) AS StandardCost,
+		LocStock.Quantity,
+		StockMaster.MBflag,
+		StockMaster.DiscountCategory,
+		StockMaster.DecimalPlaces
+	FROM StockMaster INNER JOIN LocStock
+	ON StockMaster.StockID=LocStock.StockID
+	WHERE LocStock.LocCode='" . $_SESSION['Items']->Location . "'
+	AND  StockMaster.StockID = '". $NewItem . "'";
 
-    $result1 = DB_query($sql,$db);
-
-    if (DB_error_no($db) !=0) {
-            echo "The details for " . $NewItem . " could not be retrieved because - " . DB_error_msg($db);
-            if ($debug==1){
-                echo "<BR>The SQL used to retrieve the pricing details but failed was:<BR>$sql";
-            }
-            exit;
-    }
+    $ErrMsg = "The details for " . $NewItem . " could not be retrieved because";
+    $DbgMsg = "<BR>The SQL used to retrieve the pricing details but failed was:<BR>$sql";
+    $result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
    if ($myrow = DB_fetch_array($result1)){
 
-   		if ($_SESSION['Items']->add_to_cart ($NewItem, $NewItemQty, $myrow["Description"], GetPrice ($NewItem, $_SESSION['Items']->DebtorNo,$_SESSION['Items']->Branch, &$db), 0, $myrow["Units"], $myrow["Volume"], $myrow["KGS"],$myrow["Quantity"], $myrow["MBflag"],NULL,0,$myrow["DiscountCategory"])==1){
+   		if ($_SESSION['Items']->add_to_cart ($NewItem,
+							$NewItemQty,
+							$myrow["Description"],
+							GetPrice ($NewItem, $_SESSION['Items']->DebtorNo,$_SESSION['Items']->Branch, &$db),
+							0,
+							$myrow["Units"],
+							$myrow["Volume"],
+							$myrow["KGS"],
+							$myrow["Quantity"],
+							$myrow["MBflag"],
+							NULL, /*Actual Dispatch Date */
+							0, /*Qty Invoiced */
+							$myrow["DiscountCategory"],
+							0, /*Controlled - dont care */
+							0, /*serialised - dont care */
+							$myrow['DecimalPlaces'],
+							'Yes' /*Do please update the DB */
+							)==1){
 
 		      $_SESSION['Items']->LineItems[$NewItem]->StandardCost = $myrow["StandardCost"];
              }

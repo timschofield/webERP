@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $title = "Stock Usage";
 
 $PageSecurity = 2;
@@ -69,6 +69,8 @@ echo "<HR>";
 /* $NumberOfPeriodsOfStockUsage  is defined in config.php as a user definable variable
 config.php is loaded by header.inc */
 
+/*HideMovt ==1 if the movement was only created for the purpose of a transaction but is not a physical movement eg. A price credit will create a movement record for the purposes of display on a credit note
+but there is no physical stock movement - it makes sense honest ??? */
 
 if($_POST['StockLocation']=='All'){
 	$sql = "SELECT Periods.PeriodNo, Periods.LastDate_in_Period, Sum(-StockMoves.Qty) AS QtyUsed FROM StockMoves INNER JOIN Periods ON StockMoves.Prd=Periods.PeriodNo WHERE (StockMoves.Type=10 or StockMoves.Type=11 or StockMoves.Type=28) AND StockMoves.HideMovt=0 AND StockMoves.StockID = '" . $StockID . "' GROUP BY Periods.PeriodNo, Periods.LastDate_in_Period ORDER BY PeriodNo DESC LIMIT " . $NumberOfPeriodsOfStockUsage;

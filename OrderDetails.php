@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 if (isset($_GET['OrderNumber'])) {
 	$title = "Reviewing Sales Order Number " . $_GET['OrderNumber'];
 } else {
@@ -20,7 +20,7 @@ if (isset($_SESSION['Items'])){
 }
 
 $_SESSION['Items'] = new cart;
-$_SESSION['ExistingOrder']=0;
+
 /*read in all the guff from the selected order into the Items cart  */
 
 

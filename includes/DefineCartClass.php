@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 /* Definition of the cart class
 this class can hold all the information for:
 
@@ -63,7 +63,8 @@ Class Cart {
 				$DiscCat='',
 				$Controlled=0,
 				$Serialised=0,
-				$DecimalPlaces=0){
+				$DecimalPlaces=0,
+				$UpdateDB='No'){
 
 		if (isset($StockID) AND $StockID!="" AND $Qty>0 AND isset($Qty)){
 
@@ -89,7 +90,7 @@ Class Cart {
 									$DecimalPlaces);
 			$this->ItemsOrdered++;
 
-			if ($_SESSION['ExistingOrder']!=0 AND !isset($_GET['ModifyOrderNumber'])){
+			if ($UpdateDB=='Yes'){
 				/*ExistingOrder !=0 set means that an order is selected or created for entry
 				of items - ExistingOrder is set to 0 in scripts that should not allow
 				adding items to the order - New orders have line items added at the time of
@@ -107,7 +108,7 @@ Class Cart {
 		Return 0;
 	}
 
-	function update_cart_item($UpdateItem, $Qty, $Price, $Disc){
+	function update_cart_item($UpdateItem, $Qty, $Price, $Disc, $UpdateDB='No'){
 
 		if ($Qty>0){
 			$this->LineItems[$UpdateItem]->Quantity = $Qty;
@@ -115,18 +116,18 @@ Class Cart {
 		$this->LineItems[$UpdateItem]->Price = $Price;
 		$this->LineItems[$UpdateItem]->DiscountPercent = $Disc;
 
-		if ($_SESSION['ExistingOrder']!=0){
+		if ($UpdateDB=='Yes'){
 			global $db;
 			$result = DB_query("UPDATE SalesOrderDetails SET Quantity=" . $Qty . ", UnitPrice=" . $Price . ", DiscountPercent=" . $Disc . " WHERE OrderNo=" . $_SESSION['ExistingOrder'] . " AND StkCode='" . $UpdateItem ."'" , $db , "<BR>The order line for " . $UpdateItem . " could not be updated");
 		}
 	}
 
-	function remove_from_cart(&$StockID){
+	function remove_from_cart(&$StockID,$UpdateDB='No'){
 		if (isset($StockID)){
 			unset($this->LineItems[$StockID]);
 			$this->ItemsOrdered--;
 		}
-		if ($_SESSION['ExistingOrder']!=0){
+		if ($UpdateDB=='Yes'){
 			global $db;
 			$result = DB_query("DELETE FROM SalesOrderDetails WHERE OrderNo=" . $_SESSION['ExistingOrder'] . " AND StkCode='" . $StockID ."'",$db,"The order line for " . $StockID . " couold not be deleted");
 		}
