@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 if (isset($_GET['Title'])){
 	$HelpPageTitle = $_GET['Title'];
@@ -50,7 +50,7 @@ if ($_POST['submit']) {
 
 	if ($InputError !=1 AND isset($_POST['HelpID'])) {
 
-		$sql = "UPDATE Help SET Narrative = '" . $_POST['Narrative'] . "' WHERE HelpID =" . $_POST['HelpID'];
+		$sql = "UPDATE Help SET Narrative = '" . $_POST['Narrative'] . "' WHERE PageID =" . $_POST['PageID'];
 		$msg = "The help record has been updated.";
 	} elseif ($InputError !=1) {
 

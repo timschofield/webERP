@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 $title="Main Menu";
 
 $PageSecurity = 1;
@@ -190,7 +190,7 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 			<td valign="top" class="menu_group_area">
 				<table width="100%">
 					<tr>
-					<td class="menu_group_headers">  !-- AR option Headings -->
+					<td class="menu_group_headers">  <!-- AR option Headings -->
 						<table>
 							<tr>
 							<td>
@@ -297,6 +297,11 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 							<tr>  
 							<td class="menu_group_item">
 								<a href="<?php echo $rootpath."/DebtorsAtPeriodEnd.php?" . SID; ?>">Debtor Balances At A Prior Month End</a><br />
+							</td>
+							</tr>
+							<tr>  
+							<td class="menu_group_item">
+								<a href="<?php echo $rootpath."/PDFCustomerList.php?" . SID; ?>">Customer Listing By Area/Salesperson</a><br />
 							</td>
 							</tr>
 						</table>		

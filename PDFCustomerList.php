@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 $title = "Customer Details Listing";
 
 $PageSecurity = 2;
@@ -9,7 +9,22 @@ if (isset($_POST['PrintPDF'])){
 	include("config.php");
 	include("includes/ConnectDB.inc");
 	include("includes/PDFStarter_ros.inc");
+	include("includes/DateFunctions.inc");
 
+	
+	if ($_POST['Activity']!='All'){
+		if (!is_numeric($_POST['ActivityAmount'])){
+			$title = "Customer List - Problem Report.... ";
+	  		include("includes/header.inc");
+	   		echo "<P>The acitivty amount is not numeric and you elected to print customer relative to a certain amount of activity - this level of activity must be specified in the local currency";
+			include("includes/footer.inc");
+			exit;
+		}
+	}
+			
+	   
+	
+	
 	$PageNumber = 0;
 
 	$FontSize=10;
@@ -313,7 +328,7 @@ if (isset($_POST['PrintPDF'])){
 			if ($YPos < ($Bottom_Margin +30)){
 				include("includes/PDFCustomerListPageHeader.inc");
 			}
-`		} /*end if $PrintThisCustomer == true */
+		} /*end if $PrintThisCustomer == true */
 	} /*end while loop */
 
 
@@ -327,7 +342,7 @@ if (isset($_POST['PrintPDF'])){
 		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>Back to the menu</A>";
 		include("includes/footer.inc");
 		exit;
-      } else {
+	} else {
 		header("Content-type: application/pdf");
 		header("Content-Length: " . $len);
 		header("Content-Disposition: inline; filename=CustomerList.pdf");
@@ -338,16 +353,17 @@ if (isset($_POST['PrintPDF'])){
 		$pdf->Stream();
 
 	}
-
+	exit;
+	
 } else {
-
+	
 	include("includes/session.inc");
 	include("includes/header.inc");
 	include("includes/SQL_CommonFunctions.inc");
 
 	$CompanyRecord = ReadInCompanyRecord($db);
-
-	echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "' METHOD='POST'><CENTER><TABLE>";
+	
+	echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
 	echo "<TR><TD>For Sales Areas:</TD><TD><SELECT name=Areas[] multiple>";
 
 	$sql="SELECT AreaCode, AreaDescription FROM Areas";
