@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*ProcessSerialItems.php takes the posted variables and adds to the SerialItems array
  in either the cartclass->LineItems->SerialItems or the POClass->LineItems->SerialItems */
 
@@ -7,7 +7,7 @@
 if ($_POST['AddBatches']=='Enter'){
 
 	for ($i=0;$i < 10;$i++){
-		if($_POST['SerialNo' . $i] != ""){
+		if(strlen($_POST['SerialNo' . $i])>0){
 			$ExistingBundleQty = ValidBundleRef($StockID, $_SESSION['Items']->Location, $_POST['SerialNo' . $i]);
 			if ($ExistingBundleQty >0){
 				$AddThisBundle = true;

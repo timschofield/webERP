@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -21,9 +21,10 @@ if ($LineItem->Serialised==1){
 }
 
 echo $tableheader;
-$TotalQuantity = 0; /*Variable to accumulate total quantity received */
 
+$TotalQuantity = 0; /*Variable to accumulate total quantity received */
 $RowCounter =0;
+
 /*Display the batches already entered with quantities if not serialised */
 foreach ($LineItem->SerialItems as $Bundle){
 
@@ -45,10 +46,11 @@ foreach ($LineItem->SerialItems as $Bundle){
 	echo "<TD>" . $Bundle->BundleRef . "</TD>";
 
 	if ($LineItem->Serialised==0){
-		echo "<TD>" . $Bundle->BundleQty . "</TD>";
+		echo "<TD ALIGN=RIGHT>" . number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . "</TD>";
 	}
 
 	echo "<TD><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "Delete=" . $Bundle->BundleRef . "&StockID=" . $StockID . "'>Delete</A></TD></TR>";
+
 	$TotalQuantity += $Bundle->BundleQty;
 }
 
@@ -73,13 +75,11 @@ echo $tableheader;
 /*Now allow new entries in text input boxes */
 for ($i=0;$i < 10;$i++){
 
-	if (strlen($_POST['Bundles'][$i])>0 AND $LineItem->Serialised==0){
+	echo "<TR><td><input type=text name='SerialNo" . $i ."' size=21  maxlength=20></td>";
+
 	/*if the item is controlled not serialised - batch quantity required so just enter bundle refs
 	into the form for entry of quantites manually */
-		echo "<TR><td><input type=text name='SerialNo" . $i ."' size=21  maxlength=20 Value='" . $_POST['Bundles'][$i] . "'></td>";
-	} else {
-		echo "<TR><td><input type=text name='SerialNo" . $i ."' size=21  maxlength=20></td>";
-	}
+
 	if ($LineItem->Serialised==1){
 		echo "<input type=hidden name='Qty" . $i ."' Value=1></TR>";
 	} else {

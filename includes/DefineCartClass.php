@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /* Definition of the cart class
 this class can hold all the information for:
 
@@ -182,7 +182,7 @@ Class LineDetails {
 	Var $QtyDispatched;
 	Var $StandardCost;
 	Var $QOHatLoc;
-	Var $MBflag;
+	Var $MBflag;	/*Make Buy Dummy, Assembly or Kitset */
 	Var $DiscCat; /* Discount Category of the item if any */
 	Var $TaxRate;
 	Var $Controlled;
