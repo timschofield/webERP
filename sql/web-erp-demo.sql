@@ -1734,7 +1734,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE Currencies DISABLE KEYS */;
 LOCK TABLES Currencies WRITE;
-INSERT INTO Currencies VALUES ('Australian Dollars','AUD','Australia','cents',1.7000),('Deutsche Marks','DEM','German','Pfenig',1.8000),('Pounds','GBP','England','Pence',0.8000),('Yen','JPY','Japan','Yen',150.0000),('N Z Dollars','NZD','New Zealand','Cents',2.0000),('US Dollars','USD','United States','Cents',1.0000);
+INSERT INTO Currencies VALUES ('Australian Dollars','AUD','Australia','cents',1.7000),('Deutsche','DEM','German','Pfenig',1.8000),('Pounds','GBP','England','Pence',0.8000),('Yen','JPY','Japan','Yen',150.0000),('N Z Dollars','NZD','New Zealand','Cents',2.0000),('US Dollars','USD','United States','Cents',1.0000);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE Currencies ENABLE KEYS */;
 
@@ -2014,7 +2014,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE ReportColumns DISABLE KEYS */;
 LOCK TABLES ReportColumns WRITE;
-INSERT INTO ReportColumns VALUES (2,1,'Value','',0,51,60,'Net Value',0,0,'',1,'N',0);
+INSERT INTO ReportColumns VALUES (2,2,'Quantity','',0,51,60,'Quantity',0,0,'',1,'N',0),(2,3,'Budget','Value',0,51,59,'Gross Value',0,0,'',0,'N',0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE ReportColumns ENABLE KEYS */;
 
@@ -2157,7 +2157,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE StockCheckFreeze DISABLE KEYS */;
 LOCK TABLES StockCheckFreeze WRITE;
-INSERT INTO StockCheckFreeze VALUES ('123','DEN',-13.4),('125','DEN',2515.5),('130','DEN',5867),('140','DEN',2872),('HON90021','DEN',8698.5),('HOND9022','DEN',8226);
+INSERT INTO StockCheckFreeze VALUES ('123','DEN',-2),('125','DEN',87),('127','DEN',0),('130','DEN',0),('140','DEN',0),('HON90021','DEN',7),('HON90022','DEN',-7),('HONShock','DEN',0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE StockCheckFreeze ENABLE KEYS */;
 
@@ -2318,7 +2318,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE WWW_Users DISABLE KEYS */;
 LOCK TABLES WWW_Users WRITE;
-INSERT INTO WWW_Users VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2004-11-06 18:07:24','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en'),('testy','weberp','Test Remote User','GRANHR','','','DEN',6,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en');
+INSERT INTO WWW_Users VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2004-11-13 10:36:43','','A4','1,1,1,1,1,1,1,1,',0,50,'fresh','it'),('testy','weberp','Test Remote User','GRANHR','','','DEN',6,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE WWW_Users ENABLE KEYS */;
 

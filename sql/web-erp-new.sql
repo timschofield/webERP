@@ -1639,7 +1639,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE Currencies DISABLE KEYS */;
 LOCK TABLES Currencies WRITE;
-INSERT INTO Currencies VALUES ('Australian Dollars','AUD','Australia','cents',1.7000),('Deutsche Marks','DEM','German','Pfenig',1.8000),('Pounds','GBP','England','Pence',0.8000),('Yen','JPY','Japan','Yen',150.0000),('N Z Dollars','NZD','New Zealand','Cents',2.0000),('US Dollars','USD','United States','Cents',1.0000);
+INSERT INTO Currencies VALUES ('Australian Dollars','AUD','Australia','cents',1.7000),('Deutsche','DEM','German','Pfenig',1.8000),('Pounds','GBP','England','Pence',0.8000),('Yen','JPY','Japan','Yen',150.0000),('N Z Dollars','NZD','New Zealand','Cents',2.0000),('US Dollars','USD','United States','Cents',1.0000);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE Currencies ENABLE KEYS */;
 
@@ -1749,7 +1749,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE WWW_Users DISABLE KEYS */;
 LOCK TABLES WWW_Users WRITE;
-INSERT INTO WWW_Users VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2004-11-06 18:07:24','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en'),('testy','weberp','Test Remote User','GRANHR','','','DEN',6,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en');
+INSERT INTO WWW_Users VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2004-11-13 10:36:43','','A4','1,1,1,1,1,1,1,1,',0,50,'fresh','it'),('testy','weberp','Test Remote User','GRANHR','','','DEN',6,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE WWW_Users ENABLE KEYS */;
 
