@@ -11,6 +11,10 @@ if (!isset($_SESSION['CustomerID'])){ //initialise if not already done
 	$_SESSION['CustomerID']="";
 }
 
+if (!isset($_POST['Search'])){
+	$_POST['Search']="";
+}
+
 if ($_POST['Search']=="Search Now"){
 
 	If ($_POST['Keywords'] AND $_POST['CustCode']) {
@@ -58,6 +62,9 @@ if ($_POST['Search']=="Search Now"){
 } //end of if search
 
 
+If (!isset($_POST['Select'])){
+	$_POST['Select']="";
+}
 
 If ($_POST['Select']!="" OR ($_SESSION['CustomerID']!="" AND !isset($_POST['Keywords']) AND !isset($_POST['CustCode']))) {
 
@@ -109,7 +116,7 @@ If ($_POST['Select']!="" OR ($_SESSION['CustomerID']!="" AND !isset($_POST['Keyw
 
 <?php
 
-If ($result) {
+If (isset($result)) {
 
 	echo "<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>";
 	$TableHeader = "<TR><TD Class='tableheader'>Code</TD><TD Class='tableheader'>Customer Name</TD><TD Class='tableheader'>Branch</TD><TD Class='tableheader'>Contact</TD><TD Class='tableheader'>Phone</TD><TD Class='tableheader'>Fax</TD></TR>";

@@ -12,4 +12,4 @@ Send this file: <INPUT NAME="userfile" TYPE="file">
 <INPUT TYPE="submit" VALUE="Send File">
 </FORM>
 
-<? include("includes/footer.inc"); ?>
+<?php include("includes/footer.inc"); ?>

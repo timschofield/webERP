@@ -12,7 +12,7 @@ if (isset($_GET['StockID'])){  //The page is called with a StockID
 	$_POST['Select'] = $_GET['StockID'];
 }
 
-if ($_GET['NewSearch']==True){
+if (isset($_GET['NewSearch'])){
 	$_SESSION['SelectedStockItem']="";
 	unset($StockID);
 }
@@ -36,7 +36,10 @@ if (DB_num_rows($result1)==0){
 <TD>In Stock Category:
 <SELECT NAME="StockCat">
 <?php
-	if (!isset($_POST['StockCat']) OR $_POST['StockCat']=="All"){
+	if (!isset($_POST['StockCat'])){
+		$_POST['StockCat']="";
+	}
+	if ($_POST['StockCat']=="All"){
 		echo "<OPTION SELECTED VALUE='All'>All";
 	} else {
 		echo "<OPTION VALUE='All'>All";
@@ -62,7 +65,9 @@ if (DB_num_rows($result1)==0){
 <HR>
 
 <?php
-
+if (!isset($_POST['Search'])){
+	$_POST['Search'] ="";
+}
 if ($_POST['Search']=="Search Now"){
 
 	If ($_POST['Keywords'] AND $_POST['StockCode']) {
@@ -81,9 +86,9 @@ if ($_POST['Search']=="Search Now"){
 		$SearchString = $SearchString. substr($_POST['Keywords'],$i)."%";
 
 		if ($_POST['StockCat'] == 'All'){
-			$SQL = "SELECT StockMaster.StockID, Description, Sum(LocStock.Quantity) AS QOH, Units FROM StockMaster, LocStock WHERE StockMaster.StockID=LocStock.StockID AND Description LIKE '$SearchString' GROUP BY StockMaster.StockID, Description ORDER BY StockMaster.StockID";
+			$SQL = "SELECT StockMaster.StockID, Description, Sum(LocStock.Quantity) AS QOH, Units, MBflag FROM StockMaster, LocStock WHERE StockMaster.StockID=LocStock.StockID AND Description LIKE '$SearchString' GROUP BY StockMaster.StockID, Description ORDER BY StockMaster.StockID";
 		} else {
-			$SQL = "SELECT StockMaster.StockID, Description, Sum(LocStock.Quantity) AS QOH, Units FROM StockMaster, LocStock WHERE StockMaster.StockID=LocStock.StockID AND Description LIKE '$SearchString' AND CategoryID='" . $_POST['StockCat'] . "' GROUP BY StockMaster.StockID, Description ORDER BY StockMaster.StockID";
+			$SQL = "SELECT StockMaster.StockID, Description, Sum(LocStock.Quantity) AS QOH, Units, MBflag FROM StockMaster, LocStock WHERE StockMaster.StockID=LocStock.StockID AND Description LIKE '$SearchString' AND CategoryID='" . $_POST['StockCat'] . "' GROUP BY StockMaster.StockID, Description ORDER BY StockMaster.StockID";
 		}
 	} elseif (isset($_POST['StockCode'])){
 
@@ -164,11 +169,14 @@ If (isset($result) AND !isset($_POST['Select']) ) {
 }
 //end if results to show
 
+if (!isset($_POST['Search'])){
+	$_POST['Search']="";
+}
 
 
-If (!$_POST['Search']=='Search Now' AND ($_POST['Select']!="" OR $_SESSION['SelectedStockItem']!="")) {
+If (!$_POST['Search']=='Search Now' AND (isset($_POST['Select']) OR isset($_SESSION['SelectedStockItem']))) {
 
-	if ($_POST['Select']!=""){
+	if (isset($_POST['Select'])){
 		$_SESSION['SelectedStockItem']= $_POST['Select'];
 		$StockID = $_POST['Select'];
 		unset($_POST['Select']);

@@ -36,11 +36,15 @@ Fatal error: The script tried to execute a method or access a property of an inc
 A3: This error occurs because some linux distributions that came bundled with PHP or were installed from an .rpm file were installed with the setting for session_auto_start in php.ini set to 1. Classes/objects cannot be defined before a session is started so any php script which needs an object to run will fail. The solution is to edit the php.ini file - normally C:\Windows\php.ini or /usr/local/lib/php.ini to change session.auto_start = 0 then restart the web server.
 
 
+
+
 Q4: I get the following error message or similar:
 
 Warning: session_start(): open(C:\Program Files\PHP\sessiondata\sess_35560340884acf1c04184d4df2830fb2, O_RDWR) failed: Permission denied (13) in c:\inetpub\wwwroot\web-erp\includes\session.inc on line 14
 
 A4: This error means that the directory where you have indicated that session information should be held is not writable by the web-server.
+
+
 
 Q5: I get the following error message or similar:
 
@@ -54,6 +58,7 @@ error_reporting  = E_ALL & ~A_NOTICE
 The web-server may need to be restarted - a CGI installation will not need to be restarted.
 
 
+
 Q6: The links on each page do not work I keep getting page not found errors when selecting menu links.
 
 A6: Some installations appear not to be able to work out the value of the variable $rootpath using the line
@@ -65,6 +70,8 @@ in config.php. The symptom described is the result. If all else fails just chang
 $rootpath = '/web-erp';
 
 note the trailing / is not required.
+
+
 
 
 Q7: I am starting from a point well into the business can I start issuing PO and invoices using the same sequence I am already running?

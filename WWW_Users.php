@@ -345,4 +345,4 @@ echo "</SELECT></TD></TR>";
 
 </FORM>
 
-<? include("includes/footer.inc"); ?>
+<?php include("includes/footer.inc"); ?>

@@ -8,7 +8,6 @@ include("includes/header.inc");
 include("includes/DateFunctions.inc");
 include("includes/SQL_CommonFunctions.inc");
 
-
 if (isset($_GET['StockID'])){
 	$StockID =$_GET['StockID'];
 } elseif (isset($_POST['StockID'])){

@@ -12,7 +12,7 @@
     //---------------------------------------------------
 
     // Application version
-    $Version = "0.2.8";
+    $Version = "0.2.9";
 
     // The company name to appear in the headings on each page displayed
     $CompanyName = "Web-ERP Demo";

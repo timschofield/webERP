@@ -65,7 +65,7 @@ Case "orders": //Sales Orders
     <td>
         <table width="100%">
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/transactions.png" alt="Transactions" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/transactions.png" alt="Transactions" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -84,7 +84,7 @@ Case "orders": //Sales Orders
             </tr>
 
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/reports.png" alt="Inquiries and Reports" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/reports.png" alt="Inquiries and Reports" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -119,7 +119,7 @@ Case "AR": //Debtors Module
     <td>
         <table width="100%">
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/transactions.png" alt="Transactions" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/transactions.png" alt="Transactions" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -139,7 +139,7 @@ Case "AR": //Debtors Module
             </tr>
 
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/reports.png" alt="Inquiries and Reports" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/reports.png" alt="Inquiries and Reports" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -163,7 +163,7 @@ Case "AR": //Debtors Module
             </tr>
 
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/maintenance.png" alt="Maintenance" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/maintenance.png" alt="Maintenance" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -192,7 +192,7 @@ Case "AP": //Creditors Module
     <td>
         <table width="100%">
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/transactions.png" alt="Transactions" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/transactions.png" alt="Transactions" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -210,7 +210,7 @@ Case "AP": //Creditors Module
             </tr>
 
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/reports.png" alt="Inquiries and Reports" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/reports.png" alt="Inquiries and Reports" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -229,7 +229,7 @@ Case "AP": //Creditors Module
             </tr>
 
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/maintenance.png" alt="Maintenance" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/maintenance.png" alt="Maintenance" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -259,7 +259,7 @@ Case "PO": //Purchase ordering
     <td>
         <table width="100%">
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/transactions.png" alt="Transactions" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/transactions.png" alt="Transactions" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -279,7 +279,7 @@ Case "PO": //Purchase ordering
             </tr>
 
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/reports.png" alt="Inquiries and Reports" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/reports.png" alt="Inquiries and Reports" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -296,7 +296,7 @@ Case "PO": //Purchase ordering
             </tr>
 
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/maintenance.png" alt="Maintenance" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/maintenance.png" alt="Maintenance" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -326,7 +326,7 @@ Case "stock": //Inventory Module
     <td>
         <table width="100%">
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/transactions.png" alt="Transactions" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/transactions.png" alt="Transactions" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -346,7 +346,7 @@ Case "stock": //Inventory Module
             </tr>
 
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/reports.png" alt="Inquiries and Reports" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/reports.png" alt="Inquiries and Reports" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -371,7 +371,7 @@ Case "stock": //Inventory Module
             </tr>
 
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/maintenance.png" alt="Maintenance" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/maintenance.png" alt="Maintenance" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -405,7 +405,7 @@ Case "manuf": //Manufacturing Module
     <td>
         <table width="100%">
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/transactions.png" alt="Transactions" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/transactions.png" alt="Transactions" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -422,7 +422,7 @@ Case "manuf": //Manufacturing Module
             </tr>
             
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/reports.png" alt="Inquiries and Reports" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/reports.png" alt="Inquiries and Reports" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -441,7 +441,7 @@ Case "manuf": //Manufacturing Module
             </tr>
             
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/maintenance.png" alt="Maintenance" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/maintenance.png" alt="Maintenance" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -471,7 +471,7 @@ Case "system": //System setup
     <td>
         <table width="100%">
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/company.png" alt="Company Setup" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/company.png" alt="Company Setup" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -489,7 +489,7 @@ Case "system": //System setup
             </tr>
             
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/security.png" alt="Security and Users Setup" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/security.png" alt="Security and Users Setup" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -506,7 +506,7 @@ Case "system": //System setup
             </tr>
 
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/ar.png" alt="Accounts Receivable Setup" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/ar.png" alt="Accounts Receivable Setup" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -533,7 +533,7 @@ Case "system": //System setup
             </tr>
 
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/inventory.png" alt="Inventory Setup" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/inventory.png" alt="Inventory Setup" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -552,7 +552,7 @@ Case "system": //System setup
             </tr>
 
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/bank.gif" alt="Bank Setup" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/bank.gif" alt="Bank Setup" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -569,7 +569,7 @@ Case "system": //System setup
             </tr>
 
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/currency.gif" alt="Currency Setup" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/currency.gif" alt="Currency Setup" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -586,7 +586,7 @@ Case "system": //System setup
             </tr>
             
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/inquiries.png" alt="Inquiries" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/inquiries.png" alt="Inquiries" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -615,7 +615,7 @@ Case "GL": //General Ledger
     <td>
         <table width="100%">
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/transactions.png" alt="Transactions" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/transactions.png" alt="Transactions" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -636,7 +636,7 @@ Case "GL": //General Ledger
             </tr>
             
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/reports.png" alt="Inquiries and Reports" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/reports.png" alt="Inquiries and Reports" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">
@@ -656,7 +656,7 @@ Case "GL": //General Ledger
             </tr>
 
             <tr>
-                <td class="menu_group_img"><img src="<?echo $rootpath;?>/css/<?echo $theme;?>/images/maintenance.png" alt="Maintenance" /></td>
+                <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/maintenance.png" alt="Maintenance" /></td>
 
                 <td valign="top" class="menu_group">
 				<table width="100%">

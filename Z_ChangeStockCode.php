@@ -216,4 +216,4 @@ echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?=" . $SID . "' METHOD=POST>";
 
 </FORM>
 
-<? include("includes/footer.inc"); ?>
+<?php include("includes/footer.inc"); ?>

@@ -247,4 +247,4 @@ while ($myrow = DB_fetch_array($result)) {
 
 </FORM>
 
-<? include("includes/footer.inc"); ?>
+<?php include("includes/footer.inc"); ?>
