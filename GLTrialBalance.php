@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 /*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances
 and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen
@@ -101,15 +101,10 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 
 	$SQL = "SELECT AccountGroups.GroupName, AccountGroups.PandL, ChartDetails.AccountCode , ChartMaster.AccountName, Sum(CASE WHEN ChartDetails.Period=" . $_POST['FromPeriod'] . " THEN ChartDetails.BFwd ELSE 0 END) AS FirstPrdBFwd, Sum(CASE WHEN ChartDetails.Period=" . $_POST['FromPeriod'] . " THEN ChartDetails.BFwdBudget ELSE 0 END) AS FirstPrdBudgetBFwd, Sum(CASE WHEN ChartDetails.Period=" . $_POST['ToPeriod'] . " THEN ChartDetails.BFwd + ChartDetails.Actual ELSE 0 END) AS LastPrdCFwd, Sum(CASE WHEN ChartDetails.Period=" . $_POST['ToPeriod'] . " THEN ChartDetails.Actual ELSE 0 END) AS MonthActual, Sum(CASE WHEN ChartDetails.Period=" . $_POST['ToPeriod'] . " THEN ChartDetails.Budget ELSE 0 END) AS MonthBudget, Sum(CASE WHEN ChartDetails.Period=" . $_POST['ToPeriod'] . " THEN ChartDetails.BFwdBudget + ChartDetails.Budget ELSE 0 END) AS LastPrdBudgetCFwd  FROM ChartMaster INNER JOIN AccountGroups ON ChartMaster.Group_ = AccountGroups.GroupName INNER JOIN ChartDetails ON ChartMaster.AccountCode= ChartDetails.AccountCode GROUP BY AccountGroups.GroupName, AccountGroups.PandL, ChartDetails.AccountCode, ChartMaster.AccountName Order By AccountGroups.PandL DESC, AccountGroups.SequenceInTB, ChartDetails.AccountCode";
 
-	$AccountsResult = DB_query($SQL,$db);
-
-	if (DB_error_no($db) !=0) {
-		echo "<BR>No general ledger accounts were returned by the SQL because - " . DB_error_msg($db);
-		if ($debug==1){
-			echo "<BR>$SQL";
-		}
-		exit;
-	}
+	$AccountsResult = DB_query($SQL,
+				$db,
+				"<BR>No general ledger accounts were returned by the SQL because",
+				"<BR>The SQL that failed was:");
 
 	echo "<CENTER><FONT SIZE=4 COLOR=BLUE><B>Trial Balance for the month of $PeriodToDate and for the $NumberOfMonths months to $PeriodToDate</B></FONT><BR>";
 
@@ -117,7 +112,14 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 	Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
 
 	echo "<TABLE CELLPADDING=2>";
-	$TableHeader = "<TR><TD class='tableheader'>Account</TD><TD class='tableheader'>Account Name</TD><TD class='tableheader'>Month Actual</TD><TD class='tableheader'>Month Budget</TD><TD class='tableheader'>Period Actual</TD><TD class='tableheader'>Period Budget</TD></TR>";
+	$TableHeader = "<TR>
+			<TD class='tableheader'>Account</TD>
+			<TD class='tableheader'>Account Name</TD>
+			<TD class='tableheader'>Month Actual</TD>
+			<TD class='tableheader'>Month Budget</TD>
+			<TD class='tableheader'>Period Actual</TD>
+			<TD class='tableheader'>Period Budget</TD>
+			</TR>";
 
 	echo $TableHeader;
 	$j = 1;
@@ -135,8 +137,22 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 		if ($myrow["GroupName"]!= $ActGrp){
 
 			if ($GrpActual+$GrpBudget+$GrpPrdActual+$GrpPrdBudget !=0){
-				echo "<TR><td COLSPAN=2></TD><TD COLSPAN=4><HR></TD></TR>";
-				printf("<TR><td COLSPAN=2><FONT SIZE=4>%s Total</FONT></td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s</td></tr>",$ActGrp,number_format($GrpActual,2), number_format($GrpBudget,2), number_format($GrpPrdActual,2), number_format($GrpPrdBudget,2));
+				echo "<TR>
+					<TD COLSPAN=2></TD>
+					<TD COLSPAN=4><HR></TD>
+				</TR>";
+				printf("<TR>
+					<td COLSPAN=2><FONT SIZE=4>%s Total</FONT></td>
+					<td ALIGN=RIGHT>%s</td>
+					<td ALIGN=RIGHT>%s</td>
+					<td ALIGN=RIGHT>%s</td>
+					<td ALIGN=RIGHT>%s</td>
+					</tr>",
+					$ActGrp,
+					number_format($GrpActual,2),
+					number_format($GrpBudget,2),
+					number_format($GrpPrdActual,2),
+					number_format($GrpPrdBudget,2));
 			}
 			$GrpActual =0;
 			$GrpBudget =0;
@@ -144,7 +160,10 @@ if ((! isset($_POST["FromPeriod"]) AND ! isset($_POST["ToPeriod"])) OR $_POST["S
 			$GrpPrdBudget =0;
 
 			$ActGrp = $myrow["GroupName"];
-			printf("<TR><td COLSPAN=6><FONT SIZE=4 COLOR=BLUE><B>%s</B></FONT></TD></TR>", $myrow["GroupName"]);
+			printf("<TR>
+				<td COLSPAN=6><FONT SIZE=4 COLOR=BLUE><B>%s</B></FONT></TD>
+				</TR>",
+				$myrow["GroupName"]);
 			$j++;
 
 		}

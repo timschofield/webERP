@@ -1,5 +1,5 @@
 WEB-ERP Installation
-
+/* $Revision: 1.5 $ */
 Upgrading
 
 A script is included under web-erp/sql to update an existing weberp database to the current version. The upgrade script assumes the weberp database is called weberp. The script must be edited to change the name of the database if this is not the case.

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $title="Main Menu";
 
 $PageSecurity = 1;
@@ -666,6 +666,7 @@ Case "GL": //General Ledger
 						<a href="<?php echo $rootpath."/PDFChequeListing.php?" . SID; ?>">Cheque Payments Listing</a><br />
 						<a href="<?php echo $rootpath."/GLTrialBalance.php?" . SID; ?>">Trial Balance</a><br />
 						<a href="<?php echo $rootpath."/GLProfit_Loss.php?" . SID; ?>">Profit and Loss Statement</a><br />
+						<a href="<?php echo $rootpath."/GLBalanceSheet.php?" . SID; ?>">Balance Sheet</a><br />
 				    	</td>
 				    </tr>
 				</table>

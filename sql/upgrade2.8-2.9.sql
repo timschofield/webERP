@@ -1,3 +1,5 @@
+use weberp;
+
 ALTER TABLE `BankAccounts` CHANGE `AccountCode` `AccountCode` INT( 11 ) NOT NULL;
 
 ALTER TABLE TaxAuthorities ADD INDEX (TaxGLCode);

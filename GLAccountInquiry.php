@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*As modified by Dirk Eversmann */
 
 $title = "General Ledger Account Inquiry";
@@ -113,7 +113,14 @@ if ($_POST["Show"]=="Show Account Transactions"){
 
 	echo "<table>\n";
 
-	$TableHeader = "<TR><TD class='tableheader'>Type</TD><TD class='tableheader'>Number</TD><TD class='tableheader'>Date</TD><TD class='tableheader'>Debit</TD><TD class='tableheader'>Credit</TD><TD class='tableheader'>Narrative</TD></TR>";
+	$TableHeader = "<TR>
+			<TD class='tableheader'>Type</TD>
+			<TD class='tableheader'>Number</TD>
+			<TD class='tableheader'>Date</TD>
+			<TD class='tableheader'>Debit</TD>
+			<TD class='tableheader'>Credit</TD>
+			<TD class='tableheader'>Narrative</TD>
+			</TR>";
 
 	echo $TableHeader;
 
@@ -175,7 +182,20 @@ if ($_POST["Show"]=="Show Account Transactions"){
 		$FormatedTranDate = ConvertSQLDate($myrow["TranDate"]);
 		$URL_to_TransDetail = "$rootpath/GLTransInquiry.php?" . SID . "TypeID=" . $myrow["Type"] . "&TransNo=" . $myrow["TypeNo"];
 
-		printf("<td>%s</td><td><A HREF='%s'>%s</A></td><td>%s</td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s</td><td>%s</td></tr>", $myrow["TypeName"],$URL_to_TransDetail, $myrow["TypeNo"],$FormatedTranDate, $DebitAmount, $CreditAmount, $myrow['Narrative']);
+		printf("<td>%s</td>
+			<td><A HREF='%s'>%s</A></td>
+			<td>%s</td>
+			<td ALIGN=RIGHT>%s</td>
+			<td ALIGN=RIGHT>%s</td>
+			<td>%s</td>
+			</tr>",
+			$myrow["TypeName"],
+			$URL_to_TransDetail,
+			$myrow["TypeNo"],
+			$FormatedTranDate,
+			$DebitAmount,
+			$CreditAmount,
+			$myrow['Narrative']);
 
 		$j++;
 
@@ -184,9 +204,20 @@ if ($_POST["Show"]=="Show Account Transactions"){
 			$j=1;
 		}
 	}
-	echo "<TR bgcolor='#FDFEEF'><TD COLSPAN=4><B>Running Total</B></TD><TD ALIGN=RIGHT><B>";
-	echo number_format(($RunningTotal),2) . "</B></TD><TD COLSPAN=2></TD></TR>";
 
+	echo "<TR bgcolor='#FDFEEF'><TD COLSPAN=3><B>";
+	if ($PandLAccount==True){
+		echo "Total Period Movement";
+	} else { /*its a balance sheet account*/
+		echo "Balance C/Fwd";
+	}
+	echo "</B></TD>";
+
+	if ($RunningTotal >0){
+		echo "<TD ALIGN=RIGHT><B>" . number_format(($RunningTotal),2) . "</B></TD><TD COLSPAN=2></TD></TR>";
+	}else {
+		echo "<TD></TD><TD ALIGN=RIGHT><B>" . number_format((-$RunningTotal),2) . "</B></TD><TD COLSPAN=2></TD></TR>";
+	}
 } /* end of if Show button hit */
 
 echo "</table>\n";
