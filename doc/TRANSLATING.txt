@@ -2,9 +2,7 @@ webERP Translations
 
 webERP can be translated to any language so that the entire web-interface is displayed in the language of any user. The system can display different languages for different users - all at the same time - depending on the setting of the language in the individual users' settings.
 
-Caveats: It is important to note that at the current time languages that require multi-byte fonts such as Chinese, Japanese, Arabic - whilst the browser screens will display the translations correctly, they will not be able to print pdf reports. PDF reports are created using the R & OS pdf.php class and this requires single byte .afm fonts.
-
-Further, some work is still required to get these reports working even for single byte character sets. This work can really only proceed when the development team have translations to work with.
+Caveats: It is important to note that at the current time languages that require multi-byte fonts such as Chinese, Japanese, Arabic - whilst the browser screens will display the translations correctly, they will not be able to print pdf reports. PDF reports are created using the R & OS pdf.php class and this requires single byte .afm fonts. Reports would need to be re-written using an alternative pdf class - the FPDF class is understood to be capable in this regard.
 
 
 Procedure
@@ -39,24 +37,24 @@ webERP uses the GNU gettext package for language translations. PHP must be compi
 
 The gettext translation files are held in the locale directory, under this directory there are sub-directories for each locale, a two character code representing the language to be used. eg en for English, it for Italian etc. New directories will be made up on request if a translator wishes to have a local version for their language. Under the locale, two character abbreviation code directory there is a further sub-directory called LC_MESSAGES - this is where the translation files exist. There are two files in each of these directories:
 
-1. messages.po this file contains all the strings to be translated
-2. messages.mo this is a binary machine searchable tranlation file used by gettext. The .mo file is produced by a gettext utility using the .po. The effort is needed to get the .po file translated
+1. messages.po this file contains all the strings to be translated. This is the only file of concern for translators
+2. messages.mo this is a binary machine searchable tranlation file used by gettext. The .mo file is produced by a gettext utility using the .po. The effort is needed to get the .po file translated - the .mo file is easily created by the project admin.
 
-Any text editor can be used to edit the .po file GNU Emacs contains specific functionality for editing .po files there is a special PO-Mode
+Any text editor can be used to edit the .po file (GNU Emacs contains specific functionality for editing .po files there is a special PO-Mode)
 
 
 Understanding the messages.po File
 
 The translation is performed by tranlating the strings in the messages.po file into the other language. It is important to work on the most recent messages.po file from the locale/en/LC_MESSAGES/ deirectory in the CVS.
-However, the most recent messages template file will be emailed on request to the project administrator at info@webrp.org
+However, the most recent messages template file will be emailed on request to the project administrator at info@webrp.org or any request to the translation list.
 
 The messages.po is made up of sections
 
-eg.
+eg. for a French translation file
 
 #: AccountGroups.php:8 index.php:890
-msgid "Account Groups"
-msgstr ""
+msgid "An example string in English that needs to be translated"
+msgstr="Une corde d'exemple dans le ce anglais doit être traduite "
 
 the line #: AccountGroups.php:8 index.php:890
 
@@ -123,7 +121,7 @@ Administration
 Once this exercise has been completed the file must be returned to the project administrator: info@weberp.org for the .mo file to be created. The new directory will be returned in a zip file for extraction from the web-erp directory. The language will then be added to the webERP system for the benefit of other users as well. Future archives will include the translations
 submitted.
 
-The UserSettings.php script reads the directories available for different languages and setting the language to the two letter language abbreviation will activate that language for the user from that point on. This setting is retained for all future sessions for this user.
+Upon logging into the system each time the system sets the language used by looking up the user information to see what language they have set, for instance it or en. Notice it is always two lower case characters. The user can change which language is set by clicking on their user name at the top left which brings up User Settings. Changing the language setting will activate the new language right away upon saving the change. If a language is chosen for which there is no translation (yet) then the system will continue to work but default to English still.
 
 
 Other Resources
