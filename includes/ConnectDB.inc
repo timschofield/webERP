@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $db = mysql_connect($host , $dbuser, $dbpassword);
 mysql_select_db($DatabaseName,$db);
 
@@ -9,8 +9,8 @@ require_once ("includes/MiscFunctions.php");
 
 function DB_query ($SQL,
 		&$Conn,
-		$ErrorMessage="",
-		$DebugMessage="The SQL that failed was:",
+		$ErrorMessage='',
+		$DebugMessage='The SQL that failed was:',
 		$Transaction=false,
 		$TrapErrors=true){
 
@@ -18,7 +18,7 @@ function DB_query ($SQL,
 	$result=mysql_query($SQL,$Conn);
 
 	if (DB_error_no($Conn) != 0 AND $TrapErrors){
-		prnMsg($ErrorMessage."<BR>" . DB_error_msg($Conn),"error");
+		prnMsg($ErrorMessage. '<BR>' . DB_error_msg($Conn),'error');
 		if ($debug==1){
 			echo "<BR>" . $DebugMessage."<BR>$SQL<BR>";
 		}
@@ -26,7 +26,7 @@ function DB_query ($SQL,
 			$SQL = "rollback";
 			$Result = DB_query($SQL,$Conn);
 			if (DB_error_no($Conn) !=0){
-				prnErrMsg("<br />Error Rolling Back Transaction!!");
+				prnErrMsg('<BR>' . _('Error Rolling Back Transaction!!'));
 			}
 		}
 		include("includes/footer.inc");

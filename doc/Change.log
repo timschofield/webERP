@@ -1,5 +1,6 @@
 <P>webERP Change Log
 
+<P>12/9/04 GLPostings.inc was not adding new chart details when an account had been added - fixed
 <P>10/9/04 Steve - BOM.php,  BankMatching.php, BankReconciliation.php gettextified
 <P>8/9/04 Areas.php gettextified
 <P>6/9/04 Victor - CustomerReceipt.php CustomerTransInquiry.php gettextified
