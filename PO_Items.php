@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $title = "Purchase Order Items";
 
 $PageSecurity = 4;
@@ -137,8 +137,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		 $Result = DB_query($sql,$db);
 
 		 unset($_SESSION['PO']); /*Clear the PO data to allow a newy to be input*/
-		 echo "<BR><BR><A HREF='$rootpath/PO_Header.php?" . SID . "&NewOrder=Yes'>Enter A New Purchase Order</A>";
-		 echo "<BR><A HREF='$rootpath/PO_SelectPurchOrder.php?" . SID . "'>Select An Outstanding Purchase Order</A>";
+		 echo "<BR><BR><A HREF='$rootpath/PO_Header.php?" . SID . "&NewOrder=Yes'>" . _('Enter A New Purchase Order') . '</A>';
+		 echo "<BR><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . "'>" . _('Select An Outstanding Purchase Order') . '</A>';
 		 exit;
 	} /*end if there were no input errors trapped */
 } /* end of the code to do transfer the PO object to the database  - user hit the place PO*/

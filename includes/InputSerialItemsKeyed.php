@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -20,8 +20,6 @@ if (isset($_GET['LineNo'])){
 }
 
 /*Display the batches already entered with quantities if not serialised */
-echo "<br><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "DELETEALL=YES&StockID=" . $LineItem->StockID . "&LineNo=" . $LineNo ."'>Remove All</a><br>";
-
 
 echo "<INPUT TYPE=HIDDEN NAME='LineNo' VALUE=$LineNo>";
 

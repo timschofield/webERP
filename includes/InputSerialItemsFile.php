@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -13,14 +13,15 @@ for controlled items - used in:
 //we start with a batch or serial no header and need to display something for verification...
 global $tableheader;
 global $LineItem;
+//$LineNo = initPvar('LineNo', $LineNo);
 if (isset($_GET['LineNo'])){
 	$LineNo = $_GET['LineNo'];
 } elseif (isset($_POST['LineNo'])){
 	$LineNo = $_POST['LineNo'];
 }
 
-echo "<DIV Align=Center>";
-echo "<TABLE>";
+echo '<DIV Align=Center>';
+echo '<TABLE>';
 echo $tableheader;
 
 $TotalQuantity = 0; /*Variable to accumulate total quantity received */
@@ -33,17 +34,17 @@ foreach ($LineItem->SerialItems as $Bundle){
 	//only show 1st 10 lines
 	if ($RowCounter < 10){
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr bgcolor="#CCCCCC">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr bgcolor="#EEEEEE">';
 			$k=1;
 		}
 
 		echo "<TD>" . $Bundle->BundleRef . "</TD>";
 
 		if ($LineItem->Serialised==0){
-			echo "<TD ALIGN=RIGHT>" . number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . "</TD>";
+			echo '<TD ALIGN=RIGHT>' . number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</TD>';
 		}
 	}
 
@@ -54,14 +55,14 @@ foreach ($LineItem->SerialItems as $Bundle){
 
 /*Display the totals and rule off before allowing new entries */
 if ($LineItem->Serialised==1){
-	echo "<TR><TD ALIGN=RIGHT><B>Total Quantity: " . number_format($TotalQuantity,$LineItem->DecimalPlaces) . "</B></TD></TR>";
-	echo "<TR><TD><HR></TD></TR>";
+	echo '<TR><TD ALIGN=RIGHT><B>'.  _('Total Quantity'). ': ' . number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</B></TD></TR>';
+	echo '<TR><TD><HR></TD></TR>';
 } else {
-	echo "<TR><TD ALIGN=RIGHT><B>Total Quantity:</B></TD><TD ALIGN=RIGHT><B>" . number_format($TotalQuantity,$LineItem->DecimalPlaces) . "</B></TD></TR>";
-	echo "<TR><TD COLSPAN=2><HR></TD></TR>";
+	echo '<TR><TD ALIGN=RIGHT><B>'. _('Total Quantity'). ':</B></TD><TD ALIGN=RIGHT><B>' . number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</B></TD></TR>';
+	echo '<TR><TD COLSPAN=2><HR></TD></TR>';
 }
 
-echo "</TABLE><HR>";
+echo '</TABLE><HR>';
 //echo "<TABLE><TR><TD>";
 
 //DISPLAY FILE INFO
@@ -71,20 +72,21 @@ echo "</TABLE><HR>";
                 $LineItem->SerialItemsValid=false;
         }
         if ($_FILES['ImportFile']['name'] == "" && $_SESSION['CurImportFile'] == ""){
-                $msg = "Please Choose a file and then click 'Set Entry Type' to upload a file for import";
+                $msg = _('Please Choose a file and then click "Set Entry Type" to upload a file for import');
 		prnMsg($msg);
                 $LineItem->SerialItemsValid=false;
-		include("includes/footer.inc");
+		include('includes/footer.inc');
 		exit();
         }
-        if ($_FILES['ImportFile']['error'] != "" && !isset($_SESSION['CurImportFile'])){
-                echo "There was a problem with the uploaded file. We received:<br>".
-                         "Name:".$_FILES['ImportFile']['name']."<br>".
-                         "Size:".number_format($_FILES['ImportFile']['size']/1024,2)."kb<br>".
-                         "Type:".$_FILES['ImportFile']['type']."<br>";
-                echo "<br>Error was".$_FILES['ImportFile']['error']."<br>";
+        if ($_FILES['ImportFile']['error'] != '' && !isset($_SESSION['CurImportFile'])){
+                echo _('There was a problem with the uploaded file. We received:<br>').
+                         _('Name').':'.$_FILES['ImportFile']['name'].'<br>'.
+                         _('Size').':'.number_format($_FILES['ImportFile']['size']/1024,2).'kb<br>'.
+                         _('Type').':'.$_FILES['ImportFile']['type'].'<br>';
+                echo '<br>'._('Error was').' '.$_FILES['ImportFile']['error'].'<br>';
                 $LineItem->SerialItemsValid=false;
-                endWEBERP();
+                include('includes/footer.inc');
+                exit();
         } elseif ($_FILES['ImportFile']['name']!=""){
                 //User has uploaded importfile. reset items, then just 'get hold' of it for later.
 
@@ -96,38 +98,39 @@ echo "</TABLE><HR>";
 	        $_SESSION['CurImportFile'] = $_FILES['ImportFile'];
 		$_SESSION['CurImportFile']['tmp_name'] = $LineItem->StockID."_".$LineNo."PO-RcvGoods";
                 if (!move_uploaded_file($_FILES['ImportFile']['tmp_name'],$_SESSION['CurImportFile']['tmp_name'])){
-                        pErrMsg("<br />Error Moving temporary file!!! Please check your configuration");
+                        pErrMsg('<br />'._('Error Moving temporary file!!! Please check your configuration') );
                         $LineItem->SerialItemsValid=false;
-			include("includes/footer.inc");
+			include('includes/footer.inc');
 			exit;
                 }
 
                 if ($_FILES['ImportFile']['name']!=""){
-                        echo "Successfully received:<br>";
+                        echo _('Successfully received').':<br>';
                 }
         } elseif (isset($_SESSION['CurImportFile']) && !isset($_POST['ValidateFile'])) {
                 //file exists, some action performed...
-                echo "Working with:<br>";
+                echo _('Working with'). ':<br>';
         }
 
 
 /********************************************
   Display file info for visual verification
 ********************************************/
-	echo "<TABLE>";
-	echo "<tr><td>Name:</td><td>".$_SESSION['CurImportFile']['name']."</td></tr>
-        <tr><td>Size:</td><td>" . number_format($_SESSION['CurImportFile']['size']/1024,4) . "kb</td></tr>
-        <tr><td>Type:</td><td>" . $_SESSION['CurImportFile']['type'] . "</td></tr>
-        <tr><td>TmpName:</td><td>" . $_SESSION['CurImportFile']['tmp_name'] . "</td></tr>
-       <tr><td>Status:</td><td>" . ($LineItem->SerialItemsValid?getMsg("Valid","success"):getMsg("Invalid","error")) . "</td></tr>
-       </TABLE>";
-        $invalid_imports." out of ".$TotalLines." records are invalid.<br>";
+	echo '<TABLE>';
+	echo '<tr><td>'._('Name').':</td><td>'.$_SESSION['CurImportFile']['name'].'</td></tr>
+        <tr><td>'. _('Size') .':</td><td>' . number_format($_SESSION['CurImportFile']['size']/1024,4) . 'kb</td></tr>
+        <tr><td>'. _('Type') .':</td><td>' . $_SESSION['CurImportFile']['type'] . '</td></tr>
+        <tr><td>'. _('TempName') .':</td><td>' . $_SESSION['CurImportFile']['tmp_name'] . '</td></tr>
+       <tr><td>'. _('Status') .':</td><td>' . 
+	($LineItem->SerialItemsValid?getMsg(_('Valid'),'success'):getMsg(_('Invalid'),'error')) . '</td></tr>
+       </TABLE>'.
+        $invalid_imports.' '. _('out of') .' '.$TotalLines.' '. _('records are invalid').'<br>';
 	$filename = $_SESSION['CurImportFile']['tmp_name'];
 
 if (!$LineItem->SerialItemsValid){
         // IF all items are not valid, show the raw first 10 lines of the file. maybe it will help.
 
-        $handle = fopen($filename, "r");
+        $handle = fopen($filename, 'r');
         $i=0;
         while (!feof($handle) && $i < 10) {
                 $contents .= fgets($handle, 4096);
@@ -135,23 +138,23 @@ if (!$LineItem->SerialItemsValid){
         }
         fclose($handle);
 
-	echo "<br>
+	echo '<br>
         <input type=submit name=ValidateFile value=ValidateFile>
-        <input type=hidden name=LineNo value=" . $LineNo . ">
-        <input type=hidden name=EntryType value=" . $_POST['EntryType'] .">
+        <input type=hidden name=LineNo value=' . $LineNo . '>
+        <input type=hidden name=EntryType value=' . $_POST['EntryType'] .'>
         </form>
         <p>1st 10 Lines of File....
         <hr width=15%>
 
-	<pre>";
+	<pre>';
 
 	echo $contents;
 
-	echo "</pre>";
+	echo '</pre>';
 
 } else {
         //Otherwise we have all valid records. show the first (100)  for visual verification.
-	echo "Below are the 1st 100 records as parsed<hr width=20%>";
+	echo 'Below are the 1st 100 records as parsed<hr width=20%>';
 	foreach($LineItem->SerialItems as $SItem){
 		echo $SItem->BundleRef."<br>";
 		$i++;
