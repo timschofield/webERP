@@ -1,6 +1,9 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $PageSecurity=15;
+
+$ModuleList = array(_('Orders'), _('Receivables'), _('Payables'), _('Purchasing'), _('Inventory'), _('Manufacturing'), _('General Ledger'), _('Setup'));
+
 
 include('includes/session.inc');
 $title = _('User Maintenance');
@@ -388,12 +391,10 @@ echo "</SELECT></TD></TR>";
 /*Make an array out of the comma seperated list of modules allowed*/
 $ModulesAllowed = explode(",",$_POST['ModulesAllowed']);
 
-$ModuleList = array(_('Orders'), _('Receivables'), _('Payables'), _('Purchasing'), _('Inventory'), _('Manufacturing'), _('General Ledger'), _('Setup'));
-
 $i=0;
 foreach($ModuleList as $ModuleName){
 
-	echo '<TR><TD>' . _('Display') . ' ' . $ModuleName . ' ' . _('options') . ":</TD><TD><SELECT name='Module_" . $i . "'>";
+	echo '<TR><TD>' . _('Display') . ' ' . $ModuleName . ' ' . _('options') . ": Value is " . $ModulesAllowed[$i]  . "</TD><TD><SELECT name='Module_" . $i . "'>";
 	if ($ModulesAllowed[$i]==0){
 		echo '<OPTION SELECTED VALUE=0>' . _('No');
 		echo '<OPTION VALUE=1>' . _('Yes');
@@ -419,6 +420,6 @@ echo '</SELECT></TD></TR>';
 echo "</TABLE>
 	<CENTER><input type='Submit' name='submit' value='" . _('Enter Information') . "'></CENTER></FORM>";
 
-include("includes/footer.inc");
+include('includes/footer.inc');
 
 ?>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 5;
 
@@ -14,12 +14,12 @@ include('includes/DateFunctions.inc');
 Function Is_ValidAccount ($ActNo) {
 
 if (StrLen($ActNo) < 16) {
-    echo _('The account number must have 16 numeric characters in it');
+    echo _('NZ account numbers must have 16 numeric characters in it');
     return False;
 }
 
 if (!Is_double((double) $ActNo)) {
-    echo _('The account number entered must use all numeric characters in it');
+    echo _('NZ account numbers entered must use all numeric characters in it');
     return False;
 }
 
@@ -27,7 +27,7 @@ $BankPrefix = substr($ActNo,0, 2);
 $BranchNumber = (int) (substr($ActNo, 3, 4));
 
 if ($BankPrefix == '29') {
-	echo _('Accounts codes with the United Bank are not verified') . ', ' . _('be careful to enter the correct account number');
+	echo _('NZ Accounts codes with the United Bank are not verified') . ', ' . _('be careful to enter the correct account number');
 	exit;
 }
 
@@ -138,7 +138,7 @@ case '33':
 
 default:
     echo _('The prefix') . ' - ' . $BankPrefix . ' ' . _('is not a valid New Zealand Bank') . '.<BR>' .
-    		_('If you are using the Logic Works system outside New Zealand error trapping relevant to your country should be used');
+    		_('If you are using webERP outside New Zealand error trapping relevant to your country should be used');
     return False;
     exit;
 
@@ -315,22 +315,22 @@ if (isset($_POST['submit'])) {
 
 	if (strlen($_POST['SuppName']) > 40 or strlen($_POST['SuppName']) == 0 or $_POST['SuppName'] == '') {
 		$InputError = 1;
-		echo '<BR>' . _('The supplier name must be entered and be forty characters or less long');
+		prnMsg(_('The supplier name must be entered and be forty characters or less long'),'error');
 	} elseif (strlen($SupplierID) == 0) {
 		$InputError = 1;
-		echo '<BR>' . _('The Supplier Code cannot be empty');
+		prnMsg(_('The Supplier Code cannot be empty'),'error');
 	} elseif (strstr($SupplierID,"'") or strstr($SupplierID,"+") or strstr($SupplierID,"\"") or strstr($SupplierID,"&") or strstr($SupplierID," ") or strstr($SupplierID,".") or strstr($SupplierID,'"') or strstr($SupplierID,"\\")) {
 		$InputError = 1;
-		echo '<BR>' . _('The supplier code cannot contain any of the following characters') . " - . ' & + \" \\" . ' ' ._('or a space');
+		prnMsg(_('The supplier code cannot contain any of the following characters') . " - . ' & + \" \\" . ' ' ._('or a space'),'error');
 	} elseif (strlen($_POST['BankRef']) > 12) {
 		$InputError = 1;
-		echo '<BR>' . _('The bank reference text must be less than 12 characters long');
+		prnMsg(_('The bank reference text must be less than 12 characters long'),'error');
 	} elseif (!is_date($_POST['SupplierSince'])) {
 		$InputError = 1;
-		echo '<BR>' . _('The supplier since field must be a date in the format') . ' ' . $DefaultDateFormat;
-	} elseif (strlen($_POST['BankAct']) > 1) {
+		prnMsg(_('The supplier since field must be a date in the format') . ' ' . $DefaultDateFormat,'error');
+	} elseif (strlen($_POST['BankAct']) > 1 ) {
 		if (!Is_ValidAccount($_POST['BankAct'])) {
-			$InputError = 1;
+			prnMsg(_('The bank account entry is not a valid New Zealand bank account number. This is (of course) no concern if the business operates outside of New Zealand'),'warn');
 		}
 	}
 
@@ -341,37 +341,65 @@ if (isset($_POST['submit'])) {
 
 		if (!isset($_POST['New'])) {
 
-			$sql = "UPDATE Suppliers SET SuppName='" . $_POST['SuppName'] . "', Address1='" . $_POST['Address1'] . 
-					 "', Address2='" . $_POST['Address2'] . "', Address3='" . $_POST['Address3'] . 
-					 "', Address4='" . $_POST['Address4'] . "', CurrCode='" . $_POST['CurrCode'] . 
-					 "', SupplierSince='$SQL_SupplierSince',  PaymentTerms='" . $_POST['PaymentTerms'] . 
-					 "', BankPartics='" . $_POST['BankPartics'] . "', BankRef='" . $_POST['BankRef'] . 
-					 "', BankAct='" . $_POST['BankAct'] . "', Remittance=" . $_POST['Remittance'] . 
-					 ", TaxAuthority=" . $_POST['TaxAuthority'] . " WHERE SupplierID = '$SupplierID'";
+			$sql = "UPDATE Suppliers SET SuppName='" . $_POST['SuppName'] . "', 
+							Address1='" . $_POST['Address1'] . "', 
+							Address2='" . $_POST['Address2'] . "', 
+							Address3='" . $_POST['Address3'] . "', 
+							Address4='" . $_POST['Address4'] . "', 
+							CurrCode='" . $_POST['CurrCode'] . "', 
+							SupplierSince='$SQL_SupplierSince',  
+							PaymentTerms='" . $_POST['PaymentTerms'] . "', 
+							BankPartics='" . $_POST['BankPartics'] . "', 
+							BankRef='" . $_POST['BankRef'] . "', 
+					 		BankAct='" . $_POST['BankAct'] . "', 
+							Remittance=" . $_POST['Remittance'] . ", 
+							TaxAuthority=" . $_POST['TaxAuthority'] . " 
+						WHERE SupplierID = '$SupplierID'";
 
 			$ErrMsg = _('The supplier could not be updated because');
 			$DbgMsg = _('The SQL that was used to update the supplier but failed was');
 
 			$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
-			echo '<BR>' . _('The supplier master record for') . ' ' . $SupplierID . ' ' . _('has been updated');
+			prnMsg(_('The supplier master record for') . ' ' . $SupplierID . ' ' . _('has been updated'),'success');
 
 		} else { //its a new supplier
 
-			$sql = "INSERT INTO Suppliers (SupplierID, SuppName, Address1, Address2, Address3, Address4, 
-					 CurrCode, SupplierSince, PaymentTerms, BankPartics, BankRef, BankAct, Remittance, TaxAuthority) 
-					 VALUES ('$SupplierID', '" . $_POST['SuppName'] . "', '" . $_POST['Address1'] . "', '" . 
-					 $_POST['Address2'] . "', '" . $_POST['Address3'] . "', '" . $_POST['Address4'] . "', '" . 
-					 $_POST['CurrCode'] . "', '" . $SQL_SupplierSince . "', '" . $_POST['PaymentTerms'] . "', '" . 
-					 $_POST['BankPartics'] . "', '" . $_POST['BankRef'] . "', '" . $_POST['BankAct'] . "', " . 
-					 $_POST['Remittance'] . ", " . $_POST['TaxAuthority'] . ")";
+			$sql = "INSERT INTO Suppliers (SupplierID, 
+							SuppName, 
+							Address1, 
+							Address2, 
+							Address3, 
+							Address4, 
+							CurrCode, 
+							SupplierSince, 
+							PaymentTerms, 
+							BankPartics, 
+							BankRef, 
+							BankAct, 
+							Remittance, 
+							TaxAuthority) 
+					 VALUES ('$SupplierID', 
+					 	'" . $_POST['SuppName'] . "', 
+						'" . $_POST['Address1'] . "', 
+						'" . $_POST['Address2'] . "', 
+						'" . $_POST['Address3'] . "', 
+						'" . $_POST['Address4'] . "', 
+						'" . $_POST['CurrCode'] . "', 
+						'" . $SQL_SupplierSince . "', 
+						'" . $_POST['PaymentTerms'] . "', 
+						'" . $_POST['BankPartics'] . "', 
+						'" . $_POST['BankRef'] . "', 
+						'" . $_POST['BankAct'] . "', 
+						" .  $_POST['Remittance'] . ", 
+						" . $_POST['TaxAuthority'] . ")";
 
 			$ErrMsg = _('The supplier') . ' ' . $_POST['SuppName'] . ' ' . _('could not be added because');
 			$DbgMsg = _('The SQL that was used to insert the supplier but failed was');
 			
 			$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
-			echo '<BR>' . _('A new supplier for') . ' ' . $_POST['SuppName'] . ' ' . _('has been added to the database');
+			prnMsg(_('A new supplier for') . ' ' . $_POST['SuppName'] . ' ' . _('has been added to the database'),'success');
 
 			unset ($SupplierID);
 			unset($_POST['SuppName']);
@@ -392,7 +420,7 @@ if (isset($_POST['submit'])) {
 		
 	} else {
 
-		echo '<BR>' . _('Validation failed') . ', ' . _('no updates or deletes took place');
+		prnMsg(_('Validation failed') . _('no updates or deletes took place'),'warn');
 
 	}
 
@@ -409,7 +437,7 @@ if (isset($_POST['submit'])) {
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0] > 0) {
 		$CancelDelete = 1;
-		echo '<BR>' . _('Cannot delete this supplier because there are transactions that refer to this supplier');
+		prnMsg(_('Cannot delete this supplier because there are transactions that refer to this supplier'),'warn');
 		echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('transactions against this supplier');
 
 	} else {
@@ -418,7 +446,7 @@ if (isset($_POST['submit'])) {
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0] > 0) {
 			$CancelDelete = 1;
-			echo '<BR>' . _('Cannot delete the supplier record because purchase orders have been created against this supplier');
+			prnMsg(_('Cannot delete the supplier record because purchase orders have been created against this supplier'),'warn');
 			echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('orders against this supplier');
 		} else {
 			$sql= "SELECT COUNT(*) FROM SupplierContacts WHERE SupplierID='$SupplierID'";
@@ -426,7 +454,7 @@ if (isset($_POST['submit'])) {
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0] > 0) {
 				$CancelDelete = 1;
-				echo '<BR>' . _('Cannot delete this supplier because there are supplier contacts set up against it') . ' - ' . _('delete these first');
+				prnMsg(_('Cannot delete this supplier because there are supplier contacts set up against it') . ' - ' . _('delete these first'),'warn');
 				echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('supplier contacts relating to this supplier');
 
 			}
@@ -436,9 +464,8 @@ if (isset($_POST['submit'])) {
 	if ($CancelDelete == 0) {
 		$sql="DELETE FROM Suppliers WHERE SupplierID='$SupplierID'";
 		$result = DB_query($sql, $db);
-		echo '<BR>' . _('Supplier record for') . ' ' . $SupplierID . ' ' . _('has been deleted') . ' ! <p>';
+		prnMsg(_('Supplier record for') . ' ' . $SupplierID . ' ' . _('has been deleted'),'success');
 		unset($SupplierID);
-		// Sherifoz 22.06.03 Clear the global "selected supplier"
 		unset($_SESSION['SupplierID']);
 	} //end if Delete supplier
 }

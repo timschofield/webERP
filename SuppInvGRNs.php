@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -186,8 +186,8 @@ if (!isset( $_SESSION['SuppTransTmp'])){
 								$myrow['ItemCode'],
 								$myrow['ItemDescription'],
 								$myrow['QtyRecd'],
-								number_format($myrow['Quantityinv'],2),
-								number_format($myrow['QtyRecd'] - $myrow['QuantityInv'],2),
+								$myrow['Quantityinv'],
+								$myrow['QtyRecd'] - $myrow['QuantityInv'],
 								$myrow['UnitPrice'],
 								$myrow['UnitPrice'],
 								$Complete,
@@ -220,7 +220,7 @@ if (isset($_GET['Modify'])){
 		<TD>' . $GRNTmp->GRNNo . '</TD>
 		<TD>' . $GRNTmp->ItemCode . ' ' . $GRNTmp->ItemDescription . '</TD>
 		<TD ALIGN=RIGHT>' . number_format($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv,2) . "</TD>
-		<TD><INPUT TYPE=Text Name='This_QuantityInv' Value=" . number_format($GRNTmp->This_QuantityInv,2) . ' SIZE=11 MAXLENGTH=10></TD>
+		<TD><INPUT TYPE=Text Name='This_QuantityInv' Value=" . $GRNTmp->This_QuantityInv . ' SIZE=11 MAXLENGTH=10></TD>
 		<TD ALIGN=RIGHT>' . $GRNTmp->OrderPrice . '</TD>
 		<TD><INPUT TYPE=Text Name="ChgPrice" Value=' . $GRNTmp->ChgPrice . ' SIZE=11 MAXLENGTH=10></TD>
 	</TR>';

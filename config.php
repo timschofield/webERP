@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.43 $ */
+/* $Revision: 1.44 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -13,7 +13,7 @@
 //---------------------------------------------------
 
 //DefaultLanguage
-$DefaultLanguage ='pl_PL';
+$DefaultLanguage ='en_GB';
 
 // Application version
 $Version = '2.9b';
@@ -129,6 +129,7 @@ $CountryOfOperation = 'USD';
 $NumberOfPeriodsOfStockUsage = 12;
 
 /* Accounts Payable */
+
 /* System check to see if quantity charged on purchase invoices exceeds the quantity received.
 If this parameter is checked the proportion by which the purchase invoice is an overcharge
 referred to before reporting an error */
