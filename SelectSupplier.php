@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 2;
 
@@ -39,7 +39,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		$msg='<BR>' . _('Supplier name keywords have been used in preference to the Supplier code extract entered');
 	}
 	If ($_POST['Keywords']=='' AND $_POST['SupplierCode']=='') {
-		$msg='<BR>' . _('At least one Supplier name keyword OR an extract of a Supplier code must be entered for the search');
+		$msg='<BR>' . _('At least one Supplier Name keyword OR an extract of a Supplier Code must be entered for the search');
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 
@@ -117,35 +117,35 @@ if (isset($_SESSION['SupplierID'])){
 
 	echo '<TR><TD VALIGN=TOP>';    /* Inquiry Options */
 
-	echo "<A HREF=\"$rootpath/SupplierInquiry.php?" . SID . 'SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Supplier Account Inquiry') . '</A><BR>';
+	echo "<A HREF=\"$rootpath/SupplierInquiry.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Supplier Account Inquiry') . '</A><BR>';
 
 	echo '<BR>';
 
-	echo "<BR><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . 'SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Outstanding Purchase Orders') . '</A>';
-	echo "<BR><A HREF='$rootpath/PO_SelectPurchOrder.php?" . SID . 'SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('View All Purchase Orders') . '</A>';
+	echo "<BR><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Outstanding Purchase Orders') . '</A>';
+	echo "<BR><A HREF='$rootpath/PO_SelectPurchOrder.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('View All Purchase Orders') . '</A>';
 
 	echo '<BR>';
 
-	echo "<BR><A HREF='$rootpath/Shipt_Select.php?" . SID . 'SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Search Shipments') . '</A>';
+	echo "<BR><A HREF='$rootpath/Shipt_Select.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Search Shipments') . '</A>';
 
 	echo '</TD><TD VALIGN=TOP>'; /* Supplier Transactions */
 
-	echo "<A HREF=\"$rootpath/SupplierInvoice.php?" . SID . 'SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Suppliers Invoice') . '</A><BR>';
-	echo "<A HREF=\"$rootpath/SupplierCredit.php?" . SID . 'SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Suppliers Credit Note') . '</A><BR>';
-	echo "<A HREF=\"$rootpath/Payments.php?" . SID . 'SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Payment to the Supplier') . '</A><BR>';
+	echo "<A HREF=\"$rootpath/SupplierInvoice.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Suppliers Invoice') . '</A><BR>';
+	echo "<A HREF=\"$rootpath/SupplierCredit.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Suppliers Credit Note') . '</A><BR>';
+	echo "<A HREF=\"$rootpath/Payments.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Payment to the Supplier') . '</A><BR>';
 
 	echo '<BR>';
 
-	echo "<BR><A HREF='$rootpath/ReverseGRN.php?" . SID . 'SupplierID=' . $_SESSION['SupplierID'] . "'>" . _('Reverse an Outstanding GRN') . '</A>';
+	echo "<BR><A HREF='$rootpath/ReverseGRN.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "'>" . _('Reverse an Outstanding GRN') . '</A>';
 
 	echo '</TD><TD VALIGN=TOP>'; /* Supplier Maintenance */
 
-	echo "<A HREF=\"$rootpath/Suppliers.php?" . SID . 'SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Modify Or Delete Supplier Details') . '</A>';
-	echo "<BR><A HREF=\"$rootpath/SupplierContacts.php?" . SID . 'SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Modify Or Delete Supplier Contact Details') . '</A>';
+	echo "<A HREF=\"$rootpath/Suppliers.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Modify Or Delete Supplier Details') . '</A>';
+	echo "<BR><A HREF=\"$rootpath/SupplierContacts.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Modify Or Delete Supplier Contact Details') . '</A>';
 
 	echo '<BR>';
 
-	echo "<BR><A HREF='$rootpath/Shipments.php?" . SID . "NewShipment=Yes'>" . _('Set Up A New Shipment') . '</A>';
+	echo "<BR><A HREF='$rootpath/Shipments.php?" . SID . "&NewShipment=Yes'>" . _('Set Up A New Shipment') . '</A>';
 
 	echo '</TD></TR></TABLE>';
 }
@@ -206,7 +206,7 @@ If (isset($result) AND !isset($SingleSupplierReturned)) {
     }
   }
 
-  echo "&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages. Go to Page') . ': ';
+  echo "&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 
   echo "<select name='PageOffset'>";
 

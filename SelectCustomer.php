@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 2;
 
@@ -29,7 +29,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		$_POST['Keywords'] = strtoupper($_POST['Keywords']);
 	}
 	If ($_POST['Keywords']=="" AND $_POST['CustCode']=="") {
-		$msg=_('At least one customer name keyword OR an extract of a customer code must be entered for the search');
+		$msg=_('At least one Customer Name keyword OR an extract of a Customer Code must be entered for the search');
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 
@@ -77,7 +77,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 			$_POST['Select'] = $myrow['DebtorNo'];
 			unset($result);
 		} elseif (DB_num_rows($result)==0){
-			prnMsg(_('No customer records contain the selected text - please alter your search criteria and try again'),'info');
+			prnMsg(_('No customer records contain the selected text') . ' - ' . _('please alter your search criteria and try again'),'info');
 		}
 
 	} //one of keywords or custcode was more than a zero length string
@@ -178,7 +178,7 @@ If (isset($result)) {
     }
   }
 
-  echo "&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages. Go to Page') . ': ';
+  echo "&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 ?>
 
   <select name="PageOffset">

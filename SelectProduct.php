@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 2;
 
@@ -31,14 +31,14 @@ if (!isset($_POST['PageOffset'])) {
 
 // Always show the search facilities
 
-$SQL="SELECT CategoryID,
+$SQL='SELECT CategoryID,
 		CategoryDescription
 	FROM StockCategory
-	ORDER BY CategoryDescription";
+	ORDER BY CategoryDescription';
 
 $result1 = DB_query($SQL,$db);
 if (DB_num_rows($result1)==0){
-	echo '<P><FONT SIZE=4 COLOR=RED>' . _('Problem Report') . ':</FONT><BR>' . _('There are no stock categories currently defined please use the link below to set them up') . '.';
+	echo '<P><FONT SIZE=4 COLOR=RED>' . _('Problem Report') . ':</FONT><BR>' . _('There are no stock categories currently defined please use the link below to set them up');
 	echo '<BR><A HREF="' . $rootpath . '/StockCategories.php?' . SID .'">' . _('Define Stock Categories') . '</A>';
 	exit;
 }
@@ -120,7 +120,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	}
 
 	If ($_POST['Keywords'] AND $_POST['StockCode']) {
-		$msg=_('Stock description keywords have been used in preference to the Stock code extract entered') . '.';
+		$msg=_('Stock description keywords have been used in preference to the Stock code extract entered');
 	}
 	If ($_POST['Keywords']) {
 		//insert wildcard characters in spaces
@@ -231,7 +231,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 			echo '<BR>' . _('The SQL that returned an error was') . ': <BR>' . $SQL;
 		}
 	} elseif (DB_num_rows($result)==0){
-		echo '<BR>' . _('No stock items were returned by this search please re-enter alternative criteria to try again') . '.';
+		echo '<BR>' . _('No stock items were returned by this search please re-enter alternative criteria to try again');
 	} elseif (DB_num_rows($result)==1){ /*autoselect it to avoid user hitting another keystroke */
 		$myrow = DB_fetch_row($result);
 		$_POST['Select'] = $myrow[0];
@@ -395,46 +395,46 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 
 	/*Stock Inquiry Options */
 
-        echo '<A HREF="' . $rootpath . '/StockMovements.php?' . SID . 'StockID=' . $StockID . '">' . _('Show Stock Movements') . '</A><BR>';
+        echo '<A HREF="' . $rootpath . '/StockMovements.php?' . SID . '&StockID=' . $StockID . '">' . _('Show Stock Movements') . '</A><BR>';
 
 	if ($Its_A_Kitset_Assembly_Or_Dummy==False){
-        echo '<A HREF="' . $rootpath . '/StockStatus.php?' . SID . 'StockID=' . $StockID . '">' . _('Show Stock Status') . '</A><BR>';
-        echo '<A HREF="' . $rootpath . '/StockUsage.php?' . SID . 'StockID=' . $StockID . '">' . _('Show Stock Usage') . '</A><BR>';
+        echo '<A HREF="' . $rootpath . '/StockStatus.php?' . SID . '&StockID=' . $StockID . '">' . _('Show Stock Status') . '</A><BR>';
+        echo '<A HREF="' . $rootpath . '/StockUsage.php?' . SID . '&StockID=' . $StockID . '">' . _('Show Stock Usage') . '</A><BR>';
 	}
-        echo '<A HREF="' . $rootpath . '/SelectSalesOrder.php?' . SID . 'SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</A><BR>';
-        echo '<A HREF="' . $rootpath . '/SelectCompletedOrder.php?' .SID . 'SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</A><BR>';
+        echo '<A HREF="' . $rootpath . '/SelectSalesOrder.php?' . SID . '&SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</A><BR>';
+        echo '<A HREF="' . $rootpath . '/SelectCompletedOrder.php?' .SID . '&SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</A><BR>';
 	if ($Its_A_Kitset_Assembly_Or_Dummy==False){
-		echo '<A HREF="' . $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . 'SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Purchase Orders') . '</A><BR>';
-		echo '<A HREF="' . $rootpath . '/PO_SelectPurchOrder.php?' . SID . 'SelectedStockItem=' . $StockID . '">' . _('Search All Purchase Orders') . '</A><BR>';
+		echo '<A HREF="' . $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . '&SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Purchase Orders') . '</A><BR>';
+		echo '<A HREF="' . $rootpath . '/PO_SelectPurchOrder.php?' . SID . '&SelectedStockItem=' . $StockID . '">' . _('Search All Purchase Orders') . '</A><BR>';
 		echo '<A HREF="' . $rootpath . '/' . $part_pics_dir . '/' . $StockID . '.jpg?' . SID . '">' . _('Show Part Picture (if available)') . '</A><BR>';
 	}
 
 	if ($Its_A_Dummy==False){
-		echo '<A HREF="' . $rootpath . '/BOMInquiry.php?' . SID . 'StockID=' . $StockID . '">' . _('View Costed Bill Of Material') . '</A><BR>';
-		echo '<A HREF="' . $rootpath . '/WhereUsedInquiry.php?' . SID . 'StockID=' . $StockID . '">' . _('Where This Item Is Used') . '</A><BR>';
+		echo '<A HREF="' . $rootpath . '/BOMInquiry.php?' . SID . '&StockID=' . $StockID . '">' . _('View Costed Bill Of Material') . '</A><BR>';
+		echo '<A HREF="' . $rootpath . '/WhereUsedInquiry.php?' . SID . '&StockID=' . $StockID . '">' . _('Where This Item Is Used') . '</A><BR>';
 	}
 	echo '</TD><TD>';
 
 	/*Stock Maintenance Options */
 
-        echo '<A HREF="' . $rootpath . '/Stocks.php?' . SID . 'StockID=' . $StockID . '">' . _('Modify Stock Item Details') . '</A><BR>';
+        echo '<A HREF="' . $rootpath . '/Stocks.php?' . SID . '&StockID=' . $StockID . '">' . _('Modify Stock Item Details') . '</A><BR>';
 	if ($Its_A_Kitset_Assembly_Or_Dummy==False){
-		echo '<A HREF="' . $rootpath . '/StockReorderLevel.php?' . SID . 'StockID=' . $StockID . '">' . _('Maintain Reorder Levels') . '</A><BR>';
-        	echo '<A HREF="' . $rootpath . '/StockCostUpdate.php?' . SID . 'StockID=' . $StockID . '">' . _('Maintain Standard Cost') . '</A><BR>';
-        	echo '<A HREF="' . $rootpath . '/PurchData.php?' . SID . 'StockID=' . $StockID . '">' . _('Maintain Purchasing Data') . '</A><BR>';
+		echo '<A HREF="' . $rootpath . '/StockReorderLevel.php?' . SID . '&StockID=' . $StockID . '">' . _('Maintain Reorder Levels') . '</A><BR>';
+        	echo '<A HREF="' . $rootpath . '/StockCostUpdate.php?' . SID . '&StockID=' . $StockID . '">' . _('Maintain Standard Cost') . '</A><BR>';
+        	echo '<A HREF="' . $rootpath . '/PurchData.php?' . SID . '&StockID=' . $StockID . '">' . _('Maintain Purchasing Data') . '</A><BR>';
 	}
 	if (! $Its_A_Kitset){
-		echo '<A HREF="' . $rootpath . '/Prices.php?' . SID . 'Item=' . $StockID . '">' . _('Maintain Pricing') . '</A><BR>';
+		echo '<A HREF="' . $rootpath . '/Prices.php?' . SID . '&Item=' . $StockID . '">' . _('Maintain Pricing') . '</A><BR>';
         	if (isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID']!="" AND Strlen($_SESSION['CustomerID'])>0){
-			echo '<A HREF="' . $rootpath . '/Prices_Customer.php?' . SID . 'Item=' . $StockID . '">' . _('Special Prices for customer') . ' - ' . $_SESSION['CustomerID'] . '</A><BR>';
+			echo '<A HREF="' . $rootpath . '/Prices_Customer.php?' . SID . '&Item=' . $StockID . '">' . _('Special Prices for customer') . ' - ' . $_SESSION['CustomerID'] . '</A><BR>';
         	}
 	}
 	echo '</TD><TD>';
 
 	/* Stock Transactions */
 	if ($Its_A_Kitset_Assembly_Or_Dummy==False){
-		echo '<A HREF="' . $rootpath . '/StockAdjustments.php?' . SID . 'StockID=' . $StockID . '">' . _('Quantity Adjustments') . '</A><BR>';
-        	echo '<A HREF="' . $rootpath . '/StockTransfers.php?' . SID . 'StockID=' . $StockID . '">' . _('Location Transfers') . '</A><BR>';
+		echo '<A HREF="' . $rootpath . '/StockAdjustments.php?' . SID . '&StockID=' . $StockID . '">' . _('Quantity Adjustments') . '</A><BR>';
+        	echo '<A HREF="' . $rootpath . '/StockTransfers.php?' . SID . '&StockID=' . $StockID . '">' . _('Location Transfers') . '</A><BR>';
 	}
 
 

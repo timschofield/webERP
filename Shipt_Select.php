@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 11;
 
@@ -36,7 +36,7 @@ If ($_POST['ResetPart']){
 If (isset($ShiptRef) && $ShiptRef!="") {
 	if (!is_numeric($ShiptRef)){
 		  echo '<BR>';
-		  prnMsg( _('The Shipment Number entered MUST be numeric.') );
+		  prnMsg( _('The Shipment Number entered MUST be numeric') );
 		  unset ($ShiptRef);
 	} else {
 		echo _('Shipment Number'). ' - '. $ShiptRef;
@@ -56,7 +56,7 @@ if ($_POST['SearchParts']){
 
 	If ($_POST['Keywords'] AND $_POST['StockCode']) {
 		echo '<BR>';
-		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered.'),'info');
+		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered'),'info');
 	}
 	$SQL = "SELECT StockMaster.StockID,
 			Description,
@@ -79,25 +79,22 @@ if ($_POST['SearchParts']){
 		}
 		$SearchString = $SearchString. substr($_POST['Keywords'],$i).'%';
 
-		$SQL .= "WHERE PurchOrderDetails.ShiptRef<>''
+		$SQL .= " WHERE PurchOrderDetails.ShiptRef<>''
 			AND PurchOrderDetails.ShiptRef<>0
-			AND StockMaster.Description LIKE '$SearchString' AND CategoryID='" . $_POST['StockCat'] . "'
-			GROUP BY StockMaster.StockID,
-				Description,
-				Units
-			ORDER BY StockMaster.StockID";
+			AND StockMaster.Description LIKE '$SearchString'
+			AND CategoryID='" . $_POST['StockCat'] . "'";
 
 	 } elseif ($_POST['StockCode']){
 
-		$SQL .= "WHERE PurchOrderDetails.ShiptRef<>''
+		$SQL .= " WHERE PurchOrderDetails.ShiptRef<>''
 			AND PurchOrderDetails.ShiptRef<>0
 			AND StockMaster.StockID like '%" . $_POST['StockCode'] . "%'
 			AND CategoryID='" . $_POST['StockCat'];
 
 	 } elseif (!$_POST['StockCode'] AND !$_POST['Keywords']) {
-		$SQL .= "WHERE PurchOrderDetails.ShiptRef<>''
+		$SQL .= " WHERE PurchOrderDetails.ShiptRef<>''
 			AND PurchOrderDetails.ShiptRef<>0
-			AND CategoryID='" . $_POST['StockCat'];
+			AND CategoryID='" . $_POST['StockCat'] . "'";
 
 	 }
 	$SQL .= "  GROUP BY StockMaster.StockID,
@@ -153,12 +150,12 @@ $result1 = DB_query($SQL,$db);
 ?>
 
 <HR>
-<FONT SIZE=1><?=_('To search for shipments for a specific part use the part selection facilities below');?></FONT>
-<INPUT TYPE=SUBMIT NAME="SearchParts" VALUE="<?=_('Search Parts Now');?>">
-<INPUT TYPE=SUBMIT NAME="ResetPart" VALUE="<?=_('Clear Part Selection');?>">
+<FONT SIZE=1><?php echo _('To search for shipments for a specific part use the part selection facilities below');?></FONT>
+<INPUT TYPE=SUBMIT NAME="SearchParts" VALUE="<?php echo _('Search Parts Now');?>">
+<INPUT TYPE=SUBMIT NAME="ResetPart" VALUE="<?php echo _('Clear Part Selection');?>">
 <TABLE>
 <TR>
-<TD><FONT SIZE=1><?=_('Select a stock category');?>:</FONT>
+<TD><FONT SIZE=1><?php echo _('Select a stock category');?>:</FONT>
 <SELECT NAME="StockCat">
 <?php
 while ($myrow1 = DB_fetch_array($result1)) {
@@ -170,10 +167,10 @@ while ($myrow1 = DB_fetch_array($result1)) {
 }
 ?>
 </SELECT>
-<TD><FONT SIZE=1><?=_('Enter text extract(s) in the');?> <B><?=_('description');?></B>:</FONT></TD>
+<TD><FONT SIZE=1><?php echo _('Enter text extracts in the');?> <B><?php echo _('description');?></B>:</FONT></TD>
 <TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25></TD></TR>
 <TR><TD></TD>
-<TD><FONT SIZE 3><B><?=_('OR');?> </B></FONT><FONT SIZE=1><?=_('Enter extract of the');?> <B><?=_('Stock Code');?></B>:</FONT></TD>
+<TD><FONT SIZE 3><B><?php echo _('OR');?> </B></FONT><FONT SIZE=1><?php echo _('Enter extract of the');?> <B><?php echo _('Stock Code');?></B>:</FONT></TD>
 <TD><INPUT TYPE="Text" NAME="StockCode" SIZE=15 MAXLENGTH=18></TD>
 </TR>
 </TABLE>
@@ -189,7 +186,7 @@ If (isset($StockItemsResult)) {
 			<TD class="tableheader">'. _('Code').'</TD>
 			<TD class="tableheader">'. _('Description').'</TD>
 			<TD class="tableheader">'. _('On Hand').'</TD>
-			<TD class="tableheader">'. _('Orders Ostdg').'</TD>
+			<TD class="tableheader">'. _('Orders') . '<BR>' . _('Outstanding').'</TD>
 			<TD class="tableheader">'. _('Units').'</TD>
 			</TR>';
 
@@ -251,7 +248,7 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 		if (isset($SelectedSupplier)) {
 
 			if (isset($SelectedStockItem)) {
-					$SQL .= "WHERE PurchOrderDetails.ItemCode='". $SelectedStockItem ."'
+					$SQL .= " WHERE PurchOrderDetails.ItemCode='". $SelectedStockItem ."'
 						AND Shipments.SupplierID='" . $SelectedSupplier ."'
 						AND PurchOrders.IntoStockLocation = '". $_POST['StockLocation'] . "'
 						AND Shipments.Closed=" . $_POST['OpenOrClosed'];

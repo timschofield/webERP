@@ -1,15 +1,15 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 2;
-include ("includes/session.inc");
+include ('includes/session.inc');
 $title = _('Shipments Open Inquiry');
-include("includes/header.inc");
-include("includes/DateFunctions.inc");
+include('includes/header.inc');
+include('includes/DateFunctions.inc');
 
 
 if (!isset($_GET['SupplierID']) OR !isset($_GET['SupplierName'])){
 	echo '<P>';
-	prnMsg( _('This page must be given the supplier code to look for shipments for.'), 'error');
+	prnMsg( _('This page must be given the supplier code to look for shipments for'), 'error');
 	include('includes/footer.inc');
 	exit;
 }

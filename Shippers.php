@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 15;
 
@@ -38,13 +38,13 @@ if ( isset($_POST['submit']) ) {
 		delete code below*/
 
 		$sql = "UPDATE Shippers SET ShipperName='" . $_POST['ShipperName'] . "' WHERE Shipper_ID = $SelectedShipper";
-		$msg = _('The shipper record has been updated.');
+		$msg = _('The shipper record has been updated');
 	} elseif ($InputError !=1) {
 
 	/*SelectedShipper is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Shipper form */
 
 		$sql = "INSERT INTO Shippers (ShipperName) VALUES ('" . $_POST['ShipperName'] . "')";
-		$msg = _('The shipper record has been added.');
+		$msg = _('The shipper record has been added');
 	}
 
 	//run the SQL from either of the above possibilites
@@ -66,7 +66,7 @@ if ( isset($_POST['submit']) ) {
 	if ($myrow[0]>0) {
 		$CancelDelete = 1;
 		echo '<BR>';
-		prnMsg( _('Cannot delete this shipper because sales orders have been created using this shipper. There are'). ' '. 
+		prnMsg( _('Cannot delete this shipper because sales orders have been created using this shipper') . '. ' . _('There are'). ' '. 
 			$myrow[0] . ' '. _('sales orders using this shipper code'), 'error');
 
 	} else {
@@ -78,7 +78,7 @@ if ( isset($_POST['submit']) ) {
 		if ($myrow[0]>0) {
 			$CancelDelete = 1;
 			echo '<BR>';
-			prnMsg( _('Cannot delete this shipper because invoices have been created using this shipping company. There are').  ' ' .
+			prnMsg( _('Cannot delete this shipper because invoices have been created using this shipping company') . '. ' . _('There are').  ' ' .
 				$myrow[0] . ' ' . _('invoices created using this shipping company'), 'error');
 		} else {
 			// Prevent deletion if the selected shipping company is the current default shipping company in config.php !!
@@ -86,14 +86,14 @@ if ( isset($_POST['submit']) ) {
 
 				$CancelDelete = 1;
 				echo '<BR>';
-				prnMsg( _('Cannot delete this shipper because it is defined as the default shipping company in the configuration file.'), 'error');
+				prnMsg( _('Cannot delete this shipper because it is defined as the default shipping company in the configuration file'), 'error');
 
 			} else {
 
 				$sql="DELETE FROM Shippers WHERE Shipper_ID=$SelectedShipper";
 				$result = DB_query($sql,$db);
 				echo '<BR>';
-				prnMsg( _('The shipper record has been deleted!'), 'success');;
+				prnMsg( _('The shipper record has been deleted'), 'success');;
 			}
 		}
 	}
@@ -128,13 +128,10 @@ or deletion of the records*/
 			$myrow[0], $myrow[1], $_SERVER['PHP_SELF'] . "?" . SID, $myrow[0], $_SERVER['PHP_SELF'] . "?" . SID, $myrow[0]);
 	}
 	//END WHILE LIST LOOP
+	echo '</CENTER></table>';
 }
 
 
-?>
-</CENTER></table>
-<p>
-<?php
 if (isset($SelectedShipper)) {  ?>
 	<Center><a href="<?php echo $_SERVER['PHP_SELF'] . '?' . SID;?>"><?=_('REVIEW RECORDS')?></a></Center>
 <?php } ?>

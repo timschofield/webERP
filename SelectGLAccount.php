@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 8;
 
@@ -16,7 +16,7 @@ If (isset($_POST['Select'])) {
 	$result = DB_query("SELECT AccountName FROM ChartMaster WHERE AccountCode=" . $_POST['Select'],$db);
 	$myrow = DB_fetch_row($result);
 
-	echo '<p>' . _('Account code') . ' <B>' . $_POST['Select'] . ' - ' . $myrow[0]  . ' </B>' . _('has been selected') . '. <br>' . _('Select one of the links below to operate using this Account') . '.';
+	echo '<p>' . _('Account Code') . ' <B>' . $_POST['Select'] . ' - ' . $myrow[0]  . ' </B>' . _('has been selected') . '. <br>' . _('Select one of the links below to operate using this Account') . '.';
 	$AccountID = $_POST['Select'];
 	$_POST['Select'] = NULL;
 
@@ -27,10 +27,10 @@ If (isset($_POST['Select'])) {
 } elseif (isset($_POST['Search'])){
 
 	If (strlen($_POST['Keywords']>0) AND strlen($_POST['GLCode'])>0) {
-		$msg=_('Account name keywords have been used in preference to the Account code extract entered');
+		$msg=_('Account name keywords have been used in preference to the account code extract entered');
 	}
 	If ($_POST['Keywords']=='' AND $_POST['GLCode']=='') {
-		$msg=_('At least one Account name keyword OR an extract of a Account code must be entered for the search');
+		$msg=_('At least one Account Name keyword OR an extract of an Account Code must be entered for the search');
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
@@ -55,7 +55,7 @@ If (isset($_POST['Select'])) {
 				ORDER BY AccountGroups.SequenceInTB,
 					ChartMaster.AccountCode";
 
-		} elseif (strlen($_POST['GLCode'])>0){
+		} elseif (strlen($_POST['GLCode'])>0 AND is_numeric($_POST['GLCode'])){
 
 			$SQL = "SELECT AccountCode,
 					AccountName,
@@ -66,33 +66,39 @@ If (isset($_POST['Select'])) {
 					WHERE ChartMaster.Group_=AccountGroups.GroupName
 					AND AccountCode >= " . $_POST['GLCode'] . "
 					ORDER BY ChartMaster.AccountCode";
+		} elseif(!is_numeric($_POST['GLCode'])){
+			prnMsg(_('The general ledger code specified must be numeric - all account numbers must be numeric'),'warn');
+			unset($SQL);
 		}
 
-		$result = DB_query($SQL,$db);
-
+		if (isset($SQL)){
+			$result = DB_query($SQL, $db);
+		}
 	} //one of keywords or GLCode was more than a zero length string
 } //end of if search
 
 if (!isset($AccountID)) {
-?>
 
 
-<FORM ACTION="<?php $_SERVER['PHP_SELF'] . '?' . SID; ?>" METHOD=POST>
-<B><?php echo '<BR>' . $msg; ?></B>
-<TABLE CELLPADDING=3 COLSPAN=4>
-<TR>
-<TD><FONT SIZE=1><?php echo _('Enter extract of text in the Account name'); ?>:</FONT></TD>
-<TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25></TD>
-<TD><FONT SIZE=3><B><?php echo _('OR'); ?></B></FONT></TD>
-<TD><FONT SIZE=1><?php echo _('Enter Account No. to search from'); ?>:</FONT></TD>
-<TD><INPUT TYPE="Text" NAME="GLCode" SIZE=15 MAXLENGTH=18></TD>
-</TR>
-</TABLE>
-<CENTER><INPUT TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Search Now'); ?>">
-<INPUT TYPE=SUBMIT ACTION=RESET VALUE="<?php echo _('Reset'); ?>"></CENTER>
+echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD=POST>";
 
+if(strlen($msg)>1){
+	prnMsg($msg,'info');
+}
 
-<?php
+echo '<TABLE CELLPADDING=3 COLSPAN=4>
+	<TR>
+	<TD><FONT SIZE=1>' . _('Enter extract of text in the Account name') .":</FONT></TD>
+	<TD><INPUT TYPE='Text' NAME='Keywords' SIZE=20 MAXLENGTH=25></TD>
+	<TD><FONT SIZE=3><B>" .  _('OR') . "</B></FONT></TD>
+	<TD><FONT SIZE=1>" . _('Enter Account No. to search from') . ":</FONT></TD>
+	<TD><INPUT TYPE='Text' NAME='GLCode' SIZE=15 MAXLENGTH=18></TD>
+	</TR>
+	</TABLE>";
+
+echo '<CENTER><INPUT TYPE=SUBMIT NAME="Search" VALUE=' . _('Search Now') . '">
+	<INPUT TYPE=SUBMIT ACTION=RESET VALUE="' . _('Reset') .'"></CENTER>';
+
 
 If (isset($result)) {
 

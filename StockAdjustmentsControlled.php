@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockAdjustment.php');
 
@@ -31,7 +31,7 @@ $LineItem = &$_SESSION['Adjustment'];
 //Make sure this item is really controlled
 if ( $LineItem->Controlled != 1 ){
 	echo '<CENTER><A HREF="' . $rootpath . '/StockAdjustment.php?' . SID . 'NewAdjustment=Yes">'._('Enter A Stock Adjustment').'</A></CENTER>';
-	prnMsg('<BR>'. _('Notice - The adjusted item must be defined as controlled to require input of the batch numbers or serial numbers being adjusted'),'error');
+	prnMsg('<BR>'. _('Notice') . ' - ' . _('The adjusted item must be defined as controlled to require input of the batch numbers or serial numbers being adjusted'),'error');
 	include('includes/footer.inc');
 	exit;
 }
@@ -39,7 +39,7 @@ if ( $LineItem->Controlled != 1 ){
 /*****  get the page going now... *****/
 echo '<CENTER>';
 
-echo '<br><a href="'.$rootpath.'/StockAdjustments.php?SID='  . SID .'">Back To Adjustment Screen</A>';
+echo '<br><a href="'.$rootpath.'/StockAdjustments.php?SID='  . SID .'">' . _('Back to Adjustment Screen') . '</A>';
 
 echo '<br><FONT SIZE=2><B>'. _('Adjustment of controlled item').' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription ;
 
@@ -57,7 +57,7 @@ if ($LineItem->AdjustmentType == 'ADD'){
 	$InOutModifier = -1;
 	$ShowExisting = true;
 } else {
-	prnMsg( _('The Adjustment Type needs to be set. Please try again'). '.' );
+	prnMsg( _('The Adjustment Type needs to be set') . '. ' . _('Please try again'). '.' );
 	include('includes/footer.inc');
 	exit;
 }

@@ -1,12 +1,11 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 11;
-
+include('includes/DefineShiptClass.php');
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/session.inc');
 $title = _('Shipments');
 include('includes/header.inc');
-include('includes/DefineShiptClass.php');
 include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -18,7 +17,7 @@ if ($_GET['NewShipment']=='Yes'){
 
 if (!isset($_SESSION['SupplierID']) AND !isset($_SESSION['Shipment'])){
 	echo '<BR>';
-	prnMsg( _('To set up a shipment, the supplier must first be selected from the Select Supplier page.'), 'error');
+	prnMsg( _('To set up a shipment') . ', ' . _('the supplier must first be selected from the Select Supplier page'), 'error');
         echo '<BR><table class="table_index">
                 <tr><td class="menu_group_item">
                 <li><a href="'. $rootpath . '/SelectSupplier.php?'.SID .'">' . _('Select the Supplier') . '</a></li>
@@ -52,11 +51,11 @@ if (isset($_GET['SelectedShipment'])){
 					ON Shipments.SupplierID = Suppliers.SupplierID
 				WHERE Shipments.ShiptRef = " . $_GET['SelectedShipment'];
 
-       $ErrMsg = _('Shipment').' '. $_GET['SelectedShipment'] . ' ' . _('cannot be retrieved because a database error occurred.');
+       $ErrMsg = _('Shipment').' '. $_GET['SelectedShipment'] . ' ' . _('cannot be retrieved because a database error occurred');
        $GetShiptHdrResult = DB_query($ShipmentHeaderSQL,$db, $ErrMsg);
 
        if (DB_num_rows($GetShiptHdrResult)==0) {
-		prnMsg ( _('Unable to locate Shipment') . ' '. $_GET['SelectedShipment'] . ' ' . _('in the database.'), 'error');
+		prnMsg ( _('Unable to locate Shipment') . ' '. $_GET['SelectedShipment'] . ' ' . _('in the database'), 'error');
 	        include('includes/footer.inc');
         	exit();
 	}
@@ -68,7 +67,7 @@ if (isset($_GET['SelectedShipment'])){
 	      if ($myrow['Closed']==1){
 			echo '<BR>';
 			prnMsg( _('Shipment No.') .' '. $_GET['SelectedShipment'] .': '.
-				_('The selected shipment is already closed and no further modifications to the shipment are possible.'), 'error');
+				_('The selected shipment is already closed and no further modifications to the shipment are possible'), 'error');
 			include('includes/footer.inc');
 			exit;
 	      }
@@ -107,7 +106,7 @@ if (isset($_GET['SelectedShipment'])){
               $LineItemsResult = db_query($LineItemsSQL,$db, $ErrMsg);
 
         if (DB_num_rows($GetShiptHdrResult)==0) {
-                prnMsg ( _('Unable to locate lines for Shipment') . ' '. $_GET['SelectedShipment'] . ' ' . _('in the database.'), 'error');
+                prnMsg ( _('Unable to locate lines for Shipment') . ' '. $_GET['SelectedShipment'] . ' ' . _('in the database'), 'error');
                 include('includes/footer.inc');
                 exit();
         }
@@ -171,7 +170,7 @@ if ( isset($_POST['Update']) && !$_SESSION['Shipment']->Closed==1) {
 
 	if (count($_SESSION['Shipment']->LineItems)==0){
 		echo '<BR>';
-		prnMsg( _('There are no line items on this shipment. Select some of the purchase order lines by clicking add on the available purchase order lines shown below.'), 'warn');
+		prnMsg( _('There are no line items on this shipment') . '. ' . _('Select some of the purchase order lines by clicking add on the available purchase order lines shown below'), 'warn');
 
 		$InputError=1;
 	}
@@ -180,16 +179,16 @@ if ( isset($_POST['Update']) && !$_SESSION['Shipment']->Closed==1) {
 		prnMsg( _('The date of expected arrival of the shipment must be entered in the format') . ' ' .$DefaultDateFormat, 'error');
 	} elseif (Date1GreaterThanDate2($_POST['ETA'],Date($DefaultDateFormat))==0){
 		$InputError=1;
-		prnMsg( _('An expected arrival of the shipment must be a date after today.'), 'error');
+		prnMsg( _('An expected arrival of the shipment must be a date after today'), 'error');
 	} else {
 		$_SESSION['Shipment']->ETA = FormatDateForSQL($_POST['ETA']);
 	}
 
 	if (strlen($_POST['Vessel'])<2){
-		prnMsg( _('A reference to the vessel of more than 2 characters is expected.'), 'error');
+		prnMsg( _('A reference to the vessel of more than 2 characters is expected'), 'error');
 	}
 	if (strlen($_POST['VoyageRef'])<2){
-		prnMsg( _('A reference to the voyage (or HAWB in the case of air-freight) of more than 2 characters is expected.'), 'error');
+		prnMsg( _('A reference to the voyage (or HAWB in the case of air-freight) of more than 2 characters is expected'), 'error');
 	}
 
 /*The user hit the update the shipment button */
@@ -238,7 +237,7 @@ if ( isset($_POST['Update']) && !$_SESSION['Shipment']->Closed==1) {
 			}
 		}
    		echo '<BR>';
-		prnMsg( _('Updated the shipment record and delivery dates of order lines as necessary.'), 'success');
+		prnMsg( _('Updated the shipment record and delivery dates of order lines as necessary'), 'success');
 	}
 }
 
@@ -287,7 +286,6 @@ if (isset($_GET['Add']) AND ! $_SESSION['Shipment']->Closed==1){
 						$myrow['QuantityRecd'],
 						$StandardCost,
 						$db);
-
 }
 
 echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';

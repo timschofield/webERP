@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 include('includes/LanguageSetup.php');
 require('includes/DefineCartClass.php');
@@ -167,7 +167,8 @@ if (isset($_GET['ModifyOrderNumber'])
 		$LineItemsResult = db_query($LineItemsSQL,$db,$ErrMsg);
 		if (db_num_rows($LineItemsResult)>0) {
 
-			while ($myrow=db_fetch_array($LineItemsResult)) {												$_SESSION['Items']->add_to_cart($myrow['StkCode'],
+			while ($myrow=db_fetch_array($LineItemsResult)) {
+					$_SESSION['Items']->add_to_cart($myrow['StkCode'],
 								$myrow['Quantity'],
 								$myrow['Description'],
 								$myrow['UnitPrice'],
@@ -236,7 +237,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 		$msg= _('Customer name keywords have been used in preference to the customer code extract entered');
 	}
 	If ($_POST['Keywords']=='' AND $_POST['CustCode']=='') {
-		$msg=_('At least one customer name keyword OR an extract of a customer code must be entered for the search');
+		$msg=_('At least one Customer Name keyword OR an extract of a Customer Code must be entered for the search');
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 		//insert wildcard characters in spaces
@@ -282,7 +283,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 			$myrow=DB_fetch_array($result_CustSelect);
 			$_POST['Select'] = $myrow['DebtorNo'] . ' - ' . $myrow['BranchCode'];
 		} elseif (DB_num_rows($result_CustSelect)==0){
-			prnMsg(_('No customer records contain the selected text - please alter your search criteria and try again'),'info');
+			prnMsg(_('No customer records contain the selected text') . ' - ' . _('please alter your search criteria and try again'),'info');
 		}
 	} /*one of keywords or custcode was more than a zero length string */
 } /*end of if search for customer codes/names */
@@ -310,7 +311,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 		AND DebtorsMaster.DebtorNo = '" . $_POST['Select'] . "'";
 
 	$ErrMsg = _('The details of the customer selected') . ': ' .  $_POST['Select'] . ' ' . _('cannot be retrieved because');
-	$DbgMsg = _('The SQL used to retrieve the customer details (and failed) was') . ':';
+	$DbgMsg = _('The SQL used to retrieve the customer details and failed was') . ':';
 	$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	$myrow = DB_fetch_row($result);
@@ -347,7 +348,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 
 		if (DB_num_rows($result)==0){
 
-			prnMsg(_('The branch details for branch code') . ': ' . $_SESSOIN['Items']->Branch . ' ' . _('against customer code') . ': ' . $_POST['Select'] . ' ' . _('could not be retrieved. Check the set up of the customer and branch'),'error');
+			prnMsg(_('The branch details for branch code') . ': ' . $_SESSOIN['Items']->Branch . ' ' . _('against customer code') . ': ' . $_POST['Select'] . ' ' . _('could not be retrieved') . '. ' . _('Check the set up of the customer and branch'),'error');
 
 			if ($debug==1){
 				echo '<BR>' . _('The SQL that failed to get the branch details was') . ':<BR>' . $sql;
@@ -531,7 +532,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				$OK_to_delete=0;
 
-				prnMsg( _('There are lines on this order that have already been invoiced. Please delete only the lines on the order that are no longer required') . '. <P>' . _('There is an option on confirming a dispatch/invoice to automatically cancel any balance on the order at the time of invoicing, if you know the customer will not want the back order'),'warn');
+				prnMsg( _('There are lines on this order that have already been invoiced') . '. ' . _('Please delete only the lines on the order that are no longer required') . '. <P>' . _('There is an option on confirming a dispatch/invoice to automatically cancel any balance on the order at the time of invoicing if you know the customer will not want the back order'),'warn');
 			}
 		}
 
@@ -668,7 +669,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$SearchResult = DB_query($SQL,$db,$ErrMsg, $DbgMsg);
 
 		if (DB_num_rows($SearchResult)==0 ){
-			prnMsg (_('Sorry ... there are no products available meeting the criteria specified'),'info');
+			prnMsg (_('Sorry') . ' ... ' . _('there are no products available meeting the criteria specified'),'info');
 
 			if ($debug==1){
 				echo '<P>' . _('The SQL statement used was') . ':<BR>' . $SQL;
@@ -767,7 +768,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$Narrative = $_POST['Narrative_' . $StockItem->StockID];
 
 				If ($Quantity<0 OR $Price <0 OR $DiscountPercentage >100 OR $DiscountPercentage <0){
-					prnMsg(_('The item could not be updated because you are attempting to set the quantity ordered to less than 0, or the price less than 0 or the discount more than 100% or less than 0%'),'warn');
+					prnMsg(_('The item could not be updated because you are attempting to set the quantity ordered to less than 0 or the price less than 0 or the discount more than 100% or less than 0%'),'warn');
 
 				} elseif($_SESSION['Items']->Some_Already_Delivered($StockItem->StockID)!=0 AND $_SESSION['Items']->LineItems[$StockItem->StockID]->Price != $Price) {
 
@@ -778,7 +779,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					prnMsg(_('The item you attempting to modify has had some quantity invoiced at the old discount percent the items discount cannot be modified retrospectively'),'warn');
 
 				} elseif ($_SESSION['Items']->LineItems[$StockItem->StockID]->QtyInv > $Quantity){
-					prnMsg( _('You are attempting to make the quantity ordered a quantity less than has already been invoiced. The quantity delivered and invoiced cannot be modified retrospectively'),'warn');
+					prnMsg( _('You are attempting to make the quantity ordered a quantity less than has already been invoiced') . '. ' . _('The quantity delivered and invoiced cannot be modified retrospectively'),'warn');
 				} elseif ($StockItem->Quantity !=$Quantity OR $StockItem->Price != $Price OR ABS($StockItem->Disc -$DiscountPercentage/100) >0.001 OR $StockItem->Narrative != $Narrative) {
 
 					$_SESSION['Items']->update_cart_item($StockItem->StockID,
@@ -793,7 +794,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	}
 	if (isset($_POST['DeliveryDetails'])){
 		echo '<META HTTP-EQUIV="Refresh" CONTENT="0; URL=' . $rootpath . '/DeliveryDetails.php?' . SID . '">';
-		prnMsg(_('You should automatically be forwarded to the entry of the delivery details page. If this does not happen (if the browser does not support META Refresh)') . ' ' .
+		prnMsg(_('You should automatically be forwarded to the entry of the delivery details page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' .
            '<a href="' . $rootpath . '/DeliveryDetails.php?' . SID . '">' . _('click here') . '</a> ' . _('to continue') . 'info');
 	   	exit;
 	}
@@ -987,7 +988,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		?>
 
 		</SELECT>
-		<TD><FONT SIZE=2><?php echo _('Enter text extract(s) in the'); ?> <B><?php echo _('description'); ?></B>:</FONT></TD>
+		<TD><FONT SIZE=2><?php echo _('Enter text extracts in the'); ?> <B><?php echo _('description'); ?></B>:</FONT></TD>
 		<TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25 VALUE="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>"></TD></TR>
 		<TR><TD></TD>
 		<TD><FONT SIZE 3><B><?php echo _('OR'); ?> </B></FONT><FONT SIZE=2><?php echo _('Enter extract of the'); ?> <B><?php echo _('Stock Code'); ?></B>:</FONT></TD>

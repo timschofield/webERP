@@ -1,6 +1,12 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /* Definition of the Shipment class to hold all the information for a shipment*/
+
+if (!function_exists('_')){
+	function _($String){
+		echo $String;
+	}
+}
 
 Class Shipment {
 
@@ -21,17 +27,25 @@ Class Shipment {
 		$this->AccumValue=0;
 	}
 
-	function add_to_shipment($PODetailItem, $OrderNo, $StockID, $ItemDescr, $QtyInvoiced, $UnitPrice, $UOM, $DelDate, $QuantityOrd, $QuantityRecd, $StdCostUnit, &$db){
+	function add_to_shipment($PODetailItem,
+					$OrderNo,
+					$StockID,
+					$ItemDescr,
+					$QtyInvoiced,
+					$UnitPrice,
+					$UOM,
+					$DelDate,
+					$QuantityOrd,
+					$QuantityRecd,
+					$StdCostUnit,
+					&$db){
 
 		$this->LineItems[$PODetailItem]= new LineDetails($PODetailItem,$OrderNo,$StockID,$ItemDescr, $QtyInvoiced, $UnitPrice, $UOM, $DelDate, $QuantityOrd, $QuantityRecd, $StdCostUnit);
 
 		$sql = "UPDATE PurchOrderDetails SET ShiptRef = " . $this->ShiptRef . " WHERE PODetailItem = " . $PODetailItem;
+		$ErrMsg = _('There was an error updating the purchase order detail record to make it part of shipment') . ' ' . $ShiptRef . ' ' . _('the error reported was');
+		$result = DB_query($sql, $db, $ErrMsg);
 
-		$result = DB_query($sql, $db);
-
-		if (DB_error_no($db)!=0){
-			echo "<P>There was an error updating the purchase order detail record to make it part of shipment " . $ShiptRef . " the error reported was:<BR>" . DB_error_msg($db);
-		}
 		Return 1;
 	}
 
@@ -44,7 +58,7 @@ Class Shipment {
 			$sql = "UPDATE PurchOrderDetails SET ShiptRef = 0 WHERE PODetailItem=" . $PODetailItem;
 			$Result = DB_query($sql,$db);
 		} else {
-			echo "<BR>This shipment line has a quantity invoiced and already charged to the shipment - it cannot now be removed";
+			prnMsg(_('This shipment line has a quantity invoiced and already charged to the shipment - it cannot now be removed'),'warn');
 		}
 	}
 

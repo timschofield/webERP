@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -359,7 +359,7 @@ If (isset($StockItemsResult)) {
 				<TD class='tableheader'>" . _('Disp. Note') . "</TD>
 				<TD class='tableheader'>" . _('Customer') . "</TD>
 				<TD class='tableheader'>" . _('Branch') . "</TD>
-				<TD class='tableheader'>" . _('Cust Order #') . "</TD>
+				<TD class='tableheader'>" . _('Cust Order') . " #</TD>
 				<TD class='tableheader'>" . _('Order Date') . "</TD>
 				<TD class='tableheader'>" . _('Req Del Date') . "</TD>
 				<TD class='tableheader'>" . _('Delivery To') . "</TD>
