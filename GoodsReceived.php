@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $title = "Receive Purchase Orders";
 $PageSecurity = 11;
 
@@ -31,7 +31,7 @@ if ($_GET['PONumber']<=0 AND !isset($_SESSION['PO'])) {
  set from the post to the quantity to be received in this receival*/
 
 	foreach ($_SESSION['PO']->LineItems as $Line) {
-		$RecvQty = initPvar("RecvQty_".$Line->LineNo);
+		$RecvQty = $_POST["RecvQty_" . $Line->LineNo];
 		if (!is_numeric($RecvQty)){
 			$RecvQty = 0;
 		}
@@ -278,7 +278,20 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=="Process Goods Rec
 
 /*Need to insert a GRN item */
 
-			$SQL = "INSERT INTO GRNs (GRNBatch, PODetailItem, ItemCode, ItemDescription, DeliveryDate, QtyRecd, SupplierID) VALUES (" . $GRN . ", " . $OrderLine->PODetailRec . ", '" . $OrderLine->StockID . "', '" . $OrderLine->ItemDescription . "', '" . $_POST['DefaultReceivedDate'] . "', " . $OrderLine->ReceiveQty . ", '" . $_SESSION['PO']->SupplierID . "')";
+			$SQL = "INSERT INTO GRNs (GRNBatch,
+						PODetailItem,
+						ItemCode,
+						ItemDescription,
+						DeliveryDate,
+						QtyRecd,
+						SupplierID)
+				VALUES (" . $GRN . ",
+					" . $OrderLine->PODetailRec . ",
+					'" . $OrderLine->StockID . "',
+					'" . $OrderLine->ItemDescription . "',
+					'" . $_POST['DefaultReceivedDate'] . "',
+					" . $OrderLine->ReceiveQty . ",
+					'" . $_SESSION['PO']->SupplierID . "')";
 
 			$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: A GRN record could not be inserted. This receipt of goods has not been processed because:";
 			$DbgMsg = "<BR>The following SQL to insert the GRN record was used:";
@@ -288,7 +301,7 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=="Process Goods Rec
 
 /* Update location stock records - NB  a PO cannot be entered for a dummy/assembly/kit parts */
 
-				// Need to get the current location quantity will need it later for the stock movement */
+/* Need to get the current location quantity will need it later for the stock movement */
 				$SQL="SELECT LocStock.Quantity FROM LocStock WHERE LocStock.StockID='" . $OrderLine->StockID . "' AND LocCode= '" . $_SESSION['PO']->Location . "'";
 				$Result = DB_query($SQL, $db);
 				if (DB_num_rows($Result)==1){
@@ -299,7 +312,10 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=="Process Goods Rec
 					$QtyOnHandPrior = 0;
 				}
 
-				$SQL = "UPDATE LocStock SET LocStock.Quantity = LocStock.Quantity + " . $OrderLine->ReceiveQty . " WHERE LocStock.StockID = '" . $OrderLine->StockID . "' AND LocCode = '" . $_SESSION['PO']->Location . "'";
+				$SQL = "UPDATE LocStock
+					SET LocStock.Quantity = LocStock.Quantity + " . $OrderLine->ReceiveQty . "
+					WHERE LocStock.StockID = '" . $OrderLine->StockID . "'
+					AND LocCode = '" . $_SESSION['PO']->Location . "'";
 
 				$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The location stock record could not be updated because:";
 				$DbgMsg = "<BR>The following SQL to update the location stock record was used:";
@@ -308,7 +324,28 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=="Process Goods Rec
 
 	/* If its a stock item still .... Insert stock movements - with unit cost */
 
-				$SQL = "INSERT INTO StockMoves (StockID, Type, TransNo, LocCode, TranDate, Price, Prd, Reference, Qty, StandardCost, NewQOH) VALUES ('" . $OrderLine->StockID . "', 25, " . $GRN . ", '" . $_SESSION['PO']->Location . "', '" . $_POST['DefaultReceivedDate'] . "', " . $LocalCurrencyPrice . ", " . $PeriodNo . ", '" . $_SESSION['PO']->SupplierID . " (" . $_SESSION['PO']->SupplierName . ") - " .$_SESSION['PO']->OrderNo . "', " . $OrderLine->ReceiveQty . ", " . $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost . ", " . ($QtyOnHandPrior + $OrderLine->ReceiveQty) . ")";
+				$SQL = "INSERT INTO StockMoves (StockID,
+								Type,
+								TransNo,
+								LocCode,
+								TranDate,
+								Price,
+								Prd,
+								Reference,
+								Qty,
+								StandardCost,
+								NewQOH)
+					VALUES ('" . $OrderLine->StockID . "',
+						25,
+						" . $GRN . ", '" . $_SESSION['PO']->Location . "',
+						'" . $_POST['DefaultReceivedDate'] . "',
+						" . $LocalCurrencyPrice . ",
+						" . $PeriodNo . ",
+						'" . $_SESSION['PO']->SupplierID . " (" . $_SESSION['PO']->SupplierName . ") - " .$_SESSION['PO']->OrderNo . "',
+						" . $OrderLine->ReceiveQty . ",
+						" . $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost . ",
+						" . ($QtyOnHandPrior + $OrderLine->ReceiveQty) . ")";
+
 				$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: stock movement records could not be inserted because:";
 				$DbgMsg = "<BR>The following SQL to insert the stock movement records was used:";
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);

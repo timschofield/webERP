@@ -212,11 +212,13 @@ ALTER TABLE `StockMaster` ADD `DecimalPlaces` TINYINT DEFAULT '0' NOT NULL ;
 ALTER TABLE `StockMoves` DROP `Bundle`;
 
 CREATE TABLE `Help` (
-  `ID` INT NOT NULL AUTO_INCREMENT,
-  `PageID` SMALLINT NOT NULL,
-  `Narrative` TEXT NOT NULL,
+  ID INT NOT NULL AUTO_INCREMENT,
+  PageID SMALLINT NOT NULL,
+  Narrative TEXT NOT NULL,
+  HelpType CHAR NOT NULL DEFAULT 'U',
   PRIMARY KEY (`ID`),
-  INDEX (`PageID`)
+  INDEX (`PageID`),
+  INDEX ('HelpType')
 )TYPE=InnoDB COMMENT='Context Sensitive Help Narrative';
 
 CREATE TABLE Scripts (
@@ -227,6 +229,8 @@ CREATE TABLE Scripts (
   KEY FileName (FileName)
 ) TYPE=InnoDB COMMENT='Index of all scripts';
 
+
+ALTER TABLE Help ADD FOREIGN KEY (PageID) REFERENCES Scripts (PageID);
 
 INSERT INTO Scripts VALUES (1, 'AccountGroups.php', 'Defines the groupings of general ledger accounts');
 INSERT INTO Scripts VALUES (2, 'AgedDebtors.php', 'Lists customer account balances in detail or summary in selected currency');
@@ -386,7 +390,7 @@ INSERT INTO Scripts VALUES (155, 'Z_ReverseSuppPaymentRun.php', 'Utility to reve
 INSERT INTO Scripts VALUES (156, 'Z_UpdateChartDetailsBFwd.php', 'Utility to recalculate the ChartDetails table B/Fwd balances - extreme care!!');
 INSERT INTO Scripts VALUES (157, 'Z_UploadForm.php', 'Utility to upload a file to a remote server');
 INSERT INTO Scripts VALUES (158, 'Z_UploadResult.php', 'Utility to upload a file to a remote server');
-INSERT INTO Scripts VALUES (159, 'Z_index.php', 'Utility menu page');
-INSERT INTO Scripts VALUES (160, 'index.php', 'Main menu');
+INSERT INTO Scripts VALUES (159, 'Z_index.php', 'Utility menu page showing links to many of the utilities that do not appear from the main menu');
+INSERT INTO Scripts VALUES (160, 'index.php', 'This screen allows the user to click on links to navigate to to the disired area of functionality');
 INSERT INTO Scripts VALUES (161, 'phpinfo.php', 'Details about PHP installation on the server');
 

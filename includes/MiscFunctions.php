@@ -16,15 +16,19 @@ function getMsg($msg,$type="info",$prefix=""){
 	switch($type){
 		case "error":
 			$Colour='red';
+			$prefix = "ERROR Message Report";
 			break;
 		case "warn":
 			$Colour='maroon';
+			$prefix = "WARNING Message Report";
 			break;
 		case "success":
 			$Colour='#336600';
+			$prefix = "Success Report";
 			break;
 		case "info":
 		default:
+			$prefix = "INFORMATION Message";
 			$Colour='navy';
 	}
 	return "<font color=" . $Colour . "><b>" . $prefix . "</b> : " .$msg . "</font>";

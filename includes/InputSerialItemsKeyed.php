@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -19,15 +19,18 @@ if (isset($_GET['LineNo'])){
 	$LineNo = $_POST['LineNo'];
 }
 
-echo "<DIV Align=Center>";
+/*Display the batches already entered with quantities if not serialised */
+echo "<br><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "DELETEALL=YES&StockID=" . $LineItem->StockID . "&LineNo=" . $LineNo ."'>Remove All</a><br>";
+
+
+echo "<INPUT TYPE=HIDDEN NAME='LineNo' VALUE=$LineNo>";
+
+
 echo "<TABLE>";
 echo $tableheader;
 
 $TotalQuantity = 0; /*Variable to accumulate total quantity received */
 $RowCounter =0;
-
-/*Display the batches already entered with quantities if not serialised */
-echo "<A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "DELETEALL=YES&StockID=" . $LineItem->StockID . "&LineNo=" . $LineNo ."'>Remove All</a><br>";
 
 foreach ($LineItem->SerialItems as $Bundle){
 
@@ -67,17 +70,18 @@ if ($LineItem->Serialised==1){
 	echo "<TR><TD COLSPAN=2><HR></TD></TR>";
 }
 
-echo "</TABLE><HR>";
-//echo "<TABLE><TR><TD>";
+/*Close off old table */
+echo "</TABLE>";
 
-echo "<TABLE>"; /*nested table */
+/*Start a new table for the Serial/Batch ref input  in one column (as a sub table
+then the multi select box for selection of existing bundle/serial nos for dispatch if applicable*/
+echo "<TABLE><TR><TD>";
 
+/*in the first column add a table for the input of newies */
+echo "<TABLE>";
 echo $tableheader;
 
-/*Now allow new entries in text input boxes */
-echo "<CENTER><FORM METHOD='POST' ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "'>";
 
-echo "<INPUT TYPE=HIDDEN NAME='LineNo' VALUE=$LineNo>";
 
 for ($i=0;$i < 10;$i++){
 
@@ -93,8 +97,5 @@ for ($i=0;$i < 10;$i++){
 	}
 }
 
-//echo "</table></TD>"; /*end of nested table */
-echo "</TABLE><br><INPUT TYPE=SUBMIT NAME='AddBatches' VALUE='Enter'><BR>";
-echo "</FORM>";
-echo "</DIV>";
+echo "</table></TD>"; /*end of nested table */
 ?>

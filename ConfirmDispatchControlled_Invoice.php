@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $title = "Specifiy Dispatched Controlled Items";
 $PageSecurity = 11;
 
@@ -93,7 +93,4 @@ echo "<br><INPUT TYPE=SUBMIT NAME='AddBatches' VALUE='Enter'><BR>";
 
 include("includes/footer.inc");
 exit;
-
-
 ?>
-

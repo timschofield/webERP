@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $title = "Receive Controlled Items";
 $PageSecurity = 11;
 
@@ -15,7 +15,6 @@ if (!isset($_SESSION['PO'])) {
 	prnMsg("<BR>This page can only be opened if a purchase order and line item has been selected. Please do that first.<BR>","error");
 	include( "includes/footer.inc");
 	exit;
-
 }
 
 if ($_GET['LineNo']>0){
@@ -119,21 +118,21 @@ if (isset($_GET['Delete'])){
 /********************************************
   Get the page going....
 ********************************************/
-echo "<DIV align=center>";
+echo "<CENTER><FORM METHOD='POST' ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "'>";
 
 echo "<br><a href='$rootpath/GoodsReceived.php?" . SID . "'>Back To Purchase Order # " . $_SESSION['PO']->OrderNo . "</a>";
 
 echo "<br><FONT SIZE=2><B>Receive controlled item " . $LineItem->StockID  . " - " . $LineItem->ItemDescription . " on order " . $_SESSION['PO']->OrderNo . " from " . $_SESSION['PO']->SupplierName . "</B></FONT>";
 
-echo "</DIV>";
-
 include ("includes/InputSerialItems.php");
 
+echo "</TR></TABLE>";
+
+echo "<br><INPUT TYPE=SUBMIT NAME='AddBatches' VALUE='Enter'><BR>";
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for dispatch */
 $_SESSION['PO']->LineItems[$LineItem->LineNo]->ReceiveQty = $TotalQuantity;
-
 
 include( "includes/footer.inc");
 ?>

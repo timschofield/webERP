@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $title = "Reverse Goods Received";
 $PageSecurity = 11;
 
@@ -43,6 +43,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 
 	//Get the details of the GRN item and the cost at which it was received and other PODetail info
 	$SQL = "SELECT GRNs.PODetailItem,
+		GRNs.GRNBatch,
 		GRNs.ItemCode,
 		GRNs.ItemDescription,
 		GRNs.DeliveryDate,
@@ -76,14 +77,35 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 	 that came in with this GRN */
 
 
-	 $SQL = "SELECT Controlled FROM StockMaster WHERE StockID ='" . $GRN['ItemCode'] . "'";
-	 $CheckControlledResult = DB_query($SQL,$db,"<BR>Could not determine if the item was controlled or not because ");
-	 $ControlledRow = DB_fetch_row($CheckControlledResult);
-	 if ($ControlledRow[0]==1) { /*Then its a controlled item */
+	$SQL = "SELECT Controlled FROM StockMaster WHERE StockID ='" . $GRN['ItemCode'] . "'";
+	$CheckControlledResult = DB_query($SQL,$db,"<BR>Could not determine if the item was controlled or not because ");
+	$ControlledRow = DB_fetch_row($CheckControlledResult);
+	if ($ControlledRow[0]==1) { /*Then its a controlled item */
+	 	$Controlled = true;
 		/*So check to ensure the serial items received on this GRN are still there */
-		$SQL = "SELECT
+		/*First get the StockMovement Reference for the GRN */
+		$SQL = "SELECT SerialNo, MoveQty FROM StockMoves INNER JOIN StockSerialMoves ON StockMoves.StkMoveNo= StockSerialMoves.StockMoveNo WHERE StockMoves.StockID='" . $GRN['ItemCode'] . "' AND StockMoves.Type =25 AND TransNo=" . $GRN['GRNBatch'];
+		$GetStockMoveResult = DB_query($SQL,$db,"<BR>Couldn't retrieve the stock movement reference number which is required inorder to retrieve details of the serial items that came in with this GRN");
 
-	 }
+		while ($SerialStockMoves = DB_fetch_array($GetStockMoveResult)){
+
+			$SQL = "SELECT StockSerialItems.Quantity FROM StockSerialItems WHERE StockID='" . $GRN['ItemCode'] . "' AND LocCode ='" . $GRN['IntoStockLocation'] . "' AND SerialNo ='" . $SerialStockMoves['SerialNo'] . "'";
+			$GetQOHResult = DB_query($SQL,$db,"Unable to retrieve the quantity on hand of " . $GRN['ItemCode'] . " for Serial No " . $SerialStockMoves['SerialNo']);
+			$GetQOH = DB_fetch_row($GetQOHResult);
+			if ($GetQOH[0] < $SerialStockMoves['MoveQty']){
+				/*Then some of the original goods received must have been sold
+				or transfered so cannot reverse the GRN */
+				echo "<BR>Unfortunately, of the original number (" . $SerialStockMoves['MoveQty'] . ") that were received on serial number " . $SerialStockMoves['SerialNo'] . " only " . $GetQOH[0] . " remain. The GRN can only be reversed if all the original serial number items are still in stock in the location they were received into";
+				include ("includes/footer.inc");
+				exit;
+			}
+		}
+		/*reset the pointer on this resultset ... will need it later */
+		DB_data_seek($GetStockMoveResult,0);
+	} else {
+	 	$Controlled = false;
+	}
+
 /*Start an SQL transaction */
 
 	$Result = DB_query("BEGIN",$db);
@@ -172,13 +194,40 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 				)";
 
   		$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Stock movement records could not be inserted because:";
-		$Dbgmsg = "<BR>The following SQL to insert the stock movement records was used:";
+		$DbgMsg = "<BR>The following SQL to insert the stock movement records was used:";
 		$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+
+		$StockMoveNo = DB_Last_Insert_ID($db);
+
+		if ($Controlled==true){
+			while ($SerialStockMoves = DB_fetch_array($GetStockMoveResult)){
+				$SQL = "INSERT INTO StockSerialMoves (
+						StockMoveNo,
+						StockID,
+						SerialNo,
+						MoveQty)
+					VALUES (
+						" . $StockMoveNo . ",
+						'" . $GRN['ItemCode'] . "',
+						'" . $SerialStockMoves['SerialNo'] . "',
+						" . -$SerialStockMoves['MoveQty'] . ")";
+				$result = DB_query($SQL,$db,"Could not insert the reversing stock movements for the batch/serial numbers","The SQL used but failed was:",true);
+
+				$SQL = "UPDATE StockSerialItems
+					SET Quantity=Quantity - " . $SerialStockMoves['MoveQty'] . "
+					WHERE StockID='" . $GRN['ItemCode'] . "'
+					AND LocCode ='" . $GRN['IntoStockLocation'] . "'
+					AND SerialNo = '" . $SerialStockMoves['SerialNo'] . "'";
+				$result = DB_query($SQL,$db,"Could not update the batch/serial stock records","The SQL used but failed was:",true);
+
+			}
+
+		}
+
+
 	} /*end of its a stock item - updates to locations and insert movements*/
 
 /* If GLLink_Stock then insert GLTrans to debit the GL Code  and credit GRN Suspense account at standard cost*/
-	echo ($CompanyData['GLLink_Stock']==1 AND $GRN['GLCode'] !=0 AND $GRN['StdCostUnit']!=0);
-	echo "<P>Linked - " .$CompanyData['GLLink_Stock'] . " GLCode : " . $GRN['GLCode'] . " StdCostUnit : " . $GRN['StdCostUnit'];
 
 	if ($CompanyData['GLLink_Stock']==1 AND $GRN['GLCode'] !=0 AND $GRN['StdCostUnit']!=0){ /*GLCode is set to 0 when the GLLink is not activated
 	this covers a situation where the GLLink is now active  but it wasn't when this PO was entered */

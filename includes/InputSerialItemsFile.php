@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -136,10 +136,9 @@ if (!$LineItem->SerialItemsValid){
         fclose($handle);
 
 	echo "<br>
-        <form ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID ."'  method=post>
         <input type=submit name=ValidateFile value=ValidateFile>
         <input type=hidden name=LineNo value=" . $LineNo . ">
-        <input type=hidden name=EntryType value=" . $EntryType .">
+        <input type=hidden name=EntryType value=" . $_POST['EntryType'] .">
         </form>
         <p>1st 10 Lines of File....
         <hr width=15%>

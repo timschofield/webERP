@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 if (isset($_GET['Title'])){
 	$HelpPageTitle = $_GET['Title'];
@@ -26,6 +26,11 @@ if (isset($_GET['Title'])){
 	$HelpPageTitle = $_POST['HelpPageTitle'];
 }
 
+if (isset($_GET['HelpID'])){
+	$HelpID = $_GET['HelpID'];
+} elseif (isset($_POST['HelpID'])){
+	$HelpID = $_POST['HelpID'];
+}
 
 if ($_POST['submit']) {
 
@@ -56,6 +61,7 @@ if ($_POST['submit']) {
 	//run the SQL from either of the above possibilites
 	$result = DB_query($sql,$db);
 	echo "<BR>$msg";
+	unset($_POST['Narrative']);
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
@@ -84,7 +90,7 @@ if (!isset($Page)){ /*the help page was called without specifying the page */
 $sql = "SELECT PageID, PageDescription FROM Scripts WHERE FileName='" . $Page ."'";
 $result = DB_query($sql,$db);
 
-echo "<CENTER><table border=1>\n";
+echo "<CENTER><table border=0 cellpadding=0>\n";
 echo "<tr><td class='tableheader'>Overview of " . $HelpPageTitle ."</td></tr>\n";
 
 $myrow = DB_fetch_row($result);
@@ -115,13 +121,14 @@ echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 if (isset($_GET['HelpID']) AND ! isset($_GET['delete'])) {
 	//editing an existing sales type
 
-	$sql = "SELECT Narrative FROM Help WHERE HelpID=" . $_GET['HelpID'];
+	$sql = "SELECT Narrative FROM Help WHERE ID=" . $_GET['HelpID'];
 
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_row($result);
 
 	echo "<INPUT TYPE=HIDDEN NAME='HelpID' VALUE=" . $HelpID . ">";
 
+	$NarrativeHeading = "Edit This Comment";
 	$_POST['Narrative'] = $myrow[0];
 
 }
@@ -130,7 +137,14 @@ echo "<INPUT TYPE=HIDDEN NAME='PageID' VALUE=" . $PageID . ">";
 echo "<INPUT TYPE=HIDDEN NAME='Page' VALUE='" . $Page . "'>";
 echo "<INPUT TYPE=HIDDEN NAME='HelpPageTitle' VALUE='" . $HelpPageTitle . "'>";
 
-echo "<CENTER><TABLE><TR><TD>Narrative:</TD></TR>";
+echo "<TABLE><TR><TD><FONT COLOR=BLUE><B>";
+
+if (isset($NarrativeHeading)){
+	echo $NarrativeHeading;
+} else {
+	echo "Add New Help Comment";
+}
+echo ":</FONT></B></TD></TR>";
 
 echo "<TR><TD><textarea name='Narrative' cols=100% rows=3>" . $_POST['Narrative'] . "</textarea></TD></TR>";
 

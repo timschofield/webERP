@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /*As modified by Dirk Eversmann */
 
 $title = "General Ledger Account Inquiry";
@@ -218,9 +218,10 @@ if ($_POST["Show"]=="Show Account Transactions"){
 	}else {
 		echo "<TD></TD><TD ALIGN=RIGHT><B>" . number_format((-$RunningTotal),2) . "</B></TD><TD COLSPAN=2></TD></TR>";
 	}
+	echo "</table>\n";
 } /* end of if Show button hit */
 
-echo "</table>\n";
+
 
 if ($ShowIntegrityReport){
 

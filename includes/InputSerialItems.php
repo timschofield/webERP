@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -31,46 +31,44 @@ if (isset($_GET['LineNo'])){
 
         possibly override setting elsewhere.
 */
-$EntryType = $_POST['EntryType'];
 
-if ($EntryType == ""){
+if ($_POST['EntryType']== ""){
 	if ($RecvQty <= 50) {
-		$EntryType = "KEYED";
+		$_POST['EntryType'] = "KEYED";
 	} //elseif ($RecvQty <= 50) { $EntryType = "BARCODE"; }
 	else {
-		$EntryType = "FILE";
+		$_POST['EntryType'] = "FILE";
 	}
 }
 
 $invalid_imports = 0;
 $valid = true;
 
-echo "<div align=center>";
-echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' method=post enctype='multipart/form-data'>";
 
 echo "<INPUT TYPE=HIDDEN NAME='LineNo' VALUE=" . $LineNo . ">";
-echo "<input type=submit value='Set Entry Type:'>";
 
+echo "<CENTER><TABLE BORDER=1><TR><TD>";
 echo "<input type=radio name=EntryType ";
-if ($EntryType=="KEYED") {
+if ($_POST['EntryType']=="KEYED") {
 	echo "checked ";
 }
 echo "value='KEYED' valign=texttop>Keyed Entry";
-
+echo "</TD><TD>";
 echo "<input type=radio name=EntryType";
-if ($EntryType=="BARCODE") {
+if ($_POST['EntryType']=="BARCODE") {
 	echo "checked";
 }
 echo " value='BARCODE'>Barcode Entry";
-
+echo "</TD><TD>";
 echo "<input type=radio name=EntryType";
-if ($EntryType=="FILE") {
+if ($_POST['EntryType']=="FILE") {
 	echo "checked";
 }
 echo " value='FILE'>File Upload";
 echo "<input type=file name='ImportFile'>";
-
-echo "</form></div>";
+echo "</TD></TR><TR><TD ALIGN=CENTER COLSPAN=3>";
+echo "<input type=submit value='Set Entry Type:'>";
+echo "</TD></TR></TABLE>";
 
 global $tableheader;
 
@@ -85,7 +83,7 @@ if ($LineItem->Serialised==1){
 			</TR>";
 }
 
-if ($EntryType == "FILE"){
+if ($_POST['EntryType'] == "FILE"){
 	include("includes/InputSerialItemsFile.php");
 } else { /*KEYED or BARCODE */
 	include("includes/InputSerialItemsKeyed.php");
