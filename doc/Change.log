@@ -1,7 +1,9 @@
 <P>webERP Change Log
 
-<P>18/2/05 Bug fixes - <CENTER> on BankMatching.php, GLAccountInquiry.php integrity checking against wrong chartdetail record, lower casing errors in some Z scripts - Dick Stins.
+<P>21/2/05 New script to print quotations PDFQuotation.php includes/PDFQuotationPageHeader.inc
+<P>18/2/05 Bug fixes - <CENTER> on BankMatching.php, GLAccountInquiry.php integrity checking against wrong chartdetail record, lower casing errors in some Z scripts - Dick Stins, StockCostUpdate.php - OverheadCost added twice
 <P>17/2/05 maximum execution time now as a config.php parameter defaults to 2 mins - 120 seconds
+<P>12/2/05 sha1 encrypted passwords stored in the db now as per Danie's request
 <P>9/2/05 Customer login SelectCompletedOrder.php now shows just the orders for the customer without resort to a new script
 <P>9/2/05 Scott Rosa - Discount Category logic was not applied on quick entry - bug corrected
 <P>4/2/05 DB_escape_string function added to ConnectDB_xxx.inc database specific scripts and also modifications to Stocks.php Customers.php Currencies.php DeliveryDetails.php CustomerBranches.php to use this function on insert and updates as necessary.

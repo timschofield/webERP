@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -134,6 +134,10 @@ if (!isset($StockID)) {
 
 		echo '</SELECT> &nbsp&nbsp';
 		echo '<SELECT NAME="Quotations">';
+		
+		if ($_GET['Quotations']=='Quotes_Only'){
+			$_POST['Quotations']='Quotes_Only';
+		}
 		
 		if ($_POST['Quotations']=='Quotes_Only'){
 			echo '<OPTION SELECTED VALUE="Quotes_Only">' . _('Quotations Only');

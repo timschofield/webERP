@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.47 $ */
+/* $Revision: 1.48 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -35,11 +35,11 @@ $Version = '2.9c';
 $host = 'localhost';
 
 //The type of db server being used - currently only postgres or mysql
-$dbType = 'mysql';
+$dbType = 'postgres';
 //$dbType = 'postgres';
 //$dbType = 'mysql';
 
-$DatabaseName = 'pipo';
+$DatabaseName = 'weberp';
 
 // sql user & password
 $dbuser = 'weberp_db_user';

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 8;
 include ('includes/session.inc');
@@ -169,7 +169,6 @@ if (isset($_POST['Show'])){
 				
 				if (ABS($PeriodTotal -$ChartDetailRow['actual'])>0.01){
 					$ShowIntegrityReport = True;
-					echo '<BR>Period Total - ' . $PeriodTotal . ' ChartDetailRow[actual] = ' . $ChartDetailRow['actual'];
 				}
 			}
 			$PeriodNo = $myrow['periodno'];
