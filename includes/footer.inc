@@ -17,10 +17,10 @@
 
 <table align="center" id="footer">
 	<tr>
-		<td align="center" class="footer"><?=$CompanyName;?></td>
+		<td align="center" class="footer"><?php echo $CompanyName;?></td>
 	</tr>
 	<tr>
-		<td align="center"><img src="<?="$rootpath/css/$theme/images/webERP+sm.gif";?>"></td>
+		<td align="center"><img src="<?php echo "$rootpath/css/$theme/images/webERP+sm.gif";?>"></td>
 	</tr>
 	<tr>
 		<td align="center" class="footer">WEB-ERP Copyright Logic Works Ltd</td>

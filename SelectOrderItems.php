@@ -703,13 +703,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 			$DisplayLineTotal = number_format($LineTotal,2);
 			$DisplayDiscount = number_format(($StockItem->DiscountPercent * 100),2);
 
-			if ($k==1){
-				echo "<tr bgcolor='#CCCCCC'>";
-				$k=0;
-			} elseif ($StockItem->QOHatLoc < $StockItem->Quantity AND ($StockItem->MBflag=="B" OR $StockItem->MBflag=="M")) {
+			if ($StockItem->QOHatLoc < $StockItem->Quantity AND ($StockItem->MBflag=="B" OR $StockItem->MBflag=="M")) {
 			/*There is a stock deficiency in the stock location selected */
 
 				echo "<tr bgcolor='#EEAABB'>";
+			} elseif ($k==1){
+				echo "<tr bgcolor='#CCCCCC'>";
+				$k=0;
 			} else {
 				echo "<tr bgcolor='#EEEEEE'>";
 				$k=1;

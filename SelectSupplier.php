@@ -8,6 +8,10 @@ include("includes/header.inc");
 
 $msg="";
 
+if (!isset($_POST['Search'])){
+	$_POST['Search']="";
+}
+
 If ($_POST['Search']=="Search Now"){
 
 	If ($_POST['Keywords'] AND $_POST['SupplierCode']) {

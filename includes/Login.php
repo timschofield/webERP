@@ -10,9 +10,9 @@
 
 <html>
 <head>
-    <title><?echo $CompanyName;?></title>
+    <title><?php echo $CompanyName;?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
-    <link rel="stylesheet" href="css/<?echo $theme;?>/login.css" type="text/css" />
+    <link rel="stylesheet" href="css/<?php echo $theme;?>/login.css" type="text/css" />
 </head>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
@@ -28,7 +28,7 @@
 		        <tr>
 		            <td colspan="2" rowspan="2">
                     <table border="0" cellpadding="0" cellspacing="0">
-					<form action="<?echo $_SERVER['PHP_SELF'];?>" name="loginform" method="post">
+					<form action="<?php echo $_SERVER['PHP_SELF'];?>" name="loginform" method="post">
                         <tr>
                             <td colspan="5" bgcolor="#FFFFFF"><img src="css/default/images/spacer.gif"></td>
 
@@ -52,7 +52,7 @@
                                          <span>Password:</span><br />
                                          <input type="PASSWORD" name="Password">
                                          <br />
-                                         <?echo $demo_text;?>
+                                         <?php echo $demo_text;?>
                                         </td>
                                     </tr>
 
