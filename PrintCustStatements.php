@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -34,20 +34,20 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 	if ($CompanyRecord==0){
 	/*CompanyRecord will be 0 if the company information could not be retrieved */
 		echo '<br><br>';
-		prnMsg( _('The Company Record could not be loaded. This is a major problem') , 'error' );
+		prnMsg( _('The Company Record could not be loaded') . '. ' . _('This is a major problem') , 'error' );
 		include ('includes/footer.inc');
 	     	exit;
 	}
 
 /* Do a quick tidy up to settle any transactions that should have been settled at the time of allocation but for whatever reason weren't */
 	$ErrMsg = _('There was a problem settling the old transactions.');
-	$DbgMsg = _('The SQL used to settle outstanding transactions was:');
+	$DbgMsg = _('The SQL used to settle outstanding transactions was');
 	$sql = "UPDATE DebtorTrans SET Settled=1
 		WHERE ABS(DebtorTrans.OvAmount+DebtorTrans.OvDiscount+DebtorTrans.OvFreight+DebtorTrans.OvGST-DebtorTrans.Alloc)<0.009";
 	$SettleAsNec = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 
 /*Figure out who all the customers in this range are */
-	$ErrMsg= _('There was a problem retrieving the customer information for the statements from the database.');
+	$ErrMsg= _('There was a problem retrieving the customer information for the statements from the database');
 	$sql = "SELECT DebtorNo,
 			Name,
 			Address1,
@@ -68,7 +68,7 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 	$StatementResults=DB_query($sql,$db, $ErrMsg);
 
 	if (DB_Num_Rows($StatementResults) == 0){
-		$title = _('Print Statments - No Customers Found');
+		$title = _('Print Statments') . ' - ' . _('No Customers Found');
 	        require('includes/header.inc');
 		echo '<div align=center><br><br><br>';
 		prnMsg( _('There were no Customers matching your selection of '). $_POST['FromCust']. ' - '.
@@ -99,7 +99,7 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 	   	$NumberOfRecordsReturned = DB_num_rows($OstdgTrans);
 
 /*now get all the settled transactions which were allocated this month */
-		$ErrMsg = _('There was a problem retrieving the transactions that were settled over the course of the last month for'). ' ' . $StmtHeader["Name"] . " from the database.";
+		$ErrMsg = _('There was a problem retrieving the transactions that were settled over the course of the last month for'). ' ' . $StmtHeader["Name"] . ' ' . _('from the database');
 	   	if ($Show_Settled_LastMonth==1){
 	   		$sql = "SELECT DISTINCT SysTypes.TypeName,
 						DebtorTrans.TransNo,
@@ -397,7 +397,7 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 	$pdf->Stream();
 
 	} else {
-		$title = _('Print Statments - No Statemts Found');
+		$title = _('Print Statments') . ' - ' . _('No Statements Found');
 		include('includes/header.inc');
 		echo '<BR><BR><BR>' . prnMsg( _('There were no statments to print') );
 	        echo '<BR><BR><BR>';

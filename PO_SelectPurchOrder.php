@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 2;
 
@@ -37,25 +37,25 @@ If ($_POST['ResetPart']){
 
 If (isset($OrderNumber) && $OrderNumber!="") {
 	if (!is_numeric($OrderNumber)){
-		  echo '<BR><B>' . _('The Order Number entered') . ' <U>' . _('MUST') . '</U> ' . _('be numeric') . '.</B><BR>';
+		  prnMsg( _('The Order Number entered') . ' <U>' . _('MUST') . '</U> ' . _('be numeric'), 'error');
 		  unset ($OrderNumber);
 	} else {
 		echo _('Order Number') . ' - ' . $OrderNumber;
 	}
 } else {
 	If ($SelectedSupplier) {
-		echo _('For supplier') . ': ' . $SelectedSupplier . ' and ';
+		echo _('For supplier') . ': ' . $SelectedSupplier . ' ' . _('and') . ' ';
 		echo '<input type=hidden name="SelectedSupplier" value=' . $SelectedSupplier . '>';
 	}
 	If ($SelectedStockItem) {
-		 echo _('for the part') . ': ' . $SelectedStockItem . ' and <input type=hidden name="SelectedStockItem" value="' . $SelectedStockItem . '">';
+		 echo _('for the part') . ': ' . $SelectedStockItem . ' ' . _('and') . ' <input type=hidden name="SelectedStockItem" value="' . $SelectedStockItem . '">';
 	}
 }
 
 if ($_POST['SearchParts']){
 
 	If ($_POST['Keywords'] AND $_POST['StockCode']) {
-		echo '<BR>' . _('Stock description keywords have been used in preference to the Stock code extract entered');
+		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered'),'info');
 	}
 	If ($_POST['Keywords']) {
 		//insert wildcard characters in spaces
@@ -173,7 +173,7 @@ while ($myrow1 = DB_fetch_array($result1)) {
 }
 ?>
 </SELECT>
-<TD><FONT SIZE=1><?php echo _('Enter text extract(s) in the'); ?> <B><?php echo _('description'); ?></B>:</FONT></TD>
+<TD><FONT SIZE=1><?php echo _('Enter text extracts in the'); ?> <B><?php echo _('description'); ?></B>:</FONT></TD>
 <TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25></TD></TR>
 <TR><TD></TD>
 <TD><FONT SIZE 3><B><?php echo _('OR'); ?> </B></FONT><FONT SIZE=1><?php echo _('Enter extract of the'); ?> <B><?php echo _('Stock Code'); ?></B>:</FONT></TD>
@@ -191,7 +191,7 @@ If ($StockItemsResult) {
 	$TableHeader = '<TR><TD class="tableheader">' . _('Code') . '</TD>
 				<TD class="tableheader">' . _('Description') . '</TD>
 				<TD class="tableheader">' . _('On Hand') . '</TD>
-				<TD class="tableheader">' . _('Orders Ostdg') . '</TD>
+				<TD class="tableheader">' . _('Orders') . '<BR>' . _('Outstanding') . '</TD>
 				<TD class="tableheader">' . _('Units') . '</TD>
 			</TR>';
 

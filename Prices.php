@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 2;
 
@@ -33,14 +33,14 @@ $result = DB_query("SELECT Description, MBflag FROM StockMaster WHERE StockID='$
 $myrow = DB_fetch_row($result);
 
 if (DB_num_rows($result)==0){
-	echo '<BR>' . _('The part code entered does not exist in the database. Only valid parts can have prices entered against them') . '.';
+	prnMsg( _('The part code entered does not exist in the database') . '. ' . _('Only valid parts can have prices entered against them'),'error');
 	$InputError=1;
 }
 
 
 if (!isset($Item)){
 	echo '<P>';
-	prnMsg (_('An item must first be selected before this page is called. The product selection page should call this page with a valid product code'),'error');
+	prnMsg (_('An item must first be selected before this page is called') . '. ' . _('The product selection page should call this page with a valid product code'),'error');
 	include('includes/footer.inc');
 	exit;
 }
@@ -52,7 +52,7 @@ echo _('Pricing for part') . ':<INPUT TYPE=text NAME="Item" MAXSIZEe=22 VALUE="'
 echo '<HR>';
 
 if ($myrow[1]=="K"){
-	echo '<P><FONT SIZE=4 COLOR=RED>' . _('Problem Report') . ':<BR></FONT>' . _('The part selected is a kit set item, these items explode into their components when selected on an order, prices must be set up for the components and no price can be set for the whole kit');
+	prnMsg(_('The part selected is a kit set item') .', ' . _('these items explode into their components when selected on an order') . ', ' . _('prices must be set up for the components and no price can be set for the whole kit'),'error');
 	exit;
 }
 
@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
 
 	if (!is_double((double) trim($_POST['Price'])) OR $_POST['Price']=="") {
 		$InputError = 1;
-		$msg = '<BR>' . _('The price entered must be numeric');
+		$msg = _('The price entered must be numeric');
 	}
 
 	if (isset($_POST['OldTypeAbbrev']) AND isset($_POST['OldCurrAbrev']) AND strlen($Item)>1 AND $InputError !=1) {
@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) {
 			AND CurrAbrev='" . $_POST['OldCurrAbrev'] . "'
 			AND DebtorNo=''";
 
-		$msg = '<BR>' . _('This price has been updated') . '.';
+		$msg =  _('This price has been updated') . '.';
 	} elseif ($InputError !=1) {
 
 	/*Selected price is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new price form */
@@ -96,25 +96,25 @@ if (isset($_POST['submit'])) {
 					'',
 					" . $_POST['Price'] . ")";
 
-		$msg = '<BR>' . _('The new price has been added') . '.';
+		$msg =  _('The new price has been added') . '.';
 	}
 	//run the SQL from either of the above possibilites only if there were no input errors
 	if ($InputError !=1){
 		$result = DB_query($sql,$db,'','',false,false);
 		if (DB_error_no($db)!=0){
-			If ($msg=='<BR><BR>' . _('This price has been updated')){
-				$msg = '<BR>' . _('The price could not be updated because') . ' - ' . DB_error_msg($db);
+			If ($msg== _('This price has been updated')){
+				$msg = _('The price could not be updated because') . ' - ' . DB_error_msg($db);
 			} else {
-				$msg = '<BR>' . _('The price could not be added because') . ' - ' . DB_error_msg($db);
+				$msg = _('The price could not be added because') . ' - ' . DB_error_msg($db);
 			}
 			if ($debug==1){
-				echo '<BR>' . _('The SQL that caused the problem was') . ':<BR>' . $sql;
+				prnMsg(_('The SQL that caused the problem was') . ':<BR>' . $sql,'error');
 			}
 		} else {
 			unset($_POST['Price']);
 		}
 	}
-	echo '<BR>' . $msg;
+	prnMsg($msg);
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
@@ -126,7 +126,7 @@ if (isset($_POST['submit'])) {
 		AND DebtorNo=''";
 
 	$result = DB_query($sql,$db);
-	echo '<BR>' . _('The selected price has been deleted') . '! <p>';
+	prnMsg( _('The selected price has been deleted') . '!','success');
 
 }
 
@@ -174,7 +174,7 @@ if ($InputError ==0){
 			        <td>%s</td>
 				<td ALIGN=RIGHT>%0.2f</td>
 				<td><a href='%s?%sItem=%s&TypeAbbrev=%s&CurrAbrev=%s&Price=%s&Edit=1'>" . _('Edit') . "</td>
-				<td><a href='%s?%sItem=%s&TypeAbbrev=%s&CurrAbrev=%s&delete=yes'>" . _('DELETE') . "</td></tr>",
+				<td><a href='%s?%sItem=%s&TypeAbbrev=%s&CurrAbrev=%s&delete=yes'>" . _('Delete') . "</td></tr>",
 				$myrow['Currency'],
 				$myrow['Sales_Type'],
 				$myrow['Price'],
@@ -203,7 +203,7 @@ if ($InputError ==0){
 	echo '</table></CENTER><p>';
 
 	if (DB_num_rows($result) == 0) {
-		echo '<BR>' . _('There are no prices set up for this part');
+		prnMsg(_('There are no prices set up for this part'),'warn');
 	}
 
 	if ($_GET['Edit']==1){
@@ -258,7 +258,7 @@ if ($InputError ==0){
 
 	</TABLE>
 
-	<input type="Submit" name="submit" value="<?php echo _('Enter/Amend Price'); ?>">
+	<input type="Submit" name="submit" value="<?php echo _('Enter') . '/' . _('Amend Price'); ?>">
 	</CENTER>
 
 <?php

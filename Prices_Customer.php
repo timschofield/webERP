@@ -1,10 +1,10 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 11;
 
 include('includes/session.inc');
 
-$title = _('Special Prices for') . ' ';
+$title = _('Special Prices for') . ' '. $_SESSION['CustomerID'];
 
 include('includes/header.inc');
 
@@ -17,7 +17,8 @@ if (isset($_GET['Item'])){
 if (!isset($Item) OR !isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']==""){
 
 	echo '<BR><HR>';
-	echo  _('A customer must be selected from the customer selection screen, then an item must be selected before this page is called. The product selection page should call this page with a valid product code') . '<HR>';
+	prnMsg( _('A customer must be selected from the customer selection screen') . ', ' . _('then an item must be selected before this page is called') . '. ' . _('The product selection page should call this page with a valid product code'),'info');
+	echo '<HR>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -80,7 +81,7 @@ if (isset($_POST['submit'])) {
 				AND TypeAbbrev='$SalesType'
 				AND CurrAbrev='$CurrCode'
 				AND DebtorNo='" . $_SESSION['CustomerID'] . "'";
-		$msg = _('Price Updated.');
+		$msg = _('Price Updated');
 	} elseif ($InputError !=1) {
 
 	/*Selected price is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new price form */
@@ -113,7 +114,7 @@ if (isset($_POST['submit'])) {
 		}
 	}
 
-	echo '<BR>' . $msg;
+	prnMsg($msg);
 
 } elseif ($_GET['delete']) {
 //the link to delete a selected record was clicked instead of the submit button
@@ -125,7 +126,7 @@ if (isset($_POST['submit'])) {
 		AND DebtorNo='" . $_SESSION['CustomerID'] . "'
 		AND BranchCode='" . $_GET['Branch'] . "'";
 	$result = DB_query($sql,$db);
-	echo _('This price has been deleted') . '! <p>';
+	prnMsg( _('This price has been deleted') . '!','success');
 }
 
 
@@ -183,7 +184,7 @@ if (DB_num_rows($result) == 0) {
 } else {
 /*THERE IS ALREADY A spl price setup */
 	echo '<tr><td class="tableheader">' . _('Special Price') .
-	     '</td><td class="tableheader">' . _('Branch') . '</td></tr>\n';
+	     '</td><td class="tableheader">' . _('Branch') . '</td></tr>';
 
 	while ($myrow = DB_fetch_array($result)) {
 
@@ -197,7 +198,7 @@ if (DB_num_rows($result) == 0) {
 		<td ALIGN=RIGHT>%0.2f</td>
 		<td>%s</td>
  		<td><a href='%s?Item=%s&Price=%s&Branch=%s&Edit=1'>" . _('Edit') . "</td>
-		<td><a href='%s?Item=%s&Branch=%s&delete=yes'>" . _('DELETE') . "</td></tr>",
+		<td><a href='%s?Item=%s&Branch=%s&delete=yes'>" . _('Delete') . "</td></tr>",
 		$myrow["Price"],
 		$Branch,
 		$_SERVER['PHP_SELF'],

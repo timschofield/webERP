@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -12,7 +12,7 @@ If (!isset($_GET['TransNo']) || $_GET['TransNo']==""){
 	$title = _('Select Order To Print');
 	include('includes/header.inc');
 	echo '<div align=center><br><br><br>';
-	prnMsg( _('Select an Order Number to Print before calling this page.') , 'error');
+	prnMsg( _('Select an Order Number to Print before calling this page') , 'error');
 	echo '<BR><BR><BR><table class="table_index"><tr><td class="menu_group_item">
 		<li><a href="'. $rootpath . '/SelectSalesOrder.php?'. SID .'">' . _('Outstanding Sales Orders') . '</a></li>
 		<li><a href="'. $rootpath . '/SelectCompletedOrder.php?'. SID .'">' . _('Completed Sales Orders') . '</a></li>
@@ -22,7 +22,7 @@ If (!isset($_GET['TransNo']) || $_GET['TransNo']==""){
 }
 
 /*retrieve the order details from the database to print */
-$ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database.');
+$ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
 $sql = "SELECT CustomerRef,
 		Comments,
 		OrdDate,
@@ -57,7 +57,7 @@ if (DB_num_rows($result)==0){
 	$title = _('Print Packing Slip Error');
         include('includes/header.inc');
         echo '<div align=center><br><br><br>';
-	prnMsg( _('Unable to Locate Order Number : ') . ' ' . $_GET['TransNo'] . ' ', 'error');
+	prnMsg( _('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
         echo '<BR><BR><BR><table class="table_index"><tr><td class="menu_group_item">
                 <li><a href="'. $rootpath . '/SelectSalesOrder.php?'. SID .'">' . _('Outstanding Sales Orders') . '</a></li>
                 <li><a href="'. $rootpath . '/SelectCompletedOrder.php?'. SID .'">' . _('Completed Sales Orders') . '</a></li>
@@ -72,14 +72,14 @@ if (DB_num_rows($result)==0){
 	      	include('includes/header.inc');
 		echo '<P>';
 		prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
-			_('has previously been printed. It was printed on'). ' ' . ConvertSQLDate($myrow['DatePackingSlipPrinted']) .
-			'<br>' . _('This check is there toensure that duplicate packing slips are not produced and dispatched more than once to the customer.'), 'warn' );
+			_('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($myrow['DatePackingSlipPrinted']) .
+			'<br>' . _('This check is there toensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
 	      echo '<P><A HREF="' . $rootpath . '/PrintCustOrder.php?' . SID . 'TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'
-		. _('Do a Re-Print (On Pre-Printed Stationery) Even Though Previously Printed</A>') . '<P>' .
-		'<A HREF="' . $rootpath. '/PrintCustOrder_generic.php?' . SID . 'TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'. _('Do a Re-Print (Plain paper - A4 landscape) Even Though Previously Printed'). '</A>';
+		. _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</A><P>' .
+		'<A HREF="' . $rootpath. '/PrintCustOrder_generic.php?' . SID . 'TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'. _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</A>';
 
 		echo '<BR><BR><BR>';
-		echo  _('Or, select another Order Number to Print.');
+		echo  _('Or select another Order Number to Print');
 	        echo '<table class="table_index"><tr><td class="menu_group_item">
         	        <li><a href="'. $rootpath . '/SelectSalesOrder.php?'. SID .'">' . _('Outstanding Sales Orders') . '</a></li>
                 	<li><a href="'. $rootpath . '/SelectCompletedOrder.php?'. SID .'">' . _('Completed Sales Orders') . '</a></li>
@@ -96,7 +96,7 @@ LETS GO */
 /* Now ... Has the order got any line items still outstanding to be invoiced */
 
 $PageNumber = 1;
-$ErrMsg = _('There was a problem retrieving the details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database.');
+$ErrMsg = _('There was a problem retrieving the details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
 $sql = "SELECT StkCode,
 		Description,
 		Quantity,

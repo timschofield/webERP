@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -17,7 +17,7 @@ if (isset($_GET['FromGRNNo'])){
 	$SQL= "SELECT PurchOrderDetails.OrderNo  FROM PurchOrderDetails,GRNs
 		WHERE PurchOrderDetails.PODetailITem=GRNs.PODetailItem AND GRNs.GRNNo=" . $_GET["FromGRNNo"];
 
-	$ErrMsg = _('The search of the GRNs was unsucessful -the SQL statement returned the error:');
+	$ErrMsg = _('The search of the GRNs was unsucessful') . ' - ' . _('the SQL statement returned the error');
 	$orderResult = DB_query($SQL, $db, $ErrMsg);
 
 	$orderRow = DB_fetch_row($orderResult);
@@ -28,17 +28,17 @@ if (isset($_GET['FromGRNNo'])){
 if (!isset($_GET['OrderNo'])) {
 
 	echo '<BR><BR>';
-	prnMsg( _('This page must be called with a purchase order number to review.'), 'error');
+	prnMsg( _('This page must be called with a purchase order number to review'), 'error');
 
 	echo '<table class="table_index">
 		<tr><td class="menu_group_item">
-                <li><a href="'. $rootpath . '/PO_SelectPurchOrder.php?'. SID .'">Outstanding Sales Orders</a></li>
+                <li><a href="'. $rootpath . '/PO_SelectPurchOrder.php?'. SID .'">' . _('Outstanding Sales Orders') . '</a></li>
 		</td></tr></table>';
 	include('includes/footer.inc');
-	exit();
+	exit;
 }
 
-$ErrMsg = _('The order requested could not be retrieved - the SQL returned the following error:');
+$ErrMsg = _('The order requested could not be retrieved') . ' - ' . _('the SQL returned the following error');
 $OrderHeaderSQL = "SELECT PurchOrders.*, Suppliers.SupplierID, Suppliers.SuppName, Suppliers.CurrCode
 			FROM PurchOrders, Suppliers
 			WHERE PurchOrders.SupplierNo = Suppliers.SupplierID
@@ -49,13 +49,13 @@ $GetOrdHdrResult = DB_query($OrderHeaderSQL,$db, $ErrMsg);
 if (DB_num_rows($GetOrdHdrResult)!=1) {
 	echo '<BR><BR>';
 	if (DB_num_rows($GetOrdHdrResult) == 0){
-		prnMsg ( _('Unable to locate this PO Number '. $_GET['OrderNo'] .'. Please look up another one. The order requested could not be retrieved - the SQL returned either 0 or several purchase orders.'), 'error');
+		prnMsg ( _('Unable to locate this PO Number') . ' '. $_GET['OrderNo'] . '. ' . _('Please look up another one') . '. ' . _('The order requested could not be retrieved') . ' - ' . _('the SQL returned either 0 or several purchase orders'), 'error');
 	} else {
-		prnMsg ( _('The order requested could not be retrieved - the SQL returned either several purchase orders.'), 'error');
+		prnMsg ( _('The order requested could not be retrieved') . ' - ' . _('the SQL returned either several purchase orders'), 'error');
 	}
         echo '<table class="table_index">
                 <tr><td class="menu_group_item">
-                <li><a href="'. $rootpath . '/PO_SelectPurchOrder.php?'. SID .'">Outstanding Sales Orders</a></li>
+                <li><a href="'. $rootpath . '/PO_SelectPurchOrder.php?'. SID .'">' . _('Outstanding Sales Orders') . '</a></li>
                 </td></tr></table>';
 
 	include('includes/footer.inc');
@@ -84,7 +84,7 @@ echo '<TR><TD class="tableheader">' . _('Deliver Into Location'). '</TD><TD>' . 
 	<TD class="tableheader">' . _('Delivery Address 4'). '</TD><TD>' . $myrow['DelAdd4'] . '</TD></TR>';
 
 echo '<TR><TD class="tableheader">' . _('Initiator'). '</TD><TD>' . $myrow['Initiator'] . '</TD>
-	<TD class="tableheader">' . _('Requistion Ref.'). '</TD><TD>' . $myrow['RequisitionNo'] . '</TD></TR>';
+	<TD class="tableheader">' . _('Requistion Ref'). '.</TD><TD>' . $myrow['RequisitionNo'] . '</TD></TR>';
 
 echo '<TR><TD class="tableheader">'. _('Printing') . '</TD><TD COLSPAN=3>';
 

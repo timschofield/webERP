@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 4;
 
@@ -25,16 +25,16 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 	  Is the delivery information all entered*/
 	$InputError=0; /*Start off assuming the best */
 	if ($_SESSION['PO']->DelAdd1=='' or strlen($_SESSION['PO']->DelAdd1)<3){
-	      echo '<BR><B>' . _('The purchase order can not be committed to the database because there is no delivery steet address specified');
+	      prnMsg( _('The purchase order can not be committed to the database because there is no delivery steet address specified'),'error');
 	      $InputError=1;
 	} elseif ($_SESSION['PO']->DelAdd2=='' OR strlen($_SESSION['PO']->DelAdd2)<3){
-	      echo '<BR><B>' . _('The purchase order can not be committed to the database because there is no suburb address specified');
+	      prnMsg( _('The purchase order can not be committed to the database because there is no suburb address specified'),'error');
 	      $InputError=1;
 	} elseif ($_SESSION['PO']->Location=='' OR ! isset($_SESSION['PO']->Location)){
-	      echo '<BR><B>' . _('The purchase order can not be committed to the database because there is no location specified to book any stock items into');
+	      prnMsg( _('The purchase order can not be committed to the database because there is no location specified to book any stock items into'),'error');
 	      $InputError=1;
 	} elseif ($_SESSION['PO']->LinesOnOrder <=0){
-	     echo '<BR><B>' . _('The purchase order can not be committed to the database because there are no lines entered on this order');
+	     prnMsg( _('The purchase order can not be committed to the database because there are no lines entered on this order'),'error');
 	     $InputError=1;
 	}
 
@@ -71,7 +71,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 				)";
 
 			$ErrMsg =  _('The purchase order header record could not be inserted into the database because');
-			$DbgMsg = _('The SQL statement used to insert the purchase order header record and failed was:');
+			$DbgMsg = _('The SQL statement used to insert the purchase order header record and failed was');
 			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 		     /*Get the auto increment value of the order number created from the SQL above */
@@ -104,11 +104,12 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							'" . $POLine->JobRef . "'
 						)";
 					$ErrMsg =_('One of the purchase order detail records could not be inserted into the database because');
-					$DbgMsg =_('The SQL statement used to insert the purchase order detail record and failed was:');
+					$DbgMsg =_('The SQL statement used to insert the purchase order detail record and failed was');
 					$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
 				}
 		     } /* end of the loop round the detail line items on the order */
-		     echo '<BR><BR>' . _('Purchase order') . ' ' . $_SESSION['PO']->OrderNo . ' ' . _('on') . ' ' . $_SESSION['PO']->SupplierName . ' ' . _('has been created');
+		     echo '<P>';
+		     prnMsg(_('Purchase order') . ' ' . $_SESSION['PO']->OrderNo . ' ' . _('on') . ' ' . $_SESSION['PO']->SupplierName . ' ' . _('has been created'),'success');
 		     echo "<BR><A target='_blank' HREF='$rootpath/PO_PDFPurchOrder.php?" . SID . '&OrderNo=' . $_SESSION['PO']->OrderNo . "'>" . _('Print Order') . '</A>';
 		 } else { /*its an existing order need to update the old order info */
 
@@ -128,7 +129,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		     		WHERE OrderNo = " . $_SESSION['PO']->OrderNo;
 
 			$ErrMsg =  _('The purchase order could not be updated because');
-			$DbgMsg = _('The SQL statement used to update the purchase order header record, that failed was:');
+			$DbgMsg = _('The SQL statement used to update the purchase order header record, that failed was');
 			$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 		     /*Now Update the purchase order detail records */
@@ -191,10 +192,11 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 				}
 
 				$ErrMsg = _('One of the purchase order detail records could not be updated because');
-				$DbgMsg = _('The SQL statement used to update the purchase order detail record that failed was:');
+				$DbgMsg = _('The SQL statement used to update the purchase order detail record that failed was');
 				$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 		     } /* end of the loop round the detail line items on the order */
-		     echo '<BR><BR>' . _('Purchase order') . ' ' . $_SESSION['PO']->OrderNo . ' ' . _('has been updated');
+		     echo '<BR><BR>';
+		     prnMsg(_('Purchase order') . ' ' . $_SESSION['PO']->OrderNo . ' ' . _('has been updated'),'success');
 		     if ($_SESSION['PO']->AllowPrintPO==1){
 			     echo "<BR><A target='_blank' HREF='$rootpath/PO_PDFPurchOrder.php?" . SID . "&OrderNo=" . $_SESSION['PO']->OrderNo . "'>" . _('Re-Print Order') . '</A>';
 		     }
@@ -312,7 +314,7 @@ If ($_POST['Search']){  /*ie seach for stock items */
 	$SearchResult = DB_query($SQL,$db,$ErrMsg);
 
 	if (DB_num_rows($SearchResult)==0 && $debug==1){
-		echo '<BR>' . _('There are no products to display matching the criteria provided');
+		prnMsg( _('There are no products to display matching the criteria provided'),'warn');
 	}
 	if (DB_num_rows($SearchResult)==1){
 
@@ -330,11 +332,11 @@ If($_POST['Delete']=='Delete'){
 		$_SESSION['PO']->remove_from_order($_POST['LineNo']);
 		include ('includes/PO_UnsetFormVbls.php');
 	} else {
-		echo '<BR>' . _('This item cannot be deleted because some of it has already been received');
+		prnMsg( _('This item cannot be deleted because some of it has already been received'),'warn');
 	}
 }
 
-if ($_POST['LookupPrice']=='Lookup Price' AND $_POST['StockID']!=''){
+if (isset($_POST['LookupPrice']) AND $_POST['StockID']!=''){
 
 	$sql = "SELECT PurchData.Price,
 			PurchData.ConversionFactor,
@@ -344,14 +346,14 @@ if ($_POST['LookupPrice']=='Lookup Price' AND $_POST['StockID']!=''){
 		AND PurchData.StockID = '". $_POST['StockID'] . "'";
 
 	$ErrMsg = _('The supplier pricing details for') . ' ' . $_POST['StockID'] . ' ' . _('could not be retrieved because');
-	$DbgMsg = _('The SQL used to retrieve the pricing details but failed was:');
+	$DbgMsg = _('The SQL used to retrieve the pricing details but failed was');
 	$LookupResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($LookupResult)==1){
 		$myrow = DB_fetch_array($LookupResult);
 		$_POST['Price'] = $myrow['Price']/$myrow['ConversionFactor'];
 	} else {
-		echo '<BR>' . _('Sorry ... there is no purchasing data set up for this supplier') . '  - ' . $_SESSION['PO']->SupplierID . ' ' . _('and item') . ' ' . $_POST['StockID'];
+		prnMsg(_('Sorry') . ' ... ' . _('there is no purchasing data set up for this supplier') . '  - ' . $_SESSION['PO']->SupplierID . ' ' . _('and item') . ' ' . $_POST['StockID'],'warn');
 	}
 }
 
@@ -360,12 +362,12 @@ If(isset($_POST['UpdateLine']) AND $_POST['UpdateLine']=='Update Line'){
 
 	if ($_POST['Qty']==0 OR $_POST['Price'] < 0){
 		$AllowUpdate = False;
-		echo '<BR><B>' . _('The Update Could Not Be Processed') . '</B><BR>' . _('You are attempting to set the quantity ordered to zero, or the price is set to an amount less than 0');
+		prnMsg( _('The Update Could Not Be Processed') . '<BR>' . _('You are attempting to set the quantity ordered to zero, or the price is set to an amount less than 0'),'error');
 	}
 
 	if ($_SESSION['PO']->LineItems[$_POST['LineNo']]->QtyInv > $_POST['Qty'] OR $_SESSION['PO']->LineItems[$_POST['LineNo']]->QtyReceived > $_POST['Qty']){
 		$AllowUpdate = False;
-		echo '<BR><B>' . _('The Update Could Not Be Processed') . '</B><BR>' . _('You are attempting to make the quantity ordered a quantity less than has already been invoiced or received this is of course prohibited. The quantity received can only be modified by entering a negative receipt and the quantity invoiced can only be reduced by entering a credit note against this item');
+		prnMsg( _('The Update Could Not Be Processed') . '<BR>' . _('You are attempting to make the quantity ordered a quantity less than has already been invoiced or received this is of course prohibited') . '. ' . _('The quantity received can only be modified by entering a negative receipt and the quantity invoiced can only be reduced by entering a credit note against this item'),'error');
 	}
 
 	if ($_SESSION['PO']->GLLink==1) {
@@ -374,7 +376,7 @@ If(isset($_POST['UpdateLine']) AND $_POST['UpdateLine']=='Update Line'){
 		$GLActResult = DB_query($sql,$db);
 		if (DB_error_no!=0 OR DB_num_rows($GLActResult)==0){
 			 $AllowUpdate = False;
-			 echo '<BR><B>' . _('The Update Could Not Be Processed') . '</B><BR>' . _('The GL account code selected does not exist in the database see the listing of GL Account Codes to ensure a valid account is selected');
+			 prnMsg( _('The Update Could Not Be Processed') . '<BR>' . _('The GL account code selected does not exist in the database see the listing of GL Account Codes to ensure a valid account is selected'),'error');
 		} else {
 			$GLActRow = DB_fetch_row($GLActResult);
 			$GLAccountName = $GLActRow[0];
@@ -408,19 +410,19 @@ If (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 
      if (!is_numeric($_POST['Qty'])){
 	   $AllowUpdate = False;
-	   echo '<BR><BR>' . _('Cannot Enter this order line') . '</B><BR>' . _('The quantity of the order item must be numeric');
+	   prnMsg( _('Cannot Enter this order line') . '<BR>' . _('The quantity of the order item must be numeric'),'error');
      }
      if ($_POST['Qty']<0){
 	   $AllowUpdate = False;
-	   echo '<BR><BR>' . _('Cannot Enter this order line') . '</B><BR>' . _('The quantity of the ordered item entered must be a positive amount');
+	   prnMsg( _('Cannot Enter this order line') . '<BR>' . _('The quantity of the ordered item entered must be a positive amount'),'error');
      }
      if (!is_numeric($_POST['Price'])){
 	   $AllowUpdate = False;
-	   echo '<BR><BR>' . _('Cannot Enter this order line') . '</B><BR>' . _('The price entered must be numeric');
+	   prnMsg( _('Cannot Enter this order line') . '<BR>' . _('The price entered must be numeric'),'error');
      }
      if (!is_date($_POST['ReqDelDate'])){
 	 $AllowUpdate = False;
-	 echo '<BR><BR>' . _('Cannot Enter this order line') . '</B><BR>' . _('The date entered must be in the format') . ' ' . $DefaultDateFormat;
+	 prnMsg( _('Cannot Enter this order line') . '</B><BR>' . _('The date entered must be in the format') . ' ' . $DefaultDateFormat, 'error');
      }
 
      include ('PO_Chk_ShiptRef_JobRef.php');
@@ -438,7 +440,7 @@ If (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 
 					if (($OrderItem->StockID == $_POST['StockID']) AND ($OrderItem->Deleted==False)) {
 						$AllowUpdate = False;
-						echo '<BR><B>' . _('Warning') . ':</B> ' . _('the part') . ' ' . $_POST['StockID'] . ' ' . _('is already on this order - the system will not allow the same item on the order more than once. However, you can change the quantity by selecting it from the order summary');
+						prnMsg(_('The item') . ' ' . $_POST['StockID'] . ' ' . _('is already on this order') . ' - ' . _('the system will not allow the same item on the order more than once') . '. ' . _('However you can change the quantity by selecting it from the order summary'),'warn');
 					}
 				} /* end of the foreach loop to look for pre-existing items of the same code */
 			}
@@ -468,8 +470,8 @@ If (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 					WHERE StockMaster.StockID = '". $_POST['StockID'] . "'";
 			}
 
-		$ErrMsg =  '<BR>' . _('The stock details for') . ' ' . $_POST['StockID'] . ' ' . _('could not be retrieved because');
-		$DbgMsg =  '<BR>' . _('The SQL used to retrieve the details of the item, but failed was:');
+		$ErrMsg =  _('The stock details for') . ' ' . $_POST['StockID'] . ' ' . _('could not be retrieved because');
+		$DbgMsg =  _('The SQL used to retrieve the details of the item, but failed was');
 		$result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 		if (DB_num_rows($result1)==0){ // the stock item does not exist in the DB
@@ -484,7 +486,7 @@ If (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 
 				if ($_SESSION['PO']->GLLink==1){
 
-					 $_SESSION['PO']->add_to_order ($_POST['LineNo'], 															$_POST['StockID'],
+					 $_SESSION['PO']->add_to_order ($_POST['LineNo'], $_POST['StockID'],
 					 				0, /*Serialised */
 									0, /*Controlled */
 									$_POST['Qty'],
@@ -521,7 +523,7 @@ If (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 			    	}
 			    	include ('includes/PO_UnsetFormVbls.php');
 		   } else {
-			     echo '<BR><BR>' . _('Cannot Enter this order line:') . '<BR>' . _('Either the part code') . " '" . $_POST['StockID'] . "' " . _('does not exist in the database OR the part is an assembly, kit or dummy part and therefore cannot be purchased') . '</FONT><P>';
+			    prnMsg( _('Cannot Enter this order line') . ':<BR>' . _('Either the part code') . " '" . $_POST['StockID'] . "' " . _('does not exist in the database or the part is an assembly or kit or dummy part and therefore cannot be purchased'),'warn');
 			     if ($debug==1){
 				    echo "<BR>$sql";
 			     }
@@ -540,15 +542,16 @@ If (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 		$GLValidResult = DB_query($sql,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
 			$AllowUpdate = False;
-			echo '<BR>' . _('The validation process for the GL Code entered could not be executed because') . DB_error_msg($db);
+			prnMsg( _('The validation process for the GL Code entered could not be executed because') . ' ' . DB_error_msg($db), 'error');
 			if ($debug==1){
-			     echo '<BR>' . _('The SQL used to validate the code entered, but failed was:');
+			     prnMsg (_('The SQL used to validate the code entered was') . ' ' . $sql,'error');
 		      }
+		      include('includes/footer.inc');
 		      exit;
 	      }
 	      if (DB_num_rows($GLValidResult) == 0) { /*The GLCode entered does not exist */
 		     $AllowUpdate = False;
-		      echo '<BR><BR>' . _('Cannot enter this order line:<BR>The general ledger code') . ' - ' . $_POST['GLCode'] . ' ' . _('is not a general ledger code that is defined in the chart of accounts. Please use a code that is already defined. See the Chart list from the link below') . '</FONT>';
+		      prnMsg( _('Cannot enter this order line') . ':<BR>' . _('The general ledger code') . ' - ' . $_POST['GLCode'] . ' ' . _('is not a general ledger code that is defined in the chart of accounts') . ' . ' . _('Please use a code that is already defined') . '. ' . _('See the Chart list from the link below'),'error');
 	      } else {
 		      $myrow = DB_fetch_row($GLValidResult);
 		      $GLAccountName = $myrow[0];
@@ -559,7 +562,7 @@ If (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 	   }
 	   if (strlen($_POST['ItemDescription'])<=3){
 		   $AllowUpdate = False;
-		   echo '<BR><BR>' . _('Cannot enter this order line:<BR>The description of the item being purchase is required where a non-stock item is being ordered');
+		   prnMsg(_('Cannot enter this order line') . ':<BR>' . _('The description of the item being purchase is required where a non-stock item is being ordered'),'warn');
 	    }
 
 	    if ($AllowUpdate == True){
@@ -600,7 +603,7 @@ If (isset($_GET['NewItem'])){ /* NewItem is set from the part selection list as 
 
 		    if (($OrderItem->StockID == $_GET['NewItem'])  AND ($OrderItem->Deleted==False)) {
 			  $AlreadyOnThisOrder = 1;
-			  echo '<BR><B>' . _('Warning:') . '</B> ' . _('the part') . ' ' . $_GET['NewItem'] . ' ' . _('is already on this order - the system will not allow the same item on the order more than once. However, you can change the quantity ordered of the existing line if necessary');
+			  prnMsg( _('The item') . ' ' . $_GET['NewItem'] . ' ' . _('is already on this order') . '. ' . _('The system will not allow the same item on the order more than once') . '. ' . _('However you can change the quantity ordered of the existing line if necessary'),'error');
 		    }
 		} /* end of the foreach loop to look for preexisting items of the same code */
 	}
@@ -625,7 +628,7 @@ If (isset($_GET['NewItem'])){ /* NewItem is set from the part selection list as 
 			AND StockMaster.StockID = '". $_GET['NewItem'] . "'";
 
 	    $ErrMsg = _('The supplier pricing details for') . ' ' . $_GET['NewItem'] . ' ' . _('could not be retrieved because');
-	    $DbgMsg = _('The SQL used to retrieve the pricing details but failed was:');
+	    $DbgMsg = _('The SQL used to retrieve the pricing details but failed was');
 	    $result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	   if ($myrow = DB_fetch_array($result1)){
@@ -669,12 +672,13 @@ If (isset($_GET['NewItem'])){ /* NewItem is set from the part selection list as 
 		      /*Make sure the line is also available for editing by default without additional clicks */
 		      $_GET['Edit'] = $_SESSION['PO']->LinesOnOrder; /* this is a bit confusing but it was incremented by the add_to_order function */
 	   } else {
-		      echo '<BR><FONT COLOR=RED>' . _('The part code') . ' ' . $_GET['NewItem'] . ' ' . _('does not exist in the database and therefore cannot be added to the order') . '</FONT><P>';
+		      prnMsg (_('The item code') . ' ' . $_GET['NewItem'] . ' ' . _('does not exist in the database and therefore cannot be added to the order'),'error');
 		      if ($debug==1){
 		      		echo "<BR>$sql";
-				include('includes/footer.inc');
-				exit;
+
 		      }
+		      include('includes/footer.inc');
+		      exit;
 	   }
 
 	} /* end of if not already on the order */
@@ -756,20 +760,20 @@ If ($_GET['Edit']){
 	echo '<TR><TD>' . _('Price') . ":</TD><TD><input type='Text' SIZE=15 MAXLENGTH=14 name='Price' value=" . $_SESSION['PO']->LineItems[$_GET['Edit']]->Price . "></TD><TD><INPUT TYPE=SUBMIT NAME='LookupPrice' Value='" . _('Lookup Price') . "'></TD></TR>";
 	echo '<TR><TD>' . _('Required Delivery Date') . ":</TD><TD><input type='Text' SIZE=12 MAXLENGTH=11 name='ReqDelDate' value=" . $_SESSION['PO']->LineItems[$_GET['Edit']]->ReqDelDate . '></TD></TR>';
 if ($hide_incomplete_features == False)	{
-	echo '<TR><TD>' . _('Shipment Ref') . ': <FONT SIZE=1>' . _('(Leave blank if N/A)') . "</FONT></TD><TD><input type='Text' SIZE=10 MAXLENGTH=9 name='ShiptRef' value=" . $_SESSION['PO']->LineItems[$_GET['Edit']]->ShiptRef . "> <a target='_blank' href='$rootpath/ShiptsList.php?" . SID . "SupplierID=" . $_SESSION['PO']->SupplierID . "&SupplierName=" . $_SESSION['PO']->SupplierName . "'>" . _('Show Open Shipments') . '</a></TD></TR>';
-	echo '<TR><TD>' . _('Contract Ref') . ': <FONT SIZE=1>' . _('(Leave blank if N/A)') . "</FONT></TD><TD><input type='Text' SIZE=10 MAXLENGTH=9 name='JobRef' value=" . $_SESSION['PO']->LineItems[$_GET['Edit']]->JobRef . "> <a target='_blank' href='$rootpath/ContractsList.php?" . SID . "'>" . _('Show Contracts') . '</a></TD></TR>';
+	echo '<TR><TD>' . _('Shipment Ref') . ': <FONT SIZE=1>(' . _('Leave blank if N/A') . ")</FONT></TD><TD><input type='Text' SIZE=10 MAXLENGTH=9 name='ShiptRef' value=" . $_SESSION['PO']->LineItems[$_GET['Edit']]->ShiptRef . "> <a target='_blank' href='$rootpath/ShiptsList.php?" . SID . "SupplierID=" . $_SESSION['PO']->SupplierID . "&SupplierName=" . $_SESSION['PO']->SupplierName . "'>" . _('Show Open Shipments') . '</a></TD></TR>';
+	echo '<TR><TD>' . _('Contract Ref') . ': <FONT SIZE=1>(' . _('Leave blank if N/A') . ")</FONT></TD><TD><input type='Text' SIZE=10 MAXLENGTH=9 name='JobRef' value=" . $_SESSION['PO']->LineItems[$_GET['Edit']]->JobRef . "> <a target='_blank' href='$rootpath/ContractsList.php?" . SID . "'>" . _('Show Contracts') . '</a></TD></TR>';
 }
-	echo "</TABLE><CENTER><INPUT TYPE=SUBMIT NAME='UpdateLine' VALUE='" . _('Update Line') . "'> <INPUT TYPE=SUBMIT NAME='Delete' VALUE='Delete'><BR>";
+	echo "</TABLE><CENTER><INPUT TYPE=SUBMIT NAME='UpdateLine' VALUE='" . _('Update Line') . "'> <INPUT TYPE=SUBMIT NAME='Delete' VALUE='" . _('Delete') . "'><BR>";
 } elseif ($_SESSION['ExistingOrder']==0) { /* ITS A NEWY */
  /*show a form for putting in a new line item with or without a stock entry */
 
 	echo "<input type='hidden' name='LineNo' value=" . ($_SESSION['PO']->LinesOnOrder + 1) .">";
 
-	echo '<TABLE><TR><TD>' . _('Stock Code for Item Ordered') . ': <FONT SIZE=1>' . ('(Leave blank if NOT a stock order)') . "</TD><TD><input type='text' name='StockID' size=21 maxlength=20 value='" . $_POST['StockID'] . "'></TD></TR>";
+	echo '<TABLE><TR><TD>' . _('Stock Code for Item Ordered') . ': <FONT SIZE=1>(' . ('Leave blank if NOT a stock order') . ")</TD><TD><input type='text' name='StockID' size=21 maxlength=20 value='" . $_POST['StockID'] . "'></TD></TR>";
 
-	echo '<TR><TD>' . _('Ordered item Description') . ':<BR><FONT SIZE=1>' . _('(If a stock code is entered above, its description will overide this entry)') . "</FONT></TD><TD><textarea name='ItemDescription' cols=50 rows=2>" . $_POST['ItemDescription'] . "</textarea></TD></TR>";
+	echo '<TR><TD>' . _('Ordered item Description') . ':<BR><FONT SIZE=1>(' . _('If a stock code is entered above, its description will overide this entry') . ")</FONT></TD><TD><textarea name='ItemDescription' cols=50 rows=2>" . $_POST['ItemDescription'] . "</textarea></TD></TR>";
 	if ($_SESSION['PO']->GLLink==1) {
-		echo '<TR><TD>' . _('GL Code') . ': <FONT SIZE=1> ' . _('(Only necessary if NOT a stock order)') . "</FONT></TD><TD><input type='Text' SIZE=15 MAXLENGTH=14 name='GLCode' value=" . $_POST['GLCode'] . "> <a target='_blank' href='$rootpath/GLCodesInquiry.php?" . SID . "'>" . _('List GL Codes') . '</a></TD></TR>';
+		echo '<TR><TD>' . _('GL Code') . ': <FONT SIZE=1>(' . _('Only necessary if NOT a stock order') . ")</FONT></TD><TD><input type='Text' SIZE=15 MAXLENGTH=14 name='GLCode' value=" . $_POST['GLCode'] . "> <a target='_blank' href='$rootpath/GLCodesInquiry.php?" . SID . "'>" . _('List GL Codes') . '</a></TD></TR>';
 	}
 
 	/*default the order quantity to 1 unit */
@@ -831,10 +835,10 @@ while ($myrow1 = DB_fetch_array($result1)) {
 }
 
 echo '</SELECT>
-	<TD><FONT SIZE=2>' . _('Enter text extract(s) in the <B>description</B>') . ":</FONT></TD>
+	<TD><FONT SIZE=2>' . _('Enter text extracts in the description') . ":</FONT></TD>
 	<TD><INPUT TYPE='Text' NAME='Keywords' SIZE=20 MAXLENGTH=25 VALUE='" . $_POST['Keywords'] . "'></TD></TR>
 	<TR><TD></TD>
-	<TD><FONT SIZE 3><B>" . _('OR') . ' </B></FONT><FONT SIZE=2>' . _('Enter extract of the <B>Stock Code</B>') . ":</FONT></TD>
+	<TD><FONT SIZE 3><B>" . _('OR') . ' </B></FONT><FONT SIZE=2>' . _('Enter extract of the Stock Code') . ":</FONT></TD>
 	<TD><INPUT TYPE='Text' NAME='StockCode' SIZE=15 MAXLENGTH=18 VALUE='" . $_POST['StockCode'] . "'></TD>
 	</TR>
 	</TABLE>
@@ -900,7 +904,7 @@ If ($SearchResult) {
 
 	/*$Maximum_Number_Of_Parts_To_Show defined in config.php */
 
-		echo '<BR><B>' . _('Only the first') . ' ' . $Maximum_Number_Of_Parts_To_Show . ' ' . _('can be displayed. Please restrict your search to only the parts required')  . '</B>';
+		prnMsg( _('Only the first') . ' ' . $Maximum_Number_Of_Parts_To_Show . ' ' . _('can be displayed') . '. ' . _('Please restrict your search to only the parts required'),'info');
 	}
 }#end if SearchResults to show
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 4;
 
@@ -36,7 +36,7 @@ if (isset($SupplierID) AND $SupplierID!=""){			   /*NOT EDITING AN EXISTING BUT 
 		$SuppName = $myrow['SuppName'];
 		$CurrCode = $myrow['CurrCode'];
    } else {
-		echo '</CENTER><BR><FONT COLOR=RED>' . _('WARNING: The supplier code') . ' ' . $SupplierID . ' ' . _('is not an existing supplier in the database. You must enter an alternative supplier code or select a supplier using the search facility below') . '<CENTER>';
+		prnMsg( _('The supplier code') . ' ' . $SupplierID . ' ' . _('is not an existing supplier in the database') . '. ' . _('You must enter an alternative supplier code or select a supplier using the search facility below'),'error');
 		unset($SupplierID);
    }
 }
@@ -45,22 +45,22 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
    $InputError = 0; /*Start assuming the best */
    if ($StockID=="" OR !isset($StockID)){
       $InputError=1;
-      echo '<BR><FONT COLOR=RED>' . _('There is no stock item set up enter the stock code or select a stock item using the search page') . '.</FONT>';
+      prnMsg( _('There is no stock item set up enter the stock code or select a stock item using the search page'),'error');
    }
    if (! is_numeric($_POST['Price']) OR $_POST['Price']==0){
       $InputError =1;
       unset($_POST['Price']);
-      echo '<BR><FONT COLOR=RED>' . _('The price entered was not numeric (a number is expected) - no changes have been made to the database') . '</FONT>';
+      prnMsg( _('The price entered was not numeric') . ' (' . _('a number is expected') . ') - ' . _('no changes have been made to the database'),'error');
    }
    if (! is_numeric($_POST['LeadTime'])){
       $InputError =1;
       unset($_POST['LeadTime']);
-      echo '<BR><FONT COLOR=RED>' . _('The lead time entered was not numeric (a number is expected) - no changes have been made to the database') . '</FONT>';
+      prnMsg( _('The lead time entered was not numeric') . ' (' . _('a number is expected') . ') - ' . _('no changes have been made to the database'),'error');
    }
    if (!is_numeric($_POST['ConversionFactor'])){
       $InputError =1;
       unset($_POST['ConversionFactor']);
-      echo '<BR><FONT COLOR=RED>' . _('The conversion factor entered was not numeric (a number is expected). The conversion factor is the number by which the price must be divided by to get the unit price in our unit of measure') . '. <BR>' . _('Eg. The supplier sells an item by the tonne and we hold stock by the kg. The suppliers price must be divided by 1000 to get to our cost per kg. The conversion factor to enter is 1000') . '. <BR><BR>' . _('No changes will be made to the database') . '</FONT>';
+      prnMsg( _('The conversion factor entered was not numeric') . ' (' . _('a number is expected') . '). ' . _('The conversion factor is the number which the price must be divided by to get the unit price in our unit of measure') . '. <BR>' . _('E.g.') . ' ' . _('The supplier sells an item by the tonne and we hold stock by the kg') . '. ' . _('The suppliers price must be divided by 1000 to get to our cost per kg') . '. ' . _('The conversion factor to enter is 1000') . '. <BR><BR>' . _('No changes will be made to the database'),'error');
    }
 
 
@@ -136,18 +136,20 @@ if (isset($_GET['Delete'])){
    unset ($SupplierID);
 }
 
-
-$result = DB_query("SELECT Description, Units, MBflag FROM StockMaster WHERE StockID='$StockID'",$db);
-$myrow = DB_fetch_row($result);
-if (DB_num_rows($result)==1){
-   if ($myrow[2]=="D" OR $myrow[2]=="A" OR $myrow[2]=="K"){
-	echo '<P><FONT SIZE=3><B>' . $StockID . ' - ' . $myrow[0] . ' </B><P> ' . _('The part selected is a dummy part or an assembly/kit set part - it is not purchased. Entry of purchasing information is therefore inappropriate') . '.</FONT><HR>';
-	exit;
-   } else {
-	echo '<BR><FONT COLOR=BLUE SIZE=3><B>' . $StockID . ' - ' . $myrow[0] . ' </B>  (' . _('In Units of') . ' ' . $myrow[1] . ' )</FONT>';
-   }
-} else {
-  echo '<BR><FONT COLOR=RED SIZE=3><B>' . _('Stock Item') . ' - ' . $StockID . ' ' . _('is not defined in the database') . '</B></FONT><BR>';
+if (isset($StockID)){
+	$result = DB_query("SELECT Description, Units, MBflag FROM StockMaster WHERE StockID='$StockID'",$db);
+	$myrow = DB_fetch_row($result);
+	if (DB_num_rows($result)==1){
+   		if ($myrow[2]=="D" OR $myrow[2]=="A" OR $myrow[2]=="K"){
+			prnMsg( $StockID . ' - ' . $myrow[0] . '<P> ' . _('The item selected is a dummy part or an assembly or kit set part') . ' - ' . _('it is not purchased') . '. ' . _('Entry of purchasing information is therefore inappropriate'),'warn');
+			include('includes/footer.inc');
+			exit;
+		} else {
+			echo '<BR><FONT COLOR=BLUE SIZE=3><B>' . $StockID . ' - ' . $myrow[0] . ' </B>  (' . _('In Units of') . ' ' . $myrow[1] . ' )</FONT>';
+   		}
+	} else {
+  		prnMsg( _('Stock Item') . ' - ' . $StockID . ' ' . _('is not defined in the database'), 'warn');
+	}
 }
 
 echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
@@ -173,7 +175,7 @@ if (!isset($_GET['Edit'])){
 
 
    if (DB_num_rows($PurchDataResult)==0){
-      echo _('There is no purchasing data set up for the part selected');
+      	prnMsg( _('There is no purchasing data set up for the part selected'),'info');
    } else {
 
      echo '<TABLE CELLPADDING=2 BORDER=2>';
@@ -239,9 +241,9 @@ if (!isset($_GET['Edit'])){
     } //end of while loop
     echo '</TABLE>';
     if ($CountPreferreds>1){
-	      echo '<BR><B><FONT COLOR=RED>' . _('WARNING: There are now') . ' ' . $CountPreferreds . ' ' . _('preferred suppliers set up for') . ' ' . $StockID . ' ' . _('you should edit the supplier purchasing data to make only one supplier the preferred supplier') . '</B></FONT>';
+	      prnMsg( _('There are now') . ' ' . $CountPreferreds . ' ' . _('preferred suppliers set up for') . ' ' . $StockID . ' ' . _('you should edit the supplier purchasing data to make only one supplier the preferred supplier'),'warn');
     } elseif($CountPreferreds==0){
-	      echo '<BR><B><FONT COLOR=RED>' . _('WARNING: There are NO preferred suppliers set up for') . ' ' . $StockID . ' ' . _('you should make one supplier only the preferred supplier') . '</B></FONT>';
+	      prnMsg( _('There are NO preferred suppliers set up for') . ' ' . $StockID . ' ' . _('you should make one supplier only the preferred supplier'),'warn');
     }
   } // end of there are purchsing data rows to show
   echo '<HR>';
@@ -296,7 +298,7 @@ if (isset($_GET['Edit'])){
 }
 
 echo '<TR><TD>' . _('Currency') . ':</TD><TD><INPUT TYPE=HIDDEN NAME="CurrCode" . VALUE="' . $CurrCode . '">' . $CurrCode . '</TD></TR>';
-echo '<TR><TD>' . _('Price (in Supplier Currency)') . ':</TD><TD><INPUT TYPE=TEXT NAME="Price" MAXLENGTH=12 SIZE=12 VALUE=' . $_POST['Price'] . '></TD></TR>';
+echo '<TR><TD>' . _('Price') . ' (' . _('in Supplier Currency') . '):</TD><TD><INPUT TYPE=TEXT NAME="Price" MAXLENGTH=12 SIZE=12 VALUE=' . $_POST['Price'] . '></TD></TR>';
 echo '<TR><TD>' . _('Suppliers Unit of Measure') . ':</TD><TD><INPUT TYPE=TEXT NAME="SuppliersUOM" MAXLENGTH=50 SIZE=51 VALUE="' . $_POST['SuppliersUOM'] . '"></TD></TR>';
 if (!isset($_POST['ConversionFactor']) OR $_POST['ConversionFactor']==""){
    $_POST['ConversionFactor']=1;
@@ -306,7 +308,7 @@ echo '<TR><TD>' . _('Supplier Code or Description') . ':</TD><TD><INPUT TYPE=TEX
 if (!isset($_POST['LeadTime']) OR $_POST['LeadTime']==""){
    $_POST['LeadTime']=1;
 }
-echo '<TR><TD>' . _('Lead Time (in days from date of order)') . ':</TD><TD><INPUT TYPE=TEXT NAME="LeadTime" MAXLENGTH=10 SIZE=11 VALUE=' . $_POST['LeadTime'] . '></TD></TR>';
+echo '<TR><TD>' . _('Lead Time') . ' (' . _('in days from date of order') . '):</TD><TD><INPUT TYPE=TEXT NAME="LeadTime" MAXLENGTH=10 SIZE=11 VALUE=' . $_POST['LeadTime'] . '></TD></TR>';
 echo '<TR><TD>' . _('Preferred Supplier') . ':</TD><TD><SELECT NAME="Preferred">';
 
 if ($_POST['Preferred']==1){
@@ -329,10 +331,10 @@ echo '<HR>';
 if (isset($_POST['SearchSupplier'])){
 
 	If (isset($_POST['Keywords']) AND isset($_POST['SupplierCode'])) {
-		$msg=_('Supplier name keywords have been used in preference to the Supplier code extract entered') . '.';
+		$msg=_('Supplier Name keywords have been used in preference to the Supplier Code extract entered') . '.';
 	}
 	If ($_POST['Keywords']=="" AND $_POST['SupplierCode']=="") {
-		$msg=_('At least one Supplier name keyword OR an extract of a Supplier code must be entered for the search');
+		$msg=_('At least one Supplier Name keyword OR an extract of a Supplier Code must be entered for the search');
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
@@ -372,9 +374,14 @@ if (isset($_POST['SearchSupplier'])){
 	} //one of keywords or SupplierCode was more than a zero length string
 } //end of if search
 
+
+
+if (strlen($msg)>1){
+	 prnMsg($msg,'warn');
+}
+
 ?>
 
-<B><?php echo '<BR>' . $msg; ?></B>
 <TABLE CELLPADDING=3 COLSPAN=4>
 <TR>
 <TD><?php echo _('Text in the Supplier'); ?> <B><?php echo _('NAME'); ?></B>:</FONT></TD>

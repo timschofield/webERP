@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 2;
 
@@ -243,15 +243,15 @@ if (DB_num_rows($result)!=0){
 
 	$myrow = DB_fetch_array($result);
 	echo '<CENTER><B>' . $myrow['ReportHeading'] . "</B><BR><table border=1>\n";
-	echo '<tr><td class="tableheader">' . _('Col #') . '</td>
+	echo '<tr><td class="tableheader">' . _('Col') . ' #</td>
             <td class="tableheader">' . _('Heading 1') . '</td>
             <td class="tableheader">' . _('Heading 2') . '</td>';
 	echo '<td class="tableheader">' . _('Calc') . '</td>
         <td class="tableheader">' . _('Prd From') . '</td>
         <td class="tableheader">' . _('Prd To') . '</td>';
 	echo '<td class="tableheader">' . _('Data') . '</td>
-        <td class="tableheader">' . _('Col #') . '<BR><FONT SIZE=1>' . _('Numerator') . '</FONT></td>
-        <td class="tableheader">' . _('Col #') . '<BR><FONT SIZE=1>' . _('Denominator') . '</FONT></td>';
+        <td class="tableheader">' . _('Col') . ' #<BR><FONT SIZE=1>' . _('Numerator') . '</FONT></td>
+        <td class="tableheader">' . _('Col') . ' #<BR><FONT SIZE=1>' . _('Denominator') . '</FONT></td>';
 	echo '<td class="tableheader">' . _('Operator') . '</td>
         <td class="tableheader">' . _('Budget') . '<BR>' . _('Or Actual') . '</td></TR>';
 	$k=0; //row colour counter
@@ -312,7 +312,7 @@ if (DB_num_rows($result)!=0){
 
 echo '</table><BR><A HREF="' . $rootpath . '/SalesAnalRepts.php?' . SID . '">' . _('Maintain Report Headers') . '</A></CENTER><p>';
 if (DB_num_rows($result)>10){
-    prnMsg(_('WARNING: User defined reports can have up to 10 columns defined. The report will not be able to be run until some columns are deleted'),'warn');
+    prnMsg(_('WARNING') . ': ' . _('User defined reports can have up to 10 columns defined') . '. ' . _('The report will not be able to be run until some columns are deleted'),'warn');
 }
 
 if (!isset($_GET['delete'])) {
@@ -408,9 +408,9 @@ if (!isset($_GET['delete'])) {
 
 	} else {  /*it IS a calculated column */
 
-		echo '<TR><TD>' . _('Numerator Column #') . ':</TD>
+		echo '<TR><TD>' . _('Numerator Column') . ' #:</TD>
               <TD><INPUT TYPE="TEXT" size=4 maxlength=3 name="ColNumerator" value=' . $_POST['ColNumerator'] . '></TD></TR>';
-		echo '<TR><TD>' . _('Denominator Column #') . ':</TD>
+		echo '<TR><TD>' . _('Denominator Column') . ' #:</TD>
               <TD><INPUT TYPE="TEXT" size=4 maxlength=3 name="ColDenominator" value=' . $_POST['ColDenominator'] . '></TD></TR>';
 		echo '<TR><TD>' . _('Calculation Operator') . ':</TD>
               <TD><SELECT name="CalcOperator">';

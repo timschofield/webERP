@@ -1,10 +1,10 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 15;
 
 include('includes/session.inc');
-$title = _('Sales Types / Price List Maintenance');
+$title = _('Sales Types') . ' / ' . _('Price List Maintenance');
 include('includes/header.inc');
 
 if (isset($_POST['SelectedType'])){
@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The sales type (price list) code must be two characters or less long'),'error');
 	} elseif ($_POST['TypeAbbrev']=='' OR $_POST['TypeAbbrev']==' ' OR $_POST['TypeAbbrev']=='  ') {
 		$InputError = 1;
-		prnMsg(_('<BR>The sales type (price list) code cannot be an empty string or spaces'),'error');
+		prnMsg('<BR>' . _('The sales type (price list) code cannot be an empty string or spaces'),'error');
 	} elseif (strlen($_POST['Sales_Type']) >20) {
 		$InputError = 1;
 		echo prnMsg(_('The sales type (price list) description must be twenty characters or less long'),'error');
@@ -93,15 +93,15 @@ if (isset($_POST['submit'])) {
 		} else {
 
 			$sql="DELETE FROM SalesTypes WHERE TypeAbbrev='$SelectedType'";
-			$ErrMsg = _('The Sales Type record could not be deleted because:');
+			$ErrMsg = _('The Sales Type record could not be deleted because');
 			$result = DB_query($sql,$db,$ErrMsg);
-			prnMsg(_('Sales type/ price list') . ' ' . $SelectedType  . ' ' . _('has been deleted') ,'success');
+			prnMsg(_('Sales type') . ' / ' . _('price list') . ' ' . $SelectedType  . ' ' . _('has been deleted') ,'success');
 
 			$sql ="DELETE FROM Prices WHERE Prices.TypeAbbrev='SelectedType'";
 			$ErrMsg =  _('The Sales Type prices could not be deleted because');
 			$result = DB_query($sql,$db,$ErrMsg);
 
-			prnMsg(' ...  ' . _('and any prices for this sales type/ price list were also deleted !'),'success');
+			prnMsg(' ...  ' . _('and any prices for this sales type / price list were also deleted'),'success');
 			unset ($SelectedType);
 			unset($_GET['delete']);
 
@@ -139,7 +139,7 @@ while ($myrow = DB_fetch_row($result)) {
 	printf("<td>%s</td>
 		<td>%s</td>
 		<td><a href='%sSelectedType=%s'>" . _('Edit') . "</td>
-		<td><a href='%sSelectedType=%s&delete=yes'>" . _('DELETE') . "</td>
+		<td><a href='%sSelectedType=%s&delete=yes'>" . _('Delete') . "</td>
 		</tr>",
 		$myrow[0],
 		$myrow[1],
@@ -153,15 +153,9 @@ while ($myrow = DB_fetch_row($result)) {
 
 //end of ifs and buts!
 
-?>
-
-
-<p>
-<Center><P><a href="<?php echo $_SERVER['PHP_SELF'] . "?" . SID;?>">Show All Sales Types Defined</a></Center>
-<P>
-
-
-<?php
+echo '<P>';
+echo '<CENTER><P><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Show All Sales Types Defined') . '</A></CENTER>';
+echo '<P>';
 
 if (! isset($_GET['delete'])) {
 
@@ -180,17 +174,15 @@ if (! isset($_GET['delete'])) {
 
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedType' VALUE=" . $SelectedType . ">";
 		echo "<INPUT TYPE=HIDDEN NAME='TypeAbbrev' VALUE=" . $_POST['TypeAbbrev'] . ">";
-		echo "<CENTER><TABLE> <TR><TD>Type Abbreviation:</TD><TD>";
+		echo "<CENTER><TABLE> <TR><TD>" . _('Type Abbreviation') . ":</TD><TD>";
 		echo $_POST['TypeAbbrev'] . '</TD></TR>';
 
 	} else { //end of if $SelectedType only do the else when a new record is being entered
 
-		echo "<CENTER><TABLE><TR><TD>Type Abbreviation:</TD><TD><input type='Text' SIZE=3 MAXLENGTH=2 name='TypeAbbrev'></TD></TR>";
+		echo "<CENTER><TABLE><TR><TD>" . _('Type Abbreviation') . ":</TD><TD><input type='Text' SIZE=3 MAXLENGTH=2 name='TypeAbbrev'></TD></TR>";
 	}
 
-
-	echo "<TR><TD>Sales Type Name:</TD><TD><input type='Text' name='Sales_Type' value='" . $_POST['Sales_Type'] . "'></TD></TR>";
-
+	echo "<TR><TD>" . _('Sales Type Name') . ":</TD><TD><input type='Text' name='Sales_Type' value='" . $_POST['Sales_Type'] . "'></TD></TR>";
 
 	echo '</TABLE>';
 

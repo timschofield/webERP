@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity = 10;
 
 include('includes/session.inc');
@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
 
 	$result = DB_query($sql,$db);
 
-	prnMsg('<P>' . _('Sales posting record has been deleted') . '<BR><I>(' . _('That is provided it was not a default sales posting code for any stock category or location. To delete a default posting code a new default must be defined, then it must be changed to a non default code. Only then can it be deleted') .')</I>','success');
+	prnMsg('<P>' . _('Sales posting record has been deleted') . '<BR><I>(' . _('That is provided it was not a default sales posting code for any stock category or location') . '. ' . _('To delete a default posting code a new default must be defined') . ', ' . _('then it must be changed to a non default code') . '. ' . _('Only then can it be deleted') .')</I>','success');
 }
 
 if (!isset($SelectedSalesPostingID)) {
@@ -167,7 +167,7 @@ if (!isset($SelectedSalesPostingID)) {
 			<td>%s</td>
 			<td>%s</td>
 			<td><a href=\"%sSelectedSalesPostingID=%s\">" . _('Edit') . "</td>
-			<td><a href=\"%sSelectedSalesPostingID=%s&delete=yes\">". _('DELETE') . "</td></tr>",
+			<td><a href=\"%sSelectedSalesPostingID=%s&delete=yes\">". _('Delete') . "</td></tr>",
 			$myrow[1],
 			$myrow[2],
 			$myrow[3],
@@ -268,7 +268,7 @@ if (!isset($_GET['delete'])) {
 	$result = DB_query($SQL,$db);
 
 
-	echo '<TR><TD>' . _('Sales Type / Price List') . ":</TD><TD><SELECT name='SalesType'>";
+	echo '<TR><TD>' . _('Sales Type') . ' / ' . _('Price List') . ":</TD><TD><SELECT name='SalesType'>";
 	echo "<OPTION VALUE='AN'>" . _('Any Other');
 
 	while ($myrow = DB_fetch_array($result)) {
@@ -337,4 +337,3 @@ if (!isset($_GET['delete'])) {
 
 include('includes/footer.inc');
 ?>
-

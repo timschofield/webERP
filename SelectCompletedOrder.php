@@ -1,15 +1,16 @@
 <?php
-/* $Revision: 1.2 $ */
-include("includes/DateFunctions.inc");
-
-$title = "Search All Sales Orders";
+/* $Revision: 1.3 $ */
+include('includes/DateFunctions.inc');
 
 $PageSecurity = 2;
 
-include("includes/session.inc");
-include("includes/header.inc");
+include('includes/session.inc');
 
-echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID ."' METHOD=POST>";
+$title = _('Search All Sales Orders');
+
+include('includes/header.inc');
+
+echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID ."' METHOD=POST>";
 
 if (isset($_GET['SelectedStockItem'])){
 	$SelectedStockItem = $_GET['SelectedStockItem'];
@@ -27,13 +28,13 @@ if (isset($_GET['SelectedCustomer'])){
 	$SelectedCustomer = $_POST['SelectedCustomer'];
 }
 
-if ($SelectedStockItem==""){
+if ($SelectedStockItem==''){
 	unset($SelectedStockItem);
 }
-if ($OrderNumber==""){
+if ($OrderNumber==''){
 	unset($OrderNumber);
 }
-if ($SelectedCustomer==""){
+if ($SelectedCustomer==''){
 	unset($SelectedCustomer);
 }
 If ($_POST['ResetPart']){
@@ -41,69 +42,69 @@ If ($_POST['ResetPart']){
 }
 
 If (isset($OrderNumber)) {
-	echo "Order Number - $OrderNumber";
+	echo _('Order Number') . ' - ' . $OrderNumber;
 } else {
 	If (isset($SelectedCustomer)) {
-		echo "For customer: $SelectedCustomer and ";
+		echo _('For customer') . ': ' . $SelectedCustomer .' ' . _('and') . ' ';
 		echo "<input type=hidden name='SelectedCustomer' value=$SelectedCustomer>";
 	}
 
 	If (isset($SelectedStockItem)) {
 
-		echo "for the part: " . $SelectedStockItem . " and <input type=hidden name='SelectedStockItem' value='$SelectedStockItem'>";
+		echo _('for the part') . ': ' . $SelectedStockItem . ' ' . _('and') . ' ' ."<input type=hidden name='SelectedStockItem' value='$SelectedStockItem'>";
 
 	}
 }
 
 
-if ($_POST['SearchParts']!=""){
+if ($_POST['SearchParts']!=''){
 
-	If ($_POST['Keywords']!="" AND $_POST['StockCode']!="") {
-		echo "Stock description keywords have been used in preference to the Stock code extract entered.";
+	If ($_POST['Keywords']!='' AND $_POST['StockCode']!='') {
+		echo _('Stock description keywords have been used in preference to the Stock code extract entered');
 	}
-	If ($_POST['Keywords']!="") {
+	If ($_POST['Keywords']!='') {
 		//insert wildcard characters in spaces
 
 		$i=0;
-		$SearchString = "%";
-		while (strpos($_POST['Keywords'], " ", $i)) {
-			$wrdlen=strpos($_POST['Keywords']," ",$i) - $i;
-			$SearchString=$SearchString . substr($_POST['Keywords'],$i,$wrdlen) . "%";
-			$i=strpos($_POST['Keywords']," ",$i) +1;
+		$SearchString = '%';
+		while (strpos($_POST['Keywords'], ' ', $i)) {
+			$wrdlen=strpos($_POST['Keywords'],' ',$i) - $i;
+			$SearchString=$SearchString . substr($_POST['Keywords'],$i,$wrdlen) . '%';
+			$i=strpos($_POST['Keywords'],' ',$i) +1;
 		}
-		$SearchString = $SearchString. substr($_POST['Keywords'],$i)."%";
+		$SearchString = $SearchString. substr($_POST['Keywords'],$i).'%';
 
 		$SQL = "SELECT StockMaster.StockID, Description, Sum(LocStock.Quantity) AS QOH,  Units, Sum(SalesOrderDetails.Quantity - SalesOrderDetails.QtyInvoiced) AS QDEM FROM StockMaster, LocStock, SalesOrderDetails WHERE StockMaster.StockID=LocStock.StockID AND StockMaster.StockID = SalesOrderDetails.StkCode AND SalesOrderDetails.Completed =0 AND Description LIKE '$SearchString' AND CategoryID='" . $_POST['StockCat'] . "' GROUP BY StockMaster.StockID, Description, Units ORDER BY StockMaster.StockID";
 
-	} elseif ($_POST['StockCode']!=""){
+	} elseif ($_POST['StockCode']!=''){
 
 		$SQL = "SELECT StockMaster.StockID, Description, Sum(LocStock.Quantity) AS QOH, Sum(SalesOrderDetails.Quantity - SalesOrderDetails.QtyInvoiced) AS QDEM, Units FROM StockMaster, LocStock, SalesOrderDetails WHERE StockMaster.StockID=LocStock.StockID AND StockMaster.StockID = SalesOrderDetails.StkCode AND SalesOrderDetails.Completed =0 AND StockMaster.StockID like '%" . $_POST['StockCode'] . "%' AND CategoryID='" . $_POST['StockCat'] . "' GROUP BY StockMaster.StockID, Description, Units ORDER BY StockMaster.StockID";
 
-	} elseif ($_POST['StockCode']=="" AND $_POST['Keywords']=="" AND $_POST['StockCat']!="") {
+	} elseif ($_POST['StockCode']=='' AND $_POST['Keywords']=='' AND $_POST['StockCat']!='') {
 		
 		$SQL = "SELECT StockMaster.StockID, Description, Sum(LocStock.Quantity) AS QOH, Sum(SalesOrderDetails.Quantity - SalesOrderDetails.QtyInvoiced) AS QDEM, Units FROM StockMaster, LocStock, SalesOrderDetails WHERE StockMaster.StockID=LocStock.StockID AND StockMaster.StockID = SalesOrderDetails.StkCode AND SalesOrderDetails.Completed =0 AND CategoryID='" . $_POST['StockCat'] . "' GROUP BY StockMaster.StockID, Description, Units ORDER BY StockMaster.StockID";
 
 	}
 
 	if (strlen($SQL)<2){
-		echo "<BR>No selections have been made to search for parts - choose a stock category or enter some characters of the code or description then try again.<P>";
+		echo '<BR>' . _('No selections have been made to search for parts') . ' - ' . _('choose a stock category or enter some characters of the code or description then try again');
 	} else {
 		$StockItemsResult = DB_query($SQL,$db);
 
 		if (DB_error_no($db) !=0) {
-			echo "<BR>No stock items were returned by the SQL because - " . DB_error_msg($db);
+			echo '<BR>' . _('No stock items were returned by the SQL because') . ' ' . DB_error_msg($db);
 			if ($debug==1){
-				echo "<BR>The SQL used to retrieve the searched parts was:<BR>$SQL";
+				echo '<BR>' . _('The SQL used to retrieve the searched parts was') . "<BR>$SQL";
 			}
 		} elseif (DB_num_rows($StockItemsResult)==1){
 		  	$myrow = DB_fetch_row($StockItemsResult);
 		  	$SelectedStockItem = $myrow[0];
 			$_POST['SearchOrders']='True';
 		  	unset($StockItemsResult);
-		  	echo "<BR>For the part: " . $SelectedStockItem . " and <input type=hidden name='SelectedStockItem' value='$SelectedStockItem'>";
+		  	echo '<BR>' . _('For the part') . ': ' . $SelectedStockItem . ' ' . _('and') . " <input type=hidden name='SelectedStockItem' value='$SelectedStockItem'>";
 		}
 	}
-} else if ($_POST['SearchOrders']=="Search Orders" AND Is_Date($_POST['OrdersAfterDate'])==1) {
+} else if (isset($_POST['SearchOrders']) AND Is_Date($_POST['OrdersAfterDate'])==1) {
 
 	//figure out the SQL required from the inputs available
 	if (isset($OrderNumber)) {
@@ -131,59 +132,64 @@ if ($_POST['SearchParts']!=""){
 	$SalesOrdersResult = DB_query($SQL,$db);
 
 	if (DB_error_no($db) !=0) {
-		echo "<BR>No orders were returned by the SQL because - " . DB_error_msg($db);
+		echo '<BR>' . _('No orders were returned by the SQL because') . ' ' . DB_error_msg($db);
 		echo "<BR>$SQL";
 	}
 
 }//end of which button clicked options
 
-if (!isset($_POST['OrdersAfterDate']) OR $_POST['OrdersAfterDate'] == "" OR ! Is_Date($_POST['OrdersAfterDate'])){
-	$_POST['OrdersAfterDate'] = Date($DefaultDateFormat,Mktime(0,0,0,Date("m")-2,Date("d"),Date("Y")));
+if (!isset($_POST['OrdersAfterDate']) OR $_POST['OrdersAfterDate'] == '' OR ! Is_Date($_POST['OrdersAfterDate'])){
+	$_POST['OrdersAfterDate'] = Date($DefaultDateFormat,Mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
 }
-if ($OrderNumber=="" OR !isset($OrderNumber)){
-	echo "order number: <INPUT type=text name='OrderNumber' MAXLENGTH =8 SIZE=9> for all orders placed after: <INPUT type=text name='OrdersAfterDate' MAXLENGTH =10 SIZE=11 value=" . $_POST['OrdersAfterDate'] . ">     <INPUT TYPE=SUBMIT NAME='SearchOrders' VALUE='Search Orders'>";
+if ($OrderNumber=='' OR !isset($OrderNumber)){
+	echo _('order number') . ': ' . "<INPUT type=text name='OrderNumber' MAXLENGTH =8 SIZE=9> " . _('for all orders placed after') .
+			": <INPUT type=text name='OrdersAfterDate' MAXLENGTH =10 SIZE=11 value=" . $_POST['OrdersAfterDate'] . ">" .
+			"<INPUT TYPE=SUBMIT NAME='SearchOrders' VALUE='" . _('Search Orders') . "'>";
 }
 
 if (!isset($SelectedStockItem)) {
-	$SQL="SELECT CategoryID, CategoryDescription FROM StockCategory ORDER BY CategoryDescription";
+	$SQL='SELECT CategoryID, CategoryDescription FROM StockCategory ORDER BY CategoryDescription';
 	$result1 = DB_query($SQL,$db);
-?>
 
-      <HR>
-      <FONT SIZE=1>To search for sales orders for a specific part use the part selection facilities below</FONT>	     <INPUT TYPE=SUBMIT NAME="SearchParts" VALUE="Search Parts Now"><INPUT TYPE=SUBMIT NAME="ResetPart" VALUE="Clear Part Selection">
-      <TABLE>
-      <TR>
-      <TD><FONT SIZE=1>Select a stock category:</FONT>
-      <SELECT NAME="StockCat">
-<?php
+   echo '<HR>';
+   echo '<FONT SIZE=1>' . _('To search for sales orders for a specific part use the part selection facilities below') . '</FONT>';
+   echo '<INPUT TYPE=SUBMIT NAME="SearchParts" VALUE="' . _('Search Parts Now') . '">';
+   echo '<INPUT TYPE=SUBMIT NAME="ResetPart" VALUE="' . _('Clear Part Selection') . '">';
+   echo '<TABLE>';
+   echo '<TR><TD><FONT SIZE=1>' . _('Select a stock category') . ':</FONT>';
+   echo '<SELECT NAME="StockCat">';
+
 	while ($myrow1 = DB_fetch_array($result1)) {
-		if ($myrow1["CategoryID"] == $_POST['StockCat']){
-			echo "<OPTION SELECTED VALUE='". $myrow1["CategoryID"] . "'>" . $myrow1["CategoryDescription"];
+		if ($myrow1['CategoryID'] == $_POST['StockCat']){
+			echo "<OPTION SELECTED VALUE='". $myrow1['CategoryID'] . "'>" . $myrow1['CategoryDescription'];
 		} else {
-			echo "<OPTION VALUE='". $myrow1["CategoryID"] . "'>" . $myrow1["CategoryDescription"];
+			echo "<OPTION VALUE='". $myrow1['CategoryID'] . "'>" . $myrow1['CategoryDescription'];
 		}
 	}
-?>
-      </SELECT>
-      <TD><FONT SIZE=1>Enter text extract(s) in the <B>description</B>:</FONT></TD>
-      <TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25></TD></TR>
-      <TR><TD></TD>
-      <TD><FONT SIZE 3><B>OR </B></FONT><FONT SIZE=1>Enter extract of the <B>Stock Code</B>:</FONT></TD>
-      <TD><INPUT TYPE="Text" NAME="StockCode" SIZE=15 MAXLENGTH=18></TD>
-      </TR>
-      </TABLE>
 
-      <HR>
+   echo '</SELECT>';
+   echo '<TD><FONT SIZE=1>' . _('Enter text extracts in the description') . ':</FONT></TD>';
+   echo '<TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25></TD></TR>';
+   echo '<TR><TD></TD>';
+   echo '<TD><FONT SIZE 3><B> ' ._('OR') . ' </B></FONT><FONT SIZE=1>' . _('Enter extract of the Stock Code') . ':</FONT></TD>';
+   echo '<TD><INPUT TYPE="Text" NAME="StockCode" SIZE=15 MAXLENGTH=18></TD>';
+   echo '</TR>';
+   echo '</TABLE>';
 
-<?php
+   echo '<HR>';
+
 }
-
 
 If (isset($StockItemsResult)) {
 
-	echo "<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>";
+	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>';
 
-	$TableHeadings = "<TR><TD class='tableheader'>Code</TD><TD class='tableheader'>Description</TD><TD class='tableheader'>On Hand</TD><TD class='tableheader'>Purchase Orders</TD><TD class='tableheader'>Sales Orders</TD><TD class='tableheader'>Units</TD></TR>";
+	$TableHeadings = "<TR><TD class='tableheader'>Code</TD>" .
+						  "<TD class='tableheader'>" . _('Description') . "</TD>" .
+						  "<TD class='tableheader'>" . _('On Hand') . '</TD>' .
+						  "<TD class='tableheader'>" . _('Purchase Orders') . '</TD>' .
+						  "<TD class='tableheader'>" . _('Sales Orders') . "</TD>" .
+						  "<TD class='tableheader'>" . _('Units') . '</TD></TR>';
 
 	echo $TableHeadings;
 
@@ -200,7 +206,7 @@ If (isset($StockItemsResult)) {
 			$k++;
 		}
 
-		printf("<td><FONT SIZE=1><INPUT TYPE=SUBMIT NAME='SelectedStockItem' VALUE='%s'</FONT></td><td><FONT SIZE=1>%s</FONT></td><td ALIGN=RIGHT><FONT SIZE=1>%s</FONT></td><td ALIGN=RIGHT><FONT SIZE=1>%s</FONT></td><td ALIGN=RIGHT><FONT SIZE=1>%s</FONT></td><td><FONT SIZE=1>%s</FONT></td></tr>", $myrow["StockID"], $myrow["Description"], $myrow["QOH"], $myrow["QOO"],$myrow["QDEM"],$myrow["Units"]);
+		printf("<td><FONT SIZE=1><INPUT TYPE=SUBMIT NAME='SelectedStockItem' VALUE='%s'</FONT></td><td><FONT SIZE=1>%s</FONT></td><td ALIGN=RIGHT><FONT SIZE=1>%s</FONT></td><td ALIGN=RIGHT><FONT SIZE=1>%s</FONT></td><td ALIGN=RIGHT><FONT SIZE=1>%s</FONT></td><td><FONT SIZE=1>%s</FONT></td></tr>", $myrow['StockID'], $myrow['Description'], $myrow['QOH'], $myrow['QOO'],$myrow['QDEM'],$myrow['Units']);
 
 		$j++;
 		If ($j == 12){
@@ -211,7 +217,7 @@ If (isset($StockItemsResult)) {
 	}
 //end of while loop
 
-	echo "</TABLE>";
+	echo '</TABLE>';
 
 }
 //end if stock search results to show
@@ -220,8 +226,17 @@ If ($SalesOrdersResult) {
 
 /*show a table of the orders returned by the SQL */
 
-	echo "<TABLE CELLPADDING=2 COLSPAN=6 WIDTH=100%>";
-	$tableheader = "<TR><TD class='tableheader'>Order #</TD><TD class='tableheader'>Customer</TD><TD  class='tableheader'>Branch</TD><TD class='tableheader'>Cust Order #</TD><TD class='tableheader'>Order Date</TD><TD class='tableheader'>Req Del Date</TD><TD class='tableheader'>Delivery To</TD><TD class='tableheader'>Order Total</TD></TR>";
+	echo '<TABLE CELLPADDING=2 COLSPAN=6 WIDTH=100%>';
+
+	$tableheader = "<TR><TD class='tableheader'>" . _('Order') . ' #</TD>' .
+						"<TD class='tableheader'>" . _('Customer') . '</TD>' .
+						"<TD class='tableheader'>" . _('Branch') . '</TD>' .
+						"<TD class='tableheader'>" . _('Cust Order') . ' #</TD>' .
+						"<TD class='tableheader'>" . _('Order Date') . '</TD>' .
+						"<TD class='tableheader'>" . _('Req Del Date') . '</TD>' .
+						"<TD class='tableheader'>" . _('Delivery To') . '</TD>' .
+						"<TD class='tableheader'>" . _('Order Total') . '</TD></TR>';
+
 	echo $tableheader;
 
 	$j = 1;
@@ -237,12 +252,12 @@ If ($SalesOrdersResult) {
 			$k=1;
 		}
 
-		$ViewPage = $rootpath . "/OrderDetails.php?" .SID . "OrderNumber=" . $myrow["OrderNo"];
-		$FormatedDelDate = ConvertSQLDate($myrow["DeliveryDate"]);
-		$FormatedOrderDate = ConvertSQLDate($myrow["OrdDate"]);
-		$FormatedOrderValue = number_format($myrow["OrderValue"],2);
+		$ViewPage = $rootpath . '/OrderDetails.php?' .SID . 'OrderNumber=' . $myrow['OrderNo'];
+		$FormatedDelDate = ConvertSQLDate($myrow['DeliveryDate']);
+		$FormatedOrderDate = ConvertSQLDate($myrow['OrdDate']);
+		$FormatedOrderValue = number_format($myrow['OrderValue'],2);
 
-		printf("<td><A target='_blank' HREF='%s'>%s</A></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td ALIGN=RIGHT>%s</td></tr>", $ViewPage, $myrow["OrderNo"], $myrow["Name"], $myrow["BrName"], $myrow["CustomerRef"],$FormatedOrderDate,$FormatedDelDate, $myrow["DeliverTo"], $FormatedOrderValue);
+		printf("<td><A target='_blank' HREF='%s'>%s</A></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td ALIGN=RIGHT>%s</td></tr>", $ViewPage, $myrow['OrderNo'], $myrow['Name'], $myrow['BrName'], $myrow['CustomerRef'],$FormatedOrderDate,$FormatedDelDate, $myrow['DeliverTo'], $FormatedOrderValue);
 
 		$j++;
 		If ($j == 12){
@@ -253,12 +268,11 @@ If ($SalesOrdersResult) {
 	}
 //end of while loop
 
-	echo "</TABLE>";
-
+	echo '</TABLE>';
 
 }
 
-echo "</form>";
-include("includes/footer.inc");
+echo '</form>';
+include('includes/footer.inc');
 
 ?>

@@ -1,11 +1,13 @@
 <?php
 
-/* $Revision: 1.4 $ */
-$title = "Sales Analysis Reports Maintenance";
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 2;
 
 include("includes/session.inc");
+
+$title = _('Sales Analysis Reports Maintenance');
+
 include("includes/header.inc");
 
 
@@ -56,11 +58,8 @@ Function GrpByDataOptions ($GroupByDataX){
 }
 
 /* end of function  */
-?>
 
-<P>
-
-<?php
+echo '<P>';
 
 if (isset($_GET['SelectedReport'])){
 	$SelectedReport = $_GET['SelectedReport'];
@@ -81,11 +80,11 @@ if (isset($_POST['submit'])) {
 
 	if (strlen($_POST['ReportHeading']) <2) {
 		$InputError = 1;
-		prnMsg(_('The report heading must be more than two characters long. No report heading was entered!'),'error',_('Heading Too Long'));
+		prnMsg(_('The report heading must be more than two characters long') . '. ' . _('No report heading was entered'),'error',_('Heading too long'));
 	}
 	if ($_POST['GroupByData1']=='' OR !isset($_POST['GroupByData1']) OR $_POST['GroupByData1']=='Not Used'){
 	      $InputError = 1;
-	      prnMsg (_('A group by item must be specified for the report to have any output'),'error',_('No Group By Selected'));
+	      prnMsg (_('A group by item must be specified for the report to have any output'),'error',_('No Group By selected'));
 	}
 	if ($_POST['GroupByData3']=='Not Used' AND $_POST['GroupByData4']!='Not Used'){
 		// If GroupByData3 is blank but GroupByData4 is used then move GroupByData3 to GroupByData2
@@ -101,35 +100,35 @@ if (isset($_POST['submit'])) {
 	}
 	if (($_POST['Lower1']=="" OR $_POST['Upper1']=="")){
 	     $InputError = 1;
-	     prnMsg (_('Group by Level 1 is set but the upper and lower limits are not set - these must be specified for the report to have any output'),'error',_('Upper/Lower Limits Not Set'));
+	     prnMsg (_('Group by Level 1 is set but the upper and lower limits are not set') . ' - ' . _('these must be specified for the report to have any output'),'error',_('Upper/Lower limits not set'));
 	}
 	if (($_POST['GroupByData2']!="Not Used") AND ($_POST['Lower2']=="" || $_POST['Upper2']=="")){
 	     $InputError = 1;
-	     prnMsg( _('Group by Level 2 is set but the upper and lower limits are not set - these must be specified for the report to have any output'),'error',_('Upper/Lower Limits Not Set'));
+	     prnMsg( _('Group by Level 2 is set but the upper and lower limits are not set') . ' - ' . _('these must be specified for the report to have any output'),'error',_('Upper/Lower Limits not set'));
 	}
 	if (($_POST['GroupByData3']!="Not Used") AND ($_POST['Lower3']=="" || $_POST['Upper3']=="")){
 	     $InputError = 1;
-	     prnMsg( _('Group by Level 3 is set but the upper and lower limits are not set - these must be specified for the report to have any output'),'error',_('Upper/Lower Limits Not Set'));
+	     prnMsg( _('Group by Level 3 is set but the upper and lower limits are not set') . ' - ' . _('these must be specified for the report to have any output'),'error',_('Upper/Lower Limits not set'));
 	}
 	if (($_POST['GroupByData4']!="Not Used") AND ($_POST['Lower4']=="" || $_POST['Upper4']=="")){
 		$InputError = 1;
-		prnMsg( _('Group by Level 4 is set but the upper and lower limits are not set - these must be specified for the report to have any output'),'error',_('Upper/Lower Limits Not Set'));
+		prnMsg( _('Group by Level 4 is set but the upper and lower limits are not set') . ' - ' . _('these must be specified for the report to have any output'),'error',_('Upper/Lower Limits not set'));
 	}
 	if ($_POST['GroupByData1']!="Not Used" AND $_POST['Lower1'] > $_POST['Upper1']){
 	     $InputError = 1;
-	     prnMsg(_('Group by Level 1 is set but the lower limit is greater than the upper limit - the report will have no output'),'error',_('Lower Limit > Upper Limit'));
+	     prnMsg(_('Group by Level 1 is set but the lower limit is greater than the upper limit') . ' - ' . _('the report will have no output'),'error',_('Lower Limit > Upper Limit'));
 	}
 	if ($_POST['GroupByData2']!="Not Used" AND $_POST['Lower2'] > $_POST['Upper2']){
 	     $InputError = 1;
-	     prnMsg(_('Group by Level 2 is set but the lower limit is greater than the upper limit - the report will have no output'),'error',_('Lower Limit > Upper Limit'));
+	     prnMsg(_('Group by Level 2 is set but the lower limit is greater than the upper limit') . ' - ' . _('the report will have no output'),'error',_('Lower Limit > Upper Limit'));
 	}
 	if ($_POST['GroupByData3']!="Not Used" AND $_POST['Lower3'] > $_POST['Upper3']){
 	     $InputError = 1;
-	     prnMsg(_('Group by Level 3 is set but the lower limit is greater than the upper limit - the report will have no output'),'error',_('Lower Limit > Upper Limit'));
+	     prnMsg(_('Group by Level 3 is set but the lower limit is greater than the upper limit') . ' - ' . _('the report will have no output'),'error',_('Lower Limit > Upper Limit'));
 	}
 	if ($_POST['GroupByData4']!="Not Used" AND $_POST['Lower4'] > $_POST['Upper4']){
 		$InputError = 1;
-		prnMsg(_('Group by Level 4 is set but the lower limit is greater than the upper limit - the report will have no output'),'error',_('Lower Limit > Upper Limit'));
+		prnMsg(_('Group by Level 4 is set but the lower limit is greater than the upper limit') . ' - ' . _('the report will have no output'),'error',_('Lower Limit > Upper Limit'));
 	}
 
 
@@ -142,8 +141,8 @@ if (isset($_POST['submit'])) {
 
 		$sql = "UPDATE ReportHeaders SET ReportHeading='" . $_POST['ReportHeading'] . "', GroupByData1='" . $_POST['GroupByData1'] . "', GroupByData2='" . $_POST['GroupByData2'] . "', GroupByData3='" . $_POST['GroupByData3'] . "', GroupByData4='" . $_POST['GroupByData4'] . "', NewPageAfter1=" . $_POST['NewPageAfter1'] . ", NewPageAfter2=" . $_POST['NewPageAfter2'] . ", NewPageAfter3=" . $_POST['NewPageAfter3'] . ", Lower1='" . $_POST['Lower1'] . "', Upper1='" . $_POST['Upper1'] . "', Lower2='" . $_POST['Lower2'] . "', Upper2='" . $_POST['Upper2'] . "', Lower3='" . $_POST['Lower3'] . "', Upper3='" . $_POST['Upper3'] . "', Lower4='" . $_POST['Lower4'] . "', Upper4='" . $_POST['Upper4'] . "' WHERE ReportID = " . $SelectedReport;
 
-		$ErrMsg = _('The report could not be updated because:');
-		$Dbgmsg = _('The SQL used to update the report headers was:');
+		$ErrMsg = _('The report could not be updated because');
+		$Dbgmsg = _('The SQL used to update the report headers was');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 		prnMsg( _('The') .' ' . $_POST['ReportHeading'] . ' ' . _('report has been updated'),'success', 'Report Updated');
@@ -206,7 +205,7 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['Upper4'] . "'
 					)";
 
-		$ErrMsg = _('The report could not be added because:');
+		$ErrMsg = _('The report could not be added because');
 		$DbgMsg = _('The SQL used to add the report header was');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
@@ -247,7 +246,7 @@ if (isset($_POST['submit'])) {
 	$DbgMsg = _('The SQL used to delete the report headers was');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-	echo "<P>" . _('Report Deleted !') . '<P>';
+	echo "<P>" . _('Report Deleted') . '<P>';
 	unset($SelectedReport);
 	include ('includes/footer.inc');
 	exit;
@@ -265,7 +264,7 @@ or deletion of the records*/
 	$result = DB_query($sql,$db);
 
 	echo "<CENTER><table border=1>\n";
-	echo "<tr><td class=tableheader>Report No</td><td class=tableheader>Report Title</td>";
+	echo "<tr><td class=tableheader>Report No</td><td class=tableheader>" . _('Report Title') . "</td>";
 
 $k=0; //row colour counter
 
@@ -343,8 +342,8 @@ if (!$_GET['delete']) {
 			FROM ReportHeaders
 			WHERE ReportID=$SelectedReport";
 
-		$ErrMsg = _('The reports for display could not be retrieved because:');
-		$DbgMsg = _('The SQL used to retrieve the report headers was:');
+		$ErrMsg = _('The reports for display could not be retrieved because');
+		$DbgMsg = _('The SQL used to retrieve the report headers was');
 		$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 		$myrow = DB_fetch_array($result);
@@ -372,9 +371,9 @@ if (!$_GET['delete']) {
 	} else {
 		echo '<FONT SIZE=3 COLOR=BLUE><B>' . _('Define A New Report') . '</B></FONT>';
 	}
-	echo '<CENTER><TABLE WIDTH=100% COLSPAN=4><TR><TD ALIGN=RIGHT>' . _('Report Heading:') . "</TD><TD COLSPAN=2 ALIGN=CENTER><INPUT TYPE='TEXT' size=80 maxlength=80 name=ReportHeading value='" . $_POST['ReportHeading'] . "'></TD></TR>";
+	echo '<CENTER><TABLE WIDTH=100% COLSPAN=4><TR><TD ALIGN=RIGHT>' . _('Report Heading') . ":</TD><TD COLSPAN=2 ALIGN=CENTER><INPUT TYPE='TEXT' size=80 maxlength=80 name=ReportHeading value='" . $_POST['ReportHeading'] . "'></TD></TR>";
 
-	echo '<TR><TD>' . _('Group By 1:') . ' <SELECT name=GroupByData1>';
+	echo '<TR><TD>' . _('Group By 1') . ': <SELECT name=GroupByData1>';
 
 	GrpByDataOptions($_POST['GroupByData1']);
 
@@ -389,10 +388,10 @@ if (!$_GET['delete']) {
 	}
 
 	echo '</SELECT></TD>';
-	echo '<TD>' . _('From:') . " <INPUT TYPE='TEXT' NAME='Lower1' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Lower1'] . "'></TD>";
-	echo '<TD>' . _('To:') . " <INPUT TYPE='TEXT' NAME='Upper1' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Upper1'] . "'></TD></TR>";
+	echo '<TD>' . _('From') . ": <INPUT TYPE='TEXT' NAME='Lower1' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Lower1'] . "'></TD>";
+	echo '<TD>' . _('To') . ": <INPUT TYPE='TEXT' NAME='Upper1' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Upper1'] . "'></TD></TR>";
 
-	echo '<TR><TD>' . _('Group By 2:') . ' <SELECT name=GroupByData2>';
+	echo '<TR><TD>' . _('Group By 2') . ': <SELECT name=GroupByData2>';
 
 	GrpByDataOptions($_POST['GroupByData2']);
 

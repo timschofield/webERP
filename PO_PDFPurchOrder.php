@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -10,7 +10,7 @@ if(!isset($_GET['OrderNo']) && !isset($_POST['OrderNo'])){
         $title = _('Select a Purchase Order');
         include('includes/header.inc');
         echo '<div align=center><br><br><br>';
-        prnMsg( _('Select an Puchase Order Number to Print before calling this page.') , 'error');
+        prnMsg( _('Select an Puchase Order Number to Print before calling this page') , 'error');
         echo '<BR><BR><BR><table class="table_index">
 		<tr><td class="menu_group_item">
                 <li><a href="'. $rootpath . '/PO_SelectOSPurchOrder.php?'.SID .'">' . _('Outstanding Purchase Orders') . '</a></li>
@@ -20,7 +20,7 @@ if(!isset($_GET['OrderNo']) && !isset($_POST['OrderNo'])){
         exit();
 
 	echo '<CENTER><BR><BR><BR>' . _('This page must be called with a purchase order number to print');
-	echo '<BR><A HREF="'. $rootpath . '/index.php?' . SID . '">' . _('Back to the Menu') . '</A></CENTER>';
+	echo '<BR><A HREF="'. $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</A></CENTER>';
 	exit;
 }
 
@@ -50,7 +50,7 @@ if (isset($OrderNo) && $OrderNo != "" && $OrderNo > 0){
 	//Check this up front. Note that the myrow recordset is carried into the actual make pdf section
 	/*retrieve the order details from the database to print */
 	$ErrMsg = _('There was a problem retrieving the purchase order header details for Order Number'). ' ' . $OrderNo .
-			' ' . _('from the database.');
+			' ' . _('from the database');
 	$sql = "SELECT
 			PurchOrders.SupplierNo,
 			Suppliers.SuppName,
@@ -80,7 +80,7 @@ if (isset($OrderNo) && $OrderNo != "" && $OrderNo > 0){
 		$title = _('Print Purchase Order Error');
 		include('includes/header.inc');
 		echo '<div align=center><br><br><br>';
-		prnMsg( _('Unable to Locate Purchase Order Number : ') . ' ' . $OrderNo . ' ', 'error');
+		prnMsg( _('Unable to Locate Purchase Order Number') . ' : ' . $OrderNo . ' ', 'error');
 		echo '<BR><BR><BR><table class="table_index">
 			<tr><td class="menu_group_item">
 	                <li><a href="'. $rootpath . '/PO_SelectOSPurchOrder.php?'.SID .'">' . _('Outstanding Purchase Orders') . '</a></li>
@@ -98,20 +98,19 @@ if (isset($OrderNo) && $OrderNo != "" && $OrderNo > 0){
 			  include('includes/header.inc');
 			  echo '<P>';
 			  prnMsg( _('Purchase order number').' ' . $OrderNo . ' '.
-				_('has previously been printed. It was printed on'). ' ' .
+				_('has previously been printed') . '. ' . _('It was printed on'). ' ' .
 				ConvertSQLDate($POHeader['DatePrinted']) . '<BR>'.
-				_('To re-print the order, it must be modified to allow a reprint.'). '<BR>'.
-				_('This check is there to ensure that duplicate purchase orders are not sent to the supplier
-				resulting in several deliveries of the same supplies.'), 'warn');
-	                  echo '<BR><table class="table_index">
-            	                <tr><td class="menu_group_item">
- 				<LI><A HREF="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . 'OrderNo=' . $OrderNo . '&ViewingOnly=1">'.
+				_('To re-print the order it must be modified to allow a reprint'). '<BR>'.
+				_('This check is there to ensure that duplicate purchase orders are not sent to the supplier	resulting in several deliveries of the same supplies'), 'warn');
+           echo '<BR><table class="table_index">
+                <tr><td class="menu_group_item">
+ 					 <LI><A HREF="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . 'OrderNo=' . $OrderNo . '&ViewingOnly=1">'.
 				_('Print This Order as a Copy'). '</A>
  				<LI><A HREF="' . $rootpath . '/PO_Header.php?' . SID . 'ModifyOrderNumber=' . $OrderNo . '">'.
 				_('Modify the order to allow a real reprint'). '</A>' .
 			  	'<LI><A HREF="'. $rootpath .'/PO_SelectPurchOrder.php?' . SID . '">'.
 				_('Select another order'). '</A>'.
-			  	'<LI><A HREF="' . $rootpath . '/index.php?' . SID . '">'. _('Back to the main menu').'</A>';
+			  	'<LI><A HREF="' . $rootpath . '/index.php?' . SID . '">'. _('Back to the menu').'</A>';
 			  echo '</body</html>';
 			  include('includes/footer.inc');
 			  exit;
@@ -141,7 +140,7 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 
 	   $PageNumber = 1;
 	   $ErrMsg = _('There was a problem retrieving the line details for order number') . ' ' . $OrderNo . ' ' .
-			_('from the database.');
+			_('from the database');
 	   $sql = "SELECT ItemCode,
 	   			DeliveryDate,
 				ItemDescription,
@@ -262,11 +261,11 @@ $POLine['ItemCode'] . "' AND SupplierNo ='" . $POHeader['SupplierNo'] . "'";
 	if ($result==1){
 		$failed = false;
 		echo '<P>';
-		prnMsg( _('Purchase order'). ' ' . $OrderNo.' ' . _('has been emailed to') .' ' . $_POST['EmailTo'] . ' ' . _('as directed.'), 'success');
+		prnMsg( _('Purchase order'). ' ' . $OrderNo.' ' . _('has been emailed to') .' ' . $_POST['EmailTo'] . ' ' . _('as directed'), 'success');
 	} else {
 		$failed = true;
 		echo '<P>';
-		prnMsg( _('Emailing Purchase order'). ' ' . $OrderNo.' ' . _('to') .' ' . $_POST['EmailTo'] . ' ' . _('failed.'), 'error');
+		prnMsg( _('Emailing Purchase order'). ' ' . $OrderNo.' ' . _('to') .' ' . $_POST['EmailTo'] . ' ' . _('failed'), 'error');
 	}
 
     }
@@ -287,7 +286,7 @@ $POLine['ItemCode'] . "' AND SupplierNo ='" . $POHeader['SupplierNo'] . "'";
 	}
 	echo '<BR><BR>';
 	echo '<INPUT TYPE=HIDDEN NAME="OrderNo" VALUE="'. $OrderNo. '">';
-	echo '<CENTER><TABLE><TR><TD>'. _('Print or E-mail the Order'). '</TD><TD>
+	echo '<CENTER><TABLE><TR><TD>'. _('Print or Email the Order'). '</TD><TD>
 		<SELECT NAME="PrintOrEmail">';
 
 	if (!isset($_POST['PrintOrEmail'])){
@@ -326,8 +325,8 @@ $POLine['ItemCode'] . "' AND SupplierNo ='" . $POHeader['SupplierNo'] . "'";
 			echo '</SELECT></TD></TR></TABLE>';
 		} else {
 			echo '</TABLE><BR>';
-			prnMsg ( _('There are no contacts defined for the supplier of this order.
-				You must first set up supplier contacts before emailing an Order'), 'error');
+			prnMsg ( _('There are no contacts defined for the supplier of this order') . '. ' .
+				_('You must first set up supplier contacts before emailing an order'), 'error');
 			echo '<BR>';
 		}
 	} else {

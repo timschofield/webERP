@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 2;
 
@@ -132,7 +132,7 @@ while ($myrow1 = DB_fetch_array($result1)) {
 }
 ?>
 </SELECT>
-<TD><FONT SIZE=1><?php echo _('Enter text extract(s) in the'); ?>  <B><?php echo _('description'); ?></B>:</FONT></TD>
+<TD><FONT SIZE=1><?php echo _('Enter text extracts in the'); ?>  <B><?php echo _('description'); ?></B>:</FONT></TD>
 <TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25></TD></TR>
 <TR><TD></TD>
 <TD><FONT SIZE 3><B><?php echo _('OR'); ?> </B></FONT><FONT SIZE=1><?php echo _('Enter extract of the'); ?> <B><?php echo _('Stock Code'); ?></B>:</FONT></TD>
@@ -150,7 +150,7 @@ If ($StockItemsResult) {
 	$TableHeader = 	'<TR><TD class="tableheader">' . _('Code') . '</TD>
 			<TD class="tableheader">' . _('Description') . '</TD>
 			<TD class="tableheader">' . _('On Hand') . '</TD>
-			<TD class="tableheader">' . _('Orders Ostdg') . '</TD>
+			<TD class="tableheader">' . _('Orders') . '<BR>' . _('Outstanding') . '</TD>
 			<TD class="tableheader">' . _('Units') . '</TD>
 			</TR>';
 	echo $TableHeader;
