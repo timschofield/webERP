@@ -1,10 +1,10 @@
 <?php
-/* $Revision: 1.4 $ */
-$title = _('Customer Transactions Inquiry');
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 2;
 
 include("includes/session.inc");
+$title = _('Customer Transactions Inquiry');
 include("includes/header.inc");
 include("includes/DateFunctions.inc");
 

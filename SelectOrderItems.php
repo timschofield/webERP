@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 require("includes/DefineCartClass.php");
 
@@ -987,6 +987,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 		<CENTER><INPUT TYPE=SUBMIT NAME="Search" VALUE="Search Now">
 		<INPUT TYPE=SUBMIT Name='QuickEntry' VALUE='Use Quick Entry'>
 
+
+		<script language='JavaScript' type='text/javascript'>
+
+            	document.forms[0].StockCode.select();
+            	document.forms[0].StockCode.focus();
+
+		</script>
+
 		<?php
 		if (in_array(2,$SecurityGroups[$_SESSION['AccessLevel']])){
 			echo "<INPUT TYPE=SUBMIT Name='ChangeCustomer' VALUE='Change Customer'>";
@@ -1075,6 +1083,19 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 	   }
 
 	     echo "</TABLE><INPUT TYPE='submit' name='QuickEntry' value='Quick Entry'><INPUT TYPE='submit' name='PartSearch' value='Search Parts'>";
+
+
+?>
+	     <script language='JavaScript' type='text/javascript'>
+    //<![CDATA[
+            <!--
+            document.forms[0].part_1.select();
+            document.forms[0].part_1.focus();
+            //-->
+    //]]>
+	    </script>
+<?php
+
       }
 	if ($_SESSION['Items']->ItemsOrdered >=1){
       		echo "<CENTER><BR><INPUT TYPE=SUBMIT NAME='CancelOrder' VALUE='Cancel Whole Order'></CENTER>";

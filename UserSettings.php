@@ -1,13 +1,13 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
+$title = "User Settings";
 
 $PageSecurity=1;
 
 include("includes/session.inc");
-$title = _('User Settings');
 include("includes/header.inc");
 
-if (isset($_POST['Modify'])) {
+if ($_POST['Modify']) {
 	// no input errors assumed initially before we test
 	$InputError = 0;
 
@@ -19,14 +19,49 @@ if (isset($_POST['Modify'])) {
 		$InputError = 1;
 		echo "<BR>" . _("The Maximum Number of Records on Display entered must not be negative.  0 will default to system setting");
 	}
+	if ($_POST['pass'] != ""){
+		if ($_POST['pass'] != $_POST['passcheck']){
+			$InputError = 1;
+			echo "<BR>" ._("Sorry the passwords you entered do not match");
+		}else{
+			$update_pw = "Y";
+		}
+	}
+		if ($_POST['passcheck'] != ""){
+		if ($_POST['pass'] != $_POST['passcheck']){
+			$InputError = 1;
+			echo "<BR>" ._("Sorry the passwords you entered do not match");
+		}else{
+			$update_pw = "Y";
+		}
+	}
+		
+	
 
 	if ($InputError != 1) {
 		// no errors
-
+		if ($update_pw != "Y"){
 		$sql = "UPDATE WWW_Users
 				SET DisplayRecordsMax=" . $_POST['DisplayRecordsMax'] . ",
 					Theme='" . $_POST['Theme'] . "',
-					Language='" . $_POST['Language'] . "'
+					Language='" . $_POST['Language'] . "',
+					Email='". $_POST['email'] ."'
+				WHERE UserID = '" . $_SESSION['UserID'] . "'";
+
+		$ErrMsg =  _("The user alterations could not be processed because");
+		$DbgMsg = _("The SQL that was used to update the user and failed was");
+
+		$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+
+
+		echo "<BR>" . _("The user settings have been updated.  Be Sure to Remeber your Password for the next time you LogIn!");
+		}else{
+				$sql = "UPDATE WWW_Users
+				SET DisplayRecordsMax=" . $_POST['DisplayRecordsMax'] . ",
+					Theme='" . $_POST['Theme'] . "',
+					Language='" . $_POST['Language'] . "',
+					Email='". $_POST['email'] ."',
+					Password='" . $_POST['pass'] . "'
 				WHERE UserID = '" . $_SESSION['UserID'] . "'";
 
 		$ErrMsg =  _("The user alterations could not be processed because");
@@ -36,7 +71,7 @@ if (isset($_POST['Modify'])) {
 
 
 		echo "<BR>" . _("The user settings have been updated.");
-
+		}
 	  // update the session variables to reflect user changes on-the-fly
 		$_SESSION['DisplayRecordsMax'] = $_POST['DisplayRecordsMax'];
 		$_SESSION['Theme'] = trim($_POST['Theme']); /*already set by session.inc but for completeness */
@@ -105,11 +140,27 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 	}
 }
 
-
-echo '</SELECT></TD></TR>
-	</TABLE>
-	<CENTER><input type="Submit" name="Modify" value="' . _('Modify') . '">
-	</FORM>';
-
-include("includes/footer.inc");
 ?>
+
+</SELECT></TD></TR>
+<TR><TD>New Password:</TD>
+<TD><input type="password" name="pass" size="20" value="<?php echo $_POST['pass']; ?>"></TD></TR>
+<TR><TD>Confirm Password:</TD>
+<TD><input type="password" name="passcheck" size="20"  value="<?php echo $_POST['passcheck']; ?>"></TD></TR>
+<tr><td colspan="2" align="center">If you leave the password boxes empty, your password will not change</td></tr>
+<TR><TD>Email:</TD>
+<?php
+	$sql = "Select Email from WWW_Users WHERE UserID = '" . $_SESSION['UserID'] . "'";
+	$result = DB_query($sql,$db);
+	$myrow = DB_fetch_array($result);
+	if(!isset($_POST['email'])){
+		$_POST['email'] = $myrow['Email'];
+	}
+?>
+<TD><input type="text" name="email" size="20" value="<?php echo $_POST['email']; ?>"></TD></TR>
+</TABLE>
+<CENTER><input type="Submit" name="Modify" value="Modify">
+
+</FORM>
+
+<?php include("includes/footer.inc"); ?>

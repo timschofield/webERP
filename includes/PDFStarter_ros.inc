@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 include ("includes/class.pdf.php");
 
 if (isset($SessionSavePath)){
@@ -22,11 +22,11 @@ if (! in_array($PageSecurity,$SecurityGroups[$_SESSION["AccessLevel"]]) OR !isse
 
 
 
-if (!isset($PageSize)){
-	$PageSize = $_SESSION['DefaultPageSize'];
+if (!isset($PaperSize)){
+	$PaperSize = $_SESSION['DefaultPageSize'];
 }
 
-switch ($PageSize) {
+switch ($PaperSize) {
 
   case 'A4':
 
@@ -113,6 +113,6 @@ $PageSize = array(0,0,$Page_Width,$Page_Height);
 $pdf = & new Cpdf($PageSize);
 $pdf->selectFont('./fonts/Helvetica.afm');
 $pdf->addinfo('Author',"webERP " . $Version);
-$pdf->addinfo('Creator',"webERP http://weberp.sourceforge.net - R&OS PHP-PDF http://www.ros.co.nz");
+$pdf->addinfo('Creator',"webERP http://www.weberp.org - R&OS PHP-PDF http://www.ros.co.nz");
 
 ?>

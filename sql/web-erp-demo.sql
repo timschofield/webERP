@@ -1693,7 +1693,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE Companies DISABLE KEYS */;
 LOCK TABLES Companies WRITE;
-INSERT INTO Companies VALUES (1,'Logic Works Demo System','15-325-122','','PO Box 989 Wellington Mail Centre, New Zealand','12 Downing Street,','Upper Hutt','New Zealand','+(64) (04) 567 5411','+(64) (04) 567 5412','p.daintree@paradise.net.nz','USD',710000,455000,800000,810000,723000,23700,23700,900000,1,1,1,450000);
+INSERT INTO Companies VALUES (1,'Demo System','15-325-122','','PO Box 999 Wellington Mail Centre, New Zealand','12 Downing Street,','Upper Hutt','New Zealand','+(64) (04) 567 5411','+(64) (04) 567 5412','p.daintree@paradise.net.nz','USD',710000,455000,800000,810000,723000,23700,23700,900000,1,1,1,450000);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE Companies ENABLE KEYS */;
 
@@ -2318,7 +2318,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE WWW_Users DISABLE KEYS */;
 LOCK TABLES WWW_Users WRITE;
-INSERT INTO WWW_Users VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2004-09-25 21:24:31','','A4','1,1,1,1,1,1,1,1,',0,50,'fresh','en');
+INSERT INTO WWW_Users VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2004-10-30 17:19:11','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE WWW_Users ENABLE KEYS */;
 

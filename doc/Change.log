@@ -1,5 +1,14 @@
 <P>webERP Change Log
 
+<P><P>Version 2.9a - Mk II
+<P>
+<P>30/10/04 PageSize errors caused with register globals off. Used new variable PapeSize - Vitaliy
+<P>30/10/04 fixed AgedDebtors.php and CustTrans
+<P>30/10/04 added correct icons to css directories - Steve/Chris
+
+<P>Version 2.9a - Mk I
+<P>
+<P>24/10/04 Focus on SelectCustomer, SelectOrderItems, SelectProduct, SelectSupplier all default to the code entry. Previosuly required a click in the field now already in the field
 <P>24/10/04 gettextified SalesAnalysis_UserDefined.php, SelectSalesOrder.php, SelectSupplier.php, TaxAuthorityRates.php, WWW_Users.php, WhereUsedInquiry.php, Z_ChangeBranchCode.php, Z_UploadForm.php, Z_UploadResult.php
 <P>22/10/04 session.inc / login.php - Chris bad password now goes straight to another try. Also, bad permission for a script code improved Chris
 <P>22/10/04 bg.gif - Steve's much reduced graphic - great performance increase on login. Biggest graphic in system was the first login page ?!

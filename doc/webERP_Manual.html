@@ -30,7 +30,7 @@
 <div align="center"><font size="+4" color="blue"><b><u>webERP Manual</u></b></font></div>
 <br><br><br> 
    
-	<form action="/weberp2/doc/ManualContents.php" method="POST">
+	<form action="/weberp/doc/ManualContents.php" method="POST">
     <table cellpadding="0" cellspacing="0">
       <tr>
         <td>
@@ -38,14 +38,15 @@
           <br><br>
           <UL>
             <LI>
-              <A HREF="/weberp2/doc/ManualContents.php?ViewTopic=Introduction">Introduction</A></LI>
+              <A href="#Introduction">Introduction</A>
               <UL>
                 <LI>Why Another Accounting Program?</LI>
                 <LI>System Requirements</LI>
               </UL>
               <BR>
-            <LI>
-              <A HREF="/weberp2/doc/ManualContents.php?ViewTopic=GettingStarted">Getting Started</A></LI>
+            </LI>
+						<LI>
+              <A HREF="#GettingStarted">Getting Started</A>
               <UL>
                 <LI>Prerequisites</LI>
                 <LI>Copying the PHP Scripts</LI>
@@ -56,119 +57,125 @@
                 <LI>Setting Up Users</LI>
               </UL>
               <BR>
-<LI>
-<A HREF="/weberp2/doc/ManualContents.php?ViewTopic=SecuritySchema">Security Schema</A></LI>
-<br><br>
-<LI>
-<A HREF="/weberp2/doc/ManualContents.php?ViewTopic=CreatingNewSystem">Creating a New System</A></LI>
-<UL>
-<LI>Running the Demonstration Database</LI>
-<LI>Setting Up A System</LI>
-<LI>Setting Up Inventory Items</LI>
-<LI>Entering Inventory Balances</LI>
-<LI>Inventory Ledger Integration to General Ledger Issues</LI>
-<LI>Setting Up Customers</LI>
-<LI>Entering Customer Balances</LI>
-<LI>Reconciling the Debtors Ledger Control Account</LI>
-<LI>Finally</LI>
-</UL>
-<BR>
-<LI>
-<A HREF="/weberp2/doc/ManualContents.php?ViewTopic=SystemConventions">System Conventions</A></LI>
-<UL>
-<LI>Navigating the Menu</LI>
-<LI>Reporting</LI>
-</UL>
-<BR>
-<LI>
-<A HREF="/weberp2/doc/ManualContents.php?ViewTopic=Inventory">Inventory (aka "Stock")</A></LI>
-<UL>
-<LI>Overview</LI>
-<LI>Inventory System Features</LI>
-<LI>Adding Inventory Items</LI>
-<LI>Item Code</LI>
-<LI>Part Descriptions</LI>
-<LI>Categories</LI>
-<LI>Unit of Measurement</LI>
-<LI>Economic Order Quantity</LI>
-<LI>Packaged Volume</LI>
-<LI>Packaged Weight</LI>
-<LI>Units of Measure</LI>
-<LI>Current or Obsolete</LI>
-<LI>Make Or Buy</LI>
-<LI>Setting Up Assembly Items</LI>
-<LI>Controlled</LI>
-<LI>Serialised</LI>
-<LI>Bar Code</LI>
-<LI>Discount Category</LI>
-<LI>Decimal Places</LI>
-<LI>Inventory Costing</LI>
-<LI>Material Cost</LI>
-<LI>Labour Cost</LI>
-<LI>Overhead Cost</LI>
-<LI>Standard Costing Considerations</LI>
-<LI>Actual Cost</LI>
-<LI>Alterations To Labour Cost, Material Cost or Overhead Cost</LI>
-<LI>Selecting Inventory Items</LI>
-<LI>Amending Inventory Items</LI>
-<LI>Changing a Category</LI>
-<LI>Alterations to the Make or Buy Flag</LI>
-<LI>Inventory Categories</LI>
-<LI>Inventory Category Code</LI>
-<LI>Inventory Category Description</LI>
-<LI>Balance Sheet Inventory GL Account</LI>
-<LI>Inventory Adjustments GL Posting Account</LI>
-<LI>Purchase Price Variance Account</LI>
-<LI>Material Usage Variance Account</LI>
-<LI>Type of Resource</LI>
-<LI>Inventory Location Maintenance</LI>
-<LI>Inventory Adjustments</LI>
-<LI>Inventory Location Transfers</LI>
-<LI>Inventory Reports and Inquiries</LI>
-<LI>Inventory Status inquiries</LI>
-<LI>Inventory Movement inquiries</LI>
-<LI>Inventory Usage inquiries</LI>
-<LI>Inventory Valuation Report</LI>
-<LI>Inventory Planning Report</LI>
-<LI>Inventory Checks</LI>
-</UL>
-<BR>
-<LI>
-<A HREF="/weberp2/doc/ManualContents.php?ViewTopic=AccountsReceivable">Accounts Receivable</A></LI>
-<UL>
-<LI>Overview</LI>
-<LI>Features</LI>
-<LI>Entering New Customers</LI>
-<LI>Customer Code</LI>
-<LI>Customer Name</LI>
-<LI>Address Line 1, 2, 3 and 4</LI>
-<LI>Currency</LI>
-<LI>Invoice Discount</LI>
-<LI>Prompt Payment Discount</LI>
-<LI>Customer Since</LI>
-<LI>Payment Terms</LI>
-<LI>Credit Status or Rating</LI>
-<LI>Credit Limit</LI>
-<LI>Invoice Addressing</LI>
-<LI>Entering Customer Branches</LI>
-<LI>Branch Name</LI>
-<LI>Branch Code</LI>
-<LI>Branch Contact / Phone / Fax / Address</LI>
-<LI>Sales Person</LI>
-<LI>Draw Stock From</LI>
-<LI>Forward Date From A Day In The Month</LI>
-<LI>Delivery Days</LI>
-<LI>Phone/Fax/Email</LI>
-<LI>Tax Authority</LI>
-<LI>Disable Transactions</LI>
-<LI>Default Freight Company</LI>
-<LI>Postal Address 1, 2, 3 and 4</LI>
-<LI>Amending Customer Details</LI>
-<LI>Shippers</LI>
-</UL>
-<BR>
-<LI>
-              <A HREF="/weberp2/doc/ManualContents.php?ViewTopic=SalesPeople">Sales People</A></LI>
+            </LI>
+            <LI>
+              <A HREF="#SecuritySchema">Security Schema</A>
+            </LI>
+            <br><br>
+            <LI>
+              <A HREF="#CreatingNewSystem">Creating a New System</A>
+              <UL>
+                <LI>Running the Demonstration Database</LI>
+                <LI>Setting Up A System</LI>
+                <LI>Setting Up Inventory Items</LI>
+                <LI>Entering Inventory Balances</LI>
+                <LI>Inventory Ledger Integration to General Ledger Issues</LI>
+                <LI>Setting Up Customers</LI>
+                <LI>Entering Customer Balances</LI>
+                <LI>Reconciling the Debtors Ledger Control Account</LI>
+                <LI>Finally</LI>
+              </UL>
+              <BR>
+						</LI>	
+            <LI>
+              <A HREF="#SystemConventions">System Conventions</A>
+              <UL>
+                <LI>Navigating the Menu</LI>
+                <LI>Reporting</LI>
+              </UL>
+              <BR>
+            </LI>
+						<LI>
+              <A HREF="#Inventory">Inventory (aka "Stock")</A>
+              <UL>
+                <LI>Overview</LI>
+                <LI>Inventory System Features</LI>
+                <LI>Adding Inventory Items</LI>
+                <LI>Item Code</LI>
+                <LI>Part Descriptions</LI>
+                <LI>Categories</LI>
+                <LI>Unit of Measurement</LI>
+                <LI>Economic Order Quantity</LI>
+                <LI>Packaged Volume</LI>
+                <LI>Packaged Weight</LI>
+                <LI>Units of Measure</LI>
+                <LI>Current or Obsolete</LI>
+                <LI>Make Or Buy</LI>
+                <LI>Setting Up Assembly Items</LI>
+                <LI>Controlled</LI>
+                <LI>Serialised</LI>
+                <LI>Bar Code</LI>
+                <LI>Discount Category</LI>
+                <LI>Decimal Places</LI>
+                <LI>Inventory Costing</LI>
+                <LI>Material Cost</LI>
+                <LI>Labour Cost</LI>
+                <LI>Overhead Cost</LI>
+                <LI>Standard Costing Considerations</LI>
+                <LI>Actual Cost</LI>
+                <LI>Alterations To Labour Cost, Material Cost or Overhead Cost</LI>
+                <LI>Selecting Inventory Items</LI>
+                <LI>Amending Inventory Items</LI>
+                <LI>Changing a Category</LI>
+                <LI>Alterations to the Make or Buy Flag</LI>
+                <LI>Inventory Categories</LI>
+                <LI>Inventory Category Code</LI>
+                <LI>Inventory Category Description</LI>
+                <LI>Balance Sheet Inventory GL Account</LI>
+                <LI>Inventory Adjustments GL Posting Account</LI>
+                <LI>Purchase Price Variance Account</LI>
+                <LI>Material Usage Variance Account</LI>
+                <LI>Type of Resource</LI>
+                <LI>Inventory Location Maintenance</LI>
+                <LI>Inventory Adjustments</LI>
+                <LI>Inventory Location Transfers</LI>
+                <LI>Inventory Reports and Inquiries</LI>
+                <LI>Inventory Status inquiries</LI>
+                <LI>Inventory Movement inquiries</LI>
+                <LI>Inventory Usage inquiries</LI>
+                <LI>Inventory Valuation Report</LI>
+                <LI>Inventory Planning Report</LI>
+                <LI>Inventory Checks</LI>
+              </UL>
+              <BR>
+            </LI>
+            <LI>
+              <A HREF="#AccountsReceivable">Accounts Receivable</A>
+              <UL>
+                <LI>Overview</LI>
+                <LI>Features</LI>
+                <LI>Entering New Customers</LI>
+                <LI>Customer Code</LI>
+                <LI>Customer Name</LI>
+                <LI>Address Line 1, 2, 3 and 4</LI>
+                <LI>Currency</LI>
+                <LI>Invoice Discount</LI>
+                <LI>Prompt Payment Discount</LI>
+                <LI>Customer Since</LI>
+                <LI>Payment Terms</LI>
+                <LI>Credit Status or Rating</LI>
+                <LI>Credit Limit</LI>
+                <LI>Invoice Addressing</LI>
+                <LI>Entering Customer Branches</LI>
+                <LI>Branch Name</LI>
+                <LI>Branch Code</LI>
+                <LI>Branch Contact / Phone / Fax / Address</LI>
+                <LI>Sales Person</LI>
+                <LI>Draw Stock From</LI>
+                <LI>Forward Date From A Day In The Month</LI>
+                <LI>Delivery Days</LI>
+                <LI>Phone/Fax/Email</LI>
+                <LI>Tax Authority</LI>
+                <LI>Disable Transactions</LI>
+                <LI>Default Freight Company</LI>
+                <LI>Postal Address 1, 2, 3 and 4</LI>
+                <LI>Amending Customer Details</LI>
+                <LI>Shippers</LI>
+              </UL>
+              <BR>
+            </LI>
+            <LI>
+              <A HREF="#SalesPeople">Sales People</A>
               <UL>
                 <LI>Salesperson Records</LI>
                 <LI>Salespeople Code</LI>
@@ -176,16 +183,18 @@
                 <LI>Salesperson Commission Rates and Breakpoint</LI>
               </UL>
               <BR>
-<LI>
-              <A HREF="/weberp2/doc/ManualContents.php?ViewTopic=SalesTypes">Sales Types / Price Lists</A></LI>
+            </LI>
+            <LI>
+              <A HREF="#SalesTypes">Sales Types / Price Lists</A>
               <UL>
                 <LI>Sales Types / Price Lists</LI>
                 <LI>Sales Type Code</LI>
                 <LI>Sales Type Description</LI>
               </UL>
               <BR>
-<LI>
-              <A HREF="/weberp2/doc/ManualContents.php?ViewTopic=PaymentTerms">Payment Terms</A></LI>
+            </LI>
+            <LI>
+              <A HREF="#PaymentTerms">Payment Terms</A>
               <UL>
                 <LI>Payment Terms</LI>
                 <LI>Payment Terms Code</LI>
@@ -193,8 +202,9 @@
                 <LI>Days Before Due / Day In Following Month When Due</LI>
               </UL>
               <BR>
-<LI>
-              <A HREF="/weberp2/doc/ManualContents.php?ViewTopic=CreditStatus">Credit Status</A></LI>
+            </LI>
+            <LI>
+              <A HREF="#CreditStatus">Credit Status</A>
               <UL>
                 <LI>Credit Status Ratings</LI>
                 <LI>Status Code</LI>
@@ -202,8 +212,9 @@
                 <LI>Disallow Invoices</LI>
               </UL>
               <BR>
-<LI>
-              <A HREF="/weberp2/doc/ManualContents.php?ViewTopic=Tax">Tax</A></LI>
+            </LI>
+            <LI>
+              <A HREF="#Tax">Tax</A>
               <UL>
                 <LI>Tax Calculations</LI>
                 <LI>Overview</LI>
@@ -213,8 +224,9 @@
                 <LI>Sales Within Two Tax Authorities Example - 3 Tax Levels:</LI>
               </UL>
               <BR>
-<LI>
-              <A HREF="/weberp2/doc/ManualContents.php?ViewTopic=Prices">Prices and Discounts</A></LI>
+            </LI>
+            <LI>
+              <A HREF="#Prices">Prices and Discounts</A>
               <UL>
                 <LI>Prices and Discounts</LI>
                 <LI>Pricing Overview</LI>
@@ -222,8 +234,9 @@
                 <LI>Discount Matrix</LI>
               </UL>
               <BR>
-<LI>
-              <A HREF="/weberp2/doc/ManualContents.php?ViewTopic=ARTransactions">Accounts Receivable Transactions</A></LI>
+            </LI>
+            <LI>
+              <A HREF="#ARTransactions">Accounts Receivable Transactions</A>
               <UL>
                 <LI>Invoicing An Order</LI>
                 <LI>Selecting an Order To Invoice</LI>
@@ -243,16 +256,18 @@
                 <LI>Allocate Credits To A Customer's Account
               </UL>
               <BR>
-<LI>
-              <A HREF="/weberp2/doc/ManualContents.php?ViewTopic=ARInquiries">Accounts Receivable Inquiries</A></LI>
+            </LI>
+            <LI>
+              <A HREF="#ARInquiries">Accounts Receivable Inquiries</A>
               <UL>
                 <LI>Customer Inquiries</LI>
                 <LI>Customer Account inquiries</LI>
                 <LI>Transaction Detail inquiries</LI>
               </UL>
               <BR>
-<LI>
-              <A HREF="/weberp2/doc/ManualContents.php?ViewTopic=ARReports">Accounts Receivable Reports</A></LI>
+            </LI>
+            <LI>
+              <A HREF="#ARReports">Accounts Receivable Reports</A>
               <UL>
                 <LI>Customers - Reporting</LI>
                 <LI>Aged Customer Balance Listing</LI>
@@ -261,8 +276,9 @@
                 <LI>Printing Invoices Or Credit Notes</LI>
               </UL>
               <BR>
-<LI>
-              <A HREF="/weberp2/doc/ManualContents.php?ViewTopic=SalesAnalysis">Sales Analysis</A></LI>
+            </LI>
+            <LI>
+              <A HREF="#SalesAnalysis">Sales Analysis</A>
               <UL>
                 <LI>Sales Analysis</LI>
                 <LI>Sales Analysis Report Headers</LI>
@@ -270,8 +286,9 @@
                 <LI>Automating Sales Reports</LI>
               </UL>
               <BR>
-<LI>
-              <A HREF="/weberp2/doc/ManualContents.php?ViewTopic=SalesOrders">Sales Orders</A></LI>
+            </LI>
+            <LI>
+              <A HREF="#SalesOrders">Sales Orders</A>
               <UL>
                 <LI>Sales Orders</LI>
                 <LI>Sales Order Functionality</LI>
@@ -282,8 +299,9 @@
                 <LI>Modfiying An Order</LI>
               </UL>
               <BR>
-<LI>
-              <A HREF="/weberp2/doc/ManualContents.php?ViewTopic=Shipments">Shipments</A></LI>
+            </LI>
+            <LI>
+              <A HREF="#Shipments">Shipments</A>
               <UL>
                 <LI>Shipments</LI>
                 <LI>Shipment General Ledger Posting</LI>
@@ -292,55 +310,60 @@
                 <LI>Closing a Shipment</LI>
               </UL>
               <BR>
-<LI>
-<A HREF="/weberp2/doc/ManualContents.php?ViewTopic=GeneralLedger">General Ledger</A></LI>
-<UL>
-<LI>General Ledger Overview</LI>
-<LI>Account Groups</LI>
-<LI>Bank Accounts</LI>
-<LI>Bank Account Payments</LI>
-<LI>General Ledger Integration Setup</LI>
-<LI>Sales Journals</LI>
-<LI>Stock Journals</LI>
-<LI>EDI</LI>
-<LI>EDI Setup</LI>
-<LI>Sending EDI Invoices</LI>
-</UL>
-<BR>
-<LI>
-<A HREF="/weberp2/doc/ManualContents.php?ViewTopic=SpecialUtilities">Special Utilities</A></LI>
-<UL>
-<LI>Re-Apply Standard Costs to Sales Analysis</LI>
-<LI>Change A Customer Code</LI>
-<LI>Change An Inventory Code</LI>
-<LI>Make Stock Locations</LI>
-<LI>Repost General Ledger from Period</LI>
-</UL>
-<BR>
-<LI>
-<A HREF="/weberp2/doc/ManualContents.php?ViewTopic=NewScripts">Developing New Scripts</A></LI>
-<UL>
-<LI>Directory Structure</LI>
-<LI>session.inc</LI>
-<LI>header.inc</LI>
-<LI>footer.inc</LI>
-<LI>config.php</LI>
-<LI>PDFStarter_ros.inc</LI>
-<LI>Database Abstraction - ConnectDB.inc</LI>
-<LI>DateFunctions.inc</LI>
-<LI>SQL_CommonFuctions.inc</LI>
-</UL>
-<BR>
-<LI>
-<A HREF="/weberp2/doc/ManualContents.php?ViewTopic=Contributors">Contributors - Acknowledgements</A></LI>
-</UL>
-</td>
-</tr>
-</table>
+            </LI>
+            <LI>
+              <A HREF="#GeneralLedger">General Ledger</A>
+              <UL>
+                <LI>General Ledger Overview</LI>
+                <LI>Account Groups</LI>
+                <LI>Bank Accounts</LI>
+                <LI>Bank Account Payments</LI>
+                <LI>General Ledger Integration Setup</LI>
+                <LI>Sales Journals</LI>
+                <LI>Stock Journals</LI>
+                <LI>EDI</LI>
+                <LI>EDI Setup</LI>
+                <LI>Sending EDI Invoices</LI>
+              </UL>
+              <BR>
+            </LI>
+            <LI>
+              <A HREF="#SpecialUtilities">Special Utilities</A>
+              <UL>
+                <LI>Re-Apply Standard Costs to Sales Analysis</LI>
+                <LI>Change A Customer Code</LI>
+                <LI>Change An Inventory Code</LI>
+                <LI>Make Stock Locations</LI>
+                <LI>Repost General Ledger from Period</LI>
+              </UL>
+              <BR>
+            </LI>
+            <LI>
+              <A HREF="#NewScripts">Developing New Scripts</A>
+              <UL>
+                <LI>Directory Structure</LI>
+                <LI>session.inc</LI>
+                <LI>header.inc</LI>
+                <LI>footer.inc</LI>
+                <LI>config.php</LI>
+                <LI>PDFStarter_ros.inc</LI>
+                <LI>Database Abstraction - ConnectDB.inc</LI>
+                <LI>DateFunctions.inc</LI>
+                <LI>SQL_CommonFuctions.inc</LI>
+              </UL>
+              <BR>
+            </LI>
+            <LI>
+              <A HREF="#Contributors">Contributors - Acknowledgements</A>
+            </LI>
+          </UL>
+        </td>
+      </tr>
+    </table>
 
-</form>
+  </form>
 <br><br>
-<font size="+3"><b>Introduction</b></font>
+<a name="Introduction"><font size="+3"><b>Introduction</b></font></a>
 <br><br>
 <font size="+2"><b>Why Another Accounting Program?</b></font>
 <br><br>
@@ -363,7 +386,7 @@ There are a many possible configurations that could run this application. The sc
 The operating system and the database engine chosen will have the largest bearing on the System requirements. Each client connection to the web server and database engine will also consume RAM so the more connections the larger the RAM requirement. Similarly disk space required is a function of the size of the data. Suffice it to say that due to the efficiency of the components of the system the demands on the hardware are exceptionally light by client server application standards.
 <br><br>
 In general, a linux based installation will demand less of the hardware and even an entry level server will provide good performance for up to 30 users. RAID Level 1 at least with fast SCSI disks are preferred. The system is effectively a web server and a database server - this technology is tested with thousands of simultaneous users daily. With multiple servers balancing the load and a separate database server with SMP and large amounts of RAM  the limit on database size and the number of users is large enough for the largest businesses.<br><br>
-<font size="+3"><b>Getting Started</b></font>
+<a name="GettingStarted"><font size="+3"><b>Getting Started</b></font></a>
 <br><br>
 <font size="+2"><b>Prerequisites</b></font>
 <br><br>
@@ -847,7 +870,7 @@ As well as allowing the access to be restricted there is some flexibility about 
 <br><br>
 There is also the facility to set up customers with their own logon. This restricts them to inquiries on their account including invoice re-prints and to entering new sales order. Customer logins do not allow any modification to the pricing. To do this the access level must be set to customer logon and the settings for customer logon in config.php must not be modified - ie $PageSecurity = 1 allowed only. In addition, the customer code and branch code applicable to the person logging on must be entered.
 <!-- Help End: WWW_Users --><br><br>
-<font size="+3"><b>Security Schema</b></font>
+<a name="SecuritySchema"><font size="+3"><b>Security Schema</b></font></a>
 <br><br>
 The user name and password combination entered at logon enables the system to identify the permissions appropriate to the user. It is possible to determine and restrict which pages a user should be able to access. Each user is allocated to an Access Level or Security Group. 
 <br><br>
@@ -1745,7 +1768,7 @@ WorkCentres.php
 </td>
 </tr>
 </table><br><br>
-<font size="+3"><b>Creating a New System</b></font>
+<a name="CreatingNewSystem"><font size="+3"><b>Creating a New System</b></font></a>
 <br><br>
 <font size="+2"><b>Running the Demonstration Database</b></font>
 <br><br>
@@ -1859,7 +1882,7 @@ Once all entries are made to reconcile the customers accounts with the general l
 Using a username and password as created when mysql was installed.
 <br><br>
 #mysqldump -u username -p password --opt weberp > /home/myhomedir/weberp_backup.sql<br><br>
-<font size="+3"><b>System Conventions</b></font>
+<a name="SystemConventions"><font size="+3"><b>System Conventions</b></font></a>
 <br><br>
 <font size="+2"><b>Navigating the Menu</b></font>
 <br><br>
@@ -1881,7 +1904,7 @@ Many reports create Adobe (c) Portable Document Format (.pdf) report files. The 
 <li>Many Web Browsers have pdf functionality built in or as an add on module.
 </ul>
 Some users have reported issues with reading the pdf files created. The most common issue is with navigation. Some browsers open pdf files actually within the browser. The difficulty with this is that the links to navigate the system then disappear and hitting the back button of the browser does not work with dynamic scripts so well. The preferred solution is to open the pdf documents created in a separate window. This is achieved by opening adobe acrobat reader separately then modifying the preferences to disable the "Display pdf in browser" option. This forces a new window for Acrobat reader.<br><br>
-<font size="+3"><b>Inventory (aka "Stock")</b></font>
+<a name="Inventory"><font size="+3"><b>Inventory (aka "Stock")</b></font></a>
 <br><br>
 <font size="+2"><b>Overview</b></font>
 <br><br>
@@ -2373,7 +2396,7 @@ Once happy that the adjustments to be made are correct the report can be run aga
 <br><br>
 There is no going back on this process - if you didn't mean to process these adjustments they must all be reversed manually. Be very sure when running the comparison in this mode.
 <!-- Help End: StockCheck --><br><br>
-<font size="+3"><b>Accounts Receivable</b></font>
+<a name="AccountsReceivable"><font size="+3"><b>Accounts Receivable</b></font></a>
 <br><br>
 <font size="+2"><b>Overview</b></font>
 <br><br>
@@ -2559,7 +2582,7 @@ If freight cost calculations are to be performed at order entry stage, the data 
 <!-- Help End: Shippers -->
 
 <br><br>
-<font size="+3"><b>Sales People</b></font>
+<a name="SalesPeople"><font size="+3"><b>Sales People</b></font></a>
 <br><br>
 <font size="+2"><b>Salesperson Records</b></font>
 <br><br>
@@ -2582,7 +2605,7 @@ The name can be any character to a maximum of 30 characters. The phone number an
 The system allows for input of these items as the basis of commission calculations. Most businesses have different ways of calculating commissions. For this reason it is left to the business to write a report which will use these fields (and/or additional ones) to calculate commission according to traditional company policy.
 
 <br><br>
-<font size="+3"><b>Sales Types / Price Lists</b></font>
+<a name="SalesTypes"><font size="+3"><b>Sales Types / Price Lists</b></font></a>
 <br><br>
 Sales types are the broad categories which sales fall under, they should not be confused with stock categories. They are arbitrary headings for the different pricing arrangements applicable to each type of customer. For example the fashion house might have sales types for:
 <br><br>
@@ -2604,7 +2627,7 @@ This is a 2 character code which is stored against the customer to define the sa
 <font size="+1"><b>Sales Type Description</b></font>
 <br><br>
 20 characters of text are allowed to describe the sales type. This field is used to describe the sales type / price list applicable to the customer.<br><br>
-<font size="+3"><b>Payment Terms</b></font>
+<a name="PaymentTerms"><font size="+3"><b>Payment Terms</b></font></a>
 <br><br>
 For each customer the payment terms which the business deals with them under must be specified. This provides the information required to monitor whether the account is due or not - ie for Overdue inquiries and reports. Also, the invoices, credit notes and statements, contain reference to these terms so he/she is continually reminded of these terms with every transaction as a matter of course.
 <br><br>
@@ -2635,7 +2658,7 @@ Only one of these fields needs to be entered depending on the selection in the b
 These fields expect a number - other characters are not accepted.<!-- Help Begin: CreditStatus -->
 
 <br><br>
-<font size="+2"><b>Credit Status Ratings</b></font>
+<a name="CreditStatus"><font size="+3"><b>Credit Status Ratings</b></font></a>
 <br><br>
 Each customer can be given a credit status that describes the risk as assessed by the credit controller, attached to invoices to the customer. This will never appear on any reports to customers. The customer selection screen allows customers to be restricted by their credit status so it is easy to perform inquiries on all the customers with a similar credit status. In addition the system will not allow invoices to customers whose credit status has a check in the field to prohibit invoicing. This is another credit control tool to the credit limit. 
 <br><br>
@@ -2657,7 +2680,7 @@ For all credit ratings set up, this field indicates whether or not the rating is
 <!-- Help Begin: TaxAuthorities -->
 
 <br><br>
-<font size="+3"><b>Tax Calculations</b></font>
+<a name="Tax"><font size="+3"><b>Tax Calculations</b></font></a>
 <br><br>
 <font size="+1"><b>Overview</b></font>
 <br><br>
@@ -2700,7 +2723,7 @@ General ledger posting relating to the taxes calculated are made in accordance w
 
 <!-- Help Begin: Prices -->
 
-<font size="+3"><b>Prices and Discounts</b></font>
+<a name="Prices"><font size="+3"><b>Prices and Discounts</b></font></a>
 <br><br>
 <font size="+1"><b>Overview</b></font>
 <br><br>
@@ -2749,7 +2772,7 @@ To set up the discount matrix there are two elements:
 
 <!-- Help Begin: SelectSalesOrder -->
 
-<font size="+3"><b>Accounts Receivable Transactions</b></font>
+<a name="ARTransactions"><font size="+3"><b>Accounts Receivable Transactions</b></font></a>
 <br><br>
 <font size="+2"><b>Invoicing An Order</b></font>
 <br><br>
@@ -2939,7 +2962,7 @@ Note: This is a complex area behind the scenes, to handle the changes that may r
 
 <!-- Help Begin: CustomerInquiry -->
 
-<font size="+3"><b>Accounts Receivable Inquiries</b></font>
+<a name="ARInquiries"><font size="+3"><b>Accounts Receivable Inquiries</b></font></a>
 <br><br>
 <font size="+2"><b>Customer Inquiries</b></font>
 <br><br>
@@ -2976,7 +2999,7 @@ The detail of transactions can be inspected via one of two avenues:
 
 <!-- Help End: CustomerInquiry -->
 <br><br>
-<font size="+3"><b>Customers - Reporting</b></font>
+<a name="ARReports"><font size="+3"><b>Accounts Receivable Reports</b></font></a>
 <br><br>
 The system is designed for flexibility and to provide the framework of core functionality required to administer a debtors ledger system. The basic accounts receivable reports are available as standard since they are used by all businesses. However, since the database is open it is envisaged that the business will make use of ODBC drivers for database used and use Crystal Reports or Microsoft Access  or some other analysis software, where the user is on the same LAN as the server for specialised reports.
 <br><br> 
@@ -3050,7 +3073,7 @@ Two options are available - Print, produces a html page of the invoice (or credi
 
 <!-- Help Begin: SalesAnalRepts -->
 
-<font size="+3"><b>Sales Analysis</b></font>
+<a name="SalesAnalysis"><font size="+3"><b>Sales Analysis</b></font></a>
 <br><br>
 From the main menu under Accounts Receivable Reports and Inquiries options, "Sales Analysis Reports". A list of all previously defined sales reports shows with links to:
 <br><br>
@@ -3157,7 +3180,7 @@ A similar template script is available called MailSalesReport_csv.php that mails
 
 <!-- Help End: SalesAnalRepts -->
 <br><br>
-<font size="+3"><b><A NAME=Orders>Sales Orders</A></b></font>
+<a name="SalesOrders"><font size="+3"><b>Sales Orders</b></font></a>
 <br><br>
 <font size="+2"><b>Functionality</b></font>
 <br><br>
@@ -3250,7 +3273,7 @@ The orders displayed each show links to modify the line items, invoice the order
 
 <!-- Help Begin: Shipments -->
 
-<font size="+3"><b>Shipments</b></font>
+<a name="Shipments"><font size="+3"><b>Shipments</b></font></a>
 <br><br>
 The shipment costing system is meant for use in situations where there are substantial freight costs on purchased products and the business wishes to keep track of the actual cost of these items. Many smaller businesses do these calculations on spreadsheets outside the integrated system. The advantage of bringing them inside the system is that the possibility for updating standards and calculation of variances from standard at the time the costing is completed.
 <br><br>
@@ -3315,7 +3338,7 @@ Selecting a shipment is done from the select supplier screen. The shipments defi
 From the select Shipment screen, the link to close a shipment shows on all open shipments. Closing the shipment makes it impossible to post additional charges against it and also if general ledger stock integration is active, journals to take the variances from standard to the variance account and the GRN suspense are created. Closing a shipment also has an option to update the standard costs. By default this is set to yes. Again if stock GL integration is enabled (see company preferences) then the cost adjustment journals are posted in the same way as if the cost adjustment was processed separately.
 <!-- Help End: ShipmentCosting -->
 <br><br>
-<font size="+3"><b>General Ledger</b></font>
+<a name="GeneralLedger"><font size="+3"><b>General Ledger</b></font></a>
 <br><br>
 <font size="+2"><b>Overview</b></font>
 <br><br>
@@ -3703,7 +3726,7 @@ Some customers may also require the item code to be their item code, not the web
 <br><br>
 The script that creates the EDI invoices (EDISendInvoices.php) should be run automatically in the background as a scheduled task. It first gets a list of all customers who should receive EDI invoices (or credit notes) - as determined in the settings of their DebtorsMaster record. Then the script goes through each customer returned in turn to get any invoices or credits that have not already been sent. A flat file is created for all the customers invoices and credits and sent to the customer using the transport, address and other parameters defined in the customer edi setup page - recorded against their DebtorsMaster record. There is a link to enable the script to be run manually - the browser will also show the output of the EDI message.
 <!-- Help End: CustEDISetup --><br><br>
-<font size="+3"><b>Special Utilities</b></font>
+<a name="SpecialUtilities"><font size="+3"><b>Special Utilities</b></font></a>
 <br><br>
 Any of these programs should only be run by the individual in the business who is allocated the task of administering the system, who has a thorough understanding of the system. If in doubt seek advice. Many of these utilities perform major changes to the database and it is always advisable to have a backup before attempting to run one. All these utilities have a page security setting of 15 by default (see security schema).
 <br><br>
@@ -3732,7 +3755,7 @@ If the inventory database is imported from some other system, the stock location
 <font size="+2"><b>Repost General Ledger from Period</b></font>
 <br><br>
 This script Z_RePostGLFromPeriod.php clears the actual data in the table ChartDetails - that contains the movements in each GL account, the movements are then re-calculated by setting all GLTrans to unposted and re-running the posting of all these transactions. This is a desperate measure that should only be undertaken in an extreme situation. Maybe a corrupt database or system crash etc that caused an out of balance trial balance.<br><br>
-<font size="+3"><b>Developing New Scripts</b></font>
+<a name="NewScripts"><font size="+3"><b>Developing New Scripts</b></font></a>
 <br><br>
 <font size="+2"><b>Directory Structure</b></font>
 <br><br>
@@ -3789,7 +3812,7 @@ This script holds a number of functions for manipulating dates used throughout t
 This script has some common functions used throughout the system - in particular:
 <br><br>
 ReadInCompanyRecord - returns an array of all the company record information.<br><br>
-<font size="+3"><b>Contributors - Acknowledgements</b></font>
+<a name="Contributors"><font size="+3"><b>Contributors - Acknowledgements</b></font></a>
 <br><br>
 Sherif Omar - Kylitech Consulting - bug fixes, tidy of html, cascading style sheet mods.
 <br><br>

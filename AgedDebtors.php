@@ -2,11 +2,7 @@
 
 $PageSecurity = 2;
 
-/* $Revision: 1.4 $ */
-
-if (!isset($_POST['FromCust'])  OR $_POST['FromCust']=="" OR !isset($_GET['FromCust'])) {
-	$title=_('Aged Debtor Analysis');
-}
+/* $Revision: 1.5 $ */
 
 
 If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POST['FromCriteria'])>=1 AND isset($_POST['ToCriteria']) AND
@@ -264,6 +260,7 @@ strlen($_POST['ToCriteria'])>=1){
 } else { /*The option to print PDF was not hit */
 
 	include("includes/session.inc");
+	$title=_('Aged Debtor Analysis');
 	include("includes/header.inc");
 	include("includes/SQL_CommonFunctions.inc");
 

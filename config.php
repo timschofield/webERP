@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -24,7 +24,7 @@ if (!function_exists('_')){
 $Version = "0.2.9a";
 
 // The company name to appear in the headings on each page displayed
-$CompanyName = "Web-ERP Demo";
+$CompanyName = "WebERP Demo";
 
 
 // The default date format for entry of dates and display

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-24 18:42+1300\n"
+"POT-Creation-Date: 2004-10-30 17:49+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -159,49 +159,45 @@ msgstr ""
 msgid "Enter Information"
 msgstr ""
 
-#: AgedDebtors.php:8
-msgid "Aged Debtor Analysis"
-msgstr ""
-
-#: AgedDebtors.php:22
+#: AgedDebtors.php:18
 msgid "Aged Customer Balance Listing"
 msgstr ""
 
-#: AgedDebtors.php:23
+#: AgedDebtors.php:19
 msgid "Aged Customer Balances"
 msgstr ""
 
-#: AgedDebtors.php:108
+#: AgedDebtors.php:104
 msgid "Aged Customer Account Analysis - Problem Report.... "
 msgstr ""
 
-#: AgedDebtors.php:110 DebtorsAtPeriodEnd.php:56
+#: AgedDebtors.php:106 DebtorsAtPeriodEnd.php:56
 msgid "The customer details could not be retrieved by the SQL because"
 msgstr ""
 
-#: AgedDebtors.php:111 AgedDebtors.php:250 AgedSuppliers.php:83
+#: AgedDebtors.php:107 AgedDebtors.php:246 AgedSuppliers.php:83
 #: AgedSuppliers.php:152 BOMListing.php:48 DebtorsAtPeriodEnd.php:57
 #: SalesAnalysis_UserDefined.php:50 Tax.php:76 Tax.php:217
 #: includes/ConstructSQLForUserDefinedSalesReport.inc:150
 msgid "Back To The Menu"
 msgstr ""
 
-#: AgedDebtors.php:179 AgedDebtors.php:247
+#: AgedDebtors.php:175 AgedDebtors.php:243
 msgid "Aged Customer Account Analysis - Problem Report...."
 msgstr ""
 
-#: AgedDebtors.php:181
+#: AgedDebtors.php:177
 msgid "The details of outstanding transactions for customer"
 msgstr ""
 
-#: AgedDebtors.php:181 AgedSuppliers.php:151 GLAccountInquiry.php:98
+#: AgedDebtors.php:177 AgedSuppliers.php:151 GLAccountInquiry.php:98
 #: PO_Items.php:346 PO_Items.php:471 PO_Items.php:627
 #: StockLocTransferReceive.php:338 StockQuantityByDate.php:92
 #: includes/SelectOrderItems_IntoCart.inc:47
 msgid "could not be retrieved because"
 msgstr ""
 
-#: AgedDebtors.php:182 Credit_Invoice.php:186 InventoryValuation.php:127
+#: AgedDebtors.php:178 Credit_Invoice.php:186 InventoryValuation.php:127
 #: MailInventoryValuation.php:64 MailInventoryValuation.php:163
 #: PDFLowGP.php:53 PDFLowGP.php:102 PDFStockCheckComparison.php:27
 #: PDFStockCheckComparison.php:55 SalesAnalysis_UserDefined.php:32
@@ -211,58 +207,62 @@ msgstr ""
 msgid "Back to the menu"
 msgstr ""
 
-#: AgedDebtors.php:184 AgedSuppliers.php:154 ConfirmDispatch_Invoice.php:722
+#: AgedDebtors.php:180 AgedSuppliers.php:154 ConfirmDispatch_Invoice.php:722
 #: ConfirmDispatch_Invoice.php:735 Credit_Invoice.php:550
 #: Credit_Invoice.php:572 GLProfit_Loss.php:129 GLTrialBalance.php:126
 #: StockCostUpdate.php:64 includes/ConnectDB.inc:20 includes/GLPostings.inc:37
 msgid "The SQL that failed was:"
 msgstr ""
 
-#: AgedDebtors.php:249
+#: AgedDebtors.php:245
 msgid "There are no customers meeting the critiera specified to list"
 msgstr ""
 
-#: AgedDebtors.php:278
+#: AgedDebtors.php:263
+msgid "Aged Debtor Analysis"
+msgstr ""
+
+#: AgedDebtors.php:275
 msgid "From Customer Code:"
 msgstr ""
 
-#: AgedDebtors.php:279
+#: AgedDebtors.php:276
 msgid "To Customer Code:"
 msgstr ""
 
-#: AgedDebtors.php:281 AgedSuppliers.php:248
+#: AgedDebtors.php:278 AgedSuppliers.php:248
 msgid "All balances Or Overdues Only:"
 msgstr ""
 
-#: AgedDebtors.php:282
+#: AgedDebtors.php:279
 msgid "All Customers with Balances"
 msgstr ""
 
-#: AgedDebtors.php:283 AgedSuppliers.php:251
+#: AgedDebtors.php:280 AgedSuppliers.php:251
 msgid "Overdue Accounts Only"
 msgstr ""
 
-#: AgedDebtors.php:284
+#: AgedDebtors.php:281
 msgid "Held Accounts Only"
 msgstr ""
 
-#: AgedDebtors.php:289
+#: AgedDebtors.php:286
 msgid "Only Show Customers Trading in:"
 msgstr ""
 
-#: AgedDebtors.php:305 AgedSuppliers.php:269 InventoryValuation.php:186
+#: AgedDebtors.php:302 AgedSuppliers.php:269 InventoryValuation.php:186
 msgid "Summary or Detailed Report:"
 msgstr ""
 
-#: AgedDebtors.php:306 AgedSuppliers.php:271 InventoryValuation.php:187
+#: AgedDebtors.php:303 AgedSuppliers.php:271 InventoryValuation.php:187
 msgid "Summary Report"
 msgstr ""
 
-#: AgedDebtors.php:307 AgedSuppliers.php:272 InventoryValuation.php:188
+#: AgedDebtors.php:304 AgedSuppliers.php:272 InventoryValuation.php:188
 msgid "Detailed Report"
 msgstr ""
 
-#: AgedDebtors.php:310 AgedSuppliers.php:275 BOMListing.php:136
+#: AgedDebtors.php:307 AgedSuppliers.php:275 BOMListing.php:136
 #: DebtorsAtPeriodEnd.php:150 InventoryValuation.php:191
 #: PDFCustomerList.php:403 PDFPriceList.php:246
 #: PDFStockCheckComparison.php:369 SupplierBalsAtPeriodEnd.php:149 Tax.php:476
@@ -2471,7 +2471,7 @@ msgstr ""
 msgid "Customer Name"
 msgstr ""
 
-#: CustomerTransInquiry.php:3
+#: CustomerTransInquiry.php:7
 msgid "Customer Transactions Inquiry"
 msgstr ""
 
@@ -3364,7 +3364,7 @@ msgid "No orders were returned because"
 msgstr ""
 
 #: FTP_RadioBeacon.php:60 PO_SelectOSPurchOrder.php:306
-#: SelectSalesOrder.php:357 UserSettings.php:111
+#: SelectSalesOrder.php:357
 msgid "Modify"
 msgstr ""
 
@@ -9123,45 +9123,51 @@ msgid ""
 "the same tax authority that the tax rate will be other than 0%"
 msgstr ""
 
-#: UserSettings.php:7
-msgid "User Settings"
-msgstr ""
-
 #: UserSettings.php:20
 msgid ""
 "The Maximum Number of Records on Display entered must not be negative.  0 "
 "will default to system setting"
 msgstr ""
 
-#: UserSettings.php:32 WWW_Users.php:120
+#: UserSettings.php:25 UserSettings.php:33
+msgid "Sorry the passwords you entered do not match"
+msgstr ""
+
+#: UserSettings.php:51 UserSettings.php:67 WWW_Users.php:120
 msgid "The user alterations could not be processed because"
 msgstr ""
 
-#: UserSettings.php:33 WWW_Users.php:121
+#: UserSettings.php:52 UserSettings.php:68 WWW_Users.php:121
 msgid "The SQL that was used to update the user and failed was"
 msgstr ""
 
-#: UserSettings.php:38
+#: UserSettings.php:57
+msgid ""
+"The user settings have been updated.  Be Sure to Remeber your Password for "
+"the next time you LogIn!"
+msgstr ""
+
+#: UserSettings.php:73
 msgid "The user settings have been updated."
 msgstr ""
 
-#: UserSettings.php:57
+#: UserSettings.php:92
 msgid "User ID:"
 msgstr ""
 
-#: UserSettings.php:60
+#: UserSettings.php:95
 msgid "User Name:"
 msgstr ""
 
-#: UserSettings.php:64
+#: UserSettings.php:99
 msgid "Maximum Number of Records to Display:"
 msgstr ""
 
-#: UserSettings.php:68
+#: UserSettings.php:103
 msgid "Language:"
 msgstr ""
 
-#: UserSettings.php:90
+#: UserSettings.php:125
 msgid "Theme:"
 msgstr ""
 

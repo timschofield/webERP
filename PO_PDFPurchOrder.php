@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 include("includes/SQL_CommonFunctions.inc");
 include("includes/DateFunctions.inc");
 
@@ -39,7 +39,7 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 	include("config.php");
 	include("includes/ConnectDB.inc");
 
-	$PageSize = 'A4_Landscape';
+	$PaperSize = 'A4_Landscape';
 
 	include("includes/PDFStarter_ros.inc");
 
