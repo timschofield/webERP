@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity=1;
 
@@ -19,6 +19,14 @@ if (isset($_POST['Modify'])) {
 		$InputError = 1;
 		prnMsg(_('The Maximum Number of Records on Display entered must not be negative') . '. ' . _('0 will default to system setting'),'error');
 	}
+
+	//!!!for the demo only - enable this check so password is not changed
+ /*
+	if ($_POST['pass'] != ''){
+		$InputError = 1;
+		prnMsg(_('Cannot change password in the demo or others would be locked out!'),'warn');
+	}
+ */
 	if ($_POST['pass'] != ''){
 		if ($_POST['pass'] != $_POST['passcheck']){
 			$InputError = 1;

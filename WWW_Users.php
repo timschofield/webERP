@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -36,6 +36,13 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('If you enter a Customer Code you must also enter a Branch Code valid for this Customer'),'error');
 	}
+	//comment out except for demo!  Do not want anyone modifying demo user.
+	/*
+	  elseif ($_POST['UserID'] == 'demo') {
+		prnMsg(_('The demonstration user called demo cannot be modified.','error'));
+		$InputError = 1;
+	}
+	*/
 
 	if ((strlen($_POST['BranchCode'])>0) AND ($InputError !=1)) {
 		// check that the entered branch is valid for the customer code
@@ -139,9 +146,18 @@ if (isset($_POST['submit'])) {
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
-	$sql="DELETE FROM WWW_Users WHERE UserID='$SelectedUser'";
-	$ErrMsg = _('The User could not be deleted because');;
-	$result = DB_query($sql,$db,$ErrMsg);
+	// comment out except for demo!  Do not want anyopne deleting demo user.
+	/*
+	if ($SelectedUser == 'demo') {
+		prnMsg(_('The demonstration user called demo cannot be deleted.','error'));
+	} else {
+	*/
+
+		$sql="DELETE FROM WWW_Users WHERE UserID='$SelectedUser'";
+		$ErrMsg = _('The User could not be deleted because');;
+		$result = DB_query($sql,$db,$ErrMsg);
+
+	// }
 
 	prnMsg(_('User Deleted'),'info');
 	unset($SelectedUser);
