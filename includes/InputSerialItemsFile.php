@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -41,7 +41,7 @@ foreach ($LineItem->SerialItems as $Bundle){
 			$k=1;
 		}
 
-		echo "<TD>" . $Bundle->BundleRef . "</TD>";
+		echo '<TD>' . $Bundle->BundleRef . '</TD>';
 
 		if ($LineItem->Serialised==0){
 			echo '<TD ALIGN=RIGHT>' . number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</TD>';
@@ -67,11 +67,12 @@ echo '</TABLE><HR>';
 
 //DISPLAY FILE INFO
 // do some inits & error checks...
-        if (!isset($_SESSION['CurImportFile'])){
-                $_SESSION['CurImportFile'] = "";
+$ShowFileInfo = false;
+        if (!isset($_SESSION['CurImportFile']) ){
+                $_SESSION['CurImportFile'] = '';
                 $LineItem->SerialItemsValid=false;
         }
-        if ($_FILES['ImportFile']['name'] == "" && $_SESSION['CurImportFile'] == ""){
+        if ($_FILES['ImportFile']['name'] == '' && $_SESSION['CurImportFile'] == ''){
                 $msg = _('Please Choose a file and then click "Set Entry Type" to upload a file for import');
 		prnMsg($msg);
                 $LineItem->SerialItemsValid=false;
@@ -87,7 +88,7 @@ echo '</TABLE><HR>';
                 $LineItem->SerialItemsValid=false;
                 include('includes/footer.inc');
                 exit();
-        } elseif ($_FILES['ImportFile']['name']!=""){
+        } elseif ($_FILES['ImportFile']['name']!=''){
                 //User has uploaded importfile. reset items, then just 'get hold' of it for later.
 
                 //foreach($_FILES['ImportFile'] as $k=>$v){
@@ -95,8 +96,9 @@ echo '</TABLE><HR>';
                 //}
                 $LineItem->SerialItems=array();
                 $LineItem->SerialItemsValid=false;
+                $_SESSION['CurImportFile']['Processed']=false;
 	        $_SESSION['CurImportFile'] = $_FILES['ImportFile'];
-		$_SESSION['CurImportFile']['tmp_name'] = $LineItem->StockID."_".$LineNo."PO-RcvGoods";
+		$_SESSION['CurImportFile']['tmp_name'] = './reports/'.$LineItem->StockID.'_'.$LineNo.'_'.uniqid(4);
                 if (!move_uploaded_file($_FILES['ImportFile']['tmp_name'],$_SESSION['CurImportFile']['tmp_name'])){
                         pErrMsg('<br />'._('Error Moving temporary file!!! Please check your configuration') );
                         $LineItem->SerialItemsValid=false;
@@ -104,64 +106,69 @@ echo '</TABLE><HR>';
 			exit;
                 }
 
-                if ($_FILES['ImportFile']['name']!=""){
+                if ($_FILES['ImportFile']['name']!=''){
                         echo _('Successfully received').':<br>';
+			$ShowFileInfo = true;
                 }
-        } elseif (isset($_SESSION['CurImportFile']) && !isset($_POST['ValidateFile'])) {
+        } elseif (isset($_SESSION['CurImportFile']) && $_SESSION['CurImportFile']['Processed'] ) {
                 //file exists, some action performed...
                 echo _('Working with'). ':<br>';
-        }
-
-
-/********************************************
-  Display file info for visual verification
-********************************************/
-	echo '<TABLE>';
-	echo '<tr><td>'._('Name').':</td><td>'.$_SESSION['CurImportFile']['name'].'</td></tr>
-        <tr><td>'. _('Size') .':</td><td>' . number_format($_SESSION['CurImportFile']['size']/1024,4) . 'kb</td></tr>
-        <tr><td>'. _('Type') .':</td><td>' . $_SESSION['CurImportFile']['type'] . '</td></tr>
-        <tr><td>'. _('TempName') .':</td><td>' . $_SESSION['CurImportFile']['tmp_name'] . '</td></tr>
-       <tr><td>'. _('Status') .':</td><td>' . 
-	($LineItem->SerialItemsValid?getMsg(_('Valid'),'success'):getMsg(_('Invalid'),'error')) . '</td></tr>
-       </TABLE>'.
-        $invalid_imports.' '. _('out of') .' '.$TotalLines.' '. _('records are invalid').'<br>';
-	$filename = $_SESSION['CurImportFile']['tmp_name'];
-
-if (!$LineItem->SerialItemsValid){
-        // IF all items are not valid, show the raw first 10 lines of the file. maybe it will help.
-
-        $handle = fopen($filename, 'r');
-        $i=0;
-        while (!feof($handle) && $i < 10) {
-                $contents .= fgets($handle, 4096);
-                $i++;
-        }
-        fclose($handle);
-
-	echo '<br>
-        <input type=submit name=ValidateFile value=ValidateFile>
-        <input type=hidden name=LineNo value=' . $LineNo . '>
-        <input type=hidden name=EntryType value=' . $_POST['EntryType'] .'>
-        </form>
-        <p>1st 10 Lines of File....
-        <hr width=15%>
-
-	<pre>';
-
-	echo $contents;
-
-	echo '</pre>';
-
-} else {
-        //Otherwise we have all valid records. show the first (100)  for visual verification.
-	echo 'Below are the 1st 100 records as parsed<hr width=20%>';
-	foreach($LineItem->SerialItems as $SItem){
-		echo $SItem->BundleRef."<br>";
-		$i++;
-		if ($i == 100) {
-			break;
-                }
+		$ShowFileInfo = true;
+	} elseif ($LineItem->SerialItemsValid && $_SESSION['CurImportFile']['Processed']){
+		$ShowInfo = true;
 	}
-}
+	if ($ShowFileInfo){
+		/********************************************
+		  Display file info for visual verification
+		********************************************/
+		echo '<TABLE>';
+		echo '<tr><td>'._('Name').':</td><td>'.$_SESSION['CurImportFile']['name'].'</td></tr>
+	        <tr><td>'. _('Size') .':</td><td>' . number_format($_SESSION['CurImportFile']['size']/1024,4) . 'kb</td></tr>
+	        <tr><td>'. _('Type') .':</td><td>' . $_SESSION['CurImportFile']['type'] . '</td></tr>
+	        <tr><td>'. _('TempName') .':</td><td>' . $_SESSION['CurImportFile']['tmp_name'] . '</td></tr>
+	       <tr><td>'. _('Status') .':</td><td>' . 
+		($LineItem->SerialItemsValid?getMsg(_('Valid'),'success'):getMsg(_('Invalid'),'error')) . '</td></tr>
+	       </TABLE>'.
+	        $invalid_imports.' '. _('out of') .' '.$TotalLines.' '. _('records are invalid').'<br>';
+		$filename = $_SESSION['CurImportFile']['tmp_name'];
+	}  
+
+	if (!$LineItem->SerialItemsValid && !$_SESSION['CurImportFile']['Processed']){
+	        // IF all items are not valid, show the raw first 10 lines of the file. maybe it will help.
+		$filename = $_SESSION['CurImportFile']['tmp_name'];
+	        $handle = fopen($filename, 'r');
+	        $i=0;
+	        while (!feof($handle) && $i < 10) {
+	                $contents .= fgets($handle, 4096);
+	                $i++;
+	        }
+	        fclose($handle);
+	
+		echo '<br><form method=POST>
+		        <input type=submit name=ValidateFile value=ValidateFile>
+		        <input type=hidden name=LineNo value="' . $LineNo . '">
+		        <input type=hidden name=StockID value="' . $StockID . '">
+		        <input type=hidden name=EntryType value="FILE">
+		        </form>
+		        <p>'. _('1st 10 Lines of File'). '....
+		        <hr width=15%>
+			<pre>';
+
+		echo $contents;
+
+		echo '</pre>';
+
+	} else {
+	        //Otherwise we have all valid records. show the first (100)  for visual verification.
+		echo _('Below are the 1st 100 records as parsed');
+		echo '<hr width=20%>';
+		foreach($LineItem->SerialItems as $SItem){
+			echo $SItem->BundleRef.'<br>';
+			$i++;
+			if ($i == 100) {
+				break;
+	                }
+		}
+	}
 
 ?>

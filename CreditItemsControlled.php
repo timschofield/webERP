@@ -1,19 +1,20 @@
 <?php
-/* $Revision: 1.2 $ */
-$title = "Specifiy Credited Controlled Items";
+/* $Revision: 1.3 $ */
+include('includes/DefineCartClass.php');
+include('includes/DefineSerialItems.php');
+
+$title = _('Specifiy Credited Controlled Items');
 $PageSecurity = 3;
+include('includes/session.inc');
 
 /* Session started in header.inc for password checking and authorisation level check */
-include("includes/DefineCartClass.php");
-include("includes/DefineSerialItems.php");
-include("includes/session.inc");
-include("includes/header.inc");
+include('includes/header.inc');
 
 
-if ($_GET['CreditInvoice']=="Yes" OR $_POST['CreditInvoice']=="Yes"){
-	$CreditLink = "Credit_Invoice.php";
+if ($_GET['CreditInvoice']=='Yes' OR $_POST['CreditInvoice']=='Yes'){
+	$CreditLink = 'Credit_Invoice.php';
 } else {
-	$CreditLink = "SelectCreditItems.php";
+	$CreditLink = 'SelectCreditItems.php';
 }
 
 
@@ -22,10 +23,11 @@ if (isset($_GET['StockID'])){
 } elseif (isset($_POST['StockID'])){
 	$StockID = $_POST['StockID'];
 } else {
-	echo "<CENTER><A HREF='" . $rootpath . "/" . $CreditLink . "?" . SID . "'>Select Credit Items</A><br>";
-	echo "<BR><B>Error:</B>This page can only be opened if a Line Item on a credit note has been selected. Please do that first.<BR>";
-	echo "</CENTER>";
-	include("includes/footer.inc");
+	echo '<CENTER><A HREF="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Select Credit Items'). '</A><BR>';
+	echo '<BR>';
+	prnMsg( _('This page can only be opened if a Line Item on a credit note has been selected. Please do that first') . '.<BR>', 'error');
+	echo '</CENTER>';
+	include('includes/footer.inc');
 	exit;
 }
 
@@ -33,10 +35,11 @@ if (isset($_GET['StockID'])){
 
 if (!isset($_SESSION['CreditItems'])) {
 	/* This page can only be called with a credit note entry part entered */
-	echo "<CENTER><A HREF='" . $rootpath . "/" . $CreditLink . "?" . SID . "'>Select items to credit</A><<br>";
-	prnMsg("This page can only be opened if a controlled credit note line item has been selected. Please do that first.<BR>","error");
-	echo "</CENTER>";
-	include("includes/footer.inc");
+	echo '<CENTER><A HREF="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Select Credit Items'). '</A><BR>';
+	echo '<BR>';
+	prnMsg( ('This page can only be opened if a controlled credit note line item has been selected. Please do that first'). '.<BR>','error');
+	echo '</CENTER>';
+	include('includes/footer.inc');
 	exit;
 }
 
@@ -46,9 +49,10 @@ $LineItem = &$_SESSION['CreditItems']->LineItems[$StockID];
 
 //Make sure this item is really controlled
 if ( $LineItem->Controlled != 1 ){
-	echo "<CENTER><A HREF='" . $rootpath . "/" . $CreditLink . "?" . SID . "'>Back to The Credit note entry</A></CENTER>";
-	prnMsg("<BR>Notice - The line item must be defined as controlled to require input of the batch numbers or serial numbers being credited","error");
-	include("includes/footer.inc");
+	echo '<CENTER><A HREF="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Back To Credit Note Entry').'</A></CENTER>';
+	echo '<BR>';
+	prnMsg( _('Notice - The line item must be defined as controlled to require input of the batch numbers or serial numbers being credited'),'error');
+	include('includes/footer.inc');
 	exit;
 }
 
@@ -74,39 +78,38 @@ if (isset($_GET['Delete'])){
 }
 
 
-echo "<CENTER><FORM METHOD='POST' ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "'>";
+echo '<CENTER><FORM METHOD="POST" ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 
-echo "<INPUT TYPE=HIDDEN NAME='StockID' VALUE=$StockID>";
+echo '<INPUT TYPE=HIDDEN NAME="StockID" VALUE="'.$StockID.'">';
 
-if ($CreditLink == "Credit_Invoice.php"){
-	echo "<INPUT TYPE=HIDDEN NAME='CreditInvoice' VALUE=Yes>";
+if ($CreditLink == 'Credit_Invoice.php'){
+	echo '<INPUT TYPE=HIDDEN NAME="CreditInvoice" VALUE="Yes">';
 }
 
-echo "<br><a href='" . $rootpath . "/" . $CreditLink . "?" . SID . "'>Back To Credit Note Entry</a>";
+echo '<br><a href="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Back To Credit Note Entry'). '</a>';
 
-echo "<br><FONT SIZE=2><B>Credit of Controlled Item " . $LineItem->StockID  . " - " . $LineItem->ItemDescription . " from " . $_SESSION['Items']->CustomerName . "</B></FONT>";
+echo '<br><FONT SIZE=2><B>'. _('Credit of Controlled Item'). ' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' '. _('from') .' '. $_SESSION['Items']->CustomerName . '</B></FONT>';
 
+/** vars needed by InputSerialItem : **/
+$LocationOut = $_SESSION['Transfer']->StockLocationFrom;
+/* $CreditingControlledItems_MustExist is in config.php - Phil and Jesse disagree on the default treatment
+compromise position make it user configurable */
+$ItemMustExist = $CreditingControlledItems_MustExist;
+$StockID = $LineItem->StockID;
+$InOutModifier=1;
+$ShowExisting = false;
+include ('includes/InputSerialItems.php');
 
-
-include ("includes/InputSerialItems.php");
-
-echo "</TR></TABLE>";
+echo '</TR></TABLE>';
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for dispatch */
-if ($CreditLink == "Credit_Invoice.php"){
+if ($CreditLink == 'Credit_Invoice.php'){
 	$_SESSION['CreditItems']->LineItems[$StockID]->QtyDispatched = $TotalQuantity;
 } else {
 	$_SESSION['CreditItems']->LineItems[$StockID]->Quantity = $TotalQuantity;
 }
 
-echo "<br><INPUT TYPE=SUBMIT NAME='AddBatches' VALUE='Enter'><BR>";
-
-
-
-include("includes/footer.inc");
+include('includes/footer.inc');
 exit;
-
-
 ?>
-

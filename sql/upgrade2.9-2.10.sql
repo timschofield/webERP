@@ -62,4 +62,8 @@ VALUES ('162', 'UserSettings.php', 'Allows the user to change system wide defaul
 INSERT INTO `Scripts` ( `PageID` , `FileName` , `PageDescription` )
 VALUES ('163', 'StockQuantityByDate.php', 'Shows the stock on hand for each item at a selected location and stock category as at a specified date');
 
+ALTER TABLE `TaxAuthorities` CHANGE `TaxID` `TaxID` TINYINT( 4 ) NOT NULL AUTO_INCREMENT;
+INSERT INTO `Scripts` ( `PageID` , `FileName` , `PageDescription` )
+VALUES ('164', 'Tax.php', 'Creates a report of the ad-valoerm tax - GST/VAT - for the period selected from accounts payable and accounts receivable data');
+
 COMMIT;

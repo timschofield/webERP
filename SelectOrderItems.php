@@ -1,17 +1,20 @@
 <?php
-/* $Revision: 1.14 $ */
-if (isset($_GET['ModifyOrderNumber'])) {
-	$title = "Modifying Order " . $_GET['ModifyOrderNumber'];
-} else {
-	$title = "Select Order Items";
-}
+/* $Revision: 1.15 $ */
 
 require("includes/DefineCartClass.php");
 
 $PageSecurity = 1;
 
-/* Session started in header.inc for password checking and authorisation level check */
+/* Session started in session.inc for password checking and authorisation level check
+config.php is in turn included in session.inc*/
 include("includes/session.inc");
+
+if (isset($_GET['ModifyOrderNumber'])) {
+	$title = _('Modifying Order') .' ' . $_GET['ModifyOrderNumber'];
+} else {
+	$title = _('Select Order Items');
+}
+
 include("includes/header.inc");
 include("includes/DateFunctions.inc");
 include("includes/GetPrice.inc");
@@ -1056,7 +1059,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 	} /*end of PartSearch options to be displayed */
 	   else { /* show the quick entry form variable */
 		  /*FORM VARIABLES TO POST TO THE ORDER 8 AT A TIME WITH PART CODE AND QUANTITY */
-	     echo "<FONT SIZE=4 COLOR=BLUE><B>Quick Entry</B></FONT><BR><CENTER>
+	     echo "<BR><CENTER><FONT SIZE=4 COLOR=BLUE><B>Quick Entry</B></FONT><BR>
 	     	<TABLE BORDER=1>
 		<TR>
 		<TD class='tableheader'>Part Code</TD>

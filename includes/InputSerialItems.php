@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -7,16 +7,16 @@ for controlled items - used in:
 - StockAdjustments.php
 - StockTransfers.php
 - CreditItemsControlled.php
-
 */
-/*Setup the Data Entry Types */
 
+include ('includes/Add_SerialItems.php');
+
+/*Setup the Data Entry Types */
 if (isset($_GET['LineNo'])){
 	$LineNo = $_GET['LineNo'];
 } elseif (isset($_POST['LineNo'])){
 	$LineNo = $_POST['LineNo'];
 }
-
 /*
         Entry Types:
              Keyed Mode: 'Qty' Rows of Input Fields. Upto X shown per page (100 max)
@@ -46,32 +46,32 @@ $valid = true;
 
 echo '<FORM METHOD="POST" ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" enctype="multipart/form-data" >';
 echo '<INPUT TYPE=HIDDEN NAME="LineNo" VALUE=' . $LineNo . '>';
-
+echo "<INPUT TYPE=HIDDEN NAME='StockID' VALUE=$StockID>";
 echo '<CENTER><TABLE BORDER=1><TR><TD>';
 echo '<input type=radio name=EntryType ';
 if ($_POST['EntryType']=='KEYED') {
 	echo ' checked ';
 }
-echo 'value="KEYED" valign=texttop>'. _('Keyed Entry');
-echo '</TD><TD>';
-echo '<input type=radio name=EntryType';
-if ($_POST['EntryType']=='BARCODE') {
-	echo ' checked ';
-}
-echo ' value="BARCODE">'. _('Barcode Entry');
-echo '</TD><TD>';
+echo 'value="KEYED">'. _('Keyed Entry');
+echo '</TD>';
+echo '<TD valign=bottom>';
 echo '<input type=radio name=EntryType';
 if ($_POST['EntryType']=='FILE') {
 	echo ' checked ';
 }
 echo ' value="FILE">'. _('File Upload');
-echo '<input type=file name="ImportFile">';
+echo '&nbsp; <input type=file name="ImportFile">';
 echo '</TD></TR><TR><TD ALIGN=CENTER COLSPAN=3>';
 echo '<input type=submit value="'. _('Set Entry Type'). ':">';
 echo '</TD></TR></TABLE>';
+echo '</FORM>';
 
 global $tableheader;
-
+/* Link to clear the list and start from scratch */
+$EditLink =  '<br><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . 'EditControlled=true&StockID=' . $LineItem->StockID .
+	'&LineNo=' . $LineNo .'">'. _('Edit'). '</a> | ';
+$RemoveLink = '<A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . 'DELETEALL=YES&StockID=' . $LineItem->StockID .
+	'&LineNo=' . $LineNo .'">'. _('Remove All'). '</a><br>';
 if ($LineItem->Serialised==1){
 	$tableheader .= '<TR>
 			<TD class=tableheader>'. _('Serial No').'</TD>
@@ -83,12 +83,16 @@ if ($LineItem->Serialised==1){
 			</TR>';
 }
 
-/* Link to clear the list and start from scratch */
-echo "<br><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "DELETEALL=YES&StockID=" . $LineItem->StockID . "&LineNo=" . $LineNo ."'>Remove All</a><br>";
-
+echo $EditLink . $RemoveLink;
+echo '<TABLE><TR>';
 if ($_POST['EntryType'] == 'FILE'){
+	echo '<TD>';
 	include('includes/InputSerialItemsFile.php');
+	echo '</TD>';
 } else { /*KEYED or BARCODE */
+	echo '<TD>';
 	include('includes/InputSerialItemsKeyed.php');
+	echo '</TD>';
 }
+echo '</TR></TABLE>';
 ?>

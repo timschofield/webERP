@@ -1,36 +1,40 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $db = mysql_connect($host , $dbuser, $dbpassword);
 mysql_select_db($DatabaseName,$db);
 
-require_once ("includes/MiscFunctions.php");
+require_once ('includes/MiscFunctions.php');
 
 //DB wrapper functions to change only once for whole application
 
 function DB_query ($SQL,
 		&$Conn,
 		$ErrorMessage='',
-		$DebugMessage='The SQL that failed was:',
+		$DebugMessage= '',
 		$Transaction=false,
 		$TrapErrors=true){
 
 	global $debug;
 	$result=mysql_query($SQL,$Conn);
-
-	if (DB_error_no($Conn) != 0 AND $TrapErrors){
-		prnMsg($ErrorMessage. '<BR>' . DB_error_msg($Conn),'error');
+	if ($DebugMessage == '') {
+		$DebugMessage = _('The SQL that failed was:');
+	}
+	if (DB_error_no($Conn) != 0){
+		prnMsg($ErrorMessage.'<BR>' . DB_error_msg($Conn),'error', _('DB ERROR:'));
 		if ($debug==1){
-			echo "<BR>" . $DebugMessage."<BR>$SQL<BR>";
+			echo '<BR>' . $DebugMessage.'<BR>$SQL<BR>';
 		}
 		if ($Transaction){
-			$SQL = "rollback";
+			$SQL = 'rollback';
 			$Result = DB_query($SQL,$Conn);
 			if (DB_error_no($Conn) !=0){
-				prnErrMsg('<BR>' . _('Error Rolling Back Transaction!!'));
+				prnMsg('<br />'.  _('Error Rolling Back Transaction!!'), '', _('DB DEBUG:') );
 			}
 		}
-		include("includes/footer.inc");
-		exit;
+		if ($TrapErrors){
+			include('includes/footer.inc');
+			exit;
+		}
 	}
 	return $result;
 

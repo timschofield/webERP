@@ -5,33 +5,33 @@
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
 /********************************************/
 
-function prnMsg($msg,$type="info", $prefix=""){
+function prnMsg($msg,$type='info', $prefix=''){
 
 	echo getMsg($msg, $type, $prefix);
 
 }//prnMsg
 
-function getMsg($msg,$type="info",$prefix=""){
+function getMsg($msg,$type='info',$prefix=''){
 	$Colour='';
 	switch($type){
-		case "error":
+		case 'error':
 			$Colour='red';
-			$prefix = _('ERROR Message Report');
+			$prefix = $prefix ? $prefix : _('ERROR Message Report');
 			break;
-		case "warn":
+		case 'warn':
 			$Colour='maroon';
-			$prefix = _('WARNING Message Report');
+			$prefix = $prefix ? $prefix : _('WARNING Message Report');
 			break;
-		case "success":
+		case 'success':
 			$Colour='#336600';
-			$prefix = _('Success Report');
+			$prefix = $prefix ? $prefix : _('Success Report');
 			break;
-		case "info":
+		case 'info':
 		default:
-			$prefix = _('INFORMATION Message');
+			$prefix = $prefix ? $prefix : _('INFORMATION Message');
 			$Colour='navy';
 	}
-	return "<P><TABLE><TR><TD><font color=" . $Colour . "><b>" . $prefix . "</b> : " .$msg . "</font></TD></TR></TABLE>";
+	return '<font color="' . $Colour . '"><b>' . $prefix . '</b> : ' .$msg . '</font>';
 }//getMsg
 
 ?>

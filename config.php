@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -36,7 +36,7 @@ $DefaultDateFormat = "d/m/Y";
 // $host is the computer ip address or name where the database is located
 // assuming that the web server is also the sql server
 $host = "localhost";
-$DatabaseName = "testsys";
+$DatabaseName = "weberp";
 
 // sql user & password
 $dbuser = "weberp_db_user";
@@ -75,7 +75,14 @@ $DispatchCutOffTime = 14;
 
 
 /*determines whether or not to allow sales orders to be entered for purchased or manufactured items that have no cost set up */
+
 $AllowSalesOfZeroCostItems = false;
+
+
+/*determines whether or not the batch/lot/serial number must have existed previously before it can be credited
+eg. If this variable is set to true Batch number 123456 cannot be credited into stock if there was no prior booking in
+of this batch through a purchase order delivery or stock adjustment in*/
+$CreditingControlledItems_MustExist = false;
 
 
 /*The price list to use if no price defined in the customers normal price list */
