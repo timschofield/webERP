@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 /*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen while the user is selecting the criteria the system is posting any unposted transactions */
 
@@ -127,7 +127,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 			ChartMaster.AccountName
 		ORDER BY AccountGroups.SectionInAccounts, AccountGroups.SequenceInTB, ChartDetails.AccountCode';
 
-	$AccountsResult = DB_query($SQL,$db,'<BR>'._('No general ledger accounts were returned by the SQL because'),_('The SQL that failed was'));
+	$AccountsResult = DB_query($SQL,$db,_('No general ledger accounts were returned by the SQL because'),_('The SQL that failed was'));
 
 	echo '<CENTER><FONT SIZE=4 COLOR=BLUE><B>' . _('Statement of Profit and Loss for the'). ' ' . $NumberOfMonths . ' ' . _('months to'). ' ' . $PeriodToDate . '</B></FONT><BR>';
 
@@ -383,7 +383,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 				$k++;
 			}
 
-			$ActEnquiryURL = "<A HREF='$rootpath/GLAccountInquiry.php?" . SID . 'Period=' . $_POST['ToPeriod'] . '&Account=' . $myrow['AccountCode'] . "&Show=Yes'>" . $myrow['AccountCode'] . '<A>';
+			$ActEnquiryURL = "<A HREF='$rootpath/GLAccountInquiry.php?" . SID . '&Period=' . $_POST['ToPeriod'] . '&Account=' . $myrow['AccountCode'] . "&Show=Yes'>" . $myrow['AccountCode'] . '<A>';
 
 			if ($Section ==1){
 				$PrintString = '<td>%s</td>

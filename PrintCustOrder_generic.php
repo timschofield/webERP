@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -73,9 +73,9 @@ if (DB_num_rows($result)==0){
                 prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
                         _('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($myrow['DatePackingSlipPrinted']) .
                         '<br>' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
-              echo '<P><A HREF="' . $rootpath . '/PrintCustOrder.php?' . SID . 'TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'
+              echo '<P><A HREF="' . $rootpath . '/PrintCustOrder.php?' . SID . '&TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'
                 . _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</A><P>' .
-                '<A HREF="' . $rootpath. '/PrintCustOrder_generic.php?' . SID . 'TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'. _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</A>';
+                '<A HREF="' . $rootpath. '/PrintCustOrder_generic.php?' . SID . '&TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'. _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</A>';
 
                 echo '<BR><BR><BR>';
                 echo  _('Or select another Order Number to Print');

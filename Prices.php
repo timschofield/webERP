@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 2;
 
@@ -173,8 +173,8 @@ if ($InputError ==0){
 			printf("<td>%s</td>
 			        <td>%s</td>
 				<td ALIGN=RIGHT>%0.2f</td>
-				<td><a href='%s?%sItem=%s&TypeAbbrev=%s&CurrAbrev=%s&Price=%s&Edit=1'>" . _('Edit') . "</td>
-				<td><a href='%s?%sItem=%s&TypeAbbrev=%s&CurrAbrev=%s&delete=yes'>" . _('Delete') . "</td></tr>",
+				<td><a href='%s?%s&Item=%s&TypeAbbrev=%s&CurrAbrev=%s&Price=%s&Edit=1'>" . _('Edit') . "</td>
+				<td><a href='%s?%s&Item=%s&TypeAbbrev=%s&CurrAbrev=%s&delete=yes'>" . _('Delete') . "</td></tr>",
 				$myrow['Currency'],
 				$myrow['Sales_Type'],
 				$myrow['Price'],

@@ -33,7 +33,7 @@ if(isset($_POST['ProcessTransfer'])){
 		/*Update the quantity received from the inputs */
 			$_SESSION['Transfer']->TransferItem[$i]->Quantity= $_POST['Qty' . $i];
   		} else {
-			prnMsg(_('The quantity entered for'). ' ' . $TrfLine->StockID . ' '. _('is not numeric') . '. ' . -('All quantities must be numeric'),'error');
+			prnMsg(_('The quantity entered for'). ' ' . $TrfLine->StockID . ' '. _('is not numeric') . '. ' . _('All quantities must be numeric'),'error');
 			$InputError = True;
 		}
 		if ($_POST['Qty' . $i]<0){
@@ -409,7 +409,7 @@ if (isset($_SESSION['Transfer'])){
                 echo '<td ALIGN=RIGHT>' . number_format($TrfLine->PrevRecvQty, $TrfLine->DecimalPlaces) . '</TD>';
 
 		if ($TrfLine->Controlled==1){
-			echo '<TD ALIGN=RIGHT><INPUT TYPE=HIDDEN NAME="Qty' . $i . '" VALUE="' . $Qty . '"><A HREF="' . $rootpath .'/StockTransferControlled.php?' . SID . 'TransferItem=' . $i . '">' . $Qty . '</A></td>';
+			echo '<TD ALIGN=RIGHT><INPUT TYPE=HIDDEN NAME="Qty' . $i . '" VALUE="' . $Qty . '"><A HREF="' . $rootpath .'/StockTransferControlled.php?' . SID . '&TransferItem=' . $i . '">' . $Qty . '</A></td>';
 		} else {
 			echo '<TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME="Qty' . $i . '" MAXLENGTH=10 SIZE=10 VALUE="' . $Qty . '"></td>';
 		}
@@ -418,9 +418,9 @@ if (isset($_SESSION['Transfer'])){
 
 		if ($TrfLine->Controlled==1){
 			if ($TrfLine->Serialised==1){
-				echo '<TD><A HREF="' . $rootpath .'/StockTransferControlled.php?' . SID . 'TransferItem=' . $i . '">' . _('Enter Serial Numbers') . '</A></td>';
+				echo '<TD><A HREF="' . $rootpath .'/StockTransferControlled.php?' . SID . '&TransferItem=' . $i . '">' . _('Enter Serial Numbers') . '</A></td>';
 			} else {
-				echo '<TD><A HREF="' . $rootpath .'/StockTransferControlled.php?' . SID . 'TransferItem=' . $i . '">' . _('Enter Batch Refs') . '</A></td>';
+				echo '<TD><A HREF="' . $rootpath .'/StockTransferControlled.php?' . SID . '&TransferItem=' . $i . '">' . _('Enter Batch Refs') . '</A></td>';
 			}
 		}
 

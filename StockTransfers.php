@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
 
@@ -197,7 +197,7 @@ if ( isset($_POST['EnterTransfer']) ){
 						AND LocCode='" . $_SESSION['Transfer']->StockLocationFrom . "'
 						AND SerialNo='" . $Item->BundleRef . "'";
 
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . -('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
 					$DbgMsg = _('The following SQL to update the serial stock item record was used');
 					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 				} else {
@@ -211,8 +211,8 @@ if ( isset($_POST['EnterTransfer']) ){
 						'" . $Item->BundleRef . "',
 						" . -$Item->BundleQty . ")";
 
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . -('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . -('The serial stock item record could not be updated because');
-					$DbgMsg = _('The following SQL to update the serial stock item record was used');
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be added because');
+					$DbgMsg = _('The following SQL to insert the serial stock item record was used');
 					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 				}
 
@@ -231,7 +231,7 @@ if ( isset($_POST['EnterTransfer']) ){
 							-" . $Item->BundleQty . "
 							)";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . -('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
@@ -275,7 +275,7 @@ if ( isset($_POST['EnterTransfer']) ){
 					" . ($QtyOnHandPrior + $_SESSION['Transfer']->TransferItem[0]->Quantity) .
 				")";
 
-		$ErrMsg = _('CRITICAL ERROR') . '! ' . -('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . -('The stock movement record cannot be inserted because');
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
 		$DbgMsg = _('The following SQL to insert the stock movement record was used');
 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
@@ -310,7 +310,7 @@ if ( isset($_POST['EnterTransfer']) ){
 						AND LocCode='" . $_SESSION['Transfer']->StockLocationTo . "'
 						AND SerialNo='" . $Item->BundleRef . "'";
 
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . -('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . -('The serial stock item record could not be updated because');
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
 					$DbgMsg = _('The following SQL to update the serial stock item record was used');
 					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 				} else {
@@ -324,8 +324,8 @@ if ( isset($_POST['EnterTransfer']) ){
 						'" . $Item->BundleRef . "',
 						" . $Item->BundleQty . ")";
 
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . -('The serial stock item record could not be updated because');
-					$DbgMsg = _('The following SQL to update the serial stock item record was used:');
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be added because');
+					$DbgMsg = _('The following SQL to insert the serial stock item record was used:');
 					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 				}
 
@@ -346,7 +346,7 @@ if ( isset($_POST['EnterTransfer']) ){
 			WHERE StockID='" . $_SESSION['Transfer']->TransferItem[0]->StockID . "'
 			AND LocCode='" . $_SESSION['Transfer']->StockLocationFrom . "'";
 
-		$ErrMsg = _('CRITICAL ERROR') . '! ' . -('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
 		$DbgMsg = _('The following SQL to update the location stock record was used');
 		$Result = DB_query($SQL,$db,$Errmsg,$DbgMsg,true);
 

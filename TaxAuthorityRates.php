@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 // TaxAuthorityRates.php
 //
 // Date     Author
@@ -19,14 +19,13 @@ include('includes/session.inc');
 $title = _('Tax Rates');
 include('includes/header.inc');
 
-echo "<!-- \$Revision: 1.4 $ -->";
+/* <-- $Revision: 1.5 $ --> */
 
 if (!isset($TaxAuthority)){
 	prnMsg(_('This page can only be called after selecting the tax authority to edit the rates for') . '. ' . _('Please select the Rates link from the tax authority page') . ".<BR><A HREF='$rootpath/TaxAuthorities.php'>" . _('click here') . '</A> ' . _('to go to the Tax Authority page'),'error');
 	include ('includes/footer.inc');
 	exit;
 }
-
 
 
 if (isset($_POST['UpdateRates'])){

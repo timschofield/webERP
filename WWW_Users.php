@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -149,7 +149,7 @@ if (isset($_POST['submit'])) {
 	// comment out except for demo!  Do not want anyopne deleting demo user.
 	/*
 	if ($SelectedUser == 'demo') {
-		prnMsg(_('The demonstration user called demo cannot be deleted.','error'));
+		prnMsg(_('The demonstration user called demo cannot be deleted'),'error');
 	} else {
 	*/
 

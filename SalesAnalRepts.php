@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 2;
 
@@ -263,8 +263,9 @@ or deletion of the records*/
 	$sql = "SELECT ReportID, ReportHeading FROM ReportHeaders ORDER BY ReportID";
 	$result = DB_query($sql,$db);
 
-	echo "<CENTER><table border=1>\n";
-	echo "<tr><td class=tableheader>Report No</td><td class=tableheader>" . _('Report Title') . "</td>";
+	echo '<CENTER><table border=1>';
+	echo '<tr><td class=tableheader>' . _('Report No') . '</td>
+		<td class=tableheader>' . _('Report Title') . '</td>';
 
 $k=0; //row colour counter
 
@@ -437,11 +438,11 @@ if (!$_GET['delete']) {
 	echo '<TD>' . _('From') .": <INPUT TYPE='TEXT' NAME='Lower4' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Lower4'] . "'></TD>";
 	echo '<TD>' . _('To') . ": <INPUT TYPE='TEXT' NAME='Upper4' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Upper4'] . "'></TD></TR>";
 
-	echo "</TABLE>";
+	echo '</TABLE>';
 
 	echo "<CENTER><input type='Submit' name='submit' value='" . _('Enter Information') . "'></CENTER></FORM>";
 
 } //end if record deleted no point displaying form to add record
 
-include("includes/footer.inc");
+include('includes/footer.inc');
 ?>

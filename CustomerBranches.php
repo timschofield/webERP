@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -438,17 +438,17 @@ if (! isset($_GET['delete'])) {
 
 
 	echo '<TR><TD>'._('Branch Name').':</TD>';
-	echo '<TD><input type="Text" name="BrName" SIZE=41 MAXLENGTH=40 value='. $_POST['BrName'].'></TD></TR>';
+	echo '<TD><input type="Text" name="BrName" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrName'].'"></TD></TR>';
 	echo '<TR><TD>'._('Contact').':</TD>';
-	echo '<TD><input type="Text" name="ContactName" SIZE=41 MAXLENGTH=40 value='. $_POST['ContactName'].'></TD></TR>';
+	echo '<TD><input type="Text" name="ContactName" SIZE=41 MAXLENGTH=40 value="'. $_POST['ContactName'].'"></TD></TR>';
 	echo '<TR><TD>'._('Street Address 1').':</TD>';
-	echo '<TD><input type="Text" name="BrAddress1" SIZE=41 MAXLENGTH=40 value='. $_POST['BrAddress1'].'></TD></TR>';
+	echo '<TD><input type="Text" name="BrAddress1" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrAddress1'].'"></TD></TR>';
 	echo '<TR><TD>'._('Street Address 2').':</TD>';
-	echo '<TD><input type="Text" name="BrAddress2" SIZE=41 MAXLENGTH=40 value='. $_POST['BrAddress2'].'></TD></TR>';
+	echo '<TD><input type="Text" name="BrAddress2" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrAddress2'].'"></TD></TR>';
 	echo '<TR><TD>'._('Street Address 3').':</TD>';
-	echo '<TD><input type="Text" name="BrAddress3" SIZE=41 MAXLENGTH=40 value='. $_POST['BrAddress3'].'></TD></TR>';
+	echo '<TD><input type="Text" name="BrAddress3" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrAddress3'].'"></TD></TR>';
 	echo '<TR><TD>'._('Street Address 4').':</TD>';
-	echo '<TD><input type="Text" name="BrAddress4" SIZE=31 MAXLENGTH=30 value='. $_POST['BrAddress4'].'></TD></TR>';
+	echo '<TD><input type="Text" name="BrAddress4" SIZE=31 MAXLENGTH=30 value="'. $_POST['BrAddress4'].'"></TD></TR>';
 
 	echo '<TR><TD>'._('Delivery Days').':</TD>';
 	echo '<TD><input type="Text" name="EstDeliveryDays" SIZE=4 MAXLENGTH=2 value='. $_POST['EstDeliveryDays'].'></TD></TR>';
@@ -524,14 +524,14 @@ if (! isset($_GET['delete'])) {
 
 	echo '</SELECT></TD></TR>';
 	echo '<TR><TD>'._('Phone Number').':</TD>';
-	echo '<TD><input type="Text" name="PhoneNo" SIZE=22 MAXLENGTH=20 value='. $_POST['PhoneNo'].'></TD></TR>';
+	echo '<TD><input type="Text" name="PhoneNo" SIZE=22 MAXLENGTH=20 value="'. $_POST['PhoneNo'].'"></TD></TR>';
 
 	echo '<TR><TD>'._('Fax Number').':</TD>';
-	echo '<TD><input type="Text" name="FaxNo" SIZE=22 MAXLENGTH=20 value='. $_POST['FaxNo'].'></TD></TR>';
+	echo '<TD><input type="Text" name="FaxNo" SIZE=22 MAXLENGTH=20 value="'. $_POST['FaxNo'].'"></TD></TR>';
 
 
 	echo '<TR><TD><a href="Mailto:"'. $_POST['Email'].'>'._('Email').':</a></TD>';
-	echo '<TD><input type="Text" name="Email" SIZE=56 MAXLENGTH=55 value='. $_POST['Email'].'></TD></TR>';
+	echo '<TD><input type="Text" name="Email" SIZE=56 MAXLENGTH=55 value="'. $_POST['Email'].'"></TD></TR>';
 
 	echo '<TR><TD>'._('Tax Authority').':</TD>';
 	echo '<TD><SELECT name="TaxAuthority">';
@@ -577,15 +577,15 @@ if (! isset($_GET['delete'])) {
 	echo '</SELECT></TD></TR>';
 
 	echo '<TR><TD>'._('Postal Address 1').':</TD>';
-	echo '<TD><input type="Text" name="BrPostAddr1" SIZE=41 MAXLENGTH=40 value='. $_POST['BrPostAddr1'].'></TD></TR>';
+	echo '<TD><input type="Text" name="BrPostAddr1" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrPostAddr1'].'"></TD></TR>';
 	echo '<TR><TD>'._('Post Address 2').':</TD>';
-	echo '<TD><input type="Text" name="BrPostAddr2" SIZE=41 MAXLENGTH=40 value='. $_POST['BrPostAddr2'].'></TD></TR>';
+	echo '<TD><input type="Text" name="BrPostAddr2" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrPostAddr2'].'"></TD></TR>';
 	echo '<TR><TD>'._('Postal Address 3').':</TD>';
-	echo '<TD><input type="Text" name="BrPostAddr3" SIZE=31 MAXLENGTH=30 value='. $_POST['BrPostAddr3'].'></TD></TR>';
+	echo '<TD><input type="Text" name="BrPostAddr3" SIZE=31 MAXLENGTH=30 value="'. $_POST['BrPostAddr3'].'"></TD></TR>';
 	echo '<TR><TD>'._('Postal Address 4').':</TD>';
-	echo '<TD><input type="Text" name="BrPostAddr4" SIZE=21 MAXLENGTH=20 value='. $_POST['BrPostAddr4'].'></TD></TR>';
+	echo '<TD><input type="Text" name="BrPostAddr4" SIZE=21 MAXLENGTH=20 value="'. $_POST['BrPostAddr4'].'"></TD></TR>';
 	echo '<TR><TD>'._('Customers Internal Branch Code (EDI)').':</TD>';
-	echo '<TD><input type="Text" name="CustBranchCode" SIZE=31 MAXLENGTH=30 value='. $_POST['CustBranchCode'].'></TD></TR>';
+	echo '<TD><input type="Text" name="CustBranchCode" SIZE=31 MAXLENGTH=30 value="'. $_POST['CustBranchCode'].'"></TD></TR>';
 	echo '</TABLE>';
 
 	echo '<CENTER><input type="Submit" name="submit" value='._('Enter Information').'>';

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
 
@@ -168,7 +168,7 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 					StockID='" . $_SESSION['Adjustment']->StockID . "'
 					AND LocCode='" . $_SESSION['Adjustment']->StockLocation . "'
 					AND SerialNo='" . $Item->BundleRef . "'";
-				$ErrMsg = '<BR>'._('Unable to determine if the serial item exists');
+				$ErrMsg = _('Unable to determine if the serial item exists');
 				$Result = DB_query($SQL,$db,$ErrMsg);
 				$SerialItemExistsRow = DB_fetch_row($Result);
 
@@ -289,7 +289,7 @@ if ($_SESSION['Adjustment']->Controlled==1){
 				[<A HREF="'.$rootpath.'/StockAdjustmentsControlled.php?AdjType=REMOVE&' . SID . '">'._('Remove').'</A>]
 				[<A HREF="'.$rootpath.'/StockAdjustmentsControlled.php?AdjType=ADD&' . SID . '">'._('Add').'</A>]';
 		} else {
-			prnMsg( _('Please select a location and press') . ' "' . _('Enter Stock Adjustment') . '" ' . _('below to enter Controlled Items') . '.', '','&nbsp;');
+			prnMsg( _('Please select a location and press') . ' "' . _('Enter Stock Adjustment') . '" ' . _('below to enter Controlled Items'), 'info');
 		}
 } else {
 	echo '<INPUT TYPE=TEXT NAME="Quantity" SIZE=12 MAXLENGTH=12 Value="' . $_SESSION['Adjustment']->Quantity . '">';

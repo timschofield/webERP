@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 11;
 
@@ -226,8 +226,8 @@ if (isset($_POST['submit'])) {
 			$result = DB_query('DELETE FROM TaxAuthLevels WHERE DispatchTaxAuthority=' . $TaxAuthRow[0],$db);
 		}
 
-		$result = DB_query("DELETE FROM Locations WHERE LocCode='" . $SelectedLocation . "'",$db);
 		$result= DB_query("DELETE FROM LocStock WHERE LocCode ='" . $SelectedLocation . "'",$db);
+		$result = DB_query("DELETE FROM Locations WHERE LocCode='" . $SelectedLocation . "'",$db);
 
 		prnMsg( _('Location') . ' ' . $SelectedLocation . ' ' . _('has been deleted') . '!', 'success');
 		unset ($SelectedLocation);

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 4;
 
@@ -102,7 +102,7 @@ if (isset($_POST['SelectBranch'])){
 if (!isset($_SESSION['SPL']->BranchCode)){
 	echo "<BR><FONT SIZE=4 COLOR=BLUE>" . _('Purchase from') . " " . $_SESSION['SPL']->SupplierName . " " . _('in') . " " . $_SESSION['SPL']->SuppCurrCode . " " . _('for') . " " . $_SESSION['SPL']->CustomerName . " (" . $_SESSION['SPL']->CustCurrCode . ")";
 } else {
-	echo "<BR><FONT SIZE=4 COLOR=BLUE>" . _('Purchase from') . " " . $_SESSION['SPL']->SupplierName . " " . _('in') . " " . $_SESSION['SPL']->SuppCurrCode . " for " . $_SESSION['SPL']->CustomerName . " (" . $_SESSION['SPL']->CustCurrCode . ") - " . _('delivered to') . " " . $_SESSION['SPL']->BranchName . " " . _('branch');
+	echo '<BR><FONT SIZE=4 COLOR=BLUE>' . _('Purchase from') . ' ' . $_SESSION['SPL']->SupplierName . ' ' . _('in') . ' ' . $_SESSION['SPL']->SuppCurrCode . ' ' . _('for') . ' ' . $_SESSION['SPL']->CustomerName . ' (' . $_SESSION['SPL']->CustCurrCode . ') - ' . _('delivered to') . ' ' . $_SESSION['SPL']->BranchName . ' ' . _('branch');
 }
 
 /*if the branch details and delivery details have not been entered then select them from the list */
@@ -116,12 +116,12 @@ if (!isset($_SESSION['SPL']->BranchCode)){
 
 	If (DB_num_rows($BranchResult)>0) {
 
-		echo "<BR><BR>" . _('Select the customer branch to deliver the special to from the list below');
+		echo '<BR><BR>' . _('Select the customer branch to deliver the special to from the list below');
 
-		echo "<BR><CENTER><TABLE CELLPADDING=3 COLSPAN=2 BORDER=1>";
+		echo '<BR><CENTER><TABLE CELLPADDING=3 COLSPAN=2 BORDER=1>';
 
 		$tableheader = "<TR><TD class='tableheader'>" ._('Code') . "</TD>
-					<TD class='tableheader'>" . _('Branch Name') . "</TD></TR>";
+					<TD class='tableheader'>" . _('Branch Name') . '</TD></TR>';
 		echo $tableheader;
 
 		$j = 1;
@@ -137,7 +137,7 @@ if (!isset($_SESSION['SPL']->BranchCode)){
 				$k++;
 			}
 
-			printf("<td><INPUT TYPE=SUBMIT NAME='SelectBranch' VALUE='%s'</td><td>%s</td></tr>", $myrow["BranchCode"], $myrow["BrName"]);
+			printf("<td><INPUT TYPE=SUBMIT NAME='SelectBranch' VALUE='%s'</td><td>%s</td></tr>", $myrow['BranchCode'], $myrow['BrName']);
 
 			$j++;
 			If ($j == 11){
@@ -148,8 +148,9 @@ if (!isset($_SESSION['SPL']->BranchCode)){
 		}
 //end of while loop
 
-		echo "</TABLE></CENTER>";
-		echo "</FORM>";
+		echo '</TABLE></CENTER>';
+		echo '</FORM>';
+		include('includes/footer.inc');
 		exit;
 
 	} else {

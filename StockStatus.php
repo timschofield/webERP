@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 2;
 
@@ -45,10 +45,10 @@ if ($myrow[2]=='K'){
 	prnMsg( _('This is a kitset part and cannot have a stock holding') . ', ' . _('only the total quantity on outstanding sales orders is shown'),'info');
 } elseif ($myrow[2]=='A'){
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
-	prnMsg(_('This is an assembly part and cannot have a stock holding') . ', ' . -('only the total quantity on outstanding sales orders is shown'),'info');
+	prnMsg(_('This is an assembly part and cannot have a stock holding') . ', ' . _('only the total quantity on outstanding sales orders is shown'),'info');
 } elseif ($myrow[2]=='D'){
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
-	prnMsg( _('This is an dummy part and cannot have a stock holding') . ', ' . -('only the total quantity on outstanding sales orders is shown'),'info');
+	prnMsg( _('This is an dummy part and cannot have a stock holding') . ', ' . _('only the total quantity on outstanding sales orders is shown'),'info');
 }
 
 echo '<HR><FORM ACTION="' . $_SERVER['PHP_SELF'] . '?'. SID . '" METHOD=POST>';
@@ -177,9 +177,9 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 
 		if ($Serialised ==1){ /*The line is a serialised item*/
 
-			echo '<TD><A target="_blank" HREF="' . $rootpath . '/StockSerialItems.php?' . SID . 'Serialised=Yes&Location=' . $myrow['LocCode'] . '&StockID=' .$StockID . '">' . _('Serial Numbers') . '</A></TD></TR>';
+			echo '<TD><A target="_blank" HREF="' . $rootpath . '/StockSerialItems.php?' . SID . '&Serialised=Yes&Location=' . $myrow['LocCode'] . '&StockID=' .$StockID . '">' . _('Serial Numbers') . '</A></TD></TR>';
 		} elseif ($Controlled==1){
-			echo '<TD><A target="_blank" HREF="' . $rootpath . '/StockSerialItems.php?' . SID . 'Location=' . $myrow['LocCode'] . '&StockID=' .$StockID . '">' . _('Batches') . '</A></TD></TR>';
+			echo '<TD><A target="_blank" HREF="' . $rootpath . '/StockSerialItems.php?' . SID . '&Location=' . $myrow['LocCode'] . '&StockID=' .$StockID . '">' . _('Batches') . '</A></TD></TR>';
 		}
 
 	} else {

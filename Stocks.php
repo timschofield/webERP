@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 11;
 
@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
 		prnMsg (_('The stock item description must be entered and be fifty characters or less long') . '. ' . _('It cannot be a zero length string either') . ' - ' . _('a description is required'),'error');
 	} elseif (strlen($_POST['LongDescription'])==0) {
 		$InputError = 1;
-		prnMsg (_('The stock item description cannot be a zero length string') . ' - ' . -('a long description is required'),'error');
+		prnMsg (_('The stock item description cannot be a zero length string') . ' - ' . _('a long description is required'),'error');
 	} elseif (strlen($StockID) ==0) {
 		$InputError = 1;
 		prnMsg (_('The Stock Item code cannot be empty'),'error');

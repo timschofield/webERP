@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 2;
 
@@ -29,7 +29,9 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 	include('includes/PDFStarter_ros.inc');
 
 
-	$sql = 'SELECT LastDate_In_Period FROM Periods WHERE PeriodNo=' . $_POST['ToPeriod'];
+	$sql = 'SELECT LastDate_In_Period 
+		FROM Periods 
+		WHERE PeriodNo=' . $_POST['ToPeriod'];
 	$ErrMsg = _('Could not determine the last date of the period selected') . '. ' . _('The sql returned the following error');
 	$PeriodEndResult = DB_query($sql,$db,$ErrMsg);
 	$PeriodEndRow = DB_fetch_row($PeriodEndResult);
@@ -437,11 +439,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 
 	echo '<TR><TD>' . _('Return Covering') . ':</FONT></TD>
 			<TD><SELECT name=NoOfPeriods>
-			<OPTION Value=1> One Month
-			<OPTION SELECTED Value=2>Two Months
-			<OPTION VALUE=3>Quarter
-			<OPTION VALUE=6>Six Months
-			</SELECT></TD></TR>';
+			<OPTION Value=1>' . _('One Month') .
+			'<OPTION SELECTED Value=2>' ._('Two Months') .
+			'<OPTION VALUE=3>' . _('Quarter') .
+			'<OPTION VALUE=6>' . _('Six Months') .
+			'</SELECT></TD></TR>';
 
 
 	echo '<TR><TD>' . _('Return To') . ":</TD>
@@ -450,7 +452,9 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 
 	$DefaultPeriod = GetPeriod(Date($DefaultDateFormat,Mktime(0,0,0,Date('m'),0,Date('Y'))),$db);
 
-	$sql = 'SELECT PeriodNo, LastDate_In_Period FROM Periods';
+	$sql = 'SELECT PeriodNo, 
+			LastDate_In_Period 
+		FROM Periods';
 
 	$ErrMsg = _('Could not retrieve the period data because');
 	$Periods = DB_query($sql,$db,$ErrMsg);

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 2;
 
@@ -10,8 +10,10 @@ include('includes/session.inc');
 if (isset($_GET['OrderNumber'])) {
 	$title = _('Reviewing Sales Order Number') . ' ' . $_GET['OrderNumber'];
 } else {
+	include('includes/header.inc');
 	echo '<BR><BR><BR>';
 	prnMsg(_('This page must be called with a sales order number to review') . '.<BR>' . _('i.e.') . ' http://????/OrderDetails.php?OrderNumber=<i>xyz</i><BR>' . _('Click on back') . '.','error');
+	include('includes/footer.inc');
 	exit;
 }
 

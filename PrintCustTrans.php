@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 $PageSecurity = 1;
 
 if (isset($_GET['FromTransNo'])){
@@ -71,8 +71,8 @@ If (isset($PrintPDF) AND $PrintPDF!='' AND isset($FromTransNo) AND isset($InvOrC
 	$PageSize = array(0,0,$Page_Width,$Page_Height);
 	$pdf = & new Cpdf($PageSize);
 	$pdf->selectFont('./fonts/Helvetica.afm');
-	$pdf->addinfo('Author','WEB-ERP ' . $Version);
-	$pdf->addinfo('Creator','WEB-ERP http://weberp.sourceforge.net - R&OS PHP-PDF http://www.ros.co.nz');
+	$pdf->addinfo('Author','webERP ' . $Version);
+	$pdf->addinfo('Creator','webERP http://www.weberp.org - R&OS PHP-PDF http://www.ros.co.nz');
 
 
 	if ($InvOrCredit=='Invoice'){

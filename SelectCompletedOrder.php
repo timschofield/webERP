@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 include('includes/DateFunctions.inc');
 
 $PageSecurity = 2;
@@ -74,15 +74,62 @@ if ($_POST['SearchParts']!=''){
 		}
 		$SearchString = $SearchString. substr($_POST['Keywords'],$i).'%';
 
-		$SQL = "SELECT StockMaster.StockID, Description, Sum(LocStock.Quantity) AS QOH,  Units, Sum(SalesOrderDetails.Quantity - SalesOrderDetails.QtyInvoiced) AS QDEM FROM StockMaster, LocStock, SalesOrderDetails WHERE StockMaster.StockID=LocStock.StockID AND StockMaster.StockID = SalesOrderDetails.StkCode AND SalesOrderDetails.Completed =0 AND Description LIKE '$SearchString' AND CategoryID='" . $_POST['StockCat'] . "' GROUP BY StockMaster.StockID, Description, Units ORDER BY StockMaster.StockID";
+		$SQL = "SELECT StockMaster.StockID, 
+				StockMaster.Description, 
+				Sum(LocStock.Quantity) AS QOH,  
+				StockMaster.Units, 
+				Sum(SalesOrderDetails.Quantity - SalesOrderDetails.QtyInvoiced) AS QDEM 
+			FROM StockMaster, 
+				LocStock, 
+				SalesOrderDetails 
+			WHERE StockMaster.StockID=LocStock.StockID 
+			AND StockMaster.StockID = SalesOrderDetails.StkCode 
+			AND SalesOrderDetails.Completed =0 
+			AND Description LIKE '$SearchString' 
+			AND CategoryID='" . $_POST['StockCat'] . "' 
+			GROUP BY StockMaster.StockID, 
+				StockMaster.Description, 
+				StockMaster.Units 
+			ORDER BY StockMaster.StockID";
 
 	} elseif ($_POST['StockCode']!=''){
 
-		$SQL = "SELECT StockMaster.StockID, Description, Sum(LocStock.Quantity) AS QOH, Sum(SalesOrderDetails.Quantity - SalesOrderDetails.QtyInvoiced) AS QDEM, Units FROM StockMaster, LocStock, SalesOrderDetails WHERE StockMaster.StockID=LocStock.StockID AND StockMaster.StockID = SalesOrderDetails.StkCode AND SalesOrderDetails.Completed =0 AND StockMaster.StockID like '%" . $_POST['StockCode'] . "%' AND CategoryID='" . $_POST['StockCat'] . "' GROUP BY StockMaster.StockID, Description, Units ORDER BY StockMaster.StockID";
+		$SQL = "SELECT StockMaster.StockID, 
+				StockMaster.Description, 
+				Sum(LocStock.Quantity) AS QOH, 
+				Sum(SalesOrderDetails.Quantity - SalesOrderDetails.QtyInvoiced) AS QDEM, 
+				StockMaster.Units 
+			FROM StockMaster, 
+				LocStock, 
+				SalesOrderDetails 
+			WHERE StockMaster.StockID=LocStock.StockID 
+			AND StockMaster.StockID = SalesOrderDetails.StkCode 
+			AND SalesOrderDetails.Completed =0 
+			AND StockMaster.StockID like '%" . $_POST['StockCode'] . "%' 
+			AND CategoryID='" . $_POST['StockCat'] . "' 
+			GROUP BY StockMaster.StockID, 
+				StockMaster.Description, 
+				StockMaster.Units 
+			ORDER BY StockMaster.StockID";
 
 	} elseif ($_POST['StockCode']=='' AND $_POST['Keywords']=='' AND $_POST['StockCat']!='') {
 		
-		$SQL = "SELECT StockMaster.StockID, Description, Sum(LocStock.Quantity) AS QOH, Sum(SalesOrderDetails.Quantity - SalesOrderDetails.QtyInvoiced) AS QDEM, Units FROM StockMaster, LocStock, SalesOrderDetails WHERE StockMaster.StockID=LocStock.StockID AND StockMaster.StockID = SalesOrderDetails.StkCode AND SalesOrderDetails.Completed =0 AND CategoryID='" . $_POST['StockCat'] . "' GROUP BY StockMaster.StockID, Description, Units ORDER BY StockMaster.StockID";
+		$SQL = "SELECT StockMaster.StockID, 
+				StockMaster.Description, 
+				Sum(LocStock.Quantity) AS QOH, 
+				Sum(SalesOrderDetails.Quantity - SalesOrderDetails.QtyInvoiced) AS QDEM, 
+				StockMaster.Units 
+			FROM StockMaster, 
+				LocStock, 
+				SalesOrderDetails 
+			WHERE StockMaster.StockID=LocStock.StockID 
+			AND StockMaster.StockID = SalesOrderDetails.StkCode 
+			AND SalesOrderDetails.Completed =0 
+			AND CategoryID='" . $_POST['StockCat'] . "' 
+			GROUP BY StockMaster.StockID, 
+				StockMaster.Description, 
+				StockMaster.Units 
+			ORDER BY StockMaster.StockID";
 
 	}
 
@@ -252,12 +299,29 @@ If ($SalesOrdersResult) {
 			$k=1;
 		}
 
-		$ViewPage = $rootpath . '/OrderDetails.php?' .SID . 'OrderNumber=' . $myrow['OrderNo'];
+		$ViewPage = $rootpath . '/OrderDetails.php?' .SID . '&OrderNumber=' . $myrow['OrderNo'];
 		$FormatedDelDate = ConvertSQLDate($myrow['DeliveryDate']);
 		$FormatedOrderDate = ConvertSQLDate($myrow['OrdDate']);
 		$FormatedOrderValue = number_format($myrow['OrderValue'],2);
 
-		printf("<td><A target='_blank' HREF='%s'>%s</A></td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td ALIGN=RIGHT>%s</td></tr>", $ViewPage, $myrow['OrderNo'], $myrow['Name'], $myrow['BrName'], $myrow['CustomerRef'],$FormatedOrderDate,$FormatedDelDate, $myrow['DeliverTo'], $FormatedOrderValue);
+		printf("<td><A target='_blank' HREF='%s'>%s</A></td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td ALIGN=RIGHT>%s</td>
+			</tr>", 
+			$ViewPage, 
+			$myrow['OrderNo'], 
+			$myrow['Name'], 
+			$myrow['BrName'], 
+			$myrow['CustomerRef'],
+			$FormatedOrderDate,
+			$FormatedDelDate, 
+			$myrow['DeliverTo'], 
+			$FormatedOrderValue);
 
 		$j++;
 		If ($j == 12){

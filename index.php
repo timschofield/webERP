@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 $PageSecurity = 1;
 
@@ -710,7 +710,7 @@ if (count($SecurityGroups[$_SESSION['AccessLevel']])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PeriodsInquiry.php?' . SID . "'><li>" . _('List Periods Defined <FONT SIZE=1>(Periods are automatically maintained)') . '</FONT></a>'; ?>
+								<?php echo "<a href='" . $rootpath . '/PeriodsInquiry.php?' . SID . "'><li>" . _('List Periods Defined') . ' <FONT SIZE=1>' . _('(Periods are automatically maintained)') . '</FONT></a>'; ?>
 							</td>
 							</tr>
 						</table>
