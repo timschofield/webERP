@@ -100,3 +100,31 @@ A2: Yes. You can enter items into a sales order free form using the special orde
 
 
 
+Receviables
+
+Q1: When I enter money recevied, it asks if I want a customer receipt or a GL receipt. What are these?
+
+
+A GL receipt is a receipt of cash which is not as a result of a sale to a customer. Maybe the company paid for some travel where a partner travelled with the employee and the employee re-imburses the company for the partner's travel cost, the receipt of the money from the employee would want to be entered to the credit of the travel account in the general ledger. This is how you would enter it.
+
+
+Q2: Also, I was entering in the data for the checks received, and it turns out that our customer paid us two dollars less than what he should have. Now, when I go to allocate the money, it won't let me since it is not enough for the bill that is due?  How to I deal with this?
+
+You can also enter the amount to allocate against the invoice manually. If you simply tick the box to fully allocate the invoice then the system assumes you wish to allocate the invoice fully and if there is insufficient in the receipt to fully allocate the invoice it gives an
+error. You need to enter the amount to allocate manually in the box provided.
+
+Q3: The following error pops up on invoicing an order that has been dispatched ...what shall I do?
+
+CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The sales GL posting could not be inserted because: You have an error in your SQL syntax. Check the manual that corresponds to your MySQL server version for the right syntax to use near ' 'C1039 - 10615 x 1 @ 500.0000', -500 )' at l
+
+The following SQL to insert the GLTrans record was used:
+INSERT INTO GLTrans ( Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount ) VALUES ( 10, 2, '2004/11/01', 59, , 'C1039 - 10615 x 1 @
+500.0000', -500 )
+
+You must define the sale General Ledger Posting codes. This is the general ledger analysis of sales. It maybe that all sales go to one general ledger account. In which case this general ledger account needs to be set up under main menu, setup,  Sales GL Interface postings. The cost of sales GL Postings should also be setup if you wish to have stock integration. If you dont wish to have general ledger integration this should be switched off by going into Setup tab of the main menu and Compnay preferences, then the option:
+
+Create GL entries for accounts receivable transactions: should be set to no
+
+Also if you don't wish to have general ledger stock integration then you should set
+
+Create GL entries for stock transactions (at standard cost): to no as well.

@@ -1,13 +1,13 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
-require("includes/DefineCartClass.php");
+require('includes/DefineCartClass.php');
 
 $PageSecurity = 1;
 
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
-include("includes/session.inc");
+include('includes/session.inc');
 
 if (isset($_GET['ModifyOrderNumber'])) {
 	$title = _('Modifying Order') .' ' . $_GET['ModifyOrderNumber'];
@@ -15,9 +15,9 @@ if (isset($_GET['ModifyOrderNumber'])) {
 	$title = _('Select Order Items');
 }
 
-include("includes/header.inc");
-include("includes/DateFunctions.inc");
-include("includes/GetPrice.inc");
+include('includes/header.inc');
+include('includes/DateFunctions.inc');
+include('includes/GetPrice.inc');
 
 if (isset($_POST['QuickEntry'])){
    unset($_POST['PartSearch']);
@@ -35,27 +35,27 @@ if (isset($_GET['NewOrder'])){
 		$_SESSION['Items']->ItemsOrdered=0;
 		unset ($_SESSION['Items']);
 	}
-	Session_register("Items");
-	Session_register("RequireCustomerSelection");
-	Session_register("CreditAvailable");
-	Session_register("ExistingOrder");
-	Session_register("PrintedPackingSlip");
-	Session_register("DatePackingSlipPrinted");
+	Session_register('Items');
+	Session_register('RequireCustomerSelection');
+	Session_register('CreditAvailable');
+	Session_register('ExistingOrder');
+	Session_register('PrintedPackingSlip');
+	Session_register('DatePackingSlipPrinted');
 
 	$_SESSION['ExistingOrder']=0;
 	$_SESSION['Items'] = new cart;
 
-	if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){ //its a customer logon
+	if (count($SecurityGroups[$_SESSION['AccessLevel']])==1){ //its a customer logon
 		$_SESSION['Items']->DebtorNo=$_SESSION['CustomerID'];
 		$_SESSION['RequireCustomerSelection']=0;
 	} else {
-		$_SESSION['Items']->DebtorNo="";
+		$_SESSION['Items']->DebtorNo='';
 		$_SESSION['RequireCustomerSelection']=1;
 	}
 
 }
 
-if (isset($_GET['ModifyOrderNumber']) AND $_GET['ModifyOrderNumber']!=""){
+if (isset($_GET['ModifyOrderNumber']) AND $_GET['ModifyOrderNumber']!=''){
 
 /* The delivery check screen is where the details of the order are either updated or inserted depending on the value of ExistingOrder */
 
@@ -64,12 +64,12 @@ if (isset($_GET['ModifyOrderNumber']) AND $_GET['ModifyOrderNumber']!=""){
 		unset ($_SESSION['Items']);
 	}
 
-	Session_register("Items");
-	Session_register("RequireCustomerSelection");
-	Session_register("CreditAvailable");
-	Session_register("ExistingOrder");
-	Session_register("PrintedPackingSlip");
-	Session_register("DatePackingSlipPrinted");
+	Session_register('Items');
+	Session_register('RequireCustomerSelection');
+	Session_register('CreditAvailable');
+	Session_register('ExistingOrder');
+	Session_register('PrintedPackingSlip');
+	Session_register('DatePackingSlipPrinted');
 
 	$_SESSION['ExistingOrder']=$_GET['ModifyOrderNumber'];
 	$_SESSION['RequireCustomerSelection'] = 0;

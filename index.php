@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 $PageSecurity = 1;
 
@@ -103,7 +103,10 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 			<td class="menu_group_area">
 				<table width="100%" >
 
-					<?php OptionHeadings(); ?>
+					<?php 
+  					// displays the main area headings 
+					  OptionHeadings(); 
+					?>
 
 					<tr>
 					<td class="menu_group_items">  <!-- Orders transaction options -->
@@ -153,6 +156,9 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 					<td class="menu_group_items"> <!-- Orders Maintenance options -->
 						<table width="100%">
 							<tr>
+							  <td>
+                                                       &nbsp;
+						        </td>
 							</tr>
 						</table>
 					</td>
@@ -607,6 +613,15 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 							</tr>
 						</table>
 					</td>
+					<td class="menu_group_items">
+						<table width="100%">
+							<tr>
+							  <td>
+								  &nbsp;
+								</td>
+							</tr>
+						</table>
+					</td>
 					</tr>
 				</table>
 			</td>
@@ -753,8 +768,6 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 								<?php echo "<a href='" . $rootpath . "/DiscountMatrix.php?" . SID . "'><li>" . _("Discount Matrix") . "</li></a>"; ?>
 							</td>
 							</tr>
-
-
 						</table>
 					</td>
 
@@ -777,8 +790,6 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 							</tr>
 						</table>
 					</td>
-
-
 					</tr>
 				</table>
 			</td>
@@ -890,6 +901,8 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 		break;
 	} //end of module switch
 } /* end of if security allows to see the full menu */
+
+// all tables started are ended within this index script which means 2 outstanding from footer.
 
 include("includes/footer.inc");
 

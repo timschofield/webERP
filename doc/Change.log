@@ -1,6 +1,6 @@
 <P>webERP Change Log
 
-
+<P>31/10/04 SelectCreditItems.php Steve gettextified - index.php html fixes Steve
 <P>31/10/04 UserSettings.php fixed title =_(...) after include session.inc
 <P>31/10/04 footer.inc Jesse - new web site reference and link, also fix copy; Steve
 <P>31/10/04 PurchData.php fix - in strings not minus  - Bob
