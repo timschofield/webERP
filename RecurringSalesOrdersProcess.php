@@ -1,20 +1,8 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
-$PageSecurity = 1;
 /*need to allow this script to run from Cron or windows scheduler */
-if (!isset($_SESSION['AccessLevel'])){
-	$NotLoggedIn = true;
-	if (isset($SessionSavePath)){
-		session_save_path($SessionSavePath);
-    	}
-    
-        ini_set('session.gc_Maxlifetime',$SessionLifeTime);
-        ini_set('max_execution_time',$MaximumExecutionTime);
-	session_start();
-	$_SESSION['AccessLevel']='1'; //set to any old value
-	$_SESSION['AllowedPageSecurityTokens'] = array(1);
-}
+$AllowAnyone = true;
 
 include('includes/session.inc');
 
@@ -25,12 +13,6 @@ include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/GetSalesTransGLCodes.inc');
 include('includes/htmlMimeMail.php');
-
-if ($NotLoggedIn){
-	unset($_SESSION['AccessLevel']);
-	unset($_SESSION['AllowedPageSecurityTokens']);
-	/* attempts at other scripts will be locked out now */
-}
 
 $sql = 'SELECT recurringsalesorders.recurrorderno,
 		recurringsalesorders.debtorno,
@@ -620,9 +602,4 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 
 
 include('includes/footer.inc');
-
-if ($NotLoggedIn){ /*Just to be completely sure */
-	session_unset();
-	session_destroy();
-}
 ?>

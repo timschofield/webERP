@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 include ('includes/class.pdf.php');
 
 /* A4_Landscape */
@@ -550,7 +550,7 @@ if ($_GET['ProduceCVSFile']==True){
 	include('includes/header.inc');
 
 	 echo 'http://' . getenv(SERVER_NAME) . $rootpath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv';
-	 echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=http://' . getenv(SERVER_NAME) . $rootpath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv'>";
+	 echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=http://" . getenv(SERVER_NAME) . $rootpath . '/' . $_SESSION['reports_dir'] .  "/SalesAnalysis.csv'>";
 
 	 echo '<P>' . _('You should automatically be forwarded to the CSV Sales Analysis file when it is ready') . '. ' . _('If this does not happen') . ' <a href="' . $rootpath . '/' . $_SESSION['reports_dir'] . '/SalesAnalysis.csv">' . _('click here') . '</a> ' . _('to continue') .'<br>';
 	 include('includes/footer.inc');

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 /* This is where the details specific to the recurring order are entered and the template committed to the database once the Process button is hit */
 
 include('includes/DefineCartClass.php');
@@ -213,7 +213,6 @@ If (isset($_POST['Process'])) {
 					contactemail,
 					freightcost,
 					fromstkloc,
-					deliverydate,
 					shipvia,
 					lastrecurrence,
 					stopdate,
@@ -235,7 +234,6 @@ If (isset($_POST['Process'])) {
 					'" . DB_escape_string($_SESSION['Items']->Email) . "',
 					" . $_SESSION['Items']->FreightCost .",
 					'" . $_SESSION['Items']->Location ."',
-					'" . $DelDate . "',
 					'" . $_SESSION['Items']->ShipVia ."',
 					'" . FormatDateforSQL($_POST['StartDate']) . "',
 					'" . FormatDateforSQL($_POST['StopDate']) . "',

@@ -75,12 +75,59 @@ Payments can take two forms - either it is a general ledger payment or it is a p
 <br><br>
 <font size="+2"><b>General Ledger Integration Setup</b></font>
 <br><br>
-There are two levels of general ledger integration. 
+Every transaction is recorded in two places (double entry) eg. A bank account payment reflects in the bank account and also in the expense account that is was paid for - eg. stationery, fuel, entertaining, advertising or whatever. One entry goes as a debit on the left and the other as a credit on the right - when you look at the trial balance the debits should tie up with the credits ie the trial balance - a list of the general ledger balances should have balancing debit total and credit totals.
 <br><br>
+General ledger postings can be turned off in the company preferences screen by setting each of the flags to No. 
+<br><br>
+<br>Integrated general ledger postings do provide a good way of building up the business's accounts from activity in the sub ledgers.
+<br>
+<br>You can choose between two levels of integration:
+<br>
+<br>1. Integrate GL at the debtors and sales level only
+<br>
+<br>This creates general ledger journals for each sale as follows: 
+<br>
+<br>DR the debtors control account - defined in the company preferences screen
+<br>CR the sales account - defined with reference to the customer sales area, stock category of the item being sold and the sales type (price list) of the customer. This provides great flexibility as to how sales should be posted
+<br>CR the tax to the taxgl account defined in the tax authorities (ie the general ledger code of the tax authority of the customer branch). It is also possible to have just one general ledger account for all sales by defaulting  ANY sales area, ANY stock category and ANY sales type with a single general ledger code - see later section on sales general ledger codes.
+<br>
+the reverse takes place for a credit note.
+<br>
+When cash is received:
+<br>
+CR the debtors control - defined in company preferences
+DR the bank account - defined in the bank account setup.
+<br>
+There are also general ledger entries for discounts and differences on exchange which have been ignored for the purposes of this introduction.
+<br>
+This level of integration ensures that the list of balances of all customer accounts (in local currency) always ties up with the general ledger debtors control account.
+<br><br>
+2. Integrate GL at the stock level as well
+<br><br>
+For every sale:
+<br>
+<br>CR stock value at the standard cost of each item sold - the stock GL account being defined in the stock categories record.
+<br>DR Cost of Goods Sales (COGS - or COS) with the same cost. - the COGS GL accounts are defined with similar flexibility as descibed for the Sales GL accounts under the setup menu under AR/AP options
+<br>
+<br>the reverse happens for credits.
+<br>
+<br>This enables the stock value to be continuously updated in the general ledger and always be equal to the stock valuation at standard cost.
+<br>
+<br>This level of integration also has ramifications for stock adjustments, stock deliveries and stock cost changes. 
+<br>
+<br>For stock adjustments the quantity adjusted is extended by the standard cost and it is written on (CR) or off (DR) to the stock adjustment GL account as specified in the stock category record for that item.
+<br>
+<br>For receipts of stock - the stock coming in is extended by the standard cost and the entry is to:
+<br>
+<br>DR stock at standard cost x number received - the stock account being defined in the stock category record for the item being received.
+<br>CR GRN suspense at standard cost x number received - this account is specified again in the company preferences screen.
+<br><br>
+The two levels of general ledger integration are:
 <ul>
 <li>Sales journals that post a credit to a sales general ledger account, a debit to a discount account, a credit to a tax account, a credit to a freight recovery account and a debit to a debtor account. This level of integration also reverses the posting described here for sales credit notes. This level also triggers the general ledger journals for banking of cash against debtor accounts. Debiting a bank account and crediting the debtors account.
 <li>Stock journals that post a debit to a cost of sales account and a credit to a stock account - and the reverse entries for sales credit notes.
 </ul>
+<br><br>
 The level of general ledger integration is determined by reference to the flags in the company preferences page.
 <br><br>
 

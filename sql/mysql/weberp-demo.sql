@@ -3652,8 +3652,8 @@ INSERT INTO `companies` VALUES (1,'Demo System','15-325-122','','PO Box 999 Well
 --
 
 INSERT INTO `config` VALUES ('DefaultLanguage','en_GB');
-INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
-INSERT INTO `config` VALUES ('DefaultTheme','fresh');
+INSERT INTO `config` VALUES ('DefaultDateFormat','m/d/Y');
+INSERT INTO `config` VALUES ('DefaultTheme','professional');
 INSERT INTO `config` VALUES ('PastDueDays1','30');
 INSERT INTO `config` VALUES ('PastDueDays2','60');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
@@ -3742,7 +3742,7 @@ INSERT INTO `custallocns` VALUES (54,'99.0000','2004-11-28',68,56);
 
 INSERT INTO `custbranch` VALUES ('1234','12345678','One Two Three Four Five Six Seven Eight','','','','',1,'AR','25',0,'','','','','DEN',1,10,0,'','','','','');
 INSERT INTO `custbranch` VALUES ('BILLYBUNT','BILLYBUNT','William Bunter Inc','Unit C Fatboy Industrial Estate','Donut Drive','Colchester','England',3,'UK','25',0,'','','','','MUC',6,10,0,'','','','','');
-INSERT INTO `custbranch` VALUES ('DSSAD','DSSAD','Dressner und Dressner','133 Strasse Grunter','Berlin','Deutcshe','',1,'AR','2',0,'','','','','DEN',1,1,0,'','','','','');
+INSERT INTO `custbranch` VALUES ('DSSAD','DSSAD','Dressner und Dressner','133 Strasse Grunter','Berlin','Deutcshe','',1,'AR','2',0,'','','','','DEN',1,8,0,'','','','','');
 INSERT INTO `custbranch` VALUES ('GRAN','GRANHR','Gramtham Horton PLC','2 Growler Terraces','West Hemington','BE22 FD2','England',4,'UK','25',0,'','','Ed Heath','','MUC',6,1,0,'','','','','');
 INSERT INTO `custbranch` VALUES ('JOHN','JOHNSON','San Diego','198 Greater Lofty Heights','San Diego','California','USA',2,'AR','25',0,'2412 22356','2412 23549','Rod Champion','rod.champion@johnson.com','DEN',5,1,0,'','','','','');
 INSERT INTO `custbranch` VALUES ('JOHNTEMPE','JOHNSON','Johnson Vehicles Tempe','654 Roberto Street','Tempe','Arizona','USA',2,'AR','2',0,'56565 444 44','222 44 55','Holly Drako','','DEN',5,1,0,'','','','','');
@@ -3795,6 +3795,7 @@ INSERT INTO `debtortrans` VALUES (80,10,11,'WALMON','WALM','2004-11-27 00:00:00'
 INSERT INTO `debtortrans` VALUES (81,2,12,'WATTSGRP','','2004-11-28 00:00:00',59,0,'Cash testing agains','',0,1.000000,-122.900001525879,0,0,-2.5,0,0,'','',0,'');
 INSERT INTO `debtortrans` VALUES (82,11,11,'BILLYBUNT','BILLYBUNT','2004-11-30 00:00:00',59,0,'','WS',0,0.800000,-6.65000009536743,0,0,0,0,0,'','',0,'');
 INSERT INTO `debtortrans` VALUES (83,4,12,'DSSAD','','2005-01-03 00:00:00',61,0,'Cheques one two thre','',0,1.000000,-50.25,0,0,-20,0,0,'','',0,'');
+INSERT INTO `debtortrans` VALUES (84,14,10,'DSSAD','DSSAD','2005-03-28 00:00:00',63,0,'','WS',46,1.000000,585.2,58.52,0,0,0,0,'Balance of Shocks to follow','8',0,'');
 
 --
 -- Dumping data for table `discountmatrix`
@@ -4224,6 +4225,9 @@ INSERT INTO `gltrans` VALUES (732,12,4,0,'2005-01-03',61,710000,'',-70.25,1,'');
 INSERT INTO `gltrans` VALUES (733,12,4,0,'2005-01-03',61,455000,'',20,1,'');
 INSERT INTO `gltrans` VALUES (734,1,19,0,'2005-01-23',61,24000,'Erich Von Hammer Haulage',152.949996948242,1,'');
 INSERT INTO `gltrans` VALUES (735,1,19,0,'2005-01-23',61,700000,'',-152.949996948242,1,'');
+INSERT INTO `gltrans` VALUES (736,10,14,0,'2005-03-28',63,107,'DSSAD - HON92FrSus x 11 @ 53.2000',-585.2,0,'');
+INSERT INTO `gltrans` VALUES (737,10,14,0,'2005-03-28',63,710000,'DSSAD',643.72,0,'');
+INSERT INTO `gltrans` VALUES (738,10,14,0,'2005-03-28',63,810000,'DSSAD',-58.52,0,'');
 
 --
 -- Dumping data for table `grns`
@@ -4271,11 +4275,11 @@ INSERT INTO `locstock` VALUES ('DEN','127',0.0,0);
 INSERT INTO `locstock` VALUES ('DEN','130',0.0,0);
 INSERT INTO `locstock` VALUES ('DEN','140',0.0,0);
 INSERT INTO `locstock` VALUES ('DEN','FROOM',0.0,0);
-INSERT INTO `locstock` VALUES ('DEN','HON90021',78.2,12);
+INSERT INTO `locstock` VALUES ('DEN','HON90021',56.2,12);
 INSERT INTO `locstock` VALUES ('DEN','HON90022',-7.0,0);
 INSERT INTO `locstock` VALUES ('DEN','HON92FrSus',0.0,0);
 INSERT INTO `locstock` VALUES ('DEN','HONCIVIC92SET',0.0,0);
-INSERT INTO `locstock` VALUES ('DEN','HONShock',0.0,0);
+INSERT INTO `locstock` VALUES ('DEN','HONShock',-22.0,0);
 INSERT INTO `locstock` VALUES ('MEL','*19_1',0.0,0);
 INSERT INTO `locstock` VALUES ('MEL','*20_1',0.0,0);
 INSERT INTO `locstock` VALUES ('MEL','123',0.0,0);
@@ -4400,7 +4404,7 @@ INSERT INTO `purchorderdetails` VALUES (31,16,'123','2005-02-23','12.3mm Round S
 INSERT INTO `purchorderdetails` VALUES (32,16,'125','2004-11-02','12.5mm round steel',720000,3.0000,5.2000,0.0000,0.6200,200.0000,202.0000,0,'0',1);
 INSERT INTO `purchorderdetails` VALUES (33,17,'','2004-11-24','Test nominal item',24000,0.0000,1.5000,0.0000,1.8750,5.0000,2.0000,0,'',0);
 INSERT INTO `purchorderdetails` VALUES (34,18,'123','2005-02-23','12.3mm Round Steel coil',720000,0.0000,12.5000,0.0000,0.0000,521.0000,0.0000,8,'0',0);
-INSERT INTO `purchorderdetails` VALUES (35,19,'*19_1','2005-01-01','1300kg 520mm height, 160mm dia spring',722000,0.0000,23.5000,0.0000,0.0000,25.0000,0.0000,0,'',0);
+INSERT INTO `purchorderdetails` VALUES (35,19,'*19_1','2005-05-31','1300kg 520mm height, 160mm dia spring',722000,0.0000,23.5000,0.0000,0.0000,25.0000,0.0000,12,'',0);
 INSERT INTO `purchorderdetails` VALUES (36,20,'*20_1','2004-12-02','testing any old item',722000,0.0000,5.0000,0.0000,0.0000,15.0000,0.0000,0,'',0);
 
 --
@@ -4419,11 +4423,14 @@ INSERT INTO `purchorders` VALUES (20,'GREGCA','','2004-12-01 00:00:00',0.8000,NU
 -- Dumping data for table `recurringsalesorders`
 --
 
+INSERT INTO `recurringsalesorders` VALUES (1,'WALMON','WALM','CF_44321',NULL,'','2005-03-25','EX',8,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','phyllis@WallMonterey.com.','Wallace Monterey - Sydney',0,'MEL','2005-03-03',12,'2006-03-26',0);
 
 --
 -- Dumping data for table `recurrsalesorderdetails`
 --
 
+INSERT INTO `recurrsalesorderdetails` VALUES (1,'HON90021',22.7500,21.0000,0.0000,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (1,'HON90022',26.9000,5.0000,0.0500,'');
 
 --
 -- Dumping data for table `reportcolumns`
@@ -4469,6 +4476,7 @@ INSERT INTO `salesanalysis` VALUES ('WS',59,15.8600,2.1000,'JOHNSON','JOHNTEMPE'
 INSERT INTO `salesanalysis` VALUES ('EX',59,-73.5294,-48.4500,'WALMON','WALM',-5.0000,0.0000,'HON90021','AR',1,'25','Coil',66);
 INSERT INTO `salesanalysis` VALUES ('EX',59,-0.2941,-6.2000,'WALMON','WALM',-10.0000,-0.0074,'125','AR',1,'25','Steel',67);
 INSERT INTO `salesanalysis` VALUES ('WS',59,-8.3125,-10.5000,'BILLYBUNT','BILLYBUNT',-5.0000,0.0000,'HON90022','UK',1,'25','Coil',68);
+INSERT INTO `salesanalysis` VALUES ('WS',63,585.2000,0.0000,'DSSAD','DSSAD',11.0000,0.0000,'HON92FrSus','AR',1,'2','SUSASS',69);
 
 --
 -- Dumping data for table `salescat`
@@ -4530,6 +4538,11 @@ INSERT INTO `salesorderdetails` VALUES (42,'123',0.0000,9.6500,11.0000,0,0.0150,
 INSERT INTO `salesorderdetails` VALUES (42,'125',0.0000,12.6600,25.0000,0,0.0000,'0000-00-00 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (43,'FROOM',0.0000,58.9000,4.0000,0,0.0000,'0000-00-00 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (44,'HON90021',0.0000,0.0000,23.0000,0,0.2000,'0000-00-00 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (45,'HON90021',0.0000,22.7500,21.0000,0,0.0000,'0000-00-00 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (45,'HON90022',0.0000,26.9000,5.0000,0,0.0500,'0000-00-00 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (46,'HON92FrSus',11.0000,53.2000,15.0000,0,0.0000,'2005-03-28 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (46,'HONShock',0.0000,25.9000,3.0000,0,0.0500,'0000-00-00 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (47,'HON90022',0.0000,25.2100,5.0000,0,0.2000,'0000-00-00 00:00:00',0,'');
 
 --
 -- Dumping data for table `salesorders`
@@ -4553,6 +4566,9 @@ INSERT INTO `salesorders` VALUES (41,'12345678','1234','221114',NULL,NULL,'2004-
 INSERT INTO `salesorders` VALUES (42,'WALMON','WALM','',NULL,'','2004-12-06','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',0,'MEL','2004-12-06',1,'2004-12-06',0);
 INSERT INTO `salesorders` VALUES (43,'JOHNSON','JOHNTEMPE','',NULL,'','2005-02-05','WS',1,'654 Roberto Street','Tempe','Arizona','USA','56565 444 44','','Johnson Vehicles Tempe',0,'DEN','2005-02-07',0,'0000-00-00',0);
 INSERT INTO `salesorders` VALUES (44,'BILLYBUNT','BILLYBUNT','',NULL,'','2005-03-19','WS',10,'Unit C Fatboy Industrial Estate','Donut Drive','Colchester','England','','','William Bunter Inc',0,'MUC','2005-03-21',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (45,'WALMON','WALM','CF_44321',NULL,'','2005-03-03','EX',8,'','','','','+61 2 3546 8875','phyllis@WallMonterey.com.','Wallace Monterey - Sydney',0,'MEL','2005-03-03',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (46,'DSSAD','DSSAD','844321',NULL,' Inv 14','2005-03-26','WS',8,'133 Strasse Grunter','Berlin','Deutcshe','','','','Dressner und Dressner',0,'DEN','2005-03-28',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (47,'DSSAD','DSSAD','',NULL,'','2005-03-26','WS',8,'133 Strasse Grunter','Berlin','Deutcshe','','','','Dressner und Dressner',0,'DEN','2005-03-28',0,'0000-00-00',1);
 
 --
 -- Dumping data for table `salestypes`
@@ -4826,6 +4842,7 @@ INSERT INTO `shipmentcharges` VALUES (2,3,21,5,'125',-1.19000005722046);
 
 INSERT INTO `shipments` VALUES (3,'0','Bunga Testarossa','2004-08-31 00:00:00',0.0000,'BIGBISC',0);
 INSERT INTO `shipments` VALUES (8,'1225','Rotoiti','2005-02-23 00:00:00',0.0000,'GREGCA',0);
+INSERT INTO `shipments` VALUES (11,'V665','Esta Bandan','2005-05-31 00:00:00',0.0000,'GREGCA',0);
 
 --
 -- Dumping data for table `shippers`
@@ -4944,6 +4961,9 @@ INSERT INTO `stockmoves` VALUES (207,'140',17,5,'MEL','2004-12-01','','','0.0000
 INSERT INTO `stockmoves` VALUES (208,'125',17,6,'DEN','2004-12-01','','','0.0000',60,'',5.0000,0.0000,0.0000,1,314,0,0,'');
 INSERT INTO `stockmoves` VALUES (209,'125',16,8,'DEN','2004-12-02','','','0.0000',60,'To Melbourne Australia',-10.0000,0.0000,0.0000,1,304,0,0,'');
 INSERT INTO `stockmoves` VALUES (210,'125',16,8,'MEL','2004-12-02','','','0.0000',60,'From Denver',10.0000,0.0000,0.0000,1,1200,0,0,'');
+INSERT INTO `stockmoves` VALUES (211,'HON90021',10,14,'DEN','2005-03-28','DSSAD','DSSAD','0.0000',63,'Assembly: HON92FrSus Order: 46',-22.0000,0.0000,9.6900,0,56.2,0,0,'');
+INSERT INTO `stockmoves` VALUES (212,'HONShock',10,14,'DEN','2005-03-28','DSSAD','DSSAD','0.0000',63,'Assembly: HON92FrSus Order: 46',-22.0000,0.0000,8.5000,0,-22,0,0,'');
+INSERT INTO `stockmoves` VALUES (213,'HON92FrSus',10,14,'DEN','2005-03-28','DSSAD','DSSAD','53.2000',63,'46',-11.0000,0.0000,0.0000,1,0,0,0.1,'');
 
 --
 -- Dumping data for table `stockserialitems`
@@ -5094,7 +5114,7 @@ INSERT INTO `systypes` VALUES (0,'Journal - GL',10);
 INSERT INTO `systypes` VALUES (1,'Payment - GL',19);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',3);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',13);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',14);
 INSERT INTO `systypes` VALUES (11,'Credit Note',11);
 INSERT INTO `systypes` VALUES (12,'Receipt',4);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
@@ -5110,7 +5130,7 @@ INSERT INTO `systypes` VALUES (26,'Work Order Receipt',0);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',0);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',0);
 INSERT INTO `systypes` VALUES (30,'Sales Order',0);
-INSERT INTO `systypes` VALUES (31,'Shipment Close',9);
+INSERT INTO `systypes` VALUES (31,'Shipment Close',12);
 INSERT INTO `systypes` VALUES (35,'Cost Update',6);
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
 INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',10000);
@@ -5175,7 +5195,7 @@ INSERT INTO `workcentres` VALUES ('ASSEM','DEN','Assembly',1.0000,'20.0000',5600
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-03-25 17:09:59','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
+INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-03-26 10:48:28','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
 INSERT INTO `www_users` VALUES ('testy','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Test Remote User','GRANHR','','','DEN',7,'2005-02-10 21:11:20','GRAN','A4','0,0,0,0,0,0,0,0,',0,50,'fresh','pt_PT');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
