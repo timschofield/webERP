@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -44,11 +44,11 @@ $DefaultDateFormat = 'd/m/Y';
 // $host is the computer ip address or name where the database is located
 // assuming that the web server is also the sql server
 $host = 'localhost';
-$DatabaseName = 'Vitaliy';
+$DatabaseName = 'weberp';
 
 // sql user & password
-$dbuser = 'weberp_db_user';
-$dbpassword = 'weberp_db_pwd';
+$dbuser = 'root';
+$dbpassword = 'triadpass';
 
 // CSS GUI theme
 $DefaultTheme = 'fresh';

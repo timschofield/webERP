@@ -1,10 +1,10 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
 include ('includes/session.inc');
-$title = _('UTILITY PAGE To Change A Stock Code In All Tables');
+$title = _('UTILITY PAGE Change A Stock Code');
 include('includes/header.inc');
 
 if (isset($_POST['ProcessStockChange'])){

@@ -1,30 +1,46 @@
 <?php
-/* $Revision: 1.2 $ */
-/* Script to delete an invoice expects and invoice number to delete 
-not included on any menu for obvious reasons 
+/* $Revision: 1.3 $ */
+/* Script to delete an invoice expects and invoice number to delete
+not included on any menu for obvious reasons
 This page must be called directly using path/Z_DeleteInvoice.php?InvoiceNo=?????    !! */
 
 $PageSecurity=15;
 
-include ("includes/session.inc");
-include("includes/header.inc");
+include ('includes/session.inc');
+$title = _('Delete Invoice');
+include('includes/header.inc');
 
-
+if (!isset($_GET['InvoiceNo'])){
+        prnMsg(_('This page must be called with the InvoiceNo to delete Z_DeleteInvoice.php?InvoiceNo=XX. This page should not be run by non-system administrators'),'info');
+        include('includes/footer.inc');
+        exit;
+}
 /*Get the order number that was invoiced */
 
-$SQL = "SELECT Order_ FROM DebtorTrans WHERE Type = 10	and TransNo = " . $_GET['InvoiceNo'];
+$SQL = 'SELECT Order_
+               FROM DebtorTrans
+        WHERE Type = 10	and TransNo = ' . $_GET['InvoiceNo'];
 
-$Result = DB_query($SQL,$db);  
+$Result = DB_query($SQL,$db);
 $myrow = DB_fetch_row($Result);
 
 $ProcessingOrder = $myrow[0];
 
 /*Now get the stock movements that were invoiced into an array */
 
+$SQL = 'SELECT StockID,
+               LocCode,
+               Bundle,
+               DebtorNo,
+               BranchCode,
+               Prd,
+               Qty,
+               MBflag
+        FROM StockMoves INNER JOIN StockMaster
+             ON StockMoves.StockID = StockMaster.StockID
+        WHERE TransNo =' .$_GET['InvoiceNo'] . ' AND Type=10';
 
-$SQL = "SELECT StockID, LocCode, Bundle, DebtorNo, BranchCode, Prd, Qty FROM StockMoves WHERE TransNo =" .$_GET['InvoiceNo'] . " AND Type=10";
-
-$Result = DB_query($SQL,$db);  
+$Result = DB_query($SQL,$db);
 
 $i=0;
 
@@ -33,62 +49,78 @@ While ($myrow = DB_fetch_array($Result)){
 	$i++;
 }
 
-echo "<P>The number of stock movements to be deleted is: " . DB_num_rows($Result);
+prnMsg(_('The number of stock movements to be deleted is') . ': ' . DB_num_rows($Result),'info');
+
+/*Setup a database transaction */
+$result = DB_query('BEGIN',$db);
 
 /*Now delete the DebtorTrans */
 
-$SQL = "Delete FROM DebtorTrans WHERE TransNo =" . $_GET['InvoiceNo'] . " AND Type=10";
-$Result = DB_query($SQL,$db);
+$SQL = 'DELETE FROM DebtorTrans
+               WHERE TransNo =' . $_GET['InvoiceNo'] . '
+               AND Type=10';
+$DbgMsg = _('The SQL that failed was');
+$ErrMsg = _('The debtorTrans record could not be deleted - the sql server returned the following error');
+$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-echo "<P>SQL to delete the Debtor transaction record:<BR>$SQL<BR>";
+prnMsg(_('The debtor transaction record has been deleted'),'info');
 
-/*Delete any log entries */ 
+/*Delete any log entries */
 
-$SQL = "DELETE FROM OrderDeliveryDifferencesLog	WHERE OrderNo = ". $ProcessingOrder . " AND InvoiceNo = " . $_GET['InvoiceNo'];
+$SQL = 'DELETE FROM OrderDeliveryDifferencesLog
+               WHERE OrderNo = '. $ProcessingOrder . '
+               AND InvoiceNo = ' . $_GET['InvoiceNo'];
 
-echo "<P>SQL to delete the delivery differences record(s):<BR>$SQL<BR>";
-$Result = DB_query($SQL,$db); 
-
+$ErrMsg = _('The SQL to delete the delivery differences record(s) falied because');
+$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+prnMsg(_('Any order delivery differences record(s) have been deleted'),'info');
 
 /*Now reverse updated SalesOrderDetails for the quantities invoiced and the actual dispatch dates. */
 
 foreach ($StockMovement as $OrderLine) {
-	
-	$SQL = "UPDATE SalesOrderDetails SET QtyInvoiced = QtyInvoiced - " . $OrderLine["Qty"] . ", Completed = 0 WHERE OrderNo = " . $ProcessingOrder . " AND StkCode = '" . $OrderLine["StockID"] . "'";
 
-	echo "SQL to reverse update the sales order detail record:<BR>$SQL<BR>";
-	$Result = DB_query($SQL,$db); 
+	$SQL = 'UPDATE SalesOrderDetails SET QtyInvoiced = QtyInvoiced - ' . $OrderLine['Qty'] . ',
+                                             Completed = 0
+                                WHERE OrderNo = ' . $ProcessingOrder . "
+                                AND StkCode = '" . $OrderLine['StockID'] . "'";
 
-/*reverse the update to LocStock */	
+	$ErrMsg = _('The SQL to reverse the update of the sales order detail records falied because');
+	$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+        prnMsg(_('The sales order records have been updated as not invoiced'),'info');
+/*reverse the update to LocStock */
+        if ($OrderLine['MBflag']!='A' AND $OrderLine['MBflag']!='D'){
 
-	$SQL = "UPDATE LocStock SET LocStock.Quantity = LocStock.Quantity + " . $OrderLine["Qty"] . " WHERE  LocStock.StockID = '" . $OrderLine["StockID"] . "' AND LocCode = '" . $OrderLine["LocCode"] . "'";
+        	$ErrMsg = _('The SQL to reverse update to the location stock records failed because');
 
-	echo "SQL to reverse update to the location stock records:<BR>$SQL<BR>";
-		
-	$Result = DB_query($SQL, $db);
-		
-/*Delete Sales Analysis records */
-	$SQL = "DELETE FROM SalesAnalysis WHERE  PeriodNo = " . $OrderLine["Prd"] . " AND Cust='" . $OrderLine["DebtorNo"] . "' AND CustBranch = '" . $OrderLine["BranchCode"] . "' AND Qty = " . $OrderLine["Qty"] . " AND StockID = '" . $OrderLine["StockID"] . "'"; 
+	        $Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+                prnMsg(_('Reversed the location stock quantities for items that decreased'),'info');
+        }
 
-	echo "SQL to delete the sales analysis records:<BR>$SQL<BR>";
-		
-	$Result = DB_query($SQL, $db);
+/*This is a problem - should only update sales analysis what happens where there
+have been previous sales to the same customer/branch for the same item
+Delete Sales Analysis records */
+	$SQL = 'DELETE FROM SalesAnalysis
+                       WHERE  PeriodNo = ' . $OrderLine['Prd'] . "
+                       AND Cust='" . $OrderLine['DebtorNo'] . "'
+                       AND CustBranch = '" . $OrderLine['BranchCode'] . "'
+                       AND Qty = " . $OrderLine['Qty'] . "
+                       AND StockID = '" . $OrderLine['StockID'] . "'";
 
+	$ErrMsg = _('The SQL to delete the sales analysis records failed because');
+
+	$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg,true);
+	prnMsg(_('Sales analysis records deleted - this deleted all sales analysis for the customer/branch and items on this invoice'),'info');
 }
 
 /* Delete the stock movements  */
 
-$SQL = "DELETE FROM StockMoves WHERE Type=10 AND TransNo = " . $_GET['InvoiceNo'];
+$SQL = 'DELETE FROM StockMoves WHERE Type=10 AND TransNo = ' . $_GET['InvoiceNo'];
 
-echo "SQL to delete the stock movement record:<BR>$SQL<BR>";
-$Result = DB_query($SQL, $db);
-	
-
+$ErrMsg _('The SQL to delete the stock movement records failed because');
+$Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
+prnMsg(_('The stock movement records associated with the invoice have been deleted'),'info');
+echo '<BR><BR>';
+prnMsg(_('Invoice number') . ' ' . $_GET['InvoiceNo'} . ' ' . _('has been deleted'),'info');
 /* Delete any GL Transaction records*/
-
-$SQL = "DELETE FROM GLTrans WHERE Type=10 AND TypeNo = " . $_GET['InvoiceNo'];
-echo "SQL to delete all GL posting:<BR>$SQL<BR>";
-$Result = DB_query($SQL,$db);
-
-include("includes/footer.inc");
+include('includes/footer.inc');
 ?>
