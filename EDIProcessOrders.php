@@ -1,6 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
-
+/* $Revision: 1.6 $ */
 
 $PageSecurity =11;
 $title = "Process EDI Orders";
@@ -36,19 +35,21 @@ Read the next line of the flat file ...
 
 /*Read in the EANCOM Order Segments for the current seg group from the segments table */
 
+
 $sql = "SELECT ID, SegTag, MaxOccur, SegGroup FROM EDI_ORDERS_Segs";
 $OrderSeg = DB_query($sql,$db);
 $i=0;
-$Seg =array();
+$Seg = array();
 
 while ($SegRow=DB_fetch_array($OrderSeg)){
-	$Seg[$i] = array('SegTag'=>$SegRow['SegTag'],'MaxOccur'=>$SegRow['MaxOccur'],'SegGroup'=>$SegRow['SegGroup']);
+	$Seg[$i] = array('SegTag'=>$SegRow['SegTag'], 'MaxOccur'=>$SegRow['MaxOccur'], 'SegGroup'=>$SegRow['SegGroup']);
 	$i++;
 }
 
+$TotalNoOfSegments = $i-1;
+
 /*get the list of files in the incoming orders directory - from config.php */
 $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . "/" . $rootpath . "/" . $EDI_Incoming_Orders);
-
 
  while (false !== ($OrderFile=readdir($dirhandle))){ /*there are files in the incoming orders dir */
 
@@ -65,6 +66,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . "/" . $rootpath . "/" . $EDI_In
 	$SegCounter =0;
 	$SegTag='';
 	$LastSeg = 0;
+	$FirstSegInGroup = 0;
 	$EmailText =""; /*Text of email to send to customer service person */
 	$CreateOrder = True; /*Assume create a sales order in the system for the message read */
 
@@ -88,17 +90,29 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . "/" . $rootpath . "/" . $EDI_In
 /* Go through segments in the order message array in sequence looking for matching SegTags
 
    */
-		while ($SegTag != $Seg[$SegID]['SegTag']) {
+		while ($SegTag != $Seg[$SegID]['SegTag'] AND $SegID < $TotalNoOfSegments) {
+
 			$SegID++; /*Move to the next Seg in the order message */
 			$LastSeg = $SegID; /*Remember the last segid moved to */
-			if ($Seg[$SegID]['SegGroup'] != $SegGroup AND $Seg[$SegID]['MaxOccur']> $SegCounter){ /*moved to a new seg group  but could be more segment groups*/
+
+			echo "<BR>Segment Group = " . $Seg[$SegID]['SegGroup'] . " Max Occurences of Segment = " . $Seg[$SegID]['MaxOccur'] . " No occurrences so far = " . $SegCounter;
+
+			if ($Seg[$SegID]['SegGroup'] != $SegGroup AND $Seg[$SegID]['MaxOccur'] > $SegCounter){ /*moved to a new seg group  but could be more segment groups*/
 				$SegID = $FirstSegInGroup; /*Try going back to first seg in the group */
 				if ($SegTag != $Seg[$SegID]['SegTag']){ /*still no match - must be into new seg group */
 					$SegID = $LastSeg;
+					$FirstSegInGroup = $SegID;
 				} else {
 					$SegGroup = $Seg[$SegID]['SegGroup'];
 				}
 			}
+		}
+
+		if ($SegTag != $Seg[$SegID]['SegTag']){
+
+			$EmailText .= "<BR>ERROR: Unable to identify segment tag " . $SegTag . " from the message line <BR>" . $LineText . "<BR><FONT COLOR=RED><B>This message processing has been aborted and seperate advice will be required from the customer to obtain details of the order<B></FONT>";
+
+			$TryNextFile = True;
 		}
 
 		echo "<BR>The segment tag " . $SegTag . " is being processed";
@@ -162,56 +176,66 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . "/" . $rootpath . "/" . $EDI_In
 						break;
 
 				} /*end switch for type of order */
-				$BGM_C106 = explode(':',$BGM_elements[1]);
-				$Order->CustRef = $BGM_C106[0];
-				$EmailText .= "<BR>Customer's order ref: " . $BGM_C106[0];
-				$BGM_1225 = explode(':',$BGM_elements[2]);
-				$MsgFunction = $BGM_1225[0];
-
-				switch ($MsgFunction){
-					case '5':
-						$EmailText .= "<BR><FONT SIZE=4 COLOR=RED>REPLACEMENT order - must delete original order manually</FONT>";
-						break;
-					case '6':
-						$EmailText .= "<BR>Confirmation of previously sent order";
-						break;
-					case '7':
-						$EmailText .= "<BR><FONT SIZE=4 COLOR=RED>DUPLICATE order</FONT> Delete original order manually";
-						break;
-					case '16':
-						$CreateOrder = False; /*Dont create order in system */
-						$EmailText .= "<BR><FONT SIZE=4 COLOR=RED>Proposed order only</FONT> no order created in web-erp";
-						break;
-					case '31':
-						$CreateOrder = False; /*Dont create order in system */
-						$EmailText .= "<BR><FONT SIZE=4 COLOR=RED>COPY order only</FONT> no order will be created in web-erp";
-						break;
-					case '42':
-						$CreateOrder = False; /*Dont create order in system */
-						$EmailText .= "<BR>Confirmation of order - not created in web-erp";
-						break;
-					case '46':
-						$CreateOrder = False; /*Dont create order in system */
-						$EmailText .= "<BR>Provisional order only- not created in web-erp";
-						break;
+				if (isset($BGM_elements[1])){
+					echo "<BR>echo BGM_elements[1] " .$BGM_elements[1];
+					$BGM_C106 = explode(':',$BGM_elements[1]);
+					$Order->CustRef = $BGM_C106[0];
+					$EmailText .= "<BR>Customer's order ref: " . $BGM_C106[0];
 				}
-				if (strlen($BGM_1225[1])>1){
-					$ResponseCode = $BGM_1225[1];
-					switch ($ResponseCode) {
-						case 'AC':
-							$EmailText .= "<BR>Please acknowlege to customer with detail and changes made to the order";
+				if (isset($BGM_elements[2])){
+					echo "<BR>echo BGM_elements[2] " .$BGM_elements[2];
+					$BGM_1225 = explode(':',$BGM_elements[2]);
+					$MsgFunction = $BGM_1225[0];
+
+
+					switch ($MsgFunction){
+						case '5':
+							$EmailText .= "<BR><FONT SIZE=4 COLOR=RED>REPLACEMENT order - must delete original order manually</FONT>";
 							break;
-						case 'AB':
-							$EmailText .= "<BR>Please acknowlege to customer the receipt of message";
+						case '6':
+							$EmailText .= "<BR>Confirmation of previously sent order";
 							break;
-						case 'AI':
-							$EmailText .= "<BR>Please acknowlege to customer any changes to the order";
+						case '7':
+							$EmailText .= "<BR><FONT SIZE=4 COLOR=RED>DUPLICATE order</FONT> Delete original order manually";
 							break;
-						case 'NA':
-							$EmailText .= "<BR>No acknowlegement to customer is required";
+						case '16':
+							$CreateOrder = False; /*Dont create order in system */
+							$EmailText .= "<BR><FONT SIZE=4 COLOR=RED>Proposed order only</FONT> no order created in web-erp";
+							break;
+						case '31':
+							$CreateOrder = False; /*Dont create order in system */
+							$EmailText .= "<BR><FONT SIZE=4 COLOR=RED>COPY order only</FONT> no order will be created in web-erp";
+							break;
+						case '42':
+							$CreateOrder = False; /*Dont create order in system */
+							$EmailText .= "<BR>Confirmation of order - not created in web-erp";
+							break;
+						case '46':
+							$CreateOrder = False; /*Dont create order in system */
+							$EmailText .= "<BR>Provisional order only- not created in web-erp";
 							break;
 					}
+
+					if (isset($BGM_1225[1])){
+						$ResponseCode = $BGM_1225[1];
+						echo "<BR>Response Code: " . $ResponseCode;
+						switch ($ResponseCode) {
+							case 'AC':
+								$EmailText .= "<BR>Please acknowlege to customer with detail and changes made to the order";
+								break;
+							case 'AB':
+								$EmailText .= "<BR>Please acknowlege to customer the receipt of message";
+								break;
+							case 'AI':
+								$EmailText .= "<BR>Please acknowlege to customer any changes to the order";
+								break;
+							case 'NA':
+								$EmailText .= "<BR>No acknowlegement to customer is required";
+								break;
+						}
+					}
 				}
+				break;
 			case 'DTM':
 				/*explode into an arrage all items delimited by the : - only after the + */
 				$DTM_C507 = explode(':',substr($LineText,4));
@@ -263,6 +287,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . "/" . $rootpath . "/" . $EDI_In
 						$EmailText .= "<BR>Confirmation of date lead time " . $LocalFormatDate;
 						break;
 				}
+				break;
 			case 'PAI':
 				/*explode into an array all items delimited by the : - only after the + */
 				$PAI_C534 = explode(':',substr($LineText,4));
@@ -283,9 +308,11 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . "/" . $rootpath . "/" . $EDI_In
 				} elseif ($PAI_C534[2]=='10E'){
 					$EmailText .= "<BR>Payment terms are defined in the Commerical Account Summary Section";
 				}
-				if ($PAI_C534[5]=='2'){
+				if (isset($PAI_C534[5])){
+					if ($PAI_C534[5]=='2')
 					$EmailText .= "<BR>Payment will be posted through the ordinary mail system";
 				}
+				break;
 			case 'ALI':
 				$ALI = explode('+',substr($LineText,4));
 				if (strlen($ALI[0])>1){
@@ -314,6 +341,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . "/" . $rootpath . "/" . $EDI_In
 						$EmailText .= "<BR>Deliver Full order";
 						break;
 				}
+				break;
 			case 'FTX':
 				$FTX = explode('+',substr($LineText,4));
 				/*agreed coded text is not catered for ... yet
@@ -397,9 +425,44 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . "/" . $rootpath . "/" . $EDI_In
 							break;
 					}
 				}
+				break;
 
 		} /*end case  Seg Tag*/
 	} /*end while get next line of message */
+	/*Thats the end of the message or had to abort */
+	/*Now send the email off to the appropriate person */
+	$mail = new htmlMimeMail();
+	$mail->setText($EmailText);
+	$mail->setFrom($CompanyName . "<" . $CompanyRecord['Email'] . ">");
+
+	if ($TryNextFile==True){ /*had to abort this message */
+		/* send the email to the sysadmin  - get email address from users*/
+		echo $EmailText;
+
+		$Result = DB_query("SELECT RealName, Email FROM WWW_Users WHERE FullAccess=7 AND Email <>''",$db);
+		if (DB_num_rows($Result)==0){ /*There are no sysadmins with email address specified */
+
+			$Recipients = array("'phil' <phil@localhost>");
+
+		} else { /*Make an array of the sysadmin recipients */
+			$Recipients = array();
+			$i=0;
+			while ($SysAdminsRow=DB_fetch_array($Result)){
+				$Recipients[$i] = "'" . $SysAdminsRow['RealName'] . "' <" . $SysAdminsRow['Email'] . ">";
+				$i++;
+			}
+		}
+		$TryNextFile=False; /*reset the abort to false before hit next file*/
+		$mail->setSubject("EDI Order Message Error");
+	} else {
+		$mail->setSubject("EDI Order Message " . $Order->CustRef);
+	}
+
+	$result = $mail->send($Recipients);
+
+	/*Now create the order from the $Order object  and commit to the DB*/
+
+
 
 
  } /*end of the loop around all the incoming order files in the incoming orders directory */

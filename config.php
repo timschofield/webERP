@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -124,7 +124,7 @@
 
 
    /* Email address of the person(s) who should receive the cheque listings */
-    $ChkListingReceipients = array ('"Phil" <phil@dux.co.nz>');
+    $ChkListingReceipients = array ('"Bean counter" <one-two-three@com>');
 
     /*Calendar Month number of last month in the company's financial year */
     $YearEnd = "3";
