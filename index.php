@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $title="Main Menu";
 
 $PageSecurity = 1;
@@ -338,10 +338,10 @@ Case "stock": //Inventory Module
 				    </tr>
 				    <tr>
 				    	<td class="menu_group_items">
-						<a href="<?php echo $rootpath."/StockLocTransfer.php?" . SID; ?>">Inventory Warehouse Transfer/Send</a><br/>
-						<a href="<?php echo $rootpath."/StockLocTrfReceive.php?" . SID; ?>">Inventory Warehouse Transfer/Receive</a><br/>
+						<a href="<?php echo $rootpath."/StockLocTransfer.php?" . SID; ?>">Bulk Inventory Transfer - Dispatch</a><br/>
+						<a href="<?php echo $rootpath."/StockLocTransferReceive.php?" . SID; ?>">Bulk Inventory Transfer - Receive</a><br/>
 
-						<a href="<?php echo $rootpath."/StockTransfers.php?" . SID; ?>">Inventory Location Transfers</a><br />
+						<a href="<?php echo $rootpath."/StockTransfers.php?" . SID; ?>">Individual Location Transfers</a><br />
 						<a href="<?php echo $rootpath."/StockAdjustments.php?" . SID; ?>">Inventory Adjustments</a><br />
 						<a href="<?php echo $rootpath."/ReverseGRN.php?" . SID; ?>">Reverse Goods Received</a><br />
 						<a href="<?php echo $rootpath."/StockCounts.php?" . SID; ?>">Enter Stock Counts</a><br />

@@ -1,6 +1,6 @@
 <?php
-/* $Revision: 1.1 $ */
-/* As contributed by Chris Bice - and a little additional tweaking!*/
+/* $Revision: 1.2 $ */
+/* contributed by Chris Bice */
 
 $title = "Inventory Location Transfer Shipment";
 $PageSecurity = 11;
@@ -109,7 +109,7 @@ if(isset($_POST['submit']) AND ! $InputError){
 	}
 	echo "</SELECT><BR>";
 
-	echo "<TABLE>";
+	echo "<CENTER><TABLE>";
 
 	$tableheader = "<TR><TD class='tableheader'>Item Code</TD><TD class='tableheader'>Quantity</TD></TR>";
 	echo $tableheader;
@@ -136,7 +136,7 @@ if(isset($_POST['submit']) AND ! $InputError){
 	}
 
 	echo "</table><br><input type=hidden name='LinesCounter' value=$i><INPUT TYPE=SUBMIT NAME='EnterMoreItems' VALUE='Add More Items'><INPUT TYPE=SUBMIT NAME='submit' VALUE='Create Transfer Shipment'><BR><HR>";
-	echo "</FORM>";
+	echo "</FORM></CENTER>";
 	include("includes/footer.inc");
 }
 ?>

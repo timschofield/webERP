@@ -1,6 +1,8 @@
 <P>webERP Change Log
 
-
+29/4/04 StockLocTransferReceive.php to receive quantities set up to transfer from StockLocTransfer.php. Deletes the temporary table data holding the transfered items on creation of the stock movements necessary.
+28/4/04 RePostGL scripts added updating of ChartDetails.BFwdBudget field.
+28/4/04 SelectProduct.php added link to the part picture as suggested by Alan Beard.
 25/4/04 StockLocTransfer.php - contributed by Chris Bice, creates a transfer from one location to another without creating the transaction but records the transfer in a pending transfers file. Also PDFStockTransfer.php and includes/PDFStockLocTransferPageHeader.inc creates the transfer paperwork. new table LocTransfers also required - in upgrade script.
 25/4/04 GLAccountInquiry.php modifications as contributed by Dirk Eversmann incorporated - now allows multiple periods to be selected and shows the transactions for the whole range of periods between the highest and lowest. Also the movement for each period. B/fwd balances and c/fwd balances only shown where the account is a balance sheet account. GL account is now selectable from a list rather than selecting as per customer or supplier - unlikely to be the same volume of GL accounts hence overhead of downloading all GL accounts over dial up (for the list) is deemed an acceptable compromise.
 22/4/04 PO_SelectOSPurchOrder.php made the location default properly to the users default location.
