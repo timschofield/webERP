@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
 */
@@ -305,7 +305,7 @@ echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?=" . $SID . "' METHOD=POST>";
 /*Display the order with or without discount depending on access level*/
 if (in_array(2,$SecurityGroups[$_SESSION['AccessLevel']])){
 
-	echo "<CENTER><B>Order Summary</B><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1><TR><TD class='tableheader'>Item Description</TD><TD class='tableheader'>Quantity</TD><TD class='tableheader'>Unit</TD><TD class='tableheader'>Price</TD><TD class='tableheader'>Discount %</TD><TD class='tableheader'>Total</TD></TR>";
+	echo "<CENTER><B>Order Summary</B><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1><TR><TD class='tableheader'>Item Code</TD><TD class='tableheader'>Item Description</TD><TD class='tableheader'>Quantity</TD><TD class='tableheader'>Unit</TD><TD class='tableheader'>Price</TD><TD class='tableheader'>Discount %</TD><TD class='tableheader'>Total</TD></TR>";
 
 	$_SESSION['Items']->total = 0;
 	$_SESSION['Items']->totalVolume = 0;
@@ -329,7 +329,7 @@ if (in_array(2,$SecurityGroups[$_SESSION['AccessLevel']])){
 			$k=1;
 		}
 
-		 echo "<TD>$StockItem->ItemDescription</TD><TD ALIGN=RIGHT>$DisplayQuantity</TD><TD>$StockItem->Units</TD><TD ALIGN=RIGHT>$DisplayPrice</TD><TD ALIGN=RIGHT>$DisplayDiscount</TD><TD ALIGN=RIGHT>$DisplayLineTotal</FONT></TD></TR>";
+		 echo "<TD>$StockItem->StockID</TD><TD>$StockItem->ItemDescription</TD><TD ALIGN=RIGHT>$DisplayQuantity</TD><TD>$StockItem->Units</TD><TD ALIGN=RIGHT>$DisplayPrice</TD><TD ALIGN=RIGHT>$DisplayDiscount</TD><TD ALIGN=RIGHT>$DisplayLineTotal</FONT></TD></TR>";
 
 		$_SESSION['Items']->total = $_SESSION['Items']->total + $LineTotal;
 		$_SESSION['Items']->totalVolume = $_SESSION['Items']->totalVolume + ($StockItem->Quantity * $StockItem->Volume);
@@ -337,7 +337,7 @@ if (in_array(2,$SecurityGroups[$_SESSION['AccessLevel']])){
 	}
 
 	$DisplayTotal = number_format($_SESSION['Items']->total,2);
-	echo "<TR><TD><B>TOTAL Excl Tax/Freight</B></TD><TD COLSPAN=5 ALIGN=RIGHT>$DisplayTotal</TD></TR></TABLE>";
+	echo "<TR><TD COLSPAN=6 ALIGN=RIGHT><B>TOTAL Excl Tax/Freight</B></TD><TD ALIGN=RIGHT>$DisplayTotal</TD></TR></TABLE>";
 
 	$DisplayVolume = number_format($_SESSION['Items']->totalVolume,2);
 	$DisplayWeight = number_format($_SESSION['Items']->totalWeight,2);

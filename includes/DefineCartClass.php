@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /* Definition of the cart class
 this class can hold all the information for:
 
@@ -57,6 +57,14 @@ Class Cart {
 
 			$this->LineItems[$StockID] = new LineDetails($StockID, $Descr, $Qty, $Price, $Disc, $UOM, $Volume, $Weight, $QOHatLoc, $MBflag, $ActDispatchDate, $QtyInvoiced, $DiscCat);
 			$this->ItemsOrdered++;
+
+			if ($_SESSION['ExistingOrder']!=0 AND !isset($_GET['ModifyOrderNumber'])){
+				global $db;
+				$result = DB_query("INSERT INTO SalesOrderDetails (OrderNo, StkCode, Quantity, UnitPrice, DiscountPercent) VALUES(" . $_SESSION['ExistingOrder'] . ", '" . $StockID ."'," . $Qty . ", " . $Price . ", " . $Disc . ")" , $db , "<BR>The order line for " . $StockID . " could not be inserted");
+
+				echo "<BR>Order number " . $_SESSION['ExistingOrder'] . " - line $UpdateItem has been added.";
+			}
+
 			Return 1;
 		}
 		Return 0;
@@ -64,11 +72,18 @@ Class Cart {
 
 	function update_cart_item($UpdateItem, $Qty, $Price, $Disc){
 
-			if ($Qty>0){
-				$this->LineItems[$UpdateItem]->Quantity = $Qty;
-			}
-			$this->LineItems[$UpdateItem]->Price = $Price;
-			$this->LineItems[$UpdateItem]->DiscountPercent = $Disc;
+		if ($Qty>0){
+			$this->LineItems[$UpdateItem]->Quantity = $Qty;
+		}
+		$this->LineItems[$UpdateItem]->Price = $Price;
+		$this->LineItems[$UpdateItem]->DiscountPercent = $Disc;
+
+		if ($_SESSION['ExistingOrder']!=0){
+			global $db;
+			$result = DB_query("UPDATE SalesOrderDetails SET Quantity=" . $Qty . ", UnitPrice=" . $Price . ", DiscountPercent=" . $Disc . " WHERE OrderNo=" . $_SESSION['ExistingOrder'] . " AND StkCode='" . $UpdateItem ."'" , $db , "<BR>The order line for " . $UpdateItem . " could not be updated");
+
+			echo "<BR>Order number " . $_SESSION['ExistingOrder'] . " - line $UpdateItem has been updated";
+		}
 	}
 
 	function remove_from_cart(&$StockID){
