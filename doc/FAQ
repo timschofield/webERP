@@ -1,0 +1,96 @@
+Installation Issues:
+
+
+Q1: Each time I choose an option, any one, I'm presented with the login screen again
+
+A1: webERP uses sessions to store the access level of the user. Sessions allow information to be retained between web pages. Some installations of php do not have session support working by default. The settings in the php.ini relating to sessions are critical. Windows PHP distributions used to use:
+
+session.save_path = /tmp
+
+Windows doesn't like this directory. All php sessions will fail until this is fixed. Changing to:
+
+session.save_path = C:\windows\temp
+
+should resolve the problem.
+
+
+
+Q2: I can't use PHPMyAdmin to create the database I get the message:
+
+MySQL said:
+
+
+You have an error in your SQL syntax. Check the manual that corresponds to your MySQL server version for the right syntax to use near '---------------------------------------------------------
+--
+
+A2: PHPMyAdmin does not like files created with mysqldump. The installation instructions are based around the mysql client for that reason. The mysql client program can be run from a DOS window under windows or a terminal window for *nix. Under windows the .exe file is under C:\mysql\bin\mysql.exe by default. Under Windows XP and 2000 click start, run then enter 'cmd' then press ENTER to open DOS window. To create the database enter
+
+>C:\mysql\bin\mysql.exe --user=root < /path_to_the_sql_scripts/web-erp-demo.sql
+
+
+
+Q3: I can start webERP ok, but when I try to enter an order (or purchase order/receipt/payment) after selecting a customer I get the message:
+
+Fatal error: The script tried to execute a method or access a property of an incomplete object. Please ensure that the class definition cart of the object you are trying to operate on was loaded _before_ the session was started in /usr/local/httpd/htdocs/web-erp/SelectOrderItems.php on line 282
+
+A3: This error occurs because some linux distributions that came bundled with PHP or were installed from an .rpm file were installed with the setting for session_auto_start in php.ini set to 1. Classes/objects cannot be defined before a session is started so any php script which needs an object to run will fail. The solution is to edit the php.ini file - normally C:\Windows\php.ini or /usr/local/lib/php.ini to change session.auto_start = 0 then restart the web server.
+
+
+Q4: I get the following error message or similar:
+
+Warning: session_start(): open(C:\Program Files\PHP\sessiondata\sess_35560340884acf1c04184d4df2830fb2, O_RDWR) failed: Permission denied (13) in c:\inetpub\wwwroot\web-erp\includes\session.inc on line 14
+
+A4: This error means that the directory where you have indicated that session information should be held is not writable by the web-server.
+
+Q5: I get the following error message or similar:
+
+Notice: Undefined index: AttemptsCounter in c:\inetpub\wwwroot\web-erp\includes\session.inc on line 20
+
+A5: A notice like this is not an error as such ? it is acceptable to use variables without first initialising them in PHP. To avoid showing these notices a configuration directive in php.in needs to be modified. Look for the line in php.ini
+error_reporting  = E_ALL; display all errors, warnings and notices
+and change it to :
+error_reporting  = E_ALL & ~A_NOTICE
+
+The web-server may need to be restarted - a CGI installation will not need to be restarted.
+
+
+Q6: The links on each page do not work I keep getting page not found errors when selecting menu links.
+
+A6: Some installations appear not to be able to work out the value of the variable $rootpath using the line
+
+$rootpath = dirname($_SERVER['PHP_SELF']);
+
+in config.php. The symptom described is the result. If all else fails just change the $rootpath variable to be the name of the directory under the web server root directory where the scripts are held. EG. by default this would be:
+
+$rootpath = '/web-erp';
+
+note the trailing / is not required.
+
+
+Q7: I am starting from a point well into the business can I start issuing PO and invoices using the same sequence I am already running?
+
+A7: Yes. Use a DB tool like phpMyAdmin to edit the current transactions numbers in the table SysTypes. This table stores the current transaction number for all transaction types.
+
+
+
+Pricing/Orders
+
+Q1: I am trying to enter sales orders for items I do not have in stock but are contained in the stock list, with pricing, etc, yet each time (regardless of item) I get this result. I have checked the item exists, there is pricing for it, both cost and sell. I cannot find the broken link, can anyone help?
+The part code 'RJ45M' does not have pricing set up or does not exist in the database and therefore cannot be added to the order.
+
+
+A1: This could occur for a number of reasons. If you imported the parts into the database from an old system it is important to note that when the system creates inventory items ie through manual entry, it creates stock location records for them as well. You can see if stock location records were set up by inspecting the stock status of the item. You should get each location stock listed. If not you need to create stock location records as necessary - A utility script for this called Z_MakeStockLocns.php - enter this script name in to your browser to run it.
+Also check that the customer is defined with a valid sales type (price list) and that a price is setup for the sales type of the customer. Since the sales type is a select box it may not be apparent that the customer does not have a sales type selected. Select a sales type and hit update.
+Also check that the parameter in config.php for the DefaultPriceList is set to a defined sales type.
+by default it is set to:
+$DefaultPriceList = "WS";
+if there is no WS sales type defined the system has a problem.
+
+
+
+Q2: Is there any way to enter items into a sales order freeform, in other words without have a specific part set up. For example if I want to sell an item that I do not normally stock and do want to go through the complete entry process to be able to sell it?
+
+A2: Yes. You can enter items into a sales order free form using the special order functionality. First you have to select a supplier that the item is purchased from and the customer that it is to be sold to. Then hit the link on the main menu under orders for special order. This creates a purchase order and sales order for the parts ordered and makes up part codes based on the purchase order number. The purchase cost and the selling price must be entered directly.
+
+
+

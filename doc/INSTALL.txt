@@ -1,0 +1,182 @@
+WEB-ERP Installation
+
+Pre-requisites
+
+- A working PHP web server - with mysql and ftp
+- A working MySQL server version 4 or above - innodb tables must be enabled (this needs a my.cnf file - see the MySQL manual).
+
+Getting these components installed are well covered elsewhere see the following links:
+
+http://logidac.com/apache/apache-install-rpm.phtml
+http://www.linux-sottises.net/en_apache_install.php
+
+
+One critical aspect of the PHP installation is the setting of session.auto_start in the php.ini file
+Some .rpm distributions of PHP (as of 4.3.2) have the default setting of session.auto_start = 1
+This starts a new session at the beginning of each script. However, this makes it impossible to instatiate any class objects that the system relies on. web-ERP starts a session when it needs one and the setting of session.auto_start should be therefore be set to 0.
+
+There are a number of traps with PHP installation depending on the web-server - see the FAQ.
+
+The system could be used with many other database servers but it is tested and developed on MySQL.
+
+ftp is only required for sending order files to a Radio Beacon ftp server for remote warehouse services.
+
+NB. Please try not to refer questions about PHP or MySQL configuration.
+
+The installation consists of:
+
+1. Copying all the PHP scripts and include files to a directory under the web server root directory
+2. Creating the database and populating with initial data
+3. Editing config.php for the database connection information and any other requirements
+4. Logging into the system for the first time
+5. Setting up company specific information in the system.
+
+
+1.  Copying all the PHP Scripts to the correct directory
+
+You must have downloaded the archive to be reading this file INSTALL.txt file!
+However, all files in this archive except files under the sql and doc directories should be copied to a directory under the web server root directory. This varies between installations but
+
+/usr/local/httpd/htdocs/
+
+is the apache root directory under SuSE Linux.
+
+In windows it is C:\Program Files\Apache Group\Apache\htdocs
+Normally the Apache document root directory is called "htdocs"
+
+Under windows use winzip to extract the archive under the web server root directory.
+
+Under *nix copy the archive to the the web server's root directory and then run:
+
+gunzip -dc web-erp.tar.gz | tar -xvf -
+
+this will create the web-erp directory under the web server root directory and put all the scripts in that directory.
+
+
+2. Creating the Database
+
+MySQL version 4.x or above is required - Foreign Keys are implemented in the database as from version 2.8 these only became an option in MySQL version 3.23.51. Innodb tables must be enabled in the MySQL server. These tables allow database transactions which are a critical component of ERP software. Innodb tables require some parameters to be set up in my.cnf - there are some examples in the MySQL manual under table types - Innodb tables.
+
+When using mysql both windows and *nix have the mysql command line client. The command line client is run in a DOS window under Windows. Open a DOS window using Start, Run, cmd ENTER for Windows XP and 2000. Normally the mysql client mysql.exe file is under C:\mysql\bin\mysql.exe by default if this path is not in the default path then commands referred to below as mysql will need to be prefixed by C:\mysql\bin
+
+You need to know the user name and password for the MySQL server. If you have not set these up the default is
+
+user root
+password ""
+
+BUT you should not use this account - you should set up another user for you mysql installation and change
+the root password to something other than "". There are a number of front ends that allow the mysql user accounts to be maintained and if you are familiar with one of these, it should be used in preference to the mysql command line client discussed below.
+
+From the MySQL manual (edited):
+
+	The MySQL root user is created as a superuser who can do anything. Connections must be made from the local host.
+	NOTE: The initial root password is empty, so anyone can connect as root without a password and be granted all privileges.
+
+	Because your installation is initially wide open, one of the first things you should do is specify a password for the MySQL root user. You can do this as follows (note that you specify the password using the PASSWORD() function):
+
+	You can, in MySQL Version 3.22 and above, use the SET PASSWORD statement:
+
+	shell> mysql -u root mysql
+	mysql> SET PASSWORD FOR root=PASSWORD('new_password');
+
+where 'new_password' is the new password you chose for the root user.
+
+Also from the MySQL manual (edited):
+
+	Also, if you have changed the root user password, you must specify it for the mysql commands below.
+
+	You can add new users by issuing GRANT statements:
+
+	shell> mysql --user=root  -p 'new_password' mysql
+
+	mysql> GRANT ALL PRIVILEGES ON *.* TO weberp_db_user@localhost
+        	   IDENTIFIED BY 'some_pass' WITH GRANT OPTION;
+
+Where 'some_pass' is a password of your choice for the new user 'weberp_db_user'. Note that this user weberp_db_user can only connect from the local machine so if the web server is on a different machine to the MySQL server then you need to give privileges to connect from other computers.
+See the MySQL manual.
+
+If you have an account set up already in MySQL and innodb tables enabled, then all you need to do is to run one of the sql scripts - under the sql directory as unpacked from the tar-ball.
+
+Note: The scripts provided are created using mysqldump and contain comments. Unfortunately, phpMyAdmin doesn't like these comments so it is recommended to follow the instructions below.
+
+Two scripts are provided:
+
+1. web-erp-demo.sql  This has a minimal amount of demonstration data in a bogus company set up so that transactions can be tried to see how the
+system works.
+2. web-erp-new.sql This script has only the basic data necessary to start a new company system off. If you wish to set up your company on web-erp
+then this is the script to use.
+
+This creates a weberp database and populates it with only the very basic data to start off.
+The files web-erp-demo.sql and web-erp-new.sql should be in the directory with all the PHP scripts.
+
+shell > mysql --user=weberp_db_user --password='some_pass' < /path_to_the_sql_script/web-erp-demo.sql
+
+or
+
+shell > mysql --user=weberp_db_user --password='some_pass' < /path_to_the_sql_script/web-erp-new.sql
+
+as required.
+
+3. Editing config.php
+
+config.php contains a series of user defined variables that determine how the system behaves. Critically it contains the user and password of the MySQL connection required to connect to the MySQL server. There is no going forward without the system being provided with this data. It is important to ensure there are no trailing characters at the end of this file.
+
+The file appears as follows and must be edited and saved in the web directory where the scripts are.
+
+/*User Configurable variables
+********************************
+  Please modify at will (after the = only. Quotes are required and lines must finish with a semi colon;)*/
+
+/* the company name to appear in the headings on each page displayed */
+
+	$CompanyName = "WEB-ERP Demonstration System";
+
+/*Connection Information for the database
+- host is the computer ip address or name where the database is the default is localhost assuming that the web server is also the sql server
+*/
+	$host = "localhost";
+
+/* - user is the user name under which the database should be accessed - need to change to the mysql (or other DB) user set up for purpose
+NB it is not secure to use root as the user with no password - a user with appropriate privileges must be set up
+*/
+	$dbuser = "weberp_db_user";
+
+/* - password is the password the user of the database requires to be sent to authorise the above database user
+*/
+	$dbpassword = "weberp_db_pwd";
+
+/* - DatabaseName is the name of the database as defined in the RDMS being used.
+     Typically RDMS allow many databases to be maintained under the same server.
+     The scripts for MySQL provided use the name web-erp
+*/
+	$DatabaseName = "weberp";
+
+
+4. Logging In For the First Time
+
+Open a browser and enter the URL for the web server directory where web-erp is installed if the broswer is on the same machine as the server perhaps
+
+http://localhost/web-erp/index.php
+
+enter the user name of 'demonstration'
+password 'weberp'
+
+(the quotation marks are not required).
+
+You can set up additional user accounts from the System Setup tab and change the password.
+Be careful not to delete the demonstration user until a new user has been set up.
+If there are no users defined the next time you try to login you won't be able to!
+The only way then to create a user to login with is to manually edit the SQL table WWW_Users to insert a user.
+
+NB The importance of setting a password to use the SQL server otherwise anyone could modify WWW_Users and gain access to private company information.
+
+A pdf reader - Acrobat should be installed on the client machines that will access the system. It is recommended that the preferences of Acrobat Reader be changed so as to open a seperate window for acrobat documents rather than display them in the browser.
+
+5. Setting Up Company Specific Data
+
+To have your company's logo printed on the top of reports and appear at the top left of the screen - all that is required is to copy a .jpg format file of your company's logo to logo.jpg in the scripts directory.
+
+Now the accounting starts....
+
+All the standing configuration data is defined from the system setup tab and each link should be reviewed to enter appropriate data for the business.
+
