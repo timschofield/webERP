@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /* Definition of the Supplier Transactions class to hold all the information for an accounts payable invoice or credit note
 */
 
@@ -20,12 +20,10 @@ Class SuppTrans {
 	var $GRNAct;
 	var $CreditorsAct;
 	var $InvoiceOrCredit;
-
 	var $ExRate;
 	var $Comments;
 	var $TranDate;
 	var $DueDate;
-
 	var $SuppReference;
 	var $OvAmount;
 	var $OvGST;

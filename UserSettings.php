@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity=1;
 
@@ -66,7 +66,7 @@ if (isset($_POST['Modify'])) {
 					theme='" . $_POST['Theme'] . "',
 					language='" . $_POST['Language'] . "',
 					email='". $_POST['email'] ."',
-					password='" . sha1($_POST['pass']) . "'
+					password='" . CryptPass($_POST['pass']) . "'
 				WHERE userid = '" . $_SESSION['UserID'] . "'";
 
 			$ErrMsg =  _('The user alterations could not be processed because');

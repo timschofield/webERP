@@ -59,10 +59,11 @@ If (isset($_POST['PrintPDF'])
 			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
 			AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
 			AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
-			GROUP BY locstock.stockid,
-				stockcategory.categorydescription,
+			GROUP BY stockmaster.categoryid,
 				stockmaster.description,
-				stockcategory.categoryid
+				stockcategory.categorydescription,
+				locstock.stockid,
+				stockmaster.stockid
 			ORDER BY stockmaster.categoryid,
 				stockmaster.stockid";
 	} else {

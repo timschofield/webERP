@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 	$PageSecurity = 15;
 
 	include('includes/session.inc');
@@ -19,6 +19,8 @@
 	echo "<P><A HREF='$rootpath/Z_CurrencySuppliersBalances.php?" . SID . "'>" . _('Show Local Currency Total Suppliers Balances') . '</A>';
 	echo "<P><A HREF='$rootpath/Z_CheckGLTransBalance.php?" . SID . "'>" . _('Show General Transactions That Do Not Balance') . '</A>';
 	echo "<P><A HREF='$rootpath/Z_poAdmin.php?" . SID . "'>" . _('Maintain Language Files') . '</A>';
+	echo "<P><A HREF='$rootpath/Z_DataExport.php?" . SID . "'>" . _('Data Export Options') . '</A>';
+	echo "<P><A HREF='$rootpath/Z_GetStockImage.php?" . SID . "'>" . _('Image Manipulation Utility') . '</A>';
 
 	echo '<BR><BR><HR><BR>' . _('The stuff below is really quite dangerous!');
 

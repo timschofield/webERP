@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -101,7 +101,7 @@ if (isset($_POST['submit'])) {
 						customerid='" . DB_escape_string($_POST['Cust']) ."',
 						phone='" . DB_escape_string($_POST['Phone']) ."',
 						email='" . DB_escape_string($_POST['Email']) ."',
-						password='" . sha1($_POST['Password']) . "',
+						password='" . CryptPass($_POST['Password']) . "',
 						branchcode='" . DB_escape_string($_POST['BranchCode']) . "',
 						pagesize='" . $_POST['PageSize'] . "',
 						fullaccess=" . $_POST['Access'] . ",
@@ -128,7 +128,7 @@ if (isset($_POST['submit'])) {
 						'" . DB_escape_string($_POST['RealName']) ."',
 						'" . DB_escape_string($_POST['Cust']) ."',
 						'" . DB_escape_string($_POST['BranchCode']) ."',
-						'" . sha1($_POST['Password']) ."',
+						'" . CryptPass($_POST['Password']) ."',
 						'" . DB_escape_string($_POST['Phone']) . "',
 						'" . DB_escape_string($_POST['Email']) ."',
 						'" . $_POST['PageSize'] ."',

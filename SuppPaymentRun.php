@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 5;
 
@@ -13,6 +13,9 @@ Class Allocation {
 	}
 }
 
+include('config.php');
+include('includes/ConnectDB.inc');
+
 include('includes/GetPaymentMethods.php');
 
 If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
@@ -23,9 +26,6 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	AND is_numeric($_POST['ExRate'])){
 
 /*then print the report */
-
-	include('config.php');
-	include('includes/ConnectDB.inc');
 
 	include('includes/PDFStarter_ros.inc');
 	include('includes/DateFunctions.inc');

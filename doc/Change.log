@@ -1,5 +1,10 @@
 <P>webERP Change Log
 
+<P>26/2/05 Addedd Janusz Dobrowlski/ David Lao wrapper includes/class.pdf.php for R&OS pdf class to use FPDF class by Olivier PLATHEY in place of R&OS pdf.php class which is not good at alternative fonts/character sets.
+<P>23/2/05 Links to Danie's new scripts in Z_index.php
+<P>23/2/05 Danie - Z_DataExport.php allows export of various data as csv files
+<P>23/2/05 Danie - session.inc, config.php, WWW_Users.php, UserSettings.php passwords now have a choice of md5, sha1 or plain text depending on setting in config.php - default is sha1
+<P>23/2/05 Danie - Z_GetStockImage.php image manipluation script
 <P>21/2/05 New script to print quotations PDFQuotation.php includes/PDFQuotationPageHeader.inc
 <P>18/2/05 Bug fixes - <CENTER> on BankMatching.php, GLAccountInquiry.php integrity checking against wrong chartdetail record, lower casing errors in some Z scripts - Dick Stins, StockCostUpdate.php - OverheadCost added twice
 <P>17/2/05 maximum execution time now as a config.php parameter defaults to 2 mins - 120 seconds

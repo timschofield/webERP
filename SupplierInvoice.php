@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -99,9 +99,10 @@ if (isset($_GET['SupplierID'])){
 
 	prnMsg( _('To enter a supplier invoice the supplier must first be selected from the supplier selection screen'),'warn');
 	echo "<BR><A HREF='$rootpath/SelectSupplier.php?" . SID ."'>" . _('Select A Supplier to Enter an Invoice For') . '</A>';
+	include('includes/footer.inc');
 	exit;
 
-	/*It all stops here if there aint no supplier selected */
+	/*It all stops here if there ain't no supplier selected */
 }
 
 /* Set the session variables to the posted data from the form if the page has called itself */
@@ -185,11 +186,13 @@ echo "<CENTER><TABLE BORDER=2 COLSPAN=4><TR><TD CLASS='tableheader'>" . _('Suppl
 	  "</TD><TD CLASS='tableheader'>" . _('Tax Authority') . '</TD></TR>';
 
 echo '<TR><TD><FONT COLOR=blue><B>' . $_SESSION['SuppTrans']->SupplierID . ' - ' .
-	  $_SESSION['SuppTrans']->SupplierName . '</TD><TD ALIGN=CENTER><FONT COLOR=blue><B>' .
-	  $_SESSION['SuppTrans']->CurrCode . '</TD><TD><FONT COLOR=blue><B>' .
-	  $_SESSION['SuppTrans']->TermsDescription . '</TD><TD ALIGN=CENTER><FONT COLOR=blue><B>' .
-	  $_SESSION['SuppTrans']->TaxDescription . ' (' . (($_SESSION['SuppTrans']->TaxRate)*100) .
-	  '%)</TD></TR></TABLE></B></FONT>';
+	  $_SESSION['SuppTrans']->SupplierName . '</B></FONT></TD>
+	  <TD ALIGN=CENTER><FONT COLOR=blue><B>' .  $_SESSION['SuppTrans']->CurrCode . '</B></FONT></TD>
+	  <TD><FONT COLOR=blue><B>' . $_SESSION['SuppTrans']->TermsDescription . '</B></FONT></TD>
+	  <TD ALIGN=CENTER><FONT COLOR=blue><B>' . $_SESSION['SuppTrans']->TaxDescription . ' (' . (($_SESSION['SuppTrans']->TaxRate)*100) .
+	  '%)</B></FONT></TD>
+	  </TR>
+	  </TABLE>';
 
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -10,6 +10,17 @@
     include('config.php');
     include('includes/ConnectDB.inc');
         
+    
+    function CryptPass( $Password ) {
+    	global $CryptFunction;
+    	if ( $CryptFunction == 'sha1' )
+    		return sha1($Password);
+    	elseif ( $CryptFunction == 'md5' )
+    		return md5($Password);
+    	else
+    		return $Password;
+    }
+    
     if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);
     }
@@ -79,7 +90,8 @@
 			www_users.language
 		FROM www_users
 		WHERE www_users.userid='" . $_POST['UserNameEntryField'] . "' 
-		AND www_users.password='" . sha1($_POST['Password']) . "'";
+		AND (www_users.password='" . CryptPass($_POST['Password']) . "'
+		OR  www_users.password='" . $_POST['Password'] . "')";
         $Auth_Result = DB_query($sql, $db);
 
         // Populate session variables with data base results
@@ -108,7 +120,7 @@
 
 		$sql = "UPDATE www_users SET lastvisitdate='". date("Y-m-d H:i:s") ."' 
 			WHERE www_users.userid='" . $_POST['UserNameEntryField'] . "' 
-			AND www_users.password='" . sha1($_POST['Password']) ."'";
+			AND www_users.password='" . CryptPass($_POST['Password']) ."'";
 		$Auth_Result = DB_query($sql, $db);
 		
 		/*get the security tokens that the user has access to */

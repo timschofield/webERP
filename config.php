@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.48 $ */
+/* $Revision: 1.49 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -58,6 +58,10 @@ $MaximumExecutionTime =120;
 //$SessionSavePath = '/tmp';
 
 
+// which encryption function should be used
+//$CryptFunction = "md5"; // MD5 Hash
+$CryptFunction = "sha1"; // SHA1 Hash
+//$CryptFunction = ""; // Plain Text
 // END OF USER CONFIGURABLE VARIABLES
 
 /*The $rootpath is used in most scripts to tell the script the installation details of the files.

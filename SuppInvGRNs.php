@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -22,14 +22,14 @@ if (!isset($_SESSION['SuppTrans'])){
 	/*It all stops here if there aint no supplier selected and invoice initiated ie $_SESSION['SuppTrans'] started off*/
 }
 
-/*If the user hit the Add to Invoice button then process this first before showing  all GRNs on the invoice otherwise it wouldnt show the latest addition*/
+/*If the user hit the Add to Invoice button then process this first before showing  all GRNs on the invoice otherwise it wouldnt show the latest additions*/
 if (isset($_POST['AddPOToTrans']) AND $_POST['AddPOToTrans']!=''){
     foreach($_SESSION['SuppTransTmp']->GRNs as $GRNTmp) {
         if ($_POST['AddPOToTrans']==$GRNTmp->PODetailItem) {
 		    $_SESSION['SuppTrans']->Copy_GRN_To_Trans($GRNTmp);
-            $_SESSION['SuppTransTmp']->Remove_GRN_From_Trans($GRNTmp->GRNNo);
+		    $_SESSION['SuppTransTmp']->Remove_GRN_From_Trans($GRNTmp->GRNNo);
         }
-	}
+    }
 }
 
 if (isset($_POST['AddGRNToTrans'])){ /*adding a GRN to the invoice */
@@ -37,9 +37,9 @@ if (isset($_POST['AddGRNToTrans'])){ /*adding a GRN to the invoice */
         $Selected = $_POST['GRNNo_' . $GRNTmp->GRNNo];
         if ($Selected==True) {
 		    $_SESSION['SuppTrans']->Copy_GRN_To_Trans($GRNTmp);
-            $_SESSION['SuppTransTmp']->Remove_GRN_From_Trans($GRNTmp->GRNNo);
+		    $_SESSION['SuppTransTmp']->Remove_GRN_From_Trans($GRNTmp->GRNNo);
         }
-	}
+    }
 }
 
 if (isset($_POST['ModifyGRN'])){
@@ -87,11 +87,9 @@ if (isset($_POST['ModifyGRN'])){
 }
 
 if (isset($_GET['Delete'])){
-    $_SESSION['SuppTransTmp']->Copy_GRN_To_Trans($_SESSION['SuppTrans']->GRNs[$_GET['Delete']]);
+	$_SESSION['SuppTransTmp']->Copy_GRN_To_Trans($_SESSION['SuppTrans']->GRNs[$_GET['Delete']]);
 	$_SESSION['SuppTrans']->Remove_GRN_From_Trans($_GET['Delete']);
 }
-
-
 
 
 /*Show all the selected GRNs so far from the SESSION['SuppTrans']->GRNs array */
@@ -243,7 +241,6 @@ if (isset($_GET['Modify'])){
 	echo "<INPUT TYPE=HIDDEN NAME='Prev_QuantityInv' VALUE=" . $GRNTmp->Prev_QuantityInv . '>';
 	echo "<INPUT TYPE=HIDDEN NAME='OrderPrice' VALUE=" . $GRNTmp->OrderPrice . '>';
 	echo "<INPUT TYPE=HIDDEN NAME='StdCostUnit' VALUE=" . $GRNTmp->StdCostUnit . '>';
-
 	echo "<INPUT TYPE=HIDDEN NAME='JobRef' Value='" . $GRNTmp->JobRef . "'>";
 	echo "<INPUT TYPE=HIDDEN NAME='GLCode' Value='" . $GRNTmp->GLCode . "'>";
 	echo "<INPUT TYPE=HIDDEN NAME='PODetailItem' Value='" . $GRNTmp->PODetailItem . "'>";
