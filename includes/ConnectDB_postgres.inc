@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 define ('LIKE','ILIKE');
 /* $PgConnStr = $PgConnStr = "host=".$host." dbname=".$DatabaseName; */
  $PgConnStr = 'dbname='.$DatabaseName;
@@ -32,6 +32,7 @@ function DB_query ($SQL,
 		$TrapErrors=true){
 
 	global $debug;
+	
 	$result = pg_query($Conn, $SQL);
 	if ($DebugMessage == '') {
 		$DebugMessage = _('The SQL that failed was:');

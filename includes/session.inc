@@ -1,27 +1,16 @@
 <?php
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
 	| Web-ERP - http://web-erp.sourceforge.net          |
 	| by Logic Works Ltd                                |
-	\--------------------------------------------------*/
-
+	\--------------------------------------------------*/ 
+    
+    
     include('config.php');
     include('includes/ConnectDB.inc');
         
-    
-    function CryptPass( $Password ) {
-    	global $CryptFunction;
-    	if ( $CryptFunction == 'sha1' ) {
-    		return sha1($Password);
-    	} elseif ( $CryptFunction == 'md5' ) {
-    		return md5($Password);
-	} else {
-    		return $Password;
-    	}
-    }
-    
     if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);
     }
@@ -30,7 +19,7 @@
     ini_set('max_execution_time',$MaximumExecutionTime);
  
     session_start();
-    include('includes/GetConfig.php');
+    
     // Un comment to turn off attempts counter
     //$_SESSION['AttemptsCounter'] = 0;
 
@@ -38,12 +27,13 @@
     	$_SESSION['AttemptsCounter'] = 0;
     }
 
+    
     // 5 login attempts, show failed login screen
     if (!isset($_SESSION['AttemptsCounter'])) {
 	$_SESSION['AttemptsCounter'] = 0;
     } elseif ($_SESSION['AttemptsCounter'] >= 5 AND isset($_POST['UserNameEntryField'])) {
 	/*User blocked from future accesses until sysadmin releases */
-	$sql = "UPDATE www_users SET www_users.blocked=1 WHERE www_users.userid='" . $_POST['UserNameEntryField'] . "'";
+	$sql = "UPDATE www_users SET blocked=1 WHERE www_users.userid='" . $_POST['UserNameEntryField'] . "'";
         $Auth_Result = DB_query($sql, $db);
         die(include('includes/FailedLogin.php'));
     }
@@ -153,8 +143,9 @@
 
     }		// End of userid/password check
 
+    /*User is logged in so get configuration parameters  - save in session*/
+    include('includes/GetConfig.php');
     /*Now users language has been set include the language setup script */
-    
     include('includes/LanguageSetup.php');
     
     // Now check that the user as logged in has access to the page being called. The $PageSecurity
@@ -193,5 +184,16 @@
         $debug = 1;
     } else {
         $debug = 0;
+    }
+    
+    function CryptPass( $Password ) {
+    	global $CryptFunction;
+    	if ( $CryptFunction == 'sha1' ) {
+    		return sha1($Password);
+    	} elseif ( $CryptFunction == 'md5' ) {
+    		return md5($Password);
+	} else {
+    		return $Password;
+    	}
     }
 ?>
