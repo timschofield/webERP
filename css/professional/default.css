@@ -18,7 +18,7 @@
 body {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 8px;
-	background-color: #dddddd; 
+	background-color: #DDDDDD;
 	margin-left: 10px;
 	margin-top: 5px;
 	margin-bottom: 0px;
@@ -32,17 +32,17 @@ a {
 	font-size: 12px;
 	font-weight: normal;
 	text-decoration: none;
-	color: #0000ff;
+	color: #0000FF;
 }
 
 /*links on any screen when mouse is hovering over them */
 a:hover {
-	color: #0000aa;
+	color: #0000AA;
 	text-decoration: underline;
 }
 
 table {
-  background-color: #eeeeff;
+  background-color: #EEEEFF;
 }
 
 /*table detail items default format */
@@ -65,19 +65,19 @@ select {
 #topMenu {
 	width: 100%;
 	color: #000000;
-	background-color: #ffffff;
+	background-color: #FFFFFF;
 	border: none;
 	border-bottom: 1px solid #999999;
 }
 
 #trim {
-	background: "#ffffff";
+	background: "#FFFFFF";
 }
 
 #page {
 	width: 100%;
 	color: #000000;
-	font-size 8px;
+	font-size: 8px;
 	white-space: nowrap;
 	border: none;
 }
@@ -92,7 +92,7 @@ select {
 #mainMenu {
 	width: 100%;
 	color: #000000;
-	background-color: #ffffff;
+	background-color: #FFFFFF;
 	border: none;
 	margin: 0px;
 	padding: 0px;
@@ -108,13 +108,13 @@ select {
 }
 
 .login {
-	background-color: #ffffff;
+	background-color: #FFFFFF;
 	border: none;
 }
 
 .callout_main {
 	font-family: Verdana, Arial, Helvetica;
-	background-color: #ffffff;
+	background-color: #FFFFFF;
 	border: none;
 	width: 100%;
 	margin: 0px;
@@ -122,7 +122,7 @@ select {
 }
 
 .main_page {
-	background-color: #ffffff;
+	background-color: #FFFFFF;
 	border: none;
 	width: 100%;
 	margin: 0px;
@@ -132,15 +132,15 @@ select {
 
 /* Main page heading with quick menu within */
 .quick_menu {
-	background-color: #ffffff;
+	background-color: #FFFFFF;
 	border: none;
 	margin: 0px;
 	padding: 0px;
  	color: #000000;
-	border-top: 2px #aaaaaa solid;
-	border-left: 2px #aaaaaa solid;
-	border-right: 2px #ffffff solid;
-	border-bottom: 4px #ffffff solid;
+	border-top: 2px #AAAAAA solid;
+	border-left: 2px #AAAAAA solid;
+	border-right: 2px #FFFFFF solid;
+	border-bottom: 4px #FFFFFF solid;
 	text-align: right;
 	/* position: relative;
 	top: 3px; */
@@ -160,7 +160,7 @@ select {
 
 /*the Select Customer / Item / Supplier Menu tabs */
 .quick_menu_tabs {
-	background-color: #ffffff;
+	background-color: #FFFFFF;
 	white-space: nowrap;
 	border: none;
 	margin: 0px;
@@ -171,7 +171,7 @@ select {
 
 /*the Select Customer / Item / Supplier Menu tabs */
 .system_menu_tabs {
-	background-color: #ffffff;
+	background-color: #FFFFFF;
 	white-space: nowrap;
 	border: none;
 	margin-left: 6px;
@@ -193,13 +193,13 @@ select {
 }
 
 .main_area {
-	border: 2px inset #ffffff;
+	border: 2px inset #FFFFFF;
 	width: 100%;
-  background-color: #ffffff;
+  background-color: #FFFFFF;
 }
 
 .main_menu {
-	border: 2px inset #ffffff;
+	border: 2px inset #FFFFFF;
 }
 
 .main_menu table {
@@ -210,16 +210,16 @@ select {
 }
 
 .main_menu_unselected {
-	background-color: #cccccc;
-	border: 2px outset #ffffff;
+	background-color: #CCCCCC;
+	border: 2px outset #FFFFFF;
 /*	position: relative; */
 	text-align: center;
 	white-space: nowrap;
 }
 
 .main_menu_selected {
-	background-color: #cccccc;
-	border: 2px inset #ffffff;
+	background-color: #CCCCCC;
+	border: 2px inset #FFFFFF;
 /*	position: relative; */ 
 	text-align: center;
 	white-space: nowrap;
@@ -244,7 +244,7 @@ span.main_menu_nolink {
 }
 
 .menu_group_img {
-	background-color: #cccccc;
+	background-color: #CCCCCC;
 	text-align: center;
 	width: 90px;
 	position: relative;
@@ -257,7 +257,7 @@ span.main_menu_nolink {
 }
 
 .menu_group_area {
-  border: 2px inset #ffffff;
+  border: 2px inset #FFFFFF;
 }
 
 .blank_area table {
@@ -266,7 +266,7 @@ span.main_menu_nolink {
 }
 
 .menu_group_headers {
-  border: 2px outset #aaaaaa;
+  border: 2px outset #AAAAAA;
   width: 25%;
 }
 
@@ -279,13 +279,13 @@ span.main_menu_nolink {
 
 .menu_group_items {
 	vertical-align: top;
-	background-color: #ffffff;
-	border: 2px outset #aaaaaa;
+	background-color: #FFFFFF;
+	border: 2px outset #AAAAAA;
 	padding: 10px;
 }
 
 .menu_group_item {
-	background-color: #ffffff;
+	background-color: #FFFFFF;
 	padding-top: 2px;
 	padding-bottom: 2px;
 }
