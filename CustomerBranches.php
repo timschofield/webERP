@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $title = "Customer Branches";
 $PageSecurity = 3;
 
@@ -192,6 +192,16 @@ if (!isset($SelectedBranch)){
 
 	if ($myrow) {
 		echo "<BR><B>Branches Defined for $DebtorNo - $myrow[0]</B>";
+		echo "<table border=1>\n";
+
+		echo "<tr><td class='tableheader'>Code</td><td class='tableheader'>Name</td><td class='tableheader'>Contact</td><td class='tableheader'>Salesman</td><td class='tableheader'>Area</td><td class='tableheader'>Phone No</td><td class='tableheader'>Fax No</td><td class='tableheader'>E-mail</td><td class='tableheader'>Tax Auth</td></tr>\n";
+
+		do {
+			printf("<tr><td><font size=2>%s</td><td><font size=2>%s</td><td><font size=2>%s</font></td><td><font size=2>%s</font></td><td><font size=2>%s</font></td><td><font size=2>%s</font></td><td><font size=2>%s</font></td><td><font size=2><a href=\"Mailto:%s\">%s</a></font></td><td><font size=2>%s</font></td><td><font size=2><a href=\"%s?DebtorNo=%s&SelectedBranch=%s\">Edit</font></td><td><font size=2><a href=\"%s?DebtorNo=%s&SelectedBranch=%s&delete=yes\">DELETE</font></td></tr>", $myrow[10],$myrow[2], $myrow[5], $myrow[3], $myrow[4], $myrow[6], $myrow[7], $myrow[8], $myrow[8], $myrow[9], $_SERVER['PHP_SELF'], $DebtorNo,$myrow[1], $_SERVER['PHP_SELF'], $DebtorNo, $myrow[1]);
+
+		} while ($myrow = DB_fetch_row($result));
+		//END WHILE LIST LOOP
+		echo "</table>";
 	} else {
 		$sql = "SELECT DebtorsMaster.Name, Address1, Address2, Address3, Address4 FROM DebtorsMaster WHERE DebtorNo = '$DebtorNo'";
 		$result = DB_query($sql,$db);
@@ -206,24 +216,12 @@ if (!isset($SelectedBranch)){
 		unset($myrow);
 	}
 
-	echo "<table border=1>\n";
 
-	echo "<tr><td class='tableheader'>Code</td><td class='tableheader'>Name</td><td class='tableheader'>Contact</td><td class='tableheader'>Salesman</td><td class='tableheader'>Area</td><td class='tableheader'>Phone No</td><td class='tableheader'>Fax No</td><td class='tableheader'>E-mail</td><td class='tableheader'>Tax Auth</td></tr>\n";
-
-	do {
-		 printf("<tr><td><font size=2>%s</td><td><font size=2>%s</td><td><font size=2>%s</font></td><td><font size=2>%s</font></td><td><font size=2>%s</font></td><td><font size=2>%s</font></td><td><font size=2>%s</font></td><td><font size=2><a href=\"Mailto:%s\">%s</a></font></td><td><font size=2>%s</font></td><td><font size=2><a href=\"%s?DebtorNo=%s&SelectedBranch=%s\">Edit</font></td><td><font size=2><a href=\"%s?DebtorNo=%s&SelectedBranch=%s&delete=yes\">DELETE</font></td></tr>", $myrow[10],$myrow[2], $myrow[5], $myrow[3], $myrow[4], $myrow[6], $myrow[7], $myrow[8], $myrow[8], $myrow[9], $_SERVER['PHP_SELF'], $DebtorNo,$myrow[1], $_SERVER['PHP_SELF'], $DebtorNo, $myrow[1]);
-
-	} while ($myrow = DB_fetch_row($result));
-
-	//END WHILE LIST LOOP
 }
 
 //end of ifs and buts!
 
-?>
-</table>
-<p>
-<?php
+
 if (isset($SelectedBranch)) {  ?>
 	<Center><a href="<?php echo $_SERVER['PHP_SELF'] . "?" . SID . "DebtorNo=" . $DebtorNo; ?>">Show all branches defined for <?php echo $DebtorNo; ?></a></Center>
 <?php } ?>

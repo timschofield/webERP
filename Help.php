@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 if (isset($_GET['Title'])){
 	$HelpPageTitle = $_GET['Title'];
@@ -13,6 +13,7 @@ $PageSecurity = 1;
 
 include("includes/session.inc");
 include("includes/header.inc");
+include('includes/htmlMimeMail.php');
 
 if (isset($_GET['Page'])){
 	$Page = $_GET['Page'];
@@ -57,6 +58,16 @@ if ($_POST['submit']) {
 
 		$sql = "INSERT INTO Help (PageID, Narrative) VALUES (" . $_POST['PageID'] . ", '" . $_POST['Narrative'] . "')";
 		$msg = "The new help narrative has been added";
+		if ($ContributeHelpText==true){
+			$Recipients = array("'Phil' <p.daintree@paradise.net.nz>");
+			$mail = new htmlMimeMail();
+			$mail->setText($sql);
+			$mail->setSubject("Help Text Contribution");
+			$mail->setFrom($CompanyName . "<" . $CompanyRecord['Email'] . ">");
+			$result = $mail->send($Recipients);
+			$msg .= "<BR>Many thanks for contributing to the project!";
+		}
+
 	}
 	//run the SQL from either of the above possibilites
 	$result = DB_query($sql,$db);
@@ -150,7 +161,12 @@ echo "<TR><TD><textarea name='Narrative' cols=100% rows=3>" . $_POST['Narrative'
 
 echo "</TABLE>";
 
+if ($ContributeHelpText==true){
+	echo "<P><FONT=1 COLOR=BLUE><B>Notice:</B><BR>The system is set to send a copy of the help text you add here to the developer for inclusion in the project. You can turn this option off by setting the ContributeHelpText variable in config.php to false. However, contributions are sorely needed and your input would be appreciated!";
+}
+
 echo "<CENTER><input type='Submit' name='submit' value='Enter Information'>";
+
 
 echo "</FORM>";
 

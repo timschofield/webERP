@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -25,7 +25,6 @@
 
     // The timezone of the business - this allows the possibility of having
     // the web-server on a overseas machine but record local time
-    // for a list of time zone codes see doc/zone.txt
     // this is not necessary if you have your own server locally
     // putenv("TZ=Europe/London");
     // putenv("Australia/Melbourne");
@@ -239,6 +238,11 @@ $EDI_MsgSent = "EDI_Sent";
 /* EDI Messages sent log directory */
 
 $EDI_Incoming_Orders = "EDI_Incoming_Orders";
+
+/* This automatically emails the developer with any Help text you add
+Please give generously!! */
+
+$ContributeHelpText = true;
 
     // END OF USER CONFIGURABLE VARIABLES
 
