@@ -1499,9 +1499,13 @@ CREATE TABLE `taxauthlevels` (
 
 CREATE TABLE `taxauthorities` (
   `taxid` tinyint(4) NOT NULL auto_increment,
-  `description` char(20) NOT NULL default '',
+  `description` varchar(20) NOT NULL default '',
   `taxglcode` int(11) NOT NULL default '0',
   `purchtaxglaccount` int(11) NOT NULL default '0',
+  `bank` varchar(50) NOT NULL default '',
+  `bankacctype` varchar(20) NOT NULL default '',
+  `bankacc` varchar(50) NOT NULL default '',
+  `bankswift` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`taxid`),
   KEY `taxglcode` (`taxglcode`),
   KEY `purchtaxglaccount` (`purchtaxglaccount`),
@@ -5000,9 +5004,9 @@ INSERT INTO `taxauthlevels` VALUES (6,6,2,0);
 -- Dumping data for table `taxauthorities`
 --
 
-INSERT INTO `taxauthorities` VALUES (1,'Australian GST',810000,890000);
-INSERT INTO `taxauthorities` VALUES (5,'Sales Tax',890000,890000);
-INSERT INTO `taxauthorities` VALUES (6,'UK VAT',890000,890000);
+INSERT INTO `taxauthorities` VALUES (1,'Australian GST',810000,890000,'','','','');
+INSERT INTO `taxauthorities` VALUES (5,'Sales Tax',890000,890000,'','','','');
+INSERT INTO `taxauthorities` VALUES (6,'UK VAT',890000,890000,'','','','');
 
 --
 -- Dumping data for table `unitsofmeasure`
@@ -5030,7 +5034,7 @@ INSERT INTO `workcentres` VALUES ('ASSEM','DEN','Assembly',1.0000,'20.0000',5600
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-02-12 21:00:42','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
+INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-02-20 19:49:30','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','fr_FR');
 INSERT INTO `www_users` VALUES ('testy','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Test Remote User','GRANHR','','','DEN',7,'2005-02-10 21:11:20','GRAN','A4','0,0,0,0,0,0,0,0,',0,50,'fresh','pt_PT');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

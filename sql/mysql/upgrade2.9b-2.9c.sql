@@ -920,3 +920,11 @@ INSERT INTO config VALUES('RadioBeaconFTP_user_name', 'RadioBeacon ftp server us
 INSERT INTO config VALUES('RadionBeaconFTP_user_pass','Radio Beacon remote ftp server password');
 ALTER TABLE www_users CHANGE password `password TEXT NOT NULL;
 UPDATE www_users SET password ='f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4' WHERE userid='demo';
+
+ALTER TABLE www_users ADD COLUMN pinno varchar(30) NOT NULL;
+ALTER TABLE www_users ADD COLUMN swipecard varchar(50) NOT NULL;
+
+ALTER TABLE `taxauthorities` ADD `bank` VARCHAR( 50 ) NOT NULL ,
+ADD `bankacctype` VARCHAR( 20 ) NOT NULL ,
+ADD `bankacc` VARCHAR( 50 ) NOT NULL ,
+ADD `bankswift` VARCHAR( 30 ) NOT NULL ;

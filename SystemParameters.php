@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity =15;
 
 include('includes/session.inc');
@@ -32,9 +32,9 @@ if (isset($_POST['submit'])) {
 	} elseif (strlen($_POST['X_DefaultCreditLimit']) > 12 || !is_numeric($_POST['X_DefaultCreditLimit']) ) {
 		$InputError = 1;
 		prnMsg(_('Default Credit Limit must be a number'),'error');
-	} elseif (strstr($_POST['X_RomalpaClause'], "'") || strlen($_POST['X_RomalpaClause']) > 255) {
+	} elseif (strstr($_POST['X_RomalpaClause'], "'") || strlen($_POST['X_RomalpaClause']) > 5000) {
 		$InputError = 1;
-		prnMsg(_('The Romalpa Clause may not contain single qoutes and may not be longer than 255 chars'),'error');
+		prnMsg(_('The Romalpa Clause may not contain single qoutes and may not be longer than 5000 chars'),'error');
 	} elseif (strlen($_POST['X_QuickEntries']) > 2 || !is_numeric($_POST['X_QuickEntries']) || 
 		$_POST['X_QuickEntries'] < 1 || $_POST['X_QuickEntries'] > 99 ) {
 		$InputError = 1;
