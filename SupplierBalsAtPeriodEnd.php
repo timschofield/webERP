@@ -2,7 +2,7 @@
 include("includes/DateFunctions.inc");
 $PageSecurity = 2;
 
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 if (!isset($_POST['FromSupplier'])  OR $_POST['FromSupplier']=="" OR !isset($_GET['FromSupplier'])) {
 	$title="Creditor Balances";
@@ -32,10 +32,10 @@ strlen($_POST['ToCriteria'])>=1){
   			Currencies.Currency,
 			Sum((SuppTrans.OvAmount + SuppTrans.OvGST - SuppTrans.Alloc)/SuppTrans.Rate) AS Balance,
 			Sum(SuppTrans.OvAmount + SuppTrans.OvGST - SuppTrans.Alloc) AS FXBalance,
-			Sum(CASE WHEN SuppTrans.TranDate > '" . FormatDateForSQL($_POST['PeriodEnd']) . "' THEN
+			Sum(CASE WHEN SuppTrans.TranDate > '" . $_POST['PeriodEnd'] . "' THEN
 	(SuppTrans.OvAmount + SuppTrans.OvGST)/SuppTrans.Rate ELSE 0 END)
 	 AS AfterDateTrans,
-			Sum(CASE WHEN SuppTrans.TranDate > '" . FormatDateForSQL($_POST['PeriodEnd']) . "' THEN
+			Sum(CASE WHEN SuppTrans.TranDate > '" . $_POST['PeriodEnd'] . "' THEN
 	SuppTrans.OvAmount + SuppTrans.OvGST ELSE 0 END
 	) AS FXAfterDateTrans
 	FROM Suppliers,

@@ -1,0 +1,198 @@
+GOALS of webERP
+
+1. To provide fast, web-based, integrated "best practise" business administration software.
+
+2. To be "low footprint" efficient and fast, with absolutely minimal network traffic.
+
+This is to enable dial up/low band-width connections to work with reasonable
+response times. This will require some compromises with the use of graphics.
+
+3. Platform independence.
+
+Use of Javascript should be avoided due to the inconsistencies between implimentations. By using only PHP on the server and keeping processing there, anomalies in operation between client's with different software can be avoided. Any use of javascript must have another server based option as a fallback. No significant blocks of javascript to choke dialup connections (see goal 2).
+
+4. Scripts easily readable and modifiable by a business.
+
+PHP code written using control structures in a consistent way throughout. (See style guide)
+Well spaced and rigorously indented.
+Extensive commenting.
+Long descriptive variable names.
+There is also an interesting compromise between good programming practise in maximising code reuse through the use of includes, classes and common functions and in the number of separate scripts required to be understood before a developer has enough condidence to consider modifying the script. I believe that too many levels of abstraction can detract from ease of understanding the script. webERP uses a few common include files that must be understood:
+
+includes/ConnectDB.inc   	- database abstraction
+includes/session.inc	 	- initiation of session and security checking
+includes/header.inc 	 	- page headings and quick menu links
+includes/footer.inc	 	- page footer
+includes/PDFStarter_ros.inc	- PDF report generation substitute for session.inc
+includes/DateFunctions.inc	- Date functions
+
+and config.php which is included by includes/session.inc. Most scripts use all the first 4. Transactional scripts also use an includes/DefineXXXXXXClass.php script. Apart from these files most scripts are otherwise self contained so that a knowledge of these includes and the script should be all thats needed to be confident in modifying the script.
+
+CONTRIBUTIONS
+
+Contributions to the webERP project are encouraged - these simple procedures for doing so are aimed at reducing the confusion and co-ordinating the efforts of all contributors:
+
+1.Join the developers mailing list.
+
+http://lists.sourceforge.net/lists/listinfo/web-erp-developers
+
+Inform the list of your proposed developments and discuss the approach to be used. There are some knowlegable people on the list and they can contribute ideas if you let them. This is also good to avoid overlapping effort or combine efforts in working on different elements of the same project.
+
+2. Obtain the latest development scripts from CVS - see sourceforge instructions for anonymous cvs checkout the CVS files intially then updates daily - this only downloads any modified scripts, or update immediately before commencing any development. Do development work on the most recent scripts from CVS.
+
+http://sourceforge.net/docman/display_doc.php?docid=14033&group_id=1
+
+3. After any modifications to the scripts - email (only) the modified scripts (or ideally a diff file between the latest CVS scripts and your updated scripts) to daintree@sourceforge.net within 12 hours of your last update from CVS. The project admin will have to digest the modifications and ensure the coding style is consistent, test the scripts and consider the implications of the modifications in acheiving the goals noted above. Plenty of narrative explaining the modifications should be posted in the developers list so all can consider the implications. They will be committed to CVS as soon as possible after receipt and testing. Only the project admin has write access to CVS.
+
+4. Where modifications span 10 or more scripts at the same time, request a stay on development from other developers using the list.
+
+5. All submissions of modifications or additions should be accompanied by a plain text change.log file describing the changes to each script. This explains to everyone the nature of the changes made. Each entry in the change log should state the developer name and date of the  change/addition. This file will be appended to the doc/change.log when the files are committed to CVS.
+
+6. Requests for modification of the database structure - with an extract of the SQL required to effect the changes should be made to daintree@sourgeforge.net These will be included in the version upgrage script as well as the latest database structure.
+
+
+CODING STANDARDS
+
+Function/Class/Variable Naming
+
+Descriptive names should be used in preference to short variable names:
+
+eg.
+
+$a = 3.14159;
+
+should be avoided in favour of:
+
+$Pi = 3.14159;
+
+The variable $i can be used as a counter.
+
+As displayed above, there should be one space on either side of an equals sign used to assign the return value of a function to a variable. In the case of a block of related assignments, more space may be inserted to promote readability:
+
+$Short         = foo($bar);
+$LongVariable = foo($baz);
+
+Good descriptive variable names consisting of several words appended togther should have the first letter of each word capitalised.
+
+eg.
+$longvariablename = 1;
+
+should be written as:
+
+$LongVariableName = 1;
+
+
+PHP Variables
+
+The PHP variable arrays $_POST, $_GET, $_SERVER, $_SESSION provide context about where a variable comes from - many developers are tempted to abbreviate:
+
+$StartingCustomer = $_POST['StartingCustomer'];
+
+or worse:
+
+$s = $_POST['StartingCustomer'];
+
+This should be avoided in favour of using $_POST['StartAtCustomer'] everywhere it is required so the reader can see where the variable comes from.
+
+However, variables which could come from either a $_GET or a $_POST and/or a $_SESSION may be assigned as in the first example since there is no value in the context.
+
+
+Control Structures
+
+All control structures (these include if, for, while, switch) must always use statement blocks.
+You  are  strongly  encouraged  to  always  use  curly  braces even in situations  where they are technically optional. Having them increases readability  and  decreases  the  likelihood  of  logic errors  being introduced when new lines are added.
+
+eg.
+if ($VariableName == true)
+
+	echo "Variable was true";
+
+whilst legal PHP syntax, this should be avoided in favour of the following syntax:
+
+if ($VariableName == true) {
+
+	echo "Variable was true";
+}
+
+Parenthesis should open on the same line (after a space) as the initiating control structure and close the statement block at the same level of indenting as the initiating line.
+
+Else statements should be on the same line as the closing statment block from the preceeding elseif or if statement eg.
+
+if ($VariableName == true) {
+
+	echo "Variable was true";
+
+} else {
+
+	echo "Variable was false";
+
+} /*end else $VariableName was false*/
+
+This is the only time there should be anything other than a comment on the closing curly brace line. Comments on a closing curly brace line where the block has been quite a few lines of code are encouraged to show the control structure to which they related.
+
+Whenever a statement block is used code within the block should be one tab indented.
+
+Function defintions should follow the same conventions.
+
+It  is  recommended  that  you  break  lines  at  approximately  75-85 characters.
+
+
+Spacing
+
+Where readability is improved lines of code should be separated by a line
+
+
+Comments
+
+C style comment blocks in the format:
+
+/* comments in here */
+
+are preferred. But all comments gratefully received!
+
+All scripts should have a comment in the first few lines with the script revision number in it if the following comment is pasted into it the CVS automatically updates the revision number.
+
+/* $Revision: 1.1 $ */
+
+
+Database Function Calls
+
+There should never be any database specific calls in scripts other than includes/ConnectDB.inc
+All database calls should be performed by calling the abstraction functions in that script.
+
+
+SQL
+
+Should be as ANSI compliant as possible.
+
+SQL statements should be on several lines for easier reading eg.
+
+$sql = "SELECT TransNo, TranDate, DebtorTrans.DebtorNo, BranchCode, Reference, InvText, Order_, Rate, OvAmount+OvGST+OvFreight+OvDiscount AS TotalAmt, CurrCode FROM DebtorTrans INNER JOIN DebtorsMaster ON DebtorTrans.DebtorNo=DebtorsMaster.DebtorNo WHERE ";
+
+
+is harder to read than:
+
+$sql = "SELECT TransNo,
+		TranDate,
+		DebtorTrans.DebtorNo,
+		BranchCode, Reference,
+		InvText,
+		Order_,
+		Rate,
+		OvAmount+OvGST+OvFreight+OvDiscount AS TotalAmt,
+		CurrCode
+	FROM
+		DebtorTrans INNER JOIN DebtorsMaster
+		ON DebtorTrans.DebtorNo=DebtorsMaster.DebtorNo
+	WHERE ";
+
+
+Constants
+
+Constants should always be all-uppercase, with underscores to separate
+words.
+
+
+PHP Code Tags
+
+Always use <?php ?> to delimit PHP code, not the <? ?> shorthand. This is the most portable way to include PHP code on differing operating systems and setups.

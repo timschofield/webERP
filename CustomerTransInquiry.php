@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Customer Transactions Inquiry";
 
 $PageSecurity = 2;
@@ -46,7 +46,20 @@ echo "<HR>";
 if (isset($_POST['ShowResults'])){
    $SQL_FromDate = FormatDateForSQL($_POST['FromDate']);
    $SQL_ToDate = FormatDateForSQL($_POST['ToDate']);
-   $sql = "SELECT TransNo, TranDate, DebtorTrans.DebtorNo, BranchCode, Reference, InvText, Order_, Rate, OvAmount+OvGST+OvFreight+OvDiscount AS TotalAmt, CurrCode FROM DebtorTrans INNER JOIN DebtorsMaster ON DebtorTrans.DebtorNo=DebtorsMaster.DebtorNo WHERE ";
+   $sql = "SELECT TransNo,
+   		TranDate,
+		DebtorTrans.DebtorNo,
+		BranchCode,
+		Reference,
+		InvText,
+		Order_,
+		Rate,
+		OvAmount+OvGST+OvFreight+OvDiscount AS TotalAmt,
+		CurrCode
+	FROM DebtorTrans
+		INNER JOIN DebtorsMaster ON DebtorTrans.DebtorNo=DebtorsMaster.DebtorNo
+	WHERE ";
+
    $sql = $sql . "TranDate >='" . $SQL_FromDate . "' AND TranDate <= '" . $SQL_ToDate . "' AND Type = " . $_POST['TransType'] . " ORDER BY ID";
    $TransResult = DB_query($sql, $db);
 	if (DB_error_no($db) !=0) {
@@ -57,8 +70,17 @@ if (isset($_POST['ShowResults'])){
 		exit;
 	}
 	echo "<TABLE CELLPADDING=2 BORDER=2>"; /* 	TransNo							 TranDate						      DebtorNo							     BranchCode							     Reference							     Order_								      Rate							     Amount								 Currency	*/
-	
-	$tableheader = "<TR><TD class='tableheader'>Number</TD><TD class='tableheader'>Date</TD><TD class='tableheader'>Customer</TD><TD class='tableheader'>Branch</TD><TD class='tableheader'>Reference</TD><TD class='tableheader'>Comments</TD><TD class='tableheader'>Order</TD><TD class='tableheader'>Ex Rate</TD><TD class='tableheader'>Amount</TD><TD class='tableheader'>Currency</TD></TR>";
+
+	$tableheader = "<TR><TD class='tableheader'>Number</TD>
+				<TD class='tableheader'>Date</TD>
+				<TD class='tableheader'>Customer</TD>
+				<TD class='tableheader'>Branch</TD>
+				<TD class='tableheader'>Reference</TD>
+				<TD class='tableheader'>Comments</TD>
+				<TD class='tableheader'>Order</TD>
+				<TD class='tableheader'>Ex Rate</TD>
+				<TD class='tableheader'>Amount</TD>
+				<TD class='tableheader'>Currency</TD></TR>";
 	echo $tableheader;
 
 	$RowCounter = 1;
@@ -74,7 +96,16 @@ if (isset($_POST['ShowResults'])){
 			$k++;
 		}
 
-		$format_base = "<td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td width='200'>%s</td><td>%s</td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s</td><td>%s</td>";
+		$format_base = "<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td width='200'>%s</td>
+				<td>%s</td>
+				<td ALIGN=RIGHT>%s</td>
+				<td ALIGN=RIGHT>%s</td>
+				<td>%s</td>";
 
 		if ($_POST['TransType']==10){ /* invoices */
 			/* TransNo   TranDate    DebtorNo BranchCode  Reference   Order_,		     Rate		      TotalAmt    CurrCode																						   TransNo		   TranDate		     DebtorNo 		     BranchCode	      Reference	      Order_		   Rate	      TotalAmt			      CurrCode	      */

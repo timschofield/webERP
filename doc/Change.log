@@ -1,8 +1,9 @@
 <P>webERP Change Log
 
 
-
-1/8/04 New scripts for reconciliation of GL for debtor and creditor balances as at the end of a prior period. DebtorsBalsAtPeriodEnd.php includes/PDFDebtorBalsPageHeader.inc SupplierBalsAtPeriodEnd.php includes/PDFSupplierBalsPageHeader.inc
+9/8/04 Extreme make-over MkII! - Included Steve Kaill's index.php and css/default.css. These changes make the menus columnar and has a cleaner look to the main menu. Also, includes/header.inc now with company name, user name and database and shortcut keys to quick menu options.
+8/8/04 New Customer listing report PDFCustomerList.php with options to print for selected areas and sales folks, also customers below or above a certain level of activity since a specified date.
+1/8/04 New scripts for reconciliation of GL for debtor and creditor balances as at the end of a prior period. DebtorsAtPeriodEnd.php includes/PDFDebtorBalsPageHeader.inc SupplierBalsAtPeriodEnd.php includes/PDFSupplierBalsPageHeader.inc
 
 
 Version 2.9

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*As modified by Dirk Eversmann */
 
 $title = "General Ledger Account Inquiry";
@@ -78,14 +78,20 @@ if ($_POST["Show"]=="Show Account Transactions"){
 	$FirstPeriodSelected = min($SelectedPeriod);
 	$LastPeriodSelected = max($SelectedPeriod);
 
- 	$sql= "SELECT Type, TypeName, GLTrans.TypeNo, TranDate, Narrative, Amount, PeriodNo
+ 	$sql= "SELECT Type,
+			TypeName,
+			GLTrans.TypeNo,
+			TranDate,
+			Narrative,
+			Amount,
+			PeriodNo
 		FROM GLTrans, SysTypes
 		WHERE GLTrans.Account = $SelectedAccount
 		AND SysTypes.TypeID=GLTrans.Type
 		AND Posted=1
 		AND PeriodNo>=$FirstPeriodSelected
 		AND PeriodNo<=$LastPeriodSelected
-		ORDER BY PeriodNo, TranDate";
+		ORDER BY PeriodNo, CounterIndex";
 
 	$TransResult = DB_query($sql,$db);
 	if (DB_error_no($db) !=0) {

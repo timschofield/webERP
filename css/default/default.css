@@ -15,11 +15,9 @@
 |
 \--------------------------------------------------*/
 
-<!-- \$Revision: 1.2 $ -->
-
 body {
 	font-family: Verdana, Arial, Helvetica;
-	background: #587ba6;
+	background-color: #ccccdd;
 	font-family: arial, verdana;
 	font-size: 14px;
 	margin-left: 5px;
@@ -36,17 +34,6 @@ a {
 	text-decoration: none;
 }
 
-a:link {
-	color: #0000000;
-	font-weight: bold;
-	text-decoration: none;
-}
-
-a:active {
-	color: #000000;
-	font-weight: bold;
-	text-decoration: none;
-}
 
 a:hover {
 	color: #2d8628;
@@ -54,6 +41,11 @@ a:hover {
 	text-decoration: underline;
 }
 
+table {
+  background-color: #587ba6;
+}
+
+/*table detail items default format */
 td {
 	font-family:arial, verdana;
 	font-size 12;
@@ -128,6 +120,7 @@ td {
  	font-size 12px;
 }
 
+/* Main page heading with quick menu within */
 .quick_menu {
 	background-color: #588bb6;
 	border: 0px;
@@ -138,6 +131,18 @@ td {
 	top: 3px; */
 }
 
+/*The main page heading left part before quick menu */
+.quick_menu_left {
+	font-family: Verdana, Arial, Helvetica;
+	font-size: 14px;
+	border: 0px;
+	white-space: nowrap;
+	margin: 2px;
+	padding: 2px;
+	color: #ffffff;
+}
+
+/*the Select Customer / Item / Supplier Menu tabs */
 .quick_menu_tabs {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
@@ -149,19 +154,8 @@ td {
 	text-align: right;
 }
 
+/*the Select Customer / Item / Supplier Menu link format */
 .quick_menu_tabs a {
-	color: #285b86;
-	font-weight: bold;
-	text-decoration: none;
-}
-
-.quick_menu_tabs a:link {
-	color: #285b86;
-	font-weight: bold;
-	text-decoration: none;
-}
-
-.quick_menu_tabs a:active {
 	color: #285b86;
 	font-weight: bold;
 	text-decoration: none;
@@ -173,17 +167,6 @@ td {
 	text-decoration: underline;
 }
 
-.quick_menu_selected{
-	font-family: Verdana, Arial, Helvetica;
-	font-size: 18px;
-	border: none;
-	white-space: nowrap;
-	margin: 2px;
-	padding: 2px;
-	color: #00ee00;
-	font-weight: bolder;
-}
-
 .main_menu {
 	font-family: Verdana, Arial, Helvetica;
 	background-color: #40fc40;
@@ -192,6 +175,23 @@ td {
 	border-bottom: 1px #aaaaaa solid;
 	font-weight: normal;
 	width: 100%;
+}
+
+.main_menu table {
+	border: 0px;
+	width: 100%;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.main_menu_unselected {
+	background-color: #40fc40;
+	border-left: 1px #aaaaaa solid;
+	border-right: 1px #aaaaaa solid;
+	border-bottom: 0px;
+	font-weight: normal;
+	position: relative;
+	top: 3px;
 }
 
 .main_menu_selected {
@@ -205,23 +205,20 @@ td {
 	top: 3px;
 }
 
+span.main_menu_nolink {
+	font-family: Verdana, Arial, Helvetica;
+	font-size: 12px;
+	font-weight: bold;
+	color: #777777;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
 .main_menu a {
 	color: #000000;
 	font-weight: bold;
 	text-decoration: none;
 	white-space: nowrap;
-}
-
-.main_menu a:link {
-	color: #000000;
-	font-weight: bold;
-	text-decoration: none;
-}
-
-.main_menu a:active {
-	color: #000000;
-	font-weight: bold;
-	text-decoration: none;
 }
 
 .main_menu a:hover {
@@ -251,6 +248,23 @@ td {
 	font-weight: bold;
 }
 
+.blank_area table {
+	border: 0px;
+	width: 100%;
+}
+
+.menu_group_headers {
+  border: 2px outset #aaaaaa;
+  width: 25%;
+}
+
+.menu_group_headers_text {
+	font-family: Verdana, Arial, Helvetica;
+	font-size: 12px;
+	font-weight: bold;
+	color: #ffffff;
+}
+
 .menu_group_items {
 	background-color: #ffffff;
 	font-weight: bold;
@@ -259,6 +273,28 @@ td {
 	border-left: 1px #aaaaaa solid;
 	border-right: 1px #ffffff solid;
 	border-bottom: 1px #ffffff solid;
+}
+
+.menu_group_item {
+	background-color: #ffffff;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+span.menu_group_nolink {
+	font-family: Verdana, Arial, Helvetica;
+	font-size: 12px;
+	font-weight: normal;
+	color: #777777;
+	text-decoration: none;
+}
+
+.menu_group_item a {
+}
+
+.menu_group_items a:hover {
+	color: #0000aa;
+	text-decoration: underline;
 }
 
 #footer {
@@ -302,10 +338,6 @@ td {
   color: #006666;
 	font-weight: bolder;
 	font-size: medium;
-}
-
-a:hover {
-	text-decoration: underline;
 }
 
 input.big {

@@ -15,13 +15,10 @@
 |
 \--------------------------------------------------*/
 
-<!-- \$Revision: 1.2 $ -->
-
 body {
 	font-family: Verdana, Arial, Helvetica;
-	background: #eeeeff;
-	font-family: arial, verdana;
 	font-size: 8px;
+	background-color: #dddddd; 
 	margin-left: 10px;
 	margin-top: 5px;
 	margin-bottom: 0px;
@@ -31,46 +28,37 @@ body {
 
 /*links before selection */
 a {
-	color: #0000ff;
+	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
 	font-weight: normal;
 	text-decoration: none;
-}
-
-a:link {
-	color: #00000ff;
-	font-weight: normal;
-	text-decoration: none;
-}
-
-
-a:active {
 	color: #0000ff;
-	font-weight: bold;
-	text-decoration: none;
 }
 
 /*links on any screen when mouse is hovering over them */
 a:hover {
-	color: #00ff00;
-	font-weight: bold;
+	color: #0000aa;
 	text-decoration: underline;
+}
+
+table {
+  background-color: #eeeeff;
 }
 
 /*table detail items default format */
 td {
-	font-family:arial, verdana;
-	font-size: 10;
+	font-family: Verdana, Arial, Helvetica;
+	font-size: 10px;
 }
 
 input {
-	font-family:arial, verdana;
-	font-size: 10;
+	font-family: Verdana, Arial, Helvetica;
+	font-size: 10px;
 }
 
 select {
-	font-family:arial, verdana;
-	font-size: 10;
+	font-family: Verdana, Arial, Helvetica;
+	font-size: 10px;
 }
 
 
@@ -142,7 +130,7 @@ select {
  	font-size 10px;
 }
 
-/*the Select Customer Item Supplier Menu bar */
+/* Main page heading with quick menu within */
 .quick_menu {
 	background-color: #ffffff;
 	border: none;
@@ -158,10 +146,20 @@ select {
 	top: 3px; */
 }
 
+/*The main page heading left part before quick menu */
+.quick_menu_left {
+	font-family: Verdana, Arial, Helvetica;
+	font-size: 12px;
+	font-weight: bold;
+	border: 0px;
+	white-space: nowrap;
+	margin: 2px;
+	padding: 2px;
+	color: #000000;
+}
+
 /*the Select Customer / Item / Supplier Menu tabs */
 .quick_menu_tabs {
-	font-family: Verdana, Arial, Helvetica;
-	font-size: 10px;
 	background-color: #ffffff;
 	white-space: nowrap;
 	border: none;
@@ -172,85 +170,56 @@ select {
 
 /*the Select Customer / Item / Supplier Menu link format */
 .quick_menu_tabs a {
-	color: #0000ff;
-	font-weight: bold;
-	text-decoration: underline;
-}
-
-.quick_menu_tabs a:link {
-	color: #0000ff;
-	font-weight: bold;
-	text-decoration: underline;
-}
-
-.quick_menu_tabs a:active {
-	color: #0000ff;
-	font-weight: bold;
-	text-decoration: underline;
+	font-weight: normal;
 }
 
 .quick_menu_tabs a:hover {
-	color: #ff0000;
-	font-weight: bold;
+	color: #0000aa;
 	text-decoration: underline;
 }
 
-/*The page heading */
-.quick_menu_selected{
-	font-family: Verdana, Arial, Helvetica;
-	font-size: 12px;
-	font-weight: bold;
-	border: none;
-	white-space: nowrap;
-	margin: 2px;
-	padding: 2px;
-	color: #aaaaaa;
-	font-weight: bolder;
+.main_menu {
+	border: 2px inset #ffffff;
 }
 
-.main_menu {
-	font-family: Verdana, Arial, Helvetica;
-	background-color: #cccccc;
-	font-size: 10px;
-	border-top: 1px #aaaaaa solid;
-	border-bottom: 1px #aaaaaa solid;
-	font-weight: normal;
+.main_menu table {
+	border: 0px;
 	width: 100%;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.main_menu_unselected {
+	background-color: #cccccc;
+	border: 2px outset #ffffff;
+/*	position: relative; */ 
+	text-align: center;
+	white-space: nowrap;
 }
 
 .main_menu_selected {
-	background-color: #ffffff;
-	border-top: 1px #aaaaaa solid;
-	border-left: 1px #aaaaaa solid;
-	border-right: 1px #aaaaaa solid;
-	border-bottom: 0px;
-	font-weight: normal;
-	position: relative;
-	top: 3px;
+	background-color: #cccccc;
+	border: 2px inset #ffffff;
+/*	position: relative; */ 
+	text-align: center;
+	white-space: nowrap;
 }
 
-.main_menu a {
-	color: #0000ff;
+span.main_menu_nolink {
+	font-family: Verdana, Arial, Helvetica;
+	font-size: 12px;
 	font-weight: bold;
+	color: #777777;
 	text-decoration: none;
 	white-space: nowrap;
 }
 
-.main_menu a:link {
-	color: #0000ff;
+.main_menu a {
 	font-weight: normal;
-	text-decoration: none;
-}
-
-.main_menu a:active {
-	color: #0000ff;
-	font-weight: normal;
-	text-decoration: none;
 }
 
 .main_menu a:hover {
-	color: #00ff00;
-	font-weight: bold;
+	color: #0000aa;
 	text-decoration: underline;
 }
 
@@ -267,22 +236,54 @@ select {
 	top: 10px;
 }
 
-.menu_group {
+.menu_group_area {
+  border: 2px inset #ffffff;
+}
+
+.blank_area table {
+	border: 0px;
+	width: 100%;
+}
+
+.menu_group_headers {
+  border: 2px outset #aaaaaa;
+  width: 25%;
+}
+
+.menu_group_headers_text {
 	font-family: Verdana, Arial, Helvetica;
-	font-size: 14px;
-	color: #ffffff;
-	background-color: #cccccc;
+	font-size: 12px;
 	font-weight: bold;
+	color: #000000;
 }
 
 .menu_group_items {
+	vertical-align: top;
 	background-color: #ffffff;
-	font-weight: bold;
-	padding: 15px;
-	border-top: 1px #aaaaaa solid;
-	border-left: 1px #aaaaaa solid;
-	border-right: 1px #ffffff solid;
-	border-bottom: 1px #ffffff solid;
+	border: 2px outset #aaaaaa;
+	padding: 10px;
+}
+
+.menu_group_item {
+	background-color: #ffffff;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+span.menu_group_nolink {
+	font-family: Verdana, Arial, Helvetica;
+	font-size: 12px;
+	font-weight: normal;
+	color: #777777;
+	text-decoration: none;
+}
+
+.menu_group_item a {
+}
+
+.menu_group_items a:hover {
+	color: #0000aa;
+	text-decoration: underline;
 }
 
 #footer {
