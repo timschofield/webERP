@@ -27,7 +27,7 @@
 <td>
 <font size="+3"><b>Table of Contents</b></font>
 
-<LI>Introduction</LI>
+<LI><A HREF='#Introduction'>Introduction</A></LI>
 <LI>Why Another Accounting Program?</LI>
 
 <LI>System Requirements</LI>
@@ -39,8 +39,8 @@
 <LI>Logging In For the First Time</LI>
 <LI>Themes and GUI Modification</LI>
 <LI>Setting Up Users</LI>
-<LI>Security Schema</LI>
-<LI>To Create a New System</LI>
+<LI><A HREF='#Security'>Security Schema</A></LI>
+<LI><A HREF='#NewSystem'>To Create a New System</A></LI>
 <LI>Running the Demonstration Database</LI>
 <LI>Setting Up A System</LI>
 <LI>Setting Up Inventory Items</LI>
@@ -50,10 +50,10 @@
 <LI>Entering Customer Balances</LI>
 <LI>Reconciling the Debtors Ledger Control Account</LI>
 <LI>Finally</LI>
-<LI>System Conventions</LI>
+<LI><A HREF='#Conventions'>System Conventions</A></LI>
 <LI>Navigating the Menu</LI>
 <LI>Reporting</LI>
-<LI>Inventory (aka "Stock")</LI>
+<LI><A HREF='#Inventory'>Inventory (aka "Stock")</A></LI>
 <LI>Overview</LI>
 <LI>Inventory System Features</LI>
 <LI>Adding Inventory Items</LI>
@@ -102,7 +102,7 @@
 <LI>Inventory Valuation Report</LI>
 <LI>Inventory Planning Report</LI>
 <LI>Inventory Checks</LI>
-<LI>Accounts Receivable</LI>
+<LI><A HREF='#AR'>Accounts Receivable</A></LI>
 <LI>Overview</LI>
 <LI>Features</LI>
 <LI>Entering New Customers</LI>
@@ -181,11 +181,11 @@
 <LI>Customer Statements</LI>
 <LI>Customer Transaction Listing Options</LI>
 <LI>Sales Analysis</LI>
-<LI><LI>Sales Analysis Report Headers</LI>
+<LI>Sales Analysis Report Headers</LI>
 <LI>Sales Analysis Report Columns</LI>
 <LI>Automating Sales Reports</LI>
 <LI>Printing Invoices Or Credit Notes</LI>
-<LI>Sales Orders</LI>
+<LI><A HREF='#Orders'>Sales Orders</A></LI>
 <LI>Sales Order Functionality</LI>
 <LI>Entry of Sales Orders</LI>
 <LI>Sales Orders - Selection of the Customer and Branch</LI>
@@ -197,7 +197,7 @@
 <LI>Creating Shipments</LI>
 <LI>Shipment Costings</LI>
 <LI>Closing a Shipment</LI>
-<LI>General Ledger</LI>
+<LI><A HREF='#GL'>General Ledger</A></LI>
 <LI>General Ledger Overview</LI>
 <LI>Account Groups</LI>
 <LI>Bank Accounts</LI>
@@ -208,13 +208,13 @@
 <LI>EDI</LI>
 <LI>EDI Setup</LI>
 <LI>Sending EDI Invoices</LI>
-<LI>Special Utilities</LI>
+<LI><A HREF='#Utilities'>Special Utilities</A></LI>
 <LI>Re-Apply Standard Costs to Sales Analysis</LI>
 <LI>Change A Customer Code</LI>
 <LI>Change An Inventory Code</LI>
 <LI>Make Stock Locations</LI>
 <LI>Repost General Ledger from Period</LI>
-<LI>Developing New Scripts</LI>
+<LI><A HREF='#NewScripts'>Developing New Scripts</A></LI>
 <LI>Directory Structure</LI>
 <LI>session.inc</LI>
 <LI>header.inc</LI>
@@ -226,7 +226,7 @@
 <LI>SQL_CommonFuctions.inc</LI>
 <LI>Contributors - Acknowledgements</LI>
 <br><br><br>
-<font size="+3"><b>Introduction</b></font>
+<font size="+3"><b><A NAME='Introduction'>Introduction</A></b></font>
 <br><br>
 <font size="+2"><b>Why Another Accounting Program?</b></font>
 <br><br>
@@ -250,7 +250,7 @@ The operating system and the database engine chosen will have the largest bearin
 <br><br>
 In general, a linux based installation will demand less of the hardware and even an entry level server will provide good performance for up to 30 users. RAID Level 1 at least with fast SCSI disks are preferred. The system is effectively a web server and a database server - this technology is tested with thousands of simultaneous users daily. With multiple servers balancing the load and a separate database server with SMP and large amounts of RAM  the limit on database size and the number of users is large enough for the largest businesses.
 <br><br><br>
-<font size="+3"><b>Getting Started</b></font>
+<font size="+3"><b><A NAME=Getting_Started>Getting Started</A></b></font>
 <br><br>
 <font size="+2"><b>Prerequisites</b></font>
 <br><br>
@@ -734,7 +734,7 @@ As well as allowing the access to be restricted there is some flexibility about 
 <br><br>
 There is also the facility to set up customers with their own logon. This restricts them to inquiries on their account including invoice re-prints and to entering new sales order. Customer logins do not allow any modification to the pricing. To do this the access level must be set to customer logon and the settings for customer logon in config.php must not be modified - ie $PageSecurity = 1 allowed only. In addition, the customer code and branch code applicable to the person logging on must be entered.
 <br><br>
-<font size="+3"><b>Security Schema</b></font>
+<font size="+3"><b><A NAME=Security>Security Schema</A></b></font>
 <br><br>
 The user name and password combination entered at logon enables the system to identify the permissions appropriate to the user. It is possible to determine and restrict which pages a user should be able to access. Each user is allocated to an Access Level or Security Group. 
 <br><br>
@@ -1636,7 +1636,7 @@ WorkCentres.php
 <!-- Help End: WWW_Users -->
 
 <br>
-<font size="+3"><b>To Create a New System</b></font>
+<font size="+3"><b><A NAME=CreateSystem>To Create a New System</A></b></font>
 <br><br>
 <font size="+2"><b>Running the Demonstration Database</b></font>
 <br><br>
@@ -1751,7 +1751,7 @@ Using a username and password as created when mysql was installed.
 <br><br>
 #mysqldump -u username -p password --opt weberp > /home/myhomedir/weberp_backup.sql
 <br><br>
-<font size="+3"><b>System Conventions</b></font>
+<font size="+3"><b><A NAME=Conventions>System Conventions</A></b></font>
 <br><br>
 <font size="+2"><b>Navigating the Menu</b></font>
 <br><br>
@@ -1774,7 +1774,7 @@ Many reports create Adobe (c) Portable Document Format (.pdf) report files. The 
 </ul>
 Some users have reported issues with reading the pdf files created. The most common issue is with navigation. Some browsers open pdf files actually within the browser. The difficulty with this is that the links to navigate the system then disappear and hitting the back button of the browser does not work with dynamic scripts so well. The preferred solution is to open the pdf documents created in a separate window. This is achieved by opening adobe acrobat reader separately then modifying the preferences to disable the "Display pdf in browser" option. This forces a new window for Acrobat reader.
 <br><br>
-<font size="+3"><b>Inventory (aka "Stock")</b></font>
+<font size="+3"><b><A NAME=Inventory>Inventory (aka "Stock")<A></b></font>
 <br><br>
 <font size="+2"><b>Overview</b></font>
 <br><br>
@@ -2269,7 +2269,7 @@ There is no going back on this process - if you didn't mean to process these adj
 <!-- Help End: StockCheck -->
 
 <br><br><br>
-<font size="+3"><b>Accounts Receivable</b></font>
+<font size="+3"><b><A NAME=AR>Accounts Receivable</A></b></font>
 <br><br>
 <font size="+2"><b>Overview</b></font>
 <br><br>
@@ -3057,7 +3057,7 @@ Two options are available - Print, produces a html page of the invoice (or credi
 <!-- Help End: PrintCustTrans -->
 
 <br><br><br>
-<font size="+3"><b>Sales Orders</b></font>
+<font size="+3"><b><A NAME=Orders>Sales Orders</A></b></font>
 <br><br>
 <font size="+2"><b>Functionality</b></font>
 <br><br>
@@ -3216,7 +3216,7 @@ Selecting a shipment is done from the select supplier screen. The shipments defi
 <!-- Help End: ShipmentCosting -->
 
 <br><br><br>
-<font size="+3"><b>General Ledger</b></font>
+<font size="+3"><b><A NAME=GL>General Ledger</A></b></font>
 <br><br>
 <font size="+2"><b>Overview</b></font>
 <br><br>
@@ -3607,7 +3607,7 @@ The script that creates the EDI invoices (EDISendInvoices.php) should be run aut
 <!-- Help End: CustEDISetup -->
 
 <br><br>
-<font size="+3"><b>Special Utilities</b></font>
+<font size="+3"><b><A NAME=Utilities>Special Utilities</A></b></font>
 <br><br>
 Any of these programs should only be run by the individual in the business who is allocated the task of administering the system, who has a thorough understanding of the system. If in doubt seek advice. Many of these utilities perform major changes to the database and it is always advisable to have a backup before attempting to run one. All these utilities have a page security setting of 15 by default (see security schema).
 <br><br>
@@ -3637,7 +3637,7 @@ If the inventory database is imported from some other system, the stock location
 <br><br>
 This script Z_RePostGLFromPeriod.php clears the actual data in the table ChartDetails - that contains the movements in each GL account, the movements are then re-calculated by setting all GLTrans to unposted and re-running the posting of all these transactions. This is a desperate measure that should only be undertaken in an extreme situation. Maybe a corrupt database or system crash etc that caused an out of balance trial balance.
 <br><br>
-<font size="+3"><b>Developing New Scripts</b></font>
+<font size="+3"><b><A NAME=NewScripts>Developing New Scripts</A></b></font>
 <br><br>
 <font size="+2"><b>Directory Structure</b></font>
 <br><br>
@@ -3695,7 +3695,7 @@ This script has some common functions used throughout the system - in particular
 <br><br>
 ReadInCompanyRecord - returns an array of all the company record information.
 <br><br>
-<font size="+3"><b>Contributors - Acknowledgements</b></font>
+<font size="+3"><b><A NAME=Contrinutors>Contributors - Acknowledgements</A></b></font>
 <br><br>
 Sherif Omar - Kylitech Consulting - bug fixes throughout, tidy of html, cascading style sheet mods.
 <br><br>
@@ -3708,6 +3708,8 @@ Dick Stins - suggestions and pointers - use of foreign key contraints. Use of CV
 Jesse Peterson - File upload of Serialised items - help with specification and first cut of code for Serial Items.
 <br><br>
 Chris Bice - Inquiry for All Inventory Movements and Inventory Status By Location and Category.
+<br><br>
+Steve Kaill - Improved GUI/css, documentation conversion to html and help text
 <br><br>
 Phil Daintree - everything else.
 </td>
