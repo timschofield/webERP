@@ -7,7 +7,7 @@
 
 function prnMsg($msg,$type='info', $prefix=''){
 
-	echo getMsg($msg, $type, $prefix);
+	echo '<P>' . getMsg($msg, $type, $prefix) . '</P>';
 
 }//prnMsg
 

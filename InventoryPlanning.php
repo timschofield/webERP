@@ -87,7 +87,7 @@ strlen($_POST['ToCriteria'])>=1){
 	  $title = _('Inventory Planning - Problem Report') . '....';
 	  include('includes/header.inc');
 	   echo '<BR>' . _('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db);
-	   echo "<BR><A HREF='" .$rootpath .'/index.php?' . SID . "'>" . _('Back o the Menu') . '</A>';
+	   echo "<BR><A HREF='" .$rootpath .'/index.php?' . SID . "'>" . _('Back to the Menu') . '</A>';
 	   if ($debug==1){
 	      echo "<BR>$SQL";
 	   }
