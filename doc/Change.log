@@ -1,5 +1,13 @@
 <P>webERP Change Log
 
+<P>28/8/04 PDFDeliveryDifferences.php had a few bugs in the sql fixed
+<P>28/8/04 Steve - PDFChequeListing.php PrintCustTrans.php PDFStockCheckComparison.php SuppPaymentRun.php all had display errors fixed.
+<P>28/8/04 PO_PDFPurchOrder.php purchase order printing corrected.
+<P>28/8/04 Steve - new script UserSettings.php linked from the user name on header.inc to allow setting of the theme, language and max number of records to display. Changes to session.inc to accomodate changing theme and language.
+<P>28/8/04 Theme, Language and DisplayRecordsMax are now fields in WWW_Users
+<P>28/8/04 Steve - Minor changes to theme default.css files
+<P>28/8/04 Steve - SelectCustomer.php SelectProduct.php SelectSupplier.php all modified to allow paging where a large result set is returned
+<P>25/8/04 SelectCreditItems.php now allows text line entries with each line of the credit note
 <P>23/8/04 SelectOrderItems.php SelectCreditItems.php strrpos works differently in PHP 5 changed to use strpos
 <P>14/8/04 Changed ConfirmDispatch_Invoice.php to allow entry of consignment reference also changed PrintCustTrans.php and PDFPrintCustTransPageHeader.inc to print out the narrative on sales order lines and the consignment number
 <P>14/8/04 Changed SelectOrderItems.php to allow entry of narrative and update narrative entries also show warning when quick entries not processed.

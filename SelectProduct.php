@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $title = "Search Inventory Items";
 
 $PageSecurity = 2;
@@ -20,16 +20,20 @@ if (isset($_GET['NewSearch'])){
 }
 
 if (!isset($_POST['PageOffset'])) {
-  $_POST['PageOffset'] = 1;
+	$_POST['PageOffset'] = 1;
 } else {
-  if ($_POST['PageOffset']==0) {
-    $_POST['PageOffset'] = 1;
-  }
+	if ($_POST['PageOffset']==0) {
+		$_POST['PageOffset'] = 1;
+	}
 }
 
 /*Always show the search facilities */
 
-$SQL="SELECT CategoryID, CategoryDescription FROM StockCategory ORDER BY CategoryDescription";
+$SQL="SELECT CategoryID,
+		CategoryDescription
+	FROM StockCategory
+	ORDER BY CategoryDescription";
+
 $result1 = DB_query($SQL,$db);
 if (DB_num_rows($result1)==0){
 	echo "<P><FONT SIZE=4 COLOR=RED>Problem Report:</FONT><BR>There are no stock categories currently defined please use the link below to set them up.";
@@ -103,7 +107,11 @@ if (isset($_POST['StockCode'])) {
 if (!isset($_POST['Search'])){
 	$_POST['Search'] ="";
 }
-if ($_POST['Search']=="Search Now"){
+if ($_POST['Search']=="Search Now" OR $_POST['Go']=='Go' OR $_POST['Next']=='Next' OR $_POST['Previous']=='Previous'){
+
+	if ($_POST['Go']!='Go' AND $_POST['Next']!='Next' AND $_POST['Previous']!='Previous'){
+		$_POST['PageOffset'] = 1;
+	}
 
 	If ($_POST['Keywords'] AND $_POST['StockCode']) {
 		$msg="Stock description keywords have been used in preference to the Stock code extract entered.";
@@ -121,28 +129,93 @@ if ($_POST['Search']=="Search Now"){
 		$SearchString = $SearchString. substr($_POST['Keywords'],$i)."%";
 
 		if ($_POST['StockCat'] == 'All'){
-			$SQL = "SELECT StockMaster.StockID, Description, Sum(LocStock.Quantity) AS QOH, Units, MBflag FROM StockMaster, LocStock WHERE StockMaster.StockID=LocStock.StockID AND Description LIKE '$SearchString' GROUP BY StockMaster.StockID, Description ORDER BY StockMaster.StockID";
+			$SQL = "SELECT StockMaster.StockID,
+					Description,
+					Sum(LocStock.Quantity) AS QOH,
+					Units,
+					MBflag
+				FROM StockMaster,
+					LocStock
+				WHERE StockMaster.StockID=LocStock.StockID
+				AND Description LIKE '$SearchString'
+				GROUP BY StockMaster.StockID,
+				Description
+				ORDER BY StockMaster.StockID";
 		} else {
-			$SQL = "SELECT StockMaster.StockID, Description, Sum(LocStock.Quantity) AS QOH, Units, MBflag FROM StockMaster, LocStock WHERE StockMaster.StockID=LocStock.StockID AND Description LIKE '$SearchString' AND CategoryID='" . $_POST['StockCat'] . "' GROUP BY StockMaster.StockID, Description ORDER BY StockMaster.StockID";
+			$SQL = "SELECT StockMaster.StockID,
+					Description,
+					Sum(LocStock.Quantity) AS QOH,
+					Units,
+					MBflag
+				FROM StockMaster,
+					LocStock
+				WHERE StockMaster.StockID=LocStock.StockID
+				AND Description LIKE '$SearchString'
+				AND CategoryID='" . $_POST['StockCat'] . "'
+				GROUP BY StockMaster.StockID,
+				Description
+				ORDER BY StockMaster.StockID";
 		}
 	} elseif (isset($_POST['StockCode'])){
 
 		$_POST["StockCode"] = strtoupper($_POST["StockCode"]);
 		if ($_POST['StockCat'] == 'All'){
-			$SQL = "SELECT StockMaster.StockID, Description, MBflag, Sum(LocStock.Quantity) AS QOH, Units FROM StockMaster, LocStock WHERE StockMaster.StockID=LocStock.StockID AND StockMaster.StockID like '%" . $_POST['StockCode'] . "%' GROUP BY StockMaster.StockID, Description ORDER BY StockMaster.StockID";
+			$SQL = "SELECT StockMaster.StockID,
+					Description,
+					MBflag,
+					Sum(LocStock.Quantity) AS QOH,
+					Units
+				FROM StockMaster,
+					LocStock
+				WHERE StockMaster.StockID=LocStock.StockID
+				AND StockMaster.StockID like '%" . $_POST['StockCode'] . "%'
+				GROUP BY StockMaster.StockID,
+				Description
+				ORDER BY StockMaster.StockID";
 
 		} else {
-			$SQL = "SELECT StockMaster.StockID, Description, MBflag, Sum(LocStock.Quantity) AS QOH, Units FROM StockMaster, LocStock WHERE StockMaster.StockID=LocStock.StockID AND StockMaster.StockID like '%" . $_POST['StockCode'] . "%' AND CategoryID='" . $_POST['StockCat'] . "' GROUP BY StockMaster.StockID, Description ORDER BY StockMaster.StockID";
+			$SQL = "SELECT StockMaster.StockID,
+					Description,
+					MBflag,
+					Sum(LocStock.Quantity) AS QOH,
+					Units
+				FROM StockMaster,
+					LocStock
+				WHERE StockMaster.StockID=LocStock.StockID
+				AND StockMaster.StockID like '%" . $_POST['StockCode'] . "%'
+				AND CategoryID='" . $_POST['StockCat'] . "'
+				GROUP BY StockMaster.StockID,
+					Description
+				ORDER BY StockMaster.StockID";
 		}
 
 	} elseif (!isset($_POST['StockCode']) AND !isset($_POST['Keywords'])) {
 		if ($_POST['StockCat'] == 'All'){
-			$SQL = "SELECT StockMaster.StockID, Description, MBflag, Sum(LocStock.Quantity) AS QOH, Units FROM StockMaster, LocStock WHERE StockMaster.StockID=LocStock.StockID GROUP BY StockMaster.StockID, Description ORDER BY StockMaster.StockID";
+			$SQL = "SELECT StockMaster.StockID,
+					Description, MBflag,
+					Sum(LocStock.Quantity) AS QOH,
+					Units
+				FROM StockMaster,
+					LocStock
+				WHERE StockMaster.StockID=LocStock.StockID
+				GROUP BY StockMaster.StockID,
+					Description
+				ORDER BY StockMaster.StockID";
 		} else {
-			$SQL = "SELECT StockMaster.StockID, Description, MBflag, Sum(LocStock.Quantity) AS QOH, Units FROM StockMaster, LocStock WHERE StockMaster.StockID=LocStock.StockID AND CategoryID='" . $_POST['StockCat'] . "' GROUP BY StockMaster.StockID, Description ORDER BY StockMaster.StockID";
+			$SQL = "SELECT StockMaster.StockID,
+					Description,
+					MBflag,
+					Sum(LocStock.Quantity) AS QOH,
+					Units
+				FROM StockMaster,
+					LocStock
+				WHERE StockMaster.StockID=LocStock.StockID
+				AND CategoryID='" . $_POST['StockCat'] . "'
+				GROUP BY StockMaster.StockID,
+					Description
+				ORDER BY StockMaster.StockID";
 		}
 	}
-	$SQL=$SQL . " LIMIT " . $Maximum_Number_Of_Parts_To_Show;
 
 	$result = DB_query($SQL,$db);
 
@@ -158,12 +231,13 @@ if ($_POST['Search']=="Search Now"){
 		$myrow = DB_fetch_row($result);
 		$_POST['Select'] = $myrow[0];
 	}
+	unset($_POST['Search']);
 }
 
 If (isset($result) AND !isset($_POST['Select']) ) {
 /*If the user hit the search button and there is more than one items to show */
   $ListCount=DB_num_rows($result);
-  $ListPageMax=ceil($ListCount/$_SESSION['DisplayRecordsMax']);								
+  $ListPageMax=ceil($ListCount/$_SESSION['DisplayRecordsMax']);
 
   if (isset($_POST['Next'])) {
     if ($_POST['PageOffset'] < $ListPageMax) {
@@ -176,13 +250,16 @@ If (isset($result) AND !isset($_POST['Select']) ) {
 	    $_POST['PageOffset'] = $_POST['PageOffset'] - 1;
     }
   }
-	
+
+  if ($_POST['PageOffset']>$ListPageMax){
+  	$_POST['PageOffset'] = $ListPageMax;
+  }
   echo "&nbsp;&nbsp;" . $_POST['PageOffset'] . " of " . $ListPageMax . " pages. Go to Page: ";
-?>	
+?>
 
   <select name="PageOffset">
 
-<?php	
+<?php
   $ListPage=1;
   while($ListPage<=$ListPageMax) {
 	  if ($ListPage==$_POST['PageOffset']) {
@@ -190,13 +267,13 @@ If (isset($result) AND !isset($_POST['Select']) ) {
 
   		<option value=<?php echo($ListPage); ?> selected><?php echo($ListPage); ?></option>
 
-<?php	
+<?php
 	  } else {
 ?>
 
 		  <option value=<?php echo($ListPage); ?>><?php echo($ListPage); ?></option>
 
-<?php 
+<?php
 	  }
 	  $ListPage=$ListPage+1;
   }
@@ -206,13 +283,18 @@ If (isset($result) AND !isset($_POST['Select']) ) {
   <INPUT TYPE=SUBMIT NAME="Go" VALUE="Go">
   <INPUT TYPE=SUBMIT NAME="Previous" VALUE="Previous">
   <INPUT TYPE=SUBMIT NAME="Next" VALUE="Next">
-  <INPUT TYPE=hidden NAME="Search" VALUE="Search Now">
+
 <?php
-  
+
   echo "<br><br>";
 
 	echo "<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>";
-	$tableheader = "<TR><TD class='tableheader'>Code</TD><TD class='tableheader'>Description</TD><TD class='tableheader'>Total Qty On Hand</TD><TD class='tableheader'>Units</TD></TR>";
+	$tableheader = "<TR>
+				<TD class='tableheader'>Code</TD>
+				<TD class='tableheader'>Description</TD>
+				<TD class='tableheader'>Total Qty On Hand</TD>
+				<TD class='tableheader'>Units</TD>
+			</TR>";
 	echo $tableheader;
 
 	$j = 1;
@@ -220,11 +302,11 @@ If (isset($result) AND !isset($_POST['Select']) ) {
 	$k = 0; //row counter to determine background colour
 
   $RowIndex = 0;
-	
+
   if (DB_num_rows($result)<>0){
-    mysql_data_seek($result, ($_POST['PageOffset']-1)*$_SESSION['DisplayRecordsMax']);
-	}
-	
+ 	DB_data_seek($result, ($_POST['PageOffset']-1)*$_SESSION['DisplayRecordsMax']);
+  }
+
 	while (($myrow=DB_fetch_array($result)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 
 		if ($k==1){
@@ -263,7 +345,6 @@ if (!isset($_POST['Search'])){
 	$_POST['Search']="";
 }
 
-
 If ($_POST['Search']!='Search Now' AND (isset($_POST['Select']) OR isset($_SESSION['SelectedStockItem']))) {
 
 	if (isset($_POST['Select'])){
@@ -294,7 +375,11 @@ If ($_POST['Search']!='Search Now' AND (isset($_POST['Select']) OR isset($_SESSI
 
 //LINKS TO PAGES REQUIRING STOCK ID TO BE PASSED
 	echo "<CENTER><TABLE WIDTH=90% COLSPAN=2 BORDER=2 CELLPADDING=4>";
-	echo "<TR><TD WIDTH=33% class='tableheader'>Item Inquiries</TD><TD WIDTH=33% class='tableheader'>Item Maintenance</TD><TD WIDTH=33% class='tableheader'>Item Transactions</TD></TR>";
+	echo "<TR>
+		<TD WIDTH=33% class='tableheader'>Item Inquiries</TD>
+		<TD WIDTH=33% class='tableheader'>Item Maintenance</TD>
+		<TD WIDTH=33% class='tableheader'>Item Transactions</TD>
+	</TR>";
 	echo "<TR><TD>";
 
 	/*Stock Inquiry Options */

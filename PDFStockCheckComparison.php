@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $PageSecurity = 2;
 if (! isset($_POST['ReportOrClose'])){
 	$title="Inventory Comparison Comparison Report";
@@ -334,7 +334,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 	echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='Print PDF'></CENTER>";
 
-	echo "</body></html>";
+	include("includes/footer.inc");
 
 } /*end of else not PrintPDF */
 

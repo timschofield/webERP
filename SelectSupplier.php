@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $title = "Search Suppliers";
 
 $PageSecurity = 2;
@@ -23,6 +23,7 @@ if (!isset($_POST['PageOffset'])) {
 
 If ($_POST['Search']=="Search Now"){
 
+	$_POST['PageOffset'] = 1;
 	If ($_POST['Keywords'] AND $_POST['SupplierCode']) {
 		$msg="<BR>Supplier name keywords have been used in preference to the Supplier code extract entered.";
 	}
@@ -220,12 +221,27 @@ If (isset($result)) {
   $RowIndex = 0;
 	
   if (DB_num_rows($result)<>0){
-    mysql_data_seek($result, ($_POST['PageOffset']-1)*$_SESSION['DisplayRecordsMax']);
-	}
-	
+ 	DB_data_seek($result, ($_POST['PageOffset']-1)*$_SESSION['DisplayRecordsMax']);
+  }
+
 	while (($myrow=DB_fetch_array($result)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 
-		printf("<tr><td><INPUT TYPE=SUBMIT NAME='Select' VALUE='%s'</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td></tr>", $myrow["SupplierID"], $myrow["SuppName"], $myrow["CurrCode"], $myrow["Address1"], $myrow["Address2"],$myrow["Address3"],$myrow["Address4"]);
+		printf("<tr>
+			<td><INPUT TYPE=SUBMIT NAME='Select' VALUE='%s'</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			</tr>",
+			$myrow["SupplierID"],
+			$myrow["SuppName"],
+			$myrow["CurrCode"],
+			$myrow["Address1"],
+			$myrow["Address2"],
+			$myrow["Address3"],
+			$myrow["Address4"]);
 
 		$j++;
 		If ($j == 11){
@@ -242,7 +258,7 @@ If (isset($result)) {
 }
 //end if results to show
 echo "</form>";
-include("includes/footer.inc");	
+include("includes/footer.inc");
 ?>
 
 

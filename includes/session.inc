@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -146,7 +146,7 @@
 
 
 // Set language - defined in config.php or user variable above
-putenv ("LC_ALL=$Language");
+putenv ("LC_ALL=" . $_SESSION['Language']);
 
 // Specify location of translation tables
 if (function_exists('bindtextdomain')){

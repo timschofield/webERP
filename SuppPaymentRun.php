@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 include("includes/SQL_CommonFunctions.inc");
 $PageSecurity = 5;
 
@@ -322,8 +322,8 @@ Payment types can be modified by editing that file */
 	echo "<TR><TD>Starting Reference no (eg chq no):</TD><TD><INPUT TYPE=text name='Ref' MAXLENGTH=11 SIZE=12 VALUE=" . $_POST['Ref'] . "></TD></TR>";
 
 	echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='Print PDF Only'><INPUT TYPE=Submit Name='PrintPDFAndProcess' Value='Print and Process Payments'></CENTER>";
-	echo "</body></html>";
 
+	include ("includes/footer.inc");
 } /*end of else not PrintPDF */
 
 ?>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 if ($PageNumber>1){
 	$pdf->newPage();
 }
@@ -21,7 +21,7 @@ if ($_POST['CategoryID']!='All') {
 	$pdf->addText($XPos, $YPos-20,$FontSize, "From " . $_POST['FromDate'] . " to " .  $_POST['ToDate']);
 }
 if ($_POST['Location']!='All'){
-	$pdf->addText($XPos+200, $YPos-20, $FontSize, "Deliveries ex ". $_POST['Location'] . " only");
+	$pdf->addText($XPos+300, $YPos-20, $FontSize, "Deliveries ex ". $_POST['Location'] . " only");
 }
 
 $XPos = $Page_Width-$Right_Margin-50;

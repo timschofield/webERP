@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*
 date validation and parsing functions
 
@@ -279,7 +279,7 @@ and converts to a yyyy/mm/dd format */
 
 	$DateEntry = trim($DateEntry);
 
-	
+
 	if (strpos($DateEntry,"/")) {
 		$Date_Array = explode("/",$DateEntry);
 	} elseif (strpos ($DateEntry,"-")) {
@@ -294,19 +294,23 @@ and converts to a yyyy/mm/dd format */
 		$Date_Array[2]= substr($DateEntry,6,2);
 	}
 
-
+	/*echo "<BR>The date was originally: " . $DateEntry;
+	echo "<BR>Date array 0 = " . $Date_Array[0];
+	echo "<BR>Date array 1 = " . $Date_Array[1];
+	echo "<BR>Date array 2 = " . $Date_Array[2];
+	*/
 //to modify assumption in 2030
 
-	If ((int)$Date_Array[0] <60) {
-		$Date_Array[0] = "20".$Date_Array[0];
-	} elseif ((int)$Date_Array[0] >59 AND (int)$Date_Array[0] <100) {
-		$Date_Array[0] = "19".$Date_Array[0];
-	} elseif ((int)$Date_Array[0] >9999) {
+	If ((int)$Date_Array[2] <60) {
+		$Date_Array[2] = "20".$Date_Array[2];
+	} elseif ((int)$Date_Array[2] >59 AND (int)$Date_Array[2] <100) {
+		$Date_Array[0] = "19".$Date_Array[2];
+	} elseif ((int)$Date_Array[2] >9999) {
 		Return 0;
 	}
 
 	if ($DefaultDateFormat=="d/m/Y"){
-
+		/* echo "<BR>The date returned is " . $Date_Array[2]."/".$Date_Array[1]."/".$Date_Array[0]; */
 		Return $Date_Array[2]."/".$Date_Array[1]."/".$Date_Array[0];
 
 	} elseif ($DefaultDateFormat=="m/d/Y") {

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $title = "Search Customers";
 
 $PageSecurity = 2;
@@ -26,6 +26,7 @@ if (!isset($_POST['PageOffset'])) {
 
 if ($_POST['Search']=="Search Now"){
 
+	$_POST['PageOffset'] = 1;
 	If ($_POST['Keywords'] AND $_POST['CustCode']) {
 		$msg="Customer name keywords have been used in preference to the customer code extract entered.";
 		$_POST["Keywords"] = strtoupper($_POST["Keywords"]);
@@ -151,7 +152,7 @@ if (isset($_POST['CustCode'])) {
 
 If (isset($result)) {
   $ListCount=DB_num_rows($result);
-  $ListPageMax=ceil($ListCount/$_SESSION['DisplayRecordsMax']);								
+  $ListPageMax=ceil($ListCount/$_SESSION['DisplayRecordsMax']);
 
   if (isset($_POST['Next'])) {
     if ($_POST['PageOffset'] < $ListPageMax) {
@@ -196,20 +197,20 @@ If (isset($result)) {
   <INPUT TYPE=SUBMIT NAME="Next" VALUE="Next">
   <INPUT TYPE=hidden NAME="Search" VALUE="Search Now">
 <?php
-  
+
   echo "<br><br>";
-	
+
 	echo "<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>";
 	$TableHeader = "<TR><TD Class='tableheader'>Code</TD><TD Class='tableheader'>Customer Name</TD><TD Class='tableheader'>Branch</TD><TD Class='tableheader'>Contact</TD><TD Class='tableheader'>Phone</TD><TD Class='tableheader'>Fax</TD></TR>";
 	echo $TableHeader;
 	$j = 1;
 	$k = 0; //row counter to determine background colour
   $RowIndex = 0;
-	
+
   if (DB_num_rows($result)<>0){
-    mysql_data_seek($result, ($_POST['PageOffset']-1)*$_SESSION['DisplayRecordsMax']);
-	}
-	
+  	DB_data_seek($result, ($_POST['PageOffset']-1)*$_SESSION['DisplayRecordsMax']);
+  }
+
 	while (($myrow=DB_fetch_array($result)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 
 		if ($k==1){

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $PageSecurity = 3;
 include("includes/SQL_CommonFunctions.inc");
 include("includes/DateFunctions.inc");
@@ -47,6 +47,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
      if ($InputError==1){
      	echo $msg;
      }
+     include("includes/footer.inc");
      exit;
 } else {
 	include("includes/ConnectDB.inc");
