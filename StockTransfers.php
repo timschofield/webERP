@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
 
@@ -79,6 +79,15 @@ if ($NewTransfer){
 if ($_SESSION['Transfer']->TransferItem[0]->Controlled==0){
 	$_SESSION['Transfer']->TransferItem[0]->Quantity = $_POST['Quantity'];
 }
+if ( isset($_POST['StockLocationFrom']) && $_POST['StockLocationFrom']!= $_SESSION['Transfer']->StockLocationFrom ){
+	$_SESSION['Transfer']->StockLocationFrom = $_POST['StockLocationFrom'];
+	$_SESSION['Transfer']->TransferItem[0]->Quantity=0;
+	$_SESSION['Transfer']->TransferItem[0]->SerialItems=array();
+	prnMsg( _('You have set or changed the From location. You must re-enter the quantity and any Controlled Items now.') );
+}
+if ( isset($_POST['StockLocationTo']) ){
+	$_SESSION['Transfer']->StockLocationTo = $_POST['StockLocationTo'];
+}
 
 if ( isset($_POST['EnterTransfer']) ){
 
@@ -88,16 +97,21 @@ if ( isset($_POST['EnterTransfer']) ){
 	$myrow = DB_fetch_row($result);
 	$InputError = false;
 	if (DB_num_rows($result)==0) {
-		echo '<P>' . _('The entered item code does not exist');
+		echo '<P>';
+		prnMsg(_('The entered item code does not exist'), 'error');
 		$InputError = true;
 	} elseif (!is_numeric($_SESSION['Transfer']->TransferItem[0]->Quantity)){
-		echo '<P>'._('The quantity entered must be numeric');
+		echo '<P>';
+		prnMsg( _('The quantity entered must be numeric'), 'error' );
 		$InputError = true;
 	} elseif ($_SESSION['Transfer']->TransferItem[0]->Quantity<=0){
-		echo '<P>'._('The quantity entered must be a positive number greater than zero');
+		echo '<P>';
+		prnMsg( _('The quantity entered must be a positive number greater than zero'), 'error');
 		$InputError = true;
-	} elseif ($_SESSION['Transfer']->StockLocationFrom==$_SESSION['Transfer']->StockLocationTo){
-		echo '<P>'._('The locations to transfer from and to must be different');
+	}
+	if ($_SESSION['Transfer']->StockLocationFrom==$_SESSION['Transfer']->StockLocationTo){
+		echo '<P>';
+		prnMsg( _('The locations to transfer from and to must be different'), 'error');
 		$InputError = true;
 	}
 
@@ -358,12 +372,11 @@ if ( isset($_POST['EnterTransfer']) ){
 
 echo '<FORM ACTION="'. $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
 
-
 echo '<CENTER>
 	<TABLE>
 	<TR>
 	<TD>'. _('Stock Code').':</TD>
-	<TD><input type=text name="StockID" size=21 value="' . $_SESSION['Transfer']->LineItem[0]->StockID . '" maxlength=20></TD>
+	<TD><input type=text name="StockID" size=21 value="' . $_SESSION['Transfer']->TransferItem[0]->StockID . '" maxlength=20></TD>
 	<TD><INPUT TYPE=SUBMIT NAME="CheckCode" VALUE="'._('Check Part').'"></TD>
 	</TR>';
 

@@ -57,13 +57,20 @@ ALTER TABLE WWW_Users ADD Language CHAR(2) DEFAULT 'en' NOT NULL;
 ALTER TABLE WWW_Users ADD Theme VARCHAR(30) DEFAULT 'professional' NOT NULL;
 ALTER TABLE WWW_Users ADD DisplayRecordsMax TINYINT DEFAULT 0 NOT NULL;
 UPDATE WWW_Users SET Theme='professional', Language='en';
+
 INSERT INTO `Scripts` ( `PageID` , `FileName` , `PageDescription` )
 VALUES ('162', 'UserSettings.php', 'Allows the user to change system wide defaults for the theme - appearance, the number of records to show in searches and the language to display messages in');
+
 INSERT INTO `Scripts` ( `PageID` , `FileName` , `PageDescription` )
 VALUES ('163', 'StockQuantityByDate.php', 'Shows the stock on hand for each item at a selected location and stock category as at a specified date');
 
 ALTER TABLE `TaxAuthorities` CHANGE `TaxID` `TaxID` TINYINT( 4 ) NOT NULL AUTO_INCREMENT;
+
+INSERT INTO `Scripts` (`PageID`, `FileName`, `PageDescription`) VALUES ('164', 'PDFOrderStatus.php', 'Reports on sales order status by date range, by stock location and stock category - producing a pdf showing each line items and any quantites delivered');
+
 INSERT INTO `Scripts` ( `PageID` , `FileName` , `PageDescription` )
-VALUES ('164', 'Tax.php', 'Creates a report of the ad-valoerm tax - GST/VAT - for the period selected from accounts payable and accounts receivable data');
+VALUES ('165', 'Tax.php', 'Creates a report of the ad-valoerm tax - GST/VAT - for the period selected from accounts payable and accounts receivable data');
+
+
 
 COMMIT;

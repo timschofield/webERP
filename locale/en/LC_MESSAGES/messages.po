@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-10 18:03+1300\n"
+"POT-Creation-Date: 2004-10-12 10:30+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -54,9 +54,10 @@ msgstr ""
 #: AccountGroups.php:90 Areas.php:84 Areas.php:93 BankAccounts.php:93
 #: Customers.php:176 Customers.php:185 Customers.php:193 Customers.php:201
 #: Locations.php:168 Locations.php:177 Locations.php:185 Locations.php:193
-#: Locations.php:201 Locations.php:209 Stocks.php:315 Stocks.php:324
-#: Stocks.php:332 Stocks.php:340 Stocks.php:348 Stocks.php:356
-#: TaxAuthorities.php:106 TaxAuthorities.php:114 TaxAuthorities.php:122
+#: Locations.php:201 Locations.php:209 PaymentTerms.php:111
+#: PaymentTerms.php:118 Stocks.php:315 Stocks.php:324 Stocks.php:332
+#: Stocks.php:340 Stocks.php:348 Stocks.php:356 TaxAuthorities.php:106
+#: TaxAuthorities.php:114 TaxAuthorities.php:122
 msgid "There are"
 msgstr ""
 
@@ -91,7 +92,7 @@ msgstr ""
 #: AccountGroups.php:142 AccountGroups.php:145 AccountGroups.php:249
 #: AccountGroups.php:251 CompanyPreferences.php:360 CompanyPreferences.php:362
 #: CompanyPreferences.php:372 CompanyPreferences.php:374
-#: CompanyPreferences.php:384 CompanyPreferences.php:386
+#: CompanyPreferences.php:384 CompanyPreferences.php:386 GLTransInquiry.php:84
 #: PDFDeliveryDifferences.php:54 SalesAnalRepts.php:385 SalesAnalRepts.php:388
 #: SalesAnalRepts.php:403 SalesAnalRepts.php:406 SalesAnalRepts.php:421
 #: SalesAnalRepts.php:424 Stocks.php:597 Stocks.php:599
@@ -101,7 +102,7 @@ msgstr ""
 #: AccountGroups.php:148 AccountGroups.php:254 AccountGroups.php:256
 #: CompanyPreferences.php:359 CompanyPreferences.php:363
 #: CompanyPreferences.php:371 CompanyPreferences.php:375
-#: CompanyPreferences.php:383 CompanyPreferences.php:387
+#: CompanyPreferences.php:383 CompanyPreferences.php:387 GLTransInquiry.php:82
 #: PDFDeliveryDifferences.php:53 SalesAnalRepts.php:384 SalesAnalRepts.php:387
 #: SalesAnalRepts.php:402 SalesAnalRepts.php:405 SalesAnalRepts.php:420
 #: SalesAnalRepts.php:423 Stocks.php:592 Stocks.php:594
@@ -110,11 +111,13 @@ msgid "No"
 msgstr ""
 
 #: AccountGroups.php:156 BOMs.php:78 EDIMessageFormat.php:161
+#: PaymentTerms.php:166
 msgid "EDIT"
 msgstr ""
 
 #: AccountGroups.php:157 BOMs.php:80 COGSGLPostings.php:105
 #: EDIMessageFormat.php:162 FreightCosts.php:210 Help.php:159
+#: PaymentTerms.php:167
 msgid "DELETE"
 msgstr ""
 
@@ -144,7 +147,7 @@ msgstr ""
 
 #: AccountGroups.php:266 Areas.php:180 BOMs.php:386 BankAccounts.php:221
 #: COGSGLPostings.php:267 FreightCosts.php:299 Help.php:214 Locations.php:378
-#: SalesAnalRepts.php:443 TaxAuthorities.php:261
+#: PaymentTerms.php:246 SalesAnalRepts.php:443 TaxAuthorities.php:261
 msgid "Enter Information"
 msgstr ""
 
@@ -183,7 +186,7 @@ msgstr ""
 msgid "The details of outstanding transactions for customer"
 msgstr ""
 
-#: AgedDebtors.php:181 AgedSuppliers.php:151 GLAccountInquiry.php:99
+#: AgedDebtors.php:181 AgedSuppliers.php:151 GLAccountInquiry.php:98
 #: PO_Items.php:346 PO_Items.php:471 PO_Items.php:627
 #: StockLocTransferReceive.php:338 StockQuantityByDate.php:92
 #: includes/SelectOrderItems_IntoCart.inc:47
@@ -200,8 +203,8 @@ msgstr ""
 
 #: AgedDebtors.php:184 AgedSuppliers.php:154 ConfirmDispatch_Invoice.php:722
 #: ConfirmDispatch_Invoice.php:735 Credit_Invoice.php:550
-#: Credit_Invoice.php:572 GLProfit_Loss.php:129 StockCostUpdate.php:64
-#: includes/ConnectDB.inc:20 includes/GLPostings.inc:37
+#: Credit_Invoice.php:572 GLProfit_Loss.php:129 GLTrialBalance.php:126
+#: StockCostUpdate.php:64 includes/ConnectDB.inc:20 includes/GLPostings.inc:37
 msgid "The SQL that failed was:"
 msgstr ""
 
@@ -329,9 +332,10 @@ msgstr ""
 
 #: Areas.php:66 ConfirmDispatch_Invoice.php:152 CustomerReceipt.php:256
 #: CustomerReceipt.php:437 CustomerReceipt.php:465 CustomerTransInquiry.php:69
-#: GLAccountInquiry.php:100 GLAccountInquiry.php:108 GLAccounts.php:37
+#: GLAccountInquiry.php:99 GLAccountInquiry.php:107 GLAccounts.php:37
 #: GLAccounts.php:44 GLBalanceSheet.php:73 GLBalanceSheet.php:91
-#: StockCostUpdate.php:74 StockQuantityByDate.php:73 StockTransfers.php:117
+#: Payments.php:166 StockCostUpdate.php:74 StockQuantityByDate.php:73
+#: StockTransfers.php:131
 msgid "The SQL that failed was"
 msgstr ""
 
@@ -375,7 +379,7 @@ msgstr ""
 
 #: Areas.php:131 BankAccounts.php:141 Credit_Invoice.php:302
 #: CustomerReceipt.php:514 GLJournal.php:222 Locations.php:270
-#: SalesAnalRepts.php:288 TaxAuthorities.php:168
+#: Payments.php:583 SalesAnalRepts.php:288 TaxAuthorities.php:168
 #: includes/InputSerialItemsKeyed.php:53
 msgid "Delete"
 msgstr ""
@@ -423,7 +427,8 @@ msgid "Component"
 msgstr ""
 
 #: BOMInquiry.php:47 BOMs.php:455 GoodsReceived.php:50 PDFOrderStatus.php:253
-#: PO_Items.php:743 PO_Items.php:852 StockQuantityByDate.php:81
+#: PO_Items.php:743 PO_Items.php:852 PO_SelectOSPurchOrder.php:151
+#: PO_SelectPurchOrder.php:192 PaymentTerms.php:143 StockQuantityByDate.php:81
 #: TaxAuthorities.php:153
 msgid "Description"
 msgstr ""
@@ -682,7 +687,8 @@ msgstr ""
 msgid "Effective To"
 msgstr ""
 
-#: BOMs.php:399 PO_Items.php:218
+#: BOMs.php:399 PO_Items.php:218 PO_SelectOSPurchOrder.php:60
+#: PO_SelectPurchOrder.php:58
 msgid ""
 "Stock description keywords have been used in preference to the Stock code "
 "extract entered"
@@ -711,24 +717,25 @@ msgid ""
 "of material"
 msgstr ""
 
-#: BOMs.php:439
+#: BOMs.php:439 PO_SelectOSPurchOrder.php:135 PO_SelectPurchOrder.php:176
 msgid "Enter text extract(s) in the"
 msgstr ""
 
-#: BOMs.php:439
+#: BOMs.php:439 PO_SelectOSPurchOrder.php:135 PO_SelectPurchOrder.php:176
 msgid "description"
 msgstr ""
 
 #: BOMs.php:441 PO_Header.php:200 PO_Items.php:837
+#: PO_SelectOSPurchOrder.php:138 PO_SelectPurchOrder.php:179
 msgid "OR"
 msgstr ""
 
-#: BOMs.php:442
+#: BOMs.php:442 PO_SelectOSPurchOrder.php:138 PO_SelectPurchOrder.php:179
 msgid "Enter extract of the"
 msgstr ""
 
-#: BOMs.php:442 StockAdjustments.php:251 StockCostUpdate.php:103
-#: StockTransfers.php:365
+#: BOMs.php:442 PO_SelectOSPurchOrder.php:138 PO_SelectPurchOrder.php:179
+#: StockAdjustments.php:251 StockCostUpdate.php:103 StockTransfers.php:378
 msgid "Stock Code"
 msgstr ""
 
@@ -738,16 +745,17 @@ msgstr ""
 
 #: BOMs.php:455 CustomerReceipt.php:715 GLCodesInquiry.php:27
 #: GLCodesInquiry.php:65 PDFOrderStatus.php:252 PO_Header.php:213
-#: PO_Items.php:851
+#: PO_Items.php:851 PO_SelectOSPurchOrder.php:150 PO_SelectPurchOrder.php:191
 msgid "Code"
 msgstr ""
 
-#: BOMs.php:455
+#: BOMs.php:455 PO_SelectOSPurchOrder.php:152 PO_SelectPurchOrder.php:193
 msgid "On Hand"
 msgstr ""
 
 #: BOMs.php:455 ConfirmDispatch_Invoice.php:229 Credit_Invoice.php:248
-#: GoodsReceived.php:52 PO_Items.php:853 StockLocTransferReceive.php:394
+#: GoodsReceived.php:52 PO_Items.php:853 PO_SelectOSPurchOrder.php:154
+#: PO_SelectPurchOrder.php:195 StockLocTransferReceive.php:394
 msgid "Units"
 msgstr ""
 
@@ -805,12 +813,13 @@ msgstr ""
 msgid "The SQL used to retrieve the bank account details was:"
 msgstr ""
 
-#: BankAccounts.php:120 COGSGLPostings.php:88 GLJournal.php:216 index.php:856
+#: BankAccounts.php:120 COGSGLPostings.php:88 GLJournal.php:216
+#: Payments.php:573 index.php:856
 msgid "GL Account"
 msgstr ""
 
 #: BankAccounts.php:121 GLBalanceSheet.php:100 GLCodesInquiry.php:28
-#: GLCodesInquiry.php:66 GLProfit_Loss.php:141
+#: GLCodesInquiry.php:66 GLProfit_Loss.php:141 GLTrialBalance.php:136
 msgid "Account Name"
 msgstr ""
 
@@ -872,7 +881,7 @@ msgstr ""
 msgid "Could not un-clear this bank transaction because"
 msgstr ""
 
-#: BankMatching.php:56 BankReconciliation.php:26
+#: BankMatching.php:56 BankReconciliation.php:26 Payments.php:489
 msgid "Bank Account"
 msgstr ""
 
@@ -959,13 +968,13 @@ msgid "Ref"
 msgstr ""
 
 #: BankMatching.php:143 BankReconciliation.php:81 BankReconciliation.php:152
-#: CustomerTransInquiry.php:74 GLAccountInquiry.php:118
+#: CustomerTransInquiry.php:74 GLAccountInquiry.php:117 GLTransInquiry.php:66
 #: includes/PDFTaxPageHeader.inc:35
 msgid "Date"
 msgstr ""
 
 #: BankMatching.php:144 CustomerTransInquiry.php:81 GLJournal.php:209
-#: GLJournal.php:216
+#: GLJournal.php:216 GLTransInquiry.php:66 Payments.php:572 Payments.php:614
 msgid "Amount"
 msgstr ""
 
@@ -994,15 +1003,15 @@ msgstr ""
 msgid "The bank accounts could not be retrieved by the SQL because"
 msgstr ""
 
-#: BankReconciliation.php:23 CustomerReceipt.php:539
+#: BankReconciliation.php:23 CustomerReceipt.php:539 Payments.php:486
 msgid "The SQL used to retrieve the bank acconts was"
 msgstr ""
 
-#: BankReconciliation.php:29 CustomerReceipt.php:546
+#: BankReconciliation.php:29 CustomerReceipt.php:546 Payments.php:492
 msgid "Bank Accounts have not yet been defined. You must first"
 msgstr ""
 
-#: BankReconciliation.php:29 CustomerReceipt.php:546
+#: BankReconciliation.php:29 CustomerReceipt.php:546 Payments.php:492
 msgid "define the bank accounts"
 msgstr ""
 
@@ -1027,13 +1036,13 @@ msgid "Add back unpresented cheques"
 msgstr ""
 
 #: BankReconciliation.php:82 BankReconciliation.php:153
-#: GLAccountInquiry.php:116 includes/PDFTaxPageHeader.inc:33
+#: GLAccountInquiry.php:115 includes/PDFTaxPageHeader.inc:33
 #: includes/InputSerialItemsFile.php:86 includes/InputSerialItemsFile.php:127
 msgid "Type"
 msgstr ""
 
 #: BankReconciliation.php:83 BankReconciliation.php:154
-#: CustomerTransInquiry.php:73 EmailCustTrans.php:15 GLAccountInquiry.php:117
+#: CustomerTransInquiry.php:73 EmailCustTrans.php:15 GLAccountInquiry.php:116
 #: PrintCustTrans.php:452
 msgid "Number"
 msgstr ""
@@ -1326,9 +1335,9 @@ msgstr ""
 #: PDFDeliveryDifferences.php:109 PDFDeliveryDifferences.php:193
 #: PDFOrderStatus.php:192 PDFOrderStatus.php:206
 #: includes/PDFOrderStatusPageHeader.inc:19
-#: includes/PDFOrderStatusPageHeader.inc:21 PrintCustTrans.php:80
-#: PrintCustTrans.php:83 StockLocTransferReceive.php:293
-#: StockLocTransferReceive.php:379 StockTransfers.php:350 Stocks.php:105
+#: includes/PDFOrderStatusPageHeader.inc:21 Payments.php:468
+#: PrintCustTrans.php:80 PrintCustTrans.php:83 StockLocTransferReceive.php:293
+#: StockLocTransferReceive.php:379 StockTransfers.php:364 Stocks.php:105
 #: Stocks.php:111 includes/PDFAgedDebtorsPageHeader.inc:18
 #: includes/PDFAgedSuppliersPageHeader.inc:17
 #: includes/PDFDeliveryDifferencesPageHeader.inc:19
@@ -1643,7 +1652,7 @@ msgstr ""
 
 #: ConfirmDispatch_Invoice.php:894 StockLocTransferReceive.php:133
 #: StockLocTransferReceive.php:147 StockLocTransferReceive.php:246
-#: StockLocTransferReceive.php:260 StockTransfers.php:312
+#: StockLocTransferReceive.php:260 StockTransfers.php:326
 msgid "The following SQL to update the serial stock item record was used:"
 msgstr ""
 
@@ -2197,7 +2206,7 @@ msgstr ""
 msgid "Print PDF Batch Summary"
 msgstr ""
 
-#: CustomerReceipt.php:290
+#: CustomerReceipt.php:290 Payments.php:447
 msgid "The bank account name cannot be retrieved because"
 msgstr ""
 
@@ -2205,7 +2214,7 @@ msgstr ""
 msgid "SQL used to retrieve the bank account name was:"
 msgstr ""
 
-#: CustomerReceipt.php:298
+#: CustomerReceipt.php:298 Payments.php:457
 msgid "The bank account number"
 msgstr ""
 
@@ -2251,7 +2260,7 @@ msgstr ""
 msgid "Banked into the"
 msgstr ""
 
-#: CustomerReceipt.php:496 PO_Items.php:111
+#: CustomerReceipt.php:496 PO_Items.php:111 Payments.php:475
 msgid "on"
 msgstr ""
 
@@ -2275,7 +2284,7 @@ msgstr ""
 msgid "Set up a New Batch"
 msgstr ""
 
-#: CustomerReceipt.php:538
+#: CustomerReceipt.php:538 Payments.php:485
 msgid "The bank accounts could not be retrieved because"
 msgstr ""
 
@@ -2310,7 +2319,7 @@ msgid "Narrative:"
 msgstr ""
 
 #: CustomerReceipt.php:613 CustomerReceipt.php:688 FreightCosts.php:57
-#: GLJournal.php:111 GLJournal.php:211
+#: GLJournal.php:111 GLJournal.php:211 Payments.php:616
 msgid "Accept"
 msgstr ""
 
@@ -2386,7 +2395,7 @@ msgstr ""
 msgid "Payee Bank Details:"
 msgstr ""
 
-#: CustomerReceipt.php:688 GLJournal.php:211
+#: CustomerReceipt.php:688 GLJournal.php:211 Payments.php:616
 msgid "Cancel"
 msgstr ""
 
@@ -2467,7 +2476,8 @@ msgstr ""
 msgid "Ex Rate"
 msgstr ""
 
-#: CustomerTransInquiry.php:82 PO_Header.php:215
+#: CustomerTransInquiry.php:82 PO_Header.php:215 PO_SelectOSPurchOrder.php:310
+#: PO_SelectPurchOrder.php:348 Payments.php:513 Payments.php:533
 #: includes/PDFSupplierBalsPageHeader.inc:36
 msgid "Currency"
 msgstr ""
@@ -3305,7 +3315,7 @@ msgstr ""
 msgid "No orders were returned because"
 msgstr ""
 
-#: FTP_RadioBeacon.php:60
+#: FTP_RadioBeacon.php:60 PO_SelectOSPurchOrder.php:306
 msgid "Modify"
 msgstr ""
 
@@ -3317,7 +3327,8 @@ msgstr ""
 msgid "Cust Order #"
 msgstr ""
 
-#: FTP_RadioBeacon.php:65
+#: FTP_RadioBeacon.php:65 PO_SelectOSPurchOrder.php:312
+#: PO_SelectPurchOrder.php:350
 msgid "Order Date"
 msgstr ""
 
@@ -3329,7 +3340,8 @@ msgstr ""
 msgid "Delivery To"
 msgstr ""
 
-#: FTP_RadioBeacon.php:68
+#: FTP_RadioBeacon.php:68 PO_SelectOSPurchOrder.php:314
+#: PO_SelectPurchOrder.php:352
 msgid "Order Total"
 msgstr ""
 
@@ -3357,6 +3369,7 @@ msgid "from the database"
 msgstr ""
 
 #: FTP_RadioBeacon.php:192 FTP_RadioBeacon.php:294
+#: PO_SelectOSPurchOrder.php:45 PO_SelectPurchOrder.php:43
 msgid "Order Number"
 msgstr ""
 
@@ -3504,80 +3517,81 @@ msgstr ""
 msgid "Minimum Charge (0 is N/A)"
 msgstr ""
 
-#: GLAccountInquiry.php:7
+#: GLAccountInquiry.php:6
 msgid "General Ledger Account Inquiry"
 msgstr ""
 
-#: GLAccountInquiry.php:32 GLAccounts.php:174 GLBalanceSheet.php:99
-#: GLProfit_Loss.php:140
+#: GLAccountInquiry.php:31 GLAccounts.php:174 GLBalanceSheet.php:99
+#: GLProfit_Loss.php:140 GLTransInquiry.php:66 GLTrialBalance.php:135
 msgid "Account"
 msgstr ""
 
-#: GLAccountInquiry.php:45
+#: GLAccountInquiry.php:44
 msgid "For Period range"
 msgstr ""
 
-#: GLAccountInquiry.php:63
+#: GLAccountInquiry.php:62
 msgid "Show Account Transactions"
 msgstr ""
 
-#: GLAccountInquiry.php:99
+#: GLAccountInquiry.php:98
 msgid "The transactions for account"
 msgstr ""
 
-#: GLAccountInquiry.php:107
+#: GLAccountInquiry.php:106
 msgid "The chart details for account"
 msgstr ""
 
-#: GLAccountInquiry.php:107
+#: GLAccountInquiry.php:106
 msgid "could not be retrieved"
 msgstr ""
 
-#: GLAccountInquiry.php:119
+#: GLAccountInquiry.php:118
 msgid "Debit"
 msgstr ""
 
-#: GLAccountInquiry.php:120
+#: GLAccountInquiry.php:119
 msgid "Credit"
 msgstr ""
 
-#: GLAccountInquiry.php:121 GLJournal.php:216
+#: GLAccountInquiry.php:120 GLJournal.php:216 GLTransInquiry.php:66
+#: Payments.php:574
 msgid "Narrative"
 msgstr ""
 
-#: GLAccountInquiry.php:131 GLAccountInquiry.php:133
+#: GLAccountInquiry.php:130 GLAccountInquiry.php:132
 msgid "Brought Forward Balance"
 msgstr ""
 
-#: GLAccountInquiry.php:146
+#: GLAccountInquiry.php:145
 msgid "Total for period"
 msgstr ""
 
-#: GLAccountInquiry.php:152
+#: GLAccountInquiry.php:151
 msgid "Period:"
 msgstr ""
 
-#: GLAccountInquiry.php:152
+#: GLAccountInquiry.php:151
 msgid "Account movement Per Transactions:"
 msgstr ""
 
-#: GLAccountInquiry.php:152
+#: GLAccountInquiry.php:151
 msgid "Movement Per ChartDetails record:"
 msgstr ""
 
-#: GLAccountInquiry.php:152
+#: GLAccountInquiry.php:151
 msgid "Period difference:"
 msgstr ""
 
-#: GLAccountInquiry.php:209
+#: GLAccountInquiry.php:208
 msgid "Total Period Movement"
 msgstr ""
 
-#: GLAccountInquiry.php:211
+#: GLAccountInquiry.php:210
 msgid "Balance C/Fwd"
 msgstr ""
 
-#: GLAccountInquiry.php:227
+#: GLAccountInquiry.php:226
 msgid ""
 "WARNING: There are differences between the sum of the transactions and the "
 "recorded movements in the ChartDetails table. A log of the account "
@@ -3752,6 +3766,7 @@ msgid ""
 msgstr ""
 
 #: GLBalanceSheet.php:91 GLCodesInquiry.php:19 GLProfit_Loss.php:129
+#: GLTrialBalance.php:125
 msgid "No general ledger accounts were returned by the SQL because"
 msgstr ""
 
@@ -3818,7 +3833,9 @@ msgstr ""
 msgid "The SQL that failed to insert the GL Trans record was:"
 msgstr ""
 
-#: GLJournal.php:85
+#: GLJournal.php:85 Payments.php:200 Payments.php:234 Payments.php:246
+#: Payments.php:270 Payments.php:291 Payments.php:318 Payments.php:319
+#: Payments.php:347 Payments.php:352
 msgid "Problem Report"
 msgstr ""
 
@@ -3866,7 +3883,7 @@ msgstr ""
 msgid "Journal Line Entry"
 msgstr ""
 
-#: GLJournal.php:192
+#: GLJournal.php:192 Payments.php:594
 msgid "Enter GL Account Manually"
 msgstr ""
 
@@ -3880,7 +3897,7 @@ msgid ""
 "analysed against GL accounts until the GL accounts are set up."
 msgstr ""
 
-#: GLJournal.php:208
+#: GLJournal.php:208 Payments.php:613
 msgid "GL Narrative"
 msgstr ""
 
@@ -3897,6 +3914,7 @@ msgid ""
 msgstr ""
 
 #: GLProfit_Loss.php:20 GLProfit_Loss.php:23 GLProfit_Loss.php:579
+#: GLTrialBalance.php:23 GLTrialBalance.php:26 GLTrialBalance.php:267
 msgid "Select A Different Period"
 msgstr ""
 
@@ -3904,7 +3922,7 @@ msgstr ""
 msgid "Select Period From"
 msgstr ""
 
-#: GLProfit_Loss.php:66
+#: GLProfit_Loss.php:66 GLTrialBalance.php:69
 msgid "Select Period To:"
 msgstr ""
 
@@ -3932,7 +3950,7 @@ msgstr ""
 msgid "Detailed"
 msgstr ""
 
-#: GLProfit_Loss.php:142 GLProfit_Loss.php:149
+#: GLProfit_Loss.php:142 GLProfit_Loss.php:149 GLTrialBalance.php:139
 msgid "Period Actual"
 msgstr ""
 
@@ -3940,7 +3958,7 @@ msgstr ""
 msgid "Period Budge"
 msgstr ""
 
-#: GLProfit_Loss.php:150
+#: GLProfit_Loss.php:150 GLTrialBalance.php:140
 msgid "Period Budget"
 msgstr ""
 
@@ -3959,6 +3977,102 @@ msgstr ""
 
 #: GLProfit_Loss.php:560
 msgid "Profit -Loss"
+msgstr ""
+
+#: GLTransInquiry.php:3
+msgid "General Ledger Transaction Inquiry"
+msgstr ""
+
+#: GLTransInquiry.php:14
+msgid ""
+"The script must be called with a valid transaction type and transaction "
+"number to review the general ledger postings for."
+msgstr ""
+
+#: GLTransInquiry.php:15
+msgid "Back to Menu"
+msgstr ""
+
+#: GLTransInquiry.php:25
+msgid "The transaction type "
+msgstr ""
+
+#: GLTransInquiry.php:25 GLTransInquiry.php:50
+msgid " could not be retrieved, the SQL returned an error because - "
+msgstr ""
+
+#: GLTransInquiry.php:31
+msgid "No transaction type is defined for type "
+msgstr ""
+
+#: GLTransInquiry.php:39
+msgid "The transaction number the script was called with is requesting a "
+msgstr ""
+
+#: GLTransInquiry.php:39
+msgid " beyond the last one entered."
+msgstr ""
+
+#: GLTransInquiry.php:50
+msgid "The transactions for "
+msgstr ""
+
+#: GLTransInquiry.php:50 GLTransInquiry.php:56
+msgid " number "
+msgstr ""
+
+#: GLTransInquiry.php:56
+msgid "No general ledger transactions have been created for "
+msgstr ""
+
+#: GLTransInquiry.php:66
+msgid "Period"
+msgstr ""
+
+#: GLTransInquiry.php:66
+msgid "Posted"
+msgstr ""
+
+#: GLTrialBalance.php:13 index.php:816
+msgid "Trial Balance"
+msgstr ""
+
+#: GLTrialBalance.php:22
+msgid ""
+"The selected period from is actually after the period to! Please re-select "
+"the reporting period"
+msgstr ""
+
+#: GLTrialBalance.php:36
+msgid "Select Period From:"
+msgstr ""
+
+#: GLTrialBalance.php:83
+msgid "Show Trial Balance"
+msgstr ""
+
+#: GLTrialBalance.php:128
+msgid "Trial Balance for the month of "
+msgstr ""
+
+#: GLTrialBalance.php:128
+msgid " and for the "
+msgstr ""
+
+#: GLTrialBalance.php:128
+msgid " months to "
+msgstr ""
+
+#: GLTrialBalance.php:137
+msgid "Month Actual"
+msgstr ""
+
+#: GLTrialBalance.php:138
+msgid "Month Budget"
+msgstr ""
+
+#: GLTrialBalance.php:255
+msgid "Check Totals"
 msgstr ""
 
 #: GoodsReceived.php:19 GoodsReceivedControlled.php:16
@@ -4073,14 +4187,14 @@ msgstr ""
 msgid "The following SQL to insert the GRN record was used"
 msgstr ""
 
-#: GoodsReceived.php:325 StockAdjustments.php:217 StockTransfers.php:333
-#: StockTransfers.php:344
+#: GoodsReceived.php:325 StockAdjustments.php:217 StockTransfers.php:347
+#: StockTransfers.php:358
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The location stock "
 "record could not be updated because"
 msgstr ""
 
-#: GoodsReceived.php:326 StockTransfers.php:334 StockTransfers.php:345
+#: GoodsReceived.php:326 StockTransfers.php:348 StockTransfers.php:359
 msgid "The following SQL to update the location stock record was used"
 msgstr ""
 
@@ -4104,8 +4218,8 @@ msgstr ""
 msgid "The following SQL to insert the serial stock item records was used"
 msgstr ""
 
-#: GoodsReceived.php:377 StockAdjustments.php:207 StockTransfers.php:219
-#: StockTransfers.php:321
+#: GoodsReceived.php:377 StockAdjustments.php:207 StockTransfers.php:233
+#: StockTransfers.php:335
 msgid "The following SQL to insert the serial stock movement records was used"
 msgstr ""
 
@@ -4594,7 +4708,7 @@ msgstr ""
 msgid "Last Del"
 msgstr ""
 
-#: OrderDetails.php:219
+#: OrderDetails.php:219 PaymentTerms.php:151 PaymentTerms.php:157
 msgid "N/A"
 msgstr ""
 
@@ -4782,7 +4896,8 @@ msgstr ""
 msgid "Orders from"
 msgstr ""
 
-#: PDFOrderStatus.php:241 includes/PDFLowGPPageHeader.inc:16
+#: PDFOrderStatus.php:241 PO_SelectOSPurchOrder.php:335
+#: includes/PDFLowGPPageHeader.inc:16
 msgid "Printed"
 msgstr ""
 
@@ -4804,7 +4919,7 @@ msgstr ""
 
 #: includes/PDFOrderStatusPageHeader.inc:19
 #: includes/PDFOrderStatusPageHeader.inc:21 SalesAnalRepts.php:410
-#: SalesAnalRepts.php:429 SalesAnalRepts.php:438 StockTransfers.php:257
+#: SalesAnalRepts.php:429 SalesAnalRepts.php:438 StockTransfers.php:271
 #: includes/PDFDeliveryDifferencesPageHeader.inc:19
 #: includes/PDFDeliveryDifferencesPageHeader.inc:21
 msgid "From"
@@ -5007,7 +5122,7 @@ msgstr ""
 msgid "Requistion Ref"
 msgstr ""
 
-#: PO_Header.php:378
+#: PO_Header.php:378 Payments.php:547
 msgid "Exchange Rate"
 msgstr ""
 
@@ -5391,7 +5506,7 @@ msgstr ""
 msgid "Search For Stock Items"
 msgstr ""
 
-#: PO_Items.php:822
+#: PO_Items.php:822 PO_SelectOSPurchOrder.php:123 PO_SelectPurchOrder.php:164
 msgid "Select a stock category"
 msgstr ""
 
@@ -5422,6 +5537,401 @@ msgstr ""
 
 #: PO_Items.php:908
 msgid "Add a New Stock Item"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:10
+msgid "Search Outstanding Purchase Orders"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:42 PO_SelectPurchOrder.php:40
+msgid "The Order Number entered"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:42 PO_SelectPurchOrder.php:40
+msgid "MUST"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:42 PO_SelectPurchOrder.php:40
+msgid "be numeric"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:49 PO_SelectPurchOrder.php:47
+msgid "For supplier"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:49 PO_SelectOSPurchOrder.php:53
+#: includes/PDFBOMListingPageHeader.inc:21 includes/PDFLowGPPageHeader.inc:15
+#: includes/PDFSupplierBalsPageHeader.inc:17
+msgid "and"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:53 PO_SelectPurchOrder.php:51
+msgid "for the part"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:80 PO_SelectPurchOrder.php:120
+msgid "No stock items were returned by the SQL because"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:81 PO_SelectPurchOrder.php:121
+msgid "The SQL used to retrieve the searched parts was"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:92 PO_SelectPurchOrder.php:133
+msgid "order number"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:92 PO_SelectPurchOrder.php:133
+msgid "Into Stock Location"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:109 PO_SelectPurchOrder.php:9
+#: PO_SelectPurchOrder.php:150
+msgid "Search Purchase Orders"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:118 PO_SelectPurchOrder.php:159
+msgid ""
+"To search for purchase orders for a specific part use the part selection "
+"facilities below"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:119 PO_SelectPurchOrder.php:160
+msgid "Search Parts Now"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:120 PO_SelectPurchOrder.php:161
+msgid "Clear Part Selection"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:153 PO_SelectPurchOrder.php:194
+msgid "Orders Ostdg"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:300 PO_SelectPurchOrder.php:339
+msgid "No orders were returned by the SQL because"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:307 StockLocTransferReceive.php:461
+msgid "Receive"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:308
+msgid "Print"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:309 PO_SelectPurchOrder.php:347
+#: includes/PDFAgedSuppliersPageHeader.inc:34
+#: includes/PDFSupplierBalsPageHeader.inc:33
+msgid "Supplier"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:311 PO_SelectPurchOrder.php:349
+msgid "Requisition"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:313 PO_SelectPurchOrder.php:351
+msgid "Initiator"
+msgstr ""
+
+#: PO_SelectOSPurchOrder.php:333
+msgid "Print Now"
+msgstr ""
+
+#: PO_SelectPurchOrder.php:346
+msgid "View"
+msgstr ""
+
+#: PaymentTerms.php:8
+msgid "Payment Terms Maintenance"
+msgstr ""
+
+#: PaymentTerms.php:31
+msgid "The payment terms name must be two characters or less long"
+msgstr ""
+
+#: PaymentTerms.php:34
+msgid "The number of days or the day in the following month must be numeric"
+msgstr ""
+
+#: PaymentTerms.php:37
+msgid "The terms description must be forty characters or less long"
+msgstr ""
+
+#: PaymentTerms.php:40
+msgid ""
+"When the check box is not checked to indicate a day in the following month "
+"is the due date, the due date cannot be a day after the 30th. A number "
+"between 1 and 30 is expected"
+msgstr ""
+
+#: PaymentTerms.php:43
+msgid ""
+"When the check box is checked to indicate that the term expects a number of "
+"days after which accounts are due, the number entered should be less than "
+"100 days"
+msgstr ""
+
+#: PaymentTerms.php:65
+msgid "The payment terms definition record has been updated"
+msgstr ""
+
+#: PaymentTerms.php:94
+msgid "The payment terms definition record has been added"
+msgstr ""
+
+#: PaymentTerms.php:110
+msgid ""
+"Cannot delete this payment term, because customer accounts have been created "
+"referring to this term"
+msgstr ""
+
+#: PaymentTerms.php:111
+msgid "customer accounts that refer to this payment term"
+msgstr ""
+
+#: PaymentTerms.php:117
+msgid ""
+"Cannot delete this payment term, because supplier accounts have been created "
+"referring to this term"
+msgstr ""
+
+#: PaymentTerms.php:118
+msgid "supplier accounts that refer to this payment term"
+msgstr ""
+
+#: PaymentTerms.php:124
+msgid "The payment term definition record has been deleted"
+msgstr ""
+
+#: PaymentTerms.php:142
+msgid "Terms Code"
+msgstr ""
+
+#: PaymentTerms.php:144
+msgid "Following Month On"
+msgstr ""
+
+#: PaymentTerms.php:145
+msgid "Due After (Days)"
+msgstr ""
+
+#: PaymentTerms.php:153
+msgid "th"
+msgstr ""
+
+#: PaymentTerms.php:159
+msgid "days"
+msgstr ""
+
+#: PaymentTerms.php:183
+msgid "Show all Payment Terms Definitions"
+msgstr ""
+
+#: PaymentTerms.php:210 PaymentTerms.php:220
+msgid "Term Code"
+msgstr ""
+
+#: PaymentTerms.php:227
+msgid "Terms Description"
+msgstr ""
+
+#: PaymentTerms.php:231
+msgid "Due After A Given No. Of Days"
+msgstr ""
+
+#: PaymentTerms.php:234
+msgid "Days (Or Day In Following Month)"
+msgstr ""
+
+#: Payments.php:9
+msgid "Payment Entry"
+msgstr ""
+
+#: Payments.php:42
+msgid ""
+"The supplier code that this payment page was called with is not a currently "
+"defined supplier code. If this page is called from the SelectSupplier page "
+"then this assures that a valid supplier is selected"
+msgstr ""
+
+#: Payments.php:84
+msgid ""
+"The company has not yet been set up properly - this information is needed to "
+"process the payment. Processing has been cancelled"
+msgstr ""
+
+#: Payments.php:113
+msgid "This payment has no amounts entered and will not be processed"
+msgstr ""
+
+#: Payments.php:165
+msgid "Cannot insert a GL entry for the payment using the SQL"
+msgstr ""
+
+#: Payments.php:200 Payments.php:347
+msgid "Cannot insert a bank transaction because"
+msgstr ""
+
+#: Payments.php:201
+msgid "Cannot insert a bank transaction with the SQL"
+msgstr ""
+
+#: Payments.php:234
+msgid "Cannot insert a payment transaction against the supplier because"
+msgstr ""
+
+#: Payments.php:235
+msgid "Cannot insert a payment transaction against the supplier using the SQL"
+msgstr ""
+
+#: Payments.php:246
+msgid ""
+"Cannot update the supplier record for the date of the last payment made "
+"because"
+msgstr ""
+
+#: Payments.php:247
+msgid ""
+"Cannot update the supplier record for the date of the last payment made "
+"using the SQL"
+msgstr ""
+
+#: Payments.php:270
+msgid "Cannot insert a GL transaction for the creditors account debit because"
+msgstr ""
+
+#: Payments.php:271
+msgid ""
+"Cannot insert a GL transaction for the creditors account debit using the SQL"
+msgstr ""
+
+#: Payments.php:291
+msgid "Cannot insert a GL transaction for the payment discount credit because"
+msgstr ""
+
+#: Payments.php:292
+msgid ""
+"Cannot insert a GL transaction for the payment discount credit using the SQL"
+msgstr ""
+
+#: Payments.php:318
+msgid "Cannot insert a GL transaction for the bank account credit because"
+msgstr ""
+
+#: Payments.php:319
+msgid ""
+"Cannot insert a GL transaction for the bank account credit using the SQL"
+msgstr ""
+
+#: Payments.php:348
+msgid "Cannot insert a bank transaction using the SQL"
+msgstr ""
+
+#: Payments.php:352
+msgid "Cannot commit the changes because"
+msgstr ""
+
+#: Payments.php:353
+msgid "The commit of the database transaction failed"
+msgstr ""
+
+#: Payments.php:356 Payments.php:465
+msgid "Payment"
+msgstr ""
+
+#: Payments.php:356
+msgid "has been sucessfully entered"
+msgstr ""
+
+#: Payments.php:373
+msgid "Enter a General Ledger Payment"
+msgstr ""
+
+#: Payments.php:374
+msgid "Enter a Supplier Payment"
+msgstr ""
+
+#: Payments.php:393
+msgid ""
+"The manual GL code entered does not exist in the database - so this GL "
+"analysis item could not be added"
+msgstr ""
+
+#: Payments.php:448
+msgid "SQL used to retrieve the bank account name was"
+msgstr ""
+
+#: Payments.php:457
+msgid "is not set up as a bank account with a valid general ledger account"
+msgstr ""
+
+#: Payments.php:472
+msgid "from the"
+msgstr ""
+
+#: Payments.php:492
+msgid "and general ledger accounts to be affected"
+msgstr ""
+
+#: Payments.php:507
+msgid "Date Paid"
+msgstr ""
+
+#: Payments.php:518
+msgid ""
+"No currencies are defined yet. Payments cannot be entered until a currency "
+"is defined"
+msgstr ""
+
+#: Payments.php:548
+msgid "Payment Type"
+msgstr ""
+
+#: Payments.php:564
+msgid "Ref (eg. Cheque No)"
+msgstr ""
+
+#: Payments.php:591
+msgid "General Ledger Payment Analysis Entry"
+msgstr ""
+
+#: Payments.php:596
+msgid "Select GL Account"
+msgstr ""
+
+#: Payments.php:602
+msgid ""
+"No General ledger accounts have been set up yet - payments cannot be "
+"analysed against GL accounts until the GL accounts are set up"
+msgstr ""
+
+#: Payments.php:623
+msgid "Amount of Payment"
+msgstr ""
+
+#: Payments.php:626
+msgid "Amount of Discount"
+msgstr ""
+
+#: Payments.php:633
+msgid "Accept and Process Payment"
+msgstr ""
+
+#: PeriodsInquiry.php:7
+msgid "Periods Inquiry"
+msgstr ""
+
+#: PeriodsInquiry.php:18
+msgid "No periods were returned by the SQL because"
+msgstr ""
+
+#: PeriodsInquiry.php:26
+msgid "Period Number"
+msgstr ""
+
+#: PeriodsInquiry.php:27
+msgid "Date of Last Day"
 msgstr ""
 
 #: PrintCustTrans.php:55
@@ -5758,12 +6268,12 @@ msgstr ""
 msgid "Enter another adjustment"
 msgstr ""
 
-#: StockAdjustments.php:85 StockCostUpdate.php:28 StockTransfers.php:91
-#: StockTransfers.php:171
+#: StockAdjustments.php:85 StockCostUpdate.php:28 StockTransfers.php:101
+#: StockTransfers.php:185
 msgid "The entered item code does not exist"
 msgstr ""
 
-#: StockAdjustments.php:88 StockTransfers.php:94
+#: StockAdjustments.php:88 StockTransfers.php:105
 msgid "The quantity entered must be numeric"
 msgstr ""
 
@@ -5778,13 +6288,13 @@ msgid ""
 "numbers (or batch references) to be adjusted, to be entered"
 msgstr ""
 
-#: StockAdjustments.php:148 StockTransfers.php:149 StockTransfers.php:262
+#: StockAdjustments.php:148 StockTransfers.php:163 StockTransfers.php:276
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The stock movement "
 "record cannot be inserted because"
 msgstr ""
 
-#: StockAdjustments.php:149 StockTransfers.php:150 StockTransfers.php:263
+#: StockAdjustments.php:149 StockTransfers.php:164 StockTransfers.php:277
 msgid "The following SQL to insert the stock movement record was used"
 msgstr ""
 
@@ -5792,19 +6302,19 @@ msgstr ""
 msgid "Unable to determine if the serial item exists"
 msgstr ""
 
-#: StockAdjustments.php:183 StockAdjustments.php:197 StockTransfers.php:184
-#: StockTransfers.php:198 StockTransfers.php:297 StockTransfers.php:311
+#: StockAdjustments.php:183 StockAdjustments.php:197 StockTransfers.php:198
+#: StockTransfers.php:212 StockTransfers.php:311 StockTransfers.php:325
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock "
 "item record could not be updated because"
 msgstr ""
 
-#: StockAdjustments.php:184 StockAdjustments.php:198 StockTransfers.php:185
-#: StockTransfers.php:199 StockTransfers.php:298
+#: StockAdjustments.php:184 StockAdjustments.php:198 StockTransfers.php:199
+#: StockTransfers.php:213 StockTransfers.php:312
 msgid "The following SQL to update the serial stock item record was used"
 msgstr ""
 
-#: StockAdjustments.php:206 StockTransfers.php:218 StockTransfers.php:320
+#: StockAdjustments.php:206 StockTransfers.php:232 StockTransfers.php:334
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock "
 "movement record could not be inserted because"
@@ -5832,11 +6342,11 @@ msgstr ""
 msgid "has been created from location"
 msgstr ""
 
-#: StockAdjustments.php:251 StockTransfers.php:367
+#: StockAdjustments.php:251 StockTransfers.php:380
 msgid "Check Part"
 msgstr ""
 
-#: StockAdjustments.php:254 StockTransfers.php:371
+#: StockAdjustments.php:254 StockTransfers.php:384
 msgid "In Units of"
 msgstr ""
 
@@ -5871,23 +6381,23 @@ msgid "Enter Stock Adjustment"
 msgstr ""
 
 #: StockAdjustments.php:301 StockCostUpdate.php:142 StockQuantityByDate.php:57
-#: StockTransfers.php:432
+#: StockTransfers.php:445
 msgid "Show Stock Status"
 msgstr ""
 
-#: StockAdjustments.php:302 StockTransfers.php:433
+#: StockAdjustments.php:302 StockTransfers.php:446
 msgid "Show Movements"
 msgstr ""
 
-#: StockAdjustments.php:303 StockCostUpdate.php:144 StockTransfers.php:434
+#: StockAdjustments.php:303 StockCostUpdate.php:144 StockTransfers.php:447
 msgid "Show Stock Usage"
 msgstr ""
 
-#: StockAdjustments.php:304 StockCostUpdate.php:145 StockTransfers.php:435
+#: StockAdjustments.php:304 StockCostUpdate.php:145 StockTransfers.php:448
 msgid "Search Outstanding Sales Orders"
 msgstr ""
 
-#: StockAdjustments.php:305 StockCostUpdate.php:146 StockTransfers.php:436
+#: StockAdjustments.php:305 StockCostUpdate.php:146 StockTransfers.php:449
 msgid "Search Completed Sales Orders"
 msgstr ""
 
@@ -6094,7 +6604,7 @@ msgstr ""
 msgid "From Stock Location"
 msgstr ""
 
-#: StockLocTransfer.php:128 StockTransfers.php:395
+#: StockLocTransfer.php:128 StockTransfers.php:408
 msgid "To Stock Location"
 msgstr ""
 
@@ -6201,11 +6711,11 @@ msgstr ""
 msgid "A stock transfer for item code"
 msgstr ""
 
-#: StockLocTransferReceive.php:293 StockTransfers.php:350
+#: StockLocTransferReceive.php:293 StockTransfers.php:364
 msgid "has been created from"
 msgstr ""
 
-#: StockLocTransferReceive.php:293 StockTransfers.php:350
+#: StockLocTransferReceive.php:293 StockTransfers.php:364
 msgid "for a quantity of"
 msgstr ""
 
@@ -6277,10 +6787,6 @@ msgstr ""
 
 #: StockLocTransferReceive.php:457
 msgid "Dispatch Date"
-msgstr ""
-
-#: StockLocTransferReceive.php:461
-msgid "Receive"
 msgstr ""
 
 #: StockQuantityByDate.php:6
@@ -6362,36 +6868,42 @@ msgstr ""
 msgid "Enter another Transfer"
 msgstr ""
 
-#: StockTransfers.php:97
+#: StockTransfers.php:86
+msgid ""
+"You have set or changed the From location. You must re-enter the quantity "
+"and any Controlled Items now."
+msgstr ""
+
+#: StockTransfers.php:109
 msgid "The quantity entered must be a positive number greater than zero"
 msgstr ""
 
-#: StockTransfers.php:100
+#: StockTransfers.php:114
 msgid "The locations to transfer from and to must be different"
 msgstr ""
 
-#: StockTransfers.php:116
+#: StockTransfers.php:130
 msgid "Could not retrieve the QOH at the sending location because"
 msgstr ""
 
-#: StockTransfers.php:231
+#: StockTransfers.php:245
 msgid "Could not retrieve QOH at the destination because"
 msgstr ""
 
-#: StockTransfers.php:284
+#: StockTransfers.php:298
 msgid ""
 "Could not determine if the serial item exists in the transfer to location"
 msgstr ""
 
-#: StockTransfers.php:350
+#: StockTransfers.php:364
 msgid "An inventory transfer of"
 msgstr ""
 
-#: StockTransfers.php:417
+#: StockTransfers.php:430
 msgid "Transfer Quantity"
 msgstr ""
 
-#: StockTransfers.php:428
+#: StockTransfers.php:441
 msgid "Enter Stock Transfer"
 msgstr ""
 
@@ -7619,10 +8131,6 @@ msgstr ""
 msgid "Bank Payments Matching"
 msgstr ""
 
-#: index.php:816
-msgid "Trial Balance"
-msgstr ""
-
 #: index.php:821
 msgid "Account Inquiry"
 msgstr ""
@@ -8027,18 +8535,8 @@ msgstr ""
 msgid "Aged Supplier Balances For Suppliers from"
 msgstr ""
 
-#: includes/PDFAgedSuppliersPageHeader.inc:34
-#: includes/PDFSupplierBalsPageHeader.inc:33
-msgid "Supplier"
-msgstr ""
-
 #: includes/PDFBOMListingPageHeader.inc:21
 msgid "Bill Of Material Listing for Parts Between"
-msgstr ""
-
-#: includes/PDFBOMListingPageHeader.inc:21 includes/PDFLowGPPageHeader.inc:15
-#: includes/PDFSupplierBalsPageHeader.inc:17
-msgid "and"
 msgstr ""
 
 #: includes/PDFBOMListingPageHeader.inc:39
