@@ -1,10 +1,10 @@
 <?php
-/* $Revision: 1.2 $ */
-$title = "User Settings";
+/* $Revision: 1.3 $ */
 
 $PageSecurity=1;
 
 include("includes/session.inc");
+$title = _('User Settings');
 include("includes/header.inc");
 
 if ($_POST['Modify']) {
@@ -105,12 +105,11 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 	}
 }
 
+
+echo '</SELECT></TD></TR>
+	</TABLE>
+	<CENTER><input type="Submit" name="Modify" value="' . _('Modify') . '">
+	</FORM>';
+
+include("includes/footer.inc");
 ?>
-
-</SELECT></TD></TR>
-</TABLE>
-<CENTER><input type="Submit" name="Modify" value="Modify">
-
-</FORM>
-
-<?php include("includes/footer.inc"); ?>
