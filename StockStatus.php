@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Stock Status";
 
 $PageSecurity = 2;
@@ -16,8 +16,12 @@ if (isset($_GET['StockID'])){
 }
 
 
-$result = DB_query("SELECT Description, Units, MBflag FROM StockMaster WHERE StockID='$StockID'",$db);
+$result = DB_query("SELECT Description, Units, MBflag, DecimalPlaces FROM StockMaster WHERE StockID='$StockID'",$db, "<BR>Could not retrieve the requested item","<BR>The SQL used to retrieve the items was:");
+
 $myrow = DB_fetch_row($result);
+
+$DecimalPlaces = $myrow[3];
+
 echo "<BR><FONT COLOR=BLUE SIZE=3><B>$StockID - $myrow[0] </B>  (In units of $myrow[1])</FONT>";
 $Its_A_KitSet_Assembly_Or_Dummy =False;
 if ($myrow[2]=="K"){
@@ -52,11 +56,19 @@ if (DB_error_no($db) !=0) {
 echo "<TABLE CELLPADDING=2 BORDER=0>";
 
 if ($Its_A_KitSet_Assembly_Or_Dummy == True){
-	$tableheader = "<TR><TD class='tableheader'>Location</TD><TD class='tableheader'>Demand</TD></TR>";
+	$tableheader = "<TR>
+			<TD class='tableheader'>Location</TD>
+			<TD class='tableheader'>Demand</TD>
+			</TR>";
 } else {
-	$tableheader = "<TR><TD class='tableheader'>Location</TD><TD class='tableheader'>Quantity On Hand</TD>
-					<TD class='tableheader'>Re-Order Level</FONT></TD><TD class='tableheader'>Demand</TD>
-					<TD class='tableheader'>Available</TD><TD class='tableheader'>On Order</TD></TR>";
+	$tableheader = "<TR>
+			<TD class='tableheader'>Location</TD>
+			<TD class='tableheader'>Quantity On Hand</TD>
+			<TD class='tableheader'>Re-Order Level</FONT></TD>
+			<TD class='tableheader'>Demand</TD>
+			<TD class='tableheader'>Available</TD>
+			<TD class='tableheader'>On Order</TD>
+			</TR>";
 }
 echo $tableheader;
 $j = 1;
@@ -126,13 +138,13 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 		}
 
 	/*			Location				   Quantity On Hand				    Re-Order Level					     Demand					   Available					      On Order			 Location		 Quantity On Hand   Re-Order Level 	    Demand					  Available				 On Order   */
-		printf("<td>%s</td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s</td></tr>", $myrow["LocationName"], number_format($myrow["Quantity"],2), number_format($myrow["ReorderLevel"],2), number_format($DemandQty,2), number_format($myrow["Quantity"] - $DemandQty,2),number_format($QOO,2));
+		printf("<td>%s</td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s</td></tr>", $myrow["LocationName"], number_format($myrow["Quantity"],$DecimalPlaces), number_format($myrow["ReorderLevel"],$DecimalPlaces), number_format($DemandQty,$DecimalPlaces), number_format($myrow["Quantity"] - $DemandQty,$DecimalPlaces),number_format($QOO,$DecimalPlaces));
 
 	} else {
 	/* It must be a dummy, assembly or kitset part */
 /*			        Location			     Demand				 Location	    Demand		 */
-		printf("<td>%s</td><td ALIGN=RIGHT>%s</td></tr>", $myrow["LocationName"],  number_format($DemandQty, 2));
-		
+		printf("<td>%s</td><td ALIGN=RIGHT>%s</td></tr>", $myrow["LocationName"],  number_format($DemandQty, $DecimalPlaces));
+
 	}
 	$j++;
 	If ($j == 12){

@@ -2,6 +2,8 @@
 
 Upgrade script 2.8 - 2.9 is necessary to be applied against a 2.8 database.
 
+29/5/04 New script StockAdjustmentsControlled.php allows input of serial items for stock adjustments.
+29/5/04 StockStatus.php, StockMovements.php StockLocMovements.php, StockUsage.php now all use the new decimalplaces field of the stock master to display quantities.
 25/5/04 BOMs.php modified to use Jesse DB_query function with error messages and Debug messages
 25/5/04 Stocks.php now checks and stops the mbflag change to assembly or kitset when the item is a component in a bill.
 25/5/04 ConfirmDispatch_Invoice.php updates and inserts for serialised/controlled items.

@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php

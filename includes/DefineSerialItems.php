@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 function ValidBundleRef ($StockID, $LocCode, $BundleRef){
 	global $db;
@@ -23,7 +23,7 @@ class SerialItem {
 	function SerialItem($BundleRef, $BundleQty){
 
 	/*Do any validation here before adding the item */
-		if (strlen($BundleRef)<20 AND is_numeric($BundleQty)){
+		if (strlen($BundleRef)<20 AND strlen($BundleRef)>1 AND is_numeric($BundleQty)){
 			$this->BundleRef = $BundleRef;
 			$this->BundleQty = $BundleQty;
 			return true;

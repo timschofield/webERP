@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 /*ProcessSerialItems.php takes the posted variables and adds to the SerialItems array
  in either the cartclass->LineItems->SerialItems or the POClass->LineItems->SerialItems */
 
@@ -37,6 +37,8 @@ if ($_POST['AddBatches']=='Enter'){
 	for ($i=0;$i < count($_POST['Bundles']);$i++){ /*there is an entry in the multi select list box */
 		if ($LineItem->Serialised==1){	/*only if the item is serialised */
 			$LineItem->SerialItems[$_POST['Bundles'][$i]] = new SerialItem ($_POST['Bundles'][$i], 1);
+		} else {
+			$LineItem->SerialItems[$_POST['Bundles'][$i]] = new SerialItem ($_POST['Bundles'][$i], 0);
 		}
 	}
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Stock Usage";
 
 $PageSecurity = 2;
@@ -15,9 +15,11 @@ if (isset($_GET['StockID'])){
 	$StockID =$_POST['StockID'];
 }
 
-// Sherifoz 25.06.03 Check if the item is dummy/assembly/kit. no stock usage for these.
-$result = DB_query("SELECT Description, Units, MBflag FROM StockMaster WHERE StockID='$StockID'",$db);
+
+$result = DB_query("SELECT Description, Units, MBflag, DecimalPlaces FROM StockMaster WHERE StockID='$StockID'",$db);
 $myrow = DB_fetch_row($result);
+
+$DecimalPlaces = $myrow[3];
 
 $Its_A_KitSet_Assembly_Or_Dummy =False;
 if (($myrow[2]=="K") OR ($myrow[2]=="A") OR ($myrow[2]=="D")) {
@@ -64,7 +66,7 @@ echo "</SELECT>";
 echo " <INPUT TYPE=SUBMIT NAME='ShowUsage' VALUE='Show Stock Usage'>";
 echo "<HR>";
 
-/* $NumberOfPeriodsOfStockUsage  is defined in config.php as a user definable variable 
+/* $NumberOfPeriodsOfStockUsage  is defined in config.php as a user definable variable
 config.php is loaded by header.inc */
 
 
@@ -106,7 +108,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 
 	$TotalUsage += $myrow["QtyUsed"];
 	$PeriodsCounter++;
-	printf("<td>%s</td><td ALIGN=RIGHT>%s</td></tr>", $DisplayDate, number_format($myrow["QtyUsed"],2));
+	printf("<td>%s</td><td ALIGN=RIGHT>%s</td></tr>", $DisplayDate, number_format($myrow["QtyUsed"],$DecimalPlaces));
 
 	$j++;
 	If ($j == 12){

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $title = "Item Maintenance";
 
 $PageSecurity = 11;
@@ -16,7 +16,7 @@ if (isset($_GET['StockID'])){
 	$StockID =strtoupper($_POST['StockID']);
 }
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
@@ -210,7 +210,7 @@ if ($_POST['submit']) {
 		}
 
 		if (!isset($_POST['New'])) { /*so its an existing one */
-			echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . "/SelectProduct.php?" . SID . "NewSearch=True'>";
+			echo "<BR>Updated stock item details";
 		}
 
 	} else {

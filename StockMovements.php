@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Stock Movements";
 
 $PageSecurity = 2;
@@ -58,10 +58,32 @@ echo "<HR>";
 $SQLBeforeDate = FormatDateForSQL($_POST['BeforeDate']);
 $SQLAfterDate = FormatDateForSQL($_POST['AfterDate']);
 
-$sql = "SELECT TypeName, StockMoves.Type, TransNo, TranDate, DebtorNo, BranchCode, Qty, Reference, Price, DiscountPercent, NewQOH FROM StockMoves, SysTypes WHERE StockMoves.Type=SysTypes.TypeID AND StockMoves.LocCode='" . $_POST['StockLocation'] . "' AND StockMoves.TranDate >= '". $SQLAfterDate . "' AND StockMoves.TranDate <= '" . $SQLBeforeDate . "' AND StockMoves.StockID = '" . $StockID . "' AND HideMovt=0 ORDER BY StkMoveNo DESC";
+$sql = "SELECT StockMoves.StockID,
+		SysTypes.TypeName,
+		StockMoves.Type,
+		StockMoves.TransNo,
+		StockMoves.TranDate,
+		StockMoves.DebtorNo,
+		StockMoves.BranchCode,
+		StockMoves.Qty,
+		StockMoves.Reference,
+		StockMoves.Price,
+		StockMoves.DiscountPercent,
+		StockMoves.NewQOH,
+		StockMaster.DecimalPlaces
+	FROM StockMoves
+	INNER JOIN SysTypes ON StockMoves.Type=SysTypes.TypeID
+	INNER JOIN StockMaster ON StockMoves.StockID=StockMaster.StockID
+	WHERE  StockMoves.LocCode='" . $_POST['StockLocation'] . "'
+	AND StockMoves.TranDate >= '". $SQLAfterDate . "'
+	AND StockMoves.StockID = '" . $StockID . "'
+	AND StockMoves.TranDate <= '" . $SQLBeforeDate . "'
+	AND HideMovt=0
+	ORDER BY StkMoveNo DESC";
+
 $MovtsResult = DB_query($sql, $db);
 if (DB_error_no($db) !=0) {
-	echo "The stock movements for the selected criteria could not be retrieved because - " . DB_error_msg($db);
+	echo "<BR>The stock movements for the selected criteria could not be retrieved because - " . DB_error_msg($db);
 	if ($debug==1){
 	   echo "<BR>The SQL that failed was $sql";
 	}
@@ -69,11 +91,14 @@ if (DB_error_no($db) !=0) {
 }
 
 echo "<TABLE CELLPADDING=2 BORDER=0>";
-$tableheader = "<TR><TD class='tableheader'>Type</TD><TD class='tableheader'>Number</TD>
-					<TD class='tableheader'>Date</TD><TD class='tableheader'>Customer</TD>
-					<TD class='tableheader'>Branch</TD><TD class='tableheader'>Quantity</TD>
-					<TD class='tableheader'>Reference</TD><TD class='tableheader'>Price</TD>
-					<TD class='tableheader'>Discount</TD><TD class='tableheader'>New Qty</TD></TR>";
+$tableheader = "<TR>
+		<TD class='tableheader'>Type</TD><TD class='tableheader'>Number</TD>
+		<TD class='tableheader'>Date</TD><TD class='tableheader'>Customer</TD>
+		<TD class='tableheader'>Branch</TD><TD class='tableheader'>Quantity</TD>
+		<TD class='tableheader'>Reference</TD><TD class='tableheader'>Price</TD>
+		<TD class='tableheader'>Discount</TD><TD class='tableheader'>New Qty</TD>
+		</TR>";
+
 echo $tableheader;
 
 $j = 1;
@@ -93,13 +118,80 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 
 	if ($myrow["Type"]==10){ /*its a sales invoice allow link to show invoice it was sold on*/
 		/*				      rootpath			     TransNo		     TypeName 			  TransNo			      TranDate			DebtorNo			    BranchCode					 Qty				    Reference 				  Price					DiscountPercent			      TransNo 		     TypeName 		   TransNo	 TranDate		   DebtorNo	   BranchCode 		 Qty		   Reference			 Price 			   DiscountPercent*/
-		printf("<td><a target='_blank' href='%s/PrintCustTrans.php?%sFromTransNo=%s&InvOrCredit=Invoice'>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td ALIGN=RIGHT>%s</td><td>%s</td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s%%</td><td ALIGN=RIGHT>%s</td></tr>", $rootpath, SID, $myrow["TransNo"], $myrow["TypeName"], $myrow["TransNo"], $DisplayTranDate, $myrow["DebtorNo"],$myrow["BranchCode"],number_format($myrow["Qty"],2),$myrow["Reference"],number_format($myrow["Price"],2), number_format($myrow["DiscountPercent"]*100,2), $myrow['NewQOH']);
+		printf("<td><a target='_blank' href='%s/PrintCustTrans.php?%sFromTransNo=%s&InvOrCredit=Invoice'>%s</td>
+		<td>%s</td>
+		<td>%s</td>
+		<td>%s</td>
+		<td>%s</td>
+		<td ALIGN=RIGHT>%s</td>
+		<td>%s</td>
+		<td ALIGN=RIGHT>%s</td>
+		<td ALIGN=RIGHT>%s%%</td>
+		<td ALIGN=RIGHT>%s</td>
+		</tr>",
+		$rootpath,
+		SID,
+		$myrow["TransNo"],
+		$myrow["TypeName"],
+		$myrow["TransNo"],
+		$DisplayTranDate,
+		$myrow["DebtorNo"],
+		$myrow["BranchCode"],
+		number_format($myrow["Qty"],$myrow['DecimalPlaces']),
+		$myrow["Reference"],
+		number_format($myrow["Price"],2),
+		number_format($myrow["DiscountPercent"]*100,2),
+		number_format($myrow['NewQOH'],$myrow['DecimalPlaces']));
+
 	} elseif ($myrow["Type"]==11){
-		/*				      rootpath			     TransNo		     TypeName 			  TransNo			      TranDate			DebtorNo			    BranchCode					 Qty				    Reference 				  Price					DiscountPercent			      TransNo 		     TypeName 		   TransNo	 TranDate		   DebtorNo	   BranchCode 		 Qty		   Reference			 Price 			   DiscountPercent*/
-		printf("<td><a target='_blank' href='%s/PrintCustTrans.php?%sFromTransNo=%s&InvOrCredit=Credit'>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td ALIGN=RIGHT>%s</td><td>%s</td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s%%</td><td ALIGN=RIGHT>%s</td></tr>", $rootpath, SID, $myrow["TransNo"], $myrow["TypeName"], $myrow["TransNo"], $DisplayTranDate, $myrow["DebtorNo"],$myrow["BranchCode"],number_format($myrow["Qty"],2),$myrow["Reference"],number_format($myrow["Price"],2), number_format($myrow["DiscountPercent"]*100,2), $myrow['NewQOH']);
+
+		printf("<td><a target='_blank' href='%s/PrintCustTrans.php?%sFromTransNo=%s&InvOrCredit=Credit'>%s</td>
+		<td>%s</td>
+		<td>%s</td>
+		<td>%s</td>
+		<td>%s</td>
+		<td ALIGN=RIGHT>%s</td>
+		<td>%s</td>
+		<td ALIGN=RIGHT>%s</td>
+		<td ALIGN=RIGHT>%s%%</td>
+		<td ALIGN=RIGHT>%s</td>
+		</tr>",
+		$rootpath,
+		SID,
+		$myrow["TransNo"],
+		$myrow["TypeName"],
+		$myrow["TransNo"],
+		$DisplayTranDate,
+		$myrow["DebtorNo"],
+		$myrow["BranchCode"],
+		number_format($myrow["Qty"],$myrow['DecimalPlaces']),
+		$myrow["Reference"],
+		number_format($myrow["Price"],2),
+		number_format($myrow["DiscountPercent"]*100,2),
+		number_format($myrow['NewQOH'],$myrow['DecimalPlaces']));
 	} else {
-		/*			 TypeName			     TransNo				  TranDate			   DebtorNo				BranchCode					    Qty				Reference				     Price					   DiscountPercent		    TypeName			  TransNo	TranDate		  DebtorNo	  BranchCode			Qty		  Reference			Price				  DiscountPercent*/
-		printf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td ALIGN=RIGHT>%s</td><td>%s</td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s%%</td><td ALIGN=RIGHT>%s</td></tr>", $myrow["TypeName"], $myrow["TransNo"], $DisplayTranDate,$myrow["DebtorNo"],$myrow["BranchCode"],number_format($myrow["Qty"],2),$myrow["Reference"],number_format($myrow["Price"],2), number_format($myrow["DiscountPercent"]*100,2), $myrow['NewQOH']);
+
+		printf("<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td ALIGN=RIGHT>%s</td>
+			<td>%s</td>
+			<td ALIGN=RIGHT>%s</td>
+			<td ALIGN=RIGHT>%s%%</td>
+			<td ALIGN=RIGHT>%s</td>
+			</tr>",
+			$myrow["TypeName"],
+			$myrow["TransNo"],
+			$DisplayTranDate,
+			$myrow["DebtorNo"],
+			$myrow["BranchCode"],
+			number_format($myrow["Qty"],$myrow['DecimalPlaces']),
+			$myrow["Reference"],
+			number_format($myrow["Price"],2),
+			number_format($myrow["DiscountPercent"]*100,2),
+			number_format($myrow['NewQOH'],$myrow['DecimalPlaces']));
 	}
 	$j++;
 	If ($j == 12){

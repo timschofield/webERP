@@ -46,7 +46,28 @@ echo "<HR>";
 $SQLBeforeDate = FormatDateForSQL($_POST['BeforeDate']);
 $SQLAfterDate = FormatDateForSQL($_POST['AfterDate']);
 
-$sql = "SELECT StockMoves.StockID,TypeName, StockMoves.Type, TransNo, TranDate, DebtorNo, BranchCode, Qty, Reference, Price, DiscountPercent, NewQOH FROM StockMoves, SysTypes WHERE StockMoves.Type=SysTypes.TypeID AND StockMoves.LocCode='" . $_POST['StockLocation'] . "' AND StockMoves.TranDate >= '". $SQLAfterDate . "' AND StockMoves.TranDate <= '" . $SQLBeforeDate . "' AND HideMovt=0 ORDER BY StkMoveNo DESC";
+$sql = "SELECT StockMoves.StockID,
+		SysTypes.TypeName,
+		StockMoves.Type,
+		StockMoves.TransNo,
+		StockMoves.TranDate,
+		StockMoves.DebtorNo,
+		StockMoves.BranchCode,
+		StockMoves.Qty,
+		StockMoves.Reference,
+		StockMoves.Price,
+		StockMoves.DiscountPercent,
+		StockMoves.NewQOH,
+		StockMaster.DecimalPlaces
+	FROM StockMoves
+	INNER JOIN SysTypes ON StockMoves.Type=SysTypes.TypeID
+	INNER JOIN StockMaster ON StockMoves.StockID=StockMaster.StockID
+	WHERE  StockMoves.LocCode='" . $_POST['StockLocation'] . "'
+	AND StockMoves.TranDate >= '". $SQLAfterDate . "'
+	AND StockMoves.TranDate <= '" . $SQLBeforeDate . "'
+	AND HideMovt=0
+	ORDER BY StkMoveNo DESC";
+
 $MovtsResult = DB_query($sql, $db);
 if (DB_error_no($db) !=0) {
 	echo "The stock movements for the selected criteria could not be retrieved because - " . DB_error_msg($db);
@@ -86,7 +107,19 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 	$DisplayTranDate = ConvertSQLDate($myrow["TranDate"]);
 
 		/*			 TypeName		StockID	     TransNo				  TranDate			   DebtorNo				BranchCode					    Qty				Reference				     Price					   DiscountPercent		    TypeName			  TransNo	TranDate		  DebtorNo	  BranchCode			Qty		  Reference			Price				  DiscountPercent*/
-		printf("<td><a target='_blank' href='StockStatus.php?StockID=%s'>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td ALIGN=RIGHT>%s</td><td>%s</td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s</td></tr>",strtoupper($myrow["StockID"]),strtoupper($myrow["StockID"]), $myrow["TypeName"], $myrow["TransNo"], $DisplayTranDate,$myrow["DebtorNo"], number_format($myrow["Qty"],2), $myrow["Reference"], number_format($myrow["Price"],2), number_format($myrow["DiscountPercent"]*100,2));
+		printf("<td><a target='_blank' href='StockStatus.php?StockID=%s'>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td ALIGN=RIGHT>%s</td>
+			<td>%s</td>
+			<td ALIGN=RIGHT>%s</td>
+			<td ALIGN=RIGHT>%s</td>
+			</tr>",
+			strtoupper($myrow["StockID"]),
+			strtoupper($myrow["StockID"]),
+			$myrow["TypeName"], $myrow["TransNo"], $DisplayTranDate,$myrow["DebtorNo"], number_format($myrow["Qty"],$myrow['DecimalPlaces']), $myrow["Reference"], number_format($myrow["Price"],2), number_format($myrow["DiscountPercent"]*100,2));
 	$j++;
 	If ($j == 16){
 		$j=1;
