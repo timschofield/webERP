@@ -1,33 +1,37 @@
 <?php
 
-
-
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 $PageSecurity = 3;
-include("config.php");
-include("includes/SQL_CommonFunctions.inc");
-include("includes/DateFunctions.inc");
+include('config.php');
+include('includes/SQL_CommonFunctions.inc');
+include('includes/DateFunctions.inc');
 
 $InputError=0;
 
-if (!Is_Date($_POST['FromDate'])){
-	$msg = _('The date entered was in an unrecognised format it must be specified in the format') . ' ' . $DefaultDateFormat;
+if (isset($_POST['FromDate']) AND !Is_Date($_POST['FromDate'])){
+	$msg = _('The date from must be specified in the format') . ' ' . $DefaultDateFormat;
 	$InputError=1;
+	unset($_POST['FromDate']);
 }
-if (!Is_Date($_POST['ToDate'])){
+if (isset($_POST['ToDate']) AND !Is_Date($_POST['ToDate'])){
 	$msg = _('The date to must be specified in the format') . ' ' . $DefaultDateFormat;
 	$InputError=1;
+	unset($_POST['ToDate']);
 }
 
-if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
+if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
      include ('includes/session.inc');
      $title = _('Order Status Report');
      include ('includes/header.inc');
 
+     if ($InputError==1){
+     	prnMsg($msg,'error');
+     }
+
      echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
-     echo "<CENTER><TABLE><TR><TD>" . _("Enter the date from which orders are to be listed:") . "</TD><TD><INPUT TYPE=text NAME='FromDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($DefaultDateFormat, Mktime(0,0,0,Date("m"),Date('d')-1,Date("y"))) . "'></TD></TR>";
-     echo "<TR><TD>" . _("Enter the date to which orders are to be listed:") . "</TD><TD><INPUT TYPE=text NAME='ToDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($DefaultDateFormat) . "'></TD></TR>";
-     echo "<TR><TD>" . _("Inventory Category") . "</TD><TD>";
+     echo '<CENTER><TABLE><TR><TD>' . _('Enter the date from which orders are to be listed') . ":</TD><TD><INPUT TYPE=text NAME='FromDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($DefaultDateFormat, Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . "'></TD></TR>";
+     echo '<TR><TD>' . _('Enter the date to which orders are to be listed') . ":</TD><TD><INPUT TYPE=text NAME='ToDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($DefaultDateFormat) . "'></TD></TR>";
+     echo '<TR><TD>' . _('Inventory Category') . '</TD><TD>';
 
      $sql = "SELECT CategoryDescription, CategoryID FROM StockCategory WHERE StockType<>'D' AND StockType<>'L'";
      $result = DB_query($sql,$db);
@@ -37,32 +41,29 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
      echo "<OPTION SELECTED VALUE='All'>" . _('Over All Categories');
 
      while ($myrow=DB_fetch_array($result)){
-	echo "<OPTION VALUE=" . $myrow['CategoryID'] . ">" . $myrow['CategoryDescription'];
+	echo '<OPTION VALUE=' . $myrow['CategoryID'] . '>' . $myrow['CategoryDescription'];
      }
-     echo "</SELECT></TD></TR>";
+     echo '</SELECT></TD></TR>';
 
-     echo "<TR><TD>" . _("Inventory Location:") . "</TD><TD><SELECT NAME='Location'>";
-     echo "<OPTION SELECTED VALUE='All'>" . _("All Locations");
+     echo '<TR><TD>' . _('Inventory Location') . ":</TD><TD><SELECT NAME='Location'>";
+     echo "<OPTION SELECTED VALUE='All'>" . _('All Locations');
 
-     $result= DB_query("SELECT LocCode, LocationName FROM Locations",$db);
+     $result= DB_query('SELECT LocCode, LocationName FROM Locations',$db);
      while ($myrow=DB_fetch_array($result)){
 	echo "<OPTION VALUE='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
      }
-     echo "</SELECT></TD></TR>";
+     echo '</SELECT></TD></TR>';
 
-     echo "<TR><TD>Back Order Only:</TD><TD><SELECT NAME='BackOrders'>";
+     echo '<TR><TD>' . _('Back Order Only') . ":</TD><TD><SELECT NAME='BackOrders'>";
      echo "<OPTION SELECTED VALUE='Yes'>" . _('Only Show Back Orders');
      echo "<OPTION VALUE='No'>" . _('Show All Orders');
      echo "</SELECT></TD></TR></TABLE><INPUT TYPE=SUBMIT NAME='Go' VALUE='" . _('Create PDF') . "'></CENTER>";
 
-     if ($InputError==1){
-     	echo $msg;
-     }
-     include("includes/footer.inc");
+     include('includes/footer.inc');
      exit;
 } else {
-	include("includes/ConnectDB.inc");
-	include("includes/PDFStarter_ros.inc");
+	include('includes/ConnectDB.inc');
+	include('includes/PDFStarter_ros.inc');
 }
 
 
@@ -180,20 +181,20 @@ $sql .= ' ORDER BY SalesOrders.OrderNo';
 $Result=DB_query($sql,$db,'','',false,false); //dont trap errors here
 
 if (DB_error_no($db)!=0){
-	include("includes/header.inc");
-	echo "<BR>" . _("An error occurred getting the orders details");
+	include('includes/header.inc');
+	echo '<BR>' . _('An error occurred getting the orders details');
 	if ($debug==1){
-		echo "<BR>" . _("The SQL used to get the orders (that failed) was:") . "<BR>" . $sql;
+		echo '<BR>' . _('The SQL used to get the orders that failed was') . '<BR>' . $sql;
 	}
-	include ("includes/footer.inc");
+	include ('includes/footer.inc');
 	exit;
 } elseif (DB_num_rows($Result)==0){
-  	include("includes/header.inc");
-	echo "<BR>" . _('There were no orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' '. $_POST['ToDate'] . ' ' . _('Please try again selecting a different date range');
+  	include('includes/header.inc');
+	echo '<BR>' . _('There were no orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' '. $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range');
 	if ($debug==1) {
-		echo _('The SQL that returned no rows was:') . "<BR>" . $SQL;
+		echo _('The SQL that returned no rows was') . '<BR>' . $sql;
 	}
-	include("includes/footer.inc");
+	include('includes/footer.inc');
 	exit;
 }
 
@@ -210,7 +211,7 @@ $PageNumber = 1;
 
 $TotalDiffs = 0;
 
-include ("includes/PDFOrderStatusPageHeader.inc");
+include ('includes/PDFOrderStatusPageHeader.inc');
 
 $OrderNo =0; /*initialise */
 
@@ -220,7 +221,7 @@ while ($myrow=DB_fetch_array($Result)){
            if ($YPos - (2 *$line_height) < $Bottom_Margin){
        	  /*Then set up a new page */
               $PageNumber++;
-	      include ("includes/PDFOrderStatusPageHeader.inc");
+	      include ('includes/PDFOrderStatusPageHeader.inc');
 	      $OrderNo=0;
            } /*end of new page header  */
 	   if($OrderNo!=0 AND $OrderNo != $myrow['OrderNo']){
@@ -229,13 +230,13 @@ while ($myrow=DB_fetch_array($Result)){
 	   }
 
 	if ($myrow['OrderNo']!=$OrderNo	){
-	          $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,$myrow["OrderNo"], 'left');
-        	  $LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos,80,$FontSize,$myrow["DebtorNo"], 'left');
-	          $LeftOvers = $pdf->addTextWrap($Left_Margin+120,$YPos,80,$FontSize,$myrow["BranchCode"], 'left');
+	          $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,$myrow['OrderNo'], 'left');
+        	  $LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos,80,$FontSize,$myrow['DebtorNo'], 'left');
+	          $LeftOvers = $pdf->addTextWrap($Left_Margin+120,$YPos,80,$FontSize,$myrow['BranchCode'], 'left');
 
         	  $LeftOvers = $pdf->addTextWrap($Left_Margin+200,$YPos,100,$FontSize,$myrow['CustomerRef'], 'left');
-	          $LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,80,$FontSize,ConvertSQLDate($myrow["OrdDate"]), 'left');
-        	  $LeftOvers = $pdf->addTextWrap($Left_Margin+380,$YPos,20,$FontSize,$myrow["FromStkLoc"], 'left');
+	          $LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,80,$FontSize,ConvertSQLDate($myrow['OrdDate']), 'left');
+        	  $LeftOvers = $pdf->addTextWrap($Left_Margin+380,$YPos,20,$FontSize,$myrow['FromStkLoc'], 'left');
 
 	          if ($myrow['PrintedPackingSlip']==1){
         	        $PackingSlipPrinted = _('Printed') . ' ' . ConvertSQLDate($myrow['DatePackingSlipPrinted']);
@@ -258,9 +259,9 @@ while ($myrow=DB_fetch_array($Result)){
 
         }
 
-       $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$myrow["StkCode"], 'left');
-       $LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,120,$FontSize,$myrow["Description"], 'left');
-       $LeftOvers = $pdf->addTextWrap($Left_Margin+180,$YPos,60,$FontSize,number_format($myrow["Quantity"],$myrow['DecimalPlaces']), 'right');
+       $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$myrow['StkCode'], 'left');
+       $LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,120,$FontSize,$myrow['Description'], 'left');
+       $LeftOvers = $pdf->addTextWrap($Left_Margin+180,$YPos,60,$FontSize,number_format($myrow['Quantity'],$myrow['DecimalPlaces']), 'right');
        $LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,60,$FontSize,number_format($myrow['QtyInvoiced'],$myrow['DecimalPlaces']), 'right');
 
        if ($myrow['Quantity']>$myrow['QtyInvoiced']){
@@ -273,19 +274,19 @@ while ($myrow=DB_fetch_array($Result)){
       if ($YPos - (2 *$line_height) < $Bottom_Margin){
           /*Then set up a new page */
               $PageNumber++;
-	      include ("includes/PDFOrderStatusPageHeader.inc");
+	      include ('includes/PDFOrderStatusPageHeader.inc');
 		$OrderNo=0;
       } /*end of new page header  */
 } /* end of while there are delivery differences to print */
 
 $pdfcode = $pdf->output();
 $len = strlen($pdfcode);
-header("Content-type: application/pdf");
-header("Content-Length: " . $len);
-header("Content-Disposition: inline; filename=OrderStatus.pdf");
-header("Expires: 0");
-header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-header("Pragma: public");
+header('Content-type: application/pdf');
+header('Content-Length: ' . $len);
+header('Content-Disposition: inline; filename=OrderStatus.pdf');
+header('Expires: 0');
+header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+header('Pragma: public');
 
 $pdf->stream();
 

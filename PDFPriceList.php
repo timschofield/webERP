@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 2;
 
@@ -21,12 +21,12 @@ If (isset($_POST['PrintPDF'])
 	$line_height=12;
 
       /*Now figure out the inventory data to report for the category range under review */
-	if ($_POST['CustomerSpecials']=='Customer Special Prices Only'){
+	if ($_POST['CustomerSpecials']==_('Customer Special Prices Only')){
 
 		if ($_SESSION['CustomerID']==''){
 			include('includes/header.inc');
 			echo '<BR>';
-			prnMsg( _('The Customer must first be selected from the select customer link , re-run the price list once the customer has been selected') );
+			prnMsg( _('The customer must first be selected from the select customer link') . '. ' . _('Re-run the price list once the customer has been selected') );
 			include('includes/footer.inc');
 			exit;
 		}
@@ -93,10 +93,10 @@ If (isset($_POST['PrintPDF'])
 	$PricesResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
-		$title = _('Price List - Problem Report....');
+		$title = _('Price List') . ' - ' . _('Problem Report....');
 		include('includes/header.inc');
 		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg($db), 'error');
-		echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the Menu'). '</A>';
+		echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'.  _('Back to the menu'). '</A>';
 		if ($debug==1){
 			echo '<BR>'. $SQL;
 		}
@@ -110,21 +110,21 @@ If (isset($_POST['PrintPDF'])
 	$CatTot_Val=0;
 	While ($PriceList = DB_fetch_array($PricesResult,$db)){
 
-		if ($CurrCode!=$PriceList["CurrAbrev"]){
+		if ($CurrCode!=$PriceList['CurrAbrev']){
 			$FontSize=10;
 			$YPos -=(2*$line_height);
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize, _('Prices in') . ' ' . $PriceList["CurrAbrev"]);
-			$CurrCode = $PriceList["CurrAbrev"];
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize, _('Prices in') . ' ' . $PriceList['CurrAbrev']);
+			$CurrCode = $PriceList['CurrAbrev'];
 			$FontSize=8;
 			$YPos -=$line_height;
 		}
 
-		if ($Category!=$PriceList["CategoryID"]){
+		if ($Category!=$PriceList['CategoryID']){
 			$FontSize=10;
 			$YPos -=(2*$line_height);
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300-$Left_Margin,$FontSize,$PriceList["CategoryID"] . " - " . $PriceList["CategoryDescription"]);
-			$Category = $PriceList["CategoryID"];
-			$CategoryName = $PriceList["CategoryDescription"];
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300-$Left_Margin,$FontSize,$PriceList['CategoryID'] . ' - ' . $PriceList['CategoryDescription']);
+			$Category = $PriceList['CategoryID'];
+			$CategoryName = $PriceList['CategoryDescription'];
 			$FontSize=8;
 			$YPos -=$line_height;
 		}
@@ -132,35 +132,35 @@ If (isset($_POST['PrintPDF'])
 		$YPos -=$line_height;
 
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$PriceList["StockID"]);					$LeftOvers = $pdf->addTextWrap(120,$YPos,260,$FontSize,$PriceList["Description"]);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$PriceList['StockID']);					$LeftOvers = $pdf->addTextWrap(120,$YPos,260,$FontSize,$PriceList['Description']);
 
 		if ($_POST['CustomerSpecials']=='Customer Special Prices Only'){
 			/*Need to show to which branch the price relates */
-			if ($PriceList['BranchCode']!=""){
-				$LeftOvers = $pdf->addTextWrap(320,$YPos,130,$FontSize,$PriceList['BrName'],"left");
+			if ($PriceList['BranchCode']!=''){
+				$LeftOvers = $pdf->addTextWrap(320,$YPos,130,$FontSize,$PriceList['BrName'],'left');
 			} else {
-				$LeftOvers = $pdf->addTextWrap(320,$YPos,130,$FontSize,_('All'),"left");
+				$LeftOvers = $pdf->addTextWrap(320,$YPos,130,$FontSize,_('All'),'left');
 			}
 
 		}
 
-		$DisplayUnitPrice = number_format($PriceList["Price"],2);
+		$DisplayUnitPrice = number_format($PriceList['Price'],2);
 
 		if ($PriceList['Price']!=0){
-			$DisplayGPPercent = (int)(($PriceList["Price"]-$PriceList["StandardCost"])*100/$PriceList["Price"]) . "%";
+			$DisplayGPPercent = (int)(($PriceList['Price']-$PriceList['StandardCost'])*100/$PriceList['Price']) . '%';
 		} else {
 			$DisplayGPPercent = 0;
 		}
 
 
-		$LeftOvers = $pdf->addTextWrap(440,$YPos,60,$FontSize,$DisplayUnitPrice, "right");
+		$LeftOvers = $pdf->addTextWrap(440,$YPos,60,$FontSize,$DisplayUnitPrice, 'right');
 
-		if ($_POST['ShowGPPercentages']=="Yes"){
-			$LeftOvers = $pdf->addTextWrap(530,$YPos,20,$FontSize,$DisplayGPPercent, "right");
+		if ($_POST['ShowGPPercentages']=='Yes'){
+			$LeftOvers = $pdf->addTextWrap(530,$YPos,20,$FontSize,$DisplayGPPercent, 'right');
 		}
 
 		if ($YPos < $Bottom_Margin + $line_height){
-		   include("includes/PDFPriceListPageHeader.inc");
+		   include('includes/PDFPriceListPageHeader.inc');
 		}
 
 	} /*end inventory valn while loop */
@@ -175,9 +175,9 @@ If (isset($_POST['PrintPDF'])
       if ($len<=20){
 		$title = _('Print Price List Error');
 		include('includes/header.inc');
-		echo '<p>' . _('There were no price details to print out for the customer/category specified');
-		echo '<BR><A HREF="'.$rootpath.'/index.php?' . SID . '">'. _('Back to the Menu').'</A>';
-		include("includes/footer.inc");
+		prnMsg(_('There were no price details to print out for the customer or category specified'),'warn');
+		echo '<BR><A HREF="'.$rootpath.'/index.php?' . SID . '">'. _('Back to the menu').'</A>';
+		include('includes/footer.inc');
 		exit;
       } else {
 		header('Content-type: application/pdf');
@@ -207,10 +207,10 @@ If (isset($_POST['PrintPDF'])
 
 		echo '<TR><TD>'. _('From Inventory Category Code') .':</FONT></TD><TD><SELECT name=FromCriteria>';
 
-		$sql="SELECT CategoryID, CategoryDescription FROM StockCategory ORDER BY CategoryID";
+		$sql='SELECT CategoryID, CategoryDescription FROM StockCategory ORDER BY CategoryID';
 		$CatResult= DB_query($sql,$db);
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo "<OPTION VALUE='" . $myrow["CategoryID"] . "'>" . $myrow["CategoryID"] . " - " . $myrow["CategoryDescription"];
+			echo "<OPTION VALUE='" . $myrow['CategoryID'] . "'>" . $myrow['CategoryID'] . ' - ' . $myrow['CategoryDescription'];
 		}
 		echo '</SELECT></TD></TR>';
 
@@ -225,7 +225,7 @@ If (isset($_POST['PrintPDF'])
 		echo '</SELECT></TD></TR>';
 
 		echo '<TR><TD>' . _('For Sales Type/Price List').':</TD><TD><SELECT name="SalesType">';
-		$sql = "SELECT Sales_Type, TypeAbbrev FROM SalesTypes";
+		$sql = 'SELECT Sales_Type, TypeAbbrev FROM SalesTypes';
 		$SalesTypesResult=DB_query($sql,$db);
 
 		while ($myrow=DB_fetch_array($SalesTypesResult)){

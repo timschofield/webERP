@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity =1;
 
@@ -21,9 +21,9 @@ if (!isset($_GET['TransferNo'])){
 
 $FontSize=10;
 $pdf->addinfo('Title', _('Inventory Location Transfer BOL') );
-$pdf->addinfo('Subject', _('Inventory Location Transfer BOL #') . ' ' . $_GET['Trf_ID']);
+$pdf->addinfo('Subject', _('Inventory Location Transfer BOL') . ' # ' . $_GET['Trf_ID']);
 
-$ErrMsg = _('An error occurred retrieving the items on the transfer'). '.' . '<P>'. _('<P>This page must be called with a location transfer reference number').'.';
+$ErrMsg = _('An error occurred retrieving the items on the transfer'). '.' . '<P>'. _('This page must be called with a location transfer reference number').'.';
 $DbgMsg = _('The SQL that failed while retrieving the items on the transfer was');
 $sql = "SELECT LocTransfers.Reference,
 			   LocTransfers.StockID,
@@ -45,7 +45,7 @@ $result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 If (DB_num_rows($result)==0){
 
 	include ('includes/header.inc');
-	echo '<P>' . _('The transfer reference selected does not appear to be set up - enter the items to be transferred first');
+	prnMsg(_('The transfer reference selected does not appear to be set up') . ' - ' . _('enter the items to be transferred first'),'error');
 	include ('includes/footer.inc');
 	exit;
 }
@@ -82,7 +82,7 @@ if ($len<=20){
 	include('includes/header.inc');
 	echo '<p>';
 	prnMsg( _('There was no stock location transfer to print out'), 'warn');
-	echo '<BR><A HREF="' . $rootpath. '/index.php?' . SID . '">'. _('Back to the Menu'). '</A>';
+	echo '<BR><A HREF="' . $rootpath. '/index.php?' . SID . '">'. _('Back to the menu'). '</A>';
 	include('includes/footer.inc');
 	exit;
 } else {

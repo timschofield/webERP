@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 2;
 if (! isset($_POST['ReportOrClose'])){
 	$title= _('Inventory Comparison Comparison Report');
@@ -16,11 +16,17 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 /*First off do the Inventory Comparison file stuff */
 	if ($_POST['ReportOrClose']=='ReportAndClose'){
 
-		$sql = "SELECT StockCheckFreeze.StockID,StockCheckFreeze.LocCode, QOH, MaterialCost+LabourCost+OverheadCost AS StandardCost FROM StockMaster INNER JOIN StockCheckFreeze ON StockCheckFreeze.StockID=StockMaster.StockID ORDER BY StockCheckFreeze.LocCode, StockCheckFreeze.StockID";
+		$sql = "SELECT StockCheckFreeze.StockID,
+				StockCheckFreeze.LocCode,
+				QOH,
+				MaterialCost+LabourCost+OverheadCost AS StandardCost
+			FROM StockMaster INNER JOIN StockCheckFreeze
+				ON StockCheckFreeze.StockID=StockMaster.StockID
+			ORDER BY StockCheckFreeze.LocCode, StockCheckFreeze.StockID";
 
 		$StockChecks = DB_query($sql, $db,'','',false,false);
 		if (DB_error_no($db) !=0) {
-			$title = _('Stock Freeze - Problem Report....');
+			$title = _('Stock Freeze') . ' - ' . _('Problem Report') . '....';
 			include('includes/header.inc');
 			echo '<BR>';
 			prnMsg( _('The inventory check file could not be retreived because'). ' - ' . DB_error_msg($db),'error');
@@ -28,7 +34,6 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 			if ($debug==1){
 	      			echo '<BR>' . $sql;
 			}
-			echo '</body</html>';
 			include('includes/footer.inc');
 			exit;
 		}
@@ -48,7 +53,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 			$StockCounts = DB_query($sql, $db);
 			if (DB_error_no($db) !=0) {
-				$title = _('Stock Count Comparison - Problem Report....');
+				$title = _('Stock Count Comparison') . ' - ' . _('Problem Report') . '....';
 				include('includes/header.inc');
 				echo '<BR>';
 				prnMsg( _('The inventory counts file could not be retreived because'). ' - ' . DB_error_msg($db). 'error');
@@ -56,7 +61,6 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 				if ($debug==1){
 					echo '<BR>'. $sql;
 				}
-				echo '</body</html>';
 				include('includes/footer.inc');
 				exit;
 			}
@@ -110,7 +114,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 							" . ($QtyOnHandPrior + $StockQtyDifference) . "
 						)";
 
-				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The stock movement record cannot be inserted because');
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
 				$DbgMsg = _('The following SQL to insert the stock movement record was used');
 				$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
 
@@ -118,14 +122,14 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 						SET Quantity = Quantity + " . $StockQtyDifference . "
 						WHERE StockID='" . $myrow['StockID'] . "'
 						AND LocCode='" . $myrow['LocCode'] . "'";
-				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The location stock record could not be updated because');
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
 				$DbgMsg = _('The following SQL to update the stock record was used');
 				$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
 
 				if ($CompanyRecord['GLLink_Stock']==1 AND $myrow['StandardCost'] > 0){
 
 					$StockGLCodes = GetStockGLCode($myrow['StockID'],$db);
-					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The general ledger transaction entries could not be added because');
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
 					$DbgMsg = _('The following SQL to insert the GL entries was used');
 
 					$SQL = "INSERT INTO GLTrans (Type,
@@ -141,10 +145,10 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 								" . $PeriodNo . ",
 								" .  $StockGLCodes['AdjGLAct'] . ",
 								" . $myrow['StandardCost'] * -($StockQtyDifference) . ",
-								'" . $myrow['StockID'] . " x " . $StockQtyDifference . " @ " . $myrow['StandardCost'] . " - Inventory Check')";
+								'" . $myrow['StockID'] . " x " . $StockQtyDifference . " @ " . $myrow['StandardCost'] . " - " . _('Inventory Check') . "')";
 					$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
 
-					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The general ledger transaction entries could not be added because');
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
 					$DbgMsg = _('The following SQL to insert the GL entries was used');
 
 					$SQL = "INSERT INTO GLTrans (Type,
@@ -159,11 +163,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 								'" . $SQLAdjustmentDate . "',
 								" . $PeriodNo . ",
 								" .  $StockGLCodes['StockAct'] . ",
-								" . $myrow['StandardCost'] * $StockQtyDifference . ", '" . $myrow['StockID'] . " x " . $StockQtyDifference . " @ " . $myrow['StandardCost'] . " - Inventory Check')";
+								" . $myrow['StandardCost'] * $StockQtyDifference . ", '" . $myrow['StockID'] . " x " . $StockQtyDifference . " @ " . $myrow['StandardCost'] . " - " . _('Inventory Check') . "')";
 					$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
 
 				} //END INSERT GL TRANS
-				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Unable to COMMIT transaction while adjusting stock in StockCheckAdjustmet report');
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Unable to COMMIT transaction while adjusting stock in StockCheckAdjustmet report');
 				$SQL = "COMMIT";
 				$Result = DB_query($SQL,$db, $ErrMsg,'',true);
 
@@ -195,8 +199,8 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	if (DB_num_rows($CheckedItems)==0){
 		include('includes/header.inc');
 		echo '<p>';
-		prnMsg( _('There is no inventory check data to report on.', 'warn') );
-		echo '<p>'. _('To start an inventory check first run the'). ' <a href="' . $rootpath . '/StockCheck.php?' . SID . '">'. _('inventory check sheets') . '</A> - '. _('and select the option to create new Inventory Comparison data file');;
+		prnMsg( _('There is no inventory check data to report on', 'warn') );
+		echo '<p>'. _('To start an inventory check first run the'). ' <a href="' . $rootpath . '/StockCheck.php?' . SID . '">'. _('inventory check sheets') . '</A> - '. _('and select the option to create new Inventory Comparison data file');
 		include('includes/footer.inc');
 		exit;
 	}
@@ -254,11 +258,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		$Counts = DB_query($SQL,$db,'','',false,false);
 
 		if (DB_error_no($db) !=0) {
-	 		$title = _('Inventory Comparison - Problem Report') . '.... ';
+	 		$title = _('Inventory Comparison') . ' - ' . _('Problem Report') . '.... ';
 	  		include('includes/header.inc');
 	   		echo '<BR>';
 			prnMsg( _('The inventory counts could not be retrieved by the SQL because').' - ' . DB_error_msg($db), 'error');
-	   		echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the Menu'). '</A>';
+	   		echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu'). '</A>';
 	   		if ($debug==1){
 	      			echo '<BR>'. $SQL;
 	   		}
@@ -310,7 +314,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		include('includes/header.inc');
 		echo '<p>';
 		prnMsg( _('There were no Inventory Comparison sheets to print out'), 'error');
-		echo '<BR><A HREF="' . $rootpath . '/index.php?' . SID . '">Back to the menu</A>';
+		echo '<BR><A HREF="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</A>';
 		include('includes/footer.inc');
 		exit;
       } else {
