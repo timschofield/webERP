@@ -2,6 +2,8 @@
 
 $PageSecurity = 2;
 
+/* $Revision: 1.2 $ */
+
 if (!isset($_POST['FromCust'])  OR $_POST['FromCust']=="" OR !isset($_GET['FromCust'])) {
 	$title="Aged Debtor Analysis";
 }
