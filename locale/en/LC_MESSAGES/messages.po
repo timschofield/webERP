@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-16 08:14+1300\n"
+"POT-Creation-Date: 2004-10-17 18:45+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -55,9 +55,10 @@ msgstr ""
 #: Customers.php:176 Customers.php:185 Customers.php:193 Customers.php:201
 #: Locations.php:168 Locations.php:177 Locations.php:185 Locations.php:193
 #: Locations.php:201 Locations.php:209 PaymentTerms.php:111
-#: PaymentTerms.php:118 Stocks.php:315 Stocks.php:324 Stocks.php:332
-#: Stocks.php:340 Stocks.php:348 Stocks.php:356 TaxAuthorities.php:106
-#: TaxAuthorities.php:114 TaxAuthorities.php:122
+#: PaymentTerms.php:118 SalesPeople.php:129 SalesPeople.php:136
+#: SalesTypes.php:82 SalesTypes.php:92 Stocks.php:315 Stocks.php:324
+#: Stocks.php:332 Stocks.php:340 Stocks.php:348 Stocks.php:356
+#: TaxAuthorities.php:106 TaxAuthorities.php:114 TaxAuthorities.php:122
 msgid "There are"
 msgstr ""
 
@@ -93,10 +94,10 @@ msgstr ""
 #: AccountGroups.php:251 CompanyPreferences.php:360 CompanyPreferences.php:362
 #: CompanyPreferences.php:372 CompanyPreferences.php:374
 #: CompanyPreferences.php:384 CompanyPreferences.php:386 GLTransInquiry.php:96
-#: PDFDeliveryDifferences.php:54 PurchData.php:313 PurchData.php:316
-#: SalesAnalRepts.php:385 SalesAnalRepts.php:388 SalesAnalRepts.php:403
-#: SalesAnalRepts.php:406 SalesAnalRepts.php:421 SalesAnalRepts.php:424
-#: Stocks.php:597 Stocks.php:599
+#: PDFChequeListing.php:51 PDFDeliveryDifferences.php:54 PurchData.php:313
+#: PurchData.php:316 SalesAnalRepts.php:385 SalesAnalRepts.php:388
+#: SalesAnalRepts.php:403 SalesAnalRepts.php:406 SalesAnalRepts.php:421
+#: SalesAnalRepts.php:424 Stocks.php:597 Stocks.php:599
 msgid "Yes"
 msgstr ""
 
@@ -104,10 +105,11 @@ msgstr ""
 #: CompanyPreferences.php:359 CompanyPreferences.php:363
 #: CompanyPreferences.php:371 CompanyPreferences.php:375
 #: CompanyPreferences.php:383 CompanyPreferences.php:387 GLTransInquiry.php:94
-#: PDFDeliveryDifferences.php:53 PurchData.php:314 PurchData.php:317
-#: SalesAnalRepts.php:384 SalesAnalRepts.php:387 SalesAnalRepts.php:402
-#: SalesAnalRepts.php:405 SalesAnalRepts.php:420 SalesAnalRepts.php:423
-#: Stocks.php:592 Stocks.php:594 includes/PDFLowGPPageHeader.inc:31
+#: PDFChequeListing.php:50 PDFDeliveryDifferences.php:53 PurchData.php:314
+#: PurchData.php:317 SalesAnalRepts.php:384 SalesAnalRepts.php:387
+#: SalesAnalRepts.php:402 SalesAnalRepts.php:405 SalesAnalRepts.php:420
+#: SalesAnalRepts.php:423 Stocks.php:592 Stocks.php:594
+#: includes/PDFLowGPPageHeader.inc:31
 msgid "No"
 msgstr ""
 
@@ -119,6 +121,7 @@ msgstr ""
 #: AccountGroups.php:157 BOMs.php:80 COGSGLPostings.php:105
 #: EDIMessageFormat.php:162 FreightCosts.php:210 Help.php:159
 #: PaymentTerms.php:167 Prices.php:177 Prices_Customer.php:200
+#: SalesGLPostings.php:170 SalesPeople.php:189 SalesTypes.php:142
 msgid "DELETE"
 msgstr ""
 
@@ -149,6 +152,7 @@ msgstr ""
 #: AccountGroups.php:266 Areas.php:180 BOMs.php:386 BankAccounts.php:221
 #: COGSGLPostings.php:267 FreightCosts.php:299 Help.php:214 Locations.php:378
 #: PaymentTerms.php:246 Prices_Customer.php:236 SalesAnalRepts.php:443
+#: SalesGLPostings.php:331 SalesPeople.php:279 SalesTypes.php:197
 #: TaxAuthorities.php:261
 msgid "Enter Information"
 msgstr ""
@@ -318,7 +322,8 @@ msgstr ""
 msgid "Area code"
 msgstr ""
 
-#: Areas.php:47 PO_Items.php:197 Stocks.php:203
+#: Areas.php:47 PO_Items.php:197 SalesPeople.php:81 SalesTypes.php:48
+#: Stocks.php:203
 msgid "has been updated"
 msgstr ""
 
@@ -339,6 +344,7 @@ msgstr ""
 #: GLAccountInquiry.php:99 GLAccountInquiry.php:107 GLAccounts.php:37
 #: GLAccounts.php:44 GLBalanceSheet.php:73 GLBalanceSheet.php:91
 #: Payments.php:166 PurchData.php:31 PurchData.php:87 PurchData.php:107
+#: ReverseGRN.php:147 ReverseGRN.php:160 ReverseGRN.php:321
 #: StockCostUpdate.php:74 StockQuantityByDate.php:73 StockTransfers.php:131
 msgid "The SQL that failed was"
 msgstr ""
@@ -377,7 +383,8 @@ msgstr ""
 
 #: Areas.php:128 BankAccounts.php:140 COGSGLPostings.php:104
 #: FreightCosts.php:209 Help.php:158 Locations.php:269 Prices.php:176
-#: Prices_Customer.php:199 PurchData.php:215 TaxAuthorities.php:167
+#: Prices_Customer.php:199 PurchData.php:215 SalesGLPostings.php:169
+#: SalesPeople.php:188 SalesTypes.php:141 TaxAuthorities.php:167
 #: includes/InputSerialItems.php:72
 msgid "Edit"
 msgstr ""
@@ -433,14 +440,15 @@ msgstr ""
 
 #: BOMInquiry.php:47 BOMs.php:455 GoodsReceived.php:50 PDFOrderStatus.php:253
 #: PO_Items.php:743 PO_Items.php:852 PO_SelectOSPurchOrder.php:151
-#: PO_SelectPurchOrder.php:192 PaymentTerms.php:143 StockQuantityByDate.php:81
-#: TaxAuthorities.php:153 includes/PDFStockLocTransferHeader.inc:31
+#: PO_SelectPurchOrder.php:192 PaymentTerms.php:143 ReverseGRN.php:332
+#: StockQuantityByDate.php:81 TaxAuthorities.php:153
+#: includes/PDFStockLocTransferHeader.inc:31
 msgid "Description"
 msgstr ""
 
-#: BOMInquiry.php:48 OrderDetails.php:195 PO_Items.php:700
-#: StockLocTransfer.php:147 includes/InputSerialItems.php:82
-#: includes/PDFBOMListingPageHeader.inc:44
+#: BOMInquiry.php:48 OrderDetails.php:195 PO_Items.php:700 ReverseGRN.php:334
+#: ReverseGRN.php:335 StockLocTransfer.php:147
+#: includes/InputSerialItems.php:82 includes/PDFBOMListingPageHeader.inc:44
 #: includes/PDFDeliveryDifferencesPageHeader.inc:43
 msgid "Quantity"
 msgstr ""
@@ -752,7 +760,7 @@ msgstr ""
 #: BOMs.php:455 CustomerReceipt.php:715 GLCodesInquiry.php:27
 #: GLCodesInquiry.php:65 PDFOrderStatus.php:252 PO_Header.php:213
 #: PO_Items.php:851 PO_SelectOSPurchOrder.php:150 PO_SelectPurchOrder.php:191
-#: PurchData.php:396
+#: PurchData.php:396 SalesPeople.php:169
 msgid "Code"
 msgstr ""
 
@@ -830,7 +838,7 @@ msgstr ""
 msgid "Account Name"
 msgstr ""
 
-#: BankAccounts.php:122
+#: BankAccounts.php:122 includes/PDFBankingSummaryPageHeader.inc:38
 msgid "Account Number"
 msgstr ""
 
@@ -888,7 +896,8 @@ msgstr ""
 msgid "Could not un-clear this bank transaction because"
 msgstr ""
 
-#: BankMatching.php:56 BankReconciliation.php:26 Payments.php:489
+#: BankMatching.php:56 BankReconciliation.php:26 PDFChequeListing.php:34
+#: Payments.php:489
 msgid "Bank Account"
 msgstr ""
 
@@ -976,12 +985,14 @@ msgstr ""
 
 #: BankMatching.php:143 BankReconciliation.php:81 BankReconciliation.php:152
 #: CustomerTransInquiry.php:74 GLAccountInquiry.php:117 GLTransInquiry.php:78
-#: includes/PDFTaxPageHeader.inc:35
+#: ReverseGRN.php:333 includes/PDFTaxPageHeader.inc:35
 msgid "Date"
 msgstr ""
 
 #: BankMatching.php:144 CustomerTransInquiry.php:81 GLJournal.php:209
 #: GLJournal.php:216 GLTransInquiry.php:78 Payments.php:572 Payments.php:614
+#: includes/PDFBankingSummaryPageHeader.inc:55
+#: includes/PDFChequeListingPageHeader.inc:37
 msgid "Amount"
 msgstr ""
 
@@ -1055,7 +1066,8 @@ msgid "Number"
 msgstr ""
 
 #: BankReconciliation.php:84 BankReconciliation.php:155
-#: CustomerTransInquiry.php:77 includes/PDFStockComparisonPageHeader.inc:36
+#: CustomerTransInquiry.php:77 includes/PDFBankingSummaryPageHeader.inc:40
+#: includes/PDFStockComparisonPageHeader.inc:36
 msgid "Reference"
 msgstr ""
 
@@ -1107,16 +1119,17 @@ msgstr ""
 msgid "The cost of sales posting code record has been deleted"
 msgstr ""
 
-#: COGSGLPostings.php:85 COGSGLPostings.php:167
+#: COGSGLPostings.php:85 COGSGLPostings.php:167 SalesGLPostings.php:146
+#: SalesGLPostings.php:227
 msgid "Area"
 msgstr ""
 
-#: COGSGLPostings.php:86
+#: COGSGLPostings.php:86 SalesGLPostings.php:147 SalesGLPostings.php:247
 msgid "Stock Category"
 msgstr ""
 
 #: COGSGLPostings.php:87 Prices.php:155 SalesAnalRepts.php:32
-#: SalesAnalRepts.php:34
+#: SalesAnalRepts.php:34 SalesGLPostings.php:148 SalesTypes.php:48
 msgid "Sales Type"
 msgstr ""
 
@@ -1125,10 +1138,11 @@ msgid "Show all Cost of Sales Posting Records"
 msgstr ""
 
 #: COGSGLPostings.php:169 COGSGLPostings.php:193 COGSGLPostings.php:217
+#: SalesGLPostings.php:227 SalesGLPostings.php:247 SalesGLPostings.php:272
 msgid "Any Other"
 msgstr ""
 
-#: COGSGLPostings.php:215
+#: COGSGLPostings.php:215 SalesGLPostings.php:271
 msgid "Sales Type / Price List"
 msgstr ""
 
@@ -1341,6 +1355,7 @@ msgid "on order"
 msgstr ""
 
 #: ConfirmDispatchControlled_Invoice.php:57 FTP_RadioBeacon.php:286
+#: PDFChequeListing.php:97 PDFChequeListing.php:109 PDFChequeListing.php:195
 #: PDFDeliveryDifferences.php:109 PDFDeliveryDifferences.php:193
 #: PDFOrderStatus.php:192 PDFOrderStatus.php:206
 #: includes/PDFOrderStatusPageHeader.inc:19
@@ -1349,6 +1364,7 @@ msgstr ""
 #: StockLocTransferReceive.php:379 StockTransfers.php:364 Stocks.php:105
 #: Stocks.php:111 includes/PDFAgedDebtorsPageHeader.inc:18
 #: includes/PDFAgedSuppliersPageHeader.inc:17
+#: includes/PDFChequeListingPageHeader.inc:17
 #: includes/PDFDeliveryDifferencesPageHeader.inc:19
 #: includes/PDFDeliveryDifferencesPageHeader.inc:21
 msgid "to"
@@ -1395,8 +1411,8 @@ msgid "Invoice amounts stated in"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:226 Credit_Invoice.php:245 OrderDetails.php:193
-#: PO_Items.php:698 StockLocTransfer.php:147 StockLocTransferReceive.php:389
-#: StockQuantityByDate.php:80 Stocks.php:418
+#: PO_Items.php:698 ReverseGRN.php:331 StockLocTransfer.php:147
+#: StockLocTransferReceive.php:389 StockQuantityByDate.php:80 Stocks.php:418
 #: includes/PDFStockLocTransferHeader.inc:30
 msgid "Item Code"
 msgstr ""
@@ -1499,7 +1515,7 @@ msgid ""
 "Please remedy this."
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:446 GoodsReceived.php:180
+#: ConfirmDispatch_Invoice.php:446 GoodsReceived.php:180 ReverseGRN.php:40
 msgid ""
 "The company infomation and preferences could not be retrieved - see your "
 "system administrator"
@@ -1909,7 +1925,7 @@ msgstr ""
 msgid "Credit Note amounts stated in"
 msgstr ""
 
-#: Credit_Invoice.php:247 PDFOrderStatus.php:255
+#: Credit_Invoice.php:247 PDFOrderStatus.php:255 ReverseGRN.php:335
 msgid "Invoiced"
 msgstr ""
 
@@ -2283,6 +2299,7 @@ msgstr ""
 #: CustomerReceipt.php:501 CustomerTransInquiry.php:75 FTP_RadioBeacon.php:62
 #: includes/PDFOrderStatusPageHeader.inc:41
 #: includes/PDFAgedDebtorsPageHeader.inc:40
+#: includes/PDFBankingSummaryPageHeader.inc:56
 #: includes/PDFDeliveryDifferencesPageHeader.inc:44
 #: includes/PDFLowGPPageHeader.inc:33
 msgid "Customer"
@@ -2492,7 +2509,8 @@ msgstr ""
 #: CustomerTransInquiry.php:82 PO_Header.php:215 PO_SelectOSPurchOrder.php:310
 #: PO_SelectPurchOrder.php:348 Payments.php:513 Payments.php:533
 #: Prices.php:154 Prices.php:220 PurchData.php:182 PurchData.php:298
-#: PurchData.php:398 includes/PDFSupplierBalsPageHeader.inc:36
+#: PurchData.php:398 includes/PDFBankingSummaryPageHeader.inc:42
+#: includes/PDFSupplierBalsPageHeader.inc:36
 msgid "Currency"
 msgstr ""
 
@@ -2806,7 +2824,7 @@ msgid "Defintion of"
 msgstr ""
 
 #: EDIMessageFormat.php:125 EDIMessageFormat.php:201 Prices_Customer.php:33
-#: includes/PDFPriceListPageHeader.inc:18
+#: ReverseGRN.php:289 includes/PDFPriceListPageHeader.inc:18
 #: includes/PDFPriceListPageHeader.inc:21
 msgid "for"
 msgstr ""
@@ -3571,7 +3589,7 @@ msgid "Credit"
 msgstr ""
 
 #: GLAccountInquiry.php:120 GLJournal.php:216 GLTransInquiry.php:78
-#: Payments.php:574
+#: Payments.php:574 includes/PDFBankingSummaryPageHeader.inc:58
 msgid "Narrative"
 msgstr ""
 
@@ -4189,7 +4207,7 @@ msgid ""
 "detail record could not be updated with the quantity received because"
 msgstr ""
 
-#: GoodsReceived.php:274
+#: GoodsReceived.php:274 ReverseGRN.php:131
 msgid "The following SQL to update the purchase order detail record was used"
 msgstr ""
 
@@ -4199,18 +4217,19 @@ msgid ""
 "not be inserted. This receipt of goods has not been processed because"
 msgstr ""
 
-#: GoodsReceived.php:302
+#: GoodsReceived.php:302 ReverseGRN.php:141
 msgid "The following SQL to insert the GRN record was used"
 msgstr ""
 
-#: GoodsReceived.php:325 PDFStockCheckComparison.php:121
+#: GoodsReceived.php:325 PDFStockCheckComparison.php:121 ReverseGRN.php:174
 #: StockAdjustments.php:217 StockTransfers.php:347 StockTransfers.php:358
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The location stock "
 "record could not be updated because"
 msgstr ""
 
-#: GoodsReceived.php:326 StockTransfers.php:348 StockTransfers.php:359
+#: GoodsReceived.php:326 ReverseGRN.php:175 StockTransfers.php:348
+#: StockTransfers.php:359
 msgid "The following SQL to update the location stock record was used"
 msgstr ""
 
@@ -4220,7 +4239,7 @@ msgid ""
 "records could not be inserted because"
 msgstr ""
 
-#: GoodsReceived.php:355
+#: GoodsReceived.php:355 ReverseGRN.php:205
 msgid "The following SQL to insert the stock movement records was used"
 msgstr ""
 
@@ -4245,7 +4264,7 @@ msgid ""
 "posting could not be inserted because"
 msgstr ""
 
-#: GoodsReceived.php:394
+#: GoodsReceived.php:394 ReverseGRN.php:259
 msgid "The following SQL to insert the purchase GLTrans record was used"
 msgstr ""
 
@@ -4259,17 +4278,17 @@ msgstr ""
 msgid "The following SQL to insert the cost difference GLTrans record was used"
 msgstr ""
 
-#: GoodsReceived.php:414
+#: GoodsReceived.php:414 ReverseGRN.php:281
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The GRN suspense "
 "side of the GL posting could not be inserted because"
 msgstr ""
 
-#: GoodsReceived.php:415
+#: GoodsReceived.php:415 ReverseGRN.php:282
 msgid "The following SQL to insert the GRN Suspense GLTrans record was used"
 msgstr ""
 
-#: GoodsReceived.php:429
+#: GoodsReceived.php:429 ReverseGRN.php:289
 msgid "GRN number"
 msgstr ""
 
@@ -4577,11 +4596,11 @@ msgstr ""
 msgid "State"
 msgstr ""
 
-#: Locations.php:355
+#: Locations.php:355 SalesPeople.php:271
 msgid "Telephone No"
 msgstr ""
 
-#: Locations.php:357
+#: Locations.php:357 SalesPeople.php:272
 msgid "Facsimile No"
 msgstr ""
 
@@ -4693,7 +4712,7 @@ msgstr ""
 msgid "Freight Cost"
 msgstr ""
 
-#: OrderDetails.php:126
+#: OrderDetails.php:126 SalesPeople.php:171
 msgid "Telephone"
 msgstr ""
 
@@ -4739,6 +4758,135 @@ msgstr ""
 
 #: OrderDetails.php:259
 msgid "Total Volume"
+msgstr ""
+
+#: PDFBankingSummary.php:12
+msgid "Create PDF Print Out For A Batch Of Receipts"
+msgstr ""
+
+#: PDFBankingSummary.php:15
+msgid "Enter the batch number of receipts to be printed"
+msgstr ""
+
+#: PDFBankingSummary.php:16 PDFChequeListing.php:52
+#: PDFDeliveryDifferences.php:55 PDFOrderStatus.php:56
+msgid "Create PDF"
+msgstr ""
+
+#: PDFBankingSummary.php:39
+msgid ""
+"An error occurred getting the header information about the receipt batch "
+"number"
+msgstr ""
+
+#: PDFBankingSummary.php:40 PDFChequeListing.php:90 PDFChequeListing.php:138
+msgid "The SQL used to get the receipt header information (that failed) was"
+msgstr ""
+
+#: PDFBankingSummary.php:44 PDFBankingSummary.php:74 PDFBankingSummary.php:93
+msgid "Create PDF Print-out For A Batch Of Receipts"
+msgstr ""
+
+#: PDFBankingSummary.php:46
+msgid "The receipt batch number"
+msgstr ""
+
+#: PDFBankingSummary.php:46
+msgid ""
+"was not found in the database. Please try again selecting a different batch "
+"number."
+msgstr ""
+
+#: PDFBankingSummary.php:76
+msgid "An error occurred getting the customer receipts for batch number"
+msgstr ""
+
+#: PDFBankingSummary.php:78
+msgid "The SQL used to get the customer receipt information (that failed) was:"
+msgstr ""
+
+#: PDFBankingSummary.php:95
+msgid "An error occurred getting the GL receipts for batch number"
+msgstr ""
+
+#: PDFBankingSummary.php:97
+msgid "The SQL used to get the GL receipt information (that failed) was"
+msgstr ""
+
+#: PDFBankingSummary.php:108 includes/PDFBankingSummaryPageHeader.inc:17
+msgid "Banking Summary"
+msgstr ""
+
+#: PDFBankingSummary.php:109
+msgid "Banking Summary Number"
+msgstr ""
+
+#: PDFBankingSummary.php:150 PDFChequeListing.php:169
+msgid "TOTAL"
+msgstr ""
+
+#: PDFBankingSummary.php:150
+msgid "BANKED"
+msgstr ""
+
+#: PDFChequeListing.php:11 PDFDeliveryDifferences.php:11 PDFOrderStatus.php:14
+msgid ""
+"The date entered was in an unrecognised format it must be specified in the "
+"format"
+msgstr ""
+
+#: PDFChequeListing.php:15 PDFDeliveryDifferences.php:15 PDFOrderStatus.php:18
+msgid "The date to must be specified in the format"
+msgstr ""
+
+#: PDFChequeListing.php:22 PDFChequeListing.php:86 PDFChequeListing.php:95
+#: PDFChequeListing.php:134
+msgid "Payment Listing"
+msgstr ""
+
+#: PDFChequeListing.php:28
+msgid "Enter the date from which cheques are to be listed"
+msgstr ""
+
+#: PDFChequeListing.php:31
+msgid "Enter the date to which cheques are to be listed"
+msgstr ""
+
+#: PDFChequeListing.php:49
+msgid "Email the report off"
+msgstr ""
+
+#: PDFChequeListing.php:88
+msgid "An error occurred getting the payments"
+msgstr ""
+
+#: PDFChequeListing.php:97
+msgid ""
+"There were no bank transactions found in the database within the period from"
+msgstr ""
+
+#: PDFChequeListing.php:97
+msgid "Please try again selecting a different date range or account"
+msgstr ""
+
+#: PDFChequeListing.php:108
+msgid "Cheque Listing"
+msgstr ""
+
+#: PDFChequeListing.php:109
+msgid "Cheque listing from"
+msgstr ""
+
+#: PDFChequeListing.php:136
+msgid "An error occurred getting the GL transactions"
+msgstr ""
+
+#: PDFChequeListing.php:169
+msgid "CHEQUES"
+msgstr ""
+
+#: PDFChequeListing.php:195
+msgid "Please find herewith payments listing from"
 msgstr ""
 
 #: PDFCustomerList.php:16 PDFCustomerList.php:216
@@ -4842,16 +4990,6 @@ msgstr ""
 msgid "Activity Since"
 msgstr ""
 
-#: PDFDeliveryDifferences.php:11 PDFOrderStatus.php:14
-msgid ""
-"The date entered was in an unrecognised format it must be specified in the "
-"format"
-msgstr ""
-
-#: PDFDeliveryDifferences.php:15 PDFOrderStatus.php:18
-msgid "The date to must be specified in the format"
-msgstr ""
-
 #: PDFDeliveryDifferences.php:21
 msgid "Delivery Differences Report"
 msgstr ""
@@ -4878,10 +5016,6 @@ msgstr ""
 
 #: PDFDeliveryDifferences.php:43 PDFOrderStatus.php:44
 msgid "Inventory Location:"
-msgstr ""
-
-#: PDFDeliveryDifferences.php:55 PDFOrderStatus.php:56
-msgid "Create PDF"
 msgstr ""
 
 #: PDFDeliveryDifferences.php:86
@@ -5120,6 +5254,7 @@ msgstr ""
 #: includes/PDFOrderStatusPageHeader.inc:19
 #: includes/PDFOrderStatusPageHeader.inc:21 SalesAnalRepts.php:410
 #: SalesAnalRepts.php:429 SalesAnalRepts.php:438 StockTransfers.php:271
+#: includes/PDFChequeListingPageHeader.inc:17
 #: includes/PDFDeliveryDifferencesPageHeader.inc:19
 #: includes/PDFDeliveryDifferencesPageHeader.inc:21
 #: includes/PDFStockLocTransferHeader.inc:15
@@ -5130,7 +5265,7 @@ msgstr ""
 msgid "for delivery ex"
 msgstr ""
 
-#: includes/PDFOrderStatusPageHeader.inc:24
+#: includes/PDFOrderStatusPageHeader.inc:24 ReverseGRN.php:106
 #: includes/PDFCustomerListPageHeader.inc:46
 #: includes/PDFDeliveryDifferencesPageHeader.inc:24
 msgid "only"
@@ -6793,6 +6928,171 @@ msgstr ""
 msgid "Search Completed Sales Orders"
 msgstr ""
 
+#: ReverseGRN.php:13 index.php:439
+msgid "Reverse Goods Received"
+msgstr ""
+
+#: ReverseGRN.php:21
+msgid "This page is expected to be called after a supplier has been selected"
+msgstr ""
+
+#: ReverseGRN.php:26
+msgid "Could not retrieve the supplier name for"
+msgstr ""
+
+#: ReverseGRN.php:31
+msgid "Reverse Goods Received from"
+msgstr ""
+
+#: ReverseGRN.php:61
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Could not get the "
+"details of the GRN selected for reversal because"
+msgstr ""
+
+#: ReverseGRN.php:62
+msgid "The following SQL to retrieve the GRN details was used"
+msgstr ""
+
+#: ReverseGRN.php:70
+msgid "The GRN"
+msgstr ""
+
+#: ReverseGRN.php:70
+msgid ""
+"has already been reversed or fully invoiced by the supplier - it cannot be "
+"reversed - stock quantities must be corrected by stock adjustments - the "
+"stock is paid for"
+msgstr ""
+
+#: ReverseGRN.php:81
+msgid "Could not determine if the item was controlled or not because"
+msgstr ""
+
+#: ReverseGRN.php:92
+msgid ""
+"Could not retrieve the stock movement reference number which is required "
+"inorder to retrieve details of the serial items that came in with this GRN"
+msgstr ""
+
+#: ReverseGRN.php:101
+msgid "Unable to retrieve the quantity on hand of"
+msgstr ""
+
+#: ReverseGRN.php:101
+msgid "for Serial No"
+msgstr ""
+
+#: ReverseGRN.php:106
+msgid "Unfortunately, of the original number"
+msgstr ""
+
+#: ReverseGRN.php:106
+msgid "that were received on serial number"
+msgstr ""
+
+#: ReverseGRN.php:106
+msgid ""
+"remain. The GRN can only be reversed if all the original serial number items "
+"are still in stock in the location they were received into"
+msgstr ""
+
+#: ReverseGRN.php:130
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The purchase order "
+"detail record could not be updated with the quantity reversed because"
+msgstr ""
+
+#: ReverseGRN.php:140
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The GRN record "
+"could not be updated. This reversal of goods received has not been processed "
+"because"
+msgstr ""
+
+#: ReverseGRN.php:147
+msgid "Could not determine if the item exists because"
+msgstr ""
+
+#: ReverseGRN.php:160
+msgid ""
+"Could not get the quantity on hand of the item before the reversal was "
+"processed"
+msgstr ""
+
+#: ReverseGRN.php:204
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Stock movement "
+"records could not be inserted because"
+msgstr ""
+
+#: ReverseGRN.php:222
+msgid ""
+"Could not insert the reversing stock movements for the batch/serial numbers"
+msgstr ""
+
+#: ReverseGRN.php:222 ReverseGRN.php:229
+msgid "The SQL used but failed was"
+msgstr ""
+
+#: ReverseGRN.php:229
+msgid "Could not update the batch/serial stock records"
+msgstr ""
+
+#: ReverseGRN.php:258
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The purchase GL "
+"posting could not be inserted for the reversal of the received item because"
+msgstr ""
+
+#: ReverseGRN.php:289
+msgid "has been reversed"
+msgstr ""
+
+#: ReverseGRN.php:291
+msgid "Select another GRN to Reverse"
+msgstr ""
+
+#: ReverseGRN.php:303
+msgid "Show all goods received after"
+msgstr ""
+
+#: ReverseGRN.php:304
+msgid "Show Outstanding Goods Received"
+msgstr ""
+
+#: ReverseGRN.php:320
+msgid "An error occurred in the attempt to get the outstanding GRNs for"
+msgstr ""
+
+#: ReverseGRN.php:320
+msgid "The message was"
+msgstr ""
+
+#: ReverseGRN.php:325
+msgid "There are no outstanding goods received yet to be invoiced for"
+msgstr ""
+
+#: ReverseGRN.php:325
+msgid "To reverse a GRN that has been invoiced - first it must be credited"
+msgstr ""
+
+#: ReverseGRN.php:330
+msgid "GRN #"
+msgstr ""
+
+#: ReverseGRN.php:333 ReverseGRN.php:334
+msgid "Received"
+msgstr ""
+
+#: ReverseGRN.php:336
+msgid "Quantity To"
+msgstr ""
+
+#: ReverseGRN.php:336 ReverseGRN.php:356
+msgid "Reverse"
+msgstr ""
+
 #: SalesAnalRepts.php:17 SalesAnalRepts.php:19
 msgid "Sales Area"
 msgstr ""
@@ -7004,6 +7304,246 @@ msgstr ""
 
 #: SalesAnalRepts.php:432
 msgid "Group By 4"
+msgstr ""
+
+#: SalesGLPostings.php:7
+msgid "Sales GL Postings Set Up"
+msgstr ""
+
+#: SalesGLPostings.php:34
+msgid "The sales GL posting record has been updated"
+msgstr ""
+
+#: SalesGLPostings.php:52
+msgid "The new sales GL posting record has been inserted"
+msgstr ""
+
+#: SalesGLPostings.php:75
+msgid "Sales posting record has been deleted"
+msgstr ""
+
+#: SalesGLPostings.php:75
+msgid ""
+"That is provided it was not a default sales posting code for any stock "
+"category or location. To delete a default posting code a new default must be "
+"defined, then it must be changed to a non default code. Only then can it be "
+"deleted"
+msgstr ""
+
+#: SalesGLPostings.php:149
+msgid "Sales Account"
+msgstr ""
+
+#: SalesGLPostings.php:189
+msgid "Show All Sales Posting Codes Defined"
+msgstr ""
+
+#: SalesGLPostings.php:287
+msgid "Post Sales to GL Account"
+msgstr ""
+
+#: SalesGLPostings.php:314
+msgid "Post Discount to GL Account"
+msgstr ""
+
+#: SalesPeople.php:28
+msgid "The Sales-person code must be three characters or less long"
+msgstr ""
+
+#: SalesPeople.php:32
+msgid "The sales-person code cannot be empty"
+msgstr ""
+
+#: SalesPeople.php:36
+msgid "The Sales-person name must be thity characters or less long"
+msgstr ""
+
+#: SalesPeople.php:40 SalesPeople.php:44
+msgid ""
+"The Sales-person telephone number must be twenty characters or less long"
+msgstr ""
+
+#: SalesPeople.php:47
+msgid "The commission rates must be an floating point numbers"
+msgstr ""
+
+#: SalesPeople.php:50
+msgid "The breakpoint should be a floating point number"
+msgstr ""
+
+#: SalesPeople.php:81
+msgid "Sales person record for"
+msgstr ""
+
+#: SalesPeople.php:102
+msgid "A new sales person record has been added for"
+msgstr ""
+
+#: SalesPeople.php:105
+msgid "The insert or update of the salesperson failed because"
+msgstr ""
+
+#: SalesPeople.php:106
+msgid "The SQL that was used - and failed was"
+msgstr ""
+
+#: SalesPeople.php:129
+msgid ""
+"Cannot delete this sales-person because branches are set up referring to "
+"this sales-person - first alter the branches concerned"
+msgstr ""
+
+#: SalesPeople.php:129
+msgid "branches that refer to this sales-person"
+msgstr ""
+
+#: SalesPeople.php:136
+msgid ""
+"Cannot delete this sales-person because sales analysis records refer to them"
+msgstr ""
+
+#: SalesPeople.php:136
+msgid "sales analysis records that refer to this sales-person"
+msgstr ""
+
+#: SalesPeople.php:140
+msgid "The sales-person could not be deleted because"
+msgstr ""
+
+#: SalesPeople.php:143
+msgid "Sales person"
+msgstr ""
+
+#: SalesPeople.php:143
+msgid "has been deleted from the database!"
+msgstr ""
+
+#: SalesPeople.php:170 includes/InputSerialItemsFile.php:84
+#: includes/InputSerialItemsFile.php:125
+msgid "Name"
+msgstr ""
+
+#: SalesPeople.php:172
+msgid "Facsimile"
+msgstr ""
+
+#: SalesPeople.php:173
+msgid "Comm Rate 1"
+msgstr ""
+
+#: SalesPeople.php:174
+msgid "Break"
+msgstr ""
+
+#: SalesPeople.php:208
+msgid "Show All Sales People"
+msgstr ""
+
+#: SalesPeople.php:242 SalesPeople.php:247
+msgid "Sales-person code"
+msgstr ""
+
+#: SalesPeople.php:270
+msgid "Sales-person Name"
+msgstr ""
+
+#: SalesPeople.php:273
+msgid "Commission Rate 1"
+msgstr ""
+
+#: SalesPeople.php:274
+msgid "Breakpoint"
+msgstr ""
+
+#: SalesPeople.php:275
+msgid "Commission Rate 2"
+msgstr ""
+
+#: SalesTypes.php:7
+msgid "Sales Types / Price List Maintenance"
+msgstr ""
+
+#: SalesTypes.php:29
+msgid "The sales type (price list) code must be two characters or less long"
+msgstr ""
+
+#: SalesTypes.php:32
+msgid ""
+"<BR>The sales type (price list) code cannot be an empty string or spaces"
+msgstr ""
+
+#: SalesTypes.php:35
+msgid ""
+"The sales type (price list) description must be twenty characters or less "
+"long"
+msgstr ""
+
+#: SalesTypes.php:38
+msgid ""
+"The sales type code cannot be AN since this is a system defined abbrevation "
+"for any sales type in general ledger interface lookups"
+msgstr ""
+
+#: SalesTypes.php:57
+msgid "Sales type"
+msgstr ""
+
+#: SalesTypes.php:57 Stocks.php:259
+msgid "has been added to the database"
+msgstr ""
+
+#: SalesTypes.php:77 SalesTypes.php:88
+msgid ""
+"The number of transactions using this Sales Type record could not be "
+"retrieved because"
+msgstr ""
+
+#: SalesTypes.php:82
+msgid ""
+"Cannot delete this sale type because customer transactions have been created "
+"using this sales type"
+msgstr ""
+
+#: SalesTypes.php:82
+msgid "transactions using this sales type code"
+msgstr ""
+
+#: SalesTypes.php:92
+msgid ""
+"Cannot delete this sale type because customers are currently set up to use "
+"this sales type"
+msgstr ""
+
+#: SalesTypes.php:92
+msgid "customers with this sales type code"
+msgstr ""
+
+#: SalesTypes.php:96
+msgid "The Sales Type record could not be deleted because:"
+msgstr ""
+
+#: SalesTypes.php:98
+msgid "Sales type/ price list"
+msgstr ""
+
+#: SalesTypes.php:98
+msgid "has been deleted"
+msgstr ""
+
+#: SalesTypes.php:101
+msgid "The Sales Type prices could not be deleted because"
+msgstr ""
+
+#: SalesTypes.php:104
+msgid "and any prices for this sales type/ price list were also deleted !"
+msgstr ""
+
+#: SalesTypes.php:124
+msgid "Type Code"
+msgstr ""
+
+#: SalesTypes.php:125
+msgid "Type Name"
 msgstr ""
 
 #: SelectOrderItems.php:13
@@ -7820,10 +8360,6 @@ msgstr ""
 msgid "New Item"
 msgstr ""
 
-#: Stocks.php:259
-msgid "has been added to the database"
-msgstr ""
-
 #: Stocks.php:294
 msgid "Updated stock item details"
 msgstr ""
@@ -8097,6 +8633,7 @@ msgstr ""
 
 #: Tax.php:135 includes/Add_SerialItems.php:33
 #: includes/Add_SerialItems.php:127
+#: includes/PDFBankingSummaryPageHeader.inc:19
 msgid "of"
 msgstr ""
 
@@ -8130,6 +8667,8 @@ msgstr ""
 #: includes/PDFAgedDebtorsPageHeader.inc:26
 #: includes/PDFAgedSuppliersPageHeader.inc:21
 #: includes/PDFBOMListingPageHeader.inc:26
+#: includes/PDFBankingSummaryPageHeader.inc:23
+#: includes/PDFChequeListingPageHeader.inc:21
 #: includes/PDFCustomerListPageHeader.inc:70
 #: includes/PDFDeliveryDifferencesPageHeader.inc:29
 #: includes/PDFLowGPPageHeader.inc:16 includes/PDFPriceListPageHeader.inc:12
@@ -8665,10 +9204,6 @@ msgstr ""
 msgid "Inventory Adjustments"
 msgstr ""
 
-#: index.php:439
-msgid "Reverse Goods Received"
-msgstr ""
-
 #: index.php:444
 msgid "Enter Stock Counts"
 msgstr ""
@@ -9140,10 +9675,6 @@ msgstr ""
 msgid "There was a problem with the uploaded file. We received:<br>"
 msgstr ""
 
-#: includes/InputSerialItemsFile.php:84 includes/InputSerialItemsFile.php:125
-msgid "Name"
-msgstr ""
-
 #: includes/InputSerialItemsFile.php:85 includes/InputSerialItemsFile.php:126
 msgid "Size"
 msgstr ""
@@ -9286,6 +9817,30 @@ msgstr ""
 
 #: includes/PDFBOMListingPageHeader.inc:43
 msgid "Wrk Cntr"
+msgstr ""
+
+#: includes/PDFBankingSummaryPageHeader.inc:19
+msgid "for Receipt Batch #"
+msgstr ""
+
+#: includes/PDFBankingSummaryPageHeader.inc:36
+msgid "Date of Banking"
+msgstr ""
+
+#: includes/PDFBankingSummaryPageHeader.inc:38
+msgid "Banked into"
+msgstr ""
+
+#: includes/PDFBankingSummaryPageHeader.inc:57
+msgid "Bank Details"
+msgstr ""
+
+#: includes/PDFChequeListingPageHeader.inc:15
+msgid "Payments Summary"
+msgstr ""
+
+#: includes/PDFChequeListingPageHeader.inc:38
+msgid "Reference  /  General Ledger Posting Details"
 msgstr ""
 
 #: includes/PDFCustomerListPageHeader.inc:21
