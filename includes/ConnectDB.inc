@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $db = mysql_connect($host , $dbuser, $dbpassword);
 mysql_select_db($DatabaseName,$db);
 
@@ -11,7 +11,7 @@ function DB_query ($SQL,&$Conn, $ErrorMessage="", $DebugMessage="", $Transaction
 	global $debug;
 	$result=mysql_query($SQL,$Conn);
 	if (DB_error_no($Conn) != 0 AND $TrapErrors){
-		prnMsg($ErrorMessage."\n<BR>" . DB_error_msg($Conn),"error");
+		prnMsg($ErrorMessage."<BR>" . DB_error_msg($Conn),"error");
 		if ($debug==1){
 			echo $DebugMessage."<BR>$SQL<BR>";
 		}
@@ -22,7 +22,8 @@ function DB_query ($SQL,&$Conn, $ErrorMessage="", $DebugMessage="", $Transaction
 				prnErrMsg("<br />Error Rolling Back Transaction!!");
 			}
 		}
-		endWEBERP();
+		include("includes/footer.inc");
+		exit;
 	}
 	return $result;
 

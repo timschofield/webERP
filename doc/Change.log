@@ -2,13 +2,16 @@
 
 Upgrade script 2.8 - 2.9 is necessary to be applied against a 2.8 database.
 
+
+
+21/5/04 GoodsReceived.php and GoodsReceivedControlled.php now allows for receiving controlled and controlled/serialised items.
 17/5/04 StockMoves remove field BundleID
 17/5/04 StockCheck.php now only prints stock sheets for items committed to the stockcheckfreeze table. Behaviour of this script was counter intuitive. Deletion of existing entries deleted all locations stock of the same range of categories - now corrected.
 17/5/04 Added DecimalPlaces tinyint default 0 to StockMaster - this determines the number of decimal places to show for the stock item in all places where the item is displayed. Yet to update displaing throughout the system.
 12/5/04	DeliveryDetails.php SelectOrderItems.php DefineCartClass.php - deleting lines off an existing order was not working correctly. It was possible to delete completed order lines off an order in changing an outstanding order line. Bad bug corrected.
 5/5/04  session.inc now refers to MiscFunctions.php
-5/5/04	Added new tables for Serialised stuff SerialStockItems SerialStockMoves and StockModules. Alterations to StockMaster for StockModClass and Serialised. -
-5/5/04  Added includes/MiscFunctions.php for Jesse, DefineStockMaster.php class to hold all info about a stock item master record, Stocks.php script modified for Serialised and StockModClass. New directory under includes for StockModules definitions currently only GenericStockItem.php and CellPhoneItem.php - these contain validation routines for the class of item.
+5/5/04	Added new tables for Serialised stuff StockSerialItems StockSerialMoves. Alterations to StockMaster for Serialised and DecimalPlaces - for displaying items with different decimal places
+5/5/04  Added includes/MiscFunctions.php for Jesse. Stocks.php script modified for Serialised and DecimalPlaces
 29/4/04 StockLocTransferReceive.php to receive quantities set up to transfer from StockLocTransfer.php. Deletes the temporary table data holding the transfered items on creation of the stock movements necessary.
 28/4/04 RePostGL scripts added updating of ChartDetails.BFwdBudget field.
 28/4/04 SelectProduct.php added link to the part picture as suggested by Alan Beard.

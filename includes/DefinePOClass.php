@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /* Definition of the PurchOrder class to hold all the information for a purchase order and delivery
 */
 
@@ -39,7 +39,6 @@ Class PurchOrder {
 				$StockID,
 				$Serialised,
 				$Controlled,
-				$StkModClass,
 				$Qty,
 				$ItemDescr,
 				$Price,
@@ -48,10 +47,10 @@ Class PurchOrder {
 				$ReqDelDate,
 				$ShiptRef,
 				$JobRef,
-				$QtyInv,
-				$QtyRecd,
-				$GLActName,
-				$DecimalPlaces){
+				$QtyInv=0,
+				$QtyRecd=0,
+				$GLActName='',
+				$DecimalPlaces=0){
 
 		if ($Qty!=0 && isset($Qty)){
 
@@ -59,7 +58,6 @@ Class PurchOrder {
 								$StockID,
 								$Serialised,
 								$Controlled,
-								$StkModClass,
 								$Qty,
 								$ItemDescr,
 								$Price,
@@ -150,12 +148,10 @@ Class LineDetails {
 
 	Var $Controlled;
 	Var $Serialised;
-	Var $StkModClass;
 
 	Var $SerialItems;  /*An array holding the batch/serial numbers and quantities in each batch*/
-	Var $SerialItemsValid;
 
-	function LineDetails ($LineNo, $StockItem, $Controlled, $Serialised, $StkModClass, $Qty, $ItemDescr,  $Prc, $UOM, $GLCode, $ReqDelDate, $ShiptRef, $JobRef, $QtyInv, $QtyRecd, $GLActName, $DecimalPlaces){
+	function LineDetails ($LineNo, $StockItem, $Controlled, $Serialised, $Qty, $ItemDescr,  $Prc, $UOM, $GLCode, $ReqDelDate, $ShiptRef, $JobRef, $QtyInv, $QtyRecd, $GLActName, $DecimalPlaces){
 
 	/* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNo = $LineNo;

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -227,8 +227,8 @@ $EDI_Incoming_Orders = "EDI_Incoming_Orders";
     eg. if the files are under the webserver root directory then rootpath =""; if they are under weberp then weberp is the rootpath - notice no additional slashes are necessary.
     */
 
-    $rootpath = dirname($_SERVER['PHP_SELF']);
-    //$rootpath = '/web-erp';
+$rootpath = dirname($_SERVER['PHP_SELF']);
+//$rootpath = '/web-erp';
 
 /* Report all errors except E_NOTICE
  This is the default value set in php.ini for most installations but just to be sure it is forced here
@@ -236,4 +236,5 @@ $EDI_Incoming_Orders = "EDI_Incoming_Orders";
 
  error_reporting (E_ALL ^E_NOTICE);
 
+/*Make sure there is nothing -not even spaces after this last ?> */
 ?>

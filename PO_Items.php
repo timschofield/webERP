@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Purchase Order Items";
 
 $PageSecurity = 4;
@@ -307,7 +307,6 @@ If (isset($_POST['EnterLine']) AND $_POST['EnterLine']=="Enter Line" ){ /*Inputs
 		if ($PO_AllowSameItemMultipleTimes ==False){
 			if (count($_SESSION['PO']->LineItems)>0){
 				foreach ($_SESSION['PO']->LineItems AS $OrderItem) { /*now test for the worst */
-
 					/* do a loop round the items on the order to see that the item
 					is not already on this order */
 
@@ -322,9 +321,9 @@ If (isset($_POST['EnterLine']) AND $_POST['EnterLine']=="Enter Line" ){ /*Inputs
 		if ($AllowUpdate == True){ /*Dont bother with this lot if already discovered input is stuffed */
 
 		    if ($_SESSION['PO']->GLLink==1){
-			   $sql = "SELECT StockMaster.Description, StockMaster.Units, StockMaster.MBflag, StockCategory.StockAct, ChartMaster.AccountName FROM StockCategory, ChartMaster, StockMaster WHERE ChartMaster.AccountCode = StockCategory.StockAct AND StockCategory.CategoryID = StockMaster.CategoryID AND StockMaster.StockID = '". $_POST['StockID'] . "'";
+			   $sql = "SELECT StockMaster.Description, StockMaster.Units,  StockMaster.MBflag, StockCategory.StockAct, ChartMaster.AccountName, StockMaster.DecimalPlaces FROM StockCategory, ChartMaster, StockMaster WHERE ChartMaster.AccountCode = StockCategory.StockAct AND StockCategory.CategoryID = StockMaster.CategoryID AND StockMaster.StockID = '". $_POST['StockID'] . "'";
 		    } else {
-			   $sql = "SELECT StockMaster.Description, StockMaster.Units, StockMaster.MBflag FROM StockMaster WHERE StockMaster.StockID = '". $_POST['StockID'] . "'";
+			   $sql = "SELECT StockMaster.Description, StockMaster.Units, StockMaster.MBflag, StockMaster.DecimalPlaces FROM StockMaster WHERE StockMaster.StockID = '". $_POST['StockID'] . "'";
 		    }
 		    $result1 = DB_query($sql,$db);
 
@@ -343,11 +342,42 @@ If (isset($_POST['EnterLine']) AND $_POST['EnterLine']=="Enter Line" ){ /*Inputs
 
 		   if ($myrow = DB_fetch_array($result1) AND $AllowUpdate == True AND $myrow["MBflag"]!="A" AND $myrow["MBflag"]!="K" AND $myrow["MBflag"]!="D"){
 
-						 	/*$_POST['LineNo'], $_POST['StockID'],		 $_POST['Qty'], 	   $ItemDescr,	   $_POST['Price'],	 $UOM, 	    $_POST['GLCode'],	    $_POST['ReqDelDate'], $_POST['ShiptRef'], $_POST['JobRef'], $_POST['Qty']Inv, $_POST['Qty']Recd ,   GLAccountName*/
-			    	if ($_SESSION['PO']->GLLink==1){
-					 $_SESSION['PO']->add_to_order ($_POST['LineNo'], $_POST['StockID'], $_POST['Qty'], $myrow["Description"], $_POST['Price'], $myrow["Units"], $myrow["StockAct"], $_POST['ReqDelDate'],$_POST['ShiptRef'],$_POST['JobRef'],	     0,	0, $myrow["AccountName"]);
-			    	} else {
-					 $_SESSION['PO']->add_to_order ($_POST['LineNo'], $_POST['StockID'], $_POST['Qty'], $myrow["Description"], $_POST['Price'], $myrow["Units"], 0, $_POST['ReqDelDate'],$_POST['ShiptRef'],$_POST['JobRef'],	  0,	    0, "");
+				if ($_SESSION['PO']->GLLink==1){
+
+					 $_SESSION['PO']->add_to_order ($_POST['LineNo'], 											$_POST['StockID'],
+					 				0, /*Serialised */
+									0, /*Controlled */
+									$_POST['Qty'],
+									$myrow['Description'],
+									$_POST['Price'],
+									$myrow['Units'],
+									$myrow['StockAct'],
+									$_POST['ReqDelDate'],
+									$_POST['ShiptRef'],
+									$_POST['JobRef'],
+									0,
+									0,
+									$myrow['AccountName'],
+									$myrow['DecimalPlaces']);
+
+
+				} else {
+					 $_SESSION['PO']->add_to_order ($_POST['LineNo'],
+					 				$_POST['StockID'],
+									0, /*Serialised */
+									0, /*Controlled */
+									$_POST['Qty'],
+									$myrow['Description'],
+									$_POST['Price'],
+									$myrow['Units'],
+									0,
+									$_POST['ReqDelDate'],
+									$_POST['ShiptRef'],
+									$_POST['JobRef'],
+									0,
+									0,
+									"",
+									$myrow['DecimalPlaces']);
 			    	}
 			    	include ("includes/PO_UnsetFormVbls.php");
 		   } else {
@@ -393,8 +423,22 @@ If (isset($_POST['EnterLine']) AND $_POST['EnterLine']=="Enter Line" ){ /*Inputs
 	    }
 
 	    if ($AllowUpdate == True){
-					 /*$_POST['LineNo'],	   StockID,$_POST['Qty'],  $ItemDescr,    $_POST['Price'], $UOM,	$_POST['GLCode'],  $_POST['ReqDelDate'], $_POST['ShiptRef'], $_POST['JobRef'], $_POST['Qty']Inv, $_POST['Qty']Recd ,   GLAccountName*/
-		   $_SESSION['PO']->add_to_order ($_SESSION['PO']->LinesOnOrder+1, "", $_POST['Qty'], $_POST['ItemDescription'], $_POST['Price'], "each", $_POST['GLCode'], $_POST['ReqDelDate'],$_POST['ShiptRef'],$_POST['JobRef'],	  0,	    0, $GLAccountName);
+
+		   $_SESSION['PO']->add_to_order ($_SESSION['PO']->LinesOnOrder+1,
+		   				"",
+						0, /*Serialised */
+						0, /*Controlled */
+						$_POST['Qty'],
+						$_POST['ItemDescription'],
+						$_POST['Price'],
+						"each",
+						$_POST['GLCode'],
+						$_POST['ReqDelDate'],
+						$_POST['ShiptRef'],
+						$_POST['JobRef'],
+						0,
+						0,
+						$GLAccountName);
 		   include ("includes/PO_UnsetFormVbls.php");
 	    }
 
@@ -422,7 +466,7 @@ If (isset($_GET['NewItem'])){ /* NewItem is set from the part selection list as 
 	}
 	if ($AlreadyOnThisOrder!=1){
 
-	    $sql = "SELECT StockMaster.Description, StockMaster.StockID, StockMaster.Units, StockCategory.StockAct, ChartMaster.AccountName, PurchData.Price, PurchData.ConversionFactor, PurchData.SupplierDescription FROM StockCategory, ChartMaster, StockMaster LEFT JOIN PurchData ON StockMaster.StockID = PurchData.StockID AND PurchData.SupplierNo = '" . $_SESSION['PO']->SupplierID . "' WHERE ChartMaster.AccountCode = StockCategory.StockAct AND StockCategory.CategoryID = StockMaster.CategoryID AND StockMaster.StockID = '". $_GET['NewItem'] . "'";
+	    $sql = "SELECT StockMaster.Description, StockMaster.StockID, StockMaster.Units, StockMaster.DecimalPlaces, StockCategory.StockAct, ChartMaster.AccountName, PurchData.Price, PurchData.ConversionFactor, PurchData.SupplierDescription FROM StockCategory, ChartMaster, StockMaster LEFT JOIN PurchData ON StockMaster.StockID = PurchData.StockID AND PurchData.SupplierNo = '" . $_SESSION['PO']->SupplierID . "' WHERE ChartMaster.AccountCode = StockCategory.StockAct AND StockCategory.CategoryID = StockMaster.CategoryID AND StockMaster.StockID = '". $_GET['NewItem'] . "'";
 	    $result1 = DB_query($sql,$db);
 
 	    if (DB_error_no($db) !=0) {
@@ -435,11 +479,41 @@ If (isset($_GET['NewItem'])){ /* NewItem is set from the part selection list as 
 
 	   if ($myrow = DB_fetch_array($result1)){
 		      if (is_numeric($myrow["Price"])){
-						 /*$_POST['LineNo'],		 $_POST['StockID'], $_POST['Qty'],	$ItemDescr,		 $_POST['Price'],		 $UOM,      $_POST['GLCode'], 	$_POST['ReqDelDate'], $_POST['ShiptRef'], $_POST['JobRef'], $_POST['Qty']Inv, $_POST['Qty']Recd ,   GLAccountName*/
-			     $_SESSION['PO']->add_to_order ($_SESSION['PO']->LinesOnOrder+1, $_GET['NewItem'], 1, $myrow["Description"], $myrow["Price"], $myrow["Units"], $myrow["StockAct"], Date($DefaultDateFormat),0,	 0,	     0,	0, $myrow["AccountName"]);
+
+			     $_SESSION['PO']->add_to_order ($_SESSION['PO']->LinesOnOrder+1,
+			     				$_GET['NewItem'],
+							0, /*Serialised */
+							0, /*Controlled */
+							1, /* Qty */
+							$myrow["Description"],
+							$myrow["Price"],
+							$myrow["Units"],
+							$myrow["StockAct"],
+							Date($DefaultDateFormat),
+							0,
+							0,
+							0,
+							0,
+							$myrow["AccountName"],
+							$myrow['DecimalPlaces']);
 		      } else { /*There was no supplier purchasing data for the item selected so enter a purchase order line with zero price */
-						 /*$_POST['LineNo'],		 $_POST['StockID'], $_POST['Qty'],	$ItemDescr,	 $_POST['Price'],   $UOM,		 $_POST['GLCode'],	$_POST['ReqDelDate'], $_POST['ShiptRef'], $_POST['JobRef'], $_POST['Qty']Inv, $_POST['Qty']Recd */
-			     $_SESSION['PO']->add_to_order ($_SESSION['PO']->LinesOnOrder+1, $_GET['NewItem'], 1, $myrow["Description"], 0, $myrow["Units"], $myrow["StockAct"], Date($DefaultDateFormat), 0,	  0,	    0,       0, $myrow["AccountName"]);
+
+			     $_SESSION['PO']->add_to_order ($_SESSION['PO']->LinesOnOrder+1,
+			     				$_GET['NewItem'],
+							0, /*Serialised */
+							0, /*Controlled */
+							1, /* Qty */
+							$myrow["Description"],
+							0,
+							$myrow["Units"],
+							$myrow["StockAct"],
+							Date($DefaultDateFormat),
+							0,
+							0,
+							0,
+							0,
+							$myrow["AccountName"],
+							$myrow['DecimalPlaces']);
 		      }
 		      /*Make sure the line is also available for editing by default without additional clicks */
 		      $_GET['Edit'] = $_SESSION['PO']->LinesOnOrder; /* this is a bit confusing but it was incremented by the add_to_order function */
@@ -478,7 +552,7 @@ if (count($_SESSION['PO']->LineItems)>0){
 		$LineTotal =	$POLine->Quantity * $POLine->Price;
 		$DisplayLineTotal = number_format($LineTotal,2);
 		$DisplayPrice = number_format($POLine->Price,2);
-		$DisplayQuantity = number_format($POLine->Quantity,2);
+		$DisplayQuantity = number_format($POLine->Quantity,$POLine->DecimalPlaces);
 
 		if ($k==1){
 			echo "<tr bgcolor='#CCCCCC'>";
@@ -653,7 +727,7 @@ If ($SearchResult) {
 }#end if SearchResults to show
 
 echo "<HR>";
-echo "<a target='_blank' href='$rootpath/Stocks.php?" .SID . "'>Add a New Stock Item</a>";
+echo "<a target='_blank' href='$rootpath/Stocks.php?" . SID . "'>Add a New Stock Item</a>";
 echo "</CENTER>";
 
 

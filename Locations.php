@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Location Maintenance";
 
 $PageSecurity = 11;
@@ -246,7 +246,7 @@ if ($SelectedLocation) {  ?>
 
 if (!isset($_GET['delete'])) {
 
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . ">";
+	echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . "?" . SID . "'>";
 
 	if ($SelectedLocation) {
 		//editing an existing Location

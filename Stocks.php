@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $title = "Stock Item Maintenance";
 
 $PageSecurity = 11;
@@ -73,11 +73,14 @@ if ($_POST['submit']) {
 
 	if ($InputError !=1){
 
+		if ($_POST['Serialised']==1){ /*Not appropriate to have several dp on serial items */
+			$_POST['DecimalPlaces']=0;
+		}
+
 		if (!isset($_POST['New'])) { /*so its an existing one */
 
 			/*first check on the changes being made we must disallow:
-				- changes from manufactured or purchased to Dummy, Assembly or Kitset if there is stock
-				- changes from manufactured, kitset or assembly where a BOM exists
+			- changes from manufactured or purchased to Dummy, Assembly or Kitset if there is stock			- changes from manufactured, kitset or assembly where a BOM exists
 			*/
 
 			$sql = "SELECT MBflag FROM StockMaster WHERE StockID = '$StockID'";
@@ -129,8 +132,9 @@ if ($_POST['submit']) {
 				}
 			}
 
+
 			if ($InputError == 0){
-				$sql = "UPDATE StockMaster SET LongDescription='" . $_POST['LongDescription'] . "', Description='" . $_POST['Description'] . "', Discontinued=" . $_POST['Discontinued'] . ", Controlled=" . $_POST['Controlled'] . ", Serialised=" . $_POST['Serialised'].", CategoryID='" . $_POST['CategoryID'] . "', Units='" . $_POST['Units'] . "', MBflag='" . $_POST['MBFlag'] . "', EOQ=" . $_POST['EOQ'] . ", Volume=" . $_POST['Volume'] . ", KGS=" . $_POST['KGS'] . ", BarCode='" . $_POST['BarCode'] . "', DiscountCategory='" . $_POST['DiscountCategory'] . "', TaxLevel=" . $_POST['TaxLevel'] . ", StkModClass='".$_POST['StkModClass']."' WHERE StockID='$StockID'";
+				$sql = "UPDATE StockMaster SET LongDescription='" . $_POST['LongDescription'] . "', Description='" . $_POST['Description'] . "', Discontinued=" . $_POST['Discontinued'] . ", Controlled=" . $_POST['Controlled'] . ", Serialised=" . $_POST['Serialised'].", CategoryID='" . $_POST['CategoryID'] . "', Units='" . $_POST['Units'] . "', MBflag='" . $_POST['MBFlag'] . "', EOQ=" . $_POST['EOQ'] . ", Volume=" . $_POST['Volume'] . ", KGS=" . $_POST['KGS'] . ", BarCode='" . $_POST['BarCode'] . "', DiscountCategory='" . $_POST['DiscountCategory'] . "', TaxLevel=" . $_POST['TaxLevel'] . ", DecimalPlaces=" . $_POST['DecimalPlaces'] . " WHERE StockID='$StockID'";
 
 				$result = DB_query($sql,$db);
 				if (DB_error_no($db) !=0) {
@@ -145,40 +149,38 @@ if ($_POST['submit']) {
 
 		} else { //it is a NEW part
 
-			$sql = "INSERT INTO StockMaster (StockID, Description, LongDescription, CategoryID, Units, MBFlag, EOQ, Discontinued, Controlled, Serialised, Volume, KGS, BarCode, DiscountCategory, TaxLevel, StkModClass) VALUES ('$StockID', '" . $_POST['Description'] . "', '" . $_POST['LongDescription'] . "', '" . $_POST['CategoryID'] . "', '" . $_POST['Units'] . "', '" . $_POST['MBFlag'] . "', " . $_POST['EOQ'] . ", " . $_POST['Discontinued'] . ", " . $_POST['Controlled'] . ", " . $_POST['Serialised']. ", " . $_POST['Volume'] . ", " . $_POST['KGS'] . ", '" . $_POST['BarCode'] . "','" . $_POST[', DiscountCategory'] . "'," . $_POST['TaxLevel'] . ",'".$_POST['StkModClass']."')";
+			$sql = "INSERT INTO StockMaster (StockID, Description, LongDescription, CategoryID, Units, MBFlag, EOQ, Discontinued, Controlled, Serialised, Volume, KGS, BarCode, DiscountCategory, TaxLevel, DecimalPlaces) VALUES ('$StockID', '" . $_POST['Description'] . "', '" . $_POST['LongDescription'] . "', '" . $_POST['CategoryID'] . "', '" . $_POST['Units'] . "', '" . $_POST['MBFlag'] . "', " . $_POST['EOQ'] . ", " . $_POST['Discontinued'] . ", " . $_POST['Controlled'] . ", " . $_POST['Serialised']. ", " . $_POST['Volume'] . ", " . $_POST['KGS'] . ", '" . $_POST['BarCode'] . "','" . $_POST[', DiscountCategory'] . "'," . $_POST['TaxLevel'] . "," . $_POST['DecimalPlaces']. ")";
 
-			$result = DB_query($sql,$db);
-			if (DB_error_no($db) !=0) {
-				echo "The item could not be added because - " . DB_error_msg($db);
-				if ($debug==1){
-					echo "<BR>The SQL that was used and failed was:<BR>$sql";
-				}
-			} else {
+			$ErrMsg =  "<BR>The item could not be added because: ";
+			$Dbgmsg = "<BR>The SQL that was used to add the item failed was:";
+			$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+			if (DB_error_no($db) ==0) {
+
 				$sql = "INSERT INTO LocStock (LocCode, StockID) SELECT Locations.LocCode, '" . $StockID . "' FROM Locations";
 
-				$InsResult = DB_query($sql,$db);
-				if (DB_error_no($db)!=0 && $debug==1){
+				$ErrMsg =  "<BR>The locations for the item " . $myrow[0] . " could not be added because: ";
+				$Dbgmsg = "<P>NB Locations records can be added by opening the utlity page <i>Z_MakeStockLocns.php</i>The SQL that was used to add the location records that failed was:";
+				$InsResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-					echo "<BR>The SQL to insert location records for part " . $myrow[0] . " failed, the SQL statement was:<BR>$sql<P>NB Locations records can be added by opening the utlity page <i>Z_MakeStockLocns.php</i>";
-				exit;
+				if (DB_error_no($db) ==0) {
+					echo "<BR>New Item $StockID has been added to the database";
+					unset($_POST['LongDescription']);
+					unset($_POST['Description']);
+					unset($_POST['EOQ']);
+					unset($_POST['CategoryID']);
+					unset($_POST['Units']);
+					unset($_POST['MBFlag']);
+					unset($_POST['Discontinued']);
+					unset($_POST['Controlled']);
+					unset($_POST['Serialised']);
+					unset($_POST['Volume']);
+					unset($_POST['KGS']);
+					unset($_POST['BarCode']);
+					unset($_POST['ReorderLevel']);
+					unset($_POST['DiscountCategory']);
+					unset($_POST['DecimalPlaces']);
+					unset($StockID);
 				}
-				echo "<BR>New Item $StockID has been added to the database";
-				unset($_POST['LongDescription']);
-				unset($_POST['Description']);
-				unset($_POST['EOQ']);
-				unset($_POST['CategoryID']);
-				unset($_POST['Units']);
-				unset($_POST['MBFlag']);
-				unset($_POST['Discontinued']);
-				unset($_POST['Controlled']);
-				unset($_POST['Serialised']);
-				unset($_POST['Volume']);
-				unset($_POST['KGS']);
-				unset($_POST['BarCode']);
-				unset($_POST['ReorderLevel']);
-				unset($_POST['DiscountCategory']);
-				unset($_POST['StkModClass']);
-				unset($StockID);
 			}
 		}
 		/*Check for a new TaxLevel and insert new records in TaxAuthLevels as necessary */
@@ -295,7 +297,7 @@ if ($_POST['submit']) {
 		unset($_POST['ReorderLevel']);
 		unset($_POST['DiscountCategory']);
 		unset($_POST['TaxLevel']);
-		unset($_POST['StkModClass']);
+		unset($_POST['DecimalPlaces']);
 		unset($StockID);
 		unset($_SESSION['SelectedStockItem']);
 		//echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . "/SelectProduct.php?" . SID  ."'>";
@@ -317,7 +319,7 @@ if (!isset($StockID) OR isset($_POST['New'])) {
 
 } else { // Must be modifying an existing item
 
-	$sql = "SELECT StockID, Description, LongDescription, CategoryID, Units, MBFlag, Discontinued, Controlled, Serialised, EOQ, Volume, KGS, BarCode, DiscountCategory, TaxLevel, StkModClass FROM StockMaster WHERE StockID = '$StockID'";
+	$sql = "SELECT StockID, Description, LongDescription, CategoryID, Units, MBFlag, Discontinued, Controlled, Serialised, EOQ, Volume, KGS, BarCode, DiscountCategory, TaxLevel, DecimalPlaces FROM StockMaster WHERE StockID = '$StockID'";
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
 
@@ -336,7 +338,7 @@ if (!isset($StockID) OR isset($_POST['New'])) {
 	$_POST['ReorderLevel']  = $myrow["ReorderLevel"];
 	$_POST['DiscountCategory']  = $myrow["DiscountCategory"];
 	$_POST['TaxLevel'] = $myrow["TaxLevel"];
-	$_POST['StkModClass'] = $myrow["StkModClass"];
+	$_POST['DecimalPlaces'] = $myrow["DecimalPlaces"];
 
 	echo "<TR><TD>Item Code:</TD><TD>$StockID</TD></TR>";
 	echo "<input type='Hidden' name='StockID' value='$StockID'>";
@@ -383,8 +385,8 @@ if ($_POST['Controlled']=="" OR !isset($_POST['Controlled'])){
 if ($_POST['Serialised']=="" OR !isset($_POST['Serialised']) || $_POST['Controlled']==0){
     $_POST['Serialised']=0;
 }
-if ($_POST['StkModClass']=="" OR !isset($_POST['StkModClass']) || $_POST['Controlled']==0){
-    $_POST['StkModClass']="GenericStockItem"; //I know, I know...
+if ($_POST['DecimalPlaces']=="" OR !isset($_POST['DecimalPlaces'])){
+	$_POST['DecimalPlaces']=0;
 }
 if ($_POST['Discontinued']=="" OR !isset($_POST['Discontinued'])){
     $_POST['Discontinued']=0;
@@ -457,7 +459,7 @@ if ($_POST['Discontinued']==1){
 }
 echo "</SELECT></TD></TR>";
 
-echo "<TR><TD>Controlled:</TD><TD><SELECT name='Controlled'>";
+echo "<TR><TD>Batch, Serial or Lot Control:</TD><TD><SELECT name='Controlled'>";
 
 if ($_POST['Controlled']==0){
 	echo "<OPTION SELECTED VALUE=0>No Control";
@@ -465,9 +467,9 @@ if ($_POST['Controlled']==0){
         echo "<OPTION VALUE=0>No Control";
 }
 if ($_POST['Controlled']==1){
-	echo "<OPTION SELECTED VALUE=1>Batch/Bundle/Roll/Lot Control";
+	echo "<OPTION SELECTED VALUE=1>Controlled";
 } else {
-	echo "<OPTION VALUE=1>Batch/Bundle/Roll/Lot Control Required";
+	echo "<OPTION VALUE=1>Controlled";
 }
 echo "</SELECT></TD></TR>";
 
@@ -485,26 +487,7 @@ if ($_POST['Serialised']==1){
 }
 echo "</SELECT><i>Note, this has no effect if the item is not Controlled</i></TD></TR>";
 
-echo "<TR><TD>Inventory Module:</TD><TD><SELECT name=StkModClass>";
-
-$sql = "SELECT StkModClass, Description FROM StockModules";
-$result = DB_query($sql,$db);
-
-if (DB_error_no($db) !=0) {
-        echo "The stock modules could not be retrieved because - " . DB_error_msg($db);
-        if ($debug==1){
-                echo "<BR>The SQL used to retrieve stock categories failed and was :<BR>$sql";
-        }
-}
-
-while ($myrow=DB_fetch_array($result)){
-        if ($myrow["StkModClass"]==$_POST['StkModClass']){
-                echo "<OPTION SELECTED VALUE='". $myrow["StkModClass"] . "'>" . $myrow["Description"];
-        } else {
-                echo "<OPTION VALUE='". $myrow["StkModClass"] . "'>" . $myrow["Description"];
-        }
-}
-echo "</SELECT><TD></TR>";
+echo "<TR><TD>Decimal Places to Display:</TD><TD><input type='Text' name='DecimalPlaces' SIZE=1 MAXLENGTH=1 value='" . $_POST['DecimalPlaces'] . "'><TD></TR>";
 
 echo "<TR><TD>Bar Code:</TD><TD><input type='Text' name='BarCode' SIZE=22 MAXLENGTH=20 value='" . $_POST['BarCode'] . "'></TD></TR>";
 

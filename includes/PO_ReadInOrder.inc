@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*PO_ReadInOrder.inc is used by the modify existing order code in PO_Header.php and also by GoodsReceived.php */
 
        if (isset($_SESSION['PO'])){
@@ -66,8 +66,7 @@
 				StdCostUnit,
 				StockMaster.Controlled,
 				StockMaster.Serialised,
-				StockMaster.DecimalPlaces,
-				StockMaster.StkModClass
+				StockMaster.DecimalPlaces
 				FROM PurchOrderDetails LEFT JOIN StockMaster
 					ON PurchOrderDetails.ItemCode=StockMaster.StockID
 					LEFT JOIN ChartMaster
@@ -104,7 +103,6 @@
 							$StockID,
 							$myrow["Controlled"],
 							$myrow["Serialised"],
-							$myrow["StkModClass"],
 							$myrow["QuantityOrd"],
 							$myrow["ItemDescription"],
 							$myrow["UnitPrice"],

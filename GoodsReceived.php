@@ -1,10 +1,11 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $title = "Receive Purchase Orders";
 $PageSecurity = 11;
 
 /* Session started in header.inc for password checking and authorisation level check */
 include("includes/DefinePOClass.php");
+include("includes/DefineSerialItems.php");
 include("includes/DateFunctions.inc");
 include("includes/SQL_CommonFunctions.inc");
 include("includes/session.inc");
@@ -18,7 +19,7 @@ if ($_GET['PONumber']<=0 AND !isset($_SESSION['PO'])) {
 	echo "<BR>This page can only be opened if a purchase order has been selected. Please select a purchase order first.";
 	include ("includes/footer.inc");
 	exit;
-} elseif ($_GET['PONumber']>0 AND !isset($_POST['Update'])) {
+} elseif (isset($_GET['PONumber']) AND !isset($_POST['Update'])) {
   /*Update only occurs if the user hits the button to refresh the data and recalc the value of goods recd*/
 
 	  $_GET['ModifyOrderNumber'] = $_GET['PONumber'];
@@ -34,13 +35,7 @@ if ($_GET['PONumber']<=0 AND !isset($_SESSION['PO'])) {
 		if (!is_numeric($RecvQty)){
 			$RecvQty = 0;
 		}
-		//if RecvQty changes and Item is Serialised, need to fix Invalidate SerialItems
-		//to force double checking it.
-		if ($_SESSION['PO']->LineItems[$Line->LineNo]->ReceiveQty != $RecvQty){
-			$_SESSION['PO']->LineItems[$Line->LineNo]->SerialItemsValid=false;
-		}
 		$_SESSION['PO']->LineItems[$Line->LineNo]->ReceiveQty = $RecvQty;
-		$_SESSION['PO']->LineItems[$Line->LineNo]->BundleId = $BundleId;
 	}
 }
 
@@ -88,8 +83,8 @@ if (count($_SESSION['PO']->LineItems)>0){
 
 		$LineTotal = ($LnItm->ReceiveQty * $LnItm->Price );
 		$_SESSION['PO']->total = $_SESSION['PO']->total + $LineTotal;
-		$DisplayQtyOrd = number_format($LnItm->Quantity,2);
-		$DisplayQtyRec = number_format($LnItm->QtyReceived,2);
+		$DisplayQtyOrd = number_format($LnItm->Quantity,$LnItm->DecimalPlaces);
+		$DisplayQtyRec = number_format($LnItm->QtyReceived,$LnItm->DecimalPlaces);
 		$DisplayLineTotal = number_format($LineTotal,2);
 		$DisplayPrice = number_format($LnItm->Price,2);
 
@@ -104,7 +99,7 @@ if (count($_SESSION['PO']->LineItems)>0){
 
 		if ($LnItm->Controlled == 1) {
 
-			echo "<input type=hidden name='RecvQty_" . $LnItm->LineNo . "' value=" . $LnItm->ReceiveQty . "><a href='GoodsReceivedControlled.php?LineNo=" . $LnItm->LineNo . "'>" . $LnItm->ReceiveQty . "</a></TD>";
+			echo "<input type=hidden name='RecvQty_" . $LnItm->LineNo . "' value=" . $LnItm->ReceiveQty . "><a href='GoodsReceivedControlled.php?LineNo=" . $LnItm->LineNo . "'>" . number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . "</a></TD>";
 
 		} else {
 
@@ -116,9 +111,11 @@ if (count($_SESSION['PO']->LineItems)>0){
 		echo "<TD ALIGN=RIGHT><FONT size=2>" . $DisplayLineTotal . "</FONT></TD>";
 
 		if ($LnItm->Controlled == 1) {
-
-			echo "<TD><a href='GoodsReceivedControlled.php?LineNo=" . $LnItm->LineNo . "'>Enter Batch Qtys</a></TD>";
-
+			if ($LnItm->Serialised==1){
+				echo "<TD><a href='GoodsReceivedControlled.php?LineNo=" . $LnItm->LineNo . "'>Enter Serial Nos</a></TD>";
+			} else {
+				echo "<TD><a href='GoodsReceivedControlled.php?LineNo=" . $LnItm->LineNo . "'>Enter Batches</a></TD>";
+			}
 		}
 
 		echo "</TR>";
@@ -158,19 +155,6 @@ if (count($_SESSION['PO']->LineItems)>0){
 		$DeliveryQuantityTooLarge =1;
 		$InputError = true;
 	  }
-
-
-	  if ($OrderLine->Controlled==1 AND $OrderLine->Serialised == 1){
-	  	//Need to check that we have Qty valid items...
-	  	if (!$OrderLine->SerialItemsValid){
-			$txt = "<BR>$OrderLine->StockID is controlled but batch references and quantities have not yet been entered and validated.";
-			prnMsg($txt, "error");
-			$InputError=true;
-		} else {
-			$txt = "<BR>$OrderLine->StockID is controlled with all Items Validated.";
-			prnMsg($txt, "success");
-		}
-	}
    }
 }
 
@@ -193,7 +177,8 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=="Process Goods Rec
 	if ($CompanyData==0){
 		/*The company data and preferences could not be retrieved for some reason */
 		prnMsg("<P>The company infomation and preferences could not be retrieved - see your system administrator", "error");
-+		endWEBERP();
++		include("includes/footer.inc");
+		exit;
 	}
 
 /*Now need to check that the order details are the same as they were when they were read into the Items array. If they've changed then someone else must have altered them */
@@ -327,22 +312,33 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=="Process Goods Rec
 
 	/* If its a stock item still .... Insert stock movements - with unit cost */
 
-				$SQL = "INSERT INTO StockMoves (StockID, Type, TransNo, LocCode, Bundle, TranDate, Price, Prd, Reference, Qty, StandardCost, NewQOH) VALUES ('" . $OrderLine->StockID . "', 25, " . $GRN . ", '" . $_SESSION['PO']->Location . "', '" . $OrderLine->BundleId . "', '" . $_POST['DefaultReceivedDate'] . "', " . $LocalCurrencyPrice . ", " . $PeriodNo . ", '" . $_SESSION['PO']->SupplierID . " (" . $_SESSION['PO']->SupplierName . ") - " .$_SESSION['PO']->OrderNo . "', " . $OrderLine->ReceiveQty . ", " . $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost . ", " . ($QtyOnHandPrior + $OrderLine->ReceiveQty) . ")";
+				$SQL = "INSERT INTO StockMoves (StockID, Type, TransNo, LocCode, TranDate, Price, Prd, Reference, Qty, StandardCost, NewQOH) VALUES ('" . $OrderLine->StockID . "', 25, " . $GRN . ", '" . $_SESSION['PO']->Location . "', '" . $_POST['DefaultReceivedDate'] . "', " . $LocalCurrencyPrice . ", " . $PeriodNo . ", '" . $_SESSION['PO']->SupplierID . " (" . $_SESSION['PO']->SupplierName . ") - " .$_SESSION['PO']->OrderNo . "', " . $OrderLine->ReceiveQty . ", " . $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost . ", " . ($QtyOnHandPrior + $OrderLine->ReceiveQty) . ")";
 				$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: stock movement records could not be inserted because:";
 				$DbgMsg = "<BR>The following SQL to insert the stock movement records was used:";
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
-				//Get the ID of the that StockMove...
+				/*Get the ID of the StockMove... */
 				$StkMoveNo = DB_Last_Insert_ID($db);
-				// PUT SERIALISED INSERTS HERE
-/* Now do Serialised Inserts, if necessary. */
-          			if ($OrderLine->Serialised > 0){
-					$cnt = 0;
+				/* Do the Controlled Item INSERTS HERE */
+
+          			if ($OrderLine->Controlled ==1){
 					foreach($OrderLine->SerialItems as $Item){
-                                        //we know that StockItems return an array of statements in the order they should be executed... or they better!
-					//For each we must do a StockItem and may do Custom Insert(s)
-						//$cnt++;
-						$status = $Item->add_item($StkMoveNo, true);
+                                        	/* we know that StockItems return an array of SerialItem (s)
+						We need to add the StockSerialItem record and
+						The StockSerialMoves as well */
+
+						$SQL = "INSERT INTO StockSerialItems (StockID, LocCode, SerialNo, Quantity) VALUES ('" . $OrderLine->StockID . "', '" . $_SESSION['PO']->Location . "', '" . $Item->BundleRef . "', " . $Item->BundleQty . ")";
+						$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock item record could not be inserted because:";
+						$DbgMsg = "<BR>The following SQL to insert the serial stock item records was used:";
+						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+
+						/*now insert the serial stock movement */
+
+						$SQL = "INSERT INTO StockSerialMoves (StockMoveNo, StockID, SerialNo, MoveQty) VALUES (" . $StkMoveNo . ", '" . $OrderLine->StockID . "', '" . $Item->BundleRef . "', " . $Item->BundleQty . ")";
+						$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock movement record could not be inserted because:";
+						$DbgMsg = "<BR>The following SQL to insert the serial stock movement records was used:";
+						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+
 
 					}//foreach item
 				}
@@ -395,7 +391,8 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=="Process Goods Rec
 	echo "<BR>GRN number $GRN has been processed<BR>";
 	echo "<A HREF='$rootpath/PO_SelectPurchOrder.php?" . SID . "'>Select a different purchase order for receiving goods against</A>";
 /*end of process goods received entry */
-	endWEBERP();
+	include("includes/footer.inc");
+	exit;
 
 } else { /*Process Goods received not set so show a link to allow mod of line items on order and allow input of date goods received*/
 
@@ -414,4 +411,3 @@ echo "</form>";
 
 include("includes/footer.inc");
 ?>
-

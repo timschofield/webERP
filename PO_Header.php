@@ -1,7 +1,7 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
-if ($_GET['ModifyOrderNumber']) {
+if (isset($_GET['ModifyOrderNumber'])) {
 	$title = "Modify Purchase Order " . $_GET['ModifyOrderNumber'];
 } else {
 	$title = "Purchase Order Entry";

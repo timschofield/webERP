@@ -679,9 +679,9 @@ CREATE TABLE LocTransfers (
   KEY ShipLoc (ShipLoc),
   KEY RecLoc (RecLoc),
   KEY StockID (StockID),
-  CONSTRAINT `LocTransfers_ibfk_3` FOREIGN KEY (`StockID`) REFERENCES `StockMaster` (`StockID`),
   CONSTRAINT `LocTransfers_ibfk_1` FOREIGN KEY (`ShipLoc`) REFERENCES `Locations` (`LocCode`),
-  CONSTRAINT `LocTransfers_ibfk_2` FOREIGN KEY (`RecLoc`) REFERENCES `Locations` (`LocCode`)
+  CONSTRAINT `LocTransfers_ibfk_2` FOREIGN KEY (`RecLoc`) REFERENCES `Locations` (`LocCode`),
+  CONSTRAINT `LocTransfers_ibfk_3` FOREIGN KEY (`StockID`) REFERENCES `StockMaster` (`StockID`)
 ) TYPE=InnoDB COMMENT='Stores Shipments To And From Locations';
 
 --
@@ -1186,6 +1186,8 @@ CREATE TABLE StockMaster (
   BarCode varchar(50) NOT NULL default '',
   DiscountCategory char(2) NOT NULL default '',
   TaxLevel tinyint(4) NOT NULL default '1',
+  Serialised tinyint(4) NOT NULL default '0',
+  DecimalPlaces tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (StockID),
   KEY CategoryID (CategoryID),
   KEY Description (Description),
@@ -1208,7 +1210,6 @@ CREATE TABLE StockMoves (
   Type smallint(6) NOT NULL default '0',
   TransNo int(11) NOT NULL default '0',
   LocCode char(5) NOT NULL default '',
-  Bundle char(8) NOT NULL default '1',
   TranDate date NOT NULL default '0000-00-00',
   DebtorNo char(10) NOT NULL default '',
   BranchCode char(10) NOT NULL default '',
@@ -1223,7 +1224,6 @@ CREATE TABLE StockMoves (
   HideMovt tinyint(4) NOT NULL default '0',
   TaxRate float NOT NULL default '0',
   PRIMARY KEY  (StkMoveNo),
-  KEY Bundle (Bundle),
   KEY DebtorNo (DebtorNo),
   KEY LocCode (LocCode),
   KEY Prd (Prd),
@@ -1238,6 +1238,41 @@ CREATE TABLE StockMoves (
   CONSTRAINT `StockMoves_ibfk_2` FOREIGN KEY (`Type`) REFERENCES `SysTypes` (`TypeID`),
   CONSTRAINT `StockMoves_ibfk_3` FOREIGN KEY (`LocCode`) REFERENCES `Locations` (`LocCode`),
   CONSTRAINT `StockMoves_ibfk_4` FOREIGN KEY (`Prd`) REFERENCES `Periods` (`PeriodNo`)
+) TYPE=InnoDB;
+
+--
+-- Table structure for table `StockSerialItems`
+--
+
+DROP TABLE IF EXISTS StockSerialItems;
+CREATE TABLE StockSerialItems (
+  StockID varchar(20) NOT NULL default '',
+  LocCode varchar(5) NOT NULL default '',
+  SerialNo varchar(30) NOT NULL default '',
+  Quantity float NOT NULL default '0',
+  PRIMARY KEY  (StockID,SerialNo),
+  KEY StockID (StockID),
+  KEY LocCode (LocCode),
+  CONSTRAINT `StockSerialItems_ibfk_2` FOREIGN KEY (`LocCode`) REFERENCES `Locations` (`LocCode`),
+  CONSTRAINT `StockSerialItems_ibfk_1` FOREIGN KEY (`StockID`) REFERENCES `StockMaster` (`StockID`)
+) TYPE=InnoDB;
+
+--
+-- Table structure for table `StockSerialMoves`
+--
+
+DROP TABLE IF EXISTS StockSerialMoves;
+CREATE TABLE StockSerialMoves (
+  StkItmMoveNo int(11) NOT NULL auto_increment,
+  StockMoveNo int(11) NOT NULL default '0',
+  StockID varchar(20) NOT NULL default '',
+  SerialNo varchar(30) NOT NULL default '',
+  MoveQty float NOT NULL default '0',
+  PRIMARY KEY  (StkItmMoveNo),
+  KEY StockMoveNo (StockMoveNo),
+  KEY StockID_SN (StockID,SerialNo),
+  CONSTRAINT `StockSerialMoves_ibfk_1` FOREIGN KEY (`StockMoveNo`) REFERENCES `StockMoves` (`StkMoveNo`),
+  CONSTRAINT `StockSerialMoves_ibfk_2` FOREIGN KEY (`StockID`, `SerialNo`) REFERENCES `StockSerialItems` (`StockID`, `SerialNo`)
 ) TYPE=InnoDB;
 
 --
@@ -1637,7 +1672,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE SysTypes DISABLE KEYS */;
 LOCK TABLES SysTypes WRITE;
-INSERT INTO SysTypes VALUES (0,'Journal - GL',9),(1,'Payment - GL',17),(2,'Receipt - GL',3),(3,'Standing Journal',0),(10,'Sales Invoice',26),(11,'Credit Note',11),(12,'Receipt',18),(15,'Journal - Debtors',0),(16,'Location Transfer',17),(17,'Stock Adjustment',5),(18,'Purchase Order',0),(20,'Purchase Invoice',13),(21,'Debit Note',3),(22,'Creditors Payment',3),(23,'Creditors Journal',0),(25,'Purchase Order Delivery',7),(26,'Work Order Receipt',0),(28,'Work Order Issue',0),(29,'Work Order Variance',0),(30,'Sales Order',0),(31,'Shipment Close',2),(35,'Cost Update',3),(50,'Opening Balance',0);
+INSERT INTO SysTypes VALUES (0,'Journal - GL',9),(1,'Payment - GL',17),(2,'Receipt - GL',3),(3,'Standing Journal',0),(10,'Sales Invoice',26),(11,'Credit Note',11),(12,'Receipt',18),(15,'Journal - Debtors',0),(16,'Location Transfer',18),(17,'Stock Adjustment',5),(18,'Purchase Order',0),(20,'Purchase Invoice',13),(21,'Debit Note',3),(22,'Creditors Payment',3),(23,'Creditors Journal',0),(25,'Purchase Order Delivery',9),(26,'Work Order Receipt',0),(28,'Work Order Issue',0),(29,'Work Order Variance',0),(30,'Sales Order',0),(31,'Shipment Close',2),(35,'Cost Update',3),(50,'Opening Balance',0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE SysTypes ENABLE KEYS */;
 
@@ -1670,7 +1705,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE WWW_Users DISABLE KEYS */;
 LOCK TABLES WWW_Users WRITE;
-INSERT INTO WWW_Users VALUES ('Admin','albundy','Phil Daintree','','','','DEN',7,'2004-04-28 21:29:56','','A4','1,1,1,1,1,1,1,1,',0),('demo','weberp','','','','','DEN',5,'2004-04-29 20:44:29','','A4','1,1,1,1,1,1,1,1,',0),('testy','weberp','','GRANHR','','','DEN',6,'2004-02-23 20:21:56','GRAN','A4','1,0,0,0,0,0,0,0,',0);
+INSERT INTO WWW_Users VALUES ('Admin','albundy','Phil Daintree','','','','DEN',7,'2004-05-22 15:42:39','','A4','1,1,1,1,1,1,1,1,',0),('demo','weberp','','','','','DEN',5,'2004-05-21 19:57:27','','A4','1,1,1,1,1,1,1,1,',0),('testy','weberp','','GRANHR','','','DEN',6,'2004-02-23 20:21:56','GRAN','A4','1,0,0,0,0,0,0,0,',0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE WWW_Users ENABLE KEYS */;
 

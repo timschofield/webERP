@@ -180,11 +180,13 @@ ALTER TABLE `LocTransfers`
   ADD CONSTRAINT `LocTransfers_ibfk_2` FOREIGN KEY (`RecLoc`) REFERENCES `Locations` (`LocCode`);
 
 CREATE TABLE StockSerialItems (
+  LocCode varchar(5) NOT NULL default '',
   StockID varchar(20) NOT NULL default '',
   SerialNo varchar(30) NOT NULL default '',
   Quantity float NOT NULL default 0,
   PRIMARY KEY  (StockID, SerialNo),
-  KEY (StockID)
+  KEY (StockID),
+  KEY (LocCode)
 ) TYPE=InnoDB;
 
 CREATE TABLE StockSerialMoves (
@@ -200,20 +202,9 @@ CREATE TABLE StockSerialMoves (
 
 ALTER TABLE StockSerialMoves ADD FOREIGN KEY (StockMoveNo) REFERENCES StockMoves (StkMoveNo);
 ALTER TABLE StockSerialItems ADD FOREIGN KEY (StockID) REFERENCES StockMaster (StockID);
+ALTER TABLE StockSerialItems ADD FOREIGN KEY (LocCode) REFERENCES Locations (LocCode);
 ALTER TABLE StockSerialMoves ADD FOREIGN KEY (StockID, SerialNo) REFERENCES StockSerialItems (StockID, SerialNo);
 
-CREATE TABLE StockModules (
-  StkModClass varchar(20) NOT NULL default '',
-  Description varchar(50) NOT NULL default '',
-  PRIMARY KEY  (StkModClass)
-) TYPE=InnoDB;
-
-INSERT INTO StockModules values ('GenericStockItem','Generic Module for StockItems');
-ALTER TABLE `StockMaster` ADD COLUMN `StkModClass` varchar(20) NOT NULL default 'GenericStockItem';
-UPDATE StockMaster set `StkModClass` = 'GenericStockItem';
-
-ALTER TABLE StockMaster ADD INDEX StkModClass (StkModClass);
 ALTER TABLE `StockMaster` ADD `Serialised` TINYINT DEFAULT '0' NOT NULL ;
 ALTER TABLE `StockMaster` ADD `DecimalPlaces` TINYINT DEFAULT '0' NOT NULL ;
-ALTER TABLE `StockMaster` ADD CONSTRAINT `StockMaster_ibfk_2` FOREIGN KEY ( `StkModClass` ) REFERENCES `StockModules` ( `StkModClass` );
 ALTER TABLE `StockMoves` DROP `Bundle`;
