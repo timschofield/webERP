@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity =15;
 
 include('includes/session.inc');
@@ -180,6 +180,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['reports_dir'] != $_POST['X_reports_dir'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".DB_escape_string($_POST['X_reports_dir'])."' WHERE confname = 'reports_dir'";
 		}
+		if ($_SESSION['AutoDebtorNo'] != $_POST['X_AutoDebtorNo'] ) {
+			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_AutoDebtorNo'])."' WHERE confname = 'AutoDebtorNo'";
+		}
 		
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 0 ) {
@@ -342,6 +345,21 @@ echo '<TR><TD>' . _('Apply freight charges if an order is less than') . ':</TD>
 	<TD><input type="Text" Name="X_FreightChargeAppliesIfLessThan" SIZE=6 MAXLENGTH=12 value="' . $_SESSION['FreightChargeAppliesIfLessThan'] . '"></TD>
 	<TD>' . ('This parameter is only effective if Do Freight Calculation is set to Yes. If it is set to 0 then freight is always charged. The total order value is compared to this value in deciding whether or not to charge freight') .'</TD></TR>';
 
+	
+// AutoDebtorNo
+echo '<TR><TD>' . _('Create Debtor Codes Automatically') . ':</TD>
+	<TD><SELECT Name="X_AutoDebtorNo">';
+	 
+if ($_SESSION['AutoDebtorNo']==0) {
+	echo '<OPTION SELECTED Value=0>' . _('Manual Entry');
+	echo '<OPTION Value=1>' . _('Automatic');
+} else {
+	echo '<OPTION SELECTED Value=1>' . _('Automatic');
+	echo '<OPTION Value=0>' . _('Manual Entry');
+}
+echo '</SELECT></TD>
+	<TD>' . ('Set to Automatic - customer codes are automatically created - as a sequential number') .'</TD></TR>';
+
 //DefaultTaxLevel
 echo '<TR><TD>' . _('Default Tax Level') . ':</TD>
 	<TD><input type="Text" Name="X_DefaultTaxLevel" SIZE=2 MAXLENGTH=1 value="' . $_SESSION['DefaultTaxLevel'] . '"></TD>
@@ -350,7 +368,7 @@ echo '<TR><TD>' . _('Default Tax Level') . ':</TD>
 //TaxAuthorityReferenceName
 echo '<TR><TD>' . _('TaxAuthorityReferenceName') . ':</TD>
 	<TD><input type="Text" Name="X_TaxAuthorityReferenceName" SIZE=16 MAXLENGTH=25 value="' . $_SESSION['TaxAuthorityReferenceName'] . '"></TD>
-	<TD>' . ('This parameter is what is displayed on tax invoices and credits for the tax authority of the company eg. in Australian this would by A.B.N.: - in NZ it would be GST No:') .'</TD></TR>';
+	<TD>' . ('This parameter is what is displayed on tax invoices and credits for the tax authority of the company eg. in Australian this would by A.B.N.: - in NZ it would be GST No: in the UK it would be VAT Regn. No') .'</TD></TR>';
 
 // CountryOfOperation
 $sql = 'SELECT currabrev, country FROM currencies ORDER BY country';

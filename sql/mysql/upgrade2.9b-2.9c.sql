@@ -918,6 +918,10 @@ INSERT INTO config VALUES('RadioBreaconFilePrefix', 'ORDXX');
 INSERT INTO config VALUES('RadioBraconFTP_server', '192.168.2.2');
 INSERT INTO config VALUES('RadioBeaconFTP_user_name', 'RadioBeacon ftp server user name');
 INSERT INTO config VALUES('RadionBeaconFTP_user_pass','Radio Beacon remote ftp server password');
+INSERT INTO config VALUES('AutoDebtorNo','0');
+
+INSERT INTO systypes VALUES ( 500, 'Auto Debtor Number', 10000 );
+
 ALTER TABLE www_users CHANGE password `password TEXT NOT NULL;
 UPDATE www_users SET password ='f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4' WHERE userid='demo';
 
@@ -974,3 +978,5 @@ ALTER TABLE salescatprod ADD INDEX (salescatid);
 ALTER TABLE salescatprod ADD INDEX (stockid);
 ALTER TABLE salescatprod ADD FOREIGN KEY (stockid) REFERENCES stockmaster (stockid);
 ALTER TABLE salescatprod ADD FOREIGN KEY (salescatid) REFERENCES salescat (salescatid);
+
+

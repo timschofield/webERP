@@ -1,5 +1,11 @@
 <P>webERP Change Log
 
+<P>
+<P>11/03/05 Scott Rosa - Auto DebtorNo - Added a variable to config table and modified Customers.php to control the assignment 
+<P>of the DebtorNo to be either manually assigned by the user (the current weberp default) 
+<P>or automatically assigned by the system.  The only automatic numbering scheme available 
+<P>right now is sequential, numeric with the value being pulled from the systypes table type 500
+<P>11/3/05 Changed SystemParameters.php to enable the new AutoDebtorNo to be set in the DB - changed validation to allow debtorno to be set automatically.
 <P>5/3/05 Danie - changes to Stock.php to use the image manipulation features and changed Z_GetStockImage.php to GetStockImage.php
 <P>5/3/05 Danie - Added SalesCategories.php also table salescat and salescatprod for POS/Shopping integration
 <P>26/2/05 Jesse - changed ALT references to TITLE - TITLE needs to be used for the pop up text to appear as per html spec. ALT just for when images turned off.

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 $PageSecurity = 11;
 
@@ -75,7 +75,7 @@ if (isset($_POST['submit'])  && $EditName == 1 ) { // Creating or updating a cat
 
 	//first off validate inputs sensible
 
-	if (strlen($_POST['SalesCatName']) >20) {
+	if (strlen($_POST['SalesCatName']) >20 OR trim($_POST['SalesCatName'])=='') {
 		$InputError = 1;
 		prnMsg(_('The Sales category description must be twenty characters or less long'),'error');
 	}
@@ -100,12 +100,16 @@ if (isset($_POST['submit'])  && $EditName == 1 ) { // Creating or updating a cat
                                        " . (isset($ParentCategory)?($ParentCategory):('NULL')) . ")";
 		$msg = _('A new Sales category record has been added');
 	}
-	//run the SQL from either of the above possibilites
-	$result = DB_query($sql,$db);
+	
+	if ($InputError!=1){
+		//run the SQL from either of the above possibilites
+		$result = DB_query($sql,$db);
+		prnMsg($msg,'success');
+	}
+	
 	unset ($SelectedCategory);
 	unset($_POST['SalesCatName']);
 	unset($EditName);
-	prnMsg($msg,'success');
 
 } elseif (isset($_GET['delete']) && $EditName == 1) {
 //the link to delete a selected record was clicked instead of the submit button
@@ -215,7 +219,7 @@ $result = DB_query($sql,$db);
 
 echo '<p><center>';
 if (DB_num_rows($result) == 0) {
-	prnMsg(_('There are no sub categories define.'));
+	prnMsg(_('There are no categories defined at this level.'));
 } else {
 	echo "<table border=1>\n";
 	echo '<tr><td class="tableheader">' . _('Sub Category') . '</td></tr>';

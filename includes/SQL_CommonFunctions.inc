@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 /* Common SQL Functions */
 
 
@@ -74,4 +74,18 @@ Function GetTaxRate ($TaxAuthority, $DispatchTaxAuthority, $TaxLevel, &$db){
 
 }
 
+Function ContainsIllegalCharacters ($CheckVariable) {
+
+	if (strstr($CheckVariable,"'") 
+		OR strstr($CheckVariable,'+') 
+		OR strstr($CheckVariable,"\"") 
+		OR strstr($CheckVariable,'&') 
+		OR strstr($CheckVariable,"\\") 
+		OR strstr($CheckVariable,'"')){
+		
+		return true;
+	} else {
+		return false;
+	}
+}
 ?>
