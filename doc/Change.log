@@ -1,5 +1,6 @@
 <P>webERP Change Log
 
+<P>24/10/04 gettextified SalesAnalysis_UserDefined.php, SelectSalesOrder.php, SelectSupplier.php, TaxAuthorityRates.php, WWW_Users.php, WhereUsedInquiry.php, Z_ChangeBranchCode.php, Z_UploadForm.php, Z_UploadResult.php
 <P>22/10/04 session.inc / login.php - Chris bad password now goes straight to another try. Also, bad permission for a script code improved Chris
 <P>22/10/04 bg.gif - Steve's much reduced graphic - great performance increase on login. Biggest graphic in system was the first login page ?!
 <P>17/10/04 Gettextified PDFBankingSummary.php, PDFChequeListing.php, SalesGLPostings.php, SalesPeople.php, SalesTypes.php

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 10;
 
 include('includes/session.inc');
@@ -180,7 +180,7 @@ if (!isset($SelectedSalesPostingID)) {
 
 	}
 	//END WHILE LIST LOOP
-	echo '</TABLE></CENTER';
+	echo '</TABLE></CENTER>';
 }
 
 //end of ifs and buts!
