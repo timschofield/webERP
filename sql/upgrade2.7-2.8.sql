@@ -9,8 +9,10 @@ CREATE TABLE TaxAuthLevels (
   DispatchTaxAuthority tinyint NOT NULL default '1',
   Level tinyint NOT NULL default '0',
   TaxRate double NOT NULL default '0',
-  PRIMARY KEY  (TaxAuthority,DispatchTaxAuthority,Level)
-) TYPE=MyISAM;
+  PRIMARY KEY  (TaxAuthority,DispatchTaxAuthority,Level),
+  KEY (TaxAuthority),
+  KEY (DispatchTaxAuthority)
+) TYPE=Innodb;
 
 INSERT INTO TaxAuthLevels VALUES (1, 1, 1, 0.1);
 INSERT INTO TaxAuthLevels VALUES (1, 1, 2, 0);
@@ -127,6 +129,10 @@ ALTER TABLE WORequirements Type=Innodb;
 ALTER TABLE WWW_Users Type=Innodb;
 ALTER TABLE WorkCentres Type=Innodb;
 ALTER TABLE Locations Type=Innodb;
+
+
+ALTER TABLE TaxAuthLevels ADD FOREIGN KEY (TaxAuthority) REFERENCES TaxAuthorities (TaxID);
+ALTER TABLE TaxAuthLevels ADD FOREIGN KEY (DispatchTaxAuthority) REFERENCES TaxAuthorities (TaxID);
 
 ALTER TABLE BOM ADD FOREIGN KEY (Parent) REFERENCES StockMaster (StockID);
 ALTER TABLE BOM ADD FOREIGN KEY (Component) REFERENCES StockMaster (StockID);

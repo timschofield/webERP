@@ -1320,8 +1320,12 @@ CREATE TABLE TaxAuthLevels (
   DispatchTaxAuthority tinyint(4) NOT NULL default '1',
   Level tinyint(4) NOT NULL default '0',
   TaxRate double NOT NULL default '0',
-  PRIMARY KEY  (TaxAuthority,DispatchTaxAuthority,Level)
-) TYPE=MyISAM;
+  PRIMARY KEY  (TaxAuthority,DispatchTaxAuthority,Level),
+  KEY TaxAuthority (TaxAuthority),
+  KEY DispatchTaxAuthority (DispatchTaxAuthority),
+  CONSTRAINT `TaxAuthLevels_ibfk_2` FOREIGN KEY (`DispatchTaxAuthority`) REFERENCES `TaxAuthorities` (`TaxID`),
+  CONSTRAINT `TaxAuthLevels_ibfk_1` FOREIGN KEY (`TaxAuthority`) REFERENCES `TaxAuthorities` (`TaxID`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `TaxAuthorities`
@@ -2116,7 +2120,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE WWW_Users DISABLE KEYS */;
 LOCK TABLES WWW_Users WRITE;
-INSERT INTO WWW_Users VALUES ('Admin','albundy','Phil Daintree','','','','DEN',7,'2004-02-23 20:22:35','','A4','1,1,1,1,1,1,1,1,',0),('demo','weberp','','','','','DEN',5,NULL,'','A4','1,1,1,1,1,1,1,1,',0),('testy','weberp','','GRANHR','','','DEN',6,'2004-02-23 20:21:56','GRAN','A4','1,0,0,0,0,0,0,0,',0);
+INSERT INTO WWW_Users VALUES ('Admin','albundy','Phil Daintree','','','','DEN',7,'2004-02-23 21:21:09','','A4','1,1,1,1,1,1,1,1,',0),('demo','weberp','','','','','DEN',5,'2004-02-23 21:52:42','','A4','1,1,1,1,1,1,1,1,',0),('testy','weberp','','GRANHR','','','DEN',6,'2004-02-23 20:21:56','GRAN','A4','1,0,0,0,0,0,0,0,',0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE WWW_Users ENABLE KEYS */;
 

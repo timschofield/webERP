@@ -1320,8 +1320,12 @@ CREATE TABLE TaxAuthLevels (
   DispatchTaxAuthority tinyint(4) NOT NULL default '1',
   Level tinyint(4) NOT NULL default '0',
   TaxRate double NOT NULL default '0',
-  PRIMARY KEY  (TaxAuthority,DispatchTaxAuthority,Level)
-) TYPE=MyISAM;
+  PRIMARY KEY  (TaxAuthority,DispatchTaxAuthority,Level),
+  KEY TaxAuthority (TaxAuthority),
+  KEY DispatchTaxAuthority (DispatchTaxAuthority),
+  CONSTRAINT `TaxAuthLevels_ibfk_2` FOREIGN KEY (`DispatchTaxAuthority`) REFERENCES `TaxAuthorities` (`TaxID`),
+  CONSTRAINT `TaxAuthLevels_ibfk_1` FOREIGN KEY (`TaxAuthority`) REFERENCES `TaxAuthorities` (`TaxID`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `TaxAuthorities`
@@ -1550,6 +1554,28 @@ UNLOCK TABLES;
 /*!40000 ALTER TABLE PaymentTerms ENABLE KEYS */;
 
 --
+-- Dumping data for table `Periods`
+--
+
+
+/*!40000 ALTER TABLE Periods DISABLE KEYS */;
+LOCK TABLES Periods WRITE;
+INSERT INTO Periods VALUES (37,'2003-01-31'),(38,'2003-02-28'),(39,'2003-03-31'),(40,'2003-04-30'),(41,'2003-05-31'),(42,'2003-06-30'),(43,'2003-07-31'),(44,'2003-08-31'),(45,'2003-09-30'),(46,'2003-10-31'),(47,'2003-11-30'),(48,'2003-12-31'),(49,'2004-01-31'),(50,'2004-02-29'),(51,'2004-03-31'),(52,'2004-04-30'),(53,'2004-05-31'),(54,'2004-06-30'),(55,'2004-07-31'),(56,'2004-08-31'),(57,'2004-09-30'),(58,'2004-10-31'),(59,'2004-11-30'),(60,'2004-12-31'),(61,'2005-01-31'),(62,'2005-02-28'),(63,'2005-03-31'),(64,'2005-04-30'),(65,'2005-05-31'),(66,'2005-06-30'),(67,'2005-07-31'),(68,'2005-08-31');
+UNLOCK TABLES;
+/*!40000 ALTER TABLE Periods ENABLE KEYS */;
+
+--
+-- Dumping data for table `Shippers`
+--
+
+
+/*!40000 ALTER TABLE Shippers DISABLE KEYS */;
+LOCK TABLES Shippers WRITE;
+INSERT INTO Shippers VALUES (1,'Courier Post',0.0000),(8,'Ansett',0.0000),(10,'Not Specified',0.0000);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE Shippers ENABLE KEYS */;
+
+--
 -- Dumping data for table `SysTypes`
 --
 
@@ -1572,13 +1598,24 @@ UNLOCK TABLES;
 /*!40000 ALTER TABLE TaxAuthorities ENABLE KEYS */;
 
 --
+-- Dumping data for table `TaxAuthLevels`
+--
+
+
+/*!40000 ALTER TABLE TaxAuthLevels DISABLE KEYS */;
+LOCK TABLES TaxAuthLevels WRITE;
+INSERT INTO TaxAuthLevels VALUES (1,1,1,0.1),(1,1,2,0);
+UNLOCK TABLES;
+/*!40000 ALTER TABLE TaxAuthLevels ENABLE KEYS */;
+
+--
 -- Dumping data for table `WWW_Users`
 --
 
 
 /*!40000 ALTER TABLE WWW_Users DISABLE KEYS */;
 LOCK TABLES WWW_Users WRITE;
-INSERT INTO WWW_Users VALUES ('Admin','albundy','Phil Daintree','','','','DEN',7,'2004-02-23 20:22:35','','A4','1,1,1,1,1,1,1,1,',0),('demo','weberp','','','','','DEN',5,NULL,'','A4','1,1,1,1,1,1,1,1,',0),('testy','weberp','','GRANHR','','','DEN',6,'2004-02-23 20:21:56','GRAN','A4','1,0,0,0,0,0,0,0,',0);
+INSERT INTO WWW_Users VALUES ('Admin','albundy','Phil Daintree','','','','DEN',7,'2004-02-23 21:21:09','','A4','1,1,1,1,1,1,1,1,',0),('demo','weberp','','','','','DEN',5,'2004-02-23 21:52:42','','A4','1,1,1,1,1,1,1,1,',0),('testy','weberp','','GRANHR','','','DEN',6,'2004-02-23 20:21:56','GRAN','A4','1,0,0,0,0,0,0,0,',0);
 UNLOCK TABLES;
 /*!40000 ALTER TABLE WWW_Users ENABLE KEYS */;
 
