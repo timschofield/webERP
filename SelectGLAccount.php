@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 8;
 
@@ -60,7 +60,7 @@ If (isset($_POST['Select'])) {
 		} elseif (strlen($_POST['GLCode'])>0 AND is_numeric($_POST['GLCode'])){
 
 			$SQL = "SELECT chartmaster.accountcode,
-					chartmasteraccountname,
+					chartmaster.accountname,
 					chartmaster.group_,
 					CASE WHEN accountgroups.pandl!=0 THEN '" . _('Profit and Loss') . "' ELSE '" . _('Balance Sheet') ."' END AS pl
 					FROM chartmaster,

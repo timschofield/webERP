@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $PageSecurity=15;
 include ('includes/session.inc');
 $title = _('Recalculation of Brought Forward Balances in Chart Details Table');
@@ -23,7 +23,7 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 /*Show a form to allow input of criteria for TB to show */
 	echo '<CENTER><TABLE><TR><TD>' . _('Select Period From') . ":</TD><TD><SELECT Name='FromPeriod'>";
 
-	$sql = 'SELECT PeriodNo, LastDate_In_Period FROM Periods ORDER BY PeriodNo';
+	$sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno';
 	$Periods = DB_query($sql,$db);
 
 
@@ -35,7 +35,7 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 
 	echo '</SELECT></TD></TR>';
 
-	$sql = 'SELECT Max(PeriodNo) FROM Periods';
+	$sql = 'SELECT MAX(periodno) FROM periods';
 	$MaxPrd = DB_query($sql,$db);
 	$MaxPrdrow = DB_fetch_row($MaxPrd);
 
@@ -61,7 +61,7 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 
 	for ($i=$_POST['FromPeriod'];$i<=$_POST['ToPeriod'];$i++){
 
-		$sql='SELECT AccountCode, Period, Budget, Actual, BFwd, BFwdBudget FROM ChartDetails WHERE Period ='. $i;
+		$sql='SELECT accountcode, period, budget, actual, bfwd, bfwdbudget FROM chartdetails WHERE period ='. $i;
 
 		$ErrMsg = _('Could not retrieve the ChartDetail records becaue');
 		$result = DB_query($sql,$db,$ErrMsg);
@@ -73,7 +73,7 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 
 			echo '<BR>' . _('Account Code') . ': ' . $myrow['accountcode'] . ' ' . _('Period') .': ' . $myrow['period'];
 
-			$sql = 'UPDATE ChartDetails SET BFwd=' . $CFwd . ', BFwdBudget=' . $CFwdBudget . ' WHERE Period=' . ($myrow['period'] +1) . ' AND  AccountCode = ' . $myrow['accountcode'];
+			$sql = 'UPDATE chartdetails SET bfwd=' . $CFwd . ', bfwdbudget=' . $CFwdBudget . ' WHERE period=' . ($myrow['period'] +1) . ' AND  accountcode = ' . $myrow['accountcode'];
 
 			$ErrMsg =_('Could not update the chartdetails record because');
 			$updresult = DB_query($sql,$db,$ErrMsg);

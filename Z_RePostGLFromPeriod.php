@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 
 $PageSecurity=15;
@@ -21,9 +21,9 @@ if (!isset($_POST['FromPeriod'])){
                                  <TD>' . _('Select Period From') . ":</TD>
                                  <TD><SELECT Name='FromPeriod'>";
 
-	$sql = 'SELECT PeriodNo,
-                       LastDate_In_Period
-                FROM Periods ORDER BY PeriodNo';
+	$sql = 'SELECT periodno,
+                       lastdate_in_period
+                FROM periods ORDER BY periodno';
 	$Periods = DB_query($sql,$db);
 
 
@@ -40,11 +40,11 @@ if (!isset($_POST['FromPeriod'])){
 } else {  /*OK do the updates */
 
 	/* Make the posted flag on all GL entries including and after the period selected = 0 */
-	$sql = 'UPDATE GLTrans SET Posted=0 WHERE PeriodNo >='. $_POST['FromPeriod'];
+	$sql = 'UPDATE gltrans SET posted=0 WHERE periodno >='. $_POST['FromPeriod'];
 	$UpdGLTransPostedFlag = DB_query($sql,$db);
 
 	/* Now make all the actuals 0 for all periods including and after the period from */
-	$sql = 'UPDATE ChartDetails SET Actual =0 WHERE Period >= ' . $_POST['FromPeriod'];
+	$sql = 'UPDATE chartdetails SET actual =0 WHERE period >= ' . $_POST['FromPeriod'];
 	$UpdActualChartDetails = DB_query($sql,$db);
 
 	/*Now repost the lot */
@@ -53,19 +53,19 @@ if (!isset($_POST['FromPeriod'])){
 
 	/*Make a note of all the subsequent periods to recalculate the B/Fwd balances for */
 
-	$sql = 'SELECT PeriodNo FROM Periods WHERE PeriodNo >= '. $_POST['FromPeriod'] . ' ORDER BY PeriodNo';
+	$sql = 'SELECT periodno FROM periods WHERE periodno >= '. $_POST['FromPeriod'] . ' ORDER BY periodno';
 	$Periods = DB_query($sql,$db);
 
 	while ($PeriodRow=DB_fetch_row($Periods)){
 
-		$sql='SELECT AccountCode,
-                             Period,
-                             Budget,
-                             Actual,
-                             BFwd,
-                             BFwdBudget
-                        FROM ChartDetails
-                        WHERE Period ='. $PeriodRow[0];
+		$sql='SELECT accountcode,
+                             period,
+                             budget,
+                             actual,
+                             bfwd,
+                             bfwdbudget
+                        FROM chartdetails
+                        WHERE period ='. $PeriodRow[0];
 
 		$ErrMsg = _('Now hang on we have a problem here because');
 		$result = DB_query($sql,$db,$ErrMsg);
@@ -76,7 +76,10 @@ if (!isset($_POST['FromPeriod'])){
 			$CFwdBudget = $myrow['bfwdbudget'] + $myrow['budget'];
 			echo '<BR>' . _('Account Code') . ' : ' . $myrow['accountcode'] . ' ' . _('Period') . ' : ' . $myrow['period'];
 
-			$sql = 'UPDATE ChartDetails SET BFwd=' . $CFwd . ',BFwdBudget=' . $CFwdBudget . ' WHERE Period=' . ($myrow['period'] +1) . ' AND  AccountCode = ' . $myrow['accountcode'];
+			$sql = 'UPDATE chartdetails SET bfwd=' . $CFwd . ',
+							bfwdbudget=' . $CFwdBudget . ' 
+					WHERE period=' . ($myrow['period'] +1) . ' 
+					AND  accountcode = ' . $myrow['accountcode'];
 
 			$updresult = DB_query($sql,$db,$ErrMsg);
 		}

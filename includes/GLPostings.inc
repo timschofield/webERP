@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /* This file contains the code to post GL transactions.
 
 This file can be included on any page that needs GL postings to be posted eg inquiries or GL reports
@@ -65,7 +65,7 @@ if (DB_num_rows($ChartDetailsStillRequired)>0){
 
 			echo '<LI>' . _('Period Number') . ' ' . $PeriodNo . '</LI>';
 			
-			// The errors gets to much here so I add a test		
+			// Check if there is an chart details record set up
 			$sql = 'SELECT count(*) FROM chartdetails 
 					WHERE accountcode='.$AccountRow['accountcode'].'
 					AND period=' . $PeriodNo;
@@ -113,7 +113,7 @@ if (DB_num_rows($ChartDetailsStillRequired)>0){
 
 /*All the ChartDetail records should have been created now and be available to accept postings */
 
-$sql = 'SELECT counterindex, periodno, account, amount, posted FROM gltrans WHERE posted=0';
+$sql = 'SELECT counterindex, periodno, account, amount FROM gltrans WHERE posted=0';
 
 $UnpostedTransResult = DB_query($sql, $db);
 
@@ -121,17 +121,24 @@ $TransStart = DB_query('BEGIN',$db);
 
 while ($UnpostedTrans=DB_fetch_array($UnpostedTransResult)){
 
+	if ($debug==1){
+		echo '<BR>GLTrans Counter ' . $UnpostedTrans['counterindex'] . ' period ' . $UnpostedTrans['periodno'] . ' account - ' . $UnpostedTrans['account'] . ' amount= ' . $UnpostedTrans['amount'];
+	}
 	/*Update the Actual charge in the period of the transaction */
-	$sql = 'UPDATE chartdetails SET actual = actual + ' . $UnpostedTrans['amount'] . ' WHERE accountcode = ' . $UnpostedTrans['account'] . ' AND period= ' . $UnpostedTrans['periodno'];
+	$sql = 'UPDATE chartdetails SET actual = actual + ' . $UnpostedTrans['amount'] . ' 
+		WHERE accountcode = ' . $UnpostedTrans['account'] . ' 
+		AND period= ' . $UnpostedTrans['periodno'];
 	$PostPrd = DB_query($sql,$db);
 	/*Update the BFwd for all following ChartDetail records */
-	$sql = 'UPDATE chartdetails SET bfwd = bfwd + ' . $UnpostedTrans['amount'] . ' WHERE accountcode = ' . $UnpostedTrans['account'] . ' AND period > ' . $UnpostedTrans['periodno'];
+	$sql = 'UPDATE chartdetails SET bfwd = bfwd + ' . $UnpostedTrans['amount'] . ' 
+			WHERE accountcode = ' . $UnpostedTrans['account'] . ' 
+			AND period > ' . $UnpostedTrans['periodno'];
 	$PostBFwds = DB_query($sql,$db);
 
 	$sql = 'UPDATE gltrans SET posted = 1 WHERE counterindex = ' . $UnpostedTrans['counterindex'];
 	$Posted = DB_query($sql,$db);
+	
 }
-
 $TransCommit = DB_query('COMMIT',$db);
 
 ?>

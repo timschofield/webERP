@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.46 $ */
+/* $Revision: 1.47 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -39,7 +39,7 @@ $dbType = 'mysql';
 //$dbType = 'postgres';
 //$dbType = 'mysql';
 
-$DatabaseName = 'weberp';
+$DatabaseName = 'pipo';
 
 // sql user & password
 $dbuser = 'weberp_db_user';

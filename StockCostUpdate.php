@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 2; /*viewing possible with inquiries but not mods */
 
@@ -18,8 +18,7 @@ if (isset($_GET['StockID'])){
 }
 
 if (isset($_POST['UpdateData'])){
-
-   	$OldCost =$_POST['OldMaterialCost'] + $_POST['OldLabourCost'] + $_POST['OldLabourCost'];
+ 	$OldCost =$_POST['OldMaterialCost'] + $_POST['OldLabourCost'] + $_POST['OldOverheadCost'];
    	$NewCost =$_POST['MaterialCost'] + $_POST['LabourCost'] + $_POST['OverheadCost'];
 
 	$result = DB_query("SELECT * FROM stockmaster WHERE stockid='$StockID'",$db);
@@ -30,7 +29,7 @@ if (isset($_POST['UpdateData'])){
 
 		$Result = DB_query('BEGIN',$db);
 
-		if ($_SESSION['CompanyRecord']["gllink_stock"]==1 AND $_POST['QOH']!=0){
+		if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $_POST['QOH']!=0){
 
 			$CostUpdateNo = GetNextTransNo(35, $db);
 			$PeriodNo = GetPeriod(Date("d/m/Y"), $db);

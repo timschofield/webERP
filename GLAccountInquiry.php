@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 8;
 include ('includes/session.inc');
@@ -98,15 +98,6 @@ if (isset($_POST['Show'])){
 	$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
 	$TransResult = DB_query($sql,$db,$ErrMsg);
 
-/*Get the ChartDetails balance b/fwd and the actual movement in the account for the period as recorded in the chart details - need to ensure integrity of transactions to the chart detail movements. Also, for a balance sheet account it is the balance carried forward that is important, not just the transactions*/
-
-	$sql = "SELECT bfwd, actual FROM chartdetails WHERE chartdetails.accountcode=$SelectedAccount AND chartdetails.period>=" . $FirstPeriodSelected . " AND chartdetails.period<=" . $LastPeriodSelected;
-
-	$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-	$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
-
-	$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
-
 	echo '<table>';
 
 	$TableHeader = "<TR>
@@ -125,9 +116,18 @@ if (isset($_POST['Show'])){
 	} else {
 		$RunningTotal =$ChartDetailRow['bfwd'];
 		if ($RunningTotal < 0 ){ //its a credit balance b/fwd
-			echo "<TR bgcolor='#FDFEEF'><TD COLSPAN=3><B>" . _('Brought Forward Balance') . '</B><TD></TD></TD><TD ALIGN=RIGHT><B>' . number_format(-$RunningTotal,2) . '</B></TD><TD></TD></TR>';
+			echo "<TR bgcolor='#FDFEEF'>
+				<TD COLSPAN=3><B>" . _('Brought Forward Balance') . '</B><TD>
+				</TD></TD>
+				<TD ALIGN=RIGHT><B>' . number_format(-$RunningTotal,2) . '</B></TD>
+				<TD></TD>
+				</TR>';
 		} else { //its a debit balance b/fwd
-			echo "<TR bgcolor='#FDFEEF'><TD COLSPAN=3><B>" . _('Brought Forward Balance') . '</B></TD><TD ALIGN=RIGHT><B>' . number_format($RunningTotal,2) . '</B></TD><TD COLSPAN=2></TD></TR>';
+			echo "<TR bgcolor='#FDFEEF'>
+				<TD COLSPAN=3><B>" . _('Brought Forward Balance') . '</B></TD>
+				<TD ALIGN=RIGHT><B>' . number_format($RunningTotal,2) . '</B></TD>
+				<TD COLSPAN=2></TD>
+				</TR>';
 		}
 	}
 	$PeriodTotal = 0;
@@ -139,18 +139,38 @@ if (isset($_POST['Show'])){
 	while ($myrow=DB_fetch_array($TransResult)) {
 
 		if ($myrow['periodno']!=$PeriodNo){
-			If ($PeriodNo!=-9999){
-				echo "<TR bgcolor='#FDFEEF'><TD COLSPAN=3><B>" . _('Total for period') . ' ' . $PeriodNo . '</B></TD>';
+			if ($PeriodNo!=-9999){ //ie its not the first time around
+				/*Get the ChartDetails balance b/fwd and the actual movement in the account for the period as recorded in the chart details - need to ensure integrity of transactions to the chart detail movements. Also, for a balance sheet account it is the balance carried forward that is important, not just the transactions*/
+
+				$sql = "SELECT bfwd, 
+						actual,
+						period 
+					FROM chartdetails 
+					WHERE chartdetails.accountcode= $SelectedAccount 
+					AND chartdetails.period=" . $PeriodNo; 
+					
+				$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
+				$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
+				$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
+				
+				echo "<TR bgcolor='#FDFEEF'>
+					<TD COLSPAN=3><B>" . _('Total for period') . ' ' . $PeriodNo . '</B></TD>';
 				if ($PeriodTotal < 0 ){ //its a credit balance b/fwd
-					echo '<TD></TD><TD ALIGN=RIGHT><B>' . number_format(-$PeriodTotal,2) . '</B></TD><TD></TD></TR>';
+					echo '<TD></TD>
+						<TD ALIGN=RIGHT><B>' . number_format(-$PeriodTotal,2) . '</B></TD>
+						<TD></TD>
+						</TR>';
 				} else { //its a debit balance b/fwd
-					echo '<TD ALIGN=RIGHT><B>' . number_format($PeriodTotal,2) . '</B></TD><TD COLSPAN=2></TD></TR>';
+					echo '<TD ALIGN=RIGHT><B>' . number_format($PeriodTotal,2) . '</B></TD>
+						<TD COLSPAN=2></TD>
+						</TR>';
 				}
 				$IntegrityReport .= '<BR>' . _('Period') . ': ' . $PeriodNo  . _('Account movement per transaction') . ': '  . number_format($PeriodTotal,2) . ' ' . _('Movement per ChartDetails record') . ': ' . number_format($ChartDetailRow['actual'],2) . ' ' . _('Period difference') . ': ' . number_format($PeriodTotal -$ChartDetailRow['actual'],3);
-				if (ABS($PeriodTotal -$ChartDetailRow['actual'])>0.009){
+				
+				if (ABS($PeriodTotal -$ChartDetailRow['actual'])>0.01){
 					$ShowIntegrityReport = True;
+					echo '<BR>Period Total - ' . $PeriodTotal . ' ChartDetailRow[actual] = ' . $ChartDetailRow['actual'];
 				}
-				$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 			}
 			$PeriodNo = $myrow['periodno'];
 			$PeriodTotal = 0;
@@ -176,7 +196,7 @@ if (isset($_POST['Show'])){
 		}
 
 		$FormatedTranDate = ConvertSQLDate($myrow['trandate']);
-		$URL_to_TransDetail = "$rootpath/GLTransInquiry.php?" . SID . '&TypeID=' . $myrow['type'] . '&TransNo=' . $myrow['typeno'];
+		$URL_to_TransDetail = $rootpath . '/GLTransInquiry.php?' . SID . '&TypeID=' . $myrow['type'] . '&TransNo=' . $myrow['typeno'];
 
 		printf("<td>%s</td>
 			<td><A HREF='%s'>%s</A></td>
@@ -199,6 +219,7 @@ if (isset($_POST['Show'])){
 			echo $TableHeader;
 			$j=1;
 		}
+		
 	}
 
 	echo "<TR bgcolor='#FDFEEF'><TD COLSPAN=3><B>";
