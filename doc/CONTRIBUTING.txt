@@ -226,12 +226,12 @@ are preferred. But all comments gratefully received!
 
 All scripts should have a comment in the first few lines with the script revision number in it if the following comment is pasted into it the CVS automatically updates the revision number.
 
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 
 Messages
 
-The standard message function prnMsg should always be used for all messages to be echo'ed to the screen - this function has two parameters - the string to display and the message type , 'error', 'warn', 'success', 'info' - there is a third optional paramter which is a prefix heading for the message.
+The standard message function prnMsg should always be used for all messages to be echo'ed to the screen - this function has two  parameters - the string to display and the message type , 'error', 'warn', 'success', 'info' - there is a third optional paramter which is a prefix heading for the message.
 
 Database Function Calls
 

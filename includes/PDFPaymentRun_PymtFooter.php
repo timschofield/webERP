@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*Code to print footer details for each supplier being paid and process payment total for each supplier
 as necessary an include file used since the same code is used twice */
 $YPos -= (0.5*$line_height);
@@ -51,7 +51,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 	if (DB_error_no($db) !=0) {
 		$title = _("Payment Processing") . " - " . _("Problem Report") .".... ";
 		include("includes/header.inc");
-		echp _("None of the payments will be processed because the payment record for") . " " . $SupplierName . " " . _("could not be inserted because") . " - " . DB_error_msg($db);
+		echo _("None of the payments will be processed because the payment record for") . " " . $SupplierName . " " . _("could not be inserted because") . " - " . DB_error_msg($db);
 		echo "<BR><A HREF='$rootpath/index.php'>" . _("Back to the menu") . "</A>";
 		if ($debug==1){
 			echo "<BR>" . _("The SQL that failed was") . " $SQL";
@@ -62,6 +62,38 @@ if (isset($_POST['PrintPDFAndProcess'])){
 		include("includes/footer.inc");
 		exit;
 	}
+
+	$PaymentTransID = DB_Last_Insert_ID($db);
+
+	/*Do the inserts for the allocation record against the payment for this charge */
+
+	foreach ($Allocs AS $AllocTrans){ /*loop through the array of allocations */
+
+		$SQL = 'INSERT INTO SuppAllocs (Amt,
+						DateAlloc,
+						TransID_AllocFrom,
+						TransID_AllocTo)
+				VALUES (' . $AllocTrans->Amount . ',
+		                         "' . FormatDateForSQL($_POST['AmountsDueBy']) . '",
+                	                ' . $PaymentTransID . ',
+                        	        ' . $AllocTrans->TransID . ')';
+
+		$ProcessResult = DB_query($SQL,$db);
+		if (DB_error_no($db) !=0) {
+			$title = _('Payment Processing - Problem Report') . '.... ';
+			include('includes/header.inc');
+			echo '<BR>' . _('None of the payments will be processed since an allocation record for') . $SupplierName . _('could not be inserted because') . ' - ' . DB_error_msg($db);
+			echo '<BR><A HREF="' . $rootpath . '/index.php">' . _('Back to the menu') . '</A>';
+			if ($debug==1){
+				echo '<BR>' . _('The SQL that failed was') . $SQL;
+			}
+			$SQL= 'rollback';
+			$ProcessResult = DB_query($SQL,$db);
+			include('includes/footer.inc');
+			exit;
+		}
+	} /*end of the loop to insert the allocation records */
+
 
 	/*Do the inserts for the payment transaction into the BankTrans table*/
 	$SQL="INSERT INTO BankTrans (BankAct,

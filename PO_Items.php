@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 4;
 
@@ -863,8 +863,6 @@ If ($SearchResult) {
 
 	while ($myrow=DB_fetch_array($SearchResult)) {
 
-		$ImageSource = $rootpath . '/' . $part_pics_dir . '/' . $myrow['StockID'] . '.jpg';
-
 		if ($k==1){
 			echo "<tr bgcolor='#CCCCCC'>";
 			$k=0;
@@ -873,19 +871,29 @@ If ($SearchResult) {
 			$k=1;
 		}
 
+		$filename = $myrow['StockID'] . '.jpg';
+		if (file_exists( $part_pics_dir . '/' . $filename) ) {
+
+			$ImageSource = '<img src="'.$rootpath . '/' . $part_pics_dir . '/' . $myrow['StockID'] . '.jpg">';
+
+		} else {
+			$ImageSource = '<i> n/a </i>';
+		}
+
 		printf("<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
-			<td><img src=%s></td>
+			<td ALIGN=CENTER>%s</td>
 			<td><a href='%s/PO_Items.php?%s&NewItem=%s'>" . _('Order some') . "</a></td>
 			</tr>",
-			$myrow["StockID"],
+			$myrow['StockID'],
 			$myrow['Description'],
 			$myrow['Units'],
 			$ImageSource,
 			$rootpath,
 			SID,
 			$myrow['StockID']);
+
 
 		$PartsDisplayed++;
 		if ($PartsDisplayed == $Maximum_Number_Of_Parts_To_Show){

@@ -11,7 +11,7 @@ Procedure
 
 http://lists.sourceforge.net/lists/listinfo/web-erp-translation
 
-Let the list know your wanting to help with a translation - someone may already be working on it. The list admin will send you the latest translation file to your subscribed email address normally within 24 hours.
+Let the list know you're wanting to help with a translation - someone may already be working on it. The list admin will send you the latest translation file to your subscribed email address normally within 24 hours.
 
 2. Edit the file provided entering the translations for the strings labelled msgid in the string labelled msgstr. Watch for html strings embedded inside the strings the html will also be required in the translated string. Please complete the translation file header information - with your details so that you are accorded proper recognition for your contribution.
 
@@ -20,7 +20,7 @@ Let the list know your wanting to help with a translation - someone may already 
 4. An archive of the new language directory and instructions on how to use it will be emailed for your use. The new directory created by the project admin will be added to the webERP distribution for future releases
 
 
-Thats it! However, for the more curious and technically minded more detail is provided below.
+That's it! However, for the more curious and technically minded more detail is provided below.
 
 
 

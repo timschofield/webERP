@@ -1,7 +1,17 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 5;
+
+Class Allocation {
+	Var $TransID;
+	Var $Amount;
+
+	function Allocation ($TransID, $Amount){
+		$this->TransID = $TransID;
+		$this->Amount = $Amount;
+	}
+}
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -69,7 +79,8 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 				SuppTrans.Type,
 				(SuppTrans.OvAmount + SuppTrans.OvGST - SuppTrans.Alloc) AS Balance,
 				(SuppTrans.OvAmount + SuppTrans.OvGST ) AS TranTotal,
-				SuppTrans.DiffOnExch
+				SuppTrans.DiffOnExch,
+				SuppTrans.ID
 			FROM Suppliers,
 				PaymentTerms,
 				SuppTrans,
@@ -102,6 +113,10 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			exit;
 		}
 
+		unset($Allocs);
+		$Allocs = array();
+		$AllocCounter =0;
+
 		while ($DetailTrans = DB_fetch_array($TransResult)){
 
 			if ($DetailTrans['SupplierID'] != $SupplierID){ /*Need to head up for a new suppliers details */
@@ -116,7 +131,12 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 				}
 				$AccumBalance = 0;
 				$AccumDiffOnExch = 0;
-				$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 450-$Left_Margin,$FontSize,$DetailTrans['SupplierID'] . ' - ' . $DetailTrans['SuppName'] . ' - ' . 				$DetailTrans['Terms'], 'left');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin,
+									$YPos,
+									450-$Left_Margin,
+									$FontSize,
+									$DetailTrans['SupplierID'] . ' - ' . $DetailTrans['SuppName'] . ' - ' . 				$DetailTrans['Terms'],
+									'left');
 
 				$YPos -= $line_height;
 			}
@@ -134,28 +154,10 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 			if (isset($_POST['PrintPDFAndProcess'])){
 
-			/*Do the inserts for the allocation record against the payment for this charge */
+				/*Record the Allocations for later insertion once we have the ID of the payment SuppTrans */
 
-				$SQL = 'INSERT INTO SuppAllocs (TypeNo, TransNo, Amt, PaytNo, PaytTypeNo) ';
-				$SQL = $SQL .  'VALUES (' . $DetailTrans['Type'] . ',
-                                ' . $DetailTrans['TransNo'] . ',
-                                ' . $DetailTrans['Balance'] . ',
-                                ' . $SuppPaymentNo . ', 22)';
-				$ProcessResult = DB_query($SQL,$db);
-				if (DB_error_no($db) !=0) {
-					$title = _('Payment Processing - Problem Report') . '.... ';
-					include('includes/header.inc');
-					echo '<BR>' . _('None of the payments will be processed since an allocation record for') . $SupplierName . _('could not be inserted because') . ' - ' . DB_error_msg($db);
-					echo '<BR><A HREF="' . $rootpath . '/index.php">' . _('Back to the menu') . '</A>';
-					if ($debug==1){
-						echo '<BR>' . _('The SQL that failed was') . $SQL;
-					}
-					$SQL= 'rollback';
-					$ProcessResult = DB_query($SQL,$db);
-
-					include('includes/footer.inc');
-					exit;
-				}
+				$Allocs[$AllocCounter] = new Allocation($DetailTrans['ID'],$DetailTrans['Balance']);
+				$AllocCounter++;
 
 				/*Now update the SuppTrans for the allocation made and the fact that it is now settled */
 

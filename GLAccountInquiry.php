@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 8;
 include ('includes/session.inc');
@@ -214,7 +214,7 @@ if (isset($_POST['Show'])){
 	}else {
 		echo '<TD></TD><TD ALIGN=RIGHT><B>' . number_format((-$RunningTotal),2) . '</B></TD><TD COLSPAN=2></TD></TR>';
 	}
-	echo '</table>\n';
+	echo '</table>';
 } /* end of if Show button hit */
 
 

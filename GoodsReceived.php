@@ -1,14 +1,16 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 11;
 
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
+include('includes/session.inc');
+
 include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
-include('includes/session.inc');
+
 $title = _('Receive Purchase Orders');
 include('includes/header.inc');
 
@@ -160,7 +162,7 @@ if (count($_SESSION['PO']->LineItems)>0){
    }
 }
 
-if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=='Process Goods Received'){ /*Then dont bother proceeding cos nothing to do ! */
+if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then dont bother proceeding cos nothing to do ! */
 
 	prnMsg(_('There is nothing to process') . '. ' . _('Please enter valid quantities greater than zero'),'warn');
 

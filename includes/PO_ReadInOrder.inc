@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*PO_ReadInOrder.inc is used by the modify existing order code in PO_Header.php and also by GoodsReceived.php */
 
        if (isset($_SESSION['PO'])){
@@ -23,7 +23,7 @@
 
        $OrderHeaderSQL = 'SELECT PurchOrders.SupplierNo, Suppliers.SuppName, PurchOrders.Comments, PurchOrders.OrdDate, PurchOrders.Rate, PurchOrders.DatePrinted, PurchOrders.DelAdd1, PurchOrders.DelAdd2, PurchOrders.DelAdd3, PurchOrders.DelAdd4, PurchOrders.AllowPrint, PurchOrders.RequisitionNo, PurchOrders.IntoStockLocation, PurchOrders.Initiator, Suppliers.CurrCode FROM PurchOrders, Suppliers WHERE PurchOrders.SupplierNo = Suppliers.SupplierID AND PurchOrders.OrderNo = ' . $_GET['ModifyOrderNumber'];
 
-       $ErrMsg =  _('The order cannot be retrieved because);
+       $ErrMsg =  _('The order cannot be retrieved because');
        $DbgMsg =  _('The SQL statement that was used and failed was');
        $GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg,$DbgMsg);
 
