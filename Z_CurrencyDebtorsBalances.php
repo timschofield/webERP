@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -12,7 +12,12 @@ $CompanyRecord = ReadInCompanyRecord(&$db);
 
 echo '<FONT SIZE=4><B>' . _('Debtors Balances By Currency Totals') . '</B></FONT>';
 
-$sql = 'SELECT Sum(OvAmount+OvGST+OvDiscount+OvFreight-Alloc) AS CurrencyBalance, CurrCode, SUM((OvAmount+OvGST+OvDiscount+OvFreight-Alloc)/Rate) AS LocalBalance FROM DebtorTrans INNER JOIN DebtorsMaster ON DebtorTrans.DebtorNo=DebtorsMaster.DebtorNo WHERE (OvAmount+OvGST+OvDiscount+OvFreight-Alloc)<>0 GROUP BY CurrCode';
+$sql = 'SELECT Sum(OvAmount+OvGST+OvDiscount+OvFreight-Alloc) AS CurrencyBalance,
+		CurrCode,
+		SUM((OvAmount+OvGST+OvDiscount+OvFreight-Alloc)/Rate) AS LocalBalance
+	FROM DebtorTrans INNER JOIN DebtorsMaster
+		ON DebtorTrans.DebtorNo=DebtorsMaster.DebtorNo
+	WHERE (OvAmount+OvGST+OvDiscount+OvFreight-Alloc)<>0 GROUP BY CurrCode';
 
 $result = DB_query($sql,$db);
 

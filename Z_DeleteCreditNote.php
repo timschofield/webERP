@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /* Script to delete a credit note - it expects and credit note number to delete
 not included on any menu for obvious reasons
 
@@ -15,7 +15,7 @@ include('includes/header.inc');
 
 
 if (!isset($_GET['CreditNoteNo'])){
-        prnMsg(_('This page must be called with the credit note number - it is not intended for use by non-system administrators'),'info');
+        prnMsg(_('This page must be called with the credit note number') . ' - ' . _('it is not intended for use by non-system administrators'),'info');
 }
 /*get the order number that was credited */
 
@@ -65,7 +65,7 @@ foreach ($StockMovement as $CreditLine) {
                        WHERE OrderNo = ' . $OrderNo . "
                        AND StkCode = '" . $CreditLine['StockID'] . "'";
 
-	$ErrMsg =_('A problem was encountered attempting to reverse the update the sales order detail record - the SQL server returned the following error message');
+	$ErrMsg =_('A problem was encountered attempting to reverse the update the sales order detail record') . ' - ' . _('the SQL server returned the following error message');
 	$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg, true);
 
 /*reverse the update to LocStock */
@@ -103,7 +103,7 @@ prnMsg(_('Deleted the credit note stock movements'.'info');
 echo '<BR><BR>';
 
 $result = DB_query('COMMIT',$db);
-prnMsg(_('Credit note number') . ' ' . $_GET['CreditNoteNo') . ' ' . _('has been completely deleted. To ensure the integrity of the general ledger, transactions must be reposted from the period the credit note was created'),'info');
+prnMsg(_('Credit note number') . ' ' . $_GET['CreditNoteNo') . ' ' . _('has been completely deleted') . '. ' . _('To ensure the integrity of the general ledger transactions must be reposted from the period the credit note was created'),'info');
 
 include('includes/footer.inc');
 ?>

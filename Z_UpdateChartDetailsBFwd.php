@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity=15;
 include ('includes/session.inc');
 $title = _('Recalculation of Brought Forward Balances in Chart Details Table');
@@ -11,7 +11,7 @@ include ('includes/DateFunctions.inc');
 echo "<FORM METHOD='POST' ACTION=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 if ($_POST['FromPeriod'] > $_POST['ToPeriod']){
-	prnMsg(_('The selected period from is actually after the period to! Please re-select the reporting period'),'error');
+	prnMsg(_('The selected period from is actually after the period to') . '. ' . _('Please re-select the reporting period'),'error');
 	unset ($_POST['FromPeriod']);
 	unset ($_POST['ToPeriod']);
 
@@ -71,7 +71,7 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 			$CFwd = $myrow['BFwd'] + $myrow['Actual'];
 			$CFwdBudget = $myrow['BFwdBudget'] + $myrow['Budget'];
 
-			echo '<BR>' . _('Account code') . ': ' . $myrow['AccountCode'] . ' ' . _('Period') .': ' . $myrow['Period'];
+			echo '<BR>' . _('Account Code') . ': ' . $myrow['AccountCode'] . ' ' . _('Period') .': ' . $myrow['Period'];
 
 			$sql = 'UPDATE ChartDetails SET BFwd=' . $CFwd . ', BFwdBudget=' . $CFwdBudget . ' WHERE Period=' . ($myrow['Period'] +1) . ' AND  AccountCode = ' . $myrow['AccountCode'];
 

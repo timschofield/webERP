@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 5;
 
@@ -26,7 +26,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 
 	$pdf->addinfo('Title',_('Payment Run Report'));
-	$pdf->addinfo('Subject',_('Payment Run - suppliers from') . ' ' . $_POST['FromCriteria'] . ' to ' . $_POST['ToCriteria'] . ' in ' . $_POST['Currency'] . ' ' . _('and Due By') . ' ' .  $_POST['AmountsDueBy']);
+	$pdf->addinfo('Subject',_('Payment Run') . ' - ' . _('suppliers from') . ' ' . $_POST['FromCriteria'] . ' to ' . $_POST['ToCriteria'] . ' in ' . $_POST['Currency'] . ' ' . _('and Due By') . ' ' .  $_POST['AmountsDueBy']);
 
 	$PageNumber=1;
 	$line_height=12;
@@ -90,7 +90,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 		$TransResult = DB_query($sql,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
-			$title = _('Payment Run - Problem Report') . '.... ';
+			$title = _('Payment Run') . ' - ' . _('Problem Report') . '.... ';
 			include('includes/header.inc');
 			echo '<BR>' . _('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg($db);
 			echo '<BR><A HREF="' . $rootpath . '/index.php">' . _('Back to the menu') . '</A>';
@@ -169,7 +169,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 				if (DB_error_no($db) !=0) {
 					$title = _('Payment Processing - Problem Report') . '.... ';
 					include('includes/header.inc');
-					echo '<BR>' . _('None of the payments will be processed since updates to the transaction records for') . $SupplierName . ' ' . _('could not be processed because') . ' - ' . DB_error_msg($db);
+					echo '<BR>' . _('None of the payments will be processed since updates to the transaction records for') . ' ' .$SupplierName . ' ' . _('could not be processed because') . ' - ' . DB_error_msg($db);
 					echo '<BR><A HREF="' . $rootpath . '/index.php">' . _('Back to the menu') . '</A>';
 					if ($debug==1){
 						echo '<BR>' . _('The SQL that failed was') . $SQL;
@@ -201,7 +201,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		if (DB_error_no($db) !=0) {
 			$title = _('Payment Processing - Problem Report') . '.... ';
 			include('includes/header.inc');
-			echo '<BR>' . _('None of the payments will be processed. Unfortunately, there was a problem committing the changes to the database because') . ' - ' . DB_error_msg($db);
+			echo '<BR>' . _('None of the payments will be processed') . '. ' . _('Unfortunately there was a problem committing the changes to the database because') . ' - ' . DB_error_msg($db);
 			echo '<BR><A HREF="' . $rootpath . '/index.php">' . _('Back to the menu') . '</A>';
 			if ($debug==1){
 				echo '<BR>' . _('The SQL that failed was') . $SQL;
@@ -242,7 +242,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	$CompanyRecord = ReadInCompanyRecord($db);
 
 	if (isset($_POST['Currency']) AND !is_numeric($_POST['ExRate'])){
-		echo '<BR>' . _('To process payments for') . ' ' . $_POST['Currency'] . ' ' . _('a numeric exchange rate applicable for purchasing the currency to make the payment with must be entered. This rate is used to calculate the difference in exchange and make the necessary postings to the General ledger if linked') . '.';
+		echo '<BR>' . _('To process payments for') . ' ' . $_POST['Currency'] . ' ' . _('a numeric exchange rate applicable for purchasing the currency to make the payment with must be entered') . '. ' . _('This rate is used to calculate the difference in exchange and make the necessary postings to the General ledger if linked') . '.';
 	}
 
 	/* show form to allow input	*/

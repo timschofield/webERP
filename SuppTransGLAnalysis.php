@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice or credit note
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing/crediting and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -16,7 +16,7 @@ $title = _('Supplier Transaction General Ledger Analysis');
 include('includes/header.inc');
 
 if (!isset($_SESSION['SuppTrans'])){
-	prnMsg(_('To enter a supplier invoice or credit note the supplier must first be selected from the supplier selection screen, then the link to enter a supplier invoice or supplier credit note must be clicked on.'),'info');
+	prnMsg(_('To enter a supplier invoice or credit note the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier invoice or supplier credit note must be clicked on'),'info');
 	echo "<BR><A HREF='$rootpath/SelectSupplier.php?" . SID ."'>" . _('Select A Supplier') . '</A>';
 	include('includes/footer.inc');
 	exit;
@@ -38,13 +38,13 @@ if ($_POST['AddGLCodeToTrans'] == _('Enter GL Line')){
 		WHERE AccountCode=' . $_POST['GLCode'];
 	$result = DB_query($sql, $db);
 	if (DB_num_rows($result) == 0){
-		prnMsg(_('The account code entered is not a valid code, this line cannot be added to the transaction.<BR> You can use the selection box to select the account you want'),'error');
+		prnMsg(_('The account code entered is not a valid code') . '. ' . _('This line cannot be added to the transaction') . '.<BR>' . _('You can use the selection box to select the account you want'),'error');
 		$InputError = True;
 	} else {
 		$myrow = DB_fetch_row($result);
 		$GLActName = $myrow[1];
 		if (!is_numeric($_POST['Amount'])){
-			prnMsg( _('The amount entered is not numeric. This line cannot be added to the transaction'),'error');
+			prnMsg( _('The amount entered is not numeric') . '. ' . _('This line cannot be added to the transaction'),'error');
 			$InputError = True;
 		} elseif ($_POST['JobRef'] != ''){
 			$sql = "SELECT ContractRef From Contracts WHERE ContactRef='" . $_POST['JobRef'] . "'";
@@ -136,7 +136,7 @@ echo '<TR>
 	<TD><INPUT TYPE='Text' NAME='GLCode' SIZE=12 MAXLENGTH=11 VALUE=" .  $_POST['GLCode'] . '></TD>
 	</TR>';
 echo '<TR>
-	<TD>' . _('Account Selection') . ':<BR><FONT SIZE=1>' . _('If you know the code enter it above<BR>otherwise select the account from the list') . "</FONT></TD>
+	<TD>' . _('Account Selection') . ':<BR><FONT SIZE=1>' . _('If you know the code enter it above') . '<BR>' . _('otherwise select the account from the list') . "</FONT></TD>
 	<TD><SELECT NAME='AcctSelection'>";
 
 $sql = "SELECT AccountCode, AccountName FROM ChartMaster ORDER BY AccountCode";

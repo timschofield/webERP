@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 2;
 
@@ -18,7 +18,7 @@ if (isset($StockID)){
 	$result = DB_query("SELECT Description, Units, MBflag FROM StockMaster WHERE StockID='$StockID'",$db);
 	$myrow = DB_fetch_row($result);
 	if (DB_num_rows($result)==0){
-		prnMsg(_('The item code entered') . ' - ' . $StockID . ' ' . _('is not set up as an item in the system. Re-enter a valid item code or select from the Select Item link above'),'error');
+		prnMsg(_('The item code entered') . ' - ' . $StockID . ' ' . _('is not set up as an item in the system') . '. ' . _('Re-enter a valid item code or select from the Select Item link above'),'error');
 		include('includes/footer.inc');
 		exit;
 	}

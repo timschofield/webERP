@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 
 $PageSecurity=15;
@@ -74,7 +74,7 @@ if (!isset($_POST['FromPeriod'])){
 
 			$CFwd = $myrow['BFwd'] + $myrow['Actual'];
 			$CFwdBudget = $myrow['BFwdBudget'] + $myrow['Budget'];
-			echo '<BR>' . _('Account code') . ' : ' . $myrow['AccountCode'] . ' ' . _('Period') . ' : ' . $myrow['Period'];
+			echo '<BR>' . _('Account Code') . ' : ' . $myrow['AccountCode'] . ' ' . _('Period') . ' : ' . $myrow['Period'];
 
 			$sql = 'UPDATE ChartDetails SET BFwd=' . $CFwd . ',BFwdBudget=' . $CFwdBudget . ' WHERE Period=' . ($myrow['Period'] +1) . ' AND  AccountCode = ' . $myrow['AccountCode'];
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the credit note
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -17,7 +17,7 @@ include('includes/DateFunctions.inc');
 
 
 if (!isset($_SESSION['SuppTrans'])){
-	prnMsg(_('To enter a supplier transactions the supplier must first be selected from the supplier selection screen, then the link to enter a supplier credit note must be clicked on'),'info');
+	prnMsg(_('To enter a supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier credit note must be clicked on'),'info');
 	echo '<BR><A HREF="' . $rootpath . '/SelectSupplier.php?' . SID .'">' . _('Select A Supplier to Enter a Transaction For') . '</A>';
 	include('includes/footer.inc');
 	exit;
@@ -34,7 +34,7 @@ if (isset($_POST['AddGRNToTrans'])){
 
 	if (!is_numeric($_POST['ChgPrice']) AND $_POST['ChgPrice']<0){
 		$InputError = True;
-		prnMsg(_('The price charged in the suppliers currency is either not numeric or negative. The goods received cannot be credited at this price'),'error');
+		prnMsg(_('The price charged in the suppliers currency is either not numeric or negative') . '. ' . _('The goods received cannot be credited at this price'),'error');
 	}
 
 	if ($InputError==False){
@@ -71,7 +71,7 @@ $TableHeader = '<TR><TD class="tableheader">' . _('GRN') . '</TD>
                     <TD class="tableheader">' . _('Description') . '</TD>
                     <TD class="tableheader">' . _('Quantity Credited') . '</TD>
                     <TD class="tableheader">' . _('Price Credited in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TD>
-                    <TD class="tableheader">' . _('Line Value In') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TD></TR>';
+                    <TD class="tableheader">' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TD></TR>';
 
 echo $TableHeader;
 
@@ -123,7 +123,7 @@ $SQL = "SELECT GRNNo,
 $GRNResults = DB_query($SQL,$db);
 
 if (DB_num_rows($GRNResults)==0){
-	prnMsg(_('There are no goods received records for') . ' ' . $_SESSION['SuppTrans']->SupplierName . '<BR> ' . _('To enter a credit against goods received, the goods must first be received using the link below to select purchase orders to receive'),'info');
+	prnMsg(_('There are no goods received records for') . ' ' . $_SESSION['SuppTrans']->SupplierName . '<BR> ' . _('To enter a credit against goods received') . ', ' . _('the goods must first be received using the link below to select purchase orders to receive'),'info');
 	echo '<P><A HREF="' . $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . 'SupplierID=' . $_SESSION['SuppTrans']->SupplierID . '">' . _('Select Purchase Orders to Receive') . '</A>';
 	include('includes/footer.inc');
 	exit;
@@ -229,7 +229,7 @@ if (isset($_POST['GRNNo']) AND $_POST['GRNNo']!=''){
 
 	if ($myrow['Closed']==1){ /*Shipment is closed so pre-empt problems later by warning the user - need to modify the order first */
 		echo '<INPUT TYPE=HIDDEN NAME="ShiptRef" Value="">';
-		prnMsg(_('Unfortunately, the shipment that this purchase order line item was allocated to has been closed - if you add this item to the transaction then no shipments will not be updated. If you wish to allocate the order line item to a different shipment the order must be modified first'),'error');
+		prnMsg(_('Unfortunately the shipment that this purchase order line item was allocated to has been closed') . ' - ' . _('if you add this item to the transaction then no shipments will not be updated') . '. ' . _('If you wish to allocate the order line item to a different shipment the order must be modified first'),'error');
 	} else {
 		echo '<INPUT TYPE=HIDDEN NAME="ShiptRef" Value="' . $myrow['ShiptRef'] . '">';
 	}
@@ -253,4 +253,3 @@ if (isset($_POST['GRNNo']) AND $_POST['GRNNo']!=''){
 echo '</form>';
 include('includes/footer.inc');
 ?>
-

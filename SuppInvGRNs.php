@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -15,7 +15,7 @@ include('includes/header.inc');
 include('includes/DateFunctions.inc');
 
 if (!isset($_SESSION['SuppTrans'])){
-	prnMsg(_('To enter a supplier transactions the supplier must first be selected from the supplier selection screen, then the link to enter a supplier invoice must be clicked on'),'info');
+	prnMsg(_('To enter a supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier invoice must be clicked on'),'info');
 	echo "<BR><A HREF='$rootpath/SelectSupplier.php?" . SID ."'>" . _('Select A Supplier to Enter a Transaction For') . '</A>';
 	include('includes/footer.inc');
 	exit;
@@ -59,10 +59,10 @@ if (isset($_POST['ModifyGRN'])){
 	}
 	if (!is_numeric($_POST['ChgPrice']) AND $_POST['ChgPrice']<0){
 		$InputError = True;
-		prnMsg(_('The price charged in the suppliers currency is either not numeric or negative. The goods received cannot be invoiced at this price'),'error');
+		prnMsg(_('The price charged in the suppliers currency is either not numeric or negative') . '. ' . _('The goods received cannot be invoiced at this price'),'error');
 	} elseif ($Check_Price_Charged_vs_Order_Price==True) {
 		if ($_POST['ChgPrice']/$_POST['OrderPrice'] > (1+ ($OverChargeProportion / 100))){
-			prnMsg(_('The price being invoiced is more than the purchase order price by more than') . ' ' . $OverChargeProportion . '%. ' . _('The system is set up to prohibit this. See the system administrator to modify the set up parameters if necessary'),'error');
+			prnMsg(_('The price being invoiced is more than the purchase order price by more than') . ' ' . $OverChargeProportion . '%. ' . _('The system is set up to prohibit this') . '. ' . _('See the system administrator to modify the set up parameters if necessary'),'error');
 			$InputError = True;
 		}
 	}
@@ -100,7 +100,7 @@ echo '<CENTER><FONT SIZE=4 COLOR=BLUE>' . _('Invoiced Goods Received Selected');
 echo '<TABLE CELLPADDING=1>';
 
 $tableheader = "<TR BGCOLOR=#800000>
-			<TD class='tableheader'>" . _('Sequence #') . "</TD>
+			<TD class='tableheader'>" . _('Sequence') . " #</TD>
 			<TD class='tableheader'>" . _('Item Code') . "</TD>
 			<TD class='tableheader'>" . _('Description') . "</TD>
 			<TD class='tableheader'>" . _('Quantity Charged') . "</TD>
@@ -160,7 +160,7 @@ $SQL = "SELECT GRNBatch,
 $GRNResults = DB_query($SQL,$db);
 
 if (DB_num_rows($GRNResults)==0){
-	prnMsg(_('There are no outstanding goods received from') . ' ' . $_SESSION['SuppTrans']->SupplierName . ' ' . _('that have not been invoiced by them') . '<BR>' . _('The goods must first be received using the link below to select purchase orders to receive'),'errpr');
+	prnMsg(_('There are no outstanding goods received from') . ' ' . $_SESSION['SuppTrans']->SupplierName . ' ' . _('that have not been invoiced by them') . '<BR>' . _('The goods must first be received using the link below to select purchase orders to receive'),'error');
 	echo "<P><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . 'SupplierID=' . $_SESSION['SuppTrans']->SupplierID ."'>" . _('Select Purchase Orders to receive') .'</A>';
 	include('includes/footer.inc');
 	exit;
@@ -208,7 +208,7 @@ if (isset($_GET['Modify'])){
 	echo '<P><FONT SIZE=4 COLOR=BLUE><B>' . _('GRN Selected For Adding To A Purchase Invoice') . '</FONT></B>';
 	echo "<TABLE>
 		<TR BGCOLOR=#800000>
-			<TD class='tableheader'>" . _('Sequence #') . "</TD>
+			<TD class='tableheader'>" . _('Sequence') . " #</TD>
 			<TD class='tableheader'>" . _('Item') . "</TD>
 			<TD class='tableheader'>" . _('Qty Outstanding') . "</TD>
 			<TD class='tableheader'>" . _('Qty Invoiced') . "</TD>
@@ -254,7 +254,7 @@ else {
         echo "<TABLE CELLPADDING=1 COLSPAN=7>";
 
         $tableheader = "<TR BGCOLOR=#800000><TD class='tableheader'>" . _('Select') . "</TD>
-				<TD class='tableheader'>" . _('Sequence #') . "</TD>
+				<TD class='tableheader'>" . _('Sequence') . " #</TD>
 				<TD  class='tableheader'>" . _('Order') . "</TD>
 				<TD  class='tableheader'>" . _('Item Code') . "</TD>
 				<TD class='tableheader'>" . _('Description') . "</TD>

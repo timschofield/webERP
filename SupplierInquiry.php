@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
@@ -194,9 +194,9 @@ $CompanyRecord = ReadInCompanyRecord($db);
 
 
 echo '<TABLE CELLPADDING=2 COLSPAN=7>';
-$TableHeader = "<TR><TD CLASS='tableheader'>" . _('Trans #') . 
+$TableHeader = "<TR><TD CLASS='tableheader'>" . _('Trans') . ' #' . 
 					"</TD><TD CLASS='tableheader'>" . _('Type') . 
-					"</TD><TD CLASS='tableheader'>" . _('Supplier Invoice #') . 
+					"</TD><TD CLASS='tableheader'>" . _('Supplier Invoice') . ' #' . 
 					"</TD><TD CLASS='tableheader'>" . _('Date') . 
 					"</TD><TD CLASS='tableheader'>" . _('Total') . 
 					"</TD><TD CLASS='tableheader'>" . _('Allocated') . 
@@ -246,42 +246,88 @@ while ($myrow=DB_fetch_array($TransResult)) {
 						  
 			} else {
 			
-				printf("<TD>%s</TD><TD>%s</TD><TD>%s</TD><TD>%s</TD><TD ALIGN=RIGHT>%s</TD>
-						  <TD ALIGN=RIGHT>%s</TD><TD ALIGN=RIGHT>%s</TD><TD ALIGN=LEFT>%s</TD>
-						  <TD><A HREF='%s?%sHoldType=%s&HoldTrans=%s&HoldStatus=%s&FromDate=%s'>%s</A></TD>
-						  <TD><A TARGET='_blank' HREF='%s/GLTransInquiry.php?TypeID=%s&TransNo=%s'>" . 
-						  _('View GL Postings') . '</A></TD></TR>', 
-						  $myrow['TransNo'], $myrow['TypeName'], $myrow['SuppReference'], 
-						  ConvertSQLDate($myrow['TranDate']), number_format($myrow['TotalAmount'],2), 
-						  number_format($myrow['Allocated'],2), number_format($myrow['TotalAmount'] - $myrow['Allocated'],2), 
-						  $myrow['TransText'], $_SERVER['PHP_SELF'], SID, $myrow['Type'], $myrow['TransNo'], 
-						  $HoldValue, $_POST['TransAfterDate'], $HoldValue, $rootpath, $myrow['Type'], $myrow['TransNo'] );
-				
+				printf("<TD>%s</TD>
+					<TD>%s</TD>
+					<TD>%s</TD>
+					<TD>%s</TD>
+					<TD ALIGN=RIGHT>%s</TD>
+					<TD ALIGN=RIGHT>%s</TD>
+					<TD ALIGN=RIGHT>%s</TD>
+					<TD ALIGN=LEFT>%s</TD>
+					<TD><A HREF='%s?%s&HoldType=%s&HoldTrans=%s&HoldStatus=%s&FromDate=%s'>%s</A></TD>
+					<TD><A TARGET='_blank' HREF='%s/GLTransInquiry.php?TypeID=%s&TransNo=%s'>" .
+						  _('View GL Postings') . '</A></TD></TR>',
+					$myrow['TransNo'],
+					$myrow['TypeName'],
+					$myrow['SuppReference'],
+					ConvertSQLDate($myrow['TranDate']),
+					number_format($myrow['TotalAmount'],2),
+					number_format($myrow['Allocated'],2),
+					number_format($myrow['TotalAmount'] - $myrow['Allocated'],2),
+					$myrow['TransText'],
+					$_SERVER['PHP_SELF'],
+					SID,
+					$myrow['Type'],
+					$myrow['TransNo'],
+					$HoldValue,
+					$_POST['TransAfterDate'],
+					$HoldValue,
+					$rootpath,
+					$myrow['Type'],
+					$myrow['TransNo'] );
+
 			}
 
 		} else {
-		
+
 			if ($myrow['TotalAmount'] - $myrow['Allocated'] == 0){
 
 			/*The trans is settled so don't show option to hold */
 
-				printf("<TD>%s</TD><TD>%s</TD><TD>%s</TD><TD>%s</TD><TD ALIGN=RIGHT>%s</TD>
-						  <TD ALIGN=RIGHT>%s</TD><TD ALIGN=RIGHT>%s</TD><TD ALIGN=LEFT>%s</TD></TD></TR>", 
-						  $myrow['TransNo'], $myrow['TypeName'], $myrow['SuppReference'], 
-						  ConvertSQLDate($myrow['TranDate']), number_format($myrow['TotalAmount'],2), 
-						  number_format($myrow['Allocated'],2), number_format($myrow['TotalAmount'] - $myrow['Allocated'],2), 
-						  $myrow['TransText']);
+				printf("<TD>%s</TD>
+					<TD>%s</TD>
+					<TD>%s</TD>
+					<TD>%s</TD>
+					<TD ALIGN=RIGHT>%s</TD>
+					<TD ALIGN=RIGHT>%s</TD>
+					<TD ALIGN=RIGHT>%s</TD>
+					<TD ALIGN=LEFT>%s</TD>
+					</TD></TR>",
+					$myrow['TransNo'],
+					$myrow['TypeName'],
+					$myrow['SuppReference'],
+					ConvertSQLDate($myrow['TranDate']),
+					number_format($myrow['TotalAmount'],2),
+					number_format($myrow['Allocated'],2),
+					number_format($myrow['TotalAmount'] - $myrow['Allocated'],2),
+					$myrow['TransText']);
 
 			} else {
 
-				printf("<TD>%s</TD><TD>%s</TD><TD>%s</TD><TD>%s</TD><TD ALIGN=RIGHT>%s</TD>
-						  <TD ALIGN=RIGHT>%s</TD><TD ALIGN=RIGHT>%s</TD><TD ALIGN=LEFT>%s</TD>
-						  <TD><A HREF='%s?%sHoldType=%s&HoldTrans=%s&HoldStatus=%s&FromDate=%s'>%s</A></TD></TD>", 
-						  $myrow['TransNo'], $myrow['TypeName'], $myrow['SuppReference'], 
-						  ConvertSQLDate($myrow['TranDate']), number_format($myrow['TotalAmount'],2), 
-						  number_format($myrow['Allocated'],2), number_format($myrow['TotalAmount']-$myrow['Allocated'],2), 
-						  $myrow['TransText'], $_SERVER['PHP_SELF'], SID, $myrow['Type'], $myrow['TransNo'], 
-						  $HoldValue, $_POST['TransAfterDate'], $HoldValue);
+				printf("<TD>%s</TD>
+					<TD>%s</TD>
+					<TD>%s</TD>
+					<TD>%s</TD>
+					<TD ALIGN=RIGHT>%s</TD>
+					<TD ALIGN=RIGHT>%s</TD>
+					<TD ALIGN=RIGHT>%s</TD>
+					<TD ALIGN=LEFT>%s</TD>
+					<TD><A HREF='%s?%sHoldType=%s&HoldTrans=%s&HoldStatus=%s&FromDate=%s'>%s</A></TD></TR>",
+					$myrow['TransNo'],
+					$myrow['TypeName'],
+					$myrow['SuppReference'],
+					ConvertSQLDate($myrow['TranDate']),
+					number_format($myrow['TotalAmount'],2),
+					number_format($myrow['Allocated'],2),
+					number_format($myrow['TotalAmount']-$myrow['Allocated'],2),
+					$myrow['TransText'],
+					$_SERVER['PHP_SELF'],
+					SID,
+					$myrow['Type'],
+					$myrow['TransNo'],
+					$HoldValue,
+					$_POST['TransAfterDate'],
+					$HoldValue);
 
 			}
 		}
@@ -289,22 +335,59 @@ while ($myrow=DB_fetch_array($TransResult)) {
 	} else { /*its a credit note or a payment */
 
 		if ($CompanyRecord['GLLink_Creditors'] == True){
-		
-			printf("<TD>%s</TD><TD>%s</TD><TD>%s</TD><TD>%s</TD><TD ALIGN=RIGHT>%s</TD><TD ALIGN=RIGHT>%s</TD>
-					  <TD ALIGN=RIGHT>%s</TD><TD ALIGN=LEFT>%s</TD><TD><A HREF='%s/SupplierAllocations.php?%sAllocTrans=%s'>" .
-					  _('Allocations') . "</A></TD><TD><A TARGET='_blank' HREF='%s/GLTransInquiry.php?%sTypeID=%s&TransNo=%s'>" . 
-					  _('View GL Postings') . '</A></TD></TR>', $myrow['TransNo'], $myrow['TypeName'], $myrow['SuppReference'], 
-					  ConvertSQLDate($myrow['TranDate']), number_format($myrow['TotalAmount'],2), number_format($myrow["Allocated"],2), number_format($myrow["TotalAmount"]-$myrow["Allocated"],2), $myrow["TransText"], $rootpath, SID, $myrow["ID"], $rootpath, SID, $myrow["Type"], $myrow["TransNo"] );
+
+			printf("<TD>%s</TD>
+				<TD>%s</TD>
+				<TD>%s</TD>
+				<TD>%s</TD>
+				<TD ALIGN=RIGHT>%s</TD>
+				<TD ALIGN=RIGHT>%s</TD>
+				<TD ALIGN=RIGHT>%s</TD>
+				<TD ALIGN=LEFT>%s</TD>
+				<TD><A HREF='%s/SupplierAllocations.php?%sAllocTrans=%s'>" .
+					  _('Allocations') . "</A></TD>
+				<TD><A TARGET='_blank' HREF='%s/GLTransInquiry.php?%sTypeID=%s&TransNo=%s'>" .
+					  _('View GL Postings') . '</A></TD>
+				</TR>',
+				$myrow['TransNo'],
+				$myrow['TypeName'],
+				$myrow['SuppReference'],
+				ConvertSQLDate($myrow['TranDate']),
+				number_format($myrow['TotalAmount'],2),
+				number_format($myrow["Allocated"],2),
+				number_format($myrow["TotalAmount"]-$myrow["Allocated"],2),
+				$myrow["TransText"],
+				$rootpath,
+				SID,
+				$myrow["ID"],
+				$rootpath,
+				SID,
+				$myrow["Type"],
+				$myrow["TransNo"] );
 
 		} else { /*Not linked to GL */
 
-			printf("<TD>%s</TD><TD>%s</TD><TD>%s</TD><TD>%s</TD><TD ALIGN=RIGHT>%s</TD>
-					  <TD ALIGN=RIGHT>%s</TD><TD ALIGN=RIGHT>%s</TD><TD ALIGN=LEFT>%s</TD>
-					  <TD><A HREF='%s/SupplierAllocations.php?%sAllocTrans=%s'>" . _('Allocations') . '</A></TD></TR>', 
-					  $myrow['TransNo'], $myrow['TypeName'], $myrow['SuppReference'], 
-					  ConvertSQLDate($myrow['TranDate']), number_format($myrow['TotalAmount'],2), 
-					  number_format($myrow['Allocated'],2), number_format($myrow['TotalAmount'] - $myrow['Allocated'],2), 
-					  $myrow['TransText'], $rootpath, SID, $myrow['ID']);
+			printf("<TD>%s</TD>
+				<TD>%s</TD>
+				<TD>%s</TD>
+				<TD>%s</TD>
+				<TD ALIGN=RIGHT>%s</TD>
+				<TD ALIGN=RIGHT>%s</TD>
+				<TD ALIGN=RIGHT>%s</TD>
+				<TD ALIGN=LEFT>%s</TD>
+				<TD><A HREF='%s/SupplierAllocations.php?%sAllocTrans=%s'>" . _('Allocations') . '</A></TD>
+				</TR>',
+				$myrow['TransNo'],
+				$myrow['TypeName'],
+				$myrow['SuppReference'],
+				ConvertSQLDate($myrow['TranDate']),
+				number_format($myrow['TotalAmount'],2),
+				number_format($myrow['Allocated'],2),
+				number_format($myrow['TotalAmount'] - $myrow['Allocated'],2),
+				$myrow['TransText'],
+				$rootpath,
+				SID,
+				$myrow['ID']);
 
 		}
 	}
@@ -314,7 +397,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 		$j = 1;
 		echo $TableHeader;
 	}
-	
+
 //end of page full new headings if
 
 }

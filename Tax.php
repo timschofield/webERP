@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 2;
 
@@ -23,14 +23,14 @@ Class Tax {
 If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST['ToPeriod'])){
 
 
-	include("config.php");
-	include("includes/ConnectDB.inc");
-	include("includes/DateFunctions.inc");
-	include("includes/PDFStarter_ros.inc");
+	include('config.php');
+	include('includes/ConnectDB.inc');
+	include('includes/DateFunctions.inc');
+	include('includes/PDFStarter_ros.inc');
 
 
-	$sql = "SELECT LastDate_In_Period FROM Periods WHERE PeriodNo=" . $_POST['ToPeriod'];
-	$ErrMsg = _('Could not determine the last date of the period selected. The sql returned the following error:');
+	$sql = 'SELECT LastDate_In_Period FROM Periods WHERE PeriodNo=' . $_POST['ToPeriod'];
+	$ErrMsg = _('Could not determine the last date of the period selected') . '. ' . _('The sql returned the following error');
 	$PeriodEndResult = DB_query($sql,$db,$ErrMsg);
 	$PeriodEndRow = DB_fetch_row($PeriodEndResult);
 
@@ -73,16 +73,16 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 		$title = _('Taxation Reporting Error');
 		include('includes/header.inc');
 		echo _('The accounts receiveable transation details could not be retrieved because') . ' ' . DB_error_msg($db);
-		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back To The Menu') . '</A>';
+		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
 		if ($debug==1){
 			echo "<BR>$SQL";
 		}
-		include("includes/footer.inc");
+		include('includes/footer.inc');
 		exit;
 	}
 
 	if ($_POST['DetailOrSummary']=='Detail'){
-		include ("includes/PDFTaxPageHeader.inc");
+		include ('includes/PDFTaxPageHeader.inc');
 	}
 
 	$Taxes = array(); /* elements are TaxTotal, TaxRate, OutputAmount, OutputTax, InputAmount, InputTax */
@@ -104,7 +104,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 
 		$LineItemsResult = DB_query($SQL, $db, $ErrMsg);
 
-		$TransTaxLeft = $DebtorTransRow["Tax"];
+		$TransTaxLeft = $DebtorTransRow['Tax'];
 
 		While ($LineItemsRow = DB_fetch_array($LineItemsResult,$db)){
 
@@ -132,7 +132,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 
 
 		if (ABS(round($TransTaxLeft,2))>0.01){
-			$WarningMessage[$MessageCounter] =  _('The total tax on') . ' ' . $DebtorTransRow['TypeName'] . ' ' . $DebtorTransRow['TransNo'] . ' ' . _('of') . $LineItemsRow['LineTaxAmt'] . ' ' . _('as per the transaction header record was not equal to the sum of the line items - there is a data inconsistency of') . ' ' . $TransTaxLeft ;
+			$WarningMessage[$MessageCounter] =  _('The total tax on') . ' ' . $DebtorTransRow['TypeName'] . ' ' . $DebtorTransRow['TransNo'] . ' ' . _('of') . $LineItemsRow['LineTaxAmt'] . ' ' . _('as per the transaction header record was not equal to the sum of the line items') . ' - ' . _('there is a data inconsistency of') . ' ' . $TransTaxLeft ;
 			$MessageCounter++;
 		}
 
@@ -147,7 +147,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 
 			$YPos -=$line_height;
 			if ($YPos < $Bottom_Margin + $line_height){
-				include("includes/PDFTaxPageHeader.inc");
+				include('includes/PDFTaxPageHeader.inc');
 			}
 		}
 	} /*end listing while loop */
@@ -156,7 +156,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 		$YPos -=$line_height;
 
 		if ($YPos < $Bottom_Margin + $line_height){
-			include("includes/PDFTaxPageHeader.inc");
+			include('includes/PDFTaxPageHeader.inc');
 		}
 
 		$pdf->line(410, $YPos+$line_height,530, $YPos+$line_height);
@@ -185,10 +185,10 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 	/*Now do the inputs from SuppTrans */
 	/*Only have dates in SuppTrans no periods so need to get the starting date */
 
-	$Date_Array = explode("/",$PeriodEnd);
-	if ($DefaultDateFormat=="d/m/Y"){
+	$Date_Array = explode('/',$PeriodEnd);
+	if ($DefaultDateFormat=='d/m/Y'){
 		$StartDateSQL = Date('Y-m-d', mktime(0,0,0, (int)$Date_Array[1]-$_POST['NoOfPeriods']+1,1,(int)$Date_Array[2]));
-	} elseif ($DefaultDateFormat=="m/d/Y") {
+	} elseif ($DefaultDateFormat=='m/d/Y') {
 		$StartDateSQL = Date('Y-m-d', mktime(0,0,0, (int)$Date_Array[0]-$_POST['NoOfPeriods']+1,1,(int)$Date_Array[2]));
 	}
 
@@ -214,16 +214,16 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 		$title = _('Taxation Reporting Error');
 		include('includes/header.inc');
 		echo _('The accounts payable transation details could not be retrieved because') . ' ' . DB_error_msg($db);
-		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back To The Menu') . '</A>';
+		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
 		if ($debug==1){
 			echo "<BR>$SQL";
 		}
-		include("includes/footer.inc");
+		include('includes/footer.inc');
 		exit;
 	}
 
 	if ($_POST['DetailOrSummary']=='Detail'){
-		include ("includes/PDFTaxPageHeader.inc");
+		include ('includes/PDFTaxPageHeader.inc');
 	}
 
 	$Taxes['Inputs'] = new Tax(0);
@@ -254,7 +254,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 
 			$YPos -=$line_height;
 			if ($YPos < $Bottom_Margin + $line_height){
-				include("includes/PDFTaxPageHeader.inc");
+				include('includes/PDFTaxPageHeader.inc');
 			}
 		}
 	} /*end listing while loop */
@@ -263,7 +263,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 		$YPos -=$line_height;
 
 		if ($YPos < $Bottom_Margin + $line_height){
-			include("includes/PDFTaxPageHeader.inc");
+			include('includes/PDFTaxPageHeader.inc');
 		}
 
 		$pdf->line(410, $YPos+$line_height,530, $YPos+$line_height);
@@ -307,7 +307,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 	$pdf->addText($Left_Margin, $YPos, $FontSize, $ReportTitle . ' ' . _('Summary'));
 
 	$FontSize = 8;
-	$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed:') . ' ' . Date($DefaultDateFormat) . '    ' . _('Page') . ' ' . $PageNumber);
+	$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed') . ': ' . Date($DefaultDateFormat) . '    ' . _('Page') . ' ' . $PageNumber);
 
 	$YPos -=(3*$line_height);
 
@@ -395,7 +395,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 		$pdf->addText($Left_Margin, $YPos, $FontSize, $ReportTitle . ' ' . _('Warnings'));
 
 		$FontSize = 8;
-		$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed:') . ' ' . Date($DefaultDateFormat) . '    ' . _('Page') . ' ' . $PageNumber);
+		$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed') . ': ' . Date($DefaultDateFormat) . '    ' . _('Page') . ' ' . $PageNumber);
 
 		$YPos -=(3*$line_height);
 
@@ -413,63 +413,63 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 
 
 
-	header("Content-type: application/pdf");
+	header('Content-type: application/pdf');
 	header("Content-Length: $len");
-	header("Content-Disposition: inline; filename=TaxReport.pdf");
-	header("Expires: 0");
-	header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-	header("Pragma: public");
+	header('Content-Disposition: inline; filename=TaxReport.pdf');
+	header('Expires: 0');
+	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+	header('Pragma: public');
 
 	$pdf->stream();
 
 } else { /*The option to print PDF was not hit */
 
-	include("includes/session.inc");
+	include('includes/session.inc');
 	$title=_('Tax Reporting');
-	include("includes/header.inc");
-	include("includes/DateFunctions.inc");
-	include("includes/SQL_CommonFunctions.inc");
+	include('includes/header.inc');
+	include('includes/DateFunctions.inc');
+	include('includes/SQL_CommonFunctions.inc');
 
 	$CompanyRecord = ReadInCompanyRecord($db);
 
 
-	echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
+	echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
 
-	echo '<TR><TD>' . _('Return Covering:') . "</FONT></TD>
+	echo '<TR><TD>' . _('Return Covering') . ':</FONT></TD>
 			<TD><SELECT name=NoOfPeriods>
 			<OPTION Value=1> One Month
 			<OPTION SELECTED Value=2>Two Months
 			<OPTION VALUE=3>Quarter
 			<OPTION VALUE=6>Six Months
-			</SELECT></TD></TR>";
+			</SELECT></TD></TR>';
 
 
-	echo '<TR><TD>' . _('Return To:') . "</TD>
+	echo '<TR><TD>' . _('Return To') . ":</TD>
 			<TD><SELECT Name='ToPeriod'>";
 
 
-	$DefaultPeriod = GetPeriod(Date($DefaultDateFormat,Mktime(0,0,0,Date("m"),0,Date("Y"))),$db);
+	$DefaultPeriod = GetPeriod(Date($DefaultDateFormat,Mktime(0,0,0,Date('m'),0,Date('Y'))),$db);
 
-	$sql = "SELECT PeriodNo, LastDate_In_Period FROM Periods";
+	$sql = 'SELECT PeriodNo, LastDate_In_Period FROM Periods';
 
 	$ErrMsg = _('Could not retrieve the period data because');
 	$Periods = DB_query($sql,$db,$ErrMsg);
 
 	while ($myrow = DB_fetch_array($Periods,$db)){
 		if ($myrow['PeriodNo']==$DefaultPeriod){
-			echo '<OPTION SELECTED VALUE=' . $myrow['PeriodNo'] . '>' . ConvertSQLDate($myrow["LastDate_In_Period"]);
+			echo '<OPTION SELECTED VALUE=' . $myrow['PeriodNo'] . '>' . ConvertSQLDate($myrow['LastDate_In_Period']);
 		} else {
-			echo '<OPTION VALUE=' . $myrow['PeriodNo'] . '>' . ConvertSQLDate($myrow["LastDate_In_Period"]);
+			echo '<OPTION VALUE=' . $myrow['PeriodNo'] . '>' . ConvertSQLDate($myrow['LastDate_In_Period']);
 		}
 	}
 
-	echo "</SELECT></TD></TR>";
+	echo '</SELECT></TD></TR>';
 
-	echo '<TR><TD>' . _('Detail Or Summary Only:') . "</FONT></TD>
+	echo '<TR><TD>' . _('Detail Or Summary Only') . ":</FONT></TD>
 			<TD><SELECT name='DetailOrSummary'>
-			<OPTION Value='Detail'>Detail and Summary
-			<OPTION SELECTED Value='Summary'>Summary Only
-			</SELECT></TD></TR>";
+			<OPTION Value='Detail'>" . _('Detail and Summary') .
+			"<OPTION SELECTED Value='Summary'>" . _('Summary Only') .
+			"</SELECT></TD></TR>";
 
 
 	echo "</TABLE>
@@ -477,7 +477,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 		</CENTER>
 		</FORM>";
 
-	include("includes/footer.inc");
+	include('includes/footer.inc');
 } /*end of else not PrintPDF */
 
 ?>

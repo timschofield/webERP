@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -28,7 +28,7 @@ if (isset($_POST['ProcessStockChange'])){
 	$result=DB_query("SELECT StockID FROM StockMaster WHERE StockID='" . $_POST['NewStockID'] . "'",$db);
 	if (DB_num_rows($result)!=0){
 		echo '<BR><BR>';
-		prnMsg(_('The replacement stock code') . ': ' . $_POST['NewStockID'] . ' ' . _('already exists as a stock code in the system - a unique stock code must be entered for the new code'),'error');
+		prnMsg(_('The replacement stock code') . ': ' . $_POST['NewStockID'] . ' ' . _('already exists as a stock code in the system') . ' - ' . _('a unique stock code must be entered for the new code'),'error');
 		include('includes/footer.inc');
 		exit;
 	}
@@ -172,14 +172,14 @@ if (isset($_POST['ProcessStockChange'])){
 	echo ' ... ' . _('completed');
 
 
-	echo '<BR>' . _('Changing the BOM table records - components');
+	echo '<BR>' . _('Changing the BOM table records') . ' - ' . _('components');
 	$sql = "UPDATE BOM SET Component='" . $_POST['NewStockID'] . "' WHERE Component='" . $_POST['OldStockID'] . "'";
 	$ErrMsg = _('The SQL to update the BOM records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
 
 
-	echo '<BR>' . _('Changing the BOM table records - parents');
+	echo '<BR>' . _('Changing the BOM table records') . ' - ' . _('parents');
 	$sql = "UPDATE BOM SET Parent='" . $_POST['NewStockID'] . "' WHERE Parent='" . $_POST['OldStockID'] . "'";
 	$ErrMsg = _('The SQL to update the BOM parent records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);

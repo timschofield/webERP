@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -19,14 +19,14 @@ if (isset($_POST['ProcessCustomerChange'])){
 
 
 	if ($_POST['NewDebtorNo']==''){
-		prnMsg(_('The new customer code to change the old code to must be entered as well!!'),'error');
+		prnMsg(_('The new customer code to change the old code to must be entered as well'),'error');
 		include('includes/footer.inc');
 		exit;
 	}
 /*Now check that the new code doesn't already exist */
 	$result=DB_query("SELECT DebtorNo FROM DebtorsMaster WHERE DebtorNo='" . $_POST['NewDebtorNo'] . "'",$db);
 	if (DB_num_rows($result)!=0){
-		prnMsg(_('The replacement customer code') .': ' . $_POST['NewDebtorNo'] . ' ' . _('already exists as a customer code in the system - a unique customer code must be entered for the new code'),'error');
+		prnMsg(_('The replacement customer code') .': ' . $_POST['NewDebtorNo'] . ' ' . _('already exists as a customer code in the system') . ' - ' . _('a unique customer code must be entered for the new code'),'error');
 		include('includes/footer.inc');
 		exit;
 	}
@@ -37,7 +37,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 	$sql = "INSERT INTO DebtorsMaster (`DebtorNo`, `Name`, `Address1`, `Address2`, `Address3`, `Address4`, `CurrCode`, `SalesType`, `ClientSince`, `HoldReason`, `PaymentTerms`, `Discount`, `DiscountCode`, `PymtDiscount`, `LastPaid`, `LastPaidDate`, `CreditLimit`, `InvAddrBranch`, `EDIInvoices`, `EDIOrders`, `EDIReference`, `EDITransport`, `EDIAddress`, `EDIServerUser`, `EDIServerPwd`) SELECT '" . $_POST['NewDebtorNo'] . "', `Name`, `Address1`, `Address2`, `Address3`, `Address4`, `CurrCode`, `SalesType`, `ClientSince`, `HoldReason`, `PaymentTerms`, `Discount`, `DiscountCode`, `PymtDiscount`, `LastPaid`, `LastPaidDate`, `CreditLimit`, `InvAddrBranch`, `EDIInvoices`, `EDIOrders`, `EDIReference`, `EDITransport`, `EDIAddress`, `EDIServerUser`, `EDIServerPwd` FROM DebtorsMaster WHERE DebtorNo='" . $_POST['OldDebtorNo'] . "'";
 
 	$DbgMsg =_('The SQL that failed was');
-	$ErrMsg = _('The SQL to insert the new debtors master record failed, the SQL statement was');
+	$ErrMsg = _('The SQL to insert the new debtors master record failed') . ', ' . _('the SQL statement was');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 	prnMsg(_('Inserting new customer branch records'),'info');

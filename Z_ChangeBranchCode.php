@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -27,7 +27,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 		exit;
 	}
 	if (strstr($_POST['NewBranchCode'],".")>0 OR  strstr($_POST['NewBranchCode'],"&") OR strstr($_POST['NewBranchCode'],"-") OR strstr($_POST['NewBranchCode']," ")){
-		prnMsg(_('The new customer branch code cannot contain a hyphen - an ampersand & a point . or a space'),'error');
+		prnMsg(_('The new customer branch code cannot contain') . ' - & . ' . _('or a space'),'error');
 		include('includes/footer.inc');
 		exit;
 	}
@@ -37,7 +37,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 /*Now check that the new code doesn't already exist */
 	$result=DB_query("SELECT DebtorNo FROM CustBranch WHERE DebtorNo='" . $_POST['DebtorNo'] . "' AND BranchCode ='" . $_POST['NewBranchCode'] . "'",$db);
 	if (DB_num_rows($result)!=0){
-		prmMsg(_('The replacement customer branch code') . ': ' . $_POST['NewBranchCode'] . ' ' . _('already exists as a branch code for the same customer - a unique branch code must be entered for the new code'),'error');
+		prmMsg(_('The replacement customer branch code') . ': ' . $_POST['NewBranchCode'] . ' ' . _('already exists as a branch code for the same customer') . ' - ' . _('a unique branch code must be entered for the new code'),'error');
 		include('includes/footer.inc');
 		exit;
 	}

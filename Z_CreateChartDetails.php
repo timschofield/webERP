@@ -61,7 +61,7 @@ While ($AccountRow = DB_fetch_array($ChartAccounts)){
 
 }
 
-prnMsg(_('Chart Details Created successfully'),'info');
+prnMsg(_('Chart Details Created successfully'),'success');
 include('includes/footer.inc');
 
 ?>

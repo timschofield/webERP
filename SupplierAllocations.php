@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*
 	This page can be called with...
 
@@ -23,7 +23,7 @@ $PageSecurity = 5;
 
 include('includes/session.inc');
 
-$title = _('Supplier Payment/Credit Note Allocations');
+$title = _('Supplier Payment') . '/' . _('Credit Note Allocations');
 
 include('includes/header.inc');
 include('includes/DateFunctions.inc');
@@ -36,7 +36,7 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 	$InputError = 0;
 
 	if (!isset($_SESSION['Alloc'])){
-		prnMsg( _('Allocations can not be processed again. If you hit refresh on this page after having just processed an allocation, try to use the navigation links provided rather than the back button, to avoid this message in future.'),'warn');
+		prnMsg( _('Allocations can not be processed again') . '. ' . _('If you hit refresh on this page after having just processed an allocation') . ', ' . _('try to use the navigation links provided rather than the back button, to avoid this message in future'),'warn');
 		include('includes/footer.inc');
 		exit;
 	}
@@ -55,7 +55,7 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 		      $_POST['Amt' . $AllocCounter] = 0;
 		 }
 		 if ($_POST['Amt' . $AllocCounter] < 0){
-		      prnMsg(_('The entry for the amount to allocate was negative. A positive allocation amount is expected'),'error');
+		      prnMsg(_('The entry for the amount to allocate was negative') . '. ' . _('A positive allocation amount is expected'),'error');
 			$_POST['Amt' . $AllocCounter] = 0;
 		 }
 
@@ -106,7 +106,7 @@ if (isset($_POST['UpdateDatabase'])){
 
 		$SQL = 'BEGIN';
 
-		$ErrMsg = _('CRITICAL ERROR! The transaction BEGIN failed with error');
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('The transaction BEGIN failed with error');
 		$DbgMsg = _('The SQL that was used but failed was');
 
 		$Result=DB_query($SQL, $db, $ErrMsg, $DbgMsg);
@@ -120,7 +120,7 @@ if (isset($_POST['UpdateDatabase'])){
 
 				     $SQL = 'DELETE FROM SuppAllocs WHERE ID = ' . $AllocnItem->PrevAllocRecordID;
 
-					  $ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .
+					  $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .
 					  				_('The existing allocation for') . ' ' . $AllocnItem->TransType .' ' .
 					  				$AllocnItem->TypeNo . ' ' . _('could not be deleted because');
 
@@ -140,7 +140,7 @@ if (isset($_POST['UpdateDatabase'])){
 							      FormatDateForSQL(date("d/m/Y")) . "', " . $AllocnItem->AllocAmt . ', ' .
 							      $_SESSION['Alloc']->AllocTrans . ', ' . $AllocnItem->ID . ')';
 
-						  $ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .
+						  $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .
 						  			  _('The supplier allocation record for') . ' ' . $AllocnItem->TransType . ' ' .
 						  			   $AllocnItem->TypeNo . ' ' ._('could not be inserted because');
 
@@ -159,7 +159,7 @@ if (isset($_POST['UpdateDatabase'])){
 				     $SQL = 'UPDATE SuppTrans SET DiffOnExch=' . $AllocnItem->DiffOnExch . ', Alloc = ' .
 				     		   $NewAllocTotal . ', Settled = ' . $Settled . ' WHERE ID = ' . $AllocnItem->ID;
 
-					  $ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .
+					  $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .
 					  				_('The debtor transaction record could not be modified for the allocation against it because');
 
 					  $DbgMsg = _('The following SQL to update the debtor transaction record was used');
@@ -182,7 +182,7 @@ if (isset($_POST['UpdateDatabase'])){
 		$SQL = 'UPDATE SuppTrans SET Alloc = ' .  -$TotalAllocated . ', DiffOnExch = ' . -$TotalDiffOnExch .
 				 ', Settled=' . $Settled . ' WHERE ID = ' . $_SESSION['AllocTrans'];
 
-		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .
 					 _('The supplier payment or credit note transaction could not be modified for the new allocation and exchange difference because');
 
 		$DbgMsg = _('The following SQL to update the payment or credit note was used');
@@ -207,7 +207,7 @@ if (isset($_POST['UpdateDatabase'])){
 		      		 $_SESSION['Alloc']->TransDate . "', " . $PeriodNo . ', ' . $Coy['PurchasesExchangeDiffAct'] .
 		      		 ", 'Exch diff', " . $MovtInDiffOnExch . ')';
 
-		      $ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .
+		      $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .
 		      			 _('The GL entry for the difference on exchange arising out of this allocation could not be inserted because');
 		      $DbgMsg = _('The following SQL to insert the GLTrans record was used');
 
@@ -219,7 +219,7 @@ if (isset($_POST['UpdateDatabase'])){
 		      		 $_SESSION['Alloc']->TransDate . "', " . $PeriodNo . ', ' . $Coy['CreditorsAct'] .
 		      		 ', ' . _('Exchg Diff') . ', ' . -$MovtInDiffOnExch . ')';
 
-		      $ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ' : ' .
+		      $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ' : ' .
 		      			 _('The GL entry for the difference on exchange arising out of this allocation could not be inserted because');
 
 		      $DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -234,7 +234,7 @@ if (isset($_POST['UpdateDatabase'])){
 
 		$SQL = 'COMMIT';
 
-		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .
 					 _('The updates and insertions arising from this allocation could not be committed to the database');
 
 		$DbgMsg = _('The COMMIT SQL failed');
@@ -301,7 +301,7 @@ If (isset($_GET['AllocTrans'])){
 
 	$Result = DB_query($SQL, $db);
 	if (DB_num_rows($Result) != 1){
-	echo _('There was a problem retrieving the information relating the transaction selected. Allocations are unable to proceed.');
+	echo _('There was a problem retrieving the information relating the transaction selected') . '. ' . _('Allocations are unable to proceed');
 	if ($debug == 1){
 		echo '<BR>' . _('The SQL that was used to retreive the transaction information was') . " :<BR>$SQL";
 	}
@@ -332,7 +332,7 @@ If (isset($_GET['AllocTrans'])){
 			 AND ABS(OvAmount+OvGST-Alloc)>0.009
 			 AND SupplierNo='" . $_SESSION['Alloc']->SupplierID . "'";
 
-	$ErrMsg = _('There was a problem retrieving the transactions available to allocate to.');
+	$ErrMsg = _('There was a problem retrieving the transactions available to allocate to');
 
 	$DbgMsg = _('The SQL that was used to retreive the transaction information was');
 
@@ -357,7 +357,7 @@ If (isset($_GET['AllocTrans'])){
 			  AND SuppAllocs.TransID_AllocFrom=' . $_SESSION['AllocTrans'] .
 			  " AND SupplierNo='" . $_SESSION['Alloc']->SupplierID . "'";
 
-	$ErrMsg = _('There was a problem retrieving the previously allocated transactions for modification.');
+	$ErrMsg = _('There was a problem retrieving the previously allocated transactions for modification');
 
 	$DbgMsg = _('The SQL that was used to retreive the previously allocated transaction information was');
 
@@ -389,7 +389,7 @@ if (isset($_POST['AllocTrans'])){
         		 $_SESSION['Alloc']->TransDate;
 
         if ($_SESSION['Alloc']->TransExRate != 1){
-	     	  echo '<BR>' . _("Amount in supplier's currency"). ' <B>' .
+	     	  echo '<BR>' . _("Amount in supplier currency"). ' <B>' .
 	     	  		 number_format(-$_SESSION['Alloc']->TransAmt,2) . '</B><i> (' .
 	     	  		 _('converted into local currency at an exchange rate of') . ' ' .
 	     	  		 $_SESSION['Alloc']->TransExRate . ')</i><P>';

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 5;
 
@@ -27,7 +27,7 @@ $BankPrefix = substr($ActNo,0, 2);
 $BranchNumber = (int) (substr($ActNo, 3, 4));
 
 if ($BankPrefix == '29') {
-	echo _('Accounts codes with the United Bank are not verified, be careful to enter the correct account number');
+	echo _('Accounts codes with the United Bank are not verified') . ', ' . _('be careful to enter the correct account number');
 	exit;
 }
 
@@ -37,20 +37,20 @@ switch ($BankPrefix) {
 
 case '01':
 	if (!(($BranchNumber >= 1 and $BranchNumber <= 999) or ($BranchNumber >= 1100 and $BranchNumber <= 1199))) {
-	 echo _('ANZ branches must be  between 0001 and 0999 or between 1100 and 1199. The branch number used is invalid');
+	 echo _('ANZ branches must be between 0001 and 0999 or between 1100 and 1199') . '. ' . _('The branch number used is invalid');
 	 return False;
 	}
 	break;
 case '02':
 	If (!(($BranchNumber >= 1 and $BranchNumber <= 999) or ($BranchNumber >= 1200 and $BranchNumber <= 1299))) {
-	 echo _('Bank Of New Zealand branches must be  between 0001 and 0999 or between 1200 and 1299. The branch number used is invalid');
+	 echo _('Bank Of New Zealand branches must be between 0001 and 0999 or between 1200 and 1299') . '. ' . _('The branch number used is invalid');
 	 return False;
 	 exit;
 	}
 	break;
 case '03':
     if  (!(($BranchNumber >= 1 and $BranchNumber <= 999) or ($BranchNumber >= 1300 and $BranchNumber <= 1399))) {
-	 echo _('Westpac Trust branches must be  between 0001 and 0999 or between 1300 and 1399. The branch number used is invalid');
+	 echo _('Westpac Trust branches must be between 0001 and 0999 or between 1300 and 1399') . '. ' . _('The branch number used is invalid');
 	 return False;
 	 exit;
 	}
@@ -58,7 +58,7 @@ case '03':
 
 case '06':
 	if (!(($BranchNumber >= 1 and $BranchNumber <= 999) or ($BranchNumber >= 1400 and $BranchNumber <= 1499))) {
-		echo _('National Bank branches must be  between 0001 and 0999 or between 1400 and 1499. The branch number used is invalid');
+		echo _('National Bank branches must be between 0001 and 0999 or between 1400 and 1499') . '. ' . _('The branch number used is invalid');
 	 return False;
 	 exit;
 	}
@@ -66,14 +66,14 @@ case '06':
 
 case '08':
     if (!($BranchNumber >= 6500 and $BranchNumber <= 6599)) {
-	 echo _('National Australia branches must be between 6500 and 6599. The branch number used is invalid');
+	 echo _('National Australia branches must be between 6500 and 6599') . '. ' . _('The branch number used is invalid');
 	 return False;
 	 exit;
 	}
 	break;
 case '09':
 	if ($BranchNumber != 0) {
-		echo _('The Reserve Bank branch should be 0000. The branch number used is invalid');
+		echo _('The Reserve Bank branch should be 0000') . '. ' . _('The branch number used is invalid');
 		 return False;
 		exit;
 	}
@@ -83,7 +83,7 @@ case '12':
 //"13" "14" "15", "16", "17", "18", "19", "20", "21", "22", "23", "24":
 
     if (!($BranchNumber >= 3000 and $BranchNumber <= 4999)){
-	 echo _('Trust Bank and Regional Bank branches must be between 3000 and 4999. The branch number used is invalid');
+	 echo _('Trust Bank and Regional Bank branches must be between 3000 and 4999') . '. ' . _('The branch number used is invalid');
 	 return False;
 	 exit;
     }
@@ -91,7 +91,7 @@ case '12':
 
 case '11':
     if (!($BranchNumber >= 5000 and $BranchNumber <= 6499)){
-	 echo _('Post Office Bank branches must be between 5000 and 6499. The branch number used is invalid');
+	 echo _('Post Office Bank branches must be between 5000 and 6499') . '. ' . _('The branch number used is invalid');
 	 return False;
 	 exit;
     }
@@ -99,14 +99,14 @@ case '11':
 
 case '25':
     if (!($BranchNumber >= 2500 and $BranchNumber <= 2599)){
-	 echo _('Countrywide Bank branches must be between 2500 and 2599. The branch number used is invalid');
+	 echo _('Countrywide Bank branches must be between 2500 and 2599') . '. ' . _('The branch number used is invalid');
 	 return False;
 	 exit;
     }
 	break;
 case '29':
     if (!($BranchNumber >= 2150 and $BranchNumber <= 2299)){
-	 echo _('United Bank branches must be between 2150 and 2299. The branch number used is invalid');
+	 echo _('United Bank branches must be between 2150 and 2299') . '. ' . _('The branch number used is invalid');
 	 return False;
 	 exit;
     }
@@ -114,7 +114,7 @@ case '29':
 
 case '30':
     if (!($BranchNumber >= 2900 and $BranchNumber <= 2949)){
-	 echo _('Hong Kong and Shanghai branches must be between 2900 and 2949. The branch number used is invalid');
+	 echo _('Hong Kong and Shanghai branches must be between 2900 and 2949') . '. ' . _('The branch number used is invalid');
 	 return False;
 	 exit;
     }
@@ -122,7 +122,7 @@ case '30':
 
 case '31':
     if (!($BranchNumber >= 2800 and $BranchNumber <= 2849)){
-	 echo _('Citibank NA branches must be between 2800 and 2849. The branch number used is invalid');
+	 echo _('Citibank NA branches must be between 2800 and 2849') . '. ' . _('The branch number used is invalid');
 	 return False;
 	 exit;
     }
@@ -130,14 +130,14 @@ case '31':
 
 case '33':
     if (!($BranchNumber >= 6700 and $BranchNumber <= 6799)){
-	 echo _('Rural Bank branches must be between 6700 and 6799. The branch number used is invalid');
+	 echo _('Rural Bank branches must be between 6700 and 6799') . '. ' . _('The branch number used is invalid');
 	 return False;
 	 exit;
     }
 	break;
 
 default:
-    echo _('The prefix') . ' - ' . $BankPrefix . ' ' . _('is not a valid New Zealand Bank.') . '<BR>' .
+    echo _('The prefix') . ' - ' . $BankPrefix . ' ' . _('is not a valid New Zealand Bank') . '.<BR>' .
     		_('If you are using the Logic Works system outside New Zealand error trapping relevant to your country should be used');
     return False;
     exit;
@@ -280,12 +280,12 @@ for ($i=3; $i<=14; $i++) {
 
 if ($BankPrefix == '25' or $BankPrefix == '33') {
     if ($CheckSum / 10 - (int)($CheckSum / 10) != 0) {
-	 echo '<P>' . _('The account number entered does not meet the banking check sum requirement and cannot be a valid account number.');
+	 echo '<P>' . _('The account number entered does not meet the banking check sum requirement and cannot be a valid account number');
 	 return False;
     }
 } else {
     if ($CheckSum / 11 - (int)($CheckSum / 11) != 0) {
-	 echo '<P>' . _('The account number entered does not meet the banking check sum requirement and cannot be a valid account number.');
+	 echo '<P>' . _('The account number entered does not meet the banking check sum requirement and cannot be a valid account number');
 	 return False;
     }
 }
@@ -371,7 +371,7 @@ if (isset($_POST['submit'])) {
 			
 			$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
-			echo '<BR>' . _('A new supplier for') . ' ' . $_POST['SuppName'] . ' ' . _('has been added to the database.');
+			echo '<BR>' . _('A new supplier for') . ' ' . $_POST['SuppName'] . ' ' . _('has been added to the database');
 
 			unset ($SupplierID);
 			unset($_POST['SuppName']);
@@ -392,7 +392,7 @@ if (isset($_POST['submit'])) {
 		
 	} else {
 
-		echo '<BR>' . _('Validation failed, no updates or deletes took place.');
+		echo '<BR>' . _('Validation failed') . ', ' . _('no updates or deletes took place');
 
 	}
 
@@ -409,8 +409,8 @@ if (isset($_POST['submit'])) {
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0] > 0) {
 		$CancelDelete = 1;
-		echo '<BR>' . _('Cannot delete this supplier because there are transactions that refer to this supplier.');
-		echo '<BR>' . _('There are ') . ' ' . $myrow[0] . ' ' . _('transactions against this supplier');
+		echo '<BR>' . _('Cannot delete this supplier because there are transactions that refer to this supplier');
+		echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('transactions against this supplier');
 
 	} else {
 		$sql= "SELECT COUNT(*) FROM PurchOrders WHERE SupplierNo='$SupplierID'";
@@ -418,15 +418,15 @@ if (isset($_POST['submit'])) {
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0] > 0) {
 			$CancelDelete = 1;
-			echo '<BR>' . _('Cannot delete the supplier record because purchase orders have been created against this supplier.');
-			echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('orders against this supplier.');
+			echo '<BR>' . _('Cannot delete the supplier record because purchase orders have been created against this supplier');
+			echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('orders against this supplier');
 		} else {
 			$sql= "SELECT COUNT(*) FROM SupplierContacts WHERE SupplierID='$SupplierID'";
 			$result = DB_query($sql, $db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0] > 0) {
 				$CancelDelete = 1;
-				echo '<BR>' . _('Cannot delete this supplier because there are supplier contacts set up against it - delete these first.');
+				echo '<BR>' . _('Cannot delete this supplier because there are supplier contacts set up against it') . ' - ' . _('delete these first');
 				echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('supplier contacts relating to this supplier');
 
 			}
@@ -464,7 +464,7 @@ if (!isset($SupplierID)) {
 	echo '<TR><TD>' . _('Supplier Since') . ' (' . $DefaultDateFormat . "):</TD><TD><INPUT TYPE='text' NAME='SupplierSince' VALUE=$DateString SIZE=12 MAXLENGTH=10></TD></TR>";
 	echo '<TR><TD>' . _('Bank Particulars') . ":</TD><TD><INPUT TYPE='text' NAME='BankPartics' SIZE=13 MAXLENGTH=12></TD></TR>";
 	echo '<TR><TD>' . _('Bank reference') . ":</TD><TD><INPUT TYPE='text' NAME='BankRef' VALUE=0 SIZE=13 MAXLENGTH=12></TD></TR>";
-	echo '<TR><TD>' . _('Bank Account No.') . ":</TD><TD><INPUT TYPE='text' NAME='BankAct' SIZE=17 MAXLENGTH=16></TD></TR>";
+	echo '<TR><TD>' . _('Bank Account No') . ":</TD><TD><INPUT TYPE='text' NAME='BankAct' SIZE=17 MAXLENGTH=16></TD></TR>";
 
 	$result=DB_query('SELECT Terms, TermsIndicator FROM PaymentTerms', $db);
 
@@ -483,7 +483,7 @@ if (!isset($SupplierID)) {
 		$_POST['CurrCode'] = $myrow[0];
 	}
 
-	echo '<TR><TD>' . _("Supplier's Currency") . ":</TD><TD><SELECT NAME='CurrCode'>";
+	echo '<TR><TD>' . _("Supplier Currency") . ":</TD><TD><SELECT NAME='CurrCode'>";
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['CurrCode'] == $myrow['CurrAbrev']){
 			echo '<OPTION SELECTED VALUE=' . $myrow['CurrAbrev'] . '>' . $myrow['Currency'];
@@ -559,7 +559,7 @@ if (!isset($SupplierID)) {
 	echo '<TR><TD>' . _('Supplier Since') . ' (' . $DefaultDateFormat ."):</TD><TD><INPUT TYPE='text' NAME='SupplierSince' VALUE=" . $_POST['SupplierSince'] . " SIZE=12 MAXLENGTH=10></TD></TR>";
 	echo '<TR><TD>' . _('Bank Particulars') . ":</TD><TD><INPUT TYPE='text' NAME='BankPartics' SIZE=13 MAXLENGTH=12 VALUE='" . $_POST['BankPartics'] . "'></TD></TR>";
 	echo '<TR><TD>' . _('Bank Reference') . ":</TD><TD><INPUT TYPE='text' NAME='BankRef' SIZE=13 MAXLENGTH=12 VALUE='" . $_POST['BankRef'] . "'></TD></TR>";
-	echo '<TR><TD>' . _('Bank Account No.') . ":</TD><TD><INPUT TYPE='text' NAME='BankAct' SIZE=17 MAXLENGTH=16 VALUE='" . $_POST['BankAct'] . "'></TD></TR>";
+	echo '<TR><TD>' . _('Bank Account No') . ":</TD><TD><INPUT TYPE='text' NAME='BankAct' SIZE=17 MAXLENGTH=16 VALUE='" . $_POST['BankAct'] . "'></TD></TR>";
 
 	$result=DB_query('SELECT Terms, TermsIndicator FROM PaymentTerms', $db);
 
@@ -576,7 +576,7 @@ if (!isset($SupplierID)) {
 
 	$result=DB_query('SELECT Currency, CurrAbrev FROM Currencies', $db);
 
-	echo '</SELECT></TD></TR><TR><TD>' . _("Supplier's Currency") . ":</TD><TD><SELECT NAME='CurrCode'>";
+	echo '</SELECT></TD></TR><TR><TD>' . _("Supplier Currency") . ":</TD><TD><SELECT NAME='CurrCode'>";
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['CurrCode'] == $myrow['CurrAbrev']){
 			echo '<OPTION SELECTED VALUE=' . $myrow['CurrAbrev'] . '>' . $myrow['Currency'];
@@ -624,7 +624,7 @@ if (!isset($SupplierID)) {
 		echo "</TABLE><P><CENTER><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Add These New Supplier Details') . "'></FORM>";
 	} else {
 		echo "</TABLE><P><CENTER><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Update Supplier') . "'>";
-		echo '<P><FONT COLOR=red><B>' . _('WARNING: There is no second warning if you hit the delete button below. However, checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed.') . '<BR></FONT></B>';
+		echo '<P><FONT COLOR=red><B>' . _('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed') . '<BR></FONT></B>';
 		echo "<INPUT TYPE='Submit' NAME='delete' VALUE='" . _('Delete Supplier') . "'></FORM>";
 		echo "<BR><CENTER><A HREF='$rootpath/SupplierContacts.php?" . SID . "SupplierID=$SupplierID'>" . _('Review Contact Details') . '</A></CENTER>';
 	}

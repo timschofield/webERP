@@ -1,9 +1,9 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 	$PageSecurity = 15;
 
 	include('includes/session.inc');
-	$title = ('Special Fixes and Utilities -  Only System Administrator');
+	$title = ('Special Fixes and Utilities') . ' - ' . _('Only System Administrator');
 	include('includes/header.inc');
 
 	echo '<P>' . _('BE VERY CAREFUL DO NOT RUN THESE LINKS BELOW WITHOUT UNDERSTANDING EXACTLY WHAT THEY DO AND THE IMPLICATIONS');

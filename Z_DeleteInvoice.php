@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /* Script to delete an invoice expects and invoice number to delete
 not included on any menu for obvious reasons
 This page must be called directly using path/Z_DeleteInvoice.php?InvoiceNo=?????    !! */
@@ -11,7 +11,7 @@ $title = _('Delete Invoice');
 include('includes/header.inc');
 
 if (!isset($_GET['InvoiceNo'])){
-        prnMsg(_('This page must be called with the InvoiceNo to delete Z_DeleteInvoice.php?InvoiceNo=XX. This page should not be run by non-system administrators'),'info');
+        prnMsg(_('This page must be called with the InvoiceNo to delete Z_DeleteInvoice.php?InvoiceNo=XX') . '. ' . _('This page should not be run by non-system administrators'),'info');
         include('includes/footer.inc');
         exit;
 }
@@ -60,7 +60,7 @@ $SQL = 'DELETE FROM DebtorTrans
                WHERE TransNo =' . $_GET['InvoiceNo'] . '
                AND Type=10';
 $DbgMsg = _('The SQL that failed was');
-$ErrMsg = _('The debtorTrans record could not be deleted - the sql server returned the following error');
+$ErrMsg = _('The debtorTrans record could not be deleted') . ' - ' . _('the sql server returned the following error');
 $Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 prnMsg(_('The debtor transaction record has been deleted'),'info');
@@ -71,9 +71,9 @@ $SQL = 'DELETE FROM OrderDeliveryDifferencesLog
                WHERE OrderNo = '. $ProcessingOrder . '
                AND InvoiceNo = ' . $_GET['InvoiceNo'];
 
-$ErrMsg = _('The SQL to delete the delivery differences record(s) falied because');
+$ErrMsg = _('The SQL to delete the delivery differences records failed because');
 $Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-prnMsg(_('Any order delivery differences record(s) have been deleted'),'info');
+prnMsg(_('Any order delivery differences records have been deleted'),'info');
 
 /*Now reverse updated SalesOrderDetails for the quantities invoiced and the actual dispatch dates. */
 
@@ -84,7 +84,7 @@ foreach ($StockMovement as $OrderLine) {
                                 WHERE OrderNo = ' . $ProcessingOrder . "
                                 AND StkCode = '" . $OrderLine['StockID'] . "'";
 
-	$ErrMsg = _('The SQL to reverse the update of the sales order detail records falied because');
+	$ErrMsg = _('The SQL to reverse the update of the sales order detail records failed because');
 	$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
         prnMsg(_('The sales order records have been updated as not invoiced'),'info');
 /*reverse the update to LocStock */
@@ -109,7 +109,7 @@ Delete Sales Analysis records */
 	$ErrMsg = _('The SQL to delete the sales analysis records failed because');
 
 	$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg,true);
-	prnMsg(_('Sales analysis records deleted - this deleted all sales analysis for the customer/branch and items on this invoice'),'info');
+	prnMsg(_('Sales analysis records deleted') . ' - ' . _('this deleted all sales analysis for the customer/branch and items on this invoice'),'info');
 }
 
 /* Delete the stock movements  */

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity=15;
 
 
@@ -8,7 +8,7 @@ $title=_('Update Pricing');
 include('includes/header.inc');
 
 
-echo '<BR>' . _('This page updates already existing prices for a specified sales type (price list). Choose between updating only  customer special prices where the customer is set up under the price list selected, or all prices under the sales type or just a specific customer\'s prices for the stock category selected');
+echo '<BR>' . _('This page updates already existing prices for a specified sales type (price list)') . '. ' . _('Choose between updating only customer special prices where the customer is set up under the price list selected, or all prices under the sales type or just specific prices for a customer for the stock category selected');
 
 echo "<FORM METHOD='POST' ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 
@@ -37,7 +37,7 @@ echo '<TR><TD>' . _('Category') . ":</TD>
 $sql = 'SELECT CategoryID, CategoryDescription FROM StockCategory';
 
 $ErrMsg = _('The stock categories could not be retrieved because');
-$DbgMsg = _('The SQL used to retrieve stock categories - and failed was');
+$DbgMsg = _('The SQL used to retrieve stock categories and failed was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 while ($myrow=DB_fetch_array($result)){
@@ -71,18 +71,18 @@ echo '</FORM>';
 if (isset($_POST['UpdatePrices']) AND isset($_POST['StkCat'])){
 
 	echo '<BR>' . _('So we are using a price list/sales type of') .' : ' . $_POST['PriceList'];
-	echo '<BR>' . _('and a stock category code  of') . ' : ' . $_POST['StkCat'];
+	echo '<BR>' . _('and a stock category code of') . ' : ' . $_POST['StkCat'];
 	echo '<BR>' . _('and a increase percent of') . ' : ' . $_POST['IncreasePercent'];
 
 	if ($_POST['PriceList']=='0'){
-		echo '<BR>' . _('The price list / sales type to be updated must be selected first');
+		echo '<BR>' . _('The price list/sales type to be updated must be selected first');
 		include ('includes/footer.inc');
 		exit;
 	}
 
 	if (ABS($_POST['IncreasePercent']) < 0.5 OR ABS($_POST['IncreasePercent'])>40 OR !is_numeric($_POST['IncreasePercent'])){
 
-		echo '<BR>' . _('The increase or decrease to be applied is expected to be an integer between 1 and 40 it is not necessary to enter the % sign - the amount is assumed to be a percentage');
+		echo '<BR>' . _('The increase or decrease to be applied is expected to be an integer between 1 and 40 it is not necessary to enter the % sign') . ' - ' . _('the amount is assumed to be a percentage');
 		include ('includes/footer.inc');
 		exit;
 	}

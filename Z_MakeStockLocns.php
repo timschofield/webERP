@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /* Script to make stock locations for all parts that do not have stock location records set up*/
 
 
@@ -34,7 +34,7 @@ while ($myrow=DB_fetch_row($Result)){
 }
 
 echo '<P>';
-prnMsg(_('Any stock items that may not have had stock location records, have now been given new location stock records'),'info');
+prnMsg(_('Any stock items that may not have had stock location records have now been given new location stock records'),'info');
 
 include('includes/footer.inc');
 ?>

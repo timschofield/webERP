@@ -1,11 +1,13 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*Script to insert a dummy sales order if one is not already set up - at least one order is needed for the sales order pages to work.
 Also inserts a blank company record if one is not already set up */
 
-$title = "UTILITY PAGE That sets up a new blank company record if not already existing";
 $PageSecurity=15;
 include ("includes/session.inc");
+
+$title = _('UTILITY PAGE That sets up a new blank company record if not already existing');
+
 include("includes/header.inc");
 
 $sql = "SELECT Count(CoyCode) FROM Companies";
@@ -16,7 +18,7 @@ if ($myrow[0]==0){
 	$sql = "INSERT INTO Companies (CoyCode, CoyName) VALUES (1,'Enter company name')";
 	$Result = DB_query($sql,$db);
 } else {
-	echo "<P>An existing company record is set up already. No alterations have been made";
+	echo '<P>' . _('An existing company record is set up already. No alterations have been made');
 	exit;
 }
 
@@ -26,7 +28,25 @@ $sql = "SELECT Count(OrderNo) FROM SalesOrders WHERE DebtorNo='NULL999' AND Bran
 $Result = DB_query($sql,$db);
 $myrow = DB_fetch_row($Result);
 if ($myrow[0]==0){
-	$sql= "INSERT INTO SalesOrders VALUES ( '1', 'NULL999', 'NULL9', '', NULL, NULL, '1900-01-01 00:00:00', '99', '0', '', '', '', NULL, NULL, NULL, '', '0.00', 'NULL9', '0000-00-00 00:00:00')";
+	$sql= "INSERT INTO SalesOrders VALUES ( '1',
+						'NULL999',
+						'NULL9',
+						'',
+						NULL,
+						NULL,
+						'1900-01-01 00:00:00',
+						'99',
+						'0',
+						'',
+						'',
+						'',
+						NULL,
+						NULL,
+						NULL,
+						'',
+						'0.00',
+						'NULL9',
+						'0000-00-00 00:00:00')";
 	$Result = DB_query($sql,$db);
 }
 
@@ -75,9 +95,8 @@ if ($myrow[0]==0){
 }
 
 
-echo "<P>Company record is now available for modification by clicking <A HREF='" . $rootpath . "/CompanyPreferences.php'>this link</A>";
+echo '<P>' . _('Company record is now available for modification by clicking') . " <A HREF='" . $rootpath . "/CompanyPreferences.php'>" . _('this link') . "</A>";
 
 
 include("includes/footer.inc");
 ?>
-

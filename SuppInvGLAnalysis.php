@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -14,7 +14,7 @@ include('includes/header.inc');
 
 
 if (!isset($_SESSION['SuppInv'])){
-	prnMsg( _('To enter a supplier invoice the supplier must first be selected from the supplier selection screen, then the link to enter a supplier invoice must be clicked on'),'info');
+	prnMsg( _('To enter a supplier invoice the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier invoice must be clicked on'),'info');
 	echo '<BR><A HREF="' . $rootpath . '/SelectSupplier.php?' . SID . '">' . _('Select A Supplier to Enter an Invoice For') . '</A>';
 	include('includes/footer.inc');
 	exit;
@@ -41,8 +41,6 @@ if (isset($_GET['Delete'])){
 	$_SESSION['SuppInv']->Remove_GLCodes_From_Trans($_GET['Delete']);
 
 }
-
-
 
 
 /*Show all the selected GLCodes so far from the SESSION['SuppInv']->GLCodes array */

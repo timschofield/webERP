@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -24,59 +24,74 @@ if (isset($_GET['SupplierID'])){
 		unset ( $_SESSION['SuppTrans']->GLCodes);
 		unset ( $_SESSION['SuppTrans']);
 	}
+
+	 if (isset( $_SESSION['SuppTransTmp'])){
+		unset ( $_SESSION['SuppTransTmp']->GRNs);
+		unset ( $_SESSION['SuppTransTmp']->GLCodes);
+		unset ( $_SESSION['SuppTransTmp']);
+	}
 	 Session_register('SuppInv');
 	 $_SESSION['SuppTrans'] = new SuppTrans;
 
 /*Now retrieve supplier information - name, currency, default ex rate, terms, tax rate etc */
 
-	 $sql = "SELECT Suppliers.SuppName, PaymentTerms.Terms, PaymentTerms.DaysBeforeDue, PaymentTerms.DayInFollowingMonth, 
-	 		  Suppliers.CurrCode, Currencies.Rate AS ExRate, TaxAuthorities.Description AS TaxDesc, 
-	 		  TaxAuthorities.TaxID, TaxAuthorities.PurchTaxGLAccount AS TaxGLCode 
-	 		  FROM Suppliers, Currencies, PaymentTerms, TaxAuthorities 
-	 		  WHERE Suppliers.TaxAuthority = TaxAuthorities.TaxID 
-	 		  AND Suppliers.CurrCode=Currencies.CurrAbrev 
-	 		  AND Suppliers.PaymentTerms=PaymentTerms.TermsIndicator 
-	 		  AND Suppliers.SupplierID = '" . $_GET['SupplierID'] . "'";
+	 $sql = "SELECT Suppliers.SuppName,
+	 		PaymentTerms.Terms,
+			PaymentTerms.DaysBeforeDue,
+			PaymentTerms.DayInFollowingMonth,
+	 		Suppliers.CurrCode,
+			Currencies.Rate AS ExRate,
+			TaxAuthorities.Description AS TaxDesc,
+	 		TaxAuthorities.TaxID,
+			TaxAuthorities.PurchTaxGLAccount AS TaxGLCode
+	 	FROM Suppliers,
+			Currencies,
+			PaymentTerms,
+			TaxAuthorities
+	 	WHERE Suppliers.TaxAuthority = TaxAuthorities.TaxID
+	 	AND Suppliers.CurrCode=Currencies.CurrAbrev
+	 	AND Suppliers.PaymentTerms=PaymentTerms.TermsIndicator
+	 	AND Suppliers.SupplierID = '" . $_GET['SupplierID'] . "'";
 
 	$ErrMsg = _('The supplier record selected') . ': ' . $_GET['SupplierID'] . ' ' ._('cannot be retrieved because');
-	$DbgMsg = _('The SQL used to retrieve the supplier details (and failed) was');
+	$DbgMsg = _('The SQL used to retrieve the supplier details and failed was');
 
 	$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 
-	 $myrow = DB_fetch_array($result);
+	$myrow = DB_fetch_array($result);
 
-    $_SESSION['SuppTrans']->SupplierName = $myrow['SuppName'];
-	 $_SESSION['SuppTrans']->TermsDescription = $myrow['Terms'];
-	 $_SESSION['SuppTrans']->CurrCode = $myrow['CurrCode'];
-	 $_SESSION['SuppTrans']->ExRate = $myrow['ExRate'];
+	$_SESSION['SuppTrans']->SupplierName = $myrow['SuppName'];
+	$_SESSION['SuppTrans']->TermsDescription = $myrow['Terms'];
+	$_SESSION['SuppTrans']->CurrCode = $myrow['CurrCode'];
+	$_SESSION['SuppTrans']->ExRate = $myrow['ExRate'];
 
-	 if ($myrow['DaysBeforeDue'] == 0){
-	 	 $_SESSION['SuppTrans']->Terms = '1' . $myrow['DayInFollowingMonth'];
-	 } else {
+	if ($myrow['DaysBeforeDue'] == 0){
+		 $_SESSION['SuppTrans']->Terms = '1' . $myrow['DayInFollowingMonth'];
+	} else {
 		 $_SESSION['SuppTrans']->Terms = '0' . $myrow['DaysBeforeDue'];
-	 }
-	 $_SESSION['SuppTrans']->SupplierID = $_GET['SupplierID'];
-	 $_SESSION['SuppTrans']->TaxDescription = $myrow['TaxDesc'];
+	}
+	$_SESSION['SuppTrans']->SupplierID = $_GET['SupplierID'];
+	$_SESSION['SuppTrans']->TaxDescription = $myrow['TaxDesc'];
 
-	 $LocalTaxAuthResult = DB_query("SELECT TaxAuthority FROM Locations WHERE LocCode='" . 
+	$LocalTaxAuthResult = DB_query("SELECT TaxAuthority FROM Locations WHERE LocCode='" .
 	 										  $_SESSION['UserStockLocation'] . "'", $db);
 
-	 $LocalTaxAuthRow = DB_fetch_row($LocalTaxAuthResult);
+	$LocalTaxAuthRow = DB_fetch_row($LocalTaxAuthResult);
 
-	 $_SESSION['SuppTrans']->TaxRate = GetTaxRate($myrow['TaxID'],$LocalTaxAuthRow[0], $DefaultTaxLevel, $db);
-	 $_SESSION['SuppTrans']->TaxGLCode = $myrow['TaxGLCode'];
+	$_SESSION['SuppTrans']->TaxRate = GetTaxRate($myrow['TaxID'],$LocalTaxAuthRow[0], $DefaultTaxLevel, $db);
+	$_SESSION['SuppTrans']->TaxGLCode = $myrow['TaxGLCode'];
 
-	 $CompanyRecord = ReadInCompanyRecord($db);
-	 $_SESSION['SuppTrans']->GLLink_Creditors = $CompanyRecord['GLLink_Creditors'];
-	 $_SESSION['SuppTrans']->GRNAct = $CompanyRecord['GRNAct'];
-	 $_SESSION['SuppTrans']->CreditorsAct = $CompanyRecord['CreditorsAct'];
+	$CompanyRecord = ReadInCompanyRecord($db);
+	$_SESSION['SuppTrans']->GLLink_Creditors = $CompanyRecord['GLLink_Creditors'];
+	$_SESSION['SuppTrans']->GRNAct = $CompanyRecord['GRNAct'];
+	$_SESSION['SuppTrans']->CreditorsAct = $CompanyRecord['CreditorsAct'];
 
-	 $_SESSION['SuppTrans']->InvoiceOrCredit = 'Invoice';
+	$_SESSION['SuppTrans']->InvoiceOrCredit = 'Invoice';
 
 } elseif (!isset( $_SESSION['SuppTrans'])){
 
-	echo '<P>' . _('To enter a supplier invoice the supplier must first be selected from the supplier selection screen.');
+	prnMsg( _('To enter a supplier invoice the supplier must first be selected from the supplier selection screen'),'warn');
 	echo "<BR><A HREF='$rootpath/SelectSupplier.php?" . SID ."'>" . _('Select A Supplier to Enter an Invoice For') . '</A>';
 	exit;
 
@@ -133,24 +148,24 @@ if the link is not active then OvAmount must be entered manually. */
 if ($_POST['GRNS'] == _('Enter Against Goods Recd')){
 	/*This ensures that any changes in the page are stored in the session before calling the grn page */
 	echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . "/SuppInvGRNs.php?" . SID . "'>";
-	echo '<P>' . _('You should automatically be forwarded to the entry of invoices against goods received page.') .
-		  ' ' . _("If this does not happen (if the browser doesn't support META Refresh)") . ' ' . 
+	echo '<P>' . _('You should automatically be forwarded to the entry of invoices against goods received page') .
+		  '. ' . _('If this does not happen') .' (' . _('if the browser does not support META Refresh') . ') ' .
 		  "<A HREF='" . $rootpath . "/SuppInvGRNs.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue') . '.<BR>';
 	exit;
 }
 if ($_POST['Shipts'] == _('Enter Against Shipment')){
 	/*This ensures that any changes in the page are stored in the session before calling the shipments page */
 	echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . "/SuppShiptChgs.php?" . SID . "'>";
-	echo '<P>' . _('You should automatically be forwarded to the entry of invoices against goods received page.') .
-		  ' ' . _("If this does not happen (if the browser doesn't support META Refresh)") . ' ' . 
+	echo '<P>' . _('You should automatically be forwarded to the entry of invoices against goods received page') .
+		  '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' .
 		  "<A HREF='" . $rootpath . "/SuppShiptChgs.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue') . '.<BR>';
 	exit;
 }
 if ($_POST['GL'] == _('Enter General Ledger Analysis')){
 	/*This ensures that any changes in the page are stored in the session before calling the shipments page */
 	echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . "/SuppTransGLAnalysis.php?" . SID . "'>";
-	echo '<P>' . _('You should automatically be forwarded to the entry of invoices against the general ledger page.') .
-		  _("If this does not happen (if the browser doesn't support META Refresh)") . ' ' . 
+	echo '<P>' . _('You should automatically be forwarded to the entry of invoices against the general ledger page') .
+		  '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' .
 		  "<A HREF='" . $rootpath . "/SuppTransGLAnalysis.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue') . '.<BR>';
 	exit;
 }
@@ -158,29 +173,29 @@ if ($_POST['GL'] == _('Enter General Ledger Analysis')){
 /* everything below here only do if a Supplier is selected
    fisrt add a header to show who we are making an invoice for */
 
-echo "<CENTER><TABLE BORDER=2 COLSPAN=4><TR><TD CLASS='tableheader'>" . _('Supplier') . 
-	  "</TD><TD CLASS='tableheader'>" . _('Currency') . 
-	  "</TD><TD CLASS='tableheader'>" . _('Terms'). 
+echo "<CENTER><TABLE BORDER=2 COLSPAN=4><TR><TD CLASS='tableheader'>" . _('Supplier') .
+	  "</TD><TD CLASS='tableheader'>" . _('Currency') .
+	  "</TD><TD CLASS='tableheader'>" . _('Terms').
 	  "</TD><TD CLASS='tableheader'>" . _('Tax Authority') . '</TD></TR>';
 
-echo '<TR><TD><FONT COLOR=blue><B>' . $_SESSION['SuppTrans']->SupplierID . ' - ' . 
-	  $_SESSION['SuppTrans']->SupplierName . '</TD><TD ALIGN=CENTER><FONT COLOR=blue><B>' . 
-	  $_SESSION['SuppTrans']->CurrCode . '</TD><TD><FONT COLOR=blue><B>' . 
-	  $_SESSION['SuppTrans']->TermsDescription . '</TD><TD ALIGN=CENTER><FONT COLOR=blue><B>' . 
-	  $_SESSION['SuppTrans']->TaxDescription . ' (' . (($_SESSION['SuppTrans']->TaxRate)*100) . 
+echo '<TR><TD><FONT COLOR=blue><B>' . $_SESSION['SuppTrans']->SupplierID . ' - ' .
+	  $_SESSION['SuppTrans']->SupplierName . '</TD><TD ALIGN=CENTER><FONT COLOR=blue><B>' .
+	  $_SESSION['SuppTrans']->CurrCode . '</TD><TD><FONT COLOR=blue><B>' .
+	  $_SESSION['SuppTrans']->TermsDescription . '</TD><TD ALIGN=CENTER><FONT COLOR=blue><B>' .
+	  $_SESSION['SuppTrans']->TaxDescription . ' (' . (($_SESSION['SuppTrans']->TaxRate)*100) .
 	  '%)</TD></TR></TABLE></B></FONT>';
 
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 
 echo '<TABLE>';
-echo '<TR><TD>' . _("Supplier's Invoice Reference") . ":</TD>
-	   <TD><FONT SIZE=2><INPUT TYPE=TEXT SIZE=20 MAXLENGTH=20 NAME=SuppReference VALUE='" . 
+echo '<TR><TD>' . _('Supplier Invoice Reference') . ":</TD>
+	   <TD><FONT SIZE=2><INPUT TYPE=TEXT SIZE=20 MAXLENGTH=20 NAME=SuppReference VALUE='" .
 	   $_SESSION['SuppTrans']->SuppReference . "'></TD>";
 
 if (!isset($_SESSION['SuppTrans']->TranDate)){
-	 $_SESSION['SuppTrans']->TranDate= Date($DefaultDateFormat, Mktime(0,0,0,Date("m"),Date("d")-1,Date("y")));
+	 $_SESSION['SuppTrans']->TranDate= Date($DefaultDateFormat, Mktime(0,0,0,Date('m'),Date('d')-1,Date('y')));
 }
-echo '<TD>' . _('Invoice Date (in format') . ' ' . $DefaultDateFormat . ") :</TD>
+echo '<TD>' . _('Invoice Date') . ' (' . _('in format') . ' ' . $DefaultDateFormat . ") :</TD>
 		<TD><INPUT TYPE=TEXT SIZE=11 MAXLENGTH=10 NAME='TranDate' VALUE=" . $_SESSION['SuppTrans']->TranDate . '></TD>';
 
 echo '<TD>' . _('Exchange Rate') . ":</TD>
@@ -203,22 +218,22 @@ if (count( $_SESSION['SuppTrans']->GRNs)>0){   /*if there are any GRNs selected 
 	/*Show all the selected GRNs so far from the SESSION['SuppInv']->GRNs array */
 
 	echo '<TABLE CELLPADDING=2>';
-	$tableheader = "<TR BGCOLOR=#800000><TD CLASS='tableheader'>" . _('Seq #') . "</TD>
-						 <TD CLASS='tableheader'>" . _('Item Code') . "</TD>
-						 <TD CLASS='tableheader'>" . _('Description') . "</TD>
-						 <TD CLASS='tableheader'>" . _('Quantity Charged') . "</TD>
-						 <TD CLASS='tableheader'>" . _('Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TD>
-						 <TD CLASS='tableheader'>" . _('Line Total') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TD></TR>';
+	$tableheader = "<TR BGCOLOR=#800000><TD CLASS='tableheader'>" . _('Seq') . " #</TD>
+			<TD CLASS='tableheader'>" . _('Item Code') . "</TD>
+			<TD CLASS='tableheader'>" . _('Description') . "</TD>
+			<TD CLASS='tableheader'>" . _('Quantity Charged') . "</TD>
+			<TD CLASS='tableheader'>" . _('Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TD>
+			<TD CLASS='tableheader'>" . _('Line Total') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TD></TR>';
 	echo $tableheader;
 
 	$TotalGRNValue = 0;
 
 	foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
-		echo '<TR><TD>' . $EnteredGRN->GRNNo . '</TD><TD>' . $EnteredGRN->ItemCode . 
-			  '</TD><TD>' . $EnteredGRN->ItemDescription . '</TD><TD ALIGN=RIGHT>' . 
-			  number_format($EnteredGRN->This_QuantityInv,2) . '</TD><TD ALIGN=RIGHT>' . 
-			  number_format($EnteredGRN->ChgPrice,2) . '</TD><TD ALIGN=RIGHT>' . 
+		echo '<TR><TD>' . $EnteredGRN->GRNNo . '</TD><TD>' . $EnteredGRN->ItemCode .
+			  '</TD><TD>' . $EnteredGRN->ItemDescription . '</TD><TD ALIGN=RIGHT>' .
+			  number_format($EnteredGRN->This_QuantityInv,2) . '</TD><TD ALIGN=RIGHT>' .
+			  number_format($EnteredGRN->ChgPrice,2) . '</TD><TD ALIGN=RIGHT>' .
 			  number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,2) . '</TD><TD></TR>';
 
 		$TotalGRNValue = $TotalGRNValue + ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv);
@@ -230,23 +245,23 @@ if (count( $_SESSION['SuppTrans']->GRNs)>0){   /*if there are any GRNs selected 
 		}
 	}
 
-	echo '<TR><TD COLSPAN=5 ALIGN=RIGHT><FONT COLOR=blue>' . _('Total Value of Goods Charged') . 
-		  ':</FONT></TD><TD ALIGN=RIGHT><FONT COLOR=blue><U>' . number_format($TotalGRNValue,2) . 
-		  '</U></FONT></TD></TR>';
+	echo '<TR><TD COLSPAN=5 ALIGN=RIGHT><FONT COLOR=blue>' . _('Total Value of Goods Charged') . ':</FONT></TD>
+		<TD ALIGN=RIGHT><FONT COLOR=blue><U>' . number_format($TotalGRNValue,2) . '</U></FONT></TD></TR>';
 	echo '</TABLE>';
 }
 
 if (count( $_SESSION['SuppTrans']->Shipts) > 0){   /*if there are any Shipment charges on the invoice*/
 
 	echo '<TABLE CELLPADDING=2>';
-	$TableHeader = "<TR><TD CLASS='tableheader'>" . _('Shipment') . "</TD><TD CLASS='tableheader'>" . _('Amount') . '</TD></TR>';
+	$TableHeader = "<TR><TD CLASS='tableheader'>" . _('Shipment') . "</TD>
+			<TD CLASS='tableheader'>" . _('Amount') . '</TD></TR>';
 	echo $TableHeader;
 
 	$TotalShiptValue = 0;
 
 	foreach ($_SESSION['SuppTrans']->Shipts as $EnteredShiptRef){
 
-		echo '<TR><TD>' . $EnteredShiptRef->ShiptRef . '</TD><TD ALIGN=RIGHT>' . 
+		echo '<TR><TD>' . $EnteredShiptRef->ShiptRef . '</TD><TD ALIGN=RIGHT>' .
 			  number_format($EnteredShiptRef->Amount,2) . '</TD></TR>';
 
 		$TotalShiptValue = $TotalShiptValue + $EnteredShiptRef->Amount;
@@ -258,9 +273,8 @@ if (count( $_SESSION['SuppTrans']->Shipts) > 0){   /*if there are any Shipment c
 		}
 	}
 
-	echo '<TR><TD COLSPAN=2 ALIGN=RIGHT><FONT SIZE=4 COLOR=blue>' . _('Total') . 
-		  ':</FONT></TD><TD ALIGN=RIGHT><FONT SIZE=4 COLOR=blue><U>' . 
-		  number_format($TotalShiptValue,2) . '</U></FONT></TD></TR>';
+	echo '<TR><TD COLSPAN=2 ALIGN=RIGHT><FONT SIZE=4 COLOR=blue>' . _('Total') . ':</FONT></TD>
+		<TD ALIGN=RIGHT><FONT SIZE=4 COLOR=blue><U>' .  number_format($TotalShiptValue,2) . '</U></FONT></TD></TR>';
 }
 
 
@@ -268,22 +282,21 @@ if ( $_SESSION['SuppTrans']->GLLink_Creditors == 1){
 
 	if (count($_SESSION['SuppTrans']->GLCodes) > 0){
 		echo '<TABLE CELLPADDING=2>';
-		$TableHeader = "<TR><TD CLASS='tableheader'>" . _('Account') . 
-							"</TD><TD CLASS='tableheader'>" . _('Name') . 
-							"</TD><TD CLASS='tableheader'>" . _('Amount') . '<BR>' . _('in') . ' ' . 
-							$_SESSION['SuppTrans']->CurrCode . 
-							"</TD><TD CLASS='tableheader'>" . _('Shipment') . 
-							"</TD><TD CLASS='tableheader'>" . _('Job') . 
-							"</TD><TD class='tableheader'>" . _('Narrative') . '</TD></TR>';
+		$TableHeader = "<TR><TD CLASS='tableheader'>" . _('Account') .
+				"</TD><TD CLASS='tableheader'>" . _('Name') .
+				"</TD><TD CLASS='tableheader'>" . _('Amount') . '<BR>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TD>
+				<TD CLASS='tableheader'>" . _('Shipment') ."</TD>
+				<TD CLASS='tableheader'>" . _('Job') . 	"</TD>
+				<TD class='tableheader'>" . _('Narrative') . '</TD></TR>';
 		echo $TableHeader;
 
 		$TotalGLValue = 0;
 
 		foreach ($_SESSION['SuppTrans']->GLCodes as $EnteredGLCode){
 
-			echo '<TR><TD>' . $EnteredGLCode->GLCode . '</TD><TD>' . $EnteredGLCode->GLActName . 
-				  '</TD><TD ALIGN=RIGHT>' . number_format($EnteredGLCode->Amount,2) . 
-				  '</TD><TD>' . $EnteredGLCode->ShiptRef . '</TD><TD>' .$EnteredGLCode->JobRef . 
+			echo '<TR><TD>' . $EnteredGLCode->GLCode . '</TD><TD>' . $EnteredGLCode->GLActName .
+				  '</TD><TD ALIGN=RIGHT>' . number_format($EnteredGLCode->Amount,2) .
+				  '</TD><TD>' . $EnteredGLCode->ShiptRef . '</TD><TD>' .$EnteredGLCode->JobRef .
 				  '</TD><TD>' . $EnteredGLCode->Narrative . '</TD></TR>';
 
 			$TotalGLValue = $TotalGLValue + $EnteredGLCode->Amount;
@@ -295,9 +308,9 @@ if ( $_SESSION['SuppTrans']->GLLink_Creditors == 1){
 			}
 		}
 
-		echo '<TR><TD COLSPAN=2 ALIGN=RIGHT><FONT SIZE=4 COLOR=blue>' . _('Total') . 
-			  ':</FONT></TD><TD ALIGN=RIGHT><FONT SIZE=4 COLOR=blue><U>' . 
-			  number_format($TotalGLValue,2) . '</U></FONT></TD></TR></TABLE>';
+		echo '<TR><TD COLSPAN=2 ALIGN=RIGHT><FONT SIZE=4 COLOR=blue>' . _('Total') .  ':</FONT></TD>
+				<TD ALIGN=RIGHT><FONT SIZE=4 COLOR=blue><U>' .  number_format($TotalGLValue,2) . '</U></FONT></TD>
+			</TR></TABLE>';
 	}
 
 	if (!isset($TotalGRNValue)){
@@ -310,11 +323,11 @@ if ( $_SESSION['SuppTrans']->GLLink_Creditors == 1){
 		$TotalShiptValue = 0;
 	}
 	 $_SESSION['SuppTrans']->OvAmount = $TotalGRNValue + $TotalGLValue + $TotalShiptValue;
-	echo '<TABLE><TR><TD>' . _("Amount in Supplier's currency") . ':</TD><TD ALIGN=RIGHT>' . 
+	echo '<TABLE><TR><TD>' . _("Amount in supplier currency") . ':</TD><TD ALIGN=RIGHT>' .
 		  number_format( $_SESSION['SuppTrans']->OvAmount,2) . '</TD></TR>';
 } else {
-	echo '<TABLE><TR><TD>' . _("Amount in Supplier's currency") . 
-		  ':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT SIZE=12 MAXLENGTH=10 NAME=OvAmount VALUE=' . 
+	echo '<TABLE><TR><TD>' . _("Amount in supplier currency") .
+		  ':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT SIZE=12 MAXLENGTH=10 NAME=OvAmount VALUE=' .
 		  number_format( $_SESSION['SuppTrans']->OvAmount,2) . '></TD></TR>';
 }
 
@@ -342,12 +355,12 @@ if ($_POST['OverRideTax'] == 'Man'){
 	 	$_SESSION['SuppTrans']->OvGST = round($_POST['OvGST'],2);
 	}
 
-	echo '<TR><TD>' . _('Tax') . ':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT SIZE=12 MAXLENGTH=12 NAME=OvGST VALUE=' . 
+	echo '<TR><TD>' . _('Tax') . ':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT SIZE=12 MAXLENGTH=12 NAME=OvGST VALUE=' .
 		  round( $_SESSION['SuppTrans']->OvGST,2) . '></TD></TR>';
 
 } else {
 
-	echo '<TR><TD>' . _('Tax') . ':</TD><TD ALIGN=RIGHT>' . 
+	echo '<TR><TD>' . _('Tax') . ':</TD><TD ALIGN=RIGHT>' .
 		  number_format( $_SESSION['SuppTrans']->OvGST,2) . '</TD></TR>';
 
 }
@@ -356,7 +369,7 @@ $DisplayTotal = number_format(( $_SESSION['SuppTrans']->OvAmount + $_SESSION['Su
 
 echo '<TR><TD>' . _('Invoice Total') . ':</TD><TD ALIGN=RIGHT><B>' . $DisplayTotal . '</B></TD></TR></TABLE>';
 
-echo '<TABLE><TR><TD>Comments</TD><TD><TEXTAREA NAME=Comments COLS=40 ROWS=2>' .  
+echo '<TABLE><TR><TD>Comments</TD><TD><TEXTAREA NAME=Comments COLS=40 ROWS=2>' .
 	  $_SESSION['SuppTrans']->Comments . '</TEXTAREA></TD></TR></TABLE>';
 
 if ($_POST['PostInvoice'] != _('Enter Invoice') AND $InputError != 1){
@@ -372,41 +385,40 @@ then do the updates and inserts to process the invoice entered */
 	$InputError = False;
 	if ( $_SESSION['SuppTrans']->OvGST + $_SESSION['SuppTrans']->OvAmount <= 0){
 		$InputError = True;
-		echo '<P>' . _('The invoice as entered cannot be processed because the total amount of the invoice is less than or equal to 0! Invoices are expected to have a charge.');
+		prnMsg(_('The invoice as entered cannot be processed because the total amount of the invoice is less than or equal to 0') . '. ' . _('Invoices are expected to have a charge'),'error');
 
 	} elseif (strlen( $_SESSION['SuppTrans']->SuppReference)<1){
 		$InputError = True;
-		echo '<P>' . _('The invoice as entered cannot be processed because the there is no suppliers invoice number or reference entered. The supplier invoice number must be entered.');
+		prnMsg(_('The invoice as entered cannot be processed because the there is no suppliers invoice number or reference entered') . '. ' . _('The supplier invoice number must be entered'),'error');
 
 	} elseif (!is_date( $_SESSION['SuppTrans']->TranDate)){
 		$InputError = True;
-		echo '<P>' . _('The invoice as entered cannot be processed because the invoice date entered is not in the format') . ' ' . $DefaultDateFormat;
+		prnMsg( _('The invoice as entered cannot be processed because the invoice date entered is not in the format') . ' ' . $DefaultDateFormat,'error');
 
 	} elseif (DateDiff(Date($DefaultDateFormat), $_SESSION['SuppTrans']->TranDate, "d") < 0){
 		$InputError = True;
-		echo '<P>' . _('The invoice as entered cannot be processed because the invoice date is after today. Purchase invoices are expected to have a date prior to or today');
+		prnMsg(_('The invoice as entered cannot be processed because the invoice date is after today') . '. ' . _('Purchase invoices are expected to have a date prior to or today'),'error');
 
 	}elseif ( $_SESSION['SuppTrans']->ExRate <= 0){
 		$InputError = True;
-		echo '<P>' . _('The invoice as entered cannot be processed because the exchange rate for the invoice has been entered as a negative or zero number. The exchange rate is expected to show how many of the suppliers currency there are in 1 of the local currency.');
+		prnMsg( _('The invoice as entered cannot be processed because the exchange rate for the invoice has been entered as a negative or zero number') . '. ' . _('The exchange rate is expected to show how many of the suppliers currency there are in 1 of the local currency'),'error');
 
 	}elseif ( $_SESSION['SuppTrans']->OvAmount < round($TotalShiptValue + $TotalGLValue + $TotalGRNValue,2)){
-		echo '<P>' . _('The invoice total as entered is less than the sum of the shipment charges, the general ledger entires (if any) and the charges for goods received. There must be a mistake somewhere, the invoice as entered will not be processed.');
+		prnMsg( _('The invoice total as entered is less than the sum of the shipment charges, the general ledger entires (if any) and the charges for goods received') . '. ' . _('There must be a mistake somewhere, the invoice as entered will not be processed'),'error');
 		$InputError = True;
 
 	} else {
-		$sql = "SELECT Count(*) FROM SuppTrans WHERE SupplierNo='" . $_SESSION['SuppTrans']->SupplierID . 
+		$sql = "SELECT Count(*) FROM SuppTrans WHERE SupplierNo='" . $_SESSION['SuppTrans']->SupplierID .
 				 "' AND SuppTrans.SuppReference='" . $_POST['SuppReference'] . "'";
 
-		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The sql to check for the previous entry of the same invoice failed');
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sql to check for the previous entry of the same invoice failed');
 		$DbgMsg = _('The following SQL to start an SQL transaction was used');
 
 		$result=DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
 
 		$myrow=DB_fetch_row($result);
 		if ($myrow[0] == 1){ /*Transaction reference already entered */
-			echo '<P>' . _('ERROR: The invoice number') . ' : ' . $_POST['SuppReference'] . 
-					' ' . _('has already been entered. It cannot be entered again.');
+			prnMsg( _('The invoice number') . ' : ' . $_POST['SuppReference'] . ' ' . _('has already been entered') . '. ' . _('It cannot be entered again'),'error');
 			$InputError = True;
 		}
 	}
@@ -418,10 +430,10 @@ then do the updates and inserts to process the invoice entered */
 	/*Start an SQL transaction */
 
 		$SQL = "BEGIN";
-		
-		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The database does not support transactions');
+
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The database does not support transactions');
 		$DbgMsg = _('The following SQL to start an SQL transaction was used');
-		
+
 		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 
 		/*Get the next transaction number for internal purposes and the period to post GL transactions in based on the invoice date*/
@@ -456,13 +468,13 @@ then do the updates and inserts to process the invoice entered */
 			/*GL Items are straight forward - just do the debit postings to the GL accounts specified -
 			the credit is to creditors control act  done later for the total invoice value + tax*/
 
-				$SQL = 'INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount, JobRef) VALUES (20, ' . 
-						  $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $EnteredGLCode->GLCode . ", '" . 
-						  $_SESSION['SuppTrans']->SupplierID . ' ' . $EnteredGLCode->Narrative . "', " . 
-						  round($EnteredGLCode->Amount/ $_SESSION['SuppTrans']->ExRate,2) . ", '" . 
+				$SQL = 'INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount, JobRef) VALUES (20, ' .
+						  $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $EnteredGLCode->GLCode . ", '" .
+						  $_SESSION['SuppTrans']->SupplierID . ' ' . $EnteredGLCode->Narrative . "', " .
+						  round($EnteredGLCode->Amount/ $_SESSION['SuppTrans']->ExRate,2) . ", '" .
 						  $EnteredGLCode->JobRef . "')";
 
-				$ErrMsg = _('ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The general ledger transaction could not be added because');
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');
 				$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
@@ -475,14 +487,14 @@ then do the updates and inserts to process the invoice entered */
 			/*shipment postings are also straight forward - just do the debit postings to the GRN suspense account
 			these entries are reversed from the GRN suspense when the shipment is closed*/
 
-				$SQL = 'INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (20, ' . 
-						 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $_SESSION['SuppTrans']->GRNAct . 
-						 ", '" . $_SESSION['SuppTrans']->SupplierID . ' ' . _('Shipment charge against') . ' ' . 
+				$SQL = 'INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (20, ' .
+						 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $_SESSION['SuppTrans']->GRNAct .
+						 ", '" . $_SESSION['SuppTrans']->SupplierID . ' ' . _('Shipment charge against') . ' ' .
 						 $ShiptChg->ShiptRef . "', " . $ShiptChg->Amount/ $_SESSION['SuppTrans']->ExRate . ')';
 
-				$ErrMsg = _('ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The general ledger transaction for the shipment') .
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the shipment') .
 							' ' . $ShiptChg->ShiptRef . ' ' . _('could not be added because');
-				
+
 				$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
@@ -497,14 +509,14 @@ then do the updates and inserts to process the invoice entered */
 				/* enter the GL entry to reverse the GRN suspense entry created on delivery at standard cost used on delivery */
 
 					if ($EnteredGRN->StdCostUnit * $EnteredGRN->This_QuantityInv != 0) {
-						$SQL = 'INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (20, ' . 
-								 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $_SESSION['SuppTrans']->GRNAct . 
-								 ", '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . 
-								 ' - ' . $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' @  ' . 
-								 _('std cost of') . ' ' . $EnteredGRN->StdCostUnit  . "', " . 
+						$SQL = 'INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (20, ' .
+								 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $_SESSION['SuppTrans']->GRNAct .
+								 ", '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo .
+								 ' - ' . $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' @  ' .
+								 _('std cost of') . ' ' . $EnteredGRN->StdCostUnit  . "', " .
 								 $EnteredGRN->StdCostUnit * $EnteredGRN->This_QuantityInv . ')';
 
-						$ErrMsg = _('ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The general ledger transaction could not be added because');
+						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');
 
 						$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
@@ -523,14 +535,14 @@ then do the updates and inserts to process the invoice entered */
 							/*need to get the stock category record for this stock item - this is function in SQL_CommonFunctions.inc */
 							$StockGLCode = GetStockGLCode($EnteredGRN->ItemCode,$db);
 
-							$SQL = 'INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (20, ' . 
-									 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $StockGLCode['PurchPriceVarAct'] . 
-									 ", '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . 
-									 ' - ' . $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' x  ' . _('price var of') . ' ' . 
-									 number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  . 
+							$SQL = 'INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (20, ' .
+									 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $StockGLCode['PurchPriceVarAct'] .
+									 ", '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo .
+									 ' - ' . $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' x  ' . _('price var of') . ' ' .
+									 number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  .
 									 "', " . $PurchPriceVar . ')';
 
-							$ErrMsg = _('ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The general ledger transaction could not be added for the price variance of the stock item, because');
+							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
 							$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
 							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
@@ -541,14 +553,14 @@ then do the updates and inserts to process the invoice entered */
 						order price and the actual invoice price since the std cost was made equal to the order price in local currency at the time
 						the goods were received */
 
-							$SQL = 'INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (20, ' . 
-									 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $EnteredGRN->GLCode . ", '" . 
-									 $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' . 
-									 $EnteredGRN->ItemDescription . ' x ' . $EnteredGRN->This_QuantityInv . ' x  ' . _('price var') . 
-									 ' ' . number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2) . 
+							$SQL = 'INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (20, ' .
+									 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $EnteredGRN->GLCode . ", '" .
+									 $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' .
+									 $EnteredGRN->ItemDescription . ' x ' . $EnteredGRN->This_QuantityInv . ' x  ' . _('price var') .
+									 ' ' . number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2) .
 									 "', " . $PurchPriceVar . ')';
 
-							$ErrMsg = _('ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The general ledger transaction could not be added for the price variance of the stock item, because');
+							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
 
 							$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
@@ -560,15 +572,15 @@ then do the updates and inserts to process the invoice entered */
 				} else {
 					/*then its a purchase order item on a shipment - whole charge amount to GRN suspense pending closure of the shipment when the variance is calculated and the GRN act cleared up for the shipment */
 
-					$SQL = 'INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (20, ' . 
-							 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $_SESSION['SuppTrans']->GRNAct . 
-							 ", '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' . 
-							 $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' @ ' . 
-							 $_SESSION['SuppTrans']->CurrCode . $EnteredGRN->ChgPrice . ' @ ' . _('a rate of') . ' ' . 
-							 $_SESSION['SuppTrans']->ExRate . "', " . 
+					$SQL = 'INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (20, ' .
+							 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $_SESSION['SuppTrans']->GRNAct .
+							 ", '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' .
+							 $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' @ ' .
+							 $_SESSION['SuppTrans']->CurrCode . $EnteredGRN->ChgPrice . ' @ ' . _('a rate of') . ' ' .
+							 $_SESSION['SuppTrans']->ExRate . "', " .
 							 round(($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv) / $_SESSION['SuppTrans']->ExRate,2) . ')';
 
-					$ErrMsg = _('ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The general ledger transaction could not be added because');
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');
 
 					$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
@@ -580,22 +592,22 @@ then do the updates and inserts to process the invoice entered */
 
 			if ($debug == 1 AND ( abs($_SESSION['SuppTrans']->OvAmount/ $_SESSION['SuppTrans']->ExRate) - $LocalTotal) >0.009999){
 
-				echo '<P>' . _('The total posted to the debit accounts is') . ' ' . 
-						$LocalTotal . ' ' . _('but the sum of OvAmount converted at ExRate =') . ' ' . 
+				echo '<P>' . _('The total posted to the debit accounts is') . ' ' .
+						$LocalTotal . ' ' . _('but the sum of OvAmount converted at ExRate') . ' = ' .
 						( $_SESSION['SuppTrans']->OvAmount / $_SESSION['SuppTrans']->ExRate);
 			}
 
 			if ($_SESSION['SuppTrans']->OvGST != 0){
 				/* Now the TAX account */
 
-				$SQL = 'INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (20, ' . 
-						 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $_SESSION['SuppTrans']->TaxGLCode . 
-						 ", '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Inv') . ' ' . 
-						 $_SESSION['SuppTrans']->SuppReference . ' ' . $_SESSION['SuppTrans']->CurrCode . 
-						 $_SESSION['SuppTrans']->OvGST  . ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate . 
+				$SQL = 'INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (20, ' .
+						 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $_SESSION['SuppTrans']->TaxGLCode .
+						 ", '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Inv') . ' ' .
+						 $_SESSION['SuppTrans']->SuppReference . ' ' . $_SESSION['SuppTrans']->CurrCode .
+						 $_SESSION['SuppTrans']->OvGST  . ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate .
 						 "', " . round( $_SESSION['SuppTrans']->OvGST/ $_SESSION['SuppTrans']->ExRate,2) . ')';
 
-				$ErrMsg = _('ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The general ledger transaction for the tax could not be added because');
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the tax could not be added because');
 
 				$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
@@ -604,15 +616,15 @@ then do the updates and inserts to process the invoice entered */
 			}
 			/* Now the control account */
 
-			$SQL = 'INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (20, ' . 
-					 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $_SESSION['SuppTrans']->CreditorsAct . 
-					 ", '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Inv') . ' ' . 
-					 $_SESSION['SuppTrans']->SuppReference . ' ' . $_SESSION['SuppTrans']->CurrCode . 
-					 number_format( $_SESSION['SuppTrans']->OvAmount + $_SESSION['SuppTrans']->OvGST,2)  . 
-					 ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate . "', " . 
+			$SQL = 'INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (20, ' .
+					 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $_SESSION['SuppTrans']->CreditorsAct .
+					 ", '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Inv') . ' ' .
+					 $_SESSION['SuppTrans']->SuppReference . ' ' . $_SESSION['SuppTrans']->CurrCode .
+					 number_format( $_SESSION['SuppTrans']->OvAmount + $_SESSION['SuppTrans']->OvGST,2)  .
+					 ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate . "', " .
 					 -round(($LocalTotal + ( $_SESSION['SuppTrans']->OvGST / $_SESSION['SuppTrans']->ExRate)),2) . ')';
 
-			$ErrMsg = _('ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The general ledger transaction for the control total could not be added because');
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the control total could not be added because');
 
 			$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
@@ -624,10 +636,10 @@ then do the updates and inserts to process the invoice entered */
 
 		$SQL = 'INSERT INTO SuppTrans (TransNo, Type, SupplierNo, SuppReference, TranDate, DueDate, OvAmount, OvGST, Rate, TransText)
 			VALUES ('. $InvoiceNo . ",20 , '" . $_SESSION['SuppTrans']->SupplierID . "', '" . $_SESSION['SuppTrans']->SuppReference . "',
-			'" . $SQLInvoiceDate . "', '" . FormatDateForSQL($_SESSION['SuppTrans']->DueDate) . "', " . round($_SESSION['SuppTrans']->OvAmount,2) . 
+			'" . $SQLInvoiceDate . "', '" . FormatDateForSQL($_SESSION['SuppTrans']->DueDate) . "', " . round($_SESSION['SuppTrans']->OvAmount,2) .
 			', ' . round($_SESSION['SuppTrans']->OvGST,2) . ', ' .  $_SESSION['SuppTrans']->ExRate . ", '" . $_SESSION['SuppTrans']->Comments . "')";
 
-		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The supplier invoice transaction could not be added to the database because');
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The supplier invoice transaction could not be added to the database because');
 
 		$DbgMsg = _('The following SQL to insert the supplier invoice was used');
 
@@ -637,20 +649,20 @@ then do the updates and inserts to process the invoice entered */
 
 		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
-			$SQL = 'UPDATE PurchOrderDetails SET QtyInvoiced = QtyInvoiced + ' . $EnteredGRN->This_QuantityInv . 
+			$SQL = 'UPDATE PurchOrderDetails SET QtyInvoiced = QtyInvoiced + ' . $EnteredGRN->This_QuantityInv .
 					 ', ActPrice = ' . $EnteredGRN->ChgPrice . ' WHERE PODetailItem = ' . $EnteredGRN->PODetailItem;
 
-			$ErrMsg = _('ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The quantity invoiced of the purchase order line could not be updated because');
-			
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity invoiced of the purchase order line could not be updated because');
+
 			$DbgMsg = _('The following SQL to update the purchase order details was used');
 
 			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 
 
-			$SQL = 'UPDATE GRNs SET QuantityInv = QuantityInv + ' . $EnteredGRN->This_QuantityInv . 
+			$SQL = 'UPDATE GRNs SET QuantityInv = QuantityInv + ' . $EnteredGRN->This_QuantityInv .
 					 ' WHERE GRNNo = ' . $EnteredGRN->GRNNo;
-			
-			$ErrMsg = _('ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The quantity invoiced off the goods received record could not be updated because');
+
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity invoiced off the goods received record could not be updated because');
 
 			$DbgMsg = _('The following SQL to update the GRN quantity invoiced was used');
 
@@ -661,13 +673,13 @@ then do the updates and inserts to process the invoice entered */
 
 				/* insert the shipment charge records */
 
-				$SQL = 'INSERT INTO ShipmentCharges (ShiptRef, TransType, TransNo, StockID, Value) VALUES (' . 
-						 $EnteredGRN->ShiptRef . ', 20, ' . $InvoiceNo . ", '" . $EnteredGRN->ItemCode . "', " . 
+				$SQL = 'INSERT INTO ShipmentCharges (ShiptRef, TransType, TransNo, StockID, Value) VALUES (' .
+						 $EnteredGRN->ShiptRef . ', 20, ' . $InvoiceNo . ", '" . $EnteredGRN->ItemCode . "', " .
 						 ($EnteredGRN->This_QuantityInv * $EnteredGRN->ChgPrice) / $_SESSION['SuppTrans']->ExRate . ')';
 
-				$ErrMsg = _('ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The shipment charge record for the shipment') . 
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The shipment charge record for the shipment') .
 							 ' ' . $EnteredGRN->ShiptRef . ' ' . _('could not be added because');
-							 
+
 				$DbgMsg = _('The following SQL to insert the Shipment charge record was used');
 
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
@@ -683,7 +695,7 @@ then do the updates and inserts to process the invoice entered */
 			$SQL = 'INSERT INTO ShipmentCharges (ShiptRef, TransType, TransNo, Value) VALUES (' . 
 					 $ShiptChg->ShiptRef . ', 20, ' . $InvoiceNo . ', ' . $ShiptChg->Amount/ $_SESSION['SuppTrans']->ExRate . ')';
 
-			$ErrMsg = _('ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The shipment charge record for the shipment') . 
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The shipment charge record for the shipment') . 
 						 ' ' . $ShiptChg->ShiptRef . ' ' . _('could not be added because');
 			
 			$DbgMsg = _('The following SQL to insert the Shipment charge record was used');
@@ -695,7 +707,7 @@ then do the updates and inserts to process the invoice entered */
 
 		$SQL="COMMIT";
 		
-		$ErrMsg = _('ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The SQL COMMIT failed because');
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The SQL COMMIT failed because');
 		
 		$DbgMsg = _('The SQL COMMIT failed');
 		
@@ -706,7 +718,7 @@ then do the updates and inserts to process the invoice entered */
 		unset( $_SESSION['SuppTrans']->GLCodes);
 		unset( $_SESSION['SuppTrans']);
 
-		echo '<P>' . _('Supplier invoice number') . ' ' . $InvoiceNo . ' ' . _('has been processed') . '<BR>';
+		prnMsg(_('Supplier invoice number') . ' ' . $InvoiceNo . ' ' . _('has been processed'),'success');
 		echo "<P><A HREF='$rootpath/SelectSupplier.php'>" . _('Enter Another invoice') . '</A>';
 	}
 

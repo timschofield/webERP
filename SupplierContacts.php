@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity=5;
 
@@ -18,8 +18,8 @@ if (isset($_GET['SupplierID'])){
 
 if (!isset($SupplierID)) {
 	echo '<P><P>';
-	prnMsg(_('This page must be called with the supplier code of the supplier for whom you wish to edit the contacts.') . '<BR>' . _('When the page is called from within the system this will always be the case.') .
-			'<BR>' . _('Select a supplier first, then select the link to add/edit/delete contacts.'),'info');
+	prnMsg(_('This page must be called with the supplier code of the supplier for whom you wish to edit the contacts') . '<BR>' . _('When the page is called from within the system this will always be the case') .
+			'<BR>' . _('Select a supplier first, then select the link to add/edit/delete contacts'),'info');
 	include('includes/footer.inc');
 	exit;
 }
@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
 				 "', Fax='" . $_POST['Fax'] . "', Email='" . $_POST['Email'] . "', Mobile = '". $_POST['Mobile'] .
 				 "' WHERE Contact='$SelectedContact' AND SupplierID='$SupplierID'";
 
-		$msg = _('The supplier contact information has been updated.');
+		$msg = _('The supplier contact information has been updated');
 
 	} elseif ($InputError != 1) {
 
@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
 				 $SupplierID . "', '" . $_POST['Contact'] . "', '" . $_POST['Position'] . "', '" . $_POST['Tel'] .
 				 "', '" . $_POST['Fax'] . "', '" . $_POST['Email'] . "', '" . $_POST['Mobile'] . "')";
 
-		$msg = _('The new supplier contact has been added to the database.');
+		$msg = _('The new supplier contact has been added to the database');
 	}
 	//run the SQL from either of the above possibilites
 
@@ -117,7 +117,7 @@ if (!isset($SelectedContact)){
 	echo "<TR><TD CLASS='tableheader'>" . _('Name') . "</TD>
 			<TD CLASS='tableheader'>" . _('Position') . "</TD>
 			<TD CLASS='tableheader'>" . _('Phone No') . "</TD>
-			<TD CLASS='tableheader'>" . _('Fax No') . "</TD><TD CLASS='tableheader'>" . _('E-mail') .
+			<TD CLASS='tableheader'>" . _('Fax No') . "</TD><TD CLASS='tableheader'>" . _('Email') .
 			"</TD></TR>\n";
 
 	do {
@@ -127,7 +127,7 @@ if (!isset($SelectedContact)){
 				<TD>%s</TD>
 				<TD><A HREF='mailto:%s'>%s</TD>
 				<TD><A HREF='%s?SupplierID=%s&SelectedContact=%s'>" . _('Edit') . "</TD>
-				<TD><A HREF='%s?SupplierID=%s&SelectedContact=%s&delete=yes'>" .  _('DELETE') . '</TD>
+				<TD><A HREF='%s?SupplierID=%s&SelectedContact=%s&delete=yes'>" .  _('Delete') . '</TD>
 				</TR>',
 				$myrow[1],
 				$myrow[2],
@@ -196,7 +196,7 @@ if (! isset($_GET['delete'])) {
 		<TD><INPUT TYPE=text NAME='Fax' SIZE=31 MAXLENGTH=30 VALUE='" . $_POST['Fax'] . "'></TD></TR>
 		<TR><TD>" . _('Mobile No') . ":</TD>
 		<TD><INPUT TYPE=text NAME='Mobile' SIZE=31 MAXLENGTH=30 VALUE='" . $_POST['Mobile'] . "'></TD></TR>
-		<TR><TD><A HREF='Mailto:" . $_POST['Email'] . "'>" . _('E-mail') . ":</A></TD>
+		<TR><TD><A HREF='Mailto:" . $_POST['Email'] . "'>" . _('Email') . ":</A></TD>
 		<TD><INPUT TYPE=text NAME='Email' SIZE=31 MAXLENGTH=30 VALUE='" . $_POST['Email'] . "'></TD></TR>
 		</TABLE>";
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of Shipts objects - containing details of all shipment charges for invoicing
 Shipment charges are posted to the debit of GRN suspense if the Creditors - GL link is on
@@ -20,7 +20,7 @@ $title = _('Shipment Charges or Credits');
 include('includes/header.inc');
 
 if (!isset($_SESSION['SuppTrans'])){
-	prnMsg(_('Shipment charges or credits are entered against supplier invoices or credit notes respectively . To enter supplier transactions the supplier must first be selected from the supplier selection screen, then the link to enter a supplier invoice or credit note must be clicked on.'),'info');
+	prnMsg(_('Shipment charges or credits are entered against supplier invoices or credit notes respectively') . '. ' . _('To enter supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier invoice or credit note must be clicked on'),'info');
 	echo "<BR><A HREF='$rootpath/SelectSupplier.php?" . SID ."'>" . _('Select A Supplier') . '</A>';
 	exit;
 	/*It all stops here if there aint no supplier selected and invoice/credit initiated ie $_SESSION['SuppTrans'] started off*/
@@ -36,7 +36,7 @@ if (isset($_POST['AddShiptChgToInvoice'])){
 	}
 
 	if (!is_numeric($_POST['Amount'])){
-		prnMsg(_('The amount entered is not numeric. This shipment charge cannot be added to the invoice'),'error');
+		prnMsg(_('The amount entered is not numeric') . '. ' . _('This shipment charge cannot be added to the invoice'),'error');
 		$InputError = True;
 	}
 

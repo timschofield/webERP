@@ -1,11 +1,13 @@
 <?php
-/* $Revision: 1.2 $ */
-$title = "Issue Stock Items to Work Order";
+/* $Revision: 1.3 $ */
 
 $PageSecurity = 10;
 
 $path_to_root="..";
 include("includes/session.inc");
+
+$title = _('Issue Stock Items to Work Order');
+
 include("includes/header.inc");
 include("includes/DateFunctions.inc");
 
@@ -27,11 +29,11 @@ $input_error = false;
 
 if ($_POST['SetQuantity'] OR $_POST['Process']) {
 	if (!is_numeric($_POST['IssueQuantity'])){
-		echo ("<BR>The quantity to issue entered must be numeric.");
+		echo '<BR>' . _('The quantity to issue entered must be numeric');
 		$input_error = true;
 		$_POST['IssueQuantity'] = 0;
 	} elseif ($_POST['IssueQuantity']<=0){
-		echo ("<BR>The quantity to issue entered must be a positive number greater than zero.");
+		echo '<BR>' . _('The quantity to issue entered must be a positive number greater than zero');
 		$input_error = true;
 		$_POST['IssueQuantity'] = 0;
 	}
@@ -59,7 +61,7 @@ if ($_POST['Process'] AND ($input_error == false)) {
 		$result = DB_query($sql,$db);
     	
     	if (DB_error_no($db) !=0) {
-    		displayError("The work order issues could not be added", $sql);
+    		displayError(_("The work order issues could not be added"), $sql);
 			$SQL = "rollback";
 			$Result = DB_query($SQL,$db);    		
     		exit;
@@ -76,7 +78,7 @@ if ($_POST['Process'] AND ($input_error == false)) {
 			"' WHERE WORef = '" . $_POST['WORef'] . "'";	
 	$result = DB_query($sql,$db);
 	if (DB_error_no($db) !=0) {
-		displayError("The work order could not be updated with the accumulated value issued", $sql);
+		displayError(_("The work order could not be updated with the accumulated value issued"), $sql);
 		$SQL = "rollback";
 		$Result = DB_query($SQL,$db);		
 		exit;
@@ -85,7 +87,7 @@ if ($_POST['Process'] AND ($input_error == false)) {
 	$sql="Commit";
 	$result = DB_query($sql,$db);		
 
-	echo "<CENTER>" . _("The work order issues were successfully added.");
+	echo "<CENTER>" . _("The work order issues were successfully added");
 	echo "<BR>";
 	Hyperlink_NoParams("OutstandingWorkOrders.php", _("Select another Work Order to Issue"));
 	echo "<BR><BR>";
@@ -98,13 +100,13 @@ $sql="SELECT * FROM WorksOrders WHERE WorksOrders.WORef='" . $_POST['WORef'] . "
 $result = DB_query($sql,$db);
 $myrow = DB_fetch_array($result);
 if (strlen($myrow[0])==0) {
-	echo _("The order number sent is not valid.");
+	echo _("The order number sent is not valid");
 	exit;
 }
 
 $_POST['AccumValueIssued'] = $myrow["AccumValueIssued"];
 
-displayHeading(_("Work Order Ref.") . " " . $_POST['WORef']);
+displayHeading(_("Work Order Ref") . " " . $_POST['WORef']);
 
 echo "<CENTER><table $TableStyle>";
 echo "<tr><td class='tableheader'>" . _("Manufactured Item") . "</td><td>" . $myrow["StockID"] . "</td>";
@@ -128,7 +130,7 @@ if ($_POST['IssueQuantity']=='') {
 }
 
 echo "<table>";
-TextInput_TableRowWithInputSubmit(_("Quantity to Issue :"), 'IssueQuantity', $_POST['IssueQuantity'], 12, 12, 'SetQuantity', _("Update"));
+TextInput_TableRowWithInputSubmit(_("Quantity to Issue") . ' ' , 'IssueQuantity', $_POST['IssueQuantity'], 12, 12, 'SetQuantity', _("Update"));
 echo "</table><BR>";
 
 displayWORequirements($_POST['WORef'], $_POST['IssueQuantity']);

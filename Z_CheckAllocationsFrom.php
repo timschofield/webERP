@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 15;
 include ('includes/session.inc');
@@ -57,7 +57,7 @@ if (DB_num_rows($result)>0){
 	}
 	echo '</TABLE>';
 } else {
-	prnMsg(_('There are no inconsistent allocations - all is well!'),'info');
+	prnMsg(_('There are no inconsistent allocations') . ' - ' . _('all is well'),'info');
 }
 
 include('includes/footer.inc');

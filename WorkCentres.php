@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity=9;
 
@@ -142,7 +142,7 @@ or deletion of the records*/
 				<td>%s</td>
 				<td ALIGN=RIGHT>%s</td>
 				<td><a href=\"%s&SelectedWC=%s\">" . _('Edit') . "</td>
-				<td><a href=\"%s&SelectedWC=%s&delete=yes\">" . _('DELETE') ."</td>
+				<td><a href=\"%s&SelectedWC=%s&delete=yes\">" . _('Delete') ."</td>
 				</tr>",
 				$myrow[0],
 				$myrow[1],

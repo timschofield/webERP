@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The password cannot contain the user id'),'error');
 	} elseif ((strlen($_POST['Cust'])>0) AND (strlen($_POST['BranchCode'])==0)) {
 		$InputError = 1;
-		prnMsg(_('If you enter a Customer Code, you must also enter a Branch Code valid for this Customer'),'error');
+		prnMsg(_('If you enter a Customer Code you must also enter a Branch Code valid for this Customer'),'error');
 	}
 
 	if ((strlen($_POST['BranchCode'])>0) AND ($InputError !=1)) {
@@ -167,7 +167,7 @@ if (!isset($SelectedUser)) {
 	echo "<tr><td class='tableheader'>" . _('User Login') . "</td>
 		<td class='tableheader'>" . _('Full Name') . "</td>
 		<td class='tableheader'>" . _('Telephone') . "</td>
-		<td class='tableheader'>" . _('E-mail') . "</td>
+		<td class='tableheader'>" . _('Email') . "</td>
 		<td class='tableheader'>" . _('Customer Code') . "</td>
 		<td class='tableheader'>" . _('Branch Code') . "</td>
 		<td class='tableheader'>" . _('Last Visit') . "</td>
@@ -199,8 +199,8 @@ if (!isset($SelectedUser)) {
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
-			<td><a href=\"%sSelectedUser=%s\">" . _('EDIT') . "</a></td>
-			<td><a href=\"%sSelectedUser=%s&delete=1\">" . _('DELETE') . "</a></td>
+			<td><a href=\"%sSelectedUser=%s\">" . _('Edit') . "</a></td>
+			<td><a href=\"%sSelectedUser=%s&delete=1\">" . _('Delete') . "</a></td>
 			</tr>",
 			$myrow[0],
 			$myrow[1],
@@ -338,9 +338,9 @@ if($_POST['PageSize']=="A3"){
 }
 
 if($_POST['PageSize']=="A3_landscape"){
-	echo "<OPTION SELECTED Value='A3_landscape'>" . _('A3 landscape');
+	echo "<OPTION SELECTED Value='A3_landscape'>" . _('A3') . ' ' . _('landscape');
 } else {
-	echo "<OPTION Value='A3_landscape'>" . _('A3 landscape');
+	echo "<OPTION Value='A3_landscape'>" . _('A3') . ' ' . _('landscape');
 }
 
 if($_POST['PageSize']=="letter"){
@@ -350,9 +350,9 @@ if($_POST['PageSize']=="letter"){
 }
 
 if($_POST['PageSize']=="letter_landscape"){
-	echo "<OPTION SELECTED Value='letter_landscape'>" . _('Letter Landscape');
+	echo "<OPTION SELECTED Value='letter_landscape'>" . _('Letter') . ' ' . _('landscape');
 } else {
-	echo "<OPTION Value='letter_landscape'>" . _('Letter Landscape');
+	echo "<OPTION Value='letter_landscape'>" . _('Letter') . ' ' . _('landscape');
 }
 
 if($_POST['PageSize']=="legal"){
@@ -361,9 +361,9 @@ if($_POST['PageSize']=="legal"){
 	echo "<OPTION Value='legal'>" . _('Legal');
 }
 if($_POST['PageSize']=="legal_landscape"){
-	echo "<OPTION SELECTED Value='legal_landscape'>" . _('Legal landscape');
+	echo "<OPTION SELECTED Value='legal_landscape'>" . _('Legal') . ' ' . _('landscape');
 } else {
-	echo "<OPTION Value='legal_landscape'>" . _('Legal landscape');
+	echo "<OPTION Value='legal_landscape'>" . _('Legal') . ' ' . _('landscape');
 }
 
 echo "</SELECT></TD></TR>";

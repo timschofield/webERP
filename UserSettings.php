@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity=1;
 
@@ -17,12 +17,12 @@ if (isset($_POST['Modify'])) {
 	//first off validate inputs sensible
 	if ($_POST['DisplayRecordsMax'] < 0){
 		$InputError = 1;
-		echo '<BR>' . _('The Maximum Number of Records on Display entered must not be negative.  0 will default to system setting');
+		prnMsg(_('The Maximum Number of Records on Display entered must not be negative') . '. ' . _('0 will default to system setting'),'error');
 	}
 	if ($_POST['pass'] != ''){
 		if ($_POST['pass'] != $_POST['passcheck']){
 			$InputError = 1;
-			echo '<BR>' ._('Sorry the passwords you entered do not match');
+			prnMsg(_('The password and password confirmation fields entered do not match'),'error');
 		}else{
 			$update_pw = 'Y';
 		}
@@ -30,7 +30,7 @@ if (isset($_POST['Modify'])) {
 		if ($_POST['passcheck'] != ''){
 		if ($_POST['pass'] != $_POST['passcheck']){
 			$InputError = 1;
-			echo '<BR>' ._('Sorry the passwords you entered do not match');
+			prnMsg(_('The password and password confirmation fields entered do not match'),'error');
 		}else{
 			$update_pw = 'Y';
 		}
@@ -53,7 +53,7 @@ if (isset($_POST['Modify'])) {
 
 			$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 
-			echo '<BR>' . _('The user settings have been updated.  Be Sure to Remeber your Password for the next time you LogIn!');
+			prnMsg( _('The user settings have been updated') . '. ' . _('Be sure to remember your password for the next time you login'),'success');
 		} else {
 			$sql = "UPDATE WWW_Users
 				SET DisplayRecordsMax=" . $_POST['DisplayRecordsMax'] . ",
@@ -69,7 +69,7 @@ if (isset($_POST['Modify'])) {
 			$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 
 
-			echo '<BR>' . _('The user settings have been updated.');
+			prnMsg(_('The user settings have been updated'),'success');
 		}
 	  // update the session variables to reflect user changes on-the-fly
 		$_SESSION['DisplayRecordsMax'] = $_POST['DisplayRecordsMax'];
@@ -88,18 +88,18 @@ If (!isset($_POST['DisplayRecordsMax'])) {
 
 }
 
-echo '<CENTER><TABLE><TR><TD>' . _('User ID:') . '</TD><TD>';
+echo '<CENTER><TABLE><TR><TD>' . _('User ID') . ':</TD><TD>';
 echo $_SESSION['UserID'] . '</TD></TR>';
 
-echo '<TR><TD>' . _('User Name:') . '</TD><TD>';
+echo '<TR><TD>' . _('User Name') . ':</TD><TD>';
 echo $_SESSION['UsersRealName'] . '</TD></TR>';
 
 echo '<TR>
-	<TD>' . _('Maximum Number of Records to Display:') . "</TD>
+	<TD>' . _('Maximum Number of Records to Display') . ":</TD>
 	<TD><INPUT TYPE='Text' name='DisplayRecordsMax' VALUE=" . $_POST['DisplayRecordsMax'] . " SIZE=32 MAXLENGTH=30></TD>
 	</TR>
 	<TR>
-	<TD>" . _('Language:') . "</TD>
+	<TD>" . _('Language') . ":</TD>
 	<TD><SELECT name='Language'>";
 
 
@@ -144,7 +144,7 @@ echo '</SELECT></TD></TR>
 	<TD><input type='password' name='pass' size=20 value='" .  $_POST['pass'] . "'></TD></TR>
 	<TR><TD>" . _('Confirm Password') . ":</TD>
 	<TD><input type='password' name='passcheck' size=20  value='" . $_POST['passcheck'] . "'></TD></TR>
-	<tr><td colspan=2 align='center'>" . _('If you leave the password boxes empty, your password will not change') . '</td></tr>
+	<tr><td colspan=2 align='center'>" . _('If you leave the password boxes empty your password will not change') . '</td></tr>
 	<TR><TD>' . _('Email') . ':</TD>';
 
 $sql = "SELECT Email from WWW_Users WHERE UserID = '" . $_SESSION['UserID'] . "'";

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*This page adds the total of allocation records and compares this to the recorded allocation total in DebtorTrans table */
 
 $PageSecurity = 2;
@@ -27,16 +27,16 @@ $sql = "SELECT DebtorTrans.ID,
 $result = DB_query($sql,$db);
 
 if (DB_num_rows($result)==0){
-	prnMsg(_('There are no inconsistencies with allocations. All is well!'),'info');
+	prnMsg(_('There are no inconsistencies with allocations') . ' - ' . _('all is well'),'info');
 }
 
 while ($myrow = DB_fetch_array($result)){
 	$AllocToID = $myrow['ID'];
 
-	echo '<BR>' . _('Allocations Made against') . ' ' . $myrow['DebtorNo'] . ' ' . _('Invoice Number') . ': ' . $myrow['TransNo'];
+	echo '<BR>' . _('Allocations made against') . ' ' . $myrow['DebtorNo'] . ' ' . _('Invoice Number') . ': ' . $myrow['TransNo'];
 	echo '<BR>' . _('Orginal Invoice Total') . ': '. $myrow['TotAmt'];
 	echo '<BR>' . _('Total amount recorded as allocated against it') . ': ' . $myrow['Alloc'];
-	echo '<BR>' . _('Total of Allocation records') . ': ' . $myrow['TotalAlloc'];
+	echo '<BR>' . _('Total of allocation records') . ': ' . $myrow['TotalAlloc'];
 
 	$sql = 'SELECT Type,
 			TransNo,

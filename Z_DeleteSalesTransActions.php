@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -47,7 +47,7 @@ if (isset($_POST['ProcessDeletions'])){
 
 
 		$sql = 'UPDATE SysTypes SET TypeNo =0 WHERE TypeID =30';
-		$ErrMsg = _('The SQL to update the transaction number of sales orders has failed, the SQL statement was');
+		$ErrMsg = _('The SQL to update the transaction number of sales orders has failed') . ', ' . _('the SQL statement was');
 		$Result = DB_query($sql,$db,$ErrMsg);
 
 	}
@@ -127,7 +127,8 @@ if (isset($_POST['ProcessDeletions'])){
 		$ErrMsg =_('The SQL to delete all stock movements for the receipt of goods failed because');
 		$Result = DB_query('DELETE FROM StockMoves WHERE Type=25',$db,$ErrMsg);
 
-		$ErrMsg = _('The SQL to reinitialise to 0 the transaction number of stock adjustments and location transfers has failed because');	$Result = DB_query('UPDATE SysTypes SET TypeNo=0 WHERE TypeID =16 OR TypeID=17',$db,$ErrMsg);
+		$ErrMsg = _('The SQL to reinitialise to 0 the transaction number of stock adjustments and location transfers has failed because');
+		$Result = DB_query('UPDATE SysTypes SET TypeNo=0 WHERE TypeID =16 OR TypeID=17',$db,$ErrMsg);
 
 	}
 
