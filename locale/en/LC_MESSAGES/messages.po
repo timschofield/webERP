@@ -1,0 +1,38 @@
+
+#: web-erp/includes/session.inc:59
+msgid "The SQL to retrieve the user details failed because :"
+msgstr ""
+
+#: web-erp/includes/session.inc:60
+msgid "The SQL used was :"
+msgstr ""
+
+#: web-erp/includes/session.inc:85
+msgid "incorrect password"
+msgstr ""
+
+#: web-erp/includes/session.inc:86
+msgid "The user/password combination is not a valid user of the system"
+msgstr ""
+
+#: web-erp/includes/session.inc:88
+msgid ""
+"If you are not an authorized user, please contact the proper personnel to "
+"obtain an account to enable you to use the system."
+msgstr ""
+
+#: web-erp/includes/session.inc:100
+msgid ""
+"Security settings have not been defined for your user account. Please advise "
+"your system administrator"
+msgstr ""
+
+#: web-erp/includes/session.inc:105
+msgid ""
+"The security settings on your account do not permit you to access this "
+"function."
+msgstr ""
+
+#: web-erp/includes/session.inc:106
+msgid "Back To Main Menu"
+msgstr ""
