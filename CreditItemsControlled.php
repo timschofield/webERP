@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 
@@ -25,7 +25,7 @@ if (isset($_GET['StockID'])){
 } else {
 	echo '<CENTER><A HREF="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Select Credit Items'). '</A><BR>';
 	echo '<BR>';
-	prnMsg( _('This page can only be opened if a Line Item on a credit note has been selected. Please do that first') . '.<BR>', 'error');
+	prnMsg( _('This page can only be opened if a Line Item on a credit note has been selected') . '. ' . _('Please do that first'), 'error');
 	echo '</CENTER>';
 	include('includes/footer.inc');
 	exit;
@@ -37,7 +37,7 @@ if (!isset($_SESSION['CreditItems'])) {
 	/* This page can only be called with a credit note entry part entered */
 	echo '<CENTER><A HREF="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Select Credit Items'). '</A><BR>';
 	echo '<BR>';
-	prnMsg( ('This page can only be opened if a controlled credit note line item has been selected. Please do that first'). '.<BR>','error');
+	prnMsg( _('This page can only be opened if a controlled credit note line item has been selected') . '. ' . _('Please do that first'),'error');
 	echo '</CENTER>';
 	include('includes/footer.inc');
 	exit;
@@ -49,9 +49,9 @@ $LineItem = &$_SESSION['CreditItems']->LineItems[$StockID];
 
 //Make sure this item is really controlled
 if ( $LineItem->Controlled != 1 ){
-	echo '<CENTER><A HREF="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Back To Credit Note Entry').'</A></CENTER>';
+	echo '<CENTER><A HREF="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Back to Credit Note Entry').'</A></CENTER>';
 	echo '<BR>';
-	prnMsg( _('Notice - The line item must be defined as controlled to require input of the batch numbers or serial numbers being credited'),'error');
+	prnMsg( _('Notice') . ' - ' . _('The line item must be defined as controlled to require input of the batch numbers or serial numbers being credited'),'warn');
 	include('includes/footer.inc');
 	exit;
 }
@@ -60,7 +60,7 @@ if ( $LineItem->Controlled != 1 ){
 previous sales to the customer - so that only serial items that previously existed can be credited from the customer. However there are circumstances that could warrant crediting items which were never sold to the
 customer - a bad debt recovery, or a contra for example. Also older serial items may have been purged */
 
-if ($_POST['AddBatches']=='Enter'){
+if (isset($_POST['AddBatches'])){
 
 	for ($i=0;$i < 10;$i++){
 		if(strlen($_POST['SerialNo' . $i]) >0 AND strlen($_POST['SerialNo' . $i]) <21 AND is_numeric($_POST['Qty' .$i])){
@@ -86,7 +86,7 @@ if ($CreditLink == 'Credit_Invoice.php'){
 	echo '<INPUT TYPE=HIDDEN NAME="CreditInvoice" VALUE="Yes">';
 }
 
-echo '<br><a href="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Back To Credit Note Entry'). '</a>';
+echo '<br><a href="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Back to Credit Note Entry'). '</a>';
 
 echo '<br><FONT SIZE=2><B>'. _('Credit of Controlled Item'). ' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' '. _('from') .' '. $_SESSION['Items']->CustomerName . '</B></FONT>';
 

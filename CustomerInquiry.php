@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -12,7 +12,8 @@ include('includes/header.inc');
 // always figure out the SQL required from the inputs available
 
 if(!isset($_GET['CustomerID']) AND !isset($_SESSION['CustomerID'])){
-	echo '<BR>' . _('To display the enquiry a customer must first be selected from the customer selection screen') . "<BR><CENTER><A HREF='". $rootpath . "/SelectCustomer.php?" . SID . "'>" . _('Select a Customer to Inquire On') . '</A></CENTER>';
+	prnMsg(_('To display the enquiry a customer must first be selected from the customer selection screen'),'info');
+	echo "<BR><CENTER><A HREF='". $rootpath . "/SelectCustomer.php?" . SID . "'>" . _('Select a Customer to Inquire On') . '</A></CENTER>';
 	include('includes/footer.inc');
 	exit;
 } else {
@@ -247,7 +248,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 			printf($base_formatstr .
 				$credit_invoice_str .
 				$preview_invoice_str .
-				"<td><A HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>GL<A></td>
+				"<td><A HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('GL') . "<A></td>
 				</tr>",
 				$myrow['TypeName'],
 				$myrow['TransNo'],

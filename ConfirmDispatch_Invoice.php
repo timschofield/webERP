@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
@@ -18,7 +18,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 	/* This page can only be called with an order number for invoicing*/
 	echo '<CENTER><A HREF="' . $rootpath . '/SelectSalesOrder.php?' . SID . '">' . _('Select a sales order to invoice'). '</A></CENTER>';
 	echo '<P><BR><BR>';
-	prnMsg( _('This page can only be opened if an order has been selected. Please select an order first - from the delivery details screen click on Confirm for invoicing'), 'error' );
+	prnMsg( _('This page can only be opened if an order has been selected Please select an order first from the delivery details screen click on Confirm for invoicing'), 'error' );
 	include ('includes/footer.inc');
 	exit;
 
@@ -81,7 +81,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 			AND SalesOrders.OrderNo = ' . $_GET['OrderNumber'];
 
 	$ErrMsg = _('The order cannot be retrieved because');
-	$DbgMsg = _('The SQL to get the order header was:');
+	$DbgMsg = _('The SQL to get the order header was');
 	$GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($GetOrdHdrResult)==1) {
@@ -183,7 +183,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 		} else { /* there are no line items that have a quantity to deliver */
 			echo '<CENTER><A HREF="'. $rootpath. '/SelectSalesOrder.php?' . SID . '">' ._('Select a different sales order to invoice') .'</A></CENTER>';
 			echo '<P>';
-			prnMsg( _('There are no ordered items with a quantity left to deliver. There is nothing left to invoice'));
+			prnMsg( _('There are no ordered items with a quantity left to deliver There is nothing left to invoice'));
 			include('includes/footer.inc');
 			exit;
 
@@ -193,7 +193,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 	} else { /*end if the order was returned sucessfully */
 
 		echo '<P>'.
-		prnMsg( _('This order item could not be retrieved. Please select another order'), 'warn');
+		prnMsg( _('This order item could not be retrieved') . '. ' . _('Please select another order'), 'warn');
 		echo '<CENTER><A HREF="'. $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Select a different sales order to invoice'). '</A></CENTER>';
 		include ('includes/footer.inc');
 		exit;
@@ -227,14 +227,14 @@ echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>
 		<TD class="tableheader">' . _('Item Description' ) . '</TD>
 		<TD class="tableheader">' . _('Ordered') . '</TD>
 		<TD class="tableheader">' . _('Units') . '</TD>
-		<TD class="tableheader">' . _('Already<BR>Sent') . '</TD>
+		<TD class="tableheader">' . _('Already') . '<BR>' . _('Sent') . '</TD>
 		<TD class="tableheader">' . _('This Dispatch') . '</TD>
 		<TD class="tableheader">' . _('Price') . '</TD>
 		<TD class="tableheader">' . _('Discount') . '</TD>
-		<TD class="tableheader">' . _('Total<BR>Excl Tax') . '</TD>
-		<TD class="tableheader">' . _('Tax %<BR>Rate') . '</TD>
-		<TD class="tableheader">' . _('Tax<BR>Amount') . '</TD>
-		<TD class="tableheader">' . _('Total<BR>Incl Tax') . '</TD>
+		<TD class="tableheader">' . _('Total') . '<BR>' . _('Excl Tax') . '</TD>
+		<TD class="tableheader">' . _('Tax') . ' %<BR>' . _('Rate') . '</TD>
+		<TD class="tableheader">' . _('Tax') . '<BR>' . _('Amount') . '</TD>
+		<TD class="tableheader">' . _('Total') . '<BR>' . _('Incl Tax') . '</TD>
 	</TR>';
 
 $_SESSION['Items']->total = 0;
@@ -297,7 +297,7 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 	if ($LnItm->Controlled==1){
 		echo '<TD><a href="' . $rootpath . '/ConfirmDispatchControlled_Invoice.php?' . SID . 'StockID=' . $LnItm->StockID.'">';
 		if ($LnItm->Serialised==1){
-			echo _("Enter Serial No's");
+			echo _("Enter Serial Numbers");
 		} else { /*Just batch/roll/lot control */
 			echo _('Enter Batches');
 		}
@@ -336,21 +336,21 @@ if ($DoFreightCalc==True){
   }
   if (!is_numeric($BestShipper)){
   	$SQL =  "SELECT Shipper_ID FROM Shippers WHERE Shipper_ID=$Default_Shipper";
-	$ErrMsg = '<P>'. _('There was a problem testing for a the default shipper - the SQL that failed was').' <BR>.'. $SQL;
+	$ErrMsg = _('There was a problem testing for a the default shipper because');
 	$TestShipperExists = DB_query($SQL,$db, $ErrMsg);
 	if (DB_num_rows($TestShipperExists)==1){
 		$BestShipper = $Default_Shipper;
 	} else {
 		$SQL =  'SELECT Shipper_ID FROM Shippers';
-		$ErrMsg = '<P>'. _('There was a problem testing for a the default shipper - the SQL that failed was').' <BR>'.$SQL;
+		$ErrMsg = _('There was a problem testing for a the default shipper');
 		$TestShipperExists = DB_query($SQL,$db, $ErrMsg);
 		if (DB_num_rows($TestShipperExists)>=1){
 			$ShipperReturned = DB_fetch_row($TestShipperExists);
 			$BestShipper = $ShipperReturned[0];
 		} else {
 			echo '<P>';
-			prnMsg( _('We have a problem ... there are no shippers defined. Please use the link below to set up shipping freight companies, the system expects the shipping company to be selected or a default freight company to be used').'.');
-			echo '<A HREF="' . $rootpath . 'Shippers.php">'. _('Enter/Amend Freight Companies'). '</A>';
+			prnMsg( _('We have a problem') . ' - ' . _('there are no shippers defined') . '. ' . _('Please use the link below to set up shipping freight companies') . ', ' . _('the system expects the shipping company to be selected or a default freight company to be used').'.');
+			echo '<A HREF="' . $rootpath . 'Shippers.php">'. _('Enter') . '/' . _('Amend Freight Companies'). '</A>';
 		}
 	}
   }
@@ -423,14 +423,19 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		}
 	}
 	if (! $QuantityInvoicedIsPositive){
-		echo '<BR><FONT SIZE=4 COLOR=RED>Error: </FONT>' . _('There are no lines on this order with a quantity to invoice. No further processing has been done');
+		prnMsg( _('There are no lines on this order with a quantity to invoice') . '. ' . _('No further processing has been done'),'error');
 		include('includes/footer.inc');
 		exit;
 	}
 /* Now Get the area where the sale is to from the branches table */
 
-	$SQL = "SELECT Area, DefaultShipVia FROM CustBranch WHERE CustBranch.DebtorNo ='". $_SESSION['Items']->DebtorNo . "' AND CustBranch.BranchCode = '" . $_SESSION['Items']->Branch . "'";
-	$ErrMsg = _('We were unable to load Area where the Sale is to from the BRANCHES table. Please remedy this.');
+	$SQL = "SELECT Area,
+			DefaultShipVia
+		FROM CustBranch
+		WHERE CustBranch.DebtorNo ='". $_SESSION['Items']->DebtorNo . "'
+		AND CustBranch.BranchCode = '" . $_SESSION['Items']->Branch . "'";
+
+	$ErrMsg = _('We were unable to load Area where the Sale is to from the BRANCHES table') . '. ' . _('Please remedy this') . '.';
 	$Result = DB_query($SQL,$db, $ErrMsg);
 	$myrow = DB_fetch_row($Result);
 	$Area = $myrow[0];
@@ -443,14 +448,19 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	if ($CompanyData==0){
 		/*The company data and preferences could not be retrieved for some reason */
 		echo '<P>';
-		prnMsg( _('The company infomation and preferences could not be retrieved - see your system administrator'), 'error');
+		prnMsg( _('The company infomation and preferences could not be retrieved') . ' - ' . _('see your system administrator'), 'error');
 		include('includes/footer.inc');
 		exit;
 	}
 
 /*Now need to check that the order details are the same as they were when they were read into the Items array. If they've changed then someone else may have invoiced them  - as modified for bug pointed out by Sherif 1-7-03*/
 
-	$SQL = "SELECT StkCode, Quantity, QtyInvoiced FROM SalesOrderDetails WHERE Completed=0 AND OrderNo = " . $_SESSION['ProcessingOrder'];
+	$SQL = "SELECT StkCode,
+			Quantity,
+			QtyInvoiced
+		FROM SalesOrderDetails
+		WHERE Completed=0
+		AND OrderNo = " . $_SESSION['ProcessingOrder'];
 
 	$Result = DB_query($SQL,$db);
 
@@ -460,12 +470,12 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 		if ($debug==1){
 			echo '<BR>'.$SQL;
-			echo '<BR>No rows returned by SQL:' . DB_num_rows($Result);
-			echo '<BR>Count of items in the session ' . count($_SESSION['Items']->LineItems);
+			echo '<BR>' . _('Number of rows returned by SQL') . ':' . DB_num_rows($Result);
+			echo '<BR>' . _('Count of items in the session') . ' ' . count($_SESSION['Items']->LineItems);
 		}
 
 		echo '<P>';
-		prnMsg( _('This order has been changed or invoiced since this delivery was started to be confirmed. Processing halted. To enter and confirm this dispatch/invoice the order must be re-selected and re-read again to update the changes made by the other user').'.', 'error');
+		prnMsg( _('This order has been changed or invoiced since this delivery was started to be confirmed') . '. ' . _('Processing halted') . '. ' . _('To enter and confirm this dispatch') . '/' . _('invoice the order must be re-selected and re-read again to update the changes made by the other user').'.', 'error');
 		echo '<BR>';
 
 		echo '<CENTER><A HREF="'. $rootpath/SelectSalesOrder.php.'?' . SID . '">'. _('Select a sales order for confirming deliveries and invoicing'). '</A></CENTER>';
@@ -480,7 +490,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 	while ($myrow = DB_fetch_array($Result)) {
 
-		$stkItm = $myrow["StkCode"];
+		$stkItm = $myrow['StkCode'];
 		if ($_SESSION['Items']->LineItems[$stkItm]->Quantity != $myrow['Quantity'] OR $_SESSION['Items']->LineItems[$stkItm]->QtyInv != $myrow['QtyInvoiced']) {
 
 			echo '<BR>'. _('Orig order for'). ' ' . $myrow['StkCode'] . ' '. _('has a quantity of'). ' ' .
@@ -488,7 +498,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				_('the session shows quantity of'). ' ' . $_SESSION['Items']->LineItems[$stkItm]->Quantity .
 				' ' . _('and quantity invoice of'). ' ' . $_SESSION['Items']->LineItems[$stkItm]->QtyInv;
 
-	                prnMsg( _('This order has been changed or invoiced since this delivery was started to be confirmed. Processing halted. To enter and confirm this dispatch/invoice the order must be re-selected and re-read again to update the changes made by the other user').'.', 'error');
+	                prnMsg( _('This order has been changed or invoiced since this delivery was started to be confirmed') . '. ' . _('Processing halted') . '. ' . _('To enter and confirm this dispatch') . '/' . _('invoice the order must be re-selected and re-read again to update the changes made by the other user').'.', 'error');
         	        echo '<BR>';
 
                 	echo '<CENTER><A HREF="'. $rootpath/SelectSalesOrder.php.'?' . SID . '">'. _('Select a sales order for confirming deliveries and invoicing'). '</A></CENTER>';
@@ -525,8 +535,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 /*Update order header for invoice charged on */
 	$SQL = "UPDATE SalesOrders SET Comments = CONCAT(Comments,' Inv ','" . $InvoiceNo . "') WHERE OrderNo= " . $_SESSION['ProcessingOrder'];
 
-	$ErrMsg = '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The sales order header could not be updated with the invoice number:');
-	$DbgMsg = '<BR>'. _('The following SQL to update the sales order was used:');
+	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order header could not be updated with the invoice number');
+	$DbgMsg = _('The following SQL to update the sales order was used');
 	$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 /*Now insert the DebtorTrans */
@@ -568,8 +578,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			'"  . $_POST['Consignment'] . "'
 		)";
 
-	$ErrMsg = '<BR>' ._('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The debtor transaction record could not be inserted because:');
-	$DbgMsg = '<BR>'. _('The following SQL to insert the debtor transaction record was used:');
+	$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction record could not be inserted because');
+	$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
  	$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 /* If balance of the order cancelled update sales order details quantity. Also insert log records for OrderDeliveryDifferencesLog */
@@ -581,8 +591,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			$SQL = "UPDATE SalesOrderDetails
 				SET Quantity = Quantity - " . ($OrderLine->Quantity - $OrderLine->QtyDispatched) . " WHERE OrderNo = " . $_SESSION['ProcessingOrder'] . " AND StkCode = '" . $OrderLine->StockID . "'";
 
-			$ErrMsg = '<BR>' . _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The sales order detail record could not be updated because:');
-			$Dbgmsg = '<BR>'. _('The following SQL to update the sales order detail record was used:');
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order detail record could not be updated because');
+			$DbgMsg = _('The following SQL to update the sales order detail record was used');
 			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 
@@ -607,8 +617,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						'CAN'
 						)";
 
-				$ErrMsg = '<BR>' ._('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The order delivery differences log record could not be inserted because:');
-				$DbgMsg = '<BR>'. _('The following SQL to insert the order delivery differences record was used:');
+				$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The order delivery differences log record could not be inserted because');
+				$DbgMsg = _('The following SQL to insert the order delivery differences record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 			}
 
@@ -637,8 +647,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					'BO'
 				)";
 
-			$ErrMsg =  '<BR>' . _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The order delivery differences log record could not be inserted because:');
-			$DbgMsg = '<BR>'. _('The following SQL to insert the order delivery differences record was used:');
+			$ErrMsg =  '<BR>' . _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The order delivery differences log record could not be inserted because');
+			$DbgMsg = _('The following SQL to insert the order delivery differences record was used');
 			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 		} /*end of order delivery differences log entries */
 
@@ -663,8 +673,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 			}
 
-			$ErrMsg = '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The sales order detail record could not be updated because:');
-			$DbgMsg = '<BR>'. _('The following SQL to update the sales order detail record was used:');
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order detail record could not be updated because');
+			$DbgMsg = _('The following SQL to update the sales order detail record was used');
 			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 			 /* Update location stock records if not a dummy stock item
@@ -683,7 +693,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					FROM LocStock
 					WHERE LocStock.StockID='" . $OrderLine->StockID . "'
 					AND LocCode= '" . $_SESSION['Items']->Location . "'";
-				$ErrMsg = _('WARNING: Couldn\'t retrieve current location stock');
+				$ErrMsg = _('WARNING') . ': ' . _('Could not retrieve current location stock');
                			$Result = DB_query($SQL, $db, $ErrMsg);
 
 				if (DB_num_rows($Result)==1){
@@ -699,8 +709,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					WHERE LocStock.StockID = '" . $OrderLine->StockID . "'
 					AND LocCode = '" . $_SESSION['Items']->Location . "'";
 
-				$ErrMsg = '<BR>' . _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Location stock record could not be updated because:');
-				$DbgMsg = '<BR>' . _('The following SQL to update the location stock record was used:');
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Location stock record could not be updated because');
+				$DbgMsg = _('The following SQL to update the location stock record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 			} else if ($MBFlag=='A'){ /* its an assembly */
@@ -718,8 +728,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					AND BOM.EffectiveTo > '" . Date("Y-m-d") . "'
 					AND BOM.EffectiveAfter < '" . Date("Y-m-d") . "'";
 
-				$ErrMsg = '<BR>' . _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Could not retrieve assembly components from the database for'). ' '. $OrderLine->StockID . _('because:').' ';
-				$DbgMsg = '<BR>'._('The SQL that failed was:');
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not retrieve assembly components from the database for'). ' '. $OrderLine->StockID . _('because').' ';
+				$DbgMsg = _('The SQL that failed was');
 				$AssResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 				while ($AssParts = DB_fetch_array($AssResult,$db)){
@@ -731,8 +741,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						WHERE LocStock.StockID='" . $AssParts['Component'] . "'
 						AND LocCode= '" . $_SESSION['Items']->Location . "'";
 
-					$ErrMsg = '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Can not retrieve assembly components location stock quantities because :');
-					$DbgMsg = '<BR>'. _('The SQL that failed was:');
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Can not retrieve assembly components location stock quantities because ');
+					$DbgMsg = _('The SQL that failed was');
 					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 	                  		if (DB_num_rows($Result)==1){
 	                  			$LocQtyRow = DB_fetch_row($Result);
@@ -771,8 +781,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 							 0,
 							 " . ($QtyOnHandPrior -($AssParts["Quantity"] * $OrderLine->QtyDispatched)) . "
 						)";
-					$ErrMsg = '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Stock movement records for the assembly components of'). ' '. $OrderLine->StockID . _(' could not be inserted because:');
-					$DbgMsg = '<BR>'. _('The following SQL to insert the assembly components stock movement records was used:');
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records for the assembly components of'). ' '. $OrderLine->StockID . ' ' . _('could not be inserted because');
+					$DbgMsg = _('The following SQL to insert the assembly components stock movement records was used');
 					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 
@@ -781,8 +791,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						WHERE LocStock.StockID = '" . $AssParts["Component"] . "'
 						AND LocCode = '" . $_SESSION['Items']->Location . "'";
 
-					$ErrMsg = '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Location stock record could not be updated for an assembly component because:');
-					$DbgMsg = '<BR>'. _('The following SQL to update the component\'s location stock record was used:');
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Location stock record could not be updated for an assembly component because');
+					$DbgMsg = _('The following SQL to update the locations stock record for the component was used');
 					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 				} /* end of assembly explosion and updates */
 
@@ -870,8 +880,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			}
 
 
-			$ErrMsg = '<BR>' . _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Stock movement records could not be inserted because:');
-			$DbgMsg = '<BR>'._('The following SQL to insert the stock movement records was used:');
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
+			$DbgMsg = _('The following SQL to insert the stock movement records was used');
 			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 /*Get the ID of the StockMove... */
@@ -890,15 +900,15 @@ invoices can have a zero amount but there must be a quantity to invoice */
 							AND LocCode='" . $_SESSION['Items']->Location . "'
 							AND SerialNo='" . $Item->BundleRef . "'";
 
-					$ErrMsg = '<BR>' ._('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock item record could not be updated because:');
-					$DbgMsg = '<BR>' ._('The following SQL to update the serial stock item record was used:');
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
+					$DbgMsg = _('The following SQL to update the serial stock item record was used');
 					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
 					/* now insert the serial stock movement */
 
 					$SQL = "INSERT INTO StockSerialMoves (StockMoveNo, StockID, SerialNo, MoveQty) VALUES (" . $StkMoveNo . ", '" . $OrderLine->StockID . "', '" . $Item->BundleRef . "', " . -$Item->BundleQty . ")";
-					$ErrMsg = '<BR>' . _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock movement record could not be inserted because:');
-					$DbgMsg = '<BR>'. _('The following SQL to insert the serial stock movement records was used:');
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
+					$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
 					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
 				}/* foreach controlled item in the serialitems array */
@@ -906,18 +916,18 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 /*Insert Sales Analysis records */
 
-			$SQL="SELECT Count(*), 
-					StkCategory, 
-					SalesAnalysis.Area, 
-					Salesperson 
-				FROM SalesAnalysis, 
-					CustBranch, 
-					StockMaster 
-				WHERE SalesAnalysis.StkCategory=StockMaster.CategoryID 
-				AND SalesAnalysis.StockID=StockMaster.StockID 
-				AND SalesAnalysis.Cust=CustBranch.DebtorNo 
-				AND SalesAnalysis.CustBranch=CustBranch.BranchCode 
-				AND SalesAnalysis.Area=CustBranch.Area 
+			$SQL="SELECT Count(*),
+					StkCategory,
+					SalesAnalysis.Area,
+					Salesperson
+				FROM SalesAnalysis,
+					CustBranch,
+					StockMaster
+				WHERE SalesAnalysis.StkCategory=StockMaster.CategoryID
+				AND SalesAnalysis.StockID=StockMaster.StockID
+				AND SalesAnalysis.Cust=CustBranch.DebtorNo
+				AND SalesAnalysis.CustBranch=CustBranch.BranchCode
+				AND SalesAnalysis.Area=CustBranch.Area
 				AND SalesAnalysis.Salesperson=CustBranch.Salesman 
 				AND TypeAbbrev ='" . $_SESSION['Items']->DefaultSalesType . "' 
 				AND PeriodNo=" . $PeriodNo . " 
@@ -929,8 +939,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					SalesAnalysis.Area, 
 					Salesperson";
 
-			$ErrMsg = '<BR>'. _('The count of existing Sales analysis records could not run because:');
-			$DbgMsg = '<P>'. _('SQL to count the no of sales analysis records:');
+			$ErrMsg = _('The count of existing Sales analysis records could not run because');
+			$DbgMsg = '<P>'. _('SQL to count the no of sales analysis records');
 			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 			$myrow = DB_fetch_row($Result);
@@ -945,7 +955,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					WHERE SalesAnalysis.Area='" . $myrow[2] . "' 
 					AND SalesAnalysis.Salesperson='" . $myrow[3] . "'
 					AND TypeAbbrev ='" . $_SESSION['Items']->DefaultSalesType . "' 
-					AND PeriodNo = " . $PeriodNo . " 
+					AND PeriodNo = " . $PeriodNo . "
 					AND Cust LIKE '" . $_SESSION['Items']->DebtorNo . "' 
 					AND CustBranch LIKE '" . $_SESSION['Items']->Branch . "' 
 					AND StockID LIKE '" . $OrderLine->StockID . "' 
@@ -972,9 +982,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					SELECT '" . $_SESSION['Items']->DefaultSalesType . "', 
 						" . $PeriodNo . ", 
 						" . ($OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . ", 
-						" . ($OrderLine->StandardCost * $OrderLine->QtyDispatched) . ", 
+						" . ($OrderLine->StandardCost * $OrderLine->QtyDispatched) . ",
 						'" . $_SESSION['Items']->DebtorNo . "', 
-						'" . $_SESSION['Items']->Branch . "', 
+						'" . $_SESSION['Items']->Branch . "',
 						" . $OrderLine->QtyDispatched . ", 
 						" . ($OrderLine->DiscountPercent * $OrderLine->Price * $OrderLine->QtyDispatched / $_SESSION['CurrencyRate']) . ", 
 						'" . $OrderLine->StockID . "', 
@@ -989,8 +999,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					AND CustBranch.BranchCode='" . $_SESSION['Items']->Branch . "'";
 			}
 
-			$ErrMsg = '<BR>' . _('Sales analysis record could not be added or updated because:');
-			$DbgMsg = '<BR>'. _('The following SQL to insert the sales analysis record was used:');
+			$ErrMsg = _('Sales analysis record could not be added or updated because');
+			$DbgMsg = _('The following SQL to insert the sales analysis record was used');
 			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 /* If GLLink_Stock then insert GLTrans to credit stock and debit cost of sales at standard cost*/
@@ -1014,12 +1024,12 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						'" . $DefaultDispatchDate . "', 
 						" . $PeriodNo . ", 
 						" . GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items']->DefaultSalesType, $db) . ", 
-						'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "', 
+						'" . $_SESSION['Items']->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->QtyDispatched . " @ " . $OrderLine->StandardCost . "',
 						" . $OrderLine->StandardCost * $OrderLine->QtyDispatched . "
 					)";
 
-				$ErrMsg = '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The cost of sales GL posting could not be inserted because:');
-				$DbgMsg = '<BR>'. _('The following SQL to insert the GLTrans record was used:');
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The cost of sales GL posting could not be inserted because');
+				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 /*now the stock entry*/
@@ -1031,7 +1041,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 							TranDate, 
 							PeriodNo,
 							Account, 
-							Narrative, 
+							Narrative,
 							Amount
 						) 
 					VALUES (
@@ -1044,8 +1054,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						" . (-$OrderLine->StandardCost * $OrderLine->QtyDispatched) . "
 					)";
 
-				$ErrMsg = '<BR>' . _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The stock side of the cost of sales GL posting could not be inserted because:');
-				$DbgMsg = '<BR>'. _('The following SQL to insert the GLTrans record was used:');
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock side of the cost of sales GL posting could not be inserted because');
+				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 			} /* end of if GL and stock integrated and standard cost !=0 */
 
@@ -1056,9 +1066,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 				$SQL = "INSERT INTO GLTrans (
 							Type, 
-							TypeNo, 
+							TypeNo,
 							TranDate, 
-							PeriodNo, 
+							PeriodNo,
 							Account, 
 							Narrative, 
 							Amount
@@ -1073,8 +1083,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						" . (-$OrderLine->Price * $OrderLine->QtyDispatched/$_SESSION['CurrencyRate']) . "
 					)";
 
-				$ErrMsg = '<BR>' . _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The sales GL posting could not be inserted because:');
-				$DbgMsg = '<BR>' ._('The following SQL to insert the GLTrans record was used:');
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales GL posting could not be inserted because');
+				$DbgMsg = '<BR>' ._('The following SQL to insert the GLTrans record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 				if ($OrderLine->DiscountPercent !=0){
@@ -1098,8 +1108,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 							" . ($OrderLine->Price * $OrderLine->QtyDispatched * $OrderLine->DiscountPercent/$_SESSION['CurrencyRate']) . "
 						)";
 
-					$ErrMsg = '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The sales discount GL posting could not be inserted because:');
-					$DbgMsg = '<BR>'. _('The following SQL to insert the GLTrans record was used:');
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales discount GL posting could not be inserted because');
+					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 				} /*end of if discount !=0 */
 			} /*end of if sales integrated with debtors */
@@ -1131,8 +1141,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						" . (($_SESSION['Items']->total + $_POST['ChargeFreightCost'] + $TaxTotal)/$_SESSION['CurrencyRate']) . "
 					)";
 
-			$ErrMsg = '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The total debtor GL posting could not be inserted because:');
-			$DbgMsg = '<BR>'. _('The following SQL to insert the total debtors control GLTrans record was used:');
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The total debtor GL posting could not be inserted because');
+			$DbgMsg = _('The following SQL to insert the total debtors control GLTrans record was used');
 			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 		}
 
@@ -1140,7 +1150,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 		if ($_POST['ChargeFreightCost'] !=0) {
 			$SQL = "INSERT INTO GLTrans (
-						Type, 
+						Type,
 						TypeNo, 
 						TranDate, 
 						PeriodNo, 
@@ -1158,8 +1168,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					" . (-($_POST['ChargeFreightCost'])/$_SESSION['CurrencyRate']) . "
 				)";
 
-			$ErrMsg = '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The freight GL posting could not be inserted because:');
-			$DbgMsg = '<BR>'. _('The following SQL to insert the GLTrans record was used:');
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The freight GL posting could not be inserted because');
+			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 		}
 		if ($TaxTotal !=0){
@@ -1182,8 +1192,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					" . (-$TaxTotal/$_SESSION['CurrencyRate']) . "
 				)";
 
-			$ErrMsg = '<BR>'. _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The tax GL posting could not be inserted because:');
-			$DbgMsg = '<BR>'. _('The following SQL to insert the GLTrans record was used:');
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The tax GL posting could not be inserted because');
+			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 		}
 	} /*end of if Sales and GL integrated */
@@ -1196,8 +1206,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	unset($_SESSION['ProcessingOrder']);
 
 	echo _('Invoice number'). ' '. $InvoiceNo .' '. _('processed'). '<BR>';
-	echo '<A HREF="'.$rootpath.'/PrintCustTrans.php?' . SID . 'FromTransNo='.$InvoiceNo.'&InvOrCredit=Invoice&PrintPDF=True">'. _('Print this Invoice'). '</A><BR>';
-	echo '<A HREF="'.$rootpath.'/SelectSalesOrder.php?' . SID . '">'. _('Select Another Order For Invoicing'). '</A><BR>';
+	echo '<A HREF="'.$rootpath.'/PrintCustTrans.php?' . SID . 'FromTransNo='.$InvoiceNo.'&InvOrCredit=Invoice&PrintPDF=True">'. _('Print this invoice'). '</A><BR>';
+	echo '<A HREF="'.$rootpath.'/SelectSalesOrder.php?' . SID . '">'. _('Select another order for invoicing'). '</A><BR>';
 	echo '<A HREF="'.$rootpath.'/SelectOrderItems.php?' . SID . 'NewOrder=Yes">'._('Sales Order Entry').'</A><BR>';
 /*end of process invoice */
 
@@ -1205,19 +1215,19 @@ invoices can have a zero amount but there must be a quantity to invoice */
 } else { /*Process Invoice not set so allow input of invoice data */
 
 	echo '<TABLE><TR>
-		<TD>' ._('Date Of Dispatch:'). '</TD>
+		<TD>' ._('Date Of Dispatch'). ':</TD>
 		<TD><INPUT TYPE=text MAXLENGTH=10 SIZE=10 name=DispatchDate value="'.$DefaultDispatchDate.'"></TD>
 	</TR>';
 	echo '<TR>
-		<TD>' . _('Consignment Note Ref:'). '</TD>
+		<TD>' . _('Consignment Note Ref'). ':</TD>
 		<TD><INPUT TYPE=text MAXLENGTH=15 SIZE=15 name=Consignment value="' . $_POST['Consignment'] . '"></TD>
 	</TR>';
 	echo '<TR>
-		<TD>'.('Action For Balance:'). '</TD>
+		<TD>'.('Action For Balance'). ':</TD>
 		<TD><SELECT name=BOPolicy><OPTION SELECTED Value="BO">'._('Automatically put balance on back order').'<OPTION Value="CAN">'._('Cancel any quantites not delivered').'</SELECT></TD>
 	</TR>';
 	echo '<TR>
-		<TD>' ._('Invoice Text'). '</TD>
+		<TD>' ._('Invoice Text'). ':</TD>
 		<TD><TEXTAREA NAME=InvoiceText COLS=31 ROWS=5>' . $_POST['InvoiceText'] . '</TEXTAREA></TD>
 	</TR>';
 

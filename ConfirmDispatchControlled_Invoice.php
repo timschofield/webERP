@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 $PageSecurity = 11;
@@ -15,9 +15,9 @@ if (isset($_GET['StockID'])){
         $StockID = $_POST['StockID'];
 } else {
 	echo '<CENTER><A HREF="' . $rootpath . '/ConfirmDispatch_Invoice.php?' . SID . '">'.
-		_('Select a line Item to Receive').'</A><br>';
+		_('Select a line item to invoice').'</A><br>';
 	echo '<BR>';
-	prnMsg( _('This page can only be opened if a Line Item on a Sales Order has been selected. Please do that first.'),'error');
+	prnMsg( _('This page can only be opened if a line item on a sales order to be invoiced has been selected') . '. ' . _('Please do that first'),'error');
 	echo '</CENTER>';
 	include('includes/footer.inc');
 	exit;
@@ -27,7 +27,7 @@ if (!isset($_SESSION['Items']) OR !isset($_SESSION['ProcessingOrder'])) {
 	/* This page can only be called with a sales order number to invoice */
 	echo '<CENTER><A HREF="' . $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Select a sales order to invoice').
 		'</A><br>';
-	prnMsg( _('This page can only be opened if a purchase order and line item has been selected. Please do that first.').'<BR>','error');
+	prnMsg( _('This page can only be opened if a sales order and line item has been selected Please do that first'),'error');
 	echo '</CENTER>';
 	include('includes/footer.inc');
 	exit;
@@ -40,7 +40,7 @@ $LineItem = &$_SESSION['Items']->LineItems[$StockID];
 
 //Make sure this item is really controlled
 if ( $LineItem->Controlled != 1 ){
-	echo '<CENTER><A HREF="' . $rootpath . '/ConfirmDispatch_Invoice.php?' . SID . '">'. _('Back to The Sales Order'). '</A></CENTER>';
+	echo '<CENTER><A HREF="' . $rootpath . '/ConfirmDispatch_Invoice.php?' . SID . '">'. _('Back to the Sales Order'). '</A></CENTER>';
 	echo '<BR>';
 	prnMsg( _('The line item must be defined as controlled to require input of the batch numbers or serial numbers being sold'),'error');
 	include('includes/footer.inc');
@@ -52,9 +52,9 @@ if ( $LineItem->Controlled != 1 ){
 ********************************************/
 echo '<CENTER>';
 
-echo '<br><a href="'. $rootpath. '/ConfirmDispatch_Invoice.php?' . SID . '">'. _('Back To Confirmation of Dispatch/Invoice'). '</a>';
+echo '<br><a href="'. $rootpath. '/ConfirmDispatch_Invoice.php?' . SID . '">'. _('Back to Confirmation of Dispatch') . '/' . _('Invoice'). '</a>';
 
-echo '<br><FONT SIZE=2><B>'. _('Dispatch  of up to').' '. number_format($LineItem->Quantity-$LineItem->QtyInv, $LineItem->DecimalPlaces). ' '. _('Controlled Item(s)').' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' '. _('on order').' ' . $_SESSION['Items']->OrderNo . ' '. _('to'). ' ' . $_SESSION['Items']->CustomerName . '</B></FONT>';
+echo '<br><FONT SIZE=2><B>'. _('Dispatch of up to').' '. number_format($LineItem->Quantity-$LineItem->QtyInv, $LineItem->DecimalPlaces). ' '. _('Controlled items').' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' '. _('on order').' ' . $_SESSION['Items']->OrderNo . ' '. _('to'). ' ' . $_SESSION['Items']->CustomerName . '</B></FONT>';
 /** vars needed by InputSerialItem : **/
 //$StockID set above...
 $ItemMustExist = true;  /*Can only invoice valid batches/serial numbered items that exist */

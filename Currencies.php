@@ -1,12 +1,12 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 9;
 
-include("includes/session.inc");
+include('includes/session.inc');
 $title = _('Currencies Maintenance');
 
-include("includes/header.inc");
-include("includes/SQL_CommonFunctions.inc");
+include('includes/header.inc');
+include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['SelectedCurrency'])){
     $SelectedCurrency = $_GET['SelectedCurrency'];
@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
         prnMsg(_('The currency abbreviation must be 3 characters or less long'),'error');
     } elseif (!is_real((real) $_POST['ExchangeRate'])){
         $InputError = 1;
-       prnMsg(_('The exchange rate must be numeric.'),'error');
+       prnMsg(_('The exchange rate must be numeric'),'error');
     } elseif (strlen($_POST['CurrencyName']) > 20) {
         $InputError = 1;
         prnMsg(_('The currency name must be 20 characters or less long'),'error');
@@ -51,19 +51,33 @@ if (isset($_POST['submit'])) {
     if (isset($SelectedCurrency) AND $InputError !=1) {
 
         /*SelectedCurrency could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
-        $sql = "UPDATE Currencies SET Currency='" . $_POST['CurrencyName'] . "', Country='". $_POST['Country']. "', HundredsName='" . $_POST['HundredsName'] . "', Rate=" .$_POST['ExchangeRate'] . " WHERE CurrAbrev = '" . $SelectedCurrency . "'";
+        $sql = "UPDATE Currencies SET
+			Currency='" . $_POST['CurrencyName'] . "',
+			Country='". $_POST['Country']. "',
+			HundredsName='" . $_POST['HundredsName'] . "',
+			Rate=" .$_POST['ExchangeRate'] . "
+		WHERE CurrAbrev = '" . $SelectedCurrency . "'";
 
-        $msg = _('The currency definition record has been updated.');
+        $msg = _('The currency definition record has been updated');
     } else if ($InputError !=1) {
 
     /*Selected currencies is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new payment terms form */
-    $sql = "INSERT INTO Currencies (Currency, CurrAbrev, Country, HundredsName, Rate) VALUES ('" . $_POST['CurrencyName'] . "', '" . $_POST['Abbreviation'] . "', '" . $_POST['Country'] . "', '" . $_POST['HundredsName'] .  "', " . $_POST['ExchangeRate'] . ")";
+    $sql = "INSERT INTO Currencies (Currency,
+    					CurrAbrev,
+					Country,
+					HundredsName,
+					Rate)
+			VALUES ('" . $_POST['CurrencyName'] . "',
+				'" . $_POST['Abbreviation'] . "',
+				'" . $_POST['Country'] . "',
+				'" . $_POST['HundredsName'] .  "',
+				" . $_POST['ExchangeRate'] . ")";
 
-    $msg = _('The currency definition record has been added.');
+    $msg = _('The currency definition record has been added');
     }
     //run the SQL from either of the above possibilites
     $result = DB_query($sql,$db);
-    echo prnMsg( $msg,'success');
+    prnMsg( $msg,'success');
     unset($SelectedCurrency);
 
 } elseif (isset($_GET['delete'])) {
@@ -76,27 +90,25 @@ if (isset($_POST['submit'])) {
     $myrow = DB_fetch_row($result);
     if ($myrow[0] > 0)
     {
-        prnMsg(_('Cannot delete this currency, because customer accounts have been created referring to this currency') .
+        prnMsg(_('Cannot delete this currency because customer accounts have been created referring to this currency') .
          	'<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('customer accounts that refer to this currency'),'warn');
-    }
-    else
-    {
+    } else {
         $sql= "SELECT COUNT(*) FROM Suppliers WHERE Suppliers.CurrCode = '$SelectedCurrency'";
         $result = DB_query($sql,$db);
         $myrow = DB_fetch_row($result);
         if ($myrow[0] > 0)
         {
-            prnMsg(_('Cannot delete this currency, because supplier accounts have been created referring to this currency')
+            prnMsg(_('Cannot delete this currency because supplier accounts have been created referring to this currency')
              . '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('supplier accounts that refer to this currency'),'warn');
         } else {
             $sql= "SELECT COUNT(*) FROM BankTrans WHERE BankTrans.CurrCode = '$SelectedCurrency'";
             $result = DB_query($sql,$db);
             $myrow = DB_fetch_row($result);
             if ($myrow[0] > 0){
-                prnMsg(_('Cannot delete this currency, because there are bank transactions that use this currency') .
+                prnMsg(_('Cannot delete this currency because there are bank transactions that use this currency') .
                 '<BR>' . ' ' . _('There are') . ' ' . $myrow[0] . ' ' . _('bank transactions that refer to this currency'),'warn');
             } elseif ($FunctionalCurrency==$SelectedCurrency){
-                prnMsg(_('Cannot delete this currency, because it is the functional currency of the company.'),'warn');
+                prnMsg(_('Cannot delete this currency because it is the functional currency of the company'),'warn');
             } else {
                 //only delete if used in neither customer or supplier, comp prefs, bank trans accounts
                 $sql="DELETE FROM Currencies WHERE CurrAbrev='$SelectedCurrency'";
@@ -115,15 +127,15 @@ then none of the above are true and the list of payment termss will be displayed
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-    $sql = "SELECT Currency, CurrAbrev, Country, HundredsName, Rate FROM Currencies";
+    $sql = 'SELECT Currency, CurrAbrev, Country, HundredsName, Rate FROM Currencies';
     $result = DB_query($sql, $db);
 
-    echo "<CENTER><table border=1>\n";
+    echo '<CENTER><table border=1>';
     echo "<tr><td class='tableheader'>"._('Abbreviation')."</td>
     		<td class='tableheader'>"._('Currency Name')."</td>
 		<td class='tableheader'>"._('Country')."</td>
 		<td class='tableheader'>"._('Hundredths Name')."</td>
-		<td class='tableheader'>"._('Exchange Rate')."</td></tr>\n";
+		<td class='tableheader'>"._('Exchange Rate')."</td></tr>";
 
     $k=0; //row colour counter
     while ($myrow = DB_fetch_row($result)) {
@@ -152,10 +164,10 @@ or deletion of the records*/
 			$myrow[4],
 			$_SERVER['PHP_SELF'] . "?" . SID,
 			$myrow[1],
-			_('EDIT'),
-			$_SERVER['PHP_SELF'] . "?" . SID,
+			_('Edit'),
+			$_SERVER['PHP_SELF'] . '?' . SID,
 			$myrow[1],
-			_('DELETE'));
+			_('Delete'));
         } else {
             printf("<td>%s</td>
 	    		<td>%s</td>
@@ -178,16 +190,16 @@ or deletion of the records*/
 
 
 if (isset($SelectedCurrency)) {
-    echo '<Center><a href=' .$_SERVER['PHP_SELF']  . '?' . SID. '>'._('Show all Currency Definitions').'</a></Center>';
+    echo '<Center><a href=' .$_SERVER['PHP_SELF']  . '?' . SID. '>'._('Show all currency definitions').'</a></Center>';
 }
 
 echo '<BR>';
 
 if (!isset($_GET['delete'])) {
 
-    echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+    echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
-    if (isset($SelectedCurrency) AND $SelectedCurrency!="") {
+    if (isset($SelectedCurrency) AND $SelectedCurrency!='') {
         //editing an existing payment terms
 
         $sql = "SELECT Currency,
@@ -214,30 +226,30 @@ if (!isset($_GET['delete'])) {
         echo "<INPUT TYPE=HIDDEN NAME='SelectedCurrency' VALUE='" . $SelectedCurrency . "'>";
         echo "<INPUT TYPE=HIDDEN NAME='Abbreviation' VALUE='" . $_POST['Abbreviation'] . "'>";
         echo "<CENTER><TABLE><TR>
-			<TD>"._('Currency Abbreviation:').'</TD>
+			<TD>"._('Currency Abbreviation').':</TD>
 			<TD>';
         echo $_POST['Abbreviation'] . '</TD></TR>';
 
     } else { //end of if $SelectedCurrency only do the else when a new record is being entered
 
         echo "<CENTER><TABLE><TR>
-		<TD>"._('Currency Abbreviation:')."</TD>
+		<TD>"._('Currency Abbreviation').":</TD>
 		<TD><input type='Text' name='Abbreviation' value='" . $_POST['Abbreviation'] . "' SIZE=4 MAXLENGTH=3></TD></TR>";
     }
 
-    echo '<TR><TD>'._('Currency Name:').'</TD>';
+    echo '<TR><TD>'._('Currency Name').':</TD>';
     echo '<TD>';
     echo '<INPUT TYPE="text" name="CurrencyName" SIZE=20 MAXLENGTH=20 VALUE=' . $_POST['CurrencyName'] . '>';
     echo '</TD></TR>';
-    echo '<TR><TD>'._('Country:').'</TD>';
+    echo '<TR><TD>'._('Country').':</TD>';
     echo '<TD>';
     echo '<INPUT TYPE="text" name="Country" SIZE=30 MAXLENGTH=50 VALUE=' . $_POST['Country'] . '>';
     echo '</TD></TR>';
-    echo '<TR><TD>'._('Hundredths Name:').'</TD>';
+    echo '<TR><TD>'._('Hundredths Name').':</TD>';
     echo '<TD>';
     echo '<INPUT TYPE="text" name="HundredsName" SIZE=10 MAXLENGTH=15 VALUE='. $_POST['HundredsName'].'>';
     echo '</TD></TR>';
-    echo '<TR><TD>'.('Exchange Rate:').'</TD>';
+    echo '<TR><TD>'.('Exchange Rate').':</TD>';
     echo '<TD>';
     echo '<INPUT TYPE="text" name="ExchangeRate" SIZE=10 MAXLENGTH=9 VALUE='. $_POST['ExchangeRate'].'>';
     echo '</TD></TR>';
@@ -249,5 +261,5 @@ if (!isset($_GET['delete'])) {
 
 } //end if record deleted no point displaying form to add record
 
-include("includes/footer.inc");
+include('includes/footer.inc');
 ?>

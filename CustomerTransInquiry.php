@@ -1,44 +1,44 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 2;
 
-include("includes/session.inc");
+include('includes/session.inc');
 $title = _('Customer Transactions Inquiry');
-include("includes/header.inc");
-include("includes/DateFunctions.inc");
+include('includes/header.inc');
+include('includes/DateFunctions.inc');
 
 
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "' METHOD=POST>";
 
 echo '<CENTER><TABLE CELLPADDING=2><TR>';
 
-echo '<TD>' . _('Type:') . "</TD><TD><SELECT name='TransType'> ";
+echo '<TD>' . _('Type') . ":</TD><TD><SELECT name='TransType'> ";
 
-$sql = "SELECT TypeID, TypeName FROM SysTypes WHERE TypeID >= 10 AND TypeID <= 14";
+$sql = 'SELECT TypeID, TypeName FROM SysTypes WHERE TypeID >= 10 AND TypeID <= 14';
 $resultTypes = DB_query($sql,$db);
 
 while ($myrow=DB_fetch_array($resultTypes)){
 	if (isset($_POST['TransType'])){
-		if ($myrow["TypeID"] == $_POST['TransType']){
-		     echo "<OPTION SELECTED Value='" . $myrow["TypeID"] . "'>" . $myrow["TypeName"];
+		if ($myrow['TypeID'] == $_POST['TransType']){
+		     echo "<OPTION SELECTED Value='" . $myrow['TypeID'] . "'>" . $myrow['TypeName'];
 		} else {
-		     echo "<OPTION Value='" . $myrow["TypeID"] . "'>" . $myrow["TypeName"];
+		     echo "<OPTION Value='" . $myrow['TypeID'] . "'>" . $myrow['TypeName'];
 		}
 	} else {
-		     echo "<OPTION Value='" . $myrow["TypeID"] . "'>" . $myrow["TypeName"];
+		     echo "<OPTION Value='" . $myrow['TypeID'] . "'>" . $myrow['TypeName'];
 	}
 }
-echo "</SELECT></TD>";
+echo '</SELECT></TD>';
 
 if (!isset($_POST['FromDate'])){
-	$_POST['FromDate']=Date($DefaultDateFormat, mktime(0,0,0,Date("m"),1,Date("Y")));
+	$_POST['FromDate']=Date($DefaultDateFormat, mktime(0,0,0,Date('m'),1,Date('Y')));
 }
 if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($DefaultDateFormat);
 }
-echo '<TD>' . _('From:') . "</TD><TD><INPUT TYPE=TEXT NAME='FromDate' MAXLENGTH=10 SIZE=11 VALUE=" . $_POST['FromDate'] . '></TD>';
-echo '<TD>' . _('To:') . "</TD><TD><INPUT TYPE=TEXT NAME='ToDate' MAXLENGTH=10 SIZE=11 VALUE=" . $_POST['ToDate'] . '></TD>';
+echo '<TD>' . _('From') . ":</TD><TD><INPUT TYPE=TEXT NAME='FromDate' MAXLENGTH=10 SIZE=11 VALUE=" . $_POST['FromDate'] . '></TD>';
+echo '<TD>' . _('To') . ":</TD><TD><INPUT TYPE=TEXT NAME='ToDate' MAXLENGTH=10 SIZE=11 VALUE=" . $_POST['ToDate'] . '></TD>';
 
 echo "</TR></TABLE><INPUT TYPE=SUBMIT NAME='ShowResults' VALUE='" . _('Show Transactions') . "'>";
 echo '<HR>';
@@ -108,11 +108,53 @@ if (isset($_POST['ShowResults'])){
 
 		if ($_POST['TransType']==10){ /* invoices */
 
-			printf("$format_base<td><a target='_blank' href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice'><IMG SRC='%s' alt='" . _('Click to preview the invoice') . "'></a></td></tr>", $myrow['TransNo'], ConvertSQLDate($myrow['TranDate']),$myrow['DebtorNo'], $myrow['BranchCode'], $myrow['Reference'], $myrow['InvText'], $myrow['Order_'], $myrow['Rate'], number_format($myrow['TotalAmt'],2),$myrow['CurrCode'], $rootpath, $myrow['TransNo'], $rootpath.'/css/'.$theme.'/images/preview.gif');
+			printf("$format_base
+				<td><a target='_blank' href='%s/PrintCustTrans.php?%&FromTransNo=%s&InvOrCredit=Invoice'><IMG SRC='%s' alt='" . _('Click to preview the invoice') . "'></a></td>
+				</tr>",
+				$myrow['TransNo'],
+				ConvertSQLDate($myrow['TranDate']),
+				$myrow['DebtorNo'],
+				$myrow['BranchCode'],
+				$myrow['Reference'],
+				$myrow['InvText'],
+				$myrow['Order_'],
+				$myrow['Rate'],
+				number_format($myrow['TotalAmt'],2),
+				$myrow['CurrCode'],
+				$rootpath,
+				SID,
+				$myrow['TransNo'],
+				$rootpath.'/css/'.$theme.'/images/preview.gif');
 		} elseif ($_POST['TransType']==11){ /* credit notes */
-			printf("$format_base<td><a target='_blank' href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Credit'><IMG SRC='%s' alt='" . _('Click to preview the credit') . "'></a></td></tr>", $myrow['TransNo'], ConvertSQLDate($myrow['TranDate']),$myrow['DebtorNo'], $myrow['BranchCode'], $myrow['Reference'], $myrow['InvText'], $myrow['Order_'], $myrow['Rate'], number_format($myrow['TotalAmt'],2),$myrow['CurrCode'], $rootpath, $myrow['TransNo'],$rootpath.'/css/'.$theme.'/images/preview.gif');
+			printf("$format_base
+				<td><a target='_blank' href='%s/PrintCustTrans.php?%s&FromTransNo=%s&InvOrCredit=Credit'><IMG SRC='%s' alt='" . _('Click to preview the credit') . "'></a></td>
+				</tr>",
+				$myrow['TransNo'],
+				ConvertSQLDate($myrow['TranDate']),
+				$myrow['DebtorNo'],
+				$myrow['BranchCode'],
+				$myrow['Reference'],
+				$myrow['InvText'],
+				$myrow['Order_'],
+				$myrow['Rate'],
+				number_format($myrow['TotalAmt'],2),
+				$myrow['CurrCode'],
+				$rootpath,
+				SID,
+				$myrow['TransNo'],
+				$rootpath.'/css/'.$theme.'/images/preview.gif');
 		} else {  /* otherwise */
-			printf("$format_base</tr>", $myrow["TransNo"], ConvertSQLDate($myrow["TranDate"]),$myrow["DebtorNo"], $myrow["BranchCode"], $myrow["Reference"], $myrow["InvText"], $myrow["Order_"], $myrow["Rate"], number_format($myrow["TotalAmt"],2),$myrow["CurrCode"]);
+			printf("$format_base</tr>",
+				$myrow['TransNo'],
+				ConvertSQLDate($myrow['TranDate']),
+				$myrow['DebtorNo'],
+				$myrow['BranchCode'],
+				$myrow['Reference'],
+				$myrow['InvText'],
+				$myrow['Order_'],
+				$myrow['Rate'],
+				number_format($myrow['TotalAmt'],2),
+				$myrow['CurrCode']);
 		}
 
 		$RowCounter++;
@@ -127,6 +169,6 @@ if (isset($_POST['ShowResults'])){
  echo '</TABLE>';
 }
 
-include("includes/footer.inc");
+include('includes/footer.inc');
 
 ?>

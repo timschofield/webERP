@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -13,7 +13,7 @@ if (isset($_GET['DebtorNo'])) {
 }
 
 if (!isset($DebtorNo)) {
-	prnMsg(_('This page must be called with the debtor code of the customer for whom you wish to edit the branches for.').' <BR>'._('When the pages is called from within the system this will always be the case.').' <BR>'._('Select a customer first, then select the link to add/edit/delete branches.'),'warn');
+	prnMsg(_('This page must be called with the debtor code of the customer for whom you wish to edit the branches for').'. <BR>'._('When the pages is called from within the system this will always be the case').' <BR>'._('Select a customer first then select the link to add/edit/delete branches'),'warn');
 	include('includes/footer.inc');
 	exit;
 }
@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The estimated delivery days is expected to be a number and a recognised number has not been entered'),'error');
 	} elseif ($_POST['EstDeliveryDays'] >60) {
 		$InputError = 1;
-		prnMsg(_('The estimated delivery days should be a number of days less than 60. A package can be delivered by seafreight anywhere in the world normally in less than 60 days'),'error');
+		prnMsg(_('The estimated delivery days should be a number of days less than 60') . '. ' . _('A package can be delivered by seafreight anywhere in the world normally in less than 60 days'),'error');
 	}
 
 	if (!isset($_POST['EstDeliveryDays']) OR !is_numeric($_POST['EstDeliveryDays'])){
@@ -151,7 +151,7 @@ if (isset($_POST['submit'])) {
 					" . $_POST['DefaultShipVia'] . ",
 					'" . $_POST['CustBranchCode'] ."')";
 
-		$msg = _('Customer branch').' '. $_POST['BrName'] . ' '._('has been added.');
+		$msg = _('Customer branch').' '. $_POST['BrName'] . ' '._('has been added');
 	}
 	//run the SQL from either of the above possibilites
 
@@ -208,7 +208,7 @@ if (isset($_POST['submit'])) {
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			prnMsg(_('Cannot delete this branch because sales analysis records exist for it'),'error');
-			echo '<BR>'._('There are').' ' . $myrow[0] . ' '._('sales analysis records with this Branch Code/customer.');
+			echo '<BR>'._('There are').' ' . $myrow[0] . ' '._('sales analysis records with this Branch Code/customer');
 
 		} else {
 
@@ -217,8 +217,8 @@ if (isset($_POST['submit'])) {
 
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]>0) {
-				prnMsg(_('Cannot delete this branch because sales orders exist for it. Purge old sales orders first'),'warn');
-				echo '<BR>'._('There are').' ' . $myrow[0] . ' '._('sales orders for this Branch/customer.');
+				prnMsg(_('Cannot delete this branch because sales orders exist for it') . '. ' . _('Purge old sales orders first'),'warn');
+				echo '<BR>'._('There are').' ' . $myrow[0] . ' '._('sales orders for this Branch/customer');
 			} else {
 				// Sherifoz 22.06.03 Check if there are any users that refer to this branch code
 				$sql= "SELECT COUNT(*) FROM WWW_Users WHERE WWW_Users.BranchCode='$SelectedBranch' AND WWW_Users.CustomerID = '$DebtorNo'";
@@ -227,12 +227,12 @@ if (isset($_POST['submit'])) {
 				$myrow = DB_fetch_row($result);
 
 				if ($myrow[0]>0) {
-					prnMsg(_('Cannot delete this branch because users exist that refer to it. Purge old users first'),'warn');
-				    echo '<BR>'._('There are').' ' . $myrow[0] . ' '._('users referring to this Branch/customer.');
+					prnMsg(_('Cannot delete this branch because users exist that refer to it') . '. ' . _('Purge old users first'),'warn');
+				    echo '<BR>'._('There are').' ' . $myrow[0] . ' '._('users referring to this Branch/customer');
 				} else {
 
 					$sql="DELETE FROM CustBranch WHERE BranchCode='" . $SelectedBranch . "' AND DebtorNo='" . $DebtorNo . "'";
-					$ErrMsg = _('The branch record could not be deleted - the SQL server returned the following message');
+					$ErrMsg = _('The branch record could not be deleted') . ' - ' . _('the SQL server returned the following message');
     					$result = DB_query($sql,$db,$ErrMsg);
 					if (DB_error_no($db)==0){
 						prnMsg(_('Branch Deleted'),'success');
@@ -282,7 +282,7 @@ if (!isset($SelectedBranch)){
 			<td class='tableheader'>"._('Area')."</td>
 			<td class='tableheader'>"._('Phone No')."</td>
 			<td class='tableheader'>"._('Fax No')."</td>
-			<td class='tableheader'>"._('E-mail')."</td>
+			<td class='tableheader'>"._('Email')."</td>
 			<td class='tableheader'>"._('Tax Auth')."</td></tr>";
 
 		do {
@@ -429,8 +429,9 @@ if (! isset($_GET['delete'])) {
 
 	if (DB_num_rows($result)==0){
 		echo '</TABLE>';
-		echo '<BR><FONT COLOR=RED SIZE=4>'._('Problem Report').':</FONT><BR>'._('There are no sales people defined as yet - customer branches must be allocated to an sales person. Please use the link below to define at least one sales person');
+		prnMsg(_('There are no sales people defined as yet') . ' - ' . _('customer branches must be allocated to a sales person') . '. ' . _('Please use the link below to define at least one sales person'),'error');
 		echo "<BR><A HREF='$rootpath/SalesPeople.php?" . SID . "'>"._('Define Sales People').'</A>';
+		include('includes/footer.inc');
 		exit;
 	}
 
@@ -455,7 +456,7 @@ if (! isset($_GET['delete'])) {
 	echo '<TR><TD>'._('Forward Date After (day in month)').':</TD>';
 	echo '<TD><input type="Text" name="FwdDate" SIZE=4 MAXLENGTH=2 value='. $_POST['FwdDate'].'></TD></TR>';
 
-	echo '<TR><TD>'._('Sales-person').':</TD>';
+	echo '<TR><TD>'._('Salesperson').':</TD>';
 	echo '<TD><SELECT name="Salesman">';
 
 	while ($myrow = DB_fetch_array($result)) {
@@ -476,7 +477,7 @@ if (! isset($_GET['delete'])) {
 	$result = DB_query($sql,$db);
 	if (DB_num_rows($result)==0){
 		echo '</TABLE>';
-		prnMsg(_('There are no areas defined as yet - customer branches must be allocated to an area. Please use the link below to define at least one sales area'),'error');
+		prnMsg(_('There are no areas defined as yet') . ' - ' . _('customer branches must be allocated to an area') . '. ' . _('Please use the link below to define at least one sales area'),'error');
 		echo "<BR><A HREF='$rootpath/Areas.php?" . SID . "'>"._('Define Sales Areas').'</A>';
 		include('includes/footer.inc');
 		exit;
@@ -503,13 +504,13 @@ if (! isset($_GET['delete'])) {
 
 	if (DB_num_rows($result)==0){
 		echo '</TABLE>';
-		prnMsg(_('There are no stock locations defined as yet - customer branches must refer to a default location where stock is normally drawn from. Please use the link below to define at least one stock location'),'error');
+		prnMsg(_('There are no stock locations defined as yet') . ' - ' . _('customer branches must refer to a default location where stock is normally drawn from') . '. ' . _('Please use the link below to define at least one stock location'),'error');
 		echo "<BR><A HREF='$rootpath/Locations.php?" . SID . "'>"._('Define Stock Locations').'</A>';
 		include('includes/footer.inc');
 		exit;
 	}
 
-	echo '<TR><TD>'._('Draw Stock From:').'</TD>';
+	echo '<TR><TD>'._('Draw Stock From').':</TD>';
 	echo '<TD><SELECT name="DefaultLocation">';
 
 	while ($myrow = DB_fetch_array($result)) {
@@ -530,7 +531,7 @@ if (! isset($_GET['delete'])) {
 	echo '<TD><input type="Text" name="FaxNo" SIZE=22 MAXLENGTH=20 value='. $_POST['FaxNo'].'></TD></TR>';
 
 
-	echo '<TR><TD><a href="Mailto:"'. $_POST['Email'].'>'._('E-mail:').'</a></TD>';
+	echo '<TR><TD><a href="Mailto:"'. $_POST['Email'].'>'._('Email').':</a></TD>';
 	echo '<TD><input type="Text" name="Email" SIZE=56 MAXLENGTH=55 value='. $_POST['Email'].'></TD></TR>';
 
 	echo '<TR><TD>'._('Tax Authority').':</TD>';

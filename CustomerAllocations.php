@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*This page can be called with
 
 1. A DebtorTrans ID
@@ -22,7 +22,7 @@ $PageSecurity = 3;
 
 include('includes/session.inc');
 
-$title = _('Customer Receipt/Credit Note Allocations');
+$title = _('Customer Receipt') . '/' . _('Credit Note Allocations');
 
 include('includes/header.inc');
 include('includes/DateFunctions.inc');
@@ -31,7 +31,8 @@ include('includes/SQL_CommonFunctions.inc');
 if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 
 	if (!isset($_SESSION['Alloc'])){
-		prnMsg(_('Allocations can not be processed again. If you hit refresh on this page after having just processed an allocation, try to use the navigation links provided rather than the back button, to avoid this message in future'),'info');
+		prnMsg(_('Allocations can not be processed again') . '. ' . _('If you hit refresh on this page after having just processed an allocation') . ', ' . _('try to use the navigation links provided rather than the back button') . ', ' . _('to avoid this message in future'),'info');
+		include('includes/footer.inc');
 		exit;
 	}
 	//initialise no input errors assumed initially before we test
@@ -53,7 +54,7 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 			$_POST['Amt' . $AllocCounter]=0;
 			}
 			if ($_POST['Amt' . $AllocCounter]<0){
-				prnMsg(_('The entry for the amount to allocate was negative. A positive allocation amount is expected.'),'warn');
+				prnMsg(_('The entry for the amount to allocate was negative') . '. ' . _('A positive allocation amount is expected') . '.','warn');
 				$_POST['Amt' . $AllocCounter]=0;
 			}
 
@@ -102,8 +103,8 @@ if (isset($_POST['UpdateDatabase'])){
 			    need to delete the old allocation record */
 
 				$SQL = 'DELETE FROM CustAllocns WHERE ID = ' . $AllocnItem->PrevAllocRecordID;
-                     		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The existing allocation for').' '. $AllocnItem->TransType .' '. $AllocnItem->TypeNo. ' ' . _('could not be deleted because:');
-                     		$DbgMsg = _('The following SQL to delete the allocation record was used:');
+        			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The existing allocation for').' '. $AllocnItem->TransType .' '. $AllocnItem->TypeNo. ' ' . _('could not be deleted because');
+        			$DbgMsg = _('The following SQL to delete the allocation record was used');
 				$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 			 }
 			 if ($AllocnItem->OrigAlloc != $AllocnItem->AllocAmt){
@@ -120,9 +121,9 @@ if (isset($_POST['UpdateDatabase'])){
 									' . $_SESSION['Alloc']->AllocTrans . ',
 									' . $AllocnItem->ID . ')';
 
-                         		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The customer allocation record for').' '. $AllocnItem->TransType .' '. $AllocnItem->TypeNo. ' ' . _('could not be inserted because:');
-                         		$DbgMsg = _('The following SQL to delete the allocation record was used:');
-				        $Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+           				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The customer allocation record for').' '. $AllocnItem->TransType .' '. $AllocnItem->TypeNo. ' ' . _('could not be inserted because');
+           				$DbgMsg = _('The following SQL to delete the allocation record was used');
+		         		$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 				}
 				$NewAllocTotal = $AllocnItem->PrevAlloc + $AllocnItem->AllocAmt;
 
@@ -137,9 +138,9 @@ if (isset($_POST['UpdateDatabase'])){
 								Settled = ' . $Settled . '
 						WHERE ID = ' . $AllocnItem->ID;
 
-				$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The debtor transaction record could not be modified for the allocation against it because:');
-                     		$DbgMsg = _('The following SQL to delete the allocation record was used:');
-                     		$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction record could not be modified for the allocation against it because');
+        			$DbgMsg = _('The following SQL to delete the allocation record was used');
+        			$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 			 } /*end if the new allocation is different to what it was before */
 
 		}  /*end of the loop through the array of allocations made */
@@ -156,14 +157,15 @@ if (isset($_POST['UpdateDatabase'])){
 
 		$SQL = 'UPDATE DebtorTrans SET Alloc = ' .  -$TotalAllocated . ', DiffOnExch = ' . -$TotalDiffOnExch . ', Settled=' . $Settled . ' WHERE ID = ' . $_POST['AllocTrans'];
 
-        	$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The debtor receipt or credit note transaction could not be modified for the new allocation and exchange difference because:');
-        	$DbgMsg = _('The following SQL to delete the allocation record was used:');
-        	$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+     		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor receipt or credit note transaction could not be modified for the new allocation and exchange difference because');
+     		$DbgMsg = _('The following SQL to delete the allocation record was used');
+     		$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 
 		/*Almost there ... if there is a change in the total diff on exchange
 		 and if the GLLink to debtors is active - need to post diff on exchange to GL */
 		$MovtInDiffOnExch = -$_SESSION['Alloc']->PrevDiffOnExch - $TotalDiffOnExch;
+
 		if ($MovtInDiffOnExch !=0){
 
 			$Coy = ReadInCompanyRecord($db);
@@ -188,9 +190,9 @@ if (isset($_POST['UpdateDatabase'])){
 						'',
 						" . $MovtInDiffOnExch . ')';
 
-              			$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The GL entry for the difference on exchange arising out of this allocation could not be inserted because:');
-              			$DbgMsg = _('The following SQL to delete the allocation record was used:');
-              			$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+           			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL entry for the difference on exchange arising out of this allocation could not be inserted because');
+           			$DbgMsg = _('The following SQL to delete the allocation record was used');
+           			$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 		      		$SQL = 'INSERT INTO GLTrans (Type,
 								TypeNo,
@@ -207,16 +209,16 @@ if (isset($_POST['UpdateDatabase'])){
 							'',
 							" . -$MovtInDiffOnExch . ')';
 
-              			$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The GL entry for the difference on exchange arising out of this allocation could not be inserted because:');
-              			$DbgMsg = _('The following SQL to delete the allocation record was used:');
-              			$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+           			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL entry for the difference on exchange arising out of this allocation could not be inserted because');
+           			$DbgMsg = _('The following SQL to delete the allocation record was used');
+           			$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 			}
 
 		}
 	 /* OK Commit the transaction */
-	$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The updates and insertions arising from this allocation could not be committed to the database:');
-        $DbgMsg = _('The following SQL to delete the allocation record was used:');
-        $Result=DB_query('COMMIT',$db,$ErrMsg,$DbgMsg,true);
+		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The updates and insertions arising from this allocation could not be committed to the database');
+      		$DbgMsg = _('The following SQL to delete the allocation record was used');
+      		$Result=DB_query('COMMIT',$db,$ErrMsg,$DbgMsg,true);
 	/*finally delete the session variables holding all the previous data */
 		unset($_SESSION['Alloc']);
 		unset($_POST['AllocTrans']);
@@ -278,8 +280,8 @@ If (isset($_GET['AllocTrans'])){
 		AND DebtorTrans.DebtorNo = DebtorsMaster.DebtorNo
 		AND DebtorTrans.ID=" . $_POST['AllocTrans'];
 
-	$ErrMsg = _('There was a problem retrieving the information relating the transaction selected. Allocations are unable to proceed.');
-	$DbgMsg = _('The following SQL to delete the allocation record was used:');
+	$ErrMsg = _('There was a problem retrieving the information relating the transaction selected') . '. ' . _('Allocations are unable to proceed') . '.';
+	$DbgMsg = _('The following SQL to delete the allocation record was used');
 	$Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 	$myrow = DB_fetch_array($Result);
@@ -313,8 +315,8 @@ If (isset($_GET['AllocTrans'])){
 		AND DebtorNo='" . $_SESSION['Alloc']->DebtorNo . "'
 		ORDER BY DebtorTrans.ID";
 
-    $ErrMsg = _('There was a problem retrieving the transactions available to allocate to.');
-    $DbgMsg = _('The following SQL to delete the allocation record was used:');
+    $ErrMsg = _('There was a problem retrieving the transactions available to allocate to');
+    $DbgMsg = _('The following SQL to delete the allocation record was used');
     $Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 	while ($myrow=DB_fetch_array($Result)){
@@ -354,8 +356,8 @@ If (isset($_GET['AllocTrans'])){
 		AND DebtorNo='" . $_SESSION['Alloc']->DebtorNo . "'
 		ORDER BY DebtorTrans.ID";
 
-    $ErrMsg = _('There was a problem retrieving the previously allocated transactions for modification.');
-    $DbgMsg = _('The following SQL to delete the allocation record was used:');
+    $ErrMsg = _('There was a problem retrieving the previously allocated transactions for modification');
+    $DbgMsg = _('The following SQL to delete the allocation record was used');
     $Result=DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 	while ($myrow=DB_fetch_array($Result)){
@@ -388,9 +390,9 @@ if (isset($_POST['AllocTrans'])){
         echo '<HR><CENTER><FONT COLOR=BLUE>'._('Allocation of customer'). ' ' . $_SESSION['Alloc']->TransTypeName . ' '._('number').' ' . $_SESSION['Alloc']->TransNo . ' '._('from').' ' . $_SESSION['Alloc']->DebtorNo . ' - <B>' . $_SESSION['Alloc']->CustomerName . '</B>, '._('dated').' ' . $_SESSION['Alloc']->TransDate;
 
         if ($_SESSION['Alloc']->TransExRate!=1){
-	     echo '<BR>'._('Amount in customer\'s currency').' <B>' . number_format(-$_SESSION['Alloc']->TransAmt,2) . '</B><i> ('._('converted into local currency at an exchange rate of'). ' ' . $_SESSION['Alloc']->TransExRate . ')</i><P>';
+	     echo '<BR>'._('Amount in customer currency').' <B>' . number_format(-$_SESSION['Alloc']->TransAmt,2) . '</B><i> ('._('converted into local currency at an exchange rate of'). ' ' . $_SESSION['Alloc']->TransExRate . ')</i><P>';
         } else {
-	     echo '<BR>'._('Transaction total:'). ' <B>' . -$_SESSION['Alloc']->TransAmt . '</B>';
+	     echo '<BR>'._('Transaction total'). ': <B>' . -$_SESSION['Alloc']->TransAmt . '</B>';
         }
 
         echo '<HR>';
@@ -429,10 +431,10 @@ if (isset($_POST['AllocTrans'])){
 	    $YetToAlloc = ($AllocnItem->TransAmount - $AllocnItem->PrevAlloc);
 
 	    echo "<TD>$AllocnItem->TransType</TD>
-	    		<TD>$AllocnItem->TypeNo</TD>
-			<TD ALIGN=RIGHT>$AllocnItem->TransDate</TD>
-			<TD ALIGN=RIGHT>" . number_format($AllocnItem->TransAmount,2) . '</TD>
-			<TD ALIGN=RIGHT>' . number_format($YetToAlloc,2);
+	    	<TD>$AllocnItem->TypeNo</TD>
+		<TD ALIGN=RIGHT>$AllocnItem->TransDate</TD>
+		<TD ALIGN=RIGHT>" . number_format($AllocnItem->TransAmount,2) . '</TD>
+		<TD ALIGN=RIGHT>' . number_format($YetToAlloc,2);
 
 	    if ($AllocnItem->TransAmount < 0) {
 	    	echo '</TD></TR>';
@@ -454,7 +456,7 @@ if (isset($_POST['AllocTrans'])){
 
 
    echo "<TR>
-   		<TD COLSPAN=5 ALIGN=RIGHT><B>"._('Total Allocated:').'</B></TD>
+   		<TD COLSPAN=5 ALIGN=RIGHT><B>"._('Total Allocated').':</B></TD>
 		<TD ALIGN=RIGHT><B><U>' . number_format($TotalAllocated,2) . '</U></B></TD>
 	</TR>';
 
@@ -625,4 +627,3 @@ if (isset($_POST['AllocTrans'])){
 include('includes/footer.inc');
 
 ?>
-

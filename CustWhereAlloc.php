@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -27,7 +27,7 @@ while ($myrow=DB_fetch_array($resultTypes)){
 }
 echo '</SELECT></TD>';
 
-echo '<TD>'._('Transaction Number:')."</TD>
+echo '<TD>'._('Transaction Number').":</TD>
 	<TD><INPUT TYPE=TEXT NAME='TransNo' MAXLENGTH=10 SIZE=10 VALUE=". $_POST['TransNo'] . '></TD>';
 
 echo "</TR></TABLE>
@@ -50,7 +50,7 @@ if (isset($_POST['ShowResults'])){
         $myrow = DB_fetch_array($result);
         $AllocToID = $myrow['ID'];
 
-        echo '<CENTER><FONT SIZE=3><B><BR>'._('Allocations Made against Invoice number') . ' ' . $_POST['TransNo'] . ' '._('Transaction Total:').' '. number_format($myrow['TotAmt'],2) . '</FONT></B>';
+        echo '<CENTER><FONT SIZE=3><B><BR>'._('Allocations made against invoice number') . ' ' . $_POST['TransNo'] . ' '._('Transaction Total').': '. number_format($myrow['TotAmt'],2) . '</FONT></B>';
 
         $sql = "SELECT Type,
 			TransNo,
@@ -64,7 +64,7 @@ if (isset($_POST['ShowResults'])){
 			INNER JOIN CustAllocns ON DebtorTrans.ID=CustAllocns.TransID_AllocFrom
 		WHERE CustAllocns.TransID_AllocTo=". $AllocToID;
 
-        $ErrMsg = _('The customer transactions for the selected criteria could not be retrieved because ');
+        $ErrMsg = _('The customer transactions for the selected criteria could not be retrieved because');
 
         $TransResult = DB_query($sql, $db, $ErrMsg);
 
