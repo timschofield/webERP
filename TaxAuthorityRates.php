@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 // TaxAuthorityRates.php
 //
 // Date     Author
@@ -18,7 +18,7 @@ if (isset($_GET['TaxAuthority'])){
 
 include( "includes/session.inc" );
 include( "includes/header.inc" );
-echo "<!-- \$Revision: 1.1 $ -->";
+echo "<!-- \$Revision: 1.2 $ -->";
 
 if (!isset($TaxAuthority)){
 	echo "<BR>This page can only be called after selecting the tax authority to edit the rates for. Please select the Rates link from the tax authority page.<BR><A HREF='$rootpath/TaxAuthorities.php'>Click Here</A> to go to the Tax Authority page.";

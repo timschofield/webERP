@@ -1,4 +1,6 @@
 <?php
+/* $Revision: 1.2 $ */
+
 if ($_GET['ModifyOrderNumber']) {
 	$title = "Modify Purchase Order " . $_GET['ModifyOrderNumber'];
 } else {

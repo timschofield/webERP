@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 include("includes/DefinePaymentClass.php");
 
 $title = "Payment Entry";

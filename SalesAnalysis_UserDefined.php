@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 include("config.php");
 include("includes/ConnectDB.inc");
 

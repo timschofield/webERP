@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 /* definition of the Journal class */
 
 Class Journal {

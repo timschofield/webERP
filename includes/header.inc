@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.3 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath

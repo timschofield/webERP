@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 $PageSecurity = 3;
 include("includes/SQL_CommonFunctions.inc");
 include("includes/DateFunctions.inc");

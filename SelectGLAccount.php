@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 $title = "Search GL Accounts";
 
 $PageSecurity = 8;

@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 /**
 * RFC 822 Email address list validation Utility
 *
@@ -18,7 +19,7 @@
 *
 * @author  Richard Heyes <richard@phpguru.org>
 * @author  Chuck Hagenbuch <chuck@horde.org>
-* @version $Revision: 1.1.1.1 $
+* @version $Revision: 1.2 $
 * @package Mail
 */
 

@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 /*These variables need to be modified to set up for ftp of files to a radio beacon ftp server */
 
 $StockLocation ="BL";

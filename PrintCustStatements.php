@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 if (!isset($_POST['FromCust'])  OR $_POST['FromCust']=="") {
 	$title="Select Statements to Print";
 }

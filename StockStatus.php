@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 $title = "Stock Status";
 
 $PageSecurity = 2;

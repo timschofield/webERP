@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 $title = "Credit Status Code Maintenance";
 $PageSecurity = 3;
 include("includes/session.inc");

@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 $title = "Recalculation of Brought Forward Balances in Chart Details Table";
 $PageSecurity=15;
 include ("includes/session.inc");

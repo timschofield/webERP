@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 if (isset($_GET['OrderNo'])) {
 	$title = "Reviewing Purchase Order Number " . $_GET['OrderNo'];
 } else {

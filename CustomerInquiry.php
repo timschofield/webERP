@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 include("includes/DateFunctions.inc");
 include("includes/SQL_CommonFunctions.inc");
 $title = "Customer Inquiry";

@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 	$title = "Special Fixes and Utilities -  Only System Administrator";
 	$PageSecurity = 15;
 

@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 $title = "General Ledger Account Inquiry";
 $PageSecurity = 8;
 include ("includes/session.inc");

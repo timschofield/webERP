@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 if (!isset($_GET['TransNo'])  OR $_GET['TransNo']=="") {
 	$title="Select Order To Print";
 }

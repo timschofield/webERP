@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 $title = "Bank Accounts Maintenance";
 
 $PageSecurity = 10;

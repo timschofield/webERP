@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 $PageSecurity=15;
 
 $title="Currency Debtor Balances";

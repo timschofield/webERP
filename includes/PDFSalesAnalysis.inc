@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.3 $ */
 include ("includes/class.pdf.php");
 
 /* A4_Landscape */

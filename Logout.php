@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.4 $ */
 $PageSecurity =1;
  // Uncomment to deactivate attempts counter
 //$_SESSION['AttemptsCounter'] = 0;

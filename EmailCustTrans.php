@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 if ($_GET['InvOrCredit']=='Invoice'){
 	$TransactionType = "Invoice";
 	$TypeCode = 10;

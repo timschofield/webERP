@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 $title = "Stock Cost Update";
 
 $PageSecurity = 2; /*viewing possible with inquiries but not mods */

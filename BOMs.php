@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 $title = "Bill Of Materials Maintenance";
 
 $PageSecurity = 9;

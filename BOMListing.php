@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 if (!isset($_POST['FromItem'])  OR $_POST['FromItem']=="") {
 	$title="Bill Of Materials Listing";
 }

@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 $db = mysql_connect($host , $dbuser, $dbpassword);
 mysql_select_db($DatabaseName,$db);
 

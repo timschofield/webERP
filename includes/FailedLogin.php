@@ -1,5 +1,6 @@
 <html>
 <head>
+<!-- \$Revision: 1.2 $ -->
     <title>Failed Login</title>
     <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
     <link rel="stylesheet" href="css/default/login.css" type="text/css">

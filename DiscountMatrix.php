@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 $title = "Discount Matrix Maintenance";
 
 $PageSecurity = 11;

@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 $title = "Where Used Inquiry";
 
 $PageSecurity = 2;

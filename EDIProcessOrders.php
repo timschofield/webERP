@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.4 $ */
 
 
 $PageSecurity =11;
@@ -12,7 +12,7 @@ include("includes/SQL_CommonFunctions.inc"); //need for EDITransNo
 include("includes/htmlMimeMail.php"); // need for sending email attachments
 include("includes/DefineCartClass.php");
 
-echo "<!-- \$Revision: 1.3 $ -->"
+echo "<!-- \$Revision: 1.4 $ -->"
 
 $CompanyRecord = ReadInCompanyRecord($db);
 

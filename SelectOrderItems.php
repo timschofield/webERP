@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.3 $ */
 if (isset($_GET['ModifyOrderNumber'])) {
 	$title = "Modifying Order " . $_GET['ModifyOrderNumber'];
 } else {

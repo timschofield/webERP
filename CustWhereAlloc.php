@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 $title = "Customer How Paid Inquiry";
 
 $PageSecurity = 2;

@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 $title = "Payment Terms Maintenance";
 
 $PageSecurity = 10;

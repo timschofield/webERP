@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 /*This page can be called with
 
 1. A DebtorTrans ID

@@ -1,4 +1,6 @@
 <?php
+
+/* $Revision: 1.2 $ */
 $title = "Sales GL Postings Set Up";
 
 $PageSecurity = 10;

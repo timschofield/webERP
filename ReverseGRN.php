@@ -1,4 +1,6 @@
 <?php
+
+/* $Revision: 1.2 $ */
 $title = "Reverse Goods Received";
 $PageSecurity = 11;
 

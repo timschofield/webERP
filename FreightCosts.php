@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 $title = "Freight Costs Set Up";
 $PageSecurity = 11;
 include("includes/session.inc");

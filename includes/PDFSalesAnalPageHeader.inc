@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 /*PDF page header for user defined sales reports */
 
 if ($PageNumber>0){

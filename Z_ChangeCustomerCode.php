@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.3 $ */
 /*Script to Delete all sales transactions*/
 
 $title = "UTILITY PAGE To Changes A Customer Code In All Tables";

@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.3 $ */
 $title = "General Ledger Chart of Accounts Maintenance";
 $PageSecurity = 10;
 include("includes/session.inc");

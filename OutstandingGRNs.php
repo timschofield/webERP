@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 if (!isset($_POST['FromCriteria'])  OR $_POST['FromCriteria']=="" OR !isset($_POST['ToCriteria']) OR $_POST['ToCriteria']=="") {
 	$title="Outstanding GRNs Reports";
 }

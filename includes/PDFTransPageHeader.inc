@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 /* R&OS PHP-pdf class code to head up a new page */
 
 $YPos = $Page_Height - $Top_Margin;

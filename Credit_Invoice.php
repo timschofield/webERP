@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 $title = "Credit all or part of Invoice ";
 
 $PageSecurity =3;

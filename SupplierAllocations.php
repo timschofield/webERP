@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 /*
 	This page can be called with...
 

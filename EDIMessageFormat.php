@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.3 $ */
 $title = "EDI Message Format";
 
 $PageSecurity = 10;

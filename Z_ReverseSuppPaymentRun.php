@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 /* Script to delete all supplier payments entered or created from a payment run on a specified day
  */
 $title = "Reverse and Delete Supplier Payments";

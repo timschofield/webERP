@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.4 $ */
 	// Display demo user name and password within login form if "$allow_demo_mode" is true
 	$demo_text = "";
 	if ($allow_demo_mode == True) {

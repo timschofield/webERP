@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 
 /*EDI configuration variables definition */
 

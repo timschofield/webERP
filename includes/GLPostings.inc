@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 /* This file contains the code to post GL transactions.
 
 This file can be included on any page that needs GL postings to be posted eg inquiries or GL reports

@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 /* Definition of the Shipment class to hold all the information for a shipment*/
 
 Class Shipment {

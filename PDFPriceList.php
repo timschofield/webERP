@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 if (!isset($_POST['FromCat'])  OR $_POST['FromCat']=="") {
 	$title="Price Listing";
 }

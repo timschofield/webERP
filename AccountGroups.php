@@ -1,12 +1,11 @@
 <?php
+/* $Revision: 1.4 $ */
 $title = "Account Groups";
 
 $PageSecurity = 10;
 
 include("includes/session.inc");
 include("includes/header.inc");
-
-echo "<!-- \$Revision: 1.3 $ -->"
 
 ?>
 

@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
 */

@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 $title = "Customer EDI Set Up";
 
 $PageSecurity = 11;

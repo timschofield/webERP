@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 /* Definition of the cart class
 this class can hold all the information for:
 

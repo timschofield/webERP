@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 $title = "Bank Reconciliation";
 
 $PageSecurity = 7;

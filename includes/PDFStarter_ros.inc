@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 include ("includes/class.pdf.php");
 
 

@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 $PageSecurity = 2;
 include ("includes/session.inc");
 include("includes/header.inc");

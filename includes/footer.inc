@@ -1,7 +1,8 @@
+<!-- \$Revision: 1.3 $ -->
 				</td>
 		    </tr>
 		</table>
-		
+
         </td>
         <td background="css/default/images/outline/r.gif" colspan="3" align="right" valign="top"><img src="css/default/images/outline/tr.gif" width="10" height="10" alt="" /></td>
     </tr>

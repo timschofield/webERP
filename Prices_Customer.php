@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 $title = "Special Prices for ";
 
 $PageSecurity = 11;

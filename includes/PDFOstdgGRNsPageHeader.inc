@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 /*PDF page header for outstanding GRNs report */
 if ($PageNumber>1){
 	$pdf->newPage();

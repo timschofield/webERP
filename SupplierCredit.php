@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 /*This page is very largely the same as the SupplierInvoice.php script
 the same result could have been acheived by using if statements in that script and just having the one
 SupplierTransaction.php script. However, to aid readability - variable names have been changed  -

@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 $title = "General Ledger Transaction Inquiry";
 
 $PageSecurity = 8;

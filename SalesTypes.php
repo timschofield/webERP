@@ -1,4 +1,6 @@
 <?php
+/* $Revision: 1.2 $ */
+
 $title = "Sales Types / Price List Maintenance";
 
 $PageSecurity = 15;

@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 $PageSecurity = 2;
 $title = "Periods Inquiry";
 

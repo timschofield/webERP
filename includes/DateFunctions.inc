@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.4 $ */
 /*
 date validation and parsing functions
 

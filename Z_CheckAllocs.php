@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 /*This page adds the total of allocation records and compares this to the recorded allocation total in DebtorTrans table */
 
 $title = "Customer Allocations != DebtorTrans.Alloc";

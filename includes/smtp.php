@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 /**
 * Filename.......: class.smtp.inc
 * Project........: SMTP Class

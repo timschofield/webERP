@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 $title = "Stock Category Maintenance";
 
 $PageSecurity = 11;

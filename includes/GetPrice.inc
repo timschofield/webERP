@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 function GetPrice ($StockID, $DebtorNo, $BranchCode, $db){
 
 	global $DefaultPriceList;

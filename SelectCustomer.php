@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.3 $ */
 $title = "Search Customers";
 
 $PageSecurity = 2;

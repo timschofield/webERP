@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.3 $ */
 /*Script to Delete all sales transactions*/
 
 $title = "UTILITY PAGE To Change A Stock Code In All Tables";

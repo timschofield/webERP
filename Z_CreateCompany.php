@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 /*Script to insert a dummy sales order if one is not already set up - at least one order is needed for the sales order pages to work.
 Also inserts a blank company record if one is not already set up */
 

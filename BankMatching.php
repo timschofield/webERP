@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 if ($_GET["Type"]=="Receipts" OR $_POST["Type"]=="Receipts"){
 	$Type = "Receipts";
 	$title = "Bank Account Deposits Matching";

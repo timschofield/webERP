@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 /* Script to delete a credit note - it expects and credit note number to delete 
 not included on any menu for obvious reasons 
 

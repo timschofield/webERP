@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 /* Script to make stock locations for all parts that do not have stock location records set up*/
 
 $title = "UTILITY PAGE That makes stock location records for parts where they do not already exist";

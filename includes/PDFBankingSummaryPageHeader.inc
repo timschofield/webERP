@@ -1,4 +1,5 @@
 <?php
+/* $Revision: 1.2 $ */
 $PageNumber++;
 if ($PageNumber>1){
 	$pdf->newPage();

@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 include("includes/SQL_CommonFunctions.inc");
 include("includes/DateFunctions.inc");
 include("config.php");

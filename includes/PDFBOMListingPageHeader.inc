@@ -1,5 +1,5 @@
 <?php
-
+/* $Revision: 1.2 $ */
 /*PDF page header for inventory valuation report */
 
 $PageNumber++;
