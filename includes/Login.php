@@ -1,10 +1,10 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 // Display demo user name and password within login form if "$allow_demo_mode" is true
-$demo_text = "";
-if ($allow_demo_mode == True) {
+
+if ($allow_demo_mode == True AND !isset($demo_text)) {
 	$demo_text = "login as user: <i>demo</i><BR>with password: <i>weberp</i>";
-} else {
+} elseif (!isset($demo_text)) {
 	$demo_text = "Please login here";
 }
 
@@ -44,10 +44,7 @@ if ($allow_demo_mode == True) {
 
                             <td background="css/default/images/outline/bg.gif" colspan="3" valign="top">
                                 <table border="0" cellpadding="3" cellspacing="0" width="100%">
-                                    <tr>
-                                        <td align="right"><!--<span class="loginText">Client login<input name="external_login" type="checkbox" value="1" class="loginText"></span>--><br /></td>
-                                    </tr>
-
+                                    
                                     <tr>
                                         <td class="loginText"><span>User name:</span><br />
                                          <input type="TEXT" name="UserNameEntryField"/><br />

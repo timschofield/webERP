@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -114,13 +114,8 @@
 
         // Incorrect password
         else {
-		$die_string = "<center><br /><br /><font size=\"5\" color=\"red\"><b>" .
-		_("incorrect password") .
-            "</b></font><br /><br /><b>" . _("The user/password combination is not a valid user of the system") .
-	    "</b><br /><br />" .
-	    _("If you are not an authorized user, please contact the proper personnel to obtain an account to enable you to use the system.") .
-	    "</center>";
-            die($die_string);
+		$demo_text = "<font size=\"3\" color=\"red\"><b>" .  _("incorrect password") . "</b></font><br /><b>" . _("The user/password combination<br> is not a valid user of the system");
+		include("includes/Login.php");
         }
     }// End of userid/password check
 
