@@ -207,6 +207,13 @@ function ConvertEDIDate($DateEntry, $EDIFormatCode) {
 		Return date($DefaultDateFormat, mktime(0,0,0, 1,1+(7*(int)substr($DateEntry,4,2)),substr($DateEntry,0,4)));
 		break;
 	case 718:
+		if ($DefaultDateFormat=="d/m/Y"){
+			Return substr($DateEntry,6,2)."/".substr($DateEntry,4,2)."/".substr($DateEntry,0,4) . " - ". substr($DateEntry,15,2)."/".substr($DateEntry,13,2)."/".substr($DateEntry,9,4);
+
+		} elseif ($DefaultDateFormat=="m/d/Y") {
+						Return substr($DateEntry,4,2)."/".substr($DateEntry,6,2)."/".substr($DateEntry,0,4)." - ". substr($DateEntry,13,2)."/".substr($DateEntry,15,2)."/".substr($DateEntry,9,4);
+
+		}
 
 		break;
 	}
