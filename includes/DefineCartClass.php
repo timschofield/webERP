@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /* Definition of the cart class
 this class can hold all the information for:
 
@@ -59,10 +59,18 @@ Class Cart {
 			$this->ItemsOrdered++;
 
 			if ($_SESSION['ExistingOrder']!=0 AND !isset($_GET['ModifyOrderNumber'])){
+				/*ExistingOrder !=0 set means that an order is selected or created for entry
+				of items - ExistingOrder is set to 0 in scripts that should not allow
+				adding items to the order - New orders have line items added at the time of
+				committing the order to the DB in DeliveryDetails.php
+				 GET['ModifyOrderNumber'] is only set when the items are first
+				being retrieved from the DB - dont want to add them again - would return
+				errors anyway */
+
+				echo "<BR>ExistingOrder = " . $_SESSION['ExistingOrder'] . " and ModifyOrderNumber = " . $_GET['ModifyOrderNumber'];
+
 				global $db;
 				$result = DB_query("INSERT INTO SalesOrderDetails (OrderNo, StkCode, Quantity, UnitPrice, DiscountPercent) VALUES(" . $_SESSION['ExistingOrder'] . ", '" . $StockID ."'," . $Qty . ", " . $Price . ", " . $Disc . ")" , $db , "<BR>The order line for " . $StockID . " could not be inserted");
-
-				echo "<BR>Order number " . $_SESSION['ExistingOrder'] . " - line $UpdateItem has been added.";
 			}
 
 			Return 1;
@@ -81,8 +89,6 @@ Class Cart {
 		if ($_SESSION['ExistingOrder']!=0){
 			global $db;
 			$result = DB_query("UPDATE SalesOrderDetails SET Quantity=" . $Qty . ", UnitPrice=" . $Price . ", DiscountPercent=" . $Disc . " WHERE OrderNo=" . $_SESSION['ExistingOrder'] . " AND StkCode='" . $UpdateItem ."'" , $db , "<BR>The order line for " . $UpdateItem . " could not be updated");
-
-			echo "<BR>Order number " . $_SESSION['ExistingOrder'] . " - line $UpdateItem has been updated";
 		}
 	}
 

@@ -5,12 +5,13 @@ class GenericStockItem {
 	var $ModuleName="GenericStockItem";
 	var $StockItemId;
 	var $StockID;
-	var $SerialNo;
+	var $BundleRef;
+	var $BundleQty;
 	var $StockMoveNo;
 	var $Valid=false;
 	var $ValidationMsg;
 
-	var $_PO_Header = "<table><tr><td class=tableheader>#</td><td class=tableheader>SerialNo</td></tr>";
+	var $_PO_Header = "<table><tr><td class=tableheader>#</td><td class=tableheader>Reference No</td><td>Quantity</td></tr>";
 	var $_PO_Footer =	"</table>";
 
 	//Constructor
@@ -31,7 +32,7 @@ class GenericStockItem {
 	//Shows HTML view of item for individual display
 	function viewLineItemHTML($Seq){
 
-		return "<td>". $this->SerialNo."</td>";
+		return "<td>". $this->BundleRef."</td>";
 	}
 
 	//Shows HTML form to edit individual item
@@ -48,7 +49,7 @@ class GenericStockItem {
 
 	function editLineItemHTML($Seq){
 
-		return "<td><input type=text size=20 name=\"SERIAL_".$Seq."\" value=\"".$this->SerialNo."\"></td>";
+		return "<td><input type=text size=20 name=\"SERIAL_".$Seq."\" value=\"".$this->BundleRef."\"></td>";
 
 	}
 
@@ -56,7 +57,7 @@ class GenericStockItem {
 	function validate($APP){
 		switch($APP){
 			case "PO":
-				if ($this->SerialNo == "" || (strlen($this->SerialNo) < 4)) {
+				if ($this->BundleRef == "" || (strlen($this->BundleRef) < 4)) {
 					 $this->Valid=false;
 					 $this->ValidationMsg = "Serial No must be longer than 4 chars";
 				} else {
@@ -66,7 +67,7 @@ class GenericStockItem {
 				break; //PO
 			case "SO":
 				global $db;
-				$SQL = "SELECT StockSerialItems.StockItemId, StockMoves.StkMoveNo, StockMoves.Type FROM StockSerialItems INNER  JOIN StockMoves ON StockSerialItems.StkMoveNo = StockMoves.StkMoveNo WHERE StockSerialItems.SerialNo =  '".$this->SerialNo."'";
+				$SQL = "SELECT StockSerialItems.StockItemId, StockMoves.StkMoveNo, StockMoves.Type FROM StockSerialItems INNER  JOIN StockMoves ON StockSerialItems.StkMoveNo = StockMoves.StkMoveNo WHERE StockSerialItems.SerialNo =  '".$this->BundleRef."'";
 				//check it & return
 			   	$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The StockItems's availability cannot be retrieved because:";
 			   	$DbgMsg = "<BR>The following SQL to check StockItem availability was used:";
@@ -98,17 +99,17 @@ class GenericStockItem {
 	//imports line items from the edit HTML form for this item
 	function importFormLineItem($Seq, $APP){
 
-		$this->SerialNo = trim( initPvar("SERIAL_".$Seq) );
+		$this->BundleRef = trim( initPvar("SERIAL_".$Seq) );
+		$this->BundleQty = trim( initPvar("QTY_".$Seg) );
 
 		return $this->validate($APP);
 	}
 
 	function importFileLineItem($line, $APP){
 
-
 		$line = explode(" ",$line,2);
 		if (isset($line[0]) ){
-			$this->SerialNo = trim($line[0]);
+			$this->BundleRef = trim($line[0]);
 		}
 		return $this->validate($APP);
 	}
@@ -136,7 +137,7 @@ class GenericStockItem {
 	//sql insert statements - must return an array of sql statements! That should be coming from parent anyway.
 	function add_item_sql(){
 		$stmts = array();
-		$stmts[] = "INSERT INTO StockSerialItems (StkMoveNo, SerialNo) VALUES (".$this->StockMoveNo.",'".$this->SerialNo."')";
+		$stmts[] = "INSERT INTO StockSerialItems (StkMoveNo, SerialNo) VALUES (".$this->StockMoveNo.",'".$this->BundleRef."')";
 		return $stmts;
 	}//add_item_sql
 
@@ -169,11 +170,6 @@ class GenericStockItem {
 		return true;
 	}//move_item
 
-	//returns an array of prior stock moves this item was in
-	function getPriorStockMoves(){
-
-		//returns array
-	}
 
 
 }//class StockItemModule

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
 
@@ -43,6 +43,7 @@ if (!isset($_SESSION['CreditItems'])){
 	 Session_Register("TaxGLCode");
 	 $_SESSION['CreditItems'] = new cart;
 
+	 $_SESSION['ExistingOrder']=0; /*to ensure DB updates are not processed from the Cart class */
 	 $_SESSION['RequireCustomerSelection'] = 1;
 }
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*PO_ReadInOrder.inc is used by the modify existing order code in PO_Header.php and also by GoodsReceived.php */
 
        if (isset($_SESSION['PO'])){
@@ -23,13 +23,11 @@
 
        $OrderHeaderSQL = "SELECT PurchOrders.SupplierNo, Suppliers.SuppName, PurchOrders.Comments, PurchOrders.OrdDate, PurchOrders.Rate, PurchOrders.DatePrinted, PurchOrders.DelAdd1, PurchOrders.DelAdd2, PurchOrders.DelAdd3, PurchOrders.DelAdd4, PurchOrders.AllowPrint, PurchOrders.RequisitionNo, PurchOrders.IntoStockLocation, PurchOrders.Initiator, Suppliers.CurrCode FROM PurchOrders, Suppliers WHERE PurchOrders.SupplierNo = Suppliers.SupplierID AND PurchOrders.OrderNo = " . $_GET['ModifyOrderNumber'];
 
-       $GetOrdHdrResult = DB_query($OrderHeaderSQL,$db);
-       if (DB_error_no($db) !=0) {
-              echo "<BR>The order cannot be retrieved because - " . DB_error_msg($db);
-              if ($debug==1){
-                 echo "<BR>The SQL statement that was used and failed was:<BR>$OrderHeaderSQL";
-              }
-       } elseif (DB_num_rows($GetOrdHdrResult)==1) {
+       $ErrMsg = "<BR>The order cannot be retrieved because - ";
+       $DbgMsg = "<BR>The SQL statement that was used and failed was:";
+       $GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg,$DbgMsg);
+
+	if (DB_num_rows($GetOrdHdrResult)==1) {
 
               $myrow = DB_fetch_array($GetOrdHdrResult);
               $_SESSION['PO']->OrderNo = $_GET['ModifyOrderNumber'];
@@ -51,40 +49,78 @@
 
 /*now populate the line PO array with the purchase order details records */
 
-              $LineItemsSQL = "SELECT PODetailItem, ItemCode, StockMaster.Description, DeliveryDate, ItemDescription, GLCode, AccountName, QtyInvoiced, UnitPrice, Units, QuantityOrd, QuantityRecd, ShiptRef, JobRef, StdCostUnit FROM PurchOrderDetails LEFT JOIN StockMaster ON PurchOrderDetails.ItemCode=StockMaster.StockID LEFT JOIN ChartMaster ON PurchOrderDetails.GLCode=ChartMaster.AccountCode WHERE PurchOrderDetails.Completed=0 AND OrderNo =" . $_GET['ModifyOrderNumber'] . " ORDER BY PODetailItem";
+              $LineItemsSQL = "SELECT
+	      			PODetailItem, ItemCode,
+				StockMaster.Description,
+				DeliveryDate,
+				ItemDescription,
+				GLCode,
+				AccountName,
+				QtyInvoiced,
+				UnitPrice,
+				Units,
+				QuantityOrd,
+				QuantityRecd,
+				ShiptRef,
+				JobRef,
+				StdCostUnit,
+				StockMaster.Controlled,
+				StockMaster.Serialised,
+				StockMaster.DecimalPlaces,
+				StockMaster.StkModClass
+				FROM PurchOrderDetails LEFT JOIN StockMaster
+					ON PurchOrderDetails.ItemCode=StockMaster.StockID
+					LEFT JOIN ChartMaster
+					ON PurchOrderDetails.GLCode=ChartMaster.AccountCode
+				WHERE PurchOrderDetails.Completed=0
+					AND OrderNo =" . $_GET['ModifyOrderNumber'] . "
+				ORDER BY PODetailItem";
 
-              $LineItemsResult = db_query($LineItemsSQL,$db);
+	      $ErrMsg = "<BR>The lines on the purchase order cannot be retrieved because ";
+	      $DbgMsg = "<BR>The SQL statement that was used to retrieve the purchase order lines was:";
+              $LineItemsResult = db_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg);
 
-              if (DB_error_no($db) !=0) {
-                     echo "<BR>The lines on the purchase order cannot be retrieved because - " . DB_error_msg($db);
-                     if ($debug==1){
-                           echo "<BR>The SQL statement that was used to retrieve the purchase order lines was:<BR>$LineItemsSQL";
-                     }
-              } elseif (db_num_rows($LineItemsResult) > 0) {
+	      if (db_num_rows($LineItemsResult) > 0) {
 
                      while ($myrow=db_fetch_array($LineItemsResult)) {
 
                              if (is_null($myrow["GLCode"])){
-                                $GLCode = "";
+                             	$GLCode = "";
                              } else {
-                               $GLCode = $myrow["GLCode"];
+                             	$GLCode = $myrow["GLCode"];
                              }
                              if (is_null($myrow["Units"])){
-                                $Units = "each";
+                             	$Units = "each";
                              } else {
-                                $Units = $myrow["Units"];
+                             	$Units = $myrow["Units"];
                              }
                              if (is_null($myrow["ItemCode"])){
-                                $StockID = "";
+                             	$StockID = "";
                              } else {
-                               $StockID = $myrow["ItemCode"];
+                             	$StockID = $myrow["ItemCode"];
                              }
-                                                 /*$LineNo,  				      StockID,           $Qty,             $ItemDescr,                 $Price,      $UOM,  $GLCode,                     $ReqDelDate,              $ShiptRef,          $JobRef,            $QtyInv,                $QtyRecd ,    GLAccountName*/
-                            $_SESSION['PO']->add_to_order($_SESSION['PO']->LinesOnOrder+1, $StockID, $myrow["QuantityOrd"],$myrow["ItemDescription"], $myrow["UnitPrice"],$Units,$GLCode,ConvertSQLDate($myrow["DeliveryDate"]),$myrow["ShiptRef"],$myrow["JobRef"], $myrow["QtyInvoiced"], $myrow["QuantityRecd"], $myrow["AccountName"]);
-                            $_SESSION['PO']->LineItems[$_SESSION['PO']->LinesOnOrder]->PODetailRec = $myrow["PODetailItem"];
+
+ 			$_SESSION['PO']->add_to_order($_SESSION['PO']->LinesOnOrder+1,
+							$StockID,
+							$myrow["Controlled"],
+							$myrow["Serialised"],
+							$myrow["StkModClass"],
+							$myrow["QuantityOrd"],
+							$myrow["ItemDescription"],
+							$myrow["UnitPrice"],
+							$Units,
+							$GLCode,
+							ConvertSQLDate($myrow["DeliveryDate"]),
+							$myrow["ShiptRef"],
+							$myrow["JobRef"],
+							$myrow["QtyInvoiced"],
+							$myrow["QuantityRecd"],
+							$myrow["AccountName"],
+							$myrow["DecimalPlaces"]);
+
+			    $_SESSION['PO']->LineItems[$_SESSION['PO']->LinesOnOrder]->PODetailRec = $myrow["PODetailItem"];
                             $_SESSION['PO']->LineItems[$_SESSION['PO']->LinesOnOrder]->StandardCost = $myrow["StdCostUnit"];  /*Needed for receiving goods and GL interface */
                      } /* line PO from purchase order details */
-              } //end of checks on returned data set
-       }
-
+      } //end is there were lines on the order
+   } // end if there was a header for the order
 ?>

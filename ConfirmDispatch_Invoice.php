@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $title = "Confirm Dispatches and Invoice An Order";
 
@@ -22,10 +22,9 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 
 } elseif ($_GET['OrderNumber']>0) {
 
-	if (isset($_SESSION['Items'])){
-		unset($_SESSION['Items']->LineItems);
-		unset ($_SESSION['Items']);
-	}
+	unset($_SESSION['Items']->LineItems);
+	unset ($_SESSION['Items']);
+
 	Session_register("Items");
 	Session_register("ProcessingOrder");
 	Session_register("Old_FreightCost");
@@ -36,6 +35,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 
 	$_SESSION['ProcessingOrder']=$_GET['OrderNumber'];
 	$_SESSION['Items'] = new cart;
+	$_SESSION['ExistingOrder']=0; /*required to ensure items not added to a previously modified order from SelectOrderItems.php when using add_to_cart */
 
 /*read in all the guff from the selected order into the Items cart  */
 

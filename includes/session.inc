@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -8,7 +8,6 @@
 	\--------------------------------------------------*/
 
     include("config.php");
-    include("includes/MiscFunctions.php");
     include("includes/ConnectDB.inc");
     if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);

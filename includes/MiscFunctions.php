@@ -19,18 +19,6 @@ function TypeInInventory_InList(){
 
 }
 
-//Stops WebERP in it's tracks and includes some shutdown code.
-function endWEBERP(){
-	include("includes/footer.inc");
-	exit;
-}
-
-//simple function to mark required fields however necessary. Pulls formatting out of pages.
-function markRequired($mark="*",$color="red"){
-
-	return "<font color=\"$color\"><b>$mark</b></font>";
-
-}
 
 //inits SESSION variable to avoid Notice messages and give consistent values
 function initSvar($name,$default=""){
@@ -85,7 +73,7 @@ function getMsg($msg,$type="info",$prefix=""){
 		case "warn":
 			$Colour='maroon';
 			break;
-		case "succ":
+		case "success":
 			$Colour='#336600';
 			break;
 		case "info":

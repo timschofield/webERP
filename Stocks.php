@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $title = "Stock Item Maintenance";
 
 $PageSecurity = 11;
@@ -66,6 +66,9 @@ if ($_POST['submit']) {
 	} elseif (! is_numeric($_POST['TaxLevel'])){
 		$InputError = 1;
 		echo "<BR>The tax level determines the rate of tax in conjunction with the tax authority of the branch where the item is sold to. The tax level must be a number between 0 and 9.";
+	}elseif ($_POST['Controlled']==0 AND $_POST['Serialised']==1){
+		$InputError = 1;
+		echo "<BR>The item can only be serialised if there is lot control enabled already. Batch control - with any number of items in a lot/bundle/roll is enabled when controlled is enabled. Serialised control requires that only one item is in the batch. For serialised control, both controlled and serialised must be enabled";
 	}
 
 	if ($InputError !=1){
@@ -457,14 +460,14 @@ echo "</SELECT></TD></TR>";
 echo "<TR><TD>Controlled:</TD><TD><SELECT name='Controlled'>";
 
 if ($_POST['Controlled']==0){
-	echo "<OPTION SELECTED VALUE=0>No Control Required";
+	echo "<OPTION SELECTED VALUE=0>No Control";
 } else {
-        echo "<OPTION VALUE=0>No Control Required";
+        echo "<OPTION VALUE=0>No Control";
 }
 if ($_POST['Controlled']==1){
-	echo "<OPTION SELECTED VALUE=1>Bundle/Lot Control Required";
+	echo "<OPTION SELECTED VALUE=1>Batch/Bundle/Roll/Lot Control";
 } else {
-	echo "<OPTION VALUE=1>Bundle/Lot Control Required";
+	echo "<OPTION VALUE=1>Batch/Bundle/Roll/Lot Control Required";
 }
 echo "</SELECT></TD></TR>";
 
@@ -482,7 +485,7 @@ if ($_POST['Serialised']==1){
 }
 echo "</SELECT><i>Note, this has no effect if the item is not Controlled</i></TD></TR>";
 
-echo "<TR><TD>Category:</TD><TD><SELECT name=StkModClass>";
+echo "<TR><TD>Inventory Module:</TD><TD><SELECT name=StkModClass>";
 
 $sql = "SELECT StkModClass, Description FROM StockModules";
 $result = DB_query($sql,$db);

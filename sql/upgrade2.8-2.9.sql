@@ -214,5 +214,6 @@ UPDATE StockMaster set `StkModClass` = 'GenericStockItem';
 
 ALTER TABLE StockMaster ADD INDEX StkModClass (StkModClass);
 ALTER TABLE `StockMaster` ADD `Serialised` TINYINT DEFAULT '0' NOT NULL ;
+ALTER TABLE `StockMaster` ADD `DecimalPlaces` TINYINT DEFAULT '0' NOT NULL ;
 ALTER TABLE `StockMaster` ADD CONSTRAINT `StockMaster_ibfk_2` FOREIGN KEY ( `StkModClass` ) REFERENCES `StockModules` ( `StkModClass` );
-
+ALTER TABLE `StockMoves` DROP `Bundle`;

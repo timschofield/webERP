@@ -1,13 +1,12 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $PageSecurity = 2;
 
 if (!isset($_POST['FromCat'])  OR $_POST['FromCat']=="") {
 	$title="Stock Check Sheets";
 }
 
-If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POST['FromCriteria'])>=1 AND isset($_POST['ToCriteria']) AND
-strlen($_POST['ToCriteria'])>=1){
+If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POST['FromCriteria'])>=1 AND isset($_POST['ToCriteria']) AND strlen($_POST['ToCriteria'])>=1){
 
 	include("config.php");
 	include("includes/ConnectDB.inc");
@@ -30,14 +29,13 @@ strlen($_POST['ToCriteria'])>=1){
 			if ($debug==1){
 	      			echo "<BR>$sql";
 			}
-			echo "</body</html>";
 			include("includes/footer.inc");
 			exit;
 		}
 	}
 
 	if ($_POST['MakeStkChkData']=='AddUpdate'){
-		$sql = "DELETE FROM StockCheckFreeze INNER JOIN StockMaster ON StockCheckFreeze.StockID=StockMaster.StockID WHERE StockMaster.CategoryID >='" . $_POST['FromCriteria'] . "' AND StockMaster.CategoryID<='" . $_POST['ToCriteria'] . "'";
+		$sql = "DELETE StockCheckFreeze FROM StockCheckFreeze INNER JOIN StockMaster ON StockCheckFreeze.StockID=StockMaster.StockID WHERE StockMaster.CategoryID >='" . $_POST['FromCriteria'] . "' AND StockMaster.CategoryID<='" . $_POST['ToCriteria'] . "' AND StockCheckFreeze.LocCode='" . $_POST['Location'] . "'";
 
 		$result = DB_query($sql,$db);
 if (DB_error_no($db) !=0) {
@@ -48,7 +46,6 @@ if (DB_error_no($db) !=0) {
 			if ($debug==1){
 	      			echo "<BR>$sql";
 			}
-			echo "</body</html>";
 			include("includes/footer.inc");
 			exit;
 		}
@@ -64,7 +61,13 @@ if (DB_error_no($db) !=0) {
 			if ($debug==1){
 	      			echo "<BR>$sql";
 			}
-			echo "</body</html>";
+			include("includes/footer.inc");
+			exit;
+		} else {
+			$title = "Stock Check Freeze Update";
+			include("includes/header.inc");
+			echo "<P><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "'>Print Check Sheets</A>";
+			PrnMsg ("<P>Added to the stock check file sucessfully","success");
 			include("includes/footer.inc");
 			exit;
 		}
@@ -78,7 +81,7 @@ if (DB_error_no($db) !=0) {
 	$PageNumber=1;
 	$line_height=30;
 
-      $SQL = "SELECT StockMaster.CategoryID, LocStock.StockID, StockMaster.Description, StockCategory.CategoryDescription, LocStock.Quantity  AS QOH FROM LocStock, StockMaster, StockCategory WHERE LocStock.StockID=StockMaster.StockID AND StockMaster.CategoryID >= '" . $_POST['FromCriteria'] . "' AND StockMaster.CategoryID=StockCategory.CategoryID AND StockMaster.CategoryID <= '" . $_POST['ToCriteria'] . "' AND (StockMaster.MBflag='B' OR MBflag='M') AND LocStock.LocCode = '" . $_POST['Location'] . "' ORDER BY StockMaster.CategoryID, StockMaster.StockID";
+      $SQL = "SELECT StockMaster.CategoryID, StockCheckFreeze.StockID, StockMaster.Description, StockCategory.CategoryDescription, StockCheckFreeze.QOH FROM StockCheckFreeze, StockMaster, StockCategory WHERE StockCheckFreeze.StockID=StockMaster.StockID AND StockMaster.CategoryID >= '" . $_POST['FromCriteria'] . "' AND StockMaster.CategoryID=StockCategory.CategoryID AND StockMaster.CategoryID <= '" . $_POST['ToCriteria'] . "' AND (StockMaster.MBflag='B' OR MBflag='M') AND StockCheckFreeze.LocCode = '" . $_POST['Location'] . "' ORDER BY StockMaster.CategoryID, StockMaster.StockID";
 
 	$InventoryResult = DB_query($SQL,$db);
 
@@ -90,7 +93,7 @@ if (DB_error_no($db) !=0) {
 		if ($debug==1){
 	      	echo "<BR>$SQL";
 		}
-		echo "</body</html>";
+		include ("includes/footer.inc");
 		exit;
 	}
 
@@ -234,6 +237,9 @@ if (DB_error_no($db) !=0) {
 
 		echo "<TR><TD>Action for Stock Check Freeze:</TD><TD><SELECT name='MakeStkChkData'>";
 
+		if (!isset($_POST['MakeStkChkData'])){
+			$_POST['MakeStkChkData'] = "PrintOnly";
+		}
 		if ($_POST['MakeStkChkData'] =="New"){
 			echo "<OPTION SELECTED VALUE='New'>Make new stock check data file";
 		} else {
@@ -250,7 +256,7 @@ if (DB_error_no($db) !=0) {
 			echo "<OPTION VALUE='PrintOnly'>Print Stock Check Sheets Only";
 		}
 
-		echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='Print PDF'></CENTER>";
+		echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='Print and Process'></CENTER>";
 	}
 	echo "</body></html>";
 

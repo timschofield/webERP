@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Credit all or part of Invoice ";
 
 $PageSecurity =3;
@@ -22,10 +22,8 @@ if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 
 } elseif ($_GET['InvoiceNumber']>0) {
 
-	if (isset($_SESSION['Items'])){
-		unset($_SESSION['Items']->LineItems);
-		unset($_SESSION['Items']);
-	}
+	unset($_SESSION['Items']->LineItems);
+	unset($_SESSION['Items']);
 
 	Session_register("Items");
 	Session_register("ProcessingCredit");
@@ -36,6 +34,7 @@ if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 	Session_Register("Order");
 	Session_Register("Old_FreightCost");
 
+	$_SESSION['ExistingOrder']=0; /*required to avoid adding to database in error */
 	$_SESSION['ProcessingCredit'] = $_GET['InvoiceNumber'];
 	$_SESSION['Items'] = new cart;
 

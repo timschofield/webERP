@@ -1,7 +1,9 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /* Definition of the PurchOrder class to hold all the information for a purchase order and delivery
 */
+
+include("includes/StockModules.php");
 
 Class PurchOrder {
 
@@ -33,16 +35,58 @@ Class PurchOrder {
 		$this->LinesOnOrder=0;
 	}
 
-	function add_to_order($LineNo, $StockID, $Qty, $ItemDescr, $Price, $UOM, $GLCode, $ReqDelDate, $ShiptRef, $JobRef, $QtyInv, $QtyRecd,$GLActName){
+	function add_to_order($LineNo,
+				$StockID,
+				$Serialised,
+				$Controlled,
+				$StkModClass,
+				$Qty,
+				$ItemDescr,
+				$Price,
+				$UOM,
+				$GLCode,
+				$ReqDelDate,
+				$ShiptRef,
+				$JobRef,
+				$QtyInv,
+				$QtyRecd,
+				$GLActName,
+				$DecimalPlaces){
+
 		if ($Qty!=0 && isset($Qty)){
-			$this->LineItems[$LineNo] = new LineDetails($LineNo, $StockID, $ItemDescr, $Qty, $Price, $UOM, $GLCode, $ReqDelDate, $ShiptRef, $JobRef, $QtyInv, $QtyRecd, $GLActName);
+
+			$this->LineItems[$LineNo] = new LineDetails($LineNo,
+								$StockID,
+								$Serialised,
+								$Controlled,
+								$StkModClass,
+								$Qty,
+								$ItemDescr,
+								$Price,
+								$UOM,
+								$GLCode,
+								$ReqDelDate,
+								$ShiptRef,
+								$JobRef,
+								$QtyInv,
+								$QtyRecd,
+								$GLActName,
+								$DecimalPlaces);
 			$this->LinesOnOrder++;
 			Return 1;
 		}
 		Return 0;
 	}
 
-	function update_order_item($LineNo, $Qty, $Price, $ItemDescription, $GLCode, $GLAccountName,$ReqDelDate,$ShiptRef, $JobRef ){
+	function update_order_item($LineNo,
+				$Qty,
+				$Price,
+				$ItemDescription,
+				$GLCode,
+				$GLAccountName,
+				$ReqDelDate,
+				$ShiptRef,
+				$JobRef ){
 
 			$this->LineItems[$LineNo]->ItemDescription = $ItemDescription;
 			$this->LineItems[$LineNo]->Quantity = $Qty;
@@ -84,11 +128,12 @@ Class PurchOrder {
 } /* end of class defintion */
 
 Class LineDetails {
-
+/* PurchOrderDetails */
 	Var $LineNo;
 	Var $PODetailRec;
 	Var $StockID;
 	Var $ItemDescription;
+	Var $DecimalPlaces;
 	Var $GLCode;
 	Var $GLActName;
 	Var $Quantity;
@@ -103,11 +148,22 @@ Class LineDetails {
 	Var $ReceiveQty;
 	Var $Deleted;
 
-	function LineDetails ($LineNo, $StockItem, $ItemDescr, $Qty, $Prc, $UOM, $GLCode, $ReqDelDate, $ShiptRef, $JobRef, $QtyInv, $QtyRecd, $GLActName){
+	Var $Controlled;
+	Var $Serialised;
+	Var $StkModClass;
+
+	Var $SerialItems;  /*An array holding the batch/serial numbers and quantities in each batch*/
+	Var $SerialItemsValid;
+
+	function LineDetails ($LineNo, $StockItem, $Controlled, $Serialised, $StkModClass, $Qty, $ItemDescr,  $Prc, $UOM, $GLCode, $ReqDelDate, $ShiptRef, $JobRef, $QtyInv, $QtyRecd, $GLActName, $DecimalPlaces){
 
 	/* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNo = $LineNo;
 		$this->StockID =$StockItem;
+		$this->Controlled = $Controlled;
+		$this->Serialised = $Serialised;
+		$this->StkModClass = $StkModClass;
+		$this->DecimalPlaces=$DecimalPlaces;
 		$this->ItemDescription = $ItemDescr;
 		$this->Quantity = $Qty;
 		$this->ReqDelDate = $ReqDelDate;
@@ -123,6 +179,8 @@ Class LineDetails {
 		$this->ReceiveQty =0;	/*initialise these last two only */
 		$this->StandardCost =0;
 		$this->Deleted=False;
+		$this->SerialItems = array(); /*if Controlled then need to populate this later */
+		$this->SerialItemsValid=false;
 	}
 }
 

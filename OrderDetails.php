@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 if (isset($_GET['OrderNumber'])) {
 	$title = "Reviewing Sales Order Number " . $_GET['OrderNumber'];
 } else {
@@ -14,14 +14,13 @@ include("includes/session.inc");
 include("includes/header.inc");
 include("includes/DateFunctions.inc");
 
-/* The delivery check screen is where the details of the order are either updated or inserted depending on the value of ExistingOrder */
-
 if (isset($_SESSION['Items'])){
+	unset ($_SESSION['Items']->LineItems);
 	unset ($_SESSION['Items']);
 }
 
 $_SESSION['Items'] = new cart;
-
+$_SESSION['ExistingOrder']=0;
 /*read in all the guff from the selected order into the Items cart  */
 
 

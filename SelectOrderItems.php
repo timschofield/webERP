@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 if (isset($_GET['ModifyOrderNumber'])) {
 	$title = "Modifying Order " . $_GET['ModifyOrderNumber'];
 } else {
@@ -340,7 +340,6 @@ if (isset($_POST['Select']) AND $_POST['Select']!="") {
 		exit;
 	}
 }
-
 
 
 if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->DebtorNo) OR $_SESSION['Items']->DebtorNo=="" ) {
