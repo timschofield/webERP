@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 $PageSecurity = 1;
 
 if (isset($_GET['FromTransNo'])){
@@ -22,7 +22,6 @@ if (isset($_GET['PrintPDF'])){
 
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
-include('includes/DateFunctions.inc');
 include ('includes/class.pdf.php');
 include ('includes/htmlMimeMail.php');
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 5;
 
@@ -9,7 +9,6 @@ include('includes/session.inc');
 $title = _('Payment Entry');
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 if ($_GET['NewPayment']=='Yes'){

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $PageSecurity =15;
 
 include('includes/session.inc');
@@ -7,7 +7,6 @@ include('includes/session.inc');
 $title = _('System Configuration');
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 
 
 if (isset($_POST['submit'])) {
@@ -186,7 +185,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['HTTPS_Only'] != $_POST['X_HTTPS_Only'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_HTTPS_Only'])."' WHERE confname = 'HTTPS_Only'";
 		}
-		
+		if ($_SESSION['DB_Maintenance'] != $_POST['DB_Maintenance'] ) {
+			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_DB_Maintenance'])."' WHERE confname = 'DB_Maintenance'";
+		}
 		
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 0 ) {
@@ -550,6 +551,35 @@ echo '<TR><TD>' . _('Only allow secure socket connections') . ':</TD>
 	<TD>' . _('Force connections to be only over secure sockets - ie encrypted data only') . '</TD>
 	</TR>';
 
+/*Perform Database maintenance DB_Maintenance*/
+echo '<TR><TD>' . _('Perform Database Maintenance At Logon') . ':</TD>
+	<TD><SELECT Name="X_DB_Maintenance">';
+	if ($_SESSION['DB_Maintenance']=='1'){
+		echo '<OPTION SELECTED VALUE="1">'._('Daily');
+	} else {
+		echo '<OPTION VALUE="1">'._('Daily');
+	}
+	if ($_SESSION['DB_Maintenance']=='7'){
+		echo '<OPTION SELECTED VALUE="7">'._('Weekly');
+	} else {
+		echo '<OPTION VALUE="7">'._('Weekly');
+	}
+	if ($_SESSION['DB_Maintenance']=='30'){
+		echo '<OPTION SELECTED VALUE="30">'._('Monthly');
+	} else {
+		echo '<OPTION VALUE="30">'._('Monthly');
+	}
+	if ($_SESSION['DB_Maintenance']=='0'){
+		echo '<OPTION SELECTED VALUE="0">'._('Never');
+	} else {
+		echo '<OPTION VALUE="0">'._('Never');
+	}
+	
+	echo '</SELECT></TD>
+	<TD>' . _('Uses the function DB_Maintenance defined in ConnectDB_XXXX.inc to perform database maintenance tasks, to run at regular intervals - checked at each and every user login') . '</TD>
+	</TR>';
+	
+	
 echo '</TABLE><input type="Submit" Name="submit" value="' . _('Update') . '"></CENTER></FORM>';
 
 include('includes/footer.inc');

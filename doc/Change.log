@@ -1,5 +1,6 @@
 <P>webERP Change Log
 
+<P>27/3/05 Added a new configuration variable DB_Maintenance and DB_Maintenance_LastRun. This variable is checked in session.inc to see if it is set to maintain the DB using a new function in the DB specific include DB_Connect_XXXXX.inc (where XXXX is the $dbtype) - there is a new function in these files called DB_Maintenance($Conn) that runs the routines necessary to keep the DB on top form. pg needs regular vacuums to run optimally. Changes also in SystemParameters.php to allow the variable to be set.
 <P>26/3/05 Bug fix Lyndsay Roger - StockAdjustments.php could not enter quantity and part code for a stock adjustment without being asked to enter the quantity again ... fixed
 <P>25/3/05 Added a new config HTTPS_Only variable that requires a https connection in session.inc before allowing the page
 <P>25/3/05 Z_DeleteSalesTrans.php fixed lower caseing of sql and trucate statements not liked by pg

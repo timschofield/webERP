@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -10,7 +10,6 @@ if (isset($_GET['OrderNo'])) {
 	$title = _('Reviewing A Purchase Order');
 }
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 
 if (isset($_GET['FromGRNNo'])){
 

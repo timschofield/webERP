@@ -7,8 +7,6 @@ include('includes/session.inc');
 $title = _('All Stock Movements By Location');
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
-
 
 echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
 

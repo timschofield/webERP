@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $PageSecurity = 9;
 
 include('includes/session.inc');
@@ -7,7 +7,6 @@ include('includes/session.inc');
 $title = _('Bill Of Materials Maintenance');
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 
 
 function CheckForRecursiveBOM ($UltimateParent, $ComponentToCheck, $db) {

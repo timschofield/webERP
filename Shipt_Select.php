@@ -1,12 +1,11 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 11;
 
 include('includes/session.inc');
 $title = _('Search Shipments');
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 
 if (isset($_GET['SelectedStockItem'])){
 	$SelectedStockItem=$_GET['SelectedStockItem'];

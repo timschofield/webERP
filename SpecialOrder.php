@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 4;
 
@@ -10,9 +10,6 @@ include('includes/session.inc');
 $title = _('Special Order Entry');
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
-include('includes/SQL_CommonFunctions.inc');
-
 
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 

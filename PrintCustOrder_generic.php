@@ -1,13 +1,12 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
-include('includes/DateFunctions.inc');
 
 //Get Out if we have no order number to work with
-If (!isset($_GET['TransNo']) || $_GET['TransNo']==""){
+If (!isset($_GET['TransNo']) OR $_GET['TransNo']==""){
         $title = _('Select Order To Print');
         include('includes/header.inc');
         echo '<div align=center><br><br><br>';

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 $PageSecurity =3;
 
 
@@ -13,7 +13,6 @@ include('includes/session.inc');
 
 $title = _('Credit An Invoice');
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 

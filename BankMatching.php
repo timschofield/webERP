@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 7;
 
@@ -20,7 +20,6 @@ if (($_GET["Type"]=='Receipts') OR ($_POST["Type"]=='Receipts')){
 }
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 
 if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
 	for ($Counter=1;$Counter <= $_POST['RowCounter']; $Counter++){

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
 
@@ -13,7 +13,6 @@ include('includes/session.inc');
 $title = _('Create Credit Note');
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/GetSalesTransGLCodes.inc');
 include('includes/GetPrice.inc');

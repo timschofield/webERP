@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
 
@@ -8,7 +8,6 @@ include('includes/session.inc');
 $title = _('Stock Adjustments');
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['NewAdjustment'])){

@@ -1,18 +1,17 @@
 <?php
 
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of Shipts objects - containing details of all shipment charges for invoicing
 Shipment charges are posted to the debit of GRN suspense if the Creditors - GL link is on
 This is cleared against credits to the GRN suspense when the products are received into stock and any
 purchase price variance calculated when the shipment is closed */
 
-include('includes/DateFunctions.inc');
 include('includes/DefineSuppTransClass.php');
 
 $PageSecurity = 5;
 
-/* Session started in header.inc for password checking and authorisation level check */
+/* Session started here for password checking and authorisation level check */
 include('includes/session.inc');
 
 $title = _('Shipment Charges or Credits');

@@ -920,6 +920,8 @@ INSERT INTO config VALUES('RadioBeaconFTP_user_name', 'RadioBeacon ftp server us
 INSERT INTO config VALUES('RadionBeaconFTP_user_pass','Radio Beacon remote ftp server password');
 INSERT INTO config VALUES('AutoDebtorNo','0');
 INSERT INTO `config` VALUES ('HTTPS_Only', '0');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun', '2005-03-01');
+INSERT INTO `config` VALUES ('DB_Maintenance', '1');
 
 INSERT INTO systypes VALUES ( 500, 'Auto Debtor Number', 10000 );
 

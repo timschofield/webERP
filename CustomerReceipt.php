@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 include('includes/DefineReceiptClass.php');
 
 $PageSecurity = 3;
@@ -8,7 +8,6 @@ include('includes/session.inc');
 $title = _('Receipt Entry');
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 $msg='';

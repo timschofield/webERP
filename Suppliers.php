@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 5;
 
@@ -8,8 +8,6 @@ include('includes/session.inc');
 $title = _('Supplier Maintenance');
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
-
 
 Function Is_ValidAccount ($ActNo) {
 

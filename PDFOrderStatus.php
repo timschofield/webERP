@@ -1,10 +1,9 @@
 <?php
 
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 3;
 include ('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
-include('includes/DateFunctions.inc');
 
 $InputError=0;
 

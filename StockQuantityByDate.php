@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /* Contributed by Chris Bice - gettext by Kitch*/
 
 
@@ -9,7 +9,6 @@ $PageSecurity = 2;
 include('includes/session.inc');
 $title = _('Stock On Hand By Date');
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 
 echo "<HR><FORM ACTION='" . $_SERVER['PHP_SELF'] . "?". SID . "' METHOD=POST>";
 

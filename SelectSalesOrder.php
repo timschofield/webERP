@@ -1,11 +1,10 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
 $title = _('Search Outstanding Sales Orders');
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 
 echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] .'?' .SID . ' METHOD=POST>';
 

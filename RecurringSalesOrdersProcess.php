@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 /*need to allow this script to run from Cron or windows scheduler */
 $AllowAnyone = true;
@@ -9,8 +9,6 @@ include('includes/session.inc');
 $title = _('Recurring Orders Process');
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
-include('includes/SQL_CommonFunctions.inc');
 include('includes/GetSalesTransGLCodes.inc');
 include('includes/htmlMimeMail.php');
 

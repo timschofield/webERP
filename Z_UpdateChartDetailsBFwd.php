@@ -1,11 +1,9 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $PageSecurity=15;
 include ('includes/session.inc');
 $title = _('Recalculation of Brought Forward Balances in Chart Details Table');
 include('includes/header.inc');
-include ('includes/DateFunctions.inc');
-
 
 
 echo "<FORM METHOD='POST' ACTION=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';

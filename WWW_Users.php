@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -8,8 +8,6 @@ $ModuleList = array(_('Orders'), _('Receivables'), _('Payables'), _('Purchasing'
 
 $title = _('User Maintenance');
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
-
 
 // Make an array of the security roles
 $sql = 'SELECT secroleid, secrolename FROM securityroles ORDER BY secroleid';

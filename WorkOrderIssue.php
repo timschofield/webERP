@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 10;
 
@@ -9,8 +9,6 @@ include('includes/session.inc');
 $title = _('Issue Stock Items to Work Order');
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
-
 
 if (isset($_GET['OrderNumber']) AND $_GET['OrderNumber']!=''){
 	$_POST['OrderNumber'] = $_GET['OrderNumber'];
@@ -21,8 +19,7 @@ if ($_POST['OrderNumber'] !='') {
 } else {
 }
 
-function clearData()
-{
+function clearData(){
 }
 
 $input_error = false;

@@ -1,15 +1,18 @@
 <?php
-include('includes/DateFunctions.inc');
+
 $PageSecurity = 2;
 
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
-If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POST['FromCriteria'])>=1 AND isset($_POST['ToCriteria']) AND
-strlen($_POST['ToCriteria'])>=1){
+If (isset($_POST['PrintPDF']) 
+	AND isset($_POST['FromCriteria']) 
+	AND strlen($_POST['FromCriteria'])>=1 
+	AND isset($_POST['ToCriteria']) 
+	AND strlen($_POST['ToCriteria'])>=1){
 
 	include('config.php');
 	include('includes/ConnectDB.inc');
-
+	include('includes/DateFunctions.inc');
 	include('includes/PDFStarter_ros.inc');
 
 	$FontSize=12;
@@ -26,7 +29,7 @@ strlen($_POST['ToCriteria'])>=1){
 			suppliers.suppname,
   			currencies.currency,
 			SUM((supptrans.ovamount + supptrans.ovgst - supptrans.alloc)/supptrans.rate) AS balance,
-			SUM(supptrans.ovmount + supptrans.ovgst - supptrans.alloc) AS fxbalance,
+			SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS fxbalance,
 			SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
 	(supptrans.ovamount + supptrans.ovgst)/supptrans.rate ELSE 0 END)
 	 AS afterdatetrans,

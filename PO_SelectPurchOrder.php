@@ -1,9 +1,8 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 2;
 
-include('includes/DateFunctions.inc');
 include('includes/session.inc');
 
 $title = _('Search Purchase Orders');

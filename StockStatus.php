@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 2;
 
@@ -8,8 +8,6 @@ include('includes/session.inc');
 $title = _('Stock Status');
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
-
 
 if (isset($_GET['StockID'])){
 	$StockID =$_GET['StockID'];

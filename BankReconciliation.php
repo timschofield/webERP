@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 7;
 
@@ -8,8 +8,6 @@ include ('includes/session.inc');
 $title = _('Bank Reconciliation');
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
-
 
 echo '<FORM METHOD="POST" ACTION="' . $_SERVER["PHP_SELF"] . '?' . SID . '">';
 

@@ -1,12 +1,11 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 4;
 
 include('includes/session.inc');
 $title = _('Stock Re-Order Level Maintenance');
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 
 if (isset($_GET['StockID'])){
 	$StockID = $_GET['StockID'];

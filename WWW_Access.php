@@ -1,13 +1,11 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
 
 $title = _('Access Permission Maintenance');
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
-
 
 if (isset($_GET['SelectedRole'])){
 	$SelectedRole = $_GET['SelectedRole'];

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 4;
 
@@ -8,8 +8,6 @@ include('includes/session.inc');
 $title = _('Supplier Purchasing Data');
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
-
 
 if (isset($_GET['SupplierID'])){
 	$SupplierID = strtoupper($_GET['SupplierID']);

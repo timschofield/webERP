@@ -1,12 +1,11 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 include('includes/DefineJournalClass.php');
 
 $PageSecurity = 10;
 include('includes/session.inc');
 $title = _('Journal Entry');
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 if ($_GET['NewJournal']=='Yes' AND isset($_SESSION['JournalDetail'])){

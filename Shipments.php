@@ -1,12 +1,11 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity = 11;
 include('includes/DefineShiptClass.php');
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/session.inc');
 $title = _('Shipments');
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 

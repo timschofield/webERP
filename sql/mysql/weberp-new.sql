@@ -1995,7 +1995,7 @@ INSERT INTO `systypes` VALUES (11,'Credit Note',11);
 INSERT INTO `systypes` VALUES (12,'Receipt',4);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',8);
-INSERT INTO `systypes` VALUES (17,'Stock Adjustment',6);
+INSERT INTO `systypes` VALUES (17,'Stock Adjustment',8);
 INSERT INTO `systypes` VALUES (18,'Purchase Order',0);
 INSERT INTO `systypes` VALUES (20,'Purchase Invoice',17);
 INSERT INTO `systypes` VALUES (21,'Debit Note',8);
@@ -2049,7 +2049,7 @@ INSERT INTO `taxauthlevels` VALUES (6,6,2,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-03-26 10:48:28','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
+INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-03-27 11:09:00','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
 INSERT INTO `www_users` VALUES ('testy','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Test Remote User','GRANHR','','','DEN',7,'2005-02-10 21:11:20','GRAN','A4','0,0,0,0,0,0,0,0,',0,50,'fresh','pt_PT');
 
 --
@@ -2244,6 +2244,8 @@ INSERT INTO `config` VALUES ('RadioBeaconFTP_user_name','RadioBeacon ftp server 
 INSERT INTO `config` VALUES ('RadionBeaconFTP_user_pass','Radio Beacon remote ftp server password');
 INSERT INTO `config` VALUES ('AutoDebtorNo','0');
 INSERT INTO `config` VALUES ('HTTPS_Only','0');
+INSERT INTO `config` VALUES ('DB_Maintenance','1');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-03-27');
 
 --
 -- Dumping data for table `unitsofmeasure`

@@ -1,7 +1,6 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
-include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 $PageSecurity=2;

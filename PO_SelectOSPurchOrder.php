@@ -1,9 +1,7 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 2;
-
-include('includes/DateFunctions.inc');
 
 include('includes/session.inc');
 

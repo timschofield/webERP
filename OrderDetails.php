@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 2;
 
@@ -18,7 +18,6 @@ if (isset($_GET['OrderNumber'])) {
 }
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 
 if (isset($_SESSION['Items'])){
 	unset ($_SESSION['Items']->LineItems);

@@ -1,10 +1,9 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 4;
 
 include('includes/DefinePOClass.php');
-include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 /* Session started in header.inc for password checking and authorisation level check */

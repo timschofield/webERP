@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*
 	This page can be called with...
 
@@ -26,7 +26,6 @@ include('includes/session.inc');
 $title = _('Supplier Payment') . '/' . _('Credit Note Allocations');
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {

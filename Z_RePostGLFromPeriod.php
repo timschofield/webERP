@@ -1,12 +1,11 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity=15;
 
 include ('includes/session.inc');
 $title = _('Recalculation of GL Balances in Chart Details Table');
 include('includes/header.inc');
-include ('includes/DateFunctions.inc');
 
 echo "<FORM METHOD='POST' ACTION=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 

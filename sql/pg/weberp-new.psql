@@ -6602,8 +6602,10 @@ RadioBeaconFTP_user_name	RadioBeacon ftp server user name
 RadionBeaconFTP_user_pass	Radio Beacon remote ftp server password
 CountryOfOperation	EUR
 DefaultTheme	professional
+DB_Maintenance_LastRun	2005-03-27
 AutoDebtorNo	1
 HTTPS_Only	0
+DB_Maintenance	1
 \.
 
 

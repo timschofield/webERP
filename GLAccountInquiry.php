@@ -1,11 +1,10 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 8;
 include ('includes/session.inc');
 $title = _('General Ledger Account Inquiry');
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 include('includes/GLPostings.inc');
 
 if (isset($_POST['Account'])){

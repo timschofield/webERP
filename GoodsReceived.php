@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 11;
 
@@ -7,8 +7,6 @@ $PageSecurity = 11;
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
 include('includes/session.inc');
-
-include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 $title = _('Receive Purchase Orders');

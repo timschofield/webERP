@@ -1,12 +1,11 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 11;
 
 include('includes/session.inc');
 $title = _('Item Maintenance');
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 
 /*If this form is called with the StockID then it is assumed that the stock item is to be modified */
 

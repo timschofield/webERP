@@ -8,7 +8,6 @@ $PageSecurity = 8;
 include('includes/session.inc');
 $title = _('Inventory Transfer') . ' - ' . _('Receiving');
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['NewTransfer'])){

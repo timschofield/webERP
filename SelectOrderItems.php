@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 require('includes/DefineCartClass.php');
 
@@ -16,7 +16,6 @@ if (isset($_GET['ModifyOrderNumber'])) {
 }
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 include('includes/GetPrice.inc');
 
 if (isset($_POST['QuickEntry'])){

@@ -1,9 +1,8 @@
 <?php
 
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $PageSecurity = 3;
 include ('includes/session.inc');
-include('includes/DateFunctions.inc');
 $title = _('Orders Invoiced Report');
 
 $InputError=0;

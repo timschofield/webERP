@@ -1,8 +1,6 @@
 <?php
-include('includes/DateFunctions.inc');
 $PageSecurity = 2;
-
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 
 If (isset($_POST['PrintPDF'])
@@ -14,7 +12,8 @@ If (isset($_POST['PrintPDF'])
 	include('config.php');
 	include('includes/ConnectDB.inc');
 	include('includes/PDFStarter_ros.inc');
-
+	include('includes/DateFunctions.inc');
+	
 	$FontSize=12;
 	$pdf->addinfo('Title',_('Customer Balance Listing'));
 	$pdf->addinfo('Subject',_('Customer Balances'));

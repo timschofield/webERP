@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 2;
 
 include ('includes/session.inc');
@@ -7,8 +7,6 @@ include ('includes/session.inc');
 $title = _('Periods Inquiry');
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
-
 
 $SQL = "SELECT periodno ,
 		lastdate_in_period

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -496,8 +496,7 @@ if ( isset($_POST['pricelist']) ) {
 } else {
 	$title = _('Data Exports');
 	include('includes/header.inc');
-	include('includes/DateFunctions.inc');
-	
+		
 	// SELECT EXPORT FOR PRICE LIST
 	
 	echo "<BR><CENTER>";

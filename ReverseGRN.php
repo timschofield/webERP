@@ -1,12 +1,11 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 $PageSecurity = 11;
 
 /* Session started in header.inc for password checking and authorisation level check */
 
 include('includes/DefineSerialItems.php');
-include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/session.inc');
 

@@ -1,10 +1,9 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity = 2;
 include ('includes/session.inc');
 $title = _('Shipments Open Inquiry');
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 
 
 if (!isset($_GET['SupplierID']) OR !isset($_GET['SupplierName'])){

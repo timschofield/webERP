@@ -1,6 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
-include('includes/DateFunctions.inc');
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 1;
 

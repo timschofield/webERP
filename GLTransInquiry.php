@@ -1,13 +1,11 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 8;
 
 include ('includes/session.inc');
 $title = _('General Ledger Transaction Inquiry');
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
-
 
 if (!isset($_GET['TypeID']) OR !isset($_GET['TransNo'])) { /*Script was not passed the correct parameters */
 

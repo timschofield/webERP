@@ -1,10 +1,9 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $PageSecurity =15;
 
 include ('includes/session.inc');
 include ('includes/header.inc');
-include ('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc'); //need for EDITransNo
 include('includes/htmlMimeMail.php'); // need for sending email attachments
 

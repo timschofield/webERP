@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 define ('LIKE','LIKE');
 
@@ -84,10 +84,24 @@ function DB_escape_string($String){
 }
 
 
-function INTERVAL( $val, $Inter )
-	{
+function INTERVAL( $val, $Inter ){
 		global $dbtype;
 		return "\n".'INTERVAL ' . $val . ' '. $Inter."\n";
+}
+
+function DB_Maintenance($Conn){
+
+	prnMsg(_('The system has just run the regular database administration and optimisation routine.'),'info');
+	
+	$TablesResult = DB_query('SHOW TABLES',$Conn);
+	while ($myrow = DB_fetch_row($TablesResult)){
+		$Result = DB_query('OPTIMIZE TABLE ' . $myrow[0],$Conn);
 	}
+	
+	$Result = DB_query('UPDATE config 
+				SET confvalue="' . Date('Y-m-d') . '" 
+				WHERE confname="DB_Maintenance_LastRun"',
+				$Conn);
+}
 
 ?>

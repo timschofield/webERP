@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 10;
 
@@ -8,7 +8,6 @@ include('includes/session.inc');
 $title = _('Work Order Entry');
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 
 function clearData()
 {

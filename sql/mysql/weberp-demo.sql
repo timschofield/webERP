@@ -3696,6 +3696,8 @@ INSERT INTO `config` VALUES ('RadioBeaconFTP_user_name','RadioBeacon ftp server 
 INSERT INTO `config` VALUES ('RadionBeaconFTP_user_pass','Radio Beacon remote ftp server password');
 INSERT INTO `config` VALUES ('AutoDebtorNo','0');
 INSERT INTO `config` VALUES ('HTTPS_Only','0');
+INSERT INTO `config` VALUES ('DB_Maintenance','1');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-03-27');
 
 --
 -- Dumping data for table `contractbom`
@@ -4964,6 +4966,8 @@ INSERT INTO `stockmoves` VALUES (210,'125',16,8,'MEL','2004-12-02','','','0.0000
 INSERT INTO `stockmoves` VALUES (211,'HON90021',10,14,'DEN','2005-03-28','DSSAD','DSSAD','0.0000',63,'Assembly: HON92FrSus Order: 46',-22.0000,0.0000,9.6900,0,56.2,0,0,'');
 INSERT INTO `stockmoves` VALUES (212,'HONShock',10,14,'DEN','2005-03-28','DSSAD','DSSAD','0.0000',63,'Assembly: HON92FrSus Order: 46',-22.0000,0.0000,8.5000,0,-22,0,0,'');
 INSERT INTO `stockmoves` VALUES (213,'HON92FrSus',10,14,'DEN','2005-03-28','DSSAD','DSSAD','53.2000',63,'46',-11.0000,0.0000,0.0000,1,0,0,0.1,'');
+INSERT INTO `stockmoves` VALUES (214,'130',17,7,'DEN','2005-03-26','','','0.0000',63,'',5.0000,0.0000,0.0000,1,5,0,0,'');
+INSERT INTO `stockmoves` VALUES (215,'130',17,8,'DEN','2005-03-26','','','0.0000',63,'',-5.0000,0.0000,0.0000,1,0,0,0,'');
 
 --
 -- Dumping data for table `stockserialitems`
@@ -5119,7 +5123,7 @@ INSERT INTO `systypes` VALUES (11,'Credit Note',11);
 INSERT INTO `systypes` VALUES (12,'Receipt',4);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',8);
-INSERT INTO `systypes` VALUES (17,'Stock Adjustment',6);
+INSERT INTO `systypes` VALUES (17,'Stock Adjustment',8);
 INSERT INTO `systypes` VALUES (18,'Purchase Order',0);
 INSERT INTO `systypes` VALUES (20,'Purchase Invoice',17);
 INSERT INTO `systypes` VALUES (21,'Debit Note',8);
@@ -5195,7 +5199,7 @@ INSERT INTO `workcentres` VALUES ('ASSEM','DEN','Assembly',1.0000,'20.0000',5600
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-03-26 10:48:28','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
+INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-03-27 11:09:00','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
 INSERT INTO `www_users` VALUES ('testy','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Test Remote User','GRANHR','','','DEN',7,'2005-02-10 21:11:20','GRAN','A4','0,0,0,0,0,0,0,0,',0,50,'fresh','pt_PT');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

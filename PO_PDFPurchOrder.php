@@ -1,10 +1,9 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
-include('includes/DateFunctions.inc');
 
 if(!isset($_GET['OrderNo']) && !isset($_POST['OrderNo'])){
         $title = _('Select a Purchase Order');

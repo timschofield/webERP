@@ -1,13 +1,11 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity = 8;
 include ('includes/session.inc');
 
 $title = _('GL Codes Inquiry');
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
-
 
 $SQL = 'SELECT group_,
 		accountcode ,

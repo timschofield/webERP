@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
 */
@@ -12,7 +12,6 @@ $PageSecurity=1;
 include('includes/session.inc');
 $title = _('Order Delivery Details');
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 include('includes/FreightCalculation.inc');
 
 

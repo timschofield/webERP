@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $PageSecurity = 4;
 include('includes/DefinePOClass.php');
 include('includes/session.inc');
@@ -11,7 +11,6 @@ if (isset($_GET['ModifyOrderNumber'])) {
 }
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 /*Page is called with NewOrder=Yes when a new order is to be entered

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
 
@@ -8,7 +8,6 @@ include('includes/session.inc');
 $title = _('Stock Transfers');
 
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 $NewTransfer = false; /*initialise this first then determine from form inputs */

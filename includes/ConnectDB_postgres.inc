@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 define ('LIKE','ILIKE');
 /* $PgConnStr = $PgConnStr = "host=".$host." dbname=".$DatabaseName; */
  $PgConnStr = 'dbname='.$DatabaseName;
@@ -100,11 +100,21 @@ function DB_escape_string($String){
 	Return pg_escape_string($String);
 }
 
-function INTERVAL( $val, $Inter )
-	{
-		global $dbtype;
+function INTERVAL( $val, $Inter ) {
+	global $dbtype;
+	return "\n(CAST( (" . $val . ") as text ) || ' ". $Inter ."')::interval\n";
+}
+
+function DB_Maintenance($Conn){
+
+	prnMsg(_('The system has just run the regular database administration and optimisation routine'),'info');
 	
-		return "\n(CAST( (" . $val . ") as text ) || ' ". $Inter ."')::interval\n";
-	}
+	$Result = DB_query('VACUUM ANALYZE',$Conn);
+	
+	$Result = DB_query("UPDATE config 
+				SET confvalue='" . Date('Y-m-d') . "' 
+				WHERE confname='DB_Maintenance_LastRun'",
+				$Conn);
+}
 
 ?>

@@ -1,12 +1,11 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity = 11;
 
 include('includes/session.inc');
 $title = _('Shipment Costing');
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/header.inc');
-include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 if ($_GET['NewShipment']=='Yes'){

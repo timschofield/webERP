@@ -1,15 +1,10 @@
 <?php
-/* $Revision: 1.31 $ */
-	/*--------------------------------------------------\
-	|               |               | session.inc       |
-	|---------------------------------------------------|
-	| Web-ERP - http://web-erp.sourceforge.net          |
-	| by Logic Works Ltd                                |
-	\--------------------------------------------------*/ 
-    
+/* $Revision: 1.32 $ */
+ 
     
 include('config.php');
 include('includes/ConnectDB.inc');
+include('includes/DateFunctions.inc');
         
 if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);
@@ -142,6 +137,19 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 
 /*User is logged in so get configuration parameters  - save in session*/
 include('includes/GetConfig.php');
+
+if(isset($_SESSION['DB_Maintenance'])){ 
+	if ($_SESSION['DB_Maintenance']!=0)  {	
+		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
+				ConvertSQLDate($_SESSION['DB_Maintenance_LastRun'])
+				,'d')	> 	$_SESSION['DB_Maintenance']){
+			
+			/*Do the DB maintenance routing for the DB_type selected */
+			DB_Maintenance($db);
+			$_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');
+		}	
+	}
+}
 
 If (isset($_POST['Theme'])) {
 	$_SESSION['Theme'] = $_POST['Theme'];

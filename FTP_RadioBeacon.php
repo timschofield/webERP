@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 /*Variables required to configure this script must be set in config.php */
 
@@ -7,9 +7,7 @@ $PageSecurity = 2;
 include('includes/session.inc');
 $title=_('FTP order to Radio Beacon');
 include('includes/header.inc');
-
 include('includes/SQL_CommonFunctions.inc');
-include('includes/DateFunctions.inc');
 
 
 /*Logic should allow entry of an order number which returns

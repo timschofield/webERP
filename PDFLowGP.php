@@ -1,7 +1,6 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 include('config.php');
-include('includes/DateFunctions.inc');
 
 if (!isset($_POST['FromCat'])  OR $_POST['FromCat']=='') {
 	$title=_('Low Gross Profit Sales');
@@ -9,12 +8,21 @@ if (!isset($_POST['FromCat'])  OR $_POST['FromCat']=='') {
 
 $PageSecurity = 2;
 
-If (isset($_POST['PrintPDF']) AND Is_Date($_POST['FromDate']) AND Is_Date($_POST['ToDate'])){
-
+If (isset($_POST['PrintPDF']) {
+	
 	include('includes/ConnectDB.inc');
 	include('includes/PDFStarter_ros.inc');
-
-
+	include('includes/DateFunctions.inc');
+	
+	$title = _('Low GP sales') . ' - ' . _('Problem Report');
+	
+	if (! Is_Date($_POST['FromDate']) OR ! Is_Date($_POST['ToDate'])){
+		include('includes/header.inc');
+		prnMsg(_('The dates entered must be in the format') . ' '  . $_SESSION['DefaultDateFormat'],'error');
+		include('includes/footer.inc');
+		exit;
+	}
+	
 	$FontSize=10;
 	$pdf->addinfo('Title',_('Low Gross Profit Sales'));
 	$pdf->addinfo('Subject',_('Low Gross Profit Sales'));
@@ -47,7 +55,7 @@ If (isset($_POST['PrintPDF']) AND Is_Date($_POST['FromDate']) AND Is_Date($_POST
 	$LowGPSalesResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
-	  $title = _('Low GP sales') . ' - ' . _('Problem Report');
+	  
 	  include('includes/header.inc');
 	   prnMsg(_('The low GP items could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
 	   echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
@@ -118,7 +126,7 @@ If (isset($_POST['PrintPDF']) AND Is_Date($_POST['FromDate']) AND Is_Date($_POST
 	include('includes/session.inc');
 	include('includes/header.inc');
 	
-	if (strlen($_POST['FromDate'])<1 || strlen($_POST['ToDate'])<1) {
+	if (strlen($_POST['FromDate'])<1 OR strlen($_POST['ToDate'])<1) {
 
 	/*if $FromDate is not set then show a form to allow input */
 
