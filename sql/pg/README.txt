@@ -1,3 +1,9 @@
+
+To use Postgres in preference to MySQL apply the script weberp28.psql
+against the Postgres SQL server and ensure that postgres is selected in
+config.php as the SQL server and the appropriate postgres server host
+is specified with user name and password.
+
 Conversion of a MySql database to Postgres
 
 # This program was written by Danie Brink brink@nas.co.za

@@ -214,6 +214,9 @@ $EDI_MsgPending = "EDI_Pending";
 
 $EDI_MsgSent = "EDI_Sent";
 
+/* EDI Messages sent log directory */
+
+$EDI_Incoming_Orders = "EDI_Incoming_Orders";
 
     // END OF USER CONFIGURABLE VARIABLES
 
@@ -223,7 +226,7 @@ $EDI_MsgSent = "EDI_Sent";
     eg. if the files are under the webserver root directory then rootpath =""; if they are under weberp then weberp is the rootpath - notice no additional slashes are necessary.
     */
 
-    //$rootpath = dirname($_SERVER['PHP_SELF']);
-    $rootpath = '/web-erp';
+    $rootpath = dirname($_SERVER['PHP_SELF']);
+    //$rootpath = '/web-erp';
 
 ?>

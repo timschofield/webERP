@@ -6,11 +6,14 @@ $PageSecurity = 10;
 include("includes/session.inc");
 include("includes/header.inc");
 
+echo "<!-- \$Revision: 1.2 $ -->"
 
 ?>
 
 <?php
-
+if (!isset($_POST['submit'])){
+	$_POST['submit']='';
+}
 if ($_POST['submit']=="Enter Information") {
 
 	//initialise no input errors assumed initially before we test
@@ -21,23 +24,21 @@ if ($_POST['submit']=="Enter Information") {
 
 	//first off validate inputs sensible
 
-	if (strstr($_POST['GroupName'],"&")>0 OR strstr($_POST['GroupName'],"'")>0) {
+	if (strpos($_POST['GroupName'],"&")>0 OR strpos($_POST['GroupName'],"'")>0) {
 		$InputError = 1;
-		echo "The account group name cannot contain the character '&' or the character '";
+		echo "<BR>The account group name cannot contain the character '&' or the character '";
 	} elseif (!is_long((int) $_POST['SectionInAccounts'])) {
 		$InputError = 1;
-		echo "The section in accounts must be an integer";
+		echo "<BR>The section in accounts must be an integer";
 	} elseif (!is_long((int) $_POST['SequenceInTB'])) {
 		$InputError = 1;
-		echo "The sequence in the trial balance must be an integer";
+		echo "<BR>The sequence in the trial balance must be an integer";
 	} elseif ($_POST['SequenceInTB'] > 10000) {
 		$InputError = 1;
-		echo "The sequence in the TB must be less than 10,000";
-	} elseif (($_POST['PandL']!=1 AND $_POST['PandL']!=0 AND $_POST['PandL']!=-1)) {
-		$InputError = 1;
-		echo "The profit and loss account flag must be either 1 or 0. 1 indicates that the account is a profit and loss account";
+		echo "<BR>The sequence in the TB must be less than 10,000";
 	}
-	if ($_POST['SelectedAccountGroup'] AND $InputError !=1) {
+
+	if (isset($_POST['SelectedAccountGroup']) AND $InputError !=1) {
 
 		/*SelectedAccountGroup could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
@@ -51,9 +52,12 @@ if ($_POST['submit']=="Enter Information") {
 		$sql = "INSERT INTO AccountGroups (GroupName,  SectionInAccounts, SequenceInTB, PandL) VALUES ('" . $_POST['GroupName'] . "', " . $_POST['SectionInAccounts'] . ", " . $_POST['SequenceInTB'] . ", " . $_POST['PandL'] . ")";
 		$msg = "Record inserted.";
 	}
-	//run the SQL from either of the above possibilites
-	$result = DB_query($sql,$db);
-	echo "<BR><BR><FONT SIZE=4>$msg</FONT>";
+
+	if ($InputError!=1){
+		//run the SQL from either of the above possibilites
+		$result = DB_query($sql,$db);
+		echo "<BR><BR><FONT SIZE=4>$msg</FONT>";
+	}
 	unset ($_POST['SelectedAccountGroup']);
 
 } elseif (isset($_GET['delete'])) {
@@ -65,7 +69,7 @@ if ($_POST['submit']=="Enter Information") {
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
-		echo "<BR><BR><FONT SIZE=4 COLOR=RED>Cannot delete this account group because general ledger accounts have been created using this group.";
+		echo "<BR><BR><FONT COLOR=RED>Cannot delete this account group because general ledger accounts have been created using this group.";
 		echo "<br> There are " . $myrow[0] . " GL accounts that refer to this account group</FONT>";
 
 	} else {
@@ -90,7 +94,7 @@ or deletion of the records*/
 	$sql = "SELECT GroupName, SectionInAccounts, SequenceInTB, PandL FROM AccountGroups ORDER BY SequenceInTB";
 	$result = DB_query($sql,$db);
 
-	echo "<center><table><tr><td BGCOLOR =#800000><FONT COLOR=#ffffff><B>Group Name</td><td BGCOLOR =#800000><FONT COLOR=#ffffff><B>Section</td><td BGCOLOR =#800000><FONT COLOR=#ffffff><B>Sequence In TB</td><td BGCOLOR =#800000><FONT COLOR=#ffffff><B>Profit and Loss</td></tr>\n";
+	echo "<center><table><tr><td class='tableheader'>Group Name</td><td class='tableheader'>Section</td><td class='tableheader'>Sequence In TB</td><td class='tableheader'>Profit and Loss</td></tr>\n";
 
 	$k=0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
@@ -133,7 +137,7 @@ or deletion of the records*/
 			break;
 		} //end of switch statment
 
-	printf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><a href=\"%sSelectedAccountGroup=%s\">EDIT</a></td><td><a href=\"%sSelectedAccountGroup=%s&delete=1\">DELETE</a></td></tr>", $myrow[0], $SectionText, $myrow[2], $PandLText,$_SERVER['PHP_SELF'] . "?" . SID , $myrow[0], $_SERVER['PHP_SELF'] . "?" . SID, $myrow[0]);
+	printf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><a href=\"%sSelectedAccountGroup=%s\">EDIT</a></td><td><a href=\"%sSelectedAccountGroup=%s&delete=1\">DELETE</a></td></tr>", $myrow[0], $SectionText, $myrow[2], $PandLText,$_SERVER['PHP_SELF'] . "?" . SID ,$myrow[0], $_SERVER['PHP_SELF'] . "?" . SID, $myrow[0]);
 
 	} //END WHILE LIST LOOP
 } //end of ifs and buts!
@@ -170,6 +174,21 @@ if (! isset($_GET['delete'])) {
 
 	} else { //end of if $_POST['SelectedAccountGroup'] only do the else when a new record is being entered
 
+		if (!isset($_POST['SelectedAccountGroup'])){
+			$_POST['SelectedAccountGroup']="";
+		}
+		if (!isset($_POST['GroupName'])){
+			$_POST['GroupName']="";
+		}
+		if (!isset($_POST['SectionInAccounts'])){
+			$_POST['SectionInAccounts']="";
+		}
+		if (!isset($_POST['SequenceInTB'])){
+			$_POST['SequenceInTB']="";
+		}
+		if (!isset($_POST['PandL'])){
+			$_POST['PandL']="";
+		}
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedAccountGroup' VALUE='" . $_POST['SelectedAccountGroup'] . "'>";
 		echo "<CENTER><TABLE><TR><TD>Acount Group Name:</TD><TD><input type='Text' name='GroupName' SIZE=30 MAXLENGTH=30 value='" . $_POST['GroupName'] . "'></TD></TR>";
 	}
