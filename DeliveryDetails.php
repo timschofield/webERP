@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
 */
@@ -30,7 +30,7 @@ If ($_SESSION['Items']->ItemsOrdered == 0){
 
 $EarliestDispatch = CalcEarliestDispatchDate();
 
-If ($_POST['ProcessOrder']) {
+If (isset($_POST['ProcessOrder'])) {
 
 	/*need to check for input errors in any case before order processed */
 	$_POST['Update']="Yes re-run the validation checks";
@@ -166,7 +166,7 @@ if ($_POST['BackToLineDetails']=='Modify Order Lines'){
 
 }
 
-If ($_POST['ProcessOrder']) {
+If (isset($_POST['ProcessOrder'])) {
 	/*Default OK_to_PROCESS to 1 change to 0 later if hit a snag */
 	if ($InputErrors ==0) {
 		$OK_to_PROCESS = 1;
@@ -210,8 +210,9 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 	$HeaderSQL = "INSERT INTO SalesOrders (DebtorNo, BranchCode, CustomerRef, Comments, OrdDate, OrderType, ShipVia, DeliverTo, DelAdd1, DelAdd2, DelAdd3, DelAdd4, ContactPhone, ContactEmail, FreightCost, FromStkLoc, DeliveryDate) VALUES ('" . $_SESSION['Items']->DebtorNo . "', '" . $_SESSION['Items']->Branch . "', '". $_SESSION['Items']->CustRef ."','". $_SESSION['Items']->Comments ."','" . Date("Y-m-d H:i") . "', '" . $_SESSION['Items']->DefaultSalesType . "', " . $_POST['ShipVia'] .",'" . $_SESSION['Items']->DeliverTo . "', '" . $_SESSION['Items']->BrAdd1 . "', '" . $_SESSION['Items']->BrAdd2 . "', '" . $_SESSION['Items']->BrAdd3 . "', '" . $_SESSION['Items']->BrAdd4 . "', '" . $_SESSION['Items']->PhoneNo . "', '" . $_SESSION['Items']->Email . "', " . $_SESSION['Items']->FreightCost .", '" . $_SESSION['Items']->Location ."', '" . $DelDate . "')";
 
 	$InsertQryResult = DB_query($HeaderSQL,$db);
+
 	if (DB_error_no($db) !=0) {
-		echo "The order cannot be added because - " . DB_error_msg($db) . ". The incorrect SQL used to perform this insert operation was: <BR>$HeaderSQL";
+		echo "<BR>The order cannot be added because - " . DB_error_msg($db) . ". The incorrect SQL used to perform this insert operation was: <BR>$HeaderSQL";
 	} else {
 		$OrderNo = DB_Last_Insert_ID($db);
 		$StartOf_LineItemsSQL = "INSERT INTO SalesOrderDetails (OrderNo, StkCode, UnitPrice, Quantity, DiscountPercent) VALUES (";
@@ -244,56 +245,42 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 
 } elseif ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']!=0){
 
-/* update the order header then delete the old order line details and insert the new lines - a transaction would  be good here */
+/* update the order header then update the old order line details and insert the new lines */
 
 	$DelDate = FormatDateforSQL($_SESSION['Items']->DeliveryDate);
 
-	$SQL = "Begin";
-	$Result = DB_query($SQL,$db);
+	$Result = DB_query("begin",$db);
 
 	$HeaderSQL = "UPDATE SalesOrders SET DebtorNo = '" . $_SESSION['Items']->DebtorNo . "', BranchCode = '" . $_SESSION['Items']->Branch . "', CustomerRef = '". $_SESSION['Items']->CustRef ."', Comments = '". $_SESSION['Items']->Comments ."', OrdDate = '" . Date("Y-m-d H:i") . "', OrderType = '" . $_SESSION['Items']->DefaultSalesType . "', ShipVia = " . $_POST['ShipVia'] .", DeliverTo = '" . $_SESSION['Items']->DeliverTo . "', DelAdd1 = '" . $_SESSION['Items']->BrAdd1 . "', DelAdd2 = '" . $_SESSION['Items']->BrAdd2 . "', DelAdd3 = '" . $_SESSION['Items']->BrAdd3 . "', DelAdd4 = '" . $_SESSION['Items']->BrAdd4 . "', ContactPhone = '" . $_SESSION['Items']->PhoneNo . "', ContactEmail = '" . $_SESSION['Items']->Email . "', FreightCost = " . $_SESSION['Items']->FreightCost .", FromStkLoc = '" . $_SESSION['Items']->Location ."', DeliveryDate = '" . $DelDate . "', PrintedPackingSlip = " . $_POST['ReprintPackingSlip'] . " WHERE SalesOrders.OrderNo=" . $_SESSION['ExistingOrder'];
 
 	$InsertQryResult = DB_query($HeaderSQL,$db);
 	if (DB_error_no($db) !=0) {
-		echo "The order cannot be updated because - " . DB_error_msg($db) . " The incorrect SQL that was attempted to be processed and failed was:<BR>$HeaderSQL";
-		$SQL = "Rollback";
-		$Result=DB_query($SQL,$db);
+		echo "<BR>The order cannot be updated because - " . DB_error_msg($db) . " The incorrect SQL that was attempted to be processed and failed was:<BR>$HeaderSQL";
+
+		$Result=DB_query("rollback",$db);
 	} else {
 
-		$DelOldLinesSQL = "DELETE FROM SalesOrderDetails WHERE SalesOrderDetails.OrderNo =" . $_SESSION['ExistingOrder'];
-
-		$DelOldLinesResult = DB_query($DelOldLinesSQL,$db);
-
-		if (DB_error_no($db) !=0) {
-			echo "The old order lines cannot be deleted because - " . DB_error_msg($db) . " The SQL being used to attempt deletion of the old order lines was:<BR>$DelOldLinesSQL";
-		      $SQL = "Rollback";
-		      $Result=DB_query($SQL,$db);
-		      exit;
-		}
-
-		$StartOf_LineItemsSQL = "INSERT INTO SalesOrderDetails (OrderNo, StkCode,  UnitPrice, Quantity, DiscountPercent, QtyInvoiced, ActualDispatchDate, Completed) VALUES (";
-
 		foreach ($_SESSION['Items']->LineItems as $StockItem) {
-
-			$LineItemsSQL = $StartOf_LineItemsSQL . $_SESSION['ExistingOrder'] . ",'" . $StockItem->StockID . "', " . $StockItem->Price . ", " . $StockItem->Quantity . ", " . $StockItem->DiscountPercent . ", " . $StockItem->QtyInv . ", '" . $StockItem->ActDispDate . "', ";
 
 			/* Check to see if the quantity reduced to the same quantity
 			as already invoiced - so should set the line to completed */
 			if ($StockItem->Quantity == $StockItem->QtyInv){
-			     $LineItemsSQL = $LineItemsSQL . "1)";
+			     $Completed = 1;
 			} else {  /* order line is not complete */
-			     $LineItemsSQL = $LineItemsSQL . "0)";
+			     $Completed = 0;
 			}
 
-			$Ins_LineItemResult = DB_query($LineItemsSQL,$db);
+			$LineItemsSQL = "UPDATE SalesOrderDetails SET UnitPrice="  . $StockItem->Price . ", Quantity=" . $StockItem->Quantity . ", DiscountPercent=" . $StockItem->DiscountPercent . ", Completed=" . $Completed . " WHERE OrderNo=" . $_SESSION['ExistingOrder'] . " AND StkCode='" . $StockItem->StockID . "'";
+
+			$Upd_LineItemResult = DB_query($LineItemsSQL,$db);
 
 			if (DB_error_no($db) !=0) {
-				echo "<BR>The new order lines cannot be inserted because - " . DB_error_msg($db) . "The SQL being used to insert the line that failed was:<BR>$LineItemsSQL";
-				$SQL = "Rollback";
-				$Result=DB_query($SQL,$db);
+				echo "<BR>The updated order line cannot be modified because - " . DB_error_msg($db) . "The SQL being used to modify the line that failed was:<BR>$LineItemsSQL";
+
+				$Result=DB_query("Rollback",$db);
 				exit;
 			}
-		} /* inserted line items into sales order details */
+		} /* updated line items into sales order details */
 
 	} /*header record updated OK */
 
@@ -331,7 +318,6 @@ if (in_array(2,$SecurityGroups[$_SESSION['AccessLevel']])){
 		$DisplayLineTotal = number_format($LineTotal,2);
 		$DisplayPrice = number_format($StockItem->Price,2);
 		$DisplayQuantity = number_format($StockItem->Quantity,2);
-		// Sherifoz 26.06.03 Display discount as a real
 		$DisplayDiscount = number_format(($StockItem->DiscountPercent * 100),2);
 
 

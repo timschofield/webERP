@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 if (isset($_GET['ModifyOrderNumber'])) {
 	$title = "Modifying Order " . $_GET['ModifyOrderNumber'];
 } else {
@@ -43,7 +43,6 @@ if (isset($_GET['NewOrder'])){
 	$_SESSION['Items'] = new cart;
 
 	if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){ //its a customer logon
-
 		$_SESSION['Items']->DebtorNo=$_SESSION['CustomerID'];
 		$_SESSION['RequireCustomerSelection']=0;
 	} else {
@@ -421,11 +420,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 
 		if ($OK_to_delete==1){
 			if($_SESSION['ExistingOrder']!=0){
-				$SQL = "DELETE FROM SalesOrders WHERE SalesOrders.OrderNo=" . $_SESSION['ExistingOrder'];
-				$DelResult=DB_query($SQL,$db);
-				if (DB_error_no($db) !=0) {
-					echo "<BR>The order header could not be deleted because - " . DB_error_msg($db);
-				}
 				$SQL = "DELETE FROM SalesOrderDetails WHERE SalesOrderDetails.OrderNo =" . $_SESSION['ExistingOrder'];
 				$DelResult=DB_query($SQL,$db);
 				if (DB_error_no($db) !=0) {
@@ -433,6 +427,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 				} else {
 					$_SESSION['ExistingOrder']=0;
 				}
+				$SQL = "DELETE FROM SalesOrders WHERE SalesOrders.OrderNo=" . $_SESSION['ExistingOrder'];
+				$DelResult=DB_query($SQL,$db);
+				if (DB_error_no($db) !=0) {
+					echo "<BR>The order header could not be deleted because - " . DB_error_msg($db);
+				}
+
 			}
 
 			unset($_SESSION['Items']->LineItems);
@@ -586,7 +586,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 	     unset($NewItem);
 	 } /* end of if quick entry */
 
-	If ((isset($_SESSION['Items']) AND $_SESSION['Items']->ItemsOrdered > 0) OR isset($NewItem)){
+	If ((isset($_SESSION['Items'])) OR isset($NewItem)){
 
 		If(isset($_GET['Delete'])){ //page called attempting to delete a line
 			if($_SESSION['Items']->Some_Already_Delivered($_GET['Delete'])==0){
@@ -615,9 +615,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 					echo "<BR>The item you attempting to modify has had some quantity invoiced at the old discount percent the items discount cannot be modified retrospectively";
 
 				} elseif ($_SESSION['Items']->LineItems[$StockItem->StockID]->QtyInv > $Quantity){
-
 					echo "<BR>You are attempting to make the quantity ordered a quantity less than has already been invoiced. The quantity delivered and invoiced cannot be modified retrospectively";
-
 				} else {
 					$_SESSION['Items']->update_cart_item($StockItem->StockID, $Quantity, $Price,($DiscountPercentage/100));
 				}
@@ -625,7 +623,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 		}
 
 		if (!isset($_POST['DeliveryDetails']))  $_POST['DeliveryDetails']='';
-		
+
 		if ($_POST['DeliveryDetails'] =="Enter Delivery Details and Confirm Order"){
 			echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . "/DeliveryDetails.php?" . SID . "'>";
 			echo "<P>You should automatically be forwarded to the entry of the delivery details page. If this does not happen (if the browser doesn't support META Refresh) <a href='" . $rootpath . "/DeliveryDetails.php?" . SID . "'>click here</a> to continue.<br>";

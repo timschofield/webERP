@@ -1,14 +1,14 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $db = mysql_connect($host , $dbuser, $dbpassword);
 mysql_select_db($DatabaseName,$db);
 
 //DB wrapper functions to change only once for whole application
 
-function DB_query ($SQL,&$Conn, $ErrorMessage="", $DebugMessage="", $Transaction=false){
+function DB_query ($SQL,&$Conn, $ErrorMessage="", $DebugMessage="", $Transaction=false, $TrapErrors=true){
 	global $debug;
 	$result=mysql_query($SQL,$Conn);
-	if (DB_error_no($Conn) != 0){
+	if (DB_error_no($Conn) != 0 AND $TrapErrors){
 		prnMsg($ErrorMessage."\n<BR>" . DB_error_msg($Conn),"error");
 		if ($debug==1){
 			echo $DebugMessage."<BR>$SQL<BR>";

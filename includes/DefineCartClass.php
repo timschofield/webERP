@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /* Definition of the cart class
 this class can hold all the information for:
 
@@ -75,6 +75,10 @@ Class Cart {
 		if (isset($StockID)){
 			unset($this->LineItems[$StockID]);
 			$this->ItemsOrdered--;
+		}
+		if ($_SESSION['ExistingOrder']!=0){
+			global $db;
+			$result = DB_query("DELETE FROM SalesOrderDetails WHERE OrderNo=" . $_SESSION['ExistingOrder'] . " AND StkCode='" . $StockID ."'",$db,"The order line for " . $StockID . " couold not be deleted");
 		}
 	}
 
