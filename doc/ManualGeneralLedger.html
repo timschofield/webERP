@@ -1,0 +1,400 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+<title>webERP Manual - General Ledger</title>
+</head>
+<body>
+<basefont face="Arial, Verdana, Helvetica">
+<div align="center"><font size="+4" color="blue"><b><u>webERP Manual</u></b></font></div> 
+<br><br>
+<font size="+3"><b>General Ledger</b></font>
+<br><br>
+<font size="+2"><b>Overview</b></font>
+<br><br>
+The general ledger is the accounting hub that is central to the "sub" ledgers for creditors (Accounts Payable), debtors (Accounts Receivable) and stock (inventory). All entries in the sub ledgers are also represented by entries in the general ledger. It is the integration set-up that determines how entries in the sub-ledgers are reflected in the general ledger. Most activity in the general ledger will be automatically created from the activity in the sub-ledgers with receivables, payables and stock administration.
+<br><br>
+However, there are also facilities to:
+<br><br>
+<ul>
+<li>Enter general ledger receipts against a pre-defined bank accounts.
+<li>Enter general ledger payments against pre-defined bank accounts.
+<li>Enter general ledger journals between any general ledger accounts - except bank accounts. These can also be made to reverse automatically in the following period. Further journals can be posted to any period future or previously - the period is determined by reference to the date entered.
+<li>Inquire on general ledger account activity and from any entry in this inquiry drill down to the journals created to produce the entry.
+<li>Inquire on the general ledger trial balance for any period end in history or currently.
+</ul>
+
+<!-- Help Begin: AccountGroups -->
+
+<font size="+2"><b>Account Groups</b></font>
+<br><br>
+The account group is the parent object of a general ledger account for someone who understands OO programming. Child accounts created inherit the properties of the account group - ie the account will be a profit and loss account if it belongs to an account group that is a balance sheet account, the child accounts will display in the trial balance (TB) together in the sequence determined by the account groups sequence in the trial balance (TB).
+<br><br>
+Using a numbering system inhibits the ability to manipulate the format of the trial balance ie you have to be able to change the account code to change where an account appears ie
+<br><br>
+10100 motor expense Copenhagen
+<br><br>
+10110 motor expenses The Hague
+<br><br>
+10120 motor expense Amsterdam
+<br><br>
+would be great but then if we wish to restructure so that Copenhagen expenses are all shown together and The Hague is now all shown together etc we will have to change the numbering. In web-erp all that is required is to change the account group. In the first situation we could have an account group for motor expenses and all these account numbers would be set up as belonging to the account group. We can decide whereabouts the account group should appear in the trial balance by changing the sequence in trial balance field. All accounts in the account group will show together. If we decided to change the trial balance to show The Hague expenses together as a separate group of costs, we could create an account group for the The Hague selling costs - or whatever, and change the motor expenses the Hague account no 10110 to be a member of that account group.
+<br><br>
+Account groups require the sequence in the trial balance to be specified and also whether the accounts in that group will be profit and loss accounts or balance sheet accounts.
+<br><br>
+A balance sheet account is one where only the balance at the end of the period concerned is of interest. A profit and loss is one where we are interested in the movement over the period. eg. Motor expenses we are not concerned with the balance at the end of the month so much as how much was spent over the period of the profit and loss. However, for a bank account we wish to know what we have now as a balance not the movements in the account. As noted accounts created as a member of an account group will inherit the properties of the account group ie if the account group is a balance sheet group then the accounts will be interpreted as balance sheet accounts.
+
+<!-- Help End: AccountGroups -->
+
+<br><br>
+
+<!-- Help Begin: BankAccounts -->
+
+<font size="+2"><b>Bank Accounts</b></font>
+<br><br>
+Certain general ledger accounts can be defined as bank accounts - as many bank accounts as needed can be defined. General ledger accounts defined as bank accounts can be reconciled to bank statements using the matching facilities. Entries made to bank accounts using receipts or payments, also create a total receipt or payment, which is retained for the purposes of matching off the bank statements. Using the bank payments page, general ledger payments can be analysed to any number of other general ledger accounts, but only one entry to the bank account is made. This page also allows payments to supplier accounts to be created. Similarly, using the receipt entry page, a series of receipts from customers which may all have been banked together can be deposited as one amount to a bank account. There is only one amount appearing on the statement as the total of all these receipts, this bank account transaction is created and available for matching deposits off the bank statements.
+<br><br>
+Once all receipts and payments are matched to bank statements, the bank reconciliation statement can be printed which should show how the current general ledger balance reconciles to the bank statement for this account.
+<br><br>
+Bank accounts are defined from the setup tab from the link to Bank Accounts Maintenance. There is facility to enter the name of the account, the bank account number and the address of the bank if required, as well as selecting the general ledger account to which it refers. There are links to edit existing bank account records and to delete them. However, once defined as referring to a particular general ledger code it is not possible to change the general ledger code of the bank account. This is because there would be entries made to this account. Similarly, if bank transactions have been created using this bank account it is not possible to delete it. The bank account transactions must be purged first (but currently no facility exists to purge bank transactions).
+
+<!-- Help End: BankAccounts -->
+
+<br><br>
+
+<!-- Help Begin: Payments -->
+
+<font size="+1"><b>Bank Account Payments</b></font>
+<br><br>
+From the general ledger tab, the first link under transactions is Bank Account Payments.
+<br><br>
+The following data is required:
+<br><br>
+<ul>
+<li>The bank account from which the payment has been (or is to be) made. A select box allows this to be selected from the list of defined bank accounts.
+<li>The date on which it was paid. This is important since the accounting period in which the payment is entered is determined from the date. The system will default to today's date - this must be changed where bank payments are being entered retrospectively.
+<li>The currency which is being paid. The entries to all bank accounts are made in local currency, but payment to suppliers may be made in foreign currency being purchased in local currency at the exchange rate entered. All bank accounts are recorded in local currency (there is no facility for foreign currency bank accounts). By default the system will use the functional currency of the business as defined in the company preferences page.
+<li>The exchange rate - if the functional currency of the business is being used this should be 1. If another currency is being purchased with the payment then the rate at which it is being purchased should be entered.
+<li>Narrative - applicable to the whole payment. Narrative applicable to individual general ledger entries can be entered separately.
+</ul>
+Payments can take two forms - either it is a general ledger payment or it is a payment to a supplier. General ledger payments require an analysis of how the payment should be posted to the general ledger. General ledger accounts can be specified either as the account code directly (if the account code is known) or by selecting from the select box. Any narrative applicable to the general ledger amount can be entered too - and the amount to be posted to the selected/entered account. The total payment is taken as being the sum of all the entries made. If the total of all entries made is negative then this is entered as a negative payment - these are accepted to allow for correction of data entry errors.
+
+<!-- Help End: Payments -->
+
+<br><br>
+<font size="+2"><b>General Ledger Integration Setup</b></font>
+<br><br>
+There are two levels of general ledger integration. 
+<br><br>
+<ul>
+<li>Sales journals that post a credit to a sales general ledger account, a debit to a discount account, a credit to a tax account, a credit to a freight recovery account and a debit to a debtor account. This level of integration also reverses the posting described here for sales credit notes. This level also triggers the general ledger journals for banking of cash against debtor accounts. Debiting a bank account and crediting the debtors account.
+<li>Stock journals that post a debit to a cost of sales account and a credit to a stock account - and the reverse entries for sales credit notes.
+</ul>
+The level of general ledger integration is determined by reference to the flags in the company preferences page.
+<br><br>
+
+<!-- Help Begin: SalesGLPostings -->
+
+<font size="+1"><b>Sales Journals</b></font>
+<br><br>
+The general ledger accounts that are used in this level of integration are determined from several inputs. 
+<br><br>
+<ul>
+<li>Sales Area of the customer being invoiced/credited
+<li>Sales Type (or price list) of the customer being invoiced/credited.
+<li>Stock Category of the item being invoiced/credited.
+</ul>
+A table of sales general ledger accounts is maintained and can be modified from the setup tab. When an invoice is created from the ConfirmDispatch_Invoice.php script the system uses a function defined in GetSalesTransGLCode.inc to look up the general ledger codes that are appropriate. By default this function uses the following logic:
+<br><br>
+<ul>
+<li>If there is a record in the SalesGLPostings table that has a matching Area, SalesType and Stock Category then the function returns the sales account and the discount account applicable.
+<li>If there is a match for the Area and SalesType using the default Stock Category (ANY) then the codes applicable to this record are returned.
+<li>Then if there is a matching Sales type, stock category with default (AN) area this is used.
+<li>Then if there is a matching stock category record using the default area (AN) and the default salestype (AN) this is used - finally
+<li>If there is no record is found after trying the above combinations then the GL Code for the default area, sales type and default stock category is used - this is GL code 1. If GL Code 1 is not defined, then it will be created.
+</ul>
+Since the logic of how the general ledger account is determined is defined in this function it is relatively simple to change this to what is most appropriate for the business.
+<br><br>
+The freight recovery and the debtors control account used are those defined in the company preferences page.
+<br><br>
+The tax account used is the account defined in the tax authorities definition used for the customer being invoiced.
+
+<!-- Help End: SalesGLPostings -->
+
+<br><br>
+
+<!-- Help Begin: COGSGLPostings -->
+
+<font size="+1"><b>Stock Journals</b></font>
+<br><br>
+The general ledger accounts that are used for posting sales transactions are determined using the sales area, the sales type of the customer being invoiced/credited and the stock category of the item being invoiced/credited. A table of general ledger accounts is maintained and can be modified from the set up tab from the link "COGS GL Interface Postings". The same logic as above is applied and the function is defined in the same GetSalesTransGLCode.inc script to look up the appropriate GL codes. Again, since the logic of how the general ledger account is determined is defined in the function GetCOGSGLAccount, it is relatively simple to change this to suit the business.
+<br><br>
+The account to credit stock with for the cost of goods sold is determined by reference to the stock item being sold. The stock category of the item is retrieved and the general ledger codes applicable to the stock category are used.
+<br><br>
+The profit and loss accounts used for stock adjustments are also determined by reference to the stock category record.
+<br><br>
+The profit and loss account used for posting the variance between standard cost of a purchased item and its actual cost as invoiced is also determined from the stock category record.
+
+<!-- Help End: COGSGLPostings -->
+
+<br><br>
+<font size="+2"><b>EDI</b></font>
+<br><br>
+EDI stands for electronic data interchange - the electronic transmission of transaction information between trading partners. There are numerous standards for the encoding of such transactions the most widely used being UN/EDIFACT  and its derivative EANCOM implementation. In fact many industry groups use the standard formats in slightly different ways and some businesses within the industry use the industry standard slightly differently again. So ultimately, the standards are really only a framework for what the actual messages look like. In implementing EDI in webERP, some flexibility in the format of messages to be sent and received is available. EDI messages are created in flat files in the directory specified in config.php for EDI outgoing messages and a log of the EDI messages sent is retained also. The messages can be sent either as an email attachment to the customer supplied email address or via ftp to a customer supplied ftp server address - using the ftp username and password provided by the customer.
+<br><br>
+
+<!-- Help Begin: CustEDISetup -->
+
+<font size="+1"><b>EDI Setup</b></font>
+<br><br>
+To enable EDI transactions for a customer, first select the customer from the Select Customer link on any page, then click the link - Customer EDI Configuration. This page allows selection of the type of transactions that are to transmitted electronically currently only invoices/credit notes and orders are available. Each must be specifically enabled to activate them. Each customer must have their:
+<br><br>
+<ul>
+<li>EDI reference that they are identified by
+<li>Transport mechanism and address to which the invoice/credit note messages are to be sent - either email as a file attachment or via ftp (file transfer protocol)
+</ul>
+If the transport mechanism is to be ftp - this must be compiled into PHP with the flag -enable-ftp, most windows PHP installtions have this by default now. Additional fields for the ftp server username and password will also be required.
+<br><br>
+To activate EDI polling for invoices to send the script EDISendInvoices.php must be run as a scheduled job - using cron or some other scheduling system -see automating sales reports. It can also be run from the utilites menu Z_index.php with debugging output.
+<br><br>
+To activate EDI polling for orders to be entered as received the script ???? must be run as a scheduled job using cron or some other scheduling system.
+<br><br>
+<font size="+1"><b>Sending EDI Invoices</b></font>
+<br><br>
+EDI messages are made up of segments which must appear in a certain order. Since customers will require EDI invoices in slightly different formats, the exact format can be defined in the table EDIMessageFormat. This table has a record for each customer invoice line and the sequence when it must appear in the message. The field line text in this table can include any of the predefined EDI invoice variables surrounded by "[" and "]" to denote them as a variable to be replaced with the appropriate value as follows:
+<br><br>
+<table>
+<th colspan="2">EDI Invoice Detail Section</th>
+<tr>
+<td>
+EDITransNo
+</td>
+<td>
+The unique EDI transaction number
+</td>
+</tr>
+<tr>
+<td>
+InvOrCrd
+</td>
+<td>
+Whether the transaction is an invoice or a credit - the value of this variable is an EANCOM defined number, 388 for a tax invoice and 381 for a credit note
+</td>
+</tr>
+<tr>
+<td>
+TransNo
+</td>
+<td>
+The transaction number of invoice or credit 
+</td>
+</tr>
+<tr>
+<td>
+OrigOrDup
+</td>
+<td>
+Whether the transaction is a duplicate or original sending the value of this variable is an EANCOM defined number 7 for a duplicate and 9 for an original
+</td>
+</tr>
+<tr>
+<td>
+TranDate
+</td>
+<td>
+The transaction date in the format CCYYMMDD
+</td>
+</tr>
+<tr>
+<td>
+OrderNo
+</td>
+<td>
+The original order number - only for invoices
+</td>
+</tr>
+<tr>
+<td>
+CustBranchCode
+</td>
+<td>
+The customer's internal code for the branch
+</td>
+</tr>
+<tr>
+<td>
+CompanyEDIReference
+</td>
+<td>
+The customer's EDI reference code
+</td>
+</tr>
+<tr>
+<td>
+BranchName
+</td>
+<td>
+The branch name
+</td>
+</tr>
+<tr>
+<td>
+BranchStreet
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+BranchCity
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+BranchState
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+TaxAuthorityRef
+</td>
+<td>
+The businesses Tax Authority reference number
+</td>
+</tr>
+<tr>
+<td>
+DatePaymentDue
+</td>
+<td>
+The due date for this transaction
+</td>
+</tr>
+<tr>
+<td>
+TaxTotal
+</td>
+<td>
+The total amount of tax on the transaction
+</td>
+</tr>
+</table>
+<table>
+<th>EDI Invoice Detail Section - for the lines on the transaction</th>
+<tr>
+<td>
+LineNumber
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+StockID
+</td>
+<td>
+The webERP item code 
+</td>
+</tr>
+<tr>
+<td>
+CustStockID
+</td>
+<td>
+The customer's internal code for the item
+</td>
+</tr>
+<tr>
+<td>
+ItemDescription
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+QtyInvoiced
+</td>
+<td>
+Quantity invoiced or credited
+</td>
+</tr>
+<tr>
+<td>
+LineTotalExclTax
+</td>
+<td>
+The total for the line excluding tax
+</td>
+</tr>
+<tr>
+<td>
+UnitPrice
+</td>
+<td>
+Unit price for the item
+</td>
+</tr>
+<tr>
+<td>
+LineTaxAmount
+</td>
+<td>
+The tax applicable to the line
+</td>
+</tr>
+</table>
+<table>
+<th>EDI Invoice Summary Section</th>
+<tr>
+<td>
+NoLines
+</td>
+<td>
+The total number of lines on the invoice/credit
+</td>
+</tr>
+<tr>
+<td>
+TotalAmountExclTax
+</td>
+<td>
+Total amount of the transaction excluding tax
+</td>
+</tr>
+<tr>
+<td>
+TotalAmountInclTax
+</td>
+<td>
+Total amount of the transaction including tax
+</td>
+</tr>
+<tr>
+<td>
+NoSegments
+</td>
+<td>
+The total number of segments in the transaction this is required as a control check in the summary
+</td>
+</tr>
+</table>
+There is therefore great flexibility in how the messages are defined. The variables for the summary and heading sections can be used in any section. The detail section variables can only be used in the detail section.
+<br><br>
+Most customers will require that the branch to which the invoiced goods are delivered to, be identified using the customer's coding system. It is therefore important to ensure that the customer's branch code is actually entered against the webERP branch record. The variable CustBranchCode is retrieved from the branch record and if it is not entered then the EDI transaction will fail.
+<br><br>
+Some customers may also require the item code to be their item code, not the webERP item code. The variable CustStockID is derived from the cross reference table EDIItemMapping which would need to contain a cross reference record for each item that they may buy.
+<br><br>
+The script that creates the EDI invoices (EDISendInvoices.php) should be run automatically in the background as a scheduled task. It first gets a list of all customers who should receive EDI invoices (or credit notes) - as determined in the settings of their DebtorsMaster record. Then the script goes through each customer returned in turn to get any invoices or credits that have not already been sent. A flat file is created for all the customers invoices and credits and sent to the customer using the transport, address and other parameters defined in the customer edi setup page - recorded against their DebtorsMaster record. There is a link to enable the script to be run manually - the browser will also show the output of the EDI message.
+<!-- Help End: CustEDISetup -->
+</body>
+</html>

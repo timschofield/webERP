@@ -1,5 +1,7 @@
 <P>webERP Change Log
 
+<P>17/10/04 Gettextified PDFBankingSummary.php, PDFChequeListing.php, SalesGLPostings.php, SalesPeople.php, SalesTypes.php
+<P>17/10/04 Gettextified PurchData.php, ReverseGRN.php - Steve
 <P>14/10/04 Gettextified Prices.php,Prices_Customer.php - Steve
 <P>14/10/04 Gettextified PDFCustomerList.php PDFPriceList.php, PDFStockCheckComparison.php, PDFStockLocTransfer.php  Jesse
 <P>14/10/04 Bug fixes GLTransInquiry.php Steve - $rootpath in single quotes, $title above include session.inc

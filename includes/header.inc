@@ -1,10 +1,10 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
 	//  $title - should be defined in the page this file is included with
-
+	echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">';
 	echo "<html> \n<head> \n<title>$title</title> \n";
 	echo "<link href='css/". $_SESSION['Theme'] ."/default.css' rel='stylesheet' type='text/css' /> \n";
 	echo "</head> \n";
