@@ -1,13 +1,11 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 $title = "Receive Controlled Items";
 $PageSecurity = 11;
 
 /* Session started in header.inc for password checking and authorisation level check */
 include("includes/DefinePOClass.php");
 include("includes/DefineSerialItems.php");
-include("includes/DateFunctions.inc");
-include("includes/SQL_CommonFunctions.inc");
 include("includes/session.inc");
 include("includes/header.inc");
 
@@ -65,67 +63,17 @@ echo "<br><a href='$rootpath/GoodsReceived.php?" . SID . "'>Back To Purchase Ord
 
 echo "<br><FONT SIZE=2><B>Receive controlled item " . $LineItem->StockID  . " - " . $LineItem->ItemDescription . " on order " . $_SESSION['PO']->OrderNo . " from " . $_SESSION['PO']->SupplierName . "</B></FONT>";
 
-if ($LineItem->Serialised==1){
-	echo "<BR>Read From a file:<input type=file name='ImportFile'><BR>";
-}
 
-echo "<CENTER><TABLE>";
-
-if ($LineItem->Serialised==1){
-	$tableheader .= "<TR><TD class='tableheader'>Serial No</TD></TR>";
-} else {
-	$tableheader = "<TR><TD class='tableheader'>Batch/Roll/Bundle#</TD><TD class='tableheader'>Quantity</TD></TR>";
-}
-
-echo $tableheader;
-$TotalReceived = 0; /*Variable to accumulate total quantity received */
+include ("includes/InputSerialItems.php");
 
 
-/*Display the batches already entered with quantities if not serialised */
-foreach ($LineItem->SerialItems as $Bundle){
+/*TotalQuantity set inside this include file from the sum of the bundles
+of the item selected for dispatch */
+$_SESSION['PO']->LineItems[$LineItem->LineNo]->ReceiveQty = $TotalQuantity;
 
-	if ($k==1){
-		echo "<tr bgcolor='#CCCCCC'>";
-		$k=0;
-	} else {
-		echo "<tr bgcolor='#EEEEEE'>";
-		$k=1;
-	}
-
-	echo "<TD>" . $Bundle->BundleRef . "</TD>";
-
-	if ($LineItem->Serialised==0){
-		echo "<TD>" . $Bundle->BundleQty . "</TD>";
-	}
-
-	echo "<TD><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "Delete=" . $Bundle->BundleRef . "&LineNo=" . $LineNo . "'>Delete</A></TD></TR>";
-	$TotalReceived += $Bundle->BundleQty;
-}
-
-$_SESSION['PO']->LineItems[$LineItem->LineNo]->ReceiveQty = $TotalReceived;
-
-/*Display the totals and rule off before allowing new entries */
-if ($LineItem->Serialised==1){
-	echo "<TR><TD ALIGN=RIGHT><B>Total Quantity: " . number_format($TotalReceived,$LineItem->DecimalPlaces) . "</B></TD></TR>";
-	echo "<TR><TD><HR></TD></TR>";
-} else {
-	echo "<TR><TD ALIGN=RIGHT><B>Total Received:</B></TD><TD ALIGN=RIGHT><B>" . number_format($TotalReceived,$LineItem->DecimalPlaces) . "</B></TD></TR>";
-	echo "<TR><TD COLSPAN=2><HR></TD></TR>";
-}
+echo "</TR></table><br><INPUT TYPE=SUBMIT NAME='AddBatches' VALUE='Enter'><BR>";
 
 
-/*Now allow new entries in text input boxes */
-for ($i=0;$i < 10;$i++){
-
-	echo "<TR><td><input type=text name='SerialNo" . $i ."' size=21  maxlength=20></td>";
-	if ($LineItem->Serialised==1){
-		echo "<input type=hidden name='Qty" . $i ."' Value=1></TR>";
-	} else {
-		echo "<TD><input type=text name='Qty" . $i ."' size=11  maxlength=10></TR>";
-	}
-}
-
-echo "</table><br><INPUT TYPE=SUBMIT NAME='AddBatches' VALUE='Enter'><BR>";
 
 
 /* Not sure how any of this works - but would be good to allow file input of serial numbers

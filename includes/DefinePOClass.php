@@ -1,9 +1,7 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /* Definition of the PurchOrder class to hold all the information for a purchase order and delivery
 */
-
-include("includes/StockModules.php");
 
 Class PurchOrder {
 

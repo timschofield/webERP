@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $title = "Receive Purchase Orders";
 $PageSecurity = 11;
 
@@ -136,12 +136,10 @@ if (count($_SESSION['PO']->LineItems)>0){
    }
 }
 
-
-
-/************************************************************************/
 /************************* LINE ITEM VALIDATION ************************/
-/************************************************************************/
-// Check whether trying to deliver more items than are recorded on the actual purchase order (+ overreceive allowance)
+
+/* Check whether trying to deliver more items than are recorded on the purchase order
+(+ overreceive allowance) */
 
 $DeliveryQuantityTooLarge = 0;
 
@@ -223,9 +221,7 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=="Process Goods Rec
 	DB_free_result($Result);
 
 
-/************************************************************************/
 /************************ BEGIN SQL TRANSACTIONS ************************/
-/************************************************************************/
 
 	$Result = DB_query("Begin",$db);
 /*Now Get the next GRN - function in SQL_CommonFunctions*/

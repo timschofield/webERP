@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Work Centres";
 
 $PageSecurity=9;
@@ -95,7 +95,7 @@ if ($_POST['submit']) {
 		} //end of WO requiremnets test
 	} // end of BOM test
 
-} 
+}
 
 if (!isset($SelectedWC)) {
 
@@ -109,16 +109,31 @@ or deletion of the records*/
 	$result = DB_query($sql,$db);
 
 	echo "<CENTER><table border=1>\n";
-	echo "<tr BGCOLOR =#800000><td><FONT COLOR=#ffffff><B>WC Code</B></FONT></td>";
-	echo "<td><FONT COLOR=#ffffff><B>Description</B></FONT></td>";
-	echo "<td><FONT COLOR=#ffffff><B>Location</B></FONT></td>";
-	echo "<td><FONT COLOR=#ffffff><B>Overhead GL Account</B></FONT></td>";
-	echo "<td><FONT COLOR=#ffffff><B>Overhead Per Hour</B></FONT></td>";
-	echo "</tr></FONT>\n";
+	echo "<tr BGCOLOR =#800000><td class='tableheader'>WC Code</td>";
+	echo "<td class='tableheader'>Description</td>";
+	echo "<td class='tableheader'>Location</td>";
+	echo "<td class='tableheader'>Overhead GL Account</td>";
+	echo "<td class='tableheader'>Overhead Per Hour</td>";
+	echo "</tr></FONT>";
 
 	while ($myrow = DB_fetch_row($result)) {
 
-		printf("<tr><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td ALIGN=RIGHT>%s</td><td><a href=\"%sSelectedWC=%s\">Edit</td><td><a href=\"%sSelectedWC=%s&delete=yes\">DELETE</td></tr>", $myrow[0], $myrow[1], $myrow[2], $myrow[3], $myrow[4],$_SERVER['PHP_SELF'] . "?" . SID, $myrow[0], $_SERVER['PHP_SELF'] . "?" . SID, $myrow[0]);
+		printf("<tr><td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td ALIGN=RIGHT>%s</td>
+				<td><a href=\"%sSelectedWC=%s\">Edit</td>
+				<td><a href=\"%sSelectedWC=%s&delete=yes\">DELETE</td>
+				</tr>",
+				$myrow[0],
+				$myrow[1],
+				$myrow[2],
+				$myrow[3],
+				$myrow[4],
+				$_SERVER['PHP_SELF'] . "?" . SID,
+				$myrow[0], $_SERVER['PHP_SELF'] . "?" . SID,
+				$myrow[0]);
 	}
 
 	//END WHILE LIST LOOP

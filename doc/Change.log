@@ -2,7 +2,9 @@
 
 Upgrade script 2.8 - 2.9 is necessary to be applied against a 2.8 database.
 
-
+25/5/04 BOMs.php modified to use Jesse DB_query function with error messages and Debug messages
+25/5/04 Stocks.php now checks and stops the mbflag change to assembly or kitset when the item is a component in a bill.
+25/5/04 ConfirmDispatch_Invoice.php updates and inserts for serialised/controlled items.
 24/5/04 ConfirmDispatch_Invoice.php ConfirmDispatchControlled_Invoice.php DefineSerialItems.php mods for controlled batch numbers and serial number input.
 21/5/04 GoodsReceived.php and GoodsReceivedControlled.php now allows for receiving controlled and controlled/serialised items.
 17/5/04 StockMoves remove field BundleID

@@ -1,48 +1,85 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Stock Adjustments";
 
 $PageSecurity = 11;
 
+
+include("includes/DefineStockAdjustmentClass.php");
 include("includes/session.inc");
 include("includes/header.inc");
 include("includes/DateFunctions.inc");
 include("includes/SQL_CommonFunctions.inc");
 
-
-if (isset($_GET['StockID'])){
-	$StockID =$_GET['StockID'];
-} elseif (isset($_POST['StockID'])){
-	$StockID =$_POST['StockID'];
+if (isset($_GET['NewAdjustment'])){
+     unset($_SESSION['Adjustment']);
+     $_SESSION['Adjustment'] = new StockAdjustment;
 }
 
-$result = DB_query("SELECT Description, Units, MBflag, Materialcost+Labourcost+Overheadcost AS StandardCost FROM StockMaster WHERE StockID='$StockID'",$db);
-$myrow = DB_fetch_row($result);
+if (!isset($_SESSION['Adjustment'])){
+     $_SESSION['Adjustment'] = new StockAdjustment;
+}
 
-if (DB_num_rows($result)>0){
+$NewAdjustment = false;
 
-	$PartDescription = $myrow[0];
-	$PartUnit = $myrow[1];
-	$StandardCost = $myrow[3];
+if (isset($_GET['StockID'])){
+	$_SESSION['Adjustment']->StockID =$_GET['StockID'];
+	$NewAdjustment = true;
+} elseif (isset($_POST['StockID'])){
+	if ($_POST['StockID'] != $_SESSION['Adjustment']->StockID){
+		$NewAdjustment = true;
+		$_SESSION['Adjustment']->StockID =$_POST['StockID'];
+	} else {
+		$_SESSION['Adjustment']->Narrative = $_POST['Narrative'];
+		$_SESSION['Adjustment']->StockLocation = $_POST['StockLocation'];
+		$_SESSION['Adjustment']->Quantity = $_POST['Quantity'];
+	}
+}
 
-	if ($myrow[2]=="D" OR $myrow[2]=="A" OR $myrow[2]=="K"){
-		echo "<P>The part entered is either or a dummy part or an assembly/kit-set part. These parts are not physical parts and no stock holding is maintained for them. Stock adjustments are therefore not possible.<HR>";
-		echo "<A HREF='$rootpath/StockAdjustments.php?" . SID ."'>Enter another adjustment</A>";
-		exit;
+if ($NewAdjustment){
+
+	$result = DB_query("SELECT Description, Units, MBflag, Materialcost+Labourcost+Overheadcost AS StandardCost, Controlled, Serialised, DecimalPlaces FROM StockMaster WHERE StockID='" . $_SESSION['Adjustment']->StockID . "'",$db);
+	$myrow = DB_fetch_row($result);
+
+	if (DB_num_rows($result)>0){
+
+		$_SESSION['Adjustment']->PartDescription = $myrow[0];
+		$_SESSION['Adjustment']->PartUnit = $myrow[1];
+		$_SESSION['Adjustment']->StandardCost = $myrow[3];
+		$_SESSION['Adjustment']->Controlled = $myrow[4];
+		$_SESSION['Adjustment']->Serialised = $myrow[5];
+		$_SESSION['Adjustment']->DecimalPlaces = $myrow[6];
+
+		if ($myrow[2]=="D" OR $myrow[2]=="A" OR $myrow[2]=="K"){
+			echo "<P>The part entered is either or a dummy part or an assembly/kit-set part. These parts are not physical parts and no stock holding is maintained for them. Stock adjustments are therefore not possible.<HR>";
+			echo "<A HREF='$rootpath/StockAdjustments.php?" . SID ."'>Enter another adjustment</A>";
+			unset ($_SESSION['Adjustment']);
+			include ("includes/footer.inc");
+			exit;
+		}
 	}
 }
 
 if ($_POST['EnterAdjustment']=="Enter Stock Adjustment"){
 
-	$result = DB_query("SELECT * FROM StockMaster WHERE StockID='$StockID'",$db);
+	$InputError = false; /*Start by hoping for the best */
+	$result = DB_query("SELECT * FROM StockMaster WHERE StockID='" . $_SESSION['Adjustment']->StockID . "'",$db);
 	$myrow = DB_fetch_row($result);
 	if (DB_num_rows($result)==0) {
 		echo "<P>The entered item code does not exist.";
-	} elseif (!is_numeric($_POST['Quantity'])){
+		$InputError = true;
+	} elseif (!is_numeric($_SESSION['Adjustment']->Quantity)){
 		echo "<P>The quantity entered must be numeric";
-	} elseif ($_POST['Quantity']==0){
+		$InputError = true;
+	} elseif ($_SESSION['Adjustment']->Quantity==0){
 		echo "<P>The quantity entered cannot be zero! There would be no adjustment to make";
-	} else {
+		$InputError = true;
+	} elseif ($_SESSION['Adjustment']->Controlled==1 AND count($_SESSION['Adjustment']->SerialItems)==0) {
+		echo "<P>The item entered is a controlled item that requires the detail of the serial numbers (or batch references) to be adjusted, to be entered.";
+		$InputError = true;
+	}
+
+	if (!$InputError) {
 
 /*All inputs must be sensible so make the stock movement records and update the locations stocks */
 
@@ -69,85 +106,55 @@ if ($_POST['EnterAdjustment']=="Enter Stock Adjustment"){
 
 		$SQL = "INSERT INTO StockMoves (StockID, Type, TransNo, LocCode, TranDate, Prd, Reference, Qty, NewQOH) VALUES ('" . $StockID . "', 17, " . $AdjustmentNumber . ", '" . $_POST['StockLocation'] . "','" . $SQLAdjustmentDate . "'," . $PeriodNo . ", '" . $_POST['Narrative'] ."', " . $_POST['Quantity'] . ", " . ($QtyOnHandPrior + $_POST['Quantity']) . ")";
 
-		$Result = DB_query($SQL,$db);
-		if (DB_error_no($db) !=0){
-			echo "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The stock movement record cannot be inserted because: -<BR>" . DB_error_msg($db);
-			if ($debug==1){
-				echo "<BR>The following SQL to insert the stock movement record was used:<BR>$SQL<BR>";
-			}
-			$SQL = "Rollback";
-			$Result = DB_query($SQL,$db);
-			exit;
-		}
+
+		$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The stock movement record cannot be inserted because:";
+		$DbgMsg = "<BR>The following SQL to insert the stock movement record was used:";
+		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
 
 		$SQL = "UPDATE LocStock SET Quantity = Quantity + " . $_POST['Quantity'] . " WHERE StockID='" . $StockID . "' AND LocCode='" . $_POST['StockLocation'] . "'";
-		$Result = DB_query($SQL,$db);
-		if (DB_error_no($db) !=0){
-			echo "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The location stock record could not be updated because: -<BR>" . DB_error_msg($db);
-			if ($debug==1){
-				echo "<BR>The following SQL to update the stock record was used:<BR>$SQL<BR>";
-			}
-			$SQL = "Rollback";
-			$Result = DB_query($SQL,$db);
-			exit;
-		}
+
+		$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The location stock record could not be updated because:";
+		$DbgMsg = "<BR>The following SQL to update the stock record was used:";
+
+		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
 		if ($CompanyRecord["GLLink_Stock"]==1 AND $StandardCost > 0){
 
 			$StockGLCodes = GetStockGLCode($StockID,$db);
 
 			$SQL = "INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Amount, Narrative) VALUES (17," .$AdjustmentNumber . ", '" . $SQLAdjustmentDate . "', " . $PeriodNo . ", " .  $StockGLCodes['AdjGLAct'] . ", " . $StandardCost * -($_POST['Quantity']) . ", '" . $StockID . " x " . $_POST['Quantity'] . " @ " . $StandardCost . " - " . $_POST['Narrative'] . "')";
-			$Result = DB_query($SQL,$db);
-			if (DB_error_no($db) !=0){
-				echo "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The general ledger transaction entries could not be added because: -<BR>" . DB_error_msg($db);
-				if ($debug==1){
-					echo "<BR>The following SQL to insert the GL entries was used:<BR>$SQL<BR>";
-				}
-				$SQL = "Rollback";
-				$Result = DB_query($SQL,$db);
-				exit;
-			}
+
+			$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The general ledger transaction entries could not be added because: ";
+			$DbgMsg = "<BR>The following SQL to insert the GL entries was used:";
+			$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
 
 			$SQL = "INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Amount, Narrative) VALUES (17," .$AdjustmentNumber . ", '" . $SQLAdjustmentDate . "', " . $PeriodNo . ", " .  $StockGLCodes['StockAct'] . ", " . $StandardCost * $_POST['Quantity'] . ", '" . $StockID . " x " . $_POST['Quantity'] . " @ " . $StandardCost . " - " . $_POST['Narrative'] . "')";
-			$Result = DB_query($SQL,$db);
-			if (DB_error_no($db) !=0){
-				echo "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The general ledger transaction entries could not be added because: -<BR>" . DB_error_msg($db);
-				if ($debug==1){
-					echo "<BR>The following SQL to insert the GL entries was used:<BR>$SQL<BR>";
-				}
-				$SQL = "Rollback";
-				$Result = DB_query($SQL,$db);
-				exit;
-			}
+
+			$Errmsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The general ledger transaction entries could not be added because:";
+			$DbgMsg = "<BR>The following SQL to insert the GL entries was used:";
+			$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg,true);
 
 		}
 
-
-		$SQL = "Commit";
-		$Result = DB_query($SQL,$db);
+		$Result = DB_query("Commit",$db);
 
 		echo "<P>A stock Adjustment of $StockID - $PartDescription has been created for " . $_POST['StockLocation'] ." for a quantity of " . $_POST['Quantity'];
-		unset ($_POST['StockID']);
-		unset ($StockID);
-		unset ($PartDescription);
-		unset ($StandardCost);
-		unset ($PartUnit);
+		unset ($_SESSION['Adjustment']);
 		unset ($_POST['Quantity']);
-		unset ($_POST['Narrative']);
-	}
+	} /* end if there was no input error */
 
-}
+}/* end if the user hit enter the adjustment */
 
 
 
 echo "<FORM ACTION='". $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 
 
-echo "<CENTER><TABLE><TR><TD>Stock Code:</TD><TD><input type=text name='StockID' size=21 value='$StockID' maxlength=20> <INPUT TYPE=SUBMIT NAME='CheckCode' VALUE='Check Part'></TD></TR>";
+echo "<CENTER><TABLE><TR><TD>Stock Code:</TD><TD><input type=text name='StockID' size=21 value='" . $_SESSION['Adjustment']->StockID . "' maxlength=20> <INPUT TYPE=SUBMIT NAME='CheckCode' VALUE='Check Part'></TD></TR>";
 
 if (strlen($PartDescription)>1){
-	echo "<TR><TD COLSPAN=3><FONT COLOR=BLUE SIZE=3>" . $PartDescription . " (In Units of " . $PartUnit . " ) - Unit Cost = " . $StandardCost . "</FONT></TD></TR>";
+	echo "<TR><TD COLSPAN=3><FONT COLOR=BLUE SIZE=3>" . $_SESSION['Adjustment']->PartDescription . " (In Units of " . $_SESSION['Adjustment']->PartUnit . " ) - Unit Cost = " . $_SESSION['Adjustment']->StandardCost . "</FONT></TD></TR>";
 }
 
 echo "<TR><TD>Adjustment to stock location:</TD><TD><SELECT name='StockLocation'> ";
@@ -155,8 +162,8 @@ echo "<TR><TD>Adjustment to stock location:</TD><TD><SELECT name='StockLocation'
 $sql = "SELECT LocCode, LocationName FROM Locations";
 $resultStkLocs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultStkLocs)){
-	if (isset($_POST['StockLocation'])){
-		if ($myrow["LocCode"] == $_POST['StockLocation']){
+	if (isset($_SESSION['Adjustment']->StockLocation)){
+		if ($myrow["LocCode"] == $_SESSION['Adjustment']->StockLocation){
 		     echo "<OPTION SELECTED Value='" . $myrow["LocCode"] . "'>" . $myrow["LocationName"];
 		} else {
 		     echo "<OPTION Value='" . $myrow["LocCode"] . "'>" . $myrow["LocationName"];
@@ -171,9 +178,18 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 
 echo "</SELECT></TD></TR>";
 
-echo "<TR><TD>Comments on why:</TD><TD><input type=text name='Narrative' size=32 maxlength=30 value='" . $_POST['Narrative'] . "'></TD></TR>";
+echo "<TR><TD>Comments on why:</TD><TD><input type=text name='Narrative' size=32 maxlength=30 value='" . $_SESSION['Adjustment']->Narrative . "'></TD></TR>";
 
-echo "<TR><TD>Adjustment Quantity:</TD><TD><INPUT TYPE=TEXT NAME='Quantity' SIZE=12 MAXLENGTH=12 Value='" . $_POST['Quantity'] . "'></TD></TR>";
+echo "<TR><TD>Adjustment Quantity:</TD>";
+
+
+if ($_SESSION['Adjustment']->Controlled==1){
+
+		echo "<TD><INPUT TYPE=HIDDEN NAME='Quantity' Value='" . $_SESSION['Adjustment']->Quantity . "'><A HREF='$rootpath/StockAdjustmentsControlled.php?" . SID . "'>" . $_SESSION['Adjustment']->Quantity . "</TD></TR>";
+
+} else {
+	echo "<TD><INPUT TYPE=TEXT NAME='Quantity' SIZE=12 MAXLENGTH=12 Value='" . $_SESSION['Adjustment']->Quantity . "'></TD></TR>";
+}
 
 
 echo "</TABLE><BR><INPUT TYPE=SUBMIT NAME='EnterAdjustment' VALUE='Enter Stock Adjustment'>";
