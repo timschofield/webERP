@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /* Definition of the Supplier Transactions class to hold all the information for an accounts payable invoice or credit note
 */
 
@@ -42,6 +42,22 @@ Class SuppTrans {
 	function Add_GRN_To_Trans($GRNNo, $PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit, $ShiptRef, $JobRef, $GLCode){
 		if ($This_QuantityInv!=0 && isset($This_QuantityInv)){
 			$this->GRNs[$GRNNo] = new GRNs($GRNNo, $PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit, $ShiptRef, $JobRef, $GLCode);
+			Return 1;
+		}
+		Return 0;
+	}
+
+	function Modify_GRN_To_Trans($GRNNo, $PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit, $ShiptRef, $JobRef, $GLCode){
+		if ($This_QuantityInv!=0 && isset($This_QuantityInv)){
+			$this->GRNs[$GRNNo]->Modify($PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit, $ShiptRef, $JobRef, $GLCode);
+			Return 1;
+		}
+		Return 0;
+	}
+
+	function Copy_GRN_To_Trans($GRNSrc){
+		if ($GRNSrc->This_QuantityInv!=0 && isset($GRNSrc->This_QuantityInv)){
+			$this->GRNs[$GRNSrc->GRNNo] = new GRNs($GRNSrc->GRNNo, $GRNSrc->PODetailItem, $GRNSrc->ItemCode, $GRNSrc->ItemDescription, $GRNSrc->QtyRecd, $GRNSrc->Prev_QuantityInv, $GRNSrc->This_QuantityInv, $GRNSrc->OrderPrice, $GRNSrc->ChgPrice, $GRNSrc->Complete, $GRNSrc->StdCostUnit, $GRNSrc->ShiptRef, $GRNSrc->JobRef, $GRNSrc->GLCode);
 			Return 1;
 		}
 		Return 0;
@@ -101,6 +117,24 @@ all the info to do the necessary entries without looking up ie additional querie
 
 	/* Constructor function to add a new GRNs object with passed params */
 		$this->GRNNo = $GRNNo;
+		$this->PODetailItem = $PODetailItem;
+		$this->ItemCode = $ItemCode;
+		$this->ItemDescription = $ItemDescription;
+		$this->QtyRecd = $QtyRecd;
+		$this->Prev_QuantityInv = $Prev_QuantityInv;
+		$this->This_QuantityInv = $This_QuantityInv;
+		$this->OrderPrice =$OrderPrice;
+		$this->ChgPrice = $ChgPrice;
+		$this->Complete = $Complete;
+		$this->StdCostUnit = $StdCostUnit;
+		$this->ShiptRef = $ShiptRef;
+		$this->JobRef = $JobRef;
+		$this->GLCode = $GLCode;
+	}
+
+	function Modify ($PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit, $ShiptRef, $JobRef, $GLCode){
+
+	/* Modify function to edit a GRNs object with passed params */
 		$this->PODetailItem = $PODetailItem;
 		$this->ItemCode = $ItemCode;
 		$this->ItemDescription = $ItemDescription;

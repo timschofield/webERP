@@ -1,12 +1,10 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 2;
 
 include('includes/session.inc');
-
-$title = 'Search Customers';
-
+$title = _('Search Customers');
 include('includes/header.inc');
 
 $msg="";
@@ -47,24 +45,39 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 				$i=strpos($_POST['Keywords']," ",$i) +1;
 			}
 			$SearchString = $SearchString . substr($_POST['Keywords'],$i)."%";
-			$SQL = "SELECT DebtorsMaster.DebtorNo, DebtorsMaster.Name, CustBranch.BrName, CustBranch.ContactName, CustBranch.PhoneNo, CustBranch.FaxNo FROM DebtorsMaster LEFT JOIN CustBranch ON DebtorsMaster.DebtorNo = CustBranch.DebtorNo WHERE DebtorsMaster.Name LIKE '$SearchString'";
+			$SQL = "SELECT DebtorsMaster.DebtorNo,
+					DebtorsMaster.Name,
+					CustBranch.BrName,
+					CustBranch.ContactName,
+					CustBranch.PhoneNo,
+					CustBranch.FaxNo
+				FROM DebtorsMaster LEFT JOIN CustBranch
+					ON DebtorsMaster.DebtorNo = CustBranch.DebtorNo
+				WHERE DebtorsMaster.Name LIKE '$SearchString'";
 
 		} elseif (strlen($_POST['CustCode'])>0){
 
 			$_POST["CustCode"] = strtoupper($_POST["CustCode"]);
 
-			$SQL = "SELECT DebtorsMaster.DebtorNo, DebtorsMaster.Name, CustBranch.BrName, CustBranch.ContactName, CustBranch.PhoneNo, CustBranch.FaxNo FROM DebtorsMaster LEFT JOIN CustBranch ON DebtorsMaster.DebtorNo = CustBranch.DebtorNo WHERE DebtorsMaster.DebtorNo LIKE '%" . $_POST['CustCode'] . "%'";
+			$SQL = "SELECT DebtorsMaster.DebtorNo,
+					DebtorsMaster.Name,
+					CustBranch.BrName,
+					CustBranch.ContactName,
+					CustBranch.PhoneNo,
+					CustBranch.FaxNo
+				FROM DebtorsMaster LEFT JOIN CustBranch
+					ON DebtorsMaster.DebtorNo = CustBranch.DebtorNo
+				WHERE DebtorsMaster.DebtorNo LIKE '%" . $_POST['CustCode'] . "%'";
 		}
 
-		$result = DB_query($SQL,$db);
-		if (DB_error_no($db) !=0) {
-			echo _('The searched customer records requested cannot be retrieved because') . ' - ' . DB_error_msg($db) . '<BR>' . _('SQL used to retrieve the customer details was') . ':<BR>' . $sql;
-		} elseif (DB_num_rows($result)==1){
+		$ErrMsg = _('The searched customer records requested cannot be retrieved because');
+		$result = DB_query($SQL,$db,$ErrMsg);
+		if (DB_num_rows($result)==1){
 			$myrow=DB_fetch_array($result);
-			$_POST['Select'] = $myrow["DebtorNo"];
+			$_POST['Select'] = $myrow['DebtorNo'];
 			unset($result);
 		} elseif (DB_num_rows($result)==0){
-			echo '<P>' . _('No customer records contain the selected text - please alter your search criteria and try again') . '.';
+			prnMsg(_('No customer records contain the selected text - please alter your search criteria and try again'),'info');
 		}
 
 	} //one of keywords or custcode was more than a zero length string
@@ -81,12 +94,12 @@ If ($_POST['Select']!="" OR ($_SESSION['CustomerID']!="" AND !isset($_POST['Keyw
 		$SQL = "Select Name FROM DebtorsMaster WHERE DebtorNo='" . $_POST['Select'] . "'";
 		$_SESSION['CustomerID'] = $_POST['Select'];
 	} else {
-		$SQL = "Select Name FROM DebtorsMaster WHERE DebtorNo='" . $_SESSION['CustomerID'] . "'";
+		$SQL = "SELECT Name FROM DebtorsMaster WHERE DebtorNo='" . $_SESSION['CustomerID'] . "'";
 	}
-	$result = DB_query($SQL,$db);
-	if (DB_error_no($db) !=0) {
-		echo _('The customer name requested cannot be retrieved because') . ' - ' . DB_error_msg($db) . '<BR>' . _('SQL used to retrieve the customer name was') . ':<BR>' . $sql;
-	}
+
+	$ErrMsg = _('The customer name requested cannot be retrieved because');
+	$result = DB_query($SQL,$db,$ErrMsg);
+
 	if ($myrow=DB_fetch_row($result)){
 		$CustomerName = $myrow[0];
 	}
@@ -164,13 +177,13 @@ If (isset($result)) {
 	    $_POST['PageOffset'] = $_POST['PageOffset'] - 1;
     }
   }
-	
+
   echo "&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages. Go to Page') . ': ';
-?>	
+?>
 
   <select name="PageOffset">
 
-<?php	
+<?php
   $ListPage=1;
   while($ListPage<=$ListPageMax) {
 	  if ($ListPage==$_POST['PageOffset']) {
@@ -178,13 +191,13 @@ If (isset($result)) {
 
   		<option value=<?php echo($ListPage); ?> selected><?php echo($ListPage); ?></option>
 
-<?php	
+<?php
 	  } else {
 ?>
 
 		  <option value=<?php echo($ListPage); ?>><?php echo($ListPage); ?></option>
 
-<?php 
+<?php
 	  }
 	  $ListPage=$ListPage+1;
   }

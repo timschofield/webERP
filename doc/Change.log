@@ -1,5 +1,7 @@
 <P>webERP Change Log
 
+<P>8/11/04 Vitaliy - entering purchase orders now allows selection of all GRNs on a Purchase order in one hit or selected lines using checkboxes - much neater selection of all lines to be invoiced in one go. Gettextified this script - SuppInvGRNs.php
+<P>8/11/04 Steve - SelectCustomer.php gettextified
 <P>6/11/04 SelectOrderItems.php bug in customer login order entry
 <P>4/11/04 PO_PDFPurchOrder.php now prints the suppliers description for the item on the PO.
 <P>4/11/04 bug fixes Bob CustomerReceipt.php price_customer.php
