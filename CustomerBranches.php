@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -578,7 +578,7 @@ if (! isset($_GET['delete'])) {
 
 	echo '<TR><TD>'._('Postal Address 1').':</TD>';
 	echo '<TD><input type="Text" name="BrPostAddr1" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrPostAddr1'].'"></TD></TR>';
-	echo '<TR><TD>'._('Post Address 2').':</TD>';
+	echo '<TR><TD>'._('Postal Address 2').':</TD>';
 	echo '<TD><input type="Text" name="BrPostAddr2" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrPostAddr2'].'"></TD></TR>';
 	echo '<TR><TD>'._('Postal Address 3').':</TD>';
 	echo '<TD><input type="Text" name="BrPostAddr3" SIZE=31 MAXLENGTH=30 value="'. $_POST['BrPostAddr3'].'"></TD></TR>';

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.41 $ */
+/* $Revision: 1.42 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -11,6 +11,9 @@
 
 // User configurable variables
 //---------------------------------------------------
+
+//DefaultLanguage
+$DefaultLanguage ='en_GB';
 
 // Application version
 $Version = '2.9b';

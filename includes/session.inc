@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -16,8 +16,6 @@
     ini_set('session.gc_Maxlifetime',$SessionLifeTime);
     
     session_start();
-
-    include('includes/LanguageSetup.php');
 
     // Un comment to turn off attempts counter
     //$_SESSION['AttemptsCounter'] = 0;
@@ -36,14 +34,26 @@
         die(include('includes/FailedLogin.php'));
     }
 
-    If (isset($_POST['Theme'])) {
- 	$_SESSION['Theme'] = $_POST['Theme'];
-	$theme = $_POST['Theme'];
-    } elseif (!isset($_SESSION['Theme'])) {
-	$theme = $DefaultTheme;
-    } else {
-	$theme = $_SESSION['Theme'];
-    }
+	If (isset($_POST['Theme'])) {
+		$_SESSION['Theme'] = $_POST['Theme'];
+		$theme = $_POST['Theme'];
+	} elseif (!isset($_SESSION['Theme'])) {
+		$theme = $DefaultTheme;
+	} else {
+		$theme = $_SESSION['Theme'];
+	}
+    
+	If (isset($_POST['Language'])) {
+		$_SESSION['Language'] = $_POST['Language'];
+	} elseif (!isset($_SESSION['Language'])) {
+		$_SESSION['Language'] = $DefaultLanguage;
+		$Language = $DefaultLanguage;
+	} else {
+		$Language = $_SESSION['Language'];
+	}
+    
+	include('includes/LanguageSetup.php');
+	
     // Not logged in
     if ((!isset($_SESSION['AccessLevel']) or $_SESSION['AccessLevel'] == '') or
     	(isset($_POST['UserNameEntryField']) and $_POST['UserNameEntryField'] != '')) {
@@ -58,65 +68,59 @@
 
         // Show login screen
         if (!isset($_POST['UserNameEntryField']) or $_POST['UserNameEntryField'] == '') {
-	        include('includes/Login.php');
-            exit;
+		include('includes/Login.php');
+        	exit;
         }
 
         $sql = 'SELECT FullAccess,
-						CustomerID,
-						LastVisitDate,
-						PageSize,
-						DefaultLocation,
-						BranchCode,
-						ModulesAllowed,
-						Blocked,
-						RealName,
-						Theme,
-						DisplayRecordsMax,
-						UserID,
-						Language
-					FROM WWW_Users
-					WHERE UserID="' . $_POST['UserNameEntryField'] . '" AND Password="' . $_POST['Password'] . '"';
+			CustomerID,
+			LastVisitDate,
+			PageSize,
+			DefaultLocation,
+			BranchCode,
+			ModulesAllowed,
+			Blocked,
+			RealName,
+			Theme,
+			DisplayRecordsMax,
+			UserID,
+			Language
+		FROM WWW_Users
+		WHERE UserID="' . $_POST['UserNameEntryField'] . '" AND Password="' . $_POST['Password'] . '"';
         $Auth_Result = DB_query($sql, $db);
-
-        // Determine data base error
-        if (DB_error_no($db) != 0 AND $debug == 1) {
-            echo '<BR>' . _('The SQL to retrieve the user details failed because') . DB_error_msg($db) .
-	              '<BR>' . _('The SQL used was') . '<BR>' . $sql;
-        }
 
         // Populate session variables with data base results
         if (DB_num_rows($Auth_Result) > 0) {
-            $myrow = DB_fetch_row($Auth_Result);
-			   if ($myrow[7]==1){
+        	$myrow = DB_fetch_row($Auth_Result);
+		if ($myrow[7]==1){
 	    	//the account is blocked
-					die(include("includes/FailedLogin.php"));
-			   }
-            $_SESSION['AccessLevel'] = $myrow[0];
-            $_SESSION['CustomerID'] = $myrow[1];
-            $_SESSION['UserBranch'] = $myrow[5];
-            $_SESSION['DefaultPageSize'] = $myrow[3];
-            $_SESSION['UserStockLocation'] = $myrow[4];
-            $_SESSION['ModulesEnabled'] = explode(",", $myrow[6]);
-			   $_SESSION['UsersRealName'] = $myrow[8];
-			   $_SESSION['Theme'] = $myrow[9];
-			   $_SESSION['UserID'] = $myrow[11];
-			   $_SESSION['Language'] = $myrow[12];
+			die(include("includes/FailedLogin.php"));
+		}
+		$_SESSION['AccessLevel'] = $myrow[0];
+		$_SESSION['CustomerID'] = $myrow[1];
+		$_SESSION['UserBranch'] = $myrow[5];
+		$_SESSION['DefaultPageSize'] = $myrow[3];
+		$_SESSION['UserStockLocation'] = $myrow[4];
+		$_SESSION['ModulesEnabled'] = explode(",", $myrow[6]);
+		$_SESSION['UsersRealName'] = $myrow[8];
+		$_SESSION['Theme'] = $myrow[9];
+		$_SESSION['UserID'] = $myrow[11];
+		$_SESSION['Language'] = $myrow[12];
 
-			   if ($myrow[10] <> 0) {
-	 		   	$_SESSION['DisplayRecordsMax'] = $myrow[10];
-			   } else {
-					$_SESSION['DisplayRecordsMax'] = $DefaultDisplayRecordsMax;  // default comes from config.php
-			   }
+		if ($myrow[10] > 0) {
+	 		$_SESSION['DisplayRecordsMax'] = $myrow[10];
+		} else {
+			$_SESSION['DisplayRecordsMax'] = $DefaultDisplayRecordsMax;  // default comes from config.php
+		}
 
-            $sql = 'UPDATE WWW_Users SET LastVisitDate="'. date("Y-m-d H:i:s") .'" WHERE UserID="' .
-            $_POST['UserNameEntryField'] . '" AND Password="' . $_POST['Password'] .'"';
-            $Auth_Result = DB_query($sql, $db);
+		$sql = 'UPDATE WWW_Users SET LastVisitDate="'. date("Y-m-d H:i:s") .'" WHERE UserID="' .
+		$_POST['UserNameEntryField'] . '" AND Password="' . $_POST['Password'] .'"';
+		$Auth_Result = DB_query($sql, $db);
 
         } else {     // Incorrect password
 
-				$demo_text = '<FONT SIZE="3" COLOR="red"><b>' .  _('incorrect password') . '</B></FONT><BR><B>' . _('The user/password combination') . '<BR>' . _('is not a valid user of the system') . '</B>';
-				include('includes/Login.php');
+		$demo_text = '<FONT SIZE="3" COLOR="red"><b>' .  _('incorrect password') . '</B></FONT><BR><B>' . _('The user/password combination') . '<BR>' . _('is not a valid user of the system') . '</B>';
+		include('includes/Login.php');
         }
 
     }		// End of userid/password check
@@ -135,14 +139,13 @@
     if (!in_array($PageSecurity, $SecurityGroups[$_SESSION['AccessLevel']]) OR !isset($PageSecurity)) {
 
         include('header.inc');
-		  echo '<TR><TD CLASS="menu_group_items"><TABLE WIDTH="100%" CLASS="table_index"><TR><TD CLASS="menu_group_item">';
+	echo '<TR><TD CLASS="menu_group_items"><TABLE WIDTH="100%" CLASS="table_index"><TR><TD CLASS="menu_group_item">';
+	echo '<B><FONT SIZE="+1"><CENTER>' . _('The security settings on your account do not permit you to access this function') . '</FONT></B></CENTER>';
 
-		  echo '<B><FONT SIZE="+1"><CENTER>' . _('The security settings on your account do not permit you to access this function') . '</FONT></B></CENTER>';
+	echo '</TD></TR></TABLE></TD>';
 
-		  echo '</TD></TR></TABLE></TD>';
-
-		  include('footer.inc');
-		  exit;
+	include('footer.inc');
+	exit;
     }
     // Run with debugging messages for the system administrator(s) but not anyone else
     if (in_array(15, $SecurityGroups[$_SESSION['AccessLevel']])) {

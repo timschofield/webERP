@@ -10,21 +10,21 @@ normally the lower case two character country code underscore uppercase
 // Specify location of translation tables
 
 if (function_exists('gettext')){
-	if ($_SESSION['Language']=='en'){
-		$Language_Country = 'en_US';
-	} else {
-		/*This wont work for fr_BE or where the country code is different to the language code */
-		$Language_Country = $_SESSION['Language'] . '_' . strtoupper($_SESSION['Language']);
-	}
-	$LocaleSet = setlocale (LC_MESSAGES, $Language_Country);
-	if (!$LocaleSet) {
-		prnMsg(_('The locale could not be set to') . ' ' . $Language_Country . ' ' ._('this locale is not implemented on the web server'),'error');
-		$Language_Country = 'en_US';
-		$LocaleSet = setlocale (LC_MESSAGES, $Language_Country);
-	}
-	setlocale (LC_CTYPE,$Language_Country);
-	putenv("LANGUAGE=$Language_Country");
+  //echo 'User Settings: ' . $_SESSION['Language'];
+	$Locale = setlocale (LC_CTYPE, $_SESSION['Language']);
+  //echo '&nbsp;&nbsp;LC_CTYPE Settings: ' . $_SESSION['locale'];
+	$Locale = setlocale (LC_MESSAGES, $_SESSION['Language']);
+  //echo '&nbsp;&nbsp;LC_MESSAGES Settings: ' . $_SESSION['locale'];
+  //if ($_SESSION['locale'] == FALSE) {
+  //  $_SESSION['locale'] = 'Locale not recognized on this server';
+  //}
+	
+  // possibly even if locale fails the language will still switch by using Language instead of locale variable
+  putenv("LANG=" . $_SESSION['Language']);
+  putenv("LANGUAGE=" . $_SESSION['Language']);
+  //putenv("LANG=$Language_Country");
 	bindtextdomain ("messages", "./locale");
 	textdomain ("messages");
 }
+
 ?>

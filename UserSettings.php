@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity=1;
 
@@ -84,6 +84,8 @@ if (isset($_POST['Modify'])) {
 		$_SESSION['Theme'] = trim($_POST['Theme']); /*already set by session.inc but for completeness */
 		$theme = $_SESSION['Theme'];
 		$_SESSION['Language'] = trim($_POST['Language']);
+		
+		include ('includes/LanguageSetup.php');
 
 	}
 }
