@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $title = "Supplier Maintenance";
 
 $PageSecurity=5;
@@ -293,7 +293,7 @@ if (isset($_GET['SupplierID'])){
 } elseif (isset($_POST['SupplierID'])){
 	$SupplierID = strtoupper($_POST['SupplierID']);
 } else {
-	$SupplierID = '';
+	unset($SupplierID);
 }
 
 
