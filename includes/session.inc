@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -50,7 +50,7 @@
         }
 
         $sql = "SELECT FullAccess, CustomerID, LastVisitDate, PageSize, DefaultLocation, BranchCode" .
-        ", ModulesAllowed, Blocked FROM WWW_Users WHERE UserID=\"" . $_POST["UserNameEntryField"] .
+        ", ModulesAllowed, Blocked, RealName FROM WWW_Users WHERE UserID=\"" . $_POST["UserNameEntryField"] .
         "\" AND Password=\"" . $_POST["Password"] . "\"";
         $Auth_Result = DB_query($sql, $db);
 
@@ -67,12 +67,13 @@
 	    	//the account is blocked
 		die(include("includes/FailedLogin.php"));
 	    }
-            $_SESSION["AccessLevel"] = $myrow[0];
-            $_SESSION["CustomerID"] = $myrow[1];
-            $_SESSION["UserBranch"] = $myrow[5];
-            $_SESSION["PageSize"] = $myrow[3];
-            $_SESSION["UserStockLocation"] = $myrow[4];
-            $_SESSION["ModulesEnabled"] = explode(",", $myrow[6]);
+            $_SESSION['AccessLevel'] = $myrow[0];
+            $_SESSION['CustomerID'] = $myrow[1];
+            $_SESSION['UserBranch'] = $myrow[5];
+            $_SESSION['PageSize'] = $myrow[3];
+            $_SESSION['UserStockLocation'] = $myrow[4];
+            $_SESSION['ModulesEnabled'] = explode(",", $myrow[6]);
+	    $_SESSION['UsersRealName'] = $myrow[8];
             $sql = "UPDATE WWW_Users SET LastVisitDate=\"". date("Y-m-d H:i:s") ."\" WHERE UserID=\"" .
             $_POST["UserNameEntryField"] . "\" AND Password=\"" . $_POST["Password"] ."\"";
             $Auth_Result = DB_query($sql, $db);

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -30,14 +30,11 @@ if (isset($_GET['SupplierID'])){
 
 	 $sql = "SELECT Suppliers.SuppName, PaymentTerms.Terms, PaymentTerms.DaysBeforeDue, PaymentTerms.DayInFollowingMonth, Suppliers.CurrCode, Currencies.Rate As ExRate, TaxAuthorities.Description As TaxDesc, TaxAuthorities.TaxID, TaxAuthorities.PurchTaxGLAccount AS TaxGLCode  From Suppliers, Currencies, PaymentTerms, TaxAuthorities WHERE Suppliers.TaxAuthority = TaxAuthorities.TaxID AND Suppliers.CurrCode=Currencies.CurrAbrev AND Suppliers.PaymentTerms=PaymentTerms.TermsIndicator AND Suppliers.SupplierID = '" . $_GET['SupplierID'] . "'";
 
-	 $result =DB_query($sql,$db);
-	 if (DB_error_no($db) !=0) {
-		  echo "The supplier record selected: " . $_GET['SupplierID'] . " cannot be retrieved because - " . DB_error_msg($db);
+	$ErrMsg = "<BR>The supplier record selected: " . $_GET['SupplierID'] . " cannot be retrieved because";
+	$DbgMsg = "<BR>The SQL used to retrieve the supplier details (and failed) was:";
 
-		  if ($debug==1){
-			   echo "<BR>The SQL used to retrieve the supplier details (and failed) was:<BR>$sql";
-		  }
-	 }
+	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+
 
 	 $myrow = DB_fetch_array($result);
 

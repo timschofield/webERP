@@ -2,7 +2,7 @@
 
 Upgrade script 2.8 - 2.9 is necessary to be applied against a 2.8 database.
 
-
+7/7/04  header.inc now has a link to a Help.php page Help.php added and new tables Help and Scripts. Help contains the context sensitive help referenced to the script - which is where the scripts table comes in. It contains all the scripts in the system with an overview of what the script does. The new Help script retrieves records from the Help table relevant to the PageID, the PageID is determined from the filename looked up against the Scripts table. Users can add new help and edit or delete help. A little shy on data for the help table!!
 19/6/04 GLBalanceSheet.php displays a html balance sheet for any period end.
 17/6/04 AccountGroups now uses an array for Section in accounts defined in config.php $Sections array. This array also used in GLProfit_Loss.php
 17/6/04 GLProfit_Loss.php added - index.php modified to add a link to this script
