@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.42 $ */
+/* $Revision: 1.43 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -13,7 +13,7 @@
 //---------------------------------------------------
 
 //DefaultLanguage
-$DefaultLanguage ='en_GB';
+$DefaultLanguage ='pl_PL';
 
 // Application version
 $Version = '2.9b';

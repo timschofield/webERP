@@ -1,11 +1,12 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 // Display demo user name and password within login form if "$allow_demo_mode" is true
+include ('includes/LanguageSetup.php');
 
 if ($allow_demo_mode == True AND !isset($demo_text)) {
-	$demo_text = 'login as user: <i>demo</i><BR>with password: <i>weberp</i>';
+	$demo_text = _('login as user') .': <i>' . _('demo') . '</i><BR>' ._('with password') . ': <i>' . _('weberp') . '</i>';
 } elseif (!isset($demo_text)) {
-	$demo_text = 'Please login here';
+	$demo_text = _('Please login here');
 }
 
 ?>
@@ -46,9 +47,9 @@ if ($allow_demo_mode == True AND !isset($demo_text)) {
                                 <table border="0" cellpadding="3" cellspacing="0" width="100%">
 
                                     <tr>
-                                        <td class="loginText"><span>User name:</span><br />
+                                        <td class="loginText"><span><?php echo _('User name'); ?>:</span><br />
                                          <input type="TEXT" name="UserNameEntryField"/><br />
-                                         <span>Password:</span><br />
+                                         <span><?php echo _('Password'); ?>:</span><br />
                                          <input type="PASSWORD" name="Password">
                                          <br />
                                          <?php echo $demo_text;?>
@@ -56,7 +57,7 @@ if ($allow_demo_mode == True AND !isset($demo_text)) {
                                     </tr>
 
                                     <tr>
-                                        <td align="right"><input type="submit" value=">> Login" name="SubmitUser" /></td>
+                                        <td align="right"><input type="submit" value=">><?php echo _('Login'); ?>" name="SubmitUser" /></td>
                                     </tr>
                                 </table>
                             </td>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 /* Steve Kitchen */
 
@@ -25,7 +25,7 @@ include('includes/header.inc');
 /* Your webserver user MUST have read/write access to here, 
 	otherwise you'll be wasting your time */
 
-if (isset($_POST['language']) && isset($_POST['module'])) {	
+if (isset($_POST['language']) AND isset($_POST['module'])) {	
 
 	$PathToLanguage		= './locale/' . $_POST['language'] . '/LC_MESSAGES/messages.po';
 	$PathToNewLanguage	= './locale/' . $_POST['language'] . '/LC_MESSAGES/messages.po.new';

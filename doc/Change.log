@@ -1,7 +1,9 @@
 <P>webERP Change Log
 
 <P>Version 2.9b
+<P>23rd December 2004
 <P>
+<P>23/12/04 Steve - new LanguageSetup.php using 5 character language_country codes wrinkles in multi-language fixed - testing with Polish from Janusz Dobrowolski the first language to be translated into. Lots of bug fixes
 <P>22/11/04-20/12/04 - Large changes throughout to ensure consistent use of prnMsg function of Jesse and to use the DB_query function with ErrMsg and DbgMsg parameters and to ensure all strings are enclosed in the gettext function
 <P>18/12/04 AgedDebtors.php uses CASE instead of IF to ensure ANSI SQL used.
 <P>18/12/04 modified Z_poEditLangModule.php  to check for new strings each time and to write a fresh .mo file after completing and edit

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -43,16 +43,6 @@
 		$theme = $_SESSION['Theme'];
 	}
     
-	If (isset($_POST['Language'])) {
-		$_SESSION['Language'] = $_POST['Language'];
-	} elseif (!isset($_SESSION['Language'])) {
-		$_SESSION['Language'] = $DefaultLanguage;
-		$Language = $DefaultLanguage;
-	} else {
-		$Language = $_SESSION['Language'];
-	}
-    
-	include('includes/LanguageSetup.php');
 	
     // Not logged in
     if ((!isset($_SESSION['AccessLevel']) or $_SESSION['AccessLevel'] == '') or
@@ -125,9 +115,15 @@
 
     }		// End of userid/password check
 
+    /*Now users language has been set include the language setup script */
+    
+    include('includes/LanguageSetup.php');
+    
     // Now check that the user as logged in has access to the page being called. The $PageSecurity
     // value must be set in the script before header.inc is included. $SecurityGroups is an array of
     // arrays defining access for each group of users. These definitions can be modified in config.php.
+
+
 
     if (!is_array($SecurityGroups[$_SESSION['AccessLevel']])) {
 

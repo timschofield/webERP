@@ -1489,7 +1489,7 @@ CREATE TABLE `WWW_Users` (
   `Blocked` tinyint(4) NOT NULL default '0',
   `DisplayRecordsMax` int(11) NOT NULL default '0',
   `Theme` varchar(30) NOT NULL default 'fresh',
-  `Language` char(2) NOT NULL default 'en',
+  `Language` varchar(5) NOT NULL default 'en_GB',
   PRIMARY KEY  (`UserID`),
   KEY `CustomerID` (`CustomerID`),
   KEY `DefaultLocation` (`DefaultLocation`),
@@ -1725,7 +1725,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE `WWW_Users` DISABLE KEYS */;
 LOCK TABLES `WWW_Users` WRITE;
-INSERT INTO `WWW_Users` VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2004-12-23 16:19:36','','A4','1,1,1,1,1,1,1,1,',0,50,'fresh','pl'),('testy','weberp','Test Remote User','GRANHR','','','DEN',6,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en');
+INSERT INTO `WWW_Users` VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2004-12-25 11:04:48','','A4','1,1,1,1,1,1,1,1,',0,50,'fresh','en_GB'),('testy','weberp','Test Remote User','GRANHR','','','DEN',6,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en_GB');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `WWW_Users` ENABLE KEYS */;
 

@@ -8,7 +8,16 @@ normally the lower case two character country code underscore uppercase
 2 character country code does the trick  except for en !!*/
 
 // Specify location of translation tables
-
+If (isset($_POST['Language'])) {
+	$_SESSION['Language'] = $_POST['Language'];
+	$Language = $_POST['Language'];
+} elseif (!isset($_SESSION['Language'])) {
+	$_SESSION['Language'] = $DefaultLanguage;
+	$Language = $DefaultLanguage;
+} else {
+	$Language = $_SESSION['Language'];
+}
+ 
 if (function_exists('gettext')){
   //echo 'User Settings: ' . $_SESSION['Language'];
 	$Locale = setlocale (LC_CTYPE, $_SESSION['Language']);
@@ -27,4 +36,9 @@ if (function_exists('gettext')){
 	textdomain ("messages");
 }
 
+if (!function_exists('_')){
+	function _($text){
+		return ($text);
+	}
+}
 ?>
