@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /* Script to delete a credit note - it expects and credit note number to delete
 not included on any menu for obvious reasons
 
@@ -61,18 +61,18 @@ $Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 foreach ($StockMovement as $CreditLine) {
 
-	$SQL = 'UPDATE salesorderdetails SET qtyinvoiced = qtyinvoiced - ' . $CreditLine['Qty'] . '
+	$SQL = 'UPDATE salesorderdetails SET qtyinvoiced = qtyinvoiced - ' . $CreditLine['qty'] . '
                        WHERE orderno = ' . $OrderNo . "
-                       AND stkcode = '" . $CreditLine['StockID'] . "'";
+                       AND stkcode = '" . $CreditLine['stockid'] . "'";
 
 	$ErrMsg =_('A problem was encountered attempting to reverse the update the sales order detail record') . ' - ' . _('the SQL server returned the following error message');
 	$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg, true);
 
 /*reverse the update to LocStock */
 
-	$SQL = 'UPDATE locstock SET locstock.quantity = locstock.quantity + ' . $CreditLine['Qty'] . "
-             WHERE  locstock.stockid = '" . $CreditLine['StockID'] . "'
-             AND loccode = '" . $CreditLine['LocCode'] . "'";
+	$SQL = 'UPDATE locstock SET locstock.quantity = locstock.quantity + ' . $CreditLine['qty'] . "
+             WHERE  locstock.stockid = '" . $CreditLine['stockid'] . "'
+             AND loccode = '" . $CreditLine['loccode'] . "'";
 
 	$ErrMsg = _('SQL to reverse update to the location stock records failed with the error');
 
@@ -80,16 +80,15 @@ foreach ($StockMovement as $CreditLine) {
 
 /*Delete Sales Analysis records */
 	$SQL = 'DELETE FROM salesanalysis
-                       WHERE periodno = ' . $CreditLine['Prd'] . "
-                       AND cust='" . $CreditLine['DebtorNo'] . "'
-                       AND custbranch = '" . $CreditLine['BranchCode'] . "'
-                       AND qty = " . $CreditLine['Qty'] . "
-                       AND stockid = '" . $CreditLine['StockID'] . "'";
+                       WHERE periodno = ' . $CreditLine['prd'] . "
+                       AND cust='" . $CreditLine['debtorno'] . "'
+                       AND custbranch = '" . $CreditLine['branchcode'] . "'
+                       AND qty = " . $CreditLine['qty'] . "
+                       AND stockid = '" . $CreditLine['stockid'] . "'";
 
 	$ErrMsg = _('The SQL to delete the sales analysis records with the message');
 
 	$Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
-
 }
 
 /* Delete the stock movements  */

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 
 $PageSecurity = 1;
 
@@ -125,6 +125,16 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<a href='" . $rootpath . '/SpecialOrder.php?' .SID . "&NewSpecial=Yes'><li>" . _('Special Order') . '</li></a>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/SelectRecurringSalesOrder.php?' .SID . "'><li>" . _('Select Recurring Order Template') . '</li></a>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/RecurringSalesOrdersProcess.php?' .SID . "'><li>" . _('Process Recurring Sales Orders') . '</li></a>'; ?>
 							</td>
 							</tr>
 						</table>

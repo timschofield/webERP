@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 include('includes/DateFunctions.inc');
 
 $PageSecurity = 1;
@@ -175,7 +175,8 @@ if ($_POST['SearchParts']!=''){
 					salesorders.customerref, 
 					salesorders.orddate, 
 					salesorders.deliverydate,  
-					salesorders.deliverto";
+					salesorders.deliverto
+				ORDER BY salesorders.orderno";
 	} else {
 		$DateAfterCriteria = FormatDateforSQL($_POST['OrdersAfterDate']);
 
@@ -206,7 +207,8 @@ if ($_POST['SearchParts']!=''){
 						salesorders.customerref, 
 						salesorders.orddate, 
 						salesorders.deliverydate,  
-						salesorders.deliverto";
+						salesorders.deliverto
+					ORDER BY salesorders.orderno";
 			} else {
 				$SQL = "SELECT salesorders.orderno, 
 						debtorsmaster.name, 
@@ -231,7 +233,8 @@ if ($_POST['SearchParts']!=''){
 						salesorders.customerref, 
 						salesorders.orddate, 
 						salesorders.deliverydate,  
-						salesorders.deliverto";
+						salesorders.deliverto
+					ORDER BY salesorders.orderno";
 			}
 		} else { //no customer selected
 			if (isset($SelectedStockItem)) {
@@ -258,7 +261,8 @@ if ($_POST['SearchParts']!=''){
 						salesorders.customerref, 
 						salesorders.orddate, 
 						salesorders.deliverydate,  
-						salesorders.deliverto";
+						salesorders.deliverto
+					ORDER BY salesorders.orderno";
 			} else {
 				$SQL = "SELECT salesorders.orderno, 
 						debtorsmaster.name, 
@@ -282,7 +286,8 @@ if ($_POST['SearchParts']!=''){
 						salesorders.customerref, 
 						salesorders.orddate, 
 						salesorders.deliverydate,  
-						salesorders.deliverto";
+						salesorders.deliverto
+					ORDER BY salesorders.orderno";
 			}
 
 		} //end selected customer

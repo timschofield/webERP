@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 /*
 date validation and parsing functions
 
@@ -402,16 +402,16 @@ Function DateAdd ($DateToAddTo,$PeriodString,$NumberPeriods){
 	if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
 		
 		switch ($PeriodString) {
-		case 'd':
+		case 'd': //Days
 			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_array[1],(int)$Date_array[0]+$NumberPeriods ,(int)$Date_array[2]));
 			break;
-		case 'w':
+		case 'w': //weeks
 			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_array[1],(int)$Date_array[0]+($NumberPeriods*7),(int)$Date_array[2]));
 			break;
-		case 'm':
+		case 'm': //months
 			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_array[1]+$NumberPeriods,(int)$Date_array[0],(int)$Date_array[2]));
 			break;
-		case 'y':
+		case 'y': //years
 			return Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, (int)$Date_array[1],(int)$Date_array[0],(int)$Date_array[2]+$NumberPeriods));
 			break;
 		default:

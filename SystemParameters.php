@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity =15;
 
 include('includes/session.inc');
@@ -183,6 +183,10 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['AutoDebtorNo'] != $_POST['X_AutoDebtorNo'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_AutoDebtorNo'])."' WHERE confname = 'AutoDebtorNo'";
 		}
+		if ($_SESSION['HTTPS_Only'] != $_POST['X_HTTPS_Only'] ) {
+			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_HTTPS_Only'])."' WHERE confname = 'HTTPS_Only'";
+		}
+		
 		
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 0 ) {
@@ -536,6 +540,15 @@ echo '</SELECT></TD>
 	<TD>' . _('The directory under which all report pdf files should be created in. A separate directory is recommended') . '</TD>
 	</TR>';
 
+
+// HTTPS_Only
+echo '<TR><TD>' . _('Only allow secure socket connections') . ':</TD>
+	<TD><SELECT Name="X_HTTPS_Only">
+	<OPTION '.($_SESSION['HTTPS_Only']?'SELECTED ':'').'VALUE="1">'._('Yes').'
+	<OPTION '.(!$_SESSION['HTTPS_Only']?'SELECTED ':'').'VALUE="0">'._('No').'
+	</SELECT></TD>
+	<TD>' . _('Force connections to be only over secure sockets - ie encrypted data only') . '</TD>
+	</TR>';
 
 echo '</TABLE><input type="Submit" Name="submit" value="' . _('Update') . '"></CENTER></FORM>';
 

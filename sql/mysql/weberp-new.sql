@@ -995,6 +995,31 @@ CREATE TABLE `salesanalysis` (
 ) TYPE=InnoDB;
 
 --
+-- Table structure for table `salescat`
+--
+
+CREATE TABLE `salescat` (
+  `salescatid` tinyint(4) NOT NULL auto_increment,
+  `parentcatid` tinyint(4) default NULL,
+  `salescatname` varchar(20) default NULL,
+  PRIMARY KEY  (`salescatid`)
+) TYPE=InnoDB;
+
+--
+-- Table structure for table `salescatprod`
+--
+
+CREATE TABLE `salescatprod` (
+  `salescatid` tinyint(4) NOT NULL default '0',
+  `stockid` varchar(20) NOT NULL default '',
+  PRIMARY KEY  (`salescatid`,`stockid`),
+  KEY `salescatid` (`salescatid`),
+  KEY `stockid` (`stockid`),
+  CONSTRAINT `salescatprod_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
+  CONSTRAINT `salescatprod_ibfk_2` FOREIGN KEY (`salescatid`) REFERENCES `salescat` (`salescatid`)
+) TYPE=InnoDB;
+
+--
 -- Table structure for table `salesglpostings`
 --
 
@@ -1984,6 +2009,7 @@ INSERT INTO `systypes` VALUES (30,'Sales Order',0);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',9);
 INSERT INTO `systypes` VALUES (35,'Cost Update',6);
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
+INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',10000);
 
 --
 -- Dumping data for table `taxauthorities`
@@ -2023,7 +2049,7 @@ INSERT INTO `taxauthlevels` VALUES (6,6,2,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-02-20 19:49:30','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','fr_FR');
+INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-03-25 17:09:59','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
 INSERT INTO `www_users` VALUES ('testy','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Test Remote User','GRANHR','','','DEN',7,'2005-02-10 21:11:20','GRAN','A4','0,0,0,0,0,0,0,0,',0,50,'fresh','pt_PT');
 
 --
@@ -2216,6 +2242,8 @@ INSERT INTO `config` VALUES ('RadioBreaconFilePrefix','ORDXX');
 INSERT INTO `config` VALUES ('RadioBraconFTP_server','192.168.2.2');
 INSERT INTO `config` VALUES ('RadioBeaconFTP_user_name','RadioBeacon ftp server user name');
 INSERT INTO `config` VALUES ('RadionBeaconFTP_user_pass','Radio Beacon remote ftp server password');
+INSERT INTO `config` VALUES ('AutoDebtorNo','0');
+INSERT INTO `config` VALUES ('HTTPS_Only','0');
 
 --
 -- Dumping data for table `unitsofmeasure`

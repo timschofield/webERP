@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 /*SelectOrderItems_IntoCart.inc
 
 This snippet is used to enter order line items into the cart object:
@@ -92,6 +92,9 @@ if ($AlreadyOnThisOrder!=1){
 					$Discount = 0;
 				}
                         }
+			
+			
+			
    			if ($_SESSION['Items']->add_to_cart ($NewItem,
 							$NewItemQty,
 							$myrow['description'],

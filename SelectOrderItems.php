@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 require('includes/DefineCartClass.php');
 
@@ -704,7 +704,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	/*Process Quick Entry */
 
 	 If (isset($_POST['QuickEntry'])){
-/* get the item details from the database and hold them in the cart object */
+	     /* get the item details from the database and hold them in the cart object */
+	     
+	     /*Discount can only be set later on  -- after quick entry -- so default discount to 0 in the first place */
+	     $Discount = 0;			
+	     
 	     $i=1;
 	     do {
 
@@ -720,7 +724,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		   if (strlen($NewItem)==0){
 			  break;    /* break out of the loop if nothing in the quick entry fields*/
 		   }
-
+		    
 		   /*Now figure out if the item is a kit set - the field MBFlag='K'*/
 		   $sql = "SELECT stockmaster.mbflag
 		   		FROM stockmaster
@@ -824,6 +828,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$KitResult = DB_query($sql, $db,$ErrMsg);
 
 		$NewItemQty = 1; /*By Default */
+		$Discount = 0; /*By default - can change later or discount category overide */
+		
 		if ($myrow=DB_fetch_array($KitResult)){
 		   	if ($myrow['mbflag']=='K'){	/*It is a kit set item */
 				$sql = "SELECT bom.component,

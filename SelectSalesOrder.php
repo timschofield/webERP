@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -261,7 +261,8 @@ If (isset($StockItemsResult)) {
 					salesorders.customerref,
 					salesorders.orddate,
 					salesorders.deliverydate,
-					salesorders.deliverto";
+					salesorders.deliverto
+				ORDER BY salesorders.orderno";
 	} else {
 	      /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
 
@@ -319,7 +320,8 @@ If (isset($StockItemsResult)) {
 						salesorders.customerref,
 						salesorders.orddate,
 						salesorders.deliverto,
-						salesorders.deliverydate";
+						salesorders.deliverydate
+					ORDER BY salesorders.orderno";
 
 			}
 		} else { //no customer selected
@@ -349,7 +351,8 @@ If (isset($StockItemsResult)) {
 						salesorders.customerref,
 						salesorders.orddate,
 						salesorders.deliverto,
-						salesorders.deliverydate";
+						salesorders.deliverydate
+					ORDER BY salesorders.orderno";
 			} else {
 				$SQL = "SELECT salesorders.orderno,
 						debtorsmaster.name,
@@ -376,7 +379,8 @@ If (isset($StockItemsResult)) {
 						salesorders.customerref,
 						salesorders.orddate,
 						salesorders.deliverto,
-						salesorders.deliverydate";
+						salesorders.deliverydate
+					ORDER BY salesorders.orderno";
 			}
 
 		} //end selected customer

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.49 $ */
+/* $Revision: 1.50 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -19,7 +19,7 @@ $DefaultLanguage ='en_GB';
 $allow_demo_mode = True;
 
 // Application version
-$Version = '2.9c';
+$Version = '3.0rc1';
 
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time
@@ -35,7 +35,7 @@ $Version = '2.9c';
 $host = 'localhost';
 
 //The type of db server being used - currently only postgres or mysql
-$dbType = 'postgres';
+$dbType = 'mysql';
 //$dbType = 'postgres';
 //$dbType = 'mysql';
 
@@ -62,7 +62,13 @@ $MaximumExecutionTime =120;
 //$CryptFunction = "md5"; // MD5 Hash
 $CryptFunction = "sha1"; // SHA1 Hash
 //$CryptFunction = ""; // Plain Text
+
+
+
 // END OF USER CONFIGURABLE VARIABLES
+
+
+
 
 /*The $rootpath is used in most scripts to tell the script the installation details of the files.
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
 */
@@ -166,7 +166,7 @@ If (isset($_POST['Update'])){
 
 if(isset($_POST['MakeRecurringOrder']) AND ! $InputErrors){
 	
-	echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . '/RecurringOrders.php?' . SID . "&NewRecurringOrder=Yes'>";
+	echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . '/RecurringSalesOrders.php?' . SID . "&NewRecurringOrder=Yes'>";
 	prnMsg(_('You should automatically be forwarded to the entry of recurring order details page') . '. ' . _('If this does not happen') . '(' . _('if the browser does not support META Refresh') . ') ' ."<a href='" . $rootpath . '/RecurringOrders.php?' . SID . "&NewRecurringOrder=Yes'>". _('click here') .'</a> '. _('to continue'),'info');
 	include('includes/footer.inc');
 	exit;
