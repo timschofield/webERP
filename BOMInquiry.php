@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -13,14 +13,14 @@ if (isset($_GET['StockID'])){
 }
 
 echo "<HR><FORM ACTION='" . $_SERVER['PHP_SELF'] . "?". SID . "' METHOD=POST>";
-echo _('Item Code:') . "<input type=text name='StockID' size=21 value='$StockID' maxlength=20>";
+echo _('Item Code') . ':' . "<input type=text name='StockID' size=21 value='$StockID' maxlength=20>";
 echo " <INPUT TYPE=SUBMIT NAME='ShowBOM' VALUE='" . _('Show Bill Of Material') . "'><HR>";
 
 if ($StockID!=""){
 	$result = DB_query("SELECT Description, Units FROM StockMaster WHERE StockID='" . $StockID  . "'",$db);
 	$myrow = DB_fetch_row($result);
 
-	echo "<BR><FONT SIZE=4><B>" . $myrow[0] . ' : ' . _('Per') . ' ' . $myrow[1] . "</B></FONT>";
+	echo "<BR><FONT SIZE=4><B>" . $myrow[0] . ' : ' . _('per') . ' ' . $myrow[1] . "</B></FONT>";
 
 	$sql = "SELECT BOM.Parent,
 			BOM.Component,
@@ -38,7 +38,7 @@ if ($StockID!=""){
 	$BOMResult = DB_query ($sql,$db,$ErrMsg);
 
 	if (DB_num_rows($BOMResult)==0){
-		echo '<P>' . _('The bill of material for this part is not set up - there are no components defined for it');
+		prnMsg(_('The bill of material for this part is not set up') . ' - ' . _('there are no components defined for it'),'warn');
 	} else {
 
 		echo "<TABLE CELLPADDING=2 BORDER=2>";
@@ -77,12 +77,12 @@ if ($StockID!=""){
 				<td ALIGN=RIGHT>%.2f</td>
 				</tr>",
 				$ComponentLink,
-				$myrow["Description"],
-				number_format($myrow["Quantity"],$myrow['DecimalPlaces']),
-				$myrow["StandardCost"],
-				$myrow["ComponentCost"]);
+				$myrow['Description'],
+				number_format($myrow['Quantity'],$myrow['DecimalPlaces']),
+				$myrow['StandardCost'],
+				$myrow['ComponentCost']);
 
-			$TotalCost += $myrow["ComponentCost"];
+			$TotalCost += $myrow['ComponentCost'];
 
 			$j++;
 			If ($j == 12){
@@ -99,8 +99,8 @@ if ($StockID!=""){
 		echo '</TABLE>';
 	}
 } else { //no stock item entered
-	echo '<P>' . _('Enter a stock item code above, to view the costed bill of material for');
+	prnMsg(_('Enter a stock item code above') . ', ' . _('to view the costed bill of material for'),'info');
 }
-echo "</form>";
-include("includes/footer.inc");
+echo '</form>';
+include('includes/footer.inc');
 ?>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 7;
 
@@ -26,7 +26,7 @@ $AccountsResults = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 echo '<TR><TD>' . _('Bank Account') . ':</TD><TD><SELECT name="BankAccount">';
 
 if (DB_num_rows($AccountsResults)==0){
-	 echo '</SELECT></TD></TR></TABLE><P>' . _('Bank Accounts have not yet been defined. You must first') . "<A HREF='" . $rootpath . "/BankAccounts.php'>" . _('define the bank accounts') . '</A>' . ' ' . _('and general ledger accounts to be affected.');
+	 echo '</SELECT></TD></TR></TABLE><P>' . _('Bank Accounts have not yet been defined') . '. ' . _('You must first') . "<A HREF='" . $rootpath . "/BankAccounts.php'>" . _('define the bank accounts') . '</A>' . ' ' . _('and general ledger accounts to be affected') . '.';
 	include('includes/footer.inc');
 	exit;
 } else {
@@ -45,7 +45,7 @@ if (DB_num_rows($AccountsResults)==0){
 
 include ('includes/GLPostings.inc');
 
-echo '</TABLE><P><INPUT TYPE=SUBMIT Name="ShowRec" Value="Show Bank Reconciliation Statement"></CENTER>';
+echo '</TABLE><P><INPUT TYPE=SUBMIT Name="ShowRec" Value="' . _('Show bank reconciliation statement') . '"></CENTER>';
 
 
 if (isset($_POST['ShowRec']) AND $_POST['ShowRec']!=''){
@@ -66,9 +66,21 @@ if (isset($_POST['ShowRec']) AND $_POST['ShowRec']!=''){
 	$myrow = DB_fetch_row($BalanceResult);
 	$Balance = $myrow[0];
 
-	echo '<CENTER><TABLE><TR><TD COLSPAN=6><B>' . _('Current Bank Account Balance as at') . ' ' . Date($DefaultDateFormat) . '</B></TD><TD VALIGN=BOTTOM ALIGN=RIGHT><B>' . number_format($Balance,2) . '</B></TD></TR>';
+	echo '<CENTER><TABLE><TR><TD COLSPAN=6><B>' . _('Current bank account balance as at') . ' ' . Date($DefaultDateFormat) . '</B></TD><TD VALIGN=BOTTOM ALIGN=RIGHT><B>' . number_format($Balance,2) . '</B></TD></TR>';
 
-	$SQL = "SELECT Amount/ExRate As Amt, AmountCleared, (Amount/ExRate)-AmountCleared AS Outstanding, Ref, TransDate, SysTypes.TypeName, TransNo FROM BankTrans, SysTypes WHERE BankTrans.Type = SysTypes.TypeID AND BankTrans.BankAct=" . $_POST["BankAccount"] . " AND Amount < 0 AND ABS((Amount/ExRate)-AmountCleared)>0.009";
+	$SQL = "SELECT Amount/ExRate As Amt,
+			AmountCleared,
+			(Amount/ExRate)-AmountCleared AS Outstanding,
+			Ref,
+			TransDate,
+			SysTypes.TypeName,
+			TransNo
+		FROM BankTrans,
+			SysTypes
+		WHERE BankTrans.Type = SysTypes.TypeID
+		AND BankTrans.BankAct=" . $_POST["BankAccount"] . "
+		AND Amount < 0
+		AND ABS((Amount/ExRate)-AmountCleared)>0.009";
 
 	echo '<TR></TR>'; /*Bang in a blank line */
 
@@ -146,7 +158,7 @@ if (isset($_POST['ShowRec']) AND $_POST['ShowRec']!=''){
 
 	$UPChequesResult = DB_query($SQL,$db,$ErrMsg);
 
-	echo '<TR><TD COLSPAN=6><B>' . _('Less Deposits not cleared') . ':</B></TD></TR>';
+	echo '<TR><TD COLSPAN=6><B>' . _('Less deposits not cleared') . ':</B></TD></TR>';
 
 	$TableHeader = '<TR>
 			<TD class="tableheader">' . _('Date') . '</TD>
@@ -198,12 +210,12 @@ if (isset($_POST['ShowRec']) AND $_POST['ShowRec']!=''){
 	//end of while loop
 	echo '<TR></TR><TR><TD COLSPAN=6>' . _('Total of all uncleared deposits') . '</TD><TD ALIGN=RIGHT>' . number_format($TotalUnclearedDeposits,2) . '</TD></TR>';
 
-	echo '<TR></TR><TR><TD COLSPAN=6><B>' . _('Bank Statement Balance Should Be') . '</B></TD><TD ALIGN=RIGHT>' . number_format(($Balance - $TotalUnpresentedCheques -$TotalUnclearedDeposits),2) . '</TD></TR>';
+	echo '<TR></TR><TR><TD COLSPAN=6><B>' . _('Bank statement balance should be') . '</B></TD><TD ALIGN=RIGHT>' . number_format(($Balance - $TotalUnpresentedCheques -$TotalUnclearedDeposits),2) . '</TD></TR>';
 
 	echo '</TABLE>';
 }
-echo '<P><A HREF="' . $rootpath . '/BankMatching.php?' . SID . 'Type=Payments">' . _('Match Off Cleared Payments') . '</A>';
-echo '<BR><A HREF="' . $rootpath . '/BankMatching.php?' . SID . 'Type=Receipts">' . _('Match Off Cleared Deposits') . '</A>';
+echo '<P><A HREF="' . $rootpath . '/BankMatching.php?' . SID . '&Type=Payments">' . _('Match off cleared payments') . '</A>';
+echo '<BR><A HREF="' . $rootpath . '/BankMatching.php?' . SID . '&Type=Receipts">' . _('Match off cleared deposits') . '</A>';
 echo '</form>';
 include('includes/footer.inc');
 ?>

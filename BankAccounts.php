@@ -1,13 +1,13 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 10;
 
-include("includes/session.inc");
+include('includes/session.inc');
 
 $title = _('Bank Accounts Maintenance');
 
-include("includes/header.inc");
+include('includes/header.inc');
 
 
 if (isset($_GET['SelectedBankAccount'])) {
@@ -28,13 +28,13 @@ if (isset($_POST['submit'])) {
 
 	if (strlen($_POST['BankAccountName']) >50) {
 		$InputError = 1;
-		echo _('The bank account name must be fifty characters or less long');
+		prnMsg(_('The bank account name must be fifty characters or less long'),'error');
 	} elseif (strlen($_POST['BankAccountNumber']) >50) {
 		$InputError = 1;
-		echo _('The bank account number must be fifty characters or less long');
+		prnMsg(_('The bank account number must be fifty characters or less long'),'error');
 	}  elseif (strlen($_POST['BankAddress']) >50) {
 		$InputError = 1;
-		echo _('The bank address must be fifty characters or less long');
+		prnMsg(_('The bank address must be fifty characters or less long'),'error');
 	}
 
 	if (isset($SelectedBankAccount) AND $InputError !=1) {
@@ -60,16 +60,16 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['BankAccountNumber'] . "',
 					'" . $_POST['BankAddress'] . "'
 					)";
-		$msg = _('The new bank account has been entered.');
+		$msg = _('The new bank account has been entered');
 	}
 
 	//run the SQL from either of the above possibilites
 
 	$ErrMsg = _('The bank account could not be inserted or modified because');
-	$Dbgmsg = _('The SQL used to insert/modify the bank account details was:');
+	$Dbgmsg = _('The SQL used to insert/modify the bank account details was');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-	echo '<P>' . $msg . '<P>';
+	prnMsg($msg,'success');
 	unset($_POST['AccountCode']);
 	unset($_POST['BankAccountName']);
 	unset($_POST['BankAccountNumber']);
@@ -89,14 +89,14 @@ if (isset($_POST['submit'])) {
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		$CancelDelete = 1;
-		echo _('Cannot delete this bank account because transactions have been created using this account');
+		prnMsg(_('Cannot delete this bank account because transactions have been created using this account'),'warn');
 		echo '<br> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('transactions with this bank account code');
 
 	}
 	if (!$CancelDelete) {
 		$sql="DELETE FROM BankAccounts WHERE AccountCode='$SelectedBankAccount'";
 		$result = DB_query($sql,$db);
-		echo _('Bank account deleted !') . ' <p>';
+		prnMsg(_('Bank account deleted'),'success');
 	} //end if Delete bank account
 }
 
@@ -112,10 +112,10 @@ $sql = "SELECT BankAccounts.AccountCode,
 	WHERE BankAccounts.AccountCode = ChartMaster.AccountCode";
 
 $ErrMsg = _('The bank accounts set up could not be retreived because');
-$Dbgmsg = _('The SQL used to retrieve the bank account details was:') . '<BR>' . $sql;
+$Dbgmsg = _('The SQL used to retrieve the bank account details was') . '<BR>' . $sql;
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-echo "<CENTER><table>\n";
+echo '<CENTER><table>';
 
 echo "<tr><td class='tableheader'>" . _('GL Account') . "</td>
 	<td class='tableheader'>" . _('Account Name') . "</td>
@@ -175,17 +175,17 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
 
-	$_POST['AccountCode'] = $myrow["AccountCode"];
-	$_POST['BankAccountName']  = $myrow["BankAccountName"];
-	$_POST['BankAccountNumber'] = $myrow["BankAccountNumber"];
-	$_POST['BankAddress'] = $myrow["BankAddress"];
+	$_POST['AccountCode'] = $myrow['AccountCode'];
+	$_POST['BankAccountName']  = $myrow['BankAccountName'];
+	$_POST['BankAccountNumber'] = $myrow['BankAccountNumber'];
+	$_POST['BankAddress'] = $myrow['BankAddress'];
 
 	echo '<INPUT TYPE=HIDDEN NAME=SelectedBankAccount VALUE=' . $SelectedBankAccount . '>';
 	echo '<INPUT TYPE=HIDDEN NAME=AccountCode VALUE=' . $_POST['AccountCode'] . '>';
-	echo '<CENTER><TABLE> <TR><TD>' . _('Bank Account GL Code:') . '</TD><TD>';
+	echo '<CENTER><TABLE> <TR><TD>' . _('Bank Account GL Code') . ':</TD><TD>';
 	echo $_POST['AccountCode'] . '</TD></TR>';
 } else { //end of if $Selectedbank account only do the else when a new record is being entered
-	echo '<CENTER><TABLE><TR><TD>' . _('Bank Account GL Code:') . "</TD><TD><Select name='AccountCode'>";
+	echo '<CENTER><TABLE><TR><TD>' . _('Bank Account GL Code') . ":</TD><TD><Select name='AccountCode'>";
 
 	$sql = "SELECT AccountCode,
 			AccountName
@@ -197,24 +197,24 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 
 	$result = DB_query($sql,$db);
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow["AccountCode"]==$_POST['AccountCode']) {
-			echo "<OPTION SELECTED VALUE=";
+		if ($myrow['AccountCode']==$_POST['AccountCode']) {
+			echo '<OPTION SELECTED VALUE=';
 		} else {
-			echo "<OPTION VALUE=";
+			echo '<OPTION VALUE=';
 		}
-		echo $myrow["AccountCode"] . ">" . $myrow["AccountName"];
+		echo $myrow['AccountCode'] . '>' . $myrow['AccountName'];
 
 	} //end while loop
 
-	echo "</SELECT></TD></TR>";
+	echo '</SELECT></TD></TR>';
 }
 ?>
 
-<TR><TD><?php echo _('Bank Account Name:'); ?></TD>
+<TR><TD><?php echo _('Bank Account Name') . ':'; ?></TD>
 <TD><input type="Text" name="BankAccountName" value="<?php echo $_POST['BankAccountName']; ?>" SIZE=40 MAXLENGTH=50></TD></TR>
-<TR><TD><?php echo _('Bank Account Number:'); ?></TD>
+<TR><TD><?php echo _('Bank Account Number') . ':'; ?></TD>
 <TD><input type="Text" name="BankAccountNumber" value="<?php echo $_POST['BankAccountNumber']; ?>" SIZE=40 MAXLENGTH=50></TD></TR>
-<TR><TD><?php echo _('Bank Address:'); ?></TD>
+<TR><TD><?php echo _('Bank Address') . ':'; ?></TD>
 <TD><input type="Text" name="BankAddress" value="<?php echo $_POST['BankAddress']; ?>" SIZE=40 MAXLENGTH=50></TD></TR>
 </TABLE>
 
@@ -223,5 +223,5 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 </FORM>
 
 <?php
-	include("includes/footer.inc");
+	include('includes/footer.inc');
 ?>

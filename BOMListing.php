@@ -1,13 +1,16 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 2;
 
-If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POST['FromCriteria'])>=1 AND isset($_POST['ToCriteria']) AND strlen($_POST['ToCriteria'])>=1){
+If (isset($_POST['PrintPDF'])
+	AND isset($_POST['FromCriteria'])
+	AND strlen($_POST['FromCriteria'])>=1
+	AND isset($_POST['ToCriteria'])
+	AND strlen($_POST['ToCriteria'])>=1){
 
 	include('config.php');
 	include('includes/ConnectDB.inc');
-
 	include('includes/PDFStarter_ros.inc');
 	include('includes/DateFunctions.inc');
 
@@ -39,13 +42,13 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 			BOM.Parent,
 			BOM.Component";
 
-	$BOMResult = DB_query($SQL,$db);
+	$BOMResult = DB_query($SQL,$db,'','',false,false); //dont do error trapping inside DB_query
 
 	if (DB_error_no($db) !=0) {
-	   $title = _('Bill of Materials Listing - Problem Report');
+	   $title = _('Bill of Materials Listing') . ' - ' . _('Problem Report');
 	   include('includes/header.inc');
-	   echo '<P>' . _('The Bill of Material listing could not be retrieved by the SQL because');
-	   echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>" . _('Back To The Menu') . '</A>';
+	   prnMsg(_('The Bill of Material listing could not be retrieved by the SQL because'),'error');
+	   echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
 	   if ($debug==1){
 	      echo "<BR>$SQL";
 	   }
@@ -53,9 +56,9 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 	   exit;
 	}
 	if (DB_num_rows($BOMResult)==0){
-	   $title = _('Bill of Materials Listing - Problem Report');
+	   $title = _('Bill of Materials Listing') . ' - ' . _('Problem Report');
 	   include('includes/header.inc');
-	   echo '<P>' . _('The Bill of Material listing has no bills to report on');
+	   prnMsg( _('The Bill of Material listing has no bills to report on'),'warn');
 	   include('includes/footer.inc');
 	   exit;
 	}
@@ -119,7 +122,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 } else { /*The option to print PDF was not hit */
 
 	include('includes/session.inc');
-	$title=_('Bill Of Materials Listing');
+	$title=_('Bill Of Material Listing');
 	include('includes/header.inc');
 
 	if (strlen($_POST['FromCriteria'])<1 || strlen($_POST['ToCriteria'])<1) {
@@ -128,9 +131,9 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 
 		echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
 
-		echo '<TR><TD>' . _('From Inventory Part Code:') . "</FONT></TD><TD><INPUT TYPE=text name=FromCriteria SIZE=20 MAXLENGTH=20 VALUE='1'></TD></TR>";
+		echo '<TR><TD>' . _('From Inventory Part Code') . ':' . "</FONT></TD><TD><INPUT TYPE=text name=FromCriteria SIZE=20 MAXLENGTH=20 VALUE='1'></TD></TR>";
 
-		echo '<TR><TD>' . _('To Inventory Part Code:') . "</TD><TD><INPUT TYPE=text name=ToCriteria SIZE=20 MAXLENGTH=20 VALUE='zzzzzzz'></TD></TR>";
+		echo '<TR><TD>' . _('To Inventory Part Code') . ':' . "</TD><TD><INPUT TYPE=text name=ToCriteria SIZE=20 MAXLENGTH=20 VALUE='zzzzzzz'></TD></TR>";
 
 
 		echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";

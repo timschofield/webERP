@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /* Common SQL Functions */
 
 
@@ -16,15 +16,15 @@ Also updates the transaction number
 
 	$SQL = "SELECT TypeNo FROM SysTypes WHERE TypeID = " . $TransType;
 
-	$ErrMsg = _('CRITICAL ERROR - NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The next transaction number could not be retrieved from the database because');
+	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The next transaction number could not be retrieved from the database because');
 	$DbgMsg =  _('The following SQL to retrieve the transaction number was used');
 
 	$GetTransNoResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
 	$myrow = DB_fetch_row($GetTransNoResult);
 	$SQL = 'UPDATE SysTypes SET TypeNo = ' . ($myrow[0] + 1) . ' WHERE TypeID = ' . $TransType;
-	$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The transaction number could not be incremented');
-	$DbgMsg =  _('The following SQL to increment the transaction number was used:');
+	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The transaction number could not be incremented');
+	$DbgMsg =  _('The following SQL to increment the transaction number was used');
 	$UpdTransNoResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
 	return $myrow[0] + 1;
@@ -60,12 +60,12 @@ Function ReadInCompanyRecord (&$db) {
 	FROM Companies
 	WHERE CoyCode=1";
 
-	$ErrMsg = _('An error occurred accessing the database to retrieve the company information:');
+	$ErrMsg = _('An error occurred accessing the database to retrieve the company information');
 	$ReadCoyResult = DB_query($Query,$db,$ErrMsg);
 
 	if (DB_num_rows($ReadCoyResult)==0) {
       		echo '<BR><B>';
-		prnMsg( _('The company record has not yet been set up</B><BR>From the system setup tab, select company maintenance to enter the company infomation and system preferences','error','CRITICAL PROBLEM') );
+		prnMsg( _('The company record has not yet been set up') . '</B><BR>' . _('From the system setup tab select company maintenance to enter the company infomation and system preferences'),'error',_('CRITICAL PROBLEM') );
 		return 0;
 	} else {
 		$myrow = DB_fetch_array($ReadCoyResult);
@@ -100,7 +100,7 @@ Function GetTaxRate ($TaxAuthority, $DispatchTaxAuthority, $TaxLevel, &$db){
 
 	$QuerySQL = "SELECT TaxRate FROM TaxAuthLevels WHERE TaxAuthority=" . $TaxAuthority . " AND DispatchTaxAuthority=" . $DispatchTaxAuthority . " AND Level = " . $TaxLevel;
 
-	$ErrMsg = _('The tax rate for this item could not be retreived because:');
+	$ErrMsg = _('The tax rate for this item could not be retreived because');
 	$GetTaxRateResult = DB_query($QuerySQL,$db,$ErrMsg);
 
 	if (DB_num_rows($GetTaxRateResult)==1){

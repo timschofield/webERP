@@ -1,14 +1,12 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 3;
 
-include("includes/session.inc");
+include('includes/session.inc');
 
 $title = _('Sales Area Maintenance');
 
-
-
-include("includes/header.inc");
+include('includes/header.inc');
 
 
 if (isset($_GET['SelectedArea'])){
@@ -17,7 +15,7 @@ if (isset($_GET['SelectedArea'])){
 	$SelectedArea = strtoupper($_POST['SelectedArea']);
 }
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
@@ -29,10 +27,10 @@ if ($_POST['submit']) {
 	$_POST['AreaCode'] = strtoupper($_POST['AreaCode']);
 	if (strlen($_POST['AreaCode']) > 2) {
 		$InputError = 1;
-		echo _('The area code must be two characters or less long');
+		prnMsg(_('The area code must be two characters or less long'),'error');
 	} elseif (strlen($_POST['AreaDescription']) >50) {
 		$InputError = 1;
-		echo _('The area description must be fifty characters or less long');
+		prnMsg(_('The area description must be fifty characters or less long'),'error');
 	}
 
 	if ($SelectedArea AND $InputError !=1) {
@@ -66,7 +64,7 @@ if ($_POST['submit']) {
 	$DbgMsg = _('The SQL that failed was');
 	$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
-	echo "<BR>$msg";
+	prnMsg($msg,'success');
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
@@ -80,7 +78,7 @@ if ($_POST['submit']) {
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		$CancelDelete = 1;
-		echo _('Cannot delete this area because customer branches have been created using this area');
+		prnMsg( _('Cannot delete this area because customer branches have been created using this area'),'warn');
 		echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches using this area code');
 
 	} else {
@@ -89,7 +87,7 @@ if ($_POST['submit']) {
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			$CancelDelete = 1;
-			echo _('Cannot delete this area because sales analysis ecords exist that use this area');
+			prnMsg( _('Cannot delete this area because sales analysis ecords exist that use this area'),'warn');
 			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records referring this area code');
 		}
 	}
@@ -97,18 +95,17 @@ if ($_POST['submit']) {
 	if ($CancelDelete==0) {
 		$sql="DELETE FROM Areas WHERE AreaCode='" . $SelectedArea . "'";
 		$result = DB_query($sql,$db);
-		echo '<BR><B>' . _('Area Code') . ' ' . $SelectedArea . ' ' . _('has been deleted !') . '<p>';
+		prnMsg(_('Area Code') . ' ' . $SelectedArea . ' ' . _('has been deleted') .' !','success');
 	} //end if Delete area
 } elseif (!isset($SelectedArea)) {
 
-
-	$sql = "SELECT * FROM Areas";
+	$sql = 'SELECT * FROM Areas';
 	$result = DB_query($sql,$db);
 
-	echo "<CENTER><table border=1>\n";
+	echo '<CENTER><table border=1>';
 	echo "<tr>
 		<td class='tableheader'>" . _('Area Code') . "</td>
-		<td class='tableheader'>" . _('Area Name') . "</td>";
+		<td class='tableheader'>" . _('Area Name') . '</td>';
 
 	$k=0; //row colour counter
 
@@ -120,19 +117,15 @@ if ($_POST['submit']) {
 			echo "<tr bgcolor='#EEEEEE'>";
 			$k++;
 		}
-		printf("<td>%s</td><td>%s</td><td><a href='%sSelectedArea=%s'>%s</A></td><td><A HREF='%sSelectedArea=%s&delete=1'>%s</A></td></tr>",
-			$myrow[0],
-			$myrow[1],
-			$_SERVER['PHP_SELF'] . "?" . SID,
-			$myrow[0],
-			_('Edit'),
-			$_SERVER['PHP_SELF'] . "?" . SID,
-			$myrow[0],
-			_('Delete'));
+
+		echo '<TD>' . $myrow[0] . '</TD>';
+		echo '<TD>' . $myrow[1] . '</TD>';
+		echo '<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedArea=' . $myrow[0] . '">' . _('Edit') . '</A></TD>';
+		echo '<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedArea=' . $myrow[0] . '&delete=yes">' . _('Delete') . '</A></TD>';
 
 	}
 	//END WHILE LIST LOOP
-	echo "</TABLE></CENTER>";
+	echo '</TABLE></CENTER>';
 }
 
 //end of ifs and buts!
@@ -144,7 +137,7 @@ if (isset($SelectedArea)) {
 
 if (!isset($_GET['delete'])) {
 
-	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 	if ($SelectedArea) {
 		//editing an existing area
@@ -157,22 +150,22 @@ if (!isset($_GET['delete'])) {
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
 
-		$_POST['AreaCode'] = $myrow["AreaCode"];
-		$_POST['AreaDescription']  = $myrow["AreaDescription"];
+		$_POST['AreaCode'] = $myrow['AreaCode'];
+		$_POST['AreaDescription']  = $myrow['AreaDescription'];
 
-		echo "<INPUT TYPE=HIDDEN NAME=SelectedArea VALUE=" . $SelectedArea . ">";
-		echo "<INPUT TYPE=HIDDEN NAME=AreaCode VALUE=" .$_POST['AreaCode'] . ">";
-		echo "<CENTER><TABLE><TR><TD>Area Code:</TD><TD>" . $_POST['AreaCode'] . "</TD></TR>";
+		echo "<INPUT TYPE=HIDDEN NAME=SelectedArea VALUE=" . $SelectedArea . '>';
+		echo '<INPUT TYPE=HIDDEN NAME=AreaCode VALUE=' .$_POST['AreaCode'] . '>';
+		echo '<CENTER><TABLE><TR><TD>' . _('Area Code') . ':</TD><TD>' . $_POST['AreaCode'] . '</TD></TR>';
 
 	} else {
 		echo '<CENTER><TABLE>
 			<TR>
-				<TD>' . _('Area Code:') . "</TD>
+				<TD>' . _('Area Code') . ":</TD>
 				<TD><input type='Text' name='AreaCode' value='" . $_POST['AreaCode'] . "' SIZE=3 MAXLENGTH=2></TD>
 			</TR>";
 	}
 
-	echo '<TR><TD>' . _('Area Name:') . "</TD>
+	echo '<TR><TD>' . _('Area Name') . ":</TD>
 		<TD><input type='Text' name='AreaDescription' value='" . $_POST['AreaDescription'] ."' SIZE=26 MAXLENGTH=25></TD>
 		</TR>
 	</TABLE>";
@@ -182,5 +175,5 @@ if (!isset($_GET['delete'])) {
 
  } //end if record deleted no point displaying form to add record
 
-include("includes/footer.inc");
+include('includes/footer.inc');
 ?>
