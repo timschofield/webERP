@@ -1,36 +1,36 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 8;
-include ("includes/session.inc");
+include ('includes/session.inc');
 
 $title = _('GL Codes Inquiry');
 
-include("includes/header.inc");
-include("includes/DateFunctions.inc");
+include('includes/header.inc');
+include('includes/DateFunctions.inc');
 
 
-$SQL = "SELECT Group_,
+$SQL = 'SELECT Group_,
 		AccountCode ,
 		AccountName
 	FROM ChartMaster INNER JOIN AccountGroups ON ChartMaster.Group_ = AccountGroups.GroupName
 	ORDER BY SequenceInTB,
-		AccountCode";
+		AccountCode';
 
-$ErrMsg = _("No general ledger accounts were returned by the SQL because");
+$ErrMsg = _('No general ledger accounts were returned by the SQL because');
 $AccountsResult = DB_query($SQL,$db,$ErrMsg);
 
 /*show a table of the orders returned by the SQL */
 
 echo "<CENTER><TABLE CELLPADDING=2 COLSPAN=2>
 		<TR>
-			<TD class='tableheader'>"._("Group")."</FONT></TD>
-			<TD class='tableheader'>"._("Code")."</FONT></TD>
-			<TD class='tableheader'>"._("Account Name")."</FONT></TD>
-		</TR>";
+			<TD class='tableheader'>"._('Group')."</FONT></TD>
+			<TD class='tableheader'>"._('Code')."</FONT></TD>
+			<TD class='tableheader'>"._('Account Name').'</FONT></TD>
+		</TR>';
 
 $j = 1;
 $k=0; //row colour counter
-$ActGrp ="";
+$ActGrp ='';
 
 while ($myrow=DB_fetch_array($AccountsResult)) {
        if ($k==1){
@@ -41,35 +41,35 @@ while ($myrow=DB_fetch_array($AccountsResult)) {
               $k++;
        }
 
-       if ($myrow["Group_"]== $ActGrp){
+       if ($myrow['Group_']== $ActGrp){
               printf("<td></td>
 	      		<td><FONT SIZE=2>%s</FONT></td>
 			<td><FONT SIZE=2>%s</FONT></td>
 			</tr>",
-			$myrow["AccountCode"],
-			$myrow["AccountName"]);
+			$myrow['AccountCode'],
+			$myrow['AccountName']);
        } else {
-              $ActGrp = $myrow["Group_"];
+              $ActGrp = $myrow['Group_'];
               printf("<td><FONT SIZE=2>%s</FONT></td>
 	      		<td><FONT SIZE=2>%s</FONT></td>
 			<td><FONT SIZE=2>%s</FONT></td>
 			</tr>",
-			$myrow["Group_"],
-			$myrow["AccountCode"],
-			$myrow["AccountName"]);
+			$myrow['Group_'],
+			$myrow['AccountCode'],
+			$myrow['AccountName']);
        }
        $j++;
        If ($j == 18){
               $j=1;
-              echo "<TR><TD class='tableheader'>"._("Group")."</FONT></TD>
-	      		<TD class='tableheader'>"._("Code")."</FONT></TD>
-			<TD class='tableheader'>"._("Account Name")."</FONT></TD></TR>";
+              echo "<TR><TD class='tableheader'>"._('Group')."</FONT></TD>
+	      		<TD class='tableheader'>"._('Code')."</FONT></TD>
+			<TD class='tableheader'>"._('Account Name').'</FONT></TD></TR>';
        }
 }
 //end of while loop
 
-echo "</TABLE></CENTER>";
+echo '</TABLE></CENTER>';
 
-include("includes/footer.inc");
+include('includes/footer.inc');
 
 ?>
