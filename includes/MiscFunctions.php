@@ -24,7 +24,7 @@ function getMsg($msg,$type='info',$prefix=''){
 			break;
 		case 'success':
 			$Colour='darkgreen';
-			$prefix = $prefix ? $prefix : _('Success Report');
+			$prefix = $prefix ? $prefix : _('SUCCESS Report');
 			break;
 		case 'info':
 		default:

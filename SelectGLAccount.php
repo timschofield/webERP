@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 8;
 
@@ -27,7 +27,7 @@ If (isset($_POST['Select'])) {
 } elseif (isset($_POST['Search'])){
 
 	If (strlen($_POST['Keywords']>0) AND strlen($_POST['GLCode'])>0) {
-		$msg=_('Account name keywords have been used in preference to the Account code extract entered') . '.';
+		$msg=_('Account name keywords have been used in preference to the Account code extract entered');
 	}
 	If ($_POST['Keywords']=='' AND $_POST['GLCode']=='') {
 		$msg=_('At least one Account name keyword OR an extract of a Account code must be entered for the search');
@@ -44,11 +44,28 @@ If (isset($_POST['Select'])) {
 			}
 			$SearchString = $SearchString. substr($_POST['Keywords'],$i) . '%';
 
-			$SQL = "SELECT AccountCode, AccountName, ChartMaster.Group_, IF(PandL!=0,'Profit and Loss','Balance Sheet') AS PL FROM ChartMaster, AccountGroups WHERE ChartMaster.Group_ = AccountGroups.GroupName AND AccountName LIKE '$SearchString' ORDER BY AccountGroups.SequenceInTB, ChartMaster.AccountCode";
+			$SQL = "SELECT AccountCode,
+					AccountName,
+					ChartMaster.Group_,
+					IF(PandL!=0,'Profit and Loss','Balance Sheet') AS PL
+				FROM ChartMaster,
+					AccountGroups
+				WHERE ChartMaster.Group_ = AccountGroups.GroupName
+				AND AccountName LIKE '$SearchString'
+				ORDER BY AccountGroups.SequenceInTB,
+					ChartMaster.AccountCode";
 
 		} elseif (strlen($_POST['GLCode'])>0){
 
-			$SQL = "SELECT AccountCode, AccountName, Group_, IF(PandL!=0,'Profit and Loss','Balance Sheet') AS PL FROM ChartMaster, AccountGroups WHERE ChartMaster.Group_=AccountGroups.GroupName AND AccountCode >= " . $_POST['GLCode'] . " ORDER BY ChartMaster.AccountCode";
+			$SQL = "SELECT AccountCode,
+					AccountName,
+					Group_,
+					IF(PandL!=0,'Profit and Loss','Balance Sheet') AS PL
+					FROM ChartMaster,
+						AccountGroups
+					WHERE ChartMaster.Group_=AccountGroups.GroupName
+					AND AccountCode >= " . $_POST['GLCode'] . "
+					ORDER BY ChartMaster.AccountCode";
 		}
 
 		$result = DB_query($SQL,$db);
@@ -96,10 +113,10 @@ If (isset($result)) {
                 <td><FONT SIZE=1>%s</FONT></td>
                 <td><FONT SIZE=1>%s</FONT></td>
                 <td><FONT SIZE=1>%s</FONT></td>
-                </tr>", 
-                $myrow['AccountCode'], 
-                $myrow['AccountName'], 
-                $myrow['Group_'], 
+                </tr>",
+                $myrow['AccountCode'],
+                $myrow['AccountName'],
+                $myrow['Group_'],
                 $myrow['PL']);
 
 		$j++;
