@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $title = "Search Inventory Items";
 
 $PageSecurity = 2;
@@ -221,6 +221,7 @@ If (!$_POST['Search']=='Search Now' AND (isset($_POST['Select']) OR isset($_SESS
 	if ($Its_A_Kitset_Assembly_Or_Dummy==False){
 		echo "<A HREF='$rootpath/PO_SelectOSPurchOrder.php?" .SID . "SelectedStockItem=$StockID'>Search Outstanding Purchase Orders</A><BR>";
 		echo "<A HREF='$rootpath/PO_SelectPurchOrder.php?" .SID . "SelectedStockItem=$StockID'>Search All Purchase Orders</A><BR>";
+		echo "<A HREF='$rootpath/$part_pics_dir/$StockID.jpg?" . SID ."'>Show Part Picture (if available)</A><BR>";
 	}
 
 	if ($Its_A_Dummy==False){

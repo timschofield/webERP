@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Recalculation of GL Balances in Chart Details Table";
 
 $PageSecurity=15;
@@ -64,9 +64,10 @@ if (!isset($_POST["FromPeriod"])){
 		while ($myrow=DB_fetch_array($result)){
 		
 			$CFwd = $myrow["BFwd"] + $myrow["Actual"];
+			$CFwdBudget = $myrow['BFwdBudget'] + $myrow['Budget'];
 			echo "<BR>Account code : " . $myrow["AccountCode"] . " Period : " . $myrow["Period"];
 
-			$sql = "UPDATE ChartDetails SET BFwd=" . $CFwd . " WHERE Period=" . ($myrow["Period"] +1) . " AND  AccountCode = " . $myrow["AccountCode"];
+			$sql = "UPDATE ChartDetails SET BFwd=" . $CFwd . ",BFwdBudget=" . $CFwdBudget . " WHERE Period=" . ($myrow["Period"] +1) . " AND  AccountCode = " . $myrow["AccountCode"];
 
 			$updresult = DB_query($sql,$db);
 

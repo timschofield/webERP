@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Recalculation of Brought Forward Balances in Chart Details Table";
 $PageSecurity=15;
 include ("includes/session.inc");
@@ -59,7 +59,7 @@ if (!isset($_POST["FromPeriod"]) OR !isset($_POST["ToPeriod"])){
 
 } else {  /*OK do the updates */
 
-	for ($i=$_POST["FromPeriod"];$i<$_POST["ToPeriod"];$i++){
+	for ($i=$_POST["FromPeriod"];$i<=$_POST["ToPeriod"];$i++){
 
 		$sql="SELECT AccountCode, Period, Budget, Actual, BFwd, BFwdBudget FROM ChartDetails WHERE Period =". $i;
 
