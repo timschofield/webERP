@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $title = "Search Inventory Items";
 
 $PageSecurity = 2;
@@ -326,7 +326,7 @@ If (isset($result) AND !isset($_POST['Select']) ) {
 		printf("<td><INPUT TYPE=SUBMIT NAME='Select' VALUE='%s'</td><td>%s</td><td ALIGN=RIGHT>%s</td><td>%s</td></tr>", $myrow["StockID"], $myrow["Description"], $qoh, $myrow["Units"]);
 
 		$j++;
-		If ($j == 12){
+		If ($j == 12 AND $RowIndex+1 != $_SESSION['DisplayRecordsMax']){
 			$j=1;
 			echo $tableheader;
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $title = "Search Suppliers";
 
 $PageSecurity = 2;
@@ -247,7 +247,7 @@ If (isset($result)) {
 			$myrow["Address4"]);
 
 		$j++;
-		If ($j == 11){
+		If ($j == 11 $RowIndex+1 != $_SESSION['DisplayRecordsMax'] ){
 			$j=1;
 			echo $tableheader;
 		}

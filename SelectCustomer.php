@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $title = "Search Customers";
 
 $PageSecurity = 2;
@@ -225,7 +225,7 @@ If (isset($result)) {
 		printf("<td><FONT SIZE=1><INPUT TYPE=SUBMIT NAME='Select' VALUE='%s'</FONT></td><td><FONT SIZE=1>%s</FONT></td><td><FONT SIZE=1>%s</FONT></td><td><FONT SIZE=1>%s</FONT></td><td><FONT SIZE=1>%s</FONT></td><td><FONT SIZE=1>%s</FONT></td></tr>", $myrow["DebtorNo"],$myrow["Name"], $myrow["BrName"], $myrow["ContactName"], $myrow["PhoneNo"], $myrow["FaxNo"]);
 
 		$j++;
-		If ($j == 11){
+		If ($j == 11 AND $RowIndex+1 != $_SESSION['DisplayRecordsMax']){
 			$j=1;
 			echo $TableHeader;
 		}
