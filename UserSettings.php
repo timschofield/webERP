@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity=1;
 
@@ -163,8 +163,8 @@ if(!isset($_POST['email'])){
 }
 
 echo "<TD><input type=text name='email' size=20 value='" . $_POST['email'] . "'></TD></TR>
-	</TABLE>
-	<CENTER><input type='Submit' name='Modify' value=" . _('Modify') . '>
+	</TABLE></CENTER>
+	<CENTER><input type='Submit' name='Modify' value=" . _('Modify') . '></CENTER>
 	</FORM>';
 
 include('includes/footer.inc');

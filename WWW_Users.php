@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -388,7 +388,8 @@ echo "</SELECT></TD></TR>";
 /*Make an array out of the comma seperated list of modules allowed*/
 $ModulesAllowed = explode(",",$_POST['ModulesAllowed']);
 
-/*Module List is in config.php */
+$ModuleList = array(_('Orders'), _('Receivables'), _('Payables'), _('Purchasing'), _('Inventory'), _('Manufacturing'), _('General Ledger'), _('Setup'));
+
 $i=0;
 foreach($ModuleList as $ModuleName){
 

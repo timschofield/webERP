@@ -29,7 +29,7 @@ body {
 /*links before selection */
 a {
 	font-family: Verdana, Arial, Helvetica;
-	font-size: 10px;
+	font-size: 12px;
 	font-weight: bold;
 	text-decoration: none;
 	color: #000000;
@@ -48,7 +48,7 @@ table {
 /*table detail items default format */
 td {
 	font-family: Verdana, Arial, Helvetica;
-	font-size: 10px;
+	font-size: 12px;
 
 }
 
@@ -173,12 +173,12 @@ td {
 }
 
 .system_menu_tabs a {
-	font-size: 10px;
+	font-size: 12px;
 	color: #000000;
 }
 
 .system_menu_tabs a:hover {
-	font-size: 10px;
+	font-size: 12px;
   color: #000000;
 }
 

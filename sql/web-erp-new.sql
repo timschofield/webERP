@@ -1725,7 +1725,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE `WWW_Users` DISABLE KEYS */;
 LOCK TABLES `WWW_Users` WRITE;
-INSERT INTO `WWW_Users` VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2004-12-21 20:07:26','','A4','1,1,1,1,1,1,1,1,',0,50,'fresh','en'),('testy','weberp','Test Remote User','GRANHR','','','DEN',6,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en');
+INSERT INTO `WWW_Users` VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2004-12-22 20:58:07','','A4','1,1,1,1,1,1,1,1,',0,50,'default','en'),('testy','weberp','Test Remote User','GRANHR','','','DEN',6,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `WWW_Users` ENABLE KEYS */;
 

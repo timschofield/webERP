@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-21 22:39+1300\n"
+"POT-Creation-Date: 2004-12-22 21:52+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -164,8 +164,8 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/ShipmentCosting.php:380
 #: /usr/local/httpd/htdocs/web-erp/Stocks.php:592
 #: /usr/local/httpd/htdocs/web-erp/Stocks.php:594
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:398
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:400
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:399
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:401
 msgid "Yes"
 msgstr ""
 
@@ -196,8 +196,8 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/ShipmentCosting.php:381
 #: /usr/local/httpd/htdocs/web-erp/Stocks.php:587
 #: /usr/local/httpd/htdocs/web-erp/Stocks.php:589
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:397
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:401
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:398
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:402
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFLowGPPageHeader.inc:31
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFTaxPageHeader.inc:34
 msgid "No"
@@ -328,7 +328,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SupplierContacts.php:203
 #: /usr/local/httpd/htdocs/web-erp/TaxAuthorities.php:261
 #: /usr/local/httpd/htdocs/web-erp/WorkCentres.php:257
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:419
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:420
 #: /usr/local/httpd/htdocs/web-erp/Z_poEditLangHeader.php:99
 #: /usr/local/httpd/htdocs/web-erp/Z_poEditLangModule.php:150
 msgid "Enter Information"
@@ -501,9 +501,9 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/PurchData.php:31
 #: /usr/local/httpd/htdocs/web-erp/PurchData.php:87
 #: /usr/local/httpd/htdocs/web-erp/PurchData.php:107
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:147
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:160
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:321
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:150
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:163
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:324
 #: /usr/local/httpd/htdocs/web-erp/SelectCreditItems.php:1203
 #: /usr/local/httpd/htdocs/web-erp/StockCheck.php:213
 #: /usr/local/httpd/htdocs/web-erp/StockCostUpdate.php:90
@@ -649,7 +649,10 @@ msgid "From Supplier Code"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/AgedSuppliers.php:243
-msgid "To Supplier Code:"
+#: /usr/local/httpd/htdocs/web-erp/OutstandingGRNs.php:164
+#: /usr/local/httpd/htdocs/web-erp/SupplierBalsAtPeriodEnd.php:128
+#: /usr/local/httpd/htdocs/web-erp/SuppPaymentRun.php:266
+msgid "To Supplier Code"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/AgedSuppliers.php:249
@@ -933,7 +936,7 @@ msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/BankMatching.php:89
 #: /usr/local/httpd/htdocs/web-erp/BankMatching.php:92
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:106
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:109
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFCustomerListPageHeader.inc:46
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFDeliveryDifferencesPageHeader.inc:24
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFOrderStatusPageHeader.inc:24
@@ -1007,7 +1010,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/GLAccountInquiry.php:115
 #: /usr/local/httpd/htdocs/web-erp/GLTransInquiry.php:69
 #: /usr/local/httpd/htdocs/web-erp/PrintCustTrans.php:737
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:333
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:336
 #: /usr/local/httpd/htdocs/web-erp/ShipmentCosting.php:263
 #: /usr/local/httpd/htdocs/web-erp/ShipmentCosting.php:330
 #: /usr/local/httpd/htdocs/web-erp/Shipments.php:463
@@ -1252,7 +1255,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/PrintCustTrans.php:772
 #: /usr/local/httpd/htdocs/web-erp/PrintCustTrans.php:845
 #: /usr/local/httpd/htdocs/web-erp/PrintCustTrans.php:880
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:331
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:334
 #: /usr/local/httpd/htdocs/web-erp/SelectCreditItems.php:603
 #: /usr/local/httpd/htdocs/web-erp/SelectOrderItems.php:881
 #: /usr/local/httpd/htdocs/web-erp/StockLocTransfer.php:158
@@ -1310,7 +1313,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/PO_Items.php:856
 #: /usr/local/httpd/htdocs/web-erp/PO_SelectOSPurchOrder.php:151
 #: /usr/local/httpd/htdocs/web-erp/PO_SelectPurchOrder.php:192
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:332
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:335
 #: /usr/local/httpd/htdocs/web-erp/SelectCompletedOrder.php:235
 #: /usr/local/httpd/htdocs/web-erp/SelectCreditItems.php:806
 #: /usr/local/httpd/htdocs/web-erp/SelectOrderItems.php:1021
@@ -1347,8 +1350,8 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/PrintCustTrans.php:772
 #: /usr/local/httpd/htdocs/web-erp/PrintCustTrans.php:845
 #: /usr/local/httpd/htdocs/web-erp/PrintCustTrans.php:880
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:334
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:335
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:337
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:338
 #: /usr/local/httpd/htdocs/web-erp/SalesAnalReptCols.php:18
 #: /usr/local/httpd/htdocs/web-erp/SalesAnalReptCols.php:20
 #: /usr/local/httpd/htdocs/web-erp/SelectCreditItems.php:605
@@ -1460,6 +1463,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/PO_SelectPurchOrder.php:191
 #: /usr/local/httpd/htdocs/web-erp/PurchData.php:403
 #: /usr/local/httpd/htdocs/web-erp/SalesPeople.php:170
+#: /usr/local/httpd/htdocs/web-erp/SelectCompletedOrder.php:234
 #: /usr/local/httpd/htdocs/web-erp/SelectCreditItems.php:237
 #: /usr/local/httpd/htdocs/web-erp/SelectCreditItems.php:805
 #: /usr/local/httpd/htdocs/web-erp/SelectCustomer.php:217
@@ -2638,12 +2642,12 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/PDFStockCheckComparison.php:148
 #: /usr/local/httpd/htdocs/web-erp/PDFStockCheckComparison.php:167
 #: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:61
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:130
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:140
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:174
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:204
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:258
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:281
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:133
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:143
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:177
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:207
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:261
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:284
 #: /usr/local/httpd/htdocs/web-erp/SelectCreditItems.php:872
 #: /usr/local/httpd/htdocs/web-erp/SelectCreditItems.php:906
 #: /usr/local/httpd/htdocs/web-erp/SelectCreditItems.php:944
@@ -2813,12 +2817,12 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/PDFStockCheckComparison.php:148
 #: /usr/local/httpd/htdocs/web-erp/PDFStockCheckComparison.php:167
 #: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:61
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:130
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:140
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:174
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:204
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:258
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:281
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:133
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:143
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:177
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:207
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:261
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:284
 #: /usr/local/httpd/htdocs/web-erp/SelectCreditItems.php:872
 #: /usr/local/httpd/htdocs/web-erp/SelectCreditItems.php:906
 #: /usr/local/httpd/htdocs/web-erp/SelectCreditItems.php:944
@@ -2981,7 +2985,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/ConfirmDispatch_Invoice.php:713
 #: /usr/local/httpd/htdocs/web-erp/Credit_Invoice.php:532
 #: /usr/local/httpd/htdocs/web-erp/GoodsReceived.php:378
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:175
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:178
 #: /usr/local/httpd/htdocs/web-erp/SelectCreditItems.php:1181
 #: /usr/local/httpd/htdocs/web-erp/StockTransfers.php:350
 #: /usr/local/httpd/htdocs/web-erp/StockTransfers.php:360
@@ -3051,7 +3055,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/Credit_Invoice.php:789
 #: /usr/local/httpd/htdocs/web-erp/Credit_Invoice.php:830
 #: /usr/local/httpd/htdocs/web-erp/Credit_Invoice.php:874
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:204
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:207
 #: /usr/local/httpd/htdocs/web-erp/SelectCreditItems.php:1014
 #: /usr/local/httpd/htdocs/web-erp/SelectCreditItems.php:1094
 msgid "Stock movement records could not be inserted because"
@@ -3062,7 +3066,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/Credit_Invoice.php:790
 #: /usr/local/httpd/htdocs/web-erp/Credit_Invoice.php:831
 #: /usr/local/httpd/htdocs/web-erp/GoodsReceived.php:407
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:205
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:208
 #: /usr/local/httpd/htdocs/web-erp/SelectCreditItems.php:1095
 msgid "The following SQL to insert the stock movement records was used"
 msgstr ""
@@ -3325,7 +3329,7 @@ msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/Credit_Invoice.php:246
 #: /usr/local/httpd/htdocs/web-erp/PDFOrderStatus.php:256
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:335
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:338
 #: /usr/local/httpd/htdocs/web-erp/ShipmentCosting.php:114
 #: /usr/local/httpd/htdocs/web-erp/Shipments.php:383
 msgid "Invoiced"
@@ -4861,8 +4865,8 @@ msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/CustomerReceipt.php:510
 #: /usr/local/httpd/htdocs/web-erp/GoodsReceived.php:59
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:333
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:334
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:336
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:337
 #: /usr/local/httpd/htdocs/web-erp/Shipments.php:382
 #: /usr/local/httpd/htdocs/web-erp/Shipments.php:462
 #: /usr/local/httpd/htdocs/web-erp/SuppCreditGRNs.php:145
@@ -5869,7 +5873,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/EDIMessageFormat.php:125
 #: /usr/local/httpd/htdocs/web-erp/EDIMessageFormat.php:201
 #: /usr/local/httpd/htdocs/web-erp/Prices_Customer.php:34
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:289
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:292
 #: /usr/local/httpd/htdocs/web-erp/SpecialOrder.php:103
 #: /usr/local/httpd/htdocs/web-erp/SpecialOrder.php:105
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFPriceListPageHeader.inc:18
@@ -7425,7 +7429,7 @@ msgid "The purchase order detail record could not be updated with the quantity r
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/GoodsReceived.php:322
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:131
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:134
 msgid "The following SQL to update the purchase order detail record was used"
 msgstr ""
 
@@ -7438,13 +7442,13 @@ msgid "This receipt of goods has not been processed because"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/GoodsReceived.php:350
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:141
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:144
 msgid "The following SQL to insert the GRN record was used"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/GoodsReceived.php:377
 #: /usr/local/httpd/htdocs/web-erp/PDFStockCheckComparison.php:122
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:174
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:177
 #: /usr/local/httpd/htdocs/web-erp/StockAdjustments.php:218
 #: /usr/local/httpd/htdocs/web-erp/StockLocTransferReceive.php:278
 #: /usr/local/httpd/htdocs/web-erp/StockLocTransferReceive.php:287
@@ -7470,7 +7474,7 @@ msgid "The purchase GL posting could not be inserted because"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/GoodsReceived.php:473
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:259
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:262
 msgid "The following SQL to insert the purchase GLTrans record was used"
 msgstr ""
 
@@ -7483,17 +7487,17 @@ msgid "The following SQL to insert the cost difference GLTrans record was used"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/GoodsReceived.php:519
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:281
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:284
 msgid "The GRN suspense side of the GL posting could not be inserted because"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/GoodsReceived.php:520
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:282
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:285
 msgid "The following SQL to insert the GRN Suspense GLTrans record was used"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/GoodsReceived.php:534
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:289
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:292
 msgid "GRN number"
 msgstr ""
 
@@ -7578,39 +7582,47 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/PO_SelectOSPurchOrder.php:153
 #: /usr/local/httpd/htdocs/web-erp/PO_SelectPurchOrder.php:194
 #: /usr/local/httpd/htdocs/web-erp/Shipt_Select.php:189
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:391
 msgid "Orders"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/index.php:12
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:391
 msgid "Receivables"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/index.php:12
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:391
 msgid "Payables"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/index.php:12
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:391
 msgid "Purchasing"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/index.php:12
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:391
 msgid "Inventory"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/index.php:12
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:391
 msgid "Manufacturing"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/index.php:12
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:391
 msgid "General Ledger"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/index.php:12
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:391
 msgid "Setup"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/index.php:30
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:407
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:408
 msgid "Account Status"
 msgstr ""
 
@@ -8457,12 +8469,6 @@ msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/OutstandingGRNs.php:138
 msgid "There were no GRNs with any value to print out for the specified supplier range"
-msgstr ""
-
-#: /usr/local/httpd/htdocs/web-erp/OutstandingGRNs.php:164
-#: /usr/local/httpd/htdocs/web-erp/SupplierBalsAtPeriodEnd.php:128
-#: /usr/local/httpd/htdocs/web-erp/SuppPaymentRun.php:266
-msgid "To Supplier Code"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/Payments.php:9
@@ -11506,108 +11512,108 @@ msgstr ""
 msgid "the stock is paid for"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:81
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:82
 msgid "Could not determine if the item was controlled or not because"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:92
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:95
 msgid "Could not retrieve the stock movement reference number which is required in order to retrieve details of the serial items that came in with this GRN"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:101
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:104
 msgid "Unable to retrieve the quantity on hand of"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:101
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:104
 msgid "for Serial No"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:106
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:109
 msgid "Unfortunately, of the original number"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:106
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:109
 msgid "that were received on serial number"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:106
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:109
 msgid "remain"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:106
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:109
 msgid "The GRN can only be reversed if all the original serial number items are still in stock in the location they were received into"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:130
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:133
 msgid "The purchase order detail record could not be updated with the quantity reversed because"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:140
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:143
 msgid "The GRN record could not be updated"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:140
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:143
 msgid "This reversal of goods received has not been processed because"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:147
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:150
 msgid "Could not determine if the item exists because"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:160
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:163
 msgid "Could not get the quantity on hand of the item before the reversal was processed"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:222
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:225
 msgid "Could not insert the reversing stock movements for the batch/serial numbers"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:222
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:229
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:225
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:232
 msgid "The SQL used but failed was"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:229
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:232
 msgid "Could not update the batch/serial stock records"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:258
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:261
 msgid "The purchase GL posting could not be inserted for the reversal of the received item because"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:289
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:292
 msgid "has been reversed"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:291
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:294
 msgid "Select another GRN to Reverse"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:303
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:306
 msgid "Show all goods received after"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:304
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:307
 msgid "Show Outstanding Goods Received"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:320
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:323
 msgid "An error occurred in the attempt to get the outstanding GRNs for"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:320
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:323
 msgid "The message was"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:325
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:328
 msgid "There are no outstanding goods received yet to be invoiced for"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:325
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:328
 msgid "To reverse a GRN that has been invoiced first it must be credited"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:330
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:333
 #: /usr/local/httpd/htdocs/web-erp/SuppCreditGRNs.php:69
 #: /usr/local/httpd/htdocs/web-erp/SuppCreditGRNs.php:140
 #: /usr/local/httpd/htdocs/web-erp/SuppCreditGRNs.php:213
@@ -11621,12 +11627,12 @@ msgstr ""
 msgid "GRN"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:336
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:339
 msgid "Quantity To"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:336
-#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:356
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:339
+#: /usr/local/httpd/htdocs/web-erp/ReverseGRN.php:359
 msgid "Reverse"
 msgstr ""
 
@@ -17569,21 +17575,21 @@ msgstr ""
 msgid "Legal"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:395
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:396
 msgid "Display"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:395
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:396
 msgid "options"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:409
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:413
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:410
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:414
 msgid "Open"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:410
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:412
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:411
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:413
 msgid "Blocked"
 msgstr ""
 

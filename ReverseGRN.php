@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $PageSecurity = 11;
 
 /* Session started in header.inc for password checking and authorisation level check */
@@ -43,16 +43,16 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 
 	//Get the details of the GRN item and the cost at which it was received and other PODetail info
 	$SQL = "SELECT GRNs.PODetailItem,
-		GRNs.GRNBatch,
-		GRNs.ItemCode,
-		GRNs.ItemDescription,
-		GRNs.DeliveryDate,
-		PurchOrderDetails.GLCode,
-		GRNs.QtyRecd,
-		GRNs.QuantityInv,
-		PurchOrderDetails.StdCostUnit,
-		PurchOrders.IntoStockLocation,
-		PurchOrders.OrderNo
+			GRNs.GRNBatch,
+			GRNs.ItemCode,
+			GRNs.ItemDescription,
+			GRNs.DeliveryDate,
+			PurchOrderDetails.GLCode,
+			GRNs.QtyRecd,
+			GRNs.QuantityInv,
+			PurchOrderDetails.StdCostUnit,
+			PurchOrders.IntoStockLocation,
+			PurchOrders.OrderNo
 		FROM GRNs, PurchOrderDetails, PurchOrders
 		WHERE GRNs.PODetailItem=PurchOrderDetails.PODetailItem
 		AND PurchOrders.OrderNo = PurchOrderDetails.OrderNo
@@ -77,15 +77,18 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 	 that came in with this GRN */
 
 
-	$SQL = "SELECT Controlled FROM StockMaster WHERE StockID ='" . $GRN['ItemCode'] . "'";
+	$SQL = "SELECT StockMaster.Controlled 
+			FROM StockMaster WHERE StockID ='" . $GRN['ItemCode'] . "'";
 	$CheckControlledResult = DB_query($SQL,$db,'<BR>' . _('Could not determine if the item was controlled or not because') . ' ');
 	$ControlledRow = DB_fetch_row($CheckControlledResult);
 	if ($ControlledRow[0]==1) { /*Then its a controlled item */
 	 	$Controlled = true;
 		/*So check to ensure the serial items received on this GRN are still there */
 		/*First get the StockMovement Reference for the GRN */
-		$SQL = "SELECT SerialNo, MoveQty
-		        FROM StockMoves INNER JOIN StockSerialMoves ON StockMoves.StkMoveNo= StockSerialMoves.StockMoveNo
+		$SQL = "SELECT StockSerialMoves.SerialNo, 
+				StockSerialMoves.MoveQty
+		        FROM StockMoves INNER JOIN StockSerialMoves 
+				ON StockMoves.StkMoveNo= StockSerialMoves.StockMoveNo
 			WHERE StockMoves.StockID='" . $GRN['ItemCode'] . "'
 			AND StockMoves.Type =25
 			AND TransNo=" . $GRN['GRNBatch'];

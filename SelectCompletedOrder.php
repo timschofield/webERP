@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 include('includes/DateFunctions.inc');
 
 $PageSecurity = 2;
@@ -231,12 +231,12 @@ If (isset($StockItemsResult)) {
 
 	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>';
 
-	$TableHeadings = "<TR><TD class='tableheader'>Code</TD>" .
-						  "<TD class='tableheader'>" . _('Description') . "</TD>" .
-						  "<TD class='tableheader'>" . _('On Hand') . '</TD>' .
-						  "<TD class='tableheader'>" . _('Purchase Orders') . '</TD>' .
-						  "<TD class='tableheader'>" . _('Sales Orders') . "</TD>" .
-						  "<TD class='tableheader'>" . _('Units') . '</TD></TR>';
+	$TableHeadings = "<TR><TD class='tableheader'>" . _('Code') . "</TD>" .
+				"<TD class='tableheader'>" . _('Description') . "</TD>" .
+				"<TD class='tableheader'>" . _('On Hand') . '</TD>' .
+				"<TD class='tableheader'>" . _('Purchase Orders') . '</TD>' .
+				"<TD class='tableheader'>" . _('Sales Orders') . "</TD>" .
+				"<TD class='tableheader'>" . _('Units') . '</TD></TR>';
 
 	echo $TableHeadings;
 

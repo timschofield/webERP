@@ -1,12 +1,12 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
 	//  $title - should be defined in the page this file is included with
 
-	echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">';
+	echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">';
 	echo '<HTML><HEAD><TITLE>' . $title . '</TITLE>';
 	echo '<link REL="shortcut icon" HREF="favicon.ico">';
 	echo '<link REL="icon" HREF="favicon.ico">';
@@ -53,7 +53,7 @@
 
 		echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ALIGN="center" ACCESSKEY="0" HREF="' . $rootpath . '/Logout.php?' . SID . '"><U>0</U>. ' . _('Logout') . '</A></TD>';
 
-		echo '</TD></TR></TABLE>';
+		echo '</TR></TABLE>';
 		echo '</TD></TR></TABLE>';
 
 	}

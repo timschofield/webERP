@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 2;
 
@@ -240,7 +240,7 @@ If (isset($_POST['PrintPDF'])
 		echo '<TR><TD>' . _('From Supplier Code') . ":</FONT></TD>
 			<TD><input Type=text maxlength=6 size=7 name=FromCriteria value='1'></TD>
 		</TR>";
-		echo '<TR><TD>' . _('To Supplier Code:') . "</TD>
+		echo '<TR><TD>' . _('To Supplier Code') . ":</TD>
 			<TD><input Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></TD>
 		</TR>";
 
