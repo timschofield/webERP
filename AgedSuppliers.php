@@ -1,10 +1,10 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity = 2;
 
 if (!isset($_POST['FromSupplier'])  OR $_POST['FromSupplier']=="" OR !isset($_GET['FromSupplier'])) {
-	$title="Aged Supplier Analysis";
+	$title=_('Aged Supplier Analysis');
 }
 
 
@@ -17,8 +17,8 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 	include("includes/DateFunctions.inc");
 
 	$FontSize=12;
-	$pdf->addinfo('Title',"Aged Supplier Listing");
-	$pdf->addinfo('Subject','Aged Suppliers');
+	$pdf->addinfo('Title',_('Aged Supplier Listing'));
+	$pdf->addinfo('Subject',_('Aged Suppliers'));
 
 	$PageNumber=0;
 	$line_height=12;
@@ -74,15 +74,15 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 
 	}
 
-	$SupplierResult = DB_query($SQL,$db);
+	$SupplierResult = DB_query($SQL,$db,'','',False,False); /*dont trap errors */
 
 	if (DB_error_no($db) !=0) {
-	  $title = "Aged Supplier Account Analysis - Problem Report.... ";
+	  $title = _('Aged Supplier Account Analysis - Problem Report') ;
 	  include("includes/header.inc");
-	   echo "<BR>The Supplier details could not be retrieved by the SQL because - " . DB_error_msg($db);
-	   echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>Back to the menu</A>";
+	   echo '<BR>' . _('The Supplier details could not be retrieved by the SQL because') .  ' ' . DB_error_msg($db);
+	   echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back To The Menu') . "</A>";
 	   if ($debug==1){
-	      echo "<BR>$SQL";
+		echo "<BR>$SQL";
 	   }
 	   include("includes/footer.inc");
 	   exit;
@@ -144,14 +144,14 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 			   FROM Suppliers, PaymentTerms, SuppTrans, SysTypes
 			   WHERE SysTypes.TypeID = SuppTrans.Type AND Suppliers.PaymentTerms = PaymentTerms.TermsIndicator AND Suppliers.SupplierID = SuppTrans.SupplierNo AND ABS(SuppTrans.OvAmount + SuppTrans.OvGST - SuppTrans.Alloc) >0.009 AND SuppTrans.Settled = 0 AND SuppTrans.SupplierNo = '" . $AgedAnalysis["SupplierID"] . "'";
 
-		    $DetailResult = DB_query($sql,$db);
+		    $DetailResult = DB_query($sql,$db,'','',False,False); /*dont trap errors - trapped below*/
 		    if (DB_error_no($db) !=0) {
-			$title = "Aged Supplier Account Analysis - Problem Report.... ";
+			$title = _('Aged Supplier Account Analysis - Problem Report');
 			include("includes/header.inc");
-			echo "<BR>The details of outstanding transactions for Supplier - " . $AgedAnalysis["SupplierID"] . " could not be retrieved because - " . DB_error_msg($db);
-			echo "<BR><A HREF='$rootpath/index.php'>Back to the menu</A>";
+			echo "<BR>" . _('The details of outstanding transactions for Supplier') . ' - ' . $AgedAnalysis["SupplierID"] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg($db);
+			echo "<BR><A HREF='$rootpath/index.php'>" . _('Back To The Menu') . '</A>';
 			if ($debug==1){
-			   echo "<BR>The SQL that failed was $sql";
+			   echo '<BR>' . _('The SQL that failed was:') . '<BR>' . $sql;
 			}
 			include("includes/footer.inc");
 			exit;
@@ -238,15 +238,22 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 
 		echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD='POST'><CENTER><TABLE>";
 
-		echo "<TR><TD>From Supplier Code:</FONT></TD><TD><input Type=text maxlength=6 size=7 name=FromCriteria value='1'></TD></TR>";
-		echo "<TR><TD>To Supplier Code:</TD><TD><input Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></TD></TR>";
+		echo '<TR><TD>' . _('From Supplier Code:') . "</FONT></TD>
+			<TD><input Type=text maxlength=6 size=7 name=FromCriteria value='1'></TD>
+		</TR>";
+		echo '<TR><TD>' . _('To Supplier Code:') . "</TD>
+			<TD><input Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></TD>
+		</TR>";
 
-		echo "<TR><TD>All balances Or Overdues Only:</TD><TD><SELECT name='All_Or_Overdues'>";
-		echo "<OPTION SELECTED Value='All'>All Suppliers with Balances";
-		echo "<OPTION Value='OverduesOnly'>Overdue Accounts Only";
+		echo '<TR><TD>' . _('All balances Or Overdues Only:') . "</TD>
+			<TD><SELECT name='All_Or_Overdues'>";
+		echo "<OPTION SELECTED Value='All'>" . _('All Suppliers with Balances');
+		echo "<OPTION Value='OverduesOnly'>" . _('Overdue Accounts Only');
 		echo "</SELECT></TD></TR>";
 
-		echo "<TR><TD>For Suppliers Trading in:</TD><TD><SELECT name='Currency'>";
+		echo '<TR><TD>' . _('For Suppliers Trading in:') . "</TD>
+			<TD><SELECT name='Currency'>";
+
 		$sql = "SELECT Currency, CurrAbrev FROM Currencies";
 		$result=DB_query($sql,$db);
 
@@ -259,12 +266,13 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POS
 		}
 		echo "</SELECT></TD></TR>";
 
-		echo "<TR><TD>Summary or Detailed Report:</TD><TD><SELECT name='DetailedReport'>";
-		echo "<OPTION SELECTED Value='No'>Summary Report";
-		echo "<OPTION Value='Yes'>Detailed Report";
+		echo '<TR><TD>' . _('Summary or Detailed Report:') . "</TD>
+			<TD><SELECT name='DetailedReport'>";
+		echo "<OPTION SELECTED Value='No'>" . _('Summary Report');
+		echo "<OPTION Value='Yes'>" . _('Detailed Report');
 		echo "</SELECT></TD></TR>";
 
-		echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='Print PDF'></CENTER>";
+		echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";
 	}
 	include("includes/footer.inc");
 } /*end of else not PrintPDF */

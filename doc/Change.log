@@ -1,5 +1,6 @@
 <P>webERP Change Log
 
+<P>5/9/04 AgedDebtors.php/PDFAgedDebtorsPageHeader.inc gettextified
 <P>1/9/04 AccountGroups.php getextified, Customers.php gettextified (Victor)
 <P>1/9/04 footer.inc now has date/time displayed before copyright notice.
 <P>1/9/04 PrintCustTrans.php now prints the Payment Terms on invoices and credit notes as contributed by Steve Ball

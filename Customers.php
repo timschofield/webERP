@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $title = _('Customer Maintenance');
 
 $PageSecurity = 3;
@@ -7,12 +7,6 @@ $PageSecurity = 3;
 include("includes/session.inc");
 include("includes/header.inc");
 include("includes/DateFunctions.inc");
-
-?>
-
-<P>
-
-<?php
 
 
 if ($_POST['submit']) {
@@ -298,7 +292,7 @@ if (!isset($DebtorNo)) {
 		$myrow = DB_fetch_row($CurrResult);
 		$_POST['CurrCode'] = $myrow[0];
 	}
-	echo '</SELECT></TD></TR><TR><TD>' . _('Customer\'s Currency:') . "</TD><TD><SELECT name='CurrCode'>";
+	echo '</SELECT></TD></TR><TR><TD>' . _("Customer's Currency:") . "</TD><TD><SELECT name='CurrCode'>";
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['CurrCode']==$myrow["CurrAbrev"]){
 			echo "<OPTION SELECTED VALUE=". $myrow["CurrAbrev"] . ">" . $myrow["Currency"];

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -144,30 +144,6 @@
         $debug = 0;
     }
 
-
-/* Set language - defined in config.php or user variable above
-NB this language must also exist in the locale on the web-server
-normally the lower case two character country code underscore uppercase
-2 character country code does the trick  except for en !!*/
-if ($_SESSION['Language']=='en'){
-	setlocale (LC_ALL,'en_GB');
-} else {
-	setlocale (LC_ALL, $_SESSION['Language'] . "_" . strtoupper($_SESSION['Language']));
-}
-
-// Specify location of translation tables
-
-if (function_exists('bindtextdomain')){
-	bindtextdomain ("messages", "./locale");
-	// Choose domain
-	textdomain ("messages");
-}
-
-
-if (!function_exists('gettext')){
-	function _($text){
-		return ($text);
-	}
-}
+    include('includes/LanguageSetup.php');
 
 ?>

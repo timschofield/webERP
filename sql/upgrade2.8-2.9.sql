@@ -7,7 +7,7 @@ use weberp;
 #You will need to remove this yourself - otherwise you will not be able to create shipment charges.
 #Using the new db scripts will of course generate dbs without this foreign key.
 
-
+BEGIN;
 
 ALTER TABLE `BankAccounts` CHANGE `AccountCode` `AccountCode` INT( 11 ) NOT NULL;
 
@@ -403,3 +403,4 @@ INSERT INTO Scripts VALUES (159, 'Z_index.php', 'Utility menu page showing links
 INSERT INTO Scripts VALUES (160, 'index.php', 'This screen allows the user to click on links to navigate to to the disired area of functionality');
 INSERT INTO Scripts VALUES (161, 'phpinfo.php', 'Details about PHP installation on the server');
 
+COMMIT;

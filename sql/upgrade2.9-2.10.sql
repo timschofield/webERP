@@ -1,5 +1,6 @@
 use weberp;
 
+BEGIN;
 
 INSERT INTO `Help` VALUES (3, 130, 'Enter the suppliers name and postal address, terms of payment', '');
 INSERT INTO `Help` VALUES (4, 160, 'The main menu is split into sections depending on the user\'s module selection from the tabs accross the top of the menu. The screen actually is different for different users depending on the modules that the system administrator has elected to let you see. Some or all of:\r\n<LI> Orders </LI>\r\n<LI> Receivables </LI>\r\n<LI> Payables </LI>\r\n<LI> Purchasing </LI>\r\n<LI> Inventory </LI>\r\n<LI> Manufacturing </LI>\r\n<LI> Set Up </LI>\r\n<P>Selecting any of these tabs then shows the options available grouped between transactions in the first box, then inquiries or reports in the middle box, then maintenance in the bottom section. Clicking on the text of any option on the main menu proceeds to perform that action.\r\n<P><B>Using the Short Cut Menu</B>\r\n<P>Most actions involving customers will require selection of a customer first, similarly for suppliers and inventory the supplier or item must be selected first. Having selected the customer/supplier/item the selection screens show a sub menu relavent to the selected customer/supplier/item for most transactions and inquiries this is the more direct method of actioning. The traditional menu is available to aid the transition to this method of navigation.\r\n', '');
@@ -60,3 +61,5 @@ INSERT INTO `Scripts` ( `PageID` , `FileName` , `PageDescription` )
 VALUES ('162', 'UserSettings.php', 'Allows the user to change system wide defaults for the theme - appearance, the number of records to show in searches and the language to display messages in');
 INSERT INTO `Scripts` ( `PageID` , `FileName` , `PageDescription` )
 VALUES ('163', 'StockQuantityByDate.php', 'Shows the stock on hand for each item at a selected location and stock category as at a specified date');
+
+COMMIT;

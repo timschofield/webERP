@@ -1,5 +1,7 @@
 use weberp;
 
+begin;
+
 ALTER TABLE Locations ADD TaxAuthority tinyint(4) NOT NULL default 1;
 
 ALTER TABLE StockMaster ADD TaxLevel tinyint(4) NOT NULL default 1;
@@ -306,3 +308,5 @@ ALTER TABLE `WorksOrders` ADD FOREIGN KEY (LocCode) REFERENCES Locations (LocCod
 ALTER TABLE `WorksOrders` ADD FOREIGN KEY (StockID) REFERENCES StockMaster (StockID);
 
 ALTER TABLE DebtorsMaster ADD DiscountCode char(2) NOT NULL default '';
+
+commit;

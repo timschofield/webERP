@@ -1,38 +1,101 @@
-
-#: web-erp/includes/session.inc:59
-msgid "The SQL to retrieve the user details failed because :"
-msgstr ""
-
-#: web-erp/includes/session.inc:60
-msgid "The SQL used was :"
-msgstr ""
-
-#: web-erp/includes/session.inc:85
-msgid "incorrect password"
-msgstr ""
-
-#: web-erp/includes/session.inc:86
-msgid "The user/password combination is not a valid user of the system"
-msgstr ""
-
-#: web-erp/includes/session.inc:88
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
-"If you are not an authorized user, please contact the proper personnel to "
-"obtain an account to enable you to use the system."
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-09-05 16:38+1200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../../AgedDebtors.php:8
+msgid "Aged Debtor Analysis"
 msgstr ""
 
-#: web-erp/includes/session.inc:100
-msgid ""
-"Security settings have not been defined for your user account. Please advise "
-"your system administrator"
+#: ../../../AgedDebtors.php:22
+msgid "Aged Customer Balance Listing"
 msgstr ""
 
-#: web-erp/includes/session.inc:105
-msgid ""
-"The security settings on your account do not permit you to access this "
-"function."
+#: ../../../AgedDebtors.php:23
+msgid "Aged Customer Balances"
 msgstr ""
 
-#: web-erp/includes/session.inc:106
-msgid "Back To Main Menu"
+#: ../../../AgedDebtors.php:84
+msgid "Aged Customer Account Analysis - Problem Report.... "
+msgstr ""
+
+#: ../../../AgedDebtors.php:87 ../../../AgedDebtors.php:158
+msgid "Back to the menu"
+msgstr ""
+
+#: ../../../AgedDebtors.php:155 ../../../AgedDebtors.php:223
+msgid "Aged Customer Account Analysis - Problem Report...."
+msgstr ""
+
+#: ../../../AgedDebtors.php:157
+msgid "The details of outstanding transactions for customer"
+msgstr ""
+
+#: ../../../AgedDebtors.php:157
+msgid "could not be retrieved because"
+msgstr ""
+
+#: ../../../AgedDebtors.php:160
+msgid "The SQL that failed was"
+msgstr ""
+
+#: ../../../AgedDebtors.php:225
+msgid "There are no customers meeting the critiera specified to list"
+msgstr ""
+
+#: ../../../AgedDebtors.php:226
+msgid "Back To The Menu"
+msgstr ""
+
+#: ../../../AgedDebtors.php:259
+msgid "From Customer Code:"
+msgstr ""
+
+#: ../../../AgedDebtors.php:260
+msgid "To Customer Code:"
+msgstr ""
+
+#: ../../../AgedDebtors.php:262
+msgid "All balances Or Overdues Only:"
+msgstr ""
+
+#: ../../../AgedDebtors.php:263
+msgid "All Customers with Balances"
+msgstr ""
+
+#: ../../../AgedDebtors.php:264
+msgid "Overdue Accounts Only"
+msgstr ""
+
+#: ../../../AgedDebtors.php:267
+msgid "Only Show Customers Trading in:"
+msgstr ""
+
+#: ../../../AgedDebtors.php:283
+msgid "Summary or Detailed Report:"
+msgstr ""
+
+#: ../../../AgedDebtors.php:284
+msgid "Summary Report"
+msgstr ""
+
+#: ../../../AgedDebtors.php:285
+msgid "Detailed Report"
+msgstr ""
+
+#: ../../../AgedDebtors.php:288
+msgid "Print PDF"
 msgstr ""
