@@ -1,5 +1,6 @@
 <P>webERP Change Log
 
+<P>6/9/04 Victor - CustomerReceipt.php CustomerTransInquiry.php gettextified
 <P>5/9/04 Jesse - GoodsReceived.php GoodsReceivedControlled.php InputSerialItems.php InputSerialItemsKeyed.php InputSerialItemsFile.php gettextified and some polish
 <P>5/9/04 AgedDebtors.php/PDFAgedDebtorsPageHeader.inc AgedSuppliers.php PDFAgedSuppliersPageHeader.inc all gettextified
 <P>1/9/04 AccountGroups.php getextified, Customers.php gettextified (Victor)
