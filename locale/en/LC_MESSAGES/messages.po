@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-05 16:38+1200\n"
+"POT-Creation-Date: 2004-09-06 21:24+1200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,86 +16,2104 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../../../AgedDebtors.php:8
+#: AccountGroups.php:3 index.php:851
+msgid "Account Groups"
+msgstr ""
+
+#: AccountGroups.php:24
+msgid ""
+"The account group name cannot contain the character '&' or the character '"
+msgstr ""
+
+#: AccountGroups.php:27
+msgid "The section in accounts must be an integer"
+msgstr ""
+
+#: AccountGroups.php:30
+msgid "The sequence in the trial balance must be an integer"
+msgstr ""
+
+#: AccountGroups.php:33
+msgid "The sequence in the TB must be less than 10,000"
+msgstr ""
+
+#: AccountGroups.php:50
+msgid "Record Updated"
+msgstr ""
+
+#: AccountGroups.php:66
+msgid "Record inserted"
+msgstr ""
+
+#: AccountGroups.php:85
+msgid ""
+"Cannot delete this account group because general ledger accounts have been "
+"created using this group"
+msgstr ""
+
+#: AccountGroups.php:86 BankAccounts.php:93 Customers.php:174
+#: Customers.php:183 Customers.php:191 Customers.php:199
+msgid "There are"
+msgstr ""
+
+#: AccountGroups.php:86
+msgid "general ledger accounts that refer to this account group"
+msgstr ""
+
+#: AccountGroups.php:92
+msgid "group has been deleted !"
+msgstr ""
+
+#: AccountGroups.php:114
+msgid "Could not get account groups because"
+msgstr ""
+
+#: AccountGroups.php:119
+msgid "Group Name"
+msgstr ""
+
+#: AccountGroups.php:120
+msgid "Section"
+msgstr ""
+
+#: AccountGroups.php:121
+msgid "Sequence In TB"
+msgstr ""
+
+#: AccountGroups.php:122
+msgid "Profit and Loss"
+msgstr ""
+
+#: AccountGroups.php:138 AccountGroups.php:141 AccountGroups.php:245
+#: AccountGroups.php:247
+msgid "Yes"
+msgstr ""
+
+#: AccountGroups.php:144 AccountGroups.php:250 AccountGroups.php:252
+msgid "No"
+msgstr ""
+
+#: AccountGroups.php:152
+msgid "EDIT"
+msgstr ""
+
+#: AccountGroups.php:153
+msgid "DELETE"
+msgstr ""
+
+#: AccountGroups.php:170
+msgid "Review Account Groups"
+msgstr ""
+
+#: AccountGroups.php:201
+msgid "Account Group:"
+msgstr ""
+
+#: AccountGroups.php:223
+msgid "Acount Group Name:"
+msgstr ""
+
+#: AccountGroups.php:226
+msgid "Section In Accounts:"
+msgstr ""
+
+#: AccountGroups.php:241
+msgid "Profit and Loss:"
+msgstr ""
+
+#: AccountGroups.php:257
+msgid "Sequence In TB:"
+msgstr ""
+
+#: AccountGroups.php:262 BankAccounts.php:221
+msgid "Enter Information"
+msgstr ""
+
+#: AgedDebtors.php:8
 msgid "Aged Debtor Analysis"
 msgstr ""
 
-#: ../../../AgedDebtors.php:22
+#: AgedDebtors.php:22
 msgid "Aged Customer Balance Listing"
 msgstr ""
 
-#: ../../../AgedDebtors.php:23
+#: AgedDebtors.php:23
 msgid "Aged Customer Balances"
 msgstr ""
 
-#: ../../../AgedDebtors.php:84
+#: AgedDebtors.php:84
 msgid "Aged Customer Account Analysis - Problem Report.... "
 msgstr ""
 
-#: ../../../AgedDebtors.php:87 ../../../AgedDebtors.php:158
-msgid "Back to the menu"
+#: AgedDebtors.php:86
+msgid "The customer details could not be retrieved by the SQL because"
 msgstr ""
 
-#: ../../../AgedDebtors.php:155 ../../../AgedDebtors.php:223
-msgid "Aged Customer Account Analysis - Problem Report...."
-msgstr ""
-
-#: ../../../AgedDebtors.php:157
-msgid "The details of outstanding transactions for customer"
-msgstr ""
-
-#: ../../../AgedDebtors.php:157
-msgid "could not be retrieved because"
-msgstr ""
-
-#: ../../../AgedDebtors.php:160
-msgid "The SQL that failed was"
-msgstr ""
-
-#: ../../../AgedDebtors.php:225
-msgid "There are no customers meeting the critiera specified to list"
-msgstr ""
-
-#: ../../../AgedDebtors.php:226
+#: AgedDebtors.php:87 AgedDebtors.php:226 AgedSuppliers.php:83
+#: AgedSuppliers.php:152
 msgid "Back To The Menu"
 msgstr ""
 
-#: ../../../AgedDebtors.php:259
+#: AgedDebtors.php:155 AgedDebtors.php:223
+msgid "Aged Customer Account Analysis - Problem Report...."
+msgstr ""
+
+#: AgedDebtors.php:157
+msgid "The details of outstanding transactions for customer"
+msgstr ""
+
+#: AgedDebtors.php:157 AgedSuppliers.php:151 StockQuantityByDate.php:92
+msgid "could not be retrieved because"
+msgstr ""
+
+#: AgedDebtors.php:158
+msgid "Back to the menu"
+msgstr ""
+
+#: AgedDebtors.php:160 AgedSuppliers.php:154
+msgid "The SQL that failed was:"
+msgstr ""
+
+#: AgedDebtors.php:225
+msgid "There are no customers meeting the critiera specified to list"
+msgstr ""
+
+#: AgedDebtors.php:254
 msgid "From Customer Code:"
 msgstr ""
 
-#: ../../../AgedDebtors.php:260
+#: AgedDebtors.php:255
 msgid "To Customer Code:"
 msgstr ""
 
-#: ../../../AgedDebtors.php:262
+#: AgedDebtors.php:257 AgedSuppliers.php:248
 msgid "All balances Or Overdues Only:"
 msgstr ""
 
-#: ../../../AgedDebtors.php:263
+#: AgedDebtors.php:258
 msgid "All Customers with Balances"
 msgstr ""
 
-#: ../../../AgedDebtors.php:264
+#: AgedDebtors.php:259 AgedSuppliers.php:251
 msgid "Overdue Accounts Only"
 msgstr ""
 
-#: ../../../AgedDebtors.php:267
+#: AgedDebtors.php:262
 msgid "Only Show Customers Trading in:"
 msgstr ""
 
-#: ../../../AgedDebtors.php:283
+#: AgedDebtors.php:278 AgedSuppliers.php:269
 msgid "Summary or Detailed Report:"
 msgstr ""
 
-#: ../../../AgedDebtors.php:284
+#: AgedDebtors.php:279 AgedSuppliers.php:271
 msgid "Summary Report"
 msgstr ""
 
-#: ../../../AgedDebtors.php:285
+#: AgedDebtors.php:280 AgedSuppliers.php:272
 msgid "Detailed Report"
 msgstr ""
 
-#: ../../../AgedDebtors.php:288
+#: AgedDebtors.php:283 AgedSuppliers.php:275
 msgid "Print PDF"
+msgstr ""
+
+#: AgedSuppliers.php:7
+msgid "Aged Supplier Analysis"
+msgstr ""
+
+#: AgedSuppliers.php:20
+msgid "Aged Supplier Listing"
+msgstr ""
+
+#: AgedSuppliers.php:21
+msgid "Aged Suppliers"
+msgstr ""
+
+#: AgedSuppliers.php:80 AgedSuppliers.php:149
+msgid "Aged Supplier Account Analysis - Problem Report"
+msgstr ""
+
+#: AgedSuppliers.php:82
+msgid "The Supplier details could not be retrieved by the SQL because"
+msgstr ""
+
+#: AgedSuppliers.php:151
+msgid "The details of outstanding transactions for Supplier"
+msgstr ""
+
+#: AgedSuppliers.php:241
+msgid "From Supplier Code:"
+msgstr ""
+
+#: AgedSuppliers.php:244
+msgid "To Supplier Code:"
+msgstr ""
+
+#: AgedSuppliers.php:250
+msgid "All Suppliers with Balances"
+msgstr ""
+
+#: AgedSuppliers.php:254
+msgid "For Suppliers Trading in:"
+msgstr ""
+
+#: BankAccounts.php:8
+msgid "Bank Accounts Maintenance"
+msgstr ""
+
+#: BankAccounts.php:31
+msgid "The bank account name must be fifty characters or less long"
+msgstr ""
+
+#: BankAccounts.php:34
+msgid "The bank account number must be fifty characters or less long"
+msgstr ""
+
+#: BankAccounts.php:37
+msgid "The bank address must be fifty characters or less long"
+msgstr ""
+
+#: BankAccounts.php:48
+msgid "The bank account details have been updated"
+msgstr ""
+
+#: BankAccounts.php:63
+msgid "The new bank account has been entered."
+msgstr ""
+
+#: BankAccounts.php:68
+msgid "The bank account could not be inserted or modified because"
+msgstr ""
+
+#: BankAccounts.php:69
+msgid "The SQL used to insert/modify the bank account details was:"
+msgstr ""
+
+#: BankAccounts.php:92
+msgid ""
+"Cannot delete this bank account because transactions have been created using "
+"this account"
+msgstr ""
+
+#: BankAccounts.php:93
+msgid "transactions with this bank account code"
+msgstr ""
+
+#: BankAccounts.php:99
+msgid "Bank account deleted !"
+msgstr ""
+
+#: BankAccounts.php:114
+msgid "The bank accounts set up could not be retreived because"
+msgstr ""
+
+#: BankAccounts.php:115
+msgid "The SQL used to retrieve the bank account details was:"
+msgstr ""
+
+#: BankAccounts.php:120 index.php:846
+msgid "GL Account"
+msgstr ""
+
+#: BankAccounts.php:121
+msgid "Account Name"
+msgstr ""
+
+#: BankAccounts.php:122
+msgid "Account Number"
+msgstr ""
+
+#: BankAccounts.php:123
+msgid "Bank Address"
+msgstr ""
+
+#: BankAccounts.php:140
+msgid "Edit"
+msgstr ""
+
+#: BankAccounts.php:141
+msgid "Delete"
+msgstr ""
+
+#: BankAccounts.php:185 BankAccounts.php:188
+msgid "Bank Account GL Code:"
+msgstr ""
+
+#: BankAccounts.php:213
+msgid "Bank Account Name:"
+msgstr ""
+
+#: BankAccounts.php:215
+msgid "Bank Account Number:"
+msgstr ""
+
+#: BankAccounts.php:217
+msgid "Bank Address:"
+msgstr ""
+
+#: Customers.php:3
+msgid "Customer Maintenance"
+msgstr ""
+
+#: Customers.php:26
+msgid "The customer name must be entered and be forty characters or less long"
+msgstr ""
+
+#: Customers.php:29
+msgid "The Debtor Code cannot be empty"
+msgstr ""
+
+#: Customers.php:32
+msgid "The customer code cannot contain any of the following characters"
+msgstr ""
+
+#: Customers.php:32
+msgid "or a space"
+msgstr ""
+
+#: Customers.php:35
+msgid "No lines of the address must not contain the"
+msgstr ""
+
+#: Customers.php:35
+msgid "character"
+msgstr ""
+
+#: Customers.php:38
+msgid "The Line 1 of the address must be forty characters or less long"
+msgstr ""
+
+#: Customers.php:41
+msgid "The Line 2 of the address must be forty characters or less long"
+msgstr ""
+
+#: Customers.php:44
+msgid "The Line 3 of the address must be forty characters or less long"
+msgstr ""
+
+#: Customers.php:47
+msgid "The Line 4 of the address must be fifty characters or less long"
+msgstr ""
+
+#: Customers.php:50
+msgid "The credit limit must be numeric"
+msgstr ""
+
+#: Customers.php:53
+msgid "The payment discount must be numeric"
+msgstr ""
+
+#: Customers.php:56
+msgid ""
+"The customer since field must be a date in the format $DefaultDateFormat"
+msgstr ""
+
+#: Customers.php:59
+msgid "The discount percentage must be numeric"
+msgstr ""
+
+#: Customers.php:62
+msgid "The credit limit must be a positive number"
+msgstr ""
+
+#: Customers.php:65
+msgid ""
+"The payment discount is expected to be less than 10% and greater than or "
+"equal to 0"
+msgstr ""
+
+#: Customers.php:68
+msgid ""
+"The discount is expected to be less than 100% and greater than or equal to 0"
+msgstr ""
+
+#: Customers.php:104
+msgid "The customer could not be updated because - "
+msgstr ""
+
+#: Customers.php:106
+msgid "Customer updated"
+msgstr ""
+
+#: Customers.php:148
+msgid "This customer could not be added because - "
+msgstr ""
+
+#: Customers.php:150
+msgid "A new customer record has been inserted"
+msgstr ""
+
+#: Customers.php:152
+msgid "Enter Branch Details"
+msgstr ""
+
+#: Customers.php:157
+msgid "Validation failed, no updates or deletes took place"
+msgstr ""
+
+#: Customers.php:173
+msgid ""
+"This customer cannot be deleted because there are transactions that refer to "
+"it"
+msgstr ""
+
+#: Customers.php:174
+msgid "transactions against this customer"
+msgstr ""
+
+#: Customers.php:182
+msgid ""
+"Cannot delete the customer record because orders have been created against it"
+msgstr ""
+
+#: Customers.php:183
+msgid "orders against this customer"
+msgstr ""
+
+#: Customers.php:190
+msgid ""
+"Cannot delete this customer record because sales analysis records exist for "
+"it."
+msgstr ""
+
+#: Customers.php:191
+msgid "sales analysis records against this customer."
+msgstr ""
+
+#: Customers.php:198
+msgid ""
+"Cannot delete this customer because there are branch records set up against "
+"it."
+msgstr ""
+
+#: Customers.php:199
+msgid "branch records relating to this customer"
+msgstr ""
+
+#: Customers.php:208
+msgid "Custmomer"
+msgstr ""
+
+#: Customers.php:208 GLAccounts.php:172
+msgid "has been deleted !"
+msgstr ""
+
+#: Customers.php:247 Customers.php:355
+msgid "Customer Code:"
+msgstr ""
+
+#: Customers.php:248 Customers.php:358
+msgid "Customer Name:"
+msgstr ""
+
+#: Customers.php:249 Customers.php:359
+msgid "Address Line 1:"
+msgstr ""
+
+#: Customers.php:250 Customers.php:360
+msgid "Address Line 2:"
+msgstr ""
+
+#: Customers.php:251 Customers.php:361
+msgid "Address Line 3:"
+msgstr ""
+
+#: Customers.php:252 Customers.php:362
+msgid "Address Line 4:"
+msgstr ""
+
+#: Customers.php:256 Customers.php:366
+msgid "Sales Type/Price List:"
+msgstr ""
+
+#: Customers.php:264 Customers.php:377
+msgid "Customer Since"
+msgstr ""
+
+#: Customers.php:265 Customers.php:378
+msgid "Discount Percent:"
+msgstr ""
+
+#: Customers.php:266 Customers.php:379
+msgid "Discount Code:"
+msgstr ""
+
+#: Customers.php:267 Customers.php:380
+msgid "Payment Discount Percent:"
+msgstr ""
+
+#: Customers.php:268 Customers.php:381
+msgid "Credit Limit:"
+msgstr ""
+
+#: Customers.php:272 Customers.php:385 PrintCustTrans.php:381
+msgid "Payment Terms:"
+msgstr ""
+
+#: Customers.php:279 Customers.php:398
+msgid "Credit Status:"
+msgstr ""
+
+#: Customers.php:295
+msgid "Customer's Currency:"
+msgstr ""
+
+#: Customers.php:308 Customers.php:423
+msgid "Invoice Addressing:"
+msgstr ""
+
+#: Customers.php:309 Customers.php:425 Customers.php:428
+msgid "Address to HO"
+msgstr ""
+
+#: Customers.php:310 Customers.php:426 Customers.php:429
+msgid "Address to Branch"
+msgstr ""
+
+#: Customers.php:313
+msgid "Insert New Customer"
+msgstr ""
+
+#: Customers.php:313
+msgid "Reset"
+msgstr ""
+
+#: Customers.php:327
+msgid "The customer details could not be retrieved because - "
+msgstr ""
+
+#: Customers.php:327
+msgid "the SQL that was used - and failed was:"
+msgstr ""
+
+#: Customers.php:412
+msgid "Customers Currency:"
+msgstr ""
+
+#: Customers.php:434
+msgid "Add New Customer"
+msgstr ""
+
+#: Customers.php:436
+msgid "Update Customer"
+msgstr ""
+
+#: Customers.php:436
+msgid ""
+"Be careful there is no second warning if you hit the DELETE button below"
+msgstr ""
+
+#: Customers.php:436
+msgid "Delete Customer"
+msgstr ""
+
+#: GLAccounts.php:26
+msgid "The account code must be an integer."
+msgstr ""
+
+#: GLAccounts.php:29
+msgid "The account name must be fifty characters or less long"
+msgstr ""
+
+#: GLAccounts.php:35 GLAccounts.php:42 StockQuantityByDate.php:73
+msgid "The SQL that failed was"
+msgstr ""
+
+#: GLAccounts.php:36
+msgid "Could not update the account because"
+msgstr ""
+
+#: GLAccounts.php:38
+msgid "The general ledger account has been updated."
+msgstr ""
+
+#: GLAccounts.php:43
+msgid "Could not add the new account code"
+msgstr ""
+
+#: GLAccounts.php:49
+msgid "Could not add the chart details for the new account"
+msgstr ""
+
+#: GLAccounts.php:54
+msgid "The new general ledger account has been added."
+msgstr ""
+
+#: GLAccounts.php:74
+msgid ""
+"Cannot delete this account because chart details have been created using "
+"this account."
+msgstr ""
+
+#: GLAccounts.php:75 GLAccounts.php:90
+msgid "There are "
+msgstr ""
+
+#: GLAccounts.php:75
+msgid " chart details that require this account code"
+msgstr ""
+
+#: GLAccounts.php:81
+msgid "Couldn't test for existing transactions because"
+msgstr ""
+
+#: GLAccounts.php:82
+msgid "The SQL that was used and failed was"
+msgstr ""
+
+#: GLAccounts.php:89
+msgid ""
+"Cannot delete this account because transactions have been created using this "
+"account."
+msgstr ""
+
+#: GLAccounts.php:90
+msgid " transactions that require this account code"
+msgstr ""
+
+#: GLAccounts.php:97
+msgid "Couldn't test for default company GL codes because"
+msgstr ""
+
+#: GLAccounts.php:98 GLAccounts.php:112 GLAccounts.php:124 GLAccounts.php:136
+#: GLAccounts.php:161
+msgid "The SQL that was used and failed was:"
+msgstr ""
+
+#: GLAccounts.php:105
+msgid ""
+"Cannot delete this account because it is used as one of the company default "
+"accounts."
+msgstr ""
+
+#: GLAccounts.php:111
+msgid "Couldn't test for tax authority GL codes because"
+msgstr ""
+
+#: GLAccounts.php:118
+msgid ""
+"Cannot delete this account because it is used as one of the tax authority "
+"accounts."
+msgstr ""
+
+#: GLAccounts.php:123
+msgid "Couldn't test for existing sales interface GL codes because"
+msgstr ""
+
+#: GLAccounts.php:130
+msgid ""
+"Cannot delete this account because it is used by one of the sales GL posting "
+"interface records."
+msgstr ""
+
+#: GLAccounts.php:135
+msgid "Couldn't test for existing cost of sales interface codes because"
+msgstr ""
+
+#: GLAccounts.php:142
+msgid ""
+"Cannot delete this account because it is used by one of the cost of sales GL "
+"posting interface records."
+msgstr ""
+
+#: GLAccounts.php:148
+msgid "Couldn't test for existing stock GL codes because"
+msgstr ""
+
+#: GLAccounts.php:149
+msgid ">The SQL that was used and failed was:"
+msgstr ""
+
+#: GLAccounts.php:156
+msgid ""
+"Cannot delete this account because it is used by one of the stock GL posting "
+"interface records."
+msgstr ""
+
+#: GLAccounts.php:160
+msgid "Couldn't test for existing bank account GL codes because"
+msgstr ""
+
+#: GLAccounts.php:167
+msgid ""
+"Cannot delete this account because it is used by one the defined bank "
+"accounts."
+msgstr ""
+
+#: GLAccounts.php:172
+msgid "Account"
+msgstr ""
+
+#: GLAccounts.php:199
+msgid "The chart accounts could not be retrieved because"
+msgstr ""
+
+#: GLAccounts.php:200
+msgid "The sql that was used and failed was:"
+msgstr ""
+
+#: GoodsReceived.php:19 GoodsReceivedControlled.php:15
+msgid "Select a purchase order to receive"
+msgstr ""
+
+#: GoodsReceived.php:20
+msgid ""
+"This page can only be opened if a purchase order has been selected. Please "
+"select a purchase order first"
+msgstr ""
+
+#: GoodsReceived.php:45
+msgid "Receive purchase order"
+msgstr ""
+
+#: GoodsReceived.php:45
+msgid "from"
+msgstr ""
+
+#: GoodsReceived.php:50 StockQuantityByDate.php:81
+msgid "Description"
+msgstr ""
+
+#: GoodsReceived.php:51
+msgid "Quantity<BR>Ordered"
+msgstr ""
+
+#: GoodsReceived.php:52
+msgid "Units"
+msgstr ""
+
+#: GoodsReceived.php:53
+msgid "Already Received"
+msgstr ""
+
+#: GoodsReceived.php:54
+msgid "This Delivery<BR>Quantity"
+msgstr ""
+
+#: GoodsReceived.php:55
+msgid "Price"
+msgstr ""
+
+#: GoodsReceived.php:56
+msgid "Total Value<BR>Received"
+msgstr ""
+
+#: GoodsReceived.php:116
+msgid "Enter Serial Nos"
+msgstr ""
+
+#: GoodsReceived.php:119
+msgid "Enter Batches"
+msgstr ""
+
+#: GoodsReceived.php:129
+msgid "Total value of goods received"
+msgstr ""
+
+#: GoodsReceived.php:164
+msgid ""
+"There is nothing to process. Please enter valid quantities greater than zero"
+msgstr ""
+
+#: GoodsReceived.php:168
+msgid ""
+"Entered quantities cannot be greater than the quantity entered on the "
+"purchase invoice including the allowed over-receive percentage"
+msgstr ""
+
+#: GoodsReceived.php:170
+msgid ""
+"Modify the ordered items on the purchase invoice if you wish to increase the "
+"quantities"
+msgstr ""
+
+#: GoodsReceived.php:180
+msgid ""
+"The company infomation and preferences could not be retrieved - see your "
+"system administrator"
+msgstr ""
+
+#: GoodsReceived.php:188
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Could not check "
+"that the details of the purchase order had not been changed by another user "
+"because"
+msgstr ""
+
+#: GoodsReceived.php:189
+msgid "The following SQL to retrieve the purchase order details was used"
+msgstr ""
+
+#: GoodsReceived.php:200
+msgid ""
+"This order has been changed or invoiced since this delivery was started to "
+"be actioned. Processing halted. To enter a delivery against this purchase "
+"order, it must be re-selected and re-read again to update the changes made "
+"by the other user"
+msgstr ""
+
+#: GoodsReceived.php:214 GoodsReceived.php:430
+msgid "Select a different purchase order for receiving goods against"
+msgstr ""
+
+#: GoodsReceived.php:216
+msgid "Re-Read the updated purchase order for receiving goods against"
+msgstr ""
+
+#: GoodsReceived.php:248
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The standard cost "
+"of the item being received cannot be retrieved because"
+msgstr ""
+
+#: GoodsReceived.php:249
+msgid "<BR>The following SQL to retrieve the standard cost was used"
+msgstr ""
+
+#: GoodsReceived.php:273
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The purchase order "
+"detail record could not be updated with the quantity received because"
+msgstr ""
+
+#: GoodsReceived.php:274
+msgid "The following SQL to update the purchase order detail record was used"
+msgstr ""
+
+#: GoodsReceived.php:301
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: A GRN record could "
+"not be inserted. This receipt of goods has not been processed because"
+msgstr ""
+
+#: GoodsReceived.php:302
+msgid "The following SQL to insert the GRN record was used"
+msgstr ""
+
+#: GoodsReceived.php:325
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The location stock "
+"record could not be updated because"
+msgstr ""
+
+#: GoodsReceived.php:326
+msgid "The following SQL to update the location stock record was used"
+msgstr ""
+
+#: GoodsReceived.php:354
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: stock movement "
+"records could not be inserted because"
+msgstr ""
+
+#: GoodsReceived.php:355
+msgid "The following SQL to insert the stock movement records was used"
+msgstr ""
+
+#: GoodsReceived.php:369
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock "
+"item record could not be inserted because"
+msgstr ""
+
+#: GoodsReceived.php:370
+msgid "The following SQL to insert the serial stock item records was used"
+msgstr ""
+
+#: GoodsReceived.php:377
+msgid "The following SQL to insert the serial stock movement records was used"
+msgstr ""
+
+#: GoodsReceived.php:393
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The purchase GL "
+"posting could not be inserted because"
+msgstr ""
+
+#: GoodsReceived.php:394
+msgid "The following SQL to insert the purchase GLTrans record was used"
+msgstr ""
+
+#: GoodsReceived.php:406
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The standard cost "
+"difference GL posting could not be inserted because"
+msgstr ""
+
+#: GoodsReceived.php:407
+msgid "The following SQL to insert the cost difference GLTrans record was used"
+msgstr ""
+
+#: GoodsReceived.php:414
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The GRN suspense "
+"side of the GL posting could not be inserted because"
+msgstr ""
+
+#: GoodsReceived.php:415
+msgid "The following SQL to insert the GRN Suspense GLTrans record was used"
+msgstr ""
+
+#: GoodsReceived.php:429
+msgid "GRN number"
+msgstr ""
+
+#: GoodsReceived.php:429
+msgid "has been processed"
+msgstr ""
+
+#: GoodsReceived.php:437
+msgid "Modify Order Items"
+msgstr ""
+
+#: GoodsReceived.php:442
+msgid "Date Goods/Service Received"
+msgstr ""
+
+#: GoodsReceivedControlled.php:16
+msgid ""
+"This page can only be opened if a purchase order and line item has been "
+"selected. Please do that first"
+msgstr ""
+
+#: GoodsReceivedControlled.php:27
+msgid "Select a line Item to Receive"
+msgstr ""
+
+#: GoodsReceivedControlled.php:28
+msgid ""
+"This page can only be opened if a Line Item on a PO has been selected. "
+"Please do that first"
+msgstr ""
+
+#: GoodsReceivedControlled.php:40
+msgid "Back to the Purchase Order"
+msgstr ""
+
+#: GoodsReceivedControlled.php:41
+msgid ""
+"Notice - the line being recevied must be controlled as defined in the item "
+"defintion"
+msgstr ""
+
+#: GoodsReceivedControlled.php:126
+msgid "Back To Purchase Order #"
+msgstr ""
+
+#: GoodsReceivedControlled.php:128
+msgid "Receive controlled item"
+msgstr ""
+
+#: GoodsReceivedControlled.php:129
+msgid "on order "
+msgstr ""
+
+#: PDFDeliveryDifferences.php:25
+msgid ""
+"Enter the date from which variances between orders and deliveries are to be "
+"listed:"
+msgstr ""
+
+#: PDFDeliveryDifferences.php:26
+msgid ""
+"Enter the date to which variances between orders and deliveries are to be "
+"listed:"
+msgstr ""
+
+#: PDFDeliveryDifferences.php:27
+msgid "Inventory Category"
+msgstr ""
+
+#: PDFDeliveryDifferences.php:43
+msgid "Inventory Location:"
+msgstr ""
+
+#: PDFDeliveryDifferences.php:44
+msgid "All Locations"
+msgstr ""
+
+#: PDFDeliveryDifferences.php:86
+msgid "An error occurred getting the variances between deliveries and orders"
+msgstr ""
+
+#: PDFDeliveryDifferences.php:88
+msgid ""
+"The SQL used to get the variances between deliveries and orders (that "
+"failed) was:"
+msgstr ""
+
+#: PDFDeliveryDifferences.php:94
+msgid ""
+"There were no variances between deliveries and orders found in the database "
+"within the period from "
+msgstr ""
+
+#: PDFDeliveryDifferences.php:94
+msgid " to "
+msgstr ""
+
+#: PDFDeliveryDifferences.php:94
+msgid ". Please try again selecting a different date range."
+msgstr ""
+
+#: PDFDeliveryDifferences.php:96
+msgid "The SQL that returned no rows was:"
+msgstr ""
+
+#: PDFDeliveryDifferences.php:158
+msgid ""
+"Could not retrieve the count of sales order lines in the period under review"
+msgstr ""
+
+#: PO_Header.php:6
+msgid "Modify Purchase Order "
+msgstr ""
+
+#: PO_Header.php:8 index.php:349
+msgid "Purchase Order Entry"
+msgstr ""
+
+#: PO_Header.php:48
+msgid ""
+"An error occurred updating the purchase order to allow reprints. The error "
+"says"
+msgstr ""
+
+#: PO_Header.php:54
+msgid ""
+"You should automatically be forwarded to the entry of the purchase order "
+"line items page. If this does not happen (if the browser doesn't support "
+"META Refresh)"
+msgstr ""
+
+#: PO_Header.php:54
+msgid "click here"
+msgstr ""
+
+#: PO_Header.php:54
+msgid "to continue"
+msgstr ""
+
+#: PO_Header.php:70
+msgid ""
+"This order cannot be cancelled because some of it has already been received. "
+"The line item quantities may be modified to quantities more than already "
+"received. Prices cannot be altered for lines that have already been received "
+"and quantities cannot be reduced below the quantity already received."
+msgstr ""
+
+#: PO_Header.php:84
+msgid "The order detail lines could not be deleted because"
+msgstr ""
+
+#: PO_Header.php:88
+msgid "The order header could not be deleted because"
+msgstr ""
+
+#: PO_Header.php:122
+msgid ""
+"Cannot modify the supplier of the order once some of the order has been "
+"received"
+msgstr ""
+
+#: PO_Header.php:129
+msgid ""
+"Supplier name keywords have been used in preference to the supplier code "
+"extract entered."
+msgstr ""
+
+#: PO_Header.php:132
+msgid ""
+"At least one supplier name keyword OR an extract of a supplier code must be "
+"entered for the search"
+msgstr ""
+
+#: PO_Header.php:151
+msgid "The searched supplier records requested cannot be retrieved because"
+msgstr ""
+
+#: PO_Header.php:158
+msgid ""
+"No supplier records contain the selected text - please alter your search "
+"criteria and try again"
+msgstr ""
+
+#: PO_Header.php:171
+msgid "The supplier record of the supplier selected: "
+msgstr ""
+
+#: PO_Header.php:171
+msgid " cannot be retrieved because"
+msgstr ""
+
+#: PO_Header.php:172
+msgid "The SQL used to retrieve the supplier details (and failed) was:"
+msgstr ""
+
+#: PO_Header.php:323
+msgid ""
+"The default stock location set up for this user is not a currently defined "
+"stock location. Your system administrator needs to amend your user record."
+msgstr ""
+
+#: PO_Header.php:351
+msgid "Deliver to - Suburb:"
+msgstr ""
+
+#: PO_Header.php:354
+msgid "Deliver to - City:"
+msgstr ""
+
+#: PO_Header.php:357
+msgid "Deliver to - Phone:"
+msgstr ""
+
+#: PO_Header.php:365
+msgid "Originally Ordered:"
+msgstr ""
+
+#: PO_Header.php:374
+msgid "Initiated By:"
+msgstr ""
+
+#: PO_Header.php:377
+msgid "Requistion Ref:"
+msgstr ""
+
+#: PO_Header.php:380
+msgid "Exchange Rate:"
+msgstr ""
+
+#: PO_Header.php:383
+msgid "Date Printed:"
+msgstr ""
+
+#: PO_Header.php:390
+msgid "Not Yet Printed"
+msgstr ""
+
+#: PO_Header.php:394
+msgid "Allow Reprint:"
+msgstr ""
+
+#: PO_Header.php:396
+msgid "Reprint Now"
+msgstr ""
+
+#: PO_Header.php:400
+msgid "Comments:"
+msgstr ""
+
+#: PO_Header.php:403
+msgid "Cancel and Delete The Whole Order"
+msgstr ""
+
+#: PO_Items.php:140
+msgid "Enter A New Purchase Order"
+msgstr ""
+
+#: PO_Items.php:141
+msgid "Select An Outstanding Purchase Order"
+msgstr ""
+
+#: PrintCustTrans.php:13
+msgid "Select Invoices/Credit Notes To Print"
+msgstr ""
+
+#: PrintCustTrans.php:59
+msgid "Access Denied Error"
+msgstr ""
+
+#: PrintCustTrans.php:62 includes/PDFStarter_ros.inc:18
+msgid ""
+"The security settings on your account do not permit you to access this "
+"function"
+msgstr ""
+
+#: PrintCustTrans.php:83
+msgid "Sales Invoice"
+msgstr ""
+
+#: PrintCustTrans.php:84
+msgid "Invoices from"
+msgstr ""
+
+#: PrintCustTrans.php:84 PrintCustTrans.php:87
+#: includes/PDFAgedDebtorsPageHeader.inc:18
+#: includes/PDFAgedDebtorsPageHeader.inc1:18
+#: includes/PDFAgedSuppliersPageHeader.inc:17
+msgid "to"
+msgstr ""
+
+#: PrintCustTrans.php:86
+msgid "Sales Credit Note"
+msgstr ""
+
+#: PrintCustTrans.php:87
+msgid "Credit Notes from"
+msgstr ""
+
+#: PrintCustTrans.php:217 PrintCustTrans.php:269
+msgid "Transaction Print Error Report"
+msgstr ""
+
+#: PrintCustTrans.php:220
+msgid ""
+"There was a problem retrieving the invoice (or credit note) details for "
+"invoice/credit note number $InvoiceToPrint from the database. To print an "
+"<B>invoice</B> the sales order record, the customer transaction record and "
+"the branch record for the customer must not have been purged. To print a "
+"credit note only requires the customer, transaction, salesman and branch "
+"records be available"
+msgstr ""
+
+#: PrintCustTrans.php:222 PrintCustTrans.php:273
+msgid "The SQL used to get this information (that failed) was:"
+msgstr ""
+
+#: PrintCustTrans.php:271
+msgid ""
+"There was a problem retrieving the invoice or credit note stock movement "
+"details for invoice number"
+msgstr ""
+
+#: PrintCustTrans.php:271
+msgid "from the database"
+msgstr ""
+
+#: PrintCustTrans.php:394
+msgid "Sub Total"
+msgstr ""
+
+#: PrintCustTrans.php:397
+msgid "Freight"
+msgstr ""
+
+#: PrintCustTrans.php:411
+msgid "TOTAL INVOICE"
+msgstr ""
+
+#: PrintCustTrans.php:420
+msgid "TOTAL CREDIT"
+msgstr ""
+
+#: PrintCustTrans.php:434
+msgid "There were no transactions to print in the range selected"
+msgstr ""
+
+#: PrintCustTrans.php:448
+msgid "Please find attached"
+msgstr ""
+
+#: PrintCustTrans.php:456
+msgid "Emailing"
+msgstr ""
+
+#: PrintCustTrans.php:456
+msgid "Number"
+msgstr ""
+
+#: PrintCustTrans.php:458
+msgid "number"
+msgstr ""
+
+#: PrintCustTrans.php:458
+msgid "has been emailed to"
+msgstr ""
+
+#: StockQuantityByDate.php:6
+msgid "Stock On Hand By Date"
+msgstr ""
+
+#: StockQuantityByDate.php:20
+msgid "For Stock Category:"
+msgstr ""
+
+#: StockQuantityByDate.php:36
+msgid "For Stock Location:"
+msgstr ""
+
+#: StockQuantityByDate.php:55
+msgid "On-Hand On Date:"
+msgstr ""
+
+#: StockQuantityByDate.php:57
+msgid "Show Stock Status"
+msgstr ""
+
+#: StockQuantityByDate.php:72
+msgid "The stock items in the category selected cannot be retrieved because"
+msgstr ""
+
+#: StockQuantityByDate.php:80
+msgid "Item Code"
+msgstr ""
+
+#: StockQuantityByDate.php:82
+msgid "Quantity On Hand"
+msgstr ""
+
+#: StockQuantityByDate.php:92
+msgid "The stock held as at"
+msgstr ""
+
+#: StockQuantityByDate.php:124
+msgid "Total Quantity:"
+msgstr ""
+
+#: UserSettings.php:20
+msgid ""
+"The Maximum Number of Records on Display entered must not be negative.  0 "
+"will default to system setting"
+msgstr ""
+
+#: UserSettings.php:32
+msgid "The user alterations could not be processed because"
+msgstr ""
+
+#: UserSettings.php:33
+msgid "The SQL that was used to update the user and failed was"
+msgstr ""
+
+#: UserSettings.php:38
+msgid "The user settings have been updated."
+msgstr ""
+
+#: UserSettings.php:57
+msgid "User ID:"
+msgstr ""
+
+#: UserSettings.php:60
+msgid "User Name:"
+msgstr ""
+
+#: UserSettings.php:64
+msgid "Maximum Number of Records to Display:"
+msgstr ""
+
+#: UserSettings.php:68
+msgid "Language:"
+msgstr ""
+
+#: UserSettings.php:90
+msgid "Theme:"
+msgstr ""
+
+#: WorkOrderEntry.php:159
+msgid "This Work Order has already been released."
+msgstr ""
+
+#: WorkOrderEntry.php:165
+msgid ""
+"This Work Order cannot be released. The selected item to manufacture does "
+"not have a BOM."
+msgstr ""
+
+#: WorkOrderEntry.php:287
+msgid "Work Centre:"
+msgstr ""
+
+#: WorkOrderEntry.php:288
+msgid "Item to Manufacture:"
+msgstr ""
+
+#: WorkOrderEntry.php:305
+msgid "Released On:"
+msgstr ""
+
+#: WorkOrderEntry.php:333
+msgid "BOM for item:"
+msgstr ""
+
+#: WorkOrderEntry.php:337
+msgid "Work Order Requirements"
+msgstr ""
+
+#: WorkOrderEntry.php:340
+msgid "Issues against this Work Order"
+msgstr ""
+
+#: WorkOrderIssue.php:88
+msgid "The work order issues were successfully added."
+msgstr ""
+
+#: WorkOrderIssue.php:90
+msgid "Select another Work Order to Issue"
+msgstr ""
+
+#: WorkOrderIssue.php:101
+msgid "The order number sent is not valid."
+msgstr ""
+
+#: WorkOrderIssue.php:107
+msgid "Work Order Ref."
+msgstr ""
+
+#: WorkOrderIssue.php:110
+msgid "Manufactured Item"
+msgstr ""
+
+#: WorkOrderIssue.php:111 index.php:576
+msgid "Work Centre"
+msgstr ""
+
+#: WorkOrderIssue.php:112
+msgid "Quantity Required"
+msgstr ""
+
+#: WorkOrderIssue.php:113
+msgid "Standard Cost per Unit"
+msgstr ""
+
+#: WorkOrderIssue.php:114
+msgid "Required By Date"
+msgstr ""
+
+#: WorkOrderIssue.php:115
+msgid "Released Date"
+msgstr ""
+
+#: WorkOrderIssue.php:116
+msgid "Accumulated Value Issued"
+msgstr ""
+
+#: WorkOrderIssue.php:117
+msgid "Accumulated Value Transferred"
+msgstr ""
+
+#: WorkOrderIssue.php:118
+msgid "Units Transferred to Finished Goods"
+msgstr ""
+
+#: WorkOrderIssue.php:131
+msgid "Quantity to Issue :"
+msgstr ""
+
+#: WorkOrderIssue.php:131
+msgid "Update"
+msgstr ""
+
+#: index.php:25
+msgid "Account Status"
+msgstr ""
+
+#: index.php:26
+msgid "Place An Order"
+msgstr ""
+
+#: index.php:94
+msgid "Sales Order Entry"
+msgstr ""
+
+#: index.php:99
+msgid "Outstanding Sales Orders Maintenance"
+msgstr ""
+
+#: index.php:104
+msgid "Special Order"
+msgstr ""
+
+#: index.php:113
+msgid "Order Inquiry"
+msgstr ""
+
+#: index.php:118
+msgid "Print Price Lists"
+msgstr ""
+
+#: index.php:123
+msgid "Order Delivery Differences Report"
+msgstr ""
+
+#: index.php:163
+msgid "Select Order to Invoice"
+msgstr ""
+
+#: index.php:168
+msgid "Create A Credit Note"
+msgstr ""
+
+#: index.php:173
+msgid "Enter Receipts"
+msgstr ""
+
+#: index.php:179
+msgid "Allocate Receipts or Credit Notes"
+msgstr ""
+
+#: index.php:188
+msgid "Customer Transaction Inquiries"
+msgstr ""
+
+#: index.php:193
+msgid "Where Allocated Inquiry"
+msgstr ""
+
+#: index.php:198
+msgid "Print Invoices or Credit Notes"
+msgstr ""
+
+#: index.php:203
+msgid "Print Statements"
+msgstr ""
+
+#: index.php:208
+msgid "Sales Analysis Reports"
+msgstr ""
+
+#: index.php:213
+msgid "Aged Customer Balances/Overdues Report"
+msgstr ""
+
+#: index.php:218
+msgid "Transaction Inquiries"
+msgstr ""
+
+#: index.php:223
+msgid "Re-Print A Deposit Listing"
+msgstr ""
+
+#: index.php:228
+msgid "Debtor Balances At A Prior Month End"
+msgstr ""
+
+#: index.php:233
+msgid "Customer Listing By Area/Salesperson"
+msgstr ""
+
+#: index.php:242
+msgid "Add a New Customer"
+msgstr ""
+
+#: index.php:247
+msgid "Modify/Add/Delete Customers/branches and Special pricing"
+msgstr ""
+
+#: index.php:277
+msgid "Select Supplier For Transactions and Inquiries"
+msgstr ""
+
+#: index.php:283
+msgid "Supplier Allocations"
+msgstr ""
+
+#: index.php:292
+msgid "Aged Supplier Report"
+msgstr ""
+
+#: index.php:297
+msgid "Payment Run Report"
+msgstr ""
+
+#: index.php:302
+msgid "Outstanding GRNs Report"
+msgstr ""
+
+#: index.php:307
+msgid "Creditor Balances At A Prior Month End"
+msgstr ""
+
+#: index.php:316
+msgid "Add a New Supplier"
+msgstr ""
+
+#: index.php:321
+msgid "Modify Or Delete A Supplier"
+msgstr ""
+
+#: index.php:354
+msgid "Outstanding Purchase Orders"
+msgstr ""
+
+#: index.php:359
+msgid "Shipment Entry"
+msgstr ""
+
+#: index.php:364
+msgid "Select A Shipment"
+msgstr ""
+
+#: index.php:373
+msgid "Purchase Order Inquiry"
+msgstr ""
+
+#: index.php:382 index.php:526
+msgid "Maintain Purchasing Data"
+msgstr ""
+
+#: index.php:413
+msgid "Bulk Inventory Transfer - Dispatch"
+msgstr ""
+
+#: index.php:418
+msgid "Bulk Inventory Transfer - Receive"
+msgstr ""
+
+#: index.php:423
+msgid "Inventory Location Transfers"
+msgstr ""
+
+#: index.php:428
+msgid "Inventory Adjustments"
+msgstr ""
+
+#: index.php:433
+msgid "Reverse Goods Received"
+msgstr ""
+
+#: index.php:438
+msgid "Enter Stock Counts"
+msgstr ""
+
+#: index.php:447
+msgid "Inventory Item Movements"
+msgstr ""
+
+#: index.php:452
+msgid "Inventory Item Status"
+msgstr ""
+
+#: index.php:457
+msgid "Inventory Item Usage"
+msgstr ""
+
+#: index.php:462
+msgid "Inventory Valuation Report"
+msgstr ""
+
+#: index.php:467
+msgid "Inventory Planning Report"
+msgstr ""
+
+#: index.php:472
+msgid "Inventory Stock Check Sheets"
+msgstr ""
+
+#: index.php:477
+msgid "Make Inventory Quantities CSV"
+msgstr ""
+
+#: index.php:482
+msgid "Compare Counts Vs Stock Check Data"
+msgstr ""
+
+#: index.php:487
+msgid "All Inventory Movements By Location/Date"
+msgstr ""
+
+#: index.php:492
+msgid "List Inventory Status By Location/Category"
+msgstr ""
+
+#: index.php:497
+msgid "Historical Stock Quantity By Location/Category"
+msgstr ""
+
+#: index.php:506
+msgid "Add Inventory Items"
+msgstr ""
+
+#: index.php:511
+msgid "Modify Or Delete A Inventory Item Or Item Pricing"
+msgstr ""
+
+#: index.php:516
+msgid "Maintain Reorder Levels"
+msgstr ""
+
+#: index.php:521
+msgid "Modify Standard Costs"
+msgstr ""
+
+#: index.php:557
+msgid "Costed Bill Of Material Inquiry"
+msgstr ""
+
+#: index.php:562
+msgid "Where Used Inquiry"
+msgstr ""
+
+#: index.php:567
+msgid "Bills Of Material Listing"
+msgstr ""
+
+#: index.php:581
+msgid "Bills Of Material"
+msgstr ""
+
+#: index.php:607
+msgid "General Setup Options"
+msgstr ""
+
+#: index.php:610
+msgid "General"
+msgstr ""
+
+#: index.php:619
+msgid "Receivables/Payables Setup"
+msgstr ""
+
+#: index.php:622
+msgid "Receivables/Payables"
+msgstr ""
+
+#: index.php:632 index.php:635
+msgid "Inventory Setup"
+msgstr ""
+
+#: index.php:649
+msgid "Company Preferences"
+msgstr ""
+
+#: index.php:654
+msgid "User Accounts"
+msgstr ""
+
+#: index.php:659
+msgid "Bank Accounts"
+msgstr ""
+
+#: index.php:664
+msgid "Currency Maintenance"
+msgstr ""
+
+#: index.php:669
+msgid "Tax Types and Rates Maintenance"
+msgstr ""
+
+#: index.php:674
+msgid ""
+"List Periods Defined <FONT SIZE=1>(Periods are automatically maintained)"
+msgstr ""
+
+#: index.php:684
+msgid "Sales Types"
+msgstr ""
+
+#: index.php:689
+msgid "Credit Status"
+msgstr ""
+
+#: index.php:694
+msgid "Payment Terms"
+msgstr ""
+
+#: index.php:699
+msgid "Sales People"
+msgstr ""
+
+#: index.php:704
+msgid "Sales Areas"
+msgstr ""
+
+#: index.php:709
+msgid "Shippers"
+msgstr ""
+
+#: index.php:714
+msgid "Sales GL Interface Postings"
+msgstr ""
+
+#: index.php:719
+msgid "COGS GL Interface Postings"
+msgstr ""
+
+#: index.php:724
+msgid "Freight Costs Maintenance"
+msgstr ""
+
+#: index.php:729
+msgid "Discount Matrix"
+msgstr ""
+
+#: index.php:741
+msgid "Inventory Categories Maintenance"
+msgstr ""
+
+#: index.php:746
+msgid "Inventory Locations Maintenance"
+msgstr ""
+
+#: index.php:751
+msgid "Discount Category Maintenance"
+msgstr ""
+
+#: index.php:781
+msgid "Bank Account Payments"
+msgstr ""
+
+#: index.php:786
+msgid "Bank Account Receipts"
+msgstr ""
+
+#: index.php:791
+msgid "Journal Entry"
+msgstr ""
+
+#: index.php:796
+msgid "Bank Deposits Matching"
+msgstr ""
+
+#: index.php:801
+msgid "Bank Payments Matching"
+msgstr ""
+
+#: index.php:810
+msgid "Trial Balance"
+msgstr ""
+
+#: index.php:815
+msgid "Account Inquiry"
+msgstr ""
+
+#: index.php:820
+msgid "Bank Reconciliation Statement"
+msgstr ""
+
+#: index.php:825
+msgid "Cheque Payments Listing"
+msgstr ""
+
+#: index.php:830
+msgid "Profit and Loss Statement"
+msgstr ""
+
+#: index.php:835
+msgid "Balance Sheet"
+msgstr ""
+
+#: index.php:879 index.php:882
+msgid "Transactions"
+msgstr ""
+
+#: index.php:891 index.php:894
+msgid "Inquiries and Reports"
+msgstr ""
+
+#: index.php:903 index.php:906
+msgid "Maintenance"
+msgstr ""
+
+#: includes/InputSerialItems.php:55
+msgid "Keyed Entry"
+msgstr ""
+
+#: includes/InputSerialItems.php:61
+msgid "Barcode Entry"
+msgstr ""
+
+#: includes/InputSerialItems.php:67
+msgid "File Upload"
+msgstr ""
+
+#: includes/InputSerialItems.php:70
+msgid "Set Entry Type"
+msgstr ""
+
+#: includes/InputSerialItems.php:77
+msgid "Serial No"
+msgstr ""
+
+#: includes/InputSerialItems.php:81
+msgid "Batch/Roll/Bundle#"
+msgstr ""
+
+#: includes/InputSerialItems.php:82
+msgid "Quantity"
+msgstr ""
+
+#: includes/InputSerialItemsFile.php:58 includes/InputSerialItemsFile.php:61
+msgid "Total Quantity"
+msgstr ""
+
+#: includes/InputSerialItemsFile.php:75
+msgid ""
+"Please Choose a file and then click \"Set Entry Type\" to upload a file for "
+"import"
+msgstr ""
+
+#: includes/InputSerialItemsFile.php:82
+msgid "There was a problem with the uploaded file. We received:<br>"
+msgstr ""
+
+#: includes/InputSerialItemsFile.php:83 includes/InputSerialItemsFile.php:120
+msgid "Name"
+msgstr ""
+
+#: includes/InputSerialItemsFile.php:84 includes/InputSerialItemsFile.php:121
+msgid "Size"
+msgstr ""
+
+#: includes/InputSerialItemsFile.php:85 includes/InputSerialItemsFile.php:122
+msgid "Type"
+msgstr ""
+
+#: includes/InputSerialItemsFile.php:86
+msgid "Error was"
+msgstr ""
+
+#: includes/InputSerialItemsFile.php:101
+msgid "Error Moving temporary file!!! Please check your configuration"
+msgstr ""
+
+#: includes/InputSerialItemsFile.php:108
+msgid "Successfully received"
+msgstr ""
+
+#: includes/InputSerialItemsFile.php:112
+msgid "Working with"
+msgstr ""
+
+#: includes/InputSerialItemsFile.php:123
+msgid "TempName"
+msgstr ""
+
+#: includes/InputSerialItemsFile.php:124
+msgid "Status"
+msgstr ""
+
+#: includes/InputSerialItemsFile.php:125
+msgid "Valid"
+msgstr ""
+
+#: includes/InputSerialItemsFile.php:125
+msgid "Invalid"
+msgstr ""
+
+#: includes/InputSerialItemsFile.php:127
+msgid "out of"
+msgstr ""
+
+#: includes/InputSerialItemsFile.php:127
+msgid "records are invalid"
+msgstr ""
+
+#: includes/PDFAgedDebtorsPageHeader.inc:18
+#: includes/PDFAgedDebtorsPageHeader.inc1:18
+msgid "Aged Customer Balances For Customers from"
+msgstr ""
+
+#: includes/PDFAgedDebtorsPageHeader.inc:19
+#: includes/PDFAgedDebtorsPageHeader.inc1:19
+#: includes/PDFAgedSuppliersPageHeader.inc:18
+msgid "And Trading in"
+msgstr ""
+
+#: includes/PDFAgedDebtorsPageHeader.inc:26
+#: includes/PDFAgedDebtorsPageHeader.inc1:26
+#: includes/PDFAgedSuppliersPageHeader.inc:21
+msgid "Printed:"
+msgstr ""
+
+#: includes/PDFAgedDebtorsPageHeader.inc:26
+#: includes/PDFAgedDebtorsPageHeader.inc1:26
+#: includes/PDFAgedSuppliersPageHeader.inc:21
+msgid "Page"
+msgstr ""
+
+#: includes/PDFAgedDebtorsPageHeader.inc:40
+#: includes/PDFAgedDebtorsPageHeader.inc1:40
+msgid "Customer"
+msgstr ""
+
+#: includes/PDFAgedDebtorsPageHeader.inc:41
+#: includes/PDFAgedDebtorsPageHeader.inc1:41
+#: includes/PDFAgedSuppliersPageHeader.inc:35
+msgid "Balance"
+msgstr ""
+
+#: includes/PDFAgedDebtorsPageHeader.inc:42
+#: includes/PDFAgedDebtorsPageHeader.inc1:42
+#: includes/PDFAgedSuppliersPageHeader.inc:36
+msgid "Current"
+msgstr ""
+
+#: includes/PDFAgedDebtorsPageHeader.inc:43
+#: includes/PDFAgedDebtorsPageHeader.inc1:43
+#: includes/PDFAgedSuppliersPageHeader.inc:37
+msgid "Due Now"
+msgstr ""
+
+#: includes/PDFAgedDebtorsPageHeader.inc:44
+#: includes/PDFAgedDebtorsPageHeader.inc:45
+#: includes/PDFAgedDebtorsPageHeader.inc1:44
+#: includes/PDFAgedDebtorsPageHeader.inc1:45
+#: includes/PDFAgedSuppliersPageHeader.inc:38
+#: includes/PDFAgedSuppliersPageHeader.inc:39
+msgid "Days Over"
+msgstr ""
+
+#: includes/PDFAgedSuppliersPageHeader.inc:17
+msgid "Aged Supplier Balances For Suppliers from"
+msgstr ""
+
+#: includes/PDFAgedSuppliersPageHeader.inc:34
+msgid "Supplier"
+msgstr ""
+
+#: includes/PDFStarter_ros.inc:16
+msgid "Permission Denied Report"
+msgstr ""
+
+#: includes/header.inc:35
+msgid "<u>M</u>ain  Menu"
+msgstr ""
+
+#: includes/header.inc:39
+msgid "Select <u>C</u>ustomer"
+msgstr ""
+
+#: includes/header.inc:41
+msgid "Select <u>I</u>tem"
+msgstr ""
+
+#: includes/header.inc:43
+msgid "Select <u>S</u>upplier"
+msgstr ""
+
+#: includes/header.inc:46
+msgid "<u>H</u>elp"
+msgstr ""
+
+#: includes/header.inc:48
+msgid "Logout"
+msgstr ""
+
+#: includes/session.inc:80
+msgid "The SQL to retrieve the user details failed because :"
+msgstr ""
+
+#: includes/session.inc:81
+msgid "The SQL used was :"
+msgstr ""
+
+#: includes/session.inc:116
+msgid "incorrect password"
+msgstr ""
+
+#: includes/session.inc:117
+msgid "The user/password combination is not a valid user of the system"
+msgstr ""
+
+#: includes/session.inc:119
+msgid ""
+"If you are not an authorized user, please contact the proper personnel to "
+"obtain an account to enable you to use the system."
+msgstr ""
+
+#: includes/session.inc:131
+msgid ""
+"Security settings have not been defined for your user account. Please advise "
+"your system administrator"
+msgstr ""
+
+#: includes/session.inc:136
+msgid ""
+"The security settings on your account do not permit you to access this "
+"function."
+msgstr ""
+
+#: includes/session.inc:137
+msgid "Back To Main Menu"
 msgstr ""
