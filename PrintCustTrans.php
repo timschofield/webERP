@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity = 1;
 
 
@@ -10,7 +10,7 @@ if (isset($_GET["FromTransNo"])){
 }
 
 if (!isset($FromTransNo)  || $FromTransNo=="") {
-	$title="Select Invoices/Credit Notes To Print";
+	$title=_('Select Invoices/Credit Notes To Print');
 }
 
 if (isset($_GET["InvOrCredit"])){
@@ -56,7 +56,11 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 
 /*check security - $PageSecurity set in files where this script is included from */
 	if (! in_array($PageSecurity,$SecurityGroups[$_SESSION["AccessLevel"]]) OR !isset($PageSecurity)){
-		echo "<BR><BR><BR><BR><BR><BR><BR><CENTER><FONT COLOR=RED SIZE=4><B>The security settings on your account do not permit you to access this function.</B></FONT>";
+		$title = _('Access Denied Error');
+		include ('includes/header.inc');
+		echo "<BR><BR><BR><BR><BR><BR><BR><CENTER><FONT COLOR=RED SIZE=4><B>" .
+		_('The security settings on your account do not permit you to access this function') . "</B></FONT>";
+		include('includes/footer.inc');
 		exit;
 	}
 
@@ -76,11 +80,11 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 
 
 	if ($InvOrCredit=="Invoice"){
-		$pdf->addinfo('Title',"Sales Invoice");
-		$pdf->addinfo('Subject',"Invoices from " . $FromTransNo . " to " . $_POST["ToTransNo"]);
+		$pdf->addinfo('Title',_('Sales Invoice'));
+		$pdf->addinfo('Subject',_('Invoices from') . ' ' . $FromTransNo . ' ' . _('to') . ' ' . $_POST["ToTransNo"]);
 	} else {
-		$pdf->addinfo('Title',"Sales Credit Note");
-		$pdf->addinfo('Subject',"Credit Notes from " . $FromTransNo . " to " . $_POST["ToTransNo"]);
+		$pdf->addinfo('Title',_('Sales Credit Note'));
+		$pdf->addinfo('Subject',_('Credit Notes from') . ' ' . $FromTransNo . ' ' . _('to') . ' ' . $_POST["ToTransNo"]);
 	}
 
 	$line_height=16;
@@ -100,116 +104,122 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 	nobble the invoice reprints */
 
 	   if ($InvOrCredit=="Invoice") {
-		$sql = "SELECT DebtorTrans.TranDate, 
-				DebtorTrans.OvAmount, 
-				DebtorTrans.OvDiscount, 
-				DebtorTrans.OvFreight, 
-				DebtorTrans.OvGST, 
-				DebtorTrans.Rate, 
-				DebtorTrans.InvText, 
-				DebtorTrans.Consignment, 
-				DebtorsMaster.Name, 
-				DebtorsMaster.Address1, 
-				DebtorsMaster.Address2, 
-				DebtorsMaster.Address3, 
-				DebtorsMaster.Address4, 
-				DebtorsMaster.CurrCode, 
-				DebtorsMaster.InvAddrBranch, 
-				SalesOrders.DeliverTo, 
-				SalesOrders.DelAdd1, 
-				SalesOrders.DelAdd2, 
-				SalesOrders.DelAdd3, 
-				SalesOrders.DelAdd4, 
-				SalesOrders.CustomerRef, 
-				SalesOrders.OrderNo, 
-				SalesOrders.OrdDate, 
-				Locations.LocationName, 
-				Shippers.ShipperName, 
-				CustBranch.BrName, 
-				CustBranch.BrAddress1, 
-				CustBranch.BrAddress2, 
-				CustBranch.BrAddress3, 
-				CustBranch.BrAddress4, 
-				CustBranch.BrPostAddr1, 
-				CustBranch.BrPostAddr2, 
-				CustBranch.BrPostAddr3, 
+		$sql = "SELECT DebtorTrans.TranDate,
+				DebtorTrans.OvAmount,
+				DebtorTrans.OvDiscount,
+				DebtorTrans.OvFreight,
+				DebtorTrans.OvGST,
+				DebtorTrans.Rate,
+				DebtorTrans.InvText,
+				DebtorTrans.Consignment,
+				DebtorsMaster.Name,
+				DebtorsMaster.Address1,
+				DebtorsMaster.Address2,
+				DebtorsMaster.Address3,
+				DebtorsMaster.Address4,
+				DebtorsMaster.CurrCode,
+				DebtorsMaster.InvAddrBranch,
+				PaymentTerms.Terms,
+				SalesOrders.DeliverTo,
+				SalesOrders.DelAdd1,
+				SalesOrders.DelAdd2,
+				SalesOrders.DelAdd3,
+				SalesOrders.DelAdd4,
+				SalesOrders.CustomerRef,
+				SalesOrders.OrderNo,
+				SalesOrders.OrdDate,
+				Locations.LocationName,
+				Shippers.ShipperName,
+				CustBranch.BrName,
+				CustBranch.BrAddress1,
+				CustBranch.BrAddress2,
+				CustBranch.BrAddress3,
+				CustBranch.BrAddress4,
+				CustBranch.BrPostAddr1,
+				CustBranch.BrPostAddr2,
+				CustBranch.BrPostAddr3,
 				CustBranch.BrPostAddr4,
-				Salesman.SalesmanName, 
-				DebtorTrans.DebtorNo, 
-				DebtorTrans.BranchCode 
-			FROM DebtorTrans, 
-				DebtorsMaster, 
-				CustBranch, 
-				SalesOrders, 
-				Shippers, 
-				Salesman, 
-				Locations 
-			WHERE DebtorTrans.Order_ = SalesOrders.OrderNo 
-			AND DebtorTrans.Type=10 
-			AND DebtorTrans.TransNo=" . $FromTransNo . " 
-			AND DebtorTrans.ShipVia=Shippers.Shipper_ID 
-			AND DebtorTrans.DebtorNo=DebtorsMaster.DebtorNo 
-			AND DebtorTrans.DebtorNo=CustBranch.DebtorNo 
-			AND DebtorTrans.BranchCode=CustBranch.BranchCode 
-			AND CustBranch.Salesman=Salesman.SalesmanCode 
+				Salesman.SalesmanName,
+				DebtorTrans.DebtorNo,
+				DebtorTrans.BranchCode
+			FROM DebtorTrans,
+				DebtorsMaster,
+				CustBranch,
+				SalesOrders,
+				Shippers,
+				Salesman,
+				Locations,
+				PaymentTerms
+			WHERE DebtorTrans.Order_ = SalesOrders.OrderNo
+			AND DebtorTrans.Type=10
+			AND DebtorTrans.TransNo=" . $FromTransNo . "
+			AND DebtorTrans.ShipVia=Shippers.Shipper_ID
+			AND DebtorTrans.DebtorNo=DebtorsMaster.DebtorNo
+			AND DebtorsMaster.PaymentTerms=PaymentTerms.TermsIndicator
+			AND DebtorTrans.DebtorNo=CustBranch.DebtorNo
+			AND DebtorTrans.BranchCode=CustBranch.BranchCode
+			AND CustBranch.Salesman=Salesman.SalesmanCode
 			AND SalesOrders.FromStkLoc=Locations.LocCode";
-		
+
 		if ($_POST['PrintEDI']=='No'){
 			$sql = $sql . " AND DebtorsMaster.EDIInvoices=0";
 		}
 	   } else {
-		
-		$sql = "SELECT DebtorTrans.TranDate, 
-				DebtorTrans.OvAmount, 
-				DebtorTrans.OvDiscount, 
-				DebtorTrans.OvFreight, 
-				DebtorTrans.OvGST, 
-				DebtorTrans.Rate, 
-				DebtorTrans.InvText, 
-				DebtorsMaster.InvAddrBranch, 
-				DebtorsMaster.Name, 
-				DebtorsMaster.Address1, 
-				DebtorsMaster.Address2, 
-				DebtorsMaster.Address3, 
-				DebtorsMaster.Address4, 
-				DebtorsMaster.CurrCode, 
-				CustBranch.BrName, 
-				CustBranch.BrAddress1, 
-				CustBranch.BrAddress2, 
-				CustBranch.BrAddress3, 
-				CustBranch.BrAddress4, 
-				CustBranch.BrPostAddr1, 
-				CustBranch.BrPostAddr2, 
-				CustBranch.BrPostAddr3, 
+
+		$sql = "SELECT DebtorTrans.TranDate,
+				DebtorTrans.OvAmount,
+				DebtorTrans.OvDiscount,
+				DebtorTrans.OvFreight,
+				DebtorTrans.OvGST,
+				DebtorTrans.Rate,
+				DebtorTrans.InvText,
+				DebtorsMaster.InvAddrBranch,
+				DebtorsMaster.Name,
+				DebtorsMaster.Address1,
+				DebtorsMaster.Address2,
+				DebtorsMaster.Address3,
+				DebtorsMaster.Address4,
+				DebtorsMaster.CurrCode,
+				CustBranch.BrName,
+				CustBranch.BrAddress1,
+				CustBranch.BrAddress2,
+				CustBranch.BrAddress3,
+				CustBranch.BrAddress4,
+				CustBranch.BrPostAddr1,
+				CustBranch.BrPostAddr2,
+				CustBranch.BrPostAddr3,
 				CustBranch.BrPostAddr4,
-				Salesman.SalesmanName, 
-				DebtorTrans.DebtorNo, 
-				DebtorTrans.BranchCode 
-			FROM DebtorTrans, 
-				DebtorsMaster, 
-				CustBranch, 
-				Salesman 
-			WHERE DebtorTrans.Type=11 
-			AND DebtorTrans.TransNo=" . $FromTransNo ." 
-			AND DebtorTrans.DebtorNo=DebtorsMaster.DebtorNo 
-			AND DebtorTrans.DebtorNo=CustBranch.DebtorNo 
-			AND DebtorTrans.BranchCode=CustBranch.BranchCode 
+				Salesman.SalesmanName,
+				DebtorTrans.DebtorNo,
+				DebtorTrans.BranchCode,
+				PaymentTerms.Terms
+			FROM DebtorTrans,
+				DebtorsMaster,
+				CustBranch,
+				Salesman,
+				PaymentTerms
+			WHERE DebtorTrans.Type=11
+			AND DebtorsMaster.PaymentTerms = PaymentTerms.TermsIndicator
+			AND DebtorTrans.TransNo=" . $FromTransNo ."
+			AND DebtorTrans.DebtorNo=DebtorsMaster.DebtorNo
+			AND DebtorTrans.DebtorNo=CustBranch.DebtorNo
+			AND DebtorTrans.BranchCode=CustBranch.BranchCode
 			AND CustBranch.Salesman=Salesman.SalesmanCode";
-		
+
 		if ($_POST['PrintEDI']=='No'){
 			$sql = $sql . " AND DebtorsMaster.EDIInvoices=0";
 		}
 	   }
 	   $result=DB_query($sql,$db);
-	   
+
 	   if (DB_error_no($db)!=0) {
-	   	
-		$title = "Transaction Print Error Report";
+
+		$title = _('Transaction Print Error Report');
 		include ("includes/header.inc");
-		
-		echo "<BR>There was a problem retrieving the invoice (or credit note) details for invoice/credit note number $InvoiceToPrint from the database. To print an <B>invoice</B> the sales order record, the customer transaction record and the branch record for the customer must not have been purged. To print a credit note only requires the customer, transaction, salesman and branch records be available.";
+
+		echo "<BR>" . _('There was a problem retrieving the invoice (or credit note) details for invoice/credit note number $InvoiceToPrint from the database. To print an <B>invoice</B> the sales order record, the customer transaction record and the branch record for the customer must not have been purged. To print a credit note only requires the customer, transaction, salesman and branch records be available');
 		if ($debug==1){
-		    echo "The SQL used to get this information (that failed) was:<BR>$sql";
+		    echo _('The SQL used to get this information (that failed) was:') . "<BR>$sql";
 		}
 		break;
 		include ("includes/footer.inc");
@@ -221,46 +231,46 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 		$ExchRate = $myrow["Rate"];
 
 		if ($InvOrCredit=="Invoice"){
-			 
-			 $sql = "SELECT StockMoves.StockID, 
-					StockMaster.Description, 
-					-StockMoves.Qty AS Quantity, 
-					StockMoves.DiscountPercent, 
-					((1 - StockMoves.DiscountPercent) * StockMoves.Price * " . $ExchRate . "* -StockMoves.Qty) AS FxNet, 
-					(StockMoves.Price * " . $ExchRate . ") AS FxPrice, 
+
+			 $sql = "SELECT StockMoves.StockID,
+					StockMaster.Description,
+					-StockMoves.Qty AS Quantity,
+					StockMoves.DiscountPercent,
+					((1 - StockMoves.DiscountPercent) * StockMoves.Price * " . $ExchRate . "* -StockMoves.Qty) AS FxNet,
+					(StockMoves.Price * " . $ExchRate . ") AS FxPrice,
 					StockMoves.Narrative,
-					StockMaster.Units 
-				FROM StockMoves, 
-					StockMaster 
-				WHERE StockMoves.StockID = StockMaster.StockID 
-				AND StockMoves.Type=10 
-				AND StockMoves.TransNo=" . $FromTransNo . " 
+					StockMaster.Units
+				FROM StockMoves,
+					StockMaster
+				WHERE StockMoves.StockID = StockMaster.StockID
+				AND StockMoves.Type=10
+				AND StockMoves.TransNo=" . $FromTransNo . "
 				AND StockMoves.Show_On_Inv_Crds=1";
 		} else {
 		/* only credit notes to be retrieved */
-			 $sql = "SELECT StockMoves.StockID, 
-			 		StockMaster.Description, 
-					StockMoves.Qty AS Quantity, 
-					StockMoves.DiscountPercent, 
-					((1 - StockMoves.DiscountPercent) * StockMoves.Price * " . $ExchRate . " * StockMoves.Qty) AS FxNet, 
-					(StockMoves.Price * " . $ExchRate . ") AS FxPrice, 
+			 $sql = "SELECT StockMoves.StockID,
+			 		StockMaster.Description,
+					StockMoves.Qty AS Quantity,
+					StockMoves.DiscountPercent,
+					((1 - StockMoves.DiscountPercent) * StockMoves.Price * " . $ExchRate . " * StockMoves.Qty) AS FxNet,
+					(StockMoves.Price * " . $ExchRate . ") AS FxPrice,
 					StockMoves.Narrative,
-					StockMaster.Units 
-				FROM StockMoves, 
-					StockMaster 
-				WHERE StockMoves.StockID = StockMaster.StockID 
-				AND StockMoves.Type=11 
-				AND StockMoves.TransNo=" . $FromTransNo . " 
+					StockMaster.Units
+				FROM StockMoves,
+					StockMaster
+				WHERE StockMoves.StockID = StockMaster.StockID
+				AND StockMoves.Type=11
+				AND StockMoves.TransNo=" . $FromTransNo . "
 				AND StockMoves.Show_On_Inv_Crds=1";
 		}
 
 		$result=DB_query($sql,$db);
 		if (DB_error_no($db)!=0) {
-			$title = "Transaction Print Error Report";
+			$title = _("Transaction Print Error Report");
 			include ("includes/header.inc");
-			echo "<BR>There was a problem retrieving the invoice or credit note stock movement details for invoice number " . $FromTransNo . " from the database.";
+			echo "<BR>" . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
 			if ($debug==1){
-			    echo "<BR>The SQL used to get this information (that failed) was:<BR>$sql";
+			    echo "<BR>" . _('The SQL used to get this information (that failed) was:') . "<BR>$sql";
 			}
 			include("includes/footer.inc");
 			exit;
@@ -297,7 +307,7 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+642,$YPos,120,$FontSize,$DisplayNet,'right');
 
 				$YPos -= ($line_height);
-				
+
 				$Narrative = $myrow2['Narrative'];
 				do {
 					if ($YPos-$line_height <= $Bottom_Margin){
@@ -312,8 +322,8 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 					}
 					$YPos -= ($line_height);
 				} while (strlen($Narrative)>1);
-				
-				
+
+
 			} //end while there are line items to print out
 		} /*end if there are stock movements to show on the invoice or credit note*/
 
@@ -327,7 +337,7 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 
 		}
 		/*Print a column vertical line  with enough space for the footer*/
-		/*draw the vertical column lines to 4 lines shy of the bottom 
+		/*draw the vertical column lines to 4 lines shy of the bottom
 		to leave space for invoice footer info ie totals etc*/
 		$pdf->line($Left_Margin+97, $TopOfColHeadings+12,$Left_Margin+97,$Bottom_Margin+(4*$line_height));
 
@@ -366,23 +376,25 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 		}
 	/*Print out the invoice text entered */
 		$YPos = $Bottom_Margin+(3*$line_height);
+	/* Print out the payment terms */
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos,280,$FontSize,$myrow["InvText"]);
+  		$pdf->addTextWrap($Left_Margin+5,$YPos+3,280,$FontSize,_('Payment Terms:') . ' ' . $myrow['Terms']);
+
+		$FontSize =8;
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-12,280,$FontSize,$myrow["InvText"]);
 		if (strlen($LeftOvers)>0){
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-12,280,$FontSize,$LeftOvers);
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-24,280,$FontSize,$LeftOvers);
 			if (strlen($LeftOvers)>0){
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-24,280,$FontSize,$LeftOvers);
-				if (strlen($LeftOvers)>0){
-					$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-36,280,$FontSize,$LeftOvers);
-				/*If there is some of the InvText leftover after fout lines 200 wide then it is not printed :( */
-				}
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-36,280,$FontSize,$LeftOvers);
+				/*If there is some of the InvText leftover after 3 lines 200 wide then it is not printed :( */
 			}
 		}
+		$FontSize = 10;
 
-		$pdf->addText($Page_Width-$Right_Margin-220, $YPos+5,$FontSize, "Sub Total");
+		$pdf->addText($Page_Width-$Right_Margin-220, $YPos+5,$FontSize, _('Sub Total'));
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+642,$YPos+5,120,$FontSize,$DisplaySubTot, 'right');
 
-		$pdf->addText($Page_Width-$Right_Margin-220, $YPos-$line_height+5,$FontSize, "Freight");
+		$pdf->addText($Page_Width-$Right_Margin-220, $YPos-$line_height+5,$FontSize, _('Freight'));
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+642,$YPos-$line_height+5,120,$FontSize,$DisplayFreight, 'right');
 
 		$pdf->addText($Page_Width-$Right_Margin-220, $YPos-(2*$line_height)+5,$FontSize, "Tax");
@@ -396,7 +408,7 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 
 		$YPos+=10;
 		if ($InvOrCredit=="Invoice"){
-			$pdf->addText($Page_Width-$Right_Margin-220, $YPos - ($line_height*3)-6,$FontSize, "TOTAL INVOICE");
+			$pdf->addText($Page_Width-$Right_Margin-220, $YPos - ($line_height*3)-6,$FontSize, _('TOTAL INVOICE'));
 			$FontSize=6;
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,245,$FontSize,$RomalpaClause);
 			while (strlen($LeftOvers)>0 AND $YPos > $Bottom_Margin){
@@ -405,7 +417,7 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 			}
 			$FontSize=10;
 		} else {
-			$pdf->addText($Page_Width-$Right_Margin-220, $YPos-($line_height*3),$FontSize, "TOTAL CREDIT");
+			$pdf->addText($Page_Width-$Right_Margin-220, $YPos-($line_height*3),$FontSize, _('TOTAL CREDIT'));
  		}
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+642,35,120, $FontSize,$DisplayTotal, 'right');
 	    } /* end of check to see that there was an invoice record to print */
@@ -419,7 +431,7 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 
 	if ($len <1020){
 		include("includes/header.inc");
-		echo "<P>There were no transactions to print in the range selected";
+		echo "<P>" . _('There were no transactions to print in the range selected');
 		include("includes/footer.inc");
 		exit;
 	}
@@ -433,7 +445,7 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 		fclose ($fp);
 
 		$attachment = $mail->getFile($filename);
-		$mail->setText("Please find attached " . $InvOrCredit . " " . $FromTransNo );
+		$mail->setText(_('Please find attached') . ' ' . $InvOrCredit . " " . $FromTransNo );
 		$mail->SetSubject($InvOrCredit . " " . $FromTransNo);
 		$mail->addAttachment($attachment, $filename, 'application/pdf');
 		$mail->setFrom($CompanyName . "<" . $CompanyRecord['Email'] . ">");
@@ -441,9 +453,9 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 
 		unlink($filename); //delete the temporary file
 
-		$title = "Emailing " .$InvOrCredit . " Number " . $FromTransNo;
+		$title = _('Emailing') . ' ' .$InvOrCredit . ' ' . _('Number') . ' ' . $FromTransNo;
 		include("includes/header.inc");
-		echo "<P>$InvOrCredit number $FromTransNo has been emailed to " . $_GET['Email'];
+		echo "<P>$InvOrCredit " . _('number') . $FromTransNo . ' ' . _('has been emailed to') . ' ' . $_GET['Email'];
 		include("includes/footer.inc");
 		exit;
 
@@ -563,7 +575,7 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 					CustBranch.BrAddress1, 
 					CustBranch.BrAddress2, 
 					CustBranch.BrAddress3, 
-					CustBranch.BrAddress4, 
+					CustBranch.BrAddress4,
 					Salesman.SalesmanName, 
 					DebtorTrans.DebtorNo 
 				FROM DebtorTrans, 
@@ -608,7 +620,7 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 					Salesman 
 				WHERE DebtorTrans.Type=11 
 				AND DebtorTrans.TransNo=" . $FromTransNo . " 
-				AND DebtorTrans.DebtorNo=DebtorsMaster.DebtorNo 
+				AND DebtorTrans.DebtorNo=DebtorsMaster.DebtorNo
 				AND DebtorTrans.DebtorNo=CustBranch.DebtorNo 
 				AND DebtorTrans.BranchCode=CustBranch.BranchCode 
 				AND CustBranch.Salesman=Salesman.SalesmanCode";

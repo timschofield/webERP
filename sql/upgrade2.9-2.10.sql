@@ -57,3 +57,5 @@ ALTER TABLE WWW_Users ADD Theme VARCHAR(30) NOT NULL;
 ALTER TABLE WWW_Users ADD DisplayRecordsMax TINYINT DEFAULT 0 NOT NULL;
 INSERT INTO `Scripts` ( `PageID` , `FileName` , `PageDescription` )
 VALUES ('162', 'UserSettings.php', 'Allows the user to change system wide defaults for the theme - appearance, the number of records to show in searches and the language to display messages in');
+INSERT INTO `Scripts` ( `PageID` , `FileName` , `PageDescription` )
+VALUES ('163', 'StockQuantityByDate.php', 'Shows the stock on hand for each item at a selected location and stock category as at a specified date');
