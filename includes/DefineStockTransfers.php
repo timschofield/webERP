@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 /*Class to hold stock transfer records */
 
@@ -28,6 +28,7 @@ class LineItem {
 	var $StockID;
 	var $ItemDescription;
 	Var $ShipQty;
+	Var $PrevRecvQty;
 	Var $Quantity;
 	Var $PartUnit;
 	var $Controlled;

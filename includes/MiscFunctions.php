@@ -23,7 +23,7 @@ function getMsg($msg,$type='info',$prefix=''){
 			$prefix = $prefix ? $prefix : _('WARNING Message Report');
 			break;
 		case 'success':
-			$Colour='#336600';
+			$Colour='darkgreen';
 			$prefix = $prefix ? $prefix : _('Success Report');
 			break;
 		case 'info':

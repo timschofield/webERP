@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
@@ -259,7 +259,7 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 
 	$LineTotal = $LnItm->QtyDispatched * $LnItm->Price * (1 - $LnItm->DiscountPercent);
 
-	$_SESSION['Items']->total = $_SESSION['Items']->total + $LineTotal;
+	$_SESSION['Items']->total += $LineTotal;
 	$_SESSION['Items']->totalVolume += ($LnItm->QtyDispatched * $LnItm->Volume);
 	$_SESSION['Items']->totalWeight += ($LnItm->QtyDispatched * $LnItm->Weight);
 
@@ -381,6 +381,13 @@ echo '<TD COLSPAN=2 ALIGN=RIGHT>'. _('Charge Freight Cost').'</TD>
 $TaxTotal += $_POST['FreightTaxRate']*$_POST['ChargeFreightCost']/100;
 
 $DisplaySubTotal = number_format(($_SESSION['Items']->total + $_POST['ChargeFreightCost']),2);
+
+
+/* round the totals to avoid silly entries */
+$TaxTotal = round($TaxTotal,2);
+$_SESSION['Items']->total = round($_SESSION['Items']->total,2);
+$_POST['ChargeFreightCost'] = round($_POST['ChargeFreightCost'],2);
+
 echo '<TR>
 	<TD COLSPAN=8 ALIGN=RIGHT>' . _('Invoice Totals'). '</TD>
 	<TD  ALIGN=RIGHT><HR><B>'.$DisplaySubTotal.'</B><HR></TD>
@@ -552,7 +559,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			'',
 			'" . $_SESSION['Items']->DefaultSalesType . "',
 			" . $_SESSION['ProcessingOrder'] . ",
-			" . ($_SESSION['Items']->total) . ",
+			" . $_SESSION['Items']->total . ",
 			" . $TaxTotal . ",
 			" . $_POST['ChargeFreightCost'] . ",
 			" . $_SESSION['CurrencyRate'] . ",

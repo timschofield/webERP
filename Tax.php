@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 2;
 
@@ -86,6 +86,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 	}
 
 	$Taxes = array(); /* elements are TaxTotal, TaxRate, OutputAmount, OutputTax, InputAmount, InputTax */
+	$MessageCounter = 0;
 
 	While ($DebtorTransRow = DB_fetch_array($DebtorTransResult,$db)){
 
@@ -130,16 +131,9 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 		}
 
 
-		if (round($TransTaxLeft,2)!=0){
-			$title = 'Tax Report Error';
-			include ('includes/header.inc');
-			$Msg = '<BR>' . _('The total tax on') . ' ' . $DebtorTransRow['TypeName'] . ' ' . $DebtorTransRow['TransNo'] . ' ' . _('of') . $LineItemsRow['LineTaxAmt'] . ' ' . _('as per the transaction header record was not equal to the sum of the line items - there is a data inconsistency of') . ' ' . $TransTaxLeft ;
-			prnMsg($Msg, 'error');
-			echo "<BR>Freight Amount = " . $DebtorTransRow['FreightAmount'];
-			echo "<BR>Freight Rate = " . $FreightRate;
-
-			include('includes/footer.inc');
-			exit;
+		if (ABS(round($TransTaxLeft,2))>0.01){
+			$WarningMessage[$MessageCounter] =  _('The total tax on') . ' ' . $DebtorTransRow['TypeName'] . ' ' . $DebtorTransRow['TransNo'] . ' ' . _('of') . $LineItemsRow['LineTaxAmt'] . ' ' . _('as per the transaction header record was not equal to the sum of the line items - there is a data inconsistency of') . ' ' . $TransTaxLeft ;
+			$MessageCounter++;
 		}
 
 		if ($_POST['DetailOrSummary']=='Detail'){
@@ -213,8 +207,6 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 		AND SuppTrans.TranDate <= '" . FormatDateForSQL($PeriodEnd) . "'
 		AND (SuppTrans.Type=20 OR SuppTrans.Type=21)
 		ORDER BY SuppTrans.ID";
-
-
 
 	$SuppTransResult = DB_query($SQL,$db,'','',false,false); //doint trap errors in DB_query
 
@@ -385,8 +377,41 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,500,$FontSize,_('Adjustments for GST paid to NZ Customs, FBT, entertainments etc must also be entered'),'left');
 	$YPos -= $line_height;
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,500,$FontSize,_('This information excludes GST on journal entries/payments/receipts all GST should be entered through AR/AP'),'left');
+
+	if (count($WarningMessage)>0){
+		$PageNumber++;
+		$pdf->newPage();
+
+		/*There are warnings - must shown them */
+
+		$FontSize=8;
+		$YPos= $Page_Height-$Top_Margin;
+
+		$pdf->addText($Left_Margin, $YPos,$FontSize, $CompanyName);
+
+		$YPos -=$line_height;
+
+		$FontSize =10;
+		$pdf->addText($Left_Margin, $YPos, $FontSize, $ReportTitle . ' ' . _('Warnings'));
+
+		$FontSize = 8;
+		$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed:') . ' ' . Date("d M Y") . '    ' . _('Page') . ' ' . $PageNumber);
+
+		$YPos -=(3*$line_height);
+
+		foreach ($WarningMessage as $Message){
+			while (strlen($Message)>0){
+				$Message = $pdf->addTextWrap(40,$YPos,450,$FontSize,$Message,'left');
+				$YPos -= $line_height;
+			}
+		}
+	}
+
+
 	$buf = $pdf->output();
 	$len = strlen($buf);
+
+
 
 	header("Content-type: application/pdf");
 	header("Content-Length: $len");

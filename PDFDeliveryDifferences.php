@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 3;
 include("includes/SQL_CommonFunctions.inc");
 include("includes/DateFunctions.inc");
@@ -143,7 +143,7 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,"Total number of
 if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 	$sql = "SELECT Count(OrderNo) FROM SalesOrderDetails INNER JOIN DebtorTrans ON SalesOrderDetails.OrderNo=DebtorTrans.Order_ WHERE DebtorTrans.TranDate>='" . FormatDateForSQL($_POST['FromDate']) . "' AND DebtorTrans.TranDate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
 
-} elseif ($_POST['CategoryID']!='All' AND $_POST['Location']=='Áll') {
+} elseif ($_POST['CategoryID']!='All' AND $_POST['Location']=='All') {
 	$sql = "SELECT Count(OrderNo) FROM SalesOrderDetails INNER JOIN DebtorTrans ON SalesOrderDetails.OrderNo=DebtorTrans.Order_ INNER JOIN StockMaster ON SalesOrderDetails.StkCode=StockMaster.StockID WHERE DebtorTrans.TranDate>='" . FormatDateForSQL($_POST['FromDate']) . "' AND DebtorTrans.TranDate <='" . FormatDateForSQL($_POST['ToDate']) . "' AND CategoryID='" . $_POST['CategoryID'] . "'";
 
 } elseif ($_POST['CategoryID']=='All' AND $_POST['Location']!='All'){
