@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
 
@@ -279,7 +279,7 @@ echo '<TR><TD>'. _('Comments On Why').':</TD><TD><input type=text name="Narrativ
 
 echo '<TR><TD>'._('Adjustment Quantity').':</TD>';
 
-echo '<TD';
+echo '<TD>';
 if ($_SESSION['Adjustment']->Controlled==1){
 		if ($_SESSION['Adjustment']->StockLocation != ''){
 			echo '<INPUT TYPE="HIDDEN" NAME="Quantity" Value="' . $_SESSION['Adjustment']->Quantity . '">

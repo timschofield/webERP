@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -93,7 +93,7 @@
             $_SESSION['AccessLevel'] = $myrow[0];
             $_SESSION['CustomerID'] = $myrow[1];
             $_SESSION['UserBranch'] = $myrow[5];
-            $_SESSION['PageSize'] = $myrow[3];
+            $_SESSION['DefaultPageSize'] = $myrow[3];
             $_SESSION['UserStockLocation'] = $myrow[4];
             $_SESSION['ModulesEnabled'] = explode(",", $myrow[6]);
 	    $_SESSION['UsersRealName'] = $myrow[8];

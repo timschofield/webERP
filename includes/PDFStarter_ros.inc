@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 include ("includes/class.pdf.php");
 
 if (isset($SessionSavePath)){
@@ -23,7 +23,7 @@ if (! in_array($PageSecurity,$SecurityGroups[$_SESSION["AccessLevel"]]) OR !isse
 
 
 if (!isset($PageSize)){
-	$PageSize = $_SESSION['PageSize'];
+	$PageSize = $_SESSION['DefaultPageSize'];
 }
 
 switch ($PageSize) {

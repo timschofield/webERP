@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-12 10:30+1300\n"
+"POT-Creation-Date: 2004-10-16 08:14+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,21 +92,22 @@ msgstr ""
 #: AccountGroups.php:142 AccountGroups.php:145 AccountGroups.php:249
 #: AccountGroups.php:251 CompanyPreferences.php:360 CompanyPreferences.php:362
 #: CompanyPreferences.php:372 CompanyPreferences.php:374
-#: CompanyPreferences.php:384 CompanyPreferences.php:386 GLTransInquiry.php:84
-#: PDFDeliveryDifferences.php:54 SalesAnalRepts.php:385 SalesAnalRepts.php:388
-#: SalesAnalRepts.php:403 SalesAnalRepts.php:406 SalesAnalRepts.php:421
-#: SalesAnalRepts.php:424 Stocks.php:597 Stocks.php:599
+#: CompanyPreferences.php:384 CompanyPreferences.php:386 GLTransInquiry.php:96
+#: PDFDeliveryDifferences.php:54 PurchData.php:313 PurchData.php:316
+#: SalesAnalRepts.php:385 SalesAnalRepts.php:388 SalesAnalRepts.php:403
+#: SalesAnalRepts.php:406 SalesAnalRepts.php:421 SalesAnalRepts.php:424
+#: Stocks.php:597 Stocks.php:599
 msgid "Yes"
 msgstr ""
 
 #: AccountGroups.php:148 AccountGroups.php:254 AccountGroups.php:256
 #: CompanyPreferences.php:359 CompanyPreferences.php:363
 #: CompanyPreferences.php:371 CompanyPreferences.php:375
-#: CompanyPreferences.php:383 CompanyPreferences.php:387 GLTransInquiry.php:82
-#: PDFDeliveryDifferences.php:53 SalesAnalRepts.php:384 SalesAnalRepts.php:387
-#: SalesAnalRepts.php:402 SalesAnalRepts.php:405 SalesAnalRepts.php:420
-#: SalesAnalRepts.php:423 Stocks.php:592 Stocks.php:594
-#: includes/PDFLowGPPageHeader.inc:31
+#: CompanyPreferences.php:383 CompanyPreferences.php:387 GLTransInquiry.php:94
+#: PDFDeliveryDifferences.php:53 PurchData.php:314 PurchData.php:317
+#: SalesAnalRepts.php:384 SalesAnalRepts.php:387 SalesAnalRepts.php:402
+#: SalesAnalRepts.php:405 SalesAnalRepts.php:420 SalesAnalRepts.php:423
+#: Stocks.php:592 Stocks.php:594 includes/PDFLowGPPageHeader.inc:31
 msgid "No"
 msgstr ""
 
@@ -117,7 +118,7 @@ msgstr ""
 
 #: AccountGroups.php:157 BOMs.php:80 COGSGLPostings.php:105
 #: EDIMessageFormat.php:162 FreightCosts.php:210 Help.php:159
-#: PaymentTerms.php:167
+#: PaymentTerms.php:167 Prices.php:177 Prices_Customer.php:200
 msgid "DELETE"
 msgstr ""
 
@@ -147,7 +148,8 @@ msgstr ""
 
 #: AccountGroups.php:266 Areas.php:180 BOMs.php:386 BankAccounts.php:221
 #: COGSGLPostings.php:267 FreightCosts.php:299 Help.php:214 Locations.php:378
-#: PaymentTerms.php:246 SalesAnalRepts.php:443 TaxAuthorities.php:261
+#: PaymentTerms.php:246 Prices_Customer.php:236 SalesAnalRepts.php:443
+#: TaxAuthorities.php:261
 msgid "Enter Information"
 msgstr ""
 
@@ -195,7 +197,8 @@ msgstr ""
 
 #: AgedDebtors.php:182 Credit_Invoice.php:186 InventoryValuation.php:127
 #: MailInventoryValuation.php:64 MailInventoryValuation.php:163
-#: PDFLowGP.php:53 PDFLowGP.php:102 SupplierBalsAtPeriodEnd.php:51
+#: PDFLowGP.php:53 PDFLowGP.php:102 PDFStockCheckComparison.php:27
+#: PDFStockCheckComparison.php:55 SupplierBalsAtPeriodEnd.php:51
 #: includes/ConstructSQLForUserDefinedSalesReport.inc:158
 #: includes/ConstructSQLForUserDefinedSalesReport.inc:304
 msgid "Back to the menu"
@@ -254,7 +257,8 @@ msgstr ""
 
 #: AgedDebtors.php:310 AgedSuppliers.php:275 BOMListing.php:136
 #: DebtorsAtPeriodEnd.php:150 InventoryValuation.php:191
-#: SupplierBalsAtPeriodEnd.php:149 Tax.php:476
+#: PDFCustomerList.php:403 PDFPriceList.php:246
+#: PDFStockCheckComparison.php:369 SupplierBalsAtPeriodEnd.php:149 Tax.php:476
 msgid "Print PDF"
 msgstr ""
 
@@ -334,8 +338,8 @@ msgstr ""
 #: CustomerReceipt.php:437 CustomerReceipt.php:465 CustomerTransInquiry.php:69
 #: GLAccountInquiry.php:99 GLAccountInquiry.php:107 GLAccounts.php:37
 #: GLAccounts.php:44 GLBalanceSheet.php:73 GLBalanceSheet.php:91
-#: Payments.php:166 StockCostUpdate.php:74 StockQuantityByDate.php:73
-#: StockTransfers.php:131
+#: Payments.php:166 PurchData.php:31 PurchData.php:87 PurchData.php:107
+#: StockCostUpdate.php:74 StockQuantityByDate.php:73 StockTransfers.php:131
 msgid "The SQL that failed was"
 msgstr ""
 
@@ -372,15 +376,16 @@ msgid "Area Name"
 msgstr ""
 
 #: Areas.php:128 BankAccounts.php:140 COGSGLPostings.php:104
-#: FreightCosts.php:209 Help.php:158 Locations.php:269 TaxAuthorities.php:167
+#: FreightCosts.php:209 Help.php:158 Locations.php:269 Prices.php:176
+#: Prices_Customer.php:199 PurchData.php:215 TaxAuthorities.php:167
 #: includes/InputSerialItems.php:72
 msgid "Edit"
 msgstr ""
 
 #: Areas.php:131 BankAccounts.php:141 Credit_Invoice.php:302
 #: CustomerReceipt.php:514 GLJournal.php:222 Locations.php:270
-#: Payments.php:583 SalesAnalRepts.php:288 TaxAuthorities.php:168
-#: includes/InputSerialItemsKeyed.php:53
+#: Payments.php:583 PurchData.php:216 SalesAnalRepts.php:288
+#: TaxAuthorities.php:168 includes/InputSerialItemsKeyed.php:53
 msgid "Delete"
 msgstr ""
 
@@ -429,7 +434,7 @@ msgstr ""
 #: BOMInquiry.php:47 BOMs.php:455 GoodsReceived.php:50 PDFOrderStatus.php:253
 #: PO_Items.php:743 PO_Items.php:852 PO_SelectOSPurchOrder.php:151
 #: PO_SelectPurchOrder.php:192 PaymentTerms.php:143 StockQuantityByDate.php:81
-#: TaxAuthorities.php:153
+#: TaxAuthorities.php:153 includes/PDFStockLocTransferHeader.inc:31
 msgid "Description"
 msgstr ""
 
@@ -726,7 +731,7 @@ msgid "description"
 msgstr ""
 
 #: BOMs.php:441 PO_Header.php:200 PO_Items.php:837
-#: PO_SelectOSPurchOrder.php:138 PO_SelectPurchOrder.php:179
+#: PO_SelectOSPurchOrder.php:138 PO_SelectPurchOrder.php:179 PurchData.php:382
 msgid "OR"
 msgstr ""
 
@@ -735,7 +740,8 @@ msgid "Enter extract of the"
 msgstr ""
 
 #: BOMs.php:442 PO_SelectOSPurchOrder.php:138 PO_SelectPurchOrder.php:179
-#: StockAdjustments.php:251 StockCostUpdate.php:103 StockTransfers.php:378
+#: PurchData.php:154 StockAdjustments.php:251 StockCostUpdate.php:103
+#: StockTransfers.php:378
 msgid "Stock Code"
 msgstr ""
 
@@ -746,6 +752,7 @@ msgstr ""
 #: BOMs.php:455 CustomerReceipt.php:715 GLCodesInquiry.php:27
 #: GLCodesInquiry.php:65 PDFOrderStatus.php:252 PO_Header.php:213
 #: PO_Items.php:851 PO_SelectOSPurchOrder.php:150 PO_SelectPurchOrder.php:191
+#: PurchData.php:396
 msgid "Code"
 msgstr ""
 
@@ -968,13 +975,13 @@ msgid "Ref"
 msgstr ""
 
 #: BankMatching.php:143 BankReconciliation.php:81 BankReconciliation.php:152
-#: CustomerTransInquiry.php:74 GLAccountInquiry.php:117 GLTransInquiry.php:66
+#: CustomerTransInquiry.php:74 GLAccountInquiry.php:117 GLTransInquiry.php:78
 #: includes/PDFTaxPageHeader.inc:35
 msgid "Date"
 msgstr ""
 
 #: BankMatching.php:144 CustomerTransInquiry.php:81 GLJournal.php:209
-#: GLJournal.php:216 GLTransInquiry.php:66 Payments.php:572 Payments.php:614
+#: GLJournal.php:216 GLTransInquiry.php:78 Payments.php:572 Payments.php:614
 msgid "Amount"
 msgstr ""
 
@@ -1048,7 +1055,7 @@ msgid "Number"
 msgstr ""
 
 #: BankReconciliation.php:84 BankReconciliation.php:155
-#: CustomerTransInquiry.php:77
+#: CustomerTransInquiry.php:77 includes/PDFStockComparisonPageHeader.inc:36
 msgid "Reference"
 msgstr ""
 
@@ -1108,7 +1115,8 @@ msgstr ""
 msgid "Stock Category"
 msgstr ""
 
-#: COGSGLPostings.php:87 SalesAnalRepts.php:32 SalesAnalRepts.php:34
+#: COGSGLPostings.php:87 Prices.php:155 SalesAnalRepts.php:32
+#: SalesAnalRepts.php:34
 msgid "Sales Type"
 msgstr ""
 
@@ -1192,7 +1200,7 @@ msgstr ""
 msgid "Tax Authority Reference"
 msgstr ""
 
-#: CompanyPreferences.php:162
+#: CompanyPreferences.php:162 includes/PDFCustomerListPageHeader.inc:83
 msgid "Postal Address"
 msgstr ""
 
@@ -1277,7 +1285,8 @@ msgid "Create GL entries for stock transactions (at standard cost)"
 msgstr ""
 
 #: CompanyPreferences.php:393 ConfirmDispatch_Invoice.php:1226
-#: Credit_Invoice.php:1288 StockCostUpdate.php:140 WorkOrderIssue.php:131
+#: Credit_Invoice.php:1288 PurchData.php:322 StockCostUpdate.php:140
+#: WorkOrderIssue.php:131
 msgid "Update"
 msgstr ""
 
@@ -1388,6 +1397,7 @@ msgstr ""
 #: ConfirmDispatch_Invoice.php:226 Credit_Invoice.php:245 OrderDetails.php:193
 #: PO_Items.php:698 StockLocTransfer.php:147 StockLocTransferReceive.php:389
 #: StockQuantityByDate.php:80 Stocks.php:418
+#: includes/PDFStockLocTransferHeader.inc:30
 msgid "Item Code"
 msgstr ""
 
@@ -1410,6 +1420,8 @@ msgstr ""
 
 #: ConfirmDispatch_Invoice.php:232 Credit_Invoice.php:250 GoodsReceived.php:55
 #: OrderDetails.php:197 PO_Items.php:703 PO_Items.php:756 PO_Items.php:781
+#: Prices.php:156 Prices.php:253 Prices_Customer.php:233 PurchData.php:181
+#: includes/PDFPriceListPageHeader.inc:46
 msgid "Price"
 msgstr ""
 
@@ -2458,8 +2470,9 @@ msgid ""
 msgstr ""
 
 #: CustomerTransInquiry.php:76 FTP_RadioBeacon.php:63
-#: includes/PDFOrderStatusPageHeader.inc:42
-#: includes/PDFDeliveryDifferencesPageHeader.inc:45
+#: includes/PDFOrderStatusPageHeader.inc:42 Prices_Customer.php:186
+#: Prices_Customer.php:230 includes/PDFDeliveryDifferencesPageHeader.inc:45
+#: includes/PDFPriceListPageHeader.inc:42
 msgid "Branch"
 msgstr ""
 
@@ -2478,7 +2491,8 @@ msgstr ""
 
 #: CustomerTransInquiry.php:82 PO_Header.php:215 PO_SelectOSPurchOrder.php:310
 #: PO_SelectPurchOrder.php:348 Payments.php:513 Payments.php:533
-#: includes/PDFSupplierBalsPageHeader.inc:36
+#: Prices.php:154 Prices.php:220 PurchData.php:182 PurchData.php:298
+#: PurchData.php:398 includes/PDFSupplierBalsPageHeader.inc:36
 msgid "Currency"
 msgstr ""
 
@@ -2697,7 +2711,7 @@ msgstr ""
 msgid "Insert New Customer"
 msgstr ""
 
-#: Customers.php:315
+#: Customers.php:315 PurchData.php:388
 msgid "Reset"
 msgstr ""
 
@@ -2791,7 +2805,9 @@ msgstr ""
 msgid "Defintion of"
 msgstr ""
 
-#: EDIMessageFormat.php:125 EDIMessageFormat.php:201
+#: EDIMessageFormat.php:125 EDIMessageFormat.php:201 Prices_Customer.php:33
+#: includes/PDFPriceListPageHeader.inc:18
+#: includes/PDFPriceListPageHeader.inc:21
 msgid "for"
 msgstr ""
 
@@ -3315,7 +3331,7 @@ msgstr ""
 msgid "No orders were returned because"
 msgstr ""
 
-#: FTP_RadioBeacon.php:60 PO_SelectOSPurchOrder.php:306
+#: FTP_RadioBeacon.php:60 PO_SelectOSPurchOrder.php:306 UserSettings.php:111
 msgid "Modify"
 msgstr ""
 
@@ -3522,7 +3538,7 @@ msgid "General Ledger Account Inquiry"
 msgstr ""
 
 #: GLAccountInquiry.php:31 GLAccounts.php:174 GLBalanceSheet.php:99
-#: GLProfit_Loss.php:140 GLTransInquiry.php:66 GLTrialBalance.php:135
+#: GLProfit_Loss.php:140 GLTransInquiry.php:78 GLTrialBalance.php:135
 msgid "Account"
 msgstr ""
 
@@ -3554,7 +3570,7 @@ msgstr ""
 msgid "Credit"
 msgstr ""
 
-#: GLAccountInquiry.php:120 GLJournal.php:216 GLTransInquiry.php:66
+#: GLAccountInquiry.php:120 GLJournal.php:216 GLTransInquiry.php:78
 #: Payments.php:574
 msgid "Narrative"
 msgstr ""
@@ -3835,7 +3851,7 @@ msgstr ""
 
 #: GLJournal.php:85 Payments.php:200 Payments.php:234 Payments.php:246
 #: Payments.php:270 Payments.php:291 Payments.php:318 Payments.php:319
-#: Payments.php:347 Payments.php:352
+#: Payments.php:347 Payments.php:352 Prices.php:55
 msgid "Problem Report"
 msgstr ""
 
@@ -3979,7 +3995,7 @@ msgstr ""
 msgid "Profit -Loss"
 msgstr ""
 
-#: GLTransInquiry.php:3
+#: GLTransInquiry.php:7
 msgid "General Ledger Transaction Inquiry"
 msgstr ""
 
@@ -3997,7 +4013,7 @@ msgstr ""
 msgid "The transaction type "
 msgstr ""
 
-#: GLTransInquiry.php:25 GLTransInquiry.php:50
+#: GLTransInquiry.php:25 GLTransInquiry.php:62
 msgid " could not be retrieved, the SQL returned an error because - "
 msgstr ""
 
@@ -4013,23 +4029,23 @@ msgstr ""
 msgid " beyond the last one entered."
 msgstr ""
 
-#: GLTransInquiry.php:50
+#: GLTransInquiry.php:62
 msgid "The transactions for "
 msgstr ""
 
-#: GLTransInquiry.php:50 GLTransInquiry.php:56
+#: GLTransInquiry.php:62 GLTransInquiry.php:68
 msgid " number "
 msgstr ""
 
-#: GLTransInquiry.php:56
+#: GLTransInquiry.php:68
 msgid "No general ledger transactions have been created for "
 msgstr ""
 
-#: GLTransInquiry.php:66
+#: GLTransInquiry.php:78
 msgid "Period"
 msgstr ""
 
-#: GLTransInquiry.php:66
+#: GLTransInquiry.php:78
 msgid "Posted"
 msgstr ""
 
@@ -4187,8 +4203,8 @@ msgstr ""
 msgid "The following SQL to insert the GRN record was used"
 msgstr ""
 
-#: GoodsReceived.php:325 StockAdjustments.php:217 StockTransfers.php:347
-#: StockTransfers.php:358
+#: GoodsReceived.php:325 PDFStockCheckComparison.php:121
+#: StockAdjustments.php:217 StockTransfers.php:347 StockTransfers.php:358
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The location stock "
 "record could not be updated because"
@@ -4373,6 +4389,7 @@ msgstr ""
 
 #: InventoryValuation.php:52 InventoryValuation.php:98
 #: MailInventoryValuation.php:87 MailInventoryValuation.php:133
+#: PDFStockCheckComparison.php:289
 msgid "Total for"
 msgstr ""
 
@@ -4724,6 +4741,107 @@ msgstr ""
 msgid "Total Volume"
 msgstr ""
 
+#: PDFCustomerList.php:16 PDFCustomerList.php:216
+msgid "Customer List - Problem Report...."
+msgstr ""
+
+#: PDFCustomerList.php:19
+msgid ""
+"The acitivty amount is not numeric and you elected to print customer "
+"relative to a certain amount of activity - this level of activity must be "
+"specified in the local currency"
+msgstr ""
+
+#: PDFCustomerList.php:28 PDFCustomerList.php:29
+msgid "Customer Listing"
+msgstr ""
+
+#: PDFCustomerList.php:218
+msgid "The customer List could not be retrieved by the SQL because"
+msgstr ""
+
+#: PDFCustomerList.php:219 PDFCustomerList.php:340 PDFPriceList.php:99
+#: PDFPriceList.php:179 PDFStockCheckComparison.php:261
+#: PDFStockLocTransfer.php:85
+msgid "Back to the Menu"
+msgstr ""
+
+#: PDFCustomerList.php:245
+msgid "Could not retrieve the activity of the branch because"
+msgstr ""
+
+#: PDFCustomerList.php:245
+msgid "The failed SQL was:"
+msgstr ""
+
+#: PDFCustomerList.php:275
+msgid "Customers In"
+msgstr ""
+
+#: PDFCustomerList.php:306
+msgid "Price List:"
+msgstr ""
+
+#: PDFCustomerList.php:309
+msgid "Turnover"
+msgstr ""
+
+#: PDFCustomerList.php:315
+msgid "Ph:"
+msgstr ""
+
+#: PDFCustomerList.php:316
+msgid "Fax:"
+msgstr ""
+
+#: PDFCustomerList.php:336
+msgid "Print Customer List Error"
+msgstr ""
+
+#: PDFCustomerList.php:339
+msgid "There were no customers to print out for the selections specified"
+msgstr ""
+
+#: PDFCustomerList.php:359
+msgid "Customer Details Listing"
+msgstr ""
+
+#: PDFCustomerList.php:366
+msgid "For Sales Areas"
+msgstr ""
+
+#: PDFCustomerList.php:371
+msgid "All Areas"
+msgstr ""
+
+#: PDFCustomerList.php:378
+msgid "For Sales folk"
+msgstr ""
+
+#: PDFCustomerList.php:380
+msgid "All sales folk"
+msgstr ""
+
+#: PDFCustomerList.php:390
+msgid "Level Of Activity"
+msgstr ""
+
+#: PDFCustomerList.php:392
+msgid "All customers"
+msgstr ""
+
+#: PDFCustomerList.php:393
+msgid "Sales Greater Than"
+msgstr ""
+
+#: PDFCustomerList.php:394
+msgid "Sales Less Than"
+msgstr ""
+
+#: PDFCustomerList.php:400
+msgid "Activity Since"
+msgstr ""
+
 #: PDFDeliveryDifferences.php:11 PDFOrderStatus.php:14
 msgid ""
 "The date entered was in an unrecognised format it must be specified in the "
@@ -4856,6 +4974,85 @@ msgstr ""
 msgid "Show sales with GP % below"
 msgstr ""
 
+#: PDFPriceList.php:17
+msgid "Price Listing Report"
+msgstr ""
+
+#: PDFPriceList.php:18
+msgid "Price List"
+msgstr ""
+
+#: PDFPriceList.php:29
+msgid ""
+"The Customer must first be selected from the select customer link , re-run "
+"the price list once the customer has been selected"
+msgstr ""
+
+#: PDFPriceList.php:96
+msgid "Price List - Problem Report...."
+msgstr ""
+
+#: PDFPriceList.php:98
+msgid "The Price List could not be retrieved by the SQL because"
+msgstr ""
+
+#: PDFPriceList.php:116
+msgid "Prices in"
+msgstr ""
+
+#: PDFPriceList.php:142 PO_Items.php:824
+msgid "All"
+msgstr ""
+
+#: PDFPriceList.php:176
+msgid "Print Price List Error"
+msgstr ""
+
+#: PDFPriceList.php:178
+msgid ""
+"There were no price details to print out for the customer/category specified"
+msgstr ""
+
+#: PDFPriceList.php:196
+msgid "Price Listing"
+msgstr ""
+
+#: PDFPriceList.php:208
+msgid "From Inventory Category Code"
+msgstr ""
+
+#: PDFPriceList.php:217
+msgid "To Inventory Category Code"
+msgstr ""
+
+#: PDFPriceList.php:227
+msgid "For Sales Type/Price List"
+msgstr ""
+
+#: PDFPriceList.php:236
+msgid "Show Gross Profit %"
+msgstr ""
+
+#: PDFPriceList.php:237
+msgid "Prices Only"
+msgstr ""
+
+#: PDFPriceList.php:238
+msgid "Show GP % too"
+msgstr ""
+
+#: PDFPriceList.php:241
+msgid "Price Listing Type"
+msgstr ""
+
+#: PDFPriceList.php:242
+msgid "Customer Special Prices Only"
+msgstr ""
+
+#: PDFPriceList.php:243
+msgid "Default Sales Type Prices"
+msgstr ""
+
 #: PDFOrderStatus.php:24 PDFOrderStatus.php:205
 msgid "Order Status Report"
 msgstr ""
@@ -4897,7 +5094,10 @@ msgid "Orders from"
 msgstr ""
 
 #: PDFOrderStatus.php:241 PO_SelectOSPurchOrder.php:335
-#: includes/PDFLowGPPageHeader.inc:16
+#: includes/PDFCustomerListPageHeader.inc:70
+#: includes/PDFLowGPPageHeader.inc:16 includes/PDFPriceListPageHeader.inc:12
+#: includes/PDFStockComparisonPageHeader.inc:12
+#: includes/PDFStockLocTransferHeader.inc:11
 msgid "Printed"
 msgstr ""
 
@@ -4922,6 +5122,7 @@ msgstr ""
 #: SalesAnalRepts.php:429 SalesAnalRepts.php:438 StockTransfers.php:271
 #: includes/PDFDeliveryDifferencesPageHeader.inc:19
 #: includes/PDFDeliveryDifferencesPageHeader.inc:21
+#: includes/PDFStockLocTransferHeader.inc:15
 msgid "From"
 msgstr ""
 
@@ -4930,6 +5131,7 @@ msgid "for delivery ex"
 msgstr ""
 
 #: includes/PDFOrderStatusPageHeader.inc:24
+#: includes/PDFCustomerListPageHeader.inc:46
 #: includes/PDFDeliveryDifferencesPageHeader.inc:24
 msgid "only"
 msgstr ""
@@ -4948,6 +5150,179 @@ msgstr ""
 
 #: includes/PDFOrderStatusPageHeader.inc:45
 msgid "Loc"
+msgstr ""
+
+#: PDFStockCheckComparison.php:5
+msgid "Inventory Comparison Comparison Report"
+msgstr ""
+
+#: PDFStockCheckComparison.php:23
+msgid "Stock Freeze - Problem Report...."
+msgstr ""
+
+#: PDFStockCheckComparison.php:26
+msgid "The inventory check file could not be retreived because"
+msgstr ""
+
+#: PDFStockCheckComparison.php:51
+msgid "Stock Count Comparison - Problem Report...."
+msgstr ""
+
+#: PDFStockCheckComparison.php:54
+msgid "The inventory counts file could not be retreived because"
+msgstr ""
+
+#: PDFStockCheckComparison.php:108
+msgid "Inventory Check"
+msgstr ""
+
+#: PDFStockCheckComparison.php:113 StockAdjustments.php:148
+#: StockTransfers.php:163 StockTransfers.php:276
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The stock movement "
+"record cannot be inserted because"
+msgstr ""
+
+#: PDFStockCheckComparison.php:114 StockAdjustments.php:149
+#: StockTransfers.php:164 StockTransfers.php:277
+msgid "The following SQL to insert the stock movement record was used"
+msgstr ""
+
+#: PDFStockCheckComparison.php:122 StockAdjustments.php:218
+msgid "The following SQL to update the stock record was used"
+msgstr ""
+
+#: PDFStockCheckComparison.php:128 PDFStockCheckComparison.php:147
+#: StockAdjustments.php:228 StockAdjustments.php:234
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The general ledger "
+"transaction entries could not be added because"
+msgstr ""
+
+#: PDFStockCheckComparison.php:129 PDFStockCheckComparison.php:148
+#: StockAdjustments.php:229 StockAdjustments.php:235
+msgid "The following SQL to insert the GL entries was used"
+msgstr ""
+
+#: PDFStockCheckComparison.php:166
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: Unable to COMMIT "
+"transaction while adjusting stock in StockCheckAdjustmet report"
+msgstr ""
+
+#: PDFStockCheckComparison.php:176
+msgid "The Inventory Comparison data could not be retrieved because"
+msgstr ""
+
+#: PDFStockCheckComparison.php:177
+msgid "The following SQL to retrieve the Inventory Comparison data was used"
+msgstr ""
+
+#: PDFStockCheckComparison.php:198
+msgid "There is no inventory check data to report on."
+msgstr ""
+
+#: PDFStockCheckComparison.php:199
+msgid "To start an inventory check first run the"
+msgstr ""
+
+#: PDFStockCheckComparison.php:199
+msgid "inventory check sheets"
+msgstr ""
+
+#: PDFStockCheckComparison.php:199
+msgid "and select the option to create new Inventory Comparison data file"
+msgstr ""
+
+#: PDFStockCheckComparison.php:204
+msgid "Check Comparison Report"
+msgstr ""
+
+#: PDFStockCheckComparison.php:205
+msgid "Inventory Check Comparision"
+msgstr ""
+
+#: PDFStockCheckComparison.php:257
+msgid "Inventory Comparison - Problem Report"
+msgstr ""
+
+#: PDFStockCheckComparison.php:260
+msgid "The inventory counts could not be retrieved by the SQL because"
+msgstr ""
+
+#: PDFStockCheckComparison.php:271
+msgid "No counts entered"
+msgstr ""
+
+#: PDFStockCheckComparison.php:309
+msgid "Print Stock check comparison Error"
+msgstr ""
+
+#: PDFStockCheckComparison.php:312
+msgid "There were no Inventory Comparison sheets to print out"
+msgstr ""
+
+#: PDFStockCheckComparison.php:346
+msgid "Choose Option"
+msgstr ""
+
+#: PDFStockCheckComparison.php:349 PDFStockCheckComparison.php:353
+msgid ""
+"Report and Close the Inventory Comparison Processing Adjustments As Necessary"
+msgstr ""
+
+#: PDFStockCheckComparison.php:350 PDFStockCheckComparison.php:352
+msgid "Report The Inventory Comparison Differences Only - No Adjustments"
+msgstr ""
+
+#: PDFStockCheckComparison.php:359
+msgid "Action for Zero Counts"
+msgstr ""
+
+#: PDFStockCheckComparison.php:362 PDFStockCheckComparison.php:365
+msgid "Adjust System stock to Nil"
+msgstr ""
+
+#: PDFStockCheckComparison.php:363 PDFStockCheckComparison.php:366
+msgid "Don't Adjust System stock to Nil"
+msgstr ""
+
+#: PDFStockLocTransfer.php:7
+msgid "Stock Location Transfer Docket Error"
+msgstr ""
+
+#: PDFStockLocTransfer.php:17
+msgid "This page must be called with a location transfer reference number"
+msgstr ""
+
+#: PDFStockLocTransfer.php:23
+msgid "Inventory Location Transfer BOL"
+msgstr ""
+
+#: PDFStockLocTransfer.php:24
+msgid "Inventory Location Transfer BOL #"
+msgstr ""
+
+#: PDFStockLocTransfer.php:26
+msgid "An error occurred retrieving the items on the transfer"
+msgstr ""
+
+#: PDFStockLocTransfer.php:26
+msgid "<P>This page must be called with a location transfer reference number"
+msgstr ""
+
+#: PDFStockLocTransfer.php:27
+msgid "The SQL that failed while retrieving the items on the transfer was"
+msgstr ""
+
+#: PDFStockLocTransfer.php:48
+msgid ""
+"The transfer reference selected does not appear to be set up - enter the "
+"items to be transferred first"
+msgstr ""
+
+#: PDFStockLocTransfer.php:84
+msgid "There was no stock location transfer to print out"
 msgstr ""
 
 #: PO_Chk_ShiptRef_JobRef.php:15 PO_Chk_ShiptRef_JobRef.php:20
@@ -5076,7 +5451,7 @@ msgstr ""
 msgid "Enter text extract in the supplier code"
 msgstr ""
 
-#: PO_Header.php:214
+#: PO_Header.php:214 PurchData.php:397
 msgid "Supplier Name"
 msgstr ""
 
@@ -5312,7 +5687,7 @@ msgstr ""
 msgid "The quantity of the ordered item entered must be a positive amount"
 msgstr ""
 
-#: PO_Items.php:419
+#: PO_Items.php:419 Prices.php:68 Prices_Customer.php:54
 msgid "The price entered must be numeric"
 msgstr ""
 
@@ -5510,10 +5885,6 @@ msgstr ""
 msgid "Select a stock category"
 msgstr ""
 
-#: PO_Items.php:824
-msgid "All"
-msgstr ""
-
 #: PO_Items.php:834
 msgid "Enter text extract(s) in the <B>description</B>"
 msgstr ""
@@ -5560,7 +5931,11 @@ msgid "For supplier"
 msgstr ""
 
 #: PO_SelectOSPurchOrder.php:49 PO_SelectOSPurchOrder.php:53
-#: includes/PDFBOMListingPageHeader.inc:21 includes/PDFLowGPPageHeader.inc:15
+#: includes/PDFBOMListingPageHeader.inc:21
+#: includes/PDFCustomerListPageHeader.inc:31
+#: includes/PDFCustomerListPageHeader.inc:53
+#: includes/PDFLowGPPageHeader.inc:15 includes/PDFPriceListPageHeader.inc:18
+#: includes/PDFPriceListPageHeader.inc:21
 #: includes/PDFSupplierBalsPageHeader.inc:17
 msgid "and"
 msgstr ""
@@ -5620,7 +5995,7 @@ msgstr ""
 msgid "Print"
 msgstr ""
 
-#: PO_SelectOSPurchOrder.php:309 PO_SelectPurchOrder.php:347
+#: PO_SelectOSPurchOrder.php:309 PO_SelectPurchOrder.php:347 PurchData.php:180
 #: includes/PDFAgedSuppliersPageHeader.inc:34
 #: includes/PDFSupplierBalsPageHeader.inc:33
 msgid "Supplier"
@@ -5720,7 +6095,7 @@ msgstr ""
 msgid "th"
 msgstr ""
 
-#: PaymentTerms.php:159
+#: PaymentTerms.php:159 PurchData.php:213
 msgid "days"
 msgstr ""
 
@@ -5934,6 +6309,136 @@ msgstr ""
 msgid "Date of Last Day"
 msgstr ""
 
+#: Prices.php:8
+msgid "Item Prices"
+msgstr ""
+
+#: Prices.php:36
+msgid ""
+"The part code entered does not exist in the database. Only valid parts can "
+"have prices entered against them"
+msgstr ""
+
+#: Prices.php:43
+msgid ""
+"An item must first be selected before this page is called. The product "
+"selection page should call this page with a valid product code"
+msgstr ""
+
+#: Prices.php:51
+msgid "Pricing for part"
+msgstr ""
+
+#: Prices.php:51
+msgid "Review Prices"
+msgstr ""
+
+#: Prices.php:55
+msgid ""
+"The part selected is a kit set item, these items explode into their "
+"components when selected on an order, prices must be set up for the "
+"components and no price can be set for the whole kit"
+msgstr ""
+
+#: Prices.php:83 Prices.php:105
+msgid "This price has been updated"
+msgstr ""
+
+#: Prices.php:99
+msgid "The new price has been added"
+msgstr ""
+
+#: Prices.php:106 Prices_Customer.php:107
+msgid "The price could not be updated because"
+msgstr ""
+
+#: Prices.php:108 Prices_Customer.php:109
+msgid "The price could not be added because"
+msgstr ""
+
+#: Prices.php:111
+msgid "The SQL that caused the problem was"
+msgstr ""
+
+#: Prices.php:129
+msgid "The selected price has been deleted"
+msgstr ""
+
+#: Prices.php:206
+msgid "There are no prices set up for this part"
+msgstr ""
+
+#: Prices.php:232
+msgid "Sales Type Price List"
+msgstr ""
+
+#: Prices.php:261
+msgid "Enter/Amend Price"
+msgstr ""
+
+#: Prices_Customer.php:7
+msgid "Special Prices for"
+msgstr ""
+
+#: Prices_Customer.php:20
+msgid ""
+"A customer must be selected from the customer selection screen, then an item "
+"must be selected before this page is called. The product selection page "
+"should call this page with a valid product code"
+msgstr ""
+
+#: Prices_Customer.php:33
+msgid "in"
+msgstr ""
+
+#: Prices_Customer.php:67
+msgid "The branch code entered is not currently defined"
+msgstr ""
+
+#: Prices_Customer.php:83
+msgid "Price Updated."
+msgstr ""
+
+#: Prices_Customer.php:100
+msgid "Price added"
+msgstr ""
+
+#: Prices_Customer.php:106
+msgid "Price Updated"
+msgstr ""
+
+#: Prices_Customer.php:128
+msgid "This price has been deleted"
+msgstr ""
+
+#: Prices_Customer.php:144
+msgid "Could not retrieve the normal prices set up because"
+msgstr ""
+
+#: Prices_Customer.php:145 Prices_Customer.php:176
+msgid "The SQL used to retreive these records was"
+msgstr ""
+
+#: Prices_Customer.php:152
+msgid "There are no default prices set up for this part"
+msgstr ""
+
+#: Prices_Customer.php:154
+msgid "Normal Price"
+msgstr ""
+
+#: Prices_Customer.php:175
+msgid "Could not retrieve the special prices set up because"
+msgstr ""
+
+#: Prices_Customer.php:182
+msgid "There are no special prices set up for this part"
+msgstr ""
+
+#: Prices_Customer.php:185
+msgid "Special Price"
+msgstr ""
+
 #: PrintCustTrans.php:55
 msgid "Access Denied Error"
 msgstr ""
@@ -6022,6 +6527,270 @@ msgstr ""
 
 #: PrintCustTrans.php:472
 msgid "Select Invoices/Credit Notes To Print"
+msgstr ""
+
+#: PurchData.php:8
+msgid "Supplier Purchasing Data"
+msgstr ""
+
+#: PurchData.php:30
+msgid ""
+"The supplier details for the selected supplier could not be retrieved because"
+msgstr ""
+
+#: PurchData.php:39
+msgid "WARNING: The supplier code"
+msgstr ""
+
+#: PurchData.php:39
+msgid ""
+"is not an existing supplier in the database. You must enter an alternative "
+"supplier code or select a supplier using the search facility below"
+msgstr ""
+
+#: PurchData.php:48
+msgid ""
+"There is no stock item set up enter the stock code or select a stock item "
+"using the search page"
+msgstr ""
+
+#: PurchData.php:53
+msgid ""
+"The price entered was not numeric (a number is expected) - no changes have "
+"been made to the database"
+msgstr ""
+
+#: PurchData.php:58
+msgid ""
+"The lead time entered was not numeric (a number is expected) - no changes "
+"have been made to the database"
+msgstr ""
+
+#: PurchData.php:63
+msgid ""
+"The conversion factor entered was not numeric (a number is expected). The "
+"conversion factor is the number by which the price must be divided by to get "
+"the unit price in our unit of measure"
+msgstr ""
+
+#: PurchData.php:63
+msgid ""
+"Eg. The supplier sells an item by the tonne and we hold stock by the kg. The "
+"suppliers price must be divided by 1000 to get to our cost per kg. The "
+"conversion factor to enter is 1000"
+msgstr ""
+
+#: PurchData.php:63
+msgid "No changes will be made to the database"
+msgstr ""
+
+#: PurchData.php:86
+msgid ""
+"The supplier purchasing details could not be added to the database because"
+msgstr ""
+
+#: PurchData.php:90
+msgid "This supplier purchasing data has been added to the database"
+msgstr ""
+
+#: PurchData.php:106
+msgid "The supplier purchasing details could not be update because"
+msgstr ""
+
+#: PurchData.php:111
+msgid "Supplier purchasing data has been updated"
+msgstr ""
+
+#: PurchData.php:132
+msgid "The supplier purchasing details could not be deleted because"
+msgstr ""
+
+#: PurchData.php:135
+msgid "This purchasing data record has been sucessfully deleted"
+msgstr ""
+
+#: PurchData.php:144
+msgid ""
+"The part selected is a dummy part or an assembly/kit set part - it is not "
+"purchased. Entry of purchasing information is therefore inappropriate"
+msgstr ""
+
+#: PurchData.php:147 StockAdjustments.php:254 StockTransfers.php:384
+msgid "In Units of"
+msgstr ""
+
+#: PurchData.php:150 Stocks.php:203
+msgid "Stock Item"
+msgstr ""
+
+#: PurchData.php:150
+msgid "is not defined in the database"
+msgstr ""
+
+#: PurchData.php:155
+msgid "Show Suppliers"
+msgstr ""
+
+#: PurchData.php:156
+msgid "Select Product"
+msgstr ""
+
+#: PurchData.php:171
+msgid ""
+"The supplier purchasing details for the selected part could not be retrieved "
+"because"
+msgstr ""
+
+#: PurchData.php:176
+msgid "There is no purchasing data set up for the part selected"
+msgstr ""
+
+#: PurchData.php:183
+msgid "Supplier Unit"
+msgstr ""
+
+#: PurchData.php:184
+msgid "Lead Time"
+msgstr ""
+
+#: PurchData.php:185
+msgid "Preferred"
+msgstr ""
+
+#: PurchData.php:242
+msgid "WARNING: There are now"
+msgstr ""
+
+#: PurchData.php:242
+msgid "preferred suppliers set up for"
+msgstr ""
+
+#: PurchData.php:242
+msgid ""
+"you should edit the supplier purchasing data to make only one supplier the "
+"preferred supplier"
+msgstr ""
+
+#: PurchData.php:244
+msgid "WARNING: There are NO preferred suppliers set up for"
+msgstr ""
+
+#: PurchData.php:244
+msgid "you should make one supplier only the preferred supplier"
+msgstr ""
+
+#: PurchData.php:268
+msgid ""
+"The supplier purchasing details for the selected supplier and item could not "
+"be retrieved because"
+msgstr ""
+
+#: PurchData.php:287 PurchData.php:289
+msgid "Supplier Code"
+msgstr ""
+
+#: PurchData.php:291
+msgid "A search facility is available below if necessary"
+msgstr ""
+
+#: PurchData.php:299
+msgid "Price (in Supplier Currency)"
+msgstr ""
+
+#: PurchData.php:300
+msgid "Suppliers Unit of Measure"
+msgstr ""
+
+#: PurchData.php:304
+msgid "Conversion Factor (to our UOM)"
+msgstr ""
+
+#: PurchData.php:305
+msgid "Supplier Code or Description"
+msgstr ""
+
+#: PurchData.php:309
+msgid "Lead Time (in days from date of order)"
+msgstr ""
+
+#: PurchData.php:310
+msgid "Preferred Supplier"
+msgstr ""
+
+#: PurchData.php:324 StockAdjustments.php:288
+msgid "Add"
+msgstr ""
+
+#: PurchData.php:332
+msgid ""
+"Supplier name keywords have been used in preference to the Supplier code "
+"extract entered"
+msgstr ""
+
+#: PurchData.php:335
+msgid ""
+"At least one Supplier name keyword OR an extract of a Supplier code must be "
+"entered for the search"
+msgstr ""
+
+#: PurchData.php:368
+msgid ""
+"The suppliers matching the criteria entered could not be retrieved because"
+msgstr ""
+
+#: PurchData.php:369
+msgid "The SQL to retireve supplier details that failed was"
+msgstr ""
+
+#: PurchData.php:380
+msgid "Text in the Supplier"
+msgstr ""
+
+#: PurchData.php:380
+msgid "NAME"
+msgstr ""
+
+#: PurchData.php:383
+msgid "Text in Supplier"
+msgstr ""
+
+#: PurchData.php:383
+msgid "CODE"
+msgstr ""
+
+#: PurchData.php:387
+msgid "Find Suppliers Now"
+msgstr ""
+
+#: PurchData.php:399
+msgid "Address 1"
+msgstr ""
+
+#: PurchData.php:400
+msgid "Address 2"
+msgstr ""
+
+#: PurchData.php:401
+msgid "Address 3"
+msgstr ""
+
+#: PurchData.php:440 StockAdjustments.php:301 StockCostUpdate.php:142
+#: StockQuantityByDate.php:57 StockTransfers.php:445
+msgid "Show Stock Status"
+msgstr ""
+
+#: PurchData.php:441 StockCostUpdate.php:143
+msgid "Show Stock Movements"
+msgstr ""
+
+#: PurchData.php:442 StockAdjustments.php:304 StockCostUpdate.php:145
+#: StockTransfers.php:448
+msgid "Search Outstanding Sales Orders"
+msgstr ""
+
+#: PurchData.php:443 StockAdjustments.php:305 StockCostUpdate.php:146
+#: StockTransfers.php:449
+msgid "Search Completed Sales Orders"
 msgstr ""
 
 #: SalesAnalRepts.php:17 SalesAnalRepts.php:19
@@ -6288,16 +7057,6 @@ msgid ""
 "numbers (or batch references) to be adjusted, to be entered"
 msgstr ""
 
-#: StockAdjustments.php:148 StockTransfers.php:163 StockTransfers.php:276
-msgid ""
-"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The stock movement "
-"record cannot be inserted because"
-msgstr ""
-
-#: StockAdjustments.php:149 StockTransfers.php:164 StockTransfers.php:277
-msgid "The following SQL to insert the stock movement record was used"
-msgstr ""
-
 #: StockAdjustments.php:170
 msgid "Unable to determine if the serial item exists"
 msgstr ""
@@ -6320,20 +7079,6 @@ msgid ""
 "movement record could not be inserted because"
 msgstr ""
 
-#: StockAdjustments.php:218
-msgid "The following SQL to update the stock record was used"
-msgstr ""
-
-#: StockAdjustments.php:228 StockAdjustments.php:234
-msgid ""
-"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The general ledger "
-"transaction entries could not be added because"
-msgstr ""
-
-#: StockAdjustments.php:229 StockAdjustments.php:235
-msgid "The following SQL to insert the GL entries was used"
-msgstr ""
-
 #: StockAdjustments.php:241
 msgid "A stock Adjustment for"
 msgstr ""
@@ -6344,10 +7089,6 @@ msgstr ""
 
 #: StockAdjustments.php:251 StockTransfers.php:380
 msgid "Check Part"
-msgstr ""
-
-#: StockAdjustments.php:254 StockTransfers.php:384
-msgid "In Units of"
 msgstr ""
 
 #: StockAdjustments.php:257
@@ -6366,10 +7107,6 @@ msgstr ""
 msgid "Remove"
 msgstr ""
 
-#: StockAdjustments.php:288
-msgid "Add"
-msgstr ""
-
 #: StockAdjustments.php:290
 msgid ""
 "Please Select a Location and Press \"Enter Stock Adjustment\" below to enter "
@@ -6380,25 +7117,12 @@ msgstr ""
 msgid "Enter Stock Adjustment"
 msgstr ""
 
-#: StockAdjustments.php:301 StockCostUpdate.php:142 StockQuantityByDate.php:57
-#: StockTransfers.php:445
-msgid "Show Stock Status"
-msgstr ""
-
 #: StockAdjustments.php:302 StockTransfers.php:446
 msgid "Show Movements"
 msgstr ""
 
 #: StockAdjustments.php:303 StockCostUpdate.php:144 StockTransfers.php:447
 msgid "Show Stock Usage"
-msgstr ""
-
-#: StockAdjustments.php:304 StockCostUpdate.php:145 StockTransfers.php:448
-msgid "Search Outstanding Sales Orders"
-msgstr ""
-
-#: StockAdjustments.php:305 StockCostUpdate.php:146 StockTransfers.php:449
-msgid "Search Completed Sales Orders"
 msgstr ""
 
 #: StockAdjustmentsControlled.php:9
@@ -6521,10 +7245,6 @@ msgstr ""
 
 #: StockCostUpdate.php:134
 msgid "Standard Overhead Cost Per Unit"
-msgstr ""
-
-#: StockCostUpdate.php:143
-msgid "Show Stock Movements"
 msgstr ""
 
 #: StockLocTransfer.php:7
@@ -7073,10 +7793,6 @@ msgstr ""
 msgid "The SQL that was used to update the stock item, and failed was"
 msgstr ""
 
-#: Stocks.php:203
-msgid "Stock Item"
-msgstr ""
-
 #: Stocks.php:243
 msgid "The item could not be added because"
 msgstr ""
@@ -7414,8 +8130,11 @@ msgstr ""
 #: includes/PDFAgedDebtorsPageHeader.inc:26
 #: includes/PDFAgedSuppliersPageHeader.inc:21
 #: includes/PDFBOMListingPageHeader.inc:26
+#: includes/PDFCustomerListPageHeader.inc:70
 #: includes/PDFDeliveryDifferencesPageHeader.inc:29
-#: includes/PDFLowGPPageHeader.inc:16
+#: includes/PDFLowGPPageHeader.inc:16 includes/PDFPriceListPageHeader.inc:12
+#: includes/PDFStockComparisonPageHeader.inc:12
+#: includes/PDFStockLocTransferHeader.inc:11
 #: includes/PDFSupplierBalsPageHeader.inc:20
 msgid "Page"
 msgstr ""
@@ -7616,6 +8335,10 @@ msgstr ""
 
 #: TaxAuthorities.php:245
 msgid "Input tax GL Account:"
+msgstr ""
+
+#: UserSettings.php:7
+msgid "User Settings"
 msgstr ""
 
 #: UserSettings.php:20
@@ -8295,12 +9018,26 @@ msgstr ""
 msgid "Look at the design of this report"
 msgstr ""
 
-#: includes/DateFunctions.inc:505
+#: includes/DateFunctions.inc:504
 msgid "Dates must be entered in the format"
 msgstr ""
 
-#: includes/DateFunctions.inc:527
+#: includes/DateFunctions.inc:523
 msgid "An error occurred in retrieving the period number"
+msgstr ""
+
+#: includes/DateFunctions.inc:559
+msgid "An error occurred in adding a new period number"
+msgstr ""
+
+#: includes/DateFunctions.inc:568
+msgid "An error occurred in getting the first period number in the database"
+msgstr ""
+
+#: includes/DateFunctions.inc:587
+msgid ""
+"An error occurred in inserting periods before the first period to accomodate "
+"back dated transactions"
 msgstr ""
 
 #: includes/DefineSerialItems.php:10
@@ -8551,6 +9288,46 @@ msgstr ""
 msgid "Wrk Cntr"
 msgstr ""
 
+#: includes/PDFCustomerListPageHeader.inc:21
+msgid "All Territories"
+msgstr ""
+
+#: includes/PDFCustomerListPageHeader.inc:24
+msgid "Territory"
+msgstr ""
+
+#: includes/PDFCustomerListPageHeader.inc:26
+msgid "Territories"
+msgstr ""
+
+#: includes/PDFCustomerListPageHeader.inc:41
+msgid "and for"
+msgstr ""
+
+#: includes/PDFCustomerListPageHeader.inc:43
+msgid "All Salespeople"
+msgstr ""
+
+#: includes/PDFCustomerListPageHeader.inc:48
+msgid "Sales-people"
+msgstr ""
+
+#: includes/PDFCustomerListPageHeader.inc:82
+msgid "Act Code"
+msgstr ""
+
+#: includes/PDFCustomerListPageHeader.inc:84
+msgid "Branch Code"
+msgstr ""
+
+#: includes/PDFCustomerListPageHeader.inc:85
+msgid "Branch Contact Information"
+msgstr ""
+
+#: includes/PDFCustomerListPageHeader.inc:86
+msgid "Branch Delivery Address"
+msgstr ""
+
 #: includes/PDFDeliveryDifferencesPageHeader.inc:15
 msgid "Variances Between Orders and Deliveries Listing"
 msgstr ""
@@ -8584,6 +9361,7 @@ msgid "Trans"
 msgstr ""
 
 #: includes/PDFLowGPPageHeader.inc:32
+#: includes/PDFStockComparisonPageHeader.inc:33
 msgid "Item"
 msgstr ""
 
@@ -8595,8 +9373,56 @@ msgstr ""
 msgid "GP"
 msgstr ""
 
+#: includes/PDFPriceListPageHeader.inc:18
+msgid "Special Prices for Inventory Categories between"
+msgstr ""
+
+#: includes/PDFPriceListPageHeader.inc:21
+msgid "Price List for Inventory Categories between"
+msgstr ""
+
+#: includes/PDFPriceListPageHeader.inc:38
+msgid "Category/Item"
+msgstr ""
+
+#: includes/PDFPriceListPageHeader.inc:49
+msgid "GP %"
+msgstr ""
+
 #: includes/PDFStarter_ros.inc:16
 msgid "Permission Denied Report"
+msgstr ""
+
+#: includes/PDFStockComparisonPageHeader.inc:16
+msgid "Stock Check Comparison"
+msgstr ""
+
+#: includes/PDFStockComparisonPageHeader.inc:34
+msgid "QOH"
+msgstr ""
+
+#: includes/PDFStockComparisonPageHeader.inc:35
+msgid "Counted"
+msgstr ""
+
+#: includes/PDFStockComparisonPageHeader.inc:37
+msgid "Adjustment"
+msgstr ""
+
+#: includes/PDFStockLocTransferHeader.inc:15
+msgid "Transfer No"
+msgstr ""
+
+#: includes/PDFStockLocTransferHeader.inc:15
+msgid "Shipped"
+msgstr ""
+
+#: includes/PDFStockLocTransferHeader.inc:32
+msgid "Qty Shipped"
+msgstr ""
+
+#: includes/PDFStockLocTransferHeader.inc:33
+msgid "Qty Received"
 msgstr ""
 
 #: includes/PDFSupplierBalsPageHeader.inc:17
@@ -8621,33 +9447,33 @@ msgstr ""
 msgid "The following SQL to retrieve the transaction number was used"
 msgstr ""
 
-#: includes/SQL_CommonFunctions.inc:29
+#: includes/SQL_CommonFunctions.inc:26
 msgid ""
 "CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The transaction "
 "number could not be incremented"
 msgstr ""
 
-#: includes/SQL_CommonFunctions.inc:30
+#: includes/SQL_CommonFunctions.inc:27
 msgid "The following SQL to increment the transaction number was used:"
 msgstr ""
 
-#: includes/SQL_CommonFunctions.inc:67
+#: includes/SQL_CommonFunctions.inc:63
 msgid ""
 "An error occurred accessing the database to retrieve the company information:"
 msgstr ""
 
-#: includes/SQL_CommonFunctions.inc:74
+#: includes/SQL_CommonFunctions.inc:68
 msgid ""
-"CRITICAL PROBLEM: The company record has not yet been set up</B><BR>From the "
-"system setup tab, select company maintenance to enter the company infomation "
-"and system preferences"
+"The company record has not yet been set up</B><BR>From the system setup tab, "
+"select company maintenance to enter the company infomation and system "
+"preferences"
 msgstr ""
 
-#: includes/SQL_CommonFunctions.inc:96
+#: includes/SQL_CommonFunctions.inc:90
 msgid "The stock GL codes could not be retreived because"
 msgstr ""
 
-#: includes/SQL_CommonFunctions.inc:113
+#: includes/SQL_CommonFunctions.inc:103
 msgid "The tax rate for this item could not be retreived because:"
 msgstr ""
 
