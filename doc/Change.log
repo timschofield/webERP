@@ -1,11 +1,10 @@
 <P>webERP Change Log
 
+27/3/04 GoodsReceived.php now takes account of changed standard cost at between bookings in of stock
 16/3/04 Various scripts changed variables that are not initiated first to avoid NOTICES where NOTICES are enabled in php.ini - still a long way to go here
 16/3/04 All scripts now have a comment for CVS version number - Dick Stins
 16/3/04 Fixed bug on new system where sales and COGS GL posting tables not set up - auto create a default GL account - foreign key could give problem if account groups modified so now auto creates a sales account group first - thanks Dick Stins
 14/3/04 Added new tables for EDI_ORDERS_Segs and EDI_ORDERS_SegGroups that hold the defined segments for the EANCOM EDI ORDERS message and the segment groups info.
-14/3/04 Added new postgres directory under the sql directory for sql scripts for Postgres as contributed by Danie Brink.
-14/3/04 Added Danie Brink's Mysql to Postgres database dump conversion utility. This is a python script to convert an existing MySql mysqldump - with particular parameters to a Postgres psql file.
 14/3/04 AccountGroups.php modified to disallow & or ' - also fixed class='tableheader' as per css.
 14/3/04 GLAccounts.php modified to check for related records in BankAccounts and TaxAuthorities to avoid data integrity issues. Foriegn  Keys added as necessary - in the upgrade2.8-2.9.sql script
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -27,7 +27,7 @@
     // $host is the computer ip address or name where the database is located
     // assuming that the web server is also the sql server
     $host = "localhost";
-    $DatabaseName = "weberp";
+    $DatabaseName = "aquadux";
 
     // sql user & password
     $dbuser = "weberp_db_user";
@@ -229,5 +229,11 @@ $EDI_Incoming_Orders = "EDI_Incoming_Orders";
 
     $rootpath = dirname($_SERVER['PHP_SELF']);
     //$rootpath = '/web-erp';
+
+/* Report all errors except E_NOTICE
+ This is the default value set in php.ini for most installations but just to be sure it is forced here
+ turning on NOTICES destroys things */
+
+ error_reporting (E_ALL ^ E_NOTICE);
 
 ?>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Customer Maintenance";
 
 $PageSecurity = 3;
@@ -200,7 +200,7 @@ if (!isset($DebtorNo)) {
 
 	echo "<input type='Hidden' name='New' value='Yes'>";
 
-	echo "<CENTER><TABLE><TR><TD>Customer Code:</TD><TD><input type='Text' name='DebtorNo' SIZE=10 MAXLENGTH=8></TD></TR>";
+	echo "<CENTER><TABLE><TR><TD>Customer Code:</TD><TD><input type='Text' name='DebtorNo' SIZE=11 MAXLENGTH=10></TD></TR>";
 	echo "<TR><TD>Customer Name:</TD><TD><input type='Text' name='CustName' SIZE=42 MAXLENGTH=40></TD></TR>";
 	echo "<TR><TD>Address Line 1:</TD><TD><input type='Text' name='Address1' SIZE=42 MAXLENGTH=40></TD></TR>";
 	echo "<TR><TD>Address Line 2:</TD><TD><input type='Text' name='Address2' SIZE=42 MAXLENGTH=40></TD></TR>";

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*Script to Delete all sales transactions*/
 
 $title = "UTILITY PAGE To Change A Stock Code In All Tables";
@@ -28,17 +28,18 @@ if (isset($_POST['ProcessStockChange'])){
 		exit;
 	}
 
+	echo "<BR>Adding the new stock master record";
+	$sql = "INSERT INTO StockMaster (`StockID`, `CategoryID`, `Description`, `LongDescription`, `Units`, `MBflag`, `LastCurCostDate`, `ActualCost`, `LastCost`, `Materialcost`, `Labourcost`, `Overheadcost`, `lowestlevel`, `Discontinued`, `Controlled`, `EOQ`, `Volume`, `KGS`, `BarCode`, `DiscountCategory`, `TaxLevel`) SELECT '" . $_POST['NewStockID'] . "', `CategoryID`, `Description`, `LongDescription`, `Units`, `MBflag`, `LastCurCostDate`, `ActualCost`, `LastCost`, `Materialcost`, `Labourcost`, `Overheadcost`, `lowestlevel`, `Discontinued`, `Controlled`, `EOQ`, `Volume`, `KGS`, `BarCode`, `DiscountCategory`, `TaxLevel` FROM StockMaster WHERE StockID='" . $_POST['OldStockID'] . "'";
 
-	echo "<BR>Changing the stock master record";
-	$sql = "UPDATE StockMaster SET StockID='" . $_POST['NewStockID'] . "' WHERE StockID='" . $_POST['OldStockID'] . "'";
 	$result = DB_query($sql,$db);
 	if (DB_error_no($db)!=0){
-		echo "<BR>The SQL to update stock master record failed, the SQL statement was:<BR>$sql";
+		echo "<BR>The SQL to insert the new stock master record failed, the SQL statement was:<BR>$sql";
 		$result=DB_query("rollback",$db);
 		exit;
 	} else {
 		echo " ... done.";
 	}
+
 	echo "<BR>Changing stock location records";
 	$sql = "UPDATE LocStock SET StockID='" . $_POST['NewStockID'] . "' WHERE StockID='" . $_POST['OldStockID'] . "'";
 	$result = DB_query($sql,$db);
@@ -194,6 +195,17 @@ if (isset($_POST['ProcessStockChange'])){
 	$result = DB_query($sql,$db);
 	if (DB_error_no($db)!=0){
 		echo "<BR>The SQL to update the BOM parent records failed, the SQL statement was:<BR>$sql";
+		$result=DB_query("rollback",$db);
+		exit;
+	} else {
+		echo " ... done.";
+	}
+
+	echo "<BR>Deleting the old stock master record";
+	$sql = "DELETE FROM StockMaster WHERE StockID='" . $_POST['OldStockID'] . "'";
+	$result = DB_query($sql,$db);
+	if (DB_error_no($db)!=0){
+		echo "<BR>The SQL to delete the old stock master record failed, the SQL statement was:<BR>$sql";
 		$result=DB_query("rollback",$db);
 		exit;
 	} else {

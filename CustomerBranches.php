@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Customer Branches";
 $PageSecurity = 3;
 
@@ -166,7 +166,14 @@ if ($_POST['submit']) {
 
 					$sql="DELETE FROM CustBranch WHERE BranchCode='$SelectedBranch' AND DebtorNo='$DebtorNo'";
 					$result = DB_query($sql,$db);
-					echo "Record Deleted <p>";
+					if (DB_error_no($db)!=0){
+						echo "<BR>The branch record could not be deleted - the SQL server returned the following message :<BR>" . DB_error_msg($db);
+						if ($debug==1){
+							echo "<BR>The delete SQL that failed was:" . $sql;
+						}
+					} else {
+						echo "Branch Deleted <p>";
+					}
 				}
 			}
 		}

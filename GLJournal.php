@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 include("includes/DefineJournalClass.php");
 
 $title = "Journal Entry";
@@ -9,7 +9,7 @@ include("includes/header.inc");
 include("includes/DateFunctions.inc");
 include("includes/SQL_CommonFunctions.inc");
 
-if ($_GET['NewJournal']=="Yes"){
+if ($_GET['NewJournal']=="Yes" AND isset($_SESSION['JournalDetail'])){
 	unset($_SESSION['JournalDetail']->GLEntries);
 	unset($_SESSION['JournalDetail']);
 }
@@ -30,14 +30,15 @@ if (!isset($_SESSION['JournalDetail'])){
 	}
 }
 
-if ($_POST['JournalProcessDate']!=""){
+if (isset($_POST['JournalProcessDate'])){
 	$_SESSION['JournalDetail']->JnlDate=$_POST['JournalProcessDate'];
+
+	if (!Is_Date($_POST['JournalProcessDate'])){
+		echo "<BR><B><FONT SIZE=4 COLOR=RED>WARNING: The date entered was not valid please enter the date to process the journal in the format $DefaultDateFormat";
+		$_POST['CommitBatch']="Dont do it the date is wrong";
+	}
 }
-if ($_POST['JournalProcessDate']!="" AND !Is_Date($_POST['JournalProcessDate'])){ 
-	echo "<BR><B><FONT SIZE=4 COLOR=RED>WARNING: The date entered was not valid please enter the date to process the journal in the format $DefaultDateFormat"; 
-	$_POST['CommitBatch']="Dont do it the date is wrong"; 
-}
-if ($_POST['JournalType']!=""){
+if (isset($_POST['JournalType'])){
 	$_SESSION['JournalDetail']->JournalType = $_POST['JournalType'];
 }
 $msg="";
@@ -168,10 +169,10 @@ echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . "?" . SID . " METHOD=POST>";
 echo "<P><TABLE BORDER=1 WIDTH=100%>";
 echo "<TR><TD VALIGN=TOP WIDTH=30%><TABLE>"; // A new table in the first column of the main table
 
-if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){ 
+if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 	// Default the date to the last day of the previous month
-	$_SESSION['JournalDetail']->JnlDate = Date($DefaultDateFormat,mktime(0,0,0,date("m"),0,date("Y"))); 
-} 
+	$_SESSION['JournalDetail']->JnlDate = Date($DefaultDateFormat,mktime(0,0,0,date("m"),0,date("Y")));
+}
 
 echo "<TR><TD>Date to Process Journal:</TD><TD><INPUT TYPE='text' name='JournalProcessDate' maxlength=10 size=11 value='" . $_SESSION['JournalDetail']->JnlDate . "'></TD></TR>";
 
@@ -220,7 +221,7 @@ echo "<CENTER><INPUT TYPE=SUBMIT name=Process value='Accept'><INPUT TYPE=SUBMIT 
 echo "</TD></TR></TABLE>"; /*Close the main table */
 
 
-echo "<TABLE WIDTH=100% BORDER=1><TR><td BGCOLOR=#800000><FONT COLOR='#ffffff'><B>Amount</B></FONT></TD><td BGCOLOR=#800000><FONT COLOR='#ffffff'><B>GL Account</B></FONT></TD><td BGCOLOR=#800000><FONT COLOR='#ffffff'><B>Narrative</B></FONT></TD></TR>";
+echo "<TABLE WIDTH=100% BORDER=1><TR><td class='tableheader'>Amount</TD><td class='tableheader'>GL Account</TD><td class='tableheader'>Narrative</TD></TR>";
 
 foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 	echo "<TR><TD ALIGN=RIGHT>" . number_format($JournalItem->Amount,2) . "</TD><TD>" . $JournalItem->GLCode . " - " . $JournalItem->GLActName . "</TD><TD>" . $JournalItem->Narrative  . "</TD><TD><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "Delete=" . $JournalItem->ID . "'>Delete</a></TD></TR>";

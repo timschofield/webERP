@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Receive Purchase Orders";
 $PageSecurity = 11;
 
@@ -183,19 +183,21 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=="Process Goods Rec
 			$LocalCurrencyPrice = ($OrderLine->Price / $_SESSION['PO']->ExRate);
 /*Update SalesOrderDetails for the new quantity received and the standard cost used for postings to GL and recorded in the stock movements for FIFO/LIFO stocks valuations*/
 
-			if ($OrderLine->QtyReceived==0 AND $OrderLine->StockID!="") { /*This must be the first receipt of goods against this line */
+			$CurrentStandardCost = $myrow[0];
 
+			if ($OrderLine->QtyReceived==0 AND $OrderLine->StockID!="") { /*This must be the first receipt of goods against this line */
 			   /*Need to get the standard cost as it is now so we can process GL jorunals later*/
+			   $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost = $CurrentStandardCost;
 
 			   $SQL = "SELECT MaterialCost + LabourCost + OverheadCost AS StdCost FROM StockMaster WHERE StockID='" . $OrderLine->StockID . "'";
 			   $Result = DB_query($SQL,$db);
 			   if (DB_error_no($db) !=0){
 				echo "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The standard cost of the item being received cannot be retrieved because: -<BR>" . DB_error_msg($db);
-				
+
 				if ($debug==1){
 					echo "<BR>The following SQL to retrieve the standard cost was used:<BR>$SQL<BR>";
 				}
-				
+
 				$SQL = "Rollback";
 				$Result = DB_query($SQL,$db);
 				include("includes/footer.inc");
@@ -306,7 +308,7 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=="Process Goods Rec
 									      but it wasn't when this PO was entered */
 /*first the debit using the GLCode in the PO detail record entry*/
 
-				$SQL = "INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (25, " . $GRN . ", '" . $_POST['DefaultReceivedDate'] . "', " . $PeriodNo . ", " . $OrderLine->GLCode . ", 'PO: " . $_SESSION['PO']->OrderNo . " " . $_SESSION['PO']->SupplierID . " - " . $OrderLine->StockID . " - " . $OrderLine->ItemDescription . " x " . $OrderLine->ReceiveQty . " @ " . number_format($UnitCost,2) . "', " . $UnitCost * $OrderLine->ReceiveQty . ")";
+				$SQL = "INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (25, " . $GRN . ", '" . $_POST['DefaultReceivedDate'] . "', " . $PeriodNo . ", " . $OrderLine->GLCode . ", 'PO: " . $_SESSION['PO']->OrderNo . " " . $_SESSION['PO']->SupplierID . " - " . $OrderLine->StockID . " - " . $OrderLine->ItemDescription . " x " . $OrderLine->ReceiveQty . " @ " . number_format($CurrentStandardCost,2) . "', " . $CurrentStandardCost * $OrderLine->ReceiveQty . ")";
 
 				$Result = DB_query($SQL,$db);
 				if (DB_error_no($db) !=0){
@@ -318,10 +320,33 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=="Process Goods Rec
 					$Result = DB_query($SQL,$db);
 					include ("includes/footer.inc");
 					exit;
-					
+
 				}
 
-/*now the GRN suspense entry*/
+
+				/* If the CurrentStandardCost != UnitCost (the standard at the time the first delivery was booked in then the difference needs to be booked in against the stock adjustment account and its a stock item*/
+
+				if ($UnitCost != $CurrentStandardCost AND $OrderLine->StockID!="") {
+
+					$UnitCostDifference = $UnitCost - $CurrentStandardCost;
+					$StockGLCodes = GetStockGLCode($OrderLine->StockID,$db);
+
+					$SQL = "INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (25, " . $GRN . ", '" . $_POST['DefaultReceivedDate'] . "', " . $PeriodNo . ", " . $StockGLCodes['PurchPriceVarAct'] . ", 'Cost diff on " . $_SESSION['PO']->SupplierID . " - " . $OrderLine->StockID . " " . $OrderLine->ReceiveQty . " @ (" . number_format($CurrentStandardCost,2) . " - Prev std " . number_format($UnitCost,2) . ")', " . ($UnitCostDifference * $OrderLine->ReceiveQty) . ")";
+
+					$Result = DB_query($SQL,$db);
+					if (DB_error_no($db) !=0){
+						echo "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The standard cost difference GL posting could not be inserted because: -<BR>" . DB_error_msg($db);
+						if ($debug==1){
+							echo "<BR>The following SQL to insert the cost difference GLTrans record was used:<BR>$SQL<BR>";
+						}
+						$SQL = "rollback";
+						$Result = DB_query($SQL,$db);
+						include ("includes/footer.inc");
+						exit;
+					}
+				}
+
+	/*now the GRN suspense entry*/
 				$SQL = "INSERT INTO GLTrans (Type, TypeNo, TranDate, PeriodNo, Account, Narrative, Amount) VALUES (25, " . $GRN . ", '" . $_POST['DefaultReceivedDate'] . "', " . $PeriodNo . ", " . $CompanyData["GRNAct"] . ", 'PO: " . $_SESSION['PO']->OrderNo . " " . $_SESSION['PO']->SupplierID . " - " . $OrderLine->StockID . " - " . $OrderLine->ItemDescription . " x " . $OrderLine->ReceiveQty . " @ " . number_format($UnitCost,2) . "', " . -$UnitCost * $OrderLine->ReceiveQty . ")";
 
 				$Result = DB_query($SQL,$db);
@@ -332,6 +357,7 @@ if ($SomethingReceived==0 AND $_POST['ProcessGoodsReceived']=="Process Goods Rec
 					}
 					exit;
 				}
+
 			 } /* end of if GL and stock integrated and standard cost !=0 */
 		} /*Quantity received is != 0 */
 	} /*end of OrderLine loop */

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*Script to Delete all sales transactions*/
 
 $title = "UTILITY PAGE To Changes A Customer Code In All Tables";
@@ -28,20 +28,23 @@ if (isset($_POST['ProcessCustomerChange'])){
 		exit;
 	}
 
+	$result = DB_query("begin",$db);
 
-	echo "<BR>Changing the debtor master record";
-	$sql = "UPDATE DebtorsMaster SET DebtorNo='" . $_POST['NewDebtorNo'] . "' WHERE DebtorNo='" . $_POST['OldDebtorNo'] . "'";
+	echo "<BR>Inserting the new debtors master record";
+	$sql = "INSERT INTO DebtorsMaster (`DebtorNo`, `Name`, `Address1`, `Address2`, `Address3`, `Address4`, `CurrCode`, `CustGroup`, `SalesType`, `ClientSince`, `HoldReason`, `PaymentTerms`, `Discount`, `DiscountCode`, `PymtDiscount`, `LastPaid`, `LastPaidDate`, `CreditLimit`, `InvAddrBranch`, `EDIInvoices`, `EDIOrders`, `EDIReference`, `EDITransport`, `EDIAddress`, `EDIServerUser`, `EDIServerPwd`) SELECT '" . $_POST['NewDebtorNo'] . "', `Name`, `Address1`, `Address2`, `Address3`, `Address4`, `CurrCode`, `CustGroup`, `SalesType`, `ClientSince`, `HoldReason`, `PaymentTerms`, `Discount`, `DiscountCode`, `PymtDiscount`, `LastPaid`, `LastPaidDate`, `CreditLimit`, `InvAddrBranch`, `EDIInvoices`, `EDIOrders`, `EDIReference`, `EDITransport`, `EDIAddress`, `EDIServerUser`, `EDIServerPwd` FROM DebtorsMaster WHERE DebtorNo='" . $_POST['OldDebtorNo'] . "'";
+
 	$result = DB_query($sql,$db);
 	if (DB_error_no($db)!=0){
-		echo "<BR>The SQL to update debtors master record failed, the SQL statement was:<BR>$sql";
+		echo "<BR>The SQL to insert the new debtors master record failed, the SQL statement was:<BR>$sql";
 		$result=DB_query("rollback",$db);
 		exit;
 	}
-	echo "<BR>Changing customer branch records";
-	$sql = "UPDATE CustBranch SET DebtorNo='" . $_POST['NewDebtorNo'] . "' WHERE DebtorNo='" . $_POST['OldDebtorNo'] . "'";
+
+	echo "<BR>Inserting new customer branch records";
+	$sql = "INSERT INTO CustBranch ( `BranchCode`, `DebtorNo`, `BrName`, `BrAddress1`, `BrAddress2`, `BrAddress3`, `BrAddress4`, `EstDeliveryDays`, `Area`, `Salesman`, `FwdDate`, `PhoneNo`, `FaxNo`, `ContactName`, `Email`, `DefaultLocation`, `TaxAuthority`, `DisableTrans`, `BrPostAddr1`, `BrPostAddr2`, `BrPostAddr3`, `BrPostAddr4`, `DefaultShipVia`, `CustBranchCode`) SELECT BranchCode, '" . $_POST['NewDebtorNo'] . "', `BrName`, `BrAddress1`, `BrAddress2`, `BrAddress3`, `BrAddress4`, `EstDeliveryDays`, `Area`, `Salesman`, `FwdDate`, `PhoneNo`, `FaxNo`, `ContactName`, `Email`, `DefaultLocation`, `TaxAuthority`, `DisableTrans`, `BrPostAddr1`, `BrPostAddr2`, `BrPostAddr3`, `BrPostAddr4`, `DefaultShipVia`, `CustBranchCode` FROM CustBranch WHERE DebtorNo='" . $_POST['OldDebtorNo'] . "'";
 	$result = DB_query($sql,$db);
 	if (DB_error_no($db)!=0){
-		echo "<BR>The SQL to update customer branch records failed, the SQL statement was:<BR>$sql";
+		echo "<BR>The SQL to insert new customer branch records failed, the SQL statement was:<BR>$sql";
 		$result=DB_query("rollback",$db);
 		exit;
 	}
@@ -61,7 +64,6 @@ if (isset($_POST['ProcessCustomerChange'])){
 		$result=DB_query("rollback",$db);
 		exit;
 	}
-
 
 	echo "<BR>Changing order delivery differences records";
 	$sql = "UPDATE OrderDeliveryDifferencesLog SET DebtorNo='" . $_POST['NewDebtorNo'] . "' WHERE DebtorNo='" . $_POST['OldDebtorNo'] . "'";
@@ -115,6 +117,25 @@ if (isset($_POST['ProcessCustomerChange'])){
 		$result=DB_query("rollback",$db);
 		exit;
 	}
+	echo "<BR>Deleting the old customer branch records from the CustBranch table";
+	$sql = "DELETE FROM CustBranch WHERE DebtorNo='" . $_POST['OldDebtorNo'] . "'";
+	$result = DB_query($sql,$db);
+	if (DB_error_no($db)!=0){
+		echo "<BR>The SQL to delete the old CustBranch records for the old debtor record failed, the SQL statement was:<BR>$sql";
+		$result=DB_query("rollback",$db);
+		exit;
+	}
+	echo "<BR>Deleting the customer code from the DebtorsMaster table";
+	$sql = "DELETE FROM DebtorsMaster WHERE DebtorNo='" . $_POST['OldDebtorNo'] . "'";
+	$result = DB_query($sql,$db);
+	if (DB_error_no($db)!=0){
+		echo "<BR>The SQL to delete the old debtor record failed, the SQL statement was:<BR>$sql";
+		$result=DB_query("rollback",$db);
+		exit;
+	}
+
+
+	$result = DB_query("commit",$db);
 
 }
 

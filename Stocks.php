@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $title = "Stock Item Maintenance";
 
 $PageSecurity = 11;
@@ -35,9 +35,9 @@ if (isset($_POST['submit'])) {
 	} elseif (strlen($StockID) ==0) {
 		$InputError = 1;
 		echo "The Stock Item code cannot be empty";
-	}elseif (strstr($StockID," ") OR strstr($StockID,"'") OR strstr($StockID,"+") OR strstr($StockID,"\"") OR strstr($StockID,"&")) {
+	}elseif (strstr($StockID," ") OR strstr($StockID,"'") OR strstr($StockID,"+") OR strstr($StockID,"\"") OR strstr($StockID,".") OR strstr($StockID,"&")) {
 		$InputError = 1;
-		echo "<BR>The stock item code cannot contain any of the following characters - ' & + \" OR a space";
+		echo "<BR>The stock item code cannot contain any of the following characters . - ' & + \" OR a space";
 
 	} elseif (strlen($_POST['Units']) >20) {
 		$InputError = 1;

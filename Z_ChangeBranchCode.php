@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*Script to Delete all sales transactions*/
 
 $title = "UTILITY PAGE To Changes A Customer Branch Code In All Tables";
@@ -20,6 +20,13 @@ if (isset($_POST['ProcessCustomerChange'])){
 		echo "<BR><BR>The new customer branch code to change the old code to must be entered as well!!";
 		exit;
 	}
+	if (strstr($_POST['NewBranchCode'],".")>0 OR  strstr($_POST['NewBranchCode'],"&") OR strstr($_POST['NewBranchCode'],"-") OR strstr($_POST['NewBranchCode']," ")){
+	echo "<BR><BR>The new customer branch code cannot contain a hyphen - an ampersand & a point . or a space ";
+		exit;
+	}
+
+
+
 /*Now check that the new code doesn't already exist */
 	$result=DB_query("SELECT DebtorNo FROM CustBranch WHERE DebtorNo='" . $_POST['DebtorNo'] . "' AND BranchCode ='" . $_POST['NewBranchCode'] . "'",$db);
 	if (DB_num_rows($result)!=0){
@@ -28,11 +35,13 @@ if (isset($_POST['ProcessCustomerChange'])){
 	}
 
 
-	echo "<BR>Changing the customer branches master record";
-	$sql = "UPDATE CustBranch SET BranchCode='" . $_POST['NewBranchCode'] . "' WHERE DebtorNo='" . $_POST['DebtorNo'] . "' AND BranchCode='" . $_POST['OldBranchCode'] . "'";
+	$result = DB_query("begin",$db);
+
+	echo "<BR>Inserting the new customer branches master record";
+	$sql = "INSERT INTO CustBranch (`BranchCode`, `DebtorNo`, `BrName`, `BrAddress1`, `BrAddress2`, `BrAddress3`, `BrAddress4`, `EstDeliveryDays`, `Area`, `Salesman`, `FwdDate`, `PhoneNo`, `FaxNo`, `ContactName`, `Email`, `DefaultLocation`, `TaxAuthority`, `DisableTrans`, `BrPostAddr1`, `BrPostAddr2`, `BrPostAddr3`, `BrPostAddr4`, `DefaultShipVia`, `CustBranchCode`) SELECT '" . $_POST['NewBranchCode'] . "', `DebtorNo`, `BrName`, `BrAddress1`, `BrAddress2`, `BrAddress3`, `BrAddress4`, `EstDeliveryDays`, `Area`, `Salesman`, `FwdDate`, `PhoneNo`, `FaxNo`, `ContactName`, `Email`, `DefaultLocation`, `TaxAuthority`, `DisableTrans`, `BrPostAddr1`, `BrPostAddr2`, `BrPostAddr3`, `BrPostAddr4`, `DefaultShipVia`, `CustBranchCode` FROM CustBranch WHERE DebtorNo='" . $_POST['DebtorNo'] . "' AND BranchCode='" . $_POST['OldBranchCode'] . "'";
 	$result = DB_query($sql,$db);
 	if (DB_error_no($db)!=0){
-		echo "<BR>The SQL to update customer branch master record failed, the SQL statement was:<BR>$sql";
+		echo "<BR>The SQL to insert the new customer branch master record failed, the SQL statement was:<BR>$sql";
 		$result=DB_query("rollback",$db);
 		exit;
 	}
@@ -55,7 +64,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 
 
 	echo "<BR>Changing order delivery differences records";
-	$sql = "UPDATE OrderDeliveryDifferencesLog SET Branch='" . $_POST['NewBranchCode'] . "' WHERE DebtorNo='" . $_POST['OldDebtorNo'] . "' AND Branch='" . $_POST['OldBranchCode'] . "'";
+	$sql = "UPDATE OrderDeliveryDifferencesLog SET Branch='" . $_POST['NewBranchCode'] . "' WHERE DebtorNo='" . $_POST['DebtorNo'] . "' AND Branch='" . $_POST['OldBranchCode'] . "'";
 	$result = DB_query($sql,$db);
 	if (DB_error_no($db)!=0){
 		echo "<BR>The SQL to update order delivery differences records failed, the SQL statement was:<BR>$sql";
@@ -98,7 +107,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 		$result=DB_query("rollback",$db);
 		exit;
 	}
-	echo "<BR>Changing the customer code in contract header records";
+	echo "<BR>Changing the customer branch code in contract header records";
 	$sql = "UPDATE Contracts SET BranchCode='" . $_POST['NewBranchCode'] . "' WHERE DebtorNo='" . $_POST['DebtorNo'] . "' AND BranchCode='" . $_POST['OldBranchCode'] . "'";
 	$result = DB_query($sql,$db);
 	if (DB_error_no($db)!=0){
@@ -107,6 +116,17 @@ if (isset($_POST['ProcessCustomerChange'])){
 		exit;
 	}
 
+
+	echo "<BR>Deleting the old customer branch record";
+	$sql = "DELETE FROM CustBranch WHERE DebtorNo='" . $_POST['DebtorNo'] . "' AND BranchCode='" . $_POST['OldBranchCode'] . "'";
+	$result = DB_query($sql,$db);
+	if (DB_error_no($db)!=0){
+		echo "<BR>The SQL to delete the old customer branch record failed because:<BR>" . DB_error_msg($db) . "<BR>the SQL statement was:<BR>$sql";
+		$result=DB_query("rollback",$db);
+		exit;
+	}
+
+	$result = DB_query("commit",$db);
 }
 
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?=" . $SID . "' METHOD=POST>";

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 if (isset($_GET['ModifyOrderNumber'])) {
 	$title = "Modifying Order " . $_GET['ModifyOrderNumber'];
 } else {
@@ -765,11 +765,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 
 		echo "<B>$msg</B><TABLE><TR><TD><FONT SIZE=2>Select a stock category:</FONT><SELECT NAME='StockCat'>";
 
-		echo "<OPTION SELECTED VALUE='All'>All";
+		if (!isset($_POST['StockCat'])){
+			echo "<OPTION SELECTED VALUE='All'>All";
+			$_POST['StockCat'] ='All';
+		} else {
+			echo "<OPTION VALUE='All'>All";
+		}
 
 		while ($myrow1 = DB_fetch_array($result1)) {
-
-			if (!isset($_POST['StockCat'])) $_POST['StockCat'] = $myrow1['CategoryID'];
 
 			if ($_POST['StockCat']==$myrow1["CategoryID"]){
 				echo "<OPTION SELECTED VALUE=". $myrow1["CategoryID"] . ">" . $myrow1["CategoryDescription"];
