@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 3;
 
@@ -245,7 +245,7 @@ if (! isset($_GET['delete'])) {
 	} else { //end of if $SelectedSaleperson only do the else when a new record is being entered
 
 		echo '<CENTER><TABLE><TR><TD>' . _('Sales-person code') . ":</TD>
-			<TD><input type='Text' name='SalesmanCode'SIZE=3 MAXLENGTH=3></TD></TR>";
+			<TD><input type='Text' name='SalesmanCode' SIZE=3 MAXLENGTH=3></TD></TR>";
 	}
 	if (!isset($_POST['SalesmanName'])){
 	  $_POST['SalesmanName']='';

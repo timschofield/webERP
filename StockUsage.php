@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $title = "Stock Usage";
 
 $PageSecurity = 2;
@@ -129,7 +129,7 @@ echo "<HR><A HREF='$rootpath/StockStatus.php?". SID . "StockID=$StockID'>Show St
 echo "<BR><A HREF='$rootpath/StockMovements.php?". SID . "StockID=$StockID&StockLocation=" . $_POST['StockLocation'] . "'>Show Stock Movements</A>";
 echo "<BR><A HREF='$rootpath/SelectSalesOrder.php?". SID . "SelectedStockItem=$StockID&StockLocation=" . $_POST['StockLocation'] . "'>Search Outstanding Sales Orders</A>";
 echo "<BR><A HREF='$rootpath/SelectCompletedOrder.php?". SID . "SelectedStockItem=$StockID'>Search Completed Sales Orders</A>";
-echo "<BR><A HREF='$rootpath/PO_SelectPurchOrder.php?" .SID . "SelectedStockItem=$StockID'>Search Outstanding Purchase Orders</A>";
+echo "<BR><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" .SID . "SelectedStockItem=$StockID'>Search Outstanding Purchase Orders</A>";
 
 echo "</form></center>";
 include("includes/footer.inc");

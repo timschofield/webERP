@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $title = "Search Customers";
 
 $PageSecurity = 2;
@@ -262,3 +262,11 @@ echo "</form>";
 
 include("includes/footer.inc");
 ?>
+<script language="JavaScript" type="text/javascript">
+    //<![CDATA[
+            <!--
+            document.forms[0].CustCode.select();
+            document.forms[0].CustCode.focus();
+            //-->
+    //]]>
+</script>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
 
@@ -12,7 +12,7 @@ include('includes/header.inc');
 
 if (!isset($_SESSION['PO'])) {
 	/* This page can only be called with a purchase order number for receiving*/
-	echo '<CENTER><A HREF="' . $rootpath . '/PO_SelectPurchOrder.php?' . SID . '">'.
+	echo '<CENTER><A HREF="' . $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . '">'.
 		_('Select a purchase order to receive'). '</A></CENTER><br>';
 	prnMsg('<BR>'. _('This page can only be opened if a purchase order and line item has been selected. Please do that first').'.<BR>','error');
 	include('includes/footer.inc');

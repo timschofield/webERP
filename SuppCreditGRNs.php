@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the credit note
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -85,7 +85,7 @@ $GRNResults = DB_query($SQL,$db);
 
 if (DB_num_rows($GRNResults)==0){
 	echo "<P>There are no goods received records for " . $_SESSION['SuppTrans']->SupplierName . "<BR> To enter a credit against goods received, the goods must first be received using the link below to select purchase orders to receive.";
-	echo "<P><A HREF='$rootpath/PO_SelectPurchOrder.php?" . SID . "SupplierID=" . $_SESSION['SuppTrans']->SupplierID ."'>Select Purchase Orders to Receive</A>";
+	echo "<P><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . "SupplierID=" . $_SESSION['SuppTrans']->SupplierID ."'>Select Purchase Orders to Receive</A>";
 	exit;
 }
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $title = "Search Inventory Items";
 
 $PageSecurity = 2;
@@ -434,6 +434,14 @@ If ($_POST['Search']!='Search Now' AND (isset($_POST['Select']) OR isset($_SESSI
 ?>
 
 </FORM>
+<script language="JavaScript" type="text/javascript">
+    //<![CDATA[
+            <!--
+            document.forms[0].StockCode.select();
+            document.forms[0].StockCode.focus();
+            //-->
+    //]]>
+</script>
 
 <?php
 include("includes/footer.inc");

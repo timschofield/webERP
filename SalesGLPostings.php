@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 10;
 
 include('includes/session.inc');
@@ -150,43 +150,43 @@ if (!isset($SelectedSalesPostingID)) {
 		<td class='tableheader'>" . ('Discount Account') . "</td>
 		</tr>";
 
-$k=0; //row colour counter
+	$k=0; //row colour counter
 
-while ($myrow = DB_fetch_row($result)) {
-	if ($k==1){
-		echo "<tr bgcolor='#CCCCCC'>";
-		$k=0;
-	} else {
-		echo "<tr bgcolor='#EEEEEE'>";
-		$k=1;
-	}
+	while ($myrow = DB_fetch_row($result)) {
+		if ($k==1){
+			echo "<tr bgcolor='#CCCCCC'>";
+			$k=0;
+		} else {
+			echo "<tr bgcolor='#EEEEEE'>";
+			$k=1;
+		}
 
-	printf("<td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td><a href=\"%sSelectedSalesPostingID=%s\">" . _('Edit') . "</td>
-		<td><a href=\"%sSelectedSalesPostingID=%s&delete=yes\">". _('DELETE') . "</td></tr>",
-		$myrow[1],
-		$myrow[2],
-		$myrow[3],
-		$myrow[4],
-		$myrow[5],
-		$_SERVER['PHP_SELF'] . '?' . SID . '&',
-		$myrow[0],
-		$_SERVER['PHP_SELF']. '?' . SID . '&',
-		$myrow[0]);
+		printf("<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td><a href=\"%sSelectedSalesPostingID=%s\">" . _('Edit') . "</td>
+			<td><a href=\"%sSelectedSalesPostingID=%s&delete=yes\">". _('DELETE') . "</td></tr>",
+			$myrow[1],
+			$myrow[2],
+			$myrow[3],
+			$myrow[4],
+			$myrow[5],
+			$_SERVER['PHP_SELF'] . '?' . SID . '&',
+			$myrow[0],
+			$_SERVER['PHP_SELF']. '?' . SID . '&',
+			$myrow[0]);
 
 	}
 	//END WHILE LIST LOOP
-	echo '</table>';
+	echo '</TABLE></CENTER';
 }
 
 //end of ifs and buts!
 
 if (isset($SelectedSalesPostingID)) {
-	echo "<Center><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>" . _('Show All Sales Posting Codes Defined') . '</A></CENTER>';
+	echo "<CENTER><A HREF='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>" . _('Show All Sales Posting Codes Defined') . '</A></CENTER>';
 }
 
 

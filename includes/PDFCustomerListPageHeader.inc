@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*PDF page header for aged analysis reports */
 $PageNumber++;
 if ($PageNumber>1){
@@ -15,7 +15,7 @@ $YPos -=$line_height;
 
 $FontSize =10;
 
-$Heading = ('Customers List for'). ' ';
+$Heading = _('Customers List for'). ' ';
 
 if (in_array('All', $_POST['Areas'])){
 	$Heading .= _('All Territories'). ' ';

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $title = "Stock Status";
 
 $PageSecurity = 2;
@@ -169,7 +169,7 @@ echo "<BR><A HREF='$rootpath/StockUsage.php?" . SID . "StockID=$StockID'>Show Us
 echo "<BR><A HREF='$rootpath/SelectSalesOrder.php?" . SID . "SelectedStockItem=$StockID'>Search Outstanding Sales Orders</A>";
 echo "<BR><A HREF='$rootpath/SelectCompletedOrder.php?" . SID . "SelectedStockItem=$StockID'>Search Completed Sales Orders</A>";
 if ($Its_A_KitSet_Assembly_Or_Dummy ==False){
-	echo "<BR><A HREF='$rootpath/PO_SelectPurchOrder.php?" .SID . "SelectedStockItem=$StockID'>Search Outstanding Purchase Orders</A>";
+	echo "<BR><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" .SID . "SelectedStockItem=$StockID'>Search Outstanding Purchase Orders</A>";
 }
 
 echo "</form>";

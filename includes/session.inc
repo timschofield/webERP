@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -114,8 +114,8 @@
 
         // Incorrect password
         else {
-            $die_string = "<center><br /><br /><font size=\"5\" color=\"red\"><b>" .
-	    _("incorrect password") .
+		$die_string = "<center><br /><br /><font size=\"5\" color=\"red\"><b>" .
+		_("incorrect password") .
             "</b></font><br /><br /><b>" . _("The user/password combination is not a valid user of the system") .
 	    "</b><br /><br />" .
 	    _("If you are not an authorized user, please contact the proper personnel to obtain an account to enable you to use the system.") .
@@ -134,10 +134,15 @@
         exit;
     }
     if (!in_array($PageSecurity, $SecurityGroups[$_SESSION["AccessLevel"]]) OR !isset($PageSecurity)) {
-        echo "<br /><br /><br /><br /><br /><br /><br /><center><b>" .
-	_("The security settings on your account do not permit you to access this function.") . "</b>";
-        echo "<br /><br /><a href=\"$rootpath/index.php?" . SID . "\">" . _("Back To Main Menu") . "</a>";
-        exit;
+        include("header.inc");
+	echo "<tr><td class='menu_group_items'>
+		<table width='100%' class='table_index'>
+			<tr><td class='menu_group_item'>";
+	echo "<b><font size='+1'><center>" . _("The security settings on your account do not permit you
+to access this function.") . "</font></b></center>";
+	echo "</td></tr></table></td>";
+	include("footer.inc");
+	exit;
     }
     // Run with debugging messages for the system administrator(s) but not anyone else
     if (in_array(15, $SecurityGroups[$_SESSION["AccessLevel"]])) {

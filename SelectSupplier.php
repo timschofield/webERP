@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $title = "Search Suppliers";
 
 $PageSecurity = 2;
@@ -272,4 +272,11 @@ echo "</form>";
 include("includes/footer.inc");
 ?>
 
-
+<script language="JavaScript" type="text/javascript">
+    //<![CDATA[
+            <!--
+            document.forms[0].SupplierCode.select();
+            document.forms[0].SupplierCode.focus();
+            //-->
+    //]]>
+</script>

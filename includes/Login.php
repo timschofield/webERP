@@ -1,12 +1,13 @@
 <?php
-/* $Revision: 1.4 $ */
-	// Display demo user name and password within login form if "$allow_demo_mode" is true
-	$demo_text = "";
-	if ($allow_demo_mode == True) {
-	    $demo_text = "login as user: <i>demo</i><BR>with password: <i>weberp</i>";
-	} else {
-		$demo_text = "Please login here";
-	}
+/* $Revision: 1.5 $ */
+// Display demo user name and password within login form if "$allow_demo_mode" is true
+$demo_text = "";
+if ($allow_demo_mode == True) {
+	$demo_text = "login as user: <i>demo</i><BR>with password: <i>weberp</i>";
+} else {
+	$demo_text = "Please login here";
+}
+
 ?>
 
 <html>
