@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /* This file contains the code to post GL transactions.
 
 This file can be included on any page that needs GL postings to be posted eg inquiries or GL reports
@@ -7,7 +7,6 @@ GL posting thus becomes an invisible/automatic process to the user
 
 The logic of GL posting consists of:
 
-Creating the Chart Details records for all accounts/periods where one does not already exist and might be required.
 
 Then looping through all unposted GL transactions in GLTrans table and
 
@@ -17,6 +16,8 @@ Then looping through all unposted GL transactions in GLTrans table and
 
 
 Notes:
+
+ChartDetail records should already exist - they are created when a new period is created or when a new GL account is created for all periods in the periods table
 
 This posting code is not really that good since there are a heap of queires thrown at the DB
 I would prefer to have fewer more complex queries.
@@ -28,84 +29,6 @@ NEED to have a function that reposts from a given period having first checked th
 
 */
 
-/*Get the Last Period that has a GL transaction entry to it */
-
-$sql = "SELECT Max(PeriodNo) AS GLTransLatestPeriod FROM GLTrans WHERE Posted=0";
-$GetLatestPeriod = DB_query($sql,$db);
-$myrow = DB_fetch_row($GetLatestPeriod);
-$LastPeriodPostedTo = $myrow[0];
-$DbgMsg = _('The SQL that failed was:');
-
-/* Now get the last period that has ChartDetails records already defined
-if the last period that has GL Entries is greater than the last period that
-has ChartDetail records set up then we need to create newies */
-
-$sql = "SELECT Max(Period) AS ChartLatestPeriod FROM ChartDetails";
-$GetLastChartDetailPeriod = DB_query($sql,$db);
-$myrow = DB_fetch_row($GetLastChartDetailPeriod);
-
-if ($myrow[0] != NULL){
-	$LastChartDetailPeriod = $myrow[0];
-} else {
-	/*Figure out when the first GL Postings that have been entered */
-	$sql = "SELECT Min(PeriodNo) AS GLTransFisrtPeriod FROM GLTrans WHERE Posted=0";
-	$GetFirstPeriod = DB_query($sql,$db);
-	$myrow = DB_fetch_row($GetFirstPeriod);
-	$FirstPeriodPostedTo = $myrow[0];
-}
-
-if ($FirstPeriodPostedTo > 0){
-	$CreateChartDetailsFrom = $FirstPeriodPostedTo;
-} else {
-	$CreateChartDetailsFrom = $LastChartDetailPeriod + 1;
-}
-
-
-if ($CreateChartDetailsFrom <= $LastPeriodPostedTo){ /*Then there are new chartdetail records to be created */
-
-	$sql = "begin";
-	$TransStart = DB_query($sql,$db);
-
-	/*Right now then .... create the chart detail records for all accounts from CreateChartDetailsFrom to LastPeriodPostedTo */
-
-	for ($i=$CreateChartDetailsFrom; $i<=($LastPeriodPostedTo); $i++) {
-
-		$sql = "INSERT INTO ChartDetails (AccountCode,
-						Period)
-				SELECT AccountCode," . $i . "
-				FROM ChartMaster";
-
-		$ErrMsg = _('Could not insert the new chart detail records required because there are now GL postings in a later period, for account code') . $i . _('beacuse');
-
-		$InsChartDetails = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
-	}
-
-	/*Now run through each of the new chartdetail records created for each account and update them with the B/Fwd and B/Fwd budget
-	No updates would be required where there were previously no chart details set up ie FirstPeriodPostedTo > 0 */
-	if (! isset($FirstPeriodPostedTo)){
-
-		$sql = "SELECT AccountCode,
-				Period,
-				Actual + BFwd AS CFwd,
-				Budget + BFwdBudget AS CFwdBudget
-				FROM ChartDetails
-			WHERE Period =" . ($CreateChartDetailsFrom  - 1);
-
-		$ErrMsg = _('Could not retrieve the brought forward balances to use in updating the new ChartDetails record going forward because');
-
-		$ChartDetailsCFwd = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
-
-		while ($myrow = DB_fetch_array($ChartDetailsCFwd)){
-
-			$sql = "UPDATE ChartDetails SET BFwd =" . $myrow['CFwd'] . ", BFwdBudget =" . $myrow['CFwdBudget'] . " WHERE AccountCode = " . $myrow['AccountCode'] . " AND Period >=" . $CreateChartDetailsFrom;
-			$ErrMsg = _('The new chart details records could not be updated with the brought forward balances because');
-			$UpdChartDetails = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
-		}
-	}
-
-	$sql = "Commit";
-	$TransCommit = DB_query($sql,$db);
-}
 
 /*Add a check to ensure chart details now set up for all GLTrans not posted */
 
@@ -122,54 +45,58 @@ $ErrMsg = _('The test to see that all chart details records required have been s
 $ChartDetailsStillRequired = DB_query($sql,$db,$ErrMsg);
 if (DB_num_rows($ChartDetailsStillRequired)>0){
 
-	while ($myrow = DB_fetch_array($ChartDetailsStillRequired)){
+	/*Script to insert ChartDetails records where one should already exist
+	only necessary where manual entry of chartdetails has stuffed the system */
 
-		echo "<BR>Creating ChartDetails records for Account " . $myrow['Account'];
+	$FirstPeriodResult = DB_query('SELECT Min(PeriodNo) FROM Periods',$db);
+	$FirstPeriodRow = DB_fetch_row($FirstPeriodResult);
 
-		$sql = "begin";
-		$TransStart = DB_query($sql,$db);
+	$LastPeriodResult = DB_query('SELECT Max(PeriodNo) FROM Periods',$db);
+	$LastPeriodRow = DB_fetch_row($LastPeriodResult);
 
-		/*Right now then .... create the chart detail records for the account concerned to LastPeriodPostedTo */
+	$CreateFrom = $FirstPeriodRow[0];
+	$CreateTo = $LastPeriodRow[0];;
 
-		for ($i=$myrow['FromPeriod'];$i<=($LastPeriodPostedTo); $i++) {
+	$ChartAccounts = DB_query('SELECT AccountCode FROM ChartMaster',$db);
 
-			$sql = "INSERT INTO ChartDetails (
-							AccountCode,
-							Period
-							)
-				VALUES(" . $myrow['Account'] . ",
-					" . $i . ")";
+	While ($AccountRow = DB_fetch_array($ChartAccounts)){
 
-			$ErrMsg = _('Could not add a new ChartDetails record for account') . $myrow['Account'] . ' ' . _('and period') . ' ' . $i;
-			$InsChartDetails = DB_query($sql,$db,$ErrMsg);
+		for ($PeriodNo=$CreateFrom;$PeriodNo <= $CreateTo;$PeriodNo++) {
+
+			echo '<LI>' . _('Period Number') . ' ' . $PeriodNo . '</LI>';
+
+			$sql = "INSERT INTO ChartDetails (AccountCode,
+								Period)
+						VALUES (" . $AccountRow['AccountCode'] . ",
+							" . $PeriodNo . ")";
+			$InsChartDetails = DB_query($sql,$db,'','','',false);
+			/*dont trap errors here the thinking is that duplicate records will return and error that is ignored
+			otherwise a chart detail record is created correctly - all fine */
+
 		}
 
-	/*Now run through each of the new chartdetail records created for each account and update them with the B/Fwd and B/Fwd budget */
+	/*Now run through each of the new chartdetail records created for each account and update them with the B/Fwd and B/Fwd budget no updates would be required where there were previously no chart details set up ie FirstPeriodPostedTo > 0 */
 
-		$sql = "SELECT Period,
-				Actual + BFwd AS CFwd,
-				Budget + BFwdBudget AS CFwdBudget
-			FROM ChartDetails
-			WHERE Period =" . ($myrow['FromPeriod']  - 1) . "
-			AND AccountCode=" . $myrow['Account'];
+		for ($PeriodNo=$CreateFrom;$PeriodNo<=$CreateTo; $PeriodNo++) {
 
-		$ErrMsg = _('Could not retrieve the general ledger chart details for the period prior to the new record created - this is required to get the brought forward balances from. The sql error returned was');
-		$ExistingChartDetail = DB_query($sql,$db,$ErrMsg);
+			$sql = "SELECT AccountCode,
+					Period,
+					Actual + BFwd AS CFwd,
+					Budget + BFwdBudget AS CFwdBudget
+				FROM ChartDetails WHERE Period =" . ($PeriodNo  - 1);
+			$ChartDetailsCFwd = DB_query($sql,$db);
 
-		if (DB_num_rows($ExistingChartDetail)==1){
-			$BfwdRow = DB_fetch_array($ExistingChartDetail);
-			$sql = "UPDATE ChartDetails SET BFwd =" . $BfwdRow['CFwd'] . ",
-					BFwdBudget =" . $BfwdRow['CFwdBudget'] . "
-					WHERE AccountCode = " . $myrow['Account'] . "
-					AND Period >=" . $myrow['FromPeriod'];
+			while ($myrow = DB_fetch_array($ChartDetailsCFwd)){
 
-			$ErrMsg = _('Could not update the new chart details created with the brought forward balances. The error message returned by the SQL was');
-			$UpdChartDetails = DB_query($sql,$db,$ErrMsg);
+				$sql = "UPDATE ChartDetails SET BFwd =" . $myrow['CFwd'] . ",
+								BFwdBudget =" . $myrow['CFwdBudget'] . "
+						WHERE AccountCode = " . $myrow['AccountCode'] . "
+						AND Period >=" . $PeriodNo;
+				$UpdChartDetails = DB_query($sql,$db);
+			}
 		}
 
-		$sql = "Commit";
-		$TransCommit = DB_query($sql,$db);
-	} /* end of loop to get all accounts without chart details where there should be */
+	}
 }
 
 
