@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-06 21:24+1200\n"
+"POT-Creation-Date: 2004-09-08 21:46+1200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,116 +16,116 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: AccountGroups.php:3 index.php:851
+#: AccountGroups.php:8 index.php:851
 msgid "Account Groups"
 msgstr ""
 
-#: AccountGroups.php:24
+#: AccountGroups.php:28
 msgid ""
 "The account group name cannot contain the character '&' or the character '"
 msgstr ""
 
-#: AccountGroups.php:27
+#: AccountGroups.php:31
 msgid "The section in accounts must be an integer"
 msgstr ""
 
-#: AccountGroups.php:30
+#: AccountGroups.php:34
 msgid "The sequence in the trial balance must be an integer"
 msgstr ""
 
-#: AccountGroups.php:33
+#: AccountGroups.php:37
 msgid "The sequence in the TB must be less than 10,000"
 msgstr ""
 
-#: AccountGroups.php:50
+#: AccountGroups.php:54
 msgid "Record Updated"
 msgstr ""
 
-#: AccountGroups.php:66
+#: AccountGroups.php:70
 msgid "Record inserted"
 msgstr ""
 
-#: AccountGroups.php:85
+#: AccountGroups.php:89
 msgid ""
 "Cannot delete this account group because general ledger accounts have been "
 "created using this group"
 msgstr ""
 
-#: AccountGroups.php:86 BankAccounts.php:93 Customers.php:174
-#: Customers.php:183 Customers.php:191 Customers.php:199
+#: AccountGroups.php:90 Areas.php:84 Areas.php:93 BankAccounts.php:93
+#: Customers.php:176 Customers.php:185 Customers.php:193 Customers.php:201
 msgid "There are"
 msgstr ""
 
-#: AccountGroups.php:86
+#: AccountGroups.php:90
 msgid "general ledger accounts that refer to this account group"
 msgstr ""
 
-#: AccountGroups.php:92
+#: AccountGroups.php:96
 msgid "group has been deleted !"
 msgstr ""
 
-#: AccountGroups.php:114
+#: AccountGroups.php:118
 msgid "Could not get account groups because"
 msgstr ""
 
-#: AccountGroups.php:119
+#: AccountGroups.php:123
 msgid "Group Name"
 msgstr ""
 
-#: AccountGroups.php:120
+#: AccountGroups.php:124
 msgid "Section"
 msgstr ""
 
-#: AccountGroups.php:121
+#: AccountGroups.php:125
 msgid "Sequence In TB"
 msgstr ""
 
-#: AccountGroups.php:122
+#: AccountGroups.php:126
 msgid "Profit and Loss"
 msgstr ""
 
-#: AccountGroups.php:138 AccountGroups.php:141 AccountGroups.php:245
-#: AccountGroups.php:247
+#: AccountGroups.php:142 AccountGroups.php:145 AccountGroups.php:249
+#: AccountGroups.php:251
 msgid "Yes"
 msgstr ""
 
-#: AccountGroups.php:144 AccountGroups.php:250 AccountGroups.php:252
+#: AccountGroups.php:148 AccountGroups.php:254 AccountGroups.php:256
 msgid "No"
 msgstr ""
 
-#: AccountGroups.php:152
+#: AccountGroups.php:156
 msgid "EDIT"
 msgstr ""
 
-#: AccountGroups.php:153
+#: AccountGroups.php:157
 msgid "DELETE"
 msgstr ""
 
-#: AccountGroups.php:170
+#: AccountGroups.php:174
 msgid "Review Account Groups"
 msgstr ""
 
-#: AccountGroups.php:201
+#: AccountGroups.php:205
 msgid "Account Group:"
 msgstr ""
 
-#: AccountGroups.php:223
+#: AccountGroups.php:227
 msgid "Acount Group Name:"
 msgstr ""
 
-#: AccountGroups.php:226
+#: AccountGroups.php:230
 msgid "Section In Accounts:"
 msgstr ""
 
-#: AccountGroups.php:241
+#: AccountGroups.php:245
 msgid "Profit and Loss:"
 msgstr ""
 
-#: AccountGroups.php:257
+#: AccountGroups.php:261
 msgid "Sequence In TB:"
 msgstr ""
 
-#: AccountGroups.php:262 BankAccounts.php:221
+#: AccountGroups.php:266 Areas.php:180 BankAccounts.php:221
 msgid "Enter Information"
 msgstr ""
 
@@ -258,6 +258,96 @@ msgstr ""
 msgid "For Suppliers Trading in:"
 msgstr ""
 
+#: Areas.php:7
+msgid "Sales Area Maintenance"
+msgstr ""
+
+#: Areas.php:32
+msgid "The area code must be two characters or less long"
+msgstr ""
+
+#: Areas.php:35
+msgid "The area description must be fifty characters or less long"
+msgstr ""
+
+#: Areas.php:47
+msgid "Area code"
+msgstr ""
+
+#: Areas.php:47
+msgid "has been updated"
+msgstr ""
+
+#: Areas.php:61
+msgid "New area code"
+msgstr ""
+
+#: Areas.php:61
+msgid "has been inserted"
+msgstr ""
+
+#: Areas.php:65
+msgid "The area could not be added or updated because"
+msgstr ""
+
+#: Areas.php:66 ConfirmDispatch_Invoice.php:153 CustomerReceipt.php:256
+#: CustomerReceipt.php:437 CustomerReceipt.php:465 CustomerTransInquiry.php:69
+#: GLAccounts.php:37 GLAccounts.php:44 StockQuantityByDate.php:73
+msgid "The SQL that failed was"
+msgstr ""
+
+#: Areas.php:83
+msgid ""
+"Cannot delete this area because customer branches have been created using "
+"this area"
+msgstr ""
+
+#: Areas.php:84
+msgid "branches using this area code"
+msgstr ""
+
+#: Areas.php:92
+msgid ""
+"Cannot delete this area because sales analysis ecords exist that use this "
+"area"
+msgstr ""
+
+#: Areas.php:93
+msgid "sales analysis records referring this area code"
+msgstr ""
+
+#: Areas.php:100 Areas.php:110
+msgid "Area Code"
+msgstr ""
+
+#: Areas.php:100 Customers.php:210 GLAccounts.php:174
+msgid "has been deleted !"
+msgstr ""
+
+#: Areas.php:111
+msgid "Area Name"
+msgstr ""
+
+#: Areas.php:128 BankAccounts.php:140
+msgid "Edit"
+msgstr ""
+
+#: Areas.php:131 BankAccounts.php:141 CustomerReceipt.php:514
+msgid "Delete"
+msgstr ""
+
+#: Areas.php:141
+msgid "Review Areas Defined"
+msgstr ""
+
+#: Areas.php:170
+msgid "Area Code:"
+msgstr ""
+
+#: Areas.php:175
+msgid "Area Name:"
+msgstr ""
+
 #: BankAccounts.php:8
 msgid "Bank Accounts Maintenance"
 msgstr ""
@@ -328,14 +418,6 @@ msgstr ""
 msgid "Bank Address"
 msgstr ""
 
-#: BankAccounts.php:140
-msgid "Edit"
-msgstr ""
-
-#: BankAccounts.php:141
-msgid "Delete"
-msgstr ""
-
 #: BankAccounts.php:185 BankAccounts.php:188
 msgid "Bank Account GL Code:"
 msgstr ""
@@ -352,404 +434,1031 @@ msgstr ""
 msgid "Bank Address:"
 msgstr ""
 
-#: Customers.php:3
+#: ConfirmDispatch_Invoice.php:21
+msgid "Select a sales order to invoice"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:22
+msgid ""
+"This page can only be opened if an order has been selected. Please select an "
+"order first - from the delivery details screen click on Confirm for invoicing"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:84
+msgid "The order cannot be retrieved because"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:85
+msgid "The SQL to get the order header was"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:152
+msgid "The line items of the order cannot be retrieved because"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:185 ConfirmDispatch_Invoice.php:196
+msgid "Select a different sales order to invoice"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:186
+msgid ""
+"There are no ordered items with a quantity left to deliver. There is nothing "
+"left to invoice"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:195
+msgid "This order item could not be retrieved. Please select another order."
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:215
+msgid "Invoice amounts stated in"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:224 StockQuantityByDate.php:80
+msgid "Item Code"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:225
+msgid "Item Description"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:226
+msgid "Ordered"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:227 GoodsReceived.php:52
+msgid "Units"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:228
+msgid "Already<BR>Sent"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:229
+msgid "This Dispatch"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:230 GoodsReceived.php:55
+msgid "Price"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:231 CustomerReceipt.php:500
+msgid "Discount"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:232
+msgid "Total<BR>Excl Tax"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:233
+msgid "Tax %<BR>Rate"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:234
+msgid "Tax<BR>Amount"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:235
+msgid "Total<BR>Incl Tax"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:299
+msgid "Enter Serial No's"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:301 GoodsReceived.php:119
+msgid "Enter Batches"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:340 ConfirmDispatch_Invoice.php:348
+msgid ""
+"There was a problem testing for a the default shipper - the SQL that failed "
+"was"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:354
+msgid ""
+"We have a problem ... there are no shippers defined. Please use the link "
+"below to set up shipping freight companies, the system expects the shipping "
+"company to be selected or a default freight company to be used"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:355
+msgid "Enter/Amend Freight Companies"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:366
+msgid "Order Freight Cost"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:370
+msgid "Recalculated Freight Cost"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:376
+msgid "Charge Freight Cost"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:387
+msgid "Invoice Totals"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:422 GoodsReceived.php:180
+msgid ""
+"The company infomation and preferences could not be retrieved - see your "
+"system administrator"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:439
+msgid "Number of rows returned by SQL:"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:440
+msgid "The count of items in the Items->LineItems session variable was"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:443 ConfirmDispatch_Invoice.php:462
+msgid ""
+"This order has been changed or invoiced since this delivery was started to "
+"be confirmed. Processing halted. To enter and confirm this dispatch/invoice "
+"the order must be re-selected and re-read again to update the changes made "
+"by the other user."
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:445 ConfirmDispatch_Invoice.php:464
+msgid "Select a sales order for confirming deliveries and invoicing"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:460
+msgid "Orig order for"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:460
+msgid "has a quantity of"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:460
+msgid "and an invoiced qty of"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:460
+msgid "the session shows quantity of"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:460
+msgid "and quantity invoice of"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:483
+msgid "ERROR: Could not update the default carrier for this branch because"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:483
+msgid "The SQL used to update the branch default carrier was"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:494
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The sales order "
+"header could not be updated with the invoice number"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:495
+msgid "The following SQL to update the sales order was used:"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:537
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The debtor "
+"transaction record could not be inserted because:"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:538
+msgid "The following SQL to insert the debtor transaction record was used:"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:550
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The sales order "
+"detail record could not be updated because:"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:551
+msgid "The following SQL to update the sales order detail record was used:"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:576
+msgid ""
+"CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The order delivery "
+"differences log record could not be inserted because:"
+msgstr ""
+
+#: ConfirmDispatch_Invoice.php:577
+msgid ""
+"The following SQL to insert the order delivery differences record was used:"
+msgstr ""
+
+#: CustomerReceipt.php:8
+msgid "Receipt Entry"
+msgstr ""
+
+#: CustomerReceipt.php:38
+msgid ""
+"The company has not yet been set up properly - this information is needed to "
+"process the batch. Processing has been cancelled."
+msgstr ""
+
+#: CustomerReceipt.php:79
+msgid "Cannot insert a GL entry for the receipt using the SQL:"
+msgstr ""
+
+#: CustomerReceipt.php:80
+msgid "The SQL that failed to insert the receipt GL entry was"
+msgstr ""
+
+#: CustomerReceipt.php:111
+msgid "The SQL that failed to insert the bank transaction was"
+msgstr ""
+
+#: CustomerReceipt.php:112 CustomerReceipt.php:147
+msgid "Problem Report:"
+msgstr ""
+
+#: CustomerReceipt.php:112
+msgid "Cannot insert a bank transaction using the SQL:"
+msgstr ""
+
+#: CustomerReceipt.php:146
+msgid "The SQL that failed to insert the customer receipt transaction was"
+msgstr ""
+
+#: CustomerReceipt.php:147
+msgid "Cannot insert a receipt transaction against the customer"
+msgstr ""
+
+#: CustomerReceipt.php:151
+msgid "The SQL that failed to update the date of the last payment received was"
+msgstr ""
+
+#: CustomerReceipt.php:152
+msgid ""
+"Cannot update the customer record for the date of the last payment received"
+msgstr ""
+
+#: CustomerReceipt.php:179
+msgid ""
+"The SQL that failed to insert the GL transaction fro the bank account debit "
+"was"
+msgstr ""
+
+#: CustomerReceipt.php:180
+msgid "<BR>Cannot insert a GL transaction for the bank account debit"
+msgstr ""
+
+#: CustomerReceipt.php:200
+msgid ""
+"The SQL that failed to insert the GL transaction for the debtors account "
+"credit was"
+msgstr ""
+
+#: CustomerReceipt.php:201
+msgid "<BR>Cannot insert a GL transaction for the debtors account credit"
+msgstr ""
+
+#: CustomerReceipt.php:223
+msgid ""
+"The SQL that failed to insert the GL transaction for the payment discount "
+"debit was"
+msgstr ""
+
+#: CustomerReceipt.php:224
+msgid "Cannot insert a GL transaction for the payment discount debit"
+msgstr ""
+
+#: CustomerReceipt.php:251
+msgid "The SQL that failed to insert the bank account transaction was"
+msgstr ""
+
+#: CustomerReceipt.php:252
+msgid "Cannot insert a bank transaction"
+msgstr ""
+
+#: CustomerReceipt.php:255
+msgid "Cannot commit the changes"
+msgstr ""
+
+#: CustomerReceipt.php:259
+msgid "Receipt batch"
+msgstr ""
+
+#: CustomerReceipt.php:259
+msgid "has been sucessfully entered into the database."
+msgstr ""
+
+#: CustomerReceipt.php:260
+msgid "Print PDF Batch Summary"
+msgstr ""
+
+#: CustomerReceipt.php:290
+msgid "The bank account name cannot be retrieved because"
+msgstr ""
+
+#: CustomerReceipt.php:290
+msgid "SQL used to retrieve the bank account name was:"
+msgstr ""
+
+#: CustomerReceipt.php:298
+msgid "The bank account number"
+msgstr ""
+
+#: CustomerReceipt.php:298
+msgid "is not set up as a bank account."
+msgstr ""
+
+#: CustomerReceipt.php:327
+msgid ""
+"Customer name keywords have been used in preference to the customer code "
+"extract entered."
+msgstr ""
+
+#: CustomerReceipt.php:330
+msgid ""
+"At least one customer name keyword OR an extract of a customer code must be "
+"entered for the search"
+msgstr ""
+
+#: CustomerReceipt.php:359
+msgid "The searched customer records requested cannot be retrieved because"
+msgstr ""
+
+#: CustomerReceipt.php:359
+msgid "SQL used to retrieve the customer details was:"
+msgstr ""
+
+#: CustomerReceipt.php:365
+msgid ""
+"No customer records contain the selected text - please alter your search "
+"criteria and try again."
+msgstr ""
+
+#: CustomerReceipt.php:436 CustomerReceipt.php:464
+msgid "The customer details could not be retrieved because"
+msgstr ""
+
+#: CustomerReceipt.php:496
+msgid "Batch:"
+msgstr ""
+
+#: CustomerReceipt.php:496
+msgid "Banked into the"
+msgstr ""
+
+#: CustomerReceipt.php:496
+msgid "on"
+msgstr ""
+
+#: CustomerReceipt.php:499
+msgid "Amount Rec'd"
+msgstr ""
+
+#: CustomerReceipt.php:501 CustomerTransInquiry.php:75
+#: includes/PDFAgedDebtorsPageHeader.inc:40
+msgid "Customer"
+msgstr ""
+
+#: CustomerReceipt.php:502
+msgid "GL Code"
+msgstr ""
+
+#: CustomerReceipt.php:527
+msgid "Set up a New Batch"
+msgstr ""
+
+#: CustomerReceipt.php:538
+msgid "The bank accounts could not be retrieved because"
+msgstr ""
+
+#: CustomerReceipt.php:539
+msgid "The SQL used to retrieve the bank acconts was"
+msgstr ""
+
+#: CustomerReceipt.php:542
+msgid "Bank Account:"
+msgstr ""
+
+#: CustomerReceipt.php:546
+msgid "Bank Accounts have not yet been defined. You must first"
+msgstr ""
+
+#: CustomerReceipt.php:546
+msgid "define the bank accounts"
+msgstr ""
+
+#: CustomerReceipt.php:546
+msgid "and general ledger accounts to be affected."
+msgstr ""
+
+#: CustomerReceipt.php:563
+msgid "Date Banked:"
+msgstr ""
+
+#: CustomerReceipt.php:564
+msgid "Currency:"
+msgstr ""
+
+#: CustomerReceipt.php:579
+msgid ""
+"No currencies are defined yet. Receipts cannot be entered until a currency "
+"is defined."
+msgstr ""
+
+#: CustomerReceipt.php:594 PO_Header.php:380
+msgid "Exchange Rate:"
+msgstr ""
+
+#: CustomerReceipt.php:595
+msgid "Receipt Type:"
+msgstr ""
+
+#: CustomerReceipt.php:609 CustomerReceipt.php:686
+msgid "Narrative:"
+msgstr ""
+
+#: CustomerReceipt.php:613 CustomerReceipt.php:688
+msgid "Accept"
+msgstr ""
+
+#: CustomerReceipt.php:629
+msgid "All amounts stated in"
+msgstr ""
+
+#: CustomerReceipt.php:629
+msgid "Terms:"
+msgstr ""
+
+#: CustomerReceipt.php:629 Customers.php:270 Customers.php:383
+msgid "Credit Limit:"
+msgstr ""
+
+#: CustomerReceipt.php:629 Customers.php:281 Customers.php:400
+msgid "Credit Status:"
+msgstr ""
+
+#: CustomerReceipt.php:632
+msgid "ACCOUNT ON HOLD"
+msgstr ""
+
+#: CustomerReceipt.php:635
+msgid "Total Balance"
+msgstr ""
+
+#: CustomerReceipt.php:635 includes/PDFAgedDebtorsPageHeader.inc:42
+#: includes/PDFAgedSuppliersPageHeader.inc:36
+msgid "Current"
+msgstr ""
+
+#: CustomerReceipt.php:635
+msgid "Now Due"
+msgstr ""
+
+#: CustomerReceipt.php:635
+msgid "Days Overdue"
+msgstr ""
+
+#: CustomerReceipt.php:635
+msgid "Over"
+msgstr ""
+
+#: CustomerReceipt.php:651
+msgid "General Ledger Receipt Entry"
+msgstr ""
+
+#: CustomerReceipt.php:654
+msgid "GL Account:"
+msgstr ""
+
+#: CustomerReceipt.php:658
+msgid ""
+"No General ledger accounts have been set up yet - receipts cannot be entered "
+"against GL accounts until the GL accounts are set up."
+msgstr ""
+
+#: CustomerReceipt.php:677
+msgid "Amount of Receipt:"
+msgstr ""
+
+#: CustomerReceipt.php:680
+msgid "Amount of Discount:"
+msgstr ""
+
+#: CustomerReceipt.php:680
+msgid "agreed prompt payment discount is"
+msgstr ""
+
+#: CustomerReceipt.php:685
+msgid "Payee Bank Details:"
+msgstr ""
+
+#: CustomerReceipt.php:688
+msgid "Cancel"
+msgstr ""
+
+#: CustomerReceipt.php:696
+msgid "Select A Customer"
+msgstr ""
+
+#: CustomerReceipt.php:698
+msgid "Text in the"
+msgstr ""
+
+#: CustomerReceipt.php:698
+msgid "name"
+msgstr ""
+
+#: CustomerReceipt.php:701
+msgid "Text extract in the customer"
+msgstr ""
+
+#: CustomerReceipt.php:701
+msgid "code"
+msgstr ""
+
+#: CustomerReceipt.php:705
+msgid "Search Now"
+msgstr ""
+
+#: CustomerReceipt.php:706
+msgid "Enter A GL Receipt"
+msgstr ""
+
+#: CustomerReceipt.php:709
+msgid "Accept and Process Batch"
+msgstr ""
+
+#: CustomerReceipt.php:715
+msgid "Code"
+msgstr ""
+
+#: CustomerReceipt.php:715
+msgid "Customer Name"
+msgstr ""
+
+#: CustomerTransInquiry.php:3
+msgid "Customer Transactions Inquiry"
+msgstr ""
+
+#: CustomerTransInquiry.php:16
+msgid "Type:"
+msgstr ""
+
+#: CustomerTransInquiry.php:40
+msgid "From:"
+msgstr ""
+
+#: CustomerTransInquiry.php:41
+msgid "To:"
+msgstr ""
+
+#: CustomerTransInquiry.php:43
+msgid "Show Transactions"
+msgstr ""
+
+#: CustomerTransInquiry.php:68
+msgid ""
+"The customer transactions for the selected criteria could not be retrieved "
+"because"
+msgstr ""
+
+#: CustomerTransInquiry.php:73 PrintCustTrans.php:456
+msgid "Number"
+msgstr ""
+
+#: CustomerTransInquiry.php:74
+msgid "Date"
+msgstr ""
+
+#: CustomerTransInquiry.php:76
+msgid "Branch"
+msgstr ""
+
+#: CustomerTransInquiry.php:77
+msgid "Reference"
+msgstr ""
+
+#: CustomerTransInquiry.php:78
+msgid "Comments"
+msgstr ""
+
+#: CustomerTransInquiry.php:79
+msgid "Order"
+msgstr ""
+
+#: CustomerTransInquiry.php:80
+msgid "Ex Rate"
+msgstr ""
+
+#: CustomerTransInquiry.php:81
+msgid "Amount"
+msgstr ""
+
+#: CustomerTransInquiry.php:82
+msgid "Currency"
+msgstr ""
+
+#: CustomerTransInquiry.php:111
+msgid "Click to preview the invoice"
+msgstr ""
+
+#: CustomerTransInquiry.php:113
+msgid "Click to preview the credit"
+msgstr ""
+
+#: Customers.php:8
 msgid "Customer Maintenance"
 msgstr ""
 
-#: Customers.php:26
+#: Customers.php:28
 msgid "The customer name must be entered and be forty characters or less long"
 msgstr ""
 
-#: Customers.php:29
+#: Customers.php:31
 msgid "The Debtor Code cannot be empty"
 msgstr ""
 
-#: Customers.php:32
+#: Customers.php:34
 msgid "The customer code cannot contain any of the following characters"
 msgstr ""
 
-#: Customers.php:32
+#: Customers.php:34
 msgid "or a space"
 msgstr ""
 
-#: Customers.php:35
+#: Customers.php:37
 msgid "No lines of the address must not contain the"
 msgstr ""
 
-#: Customers.php:35
+#: Customers.php:37
 msgid "character"
 msgstr ""
 
-#: Customers.php:38
+#: Customers.php:40
 msgid "The Line 1 of the address must be forty characters or less long"
 msgstr ""
 
-#: Customers.php:41
+#: Customers.php:43
 msgid "The Line 2 of the address must be forty characters or less long"
 msgstr ""
 
-#: Customers.php:44
+#: Customers.php:46
 msgid "The Line 3 of the address must be forty characters or less long"
 msgstr ""
 
-#: Customers.php:47
+#: Customers.php:49
 msgid "The Line 4 of the address must be fifty characters or less long"
 msgstr ""
 
-#: Customers.php:50
+#: Customers.php:52
 msgid "The credit limit must be numeric"
 msgstr ""
 
-#: Customers.php:53
+#: Customers.php:55
 msgid "The payment discount must be numeric"
 msgstr ""
 
-#: Customers.php:56
+#: Customers.php:58
 msgid ""
 "The customer since field must be a date in the format $DefaultDateFormat"
 msgstr ""
 
-#: Customers.php:59
+#: Customers.php:61
 msgid "The discount percentage must be numeric"
 msgstr ""
 
-#: Customers.php:62
+#: Customers.php:64
 msgid "The credit limit must be a positive number"
 msgstr ""
 
-#: Customers.php:65
+#: Customers.php:67
 msgid ""
 "The payment discount is expected to be less than 10% and greater than or "
 "equal to 0"
 msgstr ""
 
-#: Customers.php:68
+#: Customers.php:70
 msgid ""
 "The discount is expected to be less than 100% and greater than or equal to 0"
 msgstr ""
 
-#: Customers.php:104
+#: Customers.php:106
 msgid "The customer could not be updated because - "
 msgstr ""
 
-#: Customers.php:106
+#: Customers.php:108
 msgid "Customer updated"
 msgstr ""
 
-#: Customers.php:148
+#: Customers.php:150
 msgid "This customer could not be added because - "
 msgstr ""
 
-#: Customers.php:150
+#: Customers.php:152
 msgid "A new customer record has been inserted"
 msgstr ""
 
-#: Customers.php:152
+#: Customers.php:154
 msgid "Enter Branch Details"
 msgstr ""
 
-#: Customers.php:157
+#: Customers.php:159
 msgid "Validation failed, no updates or deletes took place"
 msgstr ""
 
-#: Customers.php:173
+#: Customers.php:175
 msgid ""
 "This customer cannot be deleted because there are transactions that refer to "
 "it"
 msgstr ""
 
-#: Customers.php:174
+#: Customers.php:176
 msgid "transactions against this customer"
 msgstr ""
 
-#: Customers.php:182
+#: Customers.php:184
 msgid ""
 "Cannot delete the customer record because orders have been created against it"
 msgstr ""
 
-#: Customers.php:183
+#: Customers.php:185
 msgid "orders against this customer"
 msgstr ""
 
-#: Customers.php:190
+#: Customers.php:192
 msgid ""
 "Cannot delete this customer record because sales analysis records exist for "
 "it."
 msgstr ""
 
-#: Customers.php:191
+#: Customers.php:193
 msgid "sales analysis records against this customer."
 msgstr ""
 
-#: Customers.php:198
+#: Customers.php:200
 msgid ""
 "Cannot delete this customer because there are branch records set up against "
 "it."
 msgstr ""
 
-#: Customers.php:199
+#: Customers.php:201
 msgid "branch records relating to this customer"
 msgstr ""
 
-#: Customers.php:208
+#: Customers.php:210
 msgid "Custmomer"
 msgstr ""
 
-#: Customers.php:208 GLAccounts.php:172
-msgid "has been deleted !"
-msgstr ""
-
-#: Customers.php:247 Customers.php:355
+#: Customers.php:249 Customers.php:357
 msgid "Customer Code:"
 msgstr ""
 
-#: Customers.php:248 Customers.php:358
+#: Customers.php:250 Customers.php:360
 msgid "Customer Name:"
 msgstr ""
 
-#: Customers.php:249 Customers.php:359
+#: Customers.php:251 Customers.php:361
 msgid "Address Line 1:"
 msgstr ""
 
-#: Customers.php:250 Customers.php:360
+#: Customers.php:252 Customers.php:362
 msgid "Address Line 2:"
 msgstr ""
 
-#: Customers.php:251 Customers.php:361
+#: Customers.php:253 Customers.php:363
 msgid "Address Line 3:"
 msgstr ""
 
-#: Customers.php:252 Customers.php:362
+#: Customers.php:254 Customers.php:364
 msgid "Address Line 4:"
 msgstr ""
 
-#: Customers.php:256 Customers.php:366
+#: Customers.php:258 Customers.php:368
 msgid "Sales Type/Price List:"
 msgstr ""
 
-#: Customers.php:264 Customers.php:377
+#: Customers.php:266 Customers.php:379
 msgid "Customer Since"
 msgstr ""
 
-#: Customers.php:265 Customers.php:378
+#: Customers.php:267 Customers.php:380
 msgid "Discount Percent:"
 msgstr ""
 
-#: Customers.php:266 Customers.php:379
+#: Customers.php:268 Customers.php:381
 msgid "Discount Code:"
 msgstr ""
 
-#: Customers.php:267 Customers.php:380
+#: Customers.php:269 Customers.php:382
 msgid "Payment Discount Percent:"
 msgstr ""
 
-#: Customers.php:268 Customers.php:381
-msgid "Credit Limit:"
-msgstr ""
-
-#: Customers.php:272 Customers.php:385 PrintCustTrans.php:381
+#: Customers.php:274 Customers.php:387 PrintCustTrans.php:381
 msgid "Payment Terms:"
 msgstr ""
 
-#: Customers.php:279 Customers.php:398
-msgid "Credit Status:"
-msgstr ""
-
-#: Customers.php:295
+#: Customers.php:297
 msgid "Customer's Currency:"
 msgstr ""
 
-#: Customers.php:308 Customers.php:423
+#: Customers.php:310 Customers.php:425
 msgid "Invoice Addressing:"
 msgstr ""
 
-#: Customers.php:309 Customers.php:425 Customers.php:428
+#: Customers.php:311 Customers.php:427 Customers.php:430
 msgid "Address to HO"
 msgstr ""
 
-#: Customers.php:310 Customers.php:426 Customers.php:429
+#: Customers.php:312 Customers.php:428 Customers.php:431
 msgid "Address to Branch"
 msgstr ""
 
-#: Customers.php:313
+#: Customers.php:315
 msgid "Insert New Customer"
 msgstr ""
 
-#: Customers.php:313
+#: Customers.php:315
 msgid "Reset"
 msgstr ""
 
-#: Customers.php:327
+#: Customers.php:329
 msgid "The customer details could not be retrieved because - "
 msgstr ""
 
-#: Customers.php:327
+#: Customers.php:329
 msgid "the SQL that was used - and failed was:"
 msgstr ""
 
-#: Customers.php:412
+#: Customers.php:414
 msgid "Customers Currency:"
 msgstr ""
 
-#: Customers.php:434
+#: Customers.php:436
 msgid "Add New Customer"
 msgstr ""
 
-#: Customers.php:436
+#: Customers.php:438
 msgid "Update Customer"
 msgstr ""
 
-#: Customers.php:436
+#: Customers.php:438
 msgid ""
 "Be careful there is no second warning if you hit the DELETE button below"
 msgstr ""
 
-#: Customers.php:436
+#: Customers.php:438
 msgid "Delete Customer"
 msgstr ""
 
-#: GLAccounts.php:26
+#: GLAccounts.php:6
+msgid "General Ledger Chart of Accounts Maintenance"
+msgstr ""
+
+#: GLAccounts.php:28
 msgid "The account code must be an integer."
 msgstr ""
 
-#: GLAccounts.php:29
+#: GLAccounts.php:31
 msgid "The account name must be fifty characters or less long"
 msgstr ""
 
-#: GLAccounts.php:35 GLAccounts.php:42 StockQuantityByDate.php:73
-msgid "The SQL that failed was"
-msgstr ""
-
-#: GLAccounts.php:36
+#: GLAccounts.php:38
 msgid "Could not update the account because"
 msgstr ""
 
-#: GLAccounts.php:38
+#: GLAccounts.php:40
 msgid "The general ledger account has been updated."
 msgstr ""
 
-#: GLAccounts.php:43
+#: GLAccounts.php:45
 msgid "Could not add the new account code"
 msgstr ""
 
-#: GLAccounts.php:49
+#: GLAccounts.php:51
 msgid "Could not add the chart details for the new account"
 msgstr ""
 
-#: GLAccounts.php:54
+#: GLAccounts.php:56
 msgid "The new general ledger account has been added."
 msgstr ""
 
-#: GLAccounts.php:74
+#: GLAccounts.php:76
 msgid ""
 "Cannot delete this account because chart details have been created using "
 "this account."
 msgstr ""
 
-#: GLAccounts.php:75 GLAccounts.php:90
+#: GLAccounts.php:77 GLAccounts.php:92
 msgid "There are "
 msgstr ""
 
-#: GLAccounts.php:75
+#: GLAccounts.php:77
 msgid " chart details that require this account code"
 msgstr ""
 
-#: GLAccounts.php:81
+#: GLAccounts.php:83
 msgid "Couldn't test for existing transactions because"
 msgstr ""
 
-#: GLAccounts.php:82
+#: GLAccounts.php:84
 msgid "The SQL that was used and failed was"
 msgstr ""
 
-#: GLAccounts.php:89
+#: GLAccounts.php:91
 msgid ""
 "Cannot delete this account because transactions have been created using this "
 "account."
 msgstr ""
 
-#: GLAccounts.php:90
+#: GLAccounts.php:92
 msgid " transactions that require this account code"
 msgstr ""
 
-#: GLAccounts.php:97
+#: GLAccounts.php:99
 msgid "Couldn't test for default company GL codes because"
 msgstr ""
 
-#: GLAccounts.php:98 GLAccounts.php:112 GLAccounts.php:124 GLAccounts.php:136
-#: GLAccounts.php:161
+#: GLAccounts.php:100 GLAccounts.php:114 GLAccounts.php:126 GLAccounts.php:138
+#: GLAccounts.php:163
 msgid "The SQL that was used and failed was:"
 msgstr ""
 
-#: GLAccounts.php:105
+#: GLAccounts.php:107
 msgid ""
 "Cannot delete this account because it is used as one of the company default "
 "accounts."
 msgstr ""
 
-#: GLAccounts.php:111
+#: GLAccounts.php:113
 msgid "Couldn't test for tax authority GL codes because"
 msgstr ""
 
-#: GLAccounts.php:118
+#: GLAccounts.php:120
 msgid ""
 "Cannot delete this account because it is used as one of the tax authority "
 "accounts."
 msgstr ""
 
-#: GLAccounts.php:123
+#: GLAccounts.php:125
 msgid "Couldn't test for existing sales interface GL codes because"
 msgstr ""
 
-#: GLAccounts.php:130
+#: GLAccounts.php:132
 msgid ""
 "Cannot delete this account because it is used by one of the sales GL posting "
 "interface records."
 msgstr ""
 
-#: GLAccounts.php:135
+#: GLAccounts.php:137
 msgid "Couldn't test for existing cost of sales interface codes because"
 msgstr ""
 
-#: GLAccounts.php:142
+#: GLAccounts.php:144
 msgid ""
 "Cannot delete this account because it is used by one of the cost of sales GL "
 "posting interface records."
 msgstr ""
 
-#: GLAccounts.php:148
+#: GLAccounts.php:150
 msgid "Couldn't test for existing stock GL codes because"
 msgstr ""
 
-#: GLAccounts.php:149
+#: GLAccounts.php:151
 msgid ">The SQL that was used and failed was:"
 msgstr ""
 
-#: GLAccounts.php:156
+#: GLAccounts.php:158
 msgid ""
 "Cannot delete this account because it is used by one of the stock GL posting "
 "interface records."
 msgstr ""
 
-#: GLAccounts.php:160
+#: GLAccounts.php:162
 msgid "Couldn't test for existing bank account GL codes because"
 msgstr ""
 
-#: GLAccounts.php:167
+#: GLAccounts.php:169
 msgid ""
 "Cannot delete this account because it is used by one the defined bank "
 "accounts."
 msgstr ""
 
-#: GLAccounts.php:172
+#: GLAccounts.php:174
 msgid "Account"
 msgstr ""
 
-#: GLAccounts.php:199
+#: GLAccounts.php:201
 msgid "The chart accounts could not be retrieved because"
 msgstr ""
 
-#: GLAccounts.php:200
+#: GLAccounts.php:202
 msgid "The sql that was used and failed was:"
 msgstr ""
 
@@ -779,10 +1488,6 @@ msgstr ""
 msgid "Quantity<BR>Ordered"
 msgstr ""
 
-#: GoodsReceived.php:52
-msgid "Units"
-msgstr ""
-
 #: GoodsReceived.php:53
 msgid "Already Received"
 msgstr ""
@@ -791,20 +1496,12 @@ msgstr ""
 msgid "This Delivery<BR>Quantity"
 msgstr ""
 
-#: GoodsReceived.php:55
-msgid "Price"
-msgstr ""
-
 #: GoodsReceived.php:56
 msgid "Total Value<BR>Received"
 msgstr ""
 
 #: GoodsReceived.php:116
 msgid "Enter Serial Nos"
-msgstr ""
-
-#: GoodsReceived.php:119
-msgid "Enter Batches"
 msgstr ""
 
 #: GoodsReceived.php:129
@@ -826,12 +1523,6 @@ msgstr ""
 msgid ""
 "Modify the ordered items on the purchase invoice if you wish to increase the "
 "quantities"
-msgstr ""
-
-#: GoodsReceived.php:180
-msgid ""
-"The company infomation and preferences could not be retrieved - see your "
-"system administrator"
 msgstr ""
 
 #: GoodsReceived.php:188
@@ -1181,10 +1872,6 @@ msgstr ""
 msgid "Requistion Ref:"
 msgstr ""
 
-#: PO_Header.php:380
-msgid "Exchange Rate:"
-msgstr ""
-
 #: PO_Header.php:383
 msgid "Date Printed:"
 msgstr ""
@@ -1241,7 +1928,6 @@ msgstr ""
 
 #: PrintCustTrans.php:84 PrintCustTrans.php:87
 #: includes/PDFAgedDebtorsPageHeader.inc:18
-#: includes/PDFAgedDebtorsPageHeader.inc1:18
 #: includes/PDFAgedSuppliersPageHeader.inc:17
 msgid "to"
 msgstr ""
@@ -1310,10 +1996,6 @@ msgstr ""
 msgid "Emailing"
 msgstr ""
 
-#: PrintCustTrans.php:456
-msgid "Number"
-msgstr ""
-
 #: PrintCustTrans.php:458
 msgid "number"
 msgstr ""
@@ -1344,10 +2026,6 @@ msgstr ""
 
 #: StockQuantityByDate.php:72
 msgid "The stock items in the category selected cannot be retrieved because"
-msgstr ""
-
-#: StockQuantityByDate.php:80
-msgid "Item Code"
 msgstr ""
 
 #: StockQuantityByDate.php:82
@@ -1492,6 +2170,38 @@ msgstr ""
 
 #: WorkOrderIssue.php:131
 msgid "Update"
+msgstr ""
+
+#: config.php:213
+msgid "Orders"
+msgstr ""
+
+#: config.php:213
+msgid "Receivables"
+msgstr ""
+
+#: config.php:213
+msgid "Purchasing"
+msgstr ""
+
+#: config.php:213
+msgid "Inventory"
+msgstr ""
+
+#: config.php:213
+msgid "Manufacturing"
+msgstr ""
+
+#: config.php:213
+msgid "General Ledger"
+msgstr ""
+
+#: config.php:213
+msgid "Setup"
+msgstr ""
+
+#: index.php:7
+msgid "Main Menu"
 msgstr ""
 
 #: index.php:25
@@ -1990,55 +2700,36 @@ msgid "records are invalid"
 msgstr ""
 
 #: includes/PDFAgedDebtorsPageHeader.inc:18
-#: includes/PDFAgedDebtorsPageHeader.inc1:18
 msgid "Aged Customer Balances For Customers from"
 msgstr ""
 
 #: includes/PDFAgedDebtorsPageHeader.inc:19
-#: includes/PDFAgedDebtorsPageHeader.inc1:19
 #: includes/PDFAgedSuppliersPageHeader.inc:18
 msgid "And Trading in"
 msgstr ""
 
 #: includes/PDFAgedDebtorsPageHeader.inc:26
-#: includes/PDFAgedDebtorsPageHeader.inc1:26
 #: includes/PDFAgedSuppliersPageHeader.inc:21
 msgid "Printed:"
 msgstr ""
 
 #: includes/PDFAgedDebtorsPageHeader.inc:26
-#: includes/PDFAgedDebtorsPageHeader.inc1:26
 #: includes/PDFAgedSuppliersPageHeader.inc:21
 msgid "Page"
 msgstr ""
 
-#: includes/PDFAgedDebtorsPageHeader.inc:40
-#: includes/PDFAgedDebtorsPageHeader.inc1:40
-msgid "Customer"
-msgstr ""
-
 #: includes/PDFAgedDebtorsPageHeader.inc:41
-#: includes/PDFAgedDebtorsPageHeader.inc1:41
 #: includes/PDFAgedSuppliersPageHeader.inc:35
 msgid "Balance"
 msgstr ""
 
-#: includes/PDFAgedDebtorsPageHeader.inc:42
-#: includes/PDFAgedDebtorsPageHeader.inc1:42
-#: includes/PDFAgedSuppliersPageHeader.inc:36
-msgid "Current"
-msgstr ""
-
 #: includes/PDFAgedDebtorsPageHeader.inc:43
-#: includes/PDFAgedDebtorsPageHeader.inc1:43
 #: includes/PDFAgedSuppliersPageHeader.inc:37
 msgid "Due Now"
 msgstr ""
 
 #: includes/PDFAgedDebtorsPageHeader.inc:44
 #: includes/PDFAgedDebtorsPageHeader.inc:45
-#: includes/PDFAgedDebtorsPageHeader.inc1:44
-#: includes/PDFAgedDebtorsPageHeader.inc1:45
 #: includes/PDFAgedSuppliersPageHeader.inc:38
 #: includes/PDFAgedSuppliersPageHeader.inc:39
 msgid "Days Over"
