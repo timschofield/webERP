@@ -26,400 +26,205 @@
 <tr>
 <td>
 <font size="+3"><b>Table of Contents</b></font>
-<br><br>
-Introduction	6
-<br>
-&nbsp;&nbsp;Why Another Accounting Program?	6
-<br>
-&nbsp;&nbsp;System Requirements	6
-<br>
-Getting Started	7
-<br>
-&nbsp;&nbsp;Prerequisites	7
-<br>
-&nbsp;&nbsp;Copying the PHP Scripts 	8
-<br>
-&nbsp;&nbsp;Creating the Database 	8
-<br>
-&nbsp;&nbsp;Editing config.php	10
-<br>
-&nbsp;&nbsp;Logging In For the First Time	15
-<br>
-&nbsp;&nbsp;Themes and GUI Modification	15
-<br>
-&nbsp;&nbsp;Setting Up Users	16
-<br>
-Security Schema	16
-<br>
-To Create a New System	20
-<br>
-&nbsp;&nbsp;Running the Demonstration Database	20
-<br>
-&nbsp;&nbsp;Setting Up A System	20
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Setting Up Inventory Items	22
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Entering Inventory Balances	22
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Inventory Ledger Integration to General Ledger Issues	22
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Setting Up Customers	23
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Entering Customer Balances	23
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Reconciling the Debtors Ledger Control Account	23
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Finally	23
-<br>
-System Conventions	24
-<br>
-&nbsp;&nbsp;Navigating the Menu	24
-<br>
-&nbsp;&nbsp;Reporting	24
-<br>
-Inventory (aka "Stock")	24
-<br>
-&nbsp;&nbsp;Overview	24
-<br>
-&nbsp;&nbsp;Inventory System Features	25
-<br>
-&nbsp;&nbsp;Adding Inventory Items	26
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Item Code	26
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Part Descriptions	26
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Categories	26
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Unit of Measurement	27
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Economic Order Quantity	27
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Packaged Volume	27
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Packaged Weight	27
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Units of Measure	27
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Current or Obsolete	27
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Make Or Buy	27
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Setting Up Assembly Items	28
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Controlled	29
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Serialised	29
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Bar Code	30
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Discount Category	30
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Decimal Places	30
-<br>
-&nbsp;&nbsp;Inventory Costing	30
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Material Cost	30
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Labour Cost	30
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Overhead Cost	30
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Standard Costing Considerations	31
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Actual Cost	31
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Alterations To Labour Cost, Material Cost or Overhead Cost	31
-<br>
-&nbsp;&nbsp;Selecting Inventory Items	31
-<br>
-&nbsp;&nbsp;Amending Inventory Items	32
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Changing a Category 	32
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Alterations to the Make or Buy Flag	32
-<br>
-&nbsp;&nbsp;Inventory Categories	33
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Inventory Category Code	33
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Inventory Category Description	33
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Balance Sheet Inventory GL Account	33
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Inventory Adjustments GL Posting Account	33
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Purchase Price Variance Account	33
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Material Usage Variance Account	33
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Type of Resource	34
-<br>
-&nbsp;&nbsp;Inventory Location Maintenance	34
-<br>
-&nbsp;&nbsp;Inventory Adjustments	34
-<br>
-&nbsp;&nbsp;Inventory Location Transfers	34
-<br>
-&nbsp;&nbsp;Inventory Reports and Inquiries	35
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Inventory Status inquiries	35
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Inventory Movement inquiries	35
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Inventory Usage inquiries	35
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Inventory Valuation Report	35
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Inventory Planning Report	36
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Inventory Checks	36
-<br>
-Accounts Receivable	38
-<br>
-&nbsp;&nbsp;Overview	38
-<br>
-&nbsp;&nbsp;Features	38
-<br>
-&nbsp;&nbsp;Entering New Customers	39
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Customer Code	39
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Customer Name	39
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Address Line 1, 2, 3 and 4	39
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Currency	39
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Invoice Discount	39
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Prompt Payment Discount	40
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Customer Since	40
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Payment Terms	40
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Credit Status or Rating	40
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Credit Limit	40
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Invoice Addressing	40
-<br>
-&nbsp;&nbsp;Entering Customer Branches	41
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Branch Name 	41
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Branch Code	41
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Branch Contact / Phone / Fax / Address	41
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Sales Person	41
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Draw Stock From	41
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Forward Date From A Day In The Month	41
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Delivery Days	41
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Phone/Fax/Email	42
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Tax Authority	42
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Disable Transactions	42
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Default Freight Company	42
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Postal Address 1, 2, 3 and 4	42
-<br>
-&nbsp;&nbsp;Amending Customer Details	43
-<br>
-&nbsp;&nbsp;Salesperson Records	44
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Salespeople Code	44
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Salesperson Name, Telephone and Fax Numbers	44
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Salesperson Commission Rates and Breakpoint.	44
-<br>
-&nbsp;&nbsp;Sales Types/ Price Lists	44
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Sales Type Code	45
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Sales Type Description	45
-<br>
-&nbsp;&nbsp;Payment Terms	45
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Payment Terms Code	45
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Payment Terms Description	45
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Days Before Due / Day In Following Month When Due	45
-<br>
-&nbsp;&nbsp;Shippers	45
-<br>
-&nbsp;&nbsp;Credit Status Ratings	46
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status Code	46
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Status Description	46
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Disallow Invoices	46
-<br>
-&nbsp;&nbsp;Tax Calculations	46
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Overview	46
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Setting up Taxes	47
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sales only within one Tax Authority Example - 2 Tax Levels:	47
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sales only within one Tax Authority Example - 3 Tax Levels:	47
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sales Within Two Tax Authorities Example - 3 Tax Levels:	48
-<br>
-&nbsp;&nbsp;Pricing and Discounting	48
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Overview	48
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Maintaining Prices	48
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Discount Matrix	49
-<br>
-&nbsp;&nbsp;Invoicing An Order	50
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Selecting an Order To Invoice	50
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Producing An Invoice From A Selected Order	50
-<br>
-&nbsp;&nbsp;Credit Notes	50
-<br>
-&nbsp;&nbsp;Entry Of Receipts	52
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Receipt - Customer 	52
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Receipt - Date	53
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Receipts - Currency and Exchange Rate	53
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Receipts - Payment Method	53
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Receipts - Amount	53
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Receipts - Discount	53
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Receipts - Allocating to Invoices	54
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Differences on Exchange	54
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Receipts Processing	54
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Deposits Listing	55
-<br>
-&nbsp;&nbsp;Allocate Credits To A Customer's Account	55
-<br>
-&nbsp;&nbsp;Customer Inquiries	55
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Customer Account inquiries	56
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Transaction Detail inquiries	56
-<br>
-&nbsp;&nbsp;Customers - Reporting	57
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Aged Customer Balance Listing	57
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Customer Statements	57
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Customer Transaction Listing Options	57
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Sales Analysis	58
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sales Analysis Report Headers	58
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sales Analysis Report Columns	59
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Automating Sales Reports	60
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Printing Invoices Or Credit Notes	60
-<br>
-Sales Orders	62
-<br>
-&nbsp;&nbsp;Functionality	62
-<br>
-&nbsp;&nbsp;Entry of Sales Orders	62
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Selection of the Customer and Branch	62
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Selection of Order Line Items	62
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Delivery Details	63
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Modfiying An Order	64
-<br>
-&nbsp;&nbsp;Shipments	64
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Shipment General Ledger Posting	65
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Creating Shipments	65
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Shipment Costings	66
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;Closing a Shipment	66
-<br>
-General Ledger	66
-<br>
-&nbsp;&nbsp;Overview	66
-<br>
-&nbsp;&nbsp;Account Groups	67
-<br>
-&nbsp;&nbsp;Bank Accounts	67
-<br>
-&nbsp;&nbsp;Bank Account Payments	68
-<br>
-&nbsp;&nbsp;General Ledger Integration Setup	68
-<br>
-&nbsp;&nbsp;Sales Journals	69
-<br>
-&nbsp;&nbsp;Stock Journals	69
-<br>
-EDI	70
-<br>
-&nbsp;&nbsp;EDI Setup	70
-<br>
-&nbsp;&nbsp;Sending EDI Invoices	70
-<br>
-Special Utilities	72
-<br>
-&nbsp;&nbsp;Re-Apply Standard Costs to Sales Analysis	72
-<br>
-&nbsp;&nbsp;Change A Customer Code	72
-<br>
-&nbsp;&nbsp;Change An Inventory Code	72
-<br>
-&nbsp;&nbsp;Make Stock Locations	73
-<br>
-&nbsp;&nbsp;Repost General Ledger from Period	73
-<br>
-Developing New Scripts	73
-<br>
-&nbsp;&nbsp;Directory Structure	73
-<br>
-&nbsp;&nbsp;session.inc	73
-<br>
-&nbsp;&nbsp;header.inc	73
-<br>
-&nbsp;&nbsp;footer.inc	74
-<br>
-&nbsp;&nbsp;config.php	74
-<br>
-&nbsp;&nbsp;PDFStarter_ros.inc	74
-<br>
-&nbsp;&nbsp;Database Abstraction - ConnectDB.inc	74
-<br>
-&nbsp;&nbsp;DateFunctions.inc	74
-<br>
-&nbsp;&nbsp;SQL_CommonFuctions.inc	74
-<br>
-Contributors - Acknowledgements	75
+
+<LI>Introduction</LI>
+<LI>Why Another Accounting Program?</LI>
+
+<LI>System Requirements</LI>
+<LI>Getting Started</LI>
+<LI>Prerequisites</LI>
+<LI>Copying the PHP Scripts</LI>
+<LI>Creating the Database</LI>
+<LI>Editing config.php</LI>
+<LI>Logging In For the First Time</LI>
+<LI>Themes and GUI Modification</LI>
+<LI>Setting Up Users</LI>
+<LI>Security Schema</LI>
+<LI>To Create a New System</LI>
+<LI>Running the Demonstration Database</LI>
+<LI>Setting Up A System</LI>
+<LI>Setting Up Inventory Items</LI>
+<LI>Entering Inventory Balances</LI>
+<LI>Inventory Ledger Integration to General Ledger Issues</LI>
+<LI>Setting Up Customers</LI>
+<LI>Entering Customer Balances</LI>
+<LI>Reconciling the Debtors Ledger Control Account</LI>
+<LI>Finally</LI>
+<LI>System Conventions</LI>
+<LI>Navigating the Menu</LI>
+<LI>Reporting</LI>
+<LI>Inventory (aka "Stock")</LI>
+<LI>Overview</LI>
+<LI>Inventory System Features</LI>
+<LI>Adding Inventory Items</LI>
+<LI>Item Code</LI>
+<LI>Part Descriptions</LI>
+<LI>Categories</LI>
+<LI>Unit of Measurement</LI>
+<LI>Economic Order Quantity</LI>
+<LI>Packaged Volume</LI>
+<LI>Packaged Weight</LI>
+<LI>Units of Measure</LI>
+<LI>Current or Obsolete</LI>
+<LI>Make Or Buy</LI>
+<LI>Setting Up Assembly Items</LI>
+<LI>Controlled</LI>
+<LI>Serialised</LI>
+<LI>Bar Code</LI>
+<LI>Discount Category</LI>
+<LI>Decimal Places</LI>
+<LI>Inventory Costing</LI>
+<LI>Material Cost</LI>
+<LI>Labour Cost</LI>
+<LI>Overhead Cost</LI>
+<LI>Standard Costing Considerations</LI>
+<LI>Actual Cost</LI>
+<LI>Alterations To Labour Cost, Material Cost or Overhead Cost</LI>
+<LI>Selecting Inventory Items</LI>
+<LI>Amending Inventory Items</LI>
+<LI>Changing a Category</LI>
+<LI>Alterations to the Make or Buy Flag</LI>
+<LI>Inventory Categories</LI>
+<LI>Inventory Category Code</LI>
+<LI>Inventory Category Description</LI>
+<LI>Balance Sheet Inventory GL Account</LI>
+<LI>Inventory Adjustments GL Posting Account</LI>
+<LI>Purchase Price Variance Account</LI>
+<LI>Material Usage Variance Account</LI>
+<LI>Type of Resource</LI>
+<LI>Inventory Location Maintenance</LI>
+<LI>Inventory Adjustments</LI>
+<LI>Inventory Location Transfers</LI>
+<LI>Inventory Reports and Inquiries</LI>
+<LI>Inventory Status inquiries</LI>
+<LI>Inventory Movement inquiries</LI>
+<LI>Inventory Usage inquiries</LI>
+<LI>Inventory Valuation Report</LI>
+<LI>Inventory Planning Report</LI>
+<LI>Inventory Checks</LI>
+<LI>Accounts Receivable</LI>
+<LI>Overview</LI>
+<LI>Features</LI>
+<LI>Entering New Customers</LI>
+<LI>Customer Code</LI>
+<LI>Customer Name</LI>
+<LI>Address Line 1, 2, 3 and 4</LI>
+<LI>Currency</LI>
+<LI>Invoice Discount</LI>
+<LI>Prompt Payment Discount</LI>
+<LI>Customer Since</LI>
+<LI>Payment Terms</LI>
+<LI>Credit Status or Rating</LI>
+<LI>Credit Limit</LI>
+<LI>Invoice Addressing</LI>
+<LI>Entering Customer Branches</LI>
+<LI>Branch Name</LI>
+<LI>Branch Code</LI>
+<LI>Branch Contact / Phone / Fax / Address</LI>
+<LI>Sales Person</LI>
+<LI>Draw Stock From</LI>
+<LI>Forward Date From A Day In The Month</LI>
+<LI>Delivery Days</LI>
+<LI>Phone/Fax/Email</LI>
+<LI>Tax Authority</LI>
+<LI>Disable Transactions</LI>
+<LI>Default Freight Company</LI>
+<LI>Postal Address 1, 2, 3 and 4</LI>
+<LI>Amending Customer Details</LI>
+</LI>Salesperson Records</LI>
+<LI>Salespeople Code</LI>
+<LI>Salesperson Name, Telephone and Fax Numbers</LI>
+<LI>Salesperson Commission Rates and Breakpoint</LI>
+<LI>Sales Types/ Price Lists</LI>
+<LI>Sales Type Code</LI>
+<LI>Sales Type Description</LI>
+<LI>Payment Terms</LI>
+<LI>Payment Terms Code</LI>
+<LI>Payment Terms Description</LI>
+<LI>Days Before Due / Day In Following Month When Due</LI>
+<LI>Shippers</LI>
+<LI>Credit Status Ratings</LI>
+<LI>Status Code</LI>
+<LI>Status Description</LI>
+<LI>Disallow Invoices</LI>
+<LI>Tax Calculations</LI>
+<LI>Overview</LI>
+<LI>Setting up Taxes</LI>
+<LI>Sales only within one Tax Authority Example - 2 Tax Levels:</LI>
+<LI>Sales only within one Tax Authority Example - 3 Tax Levels:</LI>
+<LI>Sales Within Two Tax Authorities Example - 3 Tax Levels:</LI>
+<LI>Pricing and Discounting</LI>
+<LI>Pricing Overview</LI>
+<LI>Maintaining Prices</LI>
+<LI>Discount Matrix</LI>
+<LI>Invoicing An Order</LI>
+<LI>Selecting an Order To Invoice</LI>
+<LI>Producing An Invoice From A Selected Order</LI>
+<LI>Credit Notes</LI>
+<LI>Entry Of Receipts</LI>
+<LI>Receipts - Customer</LI>
+<LI>Receipts - Date</LI>
+<LI>Receipts - Currency and Exchange Rate</LI>
+<LI>Receipts - Payment Method</LI>
+<LI>Receipts - Amount</LI>
+<LI>Receipts - Discount</LI>
+<LI>Receipts - Allocating to Invoices</LI>
+<LI>Differences on Exchange</LI>
+<LI>Receipts Processing</LI>
+<LI>Deposits Listing</LI>
+<LI>Allocate Credits To A Customer's Account
+<LI>Customer Inquiries</LI>
+<LI>Customer Account inquiries</LI>
+<LI>Transaction Detail inquiries</LI>
+<LI>Customers - Reporting</LI>
+<LI>Aged Customer Balance Listing</LI>
+<LI>Customer Statements</LI>
+<LI>Customer Transaction Listing Options</LI>
+<LI>Sales Analysis</LI>
+<LI><LI>Sales Analysis Report Headers</LI>
+<LI>Sales Analysis Report Columns</LI>
+<LI>Automating Sales Reports</LI>
+<LI>Printing Invoices Or Credit Notes</LI>
+<LI>Sales Orders</LI>
+<LI>Sales Order Functionality</LI>
+<LI>Entry of Sales Orders</LI>
+<LI>Sales Orders - Selection of the Customer and Branch</LI>
+<LI>Selection of Order Line Items</LI>
+<LI>Delivery Details</LI>
+<LI>Modfiying An Order</LI>
+<LI>Shipments</LI>
+<LI>Shipment General Ledger Posting</LI>
+<LI>Creating Shipments</LI>
+<LI>Shipment Costings</LI>
+<LI>Closing a Shipment</LI>
+<LI>General Ledger</LI>
+<LI>General Ledger Overview</LI>
+<LI>Account Groups</LI>
+<LI>Bank Accounts</LI>
+<LI>Bank Account Payments</LI>
+<LI>General Ledger Integration Setup</LI>
+<LI>Sales Journals</LI>
+<LI>Stock Journals</LI>
+<LI>EDI</LI>
+<LI>EDI Setup</LI>
+<LI>Sending EDI Invoices</LI>
+<LI>Special Utilities</LI>
+<LI>Re-Apply Standard Costs to Sales Analysis</LI>
+<LI>Change A Customer Code</LI>
+<LI>Change An Inventory Code</LI>
+<LI>Make Stock Locations</LI>
+<LI>Repost General Ledger from Period</LI>
+<LI>Developing New Scripts</LI>
+<LI>Directory Structure</LI>
+<LI>session.inc</LI>
+<LI>header.inc</LI>
+<LI>footer.inc</LI>
+<LI>config.php</LI>
+<LI>PDFStarter_ros.inc</LI>
+<LI>Database Abstraction - ConnectDB.inc</LI>
+<LI>DateFunctions.inc</LI>
+<LI>SQL_CommonFuctions.inc</LI>
+<LI>Contributors - Acknowledgements</LI>
 <br><br><br>
 <font size="+3"><b>Introduction</b></font>
 <br><br>
