@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $title = "Stock Status";
 
 $PageSecurity = 2;
@@ -139,9 +139,9 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 
 		if ($Serialised ==1){ /*The line is a serialised item*/
 
-			echo "<TD><A target='_blank' HREF='$rootpath/StockSerialItems.php?" . SID . "Serialised=Yes&Location=" . $myrow['LocCode'] . "&StockID=" .$StockID . "'>Show Serial Numbers</A></TD></TR>";
+			echo "<TD><A target='_blank' HREF='$rootpath/StockSerialItems.php?" . SID . "Serialised=Yes&Location=" . $myrow['LocCode'] . "&StockID=" .$StockID . "'>Serial Numbers</A></TD></TR>";
 		} elseif ($Controlled==1){
-			echo "<TD><A target='_blank' HREF='$rootpath/StockSerialItems.php?" . SID . "Location=" . $myrow['LocCode'] . "&StockID=" .$StockID . "'>Show Batch Quantities</A></TD></TR>";
+			echo "<TD><A target='_blank' HREF='$rootpath/StockSerialItems.php?" . SID . "Location=" . $myrow['LocCode'] . "&StockID=" .$StockID . "'>Batches</A></TD></TR>";
 		}
 
 	} else {

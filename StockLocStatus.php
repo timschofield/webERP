@@ -78,19 +78,46 @@ echo "<HR>";
 if (isset($_POST['ShowStatus'])){
 
 	if ($_POST['StockCat']=='All') {
-		$sql = "SELECT LocStock.StockID, StockMaster.Description, LocStock.LocCode, Locations.LocationName, LocStock.Quantity, LocStock.ReorderLevel FROM LocStock, StockMaster, Locations WHERE LocStock.StockID=StockMaster.StockID AND LocStock.LocCode = '$_POST[StockLocation]' AND LocStock.LocCode=Locations.LocCode AND LocStock.Quantity > 0 AND (StockMaster.MBFlag='B' OR StockMaster.MBFlag='M') ORDER BY LocStock.StockID";
+		$sql = "SELECT LocStock.StockID,
+				StockMaster.Description,
+				LocStock.LocCode,
+				Locations.LocationName,
+				LocStock.Quantity,
+				LocStock.ReorderLevel,
+				StockMaster.DecimalPlaces,
+				StockMaster.Serialised,
+				StockMaster.Controlled
+			FROM LocStock, StockMaster, Locations
+			WHERE LocStock.StockID=StockMaster.StockID
+			AND LocStock.LocCode = '$_POST[StockLocation]'
+			AND LocStock.LocCode=Locations.LocCode
+			AND LocStock.Quantity > 0
+			AND (StockMaster.MBFlag='B' OR StockMaster.MBFlag='M')
+			ORDER BY LocStock.StockID";
 	} else {
-		$sql = "SELECT LocStock.StockID, StockMaster.Description, LocStock.LocCode, Locations.LocationName, LocStock.Quantity, LocStock.ReorderLevel FROM LocStock, StockMaster, Locations WHERE LocStock.StockID=StockMaster.StockID AND LocStock.LocCode = '$_POST[StockLocation]' AND LocStock.LocCode=Locations.LocCode AND LocStock.Quantity > 0 AND (StockMaster.MBFlag='B' OR StockMaster.MBFlag='M') AND StockMaster.CategoryID='" . $_POST['StockCat'] . "' ORDER BY LocStock.StockID";
+		$sql = "SELECT LocStock.StockID,
+				StockMaster.Description,
+				LocStock.LocCode,
+				Locations.LocationName,
+				LocStock.Quantity,
+				LocStock.ReorderLevel,
+				StockMaster.DecimalPlaces,
+				StockMaster.Serialised,
+				StockMaster.Controlled
+			FROM LocStock, StockMaster, Locations
+			WHERE LocStock.StockID=StockMaster.StockID
+			AND LocStock.LocCode = '$_POST[StockLocation]'
+			AND LocStock.LocCode=Locations.LocCode
+			AND LocStock.Quantity > 0
+			AND (StockMaster.MBFlag='B' OR StockMaster.MBFlag='M')
+			AND StockMaster.CategoryID='" . $_POST['StockCat'] . "'
+			ORDER BY LocStock.StockID";
 	}
-	$LocStockResult = DB_query($sql, $db);
 
-	if (DB_error_no($db) !=0) {
-		echo "The stock held at each location cannot be retrieved because - " . DB_error_msg($db);
-		if ($debug==1){
-		echo "<BR>The SQL that failed was $sql";
-		}
-		exit;
-	}
+
+	$ErrMsg = "<BR>The stock held at each location cannot be retrieved because ";
+	$DbgMsg = "<BR>The SQL that failed was ";
+	$LocStockResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 	echo "<TABLE CELLPADDING=5 CELLSPACING=4 BORDER=0>";
 
@@ -153,8 +180,6 @@ if (isset($_POST['ShowStatus'])){
 		$DemandQty += $DemandRow[0];
 		}
 
-
-
 		$sql = "SELECT Sum(PurchOrderDetails.QuantityOrd - PurchOrderDetails.QuantityRecd) AS QOO FROM PurchOrderDetails INNER JOIN PurchOrders ON PurchOrderDetails.OrderNo=PurchOrders.OrderNo WHERE PurchOrders.IntoStockLocation='" . $myrow["LocCode"] . "' AND PurchOrderDetails.ItemCode='" . $StockID . "'";
 		$QOOResult = DB_query($sql,$db);
 		if (DB_error_no($db) !=0) {
@@ -171,9 +196,29 @@ if (isset($_POST['ShowStatus'])){
 			$QOOQty = 0;
 		}
 
-		/*			Location				   Quantity On Hand				    Re-Order Level					     Demand					   Available					      On Order			 Location		 Quantity On Hand   Re-Order Level 	    Demand					  Available				 On Order   */
-			printf("<td><a target='_blank' href='StockStatus.php?StockID=%s'>%s</td><td>%s</td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s</td><td ALIGN=RIGHT>%s</td></tr>", strtoupper($myrow["StockID"]), strtoupper($myrow["StockID"]), $myrow['Description'], number_format($myrow["Quantity"],0), number_format($myrow["ReorderLevel"],0), number_format($DemandQty,0), number_format($myrow["Quantity"] - $DemandQty,0),number_format($QOO,0));
 
+		printf("<td><a target='_blank' href='StockStatus.php?StockID=%s'>%s</td>
+			<td>%s</td>
+			<td ALIGN=RIGHT>%s</td>
+			<td ALIGN=RIGHT>%s</td>
+			<td ALIGN=RIGHT>%s</td>
+			<td ALIGN=RIGHT>%s</td>
+			<td ALIGN=RIGHT>%s</td>",
+			strtoupper($myrow["StockID"]),
+			strtoupper($myrow["StockID"]),
+			$myrow['Description'],
+			number_format($myrow["Quantity"],0),
+			number_format($myrow["ReorderLevel"],0),
+			number_format($DemandQty,0),
+			number_format($myrow["Quantity"] - $DemandQty,0),
+			number_format($QOO,0));
+
+		if ($myrow['Serialised'] ==1){ /*The line is a serialised item*/
+
+			echo "<TD><A target='_blank' HREF='$rootpath/StockSerialItems.php?" . SID . "Serialised=Yes&Location=" . $myrow['LocCode'] . "&StockID=" .$StockID . "'>Serial Numbers</A></TD></TR>";
+		} elseif ($myrow['Controlled']==1){
+			echo "<TD><A target='_blank' HREF='$rootpath/StockSerialItems.php?" . SID . "Location=" . $myrow['LocCode'] . "&StockID=" .$StockID . "'>Batches</A></TD></TR>";
+		}
 
 		$j++;
 		If ($j == 12){

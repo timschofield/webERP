@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /* contributed by Chris Bice */
 
 $title = "Inventory Location Transfer Shipment";
@@ -11,7 +11,10 @@ include("includes/SQL_CommonFunctions.inc");
 If (isset($_POST['submit']) OR isset($_POST['EnterMoreItems'])){
 /*Trap any errors in input */
 
+	$InputError = False; /*Start off hoping for the best */
+
 	for ($i=$_POST['LinesCounter']-10;$i<$_POST['LinesCounter'];$i++){
+
 		if ($_POST['StockID' . $i]!=""){
 			$result = DB_query("SELECT COUNT(StockID) FROM StockMaster WHERE StockID='" . $_POST['StockID' . $i] . "'",$db);
 			$myrow = DB_fetch_row($result);
@@ -19,12 +22,11 @@ If (isset($_POST['submit']) OR isset($_POST['EnterMoreItems'])){
 				$InputError = True;
 				$ErrorMessage .= "The part code entered of " . $_POST['StockID' . $i] . " is not set up in the database. Only valid parts can be entered for transfers<BR>";
 				$_POST['LinesCounter'] -= 10;
-			} else {
-				if (!is_numeric($_POST['StockQTY' . $i])){
-					$InputError = True;
-					$ErrorMessage .= "The quantity entered of " . $_POST['StockQTY' . $i] . " for part code " . $_POST['StockID' . $i] . " is not numeric. The quantity entered for transfers is expected to be numeric<BR>";
-					$_POST['LinesCounter'] -= 10;
-				}
+			}
+			if (!is_numeric($_POST['StockQTY' . $i])){
+				$InputError = True;
+				$ErrorMessage .= "The quantity entered of " . $_POST['StockQTY' . $i] . " for part code " . $_POST['StockID' . $i] . " is not numeric. The quantity entered for transfers is expected to be numeric<BR>";
+				$_POST['LinesCounter'] -= 10;
 			}
 		}
 	}
@@ -33,12 +35,10 @@ If (isset($_POST['submit']) OR isset($_POST['EnterMoreItems'])){
 	If ($_POST['FromStockLocation']==$_POST['ToStockLocation']){
 		$InputError=True;
 		$ErrorMessage .= "The transfer must have a different location to receive into and location sent from";
-	}else {
-		$InputError=False;
 	}
 }
 
-if(isset($_POST['submit']) AND ! $InputError){
+if(isset($_POST['submit']) AND $InputError==False){
 
 	for ($i=0;$i < $_POST['LinesCounter'];$i++){
 
@@ -64,7 +64,7 @@ if(isset($_POST['submit']) AND ! $InputError){
 		$Trf_ID = GetNextTransNo(16,$db);
 	}
 
-	If ($InputError){
+	If ($InputError==true){
 		echo "<BR>$ErrorMessage<BR>";
 	}
 

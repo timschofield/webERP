@@ -184,7 +184,7 @@ CREATE TABLE StockSerialItems (
   StockID varchar(20) NOT NULL default '',
   SerialNo varchar(30) NOT NULL default '',
   Quantity float NOT NULL default 0,
-  PRIMARY KEY  (StockID, SerialNo),
+  PRIMARY KEY  (StockID, SerialNo, LocCode),
   KEY (StockID),
   KEY (LocCode)
 ) TYPE=InnoDB;

@@ -1,4 +1,8 @@
 <?php
+
+include("includes/DefineSerialItems.php");
+include("includes/DefineStockTransfers.php");
+
 $title = "Inventory Transfer - Receiving";
 
 $PageSecurity = 8;
@@ -8,150 +12,296 @@ include("includes/header.inc");
 include("includes/DateFunctions.inc");
 include("includes/SQL_CommonFunctions.inc");
 
-
-if (isset($_POST['Trf_ID'])){
-	$Trf_ID=$_POST['Trf_ID'];
-} elseif(isset($_GET['Trf_ID'])){
-	$Trf_ID=$_GET['Trf_ID'];
+if (isset($_GET['NewTransfer'])){
+	unset($_SESSION['Transfer']);
 }
+
 
 if(isset($_POST['ProcessTransfer'])){
 /*Ok Time To Post transactions to Inventory Transfers, and Update Posted variable & received Qty's  to LocTransfers */
 
-	$i = 0;
-	$TransferDate = Date($DefaultDateFormat);
+	$PeriodNo = GetPeriod ($_SESSION['Transfer']->TranDate, $db);
+	$SQLTransferDate = FormatDateForSQL($_SESSION['Transfer']->TranDate);
 
-	echo "<BR>StockID is :" . $_POST['StockID'.$i];
+	$InputError = False; /*Start off hoping for the best */
+	$i=0;
 
-	while(strlen($_POST['StockID' . $i])>0){
+	foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
+		if (is_numeric($_POST['Qty' . $i])){
+		/*Update the quantity received from the inputs */
+			$_SESSION['Transfer']->TransferItem[$i]->Quantity= $_POST['Qty' . $i];
+  		} else {
+			echo "<P>The quantity entered for " . $TrfLine->StockID . " it not numeric, all quantities must be numeric.";
+			$InputError = True;
+		}
+		if ($_POST['Qty' . $i]<0){
+			echo "<P>The quantity entered  for " . $TrfLine->StockID . " is negative. All quantities must be for positive numbers greater than zero.";
+			$InputError = True;
+		}
+		$i++;
+	} /*end loop to validate and update the SESSION['Transfer'] data */
 
-		$result = DB_query("SELECT * FROM StockMaster WHERE StockID='" . $_POST['StockID' . $i] . "'",$db);
-		$myrow = DB_fetch_row($result);
-
-		if (DB_num_rows($result)==0) {
-			echo "<P>The entered item code does not exist.";
-		} elseif (!is_numeric($_POST['Qty' . $i])){
-			echo "<P>The quantity entered for " . $_POST['StockID' . $i ] . " it not numeric, all quantities must be numeric.";
-		} elseif ($_POST['Qty' . $i]<=0){
-			echo "<P>The quantity entered  for " . $_POST['StockID' . $i ] . " is negative. All quantities must be for positive numbers greater than zero.";
-		} elseif ($_POST['FromStockLocation']==$_POST['ToStockLocation']){
-			echo "<P>The locations to transfer from and to must be different.";
-		} else {
-
+	if (!$InputError){
 	/*All inputs must be sensible so make the stock movement records and update the locations stocks */
 
-			$PeriodNo = GetPeriod ($TransferDate, $db);
-			$SQLTransferDate = FormatDateForSQL($TransferDate);
+		foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
+			if ($TrfLine->Quantity >0){
+				$Result = DB_query("BEGIN",$db,"<BR>Could not initiate a transaction - perhaps the database does not support transactions");
 
-			$Result = DB_query("BEGIN",$db);
-
-			/* Need to get the current location quantity will need it later for the stock movement */
-			$SQL="SELECT LocStock.Quantity FROM LocStock WHERE LocStock.StockID='" . $_POST['StockID' . $i] . "' AND LocCode= '" . $_POST['FromStockLocation'] . "'";
-			$Result = DB_query($SQL, $db);
-			if (DB_num_rows($Result)==1){
-				$LocQtyRow = DB_fetch_row($Result);
-				$QtyOnHandPrior = $LocQtyRow[0];
-			} else {
-				// There must actually be some error this should never happen
-				$QtyOnHandPrior = 0;
-			}
-
-			// Insert the stock movement for the stock going out of the from location
-			$SQL = "INSERT INTO StockMoves (StockID, Type, TransNo, LocCode, TranDate, Prd, Reference, Qty, NewQOH) VALUES ('" . $_POST['StockID' . $i] . "', 16, " . $Trf_ID . ", '" . $_POST['FromStockLocation'] . "','" . $SQLTransferDate . "'," . $PeriodNo . ", 'To " . $_POST['ToStockLocName'] . "', " . -$_POST['Qty' . $i] . ", " . ($QtyOnHandPrior - $_POST['Qty' . $i]) . ")";
-			$Result = DB_query($SQL,$db);
-			if (DB_error_no($db) !=0){
-				echo "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The stock movement record cannot be inserted because: -<BR>" . DB_error_msg($db);
-				if ($debug==1){
-					echo "<BR>The following SQL to insert the stock movement record was used:<BR>$SQL<BR>";
+				/* Need to get the current location quantity will need it later for the stock movement */
+				$SQL="SELECT LocStock.Quantity FROM LocStock WHERE LocStock.StockID='" . $TrfLine->StockID . "' AND LocCode= '" . $_SESSION['Transfer']->StockLocationFrom . "'";
+				$Result = DB_query($SQL, $db,"<BR>Could not retrieve the stock quantity at the dispatch stock location prior to this transfer being processed");
+				if (DB_num_rows($Result)==1){
+					$LocQtyRow = DB_fetch_row($Result);
+					$QtyOnHandPrior = $LocQtyRow[0];
+				} else {
+					/* There must actually be some error this should never happen */
+					$QtyOnHandPrior = 0;
 				}
-				$SQL = "Rollback";
-				$Result = DB_query($SQL,$db);
-				include("includes/footer.inc");
-				exit;
-			}
 
-			// Need to get the current location quantity will need it later for the stock movement
-			$SQL="SELECT LocStock.Quantity FROM LocStock WHERE LocStock.StockID='" . $_POST['StockID' . $i] . "' AND LocCode= '" . $_POST['ToStockLocation'] . "'";
-			$Result = DB_query($SQL, $db);
-			if (DB_num_rows($Result)==1){
-				$LocQtyRow = DB_fetch_row($Result);
-				$QtyOnHandPrior = $LocQtyRow[0];
-			} else {
-				// There must actually be some error this should never happen
-				$QtyOnHandPrior = 0;
-			}
+				/* Insert the stock movement for the stock going out of the from location */
+				$SQL = "INSERT INTO StockMoves (StockID, Type, TransNo, LocCode, TranDate, Prd, Reference, Qty, NewQOH) VALUES ('" . $TrfLine->StockID . "', 16, " . $_SESSION['Transfer']->TrfID . ", '" . $_SESSION['Transfer']->StockLocationFrom . "','" . $SQLTransferDate . "'," . $PeriodNo . ", 'To " . $_SESSION['Transfer']->StockLocationToName . "', " . -$TrfLine->Quantity . ", " . ($QtyOnHandPrior - $TrfLine->Quantity) . ")";
 
-			// Insert the stock movement for the stock coming into the to location
-			$SQL = "INSERT INTO StockMoves (StockID, Type, TransNo, LocCode, TranDate, Prd, Reference, Qty, NewQOH) VALUES ('" . $_POST['StockID' . $i] . "',16, " . $Trf_ID . ", '" . $_POST['ToStockLocation'] . "','" . $SQLTransferDate . "'," . $PeriodNo . ", 'From " . $_POST['FromStockLocName'] ."', " . $_POST['Qty' . $i] . ", " . ($QtyOnHandPrior + $_POST['Qty' . $i]) . ")";
+				$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The stock movement record cannot be inserted because:";
+				$DbgMsg = "<BR>The following SQL to insert the stock movement record was used:";
+				$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg,True);
 
-			$Result = DB_query($SQL,$db);
-			if (DB_error_no($db) !=0){
-				echo "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The stock movement record cannot be inserted because: -<BR>" . DB_error_msg($db);
-				if ($debug==1){
-					echo "<BR>The following SQL to insert the stock movement record was used:<BR>$SQL<BR>";
+				/*Get the ID of the StockMove... */
+				$StkMoveNo = DB_Last_Insert_ID($db);
+
+		/*Insert the StockSerialMovements and update the StockSerialItems  for controlled items*/
+
+				if ($TrfLine->Controlled ==1){
+					foreach($TrfLine->SerialItems as $Item){
+					/*We need to add or update the StockSerialItem record and
+					The StockSerialMoves as well */
+
+						/*First need to check if the serial items already exists or not in the location from */
+						$SQL = "SELECT Count(*)
+							FROM StockSerialItems
+							WHERE
+							StockID='" . $TrfLine->StockID . "'
+							AND LocCode='" . $_SESSION['Transfer']->StockLocationFrom . "'
+							AND SerialNo='" . $Item->BundleRef . "'";
+
+						$Result = DB_query($SQL,$db,"<BR>Could not determine if the serial item exists");
+						$SerialItemExistsRow = DB_fetch_row($Result);
+
+						if ($SerialItemExistsRow[0]==1){
+
+							$SQL = "UPDATE StockSerialItems SET
+								Quantity= Quantity - " . $Item->BundleQty . "
+								WHERE
+								StockID='" . $TrfLine->StockID . "'
+								AND LocCode='" . $_SESSION['Transfer']->StockLocationFrom . "'
+								AND SerialNo='" . $Item->BundleRef . "'";
+
+							$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock item record could not be updated because:";
+							$DbgMsg = "<BR>The following SQL to update the serial stock item record was used:";
+							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+						} else {
+							/*Need to insert a new serial item record */
+							$SQL = "INSERT INTO StockSerialItems (StockID,
+												LocCode,
+												SerialNo,
+												Quantity)
+								VALUES ('" . $TrfLine->StockID . "',
+								'" . $_SESSION['Transfer']->StockLocationFrom . "',
+								'" . $Item->BundleRef . "',
+								" . -$Item->BundleQty . ")";
+
+							$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock item for the stock being transferred out of the existing location could not be inserted because:";
+							$DbgMsg = "<BR>The following SQL to update the serial stock item record was used:";
+							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+						}
+
+
+						/* now insert the serial stock movement */
+
+						$SQL = "INSERT INTO StockSerialMoves (
+								StockMoveNo,
+								StockID,
+								SerialNo,
+								MoveQty
+							) VALUES (
+								" . $StkMoveNo . ",
+								'" . $TrfLine->StockID . "',
+								'" . $Item->BundleRef . "',
+								" . -$Item->BundleQty . "
+							)";
+						$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock movement record could not be inserted because:";
+						$DbgMsg = "<BR>The following SQL to insert the serial stock movement records was used:";
+						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+
+					}/* foreach controlled item in the serialitems array */
+				} /*end if the transferred item is a controlled item */
+
+
+				/* Need to get the current location quantity will need it later for the stock movement */
+				$SQL="SELECT LocStock.Quantity
+					FROM LocStock
+					WHERE LocStock.StockID='" . $TrfLine->StockID . "'
+					AND LocCode= '" . $_SESSION['Transfer']->StockLocationTo . "'";
+
+				$Result = DB_query($SQL, $db, "<BR>Could not retrieve the quantity on hand at the location being transferred to");
+				if (DB_num_rows($Result)==1){
+					$LocQtyRow = DB_fetch_row($Result);
+					$QtyOnHandPrior = $LocQtyRow[0];
+				} else {
+					// There must actually be some error this should never happen
+					$QtyOnHandPrior = 0;
 				}
-				$SQL = "Rollback";
-				$Result = DB_query($SQL,$db);
-				include("includes/footer.inc");
-				exit;
-			}
 
-			$SQL = "UPDATE LocStock SET Quantity = Quantity - " . $_POST['Qty' . $i] . " WHERE StockID='" . $_POST['StockID' . $i] . "' AND LocCode='" . $_POST['FromStockLocation'] . "'";
-			$Result = DB_query($SQL,$db);
-			if (DB_error_no($db) !=0){
-				echo "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The location stock record could not be updated because: -<BR>" . DB_error_msg($db);
-				if ($debug==1){
-					echo "<BR>The following SQL to update the stock record was used:<BR>$SQL<BR>";
-				}
-				$SQL = "Rollback";
-				$Result = DB_query($SQL,$db);
-				include("includes/footer.inc");
-				exit;
-			}
+				// Insert the stock movement for the stock coming into the to location
+				$SQL = "INSERT INTO StockMoves (
+						StockID,
+						Type,
+						TransNo,
+						LocCode,
+						TranDate,
+						Prd,
+						Reference,
+						Qty,
+						NewQOH)
+					VALUES (
+						'" . $TrfLine->StockID . "',
+						16,
+						" . $_SESSION['Transfer']->TrfID . ",
+						'" . $_SESSION['Transfer']->StockLocationTo . "',
+						'" . $SQLTransferDate . "'," . $PeriodNo . ",
+						'From " . $_SESSION['Transfer']->StockLocationFromName ."',
+						" . $TrfLine->Quantity . ", " . ($QtyOnHandPrior + $TrfLine->Quantity) . "
+						)";
 
-			$SQL = "UPDATE LocStock SET Quantity = Quantity + " . $_POST['Qty' . $i] . " WHERE StockID='" . $_POST['StockID' . $i] . "' AND LocCode='" . $_POST['ToStockLocation'] . "'";
-			$Result = DB_query($SQL,$db);
-			if (DB_error_no($db) !=0){
-				echo "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The location stock record could not be updated because: -<BR>" . DB_error_msg($db);
-				if ($debug==1){
-					echo "<BR>The following SQL to update the stock record was used:<BR>$SQL<BR>";
-				}
-				$SQL = "Rollback";
-				$Result = DB_query($SQL,$db);
-				include("includes/footer.inc");
-				exit;
-			}
+				$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The stock movement record for the incoming stock cannot be added because:";
+				$DbgMsg = "<BR>The following SQL to insert the stock movement record was used:";
+				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
-			echo "<P>A stock transfer for item code - "  . $_POST['StockID' . $i] . " " . $myrow['Description'] . " has been created from " . $_POST['FromStockLocName'] . " to " . $_POST['ToStockLocName'] . " for a quantity of " . $_POST['Qty' . $i] ." </P>";
 
-			unset ($_POST['StockID' . $i]);
-			unset ($_POST['Qty' . $i]);
-		} // end if the transfer is valid
-		$i++;
-	} // end loop of $_POST['StockID' . $i] s
+				/*Get the ID of the StockMove... */
+				$StkMoveNo = DB_Last_Insert_ID($db);
 
-	$result = DB_query("commit",$db);
-	$result = DB_query("DELETE FROM LocTransfers WHERE Reference=$Trf_ID",$db);
+		/*Insert the StockSerialMovements and update the StockSerialItems  for controlled items*/
 
-	unset ($Trf_ID);
+				if ($TrfLine->Controlled ==1){
+					foreach($TrfLine->SerialItems as $Item){
+					/*We need to add or update the StockSerialItem record and
+					The StockSerialMoves as well */
 
-} elseif(isset($Trf_ID)){
+						/*First need to check if the serial items already exists or not in the location from */
+						$SQL = "SELECT Count(*)
+							FROM StockSerialItems
+							WHERE
+							StockID='" . $TrfLine->StockID . "'
+							AND LocCode='" . $_SESSION['Transfer']->StockLocationTo . "'
+							AND SerialNo='" . $Item->BundleRef . "'";
 
-	//Begin Form for receiving shipment
-	echo "<HR><FORM ACTION='" . $_SERVER['PHP_SELF'] . "?". SID . "' METHOD=POST>";
-	echo "<input type=HIDDEN NAME='Trf_ID' VALUE=" . $Trf_ID . ">";
+						$Result = DB_query($SQL,$db,"<BR>Could not determine if the serial item exists");
+						$SerialItemExistsRow = DB_fetch_row($Result);
 
-	$sql = "Select LocTransfers.StockID, Description, ShipQty, Locations.LocationName AS ShipLocationName, RecLocations.LocationName AS RecLocationName, ShipLoc, RecLoc FROM LocTransfers	INNER JOIN Locations ON LocTransfers.ShipLoc=Locations.LocCode INNER JOIN Locations AS RecLocations ON LocTransfers.RecLoc = RecLocations.LocCode INNER JOIN StockMaster On LocTransfers.StockID=StockMaster.StockID WHERE Reference =" . $Trf_ID . " ORDER BY StockID";
+						
+						if ($SerialItemExistsRow[0]==1){
 
-	$result = DB_query($sql,$db);
-	if (DB_error_no($db)!=0){
-		echo "<BR>The details of transfer number " . $Trf_ID . " could not be retrieved.";
-		if ($debug==1){
-			echo "<BR>The error message returned from the database was:<BR>" . DB_error_msg($db) . "<BR>TheSQL to retrieve the transfer was:<BR>$sql";
-		}
-		include("includes/footer.inc");
-		exit;
-	}
+							$SQL = "UPDATE StockSerialItems SET
+								Quantity= Quantity + " . $Item->BundleQty . "
+								WHERE
+								StockID='" . $TrfLine->StockID . "'
+								AND LocCode='" . $_SESSION['Transfer']->StockLocationTo . "'
+								AND SerialNo='" . $Item->BundleRef . "'";
+
+							$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock item record could not be updated for the quantity coming in because:";
+							$DbgMsg = "<BR>The following SQL to update the serial stock item record was used:";
+							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+						} else {
+							/*Need to insert a new serial item record */
+							$SQL = "INSERT INTO StockSerialItems (StockID,
+											LocCode,
+											SerialNo,
+											Quantity)
+								VALUES ('" . $TrfLine->StockID . "',
+								'" . $_SESSION['Transfer']->StockLocationTo . "',
+								'" . $Item->BundleRef . "',
+								" . $Item->BundleQty . ")";
+
+							$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock item record for the stock coming in could not be added because:";
+							$DbgMsg = "<BR>The following SQL to update the serial stock item record was used:";
+							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+						}
+
+
+						/* now insert the serial stock movement */
+
+						$SQL = "INSERT INTO StockSerialMoves (StockMoveNo, StockID, SerialNo, MoveQty) VALUES (" . $StkMoveNo . ", '" . $TrfLine->StockID . "', '" . $Item->BundleRef . "', " . $Item->BundleQty . ")";
+						$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock movement record could not be inserted because:";
+						$DbgMsg = "<BR>The following SQL to insert the serial stock movement records was used:";
+						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+
+					}/* foreach controlled item in the serialitems array */
+				} /*end if the transfer item is a controlled item */
+
+				$SQL = "UPDATE LocStock
+					SET Quantity = Quantity - " . $TrfLine->Quantity . "
+					WHERE StockID='" . $TrfLine->StockID . "'
+					AND LocCode='" . $_SESSION['Transfer']->StockLocationFrom . "'";
+
+				$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The location stock record could not be updated because:";
+				$DbgMsg = "<BR>The following SQL to update the stock record was used:";
+				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+
+				$SQL = "UPDATE LocStock
+					SET Quantity = Quantity + " . $TrfLine->Quantity . "
+					WHERE StockID='" . $TrfLine->StockID . "'
+					AND LocCode='" . $_SESSION['Transfer']->StockLocationTo . "'";
+
+				$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The location stock record could not be updated because:";
+				$DbgMsg = "<BR>The following SQL to update the stock record was used:";
+				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+
+				echo "<P>A stock transfer for item code - "  . $TrfLine->StockID . " " . $TrfLine->ItemDescription . " has been created from " . $_SESSION['Transfer']->StockLocationFromName . " to " . $_SESSION['Transfer']->StockLocationToName . " for a quantity of " . $TrfLine->Quantity ." </P>";
+
+				unset ($_SESSION['Transfer']->LineItem[$i]);
+				unset ($_POST['Qty' . $i]);
+
+				$result = DB_query("commit",$db);
+
+			} /*end if Quantity > 0 */
+			$i++;
+		} /*end of foreach TransferItem */
+
+		$result = DB_query("DELETE FROM LocTransfers WHERE Reference=" . $_SESSION['Transfer']->TrfID,$db);
+		unset($_SESSION['Transfer']->LineItem);
+		unset($_SESSION['Transfer']);
+	} /* end of if no input errors */
+
+} /*end of PRocess Transfer */
+
+if(isset($_GET['Trf_ID'])){
+
+	unset($_SESSION['Transfer']);
+
+	$sql = "SELECT LocTransfers.StockID,
+		StockMaster.Description,
+		StockMaster.Units,
+		StockMaster.Controlled,
+		StockMaster.Serialised,
+		StockMaster.DecimalPlaces,
+		LocTransfers.ShipQty,
+		Locations.LocationName AS ShipLocationName,
+		RecLocations.LocationName AS RecLocationName,
+		LocTransfers.ShipLoc,
+		LocTransfers.RecLoc
+		FROM LocTransfers INNER JOIN Locations
+		ON LocTransfers.ShipLoc=Locations.LocCode
+		INNER JOIN Locations AS RecLocations
+		ON LocTransfers.RecLoc = RecLocations.LocCode
+		INNER JOIN StockMaster
+		ON LocTransfers.StockID=StockMaster.StockID
+		WHERE Reference =" . $_GET['Trf_ID'] . " ORDER BY LocTransfers.StockID";
+
+
+	$ErrMsg = "<BR>The details of transfer number " . $Trf_ID . " could not be retrieved because ";
+	$DbgMsg = "<BR>TheSQL to retrieve the transfer was:";
+	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	if(DB_num_rows($result) == 0){
 		echo "</table></form><H3>Transfer #" . $Trf_ID . " Does Not Exist</H3><HR>";
@@ -161,38 +311,84 @@ if(isset($_POST['ProcessTransfer'])){
 
 	$myrow=DB_fetch_array($result);
 
-	echo "<h2>Location Transfer Reference #" . $Trf_ID . " from " . $myrow['ShipLocationName'] . " to " . $myrow['RecLocationName'] . "</h2>";
+	$_SESSION['Transfer']= new StockTransfer($_GET['Trf_ID'],
+						$myrow['ShipLoc'],
+						$myrow['ShipLocationName'],
+						$myrow['RecLoc'],
+						$myrow['RecLocationName'],
+						Date($DefaultDateFormat)
+						);
+	/*Populate the StockTransfer TransferItem s array with the lines to be transferred */
+	$i = 0;
+	do {
+		$_SESSION['Transfer']->TransferItem[$i]= new LineItem ($myrow['StockID'],
+									$myrow['Description'],
+									$myrow['ShipQty'],
+									$myrow['Units'],
+									$myrow['Controlled'],
+									$myrow['Serialised'],
+									$myrow['DecimalPlaces']
+									);
+		$i++; /*numerical index for the TransferItem[] array of LineItem s */
+
+	} while ($myrow=DB_fetch_array($result));
+
+} /* $_GET['Trf_ID'] is set */
+
+if (isset($_SESSION['Transfer'])){
+	//Begin Form for receiving shipment
+	echo "<HR><FORM ACTION='" . $_SERVER['PHP_SELF'] . "?". SID . "' METHOD=POST>";
+
+	echo "<H2>Location Transfer Reference #" . $_SESSION['Transfer']->TrfID . " from " . $_SESSION['Transfer']->StockLocationFromName . " to " . $_SESSION['Transfer']->StockLocationToName . "</H2>";
 
 	echo "Please Verify Shipment Quantities Receivied";
 
-	echo "<INPUT TYPE=HIDDEN NAME='FromStockLocation' VALUE='" . $myrow['ShipLoc'] . "'>";
-	echo "<INPUT TYPE=HIDDEN NAME='ToStockLocation' VALUE='" . $myrow['RecLoc'] . "'>";
-	echo "<INPUT TYPE=HIDDEN NAME='FromStockLocName' VALUE='" . $myrow['ShipLocationName'] . "'>";
-	echo "<INPUT TYPE=HIDDEN NAME='ToStockLocName' VALUE='" . $myrow['RecLocationName'] . "'>";
 
-	$i = 0; //StockID Array pointer
+	$i = 0; //Line Item Array pointer
 
 	echo "<CENTER><TABLE BORDER=1>";
 
-	$tableheader = "<TR><TD class='tableheader'>Item Code</TD><TD class='tableheader'>Item Description</TD><TD class='tableheader'>Quantity Dispatched</TD><TD class='tableheader'>Quantity Received</TD></TR>";
+	$tableheader = "<TR>
+			<TD class='tableheader'>Item Code</TD>
+			<TD class='tableheader'>Item Description</TD>
+			<TD class='tableheader'>Quantity Dispatched</TD>
+			<TD class='tableheader'>Quantity Received</TD>
+			<TD class='tableheader'>Units</TD>
+			</TR>";
 
 	echo $tableheader;
 
-	do {
-		echo "<TR><td><input type=hidden name='StockID" . $i . "' value='" . $myrow['StockID'] . "'>" . $myrow['StockID'] . "</td><td>" . $myrow['Description'] . "</td>";
+	foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
+
+		echo "<TR>
+			<td>" . $TrfLine->StockID . "</td>
+			<td>" . $TrfLine->ItemDescription . "</td>";
+
+		echo "<td ALIGN=RIGHT>" . number_format($TrfLine->ShipQty, $TrfLine->DecimalPlaces) . "</TD>";
 		if (is_numeric($_POST['Qty' . $i])){
-			$Qty =$_POST['Qty' . $i];
+			$_SESSION['Transfer']->TransferItem[$i]->Quantity= $_POST['Qty' . $i];
+			$Qty = $_POST['Qty' . $i];
 		} else {
-			$Qty =$myrow['ShipQty'];
+			$Qty = $TrfLine->Quantity;
 		}
-		echo "<td ALIGN=RIGHT>" . $myrow['ShipQty'] . "</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME='Qty" . $i . "' MAXLENGTH=10 SIZE=10 VALUE=" . $Qty . "></td></TR>";
 
-		$i++;
-	} while ($myrow=DB_fetch_array($result));
+		if ($TrfLine->Controlled==1){
+			echo "<TD ALIGN=RIGHT><INPUT TYPE=HIDDEN NAME='Qty" . $i . "' VALUE=" . $Qty . "><A HREF='" . $rootpath ."/StockTransferControlled.php?" . SID . "TransferItem=" . $i . "'>" . $Qty . "</A></td>";
+		} else {
+			echo "<TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME='Qty" . $i . "' MAXLENGTH=10 SIZE=10 VALUE=" . $Qty . "></td>";
+		}
 
-	echo "</table><br /><INPUT TYPE=SUBMIT NAME='ProcessTransfer' VALUE='Process Inventory Transfer'><BR /></form></CENTER>";
+		echo "<td>" . $TrfLine->PartUnit . "</TD></TR>";
 
-} else {
+		$i++; /* the array of TransferItem s is indexed numerically and i matches the index no */
+	} /*end of foreach TransferItem */
+
+	echo "</table><br />
+		<INPUT TYPE=SUBMIT NAME='ProcessTransfer' VALUE='Process Inventory Transfer'><BR />
+		</form>
+		</CENTER>";
+
+} else { /*Not $_SESSION['Transfer'] set */
 
 	echo "<HR><FORM ACTION='" . $_SERVER['PHP_SELF'] . "?". SID . "' METHOD=POST>";
 
@@ -217,7 +413,7 @@ if(isset($_POST['ProcessTransfer'])){
 	$TrfResult = DB_query($sql,$db);
 	if (DB_num_rows($TrfResult)>0){
 
-		echo "<TABLE BORDER=0>";
+		echo "<CENTER><TABLE BORDER=0>";
 
 		echo "<TR><TD class='tableheader'>Transfer Ref</TD><TD class='tableheader'>Transfer From</TD><TD class='tableheader'>Dispatch Date</TD></TR>";
 
@@ -227,7 +423,7 @@ if(isset($_POST['ProcessTransfer'])){
 
 		}
 
-		echo "</table>";
+		echo "</table></CENTER>";
 	}
 	echo "</FORM>";
 }

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $title = "Stock Transfers";
 
 $PageSecurity = 11;
@@ -11,7 +11,6 @@ class StockTransfer {
 	var $StockID;
 	Var $StockLocationFrom;
 	Var $StockLocationTo; /*Used in stock transfers only */
-	Var $TranDate; /*Used in stock transfers only */
 	var $Controlled;
 	var $Serialised;
 	var $ItemDescription;
@@ -55,8 +54,7 @@ if (isset($_GET['StockID'])){
 	}
 	$_SESSION['Transfer']->Narrative = $_POST['Narrative'];
 	$_SESSION['Transfer']->StockLocationFrom = $_POST['FromStockLocation'];
-	$_SESSION['Transfer']->StockLocationFromTo = $_POST['ToStockLocation'];
-	$_SESSION['Transfer']->TranDate = $_POST['TransferDate'];
+	$_SESSION['Transfer']->StockLocationTo = $_POST['ToStockLocation'];
 	if ($_POST['Quantity']=="" or !is_numeric($_POST['Quantity'])){
 		$_POST['Quantity']=0;
 	}
@@ -87,7 +85,6 @@ if ($NewTransfer){
 		$_SESSION['Transfer']->DecimalPlaces = $myrow[6];
 		$_SESSION['Transfer']->SerialItems = array();
 		$_SESSION['Transfer']->Quantity =0;
-		$_SESSION['Transfer']->TranDate = Date($DefaultDateFormat);
 
 		if ($myrow[2]=="D" OR $myrow[2]=="A" OR $myrow[2]=="K"){
 			echo "<P>The part entered is either or a dummy part or an assembly/kit-set part. These parts are not physical parts and no stock holding is maintained for them. Stock Transfers are therefore not possible.<HR>";
@@ -115,20 +112,17 @@ if ($_POST['EnterTransfer']=="Enter Stock Transfer"){
 	} elseif ($_SESSION['Transfer']->Quantity<=0){
 		echo "<P>The quantity entered must be a positive number greater than zero.";
 		$InputError = true;
-	} elseif (!Is_Date($_SESSION['Transfer']->TranDate)){
-		echo "<P>The transfer date entered must be in the format $DefaultDateFormat.";
-		$InputError = true;
-	} elseif ($_SESSION['Transfer']->StockLocationFrom==$_SESSION['Transfer']->StockLocationFromTo){
+	} elseif ($_SESSION['Transfer']->StockLocationFrom==$_SESSION['Transfer']->StockLocationTo){
 		echo "<P>The locations to transfer from and to must be different.";
 		$InputError = true;
 	}
 
-	if (!$InputError) {
+	if ($InputError==False) {
 /*All inputs must be sensible so make the stock movement records and update the locations stocks */
 
 		$TransferNumber = GetNextTransNo(16,$db);
-		$PeriodNo = GetPeriod ($_SESSION['Transfer']->TranDate, $db);
-		$SQLTransferDate = FormatDateForSQL($_SESSION['Transfer']->TranDate);
+		$PeriodNo = GetPeriod (Date($DefaultDateFormat), $db);
+		$SQLTransferDate = FormatDateForSQL(Date($DefaultDateFormat));
 
 		$Result = DB_query("BEGIN",$db);
 
@@ -160,7 +154,7 @@ if ($_POST['EnterTransfer']=="Enter Stock Transfer"){
 					" . $TransferNumber . ",
 					'" . $_SESSION['Transfer']->StockLocationFrom . "',
 					'" . $SQLTransferDate . "'," . $PeriodNo . ",
-					'To " . $_SESSION['Transfer']->StockLocationFromTo ."',
+					'To " . $_SESSION['Transfer']->StockLocationTo ."',
 					" . -$_SESSION['Transfer']->Quantity . ",
 					" . ($QtyOnHandPrior - $_SESSION['Transfer']->Quantity) .
 				")";
@@ -255,10 +249,10 @@ if ($_POST['EnterTransfer']=="Enter Stock Transfer"){
 						Reference,
 						Qty,
 						NewQOH)
-			VALUES ('" . $StockID . "',
+			VALUES ('" . $_SESSION['Transfer']->StockID . "',
 					16,
 					" . $TransferNumber . ",
-					'" . $_SESSION['Transfer']->StockLocationFromto . "',
+					'" . $_SESSION['Transfer']->StockLocationTo . "',
 					'" . $SQLTransferDate . "',
 					" . $PeriodNo . ",
 					'From " . $_SESSION['Transfer']->StockLocationFrom ."',
@@ -285,10 +279,10 @@ if ($_POST['EnterTransfer']=="Enter Stock Transfer"){
 					FROM StockSerialItems
 					WHERE
 					StockID='" . $_SESSION['Transfer']->StockID . "'
-					AND LocCode='" . $_SESSION['Transfer']->StockLocationFrom . "'
+					AND LocCode='" . $_SESSION['Transfer']->StockLocationTo . "'
 					AND SerialNo='" . $Item->BundleRef . "'";
 
-				$Result = DB_query($SQL,$db,"<BR>Could not determine if the serial item exists");
+				$Result = DB_query($SQL,$db,"<BR>Could not determine if the serial item exists in the transfer to location");
 				$SerialItemExistsRow = DB_fetch_row($Result);
 
 				if ($SerialItemExistsRow[0]==1){
@@ -297,7 +291,7 @@ if ($_POST['EnterTransfer']=="Enter Stock Transfer"){
 						Quantity= Quantity + " . $Item->BundleQty . "
 						WHERE
 						StockID='" . $_SESSION['Transfer']->StockID . "'
-						AND LocCode='" . $_SESSION['Transfer']->StockLocationFromTo . "'
+						AND LocCode='" . $_SESSION['Transfer']->StockLocationTo . "'
 						AND SerialNo='" . $Item->BundleRef . "'";
 
 					$ErrMsg = "<BR>CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE: The serial stock item record could not be updated because:";
@@ -310,7 +304,7 @@ if ($_POST['EnterTransfer']=="Enter Stock Transfer"){
 										SerialNo,
 										Quantity)
 						VALUES ('" . $_SESSION['Transfer']->StockID . "',
-						'" . $_SESSION['Transfer']->StockLocationFromTo . "',
+						'" . $_SESSION['Transfer']->StockLocationTo . "',
 						'" . $Item->BundleRef . "',
 						" . $Item->BundleQty . ")";
 
@@ -419,11 +413,6 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 
 echo "</SELECT></TD></TR>";
 
-
-if (!isset($_SESSION['Transfer']->TranDate)){
-   $_SESSION['Transfer']->TranDate = Date($DefaultDateFormat);
-}
-echo "<TR><TD>Date Transfer Received:</TD><TD><INPUT TYPE=TEXT NAME='TransferDate' SIZE=12 MAXLENGTH=12 Value='" . $_SESSION['Transfer']->TranDate . "'></TD></TR>";
 
 echo "<TR><TD>Transfer Quantity:</TD>";
 

@@ -2,6 +2,7 @@
 
 Upgrade script 2.8 - 2.9 is necessary to be applied against a 2.8 database.
 
+5/6/04 New script StockSerialItems.php shows the stock status of serial or controlled items - the total shown should tie up with the StockStatus total quantities on hand.
 29/5/04 New script StockTransfersControlled.php allows input of serial items for stock transfers.
 29/5/04 New script StockAdjustmentsControlled.php allows input of serial items for stock adjustments.
 29/5/04 StockStatus.php, StockMovements.php StockLocMovements.php, StockUsage.php now all use the new decimalplaces field of the stock master to display quantities.

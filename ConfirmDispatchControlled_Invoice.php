@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $title = "Specifiy Dispatched Controlled Items";
 $PageSecurity = 11;
 
@@ -42,9 +42,9 @@ if ( $LineItem->Controlled != 1 ){
 	exit;
 }
 
+$LocationOut = $_SESSION['Items']->Location;
 
 include ("includes/Add_SerialItemsOut.php");
-
 
 
 echo "<CENTER><FORM METHOD='POST' ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "'>";

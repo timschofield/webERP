@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $title="Main Menu";
 
 $PageSecurity = 1;
@@ -148,13 +148,13 @@ Case "AR": //Debtors Module
 				    	<td class="menu_group">Inquiries and Reports</td>
 				    </tr>
 				    <tr>
-				    	<td class="menu_group_items">
+				    	<td width=50% class="menu_group_items">
 						<a href="<?php echo $rootpath."/SelectCustomer.php?" . SID; ?>">Customer Transaction Inquiries</a><br />
 						<a href="<?php echo $rootpath."/CustWhereAlloc.php?" . SID; ?>">Where Allocated Inquiry</a><br />
 						<a href="<?php echo $rootpath."/PrintCustTrans.php?" . SID; ?>">Print Invoices or Credit Notes</a><br />
 						<a href="<?php echo $rootpath."/PrintCustStatements.php?" . SID; ?>">Print Statements</a>
 					</td>
-					<td class="menu_group_items">
+					<td width=50% class="menu_group_items">
 						<a href="<?php echo $rootpath."/SalesAnalRepts.php?" . SID; ?>">Sales Analysis Reports</a><br />
 						<a href="<?php echo $rootpath."/AgedDebtors.php?" . SID; ?>">Aged Customer Balances/Overdues Report</a><br />
 						<a href="<?php echo $rootpath."/CustomerTransInquiry.php?" . SID; ?>">Transaction Inquiries</a><br />
@@ -337,11 +337,14 @@ Case "stock": //Inventory Module
 				    	<td class="menu_group">Transactions</td>
 				    </tr>
 				    <tr>
-				    	<td class="menu_group_items">
+				    	<td width=50% class="menu_group_items">
 						<a href="<?php echo $rootpath."/StockLocTransfer.php?" . SID; ?>">Bulk Inventory Transfer - Dispatch</a><br/>
-						<a href="<?php echo $rootpath."/StockLocTransferReceive.php?" . SID; ?>">Bulk Inventory Transfer - Receive</a><br/>
+						<a href="<?php echo $rootpath."/StockLocTransferReceive.php?" . SID . "NewTransfer=Yes"; ?>">Bulk Inventory Transfer - Receive</a><br/>
 
 						<a href="<?php echo $rootpath."/StockTransfers.php?" . SID . "NewTransfer=Yes"; ?>">Individual Location Transfers</a><br />
+
+					</td>
+					<td width=50% class="menu_group_items">
 						<a href="<?php echo $rootpath."/StockAdjustments.php?" . SID . "NewAdjustment=Yes"; ?>">Inventory Adjustments</a><br />
 						<a href="<?php echo $rootpath."/ReverseGRN.php?" . SID; ?>">Reverse Goods Received</a><br />
 						<a href="<?php echo $rootpath."/StockCounts.php?" . SID; ?>">Enter Stock Counts</a><br />
@@ -360,14 +363,14 @@ Case "stock": //Inventory Module
 				    	<td class="menu_group">Inquiries and Reports</td>
 				    </tr>
 				    <tr>
-				    	<td class="menu_group_items">
+				    	<td width=50% class="menu_group_items">
 						<a href="<?php echo $rootpath."/StockMovements.php?" . SID; ?>">Inventory Item Movements</a><br />
 						<a href="<?php echo $rootpath."/StockStatus.php?" . SID; ?>">Inventory Item Status</a><br />
 						<a href="<?php echo $rootpath."/StockUsage.php?" . SID; ?>">Inventory Item Usage</a><br />
 						<a href="<?php echo $rootpath."/InventoryValuation.php?" . SID; ?>">Inventory Valuation Report</a><br />
 						<a href="<?php echo $rootpath."/InventoryPlanning.php?" . SID; ?>">Inventory Planning Report</a>
 					</td>
-					<td class="menu_group_items">
+					<td width=50% class="menu_group_items">
 						<a href="<?php echo $rootpath."/StockCheck.php?" . SID; ?>">Inventory Stock Check Sheets</a><br />
 						<a href="<?php echo $rootpath."/StockLocMovements.php?" . SID; ?>">All Inventory Movements By Location/Date</a><br />
 						<a href="<?php echo $rootpath."/StockLocStatus.php?" . SID; ?>">List Inventory Status By Location/Category</a><br />
@@ -524,7 +527,7 @@ Case "system": //System setup
 				    	<td class="menu_group">Accounts Receivable Setup</td>
 				    </tr>
 				    <tr>
-				    	<td class="menu_group_items">
+				    	<td width=50% class="menu_group_items">
 						<a href="<?php echo $rootpath."/SalesTypes.php?" . SID; ?>">Sales Type Maintenance</a><br />
 						<a href="<?php echo $rootpath."/CreditStatus.php?" . SID; ?>">Credit Status Maintenance</a><br />
 						<a href="<?php echo $rootpath."/PaymentTerms.php?" . SID; ?>">Payment Terms Maintenance</a><br />
@@ -532,7 +535,7 @@ Case "system": //System setup
 						<a href="<?php echo $rootpath."/Areas.php?" . SID; ?>">Sales Areas Maintenance</a><br />
 						<a href="<?php echo $rootpath."/Shippers.php?" . SID;?>">Shipping Companies Maintenance</a><br />
 					</td>
-					<td class="menu_group_items">
+					<td width=50% class="menu_group_items">
 						<a href="<?php echo $rootpath."/FreightCosts.php?" . SID;?>">Freight Costs Maintenance</a><br />
 						<a href="<?php echo $rootpath."/TaxAuthorities.php?" . SID; ?>">Tax Types and Rates Maintenance</a><br />
 						<a href="<?php echo $rootpath."/SalesGLPostings.php?" . SID; ?>">Sales GL Interface Postings </a><br />
