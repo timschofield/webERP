@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-08 08:39+1300\n"
+"POT-Creation-Date: 2004-10-10 18:03+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -89,16 +89,23 @@ msgid "Profit and Loss"
 msgstr ""
 
 #: AccountGroups.php:142 AccountGroups.php:145 AccountGroups.php:249
-#: AccountGroups.php:251 PDFDeliveryDifferences.php:54 SalesAnalRepts.php:385
-#: SalesAnalRepts.php:388 SalesAnalRepts.php:403 SalesAnalRepts.php:406
-#: SalesAnalRepts.php:421 SalesAnalRepts.php:424 Stocks.php:597 Stocks.php:599
+#: AccountGroups.php:251 CompanyPreferences.php:360 CompanyPreferences.php:362
+#: CompanyPreferences.php:372 CompanyPreferences.php:374
+#: CompanyPreferences.php:384 CompanyPreferences.php:386
+#: PDFDeliveryDifferences.php:54 SalesAnalRepts.php:385 SalesAnalRepts.php:388
+#: SalesAnalRepts.php:403 SalesAnalRepts.php:406 SalesAnalRepts.php:421
+#: SalesAnalRepts.php:424 Stocks.php:597 Stocks.php:599
 msgid "Yes"
 msgstr ""
 
 #: AccountGroups.php:148 AccountGroups.php:254 AccountGroups.php:256
+#: CompanyPreferences.php:359 CompanyPreferences.php:363
+#: CompanyPreferences.php:371 CompanyPreferences.php:375
+#: CompanyPreferences.php:383 CompanyPreferences.php:387
 #: PDFDeliveryDifferences.php:53 SalesAnalRepts.php:384 SalesAnalRepts.php:387
 #: SalesAnalRepts.php:402 SalesAnalRepts.php:405 SalesAnalRepts.php:420
 #: SalesAnalRepts.php:423 Stocks.php:592 Stocks.php:594
+#: includes/PDFLowGPPageHeader.inc:31
 msgid "No"
 msgstr ""
 
@@ -106,8 +113,8 @@ msgstr ""
 msgid "EDIT"
 msgstr ""
 
-#: AccountGroups.php:157 BOMs.php:80 EDIMessageFormat.php:162
-#: FreightCosts.php:210
+#: AccountGroups.php:157 BOMs.php:80 COGSGLPostings.php:105
+#: EDIMessageFormat.php:162 FreightCosts.php:210 Help.php:159
 msgid "DELETE"
 msgstr ""
 
@@ -136,8 +143,8 @@ msgid "Sequence In TB:"
 msgstr ""
 
 #: AccountGroups.php:266 Areas.php:180 BOMs.php:386 BankAccounts.php:221
-#: FreightCosts.php:299 Locations.php:378 SalesAnalRepts.php:443
-#: TaxAuthorities.php:261
+#: COGSGLPostings.php:267 FreightCosts.php:299 Help.php:214 Locations.php:378
+#: SalesAnalRepts.php:443 TaxAuthorities.php:261
 msgid "Enter Information"
 msgstr ""
 
@@ -185,7 +192,7 @@ msgstr ""
 
 #: AgedDebtors.php:182 Credit_Invoice.php:186 InventoryValuation.php:127
 #: MailInventoryValuation.php:64 MailInventoryValuation.php:163
-#: SupplierBalsAtPeriodEnd.php:51
+#: PDFLowGP.php:53 PDFLowGP.php:102 SupplierBalsAtPeriodEnd.php:51
 #: includes/ConstructSQLForUserDefinedSalesReport.inc:158
 #: includes/ConstructSQLForUserDefinedSalesReport.inc:304
 msgid "Back to the menu"
@@ -360,8 +367,9 @@ msgstr ""
 msgid "Area Name"
 msgstr ""
 
-#: Areas.php:128 BankAccounts.php:140 FreightCosts.php:209 Locations.php:269
-#: TaxAuthorities.php:167 includes/InputSerialItems.php:72
+#: Areas.php:128 BankAccounts.php:140 COGSGLPostings.php:104
+#: FreightCosts.php:209 Help.php:158 Locations.php:269 TaxAuthorities.php:167
+#: includes/InputSerialItems.php:72
 msgid "Edit"
 msgstr ""
 
@@ -420,8 +428,9 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: BOMInquiry.php:48 PO_Items.php:700 StockLocTransfer.php:147
-#: includes/InputSerialItems.php:82 includes/PDFBOMListingPageHeader.inc:44
+#: BOMInquiry.php:48 OrderDetails.php:195 PO_Items.php:700
+#: StockLocTransfer.php:147 includes/InputSerialItems.php:82
+#: includes/PDFBOMListingPageHeader.inc:44
 #: includes/PDFDeliveryDifferencesPageHeader.inc:43
 msgid "Quantity"
 msgstr ""
@@ -796,7 +805,7 @@ msgstr ""
 msgid "The SQL used to retrieve the bank account details was:"
 msgstr ""
 
-#: BankAccounts.php:120 GLJournal.php:216 index.php:856
+#: BankAccounts.php:120 COGSGLPostings.php:88 GLJournal.php:216 index.php:856
 msgid "GL Account"
 msgstr ""
 
@@ -1066,6 +1075,203 @@ msgstr ""
 msgid "Match Off Cleared Deposits"
 msgstr ""
 
+#: COGSGLPostings.php:8
+msgid "Cost Of Sales GL Postings Set Up"
+msgstr ""
+
+#: COGSGLPostings.php:35
+msgid "Cost of sales GL posting code has been updated"
+msgstr ""
+
+#: COGSGLPostings.php:51
+msgid "A new cost of sales posting code has been inserted"
+msgstr ""
+
+#: COGSGLPostings.php:64
+msgid "The cost of sales posting code record has been deleted"
+msgstr ""
+
+#: COGSGLPostings.php:85 COGSGLPostings.php:167
+msgid "Area"
+msgstr ""
+
+#: COGSGLPostings.php:86
+msgid "Stock Category"
+msgstr ""
+
+#: COGSGLPostings.php:87 SalesAnalRepts.php:32 SalesAnalRepts.php:34
+msgid "Sales Type"
+msgstr ""
+
+#: COGSGLPostings.php:124
+msgid "Show all Cost of Sales Posting Records"
+msgstr ""
+
+#: COGSGLPostings.php:169 COGSGLPostings.php:193 COGSGLPostings.php:217
+msgid "Any Other"
+msgstr ""
+
+#: COGSGLPostings.php:215
+msgid "Sales Type / Price List"
+msgstr ""
+
+#: COGSGLPostings.php:234
+msgid "Post to GL Account"
+msgstr ""
+
+#: CompanyPreferences.php:7 index.php:655
+msgid "Company Preferences"
+msgstr ""
+
+#: CompanyPreferences.php:25
+msgid "The company name must be entered and be fifty characters or less long"
+msgstr ""
+
+#: CompanyPreferences.php:28
+msgid "The postal address must be fifty characters or less long"
+msgstr ""
+
+#: CompanyPreferences.php:31
+msgid "The Line 1 of the address must be fifty characters or less long"
+msgstr ""
+
+#: CompanyPreferences.php:34
+msgid "The Line 2 of the address must be fifty characters or less long"
+msgstr ""
+
+#: CompanyPreferences.php:37
+msgid "The Line 3 of the address must be fifty characters or less long"
+msgstr ""
+
+#: CompanyPreferences.php:40
+msgid "The telephone number must be 25 characters or less long"
+msgstr ""
+
+#: CompanyPreferences.php:43
+msgid "The fax number must be 25 characters or less long"
+msgstr ""
+
+#: CompanyPreferences.php:46
+msgid "The email address must be 55 characters or less long"
+msgstr ""
+
+#: CompanyPreferences.php:77
+msgid "The company preferences could not be updated because"
+msgstr ""
+
+#: CompanyPreferences.php:79
+msgid "Company preferences updated"
+msgstr ""
+
+#: CompanyPreferences.php:82 Customers.php:159 Stocks.php:299
+msgid "Validation failed, no updates or deletes took place"
+msgstr ""
+
+#: CompanyPreferences.php:120
+msgid "The company preferences could not be retrieved because"
+msgstr ""
+
+#: CompanyPreferences.php:150
+msgid "Name (to appear on reports)"
+msgstr ""
+
+#: CompanyPreferences.php:154
+msgid "Official Company Number"
+msgstr ""
+
+#: CompanyPreferences.php:158
+msgid "Tax Authority Reference"
+msgstr ""
+
+#: CompanyPreferences.php:162
+msgid "Postal Address"
+msgstr ""
+
+#: CompanyPreferences.php:166
+msgid "Address Line 1"
+msgstr ""
+
+#: CompanyPreferences.php:170
+msgid "Address Line 2"
+msgstr ""
+
+#: CompanyPreferences.php:174
+msgid "Address Line 3"
+msgstr ""
+
+#: CompanyPreferences.php:178
+msgid "Telephone Number"
+msgstr ""
+
+#: CompanyPreferences.php:182
+msgid "Facsimile Number"
+msgstr ""
+
+#: CompanyPreferences.php:186
+msgid "Email Address"
+msgstr ""
+
+#: CompanyPreferences.php:193
+msgid "Home Currency"
+msgstr ""
+
+#: CompanyPreferences.php:215
+msgid "Debtors Control GL Account"
+msgstr ""
+
+#: CompanyPreferences.php:229
+msgid "Creditors Control GL Account"
+msgstr ""
+
+#: CompanyPreferences.php:243
+msgid "Payroll Net Pay Clearing GL Account"
+msgstr ""
+
+#: CompanyPreferences.php:257
+msgid "Goods Received Clearing GL Account"
+msgstr ""
+
+#: CompanyPreferences.php:270
+msgid "Retained Earning Clearing GL Account"
+msgstr ""
+
+#: CompanyPreferences.php:284
+msgid "Freight Re-charged GL Account"
+msgstr ""
+
+#: CompanyPreferences.php:300
+msgid "Exchange Variances GL Account"
+msgstr ""
+
+#: CompanyPreferences.php:314
+msgid "Sales Exchange Variances GL Account"
+msgstr ""
+
+#: CompanyPreferences.php:328
+msgid "Purchases Exchange Variances GL Account"
+msgstr ""
+
+#: CompanyPreferences.php:342
+msgid "Payment Discount GL Account"
+msgstr ""
+
+#: CompanyPreferences.php:356
+msgid "Create GL entries for accounts receivable transactions"
+msgstr ""
+
+#: CompanyPreferences.php:368
+msgid "Create GL entries for accounts payable transactions"
+msgstr ""
+
+#: CompanyPreferences.php:380
+msgid "Create GL entries for stock transactions (at standard cost)"
+msgstr ""
+
+#: CompanyPreferences.php:393 ConfirmDispatch_Invoice.php:1226
+#: Credit_Invoice.php:1288 StockCostUpdate.php:140 WorkOrderIssue.php:131
+msgid "Update"
+msgstr ""
+
 #: ConfirmDispatchControlled_Invoice.php:7
 msgid "Specifiy Dispatched Controlled Items"
 msgstr ""
@@ -1140,7 +1346,7 @@ msgid ""
 "order first - from the delivery details screen click on Confirm for invoicing"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:83
+#: ConfirmDispatch_Invoice.php:83 OrderDetails.php:56
 msgid "The order cannot be retrieved because"
 msgstr ""
 
@@ -1148,7 +1354,7 @@ msgstr ""
 msgid "The SQL to get the order header was:"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:151
+#: ConfirmDispatch_Invoice.php:151 OrderDetails.php:159
 msgid "The line items of the order cannot be retrieved because"
 msgstr ""
 
@@ -1170,14 +1376,14 @@ msgstr ""
 msgid "Invoice amounts stated in"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:226 Credit_Invoice.php:245 PO_Items.php:698
-#: StockLocTransfer.php:147 StockLocTransferReceive.php:389
+#: ConfirmDispatch_Invoice.php:226 Credit_Invoice.php:245 OrderDetails.php:193
+#: PO_Items.php:698 StockLocTransfer.php:147 StockLocTransferReceive.php:389
 #: StockQuantityByDate.php:80 Stocks.php:418
 msgid "Item Code"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:227 Credit_Invoice.php:246 PO_Items.php:699
-#: StockLocTransferReceive.php:390
+#: ConfirmDispatch_Invoice.php:227 Credit_Invoice.php:246 OrderDetails.php:194
+#: PO_Items.php:699 StockLocTransferReceive.php:390
 msgid "Item Description"
 msgstr ""
 
@@ -1194,12 +1400,12 @@ msgid "This Dispatch"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:232 Credit_Invoice.php:250 GoodsReceived.php:55
-#: PO_Items.php:703 PO_Items.php:756 PO_Items.php:781
+#: OrderDetails.php:197 PO_Items.php:703 PO_Items.php:756 PO_Items.php:781
 msgid "Price"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:233 Credit_Invoice.php:251
-#: CustomerReceipt.php:500
+#: CustomerReceipt.php:500 OrderDetails.php:198
 msgid "Discount"
 msgstr ""
 
@@ -1564,11 +1770,6 @@ msgstr ""
 
 #: ConfirmDispatch_Invoice.php:1220
 msgid "Invoice Text"
-msgstr ""
-
-#: ConfirmDispatch_Invoice.php:1226 Credit_Invoice.php:1288
-#: StockCostUpdate.php:140 WorkOrderIssue.php:131
-msgid "Update"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:1228
@@ -2062,6 +2263,7 @@ msgstr ""
 #: includes/PDFOrderStatusPageHeader.inc:41
 #: includes/PDFAgedDebtorsPageHeader.inc:40
 #: includes/PDFDeliveryDifferencesPageHeader.inc:44
+#: includes/PDFLowGPPageHeader.inc:33
 msgid "Customer"
 msgstr ""
 
@@ -2216,7 +2418,7 @@ msgstr ""
 msgid "Accept and Process Batch"
 msgstr ""
 
-#: CustomerReceipt.php:715
+#: CustomerReceipt.php:715 OrderDetails.php:93
 msgid "Customer Name"
 msgstr ""
 
@@ -2372,10 +2574,6 @@ msgstr ""
 
 #: Customers.php:154
 msgid "Enter Branch Details"
-msgstr ""
-
-#: Customers.php:159 Stocks.php:299
-msgid "Validation failed, no updates or deletes took place"
 msgstr ""
 
 #: Customers.php:175
@@ -3991,6 +4189,57 @@ msgstr ""
 msgid "on order "
 msgstr ""
 
+#: Help.php:15 Help.php:132
+msgid "Help On"
+msgstr ""
+
+#: Help.php:62
+msgid ""
+"The narrative must be typo its less than two characters long! It was ignored"
+msgstr ""
+
+#: Help.php:70
+msgid "The help record has been updated"
+msgstr ""
+
+#: Help.php:88
+msgid "The new help narrative has been added"
+msgstr ""
+
+#: Help.php:111
+msgid "The help narrative could not be deleted because"
+msgstr ""
+
+#: Help.php:115
+msgid "The selected help narrative has been deleted"
+msgstr ""
+
+#: Help.php:120
+msgid ""
+"The help page must be called from a link on the page on which help is "
+"required"
+msgstr ""
+
+#: Help.php:188
+msgid "Edit This Comment"
+msgstr ""
+
+#: Help.php:202
+msgid "Add New Help Comment"
+msgstr ""
+
+#: Help.php:211
+msgid "Notice"
+msgstr ""
+
+#: Help.php:211
+msgid ""
+"The system is set to send a copy of the help text you add here to the "
+"developer for inclusion in the project. You can turn this option off by "
+"setting the ContributeHelpText variable in config.php to false. However, "
+"contributions are sorely needed and your input would be appreciated!"
+msgstr ""
+
 #: InventoryValuation.php:13 MailInventoryValuation.php:42
 #: MailInventoryValuation.php:176 index.php:468
 msgid "Inventory Valuation Report"
@@ -4245,6 +4494,122 @@ msgstr ""
 msgid "Sales Analysis - CSV Format"
 msgstr ""
 
+#: OrderDetails.php:11
+msgid "Reviewing Sales Order Number"
+msgstr ""
+
+#: OrderDetails.php:13
+msgid "This page must be called with a sales order number to review"
+msgstr ""
+
+#: OrderDetails.php:13
+msgid "i.e."
+msgstr ""
+
+#: OrderDetails.php:13
+msgid "Click on back"
+msgstr ""
+
+#: OrderDetails.php:57
+msgid "The SQL that failed to get the order header was"
+msgstr ""
+
+#: OrderDetails.php:91 SalesAnalRepts.php:27 SalesAnalRepts.php:29
+msgid "Customer Code"
+msgstr ""
+
+#: OrderDetails.php:96
+msgid "Customer Reference"
+msgstr ""
+
+#: OrderDetails.php:98
+msgid "Deliver To"
+msgstr ""
+
+#: OrderDetails.php:101
+msgid "Ordered On"
+msgstr ""
+
+#: OrderDetails.php:103
+msgid "Delivery Address 1"
+msgstr ""
+
+#: OrderDetails.php:107
+msgid "Requested Delivery"
+msgstr ""
+
+#: OrderDetails.php:109
+msgid "Delivery Address 2"
+msgstr ""
+
+#: OrderDetails.php:113
+msgid "Order Currency"
+msgstr ""
+
+#: OrderDetails.php:115
+msgid "Delivery Address 3"
+msgstr ""
+
+#: OrderDetails.php:119
+msgid "Deliver From Location"
+msgstr ""
+
+#: OrderDetails.php:121
+msgid "Delivery Address 4"
+msgstr ""
+
+#: OrderDetails.php:125
+msgid "Freight Cost"
+msgstr ""
+
+#: OrderDetails.php:126
+msgid "Telephone"
+msgstr ""
+
+#: OrderDetails.php:131
+msgid "E-mail"
+msgstr ""
+
+#: OrderDetails.php:160
+msgid "The SQL used to retrieve the line items, that failed was"
+msgstr ""
+
+#: OrderDetails.php:190
+msgid "Line Details"
+msgstr ""
+
+#: OrderDetails.php:196 PO_Items.php:701
+msgid "Unit"
+msgstr ""
+
+#: OrderDetails.php:199 PO_Items.php:704
+msgid "Total"
+msgstr ""
+
+#: OrderDetails.php:200
+msgid "Qty Del"
+msgstr ""
+
+#: OrderDetails.php:201
+msgid "Last Del"
+msgstr ""
+
+#: OrderDetails.php:219
+msgid "N/A"
+msgstr ""
+
+#: OrderDetails.php:248
+msgid "TOTAL Excl Tax/Freight"
+msgstr ""
+
+#: OrderDetails.php:257
+msgid "Total Weight"
+msgstr ""
+
+#: OrderDetails.php:259
+msgid "Total Volume"
+msgstr ""
+
 #: PDFDeliveryDifferences.php:11 PDFOrderStatus.php:14
 msgid ""
 "The date entered was in an unrecognised format it must be specified in the "
@@ -4344,6 +4709,39 @@ msgstr ""
 msgid "Please find herewith delivery differences report from"
 msgstr ""
 
+#: PDFLowGP.php:7 PDFLowGP.php:19 PDFLowGP.php:20
+msgid "Low Gross Profit Sales"
+msgstr ""
+
+#: PDFLowGP.php:50
+msgid "Low GP sales - Problem Report"
+msgstr ""
+
+#: PDFLowGP.php:52
+msgid "The low GP items could not be retrieved by the SQL because"
+msgstr ""
+
+#: PDFLowGP.php:99
+msgid "Print Low GP Items Error"
+msgstr ""
+
+#: PDFLowGP.php:101
+msgid "There were no items below  print out for the location specified"
+msgstr ""
+
+#: PDFLowGP.php:130
+msgid "Sales Made From (in the format"
+msgstr ""
+
+#: PDFLowGP.php:134
+msgid "Sales Made To (in the format"
+msgstr ""
+
+#: PDFLowGP.php:138
+#, php-format
+msgid "Show sales with GP % below"
+msgstr ""
+
 #: PDFOrderStatus.php:24 PDFOrderStatus.php:205
 msgid "Order Status Report"
 msgstr ""
@@ -4384,7 +4782,7 @@ msgstr ""
 msgid "Orders from"
 msgstr ""
 
-#: PDFOrderStatus.php:241
+#: PDFOrderStatus.php:241 includes/PDFLowGPPageHeader.inc:16
 msgid "Printed"
 msgstr ""
 
@@ -4900,16 +5298,8 @@ msgstr ""
 msgid "Order Summary"
 msgstr ""
 
-#: PO_Items.php:701
-msgid "Unit"
-msgstr ""
-
 #: PO_Items.php:702
 msgid "Delivery"
-msgstr ""
-
-#: PO_Items.php:704
-msgid "Total"
 msgstr ""
 
 #: PO_Items.php:724
@@ -5130,14 +5520,6 @@ msgstr ""
 
 #: SalesAnalRepts.php:22 SalesAnalRepts.php:24
 msgid "Product Code"
-msgstr ""
-
-#: SalesAnalRepts.php:27 SalesAnalRepts.php:29
-msgid "Customer Code"
-msgstr ""
-
-#: SalesAnalRepts.php:32 SalesAnalRepts.php:34
-msgid "Sales Type"
 msgstr ""
 
 #: SalesAnalRepts.php:37 SalesAnalRepts.php:39
@@ -5615,7 +5997,7 @@ msgstr ""
 msgid "Last Cost"
 msgstr ""
 
-#: StockCostUpdate.php:128
+#: StockCostUpdate.php:128 includes/PDFLowGPPageHeader.inc:34
 msgid "Cost"
 msgstr ""
 
@@ -6521,6 +6903,7 @@ msgstr ""
 #: includes/PDFAgedSuppliersPageHeader.inc:21
 #: includes/PDFBOMListingPageHeader.inc:26
 #: includes/PDFDeliveryDifferencesPageHeader.inc:29
+#: includes/PDFLowGPPageHeader.inc:16
 #: includes/PDFSupplierBalsPageHeader.inc:20
 msgid "Page"
 msgstr ""
@@ -7147,10 +7530,6 @@ msgstr ""
 msgid "Inventory Setup"
 msgstr ""
 
-#: index.php:655
-msgid "Company Preferences"
-msgstr ""
-
 #: index.php:660
 msgid "User Accounts"
 msgstr ""
@@ -7408,6 +7787,14 @@ msgstr ""
 msgid "Look at the design of this report"
 msgstr ""
 
+#: includes/DateFunctions.inc:505
+msgid "Dates must be entered in the format"
+msgstr ""
+
+#: includes/DateFunctions.inc:527
+msgid "An error occurred in retrieving the period number"
+msgstr ""
+
 #: includes/DefineSerialItems.php:10
 msgid "The batch reference/serial number "
 msgstr ""
@@ -7649,7 +8036,7 @@ msgstr ""
 msgid "Bill Of Material Listing for Parts Between"
 msgstr ""
 
-#: includes/PDFBOMListingPageHeader.inc:21
+#: includes/PDFBOMListingPageHeader.inc:21 includes/PDFLowGPPageHeader.inc:15
 #: includes/PDFSupplierBalsPageHeader.inc:17
 msgid "and"
 msgstr ""
@@ -7684,6 +8071,30 @@ msgstr ""
 
 #: includes/PDFDeliveryDifferencesPageHeader.inc:46
 msgid "Inv Date"
+msgstr ""
+
+#: includes/PDFLowGPPageHeader.inc:15
+msgid "Low GP Sales Between"
+msgstr ""
+
+#: includes/PDFLowGPPageHeader.inc:15
+msgid "less than"
+msgstr ""
+
+#: includes/PDFLowGPPageHeader.inc:30
+msgid "Trans"
+msgstr ""
+
+#: includes/PDFLowGPPageHeader.inc:32
+msgid "Item"
+msgstr ""
+
+#: includes/PDFLowGPPageHeader.inc:35
+msgid "Sell Price"
+msgstr ""
+
+#: includes/PDFLowGPPageHeader.inc:36 includes/PDFLowGPPageHeader.inc:37
+msgid "GP"
 msgstr ""
 
 #: includes/PDFStarter_ros.inc:16
