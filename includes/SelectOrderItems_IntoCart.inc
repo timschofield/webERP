@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 /*SelectOrderItems_IntoCart.inc
 
 This snippet is used to enter order line items into the cart object:
@@ -37,7 +37,8 @@ if ($AlreadyOnThisOrder!=1){
 		LocStock.Quantity,
 		StockMaster.MBflag,
 		StockMaster.DiscountCategory,
-		StockMaster.DecimalPlaces
+		StockMaster.DecimalPlaces,
+		StockMaster.Discontinued
 	FROM StockMaster INNER JOIN LocStock
 	ON StockMaster.StockID=LocStock.StockID
 	WHERE LocStock.LocCode='" . $_SESSION['Items']->Location . "'
@@ -53,7 +54,10 @@ if ($AlreadyOnThisOrder!=1){
 
     } elseif ($myrow = DB_fetch_array($result1)){
 
-    		if (($AllowSalesOfZeroCostItems == false
+    		if ($myrow['Discontinued']==1){
+			prnMsg(_('The item') . ' ' . $NewItem . ' ' . _('could not be added to the order because it has been flagged as obsolete'),'error','Obsolete Item');
+
+		} elseif (($AllowSalesOfZeroCostItems == false
 			AND $myrow['StandardCost']>0
 			AND ($myrow['MBFlag']=='B'
 			OR $myrow['MBFlag']=='M'))
@@ -62,6 +66,9 @@ if ($AlreadyOnThisOrder!=1){
 			OR $myrow['MBFlag']=='D'
 			OR $myrow['MBFlag']=='K'))
 		OR $AllowSalesOfZeroCostItems==true) {
+
+		/*these checks above ensure that the item has a cost if the
+		config.php variable AllowSalesOfZeroCostItems is set to false */
 
 		   	if ($_SESSION['ExistingOrder']!=0){
 				$UpdateDB = 'Yes';

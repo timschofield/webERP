@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*Now this is not secure so a malicious user could send multiple emails of the report to the intended receipients
 
 The intention is that this script is called from cron at intervals defined with a command like:
@@ -34,9 +34,9 @@ include('includes/htmlMimeMail.php');
 
 $mail = new htmlMimeMail();
 $attachment = $mail->getFile( $reports_dir . "/SalesAnalysis.csv");
-$mail->setText("Please find herewith the comma seperated values sales report");
+$mail->setText(_('Please find herewith the comma seperated values sales report'));
 $mail->addAttachment($attachment, 'SalesAnalysis.csv', 'application/csv');
-$mail->setSubject("Sales Analysis - CSV Format");
+$mail->setSubject(_('Sales Analysis - CSV Format'));
 $mail->setFrom($CompanyName . "<" . $CompanyRecord['Email'] . ">");
 $result = $mail->send($Recipients);
 ?>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 1;
 
@@ -111,6 +111,12 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<a href='" . $rootpath . "/SelectCompletedOrder.php?" . SID . "'>" . _("Order Inquiry") . "</a>"; ?>
+							</td>
+							</tr>
+							<tr>
+<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . "/PDFOrderStatus.php?" . SID . "'>" . _("Order Status Reports") . "</a>"; ?>
 							</td>
 							</tr>
 							<tr>

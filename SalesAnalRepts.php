@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $title = "Sales Analysis Reports Maintenance";
 
 $PageSecurity = 2;
@@ -24,34 +24,34 @@ Function GrpByDataOptions ($GroupByDataX){
     echo "<OPTION 'Product Code'>" . _('Product Code');
  }
  if ($GroupByDataX == "Customer Code"){
-     echo "<OPTION SELECTED 'Customer Code'>Customer Code";
+     echo "<OPTION SELECTED 'Customer Code'>" . _('Customer Code');
  } else {
-    echo "<OPTION 'Customer Code'>Customer Code";
+    echo "<OPTION 'Customer Code'>" . _('Customer Code');
  }
  if ($GroupByDataX == "Sales Type"){
-     echo "<OPTION SELECTED 'Sales Type'>Sales Type";
+     echo "<OPTION SELECTED 'Sales Type'>" . _('Sales Type');
  } else {
-    echo "<OPTION 'Sales Type'>Sales Type";
+    echo "<OPTION 'Sales Type'>" . _('Sales Type');
  }
  if ($GroupByDataX == "Product Type"){
-     echo "<OPTION SELECTED 'Product Type'>Product Type";
+     echo "<OPTION SELECTED 'Product Type'>" . _('Product Type');
  } else {
-    echo "<OPTION 'Product Type'>Product Type";
+    echo "<OPTION 'Product Type'>" . _('Product Type');
  }
  if ($GroupByDataX == "Customer Branch"){
-     echo "<OPTION SELECTED 'Customer Branch'>Customer Branch";
+     echo "<OPTION SELECTED 'Customer Branch'>" . _('Customer Branch');
  } else {
-    echo "<OPTION 'Customer Branch'>Customer Branch";
+    echo "<OPTION 'Customer Branch'>" . _('Customer Branch');
  }
  if ($GroupByDataX == "Sales Person"){
-     echo "<OPTION SELECTED 'Sales Person'>Sales Person";
+     echo "<OPTION SELECTED 'Sales Person'>" . _('Sales Person');
  } else {
-    echo "<OPTION 'Sales Person'>Sales Person";
+    echo "<OPTION 'Sales Person'>" . _('Sales Person');
  }
  if ($GroupByDataX=="Not Used" OR $GroupByDataX == "" OR ! isset($GroupByDataX) OR is_null($GroupByDataX)){
-     echo "<OPTION SELECTED ''>Not Used";
+     echo "<OPTION SELECTED ''>" . _('Not Used');
  } else {
-    echo "<OPTION ''>Not Used";
+    echo "<OPTION ''>" . _('Not Used');
  }
 }
 
@@ -69,7 +69,7 @@ if (isset($_GET['SelectedReport'])){
 }
 
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
@@ -81,13 +81,13 @@ if ($_POST['submit']) {
 
 	if (strlen($_POST['ReportHeading']) <2) {
 		$InputError = 1;
-		echo "<BR>The report heading must be more than two characters long. No report heading was entered!";
+		prnMsg(_('The report heading must be more than two characters long. No report heading was entered!'),'error',_('Heading Too Long'));
 	}
-	if ($_POST['GroupByData1']=="" OR !isset($_POST['GroupByData1']) OR $_POST['GroupByData1']=="Not Used"){
+	if ($_POST['GroupByData1']=='' OR !isset($_POST['GroupByData1']) OR $_POST['GroupByData1']=='Not Used'){
 	      $InputError = 1;
-	      echo "<BR>A group by item must be specified for the report to have any output.";
+	      prnMsg (_('A group by item must be specified for the report to have any output'),'error',_('No Group By Selected'));
 	}
-	if ($_POST['GroupByData3']=="Not Used" AND $_POST['GroupByData4']!="Not Used"){
+	if ($_POST['GroupByData3']=='Not Used' AND $_POST['GroupByData4']!='Not Used'){
 		// If GroupByData3 is blank but GroupByData4 is used then move GroupByData3 to GroupByData2
 		$_POST['GroupByData3'] = $_POST['GroupByData4'];
 		$_POST['Lower3'] = $_POST['Lower4'];
@@ -101,35 +101,35 @@ if ($_POST['submit']) {
 	}
 	if (($_POST['Lower1']=="" OR $_POST['Upper1']=="")){
 	     $InputError = 1;
-	     echo "<BR>Group by Level 1 is set but the upper and lower limits are not set - these must be specified for the report to have any output.";
+	     prnMsg (_('Group by Level 1 is set but the upper and lower limits are not set - these must be specified for the report to have any output'),'error',_('Upper/Lower Limits Not Set'));
 	}
 	if (($_POST['GroupByData2']!="Not Used") AND ($_POST['Lower2']=="" || $_POST['Upper2']=="")){
 	     $InputError = 1;
-	     echo "<BR>Group by Level 2 is set but the upper and lower limits are not set - these must be specified for the report to have any output.";
+	     prnMsg( _('Group by Level 2 is set but the upper and lower limits are not set - these must be specified for the report to have any output'),'error',_('Upper/Lower Limits Not Set'));
 	}
 	if (($_POST['GroupByData3']!="Not Used") AND ($_POST['Lower3']=="" || $_POST['Upper3']=="")){
 	     $InputError = 1;
-	     echo "<BR>Group by Level 3 is set but the upper and lower limits are not set - these must be specified for the report to have any output.";
+	     prnMsg( _('Group by Level 3 is set but the upper and lower limits are not set - these must be specified for the report to have any output'),'error',_('Upper/Lower Limits Not Set'));
 	}
 	if (($_POST['GroupByData4']!="Not Used") AND ($_POST['Lower4']=="" || $_POST['Upper4']=="")){
 		$InputError = 1;
-		echo "<BR>Group by Level 4 is set but the upper and lower limits are not set - these must be specified for the report to have any output.";
+		prnMsg( _('Group by Level 4 is set but the upper and lower limits are not set - these must be specified for the report to have any output'),'error',_('Upper/Lower Limits Not Set'));
 	}
 	if ($_POST['GroupByData1']!="Not Used" AND $_POST['Lower1'] > $_POST['Upper1']){
 	     $InputError = 1;
-	     echo "<BR>Group by Level 1 is set but the lower limit is greater than the upper limit - the report will have no output.";
+	     prnMsg(_('Group by Level 1 is set but the lower limit is greater than the upper limit - the report will have no output'),'error',_('Lower Limit > Upper Limit'));
 	}
 	if ($_POST['GroupByData2']!="Not Used" AND $_POST['Lower2'] > $_POST['Upper2']){
 	     $InputError = 1;
-	     echo "<BR>Group by Level 2 is set but the lower limit is greater than the upper limit - the report will have no output.";
+	     prnMsg(_('Group by Level 2 is set but the lower limit is greater than the upper limit - the report will have no output'),'error',_('Lower Limit > Upper Limit'));
 	}
 	if ($_POST['GroupByData3']!="Not Used" AND $_POST['Lower3'] > $_POST['Upper3']){
 	     $InputError = 1;
-	     echo "<BR>Group by Level 3 is set but the lower limit is greater than the upper limit - the report will have no output.";
+	     prnMsg(_('Group by Level 3 is set but the lower limit is greater than the upper limit - the report will have no output'),'error',_('Lower Limit > Upper Limit'));
 	}
 	if ($_POST['GroupByData4']!="Not Used" AND $_POST['Lower4'] > $_POST['Upper4']){
 		$InputError = 1;
-		echo "<BR>Group by Level 4 is set but the lower limit is greater than the upper limit - the report will have no output.";
+		prnMsg(_('Group by Level 4 is set but the lower limit is greater than the upper limit - the report will have no output'),'error',_('Lower Limit > Upper Limit'));
 	}
 
 
@@ -141,44 +141,76 @@ if ($_POST['submit']) {
 		delete code below*/
 
 		$sql = "UPDATE ReportHeaders SET ReportHeading='" . $_POST['ReportHeading'] . "', GroupByData1='" . $_POST['GroupByData1'] . "', GroupByData2='" . $_POST['GroupByData2'] . "', GroupByData3='" . $_POST['GroupByData3'] . "', GroupByData4='" . $_POST['GroupByData4'] . "', NewPageAfter1=" . $_POST['NewPageAfter1'] . ", NewPageAfter2=" . $_POST['NewPageAfter2'] . ", NewPageAfter3=" . $_POST['NewPageAfter3'] . ", Lower1='" . $_POST['Lower1'] . "', Upper1='" . $_POST['Upper1'] . "', Lower2='" . $_POST['Lower2'] . "', Upper2='" . $_POST['Upper2'] . "', Lower3='" . $_POST['Lower3'] . "', Upper3='" . $_POST['Upper3'] . "', Lower4='" . $_POST['Lower4'] . "', Upper4='" . $_POST['Upper4'] . "' WHERE ReportID = " . $SelectedReport;
-		$result = DB_query($sql,$db);
-		if (DB_error_no($db)!=0){
-		   echo "<BR>The report could not be updated because: " . DB_error_msg($db);
-		   if ($debug==1){
-		      echo "<BR>The SQL used to update the report headers was:<BR>$sql";
-		   }
-		   exit;
-		} else {
-		   echo "<BR>The " . $_POST['ReportHeading'] . " report has been updated";
-		   unset($SelectedReport);
-		   unset($_POST['ReportHeading']);
-		   unset($_POST['GroupByData1']);
-		   unset($_POST['GroupByData2']);
-		   unset($_POST['GroupByData3']);
-		   unset($_POST['GroupByData4']);
-		   unset($_POST['NewPageAfter1']);
-		   unset($_POST['NewPageAfter2']);
-		   unset($_POST['NewPageAfter3']);
-		   unset($_POST['Lower1']);
-		   unset($_POST['Upper1']);
-		   unset($_POST['Lower2']);
-		   unset($_POST['Upper2']);
-		   unset($_POST['Lower3']);
-		   unset($_POST['Upper3']);
-		   unset($_POST['Lower4']);
-		   unset($_POST['Upper4']);
-		}
+
+		$ErrMsg = _('The report could not be updated because:');
+		$Dbgmsg = _('The SQL used to update the report headers was:');
+		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+
+		prnMsg( _('The') .' ' . $_POST['ReportHeading'] . ' ' . _('report has been updated'),'success', 'Report Updated');
+		unset($SelectedReport);
+		unset($_POST['ReportHeading']);
+		unset($_POST['GroupByData1']);
+		unset($_POST['GroupByData2']);
+		unset($_POST['GroupByData3']);
+		unset($_POST['GroupByData4']);
+		unset($_POST['NewPageAfter1']);
+		unset($_POST['NewPageAfter2']);
+		unset($_POST['NewPageAfter3']);
+		unset($_POST['Lower1']);
+		unset($_POST['Upper1']);
+		unset($_POST['Lower2']);
+		unset($_POST['Upper2']);
+		unset($_POST['Lower3']);
+		unset($_POST['Upper3']);
+		unset($_POST['Lower4']);
+		unset($_POST['Upper4']);
 
 	} elseif ($InputError !=1) {
 
 	/*SelectedReport is null cos no item selected on first time round so must be adding a new report */
 
-		$sql = "INSERT INTO ReportHeaders (ReportHeading, GroupByData1, GroupByData2, GroupByData3, GroupByData4, NewPageAfter1, NewPageAfter2, NewPageAfter3, Lower1, Upper1, Lower2, Upper2, Lower3, Upper3, Lower4, Upper4 ) VALUES ('" . $_POST['ReportHeading'] . "', '" . $_POST['GroupByData1'] . "', '" . $_POST['GroupByData2'] . "', '" . $_POST['GroupByData3'] . "', '" . $_POST['GroupByData4'] . "', " . $_POST['NewPageAfter1'] . ", " . $_POST['NewPageAfter2'] . ", " . $_POST['NewPageAfter3'] . ", '" . $_POST['Lower1'] . "', '" . $_POST['Upper1'] . "', '" . $_POST['Lower2'] . "', '" . $_POST['Upper2'] . "', '" . $_POST['Lower3'] . "', '" . $_POST['Upper3'] . "', '" . $_POST['Lower4'] . "', '" . $_POST['Upper4'] . "' )";
-		$result = DB_query($sql,$db);
+		$sql = "INSERT INTO ReportHeaders (
+						ReportHeading,
+						GroupByData1,
+						GroupByData2,
+						GroupByData3,
+						GroupByData4,
+						NewPageAfter1,
+						NewPageAfter2,
+						NewPageAfter3,
+						Lower1,
+						Upper1,
+						Lower2,
+						Upper2,
+						Lower3,
+						Upper3,
+						Lower4,
+						Upper4
+						)
+				VALUES (
+					'" . $_POST['ReportHeading'] . "',
+					'" . $_POST['GroupByData1'] . "',
+					'" . $_POST['GroupByData2'] . "',
+					'" . $_POST['GroupByData3'] . "',
+					'" . $_POST['GroupByData4'] . "',
+					" . $_POST['NewPageAfter1'] . ",
+					" . $_POST['NewPageAfter2'] . ",
+					" . $_POST['NewPageAfter3'] . ",
+					'" . $_POST['Lower1'] . "',
+					'" . $_POST['Upper1'] . "',
+					'" . $_POST['Lower2'] . "',
+					'" . $_POST['Upper2'] . "',
+					'" . $_POST['Lower3'] . "',
+					'" . $_POST['Upper3'] . "',
+					'" . $_POST['Lower4'] . "',
+					'" . $_POST['Upper4'] . "'
+					)";
+
 		$ErrMsg = _('The report could not be added because:');
 		$DbgMsg = _('The SQL used to add the report header was');
+		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-		echo '<BR>' ._('The') . ' ' . $_POST['ReportHeading'] . ' ' . _('report has been added to the database');
+		prnMsg(_('The') . ' ' . $_POST['ReportHeading'] . ' ' . _('report has been added to the database'),'success','Report Added');
 
 		unset($SelectedReport);
 		unset($_POST['ReportHeading']);
@@ -233,7 +265,7 @@ or deletion of the records*/
 	$result = DB_query($sql,$db);
 
 	echo "<CENTER><table border=1>\n";
-	echo "<tr><td BGCOLOR =#800000><FONT COLOR=#ffffff><B>Report No.</B></td><td BGCOLOR =#800000><FONT COLOR=#ffffff><B>Report Title</B></td>\n";
+	echo "<tr><td class=tableheader>Report No</td><td class=tableheader>Report Title</td>";
 
 $k=0; //row colour counter
 
@@ -247,25 +279,42 @@ while ($myrow = DB_fetch_array($result)) {
 	}
 
 
-printf("<td>%s</td><td>%s</td><td><a href=\"%s?SelectedReport=%s\">Design</A></td><td><a href=\"%s/SalesAnalReptCols.php?ReportID=%s\">Define Columns</A></td><td><a href=\"%s/SalesAnalysis_UserDefined.php?ReportID=%s&ProducePDF=True\">Make PDF Report</A></td><td><a href=\"%s/SalesAnalysis_UserDefined.php?ReportID=%s&ProduceCVSFile=True\">Make CSV File</A></td><td><a href=\"%s?SelectedReport=%s&delete=1\">Delete</td></tr>", $myrow[0],$myrow[1], $_SERVER['PHP_SELF'],$myrow[0], $rootpath, $myrow[0], $rootpath, $myrow[0], $rootpath, $myrow[0], $_SERVER['PHP_SELF'], $myrow[0]);
+	printf("<td>%s</td>
+		<td>%s</td>
+		<td><a href=\"%s?SelectedReport=%s\">" . ('Design') . "</A></td>
+		<td><a href=\"%s/SalesAnalReptCols.php?ReportID=%s\">" . _('Define Columns') . "</A></td>
+		<td><a href=\"%s/SalesAnalysis_UserDefined.php?ReportID=%s&ProducePDF=True\">" . _('Make PDF Report') . "</A></td>
+		<td><a href=\"%s/SalesAnalysis_UserDefined.php?ReportID=%s&ProduceCVSFile=True\">" . _('Make CSV File') . "</A></td>
+		<td><a href=\"%s?SelectedReport=%s&delete=1\">" . _('Delete') . "</td>
+		</tr>",
+		$myrow[0],
+		$myrow[1],
+		$_SERVER['PHP_SELF'],
+		$myrow[0],
+		$rootpath,
+		$myrow[0],
+		$rootpath,
+		$myrow[0],
+		$rootpath,
+		$myrow[0],
+		$_SERVER['PHP_SELF'],
+		$myrow[0]);
 
 	}
 	//END WHILE LIST LOOP
+	echo '</CENTER></table><p>';
 }
 
 //end of ifs and buts!
 
-?>
-</CENTER></table>
-<p>
-<?php
-if (isset($SelectedReport)) {  ?>
-	<Center><a href="<?php echo $_SERVER['PHP_SELF'];?>">Show All Defined Reports</a></Center>
-<?php }  ?>
 
-<P>
 
-<?php
+if (isset($SelectedReport)) {
+	echo "<Center><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>" . _('Show All Defined Reports') . '</a></Center>';
+}
+
+echo '<P>';
+
 
 if (!$_GET['delete']) {
 	echo "<HR></CENTER>";
@@ -274,16 +323,29 @@ if (!$_GET['delete']) {
 	if ($SelectedReport) {
 		//editing an existing Report
 
-		$sql = "SELECT ReportID, ReportHeading, GroupByData1, NewPageAfter1, Upper1, Lower1, GroupByData2, NewPageAfter2, Upper2, Lower2, GroupByData3, Upper3, Lower3, NewPageAfter3, GroupByData4, Upper4, Lower4 FROM ReportHeaders WHERE ReportID=$SelectedReport";
+		$sql = "SELECT ReportID,
+				ReportHeading,
+				GroupByData1,
+				NewPageAfter1,
+				Upper1,
+				Lower1,
+				GroupByData2,
+				NewPageAfter2,
+				Upper2,
+				Lower2,
+				GroupByData3,
+				Upper3,
+				Lower3,
+				NewPageAfter3,
+				GroupByData4,
+				Upper4,
+				Lower4
+			FROM ReportHeaders
+			WHERE ReportID=$SelectedReport";
 
-		$result = DB_query($sql, $db);
-		if (DB_error_no($db)!=0){
-		   echo "<BR>The reports for display could not be retrieved because: " . DB_error_msg($db);
-		   if ($debug==1){
-		      echo "<BR>The SQL used to retrieve the report headers was:<BR>$sql";
-		   }
-		   exit;
-		}
+		$ErrMsg = _('The reports for display could not be retrieved because:');
+		$DbgMsg = _('The SQL used to retrieve the report headers was:');
+		$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 		$myrow = DB_fetch_array($result);
 
@@ -306,82 +368,81 @@ if (!$_GET['delete']) {
 
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedReport' VALUE=$SelectedReport>";
 		echo "<INPUT TYPE=HIDDEN NAME='ReportID' VALUE=$ReportID>";
-		echo "<B>Edit The Selected Report</B>";
+		echo '<FONT SIZE=3 COLOR=BLUE><B>' . _('Edit The Selected Report') . '</B></FONT>';
 	} else {
-		echo "<B>Define A New Report</B>";
+		echo '<FONT SIZE=3 COLOR=BLUE><B>' . _('Define A New Report') . '</B></FONT>';
 	}
-	echo "<CENTER><TABLE WIDTH=100% COLSPAN=4><TR><TD ALIGN=RIGHT>Report Heading:</TD><TD COLSPAN=2 ALIGN=CENTER><INPUT TYPE='TEXT' size=80 maxlength=80 name=ReportHeading value='" . $_POST['ReportHeading'] . "'></TD></TR>";
+	echo '<CENTER><TABLE WIDTH=100% COLSPAN=4><TR><TD ALIGN=RIGHT>' . _('Report Heading:') . "</TD><TD COLSPAN=2 ALIGN=CENTER><INPUT TYPE='TEXT' size=80 maxlength=80 name=ReportHeading value='" . $_POST['ReportHeading'] . "'></TD></TR>";
 
-	echo "<TR><TD>Group By 1: <SELECT name=GroupByData1>";
+	echo '<TR><TD>' . _('Group By 1:') . ' <SELECT name=GroupByData1>';
 
 	GrpByDataOptions($_POST['GroupByData1']);
 
-	echo "</SELECT></TD><TD>Page Break After: <SELECT name=NewPageAfter1>";
+	echo '</SELECT></TD><TD>' . _('Page Break After') . ':<SELECT name=NewPageAfter1>';
 
 	if ($_POST['NewPageAfter1']==0){
-	  echo "<OPTION SELECTED value=0>No";
-	  echo "<OPTION value=1>Yes";
+	  echo "<OPTION SELECTED value=0>" . _('No');
+	  echo "<OPTION value=1>" . _('Yes');
 	} Else {
-	  echo "<OPTION value=0>No";
-	  echo "<OPTION SELECTED value=1>Yes";
+	  echo '<OPTION value=0>' . _('No');
+	  echo '<OPTION SELECTED value=1>' . _('Yes');
 	}
 
-	echo "</SELECT></TD>";
-	echo "<TD>From: <INPUT TYPE='TEXT' NAME='Lower1' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Lower1'] . "'></TD>";
-	echo "<TD>To: <INPUT TYPE='TEXT' NAME='Upper1' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Upper1'] . "'></TD></TR>";
+	echo '</SELECT></TD>';
+	echo '<TD>' . _('From:') . " <INPUT TYPE='TEXT' NAME='Lower1' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Lower1'] . "'></TD>";
+	echo '<TD>' . _('To:') . " <INPUT TYPE='TEXT' NAME='Upper1' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Upper1'] . "'></TD></TR>";
 
-	echo "<TR><TD>Group By 2: <SELECT name=GroupByData2>";
+	echo '<TR><TD>' . _('Group By 2:') . ' <SELECT name=GroupByData2>';
 
 	GrpByDataOptions($_POST['GroupByData2']);
 
-	echo "</SELECT></TD><TD>Page Break After: <SELECT name=NewPageAfter2>";
+	echo '</SELECT></TD><TD>' . _('Page Break After') . ': <SELECT name=NewPageAfter2>';
 
 	if ($_POST['NewPageAfter2']==0){
-	  echo "<OPTION SELECTED value=0>No";
-	  echo "<OPTION value=1>Yes";
+	  echo '<OPTION SELECTED value=0>' . _('No');
+	  echo '<OPTION value=1>' . _('Yes');
 	} Else {
-	  echo "<OPTION value=0>No";
-	  echo "<OPTION SELECTED value=1>Yes";
+	  echo '<OPTION value=0>' . _('No');
+	  echo '<OPTION SELECTED value=1>' . _('Yes');
 	}
 
-	echo "</SELECT></TD>";
-	echo "<TD>From: <INPUT TYPE='TEXT' NAME='Lower2' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Lower2'] . "'></TD>";
-	echo "<TD>To: <INPUT TYPE='TEXT' NAME='Upper2' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Upper2'] . "'></TD></TR>";
+	echo '</SELECT></TD>';
+	echo '<TD>' . _('From') . ": <INPUT TYPE='TEXT' NAME='Lower2' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Lower2'] . "'></TD>";
+	echo '<TD>' . _('To') . ": <INPUT TYPE='TEXT' NAME='Upper2' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Upper2'] . "'></TD></TR>";
 
-	echo "<TR><TD>Group By 3: <SELECT name=GroupByData3>";
+	echo '<TR><TD>' . _('Group By 3') . ': <SELECT name=GroupByData3>';
 
 	GrpByDataOptions($_POST['GroupByData3']);
 
-	echo "</SELECT></TD><TD>Page Break After: <SELECT name=NewPageAfter3>";
+	echo '</SELECT></TD><TD>' . _('Page Break After') . ': <SELECT name=NewPageAfter3>';
 
 	if ($_POST['NewPageAfter3']==0){
-	 echo "<OPTION SELECTED value=0>No";
-	 echo "<OPTION value=1>Yes";
-	} Else {
-	 echo "<OPTION value=0>No";
-	 echo "<OPTION SELECTED value=1>Yes";
+	 	echo '<OPTION SELECTED value=0>' . _('No');
+	 	echo '<OPTION value=1>' . _('Yes');
+	} else {
+	 	echo 'OPTION value=0>' . _('No');
+	 	echo '<OPTION SELECTED value=1>' . _('Yes');
 	}
 
-	echo "</SELECT></TD>";
+	echo '</SELECT></TD>';
 
-	echo "<TD>From: <INPUT TYPE='TEXT' NAME='Lower3' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Lower3'] . "'></TD>";
-	echo "<TD>To: <INPUT TYPE='TEXT' NAME='Upper3' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Upper3'] . "'></TD></TR>";
+	echo '<TD>' . _('From') . ": <INPUT TYPE='TEXT' NAME='Lower3' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Lower3'] . "'></TD>";
+	echo '<TD>' . _('To') . ": <INPUT TYPE='TEXT' NAME='Upper3' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Upper3'] . "'></TD></TR>";
 
-	echo "<TR><TD>Group By 4: <SELECT name=GroupByData4>";
+	echo '<TR><TD>' . _('Group By 4') .": <SELECT name=GroupByData4>";
 
 	GrpByDataOptions($_POST['GroupByData4']);
 
 	echo "</SELECT></TD><TD></TD>";
 
-	echo "<TD>From: <INPUT TYPE='TEXT' NAME='Lower4' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Lower4'] . "'></TD>";
-	echo "<TD>To: <INPUT TYPE='TEXT' NAME='Upper4' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Upper4'] . "'></TD></TR>";
+	echo '<TD>' . _('From') .": <INPUT TYPE='TEXT' NAME='Lower4' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Lower4'] . "'></TD>";
+	echo '<TD>' . _('To') . ": <INPUT TYPE='TEXT' NAME='Upper4' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Upper4'] . "'></TD></TR>";
 
 	echo "</TABLE>";
 
-	echo "<CENTER><input type='Submit' name='submit' value='Enter Information'></CENTER></FORM>";
+	echo "<CENTER><input type='Submit' name='submit' value='" . _('Enter Information') . "'></CENTER></FORM>";
 
 } //end if record deleted no point displaying form to add record
 
 include("includes/footer.inc");
 ?>
-

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
 */
@@ -302,38 +302,52 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 
 	$Result = DB_query("begin",$db);
 
-	$HeaderSQL = "UPDATE SalesOrders SET DebtorNo = '" . $_SESSION['Items']->DebtorNo . "', BranchCode = '" . $_SESSION['Items']->Branch . "', CustomerRef = '". $_SESSION['Items']->CustRef ."', Comments = '". $_SESSION['Items']->Comments ."', OrdDate = '" . Date("Y-m-d H:i") . "', OrderType = '" . $_SESSION['Items']->DefaultSalesType . "', ShipVia = " . $_POST['ShipVia'] .", DeliverTo = '" . $_SESSION['Items']->DeliverTo . "', DelAdd1 = '" . $_SESSION['Items']->BrAdd1 . "', DelAdd2 = '" . $_SESSION['Items']->BrAdd2 . "', DelAdd3 = '" . $_SESSION['Items']->BrAdd3 . "', DelAdd4 = '" . $_SESSION['Items']->BrAdd4 . "', ContactPhone = '" . $_SESSION['Items']->PhoneNo . "', ContactEmail = '" . $_SESSION['Items']->Email . "', FreightCost = " . $_SESSION['Items']->FreightCost .", FromStkLoc = '" . $_SESSION['Items']->Location ."', DeliveryDate = '" . $DelDate . "', PrintedPackingSlip = " . $_POST['ReprintPackingSlip'] . " WHERE SalesOrders.OrderNo=" . $_SESSION['ExistingOrder'];
+	$HeaderSQL = "UPDATE SalesOrders
+			SET DebtorNo = '" . $_SESSION['Items']->DebtorNo . "',
+				BranchCode = '" . $_SESSION['Items']->Branch . "',
+				CustomerRef = '". $_SESSION['Items']->CustRef ."',
+				Comments = '". $_SESSION['Items']->Comments ."',
+				OrderType = '" . $_SESSION['Items']->DefaultSalesType . "',
+				ShipVia = " . $_POST['ShipVia'] .",
+				DeliverTo = '" . $_SESSION['Items']->DeliverTo . "',
+				DelAdd1 = '" . $_SESSION['Items']->BrAdd1 . "',
+				DelAdd2 = '" . $_SESSION['Items']->BrAdd2 . "',
+				DelAdd3 = '" . $_SESSION['Items']->BrAdd3 . "',
+				DelAdd4 = '" . $_SESSION['Items']->BrAdd4 . "',
+				ContactPhone = '" . $_SESSION['Items']->PhoneNo . "',
+				ContactEmail = '" . $_SESSION['Items']->Email . "',
+				FreightCost = " . $_SESSION['Items']->FreightCost .",
+				FromStkLoc = '" . $_SESSION['Items']->Location ."',
+				DeliveryDate = '" . $DelDate . "',
+				PrintedPackingSlip = " . $_POST['ReprintPackingSlip'] . "
+			WHERE SalesOrders.OrderNo=" . $_SESSION['ExistingOrder'];
 
-	$InsertQryResult = DB_query($HeaderSQL,$db);
-	if (DB_error_no($db) !=0) {
-		echo "<BR>The order cannot be updated because - " . DB_error_msg($db) . " The incorrect SQL that was attempted to be processed and failed was:<BR>$HeaderSQL";
+	$DbgMsg = _('The SQL that was used to update the order and failed was:');
+	$ErrMsg = _('The order cannot be updated because');
+	$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg,$DbgMsg,true);
 
-		$Result=DB_query("rollback",$db);
-	} else {
 
-		foreach ($_SESSION['Items']->LineItems as $StockItem) {
+	foreach ($_SESSION['Items']->LineItems as $StockItem) {
 
-			/* Check to see if the quantity reduced to the same quantity
-			as already invoiced - so should set the line to completed */
-			if ($StockItem->Quantity == $StockItem->QtyInv){
-			     $Completed = 1;
-			} else {  /* order line is not complete */
-			     $Completed = 0;
-			}
+		/* Check to see if the quantity reduced to the same quantity
+		as already invoiced - so should set the line to completed */
+		if ($StockItem->Quantity == $StockItem->QtyInv){
+		$Completed = 1;
+		} else {  /* order line is not complete */
+		$Completed = 0;
+		}
 
-			$LineItemsSQL = "UPDATE SalesOrderDetails SET UnitPrice="  . $StockItem->Price . ", Quantity=" . $StockItem->Quantity . ", DiscountPercent=" . $StockItem->DiscountPercent . ", Completed=" . $Completed . " WHERE OrderNo=" . $_SESSION['ExistingOrder'] . " AND StkCode='" . $StockItem->StockID . "'";
+		$LineItemsSQL = "UPDATE SalesOrderDetails SET UnitPrice="  . $StockItem->Price . ", Quantity=" . $StockItem->Quantity . ", DiscountPercent=" . $StockItem->DiscountPercent . ", Completed=" . $Completed . " WHERE OrderNo=" . $_SESSION['ExistingOrder'] . " AND StkCode='" . $StockItem->StockID . "'";
 
-			$Upd_LineItemResult = DB_query($LineItemsSQL,$db);
+		$Upd_LineItemResult = DB_query($LineItemsSQL,$db);
 
-			if (DB_error_no($db) !=0) {
-				echo "<BR>The updated order line cannot be modified because - " . DB_error_msg($db) . "The SQL being used to modify the line that failed was:<BR>$LineItemsSQL";
+		if (DB_error_no($db) !=0) {
+			echo "<BR>The updated order line cannot be modified because - " . DB_error_msg($db) . "The SQL being used to modify the line that failed was:<BR>$LineItemsSQL";
 
-				$Result=DB_query("Rollback",$db);
-				exit;
-			}
-		} /* updated line items into sales order details */
-
-	} /*header record updated OK */
+			$Result=DB_query("Rollback",$db);
+			exit;
+		}
+	} /* updated line items into sales order details */
 
 	$SQL = "commit";
 	$Result=DB_query($SQL,$db);

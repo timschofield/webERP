@@ -1,27 +1,27 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
+include("config.php");
 $PageSecurity = 3;
 include("includes/SQL_CommonFunctions.inc");
 include("includes/DateFunctions.inc");
-include("config.php");
 
 $InputError=0;
 
 if (!Is_Date($_POST['FromDate'])){
-	$msg = "<BR>The date entered was in an unrecognised format it must be specified in the format $DefaultDateFormat";
+	$msg = '<BR>' . _('The date entered was in an unrecognised format it must be specified in the format') . ' ' . $DefaultDateFormat;
 	$InputError=1;
 }
 if (!Is_Date($_POST['ToDate'])){
-	$msg = "<BR>The date to must be specified in the format $DefaultDateFormat";
+	$msg = '<BR>' . _('The date to must be specified in the format') .  $DefaultDateFormat;
 	$InputError=1;
 }
 
 if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
-     $title = "Delivery Differences Report";
      include ("includes/session.inc");
+     $title = _('Delivery Differences Report');
      include ("includes/header.inc");
 
-     echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . ">";
+     echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
      echo "<CENTER><TABLE><TR><TD>" . _("Enter the date from which variances between orders and deliveries are to be listed:") . "</TD><TD><INPUT TYPE=text NAME='FromDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($DefaultDateFormat, Mktime(0,0,0,Date("m")-1,0,Date("y"))) . "'></TD></TR>";
      echo "<TR><TD>" . _("Enter the date to which variances between orders and deliveries are to be listed:") . "</TD><TD><INPUT TYPE=text NAME='ToDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($DefaultDateFormat) . "'></TD></TR>";
      echo "<TR><TD>" . _("Inventory Category") . "</TD><TD>";
@@ -31,7 +31,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 
 
      echo "<SELECT NAME='CategoryID'>";
-     echo "<OPTION SELECTED VALUE='All'>Over All Categories";
+     echo "<OPTION SELECTED VALUE='All'>" . _('Over All Categories');
 
      while ($myrow=DB_fetch_array($result)){
 	echo "<OPTION VALUE=" . $myrow['CategoryID'] . ">" . $myrow['CategoryDescription'];
@@ -50,9 +50,9 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
      echo "</SELECT></TD></TR>";
 
      echo "<TR><TD>Email the report off:</TD><TD><SELECT NAME='Email'>";
-     echo "<OPTION SELECTED VALUE='No'>No";
-     echo "<OPTION VALUE='Yes'>Yes";
-     echo "</SELECT></TD></TR></TABLE><INPUT TYPE=SUBMIT NAME='Go' VALUE='Create PDF'></CENTER>";
+     echo "<OPTION SELECTED VALUE='No'>" . _('No');
+     echo "<OPTION VALUE='Yes'>" . _('Yes');
+     echo "</SELECT></TD></TR></TABLE><INPUT TYPE=SUBMIT NAME='Go' VALUE='" . _('Create PDF') . "'></CENTER>";
 
      if ($InputError==1){
      	echo $msg;
@@ -105,8 +105,8 @@ include("includes/PDFStarter_ros.inc");
 
 /*PDFStarter_ros.inc has all the variables for page size and width set up depending on the users default preferences for paper size */
 
-$pdf->addinfo('Title',"Variances Between Deliveries and Orders");
-$pdf->addinfo('Subject',"Variances Between Deliveries and Orders from  " . $_POST['FromDate'] . " to " . $_POST['ToDate']);
+$pdf->addinfo('Title',_('Variances Between Deliveries and Orders'));
+$pdf->addinfo('Subject',_('Variances Between Deliveries and Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
 
 $line_height=12;
 $PageNumber = 1;
@@ -138,7 +138,7 @@ while ($myrow=DB_fetch_array($Result)){
 
 
 $YPos-=$line_height;
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,"Total number of differences " . number_format($TotalDiffs), 'left');
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Total number of differences') . ' ' . number_format($TotalDiffs), 'left');
 
 if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 	$sql = "SELECT Count(OrderNo) FROM SalesOrderDetails INNER JOIN DebtorTrans ON SalesOrderDetails.OrderNo=DebtorTrans.Order_ WHERE DebtorTrans.TranDate>='" . FormatDateForSQL($_POST['FromDate']) . "' AND DebtorTrans.TranDate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
@@ -161,10 +161,10 @@ $result = DB_query($sql,$db,$ErrMsg);
 
 $myrow=DB_fetch_row($result);
 $YPos-=$line_height;
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,"Total number of order lines " . number_format($myrow[0]), 'left');
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Total number of order lines') . ' ' . number_format($myrow[0]), 'left');
 
 $YPos-=$line_height;
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,"DIFOT " . number_format((1-($TotalDiffs/$myrow[0])) * 100,2) . "%", 'left');
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('DIFOT') . ' ' . number_format((1-($TotalDiffs/$myrow[0])) * 100,2) . "%", 'left');
 
 
 $pdfcode = $pdf->output();
@@ -190,7 +190,7 @@ if ($_POST['Email']=="Yes"){
 
 	$mail = new htmlMimeMail();
 	$attachment = $mail->getFile($reports_dir . "/DeliveryDifferences.pdf");
-	$mail->setText("Please find herewith delivery differences report from " . $_POST['FromDate'] . " to " . $_POST['ToDate']);
+	$mail->setText(_('Please find herewith delivery differences report from') . ' ' . $_POST['FromDate'] .  ' '. _('to') . ' ' . $_POST['ToDate']);
 	$mail->addAttachment($attachment, 'DeliveryDifferences.pdf', 'application/pdf');
 	$mail->setFrom(array('$CompanyName <' . $CompanyRecord["Email"] .'>'));
 

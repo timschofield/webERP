@@ -1,5 +1,8 @@
 <P>webERP Change Log
 
+<P>29/9/04 StockCostUpdate.php gettextified - fixed bug that would not allow update with zero stock on hand
+<P>29/9/04 New reports OrderStatus.php and OrderStatusPageHeader.inc allow reporting on orders, back orders by location and stock category for a specified date range.
+<P>29/9/04 SelectOrderItems_IntoCart.php now traps for obsolete items and a check to see if prohibit sales of items where the cost is zero if the new config.php variable $AllowSalesOfZeroCostItems is set to false.
 <P>23/9/04 gettextification - FTP_RadioBeacon.php, EmailCustTrans.php, FreightCosts.php
 <P>22/9/04 gettextification - EDIMessageFormat.php EDIProcessOrders.php	EDISendInvoices.php BOMInquiry.php BOMListing.php
 <P>22/9/04 Steve - gettextification - InventoryValuation.php Locations.php Logout.php MailInventoryValuation.php MailSalesReport.php
