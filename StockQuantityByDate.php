@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 /* Contributed by Chris Bice */
 
 $title = _("Stock On Hand By Date");
@@ -49,7 +49,9 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 	}
 }
 echo "</SELECT></TD>";
-
+if (!isset($_POST['OnHandDate'])){
+	$_POST['OnHandDate'] = Date($DefaultDateFormat, Mktime(0,0,0,Date("m"),0,Date("y")));
+}
 echo "<TD>" . _("On-Hand On Date:") . "</TD><TD><INPUT TYPE=TEXT NAME='OnHandDate' SIZE=12 MAXLENGTH=12 Value='" . $_POST['OnHandDate'] . "'></TD>
 	</TR>";
 echo "<TR><TD COLSPAN=6 ALIGN=CENTER><INPUT TYPE=SUBMIT NAME='ShowStatus' VALUE='" . _('Show Stock Status') ."'></TD></TR></TABLE>";

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 $title="Main Menu";
 
 $PageSecurity = 1;
@@ -490,6 +490,11 @@ if (count($SecurityGroups[$_SESSION["AccessLevel"]])==1){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<a href='" . $rootpath . "/StockLocStatus.php?" . SID . "'>" . _("List Inventory Status By Location/Category") . "</a>"; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . "/StockQuantityByDate.php?" . SID . "'>" . _("Historical Stock Quantity By Location/Category") . "</a>"; ?>
 							</td>
 							</tr>
 						</table>
