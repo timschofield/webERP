@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 include("includes/DefineReceiptClass.php");
 
 $PageSecurity = 3;
@@ -706,7 +706,7 @@ if (((isset($_SESSION['CustomerRecord']) AND isset($_POST['CustomerID']) AND $_P
 	echo "<BR><BR><INPUT TYPE=SUBMIT NAME='GLEntry' VALUE='" . _('Enter A GL Receipt') . "'>";
 
 	if (count($_SESSION['ReceiptBatch']->Items) > 0){
-		echo "<BR><BR><INPUT TYPE=SUBMIT NAME='CommitBatch' VALUE='" . _('Accept and Process Batch') . '></CENTER>';
+		echo "<BR><BR><INPUT TYPE=SUBMIT NAME='CommitBatch' VALUE='" . _('Accept and Process Batch') . "'></CENTER>";
 	}
 
 	If ($result) {

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 11;
 
 include('includes/session.inc');
@@ -17,7 +17,7 @@ if (isset($_GET['Item'])){
 if (!isset($Item) OR !isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']==""){
 
 	echo '<BR><HR>';
-	echo  _('A customer must be selected from the customer selection screen, then an item must be selected before this page is called. The product selection page should call this page with a valid product code') . '.<HR>');
+	echo  _('A customer must be selected from the customer selection screen, then an item must be selected before this page is called. The product selection page should call this page with a valid product code') . '<HR>';
 	include('includes/footer.inc');
 	exit;
 }
@@ -142,7 +142,7 @@ $sql = "SELECT Prices.Price,
 	ORDER BY TypeAbbrev";
 
 $ErrMsg = _('Could not retrieve the normal prices set up because');
-$DbgMsg = . _('The SQL used to retreive these records was');
+$DbgMsg = _('The SQL used to retreive these records was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 echo '<CENTER><table border=1><TR><TD valign=top>';
@@ -173,7 +173,7 @@ $sql = "SELECT Prices.Price,
 				CustBranch.DebtorNo IS NULL)";
 
 $ErrMsg = _('Could not retrieve the special prices set up because');
-$DbgMsg _('The SQL used to retreive these records was');
+$DbgMsg = _('The SQL used to retreive these records was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 echo '<table>';

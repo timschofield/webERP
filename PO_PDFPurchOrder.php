@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -165,6 +165,25 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 
 		while ($POLine=DB_fetch_array($result)){
 
+			$sql = "SELECT SupplierDescription FROM PurchData WHERE StockID='" .
+$POLine['ItemCode'] . "' AND SupplierNo ='" . $POHeader['SupplierNo'] . "'";
+			$SuppDescRslt = DB_query($sql,$db);
+			if (DB_error_no($db)==0){
+				if (DB_num_rows($SuppDescRslt)==1){
+					$SuppDescRow = DB_fetch_row($SuppDescRslt);
+					if (strlen($SuppDescRow[0])>2){
+						$ItemDescription = $SuppDescRow[0];
+					} else {
+						$ItemDescritpion = $POLine["ItemDescription"];
+					}
+				} else {
+					$ItemDescritpion = $POLine["ItemDescription"];
+				}
+
+			} else {
+				$ItemDescription = $POLine["ItemDescription"];
+			}
+
 			$DisplayQty = number_format($POLine['QuantityOrd'],$POLine['DecimalPlaces']);
 			$DisplayPrice = number_format($POLine['UnitPrice'],2);
 			$DisplayDelDate = ConvertSQLDate($POLine['DeliveryDate'],2);
@@ -178,7 +197,7 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64+300+85+3+37,$YPos,60,$FontSize,$DisplayDelDate, 'left');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64+300+85+40+60,$YPos,85,$FontSize,$DisplayPrice, 'right');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64+300+85+40+60+85,$YPos,85,$FontSize,$DisplayLineTotal, 'right');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64,$YPos,300,$FontSize,$POLine['ItemDescription'], 'left');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64,$YPos,300,$FontSize,$ItemDescription, 'left');
 			if (strlen($LeftOvers)>1){
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64,$YPos-$line_height,300,$FontSize,$LeftOvers, 'left');
 				$YPos-=$line_height;
