@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 /* Definition of the cart class
 this class can hold all the information for:
 
@@ -104,7 +104,19 @@ Class Cart {
 				errors anyway */
 
 				global $db;
-				$result = DB_query("INSERT INTO SalesOrderDetails (OrderNo, StkCode, Quantity, UnitPrice, DiscountPercent) VALUES(" . $_SESSION['ExistingOrder'] . ", '" . $StockID ."'," . $Qty . ", " . $Price . ", " . $Disc . ")" , $db , "<BR>The order line for " . $StockID . " could not be inserted");
+				$sql = "INSERT INTO SalesOrderDetails (OrderNo,
+											StkCode,
+											Quantity,
+											UnitPrice,
+											DiscountPercent)
+								VALUES(" . $_SESSION['ExistingOrder'] . ",
+									'" . $StockID ."',
+									" . $Qty . ",
+									" . $Price . ",
+									" . $Disc . ")";
+				$result = DB_query($sql,
+							$db ,
+							_('The order line for') . ' ' . $StockID . ' ' ._('could not be inserted'));
 			}
 
 			Return 1;
@@ -123,15 +135,15 @@ Class Cart {
 
 		if ($UpdateDB=='Yes'){
 			global $db;
-			$result = DB_query("UPDATE SalesOrderDetails 
-						SET Quantity=" . $Qty . ", 
-						UnitPrice=" . $Price . ", 
+			$result = DB_query("UPDATE SalesOrderDetails
+						SET Quantity=" . $Qty . ",
+						UnitPrice=" . $Price . ",
 						DiscountPercent=" . $Disc . ",
-						Narrative ='" . $Narrative . "'  
-					WHERE OrderNo=" . $_SESSION['ExistingOrder'] . " 
-					AND StkCode='" . $UpdateItem ."'" 
-				, $db 
-				, "<BR>The order line for " . $UpdateItem . " could not be updated");
+						Narrative ='" . $Narrative . "'
+					WHERE OrderNo=" . $_SESSION['ExistingOrder'] . "
+					AND StkCode='" . $UpdateItem ."'"
+				, $db
+				, _('The order line for') . ' ' . $UpdateItem .  ' ' . _('could not be updated'));
 		}
 	}
 
@@ -142,7 +154,11 @@ Class Cart {
 		}
 		if ($UpdateDB=='Yes'){
 			global $db;
-			$result = DB_query("DELETE FROM SalesOrderDetails WHERE OrderNo=" . $_SESSION['ExistingOrder'] . " AND StkCode='" . $StockID ."'",$db,"The order line for " . $StockID . " couold not be deleted");
+			$result = DB_query("DELETE FROM SalesOrderDetails
+						WHERE OrderNo=" . $_SESSION['ExistingOrder'] . "
+						AND StkCode='" . $StockID ."'",
+						$db,
+						_('The order line for') . ' ' . $StockID . ' ' . _('could not be deleted'));
 		}
 	}
 

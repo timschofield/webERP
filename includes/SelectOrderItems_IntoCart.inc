@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 /*SelectOrderItems_IntoCart.inc
 
 This snippet is used to enter order line items into the cart object:
@@ -78,17 +78,17 @@ if ($AlreadyOnThisOrder!=1){
 
    			if ($_SESSION['Items']->add_to_cart ($NewItem,
 							$NewItemQty,
-							$myrow["Description"],
+							$myrow['Description'],
 							GetPrice ($NewItem, $_SESSION['Items']->DebtorNo,$_SESSION['Items']->Branch, &$db),
 							0,
-							$myrow["Units"],
-							$myrow["Volume"],
-							$myrow["KGS"],
-							$myrow["Quantity"],
-							$myrow["MBflag"],
+							$myrow['Units'],
+							$myrow['Volume'],
+							$myrow['KGS'],
+							$myrow['Quantity'],
+							$myrow['MBflag'],
 							NULL, /*Actual Dispatch Date */
 							0, /*Qty Invoiced */
-							$myrow["DiscountCategory"],
+							$myrow['DiscountCategory'],
 							0, /*Controlled - dont care */
 							0, /*serialised - dont care */
 							$myrow['DecimalPlaces'],
@@ -96,7 +96,7 @@ if ($AlreadyOnThisOrder!=1){
 							$UpdateDB
 							)==1){
 
-		      		$_SESSION['Items']->LineItems[$NewItem]->StandardCost = $myrow["StandardCost"];
+		      		$_SESSION['Items']->LineItems[$NewItem]->StandardCost = $myrow['StandardCost'];
 			}
              } else {
 			echo '<BR><FONT COLOR=RED SIZE=3><B>' . _('Warning:') . ' </FONT></B>' . _('the item code') . ' ' . $NewItem . ' ' . _('does not have a cost set up and order entry is set up to prohibit sales of items with no cost data entered');

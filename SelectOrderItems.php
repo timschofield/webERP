@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 require('includes/DefineCartClass.php');
 
@@ -657,18 +657,17 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 			  }
 		}
 
-		$SQL = $SQL . " LIMIT " . $Maximum_Number_Of_Parts_To_Show;
+		$SQL = $SQL . " LIMIT " . $_SESSION['DisplayRecordsMax'];
 
-
-		$ErrMsg = "<BR>There is a problem selecting the part records to display because ";
-		$DbgMsg = "<BR>The SQL used to get the parts and pricing was ";
+		$ErrMsg = _('There is a problem selecting the part records to display because');
+		$DbgMsg = _('The SQL used to get the part selection was');
 		$SearchResult = DB_query($SQL,$db,$ErrMsg, $DbgMsg);
 
 		if (DB_num_rows($SearchResult)==0 ){
-			echo "<BR>Sorry ... there are no products available meeting the criteria specified";
+			prnMsg (_('Sorry ... there are no products available meeting the criteria specified'),'info');
 
 			if ($debug==1){
-				echo "<P>The SQL statement used was:<BR>$SQL";
+				echo '<P>' . _('The SQL statement used was') . ':<BR>' . $SQL;
 			}
 		}
 		if (DB_num_rows($SearchResult)==1){
@@ -709,7 +708,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 		   		FROM StockMaster
 				WHERE StockMaster.StockID='". $NewItem ."'";
 
-		   $ErrMsg = "<BR>Could not determine if the part being ordered was a kitset or not because ";
+		   $ErrMsg = _('Could not determine if the part being ordered was a kitset or not because');
 		   $DbgMsg = "<BR>The SQL that failed was:";
 		   $KitResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
 
@@ -921,7 +920,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 					<TD><INPUT TYPE=TEXT NAME='Discount_" . $StockItem->StockID . "' SIZE=3 MAXLENGTH=3 VALUE=" . ($StockItem->DiscountPercent * 100) . ">%</TD>";
 
 				} else {
-					echo "<TD ALIGN=RIGHT>" . number_format($StockItem->Price,2) . "></TD><TD></TD>";
+					echo "<TD ALIGN=RIGHT>" . number_format($StockItem->Price,2) . "</TD><TD></TD>";
+					echo "<INPUT TYPE=HIDDEN NAME='Price_" . $StockItem->StockID . "' VALUE=" . $StockItem->Price . '>';
 				}
 
 				echo "<TD ALIGN=RIGHT>" . $DisplayLineTotal . "</FONT></TD><TD><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "Delete=" . $StockItem->StockID . "'>Delete</A></TD></TR>";

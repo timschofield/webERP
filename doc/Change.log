@@ -1,9 +1,12 @@
 <P>webERP Change Log
 
+<P>6/11/04 SelectOrderItems.php bug in customer login order entry
+<P>4/11/04 PO_PDFPurchOrder.php now prints the suppliers description for the item on the PO.
+<P>4/11/04 bug fixes Bob CustomerReceipt.php price_customer.php
 <P>31/10/04 SelectCreditItems.php Steve gettextified - index.php html fixes Steve
 <P>31/10/04 UserSettings.php fixed title =_(...) after include session.inc
 <P>31/10/04 footer.inc Jesse - new web site reference and link, also fix copy; Steve
-<P>31/10/04 PurchData.php fix - in strings not minus  - Bob
+<P>31/10/04 PurchData.php fix hyphens  in strings not minus  signs - Bob
 <P>31/10/04 PrintCustOrder.php PrintCustOrder_generic.php PrintCustStatements.php PO_OrderDetails.php PO_PDFPurchOrder.php and associated includes/XXXXPageHeader.inc files gettextified Jesse
 <P>
 <P><P>Version 2.9a - Mk II

@@ -1,19 +1,17 @@
 <?php
-/* $Revision: 1.9 $ */
-$title = "Search Customers";
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 2;
 
-include("includes/session.inc");
-include("includes/header.inc");
+include('includes/session.inc');
+
+$title = 'Search Customers';
+
+include('includes/header.inc');
 
 $msg="";
 if (!isset($_SESSION['CustomerID'])){ //initialise if not already done
 	$_SESSION['CustomerID']="";
-}
-
-if (!isset($_POST['Search'])){
-	$_POST['Search']="";
 }
 
 if (!isset($_POST['PageOffset'])) {
@@ -24,20 +22,20 @@ if (!isset($_POST['PageOffset'])) {
   }
 }
 
-if ($_POST['Search']=="Search Now" OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])){
-	if ($_POST['Search']=="Search Now"){
+if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])){
+	if (isset($_POST['Search'])){
 		$_POST['PageOffset'] = 1;
 	}
 	If ($_POST['Keywords'] AND $_POST['CustCode']) {
-		$msg="Customer name keywords have been used in preference to the customer code extract entered.";
-		$_POST["Keywords"] = strtoupper($_POST["Keywords"]);
+		$msg=_('Customer name keywords have been used in preference to the customer code extract entered') . '.';
+		$_POST['Keywords'] = strtoupper($_POST['Keywords']);
 	}
 	If ($_POST['Keywords']=="" AND $_POST['CustCode']=="") {
-		$msg="At least one customer name keyword OR an extract of a customer code must be entered for the search";
+		$msg=_('At least one customer name keyword OR an extract of a customer code must be entered for the search');
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 
-			$_POST["Keywords"] = strtoupper($_POST["Keywords"]);
+			$_POST['Keywords'] = strtoupper($_POST['Keywords']);
 
 			//insert wildcard characters in spaces
 
@@ -60,13 +58,13 @@ if ($_POST['Search']=="Search Now" OR isset($_POST['Go']) OR isset($_POST['Next'
 
 		$result = DB_query($SQL,$db);
 		if (DB_error_no($db) !=0) {
-			echo "The searched customer records requested cannot be retrieved because - " . DB_error_msg($db) . "<BR>SQL used to retrieve the customer details was:<BR>$sql";
+			echo _('The searched customer records requested cannot be retrieved because') . ' - ' . DB_error_msg($db) . '<BR>' . _('SQL used to retrieve the customer details was') . ':<BR>' . $sql;
 		} elseif (DB_num_rows($result)==1){
 			$myrow=DB_fetch_array($result);
 			$_POST['Select'] = $myrow["DebtorNo"];
 			unset($result);
 		} elseif (DB_num_rows($result)==0){
-			echo "<P>No customer records contain the selected text - please alter your search criteria and try again.";
+			echo '<P>' . _('No customer records contain the selected text - please alter your search criteria and try again') . '.';
 		}
 
 	} //one of keywords or custcode was more than a zero length string
@@ -87,34 +85,34 @@ If ($_POST['Select']!="" OR ($_SESSION['CustomerID']!="" AND !isset($_POST['Keyw
 	}
 	$result = DB_query($SQL,$db);
 	if (DB_error_no($db) !=0) {
-		echo "The customer name requested cannot be retrieved because - " . DB_error_msg($db) . "<BR>SQL used to retrieve the customer name was:<BR>$sql";
+		echo _('The customer name requested cannot be retrieved because') . ' - ' . DB_error_msg($db) . '<BR>' . _('SQL used to retrieve the customer name was') . ':<BR>' . $sql;
 	}
 	if ($myrow=DB_fetch_row($result)){
 		$CustomerName = $myrow[0];
 	}
 	unset($result);
-	echo "<BR><BR><FONT SIZE=3>Customer :<B> " . $_SESSION['CustomerID'] . " - $CustomerName</B> has been selected.<BR>Select a menu option to operate using this customer.</FONT><BR>";
+	echo '<BR><BR><FONT SIZE=3>' . _('Customer') . ' :<B> ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . '</B> ' . _('has been selected') . '.<BR>' . _('Select a menu option to operate using this customer') . '.</FONT><BR>';
 
 	$_POST['Select'] = NULL;
 
-	echo "<BR><a href='$rootpath/CustomerInquiry.php?CustomerID=" . $_SESSION['CustomerID'] . "'>Customer Transaction Inquiries</a><BR>";
-	echo "<a href='$rootpath/Customers.php?DebtorNo=" . $_SESSION['CustomerID'] . "'>Modify Customer Details</a><BR>";
-	echo "<a href='$rootpath/CustomerBranches.php?DebtorNo=" . $_SESSION['CustomerID'] . "'>Add/Edit/Delete Customer Branch records</a><BR>";
-	echo "<a href='$rootpath/SelectSalesOrder.php?SelectedCustomer=" . $_SESSION['CustomerID'] . "'>Modify Outstanding Sales Orders</a><BR>";
-	echo "<a href='$rootpath/SelectCompletedOrder.php?SelectedCustomer=" . $_SESSION['CustomerID'] . "'>Order Inquiries</a><BR>";
-	echo "<a href='$rootpath/SelectProduct.php'>Special Customer Prices</a><BR>";
-	echo "<a href='$rootpath/CustEDISetup.php'>Customer EDI Configuration</a><BR>";
+	echo '<BR><a href="' . $rootpath . '/CustomerInquiry.php?CustomerID=' . $_SESSION['CustomerID'] . '">' . _('Customer Transaction Inquiries') . '</a><BR>';
+	echo '<a href="' . $rootpath . '/Customers.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Modify Customer Details') . '</a><BR>';
+	echo '<a href="' . $rootpath . '/CustomerBranches.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add/Edit/Delete Customer Branch records') . '</a><BR>';
+	echo '<a href="' . $rootpath . '/SelectSalesOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Modify Outstanding Sales Orders') . '</a><BR>';
+	echo '<a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Order Inquiries') . '</a><BR>';
+	echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Special Customer Prices') . '</a><BR>';
+	echo '<a href="' . $rootpath . '/CustEDISetup.php">' . _('Customer EDI Configuration') . '</a><BR>';
 
 }
 
 ?>
 
-<FORM ACTION="<?php echo $_SERVER['PHP_SELF'] . "?" . SID; ?>" METHOD=POST>
+<FORM ACTION="<?php echo $_SERVER['PHP_SELF'] . '?' . SID; ?>" METHOD=POST>
 
 <B><?php echo $msg; ?></B>
 <TABLE CELLPADDING=3 COLSPAN=4>
 <TR>
-<TD>Text in the <B>name</B>:</TD>
+<TD><?php echo _('Text in the'); ?> <B><?php echo _('name'); ?></B>:</TD>
 <TD>
 <?php
 if (isset($_POST['Keywords'])) {
@@ -128,8 +126,8 @@ if (isset($_POST['Keywords'])) {
 }
 ?>
 </TD>
-<TD><FONT SIZE=3><B>OR</B></FONT></TD>
-<TD>Text extract in the customer <B>code</B>:</TD>
+<TD><FONT SIZE=3><B><?php echo _('OR'); ?></B></FONT></TD>
+<TD><?php echo _('Text extract in the customer'); ?> <B><?php echo _('code'); ?></B>:</TD>
 <TD>
 <?php
 if (isset($_POST['CustCode'])) {
@@ -145,8 +143,8 @@ if (isset($_POST['CustCode'])) {
 </TD>
 </TR>
 </TABLE>
-<CENTER><INPUT TYPE=SUBMIT NAME="Search" VALUE="Search Now">
-<INPUT TYPE=SUBMIT ACTION=RESET VALUE="Reset"></CENTER>
+<CENTER><INPUT TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Search Now'); ?>">
+<INPUT TYPE=SUBMIT ACTION=RESET VALUE="<?php echo _('Reset'); ?>"></CENTER>
 
 
 <?php
@@ -167,7 +165,7 @@ If (isset($result)) {
     }
   }
 	
-  echo "&nbsp;&nbsp;" . $_POST['PageOffset'] . " of " . $ListPageMax . " pages. Go to Page: ";
+  echo "&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages. Go to Page') . ': ';
 ?>	
 
   <select name="PageOffset">
@@ -193,23 +191,23 @@ If (isset($result)) {
 ?>
 
   </select>
-  <INPUT TYPE=SUBMIT NAME="Go" VALUE="Go">
-  <INPUT TYPE=SUBMIT NAME="Previous" VALUE="Previous">
-  <INPUT TYPE=SUBMIT NAME="Next" VALUE="Next">
+  <INPUT TYPE=SUBMIT NAME="Go" VALUE="<?php echo _('Go'); ?>">
+  <INPUT TYPE=SUBMIT NAME="Previous" VALUE="<?php echo _('Previous'); ?>">
+  <INPUT TYPE=SUBMIT NAME="Next" VALUE="<?php echo _('Next'); ?>">
 
 <?php
 
-  echo "<br><br>";
+  echo '<br><br>';
 
-	echo "<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>";
-	$TableHeader = "<TR>
-				<TD Class='tableheader'>Code</TD>
-				<TD Class='tableheader'>Customer Name</TD>
-				<TD Class='tableheader'>Branch</TD>
-				<TD Class='tableheader'>Contact</TD>
-				<TD Class='tableheader'>Phone</TD>
-				<TD Class='tableheader'>Fax</TD>
-			</TR>";
+	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>';
+	$TableHeader = '<TR>
+				<TD Class="tableheader">' . _('Code') . '</TD>
+				<TD Class="tableheader">' . _('Customer Name') . '</TD>
+				<TD Class="tableheader">' . _('Branch') . '</TD>
+				<TD Class="tableheader">' . _('Contact') . '</TD>
+				<TD Class="tableheader">' . _('Phone') . '</TD>
+				<TD Class="tableheader">' . _('Fax') . '</TD>
+			</TR>';
 
 	echo $TableHeader;
 	$j = 1;
@@ -223,10 +221,10 @@ If (isset($result)) {
 	while (($myrow=DB_fetch_array($result)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr bgcolor="#CCCCCC">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr bgcolor="#EEEEEE">';
 			$k=1;
 		}
 
@@ -254,13 +252,13 @@ If (isset($result)) {
 	}
 //end of while loop
 
-	echo "</TABLE>";
+	echo '</TABLE>';
 
 }
 //end if results to show
-echo "</form>";
+echo '</form>';
 
-include("includes/footer.inc");
+include('includes/footer.inc');
 ?>
 <script language="JavaScript" type="text/javascript">
     //<![CDATA[
