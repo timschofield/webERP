@@ -1,9 +1,15 @@
 <P>webERP Change Log
 
+
+<P>31/10/04 UserSettings.php fixed title =_(...) after include session.inc
+<P>31/10/04 footer.inc Jesse - new web site reference and link, also fix copy; Steve
+<P>31/10/04 PurchData.php fix - in strings not minus  - Bob
+<P>31/10/04 PrintCustOrder.php PrintCustOrder_generic.php PrintCustStatements.php PO_OrderDetails.php PO_PDFPurchOrder.php and associated includes/XXXXPageHeader.inc files gettextified Jesse
+<P>
 <P><P>Version 2.9a - Mk II
 <P>
-<P>30/10/04 PageSize errors caused with register globals off. Used new variable PapeSize - Vitaliy
-<P>30/10/04 fixed AgedDebtors.php and CustTrans
+<P>30/10/04 PageSize errors caused with register globals off. Used new variable PaperSize - Vitaliy
+<P>30/10/04 fixed AgedDebtors.php and CustTransInquiry.php
 <P>30/10/04 added correct icons to css directories - Steve/Chris
 
 <P>Version 2.9a - Mk I

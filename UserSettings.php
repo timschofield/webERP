@@ -1,13 +1,13 @@
 <?php
-/* $Revision: 1.6 $ */
-$title = "User Settings";
+/* $Revision: 1.7 $ */
 
 $PageSecurity=1;
 
-include("includes/session.inc");
-include("includes/header.inc");
+include('includes/session.inc');
+$title = _('User Settings');
+include('includes/header.inc');
 
-if ($_POST['Modify']) {
+if (isset($_POST['Modify'])) {
 	// no input errors assumed initially before we test
 	$InputError = 0;
 
@@ -17,46 +17,45 @@ if ($_POST['Modify']) {
 	//first off validate inputs sensible
 	if ($_POST['DisplayRecordsMax'] < 0){
 		$InputError = 1;
-		echo "<BR>" . _("The Maximum Number of Records on Display entered must not be negative.  0 will default to system setting");
+		echo '<BR>' . _('The Maximum Number of Records on Display entered must not be negative.  0 will default to system setting');
 	}
-	if ($_POST['pass'] != ""){
+	if ($_POST['pass'] != ''){
 		if ($_POST['pass'] != $_POST['passcheck']){
 			$InputError = 1;
-			echo "<BR>" ._("Sorry the passwords you entered do not match");
+			echo '<BR>' ._('Sorry the passwords you entered do not match');
 		}else{
-			$update_pw = "Y";
+			$update_pw = 'Y';
 		}
 	}
-		if ($_POST['passcheck'] != ""){
+		if ($_POST['passcheck'] != ''){
 		if ($_POST['pass'] != $_POST['passcheck']){
 			$InputError = 1;
-			echo "<BR>" ._("Sorry the passwords you entered do not match");
+			echo '<BR>' ._('Sorry the passwords you entered do not match');
 		}else{
-			$update_pw = "Y";
+			$update_pw = 'Y';
 		}
 	}
-		
-	
+
+
 
 	if ($InputError != 1) {
 		// no errors
-		if ($update_pw != "Y"){
-		$sql = "UPDATE WWW_Users
+		if ($update_pw != 'Y'){
+			$sql = "UPDATE WWW_Users
 				SET DisplayRecordsMax=" . $_POST['DisplayRecordsMax'] . ",
 					Theme='" . $_POST['Theme'] . "',
 					Language='" . $_POST['Language'] . "',
 					Email='". $_POST['email'] ."'
 				WHERE UserID = '" . $_SESSION['UserID'] . "'";
 
-		$ErrMsg =  _("The user alterations could not be processed because");
-		$DbgMsg = _("The SQL that was used to update the user and failed was");
+			$ErrMsg =  _('The user alterations could not be processed because');
+			$DbgMsg = _('The SQL that was used to update the user and failed was');
 
-		$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+			$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 
-
-		echo "<BR>" . _("The user settings have been updated.  Be Sure to Remeber your Password for the next time you LogIn!");
-		}else{
-				$sql = "UPDATE WWW_Users
+			echo '<BR>' . _('The user settings have been updated.  Be Sure to Remeber your Password for the next time you LogIn!');
+		} else {
+			$sql = "UPDATE WWW_Users
 				SET DisplayRecordsMax=" . $_POST['DisplayRecordsMax'] . ",
 					Theme='" . $_POST['Theme'] . "',
 					Language='" . $_POST['Language'] . "',
@@ -64,13 +63,13 @@ if ($_POST['Modify']) {
 					Password='" . $_POST['pass'] . "'
 				WHERE UserID = '" . $_SESSION['UserID'] . "'";
 
-		$ErrMsg =  _("The user alterations could not be processed because");
-		$DbgMsg = _("The SQL that was used to update the user and failed was");
+			$ErrMsg =  _('The user alterations could not be processed because');
+			$DbgMsg = _('The SQL that was used to update the user and failed was');
 
-		$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
+			$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 
 
-		echo "<BR>" . _("The user settings have been updated.");
+			echo '<BR>' . _('The user settings have been updated.');
 		}
 	  // update the session variables to reflect user changes on-the-fly
 		$_SESSION['DisplayRecordsMax'] = $_POST['DisplayRecordsMax'];
@@ -81,7 +80,7 @@ if ($_POST['Modify']) {
 	}
 }
 
-echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
+echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 If (!isset($_POST['DisplayRecordsMax'])) {
 
@@ -89,27 +88,27 @@ If (!isset($_POST['DisplayRecordsMax'])) {
 
 }
 
-echo "<CENTER><TABLE><TR><TD>" . _("User ID:") . "</TD><TD>";
-echo $_SESSION['UserID'] . "</TD></TR>";
+echo '<CENTER><TABLE><TR><TD>' . _('User ID:') . '</TD><TD>';
+echo $_SESSION['UserID'] . '</TD></TR>';
 
-echo "<TR><TD>" . _("User Name:") . "</TD><TD>";
-echo $_SESSION['UsersRealName'] . "</TD></TR>";
+echo '<TR><TD>' . _('User Name:') . '</TD><TD>';
+echo $_SESSION['UsersRealName'] . '</TD></TR>';
 
-echo "<TR>
-	<TD>" . _("Maximum Number of Records to Display:") . "</TD>
+echo '<TR>
+	<TD>' . _('Maximum Number of Records to Display:') . "</TD>
 	<TD><INPUT TYPE='Text' name='DisplayRecordsMax' VALUE=" . $_POST['DisplayRecordsMax'] . " SIZE=32 MAXLENGTH=30></TD>
 	</TR>
 	<TR>
-	<TD>" . _("Language:") . "</TD>
+	<TD>" . _('Language:') . "</TD>
 	<TD><SELECT name='Language'>";
 
 
-$LangDirHandle = dir("locale/");
+$LangDirHandle = dir('locale/');
 
 
 while (false != ($LanguageEntry = $LangDirHandle->read())){
 
-	if (is_dir("locale/" . $LanguageEntry) AND $LanguageEntry != ".." AND $LanguageEntry != "CVS" AND $LanguageEntry!="."){
+	if (is_dir('locale/' . $LanguageEntry) AND $LanguageEntry != '..' AND $LanguageEntry != 'CVS' AND $LanguageEntry!='.'){
 
 		if ($_SESSION['Language'] == $LanguageEntry){
 			echo "<OPTION SELECTED VALUE='$LanguageEntry'>$LanguageEntry";
@@ -122,15 +121,15 @@ while (false != ($LanguageEntry = $LangDirHandle->read())){
 echo "</SELECT></TD>
 </TR>
 <TR>
-	<TD>" . _("Theme:") . "</TD>
+	<TD>" . _('Theme') . ":</TD>
 	<TD><SELECT name='Theme'>";
 
-$ThemeDirectory = dir("css/");
+$ThemeDirectory = dir('css/');
 
 
 while (false != ($ThemeName = $ThemeDirectory->read())){
 
-	if (is_dir("css/$ThemeName") AND $ThemeName != "." AND $ThemeName != ".." AND $ThemeName != "CVS"){
+	if (is_dir("css/$ThemeName") AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != 'CVS'){
 
 		if ($_SESSION['Theme'] == $ThemeName){
 			echo "<OPTION SELECTED VALUE='$ThemeName'>$ThemeName";
@@ -160,6 +159,6 @@ echo "<TD><input type=text name='email' size=20 value='" . $_POST['email'] . "'>
 	<CENTER><input type='Submit' name='Modify' value=" . _('Modify') . '>
 	</FORM>';
 
-include("includes/footer.inc");
+include('includes/footer.inc');
 
 ?>

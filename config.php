@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.31 $ */
+/* $Revision: 1.32 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -21,37 +21,37 @@ if (!function_exists('_')){
 //---------------------------------------------------
 
 // Application version
-$Version = "0.2.9a";
+$Version = '0.2.9b';
 
 // The company name to appear in the headings on each page displayed
-$CompanyName = "WebERP Demo";
+$CompanyName = 'webERP Demo';
 
 
 // The default date format for entry of dates and display
-// $DefaultDateFormat = "d/m/Y"; England/Australia/NZ
-// $DefaultDateFormat = "m/d/Y"; US and Canada
-$DefaultDateFormat = "d/m/Y";
+// $DefaultDateFormat = 'd/m/Y'; England/Australia/NZ
+// $DefaultDateFormat = 'm/d/Y'; US and Canada
+$DefaultDateFormat = 'd/m/Y';
 
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time
 // this is not necessary if you have your own server locally
-// putenv("TZ=Europe/London");
-// putenv("Australia/Melbourne");
-// putenv("Australia/Sydney");
-// putenv("TZ=Pacific/Auckland");
+// putenv('TZ=Europe/London');
+// putenv('Australia/Melbourne');
+// putenv('Australia/Sydney');
+// putenv('TZ=Pacific/Auckland');
 
 // Connection information for the database
 // $host is the computer ip address or name where the database is located
 // assuming that the web server is also the sql server
-$host = "localhost";
-$DatabaseName = "weberp";
+$host = 'localhost';
+$DatabaseName = 'weberp';
 
 // sql user & password
-$dbuser = "weberp_db_user";
-$dbpassword = "weberp_db_pwd";
+$dbuser = 'weberp_db_user';
+$dbpassword = 'weberp_db_pwd';
 
 // CSS GUI theme
-$DefaultTheme = "fresh";
+$DefaultTheme = 'fresh';
 
 // Accounts Receivable
 // Aging periods used on customer and supplier enquiry screens and aged listings*/
@@ -66,14 +66,16 @@ $Show_Settled_LastMonth =1;
 
 /*The romalpa clause prints out on the invoice in small type - although of limited use can in some businesses help
 > recover bad debts */
-$RomalpaClause = "Ownership will not pass to the buyer until the goods have been paid for in full.";
+$RomalpaClause = 'Ownership will not pass to the buyer until the goods have been paid for in full.';
 
 /* Types of receipts - only add or remove elements of the array as required*/
-$ReceiptTypes = array("Cheques", "Cash", "Direct Credit");
+$ReceiptTypes = array('Cheques', 'Cash', 'Direct Credit');
 
 /* Order Items Selection */
 /*In large databases it would be possible to return a gigantic page of parts if insufficient criteria were entered. This variable limits the output to the client browser to reduce waiting and clogging network connections */
+/* Now set by user - dependent on connection speed really so more appropriate
 $Maximum_Number_Of_Parts_To_Show = 100;
+*/
 
 /*The number of quick entry inputs to show on the order entry screen */
 $QuickEntries = 10;
@@ -94,10 +96,10 @@ $CreditingControlledItems_MustExist = false;
 
 
 /*The price list to use if no price defined in the customers normal price list */
-$DefaultPriceList = "WS";
+$DefaultPriceList = 'WS';
 
 /*Stock Units array*/
-$StockUnits = array("each", "metres", "kgs", "litres", "length", "pack");
+$StockUnits = array('each', 'metres', 'kgs', 'litres', 'length', 'pack');
 
 /*Freight calculations */
 /*Default Shipper - this must be an existing Shipper_ID in the table Shippers */
@@ -115,7 +117,14 @@ $FreightChargeAppliesIfLessThan = 1000;
 
 $DefaultTaxLevel =1;
 
-$CountryOfOperation = "AUD";
+/*The name of the tax authority reference to print on official transaction documnents
+Australia - would be A.B.N.
+UK - would be VAT Regn #
+NZ - GST Regn #
+*/
+$TaxAuthorityReferenceName = 'Tax Ref';
+
+$CountryOfOperation = 'USD';
 
 /* Number of periods of stock usage to show in stock usage enquiries */
 $NumberOfPeriodsOfStockUsage = 12;
@@ -149,14 +158,14 @@ several times - set to False checks to ensure that multiple lines of the same pa
 $PO_AllowSameItemMultipleTimes = True;
 
 /* Types of payments - only add or remove elements of the array as required*/
-$PaytTypes = array("Cheque", "Cash", "Direct Credit");
+$PaytTypes = array('Cheque', 'Cash', 'Direct Credit');
 
 
 /* Email address of the person(s) who should receive the cheque listings */
 $ChkListingReceipients = array ('"Bean counter" <one-two-three@com>');
 
-/*Calendar Month number of last month in the company's financial year */
-$YearEnd = "3";
+/*Calendar Month number of last month in the company's financial year  - used for defaulting TB and P & L reports*/
+$YearEnd = '3';
 
 /*Report Page Length in lines */
 $PageLength = 48;
@@ -164,23 +173,23 @@ $PageLength = 48;
 /*Sections in Accounts  - the numbers 1 (income) and 2 (COGS) are hard coded other sections can be added any of the narrative can be changed at will*/
 
 $Sections = array(
-1 => "Income",		/*Can't delete this line but can change the name */
-2 => "Cost Of Sales",	/*Can't delete this line but can change the name */
-5 => "Overheads",
-10 => "Fixed Assets",
-20 => "Amounts Receivable",
-30 => "Amounts Falling Due In Less Than One Year",
-50 => "Financed By"
+1 => 'Income',		/*Can't delete this line but can change the name */
+2 => 'Cost Of Sales',	/*Can't delete this line but can change the name */
+5 => 'Overheads',
+10 => 'Fixed Assets',
+20 => 'Amounts Receivable',
+30 => 'Amounts Falling Due In Less Than One Year',
+50 => 'Financed By'
 );
 
 /*Directory under the main directory where part photos/ pictures are to be stored
 NB no slashes are necessary. Part pictures in this directory must be .jpg format with this extension
 Note that this directory must be created by the system administrator*/
-$part_pics_dir = "part_pics";
+$part_pics_dir = 'part_pics';
 
 /*Directory under the main web files directory where report files are to be created NB no slashes are necessary
 Note that this directory must be created by the system administrator */
-$reports_dir = "reports";
+$reports_dir = 'reports';
 
 /*Show debug messages returned from an error on the page.
 Debugging info level also determined by settings in PHP.ini
@@ -194,7 +203,7 @@ Each script has a particular security category associated with it.
 If the security setting of the page is contained in the security group as determined by the access level then the user will be allowed access.
 Each page has a $PageSecurity = x; variable
 This value is compared to contents of the array applicable which is based on the access level of the user.
-Access authorisation is checked in header.inc this is where _SESSION["AccessLevel"] is the index of the SecurityGroups array. If you wish to add more security groups with then you must add a new SecurityHeading to the SecurityHeadings array
+Access authorisation is checked in header.inc this is where _SESSION['AccessLevel'] is the index of the SecurityGroups array. If you wish to add more security groups with then you must add a new SecurityHeading to the SecurityHeadings array
 and a new array of Security categories to the Security Groups array
 This mechanism allows more fine grained control of access
 SecurityGroups is an array of arrays
@@ -204,14 +213,14 @@ in conjunction with the Page Security index
 */
 
 $SecurityHeadings = array(
-			"Inquiries/Order Entry",
-			"Manufac/Stock Admin",
-			"Purchasing Officer",
-			"AP Clerk",
-			"AR Clerk",
-			"Accountant",
-			"Customer Log On Only",
-			"System Administrator"
+			'Inquiries/Order Entry',
+			'Manufac/Stock Admin',
+			'Purchasing Officer',
+			'AP Clerk',
+			'AR Clerk',
+			'Accountant',
+			'Customer Log On Only',
+			'System Administrator'
 );
 
 $SecurityGroups = array(
@@ -242,23 +251,23 @@ $ModuleList = array(_('Orders'), _('Receivables'), ('Payables'), _('Purchasing')
 /*EDI Draft version 01B - Controlling agency is the UN - EAN version control number (EAN Code)
 this info is required in the header record of every message sent - prepended with the message type*/
 
-$EDIHeaderMsgId = "D:01B:UN:EAN010";
+$EDIHeaderMsgId = 'D:01B:UN:EAN010';
 
 /*EDI Reference of the company */
 
-$EDIReference = "WEBERP";
+$EDIReference = 'WEBERP';
 
 /* EDI Messages for sending directory */
 
-$EDI_MsgPending = "EDI_Pending";
+$EDI_MsgPending = 'EDI_Pending';
 
 /* EDI Messages sent log directory */
 
-$EDI_MsgSent = "EDI_Sent";
+$EDI_MsgSent = 'EDI_Sent';
 
 /* EDI Messages sent log directory */
 
-$EDI_Incoming_Orders = "EDI_Incoming_Orders";
+$EDI_Incoming_Orders = 'EDI_Incoming_Orders';
 
 /* This automatically emails the developer with any Help text you add
 Please give generously!! */
@@ -274,7 +283,7 @@ $DefaultDisplayRecordsMax = 50;
 /*The $rootpath is used in most scripts to tell the script the installation details of the files.
 
 NOTE: In some windows installation this command doesn't work and the administrator must set this to the path of the installation manually:
-eg. if the files are under the webserver root directory then rootpath =""; if they are under weberp then weberp is the rootpath - notice no additional slashes are necessary.
+eg. if the files are under the webserver root directory then rootpath =''; if they are under weberp then weberp is the rootpath - notice no additional slashes are necessary.
 */
 
 $rootpath = dirname($_SERVER['PHP_SELF']);

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /* PDFlib code to set up a new page */
 
 $Perforation = $Page_Width - $RightMargin - 160;
@@ -10,22 +10,22 @@ $pdf->addJpegFromFile('logo.jpg',$Left_Margin,$YPos,90,60);
 $FontSize =15;
 
 $XPos = $Page_Width/2 - 100;
-$pdf->addText($XPos, $YPos+30,$FontSize, "Statement");
+$pdf->addText($XPos, $YPos+30,$FontSize, _('Statement') );
 
 $FontSize = 12;
-$pdf->addText($XPos + 70, $YPos+30,$FontSize, " as at " . Date('d M Y'));
+$pdf->addText($XPos + 70, $YPos+30,$FontSize, ' '. _('as of').' ' . Date($DefaultDateFormat));
 
 $FontSize = 10;
 $XPos = $Perforation +2;
-$pdf->addText($XPos, $YPos+30,$FontSize, "Remittance Advice");
-$pdf->addText($XPos, $YPos+18,$FontSize, "Statement dated " . Date('M d Y'));
+$pdf->addText($XPos, $YPos+30,$FontSize, _('Remittance Advice') );
+$pdf->addText($XPos, $YPos+18,$FontSize, _('Statement dated').' ' . Date($DefaultDateFormat));
 
 $XPos = $Perforation-50;
-$pdf->addText($XPos, $YPos+8,$FontSize, "Page: " . $PageNumber);
+$pdf->addText($XPos, $YPos+8,$FontSize, _('Page').': ' . $PageNumber);
 
 /*Also show the page number on the remittance section */
 $XPos = $Perforation;
-$pdf->addText($XPos+1, $YPos+8,$FontSize, "Page: " . $PageNumber);
+$pdf->addText($XPos+1, $YPos+8,$FontSize, _('Page').': ' . $PageNumber);
 
 /*Now print out the company name and address */
 $XPos = $Left_Margin;
@@ -34,15 +34,15 @@ $YPos = $Page_Height - $Top_Margin - 45;
 $pdf->addText($XPos, $YPos,$FontSize, $CompanyName);
 
 $FontSize =8;
-$pdf->addText($XPos, $YPos-12,$FontSize, $CompanyRecord["PostalAddress"]);
-$pdf->addText($XPos, $YPos-21,$FontSize, $CompanyRecord["RegOffice1"] . " " . $CompanyRecord["RegOffice2"]);
-$pdf->addText($XPos, $YPos-30,$FontSize, "Ph: " . $CompanyRecord["Telephone"] . " Fax: " . $CompanyRecord["Fax"]);
-$pdf->addText($XPos, $YPos-39,$FontSize, $CompanyRecord["Email"]);
+$pdf->addText($XPos, $YPos-12,$FontSize, $CompanyRecord['PostalAddress']);
+$pdf->addText($XPos, $YPos-21,$FontSize, $CompanyRecord['RegOffice1'] . ' ' . $CompanyRecord['RegOffice2']);
+$pdf->addText($XPos, $YPos-30,$FontSize, _('Ph').': ' . $CompanyRecord['Telephone'] . ' '._('Fax').': ' . $CompanyRecord['Fax']);
+$pdf->addText($XPos, $YPos-39,$FontSize, $CompanyRecord['Email']);
 
 /*Now the remittance section just company and return postal address */
-$pdf->addText($Perforation+1, $YPos-15,$FontSize, "Please send with remittance to:");
+$pdf->addText($Perforation+1, $YPos-15,$FontSize, _('Please send with remittance to').':');
 $pdf->addText($Perforation+1, $YPos-24,$FontSize, $CompanyName);
-$LeftOvers=$pdf->addTextWrap($Perforation+1,$YPos-33,$Page_Width-$Right_Margin-$Perforation,$FontSize,$CompanyRecord["PostalAddress"],'left');
+$LeftOvers=$pdf->addTextWrap($Perforation+1,$YPos-33,$Page_Width-$Right_Margin-$Perforation,$FontSize,$CompanyRecord['PostalAddress'],'left');
 $LeftOvers = $pdf->addTextWrap($Perforation+1, $YPos-42,$Page_Width-$Right_Margin-$Perforation,$FontSize,$LeftOvers, 'left');
 
 /*Now the customer details and statement address */
@@ -52,21 +52,21 @@ $YPos -= ($line_height*4);
 
 $FontSize=12;
 
-$pdf->addText($XPos, $YPos,$FontSize, $StmtHeader["Name"]);
-$pdf->addText($XPos, $YPos-14,$FontSize, $StmtHeader["Address1"]);
-$pdf->addText($XPos, $YPos-28,$FontSize, $StmtHeader["Address2"]);
-$pdf->addText($XPos, $YPos-42,$FontSize, $StmtHeader["Address3"]);
-$pdf->addText($XPos, $YPos-56,$FontSize, $StmtHeader["Address4"]);
+$pdf->addText($XPos, $YPos,$FontSize, $StmtHeader['Name']);
+$pdf->addText($XPos, $YPos-14,$FontSize, $StmtHeader['Address1']);
+$pdf->addText($XPos, $YPos-28,$FontSize, $StmtHeader['Address2']);
+$pdf->addText($XPos, $YPos-42,$FontSize, $StmtHeader['Address3']);
+$pdf->addText($XPos, $YPos-56,$FontSize, $StmtHeader['Address4']);
 
 $YPos -= ($line_height*4);
 /*Now note the customer code in the remittance section too */
 $FontSize=8;
-$pdf->addText($Perforation+1, $YPos,$FontSize, "Customer Code: " . $StmtHeader["DebtorNo"]);
+$pdf->addText($Perforation+1, $YPos,$FontSize, _('Customer Code').': ' . $StmtHeader['DebtorNo']);
 
 $XPos = $Page_Width/2 - 60;
-$pdf->addText($XPos, $YPos,$FontSize, "All amounts stated in - " . $StmtHeader["Currency"]);
+$pdf->addText($XPos, $YPos,$FontSize, _('All amounts stated in') . ' - ' . $StmtHeader['Currency']);
 $YPos -= $line_height;
-$pdf->addText($XPos, $YPos,$FontSize, $StmtHeader["Terms"]);
+$pdf->addText($XPos, $YPos,$FontSize, $StmtHeader['Terms']);
 
 $YPos -= $line_height;
 $XPos = $Left_Margin;
@@ -114,20 +114,20 @@ $pdf->line($Page_Width-$Right_Margin, $Bottom_Margin+10,$Page_Width-$Right_Margi
 $YPos -= $line_height;
 $FontSize =10;
 /*Set up headings */
-$pdf->addText($Left_Margin+1, $YPos,$FontSize, "Trans Type");
-$pdf->addText($Left_Margin+57, $YPos,$FontSize, "Number");
-$pdf->addText($Left_Margin+108, $YPos,$FontSize, "Date");
-$pdf->addText($Left_Margin+178, $YPos,$FontSize, "Charges");
-$pdf->addText($Left_Margin+239, $YPos,$FontSize, "Credits");
-$pdf->addText($Left_Margin+289, $YPos,$FontSize, "Allocated");
-$pdf->addText($Left_Margin+336, $YPos,$FontSize, "Outstanding");
+$pdf->addText($Left_Margin+1, $YPos,$FontSize, _('Trans Type') );
+$pdf->addText($Left_Margin+57, $YPos,$FontSize, _('Number') );
+$pdf->addText($Left_Margin+108, $YPos,$FontSize, _('Date') );
+$pdf->addText($Left_Margin+178, $YPos,$FontSize, _('Charges') );
+$pdf->addText($Left_Margin+239, $YPos,$FontSize, _('Credits') );
+$pdf->addText($Left_Margin+289, $YPos,$FontSize, _('Allocated') );
+$pdf->addText($Left_Margin+336, $YPos,$FontSize, _('Outstanding') );
 
 
 /*Set up remittance section headings */
 $FontSize=8;
-$pdf->addText($Perforation+1, $YPos,$FontSize, "Trans");
-$pdf->addText($Perforation+35, $YPos,$FontSize, "Number");
-$pdf->addText($Perforation+80, $YPos,$FontSize, "Outstanding");
+$pdf->addText($Perforation+1, $YPos,$FontSize, _('Trans') );
+$pdf->addText($Perforation+35, $YPos,$FontSize, _('Number') );
+$pdf->addText($Perforation+80, $YPos,$FontSize, _('Outstanding') );
 
 
 $YPos -= $line_height;

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 4;
 
@@ -141,10 +141,10 @@ $result = DB_query("SELECT Description, Units, MBflag FROM StockMaster WHERE Sto
 $myrow = DB_fetch_row($result);
 if (DB_num_rows($result)==1){
    if ($myrow[2]=="D" OR $myrow[2]=="A" OR $myrow[2]=="K"){
-	echo '<P><FONT SIZE=3><B>' . $StockID - $myrow[0] . ' </B><P> ' . _('The part selected is a dummy part or an assembly/kit set part - it is not purchased. Entry of purchasing information is therefore inappropriate') . '.</FONT><HR>';
+	echo '<P><FONT SIZE=3><B>' . $StockID . ' - ' . $myrow[0] . ' </B><P> ' . _('The part selected is a dummy part or an assembly/kit set part - it is not purchased. Entry of purchasing information is therefore inappropriate') . '.</FONT><HR>';
 	exit;
    } else {
-	echo '<BR><FONT COLOR=BLUE SIZE=3><B>' . $StockID - $myrow[0] . ' </B>  (' . _('In Units of') . ' ' . $myrow[1] . ' )</FONT>';
+	echo '<BR><FONT COLOR=BLUE SIZE=3><B>' . $StockID . ' - ' . $myrow[0] . ' </B>  (' . _('In Units of') . ' ' . $myrow[1] . ' )</FONT>';
    }
 } else {
   echo '<BR><FONT COLOR=RED SIZE=3><B>' . _('Stock Item') . ' - ' . $StockID . ' ' . _('is not defined in the database') . '</B></FONT><BR>';

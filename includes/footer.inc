@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 ?>
 <BR><BR><BR>
 				</td>
@@ -25,13 +25,13 @@
 	</tr>
 	<tr>
 		<td align="center">
-			<a href="http://www.weberp.org" target="_new">
-			<img src="<?php echo $rootpath . '/css/' .$theme. '/images/webERP+sm.gif'; ?>" border=0>
+			<a href="http://www.weberp.org" target="_blank">
+			<img src="<?php echo $rootpath . '/css/' . $theme . '/images/webERP+sm.gif'; ?>" border=0>
 			</a>
 		</td>
 	</tr>
 	<tr>
-		<td align="center" class="footer">webERP <?php echo _('Copyright'); ?> &copy Logic Works Ltd</td>
+		<td align="center" class="footer">webERP <?php echo _('Copyright'); ?> &copy; Logic Works Ltd</td>
 	</tr>
 </table>
 
