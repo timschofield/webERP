@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /*
 date validation and parsing functions
 
@@ -502,7 +502,7 @@ Dates are parsed using the DefaultDateFormat string */
 	} elseif (strpos($TransDate,"-")){
 		$Date_array = explode("-", $TransDate);
 	} else {
-		echo "<BR>Dates must be entered in the format $DefaultDateFormat";
+		echo '<BR>' . _('Dates must be entered in the format') . ' ' . $DefaultDateFormat;
 		exit;
 	}
 
@@ -521,10 +521,10 @@ Dates are parsed using the DefaultDateFormat string */
 
 	$GetPrdSQL = "SELECT PeriodNo FROM Periods WHERE LastDate_in_Period < '" . Date("Y/m/d", $MonthAfterTransDate) . "' AND LastDate_in_Period >= '" . Date("Y/m/d", $TransDate) . "'";
 
-	$GetPrdResult = DB_query($GetPrdSQL,$db);
+	$GetPrdResult = DB_query($GetPrdSQL,$db,'','',false,false);
 
 	If (DB_error_no($db) != 0){
-		echo "An error occurred in retrieving the period number :- " . DB_error_msg($db);
+		echo _('An error occurred in retrieving the period number') . ':- ' . DB_error_msg($db);
 		return 0;
 		exit;
 

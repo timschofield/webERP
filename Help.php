@@ -1,17 +1,19 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
+
+
+$PageSecurity = 1;
+
+include("includes/session.inc");
 if (isset($_GET['Title'])){
 	$HelpPageTitle = $_GET['Title'];
 }elseif(isset($_POST['HelpPageTitle'])){
 	$HelpPageTitle = $_POST['HelpPageTitle'];
 }
 
-$title = "Help On " . $HelpPageTitle;
+$title = _('Help On') . ' ' . $HelpPageTitle;
 
-$PageSecurity = 1;
-
-include("includes/session.inc");
 include("includes/header.inc");
 include('includes/htmlMimeMail.php');
 
@@ -45,7 +47,7 @@ if (isset($_GET['HelpID'])){
 	$HelpID = $_POST['HelpID'];
 }
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
@@ -57,17 +59,19 @@ if ($_POST['submit']) {
 
 	if (strlen($_POST['Narrative']) < 3) {
 		$InputError = 1;
-		echo "<BR>The narrative must be typo its less than two characters long! <BR>It was ignored.";
+		prnMsg( _('The narrative must be typo its less than two characters long! It was ignored'),'error');
 	}
 
 	if ($InputError !=1 AND isset($_POST['HelpID'])) {
 
-		$sql = "UPDATE Help SET Narrative = '" . $_POST['Narrative'] . "' WHERE PageID =" . $_POST['PageID'];
-		$msg = "The help record has been updated.";
+		$sql = "UPDATE Help SET 
+                               Narrative = '" . $_POST['Narrative'] . "'
+                        WHERE PageID =" . $_POST['PageID'];
+		$msg = _('The help record has been updated');
 	} elseif ($InputError !=1) {
 
 	/*Must be submitting new entries in the help narrative addition form */
-		
+
 		if ($_SESSION['ModulesEnabled'][7]!=1){ /*User has no access to system set up */
 		/*User help records will be added as help type U */
 			$HelpType = "U";
@@ -75,8 +79,13 @@ if ($_POST['submit']) {
 		/*Sys Admin help admin records will be added as help type A */
 			$HelpType = "A";
 		}
-		$sql = "INSERT INTO Help (PageID, Narrative, HelpType) VALUES (" . $_POST['PageID'] . ", '" . $_POST['Narrative'] . "')";
-		$msg = "The new help narrative has been added";
+		$sql = "INSERT INTO Help (PageID, 
+                                          Narrative, 
+                                          HelpType) 
+                        VALUES (" . $_POST['PageID'] . ", 
+                               '" . $_POST['Narrative'] . "',
+                               '" . $HelpType . "')";
+		$msg = _('The new help narrative has been added');
 		if ($ContributeHelpText==true){
 			$Recipients = array("'Phil' <p.daintree@paradise.net.nz>");
 			$mail = new htmlMimeMail();
@@ -99,17 +108,16 @@ if ($_POST['submit']) {
 
 	$sql="DELETE FROM Help WHERE ID=" . $_GET['HelpID'];
 
-	$ErrMsg = "The help narrative could not be deleted because";
-	$DbgMsg = "<BR>The following SQL was used:";
+	$ErrMsg = _('The help narrative could not be deleted because');
 
-	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$result = DB_query($sql,$db,$ErrMsg);
 
-	echo "<BR>The selected help narrative has been deleted <p>";
-	
+	prnMsg(_('The selected help narrative has been deleted'),'info');
+
 }
 
 if (!isset($Page)){ /*the help page was called without specifying the page */
-	echo "<BR>The help page must be called from a link on the page on which help is required.";
+	prnMsg(_('The help page must be called from a link on the page on which help is required'),'info');
 }
 
 /*Display the help */
@@ -121,7 +129,7 @@ $sql = "SELECT PageID, PageDescription FROM Scripts WHERE FileName='" . $Page ."
 $result = DB_query($sql,$db);
 
 echo "<CENTER><table border=0 cellpadding=0>\n";
-echo "<tr><td class='HelpTableHeader'>Help On " . $HelpPageTitle ."</td></tr>\n";
+echo "<tr><td class='HelpTableHeader'>" . _('Help On') . ' ' . $HelpPageTitle ."</td></tr>\n";
 
 $myrow = DB_fetch_row($result);
 
@@ -139,14 +147,26 @@ $result = DB_query($sql,$db);
 while ($myrow = DB_fetch_row($result)) {
 
 	if ($_SESSION['ModulesEnabled'][7]!=1 AND ($myrow[2]=='S' OR $myrow[2]=='A')){
-		
+
 		/*Help is Admin or System help and cannot be edited or deleted by non Sys Admins */
-		
+
 		printf("<tr><td>%s</td></tr>", $myrow[0]);
-		
+
 	} else { /*allow System Admins to modify/delete any help */
-	
-		printf("<tr><td>%s</td><td><a href='%sHelpID=%s&Page=%s&Title=%s'>Edit</td><td>&nbsp;<a href='%sHelpID=%s&delete=yes&Page=%s&Title=%s'>DELETE</td></tr>", $myrow[0], $_SERVER['PHP_SELF'] . "?" . SID, $myrow[1], $Page, $HelpPageTitle, $_SERVER['PHP_SELF'] . "?" . SID, $myrow[1], $Page, $HelpPageTitle);
+
+		printf("<tr><td>%s</td>
+                            <td><a href='%sHelpID=%s&Page=%s&Title=%s'>" . _('Edit') . "</td>
+                            <td>&nbsp;<a href='%sHelpID=%s&delete=yes&Page=%s&Title=%s'>" . _('DELETE') . "</td>
+                            </tr>", 
+                            $myrow[0], 
+                            $_SERVER['PHP_SELF'] . "?" . SID, 
+                            $myrow[1], 
+                            $Page, 
+                            $HelpPageTitle, 
+                            $_SERVER['PHP_SELF'] . "?" . SID, 
+                            $myrow[1], 
+                            $Page, 
+                            $HelpPageTitle);
 	}
 //END WHILE LIST LOOP
 }
@@ -165,7 +185,7 @@ if (isset($_GET['HelpID']) AND ! isset($_GET['delete'])) {
 
 	echo "<INPUT TYPE=HIDDEN NAME='HelpID' VALUE=" . $HelpID . ">";
 
-	$NarrativeHeading = "Edit This Comment";
+	$NarrativeHeading = _('Edit This Comment');
 	$_POST['Narrative'] = $myrow[0];
 
 }
@@ -179,7 +199,7 @@ echo "<TABLE><TR><TD><FONT COLOR=BLUE><B>";
 if (isset($NarrativeHeading)){
 	echo $NarrativeHeading;
 } else {
-	echo "Add New Help Comment";
+	echo _('Add New Help Comment');
 }
 echo ":</FONT></B></TD></TR>";
 
@@ -188,10 +208,10 @@ echo "<TR><TD><textarea name='Narrative' cols=100% rows=3>" . $_POST['Narrative'
 echo "</TABLE>";
 
 if ($ContributeHelpText==true){
-	echo "<P><FONT=1 COLOR=BLUE><B>Notice:</B><BR>The system is set to send a copy of the help text you add here to the developer for inclusion in the project. You can turn this option off by setting the ContributeHelpText variable in config.php to false. However, contributions are sorely needed and your input would be appreciated!";
+	echo '<P><FONT=1 COLOR=BLUE><B>' . _('Notice') . ':</B><BR>' . _('The system is set to send a copy of the help text you add here to the developer for inclusion in the project. You can turn this option off by setting the ContributeHelpText variable in config.php to false. However, contributions are sorely needed and your input would be appreciated!');
 }
 
-echo "<CENTER><input type='Submit' name='submit' value='Enter Information'>";
+echo "<CENTER><input type='Submit' name='submit' value='" . _('Enter Information') . "'>";
 
 
 echo "</FORM>";
