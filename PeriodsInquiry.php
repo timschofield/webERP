@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 2;
 
 include ('includes/session.inc');
@@ -10,10 +10,10 @@ include('includes/header.inc');
 include('includes/DateFunctions.inc');
 
 
-$SQL = "SELECT PeriodNo ,
-		LastDate_in_Period
-	FROM Periods
-	ORDER BY PeriodNo";
+$SQL = "SELECT periodno ,
+		lastdate_in_period
+	FROM periods
+	ORDER BY periodno";
 
 $ErrMsg =  _('No periods were returned by the SQL because');
 $PeriodsResult = DB_query($SQL,$db,$ErrMsg);
@@ -40,11 +40,11 @@ while ($myrow=DB_fetch_array($PeriodsResult)) {
               $k++;
        }
 
-       $FormatedLastDate = ConvertSQLDate($myrow['LastDate_in_Period']);
+       $FormatedLastDate = ConvertSQLDate($myrow['lastdate_in_period']);
        printf("<td><FONT SIZE=2>%s</td>
 		<td>%s</td>
 		</tr>",
-		$myrow['PeriodNo'],
+		$myrow['periodno'],
 		$FormatedLastDate);
 
        $j++;

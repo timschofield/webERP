@@ -1,25 +1,25 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity = 3;
 include('includes/SQL_CommonFunctions.inc');
 include('includes/DateFunctions.inc');
-include('config.php');
+include ('includes/session.inc');
 
 $InputError=0;
 if (isset($_POST['FromDate']) AND !Is_Date($_POST['FromDate'])){
-	$msg = _('The date from must be specified in the format') . ' ' . $DefaultDateFormat;
+	$msg = _('The date from must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 	$InputError=1;
 	unset($_POST['FromDate']);
 }
 if (!Is_Date($_POST['ToDate']) AND isset($_POST['ToDate'])){
-	$msg = _('The date to must be specified in the format') . ' ' . $DefaultDateFormat;
+	$msg = _('The date to must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 	$InputError=1;
 	unset($_POST['ToDate']);
 }
 
 if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 
-     include ('includes/session.inc');
+
      $title = _('Payment Listing');
      include ('includes/header.inc');
 
@@ -31,21 +31,21 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
      echo '<CENTER><TABLE>
      			<TR>
 				<TD>' . _('Enter the date from which cheques are to be listed') . ":</TD>
-				<TD><INPUT TYPE=text NAME='FromDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($DefaultDateFormat) . "'></TD>
+				<TD><INPUT TYPE=text NAME='FromDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></TD>
 			</TR>";
      echo '<TR><TD>' . _('Enter the date to which cheques are to be listed') . ":</TD>
-     		<TD><INPUT TYPE=text NAME='ToDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($DefaultDateFormat) . "'></TD>
+     		<TD><INPUT TYPE=text NAME='ToDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></TD>
 	</TR>";
      echo '<TR><TD>' . _('Bank Account') . '</TD><TD>';
 
-     $sql = 'SELECT BankAccountName, AccountCode FROM BankAccounts';
+     $sql = 'SELECT bankaccountname, accountcode FROM bankaccounts';
      $result = DB_query($sql,$db);
 
 
      echo "<SELECT NAME='BankAccount'>";
 
      while ($myrow=DB_fetch_array($result)){
-	echo '<OPTION VALUE=' . $myrow['AccountCode'] . '>' . $myrow['BankAccountName'];
+	echo '<OPTION VALUE=' . $myrow['accountcode'] . '>' . $myrow['bankaccountname'];
      }
 
 
@@ -65,24 +65,24 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 }
 
 
-$SQL = 'SELECT BankAccountName
-	FROM BankAccounts
-	WHERE AccountCode = ' .$_POST['BankAccount'];
+$SQL = 'SELECT bankaccountname
+	FROM bankaccounts
+	WHERE accountcode = ' .$_POST['BankAccount'];
 $BankActResult = DB_query($SQL,$db);
 $myrow = DB_fetch_row($BankActResult);
 $BankAccountName = $myrow[0];
 
-$SQL= "SELECT Amount,
-		Ref,
-		TransDate,
-		BankTransType,
-		Type,
-		TransNo
-	FROM BankTrans
-	WHERE BankTrans.BankAct=" . $_POST['BankAccount'] . "
-	AND (BankTrans.Type=1 OR BankTrans.Type=22)
-	AND TransDate >='" . FormatDateForSQL($_POST['FromDate']) . "'
-	AND TransDate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
+$SQL= "SELECT amount,
+		ref,
+		transdate,
+		banktranstype,
+		type,
+		transno
+	FROM banktrans
+	WHERE banktrans.bankact=" . $_POST['BankAccount'] . "
+	AND (banktrans.type=1 or banktrans.type=22)
+	AND transdate >='" . FormatDateForSQL($_POST['FromDate']) . "'
+	AND transdate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
 
 
 $Result=DB_query($SQL,$db,'','',false,false);
@@ -103,8 +103,6 @@ if (DB_error_no($db)!=0){
   	exit;
 }
 
-$CompanyRecord = ReadInCompanyRecord($db);
-
 include('includes/PDFStarter_ros.inc');
 
 /*PDFStarter_ros.inc has all the variables for page size and width set up depending on the users default preferences for paper size */
@@ -121,17 +119,17 @@ include ('includes/PDFChequeListingPageHeader.inc');
 
 while ($myrow=DB_fetch_array($Result)){
 
-      	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format(-$myrow['Amount'],2), 'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,90,$FontSize,$myrow['Ref'], 'left');
+      	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format(-$myrow['amount'],2), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,90,$FontSize,$myrow['ref'], 'left');
 
-	$sql = 'SELECT AccountName,
-			Amount,
-			Narrative
-		FROM GLTrans,
-			ChartMaster
-		WHERE ChartMaster.AccountCode=GLTrans.Account
-		AND GLTrans.TypeNo =' . $myrow['TransNo'] . '
-		AND GLTrans.Type=' . $myrow['Type'];
+	$sql = 'SELECT accountname,
+			amount,
+			narrative
+		FROM gltrans,
+			chartmaster
+		WHERE chartmaster.accountcode=gltrans.account
+		AND gltrans.typeno =' . $myrow['transno'] . '
+		AND gltrans.type=' . $myrow['type'];
 
 	$GLTransResult = DB_query($sql,$db,'','',false,false);
 	if (DB_error_no($db)!=0){
@@ -145,9 +143,9 @@ while ($myrow=DB_fetch_array($Result)){
   		exit;
 	}
 	while ($GLRow=DB_fetch_array($GLTransResult)){
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+150,$YPos,90,$FontSize,$GLRow['AccountName'], 'left');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+245,$YPos,60,$FontSize,number_format($GLRow['Amount'],2), 'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,120,$FontSize,$GLRow['Narrative'], 'left');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+150,$YPos,90,$FontSize,$GLRow['accountname'], 'left');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+245,$YPos,60,$FontSize,number_format($GLRow['amount'],2), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,120,$FontSize,$GLRow['narrative'], 'left');
 		$YPos -= ($line_height);
 		if ($YPos - (2 *$line_height) < $Bottom_Margin){
           		/*Then set up a new page */
@@ -158,7 +156,7 @@ while ($myrow=DB_fetch_array($Result)){
 	DB_free_result($GLTransResult);
 
       $YPos -= ($line_height);
-      $TotalCheques = $TotalCheques - $myrow['Amount'];
+      $TotalCheques = $TotalCheques - $myrow['amount'];
 
       if ($YPos - (2 *$line_height) < $Bottom_Margin){
           /*Then set up a new page */
@@ -185,20 +183,20 @@ header('Pragma: public');
 $pdf->stream();
 
 if ($_POST['Email']=='Yes'){
-	if (file_exists($reports_dir . '/PaymentListing.pdf')){
-		unlink($reports_dir . '/PaymentListing.pdf');
+	if (file_exists($_SESSION['reports_dir'] . '/PaymentListing.pdf')){
+		unlink($_SESSION['reports_dir'] . '/PaymentListing.pdf');
 	}
-    	$fp = fopen( $reports_dir . '/PaymentListing.pdf','wb');
+    	$fp = fopen( $_SESSION['reports_dir'] . '/PaymentListing.pdf','wb');
 	fwrite ($fp, $pdfcode);
 	fclose ($fp);
 
 	include('includes/htmlMimeMail.php');
 
 	$mail = new htmlMimeMail();
-	$attachment = $mail->getFile($reports_dir . '/PaymentListing.pdf');
+	$attachment = $mail->getFile($_SESSION['reports_dir'] . '/PaymentListing.pdf');
 	$mail->setText(_('Please find herewith payments listing from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
 	$mail->addAttachment($attachment, 'PaymentListing.pdf', 'application/pdf');
-	$mail->setFrom(array("$CompanyName <" . $CompanyRecord['Email'] . '>'));
+	$mail->setFrom(array("$_SESSION['CompanyRecord']['coyname'] <" . $_SESSION['CompanyRecord']['email'] . '>'));
 
 	/* $ChkListingRecipients defined in config.php */
 	$result = $mail->send($ChkListingRecipients);

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity = 11;
 
 include('includes/session.inc');
@@ -23,20 +23,20 @@ if (!isset($Item) OR !isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']=
 	exit;
 }
 
-$result = DB_query("SELECT Name,
-                         CurrCode,
-			 SalesType
+$result = DB_query("SELECT debtorsmaster.name,
+                         debtorsmaster.currcode,
+			 debtorsmaster.salestype
 		 FROM
-			 DebtorsMaster
+			 debtorsmaster
 		 WHERE
-			 DebtorNo='" . $_SESSION['CustomerID'] . "'",$db);
+			 debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'",$db);
 $myrow = DB_fetch_row($result);
 echo '<FONT COLOR=BLUE><B>' . $myrow[0] . ' ' . _('in') . ' ' . $myrow[1] . '<BR>' . ' ' . _('for') . ' ';
 
 $CurrCode = $myrow[1];
 $SalesType = $myrow[2];
 
-$result = DB_query("SELECT Description FROM StockMaster WHERE StockID='$Item'",$db);
+$result = DB_query("SELECT stockmaster.description FROM stockmaster WHERE stockmaster.stockid='$Item'",$db);
 $myrow = DB_fetch_row($result);
 echo $Item . ' - ' . $myrow[0] . '</B></FONT><HR>';
 
@@ -56,11 +56,11 @@ if (isset($_POST['submit'])) {
 	}
 
 	if ($_POST['Branch'] !=''){
-		$sql = "SELECT BranchCode
+		$sql = "SELECT custbranch.branchcode
 		               FROM
-				 CustBranch
-			WHERE DebtorNo='" . $_SESSION['CustomerID'] . "'
-			AND BranchCode='" . $_POST['Branch'] . "'";
+				 custbranch
+			WHERE custbranch.debtorno='" . $_SESSION['CustomerID'] . "'
+			AND custbranch.branchcode='" . $_POST['Branch'] . "'";
 
 		$result = DB_query($sql,$db);
 		if (DB_num_rows($result) ==0){
@@ -69,28 +69,28 @@ if (isset($_POST['submit'])) {
 		}
 	}
 
-	if ($_POST['Editing']=="Yes" AND strlen($Item)>1 AND $InputError !=1) {
+	if ($_POST['Editing']=='Yes' AND strlen($Item)>1 AND $InputError !=1) {
 
 		//editing an existing price
 
-		$sql = "UPDATE Prices SET TypeAbbrev='$SalesType',
-		                          CurrAbrev='$CurrCode',
-					Price=" . $_POST['Price'] . ",
-					BranchCode ='" . $_POST['Branch'] . "'
-				WHERE StockID='$Item'
-				AND TypeAbbrev='$SalesType'
-				AND CurrAbrev='$CurrCode'
-				AND DebtorNo='" . $_SESSION['CustomerID'] . "'";
+		$sql = "UPDATE prices SET typeabbrev='$SalesType',
+		                          currabrev='$CurrCode',
+					price=" . $_POST['Price'] . ",
+					branchcode ='" . $_POST['Branch'] . "'
+				WHERE prices.stockid='$Item'
+				AND prices.typeabbrev='$SalesType'
+				AND prices.currabrev='$CurrCode'
+				AND prices.debtorno='" . $_SESSION['CustomerID'] . "'";
 		$msg = _('Price Updated');
 	} elseif ($InputError !=1) {
 
 	/*Selected price is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new price form */
-		$sql = "INSERT INTO Prices (StockID,
-		                            TypeAbbrev,
-						CurrAbrev,
-						DebtorNo,
-						Price,
-						BranchCode)
+		$sql = "INSERT INTO prices (stockid,
+		                            typeabbrev,
+						currabrev,
+						debtorno,
+						price,
+						branchcode)
 				VALUES ('$Item',
 					'$SalesType',
 					'$CurrCode',
@@ -119,12 +119,12 @@ if (isset($_POST['submit'])) {
 } elseif ($_GET['delete']) {
 //the link to delete a selected record was clicked instead of the submit button
 
-	$sql="DELETE FROM Prices
-		WHERE StockID = '". $Item ."'
-		AND TypeAbbrev='". $SalesType ."'
-		AND CurrAbrev ='". $CurrCode ."'
-		AND DebtorNo='" . $_SESSION['CustomerID'] . "'
-		AND BranchCode='" . $_GET['Branch'] . "'";
+	$sql="DELETE FROM prices
+		WHERE prices.stockid = '". $Item ."'
+		AND prices.typeabbrev='". $SalesType ."'
+		AND prices.currabrev ='". $CurrCode ."'
+		AND prices.debtorno='" . $_SESSION['CustomerID'] . "'
+		AND prices.branchcode='" . $_GET['Branch'] . "'";
 	$result = DB_query($sql,$db);
 	prnMsg( _('This price has been deleted') . '!','success');
 }
@@ -133,14 +133,14 @@ if (isset($_POST['submit'])) {
 //Always do this stuff
 //Show the normal prices in the currency of this customer
 
-$sql = "SELECT Prices.Price,
-               Prices.TypeAbbrev
-	FROM Prices
-	WHERE Prices.TypeAbbrev = '$SalesType'
-	AND Prices.StockID='$Item'
-	AND Prices.DebtorNo=''
-	AND Prices.CurrAbrev='$CurrCode'
-	ORDER BY TypeAbbrev";
+$sql = "SELECT prices.price,
+               prices.typeabbrev
+	FROM prices
+	WHERE prices.typeabbrev = '$SalesType'
+	AND prices.stockid='$Item'
+	AND prices.debtorno=''
+	AND prices.currabrev='$CurrCode'
+	ORDER BY typeabbrev";
 
 $ErrMsg = _('Could not retrieve the normal prices set up because');
 $DbgMsg = _('The SQL used to retreive these records was');
@@ -154,7 +154,7 @@ if (DB_num_rows($result) == 0) {
 } else {
 	echo '<tr><td class="tableheader">' . _('Normal Price') . '</td></tr>';
 	while ($myrow = DB_fetch_array($result)) {
-		printf("<tr bgcolor='#EEEEEE'><td ALIGN=RIGHT>%0.2f</td></tr>", $myrow['Price']);
+		printf("<tr bgcolor='#EEEEEE'><td ALIGN=RIGHT>%0.2f</td></tr>", $myrow['price']);
 	}
 }
 
@@ -162,36 +162,36 @@ echo '</table></TD><TD VALIGN=TOP>';
 
 //now get the prices for the customer selected
 
-$sql = "SELECT Prices.Price,
-               Prices.BranchCode,
-		CustBranch.BrName
-	FROM Prices LEFT JOIN CustBranch ON Prices.BranchCode= CustBranch.BranchCode
-	WHERE Prices.TypeAbbrev = '$SalesType'
-	AND Prices.StockID='$Item'
-	AND Prices.DebtorNo='" . $_SESSION['CustomerID'] . "'
-	AND Prices.CurrAbrev='$CurrCode'
-	AND (CustBranch.DebtorNo='" . $_SESSION['CustomerID'] . "' OR
-				CustBranch.DebtorNo IS NULL)";
+$sql = "SELECT prices.price,
+               prices.branchcode,
+		custbranch.brname
+	FROM prices LEFT JOIN custbranch ON prices.branchcode= custbranch.branchcode
+	WHERE prices.typeabbrev = '$SalesType'
+	AND prices.stockid='$Item'
+	AND prices.debtorno='" . $_SESSION['CustomerID'] . "'
+	AND prices.currabrev='$CurrCode'
+	AND (custbranch.debtorno='" . $_SESSION['CustomerID'] . "' OR
+				custbranch.debtorno IS NULL)";
 
 $ErrMsg = _('Could not retrieve the special prices set up because');
 $DbgMsg = _('The SQL used to retreive these records was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-echo '<table>';
+echo '<TABLE>';
 
 if (DB_num_rows($result) == 0) {
 	echo '<TR><TD>' . _('There are no special prices set up for this part') . '</TD></TR>';
 } else {
 /*THERE IS ALREADY A spl price setup */
-	echo '<tr><td class="tableheader">' . _('Special Price') .
-	     '</td><td class="tableheader">' . _('Branch') . '</td></tr>';
+	echo '<TR><TD class="tableheader">' . _('Special Price') .
+	     '</TD><TD class="tableheader">' . _('Branch') . '</TD></TR>';
 
 	while ($myrow = DB_fetch_array($result)) {
 
-	if ($myrow['BranchCode']==''){
+	if ($myrow['branchcode']==''){
 		$Branch = 'All Branches';
 	} else {
-		$Branch = $myrow['BrName'];
+		$Branch = $myrow['brname'];
 	}
 
 	printf("<tr bgcolor='#CCCCCC'>
@@ -199,15 +199,15 @@ if (DB_num_rows($result) == 0) {
 		<td>%s</td>
  		<td><a href='%s?Item=%s&Price=%s&Branch=%s&Edit=1'>" . _('Edit') . "</td>
 		<td><a href='%s?Item=%s&Branch=%s&delete=yes'>" . _('Delete') . "</td></tr>",
-		$myrow["Price"],
+		$myrow["price"],
 		$Branch,
 		$_SERVER['PHP_SELF'],
 		$Item,
-		$myrow['Price'],
-		$myrow['BranchCode'],
+		$myrow['price'],
+		$myrow['branchcode'],
 		$_SERVER['PHP_SELF'],
 		$Item,
-		$myrow['BranchCode']);
+		$myrow['branchcode']);
 	}
 //END WHILE LIST LOOP
 }
@@ -229,13 +229,13 @@ if (DB_num_rows($result) == 0) {
 	}
 
 	echo '<CENTER><TABLE><TR><TD>' . _('Branch') . ':</TD>
-	                         <TD><input type="Text" name="Branch" SIZE=11 MAXLENGTH=10 value=' . $_POST['Branch'] . '></TD>
+	                         <TD><INPUT TYPE="Text" NAME="Branch" SIZE=11 MAXLENGTH=10 value=' . $_POST['Branch'] . '></TD>
 											 </TR>';
 	echo '<TR><TD>' . _('Price') . ':</TD>
-	          <TD><input type="Text" name="Price" SIZE=11 MAXLENGTH=10 value=' . $_POST['Price'] . '></TD>
+	          <TD><INPUT TYPE="Text" NAME="Price" SIZE=11 MAXLENGTH=10 value=' . $_POST['Price'] . '></TD>
 				</TR></TABLE></CENTER>';
-	echo '<CENTER><input type="Submit" name="submit" value="' . _('Enter Information') . '">';
+	echo '<CENTER><INPUT TYPE="Submit" NAME="submit" VALUE="' . _('Enter Information') . '">';
 
-	echo '</form>';
+	echo '</FORM>';
 	include('includes/footer.inc');
 ?>

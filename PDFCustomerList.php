@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 2;
 
@@ -34,64 +34,64 @@ if (isset($_POST['PrintPDF'])){
 
 	if (in_array('All', $_POST['Areas'])){
 		if (in_array('All', $_POST['SalesPeople'])){
-			$SQL = 'SELECT DebtorsMaster.DebtorNo,
-					DebtorsMaster.Name,
-					DebtorsMaster.Address1,
-					DebtorsMaster.Address2,
-					DebtorsMaster.Address3,
-					DebtorsMaster.Address4,
-					DebtorsMaster.SalesType,
-					CustBranch.BranchCode,
-					CustBranch.BrName,
-					CustBranch.BrAddress1,
-					CustBranch.BrAddress2,
-					CustBranch.BrAddress3,
-					CustBranch.ContactName,
-					CustBranch.PhoneNo,
-					CustBranch.FaxNo,
-					CustBranch.Email,
-					CustBranch.Area,
-					CustBranch.Salesman,
-					Areas.AreaDescription,
-					Salesman.SalesmanName
-				FROM DebtorsMaster INNER JOIN CustBranch
-				ON DebtorsMaster.DebtorNo=CustBranch.DebtorNo
-				INNER JOIN Areas
-				ON CustBranch.Area = Areas.AreaCode
-				INNER JOIN Salesman
-				ON CustBranch.Salesman=Salesman.SalesmanCode
-				ORDER BY Area,
-					Salesman,
-					DebtorsMaster.DebtorNo,
-					CustBranch.BranchCode';
+			$SQL = 'SELECT debtorsmaster.debtorno,
+					debtorsmaster.name,
+					debtorsmaster.address1,
+					debtorsmaster.address2,
+					debtorsmaster.address3,
+					debtorsmaster.address4,
+					debtorsmaster.salestype,
+					custbranch.branchcode,
+					custbranch.brname,
+					custbranch.braddress1,
+					custbranch.braddress2,
+					custbranch.braddress3,
+					custbranch.contactname,
+					custbranch.phoneno,
+					custbranch.faxno,
+					custbranch.email,
+					custbranch.area,
+					custbranch.salesman,
+					areas.areadescription,
+					salesman.salesmanname
+				FROM debtorsmaster INNER JOIN custbranch
+				ON debtorsmaster.debtorno=custbranch.debtorno
+				INNER JOIN areas
+				ON custbranch.area = areas.areacode
+				INNER JOIN salesman
+				ON custbranch.salesman=salesman.salesmancode
+				ORDER BY area,
+					salesman,
+					debtorsmaster.debtorno,
+					custbranch.branchcode';
 		} else {
 		/* there are a range of salesfolk selected need to build the where clause */
-			$SQL = 'SELECT DebtorsMaster.DebtorNo,
-					DebtorsMaster.Name,
-					DebtorsMaster.Address1,
-					DebtorsMaster.Address2,
-					DebtorsMaster.Address3,
-					DebtorsMaster.Address4,
-					DebtorsMaster.SalesType,
-					CustBranch.BranchCode,
-					CustBranch.BrName,
-					CustBranch.BrAddress1,
-					CustBranch.BrAddress2,
-					CustBranch.BrAddress3,
-					CustBranch.ContactName,
-					CustBranch.PhoneNo,
-					CustBranch.FaxNo,
-					CustBranch.Email,
-					CustBranch.Area,
-					CustBranch.Salesman,
-					Areas.AreaDescription,
-					Salesman.SalesmanName
-				FROM DebtorsMaster INNER JOIN CustBranch
-				ON DebtorsMaster.DebtorNo=CustBranch.DebtorNo
-				INNER JOIN Areas
-				ON CustBranch.Area = Areas.AreaCode
-				INNER JOIN Salesman
-				ON CustBranch.Salesman=Salesman.SalesmanCode
+			$SQL = 'SELECT debtorsmaster.debtorno,
+					debtorsmaster.name,
+					debtorsmaster.address1,
+					debtorsmaster.address2,
+					debtorsmaster.address3,
+					debtorsmaster.address4,
+					debtorsmaster.salestype,
+					custbranch.branchcode,
+					custbranch.brname,
+					custbranch.braddress1,
+					custbranch.braddress2,
+					custbranch.braddress3,
+					custbranch.contactname,
+					custbranch.phoneno,
+					custbranch.faxno,
+					custbranch.email,
+					custbranch.area,
+					custbranch.salesman,
+					areas.areadescription,
+					salesman.salesmanname
+				FROM debtorsmaster INNER JOIN custbranch
+				ON debtorsmaster.debtorno=custbranch.debtorno
+				INNER JOIN areas
+				ON custbranch.area = areas.areacode
+				INNER JOIN salesman
+				ON custbranch.salesman=salesman.salesmancode
 				WHERE (';
 
 				$i=0;
@@ -100,42 +100,42 @@ if (isset($_POST['PrintPDF'])){
 						$SQL .= ' OR ';
 					}
 					$i++;
-					$SQL .= "CustBranch.Salesman='" . $Salesperson ."'";
+					$SQL .= "custbranch.salesman='" . $Salesperson ."'";
 				}
 
-				$SQL .=') ORDER BY Area,
-						Salesman,
-						DebtorsMaster.DebtorNo,
-						CustBranch.BranchCode';
+				$SQL .=') ORDER BY area,
+						salesman,
+						debtorsmaster.debtorno,
+						custbranch.branchcode';
 		} /*end if SalesPeople =='All' */
 	} else { /* not all sales areas has been selected so need to build the where clause */
 		if (in_array('All', $_POST['SalesPeople'])){
-			$SQL = 'SELECT DebtorsMaster.DebtorNo,
-					DebtorsMaster.Name,
-					DebtorsMaster.Address1,
-					DebtorsMaster.Address2,
-					DebtorsMaster.Address3,
-					DebtorsMaster.Address4,
-					DebtorsMaster.SalesType,
-					CustBranch.BranchCode,
-					CustBranch.BrName,
-					CustBranch.BrAddress1,
-					CustBranch.BrAddress2,
-					CustBranch.BrAddress3,
-					CustBranch.ContactName,
-					CustBranch.PhoneNo,
-					CustBranch.FaxNo,
-					CustBranch.Email,
-					CustBranch.Area,
-					CustBranch.Salesman,
-					Areas.AreaDescription,
-					Salesman.SalesmanName
-				FROM DebtorsMaster INNER JOIN CustBranch
-				ON DebtorsMaster.DebtorNo=CustBranch.DebtorNo
-				INNER JOIN Areas
-				ON CustBranch.Area = Areas.AreaCode
-				INNER JOIN Salesman
-				ON CustBranch.Salesman=Salesman.SalesmanCode
+			$SQL = 'SELECT debtorsmaster.debtorno,
+					debtorsmaster.name,
+					debtorsmaster.address1,
+					debtorsmaster.address2,
+					debtorsmaster.address3,
+					debtorsmaster.address4,
+					debtorsmaster.salestype,
+					custbranch.branchcode,
+					custbranch.brname,
+					custbranch.braddress1,
+					custbranch.braddress2,
+					custbranch.braddress3,
+					custbranch.contactname,
+					custbranch.phoneno,
+					custbranch.faxno,
+					custbranch.email,
+					custbranch.area,
+					custbranch.salesman,
+					areas.areadescription,
+					salesman.salesmanname
+				FROM debtorsmaster INNER JOIN custbranch
+				ON debtorsmaster.debtorno=custbranch.debtorno
+				INNER JOIN areas
+				ON custbranch.area = areas.areacode
+				INNER JOIN salesman
+				ON custbranch.salesman=salesman.salesmancode
 				WHERE (';
 
 			$i=0;
@@ -144,41 +144,41 @@ if (isset($_POST['PrintPDF'])){
 					$SQL .= ' OR ';
 				}
 				$i++;
-				$SQL .= "CustBranch.Area='" . $Area ."'";
+				$SQL .= "custbranch.area='" . $Area ."'";
 			}
 
-			$SQL .= ') ORDER BY Area,
-					Salesman,
-					DebtorsMaster.DebtorNo,
-					CustBranch.BranchCode';
+			$SQL .= ') ORDER BY custbranch.area,
+					custbranch.salesman,
+					debtorsmaster.debtorno,
+					custbranch.branchcode';
 		} else {
 		/* there are a range of salesfolk selected need to build the where clause */
-			$SQL = 'SELECT DebtorsMaster.DebtorNo,
-					DebtorsMaster.Name,
-					DebtorsMaster.Address1,
-					DebtorsMaster.Address2,
-					DebtorsMaster.Address3,
-					DebtorsMaster.Address4,
-					DebtorsMaster.SalesType,
-					CustBranch.BranchCode,
-					CustBranch.BrName,
-					CustBranch.BrAddress1,
-					CustBranch.BrAddress2,
-					CustBranch.BrAddress3,
-					CustBranch.ContactName,
-					CustBranch.PhoneNo,
-					CustBranch.FaxNo,
-					CustBranch.Email,
-					CustBranch.Area,
-					CustBranch.Salesman,
-					Areas.AreaDescription,
-					Salesman.SalesmanName
-				FROM DebtorsMaster INNER JOIN CustBranch
-				ON DebtorsMaster.DebtorNo=CustBranch.DebtorNo
-				INNER JOIN Areas
-				ON CustBranch.Area = Areas.AreaCode
-				INNER JOIN Salesman
-				ON CustBranch.Salesman=Salesman.SalesmanCode
+			$SQL = 'SELECT debtorsmaster.debtorno,
+					debtorsmaster.name,
+					debtorsmaster.address1,
+					debtorsmaster.address2,
+					debtorsmaster.address3,
+					debtorsmaster.address4,
+					debtorsmaster.salestype,
+					custbranch.branchcode,
+					custbranch.brname,
+					custbranch.braddress1,
+					custbranch.braddress2,
+					custbranch.braddress3,
+					custbranch.contactname,
+					custbranch.phoneno,
+					custbranch.faxno,
+					custbranch.email,
+					custbranch.area,
+					custbranch.salesman,
+					areas.areadescription,
+					salesman.salesmanname
+				FROM debtorsmaster INNER JOIN custbranch
+				ON debtorsmaster.debtorno=custbranch.debtorno
+				INNER JOIN areas
+				ON custbranch.area = areas.areacode
+				INNER JOIN salesman
+				ON custbranch.salesman=salesman.salesmancode
 				WHERE (';
 
 			$i=0;
@@ -187,7 +187,7 @@ if (isset($_POST['PrintPDF'])){
 					$SQL .= ' OR ';
 				}
 				$i++;
-				$SQL .= "CustBranch.Area='" . $Area ."'";
+				$SQL .= "custbranch.area='" . $Area ."'";
 			}
 
 			$SQL .= ') AND (';
@@ -198,13 +198,13 @@ if (isset($_POST['PrintPDF'])){
 					$SQL .= ' OR ';
 				}
 				$i++;
-				$SQL .= "CustBranch.Salesman='" . $Salesperson ."'";
+				$SQL .= "custbranch.salesman='" . $Salesperson ."'";
 			}
 
-			$SQL .=') ORDER BY Area,
-					Salesman,
-					DebtorsMaster.DebtorNo,
-					CustBranch.BranchCode';
+			$SQL .=') ORDER BY custbranch.area,
+					custbranch.salesman,
+					debtorsmaster.debtorno,
+					custbranch.branchcode';
 		} /*end if Salesfolk =='All' */
 
 	} /* end if not all sales areas was selected */
@@ -236,12 +236,12 @@ if (isset($_POST['PrintPDF'])){
 			/*Get the total turnover in local currency for the customer/branch
 			since the date entered */
 
-			$SQL = "SELECT Sum((OvAmount+OvFreight+OvDiscount)/Rate) AS Turnover
-				FROM DebtorTrans
-				WHERE DebtorNo='" . $Customers['DebtorNo'] . "'
-				AND BranchCode='" . $Customers['BranchCode'] . "'
-				AND (Type=10 OR Type=11)
-				AND TranDate >='" . FormatDateForSQL($_POST['ActivitySince']). "'";
+			$SQL = "SELECT SUM((ovamount+ovfreight+ovdiscount)/rate) AS turnover
+				FROM debtortrans
+				WHERE debtorno='" . $Customers['debtorno'] . "'
+				AND branchcode='" . $Customers['branchcode'] . "'
+				AND (type=10 or type=11)
+				AND trandate >='" . FormatDateForSQL($_POST['ActivitySince']). "'";
 			$ActivityResult = DB_query($SQL, $db, _('Could not retrieve the activity of the branch because'), _('The failed SQL was'));
 
 			$ActivityRow = DB_fetch_row($ActivityResult);
@@ -265,30 +265,30 @@ if (isset($_POST['PrintPDF'])){
 		}
 
 		if ($PrintThisCustomer){
-			if ($Area!=$Customers['Area']){
+			if ($Area!=$Customers['area']){
 				$FontSize=10;
 				$YPos -=$line_height;
 				if ($YPos < ($Bottom_Margin + 80)){
 					include('includes/PDFCustomerListPageHeader.inc');
 				}
 				$pdf->selectFont('./fonts/Helvetica-Bold.afm');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Customers in') . ' ' . $Customers['AreaDescription']);
-				$Area = $Customers['Area'];
+				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Customers in') . ' ' . $Customers['areadescription']);
+				$Area = $Customers['area'];
 				$pdf->selectFont('./fonts/Helvetica.afm');
 				$FontSize=8;
 				$YPos -=$line_height;
 			}
 
-			if ($SalesPerson!=$Customers['Salesman']){
+			if ($SalesPerson!=$Customers['salesman']){
 				$FontSize=10;
 				$YPos -=($line_height);
 				if ($YPos < ($Bottom_Margin + 80)){
 					include('includes/PDFCustomerListPageHeader.inc');
 				}
 				$pdf->selectFont('./fonts/Helvetica-Bold.afm');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300-$Left_Margin,$FontSize,$Customers['SalesmanName']);
+				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300-$Left_Margin,$FontSize,$Customers['salesmanname']);
 				$pdf->selectFont('./fonts/Helvetica.afm');
-				$SalesPerson = $Customers['Salesman'];
+				$SalesPerson = $Customers['salesman'];
 				$FontSize=8;
 				$YPos -=$line_height;
 			}
@@ -296,28 +296,28 @@ if (isset($_POST['PrintPDF'])){
 			$YPos -=$line_height;
 
 
-			$LeftOvers = $pdf->addTextWrap(20,$YPos,60,$FontSize,$Customers['DebtorNo']);
-			$LeftOvers = $pdf->addTextWrap(80,$YPos,150,$FontSize,$Customers['Name']);
-			$LeftOvers = $pdf->addTextWrap(80,$YPos-10,150,$FontSize,$Customers['Address1']);
-			$LeftOvers = $pdf->addTextWrap(80,$YPos-20,150,$FontSize,$Customers['Address2']);
-			$LeftOvers = $pdf->addTextWrap(80,$YPos-30,150,$FontSize,$Customers['Address3']);
+			$LeftOvers = $pdf->addTextWrap(20,$YPos,60,$FontSize,$Customers['debtorno']);
+			$LeftOvers = $pdf->addTextWrap(80,$YPos,150,$FontSize,$Customers['name']);
+			$LeftOvers = $pdf->addTextWrap(80,$YPos-10,150,$FontSize,$Customers['address1']);
+			$LeftOvers = $pdf->addTextWrap(80,$YPos-20,150,$FontSize,$Customers['address2']);
+			$LeftOvers = $pdf->addTextWrap(80,$YPos-30,150,$FontSize,$Customers['address3']);
 
-			$LeftOvers = $pdf->addTextWrap(230,$YPos,60,$FontSize,$Customers['BranchCode']);
-			$LeftOvers = $pdf->addTextWrap(230,$YPos-10,60,$FontSize, _('Price List') . ': ' . $Customers['SalesType']);
+			$LeftOvers = $pdf->addTextWrap(230,$YPos,60,$FontSize,$Customers['branchcode']);
+			$LeftOvers = $pdf->addTextWrap(230,$YPos-10,60,$FontSize, _('Price List') . ': ' . $Customers['salestype']);
 
 			if ($_POST['Activity']!='All'){
 				$LeftOvers = $pdf->addTextWrap(230,$YPos-20,60,$FontSize,_('Turnover'),'right');
 				$LeftOvers = $pdf->addTextWrap(230,$YPos-30,60,$FontSize,number_format($LocalCurrencyTurnover), 'right');
 			}
 
-			$LeftOvers = $pdf->addTextWrap(290,$YPos,150,$FontSize,$Customers['BrName']);
-			$LeftOvers = $pdf->addTextWrap(290,$YPos-10,150,$FontSize,$Customers['ContactName']);
-			$LeftOvers = $pdf->addTextWrap(290,$YPos-20,150,$FontSize, _('Ph'). ': ' . $Customers['PhoneNo']);
-			$LeftOvers = $pdf->addTextWrap(290,$YPos-30,150,$FontSize, _('Fax').': ' . $Customers['FaxNo']);
-			$LeftOvers = $pdf->addTextWrap(440,$YPos,150,$FontSize,$Customers['BrAddress1']);
-			$LeftOvers = $pdf->addTextWrap(440,$YPos-10,150,$FontSize,$Customers['BrAddress2']);
-			$LeftOvers = $pdf->addTextWrap(440,$YPos-20,150,$FontSize,$Customers['BrAddress3']);
-			$LeftOvers = $pdf->addTextWrap(440,$YPos-30,150,$FontSize,$Customers['Email']);
+			$LeftOvers = $pdf->addTextWrap(290,$YPos,150,$FontSize,$Customers['brname']);
+			$LeftOvers = $pdf->addTextWrap(290,$YPos-10,150,$FontSize,$Customers['contactname']);
+			$LeftOvers = $pdf->addTextWrap(290,$YPos-20,150,$FontSize, _('Ph'). ': ' . $Customers['phoneno']);
+			$LeftOvers = $pdf->addTextWrap(290,$YPos-30,150,$FontSize, _('Fax').': ' . $Customers['faxno']);
+			$LeftOvers = $pdf->addTextWrap(440,$YPos,150,$FontSize,$Customers['braddress1']);
+			$LeftOvers = $pdf->addTextWrap(440,$YPos-10,150,$FontSize,$Customers['braddress2']);
+			$LeftOvers = $pdf->addTextWrap(440,$YPos-20,150,$FontSize,$Customers['braddress3']);
+			$LeftOvers = $pdf->addTextWrap(440,$YPos-30,150,$FontSize,$Customers['email']);
 
 			$pdf->line($Page_Width-$Right_Margin, $YPos-32,$Left_Margin, $YPos-32);
 
@@ -358,20 +358,17 @@ if (isset($_POST['PrintPDF'])){
 	include('includes/session.inc');
 	$title = _('Customer Details Listing');
 	include('includes/header.inc');
-	include('includes/SQL_CommonFunctions.inc');
-
-	$CompanyRecord = ReadInCompanyRecord($db);
 
 	echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . ' METHOD="POST"><CENTER><TABLE>';
 	echo '<TR><TD>' . _('For Sales Areas') . ':</TD><TD><SELECT name=Areas[] multiple>';
 
-	$sql='SELECT AreaCode, AreaDescription FROM Areas';
+	$sql='SELECT areacode, areadescription FROM areas';
 	$AreasResult= DB_query($sql,$db);
 
 	echo '<OPTION SELECTED VALUE="All">' . _('All Areas');
 
 	While ($myrow = DB_fetch_array($AreasResult)){
-		echo '<OPTION VALUE="' . $myrow['AreaCode'] . '">' . $myrow['AreaDescription'];
+		echo '<OPTION VALUE="' . $myrow['areacode'] . '">' . $myrow['areadescription'];
 	}
 	echo '</SELECT></TD></TR>';
 
@@ -379,11 +376,11 @@ if (isset($_POST['PrintPDF'])){
 
 	echo '<OPTION SELECTED VALUE="All">'. _('All sales folk');
 
-	$sql = 'SELECT SalesmanCode, SalesmanName FROM Salesman';
+	$sql = 'SELECT salesmancode, salesmanname FROM salesman';
 	$SalesFolkResult = DB_query($sql,$db);
 
 	While ($myrow = DB_fetch_array($SalesFolkResult)){
-		echo '<OPTION VALUE="' . $myrow['SalesmanCode'] . '">' . $myrow['SalesmanName'];
+		echo '<OPTION VALUE="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'];
 	}
 	echo '</SELECT></TD></TR>';
 
@@ -396,7 +393,7 @@ if (isset($_POST['PrintPDF'])){
 
 	echo '<INPUT TYPE="text" NAME="ActivityAmount" SIZE=8 MAXLENGTH=8></TD></TR>';
 
-	$DefaultActivitySince = Date($DefaultDateFormat, Mktime(0,0,0,Date('m')-6,0,Date('y')));
+	$DefaultActivitySince = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-6,0,Date('y')));
 	echo '<TR><TD>' . _('Activity Since'). ':</TD><TD><INPUT TYPE="text" NAME="ActivitySince" SIZE=10 MAXLENGTH=10
 		VALUE="' . $DefaultActivitySince . '"></TD></TR>';
 

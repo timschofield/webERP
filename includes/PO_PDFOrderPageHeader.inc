@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /*
 	R & OS PHP-PDF class code to set up a new page
 	a new page is implicit on the establishment of a new pdf object so
@@ -36,12 +36,12 @@ $pdf->addText($XPos,$YPos +40, $FontSize, _('Page') . ': ' .$PageNumber);
 /*Now print out the company name and address */
 $XPos = $Left_Margin;
 $YPos -=2*$line_height;
-$pdf->addText($Left_Margin,$YPos, $FontSize, $TaxAuthorityReferenceName . ' ' . $CompanyRecord['GSTNo']);
-$pdf->addText($Left_Margin,$YPos-$line_height, $FontSize, $CompanyName);
-$pdf->addText($Left_Margin,$YPos-(2*$line_height), $FontSize, $CompanyRecord['PostalAddress']);
-$pdf->addText($Left_Margin,$YPos-(3*$line_height), $FontSize, $CompanyRecord['RegOffice1'] . ' ' . $CompanyRecord['RegOffice2']);
-$pdf->addText($Left_Margin,$YPos-(4*$line_height), $FontSize, _('Ph'). ': ' . $CompanyRecord['Telephone'] . ' ' ._('Fax').': ' . $CompanyRecord['Fax'] );
-$pdf->addText($Left_Margin,$YPos-(5*$line_height), $FontSize, _('Email'). ': ' . $CompanyRecord['Email']);
+$pdf->addText($Left_Margin,$YPos, $FontSize, $_SESSION['TaxAuthorityReferenceName'] . ' ' . $_SESSION['CompanyRecord']['gstno']);
+$pdf->addText($Left_Margin,$YPos-$line_height, $FontSize, $_SESSION['CompanyRecord']['coyname']);
+$pdf->addText($Left_Margin,$YPos-(2*$line_height), $FontSize, $_SESSION['CompanyRecord']['postaladdress']);
+$pdf->addText($Left_Margin,$YPos-(3*$line_height), $FontSize, $_SESSION['CompanyRecord']['regoffice1'] . ' ' . $_SESSION['CompanyRecord']['regoffice2']);
+$pdf->addText($Left_Margin,$YPos-(4*$line_height), $FontSize, _('Ph'). ': ' . $_SESSION['CompanyRecord']['telephone'] . ' ' ._('Fax').': ' . $_SESSION['CompanyRecord']['fax'] );
+$pdf->addText($Left_Margin,$YPos-(5*$line_height), $FontSize, _('Email'). ': ' . $_SESSION['CompanyRecord']['email']);
 
 
 /*Now the delivery details */
@@ -49,10 +49,10 @@ $YPos -= 8;
 $XPos = $Page_Width/2 + 25;
 $FontSize=12;
 $pdf->addText($XPos+2,$YPos, $FontSize, _('Deliver To') . ':' );
-$pdf->addText($XPos+2,$YPos-$line_height, $FontSize, $POHeader['DelAdd1']);
-$pdf->addText($XPos+2,$YPos-(2*$line_height), $FontSize, $POHeader['DelAdd2']);
-$pdf->addText($XPos+2,$YPos-(3*$line_height), $FontSize, $POHeader['DelAdd3']);
-$pdf->addText($XPos+2,$YPos-(4*$line_height), $FontSize, $POHeader['DelAdd4']);
+$pdf->addText($XPos+2,$YPos-$line_height, $FontSize, $POHeader['deladd1']);
+$pdf->addText($XPos+2,$YPos-(2*$line_height), $FontSize, $POHeader['deladd2']);
+$pdf->addText($XPos+2,$YPos-(3*$line_height), $FontSize, $POHeader['deladd3']);
+$pdf->addText($XPos+2,$YPos-(4*$line_height), $FontSize, $POHeader['deladd4']);
 
 
 /*draw a nice curved corner box around the delivery to address */
@@ -98,33 +98,33 @@ $YPos -= 20;
 $pdf->addText($XPos+1,$YPos, $FontSize, _('To').': ');
 
 $YPos-=$line_height;
-$pdf->addText($XPos+1,$YPos, $FontSize, $POHeader['SuppName']);
-$pdf->addText($XPos+1,$YPos-$line_height, $FontSize, $POHeader['Address1']);
-$pdf->addText($XPos+1,$YPos-(2*$line_height), $FontSize, $POHeader['Address2']);
-$pdf->addText($XPos+1,$YPos-(3*$line_height), $FontSize, $POHeader['Address3']);
-$pdf->addText($XPos+1,$YPos-(4*$line_height), $FontSize, $POHeader['Address4']);
+$pdf->addText($XPos+1,$YPos, $FontSize, $POHeader['suppname']);
+$pdf->addText($XPos+1,$YPos-$line_height, $FontSize, $POHeader['address1']);
+$pdf->addText($XPos+1,$YPos-(2*$line_height), $FontSize, $POHeader['address2']);
+$pdf->addText($XPos+1,$YPos-(3*$line_height), $FontSize, $POHeader['address3']);
+$pdf->addText($XPos+1,$YPos-(4*$line_height), $FontSize, $POHeader['address4']);
 
 
 $XPos = $Page_Width/2 + 25;
 $pdf->addText($XPos,$YPos, $FontSize, _('Order Date') . ':' );
-$pdf->addText($XPos+70,$YPos, $FontSize, ConvertSQLDate($POHeader['OrdDate']));
+$pdf->addText($XPos+70,$YPos, $FontSize, ConvertSQLDate($POHeader['orddate']));
 
 
 $YPos -= $line_height;
 $pdf->addText($XPos,$YPos, $FontSize, _('Initator').': ');
-$pdf->addText($XPos+70,$YPos, $FontSize, $POHeader['Initiator']);
+$pdf->addText($XPos+70,$YPos, $FontSize, $POHeader['initiator']);
 
 $YPos -= $line_height;
 $pdf->addText($XPos,$YPos, $FontSize, _('Comments') . ':' );
 $YPos -= $line_height;
-$LeftOvers = $pdf->addTextWrap($XPos, $YPos,250,$FontSize,$POHeader['Comments'], 'left');
+$LeftOvers = $pdf->addTextWrap($XPos, $YPos,250,$FontSize,$POHeader['comments'], 'left');
 if (strlen($LeftOvers)>0){
 	$LeftOvers = $pdf->addTextWrap($XPos, $YPos-$line_height,250,$FontSize,$leftOvers, 'left');
 }
 
 $XPos = $Left_Margin;
 $YPos -= ($line_height*2);
-$pdf->addText($Left_Margin,$YPos, $FontSize, _('All amounts stated in').' - ' . $POHeader['CurrCode']);
+$pdf->addText($Left_Margin,$YPos, $FontSize, _('All amounts stated in').' - ' . $POHeader['currcode']);
 
 
 $YPos -= ($line_height*.5);

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 11;
 
@@ -44,14 +44,14 @@ if (isset($_POST['submit'])) {
         if (!isset($_POST['EDIServerPwd'])){
             $_POST['EDIServerPwd']='';
         }
-        $sql = 'UPDATE DebtorsMaster SET EDIInvoices =' . $_POST['EDIInvoices'] . ',
-					EDIOrders =' . $_POST['EDIOrders'] . ",
-					EDIReference='" . $_POST['EDIReference'] . "',
-					EDITransport='" . $_POST['EDITransport'] . "',
-					EDIAddress='" . $_POST['EDIAddress'] . "',
-					EDIServerUser='" . $_POST['EDIServerUser'] . "',
-					EDIServerPwd='" . $_POST['EDIServerPwd'] . "'
-			WHERE DebtorNo = '" . $_SESSION['CustomerID'] . "'";
+        $sql = 'UPDATE debtorsmaster SET ediinvoices =' . $_POST['EDIInvoices'] . ',
+					ediorders =' . $_POST['EDIOrders'] . ",
+					edireference='" . $_POST['EDIReference'] . "',
+					editransport='" . $_POST['EDITransport'] . "',
+					ediaddress='" . $_POST['EDIAddress'] . "',
+					ediserveruser='" . $_POST['EDIServerUser'] . "',
+					ediserverpwd='" . $_POST['EDIServerPwd'] . "'
+			WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
 
         $ErrMsg = _('The customer EDI setup data could not be updated because');
 	$result = DB_query($sql,$db,$ErrMsg);
@@ -65,17 +65,17 @@ if (isset($_POST['submit'])) {
 echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID ."'>";
 echo '<CENTER><TABLE>';
 
-$sql = "SELECT DebtorNo,
-		Name,
-		EDIInvoices,
-		EDIOrders,
-		EDIReference,
-		EDITransport,
-		EDIAddress,
-		EDIServerUser,
-		EDIServerPwd
-	FROM DebtorsMaster
-	WHERE DebtorNo = '" . $_SESSION['CustomerID'] . "'";
+$sql = "SELECT debtorno,
+		name,
+		ediinvoices,
+		ediorders,
+		edireference,
+		editransport,
+		ediaddress,
+		ediserveruser,
+		ediserverpwd
+	FROM debtorsmaster
+	WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
 
 $ErrMsg = _('The customer EDI configuration details could not be retrieved because');
 $result = DB_query($sql, $db,$ErrMsg);
@@ -85,11 +85,11 @@ $myrow = DB_fetch_array($result);
 echo '<TR><TD>'._('Customer Code').':</TD>
 	<TD>' . $_SESSION['CustomerID'] . '</TD></TR>';
 echo '<TR><TD>'._('Customer Name').':</TD>
-	<TD>' . $myrow['Name'] . '</TD></TR>';
+	<TD>' . $myrow['name'] . '</TD></TR>';
 echo '<TR><TD>'._('Enable Sending of EDI Invoices').':</TD>
 	<TD><SELECT name="EDIInvoices">';
 
-if ($myrow['EDIInvoices']==0){
+if ($myrow['ediinvoices']==0){
 
     echo '<OPTION SELECTED VALUE=0>'._('Disabled');
     echo '<OPTION VALUE=1>'._('Enabled');
@@ -103,7 +103,7 @@ echo "</SELECT><A HREF='$rootpath/EDIMessageFormat.php?" . SID . "&MessageType=I
 echo '<TR><TD>'._('Enable Receiving of EDI Orders').":</TD>
 	<TD><SELECT name='EDIOrders'>";
 
-if ($myrow['EDIOrders']==0){
+if ($myrow['ediorders']==0){
 
     echo '<OPTION SELECTED VALUE=0>'._('Disabled');
     echo '<OPTION VALUE=1>'._('Enabled');
@@ -115,12 +115,12 @@ if ($myrow['EDIOrders']==0){
 echo '</SELECT></TD></TR>';
 
 echo '<TR><TD>'._('Customer EDI Reference').":</TD>
-	<TD><input type='Text' name='EDIReference' SIZE=20 MAXLENGTH=20 value='" . $myrow['EDIReference'] . "'></TD></TR>";
+	<TD><input type='Text' name='EDIReference' SIZE=20 MAXLENGTH=20 value='" . $myrow['edireference'] . "'></TD></TR>";
 
 echo '<TR><TD>'._('EDI Communication Method').":</TD>
 	<TD><SELECT name='EDITransport'>";
 
-if ($myrow['EDITransport']=='email'){
+if ($myrow['editransport']=='email'){
     echo "<OPTION SELECTED VALUE='email'>"._('Email Attachments');
     echo "<OPTION VALUE='ftp'>"._('File Transfer Protocol (FTP)');
 } else {
@@ -131,14 +131,14 @@ if ($myrow['EDITransport']=='email'){
 echo '</SELECT></TD></TR>';
 
 echo '<TR><TD>'._('FTP Server or Email Address').":</TD>
-	<TD><input type='Text' name='EDIAddress' SIZE=42 MAXLENGTH=40 value='" . $myrow['EDIAddress'] . "'></TD></TR>";
+	<TD><input type='Text' name='EDIAddress' SIZE=42 MAXLENGTH=40 value='" . $myrow['ediaddress'] . "'></TD></TR>";
 
-if ($myrow['EDITransport']=='ftp'){
+if ($myrow['editransport']=='ftp'){
 
     echo '<TR><TD>'._('FTP Server User Name').":</TD>
-    		<TD><input type='Text' name='EDIServerUser' SIZE=20 MAXLENGTH=20 value=" . $myrow['EDIServerUser'] . "></TD></TR>";
+    		<TD><input type='Text' name='EDIServerUser' SIZE=20 MAXLENGTH=20 value=" . $myrow['ediserveruser'] . "></TD></TR>";
     echo '<TR><TD>'._('FTP Server Password').":</TD>
-    		<TD><input type='Text' name='EDIServerPwd' SIZE=20 MAXLENGTH=20 value='" . $myrow['ServerPwd'] . "'></TD></TR>";
+    		<TD><input type='Text' name='EDIServerPwd' SIZE=20 MAXLENGTH=20 value='" . $myrow['serverpwd'] . "'></TD></TR>";
 }
 
 echo "</TABLE><CENTER><input type='Submit' name='submit' value='"._('Update EDI Configuration')."'></FORM>";

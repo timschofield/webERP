@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 2;
 
@@ -31,10 +31,10 @@ if (!isset($_POST['PageOffset'])) {
 
 // Always show the search facilities
 
-$SQL='SELECT CategoryID,
-		CategoryDescription
-	FROM StockCategory
-	ORDER BY CategoryDescription';
+$SQL='SELECT categoryid,
+		categorydescription
+	FROM stockcategory
+	ORDER BY categorydescription';
 
 $result1 = DB_query($SQL,$db);
 if (DB_num_rows($result1)==0){
@@ -44,7 +44,7 @@ if (DB_num_rows($result1)==0){
 }
 
 ?>
-
+<CENTER>
 <FORM ACTION="<?php echo $_SERVER['PHP_SELF'] . '?' . SID; ?>" METHOD=POST>
 <B><?php echo $msg; ?></B>
 <TABLE>
@@ -61,10 +61,10 @@ if (DB_num_rows($result1)==0){
 		echo '<OPTION VALUE="All">' . _('All');
 	}
 	while ($myrow1 = DB_fetch_array($result1)) {
-		if ($myrow1['CategoryID']==$_POST['StockCat']){
-			echo '<OPTION SELECTED VALUE="' . $myrow1['CategoryID'] . '">' . $myrow1['CategoryDescription'];
+		if ($myrow1['categoryid']==$_POST['StockCat']){
+			echo '<OPTION SELECTED VALUE="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
 		} else {
-			echo '<OPTION VALUE="' . $myrow1['CategoryID'] . '">' . $myrow1['CategoryDescription'];
+			echo '<OPTION VALUE="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
 		}
 	}
 ?>
@@ -102,7 +102,7 @@ if (isset($_POST['StockCode'])) {
 </TD>
 </TR>
 </TABLE>
-<CENTER><INPUT TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Search Now'); ?>"></CENTER>
+<INPUT TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Search Now'); ?>"></CENTER>
 <HR>
 
 
@@ -135,103 +135,113 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		$SearchString = $SearchString. substr($_POST['Keywords'],$i).'%';
 
 		if ($_POST['StockCat'] == 'All'){
-			$SQL = "SELECT StockMaster.StockID,
-					Description,
-					Sum(LocStock.Quantity) AS QOH,
-					Units,
-					MBflag
-				FROM StockMaster,
-					LocStock
-				WHERE StockMaster.StockID=LocStock.StockID
-				AND Description LIKE '$SearchString'
-				GROUP BY StockMaster.StockID,
-				Description
-				ORDER BY StockMaster.StockID";
+			$SQL = "SELECT stockmaster.stockid,
+					stockmaster.description,
+					SUM(locstock.quantity) AS qoh,
+					stockmaster.units,
+					stockmaster.mbflag
+				FROM stockmaster,
+					locstock
+				WHERE stockmaster.stockid=locstock.stockid
+				AND stockmaster.description " . LIKE . " '$SearchString'
+				GROUP BY stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.units,
+					stockmaster.mbflag
+				ORDER BY stockmaster.stockid";
 		} else {
-			$SQL = "SELECT StockMaster.StockID,
-					Description,
-					Sum(LocStock.Quantity) AS QOH,
-					Units,
-					MBflag
-				FROM StockMaster,
-					LocStock
-				WHERE StockMaster.StockID=LocStock.StockID
-				AND Description LIKE '$SearchString'
-				AND CategoryID='" . $_POST['StockCat'] . "'
-				GROUP BY StockMaster.StockID,
-				Description
-				ORDER BY StockMaster.StockID";
+			$SQL = "SELECT stockmaster.stockid,
+					stockmaster.description,
+					SUM(locstock.quantity) AS qoh,
+					stockmaster.units,
+					stockmaster.mbflag
+				FROM stockmaster,
+					locstock
+				WHERE stockmaster.stockid=locstock.stockid
+				AND description " .  LIKE . " '$SearchString'
+				AND categoryid='" . $_POST['StockCat'] . "'
+				GROUP BY stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.units,
+					stockmaster.mbflag
+				ORDER BY stockmaster.stockid";
 		}
 	} elseif (isset($_POST['StockCode'])){
 
 		$_POST['StockCode'] = strtoupper($_POST['StockCode']);
 		if ($_POST['StockCat'] == 'All'){
-			$SQL = "SELECT StockMaster.StockID,
-					Description,
-					MBflag,
-					Sum(LocStock.Quantity) AS QOH,
-					Units
-				FROM StockMaster,
-					LocStock
-				WHERE StockMaster.StockID=LocStock.StockID
-				AND StockMaster.StockID like '%" . $_POST['StockCode'] . "%'
-				GROUP BY StockMaster.StockID,
-				Description
-				ORDER BY StockMaster.StockID";
+			$SQL = "SELECT stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.mbflag,
+					SUM(locstock.quantity) AS qoh,
+					stockmaster.units
+				FROM stockmaster,
+					locstock
+				WHERE stockmaster.stockid=locstock.stockid
+				AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
+				GROUP BY stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.units,
+					stockmaster.mbflag
+				ORDER BY stockmaster.stockid";
 
 		} else {
-			$SQL = "SELECT StockMaster.StockID,
-					Description,
-					MBflag,
-					Sum(LocStock.Quantity) AS QOH,
-					Units
-				FROM StockMaster,
-					LocStock
-				WHERE StockMaster.StockID=LocStock.StockID
-				AND StockMaster.StockID like '%" . $_POST['StockCode'] . "%'
-				AND CategoryID='" . $_POST['StockCat'] . "'
-				GROUP BY StockMaster.StockID,
-					Description
-				ORDER BY StockMaster.StockID";
+			$SQL = "SELECT stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.mbflag,
+					sum(locstock.quantity) as qoh,
+					stockmaster.units
+				FROM stockmaster,
+					locstock
+				WHERE stockmaster.stockid=locstock.stockid
+				AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
+				AND categoryid='" . $_POST['StockCat'] . "'
+				GROUP BY stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.units,
+					stockmaster.mbflag
+				ORDER BY stockmaster.stockid";
 		}
 
 	} elseif (!isset($_POST['StockCode']) AND !isset($_POST['Keywords'])) {
 		if ($_POST['StockCat'] == 'All'){
-			$SQL = "SELECT StockMaster.StockID,
-					Description, MBflag,
-					Sum(LocStock.Quantity) AS QOH,
-					Units
-				FROM StockMaster,
-					LocStock
-				WHERE StockMaster.StockID=LocStock.StockID
-				GROUP BY StockMaster.StockID,
-					Description
-				ORDER BY StockMaster.StockID";
+			$SQL = "SELECT stockmaster.stockid,
+					stockmaster.description, 
+					stockmaster.mbflag,
+					SUM(locstock.quantity) AS qoh,
+					stockmaster.units
+				FROM stockmaster,
+					locstock
+				WHERE stockmaster.stockid=locstock.stockid
+				GROUP BY stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.units,
+					stockmaster.mbflag
+				ORDER BY stockmaster.stockid";
 		} else {
-			$SQL = "SELECT StockMaster.StockID,
-					Description,
-					MBflag,
-					Sum(LocStock.Quantity) AS QOH,
-					Units
-				FROM StockMaster,
-					LocStock
-				WHERE StockMaster.StockID=LocStock.StockID
-				AND CategoryID='" . $_POST['StockCat'] . "'
-				GROUP BY StockMaster.StockID,
-					Description
-				ORDER BY StockMaster.StockID";
+			$SQL = "SELECT stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.mbflag,
+					SUM(locstock.quantity) AS qoh,
+					stockmaster.units
+				FROM stockmaster,
+					locstock
+				WHERE stockmaster.stockid=locstock.stockid
+				AND categoryid='" . $_POST['StockCat'] . "'
+				GROUP BY stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.units,
+					stockmaster.mbflag
+				ORDER BY stockmaster.stockid";
 		}
 	}
 
-	$result = DB_query($SQL,$db);
-
-	if (DB_error_no($db) !=0) {
-		echo '<BR>' . _('No stock items were returned by the SQL because') . ' - ' . DB_error_msg($db);
-		if ($debug==1) {
-			echo '<BR>' . _('The SQL that returned an error was') . ': <BR>' . $SQL;
-		}
-	} elseif (DB_num_rows($result)==0){
-		echo '<BR>' . _('No stock items were returned by this search please re-enter alternative criteria to try again');
+	$ErrMsg = _('No stock items were returned by the SQL because');
+	$Dbgmsg = _('The SQL that returned an error was');
+	$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+	
+	if (DB_num_rows($result)==0){
+		prnMsg(_('No stock items were returned by this search please re-enter alternative criteria to try again'),'info');
 	} elseif (DB_num_rows($result)==1){ /*autoselect it to avoid user hitting another keystroke */
 		$myrow = DB_fetch_row($result);
 		$_POST['Select'] = $myrow[0];
@@ -263,7 +273,7 @@ If (isset($result) AND !isset($_POST['Select']) ) {
   if ($_POST['PageOffset']>$ListPageMax){
   	$_POST['PageOffset'] = $ListPageMax;
   }
-  echo '<br>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+  echo '<CENTER><BR>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 ?>
 
   <select name="PageOffset">
@@ -322,21 +332,21 @@ If (isset($result) AND !isset($_POST['Select']) ) {
 			$k++;
 		}
 
-		if ($myrow["MBflag"]=='D') {
+		if ($myrow['mbflag']=='D') {
 			$qoh = 'N/A';
 		} else {
-			$qoh = number_format($myrow["QOH"],1);
+			$qoh = number_format($myrow["qoh"],1);
 		}
 
 		printf("<td><INPUT TYPE=SUBMIT NAME='Select' VALUE='%s'</td>
-            <td>%s</td>
-            <td ALIGN=RIGHT>%s</td>
-            <td>%s</td>
-            </tr>", 
-            $myrow['StockID'], 
-            $myrow['Description'], 
-            $qoh, 
-            $myrow['Units']);
+            		<td>%s</td>
+            		<td ALIGN=RIGHT>%s</td>
+            		<td>%s</td>
+            		</tr>", 
+            		$myrow['stockid'], 
+            		$myrow['description'], 
+            		$qoh, 
+            		$myrow['units']);
 
 		$j++;
 		If ($j == 12 AND ($RowIndex+1 != $_SESSION['DisplayRecordsMax'])){
@@ -366,7 +376,7 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		$StockID = $_SESSION['SelectedStockItem'];
 	}
 
-	$result = DB_query("SELECT Description, MBflag FROM StockMaster WHERE StockID='" . $StockID . "'",$db);
+	$result = DB_query("SELECT stockmaster.description, stockmaster.mbflag FROM stockmaster WHERE stockid='" . $StockID . "'",$db);
 	$myrow = DB_fetch_row($result);
 
 	$Its_A_Kitset_Assembly_Or_Dummy=False;
@@ -406,7 +416,7 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	if ($Its_A_Kitset_Assembly_Or_Dummy==False){
 		echo '<A HREF="' . $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . '&SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Purchase Orders') . '</A><BR>';
 		echo '<A HREF="' . $rootpath . '/PO_SelectPurchOrder.php?' . SID . '&SelectedStockItem=' . $StockID . '">' . _('Search All Purchase Orders') . '</A><BR>';
-		echo '<A HREF="' . $rootpath . '/' . $part_pics_dir . '/' . $StockID . '.jpg?' . SID . '">' . _('Show Part Picture (if available)') . '</A><BR>';
+		echo '<A HREF="' . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg?' . SID . '">' . _('Show Part Picture (if available)') . '</A><BR>';
 	}
 
 	if ($Its_A_Dummy==False){
@@ -445,7 +455,7 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 // end displaying item options if there is one and only one record
 
 ?>
-
+</CENTER>
 </FORM>
 <script language="JavaScript" type="text/javascript">
     //<![CDATA[
@@ -459,4 +469,3 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 <?php
 include('includes/footer.inc');
 ?>
-

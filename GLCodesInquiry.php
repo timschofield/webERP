@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 8;
 include ('includes/session.inc');
 
@@ -9,12 +9,12 @@ include('includes/header.inc');
 include('includes/DateFunctions.inc');
 
 
-$SQL = 'SELECT Group_,
-		AccountCode ,
-		AccountName
-	FROM ChartMaster INNER JOIN AccountGroups ON ChartMaster.Group_ = AccountGroups.GroupName
-	ORDER BY SequenceInTB,
-		AccountCode';
+$SQL = 'SELECT group_,
+		accountcode ,
+		accountname
+	FROM chartmaster INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname
+	ORDER BY sequenceintb,
+		accountcode';
 
 $ErrMsg = _('No general ledger accounts were returned by the SQL because');
 $AccountsResult = DB_query($SQL,$db,$ErrMsg);
@@ -41,22 +41,22 @@ while ($myrow=DB_fetch_array($AccountsResult)) {
               $k++;
        }
 
-       if ($myrow['Group_']== $ActGrp){
+       if ($myrow['group_']== $ActGrp){
               printf("<td></td>
 	      		<td><FONT SIZE=2>%s</FONT></td>
 			<td><FONT SIZE=2>%s</FONT></td>
 			</tr>",
-			$myrow['AccountCode'],
-			$myrow['AccountName']);
+			$myrow['accountcode'],
+			$myrow['accountname']);
        } else {
-              $ActGrp = $myrow['Group_'];
+              $ActGrp = $myrow['group_'];
               printf("<td><FONT SIZE=2>%s</FONT></td>
 	      		<td><FONT SIZE=2>%s</FONT></td>
 			<td><FONT SIZE=2>%s</FONT></td>
 			</tr>",
-			$myrow['Group_'],
-			$myrow['AccountCode'],
-			$myrow['AccountName']);
+			$myrow['group_'],
+			$myrow['accountcode'],
+			$myrow['accountname']);
        }
        $j++;
        If ($j == 18){

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 /**
 If the User has selected Keyed Entry, show them this special select list...
@@ -9,8 +9,10 @@ it also would not be applicable in a PO and possible other situations...
 **/
 if ($_POST['EntryType'] == 'KEYED'){
         /*Also a multi select box for adding bundles to the dispatch without keying */
-        $sql = "SELECT SerialNo, Quantity FROM StockSerialItems WHERE StockID='" . $StockID . "' AND LocCode ='" .
-		$LocationOut."' AND Quantity > 0";
+        $sql = "SELECT serialno, quantity 
+			FROM stockserialitems 
+			WHERE stockid='" . $StockID . "' AND loccode ='" .
+		$LocationOut."' AND quantity > 0";
 	//echo $sql;
 
 	$ErrMsg = '<BR>'. _('Could not retrieve the items for'). ' ' . $StockID;
@@ -32,16 +34,16 @@ if ($_POST['EntryType'] == 'KEYED'){
 		$ItemsAvailable=0;
                 while ($myrow=DB_fetch_array($Bundles,$db)){
 			if ($LineItem->Serialised==1){
-				if ( !array_key_exists($myrow['SerialNo'], $AllSerials) ){
-	                        	echo '<OPTION VALUE="' . $myrow['SerialNo'] . '">' . $myrow['SerialNo'].'</OPTION>';
+				if ( !array_key_exists($myrow['serialno'], $AllSerials) ){
+	                        	echo '<OPTION VALUE="' . $myrow['serialno'] . '">' . $myrow['serialno'].'</OPTION>';
 					$ItemsAvailable++;
 				}
                         } else {
-                               if ( !array_key_exists($myrow['SerialNo'], $AllSerials)  ||
-					($myrow['Quantity'] - $AllSerials[$myrow['SerialNo']] >= 0) ) {
-					$RecvQty = $myrow['Quantity'] - $AllSerials[$myrow['SerialNo']];
-                                        echo '<OPTION VALUE="' . $myrow['SerialNo'] . '/|/'. $RecvQty .'">' . 
-						$myrow['SerialNo'].' - ' . _('Qty left'). ': ' . $RecvQty . '</OPTION>';
+                               if ( !array_key_exists($myrow['serialno'], $AllSerials)  ||
+					($myrow['quantity'] - $AllSerials[$myrow['serialno']] >= 0) ) {
+					$RecvQty = $myrow['quantity'] - $AllSerials[$myrow['serialno']];
+                                        echo '<OPTION VALUE="' . $myrow['serialno'] . '/|/'. $RecvQty .'">' . 
+						$myrow['serialno'].' - ' . _('Qty left'). ': ' . $RecvQty . '</OPTION>';
 					$ItemsAvailable += $RecvQty;
                                 }
 			}

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /*PDF page header for aged analysis reports */
 $PageNumber++;
 if ($PageNumber>1){
@@ -9,7 +9,7 @@ if ($PageNumber>1){
 $FontSize=8;
 $YPos= $Page_Height-$Top_Margin;
 
-$pdf->addText($Left_Margin, $YPos,$FontSize, $CompanyName);
+$pdf->addText($Left_Margin, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
 
 $YPos -=$line_height;
 
@@ -41,8 +41,8 @@ $LeftOvers = $pdf->addTextWrap($Xpos,$YPos,220 - $Left_Margin,$FontSize,_('Custo
 $LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,_('Balance'),'centre');
 $LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,_('Current'),'centre');
 $LeftOvers = $pdf->addTextWrap(340,$YPos,60,$FontSize,_('Due Now'),'centre');
-$LeftOvers = $pdf->addTextWrap(400,$YPos,60,$FontSize,'> ' . $PastDueDays1 . ' ' . _('Days Over'),'centre');
-$LeftOvers = $pdf->addTextWrap(460,$YPos,60,$FontSize,'> ' . $PastDueDays2 . ' ' . _('Days Over'),'centre');
+$LeftOvers = $pdf->addTextWrap(400,$YPos,60,$FontSize,'> ' . $_SESSION['PastDueDays1'] . ' ' . _('Days Over'),'centre');
+$LeftOvers = $pdf->addTextWrap(460,$YPos,60,$FontSize,'> ' . $_SESSION['PastDueDays2'] . ' ' . _('Days Over'),'centre');
 
 $YPos =$YPos - (2*$line_height);
 

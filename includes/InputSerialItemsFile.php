@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -50,7 +50,6 @@ foreach ($LineItem->SerialItems as $Bundle){
 
 	$TotalQuantity += $Bundle->BundleQty;
 }
-
 
 
 /*Display the totals and rule off before allowing new entries */

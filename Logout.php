@@ -1,13 +1,13 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $PageSecurity =1;
 
-include("includes/session.inc");
+include('includes/session.inc');
 
 ?>
 <html>
 <head>
-    <title><?php echo $CompanyName;?> - <?php echo _('Log Off'); ?></title>
+    <title><?php echo $_SESSION['CompanyRecord']['coyname'];?> - <?php echo _('Log Off'); ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
     <link rel="stylesheet" href="css/<?php echo $theme;?>/login.css" type="text/css" />
 </head>
@@ -40,7 +40,7 @@ include("includes/session.inc");
 									<tr>
 										<td align="center" class="loginText">
 											<br /><br /><?php echo _('Thank you for using webERP'); ?><br /><br />
-				<?php echo "$CompanyName";?>
+				<?php echo $_SESSION['CompanyRecord']['coyname'];?>
 											<br />
 											<a href=" <?php echo $rootpath;?>/index.php? SID;?>"><b><?php echo _('Click here to Login Again'); ?></b></a>
 										</td>

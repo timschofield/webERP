@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 3;
 include('includes/session.inc');
@@ -36,9 +36,9 @@ if (isset($_POST['submit'])) {
 		/*SelectedReason could also exist if submit had not been clicked this code would not run in this case cos submit is false of course	see the delete code below*/
 
 		if ($_POST['DisallowInvoices']=='on'){
-			$sql = "UPDATE HoldReasons SET ReasonDescription='" . $_POST['ReasonDescription'] . "', DissallowInvoices=1 WHERE ReasonCode = $SelectedReason";
+			$sql = "UPDATE holdreasons SET reasondescription='" . $_POST['ReasonDescription'] . "', dissallowinvoices=1 WHERE reasoncode = $SelectedReason";
 		} else {
-			$sql = "UPDATE HoldReasons SET ReasonDescription='" . $_POST['ReasonDescription'] . "', DissallowInvoices=0 WHERE ReasonCode = $SelectedReason";
+			$sql = "UPDATE holdreasons SET reasondescription='" . $_POST['ReasonDescription'] . "', dissallowinvoices=0 WHERE reasoncode = $SelectedReason";
 		}
 
 		$msg = _('The credit status record has been updated');
@@ -49,9 +49,9 @@ if (isset($_POST['submit'])) {
 
 		if ($_POST['DisallowInvoices']=='on'){
 
-			$sql = 'INSERT INTO HoldReasons (ReasonCode, ReasonDescription, DissallowInvoices) VALUES (' . $_POST['ReasonCode'] . ", '" . $_POST['ReasonDescription'] . "', 1)";
+			$sql = 'INSERT INTO holdreasons (reasoncode, reasondescription, dissallowinvoices) VALUES (' . $_POST['ReasonCode'] . ", '" . $_POST['ReasonDescription'] . "', 1)";
 		} else {
-			$sql = 'INSERT INTO HoldReasons (ReasonCode, ReasonDescription, DissallowInvoices) VALUES (' . $_POST['ReasonCode'] . ", '" . $_POST['ReasonDescription'] . "', 0)";
+			$sql = 'INSERT INTO holdreasons (reasoncode, reasondescription, dissallowinvoices) VALUES (' . $_POST['ReasonCode'] . ", '" . $_POST['ReasonDescription'] . "', 0)";
 		}
 
 		$msg = _('A new credit status record has been inserted');
@@ -66,7 +66,10 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN DebtorsMaster
 
-	$sql= "SELECT COUNT(*) FROM DebtorsMaster WHERE DebtorsMaster.HoldReason=$SelectedReason";
+	$sql= "SELECT COUNT(*) 
+			FROM debtorsmaster 
+			WHERE debtorsmaster.holdreason=$SelectedReason";
+			
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0] > 0) {
@@ -75,7 +78,7 @@ if (isset($_POST['submit'])) {
 	}  else {
 		//only delete if used in neither customer or supplier accounts
 
-		$sql="DELETE FROM HoldReasons WHERE ReasonCode=$SelectedReason";
+		$sql="DELETE FROM holdreasons WHERE reasoncode=$SelectedReason";
 		$result = DB_query($sql,$db);
 		prnMsg(_('This credit status code has been deleted'),'success');
 	}
@@ -92,7 +95,7 @@ then none of the above are true and the list of status codes will be displayed w
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = 'SELECT ReasonCode, ReasonDescription, DissallowInvoices FROM HoldReasons';
+	$sql = 'SELECT reasoncode, reasondescription, dissallowinvoices FROM holdreasons';
 	$result = DB_query($sql, $db);
 
 	echo '<CENTER><table border=1>';
@@ -147,18 +150,18 @@ if (!isset($_GET['delete'])) {
 	if (isset($SelectedReason)) {
 		//editing an existing status code
 
-		$sql = "SELECT ReasonCode,
-				ReasonDescription,
-				DissallowInvoices
-			FROM HoldReasons
-			WHERE ReasonCode='$SelectedReason'";
+		$sql = "SELECT reasoncode,
+				reasondescription,
+				dissallowinvoices
+			FROM holdreasons
+			WHERE reasoncode='$SelectedReason'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
 
-		$_POST['ReasonCode'] = $myrow['ReasonCode'];
-		$_POST['ReasonDescription']  = $myrow['ReasonDescription'];
-		$_POST['DisallowInvoices']  = $myrow['DissallowInvoices'];
+		$_POST['ReasonCode'] = $myrow['reasoncode'];
+		$_POST['ReasonDescription']  = $myrow['reasondescription'];
+		$_POST['DisallowInvoices']  = $myrow['dissallowinvoices'];
 
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedReason' VALUE='" . $SelectedReason . "'>";
 		echo "<INPUT TYPE=HIDDEN NAME='ReasonCode' VALUE='" . $_POST['ReasonCode'] . "'>";

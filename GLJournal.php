@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 include('includes/DefineJournalClass.php');
 
 $PageSecurity = 10;
@@ -21,7 +21,7 @@ if (!isset($_SESSION['JournalDetail'])){
 	Journals cannot be entered against bank accounts GL postings involving bank accounts must be done using
 	a receipt or a payment transaction to ensure a bank trans is available for matching off vs statements */
 
-	$SQL = 'SELECT AccountCode FROM BankAccounts';
+	$SQL = 'SELECT accountcode FROM bankaccounts';
 	$result = DB_query($SQL,$db);
 	$i=0;
 	while ($Act = DB_fetch_row($result)){
@@ -34,7 +34,7 @@ if (isset($_POST['JournalProcessDate'])){
 	$_SESSION['JournalDetail']->JnlDate=$_POST['JournalProcessDate'];
 
 	if (!Is_Date($_POST['JournalProcessDate'])){
-		prnMsg(_('The date entered was not valid please enter the date to process the journal in the format'). $DefaultDateFormat,'warn');
+		prnMsg(_('The date entered was not valid please enter the date to process the journal in the format'). $_SESSION['DefaultDateFormat'],'warn');
 		$_POST['CommitBatch']='Do not do it the date is wrong';
 	}
 }
@@ -59,13 +59,13 @@ if ($_POST['CommitBatch']==_('Accept and Process Journal')){
 	$TransNo = GetNextTransNo( 0, $db);
 
 	foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
-		$SQL = 'INSERT INTO GLTrans (Type,
-						TypeNo,
-						TranDate,
-						PeriodNo,
-						Account,
-						Narrative,
-						Amount) ';
+		$SQL = 'INSERT INTO gltrans (type,
+						typeno,
+						trandate,
+						periodno,
+						account,
+						narrative,
+						amount) ';
 		$SQL= $SQL . 'VALUES (0,
 					' . $TransNo . ",
 					'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
@@ -78,13 +78,13 @@ if ($_POST['CommitBatch']==_('Accept and Process Journal')){
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 		if ($_POST['JournalType']==_('Reversing')){
-			$SQL = 'INSERT INTO GLTrans (Type,
-							TypeNo,
-							TranDate,
-							PeriodNo,
-							Account,
-							Narrative,
-							Amount) ';
+			$SQL = 'INSERT INTO gltrans (type,
+							typeno,
+							trandate,
+							periodno,
+							account,
+							narrative,
+							amount) ';
 			$SQL= $SQL . 'VALUES (0,
 						' . $TransNo . ",
 						'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
@@ -112,7 +112,7 @@ if ($_POST['CommitBatch']==_('Accept and Process Journal')){
 	unset($_SESSION['JournalDetail']);
 
 	/*Set up a newy in case user wishes to enter another */
-	echo "<BR><A HREF='" . $_SERVER['PHP_SELF'] . '?' . SID . "NewJournal=Yes'>"._('Enter Another General Ledger Journal').'</A>';
+	echo "<BR><A HREF='" . $_SERVER['PHP_SELF'] . '?' . SID . "&NewJournal=Yes'>"._('Enter Another General Ledger Journal').'</A>';
 	/*And post the journal too */
 	include ('includes/GLPostings.inc');
 	exit;
@@ -129,14 +129,14 @@ if ($_POST['CommitBatch']==_('Accept and Process Journal')){
 	if (in_array($_POST['GLManualCode'], $_SESSION['JournalDetail']->BankAccounts)) {
 		prnMsg(_('GL Journals involving a bank account cannot be entered') . '. ' . _('Bank account general ledger entries must be entered by either a bank account receipt or a bank account payment'),'info');
 	} else {
-		$SQL = 'SELECT AccountName FROM ChartMaster WHERE AccountCode=' . $_POST['GLManualCode'];
+		$SQL = 'SELECT accountname FROM chartmaster WHERE accountcode=' . $_POST['GLManualCode'];
 		$Result=DB_query($SQL,$db);
 		if (DB_num_rows($Result)==0){
 			prnMsg(_('The manual GL code entered does not exist in the database') . ' - ' . _('so this GL analysis item could not be added'),'warn');
 			unset($_POST['GLManualCode']);
 		} else {
 			$myrow = DB_fetch_array($Result);
-			$_SESSION['JournalDetail']->add_to_glanalysis($_POST['GLAmount'], $_POST['GLNarrative'], $_POST['GLManualCode'], $myrow['AccountName']);
+			$_SESSION['JournalDetail']->add_to_glanalysis($_POST['GLAmount'], $_POST['GLNarrative'], $_POST['GLManualCode'], $myrow['accountname']);
 		}
 	}
    } else {
@@ -144,10 +144,10 @@ if ($_POST['CommitBatch']==_('Accept and Process Journal')){
 		prnMsg(_('GL Journals involving a bank account cannot be entered') . '. ' . _('Bank account general ledger entries must be entered by either a bank account receipt or a bank account payment'),'warn');
 	} else {
 
-		$SQL = 'SELECT AccountName FROM ChartMaster WHERE AccountCode=' . $_POST['GLCode'];
+		$SQL = 'SELECT accountname FROM chartmaster WHERE accountcode=' . $_POST['GLCode'];
 		$Result=DB_query($SQL,$db);
 		$myrow=DB_fetch_array($Result);
-   		$_SESSION['JournalDetail']->add_to_glanalysis($_POST['GLAmount'], $_POST['GLNarrative'], $_POST['GLCode'], $myrow['AccountName']);
+   		$_SESSION['JournalDetail']->add_to_glanalysis($_POST['GLAmount'], $_POST['GLNarrative'], $_POST['GLCode'], $myrow['accountname']);
 	}
    }
 
@@ -164,7 +164,7 @@ if (isset($Cancel)){
 // set up the form whatever
 /*
 if (!isset($_SESSION['JournalDetail']->JnlDate)){
-	 $_POST['JournalProcessDate']= Date($DefaultDateFormat);
+	 $_POST['JournalProcessDate']= Date($_SESSION['DefaultDateFormat']);
 	 $_SESSION['JournalDetail']->JnlDate = $_POST['JournalProcessDate'];
 }
 */
@@ -177,7 +177,7 @@ echo '<TR><TD VALIGN=TOP WIDTH=30%><TABLE>'; // A new table in the first column 
 
 if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 	// Default the date to the last day of the previous month
-	$_SESSION['JournalDetail']->JnlDate = Date($DefaultDateFormat,mktime(0,0,0,date('m'),0,date('Y')));
+	$_SESSION['JournalDetail']->JnlDate = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m'),0,date('Y')));
 }
 
 echo '<TR><TD>'._('Date to Process Journal').":</TD>
@@ -208,17 +208,17 @@ echo '<FONT SIZE=3 COLOR=BLUE>' . _('Journal Line Entry') . '</FONT><TABLE>';
 echo '<TR><TD>' . _('Enter GL Account Manually') . ":</TD>
 	<TD><INPUT TYPE=Text Name='GLManualCode' Maxlength=12 SIZE=12 VALUE=" . $_POST['GLManualCode'] . '></TD>';
 echo '<TD>'. _('OR') . ' ' . _('Select GL Account').  ":</TD><TD><SELECT name='GLCode'>";
-$SQL = 'SELECT AccountCode, AccountName FROM ChartMaster ORDER BY AccountCode';
+$SQL = 'SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode';
 $result=DB_query($SQL,$db);
 if (DB_num_rows($result)==0){
 	echo '</SELECT></TD></TR>';
 	prnMsg(_('No General ledger accounts have been set up yet') . ' - ' . _('payments cannot be analysed against GL accounts until the GL accounts are set up'),'warn');
 } else {
 	while ($myrow=DB_fetch_array($result)){
-		if ($_POST['GLCode']==$myrow['AccountCode']){
-			echo '<OPTION SELECTED value=' . $myrow['AccountCode'] . '>' . $myrow['AccountCode'] . ' - ' . $myrow['AccountName'];
+		if ($_POST['GLCode']==$myrow['accountcode']){
+			echo '<OPTION SELECTED value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' - ' . $myrow['accountname'];
 		} else {
-			echo '<OPTION value=' . $myrow['AccountCode'] . '>' . $myrow['AccountCode'] . ' - ' . $myrow['AccountName'];
+			echo '<OPTION value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' - ' . $myrow['accountname'];
 		}
 	}
 	echo '</SELECT></TD></TR>';

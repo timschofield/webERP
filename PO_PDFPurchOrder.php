@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -52,27 +52,27 @@ if (isset($OrderNo) && $OrderNo != "" && $OrderNo > 0){
 	$ErrMsg = _('There was a problem retrieving the purchase order header details for Order Number'). ' ' . $OrderNo .
 			' ' . _('from the database');
 	$sql = "SELECT
-			PurchOrders.SupplierNo,
-			Suppliers.SuppName,
-			Suppliers.Address1,
-			Suppliers.Address2,
-			Suppliers.Address3,
-			Suppliers.Address4,
-			PurchOrders.Comments,
-			PurchOrders.OrdDate,
-			PurchOrders.Rate,
-			PurchOrders.DatePrinted,
-			PurchOrders.DelAdd1,
-			PurchOrders.DelAdd2,
-			PurchOrders.DelAdd3,
-			PurchOrders.DelAdd4,
-			PurchOrders.AllowPrint,
-			PurchOrders.RequisitionNo,
-			PurchOrders.Initiator,
-			Suppliers.CurrCode
-		FROM PurchOrders INNER JOIN Suppliers
-			ON PurchOrders.SupplierNo = Suppliers.SupplierID
-		WHERE PurchOrders.OrderNo = " . $OrderNo;
+			purchorders.supplierno,
+			suppliers.suppname,
+			suppliers.address1,
+			suppliers.address2,
+			suppliers.address3,
+			suppliers.address4,
+			purchorders.comments,
+			purchorders.orddate,
+			purchorders.rate,
+			purchorders.dateprinted,
+			purchorders.deladd1,
+			purchorders.deladd2,
+			purchorders.deladd3,
+			purchorders.deladd4,
+			purchorders.allowprint,
+			purchorders.requisitionno,
+			purchorders.initiator,
+			suppliers.currcode
+		FROM purchorders INNER JOIN suppliers
+			ON purchorders.supplierno = suppliers.supplierid
+		WHERE purchorders.orderno = " . $OrderNo;
 	$result=DB_query($sql,$db, $ErrMsg);
 
 	if (DB_num_rows($result)==0){ /*There is ony one order header returned */
@@ -93,13 +93,13 @@ if (isset($OrderNo) && $OrderNo != "" && $OrderNo > 0){
 
 	   $POHeader = DB_fetch_array($result);
 	   if ($ViewingOnly==0) {
-		   if ($POHeader['AllowPrint']==0){
+		   if ($POHeader['allowprint']==0){
 			  $title = _('Purchase Order Already Printed');
 			  include('includes/header.inc');
 			  echo '<P>';
 			  prnMsg( _('Purchase order number').' ' . $OrderNo . ' '.
 				_('has previously been printed') . '. ' . _('It was printed on'). ' ' .
-				ConvertSQLDate($POHeader['DatePrinted']) . '<BR>'.
+				ConvertSQLDate($POHeader['dateprinted']) . '<BR>'.
 				_('To re-print the order it must be modified to allow a reprint'). '<BR>'.
 				_('This check is there to ensure that duplicate purchase orders are not sent to the supplier	resulting in several deliveries of the same supplies'), 'warn');
            echo '<BR><table class="table_index">
@@ -128,12 +128,6 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 	$pdf->addinfo('Title', _('Purchase Order') );
 	$pdf->addinfo('Subject', _('Purchase Order Number').' ' . $_GET['OrderNo']);
 
-	$CompanyRecord = ReadInCompanyRecord ($db);
-	if ($CompanyRecord==0){
-	/*CompanyRecord will be 0 if the company information could not be retrieved */
-	     exit;
-	}
-
 	$line_height=16;
 	   /* Then there's an order to print and its not been printed already (or its been flagged for reprinting)
 	   Now ... Has it got any line items */
@@ -141,16 +135,16 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 	   $PageNumber = 1;
 	   $ErrMsg = _('There was a problem retrieving the line details for order number') . ' ' . $OrderNo . ' ' .
 			_('from the database');
-	   $sql = "SELECT ItemCode,
-	   			DeliveryDate,
-				ItemDescription,
-				UnitPrice,
-				Units,
-				QuantityOrd,
-				DecimalPlaces
-			FROM PurchOrderDetails LEFT JOIN StockMaster
-				ON PurchOrderDetails.ItemCode=StockMaster.StockID
-			WHERE OrderNo =" . $OrderNo;
+	   $sql = "SELECT itemcode,
+	   			deliverydate,
+				itemdescription,
+				unitprice,
+				units,
+				quantityord,
+				decimalplaces
+			FROM purchorderdetails LEFT JOIN stockmaster
+				ON purchorderdetails.itemcode=stockmaster.stockid
+			WHERE orderno =" . $OrderNo;
 	   $result=DB_query($sql,$db);
 
 	   if (DB_num_rows($result)>0){
@@ -164,8 +158,10 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 
 		while ($POLine=DB_fetch_array($result)){
 
-			$sql = "SELECT SupplierDescription FROM PurchData WHERE StockID='" .
-$POLine['ItemCode'] . "' AND SupplierNo ='" . $POHeader['SupplierNo'] . "'";
+			$sql = "SELECT supplierdescription 
+				FROM purchdata 
+				WHERE stockid='" . $POLine['itemcode'] . "' 
+				AND supplierno ='" . $POHeader['supplierno'] . "'";
 			$SuppDescRslt = DB_query($sql,$db);
 	
 			$ItemDescription='';
@@ -179,19 +175,19 @@ $POLine['ItemCode'] . "' AND SupplierNo ='" . $POHeader['SupplierNo'] . "'";
 				}
 			}
 			if (strlen($ItemDescription)<2){
-				$ItemDescription = $POLine['ItemDescription'];
+				$ItemDescription = $POLine['itemdescription'];
 			}
 
-			$DisplayQty = number_format($POLine['QuantityOrd'],$POLine['DecimalPlaces']);
-			$DisplayPrice = number_format($POLine['UnitPrice'],2);
-			$DisplayDelDate = ConvertSQLDate($POLine['DeliveryDate'],2);
-			$DisplayLineTotal = number_format($POLine['UnitPrice']*$POLine['QuantityOrd'],2);
+			$DisplayQty = number_format($POLine['quantityord'],$POLine['decimalplaces']);
+			$DisplayPrice = number_format($POLine['unitprice'],2);
+			$DisplayDelDate = ConvertSQLDate($POLine['deliverydate'],2);
+			$DisplayLineTotal = number_format($POLine['unitprice']*$POLine['quantityord'],2);
 
-			$OrderTotal += ($POLine['UnitPrice']*$POLine['QuantityOrd']);
+			$OrderTotal += ($POLine['unitprice']*$POLine['quantityord']);
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos,64,$FontSize,$POLine['ItemCode'], 'left');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos,64,$FontSize,$POLine['itemcode'], 'left');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64+300,$YPos,85,$FontSize,$DisplayQty, 'right');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64+300+85+3,$YPos,37,$FontSize,$POLine['Units'], 'left');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64+300+85+3,$YPos,37,$FontSize,$POLine['units'], 'left');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64+300+85+3+37,$YPos,60,$FontSize,$DisplayDelDate, 'left');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64+300+85+40+60,$YPos,85,$FontSize,$DisplayPrice, 'right');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64+300+85+40+60+85,$YPos,85,$FontSize,$DisplayLineTotal, 'right');
@@ -220,7 +216,7 @@ $POLine['ItemCode'] . "' AND SupplierNo ='" . $POHeader['SupplierNo'] . "'";
 
 		$DisplayOrderTotal = number_format($OrderTotal,2);
 		$YPos = $Bottom_Margin + $line_height;
-		$pdf->addText(560,$YPos, 14, _('Order Total'). ' ' . $POHeader['CurrCode']);
+		$pdf->addText(560,$YPos, 14, _('Order Total'). ' ' . $POHeader['currcode']);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64+300+85+40+60+75,$YPos,95,14,$DisplayOrderTotal, 'right');
 
 	} /*end if there are order details to show on the order*/
@@ -244,18 +240,18 @@ $POLine['ItemCode'] . "' AND SupplierNo ='" . $POHeader['SupplierNo'] . "'";
     } else { /* must be MakingPDF to email it */
 
     	$pdfcode = $pdf->output();
-	$fp = fopen( $reports_dir . '/PurchOrder.pdf','wb');
+	$fp = fopen( $_SESSION['reports_dir'] . '/PurchOrder.pdf','wb');
 	fwrite ($fp, $pdfcode);
 	fclose ($fp);
 
 	include('includes/htmlMimeMail.php');
 
 	$mail = new htmlMimeMail();
-	$attachment = $mail->getFile($reports_dir . '/PurchOrder.pdf');
+	$attachment = $mail->getFile($_SESSION['reports_dir'] . '/PurchOrder.pdf');
 	$mail->setText( _('Please find herewith our purchase order number').' ' . $OrderNo);
 	$mail->setSubject( _('Purchase Order Number').' ' . $OrderNo);
 	$mail->addAttachment($attachment, 'PurchOrder.pdf', 'application/pdf');
-	$mail->setFrom("$CompanyName <'" . $CompanyRecord['Email'] ."'>");
+	$mail->setFrom("$_SESSION['CompanyRecord']['coyname'] <'" . $_SESSION['CompanyRecord']['email'] ."'>");
 	$result = $mail->send(array($_POST['EmailTo']));
 	if ($result==1){
 		$failed = false;
@@ -270,7 +266,10 @@ $POLine['ItemCode'] . "' AND SupplierNo ='" . $POHeader['SupplierNo'] . "'";
     }
 
     if ($ViewingOnly==0 && !$failed) {
-	$sql = "UPDATE PurchOrders SET AllowPrint=0, DatePrinted='" . Date('Y-m-d') . "' WHERE PurchOrders.OrderNo=" .$OrderNo;
+	$sql = "UPDATE purchorders 
+			SET allowprint=0, 
+				dateprinted='" . Date('Y-m-d') . "' 
+			WHERE purchorders.orderno=" .$OrderNo;
 	$result = DB_query($sql,$db);
     }
 
@@ -303,21 +302,21 @@ $POLine['ItemCode'] . "' AND SupplierNo ='" . $POHeader['SupplierNo'] . "'";
 
 	if ($_POST['PrintOrEmail']=='Email'){
 		$ErrMsg = _('There was a problem retrieving the contact details for the supplier');
-		$SQL = "SELECT Contact,
-				Email
-			FROM SupplierContacts INNER JOIN PurchOrders
-			ON SupplierContacts.SupplierID=PurchOrders.SupplierNo
-			WHERE PurchOrders.OrderNo=$OrderNo";
+		$SQL = "SELECT suppliercontacts.contact,
+				suppliercontacts.email
+			FROM suppliercontacts INNER JOIN purchorders
+			ON suppliercontacts.supplierid=purchorders.supplierno
+			WHERE purchorders.orderno=$OrderNo";
 		$ContactsResult=DB_query($SQL,$db, $ErrMsg);
 
 		if (DB_num_rows($ContactsResult)>0){
 			echo '<TR><TD>'. _('Email to') .':</TD><TD><SELECT NAME="EmailTo">';
 			while ($ContactDetails = DB_fetch_array($ContactsResult)){
-				if (strlen($ContactDetails['Email'])>2 AND strpos($ContactDetails['Email'],'@')>0){
-					if ($_POST['EmailTo']==$ContactDetails['Email']){
-						echo '<OPTION SELECTED VALUE="' . $ContactDetails['Email'] . '">' . $ContactDetails['Contact'] . ' - ' . $ContactDetails['Email'];
+				if (strlen($ContactDetails['email'])>2 AND strpos($ContactDetails['email'],'@')>0){
+					if ($_POST['EmailTo']==$ContactDetails['email']){
+						echo '<OPTION SELECTED VALUE="' . $ContactDetails['email'] . '">' . $ContactDetails['Contact'] . ' - ' . $ContactDetails['email'];
 					} else {
-						echo '<OPTION VALUE="' . $ContactDetails['Email'] . '">' . $ContactDetails['Contact'] . ' - ' . $ContactDetails['Email'];
+						echo '<OPTION VALUE="' . $ContactDetails['email'] . '">' . $ContactDetails['contact'] . ' - ' . $ContactDetails['email'];
 					}
 				}
 			}

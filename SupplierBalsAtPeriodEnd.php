@@ -2,7 +2,7 @@
 include('includes/DateFunctions.inc');
 $PageSecurity = 2;
 
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 If (isset($_POST['PrintPDF']) AND isset($_POST['FromCriteria']) AND strlen($_POST['FromCriteria'])>=1 AND isset($_POST['ToCriteria']) AND
 strlen($_POST['ToCriteria'])>=1){
@@ -22,25 +22,27 @@ strlen($_POST['ToCriteria'])>=1){
 
       /*Now figure out the aged analysis for the Supplier range under review */
 
-	$SQL = "SELECT Suppliers.SupplierID,
-			Suppliers.SuppName,
-  			Currencies.Currency,
-			Sum((SuppTrans.OvAmount + SuppTrans.OvGST - SuppTrans.Alloc)/SuppTrans.Rate) AS Balance,
-			Sum(SuppTrans.OvAmount + SuppTrans.OvGST - SuppTrans.Alloc) AS FXBalance,
-			Sum(CASE WHEN SuppTrans.TranDate > '" . $_POST['PeriodEnd'] . "' THEN
-	(SuppTrans.OvAmount + SuppTrans.OvGST)/SuppTrans.Rate ELSE 0 END)
-	 AS AfterDateTrans,
-			Sum(CASE WHEN SuppTrans.TranDate > '" . $_POST['PeriodEnd'] . "' THEN
-	SuppTrans.OvAmount + SuppTrans.OvGST ELSE 0 END
-	) AS FXAfterDateTrans
-	FROM Suppliers,
-		Currencies,
-		SuppTrans
-	WHERE Suppliers.CurrCode = Currencies.CurrAbrev
-		AND Suppliers.SupplierID = SuppTrans.SupplierNo
-		AND Suppliers.SupplierID >= '" . $_POST['FromCriteria'] . "'
-		AND Suppliers.SupplierID <= '" . $_POST['ToCriteria'] . "'
-	GROUP BY Suppliers.SupplierID, Suppliers.SuppName, Currencies.Currency";
+	$SQL = "SELECT suppliers.supplierid,
+			suppliers.suppname,
+  			currencies.currency,
+			SUM((supptrans.ovamount + suppTrans.ovgst - supptrans.alloc)/supptrans.rate) AS balance,
+			SUM(supptrans.ovmount + suppTrans.ovgst - supptrans.alloc) AS fxbalance,
+			SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
+	(supptrans.ovamount + supptrans.ovgst)/supptrans.rate ELSE 0 END)
+	 AS afterdatetrans,
+			Sum(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
+	supptrans.ovamount + supptrans.ovgst ELSE 0 END
+	) AS fxafterdatetrans
+	FROM suppliers,
+		currencies,
+		supptrans
+	WHERE suppliers.currcode = currencies.currabrev
+		AND suppliers.supplierid = supptrans.supplierno
+		AND suppliers.supplierid >= '" . $_POST['FromCriteria'] . "'
+		AND suppliers.supplierid <= '" . $_POST['ToCriteria'] . "'
+	GROUP BY suppliers.supplierid, 
+		suppliers.suppname, 
+		currencies.currency";
 
 	$SupplierResult = DB_query($SQL,$db);
 
@@ -112,11 +114,7 @@ strlen($_POST['ToCriteria'])>=1){
 	include('includes/session.inc');
 	$title=_('Creditor Balances At A Period End');
 	include('includes/header.inc');
-	include('includes/SQL_CommonFunctions.inc');
-
-	$CompanyRecord = ReadInCompanyRecord($db);
-
-
+	
 	if (strlen($_POST['FromCriteria'])<1 || strlen($_POST['ToCriteria'])<1) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
@@ -131,14 +129,14 @@ strlen($_POST['ToCriteria'])>=1){
 		echo '<TR><TD>' . _('Balances As At') . ":</TD>
 			<TD><SELECT Name='PeriodEnd'>";
 
-		$sql = 'SELECT PeriodNo, LastDate_In_Period FROM Periods';
+		$sql = 'SELECT periodno, lastdate_in_period FROM periods';
 
 		$ErrMsg = _('Could not retrieve period data because');
 		$Periods = DB_query($sql,$db,$ErrMsg);
 
 		while ($myrow = DB_fetch_array($Periods,$db)){
 
-			echo '<OPTION VALUE=' . $myrow['LastDate_In_Period'] . '>' . MonthAndYearFromSQLDate($myrow['LastDate_In_Period']);
+			echo '<OPTION VALUE=' . $myrow['lastdate_in_period'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 
 		}
 	}

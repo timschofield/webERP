@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity =1;
 
@@ -25,20 +25,20 @@ $pdf->addinfo('Subject', _('Inventory Location Transfer BOL') . ' # ' . $_GET['T
 
 $ErrMsg = _('An error occurred retrieving the items on the transfer'). '.' . '<P>'. _('This page must be called with a location transfer reference number').'.';
 $DbgMsg = _('The SQL that failed while retrieving the items on the transfer was');
-$sql = "SELECT LocTransfers.Reference,
-			   LocTransfers.StockID,
-			   StockMaster.Description,
-			   LocTransfers.ShipQty,
-			   LocTransfers.ShipDate,
-			   LocTransfers.ShipLoc,
-			   Locations.LocationName AS ShipLocName,
-			   LocTransfers.RecLoc,
-			   LocationsRec.LocationName AS RecLocName
-			   FROM LocTransfers
-			   INNER JOIN StockMaster ON LocTransfers.StockID=StockMaster.StockID
-			   INNER JOIN Locations ON LocTransfers.ShipLoc=Locations.LocCode
-			   INNER JOIN Locations AS LocationsRec ON LocTransfers.RecLoc = LocationsRec.LocCode
-			   WHERE LocTransfers.Reference=" . $_GET['TransferNo'];
+$sql = "SELECT loctransfers.reference,
+			   loctransfers.stockid,
+			   stockmaster.description,
+			   loctransfers.shipqty,
+			   loctransfers.shipdate,
+			   loctransfers.shiploc,
+			   locations.locationname as shiplocname,
+			   loctransfers.recloc,
+			   locationsrec.locationname as reclocname
+			   FROM loctransfers
+			   INNER JOIN stockmaster ON loctransfers.stockid=stockmaster.stockid
+			   INNER JOIN locations ON loctransfers.shiploc=locations.loccode
+			   INNER JOIN locations AS locationsrec ON loctransfers.recloc = locationsrec.loccode
+			   WHERE loctransfers.reference=" . $_GET['TransferNo'];
 
 $result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 
@@ -59,9 +59,9 @@ $FontSize=10;
 
 do {
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,100,$FontSize,$TransferRow['StockID'], 'left');
-	$LeftOvers = $pdf->addTextWrap(150,$YPos,200,$FontSize,$TransferRow['Description'], 'left');
-	$LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize,$TransferRow['ShipQty'], 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,100,$FontSize,$TransferRow['stockid'], 'left');
+	$LeftOvers = $pdf->addTextWrap(150,$YPos,200,$FontSize,$TransferRow['description'], 'left');
+	$LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize,$TransferRow['shipqty'], 'right');
 
 	$pdf->line($Left_Margin, $YPos-2,$Page_Width-$Right_Margin, $YPos-2);
 

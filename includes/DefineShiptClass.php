@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /* Definition of the Shipment class to hold all the information for a shipment*/
 
 if (!function_exists('_')){
@@ -42,7 +42,8 @@ Class Shipment {
 
 		$this->LineItems[$PODetailItem]= new LineDetails($PODetailItem,$OrderNo,$StockID,$ItemDescr, $QtyInvoiced, $UnitPrice, $UOM, $DelDate, $QuantityOrd, $QuantityRecd, $StdCostUnit);
 
-		$sql = "UPDATE PurchOrderDetails SET ShiptRef = " . $this->ShiptRef . " WHERE PODetailItem = " . $PODetailItem;
+		$sql = "UPDATE purchorderdetails SET shiptref = " . $this->ShiptRef . " 
+			WHERE podetailitem = " . $PODetailItem;
 		$ErrMsg = _('There was an error updating the purchase order detail record to make it part of shipment') . ' ' . $ShiptRef . ' ' . _('the error reported was');
 		$result = DB_query($sql, $db, $ErrMsg);
 
@@ -55,7 +56,7 @@ Class Shipment {
 		if ($this->LineItems[$PODetailItem]->QtyInvoiced==0){
 
 			unset($this->LineItems[$PODetailItem]);
-			$sql = "UPDATE PurchOrderDetails SET ShiptRef = 0 WHERE PODetailItem=" . $PODetailItem;
+			$sql = "UPDATE purchorderdetails SET shiptref = 0 WHERE podetailitem=" . $PODetailItem;
 			$Result = DB_query($sql,$db);
 		} else {
 			prnMsg(_('This shipment line has a quantity invoiced and already charged to the shipment - it cannot now be removed'),'warn');

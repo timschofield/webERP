@@ -34,7 +34,7 @@ If (isset($_POST['PrintPDF'])
 
 	$pdf->addinfo('Author','webERP ' . $Version);
 	$pdf->addinfo('Creator','webERP http://www.weberp.org - R&OS PHP-PDF http://www.ros.co.nz');
-	$pdf->addinfo('Title',_('Inventory Planning Report') . ' ' . Date($DefaultDateFormat));
+	$pdf->addinfo('Title',_('Inventory Planning Report') . ' ' . Date($_SESSION['DefaultDateFormat']));
 
 	$line_height=12;
 
@@ -46,42 +46,42 @@ If (isset($_POST['PrintPDF'])
       /*Now figure out the inventory data to report for the category range under review
       need QOH, QOO, QDem, Sales Mth -1, Sales Mth -2, Sales Mth -3, Sales Mth -4*/
 	if ($_POST['Location']=='All'){
-		$SQL = "SELECT StockMaster.CategoryID,
-				StockMaster.Description,
-				StockCategory.CategoryDescription,
-				LocStock.StockID,
-				Sum(LocStock.Quantity) AS QOH
-			FROM LocStock,
-				StockMaster,
-				StockCategory
-			WHERE LocStock.StockID=StockMaster.StockID
-			AND StockMaster.CategoryID=StockCategory.CategoryID
-			AND (StockMaster.MBflag='B' OR MBflag='M')
-			AND StockMaster.CategoryID >= '" . $_POST['FromCriteria'] . "'
-			AND StockMaster.CategoryID <= '" . $_POST['ToCriteria'] . "'
-			GROUP BY LocStock.StockID,
-				StockCategory.CategoryDescription,
-				StockMaster.Description,
-				StockCategory.CategoryID
-			ORDER BY StockMaster.CategoryID,
-				StockMaster.StockID";
+		$SQL = "SELECT stockmaster.categoryid,
+				stockmaster.description,
+				stockcategory.categorydescription,
+				locstock.stockid,
+				SUM(locstock.quantity) AS qoh
+			FROM locstock,
+				stockmaster,
+				stockcategory
+			WHERE locstock.stockid=stockmaster.stockid
+			AND stockmaster.categoryid=stockcategory.categoryid
+			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
+			AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
+			AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
+			GROUP BY locstock.stockid,
+				stockcategory.categorydescription,
+				stockmaster.description,
+				stockcategory.categoryid
+			ORDER BY stockmaster.categoryid,
+				stockmaster.stockid";
 	} else {
-		$SQL = $SQL = "SELECT StockMaster.CategoryID,
-					LocStock.StockID,
-					StockMaster.Description,
-					StockCategory.CategoryDescription,
-					LocStock.Quantity  AS QOH
-				FROM LocStock,
-					StockMaster,
-					StockCategory
-				WHERE LocStock.StockID=StockMaster.StockID
-				AND StockMaster.CategoryID >= '" . $_POST['FromCriteria'] . "'
-				AND StockMaster.CategoryID=StockCategory.CategoryID
-				AND StockMaster.CategoryID <= '" . $_POST['ToCriteria'] . "'
-				AND (StockMaster.MBflag='B' OR MBflag='M')
-				AND LocStock.LocCode = '" . $_POST['Location'] . "'
-				ORDER BY StockMaster.CategoryID,
-					StockMaster.StockID";
+		$SQL = $SQL = "SELECT stockmaster.categoryid,
+					locstock.stockid,
+					stockmaster.description,
+					stockcategory.categorydescription,
+					locstock.quantity  AS qoh
+				FROM locstock,
+					stockmaster,
+					stockcategory
+				WHERE locstock.stockid=stockmaster.stockid
+				AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
+				AND stockmaster.categoryid=stockcategory.categoryid
+				AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
+				AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
+				AND locstock.loccode = '" . $_POST['Location'] . "'
+				ORDER BY stockmaster.categoryid,
+					stockmaster.stockid";
 
 	}
 	$InventoryResult = DB_query($SQL,$db,'','',false,false);
@@ -107,7 +107,7 @@ If (isset($_POST['PrintPDF'])
 
 	$Category = '';
 
-	$CurrentPeriod = GetPeriod(Date($DefaultDateFormat),$db);
+	$CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
 	$Period_1 = $CurrentPeriod -1;
 	$Period_2 = $CurrentPeriod -2;
 	$Period_3 = $CurrentPeriod -3;
@@ -115,7 +115,7 @@ If (isset($_POST['PrintPDF'])
 
 	While ($InventoryPlan = DB_fetch_array($InventoryResult,$db)){
 
-		if ($Category!=$InventoryPlan['CategoryID']){
+		if ($Category!=$InventoryPlan['categoryid']){
 			$FontSize=10;
 			if ($Category!=''){ /*Then it's NOT the first time round */
 				/*draw a line under the CATEGORY TOTAL*/
@@ -123,8 +123,8 @@ If (isset($_POST['PrintPDF'])
 		   		$pdf->line($Left_Margin, $YPos,$Page_Width-$Right_Margin, $YPos);
 				$YPos -=(2*$line_height);
 			}
-			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 260-$Left_Margin,$FontSize,$InventoryPlan['CategoryID'] . ' - ' . $InventoryPlan['CategoryDescription'],'left');
-			$Category = $InventoryPlan['CategoryID'];
+			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 260-$Left_Margin,$FontSize,$InventoryPlan['categoryid'] . ' - ' . $InventoryPlan['categorydescription'],'left');
+			$Category = $InventoryPlan['categoryid'];
 			$FontSize=8;
 		}
 
@@ -132,26 +132,26 @@ If (isset($_POST['PrintPDF'])
 
 
 		if ($_POST['Location']=='All'){
-   		   $SQL = "SELECT Sum(CASE WHEN Prd=" . $CurrentPeriod . " THEN -Qty ELSE 0 END) AS Prd0,
-		   		Sum(CASE WHEN Prd=" . $Period_1 . " THEN -Qty ELSE 0 END) AS Prd1,
-				Sum(CASE WHEN Prd=" . $Period_2 . " THEN -Qty ELSE 0 END) AS Prd2,
-				Sum(CASE WHEN Prd=" . $Period_3 . " THEN -Qty ELSE 0 END) AS Prd3,
-				Sum(CASE WHEN Prd=" . $Period_4 . " THEN -Qty ELSE 0 END) AS Prd4
-			FROM StockMoves
-			WHERE StockID='" . $InventoryPlan["StockID"] . "'
-			AND (Type=10 OR Type=11)
-			AND StockMoves.HideMovt=0";
+   		   $SQL = "SELECT SUM(CASE WHEN prd=" . $CurrentPeriod . " THEN -qty ELSE 0 END) AS prd0,
+		   		SUM(CASE WHEN prd=" . $Period_1 . " THEN -qty ELSE 0 END) AS prd1,
+				SUM(CASE WHEN prd=" . $Period_2 . " THEN -qty ELSE 0 END) AS prd2,
+				SUM(CASE WHEN prd=" . $Period_3 . " THEN -qty ELSE 0 END) AS prd3,
+				SUM(CASE WHEN prd=" . $Period_4 . " THEN -qty ELSE 0 END) AS prd4
+			FROM stockmoves
+			WHERE stockid='" . $InventoryPlan['stockid'] . "'
+			AND (type=10 OR type=11)
+			AND stockmoves.hidemovt=0";
 		} else {
-  		   $SQL = "SELECT Sum(CASE WHEN Prd=" . $CurrentPeriod . " THEN -Qty ELSE 0 END) AS Prd0,
-		   		Sum(CASE WHEN Prd=" . $Period_1 . " THEN -Qty ELSE 0 END) AS Prd1,
-				Sum(CASE WHEN Prd=" . $Period_2 . " THEN -Qty ELSE 0 END) AS Prd2,
-				Sum(CASE WHEN Prd=" . $Period_3 . " THEN -Qty ELSE 0 END) AS Prd3,
-				Sum(CASE WHEN Prd=" . $Period_4 . " THEN -Qty ELSE 0 END) AS Prd4
-			FROM StockMoves
-			WHERE StockID='" . $InventoryPlan['StockID'] . "'
-			AND LocCode ='" . $_POST['Location'] . "'
-			AND (Type=10 OR Type=11)
-			AND StockMoves.HideMovt=0";
+  		   $SQL = "SELECT SUM(CASE WHEN prd=" . $CurrentPeriod . " THEN -qty ELSE 0 END) AS prd0,
+		   		SUM(CASE WHEN prd=" . $Period_1 . " THEN -qty ELSE 0 END) AS prd1,
+				SUM(CASE WHEN prd=" . $Period_2 . " THEN -qty ELSE 0 END) AS prd2,
+				SUM(CASE WHEN prd=" . $Period_3 . " THEN -qty ELSE 0 END) AS prd3,
+				SUM(CASE WHEN prd=" . $Period_4 . " THEN -qty ELSE 0 END) AS prd4
+			FROM stockmoves
+			WHERE stockid='" . $InventoryPlan['stockid'] . "'
+			AND stockmoves.loccode ='" . $_POST['Location'] . "'
+			AND (stockmoves.type=10 OR stockmoves.type=11)
+			AND stockmoves.hidemovt=0";
 		}
 
 		$SalesResult=DB_query($SQL,$db,'','',FALSE,FALSE);
@@ -171,20 +171,20 @@ If (isset($_POST['PrintPDF'])
 		$SalesRow = DB_fetch_array($SalesResult);
 
 		if ($_POST['Location']=='All'){
-			$SQL = "SELECT Sum(SalesOrderDetails.Quantity - SalesOrderDetails.QtyInvoiced) AS QtyDemand
-				FROM SalesOrderDetails,
-					SalesOrders
-				WHERE SalesOrderDetails.OrderNo=SalesOrders.OrderNo
-				AND SalesOrderDetails.StkCode = '" . $InventoryPlan['StockID'] . "'
-				AND SalesOrderDetails.Completed = 0";
+			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
+				FROM salesorderdetails,
+					salesorders
+				WHERE salesorderdetails.orderno=salesorders.orderno
+				AND salesorderdetails.stkcode = '" . $InventoryPlan['stockid'] . "'
+				AND salesorderdetails.completed = 0";
 		} else {
-			$SQL = "SELECT Sum(SalesOrderDetails.Quantity - SalesOrderDetails.QtyInvoiced) AS QtyDemand
-				FROM SalesOrderDetails,
-					SalesOrders
-				WHERE SalesOrderDetails.OrderNo=SalesOrders.OrderNo
-				AND SalesOrders.FromStkLoc ='" . $_POST['Location'] . "'
-				AND SalesOrderDetails.StkCode = '" . $InventoryPlan['StockID'] . "'
-				AND SalesOrderDetails.Completed = 0";
+			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
+				FROM salesorderdetails,
+					salesorders
+				WHERE salesorderdetails.orderno=salesorders.orderno
+				AND salesorders.fromstkloc ='" . $_POST['Location'] . "'
+				AND salesorderdetails.stkcode = '" . $InventoryPlan['stockid'] . "'
+				AND salesorderdetails.completed = 0";
 		}
 
 		$DemandResult = DB_query($SQL,$db,'','',FALSE,FALSE);
@@ -204,30 +204,30 @@ If (isset($_POST['PrintPDF'])
 //Also need to add in the demand as a component of an assembly items if this items has any assembly parents.
 
 		if ($_POST['Location']=='All'){
-			$SQL = "SELECT Sum((SalesOrderDetails.Quantity-SalesOrderDetails.QtyInvoiced)*BOM.Quantity) AS DEM
-				FROM SalesOrderDetails,
-					BOM,
-					StockMaster
-				WHERE SalesOrderDetails.StkCode=BOM.Parent
-				AND SalesOrderDetails.Quantity-SalesOrderDetails.QtyInvoiced > 0
-				AND BOM.Component='" . $InventoryPlan["StockID"] . "'
-				AND StockMaster.StockID=BOM.Parent
-				AND StockMaster.MBflag='A'
-				AND SalesOrderDetails.Completed=0";
+			$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
+				FROM salesorderdetails,
+					bom,
+					stockmaster
+				WHERE salesorderdetails.stkcode=bom.parent
+				AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
+				AND bom.component='" . $InventoryPlan['stockid'] . "'
+				AND stockmaster.stockid=bom.parent
+				AND stockmaster.mbflag='A'
+				AND salesorderdetails.completed=0";
 		} else {
-			$SQL = "SELECT Sum((SalesOrderDetails.Quantity-SalesOrderDetails.QtyInvoiced)*BOM.Quantity) AS DEM
-				FROM SalesOrderDetails,
-					SalesOrders,
-					BOM,
-					StockMaster
-				WHERE SalesOrderDetails.OrderNo=SalesOrders.OrderNo
-				AND SalesOrderDetails.StkCode=BOM.Parent
-				AND SalesOrderDetails.Quantity-SalesOrderDetails.QtyInvoiced > 0
-				AND BOM.Component='" . $InventoryPlan['StockID'] . "'
-				AND StockMaster.StockID=BOM.Parent
-				AND SalesOrders.FromStkLoc ='" . $_POST['Location'] . "'
-				AND StockMaster.MBflag='A'
-				AND SalesOrderDetails.Completed=0";
+			$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
+				FROM salesorderdetails,
+					salesorders,
+					bom,
+					stockmaster
+				WHERE salesorderdetails.orderno=salesorders.orderno
+				AND salesorderdetails.stkcode=bom.parent
+				AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
+				AND bom.component='" . $InventoryPlan['stockid'] . "'
+				AND stockmaster.stockid=bom.parent
+				AND salesorders.fromstkloc ='" . $_POST['Location'] . "'
+				AND stockmaster.mbflag='A'
+				AND salesorderdetails.completed=0";
 		}
 
 		$BOMDemandResult = DB_query($SQL,$db,'','',false,false);
@@ -245,25 +245,25 @@ If (isset($_POST['PrintPDF'])
 		}
 
 		if ($_POST['Location']=='All'){
-			$SQL = "SELECT Sum(PurchOrderDetails.QuantityOrd - PurchOrderDetails.QuantityRecd) AS QtyOnOrder
-				FROM PurchOrderDetails,
-					PurchOrders
-				WHERE PurchOrderDetails.OrderNo = PurchOrders.OrderNo
-				AND PurchOrderDetails.ItemCode = '" . $InventoryPlan['StockID'] . "'
-				AND PurchOrderDetails.Completed = 0";
+			$SQL = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) as qtyonorder
+				FROM purchorderdetails,
+					purchorders
+				WHERE purchorderdetails.orderno = purchorders.orderno
+				AND purchorderdetails.itemcode = '" . $InventoryPlan['stockid'] . "'
+				AND purchorderdetails.completed = 0";
 		} else {
-			$SQL = "SELECT Sum(PurchOrderDetails.QuantityOrd - PurchOrderDetails.QuantityRecd) AS QtyOnOrder
-				FROM PurchOrderDetails,
-					PurchOrders
-				WHERE PurchOrderDetails.OrderNo = PurchOrders.OrderNo
-				AND PurchOrderDetails.ItemCode = '" . $InventoryPlan['StockID'] . "'
-				AND PurchOrderDetails.Completed = 0
-				AND PurchOrders.IntoStockLocation=  '" . $_POST['Location'] . "'";
+			$SQL = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) AS qtyonorder
+				FROM purchorderdetails,
+					purchorders
+				WHERE purchorderdetails.orderno = purchorders.orderno
+				AND purchorderdetails.itemcode = '" . $InventoryPlan['stockid'] . "'
+				AND purchorderdetails.completed = 0
+				AND purchorders.intostocklocation=  '" . $_POST['Location'] . "'";
 		}
 
 		$DemandRow = DB_fetch_array($DemandResult);
 		$BOMDemandRow = DB_fetch_array($BOMDemandResult);
-		$TotalDemand = $DemandRow['QtyDemand'] + $BOMDemandRow['DEM'];
+		$TotalDemand = $DemandRow['qtydemand'] + $BOMDemandRow['dem'];
 
 		$OnOrdResult = DB_query($SQL,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
@@ -280,23 +280,23 @@ If (isset($_POST['PrintPDF'])
 
 		$OnOrdRow = DB_fetch_array($OnOrdResult);
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 60, $FontSize, $InventoryPlan['StockID'], 'left');
-		$LeftOvers = $pdf->addTextWrap(100, $YPos, 150,6,$InventoryPlan['Description'],'left');
-		$LeftOvers = $pdf->addTextWrap(251, $YPos, 40,$FontSize,number_format($SalesRow['Prd4'],0),'right');
-		$LeftOvers = $pdf->addTextWrap(292, $YPos, 40,$FontSize,number_format($SalesRow['Prd3'],0),'right');
-		$LeftOvers = $pdf->addTextWrap(333, $YPos, 40,$FontSize,number_format($SalesRow['Prd2'],0),'right');
-		$LeftOvers = $pdf->addTextWrap(374, $YPos, 40,$FontSize,number_format($SalesRow['Prd1'],0),'right');
-		$LeftOvers = $pdf->addTextWrap(415, $YPos, 40,$FontSize,number_format($SalesRow['Prd0'],0),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 60, $FontSize, $InventoryPlan['stockid'], 'left');
+		$LeftOvers = $pdf->addTextWrap(100, $YPos, 150,6,$InventoryPlan['description'],'left');
+		$LeftOvers = $pdf->addTextWrap(251, $YPos, 40,$FontSize,number_format($SalesRow['prd4'],0),'right');
+		$LeftOvers = $pdf->addTextWrap(292, $YPos, 40,$FontSize,number_format($SalesRow['prd3'],0),'right');
+		$LeftOvers = $pdf->addTextWrap(333, $YPos, 40,$FontSize,number_format($SalesRow['prd2'],0),'right');
+		$LeftOvers = $pdf->addTextWrap(374, $YPos, 40,$FontSize,number_format($SalesRow['prd1'],0),'right');
+		$LeftOvers = $pdf->addTextWrap(415, $YPos, 40,$FontSize,number_format($SalesRow['prd0'],0),'right');
 
-		$MaxMthSales = Max($SalesRow['Prd1'], $SalesRow['Prd2'], $SalesRow['Prd3'], $SalesRow['Prd4']);
+		$MaxMthSales = Max($SalesRow['prd1'], $SalesRow['prd2'], $SalesRow['prd3'], $SalesRow['prd4']);
 		$IdealStockHolding = $MaxMthSales * $_POST['NumberMonthsHolding'];
 		$LeftOvers = $pdf->addTextWrap(456, $YPos, 40,$FontSize,number_format($IdealStockHolding,0),'right');
-		$LeftOvers = $pdf->addTextWrap(597, $YPos, 40,$FontSize,number_format($InventoryPlan['QOH'],0),'right');
+		$LeftOvers = $pdf->addTextWrap(597, $YPos, 40,$FontSize,number_format($InventoryPlan['qoh'],0),'right');
 		$LeftOvers = $pdf->addTextWrap(638, $YPos, 40,$FontSize,number_format($TotalDemand,0),'right');
 
-		$LeftOvers = $pdf->addTextWrap(679, $YPos, 40,$FontSize,number_format($OnOrdRow['QtyOnOrder'],0),'right');
+		$LeftOvers = $pdf->addTextWrap(679, $YPos, 40,$FontSize,number_format($OnOrdRow['qtyonorder'],0),'right');
 
-		$SuggestedTopUpOrder = $IdealStockHolding - $InventoryPlan['QOH'] + $TotalDemand - $OnOrdRow['QtyOnOrder'];
+		$SuggestedTopUpOrder = $IdealStockHolding - $InventoryPlan['qoh'] + $TotalDemand - $OnOrdRow['qtyonorder'];
 		if ($SuggestedTopUpOrder <=0){
 			$LeftOvers = $pdf->addTextWrap(720, $YPos, 40,$FontSize,_('Nil'),'centre');
 
@@ -345,9 +345,7 @@ If (isset($_POST['PrintPDF'])
 	include('includes/session.inc');
 	$title=_('Inventory Planning Reporting');
 	include('includes/header.inc');
-	include('includes/SQL_CommonFunctions.inc');
-	$CompanyRecord = ReadInCompanyRecord($db);
-
+	
 
 	if (strlen($_POST['FromCriteria'])<1 || strlen($_POST['ToCriteria'])<1) {
 
@@ -357,10 +355,10 @@ If (isset($_POST['PrintPDF'])
 
 		echo '<TR><TD>' . _('From Inventory Category Code') . ':</FONT></TD><TD><SELECT name=FromCriteria>';
 
-		$sql='SELECT CategoryID, CategoryDescription FROM StockCategory ORDER BY CategoryID';
+		$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
 		$CatResult= DB_query($sql,$db);
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo "<OPTION VALUE='" . $myrow['CategoryID'] . "'>" . $myrow['CategoryID'] . " - " . $myrow['CategoryDescription'];
+			echo "<OPTION VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . " - " . $myrow['categorydescription'];
 		}
 		echo "</SELECT></TD></TR>";
 
@@ -370,18 +368,18 @@ If (isset($_POST['PrintPDF'])
 		DB_data_seek($CatResult,0);
 
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo "<OPTION VALUE='" . $myrow['CategoryID'] . "'>" . $myrow['CategoryID'] . " - " . $myrow['CategoryDescription'];
+			echo "<OPTION VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . " - " . $myrow['categorydescription'];
 		}
 		echo '</SELECT></TD></TR>';
 
 		echo '<TR><TD>' . _('For Inventory in Location') . ":</TD><TD><SELECT name='Location'>";
-		$sql = 'SELECT LocCode, LocationName FROM Locations';
+		$sql = 'SELECT loccode, locationname FROM locations';
 		$LocnResult=DB_query($sql,$db);
 
 		echo "<OPTION Value='All'>" . _('All Locations');
 
 		while ($myrow=DB_fetch_array($LocnResult)){
-		          echo "<OPTION Value='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
+		          echo "<OPTION Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 		      		}
 		echo '</SELECT></TD></TR>';
 

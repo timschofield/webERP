@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -17,22 +17,22 @@ echo _('Item Code') . ':' . "<input type=text name='StockID' size=21 value='$Sto
 echo " <INPUT TYPE=SUBMIT NAME='ShowBOM' VALUE='" . _('Show Bill Of Material') . "'><HR>";
 
 if ($StockID!=""){
-	$result = DB_query("SELECT Description, Units FROM StockMaster WHERE StockID='" . $StockID  . "'",$db);
+	$result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='" . $StockID  . "'",$db);
 	$myrow = DB_fetch_row($result);
 
 	echo "<BR><FONT SIZE=4><B>" . $myrow[0] . ' : ' . _('per') . ' ' . $myrow[1] . "</B></FONT>";
 
-	$sql = "SELECT BOM.Parent,
-			BOM.Component,
-			StockMaster.Description,
-			StockMaster.DecimalPlaces,
-			StockMaster.MaterialCost+ StockMaster.LabourCost+StockMaster.OverheadCost AS StandardCost,
-			BOM.Quantity,
-			BOM.Quantity * (StockMaster.MaterialCost+ StockMaster.LabourCost+ StockMaster.OverheadCost) AS ComponentCost
-		FROM BOM INNER JOIN StockMaster ON BOM.Component = StockMaster.StockID
-		WHERE BOM.Parent = '" . $StockID . "'
-		AND BOM.EffectiveAfter < Now()
-		AND BOM.EffectiveTo > Now()";
+	$sql = "SELECT bom.parent,
+			bom.component,
+			stockmaster.description,
+			stockmaster.decimalplaces,
+			stockmaster.materialcost+ stockmaster.labourcost+stockmaster.overheadcost as standardcost,
+			bom.quantity,
+			bom.quantity * (stockmaster.materialcost+ stockmaster.labourcost+ stockmaster.overheadcost) AS componentcost
+		FROM bom INNER JOIN stockmaster ON bom.component = stockmaster.stockid
+		WHERE bom.parent = '" . $StockID . "'
+		AND bom.effectiveafter < Now()
+		AND bom.effectiveto > Now()";
 
 	$ErrMsg = _('The bill of material could not be retrieved because');
 	$BOMResult = DB_query ($sql,$db,$ErrMsg);
@@ -67,7 +67,7 @@ if ($StockID!=""){
 				$k=1;
 			}
 
-			$ComponentLink = "<A HREF='$rootpath/SelectProduct.php?" . SID . "&StockID=" . $myrow['Component'] . "'>" . $myrow['Component'] . "</A>";
+			$ComponentLink = "<A HREF='$rootpath/SelectProduct.php?" . SID . "&StockID=" . $myrow['component'] . "'>" . $myrow['component'] . "</A>";
 
 			/* Component Code  Description                 Quantity            Std Cost*                Total Cost */
 			printf("<td>%s</td>
@@ -77,12 +77,13 @@ if ($StockID!=""){
 				<td ALIGN=RIGHT>%.2f</td>
 				</tr>",
 				$ComponentLink,
-				$myrow['Description'],
-				number_format($myrow['Quantity'],$myrow['DecimalPlaces']),
-				$myrow['StandardCost'],
-				$myrow['ComponentCost']);
+				$myrow['description'],
+				number_format($myrow['quantity'],
+				$myrow['decimalplaces']),
+				$myrow['standardcost'],
+				$myrow['componentcost']);
 
-			$TotalCost += $myrow['ComponentCost'];
+			$TotalCost += $myrow['componentcost'];
 
 			$j++;
 			If ($j == 12){

@@ -1,10 +1,10 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(",","",$str);
 }
 
-$fp = fopen( $reports_dir . "/SalesAnalysis.csv", "w");
+$fp = fopen( $_SESSION['reports_dir'] . "/SalesAnalysis.csv", "w");
 
 
 While ($myrow = DB_fetch_row($result)){

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $PageSecurity = 9;
 
 include('includes/session.inc');
@@ -16,7 +16,7 @@ function CheckForRecursiveBOM ($UltimateParent, $ComponentToCheck, $db) {
 ie the BOM is recursive otherwise false ie 0 */
 
 
-	$sql = "SELECT Component FROM BOM WHERE Parent='$ComponentToCheck'";
+	$sql = "SELECT component FROM bom WHERE parent='$ComponentToCheck'";
 	$ErrMsg = _('An error occurred in retrieving the components of the BOM during the check for recursion');
 	$DbgMsg = _('The SQL that was used to retrieve the components of the BOM and that failed in the process was');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -38,21 +38,21 @@ ie the BOM is recursive otherwise false ie 0 */
 } //end of function CheckForRecursiveBOM
 
 function DisplayBOMItems($SelectedParent, $db) {
-		$sql = "SELECT BOM.Component,
-				StockMaster.Description,
-				Locations.LocationName,
-				WorkCentres.Description,
-				Quantity,
-				EffectiveAfter,
-				EffectiveTo
-			FROM BOM,
-				StockMaster,
-				Locations,
-				WorkCentres
-			WHERE BOM.Component=StockMaster.StockID
-			AND BOM.LocCode = Locations.LocCode
-			AND BOM.WorkCentreAdded=WorkCentres.Code
-			AND BOM.Parent='$SelectedParent'";
+		$sql = "SELECT bom.component,
+				stockmaster.description,
+				locations.locationname,
+				workcentres.description,
+				quantity,
+				effectiveafter,
+				effectiveto
+			FROM bom,
+				stockmaster,
+				locations,
+				workcentres
+			WHERE bom.component=stockmaster.stockid
+			AND bom.loccode = locations.loccode
+			AND bom.workcentreadded=workcentres.code
+			AND bom.parent='$SelectedParent'";
 
 		$ErrMsg = _('Could not retrieve the BOM components because');
 		$DbgMsg = _('The SQL used to retrieve the components was');
@@ -143,10 +143,10 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	$Select = NULL;
 
 
-	$sql = "SELECT StockMaster.Description,
-			StockMaster.MBflag
-		FROM StockMaster 
-		WHERE StockMaster.StockID='" . $SelectedParent . "'";
+	$sql = "SELECT stockmaster.description,
+			stockmaster.mbflag
+		FROM stockmaster 
+		WHERE stockmaster.stockid='" . $SelectedParent . "'";
 
 	$ErrMsg = _('Could not retrieve the description of the parent part because');
 	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
@@ -211,13 +211,13 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		if (isset($SelectedParent) AND isset($SelectedComponent) AND $InputError != 1) {
 
 
-			$sql = "UPDATE BOM SET BOM.WorkCentreAdded='" . $_POST['WorkCentreAdded'] . "',
-						BOM.LocCode='" . $_POST['LocCode'] . "',
-						BOM.EffectiveAfter='" . $EffectiveAfterSQL . "',
-						BOM.EffectiveTo='" . $EffectiveToSQL . "',
-						BOM.Quantity= " . $_POST['Quantity'] . "
-					WHERE BOM.Parent='" . $SelectedParent . "'
-					AND BOM.Component='" . $SelectedComponent . "'";
+			$sql = "UPDATE bom SET workcentreadded='" . $_POST['WorkCentreAdded'] . "',
+						loccode='" . $_POST['LocCode'] . "',
+						effectiveafter='" . $EffectiveAfterSQL . "',
+						effectiveto='" . $EffectiveToSQL . "',
+						quantity= " . $_POST['Quantity'] . "
+					WHERE bom.parent='" . $SelectedParent . "'
+					AND bom.component='" . $SelectedComponent . "'";
 
 			$ErrMsg =  _('Could not update this BOM component because');
 			$DbgMsg =  _('The SQL used to update the component was');
@@ -234,12 +234,12 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			If (!CheckForRecursiveBOM ($SelectedParent, $_POST['Component'], &$db)) {
 
 				/*Now check to see that the component is not already on the BOM */
-				$sql = "SELECT Component
-						FROM BOM
-					WHERE Parent='$SelectedParent'
-					AND Component='" . $_POST['Component'] . "'
-					AND WorkCentreAdded='" . $_POST['WorkCentreAdded'] . "'
-					AND LocCode='" . $_POST['LocCode'] . "'" ;
+				$sql = "SELECT component
+						FROM bom
+					WHERE parent='$SelectedParent'
+					AND component='" . $_POST['Component'] . "'
+					AND workcentreadded='" . $_POST['WorkCentreAdded'] . "'
+					AND loccode='" . $_POST['LocCode'] . "'" ;
 
 				$ErrMsg =  _('An error occurred in checking the component is not already on the BOM');
 				$DbgMsg =  _('The SQL that was used to check the component was not already on the BOM and that failed in the process was');
@@ -248,13 +248,13 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 				if (DB_num_rows($result)==0) {
 
-					$sql = "INSERT INTO BOM (Parent,
-								Component,
-								WorkCentreAdded,
-								LocCode,
-								Quantity,
-								EffectiveAfter,
-								EffectiveTo)
+					$sql = "INSERT INTO bom (parent,
+								component,
+								workcentreadded,
+								loccode,
+								quantity,
+								effectiveafter,
+								effectiveto)
 							VALUES ('$SelectedParent',
 								'" . $_POST['Component'] . "',
 								'" . $_POST['WorkCentreAdded'] . "',
@@ -289,7 +289,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 	//the link to delete a selected record was clicked instead of the Submit button
 
-		$sql="DELETE FROM BOM WHERE Parent='$SelectedParent' AND Component='$SelectedComponent'";
+		$sql="DELETE FROM bom WHERE parent='$SelectedParent' AND component='$SelectedComponent'";
 
 		$ErrMsg = _('Could not delete this BOM components because');
 		$DbgMsg = _('The SQL used to delete the BOM was');
@@ -322,23 +322,23 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		if (isset($SelectedComponent)) {
 		//editing a selected component from the link to the line item
 
-			$sql = "SELECT LocCode,
-					EffectiveAfter,
-					EffectiveTo,
-					WorkCentreAdded,
-					Quantity
-				FROM BOM
-				WHERE Parent='$SelectedParent'
-				AND Component='$SelectedComponent'";
+			$sql = "SELECT loccode,
+					effectiveafter,
+					effectiveto,
+					workcentreadded,
+					quantity
+				FROM bom
+				WHERE parent='$SelectedParent'
+				AND component='$SelectedComponent'";
 
 			$result = DB_query($sql, $db);
 			$myrow = DB_fetch_array($result);
 
-			$_POST['LocCode'] = $myrow['LocCode'];
-			$_POST['EffectiveAfter'] = ConvertSQLDate($myrow['EffectiveAfter']);
-			$_POST['EffectiveTo'] = ConvertSQLDate($myrow['EffectiveTo']);
-			$_POST['WorkCentreAdded']  = $myrow['WorkCentreAdded'];
-			$_POST['Quantity'] = $myrow['Quantity'];
+			$_POST['LocCode'] = $myrow['loccode'];
+			$_POST['EffectiveAfter'] = ConvertSQLDate($myrow['effectiveafter']);
+			$_POST['EffectiveTo'] = ConvertSQLDate($myrow['effectiveto']);
+			$_POST['WorkCentreAdded']  = $myrow['workcentreadded'];
+			$_POST['Quantity'] = $myrow['quantity'];
 
 			prnMsg(_('Edit the details of the selected component in the fields below') . '. <BR>' . _('Click on the Enter Information button to update the component details'),'info');
 			echo "<INPUT TYPE=HIDDEN NAME='SelectedParent' VALUE='$SelectedParent'>";
@@ -355,25 +355,25 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 			
 			if ($ParentMBflag=='A'){ /*Its an assembly */
-				$sql = "SELECT StockMaster.StockID, 
-						StockMaster.Description 
-					FROM StockMaster 
-					WHERE StockMaster.MBflag !='D' 
-					AND StockMaster.MBflag !='K' 
-					AND StockMaster.MBflag !='A' 
-					AND StockMaster.Controlled = 0 
-					AND StockMaster.StockID != '$SelectedParent' 
-					ORDER BY StockMaster.StockID";
+				$sql = "SELECT stockmaster.stockid, 
+						stockmaster.description 
+					FROM stockmaster 
+					WHERE stockmaster.mbflag !='D' 
+					AND stockmaster.mbflag !='K' 
+					AND stockmaster.mbflag !='A' 
+					AND stockmaster.controlled = 0 
+					AND stockmaster.stockid != '$SelectedParent' 
+					ORDER BY stockmaster.stockid";
 			
 			} else { /*Its either a normal manufac item or a kitset - controlled items ok */
-				$sql = "SELECT StockMaster.StockID, 
-						StockMaster.Description 
-					FROM StockMaster 
-					WHERE StockMaster.MBflag !='D' 
-					AND StockMaster.MBflag !='K' 
-					AND StockMaster.MBflag !='A' 
-					AND StockMaster.StockID != '$SelectedParent' 
-					ORDER BY StockMaster.StockID";
+				$sql = "SELECT stockmaster.stockid, 
+						stockmaster.description 
+					FROM stockmaster 
+					WHERE stockmaster.mbflag !='D' 
+					AND stockmaster.mbflag !='K' 
+					AND stockmaster.mbflag !='A' 
+					AND stockmaster.stockid != '$SelectedParent' 
+					ORDER BY stockmaster.stockid";
 			}
 					
 			$ErrMsg = _('Could not retrieve the list of potential components because');
@@ -382,7 +382,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 
 			while ($myrow = DB_fetch_array($result)) {
-				echo "<OPTION VALUE=".$myrow["StockID"].'>' . str_pad($myrow['StockID'],21, '_', STR_PAD_RIGHT) . $myrow['Description'];
+				echo "<OPTION VALUE=".$myrow["stockid"].'>' . str_pad($myrow['stockid'],21, '_', STR_PAD_RIGHT) . $myrow['description'];
 			} //end while loop
 
 			echo '</SELECT></TD></TR>';
@@ -396,16 +396,16 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		<?php
 
 		DB_free_result($result);
-		$sql = 'SELECT LocationName, LocCode FROM Locations';
+		$sql = 'SELECT locationname, loccode FROM locations';
 		$result = DB_query($sql,$db);
 
 		while ($myrow = DB_fetch_array($result)) {
-			if ($myrow['LocCode']==$_POST['LocCode']) {
+			if ($myrow['loccode']==$_POST['LocCode']) {
 				echo "<OPTION SELECTED VALUE='";
 			} else {
 				echo "<OPTION VALUE='";
 			}
-			echo $myrow['LocCode'] . "'>" . $myrow['LocationName'];
+			echo $myrow['loccode'] . "'>" . $myrow['locationname'];
 
 		} //end while loop
 
@@ -421,7 +421,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		<?php
 
-		$sql = 'SELECT Code, Description FROM WorkCentres';
+		$sql = 'SELECT code, description FROM workcentres';
 		$result = DB_query($sql,$db);
 
 		if (DB_num_rows($result)==0){
@@ -432,14 +432,12 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		}
 
 		while ($myrow = DB_fetch_array($result)) {
-			if ($myrow['Code']==$_POST['WorkCentreAdded']) {
+			if ($myrow['code']==$_POST['WorkCentreAdded']) {
 				echo "<OPTION SELECTED VALUE='";
 			} else {
 				echo "<OPTION VALUE='";
-
-		}
-			echo $myrow['Code'] . "'>" . $myrow['Description'];
-
+			}
+			echo $myrow['code'] . "'>" . $myrow['description'];
 		} //end while loop
 
 		DB_free_result($result);
@@ -462,19 +460,19 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		<?php
 		if (!isset($_POST['EffectiveTo']) OR $_POST['EffectiveTo']=='') {
-			$_POST['EffectiveTo'] = Date($DefaultDateFormat,Mktime(0,0,0,Date('m'),Date('d'),(Date('y')+30)));
+			$_POST['EffectiveTo'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'),Date('d'),(Date('y')+30)));
 		}
 		if (!isset($_POST['EffectiveAfter']) OR $_POST['EffectiveAfter']=='') {
-			$_POST['EffectiveAfter'] = Date($DefaultDateFormat,Mktime(0,0,0,Date('m'),Date('d')-1,Date('y')));
+			$_POST['EffectiveAfter'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'),Date('d')-1,Date('y')));
 		}
 
 		?>
 
-		<TR><TD><?php echo _('Effective After') . ' (' . $DefaultDateFormat . '):'; ?></TD>
+		<TR><TD><?php echo _('Effective After') . ' (' . $_SESSION['DefaultDateFormat'] . '):'; ?></TD>
 		<TD>
 		<INPUT TYPE="Text" name="EffectiveAfter" SIZE=11 MAXLENGTH=11 VALUE="<?php echo $_POST['EffectiveAfter']; ?>">
 		</TD></TR>
-		<TR><TD><?php echo _('Effective To') . ' (' . $DefaultDateFormat . '):'; ?></TD>
+		<TR><TD><?php echo _('Effective To') . ' (' . $_SESSION['DefaultDateFormat'] . '):'; ?></TD>
 		<TD>
 		<INPUT TYPE="Text" name="EffectiveTo" SIZE=11 MAXLENGTH=11 VALUE="<?php echo $_POST['EffectiveTo']; ?>">
 		</TD></TR>
@@ -513,38 +511,40 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$SearchString = $SearchString. substr($_POST['Keywords'],$i).'%';
 
 
-			$sql = "SELECT StockMaster.StockID,
-					StockMaster.Description,
-					StockMaster.Units,
-					StockMaster.MBflag,
-					Sum(LocStock.Quantity) AS TotalOnHand
-				FROM StockMaster,
-					LocStock
-				WHERE StockMaster.StockID = LocStock.StockID
-				AND StockMaster.Description LIKE '$SearchString'
-				AND (StockMaster.MBflag='M' OR StockMaster.MBflag='K' OR StockMaster.MBflag='A')
-				GROUP BY StockMaster.StockID,
-					StockMaster.Description,
-					StockMaster.Units
-				ORDER BY StockMaster.StockID";
+			$sql = "SELECT stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.units,
+					stockmaster.mbflag,
+					SUM(locstock.quantity) as totalonhand
+				FROM stockmaster,
+					locstock
+				WHERE stockmaster.stockid = locstock.stockid
+				AND stockmaster.description " . LIKE . " '$SearchString'
+				AND (stockmaster.mbflag='M' OR stockmaster.mbflag='K' OR stockmaster.mbflag='A')
+				GROUP BY stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.units,
+					stockmaster.mbflag
+				ORDER BY stockmaster.stockid";
 
 		} elseif (strlen($_POST['StockCode'])>0){
-			$sql = "SELECT StockMaster.StockID,
-					StockMaster.Description,
-					StockMaster.Units,
-					StockMaster.MBflag,
-					Sum(LocStock.Quantity) AS TotalOnHand
-				FROM StockMaster,
-					LocStock
-				WHERE StockMaster.StockID = LocStock.StockID
-				AND StockMaster.StockID like '%" . $_POST['StockCode'] . "%'
-				AND (StockMaster.MBflag='M'
-					OR StockMaster.MBflag='K'
-					OR StockMaster.MBflag='A')
-				GROUP BY StockMaster.StockID,
-					StockMaster.Description,
-					StockMaster.Units
-				ORDER BY StockMaster.StockID";
+			$sql = "SELECT stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.units,
+					stockmaster.mbflag,
+					sum(locstock.quantity) as totalonhand
+				FROM stockmaster,
+					locstock
+				WHERE stockmaster.stockid = locstock.stockid
+				AND stockmaster.stockid " . LIKE  . "'%" . $_POST['StockCode'] . "%'
+				AND (stockmaster.mbflag='M'
+					OR stockmaster.mbflag='K'
+					OR stockmaster.mbflag='A')
+				GROUP BY stockmaster.stockid,
+					stockmaster.description,
+					stockmaster.units,
+					stockmaster.mbflag
+				ORDER BY stockmaster.stockid";
 
 		}
 
@@ -597,19 +597,19 @@ If (isset($result) AND !isset($SelectedParent)) {
 			echo "<tr bgcolor='#EEEEEE'>";
 			$k++;
 		}
-		if ($myrow['MBflag']=='A' OR $myrow['MBflag']=='K'){
+		if ($myrow['mbflag']=='A' OR $myrow['mbflag']=='K'){
 			$StockOnHand = 'N/A';
 		} else {
-			$StockOnHand = number_format($myrow['TotalOnHand'],2);
+			$StockOnHand = number_format($myrow['totalonhand'],2);
 		}
 		printf("<td><INPUT TYPE=SUBMIT NAME='Select' VALUE='%s'</td>
 		        <td>%s</td>
 			<td ALIGN=RIGHT>%s</td>
 			<td>%s</td></tr>",
-			$myrow['StockID'],
-			$myrow['Description'],
+			$myrow['stockid'],
+			$myrow['description'],
 			$StockOnHand,
-			$myrow['Units']
+			$myrow['units']
 		);
 
 		$j++;

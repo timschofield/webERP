@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 4;
 
@@ -24,8 +24,8 @@ if (isset($_GET['StockID'])){
 }
 
 
-if (isset($SupplierID) AND $SupplierID!=""){			   /*NOT EDITING AN EXISTING BUT SUPPLIER SELECTED OR ENTERED*/
-   $sql = "SELECT SuppName, CurrCode FROM Suppliers WHERE SupplierID='$SupplierID'";
+if (isset($SupplierID) AND $SupplierID!=''){			   /*NOT EDITING AN EXISTING BUT SUPPLIER SELECTED OR ENTERED*/
+   $sql = "SELECT suppliers.suppname, suppliers.currcode FROM suppliers WHERE supplierid='$SupplierID'";
 
    $ErrMsg = _('The supplier details for the selected supplier could not be retrieved because');
    $DbgMsg = _('The SQL that failed was');
@@ -33,8 +33,8 @@ if (isset($SupplierID) AND $SupplierID!=""){			   /*NOT EDITING AN EXISTING BUT 
 
    if (DB_num_rows($SuppSelResult) ==1){
 		$myrow = DB_fetch_array($SuppSelResult);
-		$SuppName = $myrow['SuppName'];
-		$CurrCode = $myrow['CurrCode'];
+		$SuppName = $myrow['suppname'];
+		$CurrCode = $myrow['currcode'];
    } else {
 		prnMsg( _('The supplier code') . ' ' . $SupplierID . ' ' . _('is not an existing supplier in the database') . '. ' . _('You must enter an alternative supplier code or select a supplier using the search facility below'),'error');
 		unset($SupplierID);
@@ -43,7 +43,7 @@ if (isset($SupplierID) AND $SupplierID!=""){			   /*NOT EDITING AN EXISTING BUT 
 
 if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($SupplierID)){	      /*Validate Inputs */
    $InputError = 0; /*Start assuming the best */
-   if ($StockID=="" OR !isset($StockID)){
+   if ($StockID=='' OR !isset($StockID)){
       $InputError=1;
       prnMsg( _('There is no stock item set up enter the stock code or select a stock item using the search page'),'error');
    }
@@ -66,14 +66,14 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 
    if ($InputError==0 AND isset($_POST['AddRecord'])){
 
-      $sql = "INSERT INTO PurchData (SupplierNo,
-					StockID,
-					Price,
-					SuppliersUOM,
-					ConversionFactor,
-					SupplierDescription,
-					LeadTime,
-					Preferred)
+      $sql = "INSERT INTO purchdata (supplierno,
+					stockid,
+					price,
+					suppliersuom,
+					conversionfactor,
+					supplierdescription,
+					leadtime,
+					preferred)
 			VALUES ('" . $SupplierID . "',
 				'" . $StockID . "',
 				" . $_POST['Price'] . ",
@@ -81,7 +81,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 				" . $_POST['ConversionFactor'] . ",
 				'" . $_POST['SupplierDescription'] . "',
 				" . $_POST['LeadTime'] . ",
-				" . $_POST['Preferred'] . ")";
+				" . $_POST['Preferred'] . ')';
 
 	$ErrMsg = _('The supplier purchasing details could not be added to the database because');
 	$DbgMsg = _('The SQL that failed was');
@@ -92,15 +92,15 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
    }
    if ($InputError==0 AND isset($_POST['UpdateRecord'])){
 
-      $sql = "UPDATE PurchData SET
-			        Price=" . $_POST['Price'] . ",
-				SuppliersUOM='" . $_POST['SuppliersUOM'] . "',
-				ConversionFactor=" . $_POST['ConversionFactor'] . ",
-				SupplierDescription='" . $_POST['SupplierDescription'] . "',
-				LeadTime=" . $_POST['LeadTime'] . ",
-				Preferred=" . $_POST['Preferred'] . "
-		WHERE StockID='$StockID'
-		AND SupplierNo='$SupplierID'";
+      $sql = "UPDATE purchdata SET
+			        price=" . $_POST['Price'] . ",
+				suppliersuom='" . $_POST['SuppliersUOM'] . "',
+				conversionfactor=" . $_POST['ConversionFactor'] . ",
+				supplierdescription='" . $_POST['SupplierDescription'] . "',
+				leadtime=" . $_POST['LeadTime'] . ",
+				preferred=" . $_POST['Preferred'] . "
+		WHERE purchdata.stockid='$StockID'
+		AND purchdata.supplierno='$SupplierID'";
 
 
      $ErrMsg = _('The supplier purchasing details could not be update because');
@@ -128,7 +128,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 
 if (isset($_GET['Delete'])){
 
-   $sql = "DELETE FROM PurchData WHERE SupplierNo='$SupplierID' AND StockID='$StockID'";
+   $sql = "DELETE FROM purchdata WHERE purchdata.supplierno='$SupplierID' AND purchdata.stockid='$StockID'";
    $ErrMsg =  _('The supplier purchasing details could not be deleted because');
    $DelResult=DB_query($sql,$db,$ErrMsg);
 
@@ -137,10 +137,10 @@ if (isset($_GET['Delete'])){
 }
 
 if (isset($StockID)){
-	$result = DB_query("SELECT Description, Units, MBflag FROM StockMaster WHERE StockID='$StockID'",$db);
+	$result = DB_query("SELECT stockmaster.description, stockmaster.units, stockmaster.mbflag FROM stockmaster WHERE stockmaster.stockid='$StockID'",$db);
 	$myrow = DB_fetch_row($result);
 	if (DB_num_rows($result)==1){
-   		if ($myrow[2]=="D" OR $myrow[2]=="A" OR $myrow[2]=="K"){
+   		if ($myrow[2]=='D' OR $myrow[2]=='A' OR $myrow[2]=='K'){
 			prnMsg( $StockID . ' - ' . $myrow[0] . '<P> ' . _('The item selected is a dummy part or an assembly or kit set part') . ' - ' . _('it is not purchased') . '. ' . _('Entry of purchasing information is therefore inappropriate'),'warn');
 			include('includes/footer.inc');
 			exit;
@@ -159,16 +159,17 @@ echo '    <A HREF="' . $rootpath . '/SelectProduct.php?' . SID . '">' . _('Selec
 echo '<HR><CENTER>';
 
 if (!isset($_GET['Edit'])){
-   $sql = "SELECT  SupplierNo,
-			SuppName,
-			Price,
-			CurrCode,
-			SuppliersUOM,
-			SupplierDescription,
-			LeadTime,
-			Preferred
-			FROM PurchData INNER JOIN Suppliers ON PurchData.SupplierNo=Suppliers.SupplierID
-			WHERE StockID = '" . $StockID . "'";
+   $sql = "SELECT  purchdata.supplierno,
+			suppliers.suppname,
+			purchdata.price,
+			suppliers.currcode,
+			purchdata.suppliersuom,
+			purchdata.supplierdescription,
+			purchdata.leadtime,
+			purchdata.preferred
+			FROM purchdata INNER JOIN suppliers 
+				ON purchdata.supplierno=suppliers.supplierid
+			WHERE purchdata.stockid = '" . $StockID . "'";
 
    $ErrMsg =  _('The supplier purchasing details for the selected part could not be retrieved because');
    $PurchDataResult = DB_query($sql, $db,$ErrMsg);
@@ -193,7 +194,7 @@ if (!isset($_GET['Edit'])){
      $k=0; //row colour counter
 
      while ($myrow=DB_fetch_array($PurchDataResult)) {
-	if ($myrow["Preferred"]==1){
+	if ($myrow['preferred']==1){
 	     echo '<tr bgcolor="$BGColour">';
 	} elseif ($k==1){
 		echo '<tr bgcolor="#CCCCCC">';
@@ -202,33 +203,35 @@ if (!isset($_GET['Edit'])){
 		echo '<tr bgcolor="#EEEEEE">';
 		$k++;
 	}
-	if ($myrow["Preferred"]==1){
+	if ($myrow['preferred']==1){
 	  $DisplayPreferred="Yes";
 	  $CountPreferreds++;
 	} else {
 	  $DisplayPreferred="No";
 	}
 
-	printf("<td>%s</td>
-	        <td ALIGN=RIGHT>%s</td>
-		<td>%s</td><td>%s</td>
-		<td ALIGN=RIGHT>%s " . _('days') . "</td>
-		<td>%s</td>
-		<td><a href='%s?StockID=%s&SupplierID=%s&Edit=1'>" . _('Edit') . "</a></td>
-		<td><a href='%s?StockID=%s&SupplierID=%s&Delete=1'>" . _('Delete') . "</a></td>
+	printf("<TD>%s</TD>
+	        <TD ALIGN=RIGHT>%s</TD>
+		<TD>%s</TD><TD>%s</TD>
+		<TD ALIGN=RIGHT>%s " . _('days') . "</TD>
+		<TD>%s</TD>
+		<TD><A HREF='%s?%s&StockID=%s&SupplierID=%s&Edit=1'>" . _('Edit') . "</a></TD>
+		<TD><A HREF='%s?%s&StockID=%s&SupplierID=%s&Delete=1'>" . _('Delete') . "</a></TD>
 		</tr>",
-		$myrow['SuppName'],
-		number_format($myrow['Price'],2),
-		$myrow['CurrCode'],
-		$myrow['SuppliersUOM'],
-		$myrow['LeadTime'],
+		$myrow['suppname'],
+		number_format($myrow['price'],2),
+		$myrow['currcode'],
+		$myrow['suppliersuom'],
+		$myrow['leadtime'],
 		$DisplayPreferred,
 		$_SERVER['PHP_SELF'],
+		SID,
 		$StockID,
-		$myrow['SupplierNo'],
+		$myrow['supplierno'],
 		$_SERVER['PHP_SELF'],
+		SID,
 		$StockID,
-		$myrow['SupplierNo']
+		$myrow['supplierno']
 		);
 
 	$j++;
@@ -254,41 +257,44 @@ if (!isset($_GET['Edit'])){
 
 if (isset($_GET['Edit'])){
 
-	$sql = "SELECT SupplierNo,
-				SuppName,
-				Price,
-				CurrCode,
-				SuppliersUOM,
-				SupplierDescription,
-				LeadTime,
-				ConversionFactor,
-				Preferred
-		FROM PurchData INNER JOIN Suppliers ON PurchData.SupplierNo=Suppliers.SupplierID
-		WHERE PurchData.SupplierNo='$SupplierID'
-		AND PurchData.StockID='$StockID'";
+	$sql = "SELECT purchdata.supplierno,
+				suppliers.suppname,
+				purchdata.price,
+				suppliers.currcode,
+				purchdata.suppliersuom,
+				purchdata.supplierdescription,
+				purchdata.leadtime,
+				purchdata.conversionfactor,
+				purchdata.preferred
+		FROM purchdata INNER JOIN suppliers 
+			ON purchdata.supplierno=suppliers.supplierid
+		WHERE purchdata.supplierno='$SupplierID'
+		AND purchdata.stockid='$StockID'";
 
 	$ErrMsg = _('The supplier purchasing details for the selected supplier and item could not be retrieved because');
 	$EditResult = DB_query($sql, $db, $ErrMsg);
 
 	$myrow = DB_fetch_array($EditResult);
 
-	$SuppName = $myrow['SuppName'];
-	$_POST['Price'] = $myrow['Price'];
-	$CurrCode = $myrow['CurrCode'];
-	$_POST['SuppliersUOM'] = $myrow['SuppliersUOM'];
-	$_POST['SupplierDescription'] = $myrow['SupplierDescription'];
-	$_POST['LeadTime'] = $myrow['LeadTime'];
-	$_POST['ConversionFactor'] = $myrow['ConversionFactor'];
-	$_POST['Preferred'] = $myrow['Preferred'];
+	$SuppName = $myrow['suppname'];
+	$_POST['Price'] = $myrow['price'];
+	$CurrCode = $myrow['currcode'];
+	$_POST['SuppliersUOM'] = $myrow['suppliersuom'];
+	$_POST['SupplierDescription'] = $myrow['supplierdescription'];
+	$_POST['LeadTime'] = $myrow['leadtime'];
+	$_POST['ConversionFactor'] = $myrow['conversionfactor'];
+	$_POST['Preferred'] = $myrow['preferred'];
 
 }
 
 echo '<TABLE>';
 
 if (isset($_GET['Edit'])){
-    echo '<TR><TD>' . _('Supplier Code') . ':</TD><TD><INPUT TYPE=HIDDEN NAME="SupplierID" VALUE="' . $SupplierID . '">' . $SupplierID . ' - ' . $SuppName . '</TD></TR>';
+    echo '<TR><TD>' . _('Supplier Code') . ':</TD>
+    	<TD><INPUT TYPE=HIDDEN NAME="SupplierID" VALUE="' . $SupplierID . '">' . $SupplierID . ' - ' . $SuppName . '</TD></TR>';
 } else {
-    echo '<TR><TD>' . _('Supplier Code') . ':</TD><TD><INPUT TYPE=TEXT NAME="SupplierID" MAXLENGTH=10 SIZE=11 VALUE="' . $SupplierID . '">';
+    echo '<TR><TD>' . _('Supplier Code') . ':</TD>
+    	<TD><INPUT TYPE=TEXT NAME="SupplierID" MAXLENGTH=10 SIZE=11 VALUE="' . $SupplierID . '">';
     if (!isset($SuppName) OR $SuppName=""){
 	echo '<FONT SIZE=1>' . '(' . _('A search facility is available below if necessary') . ')';
     } else {
@@ -297,19 +303,26 @@ if (isset($_GET['Edit'])){
     echo '</TD></TR>';
 }
 
-echo '<TR><TD>' . _('Currency') . ':</TD><TD><INPUT TYPE=HIDDEN NAME="CurrCode" . VALUE="' . $CurrCode . '">' . $CurrCode . '</TD></TR>';
-echo '<TR><TD>' . _('Price') . ' (' . _('in Supplier Currency') . '):</TD><TD><INPUT TYPE=TEXT NAME="Price" MAXLENGTH=12 SIZE=12 VALUE=' . $_POST['Price'] . '></TD></TR>';
-echo '<TR><TD>' . _('Suppliers Unit of Measure') . ':</TD><TD><INPUT TYPE=TEXT NAME="SuppliersUOM" MAXLENGTH=50 SIZE=51 VALUE="' . $_POST['SuppliersUOM'] . '"></TD></TR>';
+echo '<TR><TD>' . _('Currency') . ':</TD>
+	<TD><INPUT TYPE=HIDDEN NAME="CurrCode" . VALUE="' . $CurrCode . '">' . $CurrCode . '</TD></TR>';
+echo '<TR><TD>' . _('Price') . ' (' . _('in Supplier Currency') . '):</TD>
+	<TD><INPUT TYPE=TEXT NAME="Price" MAXLENGTH=12 SIZE=12 VALUE=' . $_POST['Price'] . '></TD></TR>';
+echo '<TR><TD>' . _('Suppliers Unit of Measure') . ':</TD>
+	<TD><INPUT TYPE=TEXT NAME="SuppliersUOM" MAXLENGTH=50 SIZE=51 VALUE="' . $_POST['SuppliersUOM'] . '"></TD></TR>';
 if (!isset($_POST['ConversionFactor']) OR $_POST['ConversionFactor']==""){
    $_POST['ConversionFactor']=1;
 }
-echo '<TR><TD>' . _('Conversion Factor (to our UOM)') . ':</TD><TD><INPUT TYPE=TEXT NAME="ConversionFactor" MAXLENGTH=12 SIZE=12 VALUE=' . $_POST['ConversionFactor'] . '></TD></TR>';
-echo '<TR><TD>' . _('Supplier Code or Description') . ':</TD><TD><INPUT TYPE=TEXT NAME="SupplierDescription" MAXLENGTH=50 SIZE=51 VALUE="' . $_POST['SupplierDescription'] . '"></TD></TR>';
+echo '<TR><TD>' . _('Conversion Factor (to our UOM)') . ':</TD>
+	<TD><INPUT TYPE=TEXT NAME="ConversionFactor" MAXLENGTH=12 SIZE=12 VALUE=' . $_POST['ConversionFactor'] . '></TD></TR>';
+echo '<TR><TD>' . _('Supplier Code or Description') . ':</TD>
+	<TD><INPUT TYPE=TEXT NAME="SupplierDescription" MAXLENGTH=50 SIZE=51 VALUE="' . $_POST['SupplierDescription'] . '"></TD></TR>';
 if (!isset($_POST['LeadTime']) OR $_POST['LeadTime']==""){
    $_POST['LeadTime']=1;
 }
-echo '<TR><TD>' . _('Lead Time') . ' (' . _('in days from date of order') . '):</TD><TD><INPUT TYPE=TEXT NAME="LeadTime" MAXLENGTH=10 SIZE=11 VALUE=' . $_POST['LeadTime'] . '></TD></TR>';
-echo '<TR><TD>' . _('Preferred Supplier') . ':</TD><TD><SELECT NAME="Preferred">';
+echo '<TR><TD>' . _('Lead Time') . ' (' . _('in days from date of order') . '):</TD>
+	<TD><INPUT TYPE=TEXT NAME="LeadTime" MAXLENGTH=10 SIZE=11 VALUE=' . $_POST['LeadTime'] . '></TD></TR>';
+echo '<TR><TD>' . _('Preferred Supplier') . ':</TD>
+	<TD><SELECT NAME="Preferred">';
 
 if ($_POST['Preferred']==1){
 	echo '<OPTION SELECTED VALUE=1>' . _('Yes');
@@ -340,31 +353,31 @@ if (isset($_POST['SearchSupplier'])){
 			//insert wildcard characters in spaces
 
 			$i=0;
-			$SearchString = "%";
-			while (strpos($_POST['Keywords'], " ", $i)) {
-				$wrdlen=strpos($_POST['Keywords']," ",$i) - $i;
-				$SearchString=$SearchString . substr($_POST['Keywords'],$i,$wrdlen) . "%";
-				$i=strpos($_POST['Keywords']," ",$i) +1;
+			$SearchString = '%';
+			while (strpos($_POST['Keywords'], ' ', $i)) {
+				$wrdlen=strpos($_POST['Keywords'],' ',$i) - $i;
+				$SearchString=$SearchString . substr($_POST['Keywords'],$i,$wrdlen) . '%';
+				$i=strpos($_POST['Keywords'],' ',$i) +1;
 			}
-			$SearchString = $SearchString. substr($_POST['Keywords'],$i)."%";
+			$SearchString = $SearchString. substr($_POST['Keywords'],$i).'%';
 
-			$SQL = "SELECT SupplierID,
-					SuppName,
-					CurrCode,
-					Address1,
-					Address2,
-					Address3
-					FROM Suppliers WHERE SuppName LIKE '$SearchString'";
+			$SQL = "SELECT suppliers.supplierid,
+					suppliers.suppname,
+					suppliers.currcode,
+					suppliers.address1,
+					suppliers.address2,
+					suppliers.address3
+					FROM suppliers WHERE suppliers.suppname " . LIKE . " '$SearchString'";
 
 		} elseif (strlen($_POST['SupplierCode'])>0){
-			$SQL = "SELECT SupplierID,
-					SuppName,
-					CurrCode,
-					Address1,
-					Address2,
-					Address3
-				FROM Suppliers
-				WHERE SupplierID LIKE '%" . $_POST['SupplierCode'] . "%'";
+			$SQL = "SELECT suppliers.supplierid,
+					suppliers.suppname,
+					suppliers.currcode,
+					suppliers.address1,
+					suppliers.address2,
+					suppliers.address3
+				FROM suppliers
+				WHERE suppliers.supplierid " . LIKE . " '%" . $_POST['SupplierCode'] . "%'";
 		}
 
 		$ErrMsg = _('The suppliers matching the criteria entered could not be retrieved because');
@@ -413,19 +426,19 @@ If (isset($SuppliersResult)) {
 
 	while ($myrow=DB_fetch_array($SuppliersResult)) {
 
-		printf("<tr><td><FONT SIZE=1><INPUT TYPE=SUBMIT NAME='SupplierID' VALUE='%s'</FONT></td>
-				<td><FONT SIZE=1>%s</FONT></td>
-				<td><FONT SIZE=1>%s</FONT></td>
-				<td><FONT SIZE=1>%s</FONT></td>
-				<td><FONT SIZE=1>%s</FONT></td>
-				<td><FONT SIZE=1>%s</FONT></td>
+		printf("<tr><TD><FONT SIZE=1><INPUT TYPE=SUBMIT NAME='SupplierID' VALUE='%s'</FONT></TD>
+				<TD><FONT SIZE=1>%s</FONT></TD>
+				<TD><FONT SIZE=1>%s</FONT></TD>
+				<TD><FONT SIZE=1>%s</FONT></TD>
+				<TD><FONT SIZE=1>%s</FONT></TD>
+				<TD><FONT SIZE=1>%s</FONT></TD>
 			</tr>",
-			$myrow['SupplierID'],
-			$myrow['SuppName'],
-			$myrow['CurrCode'],
-			$myrow['Address1'],
-			$myrow['Address2'],
-			$myrow['Address3']
+			$myrow['supplierid'],
+			$myrow['suppname'],
+			$myrow['currcode'],
+			$myrow['address1'],
+			$myrow['address2'],
+			$myrow['address3']
 			);
 
 		$j++;
@@ -450,6 +463,6 @@ if (isset($StockID) AND strlen($StockID)!=0){
    echo '<BR><A HREF="' . $rootpath . '/SelectCompletedOrder.php?' .SID . '&SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</A>';
 }
 
-echo '</form></center>';
+echo '</FORM></CENTER>';
 include('includes/footer.inc');
 ?>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 10;
 
@@ -39,23 +39,23 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedAccountGroup could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
-		$sql = "UPDATE AccountGroups
-				SET GroupName='" . $_POST['GroupName'] . "',
-					SectionInAccounts=" . $_POST['SectionInAccounts'] . ",
-					PandL=" . $_POST['PandL'] . ",
-					SequenceInTB=" . $_POST['SequenceInTB'] . "
-				WHERE GroupName = '" . $_POST['SelectedAccountGroup'] . "'";
+		$sql = "UPDATE accountgroups
+				SET groupname='" . $_POST['GroupName'] . "',
+					sectioninaccounts=" . $_POST['SectionInAccounts'] . ",
+					pandl=" . $_POST['PandL'] . ",
+					sequenceintb=" . $_POST['SequenceInTB'] . "
+				WHERE groupname = '" . $_POST['SelectedAccountGroup'] . "'";
 
 		$msg = _('Record Updated');
 	} elseif ($InputError !=1) {
 
 	/*Selected group is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new account group form */
 
-		$sql = "INSERT INTO AccountGroups (
-					GroupName,
-					SectionInAccounts,
-					SequenceInTB,
-					PandL)
+		$sql = "INSERT INTO accountgroups (
+					groupname,
+					sectioninaccounts,
+					sequenceintb,
+					pandl)
 			VALUES (
 				'" . $_POST['GroupName'] . "',
 				" . $_POST['SectionInAccounts'] . ",
@@ -77,7 +77,7 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'ChartMaster'
 
-	$sql= "SELECT COUNT(*) FROM ChartMaster WHERE ChartMaster.Group_='" . $_GET['SelectedAccountGroup'] . "'";
+	$sql= "SELECT COUNT(*) FROM chartmaster WHERE chartmaster.group_='" . $_GET['SelectedAccountGroup'] . "'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
@@ -86,7 +86,7 @@ if (isset($_POST['submit'])) {
 
 	} else {
 
-		$sql="DELETE FROM AccountGroups WHERE GroupName='" . $_GET['SelectedAccountGroup'] . "'";
+		$sql="DELETE FROM accountgroups WHERE groupname='" . $_GET['SelectedAccountGroup'] . "'";
 		$result = DB_query($sql,$db);
 		prnMsg( $_GET['SelectedAccountGroup'] . ' ' . _('group has been deleted') . '!','success');
 
@@ -103,12 +103,13 @@ then none of the above are true and the list of account groups will be displayed
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT GroupName,
-			SectionInAccounts,
-			SequenceInTB,
-			PandL
-		FROM AccountGroups
-		ORDER BY SequenceInTB";
+	$sql = "SELECT groupname,
+			sectionname,
+			sequenceintb,
+			pandl
+		FROM accountgroups 
+		LEFT JOIN accountsection ON sectionid = sectioninaccounts
+		ORDER BY sequenceintb";
 
 	$ErrMsg = _('Could not get account groups because');
 	$result = DB_query($sql,$db,$ErrMsg);
@@ -144,7 +145,7 @@ or deletion of the records*/
 			break;
 		} //end of switch statment
 
-		echo '<TD>' . $myrow[0] . '</TD><TD>' . $Sections[$myrow[1]] . '</TD><TD>' . $myrow[2] . '</TD><TD>' . $PandLText . '</TD>';
+		echo '<TD>' . $myrow[0] . '</TD><TD>' . $myrow[1] . '</TD><TD>' . $myrow[2] . '</TD><TD>' . $PandLText . '</TD>';
 		echo '<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedAccountGroup=' . $myrow[0] . '">' . _('Edit') . '</A></TD>';
 		echo '<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedAccountGroup=' . $myrow[0] . '&delete=1">' . _('Delete') .'</A></TD>';
 
@@ -166,20 +167,20 @@ if (! isset($_GET['delete'])) {
 	if (isset($_GET['SelectedAccountGroup'])) {
 		//editing an existing account group
 
-		$sql = "SELECT GroupName,
-				SectionInAccounts,
-				SequenceInTB,
-				PandL
-			FROM AccountGroups
-			WHERE GroupName='" . $_GET['SelectedAccountGroup'] ."'";
+		$sql = "SELECT groupname,
+				sectioninaccounts,
+				sequenceintb,
+				pandl
+			FROM accountgroups
+			WHERE groupname='" . $_GET['SelectedAccountGroup'] ."'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
 
-		$_POST['GroupName'] = $myrow['GroupName'];
-		$_POST['SectionInAccounts']  = $myrow['SectionInAccounts'];
-		$_POST['SequenceInTB']  = $myrow['SequenceInTB'];
-		$_POST['PandL']  = $myrow['PandL'];
+		$_POST['GroupName'] = $myrow['groupname'];
+		$_POST['SectionInAccounts']  = $myrow['sectioninaccounts'];
+		$_POST['SequenceInTB']  = $myrow['sequenceintb'];
+		$_POST['PandL']  = $myrow['pandl'];
 
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedAccountGroup' VALUE='" . $_GET['SelectedAccountGroup'] . "'>";
 		echo "<INPUT TYPE=HIDDEN NAME='GroupName' VALUE='" . $_POST['GroupName'] . "'>";
@@ -213,18 +214,18 @@ if (! isset($_GET['delete'])) {
 	echo '<TR><TD>' . _('Section In Accounts') . ':' . '</TD>
 	<TD><SELECT name=SectionInAccounts>';
 
-
-	foreach ($Sections AS $SectionNo=>$SectionName ) {
-		if ($_POST['SectionInAccounts']==$SectionNo) {
-			echo "<OPTION SELECTED VALUE=$SectionNo>$SectionName";
+	$sql = 'SELECT sectionid, sectionname FROM accountsection ORDER BY sectionid';
+	$secresult = DB_query($sql, $db);
+	while( $secrow = DB_fetch_array($secresult) ) {
+		if ($_POST['SectionInAccounts']==$secrow['sectionid']) {
+			echo "<OPTION SELECTED VALUE=".$secrow['sectionid'].">".$secrow['sectionname'];
 		} else {
-			echo "<OPTION VALUE=$SectionNo>$SectionName";
+			echo "<OPTION VALUE=".$secrow['sectionid'].">".$secrow['sectionname'];
 		}
 	}
 	echo '</SELECT>';
-
 	echo '</TD></TR>';
-
+	
 	echo '<TR><TD>' . _('Profit and Loss') . ':' . '</TD>
 	<TD><SELECT name=PandL>';
 

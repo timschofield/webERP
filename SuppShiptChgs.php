@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of Shipts objects - containing details of all shipment charges for invoicing
 Shipment charges are posted to the debit of GRN suspense if the Creditors - GL link is on
@@ -34,6 +34,10 @@ if (isset($_POST['AddShiptChgToInvoice'])){
 	if ($_POST['ShiptRef'] == ""){
 		$_POST['ShiptRef'] = $_POST['ShiptSelection'];
 	}
+	if (!is_numeric($_POST['ShiptRef'])){
+		prnMsg(_('The shipment reference must be numeric') . '. ' . _('This shipment charge cannot be added to the invoice'),'error');
+		$InputError = True;
+	}
 
 	if (!is_numeric($_POST['Amount'])){
 		prnMsg(_('The amount entered is not numeric') . '. ' . _('This shipment charge cannot be added to the invoice'),'error');
@@ -50,7 +54,6 @@ if (isset($_POST['AddShiptChgToInvoice'])){
 if (isset($_GET['Delete'])){
 
 	$_SESSION['SuppTrans']->Remove_Shipt_From_Trans($_GET['Delete']);
-
 }
 
 /*Show all the selected ShiptRefs so far from the SESSION['SuppInv']->Shipts array */
@@ -63,14 +66,17 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit=='Invoice'){
 echo $_SESSION['SuppTrans']->SuppReference . ' ' ._('From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 
 echo "<TABLE CELLPADDING=2>";
-$TableHeader = "<TR><TD CLASS='tableheader'>" . _('Shipment') . "</TD><TD CLASS='tableheader'>" . _('Amount') . '</TD></TR>';
+$TableHeader = "<TR><TD CLASS='tableheader'>" . _('Shipment') . "</TD>
+		<TD CLASS='tableheader'>" . _('Amount') . '</TD></TR>';
 echo $TableHeader;
 
 $TotalShiptValue = 0;
 
 foreach ($_SESSION['SuppTrans']->Shipts as $EnteredShiptRef){
 
-	echo '<TR><TD>' . $EnteredShiptRef->ShiptRef . '</TD><TD ALIGN=RIGHT>' . number_format($EnteredShiptRef->Amount,2) . "</TD><TD><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "Delete=" . $EnteredShiptRef->Counter . "'>" . _('Delete') . '</A></TD></TR>';
+	echo '<TR><TD>' . $EnteredShiptRef->ShiptRef . '</TD>
+		<TD ALIGN=RIGHT>' . number_format($EnteredShiptRef->Amount,2) . "</TD>
+		<TD><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "&Delete=" . $EnteredShiptRef->Counter . "'>" . _('Delete') . '</A></TD></TR>';
 
 	$TotalShiptValue = $TotalShiptValue + $EnteredShiptRef->Amount;
 
@@ -97,29 +103,37 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 
 echo '<TABLE>';
-echo '<TR><TD>' . _('Shipment Reference') . ":</TD><TD><INPUT TYPE='Text' NAME='ShiptRef' SIZE=12 MAXLENGTH=11 VALUE=" .  $_POST['ShiptRef'] . '></TD></TR>';
+echo '<TR><TD>' . _('Shipment Reference') . ":</TD>
+	<TD><INPUT TYPE='Text' NAME='ShiptRef' SIZE=12 MAXLENGTH=11 VALUE=" .  $_POST['ShiptRef'] . '></TD></TR>';
 echo '<TR><TD>' . _('Shipment Selection') . ':<BR><FONT SIZE=1>' . _('If you know the code enter it above') . '<BR>' . _('otherwise select the shipment from the list') . "</FONT></TD><TD><SELECT NAME='ShiptSelection'>";
 
-$sql = "SELECT ShiptRef, Vessel, ETA, SuppName FROM Shipments INNER JOIN Suppliers ON Shipments.SupplierID=Suppliers.SupplierID WHERE Closed=0";
+$sql = "SELECT shiptref, 
+		vessel, 
+		eta, 
+		suppname 
+	FROM shipments INNER JOIN suppliers 
+		ON shipments.supplierid=suppliers.supplierid 
+	WHERE closed=0";
 
 $result = DB_query($sql, $db);
 
 while ($myrow = DB_fetch_array($result)) {
-	if ($myrow["ShiptRef"]==$_POST['ShiptSelection']) {
+	if ($myrow['shiptref']==$_POST['ShiptSelection']) {
 		echo '<OPTION SELECTED VALUE=';
 	} else {
 		echo '<OPTION VALUE=';
 	}
-	echo $myrow['ShiptRef'] . '>' . $myrow['ShiptRef'] . ' - ' . $myrow['Vessel'] . ' ' . _('ETA') . ' ' . ConvertSQLDate($myrow['ETA']) . ' ' . _('from') . ' ' . $myrow['SuppName'];
+	echo $myrow['shiptref'] . '>' . $myrow['shiptref'] . ' - ' . $myrow['vessel'] . ' ' . _('ETA') . ' ' . ConvertSQLDate($myrow['eta']) . ' ' . _('from') . ' ' . $myrow['suppname'];
 }
 
 echo '</SELECT></TD></TR>';
 
-echo '<TR><TD>' . _('Amount') . ":</TD><TD><INPUT TYPE='Text' NAME='Amount' SIZE=12 MAXLENGTH=11 VALUE=" .  $_POST['Amount'] . '></TD></TR>';
+echo '<TR><TD>' . _('Amount') . ":</TD>
+	<TD><INPUT TYPE='Text' NAME='Amount' SIZE=12 MAXLENGTH=11 VALUE=" .  $_POST['Amount'] . '></TD></TR>';
 echo '</TABLE>';
 
 echo "<INPUT TYPE='Submit' NAME='AddShiptChgToInvoice' VALUE='" . _('Enter Shipment Charge') . "'>";
 
-echo '</form>';
+echo '</FORM>';
 include('includes/footer.inc');
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 /*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen while the user is selecting the criteria the system is posting any unposted transactions */
 
@@ -11,7 +11,7 @@ $title = _('Profit and Loss');
 include('includes/header.inc');
 include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
-
+include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
 
 echo "<FORM METHOD='POST' ACTION=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
@@ -22,39 +22,39 @@ if ($_POST['FromPeriod'] > $_POST['ToPeriod']){
 
 if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_POST['SelectADifferentPeriod'])){
 
-	if (Date('m') > $YearEnd){
+	if (Date('m') > $_SESSION['YearEnd']){
 		/*Dates in SQL format */
-		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$YearEnd + 2,0,Date('Y')));
+		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')));
 	} else {
-		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$YearEnd + 2,0,Date('Y')-1));
+		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 	}
 
 /*Show a form to allow input of criteria for TB to show */
 	echo '<CENTER><TABLE><TR><TD>'._('Select Period From').":</TD><TD><SELECT Name='FromPeriod'>";
 
-	$sql = 'SELECT PeriodNo, LastDate_In_Period FROM Periods';
+	$sql = 'SELECT periodno, lastdate_in_period FROM periods';
 	$Periods = DB_query($sql,$db);
 
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
 		if(isset($_POST['FromPeriod']) AND $_POST['FromPeriod']!=''){
-			if( $_POST['FromPeriod']== $myrow['PeriodNo']){
-				echo '<OPTION SELECTED VALUE=' . $myrow['PeriodNo'] . '>' .MonthAndYearFromSQLDate($myrow['LastDate_In_Period']);
+			if( $_POST['FromPeriod']== $myrow['periodno']){
+				echo '<OPTION SELECTED VALUE=' . $myrow['periodno'] . '>' .MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 			} else {
-				echo '<OPTION VALUE=' . $myrow['PeriodNo'] . '>' . MonthAndYearFromSQLDate($myrow['LastDate_In_Period']);
+				echo '<OPTION VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 			}
 		} else {
-			if($myrow['LastDate_In_Period']==$DefaultFromDate){
-				echo '<OPTION SELECTED VALUE=' . $myrow['PeriodNo'] . '>' . MonthAndYearFromSQLDate($myrow['LastDate_In_Period']);
+			if($myrow['lastdate_in_period']==$DefaultFromDate){
+				echo '<OPTION SELECTED VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 			} else {
-				echo '<OPTION VALUE=' . $myrow['PeriodNo'] . '>' . MonthAndYearFromSQLDate($myrow['LastDate_In_Period']);
+				echo '<OPTION VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 			}
 		}
 	}
 
 	echo '</SELECT></TD></TR>';
 	if (!isset($_POST['ToPeriod']) OR $_POST['ToPeriod']==''){
-		$sql = 'SELECT Max(PeriodNo) FROM Periods';
+		$sql = 'SELECT MAX(periodno) FROM periods';
 		$MaxPrd = DB_query($sql,$db);
 		$MaxPrdrow = DB_fetch_row($MaxPrd);
 
@@ -69,10 +69,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
 
-		if($myrow['PeriodNo']==$DefaultToPeriod){
-			echo '<OPTION SELECTED VALUE=' . $myrow['PeriodNo'] . '>' . MonthAndYearFromSQLDate($myrow['LastDate_In_Period']);
+		if($myrow['periodno']==$DefaultToPeriod){
+			echo '<OPTION SELECTED VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 		} else {
-			echo '<OPTION VALUE =' . $myrow['PeriodNo'] . '>' . MonthAndYearFromSQLDate($myrow['LastDate_In_Period']);
+			echo '<OPTION VALUE =' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 		}
 	}
 	echo '</SELECT></TD></TR>';
@@ -103,29 +103,34 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		exit;
 	}
 
-	$sql = 'SELECT LastDate_in_Period FROM Periods WHERE PeriodNo=' . $_POST['ToPeriod'];
+	$sql = 'SELECT lastdate_in_period FROM periods WHERE periodno=' . $_POST['ToPeriod'];
 	$PrdResult = DB_query($sql, $db);
 	$myrow = DB_fetch_row($PrdResult);
 	$PeriodToDate = MonthAndYearFromSQLDate($myrow[0]);
 
 
-	$SQL = 'SELECT AccountGroups.SectionInAccounts, AccountGroups.GroupName,
-			ChartDetails.AccountCode ,
-			ChartMaster.AccountName,
-			Sum(CASE WHEN ChartDetails.Period=' . $_POST['FromPeriod'] . ' THEN ChartDetails.BFwd ELSE 0 END) AS FirstPrdBFwd,
-			Sum(CASE WHEN ChartDetails.Period=' . $_POST['FromPeriod'] . ' THEN ChartDetails.BFwdBudget ELSE 0 END) AS FirstPrdBudgetBFwd,
-			Sum(CASE WHEN ChartDetails.Period=' . $_POST['ToPeriod'] . ' THEN ChartDetails.BFwd + ChartDetails.Actual ELSE 0 END) AS LastPrdCFwd,
-			Sum(CASE WHEN ChartDetails.Period=' . ($_POST['FromPeriod'] - 12) . ' THEN ChartDetails.BFwd ELSE 0 END) AS LYFirstPrdBFwd,
-			Sum(CASE WHEN ChartDetails.Period=' . ($_POST['ToPeriod']-12) . ' THEN ChartDetails.BFwd + ChartDetails.Actual ELSE 0 END) AS LYLastPrdCFwd,
-			Sum(CASE WHEN ChartDetails.Period=' . $_POST['ToPeriod'] . ' THEN ChartDetails.BFwdBudget + ChartDetails.Budget ELSE 0 END) AS LastPrdBudgetCFwd
-		FROM ChartMaster INNER JOIN AccountGroups
-		ON ChartMaster.Group_ = AccountGroups.GroupName INNER JOIN ChartDetails
-		ON ChartMaster.AccountCode= ChartDetails.AccountCode
-		WHERE AccountGroups.PandL=1
-		GROUP BY AccountGroups.GroupName,
-			ChartDetails.AccountCode,
-			ChartMaster.AccountName
-		ORDER BY AccountGroups.SectionInAccounts, AccountGroups.SequenceInTB, ChartDetails.AccountCode';
+	$SQL = 'SELECT accountgroups.sectioninaccounts, 
+			accountgroups.groupname,
+			chartdetails.accountcode ,
+			chartmaster.accountname,
+			Sum(CASE WHEN chartdetails.period=' . $_POST['FromPeriod'] . ' THEN chartdetails.bfwd ELSE 0 END) AS firstprdbfwd,
+			Sum(CASE WHEN chartdetails.period=' . $_POST['FromPeriod'] . ' THEN chartdetails.bfwdbudget ELSE 0 END) AS firstprdbudgetbfwd,
+			Sum(CASE WHEN chartdetails.period=' . $_POST['ToPeriod'] . ' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lastprdcfwd,
+			Sum(CASE WHEN chartdetails.period=' . ($_POST['FromPeriod'] - 12) . ' THEN chartdetails.bfwd ELSE 0 END) AS lyfirstprdbfwd,
+			Sum(CASE WHEN chartdetails.period=' . ($_POST['ToPeriod']-12) . ' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lylastprdcfwd,
+			Sum(CASE WHEN chartdetails.period=' . $_POST['ToPeriod'] . ' THEN chartdetails.bfwdbudget + chartdetails.budget ELSE 0 END) AS lastprdbudgetcfwd
+		FROM chartmaster INNER JOIN accountgroups
+		ON chartmaster.group_ = accountgroups.groupname INNER JOIN chartdetails
+		ON chartmaster.accountcode= chartdetails.accountcode
+		WHERE accountgroups.pandl=1
+		GROUP BY accountgroups.sectioninaccounts,
+			accountgroups.groupname,
+			chartdetails.accountcode,
+			chartmaster.accountname,
+			accountgroups.sequenceintb
+		ORDER BY accountgroups.sectioninaccounts, 
+			accountgroups.sequenceintb, 
+			chartdetails.accountcode';
 
 	$AccountsResult = DB_query($SQL,$db,_('No general ledger accounts were returned by the SQL because'),_('The SQL that failed was'));
 
@@ -171,7 +176,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 
 	while ($myrow=DB_fetch_array($AccountsResult)) {
 
-		if ($myrow['GroupName']!= $ActGrp){
+		if ($myrow['groupname']!= $ActGrp){
 
 			if ($GrpActual+$GrpBudget+$GrpPrdActual+$GrpPrdBudget !=0){
 
@@ -180,9 +185,9 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 						<TD COLSPAN=2></TD>
 						<TD COLSPAN=6><HR></TD>
 					</TR>';
-					$ActGrpLable = $ActGrp . ' ' . _('total');
+					$ActGrpLabel = $ActGrp . ' ' . _('total');
 				} else {
-					$ActGrpLable = $ActGrp;
+					$ActGrpLabel = $ActGrp;
 				}
 
 				if ($Section ==1){ /*Income */
@@ -195,7 +200,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 						<TD></TD>
 						<TD ALIGN=RIGHT>%s</TD>
 						</TR>',
-						$ActGrpLable,
+						$ActGrpLabel,
 						number_format(-$GrpPrdActual),
 						number_format(-$GrpPrdBudget),
 						number_format(-$GrpPrdLY));
@@ -209,7 +214,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 						<TD ALIGN=RIGHT>%s</TD>
 						<TD></TD>
 						</TR>',
-						$ActGrpLable,
+						$ActGrpLabel,
 						number_format($GrpPrdActual),
 						number_format($GrpPrdBudget),
 						number_format($GrpPrdLY));
@@ -225,7 +230,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 
 		}
 
-		if ($myrow['SectionInAccounts']!= $Section){
+		if ($myrow['sectioninaccounts']!= $Section){
 
 			if ($SectionPrdLY+$SectionPrdActual+$SectionPrdBudget !=0){
 				if ($Section==1) { /*Income*/
@@ -334,13 +339,13 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 			$SectionPrdActual =0;
 			$SectionPrdBudget =0;
 
-			$Section = $myrow['SectionInAccounts'];
+			$Section = $myrow['sectioninaccounts'];
 
 			if ($_POST['Detail']=='Detailed'){
 				printf('<TR>
 					<td COLSPAN=6><FONT SIZE=4 COLOR=BLUE><B>%s</B></FONT></TD>
 					</TR>',
-					$Sections[$myrow['SectionInAccounts']]);
+					$Sections[$myrow['sectioninaccounts']]);
 			}
 			$j++;
 
@@ -348,19 +353,19 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 
 
 
-		if ($myrow['GroupName']!= $ActGrp){
-			$ActGrp = $myrow['GroupName'];
+		if ($myrow['groupname']!= $ActGrp){
+			$ActGrp = $myrow['groupname'];
 			if ($_POST['Detail']=='Detailed'){
 				printf('<TR>
 					<td COLSPAN=6><FONT SIZE=2 COLOR=BLUE><B>%s</B></FONT></TD>
 					</TR>',
-					$myrow['GroupName']);
+					$myrow['groupname']);
 			}
 		}
 
-		$AccountPeriodActual = $myrow['LastPrdCFwd'] - $myrow['FirstPrdBFwd'];
-		$AccountPeriodLY = $myrow['LYLastPrdCFwd'] - $myrow['LYFirstPrdBFwd'];
-		$AccountPeriodBudget = $myrow['LastPrdBudgetCFwd'] - $myrow['FirstPrdBudgetBFwd'];
+		$AccountPeriodActual = $myrow['lastprdcfwd'] - $myrow['firstprdbfwd'];
+		$AccountPeriodLY = $myrow['lylastprdcfwd'] - $myrow['lyfirstprdbfwd'];
+		$AccountPeriodBudget = $myrow['lastprdbudgetcfwd'] - $myrow['firstprdbudgetbfwd'];
 		$PeriodProfitLoss += $AccountPeriodActual;
 		$PeriodBudgetProfitLoss += $AccountPeriodBudget;
 		$PeriodLYProfitLoss += $AccountPeriodLY;
@@ -383,7 +388,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 				$k++;
 			}
 
-			$ActEnquiryURL = "<A HREF='$rootpath/GLAccountInquiry.php?" . SID . '&Period=' . $_POST['ToPeriod'] . '&Account=' . $myrow['AccountCode'] . "&Show=Yes'>" . $myrow['AccountCode'] . '<A>';
+			$ActEnquiryURL = "<A HREF='$rootpath/GLAccountInquiry.php?" . SID . '&Period=' . $_POST['ToPeriod'] . '&Account=' . $myrow['accountcode'] . "&Show=Yes'>" . $myrow['accountcode'] . '<A>';
 
 			if ($Section ==1){
 				$PrintString = '<td>%s</td>
@@ -409,7 +414,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 
 			printf($PrintString,
 				$ActEnquiryURL,
-				$myrow['AccountName'],
+				$myrow['accountname'],
 				number_format($AccountPeriodActual),
 				number_format($AccountPeriodBudget),
 				number_format($AccountPeriodLY)
@@ -433,9 +438,9 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 			<TD COLSPAN=2></TD>
 			<TD COLSPAN=6><HR></TD>
 			</TR>';
-			$ActGrpLable = $ActGrp . ' '._('total');
+			$ActGrpLabel = $ActGrp . ' '._('total');
 		} else {
-			$ActGrpLable = $ActGrp;
+			$ActGrpLabel = $ActGrp;
 		}
 
 		if ($Section ==1){ /*Income */
@@ -448,7 +453,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 			<TD></TD>
 			<TD ALIGN=RIGHT>%s</TD>
 			</TR>',
-			$ActGrpLable,
+			$ActGrpLabel,
 			number_format(-$GrpPrdActual),
 			number_format(-$GrpPrdBudget),
 			number_format(-$GrpPrdLY));
@@ -462,7 +467,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 				<TD ALIGN=RIGHT>%s</TD>
 				<TD></TD>
 				</TR>',
-				$ActGrpLable,
+				$ActGrpLabel,
 				number_format($GrpPrdActual),
 				number_format($GrpPrdBudget),
 				number_format($GrpPrdLY));
@@ -562,7 +567,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		printf('<TR>
 			<td COLSPAN=6><FONT SIZE=4 COLOR=BLUE><B>%s</B></FONT></TD>
 			</TR>',
-			$Sections[$myrow['SectionInAccounts']]);
+			$Sections[$myrow['sectioninaccounts']]);
 	}
 
 
@@ -594,7 +599,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 	echo '</TABLE>';
 	echo "<INPUT TYPE=SUBMIT Name='SelectADifferentPeriod' Value='"._('Select A Different Period')."'></CENTER>";
 }
-echo '</form>';
+echo '</FORM>';
 include('includes/footer.inc');
 
 ?>

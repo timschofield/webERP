@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -23,31 +23,31 @@ If (!isset($_GET['TransNo']) || $_GET['TransNo']==""){
 /*retrieve the order details from the database to print */
 $ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
 
-$sql = "SELECT CustomerRef,
-			Comments,
-			SalesOrders.OrdDate,
-			SalesOrders.DeliverTo,
-			SalesOrders.DelAdd1,
-			SalesOrders.DelAdd2,
-			SalesOrders.DelAdd3,
-			SalesOrders.DelAdd4,
-			DebtorsMaster.Name,
-			DebtorsMaster.Address1,
-			DebtorsMaster.Address2,
-			DebtorsMaster.Address3,
-			DebtorsMaster.Address4,
-			ShipperName,
-			PrintedPackingSlip,
-			DatePackingSlipPrinted,
-			LocationName
-		FROM SalesOrders,
-			DebtorsMaster,
-			Shippers,
-			Locations
-		WHERE SalesOrders.DebtorNo=DebtorsMaster.DebtorNo
-		AND SalesOrders.ShipVia=Shippers.Shipper_ID
-		AND SalesOrders.FromStkLoc=Locations.LocCode
-		AND SalesOrders.OrderNo=" . $_GET['TransNo'];
+$sql = "SELECT salesorders.customerref,
+		salesorders.comments,
+		salesorders.orddate,
+		salesorders.deliverto,
+		salesorders.deladd1,
+		salesorders.deladd2,
+		salesorders.deladd3,
+		salesorders.deladd4,
+		debtorsmaster.name,
+		debtorsmaster.address1,
+		debtorsmaster.address2,
+		debtorsmaster.address3,
+		debtorsmaster.address4,
+		shippers.shippername,
+		salesorders.printedpackingslip,
+		salesorders.datepackingslipprinted,
+		locations.locationname
+	FROM salesorders,
+		debtorsmaster,
+		shippers,
+		locations
+	WHERE salesorders.debtorno=debtorsmaster.debtorno
+	AND salesorders.shipvia=shippers.shipper_id
+	AND salesorders.fromstkloc=locations.loccode
+	AND salesorders.orderno=" . $_GET['TransNo'];
 
 $result=DB_query($sql,$db, $ErrMsg);
 
@@ -66,12 +66,12 @@ if (DB_num_rows($result)==0){
 } elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
 
         $myrow = DB_fetch_array($result);
-        if ($myrow['PrintedPackingSlip']==1 AND ($_GET['Reprint']!='OK' OR !isset($_GET['Reprint']))){
+        if ($myrow['printedpackingslip']==1 AND ($_GET['Reprint']!='OK' OR !isset($_GET['Reprint']))){
                 $title = _('Print Packing Slip Error');
                 include('includes/header.inc');
                 echo '<P>';
                 prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
-                        _('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($myrow['DatePackingSlipPrinted']) .
+                        _('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($myrow['datepackingslipprinted']) .
                         '<br>' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
               echo '<P><A HREF="' . $rootpath . '/PrintCustOrder.php?' . SID . '&TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'
                 . _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</A><P>' .
@@ -97,8 +97,6 @@ LETS GO */
 $PaperSize = 'A4_Landscape';
 include("includes/PDFStarter_ros.inc");
 
-$CompanyRecord = ReadInCompanyRecord(&$db);
-
 $FontSize=12;
 $pdf->selectFont('./fonts/Helvetica.afm');
 $pdf->addinfo('Title', _('Customer Laser Packing Slip') );
@@ -118,10 +116,14 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 	$ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' .
 		$_GET['TransNo'] . ' ' . _('from the database');
 
-	$sql = "SELECT StkCode, Description, Quantity, QtyInvoiced, UnitPrice
-		FROM SalesOrderDetails INNER JOIN StockMaster
-			ON SalesOrderDetails.StkCode=StockMaster.StockID
-		WHERE SalesOrderDetails.OrderNo=" . $_GET['TransNo'];
+	$sql = "SELECT salesorderdetails.stkcode, 
+			stockmaster.description, 
+			salesorderdetails.quantity, 
+			salesorderdetails.qtyinvoiced, 
+			salesorderdetails.unitprice
+		FROM salesorderdetails INNER JOIN stockmaster
+			ON salesorderdetails.stkcode=stockmaster.stockid
+		WHERE salesorderdetails.orderno=" . $_GET['TransNo'];
 	$result=DB_query($sql,$db, $ErrMsg);
 
 	if (DB_num_rows($result)>0){
@@ -130,12 +132,12 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 
 		while ($myrow2=DB_fetch_array($result)){
 
-			$DisplayQty = number_format($myrow2['Quantity'],2);
-			$DisplayPrevDel = number_format($myrow2['QtyInvoiced'],2);
-			$DisplayQtySupplied = number_format($myrow2['Quantity'] - $myrow2['QtyInvoiced'],2);
+			$DisplayQty = number_format($myrow2['quantity'],2);
+			$DisplayPrevDel = number_format($myrow2['qtyinvoiced'],2);
+			$DisplayQtySupplied = number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],2);
 
-			$LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize,$myrow2['StkCode']);
-			$LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize,$myrow2['Description']);
+			$LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize,$myrow2['stkcode']);
+			$LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize,$myrow2['description']);
 			$LeftOvers = $pdf->addTextWrap(400,$YPos,85,$FontSize,$DisplayQty,'right');
 			$LeftOvers = $pdf->addTextWrap(503,$YPos,85,$FontSize,$DisplayQtySupplied,'right');
 			$LeftOvers = $pdf->addTextWrap(602,$YPos,85,$FontSize,$DisplayPrevDel,'right');
@@ -179,7 +181,7 @@ if ($len<=20){
 //echo 'here';
 	$pdf->Stream();
 
-	$sql = "UPDATE SalesOrders SET PrintedPackingSlip=1, DatePackingSlipPrinted='" . Date('Y-m-d') . "' WHERE SalesOrders.OrderNo=" .$_GET['TransNo'];
+	$sql = "UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted='" . Date('Y-m-d') . "' WHERE salesorders.orderno=" .$_GET['TransNo'];
 	$result = DB_query($sql,$db);
 }
 

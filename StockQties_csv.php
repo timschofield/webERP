@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 5;
 
@@ -15,10 +15,10 @@ echo '<P>' . _('Making a comma seperated values file of the current stock quanti
 
 $ErrMsg = _('The SQL to get the stock quantites failed with the message');
 
-$sql = 'SELECT StockID, SUM(Quantity) FROM LocStock GROUP BY StockID HAVING SUM(Quantity)<>0';
+$sql = 'SELECT stockid, SUM(quantity) FROM locstock GROUP BY stockid HAVING SUM(quantity)<>0';
 $result = DB_query($sql, $db, $ErrMsg);
 
-$fp = fopen($reports_dir . '/StockQties.csv', "w");
+$fp = fopen($_SESSION['reports_dir'] . '/StockQties.csv', "w");
 
 While ($myrow = DB_fetch_row($result)){
 
@@ -28,7 +28,7 @@ While ($myrow = DB_fetch_row($result)){
 
 fclose($fp);
 
-echo "<P><A HREF='" . $rootpath . '/' . $reports_dir . "/StockQties.csv'>" . _('click here') . '</A> ' . _('to view the file') . '<BR>';
+echo "<P><A HREF='" . $rootpath . '/' . $_SESSION['reports_dir'] . "/StockQties.csv'>" . _('click here') . '</A> ' . _('to view the file') . '<BR>';
 
 include('includes/footer.inc');
 

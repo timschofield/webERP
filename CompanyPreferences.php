@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity =10;
 
 include('includes/session.inc');
@@ -48,31 +48,31 @@ if (isset($_POST['submit'])) {
 
 	if ($InputError !=1){
 
-		$sql = "UPDATE Companies SET
-				CoyName='" . $_POST['CoyName'] . "',
-				CompanyNumber = '" . $_POST['CompanyNumber'] . "',
-				GSTNo='" . $_POST['GSTNo'] . "',
-				PostalAddress ='" . $_POST['PostalAddress'] . "',
-				RegOffice1='" . $_POST['RegOffice1'] . "',
-				RegOffice2='" . $_POST['RegOffice2'] . "',
-				RegOffice3='" . $_POST['RegOffice3'] . "',
-				Telephone='" . $_POST['Telephone'] . "',
-				Fax='" . $_POST['Fax'] . "',
-				Email='" . $_POST['Email'] . "',
-				CurrencyDefault='" . $_POST['CurrencyDefault'] . "',
-				DebtorsAct=" . $_POST['DebtorsAct'] . ",
-				PytDiscountAct=" . $_POST['PytDiscountAct'] . ",
-				CreditorsAct=" . $_POST['CreditorsAct'] . ",
-				PayrollAct=" . $_POST['PayrollAct'] . ",
-				GRNAct=" . $_POST['GRNAct'] . ",
-				ExchangeDiffAct=" . $_POST['ExchangeDiffAct'] . ",
-				PurchasesExchangeDiffAct=" . $_POST['PurchasesExchangeDiffAct'] . ",
-				RetainedEarnings=" . $_POST['RetainedEarnings'] . ",
-				GLLink_Debtors=" . $_POST['GLLink_Debtors'] . ",
-				GLLink_Creditors=" . $_POST['GLLink_Creditors'] . ",
-				GLLink_Stock=" . $_POST['GLLink_Stock'] .",
-				FreightAct=" . $_POST['FreightAct'] . "
-			WHERE CoyCode=1";
+		$sql = "UPDATE companies SET
+				coyname='" . $_POST['CoyName'] . "',
+				companynumber = '" . $_POST['CompanyNumber'] . "',
+				gstno='" . $_POST['GSTNo'] . "',
+				postaladdress ='" . $_POST['PostalAddress'] . "',
+				regoffice1='" . $_POST['RegOffice1'] . "',
+				regoffice2='" . $_POST['RegOffice2'] . "',
+				regoffice3='" . $_POST['RegOffice3'] . "',
+				telephone='" . $_POST['Telephone'] . "',
+				fax='" . $_POST['Fax'] . "',
+				email='" . $_POST['Email'] . "',
+				currencydefault='" . $_POST['CurrencyDefault'] . "',
+				debtorsact=" . $_POST['DebtorsAct'] . ",
+				pytdiscountact=" . $_POST['PytDiscountAct'] . ",
+				creditorsact=" . $_POST['CreditorsAct'] . ",
+				payrollact=" . $_POST['PayrollAct'] . ",
+				grnact=" . $_POST['GRNAct'] . ",
+				exchangediffact=" . $_POST['ExchangeDiffAct'] . ",
+				purchasesexchangediffact=" . $_POST['PurchasesExchangeDiffAct'] . ",
+				retainedearnings=" . $_POST['RetainedEarnings'] . ",
+				gllink_debtors=" . $_POST['GLLink_Debtors'] . ",
+				gllink_creditors=" . $_POST['GLLink_Creditors'] . ",
+				gllink_stock=" . $_POST['GLLink_Stock'] .",
+				freightact=" . $_POST['FreightAct'] . "
+			WHERE coycode=1";
 
 			$ErrMsg =  _('The company preferences could not be updated because');
 			$result = DB_query($sql,$db,$ErrMsg);
@@ -89,31 +89,31 @@ if (isset($_POST['submit'])) {
 echo '<FORM METHOD="post" action=' . $_SERVER['PHP_SELF'] . '>';
 echo '<CENTER><TABLE>';
 
-$sql = "SELECT CoyName,
-		GSTNo,
-		CompanyNumber,
-		PostalAddress,
-		RegOffice1,
-		RegOffice2,
-		RegOffice3,
-		Telephone,
-		Fax,
-		Email,
-		CurrencyDefault,
-		DebtorsAct,
-		PytDiscountAct,
-		CreditorsAct,
-		PayrollAct,
-		GRNAct,
-		ExchangeDiffAct,
-		PurchasesExchangeDiffAct,
-		RetainedEarnings,
-		GLLink_Debtors,
-		GLLink_Creditors,
-		GLLink_Stock,
-		FreightAct
-	FROM Companies
-	WHERE CoyCode=1";
+$sql = "SELECT coyname,
+		gstno,
+		companynumber,
+		postaladdress,
+		regoffice1,
+		regoffice2,
+		regoffice3,
+		telephone,
+		fax,
+		email,
+		currencydefault,
+		debtorsact,
+		pytdiscountact,
+		creditorsact,
+		payrollact,
+		grnact,
+		exchangediffact,
+		purchasesexchangediffact,
+		retainedearnings,
+		gllink_debtors,
+		gllink_creditors,
+		gllink_stock,
+		freightact
+	FROM companies
+	WHERE coycode=1";
 
 
 
@@ -123,29 +123,29 @@ $result = DB_query($sql, $db,$ErrMsg);
 
 $myrow = DB_fetch_array($result);
 
-$_POST['CoyName'] = $myrow['CoyName'];
-$_POST['GSTNo'] = $myrow['GSTNo'];
-$_POST['CompanyNumber']  = $myrow['CompanyNumber'];
-$_POST['PostalAddress']  = $myrow['PostalAddress'];
-$_POST['RegOffice1']  = $myrow['RegOffice1'];
-$_POST['RegOffice2']  = $myrow['RegOffice2'];
-$_POST['RegOffice3']  = $myrow['RegOffice3'];
-$_POST['Telephone']  = $myrow['Telephone'];
-$_POST['Fax']  = $myrow['Fax'];
-$_POST['Email']  = $myrow['Email'];
-$_POST['CurrencyDefault']  = $myrow['CurrencyDefault'];
-$_POST['DebtorsAct']  = $myrow['DebtorsAct'];
-$_POST['PytDiscountAct']  = $myrow['PytDiscountAct'];
-$_POST['CreditorsAct']  = $myrow['CreditorsAct'];
-$_POST['PayrollAct']  = $myrow['PayrollAct'];
-$_POST['GRNAct'] = $myrow['GRNAct'];
-$_POST['ExchangeDiffAct']  = $myrow['ExchangeDiffAct'];
-$_POST['PurchasesExchangeDiffAct']  = $myrow['PurchasesExchangeDiffAct'];
-$_POST['RetainedEarnings'] = $myrow['RetainedEarnings'];
-$_POST['GLLink_Debtors'] = $myrow['GLLink_Debtors'];
-$_POST['GLLink_Creditors'] = $myrow['GLLink_Creditors'];
-$_POST['GLLink_Stock'] = $myrow['GLLink_Stock'];
-$_POST['FreightAct'] = $myrow['FreightAct'];
+$_POST['CoyName'] = $myrow['coyname'];
+$_POST['GSTNo'] = $myrow['gstno'];
+$_POST['CompanyNumber']  = $myrow['companynumber'];
+$_POST['PostalAddress']  = $myrow['postaladdress'];
+$_POST['RegOffice1']  = $myrow['regoffice1'];
+$_POST['RegOffice2']  = $myrow['regoffice2'];
+$_POST['RegOffice3']  = $myrow['regoffice3'];
+$_POST['Telephone']  = $myrow['telephone'];
+$_POST['Fax']  = $myrow['fax'];
+$_POST['Email']  = $myrow['email'];
+$_POST['CurrencyDefault']  = $myrow['currencydefault'];
+$_POST['DebtorsAct']  = $myrow['debtorsact'];
+$_POST['PytDiscountAct']  = $myrow['pytdiscountact'];
+$_POST['CreditorsAct']  = $myrow['creditorsact'];
+$_POST['PayrollAct']  = $myrow['payrollact'];
+$_POST['GRNAct'] = $myrow['grnact'];
+$_POST['ExchangeDiffAct']  = $myrow['exchangediffact'];
+$_POST['PurchasesExchangeDiffAct']  = $myrow['purchasesexchangediffact'];
+$_POST['RetainedEarnings'] = $myrow['retainedearnings'];
+$_POST['GLLink_Debtors'] = $myrow['gllink_debtors'];
+$_POST['GLLink_Creditors'] = $myrow['gllink_creditors'];
+$_POST['GLLink_Stock'] = $myrow['gllink_stock'];
+$_POST['FreightAct'] = $myrow['freightact'];
 
 echo '<TR><TD>' . _('Name') . ' (' . _('to appear on reports') . '):</TD>
 	<TD><input type="Text" Name="CoyName" value="' . $_POST['CoyName'] . '" SIZE=52 MAXLENGTH=50></TD>
@@ -188,15 +188,15 @@ echo '<TR><TD>' . _('Email Address') . ':</TD>
 </TR>';
 
 
-$result=DB_query("SELECT CurrAbrev, Currency FROM Currencies",$db);
+$result=DB_query("SELECT currabrev, currency FROM currencies",$db);
 
 echo '<TR><TD>' . _('Home Currency') . ':</TD><TD><SELECT Name=CurrencyDefault>';
 
 while ($myrow = DB_fetch_array($result)) {
-	if ($_POST['CurrencyDefault']==$myrow["CurrAbrev"]){
-		echo "<OPTION SELECTED VALUE='". $myrow['CurrAbrev'] . "'>" . $myrow['Currency'];
+	if ($_POST['CurrencyDefault']==$myrow['currabrev']){
+		echo "<OPTION SELECTED VALUE='". $myrow['currabrev'] . "'>" . $myrow['currency'];
 	} else {
-		echo "<OPTION VALUE='". $myrow['CurrAbrev'] . "'>" . $myrow['Currency'];
+		echo "<OPTION VALUE='". $myrow['currabrev'] . "'>" . $myrow['currency'];
 	}
 } //end while loop
 
@@ -204,13 +204,13 @@ DB_free_result($result);
 
 echo '</SELECT></TD></TR>';
 
-$result=DB_query("SELECT AccountCode,
-			AccountName
-		FROM ChartMaster,
-			AccountGroups
-		WHERE ChartMaster.Group_=AccountGroups.GroupName
-		AND AccountGroups.PandL=0
-		ORDER BY ChartMaster.AccountCode",$db);
+$result=DB_query("SELECT accountcode,
+			accountname
+		FROM chartmaster,
+			accountgroups
+		WHERE chartmaster.group_=accountgroups.groupname
+		AND accountgroups.pandl=0
+		ORDER BY chartmaster.accountcode",$db);
 
 echo '<TR><TD>' . _('Debtors Control GL Account') . ':</TD><TD><SELECT Name=DebtorsAct>';
 
@@ -283,24 +283,16 @@ echo '</SELECT></TD></TR>';
 
 echo '<TR><TD>' . _('Freight Re-charged GL Account') . ':</TD><TD><SELECT Name=FreightAct>';
 
-$result=DB_query('SELECT AccountCode, AccountName FROM ChartMaster, AccountGroups WHERE ChartMaster.Group_=AccountGroups.GroupName AND AccountGroups.PandL=1 ORDER BY ChartMaster.AccountCode',$db);
+$result=DB_query('SELECT accountcode, 
+			accountname 
+		FROM chartmaster, 
+			accountgroups 
+		WHERE chartmaster.group_=accountgroups.groupname 
+		AND accountgroups.pandl=1 
+		ORDER BY chartmaster.accountcode',$db);
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['FreightAct']==$myrow[0]){
-		echo "<OPTION SELECTED VALUE='". $myrow[0] . "'>" . $myrow[1];
-	} else {
-		echo "<OPTION VALUE='". $myrow[0] . "'>" . $myrow[1];
-	}
-} //end while loop
-
-DB_data_seek($result,0);
-
-echo '</SELECT></TD></TR>';
-
-echo '<TR><TD>' . _('Exchange Variances GL Account') . ':</TD><TD><SELECT Name=ExchangeDiffAct>';
-
-while ($myrow = DB_fetch_row($result)) {
-	if ($_POST['ExchangeDiffAct']==$myrow[0]){
 		echo "<OPTION SELECTED VALUE='". $myrow[0] . "'>" . $myrow[1];
 	} else {
 		echo "<OPTION VALUE='". $myrow[0] . "'>" . $myrow[1];

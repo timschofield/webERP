@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 2;
 
@@ -15,7 +15,11 @@ if (isset($_GET['StockID'])){
 }
 
 if (isset($StockID)){
-	$result = DB_query("SELECT Description, Units, MBflag FROM StockMaster WHERE StockID='$StockID'",$db);
+	$result = DB_query("SELECT description, 
+					units, 
+					mbflag 
+				FROM stockmaster 
+				WHERE stockid='$StockID'",$db);
 	$myrow = DB_fetch_row($result);
 	if (DB_num_rows($result)==0){
 		prnMsg(_('The item code entered') . ' - ' . $StockID . ' ' . _('is not set up as an item in the system') . '. ' . _('Re-enter a valid item code or select from the Select Item link above'),'error');
@@ -33,13 +37,13 @@ echo '<HR>';
 
 if (isset($StockID)) {
 
-	$SQL = "SELECT BOM.*,
-    		StockMaster.Description
-		FROM BOM INNER JOIN StockMaster
-			ON BOM.Parent = StockMaster.StockID
-		WHERE Component='" . $StockID . "'
-		AND BOM.EffectiveAfter<='" . Date('Y-m-d') . "'
-		AND BOM.EffectiveTo >='" . Date('Y-m-d') . "'";
+	$SQL = "SELECT bom.*,
+    		stockmaster.description
+		FROM bom INNER JOIN stockmaster
+			ON bom.parent = stockmaster.stockid
+		WHERE component='" . $StockID . "'
+		AND bom.effectiveafter<='" . Date('Y-m-d') . "'
+		AND bom.effectiveto >='" . Date('Y-m-d') . "'";
 
 	$ErrMsg = _('The parents for the selected part could not be retrieved because');;
 	$result = DB_query($SQL,$db,$ErrMsg);
@@ -68,12 +72,12 @@ if (isset($StockID)) {
     			}
 			$k++;
 
-    			echo "<td><A target='_blank' HREF='" . $rootpath . "/BOMInquiry.php?" . SID . "StockID=" . $myrow['Parent'] . "' ALT='" . _('Show Bill Of Material') . "'>" . $myrow['Parent']. ' - ' . $myrow['Description']. '</a></td>';
-    			echo '<td>' . $myrow['WorkCentreAdded']. '</td>';
-    			echo '<td>' . $myrow['LocCode']. '</td>';
-    			echo '<td>' . $myrow['Quantity']. '</td>';
-    			echo '<td>' . ConvertSQLDate($myrow['EffectiveAfter']) . '</td>';
-    			echo '<td>' . ConvertSQLDate($myrow['EffectiveTo']) . '</td>';
+    			echo "<td><A target='_blank' HREF='" . $rootpath . "/BOMInquiry.php?" . SID . "&StockID=" . $myrow['parent'] . "' ALT='" . _('Show Bill Of Material') . "'>" . $myrow['parent']. ' - ' . $myrow['description']. '</a></td>';
+    			echo '<td>' . $myrow['workcentreadded']. '</td>';
+    			echo '<td>' . $myrow['loccode']. '</td>';
+    			echo '<td>' . $myrow['quantity']. '</td>';
+    			echo '<td>' . ConvertSQLDate($myrow['effectiveafter']) . '</td>';
+    			echo '<td>' . ConvertSQLDate($myrow['effectiveto']) . '</td>';
 
     			$j++;
     			If ($j == 12){

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 /* Steve Kitchen */
 /* Up front menu for language file maintenance */
 
@@ -18,7 +18,7 @@ if (!function_exists('gettext')){
 	exit;
 }
 
-echo '<P><A HREF="' . $rootpath . '/Z_poRebuildDefault.php?' . SID . '">'.  _('Rebuild the Default Language File') . '</A>';
+echo '<P><A HREF="' . $rootpath . '/Z_poRebuildDefault.php?' . SID . '">'.  _('Rebuild the System Default Language File') . '</A>';
 echo '<P><A HREF="' . $rootpath . '/Z_poAddLanguage.php?' . SID . '">' . _('Add a New Language to the System') .'</A>';
 echo '<P><A HREF="' . $rootpath . '/Z_poEditLangHeader.php?' . SID . '">'. _('Edit a Language File Header') . '</A>';
 echo '<P><A HREF="' . $rootpath . '/Z_poEditLangModule.php?' . SID . '">'. _('Edit a Language File Module') . '</A>';

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice or credit note
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing/crediting and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -32,10 +32,10 @@ if ($_POST['AddGLCodeToTrans'] == _('Enter GL Line')){
 		$_POST['GLCode'] = $_POST['AcctSelection'];
 	}
 
-	$sql = 'SELECT AccountCode,
-			AccountName
-		FROM ChartMaster
-		WHERE AccountCode=' . $_POST['GLCode'];
+	$sql = 'SELECT accountcode,
+			acccountname
+		FROM chartmaster
+		WHERE accountcode=' . $_POST['GLCode'];
 	$result = DB_query($sql, $db);
 	if (DB_num_rows($result) == 0){
 		prnMsg(_('The account code entered is not a valid code') . '. ' . _('This line cannot be added to the transaction') . '.<BR>' . _('You can use the selection box to select the account you want'),'error');
@@ -47,7 +47,7 @@ if ($_POST['AddGLCodeToTrans'] == _('Enter GL Line')){
 			prnMsg( _('The amount entered is not numeric') . '. ' . _('This line cannot be added to the transaction'),'error');
 			$InputError = True;
 		} elseif ($_POST['JobRef'] != ''){
-			$sql = "SELECT ContractRef From Contracts WHERE ContactRef='" . $_POST['JobRef'] . "'";
+			$sql = "SELECT contractref FROM contracts WHERE contactref='" . $_POST['JobRef'] . "'";
 			$result = DB_query($sql, $db);
 			if (DB_num_rows($result) == 0){
 				prnMsg( _('The contract reference entered is not a valid contract, this line cannot be added to the transaction'),'error');
@@ -139,17 +139,17 @@ echo '<TR>
 	<TD>' . _('Account Selection') . ':<BR><FONT SIZE=1>' . _('If you know the code enter it above') . '<BR>' . _('otherwise select the account from the list') . "</FONT></TD>
 	<TD><SELECT NAME='AcctSelection'>";
 
-$sql = "SELECT AccountCode, AccountName FROM ChartMaster ORDER BY AccountCode";
+$sql = "SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode";
 
 $result = DB_query($sql, $db);
 
 while ($myrow = DB_fetch_array($result)) {
-	if ($myrow['AccountCode'] == $_POST['AcctSelection']) {
+	if ($myrow['accountcode'] == $_POST['AcctSelection']) {
 		echo '<OPTION SELECTED VALUE=';
 	} else {
 		echo '<OPTION VALUE=';
 	}
-	echo $myrow['AccountCode'] . '>' . $myrow['AccountCode'] . ' - ' . $myrow['AccountName'];
+	echo $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' - ' . $myrow['accountname'];
 	echo '</OPTION>';
 }
 

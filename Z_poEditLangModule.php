@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 /* Steve Kitchen */
 
@@ -9,18 +9,23 @@ $PageSecurity = 15;
 
 include ('includes/session.inc');
 
-
-$title = _('UTILITY PAGE') . ' ' ._('to edit a language file module');
+$title = _('Edit Module');
 
 include('includes/header.inc');
 
 /* Your webserver user MUST have read/write access to here, 
 	otherwise you'll be wasting your time */
 	
-$PathToLanguage		= './locale/' . $_POST['language'] . '/LC_MESSAGES/messages.po';
-$PathToNewLanguage	= './locale/' . $_POST['language'] . '/LC_MESSAGES/messages.po.new';
+$PathToLanguage		= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
+$PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
 	
-if (isset($_POST['ReMergePO']) AND isset($_POST['language'])){
+echo "<BR>&nbsp;<A HREF='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</A>";
+echo '<BR><BR>&nbsp;' . _('Utility to edit a language file module');
+echo '<BR>&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
+echo '<BR><BR>&nbsp;' . _('To change language click on the user name at the top left, change to language desired and click Modify');
+echo '<BR>&nbsp;' . _('Make sure you have selected the correct language to translate!');
+
+if (isset($_POST['ReMergePO'])){
 
 /*update the messages.po file with any new strings */	
 
@@ -33,28 +38,30 @@ if (isset($_POST['ReMergePO']) AND isset($_POST['language'])){
 	system($xgettextCmd);
 /*now merge the translated file with the new template to get new strings*/
 	
-	$msgMergeCmd = 'msgmerge ' . $PathToLanguage . ' ' . $PathToDefault . ' > ' . $PathToNewLanguage;
+	$msgMergeCmd = 'msgmerge --no-wrap ' . $PathToLanguage . ' ' . $PathToDefault . ' > ' . $PathToNewLanguage;
 	
 	system($msgMergeCmd);
 	$Result = rename($PathToNewLanguage, $PathToLanguage);
 }
 	
-if (isset($_POST['language']) AND isset($_POST['module'])) {	
-
+if (isset($_POST['module'])) {	
+  // a module has been selected and is being modified
+  
 	$PathToLanguage_mo = substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) . '.mo';
 
-/* now read in the language file */
+  /* now read in the language file */
 
 	$LangFile = file($PathToLanguage);
 	$LangFileEntries = sizeof($LangFile);
 
 	if (isset($_POST['submit'])) {
-
+    // save the modifications
+    
 		echo '<CENTER>';
 		echo '<BR><TABLE><TR><TD>';
 		echo '<FORM METHOD="post" ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
-/* write the new language file */
+    /* write the new language file */
 
 		prnMsg (_('Writing the language file') . '.....<BR>', 'info', ' ');
 
@@ -69,26 +76,25 @@ if (isset($_POST['language']) AND isset($_POST['module'])) {
 		}
 		$Result = fclose($fpOut);
 	
-/* Done writing, now move the original file to a .old */
-/* and the new one to the default */
+    /* Done writing, now move the original file to a .old */
+    /* and the new one to the default */
 
 		$Result = rename($PathToLanguage, $PathToLanguage . '.old');
 		$Result = rename($PathToNewLanguage, $PathToLanguage);
 		
-/*now need to create the .mo file from the .po file */
+    /*now need to create the .mo file from the .po file */
 		$msgfmtCommand = 'msgfmt ' . $PathToLanguage . ' -o ' . $PathToLanguage_mo;
 		system($msgfmtCommand);
 
 		prnMsg (_('Done') . '<BR>', 'info', ' ');
 
-		echo "<CENTER><A HREF='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the menu') . "</A></CENTER>";
 		echo '</FORM>';
 		echo '</TD></TR></TABLE>';
 		echo '</CENTER>';
 	
 	} else {
 
-/* now we need to parse the resulting array into something we can show the user */
+    /* now we need to parse the resulting array into something we can show the user */
 
 		$j = 1;
 
@@ -107,9 +113,10 @@ if (isset($_POST['language']) AND isset($_POST['module'])) {
 						
 /* stick it on the screen */
 
+    echo '<BR>&nbsp;' . _('When finished modifying you must click on Modify at the bottom in order to save changes');
 		echo '<CENTER>';
 		echo '<BR>';
-		prnMsg (_('Your existing messages.po will be saved as messages.po.old') . '<BR>', 'info', _('PLEASE NOTE'));
+		prnMsg (_('Your existing translation file (messages.po) will be saved as messages.po.old') . '<BR>', 'info', _('PLEASE NOTE'));
 		echo '<BR>';
 		echo '<FORM METHOD="post" ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
@@ -148,12 +155,8 @@ if (isset($_POST['language']) AND isset($_POST['module'])) {
 
 		echo '</TD></TR>';
 		echo '</TABLE>';
-		prnMsg (_('Once you click on the Enter Information button the file will be rewritten') . '. ' . _('You will not get a second chance'), 'warn', _('WARNING'));
-		echo '<CENTER>';
-		echo '<INPUT TYPE="Submit" NAME="submit" VALUE="' . _('Enter Information') . '">&nbsp;&nbsp;';
-		echo "<A HREF='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the menu') . "</A>";
-		
-		echo '<INPUT TYPE="hidden" NAME="language" VALUE="' . $_POST['language'] . '">';
+		echo '<BR><CENTER>';
+		echo '<INPUT TYPE="Submit" NAME="submit" VALUE="' . _('Modify') . '">&nbsp;&nbsp;';
 		echo '<INPUT TYPE="hidden" NAME="module" VALUE="' . $_POST['module'] . '">';
 		
 		echo '</FORM>';
@@ -162,7 +165,7 @@ if (isset($_POST['language']) AND isset($_POST['module'])) {
 
 } else {
 
-/* get available languages and modules */
+/* get available modules */
 
 /* This is a messy way of producing a directory listing of ./locale to fish out */
 /* the language directories that have been set up */
@@ -173,17 +176,6 @@ if (isset($_POST['language']) AND isset($_POST['module'])) {
 /* You'll need to change it if you are running a Windows server - sorry !! */
 
 	$ListDirCmd = '/bin/ls';
-
-	$PathToLocale = $ListDirCmd . ' ./locale';
-	$fpIn = popen($PathToLocale, 'r');
-	while (!feof($fpIn)) {
-		$AvailableLanguages[] = fgets($fpIn);
-	}
-	$NumberOfLanguages = sizeof($AvailableLanguages) - 1;
-	$Result = pclose($fpIn);
-
-/* The same thing applies to listing the available modules */
-/* though this is slightly safer */
 
 	$PathToModules = $ListDirCmd . ' *.php includes/*.php includes/*.inc';
 	$fpIn = popen($PathToModules, 'r');
@@ -197,22 +189,7 @@ if (isset($_POST['language']) AND isset($_POST['module'])) {
 	echo '<BR><TABLE><TR><TD>';
 	echo '<FORM METHOD="post" ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
-	echo '<TABLE><TR>';
-	echo '<TD>' . _('Select the language to edit') . '</TD>';
-
-	echo '<TD><SELECT NAME="language">';
-
-/* start from 1 to skip the CVS directory - not safe or subtle */
-/* and it assumes sorted directory listings */
-
-	for ($i=1; $i<$NumberOfLanguages; $i++) {
-		if (substr($AvailableLanguages[$i], 0, 2) != 'en') {	/* don't offer default for translation */
-			echo '<OPTION>' . $AvailableLanguages[$i] . '</OPTION>';
-		}
-	}
-
-	echo '</SELECT>';
-	echo '</TD></TR>';
+	echo '<TABLE>';
 
 	echo '<TR><TD>' . _('Select the module to edit') . '</TD>';
 	echo '<TD><SELECT NAME="module">';
@@ -225,7 +202,6 @@ if (isset($_POST['language']) AND isset($_POST['module'])) {
 	echo '<BR>';
 	echo '<CENTER>';
 	echo '<INPUT TYPE="Submit" NAME="proceed" VALUE="' . _('Proceed') . '">&nbsp;&nbsp;';
-	echo "<A HREF='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the menu') . "</A>";
 	echo '<BR><BR><INPUT TYPE="Submit" NAME="ReMergePO" VALUE="' . _('Refresh messages with latest strings') . '">';
 	echo '</CENTER>';
 	echo '</FORM>';

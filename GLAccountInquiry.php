@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 8;
 include ('includes/session.inc');
@@ -30,29 +30,29 @@ echo '<CENTER><TABLE>
         <TR>
          <TD>'._('Account').":</TD>
          <TD><SELECT Name='Account'>";
-         $sql = 'SELECT AccountCode, AccountName FROM ChartMaster ORDER BY AccountCode';
+         $sql = 'SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode';
          $Account = DB_query($sql,$db);
          while ($myrow=DB_fetch_array($Account,$db)){
-            if($myrow['AccountCode'] == $SelectedAccount){
-   	        echo '<OPTION SELECTED VALUE=' . $myrow['AccountCode'] . '>' . $myrow['AccountCode'] . ' ' . $myrow['AccountName'];
+            if($myrow['accountcode'] == $SelectedAccount){
+   	        echo '<OPTION SELECTED VALUE=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' ' . $myrow['accountname'];
 	    } else {
-		echo '<OPTION VALUE=' . $myrow['AccountCode'] . '>' . $myrow['AccountCode'] . ' ' . $myrow['AccountName'];
+		echo '<OPTION VALUE=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' ' . $myrow['accountname'];
 	    }
          }
          echo '</SELECT></TD></TR>
          <TR>
          <TD>'._('For Period range').':</TD>
          <TD><SELECT Name=Period[] multiple>';
-	 $sql = 'SELECT PeriodNo, LastDate_In_Period FROM Periods';
+	 $sql = 'SELECT periodno, lastdate_in_period FROM periods';
 	 $Periods = DB_query($sql,$db);
          $id=0;
          while ($myrow=DB_fetch_array($Periods,$db)){
 
-            if($myrow['PeriodNo'] == $SelectedPeriod[$id]){
-              echo '<OPTION SELECTED VALUE=' . $myrow['PeriodNo'] . '>' . _(MonthAndYearFromSQLDate($myrow['LastDate_In_Period']));
+            if($myrow['periodno'] == $SelectedPeriod[$id]){
+              echo '<OPTION SELECTED VALUE=' . $myrow['periodno'] . '>' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period']));
             $id++;
             } else {
-              echo '<OPTION VALUE=' . $myrow['PeriodNo'] . '>' . _(MonthAndYearFromSQLDate($myrow['LastDate_In_Period']));
+              echo '<OPTION VALUE=' . $myrow['periodno'] . '>' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period']));
             }
 
          }
@@ -66,10 +66,10 @@ echo '<CENTER><TABLE>
 if (isset($_POST['Show'])){
 
 	/*Is the account a balance sheet or a profit and loss account */
-	$result = DB_query("SELECT PandL
-				FROM AccountGroups
-				INNER JOIN ChartMaster ON AccountGroups.GroupName=ChartMaster.Group_
-				WHERE ChartMaster.AccountCode=$SelectedAccount",$db);
+	$result = DB_query("SELECT pandl
+				FROM accountgroups
+				INNER JOIN chartmaster ON accountgroups.groupname=chartmaster.group_
+				WHERE chartmaster.accountcode=$SelectedAccount",$db);
 	$PandLRow = DB_fetch_row($result);
 	if ($PandLRow[0]==1){
 		$PandLAccount = True;
@@ -80,27 +80,27 @@ if (isset($_POST['Show'])){
 	$FirstPeriodSelected = min($SelectedPeriod);
 	$LastPeriodSelected = max($SelectedPeriod);
 
- 	$sql= "SELECT Type,
-			TypeName,
-			GLTrans.TypeNo,
-			TranDate,
-			Narrative,
-			Amount,
-			PeriodNo
-		FROM GLTrans, SysTypes
-		WHERE GLTrans.Account = $SelectedAccount
-		AND SysTypes.TypeID=GLTrans.Type
-		AND Posted=1
-		AND PeriodNo>=$FirstPeriodSelected
-		AND PeriodNo<=$LastPeriodSelected
-		ORDER BY PeriodNo, CounterIndex";
+ 	$sql= "SELECT type,
+			typename,
+			gltrans.typeno,
+			trandate,
+			narrative,
+			amount,
+			periodno
+		FROM gltrans, systypes
+		WHERE gltrans.account = $SelectedAccount
+		AND systypes.typeid=gltrans.type
+		AND posted=1
+		AND periodno>=$FirstPeriodSelected
+		AND periodno<=$LastPeriodSelected
+		ORDER BY periodno, counterindex";
 
 	$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
 	$TransResult = DB_query($sql,$db,$ErrMsg);
 
 /*Get the ChartDetails balance b/fwd and the actual movement in the account for the period as recorded in the chart details - need to ensure integrity of transactions to the chart detail movements. Also, for a balance sheet account it is the balance carried forward that is important, not just the transactions*/
 
-	$sql = "SELECT BFwd, Actual FROM ChartDetails WHERE ChartDetails.AccountCode=$SelectedAccount AND ChartDetails.Period>=" . $FirstPeriodSelected . " AND ChartDetails.Period<=" . $LastPeriodSelected;
+	$sql = "SELECT bfwd, actual FROM chartdetails WHERE chartdetails.accountcode=$SelectedAccount AND chartdetails.period>=" . $FirstPeriodSelected . " AND chartdetails.period<=" . $LastPeriodSelected;
 
 	$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
 	$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
@@ -123,7 +123,7 @@ if (isset($_POST['Show'])){
 	if ($PandLAccount==True) {
 		$RunningTotal = 0;
 	} else {
-		$RunningTotal =$ChartDetailRow['BFwd'];
+		$RunningTotal =$ChartDetailRow['bfwd'];
 		if ($RunningTotal < 0 ){ //its a credit balance b/fwd
 			echo "<TR bgcolor='#FDFEEF'><TD COLSPAN=3><B>" . _('Brought Forward Balance') . '</B><TD></TD></TD><TD ALIGN=RIGHT><B>' . number_format(-$RunningTotal,2) . '</B></TD><TD></TD></TR>';
 		} else { //its a debit balance b/fwd
@@ -138,7 +138,7 @@ if (isset($_POST['Show'])){
 
 	while ($myrow=DB_fetch_array($TransResult)) {
 
-		if ($myrow['PeriodNo']!=$PeriodNo){
+		if ($myrow['periodno']!=$PeriodNo){
 			If ($PeriodNo!=-9999){
 				echo "<TR bgcolor='#FDFEEF'><TD COLSPAN=3><B>" . _('Total for period') . ' ' . $PeriodNo . '</B></TD>';
 				if ($PeriodTotal < 0 ){ //its a credit balance b/fwd
@@ -146,13 +146,13 @@ if (isset($_POST['Show'])){
 				} else { //its a debit balance b/fwd
 					echo '<TD ALIGN=RIGHT><B>' . number_format($PeriodTotal,2) . '</B></TD><TD COLSPAN=2></TD></TR>';
 				}
-				$IntegrityReport .= '<BR>' . _('Period') . ': ' . $PeriodNo  . _('Account movement per transaction') . ': '  . number_format($PeriodTotal,2) . ' ' . _('Movement per ChartDetails record') . ': ' . number_format($ChartDetailRow['Actual'],2) . ' ' . _('Period difference') . ': ' . number_format($PeriodTotal -$ChartDetailRow['Actual'],3);
-				if (ABS($PeriodTotal -$ChartDetailRow['Actual'])>0.009){
+				$IntegrityReport .= '<BR>' . _('Period') . ': ' . $PeriodNo  . _('Account movement per transaction') . ': '  . number_format($PeriodTotal,2) . ' ' . _('Movement per ChartDetails record') . ': ' . number_format($ChartDetailRow['actual'],2) . ' ' . _('Period difference') . ': ' . number_format($PeriodTotal -$ChartDetailRow['actual'],3);
+				if (ABS($PeriodTotal -$ChartDetailRow['actual'])>0.009){
 					$ShowIntegrityReport = True;
 				}
 				$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 			}
-			$PeriodNo = $myrow['PeriodNo'];
+			$PeriodNo = $myrow['periodno'];
 			$PeriodTotal = 0;
 		}
 
@@ -164,19 +164,19 @@ if (isset($_POST['Show'])){
 			$k++;
 		}
 
-		$RunningTotal += $myrow['Amount'];
-		$PeriodTotal += $myrow['Amount'];
+		$RunningTotal += $myrow['amount'];
+		$PeriodTotal += $myrow['amount'];
 
-		if($myrow['Amount']>=0){
-			$DebitAmount = number_format($myrow['Amount'],2);
+		if($myrow['amount']>=0){
+			$DebitAmount = number_format($myrow['amount'],2);
 			$CreditAmount = '';
 		} else {
-			$CreditAmount = number_format(-$myrow['Amount'],2);
+			$CreditAmount = number_format(-$myrow['amount'],2);
 			$DebitAmount = '';
 		}
 
-		$FormatedTranDate = ConvertSQLDate($myrow['TranDate']);
-		$URL_to_TransDetail = "$rootpath/GLTransInquiry.php?" . SID . 'TypeID=' . $myrow['Type'] . '&TransNo=' . $myrow['TypeNo'];
+		$FormatedTranDate = ConvertSQLDate($myrow['trandate']);
+		$URL_to_TransDetail = "$rootpath/GLTransInquiry.php?" . SID . '&TypeID=' . $myrow['type'] . '&TransNo=' . $myrow['typeno'];
 
 		printf("<td>%s</td>
 			<td><A HREF='%s'>%s</A></td>
@@ -185,13 +185,13 @@ if (isset($_POST['Show'])){
 			<td ALIGN=RIGHT>%s</td>
 			<td>%s</td>
 			</tr>",
-			$myrow['TypeName'],
+			$myrow['typename'],
 			$URL_to_TransDetail,
-			$myrow['TypeNo'],
+			$myrow['typeno'],
 			$FormatedTranDate,
 			$DebitAmount,
 			$CreditAmount,
-			$myrow['Narrative']);
+			$myrow['narrative']);
 
 		$j++;
 

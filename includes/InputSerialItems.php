@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -31,8 +31,7 @@ if (isset($_GET['LineNo'])){
 
         possibly override setting elsewhere.
 */
-
-if ($_POST['EntryType']== ''){
+if (!isset($_POST['EntryType']) OR trim($_POST['EntryType']) == ''){
 	if ($RecvQty <= 50) {
 		$_POST['EntryType'] = 'KEYED';
 	} //elseif ($RecvQty <= 50) { $EntryType = "BARCODE"; }
@@ -40,7 +39,7 @@ if ($_POST['EntryType']== ''){
 		$_POST['EntryType'] = 'FILE';
 	}
 }
-
+	
 $invalid_imports = 0;
 $valid = true;
 
@@ -54,6 +53,17 @@ if ($_POST['EntryType']=='KEYED') {
 }
 echo 'value="KEYED">'. _('Keyed Entry');
 echo '</TD>';
+
+if ($LineItem->Serialised==1){
+	echo '<TD>';
+	echo '<input type=radio name=EntryType';
+	if ($_POST['EntryType']=='SEQUENCE') {
+		echo ' checked ';
+	}
+	echo ' value="SEQUENCE">'. _('Sequential');
+	echo '</TD>';
+}
+
 echo '<TD valign=bottom>';
 echo '<input type=radio name=EntryType';
 if ($_POST['EntryType']=='FILE') {
@@ -68,9 +78,9 @@ echo '</FORM>';
 
 global $tableheader;
 /* Link to clear the list and start from scratch */
-$EditLink =  '<br><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . 'EditControlled=true&StockID=' . $LineItem->StockID .
+$EditLink =  '<br><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&EditControlled=true&StockID=' . $LineItem->StockID .
 	'&LineNo=' . $LineNo .'">'. _('Edit'). '</a> | ';
-$RemoveLink = '<A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . 'DELETEALL=YES&StockID=' . $LineItem->StockID .
+$RemoveLink = '<A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&DELETEALL=YES&StockID=' . $LineItem->StockID .
 	'&LineNo=' . $LineNo .'">'. _('Remove All'). '</a><br>';
 if ($LineItem->Serialised==1){
 	$tableheader .= '<TR>
@@ -89,6 +99,10 @@ if ($_POST['EntryType'] == 'FILE'){
 	echo '<TD>';
 	include('includes/InputSerialItemsFile.php');
 	echo '</TD>';
+} elseif ($_POST['EntryType'] == 'SEQUENCE'){
+        echo '<TD>';
+        include('includes/InputSerialItemsSequential.php');
+        echo '</TD>';
 } else { /*KEYED or BARCODE */
 	echo '<TD>';
 	include('includes/InputSerialItemsKeyed.php');

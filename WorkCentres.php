@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity=9;
 
@@ -29,6 +29,10 @@ if (isset($_POST['submit'])) {
 	} elseif (strlen($_POST['Description'])<3) {
 		$InputError = 1;
 		prnMsg(_('The Work Centre description must be at least 3 characters long'),'error');
+	}elseif (strstr($_POST['Code'],' ') OR strstr($_POST['Code'],"'") OR strstr($_POST['Code'],'+') OR strstr($_POST['Code'],"\\") OR strstr($_POST['Code'],"\"") OR strstr($_POST['Code'],'&') OR strstr($_POST['Code'],'.') OR strstr($_POST['Code'],'"')) {
+		$InputError = 1;
+		prnMsg(_('The work centre code cannot contain any of the following characters') . " - ' & + \" \\ " . _('or a space'),'error');
+
 	}
 
 	if (isset($SelectedWC) AND $InputError !=1) {
@@ -37,24 +41,24 @@ if (isset($_POST['submit'])) {
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
 
-		$sql = "UPDATE WorkCentres SET Location = '" . $_POST['Location'] . "',
-						Description = '" . $_POST['Description'] . "',
-						OverheadRecoveryAct =" . $_POST['OverheadRecoveryAct'] . ",
-						OverheadPerHour = " . $_POST['OverheadPerHour'] . "
-				WHERE Code = '" . $SelectedWC . "'";
+		$sql = "UPDATE workcentres SET location = '" . $_POST['Location'] . "',
+						description = '" . DB_escape_string($_POST['Description']) . "',
+						overheadrecoveryact =" . $_POST['OverheadRecoveryAct'] . ",
+						overheadperhour = " . $_POST['OverheadPerHour'] . "
+				WHERE code = '" . $SelectedWC . "'";
 		$msg = _('The work centre record has been updated');
 	} elseif ($InputError !=1) {
 
 	/*Selected work centre is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new work centre form */
 
-		$sql = "INSERT INTO WorkCentres (Code,
-						Location,
-						Description,
-						OverheadRecoveryAct,
-						OverheadPerHour)
-					VALUES ('" . $_POST['Code'] . "',
+		$sql = "INSERT INTO workcentres (code,
+						location,
+						description,
+						overheadrecoveryact,
+						overheadperhour)
+					VALUES ('" . DB_escape_string($_POST['Code']) . "',
 						'" . $_POST['Location'] . "',
-						'" . $_POST['Description'] . "',
+						'" . DB_escape_string($_POST['Description']) . "',
 						" . $_POST['OverheadRecoveryAct'] . ",
 						" . $_POST['OverheadPerHour'] . "
 						)";
@@ -78,27 +82,27 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'BOM'
 
-	$sql= "SELECT COUNT(*) FROM BOM WHERE BOM.WorkCentreAdded='$SelectedWC'";
+	$sql= "SELECT COUNT(*) FROM bom WHERE bom.workcentreadded='$SelectedWC'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		prnMsg(_('Cannot delete this work centre because bills of material have been created requiring components to be added at this work center') . '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' ._('BOM items referring to this work centre code'),'warn');
 	} else {
-		$sql= "SELECT COUNT(*) FROM WORequirements WHERE WORequirements.WrkCentre='$SelectedWC'";
+		$sql= "SELECT COUNT(*) FROM worequirements WHERE worequirements.wrkcentre='$SelectedWC'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			prnMsg(_('Cannot delete this work centre because works orders have been released requiring components to be added at this work center') . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('WO requirement items referring to this work centre code'),'warn');
 		} else {
 
-			$sql= "SELECT COUNT(*) FROM ContractBOM WHERE ContractBOM.WorkCentreAdded='$SelectedWC'";
+			$sql= "SELECT COUNT(*) FROM contractbom WHERE contractbom.workcentreadded='$SelectedWC'";
 			$result = DB_query($sql,$db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]>0) {
 				prnMsg(_('Cannot delete this work centre because contract bills of material have been created having components added at this work center') . '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('Contract BOM items referring to this work centre code'),'warn');
 
 			} else {
-				$sql="DELETE FROM WorkCentres WHERE Code='$SelectedWC'";
+				$sql="DELETE FROM workcentres WHERE code='$SelectedWC'";
 				$result = DB_query($sql,$db);
 				prnMsg(_('The selected work centre record has been deleted'),'succes');
 
@@ -115,14 +119,14 @@ then none of the above are true and the list of work centres will be displayed w
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = 'SELECT WorkCentres.Code,
-			WorkCentres.Description,
-			Locations.LocationName,
-			WorkCentres.OverheadRecoveryAct,
-			WorkCentres.OverheadPerHour
-		FROM WorkCentres,
-			Locations
-		WHERE WorkCentres.Location = Locations.LocCode';
+	$sql = 'SELECT workcentres.code,
+			workcentres.description,
+			locations.locationname,
+			workcentres.overheadrecoveryact,
+			workcentres.overheadperhour
+		FROM workcentres,
+			locations
+		WHERE workcentres.location = locations.loccode';
 
 	$result = DB_query($sql,$db);
 
@@ -169,22 +173,22 @@ echo "<P><FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>"
 if ($SelectedWC) {
 	//editing an existing work centre
 
-	$sql = "SELECT Code,
-			Location,
-			Description,
-			OverheadRecoveryAct,
-			OverheadPerHour
-		FROM WorkCentres
-		WHERE Code='$SelectedWC'";
+	$sql = "SELECT code,
+			location,
+			description,
+			overheadrecoveryact,
+			overheadperhour
+		FROM workcentres
+		WHERE code='$SelectedWC'";
 
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
 
-	$_POST['Code'] = $myrow['Code'];
-	$_POST['Location'] = $myrow['Location'];
-	$_POST['Description'] = $myrow['Description'];
-	$_POST['OverheadRecoveryAct']  = $myrow['OverheadRecoveryAct'];
-	$_POST['OverheadPerHour']  = $myrow['OverheadPerHour'];
+	$_POST['Code'] = $myrow['code'];
+	$_POST['Location'] = $myrow['location'];
+	$_POST['Description'] = $myrow['description'];
+	$_POST['OverheadRecoveryAct']  = $myrow['overheadrecoveryact'];
+	$_POST['OverheadPerHour']  = $myrow['overheadperhour'];
 
 	echo '<INPUT TYPE=HIDDEN NAME=SelectedWC VALUE=' . $SelectedWC . '>';
 	echo "<INPUT TYPE=HIDDEN NAME=Code VALUE='" . $_POST['Code'] . "'>";
@@ -198,9 +202,9 @@ if ($SelectedWC) {
 			</TR>";
 }
 
-$SQL = 'SELECT LocationName,
-		LocCode
-	FROM Locations';
+$SQL = 'SELECT locationname,
+		loccode
+	FROM locations';
 $result = DB_query($SQL,$db);
 
 
@@ -211,12 +215,12 @@ echo '<TR><TD>' . _('Work Centre Description') . ":</TD>
 		<TD><SELECT name='Location'>";
 
 while ($myrow = DB_fetch_array($result)) {
-	if ($myrow['LocCode']==$_POST['Location']) {
+	if ($myrow['loccode']==$_POST['Location']) {
 		echo "<OPTION SELECTED VALUE='";
 	} else {
 		echo "<OPTION VALUE='";
 	}
-	echo $myrow['LocCode'] . "'>" . $myrow['LocationName'];
+	echo $myrow['loccode'] . "'>" . $myrow['locationname'];
 
 } //end while loop
 
@@ -228,23 +232,23 @@ echo '</SELECT></TD></TR>
 		<TD><SELECT name='OverheadRecoveryAct'>";
 
 //SQL to poulate account selection boxes
-$SQL = 'SELECT AccountCode,
-		AccountName
-	FROM ChartMaster,
-		AccountGroups
-	WHERE ChartMaster.Group_=AccountGroups.GroupName
-	AND AccountGroups.PandL!=0
-	ORDER BY AccountCode';
+$SQL = 'SELECT accountcode,
+		accountname
+	FROM chartmaster,
+		accountgroups
+	WHERE chartmaster.group_=accountgroups.groupname
+	AND accountGroups.pandl!=0
+	ORDER BY accountcode';
 
 $result = DB_query($SQL,$db);
 
 while ($myrow = DB_fetch_array($result)) {
-	if ($myrow['AccountCode']==$_POST['OverheadRecoveryAct']) {
+	if ($myrow['accountcode']==$_POST['OverheadRecoveryAct']) {
 		echo '<OPTION SELECTED VALUE=';
 	} else {
 		echo '<OPTION VALUE=';
 	}
-	echo $myrow['AccountCode'] . '>' . $myrow['AccountName'];
+	echo $myrow['accountcode'] . '>' . $myrow['accountname'];
 
 } //end while loop
 DB_free_result($result);
@@ -256,6 +260,6 @@ echo '<TR><TD>' . _('Overhead Per Hour') . ":</TD>
 
 echo "<CENTER><input type='Submit' name='submit' value='" . _('Enter Information') . "'>";
 
-echo '</form>';
+echo '</FORM>';
 include('includes/footer.inc');
 ?>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 2;
 
@@ -18,7 +18,12 @@ if (isset($_GET['StockID'])){
 }
 
 
-$result = DB_query("SELECT Description, Units, MBflag, DecimalPlaces FROM StockMaster WHERE StockID='$StockID'",$db);
+$result = DB_query("SELECT description, 
+				units, 
+				mbflag, 
+				decimalplaces 
+			FROM stockmaster 
+			WHERE stockid='$StockID'",$db);
 $myrow = DB_fetch_row($result);
 
 $DecimalPlaces = $myrow[3];
@@ -40,20 +45,20 @@ echo _('Stock Code') . ":<input type=text name='StockID' size=21 maxlength=20 va
 
 echo _('From Stock Location') . ":<SELECT name='StockLocation'> ";
 
-$sql = 'SELECT LocCode, LocationName FROM Locations';
+$sql = 'SELECT loccode, locationname FROM locations';
 $resultStkLocs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation'])){
-		if ($myrow['LocCode'] == $_POST['StockLocation']){
-		     echo "<OPTION SELECTED Value='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
+		if ($myrow['loccode'] == $_POST['StockLocation']){
+		     echo "<OPTION SELECTED Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 		} else {
-		     echo "<OPTION Value='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
+		     echo "<OPTION Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 		}
-	} elseif ($myrow['LocCode']==$_SESSION['UserStockLocation']){
-		 echo "<OPTION SELECTED Value='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
-		 $_POST['StockLocation']=$myrow['LocCode'];
+	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
+		 echo "<OPTION SELECTED Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+		 $_POST['StockLocation']=$myrow['loccode'];
 	} else {
-		 echo "<OPTION Value='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
+		 echo "<OPTION Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 	}
 }
 if (isset($_POST['StockLocation'])){
@@ -68,16 +73,37 @@ echo '</SELECT>';
 echo " <INPUT TYPE=SUBMIT NAME='ShowUsage' VALUE='" . _('Show Stock Usage') . "'>";
 echo '<HR>';
 
-/* $NumberOfPeriodsOfStockUsage  is defined in config.php as a user definable variable
+/* $_SESSION['NumberOfPeriodsOfStockUsage']  is defined in config.php as a user definable variable
 config.php is loaded by header.inc */
 
 /*HideMovt ==1 if the movement was only created for the purpose of a transaction but is not a physical movement eg. A price credit will create a movement record for the purposes of display on a credit note
 but there is no physical stock movement - it makes sense honest ??? */
 
 if($_POST['StockLocation']=='All'){
-	$sql = "SELECT Periods.PeriodNo, Periods.LastDate_in_Period, Sum(-StockMoves.Qty) AS QtyUsed FROM StockMoves INNER JOIN Periods ON StockMoves.Prd=Periods.PeriodNo WHERE (StockMoves.Type=10 or StockMoves.Type=11 or StockMoves.Type=28) AND StockMoves.HideMovt=0 AND StockMoves.StockID = '" . $StockID . "' GROUP BY Periods.PeriodNo, Periods.LastDate_in_Period ORDER BY PeriodNo DESC LIMIT " . $NumberOfPeriodsOfStockUsage;
+	$sql = "SELECT periods.periodno, 
+			periods.lastdate_in_period, 
+			SUM(-stockmoves.qty) AS qtyused 
+		FROM stockmoves INNER JOIN periods 
+			ON stockmoves.prd=periods.periodno 
+		WHERE (stockmoves.type=10 OR stockmoves.type=11 OR stockmoves.type=28) 
+		AND stockmoves.hidemovt=0 
+		AND stockmoves.stockid = '" . $StockID . "' 
+		GROUP BY periods.periodno, 
+			periods.lastdate_in_period 
+		ORDER BY periodno DESC LIMIT " . $_SESSION['NumberOfPeriodsOfStockUsage'];
 } else {
-	$sql = "SELECT Periods.PeriodNo, Periods.LastDate_in_Period, Sum(-StockMoves.Qty) AS QtyUsed FROM StockMoves INNER JOIN Periods ON StockMoves.Prd=Periods.PeriodNo WHERE (StockMoves.Type=10 or StockMoves.Type=11 or StockMoves.Type=28) AND StockMoves.HideMovt=0 AND StockMoves.LocCode='" . $_POST['StockLocation'] . "' AND StockMoves.StockID = '" . $StockID . "' GROUP BY Periods.PeriodNo, Periods.LastDate_in_Period ORDER BY PeriodNo DESC LIMIT " . $NumberOfPeriodsOfStockUsage;
+	$sql = "SELECT periods.periodno, 
+			periods.lastdate_in_period, 
+			SUM(-stockmoves.qty) AS qtyused 
+		FROM stockmoves INNER JOIN periods 
+			ON stockmoves.prd=periods.periodno 
+		WHERE (stockmoves.type=10 Or stockmoves.type=11 OR stockmoves.type=28) 
+		AND stockmoves.hidemovt=0 
+		AND stockmoves.loccode='" . $_POST['StockLocation'] . "' 
+		AND stockmoves.stockid = '" . $StockID . "' 
+		GROUP BY periods.periodno, 
+			periods.lastdate_in_period 
+		ORDER BY periodno DESC LIMIT " . $_SESSION['NumberOfPeriodsOfStockUsage'];
 }
 $MovtsResult = DB_query($sql, $db);
 if (DB_error_no($db) !=0) {
@@ -108,11 +134,11 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 		$k++;
 	}
 
-	$DisplayDate = MonthAndYearFromSQLDate($myrow['LastDate_in_Period']);
+	$DisplayDate = MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 
-	$TotalUsage += $myrow['QtyUsed'];
+	$TotalUsage += $myrow['qtyused'];
 	$PeriodsCounter++;
-	printf('<td>%s</td><td ALIGN=RIGHT>%s</td></tr>', $DisplayDate, number_format($myrow['QtyUsed'],$DecimalPlaces));
+	printf('<td>%s</td><td ALIGN=RIGHT>%s</td></tr>', $DisplayDate, number_format($myrow['qtyused'],$DecimalPlaces));
 
 	$j++;
 	If ($j == 12){
@@ -133,7 +159,7 @@ echo "<BR><A HREF='$rootpath/SelectSalesOrder.php?". SID . "&SelectedStockItem=$
 echo "<BR><A HREF='$rootpath/SelectCompletedOrder.php?". SID . "&SelectedStockItem=$StockID'>" . _('Search Completed Sales Orders') . '</A>';
 echo "<BR><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" .SID . "&SelectedStockItem=$StockID'>" . _('Search Outstanding Purchase Orders') . '</A>';
 
-echo '</form></center>';
+echo '</FORM></center>';
 include('includes/footer.inc');
 
 ?>

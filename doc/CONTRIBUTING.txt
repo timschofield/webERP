@@ -226,7 +226,7 @@ are preferred. But all comments gratefully received!
 
 All scripts should have a comment in the first few lines with the script revision number in it if the following comment is pasted into it the CVS automatically updates the revision number.
 
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 
 Messages
@@ -241,31 +241,31 @@ All database calls should be performed by calling the abstraction functions in t
 
 SQL
 
-Should be as ANSI compliant as possible.
+Should be as ANSI compliant as possible. Table and field names should alway use lower case.
 
 SQL statements should be on several lines for easier reading eg.
 
-$sql = "SELECT TransNo, TranDate, DebtorTrans.DebtorNo, BranchCode, Reference, InvText, Order_, Rate, OvAmount+OvGST+OvFreight+OvDiscount AS TotalAmt, CurrCode FROM DebtorTrans INNER JOIN DebtorsMaster ON DebtorTrans.DebtorNo=DebtorsMaster.DebtorNo WHERE ";
+$sql = "select transno, trandate, debtortrans.debtorno, branchcode, reference, invtext, order_, rate, ovamount+ovgst+ovfreight+ovdiscount as totalamt, currcode from debtortrans inner join debtorsmaster on debtortrans.debtorno=debtorsmaster.debtorno where ";
 
 
 is harder to read than:
 
-$sql = "SELECT TransNo,
-		TranDate,
-		DebtorTrans.DebtorNo,
-		BranchCode, Reference,
-		InvText,
-		Order_,
-		Rate,
-		OvAmount+OvGST+OvFreight+OvDiscount AS TotalAmt,
-		CurrCode
+$sql = "SELECT transno,
+		trandate,
+		debtortrans.debtorno,
+		branchcode, reference,
+		invtext,
+		order_,
+		rate,
+		ovamount+ovgst+ovfreight+ovdiscount AS totalamt,
+		currcode
 	FROM
-		DebtorTrans INNER JOIN DebtorsMaster
-		ON DebtorTrans.DebtorNo=DebtorsMaster.DebtorNo
+		debtortrans INNER JOIN debtorsmaster
+		ON debtortrans.debtorno=debtorsmaster.debtorno
 	WHERE ";
 
 
-SQL kywords should be capitalised as above eg. SELECT, CASE, FROM, WHERE, GROUP BY, ORDER BY etc.
+SQL kywords should be capitalised as above eg. SELECT, CASE, FROM, WHERE, GROUP BY, ORDER BY AS INNER JOIN etc.
 Line breaks after every comma and on major SQL reserved words as above.
 
 

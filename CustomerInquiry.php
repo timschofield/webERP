@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -25,78 +25,57 @@ if(!isset($_GET['CustomerID']) AND !isset($_SESSION['CustomerID'])){
 
 
 if (!isset($_POST['TransAfterDate'])) {
-	$_POST['TransAfterDate'] = Date($DefaultDateFormat,Mktime(0,0,0,Date('m')-6,Date('d'),Date('Y')));
+	$_POST['TransAfterDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m')-6,Date('d'),Date('Y')));
 }
 
-$SQL = "SELECT DebtorsMaster.Name, Currencies.Currency, PaymentTerms.Terms,
-DebtorsMaster.CreditLimit, HoldReasons.DissallowInvoices, HoldReasons.ReasonDescription,
-
-Sum(DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight + DebtorTrans.OvDiscount
-- DebtorTrans.Alloc) AS Balance,
-
-Sum(IF (PaymentTerms.DaysBeforeDue > 0,
-	CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DebtorTrans.TranDate)) >= PaymentTerms.DaysBeforeDue
-	THEN DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight + DebtorTrans.OvDiscount
-	- DebtorTrans.Alloc ELSE 0 END,
-
-	CASE WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(DebtorTrans.TranDate,
-	INTERVAL 1 MONTH), INTERVAL (PaymentTerms.DayInFollowingMonth -
-	DAYOFMONTH(DebtorTrans.TranDate)) DAY)) >= 0 THEN DebtorTrans.OvAmount + DebtorTrans.OvGST
-	+ DebtorTrans.OvFreight + DebtorTrans.OvDiscount - DebtorTrans.Alloc ELSE 0 END
-
-)) AS Due,
-
-
-Sum(IF (PaymentTerms.DaysBeforeDue > 0,
-	CASE WHEN TO_DAYS(Now()) - TO_DAYS(DebtorTrans.TranDate) > PaymentTerms.DaysBeforeDue
-	AND TO_DAYS(Now()) - TO_DAYS(DebtorTrans.TranDate) >= (PaymentTerms.DaysBeforeDue + " .
-	$PastDueDays1 . ") THEN DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight
-	+ DebtorTrans.OvDiscount - DebtorTrans.Alloc ELSE 0 END,
-
-	CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(DebtorTrans.TranDate,
-	INTERVAL 1  MONTH), INTERVAL (PaymentTerms.DayInFollowingMonth -
-	DAYOFMONTH(DebtorTrans.TranDate)) DAY)) >= " . $PastDueDays1 . ")
-	THEN DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight + DebtorTrans.OvDiscount
-	- DebtorTrans.Alloc ELSE 0 END
-
-)) AS Overdue1,
-
-Sum(IF (PaymentTerms.DaysBeforeDue > 0,
-	CASE WHEN TO_DAYS(Now()) - TO_DAYS(DebtorTrans.TranDate) > PaymentTerms.DaysBeforeDue
-	AND TO_DAYS(Now()) - TO_DAYS(DebtorTrans.TranDate) >= (PaymentTerms.DaysBeforeDue + " .
-	$PastDueDays2 . ") THEN DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight
-	+ DebtorTrans.OvDiscount - DebtorTrans.Alloc ELSE 0 END,
-
-	CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(DebtorTrans.TranDate,
-	INTERVAL 1  MONTH), INTERVAL (PaymentTerms.DayInFollowingMonth
-	- DAYOFMONTH(DebtorTrans.TranDate)) DAY)) >= " . $PastDueDays2 . ")
-	THEN DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight + DebtorTrans.OvDiscount
-	- DebtorTrans.Alloc ELSE 0 END
-
-)) AS Overdue2
-
-FROM DebtorsMaster,
-     PaymentTerms,
-     HoldReasons,
-     Currencies,
-     DebtorTrans
-
-WHERE
-     DebtorsMaster.PaymentTerms = PaymentTerms.TermsIndicator
-     AND DebtorsMaster.CurrCode = Currencies.CurrAbrev
-     AND DebtorsMaster.HoldReason = HoldReasons.ReasonCode
-     AND DebtorsMaster.DebtorNo = '" . $CustomerID . "'
-     AND DebtorsMaster.DebtorNo = DebtorTrans.DebtorNo
-
-GROUP BY
-      DebtorsMaster.Name,
-      Currencies.Currency,
-      PaymentTerms.Terms,
-      PaymentTerms.DaysBeforeDue,
-      PaymentTerms.DayInFollowingMonth,
-      DebtorsMaster.CreditLimit,
-      HoldReasons.DissallowInvoices,
-      HoldReasons.ReasonDescription";
+$SQL = "SELECT debtorsmaster.name, 
+		currencies.currency, 
+		paymentterms.terms,
+		debtorsmaster.creditlimit, 
+		holdreasons.dissallowinvoices, 
+		holdreasons.reasondescription,
+		SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount
+- debtortrans.alloc) AS balance,
+		SUM(CASE WHEN (paymentterms.daysbeforedue > 0) THEN
+			CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) >= paymentterms.daysbeforedue
+			THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
+		ELSE
+			CASE WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))', 'DAY') . ")) >= 0 THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END 
+		END) AS due,
+		SUM(CASE WHEN (paymentterms.daysbeforedue > 0) THEN
+			CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue
+			AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " .
+		$_SESSION['PastDueDays1'] . ") 
+			THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
+		ELSE 
+			CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . ")) >= " . $_SESSION['PastDueDays1'] . ")
+			THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount 
+			- debtortrans.alloc ELSE 0 END
+		END) AS overdue1,
+		SUM(CASE WHEN (paymentterms.daysbeforedue > 0) THEN
+			CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue
+			AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ") THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
+		ELSE
+			CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . INTERVAL('1','MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . ")) >= " . $_SESSION['PastDueDays2'] . ") THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
+		END) AS overdue2
+		FROM debtorsmaster,
+     			paymentterms,
+     			holdreasons,
+     			currencies,
+     			debtortrans
+		WHERE  debtorsmaster.paymentterms = paymentterms.termsindicator
+     		AND debtorsmaster.currcode = currencies.currabrev
+     		AND debtorsmaster.holdreason = holdreasons.reasoncode
+     		AND debtorsmaster.debtorno = '" . $CustomerID . "'
+     		AND debtorsmaster.debtorno = debtortrans.debtorno
+		GROUP BY debtorsmaster.name,
+			currencies.currency,
+			paymentterms.terms,
+			paymentterms.daysbeforedue,
+			paymentterms.dayinfollowingmonth,
+			debtorsmaster.creditlimit,
+			holdreasons.dissallowinvoices,
+			holdreasons.reasondescription";
 
 $ErrMsg = _('The customer details could not be retrieved by the SQL because');
 $CustomerResult = DB_query($SQL,$db,$ErrMsg);
@@ -107,18 +86,17 @@ if (DB_num_rows($CustomerResult)==0){
 
 	$NIL_BALANCE = True;
 
-	$SQL = "SELECT DebtorsMaster.Name, Currencies.Currency, PaymentTerms.Terms,
-	DebtorsMaster.CreditLimit, HoldReasons.DissallowInvoices, HoldReasons.ReasonDescription
-	FROM DebtorsMaster,
-	     PaymentTerms,
-	     HoldReasons,
-	     Currencies
-
+	$SQL = "SELECT debtorsmaster.name, currencies.currency, paymentterms.terms,
+	debtorsmaster.creditlimit, holdreasons.dissallowinvoices, holdreasons.reasondescription
+	FROM debtorsmaster,
+	     paymentterms,
+	     holdreasons,
+	     currencies
 	WHERE
-	     DebtorsMaster.PaymentTerms = PaymentTerms.TermsIndicator
-	     AND DebtorsMaster.CurrCode = Currencies.CurrAbrev
-	     AND DebtorsMaster.HoldReason = HoldReasons.ReasonCode
-	     AND DebtorsMaster.DebtorNo = '" . $CustomerID . "'";
+	     debtorsmaster.paymentterms = paymentterms.termsindicator
+	     AND debtorsmaster.currcode = currencies.currabrev
+	     AND debtorsmaster.holdreason = holdreasons.reasoncode
+	     AND debtorsmaster.debtorno = '" . $CustomerID . "'";
 
 	$ErrMsg =_('The customer details could not be retrieved by the SQL because');
 	$CustomerResult = DB_query($SQL,$db,$ErrMsg);
@@ -130,15 +108,15 @@ if (DB_num_rows($CustomerResult)==0){
 $CustomerRecord = DB_fetch_array($CustomerResult);
 
 if ($NIL_BALANCE==True){
-	$CustomerRecord['Balance']=0;
-	$CustomerRecord['Due']=0;
-	$CustomerRecord['Overdue1']=0;
-	$CustomerRecord['Overdue2']=0;
+	$CustomerRecord['balance']=0;
+	$CustomerRecord['due']=0;
+	$CustomerRecord['overdue1']=0;
+	$CustomerRecord['overdue2']=0;
 }
 
-echo '<CENTER><FONT SIZE=4>' . $CustomerRecord['Name'] . ' </FONT></B> - (' . _('All amounts stated in') . ' ' . $CustomerRecord['Currency'] . ')</CENTER><BR><B><FONT COLOR=BLUE>' . _('Terms') . ': ' . $CustomerRecord['Terms'] . '<BR>' . _('Credit Limit') . ': </B></FONT> ' . number_format($CustomerRecord['CreditLimit'],0) . '  <B><FONT COLOR=BLUE>' . _('Credit Status') . ':</B></FONT> ' . $CustomerRecord['ReasonDescription'];
+echo '<CENTER><FONT SIZE=4>' . $CustomerRecord['name'] . ' </FONT></B> - (' . _('All amounts stated in') . ' ' . $CustomerRecord['currency'] . ')</CENTER><BR><B><FONT COLOR=BLUE>' . _('Terms') . ': ' . $CustomerRecord['terms'] . '<BR>' . _('Credit Limit') . ': </B></FONT> ' . number_format($CustomerRecord['creditlimit'],0) . '  <B><FONT COLOR=BLUE>' . _('Credit Status') . ':</B></FONT> ' . $CustomerRecord['reasondescription'];
 
-if ($CustomerRecord['DissallowInvoices']!=0){
+if ($CustomerRecord['dissallowinvoices']!=0){
 	echo '<BR><FONT COLOR=RED SIZE=4><B>' . _('ACCOUNT ON HOLD') . '</FONT></B><BR>';
 }
 
@@ -147,14 +125,14 @@ echo "<TABLE WIDTH=100% BORDER=1>
 		<td class='tableheader'>" . _('Total Balance') . "</TD>
 		<td class='tableheader'>" . _('Current') . "</TD>
 		<td class='tableheader'>" . _('Now Due') . "</TD>
-		<td class='tableheader'>" . $PastDueDays1 . "-" . $PastDueDays2 . ' ' . _('Days Overdue') . "</TD>
-		<td class='tableheader'>" . _('Over') . ' ' . $PastDueDays2 . ' ' . _('Days Overdue') . '</TD></TR>';
+		<td class='tableheader'>" . $_SESSION['PastDueDays1'] . "-" . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . "</TD>
+		<td class='tableheader'>" . _('Over') . ' ' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</TD></TR>';
 
-echo '<TR><TD ALIGN=RIGHT>' . number_format($CustomerRecord['Balance'],2) . '</TD>
-	<TD ALIGN=RIGHT>' . number_format(($CustomerRecord['Balance'] - $CustomerRecord['Due']),2) . '</TD>
-	<TD ALIGN=RIGHT>' . number_format(($CustomerRecord['Due']-$CustomerRecord['Overdue1']),2) . '</TD>
-	<TD ALIGN=RIGHT>' . number_format(($CustomerRecord['Overdue1']-$CustomerRecord['Overdue2']) ,2) . '</TD>
-	<TD ALIGN=RIGHT>' . number_format($CustomerRecord['Overdue2'],2) . '</TD>
+echo '<TR><TD ALIGN=RIGHT>' . number_format($CustomerRecord['balance'],2) . '</TD>
+	<TD ALIGN=RIGHT>' . number_format(($CustomerRecord['balance'] - $CustomerRecord['due']),2) . '</TD>
+	<TD ALIGN=RIGHT>' . number_format(($CustomerRecord['due']-$CustomerRecord['overdue1']),2) . '</TD>
+	<TD ALIGN=RIGHT>' . number_format(($CustomerRecord['overdue1']-$CustomerRecord['overdue2']) ,2) . '</TD>
+	<TD ALIGN=RIGHT>' . number_format($CustomerRecord['overdue2'],2) . '</TD>
 	</TR>
 	</TABLE>';
 
@@ -164,24 +142,24 @@ echo _('Show all transactions after') . ": <INPUT type=text name='TransAfterDate
 $DateAfterCriteria = FormatDateForSQL($_POST['TransAfterDate']);
 
 
-$SQL = "SELECT SysTypes.TypeName,
-		DebtorTrans.ID,
-		DebtorTrans.Type,
-		DebtorTrans.TransNo,
-		DebtorTrans.BranchCode,
-		DebtorTrans.TranDate,
-		DebtorTrans.Reference,
-		DebtorTrans.InvText,
-		DebtorTrans.Order_,
-		DebtorTrans.Rate,
-		(DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight + DebtorTrans.OvDiscount) AS TotalAmount,
-		DebtorTrans.Alloc AS Allocated
-	FROM DebtorTrans,
-		SysTypes
-	WHERE DebtorTrans.Type = SysTypes.TypeID
-	AND DebtorTrans.DebtorNo = '" . $CustomerID . "'
-	AND DebtorTrans.TranDate >= '$DateAfterCriteria'
-	ORDER BY DebtorTrans.ID";
+$SQL = "SELECT systypes.typename,
+		debtortrans.id,
+		debtortrans.type,
+		debtortrans.transno,
+		debtortrans.branchcode,
+		debtortrans.trandate,
+		debtortrans.reference,
+		debtortrans.invtext,
+		debtortrans.order_,
+		debtortrans.rate,
+		(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount) AS totalamount,
+		debtortrans.alloc AS allocated
+	FROM debtortrans,
+		systypes
+	WHERE debtortrans.type = systypes.typeid
+	AND debtortrans.debtorno = '" . $CustomerID . "'
+	AND debtortrans.trandate >= '$DateAfterCriteria'
+	ORDER BY debtortrans.id";
 
 $ErrMsg = _('No transactions were returned by the SQL because');
 $TransResult = DB_query($SQL,$db,$ErrMsg);
@@ -210,8 +188,6 @@ $tableheader = "<TR BGCOLOR =#800000>
 echo $tableheader;
 
 
-$CompanyRecord = ReadInCompanyRecord($db);
-
 $j = 1;
 $k=0; //row colour counter
 while ($myrow=DB_fetch_array($TransResult)) {
@@ -224,7 +200,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 		$k=1;
 	}
 
-	$FormatedTranDate = ConvertSQLDate($myrow['TranDate']);
+	$FormatedTranDate = ConvertSQLDate($myrow['trandate']);
 
 	$base_formatstr = "<td>%s</td>
 				<td>%s</td>
@@ -242,238 +218,238 @@ while ($myrow=DB_fetch_array($TransResult)) {
 	$preview_credit_str = "<td><a target='_blank' href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Credit'><IMG SRC='%s/preview.gif' alt='" . _('Click to preview the credit note') . "'></a></td>
 				<td><a target='_blank' href='%s/EmailCustTrans.php?FromTransNo=%s&InvOrCredit=Credit'><IMG SRC='%s/email.gif' alt='" . _('Click to email the credit note') . "'></a></td>";
 
-	if (in_array(3,$SecurityGroups[$_SESSION['AccessLevel']]) && $myrow['Type']==10){ /*Show a link to allow an invoice to be credited */
+	if (in_array(3,$_SESSION['AllowedPageSecurityTokens']) && $myrow['type']==10){ /*Show a link to allow an invoice to be credited */
 
-		if ($CompanyRecord['GLLink_Debtors']== 1 AND in_array(8,$SecurityGroups[$_SESSION['AccessLevel']])){
+		if ($_SESSION['CompanyRecord']['gllink_debtors']== 1 AND in_array(8,$_SESSION['AllowedPageSecurityTokens'])){
 			printf($base_formatstr .
 				$credit_invoice_str .
 				$preview_invoice_str .
 				"<td><A HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('GL') . "<A></td>
 				</tr>",
-				$myrow['TypeName'],
-				$myrow['TransNo'],
-				ConvertSQLDate($myrow['TranDate']),
-				$myrow['BranchCode'],
-				$myrow['Reference'],
-				$myrow['InvText'],
-				$myrow['Order_'],
-				number_format($myrow['TotalAmount'],2),
-				number_format($myrow['Allocated'],2),
-				number_format($myrow['TotalAmount']-$myrow['Allocated'],2),
+				$myrow['typename'],
+				$myrow['transno'],
+				ConvertSQLDate($myrow['trandate']),
+				$myrow['branchcode'],
+				$myrow['reference'],
+				$myrow['invtext'],
+				$myrow['order_'],
+				number_format($myrow['totalamount'],2),
+				number_format($myrow['allocated'],2),
+				number_format($myrow['totalamount']-$myrow['allocated'],2),
 				$rootpath,
-				$myrow['TransNo'],
+				$myrow['transno'],
 				$rootpath.'/css/'.$theme.'/images',
 				$rootpath,
-				$myrow['TransNo'],
+				$myrow['transno'],
 				$rootpath.'/css/'.$theme.'/images',
 				$rootpath,
-				$myrow['TransNo'],
+				$myrow['transno'],
 				$rootpath.'/css/'.$theme.'/images',
 				$rootpath,
 				SID,
-				$myrow['Type'],
-				$myrow['TransNo']);
+				$myrow['type'],
+				$myrow['transno']);
 		} else {
 			printf($base_formatstr .
 				$credit_invoice_str .
 				$preview_invoice_str .
 				'</tr>',
-				$myrow['TypeName'],
-				$myrow['TransNo'],
-				ConvertSQLDate($myrow['TranDate']),
-				$myrow['BranchCode'],
-				$myrow['Reference'],
-				$myrow['InvText'],
-				$myrow['Order_'],
-				number_format($myrow['TotalAmount'],2),
-				number_format($myrow['Allocated'],2),
-				number_format($myrow['TotalAmount']-$myrow['Allocated'],2),
+				$myrow['typename'],
+				$myrow['transno'],
+				ConvertSQLDate($myrow['trandate']),
+				$myrow['branchcode'],
+				$myrow['reference'],
+				$myrow['invtext'],
+				$myrow['order_'],
+				number_format($myrow['totalamount'],2),
+				number_format($myrow['allocated'],2),
+				number_format($myrow['totalamount']-$myrow['allocated'],2),
 				$rootpath,
-				$myrow['TransNo'],
+				$myrow['transno'],
 				$rootpath.'/css/'.$theme.'/images',
-				$rootpath, $myrow['TransNo'],
+				$rootpath, $myrow['transno'],
 				$rootpath.'/css/'.$theme.'/images',
 				$rootpath,
-				$myrow['TransNo'],
+				$myrow['transno'],
 				$rootpath.'/css/'.$theme.'/images');
 		}
 
-	} elseif($myrow['Type']==10) { /*its an invoice but not high enough priveliges to credit it */
+	} elseif($myrow['type']==10) { /*its an invoice but not high enough priveliges to credit it */
 
 		printf($base_formatstr .
 			$preview_invoice_str .
 			'</tr>',
-			$myrow['TypeName'],
-			$myrow['TransNo'],
-			ConvertSQLDate($myrow['TranDate']),
-			$myrow['BranchCode'],
-			$myrow['Reference'],
-			$myrow['InvText'],
-			$myrow['Order_'],
-			number_format($myrow['TotalAmount'],2),
-			number_format($myrow['Allocated'],2),
-			number_format($myrow['TotalAmount']-$myrow['Allocated'],2),
+			$myrow['typename'],
+			$myrow['transno'],
+			ConvertSQLDate($myrow['trandate']),
+			$myrow['branchcode'],
+			$myrow['reference'],
+			$myrow['invtext'],
+			$myrow['order_'],
+			number_format($myrow['totalamount'],2),
+			number_format($myrow['allocated'],2),
+			number_format($myrow['totalamount']-$myrow['allocated'],2),
 			$rootpath,
-			$myrow['TransNo'],
+			$myrow['transno'],
 			$rootpath.'/css/'.$theme.'/images',
 			$rootpath,
-			$myrow['TransNo'],
+			$myrow['transno'],
 			$rootpath.'/css/'.$theme.'/images');
 
-	} elseif ($myrow['Type']==11) { /*its a credit note */
-		if ($CompanyRecord['GLLink_Debtors']== 1 AND in_array(8,$SecurityGroups[$_SESSION['AccessLevel']])){
+	} elseif ($myrow['type']==11) { /*its a credit note */
+		if ($_SESSION['CompanyRecord']['gllink_debtors']== 1 AND in_array(8,$_SESSION['AllowedPageSecurityTokens'])){
 			printf($base_formatstr .
 				$preview_credit_str .
 				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'><IMG SRC='%s/allocation.gif' alt='" . _('Click to allocate funds') . "'></a></td>
 				<td><A HREF='%s/GLTransInquiry.php?%sTypeID=%s&TransNo=%s'>" . _('GL') . '<A></td></tr>',
-				$myrow['TypeName'],
-				$myrow['TransNo'],
-				ConvertSQLDate($myrow['TranDate']),
-				$myrow['BranchCode'],
-				$myrow['Reference'],
-				$myrow['InvText'],
-				$myrow['Order_'],
-				number_format($myrow['TotalAmount'],2),
-				number_format($myrow['Allocated'],2),
-				number_format($myrow['TotalAmount']-$myrow['Allocated'],2),
+				$myrow['typename'],
+				$myrow['transno'],
+				ConvertSQLDate($myrow['trandate']),
+				$myrow['branchcode'],
+				$myrow['reference'],
+				$myrow['invtext'],
+				$myrow['order_'],
+				number_format($myrow['totalamount'],2),
+				number_format($myrow['allocated'],2),
+				number_format($myrow['totalamount']-$myrow['allocated'],2),
 				$rootpath,
-				$myrow['TransNo'],
+				$myrow['transno'],
 				$rootpath.'/css/'.$theme.'/images',
 				$rootpath,
-				$myrow['TransNo'],
+				$myrow['transno'],
 				$rootpath.'/css/'.$theme.'/images',
 				$rootpath,
-				$myrow['ID'],
+				$myrow['id'],
 				$rootpath.'/css/'.$theme.'/images',
 				$rootpath,
 				SID,
-				$myrow['Type'],
-				$myrow['TransNo']);
+				$myrow['type'],
+				$myrow['transno']);
 		} else {
 			printf($base_formatstr .
 				$preview_credit_str .
 				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'><IMG SRC='%s/allocation.gif' alt='" . _('Click to allocate funds') . "'></a></td>
 				</tr>",
-				$myrow['TypeName'],
-				$myrow['TransNo'],
-				ConvertSQLDate($myrow['TranDate']),
-				$myrow['BranchCode'],
-				$myrow['Reference'],
-				$myrow['InvText'],
-				$myrow['Order_'],
-				number_format($myrow['TotalAmount'],2),
-				number_format($myrow['Allocated'],2),
-				number_format($myrow['TotalAmount']-$myrow['Allocated'],2),
+				$myrow['typename'],
+				$myrow['transno'],
+				ConvertSQLDate($myrow['trandate']),
+				$myrow['branchcode'],
+				$myrow['reference'],
+				$myrow['invtext'],
+				$myrow['order_'],
+				number_format($myrow['totalamount'],2),
+				number_format($myrow['allocated'],2),
+				number_format($myrow['totalamount']-$myrow['allocated'],2),
 				$rootpath,
-				$myrow['TransNo'],
+				$myrow['transno'],
 				$rootpath.'/css/'.$theme.'/images',
 				$rootpath,
-				$myrow['TransNo'],
+				$myrow['transno'],
 				$rootpath.'/css/'.$theme.'/images',
 				$rootpath,
-				$myrow['ID'],
+				$myrow['id'],
 				$rootpath.'/css/'.$theme.'/images');
 		}
-	} elseif ($myrow['Type']==12 AND $myrow['TotalAmount']<0) { /*its a receipt  which could have an allocation*/
-		if ($CompanyRecord['GLLink_Debtors']== 1 AND in_array(8,$SecurityGroups[$_SESSION['AccessLevel']])){
+	} elseif ($myrow['type']==12 AND $myrow['totalamount']<0) { /*its a receipt  which could have an allocation*/
+		if ($_SESSION['CompanyRecord']['gllink_debtors']== 1 AND in_array(8,$_SESSION['AllowedPageSecurityTokens'])){
 			printf($base_formatstr .
 				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'>" . _('Allocation') . "</a></td>
 				<td><A HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('Whole') . '<BR>' . _('Batch GL') . "<A></td>
 				</tr>",
-				$myrow['TypeName'],
-				$myrow['TransNo'],
-				ConvertSQLDate($myrow['TranDate']),
-				$myrow['BranchCode'],
-				$myrow['Reference'],
-				$myrow['InvText'],
-				$myrow['Order_'],
-				number_format($myrow['TotalAmount'],2),
-				number_format($myrow['Allocated'],2),
-				number_format($myrow['TotalAmount']-$myrow['Allocated'],2),
+				$myrow['typename'],
+				$myrow['transno'],
+				ConvertSQLDate($myrow['trandate']),
+				$myrow['branchcode'],
+				$myrow['reference'],
+				$myrow['invtext'],
+				$myrow['order_'],
+				number_format($myrow['totalamount'],2),
+				number_format($myrow['allocated'],2),
+				number_format($myrow['totalamount']-$myrow['allocated'],2),
 				$rootpath,
-				$myrow['ID'],
+				$myrow['id'],
 				$rootpath,
 				SID,
-				$myrow['Type'],
-				$myrow['TransNo']);
+				$myrow['type'],
+				$myrow['transno']);
 		} else {
 			printf($base_formatstr .
 				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'>" . _('Allocation') . "</a></td>
 				</tr>",
-				$myrow['TypeName'],
-				$myrow['TransNo'],
-				ConvertSQLDate($myrow['TranDate']),
-				$myrow['BranchCode'],
-				$myrow['Reference'],
-				$myrow['InvText'],
-				$myrow['Order_'],
-				number_format($myrow['TotalAmount'],2),
-				number_format($myrow['Allocated'],2),
-				number_format($myrow['TotalAmount']-$myrow['Allocated'],2),
+				$myrow['typename'],
+				$myrow['transno'],
+				ConvertSQLDate($myrow['trandate']),
+				$myrow['branchcode'],
+				$myrow['reference'],
+				$myrow['invtext'],
+				$myrow['order_'],
+				number_format($myrow['totalamount'],2),
+				number_format($myrow['allocated'],2),
+				number_format($myrow['totalamount']-$myrow['allocated'],2),
 				$rootpath,
-				$myrow['ID']);
+				$myrow['id']);
 		}
-	} elseif ($myrow['Type']==12 AND $myrow['TotalAmount']>0) { /*its a negative receipt */
-		if ($CompanyRecord['GLLink_Debtors']== 1 AND in_array(8,$SecurityGroups[$_SESSION['AccessLevel']])){
+	} elseif ($myrow['type']==12 AND $myrow['totalamount']>0) { /*its a negative receipt */
+		if ($_SESSION['CompanyRecord']['gllink_debtors']== 1 AND in_array(8,$_SESSION['AllowedPageSecurityTokens'])){
 			printf($base_formatstr .
 				"<td><A HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('Whole') . '<BR>' . _('Batch GL') . '<A></td></tr>',
-				$myrow['TypeName'],
-				$myrow['TransNo'],
-				ConvertSQLDate($myrow['TranDate']),
-				$myrow['BranchCode'],
-				$myrow['Reference'],
-				$myrow['InvText'],
-				$myrow['Order_'],
-				number_format($myrow['TotalAmount'],2),
-				number_format($myrow['Allocated'],2),
-				number_format($myrow['TotalAmount']-$myrow['Allocated'],2),
+				$myrow['typename'],
+				$myrow['transno'],
+				ConvertSQLDate($myrow['trandate']),
+				$myrow['branchcode'],
+				$myrow['reference'],
+				$myrow['invtext'],
+				$myrow['order_'],
+				number_format($myrow['totalamount'],2),
+				number_format($myrow['allocated'],2),
+				number_format($myrow['totalamount']-$myrow['allocated'],2),
 				$rootpath,
 				SID,
-				$myrow['Type'],
-				$myrow['TransNo']);
+				$myrow['type'],
+				$myrow['transno']);
 		} else {
 			printf($base_formatstr . '<td></tr>',
-				$myrow['TypeName'],
-				$myrow['TransNo'],
-				ConvertSQLDate($myrow['TranDate']),
-				$myrow['BranchCode'],
-				$myrow['Reference'],
-				$myrow['InvText'],
-				$myrow['Order_'],
-				number_format($myrow['TotalAmount'],2),
-				number_format($myrow['Allocated'],2),
-				number_format($myrow['TotalAmount']-$myrow['Allocated'],2));
+				$myrow['typename'],
+				$myrow['transno'],
+				ConvertSQLDate($myrow['trandate']),
+				$myrow['branchcode'],
+				$myrow['reference'],
+				$myrow['invtext'],
+				$myrow['order_'],
+				number_format($myrow['totalamount'],2),
+				number_format($myrow['allocated'],2),
+				number_format($myrow['totalamount']-$myrow['allocated'],2));
 		}
 	} else {
-		if ($CompanyRecord['GLLink_Debtors']== 1 AND in_array(8,$SecurityGroups[$_SESSION['AccessLevel']])){
+		if ($_SESSION['CompanyRecord']['gllink_debtors']== 1 AND in_array(8,$_SESSION['AllowedPageSecurityTokens'])){
 			printf($base_formatstr .
 				"<td><A HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('GL') . '<A></td></tr>',
-				$myrow['TypeName'],
-				$myrow['TransNo'],
-				ConvertSQLDate($myrow['TranDate']),
-				$myrow['BranchCode'],
-				$myrow['Reference'],
-				$myrow['InvText'],
-				$myrow['Order_'],
-				number_format($myrow['TotalAmount'],2),
-				number_format($myrow['Allocated'],2),
-				number_format($myrow['TotalAmount']-$myrow['Allocated'],2),
+				$myrow['typename'],
+				$myrow['transno'],
+				ConvertSQLDate($myrow['trandate']),
+				$myrow['branchcode'],
+				$myrow['reference'],
+				$myrow['invtext'],
+				$myrow['order_'],
+				number_format($myrow['totalamount'],2),
+				number_format($myrow['allocated'],2),
+				number_format($myrow['totalamount']-$myrow['allocated'],2),
 				$rootpath,
 				SID,
-				$myrow['Type'],
-				$myrow['TransNo']);
+				$myrow['type'],
+				$myrow['transno']);
 		} else {
 			printf($base_formatstr . '</tr>',
-				$myrow['TypeName'],
-				$myrow['TransNo'],
-				ConvertSQLDate($myrow['TranDate']),
-				$myrow['BranchCode'],
-				$myrow['Reference'],
-				$myrow['InvText'],
-				$myrow['Order_'],
-				number_format($myrow['TotalAmount'],2),
-				number_format($myrow['Allocated'],2),
-				number_format($myrow['TotalAmount']-$myrow['Allocated'],2));
+				$myrow['typename'],
+				$myrow['transno'],
+				ConvertSQLDate($myrow['trandate']),
+				$myrow['branchcode'],
+				$myrow['reference'],
+				$myrow['invtext'],
+				$myrow['order_'],
+				number_format($myrow['totalamount'],2),
+				number_format($myrow['allocated'],2),
+				number_format($myrow['totalamount']-$myrow['allocated'],2));
 		}
 	}
 
@@ -489,4 +465,3 @@ while ($myrow=DB_fetch_array($TransResult)) {
 echo '</table>';
 include('includes/footer.inc');
 ?>
-

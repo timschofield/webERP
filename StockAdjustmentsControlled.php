@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockAdjustment.php');
 
@@ -13,7 +13,7 @@ include('includes/header.inc');
 
 if (!isset($_SESSION['Adjustment'])) {
 	/* This page can only be called when a stock adjustment is pending */
-	echo '<CENTER><A HREF="' . $rootpath . '/StockAdjustment.php?' . SID . 'NewAdjustment=Yes">'. _('Enter A Stock Adjustment'). '</A><br>';
+	echo '<CENTER><A HREF="' . $rootpath . '/StockAdjustment.php?' . SID . '&NewAdjustment=Yes">'. _('Enter A Stock Adjustment'). '</A><br>';
 	prnMsg( _('This page can only be opened if a stock adjustment for a controlled item has been entered').'<BR>','error');
 	echo '</CENTER>';
 	include('includes/footer.inc');
@@ -30,7 +30,7 @@ $LineItem = &$_SESSION['Adjustment'];
 
 //Make sure this item is really controlled
 if ( $LineItem->Controlled != 1 ){
-	echo '<CENTER><A HREF="' . $rootpath . '/StockAdjustment.php?' . SID . 'NewAdjustment=Yes">'._('Enter A Stock Adjustment').'</A></CENTER>';
+	echo '<CENTER><A HREF="' . $rootpath . '/StockAdjustment.php?' . SID . '&NewAdjustment=Yes">'._('Enter A Stock Adjustment').'</A></CENTER>';
 	prnMsg('<BR>'. _('Notice') . ' - ' . _('The adjusted item must be defined as controlled to require input of the batch numbers or serial numbers being adjusted'),'error');
 	include('includes/footer.inc');
 	exit;
@@ -39,7 +39,7 @@ if ( $LineItem->Controlled != 1 ){
 /*****  get the page going now... *****/
 echo '<CENTER>';
 
-echo '<br><a href="'.$rootpath.'/StockAdjustments.php?SID='  . SID .'">' . _('Back to Adjustment Screen') . '</A>';
+echo '<br><a href="'.$rootpath.'/StockAdjustments.php?'  . SID .'">' . _('Back to Adjustment Screen') . '</A>';
 
 echo '<br><FONT SIZE=2><B>'. _('Adjustment of controlled item').' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription ;
 

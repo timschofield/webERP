@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 2;
 
@@ -12,15 +12,15 @@ include('includes/header.inc');
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "' METHOD=POST>";
 
 echo "<CENTER>Stock Check Counts at Location:<SELECT NAME='Location'>";
-$sql = 'SELECT LocCode, LocationName FROM Locations';
+$sql = 'SELECT loccode, locationname FROM locations';
 $result = DB_query($sql,$db);
 
 while ($myrow=DB_fetch_array($result)){
 
-	if ($myrow['LocCode']==$_POST['Location']){
-		echo "<OPTION SELECTED VALUE='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
+	if ($myrow['loccode']==$_POST['Location']){
+		echo "<OPTION SELECTED VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 	} else {
-		echo "<OPTION VALUE='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
+		echo "<OPTION VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 	}
 }
 
@@ -58,7 +58,7 @@ if (isset($_POST['EnterCounts'])){
 				prnMsg(_('The quantity entered for line') . ' ' . $i . ' ' . _('is not numeric') . ' - ' . _('this line was for the part code') . ' ' . $_POST[$StockID] . '. ' . _('This line will have to be re-entered'),'warn');
 				$InputError=True;
 			}
-			$SQL = "SELECT StockID FROM StockCheckFreeze WHERE StockID='" . $_POST[$StockID] . "'";
+		$SQL = "SELECT stockid FROM stockcheckfreeze WHERE stockid='" . $_POST[$StockID] . "'";
 			$result = DB_query($SQL,$db);
 			if (DB_num_rows($result)==0){
 				prnMsg( _('The stock code entered on line') . ' ' . $i . ' ' . _('is not a part code that has been added to the stock check file') . ' - ' . _('the code entered was') . ' ' . $_POST[$StockID] . '. ' . _('This line will have to be re-entered'),'warn');
@@ -66,10 +66,10 @@ if (isset($_POST['EnterCounts'])){
 			}
 
 			if ($InputError==False){
-				$sql = "INSERT INTO StockCounts (StockID,
-								LocCode,
-								QtyCounted,
-								Reference)
+				$sql = "INSERT INTO stockcounts (stockid,
+								loccode,
+								qtycounted,
+								reference)
 							VALUES ('" . $_POST[$StockID] . "',
 								'" . $_POST['Location'] . "',
 								" . $_POST[$Quantity] . ",

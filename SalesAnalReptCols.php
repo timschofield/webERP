@@ -1,12 +1,12 @@
 <?php
 
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 2;
 
 include('includes/session.inc');
 
-$title = _('Sales Analysis Report Columns Maintenance');
+$title = _('Sales Analysis Report Columns');
 
 include('includes/header.inc');
 
@@ -105,21 +105,21 @@ if (isset($_POST['submit'])) {
 	if ($SelectedCol AND $InputError !=1) {
 
 
-		$sql = "UPDATE ReportColumns SET Heading1='" . $_POST['Heading1'] . "',
-                                     Heading2='" . $_POST['Heading2'] . "',
-                                     Calculation=" . $_POST['Calculation'] . ",
-                                     PeriodFrom=" . $_POST['PeriodFrom'] . ",
-                                     PeriodTo=" . $_POST['PeriodTo'] . ",
-                                     DataType='" . $_POST['DataType'] . "',
-                                     ColNumerator=" . $_POST['ColNumerator'] . ",
-                                     ColDenominator=" . $_POST['ColDenominator'] . ",
-                                     CalcOperator='" . $_POST['CalcOperator'] . "',
-                                     BudgetOrActual=" . $_POST['BudgetOrActual'] . ",
-                                     ValFormat='" . $_POST['ValFormat'] . "',
-                                     Constant = " . $_POST['Constant'] . "
+		$sql = "UPDATE reportcolumns SET heading1='" . $_POST['Heading1'] . "',
+                                     heading2='" . $_POST['Heading2'] . "',
+                                     calculation=" . $_POST['Calculation'] . ",
+                                     periodfrom=" . $_POST['PeriodFrom'] . ",
+                                     periodto=" . $_POST['PeriodTo'] . ",
+                                     datatype='" . $_POST['DataType'] . "',
+                                     colnumerator=" . $_POST['ColNumerator'] . ",
+                                     coldenominator=" . $_POST['ColDenominator'] . ",
+                                     calcoperator='" . $_POST['CalcOperator'] . "',
+                                     budgetoractual=" . $_POST['BudgetOrActual'] . ",
+                                     valformat='" . $_POST['ValFormat'] . "',
+                                     constant = " . $_POST['Constant'] . "
                                      WHERE
-                                     ReportID = $ReportID AND
-                                     ColNo=$SelectedCol";
+                                     reportid = $ReportID AND
+                                     colno=$SelectedCol";
 		$ErrMsg = _('The report column could not be updated because');
 		$DbgMsg = _('The SQL used to update the report column was');
 
@@ -141,24 +141,27 @@ if (isset($_POST['submit'])) {
 		unset($_POST['BudgetOrActual']);
 
 
-	} elseif ($InputError !=1 && (($_POST['Calculation']==1 && (($_POST['ColNumerator']>0 && $_POST['Constant']!=0) OR ($_POST['ColNumerator']>0 && $_POST['ColDenominator']>0)) OR $_POST['Calculation']==0))) {
+	} elseif ($InputError !=1 AND 
+			(($_POST['Calculation']==1 AND 
+			(($_POST['ColNumerator']>0 AND $_POST['Constant']!=0) OR ($_POST['ColNumerator']>0 AND $_POST['ColDenominator']>0)) 
+			OR $_POST['Calculation']==0))) {
 
 	/*SelectedReport is null cos no item selected on first time round so must be adding a new column to the report */
 
-		$sql = "INSERT INTO ReportColumns (ReportID,
-                                       ColNo,
-                                       Heading1,
-                                       Heading2,
-                                       Calculation,
-                                       PeriodFrom,
-                                       PeriodTo,
-                                       DataType,
-                                       ColNumerator,
-                                       ColDenominator,
-                                       CalcOperator,
-                                       Constant,
-                                       BudgetOrActual,
-                                       ValFormat )
+		$sql = "INSERT INTO reportcolumns (reportid,
+                                       colno,
+                                       heading1,
+                                       heading2,
+                                       calculation,
+                                       periodfrom,
+                                       periodto,
+                                       datatype,
+                                       colnumerator,
+                                       coldenominator,
+                                       calcoperator,
+                                       constant,
+                                       budgetoractual,
+                                       valformat )
                                        VALUES (
                                        $ReportID,
                                        " . $_POST['ColID'] . ",
@@ -202,7 +205,7 @@ if (isset($_POST['submit'])) {
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
-	$sql="DELETE FROM ReportColumns WHERE ReportID=$ReportID AND ColNo=$SelectedCol";
+	$sql="DELETE FROM reportcolumns WHERE reportid=$ReportID AND colno=$SelectedCol";
 
 	$ErrMsg = _('The deletion of the column failed because');
 	$DbgMsg = _('The SQL used to delete this report column was');
@@ -215,26 +218,26 @@ if (isset($_POST['submit'])) {
 /* List of Columns will be displayed with links to delete or edit each.
 These will call the same page again and allow update/input or deletion of the records*/
 
-$sql = "SELECT ReportHeaders.ReportHeading,
-               ColNo,
-               Heading1,
-               Heading2,
-               Calculation,
-               PeriodFrom,
-               PeriodTo,
-               DataType,
-               ColNumerator,
-               ColDenominator,
-               CalcOperator,
-               BudgetOrActual,
-               Constant
-               FROM
-               ReportHeaders,
-               ReportColumns
-               WHERE
-               ReportHeaders.ReportID = ReportColumns.ReportID AND
-               ReportColumns.ReportID=$ReportID
-               ORDER BY ColNo";
+$sql = "SELECT reportheaders.reportheading,
+               reportcolumns.colno,
+               reportcolumns.heading1,
+               reportcolumns.heading2,
+               reportcolumns.calculation,
+               reportcolumns.periodfrom,
+               reportcolumns.periodto,
+               reportcolumns.datatype,
+               reportcolumns.colnumerator,
+               reportcolumns.coldenominator,
+               reportcolumns.calcoperator,
+               reportcolumns.budgetoractual,
+               reportcolumns.constant
+         FROM
+               reportheaders,
+               reportcolumns
+        WHERE  reportheaders.reportid = reportcolumns.reportid 
+	AND    reportcolumns.reportid=$ReportID
+        ORDER BY reportcolumns.colno";
+	
 $ErrMsg = _('The column definitions could not be retrieved from the database because');
 $DbgMsg = _('The SQL used to retrieve the columns for the report was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -242,7 +245,7 @@ $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 if (DB_num_rows($result)!=0){
 
 	$myrow = DB_fetch_array($result);
-	echo '<CENTER><B>' . $myrow['ReportHeading'] . "</B><BR><table border=1>\n";
+	echo '<CENTER><B>' . $myrow['reportheading'] . "</B><BR><table border=1>\n";
 	echo '<tr><td class="tableheader">' . _('Col') . ' #</td>
             <td class="tableheader">' . _('Heading 1') . '</td>
             <td class="tableheader">' . _('Heading 2') . '</td>';
@@ -265,15 +268,15 @@ if (DB_num_rows($result)!=0){
 			$k=1;
 		}
 	if ($myrow[11]==1){
-		$BudOrAct = 'Actual';
+		$BudOrAct = _('Actual');
 	} else {
-		$BudOrAct = 'Budget';
+		$BudOrAct = _('Budget');
 	}
 	if ($myrow[4]==0){
-		$Calc = 'No';
+		$Calc = _('No');
 	} else {
-		$Calc = 'Yes';
-		$BudOrAct = 'N/A';
+		$Calc = _('Yes');
+		$BudOrAct = _('N/A');
 	}
 
 	printf("<td><A HREF=\"%sReportID=%s&SelectedCol=%s\">%s</A></td>
@@ -322,25 +325,25 @@ if (!isset($_GET['delete'])) {
 	if (isset($SelectedCol)) {
 		//editing an existing Column
 
-		$sql = "SELECT ReportID,
-                   	ColNo,
-                   	Heading1,
-                   	Heading2,
-                   	Calculation,
-                   	PeriodFrom,
-                   	PeriodTo,
-                   	DataType,
-                   	ColNumerator,
-                   	ColDenominator,
-                   	CalcOperator,
-                   	Constant,
-                   	BudgetOrActual,
-                   	ValFormat
+		$sql = "SELECT reportid,
+                   	colno,
+                   	heading1,
+                   	heading2,
+                   	calculation,
+                   	periodfrom,
+                   	periodto,
+                   	datatype,
+                   	colnumerator,
+                   	coldenominator,
+                   	calcoperator,
+                   	constant,
+                   	budgetoractual,
+                   	valformat
                    	FROM
-                   	ReportColumns
+                   	reportcolumns
                    	WHERE
-                   	ReportColumns.ReportID=$ReportID AND
-                   	ReportColumns.ColNo=$SelectedCol";
+                   	reportcolumns.reportid=$ReportID AND
+                   	reportcolumns.colno=$SelectedCol";
 
 
 		$ErrMsg =  _('The column') . ' ' . $SelectedCol . ' ' . _('could not be retrieved because');
@@ -350,18 +353,18 @@ if (!isset($_GET['delete'])) {
 
 		$myrow = DB_fetch_array($result);
 
-		$_POST['Heading1']=$myrow["Heading1"];
-		$_POST['Heading2']= $myrow["Heading2"];
-		$_POST['Calculation']=$myrow["Calculation"];
-		$_POST['PeriodFrom']=$myrow["PeriodFrom"];
-		$_POST['PeriodTo']=$myrow["PeriodTo"];
-		$_POST['DataType'] = $myrow["DataType"];
-		$_POST['ColNumerator']=$myrow["ColNumerator"];
-		$_POST['ColDenominator']=$myrow["ColDenominator"];
-		$_POST['CalcOperator']=$myrow["CalcOperator"];
-		$_POST['Constant']=$myrow['Constant'];
-		$_POST['BudgetOrActual']=$myrow["BudgetOrActual"];
-		$_POST['ValFormat']=$myrow["ValFormat"];
+		$_POST['Heading1']=$myrow['heading1'];
+		$_POST['Heading2']= $myrow['heading2'];
+		$_POST['Calculation']=$myrow['calculation'];
+		$_POST['PeriodFrom']=$myrow['periodfrom'];
+		$_POST['PeriodTo']=$myrow['periodto'];
+		$_POST['DataType'] = $myrow['datatype'];
+		$_POST['ColNumerator']=$myrow['colnumerator'];
+		$_POST['ColDenominator']=$myrow['coldenominator'];
+		$_POST['CalcOperator']=$myrow['calcoperator'];
+		$_POST['Constant']=$myrow['constant'];
+		$_POST['BudgetOrActual']=$myrow['budgetoractual'];
+		$_POST['ValFormat']=$myrow['valformat'];
 
 		echo '<INPUT TYPE=HIDDEN NAME="SelectedCol" VALUE=' . $SelectedCol . '>';
 		echo '<CENTER><TABLE>';

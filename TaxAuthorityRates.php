@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 // TaxAuthorityRates.php
 //
 // Date     Author
@@ -19,7 +19,7 @@ include('includes/session.inc');
 $title = _('Tax Rates');
 include('includes/header.inc');
 
-/* <-- $Revision: 1.5 $ --> */
+/* <-- $Revision: 1.6 $ --> */
 
 if (!isset($TaxAuthority)){
 	prnMsg(_('This page can only be called after selecting the tax authority to edit the rates for') . '. ' . _('Please select the Rates link from the tax authority page') . ".<BR><A HREF='$rootpath/TaxAuthorities.php'>" . _('click here') . '</A> ' . _('to go to the Tax Authority page'),'error');
@@ -30,19 +30,18 @@ if (!isset($TaxAuthority)){
 
 if (isset($_POST['UpdateRates'])){
 
-	$TaxRatesResult = DB_query('SELECT TaxAuthLevels.Level,
-						TaxAuthLevels.TaxRate,
-						TaxAuthLevels.DispatchTaxAuthority
-					FROM TaxAuthLevels
-					WHERE TaxAuthLevels.TaxAuthority=' . $TaxAuthority, $db);
+	$TaxRatesResult = DB_query('SELECT taxauthlevels.level,
+						taxauthlevels.taxrate,
+						taxauthlevels.dispatchtaxauthority
+					FROM taxauthlevels
+					WHERE taxauthlevels.taxauthority=' . $TaxAuthority, $db);
 
 	while ($myrow=DB_fetch_array($TaxRatesResult)){
 
-		$sql = 'UPDATE TaxAuthLevels SET
-				TaxRate=' . ($_POST[$myrow['DispatchTaxAuthority'] . '_' . $myrow['Level']]/100) . '
-			WHERE Level = ' . $myrow['Level'] . '
-			AND DispatchTaxAuthority = ' . $myrow['DispatchTaxAuthority'] . '
-			AND TaxAuthority = ' . $TaxAuthority;
+		$sql = 'UPDATE taxauthlevels SET taxrate=' . ($_POST[$myrow['dispatchtaxauthority'] . '_' . $myrow['level']]/100) . '
+			WHERE level = ' . $myrow['level'] . '
+			AND dispatchtaxauthority = ' . $myrow['dispatchtaxauthority'] . '
+			AND taxauthority = ' . $TaxAuthority;
 		DB_query($sql,$db);
 
 	}
@@ -55,7 +54,7 @@ if (isset($_POST['UpdateRates'])){
 /*Display updated rates
 */
 
-$TaxAuthDetail = DB_query('SELECT Description FROM TaxAuthorities WHERE TaxID=' . $TaxAuthority,$db);
+$TaxAuthDetail = DB_query('SELECT description FROM taxauthorities WHERE taxid=' . $TaxAuthority,$db);
 $myrow = DB_fetch_row($TaxAuthDetail);
 echo '<BR><FONT SIZE=3 COLOR=BLUE><B>' . _('Update') . ' ' . $myrow[0] . ' ' . _('Rates') . '</B></FONT><BR>';
 
@@ -63,14 +62,15 @@ echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID ."' METHOD=POST>";
 
 echo "<INPUT TYPE=HIDDEN NAME='TaxAuthority' VALUE=$TaxAuthority>";
 
-$TaxRatesResult = DB_query('SELECT TaxAuthLevels.Level,
-				TaxAuthLevels.TaxRate,
-				TaxAuthLevels.DispatchTaxAuthority,
-				TaxAuthorities.Description
-				FROM TaxAuthLevels INNER JOIN TaxAuthorities
-					ON TaxAuthLevels.DispatchTaxAuthority=TaxAuthorities.TaxID
-				WHERE TaxAuthLevels.TaxAuthority=' . $TaxAuthority . "
-				ORDER BY TaxAuthLevels.DispatchTaxAuthority, TaxAuthLevels.Level",
+$TaxRatesResult = DB_query('SELECT taxauthlevels.level,
+				taxauthlevels.taxrate,
+				taxauthlevels.dispatchtaxauthority,
+				taxauthorities.description
+				FROM taxauthlevels INNER JOIN taxauthorities
+					ON taxauthlevels.dispatchtaxauthority=taxauthorities.taxid
+				WHERE taxauthlevels.taxauthority=' . $TaxAuthority . "
+				ORDER BY taxauthlevels.dispatchtaxauthority, 
+					taxauthlevels.level",
 				$db);
 
 if (DB_num_rows($TaxRatesResult)>0){
@@ -97,10 +97,10 @@ if (DB_num_rows($TaxRatesResult)>0){
 			<td>%s</td>
 			<td><INPUT TYPE=TEXT NAME=%s MAXLENGTH=5 SIZE=5 VALUE=%s></td>
 			</tr>',
-			$myrow['Description'],
-			$myrow['Level'],
-			$myrow['DispatchTaxAuthority'] . '_' . $myrow['Level'],
-			$myrow['TaxRate']*100 );
+			$myrow['description'],
+			$myrow['level'],
+			$myrow['dispatchtaxauthority'] . '_' . $myrow['level'],
+			$myrow['taxrate']*100 );
 
 	}
 //end of while loop
@@ -115,7 +115,7 @@ echo '<BR><BR>';
 prnMsg(_('Tax rates must be specified for all defined tax levels') . '. ' . _('The tax level refers to the specific level of tax attributable to different items') . '. ' . _('These are set up against the item'),'info');
 
 echo '<BR><BR>';
-prnMsg(_('For all tax levels') . ', ' . _('tax rates must be specified for all other defined Tax Authorities ie for goods moving between tax authorities') . '. ' . _('In most countries selling products between tax authorities attracts 0% tax') . '. ' . _('It is normally only when sales are delivered from within the tax authority to a customer in the same tax authority that the tax rate will be other than 0%'),'info');
+prnMsg(_('For all tax levels, tax rates must be specified for all other defined Tax Authorities ie for goods moving between tax authorities. In most countries selling products between tax authorities attracts 0% tax. It is normally only when sales are delivered from within the tax authority to a customer in the same tax authority that the tax rate will be other than 0%'),'info');
 
 include( 'includes/footer.inc' );
 ?>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /*Now this is not secure so a malicious user could send multiple emails of the report to the intended receipients
 
 The intention is that this script is called from cron at intervals defined with a command like:
@@ -17,8 +17,8 @@ $Recipients = array('"Root" <root@localhost>','"someone else" <someoneelese@sowh
 
 /* ----------------------------------------------------------------------------------------------*/
 
-include("config.php");
-include("includes/ConnectDB.inc");
+include('config.php');
+include('includes/ConnectDB.inc');
 
 if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);
@@ -26,17 +26,17 @@ if (isset($SessionSavePath)){
 
 session_start();
 
-include("includes/ConstructSQLForUserDefinedSalesReport.inc");
-include("includes/CSVSalesAnalysis.inc");
+include('includes/ConstructSQLForUserDefinedSalesReport.inc');
+include('includes/CSVSalesAnalysis.inc');
 
 
 include('includes/htmlMimeMail.php');
 
 $mail = new htmlMimeMail();
-$attachment = $mail->getFile( $reports_dir . "/SalesAnalysis.csv");
+$attachment = $mail->getFile( $_SESSION['reports_dir'] . '/SalesAnalysis.csv');
 $mail->setText(_('Please find herewith the comma seperated values sales report'));
 $mail->addAttachment($attachment, 'SalesAnalysis.csv', 'application/csv');
 $mail->setSubject(_('Sales Analysis') . ' - ' . _('CSV Format'));
-$mail->setFrom($CompanyName . "<" . $CompanyRecord['Email'] . ">");
+$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
 $result = $mail->send($Recipients);
 ?>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 7;
 
@@ -15,7 +15,7 @@ echo '<FORM METHOD="POST" ACTION="' . $_SERVER["PHP_SELF"] . '?' . SID . '">';
 
 echo '<CENTER><TABLE>';
 
-$SQL = 'SELECT BankAccountName, AccountCode FROM BankAccounts';
+$SQL = 'SELECT bankaccountname, accountcode FROM bankaccounts';
 
 
 
@@ -32,10 +32,10 @@ if (DB_num_rows($AccountsResults)==0){
 } else {
 	while ($myrow=DB_fetch_array($AccountsResults)){
 		/*list the bank account names */
-		if ($_POST["BankAccount"]==$myrow["AccountCode"]){
-			echo '<OPTION SELECTED VALUE="' . $myrow["AccountCode"] . '">' . $myrow["BankAccountName"];
+		if ($_POST["BankAccount"]==$myrow["accountcode"]){
+			echo '<OPTION SELECTED VALUE="' . $myrow["accountcode"] . '">' . $myrow["bankaccountname"];
 		} else {
-			echo '<OPTION VALUE="' . $myrow["AccountCode"] . '">' . $myrow["BankAccountName"];
+			echo '<OPTION VALUE="' . $myrow["accountcode"] . '">' . $myrow["bankaccountname"];
 		}
 	}
 	echo '</SELECT></TD></TR>';
@@ -52,13 +52,13 @@ if (isset($_POST['ShowRec']) AND $_POST['ShowRec']!=''){
 
 /*Get the balance of the bank account concerned */
 
-	$sql = "SELECT Max(Period) FROM ChartDetails WHERE AccountCode=" . $_POST["BankAccount"];
+	$sql = "SELECT MAX(period) FROM chartdetails WHERE accountcode=" . $_POST['BankAccount'];
 	$PrdResult = DB_query($sql, $db);
 	$myrow = DB_fetch_row($PrdResult);
 	$LastPeriod = $myrow[0];
 
 
-	$SQL = "SELECT BFwd+Actual AS Balance FROM ChartDetails WHERE Period=$LastPeriod AND AccountCode=" . $_POST["BankAccount"];
+	$SQL = "SELECT bfwd+actual AS balance FROM chartdetails WHERE period=$LastPeriod AND accountcode=" . $_POST["BankAccount"];
 
 	$ErrMsg = _('The bank account balance could not be returned by the SQL because');
 	$BalanceResult = DB_query($SQL,$db,$ErrMsg);
@@ -66,21 +66,21 @@ if (isset($_POST['ShowRec']) AND $_POST['ShowRec']!=''){
 	$myrow = DB_fetch_row($BalanceResult);
 	$Balance = $myrow[0];
 
-	echo '<CENTER><TABLE><TR><TD COLSPAN=6><B>' . _('Current bank account balance as at') . ' ' . Date($DefaultDateFormat) . '</B></TD><TD VALIGN=BOTTOM ALIGN=RIGHT><B>' . number_format($Balance,2) . '</B></TD></TR>';
+	echo '<CENTER><TABLE><TR><TD COLSPAN=6><B>' . _('Current bank account balance as at') . ' ' . Date($_SESSION['DefaultDateFormat']) . '</B></TD><TD VALIGN=BOTTOM ALIGN=RIGHT><B>' . number_format($Balance,2) . '</B></TD></TR>';
 
-	$SQL = "SELECT Amount/ExRate As Amt,
-			AmountCleared,
-			(Amount/ExRate)-AmountCleared AS Outstanding,
-			Ref,
-			TransDate,
-			SysTypes.TypeName,
-			TransNo
-		FROM BankTrans,
-			SysTypes
-		WHERE BankTrans.Type = SysTypes.TypeID
-		AND BankTrans.BankAct=" . $_POST["BankAccount"] . "
-		AND Amount < 0
-		AND ABS((Amount/ExRate)-AmountCleared)>0.009";
+	$SQL = "SELECT amount/exrate AS amt,
+			amountcleared,
+			(amount/exrate)-amountcleared as outstanding,
+			ref,
+			transdate,
+			systypes.typename,
+			transno
+		FROM banktrans,
+			systypes
+		WHERE banktrans.type = systypes.typeid
+		AND banktrans.bankact=" . $_POST["BankAccount"] . "
+		AND amount < 0
+		AND ABS((amount/exrate)-amountcleared)>0.009";
 
 	echo '<TR></TR>'; /*Bang in a blank line */
 
@@ -120,14 +120,14 @@ if (isset($_POST['ShowRec']) AND $_POST['ShowRec']!=''){
 			<td ALIGN=RIGHT>%01.2f</td>
 			<td ALIGN=RIGHT>%01.2f</td>
 			</tr>",
-			ConvertSQLDate($myrow['TransDate']),
-			$myrow['TypeName'],
-			$myrow['TransNo'],
-			$myrow['Ref'],
-			$myrow['Amt'],
-			$myrow['Outstanding']);
+			ConvertSQLDate($myrow['transdate']),
+			$myrow['typename'],
+			$myrow['transno'],
+			$myrow['ref'],
+			$myrow['amt'],
+			$myrow['outstanding']);
 
-		$TotalUnpresentedCheques +=$myrow['Outstanding'];
+		$TotalUnpresentedCheques +=$myrow['outstanding'];
 
 		$j++;
 		If ($j == 18){
@@ -138,19 +138,19 @@ if (isset($_POST['ShowRec']) AND $_POST['ShowRec']!=''){
 	//end of while loop
 	echo '<TR></TR><TR><TD COLSPAN=6>' . _('Total of all unpresented cheques') . '</TD><TD ALIGN=RIGHT>' . number_format($TotalUnpresentedCheques,2) . '</TD></TR>';
 
-	$SQL = "SELECT Amount/ExRate As Amt,
-			AmountCleared,
-			(Amount/ExRate)-AmountCleared AS Outstanding,
-			Ref,
-			TransDate,
-			SysTypes.TypeName,
-			TransNo
-		FROM BankTrans,
-			SysTypes
-		WHERE BankTrans.Type = SysTypes.TypeID
-		AND BankTrans.BankAct=" . $_POST["BankAccount"] . "
-		AND Amount > 0
-		AND ABS((Amount/ExRate)-AmountCleared)>0.009";
+	$SQL = "SELECT amount/exrate AS amt,
+			amountcleared,
+			(amount/exrate)-amountcleared as outstanding,
+			ref,
+			transdate,
+			systypes.typename,
+			transno
+		FROM banktrans,
+			systypes
+		WHERE banktrans.type = systypes.typeid
+		AND banktrans.bankact=" . $_POST["BankAccount"] . "
+		AND amount > 0
+		AND ABS((amount/exrate)-amountcleared)>0.009";
 
 	echo '<TR></TR>'; /*Bang in a blank line */
 
@@ -191,15 +191,15 @@ if (isset($_POST['ShowRec']) AND $_POST['ShowRec']!=''){
 			<td ALIGN=RIGHT>%01.2f</td>
 			<td ALIGN=RIGHT>%01.2f</td>
 			</tr>",
-			ConvertSQLDate($myrow["TransDate"]),
-			$myrow["TypeName"],
-			$myrow["TransNo"],
-			$myrow["Ref"],
-			$myrow["Amt"],
-			$myrow["Outstanding"]
+			ConvertSQLDate($myrow['transdate']),
+			$myrow['typename'],
+			$myrow['transno'],
+			$myrow['ref'],
+			$myrow['amt'],
+			$myrow['outstanding']
 		);
 
-		$TotalUnclearedDeposits +=$myrow["Outstanding"];
+		$TotalUnclearedDeposits +=$myrow['outstanding'];
 
 		$j++;
 		If ($j == 18){

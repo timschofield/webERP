@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -14,8 +14,11 @@ include('includes/DateFunctions.inc');
 
 if (isset($_GET['FromGRNNo'])){
 
-	$SQL= "SELECT PurchOrderDetails.OrderNo  FROM PurchOrderDetails,GRNs
-		WHERE PurchOrderDetails.PODetailITem=GRNs.PODetailItem AND GRNs.GRNNo=" . $_GET["FromGRNNo"];
+	$SQL= "SELECT purchorderdetails.orderno  
+		FROM purchorderdetails,
+			grns
+		WHERE purchorderdetails.podetailitem=grns.podetailitem 
+		AND grns.grnno=" . $_GET['FromGRNNo'];
 
 	$ErrMsg = _('The search of the GRNs was unsucessful') . ' - ' . _('the SQL statement returned the error');
 	$orderResult = DB_query($SQL, $db, $ErrMsg);
@@ -39,10 +42,14 @@ if (!isset($_GET['OrderNo'])) {
 }
 
 $ErrMsg = _('The order requested could not be retrieved') . ' - ' . _('the SQL returned the following error');
-$OrderHeaderSQL = "SELECT PurchOrders.*, Suppliers.SupplierID, Suppliers.SuppName, Suppliers.CurrCode
-			FROM PurchOrders, Suppliers
-			WHERE PurchOrders.SupplierNo = Suppliers.SupplierID
-			AND PurchOrders.OrderNo = " . $_GET['OrderNo'];
+$OrderHeaderSQL = "SELECT purchorders.*, 
+			suppliers.supplierid, 
+			suppliers.suppname, 
+			suppliers.currcode
+		FROM purchorders, 
+			suppliers
+		WHERE purchorders.supplierno = suppliers.supplierid
+		AND purchorders.orderno = " . $_GET['OrderNo'];
 
 $GetOrdHdrResult = DB_query($OrderHeaderSQL,$db, $ErrMsg);
 
@@ -68,37 +75,37 @@ $myrow = DB_fetch_array($GetOrdHdrResult);
 /* SHOW ALL THE ORDER INFO IN ONE PLACE */
 
 echo '<BR><CENTER><TABLE BORDER=0 CELLPADDING=2>';
-echo '<TR><TD class="tableheader">' . _('Supplier Code'). '</TD><TD>' . $myrow['SupplierID'] . '</TD>
-	<TD class="tableheader">' . _('Supplier Name'). '</TD><TD>' . $myrow['SuppName'] . '</TD></TR>';
+echo '<TR><TD class="tableheader">' . _('Supplier Code'). '</TD><TD>' . $myrow['supplierid'] . '</TD>
+	<TD class="tableheader">' . _('Supplier Name'). '</TD><TD>' . $myrow['suppname'] . '</TD></TR>';
 
-echo '<TR><TD class="tableheader">' . _('Ordered On'). '</TD><TD>' . ConvertSQLDate($myrow['OrdDate']) . '</TD>
-	<TD class="tableheader">' . _('Delivery Address 1'). '</TD><TD>' . $$myrow['DelAdd1'] . '</TD></TR>';
+echo '<TR><TD class="tableheader">' . _('Ordered On'). '</TD><TD>' . ConvertSQLDate($myrow['orddate']) . '</TD>
+	<TD class="tableheader">' . _('Delivery Address 1'). '</TD><TD>' . $$myrow['deladd1'] . '</TD></TR>';
 
-echo '<TR><TD class="tableheader">' . _('Order Currency'). '</TD><TD>' . $myrow['CurrCode'] . '</TD>
-	<TD class="tableheader">' . _('Delivery Address 2'). '</TD><TD>' . $myrow['DelAdd2'] . '</TD></TR>';
+echo '<TR><TD class="tableheader">' . _('Order Currency'). '</TD><TD>' . $myrow['currcode'] . '</TD>
+	<TD class="tableheader">' . _('Delivery Address 2'). '</TD><TD>' . $myrow['deladd2'] . '</TD></TR>';
 
-echo '<TR><TD class="tableheader">' . _('Exchange Rate'). '</TD><TD>' . $myrow['Rate'] . '</TD>
-	<TD class="tableheader">' . _('Delivery Address 3'). '</TD><TD>' . $myrow['DelAdd3'] . '</TD></TR>';
+echo '<TR><TD class="tableheader">' . _('Exchange Rate'). '</TD><TD>' . $myrow['rate'] . '</TD>
+	<TD class="tableheader">' . _('Delivery Address 3'). '</TD><TD>' . $myrow['deladd3'] . '</TD></TR>';
 
-echo '<TR><TD class="tableheader">' . _('Deliver Into Location'). '</TD><TD>' . $myrow['IntoStockLocation'] . '</TD>
-	<TD class="tableheader">' . _('Delivery Address 4'). '</TD><TD>' . $myrow['DelAdd4'] . '</TD></TR>';
+echo '<TR><TD class="tableheader">' . _('Deliver Into Location'). '</TD><TD>' . $myrow['intostocklocation'] . '</TD>
+	<TD class="tableheader">' . _('Delivery Address 4'). '</TD><TD>' . $myrow['deladd4'] . '</TD></TR>';
 
-echo '<TR><TD class="tableheader">' . _('Initiator'). '</TD><TD>' . $myrow['Initiator'] . '</TD>
-	<TD class="tableheader">' . _('Requistion Ref'). '.</TD><TD>' . $myrow['RequisitionNo'] . '</TD></TR>';
+echo '<TR><TD class="tableheader">' . _('Initiator'). '</TD><TD>' . $myrow['initiator'] . '</TD>
+	<TD class="tableheader">' . _('Requistion Ref'). '.</TD><TD>' . $myrow['requisitionno'] . '</TD></TR>';
 
 echo '<TR><TD class="tableheader">'. _('Printing') . '</TD><TD COLSPAN=3>';
 
-if ($myrow['DatePrinted'] == ''){
+if ($myrow['dateprinted'] == ''){
 	echo '<i>'. _('Not yet printed') . '</i> &nbsp; &nbsp; ';
 	echo '[<a href="PO_PDFPurchOrder.php?OrderNo='. $_GET['OrderNo'] .'">'. _('Print') .'</A>]';
 } else {
-	echo _('Printed on').' '. ConvertSQLDate($myrow['DatePrinted']). '&nbsp; &nbsp;';
+	echo _('Printed on').' '. ConvertSQLDate($myrow['dateprinted']). '&nbsp; &nbsp;';
 	echo '[<a href="PO_PDFPurchOrder.php?OrderNo='. $_GET['OrderNo'] .'">'. _('Print a Copy') .'</A>]';
 }
 
 echo  '</TD></TR>';
 
-echo '<TR><TD class="tableheader">' . _('Comments'). '</TD><TD bgcolor=white COLSPAN=3>' . $myrow['Comments'] . '</TD></TR>';
+echo '<TR><TD class="tableheader">' . _('Comments'). '</TD><TD bgcolor=white COLSPAN=3>' . $myrow['comments'] . '</TD></TR>';
 
 echo '</TABLE>';
 
@@ -106,8 +113,8 @@ echo '</TABLE>';
 echo '<BR></CENTER>';
 /*Now get the line items */
 $ErrMsg = _('The line items of the purchase order could not be retrieved');
-$LineItemsSQL = "SELECT PurchOrderDetails.* FROM PurchOrderDetails
-				WHERE PurchOrderDetails.OrderNo = " . $_GET['OrderNo'];
+$LineItemsSQL = "SELECT purchorderdetails.* FROM purchorderdetails
+				WHERE purchorderdetails.orderno = " . $_GET['OrderNo'];
 
 $LineItemsResult = db_query($LineItemsSQL,$db, $ErrMsg);
 
@@ -131,14 +138,14 @@ $RecdTotal=0;
 
 while ($myrow=db_fetch_array($LineItemsResult)) {
 
-	$OrderTotal += ($myrow['QuantityOrd'] * $myrow['UnitPrice']);
-	$RecdTotal += ($myrow['QuantityRecd'] * $myrow['UnitPrice']);
+	$OrderTotal += ($myrow['quantityord'] * $myrow['unitprice']);
+	$RecdTotal += ($myrow['quantityrecd'] * $myrow['unitprice']);
 
-	$DisplayReqdDate = ConvertSQLDate($myrow['DeliveryDate']);
+	$DisplayReqdDate = ConvertSQLDate($myrow['deliverydate']);
 
 	// if overdue and outstanding quantities, then highlight as so
-	if (($myrow['QuantityOrd'] - $myrow['QuantityRecd'] > 0)
-	  	AND Date1GreaterThanDate2(Date($DefaultDateFormat), $DisplayReqdDate)){
+	if (($myrow['quantityord'] - $myrow['quantityrecd'] > 0)
+	  	AND Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']), $DisplayReqdDate)){
     	 	echo '<tr class="OsRow">';
 	} else {
     		if ($k==1){
@@ -159,13 +166,13 @@ while ($myrow=db_fetch_array($LineItemsResult)) {
 		<TD ALIGN=RIGHT>%01.2f</TD>
 		<TD>%s</TD>
 		</TR>' ,
-		$myrow['ItemCode'],
-		$myrow['ItemDescription'],
-		$myrow['QuantityOrd'],
-		$myrow['QuantityRecd'],
-		$myrow['QtyInvoiced'],
-		$myrow['UnitPrice'],
-		$myrow['ActPrice'],
+		$myrow['itemcode'],
+		$myrow['itemdescription'],
+		$myrow['quantityord'],
+		$myrow['quantityrecd'],
+		$myrow['qtyinvoiced'],
+		$myrow['unitprice'],
+		$myrow['actprice'],
 		$DisplayReqdDate);
 
 }

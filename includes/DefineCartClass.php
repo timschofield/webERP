@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 /* Definition of the cart class
 this class can hold all the information for:
 
@@ -36,7 +36,6 @@ Class Cart {
 	var $CustRef;
 	var $Comments;
 	var $Location;
-
 	var $DebtorNo;
 	var $CustomerName;
 	var $Orig_OrderDate;
@@ -46,6 +45,7 @@ Class Cart {
 	var $FreightCost;
 	Var $OrderNo;
 	Var $Consignment;
+	Var $Quotation;
 
 	function Cart(){
 	/*Constructor function initialises a new shopping cart */
@@ -110,11 +110,11 @@ Class Cart {
 				errors anyway */
 
 				global $db;
-				$sql = "INSERT INTO SalesOrderDetails (OrderNo,
-											StkCode,
-											Quantity,
-											UnitPrice,
-											DiscountPercent)
+				$sql = "INSERT INTO salesorderdetails (orderno,
+									stkcode,
+									quantity,
+									unitprice,
+									discountpercent)
 								VALUES(" . $_SESSION['ExistingOrder'] . ",
 									'" . $StockID ."',
 									" . $Qty . ",
@@ -141,13 +141,13 @@ Class Cart {
 
 		if ($UpdateDB=='Yes'){
 			global $db;
-			$result = DB_query("UPDATE SalesOrderDetails
-						SET Quantity=" . $Qty . ",
-						UnitPrice=" . $Price . ",
-						DiscountPercent=" . $Disc . ",
-						Narrative ='" . $Narrative . "'
-					WHERE OrderNo=" . $_SESSION['ExistingOrder'] . "
-					AND StkCode='" . $UpdateItem ."'"
+			$result = DB_query("UPDATE salesorderdetails
+						SET quantity=" . $Qty . ",
+						unitprice=" . $Price . ",
+						discountpercent=" . $Disc . ",
+						narrative ='" . $Narrative . "'
+					WHERE orderno=" . $_SESSION['ExistingOrder'] . "
+					AND stkcode='" . $UpdateItem ."'"
 				, $db
 				, _('The order line for') . ' ' . $UpdateItem .  ' ' . _('could not be updated'));
 		}
@@ -160,9 +160,9 @@ Class Cart {
 		}
 		if ($UpdateDB=='Yes'){
 			global $db;
-			$result = DB_query("DELETE FROM SalesOrderDetails
-						WHERE OrderNo=" . $_SESSION['ExistingOrder'] . "
-						AND StkCode='" . $StockID ."'",
+			$result = DB_query("DELETE FROM salesorderdetails
+						WHERE orderno=" . $_SESSION['ExistingOrder'] . "
+						AND stkcode='" . $StockID ."'",
 						$db,
 						_('The order line for') . ' ' . $StockID . ' ' . _('could not be deleted'));
 		}
@@ -201,6 +201,15 @@ Class Cart {
 			return 1;
 		}
 		return 0;
+	}
+	
+	function AllDummyLineItems(){
+		foreach ($this->LineItems as $StockItem) {
+			if($StockItem->MBflag !='D'){
+				return false;
+			}
+		}
+		return true;
 	}
 } /* end of class defintion */
 

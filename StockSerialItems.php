@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 2;
 
@@ -16,14 +16,14 @@ if (isset($_GET['StockID'])){
 	exit;
 }
 
-$result = DB_query("SELECT Description,
-			Units,
-			MBflag,
-			DecimalPlaces,
-			Serialised,
-			Controlled
-		FROM StockMaster
-		WHERE StockID='$StockID'",
+$result = DB_query("SELECT description,
+			units,
+			mbflag,
+			decimalplaces,
+			serialised,
+			controlled
+		FROM stockmaster
+		WHERE stockid='$StockID'",
 		$db,
 		_('Could not retrieve the requested item because'));
 
@@ -49,9 +49,9 @@ if ($Serialised==1){
 }
 
 
-$result = DB_query("SELECT LocationName
-			FROM Locations
-			WHERE LocCode='" . $_GET['Location'] . "'",
+$result = DB_query("SELECT locationname
+			FROM locations
+			WHERE loccode='" . $_GET['Location'] . "'",
 			$db,
 			_('Could not retrieve the stock location of the item because'),
 			_('The SQL used to lookup the location was'));
@@ -59,12 +59,12 @@ $result = DB_query("SELECT LocationName
 $myrow = DB_fetch_row($result);
 echo $myrow[0];
 
-$sql = "SELECT SerialNo,
-		Quantity
-	FROM StockSerialItems
-	WHERE LocCode='" . $_GET['Location'] . "'
-	AND StockID = '" . $StockID . "'
-	AND Quantity <>0";
+$sql = "SELECT serialno,
+		quantity
+	FROM stockserialitems
+	WHERE loccode='" . $_GET['Location'] . "'
+	AND stockid = '" . $StockID . "'
+	AND quantity <>0";
 
 
 $ErrMsg = _('The serial numbers/batches held cannot be retrieved because');
@@ -103,17 +103,17 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 		echo "<TR bgcolor=$BGColor>";
 	}
 
-	$TotalQuantity += $myrow['Quantity'];
+	$TotalQuantity += $myrow['quantity'];
 
 	if ($Serialised == 1){
 		printf('<td>%s</td>',
-		$myrow['SerialNo']
+		$myrow['serialno']
 		);
 	} else {
 		printf("<td>%s</td>
 			<td ALIGN=RIGHT>%s</td>",
-			$myrow['SerialNo'],
-			number_format($myrow['Quantity'],$DecimalPlaces)
+			$myrow['serialno'],
+			number_format($myrow['quantity'],$DecimalPlaces)
 			);
 	}
 	$j++;

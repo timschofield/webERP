@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 /*SelectOrderItems_IntoCart.inc
 
 This snippet is used to enter order line items into the cart object:
@@ -28,24 +28,24 @@ if (count($_SESSION['Items']->LineItems)>0){
 
 if ($AlreadyOnThisOrder!=1){
 
-    $sql = "SELECT StockMaster.Description,
-    		StockMaster.StockID,
-		StockMaster.Units,
-		StockMaster.Volume,
-		StockMaster.KGS,
-		(Materialcost+Labourcost+Overheadcost) AS StandardCost,
-		LocStock.Quantity,
-		StockMaster.MBflag,
-		StockMaster.DiscountCategory,
-		StockMaster.DecimalPlaces,
-		StockMaster.Discontinued
-	FROM StockMaster INNER JOIN LocStock
-	ON StockMaster.StockID=LocStock.StockID
-	WHERE LocStock.LocCode='" . $_SESSION['Items']->Location . "'
-	AND  StockMaster.StockID = '". $NewItem . "'";
+    $sql = "SELECT stockmaster.description,
+    		stockmaster.stockid,
+		stockmaster.units,
+		stockmaster.volume,
+		stockmaster.kgs,
+		(materialcost+labourcost+overheadcost) as standardcost,
+		locstock.quantity,
+		stockmaster.mbflag,
+		stockmaster.discountcategory,
+		stockmaster.decimalplaces,
+		stockmaster.discontinued
+	FROM stockmaster INNER JOIN locstock
+	ON stockmaster.stockid=locstock.stockid
+	WHERE locstock.loccode='" . $_SESSION['Items']->Location . "'
+	AND stockmaster.stockid = '". $NewItem . "'";
 
     $ErrMsg = _('The details for') . ' ' . $NewItem . ' ' . _('could not be retrieved because');
-    $DbgMsg = '<BR>' . _('The SQL used to retrieve the pricing details but failed was');
+    $DbgMsg = _('The SQL used to retrieve the pricing details but failed was');
     $result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
     if (DB_num_rows($result1)==0){
@@ -54,18 +54,18 @@ if ($AlreadyOnThisOrder!=1){
 
     } elseif ($myrow = DB_fetch_array($result1)){
 
-    		if ($myrow['Discontinued']==1){
+    		if ($myrow['discontinued']==1){
 			prnMsg(_('The item') . ' ' . $NewItem . ' ' . _('could not be added to the order because it has been flagged as obsolete'),'error',_('Obsolete Item'));
 
-		} elseif (($AllowSalesOfZeroCostItems == false
-			AND $myrow['StandardCost']>0
-			AND ($myrow['MBFlag']=='B'
-			OR $myrow['MBFlag']=='M'))
-		OR ($AllowSalesOfZeroCostItems == false
-			AND ($myrow['MBFlag']='A'
-			OR $myrow['MBFlag']=='D'
-			OR $myrow['MBFlag']=='K'))
-		OR $AllowSalesOfZeroCostItems==true) {
+		} elseif (($_SESSION['AllowSalesOfZeroCostItems'] == false
+			AND $myrow['standardcost']>0
+			AND ($myrow['mbflag']=='B'
+			OR $myrow['mbflag']=='M'))
+		OR ($_SESSION['AllowSalesOfZeroCostItems'] == false
+			AND ($myrow['mbflag']=='A'
+			OR $myrow['mbflag']=='D'
+			OR $myrow['mbflag']=='K'))
+		OR $_SESSION['AllowSalesOfZeroCostItems']==true) {
 
 		/*these checks above ensure that the item has a cost if the
 		config.php variable AllowSalesOfZeroCostItems is set to false */
@@ -75,28 +75,44 @@ if ($AlreadyOnThisOrder!=1){
 			} else {
 				$UpdateDB = 'No';
 			}
+  			
+			if ( $myrow['DiscountCategory'] != "" ){
+                                $DiscCatsDone[$Counter]=$StockItem->DiscCat;
+                                $QuantityOfDiscCat =0;
 
+                                $result = DB_query("SELECT MAX(discountrate) AS discount
+                                                        FROM discountmatrix
+                                                        WHERE salestype='" .  $_SESSION['Items']->DefaultSalesType . "'
+                                                        AND discountcategory ='" . $myrow['discountcategory'] . "'
+                                                        AND quantitybreak <" . $NewItemQty,$db);
+                                $myrow = DB_fetch_row($result);
+				if ($myrow[0] != "" && $myrow[0] > 0) {
+					$Discount = $myrow[0];
+				} else {
+					$Discount = 0;
+				}
+                        }
    			if ($_SESSION['Items']->add_to_cart ($NewItem,
 							$NewItemQty,
-							$myrow['Description'],
+							$myrow['description'],
 							GetPrice ($NewItem, $_SESSION['Items']->DebtorNo,$_SESSION['Items']->Branch, &$db),
-							0,
-							$myrow['Units'],
-							$myrow['Volume'],
-							$myrow['KGS'],
-							$myrow['Quantity'],
-							$myrow['MBflag'],
+							$Discount,
+							$myrow['units'],
+							$myrow['volume'],
+							$myrow['kgs'],
+							$myrow['quantity'],
+							$myrow['mbflag'],
 							NULL, /*Actual Dispatch Date */
 							0, /*Qty Invoiced */
-							$myrow['DiscountCategory'],
+							$myrow['discountcategory'],
 							0, /*Controlled - dont care */
 							0, /*serialised - dont care */
-							$myrow['DecimalPlaces'],
+							$myrow['decimalplaces'],
 							'', /*Narrative - none yet */
 							$UpdateDB
 							)==1){
 
-		      		$_SESSION['Items']->LineItems[$NewItem]->StandardCost = $myrow['StandardCost'];
+		      		$_SESSION['Items']->LineItems[$NewItem]->StandardCost = $myrow['standardcost'];
 			}
              } else {
 			echo '<BR><FONT COLOR=RED SIZE=3><B>' . _('Warning') . ': </FONT></B>' . _('the item code') . ' ' . $NewItem . ' ' . _('does not have a cost set up and order entry is set up to prohibit sales of items with no cost data entered');

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 //
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
@@ -72,7 +72,7 @@
 *    re-build the message.
 *
 * @author  Richard Heyes <richard@phpguru.org>
-* @version $Revision: 1.2 $
+* @version $Revision: 1.3 $
 * @package Mail
 */
 

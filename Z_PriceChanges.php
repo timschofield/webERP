@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity=15;
 
 
@@ -41,10 +41,10 @@ $DbgMsg = _('The SQL used to retrieve stock categories and failed was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 while ($myrow=DB_fetch_array($result)){
-	if ($myrow['CategoryID']==$_POST['StkCat']){
-		echo "<OPTION SELECTED VALUE='". $myrow['CategoryID'] . "'>" . $myrow["CategoryDescription"];
+	if ($myrow['categoryid']==$_POST['StkCat']){
+		echo "<OPTION SELECTED VALUE='". $myrow['categoryid'] . "'>" . $myrow["categorydescription"];
 	} else {
-		echo "<OPTION VALUE='". $myrow['CategoryID'] . "'>" . $myrow['CategoryDescription'];
+		echo "<OPTION VALUE='". $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
 	}
 }
 echo '</SELECT></TD></TR>';
@@ -98,25 +98,25 @@ if (isset($_POST['UpdatePrices']) AND isset($_POST['StkCat'])){
 
 		if ($_POST['WhichPrices'] == 'Only Non-customer special prices'){
 
-			$sql = 'UPDATE Prices SET Price=Price*(1+' . $IncrementPercentage . ") WHERE TypeAbbrev='" . $_POST['PriceList'] . "' AND StockID='" . $myrow['StockID'] . "' AND TypeAbbrev='" . $_POST['PriceList'] . "' AND DebtorNo=''";
+			$sql = 'UPDATE Prices SET Price=Price*(1+' . $IncrementPercentage . ") WHERE TypeAbbrev='" . $_POST['PriceList'] . "' AND StockID='" . $myrow['stockid'] . "' AND TypeAbbrev='" . $_POST['PriceList'] . "' AND DebtorNo=''";
 
 		}else if ($_POST['WhichPrices'] == 'Only customer special prices'){
 
-			$sql = "UPDATE Prices SET Price=Price*(1+" . $IncrementPercentage . ") WHERE TypeAbbrev='" . $_POST['PriceList'] . "' AND StockID='" . $myrow['StockID'] . "' AND TypeAbbrev='" . $_POST['PriceList'] . "' AND DebtorNo!=''";
+			$sql = "UPDATE Prices SET Price=Price*(1+" . $IncrementPercentage . ") WHERE TypeAbbrev='" . $_POST['PriceList'] . "' AND StockID='" . $myrow['stockid'] . "' AND TypeAbbrev='" . $_POST['PriceList'] . "' AND DebtorNo!=''";
 
 		} else if ($_POST['WhichPrices'] == 'Both customer special prices and non-customer special prices'){
 
-			$sql = "UPDATE Prices SET Price=Price*(1+" . $IncrementPercentage . ") WHERE TypeAbbrev='" . $_POST['PriceList'] . "' AND StockID='" . $myrow['StockID'] . "' AND TypeAbbrev='" . $_POST['PriceList'] . "'";
+			$sql = "UPDATE Prices SET Price=Price*(1+" . $IncrementPercentage . ") WHERE TypeAbbrev='" . $_POST['PriceList'] . "' AND StockID='" . $myrow['stockid'] . "' AND TypeAbbrev='" . $_POST['PriceList'] . "'";
 
 		} else if ($_POST['WhichPrices'] == 'Selected customer special prices only'){
 
-			$sql = 'UPDATE Prices SET Price=Price*(1+' . $IncrementPercentage . ") WHERE TypeAbbrev='" . $_POST['PriceList'] . "' AND StockID='" . $myrow['StockID'] . "' AND TypeAbbrev='" . $_POST['PriceList'] . "' AND DebtorNo='" . $_SESSION['CustomerID'] . "'";
+			$sql = 'UPDATE Prices SET Price=Price*(1+' . $IncrementPercentage . ") WHERE TypeAbbrev='" . $_POST['PriceList'] . "' AND StockID='" . $myrow['stockid'] . "' AND TypeAbbrev='" . $_POST['PriceList'] . "' AND DebtorNo='" . $_SESSION['CustomerID'] . "'";
 
 		}
 
 		$result = DB_query($sql,$db);
-                $ErrMsg =_('Error updating prices for') . ' ' . $myrow['StockID'] . ' ' . _('because');
-		prnMsg(_('Updating prices for') . ' ' . $myrow['StockID'],'info');
+                $ErrMsg =_('Error updating prices for') . ' ' . $myrow['stockid'] . ' ' . _('because');
+		prnMsg(_('Updating prices for') . ' ' . $myrow['stockid'],'info');
 	}
 
 }

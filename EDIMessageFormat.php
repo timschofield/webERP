@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 10;
 
@@ -27,19 +27,19 @@ if (isset($_GET['SelectedMessageLine'])){
 
 
 if (isset($_POST['NewEDIInvMsg'])){
-	$sql = "INSERT INTO EDIMessageFormat (PartnerCode,
-						MessageType,
-						SequenceNo,
-						Section,
-						LineText)
+	$sql = "INSERT INTO edimessageformat (partnercode,
+						messagetype,
+						sequenceno,
+						section,
+						linetext)
 		SELECT '$PartnerCode',
 			'INVOIC',
-			SequenceNo,
-			Section,
-			LineText
-		FROM EDIMessageFormat
-		WHERE PartnerCode='DEFAULT'
-			AND MessageType='INVOIC'";
+			sequenceno,
+			section,
+			linetext
+		FROM edimessageformat
+		WHERE partnercode='DEFAULT'
+			AND messagetype='INVOIC'";
 
 	$ErrMsg = _('There was an error inserting the default template invoice message records for') . ' ' . $PartnerCode . ' ' . _('because');
 	$result = DB_query($sql,$db,$ErrMsg);
@@ -67,14 +67,14 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedMessageLine could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
-		$sql = "UPDATE EDIMessageFormat
+		$sql = "UPDATE edimessageformat
 				SET
-					PartnerCode='" . $PartnerCode . "',
-					MessageType='" . $MessageType . "',
-					Section='" . $_POST['Section'] . "',
-					SequenceNo=" . $_POST['SequenceNo'] . ",
-					LineText='" . $_POST['LineText'] . "'
-				WHERE ID = '" . $SelectedMessageLine . "'";
+					partnercode='" . $PartnerCode . "',
+					messagetype='" . $MessageType . "',
+					section='" . $_POST['Section'] . "',
+					sequenceno=" . $_POST['SequenceNo'] . ",
+					linetext='" . $_POST['LineText'] . "'
+				WHERE id = '" . $SelectedMessageLine . "'";
 
 		$msg = _('Message line updated');
 
@@ -82,12 +82,12 @@ if (isset($_POST['submit'])) {
 
 	/*Selected group is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new message line form */
 
-		$sql = "INSERT INTO EDIMessageFormat (
-					PartnerCode,
-					MessageType,
-					Section,
-					SequenceNo,
-					LineText)
+		$sql = "INSERT INTO edimessageformat (
+					partnercode,
+					messagetype,
+					section,
+					sequenceno,
+					linetext)
 				VALUES (
 					'" . $PartnerCode . "',
 					'" . $MessageType . "',
@@ -106,7 +106,7 @@ if (isset($_POST['submit'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 
-	$sql='DELETE FROM EDIMessageFormat WHERE ID=' . $_GET['delete'];
+	$sql='DELETE FROM edimessageformat WHERE id=' . $_GET['delete'];
 	$result = DB_query($sql,$db);
 	prnMsg(_('The selected message line has been deleted'),'success');
 
@@ -124,14 +124,14 @@ or deletion of the records*/
 
 	echo '<FONT SIZE=4>' . _('Defintion of') . ' ' . $MessageType . ' ' . _('for') . ' ' . $PartnerCode;
 
-	$sql = "SELECT ID,
-			Section,
-			SequenceNo,
-			LineText
-		FROM EDIMessageFormat
-		WHERE PartnerCode='" . $PartnerCode . "'
-		AND MessageType='" . $MessageType . "'
-		ORDER BY SequenceNo";
+	$sql = "SELECT id,
+			section,
+			sequenceno,
+			linetext
+		FROM edimessageformat
+		WHERE partnercode='" . $PartnerCode . "'
+		AND messagetype='" . $MessageType . "'
+		ORDER BY sequenceno";
 
 	$result = DB_query($sql,$db);
 
@@ -182,29 +182,29 @@ or deletion of the records*/
 if (isset($SelectedMessageLine)) {
 	//editing an existing message line
 
-	$sql = 'SELECT MessageType,
-			PartnerCode,
-			Section,
-			SequenceNo,
-			LineText
-		FROM EDIMessageFormat
-		WHERE ID=' . $SelectedMessageLine;
+	$sql = 'SELECT messagetype,
+			partnercode,
+			section,
+			sequenceno,
+			linetext
+		FROM edimessageformat
+		WHERE id=' . $SelectedMessageLine;
 
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
 
 
-	$_POST['Section']  = $myrow['Section'];
-	$_POST['SequenceNo']  = $myrow['SequenceNo'];
-	$_POST['LineText']  = $myrow['LineText'];
+	$_POST['Section']  = $myrow['section'];
+	$_POST['SequenceNo']  = $myrow['sequenceno'];
+	$_POST['LineText']  = $myrow['linetext'];
 
-	echo '<FONT SIZE=4>' . _('Defintion of') . ' ' . $myrow['MessageType'] . ' ' . _('for') . ' ' . $myrow['PartnerCode'];
+	echo '<FONT SIZE=4>' . _('Defintion of') . ' ' . $myrow['messagetype'] . ' ' . _('for') . ' ' . $myrow['partnercode'];
 
-	echo "<Center><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . 'MessageType=INVOIC&PartnerCode=' . $myrow['PartnerCode'] . "'>" . _('Review Message Lines') . '</a></Center>';
+	echo "<Center><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . 'MessageType=INVOIC&PartnerCode=' . $myrow['partnercode'] . "'>" . _('Review Message Lines') . '</a></Center>';
 
 	echo "<INPUT TYPE=HIDDEN NAME='SelectedMessageLine' VALUE='" . $SelectedMessageLine . "'>";
-	echo "<INPUT TYPE=HIDDEN NAME='MessageType' VALUE='" . $myrow['MessageType'] . "'>";
-	echo "<INPUT TYPE=HIDDEN NAME='PartnerCode' VALUE='" . $myrow['PartnerCode'] . "'>";
+	echo "<INPUT TYPE=HIDDEN NAME='MessageType' VALUE='" . $myrow['messagetype'] . "'>";
+	echo "<INPUT TYPE=HIDDEN NAME='PartnerCode' VALUE='" . $myrow['partnercode'] . "'>";
 } else { //end of if $SelectedMessageLine only do the else when a new record is being entered
 	echo "<INPUT TYPE=HIDDEN NAME='MessageType' VALUE='" . $MessageType . "'>";
 	echo "<INPUT TYPE=HIDDEN NAME='PartnerCode' VALUE='" . $PartnerCode . "'>";

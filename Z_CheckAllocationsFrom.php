@@ -1,24 +1,24 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 15;
 include ('includes/session.inc');
 $title = _('Identify Allocation Stuff Ups');
 include ('includes/header.inc');
 
-$sql = 'SELECT DebtorTrans.Type,
-		DebtorTrans.TransNo,
-		DebtorTrans.OvAmount,
-		DebtorTrans.Alloc,
-		Sum(CustAllocns.Amt) As TotAllocFrom
-	FROM DebtorTrans,
-		CustAllocns
-	WHERE TransID_AllocFrom=DebtorTrans.ID
-	GROUP BY DebtorTrans.Type,
-		DebtorTrans.TransNo,
-		DebtorTrans.OvAmount,
-		DebtorTrans.Alloc
-	HAVING Sum(CustAllocns.Amt) < -Alloc';
+$sql = 'SELECT debtortrans.type,
+		debtortrans.transno,
+		debtortrans.ovamount,
+		debtortrans.alloc,
+		SUM(custallocns.amt) AS totallocfrom
+	FROM debtortrans,
+		custallocns
+	WHERE transid_allocfrom=debtortrans.id
+	GROUP BY debtortrans.type,
+		debtortrans.transno,
+		debtortrans.ovamount,
+		debtortrans.alloc
+	HAVING SUM(custallocns.amt) < -alloc';
 
 $result =DB_query($sql,$db);
 
@@ -40,11 +40,11 @@ if (DB_num_rows($result)>0){
 			<TD ALIGN=RIGHT>%f.2</TD>
 			<TD ALIGN=RIGHT>%f.2</TD>
 			</TR>',
-			$myrow['Type'],
-			$myrow['TransNo'],
-			$myrow['OvAmount'],
-			$myrow['Alloc'],
-			$myrow['TotAllocFrom']);
+			$myrow['type'],
+			$myrow['transno'],
+			$myrow['ovamount'],
+			$myrow['alloc'],
+			$myrow['totallocfrom']);
 		$RowCounter++;
 		if ($RowCounter==20){
 			echo '<TR><TD>' . _('Type') . '</TD>

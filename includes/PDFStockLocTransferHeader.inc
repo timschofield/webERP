@@ -7,8 +7,8 @@ if ($PageNumber>1){
 
 $FontSize=12;
 $YPos= $Page_Height-$Top_Margin;
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$CompanyName);
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize, _('Printed'). ': ' . Date($DefaultDateFormat) . '   ' . _('Page'). ' ' . $PageNumber);
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize, _('Printed'). ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page'). ' ' . $PageNumber);
 
 $YPos -=15;
 $FontSize=12;

@@ -1,32 +1,33 @@
 <?php
-/* $Revision: 1.6 $ */
-include('config.php');
+/* $Revision: 1.7 $ */
+
 $PageSecurity = 3;
+include ('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/DateFunctions.inc');
 
 $InputError=0;
 
 if (isset($_POST['FromDate']) AND !Is_Date($_POST['FromDate'])){
-	$msg = _('The date from must be specified in the format') . ' ' . $DefaultDateFormat;
+	$msg = _('The date from must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 	$InputError=1;
 }
 if (isset($_POST['ToDate']) AND !Is_Date($_POST['ToDate'])){
-	$msg =  _('The date to must be specified in the format') . ' ' .  $DefaultDateFormat;
+	$msg =  _('The date to must be specified in the format') . ' ' .  $_SESSION['DefaultDateFormat'];
 	$InputError=1;
 }
 
 if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
-     include ('includes/session.inc');
+
      $title = _('Delivery Differences Report');
      include ('includes/header.inc');
 
      echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
-     echo '<CENTER><TABLE><TR><TD>' . _('Enter the date from which variances between orders and deliveries are to be listed') . ":</TD><TD><INPUT TYPE=text NAME='FromDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($DefaultDateFormat, Mktime(0,0,0,Date('m')-1,0,Date('y'))) . "'></TD></TR>";
-     echo '<TR><TD>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ":</TD><TD><INPUT TYPE=text NAME='ToDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($DefaultDateFormat) . "'></TD></TR>";
+     echo '<CENTER><TABLE><TR><TD>' . _('Enter the date from which variances between orders and deliveries are to be listed') . ":</TD><TD><INPUT TYPE=text NAME='FromDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . "'></TD></TR>";
+     echo '<TR><TD>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ":</TD><TD><INPUT TYPE=text NAME='ToDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></TD></TR>";
      echo '<TR><TD>' . _('Inventory Category') . '</TD><TD>';
 
-     $sql = "SELECT CategoryDescription, CategoryID FROM StockCategory WHERE StockType<>'D' AND StockType<>'L'";
+     $sql = "SELECT categorydescription, categoryid FROM stockcategory WHERE stocktype<>'D' AND stocktype<>'L'";
      $result = DB_query($sql,$db);
 
 
@@ -34,7 +35,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
      echo "<OPTION SELECTED VALUE='All'>" . _('Over All Categories');
 
      while ($myrow=DB_fetch_array($result)){
-	echo "<OPTION VALUE='" . $myrow['CategoryID'] . "'>" . $myrow['CategoryDescription'];
+	echo "<OPTION VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
      }
 
 
@@ -43,9 +44,9 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
      echo '<TR><TD>' . _('Inventory Location') . ":</TD><TD><SELECT NAME='Location'>";
      echo "<OPTION SELECTED VALUE='All'>" . _('All Locations');
 
-     $result= DB_query('SELECT LocCode, LocationName FROM Locations',$db);
+     $result= DB_query('SELECT loccode, locationname FROM locations',$db);
      while ($myrow=DB_fetch_array($result)){
-	echo "<OPTION VALUE='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
+	echo "<OPTION VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
      }
      echo '</SELECT></TD></TR>';
 
@@ -64,79 +65,79 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 }
 
 if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
-	$sql= "SELECT InvoiceNo,
-			OrderDeliveryDifferencesLog.OrderNo,
-			OrderDeliveryDifferencesLog.StockID,
-			StockMaster.Description,
-			QuantityDiff,
-			TranDate,
-			OrderDeliveryDifferencesLog.DebtorNo,
-			OrderDeliveryDifferencesLog.Branch
-		FROM OrderDeliveryDifferencesLog INNER JOIN StockMaster
-			ON OrderDeliveryDifferencesLog.StockID=StockMaster.StockID
-		INNER JOIN DebtorTrans ON OrderDeliveryDifferencesLog.InvoiceNo=DebtorTrans.TransNo
-			AND DebtorTrans.Type=10
-			AND TranDate >='" . FormatDateForSQL($_POST['FromDate']) . "'
-			AND TranDate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
+	$sql= "SELECT invoiceno,
+			orderdeliverydifferenceslog.orderno,
+			orderdeliverydifferenceslog.stockid,
+			stockmaster.description,
+			quantitydiff,
+			trandate,
+			orderdeliverydifferenceslog.debtorno,
+			orderdeliverydifferenceslog.branch
+		FROM orderdeliverydifferenceslog INNER JOIN stockmaster
+			ON orderdeliverydifferenceslog.stockid=stockmaster.stockid
+		INNER JOIN debtortrans ON orderdeliverydifferenceslog.invoiceno=debtortrans.transno
+			AND debtortrans.type=10
+			AND trandate >='" . FormatDateForSQL($_POST['FromDate']) . "'
+			AND trandate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
 
 } elseif ($_POST['CategoryID']!='All' AND $_POST['Location']=='All') {
-	$sql= "SELECT InvoiceNo,
-			OrderDeliveryDifferencesLog.OrderNo,
-			OrderDeliveryDifferencesLog.StockID,
-			StockMaster.Description,
-			QuantityDiff,
-			TranDate,
-			OrderDeliveryDifferencesLog.DebtorNo,
-			OrderDeliveryDifferencesLog.Branch
-		FROM OrderDeliveryDifferencesLog INNER JOIN StockMaster
-			ON OrderDeliveryDifferencesLog.StockID=StockMaster.StockID
-			INNER JOIN DebtorTrans ON OrderDeliveryDifferencesLog.InvoiceNo=DebtorTrans.TransNo
-			AND DebtorTrans.Type=10
-			AND TranDate >='" . FormatDateForSQL($_POST['FromDate']) . "'
-			AND TranDate <='" . FormatDateForSQL($_POST['ToDate']) . "'
-			AND CategoryID='" . $_POST['CategoryID'] ."'";
+	$sql= "SELECT invoiceno,
+			orderdeliverydifferenceslog.orderno,
+			orderdeliverydifferenceslog.stockid,
+			stockmaster.description,
+			quantitydiff,
+			trandate,
+			orderdeliverydifferenceslog.debtorno,
+			orderdeliverydifferenceslog.branch
+		FROM orderdeliverydifferenceslog INNER JOIN stockmaster
+			ON orderdeliverydifferenceslog.stockid=stockmaster.stockid
+			INNER JOIN debtortrans ON orderdeliverydifferenceslog.invoiceno=debtortrans.transno
+			AND debtortrans.type=10
+			AND trandate >='" . FormatDateForSQL($_POST['FromDate']) . "'
+			AND trandate <='" . FormatDateForSQL($_POST['ToDate']) . "'
+			AND categoryid='" . $_POST['CategoryID'] ."'";
 
 } elseif ($_POST['CategoryID']=='All' AND $_POST['Location']!='All') {
-	$sql = "SELECT InvoiceNo,
-			OrderDeliveryDifferencesLog.OrderNo,
-			OrderDeliveryDifferencesLog.StockID,
-			StockMaster.Description,
-			QuantityDiff,
-			TranDate,
-			OrderDeliveryDifferencesLog.DebtorNo,
-			OrderDeliveryDifferencesLog.Branch
-		FROM OrderDeliveryDifferencesLog INNER JOIN StockMaster
-			ON OrderDeliveryDifferencesLog.StockID=StockMaster.StockID
-			INNER JOIN DebtorTrans
-				ON OrderDeliveryDifferencesLog.InvoiceNo=DebtorTrans.TransNo
-				INNER JOIN SalesOrders
-					ON OrderDeliveryDifferencesLog.OrderNo=SalesOrders.OrderNo
-		WHERE DebtorTrans.Type=10
-		AND SalesOrders.FromStkLoc='". $_POST['Location'] . "'
-		AND TranDate >='" . FormatDateForSQL($_POST['FromDate']) . "'
-		AND TranDate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
+	$sql = "SELECT invoiceno,
+			orderdeliverydifferenceslog.orderno,
+			orderdeliverydifferenceslog.stockid,
+			stockmaster.description,
+			quantitydiff,
+			trandate,
+			orderdeliverydifferenceslog.debtorno,
+			orderdeliverydifferenceslog.branch
+		FROM orderdeliverydifferenceslog INNER JOIN stockmaster
+			ON orderdeliverydifferenceslog.stockid=stockmaster.stockid
+			INNER JOIN debtortrans
+				ON orderdeliverydifferenceslog.invoiceno=debtortrans.transno
+				INNER JOIN salesorders
+					ON orderdeliverydifferenceslog.orderno=salesorders.orderno
+		WHERE debtortrans.type=10
+		AND salesorders.fromstkloc='". $_POST['Location'] . "'
+		AND trandate >='" . FormatDateForSQL($_POST['FromDate']) . "'
+		AND trandate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
 
 } elseif ($_POST['CategoryID']!='All' AND $_POST['location']!='Áll'){
 
-	$sql = "SELECT InvoiceNo,
-			OrderDeliveryDifferencesLog.OrderNo,
-			OrderDeliveryDifferencesLog.StockID,
-			StockMaster.Description,
-			QuantityDiff,
-			TranDate,
-			OrderDeliveryDifferencesLog.DebtorNo,
-			OrderDeliveryDifferencesLog.Branch
-		FROM OrderDeliveryDifferencesLog INNER JOIN StockMaster
-			ON OrderDeliveryDifferencesLog.StockID=StockMaster.StockID
-			INNER JOIN DebtorTrans
-				ON OrderDeliveryDifferencesLog.InvoiceNo=DebtorTrans.TransNo
-				AND DebtorTrans.Type=10
-				INNER JOIN SalesOrders
-					ON OrderDeliveryDifferencesLog.OrderNo = SalesOrders.OrderNo
-		WHERE SalesOrders.FromStkLoc='" . $_POST['Location'] . "'
-		AND CategoryID='" . $_POST['CategoryID'] . "'
-		AND TranDate >='" . FormatDateForSQL($_POST['FromDate']) . "'
-		AND TranDate <= '" . FormatDateForSQL($_POST['ToDate']) . "'";
+	$sql = "SELECT invoiceno,
+			orderdeliverydifferenceslog.orderno,
+			orderdeliverydifferenceslog.stockid,
+			stockmaster.description,
+			quantitydiff,
+			trandate,
+			orderdeliverydifferenceslog.debtorno,
+			orderdeliverydifferenceslog.branch
+		FROM orderdeliverydifferenceslog INNER JOIN stockmaster
+			ON orderdeliverydifferenceslog.stockid=stockmaster.stockid
+			INNER JOIN debtortrans
+				ON orderdeliverydifferenceslog.invoiceno=debtortrans.transno
+				AND debtortrans.type=10
+				INNER JOIN salesorders
+					ON orderdeliverydifferenceslog.orderno = salesorders.orderno
+		WHERE salesorders.fromstkloc='" . $_POST['Location'] . "'
+		AND categoryid='" . $_POST['CategoryID'] . "'
+		AND trandate >='" . FormatDateForSQL($_POST['FromDate']) . "'
+		AND trandate <= '" . FormatDateForSQL($_POST['ToDate']) . "'";
 }
 
 $Result=DB_query($sql,$db,'','',false,false); //dont error check - see below
@@ -161,8 +162,6 @@ if (DB_error_no($db)!=0){
 	exit;
 }
 
-$CompanyRecord = ReadInCompanyRecord($db);
-
 include('includes/PDFStarter_ros.inc');
 
 /*PDFStarter_ros.inc has all the variables for page size and width set up depending on the users default preferences for paper size */
@@ -179,14 +178,14 @@ include ('includes/PDFDeliveryDifferencesPageHeader.inc');
 
 while ($myrow=DB_fetch_array($Result)){
 
-      $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,$myrow['InvoiceNo'], 'left');
-      $LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos,40,$FontSize,$myrow['OrderNo'], 'left');
-      $LeftOvers = $pdf->addTextWrap($Left_Margin+80,$YPos,200,$FontSize,$myrow['StockID'] . ' - ' . $myrow['Description'], 'left');
+      $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,$myrow['invoiceno'], 'left');
+      $LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos,40,$FontSize,$myrow['orderno'], 'left');
+      $LeftOvers = $pdf->addTextWrap($Left_Margin+80,$YPos,200,$FontSize,$myrow['stockid'] . ' - ' . $myrow['description'], 'left');
 
-      $LeftOvers = $pdf->addTextWrap($Left_Margin+280,$YPos,50,$FontSize,number_format($myrow['QuantityDiff']), 'right');
-      $LeftOvers = $pdf->addTextWrap($Left_Margin+335,$YPos,50,$FontSize,$myrow['DebtorNo'], 'left');
-      $LeftOvers = $pdf->addTextWrap($Left_Margin+385,$YPos,50,$FontSize,$myrow['Branch'], 'left');
-      $LeftOvers = $pdf->addTextWrap($Left_Margin+435,$YPos,50,$FontSize,ConvertSQLDate($myrow['TranDate']), 'left');
+      $LeftOvers = $pdf->addTextWrap($Left_Margin+280,$YPos,50,$FontSize,number_format($myrow['quantitydiff']), 'right');
+      $LeftOvers = $pdf->addTextWrap($Left_Margin+335,$YPos,50,$FontSize,$myrow['debtorno'], 'left');
+      $LeftOvers = $pdf->addTextWrap($Left_Margin+385,$YPos,50,$FontSize,$myrow['branch'], 'left');
+      $LeftOvers = $pdf->addTextWrap($Left_Margin+435,$YPos,50,$FontSize,ConvertSQLDate($myrow['trandate']), 'left');
 
       $YPos -= ($line_height);
       $TotalDiffs++;
@@ -203,18 +202,41 @@ $YPos-=$line_height;
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Total number of differences') . ' ' . number_format($TotalDiffs), 'left');
 
 if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
-	$sql = "SELECT Count(OrderNo) FROM SalesOrderDetails INNER JOIN DebtorTrans ON SalesOrderDetails.OrderNo=DebtorTrans.Order_ WHERE DebtorTrans.TranDate>='" . FormatDateForSQL($_POST['FromDate']) . "' AND DebtorTrans.TranDate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
+	$sql = "SELECT COUNT(salesorderdetails.orderno) 
+			FROM salesorderdetails INNER JOIN debtortrans 
+				ON salesorderdetails.orderno=debtortrans.order_ 
+			WHERE debtortrans.trandate>='" . FormatDateForSQL($_POST['FromDate']) . "' 
+			AND debtortrans.trandate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
 
 } elseif ($_POST['CategoryID']!='All' AND $_POST['Location']=='All') {
-	$sql = "SELECT Count(OrderNo) FROM SalesOrderDetails INNER JOIN DebtorTrans ON SalesOrderDetails.OrderNo=DebtorTrans.Order_ INNER JOIN StockMaster ON SalesOrderDetails.StkCode=StockMaster.StockID WHERE DebtorTrans.TranDate>='" . FormatDateForSQL($_POST['FromDate']) . "' AND DebtorTrans.TranDate <='" . FormatDateForSQL($_POST['ToDate']) . "' AND CategoryID='" . $_POST['CategoryID'] . "'";
+	$sql = "SELECT COUNT(salesorderdetails.orderno) 
+		FROM salesorderdetails INNER JOIN debtortrans 
+			ON salesorderdetails.orderno=debtortrans.order_ INNER JOIN stockmaster 
+			ON salesorderdetails.stkcode=stockmaster.stockid 
+		WHERE debtortrans.trandate>='" . FormatDateForSQL($_POST['FromDate']) . "' 
+		AND debtortrans.trandate <='" . FormatDateForSQL($_POST['ToDate']) . "' 
+		AND stockmaster.categoryid='" . $_POST['CategoryID'] . "'";
 
 } elseif ($_POST['CategoryID']=='All' AND $_POST['Location']!='All'){
 
-	$sql = "SELECT Count(SalesOrderDetails.OrderNo) FROM SalesOrderDetails INNER JOIN DebtorTrans ON SalesOrderDetails.OrderNo=DebtorTrans.Order_ INNER JOIN SalesOrders ON SalesOrderDetails.OrderNo = SalesOrders.OrderNo WHERE DebtorTrans.TranDate>='". FormatDateForSQL($_POST['FromDate']) . "' AND DebtorTrans.TranDate <='" . FormatDateForSQL($_POST['ToDate']) . "' AND FromStkLoc='" . $_POST['Location'] . "'";
+	$sql = "SELECT COUNT(salesorderdetails.orderno) 
+		FROM salesorderdetails INNER JOIN debtortrans 
+			ON salesorderdetails.orderno=debtortrans.order_ INNER JOIN salesorders 
+			ON salesorderdetails.orderno = salesorders.orderno 
+		WHERE debtortrans.trandate>='". FormatDateForSQL($_POST['FromDate']) . "' 
+		AND debtortrans.trandate <='" . FormatDateForSQL($_POST['ToDate']) . "' 
+		AND salesorders.fromstkloc='" . $_POST['Location'] . "'";
 
 } elseif ($_POST['CategoryID'] !='All' AND $_POST['Location'] !='All'){
 
-	$sql = "SELECT Count(SalesOrderDetails.OrderNo) FROM SalesOrderDetails INNER JOIN DebtorTrans ON SalesOrderDetails.OrderNo=DebtorTrans.Order_ INNER JOIN SalesOrders ON SalesOrderDetails.OrderNo = SalesOrders.OrderNo INNER JOIN StockMaster ON SalesOrderDetails.StkCode = StockMaster.StockID WHERE SalesOrders.FromStkLoc ='" . $_POST['Location'] . "' AND CategoryID='" . $_POST['CategoryID'] . "' AND TranDate >='" . FormatDateForSQL($_POST['FromDate']) . "' AND TranDate <= '" . FormatDateForSQL($_POST['ToDate']) . "'";
+	$sql = "SELECT COUNT(salesorderdetails.orderno) 
+		FROM salesorderdetails INNER JOIN debtortrans ON salesorderdetails.orderno=debtortrans.order_ 
+			INNER JOIN salesorders ON salesorderdetails.orderno = salesorders.orderno 
+			INNER JOIN stockmaster ON salesorderdetails.stkcode = stockmaster.stockid 
+		WHERE salesorders.fromstkloc ='" . $_POST['Location'] . "' 
+		AND categoryid='" . $_POST['CategoryID'] . "' 
+		AND trandate >='" . FormatDateForSQL($_POST['FromDate']) . "' 
+		AND trandate <= '" . FormatDateForSQL($_POST['ToDate']) . "'";
 
 }
 $Errmsg = _('Could not retrieve the count of sales order lines in the period under review');
@@ -241,20 +263,20 @@ header('Pragma: public');
 $pdf->stream();
 
 if ($_POST['Email']=='Yes'){
-	if (file_exists($reports_dir . '/DeliveryDifferences.pdf')){
-		unlink($reports_dir . '/DeliveryDifferences.pdf');
+	if (file_exists($_SESSION['reports_dir'] . '/DeliveryDifferences.pdf')){
+		unlink($_SESSION['reports_dir'] . '/DeliveryDifferences.pdf');
 	}
-    	$fp = fopen( $reports_dir . '/DeliveryDifferences.pdf','wb');
+    	$fp = fopen( $_SESSION['reports_dir'] . '/DeliveryDifferences.pdf','wb');
 	fwrite ($fp, $pdfcode);
 	fclose ($fp);
 
 	include('includes/htmlMimeMail.php');
 
 	$mail = new htmlMimeMail();
-	$attachment = $mail->getFile($reports_dir . '/DeliveryDifferences.pdf');
+	$attachment = $mail->getFile($_SESSION['reports_dir'] . '/DeliveryDifferences.pdf');
 	$mail->setText(_('Please find herewith delivery differences report from') . ' ' . $_POST['FromDate'] .  ' '. _('to') . ' ' . $_POST['ToDate']);
 	$mail->addAttachment($attachment, 'DeliveryDifferences.pdf', 'application/pdf');
-	$mail->setFrom(array('$CompanyName <' . $CompanyRecord['Email'] .'>'));
+	$mail->setFrom(array('$_SESSION['CompanyRecord']['coyname'] <' . $_SESSION['CompanyRecord']['email'] .'>'));
 
 	/* $DelDiffsRecipients defined in config.php */
 	$result = $mail->send($DelDiffsRecipients);

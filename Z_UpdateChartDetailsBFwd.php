@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity=15;
 include ('includes/session.inc');
 $title = _('Recalculation of Brought Forward Balances in Chart Details Table');
@@ -29,7 +29,7 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
 
-		echo '<OPTION VALUE=' . $myrow['PeriodNo'] . '>' . MonthAndYearFromSQLDate($myrow['LastDate_In_Period']);
+		echo '<OPTION VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 
 	}
 
@@ -47,10 +47,10 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
 
-		if($myrow['PeriodNo']==$DefaultToPeriod){
-			echo '<OPTION SELECTED VALUE=' . $myrow['PeriodNo'] . '>' . MonthAndYearFromSQLDate($myrow['LastDate_In_Period']);
+		if($myrow['periodno']==$DefaultToPeriod){
+			echo '<OPTION SELECTED VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 		} else {
-			echo '<OPTION VALUE =' . $myrow['PeriodNo'] . '>' . MonthAndYearFromSQLDate($myrow['LastDate_In_Period']);
+			echo '<OPTION VALUE =' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 		}
 	}
 	echo '</SELECT></TD></TR></TABLE>';
@@ -68,12 +68,12 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 
 		while ($myrow=DB_fetch_array($result)){
 
-			$CFwd = $myrow['BFwd'] + $myrow['Actual'];
-			$CFwdBudget = $myrow['BFwdBudget'] + $myrow['Budget'];
+			$CFwd = $myrow['bfwd'] + $myrow['actual'];
+			$CFwdBudget = $myrow['bfwdbudget'] + $myrow['budget'];
 
-			echo '<BR>' . _('Account Code') . ': ' . $myrow['AccountCode'] . ' ' . _('Period') .': ' . $myrow['Period'];
+			echo '<BR>' . _('Account Code') . ': ' . $myrow['accountcode'] . ' ' . _('Period') .': ' . $myrow['period'];
 
-			$sql = 'UPDATE ChartDetails SET BFwd=' . $CFwd . ', BFwdBudget=' . $CFwdBudget . ' WHERE Period=' . ($myrow['Period'] +1) . ' AND  AccountCode = ' . $myrow['AccountCode'];
+			$sql = 'UPDATE ChartDetails SET BFwd=' . $CFwd . ', BFwdBudget=' . $CFwdBudget . ' WHERE Period=' . ($myrow['period'] +1) . ' AND  AccountCode = ' . $myrow['accountcode'];
 
 			$ErrMsg =_('Could not update the chartdetails record because');
 			$updresult = DB_query($sql,$db,$ErrMsg);

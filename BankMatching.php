@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 7;
 
@@ -26,22 +26,22 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
 	for ($Counter=1;$Counter <= $_POST['RowCounter']; $Counter++){
 		if ($_POST["Clear_" . $Counter]==True){
 			/*Update the banktrans recoord to match it off */
-			$sql = "UPDATE BankTrans SET AmountCleared=(Amount/ExRate)
-					WHERE BankTransID=" . $_POST["BankTrans_" . $Counter];
+			$sql = "UPDATE banktrans SET amountcleared=(amount/exrate)
+					WHERE banktransid=" . $_POST["BankTrans_" . $Counter];
 			$ErrMsg =  _('Could not match off this payment beacause');
 			$result = DB_query($sql,$db,$ErrMsg);
 
 		} elseif (is_numeric((float) $_POST["AmtClear_" . $Counter]) AND (($_POST["AmtClear_" . $Counter]<0 AND $Type=='Payments') OR ($Type=='Receipts' AND ($_POST["AmtClear_" . $Counter]>0)))){
 			/*if the amount entered was numeric and negative for a payment or positive for a receipt */
-			$sql = "UPDATE BankTrans SET AmountCleared=" .  $_POST["AmtClear_" . $Counter] . "
-					WHERE BankTransID=" . $_POST["BankTrans_" . $Counter];
+			$sql = "UPDATE banktrans SET amountcleared=" .  $_POST["AmtClear_" . $Counter] . "
+					WHERE banktransid=" . $_POST["BankTrans_" . $Counter];
 
 			$ErrMsg = _('Could not update the amount matched off this bank transaction because');
 			$result = DB_query($sql,$db,$ErrMsg);
 
 		} elseif ($_POST["Unclear_" . $Counter]==True){
-			$sql = "UPDATE BankTrans SET AmountCleared = 0
-					WHERE BankTransID=" . $_POST["BankTrans_" . $Counter];
+			$sql = "UPDATE banktrans SET amountcleared = 0
+					WHERE banktransid=" . $_POST["BankTrans_" . $Counter];
 			$ErrMsg =  _('Could not unclear this bank transaction because');
 			$result = DB_query($sql,$db,$ErrMsg);
 		}
@@ -58,23 +58,23 @@ echo "<INPUT TYPE=HIDDEN Name=Type Value=$Type>";
 echo '<TABLE><TR>';
 echo '<TD ALIGN=RIGHT>' . _('Bank Account') . ':</TD><TD COLSPAN=3><SELECT name="BankAccount">';
 
-$sql = "SELECT AccountCode, BankAccountName FROM BankAccounts";
+$sql = "SELECT accountcode, bankaccountname FROM bankaccounts";
 $resultBankActs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultBankActs)){
-	if ($myrow["AccountCode"] == $_POST['BankAccount']){
-	     echo "<OPTION SELECTED Value='" . $myrow["AccountCode"] . "'>" . $myrow["BankAccountName"];
+	if ($myrow["accountcode"] == $_POST['BankAccount']){
+	     echo "<OPTION SELECTED Value='" . $myrow['accountcode'] . "'>" . $myrow['bankaccountname'];
 	} else {
-	     echo "<OPTION Value='" . $myrow["AccountCode"] . "'>" . $myrow["BankAccountName"];
+	     echo "<OPTION Value='" . $myrow['accountcode'] . "'>" . $myrow['bankaccountname'];
 	}
 }
 
 echo '</SELECT></TD></TR>';
 
 if (!isset($_POST['BeforeDate']) OR !Is_Date($_POST['BeforeDate'])){
-   $_POST['BeforeDate'] = Date($DefaultDateFormat);
+   $_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])){
-   $_POST['AfterDate'] = Date($DefaultDateFormat, Mktime(0,0,0,Date("m")-3,Date("d"),Date("y")));
+   $_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date("m")-3,Date("d"),Date("y")));
 }
 
 echo '<TR><TD>' . _('Show') . ' ' . $TypeName . ' ' . _('before') . ':</TD>
@@ -111,11 +111,11 @@ echo '<HR>';
 $InputError=0;
 if (!Is_Date($_POST['BeforeDate'])){
 	$InputError =1;
-	prnMsg(_('The date entered for the field to show') . ' ' . $TypeName . ' ' . _('before') . ', ' . _('is not entered in a recognised date format') . '. ' . _('Entry is expected in the format') . ' ' . $DefaultDateFormat,'error');
+	prnMsg(_('The date entered for the field to show') . ' ' . $TypeName . ' ' . _('before') . ', ' . _('is not entered in a recognised date format') . '. ' . _('Entry is expected in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 }
 if (!Is_Date($_POST['AfterDate'])){
 	$InputError =1;
-	prnMsg( _('The date entered for the field to show') . ' ' . $Type . ' ' . _('after') . ', ' . _('is not entered in a recognised date format') . '. ' . _('Entry is expected in the format') . ' ' . $DefaultDateFormat,'error');
+	prnMsg( _('The date entered for the field to show') . ' ' . $Type . ' ' . _('after') . ', ' . _('is not entered in a recognised date format') . '. ' . _('Entry is expected in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 }
 
 if ($InputError !=1 AND isset($_POST["BankAccount"]) AND $_POST["BankAccount"]!="" AND isset($_POST["ShowTransactions"])){
@@ -125,62 +125,62 @@ if ($InputError !=1 AND isset($_POST["BankAccount"]) AND $_POST["BankAccount"]!=
 
 	if ($_POST["Ostg_or_All"]=='All'){
 		if ($Type=='Payments'){
-			$sql = "SELECT BankTransID,
-					Ref,
-					AmountCleared,
-					TransDate,
-					Amount/ExRate AS Amt,
-					BankTransType
-				FROM BankTrans
-				WHERE Amount <0
-				AND TransDate >= '". $SQLAfterDate . "'
-				AND TransDate <= '" . $SQLBeforeDate . "'
-				AND BankAct=" .$_POST["BankAccount"] . "
-				ORDER BY BankTransID";
+			$sql = "SELECT banktransid,
+					ref,
+					amountcleared,
+					transdate,
+					amount/exrate as amt,
+					banktranstype
+				FROM banktrans
+				WHERE amount <0
+				AND transdate >= '". $SQLAfterDate . "'
+				AND transdate <= '" . $SQLBeforeDate . "'
+				AND bankact=" .$_POST["BankAccount"] . "
+				ORDER BY banktransid";
 
 		} else { /* Type must == Receipts */
-			$sql = "SELECT BankTransID,
-					Ref,
-					AmountCleared,
-					TransDate,
-					Amount/ExRate AS Amt,
-					BankTransType
-				FROM BankTrans
-				WHERE Amount >0
-				AND TransDate >= '". $SQLAfterDate . "'
-				AND TransDate <= '" . $SQLBeforeDate . "'
-				AND BankAct=" .$_POST["BankAccount"] . "
-				ORDER BY BankTransID";
+			$sql = "SELECT banktransid,
+					ref,
+					amountcleared,
+					transdate,
+					amount/exrate as amt,
+					banktranstype
+				FROM banktrans
+				WHERE amount >0
+				AND transdate >= '". $SQLAfterDate . "'
+				AND transdate <= '" . $SQLBeforeDate . "'
+				AND bankact=" .$_POST['BankAccount'] . "
+				ORDER BY banktransid";
 		}
 	} else { /*it must be only the outstanding bank trans required */
 		if ($Type=='Payments'){
-			$sql = "SELECT BankTransID,
-					Ref,
-					AmountCleared,
-					TransDate,
-					Amount/ExRate AS Amt,
-					BankTransType
-				FROM BankTrans
-				WHERE Amount <0
-				AND TransDate >= '". $SQLAfterDate . "'
-				AND TransDate <= '" . $SQLBeforeDate . "'
-				AND BankAct=" .$_POST["BankAccount"] . "
-				AND  ABS(AmountCleared - (Amount / ExRate)) > 0.009
-				ORDER BY BankTransID";
+			$sql = "SELECT banktransid,
+					ref,
+					amountcleared,
+					transdate,
+					amount/exrate as amt,
+					banktranstype
+				FROM banktrans
+				WHERE amount <0
+				AND transdate >= '". $SQLAfterDate . "'
+				AND transdate <= '" . $SQLBeforeDate . "'
+				AND bankact=" .$_POST["BankAccount"] . "
+				AND  ABS(amountcleared - (amount / exrate)) > 0.009
+				ORDER BY banktransid";
 		} else { /* Type must == Receipts */
-			$sql = "SELECT BankTransID,
-					Ref,
-					AmountCleared,
-					TransDate,
-					Amount/ExRate AS Amt,
-					BankTransType
-				FROM BankTrans
-				WHERE Amount >0
-				AND TransDate >= '". $SQLAfterDate . "'
-				AND TransDate <= '" . $SQLBeforeDate . "'
-				AND BankAct=" .$_POST["BankAccount"] . "
-				AND  ABS(AmountCleared - (Amount / ExRate)) > 0.009
-				ORDER BY BankTransID";
+			$sql = "SELECT banktransid,
+					ref,
+					amountcleared,
+					transdate,
+					amount/exrate as amt,
+					banktranstype
+				FROM banktrans
+				WHERE amount >0
+				AND transdate >= '". $SQLAfterDate . "'
+				AND transdate <= '" . $SQLBeforeDate . "'
+				AND bankact=" .$_POST["BankAccount"] . "
+				AND  ABS(amountcleared - (amount / exrate)) > 0.009
+				ORDER BY banktransid";
 		}
 	}
 	if ($_POST["First20_or_All"]!='All'){
@@ -206,8 +206,8 @@ if ($InputError !=1 AND isset($_POST["BankAccount"]) AND $_POST["BankAccount"]!=
 
 	while ($myrow=DB_fetch_array($PaymentsResult)) {
 
-		$DisplayTranDate = ConvertSQLDate($myrow["TransDate"]);
-		$Outstanding = $myrow["Amt"]- $myrow["AmountCleared"];
+		$DisplayTranDate = ConvertSQLDate($myrow['transdate']);
+		$Outstanding = $myrow['amt']- $myrow['amountcleared'];
 		if (ABS($Outstanding)<0.009){ /*the payment is cleared dont show the check box*/
 
 			printf("<tr bgcolor='#CCCEEE'>
@@ -219,15 +219,15 @@ if ($InputError !=1 AND isset($_POST["BankAccount"]) AND $_POST["BankAccount"]!=
 				<td COLSPAN=2 ALIGN=CENTER>%s</td>
 				<td ALIGN=CENTER><INPUT TYPE='checkbox' NAME='Unclear_%s'><INPUT TYPE=HIDDEN NAME='BankTrans_%s' VALUE=%s></TD>
 				</tr>",
-				$myrow['Ref'],
-				$myrow['BankTransType'],
+				$myrow['ref'],
+				$myrow['banktranstype'],
 				$DisplayTranDate,
-				number_format($myrow['Amt'],2),
+				number_format($myrow['amt'],2),
 				number_format($Outstanding,2),
 				_('Unclear'),
 				$i,
 				$i,
-				$myrow['BankTransID']);
+				$myrow['banktransid']);
 
 		} else{
 			if ($k==1){
@@ -246,14 +246,14 @@ if ($InputError !=1 AND isset($_POST["BankAccount"]) AND $_POST["BankAccount"]!=
 				<td ALIGN=CENTER><INPUT TYPE='checkbox' NAME='Clear_%s'><INPUT TYPE=HIDDEN NAME='BankTrans_%s' VALUE=%s></td>
 				<td COLSPAN=2><INPUT TYPE='text' MAXLENGTH=15 SIZE=15 NAME='AmtClear_%s'></td>
 				</tr>",
-				$myrow['Ref'],
-				$myrow['BankTransType'],
+				$myrow['ref'],
+				$myrow['banktranstype'],
 				$DisplayTranDate,
-				number_format($myrow['Amt'],2),
+				number_format($myrow['amt'],2),
 				number_format($Outstanding,2),
 				$i,
 				$i,
-				$myrow['BankTransID'],
+				$myrow['banktransid'],
 				$i
 			);
 		}

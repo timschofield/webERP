@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the credit note
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -103,23 +103,23 @@ echo '</TABLE><BR><A HREF="' . $rootpath . '/SupplierCredit.php?' . SID . '">' .
 /* Now get all the GRNs for this supplier from the database
 after the date entered */
 if (!isset($_POST['Show_Since'])){
-	$_POST['Show_Since'] =  Date($DefaultDateFormat,Mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
+	$_POST['Show_Since'] =  Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
 }
 
-$SQL = "SELECT GRNNo,
-               PurchOrderDetails.OrderNo,
-               PurchOrderDetails.UnitPrice,
-               GRNs.ItemCode, GRNs.DeliveryDate,
-               GRNs.ItemDescription,
-               GRNs.QtyRecd,
-               GRNs.QuantityInv,
-               PurchOrderDetails.StdCostUnit
-               FROM GRNs,
-                    PurchOrderDetails
-               WHERE GRNs.PODetailItem=PurchOrderDetails.PODetailItem AND
-                     GRNs.SupplierID ='" . $_SESSION['SuppTrans']->SupplierID . "' AND
-                     GRNs.DeliveryDate >= '" . FormatDateForSQL($_POST['Show_Since']) . "'
-               ORDER BY GRNs.GRNNo";
+$SQL = "SELECT grnno,
+               purchorderdetails.orderno,
+               purchorderdetails.unitprice,
+               grns.itemcode, grns.deliverydate,
+               grns.itemdescription,
+               grns.qtyrecd,
+               grns.quantityinv,
+               purchorderdetails.stdcostunit
+               FROM grns,
+                    purchorderdetails
+               WHERE grns.podetailitem=purchorderdetails.podetailitem AND
+                     grns.supplierid ='" . $_SESSION['SuppTrans']->SupplierID . "' AND
+                     grns.deliverydate >= '" . FormatDateForSQL($_POST['Show_Since']) . "'
+               ORDER BY grns.grnno";
 $GRNResults = DB_query($SQL,$db);
 
 if (DB_num_rows($GRNResults)==0){
@@ -157,21 +157,21 @@ while ($myrow=DB_fetch_array($GRNResults)){
 	$GRNAlreadyOnCredit = False;
 
 	foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
-		if ($EnteredGRN->GRNNo == $myrow['GRNNo']) {
+		if ($EnteredGRN->GRNNo == $myrow['grnno']) {
 			$GRNAlreadyOnCredit = True;
 		}
 	}
 	if ($GRNAlreadyOnCredit == False){
-		echo '<TR><TD><INPUT TYPE=Submit NAME="GRNNo" Value="' . $myrow['GRNNo'] . '"></TD>
-              		<TD>' . $myrow['OrderNo'] . '</TD>
-              		<TD>' . $myrow['ItemCode'] . '</TD>
-              		<TD>' . $myrow['ItemDescription'] . '</TD>
-              		<TD>' . ConvertSQLDate($myrow['DeliveryDate']) . '</TD>
-              		<TD ALIGN=RIGHT>' . number_format($myrow['QtyRecd'],2) . '</TD>
-              		<TD ALIGN=RIGHT>' . number_format($myrow['Quantityinv'],2) . '</TD>
-              		<TD ALIGN=RIGHT>' . number_format($myrow['QtyRecd'] - $myrow['QuantityInv'],2) . '</TD>
-              		<TD ALIGN=RIGHT>' . number_format($myrow['UnitPrice'],2) . '</TD>
-              		<TD ALIGN=RIGHT>' . number_format($myrow['UnitPrice']*($myrow['QtyRecd'] - $myrow['QuantityInv']),2) . '</TD>
+		echo '<TR><TD><INPUT TYPE=Submit NAME="GRNNo" Value="' . $myrow['grnno'] . '"></TD>
+              		<TD>' . $myrow['orderno'] . '</TD>
+              		<TD>' . $myrow['itemcode'] . '</TD>
+              		<TD>' . $myrow['itemdescription'] . '</TD>
+              		<TD>' . ConvertSQLDate($myrow['deliverydate']) . '</TD>
+              		<TD ALIGN=RIGHT>' . number_format($myrow['qtyrecd'],2) . '</TD>
+              		<TD ALIGN=RIGHT>' . number_format($myrow['quantityinv'],2) . '</TD>
+              		<TD ALIGN=RIGHT>' . number_format($myrow['qtyrecd'] - $myrow['quantityinv'],2) . '</TD>
+              		<TD ALIGN=RIGHT>' . number_format($myrow['unitprice'],2) . '</TD>
+              		<TD ALIGN=RIGHT>' . number_format($myrow['unitprice']*($myrow['qtyrecd'] - $myrow['quantityinv']),2) . '</TD>
               	</TR>';
 		$i++;
 		if ($i>15){
@@ -185,26 +185,26 @@ echo '</TABLE>';
 
 if (isset($_POST['GRNNo']) AND $_POST['GRNNo']!=''){
 
-	$SQL = 'SELECT GRNNo,
-                 GRNs.PODetailItem,
-                 PurchOrderDetails.UnitPrice,
-                 PurchOrderDetails.GLCode,
-                 GRNs.ItemCode,
-                 GRNs.DeliveryDate,
-                 GRNs.ItemDescription,
-                 GRNs.QuantityInv,
-                 GRNs.QtyRecd,
-                 GRNs.QtyRecd - GRNs.QuantityInv
-                 AS QtyOstdg,
-                    PurchOrderDetails.StdCostUnit,
-                    PurchOrderDetails.ShiptRef,
-                    PurchOrderDetails.JobRef,
-                    Shipments.Closed
-                 FROM GRNs,
-                      PurchOrderDetails
-                 LEFT JOIN Shipments ON PurchOrderDetails.ShiptRef=Shipments.ShiptRef
-                 WHERE GRNs.PODetailItem=PurchOrderDetails.PODetailItem AND
-                       GRNs.GRNNo=' .$_POST['GRNNo'];
+	$SQL = 'SELECT grnno,
+                 grns.podetailitem,
+                 purchorderdetails.unitprice,
+                 purchorderdetails.glcode,
+                 grns.itemcode,
+                 grns.deliverydate,
+                 grns.itemdescription,
+                 grns.quantityinv,
+                 grns.qtyrecd,
+                 grns.qtyrecd - grns.quantityinv
+                 AS qtyostdg,
+                    purchorderdetails.stdcostunit,
+                    purchorderdetails.shiptref,
+                    purchorderdetails.jobref,
+                    shipments.closed
+                 FROM grns,
+                      purchorderdetails
+                 LEFT JOIN shipments ON purchorderdetails.shiptref=shipments.shiptref
+                 WHERE grns.podetailitem=purchorderdetails.podetailitem AND
+                       grns.grnno=' .$_POST['GRNNo'];
 	$GRNEntryResult = DB_query($SQL,$db);
 	$myrow = DB_fetch_array($GRNEntryResult);
 
@@ -219,37 +219,37 @@ if (isset($_POST['GRNNo']) AND $_POST['GRNNo']!=''){
                    </TR>';
 
 	echo '<TR><TD>' . $_POST['GRNNo'] . '</TD>
-            <TD>' . $myrow['ItemCode'] . ' ' . $myrow['ItemDescription'] . '</TD>
-            <TD ALIGN=RIGHT>' . number_format($myrow['QtyOstdg'],2) . '</TD>
-            <TD><INPUT TYPE=Text Name="This_QuantityCredited" Value=' . $myrow['QtyOstdg'] . ' SIZE=11 MAXLENGTH=10></TD>
-            <TD ALIGN=RIGHT>' . $myrow['UnitPrice'] . '</TD>
-            <TD><INPUT TYPE=Text Name="ChgPrice" Value=' . $myrow['UnitPrice'] . ' SIZE=11 MAXLENGTH=10></TD>
+            <TD>' . $myrow['itemcode'] . ' ' . $myrow['itemdescription'] . '</TD>
+            <TD ALIGN=RIGHT>' . number_format($myrow['qtyostdg'],2) . '</TD>
+            <TD><INPUT TYPE=Text Name="This_QuantityCredited" Value=' . $myrow['qtyostdg'] . ' SIZE=11 MAXLENGTH=10></TD>
+            <TD ALIGN=RIGHT>' . $myrow['unitprice'] . '</TD>
+            <TD><INPUT TYPE=Text Name="ChgPrice" Value=' . $myrow['unitprice'] . ' SIZE=11 MAXLENGTH=10></TD>
             </TR>';
 	echo '</TABLE>';
 
-	if ($myrow['Closed']==1){ /*Shipment is closed so pre-empt problems later by warning the user - need to modify the order first */
+	if ($myrow['closed']==1){ /*Shipment is closed so pre-empt problems later by warning the user - need to modify the order first */
 		echo '<INPUT TYPE=HIDDEN NAME="ShiptRef" Value="">';
 		prnMsg(_('Unfortunately the shipment that this purchase order line item was allocated to has been closed') . ' - ' . _('if you add this item to the transaction then no shipments will not be updated') . '. ' . _('If you wish to allocate the order line item to a different shipment the order must be modified first'),'error');
 	} else {
-		echo '<INPUT TYPE=HIDDEN NAME="ShiptRef" Value="' . $myrow['ShiptRef'] . '">';
+		echo '<INPUT TYPE=HIDDEN NAME="ShiptRef" Value="' . $myrow['shiptref'] . '">';
 	}
 
 	echo '<P><INPUT TYPE=Submit Name="AddGRNToTrans" Value="' . _('Add to Credit Note') . '">';
 
 
 	echo '<INPUT TYPE=HIDDEN NAME="GRNNumber" VALUE=' . $_POST['GRNNo'] . '>';
-	echo '<INPUT TYPE=HIDDEN NAME="ItemCode" VALUE="' . $myrow['ItemCode'] . '">';
-	echo '<INPUT TYPE=HIDDEN NAME="ItemDescription" VALUE="' . $myrow['ItemDescription'] . '">';
-	echo '<INPUT TYPE=HIDDEN NAME="QtyRecd" VALUE=' . $myrow['QtyRecd'] . '>';
-	echo '<INPUT TYPE=HIDDEN NAME="Prev_QuantityInv" VALUE=' . $myrow['QuantityInv'] . '>';
-	echo '<INPUT TYPE=HIDDEN NAME="OrderPrice" VALUE=' . $myrow['UnitPrice'] . '>';
-	echo '<INPUT TYPE=HIDDEN NAME="StdCostUnit" VALUE=' . $myrow['StdCostUnit'] . '>';
+	echo '<INPUT TYPE=HIDDEN NAME="ItemCode" VALUE="' . $myrow['itemcode'] . '">';
+	echo '<INPUT TYPE=HIDDEN NAME="ItemDescription" VALUE="' . $myrow['itemdescription'] . '">';
+	echo '<INPUT TYPE=HIDDEN NAME="QtyRecd" VALUE=' . $myrow['qtyrecd'] . '>';
+	echo '<INPUT TYPE=HIDDEN NAME="Prev_QuantityInv" VALUE=' . $myrow['quantityinv'] . '>';
+	echo '<INPUT TYPE=HIDDEN NAME="OrderPrice" VALUE=' . $myrow['unitprice'] . '>';
+	echo '<INPUT TYPE=HIDDEN NAME="StdCostUnit" VALUE=' . $myrow['stdcostunit'] . '>';
 
-	echo '<INPUT TYPE=HIDDEN NAME="JobRef" Value="' . $myrow['JobRef'] . '">';
-	echo '<INPUT TYPE=HIDDEN NAME="GLCode" Value="' . $myrow['GLCode'] . '">';
-	echo '<INPUT TYPE=HIDDEN NAME="PODetailItem" Value="' . $myrow['PODetailItem'] . '">';
+	echo '<INPUT TYPE=HIDDEN NAME="JobRef" Value="' . $myrow['jobref'] . '">';
+	echo '<INPUT TYPE=HIDDEN NAME="GLCode" Value="' . $myrow['glcode'] . '">';
+	echo '<INPUT TYPE=HIDDEN NAME="PODetailItem" Value="' . $myrow['podetailitem'] . '">';
 }
 
-echo '</form>';
+echo '</FORM>';
 include('includes/footer.inc');
 ?>

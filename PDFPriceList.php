@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 2;
 
@@ -31,64 +31,69 @@ If (isset($_POST['PrintPDF'])
 			exit;
 		}
 
-		$SQL = "SELECT Name, SalesType From DebtorsMaster WHERE DebtorNo = '" . $_SESSION['CustomerID'] . "'";
+		$SQL = "SELECT debtorsmaster.name, 
+				debtorsmaster.salestype 
+			FROM debtorsmaster 
+			WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
 		$CustNameResult = DB_query($SQL,$db);
 		$CustNameRow = DB_fetch_row($CustNameResult);
 		$CustomerName = $CustNameRow[0];
 		$SalesType = $CustNameRow[1];
 
-		$SQL = "SELECT Prices.TypeAbbrev,
-			Prices.StockID,
-			StockMaster.Description,
-			Prices.CurrAbrev,
-			Prices.Price,
-			StockMaster.MaterialCost+StockMaster.LabourCost+StockMaster.OverheadCost AS StandardCost,
-			StockMaster.CategoryID,
-			StockCategory.CategoryDescription,
-			Prices.DebtorNo,
-			Prices.BranchCode,
-			CustBranch.BrName
-			FROM StockMaster, StockCategory, Prices LEFT JOIN CustBranch
-			ON Prices.DebtorNo=CustBranch.DebtorNo
-			AND Prices.BranchCode=CustBranch.BranchCode
-			WHERE StockMaster.StockID=Prices.StockID
-			AND StockMaster.CategoryID=StockCategory.CategoryID
-			AND Prices.TypeAbbrev = '" . $SalesType . "'
-			AND StockMaster.CategoryID >= '" . $_POST['FromCriteria'] . "'
-			AND StockMaster.CategoryID <= '" . $_POST['ToCriteria'] . "'
-			AND Prices.DebtorNo='" . $_SESSION['CustomerID'] . "'
-			ORDER BY Prices.CurrAbrev,
-				StockMaster.CategoryID,
-				StockMaster.StockID";
+		$SQL = "SELECT prices.typeabbrev,
+			prices.stockid,
+			stockmaster.description,
+			prices.currabrev,
+			prices.price,
+			stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standardcost,
+			stockmaster.categoryid,
+			stockcategory.categorydescription,
+			prices.debtorno,
+			prices.branchcode,
+			custbranch.brname
+			FROM stockmaster, 
+				stockcategory, 
+				prices LEFT JOIN custbranch
+			ON prices.debtorno=custbranch.debtorno
+			AND prices.branchcode=custbranch.branchcode
+			WHERE stockmaster.stockid=prices.stockid
+			AND stockmaster.categoryid=stockcategory.categoryid
+			AND prices.typeabbrev = '" . $SalesType . "'
+			AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
+			AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
+			AND prices.debtorno='" . $_SESSION['CustomerID'] . "'
+			ORDER BY prices.currabrev,
+				stockmaster.categoryid,
+				stockmaster.stockid";
 
 	} else { /* the sales type list only */
 
 
-		$SQL = "SELECT Sales_Type FROM SalesTypes WHERE TypeAbbrev='" . $_POST['SalesType'] . "'";
+		$SQL = "SELECT sales_type FROM salestypes WHERE typeabbrev='" . $_POST['SalesType'] . "'";
 		$SalesTypeResult = DB_query($SQL,$db);
 		$SalesTypeRow = DB_fetch_row($SalesTypeResult);
 		$SalesTypeName = $SalesTypeRow[0];
 
-		$SQL = "SELECT Prices.TypeAbbrev,
-				Prices.StockID,
-				StockMaster.Description,
-				Prices.CurrAbrev,
-				Prices.Price,
-				StockMaster.MaterialCost+StockMaster.LabourCost+StockMaster.OverheadCost AS StandardCost,
-				StockMaster.CategoryID,
-				StockCategory.CategoryDescription
-			FROM Prices,
-				StockMaster,
-				StockCategory
-			WHERE StockMaster.StockID=Prices.StockID
-			AND StockMaster.CategoryID=StockCategory.CategoryID
-			AND StockMaster.CategoryID >= '" . $_POST['FromCriteria'] . "'
-			AND StockMaster.CategoryID <= '" . $_POST['ToCriteria'] . "'
-			AND Prices.TypeAbbrev='" . $_POST['SalesType'] . "'
-			AND Prices.DebtorNo=''
-			ORDER BY Prices.CurrAbrev,
-				StockMaster.CategoryID,
-				StockMaster.StockID";
+		$SQL = "SELECT prices.typeabbrev,
+				prices.stockid,
+				stockmaster.description,
+				prices.currabrev,
+				prices.price,
+				stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost as standardcost,
+				stockmaster.categoryid,
+				stockcategory.categorydescription
+			FROM prices,
+				stockmaster,
+				stockcategory
+			WHERE stockmaster.stockid=prices.stockid
+			AND stockmaster.categoryid=stockcategory.categoryid
+			AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
+			AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
+			AND prices.typeabbrev='" . $_POST['SalesType'] . "'
+			AND prices.debtorno=''
+			ORDER BY prices.currabrev,
+				stockmaster.categoryid,
+				stockmaster.stockid";
 	}
 	$PricesResult = DB_query($SQL,$db,'','',false,false);
 
@@ -110,21 +115,21 @@ If (isset($_POST['PrintPDF'])
 	$CatTot_Val=0;
 	While ($PriceList = DB_fetch_array($PricesResult,$db)){
 
-		if ($CurrCode!=$PriceList['CurrAbrev']){
+		if ($CurrCode!=$PriceList['currabrev']){
 			$FontSize=10;
 			$YPos -=(2*$line_height);
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize, _('Prices in') . ' ' . $PriceList['CurrAbrev']);
-			$CurrCode = $PriceList['CurrAbrev'];
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize, _('Prices in') . ' ' . $PriceList['currabrev']);
+			$CurrCode = $PriceList['currabrev'];
 			$FontSize=8;
 			$YPos -=$line_height;
 		}
 
-		if ($Category!=$PriceList['CategoryID']){
+		if ($Category!=$PriceList['categoryid']){
 			$FontSize=10;
 			$YPos -=(2*$line_height);
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300-$Left_Margin,$FontSize,$PriceList['CategoryID'] . ' - ' . $PriceList['CategoryDescription']);
-			$Category = $PriceList['CategoryID'];
-			$CategoryName = $PriceList['CategoryDescription'];
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300-$Left_Margin,$FontSize,$PriceList['categoryid'] . ' - ' . $PriceList['categorydescription']);
+			$Category = $PriceList['categoryid'];
+			$CategoryName = $PriceList['categorydescription'];
 			$FontSize=8;
 			$YPos -=$line_height;
 		}
@@ -132,22 +137,22 @@ If (isset($_POST['PrintPDF'])
 		$YPos -=$line_height;
 
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$PriceList['StockID']);					$LeftOvers = $pdf->addTextWrap(120,$YPos,260,$FontSize,$PriceList['Description']);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$PriceList['stockid']);					$LeftOvers = $pdf->addTextWrap(120,$YPos,260,$FontSize,$PriceList['description']);
 
 		if ($_POST['CustomerSpecials']=='Customer Special Prices Only'){
 			/*Need to show to which branch the price relates */
-			if ($PriceList['BranchCode']!=''){
-				$LeftOvers = $pdf->addTextWrap(320,$YPos,130,$FontSize,$PriceList['BrName'],'left');
+			if ($PriceList['branchcode']!=''){
+				$LeftOvers = $pdf->addTextWrap(320,$YPos,130,$FontSize,$PriceList['brname'],'left');
 			} else {
 				$LeftOvers = $pdf->addTextWrap(320,$YPos,130,$FontSize,_('All'),'left');
 			}
 
 		}
 
-		$DisplayUnitPrice = number_format($PriceList['Price'],2);
+		$DisplayUnitPrice = number_format($PriceList['price'],2);
 
-		if ($PriceList['Price']!=0){
-			$DisplayGPPercent = (int)(($PriceList['Price']-$PriceList['StandardCost'])*100/$PriceList['Price']) . '%';
+		if ($PriceList['price']!=0){
+			$DisplayGPPercent = (int)(($PriceList['price']-$PriceList['standardcost'])*100/$PriceList['price']) . '%';
 		} else {
 			$DisplayGPPercent = 0;
 		}
@@ -195,10 +200,7 @@ If (isset($_POST['PrintPDF'])
 	include('includes/session.inc');
 	$title= _('Price Listing');
 	include('includes/header.inc');
-	include('includes/SQL_CommonFunctions.inc');
-	$CompanyRecord = ReadInCompanyRecord($db);
-
-
+	
 	if (strlen($_POST['FromCriteria'])<1 || strlen($_POST['ToCriteria'])<1) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
@@ -207,10 +209,10 @@ If (isset($_POST['PrintPDF'])
 
 		echo '<TR><TD>'. _('From Inventory Category Code') .':</FONT></TD><TD><SELECT name=FromCriteria>';
 
-		$sql='SELECT CategoryID, CategoryDescription FROM StockCategory ORDER BY CategoryID';
+		$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
 		$CatResult= DB_query($sql,$db);
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo "<OPTION VALUE='" . $myrow['CategoryID'] . "'>" . $myrow['CategoryID'] . ' - ' . $myrow['CategoryDescription'];
+			echo "<OPTION VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 		}
 		echo '</SELECT></TD></TR>';
 
@@ -220,16 +222,16 @@ If (isset($_POST['PrintPDF'])
 		DB_data_seek($CatResult,0);
 
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo '<OPTION VALUE="' . $myrow['CategoryID'] . '">' . $myrow['CategoryID'] . ' - ' . $myrow['CategoryDescription'];
+			echo '<OPTION VALUE="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 		}
 		echo '</SELECT></TD></TR>';
 
 		echo '<TR><TD>' . _('For Sales Type/Price List').':</TD><TD><SELECT name="SalesType">';
-		$sql = 'SELECT Sales_Type, TypeAbbrev FROM SalesTypes';
+		$sql = 'SELECT sales_type, typeabbrev FROM salestypes';
 		$SalesTypesResult=DB_query($sql,$db);
 
 		while ($myrow=DB_fetch_array($SalesTypesResult)){
-		          echo '<OPTION Value="' . $myrow['TypeAbbrev'] . '">' . $myrow['Sales_Type'];
+		          echo '<OPTION Value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'];
 		}
 		echo '</SELECT></TD></TR>';
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /* Contributed by Chris Bice - gettext by Kitch*/
 
 
@@ -13,7 +13,7 @@ include('includes/DateFunctions.inc');
 
 echo "<HR><FORM ACTION='" . $_SERVER['PHP_SELF'] . "?". SID . "' METHOD=POST>";
 
-$sql = 'SELECT CategoryID, CategoryDescription FROM StockCategory';
+$sql = 'SELECT categoryid, categorydescription FROM stockcategory';
 $resultStkLocs = DB_query($sql, $db);
 
 echo '<CENTER><TABLE><TR>';
@@ -22,18 +22,18 @@ echo '<TD>' . _('For Stock Category') . ":</TD>
 
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockCategory']) AND $_POST['StockCategory']!='All'){
-		if ($myrow['CategoryID'] == $_POST['StockCategory']){
-		     echo "<OPTION SELECTED VALUE='" . $myrow['CategoryID'] . "'>" . $myrow['CategoryDescription'];
+		if ($myrow['categoryid'] == $_POST['StockCategory']){
+		     echo "<OPTION SELECTED VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
 		} else {
-		     echo "<OPTION VALUE='" . $myrow['CategoryID'] . "'>" . $myrow['CategoryDescription'];
+		     echo "<OPTION VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
 		}
 	}else {
-		 echo "<OPTION VALUE='" . $myrow['CategoryID'] . "'>" . $myrow['CategoryDescription'];
+		 echo "<OPTION VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
 	}
 }
 echo '</SELECT></TD>';
 
-$sql = 'SELECT LocCode, LocationName FROM Locations';
+$sql = 'SELECT loccode, locationname FROM locations';
 $resultStkLocs = DB_query($sql, $db);
 
 echo '<TD>' . _('For Stock Location') . ":</TD>
@@ -41,22 +41,22 @@ echo '<TD>' . _('For Stock Location') . ":</TD>
 
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation']) AND $_POST['StockLocation']!='All'){
-		if ($myrow['LocCode'] == $_POST['StockLocation']){
-		     echo "<OPTION SELECTED VALUE='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
+		if ($myrow['loccode'] == $_POST['StockLocation']){
+		     echo "<OPTION SELECTED VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 		} else {
-		     echo "<OPTION VALUE='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
+		     echo "<OPTION VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 		}
-	} elseif ($myrow['LocCode']==$_SESSION['UserStockLocation']){
-		 echo "<OPTION SELECTED VALUE='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
-		 $_POST['StockLocation']=$myrow['LocCode'];
+	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
+		 echo "<OPTION SELECTED VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+		 $_POST['StockLocation']=$myrow['loccode'];
 	} else {
-		 echo "<OPTION VALUE='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
+		 echo "<OPTION VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 	}
 }
 echo '</SELECT></TD>';
 
 if (!isset($_POST['OnHandDate'])){
-	$_POST['OnHandDate'] = Date($DefaultDateFormat, Mktime(0,0,0,Date("m"),0,Date("y")));
+	$_POST['OnHandDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date("m"),0,Date("y")));
 }
 
 echo '<TD>' . _("On-Hand On Date") . ":</TD>
@@ -68,12 +68,12 @@ $TotalQuantity = 0;
 
 if(isset($_POST['ShowStatus']) AND is_date($_POST['OnHandDate']))
 {
-	$sql = "SELECT StockID,
-			Description,
-			DecimalPlaces
-		FROM StockMaster
-		WHERE CategoryID = '" . $_POST['StockCategory'] . "'
-		AND (MBflag='M' OR MBflag='B')";
+	$sql = "SELECT stockid,
+			description,
+			decimalplaces
+		FROM stockmaster
+		WHERE categoryid = '" . $_POST['StockCategory'] . "'
+		AND (mbflag='M' OR mbflag='B')";
 
 	$ErrMsg = _('The stock items in the category selected cannot be retrieved because');
 	$DbgMsg = _('The SQL that failed was');
@@ -92,10 +92,13 @@ if(isset($_POST['ShowStatus']) AND is_date($_POST['OnHandDate']))
 
 	while ($myrows=DB_fetch_array($StockResult)) {
 
-		$sql = "SELECT StockID,
-				NewQOH
-				FROM StockMoves
-				WHERE StockMoves.TranDate <= '". $SQLOnHandDate . "' AND StockID = '" . $myrows['StockID'] . "' AND LocCode = '" . $_POST['StockLocation'] ."' ORDER BY StkMoveNo DESC LIMIT 1";
+		$sql = "SELECT stockid,
+				newqoh
+				FROM stockmoves
+				WHERE stockmoves.trandate <= '". $SQLOnHandDate . "' 
+				AND stockid = '" . $myrows['stockid'] . "' 
+				AND loccode = '" . $_POST['StockLocation'] ."' 
+				ORDER BY stkmoveno DESC LIMIT 1";
 
 		$ErrMsg =  _('The stock held as at') . ' ' . $_POST['OnHandDate'] . ' ' . _('could not be retrieved because');
 
@@ -120,20 +123,20 @@ if(isset($_POST['ShowStatus']) AND is_date($_POST['OnHandDate']))
 				printf("<TD><A TARGET='_blank' HREF='StockStatus.php?%s'>%s</TD>
 					<TD>%s</TD>
 					<TD ALIGN=RIGHT>%s</TD>",
-					SID . '&StockID=' . strtoupper($myrows['StockID']),
-					strtoupper($myrows['StockID']),
-					$myrows['Description'],
+					SID . '&StockID=' . strtoupper($myrows['stockid']),
+					strtoupper($myrows['stockid']),
+					$myrows['description'],
 					0);
 			} else {
 				printf("<TD><A TARGET='_blank' HREF='StockStatus.php?%s'>%s</TD>
 					<TD>%s</TD>
 					<TD ALIGN=RIGHT>%s</TD>",
-					SID . '&StockID=' . strtoupper($myrows['StockID']),
-					strtoupper($myrows['StockID']),
-					$myrows['Description'],
-					number_format($LocQtyRow['NewQOH'],$myrows['DecimalPlaces']));
+					SID . '&StockID=' . strtoupper($myrows['stockid']),
+					strtoupper($myrows['stockid']),
+					$myrows['description'],
+					number_format($LocQtyRow['newqoh'],$myrows['decimalplaces']));
 
-				$TotalQuantity += $LocQtyRow['NewQOH'];
+				$TotalQuantity += $LocQtyRow['newqoh'];
 			}
 			$j++;
 			if ($j == 12){

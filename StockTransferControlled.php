@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');

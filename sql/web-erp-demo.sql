@@ -17,9 +17,9 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- Current Database: `weberp`
 --
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `weberp`;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `sunshine`;
 
-USE `weberp`;
+USE `sunshine`;
 
 --
 -- Table structure for table `AccountGroups`
@@ -2279,7 +2279,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE `WWW_Users` DISABLE KEYS */;
 LOCK TABLES `WWW_Users` WRITE;
-INSERT INTO `WWW_Users` VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2004-12-27 13:43:36','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','es_ES'),('NewOne','weberp','New User Admin','','','','DEN',7,'2004-12-26 14:15:05','','A4','1,1,1,1,1,1,1,1,',0,0,'fresh','en_GB'),('testy','weberp','Test Remote User','GRANHR','','','DEN',6,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en_GB');
+INSERT INTO `WWW_Users` VALUES ('demo','weberp','Demonstration user','','','','DEN',7,'2005-01-01 12:32:11','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','es_ES'),('NewOne','weberp','New User Admin','','','','DEN',7,'2004-12-26 14:15:05','','A4','1,1,1,1,1,1,1,1,',0,0,'fresh','en_GB'),('testy','weberp','Test Remote User','GRANHR','','','DEN',6,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en_GB');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE `WWW_Users` ENABLE KEYS */;
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /*PDF page header for aged analysis reports */
 $PageNumber++;
 if ($PageNumber>1){
@@ -9,7 +9,7 @@ if ($PageNumber>1){
 $FontSize=8;
 $YPos= $Page_Height-$Top_Margin;
 
-$pdf->addText($Left_Margin, $YPos,$FontSize, $CompanyName);
+$pdf->addText($Left_Margin, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
 
 $YPos -=$line_height;
 
@@ -67,7 +67,7 @@ $pdf->addText($Left_Margin, $YPos, $FontSize, $Heading);
 $pdf->selectFont('./fonts/Helvetica.afm');
 
 $FontSize = 8;
-$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed'). ': ' . Date($DefaultDateFormat) . '   '. _('Page'). ' ' . $PageNumber);
+$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed'). ': ' . Date($_SESSION['DefaultDateFormat']) . '   '. _('Page'). ' ' . $PageNumber);
 
 $YPos -=(3*$line_height);
 

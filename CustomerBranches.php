@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -72,29 +72,29 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedBranch could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the 	delete code below*/
 
-		$sql = "UPDATE CustBranch SET BrName = '" . $_POST['BrName'] . "',
-						BrAddress1 = '" . $_POST['BrAddress1'] . "',
-						BrAddress2 = '" . $_POST['BrAddress2'] . "',
-						BrAddress3 = '" . $_POST['BrAddress3'] . "',
-						BrAddress4 = '" . $_POST['BrAddress4'] . "',
-						PhoneNo='" . $_POST['PhoneNo'] . "',
-						FaxNo='" . $_POST['FaxNo'] . "',
-						FwdDate= " . $_POST['FwdDate'] . ",
-						ContactName='" . $_POST['ContactName'] . "',
-						Salesman= '" . $_POST['Salesman'] . "',
-						Area='" . $_POST['Area'] . "',
-						EstDeliveryDays =" . $_POST['EstDeliveryDays'] . ",
-						Email='" . $_POST['Email'] . "',
-						TaxAuthority=" . $_POST['TaxAuthority'] . ",
-						DefaultLocation='" . $_POST['DefaultLocation'] . "',
-						BrPostAddr1 = '" . $_POST['BrPostAddr1'] . "',
-						BrPostAddr2 = '" . $_POST['BrPostAddr2'] . "',
-						BrPostAddr3 = '" . $_POST['BrPostAddr3'] . "',
-						BrPostAddr4 = '" . $_POST['BrPostAddr4'] . "',
-						DisableTrans=" . $_POST['DisableTrans'] . ",
-						DefaultShipVia=" . $_POST['DefaultShipVia'] . ",
-						CustBranchCode='" . $_POST['CustBranchCode'] ."'
-					WHERE BranchCode = '$SelectedBranch' AND DebtorNo='$DebtorNo'";
+		$sql = "UPDATE custbranch SET brname = '" . DB_escape_string($_POST['BrName']) . "',
+						braddress1 = '" . DB_escape_string($_POST['BrAddress1']) . "',
+						braddress2 = '" . DB_escape_string($_POST['BrAddress2']) . "',
+						braddress3 = '" . DB_escape_string($_POST['BrAddress3']) . "',
+						braddress4 = '" . DB_escape_string($_POST['BrAddress4']) . "',
+						phoneno='" . DB_escape_string($_POST['PhoneNo']) . "',
+						faxno='" . DB_escape_string($_POST['FaxNo']) . "',
+						fwddate= " . $_POST['FwdDate'] . ",
+						contactname='" . DB_escape_string($_POST['ContactName']) . "',
+						salesman= '" . $_POST['Salesman'] . "',
+						area='" . $_POST['Area'] . "',
+						estdeliverydays =" . $_POST['EstDeliveryDays'] . ",
+						email='" . $_POST['Email'] . "',
+						taxauthority=" . $_POST['TaxAuthority'] . ",
+						defaultlocation='" . $_POST['DefaultLocation'] . "',
+						brpostaddr1 = '" . DB_escape_string($_POST['BrPostAddr1']) . "',
+						brpostaddr2 = '" . DB_escape_string($_POST['BrPostAddr2']) . "',
+						brpostaddr3 = '" . DB_escape_string($_POST['BrPostAddr3']) . "',
+						brpostaddr4 = '" . DB_escape_string($_POST['BrPostAddr4']) . "',
+						disabletrans=" . $_POST['DisableTrans'] . ",
+						defaultshipvia=" . $_POST['DefaultShipVia'] . ",
+						custbranchcode='" . $_POST['CustBranchCode'] ."'
+					WHERE branchcode = '$SelectedBranch' AND debtorno='$DebtorNo'";
 
 		$msg = $_POST['BrName'] . ' '._('branch  has been updated.');
 
@@ -102,51 +102,51 @@ if (isset($_POST['submit'])) {
 
 	/*Selected branch is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Customer Branches form */
 
-		$sql = "INSERT INTO CustBranch (BranchCode,
-						DebtorNo,
-						BrName,
-						BrAddress1,
-						BrAddress2,
-						BrAddress3,
-						BrAddress4,
-						EstDeliveryDays,
-						FwdDate,
-						Salesman,
-						PhoneNo,
-						FaxNo,
-						ContactName,
-						Area,
-						Email,
-						TaxAuthority,
-						DefaultLocation,
-						BrPostAddr1,
-						BrPostAddr2,
-						BrPostAddr3,
-						BrPostAddr4,
-						DisableTrans,
-						DefaultShipVia,
-						CustBranchCode)
+		$sql = "INSERT INTO custbranch (branchcode,
+						debtorno,
+						brname,
+						braddress1,
+						braddress2,
+						braddress3,
+						braddress4,
+						estdeliverydays,
+						fwddate,
+						salesman,
+						phoneno,
+						faxno,
+						contactname,
+						area,
+						email,
+						taxauthority,
+						defaultlocation,
+						brpostaddr1,
+						brpostaddr2,
+						brpostaddr3,
+						brpostaddr4,
+						disabletrans,
+						defaultshipvia,
+						custbranchcode)
 				VALUES ('" . $_POST['BranchCode'] . "',
 					'" . $DebtorNo . "',
-					'" . $_POST['BrName'] . "',
-					'" . $_POST['BrAddress1'] . "',
-					'" . $_POST['BrAddress2'] . "',
-					'" . $_POST['BrAddress3'] . "',
-					'" . $_POST['BrAddress4'] . "',
+					'" . DB_escape_string($_POST['BrName']) . "',
+					'" . DB_escape_string($_POST['BrAddress1']) . "',
+					'" . DB_escape_string($_POST['BrAddress2']) . "',
+					'" . DB_escape_string($_POST['BrAddress3']) . "',
+					'" . DB_escape_string($_POST['BrAddress4']) . "',
 					" . $_POST['EstDeliveryDays'] . ",
 					" . $_POST['FwdDate'] . ",
 					'" . $_POST['Salesman'] . "',
-					'" . $_POST['PhoneNo'] . "',
-					'" . $_POST['FaxNo'] . "',
-					'" . $_POST['ContactName'] . "',
+					'" . DB_escape_string($_POST['PhoneNo']) . "',
+					'" . DB_escape_string($_POST['FaxNo']) . "',
+					'" . DB_escape_string($_POST['ContactName']) . "',
 					'" . $_POST['Area'] . "',
-					'" . $_POST['Email'] . "',
+					'" . DB_escape_string($_POST['Email']) . "',
 					" . $_POST['TaxAuthority'] . ",
 					'" . $_POST['DefaultLocation'] . "',
-					'" . $_POST['BrPostAddr1'] . "',
-					'" . $_POST['BrPostAddr2'] . "',
-					'" . $_POST['BrPostAddr3'] . "',
-					'" . $_POST['BrPostAddr4'] . "',
+					'" . DB_escape_string($_POST['BrPostAddr1']) . "',
+					'" . DB_escape_string($_POST['BrPostAddr2']) . "',
+					'" . DB_escape_string($_POST['BrPostAddr3']) . "',
+					'" . DB_escape_string($_POST['BrPostAddr4']) . "',
 					" . $_POST['DisableTrans'] . ",
 					" . $_POST['DefaultShipVia'] . ",
 					'" . $_POST['CustBranchCode'] ."')";
@@ -192,7 +192,7 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorTrans'
 
-	$sql= "SELECT COUNT(*) FROM DebtorTrans WHERE DebtorTrans.BranchCode='$SelectedBranch' AND DebtorNo = '$DebtorNo'";
+	$sql= "SELECT COUNT(*) FROM debtortrans WHERE debtortrans.branchcode='$SelectedBranch' AND debtorno = '$DebtorNo'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
@@ -200,7 +200,7 @@ if (isset($_POST['submit'])) {
 			 _('There are').' ' . $myrow[0] . ' '._('transactions with this Branch Code'),'error');
 
 	} else {
-		$sql= "SELECT COUNT(*) FROM SalesAnalysis WHERE SalesAnalysis.CustBranch='$SelectedBranch' AND Cust = '$DebtorNo'";
+		$sql= "SELECT COUNT(*) FROM salesanalysis WHERE salesanalysis.custbranch='$SelectedBranch' AND salesanalysis.cust = '$DebtorNo'";
 
 		$result = DB_query($sql,$db);
 
@@ -211,7 +211,7 @@ if (isset($_POST['submit'])) {
 
 		} else {
 
-			$sql= "SELECT COUNT(*) FROM SalesOrders WHERE SalesOrders.BranchCode='$SelectedBranch' AND SalesOrders.DebtorNo = '$DebtorNo'";
+			$sql= "SELECT COUNT(*) FROM salesorders WHERE salesorders.branchcode='$SelectedBranch' AND salesorders.debtorno = '$DebtorNo'";
 			$result = DB_query($sql,$db);
 
 			$myrow = DB_fetch_row($result);
@@ -219,8 +219,8 @@ if (isset($_POST['submit'])) {
 				prnMsg(_('Cannot delete this branch because sales orders exist for it') . '. ' . _('Purge old sales orders first'),'warn');
 				echo '<BR>'._('There are').' ' . $myrow[0] . ' '._('sales orders for this Branch/customer');
 			} else {
-				// Sherifoz 22.06.03 Check if there are any users that refer to this branch code
-				$sql= "SELECT COUNT(*) FROM WWW_Users WHERE WWW_Users.BranchCode='$SelectedBranch' AND WWW_Users.CustomerID = '$DebtorNo'";
+				// Check if there are any users that refer to this branch code
+				$sql= "SELECT COUNT(*) FROM www_users WHERE www_users.branchcode='$SelectedBranch' AND www_users.customerid = '$DebtorNo'";
 
 				$result = DB_query($sql,$db);
 				$myrow = DB_fetch_row($result);
@@ -230,7 +230,7 @@ if (isset($_POST['submit'])) {
 				    echo '<BR>'._('There are').' ' . $myrow[0] . ' '._('users referring to this Branch/customer');
 				} else {
 
-					$sql="DELETE FROM CustBranch WHERE BranchCode='" . $SelectedBranch . "' AND DebtorNo='" . $DebtorNo . "'";
+					$sql="DELETE FROM custbranch WHERE branchcode='" . $SelectedBranch . "' AND debtorno='" . $DebtorNo . "'";
 					$ErrMsg = _('The branch record could not be deleted') . ' - ' . _('the SQL server returned the following message');
     					$result = DB_query($sql,$db,$ErrMsg);
 					if (DB_error_no($db)==0){
@@ -247,25 +247,25 @@ if (!isset($SelectedBranch)){
 
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedBranch will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters then none of the above are true and the list of branches will be displayed with links to delete or edit each. These will call the same page again and allow update/input or deletion of the records*/
 
-	$sql = "SELECT DebtorsMaster.Name,
-			CustBranch.BranchCode,
-			BrName,
-			Salesman.SalesmanName,
-			Areas.AreaDescription,
-			ContactName,
-			PhoneNo,
-			FaxNo,
-			Email,
-			TaxAuthority,
-			CustBranch.BranchCode
-		FROM CustBranch,
-			DebtorsMaster,
-			Areas,
-			Salesman
-		WHERE CustBranch.DebtorNo=DebtorsMaster.DebtorNo
-		AND CustBranch.Area=Areas.AreaCode
-		AND CustBranch.Salesman=Salesman.SalesmanCode
-		AND CustBranch.DebtorNo = '$DebtorNo'";
+	$sql = "SELECT debtorsmaster.name,
+			custbranch.branchcode,
+			brname,
+			salesman.salesmanname,
+			areas.areadescription,
+			contactname,
+			phoneno,
+			faxno,
+			email,
+			taxauthority,
+			custbranch.branchcode
+		FROM custbranch,
+			debtorsmaster,
+			areas,
+			salesman
+		WHERE custbranch.debtorno=debtorsmaster.debtorno
+		AND custbranch.area=areas.areacode
+		AND custbranch.salesman=salesman.salesmancode
+		AND custbranch.debtorno = '$DebtorNo'";
 
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
@@ -286,46 +286,46 @@ if (!isset($SelectedBranch)){
 
 		do {
 			printf("<tr><td><font size=2>%s</td>
-					<td><font size=2>%s</td>
-					<td><font size=2>%s</font></td>
-					<td><font size=2>%s</font></td>
-					<td><font size=2>%s</font></td>
-					<td><font size=2>%s</font></td>
-					<td><font size=2>%s</font></td>
-					<td><font size=2><a href=\"Mailto:%s\">%s</a></font></td>
-					<td><font size=2>%s</font></td>
-					<td><font size=2><a href=\"%s?DebtorNo=%s&SelectedBranch=%s\">%s</font></td>
-					<td><font size=2><a href=\"%s?DebtorNo=%s&SelectedBranch=%s&delete=yes\">%s</font></td></tr>",
-					$myrow[10],
-					$myrow[2],
-					$myrow[5],
-					$myrow[3],
-					$myrow[4],
-					$myrow[6],
-					$myrow[7],
-					$myrow[8],
-					$myrow[8],
-					$myrow[9],
-					$_SERVER['PHP_SELF'],
-					$DebtorNo,
-					$myrow[1],
-					_('Edit'),
-					$_SERVER['PHP_SELF'],
-					$DebtorNo,
-					$myrow[1],
-					_('Delete'));
+				<td><font size=2>%s</td>
+				<td><font size=2>%s</font></td>
+				<td><font size=2>%s</font></td>
+				<td><font size=2>%s</font></td>
+				<td><font size=2>%s</font></td>
+				<td><font size=2>%s</font></td>
+				<td><font size=2><a href=\"Mailto:%s\">%s</a></font></td>
+				<td><font size=2>%s</font></td>
+				<td><font size=2><a href=\"%s?DebtorNo=%s&SelectedBranch=%s\">%s</font></td>
+				<td><font size=2><a href=\"%s?DebtorNo=%s&SelectedBranch=%s&delete=yes\">%s</font></td></tr>",
+				$myrow[10],
+				$myrow[2],
+				$myrow[5],
+				$myrow[3],
+				$myrow[4],
+				$myrow[6],
+				$myrow[7],
+				$myrow[8],
+				$myrow[8],
+				$myrow[9],
+				$_SERVER['PHP_SELF'],
+				$DebtorNo,
+				$myrow[1],
+				_('Edit'),
+				$_SERVER['PHP_SELF'],
+				$DebtorNo,
+				$myrow[1],
+				_('Delete'));
 
 		} while ($myrow = DB_fetch_row($result));
 		//END WHILE LIST LOOP
 		echo '</table>';
 	} else {
-		$sql = "SELECT DebtorsMaster.Name,
-				Address1,
-				Address2,
-				Address3,
-				Address4
-			FROM DebtorsMaster
-			WHERE DebtorNo = '$DebtorNo'";
+		$sql = "SELECT debtorsmaster.name,
+				address1,
+				address2,
+				address3,
+				address4
+			FROM debtorsmaster
+			WHERE debtorno = '$DebtorNo'";
 
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
@@ -356,59 +356,59 @@ if (! isset($_GET['delete'])) {
 	if (isset($SelectedBranch)) {
 		//editing an existing branch
 
-		$sql = "SELECT BranchCode,
-				BrName,
-				BrAddress1,
-				BrAddress2,
-				BrAddress3,
-				BrAddress4,
-				EstDeliveryDays,
-				FwdDate,
-				Salesman,
-				Area,
-				PhoneNo,
-				FaxNo,
-				ContactName,
-				Email,
-				TaxAuthority,
-				DefaultLocation,
-				BrPostAddr1,
-				BrPostAddr2,
-				BrPostAddr3,
-				BrPostAddr4,
-				DisableTrans,
-				DefaultShipVia,
-				CustBranchCode
-			FROM CustBranch
-			WHERE BranchCode='$SelectedBranch'
-			AND DebtorNo='$DebtorNo'";
+		$sql = "SELECT branchcode,
+				brname,
+				braddress1,
+				braddress2,
+				braddress3,
+				braddress4,
+				estdeliverydays,
+				fwddate,
+				salesman,
+				area,
+				phoneno,
+				faxno,
+				contactname,
+				email,
+				taxauthority,
+				defaultlocation,
+				brpostaddr1,
+				brpostaddr2,
+				brpostaddr3,
+				brpostaddr4,
+				disabletrans,
+				defaultshipvia,
+				custbranchcode
+			FROM custbranch
+			WHERE branchcode='$SelectedBranch'
+			AND debtorno='$DebtorNo'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
 
-		$_POST['BranchCode'] = $myrow['BranchCode'];
-		$_POST['BrName']  = $myrow['BrName'];
-		$_POST['BrAddress1']  = $myrow['BrAddress1'];
-		$_POST['BrAddress2']  = $myrow['BrAddress2'];
-		$_POST['BrAddress3']  = $myrow['BrAddress3'];
-		$_POST['BrAddress4']  = $myrow['BrAddress4'];
-		$_POST['BrPostAddr1']  = $myrow['BrPostAddr1'];
-		$_POST['BrPostAddr2']  = $myrow['BrPostAddr2'];
-		$_POST['BrPostAddr3']  = $myrow['BrPostAddr3'];
-		$_POST['BrPostAddr4']  = $myrow['BrPostAddr4'];
-		$_POST['EstDeliveryDays']  = $myrow['EstDeliveryDays'];
-		$_POST['FwdDate'] =$myrow['FwdDate'];
-		$_POST['ContactName'] = $myrow['ContactName'];
-		$_POST['Salesman'] =$myrow['Salesman'];
-		$_POST['Area'] =$myrow['Area'];
-		$_POST['PhoneNo'] =$myrow['PhoneNo'];
-		$_POST['FaxNo'] =$myrow['FaxNo'];
-		$_POST['Email'] =$myrow['Email'];
-		$_POST['TaxAuthority'] = $myrow['TaxAuthority'];
-		$_POST['DisableTrans'] = $myrow['DisableTrans'];
-		$_POST['DefaultLocation'] = $myrow['DefaultLocation'];
-		$_POST['DefaultShipVia'] = $myrow['DefaultShipVia'];
-		$_POST['CustBranchCode'] = $myrow['CustBranchCode'];
+		$_POST['BranchCode'] = $myrow['branchcode'];
+		$_POST['BrName']  = $myrow['brname'];
+		$_POST['BrAddress1']  = $myrow['braddress1'];
+		$_POST['BrAddress2']  = $myrow['braddress2'];
+		$_POST['BrAddress3']  = $myrow['braddress3'];
+		$_POST['BrAddress4']  = $myrow['braddress4'];
+		$_POST['BrPostAddr1']  = $myrow['brpostaddr1'];
+		$_POST['BrPostAddr2']  = $myrow['brpostaddr2'];
+		$_POST['BrPostAddr3']  = $myrow['brpostaddr3'];
+		$_POST['BrPostAddr4']  = $myrow['brpostaddr4'];
+		$_POST['EstDeliveryDays']  = $myrow['estdeliverydays'];
+		$_POST['FwdDate'] =$myrow['fwddate'];
+		$_POST['ContactName'] = $myrow['contactname'];
+		$_POST['Salesman'] =$myrow['salesman'];
+		$_POST['Area'] =$myrow['area'];
+		$_POST['PhoneNo'] =$myrow['phoneno'];
+		$_POST['FaxNo'] =$myrow['faxno'];
+		$_POST['Email'] =$myrow['email'];
+		$_POST['TaxAuthority'] = $myrow['taxauthority'];
+		$_POST['DisableTrans'] = $myrow['disabletrans'];
+		$_POST['DefaultLocation'] = $myrow['defaultlocation'];
+		$_POST['DefaultShipVia'] = $myrow['defaultshipvia'];
+		$_POST['CustBranchCode'] = $myrow['custbranchcode'];
 
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedBranch' VALUE=" . $SelectedBranch . '>';
 		echo "<INPUT TYPE=HIDDEN NAME='BranchCode'  VALUE=" . $_POST['BranchCode'] . '>';
@@ -422,7 +422,7 @@ if (! isset($_GET['delete'])) {
 	}
 
 	//SQL to poulate account selection boxes
-	$sql = "SELECT SalesmanName, SalesmanCode FROM Salesman";
+	$sql = "SELECT salesmanname, salesmancode FROM salesman";
 
 	$result = DB_query($sql,$db);
 
@@ -459,12 +459,12 @@ if (! isset($_GET['delete'])) {
 	echo '<TD><SELECT name="Salesman">';
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['SalesmanCode']==$_POST['Salesman']) {
+		if ($myrow['salesmancode']==$_POST['Salesman']) {
 			echo '<OPTION SELECTED VALUE=';
 		} else {
 			echo '<OPTION VALUE=';
 		}
-		echo $myrow['SalesmanCode'] . '>' . $myrow['SalesmanName'];
+		echo $myrow['salesmancode'] . '>' . $myrow['salesmanname'];
 
 	} //end while loop
 
@@ -472,7 +472,7 @@ if (! isset($_GET['delete'])) {
 
 	DB_data_seek($result,0);
 
-	$sql = 'SELECT AreaCode, AreaDescription FROM Areas';
+	$sql = 'SELECT areacode, areadescription FROM areas';
 	$result = DB_query($sql,$db);
 	if (DB_num_rows($result)==0){
 		echo '</TABLE>';
@@ -485,12 +485,12 @@ if (! isset($_GET['delete'])) {
 	echo '<TR><TD>'._('Sales Area').':</TD>';
 	echo '<TD><SELECT name="Area">';
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['AreaCode']==$_POST['Area']) {
+		if ($myrow['areacode']==$_POST['Area']) {
 			echo '<OPTION SELECTED VALUE=';
 		} else {
 			echo '<OPTION VALUE=';
 		}
-		echo $myrow['AreaCode'] . '>' . $myrow['AreaDescription'];
+		echo $myrow['areacode'] . '>' . $myrow['areadescription'];
 
 	} //end while loop
 
@@ -498,7 +498,7 @@ if (! isset($_GET['delete'])) {
 	echo '</SELECT></TD></TR>';
 	DB_data_seek($result,0);
 
-	$sql = 'SELECT LocCode, LocationName FROM Locations';
+	$sql = 'SELECT loccode, locationname FROM locations';
 	$result = DB_query($sql,$db);
 
 	if (DB_num_rows($result)==0){
@@ -513,12 +513,12 @@ if (! isset($_GET['delete'])) {
 	echo '<TD><SELECT name="DefaultLocation">';
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['LocCode']==$_POST['DefaultLocation']) {
+		if ($myrow['loccode']==$_POST['DefaultLocation']) {
 			echo '<OPTION SELECTED VALUE=';
 		} else {
 			echo '<OPTION VALUE=';
 		}
-		echo $myrow['LocCode'] . '>' . $myrow['LocationName'];
+		echo $myrow['loccode'] . '>' . $myrow['locationname'];
 
 	} //end while loop
 
@@ -538,16 +538,16 @@ if (! isset($_GET['delete'])) {
 
 	DB_data_seek($result,0);
 
-	$sql = 'SELECT TaxID, Description FROM TaxAuthorities';
+	$sql = 'SELECT taxid, description FROM taxauthorities';
 	$result = DB_query($sql,$db);
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['TaxID']==$_POST['TaxAuthority']) {
+		if ($myrow['taxid']==$_POST['TaxAuthority']) {
 			echo '<OPTION SELECTED VALUE=';
 		} else {
 			echo '<OPTION VALUE=';
 		}
-		echo $myrow['TaxID'] . '>' . $myrow['Description'];
+		echo $myrow['taxid'] . '>' . $myrow['description'];
 
 	} //end while loop
 
@@ -564,13 +564,13 @@ if (! isset($_GET['delete'])) {
 	echo '	</SELECT></TD></TR>';
 
 	echo '<TR><TD>'._('Default freight company').":</TD><TD><SELECT name='DefaultShipVia'>";
-	$SQL = 'SELECT Shipper_ID, ShipperName FROM Shippers';
+	$SQL = 'SELECT shipper_id, shippername FROM shippers';
 	$ShipperResults = DB_query($SQL,$db);
 	while ($myrow=DB_fetch_array($ShipperResults)){
-		if ($myrow['Shipper_ID']==$_POST['DefaultShipVia']){
-			echo '<OPTION SELECTED VALUE=' . $myrow['Shipper_ID'] . '>' . $myrow['ShipperName'];
+		if ($myrow['shipper_id']==$_POST['DefaultShipVia']){
+			echo '<OPTION SELECTED VALUE=' . $myrow['shipper_id'] . '>' . $myrow['shippername'];
 		}else {
-			echo '<OPTION VALUE=' . $myrow['Shipper_ID'] . '>' . $myrow['ShipperName'];
+			echo '<OPTION VALUE=' . $myrow['shipper_id'] . '>' . $myrow['shippername'];
 		}
 	}
 

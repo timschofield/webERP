@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 
@@ -77,9 +77,7 @@ if (isset($_GET['Delete'])){
 	unset($LineItem->SerialItems[$_GET['Delete']]);
 }
 
-
 echo '<CENTER><FORM METHOD="POST" ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
-
 echo '<INPUT TYPE=HIDDEN NAME="StockID" VALUE="'.$StockID.'">';
 
 if ($CreditLink == 'Credit_Invoice.php'){
@@ -92,9 +90,9 @@ echo '<br><FONT SIZE=2><B>'. _('Credit of Controlled Item'). ' ' . $LineItem->St
 
 /** vars needed by InputSerialItem : **/
 $LocationOut = $_SESSION['Transfer']->StockLocationFrom;
-/* $CreditingControlledItems_MustExist is in config.php - Phil and Jesse disagree on the default treatment
+/* $_SESSION['CreditingControlledItems_MustExist'] is in config.php - Phil and Jesse disagree on the default treatment
 compromise position make it user configurable */
-$ItemMustExist = $CreditingControlledItems_MustExist;
+$ItemMustExist = $_SESSION['CreditingControlledItems_MustExist'];
 $StockID = $LineItem->StockID;
 $InOutModifier=1;
 $ShowExisting = false;

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /* pdf-php by R&OS code to set up a new sales order page */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -16,12 +16,12 @@ if ($Copy=='Customer'){
 }
 $FontSize=14;
 $YPos = 480;
-$pdf->addText($XPos, $YPos,$FontSize, $CompanyName);
+$pdf->addText($XPos, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
 $FontSize =8;
-$pdf->addText($XPos, $YPos-12,$FontSize, $CompanyRecord['PostalAddress']);
-$pdf->addText($XPos, $YPos-21,$FontSize, $CompanyRecord['RegOffice1'] . ' ' . $CompanyRecord['RegOffice2']);
-$pdf->addText($XPos, $YPos-30,$FontSize, _('Ph') . ': ' . $CompanyRecord['Telephone'] . ' ' . _('Fax'). ': ' . $CompanyRecord['Fax']);
-$pdf->addText($XPos, $YPos-39,$FontSize, $CompanyRecord['Email']);
+$pdf->addText($XPos, $YPos-12,$FontSize, $_SESSION['CompanyRecord']['postaladdress']);
+$pdf->addText($XPos, $YPos-21,$FontSize, $_SESSION['CompanyRecord']['regoffice1'] . ' ' . $_SESSION['CompanyRecord']['regoffice2']);
+$pdf->addText($XPos, $YPos-30,$FontSize, _('Ph') . ': ' . $_SESSION['CompanyRecord']['telephone'] . ' ' . _('Fax'). ': ' . $_SESSION['CompanyRecord']['fax']);
+$pdf->addText($XPos, $YPos-39,$FontSize, $_SESSION['CompanyRecord']['email']);
 
 
 $XPos = 46;
@@ -29,25 +29,25 @@ $YPos = 566;
 
 $FontSize=14;
 $pdf->addText($XPos, $YPos,$FontSize, _('Delivered To').':' );
-$pdf->addText($XPos, $YPos-15,$FontSize, $myrow['DeliverTo']);
-$pdf->addText($XPos, $YPos-30,$FontSize, $myrow['DelAdd1']);
-$pdf->addText($XPos, $YPos-45,$FontSize, $myrow['DelAdd2']);
-$pdf->addText($XPos, $YPos-60,$FontSize, $myrow['DelAdd3'] . ' ' . $myrow['DelAdd4']);
+$pdf->addText($XPos, $YPos-15,$FontSize, $myrow['deliverto']);
+$pdf->addText($XPos, $YPos-30,$FontSize, $myrow['deladd1']);
+$pdf->addText($XPos, $YPos-45,$FontSize, $myrow['deladd2']);
+$pdf->addText($XPos, $YPos-60,$FontSize, $myrow['deladd3'] . ' ' . $myrow['deladd4']);
 
 $YPos -= 80;
 
 $pdf->addText($XPos, $YPos,$FontSize, _('Customer').':');
-$pdf->addText($XPos, $YPos-15,$FontSize, $myrow['Name']);
-$pdf->addText($XPos, $YPos-30,$FontSize, $myrow['Address1']);
-$pdf->addText($XPos, $YPos-45,$FontSize, $myrow['Address2']);
-$pdf->addText($XPos, $YPos-60,$FontSize, $myrow['Address3']);
-$pdf->addText($XPos, $YPos-75,$FontSize, $myrow['Address4']);
+$pdf->addText($XPos, $YPos-15,$FontSize, $myrow['name']);
+$pdf->addText($XPos, $YPos-30,$FontSize, $myrow['address1']);
+$pdf->addText($XPos, $YPos-45,$FontSize, $myrow['address2']);
+$pdf->addText($XPos, $YPos-60,$FontSize, $myrow['address3']);
+$pdf->addText($XPos, $YPos-75,$FontSize, $myrow['address4']);
 
 
 
-$pdf->addText($XPos, $YPos-100,$FontSize, _('Shipped by'). ' : ' . $myrow['ShipperName']);
+$pdf->addText($XPos, $YPos-100,$FontSize, _('Shipped by'). ' : ' . $myrow['shippername']);
 
-$LeftOvers = $pdf->addTextWrap($XPos,$YPos-115,170,$FontSize,$myrow['Comments']);
+$LeftOvers = $pdf->addTextWrap($XPos,$YPos-115,170,$FontSize,$myrow['comments']);
 
 if (strlen($LeftOvers)>1){
 	$LeftOvers = $pdf->addTextWrap($XPos,$YPos-130,170,$FontSize,$LeftOvers);
@@ -65,13 +65,13 @@ if (strlen($LeftOvers)>1){
 $pdf->addText(620, 560,$FontSize, _('Order No'). ':');
 $pdf->addText(700, 560,$FontSize, $_GET['TransNo']);
 $pdf->addText(620, 560-15,$FontSize, _('Your Ref'). ':');
-$pdf->addText(700, 560-15,$FontSize, $myrow['CustomerRef']);
+$pdf->addText(700, 560-15,$FontSize, $myrow['customerref']);
 $pdf->addText(620, 560-45,$FontSize,  _('Order Date'). ':');
-$pdf->addText(700, 560-45,$FontSize,  ConvertSQLDate($myrow['OrdDate']));
+$pdf->addText(700, 560-45,$FontSize,  ConvertSQLDate($myrow['orddate']));
 $pdf->addText(620, 560-60,$FontSize,  _('Printed') . ': ');
-$pdf->addText(700, 560-60,$FontSize,  Date($DefaultDateFormat));
+$pdf->addText(700, 560-60,$FontSize,  Date($_SESSION['DefaultDateFormat']));
 $pdf->addText(620, 560-75,$FontSize,  _('From').': ');
-$pdf->addText(700, 560-75,$FontSize,  $myrow['LocationName']);
+$pdf->addText(700, 560-75,$FontSize,  $myrow['locationname']);
 $pdf->addText(620, 560-90,$FontSize,  _('Page'). ':');
 $pdf->addText(700, 560-90,$FontSize,  $PageNumber);
 

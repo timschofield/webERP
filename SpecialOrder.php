@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 4;
 
@@ -12,7 +12,6 @@ $title = _('Special Order Entry');
 include('includes/header.inc');
 include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
-
 
 
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
@@ -42,21 +41,21 @@ if (isset($_POST['Cancel'])){
 if (!isset($_SESSION['SPL'])){
 	/* It must be a new special order being created $_SESSION['SPL'] would be set up from the order modification code above if a modification to an existing order.  */
 
-	Session_register("SPL");
+	Session_register('SPL');
 
 	$_SESSION['SPL'] = new SpecialOrder;
-	$CompanyRecord = ReadInCompanyRecord($db);
+
 }
 
 
 /*if not already done populate the SPL object with supplier data */
 if (!isset($_SESSION['SPL']->SupplierID)){
-	$sql = "SELECT Suppliers.SuppName,
-			Suppliers.CurrCode,
-			Currencies.Rate
-		FROM Suppliers INNER JOIN Currencies
-			ON Suppliers.CurrCode=Currencies.CurrAbrev
-		WHERE SupplierID='" . $_SESSION['SupplierID'] . "'";
+	$sql = "SELECT suppliers.suppname,
+			suppliers.currcode,
+			currencies.rate
+		FROM suppliers INNER JOIN currencies
+			ON suppliers.currcode=currencies.currabrev
+		WHERE supplierid='" . $_SESSION['SupplierID'] . "'";
 	$ErrMsg = _('The supplier record of the supplier selected') . ": " . $_SESSION['SupplierID']  . ' ' . _('cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the supplier details and failed was');
 	$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -69,12 +68,12 @@ if (!isset($_SESSION['SPL']->SupplierID)){
 }
 
 if (!isset($_SESSION['SPL']->CustomerID)){
-	$sql = "SELECT DebtorsMaster.Name,
-			DebtorsMaster.CurrCode,
-			Currencies.Rate
-		FROM DebtorsMaster INNER JOIN Currencies
-			ON DebtorsMaster.CurrCode=Currencies.CurrAbrev
-		WHERE DebtorNo='" . $_SESSION['CustomerID'] . "'";
+	$sql = "SELECT debtorsmaster.name,
+			debtorsmaster.currcode,
+			currencies.rate
+		FROM debtorsmaster INNER JOIN currencies
+			ON debtorsmaster.currcode=currencies.currabrev
+		WHERE debtorno='" . $_SESSION['CustomerID'] . "'";
 
 	$ErrMsg = _('The customer record for') . ' : ' . $_SESSION['CustomerID']  . ' ' . _('cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the customer details and failed was');
@@ -89,14 +88,14 @@ if (!isset($_SESSION['SPL']->CustomerID)){
 
 if (isset($_POST['SelectBranch'])){
 
-	$sql = "SELECT BrName
-		FROM CustBranch
-		WHERE DebtorNo='" . $_SESSION['SPL']->CustomerID . "'
-		AND BranchCode='" . $_POST['SelectBranch'] . "'";
+	$sql = "SELECT brname
+		FROM custbranch
+		WHERE debtorno='" . $_SESSION['SPL']->CustomerID . "'
+		AND branchcode='" . $_POST['SelectBranch'] . "'";
 	$BranchResult = DB_query($sql,$db);
 	$myrow=DB_fetch_array($BranchResult);
 	$_SESSION['SPL']->BranchCode = $_POST['SelectBranch'];
-	$_SESSION['SPL']->BranchName = $myrow['BrName'];
+	$_SESSION['SPL']->BranchName = $myrow['brname'];
 }
 
 if (!isset($_SESSION['SPL']->BranchCode)){
@@ -108,10 +107,10 @@ if (!isset($_SESSION['SPL']->BranchCode)){
 /*if the branch details and delivery details have not been entered then select them from the list */
 if (!isset($_SESSION['SPL']->BranchCode)){
 
-	$sql = "SELECT BranchCode,
-			BrName
-		FROM CustBranch
-		WHERE DebtorNo='" . $_SESSION['CustomerID'] . "'";
+	$sql = "SELECT branchcode,
+			brname
+		FROM custbranch
+		WHERE debtorno='" . $_SESSION['CustomerID'] . "'";
 	$BranchResult = DB_query($sql,$db);
 
 	If (DB_num_rows($BranchResult)>0) {
@@ -137,7 +136,7 @@ if (!isset($_SESSION['SPL']->BranchCode)){
 				$k++;
 			}
 
-			printf("<td><INPUT TYPE=SUBMIT NAME='SelectBranch' VALUE='%s'</td><td>%s</td></tr>", $myrow['BranchCode'], $myrow['BrName']);
+			printf("<td><INPUT TYPE=SUBMIT NAME='SelectBranch' VALUE='%s'</td><td>%s</td></tr>", $myrow['branchcode'], $myrow['brname']);
 
 			$j++;
 			If ($j == 11){
@@ -208,7 +207,7 @@ If(isset($_POST['EnterLine'])){
 
 	if (!is_date($_POST['ReqDelDate'])){
 		$AllowAdd = False;
-		prnMsg( _('Cannot Enter this order line') . '<BR>' . _('The date entered must be in the format') . ' ' . $DefaultDateFormat,'warn');
+		prnMsg( _('Cannot Enter this order line') . '<BR>' . _('The date entered must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
 	}
 	If ($AllowAdd == True){
 
@@ -235,7 +234,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
  /*First do some validation
 	  Is the delivery information all entered*/
 	$InputError=0; /*Start off assuming the best */
-	if ($_SESSION['SPL']->StkLocation=="" OR ! isset($_SESSION['SPL']->StkLocation)){
+	if ($_SESSION['SPL']->StkLocation=='' OR ! isset($_SESSION['SPL']->StkLocation)){
 		prnMsg( _('The purchase order can not be committed to the database because there is no stock location specified to book any stock items into'),'error');
 	      $InputError=1;
 	} elseif ($_SESSION['SPL']->LinesOnOrder <=0){
@@ -252,12 +251,12 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 	if ($InputError!=1){
 
-		$sql = "SELECT Contact,
-				DelAdd1,
-				DelAdd2,
-				DelAdd3
-			FROM Locations
-			WHERE LocCode='" . $_SESSION['SPL']->StkLocation . "'";
+		$sql = "SELECT contact,
+				deladd1,
+				deladd2,
+				deladd3
+			FROM locations
+			WHERE loccode='" . $_SESSION['SPL']->StkLocation . "'";
 
 		$StkLocAddResult = DB_query($sql,$db);
 		$StkLocAddress = DB_fetch_array($StkLocAddResult);
@@ -266,17 +265,17 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		 $result = DB_query($sql,$db);
 
 		 /*Insert to purchase order header record */
-		 $sql = "INSERT INTO PurchOrders (SupplierNo,
-		 					Comments,
-							OrdDate,
-							Rate,
-							Initiator,
-							RequisitionNo,
-							IntoStockLocation,
-							DelAdd1,
-							DelAdd2,
-							DelAdd3,
-							DelAdd4)
+		 $sql = "INSERT INTO purchorders (supplierno,
+		 					comments,
+							orddate,
+							rate,
+							initiator,
+							requisitionno,
+							intostocklocation,
+							deladd1,
+							deladd2,
+							deladd3,
+							deladd4)
 							VALUES(";
 
 		 $sql = $sql . "'" . $_SESSION['SPL']->SupplierID . "',
@@ -297,7 +296,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
  		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 		/*Get the auto increment value of the order number created from the SQL above */
-		$_SESSION['SPL']->PurchOrderNo = DB_Last_Insert_ID($db);
+		$_SESSION['SPL']->PurchOrderNo = DB_Last_Insert_ID($db,'purchorders','orderno');
 
 
 		/*Insert the purchase order detail records */
@@ -310,7 +309,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			$PartAlreadyExists =True; /*assume the worst */
 			$Counter = 0;
 			While ($PartAlreadyExists==True) {
-				$sql = "SELECT Count(*) FROM StockMaster WHERE StockID = '" . $PartCode . "'";
+				$sql = "SELECT COUNT(*) FROM stockmaster WHERE stockid = '" . $PartCode . "'";
 				$PartCountResult = DB_query($sql,$db);
 				$PartCount = DB_fetch_row($PartCountResult);
 				if ($PartCount[0]!=0){
@@ -327,11 +326,11 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 			$_SESSION['SPL']->LineItems[$SPLLine->LineNo]->PartCode = $PartCode;
 
-			$sql = "INSERT INTO StockMaster (StockID,
-							CategoryID,
-							Description,
-							LongDescription,
-							MaterialCost)
+			$sql = "INSERT INTO stockmaster (stockid,
+							categoryid,
+							description,
+							longdescription,
+							materialcost)
 					VALUES ('" . $PartCode . "',
 						'" . $SPLLine->StkCat . "',
 						'" . $SPLLine->ItemDescription . "',
@@ -344,13 +343,13 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 			$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
-			$sql = "INSERT INTO LocStock (LocCode, StockID) SELECT LocCode,'" . $PartCode . "' FROM Locations";
+			$sql = "INSERT INTO locstock (loccode, stockid) SELECT loccode,'" . $PartCode . "' FROM locations";
 			$ErrMsg = _('The item stock locations for the special order line') . " " . $SPLLine->LineNo . " " ._('could not be created because');
 			$DbgMsg = _('The SQL statement used to insert the location stock records and failed was');
 			$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 			/*need to get the stock category GL information */
-			$sql = "SELECT StockAct FROM StockCategory WHERE CategoryID = '" . $SPLLine->StkCat . "'";
+			$sql = "SELECT stockact FROM stockcategory WHERE categoryid = '" . $SPLLine->StkCat . "'";
 			$ErrMsg = _('The item stock category information for the special order line') ." " . $SPLLine->LineNo . " " . _('could not be retrieved because');
 			$DbgMsg = _('The SQL statement used to get the category information and that failed was');
 			$result =DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
@@ -360,8 +359,21 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 			$OrderDate = FormatDateForSQL($SPLLine->ReqDelDate);
 
-			$sql = "INSERT INTO PurchOrderDetails (OrderNo, ItemCode, DeliveryDate, ItemDescription, GLCode, UnitPrice, QuantityOrd) VALUES (";
-			$sql = $sql . $_SESSION['SPL']->PurchOrderNo . ", '" . $PartCode . "','" . $OrderDate . "','" . $SPLLine->ItemDescription . "', " . $GLCode . "," . $SPLLine->Cost . ", " . $SPLLine->Quantity . ")";
+			$sql = "INSERT INTO purchorderdetails (orderno, 
+								itemcode, 
+								deliverydate, 
+								itemdescription, 
+								glcode, 
+								unitprice, 
+								quantityord) 
+					VALUES (";
+			$sql = $sql . $_SESSION['SPL']->PurchOrderNo . ", 
+					'" . $PartCode . "',
+					'" . $OrderDate . "',
+					'" . $SPLLine->ItemDescription . "', 
+					" . $GLCode . ",
+					" . $SPLLine->Cost . ", 
+					" . $SPLLine->Quantity . ")";
 
 			$ErrMsg = _('One of the purchase order detail records could not be inserted into the database because');
 			$DbgMsg = _('The SQL statement used to insert the purchase order detail record and failed was');
@@ -375,19 +387,19 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 /*Now insert the sales order too */
 
 		/*First get the customer delivery information */
-		$sql = "SELECT SalesType,
-				BrName,
-				BrAddress1,
-				BrAddress2,
-				BrAddress3,
-				BrAddress4,
-				DefaultShipVia,
-				Email,
-				PhoneNo
-			FROM CustBranch INNER JOIN DebtorsMaster
-				ON CustBranch.DebtorNo=DebtorsMaster.DebtorNo
-			WHERE CustBranch.DebtorNo='" . $_SESSION['SPL']->CustomerID . "'
-			AND CustBranch.BranchCode = '" . $_SESSION['SPL']->BranchCode . "'";
+		$sql = "SELECT salestype,
+				brname,
+				braddress1,
+				braddress2,
+				braddress3,
+				braddress4,
+				defaultshipvia,
+				email,
+				phoneno
+			FROM custbranch INNER JOIN debtorsmaster
+				ON custbranch.debtorno=debtorsmaster.debtorno
+			WHERE custbranch.debtorno='" . $_SESSION['SPL']->CustomerID . "'
+			AND custbranch.branchcode = '" . $_SESSION['SPL']->BranchCode . "'";
 
 		$ErrMsg = _('The delivery and sales type for the customer could not be retrieved for this special order') . " " . $SPLLine->LineNo . " " . _('because');
 		$DbgMsg = _('The SQL statement used to get the delivery details and that failed was');
@@ -395,43 +407,47 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 		$BranchDetails=DB_fetch_array($result);
 
-		$HeaderSQL = "INSERT INTO SalesOrders (DebtorNo,
-							BranchCode,
-							CustomerRef,
-							OrdDate,
-							OrderType,
-							ShipVia,
-							DeliverTo,
-							DelAdd1,
-							DelAdd2,
-							DelAdd3,
-							DelAdd4,
-							ContactPhone,
-							ContactEmail,
-							FromStkLoc,
-							DeliveryDate)
+		$HeaderSQL = "INSERT INTO salesorders (debtorno,
+							branchcode,
+							customerref,
+							orddate,
+							ordertype,
+							shipvia,
+							deliverto,
+							deladd1,
+							deladd2,
+							deladd3,
+							deladd4,
+							contactphone,
+							contactemail,
+							fromstkloc,
+							deliverydate)
 					VALUES ('" . $_SESSION['SPL']->CustomerID . "',
 						'" . $_SESSION['SPL']->BranchCode . "',
 						'". $_SESSION['SPL']->CustRef ."',
 						'" . Date("Y-m-d") . "',
-						'" . $BranchDetails['SalesType'] . "',
-						" . $BranchDetails['DefaultShipVia'] .",
-						'" . $BranchDetails['BrName'] . "',
-						'" . $BranchDetails['BrAddress1'] . "',
-						'" . $BranchDetails['BrAddress2'] . "',
-						'" . $BranchDetails['BrAddress3'] . "',
-						'" . $BranchDetails['BrAddress4'] . "',
-						'" . $BranchDetails['PhoneNo'] . "',
-						'" . $BranchDetails['Email'] . "',
+						'" . $BranchDetails['salestype'] . "',
+						" . $BranchDetails['defaultshipvia'] .",
+						'" . $BranchDetails['brname'] . "',
+						'" . $BranchDetails['braddress1'] . "',
+						'" . $BranchDetails['braddress2'] . "',
+						'" . $BranchDetails['braddress3'] . "',
+						'" . $BranchDetails['braddress4'] . "',
+						'" . $BranchDetails['phoneno'] . "',
+						'" . $BranchDetails['email'] . "',
 						'" . $_SESSION['SPL']->StkLocation ."',
 						'" . $OrderDate . "')";
 
 		$ErrMsg = _('The sales order cannot be added because');
 		$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg);
 
-		$SalesOrderNo = DB_Last_Insert_ID($db);
+		$SalesOrderNo = DB_Last_Insert_ID($db,'salesorders','orderno');
 
-		$StartOf_LineItemsSQL = "INSERT INTO SalesOrderDetails (OrderNo, StkCode, UnitPrice, Quantity) VALUES (" .  $SalesOrderNo;
+		$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (orderno, 
+									stkcode, 
+									unitprice, 
+									quantity) 
+						VALUES (" .  $SalesOrderNo;
 
 		$ErrMsg = _('There was a problem inserting a line into the sales order because');
 
@@ -445,11 +461,11 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		unset ($_SESSION['SPL']);
 		prnMsg(_('Sales Order Number') . ' ' . $SalesOrderNo . ' ' . _('has been entered') . '. <P>' . _('Orders created on a cash sales account may need the delivery details for the order to be modified') . '. <br><br>' . _('A freight charge may also be applicable'),'success');
 
-		if (count($SecurityGroups[$_SESSION["AccessLevel"]])>1){
+		if (count($_SESSION['AllowedPageSecurityTokens'])>1){
 
 			/* Only allow print of packing slip for internal staff - customer logon's cannot go here */
-			echo "<P><A HREF='$rootpath/PrintCustOrder.php?" . SID . "TransNo=" . $SalesOrderNo . "'>" . _('Print packing slip') . ' (' . _('Preprinted stationery') . ')</A>';
-			echo "<P><A HREF='$rootpath/PrintCustOrder_generic.php?" . SID . "TransNo=" . $SalesOrderNo . "'>" . _('Print packing slip') . ' (' . _('Laser') . ')</A>';
+			echo "<P><A HREF='$rootpath/PrintCustOrder.php?" . SID . "&TransNo=" . $SalesOrderNo . "'>" . _('Print packing slip') . ' (' . _('Preprinted stationery') . ')</A>';
+			echo "<P><A HREF='$rootpath/PrintCustOrder_generic.php?" . SID . '&TransNo=' . $SalesOrderNo . "'>" . _('Print packing slip') . ' (' . _('Laser') . ')</A>';
 
 		}
 
@@ -466,17 +482,17 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 echo "<TABLE><TR><TD>" . _('Receive Purchase Into and Sell From') . ": <SELECT NAME='StkLocation'>";
 
-$sql = "SELECT LocCode, LocationName FROM Locations";
+$sql = "SELECT loccode, locationname FROM locations";
 $LocnResult = DB_query($sql,$db);
 if (!isset($_SESSION['SPL']->StkLocation) OR $_SESSION['SPL']->StkLocation==""){ /*If this is the first time the form loaded set up defaults */
 	$_SESSION['SPL']->StkLocation = $_SESSION['UserStockLocation'];
 }
 
 while ($LocnRow=DB_fetch_array($LocnResult)){
-	if ($_SESSION['SPL']->StkLocation == $LocnRow["LocCode"]){
-		echo "<OPTION SELECTED Value='" . $LocnRow["LocCode"] . "'>" . $LocnRow["LocationName"];
+	if ($_SESSION['SPL']->StkLocation == $LocnRow['loccode']){
+		echo "<OPTION SELECTED Value='" . $LocnRow['Loccode'] . "'>" . $LocnRow['locationname'];
 	} else {
-		echo "<OPTION Value='" . $LocnRow["LocCode"] . "'>" . $LocnRow["LocationName"];
+		echo "<OPTION Value='" . $LocnRow['loccode'] . "'>" . $LocnRow['locationname'];
 	}
 }
 echo "</SELECT></TD>";
@@ -556,16 +572,16 @@ echo '<TR><TD>' . _('Ordered item Description') . ":</TD><TD><INPUT TYPE=TEXT NA
 
 echo '<TR><TD>' . _('Category') . ':</TD><TD><SELECT name=StkCat>';
 
-$sql = "SELECT CategoryID, CategoryDescription FROM StockCategory";
+$sql = "SELECT categoryid, categorydescription FROM stockcategory";
 $ErrMsg = _('The stock categories could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve stock categories and failed was');
 $result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 
 while ($myrow=DB_fetch_array($result)){
-	if ($myrow['CategoryID']==$_POST['StkCat']){
-		echo "<OPTION SELECTED VALUE='". $myrow['CategoryID'] . "'>" . $myrow['CategoryDescription'];
+	if ($myrow['categoryid']==$_POST['StkCat']){
+		echo "<OPTION SELECTED VALUE='". $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
 	} else {
-		echo "<OPTION VALUE='". $myrow['CategoryID'] . "'>" . $myrow['CategoryDescription'];
+		echo "<OPTION VALUE='". $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
 	}
 }
 echo '</SELECT></TD></TR>';
@@ -582,7 +598,7 @@ echo '<TR><TD>' . _('Unit Price') . ":</TD>
 	<TD><input type='Text' SIZE=15 MAXLENGTH=14 name='Price' value=" . $_POST['Price'] . "></TD></TR>";
 
 /*Default the required delivery date to tomorrow as a starting point */
-$_POST['ReqDelDate'] = Date($DefaultDateFormat,Mktime(0,0,0,Date('m'),Date('d')+1,Date('y')));
+$_POST['ReqDelDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'),Date('d')+1,Date('y')));
 
 echo '<TR><TD>' . _('Required Delivery Date') . ":</TD>
 	<TD><input type='Text' SIZE=12 MAXLENGTH=11 name='ReqDelDate' value=" . $_POST['ReqDelDate'] . "></TD></TR>";
@@ -594,6 +610,6 @@ echo "<INPUT TYPE=SUBMIT Name='EnterLine' VALUE='" . _('Add Item to Order') . "'
 echo "<BR><BR><INPUT TYPE=SUBMIT Name='Cancel' VALUE='" . _('Start Again') . "'>";
 echo "<BR><BR><INPUT TYPE=SUBMIT Name='Commit' VALUE='" . _('Process This Order') . "'>";
 
-echo '</form>';
+echo '</FORM>';
 include('includes/footer.inc');
 ?>

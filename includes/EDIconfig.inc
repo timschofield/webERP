@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 /*EDI configuration variables definition */
 
@@ -42,7 +42,12 @@ write the output to a file one line at a time
 
 Need code of supplier or customer and the type of message INVOIC or ORDERS*/
 
-$sql = "SELECT Section, LineText FROM EDIMessageFormat WHERE PartnerCode='" . $PartnerCode . "' AND MessageType='" . $MessageType . "' ORDER BY SequenceNo";
+$sql = "SELECT section, 
+		linetext 
+	FROM edimessageformat 
+	WHERE partnercode='" . $PartnerCode . "' 
+	AND messagetype='" . $MessageType . "' 
+	ORDER BY sequenceno";
 
 $MessageLinesResult = DB_query($sql, $db);
 
@@ -53,23 +58,23 @@ while ($LineDetails = DB_fetch_array($MessageLinesResult)){
 	$PoistionPointer = 0;
 	$NewLineText ='';
 	/* now get each occurence of [ in the line */
-	while (strpos ($LineDetails['LineText'],'[',$PoistionPointer)!=False){
+	while (strpos ($LineDetails['linetext'],'[',$PoistionPointer)!=False){
 		$LastPositionPointer = $PoistionPointer;
-		$PositionPointer = strpos ($LineDetails['LineText'],'[',$PoistionPointer);
+		$PositionPointer = strpos ($LineDetails['linetext'],'[',$PoistionPointer);
 
-		$NewLineText = $NewLineText .  substr($LineDetails['LineText'],$LastPositionPointer,$PoistionPointer-$LastPositionPointer);
+		$NewLineText = $NewLineText .  substr($LineDetails['linetext'],$LastPositionPointer,$PoistionPointer-$LastPositionPointer);
 
 		$LastPositionPointer = $PoistionPointer;
-		$PositionPointer = strpos ($LineDetails['LineText'],']',$PoistionPointer);
+		$PositionPointer = strpos ($LineDetails['linetext'],']',$PoistionPointer);
 
-		$VariableName = substr($LineDetails['LineText'],$LastPositionPointer,$PoistionPointer-$LastPositionPointer);
+		$VariableName = substr($LineDetails['linetext'],$LastPositionPointer,$PoistionPointer-$LastPositionPointer);
 
 		$NewLineText = $NewLineText . $($VariableName);
 
 	}
 	/* now add the text from the last ] to the end of the line */
 	$LastPositionPointer = $PoistionPointer;
-	$NewLineText = $NewLineText .  substr($LineDetails['LineText'],$LastPositionPointer);
+	$NewLineText = $NewLineText .  substr($LineDetails['linetext'],$LastPositionPointer);
 
 	echo "<BR>$NewLineText";
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageNumber++;
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -26,14 +26,14 @@ $pdf->addText($XPos, $YPos,$FontSize, _('Page') .': ' . $PageNumber);
 $XPos = $Left_Margin;
 $YPos -= $line_height;
 
-$pdf->addText($XPos, $YPos,$FontSize, $CompanyName);
+$pdf->addText($XPos, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
 $FontSize=10;
 
 $YPos -=$line_height;
 $XPos = $Left_Margin;
 
 
-$pdf->addText($XPos, $YPos,$FontSize, _('Date of Banking') .': ' . ConvertSQLDate($myrow['TransDate']));
+$pdf->addText($XPos, $YPos,$FontSize, _('Date of Banking') .': ' . ConvertSQLDate($myrow['transdate']));
 $YPos -= $line_height;
 $pdf->addText($XPos, $YPos,$FontSize, _('Banked into') . ': ' . $BankActName . ' - ' . _('Account Number') . ': ' . $BankActNumber);
 $YPos -= $line_height;

@@ -1,89 +1,63 @@
 <br><br>
 <a name="SecuritySchema"><font size="+3"><b>Security Schema</b></font></a>
 <br><br>
-The user name and password combination entered at logon enables the system to identify the permissions appropriate to the user. It is possible to determine and restrict which pages a user should be able to access. Each user is allocated to an Access Level or Security Group. 
+The user name and password combination entered at logon enables the system to identify the permissions appropriate to the user. It is possible to determine and restrict which pages a user should be able to access. Each user is allocated to a Role at the time of the user set up and the role determines which pages they can access. 
 <br><br>
-The Security group must be defined in config.php in two ways. 
+The Role is set up under the Setup tab, General, Role Permissions - this page allows a user to 
 <br><br>
 <ul>
-<li>The Security Group Headings are defined in an array called SecurityHeadings.
-<li>The Security Group page access codes applicable to the group must be defined in the SecurityGroups array - in the same order as the SecurityHeadings array. Ie the first security heading refers to the first array stored in the SecurityGroups array.
+<li>Add, Edit or delete an existing role</li>
+<li>Define the permissions applicable to this role</li>
 </ul>
-Each script is defined as having a specific PageSecurity level. At the time of writing this is a number between 1 and 15 - if more levels of security are necessary then this can be expanded. The current PageSecurity settings applicable for each page are set out in the table below.
+Each script is defined as having a specific PageSecurity level - this page security level is hard coded inside each script. At the time of writing this is a number between 1 and 15 - if more levels of security are necessary then this can be expanded. The current PageSecurity settings applicable for each page are set out in the table below.
 <br><br>
-If the PageSecurity setting of the page is a number contained in the SecurityGroup array as determined from the users access level then the user will be allowed access to the page. The user access level is an integer that represents the index number of the array element of the SecurityGroups array defined in config.php.
+If the PageSecurity setting of the page is a number contained in the SESSION AllowedPageSecurityTokens array as determined from the users access level then the user will be allowed access to the page. The user access level is an integer that represents the role given to the user in the user set up page.
 <br><br>
-Access authority is checked in header.inc script for all pages (or PDF_Starter.inc for PDF pages). The variable $_SESSION["AccessLevel"] is retrieved from the database when the user logs in. This variable refers to the index of the SecurityGroups array or arrays. The array of numbers that is referenced by this index defines the pages a user can see. Any page that has a $PageSecurity equal to any value in this array is deemed to be an authorised page.
+Access authority is checked in session.inc script for all pages (or PDF_Starter.inc for PDF pages). The variable $_SESSION['AccessLevel'] is retrieved from the database when the user logs in - in session.inc. This variable refers to the role of the user. The SESSION['AllowedPageSecurityTokens'] array of numbers is retrieved from the database based on the users AccessLevel - or Role. Any page that has a $PageSecurity equal to any value in this array is deemed to be an authorised page.
 <br><br>
-If you wish to add more security groups then you must add a new Security Heading to the $SecurityHeadings array and a new array of PageSecurity numbers to the $SecurityGroups array. This mechanism allows the system administrator to closely and accurately control who can access what.
+If you wish to add more roles then you must add a new role using the Role Permissions script and add the allowed PageSecurity tokens to this role to allow users with this role to have access to these pages. This mechanism allows the system administrator to closely and accurately control who can access what.
 <br><br>
 By changing the numbers in each array the security access can be tailored for all users referring to the array being modified. When setting the numbers in the array, reference to the index of PageSecurity values below will be necessary. Of course the value of the default settings can easily be modified.
 <br><br>
-The default settings in config.php are as follows:
+The roles defined by default are as follows:
 <br><br>
 Index Group
 <br><br>
-0 Inquiries Only
+1 Inquiries Only
 <br>
-1 Manufacturing/Inventory Admin
+2 Manufacturing/Inventory Admin
 <br>
-2 Purchasing officer
+3 Purchasing officer
 <br>
-3 AP Clerk
+4 AP Clerk
 <br>
-4 AR Clerk
+5 AR Clerk
 <br>
-5 Accountant
+6 Accountant
 <br>
-6 Customer logon 
+7 Customer logon 
 <br>
-7 System Administrator
+8 System Administrator
 <br><br>
-to achieve this the following array for $SecurityHeadings is defined - the index number starting from 0 is incremented for each entry:
+The roles above have access to pages with PageSecurity tokens a follows:
 <br><br>
-$SecurityHeadings = array(
+1 Inquiries Only tokens 1 and 2
 <br>
-"Inquiries/Order Entry",
+2 Manufacturing/Inventory Admin tokens 1,2 and 11
 <br>
-"Manufac/Inventory Admin",
+3 Purchasing officer tokens 1,2 and 4
 <br>
-"Purchasing Officer",
+4 AP Clerk tokens 1,2 and 5
 <br>
-"AP Clerk",
+5 AR Clerk tokens 1,2 and 3
 <br>
-"AR Clerk",
+6 Accountant tokens 1,2,3,4,5,6,7,8,9,10 and 11
 <br>
-"Accountant",
+7 Customer logon token 1 only
 <br>
-"Customer Log On Only",
-<br>
-"System Administrator"
-<br>
-);
+8 System Administrator 1,2,3,4,5,6,7,8,9,10,11,12,13,14 and 15 - or all the currently defined security tokens
 <br><br>
-the corresponding array of SecurityGroup arrays is defined in config.php also. The first array (1,2) refers to the page security numbers that a user with "Inquiries/Order Entry" access would be authorised to view.
-<br><br>
-$SecurityGroups = array(
-<br>
-array(1,2),
-<br>
-array(1,2,11),
-<br>
-array(1,2,4),
-<br>
-array(1,2,5),
-<br>
-array(1,2,3),
-<br>
-array(1,2,3,4,5,6,7,8,9,10,11),
-<br>
-array(1),
-<br>
-array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15)
-<br>
-);
-<br><br>
-The system continues to evolve and the information set out below may be different in the current version. By default, each page has the variable $PageSecurity defined as follows:
+The system continues to evolve and the information set out below may be different in the current version. By default, each page has the variable $PageSecurity token defined as follows:
 <br><br>
 <table border="2">
 <th>Script File Name

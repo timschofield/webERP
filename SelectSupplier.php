@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 2;
 
@@ -55,27 +55,27 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 			}
 			$SearchString = $SearchString. substr($_POST['Keywords'],$i).'%';
 
-			$SQL = "SELECT SupplierID,
-					SuppName,
-					CurrCode,
-					Address1,
-					Address2,
-					Address3,
-					Address4
-				FROM Suppliers
-				WHERE SuppName LIKE '$SearchString'";
+			$SQL = "SELECT supplierid,
+					suppname,
+					currcode,
+					address1,
+					address2,
+					address3,
+					address4
+				FROM suppliers
+				WHERE suppname " . LIKE . " '$SearchString'";
 
 		} elseif (strlen($_POST['SupplierCode'])>0){
 			$_POST['SupplierCode'] = strtoupper($_POST['SupplierCode']);
-			$SQL = "SELECT SupplierID,
-					SuppName,
-					CurrCode,
-					Address1,
-					Address2,
-					Address3,
-					Address4
-				FROM Suppliers
-				WHERE SupplierID LIKE '%" . $_POST['SupplierCode'] . "%'";
+			$SQL = "SELECT supplierid,
+					suppname,
+					currcode,
+					address1,
+					address2,
+					address3,
+					address4
+				FROM suppliers
+				WHERE supplierid " . LIKE  . " '%" . $_POST['SupplierCode'] . "%'";
 		}
 
 		$result = DB_query($SQL,$db);
@@ -96,9 +96,9 @@ If (isset($SingleSupplierReturned)) { /*there was only one supplier returned */
 if (isset($_SESSION['SupplierID'])){
 
 	$SupplierName = '';
-	$SQL = "SELECT Suppliers.SuppName
-		FROM Suppliers
-		WHERE Suppliers.SupplierID ='" . $_SESSION['SupplierID'] . "'";
+	$SQL = "SELECT suppliers.suppname
+		FROM suppliers
+		WHERE suppliers.supplierid ='" . $_SESSION['SupplierID'] . "'";
 
 	$SupplierNameResult = DB_query($SQL,$db);
 	if (DB_num_rows($SupplierNameResult)==1){
@@ -153,7 +153,7 @@ if (isset($_SESSION['SupplierID'])){
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD=POST>";
 echo '<B>' . $msg;
 
-echo '</B>
+echo '</B><CENTER>
 	<TABLE CELLPADDING=3 COLSPAN=4>
 	<TR>
 	<TD>' . _('Text in the NAME') . ':</FONT></TD>
@@ -206,7 +206,7 @@ If (isset($result) AND !isset($SingleSupplierReturned)) {
     }
   }
 
-  echo "&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+  echo "<CENTER>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 
   echo "<select name='PageOffset'>";
 
@@ -258,13 +258,13 @@ If (isset($result) AND !isset($SingleSupplierReturned)) {
 			<td>%s</td>
 			<td>%s</td>
 			</tr>",
-			$myrow['SupplierID'],
-			$myrow['SuppName'],
-			$myrow['CurrCode'],
-			$myrow['Address1'],
-			$myrow['Address2'],
-			$myrow['Address3'],
-			$myrow['Address4']);
+			$myrow['supplierid'],
+			$myrow['suppname'],
+			$myrow['currcode'],
+			$myrow['address1'],
+			$myrow['address2'],
+			$myrow['address3'],
+			$myrow['address4']);
 
 		$j++;
 		If ($j == 11 AND ($RowIndex+1 != $_SESSION['DisplayRecordsMax'])){
@@ -276,11 +276,11 @@ If (isset($result) AND !isset($SingleSupplierReturned)) {
 	}
 //end of while loop
 
-	echo '</TABLE>';
+	echo '</TABLE></CENTER>';
 
 }
 //end if results to show
-echo '</form>';
+echo '</FORM>';
 include('includes/footer.inc');
 ?>
 

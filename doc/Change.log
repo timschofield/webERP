@@ -1,5 +1,26 @@
 <P>webERP Change Log
 
+<P>9/2/05 Customer login SelectCompletedOrder.php now shows just the orders for the customer without resort to a new script
+<P>9/2/05 Scott Rosa - Discount Category logic was not applied on quick entry - bug corrected
+<P>4/2/05 DB_escape_string function added to ConnectDB_xxx.inc database specific scripts and also modifications to Stocks.php Customers.php Currencies.php DeliveryDetails.php CustomerBranches.php to use this function on insert and updates as necessary.
+<P>4/2/05 db now stores sha1 hash of the password in the database rather than the password itself
+<P><29/1/05 Negative stocks report
+<P>25/1/05 Danie new config SystemParamters.php form for entry of config paramters - 99% of all config now in this form
+<P>24/1/05 Janusz Dobrowolski <janusz@iron.from.pl> fixed CompanyPreferences.php had exchange diff account field twice!
+<P>24/1/05 "Ori Solomon" <ori@yzcompany.com> - Upload of part pictures code in Stocks.php
+<P>23/1/05 Danie units of measure now a table and array created from table new script for maintenance
+<P>23/1/05 Danie payment and receipt types arrays moved to a table from config.php new include for payments and receipts
+<P>22/1/05 Update manual to reflect new security definitions interface changes no longer use config.php
+<P>20/1/05 StockCheck sheets now have option not to show system counts for counting blind ie so bogus count data can not be made up by counters!!
+<P>20/1/05 Steve modifications to Z_poAdmin.php and other language translation utility scripts of Kitch's to use the user's language that they currently have set
+<P>20/1/05 Danie - Moved Security setup to the db from config.php new tables for securityroles securitygroups securitytokens in db. New script WWW_Access to define roles and permissions.
+<P>11/1/05 Steve - check of sql changes quite a number of bug fixes resulting from change to lower case.
+<P>4/1/05 changing all SQL that used IF to CASE to enable more universal database compatibility 
+<P>3/1/05 changing all LastInsertID to add the necessary parameters to enable PG compatibility
+<P>2/1/05 changing all INTERVAL to use the DB specific function and new DBConnect_pg (Danie) and DB_Connect_mysql
+<P>19/1/05 Danie - Moved Account Sections to the db from config.php new table in db
+<P>26-30/12/04 Khattak/Phil lower case all sql and array elements of returns from DB_fetch_array to enable compatibility with postgres
+<P>
 <P>Version 2.9b
 <P>23rd December 2004
 <P>

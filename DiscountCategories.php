@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 11;
 
@@ -19,11 +19,11 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	$result = DB_query("SELECT StockID
-				FROM StockMaster
-				WHERE MBflag <>'K'
-				AND MBflag<>'D'
-				AND StockID='" . $_POST['StockID'] . "'",$db);
+	$result = DB_query("SELECT stockid
+				FROM stockmaster
+				WHERE mbflag <>'K'
+				AND mbflag<>'D'
+				AND stockid='" . $_POST['StockID'] . "'",$db);
 	if (DB_num_rows($result)==0){
 		$InputError = 1;
 		prnMsg(_('The stock item entered must be set up as either a manufactured or purchased or assembly item'),'warn');
@@ -31,8 +31,8 @@ if (isset($_POST['submit'])) {
 
 	if ($InputError !=1) {
 
-		$sql = "UPDATE StockMaster SET DiscountCategory='" . $_POST['DiscountCategory'] . "'
-			WHERE StockID='" . $_POST['StockID'] . "'";
+		$sql = "UPDATE stockmaster SET discountcategory='" . $_POST['DiscountCategory'] . "'
+			WHERE stockid='" . $_POST['StockID'] . "'";
 
 		$result = DB_query($sql,$db, _('The discount category') . ' ' . $_POST['DiscountCategory'] . ' ' . _('record for') . ' ' . $_POST['StockID'] . ' ' . _('could not be updated because'));
 
@@ -45,14 +45,14 @@ if (isset($_POST['submit'])) {
 } elseif ($_GET['Delete']=='yes') {
 /*the link to delete a selected record was clicked instead of the submit button */
 
-	$sql="UPDATE StockMaster SET DiscountCategory='' WHERE StockID='" . $_GET['StockID'] ."'";
+	$sql="UPDATE stockmaster SET discountcategory='' WHERE stockid='" . $_GET['StockID'] ."'";
 	$result = DB_query($sql,$db);
 	prnMsg( _('The stock master record has been updated to no discount category'),'success');
 }
 
 echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
-$sql = "SELECT DISTINCT DiscountCategory FROM StockMaster WHERE DiscountCategory <>''";
+$sql = "SELECT DISTINCT discountcategory FROM stockmaster WHERE discountcategory <>''";
 
 $result = DB_query($sql, $db);
 
@@ -61,10 +61,10 @@ echo '<CENTER>'. _('Discount Category Code') .': ';
 echo "<SELECT NAME='DiscCat'>";
 
 while ($myrow = DB_fetch_array($result)){
-	if ($myrow['DiscountCategory']==$_POST['DiscCat']){
-		echo "<OPTION SELECTED VALUE='" . $myrow['DiscountCategory'] . "'>" . $myrow['DiscountCategory'];
+	if ($myrow['discountcategory']==$_POST['DiscCat']){
+		echo "<OPTION SELECTED VALUE='" . $myrow['discountcategory'] . "'>" . $myrow['discountcategory'];
 	} else {
-		echo "<OPTION VALUE='" . $myrow['DiscountCategory'] . "'>" . $myrow['DiscountCategory'];
+		echo "<OPTION VALUE='" . $myrow['discountcategory'] . "'>" . $myrow['discountcategory'];
 	}
 	echo '</OPTION>';
 }
@@ -76,7 +76,7 @@ if (! isset($_POST['DiscCat'])){ /*set DiscCat to something to show results for 
 	if (DB_num_rows($result)>0){
 		DB_data_seek($result,0);
 		$myrow = DB_fetch_array($result);
-		$_POST['DiscCat'] = $myrow['DiscountCategory'];
+		$_POST['DiscCat'] = $myrow['discountcategory'];
 	} else {
 		$_POST['DiscCat']='0';
 	}
@@ -84,12 +84,12 @@ if (! isset($_POST['DiscCat'])){ /*set DiscCat to something to show results for 
 
 if ($_POST['DiscCat']!='0'){
 
-	$sql = "SELECT StockMaster.StockID,
-			StockMaster.Description,
-			DiscountCategory
-		FROM StockMaster
-		WHERE DiscountCategory='" . $_POST['DiscCat'] . "'
-		ORDER BY StockMaster.StockID";
+	$sql = "SELECT stockmaster.stockid,
+			stockmaster.description,
+			discountcategory
+		FROM stockmaster
+		WHERE discountcategory='" . $_POST['DiscCat'] . "'
+		ORDER BY stockmaster.stockid";
 
 	$result = DB_query($sql,$db);
 
@@ -108,15 +108,15 @@ if ($_POST['DiscCat']!='0'){
 			echo "<tr bgcolor='#EEEEEE'>";
 			$k=1;
 		}
-		$DeleteURL = $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=yes&StockID=' . $myrow['StockID'] . '&DiscountCategory=' . $myrow['DiscountCategory'];
+		$DeleteURL = $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=yes&StockID=' . $myrow['stockid'] . '&DiscountCategory=' . $myrow['discountcategory'];
 
 		printf("<td>%s</td>
 			<td>%s - %s</td>
 			<td><a href='%s'>". _('Delete') .'</td>
 			</tr>',
-			$myrow['DiscountCategory'],
-			$myrow['StockID'],
-			$myrow['Description'],
+			$myrow['discountcategory'],
+			$myrow['stockid'],
+			$myrow['description'],
 			$DeleteURL);
 
 	}

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 2;
 
@@ -21,15 +21,14 @@ if (isset($_GET['Item'])){
 }
 
 if (!isset($_POST['TypeAbbrev']) OR $_POST['TypeAbbrev']==""){
-	$_POST['TypeAbbrev'] = $DefaultPriceList;
+	$_POST['TypeAbbrev'] = $_SESSION['DefaultPriceList'];
 }
 
 if (!isset($_POST['CurrAbrev'])){
-	$CompanyRecord = ReadInCompanyRecord(&$db);
-	$_POST['CurrAbrev'] = $CompanyRecord['CurrencyDefault'];
+	$_POST['CurrAbrev'] = $_SESSION['CompanyRecord']['currencydefault'];
 }
 
-$result = DB_query("SELECT Description, MBflag FROM StockMaster WHERE StockID='$Item'",$db);
+$result = DB_query("SELECT stockmaster.description, stockmaster.mbflag FROM stockmaster WHERE stockmaster.stockid='$Item'",$db);
 $myrow = DB_fetch_row($result);
 
 if (DB_num_rows($result)==0){
@@ -71,25 +70,25 @@ if (isset($_POST['submit'])) {
 	if (isset($_POST['OldTypeAbbrev']) AND isset($_POST['OldCurrAbrev']) AND strlen($Item)>1 AND $InputError !=1) {
 
 		//editing an existing price
-		$sql = "UPDATE Prices SET
-				TypeAbbrev='" . $_POST['TypeAbbrev'] . "',
-				CurrAbrev='" . $_POST['CurrAbrev'] . "',
-				Price=" . $_POST['Price'] . "
-			WHERE StockID='$Item'
-			AND TypeAbbrev='" . $_POST['OldTypeAbbrev'] . "'
-			AND CurrAbrev='" . $_POST['OldCurrAbrev'] . "'
-			AND DebtorNo=''";
+		$sql = "UPDATE prices SET
+				typeabbrev='" . $_POST['TypeAbbrev'] . "',
+				currabrev='" . $_POST['CurrAbrev'] . "',
+				price=" . $_POST['Price'] . "
+			WHERE prices.stockid='$Item'
+			AND prices.typeabbrev='" . $_POST['OldTypeAbbrev'] . "'
+			AND prices.currabrev='" . $_POST['OldCurrAbrev'] . "'
+			AND prices.debtorno=''";
 
 		$msg =  _('This price has been updated') . '.';
 	} elseif ($InputError !=1) {
 
 	/*Selected price is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new price form */
 
-		$sql = "INSERT INTO Prices (StockID,
-						TypeAbbrev,
-						CurrAbrev,
-						DebtorNo,
-						Price)
+		$sql = "INSERT INTO prices (stockid,
+						typeabbrev,
+						currabrev,
+						debtorno,
+						price)
 				VALUES ('$Item',
 					'" . $_POST['TypeAbbrev'] . "',
 					'" . $_POST['CurrAbrev'] . "',
@@ -119,11 +118,11 @@ if (isset($_POST['submit'])) {
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
-	$sql="DELETE FROM Prices
-		WHERE StockID = '". $Item ."'
-		AND TypeAbbrev='". $_GET['TypeAbbrev'] ."'
-		AND CurrAbrev ='". $_GET['CurrAbrev'] ."'
-		AND DebtorNo=''";
+	$sql="DELETE FROM prices
+		WHERE prices.stockid = '". $Item ."'
+		AND prices.typeabbrev='". $_GET['TypeAbbrev'] ."'
+		AND prices.currabrev ='". $_GET['CurrAbrev'] ."'
+		AND prices.debtorno=''";
 
 	$result = DB_query($sql,$db);
 	prnMsg( _('The selected price has been deleted') . '!','success');
@@ -132,21 +131,21 @@ if (isset($_POST['submit'])) {
 
 //Always do this stuff
 if ($InputError ==0){
-	$sql = "SELECT Currencies.Currency,
-	        	SalesTypes.Sales_Type,
-			Prices.Price,
-			Prices.StockID,
-			Prices.TypeAbbrev,
-			Prices.CurrAbrev
-		FROM Prices,
-			SalesTypes,
-			Currencies
-		WHERE Prices.CurrAbrev=Currencies.CurrAbrev
-		AND Prices.TypeAbbrev = SalesTypes.TypeAbbrev
-		AND StockID='$Item'
-		AND Prices.DebtorNo=''
-		ORDER BY CurrAbrev,
-			TypeAbbrev";
+	$sql = "SELECT currencies.currency,
+	        	salestypes.sales_type,
+			prices.price,
+			prices.stockid,
+			prices.typeabbrev,
+			prices.currabrev
+		FROM prices,
+			salestypes,
+			currencies
+		WHERE prices.currabrev=currencies.currabrev
+		AND prices.typeabbrev = salestypes.typeabbrev
+		AND prices.stockid='$Item'
+		AND prices.debtorno=''
+		ORDER BY prices.currabrev,
+			prices.typeabbrev";
 
 	$result = DB_query($sql,$db);
 
@@ -167,35 +166,35 @@ if ($InputError ==0){
 			$k=1;
 		}
 
-		/*Only allow access to modify prices if securiy access 5 or more */
-		if (in_array(5,$SecurityGroups[$_SESSION['AccessLevel']])) {
-/*			currency      sales type             price		   path  SID    Stockid     TypeAbb	currabrev price    */
+		/*Only allow access to modify prices if securiy token 5 is allowed */
+		if (in_array(5,$_SESSION['AllowedPageSecurityTokens'])) {
+
 			printf("<td>%s</td>
 			        <td>%s</td>
 				<td ALIGN=RIGHT>%0.2f</td>
 				<td><a href='%s?%s&Item=%s&TypeAbbrev=%s&CurrAbrev=%s&Price=%s&Edit=1'>" . _('Edit') . "</td>
 				<td><a href='%s?%s&Item=%s&TypeAbbrev=%s&CurrAbrev=%s&delete=yes'>" . _('Delete') . "</td></tr>",
-				$myrow['Currency'],
-				$myrow['Sales_Type'],
-				$myrow['Price'],
+				$myrow['currency'],
+				$myrow['sales_type'],
+				$myrow['price'],
 				$_SERVER['PHP_SELF'],
 				SID,
-				$myrow['StockID'],
-				$myrow['TypeAbbrev'],
-				$myrow['CurrAbrev'],
-				$myrow['Price'],
+				$myrow['stockid'],
+				$myrow['typeabbrev'],
+				$myrow['currabrev'],
+				$myrow['price'],
 				$_SERVER['PHP_SELF'],
 				SID,
-				$myrow['StockID'],
-				$myrow['TypeAbbrev'],
-				$myrow['CurrAbrev']);
+				$myrow['stockid'],
+				$myrow['typeabbrev'],
+				$myrow['currabrev']);
 		} else {
 			printf("<td>%s</td>
 			        <td>%s</td>
 				<td ALIGN=RIGHT>%0.2f</td></tr>",
-				$myrow['Currency'],
-				$myrow['Sales_Type'],
-				$myrow['Price']);
+				$myrow['currency'],
+				$myrow['sales_type'],
+				$myrow['price']);
 		}
 
 	}
@@ -214,33 +213,33 @@ if ($InputError ==0){
 		$_POST['Price'] = $_GET['Price'];
 	}
 
-	$SQL = "SELECT CurrAbrev, Currency FROM Currencies";
+	$SQL = "SELECT currabrev, currency FROM currencies";
 	$result = DB_query($SQL,$db);
 
 	echo '<CENTER><TABLE><TR><TD>' . _('Currency') . ':</TD><TD><SELECT name="CurrAbrev">';
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['CurrAbrev']==$_POST['CurrAbrev']) {
+		if ($myrow['currabrev']==$_POST['CurrAbrev']) {
 			echo '<OPTION SELECTED VALUE="';
 		} else {
 			echo '<OPTION VALUE="';
 		}
-		echo $myrow['CurrAbrev'] . '">' . $myrow['Currency'];
+		echo $myrow['currabrev'] . '">' . $myrow['currency'];
 	} //end while loop
 
 	DB_free_result($result);
 
 	echo '</SELECT>	</TD></TR><TR><TD>' . _('Sales Type Price List') . ':</TD><TD><SELECT name="TypeAbbrev">';
 
-	$SQL = "SELECT TypeAbbrev, Sales_Type FROM SalesTypes";
+	$SQL = "SELECT typeabbrev, sales_type FROM salestypes";
 	$result = DB_query($SQL,$db);
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['TypeAbbrev']==$_POST['TypeAbbrev']) {
+		if ($myrow['typeabbrev']==$_POST['TypeAbbrev']) {
 			echo '<OPTION SELECTED VALUE="';
 		} else {
 			echo '<OPTION VALUE="';
 		}
-		echo $myrow['TypeAbbrev'] . '">' . $myrow['Sales_Type'];
+		echo $myrow['typeabbrev'] . '">' . $myrow['sales_type'];
 
 	} //end while loop
 
@@ -252,7 +251,7 @@ if ($InputError ==0){
 
 	<TR><TD><?php echo _('Price'); ?>:</TD>
 	<TD>
-	<input type="Text" name="Price" SIZE=6 MAXLENGTH=6 value=<?php echo $_POST['Price'];?>>
+	<input type="Text" name="Price" SIZE=12 MAXLENGTH=11 value=<?php echo $_POST['Price'];?>>
 
 	</TD></TR>
 
@@ -264,6 +263,6 @@ if ($InputError ==0){
 <?php
  }
 
-echo '</form>';
+echo '</FORM>';
 include('includes/footer.inc');
 ?>

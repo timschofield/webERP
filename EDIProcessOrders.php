@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity =11;
 
@@ -13,7 +13,6 @@ include('includes/SQL_CommonFunctions.inc'); // need for EDITransNo
 include('includes/htmlMimeMail.php'); // need for sending email attachments
 include('includes/DefineCartClass.php');
 
-$CompanyRecord = ReadInCompanyRecord($db);
 
 /*The logic outline is this ....
 
@@ -40,20 +39,20 @@ If the order processed ok then move the file to processed and go on to next file
 /*Read in the EANCOM Order Segments for the current seg group from the segments table */
 
 
-$sql = 'SELECT ID, SegTag, MaxOccur, SegGroup FROM EDI_ORDERS_Segs';
+$sql = 'SELECT id, segtag, maxoccur, seggroup FROM edi_orders_segs';
 $OrderSeg = DB_query($sql,$db);
 $i=0;
 $Seg = array();
 
 while ($SegRow=DB_fetch_array($OrderSeg)){
-	$Seg[$i] = array('SegTag'=>$SegRow['SegTag'], 'MaxOccur'=>$SegRow['MaxOccur'], 'SegGroup'=>$SegRow['SegGroup']);
+	$Seg[$i] = array('SegTag'=>$SegRow['segtag'], 'MaxOccur'=>$SegRow['maxoccur'], 'SegGroup'=>$SegRow['seggroup']);
 	$i++;
 }
 
 $TotalNoOfSegments = $i-1;
 
 /*get the list of files in the incoming orders directory - from config.php */
-$dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $EDI_Incoming_Orders);
+$dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSION['EDI_Incoming_Orders']);
 
  while (false !== ($OrderFile=readdir($dirhandle))){ /*there are files in the incoming orders dir */
 
@@ -64,7 +63,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $EDI_In
 	$FirstSegInGrp =0;
 	$SegGroup =0;
 
-	$fp = fopen($_SERVER['DOCUMENT_ROOT'] . '/$rootpath/$EDI_Incoming_Orders/$OrderFile','r');
+	$fp = fopen($_SERVER['DOCUMENT_ROOT'] . '/$rootpath/$_SESSION['EDI_Incoming_Orders']/$OrderFile','r');
 
 	$SegID = 0;
 	$SegCounter =0;
@@ -417,14 +416,14 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $EDI_In
 						/*Look up the EAN Code given $NAD[1] for the buyer */
 						if ($NAD_C082[2] ==9){
 						/*if NAD_C082[2] must = 9 then NAD_C082[0] is the EAN Intnat Article Numbering Assocn code of the customer - look up the customer by EDIReference*/
-							$InvoiceeResult = DB_query("SELECT DebtorNo FROM DebtorsMaster WHERE EDIReference='" . $NAD_C082[0] . "' AND EDIOrders=1",$db);
+							$InvoiceeResult = DB_query("SELECT debtorno FROM debtorsmaster WHERE edireference='" . $NAD_C082[0] . "' AND ediorders=1",$db);
 							if (DB_num_rows($InvoiceeResult)!=1){
 								$EmailText .= "\n" . _('The Buyer reference was specified as an EAN International Article Numbering Association code') . '. ' . _('Unfortunately the field EDIReference of any of the customers currently set up to receive EDI orders does not match with the code') . ' ' . $NAD_C082[0] . ' ' . _('used in this message') . '. ' . _('So that is the end of the road for this message');
 								$TryNextFile = True; /* Look for other EDI msgs */
 								$CreateOrder = False; /*Dont create order in system */
 							} else {
 								$CustRow = DB_fetch_array($InvoiceeResult);
-								$Order->DebtorNo = $CustRow['DebtorNo'];
+								$Order->DebtorNo = $CustRow['debtorno'];
 							}
 							break;
 						}
@@ -435,9 +434,9 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $EDI_In
 
 					case 'SU':
 						/*Supplier party details. This should be our EAN IANA number if not the message is not for us!! */
-						if ($NAD_C082[0]!= $EDIReference){
-							/* $EDIReference is set in config.php as our EDIReference it should be our EAN International Article Numbering Association code */
-							$EmailText .= "\n" . _('The supplier reference was specified as an EAN International Article Numbering Association code') . '. ' . _('Unfortunately the company EDIReference') . ' - ' . $EDIReference  . ' ' . _('does not match with the code') . ' ' . $NAD_C082[0] . ' ' . _('used in this message') . '. ' . _('This implies that the EDI message is for some other supplier') . '. ' . _('No further processing will be done');
+						if ($NAD_C082[0]!= $_SESSION['EDIReference']){
+							/* $_SESSION['EDIReference'] is set in config.php as our EDIReference it should be our EAN International Article Numbering Association code */
+							$EmailText .= "\n" . _('The supplier reference was specified as an EAN International Article Numbering Association code') . '. ' . _('Unfortunately the company EDIReference') . ' - ' . $_SESSION['EDIReference']  . ' ' . _('does not match with the code') . ' ' . $NAD_C082[0] . ' ' . _('used in this message') . '. ' . _('This implies that the EDI message is for some other supplier') . '. ' . _('No further processing will be done');
 							$TryNextFile = True; /* Look for other EDI msgs */
 							$CreateOrder = False; /*Dont create order in system */						}
 						break;
@@ -457,21 +456,31 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $EDI_In
 						break;
 					case 'SN':
 						/*Store Number - get the branch details from the store number - snag here too cos need to ensure got the Customer detail first before try looking up its branches */
-						$BranchResult = DB_query("SELECT BranchCode, BrName, BrAddress1,BrAddress2, BrAddress3, BrAddress4, ContactName, DefaultLocation, PhoneNo, Email FROM CustBranch INNER JOIN DebtorsMaster ON CustBranch.DebtorNo = CustBranch.DebtorNo WHERE CustBranchCode='" . $NAD_C082[0] . "' AND CustBranch.DebtorNo='" . $Order->DebtorNo . "' AND DebtorsMaster.EDIOrders=1",$db);
+						$BranchResult = DB_query("SELECT branchcode, 
+										brname, 
+										braddress1,
+										braddress2, 
+										braddress3, 
+										braddress4, 
+										contactname, 
+										defaultlocation, 
+										phoneno, 
+										email 
+									FROM custbranch INNER JOIN debtorsmaster ON custbranch.debtorno = custbranch.debtorno WHERE custbranchcode='" . $NAD_C082[0] . "' AND custbranch.debtorno='" . $Order->DebtorNo . "' AND debtorsmaster.ediorders=1",$db);
 						if (DB_num_rows($BranchResult)!=1){
 							$EmailText .= "\n" . _('The Store number was specified as') . ' ' . $NAD_C082[0] . ' ' . _('Unfortunately there are either no branches of customer code') . ' ' . $Order->DebtorNo . ' ' ._('or several that match this store number') . '. ' . _('This order could not be processed further');
 							$TryNextFile = True; /* Look for other EDI msgs */
 							$CreateOrder = False; /*Dont create order in system */						} else {
 							$BranchRow = DB_fetch_array($BranchResult);
-							$Order->BranchCode = $BranchRow['BranchCode'];
-							$Order->DeliverTo = $BranchRow['BrName'];
-							$Order->DelAdd1 = $BranchRow['BrAddress1'];
-							$Order->DelAdd2 = $BranchRow['BrAddress2'];
-							$Order->DelAdd3 = $BranchRow['BrAddress3'];
-							$Order->DelAdd4 = $BranchRow['BrAddress4'];
-							$Order->PhoneNo = $BranchRow['PhoneNo'];
-							$Order->Email = $BranchRow['Email'];
-							$Order->Location = $BranchRow['DefaultLocation'];
+							$Order->BranchCode = $BranchRow['branchcode'];
+							$Order->DeliverTo = $BranchRow['brname'];
+							$Order->DelAdd1 = $BranchRow['braddress1'];
+							$Order->DelAdd2 = $BranchRow['braddress2'];
+							$Order->DelAdd3 = $BranchRow['braddress3'];
+							$Order->DelAdd4 = $BranchRow['braddress4'];
+							$Order->PhoneNo = $BranchRow['phoneno'];
+							$Order->Email = $BranchRow['email'];
+							$Order->Location = $BranchRow['defaultlocation'];
 						}
 						break;
 					case 'BY':
@@ -502,12 +511,12 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $EDI_In
 		/*Now send the email off to the appropriate person */
 		$mail = new htmlMimeMail();
 		$mail->setText($EmailText);
-		$mail->setFrom($CompanyName . "<" . $CompanyRecord['Email'] . ">");
+		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">");
 
 		if ($TryNextFile==True){ /*had to abort this message */
 			/* send the email to the sysadmin  - get email address from users*/
 
-			$Result = DB_query("SELECT RealName, Email FROM WWW_Users WHERE FullAccess=7 AND Email <>''",$db);
+			$Result = DB_query("SELECT realname, email FROM www_users WHERE fullaccess=7 AND email <>''",$db);
 			if (DB_num_rows($Result)==0){ /*There are no sysadmins with email address specified */
 
 				$Recipients = array("'phil' <phil@localhost>");
@@ -516,7 +525,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $EDI_In
 				$Recipients = array();
 				$i=0;
 				while ($SysAdminsRow=DB_fetch_array($Result)){
-					$Recipients[$i] = "'" . $SysAdminsRow['RealName'] . "' <" . $SysAdminsRow['Email'] . ">";
+					$Recipients[$i] = "'" . $SysAdminsRow['realname'] . "' <" . $SysAdminsRow['email'] . ">";
 					$i++;
 				}
 			}

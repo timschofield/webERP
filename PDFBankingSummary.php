@@ -1,14 +1,16 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 3;
-
+include ('includes/session.inc');
+include('includes/SQL_CommonFunctions.inc');
+include('includes/DateFunctions.inc');
+ 
 if (isset($_GET['BatchNo'])){
 	$_POST['BatchNo'] = $_GET['BatchNo'];
 }
 
 if (!isset($_POST['BatchNo'])){
-
-     include ('includes/session.inc');
+ 
      $title = _('Create PDF Print Out For A Batch Of Receipts');
      include ('includes/header.inc');
      echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '>';
@@ -17,24 +19,19 @@ if (!isset($_POST['BatchNo'])){
      exit;
 }
 
-include('config.php');
-include('includes/ConnectDB.inc');
-include('includes/SQL_CommonFunctions.inc');
-include('includes/DateFunctions.inc');
-
-$SQL= 'SELECT BankAccountName,
-		BankAccountNumber,
-		Ref,
-		TransDate,
-		BankTransType,
-		BankAct,
-		BankTrans.ExRate,
-		BankTrans.CurrCode
-	FROM BankAccounts,
-		BankTrans
-	WHERE BankAccounts.AccountCode=BankTrans.BankAct
-	AND BankTrans.TransNo=' . $_POST['BatchNo'] . '
-	AND BankTrans.Type=12';
+$SQL= 'SELECT bankaccountname,
+		bankaccountnumber,
+		ref,
+		transdate,
+		banktranstype,
+		bankact,
+		banktrans.exrate,
+		banktrans.currcode
+	FROM bankaccounts,
+		banktrans
+	WHERE bankaccounts.accountcode=banktrans.bankact
+	AND banktrans.transno=' . $_POST['BatchNo'] . '
+	AND banktrans.type=12';
 
 $ErrMsg = _('An error occurred getting the header information about the receipt batch number') . ' ' . $_POST['BatchNo'];
 $DbgMsg = _('The SQL used to get the receipt header information that failed was');
@@ -49,25 +46,24 @@ if (DB_num_rows($Result)==0){
 }
 /* OK get the row of receipt batch header info from the BankTrans table */
 $myrow = DB_fetch_array($Result);
-$ExRate = $myrow['ExRate'];
-$Currency = $myrow['CurrCode'];
-$BankTransType = $myrow['BankTransType'];
-$BankedDate =  $myrow['TransDate'];
-$BankActName = $myrow['BankAccountName'];
-$BankActNumber = $myrow['BankAccountNumber'];
-$BankingReference = $myrow['Ref'];
+$ExRate = $myrow['exrate'];
+$Currency = $myrow['currcode'];
+$BankTransType = $myrow['banktranstype'];
+$BankedDate =  $myrow['transdate'];
+$BankActName = $myrow['bankaccountname'];
+$BankActNumber = $myrow['bankaccountnumber'];
+$BankingReference = $myrow['ref'];
 
-$CompanyRecord = ReadInCompanyRecord($db);
 
-$SQL = "SELECT DebtorsMaster.Name,
-		OvAmount,
-		InvText,
-		Reference
-	FROM DebtorsMaster,
-		DebtorTrans
-	WHERE DebtorsMaster.DebtorNo=DebtorTrans.DebtorNo
-	AND DebtorTrans.TransNo=" . $_POST['BatchNo'] . '
-	AND DebtorTrans.Type=12';
+$SQL = "SELECT debtorsmaster.name,
+		ovamount,
+		invtext,
+		reference
+	FROM debtorsmaster,
+		debtortrans
+	WHERE debtorsmaster.debtorno=debtortrans.debtorno
+	AND debtortrans.transno=" . $_POST['BatchNo'] . '
+	AND debtortrans.type=12';
 
 $CustRecs=DB_query($SQL,$db,'','',false,false);
 if (DB_error_no($db)!=0){
@@ -80,13 +76,13 @@ if (DB_error_no($db)!=0){
 	include('includes/footer.inc');
   	exit;
 }
-$SQL = "SELECT Narrative,
-		Amount
-	FROM GLTrans
-	WHERE GLTrans.TypeNo=" . $_POST['BatchNo'] . "
-	AND GLTrans.Type=12 AND GLTrans.Amount <0
-	AND GLTrans.Account !=" . $myrow['BankAct'] . '
-	AND GLTrans.Account !=' . $CompanyRecord['DebtorsAct'];
+$SQL = "SELECT narrative,
+		amount
+	FROM gltrans
+	WHERE gltrans.typeno=" . $_POST['BatchNo'] . "
+	AND gltrans.type=12 and gltrans.amount <0
+	AND gltrans.account !=" . $myrow['bankact'] . '
+	AND gltrans.account !=' . $_SESSION['CompanyRecord']['debtorsact'];
 
 $GLRecs=DB_query($SQL,$db,'','',false,false);
 if (DB_error_no($db)!=0){
@@ -117,13 +113,13 @@ include ('includes/PDFBankingSummaryPageHeader.inc');
 
 while ($myrow=DB_fetch_array($CustRecs)){
 
-      	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format(-$myrow['OvAmount'],2), 'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,150,$FontSize,$myrow['Name'], 'left');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+215,$YPos,100,$FontSize,$myrow['InvText'], 'left');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+315,$YPos,100,$FontSize,$myrow['Reference'], 'left');
+      	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format(-$myrow['ovamount'],2), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,150,$FontSize,$myrow['name'], 'left');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+215,$YPos,100,$FontSize,$myrow['invtext'], 'left');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+315,$YPos,100,$FontSize,$myrow['reference'], 'left');
 
       $YPos -= ($line_height);
-      $TotalBanked = $TotalBanked - $myrow['OvAmount'];
+      $TotalBanked = $TotalBanked - $myrow['ovamount'];
 
       if ($YPos - (2 *$line_height) < $Bottom_Margin){
           /*Then set up a new page */
@@ -134,10 +130,10 @@ while ($myrow=DB_fetch_array($CustRecs)){
 /* Right now print out the GL receipt entries in the batch */
 while ($myrow=DB_fetch_array($GLRecs)){
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format(-$myrow['Amount']*$ExRate,2), 'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,$myrow['Narrative'], 'left');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format(-$myrow['amount']*$ExRate,2), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,$myrow['narrative'], 'left');
         $YPos -= ($line_height);
-        $TotalBanked = $TotalBanked + (-$myrow['Amount']*$ExRate);
+        $TotalBanked = $TotalBanked + (-$myrow['amount']*$ExRate);
 
       if ($YPos - (2 *$line_height) < $Bottom_Margin){
           /*Then set up a new page */

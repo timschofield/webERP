@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 $PageSecurity = 1;
 
@@ -15,33 +15,33 @@ if (isset($_GET['Application'])){ /*This is sent by this page (to itself) when t
 	$_SESSION['Module'] = $_GET['Application'];
 }
 
-
 include('includes/header.inc');
 
-if (count($SecurityGroups[$_SESSION['AccessLevel']])==1){
+if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 
 /* if there is only one security access and its 1 (it has to be 1 for this page came up at all)- it must be a customer log on need to limit the menu to show only the customer accessible stuff this is what the page looks like for customers logging in */
 ?>
-					<tr>
-					<td class="menu_group_items">  <!-- Orders transaction options -->
-						<table width="100%" class="table_index">
-							<tr>
-							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/CustomerInquiry.php?' .SID . '&CustomerID=' . $_SESSION['CustomerID'] . "'><li>" . _('Account Status') . '</li></a>'; ?>
-							</td>
-							</tr>
-							<tr>
-							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SelectOrderItems.php?' .SID . "&NewOrder=Yes'><li>" . _('Place An Order') . '</li></a>'; ?>
-							</td>
-							</tr>
-														<tr>
-							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SelectCompletedOrder_CUSTOMER.php?' .SID . "&NewOrder=Yes'><li>" . _('Order Status') . '</li></a>'; ?>
-							</td>
-							</tr>
-						</table>
-					</td>
+	
+		<tr>
+		<td class="menu_group_items">  <!-- Orders transaction options -->
+		<table width="100%" class="table_index">
+			<tr>
+			<td class="menu_group_item">
+				<?php echo "<a href='" . $rootpath . '/CustomerInquiry.php?' .SID . '&CustomerID=' . $_SESSION['CustomerID'] . "'><li>" . _('Account Status') . '</li></a>'; ?>
+			</td>
+			</tr>
+			<tr>
+			<td class="menu_group_item">
+				<?php echo "<a href='" . $rootpath . '/SelectOrderItems.php?' .SID . "&NewOrder=Yes'><li>" . _('Place An Order') . '</li></a>'; ?>
+			</td>
+			</tr>
+										<tr>
+			<td class="menu_group_item">
+				<?php echo "<a href='" . $rootpath . '/SelectCompletedOrder.php?' .SID . "&SelectedCustomer=" . $_SESSION['CustomerID'] . "'><li>" . _('Order Status') . '</li></a>'; ?>
+			</td>
+			</tr>
+		</table>
+	</td>
 <?php
 	include('includes/footer.inc');
 	exit;
@@ -146,6 +146,12 @@ if (count($SecurityGroups[$_SESSION['AccessLevel']])==1){
 								<?php echo "<a href='" . $rootpath . '/PDFOrderStatus.php?' . SID . "'><li>" . _('Order Status Reports (Print)') . '</li></a>'; ?>
 							</td>
 							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/PDFOrdersInvoiced.php?' . SID . "'><li>" . _('Orders Invoiced Reports') . '</li></a>'; ?>
+							</td>
+							</tr>
+
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<a href='" . $rootpath . '/PDFDeliveryDifferences.php?' . SID . "'><li>" . _('Order Delivery Differences Report') . '</li></a>'; ?>
@@ -528,6 +534,11 @@ if (count($SecurityGroups[$_SESSION['AccessLevel']])==1){
 								<?php echo "<a href='" . $rootpath . '/StockQuantityByDate.php?' . SID . "'><li>" . _('Historical Stock Quantity By Location/Category') . '</li></a>'; ?>
 							</td>
 							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/PDFStockNegatives.php?' . SID . "'><li>" . _('List Negative Stocks') . '</li></a>'; ?>
+							</td>
+							</tr>
 						</table>
 					</td>
 					<td class="menu_group_items">
@@ -691,7 +702,18 @@ if (count($SecurityGroups[$_SESSION['AccessLevel']])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/SystemParameters.php?' . SID . "'><li>" . _('Configuration Settings') . '</li></a>'; ?>
+							</td>
+							</tr>
+
+							<tr>
+							<td class="menu_group_item">
 								<?php echo "<a href='" . $rootpath . '/WWW_Users.php?' . SID . "'><li>" . _('User Accounts') . '</li></a>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/WWW_Access.php?' . SID . "'><li>" . _('Role Permissions') . '</li></a>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -732,6 +754,11 @@ if (count($SecurityGroups[$_SESSION['AccessLevel']])==1){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<a href='" . $rootpath . '/PaymentTerms.php?' . SID . "'><li>" . _('Payment Terms') . '</li></a>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/PaymentMethods.php?' . SID . "'><li>" . _('Payment Methods') . '</li></a>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -789,6 +816,11 @@ if (count($SecurityGroups[$_SESSION['AccessLevel']])==1){
 								<?php echo "<a href='" . $rootpath . '/DiscountCategories.php?' . SID . "'><li>" . _('Discount Category Maintenance') . '</li></a>'; ?>
 							</td>
 							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/UnitsOfMeasure.php?' . SID . "'><li>" . _('Units of Measure') . '</li></a>'; ?>
+							</td>
+							</tr>
 						</table>
 					</td>
 					</tr>
@@ -810,7 +842,7 @@ if (count($SecurityGroups[$_SESSION['AccessLevel']])==1){
     					<?php OptionHeadings(); ?>
 
 					<tr>
-					<td class="menu_group_items"> <!-- Gereral transactions options -->
+					<td class="menu_group_items"> <!-- General transactions options -->
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
@@ -889,6 +921,11 @@ if (count($SecurityGroups[$_SESSION['AccessLevel']])==1){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<a href='" . $rootpath . '/AccountGroups.php?' . SID . "'><li>" . _('Account Groups') . '</li></a>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/AccountSections.php?' . SID . "'><li>" . _('Account Sections') . '</li></a>'; ?>
 							</td>
 							</tr>
 						</table>

@@ -1,9 +1,9 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
-$title = 'Search Outstanding Sales Orders';
+$title = _('Search Outstanding Sales Orders');
 include('includes/header.inc');
 include('includes/DateFunctions.inc');
 
@@ -47,47 +47,48 @@ if (isset($_POST['SearchParts'])){
 		}
 		$SearchString = $SearchString . substr($_POST['Keywords'],$i).'%';
 
-		$SQL = "SELECT StockMaster.StockID,
-				Description,
-				Sum(LocStock.Quantity) AS QOH,
-				Units,
-				LocStock
-			WHERE StockMaster.StockID=LocStock.StockID
-			AND Description LIKE '" . $SearchString . "'
-			AND CategoryID='" . $_POST['StockCat']. "'
-			GROUP BY StockMaster.StockID,
-				Description,
-				Units
-			ORDER BY StockMaster.StockID";
+		$SQL = "SELECT stockmaster.stockid,
+				stockmaster.description,
+				SUM(locstock.quantity) AS qoh,
+				stockmaster.units
+			FROM stockmaster,
+				locstock
+			WHERE stockmaster.stockid=locstock.stockid
+			AND stockmaster.description " . LIKE . " '" . $SearchString . "'
+			AND stockmaster.categoryid='" . $_POST['StockCat']. "'
+			GROUP BY stockmaster.stockid,
+				stockmaster.description,
+				stockmaster.units
+			ORDER BY stockmaster.stockid";
 
 	 } elseif (isset($_POST['StockCode'])){
-		$SQL = "SELECT StockMaster.StockID,
-				Description,
-				Sum(LocStock.Quantity) AS QOH,
-				Units
-			FROM StockMaster,
-				LocStock
-			WHERE StockMaster.StockID=LocStock.StockID
-			AND StockMaster.StockID like '%" . $_POST['StockCode'] . "%'
-			AND CategoryID='" . $_POST['StockCat'] . "'
-			GROUP BY StockMaster.StockID,
-				Description,
-				Units
-			ORDER BY StockMaster.StockID";
+		$SQL = "SELECT stockmaster.stockid,
+				stockmaster.description,
+				sum(locstock.quantity) as qoh,
+				stockmaster.units
+			FROM stockmaster,
+				locstock
+			WHERE stockmaster.stockid=locstock.stockid
+			AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
+			AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+			GROUP BY stockmaster.stockid,
+				stockmaster.description,
+				stockmaster.units
+			ORDER BY stockmaster.stockid";
 
 	 } elseif (!isset($_POST['StockCode']) AND !isset($_POST['Keywords'])) {
-		$SQL = "SELECT StockMaster.StockID,
-				Description,
-				Sum(LocStock.Quantity) AS QOH,
-				Units
-			FROM StockMaster,
-				LocStock
-			WHERE StockMaster.StockID=LocStock.StockID
-			AND CategoryID='" . $_POST['StockCat'] ."'
-			GROUP BY StockMaster.StockID,
-				Description,
-				Units
-			ORDER BY StockMaster.StockID";
+		$SQL = "SELECT stockmaster.stockid,
+				stockmaster.description,
+				sum(locstock.quantity) as qoh,
+				stockmaster.units
+			FROM stockmaster,
+				locstock
+			WHERE stockmaster.stockid=locstock.stockid
+			AND stockmaster.categoryid='" . $_POST['StockCat'] ."'
+			GROUP BY stockmaster.stockid,
+				stockmaster.description,
+				stockmaster.units
+			ORDER BY stockmaster.stockid";
 	 }
 
 	$ErrMsg =  _('No stock items were returned by the SQL because');
@@ -111,42 +112,57 @@ if (!isset($StockID)) {
 
 	if ($_REQUEST['OrderNumber']=='' OR !$_REQUEST['OrderNumber']){
 
-		echo _('Order number') . ": <INPUT type=text name='OrderNumber' MAXLENGTH =8 SIZE=9> " . _('From Stock Location') . ":<SELECT name='StockLocation'> ";
-		$sql = 'SELECT LocCode, LocationName FROM Locations';
+		echo _('Order number') . ": <INPUT type=text name='OrderNumber' MAXLENGTH =8 SIZE=9>&nbsp " . _('From Stock Location') . ":<SELECT name='StockLocation'> ";
+		
+		$sql = 'SELECT loccode, locationname FROM locations';
+		
 		$resultStkLocs = DB_query($sql,$db);
+		
 		while ($myrow=DB_fetch_array($resultStkLocs)){
 			if (isset($_POST['StockLocation'])){
-				if ($myrow['LocCode'] == $_POST['StockLocation']){
-				     echo "<OPTION SELECTED Value='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
+				if ($myrow['loccode'] == $_POST['StockLocation']){
+				     echo "<OPTION SELECTED Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 				} else {
-				     echo "<OPTION Value='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
+				     echo "<OPTION Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 				}
-			} elseif ($myrow['LocCode']==$_SESSION['UserStockLocation']){
-				 echo "<OPTION SELECTED Value='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
+			} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
+				 echo "<OPTION SELECTED Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 			} else {
-				 echo "<OPTION Value='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
+				 echo "<OPTION Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 			}
 		}
 
-		echo "</SELECT>  <INPUT TYPE=SUBMIT NAME='SearchOrders' VALUE='" . _('Search Orders') . "'>";
+		echo '</SELECT> &nbsp&nbsp';
+		echo '<SELECT NAME="Quotations">';
+		
+		if ($_POST['Quotations']=='Quotes_Only'){
+			echo '<OPTION SELECTED VALUE="Quotes_Only">' . _('Quotations Only');
+			echo '<OPTION VALUE="Orders_Only">' . _('Orders Only');
+		} else {
+			echo '<OPTION SELECTED VALUE="Orders_Only">' . _('Orders Only');
+			echo '<OPTION VALUE="Quotes_Only">' . _('Quotations Only');
+		}
+		
+		echo '</SELECT> &nbsp&nbsp';
+		echo "<INPUT TYPE=SUBMIT NAME='SearchOrders' VALUE='" . _('Search Orders/Quotations') . "'>";
 	}
 
-	$SQL='SELECT CategoryID,
-			CategoryDescription
-		FROM StockCategory
-		ORDER BY CategoryDescription';
+	$SQL='SELECT categoryid,
+			categorydescription
+		FROM stockcategory
+		ORDER BY categorydescription';
 
 	$result1 = DB_query($SQL,$db);
 
 	echo '<HR>
-		<FONT SIZE=1>' . _('To search for sales orders for a specific part use the part selection facilities below') . "</FONT>     <INPUT TYPE=SUBMIT NAME='SearchParts' VALUE='" . _('Search Parts Now') . "'><INPUT TYPE=SUBMIT NAME='ResetPart' VALUE='" . _('Clear Part Selection') . "'>
+		<FONT SIZE=1>' . _('To search for sales orders for a specific part use the part selection facilities below') . "</FONT>     <INPUT TYPE=SUBMIT NAME='SearchParts' VALUE='" . _('Search Parts Now') . "'><INPUT TYPE=SUBMIT NAME='ResetPart' VALUE='" . _('Show All') . "'>
       <TABLE>
       	<TR>
       		<TD><FONT SIZE=1>" . _('Select a stock category') . ":</FONT>
       			<SELECT NAME='StockCat'>";
 
 	while ($myrow1 = DB_fetch_array($result1)) {
-		echo "<OPTION VALUE='". $myrow1['CategoryID'] . "'>" . $myrow1['CategoryDescription'];
+		echo "<OPTION VALUE='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
 	}
 
       echo '</SELECT>
@@ -189,10 +205,10 @@ If (isset($StockItemsResult)) {
 			<td ALIGN=RIGHT>%s</td>
 			<td>%s</td>
 			</tr>",
-			$myrow["StockID"],
-			$myrow["Description"],
-			$myrow["QOH"],
-			$myrow["Units"]);
+			$myrow['stockid'],
+			$myrow['description'],
+			$myrow['qoh'],
+			$myrow['units']);
 
 		$j++;
 		If ($j == 12){
@@ -210,150 +226,167 @@ If (isset($StockItemsResult)) {
   else {
 
 	//figure out the SQL required from the inputs available
-
+	if ($_POST['Quotations']=='Orders_Only'){
+		$Quotations = 0;
+	} else {
+		$Quotations =1;
+	}
 	if (isset($_REQUEST['OrderNumber']) && $_REQUEST['OrderNumber'] !='') {
-			$SQL = "SELECT SalesOrders.OrderNo,
-					DebtorsMaster.Name,
-					CustBranch.BrName,
-					SalesOrders.CustomerRef,
-					SalesOrders.OrdDate,
-					SalesOrders.DeliveryDate,
-					SalesOrders.DeliverTo,
-					Sum(SalesOrderDetails.UnitPrice*SalesOrderDetails.Quantity*(1-SalesOrderDetails.DiscountPercent)) AS OrderValue
-				FROM SalesOrders,
-					SalesOrderDetails,
-					DebtorsMaster,
-					CustBranch
-				WHERE SalesOrders.OrderNo = SalesOrderDetails.OrderNo
-				AND SalesOrders.BranchCode = CustBranch.BranchCode
-				AND SalesOrders.DebtorNo = DebtorsMaster.DebtorNo
-				AND DebtorsMaster.DebtorNo = CustBranch.DebtorNo
-				AND SalesOrderDetails.Completed=0
-				AND SalesOrders.OrderNo=". $_REQUEST['OrderNumber'] ."
-				GROUP BY SalesOrders.OrderNo";
+			$SQL = "SELECT salesorders.orderno,
+					debtorsmaster.name,
+					custbranch.brname,
+					salesorders.customerref,
+					salesorders.orddate,
+					salesorders.deliverydate,
+					salesorders.deliverto,
+					SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
+				FROM salesorders,
+					salesorderdetails,
+					debtorsmaster,
+					custbranch
+				WHERE salesorders.orderno = salesorderdetails.orderno
+				AND salesorders.branchcode = custbranch.branchcode
+				AND salesorders.debtorno = debtorsmaster.debtorno
+				AND debtorsmaster.debtorno = custbranch.debtorno
+				AND salesorderdetails.completed=0
+				AND salesorders.orderno=". $_REQUEST['OrderNumber'] ."
+				AND salesorders.quotation =" .$Quotations . " 
+				GROUP BY salesorders.orderno,
+					debtorsmaster.name,
+					custbranch.brname,
+					salesorders.customerref,
+					salesorders.orddate,
+					salesorders.deliverydate,
+					salesorders.deliverto";
 	} else {
 	      /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
 
 		if (isset($_REQUEST['SelectedCustomer'])) {
 
 			if (isset($_REQUEST['SelectedStockItem'])) {
-				$SQL = "SELECT SalesOrders.OrderNo,
-						DebtorsMaster.Name,
-						CustBranch.BrName,
-						SalesOrders.CustomerRef,
-						SalesOrders.OrdDate,
-						SalesOrders.DeliveryDate,
-						SalesOrders.DeliverTo,
-						SalesOrderDetails.UnitPrice*SalesOrderDetails.Quantity*(1-SalesOrderDetails.DiscountPercent)) AS OrderValue
-					FROM SalesOrders,
-						SalesOrderDetails,
-						DebtorsMaster,
-						CustBranch
-					WHERE SalesOrders.OrderNo = SalesOrderDetails.OrderNo
-					AND SalesOrders.DebtorNo = DebtorsMaster.DebtorNo
-					AND DebtorsMaster.DebtorNo = CustBranch.DebtorNo
-					AND SalesOrders.BranchCode = CustBranch.BranchCode
-					AND SalesOrderDetails.Completed=0
-					AND SalesOrderDetails.StkCode='". $_REQUEST['SelectedStockItem'] ."'
-					AND SalesOrders.DebtorNo='" . $_REQUEST['SelectedCustomer'] ."'
-					AND SalesOrders.FromStkLoc = '". $_POST['StockLocation'] . "'
-					GROUP BY SalesOrders.OrderNo,
-						SalesOrders.DebtorNo,
-						SalesOrders.BranchCode,
-						SalesOrders.CustomerRef,
-						SalesOrders.OrdDate,
-						SalesOrders.DeliverTo";
+				$SQL = "SELECT salesorders.orderno,
+						debtorsmaster.name,
+						custbranch.brname,
+						salesorders.customerref,
+						salesorders.orddate,
+						salesorders.deliverydate,
+						salesorders.deliverto,
+						salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
+					FROM salesorders,
+						salesorderdetails,
+						debtorsmaster,
+						custbranch
+					WHERE salesorders.orderno = salesorderdetails.orderno
+					AND salesorders.debtorno = debtorsmaster.debtorno
+					AND debtorsmaster.debtorno = custbranch.debtorno
+					AND salesorders.branchcode = custbranch.branchcode
+					AND salesorderdetails.completed=0
+					AND salesorders.quotation =" .$Quotations . "
+					AND salesorderdetails.stkcode='". $_REQUEST['SelectedStockItem'] ."'
+					AND salesorders.debtorno='" . $_REQUEST['SelectedCustomer'] ."'
+					AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'
+					ORDER BY salesorders.orderno";
+						
 
 			} else {
-				$SQL = "SELECT SalesOrders.OrderNo,
-						DebtorsMaster.Name,
-						CustBranch.BrName,
-						SalesOrders.CustomerRef,
-						SalesOrders.OrdDate,
-						SalesOrders.DeliverTo,
-						SalesOrders.DeliveryDate, Sum(SalesOrderDetails.UnitPrice*SalesOrderDetails.Quantity*(1-SalesOrderDetails.DiscountPercent)) AS OrderValue
-					FROM SalesOrders,
-						SalesOrderDetails,
-						DebtorsMaster,
-						CustBranch
-					WHERE SalesOrders.OrderNo = SalesOrderDetails.OrderNo
-					AND SalesOrders.DebtorNo = DebtorsMaster.DebtorNo
-					AND DebtorsMaster.DebtorNo = CustBranch.DebtorNo
-					AND SalesOrders.BranchCode = CustBranch.BranchCode
-					AND SalesOrderDetails.Completed=0
-					AND SalesOrders.DebtorNo='" . $_REQUEST['SelectedCustomer'] . "'
-					AND SalesOrders.FromStkLoc = '". $_POST['StockLocation'] . "'
-					GROUP BY SalesOrders.OrderNo,
-						SalesOrders.DebtorNo,
-						SalesOrders.BranchCode,
-						SalesOrders.CustomerRef,
-						SalesOrders.OrdDate,
-						SalesOrders.DeliverTo";
+				$SQL = "SELECT salesorders.orderno,
+						debtorsmaster.name,
+						custbranch.brname,
+						salesorders.customerref,
+						salesorders.orddate,
+						salesorders.deliverto,
+						salesorders.deliverydate, SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
+					FROM salesorders,
+						salesorderdetails,
+						debtorsmaster,
+						custbranch
+					WHERE salesorders.orderno = salesorderdetails.orderno
+					AND salesorders.debtorno = debtorsmaster.debtorno
+					AND debtorsmaster.debtorno = custbranch.debtorno
+					AND salesorders.branchcode = custbranch.branchcode
+					AND salesorders.quotation =" .$Quotations . "
+					AND salesorderdetails.completed=0
+					AND salesorders.debtorno='" . $_REQUEST['SelectedCustomer'] . "'
+					AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'
+					GROUP BY salesorders.orderno,
+						debtorsmaster.name,
+						salesorders.debtorno,
+						custbranch.brname,
+						salesorders.customerref,
+						salesorders.orddate,
+						salesorders.deliverto,
+						salesorders.deliverydate";
 
 			}
 		} else { //no customer selected
 			if (isset($_REQUEST['SelectedStockItem'])) {
-				$SQL = "SELECT SalesOrders.OrderNo,
-						DebtorsMaster.Name,
-						CustBranch.BrName,
-						SalesOrders.CustomerRef,
-						SalesOrders.OrdDate,
-						SalesOrders.DeliverTo,
-						SalesOrders.DeliveryDate, Sum(SalesOrderDetails.UnitPrice*SalesOrderDetails.Quantity*(1-SalesOrderDetails.DiscountPercent)) AS OrderValue
-					FROM SalesOrders,
-						SalesOrderDetails,
-						DebtorsMaster,
-						CustBranch
-					WHERE SalesOrders.OrderNo = SalesOrderDetails.OrderNo
-					AND SalesOrders.DebtorNo = DebtorsMaster.DebtorNo
-					AND DebtorsMaster.DebtorNo = CustBranch.DebtorNo
-					AND SalesOrders.BranchCode = CustBranch.BranchCode
-					AND SalesOrderDetails.Completed=0
-					AND SalesOrderDetails.StkCode='". $_REQUEST['SelectedStockItem'] . "'
-					AND SalesOrders.FromStkLoc = '". $_POST['StockLocation'] . "'
-					GROUP BY SalesOrders.OrderNo,
-						SalesOrders.DebtorNo,
-						SalesOrders.BranchCode,
-						SalesOrders.CustomerRef,
-						SalesOrders.OrdDate,
-						SalesOrders.DeliverTo";
+				$SQL = "SELECT salesorders.orderno,
+						debtorsmaster.name,
+						custbranch.brname,
+						salesorders.customerref,
+						salesorders.orddate,
+						salesorders.deliverto,
+						salesorders.deliverydate, SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
+					FROM salesorders,
+						salesorderdetails,
+						debtorsmaster,
+						custbranch
+					WHERE salesorders.orderno = salesorderdetails.orderno
+					AND salesorders.debtorno = debtorsmaster.debtorno
+					AND debtorsmaster.debtorno = custbranch.debtorno
+					AND salesorders.branchcode = custbranch.branchcode
+					AND salesorderdetails.completed=0
+					AND salesorders.quotation =" .$Quotations . "
+					AND salesorderdetails.stkcode='". $_REQUEST['SelectedStockItem'] . "'
+					AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'
+					GROUP BY salesorders.orderno,
+						debtorsmaster.name,
+						custbranch.brname,
+						salesorders.customerref,
+						salesorders.orddate,
+						salesorders.deliverto,
+						salesorders.deliverydate";
 			} else {
-				$SQL = "SELECT SalesOrders.OrderNo,
-						DebtorsMaster.Name,
-						CustBranch.BrName,
-						SalesOrders.CustomerRef,
-						SalesOrders.OrdDate,
-						SalesOrders.DeliverTo,
-						SalesOrders.DeliveryDate, Sum(SalesOrderDetails.UnitPrice*SalesOrderDetails.Quantity*(1-SalesOrderDetails.DiscountPercent)) AS OrderValue
-					FROM SalesOrders,
-						SalesOrderDetails,
-						DebtorsMaster,
-						CustBranch
-					WHERE SalesOrders.OrderNo = SalesOrderDetails.OrderNo
-					AND SalesOrders.DebtorNo = DebtorsMaster.DebtorNo
-					AND DebtorsMaster.DebtorNo = CustBranch.DebtorNo
-					AND SalesOrders.BranchCode = CustBranch.BranchCode
-					AND SalesOrderDetails.Completed=0
-					AND SalesOrders.FromStkLoc = '". $_POST['StockLocation'] . "'
-					GROUP BY SalesOrders.OrderNo,
-						SalesOrders.DebtorNo,
-						SalesOrders.BranchCode,
-						SalesOrders.CustomerRef,
-						SalesOrders.OrdDate,
-						SalesOrders.DeliverTo ";
+				$SQL = "SELECT salesorders.orderno,
+						debtorsmaster.name,
+						custbranch.brname,
+						salesorders.customerref,
+						salesorders.orddate,
+						salesorders.deliverto,
+						salesorders.deliverydate,
+						SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
+					FROM salesorders,
+						salesorderdetails,
+						debtorsmaster,
+						custbranch
+					WHERE salesorders.orderno = salesorderdetails.orderno
+					AND salesorders.debtorno = debtorsmaster.debtorno
+					AND debtorsmaster.debtorno = custbranch.debtorno
+					AND salesorders.branchcode = custbranch.branchcode
+					AND salesorderdetails.completed=0
+					AND salesorders.quotation =" .$Quotations . "
+					AND salesorders.fromstkloc = '". $_POST['StockLocation'] . "'
+					GROUP BY salesorders.orderno,
+						debtorsmaster.name,
+						custbranch.brname,
+						salesorders.customerref,
+						salesorders.orddate,
+						salesorders.deliverto,
+						salesorders.deliverydate";
 			}
 
 		} //end selected customer
 	} //end not order number selected
 
-	$ErrMsg = _('No orders were returned by the SQL because');
+	$ErrMsg = _('No orders or quotations were returned by the SQL because');
 	$SalesOrdersResult = DB_query($SQL,$db,$ErrMsg);
 
 	/*show a table of the orders returned by the SQL */
 
 	echo '<TABLE CELLPADDING=2 COLSPAN=7 WIDTH=100%>';
 
-	$tableheader = "<TR>
+	if ($_POST['Quotations']=='Orders_Only'){
+		$tableheader = "<TR>
 				<TD class='tableheader'>" . _('Modify') . "</TD>
 				<TD class='tableheader'>" . _('Invoice') . "</TD>
 				<TD class='tableheader'>" . _('Disp. Note') . "</TD>
@@ -364,6 +397,19 @@ If (isset($StockItemsResult)) {
 				<TD class='tableheader'>" . _('Req Del Date') . "</TD>
 				<TD class='tableheader'>" . _('Delivery To') . "</TD>
 				<TD class='tableheader'>" . _('Order Total') . "</TD></TR>";
+	} else {
+		$tableheader = "<TR>
+				<TD class='tableheader'>" . _('Modify') . "</TD>
+				<TD class='tableheader'>" . _('Print Quote') . "</TD>
+				<TD class='tableheader'>" . _('Customer') . "</TD>
+				<TD class='tableheader'>" . _('Branch') . "</TD>
+				<TD class='tableheader'>" . _('Cust Ref') . " #</TD>
+				<TD class='tableheader'>" . _('Quote Date') . "</TD>
+				<TD class='tableheader'>" . _('Req Del Date') . "</TD>
+				<TD class='tableheader'>" . _('Delivery To') . "</TD>
+				<TD class='tableheader'>" . _('Quote Total') . "</TD></TR>";
+	}
+	
 	echo $tableheader;
 
 	$j = 1;
@@ -379,35 +425,60 @@ If (isset($StockItemsResult)) {
 			$k++;
 		}
 
-		$ModifyPage = $rootpath . "/SelectOrderItems.php?" . SID . 'ModifyOrderNumber=' . $myrow['OrderNo'];
-		$Confirm_Invoice = $rootpath . '/ConfirmDispatch_Invoice.php?' . SID . 'OrderNumber=' .$myrow['OrderNo'];
-		$PrintDispatchNote = $rootpath . '/PrintCustOrder.php?' . SID . 'TransNo=' . $myrow['OrderNo'];
-		$FormatedDelDate = ConvertSQLDate($myrow['DeliveryDate']);
-		$FormatedOrderDate = ConvertSQLDate($myrow['OrdDate']);
-		$FormatedOrderValue = number_format($myrow['OrderValue'],2);
+		$ModifyPage = $rootpath . "/SelectOrderItems.php?" . SID . '&ModifyOrderNumber=' . $myrow['orderno'];
+		$Confirm_Invoice = $rootpath . '/ConfirmDispatch_Invoice.php?' . SID . '&OrderNumber=' .$myrow['orderno'];
+		$PrintDispatchNote = $rootpath . '/PrintCustOrder.php?' . SID . '&TransNo=' . $myrow['orderno'];
+		$PrintQuotation = $rootpath . '/PDFQuotation.php?' . SID . '&QuotationNo=' . $myrow['orderno'];
+		$FormatedDelDate = ConvertSQLDate($myrow['deliverydate']);
+		$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
+		$FormatedOrderValue = number_format($myrow['ordervalue'],2);
 
-		printf("<td><A HREF='%s'>%s</A></td>
-			<td><A HREF='%s'>" . _('Invoice') . "</A></td>
-			<td><A target='_blank' HREF='%s'>" . _('Print') . "</A></td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td ALIGN=RIGHT>%s</td>
-			</tr>",
-			$ModifyPage,
-			$myrow["OrderNo"],
-			$Confirm_Invoice,
-			$PrintDispatchNote,
-			$myrow['Name'],
-			$myrow['BrName'],
-			$myrow['CustomerRef'],
-			$FormatedOrderDate,
-			$FormatedDelDate,
-			$myrow['DeliverTo'],
-			$FormatedOrderValue);
+		if ($_POST['Quotations']=='Orders_Only'){
+			printf("<td><A HREF='%s'>%s</A></td>
+				<td><A HREF='%s'>" . _('Invoice') . "</A></td>
+				<td><A target='_blank' HREF='%s'>" . _('Print') . "</A></td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td ALIGN=RIGHT>%s</td>
+				</tr>",
+				$ModifyPage,
+				$myrow['orderno'],
+				$Confirm_Invoice,
+				$PrintDispatchNote,
+				$myrow['name'],
+				$myrow['brname'],
+				$myrow['customerref'],
+				$FormatedOrderDate,
+				$FormatedDelDate,
+				$myrow['deliverto'],
+				$FormatedOrderValue);
+		} else { /*must be quotes only */
+			printf("<td><A HREF='%s'>%s</A></td>
+				<td><A HREF='%s'>" . _('Print') . "</A></td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td ALIGN=RIGHT>%s</td>
+				</tr>",
+				$ModifyPage,
+				$myrow['orderno'],
+				$PrintQuotation,
+				$myrow['name'],
+				$myrow['brname'],
+				$myrow['customerref'],
+				$FormatedOrderDate,
+				$FormatedDelDate,
+				$myrow['deliverto'],
+				$FormatedOrderValue);
+		}
+		
 
 		$j++;
 		If ($j == 12){
@@ -428,4 +499,3 @@ If (isset($StockItemsResult)) {
 
 include('includes/footer.inc');
 ?>
-

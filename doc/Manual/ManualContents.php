@@ -596,6 +596,28 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
 <?php
   if (!isset($_POST['Submit'])) {
 ?>  
+              <input type="checkbox" name="SelectMultilanguage">
+              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=Multilanguage'; ?>">Multilanguage</A>
+<?php
+  } else {
+?>
+              <A HREF="#Multilanguage">Multilanguage</A>
+<?php	
+  }
+?>
+              <UL>
+                <LI>Introduction to Multilanguage</LI>
+                <LI>Rebuild the System Default Language File</LI>
+                <LI>Add a New Language to the System</LI>
+                <LI>Edit a Language File Header</LI>
+                <LI>Edit a Language File Module</LI>
+              </UL>
+              <BR>
+            </LI>
+            <LI>
+<?php
+  if (!isset($_POST['Submit'])) {
+?>  
               <input type="checkbox" name="SelectSpecialUtilities">
               <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=SpecialUtilities'; ?>">Special Utilities</A>
 <?php
@@ -746,6 +768,10 @@ if ($_GET['ViewTopic'] == 'Shipments' OR isset($_POST['SelectShipments'])) {
 
 if ($_GET['ViewTopic'] == 'GeneralLedger' OR isset($_POST['SelectGeneralLedger'])) {
   include('ManualGeneralLedger.html');
+}
+
+if ($_GET['ViewTopic'] == 'Multilanguage' OR isset($_POST['SelectMultilanguage'])) {
+  include('ManualMultilanguage.html');
 }
 
 if ($_GET['ViewTopic'] == 'SpecialUtilities' OR isset($_POST['SelectSpecialUtilities'])) {

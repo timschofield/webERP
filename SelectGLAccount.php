@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 8;
 
@@ -13,15 +13,15 @@ $msg='';
 
 If (isset($_POST['Select'])) {
 
-	$result = DB_query("SELECT AccountName FROM ChartMaster WHERE AccountCode=" . $_POST['Select'],$db);
+	$result = DB_query("SELECT accountname FROM chartmaster WHERE accountcode=" . $_POST['Select'],$db);
 	$myrow = DB_fetch_row($result);
 
 	echo '<p>' . _('Account Code') . ' <B>' . $_POST['Select'] . ' - ' . $myrow[0]  . ' </B>' . _('has been selected') . '. <br>' . _('Select one of the links below to operate using this Account') . '.';
 	$AccountID = $_POST['Select'];
 	$_POST['Select'] = NULL;
 
-	echo '<BR><A HREF="' . $rootpath . '/GLAccounts.php?' . SID . 'SelectedAccount=' . $AccountID . '">' . _('Edit Account') . '</A>';
-	echo '<BR><A HREF="' . $rootpath . '/GLAccountInquiry.php?' . SID . 'Account=' . $AccountID . '">' . _('Account Inquiry') . '</A>';
+	echo '<BR><A HREF="' . $rootpath . '/GLAccounts.php?' . SID . '&SelectedAccount=' . $AccountID . '">' . _('Edit Account') . '</A>';
+	echo '<BR><A HREF="' . $rootpath . '/GLAccountInquiry.php?' . SID . '&Account=' . $AccountID . '">' . _('Account Inquiry') . '</A>';
 	echo '<CENTER><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID .  '">' . _('New Search') . '</A></CENTER>';
 
 } elseif (isset($_POST['Search'])){
@@ -44,28 +44,30 @@ If (isset($_POST['Select'])) {
 			}
 			$SearchString = $SearchString. substr($_POST['Keywords'],$i) . '%';
 
-			$SQL = "SELECT AccountCode,
-					AccountName,
-					ChartMaster.Group_,
-					IF(PandL!=0,'Profit and Loss','Balance Sheet') AS PL
-				FROM ChartMaster,
-					AccountGroups
-				WHERE ChartMaster.Group_ = AccountGroups.GroupName
-				AND AccountName LIKE '$SearchString'
-				ORDER BY AccountGroups.SequenceInTB,
-					ChartMaster.AccountCode";
+			$SQL = "SELECT chartmaster.accountcode,
+					chartmaster.accountname,
+					chartmaster.group_,
+					CASE WHEN accountgroups.pandl!=0 
+						THEN '" . _('Profit and Loss') . "' 
+						ELSE '" . _('Balance Sheet') . "' END AS pl
+				FROM chartmaster,
+					accountgroups
+				WHERE chartmaster.group_ = accountgroups.groupname
+				AND accountname " . LIKE  . " '$SearchString'
+				ORDER BY accountgroups.sequenceintb,
+					chartmaster.accountcode";
 
 		} elseif (strlen($_POST['GLCode'])>0 AND is_numeric($_POST['GLCode'])){
 
-			$SQL = "SELECT AccountCode,
-					AccountName,
-					Group_,
-					IF(PandL!=0,'Profit and Loss','Balance Sheet') AS PL
-					FROM ChartMaster,
-						AccountGroups
-					WHERE ChartMaster.Group_=AccountGroups.GroupName
-					AND AccountCode >= " . $_POST['GLCode'] . "
-					ORDER BY ChartMaster.AccountCode";
+			$SQL = "SELECT chartmaster.accountcode,
+					chartmasteraccountname,
+					chartmaster.group_,
+					CASE WHEN accountgroups.pandl!=0 THEN '" . _('Profit and Loss') . "' ELSE '" . _('Balance Sheet') ."' END AS pl
+					FROM chartmaster,
+						accountgroups
+					WHERE chartmaster.group_=accountgroups.groupname
+					AND chartmaster.accountcode >= " . $_POST['GLCode'] . "
+					ORDER BY chartmaster.accountcode";
 		} elseif(!is_numeric($_POST['GLCode'])){
 			prnMsg(_('The general ledger code specified must be numeric - all account numbers must be numeric'),'warn');
 			unset($SQL);
@@ -120,10 +122,10 @@ If (isset($result)) {
                 <td><FONT SIZE=1>%s</FONT></td>
                 <td><FONT SIZE=1>%s</FONT></td>
                 </tr>",
-                $myrow['AccountCode'],
-                $myrow['AccountName'],
-                $myrow['Group_'],
-                $myrow['PL']);
+                $myrow['accountcode'],
+                $myrow['accountname'],
+                $myrow['group_'],
+                $myrow['pl']);
 
 		$j++;
 		If ($j == 12){

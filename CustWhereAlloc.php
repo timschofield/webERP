@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -12,17 +12,17 @@ echo '<CENTER><TABLE CELLPADDING=2><TR>';
 
 echo "<TD>Type:</TD><TD><SELECT name='TransType'> ";
 
-$sql = 'SELECT TypeID, TypeName FROM SysTypes WHERE TypeID = 10 OR TypeID=12';
+$sql = 'SELECT typeid, typename FROM systypes WHERE typeid = 10 OR typeid=12';
 $resultTypes = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultTypes)){
     if (isset($_POST['TransType'])){
-        if ($myrow['TypeID'] == $_POST['TransType']){
-             echo "<OPTION SELECTED Value='" . $myrow['TypeID'] . "'>" . $myrow['TypeName'];
+        if ($myrow['typeid'] == $_POST['TransType']){
+             echo "<OPTION SELECTED Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
         } else {
-             echo "<OPTION Value='" . $myrow['TypeID'] . "'>" . $myrow['TypeName'];
+             echo "<OPTION Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
         }
     } else {
-             echo "<OPTION Value='" . $myrow['TypeID'] . "'>" . $myrow['TypeName'];
+             echo "<OPTION Value='" . $myrow['typeid'] . "'>" . $myrow['typename'];
     }
 }
 echo '</SELECT></TD>';
@@ -39,30 +39,30 @@ if (isset($_POST['ShowResults'])){
 
 
 /*First off get the DebtorTransID of the transaction (invoice normally) selected */
-    $sql = 'SELECT ID,
-    		OvAmount+OvGST AS TotAmt
-		FROM DebtorTrans
-		WHERE Type=' . $_POST['TransType'] . ' AND TransNo = ' . $_POST['TransNo'];
+    $sql = 'SELECT id,
+    		ovamount+ovgst AS totamt
+		FROM debtortrans
+		WHERE type=' . $_POST['TransType'] . ' AND transno = ' . $_POST['TransNo'];
 
     $result = DB_query($sql , $db);
 
     if (DB_num_rows($result)==1){
         $myrow = DB_fetch_array($result);
-        $AllocToID = $myrow['ID'];
+        $AllocToID = $myrow['id'];
 
-        echo '<CENTER><FONT SIZE=3><B><BR>'._('Allocations made against invoice number') . ' ' . $_POST['TransNo'] . ' '._('Transaction Total').': '. number_format($myrow['TotAmt'],2) . '</FONT></B>';
+        echo '<CENTER><FONT SIZE=3><B><BR>'._('Allocations made against invoice number') . ' ' . $_POST['TransNo'] . ' '._('Transaction Total').': '. number_format($myrow['totamt'],2) . '</FONT></B>';
 
-        $sql = "SELECT Type,
-			TransNo,
-			TranDate,
-			DebtorTrans.DebtorNo,
-			Reference,
-			Rate,
-			OvAmount+OvGST+OvFreight+OvDiscount AS TotalAmt,
-			CustAllocns.Amt
-		FROM DebtorTrans
-			INNER JOIN CustAllocns ON DebtorTrans.ID=CustAllocns.TransID_AllocFrom
-		WHERE CustAllocns.TransID_AllocTo=". $AllocToID;
+        $sql = "SELECT type,
+			transno,
+			trandate,
+			debtortrans.debtorno,
+			reference,
+			rate,
+			ovamount+ovgst+ovfreight+ovdiscount as totalamt,
+			custallocns.amt
+		FROM debtortrans
+			INNER JOIN custallocns ON debtortrans.id=custallocns.transid_allocfrom
+		WHERE custallocns.transid_allocto=". $AllocToID;
 
         $ErrMsg = _('The customer transactions for the selected criteria could not be retrieved because');
 
@@ -93,7 +93,7 @@ if (isset($_POST['ShowResults'])){
                 $k++;
             }
 
-            if ($myrow['Type']==11){
+            if ($myrow['type']==11){
                 $TransType = _('Credit Note');
             } else {
                 $TransType = _('Receipt');
@@ -106,11 +106,11 @@ if (isset($_POST['ShowResults'])){
 			<td ALIGN=RIGHT>%s</td>
 			</tr>",
 			$TransType,
-			$myrow['TransNo'],
-			$myrow['Reference'],
-			$myrow['Rate'],
-			$myrow['TotalAmt'],
-			$myrow['Amt']);
+			$myrow['transno'],
+			$myrow['reference'],
+			$myrow['rate'],
+			$myrow['totalamt'],
+			$myrow['amt']);
 
             $RowCounter++;
             If ($RowCounter == 12){
@@ -118,7 +118,7 @@ if (isset($_POST['ShowResults'])){
                 echo $tableheader;
             }
             //end of page full new headings if
-            $AllocsTotal +=$myrow['Amt'];
+            $AllocsTotal +=$myrow['amt'];
         }
         //end of while loop
         echo '<TR><TD COLSPAN = 6 ALIGN=RIGHT>' . number_format($AllocsTotal,2) . '</TD></TR>';

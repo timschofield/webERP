@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -14,40 +14,40 @@ if (isset($_GET['StockID'])){
 	$StockID = $_POST['StockID'];
 }
 
-$result = DB_query("SELECT Description, Units FROM StockMaster WHERE StockID='$StockID'",$db);
+$result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='$StockID'",$db);
 $myrow = DB_fetch_row($result);
-echo "<BR><FONT COLOR=BLUE SIZE=3><B>$StockID - $myrow[0] </B>  (" . _('In units of') . " $myrow[1])</FONT>";
+echo "<CENTER><BR><FONT COLOR=BLUE SIZE=3><B>$StockID - $myrow[0] </B>  (" . _('In units of') . " $myrow[1])</FONT>";
 
 echo "<FORM ACTION='". $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 echo _('Stock Code') . ":<INPUT TYPE=TEXT NAME='StockID' SIZE=21 VALUE='$StockID' MAXLENGTH=20>";
 
 echo '  ' . _('From Stock Location') . ":<SELECT NAME='StockLocation'> ";
 
-$sql = 'SELECT LocCode, LocationName FROM Locations';
+$sql = 'SELECT loccode, locationname FROM locations';
 $resultStkLocs = DB_query($sql,$db);
 
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation']) AND $_POST['StockLocation']!='All'){
-		if ($myrow['LocCode'] == $_POST['StockLocation']){
-		     echo "<OPTION SELECTED VALUE='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
+		if ($myrow['loccode'] == $_POST['StockLocation']){
+		     echo "<OPTION SELECTED VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 		} else {
-		     echo "<OPTION VALUE='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
+		     echo "<OPTION VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 		}
-	} elseif ($myrow['LocCode']==$_SESSION['UserStockLocation']){
-		 echo "<OPTION SELECTED VALUE='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
-		 $_POST['StockLocation']=$myrow['LocCode'];
+	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
+		 echo "<OPTION SELECTED VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+		 $_POST['StockLocation']=$myrow['loccode'];
 	} else {
-		 echo "<OPTION VALUE='" . $myrow['LocCode'] . "'>" . $myrow['LocationName'];
+		 echo "<OPTION VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 	}
 }
 
 echo '</SELECT><BR>';
 
 if (!isset($_POST['BeforeDate']) OR !Is_Date($_POST['BeforeDate'])){
-   $_POST['BeforeDate'] = Date($DefaultDateFormat);
+   $_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])){
-   $_POST['AfterDate'] = Date($DefaultDateFormat, Mktime(0,0,0,Date("m")-3,Date("d"),Date("y")));
+   $_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date("m")-3,Date("d"),Date("y")));
 }
 echo ' ' . _('Show Movements before') . ": <INPUT TYPE=TEXT NAME='BeforeDate' SIZE=12 MAXLENGTH=12 VALUE='" . $_POST['BeforeDate'] . "'>";
 echo ' ' . _('But after') . ": <INPUT TYPE=TEXT NAME='AfterDate' SIZE=12 MAXLENGTH=12 VALUE='" . $_POST['AfterDate'] . "'>";
@@ -57,28 +57,28 @@ echo '<HR>';
 $SQLBeforeDate = FormatDateForSQL($_POST['BeforeDate']);
 $SQLAfterDate = FormatDateForSQL($_POST['AfterDate']);
 
-$sql = "SELECT StockMoves.StockID,
-		SysTypes.TypeName,
-		StockMoves.Type,
-		StockMoves.TransNo,
-		StockMoves.TranDate,
-		StockMoves.DebtorNo,
-		StockMoves.BranchCode,
-		StockMoves.Qty,
-		StockMoves.Reference,
-		StockMoves.Price,
-		StockMoves.DiscountPercent,
-		StockMoves.NewQOH,
-		StockMaster.DecimalPlaces
-	FROM StockMoves
-	INNER JOIN SysTypes ON StockMoves.Type=SysTypes.TypeID
-	INNER JOIN StockMaster ON StockMoves.StockID=StockMaster.StockID
-	WHERE  StockMoves.LocCode='" . $_POST['StockLocation'] . "'
-	AND StockMoves.TranDate >= '". $SQLAfterDate . "'
-	AND StockMoves.StockID = '" . $StockID . "'
-	AND StockMoves.TranDate <= '" . $SQLBeforeDate . "'
-	AND HideMovt=0
-	ORDER BY StkMoveNo DESC";
+$sql = "SELECT stockmoves.stockid,
+		systypes.typename,
+		stockmoves.type,
+		stockmoves.transno,
+		stockmoves.trandate,
+		stockmoves.debtorno,
+		stockmoves.branchcode,
+		stockmoves.qty,
+		stockmoves.reference,
+		stockmoves.price,
+		stockmoves.discountpercent,
+		stockmoves.newqoh,
+		stockmaster.decimalplaces
+	FROM stockmoves
+	INNER JOIN systypes ON stockmoves.type=systypes.typeid
+	INNER JOIN stockmaster ON stockmoves.stockid=stockmaster.stockid
+	WHERE  stockmoves.loccode='" . $_POST['StockLocation'] . "'
+	AND stockmoves.trandate >= '". $SQLAfterDate . "'
+	AND stockmoves.stockid = '" . $StockID . "'
+	AND stockmoves.trandate <= '" . $SQLBeforeDate . "'
+	AND hidemovt=0
+	ORDER BY stkmoveno DESC";
 
 $ErrMsg = _('The stock movements for the selected criteria could not be retrieved because') . ' - ';
 $DbgMsg = _('The SQL that failed was') . ' ';
@@ -109,9 +109,9 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 		$k=1;
 	}
 
-	$DisplayTranDate = ConvertSQLDate($myrow['TranDate']);
+	$DisplayTranDate = ConvertSQLDate($myrow['trandate']);
 
-	if ($myrow['Type']==10){ /*its a sales invoice allow link to show invoice it was sold on*/
+	if ($myrow['type']==10){ /*its a sales invoice allow link to show invoice it was sold on*/
 
 		printf("<TD><A TARGET='_blank' HREF='%s/PrintCustTrans.php?%s&FromTransNo=%s&InvOrCredit=Invoice'>%s</TD>
 		<TD>%s</TD>
@@ -126,19 +126,20 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 		</TR>",
 		$rootpath,
 		SID,
-		$myrow['TransNo'],
-		$myrow['TypeName'],
-		$myrow['TransNo'],
+		$myrow['transno'],
+		$myrow['typename'],
+		$myrow['transno'],
 		$DisplayTranDate,
-		$myrow['DebtorNo'],
-		$myrow['BranchCode'],
-		number_format($myrow['Qty'],$myrow['DecimalPlaces']),
-		$myrow['Reference'],
-		number_format($myrow['Price'],2),
-		number_format($myrow['DiscountPercent']*100,2),
-		number_format($myrow['NewQOH'],$myrow['DecimalPlaces']));
+		$myrow['debtorno'],
+		$myrow['branchcode'],
+		number_format($myrow['qty'],
+		$myrow['decimalplaces']),
+		$myrow['reference'],
+		number_format($myrow['price'],2),
+		number_format($myrow['discountpercent']*100,2),
+		number_format($myrow['newqoh'],$myrow['decimalplaces']));
 
-	} elseif ($myrow['Type']==11){
+	} elseif ($myrow['type']==11){
 
 		printf("<TD><A TARGET='_blank' HREF='%s/PrintCustTrans.php?%s&FromTransNo=%s&InvOrCredit=Credit'>%s</TD>
 		<TD>%s</TD>
@@ -153,17 +154,17 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 		</TR>",
 		$rootpath,
 		SID,
-		$myrow['TransNo'],
-		$myrow['TypeName'],
-		$myrow['TransNo'],
+		$myrow['transno'],
+		$myrow['typename'],
+		$myrow['transno'],
 		$DisplayTranDate,
-		$myrow['DebtorNo'],
-		$myrow['BranchCode'],
-		number_format($myrow['Qty'],$myrow['DecimalPlaces']),
-		$myrow['Reference'],
-		number_format($myrow['Price'],2),
-		number_format($myrow['DiscountPercent']*100,2),
-		number_format($myrow['NewQOH'],$myrow['DecimalPlaces']));
+		$myrow['debtorno'],
+		$myrow['branchcode'],
+		number_format($myrow['qty'],$myrow['decimalplaces']),
+		$myrow['reference'],
+		number_format($myrow['price'],2),
+		number_format($myrow['discountpercent']*100,2),
+		number_format($myrow['newqoh'],$myrow['decimalplaces']));
 	} else {
 
 		printf("<TD>%s</TD>
@@ -177,16 +178,16 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 			<TD ALIGN=RIGHT>%s%%</TD>
 			<TD ALIGN=RIGHT>%s</TD>
 			</TR>",
-			$myrow['TypeName'],
-			$myrow['TransNo'],
+			$myrow['typename'],
+			$myrow['transno'],
 			$DisplayTranDate,
-			$myrow['DebtorNo'],
-			$myrow['BranchCode'],
-			number_format($myrow['Qty'],$myrow['DecimalPlaces']),
-			$myrow['Reference'],
-			number_format($myrow['Price'],2),
-			number_format($myrow['DiscountPercent']*100,2),
-			number_format($myrow['NewQOH'],$myrow['DecimalPlaces']));
+			$myrow['debtorno'],
+			$myrow['branchcode'],
+			number_format($myrow['qty'],$myrow['decimalplaces']),
+			$myrow['reference'],
+			number_format($myrow['price'],2),
+			number_format($myrow['discountpercent']*100,2),
+			number_format($myrow['newqoh'],$myrow['decimalplaces']));
 	}
 	$j++;
 	If ($j == 12){
@@ -203,7 +204,7 @@ echo "<BR><A HREF='$rootpath/StockUsage.php?" . SID . "&StockID=$StockID&StockLo
 echo "<BR><A HREF='$rootpath/SelectSalesOrder.php?" . SID . "&SelectedStockItem=$StockID&StockLocation=" . $_POST['StockLocation'] . "'>" . _('Search Outstanding Sales Orders') . '</A>';
 echo "<BR><A HREF='$rootpath/SelectCompletedOrder.php?" . SID . "&SelectedStockItem=$StockID'>" . _('Search Completed Sales Orders') . '</A>';
 
-echo '</FORM>';
+echo '</FORM></CENTER>';
 
 include('includes/footer.inc');
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /*Code to print footer details for each supplier being paid and process payment total for each supplier
 as necessary an include file used since the same code is used twice */
 $YPos -= (0.5*$line_height);
@@ -25,17 +25,17 @@ if (isset($_POST['PrintPDFAndProcess'])){
 
 	/*Do the inserts for the payment transaction into the Supp Trans table*/
 
-	$SQL = "INSERT INTO SuppTrans (Type,
-					TransNo,
-					SuppReference,
-					SupplierNo,
-					TranDate,
-					DueDate,
-					Settled,
-					Rate,
-					OvAmount,
-					DiffOnExch,
-					Alloc) ";
+	$SQL = "INSERT INTO supptrans (type,
+					transno,
+					suppreference,
+					supplierno,
+					trandate,
+					duedate,
+					settled,
+					rate,
+					ovamount,
+					diffonexch,
+					alloc) ";
 	$SQL = $SQL .  "VALUES (22,
 				" . $SuppPaymentNo . ",
 				'" . $PaytReference . "',
@@ -56,23 +56,23 @@ if (isset($_POST['PrintPDFAndProcess'])){
 		if ($debug==1){
 			echo "<BR>" . _("The SQL that failed was") . " $SQL";
 		}
-		$SQL= "rollback";
+		$SQL= 'rollback';
 		$ProcessResult = DB_query($SQL,$db);
 
-		include("includes/footer.inc");
+		include('includes/footer.inc');
 		exit;
 	}
 
-	$PaymentTransID = DB_Last_Insert_ID($db);
+	$PaymentTransID = DB_Last_Insert_ID($db,'supptrans','id');
 
 	/*Do the inserts for the allocation record against the payment for this charge */
 
 	foreach ($Allocs AS $AllocTrans){ /*loop through the array of allocations */
 
-		$SQL = 'INSERT INTO SuppAllocs (Amt,
-						DateAlloc,
-						TransID_AllocFrom,
-						TransID_AllocTo)
+		$SQL = 'INSERT INTO suppallocs (amt,
+						datealloc,
+						transid_allocfrom,
+						transid_allocto)
 				VALUES (' . $AllocTrans->Amount . ',
 		                         "' . FormatDateForSQL($_POST['AmountsDueBy']) . '",
                 	                ' . $PaymentTransID . ',
@@ -96,12 +96,12 @@ if (isset($_POST['PrintPDFAndProcess'])){
 
 
 	/*Do the inserts for the payment transaction into the BankTrans table*/
-	$SQL="INSERT INTO BankTrans (BankAct,
-					Ref,
-					ExRate,
-					TransDate,
-					BankTransType,
-					Amount) ";
+	$SQL="INSERT INTO banktrans (bankact,
+					ref,
+					exrate,
+					transdate,
+					banktranstype,
+					amount) ";
    	$SQL = $SQL .  "VALUES ( " . $_POST['BankAccount'] . ",
 				'" . $PaytReference . " " . $SupplierID . "',
 				" . $_POST['ExRate'] . ",
@@ -117,67 +117,67 @@ if (isset($_POST['PrintPDFAndProcess'])){
 		if ($debug==1){
 			echo "<BR>" . _("The SQL that failed was") . " $SQL";
 		}
-		$SQL= "rollback";
+		$SQL= 'rollback';
 		$ProcessResult = DB_query($SQL,$db);
 
-		include("includes/footer.inc");
+		include('includes/footer.inc');
 		exit;
 	}
 
 
 	/*If the General Ledger Link is activated */
-	if ($CompanyRecord["GLLink_Creditors"]==1){
+	if ($_SESSION['CompanyRecord']['gllink_creditors']==1){
 
 		$PeriodNo = GetPeriod($_POST['AmountsDueBy'],$db);
 
 		/*Do the GL trans for the payment CR bank */
 
-		$SQL = "INSERT INTO GLTrans (Type,
-						TypeNo,
-						TranDate,
-						PeriodNo,
-						Account,
-						Narrative,
-						Amount )
+		$SQL = "INSERT INTO gltrans (type,
+						typeno,
+						trandate,
+						periodno,
+						account,
+						narrative,
+						amount )
 				VALUES (22,
 					" . $SuppPaymentNo . ",
 					'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
 					" . $PeriodNo . ",
 					" . $_POST['BankAccount'] . ",
-					'" . $SupplierID . " - " . $SupplierName . ' ' . _('payment run on') . ' ' . Date($DefaultDateFormat) . ' - ' . $PaytReference . "',
+					'" . $SupplierID . " - " . $SupplierName . ' ' . _('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . ' - ' . $PaytReference . "',
 					" . (-$AccumBalance/ $_POST['ExRate']) . ")";
 
 		$ProcessResult = DB_query($SQL,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
-			$title = _("Payment Processing") . " - " . _("Problem Report") . ".... ";
-			include("includes/header.inc");
-			echo "<BR>" . _("None of the payments will be processed since the general ledger posting for the payment to") . " " . $SupplierName . " " . _("could not be inserted because") . " - " . DB_error_msg($db);
-			echo "<BR><A HREF='$rootpath/index.php'>" . _("Back to the menu") . "</A>";
+			$title = _('Payment Processing') . ' - ' . _('Problem Report') . '.... ';
+			include('includes/header.inc');
+			echo '<BR>' . _('None of the payments will be processed since the general ledger posting for the payment to') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg($db);
+			echo "<BR><A HREF='$rootpath/index.php'>" . _('Back to the menu') . '</A>';
 			if ($debug==1){
-				echo "<BR>" . _("The SQL that failed was") . " $SQL";
+				echo '<BR>' . _('The SQL that failed was') . ':<BR>' . $SQL;
 			}
-			$SQL= "rollback";
+			$SQL= 'rollback';
 			$ProcessResult = DB_query($SQL,$db);
 
-			include("includes/footer.inc");
+			include('includes/footer.inc');
 			exit;
 		}
 
 		/*Do the GL trans for the payment DR creditors */
 
-		$SQL = 'INSERT INTO GLTrans (Type,
-						TypeNo,
-						TranDate,
-						PeriodNo,
-						Account,
-						Narrative,
-						Amount )
+		$SQL = 'INSERT INTO gltrans (type,
+						typeno,
+						trandate,
+						periodno,
+						account,
+						narrative,
+						amount )
 				VALUES (22,
 					' . $SuppPaymentNo . ",
 					'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
 					" . $PeriodNo . ',
-					' . $CompanyRecord['CreditorsAct'] . ",
-					'" . $SupplierID . ' - ' . $SupplierName . ' ' . _('payment run on') . ' ' . Date($DefaultDateFormat) . ' - ' . $PaytReference . "',
+					' . $_SESSION['CompanyRecord']['creditorsact'] . ",
+					'" . $SupplierID . ' - ' . $SupplierName . ' ' . _('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . ' - ' . $PaytReference . "',
 					" . ($AccumBalance/ $_POST['ExRate']  + $AccumDiffOnExch) . ')';
 
 		$ProcessResult = DB_query($SQL,$db,'','',false,false);
@@ -187,30 +187,30 @@ if (isset($_POST['PrintPDFAndProcess'])){
 			echo '<BR>' . _('None of the payments will be processed since the general ledger posting for the payment to') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg($db);
 			echo "<BR><A HREF='$rootpath/index.php'>" . _('Back to the menu') . '</A>';
 			if ($debug==1){
-				echo '<BR>' . _('The SQL that failed was') . " $SQL";
+				echo '<BR>' . _('The SQL that failed was') . ':<BR>' . $SQL;
 			}
 			$SQL= 'rollback';
 			$ProcessResult = DB_query($SQL,$db);
 
-			echo '</body</html>';
+			include('includes/footer.inc');
 			exit;
 		}
 
 		/*Do the GL trans for the exch diff */
 		if ($AccumDiffOnExch != 0){
-			$SQL = 'INSERT INTO GLTrans (Type,
-							TypeNo,
-							TranDate,
-							PeriodNo,
-							Account,
-							Narrative,
-							Amount )
+			$SQL = 'INSERT INTO gltrans (type,
+							typeno,
+							trandate,
+							periodno,
+							account,
+							narrative,
+							amount )
 						VALUES (22,
 							' . $SuppPaymentNo . ",
 							'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
 							" . $PeriodNo . ',
-							' . $CompanyRecord['PurchasesExchangeDiffAct'] . ",
-							'" . $SupplierID . ' - ' . $SupplierName . ' ' . _('payment run on') . ' ' . Date($DefaultDateFormat) . " - " . $PaytReference . "',
+							' . $_SESSION['CompanyRecord']['purchasesexchangediffact'] . ",
+							'" . $SupplierID . ' - ' . $SupplierName . ' ' . _('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . " - " . $PaytReference . "',
 							" . (-$AccumDiffOnExch) . ")";
 
 			$ProcessResult = DB_query($SQL,$db,'','',false,false);

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /* definition of the Debtor Receipt/Credit note allocation class */
 
 Class Allocation {

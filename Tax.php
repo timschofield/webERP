@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 2;
 
@@ -29,9 +29,9 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 	include('includes/PDFStarter_ros.inc');
 
 
-	$sql = 'SELECT LastDate_In_Period 
-		FROM Periods 
-		WHERE PeriodNo=' . $_POST['ToPeriod'];
+	$sql = 'SELECT lastdate_in_period 
+		FROM periods 
+		WHERE periodno=' . $_POST['ToPeriod'];
 	$ErrMsg = _('Could not determine the last date of the period selected') . '. ' . _('The sql returned the following error');
 	$PeriodEndResult = DB_query($sql,$db,$ErrMsg);
 	$PeriodEndRow = DB_fetch_row($PeriodEndResult);
@@ -50,24 +50,24 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 
       /*Now get the invoices for the tax report */
 
-	$SQL = 'SELECT DebtorTrans.TransNo,
-			DebtorTrans.Type,
-			SysTypes.TypeName,
-			DebtorTrans.TranDate,
-			DebtorTrans.DebtorNo,
-			DebtorsMaster.Name,
-			DebtorTrans.BranchCode,
-			DebtorTrans.Order_,
-			(OvAmount+OvFreight)/Rate AS NetAmount,
-			OvFreight/Rate AS FreightAmount,
-			OvGST/Rate AS Tax
-		FROM DebtorTrans
-		INNER JOIN DebtorsMaster ON DebtorTrans.DebtorNo=DebtorsMaster.DebtorNo
-		INNER JOIN SysTypes ON DebtorTrans.Type=SysTypes.TypeID
-		WHERE DebtorTrans.Prd >= ' . ($_POST['ToPeriod'] - $_POST['NoOfPeriods'] + 1) . '
-		AND DebtorTrans.Prd <= ' . $_POST['ToPeriod'] . '
-		AND (DebtorTrans.Type=10 OR DebtorTrans.Type=11)
-		ORDER BY DebtorTrans.ID';
+	$SQL = 'SELECT debtortrans.transno,
+			debtortrans.type,
+			systypes.typename,
+			debtortrans.trandate,
+			debtortrans.debtorno,
+			debtorsmaster.name,
+			debtortrans.branchcode,
+			debtortrans.order_,
+			(ovamount+ovfreight)/rate AS netamount,
+			ovfreight/rate AS freightamount,
+			ovgst/rate AS tax
+		FROM debtortrans
+		INNER JOIN debtorsmaster ON debtortrans.tebtorno=debtorsmaster.debtorno
+		INNER JOIN systypes ON debtortrans.type=systypes.typeid
+		WHERE debtortrans.prd >= ' . ($_POST['ToPeriod'] - $_POST['NoOfPeriods'] + 1) . '
+		AND debtortrans.prd <= ' . $_POST['ToPeriod'] . '
+		AND (debtortrans.type=10 OR debtortrans.type=11)
+		ORDER BY debtortrans.id';
 
 	$DebtorTransResult = DB_query($SQL,$db,'','',false,false); //doint trap errors in DB_query
 
@@ -94,58 +94,58 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 
 
 		/*Now need to figure out if the line items on the transation were all taxable */
-		$SQL = 'SELECT TaxRate,
-				Price*-Qty*(1-DiscountPercent) AS LineNetAmt,
-				Price*-Qty*TaxRate*(1-DiscountPercent) AS LineTaxAmt
-			FROM StockMoves
-			WHERE Type=' . $DebtorTransRow['Type'] . '
-			AND TransNo=' . $DebtorTransRow['TransNo'] . '
-			AND Show_On_Inv_Crds=1';
+		$SQL = 'SELECT taxrate,
+				price*-qty*(1-discountpercent) AS linenetamt,
+				price*-qty*taxrate*(1-discountpercent) AS linetaxamt
+			FROM stockmoves
+			WHERE type=' . $DebtorTransRow['type'] . '
+			AND transno=' . $DebtorTransRow['transno'] . '
+			AND show_on_inv_crds=1';
 
-		$ErrMsg = _('Could not retrieve the line item tax amounts for') . ' ' . $DebtorTransRow['TypeName'] . ' ' . $DebtorTranRow['TransNo'];
+		$ErrMsg = _('Could not retrieve the line item tax amounts for') . ' ' . $DebtorTransRow['typename'] . ' ' . $DebtorTransRow['transno'];
 
 		$LineItemsResult = DB_query($SQL, $db, $ErrMsg);
 
-		$TransTaxLeft = $DebtorTransRow['Tax'];
+		$TransTaxLeft = $DebtorTransRow['tax'];
 
 		While ($LineItemsRow = DB_fetch_array($LineItemsResult,$db)){
 
-			$LineItemsRow['TaxRate'] = number_format($LineItemsRow['TaxRate'],2);
+			$LineItemsRow['taxrate'] = number_format($LineItemsRow['taxrate'],2);
 
-			if (! isset($Taxes[$LineItemsRow['TaxRate']]->Rate)){
-				$Taxes[$LineItemsRow['TaxRate']] = new Tax((float) $LineItemsRow['TaxRate']);
+			if (! isset($Taxes[$LineItemsRow['taxrate']]->Rate)){
+				$Taxes[$LineItemsRow['taxrate']] = new Tax((float) $LineItemsRow['taxrate']);
 			}
 
-			$Taxes[$LineItemsRow['TaxRate']]->OutputAmount += $LineItemsRow['LineNetAmt'];
-			$Taxes[$LineItemsRow['TaxRate']]->OutputTax += $LineItemsRow['LineTaxAmt'];
-			$TransTaxLeft -= $LineItemsRow['LineTaxAmt'];
+			$Taxes[$LineItemsRow['taxrate']]->OutputAmount += $LineItemsRow['linenetamt'];
+			$Taxes[$LineItemsRow['taxrate']]->OutputTax += $LineItemsRow['linetaxamt'];
+			$TransTaxLeft -= $LineItemsRow['linetaxamt'];
 		} /* end of loop around invoice/credit note line items */
 
-		if ($DebtorTransRow['FreightAmount']!=0){
-			$FreightRate = number_format(ABS($TransTaxLeft/$DebtorTransRow['FreightAmount']),2);
+		if ($DebtorTransRow['freightamount']!=0){
+			$FreightRate = number_format(ABS($TransTaxLeft/$DebtorTransRow['freightamount']),2);
 
 			if (!isset($Taxes[$FreightRate]->Rate)){
 				$Taxes[$FreightRate] = new Tax((float) $FreightRate);
 			}
-			$Taxes[$FreightRate]->OutputAmount += $DebtorTransRow['FreightAmount'];
+			$Taxes[$FreightRate]->OutputAmount += $DebtorTransRow['freightamount'];
 			$Taxes[$FreightRate]->OutputTax += $TransTaxLeft;
 			$TransTaxLeft =0;
 		}
 
 
 		if (ABS(round($TransTaxLeft,2))>0.01){
-			$WarningMessage[$MessageCounter] =  _('The total tax on') . ' ' . $DebtorTransRow['TypeName'] . ' ' . $DebtorTransRow['TransNo'] . ' ' . _('of') . $LineItemsRow['LineTaxAmt'] . ' ' . _('as per the transaction header record was not equal to the sum of the line items') . ' - ' . _('there is a data inconsistency of') . ' ' . $TransTaxLeft ;
+			$WarningMessage[$MessageCounter] =  _('The total tax on') . ' ' . $DebtorTransRow['typename'] . ' ' . $DebtorTransRow['transno'] . ' ' . _('of') . $LineItemsRow['linetaxamt'] . ' ' . _('as per the transaction header record was not equal to the sum of the line items') . ' - ' . _('there is a data inconsistency of') . ' ' . $TransTaxLeft ;
 			$MessageCounter++;
 		}
 
 		if ($_POST['DetailOrSummary']=='Detail'){
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize, $DebtorTransRow['TypeName'],'left');
-			$LeftOvers = $pdf->addTextWrap(100,$YPos,40,$FontSize, $DebtorTransRow['TransNo'],'left');
-			$LeftOvers = $pdf->addTextWrap(140,$YPos,60,$FontSize,ConvertSQLDate($DebtorTransRow['TranDate']),'left');
-			$LeftOvers = $pdf->addTextWrap(200,$YPos,150,$FontSize, $DebtorTransRow['Name'],'left');
-			$LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize, $DebtorTransRow['BranchCode'],'left');
-			$LeftOvers = $pdf->addTextWrap(410,$YPos,60,$FontSize, number_format($DebtorTransRow['NetAmount'],2),'right');
-			$LeftOvers = $pdf->addTextWrap(470,$YPos,60,$FontSize, number_format($DebtorTransRow['Tax'],2),'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize, $DebtorTransRow['typename'],'left');
+			$LeftOvers = $pdf->addTextWrap(100,$YPos,40,$FontSize, $DebtorTransRow['transno'],'left');
+			$LeftOvers = $pdf->addTextWrap(140,$YPos,60,$FontSize,ConvertSQLDate($DebtorTransRow['trandate']),'left');
+			$LeftOvers = $pdf->addTextWrap(200,$YPos,150,$FontSize, $DebtorTransRow['name'],'left');
+			$LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize, $DebtorTransRow['branchcode'],'left');
+			$LeftOvers = $pdf->addTextWrap(410,$YPos,60,$FontSize, number_format($DebtorTransRow['netamount'],2),'right');
+			$LeftOvers = $pdf->addTextWrap(470,$YPos,60,$FontSize, number_format($DebtorTransRow['tax'],2),'right');
 
 			$YPos -=$line_height;
 			if ($YPos < $Bottom_Margin + $line_height){
@@ -188,27 +188,27 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 	/*Only have dates in SuppTrans no periods so need to get the starting date */
 
 	$Date_Array = explode('/',$PeriodEnd);
-	if ($DefaultDateFormat=='d/m/Y'){
+	if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
 		$StartDateSQL = Date('Y-m-d', mktime(0,0,0, (int)$Date_Array[1]-$_POST['NoOfPeriods']+1,1,(int)$Date_Array[2]));
-	} elseif ($DefaultDateFormat=='m/d/Y') {
+	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y') {
 		$StartDateSQL = Date('Y-m-d', mktime(0,0,0, (int)$Date_Array[0]-$_POST['NoOfPeriods']+1,1,(int)$Date_Array[2]));
 	}
 
 
-	$SQL = "SELECT SuppTrans.Type,
-			SuppTrans.SuppReference,
-			SysTypes.TypeName,
-			SuppTrans.TranDate,
-			Suppliers.SuppName,
-   			SuppTrans.OvAmount/SuppTrans.Rate AS NetAmount,
-			SuppTrans.OvGST/SuppTrans.Rate AS TaxAmt
-		FROM SuppTrans
-		INNER JOIN Suppliers ON SuppTrans.SupplierNo=Suppliers.SupplierID
-		INNER JOIN SysTypes ON SuppTrans.Type=SysTypes.TypeID
-		WHERE SuppTrans.TranDate >= '" . $StartDateSQL . "'
-		AND SuppTrans.TranDate <= '" . FormatDateForSQL($PeriodEnd) . "'
-		AND (SuppTrans.Type=20 OR SuppTrans.Type=21)
-		ORDER BY SuppTrans.ID";
+	$SQL = "SELECT supptrans.type,
+			supptrans.suppreference,
+			systypes.typename,
+			supptrans.trandate,
+			suppliers.suppname,
+   			supptrans.ovamount/supptrans.rate AS netamount,
+			supptrans.ovgst/supptrans.rate AS taxamt
+		FROM supptrans
+		INNER JOIN suppliers ON supptrans.supplierno=suppliers.supplierid
+		INNER JOIN systypes ON supptrans.type=systypes.typeid
+		WHERE supptrans.trandate >= '" . $StartDateSQL . "'
+		AND supptrans.trandate <= '" . FormatDateForSQL($PeriodEnd) . "'
+		AND (supptrans.type=20 OR supptrans.type=21)
+		ORDER BY supptrans.id";
 
 	$SuppTransResult = DB_query($SQL,$db,'','',false,false); //doint trap errors in DB_query
 
@@ -232,7 +232,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 
 	While ($SuppTransRow = DB_fetch_array($SuppTransResult,$db)){
 
-		/*$TaxRate = number_format($SuppTransRow['TaxRate'],2);
+		/*$TaxRate = number_format($SuppTransRow['taxrate'],2);
 
 		if (! isset($Taxes[$TaxRate]->Rate)){
 			$Taxes[$TaxRate] = new Tax((float) $TaxRate);
@@ -241,18 +241,18 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 		$Taxes[$TaxRate]->InputAmount += $SuppTransRow['NetAmount'];
 		$Taxes[$TaxRate]->InputTax += $SuppTransRow['TaxAmt'];
 		*/
-		$Taxes['Inputs']->InputAmount += $SuppTransRow['NetAmount'];
-		$Taxes['Inputs']->InputTax += $SuppTransRow['TaxAmt'];
+		$Taxes['Inputs']->InputAmount += $SuppTransRow['netamount'];
+		$Taxes['Inputs']->InputTax += $SuppTransRow['taxamt'];
 
 
 		if ($_POST['DetailOrSummary']=='Detail'){
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize, $SuppTransRow['TypeName'],'left');
-			$LeftOvers = $pdf->addTextWrap(100,$YPos,40,$FontSize, $SuppTransRow['SuppReference'],'left');
-			$LeftOvers = $pdf->addTextWrap(140,$YPos,60,$FontSize,ConvertSQLDate($SuppTransRow['TranDate']),'left');
-			$LeftOvers = $pdf->addTextWrap(200,$YPos,150,$FontSize, $SuppTransRow['SuppName'],'left');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize, $SuppTransRow['typename'],'left');
+			$LeftOvers = $pdf->addTextWrap(100,$YPos,40,$FontSize, $SuppTransRow['suppreference'],'left');
+			$LeftOvers = $pdf->addTextWrap(140,$YPos,60,$FontSize,ConvertSQLDate($SuppTransRow['trandate']),'left');
+			$LeftOvers = $pdf->addTextWrap(200,$YPos,150,$FontSize, $SuppTransRow['suppname'],'left');
 
-			$LeftOvers = $pdf->addTextWrap(410,$YPos,60,$FontSize, number_format($SuppTransRow['NetAmount'],2),'right');
-			$LeftOvers = $pdf->addTextWrap(470,$YPos,60,$FontSize, number_format($SuppTransRow['TaxAmt'],2),'right');
+			$LeftOvers = $pdf->addTextWrap(410,$YPos,60,$FontSize, number_format($SuppTransRow['netamount'],2),'right');
+			$LeftOvers = $pdf->addTextWrap(470,$YPos,60,$FontSize, number_format($SuppTransRow['taxamt'],2),'right');
 
 			$YPos -=$line_height;
 			if ($YPos < $Bottom_Margin + $line_height){
@@ -301,7 +301,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 	$FontSize=8;
 	$YPos= $Page_Height-$Top_Margin;
 
-	$pdf->addText($Left_Margin, $YPos,$FontSize, $CompanyName);
+	$pdf->addText($Left_Margin, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
 
 	$YPos -=$line_height;
 
@@ -309,7 +309,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 	$pdf->addText($Left_Margin, $YPos, $FontSize, $ReportTitle . ' ' . _('Summary'));
 
 	$FontSize = 8;
-	$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed') . ': ' . Date($DefaultDateFormat) . '    ' . _('Page') . ' ' . $PageNumber);
+	$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '    ' . _('Page') . ' ' . $PageNumber);
 
 	$YPos -=(3*$line_height);
 
@@ -389,7 +389,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 		$FontSize=8;
 		$YPos= $Page_Height-$Top_Margin;
 
-		$pdf->addText($Left_Margin, $YPos,$FontSize, $CompanyName);
+		$pdf->addText($Left_Margin, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
 
 		$YPos -=$line_height;
 
@@ -397,7 +397,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 		$pdf->addText($Left_Margin, $YPos, $FontSize, $ReportTitle . ' ' . _('Warnings'));
 
 		$FontSize = 8;
-		$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed') . ': ' . Date($DefaultDateFormat) . '    ' . _('Page') . ' ' . $PageNumber);
+		$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '    ' . _('Page') . ' ' . $PageNumber);
 
 		$YPos -=(3*$line_height);
 
@@ -430,10 +430,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 	$title=_('Tax Reporting');
 	include('includes/header.inc');
 	include('includes/DateFunctions.inc');
-	include('includes/SQL_CommonFunctions.inc');
-
-	$CompanyRecord = ReadInCompanyRecord($db);
-
+	
 
 	echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
 
@@ -450,20 +447,20 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 			<TD><SELECT Name='ToPeriod'>";
 
 
-	$DefaultPeriod = GetPeriod(Date($DefaultDateFormat,Mktime(0,0,0,Date('m'),0,Date('Y'))),$db);
+	$DefaultPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'),0,Date('Y'))),$db);
 
-	$sql = 'SELECT PeriodNo, 
-			LastDate_In_Period 
-		FROM Periods';
+	$sql = 'SELECT periodno, 
+			lastdate_in_period 
+		FROM periods';
 
 	$ErrMsg = _('Could not retrieve the period data because');
 	$Periods = DB_query($sql,$db,$ErrMsg);
 
 	while ($myrow = DB_fetch_array($Periods,$db)){
-		if ($myrow['PeriodNo']==$DefaultPeriod){
-			echo '<OPTION SELECTED VALUE=' . $myrow['PeriodNo'] . '>' . ConvertSQLDate($myrow['LastDate_In_Period']);
+		if ($myrow['periodno']==$DefaultPeriod){
+			echo '<OPTION SELECTED VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period']);
 		} else {
-			echo '<OPTION VALUE=' . $myrow['PeriodNo'] . '>' . ConvertSQLDate($myrow['LastDate_In_Period']);
+			echo '<OPTION VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period']);
 		}
 	}
 

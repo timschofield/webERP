@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 /*PO_ReadInOrder.inc is used by the modify existing order code in PO_Header.php and also by GoodsReceived.php */
 
        if (isset($_SESSION['PO'])){
@@ -16,30 +16,29 @@
        $_SESSION['RequireSupplierSelection'] = 0;
        $_SESSION['PO'] = new PurchOrder;
 
-       $CompanyRecord = ReadInCompanyRecord($db);
-       $_SESSION['PO']->GLLink = $CompanyRecord['GLLink_Stock'];
+       $_SESSION['PO']->GLLink = $_SESSION['CompanyRecord']['gllink_stock'];
 
 /*read in all the guff from the selected order into the PO PurchOrder Class variable  */
 
-       $OrderHeaderSQL = 'SELECT PurchOrders.SupplierNo, 
-       				Suppliers.SuppName, 
-				PurchOrders.Comments, 
-				PurchOrders.OrdDate, 
-				PurchOrders.Rate, 
-				PurchOrders.DatePrinted, 
-				PurchOrders.DelAdd1, 
-				PurchOrders.DelAdd2, 
-				PurchOrders.DelAdd3, 
-				PurchOrders.DelAdd4, 
-				PurchOrders.AllowPrint, 
-				PurchOrders.RequisitionNo, 
-				PurchOrders.IntoStockLocation, 
-				PurchOrders.Initiator, 
-				Suppliers.CurrCode 
-			FROM PurchOrders, 
-				Suppliers 
-			WHERE PurchOrders.SupplierNo = Suppliers.SupplierID 
-			AND PurchOrders.OrderNo = ' . $_GET['ModifyOrderNumber'];
+       $OrderHeaderSQL = 'SELECT purchorders.supplierno, 
+       				suppliers.suppname, 
+				purchorders.comments, 
+				purchorders.orddate, 
+				purchorders.rate, 
+				purchorders.dateprinted, 
+				purchorders.deladd1, 
+				purchorders.deladd2, 
+				purchorders.deladd3, 
+				purchorders.deladd4, 
+				purchorders.allowprint, 
+				purchorders.requisitionno, 
+				purchorders.intostocklocation, 
+				purchorders.initiator, 
+				suppliers.currcode 
+			FROM purchorders, 
+				suppliers 
+			WHERE purchorders.supplierno = suppliers.supplierid 
+			AND purchorders.orderno = ' . $_GET['ModifyOrderNumber'];
 
        $ErrMsg =  _('The order cannot be retrieved because');
        $DbgMsg =  _('The SQL statement that was used and failed was');
@@ -49,49 +48,48 @@
 
               $myrow = DB_fetch_array($GetOrdHdrResult);
               $_SESSION['PO']->OrderNo = $_GET['ModifyOrderNumber'];
-              $_SESSION['PO']->SupplierID = $myrow['SupplierNo'];
-              $_SESSION['PO']->SupplierName = $myrow['SuppName'];
-              $_SESSION['PO']->CurrCode = $myrow['CurrCode'];
-              $_SESSION['PO']->Orig_OrderDate = $myrow['OrdDate'];
-              $_SESSION['PO']->AllowPrintPO = $myrow['AllowPrint'];
-              $_SESSION['PO']->DatePurchaseOrderPrinted = $myrow['DatePrinted'];
-              $_SESSION['PO']->Comments = $myrow['Comments'];
-              $_SESSION['PO']->ExRate = $myrow['Rate'];
-              $_SESSION['PO']->Location = $myrow['IntoStockLocation'];
-              $_SESSION['PO']->Initiator = $myrow['Initiator'];
-              $_SESSION['PO']->RequisitionNo = $myrow['RequisitionNo'];
-              $_SESSION['PO']->DelAdd1 = $myrow['DelAdd1'];
-              $_SESSION['PO']->DelAdd2 = $myrow['DelAdd2'];
-              $_SESSION['PO']->DelAdd3 = $myrow['DelAdd3'];
-              $_SESSION['PO']->DelAdd4 = $myrow['DelAdd4'];
+              $_SESSION['PO']->SupplierID = $myrow['supplierno'];
+              $_SESSION['PO']->SupplierName = $myrow['suppname'];
+              $_SESSION['PO']->CurrCode = $myrow['currcode'];
+              $_SESSION['PO']->Orig_OrderDate = $myrow['orddate'];
+              $_SESSION['PO']->AllowPrintPO = $myrow['allowprint'];
+              $_SESSION['PO']->DatePurchaseOrderPrinted = $myrow['dateprinted'];
+              $_SESSION['PO']->Comments = $myrow['comments'];
+              $_SESSION['PO']->ExRate = $myrow['rate'];
+              $_SESSION['PO']->Location = $myrow['intostocklocation'];
+              $_SESSION['PO']->Initiator = $myrow['initiator'];
+              $_SESSION['PO']->RequisitionNo = $myrow['requisitionno'];
+              $_SESSION['PO']->DelAdd1 = $myrow['deladd1'];
+              $_SESSION['PO']->DelAdd2 = $myrow['deladd2'];
+              $_SESSION['PO']->DelAdd3 = $myrow['deladd3'];
+              $_SESSION['PO']->DelAdd4 = $myrow['deladd4'];
 
 /*now populate the line PO array with the purchase order details records */
 
-              $LineItemsSQL = 'SELECT
-	      			PODetailItem, ItemCode,
-				StockMaster.Description,
-				DeliveryDate,
-				ItemDescription,
-				GLCode,
-				AccountName,
-				QtyInvoiced,
-				UnitPrice,
-				Units,
-				QuantityOrd,
-				QuantityRecd,
-				ShiptRef,
-				JobRef,
-				StdCostUnit,
-				StockMaster.Controlled,
-				StockMaster.Serialised,
-				StockMaster.DecimalPlaces
-				FROM PurchOrderDetails LEFT JOIN StockMaster
-					ON PurchOrderDetails.ItemCode=StockMaster.StockID
-					LEFT JOIN ChartMaster
-					ON PurchOrderDetails.GLCode=ChartMaster.AccountCode
-				WHERE PurchOrderDetails.Completed=0
-					AND OrderNo =' . $_GET['ModifyOrderNumber'] . "
-				ORDER BY PODetailItem";
+              $LineItemsSQL = 'SELECT podetailitem, itemcode,
+				stockmaster.description,
+				deliverydate,
+				itemdescription,
+				glcode,
+				accountname,
+				qtyinvoiced,
+				unitprice,
+				units,
+				quantityord,
+				quantityrecd,
+				shiptref,
+				jobref,
+				stdcostunit,
+				stockmaster.controlled,
+				stockmaster.serialised,
+				stockmaster.decimalplaces
+				FROM purchorderdetails LEFT JOIN stockmaster
+					ON purchorderdetails.itemcode=stockmaster.stockid
+					LEFT JOIN chartmaster
+					ON purchorderdetails.glcode=chartmaster.accountcode
+				WHERE purchorderdetails.completed=0
+					AND orderno =' . $_GET['ModifyOrderNumber'] . "
+				ORDER BY podetailitem";
 
 	      $ErrMsg =  _('The lines on the purchase order cannot be retrieved because');
 	      $DbgMsg =  _('The SQL statement that was used to retrieve the purchase order lines was');
@@ -101,41 +99,41 @@
 
                      while ($myrow=db_fetch_array($LineItemsResult)) {
 
-                             if (is_null($myrow['GLCode'])){
+                             if (is_null($myrow['glcode'])){
                              	$GLCode = '';
                              } else {
-                             	$GLCode = $myrow['GLCode'];
+                             	$GLCode = $myrow['glcode'];
                              }
-                             if (is_null($myrow['Units'])){
+                             if (is_null($myrow['units'])){
                              	$Units = _('each');
                              } else {
-                             	$Units = $myrow['Units'];
+                             	$Units = $myrow['units'];
                              }
-                             if (is_null($myrow['ItemCode'])){
+                             if (is_null($myrow['itemcode'])){
                              	$StockID = '';
                              } else {
-                             	$StockID = $myrow['ItemCode'];
+                             	$StockID = $myrow['itemcode'];
                              }
 
  			$_SESSION['PO']->add_to_order($_SESSION['PO']->LinesOnOrder+1,
 							$StockID,
-							$myrow['Controlled'],
-							$myrow['Serialised'],
-							$myrow['QuantityOrd'],
-							$myrow['ItemDescription'],
-							$myrow['UnitPrice'],
+							$myrow['controlled'],
+							$myrow['serialised'],
+							$myrow['quantityord'],
+							$myrow['itemdescription'],
+							$myrow['unitprice'],
 							$Units,
 							$GLCode,
-							ConvertSQLDate($myrow['DeliveryDate']),
-							$myrow['ShiptRef'],
-							$myrow['JobRef'],
-							$myrow['QtyInvoiced'],
-							$myrow['QuantityRecd'],
-							$myrow['AccountName'],
-							$myrow['DecimalPlaces']);
+							ConvertSQLDate($myrow['deliverydate']),
+							$myrow['shiptref'],
+							$myrow['jobref'],
+							$myrow['qtyinvoiced'],
+							$myrow['quantityrecd'],
+							$myrow['accountname'],
+							$myrow['decimalplaces']);
 
-			    $_SESSION['PO']->LineItems[$_SESSION['PO']->LinesOnOrder]->PODetailRec = $myrow['PODetailItem'];
-                            $_SESSION['PO']->LineItems[$_SESSION['PO']->LinesOnOrder]->StandardCost = $myrow['StdCostUnit'];  /*Needed for receiving goods and GL interface */
+			    $_SESSION['PO']->LineItems[$_SESSION['PO']->LinesOnOrder]->PODetailRec = $myrow['podetailitem'];
+                            $_SESSION['PO']->LineItems[$_SESSION['PO']->LinesOnOrder]->StandardCost = $myrow['stdcostunit'];  /*Needed for receiving goods and GL interface */
                      } /* line PO from purchase order details */
       } //end is there were lines on the order
    } // end if there was a header for the order

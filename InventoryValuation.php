@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity = 2;
 
 If (isset($_POST['PrintPDF'])
@@ -22,47 +22,47 @@ If (isset($_POST['PrintPDF'])
 
       /*Now figure out the inventory data to report for the category range under review */
 	if ($_POST['Location']=='All'){
-		$SQL = "SELECT StockMaster.CategoryID,
-				StockCategory.CategoryDescription,
-				StockMaster.StockID,
-				StockMaster.Description,
-				Sum(LocStock.Quantity) As QtyOnHand,
-				StockMaster.MaterialCost + StockMaster.LabourCost + StockMaster.OverheadCost AS UnitCost,
-				Sum(LocStock.Quantity) *(StockMaster.MaterialCost + StockMaster.LabourCost + StockMaster.OverheadCost) AS ItemTotal
-			FROM StockMaster,
-				StockCategory,
-				LocStock
-			WHERE StockMaster.StockID=LocStock.StockID
-			AND StockMaster.CategoryID=StockCategory.CategoryID
-			GROUP BY StockMaster.CategoryID,
-				StockCategory.CategoryDescription,
-				UnitCost,
-				StockMaster.StockID,
-				StockMaster.Description
-			HAVING Sum(LocStock.Quantity)!=0
-			AND StockMaster.CategoryID >= '" . $_POST['FromCriteria'] . "'
-			AND StockMaster.CategoryID <= '" . $_POST['ToCriteria'] . "'
-			ORDER BY StockMaster.CategoryID,
-			StockMaster.StockID";
+		$SQL = "SELECT stockmaster.categoryid,
+				stockcategory.categorydescription,
+				stockmaster.stockid,
+				stockmaster.description,
+				SUM(locstock.quantity) AS qtyonhand,
+				stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
+				SUM(locstock.quantity) *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
+			FROM stockmaster,
+				stockcategory,
+				locstock
+			WHERE stockmaster.stockid=locstock.stockid
+			AND stockmaster.categoryid=stockcategory.categoryid
+			GROUP BY stockmaster.categoryid,
+				stockcategory.categorydescription,
+				unitcost,
+				stockmaster.stockid,
+				stockmaster.description
+			HAVING SUM(locstock.quantity)!=0
+			AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
+			AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
+			ORDER BY stockmaster.categoryid,
+				stockmaster.stockid";
 	} else {
-		$SQL = "SELECT StockMaster.CategoryID,
-				StockCategory.CategoryDescription,
-				StockMaster.StockID,
-				StockMaster.Description,
-				LocStock.Quantity AS QtyOnHand,
-				StockMaster.MaterialCost + StockMaster.LabourCost + StockMaster.OverheadCost AS UnitCost,
-				LocStock.Quantity *(StockMaster.MaterialCost + StockMaster.LabourCost + StockMaster.OverheadCost) AS ItemTotal
-			FROM StockMaster,
-				StockCategory,
-				LocStock
-			WHERE StockMaster.StockID=LocStock.StockID
-			AND StockMaster.CategoryID=StockCategory.CategoryID
-			AND LocStock.Quantity!=0
-			AND StockMaster.CategoryID >= '" . $_POST['FromCriteria'] . "'
-			AND StockMaster.CategoryID <= '" . $_POST['ToCriteria'] . "'
-			AND LocStock.LocCode = '" . $_POST['Location'] . "'
-			ORDER BY StockMaster.CategoryID,
-			StockMaster.StockID";
+		$SQL = "SELECT stockmaster.categoryid,
+				stockcategory.categorydescription,
+				stockmaster.stockid,
+				stockmaster.description,
+				locstock.quantity AS qtyonhand,
+				stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
+				locstock.quantity *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
+			FROM stockmaster,
+				stockcategory,
+				locstock
+			WHERE stockmaster.stockid=locstock.stockid
+			AND stockmaster.categoryid=stockcategory.categoryid
+			AND locstock.quantity!=0
+			AND stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "'
+			AND stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "'
+			AND locstock.loccode = '" . $_POST['Location'] . "'
+			ORDER BY stockmaster.categoryid,
+				stockmaster.stockid";
 	}
 	$InventoryResult = DB_query($SQL,$db,'','',false,true);
 
@@ -84,7 +84,7 @@ If (isset($_POST['PrintPDF'])
 	$CatTot_Val=0;
 	While ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
 
-		if ($Category!=$InventoryValn['CategoryID']){
+		if ($Category!=$InventoryValn['categoryid']){
 			$FontSize=10;
 			if ($Category!=''){ /*Then it's NOT the first time round */
 
@@ -105,27 +105,27 @@ If (isset($_POST['PrintPDF'])
 				}
 				$CatTot_Val=0;
 			}
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,$InventoryValn['CategoryID'] . ' - ' . $InventoryValn['CategoryDescription']);
-			$Category = $InventoryValn['CategoryID'];
-			$CategoryName = $InventoryValn['CategoryDescription'];
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,$InventoryValn['categoryid'] . ' - ' . $InventoryValn['categorydescription']);
+			$Category = $InventoryValn['categoryid'];
+			$CategoryName = $InventoryValn['categorydescription'];
 		}
 
 		if ($_POST['DetailedReport']=='Yes'){
 			$YPos -=$line_height;
 			$FontSize=8;
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$InventoryValn['StockID']);				$LeftOvers = $pdf->addTextWrap(120,$YPos,260,$FontSize,$InventoryValn['Description']);
-			$DisplayUnitCost = number_format($InventoryValn['UnitCost'],2);
-			$DisplayQtyOnHand = number_format($InventoryValn['QtyOnHand'],0);
-			$DisplayItemTotal = number_format($InventoryValn['ItemTotal'],2);
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$InventoryValn['stockid']);				$LeftOvers = $pdf->addTextWrap(120,$YPos,260,$FontSize,$InventoryValn['description']);
+			$DisplayUnitCost = number_format($InventoryValn['unitcost'],2);
+			$DisplayQtyOnHand = number_format($InventoryValn['qtyonhand'],0);
+			$DisplayItemTotal = number_format($InventoryValn['itemtotal'],2);
 
 			$LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,$DisplayQtyOnHand,'right');
 			$LeftOvers = $pdf->addTextWrap(440,$YPos,60,$FontSize,$DisplayUnitCost, 'right');
 			$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayItemTotal, 'right');
 
 		}
-		$Tot_Val += $InventoryValn['ItemTotal'];
-		$CatTot_Val += $InventoryValn['ItemTotal'];
+		$Tot_Val += $InventoryValn['itemtotal'];
+		$CatTot_Val += $InventoryValn['itemtotal'];
 
 		if ($YPos < $Bottom_Margin + $line_height){
 		   include('includes/PDFInventoryValnPageHeader.inc');
@@ -185,8 +185,6 @@ If (isset($_POST['PrintPDF'])
 	include('includes/session.inc');
 	$title=_('Inventory Valuation Reporting');
 	include('includes/header.inc');
-	include('includes/SQL_CommonFunctions.inc');
-	$CompanyRecord = ReadInCompanyRecord($db);
 
 
 	if (strlen($_POST['FromCriteria'])<1 || strlen($_POST['ToCriteria'])<1) {
@@ -197,10 +195,10 @@ If (isset($_POST['PrintPDF'])
 
 		echo '<TR><TD>' . _('From Inventory Category Code') . ':</FONT></TD><TD><SELECT name=FromCriteria>';
 
-		$sql='SELECT CategoryID, CategoryDescription FROM StockCategory ORDER BY CategoryID';
+		$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
 		$CatResult= DB_query($sql,$db);
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo "<OPTION VALUE='" . $myrow['CategoryID'] . "'>" . $myrow['CategoryID'] . ' - ' . $myrow['CategoryDescription'];
+			echo "<OPTION VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 		}
 		echo '</SELECT></TD></TR>';
 
@@ -210,18 +208,18 @@ If (isset($_POST['PrintPDF'])
 		DB_data_seek($CatResult,0);
 
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo "<OPTION VALUE='" . $myrow['CategoryID'] . "'>" . $myrow['CategoryID'] . ' - ' . $myrow['CategoryDescription'];
+			echo "<OPTION VALUE='" . $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 		}
 		echo '</SELECT></TD></TR>';
 
 		echo '<TR><TD>' . _('For Inventory in Location') . ":</TD><TD><SELECT name='Location'>";
-		$sql = 'SELECT LocCode, LocationName FROM Locations';
+		$sql = 'SELECT loccode, locationname FROM locations';
 		$LocnResult=DB_query($sql,$db);
 
 		echo "<OPTION Value='All'>" . _('All Locations');
 
 		while ($myrow=DB_fetch_array($LocnResult)){
-		          echo "<OPTION Value='" . $myrow["LocCode"] . "'>" . $myrow["LocationName"];
+		          echo "<OPTION Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 		      		}
 		echo '</SELECT></TD></TR>';
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
 */
@@ -32,7 +32,7 @@ If ($_SESSION['Items']->ItemsOrdered == 0){
 
 $EarliestDispatch = CalcEarliestDispatchDate();
 
-If (isset($_POST['ProcessOrder'])) {
+If (isset($_POST['ProcessOrder']) OR isset($_POST['MakeRecurringOrder'])) {
 
 	/*need to check for input errors in any case before order processed */
 	$_POST['Update']='Yes rerun the validation checks';
@@ -60,7 +60,10 @@ If (isset($_POST['Update'])){
 		$InputErrors =1;
 		prnMsg( _('The freight cost entered is expected to be numeric'),'error');
 	}
-
+	if (isset($_POST['MakeRecurringOrder']) AND $_POST['Quotation']==1){
+		$InputErrors =1;
+		prnMsg( _('A recurring order cannot be made from a quotation'),'error');
+	}
 
 /*	If (strlen($_POST['BrAdd3'])==0 OR !isset($_POST['BrAdd3'])){
 		$InputErrors =1;
@@ -86,14 +89,14 @@ If (isset($_POST['Update'])){
 
 	If(!Is_Date($_POST['DeliveryDate'])) {
 		$InputErrors =1;
-		prnMsg(_('An invalid date entry was made') . '. ' . _('The date entry for the despatch date must be in the format') . ' ' . $DefaultDateFormat,'warn');
+		prnMsg(_('An invalid date entry was made') . '. ' . _('The date entry for the despatch date must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
 	}
 
 	 /* This check is not appropriate where orders need to be entered in retrospectively in some cases this check will be appropriate and this should be uncommented
 
-	 elseif (Date1GreaterThanDate2(Date($DefaultDateFormat,$EarliestDispatch), $_POST['DeliveryDate'])){
+	 elseif (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat'],$EarliestDispatch), $_POST['DeliveryDate'])){
 		$InputErrors =1;
-		echo "<BR><B>The delivery details cannot be updated because you are attempting to set the date the order is to be dispatched earlier than is possible. No dispatches are made on Saturday and Sunday. Also, the dispatch cut off time is $DispatchCutOffTime 00 hrs. Orders placed after this time will be dispatched the following working day.";
+		echo "<BR><B>The delivery details cannot be updated because you are attempting to set the date the order is to be dispatched earlier than is possible. No dispatches are made on Saturday and Sunday. Also, the dispatch cut off time is $_SESSION['DispatchCutOffTime'] 00 hrs. Orders placed after this time will be dispatched the following working day.";
 	}
 
 	*/
@@ -113,10 +116,11 @@ If (isset($_POST['Update'])){
 		$_SESSION['Items']->Comments = $_POST['Comments'];
 		$_SESSION['Items']->FreightCost = $_POST['FreightCost'];
 		$_SESSION['Items']->ShipVia = $_POST['ShipVia'];
+		$_SESSION['Items']->Quotation = $_POST['Quotation'];
 
-		/*$DoFreightCalc is a setting in the config.php file that the user can set to false to turn off freight calculations if necessary */
+		/*$_SESSION['DoFreightCalc'] is a setting in the config.php file that the user can set to false to turn off freight calculations if necessary */
 
-		if ($DoFreightCalc==True){
+		if ($_SESSION['DoFreightCalc']==True){
 		      list ($_POST['FreightCost'], $BestShipper) = CalcFreightCost($_SESSION['Items']->total, $_POST['BrAdd2'], $_POST['BrAdd3'], $_SESSION['Items']->totalVolume, $_SESSION['Items']->totalWeight, $_SESSION['Items']->Location, $db) ;
 		      $_POST['ShipVia'] = $BestShipper;
 		}
@@ -129,17 +133,17 @@ If (isset($_POST['Update'])){
 		- if shippers defined but the default shipper is bogus then use the first shipper defined
 		*/
 		if (($BestShipper==''|| !isset($BestShipper)) AND ($_POST['ShipVia']=='' || !isset($_POST['ShipVia']))){
-			$SQL =  "SELECT Shipper_ID FROM Shippers WHERE Shipper_ID=$Default_Shipper";
+			$SQL =  "SELECT shipper_id FROM shippers WHERE shipper_id=" . $_SESSION['Default_Shipper'];
 			$ErrMsg = _('There was a problem testing for the default shipper');
 			$TestShipperExists = DB_query($SQL,$db,$ErrMsg);
 
 			if (DB_num_rows($TestShipperExists)==1){
 
-				$BestShipper = $Default_Shipper;
+				$BestShipper = $_SESSION['Default_Shipper'];
 
 			} else {
 
-				$SQL =  'SELECT Shipper_ID FROM Shippers';
+				$SQL =  'SELECT shipper_id FROM shippers';
 				$TestShipperExists = DB_query($SQL,$db,$ErrMsg);
 
 				if (DB_num_rows($TestShipperExists)>=1){
@@ -160,6 +164,15 @@ If (isset($_POST['Update'])){
 }
 
 
+if(isset($_POST['MakeRecurringOrder']) AND ! $InputErrors){
+	
+	echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . '/RecurringOrders.php?' . SID . "&NewRecurringOrder=Yes'>";
+	prnMsg(_('You should automatically be forwarded to the entry of recurring order details page') . '. ' . _('If this does not happen') . '(' . _('if the browser does not support META Refresh') . ') ' ."<a href='" . $rootpath . '/RecurringOrders.php?' . SID . "&NewRecurringOrder=Yes'>". _('click here') .'</a> '. _('to continue'),'info');
+	include('includes/footer.inc');
+	exit;
+}
+
+
 if ($_POST['BackToLineDetails']==_('Modify Order Lines')){
 
 	echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . '/SelectOrderItems.php?' . SID . "'>";
@@ -174,25 +187,25 @@ If (isset($_POST['ProcessOrder'])) {
 	if ($InputErrors ==0) {
 		$OK_to_PROCESS = 1;
 	}
-	If ($_POST['FreightCost'] != $OldFreightCost && $DoFreightCalc==True){
+	If ($_POST['FreightCost'] != $OldFreightCost && $_SESSION['DoFreightCalc']==True){
 		$OK_to_PROCESS = 0;
 		prnMsg(_('The freight charge has been updated') . '. ' . _('Please reconfirm that the order and the freight charges are acceptable and then confirm the order again if OK') .' <BR> '. _('The new freight cost is') .' ' . $_POST['FreightCost'] . ' ' . _('and the previously calculated freight cost was') .' '. $OldFreightCost,'warn');
 	} else {
 
 /*check the customer's payment terms */
-		$sql = "SELECT DaysBeforeDue,
-				DayInFollowingMonth
-			FROM DebtorsMaster,
-				PaymentTerms
-			WHERE DebtorsMaster.PaymentTerms=PaymentTerms.TermsIndicator
-			AND DebtorsMaster.DebtorNo = '" . $_SESSION['Items']->DebtorNo . "'";
+		$sql = "SELECT daysbeforedue,
+				dayinfollowingmonth
+			FROM debtorsmaster,
+				paymentterms
+			WHERE debtorsmaster.paymentterms=paymentterms.termsindicator
+			AND debtorsmaster.debtorno = '" . $_SESSION['Items']->DebtorNo . "'";
 
 		$ErrMsg = _('The customer terms cannot be determined') . '. ' . _('This order cannot be processed because');
 		$TermsResult = DB_query($sql,$db,$ErrMsg);
 
 
 		$myrow = DB_fetch_array($TermsResult);
-		if ($myrow['DaysBeforeDue']==0 && $myrow['DayInFollowingMonth']==0){
+		if ($myrow['daysbeforedue']==0 && $myrow['dayinfollowingmonth']==0){
 
 /* THIS IS A CASH SALE NEED TO GO OFF TO 3RD PARTY SITE SENDING MERCHANT ACCOUNT DETAILS AND CHECK FOR APPROVAL FROM 3RD PARTY SITE BEFORE CONTINUING TO PROCESS THE ORDER
 
@@ -214,55 +227,56 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 
 	$DelDate = FormatDateforSQL($_SESSION['Items']->DeliveryDate);
 
-	$HeaderSQL = "INSERT INTO SalesOrders (
-				DebtorNo,
-				BranchCode,
-				CustomerRef,
-				Comments,
-				OrdDate,
-				OrderType,
-				ShipVia,
-				DeliverTo,
-				DelAdd1,
-				DelAdd2,
-				DelAdd3,
-				DelAdd4,
-				ContactPhone,
-				ContactEmail,
-				FreightCost,
-				FromStkLoc,
-				DeliveryDate)
+	$HeaderSQL = "INSERT INTO salesorders (
+				debtorno,
+				branchcode,
+				customerref,
+				comments,
+				orddate,
+				ordertype,
+				shipvia,
+				deliverto,
+				deladd1,
+				deladd2,
+				deladd3,
+				deladd4,
+				contactphone,
+				contactemail,
+				freightcost,
+				fromstkloc,
+				deliverydate,
+				quotation)
 			VALUES (
 				'" . $_SESSION['Items']->DebtorNo . "',
 				'" . $_SESSION['Items']->Branch . "',
-				'". $_SESSION['Items']->CustRef ."',
-				'". $_SESSION['Items']->Comments ."',
+				'". DB_escape_string($_SESSION['Items']->CustRef) ."',
+				'". DB_escape_string($_SESSION['Items']->Comments) ."',
 				'" . Date("Y-m-d H:i") . "',
 				'" . $_SESSION['Items']->DefaultSalesType . "',
 				" . $_POST['ShipVia'] .",
-				'" . $_SESSION['Items']->DeliverTo . "',
-				'" . $_SESSION['Items']->BrAdd1 . "',
-				'" . $_SESSION['Items']->BrAdd2 . "',
-				'" . $_SESSION['Items']->BrAdd3 . "',
-				'" . $_SESSION['Items']->BrAdd4 . "',
-				'" . $_SESSION['Items']->PhoneNo . "',
-				'" . $_SESSION['Items']->Email . "',
+				'" . DB_escape_string($_SESSION['Items']->DeliverTo) . "',
+				'" . DB_escape_string($_SESSION['Items']->BrAdd1) . "',
+				'" . DB_escape_string($_SESSION['Items']->BrAdd2) . "',
+				'" . DB_escape_string($_SESSION['Items']->BrAdd3) . "',
+				'" . DB_escape_string($_SESSION['Items']->BrAdd4) . "',
+				'" . DB_escape_string($_SESSION['Items']->PhoneNo) . "',
+				'" . DB_escape_string($_SESSION['Items']->Email) . "',
 				" . $_SESSION['Items']->FreightCost .",
 				'" . $_SESSION['Items']->Location ."',
-				'" . $DelDate . "'
-				)";
+				'" . $DelDate . "',
+				" . $_SESSION['Items']->Quotation . ")";
 
 	$ErrMsg = _('The order cannot be added because');
 	$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg);
 
-	$OrderNo = DB_Last_Insert_ID($db);
-	$StartOf_LineItemsSQL = "INSERT INTO SalesOrderDetails (
-						OrderNo,
-						StkCode,
-						UnitPrice,
-						Quantity,
-						DiscountPercent,
-						Narrative)
+	$OrderNo = DB_Last_Insert_ID($db,'salesorders','orderno');
+	$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (
+						orderno,
+						stkcode,
+						unitprice,
+						quantity,
+						discountpercent,
+						narrative)
 					VALUES (";
 
 	foreach ($_SESSION['Items']->LineItems as $StockItem) {
@@ -272,23 +286,35 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 					'" . $StockItem->StockID . "',
 					". $StockItem->Price . ",
 					" . $StockItem->Quantity . ",
-					" . $StockItem->DiscountPercent . ",
-					'" . $StockItem->Narrative . "'
+					" . floatval($StockItem->DiscountPercent) . ",
+					'" . DB_escape_string($StockItem->Narrative) . "'
 				)";
 		$Ins_LineItemResult = DB_query($LineItemsSQL,$db);
 	} /* inserted line items into sales order details */
 
-	unset ($_SESSION['Items']);
-	prnMsg(_('Order Number') . ' ' . $OrderNo . ' ' . _('has been entered'),'success');
-
-	if (count($SecurityGroups[$_SESSION["AccessLevel"]])>1){
-
+		
+	if ($_SESSION['Items']->Quotation==1){
+		prnMsg(_('Quotation Number') . ' ' . $OrderNo . ' ' . _('has been entered'),'success');
+	} else {
+		prnMsg(_('Order Number') . ' ' . $OrderNo . ' ' . _('has been entered'),'success');
+	}
+	
+	if (count($_SESSION['AllowedPageSecurityTokens'])>1){
 		/* Only allow print of packing slip for internal staff - customer logon's cannot go here */
+		
+		if ($_POST['Quotation']==0) { /*then its not a quotation its a real order */
+		
+			echo "<P><A  target='_blank' HREF='$rootpath/PrintCustOrder.php?" . SID . '&TransNo=' . $OrderNo . "'>". _('Print packing slip') . ' (' . _('Preprinted stationery') . ')' .'</A>';
+			echo "<P><A  target='_blank' HREF='$rootpath/PrintCustOrder_generic.php?" . SID . '&TransNo=' . $OrderNo . "'>". _('Print packing slip') . ' (' . _('Laser') . ')' .'</A>';
 
-		echo "<P><A  target='_blank' HREF='$rootpath/PrintCustOrder.php?" . SID . "TransNo=" . $OrderNo . "'>". _('Print packing slip') . ' (' . _('Preprinted stationery') . ')' .'</A>';
-		echo "<P><A  target='_blank' HREF='$rootpath/PrintCustOrder_generic.php?" . SID . 'TransNo=' . $OrderNo . "'>". _('Print packing slip') . ' (' . _('Laser') . ')' .'</A>';
-
-		echo "<P><A HREF='$rootpath/ConfirmDispatch_Invoice.php?" . SID . "OrderNumber=$OrderNo'>". _('Confirm Order Delivery Quantities and Produce Invoice') ."</A><P><A HREF='$rootpath/SelectOrderItems.php?NewOrder=Yes'>". _('New Order') .'</A>';
+			echo "<P><A HREF='$rootpath/ConfirmDispatch_Invoice.php?" . SID . "&OrderNumber=$OrderNo'>". _('Confirm Order Delivery Quantities and Produce Invoice') ."</A>";
+			
+		} else {
+			/*link to print the quotation */
+			echo "<P><A HREF='$rootpath/PDFQuotation.php?" . SID . "&QuotationNo=$OrderNo'>". _('Print Quotation') ."</A>";
+			
+		}
+		echo "<P><A HREF='$rootpath/SelectOrderItems.php?" . SID . "&NewOrder=Yes'>". _('New Order') .'</A>';
 	} else {
 		/*its a customer logon so thank them */
 		prnMsg(_('Thank you for your business'),'success');
@@ -305,27 +331,28 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 
 	$DelDate = FormatDateforSQL($_SESSION['Items']->DeliveryDate);
 
-	$Result = DB_query('begin',$db);
+	$Result = DB_query('BEGIN',$db);
 
-	$HeaderSQL = "UPDATE SalesOrders
-			SET DebtorNo = '" . $_SESSION['Items']->DebtorNo . "',
-				BranchCode = '" . $_SESSION['Items']->Branch . "',
-				CustomerRef = '". $_SESSION['Items']->CustRef ."',
-				Comments = '". $_SESSION['Items']->Comments ."',
-				OrderType = '" . $_SESSION['Items']->DefaultSalesType . "',
-				ShipVia = " . $_POST['ShipVia'] .",
-				DeliverTo = '" . $_SESSION['Items']->DeliverTo . "',
-				DelAdd1 = '" . $_SESSION['Items']->BrAdd1 . "',
-				DelAdd2 = '" . $_SESSION['Items']->BrAdd2 . "',
-				DelAdd3 = '" . $_SESSION['Items']->BrAdd3 . "',
-				DelAdd4 = '" . $_SESSION['Items']->BrAdd4 . "',
-				ContactPhone = '" . $_SESSION['Items']->PhoneNo . "',
-				ContactEmail = '" . $_SESSION['Items']->Email . "',
-				FreightCost = " . $_SESSION['Items']->FreightCost .",
-				FromStkLoc = '" . $_SESSION['Items']->Location ."',
-				DeliveryDate = '" . $DelDate . "',
-				PrintedPackingSlip = " . $_POST['ReprintPackingSlip'] . "
-			WHERE SalesOrders.OrderNo=" . $_SESSION['ExistingOrder'];
+	$HeaderSQL = "UPDATE salesorders
+			SET debtorno = '" . $_SESSION['Items']->DebtorNo . "',
+				branchcode = '" . $_SESSION['Items']->Branch . "',
+				customerref = '". DB_escape_string($_SESSION['Items']->CustRef) ."',
+				comments = '". DB_escape_string($_SESSION['Items']->Comments) ."',
+				ordertype = '" . $_SESSION['Items']->DefaultSalesType . "',
+				shipvia = " . $_POST['ShipVia'] .",
+				deliverto = '" . $_SESSION['Items']->DeliverTo . "',
+				deladd1 = '" . DB_escape_string($_SESSION['Items']->BrAdd1) . "',
+				deladd2 = '" . DB_escape_string($_SESSION['Items']->BrAdd2) . "',
+				deladd3 = '" . DB_escape_string($_SESSION['Items']->BrAdd3) . "',
+				deladd4 = '" . DB_escape_string($_SESSION['Items']->BrAdd4) . "',
+				contactphone = '" . DB_escape_string($_SESSION['Items']->PhoneNo) . "',
+				contactemail = '" . DB_escape_string($_SESSION['Items']->Email) . "',
+				freightcost = " . $_SESSION['Items']->FreightCost .",
+				fromstkloc = '" . $_SESSION['Items']->Location ."',
+				deliverydate = '" . $DelDate . "',
+				printedpackingslip = " . $_POST['ReprintPackingSlip'] . ",
+				quotation = " . $_SESSION['Items']->Quotation . "
+			WHERE salesorders.orderno=" . $_SESSION['ExistingOrder'];
 
 	$DbgMsg = _('The SQL that was used to update the order and failed was');
 	$ErrMsg = _('The order cannot be updated because');
@@ -342,23 +369,28 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 		$Completed = 0;
 		}
 
-		$LineItemsSQL = "UPDATE SalesOrderDetails SET UnitPrice="  . $StockItem->Price . ', Quantity=' . $StockItem->Quantity . ', DiscountPercent=' . $StockItem->DiscountPercent . ', Completed=' . $Completed . ' WHERE OrderNo=' . $_SESSION['ExistingOrder'] . " AND StkCode='" . $StockItem->StockID . "'";
+		$LineItemsSQL = "UPDATE salesorderdetails SET unitprice="  . $StockItem->Price . ', 
+								quantity=' . $StockItem->Quantity . ', 
+								discountpercent=' . floatval($StockItem->DiscountPercent) . ', 
+								completed=' . $Completed . ' 
+					WHERE salesorderdetails.orderno=' . $_SESSION['ExistingOrder'] . " 
+					AND salesorderdetails.stkcode='" . $StockItem->StockID . "'";
 
 		$ErrMsg = _('The updated order line cannot be modified because');
 		$Upd_LineItemResult = DB_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg,true);
 
 	} /* updated line items into sales order details */
 
-	$Result=DB_query('commit',$db);
+	$Result=DB_query('COMMIT',$db);
 
 	unset($_SESSION['Items']->LineItems);
 	unset($_SESSION['Items']);
 
 	prnMsg(_('Order number') .' ' . $_SESSION['ExistingOrder'] . ' ' . _('has been updated'),'success');
-	echo "<BR><A HREF='$rootpath/PrintCustOrder.php?TransNo=" . $_SESSION['ExistingOrder'] . "'>". _('Reprint packing slip') .'</A>';
-	echo "<P><A HREF='$rootpath/SelectSalesOrder.php'>". _('Select A Different Order') .'</A>';
+	echo "<BR><A HREF='$rootpath/PrintCustOrder.php?" . SID . '&TransNo=' . $_SESSION['ExistingOrder'] . "'>". _('Reprint packing slip') .'</A>';
+	echo "<P><A HREF='$rootpath/SelectSalesOrder.php?" . SID  . "'>". _('Select A Different Order') .'</A>';
+	include('includes/footer.inc');
 	exit;
-
 }
 
 
@@ -367,9 +399,16 @@ echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . $SID . "' METHOD=POST>";
 
 
 /*Display the order with or without discount depending on access level*/
-if (in_array(2,$SecurityGroups[$_SESSION['AccessLevel']])){
+if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
-	echo '<CENTER><B>'. _('Order Summary') ."</B>
+	echo '<CENTER><B>';
+	
+	if ($_SESSION['Items']->Quotation==1){
+		echo _('Quotation Summary');
+	} else {
+		echo _('Order Summary');
+	}
+	echo "</B>
 	<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>
 	<TR>
 		<TD class='tableheader'>". _('Item Code') ."</TD>
@@ -508,7 +547,7 @@ if ($_SESSION['Items']->Location=='' OR !isset($_SESSION['Items']->Location)) {
 	$_SESSION['Items']->Location = $DefaultStockLocation;
 }
 
-$StkLocsResult = DB_query('SELECT LocationName,LocCode FROM Locations',$db);
+$StkLocsResult = DB_query('SELECT locationname,loccode FROM locations',$db);
 while ($myrow=DB_fetch_row($StkLocsResult)){
 	if ($_SESSION['Items']->Location==$myrow[1]){
 		echo "<OPTION SELECTED Value='$myrow[1]'>$myrow[0]";
@@ -521,7 +560,7 @@ echo '</SELECT></TD></TR>';
 
 
 if (!$_SESSION['Items']->DeliveryDate) {
-	$_SESSION['Items']->DeliveryDate = Date($DefaultDateFormat,$EarliestDispatch);
+	$_SESSION['Items']->DeliveryDate = Date($_SESSION['DefaultDateFormat'],$EarliestDispatch);
 }
 
 echo '<TR>
@@ -554,10 +593,9 @@ echo '<TR>
 	<TD><input type=text size=25 max=25 name='PhoneNo' value='" . $_SESSION['Items']->PhoneNo . "'></TD>
 </TR>";
 
-/*echo "<TR><TD>Contact Email:</TD><TD><input type=text size=25 max=25 name='Email' value='" . $_SESSION['Items']->Email . "'></TD></TR>";
-*/
-echo '<TR>
-	<TD>'. _('Customer Reference') .":</TD>
+echo '<TR><TD>' . _('Contact Email') . ":</TD><TD><input type=text size=40 max=38 name='Email' value='" . $_SESSION['Items']->Email . "'></TD></TR>";
+
+echo '<TR><TD>'. _('Customer Reference') .":</TD>
 	<TD><input type=text size=25 max=25 name='CustRef' value='" . $_SESSION['Items']->CustRef . "'></TD>
 </TR>";
 
@@ -588,7 +626,7 @@ if (!isset($_POST['FreightCost'])) {
 echo '<TR><TD>'. _('Freight Charge') .':</TD>';
 echo "<TD><INPUT TYPE=TEXT SIZE=10 max=10 NAME='FreightCost' VALUE=" . $_POST['FreightCost'] . '></TD>';
 
-if ($DoFreightCalc==True){
+if ($_SESSION['DoFreightCalc']==True){
 	echo "<TD><INPUT TYPE=SUBMIT NAME='Update' VALUE='" . _('Recalc Freight Cost') . "'></TD></TR>";
 }
 
@@ -597,17 +635,29 @@ if ((!isset($_POST['ShipVia']) OR $_POST['ShipVia']=='') AND isset($_SESSION['It
 }
 
 echo '<TR><TD>'. _('Freight Company') .":</TD><TD><SELECT name='ShipVia'>";
-$SQL = 'SELECT Shipper_ID, ShipperName FROM Shippers';
+$SQL = 'SELECT shipper_id, shippername FROM shippers';
 $ShipperResults = DB_query($SQL,$db);
 while ($myrow=DB_fetch_array($ShipperResults)){
-	if ($myrow['Shipper_ID']==$_POST['ShipVia']){
-			echo '<OPTION SELECTED VALUE=' . $myrow['Shipper_ID'] . '>' . $myrow['ShipperName'];
+	if ($myrow['shipper_id']==$_POST['ShipVia']){
+			echo '<OPTION SELECTED VALUE=' . $myrow['shipper_id'] . '>' . $myrow['shippername'];
 	}else {
-		echo '<OPTION VALUE=' . $myrow['Shipper_ID'] . '>' . $myrow['ShipperName'];
+		echo '<OPTION VALUE=' . $myrow['shipper_id'] . '>' . $myrow['shippername'];
 	}
 }
 
 echo '</SELECT></TD></TR>';
+
+
+echo '<TR><TD>'. _('Quotation Only') .":</TD><TD><SELECT name='Quotation'>";
+if ($_SESSION['Items']->Quotation==1){
+	echo "<OPTION SELECTED VALUE=1>" . _('Yes');
+	echo "<OPTION VALUE=0>" . _('No');
+} else {
+	echo "<OPTION VALUE=1>" . _('Yes');
+	echo "<OPTION SELECTED VALUE=0>" . _('No');
+}
+echo '</SELECT></TD></TR>';
+
 
 echo '</TABLE></CENTER>';
 
@@ -615,11 +665,11 @@ echo "<BR><CENTER><INPUT TYPE=SUBMIT NAME='BackToLineDetails' VALUE='" . _('Modi
 
 if ($_SESSION['ExistingOrder']==0){
 	echo "<BR><INPUT TYPE=SUBMIT NAME='ProcessOrder' VALUE='" . _('Place Order') . "'>";
+	echo "<BR><BR><BR><INPUT TYPE=SUBMIT NAME='MakeRecurringOrder' VALUE='" . _('Create Reccurring Order') . "'>";
 } else {
 	echo "<BR><INPUT TYPE=SUBMIT NAME='ProcessOrder' VALUE='" . _('Commit Order Changes') . "'>";
 }
 
-echo '</form>';
+echo '</FORM>';
 include('includes/footer.inc');
 ?>
-

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -9,6 +9,7 @@
 
     include('config.php');
     include('includes/ConnectDB.inc');
+        
     if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);
     }
@@ -16,7 +17,7 @@
     ini_set('session.gc_Maxlifetime',$SessionLifeTime);
     
     session_start();
-
+    include('includes/GetConfig.php');
     // Un comment to turn off attempts counter
     //$_SESSION['AttemptsCounter'] = 0;
 
@@ -27,9 +28,9 @@
     // 5 login attempts, show failed login screen
     if (!isset($_SESSION['AttemptsCounter'])) {
 	$_SESSION['AttemptsCounter'] = 0;
-    } elseif ($_SESSION['AttemptsCounter'] >= 5) {
+    } elseif ($_SESSION['AttemptsCounter'] >= 5 AND isset($_POST['UserNameEntryField'])) {
 	/*User blocked from future accesses until sysadmin releases */
-	$sql = "UPDATE WWW_Users SET WWW_Users.Blocked=1 WHERE WWW_Users.UserID='" . $_POST['UserNameEntryField'] . "'";
+	$sql = "UPDATE www_users SET www_users.blocked=1 WHERE www_users.userid='" . $_POST['UserNameEntryField'] . "'";
         $Auth_Result = DB_query($sql, $db);
         die(include('includes/FailedLogin.php'));
     }
@@ -38,7 +39,7 @@
 		$_SESSION['Theme'] = $_POST['Theme'];
 		$theme = $_POST['Theme'];
 	} elseif (!isset($_SESSION['Theme'])) {
-		$theme = $DefaultTheme;
+		$theme = $_SESSION['DefaultTheme'];
 	} else {
 		$theme = $_SESSION['Theme'];
 	}
@@ -62,22 +63,22 @@
         	exit;
         }
 
-        $sql = "SELECT WWW_Users.FullAccess,
-			WWW_Users.CustomerID,
-			WWW_Users.LastVisitDate,
-			WWW_Users.PageSize,
-			WWW_Users.DefaultLocation,
-			WWW_Users.BranchCode,
-			WWW_Users.ModulesAllowed,
-			WWW_Users.Blocked,
-			WWW_Users.RealName,
-			WWW_Users.Theme,
-			WWW_Users.DisplayRecordsMax,
-			WWW_Users.UserID,
-			WWW_Users.Language
-		FROM WWW_Users
-		WHERE WWW_Users.UserID='" . $_POST['UserNameEntryField'] . "' 
-		AND WWW_Users.Password='" . $_POST['Password'] . "'";
+        $sql = "SELECT www_users.fullaccess,
+			www_users.customerid,
+			www_users.lastvisitdate,
+			www_users.pagesize,
+			www_users.defaultlocation,
+			www_users.branchcode,
+			www_users.modulesallowed,
+			www_users.blocked,
+			www_users.realname,
+			www_users.theme,
+			www_users.displayrecordsmax,
+			www_users.userid,
+			www_users.language
+		FROM www_users
+		WHERE www_users.userid='" . $_POST['UserNameEntryField'] . "' 
+		AND www_users.password='" . sha1($_POST['Password']) . "'";
         $Auth_Result = DB_query($sql, $db);
 
         // Populate session variables with data base results
@@ -85,7 +86,7 @@
         	$myrow = DB_fetch_row($Auth_Result);
 		if ($myrow[7]==1){
 	    	//the account is blocked
-			die(include("includes/FailedLogin.php"));
+			die(include('includes/FailedLogin.php'));
 		}
 		$_SESSION['AccessLevel'] = $myrow[0];
 		$_SESSION['CustomerID'] = $myrow[1];
@@ -101,13 +102,34 @@
 		if ($myrow[10] > 0) {
 	 		$_SESSION['DisplayRecordsMax'] = $myrow[10];
 		} else {
-			$_SESSION['DisplayRecordsMax'] = $DefaultDisplayRecordsMax;  // default comes from config.php
+			$_SESSION['DisplayRecordsMax'] = $_SESSION['DefaultDisplayRecordsMax'];  // default comes from config.php
 		}
 
-		$sql = "UPDATE WWW_Users SET LastVisitDate='". date("Y-m-d H:i:s") ."' 
-			WHERE WWW_Users.UserID='" . $_POST['UserNameEntryField'] . "' 
-			AND WWW_Users.Password='" . $_POST['Password'] ."'";
+		$sql = "UPDATE www_users SET lastvisitdate='". date("Y-m-d H:i:s") ."' 
+			WHERE www_users.userid='" . $_POST['UserNameEntryField'] . "' 
+			AND www_users.password='" . sha1($_POST['Password']) ."'";
 		$Auth_Result = DB_query($sql, $db);
+		
+		/*get the security tokens that the user has access to */
+		$sql = 'SELECT tokenid FROM securitygroups
+    		WHERE secroleid =  ' . $_SESSION['AccessLevel'];
+    		$Sec_Result = DB_query($sql, $db);
+				
+    		$_SESSION['AllowedPageSecurityTokens'] = array();
+		if (DB_num_rows($Sec_Result)==0){
+			$title = _('Account Error Report');
+			include('includes/header.inc');
+        		echo '<BR><BR><BR>';
+			prnMsg(_('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'),'error');
+			include('includes/footer.inc');
+        		exit;
+		} else {
+			$i=0;
+			while ($myrow = DB_fetch_row($Sec_Result)){
+				$_SESSION['AllowedPageSecurityTokens'][$i] = $myrow[0];
+				$i++;
+			}
+		}
 
         } else {     // Incorrect password
 
@@ -123,19 +145,20 @@
     
     // Now check that the user as logged in has access to the page being called. The $PageSecurity
     // value must be set in the script before header.inc is included. $SecurityGroups is an array of
-    // arrays defining access for each group of users. These definitions can be modified in config.php.
+    // arrays defining access for each group of users. These definitions can be modified by a system admin under setup
 
-
-
-    if (!is_array($SecurityGroups[$_SESSION['AccessLevel']])) {
-
-        echo '<BR><BR><BR><CENTER><B>';
-		echo _('Security settings have not been defined for your user account') . '. ' . _('Please advise your system administrator') . '</B>';
+    
+    if (!is_array($_SESSION['AllowedPageSecurityTokens'])) {
+		$title = _('Account Error Report');
+		include('includes/header.inc');
+        	echo '<BR><BR><BR>';
+		prnMsg(_('Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server'),'error');
+		include('includes/footer.inc');
         	exit;
     }
 
-    if (!in_array($PageSecurity, $SecurityGroups[$_SESSION['AccessLevel']]) OR !isset($PageSecurity)) {
-
+    if (!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity)) {
+	$title = _('Security Permissions Problem');
         include('header.inc');
 	echo '<TR>
 		<TD CLASS="menu_group_items">
@@ -152,7 +175,7 @@
 	exit;
     }
     // Run with debugging messages for the system administrator(s) but not anyone else
-    if (in_array(15, $SecurityGroups[$_SESSION['AccessLevel']])) {
+    if (in_array(15, $_SESSION['AllowedPageSecurityTokens'])) {
         $debug = 1;
     } else {
         $debug = 0;

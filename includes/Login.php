@@ -1,6 +1,6 @@
 <?php
-/* $Revision: 1.9 $ */
-// Display demo user name and password within login form if "$allow_demo_mode" is true
+/* $Revision: 1.10 $ */
+// Display demo user name and password within login form if $allow_demo_mode is true
 include ('includes/LanguageSetup.php');
 
 if ($allow_demo_mode == True AND !isset($demo_text)) {
@@ -13,7 +13,7 @@ if ($allow_demo_mode == True AND !isset($demo_text)) {
 
 <html>
 <head>
-    <title><?php echo $CompanyName;?></title>
+    <title><?php echo $_SESSION['CompanyRecord']['coyname'];?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
     <link rel="stylesheet" href="css/<?php echo $theme;?>/login.css" type="text/css" />
 </head>

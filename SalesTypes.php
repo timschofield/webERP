@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 15;
 
@@ -40,18 +40,18 @@ if (isset($_POST['submit'])) {
 
 	if ($SelectedType AND $InputError !=1) {
 
-		$sql = "UPDATE SalesTypes SET
-				TypeAbbrev = '" . $_POST['TypeAbbrev'] . "',
-				Sales_Type = '" . $_POST['Sales_Type'] . "'
-			WHERE TypeAbbrev = '$SelectedType'";
+		$sql = "UPDATE salestypes SET
+				typeabbrev = '" . $_POST['TypeAbbrev'] . "',
+				sales_type = '" . $_POST['Sales_Type'] . "'
+			WHERE typeabbrev = '$SelectedType'";
 
 		$msg = _('Sales Type') . ' ' . $SelectedType . ' ' .  _('has been updated');
 	} elseif ($InputError !=1) {
 
 	/*Selected type is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new sales type form */
 
-		$sql = "INSERT INTO SalesTypes (TypeAbbrev,
-						Sales_Type)
+		$sql = "INSERT INTO salestypes (typeabbrev,
+						sales_type)
 				VALUES ('" . $_POST['TypeAbbrev'] . "',
 					'" . $_POST['Sales_Type'] . "')";
 		$msg = _('Sales type') . ' ' . $_POST["Sales_Type"] .  ' ' . _('has been added to the database');
@@ -71,8 +71,8 @@ if (isset($_POST['submit'])) {
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorTrans'
 
 	$sql= "SELECT COUNT(*)
-		FROM DebtorTrans
-		WHERE DebtorTrans.Tpe='$SelectedType'";
+		FROM debtortrans
+		WHERE debtortrans.tpe='$SelectedType'";
 
 	$ErrMsg = _('The number of transactions using this Sales Type record could not be retrieved because');
 	$result = DB_query($sql,$db,$ErrMsg);
@@ -83,7 +83,7 @@ if (isset($_POST['submit'])) {
 
 	} else {
 
-		$sql = "SELECT COUNT(*) FROM DebtorsMaster WHERE SalesType='$SelectedType'";
+		$sql = "SELECT COUNT(*) FROM debtorsmaster WHERE salestype='$SelectedType'";
 
 		$ErrMsg = _('The number of transactions using this Sales Type record could not be retrieved because');
 		$result = DB_query($sql,$db,$ErrMsg);
@@ -92,12 +92,12 @@ if (isset($_POST['submit'])) {
 			prnMsg (_('Cannot delete this sale type because customers are currently set up to use this sales type') . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('customers with this sales type code'));
 		} else {
 
-			$sql="DELETE FROM SalesTypes WHERE TypeAbbrev='$SelectedType'";
+			$sql="DELETE FROM salestypes WHERE typeabbrev='$SelectedType'";
 			$ErrMsg = _('The Sales Type record could not be deleted because');
 			$result = DB_query($sql,$db,$ErrMsg);
 			prnMsg(_('Sales type') . ' / ' . _('price list') . ' ' . $SelectedType  . ' ' . _('has been deleted') ,'success');
 
-			$sql ="DELETE FROM Prices WHERE Prices.TypeAbbrev='SelectedType'";
+			$sql ="DELETE FROM prices WHERE prices.typeabbrev='SelectedType'";
 			$ErrMsg =  _('The Sales Type prices could not be deleted because');
 			$result = DB_query($sql,$db,$ErrMsg);
 
@@ -116,7 +116,7 @@ then none of the above are true and the list of sales types will be displayed wi
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = 'SELECT * FROM SalesTypes';
+	$sql = 'SELECT * FROM salestypes';
 	$result = DB_query($sql,$db);
 
 	echo '<CENTER><table border=1>';
@@ -164,13 +164,13 @@ if (! isset($_GET['delete'])) {
 	if ($SelectedType) {
 		//editing an existing sales type
 
-		$sql = "SELECT TypeAbbrev, Sales_Type FROM SalesTypes WHERE TypeAbbrev='$SelectedType'";
+		$sql = "SELECT typeabbrev, sales_type FROM salestypes WHERE typeabbrev='$SelectedType'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
 
-		$_POST['TypeAbbrev'] = $myrow['TypeAbbrev'];
-		$_POST['Sales_Type']  = $myrow['Sales_Type'];
+		$_POST['TypeAbbrev'] = $myrow['typeabbrev'];
+		$_POST['Sales_Type']  = $myrow['sales_type'];
 
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedType' VALUE=" . $SelectedType . ">";
 		echo "<INPUT TYPE=HIDDEN NAME='TypeAbbrev' VALUE=" . $_POST['TypeAbbrev'] . ">";

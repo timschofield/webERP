@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 2;
 
@@ -31,31 +31,31 @@ $_SESSION['Items'] = new cart;
 
 
 $OrderHeaderSQL = 'SELECT
-			SalesOrders.DebtorNo,
-			DebtorsMaster.Name,
-			SalesOrders.BranchCode,
-			SalesOrders.CustomerRef,
-			SalesOrders.Comments,
-			SalesOrders.OrdDate,
-			SalesOrders.OrderType,
-			SalesOrders.ShipVia,
-			SalesOrders.DeliverTo,
-			SalesOrders.DelAdd1,
-			SalesOrders.DelAdd2,
-			SalesOrders.DelAdd3,
-			SalesOrders.DelAdd4,
-			SalesOrders.ContactPhone,
-			SalesOrders.ContactEmail,
-			SalesOrders.FreightCost,
-			SalesOrders.DeliveryDate,
-			DebtorsMaster.CurrCode,
-			SalesOrders.FromStkLoc
+			salesorders.debtorno,
+			debtorsmaster.name,
+			salesorders.branchcode,
+			salesorders.customerref,
+			salesorders.comments,
+			salesorders.orddate,
+			salesorders.ordertype,
+			salesorders.shipvia,
+			salesorders.deliverto,
+			salesorders.deladd1,
+			salesorders.deladd2,
+			salesorders.deladd3,
+			salesorders.deladd4,
+			salesorders.contactphone,
+			salesorders.contactemail,
+			salesorders.freightcost,
+			salesorders.deliverydate,
+			debtorsmaster.currcode,
+			salesorders.fromstkloc
 		FROM
-			SalesOrders,
-			DebtorsMaster
+			salesorders,
+			debtorsmaster
 		WHERE
-			SalesOrders.DebtorNo = DebtorsMaster.DebtorNo
-		AND SalesOrders.OrderNo = ' . $_GET['OrderNumber'];
+			salesorders.debtorno = debtorsmaster.debtorno
+		AND salesorders.orderno = ' . $_GET['OrderNumber'];
 
 $ErrMsg =  _('The order cannot be retrieved because');
 $DbgMsg = _('The SQL that failed to get the order header was');
@@ -65,27 +65,27 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 
 	$myrow = DB_fetch_array($GetOrdHdrResult);
 
-	$_SESSION['CustomerID'] = $myrow['DebtorNo'];
+	$_SESSION['CustomerID'] = $myrow['debtorno'];
 /*CustomerID defined in header.inc */
-	$_SESSION['Items']->Branch = $myrow['BranchCode'];
-	$_SESSION['Items']->CustomerName = $myrow['Name'];
-	$_SESSION['Items']->CustRef = $myrow['CustomerRef'];
-	$_SESSION['Items']->Comments = $myrow['Comments'];
+	$_SESSION['Items']->Branch = $myrow['branchcode'];
+	$_SESSION['Items']->CustomerName = $myrow['name'];
+	$_SESSION['Items']->CustRef = $myrow['customerref'];
+	$_SESSION['Items']->Comments = $myrow['comments'];
 
-	$_SESSION['Items']->DefaultSalesType =$myrow['OrderType'];
-	$_SESSION['Items']->DefaultCurrency = $myrow['CurrCode'];
-	$BestShipper = $myrow['ShipVia'];
-	$_SESSION['Items']->DeliverTo = $myrow['DeliverTo'];
-	$_SESSION['Items']->DeliveryDate = ConvertSQLDate($myrow['DeliveryDate']);
-	$_SESSION['Items']->BrAdd1 = $myrow['DelAdd1'];
-	$_SESSION['Items']->BrAdd2 = $myrow['DelAdd2'];
-	$_SESSION['Items']->BrAdd3 = $myrow['DelAdd3'];
-	$_SESSION['Items']->BrAdd4 = $myrow['DelAdd4'];
-	$_SESSION['Items']->PhoneNo = $myrow['ContactPhone'];
-	$_SESSION['Items']->Email = $myrow['ContactEmail'];
-	$_SESSION['Items']->Location = $myrow['FromStkLoc'];
-	$FreightCost = $myrow['FreightCost'];
-	$_SESSION['Items']->Orig_OrderDate = $myrow['OrdDate'];
+	$_SESSION['Items']->DefaultSalesType =$myrow['ordertype'];
+	$_SESSION['Items']->DefaultCurrency = $myrow['currcode'];
+	$BestShipper = $myrow['shipvia'];
+	$_SESSION['Items']->DeliverTo = $myrow['deliverto'];
+	$_SESSION['Items']->DeliveryDate = ConvertSQLDate($myrow['deliverydate']);
+	$_SESSION['Items']->BrAdd1 = $myrow['deladd1'];
+	$_SESSION['Items']->BrAdd2 = $myrow['deladd2'];
+	$_SESSION['Items']->BrAdd3 = $myrow['deladd3'];
+	$_SESSION['Items']->BrAdd4 = $myrow['deladd4'];
+	$_SESSION['Items']->PhoneNo = $myrow['contactphone'];
+	$_SESSION['Items']->Email = $myrow['contactemail'];
+	$_SESSION['Items']->Location = $myrow['fromstkloc'];
+	$FreightCost = $myrow['freightcost'];
+	$_SESSION['Items']->Orig_OrderDate = $myrow['orddate'];
 
 
 	/* SHOW ALL THE ORDER INFO IN ONE PLACE */
@@ -142,23 +142,23 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 /*Now get the line items */
 
 	$LineItemsSQL = 'SELECT
-				StkCode,
-				StockMaster.Description,
-				StockMaster.Volume,
-				StockMaster.KGS,
-				StockMaster.DecimalPlaces,
-				StockMaster.MBflag,
-				StockMaster.Units,
-				StockMaster.DiscountCategory,
-				StockMaster.Controlled,
-				StockMaster.Serialised,
-				UnitPrice,
-				Quantity,
-				DiscountPercent,
-				ActualDispatchDate,
-				QtyInvoiced
-			FROM SalesOrderDetails, StockMaster
-			WHERE SalesOrderDetails.StkCode = StockMaster.StockID AND OrderNo =' . $_GET['OrderNumber'];
+				stkcode,
+				stockmaster.description,
+				stockmaster.volume,
+				stockmaster.kgs,
+				stockmaster.decimalplaces,
+				stockmaster.mbflag,
+				stockmaster.units,
+				stockmaster.discountcategory,
+				stockmaster.controlled,
+				stockmaster.serialised,
+				unitprice,
+				quantity,
+				discountpercent,
+				actualdispatchdate,
+				qtyinvoiced
+			FROM salesorderdetails, stockmaster
+			WHERE salesorderdetails.stkcode = stockmaster.stockid AND orderno =' . $_GET['OrderNumber'];
 
 	$ErrMsg =  _('The line items of the order cannot be retrieved because');
 	$DbgMsg =  _('The SQL used to retrieve the line items, that failed was');
@@ -168,22 +168,22 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 
 		while ($myrow=db_fetch_array($LineItemsResult)) {
 
-			$_SESSION['Items']->add_to_cart($myrow['StkCode'],
-							$myrow['Quantity'],
-							$myrow['Description'],
-							$myrow['UnitPrice'],
-							$myrow['DiscountPercent'],
-							$myrow['Units'],
-							$myrow['Volume'],
-							$myrow['KGS'],
+			$_SESSION['Items']->add_to_cart($myrow['stkcode'],
+							$myrow['quantity'],
+							$myrow['description'],
+							$myrow['unitprice'],
+							$myrow['discountpercent'],
+							$myrow['units'],
+							$myrow['volume'],
+							$myrow['kgs'],
 							0,
-							$myrow['MBflag'],
-							$myrow['ActualDispatchDate'],
-							$myrow['QtyInvoiced'],
-							$myrow['DiscountCategory'],
-							$myrow['Controlled'],
-							$myrow['Serialised'],
-							$myrow['DecimalPlaces']
+							$myrow['mbflag'],
+							$myrow['actualdispatchdate'],
+							$myrow['qtyinvoiced'],
+							$myrow['discountcategory'],
+							$myrow['controlled'],
+							$myrow['serialised'],
+							$myrow['decimalplaces']
 						);
 
 		} /* line items from sales order details */

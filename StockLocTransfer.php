@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /* contributed by Chris Bice */
 
 $PageSecurity = 11;
@@ -14,7 +14,7 @@ If (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 	$InputError = False; /*Start off hoping for the best */
 	$TotalItems = 0;
 	//Make sure this Transfer has not already been entered... aka one way around the refresh & insert new records problem
-	$result = DB_query("SELECT * from LocTransfers WHERE Reference='" . $_POST['Trf_ID'] . "'",$db);
+	$result = DB_query("SELECT * FROM loctransfers WHERE reference='" . $_POST['Trf_ID'] . "'",$db);
 	if (DB_num_rows($result)!=0){
 		$InputError = true;
 		$ErrorMessage = _('This transaction has already been entered') . '. ' . _('Please start over now').'<BR>';
@@ -28,7 +28,7 @@ If (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 	for ($i=$_POST['LinesCounter']-10;$i<$_POST['LinesCounter'];$i++){
 
 		if ($_POST['StockID' . $i]!=''){
-			$result = DB_query("SELECT COUNT(StockID) FROM StockMaster WHERE StockID='" . $_POST['StockID' . $i] . "'",$db);
+			$result = DB_query("SELECT COUNT(stockid) FROM stockmaster WHERE stockid='" . $_POST['StockID' . $i] . "'",$db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]==0){
 				$InputError = True;
@@ -67,16 +67,16 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	for ($i=0;$i < $_POST['LinesCounter'];$i++){
 
 		if($_POST['StockID' . $i] != ""){
-			$sql = "INSERT INTO LocTransfers (Reference,
-								StockID,
-								ShipQty,
-								ShipDate,
-								ShipLoc,
-								RecLoc)
+			$sql = "INSERT INTO loctransfers (reference,
+								stockid,
+								shipqty,
+								shipdate,
+								shiploc,
+								recloc)
 						VALUES ('" . $_POST['Trf_ID'] . "',
 							'" . $_POST['StockID' . $i] . "',
 							'" . $_POST['StockQTY' . $i] . "',
-							'" . Date("Y-m-d") . "',
+							'" . Date('Y-m-d') . "',
 							'" . $_POST['FromStockLocation']  ."',
 							'" . $_POST['ToStockLocation'] . "')";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$_POST['StockID' . $i];
@@ -116,21 +116,21 @@ if(isset($_POST['Submit']) AND $InputError==False){
 
 	echo '<input type=HIDDEN NAME="Trf_ID" VALUE="' . $Trf_ID . '"><h2>'. _('Inventory Location Transfer Shipment Reference').' # '. $Trf_ID. '</h2>';
 
-	$sql = 'SELECT LocCode, LocationName FROM Locations';
+	$sql = 'SELECT loccode, locationname FROM locations';
 	$resultStkLocs = DB_query($sql,$db);
 	echo _('From Stock Location').':<SELECT name="FromStockLocation">';
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['FromStockLocation'])){
-			if ($myrow['LocCode'] == $_POST['FromStockLocation']){
-				echo '<OPTION SELECTED Value="' . $myrow['LocCode'] . '">' . $myrow['LocationName'];
+			if ($myrow['loccode'] == $_POST['FromStockLocation']){
+				echo '<OPTION SELECTED Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 			} else {
-				echo '<OPTION Value="' . $myrow['LocCode'] . '">' . $myrow['LocationName'];
+				echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 			}
-		} elseif ($myrow['LocCode']==$_SESSION['UserStockLocation']){
-			echo '<OPTION SELECTED Value="' . $myrow['LocCode'] . '">' . $myrow['LocationName'];
-			$_POST['FromStockLocation']=$myrow['LocCode'];
+		} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
+			echo '<OPTION SELECTED Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			$_POST['FromStockLocation']=$myrow['loccode'];
 		} else {
-			echo '<OPTION Value="' . $myrow['LocCode'] . '">' . $myrow['LocationName'];
+			echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		}
 	}
 	echo '</SELECT>';
@@ -139,16 +139,16 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	echo _('To Stock Location').':<SELECT name="ToStockLocation">';
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['ToStockLocation'])){
-			if ($myrow['LocCode'] == $_POST['ToStockLocation']){
-				echo '<OPTION SELECTED Value="' . $myrow['LocCode'] . '">' . $myrow['LocationName'];
+			if ($myrow['loccode'] == $_POST['ToStockLocation']){
+				echo '<OPTION SELECTED Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 			} else {
-				echo '<OPTION Value="' . $myrow['LocCode'] . '">' . $myrow['LocationName'];
+				echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 			}
-		} elseif ($myrow['LocCode']==$_SESSION['UserStockLocation']){
-			echo '<OPTION SELECTED Value="' . $myrow['LocCode'] . '">' . $myrow['LocationName'];
-			$_POST['ToStockLocation']=$myrow['LocCode'];
+		} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
+			echo '<OPTION SELECTED Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+			$_POST['ToStockLocation']=$myrow['loccode'];
 		} else {
-			echo '<OPTION Value="' . $myrow['LocCode'] . '">' . $myrow['LocationName'];
+			echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		}
 	}
 	echo '</SELECT><BR>';

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
 
@@ -42,7 +42,6 @@ if ($LineItem->Controlled !=1 ){ /*This page only relavent for controlled items 
 	include('includes/footer.inc');
 	exit;
 }
-
 
 /********************************************
   Get the page going....

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity = 2;
 
 
@@ -17,23 +17,23 @@ If (isset($_POST['PrintPDF'])
 
 /*First off do the stock check file stuff */
 	if ($_POST['MakeStkChkData']=='New'){
-		$sql = 'TRUNCATE TABLE StockCheckFreeze';
+		$sql = 'TRUNCATE TABLE stockcheckfreeze';
 		$result = DB_query($sql,$db);
-		$sql = "INSERT INTO StockCheckFreeze (StockID,
-                                          LocCode,
-                                          QOH)
-                   SELECT LocStock.StockID,
-                          LocCode ,
-                          LocStock.Quantity
-                   FROM LocStock,
-                        StockMaster
-                   WHERE LocStock.StockID=StockMaster.StockID AND
-                   LocStock.LocCode='" . $_POST['Location'] . "' AND
-                   StockMaster.CategoryID>='" . $_POST['FromCriteria'] . "' AND
-                   StockMaster.CategoryID<='" . $_POST['ToCriteria'] . "' AND
-                   StockMaster.MBflag!='A' AND
-                   StockMaster.MBflag!='K' AND
-                   StockMaster.MBflag!='D'";
+		$sql = "INSERT INTO stockcheckfreeze (stockid,
+                                          loccode,
+                                          qoh)
+                   SELECT locstock.stockid,
+                          locstock.loccode,
+                          locstock.quantity
+                   FROM locstock,
+                        stockmaster
+                   WHERE locstock.stockid=stockmaster.stockid and
+                   locstock.loccode='" . $_POST['Location'] . "' AND
+                   stockmaster.categoryid>='" . $_POST['FromCriteria'] . "' AND
+                   stockmaster.categoryid<='" . $_POST['ToCriteria'] . "' AND
+                   stockmaster.mbflag!='A' AND
+                   stockmaster.mbflag!='K' AND
+                   stockmaster.mbflag!='D'";
 
 		$result = DB_query($sql, $db,'','',false,false);
 		if (DB_error_no($db) !=0) {
@@ -50,11 +50,11 @@ If (isset($_POST['PrintPDF'])
 	}
 
 	if ($_POST['MakeStkChkData']=='AddUpdate'){
-		$sql = "DELETE StockCheckFreeze FROM StockCheckFreeze
-                                    INNER JOIN StockMaster ON StockCheckFreeze.StockID=StockMaster.StockID
-                                    WHERE StockMaster.CategoryID >='" . $_POST['FromCriteria'] . "' AND
-                                    StockMaster.CategoryID<='" . $_POST['ToCriteria'] . "' AND
-                                    StockCheckFreeze.LocCode='" . $_POST['Location'] . "'";
+		$sql = "DELETE stockcheckfreeze FROM stockcheckfreeze
+                                    INNER JOIN stockmaster ON stockcheckfreeze.stockid=stockmaster.stockid
+                                    WHERE stockmaster.categoryid >='" . $_POST['FromCriteria'] . "' AND
+                                    stockmaster.categoryid<='" . $_POST['ToCriteria'] . "' AND
+                                    stockcheckfreeze.loccode='" . $_POST['Location'] . "'";
 
 		$result = DB_query($sql,$db,'','',false,false);
 if (DB_error_no($db) !=0) {
@@ -69,20 +69,21 @@ if (DB_error_no($db) !=0) {
 			exit;
 		}
 
-		$sql = "INSERT INTO StockCheckFreeze (StockID,
-                                          LocCode,
-                                          QOH) SELECT LocStock.StockID,
-                                                      LocCode ,
-                                                      LocStock.Quantity
-                                               FROM LocStock,
-                                                    StockMaster
-                                               WHERE LocStock.StockID=StockMaster.StockID AND
-                                                     LocStock.LocCode='" . $_POST['Location'] . "' AND
-                                                     StockMaster.CategoryID>='" . $_POST['FromCriteria'] . "' AND
-                                                     StockMaster.CategoryID<='" . $_POST['ToCriteria'] . "' AND
-                                                     StockMaster.MBflag!='A' AND
-                                                     StockMaster.MBflag!='K' AND
-                                                     StockMaster.MBflag!='D'";
+		$sql = "INSERT INTO stockcheckfreeze (stockid,
+                                          loccode,
+                                          qoh) 
+				SELECT locstock.stockid,
+					loccode ,
+					locstock.quantity
+				FROM locstock,
+					stockmaster
+				WHERE locstock.stockid=stockmaster.stockid AND
+					locstock.loccode='" . $_POST['Location'] . "' AND
+					stockmaster.categoryid>='" . $_POST['FromCriteria'] . "' AND
+                                                     stockmaster.categoryid<='" . $_POST['ToCriteria'] . "' AND
+                                                     stockmaster.mbflag!='A' AND
+                                                     stockmaster.mbflag!='K' AND
+                                                     stockmaster.mbflag!='D'";
 
 		$result = DB_query($sql, $db,'','',false,false);
 		if (DB_error_no($db) !=0) {
@@ -113,23 +114,26 @@ if (DB_error_no($db) !=0) {
 	$PageNumber=1;
 	$line_height=30;
 
-      $SQL = "SELECT StockMaster.CategoryID,
-                     StockCheckFreeze.StockID,
-                     StockMaster.Description,
-                     StockCategory.CategoryDescription,
-                     StockCheckFreeze.QOH
-                     FROM StockCheckFreeze,
-                          StockMaster,
-                          StockCategory
-                     WHERE StockCheckFreeze.StockID=StockMaster.StockID AND
-                           StockMaster.CategoryID >= '" . $_POST['FromCriteria'] . "' AND
-                           StockMaster.CategoryID=StockCategory.CategoryID AND
-                           StockMaster.CategoryID <= '" . $_POST['ToCriteria'] . "' AND
-                           (StockMaster.MBflag='B' OR MBflag='M') AND
-                           StockCheckFreeze.LocCode = '" . $_POST['Location'] . "'
-                     ORDER BY StockMaster.CategoryID,
-                              StockMaster.StockID";
-
+      $SQL = "SELECT stockmaster.categoryid,
+                     stockcheckfreeze.stockid,
+                     stockmaster.description,
+                     stockcategory.categorydescription,
+                     stockcheckfreeze.qoh
+                     FROM stockcheckfreeze,
+                          stockmaster,
+                          stockcategory
+                     WHERE stockcheckfreeze.stockid=stockmaster.stockid AND
+                           stockmaster.categoryid >= '" . $_POST['FromCriteria'] . "' AND
+                           stockmaster.categoryid=stockcategory.categoryid AND
+                           stockmaster.categoryid <= '" . $_POST['ToCriteria'] . "' AND
+                           (stockmaster.mbflag='B' OR mbflag='M') AND
+                           stockcheckfreeze.loccode = '" . $_POST['Location'] . "'";
+		if ($_POST['NonZerosOnly']==true){
+			$SQL .= ' AND stockcheckfreeze.qoh<>0';
+		}
+	
+		$SQL .=  ' ORDER BY stockmaster.categoryid, stockmaster.stockid';
+		
 	$InventoryResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
@@ -150,7 +154,7 @@ if (DB_error_no($db) !=0) {
 
 	While ($InventoryPlan = DB_fetch_array($InventoryResult,$db)){
 
-		if ($Category!=$InventoryPlan['CategoryID']){
+		if ($Category!=$InventoryPlan['categoryid']){
 			$FontSize=12;
 			if ($Category!=''){ /*Then it's NOT the first time round */
 				/*draw a line under the CATEGORY TOTAL*/
@@ -158,74 +162,79 @@ if (DB_error_no($db) !=0) {
 				$YPos -=(2*$line_height);
 			}
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,$InventoryPlan['CategoryID'] . ' - ' . $InventoryPlan['CategoryDescription'], 'left');
-			$Category = $InventoryPlan['CategoryID'];
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,$InventoryPlan['categoryid'] . ' - ' . $InventoryPlan['categorydescription'], 'left');
+			$Category = $InventoryPlan['categoryid'];
 		}
 
 		$FontSize=10;
 		$YPos -=$line_height;
+                if ($_POST['ShowInfo']==true){
 
-		$SQL = "SELECT Sum(SalesOrderDetails.Quantity - SalesOrderDetails.QtyInvoiced)
-                   AS QtyDemand
-                   FROM SalesOrderDetails,
-                        SalesOrders
-                   WHERE SalesOrderDetails.OrderNo=SalesOrders.OrderNo AND
-                   SalesOrders.FromStkLoc ='" . $_POST["Location"] . "' AND
-                   SalesOrderDetails.StkCode = '" . $InventoryPlan['StockID'] . "'  AND
-                   SalesOrderDetails.Completed = 0";
+			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
+                   		FROM salesorderdetails,
+                        		salesorders
+                   		WHERE salesorderdetails.orderno=salesorders.orderno AND
+                   			salesorders.fromstkloc ='" . $_POST['Location'] . "' AND
+                   			salesorderdetails.stkcode = '" . $InventoryPlan['StockID'] . "'  AND
+                   			salesorderdetails.completed = 0";
 
-		$DemandResult = DB_query($SQL,$db,'','',false, false);
+			$DemandResult = DB_query($SQL,$db,'','',false, false);
 
-		if (DB_error_no($db) !=0) {
-	 		 $title = _('Stock Check Sheets') . ' - ' . _('Problem Report') . '.... ';
-	  		include('includes/header.inc');
-	   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg($db), 'error');
-	   		echo '<BR><A HREF="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</A>';
-	   		if ($debug==1){
-	      			echo '<BR>' . $SQL;
-	   		}
-	   		echo '</body</html>';
-	   		exit;
-		}
-
-		$DemandRow = DB_fetch_array($DemandResult);
-		$DemandQty = $DemandRow['QtyDemand'];
-
-		//Also need to add in the demand for components of assembly items
-		$sql = "SELECT Sum((SalesOrderDetails.Quantity-SalesOrderDetails.QtyInvoiced)*BOM.Quantity)
-                   AS DEM
-                   FROM SalesOrderDetails,
-                        SalesOrders,
-                        BOM,
-                        StockMaster
-                   WHERE SalesOrderDetails.StkCode=BOM.Parent AND
-                   SalesOrders.OrderNo = SalesOrderDetails.OrderNo AND
-                   SalesOrders.FromStkLoc='" . $myrow['LocCode'] . "' AND
-                   SalesOrderDetails.Quantity-SalesOrderDetails.QtyInvoiced > 0 AND
-                   BOM.Component='" . $StockID . "' AND
-                   StockMaster.StockID=BOM.Parent AND
-                   StockMaster.MBFlag='A'";
-
-		$DemandResult = DB_query($sql,$db,'','',false,false);
-		if (DB_error_no($db) !=0) {
-			prnMsg(_('The demand for this product from') . ' ' . $myrow['LocCode'] . ' ' . _('cannot be retrieved because') . ' - ' . DB_error_msg($db),'error');
-			if ($debug==1){
-		   		echo '<BR>' . _('The SQL that failed was') . ' ' . $sql;
+			if (DB_error_no($db) !=0) {
+	 			 $title = _('Stock Check Sheets') . ' - ' . _('Problem Report') . '.... ';
+		  		include('includes/header.inc');
+		   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg($db), 'error');
+	   			echo '<BR><A HREF="' . $rootpath . '/index.php?' . SID . '">' . _('Back to the menu') . '</A>';
+	   			if ($debug==1){
+	      				echo '<BR>' . $SQL;
+		   		}
+		   		echo '</body</html>';
+	   			exit;
 			}
-			exit;
+
+			$DemandRow = DB_fetch_array($DemandResult);
+			$DemandQty = $DemandRow['qtydemand'];
+
+			//Also need to add in the demand for components of assembly items
+			$sql = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity)
+                		   AS dem
+		                   FROM salesorderdetails,
+                		        salesorders,
+		                        bom,
+                		        stockmaster
+		                   WHERE salesorderdetails.stkcode=bom.parent AND
+                		   salesorders.orderno = salesorderdetails.orderno AND
+		                   salesorders.fromstkloc='" . $myrow['loccode'] . "' AND
+                		   salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0 AND
+		                   bom.component='" . $StockID . "' AND
+                		   stockmaster.stockid=bom.parent AND
+		                   stockmaster.mbflag='A'";
+
+			$DemandResult = DB_query($sql,$db,'','',false,false);
+			if (DB_error_no($db) !=0) {
+				prnMsg(_('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because') . ' - ' . DB_error_msg($db),'error');
+				if ($debug==1){
+		   			echo '<BR>' . _('The SQL that failed was') . ' ' . $sql;
+				}
+				exit;
+			}
+	
+			if (DB_num_rows($DemandResult)==1){
+	  			$DemandRow = DB_fetch_row($DemandResult);
+	  			$DemandQty += $DemandRow[0];
+			}
+
+			$LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize,$InventoryPlan['qoh'], 'right');
+			$LeftOvers = $pdf->addTextWrap(410,$YPos,60,$FontSize,number_format($DemandQty,0), 'right');
+			$LeftOvers = $pdf->addTextWrap(470,$YPos,60,$FontSize,number_format($InventoryPlan['qoh']-$DemandQty,0), 'right');
+	
 		}
+		
+		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize,$InventoryPlan['stockid'], 'left');
 
-		if (DB_num_rows($DemandResult)==1){
-	  		$DemandRow = DB_fetch_row($DemandResult);
-	  		$DemandQty += $DemandRow[0];
-		}
-
-		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize,$InventoryPlan['StockID'], 'left');
-		$LeftOvers = $pdf->addTextWrap(150,$YPos,200,$FontSize,$InventoryPlan['Description'], 'left');
-		$LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize,$InventoryPlan['QOH'], 'right');
-		$LeftOvers = $pdf->addTextWrap(410,$YPos,60,$FontSize,number_format($DemandQty,0), 'right');
-		$LeftOvers = $pdf->addTextWrap(470,$YPos,60,$FontSize,number_format($InventoryPlan['QOH']-$DemandQty,0), 'right');
-
+		$LeftOvers = $pdf->addTextWrap(150,$YPos,200,$FontSize,$InventoryPlan['description'], 'left');
+		
+	
 		$pdf->line($Left_Margin, $YPos-2,$Page_Width-$Right_Margin, $YPos-2);
 
 		if ($YPos < $Bottom_Margin + $line_height){
@@ -264,9 +273,6 @@ if (DB_error_no($db) !=0) {
 	include('includes/session.inc');
 	$title=_('Stock Check Sheets');
 	include('includes/header.inc');
-	include('includes/SQL_CommonFunctions.inc');
-	$CompanyRecord = ReadInCompanyRecord($db);
-
 
 	if (strlen($_POST['FromCriteria'])<1 || strlen($_POST['ToCriteria'])<1) {
 
@@ -276,10 +282,10 @@ if (DB_error_no($db) !=0) {
 
 		echo '<TR><TD>' . _('From Inventory Category Code') . ':</FONT></TD><TD><SELECT name="FromCriteria">';
 
-		$sql='SELECT CategoryID, CategoryDescription FROM StockCategory ORDER BY CategoryID';
+		$sql='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid';
 		$CatResult= DB_query($sql,$db);
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo '<OPTION VALUE="' . $myrow['CategoryID'] . '">' . $myrow['CategoryID'] . ' - ' . $myrow['CategoryDescription'];
+			echo '<OPTION VALUE="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 		}
 		echo '</SELECT></TD></TR>';
 
@@ -289,16 +295,16 @@ if (DB_error_no($db) !=0) {
 		DB_data_seek($CatResult,0);
 
 		While ($myrow = DB_fetch_array($CatResult)){
-			echo '<OPTION VALUE="' . $myrow['CategoryID'] . '">' . $myrow['CategoryID'] . ' - ' . $myrow['CategoryDescription'];
+			echo '<OPTION VALUE="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 		}
 		echo '</SELECT></TD></TR>';
 
 		echo '<TR><TD>' . _('For Inventory in Location') . ':</TD><TD><SELECT name="Location">';
-		$sql = 'SELECT LocCode, LocationName FROM Locations';
+		$sql = 'SELECT loccode, locationname FROM locations';
 		$LocnResult=DB_query($sql,$db);
 
 		while ($myrow=DB_fetch_array($LocnResult)){
-		          echo '<OPTION Value="' . $myrow["LocCode"] . '">' . $myrow['LocationName'];
+		          echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
      		}
 		echo '</SELECT></TD></TR>';
 
@@ -322,8 +328,25 @@ if (DB_error_no($db) !=0) {
 		} else {
 			echo '<OPTION VALUE="PrintOnly">' . _('Print Stock Check Sheets Only');
 		}
-
-		echo '</TABLE><INPUT TYPE=Submit Name="PrintPDF" Value="' . _('Print and Process') . '"></CENTER>';
+		echo "</SELECT></TD></TR>";
+		
+		echo "<TR><TD>Show system quantity on sheets:</TD><TD>";
+		
+		if ($_POST['ShowInfo'] == false){
+		        echo "<INPUT TYPE=CHECKBOX NAME='ShowInfo' VALUE=FALSE>";
+		} else {
+	        	echo "<INPUT TYPE=CHECKBOX NAME='ShowInfo' VALUE=TRUE>";
+		}
+		echo "</TD></TR>";
+																		
+		echo "<TR><TD>Only print items with non zero quantities:</TD><TD>";
+		if ($_POST['NonZerosOnly'] == false){
+		        echo "<INPUT TYPE=CHECKBOX NAME='NonZerosOnly' VALUE=FALSE>";
+		} else {
+		        echo "<INPUT TYPE=CHECKBOX NAME='NonZerosOnly' VALUE=TRUE>";
+		}
+              
+	       	echo '</TD></TR></TABLE><INPUT TYPE=Submit Name="PrintPDF" Value="' . _('Print and Process') . '"></CENTER></FORM>';
 	}
 	echo '</body></html>';
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $PageSecurity = 4;
 include('includes/DefinePOClass.php');
 include('includes/session.inc');
@@ -40,9 +40,9 @@ If (isset($_POST['EnterLines'])){
 
 		$_SESSION['PO']->AllowPrintPO=1;
 
-		$sql = 'UPDATE PurchOrders
-			SET PurchOrders.AllowPrint=1
-			WHERE PurchOrders.OrderNo=' . $_SESSION['PO']->OrderNo;
+		$sql = 'UPDATE purchorders
+			SET purchorders.allowprint=1
+			WHERE purchorders.orderno=' . $_SESSION['PO']->OrderNo;
 
 		$ErrMsg = _('An error occurred updating the purchase order to allow reprints') . '. ' . _('The error says');
 		$updateResult = DB_query($sql,$db,$ErrMsg);
@@ -80,11 +80,11 @@ if (isset($_POST['CancelOrder']) AND $_POST['CancelOrder']!='') { /*The cancel b
 
 		if($_SESSION['ExistingOrder']!=0){
 
-			$SQL = 'DELETE FROM PurchOrderDetails WHERE PurchOrderDetails.OrderNo =' . $_SESSION['ExistingOrder'];
+			$SQL = 'DELETE FROM purchorderdetails WHERE purchorderdetails.orderno =' . $_SESSION['ExistingOrder'];
 			$ErrMsg = _('The order detail lines could not be deleted because');
 			$DelResult=DB_query($SQL,$db,$ErrMsg);
 
-			$SQL = 'DELETE FROM PurchOrders WHERE PurchOrders.OrderNo=' . $_SESSION['ExistingOrder'];
+			$SQL = 'DELETE FROM purchorders WHERE purchorders.orderno=' . $_SESSION['ExistingOrder'];
 			$ErrMsg = _('The order header could not be deleted because');
 			$DelResult=DB_query($SQL,$db,$ErrMsg);
 		 }
@@ -101,8 +101,7 @@ if (!isset($_SESSION['PO'])){
 	$_SESSION['ExistingOrder']=0;
 	$_SESSION['PO'] = new PurchOrder;
 	$_SESSION['PO']->AllowPrintPO = 1; /*Of course cos the order aint even started !!*/
-	$CompanyRecord = ReadInCompanyRecord($db);
-	$_SESSION['PO']->GLLink = $CompanyRecord['GLLink_Stock'];
+	$_SESSION['PO']->GLLink = $_SESSION['CompanyRecord']['gllink_stock'];
 
 	if ($_SESSION['PO']->SupplierID=='' OR !isset($_SESSION['PO']->SupplierID)){
 
@@ -143,10 +142,18 @@ if (isset($_POST['SearchSuppliers'])){
 				$i=strpos($_POST['Keywords'],' ',$i) +1;
 			}
 			$SearchString = $SearchString. substr($_POST['Keywords'],$i).'%';
-			$SQL = "SELECT Suppliers.SupplierID, Suppliers.SuppName, Suppliers.CurrCode FROM Suppliers WHERE Suppliers.SuppName LIKE '$SearchString'";
+			$SQL = "SELECT suppliers.supplierid, 
+					suppliers.suppname, 
+					suppliers.currcode 
+				FROM suppliers 
+				WHERE suppliers.suppname " . LIKE . " '$SearchString'";
 
 		} elseif (strlen($_POST['SuppCode'])>0){
-			$SQL = "SELECT Suppliers.SupplierID, Suppliers.SuppName, Suppliers.CurrCode FROM Suppliers WHERE Suppliers.SupplierID LIKE '%" . $_POST['SuppCode'] . "%'";
+			$SQL = "SELECT suppliers.supplierid, 
+					suppliers.suppname, 
+					suppliers.currcode 
+				FROM suppliers 
+				WHERE suppliers.supplierid " . LIKE . " '%" . $_POST['SuppCode'] . "%'";
 		}
 
 		$ErrMsg = _('The searched supplier records requested cannot be retrieved because');
@@ -154,7 +161,7 @@ if (isset($_POST['SearchSuppliers'])){
 
 		if (DB_num_rows($result_SuppSelect)==1){
 			$myrow=DB_fetch_array($result_SuppSelect);
-			$_POST['Select'] = $myrow['SupplierID'];
+			$_POST['Select'] = $myrow['supplierid'];
 		} elseif (DB_num_rows($result_SuppSelect)==0){
 			prnMsg( _('No supplier records contain the selected text') . ' - ' . _('please alter your search criteria and try again'),'info');
 		}
@@ -167,12 +174,12 @@ if ($_POST['Select']) {
 /*will only be true if page called from supplier selection form or set because only one supplier record returned from a search
  so parse the $Select string into supplier code and branch code */
 
-	$sql = "SELECT Suppliers.SuppName,
-			Suppliers.CurrCode,
-			Currencies.Rate
-		FROM Suppliers INNER JOIN Currencies
-		ON Suppliers.CurrCode=Currencies.CurrAbrev
-		WHERE SupplierID='" . $_POST['Select'] . "'";
+	$sql = "SELECT suppliers.suppname,
+			suppliers.currcode,
+			currencies.rate
+		FROM suppliers INNER JOIN currencies
+		ON suppliers.currcode=currencies.currabrev
+		WHERE supplierid='" . $_POST['Select'] . "'";
 
 	$ErrMsg = _('The supplier record of the supplier selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the supplier details and failed was');
@@ -238,9 +245,9 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 				<td>%s</td>
 				<td>%s</td>
 				</tr>",
-				$myrow['SupplierID'],
-				$myrow['SuppName'],
-				$myrow['CurrCode']);
+				$myrow['supplierid'],
+				$myrow['suppname'],
+				$myrow['currcode']);
 
 			$j++;
 			If ($j == 11){
@@ -292,14 +299,14 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 				<TD>' . _('Receive Into') . ':</TD>
 				<TD><SELECT NAME=StkLocation>';
 
-	  $sql = 'SELECT LocCode, LocationName FROM Locations';
+	  $sql = 'SELECT loccode, locationname FROM locations';
 	  $LocnResult = DB_query($sql,$db);
 
 	  while ($LocnRow=DB_fetch_array($LocnResult)){
-		 if ($_POST['StkLocation'] == $LocnRow['LocCode'] OR ($_POST['StkLocation']=='' AND $LocnRow['LocCode']==$_SESSION['UserStockLocation'])){
-			 echo "<OPTION SELECTED Value='" . $LocnRow['LocCode'] . "'>" . $LocnRow['LocationName'];
+		 if ($_POST['StkLocation'] == $LocnRow['loccode'] OR ($_POST['StkLocation']=='' AND $LocnRow['loccode']==$_SESSION['UserStockLocation'])){
+			 echo "<OPTION SELECTED Value='" . $LocnRow['loccode'] . "'>" . $LocnRow['locationname'];
 		 } else {
-			 echo "<OPTION Value='" . $LocnRow['LocCode'] . "'>" . $LocnRow['LocationName'];
+			 echo "<OPTION Value='" . $LocnRow['loccode'] . "'>" . $LocnRow['locationname'];
 		 }
 	  }
 	  echo '</SELECT></TD>
@@ -307,7 +314,12 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 
 	 if (!isset($_POST['StkLocation']) OR $_POST['StkLocation']==''){ /*If this is the first time the form loaded set up defaults */
 	     $_POST['StkLocation'] = $_SESSION['UserStockLocation'];
-	     $sql = "SELECT DelAdd1, DelAdd2, DelAdd3, Tel FROM Locations WHERE LocCode='" . $_POST['StkLocation'] . "'";
+	     $sql = "SELECT deladd1, 
+	     			deladd2, 
+				deladd3, 
+				tel 
+			FROM locations 
+			WHERE loccode='" . $_POST['StkLocation'] . "'";
 	     $LocnAddrResult = DB_query($sql,$db);
 	     if (DB_num_rows($LocnAddrResult)==1){
 		  $LocnRow = DB_fetch_row($LocnAddrResult);
@@ -326,12 +338,12 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 	     }
 	  } elseif ($_POST['DelAdd1']==''){
 
-	      $sql = "SELECT DelAdd1,
-	      			DelAdd2,
-				DelAdd3,
-				Tel
-			FROM Locations
-			WHERE LocCode='" . $_POST['StkLocation'] . "'";
+	      $sql = "SELECT deladd1,
+	      			deladd2,
+				deladd3,
+				tel
+			FROM locations
+			WHERE loccode='" . $_POST['StkLocation'] . "'";
 
 	      $LocnAddrResult = DB_query($sql,$db);
 	      if (DB_num_rows($LocnAddrResult)==1){
@@ -369,7 +381,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 		 ConvertSQLDate($_SESSION['PO']->Orig_OrderDate);
 	  } else {
 	  	/* DefaultDateFormat defined in config.php */
-		 echo Date($DefaultDateFormat);
+		 echo Date($_SESSION['DefaultDateFormat']);
 	  }
 
 	  echo '</TD></TR>';
@@ -409,4 +421,3 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 echo '</form>';
 include('includes/footer.inc');
 ?>
-

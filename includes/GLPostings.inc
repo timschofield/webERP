@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /* This file contains the code to post GL transactions.
 
 This file can be included on any page that needs GL postings to be posted eg inquiries or GL reports
@@ -32,14 +32,14 @@ NEED to have a function that reposts from a given period having first checked th
 
 /*Add a check to ensure chart details now set up for all GLTrans not posted */
 
-$sql = "SELECT GLTrans.Account,
-		MIN(GLTrans.PeriodNo) AS FromPeriod
-	FROM GLTrans LEFT JOIN ChartDetails
-		ON GLTrans.Account=ChartDetails.AccountCode
-		AND GLTrans.PeriodNo=ChartDetails.Period
-	WHERE GLTrans.Posted=0
-	AND ChartDetails.AccountCode IS NULL
-	GROUP BY GLTrans.Account";
+$sql = 'SELECT gltrans.account,
+		MIN(gltrans.periodno) AS fromperiod
+	FROM gltrans LEFT JOIN chartdetails
+		ON gltrans.account=chartdetails.accountcode
+		AND gltrans.periodno=chartdetails.period
+	WHERE gltrans.posted=0
+	AND chartdetails.accountcode IS NULL
+	GROUP BY gltrans.account';
 
 $ErrMsg = _('The test to see that all chart details records required have been set up failed because');
 $ChartDetailsStillRequired = DB_query($sql,$db,$ErrMsg);
@@ -48,52 +48,63 @@ if (DB_num_rows($ChartDetailsStillRequired)>0){
 	/*Script to insert ChartDetails records where one should already exist
 	only necessary where manual entry of chartdetails has stuffed the system */
 
-	$FirstPeriodResult = DB_query('SELECT Min(PeriodNo) FROM Periods',$db);
+	$FirstPeriodResult = DB_query('SELECT MIN(periodno) FROM periods',$db);
 	$FirstPeriodRow = DB_fetch_row($FirstPeriodResult);
 
-	$LastPeriodResult = DB_query('SELECT Max(PeriodNo) FROM Periods',$db);
+	$LastPeriodResult = DB_query('SELECT Max(periodno) FROM periods',$db);
 	$LastPeriodRow = DB_fetch_row($LastPeriodResult);
 
 	$CreateFrom = $FirstPeriodRow[0];
-	$CreateTo = $LastPeriodRow[0];;
+	$CreateTo = $LastPeriodRow[0];
 
-	$ChartAccounts = DB_query('SELECT AccountCode FROM ChartMaster',$db);
+	$ChartAccounts = DB_query('SELECT accountcode FROM chartmaster',$db);
 
 	While ($AccountRow = DB_fetch_array($ChartAccounts)){
 
 		for ($PeriodNo=$CreateFrom;$PeriodNo <= $CreateTo;$PeriodNo++) {
 
 			echo '<LI>' . _('Period Number') . ' ' . $PeriodNo . '</LI>';
-
-			$sql = "INSERT INTO ChartDetails (AccountCode,
-								Period)
-						VALUES (" . $AccountRow['AccountCode'] . ",
-							" . $PeriodNo . ")";
+			
+			// The errors gets to much here so I add a test		
+			$sql = 'SELECT count(*) FROM chartdetails 
+					WHERE accountcode='.$AccountRow['accountcode'].'
+					AND period=' . $PeriodNo;
 			$InsChartDetails = DB_query($sql,$db,'','','',false);
-			/*dont trap errors here the thinking is that duplicate records will return and error that is ignored
-			otherwise a chart detail record is created correctly - all fine */
-
+			$cnt = DB_fetch_row($InsChartDetails);
+			$cnt = $cnt[0];
+			DB_free_result($InsChartDetails);
+			if($cnt == 0 ) {
+				$sql = 'INSERT INTO chartdetails (accountcode,
+							period)
+					VALUES (' . $AccountRow['accountcode'] . ',
+						' . $PeriodNo . ')';
+				$InsChartDetails = DB_query($sql,$db);
+				DB_free_result($InsChartDetails);
+			}
+			
 		}
 
 	/*Now run through each of the new chartdetail records created for each account and update them with the B/Fwd and B/Fwd budget no updates would be required where there were previously no chart details set up ie FirstPeriodPostedTo > 0 */
 
 		for ($PeriodNo=$CreateFrom;$PeriodNo<=$CreateTo; $PeriodNo++) {
 
-			$sql = "SELECT AccountCode,
-					Period,
-					Actual + BFwd AS CFwd,
-					Budget + BFwdBudget AS CFwdBudget
-				FROM ChartDetails WHERE Period =" . ($PeriodNo  - 1);
+			$sql = 'SELECT accountcode,
+					period,
+					actual + bfwd AS cfwd,
+					budget + bfwdbudget AS cfwdbudget
+				FROM chartdetails WHERE period =' . ($PeriodNo  - 1);
 			$ChartDetailsCFwd = DB_query($sql,$db);
 
 			while ($myrow = DB_fetch_array($ChartDetailsCFwd)){
 
-				$sql = "UPDATE ChartDetails SET BFwd =" . $myrow['CFwd'] . ",
-								BFwdBudget =" . $myrow['CFwdBudget'] . "
-						WHERE AccountCode = " . $myrow['AccountCode'] . "
-						AND Period >=" . $PeriodNo;
-				$UpdChartDetails = DB_query($sql,$db);
+				$sql = 'UPDATE chartdetails SET bfwd =' . $myrow['cfwd'] . ',
+								bfwdbudget =' . $myrow['cfwdbudget'] . '
+						WHERE accountcode = ' . $myrow['accountcode'] . '
+						AND period >=' . $PeriodNo;
+				$UpdChartDetails = DB_query($sql,$db, '', '', '', false);
+				DB_free_result($UpdChartDetails);
 			}
+			DB_free_result($ChartDetailsCFwd);
 		}
 
 	}
@@ -102,27 +113,25 @@ if (DB_num_rows($ChartDetailsStillRequired)>0){
 
 /*All the ChartDetail records should have been created now and be available to accept postings */
 
-$sql = "Select CounterIndex, PeriodNo, Account, Amount, Posted FROM GLTrans WHERE Posted=0";
+$sql = 'SELECT counterindex, periodno, account, amount, posted FROM gltrans WHERE posted=0';
 
 $UnpostedTransResult = DB_query($sql, $db);
 
-$sql = "begin";
-$TransStart = DB_query($sql,$db);
+$TransStart = DB_query('BEGIN',$db);
 
 while ($UnpostedTrans=DB_fetch_array($UnpostedTransResult)){
 
 	/*Update the Actual charge in the period of the transaction */
-	$sql = "UPDATE ChartDetails SET Actual = Actual + " . $UnpostedTrans["Amount"] . " WHERE AccountCode = " . $UnpostedTrans["Account"] . " AND Period= " . $UnpostedTrans["PeriodNo"];
+	$sql = 'UPDATE chartdetails SET actual = actual + ' . $UnpostedTrans['amount'] . ' WHERE accountcode = ' . $UnpostedTrans['account'] . ' AND period= ' . $UnpostedTrans['periodno'];
 	$PostPrd = DB_query($sql,$db);
 	/*Update the BFwd for all following ChartDetail records */
-	$sql = "UPDATE ChartDetails SET BFwd = BFwd + " . $UnpostedTrans["Amount"] . " WHERE AccountCode = " . $UnpostedTrans["Account"] . " AND Period > " . $UnpostedTrans["PeriodNo"];
+	$sql = 'UPDATE chartdetails SET bfwd = bfwd + ' . $UnpostedTrans['amount'] . ' WHERE accountcode = ' . $UnpostedTrans['account'] . ' AND period > ' . $UnpostedTrans['periodno'];
 	$PostBFwds = DB_query($sql,$db);
 
-	$sql = "UPDATE GLTrans SET Posted = 1 WHERE CounterIndex = " . $UnpostedTrans['CounterIndex'];
+	$sql = 'UPDATE gltrans SET posted = 1 WHERE counterindex = ' . $UnpostedTrans['counterindex'];
 	$Posted = DB_query($sql,$db);
 }
 
-$sql = "Commit";
-$TransCommit = DB_query($sql,$db);
+$TransCommit = DB_query('COMMIT',$db);
 
 ?>

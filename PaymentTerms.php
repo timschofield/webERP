@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 10;
 
@@ -49,17 +49,17 @@ if (isset($_POST['submit'])) {
 		/*SelectedTerms could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
 		if ($_POST['DaysOrFoll']=='on') {
-			$sql = "UPDATE PaymentTerms SET
-					Terms='" . $_POST['Terms'] . "',
-					DayInFollowingMonth=0,
-					DaysBeforeDue=" . $_POST['DayNumber'] . "
-				WHERE TermsIndicator = '" . $SelectedTerms . "'";
+			$sql = "UPDATE paymentterms SET
+					terms='" . $_POST['Terms'] . "',
+					dayinfollowingmonth=0,
+					daysbeforedue=" . $_POST['DayNumber'] . "
+				WHERE termsindicator = '" . $SelectedTerms . "'";
 		} else {
-			$sql = "UPDATE PaymentTerms SET
-					Terms='" . $_POST['Terms'] . "',
-					DayInFollowingMonth=" . $_POST['DayNumber'] . ",
-					DaysBeforeDue=0
-				WHERE TermsIndicator = '" . $SelectedTerms . "'";
+			$sql = "UPDATE paymentterms SET
+					terms='" . $_POST['Terms'] . "',
+					dayinfollowingmonth=" . $_POST['DayNumber'] . ",
+					daysbeforedue=0
+				WHERE termsindicator = '" . $SelectedTerms . "'";
 		}
 
 		$msg = _('The payment terms definition record has been updated') . '.';
@@ -68,10 +68,10 @@ if (isset($_POST['submit'])) {
 	/*Selected terms is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new payment terms form */
 
 		if ($_POST['DaysOrFoll']=='on') {
-			$sql = "INSERT INTO PaymentTerms (TermsIndicator,
-								Terms,
-								DaysBeforeDue,
-								DayInFollowingMonth)
+			$sql = "INSERT INTO paymentterms (termsindicator,
+								terms,
+								daysbeforedue,
+								dayinfollowingmonth)
 						VALUES (
 							'" . $_POST['TermsIndicator'] . "',
 							'" . $_POST['Terms'] . "',
@@ -79,10 +79,10 @@ if (isset($_POST['submit'])) {
 							0
 						)";
 		} else {
-			$sql = "INSERT INTO PaymentTerms (TermsIndicator,
-								Terms,
-								DaysBeforeDue,
-								DayInFollowingMonth)
+			$sql = "INSERT INTO paymentterms (termsindicator,
+								terms,
+								daysbeforedue,
+								dayinfollowingmonth)
 						VALUES (
 							'" . $_POST['TermsIndicator'] . "',
 							'" . $_POST['Terms'] . "',
@@ -103,14 +103,14 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN DebtorsMaster
 
-	$sql= "SELECT COUNT(*) FROM DebtorsMaster WHERE DebtorsMaster.PaymentTerms = '$SelectedTerms'";
+	$sql= "SELECT COUNT(*) FROM debtorsmaster WHERE debtorsmaster.paymentterms = '$SelectedTerms'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0] > 0) {
 		prnMsg( _('Cannot delete this payment term because customer accounts have been created referring to this term'),'warn');
 		echo '<br> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('customer accounts that refer to this payment term');
 	} else {
-		$sql= "SELECT COUNT(*) FROM Suppliers WHERE Suppliers.PaymentTerms = '$SelectedTerms'";
+		$sql= "SELECT COUNT(*) FROM suppliers WHERE suppliers.paymentterms = '$SelectedTerms'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0] > 0) {
@@ -119,7 +119,7 @@ if (isset($_POST['submit'])) {
 		} else {
 			//only delete if used in neither customer or supplier accounts
 
-			$sql="DELETE FROM PaymentTerms WHERE TermsIndicator='$SelectedTerms'";
+			$sql="DELETE FROM paymentterms WHERE termsindicator='$SelectedTerms'";
 			$result = DB_query($sql,$db);
 			prnMsg( _('The payment term definition record has been deleted') . '!','success');
 		}
@@ -135,7 +135,7 @@ then none of the above are true and the list of payment termss will be displayed
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = 'SELECT TermsIndicator, Terms, DaysBeforeDue, DayInFollowingMonth FROM PaymentTerms';
+	$sql = 'SELECT termsindicator, terms, daysbeforedue, dayinfollowingmonth FROM paymentterms';
 	$result = DB_query($sql, $db);
 
 	echo '<CENTER><table border=1>';
@@ -163,16 +163,16 @@ or deletion of the records*/
 	        <td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
-		<td><a href=\"%s?SelectedTerms=%s\">" . _('Edit') . "</a></td>
-		<td><a href=\"%s?SelectedTerms=%s&delete=1\">" . _('Delete') . "</a></td>
+		<td><a href=\"%s&SelectedTerms=%s\">" . _('Edit') . "</a></td>
+		<td><a href=\"%s&SelectedTerms=%s&delete=1\">" . _('Delete') . "</a></td>
 		</tr>",
 		$myrow[0],
 		$myrow[1],
 		$FollMthText,
 		$DueAfterText,
-		$_SERVER['PHP_SELF'],
+		$_SERVER['PHP_SELF'] . '?' . SID,
 		$myrow[0],
-		$_SERVER['PHP_SELF'],
+		$_SERVER['PHP_SELF']. '?' . SID,
 		$myrow[0]);
 
 	} //END WHILE LIST LOOP
@@ -190,20 +190,20 @@ if (!isset($_GET['delete'])) {
 	if (isset($SelectedTerms)) {
 		//editing an existing payment terms
 
-		$sql = "SELECT TermsIndicator,
-				Terms,
-				DaysBeforeDue,
-				DayInFollowingMonth
-			FROM PaymentTerms
-			WHERE TermsIndicator='$SelectedTerms'";
+		$sql = "SELECT termsindicator,
+				terms,
+				daysbeforedue,
+				dayinfollowingmonth
+			FROM paymentterms
+			WHERE termsindicator='$SelectedTerms'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
 
-		$_POST['TermsIndicator'] = $myrow['TermsIndicator'];
-		$_POST['Terms']  = $myrow['Terms'];
-		$DaysBeforeDue  = $myrow['DaysBeforeDue'];
-		$DayInFollowingMonth  = $myrow['DayInFollowingMonth'];
+		$_POST['TermsIndicator'] = $myrow['termsindicator'];
+		$_POST['Terms']  = $myrow['terms'];
+		$DaysBeforeDue  = $myrow['daysbeforedue'];
+		$DayInFollowingMonth  = $myrow['dayinfollowingmonth'];
 
 		echo '<INPUT TYPE=HIDDEN NAME="SelectedTerms" VALUE="' . $SelectedTerms . '">';
 		echo '<INPUT TYPE=HIDDEN NAME="TermsIndicator" VALUE="' . $_POST['TermsIndicator'] . '">';
@@ -252,4 +252,3 @@ if (!isset($_GET['delete'])) {
 
 include('includes/footer.inc');
 ?>
-

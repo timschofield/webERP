@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 3;
 
@@ -71,26 +71,26 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedSaleperson could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
-		$sql = "UPDATE Salesman SET SalesmanName='" . $_POST['SalesmanName'] . "',
-						CommissionRate1=" . $_POST['CommissionRate1'] . ",
-						SManTel='" . $_POST['SManTel'] . "',
-						SManFax='" . $_POST['SManFax'] . "',
-						Breakpoint=" . $_POST['Breakpoint'] . ",
-						CommissionRate2=" . $_POST['CommissionRate2'] . "
-				WHERE SalesmanCode = '$SelectedSaleperson'";
+		$sql = "UPDATE salesman SET salesmanname='" . $_POST['SalesmanName'] . "',
+						commissionrate1=" . $_POST['CommissionRate1'] . ",
+						smantel='" . $_POST['SManTel'] . "',
+						smanfax='" . $_POST['SManFax'] . "',
+						breakpoint=" . $_POST['Breakpoint'] . ",
+						commissionrate2=" . $_POST['CommissionRate2'] . "
+				WHERE salesmancode = '$SelectedSaleperson'";
 
 		$msg = _('Salesperson record for') . ' ' . $_POST['SalesmanName'] . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
 
 	/*Selected group is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new Sales-person form */
 
-		$sql = "INSERT INTO Salesman (SalesmanCode,
-						SalesmanName,
-						CommissionRate1,
-						CommissionRate2,
-						Breakpoint,
-						SManTel,
-						SManFax)
+		$sql = "INSERT INTO salesman (salesmancode,
+						salesmanname,
+						commissionrate1,
+						commissionrate2,
+						breakpoint,
+						smantel,
+						smanfax)
 				VALUES ('" . $_POST['SalesmanCode'] . "',
 					'" . $_POST['SalesmanName'] . "',
 					" . $_POST['CommissionRate1'] . ",
@@ -123,21 +123,21 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorsMaster'
 
-	$sql= "SELECT COUNT(*) FROM CustBranch WHERE  CustBranch.Salesman='$SelectedSaleperson'";
+	$sql= "SELECT COUNT(*) FROM custbranch WHERE  custbranch.salesman='$SelectedSaleperson'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		prnMsg(_('Cannot delete this salesperson because branches are set up referring to them') . ' - ' . _('first alter the branches concerned') . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches that refer to this salesperson'),'error');
 
 	} else {
-		$sql= "SELECT COUNT(*) FROM SalesAnalysis WHERE SalesAnalysis.Salesperson='$SelectedSaleperson'";
+		$sql= "SELECT COUNT(*) FROM salesanalysis WHERE salesanalysis.salesperson='$SelectedSaleperson'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			prnMsg(_('Cannot delete this salesperson because sales analysis records refer to them') , '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records that refer to this salesperson'),'error');
 		} else {
 
-			$sql="DELETE FROM Salesman WHERE SalesmanCode='$SelectedSaleperson'";
+			$sql="DELETE FROM salesman WHERE salesmancode='$SelectedSaleperson'";
 			$ErrMsg = _('The salesperson could not be deleted because');
 			$result = DB_query($sql,$db,$ErrMsg);
 
@@ -156,14 +156,14 @@ then none of the above are true and the list of Sales-persons will be displayed 
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT SalesmanCode,
-			SalesmanName,
-			SManTel,
-			SManFax,
-			CommissionRate1,
-			Breakpoint,
-			CommissionRate2
-		FROM Salesman";
+	$sql = "SELECT salesmancode,
+			salesmanname,
+			smantel,
+			smanfax,
+			commissionrate1,
+			breakpoint,
+			commissionrate2
+		FROM salesman";
 	$result = DB_query($sql,$db);
 
 	echo '<CENTER><TABLE BORDER=1>';
@@ -216,26 +216,26 @@ if (! isset($_GET['delete'])) {
 	if (isset($SelectedSaleperson)) {
 		//editing an existing Sales-person
 
-		$sql = "SELECT SalesmanCode,
-				SalesmanName,
-				SManTel,
-				SManFax,
-				CommissionRate1,
-				Breakpoint,
-				CommissionRate2
-			FROM Salesman
-			WHERE SalesmanCode='$SelectedSaleperson'";
+		$sql = "SELECT salesmancode,
+				salesmanname,
+				smantel,
+				smanfax,
+				commissionrate1,
+				breakpoint,
+				commissionrate2
+			FROM salesman
+			WHERE salesmancode='$SelectedSaleperson'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
 
-		$_POST['SalesmanCode'] = $myrow['SalesmanCode'];
-		$_POST['SalesmanName'] = $myrow['SalesmanName'];
-		$_POST['SManTel'] = $myrow['SManTel'];
-		$_POST['SManFax'] = $myrow['SManFax'];
-		$_POST['CommissionRate1']  = $myrow['CommissionRate1'];
-		$_POST['Breakpoint'] = $myrow['Breakpoint'];
-		$_POST['CommissionRate2']  = $myrow['CommissionRate2'];
+		$_POST['SalesmanCode'] = $myrow['salesmancode'];
+		$_POST['SalesmanName'] = $myrow['salesmanname'];
+		$_POST['SManTel'] = $myrow['smantel'];
+		$_POST['SManFax'] = $myrow['smanfax'];
+		$_POST['CommissionRate1']  = $myrow['commissionrate1'];
+		$_POST['Breakpoint'] = $myrow['breakpoint'];
+		$_POST['CommissionRate2']  = $myrow['commissionrate2'];
 
 
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedSaleperson' VALUE='" . $SelectedSaleperson . "'>";

@@ -1,6 +1,10 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /* R&OS PHP-pdf class code to head up a new page */
+
+if (!$FirstPage){ /* only initiate a new page if its not the first */
+	$pdf->newPage();
+}
 
 $YPos = $Page_Height - $Top_Margin;
 
@@ -40,21 +44,21 @@ $FontSize = 10;
 $pdf->addText($Page_Width-268, $YPos-13, $FontSize, _('Number'));
 $pdf->addText($Page_Width-180, $YPos-13, $FontSize, $FromTransNo);
 $pdf->addText($Page_Width-268, $YPos-26, $FontSize, _('Customer Code'));
-$pdf->addText($Page_Width-180, $YPos-26, $FontSize, $myrow['DebtorNo'] . ' ' . _('Branch') . ' ' . $myrow['BranchCode']);
+$pdf->addText($Page_Width-180, $YPos-26, $FontSize, $myrow['debtorno'] . ' ' . _('Branch') . ' ' . $myrow['branchcode']);
 $pdf->addText($Page_Width-268, $YPos-39, $FontSize, _('Date'));
-$pdf->addText($Page_Width-180, $YPos-39, $FontSize, ConvertSQLDate($myrow['TranDate']));
+$pdf->addText($Page_Width-180, $YPos-39, $FontSize, ConvertSQLDate($myrow['trandate']));
 
 
 if ($InvOrCredit=='Invoice') {
 
 	$pdf->addText($Page_Width-268, $YPos-52, $FontSize, _('Order No'));
-	$pdf->addText($Page_Width-180, $YPos-52, $FontSize, $myrow['OrderNo']);
+	$pdf->addText($Page_Width-180, $YPos-52, $FontSize, $myrow['orderno']);
 	$pdf->addText($Page_Width-268, $YPos-65, $FontSize, _('Order Date'));
-	$pdf->addText($Page_Width-180, $YPos-65, $FontSize, ConvertSQLDate($myrow['OrdDate']));
+	$pdf->addText($Page_Width-180, $YPos-65, $FontSize, ConvertSQLDate($myrow['orddate']));
 	$pdf->addText($Page_Width-268, $YPos-78, $FontSize, _('Dispatch Detail'));
-	$pdf->addText($Page_Width-180, $YPos-78, $FontSize, $myrow['ShipperName'] . '-' . $myrow['Consignment']);
+	$pdf->addText($Page_Width-180, $YPos-78, $FontSize, $myrow['shippername'] . '-' . $myrow['consignment']);
 	$pdf->addText($Page_Width-268, $YPos-91, $FontSize, _('Dispatched From'));
-	$pdf->addText($Page_Width-180, $YPos-91, $FontSize, $myrow['LocationName']);
+	$pdf->addText($Page_Width-180, $YPos-91, $FontSize, $myrow['locationname']);
 }
 
 
@@ -66,15 +70,15 @@ $pdf->addText($Page_Width-180, $YPos-104, $FontSize, $PageNumber);
 /*Now print out the company name and address in the middle under the logo */
 $XPos = $Page_Width/2 -90;
 $YPos = $Page_Height - $Top_Margin-60;
-$pdf->addText($XPos, $YPos, $FontSize, $CompanyName);
+$pdf->addText($XPos, $YPos, $FontSize, $_SESSION['CompanyRecord']['coyname']);
 
 $FontSize=8;
-$pdf->addText($XPos, $YPos-10, $FontSize, _('Tax Authority No') . ': ' . $CompanyRecord['GSTNo']);
-$pdf->addText($XPos, $YPos-20, $FontSize, $CompanyRecord['PostalAddress']);
-$pdf->addText($XPos, $YPos-30, $FontSize, $CompanyRecord['RegOffice1'] . ' ' . $CompanyRecord['RegOffice2']);
-$pdf->addText($XPos, $YPos-40, $FontSize, $CompanyRecord['RegOffice3']);
-$pdf->addText($XPos, $YPos-50, $FontSize, _('Phone') . ':' . $CompanyRecord['Telephone'] . ' ' . _('Fax') . ': ' . $CompanyRecord['Fax']);
-$pdf->addText($XPos, $YPos-60, $FontSize, _('Email') . ': ' . $CompanyRecord['Email']);
+$pdf->addText($XPos, $YPos-10, $FontSize, $_SESSION['TaxAuthorityReferenceName'] . ': ' . $_SESSION['CompanyRecord']['gstno']);
+$pdf->addText($XPos, $YPos-20, $FontSize, $_SESSION['CompanyRecord']['postaladdress']);
+$pdf->addText($XPos, $YPos-30, $FontSize, $_SESSION['CompanyRecord']['regoffice1'] . ' ' . $_SESSION['CompanyRecord']['regoffice2']);
+$pdf->addText($XPos, $YPos-40, $FontSize, $_SESSION['CompanyRecord']['regoffice3']);
+$pdf->addText($XPos, $YPos-50, $FontSize, _('Phone') . ':' . $_SESSION['CompanyRecord']['telephone'] . ' ' . _('Fax') . ': ' . $_SESSION['CompanyRecord']['fax']);
+$pdf->addText($XPos, $YPos-60, $FontSize, _('Email') . ': ' . $_SESSION['CompanyRecord']['email']);
 
 /*Now the customer charged to details top left */
 
@@ -86,16 +90,16 @@ $FontSize=10;
 $pdf->addText($XPos, $YPos, $FontSize, _('Sold To') . ':');
 $XPos +=80;
 
-if ($myrow['InvAddrBranch']==0){
-	$pdf->addText($XPos, $YPos, $FontSize, $myrow['Name']);
-	$pdf->addText($XPos, $YPos-14, $FontSize, $myrow['Address1']);
-	$pdf->addText($XPos, $YPos-28, $FontSize, $myrow['Address2']);
-	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['Address3'] . ' ' . $myrow['Address4']);
+if ($myrow['invaddrbranch']==0){
+	$pdf->addText($XPos, $YPos, $FontSize, $myrow['name']);
+	$pdf->addText($XPos, $YPos-14, $FontSize, $myrow['address1']);
+	$pdf->addText($XPos, $YPos-28, $FontSize, $myrow['address2']);
+	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['address3'] . ' ' . $myrow['address4']);
 } else {
-	$pdf->addText($XPos, $YPos, $FontSize, $myrow['Name']);
-	$pdf->addText($XPos, $YPos-14, $FontSize, $myrow['BrPostAddr1']);
-	$pdf->addText($XPos, $YPos-28, $FontSize, $myrow['BrPostAddr2']);
-	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['BrPostAddr3'] . ' ' . $myrow['BrPostAddr4']);
+	$pdf->addText($XPos, $YPos, $FontSize, $myrow['name']);
+	$pdf->addText($XPos, $YPos-14, $FontSize, $myrow['brpostaddr1']);
+	$pdf->addText($XPos, $YPos-28, $FontSize, $myrow['brpostaddr2']);
+	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['brpostaddr3'] . ' ' . $myrow['brpostaddr4']);
 }
 
 
@@ -106,10 +110,10 @@ if ($InvOrCredit=='Invoice') {
 
 	$pdf->addText($XPos, $YPos, $FontSize, _('Delivered To') . ':');
 	$XPos +=80;
-	$pdf->addText($XPos, $YPos, $FontSize, $myrow['DeliverTo']);
-	$pdf->addText($XPos, $YPos-14, $FontSize, $myrow['DelAdd1']);
-	$pdf->addText($XPos, $YPos-28, $FontSize, $myrow['DelAdd2']);
-	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['DelAdd3'] . ' ' . $myrow['DelAdd4']);
+	$pdf->addText($XPos, $YPos, $FontSize, $myrow['deliverto']);
+	$pdf->addText($XPos, $YPos-14, $FontSize, $myrow['deladd1']);
+	$pdf->addText($XPos, $YPos-28, $FontSize, $myrow['deladd2']);
+	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['deladd3'] . ' ' . $myrow['deladd4']);
 	$XPos -=80;
 }
 if ($InvOrCredit=='Credit'){
@@ -117,10 +121,10 @@ if ($InvOrCredit=='Credit'){
 
 	$pdf->addText($XPos, $YPos, $FontSize, _('Charge Branch') . ':');
 	$XPos +=80;
-	$pdf->addText($XPos, $YPos, $FontSize, $myrow['BrName']);
-	$pdf->addText($XPos, $YPos-14, $FontSize, $myrow['BrAddress1']);
-	$pdf->addText($XPos, $YPos-28, $FontSize, $myrow['BrAddress2']);
-	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['BrAddress3'] . ' ' . $myrow['BrAddress4']);
+	$pdf->addText($XPos, $YPos, $FontSize, $myrow['brname']);
+	$pdf->addText($XPos, $YPos-14, $FontSize, $myrow['braddress1']);
+	$pdf->addText($XPos, $YPos-28, $FontSize, $myrow['braddress2']);
+	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['braddress3'] . ' ' . $myrow['braddress4']);
 	$XPos -=80;
 }
 
@@ -135,7 +139,7 @@ $XPos = $Page_Width/2;
 $XPos = $Left_Margin;
 $YPos -= ($line_height*2);
 
-$pdf->addText($Left_Margin, $YPos-8, $FontSize, _('All amounts stated in') . ' - ' . $myrow['CurrCode']);
+$pdf->addText($Left_Margin, $YPos-8, $FontSize, _('All amounts stated in') . ' - ' . $myrow['currcode']);
 
 /*draw a box with nice round corner for entering line items */
 /*90 degree arc at top right of box 0 degrees starts a bottom */
@@ -159,20 +163,21 @@ $pdf->line($Page_Width-$Right_Margin, $Bottom_Margin+10,$Page_Width-$Right_Margi
 $YPos -= ($line_height*2);
 /*Set up headings */
 $FontSize=10;
-$pdf->addText($Left_Margin + 2, $YPos, $FontSize, _('Customer ABN') . ':');
-/* Need a field to enter the ABN into to print out here */
+$pdf->addText($Left_Margin + 2, $YPos, $FontSize, _('Customer Tax Ref') . ':');
+$pdf->addText($Left_Margin+90, $YPos, $FontSize, $myrow['taxref']);
+
 
 /*Print a vertical line */
 $pdf->line($Left_Margin+248, $YPos+$line_height+3,$Left_Margin+248, $YPos - 8);
 
 $pdf->addText($Left_Margin + 252, $YPos, $FontSize, _('Your Order No') . ':');
-$pdf->addText($Left_Margin+330, $YPos, $FontSize, $myrow['CustomerRef']);
+$pdf->addText($Left_Margin+330, $YPos, $FontSize, $myrow['customerref']);
 
 /*Print a vertical line */
 $pdf->line($Left_Margin+450, $YPos+$line_height+3,$Left_Margin+450,$YPos-8);
 
 $pdf->addText($Left_Margin+453, $YPos, $FontSize, _('Sales Person') . ':');
-$pdf->addText($Left_Margin+530, $YPos, $FontSize, $myrow['SalesmanName']);
+$pdf->addText($Left_Margin+530, $YPos, $FontSize, $myrow['salesmanname']);
 
 $YPos -= 8;
 /*draw a line */

@@ -1,10 +1,10 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /**
 * Filename.......: class.html.mime.mail.inc
 * Project........: HTML Mime mail class
-* Last Modified..: $Date: 2004-03-15 07:53:16 $
-* CVS Revision...: $Revision: 1.2 $
+* Last Modified..: $Date: 2005-02-12 04:38:10 $
+* CVS Revision...: $Revision: 1.3 $
 * Copyright......: 2001, 2002 Richard Heyes
 */
 

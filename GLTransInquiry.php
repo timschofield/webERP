@@ -1,12 +1,12 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 8;
 
-include ("includes/session.inc");
+include ('includes/session.inc');
 $title = _('General Ledger Transaction Inquiry');
-include("includes/header.inc");
-include("includes/DateFunctions.inc");
+include('includes/header.inc');
+include('includes/DateFunctions.inc');
 
 
 if (!isset($_GET['TypeID']) OR !isset($_GET['TransNo'])) { /*Script was not passed the correct parameters */
@@ -17,7 +17,7 @@ if (!isset($_GET['TypeID']) OR !isset($_GET['TransNo'])) { /*Script was not pass
 }
 
 
-$SQL = "SELECT TypeName, TypeNo FROM SysTypes WHERE TypeID=" . $_GET['TypeID'];
+$SQL = "SELECT typename, typeno FROM systypes WHERE typeid=" . $_GET['TypeID'];
 
 $ErrMsg =_('The transaction type') . ' ' . $_GET['TypeID'] . ' ' . _('could not be retrieved');
 $TypeResult = DB_query($SQL,$db,$ErrMsg);
@@ -40,18 +40,18 @@ if ($myrow[1]<$_GET['TransNo']){
 echo '<BR><CENTER><FONT SIZE=4 COLOR=BLUE>'.$TransName.' ' . $_GET['TransNo'] . '</FONT>';
 
 
-$SQL = "SELECT TranDate,
-		PeriodNo,
-		AccountName,
-		Narrative,
-		Amount,
-		Posted
-	FROM GLTrans,
-		ChartMaster
-	WHERE GLTrans.Account = ChartMaster.AccountCode
-	AND Type= " . $_GET['TypeID'] . "
-	AND TypeNo = " . $_GET['TransNo'] . "
-	ORDER BY CounterIndex";
+$SQL = "SELECT trandate,
+		periodno,
+		accountname,
+		narrative,
+		amount,
+		posted
+	FROM gltrans,
+		chartmaster
+	WHERE gltrans.account = chartmaster.accountcode
+	AND type= " . $_GET['TypeID'] . "
+	AND typeno = " . $_GET['TransNo'] . "
+	ORDER BY counterindex";
 
 $ErrMsg = _('The transactions for') . ' ' . $TransName . ' ' . _('number') . ' ' .  $_GET['TransNo'] . ' '. _('could not be retrieved');
 $TransResult = DB_query($SQL,$db,$ErrMsg);
@@ -86,12 +86,12 @@ while ($myrow=DB_fetch_array($TransResult)) {
               $k++;
        }
 
-       if ($myrow['Posted']==0){
+       if ($myrow['posted']==0){
        		$Posted = _('No');
 	} else {
 		$Posted = _('Yes');
 	}
-       $FormatedTranDate = ConvertSQLDate($myrow["TranDate"]);
+       $FormatedTranDate = ConvertSQLDate($myrow["trandate"]);
        printf('<td>%s</td>
        		<td ALIGN=RIGHT>%s</td>
 		<td>%s</td>
@@ -100,10 +100,10 @@ while ($myrow=DB_fetch_array($TransResult)) {
 		<td>%s</td>
 		</tr>',
 		$FormatedTranDate,
-		$myrow['PeriodNo'],
-		$myrow['AccountName'],
-		number_format($myrow['Amount'],2),
-		$myrow['Narrative'],
+		$myrow['periodno'],
+		$myrow['accountname'],
+		number_format($myrow['amount'],2),
+		$myrow['narrative'],
 		$Posted);
 
        $j++;

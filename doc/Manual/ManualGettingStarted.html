@@ -24,32 +24,20 @@ The main issues with installation of PHP appear to be:
 <li>Some windows installations come with a setting for session.save_path= /tmp this is inappropriate directory for windows and it should be changed to session.save_path=C:\temp or something more appropriate.
 <li>When the system is hosted on a multi-homed web server farm, the session needs a directory to be specified as a permanent directory otherwise alternative servers serving subsequent pages depending on the load at the time will not be able to find the session cookie. There is a config.php setting for $SessionSavePath this should be set appropriately for the web server host.
 <li>For a reason unknown some servers are unable to obtain the correct directory automatically using the line: $rootpath = dirname($_SERVER['PHP_SELF']); This will be evidenced by the system's inability to find the page links for the various system options. If this happens the $rootpath variable can be set to the root path of the scripts directly.
-<li>In some  IIS  installations the following message occurs and similar messages throughout the system:
-<br>
-Notice: Undefined index: AttemptsCounter in c:\inetpub\wwwroot\web-erp\includes\session.inc on line 20
 <br><br>
-A notice like this is not an error as such - it is acceptable to use variables without first initialising them in PHP. To avoid showing these notices a configuration directive in php.in needs to be modified. Look for the line in php.ini 
-<br><br>
-error_reporting  = E_ALL; display all errors, warnings and notices
-<br><br>
-and change it to :
-<br><br>	
-error_reporting  = E_ALL & ~A_NOTICE
-</ol>
-There is a configuration directive in config.php that sets error_reporting to the above for web-erp use as of version 2.8
-<br><br>
-The system could be used with many other database servers but it is tested and developed on MySQL. Independent benchmarks show that MySQL is at least one of the fastest for most common database tasks. It is especially fast at initiating a connection and due to the stateless nature of the web, a new connection is required to be established on every page - this makes MySQL particularly suitable for web based applications such as this.
+The system could be used with many other database servers but it is tested and developed on MySQL a Postgres ConnectDB.inc is provided and there is a setting in config.php - $dbtype that allows the system adminstrator to use a postgres database if preferred. Independent benchmarks show that MySQL is at least one of the fastest for most common database tasks. It is especially fast at initiating a connection and due to the stateless nature of the web, a new connection is required to be established on every page - this makes MySQL particularly suitable for web based applications.
 <br><br>
 The ftp library for PHP is only required for sending order files to a Radio Beacon ftp server for remote warehouse services.
 <br><br>
 Assuming that a web-server with PHP  functionality is operational and a MySQL server is available either on the same machine or on the network , a new installation consists of the following five steps:
 <br><br>
 <ul>
-<li>Copying all the PHP scripts and include files to a directory under the web server root directory.
-<li>Creating the database and populating it with initial data 
-<li>Editing config.php for the database connection information and any other requirements 
-<li>Logging into the system for the first time 
-<li>Setting up company specific information in the system. 
+<li>Copying all the PHP scripts and include files to a directory under the web server root directory.</li>
+<li>Creating the database and populating it with initial data </li>
+<li>Editing config.php for the database connection information and any other requirements </li>
+<li>Logging into the system for the first time </li>
+<li>Setting system parameters </li>
+<li>Setting up company specific information in the system </li>
 </ul>
 <font size="+2"><b>Copying the PHP Scripts</b></font> 
 <br><br>
@@ -63,7 +51,8 @@ Copy the archive to the this directory and then extract the archive andl create 
 <br><br>
 <font size="+2"><b>Creating the Database</b></font>
 <br><br> 
-You need to know the user name and password for the MySQL server. If you have not set these up the default is
+The information provided assumes that you are using a mysql database server. An sql dump file suitable for postgres is also provided. However these instructions refer to the set up necessary using MySql.
+<br><br>You need to know the user name and password for the MySQL server. If you have not set these up the default is
 <br><br>
 user root
 <br>
@@ -117,307 +106,72 @@ as required - modifying the user entered here as weberp to the user you created 
 <br><br> 
 <font size="+2"><b>Editing config.php</b></font>
 <br><br>
-config.php contains a series of user defined variables that determine how the system behaves. Critically it contains the host (computer name), username and password of the MySQL connection required to connect to the MySQL server. There is no going forward without the system being provided with this data.
+config.php contains a series of user defined variables that determine how the system behaves. Critically it contains the host (computer name), username and password of the database connection required to connect to the database server. There is also an option to chose which type of database server is to be used. Currently there is only mysql and postgres options. There is no going forward without the system being provided with this data.
 <br><br>
 The default contents of the config.php file are as follows and must be edited in an editor of choice (KATE, Wordpad etc) and then saved in the web directory where the scripts are. However, the system is continually evolving and may well have changed since this was written.
 <br><br>
 Lines beginning with a # are commented out. Sections beginning with 
 /* are comments - they must be terminated with */
 <br><br>
-<&#x3F;php
-<br>
-/*WEB-ERP
-<br>
-by Logic Works Ltd
-<br>
-user definable variables - config.php*/
+/ User configurable variables
+//---------------------------------------------------
 <br><br>
-/*User Configurable variables
-<br>
-********************************
-<br>
-Please modify at will*/
+//DefaultLanguage - this is the language that the login screen will use - other users can have different languages but they will see the default language before they login - once logged in the user settings are retrieved including their preferred language
+$DefaultLanguage ='en_GB';
 <br><br>
-/* the company name to appear in the headings on each page displayed */
-<br><br>
-$CompanyName = "WEB-ERP Demo System";
-<br><br>
-/* the default date format for entry of dates and display
-*/
-<br><br>
-/* for England/Australia/NZ d/m/Y */
-<br>
-# $DefaultDateFormat = "d/m/Y";
-<br><br>
-/* for US and Canada */
-<br>
-$DefaultDateFormat = "m/d/Y";
-<br><br>
-/*Connection Information for the database
-<br>
-- host is the computer ip address or name where the database is the default is localhost assuming that the web server is also the sql server
-<br>
-*/
-<br>
-$host = "localhost";
-<br><br>
-/* - user is the user name under which the database should be accessed - need to change to the mysql (or other DB) user set up for purpose
-<br>
-NB it is not secure to use root as the user with no password - a user with appropriate privileges must be set up
-<br>
-*/
-<br><br>
-$dbuser = "weberp_db_user";
-<br><br>
-/* - password is the password the user of the database requires to be sent to authorise the above database user
-<br>
-*/
-<br><br>
-$dbpassword = "weberp_db_pwd";
-<br><br>
-/* - DatabaseName is the name of the database as defined in the RDMS being used. Typically RDMS allow many databases to be maintained under the same server.
-<br>
-The scripts for MySQL provided use the name logicworks
-<br>
-*/
-<br>
-$DatabaseName = "weberp";
-<br><br>
-/* CSS GUI theme */
-<br>
-// $theme = "professional"; 
-<br>
-$theme = "default";
-<br><br>
-/* Accounts Receivable */
-<br>
-/* Aging periods used on customer and supplier inquiry screens and aged listings*/
-<br><br>
-$PastDueDays1 = 30;
-<br>
-$PastDueDays2 = 60;
-<br><br>
-$DefaultCreditLimit = 1000;
-<br><br>
-/* Types of receipts - only add or remove elements of the array as required*/
-<br><br>
-$ReceiptTypes = array("Cheques", "Cash", "Visa", "American Express", "Diners Club", "MasterCard", "Direct Credit");
-<br><br>
-/* Order Items Selection */
-<br><br>
-/*In large databases it would be possible to return a gigantic page of parts if insufficient criteria were entered. This variable limits the output to the client browser to reduce waiting and clogging network connections */
-<br><br>
-$Maximum_Number_Of_Parts_To_Show = 100;
-<br><br>
-/*The number of quick entry fields to show on order entry and credit note entry */
-<br><br>
-$QuickEntries =10;
-<br><br>
-/*orders placed after this hour (an integer from 0 to 23) will be dispatched the following day */
-<br><br>
-$DispatchCutOffTime = 14;
-<br><br>
-/* Normally the stock location is determined with reference to the default location set up in the branch record of the customer selected - if not then the default location of the user is used,  if not the default below is used
-<br><br>
-$DefaultInventoryLocation = "DEN"; */
-<br><br>
-/*Inventory Units array*/
-<br><br>
-$InventoryUnits = array("each", "metres", "Kgs", "tonnes", "litres", "lbs", "dozen", "pack");
-<br><br>
-/*Freight calculations */
-<br><br>
-/*Default Shipper - this must be an existing Shipper_ID in the table Shippers */
-<br>
-$Default_Shipper = 1;
-<br><br>
-/*Set DoFreightCalc=True if the order entry should insist on calculating freight cost
-<br>
-Set to False if no freight calculation is forced */
-<br><br>
-$DoFreightCalc = False;
-<br><br>
-/* Set $FreightChargeAppliesIfLessThan to the amount below which freight is calculated
-<br>
-and charged */
-<br><br>
-$FreightChargeAppliesIfLessThan = 1000;
-<br><br>
-$CountryOfOperation = "Australia";
-<br><br>
-/* Number of periods of stock usage to show in stock usage inquiries */
-<br><br>
-$NumberOfPeriodsOfInventoryUsage = 12;
-<br><br>
-/* Accounts Payable */
-<br><br>
-/* System check to see if quantity charged on purchase invoices exceeds the quantity received.
-<br>
-If this parameter is checked the proportion by which the purchase invoice is an overcharge
-<br>
-referred to before reporting an error */
-<br><br>
-$Check_Qty_Charged_vs_Del_Qty = True;
-<br><br>
-/* System check to see if price charged on purchase invoices exceeds the purchase order price.
-<br>
-If this parameter is checked the proportion by which the purchase invoice is an overcharge
-<br>
-referred to before reporting an error */
-<br><br>
-$Check_Price_Charged_vs_Order_Price = True;
-<br><br>
-/* Proportion by which a purchase invoice line is an overcharge for a purchase order item received
-<br>
-is an overcharge. If the overcharge is more than this percentage then an error is reported and
-<br>
-purchase invoice line cannot be entered
-<br><br>
-The figure entered is interpreted as a percentage ie 20 means 0.2 or 20% not 20 times
-<br>
-*/
-<br><br>
-$OverChargeProportion = 20;
-<br><br>
-$OverReceiveProportion = 20;
-<br><br>
-/* If $PO_AllowSameItemMultipleTimes = True then purchase orders can have the same part on them several times - set to False checks to ensure that multiple lines of the same part are prohibited */
-<br><br>
-$PO_AllowSameItemMultipleTimes = True;
-<br><br>
-/* Types of payments - only add or remove elements of the array as required*/
-<br><br>
-$PaytTypes = array("Cheque", "Cash", "Direct Credit");
-<br><br>
-/* Email address of the person(s) who should receive the cheque listings */
-<br>
-$ChkListingReceipients = array ('"Finance Manager" <finance@company.com>');
-<br><br>
-/*Month number of last month in the company's financial year */
-<br><br>
-$YearEnd = "3";
-<br><br>
-/*Report Page Length in lines */
-<br>
-$PageLength = 48;
-<br><br>
-/*Directory under the main directory where part photos/ pictures are to be stored
-<br>
-NB no slashes are necessary. Part pictures in this directory must be .jpg format with this extension
-<br>
-Note that this directory must be created by the system administrator*/
-<br><br>
-$part_pics_dir = "part_pics";
-<br><br>
-/*Directory under the main web files directory where report files are to be created NB no slashes are necessary
-<br>
-Note that this directory must be created by the system administrator */
-<br><br>
-$reports_dir = "reports";
-<br><br>
-/* Whether to display the demo login and password or not - setting this to false will not display the demo text */
-<br>
+// Whether to display the demo login and password or not 
 $allow_demo_mode = True;
 <br><br>
-/*Show debug messages returned from an error on the page.
-<br>
-Debugging info level also determined by settings in PHP.ini
-<br>
-if $debug=1 show debugging info, dont show if $debug=0 */
+// Application version
+$Version = '2.9c';
 <br><br>
-$debug=1;
+// The timezone of the business - this allows the possibility of having
+<br>
+// the web-server on a overseas machine but record local time
+<br>
+// this is not necessary if you have your own server locally
+<br>
+// putenv('TZ=Europe/London');
+<br>
+// putenv('Australia/Melbourne');
+<br>
+// putenv('Australia/Sydney');
+<br>
+// putenv('TZ=Pacific/Auckland');
 <br><br>
-/*Security Group definitions - Depending on the AccessLevel of the user defined in the user set up
+// Connection information for the database
 <br>
-the areas of functionality accessible can be modified.
+// $host is the computer ip address or name where the database is located
 <br>
-Each AccessLevel is associated with an array containing the security categories that the user is entitled to access
+// assuming that the web server is also the sql server
 <br>
-Each script has a particular security category associated with it.
-<br>
-If the security setting of the page is contained in the security group as determined by the access level then the user will be allowed access.
+$host = 'localhost';
 <br><br>
-Each page has a $PageSecurity = x; variable
+//The type of db server being used - currently only postgres or mysql
+<br>
+$dbType = 'postgres';
+<br>
+//$dbType = 'postgres';
+<br>
+//$dbType = 'mysql';
 <br><br>
-This value is compared to contents of the array applicable which is based on the access level of the user.
+$DatabaseName = 'weberp';
 <br><br>
-Access authorisation is checked in header.inc this is where _SESSION["AccessLevel"] is the index of the SecurityGroups array. If you wish to add more security groups with then you must add a new SecurityHeading to the SecurityHeadings array
+// sql user & password
 <br>
-and a new array of Security categories to the Security Groups array
+$dbuser = 'weberp_db_user';
+<br>
+$dbpassword = 'weberp_db_pwd';
 <br><br>
-This mechanism allows more fine grained control of access
+//The maximum time that a login session can be idle before automatic logout
+<br>
+//time is in seconds  3600 seconds in an hour
+<br>
+$SessionLifeTime = 3600;
 <br><br>
-SecurityGroups is an array of arrays
 <br><br>
-The index is the order in which the array of allowed pages is defined new ones can be defined at will
-<br>
-or by changing the numbers in each array the security access can be tailored. These numbers need to read
-<br>
-in conjunction with the Page Security index
-<br><br>
-*/
-<br>
-$SecurityHeadings = array(
-<br>
-"Inquiries/Order Entry",
-<br>
-"Manufac/Inventory Admin",
-<br>
-"Purchasing Officer",
-<br>
-"AP Clerk",
-<br>
-"AR Clerk",
-<br>
-"Accountant",
-<br>
-"Customer Log On Only",
-<br>
-"System Administrator"
-<br>
-);
-<br><br>
-$SecurityGroups = array(
-<br>
-array(1,2),
-<br>
-array(1,2,11),
-<br>
-array(1,2,4),
-<br>
-array(1,2,5),
-<br>
-array(1,2,3),
-<br>
-array(1,2,3,4,5,6,7,8,9,10,11),
-<br>
-array(1),
-<br>
-array(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15)
-<br>
-);
-<br><br>
-/*Session save path is necessary where there may be several installations on the same server and the server cookie must be in different directories to avoid confusion. If there are two different companies using web-erp implementations on the same server, then it is important to ensure that different session directories are used for each web-erp system, otherwise session information from each system will overwrite the other system's session information ie the information about users, customer or transactional information. The session save path is also required where the server uses load balancing among several servers - one server must be used for the cookie - sourceforge.net uses load balancing and requires this for the demo. Normally this can be left as the default - as per php.ini /tmp or C:\windows\temp where there is only one web-erp system on the server*/
-<br><br>
-//$SessionSavePath='/home/groups/w/we/web-erp/sessions/';
-<br><br>
-/*EDI configuration variables definition */
-<br><br>
-/*EDI Draft version 01B - Controlling agency is the UN - EAN version control number (EAN Code) this info is required in the header record of every message sent - prepended with the message type*/
-<br><br>
-$EDIHeaderMsgId = "D:01B:UN:EAN010";
-<br><br>
-/*EDI Reference of the company */
-<br><br>
-$EDIReference = "WEBERP";
-<br><br>
-/* EDI Messages for sending directory - under the web-erp main scripts directory*/
-<br><br>
-$EDI_MsgPending = "EDI_Pending";
-<br><br>
-/* EDI Messages sent log directory */
-<br><br>
-$EDI_MsgSent = "EDI_Sent";
+$rootpath = dirname($_SERVER['PHP_SELF']);
+<br>//$rootpath = '/web-erp';<br><br>
 <br><br>
 /* ******************END OF USER CONFIGURABLE VARIABLES ******************* */
 <br><br>
@@ -448,29 +202,23 @@ enter the user name of 'demo'
 password 'weberp'
 <br><br>
 (the quotation marks are not required).
-You can set up additional user accounts from the System Setup tab and change the password. Be careful not to delete the demonstration user until a new System Administrator user has been set up. If there are no users defined the next time you try to login you won't be able to! In this situation the only way then to create a user to login with is to manually edit the SQL table WWW_Users to insert a user. If phpMyAdmin is installed on the web server as well then this can be achieved by adding a new record to WWW_Users.
+You can set up additional user accounts from the System Setup tab and change the password. (Users can change there own passwords at any time - by clicking on their user name shown at the top left of the screen) Be careful not to delete the demonstration user until a new System Administrator user has been set up. If there are no users defined the next time you try to login you won't be able to! In this situation the only way then to create a user to login with is to manually edit the SQL table WWW_Users to insert a user. If phpMyAdmin is installed on the web server as well then this can be achieved by adding a new record to WWW_Users.
 <br><br>
 NB The importance of setting a password for the root user of MySQL, otherwise anyone could modify WWW_Users and gain access  to private company information.
 <br><br>
+<font size="+2"><b>Configuration Parameters</b></font>
+<br><br>
+In previous versions prior to version 3.0 configuration parameters were stored under the config.php file which required manual editing of the system parameters. Since version 3.0 a new screen for System Parameters was developed that allows all the system wide configuration variables to be set - these are now stored in the database allowing for upgrades without then having to re-edit the config.php file. The system parameters screen is linked from the main menu under the set up tab, under general. Each of these settings should be reviewed in detail, notes describing the function of each variable are show along side it.
+<br><br>
 <font size="+2"><b>Themes and GUI Modification</b></font>
 <br><br>
-Often what visually appeals to one does not appeal to another. Whilst accounting software is primarily about function - appearances do matter! Some flexibility is available with the color scheme and font sizes of the GUI using cascading style sheets. (css)
+Often what visually appeals to one does not appeal to another. Whilst accounting software is primarily about function - appearances do matter! Some flexibility is available with the colour scheme and font sizes of the GUI using cascading style sheets. (css)
 <br><br>
-The user interface can be modified by adopting one of the defined themes or making up a new theme. There are currently only two themes defined in the distribution - 'default' and 'professional'.
+The user interface can be modified by adopting one of the defined themes or making up a new theme. There are currently only three themes defined in the distribution - 'default', 'professional' and 'fresh'.
 <br><br>
-In config.php the variable:
+Each user can select their own preference from the user settings screen - this is revealed by clicking on the user name shown at the top left of the screen.
 <br><br>
-$theme = "professional";
-<br><br>
-can be changed to 
-<br><br>
-$theme = "default";
-<br><br>
-for a different look.
-<br><br>
-To make up a new theme copy the directory of one of the defined themes to a new name. The the themes are held under the css directory of the distribution, there is a directory under the css directory for each theme. Having copied the files to a new directory say 'New_theme' they should be edited to reflect the look desired. The variable in config.php should be edited to:
-<br><br>
-$theme = "New_theme";
+To make up a new theme copy the directory of one of the defined themes to a new name. The the themes are held under the css directory of the distribution, there is a directory under the css directory for each theme. Having copied the files to a new directory say 'New_theme' they should be edited to reflect the look desired. New theme directories are revealed automatically on the user setting screen, so users can select the customised theme.
 <br><br>
 
 <!-- Help Begin: WWW_Users -->

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /* Script to make stock locations for all parts that do not have stock location records set up*/
 
 

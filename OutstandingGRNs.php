@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 2;
 
 If (isset($_POST['PrintPDF'])
@@ -22,26 +22,27 @@ If (isset($_POST['PrintPDF'])
 
       /*Now figure out the data to report for the criteria under review */
 
-	$SQL = "SELECT GRNNo,
-			OrderNo,
-			GRNs.SupplierID,
-			Suppliers.SuppName,
-			GRNs.ItemCode,
-			GRNs.ItemDescription,
-			QtyRecd,
-			QuantityInv,
-			StdCostUnit,
-			ActPrice,
-			UnitPrice
-		FROM GRNs,
-			PurchOrderDetails,
-			Suppliers
-		WHERE GRNs.SupplierID=Suppliers.SupplierID
-		AND GRNs.PODetailItem = PurchOrderDetails.PODetailItem
-		AND QtyRecd-QuantityInv <>0
-		AND GRNs.SupplierID >='" . $_POST['FromCriteria'] . "'
-		AND GRNs.SupplierID <='" . $_POST['ToCriteria'] . "'
-		ORDER BY SupplierID, GRNNo";
+	$SQL = "SELECT grnno,
+			orderno,
+			grns.supplierid,
+			suppliers.suppname,
+			grns.itemcode,
+			grns.itemdescription,
+			qtyrecd,
+			quantityinv,
+			stdcostunit,
+			actprice,
+			unitprice
+		FROM grns,
+			purchorderdetails,
+			suppliers
+		WHERE grns.supplierid=suppliers.supplierid
+		AND grns.podetailitem = purchorderdetails.podetailitem
+		AND qtyrecd-quantityinv <>0
+		AND grns.supplierid >='" . $_POST['FromCriteria'] . "'
+		AND grns.supplierid <='" . $_POST['ToCriteria'] . "'
+		ORDER BY supplierid, 
+			grnno";
 
 	$GRNsResult = DB_query($SQL,$db,'','',false,false);
 
@@ -64,7 +65,7 @@ If (isset($_POST['PrintPDF'])
 	$SuppTot_Val=0;
 	While ($GRNs = DB_fetch_array($GRNsResult,$db)){
 
-		if ($Supplier!=$GRNs['SupplierID']){
+		if ($Supplier!=$GRNs['supplierid']){
 
 			if ($Supplier!=''){ /*Then it's NOT the first time round */
 				/* need to print the total of previous supplier */
@@ -77,20 +78,20 @@ If (isset($_POST['PrintPDF'])
 				$YPos -=(2*$line_height);
 				$SuppTot_Val=0;
 			}
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,$GRNs['SupplierID'] . ' - ' . $GRNs['SuppName']);
-			$Supplier = $GRNs['SupplierID'];
-			$SupplierName = $GRNs['SuppName'];
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,$GRNs['supplierid'] . ' - ' . $GRNs['suppname']);
+			$Supplier = $GRNs['supplierid'];
+			$SupplierName = $GRNs['suppname'];
 		}
 		$YPos -=$line_height;
 
-		$LeftOvers = $pdf->addTextWrap(30,$YPos,40,$FontSize,$GRNs['GRNNo']);
-		$LeftOvers = $pdf->addTextWrap(70,$YPos,40,$FontSize,$GRNs['OrderNo']);
-		$LeftOvers = $pdf->addTextWrap(110,$YPos,200,$FontSize,$GRNs['ItemCode'] . ' - ' . $GRNs['ItemDescription']);
-		$DisplayStdCost = number_format($GRNs['StdCostUnit'],2);
-		$DisplayQtyRecd = number_format($GRNs['QtyRecd'],2);
-		$DisplayQtyInv = number_format($GRNs['QuantityInv'],2);
-		$DisplayQtyOstg = number_format($GRNs['QtyRecd']- $GRNs['QuantityInv'],2);
-		$LineValue = ($GRNs['QtyRecd']- $GRNs['QuantityInv'])*$GRNs['StdCostUnit'];
+		$LeftOvers = $pdf->addTextWrap(30,$YPos,40,$FontSize,$GRNs['grnno']);
+		$LeftOvers = $pdf->addTextWrap(70,$YPos,40,$FontSize,$GRNs['orderno']);
+		$LeftOvers = $pdf->addTextWrap(110,$YPos,200,$FontSize,$GRNs['itemcode'] . ' - ' . $GRNs['itemdescription']);
+		$DisplayStdCost = number_format($GRNs['stdcostunit'],2);
+		$DisplayQtyRecd = number_format($GRNs['qtyrecd'],2);
+		$DisplayQtyInv = number_format($GRNs['quantityinv'],2);
+		$DisplayQtyOstg = number_format($GRNs['qtyrecd']- $GRNs['quantityinv'],2);
+		$LineValue = ($GRNs['qtyrecd']- $GRNs['quantityinv'])*$GRNs['stdcostunit'];
 		$DisplayValue = number_format($LineValue,2);
 
 		$LeftOvers = $pdf->addTextWrap(310,$YPos,50,$FontSize,$DisplayQtyRecd,'right');
@@ -154,8 +155,6 @@ If (isset($_POST['PrintPDF'])
 	include('includes/session.inc');
 	$title=_('Outstanding GRNs Report');
 	include('includes/header.inc');
-	include('includes/SQL_CommonFunctions.inc');
-	$CompanyRecord = ReadInCompanyRecord($db);
 
 	echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
 

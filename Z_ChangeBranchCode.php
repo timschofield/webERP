@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -10,11 +10,11 @@ include('includes/header.inc');
 if (isset($_POST['ProcessCustomerChange'])){
 
 /*First check the customer code exists */
-	$result=DB_query("SELECT DebtorNo,
-				BranchCode
-			FROM CustBranch
-			WHERE DebtorNo='" . $_POST['DebtorNo'] . "'
-			AND BranchCode='" . $_POST['OldBranchCode'] . "'",$db);
+	$result=DB_query("SELECT debtorno,
+				branchcode
+			FROM custbranch
+			WHERE debtorno='" . $_POST['DebtorNo'] . "'
+			AND branchcode='" . $_POST['OldBranchCode'] . "'",$db);
 	if (DB_num_rows($result)==0){
 		prnMsg (_('The customer branch code') . ': ' . $_POST['DebtorNo'] . ' - ' . $_POST['OldBranchCode'] . ' ' . _('does not currently exist as a customer branch code in the system'),'error');
 		include('includes/footer.inc');
@@ -35,7 +35,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 
 
 /*Now check that the new code doesn't already exist */
-	$result=DB_query("SELECT DebtorNo FROM CustBranch WHERE DebtorNo='" . $_POST['DebtorNo'] . "' AND BranchCode ='" . $_POST['NewBranchCode'] . "'",$db);
+	$result=DB_query("SELECT debtorno FROM custbranch WHERE debtorno='" . $_POST['DebtorNo'] . "' AND branchcode ='" . $_POST['NewBranchCode'] . "'",$db);
 	if (DB_num_rows($result)!=0){
 		prmMsg(_('The replacement customer branch code') . ': ' . $_POST['NewBranchCode'] . ' ' . _('already exists as a branch code for the same customer') . ' - ' . _('a unique branch code must be entered for the new code'),'error');
 		include('includes/footer.inc');
@@ -43,142 +43,142 @@ if (isset($_POST['ProcessCustomerChange'])){
 	}
 
 
-	$result = DB_query("begin",$db);
+	$result = DB_query("BEGIN",$db);
 
 	prnMsg(_('Inserting the new customer branches master record'),'info');
-	$sql = "INSERT INTO CustBranch (`BranchCode`,
-					`DebtorNo`,
-					`BrName`,
-					`BrAddress1`,
-					`BrAddress2`,
-					`BrAddress3`,
-					`BrAddress4`,
-					`EstDeliveryDays`,
-					`Area`,
-					`Salesman`,
-					`FwdDate`,
-					`PhoneNo`,
-					`FaxNo`,
-					`ContactName`,
-					`Email`,
-					`DefaultLocation`,
-					`TaxAuthority`,
-					`DisableTrans`,
-					`BrPostAddr1`,
-					`BrPostAddr2`,
-					`BrPostAddr3`,
-					`BrPostAddr4`,
-					`DefaultShipVia`,
-					`CustBranchCode`)
+	$sql = "INSERT INTO custbranch (`branchcode`,
+					`bebtorno`,
+					`brname`,
+					`braddress1`,
+					`braddress2`,
+					`braddress3`,
+					`braddress4`,
+					`estdeliverydays`,
+					`area`,
+					`salesman`,
+					`fwddate`,
+					`phoneno`,
+					`faxfo`,
+					`contactname`,
+					`email`,
+					`defaultlocation`,
+					`taxauthority`,
+					`disabletrans`,
+					`brPostaddr1`,
+					`brPostaddr2`,
+					`brPostaddr3`,
+					`brPostaddr4`,
+					`defaultshipvia`,
+					`custbranchcode`)
 			SELECT '" . $_POST['NewBranchCode'] . "',
-					`DebtorNo`,
-					`BrName`,
-					`BrAddress1`,
-					`BrAddress2`,
-					`BrAddress3`,
-					`BrAddress4`,
-					`EstDeliveryDays`,
-					`Area`,
-					`Salesman`,
-					`FwdDate`,
-					`PhoneNo`,
-					`FaxNo`,
-					`ContactName`,
-					`Email`,
-					`DefaultLocation`,
-					`TaxAuthority`,
-					`DisableTrans`,
-					`BrPostAddr1`,
-					`BrPostAddr2`,
-					`BrPostAddr3`,
-					`BrPostAddr4`,
-					`DefaultShipVia`,
-					`CustBranchCode`
-			FROM CustBranch
-			WHERE DebtorNo='" . $_POST['DebtorNo'] . "'
-			AND BranchCode='" . $_POST['OldBranchCode'] . "'";
+					`debtorno`,
+					`brname`,
+					`braddress1`,
+					`braddress2`,
+					`braddress3`,
+					`braddress4`,
+					`estdeliverydays`,
+					`area`,
+					`salesman`,
+					`fwddate`,
+					`phoneno`,
+					`faxno`,
+					`contactname`,
+					`email`,
+					`defaultlocation`,
+					`taxauthority`,
+					`disabletrans`,
+					`brpostaddr1`,
+					`brpostaddr2`,
+					`brpostaddr3`,
+					`brpostaddr4`,
+					`defaultshipvia`,
+					`custbranchcode`
+			FROM custbranch
+			WHERE debtorno='" . $_POST['DebtorNo'] . "'
+			AND branchcode='" . $_POST['OldBranchCode'] . "'";
 	$DbgMsg = _('The SQL that failed was');
 	$ErrMsg = _('The SQL to insert the new customer branch master record failed because');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 	prnMsg (_('Changing customer transaction records'),'info');
-	$sql = "UPDATE DebtorTrans SET
-			BranchCode='" . $_POST['NewBranchCode'] . "'
-		WHERE DebtorNo='" . $_POST['DebtorNo'] . "'
-		AND BranchCode='" . $_POST['OldBranchCode'] . "'";
+	$sql = "UPDATE debtortrans SET
+			branchcode='" . $_POST['NewBranchCode'] . "'
+		WHERE debtorno='" . $_POST['DebtorNo'] . "'
+		AND branchcode='" . $_POST['OldBranchCode'] . "'";
 
 	$ErrMsg = _('The SQL to update debtor transaction records failed because');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 	prnMsg(_('Changing sales analysis records'),'info');
-	$sql = "UPDATE SalesAnalysis
-			SET CustBranch='" . $_POST['NewBranchCode'] . "'
-		WHERE Cust='" . $_POST['DebtorNo'] . "'
-		AND CustBranch='" . $_POST['OldBranchCode'] . "'";
+	$sql = "UPDATE salesanalysis
+			SET custbranch='" . $_POST['NewBranchCode'] . "'
+		WHERE cust='" . $_POST['DebtorNo'] . "'
+		AND custbranch='" . $_POST['OldBranchCode'] . "'";
 
 	$ErrMsg = _('The SQL to update Sales Analysis records failed because');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 
 	prnMsg(_('Changing order delivery differences records'),'info');
-	$sql = "UPDATE OrderDeliveryDifferencesLog
-			SET Branch='" . $_POST['NewBranchCode'] . "'
-		WHERE DebtorNo='" . $_POST['DebtorNo'] . "'
-		AND Branch='" . $_POST['OldBranchCode'] . "'";
+	$sql = "UPDATE orderdeliverydifferenceslog
+			SET branch='" . $_POST['NewBranchCode'] . "'
+		WHERE debtorno='" . $_POST['DebtorNo'] . "'
+		AND branch='" . $_POST['OldBranchCode'] . "'";
 
 	$ErrMsg = _('The SQL to update order delivery differences records failed because');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 
 	prnMsg (_('Changing pricing records'),'info');
-	$sql = "UPDATE Prices
-			SET BranchCode='" . $_POST['NewBranchCode'] . "'
-		WHERE DebtorNo='" . $_POST['DebtorNo'] . "'
-		AND BranchCode='" . $_POST['OldBranchCode'] . "'";
+	$sql = "UPDATE prices
+			SET branchcode='" . $_POST['NewBranchCode'] . "'
+		WHERE debtorno='" . $_POST['DebtorNo'] . "'
+		AND branchcode='" . $_POST['OldBranchCode'] . "'";
 	$ErrMsg = _('The SQL to update the pricing records failed because');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 
 	prnMsg(_('Changing sales orders records'),'info');
-	$sql = "UPDATE SalesOrders
-			SET BranchCode='" . $_POST['NewBranchCode'] . "'
-		WHERE DebtorNo='" . $_POST['DebtorNo'] . "'
-		AND BranchCode='" . $_POST['OldBranchCode'] . "'";
+	$sql = "UPDATE salesorders
+			SET branchcode='" . $_POST['NewBranchCode'] . "'
+		WHERE debtorno='" . $_POST['DebtorNo'] . "'
+		AND branchcode='" . $_POST['OldBranchCode'] . "'";
 	$ErrMsg = _('The SQL to update the sales order header records failed because');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 
 	prnMsg(_('Changing stock movement records'),'info');
-	$sql = "UPDATE StockMoves
-		SET BranchCode='" . $_POST['NewBranchCode'] . "'
-		WHERE DebtorNo='" . $_POST['DebtorNo'] . "'
-		AND BranchCode='" . $_POST['OldBranchCode'] . "'";
+	$sql = "UPDATE stockmoves
+		SET branchcode='" . $_POST['NewBranchCode'] . "'
+		WHERE debtorno='" . $_POST['DebtorNo'] . "'
+		AND branchcode='" . $_POST['OldBranchCode'] . "'";
 	$ErrMsg = _('The SQL to update the stock movement records failed because');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 	prnMsg(_('Changing user default customer records'),'info');
-	$sql = "UPDATE WWW_Users
-		SET BranchCode='" . $_POST['NewBranchCode'] . "'
-		WHERE CustomerID='" . $_POST['DebtorNo'] . "'
-		AND BranchCode='" . $_POST['OldBranchCode'] . "'";;
+	$sql = "UPDATE www_users
+		SET branchcode='" . $_POST['NewBranchCode'] . "'
+		WHERE customerid='" . $_POST['DebtorNo'] . "'
+		AND branchcode='" . $_POST['OldBranchCode'] . "'";;
 
 	$ErrMsg = _('The SQL to update the user records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 	prnMsg(_('Changing the customer branch code in contract header records'),'info');
-	$sql = "UPDATE Contracts
-		SET BranchCode='" . $_POST['NewBranchCode'] . "'
-		WHERE DebtorNo='" . $_POST['DebtorNo'] . "'
-		AND BranchCode='" . $_POST['OldBranchCode'] . "'";
+	$sql = "UPDATE contracts
+		SET branchcode='" . $_POST['NewBranchCode'] . "'
+		WHERE debtorno='" . $_POST['DebtorNo'] . "'
+		AND branchcode='" . $_POST['OldBranchCode'] . "'";
 	$ErrMsg = _('The SQL to update contract header records failed because');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
-	$result = DB_query("commit",$db);
+	$result = DB_query("COMMIT",$db);
 
 	prnMsg(_('Deleting the old customer branch record'),'info');
-	$sql = "DELETE FROM CustBranch
-		WHERE DebtorNo='" . $_POST['DebtorNo'] . "'
-		AND BranchCode='" . $_POST['OldBranchCode'] . "'";
+	$sql = "DELETE FROM custbranch
+		WHERE debtorno='" . $_POST['DebtorNo'] . "'
+		AND branchcode='" . $_POST['OldBranchCode'] . "'";
 
 	$ErrMsg = _('The SQL to delete the old customer branch record failed because');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);

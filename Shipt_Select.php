@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 11;
 
@@ -58,15 +58,15 @@ if ($_POST['SearchParts']){
 		echo '<BR>';
 		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered'),'info');
 	}
-	$SQL = "SELECT StockMaster.StockID,
-			Description,
-			Sum(LocStock.Quantity) AS QOH,
-			Units,
-			Sum(PurchOrderDetails.QuantityOrd-PurchOrderDetails.QuantityRecd) AS QORD
-		FROM StockMaster INNER JOIN LocStock
-			ON StockMaster.StockID = LocStock.StockID
-		INNER JOIN PurchOrderDetails
-			ON StockMaster.StockID=PurchOrderDetails.ItemCode";
+	$SQL = "SELECT stockmaster.stockid,
+			description,
+			SUM(locstock.quantity) AS qoh,
+			units,
+			SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qord
+		FROM stockmaster INNER JOIN locstock
+			ON stockmaster.stockid = locstock.stockid
+		INNER JOIN purchorderdetails
+			ON stockmaster.stockid=purchorderdetails.itemcode";
 
 	If ($_POST['Keywords']) {
 		//insert wildcard characters in spaces
@@ -79,28 +79,28 @@ if ($_POST['SearchParts']){
 		}
 		$SearchString = $SearchString. substr($_POST['Keywords'],$i).'%';
 
-		$SQL .= " WHERE PurchOrderDetails.ShiptRef<>''
-			AND PurchOrderDetails.ShiptRef<>0
-			AND StockMaster.Description LIKE '$SearchString'
-			AND CategoryID='" . $_POST['StockCat'] . "'";
+		$SQL .= " WHERE purchorderdetails.shiptref<>''
+			AND purchorderdetails.shiptref<>0
+			AND stockmaster.description " . LIKE . " '$SearchString'
+			AND categoryid='" . $_POST['StockCat'] . "'";
 
 	 } elseif ($_POST['StockCode']){
 
-		$SQL .= " WHERE PurchOrderDetails.ShiptRef<>''
-			AND PurchOrderDetails.ShiptRef<>0
-			AND StockMaster.StockID like '%" . $_POST['StockCode'] . "%'
-			AND CategoryID='" . $_POST['StockCat'];
+		$SQL .= " WHERE purchorderdetails.shiptref<>''
+			AND purchorderdetails.shiptref<>0
+			AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
+			AND categoryid='" . $_POST['StockCat'];
 
 	 } elseif (!$_POST['StockCode'] AND !$_POST['Keywords']) {
-		$SQL .= " WHERE PurchOrderDetails.ShiptRef<>''
-			AND PurchOrderDetails.ShiptRef<>0
-			AND CategoryID='" . $_POST['StockCat'] . "'";
+		$SQL .= " WHERE purchorderdetails.shiptref<>''
+			AND purchorderdetails.shiptref<>0
+			AND stockmaster.categoryid='" . $_POST['StockCat'] . "'";
 
 	 }
-	$SQL .= "  GROUP BY StockMaster.StockID,
-				Description,
-				Units
-		 	ORDER BY StockMaster.StockID";
+	$SQL .= "  GROUP BY stockmaster.stockid,
+				stockmaster.description,
+				stockmaster.units
+		 	ORDER BY stockmaster.stockid";
 
 	$ErrMsg = _('No Stock Items were returned from the database because'). ' - '. DB_error_msg($db);
 	$StockItemsResult = DB_query($SQL,$db, $ErrMsg);
@@ -112,20 +112,20 @@ if ($ShiptRef=="" OR !isset($ShiptRef)){
 
 	echo _('Shipment Number'). ': <INPUT type=text name="ShiptRef" MAXLENGTH =10 SIZE=10> '.
 		_('Into Stock Location').' :<SELECT name="StockLocation"> ';
-	$sql = "SELECT LocCode, LocationName FROM Locations";
+	$sql = "SELECT loccode, locationname FROM locations";
 	$resultStkLocs = DB_query($sql,$db);
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if (isset($_POST['StockLocation'])){
-			if ($myrow['LocCode'] == $_POST['StockLocation']){
-			echo '<OPTION SELECTED Value="' . $myrow['LocCode'] . '">' . $myrow['LocationName'];
+			if ($myrow['loccode'] == $_POST['StockLocation']){
+			echo '<OPTION SELECTED Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 			} else {
-			echo '<OPTION Value="' . $myrow['LocCode'] . '">' . $myrow['LocationName'];
+			echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 			}
-		} elseif ($myrow['LocCode']==$_SESSION['UserStockLocation']){
+		} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
 			$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
-			echo '<OPTION SELECTED Value="' . $myrow['LocCode'] . '">' . $myrow['LocationName'];
+			echo '<OPTION SELECTED Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		} else {
-			echo '<OPTION Value="' . $myrow['LocCode'] . '">' . $myrow['LocationName'];
+			echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		}
 	}
 
@@ -144,7 +144,11 @@ if ($ShiptRef=="" OR !isset($ShiptRef)){
 	echo '<BR><CENTER><INPUT TYPE=SUBMIT NAME="SearchShipments" VALUE="'. _('Search Shipments'). '">';
 }
 
-$SQL="SELECT CategoryID, CategoryDescription FROM StockCategory WHERE StockType<>'D' ORDER BY CategoryDescription";
+$SQL="SELECT categoryid, 
+		categorydescription 
+	FROM stockcategory 
+	WHERE stocktype<>'D' 
+	ORDER BY categorydescription";
 $result1 = DB_query($SQL,$db);
 
 ?>
@@ -152,17 +156,17 @@ $result1 = DB_query($SQL,$db);
 <HR>
 <FONT SIZE=1><?php echo _('To search for shipments for a specific part use the part selection facilities below');?></FONT>
 <INPUT TYPE=SUBMIT NAME="SearchParts" VALUE="<?php echo _('Search Parts Now');?>">
-<INPUT TYPE=SUBMIT NAME="ResetPart" VALUE="<?php echo _('Clear Part Selection');?>">
+<INPUT TYPE=SUBMIT NAME="ResetPart" VALUE="<?php echo _('Show All');?>">
 <TABLE>
 <TR>
 <TD><FONT SIZE=1><?php echo _('Select a stock category');?>:</FONT>
 <SELECT NAME="StockCat">
 <?php
 while ($myrow1 = DB_fetch_array($result1)) {
-	if ($myrow1['CategoryID']==$_POST['StockCat']){
-		echo '<OPTION SELECTED VALUE="'. $myrow1['CategoryID'] . '">' . $myrow1['CategoryDescription'];
+	if ($myrow1['categoryid']==$_POST['StockCat']){
+		echo '<OPTION SELECTED VALUE="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
 	} else {
-		echo '<OPTION VALUE="'. $myrow1['CategoryID'] . '">' . $myrow1['CategoryDescription'];
+		echo '<OPTION VALUE="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
 	}
 }
 ?>
@@ -211,7 +215,7 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 			<td ALIGN=RIGHT>%s</td>
 			<td ALIGN=RIGHT>%s</td>
 			<td>%s</td></tr>',
-			$myrow['StockID'], $myrow['Description'], $myrow['QOH'], $myrow['QORD'],$myrow['Units']);
+			$myrow['stockid'], $myrow['description'], $myrow['qoh'], $myrow['qord'],$myrow['units']);
 
 		$j++;
 		If ($j == 15){
@@ -231,40 +235,45 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 	//figure out the SQL required from the inputs available
 
 	if (isset($ShiptRef) && $ShiptRef !="") {
-		$SQL = "SELECT Shipments.ShiptRef, Vessel, VoyageRef, Suppliers.SuppName, Shipments.ETA, Closed
-			FROM Shipments INNER JOIN Suppliers
-				ON Shipments.SupplierID = Suppliers.SupplierID
-			WHERE Shipments.ShiptRef=". $ShiptRef;
+		$SQL = "SELECT shipments.shiptref, 
+				vessel, 
+				voyageref, 
+				suppliers.suppname, 
+				shipments.eta, 
+				shipments.closed
+			FROM shipments INNER JOIN suppliers
+				ON shipments.supplierid = suppliers.supplierid
+			WHERE shipments.shiptref=". $ShiptRef;
 	} else {
-		$SQL = "SELECT DISTINCT Shipments.ShiptRef, Vessel, VoyageRef, Suppliers.SuppName, Shipments.ETA, Shipments.Closed
-			FROM Shipments INNER JOIN Suppliers
-				ON Shipments.SupplierID = Suppliers.SupplierID
-			INNER JOIN PurchOrderDetails
-				ON PurchOrderDetails.ShiptRef=Shipments.ShiptRef
-			INNER JOIN PurchOrders
-				ON PurchOrderDetails.OrderNo=PurchOrders.OrderNo
+		$SQL = "SELECT DISTINCT shipments.shiptref, vessel, voyageref, suppliers.suppname, shipments.eta, shipments.closed
+			FROM shipments INNER JOIN suppliers
+				ON shipments.supplierid = suppliers.supplierid
+			INNER JOIN purchorderdetails
+				ON purchorderdetails.shiptref=shipments.shiptref
+			INNER JOIN purchorders
+				ON purchorderdetails.orderno=purchorders.orderno
 			";
 
 		if (isset($SelectedSupplier)) {
 
 			if (isset($SelectedStockItem)) {
-					$SQL .= " WHERE PurchOrderDetails.ItemCode='". $SelectedStockItem ."'
-						AND Shipments.SupplierID='" . $SelectedSupplier ."'
-						AND PurchOrders.IntoStockLocation = '". $_POST['StockLocation'] . "'
-						AND Shipments.Closed=" . $_POST['OpenOrClosed'];
+					$SQL .= " WHERE purchorderdetails.itemcode='". $SelectedStockItem ."'
+						AND shipments.supplierid='" . $SelectedSupplier ."'
+						AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
+						AND shipments.closed=" . $_POST['OpenOrClosed'];
 			} else {
-				$SQL .= "WHERE Shipments.SupplierID='" . $SelectedSupplier ."'
-					AND PurchOrders.IntoStockLocation = '". $_POST['StockLocation'] . "'
-					AND Shipments.Closed=" . $_POST['OpenOrClosed'];
+				$SQL .= "WHERE shipments.supplierid='" . $SelectedSupplier ."'
+					AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
+					AND shipments.closed=" . $_POST['OpenOrClosed'];
 			}
 		} else { //no supplier selected
 			if (isset($SelectedStockItem)) {
-				$SQL .= "WHERE PurchOrderDetails.ItemCode='". $SelectedStockItem ."'
-					AND PurchOrders.IntoStockLocation = '". $_POST['StockLocation'] . "'
-					AND Shipments.Closed=" . $_POST['OpenOrClosed'];
+				$SQL .= "WHERE purchorderdetails.itemcode='". $SelectedStockItem ."'
+					AND purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
+					AND shipments.closed=" . $_POST['OpenOrClosed'];
 			} else {
-				$SQL .= "WHERE PurchOrders.IntoStockLocation = '". $_POST['StockLocation'] . "'
-					AND Shipments.Closed=" . $_POST['OpenOrClosed'];
+				$SQL .= "WHERE purchorders.intostocklocation = '". $_POST['StockLocation'] . "'
+					AND shipments.closed=" . $_POST['OpenOrClosed'];
 			}
 
 		} //end selected supplier
@@ -301,13 +310,13 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 				$k++;
 			}
 
-			$URL_Modify_Shipment = $rootpath . '/Shipments.php?' . SID . 'SelectedShipment=' . $myrow['ShiptRef'];
-			$URL_View_Shipment = $rootpath . '/ShipmentCosting.php?' . SID . 'SelectedShipment=' . $myrow['ShiptRef'];
+			$URL_Modify_Shipment = $rootpath . '/Shipments.php?' . SID . 'SelectedShipment=' . $myrow['shiptref'];
+			$URL_View_Shipment = $rootpath . '/ShipmentCosting.php?' . SID . 'SelectedShipment=' . $myrow['shiptref'];
 
-			$FormatedETA = ConvertSQLDate($myrow['ETA']);
+			$FormatedETA = ConvertSQLDate($myrow['eta']);
 			/* ShiptRef   Supplier  Vessel  Voyage  ETA */
 
-			if ($myrow['Closed']==0){
+			if ($myrow['closed']==0){
 
 				$URL_Close_Shipment = $URL_View_Shipment . '&Close=Yes';
 
@@ -319,8 +328,15 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 					<td><A HREF="%s">'._('Costing').'</A></td>
 					<td><A HREF="%s">'._('Modify').'</A></td>
 					<td><A HREF="%s"><B>'._('Close').'</B></A></td>
-					</tr>', $myrow['ShiptRef'], $myrow['SuppName'], $myrow['Vessel'], $myrow['Voyage'],
-						$FormatedETA, $URL_View_Shipment, $URL_Modify_Shipment,$URL_Close_Shipment);
+					</tr>', 
+					$myrow['shiptref'], 
+					$myrow['suppname'], 
+					$myrow['vessel'], 
+					$myrow['voyage'],
+					$FormatedETA, 
+					$URL_View_Shipment, 
+					$URL_Modify_Shipment,
+					$URL_Close_Shipment);
 
 			} else {
 				printf('<td>%s</td>
@@ -329,8 +345,13 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 					<td>%s</td>
 					<td>%s</td>
 					<td><A HREF="%s">'._('Costing').'</A></td>
-					</tr>', $myrow['ShiptRef'], $myrow['SuppName'], $myrow['Vessel'], $myrow['Voyage'],
-						$FormatedETA, $URL_View_Shipment);
+					</tr>', 
+					$myrow['shiptref'], 
+					$myrow['suppname'], 
+					$myrow['vessel'], 
+					$myrow['voyage'],
+					$FormatedETA, 
+					$URL_View_Shipment);
 			}
 			$j++;
 			If ($j == 15){
@@ -345,6 +366,6 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 	} // end if shipments to show
 }
 
-echo '</form>';
+echo '</FORM>';
 include('includes/footer.inc');
 ?>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 10;
 
@@ -25,23 +25,23 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedCOGSPostingID could also exist if submit had not been clicked this 		code would not run in this case cos submit is false of course	see the delete code below*/
 
-		$sql = "UPDATE COGSGLPostings SET
-						GLCode = " . $_POST['GLCode'] . ",
-						Area = '" . $_POST['Area'] . "',
-						StkCat = '" . $_POST['StkCat'] . "',
-						SalesType='" . $_POST['SalesType'] . "'
-				WHERE ID = $SelectedCOGSPostingID";
+		$sql = "UPDATE cogsglpostings SET
+						glcode = " . $_POST['GLCode'] . ",
+						area = '" . $_POST['Area'] . "',
+						stkcat = '" . $_POST['StkCat'] . "',
+						salestype='" . $_POST['SalesType'] . "'
+				WHERE id = $SelectedCOGSPostingID";
 
 		$msg = _('Cost of sales GL posting code has been updated');
 	} else {
 
 	/*Selected Sales GL Posting is null cos no item selected on first time round so must be	adding a record must be submitting new entries in the new SalesGLPosting form */
 
-		$sql = "INSERT INTO COGSGLPostings (
-						GLCode,
-						Area,
-						StkCat,
-						SalesType)
+		$sql = "INSERT INTO cogsglpostings (
+						glcode,
+						area,
+						stkcat,
+						salestype)
 				VALUES (
 					" . $_POST['GLCode'] . ",
 					'" . $_POST['Area'] . "',
@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
-	$sql="DELETE FROM COGSGLPostings WHERE ID=$SelectedCOGSPostingID";
+	$sql="DELETE FROM cogsglpostings WHERE id=$SelectedCOGSPostingID";
 	$result = DB_query($sql,$db);
 	prnMsg( _('The cost of sales posting code record has been deleted'),'info');
 	unset ($SelectedCOGSPostingID);
@@ -70,23 +70,23 @@ if (!isset($SelectedCOGSPostingID)) {
 
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedID will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters then none of the above are true and the list of Sales GL Postings will be displayed with links to delete or edit each. These will call the same page again and allow update/input or deletion of the records*/
 
-	$sql = 'SELECT COGSGLPostings.ID,
-			COGSGLPostings.Area,
-			COGSGLPostings.StkCat,
-			COGSGLPostings.SalesType,
-			ChartMaster.AccountName
-		FROM COGSGLPostings,
-			ChartMaster
-		WHERE COGSGLPostings.GLCode = ChartMaster.AccountCode';
+	$sql = 'SELECT cogsglpostings.id,
+			cogsglpostings.area,
+			cogsglpostings.stkcat,
+			cogsglpostings.salestype,
+			chartmaster.accountname
+		FROM cogsglpostings,
+			chartmaster
+		WHERE cogsglpostings.glcode = chartmaster.accountcode';
 
 	$result = DB_query($sql,$db);
 
 	echo '<CENTER><table border=1>';
-	echo '<tr><td class="tableheader">' . _('Area')
-	       . '</td><td class="tableheader">' . _('Stock Category')
-				 . '</td><td class="tableheader">' . _('Sales Type')
-				 . '</td><td class="tableheader">' . _('GL Account')
-				 . "</td></tr>";
+	echo '<tr><td class="tableheader">' . _('Area') .
+		'</td><td class="tableheader">' . _('Stock Category') .
+		'</td><td class="tableheader">' . _('Sales Type') .
+		'</td><td class="tableheader">' . _('GL Account') .
+		'</td></tr>';
 
 	while ($myrow = DB_fetch_row($result)) {
 
@@ -136,29 +136,29 @@ if (!isset($_GET['delete'])) {
 	if (isset($SelectedCOGSPostingID)) {
 		//editing an existing cost of sales posting record
 
-		$sql = "SELECT StkCat,
-				GLCode,
-				Area,
-				SalesType
-			FROM COGSGLPostings
-			WHERE ID=$SelectedCOGSPostingID";
+		$sql = "SELECT stkcat,
+				glcode,
+				area,
+				salestype
+			FROM cogsglpostings
+			WHERE id=$SelectedCOGSPostingID";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
 
-		$_POST['GLCode']  = $myrow['GLCode'];
-		$_POST['Area']	= $myrow['Area'];
-		$_POST['StkCat']  = $myrow['StkCat'];
-		$_POST['SalesType']=$myrow['SalesType'];
+		$_POST['GLCode']  = $myrow['glcode'];
+		$_POST['Area']	= $myrow['area'];
+		$_POST['StkCat']  = $myrow['stkcat'];
+		$_POST['SalesType']=$myrow['salestype'];
 
 		echo '<INPUT TYPE=HIDDEN NAME="SelectedCOGSPostingID" VALUE="' . $SelectedCOGSPostingID . '">';
 
 	}  //end of if $SelectedCOGSPostingID only do the else when a new record is being entered
 
 
-	$SQL = "SELECT AreaCode,
-			AreaDescription
-		FROM Areas";
+	$SQL = "SELECT areacode,
+			areadescription
+		FROM areas";
 	$result = DB_query($SQL,$db);
 
 	?>
@@ -171,17 +171,17 @@ if (!isset($_GET['delete'])) {
 	<?php
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['AreaCode']==$_POST['Area']) {
+		if ($myrow['areacode']==$_POST['Area']) {
 			echo "<OPTION SELECTED VALUE='";
 		} else {
 			echo "<OPTION VALUE='";
 		}
-		echo $myrow['AreaCode'] . "'>" . $myrow['AreaDescription'];
+		echo $myrow['areacode'] . "'>" . $myrow['areadescription'];
 
 	} //end while loop
 	DB_free_result($result);
 
-	$SQL = 'SELECT CategoryID, CategoryDescription FROM StockCategory';
+	$SQL = 'SELECT categoryid, categorydescription FROM stockcategory';
 	$result = DB_query($SQL,$db);
 
 	?>
@@ -194,18 +194,18 @@ if (!isset($_GET['delete'])) {
 	<?php
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow["CategoryID"]==$_POST['StkCat']) {
+		if ($myrow["categoryid"]==$_POST['StkCat']) {
 			echo "<OPTION SELECTED VALUE='";
 		} else {
 			echo "<OPTION VALUE='";
 		}
-		echo $myrow['CategoryID'] . "'>" . $myrow['CategoryDescription'];
+		echo $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
 
 	} //end while loop
 
 	DB_free_result($result);
 
-	$SQL = 'SELECT TypeAbbrev, Sales_Type FROM SalesTypes';
+	$SQL = 'SELECT typeabbrev, sales_type FROM salestypes';
 	$result = DB_query($SQL,$db);
 
 	?>
@@ -218,12 +218,12 @@ if (!isset($_GET['delete'])) {
 	<?php
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['TypeAbbrev']==$_POST['SalesType']) {
+		if ($myrow['typeabbrev']==$_POST['SalesType']) {
 			echo "<OPTION SELECTED VALUE='";
 		} else {
 			echo "<OPTION VALUE='";
 		}
-		echo $myrow["TypeAbbrev"] . "'>" . $myrow['Sales_Type'];
+		echo $myrow["typeabbrev"] . "'>" . $myrow['sales_type'];
 
 	} //end while loop
 
@@ -237,23 +237,23 @@ if (!isset($_GET['delete'])) {
 
 	<?php
 	DB_free_result($result);
-	$SQL = "SELECT AccountCode,
-			AccountName
-		FROM ChartMaster,
-			AccountGroups
-		WHERE ChartMaster.Group_=AccountGroups.GroupName
-		AND AccountGroups.PandL=1
-		ORDER BY AccountGroups.SequenceInTB,
-			ChartMaster.AccountName";
+	$SQL = "SELECT chartmaster.accountcode,
+			chartmaster.accountname
+		FROM chartmaster,
+			accountgroups
+		WHERE chartmaster.group_=accountgroups.groupname
+		AND accountgroups.pandl=1
+		ORDER BY accountgroups.sequenceintb,
+			chartmaster.accountname";
 	$result = DB_query($SQL,$db);
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['AccountCode']==$_POST['GLCode']) {
+		if ($myrow['accountcode']==$_POST['GLCode']) {
 			echo "<OPTION SELECTED VALUE='";
 		} else {
 			echo "<OPTION VALUE='";
 		}
-		echo $myrow['AccountCode'] . "'>" . $myrow['AccountName'];
+		echo $myrow['accountcode'] . "'>" . $myrow['accountname'];
 
 	} //end while loop
 

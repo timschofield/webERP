@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -17,19 +17,19 @@ $Header = "<tr>
 
 echo $Header;
 
-$sql = 'SELECT GLTrans.Type,
-		SysTypes.TypeName,
-		GLTrans.TypeNo,
-		PeriodNo,
-		Sum(Amount) AS NetTot
-	FROM GLTrans,
-		SysTypes
-	WHERE GLTrans.Type = SysTypes.TypeID
-	GROUP BY GLTrans.Type,
-		SysTypes.TypeName,
-		TypeNo,
-		PeriodNo
-	HAVING ABS(Sum(Amount))>0.01';
+$sql = 'SELECT gltrans.type,
+		systypes.typename,
+		gltrans.typeno,
+		periodno,
+		SUM(amount) AS nettot
+	FROM gltrans,
+		systypes
+	WHERE gltrans.type = systypes.typeid
+	GROUP BY gltrans.type,
+		systypes.typename,
+		typeno,
+		periodno
+	HAVING ABS(SUM(amount))>0.01';
 
 $OutOfWackResult = DB_query($sql,$db);
 
@@ -44,7 +44,7 @@ while ($OutOfWackRow = DB_fetch_array($OutOfWackResult)){
 	} else {
 		$RowCounter++;
 	}
-	echo "<TR><TD><A HREF='" . $rootpath . "/GLTransInquiry.php?" . SID . "&TypeID=" . $OutOfWackRow['Type'] . "&TransNo=" . $OutOfWackRow['TypeNo'] . "'>" . $OutOfWackRow['TypeName'] . '</A></TD><TD ALIGN=RIGHT>' . $OutOfWackRow['TypeNo'] . '</TD><TD ALIGN=RIGHT>' . $OutOfWackRow['PeriodNo'] . '</TD><TD ALIGN=RIGHT>' . number_format($OutOfWackRow['NetTot'],3) . '</TD></TR>';
+	echo "<TR><TD><A HREF='" . $rootpath . "/GLTransInquiry.php?" . SID . "&TypeID=" . $OutOfWackRow['type'] . "&TransNo=" . $OutOfWackRow['typeno'] . "'>" . $OutOfWackRow['typename'] . '</A></TD><TD ALIGN=RIGHT>' . $OutOfWackRow['typeno'] . '</TD><TD ALIGN=RIGHT>' . $OutOfWackRow['periodno'] . '</TD><TD ALIGN=RIGHT>' . number_format($OutOfWackRow['nettot'],3) . '</TD></TR>';
 
 }
 echo '</TABLE>';

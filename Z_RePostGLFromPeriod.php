@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 
 $PageSecurity=15;
@@ -28,7 +28,7 @@ if (!isset($_POST['FromPeriod'])){
 
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
-		echo '<OPTION VALUE=' . $myrow['PeriodNo'] . '>' . MonthAndYearFromSQLDate($myrow['LastDate_In_Period']);
+		echo '<OPTION VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 	}
 
 	echo '</SELECT></TD>
@@ -72,11 +72,11 @@ if (!isset($_POST['FromPeriod'])){
 
 		while ($myrow=DB_fetch_array($result)){
 
-			$CFwd = $myrow['BFwd'] + $myrow['Actual'];
-			$CFwdBudget = $myrow['BFwdBudget'] + $myrow['Budget'];
-			echo '<BR>' . _('Account Code') . ' : ' . $myrow['AccountCode'] . ' ' . _('Period') . ' : ' . $myrow['Period'];
+			$CFwd = $myrow['bfwd'] + $myrow['actual'];
+			$CFwdBudget = $myrow['bfwdbudget'] + $myrow['budget'];
+			echo '<BR>' . _('Account Code') . ' : ' . $myrow['accountcode'] . ' ' . _('Period') . ' : ' . $myrow['period'];
 
-			$sql = 'UPDATE ChartDetails SET BFwd=' . $CFwd . ',BFwdBudget=' . $CFwdBudget . ' WHERE Period=' . ($myrow['Period'] +1) . ' AND  AccountCode = ' . $myrow['AccountCode'];
+			$sql = 'UPDATE ChartDetails SET BFwd=' . $CFwd . ',BFwdBudget=' . $CFwdBudget . ' WHERE Period=' . ($myrow['period'] +1) . ' AND  AccountCode = ' . $myrow['accountcode'];
 
 			$updresult = DB_query($sql,$db,$ErrMsg);
 		}

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 15;
 
@@ -37,13 +37,13 @@ if ( isset($_POST['submit']) ) {
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
 
-		$sql = "UPDATE Shippers SET ShipperName='" . $_POST['ShipperName'] . "' WHERE Shipper_ID = $SelectedShipper";
+		$sql = "UPDATE shippers SET shippername='" . DB_escape_string($_POST['ShipperName']) . "' WHERE shipper_id = $SelectedShipper";
 		$msg = _('The shipper record has been updated');
 	} elseif ($InputError !=1) {
 
 	/*SelectedShipper is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Shipper form */
 
-		$sql = "INSERT INTO Shippers (ShipperName) VALUES ('" . $_POST['ShipperName'] . "')";
+		$sql = "INSERT INTO shippers (shippername) VALUES ('" . DB_escape_string($_POST['ShipperName']) . "')";
 		$msg = _('The shipper record has been added');
 	}
 
@@ -60,7 +60,7 @@ if ( isset($_POST['submit']) ) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'SalesOrders'
 
-	$sql= "SELECT COUNT(*) FROM SalesOrders WHERE SalesOrders.ShipVia='$SelectedShipper'";
+	$sql= "SELECT COUNT(*) FROM salesorders WHERE salesorders.shipvia='$SelectedShipper'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
@@ -72,7 +72,7 @@ if ( isset($_POST['submit']) ) {
 	} else {
 		// PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorTrans'
 
-		$sql= "SELECT COUNT(*) FROM DebtorTrans WHERE DebtorTrans.ShipVia='$SelectedShipper'";
+		$sql= "SELECT COUNT(*) FROM debtortrans WHERE debtortrans.shipvia='$SelectedShipper'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
@@ -82,7 +82,7 @@ if ( isset($_POST['submit']) ) {
 				$myrow[0] . ' ' . _('invoices created using this shipping company'), 'error');
 		} else {
 			// Prevent deletion if the selected shipping company is the current default shipping company in config.php !!
-			if ($Default_Shipper==$SelectedShipper) {
+			if ($_SESSION['Default_Shipper']==$SelectedShipper) {
 
 				$CancelDelete = 1;
 				echo '<BR>';
@@ -90,7 +90,7 @@ if ( isset($_POST['submit']) ) {
 
 			} else {
 
-				$sql="DELETE FROM Shippers WHERE Shipper_ID=$SelectedShipper";
+				$sql="DELETE FROM shippers WHERE shipper_id=$SelectedShipper";
 				$result = DB_query($sql,$db);
 				echo '<BR>';
 				prnMsg( _('The shipper record has been deleted'), 'success');;
@@ -106,7 +106,7 @@ then none of the above are true and the list of Shippers will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT * FROM Shippers ORDER BY Shipper_ID";
+	$sql = "SELECT * FROM shippers ORDER BY shipper_id";
 	$result = DB_query($sql,$db);
 
 	echo '<CENTER><table border=1>
@@ -123,9 +123,16 @@ or deletion of the records*/
 			echo '<tr bgcolor="#EEEEEE">';
 			$k=1;
 		}
-		printf('<td>%s</td><td>%s</td><td><a href="%sSelectedShipper=%s">'. _('Edit').' </td>
+		printf('<td>%s</td>
+			<td>%s</td>
+			<td><a href="%sSelectedShipper=%s">'. _('Edit').' </td>
 			<td><a href="%sSelectedShipper=%s&delete=1">'. _('Delete'). '</td></tr>',
-			$myrow[0], $myrow[1], $_SERVER['PHP_SELF'] . "?" . SID, $myrow[0], $_SERVER['PHP_SELF'] . "?" . SID, $myrow[0]);
+			$myrow[0], 
+			$myrow[1], 
+			$_SERVER['PHP_SELF'] . "?" . SID, 
+			$myrow[0], 
+			$_SERVER['PHP_SELF'] . "?" . SID, 
+			$myrow[0]);
 	}
 	//END WHILE LIST LOOP
 	echo '</CENTER></table>';
@@ -147,13 +154,13 @@ if (!isset($_GET['delete'])) {
 	if (isset($SelectedShipper)) {
 		//editing an existing Shipper
 
-		$sql = "SELECT Shipper_ID, ShipperName FROM Shippers WHERE Shipper_ID=$SelectedShipper";
+		$sql = "SELECT shipper_id, shippername FROM shippers WHERE shipper_id=$SelectedShipper";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
 
-		$_POST['Shipper_ID'] = $myrow["Shipper_ID"];
-		$_POST['ShipperName']	= $myrow["ShipperName"];
+		$_POST['Shipper_ID'] = $myrow['shipper_id'];
+		$_POST['ShipperName']	= $myrow['shippername'];
 
 		echo '<INPUT TYPE=HIDDEN NAME="SelectedShipper" VALUE='. $SelectedShipper .'>';
 		echo '<INPUT TYPE=HIDDEN NAME="Shipper_ID" VALUE=' . $_POST['Shipper_ID'] . '>';
@@ -163,12 +170,12 @@ if (!isset($_GET['delete'])) {
 	}
 	?>
 
-	<TR><TD><?=_('Shipper Name');?>:</TD>
+	<TR><TD><?php echo _('Shipper Name');?>:</TD>
 	<TD><input type="Text" name="ShipperName" value="<?php echo $_POST['ShipperName']; ?>" SIZE=35 MAXLENGTH=40></TD></TR>
 
 	</TABLE></CENTER>
 
-	<CENTER><input type="Submit" name="submit" value="<?=_('Enter Information');?>"></CENTER>
+	<CENTER><input type="Submit" name="submit" value="<?php echo _('Enter Information');?>"></CENTER>
 
 	</FORM>
 
@@ -176,4 +183,3 @@ if (!isset($_GET['delete'])) {
 
 include('includes/footer.inc');
 ?>
-

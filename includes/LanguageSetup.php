@@ -20,6 +20,8 @@ If (isset($_POST['Language'])) {
  
 if (function_exists('gettext')){
   //echo 'User Settings: ' . $_SESSION['Language'];
+  //	$Locale = setlocale (LC_ALL, $_SESSION['Language']);
+	
 	$Locale = setlocale (LC_CTYPE, $_SESSION['Language']);
   //echo '&nbsp;&nbsp;LC_CTYPE Settings: ' . $_SESSION['locale'];
 	$Locale = setlocale (LC_MESSAGES, $_SESSION['Language']);
@@ -29,11 +31,11 @@ if (function_exists('gettext')){
   //}
 	
   // possibly even if locale fails the language will still switch by using Language instead of locale variable
-  putenv("LANG=" . $_SESSION['Language']);
-  putenv("LANGUAGE=" . $_SESSION['Language']);
-  //putenv("LANG=$Language_Country");
-	bindtextdomain ("messages", "./locale");
-	textdomain ("messages");
+  putenv('LANG=' . $_SESSION['Language']);
+  putenv('LANGUAGE=' . $_SESSION['Language']);
+  //putenv('LANG=$Language_Country');
+	bindtextdomain ('messages', './locale');
+	textdomain ('messages');
 }
 
 if (!function_exists('_')){

@@ -1,8 +1,6 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 $PageSecurity=15;
-
-
 
 include('includes/session.inc');
 
@@ -12,6 +10,16 @@ $title = _('User Maintenance');
 include('includes/header.inc');
 include('includes/DateFunctions.inc');
 
+
+// Make an array of the security roles
+$sql = 'SELECT secroleid, secrolename FROM securityroles ORDER BY secroleid';
+$Sec_Result = DB_query($sql, $db);
+$SecurityRoles = array();
+// Now load it into an a ray using Key/Value pairs
+while( $Sec_row = DB_fetch_row($Sec_Result) ) {
+	$SecurityRoles[$Sec_row[0]] = $Sec_row[1];
+}
+DB_free_result($Sec_Result);
 
 if (isset($_GET['SelectedUser'])){
 	$SelectedUser = $_GET['SelectedUser'];
@@ -31,6 +39,9 @@ if (isset($_POST['submit'])) {
 	if (strlen($_POST['UserID'])<4){
 		$InputError = 1;
 		prnMsg(_('The user ID entered must be at least 4 characters long'),'error');
+	} elseif (strstr($_POST['UserID'],' ') OR strstr($_POST['UserID'],"'") OR strstr($_POST['UserID'],'+') OR strstr($_POST['UserID'],"\\") OR strstr($_POST['UserID'],"\"") OR strstr($_POST['UserID'],'&') OR strstr($_POST['UserID'],'.') OR strstr($_POST['UserID'],'"')) {
+		$InputError = 1;
+		prnMsg(_('User names cannot contain any of the following characters') . " - ' & + \" \\ " . _('or a space'),'error');
 	} elseif (strlen($_POST['Password'])<5){
 		$InputError = 1;
 		prnMsg(_('The password entered must be at least 5 characters long'),'error');
@@ -44,17 +55,17 @@ if (isset($_POST['submit'])) {
 	//comment out except for demo!  Do not want anyone modifying demo user.
 	/*
 	  elseif ($_POST['UserID'] == 'demo') {
-		prnMsg(_('The demonstration user called demo cannot be modified.','error'));
+		prnMsg(_('The demonstration user called demo cannot be modified.'),'error');
 		$InputError = 1;
 	}
 	*/
 
 	if ((strlen($_POST['BranchCode'])>0) AND ($InputError !=1)) {
 		// check that the entered branch is valid for the customer code
-		$sql = "SELECT CustBranch.DebtorNo
-				FROM CustBranch
-				WHERE CustBranch.DebtorNo='" . $_POST['Cust'] . "'
-				AND CustBranch.BranchCode='" . $_POST['BranchCode'] . "'";
+		$sql = "SELECT custbranch.debtorno
+				FROM custbranch
+				WHERE custbranch.debtorno='" . $_POST['Cust'] . "'
+				AND custbranch.branchcode='" . $_POST['BranchCode'] . "'";
 
 		$ErrMsg = _('The check on validity of the customer code and branch failed  because');
 		$DbgMsg = _('The SQL that was used to check the customer code and branch was');
@@ -86,40 +97,40 @@ if (isset($_POST['submit'])) {
 			$_POST['BranchCode']='';
 		}
 
-		$sql = "UPDATE WWW_Users SET RealName='" . $_POST['RealName'] . "',
-						CustomerID='" . $_POST['Cust'] ."',
-						Phone='" . $_POST['Phone'] ."',
-						Email='" . $_POST['Email'] ."',
-						Password='" . $_POST['Password'] . "',
-						BranchCode='" . $_POST['BranchCode'] . "',
-						PageSize='" . $_POST['PageSize'] . "',
-						FullAccess=" . $_POST['Access'] . ",
-						DefaultLocation='" . $_POST['DefaultLocation'] ."',
-						ModulesAllowed='" . $ModulesAllowed . "',
-						Blocked=" . $_POST['Blocked'] . "
-					WHERE UserID = '$SelectedUser'";
+		$sql = "UPDATE www_users SET realname='" . DB_escape_string($_POST['RealName']) . "',
+						customerid='" . DB_escape_string($_POST['Cust']) ."',
+						phone='" . DB_escape_string($_POST['Phone']) ."',
+						email='" . DB_escape_string($_POST['Email']) ."',
+						password='" . sha1($_POST['Password']) . "',
+						branchcode='" . DB_escape_string($_POST['BranchCode']) . "',
+						pagesize='" . $_POST['PageSize'] . "',
+						fullaccess=" . $_POST['Access'] . ",
+						defaultlocation='" . $_POST['DefaultLocation'] ."',
+						modulesallowed='" . $ModulesAllowed . "',
+						blocked=" . $_POST['Blocked'] . "
+					WHERE userid = '$SelectedUser'";
 
 		$msg = _('The selected user record has been updated');
 	} elseif ($InputError !=1) {
 
-		$sql = "INSERT INTO WWW_Users (UserID,
-						RealName,
-						CustomerID,
-						BranchCode,
-						Password,
-						Phone,
-						Email,
-						PageSize,
-						FullAccess,
-						DefaultLocation,
-						ModulesAllowed)
+		$sql = "INSERT INTO www_users (userid,
+						realname,
+						customerid,
+						branchcode,
+						password,
+						phone,
+						email,
+						pagesize,
+						fullaccess,
+						defaultlocation,
+						modulesallowed)
 					VALUES ('" . $_POST['UserID'] . "',
-						'" . $_POST['RealName'] ."',
-						'" . $_POST['Cust'] ."',
-						'" . $_POST['BranchCode'] ."',
-						'" . $_POST['Password'] ."',
-						'" . $_POST['Phone'] . "',
-						'" . $_POST['Email'] ."',
+						'" . DB_escape_string($_POST['RealName']) ."',
+						'" . DB_escape_string($_POST['Cust']) ."',
+						'" . DB_escape_string($_POST['BranchCode']) ."',
+						'" . sha1($_POST['Password']) ."',
+						'" . DB_escape_string($_POST['Phone']) . "',
+						'" . DB_escape_string($_POST['Email']) ."',
 						'" . $_POST['PageSize'] ."',
 						" . $_POST['Access'] . ",
 						'" . $_POST['DefaultLocation'] ."',
@@ -158,7 +169,7 @@ if (isset($_POST['submit'])) {
 	} else {
 	*/
 
-		$sql="DELETE FROM WWW_Users WHERE UserID='$SelectedUser'";
+		$sql="DELETE FROM www_users WHERE userid='$SelectedUser'";
 		$ErrMsg = _('The User could not be deleted because');;
 		$result = DB_query($sql,$db,$ErrMsg);
 
@@ -172,16 +183,16 @@ if (!isset($SelectedUser)) {
 
 /* If its the first time the page has been displayed with no parameters then none of the above are true and the list of Users will be displayed with links to delete or edit each. These will call the same page again and allow update/input or deletion of the records*/
 
-	$sql = "SELECT UserID,
-			RealName,
-			Phone,
-			Email,
-			CustomerID,
-			BranchCode,
-			LastVisitDate,
-			FullAccess,
-			PageSize
-		FROM WWW_Users";
+	$sql = "SELECT userid,
+			realname,
+			phone,
+			email,
+			customerid,
+			branchcode,
+			lastvisitdate,
+			fullaccess,
+			pagesize
+		FROM www_users";
 	$result = DB_query($sql,$db);
 
 	echo '<CENTER><table border=1>';
@@ -220,8 +231,8 @@ if (!isset($SelectedUser)) {
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
-			<td><a href=\"%sSelectedUser=%s\">" . _('Edit') . "</a></td>
-			<td><a href=\"%sSelectedUser=%s&delete=1\">" . _('Delete') . "</a></td>
+			<td><a href=\"%s&SelectedUser=%s\">" . _('Edit') . "</a></td>
+			<td><a href=\"%s&SelectedUser=%s&delete=1\">" . _('Delete') . "</a></td>
 			</tr>",
 			$myrow[0],
 			$myrow[1],
@@ -230,7 +241,7 @@ if (!isset($SelectedUser)) {
 			$myrow[4],
 			$myrow[5],
 			$LastVisitDate,
-			$SecurityHeadings[($myrow[7])],
+			$SecurityRoles[($myrow[7])],
 			$myrow[8],
 			$_SERVER['PHP_SELF']  . "?" . SID,
 			$myrow[0],
@@ -251,36 +262,35 @@ echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 if (isset($SelectedUser)) {
 	//editing an existing User
 
-	$sql = "SELECT UserID,
-			RealName,
-			Phone,
-			Email,
-			CustomerID,
-			Password,
-			BranchCode,
-			PageSize,
-			FullAccess,
-			DefaultLocation,
-			ModulesAllowed,
-			Blocked
-		FROM WWW_Users
-		WHERE UserID='" . $SelectedUser . "'";
+	$sql = "SELECT userid,
+			realname,
+			phone,
+			email,
+			customerid,
+			password,
+			branchcode,
+			pagesize,
+			fullaccess,
+			defaultlocation,
+			modulesallowed,
+			blocked
+		FROM www_users
+		WHERE userid='" . $SelectedUser . "'";
 
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
 
-	$_POST['UserID'] = $myrow['UserID'];
-	$_POST['RealName'] = $myrow['RealName'];
-	$_POST['Phone'] = $myrow['Phone'];
-	$_POST['Email'] = $myrow['Email'];
-	$_POST['Cust']	= $myrow['CustomerID'];
-	$_POST['Password'] = $myrow['Password'];
-	$_POST['BranchCode']  = $myrow['BranchCode'];
-	$_POST['PageSize'] = $myrow['PageSize'];
-	$_POST['Access'] = $myrow['FullAccess'];
-	$_POST['DefaultLocation'] = $myrow['DefaultLocation'];
-	$_POST['ModulesAllowed'] = $myrow['ModulesAllowed'];
-	$_POST['Blocked'] = $myrow['Blocked'];
+	$_POST['UserID'] = $myrow['userid'];
+	$_POST['RealName'] = $myrow['realname'];
+	$_POST['Phone'] = $myrow['phone'];
+	$_POST['Email'] = $myrow['email'];
+	$_POST['Cust']	= $myrow['customerid'];
+	$_POST['BranchCode']  = $myrow['branchcode'];
+	$_POST['PageSize'] = $myrow['pagesize'];
+	$_POST['Access'] = $myrow['fullaccess'];
+	$_POST['DefaultLocation'] = $myrow['defaultlocation'];
+	$_POST['ModulesAllowed'] = $myrow['modulesallowed'];
+	$_POST['Blocked'] = $myrow['blocked'];
 
 	echo "<INPUT TYPE=HIDDEN NAME='SelectedUser' VALUE='" . $SelectedUser . "'>";
 	echo "<INPUT TYPE=HIDDEN NAME='UserID' VALUE='" . $_POST['UserID'] . "'>";
@@ -304,12 +314,11 @@ echo '<TR><TD>' . _('Email Address') .":</TD>
 	<TD><INPUT TYPE='Text' name='Email' VALUE='" . $_POST['Email'] ."' SIZE=32 MAXLENGTH=55></TD></TR>";
 echo '<TR><TD>' . _('Access Level') . ":</TD><TD><SELECT NAME='Access'>";
 
-
-for ($i=0;$i<count($SecurityHeadings);$i++){
-	if ($i== (int)$_POST["Access"]){
-		echo "<OPTION SELECTED VALUE=" . $i . ">" . $SecurityHeadings[$i];
+foreach ($SecurityRoles as $SecKey => $SecVal) {
+	if ($SecKey == $_POST['Access']){
+		echo "<OPTION SELECTED VALUE=" . $SecKey . ">" . $SecVal;
 	} else {
-		echo "<OPTION VALUE=" . $i . ">" . $SecurityHeadings[$i];
+		echo "<OPTION VALUE=" . $SecKey . ">" . $SecVal;
 	}
 }
 
@@ -318,17 +327,17 @@ echo '</SELECT></TD></TR>';
 echo '<TR><TD>' . _('Default Location') . ":</TD>
 	<TD><SELECT name='DefaultLocation'>";
 
-$sql = "SELECT LocCode, LocationName FROM Locations";
+$sql = "SELECT loccode, locationname FROM locations";
 $result = DB_query($sql,$db);
 
 while ($myrow=DB_fetch_array($result)){
 
-	if ($myrow["LocCode"] == $_POST['DefaultLocation']){
+	if ($myrow['loccode'] == $_POST['DefaultLocation']){
 
-		echo "<OPTION SELECTED Value='" . $myrow["LocCode"] . "'>" . $myrow["LocationName"];
+		echo "<OPTION SELECTED Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 
 	} else {
-		echo "<OPTION Value='" . $myrow["LocCode"] . "'>" . $myrow["LocationName"];
+		echo "<OPTION Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 
 	}
 
@@ -346,57 +355,57 @@ echo '<TR><TD>' . _('Branch Code') . ":</TD>
 echo '<TR><TD>' . _('Reports Page Size') .":</TD>
 	<TD><SELECT name='PageSize'>";
 
-if($_POST['PageSize']=="A4"){
+if($_POST['PageSize']=='A4'){
 	echo "<OPTION SELECTED Value='A4'>" . _('A4');
 } else {
 	echo "<OPTION Value='A4'>A4";
 }
 
-if($_POST['PageSize']=="A3"){
+if($_POST['PageSize']=='A3'){
 	echo "<OPTION SELECTED Value='A3'>" . _('A3');
 } else {
 	echo "<OPTION Value='A3'>A3";
 }
 
-if($_POST['PageSize']=="A3_landscape"){
+if($_POST['PageSize']=='A3_landscape'){
 	echo "<OPTION SELECTED Value='A3_landscape'>" . _('A3') . ' ' . _('landscape');
 } else {
 	echo "<OPTION Value='A3_landscape'>" . _('A3') . ' ' . _('landscape');
 }
 
-if($_POST['PageSize']=="letter"){
+if($_POST['PageSize']=='letter'){
 	echo "<OPTION SELECTED Value='letter'>" . _('Letter');
 } else {
 	echo "<OPTION Value='letter'>" . _('Letter');
 }
 
-if($_POST['PageSize']=="letter_landscape"){
+if($_POST['PageSize']=='letter_landscape'){
 	echo "<OPTION SELECTED Value='letter_landscape'>" . _('Letter') . ' ' . _('landscape');
 } else {
 	echo "<OPTION Value='letter_landscape'>" . _('Letter') . ' ' . _('landscape');
 }
 
-if($_POST['PageSize']=="legal"){
+if($_POST['PageSize']=='legal'){
 	echo "<OPTION SELECTED Value='legal'>" . _('Legal');
 } else {
 	echo "<OPTION Value='legal'>" . _('Legal');
 }
-if($_POST['PageSize']=="legal_landscape"){
+if($_POST['PageSize']=='legal_landscape'){
 	echo "<OPTION SELECTED Value='legal_landscape'>" . _('Legal') . ' ' . _('landscape');
 } else {
 	echo "<OPTION Value='legal_landscape'>" . _('Legal') . ' ' . _('landscape');
 }
 
-echo "</SELECT></TD></TR>";
+echo '</SELECT></TD></TR>';
 
 
 /*Make an array out of the comma seperated list of modules allowed*/
-$ModulesAllowed = explode(",",$_POST['ModulesAllowed']);
+$ModulesAllowed = explode(',',$_POST['ModulesAllowed']);
 
 $i=0;
 foreach($ModuleList as $ModuleName){
 
-	echo '<TR><TD>' . _('Display') . ' ' . $ModuleName . ' ' . _('options') . ": Value is " . $ModulesAllowed[$i]  . "</TD><TD><SELECT name='Module_" . $i . "'>";
+	echo '<TR><TD>' . _('Display') . ' ' . $ModuleName . ' ' . _('options') . ": </TD><TD><SELECT name='Module_" . $i . "'>";
 	if ($ModulesAllowed[$i]==0){
 		echo '<OPTION SELECTED VALUE=0>' . _('No');
 		echo '<OPTION VALUE=1>' . _('Yes');

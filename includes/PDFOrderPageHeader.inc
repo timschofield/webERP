@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /* pdf-php by R&OS code to set up a new sales order page */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -8,24 +8,24 @@ if ($PageNumber>1){
 $XPos = 55;
 $YPos = 575;
 
-$pdf->addText($XPos, $YPos,$FontSize, $myrow['DeliverTo']);
-$pdf->addText($XPos, $YPos-13,$FontSize, $myrow['DelAdd1']);
-$pdf->addText($XPos, $YPos-26,$FontSize, $myrow['DelAdd2']);
-$pdf->addText($XPos, $YPos-39,$FontSize, $myrow['DelAdd3'] . ' ' . $myrow['DelAdd4']);
+$pdf->addText($XPos, $YPos,$FontSize, $myrow['deliverto']);
+$pdf->addText($XPos, $YPos-13,$FontSize, $myrow['deladd1']);
+$pdf->addText($XPos, $YPos-26,$FontSize, $myrow['deladd2']);
+$pdf->addText($XPos, $YPos-39,$FontSize, $myrow['deladd3'] . ' ' . $myrow['deladd4']);
 
 $YPos = 510;
 
-$pdf->addText($XPos, $YPos,$FontSize, $myrow['Name']);
-$pdf->addText($XPos, $YPos-13,$FontSize, $myrow['Address1']);
-$pdf->addText($XPos, $YPos-26,$FontSize, $myrow['Address2']);
-$pdf->addText($XPos, $YPos-39,$FontSize, $myrow['Address3']);
-$pdf->addText($XPos, $YPos-52,$FontSize, $myrow['Address4']);
+$pdf->addText($XPos, $YPos,$FontSize, $myrow['name']);
+$pdf->addText($XPos, $YPos-13,$FontSize, $myrow['address1']);
+$pdf->addText($XPos, $YPos-26,$FontSize, $myrow['address2']);
+$pdf->addText($XPos, $YPos-39,$FontSize, $myrow['address3']);
+$pdf->addText($XPos, $YPos-52,$FontSize, $myrow['address4']);
 
 
 /*Print Dispatch Date - as current date
 $XPos=50;
 $YPos=98;
-$pdf->addText($XPos, $YPos,$FontSize, Date($DefaultDateFormat));
+$pdf->addText($XPos, $YPos,$FontSize, Date($_SESSION['DefaultDateFormat']));
 
 */
 
@@ -33,26 +33,26 @@ $pdf->addText($XPos, $YPos,$FontSize, Date($DefaultDateFormat));
 /*Print the freight company to be used */
 $XPos=65;
 $YPos=48;
-$pdf->addText($XPos, $YPos,$FontSize, $myrow['ShipperName']);
+$pdf->addText($XPos, $YPos,$FontSize, $myrow['shippername']);
 
 $XPos=630;
 $YPos=567;
 $pdf->addText($XPos, $YPos,$FontSize, _('Order No') . ': ' . $_GET['TransNo']);
-$pdf->addText($XPos, $YPos-14,$FontSize, _('Your Ref') . ': ' . $myrow['CustomerRef']);
+$pdf->addText($XPos, $YPos-14,$FontSize, _('Your Ref') . ': ' . $myrow['customerref']);
 
 
 $XPos=687;
 $YPos=539;
-$pdf->addText($XPos, $YPos,$FontSize,  ConvertSQLDate($myrow['OrdDate']));
+$pdf->addText($XPos, $YPos,$FontSize,  ConvertSQLDate($myrow['orddate']));
 
 $XPos=630;
 $YPos=525;
-$pdf->addText($XPos, $YPos,$FontSize, _('Cust') . ': ' . $myrow['DebtorNo']);
-$pdf->addText($XPos, $YPos-14,$FontSize, _('Branch') . ': ' . $myrow['BranchCode']);
+$pdf->addText($XPos, $YPos,$FontSize, _('Cust') . ': ' . $myrow['debtorno']);
+$pdf->addText($XPos, $YPos-14,$FontSize, _('Branch') . ': ' . $myrow['branchcode']);
 
 $pdf->addText($XPos, $YPos-32,$FontSize, _('Page') . ': ' . $PageNumber);
 
-$pdf->addText($XPos, $YPos-46,$FontSize,  _('From') . ': ' . $myrow['LocationName']);
+$pdf->addText($XPos, $YPos-46,$FontSize,  _('From') . ': ' . $myrow['locationname']);
 
 
 /*Print the order number */
@@ -63,7 +63,7 @@ $pdf->addText($XPos, $YPos,$FontSize, $_GET['TransNo']);
 
 $XPos=609;
 $YPos=96;
-$LeftOvers = $pdf->addTextWrap($XPos,$YPos,170,$FontSize,$myrow['Comments']);
+$LeftOvers = $pdf->addTextWrap($XPos,$YPos,170,$FontSize,$myrow['comments']);
 
 if (strlen($LeftOvers)>1){
 	$LeftOvers = $pdf->addTextWrap($XPos,$YPos-14,170,$FontSize,$LeftOvers);

@@ -1,0 +1,64 @@
+<br><br>
+<a name="Multilanguage"><font size="+3"><b>Multilanguage</b></font></a>
+<br><br>
+The following explains how to use the language translation utilities provided with webERP for the purpose of adding languages
+ and maintaining their translations.
+<br><br>
+In general before using the utilities you need to click on your user name at the top left in order to access user preferences.  
+Select the language to translate and click on Modify.  The language utilities all use the currently selected user language. If the language you wish to use is not there then a new translation can be initiated with the 'Add a New Language' utility - see below. By default a new install of webERP will only have the english - en_GB available. The most recent submitted language packs are available from the <A HREF='http://sourceforge.net/project/showfiles.php?group_id=70949'>sourceforge webERP page</A>
+<br><br>
+Translations require that the <A HREF='www.gnu.org/software/gettext/'>GNU Gettext utilites</A> are installed on your web server. The existence of a translation is no use without gettext.
+<br><br>
+Translations are maintained from the utilities menu - this does not have its own link on the main menu since it is an area that only the system administrator should be able to access. Unauthorised modification of translation files is therefore discouraged. The utlities menu is Z_index.php - so you can modify the URL on the main menu by prefixing it with Z_ - this brings up the utilities menu - only if you have system administrator permissions on your user account. The link to 'Maintain Language Files' is where the translations are managed.
+<br><br>
+There are four translation utilities availble:
+<br>
+<li>Rebuild the System Default Language File</li>
+<li>Add a New Language to the System</li>
+<li>Edit a Language File Header</li>
+<li>Edit a Language File Module</li>
+<br><br> 
+Note that the discussion about what the system does is intended for those handling the system and its files.  It is not necessary
+ to understand if you are only dealing with translation.
+<br><br>
+<font size="+2"><b>Rebuild the System Default Language File</b></font>
+<br><br>
+The system has one default language file.  When a new language is created it makes a copy of this file for itself that can be
+ edited for that language.  The rebuilding this system default language file consists of it looking through every system code
+ file (script) in order to create a new system default language file.  In this way, any modifications or additions to strings
+ will be contained within the newly created file.  This can be done before creating a new language in order to start with the
+ very latest strings.
+<br><br>
+<font size="+2"><b>Add a New Language to the System</b></font>
+<br><br>
+Use this utility to create a new language. It is important to recognise that only languages that have appropriate locale files on your web-server can be added. The language identifier must match with the language files on the web-server. Enter the language in the form xx_XX where the first two characters are the lower case standard code for the language such as en for English and the last two are the upper case standard code for the country such as US for United States.  This example would be en_US.  The underscore must separate the language and country for a total of 5 characters. The Proceed button must be clicked after entering the language in order for it to be created.  The system then creates a new language directory under the locale directory and an LC_MESSAGES directory under this new language directory. Then, in this new locale/xx_XX/LC_MESSAGES directory it copies accross the Default Language file (messages.po). Initially there are no translations in the new messages.po file. 
+<br><br>
+Once the new language has been created, to use the language translation utlities to maintain the new translation you must change to the new language. To change language, the user name shown at the top left of all webERP screens is clicked on and the drop down box should now show the new language created above. Select the new language to enable you to operate with the translation utilities.
+<br><br>
+It is not necessary to know about the structure of the language file if using the translation tools provided. The details below are presented for infomation purposes only. The language file - messages.po consists of:
+<br>
+<li>A header, containing details of the translator and of critical importance the character set required to represent the letters in the language.</li>
+<li>Message identification strings that start with msgid then the english string that is to be translated surrounded by quotation marks. The scripts in which the string occurrs are noted above each msgid statement</li>
+<li>Message strings such as msgstr "" - in a new messages.po these are all "". The job of translating requires that the msgstr be entered for the language to represent the text in the msgid string.</li>
+<br><br>
+<font size="+2"><b>Edit a Language File Header</b></font>
+<br><br>
+The language file header can be modified using this utility.  One important reason for modifying the header is to modify the
+ charset to what is suitable for the locale.  For en, the charset is usually set to 8829-1 or something like that. After editing
+ the various areas of the header make sure to click on Enter Information at the bottom in order to save the changes. 
+<br><br>
+<font size="+2"><b>Edit a Language File Module</b></font>
+<br><br>
+The majority of the translation work is done with this utility.  First select the language you wish to edit and then there is
+ a choice of modules.  For a complete translation of the entire system all of the modules must be completed.  Many prefer to
+ do index.php and includes/header.inc first in order for the main menu to be in their language.  From that point, the most
+ important modules can be done first or all can be done alphabetically.  Some memorable system should be used though in order
+ to remember which modules still need translating in subsequent sessions.
+<br><br> 
+Once the language and module have been selected then click on Proceed.  A handy interface comes up with all of the strings
+ listed that are within that module and beside them an area to enter your translation of that string.  On the right is a list of
+ the line number where the string occurs in the code within the module.  After entering some translations click on Enter
+ Information in order to save all changes.
+<br><br>
+If there has been some development work on your version of webERP it is possible to merge any new strings that have been created by the developers with the existing language file and create a new messages.po that contain all the strings required by the system. If some messages still come up in English but they don't appear when editing the module for that screen then you know you must Merge the existing messages.po with any new messages. To ensure all strings are extracted by the gettext utility it is important to ensure that the "Rebuild the System Default Language File" is run first. Then from the "Edit a Language File Module" screen click on the "Refresh Messages With Latest Strings" - this merges the newly creates master messages.po file created by the Rebuild with your existing translations.
+<br><br>

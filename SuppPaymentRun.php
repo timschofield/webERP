@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 5;
 
@@ -13,7 +13,7 @@ Class Allocation {
 	}
 }
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/GetPaymentMethods.php');
 
 If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	AND isset($_POST['FromCriteria'])
@@ -30,8 +30,6 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	include('includes/PDFStarter_ros.inc');
 	include('includes/DateFunctions.inc');
 
-
-	$CompanyRecord = ReadInCompanyRecord($db);
 	$RefCounter = 0;
 
 
@@ -45,15 +43,24 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 	include ('includes/PDFPaymentRunPageHeader.inc');
 
-	$sql = "SELECT Suppliers.SupplierID, SUM(SuppTrans.OvAmount + SuppTrans.OvGST - SuppTrans.Alloc) AS Balance
-		FROM Suppliers, PaymentTerms, SuppTrans, SysTypes
-		WHERE SysTypes.TypeID = SuppTrans.Type AND Suppliers.PaymentTerms = PaymentTerms.TermsIndicator AND 			Suppliers.SupplierID = SuppTrans.SupplierNo
-		AND SuppTrans.OvAmount + SuppTrans.OvGST - SuppTrans.Alloc !=0
-		AND SuppTrans.DueDate <='" . FormatDateForSQL($_POST['AmountsDueBy']) . "' AND SuppTrans.Hold=0 AND 			Suppliers.CurrCode = '" . $_POST['Currency'] . "'
-		AND SuppTrans.SupplierNo >= '" . $_POST['FromCriteria'] . "' AND SuppTrans.SupplierNo <= '" . 				$_POST['ToCriteria'] . "'
-		GROUP BY Suppliers.SupplierID
-		HAVING SUM(SuppTrans.OvAmount + SuppTrans.OvGST - SuppTrans.Alloc) > 0
-		ORDER BY Suppliers.SupplierID";
+	$sql = "SELECT suppliers.supplierid, 
+			SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS balance
+		FROM suppliers, 
+			paymentterms, 
+			supptrans, 
+			systypes
+		WHERE systypes.typeid = supptrans.type 
+		AND suppliers.paymentterms = paymentterms.termsindicator 
+		AND suppliers.supplierid = supptrans.supplierno
+		AND supptrans.ovamount + supptrans.ovgst - supptrans.alloc !=0
+		AND supptrans.duedate <='" . FormatDateForSQL($_POST['AmountsDueBy']) . "' 
+		AND supptrans.hold=0 
+		AND suppliers.currcode = '" . $_POST['Currency'] . "'
+		AND supptrans.supplierNo >= '" . $_POST['FromCriteria'] . "' 
+		AND supptrans.supplierno <= '" $_POST['ToCriteria'] . "'
+		GROUP BY suppliers.supplierid
+		HAVING SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) > 0
+		ORDER BY suppliers.supplierid";
 
 	$SuppliersResult = DB_query($sql,$db);
 
@@ -68,36 +75,36 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 	while ($SuppliersToPay = DB_fetch_array($SuppliersResult)){
 
-		$sql = "SELECT Suppliers.SupplierID,
-				Suppliers.SuppName,
-				SysTypes.TypeName,
-				PaymentTerms.Terms,
-				SuppTrans.SuppReference,
-				SuppTrans.TranDate,
-				SuppTrans.Rate,
-				SuppTrans.TransNo,
-				SuppTrans.Type,
-				(SuppTrans.OvAmount + SuppTrans.OvGST - SuppTrans.Alloc) AS Balance,
-				(SuppTrans.OvAmount + SuppTrans.OvGST ) AS TranTotal,
-				SuppTrans.DiffOnExch,
-				SuppTrans.ID
-			FROM Suppliers,
-				PaymentTerms,
-				SuppTrans,
-				SysTypes
-			WHERE SysTypes.TypeID = SuppTrans.Type
-			AND Suppliers.PaymentTerms = PaymentTerms.TermsIndicator
-			AND Suppliers.SupplierID = SuppTrans.SupplierNo
-			AND SuppTrans.SupplierNo = '" . $SuppliersToPay['SupplierID'] . "'
-			AND SuppTrans.OvAmount + SuppTrans.OvGST - SuppTrans.Alloc !=0
-			AND SuppTrans.DueDate <='" . FormatDateForSQL($_POST['AmountsDueBy']) . "'
-			AND SuppTrans.Hold=0
-			AND Suppliers.CurrCode = '" . $_POST['Currency'] . "'
-			AND SuppTrans.SupplierNo >= '" . $_POST['FromCriteria'] . "'
-			AND SuppTrans.SupplierNo <= '" . $_POST['ToCriteria'] . "'
-			ORDER BY SuppTrans.SupplierNo,
-				SuppTrans.Type,
-				SuppTrans.TransNo";
+		$sql = "SELECT suppliers.supplierid,
+				suppliers.suppname,
+				systypes.typename,
+				paymentterms.terms,
+				supptrans.suppreference,
+				supptrans.trandate,
+				supptrans.rate,
+				supptrans.transno,
+				supptrans.type,
+				(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS balance,
+				(supptrans.ovamount + supptrans.ovgst ) AS trantotal,
+				supptrans.diffonexch,
+				supptrans.id
+			FROM suppliers,
+				paymentterms,
+				supptrans,
+				systypes
+			WHERE systypes.typeid = supptrans.type
+			AND suppliers.paymentterms = paymentterms.termsindicator
+			AND suppliers.supplierid = supptrans.supplierno
+			AND supptrans.supplierno = '" . $SuppliersToPay['supplierid'] . "'
+			AND supptrans.ovamount + supptrans.ovgst - supptrans.alloc !=0
+			AND supptrans.duedate <='" . FormatDateForSQL($_POST['AmountsDueBy']) . "'
+			AND supptrans.hold=0
+			AND suppliers.currcode = '" . $_POST['Currency'] . "'
+			AND supptrans.supplierno >= '" . $_POST['FromCriteria'] . "'
+			AND supptrans.supplierno <= '" . $_POST['ToCriteria'] . "'
+			ORDER BY supptrans.supplierno,
+				supptrans.type,
+				supptrans.transno";
 
 		$TransResult = DB_query($sql,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
@@ -119,13 +126,13 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 		while ($DetailTrans = DB_fetch_array($TransResult)){
 
-			if ($DetailTrans['SupplierID'] != $SupplierID){ /*Need to head up for a new suppliers details */
+			if ($DetailTrans['supplierid'] != $SupplierID){ /*Need to head up for a new suppliers details */
 
 				if ($SupplierID!=''){ /*only print the footer if this is not the first pass */
 					include('includes/PDFPaymentRun_PymtFooter.php');
 				}
-				$SupplierID = $DetailTrans['SupplierID'];
-				$SupplierName = $DetailTrans['SuppName'];
+				$SupplierID = $DetailTrans['supplierid'];
+				$SupplierName = $DetailTrans['suppname'];
 				if (isset($_POST['PrintPDFAndProcess'])){
 					$SuppPaymentNo = GetNextTransNo(22, $db);
 				}
@@ -135,20 +142,20 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 									$YPos,
 									450-$Left_Margin,
 									$FontSize,
-									$DetailTrans['SupplierID'] . ' - ' . $DetailTrans['SuppName'] . ' - ' . 				$DetailTrans['Terms'],
+									$DetailTrans['supplierid'] . ' - ' . $DetailTrans['suppname'] . ' - ' . $DetailTrans['terms'],
 									'left');
 
 				$YPos -= $line_height;
 			}
 
-			$DislayTranDate = ConvertSQLDate($DetailTrans['TranDate']);
+			$DislayTranDate = ConvertSQLDate($DetailTrans['trandate']);
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+15, $YPos, 340-$Left_Margin,$FontSize,$DislayTranDate . ' - ' . $DetailTrans['TypeName'] . ' - ' . $DetailTrans['SuppReference'], 'left');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+15, $YPos, 340-$Left_Margin,$FontSize,$DislayTranDate . ' - ' . $DetailTrans['typename'] . ' - ' . $DetailTrans['suppreference'], 'left');
 
 			/*Positive is a favourable */
-			$DiffOnExch = ($DetailTrans['Balance'] / $DetailTrans['Rate']) -  ($DetailTrans['Balance'] / $_POST['ExRate']);
+			$DiffOnExch = ($DetailTrans['balance'] / $DetailTrans['rate']) -  ($DetailTrans['balance'] / $_POST['exrate']);
 
-			$AccumBalance += $DetailTrans['Balance'];
+			$AccumBalance += $DetailTrans['balance'];
 			$AccumDiffOnExch += $DiffOnExch;
 
 
@@ -156,16 +163,16 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 				/*Record the Allocations for later insertion once we have the ID of the payment SuppTrans */
 
-				$Allocs[$AllocCounter] = new Allocation($DetailTrans['ID'],$DetailTrans['Balance']);
+				$Allocs[$AllocCounter] = new Allocation($DetailTrans['id'],$DetailTrans['balance']);
 				$AllocCounter++;
 
 				/*Now update the SuppTrans for the allocation made and the fact that it is now settled */
 
-				$SQL = "UPDATE SuppTrans SET Settled = 1,
-                                     				Alloc = " . $DetailTrans['TranTotal'] . ",
-                                     				DiffOnExch = " . ($DetailTrans['DiffOnExch'] + $DiffOnExch)  . "
-                                 	WHERE Type = " . $DetailTrans['Type'] . '
-					AND TransNo = ' . $DetailTrans['TransNo'];
+				$SQL = "UPDATE supptrans SET settled = 1,
+                                     				alloc = " . $DetailTrans['trantotal'] . ",
+                                     				diffonexch = " . ($DetailTrans['diffonexch'] + $DiffOnExch)  . "
+                                 	WHERE type = " . $DetailTrans['type'] . '
+					AND transno = ' . $DetailTrans['transno'];
 
 				$ProcessResult = DB_query($SQL,$db,'','',false,false);
 				if (DB_error_no($db) !=0) {
@@ -184,7 +191,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 				}
 			}
 
-			$LeftOvers = $pdf->addTextWrap(340, $YPos,60,$FontSize,number_format($DetailTrans["Balance"],2), 'right');
+			$LeftOvers = $pdf->addTextWrap(340, $YPos,60,$FontSize,number_format($DetailTrans['balance'],2), 'right');
 			$LeftOvers = $pdf->addTextWrap(405, $YPos,60,$FontSize,number_format($DiffOnExch,2), 'right');
 
 			$YPos -=$line_height;
@@ -199,7 +206,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 		include('includes/PDFPaymentRun_PymtFooter.php');
 
-		$ProcessResult = DB_query('Commit',$db,'','',false,false);
+		$ProcessResult = DB_query('COMMIT',$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
 			$title = _('Payment Processing - Problem Report') . '.... ';
 			include('includes/header.inc');
@@ -241,7 +248,6 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	include('includes/session.inc');
 	$title=_('Payment Run');
 	include('includes/header.inc');
-	$CompanyRecord = ReadInCompanyRecord($db);
 
 	if (isset($_POST['Currency']) AND !is_numeric($_POST['ExRate'])){
 		echo '<BR>' . _('To process payments for') . ' ' . $_POST['Currency'] . ' ' . _('a numeric exchange rate applicable for purchasing the currency to make the payment with must be entered') . '. ' . _('This rate is used to calculate the difference in exchange and make the necessary postings to the General ledger if linked') . '.';
@@ -268,14 +274,14 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 
 	echo '<TR><TD>' . _('For Suppliers Trading in') . ':</TD><TD><SELECT name="Currency">';
-	$sql = 'SELECT Currency, CurrAbrev FROM Currencies';
+	$sql = 'SELECT currency, currabrev FROM currencies';
 	$result=DB_query($sql,$db);
 
 	while ($myrow=DB_fetch_array($result)){
-	if ($myrow['CurrAbrev'] == $CompanyRecord['CurrencyDefault']){
-			echo '<OPTION SELECTED Value="' . $myrow['CurrAbrev'] . '">' . $myrow['Currency'];
+	if ($myrow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){
+			echo '<OPTION SELECTED Value="' . $myrow['currabrev'] . '">' . $myrow['currency'];
 	} else {
-		echo '<OPTION Value="' . $myrow['CurrAbrev'] . '">' . $myrow['Currency'];
+		echo '<OPTION Value="' . $myrow['currabrev'] . '">' . $myrow['currency'];
 	}
 	}
 	echo '</SELECT></TD></TR>';
@@ -289,7 +295,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
             <TD><INPUT TYPE=text name="ExRate" MAXLENGTH=11 SIZE=12 VALUE=' . $DefaultExRate . '></TD></TR>';
 
 	if (!isset($_POST['AmountsDueBy'])){
-		$DefaultDate = Date($DefaultDateFormat, Mktime(0,0,0,Date('m')+1,0 ,Date('y')));
+		$DefaultDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')+1,0 ,Date('y')));
 	} else {
 		$DefaultDate = $_POST['AmountsDueBy'];
 	}
@@ -297,7 +303,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	echo '<TR><TD>' . _('Payments Due To') . ':</TD>
             <TD><INPUT TYPE=text name="AmountsDueBy" MAXLENGTH=11 SIZE=12 VALUE=' . $DefaultDate . '></TD></TR>';
 
-	$SQL = 'SELECT BankAccountName, AccountCode FROM BankAccounts';
+	$SQL = 'SELECT bankaccountname, accountcode FROM bankaccounts';
 
 	$AccountsResults = DB_query($SQL,$db,'','',false,false);
 
@@ -313,15 +319,16 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 	if (DB_num_rows($AccountsResults)==0){
 		 echo '</SELECT></TD></TR></TABLE><P>' . _('Bank Accounts have not yet been defined. You must first') . ' <A HREF="' . $rootpath . '/BankAccounts.php">' . _('define the bank accounts') . '</A> ' . _('and general ledger accounts to be affected') . '.';
+		 include('includes/footer.inc');
 		 exit;
 	} else {
 		while ($myrow=DB_fetch_array($AccountsResults)){
 		      /*list the bank account names */
 
-			if ($_POST['BankAccount']==$myrow['AccountCode']){
-				echo '<OPTION SELECTED VALUE="' . $myrow['AccountCode'] . '">' . $myrow['BankAccountName'];
+			if ($_POST['BankAccount']==$myrow['accountcode']){
+				echo '<OPTION SELECTED VALUE="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'];
 			} else {
-				echo '<OPTION VALUE="' . $myrow['AccountCode'] . '">' . $myrow['BankAccountName'];
+				echo '<OPTION VALUE="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'];
 			}
 		}
 		echo '</SELECT></TD></TR>';
@@ -356,5 +363,4 @@ Payment types can be modified by editing that file */
 
 	include ('includes/footer.inc');
 } /*end of else not PrintPDF */
-
 ?>

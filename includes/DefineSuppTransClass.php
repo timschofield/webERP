@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /* Definition of the Supplier Transactions class to hold all the information for an accounts payable invoice or credit note
 */
 

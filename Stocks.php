@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 11;
 
@@ -15,6 +15,40 @@ if (isset($_GET['StockID'])){
 } elseif (isset($_POST['StockID'])){
 	$StockID =strtoupper($_POST['StockID']);
 }
+
+
+if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
+	
+	$result    = $_FILES['ItemPicture']['error'];
+ 	$UploadTheFile = 'Yes'; //Assume all is well to start off with
+	$filename = $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg';
+	
+	 //But check for the worst 
+	if (strtoupper(substr(trim($_FILES['ItemPicture']['name']),strlen($_FILES['ItemPicture']['name'])-3))!='JPG'){
+		prnMsg(_('Only jpg files are supported - a file extension of .jpg is expected'),'warn');
+		$UploadTheFile ='No';
+	} elseif ( $_FILES['ItemPicture']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
+		prnMsg(_('The file size is over the maximum allowed. The maximum size allowed in KB is') . ' ' . $_SESSION['MaxImageSize'],'warn');
+		$UploadTheFile ='No';
+	} elseif ( $_FILES['ItemPicture']['type'] == "text/plain" ) {  //File Type Check
+		prnMsg( _('Only graphics files can be uploaded'),'warn');
+         	$UploadTheFile ='No';
+	} elseif (file_exists($filename)){
+		prnMsg(_('Attempting to overwrite an existing item image'),'warn');
+		$result = unlink($filename);
+		if (!$result){
+			prnMsg(_('The existing image could not be removed'),'error');
+			$UploadTheFile ='No';
+		}
+	}
+	
+	if ($UploadTheFile=='Yes'){
+		$result  =  move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $filename);
+		$message = ($result)?_('File url') ."<a href='". $filename ."'>" .  $filename . '</a>' : "Somthing is wrong with uploading a file.";
+	}
+ /* EOR Add Image upload for New Item  - by Ori */
+}
+
 
 if (isset($_POST['submit'])) {
 
@@ -86,14 +120,14 @@ if (isset($_POST['submit'])) {
 			- changes from manufactured or purchased to Dummy, Assembly or Kitset if there is stock			- changes from manufactured, kitset or assembly where a BOM exists
 			*/
 
-			$sql = "SELECT MBflag, Controlled, Serialised FROM StockMaster WHERE StockID = '$StockID'";
+			$sql = "SELECT mbflag, controlled, serialised FROM stockmaster WHERE stockid = '$StockID'";
 			$MBFlagResult = DB_query($sql,$db);
 			$myrow = DB_fetch_row($MBFlagResult);
 			$OldMBFlag = $myrow[0];
 			$OldControlled = $myrow[1];
 			$OldSerialised = $myrow[2];
 
-			$sql = "SELECT Sum(LocStock.Quantity) FROM LocStock WHERE StockID='$StockID'";
+			$sql = "SELECT SUM(locstock.quantity) FROM locstock WHERE stockid='$StockID'";
 			$result = DB_query($sql,$db);
 			$stkqtychk = DB_fetch_row($result);
 
@@ -101,60 +135,62 @@ if (isset($_POST['submit'])) {
 				if (($OldMBFlag == 'M' OR $OldMBFlag=='B') AND ($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K' OR $_POST['MBFlag']=='D')){ /*then need to check that there is no stock holding first */
 					if ($stkqtychk[0]!=0){
 						$InputError=1;
-						echo '<BR>';
 						prnMsg( _('The make or buy flag cannot be changed from') . ' ' . $OldMBFlag . ' ' . _('to') . ' ' . $_POST['MBFlag'] . ' ' . _('where there is a quantity of stock on hand at any location') . '. ' . _('Currently there are') . ' ' . $stkqtychk[0] .  ' ' . _('on hand') , 'errror');
 					}
 
 					if ($_POST['Controlled']==1){
 						$InputError=1;
-						echo '<BR>';
 						prnMsg( _('The make or buy flag cannot be changed from') . ' ' . $OldMBFlag . ' ' . _('to') . ' ' . $_POST['MBFlag'] . ' ' . _('where the item is to be lot controlled') . '. ' . _('Kitset, dummy and assembly items cannot be lot controlled'), 'error');
 					}
 				}
 				/*now check that if the item is being changed to a kitset, there are no items on order sales or purchase orders*/
 				if ($_POST['MBFlag']=='K') {
-					$sql = "SELECT Quantity-QtyInvoiced FROM SalesOrderDetails WHERE StkCode = '$StockID' AND Completed=0";
+					$sql = "SELECT quantity-qtyinvoiced 
+						FROM salesorderdetails 
+						WHERE stkcode = '$StockID' 
+						AND completed=0";
+						
 					$result = DB_query($sql,$db);
 					$ChkSalesOrds = DB_fetch_row($result);
 					if ($ChkSalesOrds[0]!=0){
 						$InputError = 1;
-						echo '<BR>';
 						prnMsg( _('The make or buy flag cannot be changed to a kitset where there is a quantity outstanding to be delivered on sales orders') . '. ' . _('Currently there are') .' ' . $ChkSalesOrds[0] . ' '. _('outstanding'), 'error');
 					}
 				}
 				/*now check that if it is to be a kitset or assembly or dummy there is no quantity on purchase orders outstanding*/
 				if ($_POST['MBFlag']=='K' OR $_POST['MBFlag']=='A' OR $_POST['MBFlag']=='D') {
 
-					$sql = "SELECT QuantityOrd-QuantityRecd FROM PurchOrderDetails WHERE ItemCode = '$StockID' AND Completed=0";
+					$sql = "SELECT quantityord-quantityrecd 
+						FROM purchorderdetails 
+						WHERE itemcode = '$StockID' 
+						AND completed=0";
+						
 					$result = DB_query($sql,$db);
 					$ChkPurchOrds = DB_fetch_row($result);
 					if ($ChkPurchOrds[0]!=0){
 						$InputError = 1;
-						echo '<BR>';
 						prnMsg( _('The make or buy flag cannot be changed to'). ' ' . $_POST['MBFlag'] . ' '. _('where there is a quantity outstanding to be received on purchase orders') . '. ' . _('Currently there are'). ' ' . $ChkPurchOrds[0] . ' '. _('yet to be received'). 'error');
 					}
 				}
 				/*now check that if it is was a Manufactured, Kitset or Assembly and is being changed to a purchased or dummy - that no BOM exists */
 
 				if (($OldMBFlag=='M' OR $OldMBFlag =='K' OR $OldMBFlag=='A') AND ($_POST['MBFlag']=='B' OR $_POST['MBFlag']=='D')) {
-					$sql = "SELECT Count(*) FROM BOM WHERE Parent = '$StockID'";
+					$sql = "SELECT COUNT(*) FROM bom WHERE parent = '$StockID'";
 					$result = DB_query($sql,$db);
 					$ChkBOM = DB_fetch_row($result);
 					if ($ChkBOM[0]!=0){
 						$InputError = 1;
-						echo '<BR>';
 						prnMsg( _('The make or buy flag cannot be changed from manufactured, kitset or assembly to'). ' ' . $_POST['MBFlag'] . ' '. _('where there is a bill of material set up for the item') . '. ' . _('Bills of material are not appropriate for purchased or dummy items'), 'error');
 					}
 				}
 
 				/*now check that if it was Manufac or Purchased and is being changed to assembly or kitset, it is not a component on an existing BOM */
 				if (($OldMBFlag=='M' OR $OldMBFlag =='B' OR $OldMBFlag=='D') AND ($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K')) {
-					$sql = "SELECT Count(*) FROM BOM WHERE Component = '$StockID'";
+					$sql = "SELECT COUNT(*) FROM bom WHERE component = '$StockID'";
 					$result = DB_query($sql,$db);
 					$ChkBOM = DB_fetch_row($result);
 					if ($ChkBOM[0]!=0){
 						$InputError = 1;
-						echo '<BR>';
 						prnMsg( _('The make or buy flag cannot be changed from manufactured, purchased or dummy to a kitset or assembly where the item is a component in a bill of material') . '. ' . _('Assembly and kitset items are not appropriate as componennts in a bill of materials'), 'error');
 					}
 				}
@@ -164,69 +200,66 @@ if (isset($_POST['submit'])) {
 
 			if ($OldControlled != $_POST['Controlled'] AND $stkqtychk[0]!=0){
 				$InputError=1;
-				echo '<BR>';
 				prnMsg( _('You can not change a Non-Controlled Item to Controlled (or back from Controlled to non-controlled when there is currently stock on hand for the item') , 'error');
 
 			}
 			if ($OldSerialised != $_POST['Serialised'] AND $stkqtychk[0]!=0){
 				$InputError=1;
-				echo '<BR>';
 				prnMsg( _('You can not change a Serialised Item to Non-Serialised (or visa-versa) when there is a quantity on hand for the item') , 'error');
 			}
 
 
 			if ($InputError == 0){
-				$sql = "UPDATE StockMaster
-						SET LongDescription='" . $_POST['LongDescription'] . "',
-							Description='" . $_POST['Description'] . "',
-							Discontinued=" . $_POST['Discontinued'] . ",
-							Controlled=" . $_POST['Controlled'] . ",
-							Serialised=" . $_POST['Serialised'].",
-							CategoryID='" . $_POST['CategoryID'] . "',
-							Units='" . $_POST['Units'] . "',
-							MBflag='" . $_POST['MBFlag'] . "',
-							EOQ=" . $_POST['EOQ'] . ",
-							Volume=" . $_POST['Volume'] . ",
-							KGS=" . $_POST['KGS'] . ",
-							BarCode='" . $_POST['BarCode'] . "',
-							DiscountCategory='" . $_POST['DiscountCategory'] . "',
-							TaxLevel=" . $_POST['TaxLevel'] . ",
-							DecimalPlaces=" . $_POST['DecimalPlaces'] . "
-					WHERE StockID='$StockID'";
+				$sql = "UPDATE stockmaster
+						SET longdescription='" . DB_escape_string($_POST['LongDescription']) . "',
+							description='" . DB_escape_string($_POST['Description']) . "',
+							discontinued=" . $_POST['Discontinued'] . ",
+							controlled=" . $_POST['Controlled'] . ",
+							serialised=" . $_POST['Serialised'].",
+							categoryid='" . $_POST['CategoryID'] . "',
+							units='" . DB_escape_string($_POST['Units']) . "',
+							mbflag='" . $_POST['MBFlag'] . "',
+							eoq=" . $_POST['EOQ'] . ",
+							volume=" . $_POST['Volume'] . ",
+							kgs=" . $_POST['KGS'] . ",
+							barcode='" . $_POST['BarCode'] . "',
+							discountcategory='" . $_POST['DiscountCategory'] . "',
+							taxlevel=" . $_POST['TaxLevel'] . ",
+							decimalplaces=" . $_POST['DecimalPlaces'] . "
+					WHERE stockid='$StockID'";
 
 
 				$ErrMsg = _('The stock item could not be updated because');
 				$DbgMsg = _('The SQL that was used to update the stock item and failed was');
 				$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-				echo '<BR>';
 				prnMsg( _('Stock Item') . ' ' . $StockID . ' ' . _('has been updated'), 'success');
 			}
 
 		} else { //it is a NEW part
 
-			$sql = "INSERT INTO StockMaster (
-						StockID,
-						Description,
-						LongDescription,
-						CategoryID,
-						Units,
-						MBFlag,
-						EOQ,
-						Discontinued,
-						Controlled,
-						Serialised,
-						Volume,
-						KGS,
-						BarCode,
-						DiscountCategory,
-						TaxLevel,
-						DecimalPlaces)
+			$sql = "INSERT INTO stockmaster (
+						stockid,
+						description,
+						longdescription,
+						categoryid,
+						units,
+						mbflag,
+						eoq,
+						discontinued,
+						controlled,
+						serialised,
+						volume,
+						kgs,
+						barcode,
+						discountcategory,
+						taxlevel,
+						decimalplaces)
 					VALUES ('$StockID',
-						'" . $_POST['Description'] . "',
-						'" . $_POST['LongDescription'] . "',
+						'" . DB_escape_string($_POST['Description']) . "',
+						'" . DB_escape_string($_POST['LongDescription']) . "',
 						'" . $_POST['CategoryID'] . "',
-						'" . $_POST['Units'] . "',
+						'" . DB_escape_string($_POST['Units']) . "',
 						'" . $_POST['MBFlag'] . "',
 						" . $_POST['EOQ'] . ",
 						" . $_POST['Discontinued'] . ",
@@ -235,7 +268,7 @@ if (isset($_POST['submit'])) {
 						" . $_POST['Volume'] . ",
 						" . $_POST['KGS'] . ",
 						'" . $_POST['BarCode'] . "',
-						'" . $_POST[', DiscountCategory'] . "',
+						'" . $_POST['DiscountCategory'] . "',
 						" . $_POST['TaxLevel'] . ",
 						" . $_POST['DecimalPlaces']. "
 						)";
@@ -245,11 +278,11 @@ if (isset($_POST['submit'])) {
 			$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 			if (DB_error_no($db) ==0) {
 
-				$sql = "INSERT INTO LocStock (LocCode,
-								StockID)
-						SELECT Locations.LocCode,
+				$sql = "INSERT INTO locstock (loccode,
+								stockid)
+						SELECT locations.loccode,
 							'" . $StockID . "'
-						FROM Locations";
+						FROM locations";
 
 				$ErrMsg =  _('The locations for the item') . ' ' . $myrow[0] .  ' ' . _('could not be added because');
 				$DbgMsg = _('NB Locations records can be added by opening the utility page') . ' <i>Z_MakeStockLocns.php</i> ' . _('The SQL that was used to add the location records that failed was');
@@ -278,13 +311,19 @@ if (isset($_POST['submit'])) {
 		}
 		/*Check for a new TaxLevel and insert new records in TaxAuthLevels as necessary */
 
-		$result = DB_query("SELECT TaxAuthority FROM TaxAuthLevels WHERE Level=" . $_POST['TaxLevel'] ,$db);
+		$result = DB_query("SELECT taxauthority FROM taxauthlevels WHERE level=" . $_POST['TaxLevel'] ,$db);
 		if (DB_num_rows($result)==0){ /*need to add the new level accross all TaxAuthorities */
 
-			$DispTaxAuthResult = DB_query('SELECT DISTINCT TaxAuthority FROM Locations',$db);
+			$DispTaxAuthResult = DB_query('SELECT DISTINCT taxauthority FROM locations',$db);
 
 			while ($DispTaxAuthRow = DB_fetch_row($DispTaxAuthResult)){
-				$sql = 'INSERT INTO TaxAuthLevels (TaxAuthority, DispatchTaxAuthority, Level) SELECT TaxID, ' . $DispTaxAuthRow[0] . ', ' . $_POST['TaxLevel'] . ' FROM TaxAuthorities';
+				$sql = 'INSERT INTO taxauthlevels (taxauthority, 
+								dispatchtaxauthority, 
+								level) 
+						SELECT taxid,
+							 ' . $DispTaxAuthRow[0] . ', 
+							 ' . $_POST['TaxLevel'] . ' 
+						FROM taxauthorities';
 				$InsertResult = DB_query($sql,$db);
 			}
 		}
@@ -301,53 +340,53 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'StockMoves'
 
-	$sql= "SELECT COUNT(*) FROM StockMoves WHERE StockID='$StockID'";
+	$sql= "SELECT COUNT(*) FROM stockmoves WHERE stockid='$StockID'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		$CancelDelete = 1;
-		echo '<BR>' . _('Cannot delete this stock item because there are stock movements that refer to this item');
+		prnMsg( _('Cannot delete this stock item because there are stock movements that refer to this item'),'warn');
 		echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock movements that refer to this item');
 
 	} else {
-		$sql= "SELECT COUNT(*) FROM BOM WHERE Component='$StockID'";
+		$sql= "SELECT COUNT(*) FROM bom WHERE component='$StockID'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			$CancelDelete = 1;
-			echo '<BR>' . _('Cannot delete this item record because there are bills of material that require this part as a component');
+			prnMsg( _('Cannot delete this item record because there are bills of material that require this part as a component'),'warn');
 			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('bills of material that require this part as a component');
 		} else {
-			$sql= "SELECT COUNT(*) FROM SalesOrderDetails WHERE StkCode='$StockID'";
+			$sql= "SELECT COUNT(*) FROM salesorderdetails WHERE stkcode='$StockID'";
 			$result = DB_query($sql,$db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]>0) {
 				$CancelDelete = 1;
-				echo '<BR>' . _('Cannot delete this item record because there are existing sales orders for this part');
+				prnMsg( _('Cannot delete this item record because there are existing sales orders for this part'),'warn');
 				echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales order items against this part');
 			} else {
-				$sql= "SELECT COUNT(*) FROM SalesAnalysis WHERE StockID='$StockID'";
+				$sql= "SELECT COUNT(*) FROM salesanalysis WHERE stockid='$StockID'";
 				$result = DB_query($sql,$db);
 				$myrow = DB_fetch_row($result);
 				if ($myrow[0]>0) {
 					$CancelDelete = 1;
-					echo '<BR>'. _('Cannot delete this item because sales analysis records exist for it');
+					prnMsg(_('Cannot delete this item because sales analysis records exist for it'),'warn');
 					echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records against this part');
 				} else {
-					$sql= "SELECT COUNT(*) FROM PurchOrderDetails WHERE ItemCode='$StockID'";
+					$sql= "SELECT COUNT(*) FROM purchorderdetails WHERE itemcode='$StockID'";
 					$result = DB_query($sql,$db);
 					$myrow = DB_fetch_row($result);
 					if ($myrow[0]>0) {
 						$CancelDelete = 1;
-						echo '<BR>' . _('Cannot delete this item because there are existing purchase order items for it');
+						prnMsg(_('Cannot delete this item because there are existing purchase order items for it'),'warn');
 						echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('purchase order item record relating to this part');
 					} else {
-						$sql = "SELECT Sum(Quantity) AS QOH FROM LocStock WHERE StockID='$StockID'";
+						$sql = "SELECT SUM(quantity) AS qoh FROM locstock WHERE stockid='$StockID'";
 						$result = DB_query($sql,$db);
 						$myrow = DB_fetch_row($result);
 						if ($myrow[0]!=0) {
 							$CancelDelete = 1;
-							echo '<BR>' . _('Cannot delete this item because there is currently some stock on hand');
+							prnMsg( _('Cannot delete this item because there is currently some stock on hand'),'warn');
 							echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('on hand for this part');
 						}
 					}
@@ -360,23 +399,23 @@ if (isset($_POST['submit'])) {
 		$result = DB_query('BEGIN', $db);
 
 			/*Deletes LocStock records*/
-			$sql ="DELETE FROM LocStock WHERE StockID='$StockID'";
+			$sql ="DELETE FROM locstock WHERE stockid='$StockID'";
 			$result=DB_query($sql,$db,_('Could not delete the location stock records because'),'',true);
 			/*and cascade deletes in PurchData */
-			$sql ="DELETE FROM PurchData WHERE StockID='$StockID'";
+			$sql ="DELETE FROM purchdata WHERE stockid='$StockID'";
 			$result=DB_query($sql,$db,_('Could not delete the purchasing data because'),'',true);
 			/*and cascade delete the bill of material if any */
-			$sql = "DELETE FROM BOM WHERE Parent='$StockID'";
+			$sql = "DELETE FROM bom WHERE parent='$StockID'";
 			$result=DB_query($sql,$db,_('Could not delete the bill of material because'),'',true);
-			$sql="DELETE FROM StockMaster WHERE StockID='$StockID'";
+			$sql="DELETE FROM stockmaster WHERE stockid='$StockID'";
 			$result=DB_query($sql,$db, _('Could not delete the item record'),'',true);
 
 		$result = DB_query('COMMIT', $db);
 
-		echo '<BR>' . _('Deleted the stock master record for') . ' ' . $StockID . '....' . '<BR>';
-		echo '<BR>. . ' . _('and all the location stock records set up for the part') . '<BR>';
-		echo '<BR>. . .' . _('and any bill of material that may have been set up for the part') . '<BR>';
-		echo '<BR> . . . .' . _('and any purchasing data that may have been set up for the part') . '<BR>';
+		prnMsg(_('Deleted the stock master record for') . ' ' . $StockID . '....' . 
+		'<BR>. . ' . _('and all the location stock records set up for the part') .
+		'<BR>. . .' . _('and any bill of material that may have been set up for the part') . 
+		'<BR> . . . .' . _('and any purchasing data that may have been set up for the part'),'success');
 		unset($_POST['LongDescription']);
 		unset($_POST['Description']);
 		unset($_POST['EOQ']);
@@ -402,80 +441,92 @@ if (isset($_POST['submit'])) {
 }
 
 
-echo '<FORM METHOD="POST" action="' . $_SERVER['PHP_SELF'] . '?' .SID .'"><CENTER><TABLE>';
+echo '<FORM ENCTYPE="MULTIPART/FORM-DATA" METHOD="POST" ACTION="' . $_SERVER['PHP_SELF'] . '?' .SID .'"><CENTER><TABLE>
+	<TR><TD><TABLE>'; //Nested table
 
 if (!isset($StockID) OR isset($_POST['New'])) {
 
 /*If the page was called without $StockID passed to page then assume a new stock item is to be entered show a form with a part Code field other wise the form showing the fields with the existing entries against the part will show for editing with only a hidden StockID field. New is set to flag that the page may have called itself and still be entering a new part, in which case the page needs to know not to go looking up details for an existing part*/
 
-	echo '<input type="Hidden" name="New" value="Yes">';
+	echo '<INPUT TYPE="HIDDEN" NAME="New" VALUE="Yes">';
 
-	echo '<TR><TD>'. _('Item Code'). ':</TD><TD><input type="Text" name="StockID" SIZE=21 MAXLENGTH=20 Value="'.$StockID.'"></TD></TR>';
+	echo '<TR><TD>'. _('Item Code'). ':</TD><TD><INPUT TYPE="TEXT" NAME="StockID" SIZE=21 MAXLENGTH=20 Value="'.$StockID.'"></TD></TR>';
 
-} else { // Must be modifying an existing item
+} elseif (!isset($_POST['submit'])) { // Must be modifying an existing item and no changes made yet
 
-	$sql = "SELECT StockID,
-			Description,
-			LongDescription,
-			CategoryID,
-			Units,
-			MBFlag,
-			Discontinued,
-			Controlled,
-			Serialised,
-			EOQ,
-			Volume,
-			KGS,
-			BarCode,
-			DiscountCategory,
-			TaxLevel,
-			DecimalPlaces
-		FROM StockMaster
-		WHERE StockID = '$StockID'";
+	$sql = "SELECT stockid,
+			description,
+			longdescription,
+			categoryid,
+			units,
+			mbflag,
+			discontinued,
+			controlled,
+			serialised,
+			eoq,
+			volume,
+			kgs,
+			barcode,
+			discountcategory,
+			taxlevel,
+			decimalplaces
+		FROM stockmaster
+		WHERE stockid = '$StockID'";
 
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
 
-	$_POST['LongDescription'] = $myrow['LongDescription'];
-	$_POST['Description'] = $myrow['Description'];
-	$_POST['EOQ']  = $myrow['EOQ'];
-	$_POST['CategoryID']  = $myrow['CategoryID'];
-	$_POST['Units']  = $myrow['Units'];
-	$_POST['MBFlag']  = $myrow['MBFlag'];
-	$_POST['Discontinued']  = $myrow['Discontinued'];
-	$_POST['Controlled']  = $myrow['Controlled'];
-	$_POST['Serialised']  = $myrow['Serialised'];
-	$_POST['Volume']  = $myrow['Volume'];
-	$_POST['KGS']  = $myrow['KGS'];
-	$_POST['BarCode']  = $myrow['BarCode'];
-	$_POST['ReorderLevel']  = $myrow['ReorderLevel'];
-	$_POST['DiscountCategory']  = $myrow['DiscountCategory'];
-	$_POST['TaxLevel'] = $myrow['TaxLevel'];
-	$_POST['DecimalPlaces'] = $myrow['DecimalPlaces'];
+	$_POST['LongDescription'] = $myrow['longdescription'];
+	$_POST['Description'] = $myrow['description'];
+	$_POST['EOQ']  = $myrow['eoq'];
+	$_POST['CategoryID']  = $myrow['categoryid'];
+	$_POST['Units']  = $myrow['units'];
+	$_POST['MBFlag']  = $myrow['mbflag'];
+	$_POST['Discontinued']  = $myrow['discontinued'];
+	$_POST['Controlled']  = $myrow['controlled'];
+	$_POST['Serialised']  = $myrow['serialised'];
+	$_POST['Volume']  = $myrow['volume'];
+	$_POST['KGS']  = $myrow['kgs'];
+	$_POST['BarCode']  = $myrow['barcode'];
+	$_POST['ReorderLevel']  = $myrow['reorderlevel'];
+	$_POST['DiscountCategory']  = $myrow['discountcategory'];
+	$_POST['TaxLevel'] = $myrow['taxlevel'];
+	$_POST['DecimalPlaces'] = $myrow['decimalplaces'];
 
 	echo '<TR><TD>' . _('Item Code') . ':</TD><TD>'.$StockID.'</TD></TR>';
 	echo "<input type='Hidden' name='StockID' value='$StockID'>";
-
+	
+} else { // some changes were made to the data so don't re-set form variables to DB ie the code above
+	echo '<TR><TD>' . _('Item Code') . ':</TD><TD>'.$StockID.'</TD></TR>';
+	echo "<input type='Hidden' name='StockID' value='$StockID'>";
 }
+	
 
 echo '<TR><TD>' . _('Part Description') . ' (' . _('short') . '):</TD><TD><input type="Text" name="Description" SIZE=52 MAXLENGTH=50 value="' . $_POST['Description'] . '"></TD></TR>';
 
 echo '<TR><TD>' . _('Part Description') . ' (' . _('long') . '):</TD><TD><textarea name="LongDescription" cols=40 rows=4>' . $_POST['LongDescription'] . '</textarea></TD></TR>';
 
+// Add image upload for New Item  - by Ori
+echo '<TR><TD>'. _('Image File (.jpg)') . ':</TD><TD><input type="file" id="ItemPicture" name="ItemPicture"></TD></TR>';
+// EOR Add Image upload for New Item  - by Ori
+
 echo '<TR><TD>' . _('Category') . ':</TD><TD><SELECT name=CategoryID>';
 
-$sql = "SELECT CategoryID, CategoryDescription FROM StockCategory";
+$sql = "SELECT categoryid, categorydescription FROM stockcategory";
 $ErrMsg = _('The stock categories could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve stock categories and failed was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 while ($myrow=DB_fetch_array($result)){
-	if ($myrow['CategoryID']==$_POST['CategoryID']){
-		echo '<OPTION SELECTED VALUE="'. $myrow['CategoryID'] . '">' . $myrow['CategoryDescription'];
+	if ($myrow['categoryid']==$_POST['CategoryID']){
+		echo '<OPTION SELECTED VALUE="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'];
 	} else {
-		echo '<OPTION VALUE="'. $myrow['CategoryID'] . '">' . $myrow['CategoryDescription'];
+		echo '<OPTION VALUE="'. $myrow['categoryid'] . '">' . $myrow['categorydescription'];
 	}
 }
+
+echo '</SELECT><a target="_blank" href="'. $rootpath . '/StockCategories.php?' . SID . '">' . _('Add or Modify Stock Categories') . '</a></TD></TR>';
+
 
 if ($_POST['EOQ']=='' or !isset($_POST['EOQ'])){
     $_POST['EOQ']=0;
@@ -500,10 +551,8 @@ if ($_POST['Discontinued']=='' OR !isset($_POST['Discontinued'])){
     $_POST['Discontinued']=0;
 }
 
-echo '</SELECT><a target="_blank" href="'. $rootpath . '/StockCategories.php?' . SID . '">' . _('Add or Modify Stock Categories') . '</a>';
 
-
-echo '</TR><TR><TD>' . _('Economic Order Quantity') . ':</TD><TD><input type="Text" name="EOQ" SIZE=12 MAXLENGTH=10 Value="' . $_POST['EOQ'] . '"></TD></TR>';
+echo '<TR><TD>' . _('Economic Order Quantity') . ':</TD><TD><input type="Text" name="EOQ" SIZE=12 MAXLENGTH=10 Value="' . $_POST['EOQ'] . '"></TD></TR>';
 
 echo '<TR><TD>' . _('Packaged Volume (metres cubed)') . ':</TD><TD><input type="Text" name="Volume" SIZE=12 MAXLENGTH=10 value="' . $_POST['Volume'] . '"></TD></TR>';
 
@@ -511,17 +560,18 @@ echo '<TR><TD>' . _('Packaged Weight (KGs)') . ':</TD><TD><input type="Text" nam
 
 echo '<TR><TD>' . _('Units of Measure') . ':</TD><TD><SELECT name="Units">';
 
-/* The array StockUnits is set up in config.php for user modification
-possible units of measure can added or modifying the array definition by editing that file */
 
-foreach ($StockUnits as $UOM) {
+$sql = 'SELECT unitname FROM unitsofmeasure ORDER by unitname';
+$UOMResult = DB_query($sql,$db);
 
-     if ($_POST['Units']==$UOM){
-	    echo "<OPTION SELECTED Value='$UOM'>$UOM";
+while( $UOMrow = DB_fetch_array($UOMResult) ) {
+     if ($_POST['Units']==$UOMrow['unitname']){
+	    echo "<OPTION SELECTED Value='" . $UOMrow['unitname'] . "'>" . $UOMrow['unitname'];
      } else {
-	    echo "<OPTION Value='$UOM'>$UOM";
+	    echo "<OPTION Value='" . $UOMrow['unitname'] . "'>" . $UOMrow['unitname'];
      }
 }
+
 echo '</SELECT></TD></TR>';
 
 echo '<TR><TD>' . _('Make, Buy, Kit, Assembly or Dummy Part') . ':</TD><TD><SELECT name="MBFlag">';
@@ -607,7 +657,7 @@ if (!isset($_POST['TaxLevel'])){
 
 echo '<TR><TD>' . _('Tax Level') . ':</TD><TD><input type="Text" name="TaxLevel" SIZE=1 MAXLENGTH=1 value="' . $_POST['TaxLevel'] . '"></TD></TR>';
 
-echo '</TABLE><CENTER><P>';
+echo '</TABLE></TD><TD><CENTER>' . _('Image') . '<BR><img src=' . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg' . '>' . '</CENTER></TD></TR></TABLE>';
 
 if (isset($_POST['New']) OR $_POST['New']!="") {
 	echo '<input type="Submit" name="submit" value="' . _('Insert New Item') . '">';
@@ -621,6 +671,6 @@ if (isset($_POST['New']) OR $_POST['New']!="") {
 
 }
 
-echo '</form>';
+echo '</FORM></CENTER>';
 include('includes/footer.inc');
 ?>

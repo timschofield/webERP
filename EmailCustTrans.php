@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 2;
 
@@ -37,12 +37,12 @@ echo "<INPUT TYPE=HIDDEN NAME='InvOrCredit' VALUE=" . $_GET['InvOrCredit'] . '>'
 echo '<CENTER><P><TABLE>';
 
 
-$SQL = "SELECT Email
-		FROM CustBranch INNER JOIN DebtorTrans
-			ON CustBranch.DebtorNo= DebtorTrans.DebtorNo
-			AND CustBranch.BranchCode=DebtorTrans.BranchCode
-	WHERE DebtorTrans.Type=$TypeCode
-	AND DebtorTrans.TransNo=" .$_GET['FromTransNo'];
+$SQL = "SELECT email
+		FROM custbranch INNER JOIN debtortrans
+			ON custbranch.debtorno= debtortrans.debtorno
+			AND custbranch.branchcode=debtortrans.branchcode
+	WHERE debtortrans.type=$TypeCode
+	AND debtortrans.transno=" .$_GET['FromTransNo'];
 
 $ErrMsg = _('There was a problem retrieving the contact details for the customer');
 $ContactResult=DB_query($SQL,$db,$ErrMsg);

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /* Script to delete all supplier payments entered or created from a payment run on a specified day
  */
 $PageSecurity=15;

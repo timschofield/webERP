@@ -2,7 +2,7 @@
 include('includes/DateFunctions.inc');
 $PageSecurity = 2;
 
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 
 If (isset($_POST['PrintPDF'])
@@ -24,32 +24,33 @@ If (isset($_POST['PrintPDF'])
 
 	/*Get the date of the last day in the period selected */
 
-	$SQL = 'SELECT LastDate_In_Period FROM Periods WHERE PeriodNo = ' . $_POST['PeriodEnd'];
+	$SQL = 'SELECT lastdate_in_period FROM periods WHERE periodno = ' . $_POST['PeriodEnd'];
 	$PeriodEndResult = DB_query($SQL,$db,_('Could not get the date of the last day in the period selected'));
 	$PeriodRow = DB_fetch_row($PeriodEndResult);
 	$PeriodEndDate = ConvertSQLDate($PeriodRow[0]);
 
       /*Now figure out the aged analysis for the customer range under review */
 
-	$SQL = 'SELECT DebtorsMaster.DebtorNo,
-			DebtorsMaster.Name,
-  			Currencies.Currency,
-			Sum((DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight + DebtorTrans.OvDiscount - DebtorTrans.Alloc)/DebtorTrans.Rate) AS Balance,
-			Sum(DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight + DebtorTrans.OvDiscount - DebtorTrans.Alloc) AS FXBalance,
-			Sum(CASE WHEN DebtorTrans.Prd > ' . $_POST['PeriodEnd'] . ' THEN
-	(DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight + DebtorTrans.OvDiscount)/DebtorTrans.Rate ELSE 0 END)
-	 AS AfterDateTrans,
-			Sum(CASE WHEN DebtorTrans.Prd > ' . $_POST['PeriodEnd'] . " THEN
-	DebtorTrans.OvAmount + DebtorTrans.OvGST + DebtorTrans.OvFreight + DebtorTrans.OvDiscount ELSE 0 END
-	) AS FXAfterDateTrans
-	FROM DebtorsMaster,
-		Currencies,
-		DebtorTrans
-	WHERE DebtorsMaster.CurrCode = Currencies.CurrAbrev
-		AND DebtorsMaster.DebtorNo = DebtorTrans.DebtorNo
-		AND DebtorsMaster.DebtorNo >= '" . $_POST['FromCriteria'] . "'
-		AND DebtorsMaster.DebtorNo <= '" . $_POST['ToCriteria'] . "'
-	GROUP BY DebtorsMaster.DebtorNo, DebtorsMaster.Name, Currencies.Currency";
+	$SQL = 'SELECT debtorsmaster.debtorno,
+			debtorsmaster.name,
+  			currencies.currency,
+			SUM((debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc)/debtortrans.rate) AS balance,
+			SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) AS fxbalance,
+			SUM(CASE WHEN debtortrans.prd > ' . $_POST['PeriodEnd'] . ' THEN
+			(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount)/debtortrans.rate ELSE 0 END) AS afterdatetrans,
+			SUM(CASE WHEN debtortrans.prd > ' . $_POST['PeriodEnd'] . " THEN
+			debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount ELSE 0 END
+			) AS fxafterdatetrans
+			FROM debtorsmaster,
+				currencies,
+				debtortrans
+			WHERE debtorsmaster.currcode = currencies.currabrev
+			AND debtorsmaster.debtorno = debtortrans.debtorno
+			AND debtorsmaster.debtorno >= '" . $_POST['FromCriteria'] . "'
+			AND debtorsmaster.debtorno <= '" . $_POST['ToCriteria'] . "'
+			GROUP BY debtorsmaster.debtorno, 
+				debtorsmaster.name, 
+				currencies.currency";
 
 	$CustomerResult = DB_query($SQL,$db,'','',false,false);
 
@@ -71,20 +72,20 @@ If (isset($_POST['PrintPDF'])
 
 	While ($DebtorBalances = DB_fetch_array($CustomerResult,$db)){
 
-		$Balance = $DebtorBalances['Balance'] - $DebtorBalances['AfterDateTrans'];
-		$FXBalance = $DebtorBalances['FXBalance'] - $DebtorBalances['FXAfterDateTrans'];
+		$Balance = $DebtorBalances['balance'] - $DebtorBalances['afterdatetrans'];
+		$FXBalance = $DebtorBalances['fxbalance'] - $DebtorBalances['fxafterdatetrans'];
 
 		if (ABS($Balance)>0.009 OR ABS($FXBalance)>0.009) {
 
-			$DisplayBalance = number_format($DebtorBalances['Balance'] - $DebtorBalances['AfterDateTrans'],2);
-			$DisplayFXBalance = number_format($DebtorBalances['FXBalance'] - $DebtorBalances['FXAfterDateTrans'],2);
+			$DisplayBalance = number_format($DebtorBalances['balance'] - $DebtorBalances['afterdatetrans'],2);
+			$DisplayFXBalance = number_format($DebtorBalances['fxbalance'] - $DebtorBalances['fxafterdatetrans'],2);
 
 			$TotBal += $Balance;
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,220-$Left_Margin,$FontSize,$DebtorBalances['DebtorNo'] . ' - ' . $DebtorBalances['Name'],'left');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,220-$Left_Margin,$FontSize,$DebtorBalances['debtorno'] . ' - ' . $DebtorBalances['name'],'left');
 			$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayBalance,'right');
 			$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayFXBalance,'right');
-			$LeftOvers = $pdf->addTextWrap(350,$YPos,100,$FontSize,$DebtorBalances['Currency'],'left');
+			$LeftOvers = $pdf->addTextWrap(350,$YPos,100,$FontSize,$DebtorBalances['currency'],'left');
 
 
 			$YPos -=$line_height;
@@ -121,10 +122,6 @@ If (isset($_POST['PrintPDF'])
 	include('includes/session.inc');
 	$title=_('Debtor Balances');
 	include('includes/header.inc');
-	include('includes/SQL_CommonFunctions.inc');
-
-	$CompanyRecord = ReadInCompanyRecord($db);
-
 
 	if (strlen($_POST['FromCriteria'])<1 || strlen($_POST['ToCriteria'])<1) {
 
@@ -137,12 +134,12 @@ If (isset($_POST['PrintPDF'])
 
 		echo '<TR><TD>' . _('Balances As At') . ":</TD><TD><SELECT Name='PeriodEnd'>";
 
-		$sql = 'SELECT PeriodNo, LastDate_In_Period FROM Periods';
+		$sql = 'SELECT periodno, lastdate_in_period FROM periods';
 		$Periods = DB_query($sql,$db,_('Could not retrieve period data because'),_('The SQL that failed to get the period data was'));
 
 		while ($myrow = DB_fetch_array($Periods,$db)){
 
-			echo '<OPTION VALUE=' . $myrow['PeriodNo'] . '>' . MonthAndYearFromSQLDate($myrow['LastDate_In_Period']);
+			echo '<OPTION VALUE=' . $myrow['periodno'] . '>' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
 
 		}
 	}

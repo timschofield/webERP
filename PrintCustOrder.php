@@ -1,54 +1,54 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 2;
 
+include('includes/class.pdf.php');
 include('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/DateFunctions.inc');
-include('includes/class.pdf.php');
 
 //Get Out if we have no order number to work with
 If (!isset($_GET['TransNo']) || $_GET['TransNo']==""){
 	$title = _('Select Order To Print');
 	include('includes/header.inc');
-	echo '<div align=center><br><br><br>';
+	echo '<DIV ALIGN=CENTER><BR><BR><BR>';
 	prnMsg( _('Select an Order Number to Print before calling this page') , 'error');
-	echo '<BR><BR><BR><table class="table_index"><tr><td class="menu_group_item">
-		<li><a href="'. $rootpath . '/SelectSalesOrder.php?'. SID .'">' . _('Outstanding Sales Orders') . '</a></li>
-		<li><a href="'. $rootpath . '/SelectCompletedOrder.php?'. SID .'">' . _('Completed Sales Orders') . '</a></li>
-		</td></tr></table></DIV><BR><BR><BR>';
+	echo '<BR><BR><BR><table class="table_index"><TR><TD CLASS="menu_group_item">
+		<LI><A HREF="'. $rootpath . '/SelectSalesOrder.php?'. SID .'">' . _('Outstanding Sales Orders') . '</A></LI>
+		<LI><A HREF="'. $rootpath . '/SelectCompletedOrder.php?'. SID .'">' . _('Completed Sales Orders') . '</A></LI>
+		</TD></TR></TABLE></DIV><BR><BR><BR>';
 	include('includes/footer.inc');
-	exit();
+	exit;
 }
 
 /*retrieve the order details from the database to print */
 $ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
-$sql = "SELECT CustomerRef,
-		Comments,
-		OrdDate,
-		DeliverTo,
-		SalesOrders.DelAdd1,
-		SalesOrders.DelAdd2,
-		SalesOrders.DelAdd3,
-		SalesOrders.DelAdd4,
-		SalesOrders.DebtorNo,
-		SalesOrders.BranchCode,
-		DebtorsMaster.Name,
-		DebtorsMaster.Address1,
-		DebtorsMaster.Address2,
-		DebtorsMaster.Address3,
-		DebtorsMaster.Address4,
-		ShipperName,
-		PrintedPackingSlip,
-		DatePackingSlipPrinted,
-		LocationName
-	FROM SalesOrders INNER JOIN DebtorsMaster
-		ON SalesOrders.DebtorNo=DebtorsMaster.DebtorNo
-	INNER JOIN Shippers
-		ON SalesOrders.ShipVia=Shippers.Shipper_ID
-	INNER JOIN Locations
-		ON SalesOrders.FromStkLoc=Locations.LocCode
-	WHERE SalesOrders.OrderNo=" . $_GET['TransNo'];
+$sql = "SELECT salesorders.customerref,
+		salesorders.comments,
+		salesorders.orddate,
+		salesorders.deliverto,
+		salesorders.deladd1,
+		salesorders.deladd2,
+		salesorders.deladd3,
+		salesorders.deladd4,
+		salesorders.debtorno,
+		salesorders.branchcode,
+		debtorsmaster.name,
+		debtorsmaster.address1,
+		debtorsmaster.address2,
+		debtorsmaster.address3,
+		debtorsmaster.address4,
+		shippers.shippername,
+		salesorders.printedpackingslip,
+		salesorders.datepackingslipprinted,
+		locations.locationname
+	FROM salesorders INNER JOIN debtorsmaster
+		ON salesorders.debtorno=debtorsmaster.debtorno
+	INNER JOIN shippers
+		ON salesorders.shipvia=shippers.shipper_id
+	INNER JOIN locations
+		ON salesorders.fromstkloc=locations.loccode
+	WHERE salesorders.orderno=" . $_GET['TransNo'];
 
 $result=DB_query($sql,$db, $ErrMsg);
 
@@ -58,21 +58,21 @@ if (DB_num_rows($result)==0){
         include('includes/header.inc');
         echo '<div align=center><br><br><br>';
 	prnMsg( _('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
-        echo '<BR><BR><BR><table class="table_index"><tr><td class="menu_group_item">
-                <li><a href="'. $rootpath . '/SelectSalesOrder.php?'. SID .'">' . _('Outstanding Sales Orders') . '</a></li>
-                <li><a href="'. $rootpath . '/SelectCompletedOrder.php?'. SID .'">' . _('Completed Sales Orders') . '</a></li>
-                </td></tr></table></DIV><BR><BR><BR>';
+        echo '<BR><BR><BR><TABLE class="table_index"><TR><TD class="menu_group_item">
+                <LI><A HREF="'. $rootpath . '/SelectSalesOrder.php?'. SID .'">' . _('Outstanding Sales Orders') . '</A></LI>
+                <LI><A HREF="'. $rootpath . '/SelectCompletedOrder.php?'. SID .'">' . _('Completed Sales Orders') . '</A></LI>
+                </TD></TR></TABLE></DIV><BR><BR><BR>';
         include('includes/footer.inc');
         exit();
 } elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
 
 	$myrow = DB_fetch_array($result);
-	if ($myrow['PrintedPackingSlip']==1 AND ($_GET['Reprint']!='OK' OR !isset($_GET['Reprint']))){
+	if ($myrow['printedpackingslip']==1 AND ($_GET['Reprint']!='OK' OR !isset($_GET['Reprint']))){
 		$title = _('Print Packing Slip Error');
 	      	include('includes/header.inc');
 		echo '<P>';
 		prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
-			_('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($myrow['DatePackingSlipPrinted']) .
+			_('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($myrow['datepackingslipprinted']) .
 			'<br>' . _('This check is there toensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
 	      echo '<P><A HREF="' . $rootpath . '/PrintCustOrder.php?' . SID . 'TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'
 		. _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</A><P>' .
@@ -97,14 +97,14 @@ LETS GO */
 
 $PageNumber = 1;
 $ErrMsg = _('There was a problem retrieving the details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
-$sql = "SELECT StkCode,
-		Description,
-		Quantity,
-		QtyInvoiced,
-		UnitPrice
-	FROM SalesOrderDetails INNER JOIN StockMaster
-		ON SalesOrderDetails.StkCode=StockMaster.StockID
-	 WHERE SalesOrderDetails.OrderNo=" . $_GET['TransNo'];
+$sql = "SELECT salesorderdetails.stkcode,
+		stockmaster.description,
+		salesorderdetails.quantity,
+		salesorderdetails.qtyinvoiced,
+		salesorderdetails.unitprice
+	FROM salesorderdetails INNER JOIN stockmaster
+		ON salesorderdetails.stkcode=stockmaster.stockid
+	 WHERE salesorderdetails.orderno=" . $_GET['TransNo'];
 $result=DB_query($sql, $db, $ErrMsg);
 
 if (DB_num_rows($result)>0){
@@ -137,12 +137,12 @@ if (DB_num_rows($result)>0){
 
 	while ($myrow2=DB_fetch_array($result)){
 
-		$DisplayQty = number_format($myrow2['Quantity'],2);
-		$DisplayPrevDel = number_format($myrow2['QtyInvoiced'],2);
-		$DisplayQtySupplied = number_format($myrow2['Quantity'] - $myrow2['QtyInvoiced'],2);
+		$DisplayQty = number_format($myrow2['quantity'],2);
+		$DisplayPrevDel = number_format($myrow2['qtyinvoiced'],2);
+		$DisplayQtySupplied = number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],2);
 
-		$LeftOvers = $pdf->addTextWrap(13,$YPos,135,$FontSize,$myrow2['StkCode']);
-		$LeftOvers = $pdf->addTextWrap(148,$YPos,239,$FontSize,$myrow2['Description']);
+		$LeftOvers = $pdf->addTextWrap(13,$YPos,135,$FontSize,$myrow2['stkcode']);
+		$LeftOvers = $pdf->addTextWrap(148,$YPos,239,$FontSize,$myrow2['description']);
 		$LeftOvers = $pdf->addTextWrap(387,$YPos,90,$FontSize,$DisplayQty,'right');
 		$LeftOvers = $pdf->addTextWrap(505,$YPos,90,$FontSize,$DisplayQtySupplied,'right');
 		$LeftOvers = $pdf->addTextWrap(604,$YPos,90,$FontSize,$DisplayPrevDel,'right');
@@ -183,7 +183,7 @@ if ($len<=20){
 
 	$pdf->Stream();
 
-	$sql = "UPDATE SalesOrders SET PrintedPackingSlip=1, DatePackingSlipPrinted='" . Date($DefaultDateFormat) . "' WHERE SalesOrders.OrderNo=" .$_GET['TransNo'];
+	$sql = "UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted='" . Date($_SESSION['DefaultDateFormat']) . "' WHERE salesorders.orderno=" .$_GET['TransNo'];
 	$result = DB_query($sql,$db);
 }
 

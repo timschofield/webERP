@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 11;
 
@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	$_POST["CategoryID"] = strtoupper($_POST["CategoryID"]);
+	$_POST['CategoryID'] = strtoupper($_POST['CategoryID']);
 
 	if (strlen($_POST['CategoryID']) > 6) {
 		$InputError = 1;
@@ -47,32 +47,32 @@ if (isset($_POST['submit'])) {
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
 
-		$sql = "UPDATE StockCategory SET StockType = '" . $_POST['StockType'] . "',
-                                     CategoryDescription = '" . $_POST['CategoryDescription'] . "',
-                                     StockAct = " . $_POST['StockAct'] . ",
-                                     AdjGLAct = " . $_POST['AdjGLAct'] . ",
-                                     PurchPriceVarAct = " . $_POST['PurchPriceVarAct'] . ",
-                                     MaterialUseageVarAc = " . $_POST['MaterialUseageVarAc'] . ",
-                                     WIPAct = " . $_POST['WIPAct'] . "
+		$sql = "UPDATE stockcategory SET stocktype = '" . $_POST['StockType'] . "',
+                                     categorydescription = '" . DB_escape_string($_POST['CategoryDescription']) . "',
+                                     stockact = " . $_POST['StockAct'] . ",
+                                     adjglact = " . $_POST['AdjGLAct'] . ",
+                                     purchpricevaract = " . $_POST['PurchPriceVarAct'] . ",
+                                     materialuseagevarac = " . $_POST['MaterialUseageVarAc'] . ",
+                                     wipact = " . $_POST['WIPAct'] . "
                                      WHERE
-                                     CategoryID = '$SelectedCategory'";
+                                     categoryid = '$SelectedCategory'";
 		$msg = _('The stock category record has been updated');
 	} elseif ($InputError !=1) {
 
 	/*Selected category is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new stock category form */
 
-		$sql = "INSERT INTO StockCategory (CategoryID,
-                                       StockType,
-                                       CategoryDescription,
-                                       StockAct,
-                                       AdjGLAct,
-                                       PurchPriceVarAct,
-                                       MaterialUseageVarAc,
-                                       WIPAct)
+		$sql = "INSERT INTO stockcategory (categoryid,
+                                       stocktype,
+                                       categorydescription,
+                                       stockact,
+                                       adjglact,
+                                       purchpricevaract,
+                                       materialuseagevarac,
+                                       wipact)
                                        VALUES (
-                                       '" . $_POST['CategoryID'] . "',
+                                       '" . DB_escape_string($_POST['CategoryID']) . "',
                                        '" . $_POST['StockType'] . "',
-                                       '" . $_POST['CategoryDescription'] . "',
+                                       '" . DB_escape_string($_POST['CategoryDescription']) . "',
                                        " . $_POST['StockAct'] . ",
                                        " . $_POST['AdjGLAct'] . ",
                                        " . $_POST['PurchPriceVarAct'] . ",
@@ -98,7 +98,7 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'StockMaster'
 
-	$sql= "SELECT COUNT(*) FROM StockMaster WHERE StockMaster.CategoryID='$SelectedCategory'";
+	$sql= "SELECT COUNT(*) FROM stockmaster WHERE stockmaster.categoryid='$SelectedCategory'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
@@ -106,19 +106,19 @@ if (isset($_POST['submit'])) {
 			'<br> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('items referring to this stock category code'),'warn');
 
 	} else {
-		$sql = "SELECT COUNT(*) FROM SalesGLPostings WHERE StkCat='$SelectedCategory'";
+		$sql = "SELECT COUNT(*) FROM salesglpostings WHERE stkcat='$SelectedCategory'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			prnMsg(_('Cannot delete this stock category because it is used by the sales') . ' - ' . _('GL posting interface') . '. ' . _('Delete any records in the Sales GL Interface set up using this stock category first'),'warn');
 		} else {
-			$sql = "SELECT COUNT(*) FROM COGSGLPostings WHERE StkCat='$SelectedCategory'";
+			$sql = "SELECT COUNT(*) FROM cogsglpostings WHERE stkcat='$SelectedCategory'";
 			$result = DB_query($sql,$db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]>0) {
 				prnMsg(_('Cannot delete this stock category because it is used by the cost of sales') . ' - ' . _('GL posting interface') . '. ' . _('Delete any records in the Cost of Sales GL Interface set up using this stock category first'),'warn');
 			} else {
-				$sql="DELETE FROM StockCategory WHERE CategoryID='$SelectedCategory'";
+				$sql="DELETE FROM stockcategory WHERE categoryid='$SelectedCategory'";
 				$result = DB_query($sql,$db);
 				prnMsg(_('The stock category') . ' ' . $SelectedCategory . ' ' . _('has been deleted') . ' !','success');
 				unset ($SelectedCategory);
@@ -134,7 +134,7 @@ then none of the above are true and the list of stock categorys will be displaye
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT * FROM StockCategory";
+	$sql = "SELECT * FROM stockcategory";
 	$result = DB_query($sql,$db);
 
 	echo "<CENTER><table border=1>\n";
@@ -206,28 +206,28 @@ if (! isset($_GET['delete'])) {
 	if (isset($SelectedCategory)) {
 		//editing an existing stock category
 
-		$sql = "SELECT CategoryID,
-                   StockType,
-                   CategoryDescription,
-                   StockAct,
-                   AdjGLAct,
-                   PurchPriceVarAct,
-                   MaterialUseageVarAc,
-                   WIPAct
-                   FROM StockCategory
-                   WHERE CategoryID='$SelectedCategory'";
+		$sql = "SELECT categoryid,
+                   	stocktype,
+                   	categorydescription,
+                   	stockact,
+                   	adjglact,
+                   	purchpricevaract,
+                   	materialuseagevarac,
+                   	wipact
+                   FROM stockcategory
+                   WHERE categoryid='" . DB_escape_string($SelectedCategory) . "'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
 
-		$_POST['CategoryID'] = $myrow["CategoryID"];
-		$_POST['StockType']  = $myrow["StockType"];
-		$_POST['CategoryDescription']  = $myrow["CategoryDescription"];
-		$_POST['StockAct']  = $myrow["StockAct"];
-		$_POST['AdjGLAct']  = $myrow["AdjGLAct"];
-		$_POST['PurchPriceVarAct']  = $myrow["PurchPriceVarAct"];
-		$_POST['MaterialUseageVarAc']  = $myrow["MaterialUseageVarAc"];
-		$_POST['WIPAct']  = $myrow["WIPAct"];
+		$_POST['CategoryID'] = $myrow['categoryid'];
+		$_POST['StockType']  = $myrow['stocktype'];
+		$_POST['CategoryDescription']  = $myrow['categorydescription'];
+		$_POST['StockAct']  = $myrow['stockact'];
+		$_POST['AdjGLAct']  = $myrow['adjglact'];
+		$_POST['PurchPriceVarAct']  = $myrow['purchpricevaract'];
+		$_POST['MaterialUseageVarAc']  = $myrow['materialuseagevarac'];
+		$_POST['WIPAct']  = $myrow['wipact'];
 
 		echo '<INPUT TYPE=HIDDEN NAME="SelectedCategory" VALUE="' . $SelectedCategory . '">';
 		echo '<INPUT TYPE=HIDDEN NAME="CategoryID" VALUE="' . $_POST['CategoryID'] . '">';
@@ -240,13 +240,13 @@ if (! isset($_GET['delete'])) {
 	}
 
 	//SQL to poulate account selection boxes
-	$sql = "SELECT AccountCode,
-                 AccountName
-                 FROM ChartMaster,
-                      AccountGroups
-                 WHERE ChartMaster.Group_=AccountGroups.GroupName AND
-                       AccountGroups.PandL=0
-                 ORDER BY AccountCode";
+	$sql = "SELECT accountcode,
+                 accountname
+                 FROM chartmaster,
+                      accountgroups
+                 WHERE chartmaster.group_=accountgroups.groupname and
+                       accountgroups.pandl=0
+                 ORDER BY accountcode";
 
 	$result = DB_query($sql,$db);
 
@@ -282,12 +282,12 @@ if (! isset($_GET['delete'])) {
 	echo '<TR><TD>' . _('Stock GL Code') . ':</TD><TD><SELECT name="StockAct">';
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow["AccountCode"]==$_POST['StockAct']) {
+		if ($myrow['accountcode']==$_POST['StockAct']) {
 			echo '<OPTION SELECTED VALUE=';
 		} else {
 			echo '<OPTION VALUE=';
 		}
-		echo $myrow["AccountCode"] . '>' . $myrow["AccountName"];
+		echo $myrow['accountcode'] . '>' . $myrow['accountname'];
 	} //end while loop
 	DB_data_seek($result,0);
 	echo '</SELECT></TD></TR>';
@@ -295,23 +295,23 @@ if (! isset($_GET['delete'])) {
 	echo '<TR><TD>' . _('WIP GL Code') . ':</TD><TD><SELECT name="WIPAct">';
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow["AccountCode"]==$_POST['WIPAct']) {
+		if ($myrow['accountcode']==$_POST['WIPAct']) {
 			echo '<OPTION SELECTED VALUE=';
 		} else {
 			echo '<OPTION VALUE=';
 		}
-		echo $myrow["AccountCode"] . '>' . $myrow["AccountName"];
+		echo $myrow['accountcode'] . '>' . $myrow['accountname'];
 
 	} //end while loop
 	echo '</SELECT></TD></TR>';
 
-	$sql = "SELECT AccountCode,
-                 AccountName
-                 FROM ChartMaster,
-                      AccountGroups
-                 WHERE ChartMaster.Group_=AccountGroups.GroupName AND
-                       AccountGroups.PandL!=0
-                 ORDER BY AccountCode";
+	$sql = "SELECT accountcode,
+                 accountname
+                 FROM chartmaster,
+                      accountgroups
+                 WHERE chartmaster.group_=accountgroups.groupname and
+                       accountgroups.pandl!=0
+                 ORDER BY accountcode";
 
 	$result1 = DB_query($sql,$db);
 
@@ -319,12 +319,12 @@ if (! isset($_GET['delete'])) {
             <TD><SELECT name="AdjGLAct">';
 
 	while ($myrow = DB_fetch_array($result1)) {
-		if ($myrow["AccountCode"]==$_POST['AdjGLAct']) {
+		if ($myrow['accountcode']==$_POST['AdjGLAct']) {
 			echo '<OPTION SELECTED VALUE=';
 		} else {
 			echo '<OPTION VALUE=';
 		}
-		echo $myrow["AccountCode"] . '>' . $myrow["AccountName"];
+		echo $myrow['accountcode'] . '>' . $myrow['accountname'];
 
 	} //end while loop
 	DB_data_seek($result1,0);
@@ -334,12 +334,12 @@ if (! isset($_GET['delete'])) {
             <TD><SELECT name="PurchPriceVarAct">';
 
 	while ($myrow = DB_fetch_array($result1)) {
-		if ($myrow["AccountCode"]==$_POST['PurchPriceVarAct']) {
+		if ($myrow['accountcode']==$_POST['PurchPriceVarAct']) {
 			echo '<OPTION SELECTED VALUE=';
 		} else {
 			echo '<OPTION VALUE=';
 		}
-		echo $myrow["AccountCode"] . '>' . $myrow["AccountName"];
+		echo $myrow['accountcode'] . '>' . $myrow['accountname'];
 
 	} //end while loop
 	DB_data_seek($result1,0);
@@ -349,12 +349,12 @@ if (! isset($_GET['delete'])) {
 	echo '<TR><TD>' . _('Usage Variance GL Code') . ':</TD><TD><SELECT name="MaterialUseageVarAc">';
 
 	while ($myrow = DB_fetch_array($result1)) {
-		if ($myrow["AccountCode"]==$_POST['MaterialUseageVarAc']) {
+		if ($myrow['accountcode']==$_POST['MaterialUseageVarAc']) {
 			echo '<OPTION SELECTED VALUE=';
 		} else {
 			echo '<OPTION VALUE=';
 		}
-		echo $myrow["AccountCode"] . '>' . $myrow["AccountName"];
+		echo $myrow['accountcode'] . '>' . $myrow['accountname'];
 
 	} //end while loop
 	DB_free_result($result1);

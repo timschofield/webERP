@@ -9,28 +9,28 @@ include ('includes/header.inc');
 /*Script to insert ChartDetails records where one should already exist
 only necessary where manual entry of chartdetails has stuffed the system */
 
-$FirstPeriodResult = DB_query('SELECT Min(PeriodNo) FROM Periods',$db);
+$FirstPeriodResult = DB_query('SELECT MIN(periodno) FROM periods',$db);
 $FirstPeriodRow = DB_fetch_row($FirstPeriodResult);
 
-$LastPeriodResult = DB_query('SELECT Max(PeriodNo) FROM Periods',$db);
+$LastPeriodResult = DB_query('SELECT MAX(periodno) FROM periods',$db);
 $LatPeriodRow = DB_fetch_row($LastPeriodResult);
 
 $CreateFrom = $FirstPeriodRow[0];
 $CreateTo = $LastPeriodRow[0];;
 
-$ChartAccounts = DB_query("SELECT AccountCode FROM ChartMaster",$db);
+$ChartAccounts = DB_query("SELECT accountcode FROM chartmaster",$db);
 
 While ($AccountRow = DB_fetch_array($ChartAccounts)){
 
-	prnMsg(_('Creating Chart Details for Account code') . ' ' . $AccountRow['AccountCode'],'info');
+	prnMsg(_('Creating Chart Details for Account code') . ' ' . $AccountRow['accountcode'],'info');
 
 	for ($PeriodNo=$CreateFrom;$PeriodNo <= $CreateTo;$PeriodNo++) {
 
 		echo '<LI>' . _('Period Number') . ' ' . $PeriodNo . '</LI>';
 
-		$sql = "INSERT INTO ChartDetails (AccountCode,
-							Period)
-					VALUES (" . $AccountRow['AccountCode'] . ",
+		$sql = "INSERT INTO chartdetails (accountcode,
+							period)
+					VALUES (" . $AccountRow['accountcode'] . ",
 						" . $PeriodNo . ")";
 		$InsChartDetails = DB_query($sql,$db,'','','',false);
 		/*dont trap errors here the thinking is that duplicate records will return and error that is ignored
@@ -42,19 +42,19 @@ While ($AccountRow = DB_fetch_array($ChartAccounts)){
 
 	for ($PeriodNo=$CreateFrom;$PeriodNo<=$CreateTo; $PeriodNo++) {
 
-		$sql = "SELECT AccountCode,
-				Period,
-				Actual + BFwd AS CFwd,
-				Budget + BFwdBudget AS CFwdBudget
-			FROM ChartDetails WHERE Period =" . ($PeriodNo  - 1);
+		$sql = "SELECT accountcode,
+				period,
+				actual + bfwd AS cfwd,
+				budget + bfwdbudget AS cfwdbudget
+			FROM chartdetails WHERE period =" . ($PeriodNo  - 1);
 		$ChartDetailsCFwd = DB_query($sql,$db);
 
 		while ($myrow = DB_fetch_array($ChartDetailsCFwd)){
 
-			$sql = "UPDATE ChartDetails SET BFwd =" . $myrow['CFwd'] . ",
-							BFwdBudget =" . $myrow['CFwdBudget'] . "
-					WHERE AccountCode = " . $myrow['AccountCode'] . "
-					AND Period >=" . $PeriodNo;
+			$sql = "UPDATE chartdetails SET bfwd =" . $myrow['cfwd'] . ",
+							bfwdbudget =" . $myrow['cfwdbudget'] . "
+					WHERE accountcode = " . $myrow['accountcode'] . "
+					AND period >=" . $PeriodNo;
 			$UpdChartDetails = DB_query($sql,$db);
 		}
 	}
@@ -63,5 +63,4 @@ While ($AccountRow = DB_fetch_array($ChartAccounts)){
 
 prnMsg(_('Chart Details Created successfully'),'success');
 include('includes/footer.inc');
-
 ?>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 /* Steve Kitchen */
 
@@ -7,7 +7,7 @@ $PageSecurity = 15;
 
 include ('includes/session.inc');
 
-$title = _('UTILITY PAGE') . ' ' . _('to rebuild the default language file');
+$title = _('Rebuild');
 
 include('includes/header.inc');
 
@@ -17,6 +17,9 @@ include('includes/header.inc');
 $PathToDefault		= './locale/en_GB/LC_MESSAGES/messages.po';
 $FilesToInclude	= '*php includes/*.php includes/*.inc';
 $xgettextCmd		= 'xgettext --no-wrap -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
+
+echo "<BR>&nbsp;<A HREF='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the translation menu') . "</A>";
+echo '<BR><BR>&nbsp;' . _('Utility page to rebuild the system default language file');
 
 if (isset($_POST['submit'])) {
 
@@ -41,14 +44,14 @@ if (isset($_POST['submit'])) {
 
 	echo '<CENTER>';
 	echo '<BR>';
-	prnMsg (_('This utility will recreate the default messages.po file') . '<BR><BR>' . 
-			_('Make sure you know what you are doing BEFORE you run this procedure'), 'info', _('PLEASE NOTE'));
+	prnMsg (_('Every new language creates a new translation file from the system default one') . '.<BR>' .
+          _('This utility will recreate the system default language file by going through all the script files to get all the strings') . '.<BR>' .
+          _('This is not usually necessary but if done before a new language is created then that language will have any new or recently modified strings') . '.<BR>' .
+          _('Existing languages are not affected.') . '.', 'info', _('PLEASE NOTE'));
 	echo '<BR>';
 	echo '<FORM METHOD="post" ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
-	prnMsg (_('Once you click on the Proceed button the file will be recreated') . '. ' . _('You will not get a second warning'), 'warn', _('WARNING'));
 	echo '<INPUT TYPE="Submit" NAME="submit" VALUE="' . _('Proceed') . '">&nbsp;&nbsp;';
-	echo "<A HREF='" . $rootpath . "/Z_poAdmin.php'>" . _('Back to the menu') . "</A>";
 	echo '</FORM>';
 	echo '</CENTER>';
 

@@ -19,9 +19,9 @@ if (isset($_GET['StockID'])){
 
 echo '<HR><FORM ACTION="' . $_SERVER['PHP_SELF'] . '?'. SID . '" METHOD=POST>';
 
-$sql = "SELECT LocCode,
-		LocationName
-	FROM Locations";
+$sql = "SELECT loccode,
+		locationname
+	FROM locations";
 $resultStkLocs = DB_query($sql,$db);
 
 echo '<TABLE><TR><TD>';
@@ -29,21 +29,21 @@ echo '<TABLE><TR><TD>';
 echo '<TABLE><TR><TD>' . _('From Stock Location') . ':</TD><TD><SELECT name="StockLocation"> ';
 while ($myrow=DB_fetch_array($resultStkLocs)){
 	if (isset($_POST['StockLocation']) AND $_POST['StockLocation']!='All'){
-		if ($myrow["LocCode"] == $_POST['StockLocation']){
-		     echo '<OPTION SELECTED Value="' . $myrow["LocCode"] . '">' . $myrow["LocationName"];
+		if ($myrow['loccode'] == $_POST['StockLocation']){
+		     echo '<OPTION SELECTED Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		} else {
-		     echo '<OPTION Value="' . $myrow["LocCode"] . '">' . $myrow["LocationName"];
+		     echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 		}
-	} elseif ($myrow['LocCode']==$_SESSION['UserStockLocation']){
-		 echo '<OPTION SELECTED Value="' . $myrow['LocCode'] . '">' . $myrow['LocationName'];
-		 $_POST['StockLocation']=$myrow["LocCode"];
+	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
+		 echo '<OPTION SELECTED Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
+		 $_POST['StockLocation']=$myrow['loccode'];
 	} else {
-		 echo '<OPTION Value="' . $myrow['LocCode'] . '">' . $myrow['LocationName'];
+		 echo '<OPTION Value="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 	}
 }
 echo '</SELECT></TD></TR>';
 
-$SQL="SELECT CategoryID, CategoryDescription FROM StockCategory ORDER BY CategoryDescription";
+$SQL='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription';
 $result1 = DB_query($SQL,$db);
 if (DB_num_rows($result1)==0){
 	echo '</TABLE></TD></TR>
@@ -65,10 +65,10 @@ if ($_POST['StockCat']=='All'){
 	echo '<OPTION VALUE="All">' . _('All');
 }
 while ($myrow1 = DB_fetch_array($result1)) {
-	if ($myrow1['CategoryID']==$_POST['StockCat']){
-		echo '<OPTION SELECTED VALUE="' . $myrow1['CategoryID'] . '">' . $myrow1['CategoryDescription'];
+	if ($myrow1['categoryid']==$_POST['StockCat']){
+		echo '<OPTION SELECTED VALUE="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
 	} else {
-		echo '<OPTION VALUE="' . $myrow1['CategoryID'] . '">' . $myrow1['CategoryDescription'];
+		echo '<OPTION VALUE="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
 	}
 }
 
@@ -85,40 +85,44 @@ echo '<HR>';
 if (isset($_POST['ShowStatus'])){
 
 	if ($_POST['StockCat']=='All') {
-		$sql = "SELECT LocStock.StockID,
-				StockMaster.Description,
-				LocStock.LocCode,
-				Locations.LocationName,
-				LocStock.Quantity,
-				LocStock.ReorderLevel,
-				StockMaster.DecimalPlaces,
-				StockMaster.Serialised,
-				StockMaster.Controlled
-			FROM LocStock, StockMaster, Locations
-			WHERE LocStock.StockID=StockMaster.StockID
-			AND LocStock.LocCode = '$_POST[StockLocation]'
-			AND LocStock.LocCode=Locations.LocCode
-			AND LocStock.Quantity > 0
-			AND (StockMaster.MBFlag='B' OR StockMaster.MBFlag='M')
-			ORDER BY LocStock.StockID";
+		$sql = "SELECT locstock.stockid,
+				stockmaster.description,
+				locstock.loccode,
+				locations.locationname,
+				locstock.quantity,
+				locstock.reorderlevel,
+				stockmaster.decimalplaces,
+				stockmaster.serialised,
+				stockmaster.controlled
+			FROM locstock, 
+				stockmaster, 
+				locations
+			WHERE locstock.stockid=stockmaster.stockid
+			AND locstock.loccode = '$_POST[StockLocation]'
+			AND locstock.loccode=locations.loccode
+			AND locstock.quantity > 0
+			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
+			ORDER BY locstock.stockid";
 	} else {
-		$sql = "SELECT LocStock.StockID,
-				StockMaster.Description,
-				LocStock.LocCode,
-				Locations.LocationName,
-				LocStock.Quantity,
-				LocStock.ReorderLevel,
-				StockMaster.DecimalPlaces,
-				StockMaster.Serialised,
-				StockMaster.Controlled
-			FROM LocStock, StockMaster, Locations
-			WHERE LocStock.StockID=StockMaster.StockID
-			AND LocStock.LocCode = '$_POST[StockLocation]'
-			AND LocStock.LocCode=Locations.LocCode
-			AND LocStock.Quantity > 0
-			AND (StockMaster.MBFlag='B' OR StockMaster.MBFlag='M')
-			AND StockMaster.CategoryID='" . $_POST['StockCat'] . "'
-			ORDER BY LocStock.StockID";
+		$sql = "SELECT locstock.stockid,
+				stockmaster.description,
+				locstock.loccode,
+				locations.locationname,
+				locstock.quantity,
+				locstock.reorderlevel,
+				stockmaster.decimalplaces,
+				stockmaster.serialised,
+				stockmaster.controlled
+			FROM locstock, 
+				stockmaster, 
+				locations
+			WHERE locstock.stockid=stockmaster.stockid
+			AND locstock.loccode = '$_POST[StockLocation]'
+			AND locstock.loccode=locations.loccode
+			AND locstock.quantity > 0
+			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
+			AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+			ORDER BY locstock.stockid";
 	}
 
 
@@ -151,17 +155,17 @@ if (isset($_POST['ShowStatus'])){
 			$k=1;
 		}
 
-		$StockID = $myrow['StockID'];
+		$StockID = $myrow['stockid'];
 
-		$sql = "SELECT Sum(SalesOrderDetails.Quantity-SalesOrderDetails.QtyInvoiced) AS DEM
-                   	FROM SalesOrderDetails,
-                        	SalesOrders
-                   	WHERE SalesOrders.OrderNo = SalesOrderDetails.OrderNo
-			AND SalesOrders.FromStkLoc='" . $myrow["LocCode"] . "'
-			AND SalesOrderDetails.Completed=0
-			AND SalesOrderDetails.StkCode='" . $StockID . "'";
+		$sql = "SELECT Sum(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
+                   	FROM salesorderdetails,
+                        	salesorders
+                   	WHERE salesorders.orderno = salesorderdetails.orderno
+			AND salesorders.fromstkloc='" . $myrow['loccode'] . "'
+			AND salesorderdetails.completed=0
+			AND salesorderdetails.stkcode='" . $StockID . "'";
 
-		$ErrMsg = _('The demand for this product from') . ' ' . $myrow["LocCode"] . ' ' . _('cannot be retrieved because');
+		$ErrMsg = _('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
 		$DemandResult = DB_query($sql,$db,$ErrMsg);
 
 		if (DB_num_rows($DemandResult)==1){
@@ -172,20 +176,20 @@ if (isset($_POST['ShowStatus'])){
 		}
 
 		//Also need to add in the demand as a component of an assembly items if this items has any assembly parents.
-		$sql = "SELECT Sum((SalesOrderDetails.Quantity-SalesOrderDetails.QtyInvoiced)*BOM.Quantity) AS DEM
-                   	FROM SalesOrderDetails,
-                        	SalesOrders,
-                        	BOM,
-                        	StockMaster
-                   	WHERE SalesOrderDetails.StkCode=BOM.Parent
-			AND SalesOrders.OrderNo = SalesOrderDetails.OrderNo
-			AND SalesOrders.FromStkLoc='" . $myrow["LocCode"] . "'
-			AND SalesOrderDetails.Quantity-SalesOrderDetails.QtyInvoiced > 0
-			AND BOM.Component='" . $StockID . "'
-			AND StockMaster.StockID=BOM.Parent
-			AND StockMaster.MBflag='A'";
+		$sql = "SELECT Sum((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
+                   	FROM salesorderdetails,
+                        	salesorders,
+                        	bom,
+                        	stockmaster
+                   	WHERE salesorderdetails.stkcode=bom.parent
+			AND salesorders.orderno = salesorderdetails.orderno
+			AND salesorders.fromstkloc='" . $myrow['loccode'] . "'
+			AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
+			AND bom.component='" . $StockID . "'
+			AND stockmaster.stockid=bom.parent
+			AND stockmaster.mbflag='A'";
 
-		$ErrMsg = _('The demand for this product from') . ' ' . $myrow["LocCode"] . ' ' . _('cannot be retrieved because');
+		$ErrMsg = _('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
 		$DemandResult = DB_query($sql,$db, $ErrMsg);
 
 		if (DB_num_rows($DemandResult)==1){
@@ -193,14 +197,14 @@ if (isset($_POST['ShowStatus'])){
 			$DemandQty += $DemandRow[0];
 		}
 
-		$sql = "SELECT Sum(PurchOrderDetails.QuantityOrd - PurchOrderDetails.QuantityRecd) AS QOO
-                   	FROM PurchOrderDetails
-                   	INNER JOIN PurchOrders
-                   		ON PurchOrderDetails.OrderNo=PurchOrders.OrderNo
-                   	WHERE PurchOrders.IntoStockLocation='" . $myrow["LocCode"] . "'
-			AND PurchOrderDetails.ItemCode='" . $StockID . "'";
+		$sql = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) AS qoo
+                   	FROM purchorderdetails
+                   	INNER JOIN purchorders
+                   		ON purchorderdetails.orderno=purchorders.orderno
+                   	WHERE purchorders.intostocklocation='" . $myrow['loccode'] . "'
+			AND purchorderdetails.itemcode='" . $StockID . "'";
 
-		$ErrMsg = _('The quantity on order for this product to be received into') . ' ' . $myrow["LocCode"] . ' ' . _('cannot be retrieved because');
+		$ErrMsg = _('The quantity on order for this product to be received into') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
 		$QOOResult = DB_query($sql,$db,$ErrMsg);
 
 		if (DB_num_rows($QOOResult)==1){
@@ -218,20 +222,20 @@ if (isset($_POST['ShowStatus'])){
 			<td ALIGN=RIGHT>%s</td>
 			<td ALIGN=RIGHT>%s</td>
 			<td ALIGN=RIGHT>%s</td>",
-			strtoupper($myrow['StockID']),
-			strtoupper($myrow['StockID']),
-			$myrow['Description'],
-			number_format($myrow['Quantity'],0),
-			number_format($myrow['ReorderLevel'],0),
+			strtoupper($myrow['stockid']),
+			strtoupper($myrow['stockid']),
+			$myrow['description'],
+			number_format($myrow['quantity'],0),
+			number_format($myrow['reorderlevel'],0),
 			number_format($DemandQty,0),
-			number_format($myrow['Quantity'] - $DemandQty,0),
+			number_format($myrow['quantity'] - $DemandQty,0),
 			number_format($QOO,0));
 
-		if ($myrow['Serialised'] ==1){ /*The line is a serialised item*/
+		if ($myrow['serialised'] ==1){ /*The line is a serialised item*/
 
-			echo '<TD><A target="_blank" HREF="' . $rootpath . '/StockSerialItems.php?' . SID . '&Serialised=Yes&Location=' . $myrow['LocCode'] . '&StockID=' . $StockID . '">' . _('Serial Numbers') . '</A></TD></TR>';
-		} elseif ($myrow['Controlled']==1){
-			echo '<TD><A target="_blank" HREF="' . $rootpath . '/StockSerialItems.php?' . SID . '&Location=' . $myrow['LocCode'] . '&StockID=' . $StockID . '">' . _('Batches') . '</A></TD></TR>';
+			echo '<TD><A target="_blank" HREF="' . $rootpath . '/StockSerialItems.php?' . SID . '&Serialised=Yes&Location=' . $myrow['loccode'] . '&StockID=' . $StockID . '">' . _('Serial Numbers') . '</A></TD></TR>';
+		} elseif ($myrow['controlled']==1){
+			echo '<TD><A target="_blank" HREF="' . $rootpath . '/StockSerialItems.php?' . SID . '&Location=' . $myrow['loccode'] . '&StockID=' . $StockID . '">' . _('Batches') . '</A></TD></TR>';
 		}
 
 		$j++;

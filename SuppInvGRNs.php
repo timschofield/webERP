@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -51,18 +51,18 @@ if (isset($_POST['ModifyGRN'])){
 	} else {
 		$Complete = False;
 	}
-	if ($Check_Qty_Charged_vs_Del_Qty==True) {
-		if ($_POST['This_QuantityInv']/($_POST['QtyRecd'] - $_POST['Prev_QuantityInv']) > (1+ ($OverChargeProportion / 100))){
-			prnMsg(_('The quantity being invoiced is more than the outstanding quantity by more than') . ' ' . $OverChargeProportion . ' ' . _('percent. The system is set up to prohibit this. See the system administrator to modify the set up parameters if necessary'),'error');
+	if ($_SESSION['Check_Qty_Charged_vs_Del_Qty']==True) {
+		if ($_POST['This_QuantityInv']/($_POST['QtyRecd'] - $_POST['Prev_QuantityInv']) > (1+ ($_SESSION['OverChargeProportion'] / 100))){
+			prnMsg(_('The quantity being invoiced is more than the outstanding quantity by more than') . ' ' . $_SESSION['OverChargeProportion'] . ' ' . _('percent. The system is set up to prohibit this. See the system administrator to modify the set up parameters if necessary'),'error');
 			$InputError = True;
 		}
 	}
 	if (!is_numeric($_POST['ChgPrice']) AND $_POST['ChgPrice']<0){
 		$InputError = True;
 		prnMsg(_('The price charged in the suppliers currency is either not numeric or negative') . '. ' . _('The goods received cannot be invoiced at this price'),'error');
-	} elseif ($Check_Price_Charged_vs_Order_Price==True) {
-		if ($_POST['ChgPrice']/$_POST['OrderPrice'] > (1+ ($OverChargeProportion / 100))){
-			prnMsg(_('The price being invoiced is more than the purchase order price by more than') . ' ' . $OverChargeProportion . '%. ' . _('The system is set up to prohibit this') . '. ' . _('See the system administrator to modify the set up parameters if necessary'),'error');
+	} elseif ($_SESSION['Check_Price_Charged_vs_Order_Price']==True) {
+		if ($_POST['ChgPrice']/$_POST['OrderPrice'] > (1+ ($_SESSION['OverChargeProportion'] / 100))){
+			prnMsg(_('The price being invoiced is more than the purchase order price by more than') . ' ' . $_SESSION['OverChargeProportion'] . '%. ' . _('The system is set up to prohibit this') . '. ' . _('See the system administrator to modify the set up parameters if necessary'),'error');
 			$InputError = True;
 		}
 	}
@@ -141,22 +141,22 @@ echo "</TABLE><BR><A HREF='$rootpath/SupplierInvoice.php?" . SID ."'>" . _('Back
 
 /* Now get all the outstanding GRNs for this supplier from the database*/
 
-$SQL = "SELECT GRNBatch,
-		GRNNo,
-		PurchOrderDetails.OrderNo,
-		PurchOrderDetails.UnitPrice,
-		GRNs.ItemCode,
-		GRNs.DeliveryDate,
-		GRNs.ItemDescription,
-		GRNs.QtyRecd,
-		GRNs.QuantityInv,
-		PurchOrderDetails.StdCostUnit
-	FROM GRNs,
-		PurchOrderDetails
-	WHERE GRNs.PODetailItem=PurchOrderDetails.PODetailItem
-	AND GRNs.SupplierID ='" . $_SESSION['SuppTrans']->SupplierID . "'
-	AND GRNs.QtyRecd - GRNs.QuantityInv > 0
-	ORDER BY GRNs.GRNNo";
+$SQL = "SELECT grnbatch,
+		grnno,
+		purchorderdetails.orderno,
+		purchorderdetails.unitprice,
+		grns.itemcode,
+		grns.deliverydate,
+		grns.itemdescription,
+		grns.qtyrecd,
+		grns.quantityinv,
+		purchorderdetails.stdcostunit
+	FROM grns,
+		purchorderdetails
+	WHERE grns.podetailitem=purchorderdetails.podetailitem
+	AND grns.supplierid ='" . $_SESSION['SuppTrans']->SupplierID . "'
+	AND grns.qtyrecd - grns.quantityinv > 0
+	ORDER BY grns.grnno";
 $GRNResults = DB_query($SQL,$db);
 
 if (DB_num_rows($GRNResults)==0){
@@ -176,25 +176,25 @@ if (!isset( $_SESSION['SuppTransTmp'])){
 	    $GRNAlreadyOnInvoice = False;
 
 	    foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
-		    if ($EnteredGRN->GRNNo == $myrow['GRNNo']) {
+		    if ($EnteredGRN->GRNNo == $myrow['grnno']) {
 			    $GRNAlreadyOnInvoice = True;
 		    }
 	    }
 	    if ($GRNAlreadyOnInvoice == False){
-		    $_SESSION['SuppTransTmp']->Add_GRN_To_Trans($myrow['GRNNo'],
-		    						$myrow['OrderNo'],
-								$myrow['ItemCode'],
-								$myrow['ItemDescription'],
-								$myrow['QtyRecd'],
-								$myrow['Quantityinv'],
-								$myrow['QtyRecd'] - $myrow['QuantityInv'],
-								$myrow['UnitPrice'],
-								$myrow['UnitPrice'],
+		    $_SESSION['SuppTransTmp']->Add_GRN_To_Trans($myrow['grnno'],
+		    						$myrow['orderno'],
+								$myrow['itemcode'],
+								$myrow['itemdescription'],
+								$myrow['qtyrecd'],
+								$myrow['quantityinv'],
+								$myrow['qtyrecd'] - $myrow['quantityinv'],
+								$myrow['unitprice'],
+								$myrow['unitprice'],
 								$Complete,
-								$myrow['StdCostUnit'],
-								$myrow['ShiptRef'],
-								$myrow['JobRef'],
-								$myrow['GLCode']);
+								$myrow['stdcostunit'],
+								$myrow['shiptref'],
+								$myrow['jobref'],
+								$myrow['glcode']);
 	    }
     }
 }
@@ -226,7 +226,7 @@ if (isset($_GET['Modify'])){
 	</TR>';
 	echo '</TABLE>';
 
-/*	if ($myrow['Closed']==1){ //Shipment is closed so pre-empt problems later by warning the user - need to modify the order first
+/*	if ($myrow['closed']==1){ //Shipment is closed so pre-empt problems later by warning the user - need to modify the order first
 		echo "<INPUT TYPE=HIDDEN NAME='ShiptRef' Value=''>";
 		echo "<P>Unfortunately, the shipment that this purchase order line item was allocated to has been closed - if you add this item to the transaction then no shipments will not be updated. If you wish to allocate the order line item to a different shipment the order must be modified first.";
 	} else {    */
@@ -296,6 +296,6 @@ else {
     }
 }
 
-echo '</form>';
+echo '</FORM>';
 include('includes/footer.inc');
 ?>

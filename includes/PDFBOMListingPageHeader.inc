@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /*PDF page header for inventory valuation report */
 
 $PageNumber++;
@@ -12,7 +12,7 @@ $FontSize=8;
 $YPos= $Page_Height-$Top_Margin;
 
 
-$pdf->addText($Left_Margin, $YPos,$FontSize, $CompanyName);
+$pdf->addText($Left_Margin, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
 
 $YPos -=$line_height;
 
@@ -23,7 +23,7 @@ $pdf->addText($Left_Margin, $YPos, $FontSize, _('Bill Of Material Listing for Pa
 
 
 $FontSize = 8;
-$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed') . ': ' . Date($DefaultDateFormat) . '   ' . _('Page') . ' ' . $PageNumber);
+$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber);
 
 $YPos -=(2*$line_height);
 

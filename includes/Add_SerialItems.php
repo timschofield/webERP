@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*ProcessSerialItems.php takes the posted variables and adds to the SerialItems array
  in either the cartclass->LineItems->SerialItems or the POClass->LineItems->SerialItems */
 
@@ -66,8 +66,36 @@ if ( isset($_POST['AddBatches']) && $_POST['AddBatches']!='') {
 		}
 	}
 
+} /*end if the user hit the enter button on Keyed Entry */
+ 
+ /********************************************
+   Add a Sequence of Items and save entries
+ ********************************************/
+if ( isset($_POST['AddSequence']) && $_POST['AddSequence']!='') {
+	// do some quick validation
+	$BeginNo =  $_POST['BeginNo'];
+	$EndNo   = $_POST['EndNo'];
+	if ($BeginNo > $EndNo){
+		prnMsg( _('To Add Items Sequentially, the Begin Number must be less than the End Number'), 'error');
+	} else {
+		$sql = "SELECT serialno FROM stockserialitems 
+			WHERE serialno BETWEEN '". $BeginNo . "' AND '". $EndNo . "' 
+			AND stockid = '". $StockID."' AND loccode='". $LocationOut . "'";
+		echo $sql;
+                $SeqItems = DB_query($sql,$db);
 
-} /*end if the user hit the enter button */
+                while ($myrow=db_fetch_array($SeqItems)) {
+			
+			$LineItem->SerialItems[$myrow['serialno']] = new SerialItem ($myrow['serialno'], ($InOutModifier>0?1:-1) );
+
+			//force it to Keyed entry for cleanup & manual verification
+			$_POST['EntryType'] = 'KEYED';
+
+		}
+	}//end of is valid request
+
+} /* end of input by Sequence Number */
+
 /********************************************
   Validate an uploaded FILE and save entries
 ********************************************/

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 include ('includes/class.pdf.php');
 
 if (isset($SessionSavePath)){
@@ -12,14 +12,13 @@ include('includes/LanguageSetup.php');
 /* Standard PDF file creation header stuff */
 
 /*check security - $PageSecurity set in files where this script is included from */
-if (! in_array($PageSecurity,$SecurityGroups[$_SESSION['AccessLevel']]) OR !isset($PageSecurity)){
+if (! in_array($PageSecurity,$_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity)){
 	$title = _('Permission Denied Report');
 	include('includes/header.inc');
 	echo '<BR><BR><BR><BR><BR><BR><BR><CENTER><FONT COLOR=RED SIZE=4><B>' . _('The security settings on your account do not permit you to access this function') . '</B></FONT>';
 	include('includes/footer.inc');
 	exit;
 }
-
 
 
 if (!isset($PaperSize)){

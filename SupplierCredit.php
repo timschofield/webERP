@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /*This page is very largely the same as the SupplierInvoice.php script
 the same result could have been acheived by using if statements in that script and just having the one
 SupplierTransaction.php script. However, to aid readability - variable names have been changed  -
@@ -47,23 +47,23 @@ if (isset($_GET['SupplierID'])){
 
 /*Now retrieve supplier information - name, currency, default ex rate, terms, tax rate etc */
 
-	 $sql = "SELECT Suppliers.SuppName,
-	 		PaymentTerms.Terms,
-			PaymentTerms.DaysBeforeDue,
-			PaymentTerms.DayInFollowingMonth,
-	 		Suppliers.CurrCode,
-			Currencies.Rate As ExRate,
-			TaxAuthorities.Description As TaxDesc,
-	 		TaxAuthorities.TaxID,
-			TaxAuthorities.PurchTaxGLAccount AS TaxGLCode
-	 	FROM Suppliers,
-			Currencies,
-			PaymentTerms,
-			TaxAuthorities
-	 	WHERE Suppliers.TaxAuthority = TaxAuthorities.TaxID
-	 	AND Suppliers.CurrCode=Currencies.CurrAbrev
-	 	AND Suppliers.PaymentTerms=PaymentTerms.TermsIndicator
-	 	AND Suppliers.SupplierID = '" . $_GET['SupplierID'] . "'";
+	 $sql = "SELECT suppliers.suppname,
+	 		paymentterms.terms,
+			paymentterms.daysbeforedue,
+			paymentterms.dayinfollowingmonth,
+	 		suppliers.currcode,
+			currencies.rate As exrate,
+			taxauthorities.description As taxdesc,
+	 		taxauthorities.taxid,
+			taxauthorities.purchtaxglaccount AS taxglcode
+	 	FROM suppliers,
+			currencies,
+			paymentterms,
+			taxauthorities
+	 	WHERE suppliers.taxauthority = taxauthorities.taxid
+	 	AND suppliers.currcode=currencies.currabrev
+	 	AND suppliers.paymentterms=paymentterms.termsindicator
+	 	AND suppliers.supplierid = '" . $_GET['SupplierID'] . "'";
 
 	 $ErrMsg = _('The supplier record selected') . ': ' . $_GET['SupplierID'] . ' ' . _('cannot be retrieved because');
 	 $DbgMsg = _('The SQL used to retrieve the supplier details and failed was');
@@ -71,31 +71,29 @@ if (isset($_GET['SupplierID'])){
 
 	 $myrow = DB_fetch_array($result);
 
-	 $_SESSION['SuppTrans']->SupplierName = $myrow['SuppName'];
-	 $_SESSION['SuppTrans']->TermsDescription = $myrow['Terms'];
-	 $_SESSION['SuppTrans']->CurrCode = $myrow['CurrCode'];
-	 $_SESSION['SuppTrans']->ExRate = $myrow['ExRate'];
+	 $_SESSION['SuppTrans']->SupplierName = $myrow['suppname'];
+	 $_SESSION['SuppTrans']->TermsDescription = $myrow['terms'];
+	 $_SESSION['SuppTrans']->CurrCode = $myrow['currcode'];
+	 $_SESSION['SuppTrans']->ExRate = $myrow['exrate'];
 
-	 if ($myrow['DaysBeforeDue'] == 0){
-	 	$_SESSION['SuppTrans']->Terms = "1" . $myrow['DayInFollowingMonth'];
+	 if ($myrow['daysbeforedue'] == 0){
+	 	$_SESSION['SuppTrans']->Terms = "1" . $myrow['dayinfollowingmonth'];
 	 } else {
-		$_SESSION['SuppTrans']->Terms = "0" . $myrow['DaysBeforeDue'];
+		$_SESSION['SuppTrans']->Terms = "0" . $myrow['daysbeforedue'];
 	 }
 	 $_SESSION['SuppTrans']->SupplierID = $_GET['SupplierID'];
-	 $_SESSION['SuppTrans']->TaxDescription = $myrow['TaxDesc'];
+	 $_SESSION['SuppTrans']->TaxDescription = $myrow['taxdesc'];
 
-	 $LocalTaxAuthResult = DB_query("SELECT TaxAuthority FROM Locations WHERE LocCode='" . $_SESSION['UserStockLocation'] . "'", $db);
+	 $LocalTaxAuthResult = DB_query("SELECT taxauthority FROM locations WHERE loccode='" . $_SESSION['UserStockLocation'] . "'", $db);
 	 $LocalTaxAuthRow = DB_fetch_row($LocalTaxAuthResult);
 
-	 $_SESSION['SuppTrans']->TaxRate = GetTaxRate($myrow['TaxID'],$LocalTaxAuthRow[0], $DefaultTaxLevel, $db);
+	 $_SESSION['SuppTrans']->TaxRate = GetTaxRate($myrow['taxid'],$LocalTaxAuthRow[0], $_SESSION['DefaultTaxLevel'], $db);
 
-	 $_SESSION['SuppTrans']->TaxGLCode = $myrow['TaxGLCode'];
+	 $_SESSION['SuppTrans']->TaxGLCode = $myrow['taxglcode'];
 
-	 $CompanyRecord = ReadInCompanyRecord($db);
-
-	 $_SESSION['SuppTrans']->GLLink_Creditors = $CompanyRecord['GLLink_Creditors'];
-	 $_SESSION['SuppTrans']->GRNAct = $CompanyRecord['GRNAct'];
-	 $_SESSION['SuppTrans']->CreditorsAct = $CompanyRecord['CreditorsAct'];
+	 $_SESSION['SuppTrans']->GLLink_Creditors = $_SESSION['CompanyRecord']['gllink_creditors'];
+	 $_SESSION['SuppTrans']->GRNAct = $_SESSION['CompanyRecord']['grnact'];
+	 $_SESSION['SuppTrans']->CreditorsAct = $_SESSION['CompanyRecord']['creditorsact'];
 	 $_SESSION['SuppTrans']->InvoiceOrCredit = 'Credit Note';
 
 } elseif (!isset($_SESSION['SuppTrans'])){
@@ -114,9 +112,9 @@ if (isset($_POST['ExRate'])){
 	$_SESSION['SuppTrans']->TranDate = $_POST['TranDate'];
 
 	if (substr($_SESSION['SuppTrans']->$Terms,0,1)=="1") {
-		$_SESSION['SuppTrans']->DueDate = Date($DefaultDateFormat, Mktime(0,0,0,Date("m")+1,substr($_SESSION['SuppTrans']->$Terms,1),Date("y")));
+		$_SESSION['SuppTrans']->DueDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date("m")+1,substr($_SESSION['SuppTrans']->$Terms,1),Date("y")));
 	} else {
-		$_SESSION['SuppTrans']->DueDate = Date($DefaultDateFormat, Mktime(0,0,0,Date("m")+1,Date("d") + (int) substr($_SESSION['SuppTrans']->$Terms,1),Date("y")));
+		$_SESSION['SuppTrans']->DueDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date("m")+1,Date("d") + (int) substr($_SESSION['SuppTrans']->$Terms,1),Date("y")));
 	}
 
 	$_SESSION['SuppTrans']->SuppReference = $_POST['SuppReference'];
@@ -202,13 +200,13 @@ echo '<TR><TD><FONT COLOR=red><B>' . $_SESSION['SuppTrans']->SupplierID . ' - ' 
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 
 echo '<TABLE>';
-echo '<TR><TD><FONT COLOR=red>' . _("Supplier Credit Note Reference") . ":</FONT></TD>
+echo '<TR><TD><FONT COLOR=red>' . _('Supplier Credit Note Reference') . ":</FONT></TD>
 	<TD><FONT SIZE=2><INPUT TYPE=TEXT SIZE=20 MAXLENGTH=20 NAME=SuppReference VALUE='" . $_SESSION['SuppTrans']->SuppReference . "'></TD></TR>";
 
 if (!isset($_SESSION['SuppTrans']->TranDate)){
-	$_SESSION['SuppTrans']->TranDate= Date($DefaultDateFormat, Mktime(0,0,0,Date('m'),Date('d')-1,Date('y')));
+	$_SESSION['SuppTrans']->TranDate= Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y')));
 }
-echo '<TR><TD><FONT COLOR=red>' . _('Credit Note Date') . ' (' . _('in format') . ' ' . $DefaultDateFormat . ") :</FONT></TD>
+echo '<TR><TD><FONT COLOR=red>' . _('Credit Note Date') . ' (' . _('in format') . ' ' . $_SESSION['DefaultDateFormat'] . ") :</FONT></TD>
 		<TD><INPUT TYPE=TEXT SIZE=11 MAXLENGTH=10 NAME='TranDate' VALUE=" . $_SESSION['SuppTrans']->TranDate . '></TD></TR>';
 echo '<TR><TD><FONT COLOR=red>' . _('Exchange Rate') . ":</FONT></TD>
 		<TD><INPUT TYPE=TEXT SIZE=11 MAXLENGTH=10 NAME='ExRate' VALUE=" . $_SESSION['SuppTrans']->ExRate . '></TD></TR>';
@@ -278,8 +276,8 @@ if (count($_SESSION['SuppTrans']->Shipts)>0){   /*if there are any Shipment char
 		$i++;
 		if ($i>15){
 			$i=0;
-			echo "<TR><TD CLASS='tableheader'>" . _('Shipment') . "</B></TD><TD class='tableheader'>" .
-				  _('Credit Amount') . '</B></TD></TR>';
+			echo "<TR><TD CLASS='tableheader'>" . _('Shipment') . "</TD><TD class='tableheader'>" .
+				  _('Credit Amount') . '</TD></TR>';
 		}
 	}
 
@@ -384,8 +382,8 @@ then do the updates and inserts to process the credit note entered */
 		prnMsg(_('The credit note as entered cannot be processed because the there is no suppliers credit note number or reference entered') . '. ' . _('The supplier credit note number must be entered'),'error');
 	} elseif (!is_date($_SESSION['SuppTrans']->TranDate)){
 		$InputError = True;
-		prnMsg(_('The credit note as entered cannot be processed because the date entered is not in the format') . ' ' . $DefaultDateFormat, 'error');
-	} elseif (DateDiff(Date($DefaultDateFormat), $_SESSION['SuppTrans']->TranDate, "d") < 0){
+		prnMsg(_('The credit note as entered cannot be processed because the date entered is not in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
+	} elseif (DateDiff(Date($_SESSION['DefaultDateFormat']), $_SESSION['SuppTrans']->TranDate, "d") < 0){
 		$InputError = True;
 		prnMsg(_('The credit note as entered cannot be processed because the date is after today') . '. ' . _('Purchase credit notes are expected to have a date prior to or today'),'error');
 	}elseif ($_SESSION['SuppTrans']->ExRate <= 0){
@@ -445,14 +443,14 @@ then do the updates and inserts to process the credit note entered */
 			/*GL Items are straight forward - just do the credit postings to the GL accounts specified -
 			the debit is to creditors control act  done later for the total credit note value + tax*/
 
-				$SQL = 'INSERT INTO GLTrans (Type,
-								TypeNo,
-								TranDate,
-								PeriodNo,
-								Account,
-								Narrative,
-								Amount,
-								JobRef)
+				$SQL = 'INSERT INTO gltrans (type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount,
+								jobref)
 						 	VALUES (21,
 								' . $CreditNoteNo . ",
 								'" . $SQLCreditNoteDate . "',
@@ -478,13 +476,13 @@ then do the updates and inserts to process the credit note entered */
 			/*shipment postings are also straight forward - just do the credit postings to the GRN suspense account
 			these entries are reversed from the GRN suspense when the shipment is closed - entries only to open shipts*/
 
-				$SQL = 'INSERT INTO GLTrans (Type,
-								TypeNo,
-								TranDate,
-								PeriodNo,
-								Account,
-								Narrative,
-								Amount)
+				$SQL = 'INSERT INTO gltrans (type,
+								typeno,
+								trandate,
+								periodo,
+								account,
+								narrative,
+								amount)
 							VALUES (21,
 								' . $CreditNoteNo . ",
 								'" . $SQLCreditNoteDate . "',
@@ -519,18 +517,18 @@ then do the updates and inserts to process the credit note entered */
 
 							$StockGLCode = GetStockGLCode($EnteredGRN->ItemCode,$db);
 
-							$SQL = 'INSERT INTO GLTrans (Type,
-											TypeNo,
-											TranDate,
-											PeriodNo,
-											Account,
-											Narrative,
-											Amount)
+							$SQL = 'INSERT INTO gltrans (type,
+											typeno,
+											trandate,
+											periodno,
+											account,
+											narrative,
+											amount)
 									 VALUES (21,
 									 	' . $CreditNoteNo . ",
 										'" . $SQLCreditNoteDate . "',
 										" . $PeriodNo . ',
-										' . $StockGLCode['PurchPriceVarAct'] . ",
+										' . $StockGLCode['purchpricevaract'] . ",
 										'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN Credit Note') . ' ' . $EnteredGRN->GRNNo . ' - ' . $EnteredGRN->ItemCode . ' x ' .  $EnteredGRN->This_QuantityInv . ' x  ' . number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate),2)  . "',
 										" . (-$PurchPriceVar) . ')';
 
@@ -544,13 +542,13 @@ then do the updates and inserts to process the credit note entered */
 						order price and the actual credit note price since the std cost was made equal to the order price in local currency at the time
 						the goods were received */
 
-							$SQL = 'INSERT INTO GLTrans (Type,
-											TypeNo,
-											TranDate,
-											PeriodNo,
-											Account,
-											Narrative,
-											Amount)
+							$SQL = 'INSERT INTO gltrans (type,
+											typeno,
+											trandate,
+											periodno,
+											account,
+											narrative,
+											amount)
 									VALUES (21,
 										' . $CreditNoteNo . ",
 										'" . $SQLCreditNoteDate . "',
@@ -572,13 +570,13 @@ then do the updates and inserts to process the credit note entered */
 
 					/*then its a purchase order item on a shipment - whole charge amount to GRN suspense pending closure of the shipment	when the variance is calculated and the GRN act cleared up for the shipment */
 
-					$SQL = 'INSERT INTO GLTrans (Type,
-									TypeNo,
-									TranDate,
-									PeriodNo,
-									Account,
-									Narrative,
-									Amount)
+					$SQL = 'INSERT INTO gltrans (type,
+									typeNo,
+									trandate,
+									periodno,
+									account,
+									narrative,
+									amount)
 							 VALUES (21,
 							 	' . $CreditNoteNo . ",
 								'" . $SQLCreditNoteDate . "',
@@ -605,13 +603,13 @@ then do the updates and inserts to process the credit note entered */
 			if ($_SESSION['SuppTrans']->OvGST != 0){
 
 				/* Now the TAX account */
-				$SQL = 'INSERT INTO GLTrans (Type,
-								TypeNo,
-								TranDate,
-								PeriodNo,
-								Account,
-								Narrative,
-								Amount)
+				$SQL = 'INSERT INTO gltrans (type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount)
 						 VALUES (21,
 						 	' . $CreditNoteNo . ",
 							'" . $SQLCreditNoteDate . "',
@@ -628,13 +626,13 @@ then do the updates and inserts to process the credit note entered */
 
 			/* Now the control account */
 
-			$SQL = 'INSERT INTO GLTrans (Type,
-							TypeNo,
-							TranDate,
-							PeriodNo,
-							Account,
-							Narrative,
-							Amount)
+			$SQL = 'INSERT INTO gltrans (type,
+							typeno,
+							trandate,
+							periodno,
+							account,
+							narrative,
+							amount)
 					 VALUES (21,
 					 	' . $CreditNoteNo . ",
 						'" . $SQLCreditNoteDate . "',
@@ -651,16 +649,16 @@ then do the updates and inserts to process the credit note entered */
 
 	/*Now insert the credit note into the SuppTrans table*/
 
-		$SQL = 'INSERT INTO SuppTrans (TransNo,
-						Type,
-						SupplierNo,
-						SuppReference,
-						TranDate,
-						DueDate,
-						OvAmount,
-						OvGST,
-						Rate,
-						TransText)
+		$SQL = 'INSERT INTO supptrans (transno,
+						type,
+						supplierno,
+						suppreference,
+						trandate,
+						duedate,
+						ovamount,
+						ovgst,
+						rate,
+						transtext)
 			VALUES ('. $CreditNoteNo . ",
 				21,
 				'" . $_SESSION['SuppTrans']->SupplierID . "',
@@ -680,15 +678,15 @@ then do the updates and inserts to process the credit note entered */
 
 		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
-			$SQL = 'UPDATE PurchOrderDetails SET QtyInvoiced = QtyInvoiced - ' .
-					 $EnteredGRN->This_QuantityInv . ' WHERE PODetailItem = ' . $EnteredGRN->PODetailItem;
+			$SQL = 'UPDATE purchorderdetails SET qtyinvoiced = qtyinvoiced - ' .
+					 $EnteredGRN->This_QuantityInv . ' WHERE podetailitem = ' . $EnteredGRN->PODetailItem;
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity credited of the purchase order line could not be updated because');
 			$DbgMsg = _('The following SQL to update the purchase order details was used');
 			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 
-			$SQL = 'UPDATE GRNs SET QuantityInv = QuantityInv - ' .
-					 $EnteredGRN->This_QuantityInv . ' WHERE GRNNo = ' . $EnteredGRN->GRNNo;
+			$SQL = 'UPDATE grns SET quantityinv = quantityinv - ' .
+					 $EnteredGRN->This_QuantityInv . ' WHERE grnno = ' . $EnteredGRN->GRNNo;
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity credited off the goods received record could not be updated because');
 			$DbgMsg = _('The following SQL to update the GRN quantity credited was used');
@@ -701,11 +699,11 @@ then do the updates and inserts to process the credit note entered */
 			if (strlen($EnteredGRN->ShiptRef)>0 AND $EnteredGRN->ShiptRef!=0){
 
 				/* and insert the shipment charge records */
-				$SQL = 'INSERT INTO ShipmentCharges (ShiptRef,
-									TransType,
-									TransNo,
-									StockID,
-									Value)
+				$SQL = 'INSERT INTO shipmentcharges (shiptref,
+									transtype,
+									transno,
+									stockid,
+									value)
 							VALUES (' . $EnteredGRN->ShiptRef . ',
 								21,
 								' . $CreditNoteNo . ",
@@ -725,10 +723,10 @@ then do the updates and inserts to process the credit note entered */
 
 		foreach ($_SESSION['SuppTrans']->Shipts as $ShiptChg){
 
-			$SQL = 'INSERT INTO ShipmentCharges (ShiptRef,
-								TransType,
-								TransNo,
-								Value)
+			$SQL = 'INSERT INTO shipmentcharges (shiptref,
+								transtype,
+								transno,
+								value)
 							VALUES (' . $ShiptChg->ShiptRef . ',
 								21,
 								' . $CreditNoteNo . ',

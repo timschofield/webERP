@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 include('config.php');
 include('includes/ConnectDB.inc');
@@ -11,7 +11,7 @@ if (isset($SessionSavePath)){
 
 session_start();
 
-if (! in_array($PageSecurity,$SecurityGroups[$_SESSION['AccessLevel']])){
+if (!in_array($PageSecurity,$_SESSION['AllowedPageSecurityTokens'])){
 	echo '<html><body><BR><BR><BR><BR><BR><BR><BR><CENTER><FONT COLOR=RED SIZE=4><B>' . _('The security settings on your account do not permit you to access this function') . '</B></FONT></body></html>';
 	exit;
 }
@@ -62,10 +62,10 @@ if ($_GET['ProduceCVSFile']==True){
 	 $title = _('Sales Analysis Comma Seperated File (CSV) Generation');
 	include('includes/header.inc');
 
-	 echo 'http://' . getenv(SERVER_NAME) . $rootpath . '/' . $reports_dir .  '/SalesAnalysis.csv';
-	 echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . "/" . $reports_dir .  "/SalesAnalysis.csv'>";
+	 echo 'http://' . getenv(SERVER_NAME) . $rootpath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv';
+	 echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . "/" . $_SESSION['reports_dir'] .  "/SalesAnalysis.csv'>";
 
-	 echo '<P>' . _('You should automatically be forwarded to the CSV Sales Analysis file when it is ready') . '. ' . _('If this does not happen') . " <a href='" . $rootpath . '/' . $reports_dir . "/SalesAnalysis.csv'>" . _('click here') . '</a> ' . _('to continue') . '<br>';
+	 echo '<P>' . _('You should automatically be forwarded to the CSV Sales Analysis file when it is ready') . '. ' . _('If this does not happen') . " <a href='" . $rootpath . '/' . $_SESSION['reports_dir'] . "/SalesAnalysis.csv'>" . _('click here') . '</a> ' . _('to continue') . '<br>';
 	 include('includes/footer.inc');
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
 
@@ -11,7 +11,7 @@ $title = _('Balance Sheet');
 include('includes/header.inc');
 include('includes/DateFunctions.inc');
 include('includes/SQL_CommonFunctions.inc');
-
+include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
 
 echo "<FORM METHOD='POST' ACTION=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
@@ -22,15 +22,15 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 /*Show a form to allow input of criteria for TB to show */
 	echo '<CENTER><TABLE><TR><TD>'._('Select the balance date').":</TD><TD><SELECT Name='BalancePeriodEnd'>";
 
-	$sql = 'SELECT PeriodNo, LastDate_In_Period FROM Periods';
+	$sql = 'SELECT periodno, lastdate_in_period FROM periods';
 	$Periods = DB_query($sql,$db);
 
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
-		if( $_POST['BalancePeriodEnd']== $myrow['PeriodNo']){
-			echo '<OPTION SELECTED VALUE=' . $myrow['PeriodNo'] . '>' . ConvertSQLDate($myrow['LastDate_In_Period']);
+		if( $_POST['BalancePeriodEnd']== $myrow['periodno']){
+			echo '<OPTION SELECTED VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period']);
 		} else {
-			echo '<OPTION VALUE=' . $myrow['PeriodNo'] . '>' . ConvertSQLDate($myrow['LastDate_In_Period']);
+			echo '<OPTION VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period']);
 		}
 	}
 
@@ -53,40 +53,44 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 
 	echo "<INPUT TYPE=HIDDEN NAME='BalancePeriodEnd' VALUE=" . $_POST['BalancePeriodEnd'] . '>';
 
-	$CompanyRecord = ReadInCompanyRecord($db);
-	$RetainedEarningsAct = $CompanyRecord['RetainedEarnings'];
+	$RetainedEarningsAct = $_SESSION['CompanyRecord']['retainedearnings'];
 
-	$sql = 'SELECT LastDate_in_Period FROM Periods WHERE PeriodNo=' . $_POST['BalancePeriodEnd'];
+	$sql = 'SELECT lastdate_in_period FROM periods WHERE periodno=' . $_POST['BalancePeriodEnd'];
 	$PrdResult = DB_query($sql, $db);
 	$myrow = DB_fetch_row($PrdResult);
 	$BalanceDate = ConvertSQLDate($myrow[0]);
 
 	/*Calculate B/Fwd retained earnings */
 
-	$SQL = 'SELECT Sum(CASE WHEN ChartDetails.Period=' . $_POST['BalancePeriodEnd'] . ' THEN ChartDetails.BFwd + ChartDetails.Actual ELSE 0 END) AS AccumProfitBFwd,
-			Sum(CASE WHEN ChartDetails.Period=' . ($_POST['BalancePeriodEnd'] - 12) . " THEN ChartDetails.BFwd + ChartDetails.Actual ELSE 0 END) AS LYAccumProfitBFwd
-		FROM ChartMaster INNER JOIN AccountGroups
-		ON ChartMaster.Group_ = AccountGroups.GroupName INNER JOIN ChartDetails
-		ON ChartMaster.AccountCode= ChartDetails.AccountCode
-		WHERE AccountGroups.PandL=1";
+	$SQL = 'SELECT Sum(CASE WHEN chartdetails.period=' . $_POST['BalancePeriodEnd'] . ' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS accumprofitbfwd,
+			Sum(CASE WHEN chartdetails.period=' . ($_POST['BalancePeriodEnd'] - 12) . " THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lyaccumprofitbfwd
+		FROM chartmaster INNER JOIN accountgroups
+		ON chartmaster.group_ = accountgroups.groupname INNER JOIN chartdetails
+		ON chartmaster.accountcode= chartdetails.accountcode
+		WHERE accountgroups.pandl=1";
 
 	$AccumProfitResult = DB_query($SQL,$db,_('The accumulated profits brought forward could not be calculated by the SQL because'));
 
 	$AccumProfitRow = DB_fetch_array($AccumProfitResult); /*should only be one row returned */
 
-	$SQL = 'SELECT AccountGroups.SectionInAccounts, AccountGroups.GroupName,
-			ChartDetails.AccountCode ,
-			ChartMaster.AccountName,
-			Sum(CASE WHEN ChartDetails.Period=' . $_POST['BalancePeriodEnd'] . ' THEN ChartDetails.BFwd + ChartDetails.Actual ELSE 0 END) AS BalanceCFwd,
-			Sum(CASE WHEN ChartDetails.Period=' . ($_POST['BalancePeriodEnd'] - 12) . ' THEN ChartDetails.BFwd + ChartDetails.Actual ELSE 0 END) AS LYBalanceCFwd
-		FROM ChartMaster INNER JOIN AccountGroups
-		ON ChartMaster.Group_ = AccountGroups.GroupName INNER JOIN ChartDetails
-		ON ChartMaster.AccountCode= ChartDetails.AccountCode
-		WHERE AccountGroups.PandL=0
-		GROUP BY AccountGroups.GroupName,
-			ChartDetails.AccountCode,
-			ChartMaster.AccountName
-		ORDER BY AccountGroups.SectionInAccounts, AccountGroups.SequenceInTB, ChartDetails.AccountCode';
+	$SQL = 'SELECT accountgroups.sectioninaccounts, 
+			accountgroups.groupname,
+			chartdetails.accountcode ,
+			chartmaster.accountname,
+			Sum(CASE WHEN chartdetails.period=' . $_POST['BalancePeriodEnd'] . ' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS balancecfwd,
+			Sum(CASE WHEN chartdetails.period=' . ($_POST['BalancePeriodEnd'] - 12) . ' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lybalancecfwd
+		FROM chartmaster INNER JOIN accountgroups
+		ON chartmaster.group_ = accountgroups.groupname INNER JOIN chartdetails
+		ON chartmaster.accountcode= chartdetails.accountcode
+		WHERE accountgroups.pandl=0
+		GROUP BY accountgroups.groupname,
+			chartdetails.accountcode,
+			chartmaster.accountname,
+			accountgroups.sequenceintb,
+			accountgroups.sectioninaccounts
+		ORDER BY accountgroups.sectioninaccounts, 
+			accountgroups.sequenceintb, 
+			chartdetails.accountcode';
 
 	$AccountsResult = DB_query($SQL,$db,_('No general ledger accounts were returned by the SQL because'));
 
@@ -125,15 +129,15 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 
 	while ($myrow=DB_fetch_array($AccountsResult)) {
 
-		$AccountBalance = $myrow['BalanceCFwd'];
-		$LYAccountBalance = $myrow['LYBalanceCFwd'];
+		$AccountBalance = $myrow['balancecfwd'];
+		$LYAccountBalance = $myrow['lybalancecfwd'];
 
-		if ($myrow['AccountCode'] == $RetainedEarningsAct){
-			$AccountBalance += $AccumProfitRow['AccumProfitBFwd'];
-			$LYAccountBalance += $AccumProfitRow['LYAccumProfitBFwd'];
+		if ($myrow['accountcode'] == $RetainedEarningsAct){
+			$AccountBalance += $AccumProfitRow['accumprofitbfwd'];
+			$LYAccountBalance += $AccumProfitRow['lyaccumprofitbfwd'];
 		}
 
-		if ($myrow['GroupName']!= $ActGrp AND $_POST['Detail']=='Summary' AND $ActGrp != '') {
+		if ($myrow['groupname']!= $ActGrp AND $_POST['Detail']=='Summary' AND $ActGrp != '') {
 
 			printf('<td COLSPAN=3>%s</td>
 			<td ALIGN=RIGHT>%s</td>
@@ -146,7 +150,7 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 			);
 
 		}
-		if ($myrow['SectionInAccounts']!= $Section){
+		if ($myrow['sectioninaccounts']!= $Section){
 
 			if ($SectionBalanceLY+$SectionBalance !=0){
 				if ($_POST['Detail']=='Detailed'){
@@ -179,29 +183,29 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 			$SectionBalanceLY = 0;
 			$SectionBalance = 0;
 
-			$Section = $myrow['SectionInAccounts'];
+			$Section = $myrow['sectioninaccounts'];
 
 			if ($_POST['Detail']=='Detailed'){
 				printf('<TR>
 					<TD COLSPAN=6><FONT SIZE=4 COLOR=BLUE><B>%s</B></FONT></TD>
 					</TR>',
-					$Sections[$myrow['SectionInAccounts']]);
+					$Sections[$myrow['sectioninaccounts']]);
 			}
 		}
 
-		if ($myrow['GroupName']!= $ActGrp){
+		if ($myrow['groupname']!= $ActGrp){
 
 			if ($_POST['Detail']=='Detailed'){
-				$ActGrp = $myrow['GroupName'];
+				$ActGrp = $myrow['groupname'];
 				printf('<TR>
 				<td COLSPAN=6><FONT SIZE=2 COLOR=BLUE><B>%s</B></FONT></TD>
 				</TR>',
-				$myrow['GroupName']);
+				$myrow['groupname']);
 				echo $TableHeader;
 			}
 			$GroupTotal=0;
 			$LYGroupTotal=0;
-			$ActGrp = $myrow["GroupName"];
+			$ActGrp = $myrow["groupname"];
 		}
 
 		$SectionBalanceLY +=	$LYAccountBalance;
@@ -224,7 +228,7 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 				$k++;
 			}
 
-			$ActEnquiryURL = "<A HREF='$rootpath/GLAccountInquiry.php?" . SID . "Period=" . $_POST['BalancePeriodEnd'] . '&Account=' . $myrow['AccountCode'] . "'>" . $myrow['AccountCode'] . '<A>';
+			$ActEnquiryURL = "<A HREF='$rootpath/GLAccountInquiry.php?" . SID . "Period=" . $_POST['BalancePeriodEnd'] . '&Account=' . $myrow['accountcode'] . "'>" . $myrow['accountcode'] . '<A>';
 
 			$PrintString = '<td>%s</td>
 					<td>%s</td>
@@ -236,7 +240,7 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 
 			printf($PrintString,
 				$ActEnquiryURL,
-				$myrow['AccountName'],
+				$myrow['accountname'],
 				number_format($AccountBalance),
 				number_format($LYAccountBalance)
 				);

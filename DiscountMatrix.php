@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 11;
 include('includes/session.inc');
@@ -34,7 +34,14 @@ if (isset($_POST['submit'])) {
 
 	if ($InputError !=1) {
 
-		$sql = "INSERT INTO DiscountMatrix (SalesType, DiscountCategory, QuantityBreak, DiscountRate) VALUES('" . $_POST['SalesType'] . "', '" . $_POST['DiscountCategory'] . "', " . $_POST['QuantityBreak'] . ", " . ($_POST['DiscountRate']/100) . ')';
+		$sql = "INSERT INTO discountmatrix (salestype, 
+							discountcategory, 
+							quantitybreak, 
+							discountrate) 
+					VALUES('" . $_POST['SalesType'] . "', 
+						'" . $_POST['DiscountCategory'] . "', 
+						" . $_POST['QuantityBreak'] . ", 
+						" . ($_POST['DiscountRate']/100) . ')';
 
 		$result = DB_query($sql,$db);
 		prnMsg( _('The discount matrix record has been added'),'success');
@@ -46,25 +53,25 @@ if (isset($_POST['submit'])) {
 } elseif ($_GET['Delete']=='yes') {
 /*the link to delete a selected record was clicked instead of the submit button */
 
-	$sql="DELETE FROM DiscountMatrix
-		WHERE DiscountCategory='" .$_GET['DiscountCategory'] . "'
-		AND SalesType='" . $_GET['SalesType'] . "'
-		AND QuantityBreak=" . $_GET['QuantityBreak'];
+	$sql="DELETE FROM discountmatrix
+		WHERE discountcategory='" .$_GET['DiscountCategory'] . "'
+		AND salestype='" . $_GET['SalesType'] . "'
+		AND quantitybreak=" . $_GET['QuantityBreak'];
 
 	$result = DB_query($sql,$db);
 	prnMsg( _('The discount matrix record has been deleted'),'success');
 }
 
-$sql = 'SELECT Sales_Type,
-		SalesType,
-		DiscountCategory,
-		QuantityBreak,
-		DiscountRate
-	FROM DiscountMatrix INNER JOIN SalesTypes
-		ON DiscountMatrix.SalesType=SalesTypes.TypeAbbrev
-	ORDER BY SalesType,
-		DiscountCategory,
-		QuantityBreak';
+$sql = 'SELECT sales_type,
+		salestype,
+		discountcategory,
+		quantitybreak,
+		discountrate
+	FROM discountmatrix INNER JOIN salestypes
+		ON discountmatrix.salestype=salestypes.typeabbrev
+	ORDER BY salestype,
+		discountcategory,
+		quantitybreak';
 
 $result = DB_query($sql,$db);
 
@@ -84,7 +91,7 @@ while ($myrow = DB_fetch_array($result)) {
 		echo "<tr bgcolor='#EEEEEE'>";
 		$k=1;
 	}
-	$DeleteURL = $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=yes&SalesType=' . $myrow['SalesType'] . '&DiscountCategory=' . $myrow['DiscountCategory'] . '&QuantityBreak=' . $myrow['QuantityBreak'];
+	$DeleteURL = $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=yes&SalesType=' . $myrow['salestype'] . '&DiscountCategory=' . $myrow['discountcategory'] . '&QuantityBreak=' . $myrow['quantitybreak'];
 
 	printf("<td>%s</td>
 		<td>%s</td>
@@ -92,10 +99,10 @@ while ($myrow = DB_fetch_array($result)) {
 		<td>%s</td>
 		<td><a href='%s'>" . _('Delete') . '</td>
 		</tr>',
-		$myrow['Sales_Type'],
-		$myrow['DiscountCategory'],
-		$myrow['QuantityBreak'],
-		number_format($myrow['DiscountRate']*100,2) ,
+		$myrow['sales_type'],
+		$myrow['discountcategory'],
+		$myrow['quantitybreak'],
+		number_format($myrow['discountrate']*100,2) ,
 		$DeleteURL);
 
 }
@@ -107,9 +114,9 @@ echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 echo '<TABLE>';
 
-$sql = 'SELECT TypeAbbrev,
-		Sales_Type
-	FROM SalesTypes';
+$sql = 'SELECT typeabbrev,
+		sales_type
+	FROM salestypes';
 
 $result = DB_query($sql, $db);
 
@@ -118,10 +125,10 @@ echo '<TR><TD>' . _('Customer Price List') . ' (' . _('Sales Type') . '):</TD><T
 echo "<SELECT NAME='SalesType'>";
 
 while ($myrow = DB_fetch_array($result)){
-	if ($myrow['TypeAbbrev']==$_POST['SalesType']){
-		echo "<OPTION SELECTED VALUE='" . $myrow['TypeAbbrev'] . "'>" . $myrow['Sales_Type'];
+	if ($myrow['typeabbrev']==$_POST['SalesType']){
+		echo "<OPTION SELECTED VALUE='" . $myrow['typeabbrev'] . "'>" . $myrow['sales_type'];
 	} else {
-		echo "<OPTION VALUE='" . $myrow['TypeAbbrev'] . "'>" . $myrow['Sales_Type'];
+		echo "<OPTION VALUE='" . $myrow['typeabbrev'] . "'>" . $myrow['sales_type'];
 	}
 }
 

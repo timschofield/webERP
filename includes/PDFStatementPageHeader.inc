@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /* PDFlib code to set up a new page */
 
 $Perforation = $Page_Width - $RightMargin - 160;
@@ -13,12 +13,12 @@ $XPos = $Page_Width/2 - 100;
 $pdf->addText($XPos, $YPos+30,$FontSize, _('Statement') );
 
 $FontSize = 12;
-$pdf->addText($XPos + 70, $YPos+30,$FontSize, ' '. _('as of').' ' . Date($DefaultDateFormat));
+$pdf->addText($XPos + 70, $YPos+30,$FontSize, ' '. _('as of').' ' . Date($_SESSION['DefaultDateFormat']));
 
 $FontSize = 10;
 $XPos = $Perforation +2;
 $pdf->addText($XPos, $YPos+30,$FontSize, _('Remittance Advice') );
-$pdf->addText($XPos, $YPos+18,$FontSize, _('Statement dated').' ' . Date($DefaultDateFormat));
+$pdf->addText($XPos, $YPos+18,$FontSize, _('Statement dated').' ' . Date($_SESSION['DefaultDateFormat']));
 
 $XPos = $Perforation-50;
 $pdf->addText($XPos, $YPos+8,$FontSize, _('Page').': ' . $PageNumber);
@@ -31,18 +31,18 @@ $pdf->addText($XPos+1, $YPos+8,$FontSize, _('Page').': ' . $PageNumber);
 $XPos = $Left_Margin;
 $YPos = $Page_Height - $Top_Margin - 45;
 
-$pdf->addText($XPos, $YPos,$FontSize, $CompanyName);
+$pdf->addText($XPos, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
 
 $FontSize =8;
-$pdf->addText($XPos, $YPos-12,$FontSize, $CompanyRecord['PostalAddress']);
-$pdf->addText($XPos, $YPos-21,$FontSize, $CompanyRecord['RegOffice1'] . ' ' . $CompanyRecord['RegOffice2']);
-$pdf->addText($XPos, $YPos-30,$FontSize, _('Ph').': ' . $CompanyRecord['Telephone'] . ' '._('Fax').': ' . $CompanyRecord['Fax']);
-$pdf->addText($XPos, $YPos-39,$FontSize, $CompanyRecord['Email']);
+$pdf->addText($XPos, $YPos-12,$FontSize, $_SESSION['CompanyRecord']['postaladdress']);
+$pdf->addText($XPos, $YPos-21,$FontSize, $_SESSION['CompanyRecord']['regoffice1'] . ' ' . $_SESSION['CompanyRecord']['regoffice2']);
+$pdf->addText($XPos, $YPos-30,$FontSize, _('Ph').': ' . $_SESSION['CompanyRecord']['telephone'] . ' '._('Fax').': ' . $_SESSION['CompanyRecord']['fax']);
+$pdf->addText($XPos, $YPos-39,$FontSize, $_SESSION['CompanyRecord']['email']);
 
 /*Now the remittance section just company and return postal address */
 $pdf->addText($Perforation+1, $YPos-15,$FontSize, _('Please send with remittance to').':');
-$pdf->addText($Perforation+1, $YPos-24,$FontSize, $CompanyName);
-$LeftOvers=$pdf->addTextWrap($Perforation+1,$YPos-33,$Page_Width-$Right_Margin-$Perforation,$FontSize,$CompanyRecord['PostalAddress'],'left');
+$pdf->addText($Perforation+1, $YPos-24,$FontSize, $_SESSION['CompanyRecord']['coyname']);
+$LeftOvers=$pdf->addTextWrap($Perforation+1,$YPos-33,$Page_Width-$Right_Margin-$Perforation,$FontSize,$_SESSION['CompanyRecord']['postaladdress'],'left');
 $LeftOvers = $pdf->addTextWrap($Perforation+1, $YPos-42,$Page_Width-$Right_Margin-$Perforation,$FontSize,$LeftOvers, 'left');
 
 /*Now the customer details and statement address */
@@ -52,21 +52,21 @@ $YPos -= ($line_height*4);
 
 $FontSize=12;
 
-$pdf->addText($XPos, $YPos,$FontSize, $StmtHeader['Name']);
-$pdf->addText($XPos, $YPos-14,$FontSize, $StmtHeader['Address1']);
-$pdf->addText($XPos, $YPos-28,$FontSize, $StmtHeader['Address2']);
-$pdf->addText($XPos, $YPos-42,$FontSize, $StmtHeader['Address3']);
-$pdf->addText($XPos, $YPos-56,$FontSize, $StmtHeader['Address4']);
+$pdf->addText($XPos, $YPos,$FontSize, $StmtHeader['name']);
+$pdf->addText($XPos, $YPos-14,$FontSize, $StmtHeader['address1']);
+$pdf->addText($XPos, $YPos-28,$FontSize, $StmtHeader['address2']);
+$pdf->addText($XPos, $YPos-42,$FontSize, $StmtHeader['address3']);
+$pdf->addText($XPos, $YPos-56,$FontSize, $StmtHeader['address4']);
 
 $YPos -= ($line_height*4);
 /*Now note the customer code in the remittance section too */
 $FontSize=8;
-$pdf->addText($Perforation+1, $YPos,$FontSize, _('Customer Code').': ' . $StmtHeader['DebtorNo']);
+$pdf->addText($Perforation+1, $YPos,$FontSize, _('Customer Code').': ' . $StmtHeader['debtorno']);
 
 $XPos = $Page_Width/2 - 60;
-$pdf->addText($XPos, $YPos,$FontSize, _('All amounts stated in') . ' - ' . $StmtHeader['Currency']);
+$pdf->addText($XPos, $YPos,$FontSize, _('All amounts stated in') . ' - ' . $StmtHeader['currency']);
 $YPos -= $line_height;
-$pdf->addText($XPos, $YPos,$FontSize, $StmtHeader['Terms']);
+$pdf->addText($XPos, $YPos,$FontSize, $StmtHeader['terms']);
 
 $YPos -= $line_height;
 $XPos = $Left_Margin;
@@ -136,6 +136,5 @@ $pdf->line($Page_Width-$Right_Margin, $YPos,$XPos, $YPos);
 
 $YPos -= $line_height;
 $XPos = $Left_Margin;
-
 
 ?>

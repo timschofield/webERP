@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*Script to insert a dummy sales order if one is not already set up - at least one order is needed for the sales order pages to work.
 Also inserts a blank company record if one is not already set up */
 
@@ -10,12 +10,12 @@ $title = _('UTILITY PAGE That sets up a new blank company record if not already 
 
 include("includes/header.inc");
 
-$sql = "SELECT Count(CoyCode) FROM Companies";
+$sql = "SELECT COUNT(coycode) FROM companies";
 $Result = DB_query($sql,$db);
 $myrow = DB_fetch_row($Result);
 if ($myrow[0]==0){
 
-	$sql = "INSERT INTO Companies (CoyCode, CoyName) VALUES (1,'Enter company name')";
+	$sql = "INSERT INTO companies (coycode, coyname) VALUES (1,'Enter company name')";
 	$Result = DB_query($sql,$db);
 } else {
 	echo '<P>' . _('An existing company record is set up already. No alterations have been made');
@@ -24,11 +24,11 @@ if ($myrow[0]==0){
 
 /*Need to have a sales order record set up */
 
-$sql = "SELECT Count(OrderNo) FROM SalesOrders WHERE DebtorNo='NULL999' AND BranchCode='NULL9'";
+$sql = "SELECT COUNT(orderno) FROM salesorders WHERE debtorno='NULL999' AND branchcode='NULL9'";
 $Result = DB_query($sql,$db);
 $myrow = DB_fetch_row($Result);
 if ($myrow[0]==0){
-	$sql= "INSERT INTO SalesOrders VALUES ( '1',
+	$sql= "INSERT INTO salesorders VALUES ( '1',
 						'NULL999',
 						'NULL9',
 						'',
@@ -52,45 +52,45 @@ if ($myrow[0]==0){
 
 /*The sales GL account group needs to be set up */
 
-$sql = "SELECT Count(GroupName) FROM AccountGroups WHERE GroupName='Sales'";
+$sql = "SELECT COUNT(groupname) FROM accountgroups WHERE groupname='Sales'";
 $Result = DB_query($sql,$db);
 $myrow = DB_fetch_row($Result);
 if ($myrow[0]==0){
 
-	$sql = "INSERT INTO AccountGroups (GroupName, SectionInAccounts, PandL, SequenceInTB) VALUES ('Sales', 1, 1, 5)";
+	$sql = "INSERT INTO accountgroups (groupname, sectioninaccounts, pandl, sequenceintb) VALUES ('Sales', 1, 1, 5)";
 	$Result = DB_query($sql,$db);
 }
 
 /*At least 1 GL acount needs to be set up for sales transactions */
 
-$sql = "SELECT Count(AccountCode) FROM ChartMaster WHERE AccountCode=1";
+$sql = "SELECT COUNT(accountcode) FROM chartmaster WHERE accountcode=1";
 $Result = DB_query($sql,$db);
 $myrow = DB_fetch_row($Result);
 if ($myrow[0]==0){
 
-	$sql = "INSERT INTO ChartMaster (AccountCode, AccountName, Group_) VALUES (1,'Default Sales and Discounts', 'Sales')";
+	$sql = "INSERT INTO chartmaster (accountcode, accountname, group_) VALUES (1,'Default Sales and Discounts', 'Sales')";
 	$Result = DB_query($sql,$db);
 }
 
 /* The default COGS GL Posting table is required */
 
-$sql = "SELECT Count(StkCat) FROM COGSGLPostings WHERE Area='AN' AND StkCat='ANY'";
+$sql = "SELECT COUNT(stkcat) FROM cogsglpostings WHERE area='AN' AND stkcat='ANY'";
 $Result = DB_query($sql,$db);
 $myrow = DB_fetch_row($Result);
 if ($myrow[0]==0){
 
-	$sql = "INSERT INTO COGSGLPostings (Area, StkCat, GLCode) VALUES ('AN','ANY', 1)";
+	$sql = "INSERT INTO cogsglpostings (area, stkcat, glcode) VALUES ('AN','ANY', 1)";
 	$Result = DB_query($sql,$db);
 }
 
 /* The default Sales GL Posting table is required */
 
-$sql = "SELECT Count(StkCat) FROM SalesGLPostings WHERE Area='AN' AND StkCat='ANY'";
+$sql = "SELECT COUNT(stkcat) FROM salesglpostings WHERE area='AN' AND stkcat='ANY'";
 $Result = DB_query($sql,$db);
 $myrow = DB_fetch_row($Result);
 if ($myrow[0]==0){
 
-	$sql = "INSERT INTO SalesGLPostings (Area, StkCat, DiscountGLCode, SalesGLCode) VALUES ('AN','ANY', 1, 1)";
+	$sql = "INSERT INTO salesglpostings (area, stkcat, discountglcode, salesglcode) VALUES ('AN','ANY', 1, 1)";
 	$Result = DB_query($sql,$db);
 }
 

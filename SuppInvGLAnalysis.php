@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -45,12 +45,12 @@ if (isset($_GET['Delete'])){
 
 /*Show all the selected GLCodes so far from the SESSION['SuppInv']->GLCodes array */
 echo '<CENTER><FONT SIZE=4 COLOR=BLUE>' . _('General Ledger Analysis of Invoice From') . ' ' . $_SESSION['SuppInv']->SupplierName;
-echo '<TABLE CELLPADDING=2><TR><TD BGCOLOR=#800000><FONT COLOR=#ffffff><B>' . _('Account') . '</B></TD>
-                               <TD BGCOLOR=#800000><FONT COLOR=#ffffff><B>' . _('Name') . '</B></TD>
-                               <TD BGCOLOR=#800000><FONT COLOR=#ffffff><B>' . _('Amount') . '<BR>' . _('in') . ' ' . $_SESSION['SuppInv']->CurrCode . '</B></TD>
-                               <TD BGCOLOR=#800000><FONT COLOR=#ffffff><B>' . _('Shipment') . '</B></TD>
-                               <TD BGCOLOR=#800000><FONT COLOR=#ffffff><B>' . _('Job') . '</B></TD>
-                               <TD BGCOLOR=#800000><FONT COLOR=#ffffff><B>' . _('Narrative') . '</B></TD></TR>';
+echo '<TABLE CELLPADDING=2><TR><TD class="tableheader">' . _('Account') . '</TD>
+                               <TD class="tableheader">' . _('Name') . '</TD>
+                               <TD class="tableheader">' . _('Amount') . '<BR>' . _('in') . ' ' . $_SESSION['SuppInv']->CurrCode . '</TD>
+                               <TD class="tableheader">' . _('Shipment') . '</TD>
+                               <TD class="tableheader">' . _('Job') . '</TD>
+                               <TD class="tableheader">' . _('Narrative') . '</TD></TR>';
 
 $TotalGLValue=0;
 
@@ -62,7 +62,7 @@ foreach ($_SESSION['SuppInv']->GLCodes as $EnteredGLCode){
             <TD>' . $EnteredGLCode->ShiptRef . '</TD>
             <TD>' .$EnteredGLCode->JobRef . '</TD>
             <TD>' . $EnteredGLCode->Narrative . '</TD>
-            <TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . 'Delete=' . $EnteredGLCode->Counter . '">' . _('Delete') . '</A></TD></TR>';
+            <TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $EnteredGLCode->Counter . '">' . _('Delete') . '</A></TD></TR>';
 
 	$TotalGLValue = $TotalGLValue + ($EnteredGLCode->ChgPrice * $EnteredGLCode->This_QuantityInv);
 
@@ -85,6 +85,6 @@ echo '</TABLE><BR><A HREF="' . $rootpath . '/SupplierInvoice.php?' . SID . '">' 
 /*Set up a form to allow input of new GL entries */
 echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
 
-echo '</form>';
+echo '</FORM>';
 include('includes/footer.inc');
 ?>

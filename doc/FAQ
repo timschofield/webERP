@@ -67,7 +67,7 @@ $rootpath = dirname($_SERVER['PHP_SELF']);
 
 in config.php. The symptom described is the result. If all else fails just change the $rootpath variable to be the name of the directory under the web server root directory where the scripts are held. EG. by default this would be:
 
-$rootpath = '/web-erp';
+$rootpath = '/weberp';
 
 note the trailing / is not required.
 
@@ -76,7 +76,20 @@ note the trailing / is not required.
 
 Q7: I am starting from a point well into the business can I start issuing PO and invoices using the same sequence I am already running?
 
-A7: Yes. Use a DB tool like phpMyAdmin to edit the current transactions numbers in the table SysTypes. This table stores the current transaction number for all transaction types.
+A7: Yes. Use a DB tool like phpMyAdmin to edit the current transactions numbers in the table SysTypes. This table stores the current transaction number for all transaction types. eg. Sales invoices are typeid=10 and sales credit notes are typeid=11 - simply change the typeno field to the number you would like the next invoice/credit note to start at.
+
+Q8: How about sales order numbers? - I wish these to start from x how can I do this?
+
+A8: The sales order number is an auto-incrment field in salesorders table. To make it start at a particular point you need to enter a specific number into that field - using SQL similar to this to make the next order 10,000.
+
+INSERT INTO SalesOrders (OrderNo) VALUES (9999); 
+ 
+Then run 
+ 
+DELETE FROM SalesOrders WHERE OrderNo=9999; 
+
+to remove this bogus order.
+
 
 
 
@@ -92,6 +105,7 @@ Also check that the parameter in config.php for the DefaultPriceList is set to a
 by default it is set to:
 $DefaultPriceList = "WS";
 if there is no WS sales type defined the system has a problem.
+Another reason this can happen is that the branch details for the customer for whom an order is being entered does not have appropraite information entered. Setup the branch details correctly and all should be well.
 
 
 Q2: Is there any way to enter items into a sales order freeform, in other words without have a specific part set up. For example if I want to sell an item that I do not normally stock and do want to go through the complete entry process to be able to sell it?

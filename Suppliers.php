@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 5;
 
@@ -327,7 +327,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The bank reference text must be less than 12 characters long'),'error');
 	} elseif (!is_date($_POST['SupplierSince'])) {
 		$InputError = 1;
-		prnMsg(_('The supplier since field must be a date in the format') . ' ' . $DefaultDateFormat,'error');
+		prnMsg(_('The supplier since field must be a date in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 	} elseif (strlen($_POST['BankAct']) > 1 ) {
 		if (!Is_ValidAccount($_POST['BankAct'])) {
 			prnMsg(_('The bank account entry is not a valid New Zealand bank account number. This is (of course) no concern if the business operates outside of New Zealand'),'warn');
@@ -341,20 +341,20 @@ if (isset($_POST['submit'])) {
 
 		if (!isset($_POST['New'])) {
 
-			$sql = "UPDATE Suppliers SET SuppName='" . $_POST['SuppName'] . "', 
-							Address1='" . $_POST['Address1'] . "', 
-							Address2='" . $_POST['Address2'] . "', 
-							Address3='" . $_POST['Address3'] . "', 
-							Address4='" . $_POST['Address4'] . "', 
-							CurrCode='" . $_POST['CurrCode'] . "', 
-							SupplierSince='$SQL_SupplierSince',  
-							PaymentTerms='" . $_POST['PaymentTerms'] . "', 
-							BankPartics='" . $_POST['BankPartics'] . "', 
-							BankRef='" . $_POST['BankRef'] . "', 
-					 		BankAct='" . $_POST['BankAct'] . "', 
-							Remittance=" . $_POST['Remittance'] . ", 
-							TaxAuthority=" . $_POST['TaxAuthority'] . " 
-						WHERE SupplierID = '$SupplierID'";
+			$sql = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "', 
+							address1='" . $_POST['Address1'] . "', 
+							address2='" . $_POST['Address2'] . "', 
+							address3='" . $_POST['Address3'] . "', 
+							address4='" . $_POST['Address4'] . "', 
+							currcode='" . $_POST['CurrCode'] . "', 
+							suppliersince='$SQL_SupplierSince',  
+							paymentterms='" . $_POST['PaymentTerms'] . "', 
+							bankpartics='" . $_POST['BankPartics'] . "', 
+							bankref='" . $_POST['BankRef'] . "', 
+					 		bankact='" . $_POST['BankAct'] . "', 
+							remittance=" . $_POST['Remittance'] . ", 
+							taxauthority=" . $_POST['TaxAuthority'] . " 
+						WHERE supplierid = '$SupplierID'";
 
 			$ErrMsg = _('The supplier could not be updated because');
 			$DbgMsg = _('The SQL that was used to update the supplier but failed was');
@@ -365,20 +365,20 @@ if (isset($_POST['submit'])) {
 
 		} else { //its a new supplier
 
-			$sql = "INSERT INTO Suppliers (SupplierID, 
-							SuppName, 
-							Address1, 
-							Address2, 
-							Address3, 
-							Address4, 
-							CurrCode, 
-							SupplierSince, 
-							PaymentTerms, 
-							BankPartics, 
-							BankRef, 
-							BankAct, 
-							Remittance, 
-							TaxAuthority) 
+			$sql = "INSERT INTO suppliers (supplierid, 
+							suppname, 
+							address1, 
+							address2, 
+							address3, 
+							address4, 
+							currcode, 
+							suppliersince, 
+							paymentterms, 
+							bankpartics, 
+							bankref, 
+							bankact, 
+							remittance, 
+							taxauthority) 
 					 VALUES ('$SupplierID', 
 					 	'" . $_POST['SuppName'] . "', 
 						'" . $_POST['Address1'] . "', 
@@ -432,7 +432,7 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'SuppTrans' , PurchOrders, SupplierContacts
 
-	$sql= "SELECT COUNT(*) FROM SuppTrans WHERE SupplierNo='$SupplierID'";
+	$sql= "SELECT COUNT(*) FROM supptrans WHERE supplierno='$SupplierID'";
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0] > 0) {
@@ -441,7 +441,7 @@ if (isset($_POST['submit'])) {
 		echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('transactions against this supplier');
 
 	} else {
-		$sql= "SELECT COUNT(*) FROM PurchOrders WHERE SupplierNo='$SupplierID'";
+		$sql= "SELECT COUNT(*) FROM purchorders WHERE supplierno='$SupplierID'";
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0] > 0) {
@@ -449,7 +449,7 @@ if (isset($_POST['submit'])) {
 			prnMsg(_('Cannot delete the supplier record because purchase orders have been created against this supplier'),'warn');
 			echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('orders against this supplier');
 		} else {
-			$sql= "SELECT COUNT(*) FROM SupplierContacts WHERE SupplierID='$SupplierID'";
+			$sql= "SELECT COUNT(*) FROM suppliercontacts WHERE supplierid='$SupplierID'";
 			$result = DB_query($sql, $db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0] > 0) {
@@ -462,7 +462,7 @@ if (isset($_POST['submit'])) {
 
 	}
 	if ($CancelDelete == 0) {
-		$sql="DELETE FROM Suppliers WHERE SupplierID='$SupplierID'";
+		$sql="DELETE FROM suppliers WHERE supplierid='$SupplierID'";
 		$result = DB_query($sql, $db);
 		prnMsg(_('Supplier record for') . ' ' . $SupplierID . ' ' . _('has been deleted'),'success');
 		unset($SupplierID);
@@ -487,8 +487,8 @@ if (!isset($SupplierID)) {
 	echo '<TR><TD>' . _('Address Line 3') . ":</TD><TD><INPUT TYPE='text' name='Address3' SIZE=42 MAXLENGTH=40></TD></TR>";
 	echo '<TR><TD>' . _('Address Line 4') . ":</TD><TD><INPUT TYPE='text' name='Address4' SIZE=42 MAXLENGTH=40></TD></TR>";
 
-	$DateString = Date($DefaultDateFormat);
-	echo '<TR><TD>' . _('Supplier Since') . ' (' . $DefaultDateFormat . "):</TD><TD><INPUT TYPE='text' NAME='SupplierSince' VALUE=$DateString SIZE=12 MAXLENGTH=10></TD></TR>";
+	$DateString = Date($_SESSION['DefaultDateFormat']);
+	echo '<TR><TD>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] . "):</TD><TD><INPUT TYPE='text' NAME='SupplierSince' VALUE=$DateString SIZE=12 MAXLENGTH=10></TD></TR>";
 	echo '<TR><TD>' . _('Bank Particulars') . ":</TD><TD><INPUT TYPE='text' NAME='BankPartics' SIZE=13 MAXLENGTH=12></TD></TR>";
 	echo '<TR><TD>' . _('Bank reference') . ":</TD><TD><INPUT TYPE='text' NAME='BankRef' VALUE=0 SIZE=13 MAXLENGTH=12></TD></TR>";
 	echo '<TR><TD>' . _('Bank Account No') . ":</TD><TD><INPUT TYPE='text' NAME='BankAct' SIZE=17 MAXLENGTH=16></TD></TR>";
@@ -498,24 +498,24 @@ if (!isset($SupplierID)) {
 	echo '<TR><TD>' . _('Payment Terms') . ":</TD><TD><SELECT NAME='PaymentTerms'>";
 
 	while ($myrow = DB_fetch_array($result)) {
-		echo "<OPTION VALUE='". $myrow['TermsIndicator'] . "'>" . $myrow['Terms'];
+		echo "<OPTION VALUE='". $myrow['termsindicator'] . "'>" . $myrow['terms'];
 	} //end while loop
 	DB_data_seek($result, 0);
 	echo '</SELECT></TD></TR>';
 
-	$result=DB_query('SELECT Currency, CurrAbrev FROM Currencies', $db);
+	$result=DB_query('SELECT currency, currAbrev FROM currencies', $db);
 	if (!isset($_POST['CurrCode'])){
-		$CurrResult = DB_query('SELECT CurrencyDefault FROM Companies WHERE CoyCode=1', $db);
+		$CurrResult = DB_query('SELECT currencydefault FROM companies WHERE coycode=1', $db);
 		$myrow = DB_fetch_row($CurrResult);
 		$_POST['CurrCode'] = $myrow[0];
 	}
 
 	echo '<TR><TD>' . _("Supplier Currency") . ":</TD><TD><SELECT NAME='CurrCode'>";
 	while ($myrow = DB_fetch_array($result)) {
-		if ($_POST['CurrCode'] == $myrow['CurrAbrev']){
-			echo '<OPTION SELECTED VALUE=' . $myrow['CurrAbrev'] . '>' . $myrow['Currency'];
+		if ($_POST['CurrCode'] == $myrow['currabrev']){
+			echo '<OPTION SELECTED VALUE=' . $myrow['currabrev'] . '>' . $myrow['currency'];
 		} else {
-			echo '<OPTION VALUE=' . $myrow['CurrAbrev'] . '>' . $myrow['Currency'];
+			echo '<OPTION VALUE=' . $myrow['currabrev'] . '>' . $myrow['currency'];
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
@@ -530,11 +530,11 @@ if (!isset($SupplierID)) {
 
 	DB_data_seek($result, 0);
 
-	$sql = 'SELECT TaxID, Description FROM TaxAuthorities';
+	$sql = 'SELECT taxid, description FROM taxauthorities';
 	$result = DB_query($sql, $db);
 
 	while ($myrow = DB_fetch_array($result)) {
-			echo '<OPTION VALUE=' . $myrow['TaxID'] . '>' . $myrow['Description'];
+			echo '<OPTION VALUE=' . $myrow['taxid'] . '>' . $myrow['description'];
 	} //end while loop
 
 	echo "</SELECT></TD></TR></TABLE><p><CENTER><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Insert New Supplier') . "'>";
@@ -548,26 +548,39 @@ if (!isset($SupplierID)) {
 	echo '<CENTER><TABLE>';
 
 	if (!isset($_POST['New'])) {
-		$sql = "SELECT SupplierID, SuppName, Address1, Address2, Address3, Address4, CurrCode, 
-				  SupplierSince, PaymentTerms, BankPartics, BankRef, BankAct, Remittance, TaxAuthority 
-				  FROM Suppliers WHERE SupplierID = '$SupplierID'";
+		$sql = "SELECT supplierid, 
+				suppname, 
+				address1, 
+				address2, 
+				address3, 
+				address4, 
+				currcode, 
+				suppliersince, 
+				paymentterms, 
+				bankpartics, 
+				bankref, 
+				bankact, 
+				remittance, 
+				taxauthority 
+			FROM suppliers 
+			WHERE supplierid = '$SupplierID'";
 				  
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
 
-		$_POST['SuppName'] = $myrow['SuppName'];
-		$_POST['Address1']  = $myrow['Address1'];
-		$_POST['Address2']  = $myrow['Address2'];
-		$_POST['Address3']  = $myrow['Address3'];
-		$_POST['Address4']  = $myrow['Address4'];
-		$_POST['CurrCode']  = $myrow['CurrCode'];
-		$_POST['SupplierSince']  = ConvertSQLDate($myrow['SupplierSince']);
-		$_POST['PaymentTerms']  = $myrow['PaymentTerms'];
-		$_POST['BankPartics']	= $myrow['BankPartics'];
-		$_POST['Remittance']  = $myrow['Remittance'];
-		$_POST['BankRef']  = $myrow['BankRef'];
-		$_POST['BankAct']  = $myrow['BankAct'];
-		$_POST['TaxAuthority'] = $myrow['TaxAuthority'];
+		$_POST['SuppName'] = $myrow['suppname'];
+		$_POST['Address1']  = $myrow['address1'];
+		$_POST['Address2']  = $myrow['address2'];
+		$_POST['Address3']  = $myrow['address3'];
+		$_POST['Address4']  = $myrow['address4'];
+		$_POST['CurrCode']  = $myrow['currcode'];
+		$_POST['SupplierSince']  = ConvertSQLDate($myrow['suppliersince']);
+		$_POST['PaymentTerms']  = $myrow['paymentterms'];
+		$_POST['BankPartics']	= $myrow['bankpartics'];
+		$_POST['Remittance']  = $myrow['remittance'];
+		$_POST['BankRef']  = $myrow['bankref'];
+		$_POST['BankAct']  = $myrow['bankact'];
+		$_POST['TaxAuthority'] = $myrow['taxauthority'];
 
 		echo "<INPUT TYPE=HIDDEN NAME='SupplierID' VALUE='$SupplierID'>";
 
@@ -583,32 +596,32 @@ if (!isset($SupplierID)) {
 	echo '<TR><TD>' . _('Address Line 3') . ":</TD><TD><INPUT TYPE='text' NAME='Address3' VALUE='" . $_POST['Address3'] . "' SIZE=42 MAXLENGTH=40></TD></TR>";
 	echo '<TR><TD>' . _('Address Line 4') . ":</TD><TD><INPUT TYPE='Text' NAME='Address4' VALUE='" . $_POST['Address4'] . "' SIZE=42 MAXLENGTH=40></TD></TR>";
 
-	echo '<TR><TD>' . _('Supplier Since') . ' (' . $DefaultDateFormat ."):</TD><TD><INPUT TYPE='text' NAME='SupplierSince' VALUE=" . $_POST['SupplierSince'] . " SIZE=12 MAXLENGTH=10></TD></TR>";
+	echo '<TR><TD>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] ."):</TD><TD><INPUT TYPE='text' NAME='SupplierSince' VALUE=" . $_POST['SupplierSince'] . " SIZE=12 MAXLENGTH=10></TD></TR>";
 	echo '<TR><TD>' . _('Bank Particulars') . ":</TD><TD><INPUT TYPE='text' NAME='BankPartics' SIZE=13 MAXLENGTH=12 VALUE='" . $_POST['BankPartics'] . "'></TD></TR>";
 	echo '<TR><TD>' . _('Bank Reference') . ":</TD><TD><INPUT TYPE='text' NAME='BankRef' SIZE=13 MAXLENGTH=12 VALUE='" . $_POST['BankRef'] . "'></TD></TR>";
 	echo '<TR><TD>' . _('Bank Account No') . ":</TD><TD><INPUT TYPE='text' NAME='BankAct' SIZE=17 MAXLENGTH=16 VALUE='" . $_POST['BankAct'] . "'></TD></TR>";
 
-	$result=DB_query('SELECT Terms, TermsIndicator FROM PaymentTerms', $db);
+	$result=DB_query('SELECT terms, termsindicator FROM paymentterms', $db);
 
 	echo '<TR><TD>' . _('Payment Terms') . ":</TD><TD><SELECT NAME='PaymentTerms'>";
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($_POST['PaymentTerms'] == $myrow['TermsIndicator']){
-		echo '<OPTION SELECTED VALUE=' . $myrow['TermsIndicator'] . '>' . $myrow['Terms'];
+		if ($_POST['PaymentTerms'] == $myrow['termsindicator']){
+		echo '<OPTION SELECTED VALUE=' . $myrow['termsindicator'] . '>' . $myrow['terms'];
 		} else {
-		echo '<OPTION VALUE=' . $myrow['TermsIndicator'] . '>' . $myrow['Terms'];
+		echo '<OPTION VALUE=' . $myrow['termsindicator'] . '>' . $myrow['terms'];
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
 
-	$result=DB_query('SELECT Currency, CurrAbrev FROM Currencies', $db);
+	$result=DB_query('SELECT currency, currabrev FROM currencies', $db);
 
-	echo '</SELECT></TD></TR><TR><TD>' . _("Supplier Currency") . ":</TD><TD><SELECT NAME='CurrCode'>";
+	echo '</SELECT></TD></TR><TR><TD>' . _('Supplier Currency') . ":</TD><TD><SELECT NAME='CurrCode'>";
 	while ($myrow = DB_fetch_array($result)) {
-		if ($_POST['CurrCode'] == $myrow['CurrAbrev']){
-			echo '<OPTION SELECTED VALUE=' . $myrow['CurrAbrev'] . '>' . $myrow['Currency'];
+		if ($_POST['CurrCode'] == $myrow['currabrev']){
+			echo '<OPTION SELECTED VALUE=' . $myrow['currabrev'] . '>' . $myrow['currency'];
 		} else {
-			echo '<OPTION VALUE=' . $myrow['CurrAbrev'] . '>' . $myrow['Currency'];
+			echo '<OPTION VALUE=' . $myrow['currabrev'] . '>' . $myrow['currency'];
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
@@ -631,16 +644,16 @@ if (!isset($SupplierID)) {
 
 	DB_data_seek($result, 0);
 
-	$sql = 'SELECT TaxID, Description FROM TaxAuthorities';
+	$sql = 'SELECT taxid, description FROM taxauthorities';
 	$result = DB_query($sql, $db);
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['TaxID'] == $_POST['TaxAuthority']) {
+		if ($myrow['taxid'] == $_POST['TaxAuthority']) {
 			echo '<OPTION SELECTED VALUE=';
 		} else {
 			echo '<OPTION VALUE=';
 		}
-		echo $myrow['TaxID'] . '>' . $myrow['Description'];
+		echo $myrow['taxid'] . '>' . $myrow['description'];
 
 	} //end while loop
 

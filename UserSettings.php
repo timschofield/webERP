@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity=1;
 
@@ -35,7 +35,7 @@ if (isset($_POST['Modify'])) {
 			$update_pw = 'Y';
 		}
 	}
-		if ($_POST['passcheck'] != ''){
+	if ($_POST['passcheck'] != ''){
 		if ($_POST['pass'] != $_POST['passcheck']){
 			$InputError = 1;
 			prnMsg(_('The password and password confirmation fields entered do not match'),'error');
@@ -44,17 +44,15 @@ if (isset($_POST['Modify'])) {
 		}
 	}
 
-
-
 	if ($InputError != 1) {
 		// no errors
 		if ($update_pw != 'Y'){
-			$sql = "UPDATE WWW_Users
-				SET DisplayRecordsMax=" . $_POST['DisplayRecordsMax'] . ",
-					Theme='" . $_POST['Theme'] . "',
-					Language='" . $_POST['Language'] . "',
-					Email='". $_POST['email'] ."'
-				WHERE UserID = '" . $_SESSION['UserID'] . "'";
+			$sql = "UPDATE www_users
+				SET displayrecordsmax=" . $_POST['DisplayRecordsMax'] . ",
+					theme='" . $_POST['Theme'] . "',
+					language='" . $_POST['Language'] . "',
+					email='". $_POST['email'] ."'
+				WHERE userid = '" . $_SESSION['UserID'] . "'";
 
 			$ErrMsg =  _('The user alterations could not be processed because');
 			$DbgMsg = _('The SQL that was used to update the user and failed was');
@@ -63,13 +61,13 @@ if (isset($_POST['Modify'])) {
 
 			prnMsg( _('The user settings have been updated') . '. ' . _('Be sure to remember your password for the next time you login'),'success');
 		} else {
-			$sql = "UPDATE WWW_Users
-				SET DisplayRecordsMax=" . $_POST['DisplayRecordsMax'] . ",
-					Theme='" . $_POST['Theme'] . "',
-					Language='" . $_POST['Language'] . "',
-					Email='". $_POST['email'] ."',
-					Password='" . $_POST['pass'] . "'
-				WHERE UserID = '" . $_SESSION['UserID'] . "'";
+			$sql = "UPDATE www_users
+				SET displayrecordsmax=" . $_POST['DisplayRecordsMax'] . ",
+					theme='" . $_POST['Theme'] . "',
+					language='" . $_POST['Language'] . "',
+					email='". $_POST['email'] ."',
+					password='" . sha1($_POST['pass']) . "'
+				WHERE userid = '" . $_SESSION['UserID'] . "'";
 
 			$ErrMsg =  _('The user alterations could not be processed because');
 			$DbgMsg = _('The SQL that was used to update the user and failed was');
@@ -157,11 +155,11 @@ echo '</SELECT></TD></TR>
 	<tr><td colspan=2 align='center'>" . _('If you leave the password boxes empty your password will not change') . '</td></tr>
 	<TR><TD>' . _('Email') . ':</TD>';
 
-$sql = "SELECT Email from WWW_Users WHERE UserID = '" . $_SESSION['UserID'] . "'";
+$sql = "SELECT email from www_users WHERE userid = '" . $_SESSION['UserID'] . "'";
 $result = DB_query($sql,$db);
 $myrow = DB_fetch_array($result);
 if(!isset($_POST['email'])){
-	$_POST['email'] = $myrow['Email'];
+	$_POST['email'] = $myrow['email'];
 }
 
 echo "<TD><input type=text name='email' size=20 value='" . $_POST['email'] . "'></TD></TR>

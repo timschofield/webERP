@@ -1,5 +1,5 @@
 WEB-ERP Installation
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 Upgrading
 
 A script is included under web-erp/sql to update an existing weberp database to the current version. The upgrade script assumes the weberp database is called weberp. The script must be edited to change the name of the database if this is not the case.
@@ -17,18 +17,22 @@ New Installations
 
 Pre-requisites
 
-- A working PHP web server - with mysql and ftp
-- A working MySQL server version 4 or above - innodb tables must be enabled (this needs a my.cnf file - see the MySQL manual).
+- A working PHP web server - v 4.3 or later - with mysql or postgres databases and ftp
+- A working MySQL or Postgres server (MySql version 4 or above - innodb tables must be enabled - this needs a my.cnf file - see the MySQL manual. Postgres v 7.4 or later).
 
 Getting these components installed are well covered elsewhere see the following links:
 
 http://logidac.com/apache/apache-install-rpm.phtml
 http://www.linux-sottises.net/en_apache_install.php
 
-
 One critical aspect of the PHP installation is the setting of session.auto_start in the php.ini file
 Some .rpm distributions of PHP (as of 4.3.2) have the default setting of session.auto_start = 1
 This starts a new session at the beginning of each script. However, this makes it impossible to instatiate any class objects that the system relies on. web-ERP starts a session when it needs one and the setting of session.auto_start should be therefore be set to 0.
+
+Another is that php must have register globals off.  This is the default and how it is set on almost all servers.  This flag can be set in the php.ini on the server.  If it can't be changed, it is possibe in Linux to create a file called .htaccess in the root of the webERP system.  In that file put the line 
+php_flag register_globals off.
+
+One more issue with php setup - by default the setting session.use_cookies is set to 1, if it is set to 0 this can also cause problems.
 
 There are a number of traps with PHP installation depending on the web-server - see the FAQ.
 
@@ -69,6 +73,8 @@ this will create the web-erp directory under the web server root directory and p
 
 
 2. Creating the Database
+
+The install for MySQL is described here - similar steps are required with Postgres.
 
 MySQL version 4.x or above is required - Foreign Keys are implemented in the database as from version 2.8 these only became an option in MySQL version 3.23.51. Innodb tables must be enabled in the MySQL server. These tables allow database transactions which are a critical component of ERP software. Innodb tables require some parameters to be set up in my.cnf - there are some examples in the MySQL manual under table types - Innodb tables.
 
@@ -124,11 +130,11 @@ then this is the script to use.
 This creates a weberp database and populates it with only the very basic data to start off.
 The files web-erp-demo.sql and web-erp-new.sql should be in the directory with all the PHP scripts.
 
-shell > mysql --user=weberp_db_user --password='some_pass' < /path_to_the_sql_script/web-erp-demo.sql
+shell > mysql --user=weberp_db_user --password='some_pass' < /path_to_the_sql_script/weberp-demo.sql
 
 or
 
-shell > mysql --user=weberp_db_user --password='some_pass' < /path_to_the_sql_script/web-erp-new.sql
+shell > mysql --user=weberp_db_user --password='some_pass' < /path_to_the_sql_script/weberp-new.sql
 
 as required.
 
@@ -166,6 +172,12 @@ NB it is not secure to use root as the user with no password - a user with appro
 */
 	$DatabaseName = "weberp";
 
+//The type of db server being used - currently only postgres or mysql
+
+$dbType = 'mysql';
+
+//$dbType = 'postgres';
+//$dbType = 'mysql';
 
 4. Logging In For the First Time
 
@@ -198,7 +210,15 @@ All the standing configuration data is defined from the system setup tab and eac
 
 _____________________________________________________________________
 
+LEGAL
 
-Transferring a Windows MySQL Database to a *nix database
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
-Creating a database with the scripts provided will work with either a windows or *nix mysql server. However, if, after setting up a windows mysql database server you subsequently wish to transfer the database to a *nix database server, there is an issue with case sensitivity - *nix is case sensitive, windows is not. The setting of the variable lower_case_table_names in the my.cnf may be used to overcome this issue. See the MySQL manual if necessary.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+A copy of the GNU General Public License is included in the doc directory along with this program; if not, write to the Free Software
+Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+
+Copyright Logic Works Ltd - Contact: info@weberp.org

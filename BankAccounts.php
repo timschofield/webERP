@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 10;
 
@@ -39,22 +39,22 @@ if (isset($_POST['submit'])) {
 
 	if (isset($SelectedBankAccount) AND $InputError !=1) {
 
-		$sql = "UPDATE BankAccounts
-				SET BankAccountName='" . $_POST['BankAccountName'] . "',
-				BankAccountNumber='" . $_POST['BankAccountNumber'] . "',
-				BankAddress='" . $_POST['BankAddress'] . "'
-			WHERE AccountCode = '" . $SelectedBankAccount . "'";
+		$sql = "UPDATE bankaccounts
+				SET bankaccountname='" . $_POST['BankAccountName'] . "',
+				bankaccountnumber='" . $_POST['BankAccountNumber'] . "',
+				bankaddress='" . $_POST['BankAddress'] . "'
+			WHERE accountcode = '" . $SelectedBankAccount . "'";
 
 		$msg = _('The bank account details have been updated');
 	} elseif ($InputError !=1) {
 
 	/*Selectedbank account is null cos no item selected on first time round so must be adding a    record must be submitting new entries in the new bank account form */
 
-		$sql = "INSERT INTO BankAccounts (
-						AccountCode,
-						BankAccountName,
-						BankAccountNumber,
-						BankAddress)
+		$sql = "INSERT INTO bankaccounts (
+						accountcode,
+						bankaccountname,
+						bankaccountnumber,
+						bankaddress)
 				VALUES ('" . $_POST['AccountCode'] . "',
 					'" . $_POST['BankAccountName'] . "',
 					'" . $_POST['BankAccountNumber'] . "',
@@ -84,7 +84,7 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'BankTrans'
 
-	$sql= "SELECT COUNT(*) FROM BankTrans WHERE BankTrans.BankAct='$SelectedBankAccount'";
+	$sql= "SELECT COUNT(*) FROM banktrans WHERE banktrans.bankact='$SelectedBankAccount'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
@@ -94,7 +94,7 @@ if (isset($_POST['submit'])) {
 
 	}
 	if (!$CancelDelete) {
-		$sql="DELETE FROM BankAccounts WHERE AccountCode='$SelectedBankAccount'";
+		$sql="DELETE FROM bankaccounts WHERE accountcode='$SelectedBankAccount'";
 		$result = DB_query($sql,$db);
 		prnMsg(_('Bank account deleted'),'success');
 	} //end if Delete bank account
@@ -102,14 +102,14 @@ if (isset($_POST['submit'])) {
 
 /* Always show the list of accounts */
 
-$sql = "SELECT BankAccounts.AccountCode,
-		ChartMaster.AccountName,
-		BankAccountName,
-		BankAccountNumber,
-		BankAddress
-	FROM BankAccounts,
-		ChartMaster
-	WHERE BankAccounts.AccountCode = ChartMaster.AccountCode";
+$sql = "SELECT bankaccounts.accountcode,
+		chartmaster.accountname,
+		bankaccountname,
+		bankaccountnumber,
+		bankaddress
+	FROM bankaccounts,
+		chartmaster
+	WHERE bankaccounts.accountcode = chartmaster.accountcode";
 
 $ErrMsg = _('The bank accounts set up could not be retreived because');
 $Dbgmsg = _('The SQL used to retrieve the bank account details was') . '<BR>' . $sql;
@@ -165,20 +165,20 @@ echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . ">";
 if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 	//editing an existing bank account  - not deleting
 
-	$sql = "SELECT AccountCode,
-			BankAccountName,
-			BankAccountNumber,
-			BankAddress
-		FROM BankAccounts
-		WHERE BankAccounts.AccountCode='$SelectedBankAccount'";
+	$sql = "SELECT accountcode,
+			bankaccountname,
+			bankaccountnumber,
+			bankaddress
+		FROM bankaccounts
+		WHERE bankaccounts.accountcode='$SelectedBankAccount'";
 
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
 
-	$_POST['AccountCode'] = $myrow['AccountCode'];
-	$_POST['BankAccountName']  = $myrow['BankAccountName'];
-	$_POST['BankAccountNumber'] = $myrow['BankAccountNumber'];
-	$_POST['BankAddress'] = $myrow['BankAddress'];
+	$_POST['AccountCode'] = $myrow['accountcode'];
+	$_POST['BankAccountName']  = $myrow['bankaccountname'];
+	$_POST['BankAccountNumber'] = $myrow['bankaccountnumber'];
+	$_POST['BankAddress'] = $myrow['bankaddress'];
 
 	echo '<INPUT TYPE=HIDDEN NAME=SelectedBankAccount VALUE=' . $SelectedBankAccount . '>';
 	echo '<INPUT TYPE=HIDDEN NAME=AccountCode VALUE=' . $_POST['AccountCode'] . '>';
@@ -187,22 +187,22 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 } else { //end of if $Selectedbank account only do the else when a new record is being entered
 	echo '<CENTER><TABLE><TR><TD>' . _('Bank Account GL Code') . ":</TD><TD><Select name='AccountCode'>";
 
-	$sql = "SELECT AccountCode,
-			AccountName
-		FROM ChartMaster,
-			AccountGroups
-		WHERE ChartMaster.Group_ = AccountGroups.GroupName
-		AND AccountGroups.PandL = 0
-		ORDER BY AccountCode";
+	$sql = "SELECT accountcode,
+			accountname
+		FROM chartmaster,
+			accountgroups
+		WHERE chartmaster.group_ = accountgroups.groupname
+		AND accountgroups.pandl = 0
+		ORDER BY accountcode";
 
 	$result = DB_query($sql,$db);
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['AccountCode']==$_POST['AccountCode']) {
+		if ($myrow['accountcode']==$_POST['AccountCode']) {
 			echo '<OPTION SELECTED VALUE=';
 		} else {
 			echo '<OPTION VALUE=';
 		}
-		echo $myrow['AccountCode'] . '>' . $myrow['AccountName'];
+		echo $myrow['accountcode'] . '>' . $myrow['accountname'];
 
 	} //end while loop
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 2;
 
@@ -45,36 +45,36 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 				$i=strpos($_POST['Keywords']," ",$i) +1;
 			}
 			$SearchString = $SearchString . substr($_POST['Keywords'],$i)."%";
-			$SQL = "SELECT DebtorsMaster.DebtorNo,
-					DebtorsMaster.Name,
-					CustBranch.BrName,
-					CustBranch.ContactName,
-					CustBranch.PhoneNo,
-					CustBranch.FaxNo
-				FROM DebtorsMaster LEFT JOIN CustBranch
-					ON DebtorsMaster.DebtorNo = CustBranch.DebtorNo
-				WHERE DebtorsMaster.Name LIKE '$SearchString'";
+			$SQL = "SELECT debtorsmaster.debtorno,
+					debtorsmaster.name,
+					custbranch.brname,
+					custbranch.contactname,
+					custbranch.phoneno,
+					custbranch.faxno
+				FROM debtorsmaster LEFT JOIN custbranch
+					ON debtorsmaster.debtorno = custbranch.debtorno
+				WHERE debtorsmaster.name " . LIKE . " '$SearchString'";
 
 		} elseif (strlen($_POST['CustCode'])>0){
 
-			$_POST["CustCode"] = strtoupper($_POST["CustCode"]);
+			$_POST['CustCode'] = strtoupper($_POST['CustCode']);
 
-			$SQL = "SELECT DebtorsMaster.DebtorNo,
-					DebtorsMaster.Name,
-					CustBranch.BrName,
-					CustBranch.ContactName,
-					CustBranch.PhoneNo,
-					CustBranch.FaxNo
-				FROM DebtorsMaster LEFT JOIN CustBranch
-					ON DebtorsMaster.DebtorNo = CustBranch.DebtorNo
-				WHERE DebtorsMaster.DebtorNo LIKE '%" . $_POST['CustCode'] . "%'";
+			$SQL = "SELECT debtorsmaster.debtorno,
+					debtorsmaster.name,
+					custbranch.brname,
+					custbranch.contactname,
+					custbranch.phoneno,
+					custbranch.faxno
+				FROM debtorsmaster LEFT JOIN custbranch
+					ON debtorsmaster.debtorno = custbranch.debtorno
+				WHERE debtorsmaster.debtorno " . LIKE  . " '%" . $_POST['CustCode'] . "%'";
 		}
 
 		$ErrMsg = _('The searched customer records requested cannot be retrieved because');
 		$result = DB_query($SQL,$db,$ErrMsg);
 		if (DB_num_rows($result)==1){
 			$myrow=DB_fetch_array($result);
-			$_POST['Select'] = $myrow['DebtorNo'];
+			$_POST['Select'] = $myrow['debtorno'];
 			unset($result);
 		} elseif (DB_num_rows($result)==0){
 			prnMsg(_('No customer records contain the selected text') . ' - ' . _('please alter your search criteria and try again'),'info');
@@ -88,13 +88,16 @@ If (!isset($_POST['Select'])){
 	$_POST['Select']="";
 }
 
-If ($_POST['Select']!="" OR ($_SESSION['CustomerID']!="" AND !isset($_POST['Keywords']) AND !isset($_POST['CustCode']))) {
+If ($_POST['Select']!="" OR 
+	($_SESSION['CustomerID']!="" 
+	AND !isset($_POST['Keywords']) 
+	AND !isset($_POST['CustCode']))) {
 
 	If ($_POST['Select']!=""){
-		$SQL = "Select Name FROM DebtorsMaster WHERE DebtorNo='" . $_POST['Select'] . "'";
+		$SQL = "SELECT name FROM debtorsmaster WHERE debtorno='" . $_POST['Select'] . "'";
 		$_SESSION['CustomerID'] = $_POST['Select'];
 	} else {
-		$SQL = "SELECT Name FROM DebtorsMaster WHERE DebtorNo='" . $_SESSION['CustomerID'] . "'";
+		$SQL = "SELECT name FROM debtorsmaster WHERE debtorno='" . $_SESSION['CustomerID'] . "'";
 	}
 
 	$ErrMsg = _('The customer name requested cannot be retrieved because');
@@ -104,24 +107,36 @@ If ($_POST['Select']!="" OR ($_SESSION['CustomerID']!="" AND !isset($_POST['Keyw
 		$CustomerName = $myrow[0];
 	}
 	unset($result);
-	echo '<BR><BR><FONT SIZE=3>' . _('Customer') . ' :<B> ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . '</B> ' . _('has been selected') . '.<BR>' . _('Select a menu option to operate using this customer') . '.</FONT><BR>';
+	echo '<CENTER><FONT SIZE=3>' . _('Customer') . ' :<B> ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . '</B> ' . _('has been selected') . '.<BR>' . _('Select a menu option to operate using this customer') . '.</FONT><BR>';
 
 	$_POST['Select'] = NULL;
 
-	echo '<BR><a href="' . $rootpath . '/CustomerInquiry.php?CustomerID=' . $_SESSION['CustomerID'] . '">' . _('Customer Transaction Inquiries') . '</a><BR>';
-	echo '<a href="' . $rootpath . '/Customers.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Modify Customer Details') . '</a><BR>';
-	echo '<a href="' . $rootpath . '/CustomerBranches.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add/Edit/Delete Customer Branch records') . '</a><BR>';
+	echo "<TABLE WIDTH=50% BORDER=2><TR><TD class='tableheader'>" . _('Customer Inquiries') . "</TD>
+			<TD class='tableheader'>" . _('Customer Maintenance') . "</TD></TR>";
+			
+	echo '<TR><TD WIDTH=50%>';
+	
+	
+	echo '<a href="' . $rootpath . '/CustomerInquiry.php?CustomerID=' . $_SESSION['CustomerID'] . '">' . _('Customer Transaction Inquiries') . '</a><BR>';
 	echo '<a href="' . $rootpath . '/SelectSalesOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Modify Outstanding Sales Orders') . '</a><BR>';
 	echo '<a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Order Inquiries') . '</a><BR>';
+	
+	echo '</TD><TD WIDTH=50%>';
+	
+	echo '<a href="' . $rootpath . '/Customers.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Modify Customer Details') . '</a><BR>';
+	echo '<a href="' . $rootpath . '/CustomerBranches.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add/Edit/Delete Customer Branch records') . '</a><BR>';
+	
 	echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Special Customer Prices') . '</a><BR>';
-	echo '<a href="' . $rootpath . '/CustEDISetup.php">' . _('Customer EDI Configuration') . '</a><BR>';
+	echo '<a href="' . $rootpath . '/CustEDISetup.php">' . _('Customer EDI Configuration') . '</a>';
 
+	
+	echo '</TD></TR></TABLE><BR></CENTER>';
 }
 
 ?>
 
 <FORM ACTION="<?php echo $_SERVER['PHP_SELF'] . '?' . SID; ?>" METHOD=POST>
-
+<CENTER>
 <B><?php echo $msg; ?></B>
 <TABLE CELLPADDING=3 COLSPAN=4>
 <TR>
@@ -156,7 +171,7 @@ if (isset($_POST['CustCode'])) {
 </TD>
 </TR>
 </TABLE>
-<CENTER><INPUT TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Search Now'); ?>">
+<INPUT TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Search Now'); ?>">
 <INPUT TYPE=SUBMIT ACTION=RESET VALUE="<?php echo _('Reset'); ?>"></CENTER>
 
 
@@ -210,7 +225,7 @@ If (isset($result)) {
 
 <?php
 
-  echo '<br><br>';
+  echo '<BR><BR>';
 
 	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>';
 	$TableHeader = '<TR>
@@ -247,12 +262,12 @@ If (isset($result)) {
 			<td><FONT SIZE=1>%s</FONT></td>
 			<td><FONT SIZE=1>%s</FONT></td>
 			<td><FONT SIZE=1>%s</FONT></td></tr>",
-			$myrow["DebtorNo"],
-			$myrow["Name"],
-			$myrow["BrName"],
-			$myrow["ContactName"],
-			$myrow["PhoneNo"],
-			$myrow["FaxNo"]);
+			$myrow["debtorno"],
+			$myrow["name"],
+			$myrow["brname"],
+			$myrow["contactname"],
+			$myrow["phoneno"],
+			$myrow["faxno"]);
 
 		$j++;
 		If ($j == 11 AND ($RowIndex+1 != $_SESSION['DisplayRecordsMax'])){
@@ -269,7 +284,7 @@ If (isset($result)) {
 
 }
 //end if results to show
-echo '</form>';
+echo '</FORM></CENTER>';
 
 include('includes/footer.inc');
 ?>

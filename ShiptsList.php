@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 2;
 include ('includes/session.inc');
 $title = _('Shipments Open Inquiry');
@@ -14,11 +14,11 @@ if (!isset($_GET['SupplierID']) OR !isset($_GET['SupplierName'])){
 	exit;
 }
 
-$SQL = "SELECT ShiptRef,
-		Vessel,
-		ETA
-	FROM Shipments
-	WHERE SupplierID='" . $_GET['SupplierID'] . "'";
+$SQL = "SELECT shiptref,
+		vessel,
+		eta
+	FROM shipments
+	WHERE supplierid='" . $_GET['SupplierID'] . "'";
 $ErrMsg = _('No shipments were returned from the database because'). ' - '. DB_error_msg($db);
 $ShiptsResult = DB_query($SQL,$db, $ErrMsg);
 
@@ -32,9 +32,9 @@ if (DB_num_rows($ShiptsResult)==0){
 echo '<CENTER><FONT SIZE=4 COLOR=BLUE>'. _('Open Shipments for').' ' . $_GET['SupplierName'] . '</FONT><BR>
 	<TABLE CELLPADDING=2 COLSPAN=2>';
 $TableHeader = '<TR>
-		<TD BGCOLOR =#800000><FONT COLOR=#ffffff>'. _('Reference'). '</FONT></TD>
-		<TD BGCOLOR =#800000><FONT COLOR=#ffffff>'. _('Vessel'). '</FONT></TD>
-		<TD BGCOLOR =#800000><FONT COLOR=#ffffff>'. _('ETA'). '</FONT></TD></TR>';
+		<TD class="tableheader">'. _('Reference'). '</TD>
+		<TD class="tableheader">'. _('Vessel'). '</TD>
+		<TD class="tableheader">'. _('ETA'). '</TD></TR>';
 
 $j = 1;
 $k = 0; //row colour counter
@@ -52,9 +52,9 @@ while ($myrow=DB_fetch_array($ShiptsResult)) {
        		<td>%s</td>
 		<td>%s</td>
 		</tr>',
-		$myrow['ShiptRef'],
-		$myrow['Vessel'],
-		ConvertSQLDate($myrow['ETA']));
+		$myrow['shiptref'],
+		$myrow['vessel'],
+		ConvertSQLDate($myrow['eta']));
 
        $j++;
        If ($j == 12){

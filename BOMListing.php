@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 2;
 
@@ -22,25 +22,25 @@ If (isset($_POST['PrintPDF'])
 	$line_height=12;
 
       /*Now figure out the bills to report for the part range under review */
-	$SQL = "SELECT BOM.Parent,
-			BOM.Component,
-			StockMaster.Description AS CompDescription,
-			StockMaster.DecimalPlaces,
-			BOM.Quantity,
-			BOM.LocCode,
-			BOM.WorkCentreAdded,
-			DATE_FORMAT(BOM.EffectiveTo,'%d %b %y') AS Eff_To,
-			DATE_FORMAT(BOM.EffectiveAfter,'%d %b %y') AS Eff_Frm
+	$SQL = "SELECT bom.parent,
+			bom.component,
+			stockmaster.description as compdescription,
+			stockmaster.decimalplaces,
+			bom.quantity,
+			bom.loccode,
+			bom.workcentreadded,
+			bom.effectiveto AS eff_to,
+			bom.effectiveafter AS eff_frm
 		FROM
-			StockMaster,
-			BOM
-		WHERE StockMaster.StockID=BOM.Component
-		AND BOM.Parent >= '" . $_POST['FromCriteria'] . "'
-		AND BOM.Parent <= '" . $_POST['ToCriteria'] . "'
-		AND BOM.EffectiveTo >= CURDATE() AND BOM.EffectiveAfter <= CURDATE()
+			stockmaster,
+			bom
+		WHERE stockmaster.stockid=bom.component
+		AND bom.parent >= '" . $_POST['FromCriteria'] . "'
+		AND bom.parent <= '" . $_POST['ToCriteria'] . "'
+		AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()
 		ORDER BY
-			BOM.Parent,
-			BOM.Component";
+			bom.parent,
+			bom.component";
 
 	$BOMResult = DB_query($SQL,$db,'','',false,false); //dont do error trapping inside DB_query
 
@@ -69,7 +69,7 @@ If (isset($_POST['PrintPDF'])
 
 	While ($BOMList = DB_fetch_array($BOMResult,$db)){
 
-		if ($ParentPart!=$BOMList['Parent']){
+		if ($ParentPart!=$BOMList['parent']){
 
 			$FontSize=10;
 			if ($ParentPart!=''){ /*Then it's NOT the first time round */
@@ -78,23 +78,23 @@ If (isset($_POST['PrintPDF'])
 				$pdf->line($Page_Width-$Right_Margin, $YPos,$Left_Margin, $YPos);
 				$YPos -=$line_height;
 			}
-			$SQL = "SELECT Description FROM StockMaster WHERE StockMaster.StockID = '" . $BOMList['Parent'] . "'";
+			$SQL = "SELECT description FROM stockmaster WHERE stockmaster.stockid = '" . $BOMList['parent'] . "'";
 			$ParentResult = DB_query($SQL,$db);
 			$ParentRow = DB_fetch_row($ParentResult);
-		        $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,400-$Left_Margin,$FontSize,$BOMList['Parent'] . ' - ' . $ParentRow[0],'left');
-			$ParentPart = $BOMList['Parent'];
+		        $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,400-$Left_Margin,$FontSize,$BOMList['parent'] . ' - ' . $ParentRow[0],'left');
+			$ParentPart = $BOMList['parent'];
 		}
 
 		$YPos -=$line_height;
 		$FontSize=8;
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos,80,$FontSize,$BOMList['Component'],'left');
-		$LeftOvers = $pdf->addTextWrap(110,$YPos,200,$FontSize,$BOMList['CompDescription'],'left');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos,80,$FontSize,$BOMList['component'],'left');
+		$LeftOvers = $pdf->addTextWrap(110,$YPos,200,$FontSize,$BOMList['compdescription'],'left');
 
-		$DisplayQuantity = number_format($BOMList['Quantity'],$BOMList['DecimalPlaces']);
-		$LeftOvers = $pdf->addTextWrap(320,$YPos,50,$FontSize,$BOMList['Eff_Frm'],'left');
-		$LeftOvers = $pdf->addTextWrap(370,$YPos,50,$FontSize,$BOMList['Eff_To'],'left');
-		$LeftOvers = $pdf->addTextWrap(420,$YPos,20,$FontSize,$BOMList['LocCode'],'left');
-		$LeftOvers = $pdf->addTextWrap(440,$YPos,30,$FontSize,$BOMList['WorkCentreAdded'],'left');
+		$DisplayQuantity = number_format($BOMList['quantity'],$BOMList['decimalplaces']);
+		$LeftOvers = $pdf->addTextWrap(320,$YPos,50,$FontSize,ConvertSQLDate($BOMList['eff_frm']),'left');
+		$LeftOvers = $pdf->addTextWrap(370,$YPos,50,$FontSize,ConvertSQLDate($BOMList['eff_to']),'left');
+		$LeftOvers = $pdf->addTextWrap(420,$YPos,20,$FontSize,$BOMList['loccode'],'left');
+		$LeftOvers = $pdf->addTextWrap(440,$YPos,30,$FontSize,$BOMList['workcentreadded'],'left');
 		$LeftOvers = $pdf->addTextWrap(480,$YPos,60,$FontSize,$DisplayQuantity,'right');
 
 		if ($YPos < $Bottom_Margin + $line_height){
