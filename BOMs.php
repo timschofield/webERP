@@ -1,13 +1,13 @@
 <?php
-/* $Revision: 1.3 $ */
-$title = "Bill Of Materials Maintenance";
-
+/* $Revision: 1.4 $ */
 $PageSecurity = 9;
 
 include("includes/session.inc");
+
+$title = _('Bill Of Materials Maintenance');
+
 include("includes/header.inc");
 include("includes/DateFunctions.inc");
-
 
 
 function CheckForRecursiveBOM ($UltimateParent, $ComponentToCheck, $db) {
@@ -17,8 +17,8 @@ ie the BOM is recursive otherwise false ie 0 */
 
 
 	$sql = "SELECT Component FROM BOM WHERE Parent='$ComponentToCheck'";
-	$ErrMsg = "<BR>An error occurred in retrieving the components of the BOM during the check for recursion:";
-	$DbgMsg = "<BR>The SQL that was used to retrieve the components of the BOM and that failed in the process was:";
+	$ErrMsg = '<BR>' . _('An error occurred in retrieving the components of the BOM during the check for recursion:');
+	$DbgMsg = '<BR>' . _('The SQL that was used to retrieve the components of the BOM and that failed in the process was:');
 	$result = DB_query($sql,$db,$ErrMsg.$DbgMsg);
 
 	if ($result!=0) {
@@ -40,8 +40,8 @@ ie the BOM is recursive otherwise false ie 0 */
 function DisplayBOMItems($SelectedParent, $db) {
 		$sql = "SELECT BOM.Component, StockMaster.Description, Locations.LocationName, WorkCentres.Description, Quantity, EffectiveAfter, EffectiveTo FROM BOM, StockMaster, Locations, WorkCentres WHERE BOM.Component=StockMaster.StockID AND BOM.LocCode = Locations.LocCode AND BOM.WorkCentreAdded=WorkCentres.Code AND BOM.Parent='$SelectedParent'";
 
-		$ErrMsg = "<BR>Could not retrieve the BOM components because ";
-		$DbgMsg = "<BR>The SQL used to retrieve the components was:";
+		$ErrMsg = '<BR>' . _('Could not retrieve the BOM components because') . ' ';
+		$DbgMsg = '<BR>' . _('The SQL used to retrieve the components was:');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 		echo "<CENTER><table border=1>\n";
@@ -67,7 +67,20 @@ function DisplayBOMItems($SelectedParent, $db) {
 				$k++;
 			}
 
-			printf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><a href=\"%sSelect=%s&SelectedComponent=%s\">EDIT</a></td><td><a href=\"%sSelect=%s&SelectedComponent=%s&delete=1\">DELETE</a></td></tr>", $myrow[0], $myrow[1], $myrow[2], $myrow[3], $myrow[4], ConvertSQLDate($myrow[5]), ConvertSQLDate($myrow[6]), $_SERVER['PHP_SELF'] . "?" . SID, $SelectedParent,$myrow[0],$_SERVER['PHP_SELF'] . "?" . SID,$SelectedParent,$myrow[0]);
+			printf("<td>%s</td>
+			        <td>%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							<td><a href=\"%sSelect=%s&SelectedComponent=%s\">"
+							             . _('EDIT')
+													 . "</a></td><td><a href=\"%sSelect=%s&SelectedComponent=%s&delete=1\">"
+													 . _('DELETE')
+													 . "</a></td></tr>"
+							, $myrow[0], $myrow[1], $myrow[2], $myrow[3], $myrow[4], ConvertSQLDate($myrow[5]), ConvertSQLDate($myrow[6])
+							, $_SERVER['PHP_SELF'] . "?" . SID, $SelectedParent,$myrow[0],$_SERVER['PHP_SELF'] . "?" . SID,$SelectedParent,$myrow[0]);
 
 			$RowCounter++;
 			if ($RowCounter==20){
@@ -108,43 +121,39 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 
 	$sql = "SELECT Description FROM StockMaster WHERE StockID='" . $SelectedParent . "'";
-	$result=DB_query($sql,$db);
-	if (DB_error_no($db)!=0){
-	     echo "<BR>Could not retrieve the description of the parent part because - " . DB_error_msg($db);
-	     if ($debug==1){
-		    echo "<BR>The SQL used to retrieve description of the parent part was:<BR>$sql";
-	     }
-	     exit;
-	}
+
+	$Errmsg = _('Could not retrieve the description of the parent part because');
+	$DbgMsg = _('The SQL used to retrieve description of the parent part was:') . '<BR>' . $sql;
+	$result=DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	$myrow=DB_fetch_row($result);
 
 	echo "<BR><FONT COLOR=BLUE SIZE=3><B>$SelectedParent - " . $myrow[0] . "</FONT></B>";
-	echo "<BR><A HREF=" . $_SERVER['PHP_SELF'] . "?" . SID . ">Select a Different BOM</A></CENTER>";
+	echo "<BR><A HREF=" . $_SERVER['PHP_SELF'] . "?" . SID . '>' . _('Select a Different BOM') . '</A></CENTER>';
 
 	if (isset($SelectedParent)) {
-		echo "<Center><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "Select=$SelectedParent'>Review Components</a></Center>";
+		echo "<Center><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "Select=$SelectedParent'>" . _('Review Components') . '</a></Center>';
 	}
 
-	If (isset($SelectedParent) AND $_POST['Submit']=="Enter Information") {
+	If (isset($SelectedParent) AND isset($_POST['Submit'])) {
 
 		//editing a component need to do some validation of inputs
 
 		if (!Is_Date($_POST['EffectiveAfter'])) {
 			$InputError = 1;
-			echo "<BR>The 'effective after' date field must be a date in the format dd/mm/yy or dd/mm/yyyy or ddmmyy or ddmmyyyy or dd-mm-yy or dd-mm-yyyy.";
+			echo '<BR>' . _('The "effective after" date field must be a date in the format dd/mm/yy or dd/mm/yyyy or ddmmyy or ddmmyyyy or dd-mm-yy or dd-mm-yyyy.');
 			exit;
 		} elseif (!Is_Date($_POST['EffectiveTo'])) {
 			$InputError = 1;
-			echo "<BR>The 'effective to' date field must be a date in the format dd/mm/yy or dd/mm/yyyy or ddmmyy or ddmmyyyy or dd-mm-yy or dd-mm-yyyy.";
+			echo '<BR>' . _('The "effective to" date field must be a date in the format dd/mm/yy or dd/mm/yyyy or ddmmyy or ddmmyyyy or dd-mm-yy or dd-mm-yyyy.');
 			exit;
 		} elseif (!is_double((double) $_POST['Quantity'])) {
 			$InputError = 1;
-			echo "<BR>The quantity entered must be numeric.";
+			echo '<BR>' . _('The quantity entered must be numeric.');
 			exit;
 		} elseif(!Date1GreaterThanDate2($_POST['EffectiveTo'], $_POST['EffectiveAfter'])){
 			$InputError = 1;
-			echo "<BR>The effective to date must be a date after the effective after date.<BR>The effective to date is ". DateDiff($_POST['EffectiveTo'], $_POST['EffectiveAfter'], "d"). " days before the effective after date! No updates have been performed.<BR>Effective after was: " . $_POST['EffectiveAfter'] ." and effective after was: " . $_POST['EffectiveTo'];
+			echo '<BR>' . _('The effective to date must be a date after the effective after date.') . '<BR>' . _('The effective to date is') . ' ' . DateDiff($_POST['EffectiveTo'], $_POST['EffectiveAfter'], "d") . ' ' . _('days before the effective after date! No updates have been performed.') . '<BR>' . _('Effective after was:') . ' ' . $_POST['EffectiveAfter'] . ' ' . _('and effective after was:') . ' ' . $_POST['EffectiveTo'];
 			exit;
 		}
 
@@ -156,11 +165,11 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 			$sql = "UPDATE BOM SET WorkCentreAdded='" . $_POST['WorkCentreAdded'] . "', LocCode='" . $_POST['LocCode'] . "', EffectiveAfter='" . $EffectiveAfterSQL . "', EffectiveTo='" . $EffectiveToSQL . "', Quantity= " . $_POST['Quantity'] . " WHERE Parent='" . $SelectedParent . "' AND Component='" . $SelectedComponent . "'";
 
-			$ErrMsg = "<BR>Could not update this BOM component because:";
-			$DbgMsg = "<BR>The SQL used to update the component was:";
+			$ErrMsg = '<BR>' . _('Could not update this BOM component because:');
+			$DbgMsg = '<BR>' . _('The SQL used to update the component was:');
 
 			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-			$msg = "Details for - $SelectedComponent have been updated.";
+			$msg = _('Details for -') . ' ' . $SelectedComponent . ' ' . _('have been updated.');
 
 		} elseIf ($InputError !=1 AND ! isset($SelectedComponent) AND isset($SelectedParent)) {
 
@@ -173,38 +182,29 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				/*Now check to see that the component is not already on the BOM */
 				$sql = "SELECT Component FROM BOM WHERE Parent='$SelectedParent' AND Component='" . $_POST['Component'] . "' AND WorkCentreAdded='" . $_POST['WorkCentreAdded'] . "' AND LocCode='" . $_POST['LocCode'] . "'" ;
 
-				$ErrMsg = "<BR>An error occurred in checking the component is not already on the BOM :";
-				$DbgMsg = "<BR>The SQL that was used to check the component was not already on the BOM and that failed in the process was:";
+				$ErrMsg =  _('An error occurred in checking the component is not already on the BOM :');
+				$DbgMsg =  _('The SQL that was used to check the component was not already on the BOM and that failed in the process was:');
 
 				$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 				if (DB_num_rows($result)==0) {
 
 					$sql = "INSERT INTO BOM (Parent, Component, WorkCentreAdded, LocCode, Quantity, EffectiveAfter, EffectiveTo) VALUES ('$SelectedParent', '" . $_POST['Component'] . "', '" . $_POST['WorkCentreAdded'] . "', '" . $_POST['LocCode'] . "', " . $_POST['Quantity'] . ", '" . $EffectiveAfterSQL . "', '" . $EffectiveToSQL . "')";
-					if (DB_error_no($db)!=0){
-						echo "<BR>Could not insert the BOM components because - " . DB_error_msg($db);
-						if ($debug==1){
-						   echo "The SQL used to insert the component was:<BR>$sql";
-						}
-						exit;
-					}
-					$result = DB_query($sql,$db);
-					If (DB_error_no($db) != 0){
-						echo "<BR>An error occurred in inserting the new component :- " . DB_error_msg($db);
-						if ($debug==1){
-							echo "<BR>The SQL that was used to insert the component onto the BOM and that failed in the process was:<BR>$sql";
-						}
-						exit;
-					} else {
-						$msg = "A new component part " . $_POST['Component'] . " has been added to the bill of material for part - $SelectedParent .";
-					}
+
+					$ErrMsg = _('Could not insert the BOM component because');
+					$DbgMsg = _('The SQL used to insert the component was:');
+
+					$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+
+					$msg = _('A new component part') . ' ' . $_POST['Component'] . ' ' . _('has been added to the bill of material for part -') . ' ' . $SelectedParent . '.';
+
 
 				} else {
 
 				/*The component must already be on the BOM */
 
-					echo "<P><FONT SIZE=3 COLOR=RED>Problem Report : </FONT>The component " . $_POST['Component'] . " is already recorded as a component of " . $SelectedParent . ".
-					<BR>Whilst the quantity of the component required can be modified it is inappropriate for a component to appear more than once in a bill of material.<BR>";
+					echo '<P><FONT SIZE=3 COLOR=RED>' . _('Problem Report:') . ' ' . '</FONT>' . _('The component') . ' ' . $_POST['Component'] . ' ' . _('is already recorded as a component of') . ' ' . $SelectedParent . '.' .
+					'<BR>' . _('Whilst the quantity of the component required can be modified it is inappropriate for a component to appear more than once in a bill of material.') . '<BR>';
 				}
 
 
@@ -219,15 +219,12 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	//the link to delete a selected record was clicked instead of the Submit button
 
 		$sql="DELETE FROM BOM WHERE Parent='$SelectedParent' AND Component='$SelectedComponent'";
-		$result = DB_query($sql,$db);
-		if (DB_error_no($db)!=0){
-			echo "Could not delete this BOM components because - " . DB_error_msg($db);
-			if ($debug==1){
-				 echo "The SQL used to delete the BOM was:<BR>$sql";
-			}
-			exit;
-		}
-		echo "<BR>The component part - $SelectedComponent - has been deleted from this BOM<p>";
+
+		$ErrMsg = _('Could not delete this BOM components because');
+		$DbgMsg = _('The SQL used to delete the BOM was:');
+		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+
+		echo '<BR>' . _('The component part -') . ' ' . $SelectedComponent . ' ' . _('- has been deleted from this BOM') . '<p>';
 
 	} elseif (isset($SelectedParent) AND !isset($SelectedComponent) AND ! isset($_POST['submit'])) {
 
@@ -235,8 +232,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		//DisplayBOMItems($SelectedParent, $db);
 
 	} //BOM editing/insertion ifs
-	
-	DisplayBOMItems($SelectedParent, $db);	
+
+	DisplayBOMItems($SelectedParent, $db);
 
 	?>
 
@@ -249,7 +246,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 	if (! $_GET['delete']) {
 
-		echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . "?" . SID . "Select=" . $SelectedParent ."'>";
+		echo '<FORM METHOD="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . 'Select=' . $SelectedParent .'">';
 
 		if (isset($SelectedComponent)) {
 		//editing a selected component from the link to the line item
@@ -265,29 +262,25 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$_POST['WorkCentreAdded']  = $myrow["WorkCentreAdded"];
 			$_POST['Quantity'] = $myrow["Quantity"];
 
-			echo "Edit the details of the selected component in the fields below. <BR> Click on the 'Enter Information' button to update the component's details.";
+			echo _('Edit the details of the selected component in the fields below.') . ' <BR>' . _('Click on the "Enter Information" button to update the component details.');
 			echo "<INPUT TYPE=HIDDEN NAME='SelectedParent' VALUE='$SelectedParent'>";
 			echo "<INPUT TYPE=HIDDEN NAME='SelectedComponent' VALUE='$SelectedComponent'>";
-			echo "<CENTER><TABLE> <TR><TD>Component:</TD><TD><B>$SelectedComponent</B></TD></TR>";
+			echo '<CENTER><TABLE><TR><TD>' . _('Component:') . '</TD><TD><B>' . $SelectedComponent . '</B></TD></TR>';
 
 		} else { //end of if $SelectedComponent
 
 			echo "<INPUT TYPE=HIDDEN NAME='SelectedParent' VALUE='$SelectedParent'>";
 			/* echo "Enter the details of a new component in the fields below. <BR>Click on 'Enter Information' to add the new component, once all fields are completed.";
 			*/
-			echo "<CENTER><TABLE><TR><TD>Component code:</TD><TD>";
+			echo '<CENTER><TABLE><TR><TD>' . _('Component code:') . '</TD><TD>';
 			echo "<SELECT name='Component'>";
 
 			$sql = "SELECT StockID, Description FROM StockMaster WHERE MBflag !='D' AND MBflag !='K' AND MBflag !='A' AND StockID != '$SelectedParent' ORDER BY StockID";
-			$result = DB_query($sql,$db);
 
-			if (DB_error_no($db)!=0){
-			     echo "<BR>Could not retrieve the list of potential components because - " . DB_error_msg($db);
-	     		     if ($debug==1){
-		    		echo "<BR>The SQL used to retrieve the list of potential components part was:<BR>$sql";
-	     		     }
-	     		     exit;
-			}
+
+			$ErrMsg = _('Could not retrieve the list of potential components because');
+			$DbgMsg = _('The SQL used to retrieve the list of potential components part was:') . '<BR>' . $sql;
+			$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
 
 
 			while ($myrow = DB_fetch_array($result)) {
@@ -298,7 +291,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		}
 		?>
 
-		<TR><TD>Location:</TD>
+		<TR><TD><?php echo _('Location:'); ?></TD>
 		<TD>
 		<SELECT name="LocCode">
 
@@ -324,7 +317,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		</SELECT>
 		</TD></TR>
 
-		<TR><TD>Work Centre Added:</TD>
+		<TR><TD><?php echo _('Work Centre Added:'); ?></TD>
 		<TD>
 		<SELECT name="WorkCentreAdded">
 
@@ -334,8 +327,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		$result = DB_query($sql,$db);
 
 		if (DB_num_rows($result)==0){
-			echo "</SELECT></TD></TR></TABLE><BR><FONT SIZE=4 COLOR=RED>Problem Report:<BR></FONT>There are no work centres set up yet. Please use the link below to set up work centres.";
-			echo "<BR><A HREF='$rootpath/WorkCentres.php?" . SID . "'>Work Centre Maintenance</A>";
+			echo '</SELECT></TD></TR></TABLE><BR><FONT SIZE=4 COLOR=RED>' . _('Problem Report:') . '<BR></FONT>' . _('There are no work centres set up yet. Please use the link below to set up work centres.');
+			echo "<BR><A HREF='$rootpath/WorkCentres.php?" . SID . "'>" . _('Work Centre Maintenance') . '</A>';
 			exit;
 		}
 
@@ -356,7 +349,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		</SELECT>
 		</TD></TR>
 
-		<TR><TD>Quantity:</TD>
+		<TR><TD><?php echo _('Quantity:'); ?></TD>
 		<TD>
 		<INPUT TYPE="Text" name="Quantity" SIZE=10 MAXLENGTH=8 VALUE=
 		<?php
@@ -378,11 +371,11 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		?>
 
-		<TR><TD>Effective After (<?php echo $DefaultDateFormat; ?>):</TD>
+		<TR><TD><?php echo _('Effective After') . ' (' . $DefaultDateFormat . '):'; ?></TD>
 		<TD>
 		<INPUT TYPE="Text" name="EffectiveAfter" SIZE=11 MAXLENGTH=11 VALUE="<?php echo $_POST['EffectiveAfter']; ?>">
 		</TD></TR>
-		<TR><TD>Effective To (<?php echo $DefaultDateFormat; ?>):</TD>
+		<TR><TD><?php echo _('Effective To') . ' (' . $DefaultDateFormat . '):'; ?></TD>
 		<TD>
 		<INPUT TYPE="Text" name="EffectiveTo" SIZE=11 MAXLENGTH=11 VALUE="<?php echo $_POST['EffectiveTo']; ?>">
 		</TD></TR>
@@ -390,7 +383,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		</TABLE>
 
-		<CENTER><input type="Submit" name="Submit" value="Enter Information">
+		<CENTER><input type="Submit" name="Submit" value="<?php echo _('Enter Information'); ?>">
 
 		</FORM>
 
@@ -403,10 +396,10 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 } elseif (isset($_POST['Search'])){
 
 	If ($_POST['Keywords'] AND $_POST['StockCode']) {
-		$msg="Stock description keywords have been used in preference to the Stock code extract entered.";
+		$msg=_('Stock description keywords have been used in preference to the Stock code extract entered');
 	}
 	If ($_POST['Keywords']=="" AND $_POST['StockCode']=="") {
-		$msg="At least one Stock description keyword OR an extract of a Stock code must be entered for the search";
+		$msg=_('At least one Stock description keyword OR an extract of a Stock code must be entered for the search');
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
@@ -428,11 +421,9 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		}
 
-		$result = DB_query($sql,$db);
-		if (DB_error_no($db)!=0){
-			echo "<BR>The SQL to find the parts selected failed with the message: "  . DB_error_msg($db) . " The SQL statement was:<BR>$sql";
+		$ErrMsg = _('The SQL to find the parts selected failed with the message:');
+		$result = DB_query($sql,$db,$ErrMsg);
 
-		}
 	} //one of keywords or StockCode was more than a zero length string
 } //end of if search
 
@@ -440,19 +431,19 @@ if (!isset($SelectedParent)) {
 ?>
 
 <FORM ACTION='<?php echo $_SERVER['PHP_SELF'] . "?" . SID; ?>' METHOD=POST>
-<B><?php echo "<BR>" . $msg; ?></B>
-Select a manufactured part (or Assembly or Kit part) to maintain the bill of material for using the options below.
-<BR><FONT SIZE=1>Parts must be defined in the stock item entry/modification screen as manufactured, kits or assemblies to be available for construction of a bill of material</FONT>
+<B><BR><?php echo $msg; ?></B>
+<?php echo _('Select a manufactured part (or Assembly or Kit part) to maintain the bill of material for using the options below.'); ?>
+<BR><FONT SIZE=1><?php echo _('Parts must be defined in the stock item entry/modification screen as manufactured, kits or assemblies to be available for construction of a bill of material'); ?></FONT>
 <TABLE CELLPADDING=3 COLSPAN=4>
 <TR>
-<TD><FONT SIZE=1>Enter text extract(s) in the <B>description</B>:</FONT></TD>
+<TD><FONT SIZE=1><?php echo _('Enter text extract(s) in the') . ' <B>' . _('description'); ?></B>:</FONT></TD>
 <TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25></TD>
-<TD><FONT SIZE=3><B>OR</B></FONT></TD>
-<TD><FONT SIZE=1>Enter extract of the <B>Stock Code</B>:</FONT></TD>
+<TD><FONT SIZE=3><B><?php echo _('OR'); ?></B></FONT></TD>
+<TD><FONT SIZE=1><?php echo _('Enter extract of the') . ' <B>' . _('Stock Code'); ?></B>:</FONT></TD>
 <TD><INPUT TYPE="Text" NAME="StockCode" SIZE=15 MAXLENGTH=18></TD>
 </TR>
 </TABLE>
-<CENTER><INPUT TYPE=SUBMIT NAME="Search" VALUE="Search Now">
+<CENTER><INPUT TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Search Now'); ?>">
 </CENTER>
 
 
@@ -461,7 +452,7 @@ Select a manufactured part (or Assembly or Kit part) to maintain the bill of mat
 If (isset($result) AND !isset($SelectedParent)) {
 
 	echo "<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>";
-	$TableHeader = "<TR><TD class=tableheader>Code</TD><TD class=tableheader>Description</TD><TD class=tableheader>On Hand</TD><TD class=tableheader>Units</TD></TR>";
+	$TableHeader = '<TR><TD class=tableheader>' . _('Code') . '</TD><TD class=tableheader>' . _('Description') . '</TD><TD class=tableheader>' . _('On Hand') . '</TD><TD class=tableheader>' . _('Units') . '</TD></TR>';
 
 	echo $TableHeader;
 
@@ -480,7 +471,15 @@ If (isset($result) AND !isset($SelectedParent)) {
 		} else {
 			$StockOnHand = number_format($myrow['TotalOnHand'],2);
 		}
-		printf("<td><FONT SIZE=1><INPUT TYPE=SUBMIT NAME='Select' VALUE='%s'</FONT></td><td><FONT SIZE=1>%s</FONT></td><td ALIGN=RIGHT><FONT SIZE=1>%s</FONT></td><td><FONT SIZE=1>%s</FONT></td></tr>", $myrow["StockID"], $myrow["Description"], $StockOnHand,$myrow["Units"]);
+		printf("<td><FONT SIZE=1><INPUT TYPE=SUBMIT NAME='Select' VALUE='%s'</FONT></td>
+		        <td><FONT SIZE=1>%s</FONT></td>
+			<td ALIGN=RIGHT><FONT SIZE=1>%s</FONT></td>
+			<td><FONT SIZE=1>%s</FONT></td></tr>",
+			$myrow["StockID"],
+			$myrow["Description"],
+			$StockOnHand,
+			$myrow["Units"]
+		);
 
 		$j++;
 		If ($j == 12){
