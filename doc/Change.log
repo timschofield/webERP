@@ -1,5 +1,6 @@
 <P>webERP Change Log
 
+<P>23/9/04 gettextification - FTP_RadioBeacon.php, EmailCustTrans.php, FreightCosts.php
 <P>22/9/04 gettextification - EDIMessageFormat.php EDIProcessOrders.php	EDISendInvoices.php BOMInquiry.php BOMListing.php
 <P>22/9/04 Steve - gettextification - InventoryValuation.php Locations.php Logout.php MailInventoryValuation.php MailSalesReport.php
 <P>21/9/04 Jake - gettextification - GLJournal.php GLProfit_Loss.php GLBalanceSheet.php GLCodesInquiry.php GLTransInquiry.php

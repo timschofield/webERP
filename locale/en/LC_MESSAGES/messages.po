@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-22 22:44+1200\n"
+"POT-Creation-Date: 2004-09-23 22:34+1200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -103,6 +103,7 @@ msgid "EDIT"
 msgstr ""
 
 #: AccountGroups.php:157 BOMs.php:80 EDIMessageFormat.php:162
+#: FreightCosts.php:210
 msgid "DELETE"
 msgstr ""
 
@@ -131,7 +132,7 @@ msgid "Sequence In TB:"
 msgstr ""
 
 #: AccountGroups.php:266 Areas.php:180 BOMs.php:386 BankAccounts.php:221
-#: Locations.php:378 TaxAuthorities.php:261
+#: FreightCosts.php:299 Locations.php:378 TaxAuthorities.php:261
 msgid "Enter Information"
 msgstr ""
 
@@ -349,8 +350,8 @@ msgstr ""
 msgid "Area Name"
 msgstr ""
 
-#: Areas.php:128 BankAccounts.php:140 Locations.php:269 TaxAuthorities.php:167
-#: includes/InputSerialItems.php:72
+#: Areas.php:128 BankAccounts.php:140 FreightCosts.php:209 Locations.php:269
+#: TaxAuthorities.php:167 includes/InputSerialItems.php:72
 msgid "Edit"
 msgstr ""
 
@@ -1007,7 +1008,8 @@ msgid "Type"
 msgstr ""
 
 #: BankReconciliation.php:83 BankReconciliation.php:154
-#: CustomerTransInquiry.php:73 GLAccountInquiry.php:117 PrintCustTrans.php:452
+#: CustomerTransInquiry.php:73 EmailCustTrans.php:15 GLAccountInquiry.php:117
+#: PrintCustTrans.php:452
 msgid "Number"
 msgstr ""
 
@@ -1098,9 +1100,9 @@ msgstr ""
 msgid "on order"
 msgstr ""
 
-#: ConfirmDispatchControlled_Invoice.php:57 PrintCustTrans.php:80
-#: PrintCustTrans.php:83 StockTransfers.php:333 Stocks.php:104 Stocks.php:109
-#: includes/PDFAgedDebtorsPageHeader.inc:18
+#: ConfirmDispatchControlled_Invoice.php:57 FTP_RadioBeacon.php:286
+#: PrintCustTrans.php:80 PrintCustTrans.php:83 StockTransfers.php:333
+#: Stocks.php:104 Stocks.php:109 includes/PDFAgedDebtorsPageHeader.inc:18
 #: includes/PDFAgedSuppliersPageHeader.inc:17
 msgid "to"
 msgstr ""
@@ -1158,7 +1160,7 @@ msgstr ""
 msgid "Ordered"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:230
+#: ConfirmDispatch_Invoice.php:230 FTP_RadioBeacon.php:94
 msgid "Already<BR>Sent"
 msgstr ""
 
@@ -1577,7 +1579,7 @@ msgstr ""
 msgid "Credit of Controlled Item"
 msgstr ""
 
-#: CreditItemsControlled.php:91 GoodsReceived.php:45
+#: CreditItemsControlled.php:91 FreightCosts.php:236 GoodsReceived.php:45
 msgid "from"
 msgstr ""
 
@@ -2031,7 +2033,7 @@ msgstr ""
 msgid "Amount Rec'd"
 msgstr ""
 
-#: CustomerReceipt.php:501 CustomerTransInquiry.php:75
+#: CustomerReceipt.php:501 CustomerTransInquiry.php:75 FTP_RadioBeacon.php:62
 #: includes/PDFAgedDebtorsPageHeader.inc:40
 msgid "Customer"
 msgstr ""
@@ -2078,8 +2080,8 @@ msgstr ""
 msgid "Narrative:"
 msgstr ""
 
-#: CustomerReceipt.php:613 CustomerReceipt.php:688 GLJournal.php:111
-#: GLJournal.php:211
+#: CustomerReceipt.php:613 CustomerReceipt.php:688 FreightCosts.php:57
+#: GLJournal.php:111 GLJournal.php:211
 msgid "Accept"
 msgstr ""
 
@@ -2217,7 +2219,7 @@ msgid ""
 "because"
 msgstr ""
 
-#: CustomerTransInquiry.php:76
+#: CustomerTransInquiry.php:76 FTP_RadioBeacon.php:63
 msgid "Branch"
 msgstr ""
 
@@ -2984,15 +2986,15 @@ msgstr ""
 msgid "could not be emailed to"
 msgstr ""
 
-#: EDISendInvoices.php:207
+#: EDISendInvoices.php:207 FTP_RadioBeacon.php:275
 msgid "Ftp connection has failed!"
 msgstr ""
 
-#: EDISendInvoices.php:208
+#: EDISendInvoices.php:208 FTP_RadioBeacon.php:276
 msgid "Attempted to connect to"
 msgstr ""
 
-#: EDISendInvoices.php:208
+#: EDISendInvoices.php:208 FTP_RadioBeacon.php:276
 msgid "for user"
 msgstr ""
 
@@ -3012,6 +3014,257 @@ msgstr ""
 msgid ""
 "Cannot create EDI message since there is no EDI INVOIC message template set "
 "up for"
+msgstr ""
+
+#: EmailCustTrans.php:9
+msgid "Invoice"
+msgstr ""
+
+#: EmailCustTrans.php:12
+msgid "Credit Note"
+msgstr ""
+
+#: EmailCustTrans.php:15 Locations.php:359
+msgid "Email"
+msgstr ""
+
+#: EmailCustTrans.php:19
+msgid ""
+"The transaction should be emailed off. If this does not happen (if the "
+"browser does not support META Refresh)"
+msgstr ""
+
+#: EmailCustTrans.php:19 PO_Header.php:54
+msgid "click here"
+msgstr ""
+
+#: EmailCustTrans.php:19
+msgid "to email the customer tranaction"
+msgstr ""
+
+#: EmailCustTrans.php:24
+msgid ""
+"The email address entered is too short to be a valid email address. The "
+"transaction was not emailed"
+msgstr ""
+
+#: EmailCustTrans.php:45
+msgid "There was a problem retrieving the contact details for the customer"
+msgstr ""
+
+#: EmailCustTrans.php:55
+msgid "Email to"
+msgstr ""
+
+#: EmailCustTrans.php:59
+msgid "OK"
+msgstr ""
+
+#: FTP_RadioBeacon.php:17
+msgid "FTP order to Radio Beacon"
+msgstr ""
+
+#: FTP_RadioBeacon.php:53
+msgid "No orders were returned because"
+msgstr ""
+
+#: FTP_RadioBeacon.php:60
+msgid "Modify"
+msgstr ""
+
+#: FTP_RadioBeacon.php:61
+msgid "Send to<BR>Radio Beacon"
+msgstr ""
+
+#: FTP_RadioBeacon.php:64
+msgid "Cust Order #"
+msgstr ""
+
+#: FTP_RadioBeacon.php:65
+msgid "Order Date"
+msgstr ""
+
+#: FTP_RadioBeacon.php:66
+msgid "Req Del Date"
+msgstr ""
+
+#: FTP_RadioBeacon.php:67
+msgid "Delivery To"
+msgstr ""
+
+#: FTP_RadioBeacon.php:68
+msgid "Order Total"
+msgstr ""
+
+#: FTP_RadioBeacon.php:69
+msgid "Last Send"
+msgstr ""
+
+#: FTP_RadioBeacon.php:115
+msgid "Send"
+msgstr ""
+
+#: FTP_RadioBeacon.php:153
+msgid ""
+"There was a problem retrieving the company information ensure that the "
+"company record is correctly set up"
+msgstr ""
+
+#: FTP_RadioBeacon.php:185
+msgid ""
+"There was a problem retrieving the order header details for Order Number"
+msgstr ""
+
+#: FTP_RadioBeacon.php:185 PrintCustTrans.php:267
+msgid "from the database"
+msgstr ""
+
+#: FTP_RadioBeacon.php:192 FTP_RadioBeacon.php:294
+msgid "Order Number"
+msgstr ""
+
+#: FTP_RadioBeacon.php:192
+msgid "has previously been sent to Radio Beacon. It was sent on"
+msgstr ""
+
+#: FTP_RadioBeacon.php:192
+msgid ""
+"To re-send the order with the balance not previously dispatched and invoiced "
+"the order must be modified to allow a reprint (or re-send).<BR>This check is "
+"there to ensure that duplication of dispatches to the customer are avoided"
+msgstr ""
+
+#: FTP_RadioBeacon.php:193
+msgid "Modify the order to allow a re-send/reprint (Select Delivery Details)"
+msgstr ""
+
+#: FTP_RadioBeacon.php:194
+msgid "Back To The Main Menu"
+msgstr ""
+
+#: FTP_RadioBeacon.php:211
+msgid "There was a problem retrieving the line details for order number"
+msgstr ""
+
+#: FTP_RadioBeacon.php:211
+msgid "from the database because"
+msgstr ""
+
+#: FTP_RadioBeacon.php:270
+msgid "FTP Connection progress"
+msgstr ""
+
+#: FTP_RadioBeacon.php:279
+msgid "Connected to Radio Beacon FTP server at"
+msgstr ""
+
+#: FTP_RadioBeacon.php:279
+msgid "with user name"
+msgstr ""
+
+#: FTP_RadioBeacon.php:283
+msgid "FTP upload has failed!"
+msgstr ""
+
+#: FTP_RadioBeacon.php:286
+msgid "Uploaded"
+msgstr ""
+
+#: FTP_RadioBeacon.php:294
+msgid ""
+"has been sent via FTP to Radio Beacon a copy of the file that was sent is "
+"held on the server at:"
+msgstr ""
+
+#: FTP_RadioBeacon.php:298
+msgid "The order"
+msgstr ""
+
+#: FTP_RadioBeacon.php:298
+msgid ""
+"for dispatch via Radio Beacon could not be retrieved. Perhaps it is set to "
+"be dispatched from a different stock location?"
+msgstr ""
+
+#: FreightCosts.php:6
+msgid "Freight Costs Set Up"
+msgstr ""
+
+#: FreightCosts.php:39
+msgid "Select A Freight Company to set up costs for"
+msgstr ""
+
+#: FreightCosts.php:47
+msgid "Select the warehouse (ship from location)"
+msgstr ""
+
+#: FreightCosts.php:69
+msgid "For Deliveries From"
+msgstr ""
+
+#: FreightCosts.php:69
+msgid "using"
+msgstr ""
+
+#: FreightCosts.php:82
+msgid ""
+"The entry for the destination must be at least two characters long. These "
+"entries are matched against the town names entered for customer delivery "
+"addresses"
+msgstr ""
+
+#: FreightCosts.php:87
+msgid ""
+"The entries for Cubic Rate, KG Rate, Maxmimum Weight, Maximum Volume, Fixed "
+"Price and Minimum charge must be numeric"
+msgstr ""
+
+#: FreightCosts.php:106
+msgid "Freight cost record updated"
+msgstr ""
+
+#: FreightCosts.php:134
+msgid "Freight cost record inserted"
+msgstr ""
+
+#: FreightCosts.php:140
+msgid "The freight cost record could not be updated because"
+msgstr ""
+
+#: FreightCosts.php:149
+msgid "Freight cost record Deleted"
+msgstr ""
+
+#: FreightCosts.php:236
+msgid "Show all freight costs for"
+msgstr ""
+
+#: FreightCosts.php:283
+msgid "Destination"
+msgstr ""
+
+#: FreightCosts.php:285
+msgid "Rate per Cubic Metre"
+msgstr ""
+
+#: FreightCosts.php:287
+msgid "Rate Per KG:"
+msgstr ""
+
+#: FreightCosts.php:289
+msgid "Maximum Weight Per Package (KGs)"
+msgstr ""
+
+#: FreightCosts.php:291
+msgid "Maximum Volume Per Package (cubic metres)"
+msgstr ""
+
+#: FreightCosts.php:293
+msgid "Fixed Price (zero if rate per KG or Cubic)"
+msgstr ""
+
+#: FreightCosts.php:295
+msgid "Minimum Charge (0 is N/A)"
 msgstr ""
 
 #: GLAccountInquiry.php:7
@@ -3912,10 +4165,6 @@ msgstr ""
 msgid "Facsimile No"
 msgstr ""
 
-#: Locations.php:359
-msgid "Email"
-msgstr ""
-
 #: Logout.php:10
 msgid "Log Off"
 msgstr ""
@@ -4020,10 +4269,6 @@ msgid ""
 "You should automatically be forwarded to the entry of the purchase order "
 "line items page. If this does not happen (if the browser doesn't support "
 "META Refresh)"
-msgstr ""
-
-#: PO_Header.php:54
-msgid "click here"
 msgstr ""
 
 #: PO_Header.php:54
@@ -4198,10 +4443,6 @@ msgid ""
 "details for invoice number"
 msgstr ""
 
-#: PrintCustTrans.php:267
-msgid "from the database"
-msgstr ""
-
 #: PrintCustTrans.php:390
 msgid "Sub Total"
 msgstr ""
@@ -4240,6 +4481,50 @@ msgstr ""
 
 #: PrintCustTrans.php:472
 msgid "Select Invoices/Credit Notes To Print"
+msgstr ""
+
+#: SalesAnalRepts.php:17 SalesAnalRepts.php:19
+msgid "Sales Area"
+msgstr ""
+
+#: SalesAnalRepts.php:22 SalesAnalRepts.php:24
+msgid "Product Code"
+msgstr ""
+
+#: SalesAnalRepts.php:178
+msgid "The report could not be added because:"
+msgstr ""
+
+#: SalesAnalRepts.php:179
+msgid "The SQL used to add the report header was"
+msgstr ""
+
+#: SalesAnalRepts.php:181
+msgid "The"
+msgstr ""
+
+#: SalesAnalRepts.php:181
+msgid "report has been added to the database"
+msgstr ""
+
+#: SalesAnalRepts.php:208
+msgid "The deletion of the report's columns failed because"
+msgstr ""
+
+#: SalesAnalRepts.php:209
+msgid "The SQL used to delete the report's columns was"
+msgstr ""
+
+#: SalesAnalRepts.php:214
+msgid "The deletion of the report heading failed because"
+msgstr ""
+
+#: SalesAnalRepts.php:215
+msgid "The SQL used to delete the report headers was"
+msgstr ""
+
+#: SalesAnalRepts.php:218
+msgid "Report Deleted !"
 msgstr ""
 
 #: SelectOrderItems.php:13

@@ -1749,7 +1749,7 @@ UNLOCK TABLES;
 
 /*!40000 ALTER TABLE WWW_Users DISABLE KEYS */;
 LOCK TABLES WWW_Users WRITE;
-INSERT INTO WWW_Users VALUES ('Admin','weeping','Phil Daintree','','','','DEN',7,'2004-06-06 13:23:59','','A4','1,1,1,1,1,1,1,1,',0,0,'professional','en'),('demo','weberp','Demonstration user','','','','DEN',7,'2004-09-22 21:25:37','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en'),('testy','weberp','','GRANHR','','','DEN',6,'2004-02-23 20:21:56','GRAN','A4','1,0,0,0,0,0,0,0,',0,0,'professional','en');
+INSERT INTO WWW_Users VALUES ('Admin','weeping','Phil Daintree','','','','DEN',7,'2004-06-06 13:23:59','','A4','1,1,1,1,1,1,1,1,',0,0,'professional','en'),('demo','weberp','Demonstration user','','','','DEN',7,'2004-09-23 21:42:28','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en'),('testy','weberp','','GRANHR','','','DEN',6,'2004-02-23 20:21:56','GRAN','A4','1,0,0,0,0,0,0,0,',0,0,'professional','en');
 UNLOCK TABLES;
 /*!40000 ALTER TABLE WWW_Users ENABLE KEYS */;
 

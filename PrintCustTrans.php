@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $PageSecurity = 1;
 
 if (isset($_GET["FromTransNo"])){
@@ -451,7 +451,7 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 
 		$title = _('Emailing') . ' ' .$InvOrCredit . ' ' . _('Number') . ' ' . $FromTransNo;
 		include("includes/header.inc");
-		echo "<P>$InvOrCredit " . _('number') . $FromTransNo . ' ' . _('has been emailed to') . ' ' . $_GET['Email'];
+		echo "<P>$InvOrCredit " . _('number') . ' ' . $FromTransNo . ' ' . _('has been emailed to') . ' ' . $_GET['Email'];
 		include("includes/footer.inc");
 		exit;
 
