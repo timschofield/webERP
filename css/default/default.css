@@ -16,7 +16,7 @@
 \--------------------------------------------------*/
 
 body {
-	font-family: Verdana, Arial, Helvetica;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	background-color: #CCCCDD;
 	margin-left: 5px;
@@ -48,7 +48,7 @@ table {
 /*table detail items default format */
 td {
 	font-family: Verdana, Arial, Helvetica;
-	font-size 10px;
+	font-size: 10px;
 
 }
 
@@ -67,7 +67,7 @@ td {
 #page {
 	width: 100%;
 	color: #000000;
-	font-size 12px;
+	font-size: 12px;
 	white-space: nowrap;
 	border: none;
 }
@@ -117,7 +117,7 @@ td {
 	width: 100%;
 	margin: 0px;
 	padding: 0px;
- 	font-size 12px;
+ 	font-size: 12px;
 }
 
 /* Main page heading with quick menu within */
