@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -47,8 +47,8 @@ $host = 'localhost';
 $DatabaseName = 'weberp';
 
 // sql user & password
-$dbuser = 'root';
-$dbpassword = 'triadpass';
+$dbuser = 'weberp_db_user';
+$dbpassword = 'weberp_db_pwd';
 
 // CSS GUI theme
 $DefaultTheme = 'fresh';
@@ -239,7 +239,7 @@ $SecurityGroups = array(
 $allow_demo_mode = True;
 
 /*The headings showing on the tabs accross the main index used also in WWW_Users for defining what should be visible to the user */
-$ModuleList = array(_('Orders'), _('Receivables'), ('Payables'), _('Purchasing'), _('Inventory'), _('Manufacturing'), _('General Ledger'), _('Setup'));
+$ModuleList = array(_('Orders'), _('Receivables'), _('Payables'), _('Purchasing'), _('Inventory'), _('Manufacturing'), _('General Ledger'), _('Setup'));
 
 /*Session save path is necessary where there may be several installations on the same server and the server cookie must be in different directories to avoid confusion - also where the server uses load balancing among several servers - one server must be used for the cookie - sourceforge.net uses load balancing and requires this for the demo*/
 
@@ -293,8 +293,7 @@ $rootpath = dirname($_SERVER['PHP_SELF']);
 This is the default value set in php.ini for most installations but just to be sure it is forced here
 turning on NOTICES destroys things */
 
-error_reporting (E_ALL ^E_NOTICE);
-
+error_reporting (E_ALL & ~E_NOTICE);
 
 /*Make sure there is nothing -not even spaces after this last ?> */
 ?>

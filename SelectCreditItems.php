@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
 
@@ -109,15 +109,16 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1){
 				AND DisableTrans=0";
 		  }
 
-		  $result_CustSelect = DB_query($SQL,$db);
-		  if (DB_error_no($db) !=0) {
-			   echo '<P>' . _('Customer branch records requested cannot be retrieved because') . ' - ' . DB_error_msg($db) . '<BR>' . _('SQL used to retrieve the customer details was') . ':<BR>' . $sql;
-		  }
+		  $ErrMsg = _('Customer branch records requested cannot be retrieved because');
+		  $DbgMsg = _('SQL used to retrieve the customer details was');
+		  $result_CustSelect = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+
+
 		  if (DB_num_rows($result_CustSelect)==1){
 			    $myrow=DB_fetch_array($result_CustSelect);
 			    $_POST['Select'] = $myrow['DebtorNo'] . ' - ' . $myrow['BranchCode'];
 		  } elseif (DB_num_rows($result_CustSelect)==0){
-			    echo '<P>' . _('Sorry ... there are no customer branch records contain the selected text - please alter your search criteria and try again.');
+			    prnMsg(_('Sorry ... there are no customer branch records contain the selected text - please alter your search criteria and try again'),'info');
 		  }
 
 	 } /*one of keywords or custcode was more than a zero length string */
@@ -144,14 +145,9 @@ parse the $Select string into customer code and branch code */
 		WHERE DebtorsMaster.CurrCode=Currencies.CurrAbrev
 		AND DebtorsMaster.DebtorNo = '" . $_POST['Select'] . "'";
 
-	 $result =DB_query($sql,$db);
-	 if (DB_error_no($db) !=0) {
-		  echo _('The customer record of the customer selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because') . ' - ' . DB_error_msg($db);
-
-		  if ($debug==1){
-			   echo '<BR>' . _('The SQL used to retrieve the customer details (and failed) was') . ':<BR>' . $sql;
-		  }
-	 }
+	$ErrMsg = _('The customer record of the customer selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');
+	$DbgMsg = _('The SQL used to retrieve the customer details (and failed) was');
+	$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	 $myrow = DB_fetch_row($result);
 
@@ -188,8 +184,8 @@ will be booked back into. */
 			WHERE CustBranch.BranchCode='" . $_SESSION['CreditItems']->Branch . "'
 			AND CustBranch.DebtorNo = '" . $_SESSION['CreditItems']->DebtorNo . "'";
 
-	 $ErrMsg = '<BR>' . _('The customer branch record of the customer selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because') . ':';
-	$DbgMsg = '<BR>' . _('SQL used to retrieve the branch details was') . ':';
+	 $ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because') . ':';
+	$DbgMsg =  _('SQL used to retrieve the branch details was') . ':';
 	 $result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	 $myrow = DB_fetch_row($result);
@@ -388,11 +384,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			  }
 		}
 
-		$ErrMsg = '<BR>' . _('There is a problem selecting the part records to display because');
+		$ErrMsg = _('There is a problem selecting the part records to display because');
 		$SearchResult = DB_query($SQL,$db,$ErrMsg);
 
 		if (DB_num_rows($SearchResult)==0){
-			   echo '<BR>' . _('Sorry ... there are no products available that match the criteria specified');
+			   prnMsg(_('Sorry ... there are no products available that match the criteria specified'),'info');
 			   if ($debug==1){
 				    echo '<P>' . _('The SQL statement used was') . ':<BR>' . $SQL;
 			   }
@@ -460,50 +456,49 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					DiscountCategory From StockMaster
 				 WHERE  StockMaster.StockID = '". $_POST['NewItem'] . "'";
 
-			    $result1 = DB_query($sql,$db);
-				if (DB_error_no($db)!=0){
-			   		echo '<BR>' . _('There is a problem selecting the part being') . ' - ' . DB_error_msg($db);
-				}
+				$ErrMsg =  _('There is a problem selecting the part because');
+				$result1 = DB_query($sql,$db,$ErrMsg);
 
-       		   if ($myrow = DB_fetch_array($result1)){
 
-				if ($_SESSION['CreditItems']->add_to_cart ($_POST['NewItem'],
-										$NewItemQty,
-										$myrow['Description'],
-										GetPrice 												($_POST['NewItem'],
-									$_SESSION['CreditItems']->DebtorNo,
-									$_SESSION['CreditItems']->Branch, 										&$db),
-										0,
-										$myrow['Units'],
-										$myrow['Volume'],
-										$myrow['KGS'],
-										0,
-										$myrow['MBflag'],
-										Date($DefaultDateFormat),
-										0,
-										$myrow['DiscountCategory'],
-										$myrow['Controlled'],
-										$myrow['Serialised'],
-										$myrow['DecimalPlaces']
+       		   		if ($myrow = DB_fetch_array($result1)){
+
+					if ($_SESSION['CreditItems']->add_to_cart ($_POST['NewItem'],
+											$NewItemQty,
+											$myrow['Description'],
+											GetPrice 																	($_POST['NewItem'],
+												$_SESSION['CreditItems']->DebtorNo,
+												$_SESSION['CreditItems']->Branch, 													&$db),
+											0,
+											$myrow['Units'],
+											$myrow['Volume'],
+											$myrow['KGS'],
+											0,
+											$myrow['MBflag'],
+											Date($DefaultDateFormat),
+											0,
+											$myrow['DiscountCategory'],
+											$myrow['Controlled'],
+											$myrow['Serialised'],
+											$myrow['DecimalPlaces']
 										)
-								==1){
-				$_SESSION['CreditItems']->LineItems[$_POST['NewItem']]->StandardCost = $myrow['StandardCost'];
-					 $_SESSION['CreditItems']->LineItems[$_POST['NewItem']]->TaxRate = GetTaxRate($_SESSION['TaxAuthority'], $_SESSION['DispatchTaxAuthority'], $myrow['TaxLevel'],$db);
+						==1){
+							$_SESSION['CreditItems']->LineItems[$_POST['NewItem']]->StandardCost = $myrow['StandardCost'];
+					 		$_SESSION['CreditItems']->LineItems[$_POST['NewItem']]->TaxRate = GetTaxRate($_SESSION['TaxAuthority'], $_SESSION['DispatchTaxAuthority'], $myrow['TaxLevel'],$db);
 
-					if ($myrow['Controlled']==1){
-					/*Qty must be built up from serial item entries */
+							if ($myrow['Controlled']==1){
+								/*Qty must be built up from serial item entries */
 
-					   $_SESSION['CreditItems']->LineItems[$_POST['NewItem']]->Quantity = 0;
+					   			$_SESSION['CreditItems']->LineItems[$_POST['NewItem']]->Quantity = 0;
+							}
+
 					}
-
-				}
-			   } else {
-				echo '<FONT COLOR=RED SIZE=4>' . _('The part code') . ' "' . $_POST['NewItem'] . '" ' . _('does not exist in the database and cannot therefore be added to the credit note') . '.</FONT><P>';
-			   }
-		   } /* end of if not already on the credit note */
-	     } while ($i<=$QuickEntries); /*loop to the next quick entry record */
-	     unset($_POST['NewItem']);
-	 } /* end of if quick entry */
+			   	} else {
+					prnMsg( _('The part code') . ' "' . $_POST['NewItem'] . '" ' . _('does not exist in the database and cannot therefore be added to the credit note'),'warn');
+			   	}
+		   	} /* end of if not already on the credit note */
+		} while ($i<=$QuickEntries); /*loop to the next quick entry record */
+		unset($_POST['NewItem']);
+	} /* end of if quick entry */
 
 
 /* setup system defaults for looking up prices and the number of ordered items
@@ -535,7 +530,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 
 			If ($Quantity<0 OR $Price <0 OR $DiscountPercentage >100 OR $DiscountPercentage <0){
-				echo '<BR>' . _('The item could not be updated because you are attempting to set the quantity credited to less than 0, or the price less than 0 or the discount more than 100% or less than 0%');
+				prnMsg(_('The item could not be updated because you are attempting to set the quantity credited to less than 0, or the price less than 0 or the discount more than 100% or less than 0%'),'warn');
 			} elseif (isset($_POST['Quantity_' . $StockItem->StockID])) {
 				$_SESSION['CreditItems']->update_cart_item($StockItem->StockID, $Quantity, $Price, $DiscountPercentage/100, $Narrative);
 			}
@@ -553,7 +548,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				    if ($OrderItem->StockID == $_POST['NewItem']) {
 					     $AlreadyOnThisCredit = 1;
-					     echo '<BR><B>' . _('Warning') . ':</B>' . _('The item selected is already on this credit - the system will not allow the same item on the credit note more than once. However, you can change the quantity credited of the existing line if necessary');
+					     prnMsg(_('The item selected is already on this credit - the system will not allow the same item on the credit note more than once. However, you can change the quantity credited of the existing line if necessary'),'warn');
 				    }
 			   } /* end of the foreach loop to look for preexisting items of the same code */
 
@@ -569,8 +564,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					FROM StockMaster
 					WHERE StockMaster.StockID = '". $_POST['NewItem'] . "'";
 
-				$ErrMsg = '<BR>' . _('The item details could not be retrieved because') . ': ';
-				$DbgMsg = '<BR>' . _('The SQL used to retrieve the item details but failed was') . ':';
+				$ErrMsg = _('The item details could not be retrieved because') . ': ';
+				$DbgMsg = _('The SQL used to retrieve the item details but failed was') . ':';
 				$result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 				$myrow = DB_fetch_array($result1);
 

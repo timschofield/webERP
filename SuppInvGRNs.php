@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -160,7 +160,7 @@ $SQL = "SELECT GRNBatch,
 $GRNResults = DB_query($SQL,$db);
 
 if (DB_num_rows($GRNResults)==0){
-	prnMsg(_('There are no outstanding goods received from') . ' ' . $_SESSION['SuppTrans']->SupplierName . ' ' . _('that have not been invoiced by them') . '<BR>' . _('The goods must first be received using the link below to select purchase orders to receive');
+	prnMsg(_('There are no outstanding goods received from') . ' ' . $_SESSION['SuppTrans']->SupplierName . ' ' . _('that have not been invoiced by them') . '<BR>' . _('The goods must first be received using the link below to select purchase orders to receive'),'errpr');
 	echo "<P><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . 'SupplierID=' . $_SESSION['SuppTrans']->SupplierID ."'>" . _('Select Purchase Orders to receive') .'</A>';
 	include('includes/footer.inc');
 	exit;
@@ -222,7 +222,7 @@ if (isset($_GET['Modify'])){
 		<TD ALIGN=RIGHT>' . number_format($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv,2) . "</TD>
 		<TD><INPUT TYPE=Text Name='This_QuantityInv' Value=" . number_format($GRNTmp->This_QuantityInv,2) . ' SIZE=11 MAXLENGTH=10></TD>
 		<TD ALIGN=RIGHT>' . $GRNTmp->OrderPrice . '</TD>
-		<TD><INPUT TYPE=Text Name='ChgPrice' Value=' . $GRNTmp->ChgPrice . ' SIZE=11 MAXLENGTH=10></TD>
+		<TD><INPUT TYPE=Text Name="ChgPrice" Value=' . $GRNTmp->ChgPrice . ' SIZE=11 MAXLENGTH=10></TD>
 	</TR>';
 	echo '</TABLE>';
 
