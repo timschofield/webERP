@@ -1,17 +1,13 @@
 <?php
-/* $Revision: 1.3 $ */
-$title = "Company Preferences";
+/* $Revision: 1.4 $ */
 $PageSecurity =10;
 
-include("includes/session.inc");
-include("includes/header.inc");
-include("includes/DateFunctions.inc");
+include('includes/session.inc');
 
-?>
+$title = _('Company Preferences');
 
-<P>
-
-<?php
+include('includes/header.inc');
+include('includes/DateFunctions.inc');
 
 
 if (isset($_POST['submit'])) {
@@ -26,62 +22,104 @@ if (isset($_POST['submit'])) {
 
 	if (strlen($_POST['CoyName']) > 40 OR strlen($_POST['CoyName'])==0) {
 		$InputError = 1;
-		echo "The company name must be entered and be fifty characters or less long";
+		echo _('The company name must be entered and be fifty characters or less long');
 	} elseif (strlen($_POST['PostalAddress']) >50) {
 		$InputError = 1;
-		echo "The postal address must be fifty characters or less long";
+		echo _('The postal address must be fifty characters or less long');
 	} elseif (strlen($_POST['RegOffice1']) >50) {
 		$InputError = 1;
-		echo "The Line 1 of the address must be fifty characters or less long";
+		echo _('The Line 1 of the address must be fifty characters or less long');
 	} elseif (strlen($_POST['RegOffice2']) >50) {
 		$InputError = 1;
-		echo "The Line 2 of the address must be fifty characters or less long";
+		echo _('The Line 2 of the address must be fifty characters or less long');
 	} elseif (strlen($_POST['RegOffice3']) >50) {
 		$InputError = 1;
-		echo "The Line 3 of the address must be fifty characters or less long";
+		echo _('The Line 3 of the address must be fifty characters or less long');
 	} elseif (strlen($_POST['Telephone']) >25) {
 		$InputError = 1;
-		echo "The telephone number must be 25 characters or less long";
+		echo _('The telephone number must be 25 characters or less long');
 	} elseif (strlen($_POST['Fax']) >25) {
 		$InputError = 1;
-		echo "The fax number must be 25 characters or less long";
+		echo _('The fax number must be 25 characters or less long');
 	} elseif (strlen($_POST['Email']) >55) {
 		$InputError = 1;
-		echo "The email address must be 55 characters or less long";
+		echo _('The email address must be 55 characters or less long');
 	}
 
 	if ($InputError !=1){
 
-		$sql = "UPDATE Companies SET CoyName='" . $_POST['CoyName'] . "', CompanyNumber = '" . $_POST['CompanyNumber'] . "', GSTNo='" . $_POST['GSTNo'] . "', PostalAddress ='" . $_POST['PostalAddress'] . "', RegOffice1='" . $_POST['RegOffice1'] . "', RegOffice2='" . $_POST['RegOffice2'] . "', RegOffice3='" . $_POST['RegOffice3'] . "', Telephone='" . $_POST['Telephone'] . "', Fax='" . $_POST['Fax'] . "', Email='" . $_POST['Email'] . "', CurrencyDefault='" . $_POST['CurrencyDefault'] . "', DebtorsAct=" . $_POST['DebtorsAct'] . ", PytDiscountAct=" . $_POST['PytDiscountAct'] . ", CreditorsAct=" . $_POST['CreditorsAct'] . ", PayrollAct=" . $_POST['PayrollAct'] . ", GRNAct=" . $_POST['GRNAct'] . ", ExchangeDiffAct=" . $_POST['ExchangeDiffAct'] . ", PurchasesExchangeDiffAct=" . $_POST['PurchasesExchangeDiffAct'] . ", RetainedEarnings=" . $_POST['RetainedEarnings'] . ", GLLink_Debtors=" . $_POST['GLLink_Debtors'] . ", GLLink_Creditors=" . $_POST['GLLink_Creditors'] . ", GLLink_Stock=" . $_POST['GLLink_Stock'] .", FreightAct=" . $_POST['FreightAct'] . " WHERE CoyCode=1";
+		$sql = "UPDATE Companies SET
+				CoyName='" . $_POST['CoyName'] . "',
+				CompanyNumber = '" . $_POST['CompanyNumber'] . "',
+				GSTNo='" . $_POST['GSTNo'] . "',
+				PostalAddress ='" . $_POST['PostalAddress'] . "',
+				RegOffice1='" . $_POST['RegOffice1'] . "',
+				RegOffice2='" . $_POST['RegOffice2'] . "',
+				RegOffice3='" . $_POST['RegOffice3'] . "',
+				Telephone='" . $_POST['Telephone'] . "',
+				Fax='" . $_POST['Fax'] . "',
+				Email='" . $_POST['Email'] . "',
+				CurrencyDefault='" . $_POST['CurrencyDefault'] . "',
+				DebtorsAct=" . $_POST['DebtorsAct'] . ",
+				PytDiscountAct=" . $_POST['PytDiscountAct'] . ",
+				CreditorsAct=" . $_POST['CreditorsAct'] . ",
+				PayrollAct=" . $_POST['PayrollAct'] . ",
+				GRNAct=" . $_POST['GRNAct'] . ",
+				ExchangeDiffAct=" . $_POST['ExchangeDiffAct'] . ",
+				PurchasesExchangeDiffAct=" . $_POST['PurchasesExchangeDiffAct'] . ",
+				RetainedEarnings=" . $_POST['RetainedEarnings'] . ",
+				GLLink_Debtors=" . $_POST['GLLink_Debtors'] . ",
+				GLLink_Creditors=" . $_POST['GLLink_Creditors'] . ",
+				GLLink_Stock=" . $_POST['GLLink_Stock'] .",
+				FreightAct=" . $_POST['FreightAct'] . "
+			WHERE CoyCode=1";
 
-			$result = DB_query($sql,$db);
-			if (DB_error_no($db) !=0) {
-				echo "The company preferences could not be updated because - " . DB_error_msg($db);
-			} else {
-				echo "Company preferences updated";
-			}
+			$ErrMsg =  _('The company preferences could not be updated because');
+			$result = DB_query($sql,$db,$ErrMsg);
+			prnMsg( _('Company preferences updated'),'info');
+
 	} else {
-		echo "<BR>Validation failed, no updates or deletes took place.";
+		prnMsg( _('Validation failed, no updates or deletes took place'),'warn');
 	}
 
 } /* end of if submit */
 
 
 
-echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . ">";
-echo "<CENTER><TABLE>";
+echo '<FORM METHOD="post" action=' . $_SERVER['PHP_SELF'] . '>';
+echo '<CENTER><TABLE>';
 
-$sql = "SELECT CoyName, GSTNo, CompanyNumber, PostalAddress, RegOffice1, RegOffice2, RegOffice3, Telephone, Fax, Email, CurrencyDefault, DebtorsAct, PytDiscountAct, CreditorsAct, PayrollAct, GRNAct, ExchangeDiffAct, PurchasesExchangeDiffAct, RetainedEarnings, GLLink_Debtors, GLLink_Creditors, GLLink_Stock, FreightAct FROM Companies WHERE CoyCode=1";
-		
-$result = DB_query($sql, $db);
+$sql = "SELECT CoyName,
+		GSTNo,
+		CompanyNumber,
+		PostalAddress,
+		RegOffice1,
+		RegOffice2,
+		RegOffice3,
+		Telephone,
+		Fax,
+		Email,
+		CurrencyDefault,
+		DebtorsAct,
+		PytDiscountAct,
+		CreditorsAct,
+		PayrollAct,
+		GRNAct,
+		ExchangeDiffAct,
+		PurchasesExchangeDiffAct,
+		RetainedEarnings,
+		GLLink_Debtors,
+		GLLink_Creditors,
+		GLLink_Stock,
+		FreightAct
+	FROM Companies
+	WHERE CoyCode=1";
 
-if (DB_error_no($db) !=0) {
-	echo "The company preferences could not be retrieved because - " . DB_error_msg($db);
-	if ($debug==1){
-		echo "The SQL that was used - and failed was: <BR>$sql";
-	}
-	exit;
-}
+
+
+$ErrMsg =  _('The company preferences could not be retrieved because');
+$result = DB_query($sql, $db,$ErrMsg);
+
 
 $myrow = DB_fetch_array($result);
 
@@ -109,30 +147,50 @@ $_POST['GLLink_Creditors'] = $myrow["GLLink_Creditors"];
 $_POST['GLLink_Stock'] = $myrow["GLLink_Stock"];
 $_POST['FreightAct'] = $myrow["FreightAct"];
 
-echo "<TR><TD>Name (to appear on reports):</TD><TD><input type='Text' Name='CoyName' value='" . $_POST['CoyName'] ."' SIZE=52 MAXLENGTH=50></TD></TR>";
+echo '<TR><TD>' . _('Name (to appear on reports)') . ':</TD>
+	<TD><input type="Text" Name="CoyName" value="' . $_POST['CoyName'] . '" SIZE=52 MAXLENGTH=50></TD>
+</TR>';
 
-echo "<TR><TD>Official Company Number:</TD><TD><input type='Text' Name='CompanyNumber' value='" . $_POST['CompanyNumber'] . "' SIZE=22 MAXLENGTH=20></TD></TR>";
+echo '<TR><TD>' . _('Official Company Number') . ':</TD>
+	<TD><input type="Text" Name="CompanyNumber" value="' . $_POST['CompanyNumber'] . '" SIZE=22 MAXLENGTH=20></TD>
+	</TR>';
 
-echo "<TR><TD>Tax Authority Reference:</TD><TD><input type='Text' Name='GSTNo' value='" . $_POST['GSTNo'] . "' SIZE=22 MAXLENGTH=20></TD></TR>";
+echo '<TR><TD>' . _('Tax Authority Reference') . ':</TD>
+	<TD><input type="Text" Name="GSTNo" value="' . $_POST['GSTNo'] . '" SIZE=22 MAXLENGTH=20></TD>
+</TR>';
 
-echo "<TR><TD>Postal Address:</TD><TD><input type='Text' Name='PostalAddress' SIZE=52 MAXLENGTH=50 value='" . $_POST['PostalAddress'] . "'></TD></TR>";
+echo '<TR><TD>' . _('Postal Address') . ':</TD>
+	<TD><input type="Text" Name="PostalAddress" SIZE=52 MAXLENGTH=50 value="' . $_POST['PostalAddress'] . '"></TD>
+</TR>';
 
-echo "<TR><TD>Address Line 1:</TD><TD><input type='Text' Name='RegOffice1' SIZE=52 MAXLENGTH=50 value='" . $_POST['RegOffice1'] . "'></TD></TR>";
+echo '<TR><TD>' . _('Address Line 1') . ':</TD>
+	<TD><input type="Text" Name="RegOffice1" SIZE=52 MAXLENGTH=50 value="' . $_POST['RegOffice1'] . '"></TD>
+</TR>';
 
-echo "<TR><TD>Address Line 2:</TD><TD><input type='Text' Name='RegOffice2' SIZE=52 MAXLENGTH=50 value='" . $_POST['RegOffice2'] . "'></TD></TR>";
+echo '<TR><TD>' . _('Address Line 2') . ':</TD>
+	<TD><input type="Text" Name="RegOffice2" SIZE=52 MAXLENGTH=50 value="' . $_POST['RegOffice2'] . '"></TD>
+</TR>';
 
-echo "<TR><TD>Address Line 3:</TD><TD><input type='Text' Name='RegOffice3' SIZE=52 MAXLENGTH=50 value='" . $_POST['RegOffice3'] . "'></TD></TR>";
+echo '<TR><TD>' . _('Address Line 3') . ':</TD>
+	<TD><input type="Text" Name="RegOffice3" SIZE=52 MAXLENGTH=50 value="' . $_POST['RegOffice3'] . '"></TD>
+</TR>';
 
-echo "<TR><TD>Telephone Number:</TD><TD><input type='Text' Name='Telephone' SIZE=26 MAXLENGTH=25 value='" . $_POST['Telephone'] . "'></TD></TR>";
+echo '<TR><TD>' . _('Telephone Number') . ':</TD>
+	<TD><input type="Text" Name="Telephone" SIZE=26 MAXLENGTH=25 value="' . $_POST['Telephone'] . '"></TD>
+</TR>';
 
-echo "<TR><TD>Facsimile Number:</TD><TD><input type='Text' Name='Fax' SIZE=26 MAXLENGTH=25 value='" . $_POST['Fax'] . "'></TD></TR>";
+echo '<TR><TD>' . _('Facsimile Number') . ':</TD>
+	<TD><input type="Text" Name="Fax" SIZE=26 MAXLENGTH=25 value="' . $_POST['Fax'] . '"></TD>
+</TR>';
 
-echo "<TR><TD>Email Address:</TD><TD><input type='Text' Name='Email' SIZE=26 MAXLENGTH=55 value='" . $_POST['Email'] . "'></TD></TR>";
+echo '<TR><TD>' . _('Email Address') . ':</TD>
+	<TD><input type="Text" Name="Email" SIZE=26 MAXLENGTH=55 value="' . $_POST['Email'] . '"></TD>
+</TR>';
 
 
 $result=DB_query("SELECT CurrAbrev, Currency FROM Currencies",$db);
 
-echo "<TR><TD>Home Currency:</TD><TD><SELECT Name=CurrencyDefault>";
+echo '<TR><TD>' . _('Home Currency') . ':</TD><TD><SELECT Name=CurrencyDefault>';
 
 while ($myrow = DB_fetch_array($result)) {
 	if ($_POST['CurrencyDefault']==$myrow["CurrAbrev"]){
@@ -144,11 +202,17 @@ while ($myrow = DB_fetch_array($result)) {
 
 DB_free_result($result);
 
-echo "</SELECT></TD></TR>";
+echo '</SELECT></TD></TR>';
 
-$result=DB_query("SELECT AccountCode, AccountName FROM ChartMaster, AccountGroups WHERE ChartMaster.Group_=AccountGroups.GroupName AND AccountGroups.PandL=0 ORDER BY ChartMaster.AccountCode",$db);
+$result=DB_query("SELECT AccountCode,
+			AccountName
+		FROM ChartMaster,
+			AccountGroups
+		WHERE ChartMaster.Group_=AccountGroups.GroupName
+		AND AccountGroups.PandL=0
+		ORDER BY ChartMaster.AccountCode",$db);
 
-echo "<TR><TD>Debtors Control GL Account:</TD><TD><SELECT Name=DebtorsAct>";
+echo '<TR><TD>' . _('Debtors Control GL Account') . ':</TD><TD><SELECT Name=DebtorsAct>';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['DebtorsAct']==$myrow[0]){
@@ -160,9 +224,9 @@ while ($myrow = DB_fetch_row($result)) {
 
 DB_data_seek($result,0);
 
-echo "</SELECT></TD></TR>";
+echo '</SELECT></TD></TR>';
 
-echo "<TR><TD>Creditors Control GL Account:</TD><TD><SELECT Name=CreditorsAct>";
+echo '<TR><TD>' . _('Creditors Control GL Account') . ':</TD><TD><SELECT Name=CreditorsAct>';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['CreditorsAct']==$myrow[0]){
@@ -174,9 +238,9 @@ while ($myrow = DB_fetch_row($result)) {
 
 DB_data_seek($result,0);
 
-echo "</SELECT></TD></TR>";
+echo '</SELECT></TD></TR>';
 
-echo "<TR><TD>Payroll Net Pay Clearing GL Account:</TD><TD><SELECT Name=PayrollAct>";
+echo '<TR><TD>' . _('Payroll Net Pay Clearing GL Account') . ':</TD><TD><SELECT Name=PayrollAct>';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['PayrollAct']==$myrow[0]){
@@ -188,9 +252,9 @@ while ($myrow = DB_fetch_row($result)) {
 
 DB_data_seek($result,0);
 
-echo "</SELECT></TD></TR>";
+echo '</SELECT></TD></TR>';
 
-echo "<TR><TD>Goods Received Clearing GL Account:</TD><TD><SELECT Name=GRNAct>";
+echo '<TR><TD>' . _('Goods Received Clearing GL Account') . ':</TD><TD><SELECT Name=GRNAct>';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['GRNAct']==$myrow[0]){
@@ -201,9 +265,9 @@ while ($myrow = DB_fetch_row($result)) {
 } //end while loop
 
 DB_data_seek($result,0);
-echo "</SELECT></TD></TR>";
+echo '</SELECT></TD></TR>';
 
-echo "<TR><TD>Retained Earning Clearing GL Account:</TD><TD><SELECT Name=RetainedEarnings>";
+echo '<TR><TD>' . _('Retained Earning Clearing GL Account') . ':</TD><TD><SELECT Name=RetainedEarnings>';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['RetainedEarnings']==$myrow[0]){
@@ -215,9 +279,9 @@ while ($myrow = DB_fetch_row($result)) {
 
 DB_free_result($result);
 
-echo "</SELECT></TD></TR>";
+echo '</SELECT></TD></TR>';
 
-echo "<TR><TD>Freight Re-charged GL Account:</TD><TD><SELECT Name=FreightAct>";
+echo '<TR><TD>' . _('Freight Re-charged GL Account') . ':</TD><TD><SELECT Name=FreightAct>';
 
 $result=DB_query("SELECT AccountCode, AccountName FROM ChartMaster, AccountGroups WHERE ChartMaster.Group_=AccountGroups.GroupName AND AccountGroups.PandL=1 ORDER BY ChartMaster.AccountCode",$db);
 
@@ -231,23 +295,9 @@ while ($myrow = DB_fetch_row($result)) {
 
 DB_data_seek($result,0);
 
-echo "</SELECT></TD></TR>";
+echo '</SELECT></TD></TR>';
 
-echo "<TR><TD>Exchange Variances GL Account:</TD><TD><SELECT Name=ExchangeDiffAct>";
-
-while ($myrow = DB_fetch_row($result)) {
-	if ($_POST['ExchangeDiffAct']==$myrow[0]){
-		echo "<OPTION SELECTED VALUE='". $myrow[0] . "'>" . $myrow[1];
-	} else {
-		echo "<OPTION VALUE='". $myrow[0] . "'>" . $myrow[1];
-	}
-} //end while loop
-
-DB_data_seek($result,0);
-
-echo "</SELECT></TD></TR>";
-
-echo "<TR><TD>Sales Exchange Variances GL Account:</TD><TD><SELECT Name=ExchangeDiffAct>";
+echo '<TR><TD>' . _('Exchange Variances GL Account') . ':</TD><TD><SELECT Name=ExchangeDiffAct>';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['ExchangeDiffAct']==$myrow[0]){
@@ -259,9 +309,23 @@ while ($myrow = DB_fetch_row($result)) {
 
 DB_data_seek($result,0);
 
-echo "</SELECT></TD></TR>";
+echo '</SELECT></TD></TR>';
 
-echo "<TR><TD>Purchases Exchange Variances GL Account:</TD><TD><SELECT Name=PurchasesExchangeDiffAct>";
+echo '<TR><TD>' . _('Sales Exchange Variances GL Account') . ':</TD><TD><SELECT Name=ExchangeDiffAct>';
+
+while ($myrow = DB_fetch_row($result)) {
+	if ($_POST['ExchangeDiffAct']==$myrow[0]){
+		echo "<OPTION SELECTED VALUE='". $myrow[0] . "'>" . $myrow[1];
+	} else {
+		echo "<OPTION VALUE='". $myrow[0] . "'>" . $myrow[1];
+	}
+} //end while loop
+
+DB_data_seek($result,0);
+
+echo '</SELECT></TD></TR>';
+
+echo '<TR><TD>' . _('Purchases Exchange Variances GL Account') . ':</TD><TD><SELECT Name=PurchasesExchangeDiffAct>';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['PurchasesExchangeDiffAct']==$myrow[0]){
@@ -273,9 +337,9 @@ while ($myrow = DB_fetch_row($result)) {
 
 DB_data_seek($result,0);
 
-echo "</SELECT></TD></TR>";
+echo '</SELECT></TD></TR>';
 
-echo "<TR><TD>Payment Discount GL Account:</TD><TD><SELECT Name=PytDiscountAct>";
+echo '<TR><TD>' . _('Payment Discount GL Account') . ':</TD><TD><SELECT Name=PytDiscountAct>';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['PytDiscountAct']==$myrow[0]){
@@ -287,46 +351,46 @@ while ($myrow = DB_fetch_row($result)) {
 
 DB_data_seek($result,0);
 
-echo "</SELECT></TD></TR>";
+echo '</SELECT></TD></TR>';
 
-echo "<TR><TD>Create GL entries for accounts receivable transactions:</TD><TD><SELECT Name=GLLink_Debtors>";
+echo '<TR><TD>' . _('Create GL entries for accounts receivable transactions') . ':</TD><TD><SELECT Name=GLLink_Debtors>';
 
 if ($_POST['GLLink_Debtors']==0){
-	echo "<OPTION SELECTED VALUE=0>No";
-	echo "<OPTION VALUE=1>Yes";
+	echo '<OPTION SELECTED VALUE=0>' . _('No');
+	echo '<OPTION VALUE=1>' . _('Yes');
 } else {
-	echo "<OPTION SELECTED VALUE=1>Yes";
-	echo "<OPTION VALUE=0>No";
+	echo '<OPTION SELECTED VALUE=1>' . _('Yes');
+	echo '<OPTION VALUE=0>' . _('No');
 }
 
-echo "</SELECT></TD></TR>";
+echo '</SELECT></TD></TR>';
 
-echo "<TR><TD>Create GL entries for accounts payable transactions:</TD><TD><SELECT Name=GLLink_Creditors>";
+echo '<TR><TD>' . _('Create GL entries for accounts payable transactions') . ':</TD><TD><SELECT Name=GLLink_Creditors>';
 
 if ($_POST['GLLink_Creditors']==0){
-	echo "<OPTION SELECTED VALUE=0>No";
-	echo "<OPTION VALUE=1>Yes";
+	echo '<OPTION SELECTED VALUE=0>' . _('No');
+	echo '<OPTION VALUE=1>' . _('Yes');
 } else {
-	echo "<OPTION SELECTED VALUE=1>Yes";
-	echo "<OPTION VALUE=0>No";
+	echo '<OPTION SELECTED VALUE=1>' . _('Yes');
+	echo '<OPTION VALUE=0>' . _('No');
 }
 
-echo "</SELECT></TD></TR>";
+echo '</SELECT></TD></TR>';
 
-echo "<TR><TD>Create GL entries for stock transactions (at standard cost):</TD><TD><SELECT Name=GLLink_Stock>";
+echo '<TR><TD>' . _('Create GL entries for stock transactions (at standard cost)') . ':</TD><TD><SELECT Name=GLLink_Stock>';
 
 if ($_POST['GLLink_Stock']==0){
-	echo "<OPTION SELECTED VALUE=0>No";
-	echo "<OPTION VALUE=1>Yes";
+	echo '<OPTION SELECTED VALUE=0>' . _('No');
+	echo '<OPTION VALUE=1>' . _('Yes');
 } else {
-	echo "<OPTION SELECTED VALUE=1>Yes";
-	echo "<OPTION VALUE=0>No";
+	echo '<OPTION SELECTED VALUE=1>' . _('Yes');
+	echo '<OPTION VALUE=0>' . _('No');
 }
 
-echo "</SELECT></TD></TR>";
+echo '</SELECT></TD></TR>';
 
 
-echo "</TABLE><CENTER><input type='Submit' Name='submit' value='Update'>";
+echo '</TABLE><CENTER><input type="Submit" Name="submit" value="' . _('Update') . '">';
 
-include("includes/footer.inc");
+include('includes/footer.inc');
 ?>

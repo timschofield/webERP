@@ -1,18 +1,20 @@
 <?php
-/* $Revision: 1.6 $ */
-if (isset($_GET['OrderNumber'])) {
-	$title = "Reviewing Sales Order Number " . $_GET['OrderNumber'];
-} else {
-	die ("<BR><BR><BR>This page must be called with a sales order number to review.<BR>ie http://????/OrderDetails.php?OrderNumber=<i>xyz</i><BR>Click on back.");
-}
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 2;
 
-include("includes/DefineCartClass.php");
+include('includes/DefineCartClass.php');
 /* Session started in header.inc for password checking and authorisation level check */
-include("includes/session.inc");
-include("includes/header.inc");
-include("includes/DateFunctions.inc");
+include('includes/session.inc');
+
+if (isset($_GET['OrderNumber'])) {
+	$title = _('Reviewing Sales Order Number') . ' ' . $_GET['OrderNumber'];
+} else {
+	die ('<BR><BR><BR>' . _('This page must be called with a sales order number to review') . '.<BR>' . _('i.e.') . ' http://????/OrderDetails.php?OrderNumber=<i>xyz</i><BR>' . _('Click on back') . '.');
+}
+
+include('includes/header.inc');
+include('includes/DateFunctions.inc');
 
 if (isset($_SESSION['Items'])){
 	unset ($_SESSION['Items']->LineItems);
@@ -51,8 +53,8 @@ $OrderHeaderSQL = "SELECT
 			SalesOrders.DebtorNo = DebtorsMaster.DebtorNo
 		AND SalesOrders.OrderNo = " . $_GET['OrderNumber'];
 
-$ErrMsg = "<BR>The order cannot be retrieved because ";
-$DbgMsg = "<BR>The SQL that failed to get the order header was ";
+$ErrMsg =  _('The order cannot be retrieved because');
+$DbgMsg = _('The SQL that failed to get the order header was');
 $GetOrdHdrResult = DB_query($OrderHeaderSQL,$db, $ErrMsg, $DbgMsg);
 
 if (DB_num_rows($GetOrdHdrResult)==1) {
@@ -84,54 +86,54 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 
 	/* SHOW ALL THE ORDER INFO IN ONE PLACE */
 
-	echo "<BR><BR><CENTER><TABLE BGCOLOR='#CCCCCC'>";
-	echo "<TR>
-		<TD>Customer Code:</TD>
-		<TD><FONT COLOR=BLUE><B><A HREF='$rootpath/SelectCustomer.php?Select=" . $_SESSION['CustomerID'] . "'>" . $_SESSION['CustomerID'] . "</A></B></TD>
-		<TD>Customer Name:</TD><TD><FONT COLOR=BLUE><B>" . $_SESSION['Items']->CustomerName . "</B></TD>
-	</TR>";
-	echo "<TR>
-		<TD>Customer Reference:</TD>
-		<TD><FONT COLOR=BLUE><B>" . $_SESSION['Items']->CustRef . "</FONT></B></TD>
-		<TD>Deliver To:</TD><TD><FONT COLOR=BLUE><B>" . $_SESSION['Items']->DeliverTo . "</B></TD>
-	</TR>";
-	echo "<TR>
-		<TD>Ordered On:</TD>
-		<TD><FONT COLOR=BLUE><B>" . ConvertSQLDate($_SESSION['Items']->Orig_OrderDate) . "</FONT></B></TD>
-		<TD>Delivery Address 1:</TD>
-		<TD><FONT COLOR=BLUE><B>" . $_SESSION['Items']->BrAdd1 . "</FONT></B></TD>
-	</TR>";
-	echo "<TR>
-		<TD>Requested Delivery:</TD>
-		<TD><FONT COLOR=BLUE><B>" . $_SESSION['Items']->DeliveryDate . "</FONT></B></TD>
-		<TD>Delivery Address 2:</TD>
-		<TD><FONT COLOR=BLUE><B>" . $_SESSION['Items']->BrAdd2 . "</FONT></B></TD>
-	</TR>";
-	echo "<TR>
-		<TD>Order Currency:</TD>
-		<TD><FONT COLOR=BLUE><B>" . $_SESSION['Items']->DefaultCurrency . "</FONT></B></TD>
-		<TD>Delivery Address 3:</TD>
-		<TD><FONT COLOR=BLUE><B>" . $_SESSION['Items']->BrAdd3 . "</FONT></B></TD>
-	</TR>";
-	echo "<TR>
-		<TD>Deliver From Loc'n:</TD>
-		<TD><FONT COLOR=BLUE><B>" . $_SESSION['Items']->Location . "</FONT></B></TD>
-		<TD>Delivery Address 4:</TD>
-		<TD><FONT COLOR=BLUE><B>" . $_SESSION['Items']->BrAdd4 . "</FONT></B></TD>
-	</TR>";
-	echo "<TR>
-		<TD>Freight Cost:</TD>
-		<TD><FONT COLOR=BLUE><B>" . $FreightCost . "</FONT></B></TD><TD>Telephone:</TD>
-		<TD><FONT COLOR=BLUE><B>" . $_SESSION['Items']->PhoneNo . "</FONT></B></TD>
-	</TR>";
-	echo "<TR>
+	echo '<BR><BR><CENTER><TABLE BGCOLOR="#CCCCCC">';
+	echo '<TR>
+		<TD>' . _('Customer Code') . ':</TD>
+		<TD><FONT COLOR=BLUE><B><A HREF="' . $rootpath . '/SelectCustomer.php?Select=' . $_SESSION['CustomerID'] . '">' . $_SESSION['CustomerID'] . '</A></B></TD>
+		<TD>' . _('Customer Name') . ':</TD><TD><FONT COLOR=BLUE><B>' . $_SESSION['Items']->CustomerName . '</B></TD>
+	</TR>';
+	echo '<TR>
+		<TD>' . _('Customer Reference') . ':</TD>
+		<TD><FONT COLOR=BLUE><B>' . $_SESSION['Items']->CustRef . '</FONT></B></TD>
+		<TD>' . _('Deliver To') . ':</TD><TD><FONT COLOR=BLUE><B>' . $_SESSION['Items']->DeliverTo . '</B></TD>
+	</TR>';
+	echo '<TR>
+		<TD>' . _('Ordered On') . ':</TD>
+		<TD><FONT COLOR=BLUE><B>' . ConvertSQLDate($_SESSION['Items']->Orig_OrderDate) . '</FONT></B></TD>
+		<TD>' . _('Delivery Address 1') . ':</TD>
+		<TD><FONT COLOR=BLUE><B>' . $_SESSION['Items']->BrAdd1 . '</FONT></B></TD>
+	</TR>';
+	echo '<TR>
+		<TD>' . _('Requested Delivery') . ':</TD>
+		<TD><FONT COLOR=BLUE><B>' . $_SESSION['Items']->DeliveryDate . '</FONT></B></TD>
+		<TD>' . _('Delivery Address 2') . ':</TD>
+		<TD><FONT COLOR=BLUE><B>' . $_SESSION['Items']->BrAdd2 . '</FONT></B></TD>
+	</TR>';
+	echo '<TR>
+		<TD>' . _('Order Currency') . ':</TD>
+		<TD><FONT COLOR=BLUE><B>' . $_SESSION['Items']->DefaultCurrency . '</FONT></B></TD>
+		<TD>' . _('Delivery Address 3') . ':</TD>
+		<TD><FONT COLOR=BLUE><B>' . $_SESSION['Items']->BrAdd3 . '</FONT></B></TD>
+	</TR>';
+	echo '<TR>
+		<TD>' . _('Deliver From Location') . ':</TD>
+		<TD><FONT COLOR=BLUE><B>' . $_SESSION['Items']->Location . '</FONT></B></TD>
+		<TD>' . _('Delivery Address 4') . ':</TD>
+		<TD><FONT COLOR=BLUE><B>' . $_SESSION['Items']->BrAdd4 . '</FONT></B></TD>
+	</TR>';
+	echo '<TR>
+		<TD>' . _('Freight Cost') . ':</TD>
+		<TD><FONT COLOR=BLUE><B>' . $FreightCost . '</FONT></B></TD><TD>' . _('Telephone') . ':</TD>
+		<TD><FONT COLOR=BLUE><B>' . $_SESSION['Items']->PhoneNo . '</FONT></B></TD>
+	</TR>';
+	echo '<TR>
 		<TD COLSPAN=2></TD>
-		<TD>E-mail:</TD>
-		<TD><FONT COLOR=BLUE><B><A HREF='mailto:" . $_SESSION['Items']->Email . "'>" . $_SESSION['Items']->Email . "</A></FONT></B></TD>
-	</TR>";
-	echo "</TABLE>";
+		<TD>' . _('E-mail') . ':</TD>
+		<TD><FONT COLOR=BLUE><B><A HREF="mailto:' . $_SESSION['Items']->Email . '">' . $_SESSION['Items']->Email . '</A></FONT></B></TD>
+	</TR>';
+	echo '</TABLE>';
 
-	echo $_SESSION['Items']->Comments . "<BR></CENTER>";
+	echo $_SESSION['Items']->Comments . '<BR></CENTER>';
 
 /*Now get the line items */
 
@@ -154,8 +156,8 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 			FROM SalesOrderDetails, StockMaster
 			WHERE SalesOrderDetails.StkCode = StockMaster.StockID AND OrderNo =" . $_GET['OrderNumber'];
 
-	$ErrMsg = "<BR>The line items of the order cannot be retrieved because ";
-	$Dbgmsg = "<BR>The SQL used to retrieve the line items, that failed was ";
+	$ErrMsg =  _('The line items of the order cannot be retrieved because');
+	$DbgMsg =  _('The SQL used to retrieve the line items, that failed was');
 	$LineItemsResult = db_query($LineItemsSQL,$db, $ErrMsg, $DbgMsg);
 
 	if (db_num_rows($LineItemsResult)>0) {
@@ -185,19 +187,19 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 }
 
 
-echo "<CENTER><B>Line Details</B>
+echo '<CENTER><B>' . _('Line Details') . '</B>
 	<TABLE CELLPADDING=2 COLSPAN=9 BORDER=1>
 	<TR>
-		<TD class='tableheader'>Item Code</TD>
-		<TD class='tableheader'>Item Description</TD>
-		<TD class='tableheader'>Quantity</TD>
-		<TD class='tableheader'>Unit</TD>
-		<TD class='tableheader'>Price</TD>
-		<TD class='tableheader'>Discount</TD>
-		<TD class='tableheader'>Total</TD>
-		<TD class='tableheader'>Qty Del</TD>
-		<TD class='tableheader'>Last Del</TD>
-	</TR>";
+		<TD class="tableheader">' . _('Item Code') . '</TD>
+		<TD class="tableheader">' . _('Item Description') . '</TD>
+		<TD class="tableheader">' . _('Quantity') . '</TD>
+		<TD class="tableheader">' . _('Unit') . '</TD>
+		<TD class="tableheader">' . _('Price') . '</TD>
+		<TD class="tableheader">' . _('Discount') . '</TD>
+		<TD class="tableheader">' . _('Total') . '</TD>
+		<TD class="tableheader">' . _('Qty Del') . '</TD>
+		<TD class="tableheader">' . _('Last Del') . '</TD>
+	</TR>';
 
 $_SESSION['Items']->total = 0;
 $_SESSION['Items']->totalVolume = 0;
@@ -214,27 +216,27 @@ foreach ($_SESSION['Items']->LineItems as $StockItem) {
 	if ($StockItem->QtyInv>0){
 		  $DisplayActualDeliveryDate = ConvertSQLDate($StockItem->ActDispDate);
 	} else {
-		  $DisplayActualDeliveryDate = "N/A";
+		  $DisplayActualDeliveryDate = _('N/A');
 	}
 
 	if ($k==1){
-		echo "<tr bgcolor='#CCCCCC'>";
+		echo '<tr bgcolor="#CCCCCC">';
 		$k=0;
 	} else {
-		echo "<tr bgcolor='#EEEEEE'>";
+		echo '<tr bgcolor="#EEEEEE">';
 		$k=1;
 	}
 
-	echo 	"<TD>$StockItem->StockID</TD>
-		<TD>$StockItem->ItemDescription</TD>
-		<TD ALIGN=RIGHT>$DisplayQuantity</TD>
-		<TD>$StockItem->Units</TD>
-		<TD ALIGN=RIGHT>$DisplayPrice</TD>
-		<TD ALIGN=RIGHT>$DisplayDiscount</TD>
-		<TD ALIGN=RIGHT>$DisplayLineTotal</TD>
-		<TD ALIGN=RIGHT>$DisplayQtyInvoiced</TD>
-		<TD>$DisplayActualDeliveryDate</TD>
-	</TR>";
+	echo 	'<TD>' . $StockItem->StockID . '</TD>
+		<TD>' . $StockItem->ItemDescription . '</TD>
+		<TD ALIGN=RIGHT>' . $DisplayQuantity . '</TD>
+		<TD>' . $StockItem->Units . '</TD>
+		<TD ALIGN=RIGHT>' . $DisplayPrice . '</TD>
+		<TD ALIGN=RIGHT>' . $DisplayDiscount . '</TD>
+		<TD ALIGN=RIGHT>' . $DisplayLineTotal . '</TD>
+		<TD ALIGN=RIGHT>' . $DisplayQtyInvoiced . '</TD>
+		<TD>' . $DisplayActualDeliveryDate . '</TD>
+	</TR>';
 
 	$_SESSION['Items']->total = $_SESSION['Items']->total + $LineTotal;
 	$_SESSION['Items']->totalVolume = $_SESSION['Items']->totalVolume + $StockItem->Quantity * $StockItem->Volume;
@@ -242,22 +244,22 @@ foreach ($_SESSION['Items']->LineItems as $StockItem) {
 }
 
 $DisplayTotal = number_format($_SESSION['Items']->total,2);
-echo "<TR>
-	<TD COLSPAN=5 ALIGN=RIGHT><B>TOTAL Excl Tax/Freight</B></TD>
-	<TD COLSPAN=2 ALIGN=RIGHT>$DisplayTotal</TD>
+echo '<TR>
+	<TD COLSPAN=5 ALIGN=RIGHT><B>' . _('TOTAL Excl Tax/Freight') . '</B></TD>
+	<TD COLSPAN=2 ALIGN=RIGHT>' . $DisplayTotal . '</TD>
 	</TR>
-	</TABLE>";
+	</TABLE>';
 
 $DisplayVolume = number_format($_SESSION['Items']->totalVolume,2);
 $DisplayWeight = number_format($_SESSION['Items']->totalWeight,2);
-echo "<TABLE BORDER=1>
+echo '<TABLE BORDER=1>
 	<TR>
-		<TD>Total Weight:</TD>
-		<TD>$DisplayWeight</TD>
-		<TD>Total Volume:</TD>
-		<TD>$DisplayVolume</TD>
+		<TD>' . _('Total Weight') . ':</TD>
+		<TD>' . $DisplayWeight . '</TD>
+		<TD>' . _('Total Volume') . ':</TD>
+		<TD>' . $DisplayVolume . '</TD>
 	</TR>
-</TABLE>";
+</TABLE>';
 
-include("includes/footer.inc");
+include('includes/footer.inc');
 ?>
