@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -210,7 +210,7 @@ $SecurityGroups = array(
 $allow_demo_mode = True;
 
 /*The headings showing on the tabs accross the main index used also in WWW_Users for defining what should be visible to the user */
-$ModuleList = array("Orders", "Receivables", "Payables", "Purchasing", "Inventory", "Manufacturing", "General Ledger", "Setup");
+$ModuleList = array(_('Orders'), _('Receivables'), ('Payables'), _('Purchasing'), _('Inventory'), _('Manufacturing'), _('General Ledger'), _('Setup'));
 
 /*Session save path is necessary where there may be several installations on the same server and the server cookie must be in different directories to avoid confusion - also where the server uses load balancing among several servers - one server must be used for the cookie - sourceforge.net uses load balancing and requires this for the demo*/
 

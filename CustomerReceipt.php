@@ -1,11 +1,12 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 include("includes/DefineReceiptClass.php");
 
 $PageSecurity = 3;
+include("includes/session.inc");
 
 $title = _('Receipt Entry');
-include("includes/session.inc");
+
 include("includes/header.inc");
 include("includes/DateFunctions.inc");
 include("includes/SQL_CommonFunctions.inc");

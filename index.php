@@ -1,10 +1,10 @@
 <?php
-/* $Revision: 1.16 $ */
-$title="Main Menu";
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 1;
 
 include("includes/session.inc");
+$title=_('Main Menu');
 
 /*ModuleList array with the text of modules now in config.php */
 /*The module link codes are hard coded in a switch statement below to determine the options to show for each tab */

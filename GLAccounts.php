@@ -1,8 +1,10 @@
 <?php
-/* $Revision: 1.4 $ */
-$title = "General Ledger Chart of Accounts Maintenance";
+/* $Revision: 1.5 $ */
+
 $PageSecurity = 10;
 include("includes/session.inc");
+$title = _('General Ledger Chart of Accounts Maintenance');
+
 include("includes/header.inc");
 
 if (isset($_POST['SelectedAccount'])){

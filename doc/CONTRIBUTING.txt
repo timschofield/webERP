@@ -82,6 +82,11 @@ should be written as:
 $LongVariableName = 1;
 
 
+HTML
+
+HTML keywords and tags should be in capitals.
+
+
 PHP Variables
 
 The PHP variable arrays $_POST, $_GET, $_SERVER, $_SESSION provide context about where a variable comes from - many developers are tempted to abbreviate:
@@ -152,7 +157,7 @@ are preferred. But all comments gratefully received!
 
 All scripts should have a comment in the first few lines with the script revision number in it if the following comment is pasted into it the CVS automatically updates the revision number.
 
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 
 Database Function Calls
@@ -186,6 +191,8 @@ $sql = "SELECT TransNo,
 		ON DebtorTrans.DebtorNo=DebtorsMaster.DebtorNo
 	WHERE ";
 
+
+SQL kywords should be capitalised as above eg. SELECT, CASE, FROM, WHERE etc.
 
 Constants
 

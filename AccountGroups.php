@@ -1,10 +1,14 @@
 <?php
-/* $Revision: 1.6 $ */
-$title = _('Account Groups');
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 10;
 
 include("includes/session.inc");
+
+$title = _('Account Groups');
+
+
+
 include("includes/header.inc");
 
 
