@@ -12,19 +12,26 @@ normally the lower case two character country code underscore uppercase
 
 // Specify location of translation tables
 
-if (function_exists('bindtextdomain')){
-	bindtextdomain ('messages', './locale');
-	// Choose domain
-	textdomain ('messages');
-}
-
-
 if (function_exists('gettext')){
+
 	if ($_SESSION['Language']=='en'){
 		setlocale (LC_MESSAGES,'en_GB');
 	} else {
-		setlocale (LC_MESSAGES, $_SESSION['Language'] . '_' . strtoupper($_SESSION['Language']));
+		/*This wont work for fr_BE or where the country code is different to the language code */
+		$Language_Country = $_SESSION['Language'] . '_' . strtoupper($_SESSION['Language']);
+			
+		setlocale (LC_MESSAGES, $Language_Country);
+		setlocale (LC_CTYPE,$Language_Country);
+		
+		putenv("LANGUAGE=$Language_Country");
+				
+		bindtextdomain ("messages", "./locale");
+		// Choose domain
+		textdomain ("messages");
 	}
+} else {
+
+	echo 'The gettext function is not there in PHP';
 }
 
 ?>
