@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $title = "User Settings";
 
 $PageSecurity=1;
@@ -140,27 +140,26 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 	}
 }
 
+echo '</SELECT></TD></TR>
+	<TR><TD>' . _('New Password') . ":</TD>
+	<TD><input type='password' name='pass' size=20 value='" .  $_POST['pass'] . "'></TD></TR>
+	<TR><TD>" . _('Confirm Password') . ":</TD>
+	<TD><input type='password' name='passcheck' size=20  value='" . $_POST['passcheck'] . "'></TD></TR>
+	<tr><td colspan=2 align='center'>" . _('If you leave the password boxes empty, your password will not change') . '</td></tr>
+	<TR><TD>' . _('Email') . ':</TD>';
+
+$sql = "SELECT Email from WWW_Users WHERE UserID = '" . $_SESSION['UserID'] . "'";
+$result = DB_query($sql,$db);
+$myrow = DB_fetch_array($result);
+if(!isset($_POST['email'])){
+	$_POST['email'] = $myrow['Email'];
+}
+
+echo "<TD><input type=text name='email' size=20 value='" . $_POST['email'] . "'></TD></TR>
+	</TABLE>
+	<CENTER><input type='Submit' name='Modify' value=" . _('Modify') . '>
+	</FORM>';
+
+include("includes/footer.inc");
+
 ?>
-
-</SELECT></TD></TR>
-<TR><TD>New Password:</TD>
-<TD><input type="password" name="pass" size="20" value="<?php echo $_POST['pass']; ?>"></TD></TR>
-<TR><TD>Confirm Password:</TD>
-<TD><input type="password" name="passcheck" size="20"  value="<?php echo $_POST['passcheck']; ?>"></TD></TR>
-<tr><td colspan="2" align="center">If you leave the password boxes empty, your password will not change</td></tr>
-<TR><TD>Email:</TD>
-<?php
-	$sql = "Select Email from WWW_Users WHERE UserID = '" . $_SESSION['UserID'] . "'";
-	$result = DB_query($sql,$db);
-	$myrow = DB_fetch_array($result);
-	if(!isset($_POST['email'])){
-		$_POST['email'] = $myrow['Email'];
-	}
-?>
-<TD><input type="text" name="email" size="20" value="<?php echo $_POST['email']; ?>"></TD></TR>
-</TABLE>
-<CENTER><input type="Submit" name="Modify" value="Modify">
-
-</FORM>
-
-<?php include("includes/footer.inc"); ?>

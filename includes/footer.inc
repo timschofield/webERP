@@ -1,4 +1,7 @@
-<!-- \$Revision: 1.5 $ -->
+<?php
+/* $Revision: 1.6 $ */
+?>
+<BR><BR><BR>
 				</td>
 		    </tr>
 		</table>
@@ -21,10 +24,14 @@
 		<td align="center" class="footer"><?php echo $CompanyName;?></td>
 	</tr>
 	<tr>
-		<td align="center"><img src="<?php echo "$rootpath/css/$theme/images/webERP+sm.gif";?>"></td>
+		<td align="center">
+			<a href="http://www.weberp.org" target="_new">
+			<img src="<?php echo $rootpath . '/css/' .$theme. '/images/webERP+sm.gif'; ?>" border=0>
+			</a>
+		</td>
 	</tr>
 	<tr>
-		<td align="center" class="footer">webERP Copyright Logic Works Ltd</td>
+		<td align="center" class="footer">webERP <?php echo _('Copyright'); ?> &copy Logic Works Ltd</td>
 	</tr>
 </table>
 
