@@ -1,6 +1,8 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 4;
+include("includes/DefinePOClass.php");
+include("includes/session.inc");
 
 if (isset($_GET['ModifyOrderNumber'])) {
 	$title = _("Modify Purchase Order ") . $_GET['ModifyOrderNumber'];
@@ -8,9 +10,6 @@ if (isset($_GET['ModifyOrderNumber'])) {
 	$title = _("Purchase Order Entry");
 }
 
-
-include("includes/DefinePOClass.php");
-include("includes/session.inc");
 include("includes/header.inc");
 include("includes/DateFunctions.inc");
 include("includes/SQL_CommonFunctions.inc");
@@ -166,7 +165,12 @@ if ($_POST['Select']) {
 /*will only be true if page called from supplier selection form or set because only one supplier record returned from a search
  so parse the $Select string into supplier code and branch code */
 
-	$sql = "SELECT Suppliers.SuppName, Suppliers.CurrCode, Currencies.Rate From Suppliers INNER JOIN Currencies ON Suppliers.CurrCode=Currencies.CurrAbrev WHERE SupplierID='" . $_POST['Select'] . "'";
+	$sql = "SELECT Suppliers.SuppName,
+			Suppliers.CurrCode,
+			Currencies.Rate
+		FROM Suppliers INNER JOIN Currencies
+		ON Suppliers.CurrCode=Currencies.CurrAbrev
+		WHERE SupplierID='" . $_POST['Select'] . "'";
 
 	$ErrMsg = _("The supplier record of the supplier selected: ") . $_POST['Select']  . _(" cannot be retrieved because");
 	$DbgMsg = _("The SQL used to retrieve the supplier details (and failed) was:");
@@ -183,39 +187,33 @@ if ($_POST['Select']) {
 }
 
 
-
 if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->SupplierID) OR $_SESSION['PO']->SupplierID=="" ) {
 
-	?>
+	echo '<FONT SIZE=3><B> - ' . _('Supplier Selection') . "</B></FONT><BR>
+	<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD=POST>
+	<B>$msg</B>";
 
-	<FONT SIZE=3><B> - Supplier Selection</B></FONT><BR>
-
-	<FORM ACTION="<?php $_SERVER['PHP_SELF']; ?>" METHOD=POST>
-	<B><?php echo $msg; ?></B>
-	<TABLE CELLPADDING=3 COLSPAN=4>
+	echo '<TABLE CELLPADDING=3 COLSPAN=4>
 	<TR>
-	<TD><FONT SIZE=1>Enter text in the supplier name:</FONT></TD>
-	<TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20	MAXLENGTH=25></TD>
-	<TD><FONT SIZE=3><B>OR</B></FONT></TD>
-	<TD><FONT SIZE=1>Enter text extract in the supplier code:</FONT></TD>
-	<TD><INPUT TYPE="Text" NAME="SuppCode" SIZE=15	MAXLENGTH=18></TD>
+	<TD><FONT SIZE=1>' . _('Enter text in the supplier name') . ":</FONT></TD>
+	<TD><INPUT TYPE='Text' NAME='Keywords' SIZE=20	MAXLENGTH=25></TD>
+	<TD><FONT SIZE=3><B>" . _('OR') . '</B></FONT></TD>
+	<TD><FONT SIZE=1>' . _('Enter text extract in the supplier code') . ":</FONT></TD>
+	<TD><INPUT TYPE='Text' NAME='SuppCode' SIZE=15	MAXLENGTH=18></TD>
 	</TR>
 	</TABLE>
-	<CENTER><INPUT TYPE=SUBMIT NAME="SearchSuppliers" VALUE="Search Now">
-	<INPUT TYPE=SUBMIT ACTION=RESET VALUE="Reset"></CENTER>
-
-
-	<?php
+	<CENTER><INPUT TYPE=SUBMIT NAME='SearchSuppliers' VALUE=" . _('Search Now') . ">
+	<INPUT TYPE=SUBMIT ACTION=RESET VALUE='Reset'></CENTER>";
 
 	If ($result_SuppSelect) {
 
 		echo "<BR><CENTER><TABLE CELLPADDING=3 COLSPAN=7 BORDER=1>";
 
 		$tableheader = "<TR>
-				<TD class='tableheader'>Code</TD>
-				<TD class='tableheader'>Supplier Name</TD>
-				<TD class='tableheader'>Currency</TD>
-				</TR>";
+				<TD class='tableheader'>" . _('Code') . "</TD>
+				<TD class='tableheader'>" . _('Supplier Name') . "</TD>
+				<TD class='tableheader'>" . _('Currency') . '</TD>
+				</TR>';
 
 		echo $tableheader;
 
@@ -260,7 +258,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 
 	echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 
-	echo "<CENTER>Purchase Order: <FONT COLOR=BLUE SIZE=4><B>" . $_SESSION['PO']->OrderNo . " " . $_SESSION['PO']->SupplierName . "</U> </B></FONT> - All amounts stated in " . $_SESSION['PO']->CurrCode . "<BR><BR>";
+	echo '<CENTER>' . _('Purchase Order') . ': <FONT COLOR=BLUE SIZE=4><B>' . $_SESSION['PO']->OrderNo . ' ' . $_SESSION['PO']->SupplierName . '</U> </B></FONT> - ' . _('All amounts stated in') . ' ' . $_SESSION['PO']->CurrCode . "<BR><BR>";
 
 	/*Set up form for entry of order header stuff */
 
@@ -278,17 +276,17 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 	    $_POST['Comments']=$_SESSION['PO']->Comments;
 	}
 
-	echo "<TABLE BORDER=1>
+	echo '<TABLE BORDER=1>
 		<TR>
-			<TD><FONT COLOR=BLUE SIZE=4><B>Delivery To</B></FONT></TD>
-			<TD><FONT COLOR=BLUE SIZE=4><B>Order Initiation Details</B></FONT></TD>
+			<TD><FONT COLOR=BLUE SIZE=4><B>' . _('Delivery To') . '</B></FONT></TD>
+			<TD><FONT COLOR=BLUE SIZE=4><B>' . _('Order Initiation Details') . '</B></FONT></TD>
 		</TR>
-		<TR><TD>";
+		<TR><TD>';
 	/*nested table level1 */
-	  echo "<TABLE>
+	  echo '<TABLE>
 	  		<TR>
-				<TD>Receive Into:</TD>
-				<TD><SELECT NAME='StkLocation'>";
+				<TD>' . _('Receive Into') . ':</TD>
+				<TD><SELECT NAME=StkLocation>';
 
 	  $sql = "SELECT LocCode, LocationName FROM Locations";
 	  $LocnResult = DB_query($sql,$db);
@@ -320,7 +318,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 		  $_SESSION['PO']->DelAdd4 = $_POST['DelAdd4'];
 
 	     } else { /*The default location of the user is crook */
-		  echo "<BR>" . _("The default stock location set up for this user is not a currently defined stock location. Your system administrator needs to amend your user record.");
+		  echo '<BR>' . _('The default stock location set up for this user is not a currently defined stock location. Your system administrator needs to amend your user record');
 	     }
 	  } elseif ($_POST['DelAdd1']==""){
 
@@ -345,24 +343,24 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 		  $_SESSION['PO']->DelAdd4 = $_POST['DelAdd4'];
 	      }
 	  }
-	  echo "<TR><TD>" . ("Deliver to - Street:") . "</TD>
+	  echo '<TR><TD>' . ('Deliver to - Street') . ":</TD>
 	  		<TD><INPUT TYPE=text NAME=DelAdd1 SIZE=41 MAXLENGTH=40 Value='" . $_POST['DelAdd1'] . "'></TD>
 		</TR>";
-	  echo "<TR><TD>" . _("Deliver to - Suburb:") . "</TD>
+	  echo '<TR><TD>' . _('Deliver to - Suburb') . ":</TD>
 	  		<TD><INPUT TYPE=text NAME=DelAdd2 SIZE=41 MAXLENGTH=40 Value='" . $_POST['DelAdd2'] . "'></TD>
 		</TR>";
-	  echo "<TR><TD>" . _("Deliver to - City:") . "</TD>
+	  echo '<TR><TD>' . _('Deliver to - City') . ":</TD>
 	  		<TD><INPUT TYPE=text NAME=DelAdd3 SIZE=41 MAXLENGTH=40 Value='" . $_POST['DelAdd3'] . "'></TD>
 		</TR>";
-	  echo "<TR><TD>" . _("Deliver to - Phone:") . "</TD>
+	  echo '<TR><TD>' . _('Deliver to - Phone') . ":</TD>
 	  	<TD><INPUT TYPE=text NAME=DelAdd4 SIZE=31 MAXLENGTH=30 Value='" . $_POST['DelAdd4'] . "'></TD>
 		</TR>";
-	  echo "</TABLE>"; /* end of sub table */
+	  echo '</TABLE>'; /* end of sub table */
 
 	  {
-	  echo "</TD><TD>"; /*sub table nested */
+	  echo '</TD><TD>'; /*sub table nested */
 
-	  echo "<TABLE><TR><TD>" . _("Originally Ordered:") . "</TD><TD>";
+	  echo '<TABLE><TR><TD>' . _('Originally Ordered') . ":</TD><TD>";
 	  if ($_SESSION['ExistingOrder']==1){ echo
 		 ConvertSQLDate($_SESSION['PO']->Orig_OrderDate);
 	  } else {
@@ -370,41 +368,41 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 		 echo Date($DefaultDateFormat);
 	  }
 
-	  echo "</TD></TR>";
-	  echo "<TR><TD>" . _("Initiated By:") . "</TD>
+	  echo '</TD></TR>';
+	  echo '<TR><TD>' . _('Initiated By') . ":</TD>
 	  		<TD><INPUT TYPE=TEXT NAME='Initiator' SIZE=11 MAXLENGTH=10 VALUE=" . $_POST['Initiator'] . "></TD>
 		</TR>";
-	  echo "<TR><TD>" . _("Requistion Ref:") . "</TD><TD><INPUT TYPE=TEXT NAME='Requisition' SIZE=16 MAXLENGTH=15 VALUE=" . $_POST['Requisition'] . "></TD>
+	  echo '<TR><TD>' . _('Requistion Ref') . ":</TD><TD><INPUT TYPE=TEXT NAME='Requisition' SIZE=16 MAXLENGTH=15 VALUE=" . $_POST['Requisition'] . "></TD>
 	  	</TR>";
 
-	  echo "<TR><TD>" . _("Exchange Rate:") . "</TD>
+	  echo '<TR><TD>' . _('Exchange Rate') . ":</TD>
 	  		<TD><INPUT TYPE=TEXT NAME='ExRate' SIZE=16 MAXLENGTH=15 VALUE=" . $_POST['ExRate'] . "></TD>
 		</TR>";
-	  echo "<TR><TD>" . _("Date Printed:") . "</TD><TD>";
+	  echo '<TR><TD>' . _('Date Printed') . ':</TD><TD>';
 
 	  if (isset($_SESSION['PO']->DatePurchaseOrderPrinted) AND strlen($_SESSION['PO']->DatePurchaseOrderPrinted)>6){
 	     echo ConvertSQLDate($_SESSION['PO']->DatePurchaseOrderPrinted);
 	     $Printed = True;
 	  } else {
 	     $Printed = False;
-	     echo _("Not Yet Printed");
+	     echo _('Not Yet Printed');
 	  }
 
 	  if ($_SESSION['PO']->AllowPrintPO==0 AND $_POST['RePrint']!=1){
-	     echo "<TR><TD>" . _("Allow Reprint:") . "</TD><TD><SELECT NAME='RePrint'><OPTION SELECTED VALUE=0>No<OPTION VALUE=1>Yes</SELECT></TD></TR>";
+	     echo '<TR><TD>' . _('Allow Reprint') . ":</TD><TD><SELECT NAME='RePrint'><OPTION SELECTED VALUE=0>No<OPTION VALUE=1>Yes</SELECT></TD></TR>";
 	  } elseif ($Printed) {
-	     echo "<TR><TD COLSPAN=2 ALIGN=CENTER><A target='_blank'  HREF='$rootpath/PO_PDFPurchOrder.php?" . SID . "OrderNo=" . $_SESSION['ExistingOrder'] . "'>" . _("Reprint Now") . "</A></TD></TR>";
+	     echo "<TR><TD COLSPAN=2 ALIGN=CENTER><A target='_blank'  HREF='$rootpath/PO_PDFPurchOrder.php?" . SID . "OrderNo=" . $_SESSION['ExistingOrder'] . "'>" . _('Reprint Now') . '</A></TD></TR>';
 	  }
-	  echo "</TD></TR></TABLE>"; /*end of sub table */
+	  echo '</TD></TR></TABLE>'; /*end of sub table */
 	  }
- 	  echo "</TD></TR><TR><TD VALIGN=TOP COLSPAN=2>" . _("Comments:");
-	  echo "<textarea name='Comments' cols=70 rows=2>" . $_POST['Comments'] . "</textarea>";
-	  echo "</TD></TR></TABLE>"; /* end of main table */
-	  echo "<INPUT TYPE=SUBMIT Name='EnterLines' VALUE='Enter Line Items'><INPUT TYPE=SUBMIT Name='ChangeSupplier' VALUE='Change supplier'><BR><BR><INPUT TYPE=SUBMIT NAME='CancelOrder' VALUE='" . _("Cancel and Delete The Whole Order") . "'>";
+ 	  echo '</TD></TR><TR><TD VALIGN=TOP COLSPAN=2>' . _('Comments');
+	  echo ":<textarea name='Comments' cols=70 rows=2>" . $_POST['Comments'] . '</textarea>';
+	  echo '</TD></TR></TABLE>'; /* end of main table */
+	  echo "<INPUT TYPE=SUBMIT Name='EnterLines' VALUE='" . _('Enter Line Items') . "'><INPUT TYPE=SUBMIT Name='ChangeSupplier' VALUE='" . _('Change supplier') . "'><BR><BR><INPUT TYPE=SUBMIT NAME='CancelOrder' VALUE='" . _("Cancel and Delete The Whole Order") . "'>";
 
 } /*end of if supplier selected */
 
-echo "</form>";
-include("includes/footer.inc");
+echo '</form>';
+include('includes/footer.inc');
 ?>
 
