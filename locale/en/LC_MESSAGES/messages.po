@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-22 21:52+1300\n"
+"POT-Creation-Date: 2004-12-26 16:02+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,9 +92,9 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/Stocks.php:335
 #: /usr/local/httpd/htdocs/web-erp/Stocks.php:343
 #: /usr/local/httpd/htdocs/web-erp/Stocks.php:351
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:413
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:422
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:430
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:441
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:450
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:458
 #: /usr/local/httpd/htdocs/web-erp/TaxAuthorities.php:106
 #: /usr/local/httpd/htdocs/web-erp/TaxAuthorities.php:114
 #: /usr/local/httpd/htdocs/web-erp/TaxAuthorities.php:122
@@ -164,8 +164,8 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/ShipmentCosting.php:380
 #: /usr/local/httpd/htdocs/web-erp/Stocks.php:592
 #: /usr/local/httpd/htdocs/web-erp/Stocks.php:594
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:399
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:401
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:400
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:402
 msgid "Yes"
 msgstr ""
 
@@ -196,8 +196,8 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/ShipmentCosting.php:381
 #: /usr/local/httpd/htdocs/web-erp/Stocks.php:587
 #: /usr/local/httpd/htdocs/web-erp/Stocks.php:589
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:398
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:402
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:399
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:403
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFLowGPPageHeader.inc:31
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFTaxPageHeader.inc:34
 msgid "No"
@@ -228,7 +228,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SupplierContacts.php:129
 #: /usr/local/httpd/htdocs/web-erp/TaxAuthorities.php:167
 #: /usr/local/httpd/htdocs/web-erp/WorkCentres.php:144
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:218
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:221
 #: /usr/local/httpd/htdocs/web-erp/includes/InputSerialItems.php:72
 #, php-format
 msgid "Edit"
@@ -277,7 +277,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SuppTransGLAnalysis.php:105
 #: /usr/local/httpd/htdocs/web-erp/TaxAuthorities.php:168
 #: /usr/local/httpd/htdocs/web-erp/WorkCentres.php:145
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:219
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:222
 #: /usr/local/httpd/htdocs/web-erp/includes/InputSerialItemsKeyed.php:53
 #, php-format
 msgid "Delete"
@@ -328,7 +328,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SupplierContacts.php:203
 #: /usr/local/httpd/htdocs/web-erp/TaxAuthorities.php:261
 #: /usr/local/httpd/htdocs/web-erp/WorkCentres.php:257
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:420
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:421
 #: /usr/local/httpd/htdocs/web-erp/Z_poEditLangHeader.php:99
 #: /usr/local/httpd/htdocs/web-erp/Z_poEditLangModule.php:150
 msgid "Enter Information"
@@ -444,8 +444,8 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SuppPaymentRun.php:207
 #: /usr/local/httpd/htdocs/web-erp/Tax.php:78
 #: /usr/local/httpd/htdocs/web-erp/Tax.php:219
-#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:53
-#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:74
+#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:62
+#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:87
 #: /usr/local/httpd/htdocs/web-erp/Z_poEditLangHeader.php:70
 #: /usr/local/httpd/htdocs/web-erp/Z_poEditLangHeader.php:100
 #: /usr/local/httpd/htdocs/web-erp/Z_poEditLangHeader.php:145
@@ -691,7 +691,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SalesPeople.php:82
 #: /usr/local/httpd/htdocs/web-erp/SalesTypes.php:48
 #: /usr/local/httpd/htdocs/web-erp/Stocks.php:203
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:357
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:364
 msgid "has been updated"
 msgstr ""
 
@@ -737,7 +737,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SalesAnalReptCols.php:211
 #: /usr/local/httpd/htdocs/web-erp/SalesTypes.php:98
 #: /usr/local/httpd/htdocs/web-erp/StockCategories.php:123
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:439
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:467
 #: /usr/local/httpd/htdocs/web-erp/Z_DeleteInvoice.php:123
 msgid "has been deleted"
 msgstr ""
@@ -1043,8 +1043,8 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SuppInvGLAnalysis.php:74
 #: /usr/local/httpd/htdocs/web-erp/SupplierAllocations.php:410
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:296
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:257
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:287
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:264
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:294
 #: /usr/local/httpd/htdocs/web-erp/SuppShiptChgs.php:66
 #: /usr/local/httpd/htdocs/web-erp/SuppShiptChgs.php:118
 #: /usr/local/httpd/htdocs/web-erp/SuppTransGLAnalysis.php:90
@@ -1268,7 +1268,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SuppInvGRNs.php:104
 #: /usr/local/httpd/htdocs/web-erp/SuppInvGRNs.php:259
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:232
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:222
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:229
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFOrderPageHeader_generic.inc:83
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFStockLocTransferHeader.inc:30
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFTransPageHeader.inc:185
@@ -1328,7 +1328,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SuppInvGRNs.php:105
 #: /usr/local/httpd/htdocs/web-erp/SuppInvGRNs.php:260
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:233
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:223
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:230
 #: /usr/local/httpd/htdocs/web-erp/TaxAuthorities.php:153
 #: /usr/local/httpd/htdocs/web-erp/WorkCentres.php:131
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFOstdgGRNsPageHeader.inc:32
@@ -1973,12 +1973,12 @@ msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/CompanyPreferences.php:82
 #: /usr/local/httpd/htdocs/web-erp/Customers.php:159
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:395
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:423
 msgid "Validation failed"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/CompanyPreferences.php:82
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:395
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:423
 msgid "no updates or deletes took place"
 msgstr ""
 
@@ -1993,7 +1993,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SuppInvGLAnalysis.php:73
 #: /usr/local/httpd/htdocs/web-erp/SupplierContacts.php:117
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:295
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:286
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:293
 #: /usr/local/httpd/htdocs/web-erp/SuppTransGLAnalysis.php:89
 #: /usr/local/httpd/htdocs/web-erp/includes/InputSerialItemsFile.php:84
 #: /usr/local/httpd/htdocs/web-erp/includes/InputSerialItemsFile.php:125
@@ -2020,24 +2020,24 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/CompanyPreferences.php:166
 #: /usr/local/httpd/htdocs/web-erp/Customers.php:252
 #: /usr/local/httpd/htdocs/web-erp/Customers.php:378
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:458
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:554
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:485
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:581
 msgid "Address Line 1"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/CompanyPreferences.php:170
 #: /usr/local/httpd/htdocs/web-erp/Customers.php:253
 #: /usr/local/httpd/htdocs/web-erp/Customers.php:380
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:459
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:555
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:486
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:582
 msgid "Address Line 2"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/CompanyPreferences.php:174
 #: /usr/local/httpd/htdocs/web-erp/Customers.php:254
 #: /usr/local/httpd/htdocs/web-erp/Customers.php:382
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:460
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:556
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:487
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:583
 msgid "Address Line 3"
 msgstr ""
 
@@ -2050,7 +2050,7 @@ msgid "Facsimile Number"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/CompanyPreferences.php:186
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:298
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:301
 msgid "Email Address"
 msgstr ""
 
@@ -2375,8 +2375,8 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SupplierAllocations.php:575
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:322
 #: /usr/local/httpd/htdocs/web-erp/SupplierInquiry.php:201
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:276
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:311
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:283
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:318
 #: /usr/local/httpd/htdocs/web-erp/SuppShiptChgs.php:85
 #: /usr/local/httpd/htdocs/web-erp/SuppTransGLAnalysis.php:118
 #: /usr/local/httpd/htdocs/web-erp/includes/PO_PDFOrderPageHeader.inc:146
@@ -2398,8 +2398,8 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SelectCreditItems.php:612
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:355
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:359
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:358
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:363
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:367
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:372
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFTaxPageHeader.inc:37
 msgid "Tax"
 msgstr ""
@@ -2732,22 +2732,22 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:716
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:738
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:743
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:412
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:432
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:475
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:493
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:517
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:543
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:561
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:581
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:608
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:625
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:640
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:653
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:663
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:678
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:696
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:708
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:421
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:441
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:484
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:502
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:526
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:552
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:570
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:590
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:617
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:634
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:649
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:662
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:672
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:687
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:705
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:717
 #: /usr/local/httpd/htdocs/web-erp/TaxAuthorities.php:146
 #: /usr/local/httpd/htdocs/web-erp/includes/SQL_CommonFunctions.inc:19
 #: /usr/local/httpd/htdocs/web-erp/includes/SQL_CommonFunctions.inc:26
@@ -2902,22 +2902,22 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:716
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:738
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:743
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:412
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:432
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:475
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:493
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:517
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:543
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:561
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:581
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:608
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:625
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:640
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:653
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:663
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:678
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:696
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:708
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:421
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:441
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:484
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:502
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:526
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:552
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:570
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:590
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:617
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:634
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:649
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:662
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:672
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:687
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:705
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:717
 #: /usr/local/httpd/htdocs/web-erp/TaxAuthorities.php:146
 #: /usr/local/httpd/htdocs/web-erp/includes/SQL_CommonFunctions.inc:19
 #: /usr/local/httpd/htdocs/web-erp/includes/SQL_CommonFunctions.inc:26
@@ -2963,8 +2963,8 @@ msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/ConfirmDispatch_Invoice.php:696
 #: /usr/local/httpd/htdocs/web-erp/SalesAnalReptCols.php:315
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:627
-#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:72
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:654
+#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:85
 #: /usr/local/httpd/htdocs/web-erp/Z_poEditLangHeader.php:98
 #: /usr/local/httpd/htdocs/web-erp/Z_poEditLangModule.php:148
 #: /usr/local/httpd/htdocs/web-erp/Z_poRebuildDefault.php:60
@@ -3472,7 +3472,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/Credit_Invoice.php:1218
 #: /usr/local/httpd/htdocs/web-erp/GoodsReceived.php:534
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:754
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:719
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:728
 msgid "has been processed"
 msgstr ""
 
@@ -3725,7 +3725,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/PO_Header.php:382
 #: /usr/local/httpd/htdocs/web-erp/PO_OrderDetails.php:80
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:213
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:201
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:208
 #: /usr/local/httpd/htdocs/web-erp/SuppPaymentRun.php:288
 msgid "Exchange Rate"
 msgstr ""
@@ -3793,8 +3793,8 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/OrderDetails.php:95
 #: /usr/local/httpd/htdocs/web-erp/SalesAnalRepts.php:29
 #: /usr/local/httpd/htdocs/web-erp/SalesAnalRepts.php:31
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:187
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:334
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:190
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:337
 #: /usr/local/httpd/htdocs/web-erp/Z_ChangeBranchCode.php:192
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFStatementPageHeader.inc:64
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFTransPageHeader.inc:42
@@ -4298,8 +4298,8 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/PrintCustTrans.php:878
 #: /usr/local/httpd/htdocs/web-erp/SupplierContacts.php:120
 #: /usr/local/httpd/htdocs/web-erp/SupplierContacts.php:199
-#: /usr/local/httpd/htdocs/web-erp/UserSettings.php:156
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:186
+#: /usr/local/httpd/htdocs/web-erp/UserSettings.php:158
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:189
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFTransPageHeader.inc:77
 #: /usr/local/httpd/htdocs/web-erp/includes/PO_PDFOrderPageHeader.inc:44
 msgid "Email"
@@ -4315,8 +4315,8 @@ msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/CustomerBranches.php:415
 #: /usr/local/httpd/htdocs/web-erp/CustomerBranches.php:420
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:188
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:337
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:191
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:340
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFCustomerListPageHeader.inc:84
 msgid "Branch Code"
 msgstr ""
@@ -4425,9 +4425,9 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/Locations.php:253
 #: /usr/local/httpd/htdocs/web-erp/Locations.php:362
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:194
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:179
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:502
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:603
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:186
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:529
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:630
 #: /usr/local/httpd/htdocs/web-erp/TaxAuthorityRates.php:79
 msgid "Tax Authority"
 msgstr ""
@@ -4445,7 +4445,7 @@ msgid "Postal Address 1"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/CustomerBranches.php:581
-msgid "Post Address 2"
+msgid "Postal Address 2"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/CustomerBranches.php:583
@@ -4488,7 +4488,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/CustomerReceipt.php:642
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:193
 #: /usr/local/httpd/htdocs/web-erp/SupplierInquiry.php:137
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:178
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:185
 msgid "Terms"
 msgstr ""
 
@@ -4906,7 +4906,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/PurchData.php:405
 #: /usr/local/httpd/htdocs/web-erp/SelectSupplier.php:234
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:192
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:177
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:184
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFBankingSummaryPageHeader.inc:42
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFDebtorBalsPageHeader.inc:36
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFSupplierBalsPageHeader.inc:36
@@ -4935,7 +4935,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SuppInvGLAnalysis.php:53
 #: /usr/local/httpd/htdocs/web-erp/SuppInvGLAnalysis.php:77
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:299
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:290
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:297
 #: /usr/local/httpd/htdocs/web-erp/SuppTransGLAnalysis.php:92
 #: /usr/local/httpd/htdocs/web-erp/SuppTransGLAnalysis.php:169
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFBankingSummaryPageHeader.inc:58
@@ -5153,8 +5153,8 @@ msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/Customers.php:255
 #: /usr/local/httpd/htdocs/web-erp/Customers.php:384
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:461
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:557
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:488
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:584
 msgid "Address Line 4"
 msgstr ""
 
@@ -5182,8 +5182,8 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/Customers.php:415
 #: /usr/local/httpd/htdocs/web-erp/index.php:734
 #: /usr/local/httpd/htdocs/web-erp/PrintCustTrans.php:377
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:471
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:566
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:498
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:593
 msgid "Payment Terms"
 msgstr ""
 
@@ -5459,9 +5459,9 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:158
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:170
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:182
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:152
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:160
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:168
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:159
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:167
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:175
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFSalesAnalysis.inc:555
 msgid "If this does not happen"
 msgstr ""
@@ -5473,9 +5473,9 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:158
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:170
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:182
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:152
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:160
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:168
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:159
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:167
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:175
 msgid "if the browser does not support META Refresh"
 msgstr ""
 
@@ -5488,9 +5488,9 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:160
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:172
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:184
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:153
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:161
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:169
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:160
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:168
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:176
 #: /usr/local/httpd/htdocs/web-erp/TaxAuthorityRates.php:25
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFSalesAnalysis.inc:555
 msgid "click here"
@@ -5503,9 +5503,9 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:160
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:172
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:184
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:153
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:161
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:169
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:160
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:168
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:176
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFSalesAnalysis.inc:555
 msgid "to continue"
 msgstr ""
@@ -6537,7 +6537,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SelectSalesOrder.php:357
 #: /usr/local/httpd/htdocs/web-erp/Shipt_Select.php:320
 #: /usr/local/httpd/htdocs/web-erp/SuppInvGRNs.php:122
-#: /usr/local/httpd/htdocs/web-erp/UserSettings.php:167
+#: /usr/local/httpd/htdocs/web-erp/UserSettings.php:169
 #, php-format
 msgid "Modify"
 msgstr ""
@@ -6708,7 +6708,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SuppInvGLAnalysis.php:48
 #: /usr/local/httpd/htdocs/web-erp/SuppInvGLAnalysis.php:72
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:294
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:285
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:292
 #: /usr/local/httpd/htdocs/web-erp/SuppTransGLAnalysis.php:88
 msgid "Account"
 msgstr ""
@@ -7582,47 +7582,47 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/PO_SelectOSPurchOrder.php:153
 #: /usr/local/httpd/htdocs/web-erp/PO_SelectPurchOrder.php:194
 #: /usr/local/httpd/htdocs/web-erp/Shipt_Select.php:189
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:391
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:5
 msgid "Orders"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/index.php:12
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:391
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:5
 msgid "Receivables"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/index.php:12
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:391
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:5
 msgid "Payables"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/index.php:12
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:391
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:5
 msgid "Purchasing"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/index.php:12
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:391
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:5
 msgid "Inventory"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/index.php:12
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:391
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:5
 msgid "Manufacturing"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/index.php:12
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:391
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:5
 msgid "General Ledger"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/index.php:12
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:391
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:5
 msgid "Setup"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/index.php:30
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:408
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:409
 msgid "Account Status"
 msgstr ""
 
@@ -8303,7 +8303,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/Locations.php:355
 #: /usr/local/httpd/htdocs/web-erp/SalesPeople.php:272
 #: /usr/local/httpd/htdocs/web-erp/SupplierContacts.php:193
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:296
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:299
 msgid "Telephone No"
 msgstr ""
 
@@ -8425,7 +8425,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/PrintCustTrans.php:841
 #: /usr/local/httpd/htdocs/web-erp/PrintCustTrans.php:876
 #: /usr/local/httpd/htdocs/web-erp/SalesPeople.php:172
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:185
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:188
 msgid "Telephone"
 msgstr ""
 
@@ -9592,8 +9592,8 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/PO_OrderDetails.php:72
 #: /usr/local/httpd/htdocs/web-erp/PurchData.php:404
 #: /usr/local/httpd/htdocs/web-erp/SelectSupplier.php:233
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:457
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:553
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:484
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:580
 msgid "Supplier Name"
 msgstr ""
 
@@ -10166,8 +10166,8 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/PO_OrderDetails.php:71
 #: /usr/local/httpd/htdocs/web-erp/PurchData.php:289
 #: /usr/local/httpd/htdocs/web-erp/PurchData.php:291
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:456
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:550
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:483
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:577
 msgid "Supplier Code"
 msgstr ""
 
@@ -10496,7 +10496,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SupplierAllocations.php:507
 #: /usr/local/httpd/htdocs/web-erp/SupplierAllocations.php:572
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:191
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:176
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:183
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFAgedSuppliersPageHeader.inc:34
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFPaymentRunPageHeader.inc:39
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFSupplierBalsPageHeader.inc:33
@@ -10541,7 +10541,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:235
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:236
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:296
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:287
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:294
 #: /usr/local/httpd/htdocs/web-erp/SuppTransGLAnalysis.php:90
 #: /usr/local/httpd/htdocs/web-erp/Z_CurrencySuppliersBalances.php:28
 msgid "in"
@@ -10736,18 +10736,18 @@ msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/PrintCustOrder_generic.php:78
 #: /usr/local/httpd/htdocs/web-erp/PrintCustOrder.php:79
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:345
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:348
 msgid "A4"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/PrintCustOrder_generic.php:78
 #: /usr/local/httpd/htdocs/web-erp/PrintCustOrder.php:79
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:357
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:359
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:369
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:371
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:380
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:382
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:360
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:362
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:372
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:374
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:383
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:385
 msgid "landscape"
 msgstr ""
 
@@ -10897,7 +10897,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/PrintCustTrans.php:58
 #: /usr/local/httpd/htdocs/web-erp/SalesAnalysis_UserDefined.php:15
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFStarter_ros.inc:18
-#: /usr/local/httpd/htdocs/web-erp/includes/session.inc:140
+#: /usr/local/httpd/htdocs/web-erp/includes/session.inc:139
 msgid "The security settings on your account do not permit you to access this function"
 msgstr ""
 
@@ -11136,7 +11136,7 @@ msgid "Our Order No"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/PrintCustTrans.php:697
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:198
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:205
 msgid "Invoice Date"
 msgstr ""
 
@@ -11619,10 +11619,10 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SuppCreditGRNs.php:213
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:231
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:587
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:512
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:538
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:556
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:575
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:521
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:547
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:565
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:584
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFOstdgGRNsPageHeader.inc:30
 msgid "GRN"
 msgstr ""
@@ -11712,7 +11712,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SalesAnalReptCols.php:182
 #: /usr/local/httpd/htdocs/web-erp/SalesTypes.php:57
 #: /usr/local/httpd/htdocs/web-erp/Stocks.php:259
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:374
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:402
 msgid "has been added to the database"
 msgstr ""
 
@@ -12648,7 +12648,7 @@ msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SelectCreditItems.php:906
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:405
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:432
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:441
 msgid "The database does not support transactions"
 msgstr ""
 
@@ -13216,8 +13216,8 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:266
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:281
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:297
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:256
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:288
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:263
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:295
 #: /usr/local/httpd/htdocs/web-erp/SuppShiptChgs.php:66
 msgid "Shipment"
 msgstr ""
@@ -14971,10 +14971,10 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:497
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:716
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:738
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:494
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:679
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:697
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:369
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:503
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:688
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:706
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:397
 msgid "could not be added because"
 msgstr ""
 
@@ -15502,7 +15502,7 @@ msgid "Supplier Invoice General Ledger Analysis"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SuppInvGLAnalysis.php:17
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:94
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:101
 msgid "To enter a supplier invoice the supplier must first be selected from the supplier selection screen"
 msgstr ""
 
@@ -15512,7 +15512,7 @@ msgid "then the link to enter a supplier invoice must be clicked on"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SuppInvGLAnalysis.php:18
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:95
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:102
 msgid "Select A Supplier to Enter an Invoice For"
 msgstr ""
 
@@ -15524,7 +15524,7 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SuppInvGLAnalysis.php:52
 #: /usr/local/httpd/htdocs/web-erp/SuppInvGLAnalysis.php:76
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:298
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:289
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:296
 #: /usr/local/httpd/htdocs/web-erp/SuppTransGLAnalysis.php:91
 msgid "Job"
 msgstr ""
@@ -15569,7 +15569,7 @@ msgid "Invoiced Goods Received Selected"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SuppInvGRNs.php:106
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:224
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:231
 msgid "Quantity Charged"
 msgstr ""
 
@@ -15578,7 +15578,7 @@ msgid "Price Charge in"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SuppInvGRNs.php:136
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:248
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:255
 msgid "Total Value of Goods Charged"
 msgstr ""
 
@@ -15712,8 +15712,8 @@ msgid "Allocation of supplier"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SupplierAllocations.php:392
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:326
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:329
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:335
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:338
 msgid "Amount in supplier currency"
 msgstr ""
 
@@ -15831,8 +15831,8 @@ msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:176
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:220
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:164
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:211
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:171
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:218
 msgid "Enter General Ledger Analysis"
 msgstr ""
 
@@ -15849,7 +15849,7 @@ msgid "Credit Note Date"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:211
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:198
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:205
 msgid "in format"
 msgstr ""
 
@@ -15866,7 +15866,7 @@ msgid "Price Credited"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:236
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:226
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:233
 msgid "Line Total"
 msgstr ""
 
@@ -15889,21 +15889,21 @@ msgid "Credit Amount in Supplier Currency"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:336
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:334
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:343
 msgid "Change Tax Calculation Method"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:340
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:346
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:337
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:343
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:346
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:352
 msgid "Automatic"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:340
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:346
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:337
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:343
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:346
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:352
 #: /usr/local/httpd/htdocs/web-erp/includes/header.inc:48
 msgid "Manual"
 msgstr ""
@@ -15950,7 +15950,7 @@ msgid "The credit note as entered cannot be processed because the exchange rate 
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:393
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:402
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:411
 msgid "The exchange rate is expected to show how many of the suppliers currency there are in 1 of the local currency"
 msgstr ""
 
@@ -15971,16 +15971,16 @@ msgid "the credit note as entered will not be processed"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:406
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:413
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:433
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:422
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:442
 msgid "The following SQL to start an SQL transaction was used"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:466
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:591
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:475
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:517
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:581
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:484
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:526
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:590
 msgid "The general ledger transaction could not be added because"
 msgstr ""
 
@@ -15991,14 +15991,14 @@ msgstr ""
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:592
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:625
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:647
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:476
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:496
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:519
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:544
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:563
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:583
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:610
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:627
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:485
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:505
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:528
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:553
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:572
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:592
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:619
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:636
 msgid "The following SQL to insert the GL transaction was used"
 msgstr ""
 
@@ -16007,7 +16007,7 @@ msgid "Shipment credit against"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:497
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:493
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:502
 msgid "The general ledger transaction for the shipment"
 msgstr ""
 
@@ -16018,22 +16018,22 @@ msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:537
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:563
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:543
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:561
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:552
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:570
 msgid "The general ledger transaction could not be added for the price variance of the stock item because"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:560
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:557
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:566
 msgid "price var"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:587
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:620
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:643
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:577
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:605
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:622
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:586
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:614
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:631
 msgid "a rate of"
 msgstr ""
 
@@ -16042,7 +16042,7 @@ msgid "The total posted to the credit accounts is"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:602
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:594
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:603
 msgid "but the sum of OvAmount converted at ExRate"
 msgstr ""
 
@@ -16051,7 +16051,7 @@ msgid "The general ledger transaction for the tax on the suppliers credit note c
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:646
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:625
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:634
 msgid "The general ledger transaction for the control total could not be added because"
 msgstr ""
 
@@ -16068,7 +16068,7 @@ msgid "The quantity credited of the purchase order line could not be updated bec
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:687
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:655
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:664
 msgid "The following SQL to update the purchase order details was used"
 msgstr ""
 
@@ -16082,15 +16082,15 @@ msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:716
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:738
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:678
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:696
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:687
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:705
 msgid "The shipment charge record for the shipment"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:717
 #: /usr/local/httpd/htdocs/web-erp/SupplierCredit.php:739
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:681
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:699
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:690
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:708
 msgid "The following SQL to insert the Shipment charge record was used"
 msgstr ""
 
@@ -16144,173 +16144,177 @@ msgstr ""
 msgid "Enter Supplier Invoice"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:148
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:205
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:81
+msgid "The tax authority associated with your user account has not been set up in this database. Tax calculations are based on the tax authority of the supplier and the tax authority of the user entering the invoice. The system administrator should redefine your account with a valid default stocking location and this location should refer to a valid tax authority"
+msgstr ""
+
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:155
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:212
 msgid "Enter Against Goods Recd"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:151
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:159
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:158
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:166
 msgid "You should automatically be forwarded to the entry of invoices against goods received page"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:156
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:207
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:163
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:214
 msgid "Enter Against Shipment"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:167
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:174
 msgid "You should automatically be forwarded to the entry of invoices against the general ledger page"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:191
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:198
 msgid "Supplier Invoice Reference"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:221
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:228
 msgid "Seq"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:225
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:232
 msgid "Price in"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:370
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:379
 msgid "Invoice Total"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:375
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:378
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:384
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:387
 msgid "Enter Invoice"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:386
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:395
 msgid "The invoice as entered cannot be processed because the total amount of the invoice is less than or equal to 0"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:386
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:395
 msgid "Invoices are expected to have a charge"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:390
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:399
 msgid "The invoice as entered cannot be processed because the there is no suppliers invoice number or reference entered"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:390
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:399
 msgid "The supplier invoice number must be entered"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:394
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:403
 msgid "The invoice as entered cannot be processed because the invoice date entered is not in the format"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:398
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:407
 msgid "The invoice as entered cannot be processed because the invoice date is after today"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:398
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:407
 msgid "Purchase invoices are expected to have a date prior to or today"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:402
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:411
 msgid "The invoice as entered cannot be processed because the exchange rate for the invoice has been entered as a negative or zero number"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:405
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:414
 msgid "The invoice total as entered is less than the sum of the shipment charges, the general ledger entires (if any) and the charges for goods received"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:405
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:414
 msgid "There must be a mistake somewhere, the invoice as entered will not be processed"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:412
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:421
 msgid "The sql to check for the previous entry of the same invoice failed"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:419
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:428
 msgid "The invoice number"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:419
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:428
 msgid "has already been entered"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:419
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:428
 msgid "It cannot be entered again"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:490
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:499
 msgid "Shipment charge against"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:514
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:523
 msgid "std cost of"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:539
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:548
 msgid "price var of"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:593
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:602
 msgid "The total posted to the debit accounts is"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:603
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:619
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:612
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:628
 msgid "Inv"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:608
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:617
 msgid "The general ledger transaction for the tax could not be added because"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:640
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:649
 msgid "The supplier invoice transaction could not be added to the database because"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:642
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:651
 msgid "The following SQL to insert the supplier invoice was used"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:653
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:662
 msgid "The quantity invoiced of the purchase order line could not be updated because"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:663
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:672
 msgid "The quantity invoiced off the goods received record could not be updated because"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:665
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:674
 msgid "The following SQL to update the GRN quantity invoiced was used"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:708
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:717
 msgid "The SQL COMMIT failed because"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:710
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:719
 msgid "The SQL COMMIT failed"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:719
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:728
 msgid "Supplier invoice number"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:720
+#: /usr/local/httpd/htdocs/web-erp/SupplierInvoice.php:729
 msgid "Enter Another invoice"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/Suppliers.php:17
-msgid "The account number must have 16 numeric characters in it"
+msgid "NZ account numbers must have 16 numeric characters in it"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/Suppliers.php:22
-msgid "The account number entered must use all numeric characters in it"
+msgid "NZ account numbers entered must use all numeric characters in it"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/Suppliers.php:30
-msgid "Accounts codes with the United Bank are not verified"
+msgid "NZ Accounts codes with the United Bank are not verified"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/Suppliers.php:30
@@ -16394,7 +16398,7 @@ msgid "is not a valid New Zealand Bank"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/Suppliers.php:141
-msgid "If you are using the Logic Works system outside New Zealand error trapping relevant to your country should be used"
+msgid "If you are using webERP outside New Zealand error trapping relevant to your country should be used"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/Suppliers.php:283
@@ -16422,133 +16426,137 @@ msgstr ""
 msgid "The supplier since field must be a date in the format"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:352
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:333
+msgid "The bank account entry is not a valid New Zealand bank account number. This is (of course) no concern if the business operates outside of New Zealand"
+msgstr ""
+
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:359
 msgid "The supplier could not be updated because"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:353
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:360
 msgid "The SQL that was used to update the supplier but failed was"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:357
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:364
 msgid "The supplier master record for"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:369
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:397
 msgid "The supplier"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:370
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:398
 msgid "The SQL that was used to insert the supplier but failed was"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:374
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:402
 msgid "A new supplier for"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:412
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:440
 msgid "Cannot delete this supplier because there are transactions that refer to this supplier"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:413
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:441
 msgid "transactions against this supplier"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:421
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:449
 msgid "Cannot delete the supplier record because purchase orders have been created against this supplier"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:422
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:450
 msgid "orders against this supplier"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:429
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:457
 msgid "Cannot delete this supplier because there are supplier contacts set up against it"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:429
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:457
 msgid "delete these first"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:430
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:458
 msgid "supplier contacts relating to this supplier"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:439
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:467
 msgid "Supplier record for"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:464
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:559
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:491
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:586
 msgid "Supplier Since"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:465
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:560
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:492
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:587
 msgid "Bank Particulars"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:466
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:493
 msgid "Bank reference"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:467
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:562
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:494
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:589
 msgid "Bank Account No"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:486
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:579
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:513
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:606
 msgid "Supplier Currency"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:496
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:589
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:523
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:616
 #: /usr/local/httpd/htdocs/web-erp/includes/PDFStatementPageHeader.inc:20
 msgid "Remittance Advice"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:497
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:592
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:595
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:524
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:619
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:622
 msgid "Not Required"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:498
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:593
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:596
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:525
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:620
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:623
 msgid "Required"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:513
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:540
 msgid "Insert New Supplier"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:561
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:588
 msgid "Bank Reference"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:624
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:651
 msgid "Add These New Supplier Details"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:626
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:653
 msgid "Update Supplier"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:627
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:654
 msgid "There is no second warning if you hit the delete button below"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:627
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:654
 msgid "However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:628
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:655
 msgid "Delete Supplier"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:629
+#: /usr/local/httpd/htdocs/web-erp/Suppliers.php:656
 msgid "Review Contact Details"
 msgstr ""
 
@@ -17080,13 +17088,13 @@ msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/UserSettings.php:59
 #: /usr/local/httpd/htdocs/web-erp/UserSettings.php:74
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:127
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:130
 msgid "The user alterations could not be processed because"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/UserSettings.php:60
 #: /usr/local/httpd/htdocs/web-erp/UserSettings.php:75
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:128
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:131
 msgid "The SQL that was used to update the user and failed was"
 msgstr ""
 
@@ -17099,36 +17107,36 @@ msgstr ""
 msgid "Be sure to remember your password for the next time you login"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/UserSettings.php:99
+#: /usr/local/httpd/htdocs/web-erp/UserSettings.php:101
 msgid "User ID"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/UserSettings.php:102
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:294
+#: /usr/local/httpd/htdocs/web-erp/UserSettings.php:104
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:297
 msgid "User Name"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/UserSettings.php:106
+#: /usr/local/httpd/htdocs/web-erp/UserSettings.php:108
 msgid "Maximum Number of Records to Display"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/UserSettings.php:110
+#: /usr/local/httpd/htdocs/web-erp/UserSettings.php:112
 msgid "Language"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/UserSettings.php:132
+#: /usr/local/httpd/htdocs/web-erp/UserSettings.php:134
 msgid "Theme"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/UserSettings.php:151
+#: /usr/local/httpd/htdocs/web-erp/UserSettings.php:153
 msgid "New Password"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/UserSettings.php:153
+#: /usr/local/httpd/htdocs/web-erp/UserSettings.php:155
 msgid "Confirm Password"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/UserSettings.php:155
+#: /usr/local/httpd/htdocs/web-erp/UserSettings.php:157
 msgid "If you leave the password boxes empty your password will not change"
 msgstr ""
 
@@ -17462,134 +17470,135 @@ msgstr ""
 msgid "Quantity to Issue"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:6
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:9
 msgid "User Maintenance"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:28
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:31
 msgid "The user ID entered must be at least 4 characters long"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:31
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:34
 msgid "The password entered must be at least 5 characters long"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:34
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:37
 msgid "The password cannot contain the user id"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:37
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:40
 msgid "If you enter a Customer Code you must also enter a Branch Code valid for this Customer"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:54
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:57
 msgid "The check on validity of the customer code and branch failed  because"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:55
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:58
 msgid "The SQL that was used to check the customer code and branch was"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:59
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:62
 msgid "The entered Branch Code is not valid for the entered Customer Code"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:97
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:100
 msgid "The selected user record has been updated"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:122
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:125
 msgid "A new user record has been inserted"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:157
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:160
 msgid "The User could not be deleted because"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:162
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:165
 msgid "User Deleted"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:183
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:186
 msgid "User Login"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:184
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:187
 msgid "Full Name"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:189
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:192
 msgid "Last Visit"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:190
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:193
 msgid "Security Group"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:191
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:194
 msgid "Report Size"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:241
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:244
 msgid "Review Existing Users"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:284
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:289
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:287
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:292
 msgid "User code"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:292
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:295
+#: /usr/local/httpd/htdocs/web-erp/includes/Login.php:52
 msgid "Password"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:300
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:303
 msgid "Access Level"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:313
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:316
 msgid "Default Location"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:341
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:344
 msgid "Reports Page Size"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:351
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:357
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:359
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:354
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:360
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:362
 msgid "A3"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:363
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:365
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:369
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:371
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:366
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:368
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:372
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:374
 msgid "Letter"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:375
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:377
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:378
 #: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:380
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:382
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:383
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:385
 msgid "Legal"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:396
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:397
 msgid "Display"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:396
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:397
 msgid "options"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:410
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:414
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:411
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:415
 msgid "Open"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:411
-#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:413
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:412
+#: /usr/local/httpd/htdocs/web-erp/WWW_Users.php:414
 msgid "Blocked"
 msgstr ""
 
@@ -18568,55 +18577,59 @@ msgstr ""
 msgid "To Create A New Language File"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:36
+#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:34
+msgid "Languages must be in the format of a two character country code an underscore _ and a two character language code in upper case"
+msgstr ""
+
+#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:45
 msgid "Creating the new language file"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:50
+#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:59
 #: /usr/local/httpd/htdocs/web-erp/Z_poEditLangHeader.php:68
 #: /usr/local/httpd/htdocs/web-erp/Z_poEditLangModule.php:79
 #: /usr/local/httpd/htdocs/web-erp/Z_poRebuildDefault.php:44
 msgid "Done"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:50
+#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:59
 msgid "You should now edit the new language file header"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:51
+#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:60
 msgid "Then use the language module editor to provide the content"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:62
+#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:75
 msgid "This utility will create a new language file from your default messages.po"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:63
+#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:76
 msgid "If the file already exists it will be overwritten"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:63
+#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:76
 #: /usr/local/httpd/htdocs/web-erp/Z_poEditLangHeader.php:82
 #: /usr/local/httpd/htdocs/web-erp/Z_poEditLangModule.php:109
 #: /usr/local/httpd/htdocs/web-erp/Z_poRebuildDefault.php:56
 msgid "PLEASE NOTE"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:68
-msgid "Two letter code for the new language"
+#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:81
+msgid "Full code of the new language in the format en_US"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:72
+#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:85
 msgid "Once you click on the Proceed button the file will be written"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:72
+#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:85
 #: /usr/local/httpd/htdocs/web-erp/Z_poEditLangHeader.php:98
 #: /usr/local/httpd/htdocs/web-erp/Z_poEditLangModule.php:148
 msgid "You will not get a second chance"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:73
+#: /usr/local/httpd/htdocs/web-erp/Z_poAddLanguage.php:86
 #: /usr/local/httpd/htdocs/web-erp/Z_poEditLangHeader.php:144
 #: /usr/local/httpd/htdocs/web-erp/Z_poEditLangModule.php:223
 #: /usr/local/httpd/htdocs/web-erp/Z_poRebuildDefault.php:61
@@ -19202,6 +19215,34 @@ msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/includes/InputSerialItems.php:81
 msgid "Batch/Roll/Bundle"
+msgstr ""
+
+#: /usr/local/httpd/htdocs/web-erp/includes/Login.php:7
+msgid "login as user"
+msgstr ""
+
+#: /usr/local/httpd/htdocs/web-erp/includes/Login.php:7
+msgid "demo"
+msgstr ""
+
+#: /usr/local/httpd/htdocs/web-erp/includes/Login.php:7
+msgid "with password"
+msgstr ""
+
+#: /usr/local/httpd/htdocs/web-erp/includes/Login.php:7
+msgid "weberp"
+msgstr ""
+
+#: /usr/local/httpd/htdocs/web-erp/includes/Login.php:9
+msgid "Please login here"
+msgstr ""
+
+#: /usr/local/httpd/htdocs/web-erp/includes/Login.php:50
+msgid "User name"
+msgstr ""
+
+#: /usr/local/httpd/htdocs/web-erp/includes/Login.php:60
+msgid "Login"
 msgstr ""
 
 #: /usr/local/httpd/htdocs/web-erp/includes/MiscFunctions.php:19
@@ -19979,23 +20020,15 @@ msgstr ""
 msgid "does not have a cost set up and order entry is set up to prohibit sales of items with no cost data entered"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/includes/session.inc:84
-msgid "The SQL to retrieve the user details failed because"
-msgstr ""
-
-#: /usr/local/httpd/htdocs/web-erp/includes/session.inc:85
-msgid "The SQL used was"
-msgstr ""
-
-#: /usr/local/httpd/htdocs/web-erp/includes/session.inc:118
+#: /usr/local/httpd/htdocs/web-erp/includes/session.inc:112
 msgid "incorrect password"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/includes/session.inc:118
+#: /usr/local/httpd/htdocs/web-erp/includes/session.inc:112
 msgid "The user/password combination"
 msgstr ""
 
-#: /usr/local/httpd/htdocs/web-erp/includes/session.inc:118
+#: /usr/local/httpd/htdocs/web-erp/includes/session.inc:112
 msgid "is not a valid user of the system"
 msgstr ""
 

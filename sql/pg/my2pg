@@ -1,1 +1,0 @@
-python MYSQL2PGSQL.py $1 > $2
