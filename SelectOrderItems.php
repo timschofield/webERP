@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 if (isset($_GET['ModifyOrderNumber'])) {
 	$title = "Modifying Order " . $_GET['ModifyOrderNumber'];
 } else {
@@ -274,21 +274,16 @@ if ($_POST['SearchCust']=="Search Now" AND $_SESSION['RequireCustomerSelection']
 if (isset($_POST['Select']) AND $_POST['Select']!="") {
 
 
-	$_SESSION['Items']->Branch = substr($_POST['Select'],strrpos($_POST['Select']," - ")+1);
+	$_SESSION['Items']->Branch = substr($_POST['Select'],strrpos($_POST['Select']," - ")+3);
 
 	$_POST['Select'] = substr($_POST['Select'],0,strpos($_POST['Select']," - "));
 
 	// Now check to ensure this account is not on hold */
 	$sql = "SELECT DebtorsMaster.Name, HoldReasons.DissallowInvoices, DebtorsMaster.SalesType, SalesTypes.Sales_Type, DebtorsMaster.CurrCode From DebtorsMaster, HoldReasons, SalesTypes WHERE DebtorsMaster.SalesType=SalesTypes.TypeAbbrev AND DebtorsMaster.HoldReason=HoldReasons.ReasonCode AND DebtorsMaster.DebtorNo = '" . $_POST['Select'] . "'";
 
-	$result =DB_query($sql,$db);
-	if (DB_error_no($db) !=0) {
-		echo "The details of the customer selected: " .  $_POST['Select'] . " cannot be retrieved because - " . DB_error_msg($db);
-
-		if ($debug==1){
-			echo "<BR>The SQL used to retrieve the customer details (and failed) was:<BR>$sql";
-		}
-	}
+	$ErrMsg = "The details of the customer selected: " .  $_POST['Select'] . " cannot be retrieved because";
+	$DbgMsg = "<BR>The SQL used to retrieve the customer details (and failed) was:";
+	$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	$myrow = DB_fetch_row($result);
 	if ($myrow[1] == 0){
@@ -307,14 +302,9 @@ if (isset($_POST['Select']) AND $_POST['Select']!="") {
 
 		$sql = "SELECT CustBranch.BrName, CustBranch.BrAddress1,BrAddress2, BrAddress3, BrAddress4, PhoneNo, Email, DefaultLocation, DefaultShipVia From CustBranch WHERE CustBranch.BranchCode='" . $_SESSION['Items']->Branch . "' AND CustBranch.DebtorNo = '" . $_POST['Select'] . "'";
 
-		$result =DB_query($sql,$db);
-		if (DB_error_no($db) !=0) {
-			echo "The customer branch record of the customer selected: " . $_POST['Select'] . " cannot be retrieved because - " . DB_error_msg($db);
-
-			if ($debug==1){
-				"<BR>SQL used to retrieve the branch details was:<BR>$sql";
-			}
-		}
+		$ErrMsg = "The customer branch record of the customer selected: " . $_POST['Select'] . " cannot be retrieved because";
+		$DbgMsg ="<BR>SQL used to retrieve the branch details was:";
+		$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 		if (DB_num_rows($result)==0){
 
@@ -826,73 +816,76 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 			}
 		} /* end of discount matrix lookup code */
 
+		if (count($_SESSION['Items']->LineItems)>0){ /*only show order lines if there are any */
+
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
-		echo "<CENTER><B>Order Summary</B>
-			<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>
-			<TR BGCOLOR=#800000>
-			<TD class='tableheader'>Item Code</TD>
-			<TD class='tableheader'>Item Description</TD>
-			<TD class='tableheader'>Quantity</TD>
-			<TD class='tableheader'>Unit</TD>
-			<TD class='tableheader'>Price</TD>
-			<TD class='tableheader'>Discount</TD>
-			<TD class='tableheader'>Total</TD>
-			</TR>";
+			echo "<CENTER><B>Order Summary</B>
+				<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>
+				<TR BGCOLOR=#800000>
+				<TD class='tableheader'>Item Code</TD>
+				<TD class='tableheader'>Item Description</TD>
+				<TD class='tableheader'>Quantity</TD>
+				<TD class='tableheader'>Unit</TD>
+				<TD class='tableheader'>Price</TD>
+				<TD class='tableheader'>Discount</TD>
+				<TD class='tableheader'>Total</TD>
+				</TR>";
 
-		$_SESSION['Items']->total = 0;
-		$_SESSION['Items']->totalVolume = 0;
-		$_SESSION['Items']->totalWeight = 0;
-		$k =0;  //row colour counter
-		foreach ($_SESSION['Items']->LineItems as $StockItem) {
+			$_SESSION['Items']->total = 0;
+			$_SESSION['Items']->totalVolume = 0;
+			$_SESSION['Items']->totalWeight = 0;
+			$k =0;  //row colour counter
+			foreach ($_SESSION['Items']->LineItems as $StockItem) {
 
-			$LineTotal =	$StockItem->Quantity * $StockItem->Price * (1 - $StockItem->DiscountPercent);
-			$DisplayLineTotal = number_format($LineTotal,2);
-			$DisplayDiscount = number_format(($StockItem->DiscountPercent * 100),2);
+				$LineTotal =	$StockItem->Quantity * $StockItem->Price * (1 - $StockItem->DiscountPercent);
+				$DisplayLineTotal = number_format($LineTotal,2);
+				$DisplayDiscount = number_format(($StockItem->DiscountPercent * 100),2);
 
-			if ($StockItem->QOHatLoc < $StockItem->Quantity AND ($StockItem->MBflag=="B" OR $StockItem->MBflag=="M")) {
-			/*There is a stock deficiency in the stock location selected */
+				if ($StockItem->QOHatLoc < $StockItem->Quantity AND ($StockItem->MBflag=="B" OR $StockItem->MBflag=="M")) {
+				/*There is a stock deficiency in the stock location selected */
 
-				echo "<tr bgcolor='#EEAABB'>";
-			} elseif ($k==1){
-				echo "<tr bgcolor='#CCCCCC'>";
-				$k=0;
-			} else {
-				echo "<tr bgcolor='#EEEEEE'>";
-				$k=1;
+					echo "<tr bgcolor='#EEAABB'>";
+				} elseif ($k==1){
+					echo "<tr bgcolor='#CCCCCC'>";
+					$k=0;
+				} else {
+					echo "<tr bgcolor='#EEEEEE'>";
+					$k=1;
+				}
+
+				echo "<TD><A target='_blank' HREF='$rootpath/StockStatus.php?" . SID . "StockID=" . $StockItem->StockID . "'>$StockItem->StockID</A></TD>
+					<TD>" . $StockItem->ItemDescription . "</TD>
+					<TD><INPUT TYPE=TEXT NAME='Quantity_" . $StockItem->StockID . "' SIZE=6 MAXLENGTH=6 VALUE=" . $StockItem->Quantity . "></TD>
+					<TD>" . $StockItem->Units . "</TD>";
+
+				if (in_array(2,$SecurityGroups[$_SESSION['AccessLevel']])){
+					/*OK to display with discount if it is an internal user with appropriate permissions */
+
+					echo "<TD><INPUT TYPE=TEXT NAME='Price_" . $StockItem->StockID . "' SIZE=8 MAXLENGTH=8 VALUE=" . $StockItem->Price . "></TD>
+					<TD><INPUT TYPE=TEXT NAME='Discount_" . $StockItem->StockID . "' SIZE=3 MAXLENGTH=3 VALUE=" . ($StockItem->DiscountPercent * 100) . ">%</TD>";
+
+				} else {
+					echo "<TD ALIGN=RIGHT>" . number_format($StockItem->Price,2) . "></TD><TD></TD>";
+				}
+
+				echo "<TD ALIGN=RIGHT>" . $DisplayLineTotal . "</FONT></TD><TD><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "Delete=" . $StockItem->StockID . "'>Delete</A></TD></TR>";
+
+				$_SESSION['Items']->total = $_SESSION['Items']->total + $LineTotal;
+				$_SESSION['Items']->totalVolume = $_SESSION['Items']->totalVolume + $StockItem->Quantity * $StockItem->Volume;
+				$_SESSION['Items']->totalWeight = $_SESSION['Items']->totalWeight + $StockItem->Quantity * $StockItem->Weight;
 			}
 
-			echo "<TD><A target='_blank' HREF='$rootpath/StockStatus.php?" . SID . "StockID=" . $StockItem->StockID . "'>$StockItem->StockID</A></TD>
-				<TD>" . $StockItem->ItemDescription . "</TD>
-				<TD><INPUT TYPE=TEXT NAME='Quantity_" . $StockItem->StockID . "' SIZE=6 MAXLENGTH=6 VALUE=" . $StockItem->Quantity . "></TD>
-				<TD>" . $StockItem->Units . "</TD>";
+			$DisplayTotal = number_format($_SESSION['Items']->total,2);
+			echo "<TR><TD></TD><TD><B>TOTAL Excl Tax/Freight</B></TD><TD COLSPAN=5 ALIGN=RIGHT>$DisplayTotal</TD></TR></TABLE>";
 
-			if (in_array(2,$SecurityGroups[$_SESSION['AccessLevel']])){
-				/*OK to display with discount if it is an internal user with appropriate permissions */
+			$DisplayVolume = number_format($_SESSION['Items']->totalVolume,2);
+			$DisplayWeight = number_format($_SESSION['Items']->totalWeight,2);
+			echo "<TABLE BORDER=1><TR><TD>Total Weight:</TD><TD>$DisplayWeight</TD><TD>Total Volume:</TD><TD>$DisplayVolume</TD></TR></TABLE>";
 
-				echo "<TD><INPUT TYPE=TEXT NAME='Price_" . $StockItem->StockID . "' SIZE=8 MAXLENGTH=8 VALUE=" . $StockItem->Price . "></TD>
-				<TD><INPUT TYPE=TEXT NAME='Discount_" . $StockItem->StockID . "' SIZE=3 MAXLENGTH=3 VALUE=" . ($StockItem->DiscountPercent * 100) . ">%</TD>";
 
-			} else {
-				echo "<TD ALIGN=RIGHT>" . number_format($StockItem->Price,2) . "></TD><TD></TD>";
-			}
-
-			echo "<TD ALIGN=RIGHT>" . $DisplayLineTotal . "</FONT></TD><TD><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "Delete=" . $StockItem->StockID . "'>Delete</A></TD></TR>";
-
-			$_SESSION['Items']->total = $_SESSION['Items']->total + $LineTotal;
-			$_SESSION['Items']->totalVolume = $_SESSION['Items']->totalVolume + $StockItem->Quantity * $StockItem->Volume;
-			$_SESSION['Items']->totalWeight = $_SESSION['Items']->totalWeight + $StockItem->Quantity * $StockItem->Weight;
+			echo "<BR><INPUT TYPE=SUBMIT NAME='Recalculate' Value='Re-Calculate'><INPUT TYPE=SUBMIT NAME='DeliveryDetails' VALUE='Enter Delivery Details and Confirm Order'><HR>";
 		}
-
-		$DisplayTotal = number_format($_SESSION['Items']->total,2);
-		echo "<TR><TD></TD><TD><B>TOTAL Excl Tax/Freight</B></TD><TD COLSPAN=5 ALIGN=RIGHT>$DisplayTotal</TD></TR></TABLE>";
-
-		$DisplayVolume = number_format($_SESSION['Items']->totalVolume,2);
-		$DisplayWeight = number_format($_SESSION['Items']->totalWeight,2);
-		echo "<TABLE BORDER=1><TR><TD>Total Weight:</TD><TD>$DisplayWeight</TD><TD>Total Volume:</TD><TD>$DisplayVolume</TD></TR></TABLE>";
-
-
-		echo "<BR><INPUT TYPE=SUBMIT NAME='Recalculate' Value='Re-Calculate'><INPUT TYPE=SUBMIT NAME='DeliveryDetails' VALUE='Enter Delivery Details and Confirm Order'><HR>";
 	} # end of if lines
 
 /* Now show the stock item selection search stuff below */

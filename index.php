@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 $title="Main Menu";
 
 $PageSecurity = 1;
@@ -494,13 +494,13 @@ Case "system": //System setup
 				    <tr>
 				    	<td class="menu_group_items">
 						<a href="<?php echo $rootpath."/CompanyPreferences.php?" . SID; ?>">Company Preferences Setup</a><br />
-				
+
 				    	</td>
 				    </tr>
 				</table>
 				</td>
             </tr>
-            
+
             <tr>
                 <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/security.png" alt="Security and Users Setup" /></td>
 
@@ -541,7 +541,7 @@ Case "system": //System setup
 						<a href="<?php echo $rootpath."/SalesGLPostings.php?" . SID; ?>">Sales GL Interface Postings </a><br />
 						<a href="<?php echo $rootpath."/COGSGLPostings.php?" . SID; ?>">COGS GL Interface Postings</a><br />
 						<a href="<?php echo $rootpath."/DiscountMatrix.php?" . SID; ?>">Discount Matrix</a><br />
-				<td>
+					</td>
 				    </tr>
 				</table>
 				</td>
