@@ -14,18 +14,18 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$CompanyName);
 $YPos -=$line_height;
 
 $FontSize=10;
-if ($_POST["Location"]=="All"){
+if ($_POST['Location']=='All'){
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos,450,$FontSize,"Inventory Planning for Categories Between " . $_POST['FromCriteria'] . " and " . $_POST['ToCriteria'] . " for all stock locations");
+	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos,450,$FontSize,_('Inventory Planning for Categories Between') . ' ' . $_POST['FromCriteria'] . ' ' . _('and') . ' ' . $_POST['ToCriteria'] . ' ' . _('for all stock locations'));
 
 } else {
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos,450,$FontSize,"Inventory Planning for Categories Between " . $_POST['FromCriteria'] . " and " . $_POST['ToCriteria'] . " for stock at " . $_POST['Location']);
+	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos,450,$FontSize,_('Inventory Planning for Categories Between') . ' ' . $_POST['FromCriteria'] . ' ' . _('and') . ' ' . $_POST['ToCriteria'] . ' ' . _('for stock at') . ' ' . $_POST['Location']);
 
 }
 
 $FontSize=8;
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,"Printed: " . Date("d M Y") . "   Page " . $PageNumber);
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,_('Printed') . ': ' . Date('d M Y') . '   ' . _('Page') . ' ' . $PageNumber);
 
 $YPos -=(2*$line_height);
 
@@ -39,19 +39,18 @@ $pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Marg
 /*set up the headings */
 $XPos = $Left_Margin+1;
 
-$LeftOvers = $pdf->addTextWrap($XPos,$YPos,180,$FontSize,"Item","centre");
-$LeftOvers = $pdf->addTextWrap(251,$YPos,40,$FontSize,$Period_4_Name . " Qty","centre");
-$LeftOvers = $pdf->addTextWrap(292,$YPos,40,$FontSize,$Period_3_Name . " Qty","centre");
-$LeftOvers = $pdf->addTextWrap(333,$YPos,40,$FontSize,$Period_2_Name . " Qty","centre");
-$LeftOvers = $pdf->addTextWrap(374,$YPos,40,$FontSize,$Period_1_Name . " Qty","centre");
-$LeftOvers = $pdf->addTextWrap(415,$YPos,40,$FontSize,$Period_0_Name . " MTD","centre");
+$LeftOvers = $pdf->addTextWrap($XPos,$YPos,180,$FontSize,_('Item'),'centre');
+$LeftOvers = $pdf->addTextWrap(251,$YPos,40,$FontSize,$Period_4_Name . ' ' . _('Qty'),'centre');
+$LeftOvers = $pdf->addTextWrap(292,$YPos,40,$FontSize,$Period_3_Name . ' ' . _('Qty'),'centre');
+$LeftOvers = $pdf->addTextWrap(333,$YPos,40,$FontSize,$Period_2_Name . ' ' . _('Qty'),'centre');
+$LeftOvers = $pdf->addTextWrap(374,$YPos,40,$FontSize,$Period_1_Name . ' ' . _('Qty'),'centre');
+$LeftOvers = $pdf->addTextWrap(415,$YPos,40,$FontSize,$Period_0_Name . ' ' . _('MTD'),'centre');
 
-$LeftOvers = $pdf->addTextWrap(456,$YPos,40,$FontSize,$_POST["NumberMonthsHolding"] . " ms stk","centre");
-$LeftOvers = $pdf->addTextWrap(597,$YPos,40,$FontSize,"QOH","centre");
-$LeftOvers = $pdf->addTextWrap(638,$YPos,40,$FontSize,"Cust Ords","centre");
-$LeftOvers = $pdf->addTextWrap(679,$YPos,40,$FontSize,"Splr Ords","centre");
-$LeftOvers = $pdf->addTextWrap(720,$YPos,40,$FontSize,"Sugg Ord","centre");
-
+$LeftOvers = $pdf->addTextWrap(456,$YPos,40,$FontSize,$_POST['NumberMonthsHolding'] . ' ' . _('ms stk'),'centre');
+$LeftOvers = $pdf->addTextWrap(597,$YPos,40,$FontSize,_('QOH'),'centre');
+$LeftOvers = $pdf->addTextWrap(638,$YPos,40,$FontSize,_('Cust Ords'),'centre');
+$LeftOvers = $pdf->addTextWrap(679,$YPos,40,$FontSize,_('Splr Ords'),'centre');
+$LeftOvers = $pdf->addTextWrap(720,$YPos,40,$FontSize,_('Sugg Ord'),'centre');
 
 $YPos =$YPos - (2*$line_height);
 $FontSize=8;

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 
 
@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
 
 	if ($InputError !=1 AND isset($_POST['HelpID'])) {
 
-		$sql = "UPDATE Help SET 
+		$sql = "UPDATE Help SET
                                Narrative = '" . $_POST['Narrative'] . "'
                         WHERE PageID =" . $_POST['PageID'];
 		$msg = _('The help record has been updated');
@@ -79,10 +79,10 @@ if (isset($_POST['submit'])) {
 		/*Sys Admin help admin records will be added as help type A */
 			$HelpType = "A";
 		}
-		$sql = "INSERT INTO Help (PageID, 
-                                          Narrative, 
-                                          HelpType) 
-                        VALUES (" . $_POST['PageID'] . ", 
+		$sql = "INSERT INTO Help (PageID,
+                                          Narrative,
+                                          HelpType)
+                        VALUES (" . $_POST['PageID'] . ",
                                '" . $_POST['Narrative'] . "',
                                '" . $HelpType . "')";
 		$msg = _('The new help narrative has been added');
@@ -90,10 +90,10 @@ if (isset($_POST['submit'])) {
 			$Recipients = array("'Phil' <p.daintree@paradise.net.nz>");
 			$mail = new htmlMimeMail();
 			$mail->setText($sql);
-			$mail->setSubject("Help Text Contribution");
+			$mail->setSubject(_('Help Text Contribution'));
 			$mail->setFrom($CompanyName . "<" . $CompanyRecord['Email'] . ">");
 			$result = $mail->send($Recipients);
-			$msg .= "<BR>Many thanks for contributing to the project!";
+			$msg .= '<BR>' . _('Many thanks for contributing to the project') . '!';
 		}
 
 	}
@@ -157,15 +157,15 @@ while ($myrow = DB_fetch_row($result)) {
 		printf("<tr><td>%s</td>
                             <td><a href='%sHelpID=%s&Page=%s&Title=%s'>" . _('Edit') . "</td>
                             <td>&nbsp;<a href='%sHelpID=%s&delete=yes&Page=%s&Title=%s'>" . _('DELETE') . "</td>
-                            </tr>", 
-                            $myrow[0], 
-                            $_SERVER['PHP_SELF'] . "?" . SID, 
-                            $myrow[1], 
-                            $Page, 
-                            $HelpPageTitle, 
-                            $_SERVER['PHP_SELF'] . "?" . SID, 
-                            $myrow[1], 
-                            $Page, 
+                            </tr>",
+                            $myrow[0],
+                            $_SERVER['PHP_SELF'] . "?" . SID,
+                            $myrow[1],
+                            $Page,
+                            $HelpPageTitle,
+                            $_SERVER['PHP_SELF'] . "?" . SID,
+                            $myrow[1],
+                            $Page,
                             $HelpPageTitle);
 	}
 //END WHILE LIST LOOP
@@ -215,7 +215,6 @@ echo "<CENTER><input type='Submit' name='submit' value='" . _('Enter Information
 
 
 echo "</FORM>";
-
 
 include("includes/footer.inc");
 ?>
