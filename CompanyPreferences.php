@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Company Preferences";
 $PageSecurity =10;
 
@@ -14,8 +14,8 @@ include("includes/DateFunctions.inc");
 <?php
 
 
-if ($_POST['submit']) {
-	
+if (isset($_POST['submit'])) {
+
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
 

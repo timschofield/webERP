@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*SelectOrderItems_IntoCart.inc
 
 This snippet is used to enter order line items into the cart object:
@@ -12,21 +12,18 @@ just reduces a double up in the typing and if it does need to be modified - it i
 
 $AlreadyOnThisOrder =0;
 
-if ($SO_AllowSameItemMultipleTimes==False){
+if (count($_SESSION['Items']->LineItems)>0){
 
-	if (count($_SESSION['Items']->LineItems)>0){
+	foreach ($_SESSION['Items']->LineItems AS $OrderItem) {
 
-   		foreach ($_SESSION['Items']->LineItems AS $OrderItem) {
+	/* do a loop round the items on the order to see that the item
+	is not already on this order */
 
-			/* do a loop round the items on the order to see that the item
-			is not already on this order */
-
-        		if (strcasecmp($OrderItem->StockID, $NewItem)==0) {
-            			$AlreadyOnThisOrder = 1;
-            			echo "<B>Warning:</B> the part " . $NewItem . " is already on this order - the system will not allow the same item on the order more than once. However, you can change the quantity ordered of the existing line if necessary";
-        		}
-  		} /* end of the foreach loop to look for preexisting items of the same code */
-	}
+		if (strcasecmp($OrderItem->StockID, $NewItem)==0) {
+			$AlreadyOnThisOrder = 1;
+			echo "<B>Warning:</B> the part " . $NewItem . " is already on this order - the system will not allow the same item on the order more than once. However, you can change the quantity ordered of the existing line if necessary";
+       		}
+	} /* end of the foreach loop to look for preexisting items of the same code */
 }
 
 if ($AlreadyOnThisOrder!=1){

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Credit Status Code Maintenance";
 $PageSecurity = 3;
 include("includes/session.inc");
@@ -17,7 +17,7 @@ if (isset($_GET['SelectedReason'])){
 	$SelectedReason = $_POST['SelectedReason'];
 }
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
@@ -129,7 +129,7 @@ or deletion of the records*/
 
 </table></CENTER>
 <p>
-<?php if ($SelectedReason) {  ?>
+<?php if (isset($SelectedReason)) {  ?>
 	<Center><a href="<?php echo $_SERVER['PHP_SELF']; ?>">Show Defined Credit Status Codes</a></Center>
 <?php } ?>
 
@@ -142,7 +142,7 @@ if (!isset($_GET['delete'])) {
 
 	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . ">";
 
-	if ($SelectedReason) {
+	if (isset($SelectedReason)) {
 		//editing an existing status code
 
 		$sql = "SELECT ReasonCode, ReasonDescription, DissallowInvoices FROM HoldReasons WHERE ReasonCode='$SelectedReason'";

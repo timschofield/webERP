@@ -1,5 +1,6 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
+
 $title = "Payment Terms Maintenance";
 
 $PageSecurity = 10;
@@ -14,7 +15,7 @@ if (isset($_GET['SelectedTerms'])){
 	$SelectedTerms = $_POST['SelectedTerms'];
 }
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
@@ -70,7 +71,7 @@ if ($_POST['submit']) {
 	echo "<BR>$msg";
 	unset($SelectedTerms);
 
-} elseif ($_GET['delete']) {
+} elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN DebtorsMaster
@@ -170,8 +171,14 @@ if (!isset($_GET['delete'])) {
 
 	} else { //end of if $SelectedTerms only do the else when a new record is being entered
 
+		if (!isset($_POST['TermsIndicator'])) $_POST['TermsIndicator']="";
+		if (!isset($DaysBeforeDue)) $DaysBeforeDue=0;
+		if (!isset($DayInFollowingMonth)) $DayInFollowingMonth=0;
+		if (!isset($_POST['Terms'])) $_POST['Terms']='';
+
 		echo "<CENTER><TABLE><TR><TD>Term Code:</TD><TD><input type='Text' name='TermsIndicator' value='" . $_POST['TermsIndicator'] . "' SIZE=3 MAXLENGTH=2></TD></TR>";
 	}
+
 
 	?>
 

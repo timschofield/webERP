@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $title = "Sales People Maintenance";
 
@@ -17,7 +17,7 @@ if (isset($_GET['SelectedSaleperson'])){
 ?>
 
 <?php
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
@@ -54,19 +54,19 @@ if ($_POST['submit']) {
 		echo "The breakpoint should be a floating point number";
 	}
 
-	if (strlen($_POST['SManTel'])==0){
+	if (!isset($_POST['SManTel'])){
 	  $_POST['SManTel']="";
 	}
-	if (strlen($_POST['SManFax'])==0){
+	if (!isset($_POST['SManFax'])){
 	  $_POST['SManFax']="";
 	}
-	if (strlen($_POST['CommissionRate1'])==0){
+	if (!isset($_POST['CommissionRate1'])){
 	  $_POST['CommissionRate1']=0;
 	}
-	if (strlen($_POST['CommissionRate2'])==0){
+	if (!isset($_POST['CommissionRate2'])){
 	  $_POST['CommissionRate2']=0;
 	}
-	if (strlen($_POST['Breakpoint'])==0){
+	if (!isset($_POST['Breakpoint'])){
 	  $_POST['Breakpoint']=0;
 	}
 
@@ -105,7 +105,7 @@ if ($_POST['submit']) {
 
 	}
 
-} elseif ($_GET['delete']) {
+} elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorsMaster'
@@ -209,20 +209,22 @@ if (! isset($_GET['delete'])) {
 
 		echo "<CENTER><TABLE><TR><TD>Sales-person code:</TD><TD><input type='Text' name='SalesmanCode'SIZE=3 MAXLENGTH=3></TD></TR>";
 	}
-
-	if (strlen($_POST['SManTel'])==0){
+	if (!isset($_POST['SalesmanName'])){
+	  $_POST['SalesmanName']="";
+	}
+	if (!isset($_POST['SManTel'])){
 	  $_POST['SManTel']="";
 	}
-	if (strlen($_POST['SManFax'])==0){
+	if (!isset($_POST['SManFax'])){
 	  $_POST['SManFax']="";
 	}
-	if (strlen($_POST['CommissionRate1'])){
+	if (!isset($_POST['CommissionRate1'])){
 	  $_POST['CommissionRate1']=0;
 	}
-	if (strlen($_POST['CommissionRate2'])){
+	if (!isset($_POST['CommissionRate2'])){
 	  $_POST['CommissionRate2']=0;
 	}
-	if (strlen($_POST['Breakpoint'])){
+	if (!isset($_POST['Breakpoint'])){
 	  $_POST['Breakpoint']=0;
 	}
 

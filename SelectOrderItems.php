@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 if (isset($_GET['ModifyOrderNumber'])) {
 	$title = "Modifying Order " . $_GET['ModifyOrderNumber'];
 } else {
@@ -166,6 +166,12 @@ if (isset($_POST['ChangeCustomer']) AND $_POST['ChangeCustomer']!=""){
 		echo "<BR>The customer the order is for cannot be modified once some of the order has been invoiced.";
 	}
 }
+
+if (!isset($_POST['SearchCust'])){
+	$_POST['SearchCust']='';
+}
+
+$msg='';
 
 if ($_POST['SearchCust']=="Search Now" AND $_SESSION['RequireCustomerSelection']==1 AND in_array(2,$SecurityGroups[$_SESSION['AccessLevel']])){
 
@@ -360,7 +366,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 
 	<?php
 
-	If ($result_CustSelect) {
+	If (isset($result_CustSelect)) {
 
 		echo "<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>";
 
@@ -399,7 +405,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 //end if RequireCustomerSelection
 } else {
 // everything below here only do if a customer is selected
-
+	if (!isset($_POST['CancelOrder'])) $_POST['CancelOrder']='No';
 	 if ($_POST['CancelOrder']=="Cancel Whole Order") {
 		$OK_to_delete=1;	//assume this in the first instance
 
@@ -447,6 +453,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 		echo " -  Deliver To : " . $_SESSION['Items']->DeliverTo;
 		echo "<BR>A " . $_SESSION['Items']->SalesTypeName . " Customer </B></FONT></CENTER>";
 	}
+
+	if (!isset($_POST['Search'])) $_POST['Search']='Dont Search';
 
 	If ($_POST['Search']=="Search Now"){
 
@@ -616,6 +624,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 			} //page not called from itself - POST variables not set
 		}
 
+		if (!isset($_POST['DeliveryDetails']))  $_POST['DeliveryDetails']='';
+		
 		if ($_POST['DeliveryDetails'] =="Enter Delivery Details and Confirm Order"){
 			echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . "/DeliveryDetails.php?" . SID . "'>";
 			echo "<P>You should automatically be forwarded to the entry of the delivery details page. If this does not happen (if the browser doesn't support META Refresh) <a href='" . $rootpath . "/DeliveryDetails.php?" . SID . "'>click here</a> to continue.<br>";
@@ -758,6 +768,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 		echo "<OPTION SELECTED VALUE='All'>All";
 
 		while ($myrow1 = DB_fetch_array($result1)) {
+
+			if (!isset($_POST['StockCat'])) $_POST['StockCat'] = $myrow1['CategoryID'];
+
 			if ($_POST['StockCat']==$myrow1["CategoryID"]){
 				echo "<OPTION SELECTED VALUE=". $myrow1["CategoryID"] . ">" . $myrow1["CategoryDescription"];
 			} else {
@@ -769,10 +782,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 
 		</SELECT>
 		<TD><FONT SIZE=2>Enter text extract(s) in the <B>description</B>:</FONT></TD>
-		<TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25 VALUE="<?php echo $_POST['Keywords']; ?>"></TD></TR>
+		<TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25 VALUE="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>"></TD></TR>
 		<TR><TD></TD>
 		<TD><FONT SIZE 3><B>OR </B></FONT><FONT SIZE=2>Enter extract of the <B>Stock Code</B>:</FONT></TD>
-		<TD><INPUT TYPE="Text" NAME="StockCode" SIZE=15 MAXLENGTH=18 VALUE="<?php echo $_POST['StockCode']; ?>"></TD>
+		<TD><INPUT TYPE="Text" NAME="StockCode" SIZE=15 MAXLENGTH=18 VALUE="<?php if (isset($_POST['StockCode']))echo $_POST['StockCode']; ?>"></TD>
 		</TR>
 		</TABLE>
 		<CENTER><INPUT TYPE=SUBMIT NAME="Search" VALUE="Search Now">
@@ -786,7 +799,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 
 		echo "</CENTER>";
 
-		If ($SearchResult) {
+		If (isset($SearchResult)) {
 
 			echo "<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>";
 			$TableHeader = "<TR><TD class='tableheader'>Code</TD><TD class='tableheader'>Description</TD><TD class='tableheader'>Units</TD></TR>";

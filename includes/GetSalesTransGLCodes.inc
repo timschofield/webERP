@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /*Functions to get the GL codes for customer transactions based on
 $Area, $StockID to determine the stock category and the SalesType (Price List)
 
@@ -126,7 +126,11 @@ Function GetCOGSGLAccount ($Area, $StockID, $SalesType, &$db) {
 		$SQL = "SELECT AccountCode FROM ChartMaster WHERE AccountCode=1";
 		$Result = DB_query($SQL,$db);
 		if (DB_num_rows($Result)==0){ /*It doesn't exist so  create it */
-			$SQL = "INSERT INTO ChartMaster VALUES (1, 'Default Sales and Cost of Sales', 'Sales')";
+			$Result = DB_query("SELECT GroupName FROM AccountGroups WHERE GroupName='Sales'",$db);
+			if (DB_num_rows($Result)==0) {
+				$Result = DB_query("INSERT INTO AccountGroups (GroupName, SectionInAccounts, PandL, SequenceInTB) VALUES ('Sales',1,1,5)",$db);
+			}
+			$SQL = "INSERT INTO ChartMaster VALUES (1, 'Default Sales and COGS', 'Sales')";
 			$Result = DB_query($SQL,$db);
 		}
 		return 1;
@@ -253,7 +257,12 @@ Function GetSalesGLAccount ($Area, $StockID, $SalesType, &$db) {
 		$SQL = "SELECT AccountCode FROM ChartMaster WHERE AccountCode=1";
 		$Result = DB_query($SQL,$db);
 		if (DB_num_rows($Result)==0){ /*It doesn't exist so  create it */
-			$SQL = "INSERT INTO ChartMaster VALUES (1, 'Default Sales and Cost of Sales', 'Sales')";
+			/*First check the account group sales exists */
+			$Result = DB_query("SELECT GroupName FROM AccountGroups WHERE GroupName='Sales'",$db);
+			if (DB_num_rows($Result)==0) {
+				$Result = DB_query("INSERT INTO AccountGroups (GroupName, SectionInAccounts, PandL, SequenceInTB) VALUES ('Sales',1,1,5)",$db);
+			}
+			$SQL = "INSERT INTO ChartMaster VALUES (1, 'Default Sales and COGS', 'Sales')";
 			$Result = DB_query($SQL,$db);
 		}
 		return 1;
