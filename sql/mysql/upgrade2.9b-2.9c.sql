@@ -956,3 +956,21 @@ ALTER TABLE stockserialitems CHANGE `quantity` `quantity` double NOT NULL defaul
 ALTER TABLE stockserialmoves CHANGE `moveqty` `moveqty` double NOT NULL default '0';
 ALTER TABLE suppallocs CHANGE `amt` `amt` double NOT NULL default '0.00';
 
+
+CREATE TABLE `salescat` (
+  `salescatid` tinyint(4) NOT NULL auto_increment,
+  `parentcatid` tinyint(4) default NULL,
+  `salescatname` varchar(30) default NULL,
+  PRIMARY KEY  (`salescatid`)
+) ENGINE=InnoDB;
+   
+CREATE TABLE salescatprod (
+  salescatid tinyint not null,
+  stockid varchar(20) not null,
+PRIMARY KEY(salescatid,stockid)
+) ENGINE=InnoDB;
+
+ALTER TABLE salescatprod ADD INDEX (salescatid);
+ALTER TABLE salescatprod ADD INDEX (stockid);
+ALTER TABLE salescatprod ADD FOREIGN KEY (stockid) REFERENCES stockmaster (stockid);
+ALTER TABLE salescatprod ADD FOREIGN KEY (salescatid) REFERENCES salescat (salescatid);

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 2;
 
@@ -62,7 +62,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 			ovfreight/rate AS freightamount,
 			ovgst/rate AS tax
 		FROM debtortrans
-		INNER JOIN debtorsmaster ON debtortrans.tebtorno=debtorsmaster.debtorno
+		INNER JOIN debtorsmaster ON debtortrans.debtorno=debtorsmaster.debtorno
 		INNER JOIN systypes ON debtortrans.type=systypes.typeid
 		WHERE debtortrans.prd >= ' . ($_POST['ToPeriod'] - $_POST['NoOfPeriods'] + 1) . '
 		AND debtortrans.prd <= ' . $_POST['ToPeriod'] . '

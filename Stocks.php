@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 11;
 
@@ -657,7 +657,26 @@ if (!isset($_POST['TaxLevel'])){
 
 echo '<TR><TD>' . _('Tax Level') . ':</TD><TD><input type="Text" name="TaxLevel" SIZE=1 MAXLENGTH=1 value="' . $_POST['TaxLevel'] . '"></TD></TR>';
 
-echo '</TABLE></TD><TD><CENTER>' . _('Image') . '<BR><img src=' . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg' . '>' . '</CENTER></TD></TR></TABLE>';
+if (function_exists('imagecreatefrompng')){
+	$StockImgLink = '<img src="GetStockImage.php?SID&automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
+		'&stockid='.urlencode($StockID.'.jpg').
+		'&text='.
+		'&width=64'.
+		'&height=64'.
+		'" >';
+} else {
+	if( file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
+		$StockImgLink = '<img src="'.$rootpath . '/' . $_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg" >';
+	} else {
+		$StockImgLink = 'No Image';
+	}
+}
+
+echo '</TABLE></TD><TD><CENTER>' . _('Image') . '<BR>'.$StockImgLink . '</CENTER></TD></TR></TABLE>';
+	
+//echo '</TABLE></TD><TD><CENTER>' . _('Image') . '<BR><img src=' . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg' . '>' . '</CENTER></TD></TR></TABLE>';
+
+
 
 if (isset($_POST['New']) OR $_POST['New']!="") {
 	echo '<input type="Submit" name="submit" value="' . _('Insert New Item') . '">';

@@ -1,5 +1,8 @@
 <P>webERP Change Log
 
+<P>5/3/05 Danie - changes to Stock.php to use the image manipulation features and changed Z_GetStockImage.php to GetStockImage.php
+<P>5/3/05 Danie - Added SalesCategories.php also table salescat and salescatprod for POS/Shopping integration
+<P>26/2/05 Jesse - changed ALT references to TITLE - TITLE needs to be used for the pop up text to appear as per html spec. ALT just for when images turned off.
 <P>26/2/05 Addedd Janusz Dobrowlski/ David Lao wrapper includes/class.pdf.php for R&OS pdf class to use FPDF class by Olivier PLATHEY in place of R&OS pdf.php class which is not good at alternative fonts/character sets.
 <P>23/2/05 Links to Danie's new scripts in Z_index.php
 <P>23/2/05 Danie - Z_DataExport.php allows export of various data as csv files

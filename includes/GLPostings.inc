@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /* This file contains the code to post GL transactions.
 
 This file can be included on any page that needs GL postings to be posted eg inquiries or GL reports
@@ -40,7 +40,7 @@ $sql = 'SELECT gltrans.account,
 	WHERE gltrans.posted=0
 	AND chartdetails.accountcode IS NULL
 	GROUP BY gltrans.account';
-
+	
 $ErrMsg = _('The test to see that all chart details records required have been set up failed because');
 $ChartDetailsStillRequired = DB_query($sql,$db,$ErrMsg);
 if (DB_num_rows($ChartDetailsStillRequired)>0){
@@ -51,7 +51,7 @@ if (DB_num_rows($ChartDetailsStillRequired)>0){
 	$FirstPeriodResult = DB_query('SELECT MIN(periodno) FROM periods',$db);
 	$FirstPeriodRow = DB_fetch_row($FirstPeriodResult);
 
-	$LastPeriodResult = DB_query('SELECT Max(periodno) FROM periods',$db);
+	$LastPeriodResult = DB_query('SELECT MAX(periodno) FROM periods',$db);
 	$LastPeriodRow = DB_fetch_row($LastPeriodResult);
 
 	$CreateFrom = $FirstPeriodRow[0];
@@ -70,10 +70,10 @@ if (DB_num_rows($ChartDetailsStillRequired)>0){
 					WHERE accountcode='.$AccountRow['accountcode'].'
 					AND period=' . $PeriodNo;
 			$InsChartDetails = DB_query($sql,$db,'','','',false);
-			$cnt = DB_fetch_row($InsChartDetails);
-			$cnt = $cnt[0];
+			$CountRows = DB_fetch_row($InsChartDetails);
+			$AccountExistsAlready = $CountRows[0];
 			DB_free_result($InsChartDetails);
-			if($cnt == 0 ) {
+			if(! $AccountExistsAlready) {
 				$sql = 'INSERT INTO chartdetails (accountcode,
 							period)
 					VALUES (' . $AccountRow['accountcode'] . ',

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 /*
 date validation and parsing functions
 
@@ -614,10 +614,12 @@ Need to insert some new periods */
 				$GetPrdSQL = 'INSERT INTO periods (periodno, lastdate_in_period) VALUES (' . $FirstPeriodNo . ", '" . Date('Y/m/d', $FirstPeriodEnd) . "')";
 				$ErrMsg = _('An error occurred in inserting periods before the first period to accomodate back dated transactions');
 				$GetPrdResult = DB_query($GetPrdSQL,$db, $ErrMsg);
-
+				$sql = 'INSERT INTO chartdetails (accountcode, period)
+						SELECT accountcode,' . $FirstPeriodEnd . ' FROM chartmaster';
+				$InsNewChartDetails = DB_query($sql,$db,'','','',false); 
+				/*dont trap errors - chart details records */
 			}
 			return $FirstPeriodNo + 1 ;
-
 		} /*end of logic for dates before currently defined periods */
 	} else {
 
@@ -629,5 +631,4 @@ Need to insert some new periods */
 
 
 } /*end of get period function */
-
 ?>
