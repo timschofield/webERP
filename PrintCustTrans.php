@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $PageSecurity = 1;
 
 if (isset($_GET["FromTransNo"])){
@@ -305,7 +305,7 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 				$YPos -= ($line_height);
 
 				$Narrative = $myrow2['Narrative'];
-				do {
+				while (strlen($Narrative)>1){
 					if ($YPos-$line_height <= $Bottom_Margin){
 						/* head up a new invoice/credit note page */
 						/*draw the vertical column lines right to the bottom */
@@ -317,7 +317,7 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 						$Narrative = $pdf->addTextWrap($Left_Margin+100,$YPos,245,$FontSize,$Narrative);
 					}
 					$YPos -= ($line_height);
-				} while (strlen($Narrative)>1);
+				}
 
 
 			} //end while there are line items to print out
@@ -570,7 +570,7 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 					Shippers.ShipperName, 
 					CustBranch.BrName, 
 					CustBranch.BrAddress1, 
-					CustBranch.BrAddress2, 
+					CustBranch.BrAddress2,
 					CustBranch.BrAddress3, 
 					CustBranch.BrAddress4,
 					Salesman.SalesmanName, 
@@ -615,7 +615,7 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 					DebtorsMaster, 
 					CustBranch, 
 					Salesman 
-				WHERE DebtorTrans.Type=11 
+				WHERE DebtorTrans.Type=11
 				AND DebtorTrans.TransNo=" . $FromTransNo . " 
 				AND DebtorTrans.DebtorNo=DebtorsMaster.DebtorNo
 				AND DebtorTrans.DebtorNo=CustBranch.DebtorNo 
@@ -930,7 +930,12 @@ function PrintLinesToBottom () {
 
 	global $pdf;
 	global $PageNumber;
+	global $TopOfColHeadings;
+	global $Left_Margin;
+	global $Bottom_Margin;
+	global $line_height;
 
+	
 /*draw the vertical column lines right to the bottom */
 	$pdf->line($Left_Margin+97, $TopOfColHeadings+12,$Left_Margin+97,$Bottom_Margin);
 

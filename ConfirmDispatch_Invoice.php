@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
@@ -399,14 +399,6 @@ if (! isset($_POST['DispatchDate']) OR  ! Is_Date($_POST['DispatchDate'])){
 
 echo '</TABLE>';
 
-foreach ($_SESSION['Items']->LineItems as $OrderLine) {
-
-	if ($OrderLine->Quantity-$OrderLine->QtyInv < $OrderLine->QtyDispatched){
-		echo '<br>';
-		prnMsg( $OrderLine->StockID .':'. _('You are trying to dispatch more Items than were ordered. Either modify the order or modify the items quantities') , 'error', ' ');
-	unset($_POST['ProcessInvoice']);
-	}
-}
 
 
 if (isset($_POST['ProcessInvoice']) && $_POST['ProcessInvoice'] != ""){
@@ -423,10 +415,11 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			$QuantityInvoicedIsPositive =true;
 		}
 	}
-	echo '<BR><FONT SIZE=4 COLOR=RED>Error: </FONT>' . _('There are no lines on this order with a quantity to invoice. No further processing has been done');
-	include('includes/footer.inc');
-	exit;
-
+	if (! $QuantityInvoicedIsPositive){
+		echo '<BR><FONT SIZE=4 COLOR=RED>Error: </FONT>' . _('There are no lines on this order with a quantity to invoice. No further processing has been done');
+		include('includes/footer.inc');
+		exit;
+	}
 /* Now Get the area where the sale is to from the branches table */
 
 	$SQL = "SELECT Area, DefaultShipVia FROM CustBranch WHERE CustBranch.DebtorNo ='". $_SESSION['Items']->DebtorNo . "' AND CustBranch.BranchCode = '" . $_SESSION['Items']->Branch . "'";
@@ -829,7 +822,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						" . $OrderLine->StandardCost . ",
 						" . ($QtyOnHandPrior - $OrderLine->QtyDispatched) . ",
 						" . $OrderLine->TaxRate . ",
-						'" . $OrderLine->Narrative . "'
+						'" . addslashes($OrderLine->Narrative) . "'
 					)";
 			} else {
             // its an assembly or dummy and assemblies/dummies always have nil stock (by definition they are made up at the time of dispatch  so new qty on hand will be nil
@@ -865,7 +858,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						" . $OrderLine->DiscountPercent . ",
 						" . $OrderLine->StandardCost . ",
 						" . $OrderLine->TaxRate . ",
-						'" . $OrderLine->Narrative . "'
+						'" . addslashes($OrderLine->Narrative) . "'
 					)";
 			}
 
