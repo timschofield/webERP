@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 	/*--------------------------------------------------\
 	|               |               | session.inc       |
 	|---------------------------------------------------|
@@ -56,8 +56,8 @@
 
         // Determine data base error
         if (DB_error_no($db) != 0 AND $debug == 1) {
-            echo "<br />The SQL to retrieve the user details failed because :" . DB_error_msg($db) .
-            "<br />The SQL used was :<br />$sql";
+            echo "<br />" . _("The SQL to retrieve the user details failed because :") . DB_error_msg($db) .
+            "<br />" . _("The SQL used was :") . "<br />" . $sql;
         }
 
         // Populate session variables with data base results
@@ -81,10 +81,12 @@
 
         // Incorrect password
         else {
-            $die_string = "<center><br /><br /><font size=\"5\" color=\"red\"><b>incorrect password" .
-            "</b></font><br /><br /><b>The user/password combination is not a valid user of the " .
-            "system.</b><br /><br />If you are not an authorized user, please contact the proper " .
-            "personnel to obtain an account to enable you to use the system.</center>";
+            $die_string = "<center><br /><br /><font size=\"5\" color=\"red\"><b>" .
+	    _("incorrect password") .
+            "</b></font><br /><br /><b>" . _("The user/password combination is not a valid user of the system") .
+	    "</b><br /><br />" .
+	    _("If you are not an authorized user, please contact the proper personnel to obtain an account to enable you to use the system.") .
+	    "</center>";
             die($die_string);
         }
     }// End of userid/password check
@@ -94,14 +96,14 @@
     // arrays defining access for each group of users. These definitions can be modified in config.php.
 
     if (!is_array($SecurityGroups[$_SESSION["AccessLevel"]])) {
-        echo "<br /><br /><br /><center><b>Security settings have not been " .
-        "defined for your user account. Please advise your system administrator</b>";
+        echo "<br /><br /><br /><center><b>" .
+	_("Security settings have not been defined for your user account. Please advise your system administrator") . "</b>";
         exit;
     }
     if (!in_array($PageSecurity, $SecurityGroups[$_SESSION["AccessLevel"]]) OR !isset($PageSecurity)) {
-        echo "<br /><br /><br /><br /><br /><br /><br /><center><b>The security settings " .
-        "on your account do not permit you to access this function.</b>";
-        echo "<br /><br /><a href=\"$rootpath/index.php?" . SID . "\">Back To Main Menu</a>";
+        echo "<br /><br /><br /><br /><br /><br /><br /><center><b>" .
+	_("The security settings on your account do not permit you to access this function.") . "</b>";
+        echo "<br /><br /><a href=\"$rootpath/index.php?" . SID . "\">" . _("Back To Main Menu") . "</a>";
         exit;
     }
     // Run with debugging messages for the system administrator(s) but not anyone else
@@ -110,4 +112,20 @@
     } else {
         $debug = 0;
     }
+
+
+// Set language to Spanish
+putenv ("LC_ALL=$Language");
+
+// Specify location of translation tables
+bindtextdomain ("messages", "./locale");
+
+// Choose domain
+textdomain ("messages");
+
+if (!function_exists('_')){
+	function _ ($text){
+		return $text;
+	}
+}
 ?>

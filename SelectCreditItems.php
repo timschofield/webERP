@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
 
@@ -127,7 +127,7 @@ if (isset($_POST['Select'])) {
 /*will only be true if page called from customer selection form
 parse the $Select string into customer code and branch code */
 
-	 $_SESSION['CreditItems']->Branch = substr($_POST['Select'],strrpos($_POST['Select']," - ")+1);
+	 $_SESSION['CreditItems']->Branch = substr($_POST['Select'],strrpos($_POST['Select']," - ")+3);
 	 $_POST['Select'] = substr($_POST['Select'],0,strpos($_POST['Select']," - "));
 
 /*Now retrieve customer information - name, salestype, currency, terms etc */

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
@@ -32,20 +32,20 @@
 					echo "<img src='$rootpath/css/". $theme ."/images/menucurve.gif' width='30' height='30' alt='' />";
 				echo "</td><td class='quick_menu_tabs'>";
 				echo "<table><tr> \n";
-					echo "<td class='quick_menu_tabs' align='center'><a accesskey='m' align='center' href='$rootpath/index.php?". SID ."'><u>M</u>ain  Menu</a>&nbsp;&nbsp;</td> \n";
+					echo "<td class='quick_menu_tabs' align='center'><a accesskey='m' align='center' href='$rootpath/index.php?". SID ."'>" . _("<u>M</u>ain  Menu") . "</a>&nbsp;&nbsp;</td> \n";
 
 					if (count($SecurityGroups[$_SESSION['AccessLevel']])>1){
-						
-						echo "<td class='quick_menu_tabs' align='center'><a align='center' accesskey='c'  href='$rootpath/SelectCustomer.php?". SID ."'>Select <u>C</u>ustomer</a>&nbsp;&nbsp;</td>";
-						
-						echo "<td class='quick_menu_tabs' align='center'><a accesskey='i' align='center' href='$rootpath/SelectProduct.php?". SID ."'>Select <u>I</u>tem</a>&nbsp;&nbsp;</td>";
-						
-						echo "<td class='quick_menu_tabs' align='center'><a accesskey='s' align='center' href='$rootpath/SelectSupplier.php?". SID ."'>Select <u>S</u>upplier</a>&nbsp;&nbsp;</td>";
+
+						echo "<td class='quick_menu_tabs' align='center'><a align='center' accesskey='c'  href='$rootpath/SelectCustomer.php?". SID ."'>" . _("Select <u>C</u>ustomer") . "</a>&nbsp;&nbsp;</td>";
+
+						echo "<td class='quick_menu_tabs' align='center'><a accesskey='i' align='center' href='$rootpath/SelectProduct.php?". SID ."'>" . _("Select <u>I</u>tem") . "</a>&nbsp;&nbsp;</td>";
+
+						echo "<td class='quick_menu_tabs' align='center'><a accesskey='s' align='center' href='$rootpath/SelectSupplier.php?". SID ."'>" . _("Select <u>S</u>upplier") . "</a>&nbsp;&nbsp;</td>";
 					}
 
-					echo "<td class='quick_menu_tabs' align='center'><a target='_blank' accesskey='h' align='center' href='$rootpath/Help.php?" . SID . "Page=" . substr(strrchr($_SERVER['PHP_SELF'],"/"),1) . "&Title=" . $title . "'><u>H</u>elp</a>&nbsp;&nbsp;</td>";
-					
-					echo "<td class='quick_menu_tabs' align='center'><a align='center' href='$rootpath/Logout.php?" . SID . "'>Logout</a></td> \n";
+					echo "<td class='quick_menu_tabs' align='center'><a target='_blank' accesskey='h' align='center' href='$rootpath/Help.php?" . SID . "Page=" . substr(strrchr($_SERVER['PHP_SELF'],"/"),1) . "&Title=" . $title . "'>" . _("<u>H</u>elp") . "</a>&nbsp;&nbsp;</td>";
+
+					echo "<td class='quick_menu_tabs' align='center'><a align='center' href='$rootpath/Logout.php?" . SID . "'>" . _("Logout") . "</a></td> \n";
 			echo "</td></tr></table> \n";
 		echo "</td></tr></table> \n";
 	}

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity = 1;
 
 
@@ -911,7 +911,6 @@ If (isset($PrintPDF) AND $PrintPDF!="" AND isset($FromTransNo) AND isset($InvOrC
 			$FromTransNo++;
 		} /* end loop to print invoices */
 	} /*end of if FromTransNo exists */
-	echo "</table>";
 	include("includes/footer.inc");
 
 } /*end of else not PrintPDF */
