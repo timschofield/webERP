@@ -55,7 +55,7 @@ error_reporting  = E_ALL; display all errors, warnings and notices
 and change it to :
 error_reporting  = E_ALL & ~A_NOTICE
 
-The web-server may need to be restarted - a CGI installation will not need to be restarted.
+The web-server may need to be restarted - a CGI installation will not need to be restarted. This setting is now enabled by default using a configuration directive in config.php that turns notices off. This error is unlikely to resurface in versions since 2.8
 
 
 
@@ -92,7 +92,6 @@ Also check that the parameter in config.php for the DefaultPriceList is set to a
 by default it is set to:
 $DefaultPriceList = "WS";
 if there is no WS sales type defined the system has a problem.
-
 
 
 Q2: Is there any way to enter items into a sales order freeform, in other words without have a specific part set up. For example if I want to sell an item that I do not normally stock and do want to go through the complete entry process to be able to sell it?

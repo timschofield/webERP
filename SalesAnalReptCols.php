@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $title = "Sales Analysis Report Columns Maintenance";
 
 $PageSecurity = 2;
@@ -247,14 +247,11 @@ if (!isset($_GET['delete'])) {
 
 		$sql = "SELECT ReportID, ColNo, Heading1, Heading2, Calculation, PeriodFrom, PeriodTo, DataType, ColNumerator, ColDenominator, CalcOperator, Constant, BudgetOrActual, ValFormat FROM ReportColumns WHERE ReportColumns.ReportID=$ReportID AND ReportColumns.ColNo=$SelectedCol";
 
-		$result = DB_query($sql, $db);
-		if (DB_error_no($db)!=0){
-		   echo "<BR>The column $SelectedCol could not be retrieved because: " . DB_error_msg($db);
-		   if ($debug==1){
-			      echo "<BR>The SQL used to retrieve the this column was:<BR>$sql";
-		   }
-		   exit;
-		}
+
+		$ErrMsg = "<BR>The column $SelectedCol could not be retrieved because:";
+		$DbgMsg = "<BR>The SQL used to retrieve the this column was:";
+
+		$result = DB_query($sql, $db,$ErrMsg, $DbgMsg);
 
 		$myrow = DB_fetch_array($result);
 

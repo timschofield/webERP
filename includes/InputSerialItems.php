@@ -1,16 +1,14 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
 - GoodsReceivedControlled.php
 - StockAdjustments.php
 - StockTransfers.php
-*/
+- CreditItemsControlled.php
 
-if ($LineItem->Serialised==1){
-	echo "<BR>Read From a file:<input type=file name='ImportFile'><BR>";
-}
+*/
 
 echo "<TABLE>";
 
