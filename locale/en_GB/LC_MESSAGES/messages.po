@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-27 15:01+1300\n"
+"POT-Creation-Date: 2005-03-03 21:00+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -339,7 +339,6 @@ msgstr ""
 #: Credit_Invoice.php:581 CustomerReceipt.php:257 CustomerReceipt.php:457
 #: CustomerReceipt.php:485 CustomerTransInquiry.php:69 GLProfit_Loss.php:135
 #: Payments.php:160 PurchData.php:31 PurchData.php:87 PurchData.php:107
-#: RecurringOrdersProcess.php:310 RecurringOrdersProcess.php:323
 #: ReverseGRN.php:142 ReverseGRN.php:156 ReverseGRN.php:317
 #: SelectCreditItems.php:1221 StockCheck.php:217 StockCostUpdate.php:87
 #: StockCostUpdate.php:96 StockLocStatus.php:130 StockMovements.php:84
@@ -1967,18 +1966,15 @@ msgstr ""
 #: GoodsReceived.php:474 GoodsReceived.php:500 GoodsReceived.php:521
 #: PDFStockCheckComparison.php:113 PDFStockCheckComparison.php:121
 #: PDFStockCheckComparison.php:128 PDFStockCheckComparison.php:147
-#: PDFStockCheckComparison.php:166 RecurringOrdersProcess.php:184
-#: RecurringOrdersProcess.php:227 RecurringOrdersProcess.php:254
-#: RecurringOrdersProcess.php:290 RecurringOrdersProcess.php:309
-#: RecurringOrdersProcess.php:322 RecurringOrdersProcess.php:362
-#: RecurringOrdersProcess.php:372 RecurringOrdersProcess.php:461
-#: RecurringOrdersProcess.php:481 RecurringOrdersProcess.php:496
-#: RecurringOrdersProcess.php:627 RecurringOrdersProcess.php:653
-#: RecurringOrdersProcess.php:682 RecurringOrdersProcess.php:707
-#: RecurringOrdersProcess.php:740 RecurringOrdersProcess.php:767
-#: RecurringOrdersProcess.php:791 ReverseGRN.php:53 ReverseGRN.php:125
-#: ReverseGRN.php:135 ReverseGRN.php:170 ReverseGRN.php:200 ReverseGRN.php:254
-#: ReverseGRN.php:277 SelectCreditItems.php:901 SelectCreditItems.php:925
+#: PDFStockCheckComparison.php:166 RecurringOrdersProcess.php:224
+#: RecurringOrdersProcess.php:271 RecurringOrdersProcess.php:399
+#: RecurringOrdersProcess.php:425 RecurringOrdersProcess.php:454
+#: RecurringOrdersProcess.php:479 RecurringOrdersProcess.php:512
+#: RecurringOrdersProcess.php:539 RecurringOrdersProcess.php:563
+#: RecurringOrdersProcess.php:575 RecurringOrdersProcess.php:618
+#: ReverseGRN.php:53 ReverseGRN.php:125 ReverseGRN.php:135 ReverseGRN.php:170
+#: ReverseGRN.php:200 ReverseGRN.php:254 ReverseGRN.php:277
+#: SelectCreditItems.php:901 SelectCreditItems.php:925
 #: SelectCreditItems.php:963 SelectCreditItems.php:1032
 #: SelectCreditItems.php:1112 SelectCreditItems.php:1130
 #: SelectCreditItems.php:1150 SelectCreditItems.php:1160
@@ -2049,18 +2045,14 @@ msgstr ""
 #: GoodsReceived.php:500 GoodsReceived.php:521 PDFStockCheckComparison.php:113
 #: PDFStockCheckComparison.php:121 PDFStockCheckComparison.php:128
 #: PDFStockCheckComparison.php:147 PDFStockCheckComparison.php:166
-#: RecurringOrdersProcess.php:184 RecurringOrdersProcess.php:227
-#: RecurringOrdersProcess.php:254 RecurringOrdersProcess.php:290
-#: RecurringOrdersProcess.php:309 RecurringOrdersProcess.php:322
-#: RecurringOrdersProcess.php:362 RecurringOrdersProcess.php:372
-#: RecurringOrdersProcess.php:461 RecurringOrdersProcess.php:481
-#: RecurringOrdersProcess.php:496 RecurringOrdersProcess.php:627
-#: RecurringOrdersProcess.php:653 RecurringOrdersProcess.php:682
-#: RecurringOrdersProcess.php:707 RecurringOrdersProcess.php:740
-#: RecurringOrdersProcess.php:767 RecurringOrdersProcess.php:791
-#: ReverseGRN.php:53 ReverseGRN.php:125 ReverseGRN.php:135 ReverseGRN.php:170
-#: ReverseGRN.php:200 ReverseGRN.php:254 ReverseGRN.php:277
-#: SelectCreditItems.php:901 SelectCreditItems.php:925
+#: RecurringOrdersProcess.php:224 RecurringOrdersProcess.php:271
+#: RecurringOrdersProcess.php:399 RecurringOrdersProcess.php:425
+#: RecurringOrdersProcess.php:454 RecurringOrdersProcess.php:479
+#: RecurringOrdersProcess.php:512 RecurringOrdersProcess.php:539
+#: RecurringOrdersProcess.php:563 RecurringOrdersProcess.php:575
+#: RecurringOrdersProcess.php:618 ReverseGRN.php:53 ReverseGRN.php:125
+#: ReverseGRN.php:135 ReverseGRN.php:170 ReverseGRN.php:200 ReverseGRN.php:254
+#: ReverseGRN.php:277 SelectCreditItems.php:901 SelectCreditItems.php:925
 #: SelectCreditItems.php:963 SelectCreditItems.php:1032
 #: SelectCreditItems.php:1112 SelectCreditItems.php:1130
 #: SelectCreditItems.php:1150 SelectCreditItems.php:1160
@@ -2103,29 +2095,29 @@ msgstr ""
 msgid "NOTE DOWN THIS ERROR AND SEEK ASSISTANCE"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:537 RecurringOrdersProcess.php:184
+#: ConfirmDispatch_Invoice.php:537 RecurringOrdersProcess.php:575
 msgid "The sales order header could not be updated with the invoice number"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:538 RecurringOrdersProcess.php:185
+#: ConfirmDispatch_Invoice.php:538 RecurringOrdersProcess.php:576
 msgid "The following SQL to update the sales order was used"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:580 RecurringOrdersProcess.php:227
+#: ConfirmDispatch_Invoice.php:580 RecurringOrdersProcess.php:618
 msgid "The debtor transaction record could not be inserted because"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:581 RecurringOrdersProcess.php:228
+#: ConfirmDispatch_Invoice.php:581 RecurringOrdersProcess.php:619
 msgid "The following SQL to insert the debtor transaction record was used"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:593 ConfirmDispatch_Invoice.php:675
-#: RecurringOrdersProcess.php:254
+#: RecurringOrdersProcess.php:224
 msgid "The sales order detail record could not be updated because"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:594 ConfirmDispatch_Invoice.php:676
-#: Credit_Invoice.php:527 RecurringOrdersProcess.php:255
+#: Credit_Invoice.php:527 RecurringOrdersProcess.php:225
 msgid "The following SQL to update the sales order detail record was used"
 msgstr ""
 
@@ -2137,51 +2129,50 @@ msgstr ""
 msgid "The following SQL to insert the order delivery differences record was used"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:695 RecurringOrdersProcess.php:274
-#: SalesAnalReptCols.php:318 Suppliers.php:667 includes/MiscFunctions.php:23
+#: ConfirmDispatch_Invoice.php:695 SalesAnalReptCols.php:318 Suppliers.php:667
+#: includes/MiscFunctions.php:23
 msgid "WARNING"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:695 RecurringOrdersProcess.php:274
+#: ConfirmDispatch_Invoice.php:695
 msgid "Could not retrieve current location stock"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:711 Credit_Invoice.php:539
-#: RecurringOrdersProcess.php:290 SelectCreditItems.php:1198
+#: SelectCreditItems.php:1198
 msgid "Location stock record could not be updated because"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:712 Credit_Invoice.php:540
-#: GoodsReceived.php:380 RecurringOrdersProcess.php:291 ReverseGRN.php:171
-#: SelectCreditItems.php:1199 StockTransfers.php:360 StockTransfers.php:370
+#: GoodsReceived.php:380 ReverseGRN.php:171 SelectCreditItems.php:1199
+#: StockTransfers.php:360 StockTransfers.php:370
 msgid "The following SQL to update the location stock record was used"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:730 Credit_Invoice.php:558
-#: RecurringOrdersProcess.php:309 SelectCreditItems.php:1220
+#: SelectCreditItems.php:1220
 msgid "Could not retrieve assembly components from the database for"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:730 Credit_Invoice.php:558
-#: EDIMessageFormat.php:44 EDISendInvoices.php:102
-#: RecurringOrdersProcess.php:309 SelectCreditItems.php:1220
+#: EDIMessageFormat.php:44 EDISendInvoices.php:102 SelectCreditItems.php:1220
 #: SpecialOrder.php:404 Z_PriceChanges.php:118 Z_ReApplyCostToSA.php:56
 msgid "because"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:743 RecurringOrdersProcess.php:322
+#: ConfirmDispatch_Invoice.php:743
 msgid "Can not retrieve assembly components location stock quantities because "
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:783 Credit_Invoice.php:654
-#: RecurringOrdersProcess.php:362 SelectCreditItems.php:1273
+#: SelectCreditItems.php:1273
 msgid "Stock movement records for the assembly components of"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:783 Credit_Invoice.php:654
-#: CustomerAllocations.php:124 RecurringOrdersProcess.php:362
-#: SelectCreditItems.php:1273 ShipmentCosting.php:225
-#: SupplierAllocations.php:141 includes/PDFPaymentRun_PymtFooter.php:54
+#: CustomerAllocations.php:124 SelectCreditItems.php:1273
+#: ShipmentCosting.php:225 SupplierAllocations.php:141
+#: includes/PDFPaymentRun_PymtFooter.php:54
 #: includes/PDFPaymentRun_PymtFooter.php:85
 #: includes/PDFPaymentRun_PymtFooter.php:115
 #: includes/PDFPaymentRun_PymtFooter.php:154
@@ -2191,84 +2182,83 @@ msgid "could not be inserted because"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:784 Credit_Invoice.php:655
-#: RecurringOrdersProcess.php:363 SelectCreditItems.php:1274
+#: SelectCreditItems.php:1274
 msgid "The following SQL to insert the assembly components stock movement records was used"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:793 Credit_Invoice.php:665
-#: RecurringOrdersProcess.php:372 SelectCreditItems.php:1283
+#: SelectCreditItems.php:1283
 msgid "Location stock record could not be updated for an assembly component because"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:794 RecurringOrdersProcess.php:373
+#: ConfirmDispatch_Invoice.php:794
 msgid "The following SQL to update the locations stock record for the component was used"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:882 Credit_Invoice.php:753
 #: Credit_Invoice.php:798 Credit_Invoice.php:839 Credit_Invoice.php:883
-#: RecurringOrdersProcess.php:461 ReverseGRN.php:200
+#: RecurringOrdersProcess.php:271 ReverseGRN.php:200
 #: SelectCreditItems.php:1032 SelectCreditItems.php:1112
 msgid "Stock movement records could not be inserted because"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:883 Credit_Invoice.php:754
 #: Credit_Invoice.php:799 Credit_Invoice.php:840 GoodsReceived.php:409
-#: RecurringOrdersProcess.php:462 ReverseGRN.php:201
+#: RecurringOrdersProcess.php:272 ReverseGRN.php:201
 #: SelectCreditItems.php:1113
 msgid "The following SQL to insert the stock movement records was used"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:902 RecurringOrdersProcess.php:481
-#: SelectCreditItems.php:1160 StockAdjustments.php:182
-#: StockAdjustments.php:196 StockLocTransferReceive.php:134
-#: StockTransfers.php:203 StockTransfers.php:316
+#: ConfirmDispatch_Invoice.php:902 SelectCreditItems.php:1160
+#: StockAdjustments.php:182 StockAdjustments.php:196
+#: StockLocTransferReceive.php:134 StockTransfers.php:203
+#: StockTransfers.php:316
 msgid "The serial stock item record could not be updated because"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:903 RecurringOrdersProcess.php:482
-#: SelectCreditItems.php:1161 SelectCreditItems.php:1391
-#: StockAdjustments.php:183 StockAdjustments.php:197
-#: StockLocTransferReceive.php:135 StockLocTransferReceive.php:149
-#: StockLocTransferReceive.php:248 StockLocTransferReceive.php:262
-#: StockTransfers.php:204 StockTransfers.php:317
+#: ConfirmDispatch_Invoice.php:903 SelectCreditItems.php:1161
+#: SelectCreditItems.php:1391 StockAdjustments.php:183
+#: StockAdjustments.php:197 StockLocTransferReceive.php:135
+#: StockLocTransferReceive.php:149 StockLocTransferReceive.php:248
+#: StockLocTransferReceive.php:262 StockTransfers.php:204
+#: StockTransfers.php:317
 msgid "The following SQL to update the serial stock item record was used"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:917 GoodsReceived.php:444
-#: RecurringOrdersProcess.php:496 SelectCreditItems.php:1177
-#: StockAdjustments.php:212 StockLocTransferReceive.php:167
-#: StockLocTransferReceive.php:277 StockTransfers.php:237
-#: StockTransfers.php:346
+#: SelectCreditItems.php:1177 StockAdjustments.php:212
+#: StockLocTransferReceive.php:167 StockLocTransferReceive.php:277
+#: StockTransfers.php:237 StockTransfers.php:346
 msgid "The serial stock movement record could not be inserted because"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:918 GoodsReceived.php:445
-#: RecurringOrdersProcess.php:497 StockAdjustments.php:213
-#: StockLocTransferReceive.php:168 StockLocTransferReceive.php:278
-#: StockTransfers.php:238 StockTransfers.php:347
+#: StockAdjustments.php:213 StockLocTransferReceive.php:168
+#: StockLocTransferReceive.php:278 StockTransfers.php:238
+#: StockTransfers.php:347
 msgid "The following SQL to insert the serial stock movement records was used"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:959 RecurringOrdersProcess.php:538
+#: ConfirmDispatch_Invoice.php:959 RecurringOrdersProcess.php:310
 msgid "The count of existing Sales analysis records could not run because"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:960 Credit_Invoice.php:913
-#: RecurringOrdersProcess.php:539 SelectCreditItems.php:1447
+#: RecurringOrdersProcess.php:311 SelectCreditItems.php:1447
 msgid "SQL to count the no of sales analysis records"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:1019 RecurringOrdersProcess.php:598
+#: ConfirmDispatch_Invoice.php:1019 RecurringOrdersProcess.php:370
 msgid "Sales analysis record could not be added or updated because"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:1020 Credit_Invoice.php:1025
-#: RecurringOrdersProcess.php:599 SelectCreditItems.php:1562
+#: RecurringOrdersProcess.php:371 SelectCreditItems.php:1562
 msgid "The following SQL to insert the sales analysis record was used"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:1048 Credit_Invoice.php:1053
-#: RecurringOrdersProcess.php:627
+#: RecurringOrdersProcess.php:399
 msgid "The cost of sales GL posting could not be inserted because"
 msgstr ""
 
@@ -2277,10 +2267,10 @@ msgstr ""
 #: ConfirmDispatch_Invoice.php:1189 ConfirmDispatch_Invoice.php:1213
 #: Credit_Invoice.php:1054 Credit_Invoice.php:1094 Credit_Invoice.php:1122
 #: Credit_Invoice.php:1143 Credit_Invoice.php:1172 Credit_Invoice.php:1193
-#: Credit_Invoice.php:1213 RecurringOrdersProcess.php:628
-#: RecurringOrdersProcess.php:654 RecurringOrdersProcess.php:683
-#: RecurringOrdersProcess.php:708 RecurringOrdersProcess.php:768
-#: RecurringOrdersProcess.php:792 SelectCreditItems.php:1592
+#: Credit_Invoice.php:1213 RecurringOrdersProcess.php:400
+#: RecurringOrdersProcess.php:426 RecurringOrdersProcess.php:455
+#: RecurringOrdersProcess.php:480 RecurringOrdersProcess.php:540
+#: RecurringOrdersProcess.php:564 SelectCreditItems.php:1592
 #: SelectCreditItems.php:1620 SelectCreditItems.php:1644
 #: SelectCreditItems.php:1674 SelectCreditItems.php:1699
 #: SelectCreditItems.php:1730 SelectCreditItems.php:1753
@@ -2289,40 +2279,40 @@ msgstr ""
 msgid "The following SQL to insert the GLTrans record was used"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:1074 RecurringOrdersProcess.php:653
+#: ConfirmDispatch_Invoice.php:1074 RecurringOrdersProcess.php:425
 msgid "The stock side of the cost of sales GL posting could not be inserted because"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:1103 RecurringOrdersProcess.php:682
+#: ConfirmDispatch_Invoice.php:1103 RecurringOrdersProcess.php:454
 msgid "The sales GL posting could not be inserted because"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:1128 RecurringOrdersProcess.php:707
+#: ConfirmDispatch_Invoice.php:1128 RecurringOrdersProcess.php:479
 msgid "The sales discount GL posting could not be inserted because"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:1161 RecurringOrdersProcess.php:740
+#: ConfirmDispatch_Invoice.php:1161 RecurringOrdersProcess.php:512
 msgid "The total debtor GL posting could not be inserted because"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:1162 RecurringOrdersProcess.php:741
+#: ConfirmDispatch_Invoice.php:1162 RecurringOrdersProcess.php:513
 msgid "The following SQL to insert the total debtors control GLTrans record was used"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:1188 RecurringOrdersProcess.php:767
+#: ConfirmDispatch_Invoice.php:1188 RecurringOrdersProcess.php:539
 msgid "The freight GL posting could not be inserted because"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:1212 RecurringOrdersProcess.php:791
+#: ConfirmDispatch_Invoice.php:1212 RecurringOrdersProcess.php:563
 msgid "The tax GL posting could not be inserted because"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:1225 RecurringOrdersProcess.php:804
+#: ConfirmDispatch_Invoice.php:1225 RecurringOrdersProcess.php:629
 #: Z_DeleteInvoice.php:123
 msgid "Invoice number"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:1225 RecurringOrdersProcess.php:804
+#: ConfirmDispatch_Invoice.php:1225 RecurringOrdersProcess.php:629
 #: SelectCreditItems.php:1788
 msgid "processed"
 msgstr ""
@@ -4336,7 +4326,7 @@ msgstr ""
 msgid "This order cannot be processed because"
 msgstr ""
 
-#: DeliveryDetails.php:269 RecurringOrdersProcess.php:104
+#: DeliveryDetails.php:269 RecurringOrdersProcess.php:103
 msgid "The order cannot be added because"
 msgstr ""
 
@@ -9926,24 +9916,36 @@ msgstr ""
 msgid "Recurring Orders Process"
 msgstr ""
 
-#: RecurringOrdersProcess.php:51
+#: RecurringOrdersProcess.php:50
 msgid "There was a problem retrieving the recurring sales order templates - the database reported:"
 msgstr ""
 
-#: RecurringOrdersProcess.php:118
+#: RecurringOrdersProcess.php:117
 msgid "The line items of the recurring order cannot be retrieved because"
 msgstr ""
 
-#: RecurringOrdersProcess.php:149
+#: RecurringOrdersProcess.php:146
 msgid "Recurring order was created for"
 msgstr ""
 
-#: RecurringOrdersProcess.php:149
+#: RecurringOrdersProcess.php:146
 msgid "with order Number"
 msgstr ""
 
-#: RecurringOrdersProcess.php:162
+#: RecurringOrdersProcess.php:161
 msgid "Unable to determine the area where the sale is to, from the customr branches table, please select an area for this branch"
+msgstr ""
+
+#: RecurringOrdersProcess.php:174
+msgid "The exchange rate for the customer currency could not be retrieved from the currency table because:"
+msgstr ""
+
+#: RecurringOrdersProcess.php:180
+msgid "Could not retreive the tax authority of the location from where the order was fulfilled because:"
+msgstr ""
+
+#: RecurringOrdersProcess.php:206
+msgid "The tax level of the item could not be retrieved because:"
 msgstr ""
 
 #: ReverseGRN.php:21
@@ -15001,7 +15003,7 @@ msgid "Default Credit Limit must be a number"
 msgstr ""
 
 #: SystemParameters.php:37
-msgid "The Romalpa Clause may not contain single qoutes and may not be longer than 255 chars"
+msgid "The Romalpa Clause may not contain single qoutes and may not be longer than 5000 chars"
 msgstr ""
 
 #: SystemParameters.php:41

@@ -6436,7 +6436,7 @@ SET search_path = public, pg_catalog;
 --
 
 COPY www_users (userid, "password", realname, customerid, phone, email, defaultlocation, fullaccess, lastvisitdate, branchcode, pagesize, modulesallowed, blocked, displayrecordsmax, theme, "language", pinno, swipecard) FROM stdin;
-demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2005-02-27 11:02:51		A4	1,1,1,1,1,1,1,1,	0	50	fresh	en	\N	\N
+demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2005-02-27 11:02:51		A4	1,1,1,1,1,1,1,1,	1	50	fresh	en	\N	\N
 \.
 
 

@@ -928,3 +928,31 @@ ALTER TABLE `taxauthorities` ADD `bank` VARCHAR( 50 ) NOT NULL ,
 ADD `bankacctype` VARCHAR( 20 ) NOT NULL ,
 ADD `bankacc` VARCHAR( 50 ) NOT NULL ,
 ADD `bankswift` VARCHAR( 30 ) NOT NULL ;
+
+
+ALTER TABLE banktrans CHANGE amountcleared amountcleared double NOT NULL default '0';
+ALTER TABLE banktrans CHANGE amount amount double NOT NULL default '0';
+ALTER TABLE buckets CHANGE capacity capacity double NOT NULL default '0.00';
+ALTER TABLE chartdetails CHANGE budget budget double NOT NULL default '0';
+ALTER TABLE chartdetails CHANGE actual actual double NOT NULL default '0';
+ALTER TABLE chartdetails CHANGE bfwd bfwd double NOT NULL default '0';
+ALTER TABLE chartdetails CHANGE bfwdbudget bfwdbudget double NOT NULL default '0';
+ALTER TABLE debtorsmaster CHANGE creditlimit creditlimit double NOT NULL default '1000';
+ALTER TABLE debtortrans CHANGE ovamount ovamount double NOT NULL default '0';
+ALTER TABLE debtortrans CHANGE ovgst ovgst double NOT NULL default '0';
+ALTER TABLE debtortrans CHANGE ovfreight ovfreight double NOT NULL default '0';
+ALTER TABLE debtortrans CHANGE ovdiscount ovdiscount double NOT NULL default '0';
+ALTER TABLE debtortrans CHANGE diffonexch diffonexch double NOT NULL default '0';
+ALTER TABLE debtortrans CHANGE alloc alloc double NOT NULL default '0';
+ALTER TABLE gltrans CHANGE amount amount double NOT NULL default '0';
+ALTER TABLE recurringsalesorders CHANGE `freightcost` `freightcost` double NOT NULL default '0.00';
+ALTER TABLE reportcolumns CHANGE  `constant` `constant` double NOT NULL default '0';
+ALTER TABLE salesorders CHANGE freightcost freightcost double NOT NULL default '0.00';
+ALTER TABLE shipmentcharges CHANGE  value value double NOT NULL default '0';
+ALTER TABLE stockcheckfreeze CHANGE qoh qoh double NOT NULL default '0';
+ALTER TABLE stockcounts CHANGE `qtycounted` `qtycounted` double NOT NULL default '0';
+ALTER TABLE stockmoves CHANGE `taxrate` `taxrate` double NOT NULL default '0';
+ALTER TABLE stockserialitems CHANGE `quantity` `quantity` double NOT NULL default '0';
+ALTER TABLE stockserialmoves CHANGE `moveqty` `moveqty` double NOT NULL default '0';
+ALTER TABLE suppallocs CHANGE `amt` `amt` double NOT NULL default '0.00';
+

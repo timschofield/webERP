@@ -75,11 +75,11 @@ CREATE TABLE `banktrans` (
   `transno` bigint(20) NOT NULL default '0',
   `bankact` int(11) NOT NULL default '0',
   `ref` varchar(50) NOT NULL default '',
-  `amountcleared` float NOT NULL default '0',
+  `amountcleared` double NOT NULL default '0',
   `exrate` double NOT NULL default '1',
   `transdate` date NOT NULL default '0000-00-00',
   `banktranstype` varchar(30) NOT NULL default '',
-  `amount` float NOT NULL default '0',
+  `amount` double NOT NULL default '0',
   `currcode` char(3) NOT NULL default '',
   PRIMARY KEY  (`banktransid`),
   KEY `bankact` (`bankact`,`ref`),
@@ -124,7 +124,7 @@ CREATE TABLE `bom` (
 CREATE TABLE `buckets` (
   `workcentre` char(5) NOT NULL default '',
   `availdate` datetime NOT NULL default '0000-00-00 00:00:00',
-  `capacity` float(10,2) NOT NULL default '0.00',
+  `capacity` double NOT NULL default '0',
   PRIMARY KEY  (`workcentre`,`availdate`),
   KEY `workcentre` (`workcentre`),
   KEY `availdate` (`availdate`),
@@ -138,10 +138,10 @@ CREATE TABLE `buckets` (
 CREATE TABLE `chartdetails` (
   `accountcode` int(11) NOT NULL default '0',
   `period` smallint(6) NOT NULL default '0',
-  `budget` float NOT NULL default '0',
-  `actual` float NOT NULL default '0',
-  `bfwd` float NOT NULL default '0',
-  `bfwdbudget` float NOT NULL default '0',
+  `budget` double NOT NULL default '0',
+  `actual` double NOT NULL default '0',
+  `bfwd` double NOT NULL default '0',
+  `bfwdbudget` double NOT NULL default '0',
   PRIMARY KEY  (`accountcode`,`period`),
   KEY `period` (`period`),
   CONSTRAINT `chartdetails_ibfk_1` FOREIGN KEY (`accountcode`) REFERENCES `chartmaster` (`accountcode`),
@@ -394,7 +394,7 @@ CREATE TABLE `debtorsmaster` (
   `pymtdiscount` double(16,4) NOT NULL default '0.0000',
   `lastpaid` double(16,4) NOT NULL default '0.0000',
   `lastpaiddate` datetime default NULL,
-  `creditlimit` float NOT NULL default '1000',
+  `creditlimit` double NOT NULL default '1000',
   `taxref` varchar(20) NOT NULL default '',
   `invaddrbranch` tinyint(4) NOT NULL default '0',
   `discountcode` char(2) NOT NULL default '',
@@ -436,12 +436,12 @@ CREATE TABLE `debtortrans` (
   `tpe` char(2) NOT NULL default '',
   `order_` int(11) NOT NULL default '0',
   `rate` double(16,6) NOT NULL default '0.000000',
-  `ovamount` float NOT NULL default '0',
-  `ovgst` float NOT NULL default '0',
-  `ovfreight` float NOT NULL default '0',
-  `ovdiscount` float NOT NULL default '0',
-  `diffonexch` float NOT NULL default '0',
-  `alloc` float NOT NULL default '0',
+  `ovamount` double NOT NULL default '0',
+  `ovgst` double NOT NULL default '0',
+  `ovfreight` double NOT NULL default '0',
+  `ovdiscount` double NOT NULL default '0',
+  `diffonexch` double NOT NULL default '0',
+  `alloc` double NOT NULL default '0',
   `invtext` text,
   `shipvia` varchar(10) NOT NULL default '',
   `edisent` tinyint(4) NOT NULL default '0',
@@ -572,7 +572,7 @@ CREATE TABLE `gltrans` (
   `periodno` smallint(6) NOT NULL default '0',
   `account` int(11) NOT NULL default '0',
   `narrative` varchar(200) NOT NULL default '',
-  `amount` float NOT NULL default '0',
+  `amount` double NOT NULL default '0',
   `posted` tinyint(4) NOT NULL default '0',
   `jobref` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`counterindex`),
@@ -879,7 +879,7 @@ CREATE TABLE `recurringsalesorders` (
   `contactphone` varchar(25) default NULL,
   `contactemail` varchar(25) default NULL,
   `deliverto` varchar(40) NOT NULL default '',
-  `freightcost` float(10,2) NOT NULL default '0.00',
+  `freightcost` double NOT NULL default '0',
   `fromstkloc` varchar(5) NOT NULL default '',
   `lastrecurrence` date NOT NULL default '0000-00-00',
   `frequency` tinyint(4) NOT NULL default '0',
@@ -930,7 +930,7 @@ CREATE TABLE `reportcolumns` (
   `calcoperator` char(1) default NULL,
   `budgetoractual` tinyint(1) NOT NULL default '0',
   `valformat` char(1) NOT NULL default 'n',
-  `constant` float NOT NULL default '0',
+  `constant` double NOT NULL default '0',
   PRIMARY KEY  (`reportid`,`colno`),
   CONSTRAINT `reportcolumns_ibfk_1` FOREIGN KEY (`reportid`) REFERENCES `reportheaders` (`reportid`)
 ) TYPE=InnoDB;
@@ -1071,7 +1071,7 @@ CREATE TABLE `salesorders` (
   `contactphone` varchar(25) default NULL,
   `contactemail` varchar(25) default NULL,
   `deliverto` varchar(40) NOT NULL default '',
-  `freightcost` float(10,2) NOT NULL default '0.00',
+  `freightcost` double NOT NULL default '0',
   `fromstkloc` varchar(5) NOT NULL default '',
   `deliverydate` date NOT NULL default '0000-00-00',
   `printedpackingslip` tinyint(4) NOT NULL default '0',
@@ -1158,7 +1158,7 @@ CREATE TABLE `shipmentcharges` (
   `transtype` smallint(6) NOT NULL default '0',
   `transno` int(11) NOT NULL default '0',
   `stockid` varchar(20) NOT NULL default '',
-  `value` float NOT NULL default '0',
+  `value` double NOT NULL default '0',
   PRIMARY KEY  (`shiptchgid`),
   KEY `transtype` (`transtype`,`transno`),
   KEY `shiptref` (`shiptref`),
@@ -1224,7 +1224,7 @@ CREATE TABLE `stockcategory` (
 CREATE TABLE `stockcheckfreeze` (
   `stockid` varchar(20) NOT NULL default '',
   `loccode` varchar(5) NOT NULL default '',
-  `qoh` float NOT NULL default '0',
+  `qoh` double NOT NULL default '0',
   PRIMARY KEY  (`stockid`),
   KEY `loccode` (`loccode`),
   CONSTRAINT `stockcheckfreeze_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
@@ -1239,7 +1239,7 @@ CREATE TABLE `stockcounts` (
   `id` int(11) NOT NULL auto_increment,
   `stockid` varchar(20) NOT NULL default '',
   `loccode` varchar(5) NOT NULL default '',
-  `qtycounted` float NOT NULL default '0',
+  `qtycounted` double NOT NULL default '0',
   `reference` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`id`),
   KEY `stockid` (`stockid`),
@@ -1309,7 +1309,7 @@ CREATE TABLE `stockmoves` (
   `show_on_inv_crds` tinyint(4) NOT NULL default '1',
   `newqoh` double NOT NULL default '0',
   `hidemovt` tinyint(4) NOT NULL default '0',
-  `taxrate` float NOT NULL default '0',
+  `taxrate` double NOT NULL default '0',
   `narrative` text NOT NULL,
   PRIMARY KEY  (`stkmoveno`),
   KEY `debtorno` (`debtorno`),
@@ -1336,7 +1336,7 @@ CREATE TABLE `stockserialitems` (
   `stockid` varchar(20) NOT NULL default '',
   `loccode` varchar(5) NOT NULL default '',
   `serialno` varchar(30) NOT NULL default '',
-  `quantity` float NOT NULL default '0',
+  `quantity` double NOT NULL default '0',
   PRIMARY KEY  (`stockid`,`serialno`,`loccode`),
   KEY `stockid` (`stockid`),
   KEY `loccode` (`loccode`),
@@ -1353,7 +1353,7 @@ CREATE TABLE `stockserialmoves` (
   `stockmoveno` int(11) NOT NULL default '0',
   `stockid` varchar(20) NOT NULL default '',
   `serialno` varchar(30) NOT NULL default '',
-  `moveqty` float NOT NULL default '0',
+  `moveqty` double NOT NULL default '0',
   PRIMARY KEY  (`stkitmmoveno`),
   KEY `stockmoveno` (`stockmoveno`),
   KEY `stockid_sn` (`stockid`,`serialno`),
@@ -1367,7 +1367,7 @@ CREATE TABLE `stockserialmoves` (
 
 CREATE TABLE `suppallocs` (
   `id` int(11) NOT NULL auto_increment,
-  `amt` float(20,2) NOT NULL default '0.00',
+  `amt` double NOT NULL default '0',
   `datealloc` date NOT NULL default '0000-00-00',
   `transid_allocfrom` int(11) NOT NULL default '0',
   `transid_allocto` int(11) NOT NULL default '0',
@@ -1657,13 +1657,13 @@ INSERT INTO `bankaccounts` VALUES (700100,'Petty Cash account','NA','');
 
 INSERT INTO `banktrans` VALUES (39,12,1,700100,'',0,2.354,'2004-07-17','Direct Credit',17.75,'GBP');
 INSERT INTO `banktrans` VALUES (40,22,4,700000,'BIGBISC-',0,0.5,'2004-07-29','Cheque',100,'GBP');
-INSERT INTO `banktrans` VALUES (41,12,2,700100,'',0,1,'2004-11-28','Cash',128.88,'USD');
+INSERT INTO `banktrans` VALUES (41,12,2,700100,'',0,1,'2004-11-28','Cash',128.880004882812,'USD');
 INSERT INTO `banktrans` VALUES (42,1,18,700000,'',0,1,'2004-11-28','Cheque',-677.25,'USD');
-INSERT INTO `banktrans` VALUES (43,22,5,700000,'GREGCA-',0,0.8,'2004-11-28','Cheque',-55.2,'GBP');
-INSERT INTO `banktrans` VALUES (44,22,6,700000,'GREGCA-',0,0.8,'2004-12-06','Cheque',-233.33,'GBP');
-INSERT INTO `banktrans` VALUES (45,0,0,700000,'1 FREDBLOW',0,1,'2004-12-31','Cheque',-58.87,'');
+INSERT INTO `banktrans` VALUES (43,22,5,700000,'GREGCA-',0,0.8,'2004-11-28','Cheque',-55.2000007629395,'GBP');
+INSERT INTO `banktrans` VALUES (44,22,6,700000,'GREGCA-',0,0.8,'2004-12-06','Cheque',-233.330001831055,'GBP');
+INSERT INTO `banktrans` VALUES (45,0,0,700000,'1 FREDBLOW',0,1,'2004-12-31','Cheque',-58.8699989318848,'');
 INSERT INTO `banktrans` VALUES (46,12,4,700000,'',0,1,'2005-01-03','Cheques',52.75,'USD');
-INSERT INTO `banktrans` VALUES (47,1,19,700000,'',0,1,'2005-01-23','Cheques',-152.95,'USD');
+INSERT INTO `banktrans` VALUES (47,1,19,700000,'',0,1,'2005-01-23','Cheques',-152.949996948242,'USD');
 
 --
 -- Dumping data for table `bom`
@@ -1687,20 +1687,20 @@ INSERT INTO `bom` VALUES ('HOND9022','123','ASSEM','DEN','2003-01-29','9999-12-3
 INSERT INTO `chartdetails` VALUES (1,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1,54,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1,55,0,-0.101179,0,0);
-INSERT INTO `chartdetails` VALUES (1,56,0,56.03,-0.101179,0);
-INSERT INTO `chartdetails` VALUES (1,57,0,112.387,55.9288,0);
-INSERT INTO `chartdetails` VALUES (1,58,0,0,168.316,0);
-INSERT INTO `chartdetails` VALUES (1,59,0,-109.212,168.316,0);
-INSERT INTO `chartdetails` VALUES (1,60,0,0,59.1038,0);
-INSERT INTO `chartdetails` VALUES (1,61,0,0,59.1038,0);
-INSERT INTO `chartdetails` VALUES (1,62,0,0,59.1038,0);
-INSERT INTO `chartdetails` VALUES (1,63,0,0,59.1038,0);
-INSERT INTO `chartdetails` VALUES (1,64,0,0,59.1038,0);
-INSERT INTO `chartdetails` VALUES (1,65,0,0,59.1038,0);
-INSERT INTO `chartdetails` VALUES (1,66,0,0,59.1038,0);
-INSERT INTO `chartdetails` VALUES (1,67,0,0,59.1038,0);
-INSERT INTO `chartdetails` VALUES (1,68,0,0,59.1038,0);
+INSERT INTO `chartdetails` VALUES (1,55,0,-0.101179003715515,0,0);
+INSERT INTO `chartdetails` VALUES (1,56,0,56.0299987792969,-0.101179003715515,0);
+INSERT INTO `chartdetails` VALUES (1,57,0,112.387001037598,55.9287986755371,0);
+INSERT INTO `chartdetails` VALUES (1,58,0,0,168.315994262695,0);
+INSERT INTO `chartdetails` VALUES (1,59,0,-109.21199798584,168.315994262695,0);
+INSERT INTO `chartdetails` VALUES (1,60,0,0,59.1038017272949,0);
+INSERT INTO `chartdetails` VALUES (1,61,0,0,59.1038017272949,0);
+INSERT INTO `chartdetails` VALUES (1,62,0,0,59.1038017272949,0);
+INSERT INTO `chartdetails` VALUES (1,63,0,0,59.1038017272949,0);
+INSERT INTO `chartdetails` VALUES (1,64,0,0,59.1038017272949,0);
+INSERT INTO `chartdetails` VALUES (1,65,0,0,59.1038017272949,0);
+INSERT INTO `chartdetails` VALUES (1,66,0,0,59.1038017272949,0);
+INSERT INTO `chartdetails` VALUES (1,67,0,0,59.1038017272949,0);
+INSERT INTO `chartdetails` VALUES (1,68,0,0,59.1038017272949,0);
 INSERT INTO `chartdetails` VALUES (100,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (100,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (100,54,0,0,0,0);
@@ -1723,18 +1723,18 @@ INSERT INTO `chartdetails` VALUES (107,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (107,54,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (107,55,0,55.75,0,0);
 INSERT INTO `chartdetails` VALUES (107,56,0,-174.75,55.75,0);
-INSERT INTO `chartdetails` VALUES (107,57,0,-236.195,-119,0);
-INSERT INTO `chartdetails` VALUES (107,58,0,0,-355.195,0);
-INSERT INTO `chartdetails` VALUES (107,59,0,941.01,-355.195,0);
-INSERT INTO `chartdetails` VALUES (107,60,0,0,585.815,0);
-INSERT INTO `chartdetails` VALUES (107,61,0,0,585.815,0);
-INSERT INTO `chartdetails` VALUES (107,62,0,0,585.815,0);
-INSERT INTO `chartdetails` VALUES (107,63,0,0,585.815,0);
-INSERT INTO `chartdetails` VALUES (107,64,0,0,585.815,0);
-INSERT INTO `chartdetails` VALUES (107,65,0,0,585.815,0);
-INSERT INTO `chartdetails` VALUES (107,66,0,0,585.815,0);
-INSERT INTO `chartdetails` VALUES (107,67,0,0,585.815,0);
-INSERT INTO `chartdetails` VALUES (107,68,0,0,585.815,0);
+INSERT INTO `chartdetails` VALUES (107,57,0,-236.195007324219,-119,0);
+INSERT INTO `chartdetails` VALUES (107,58,0,0,-355.195007324219,0);
+INSERT INTO `chartdetails` VALUES (107,59,0,941.010009765625,-355.195007324219,0);
+INSERT INTO `chartdetails` VALUES (107,60,0,0,585.815002441406,0);
+INSERT INTO `chartdetails` VALUES (107,61,0,0,585.815002441406,0);
+INSERT INTO `chartdetails` VALUES (107,62,0,0,585.815002441406,0);
+INSERT INTO `chartdetails` VALUES (107,63,0,0,585.815002441406,0);
+INSERT INTO `chartdetails` VALUES (107,64,0,0,585.815002441406,0);
+INSERT INTO `chartdetails` VALUES (107,65,0,0,585.815002441406,0);
+INSERT INTO `chartdetails` VALUES (107,66,0,0,585.815002441406,0);
+INSERT INTO `chartdetails` VALUES (107,67,0,0,585.815002441406,0);
+INSERT INTO `chartdetails` VALUES (107,68,0,0,585.815002441406,0);
 INSERT INTO `chartdetails` VALUES (112,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (112,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (112,54,0,0,0,0);
@@ -1776,16 +1776,16 @@ INSERT INTO `chartdetails` VALUES (301,55,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (301,56,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (301,57,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (301,58,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (301,59,0,65.69,0,0);
-INSERT INTO `chartdetails` VALUES (301,60,0,0,65.69,0);
-INSERT INTO `chartdetails` VALUES (301,61,0,0,65.69,0);
-INSERT INTO `chartdetails` VALUES (301,62,0,0,65.69,0);
-INSERT INTO `chartdetails` VALUES (301,63,0,0,65.69,0);
-INSERT INTO `chartdetails` VALUES (301,64,0,0,65.69,0);
-INSERT INTO `chartdetails` VALUES (301,65,0,0,65.69,0);
-INSERT INTO `chartdetails` VALUES (301,66,0,0,65.69,0);
-INSERT INTO `chartdetails` VALUES (301,67,0,0,65.69,0);
-INSERT INTO `chartdetails` VALUES (301,68,0,0,65.69,0);
+INSERT INTO `chartdetails` VALUES (301,59,0,65.6900024414062,0,0);
+INSERT INTO `chartdetails` VALUES (301,60,0,0,65.6900024414062,0);
+INSERT INTO `chartdetails` VALUES (301,61,0,0,65.6900024414062,0);
+INSERT INTO `chartdetails` VALUES (301,62,0,0,65.6900024414062,0);
+INSERT INTO `chartdetails` VALUES (301,63,0,0,65.6900024414062,0);
+INSERT INTO `chartdetails` VALUES (301,64,0,0,65.6900024414062,0);
+INSERT INTO `chartdetails` VALUES (301,65,0,0,65.6900024414062,0);
+INSERT INTO `chartdetails` VALUES (301,66,0,0,65.6900024414062,0);
+INSERT INTO `chartdetails` VALUES (301,67,0,0,65.6900024414062,0);
+INSERT INTO `chartdetails` VALUES (301,68,0,0,65.6900024414062,0);
 INSERT INTO `chartdetails` VALUES (10000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (10000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (10000,54,0,0,0,0);
@@ -1861,16 +1861,16 @@ INSERT INTO `chartdetails` VALUES (20000,55,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (20000,56,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (20000,57,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (20000,58,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (20000,59,0,109.2,0,0);
-INSERT INTO `chartdetails` VALUES (20000,60,0,-21.7975,109.2,0);
-INSERT INTO `chartdetails` VALUES (20000,61,0,0,87.4025,0);
-INSERT INTO `chartdetails` VALUES (20000,62,0,0,87.4025,0);
-INSERT INTO `chartdetails` VALUES (20000,63,0,0,87.4025,0);
-INSERT INTO `chartdetails` VALUES (20000,64,0,0,87.4025,0);
-INSERT INTO `chartdetails` VALUES (20000,65,0,0,87.4025,0);
-INSERT INTO `chartdetails` VALUES (20000,66,0,0,87.4025,0);
-INSERT INTO `chartdetails` VALUES (20000,67,0,0,87.4025,0);
-INSERT INTO `chartdetails` VALUES (20000,68,0,0,87.4025,0);
+INSERT INTO `chartdetails` VALUES (20000,59,0,109.199996948242,0,0);
+INSERT INTO `chartdetails` VALUES (20000,60,0,-21.7975006103516,109.199996948242,0);
+INSERT INTO `chartdetails` VALUES (20000,61,0,0,87.4024963378906,0);
+INSERT INTO `chartdetails` VALUES (20000,62,0,0,87.4024963378906,0);
+INSERT INTO `chartdetails` VALUES (20000,63,0,0,87.4024963378906,0);
+INSERT INTO `chartdetails` VALUES (20000,64,0,0,87.4024963378906,0);
+INSERT INTO `chartdetails` VALUES (20000,65,0,0,87.4024963378906,0);
+INSERT INTO `chartdetails` VALUES (20000,66,0,0,87.4024963378906,0);
+INSERT INTO `chartdetails` VALUES (20000,67,0,0,87.4024963378906,0);
+INSERT INTO `chartdetails` VALUES (20000,68,0,0,87.4024963378906,0);
 INSERT INTO `chartdetails` VALUES (21000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (21000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (21000,54,0,0,0,0);
@@ -1895,16 +1895,16 @@ INSERT INTO `chartdetails` VALUES (23400,55,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (23400,56,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (23400,57,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (23400,58,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (23400,59,0,-5.98,0,0);
-INSERT INTO `chartdetails` VALUES (23400,60,0,1204.21,-5.98,0);
-INSERT INTO `chartdetails` VALUES (23400,61,0,0,1198.23,0);
-INSERT INTO `chartdetails` VALUES (23400,62,0,0,1198.23,0);
-INSERT INTO `chartdetails` VALUES (23400,63,0,0,1198.23,0);
-INSERT INTO `chartdetails` VALUES (23400,64,0,0,1198.23,0);
-INSERT INTO `chartdetails` VALUES (23400,65,0,0,1198.23,0);
-INSERT INTO `chartdetails` VALUES (23400,66,0,0,1198.23,0);
-INSERT INTO `chartdetails` VALUES (23400,67,0,0,1198.23,0);
-INSERT INTO `chartdetails` VALUES (23400,68,0,0,1198.23,0);
+INSERT INTO `chartdetails` VALUES (23400,59,0,-5.98000001907349,0,0);
+INSERT INTO `chartdetails` VALUES (23400,60,0,1204.2099609375,-5.98000001907349,0);
+INSERT INTO `chartdetails` VALUES (23400,61,0,0,1198.22998046875,0);
+INSERT INTO `chartdetails` VALUES (23400,62,0,0,1198.22998046875,0);
+INSERT INTO `chartdetails` VALUES (23400,63,0,0,1198.22998046875,0);
+INSERT INTO `chartdetails` VALUES (23400,64,0,0,1198.22998046875,0);
+INSERT INTO `chartdetails` VALUES (23400,65,0,0,1198.22998046875,0);
+INSERT INTO `chartdetails` VALUES (23400,66,0,0,1198.22998046875,0);
+INSERT INTO `chartdetails` VALUES (23400,67,0,0,1198.22998046875,0);
+INSERT INTO `chartdetails` VALUES (23400,68,0,0,1198.22998046875,0);
 INSERT INTO `chartdetails` VALUES (23500,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (23500,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (23500,54,0,0,0,0);
@@ -1946,16 +1946,16 @@ INSERT INTO `chartdetails` VALUES (23700,55,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (23700,56,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (23700,57,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (23700,58,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (23700,59,0,94.85,0,0);
-INSERT INTO `chartdetails` VALUES (23700,60,0,0,94.85,0);
-INSERT INTO `chartdetails` VALUES (23700,61,0,0,94.85,0);
-INSERT INTO `chartdetails` VALUES (23700,62,0,0,94.85,0);
-INSERT INTO `chartdetails` VALUES (23700,63,0,0,94.85,0);
-INSERT INTO `chartdetails` VALUES (23700,64,0,0,94.85,0);
-INSERT INTO `chartdetails` VALUES (23700,65,0,0,94.85,0);
-INSERT INTO `chartdetails` VALUES (23700,66,0,0,94.85,0);
-INSERT INTO `chartdetails` VALUES (23700,67,0,0,94.85,0);
-INSERT INTO `chartdetails` VALUES (23700,68,0,0,94.85,0);
+INSERT INTO `chartdetails` VALUES (23700,59,0,94.8499984741211,0,0);
+INSERT INTO `chartdetails` VALUES (23700,60,0,0,94.8499984741211,0);
+INSERT INTO `chartdetails` VALUES (23700,61,0,0,94.8499984741211,0);
+INSERT INTO `chartdetails` VALUES (23700,62,0,0,94.8499984741211,0);
+INSERT INTO `chartdetails` VALUES (23700,63,0,0,94.8499984741211,0);
+INSERT INTO `chartdetails` VALUES (23700,64,0,0,94.8499984741211,0);
+INSERT INTO `chartdetails` VALUES (23700,65,0,0,94.8499984741211,0);
+INSERT INTO `chartdetails` VALUES (23700,66,0,0,94.8499984741211,0);
+INSERT INTO `chartdetails` VALUES (23700,67,0,0,94.8499984741211,0);
+INSERT INTO `chartdetails` VALUES (23700,68,0,0,94.8499984741211,0);
 INSERT INTO `chartdetails` VALUES (24000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (24000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (24000,54,0,0,0,0);
@@ -1965,14 +1965,14 @@ INSERT INTO `chartdetails` VALUES (24000,57,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (24000,58,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (24000,59,0,657.125,0,0);
 INSERT INTO `chartdetails` VALUES (24000,60,0,0,657.125,0);
-INSERT INTO `chartdetails` VALUES (24000,61,0,152.95,657.125,0);
-INSERT INTO `chartdetails` VALUES (24000,62,0,0,810.075,0);
-INSERT INTO `chartdetails` VALUES (24000,63,0,0,810.075,0);
-INSERT INTO `chartdetails` VALUES (24000,64,0,0,810.075,0);
-INSERT INTO `chartdetails` VALUES (24000,65,0,0,810.075,0);
-INSERT INTO `chartdetails` VALUES (24000,66,0,0,810.075,0);
-INSERT INTO `chartdetails` VALUES (24000,67,0,0,810.075,0);
-INSERT INTO `chartdetails` VALUES (24000,68,0,0,810.075,0);
+INSERT INTO `chartdetails` VALUES (24000,61,0,152.949996948242,657.125,0);
+INSERT INTO `chartdetails` VALUES (24000,62,0,0,810.075012207031,0);
+INSERT INTO `chartdetails` VALUES (24000,63,0,0,810.075012207031,0);
+INSERT INTO `chartdetails` VALUES (24000,64,0,0,810.075012207031,0);
+INSERT INTO `chartdetails` VALUES (24000,65,0,0,810.075012207031,0);
+INSERT INTO `chartdetails` VALUES (24000,66,0,0,810.075012207031,0);
+INSERT INTO `chartdetails` VALUES (24000,67,0,0,810.075012207031,0);
+INSERT INTO `chartdetails` VALUES (24000,68,0,0,810.075012207031,0);
 INSERT INTO `chartdetails` VALUES (70100,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (70100,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (70100,54,0,0,0,0);
@@ -1997,16 +1997,16 @@ INSERT INTO `chartdetails` VALUES (70200,55,0,-52.5,0,0);
 INSERT INTO `chartdetails` VALUES (70200,56,0,0,-52.5,0);
 INSERT INTO `chartdetails` VALUES (70200,57,0,0,-52.5,0);
 INSERT INTO `chartdetails` VALUES (70200,58,0,0,-52.5,0);
-INSERT INTO `chartdetails` VALUES (70200,59,0,-63.05,-52.5,0);
-INSERT INTO `chartdetails` VALUES (70200,60,0,0,-115.55,0);
-INSERT INTO `chartdetails` VALUES (70200,61,0,0,-115.55,0);
-INSERT INTO `chartdetails` VALUES (70200,62,0,0,-115.55,0);
-INSERT INTO `chartdetails` VALUES (70200,63,0,0,-115.55,0);
-INSERT INTO `chartdetails` VALUES (70200,64,0,0,-115.55,0);
-INSERT INTO `chartdetails` VALUES (70200,65,0,0,-115.55,0);
-INSERT INTO `chartdetails` VALUES (70200,66,0,0,-115.55,0);
-INSERT INTO `chartdetails` VALUES (70200,67,0,0,-115.55,0);
-INSERT INTO `chartdetails` VALUES (70200,68,0,0,-115.55,0);
+INSERT INTO `chartdetails` VALUES (70200,59,0,-63.0499992370605,-52.5,0);
+INSERT INTO `chartdetails` VALUES (70200,60,0,0,-115.550003051758,0);
+INSERT INTO `chartdetails` VALUES (70200,61,0,0,-115.550003051758,0);
+INSERT INTO `chartdetails` VALUES (70200,62,0,0,-115.550003051758,0);
+INSERT INTO `chartdetails` VALUES (70200,63,0,0,-115.550003051758,0);
+INSERT INTO `chartdetails` VALUES (70200,64,0,0,-115.550003051758,0);
+INSERT INTO `chartdetails` VALUES (70200,65,0,0,-115.550003051758,0);
+INSERT INTO `chartdetails` VALUES (70200,66,0,0,-115.550003051758,0);
+INSERT INTO `chartdetails` VALUES (70200,67,0,0,-115.550003051758,0);
+INSERT INTO `chartdetails` VALUES (70200,68,0,0,-115.550003051758,0);
 INSERT INTO `chartdetails` VALUES (70300,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (70300,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (70300,54,0,0,0,0);
@@ -2130,19 +2130,19 @@ INSERT INTO `chartdetails` VALUES (256000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (256000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (256000,54,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (256000,55,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (256000,56,0,-145.35,0,0);
-INSERT INTO `chartdetails` VALUES (256000,57,0,67.29,-145.35,0);
-INSERT INTO `chartdetails` VALUES (256000,58,0,0,-78.06,0);
-INSERT INTO `chartdetails` VALUES (256000,59,0,0,-78.06,0);
-INSERT INTO `chartdetails` VALUES (256000,60,0,0,-78.06,0);
-INSERT INTO `chartdetails` VALUES (256000,61,0,0,-78.06,0);
-INSERT INTO `chartdetails` VALUES (256000,62,0,0,-78.06,0);
-INSERT INTO `chartdetails` VALUES (256000,63,0,0,-78.06,0);
-INSERT INTO `chartdetails` VALUES (256000,64,0,0,-78.06,0);
-INSERT INTO `chartdetails` VALUES (256000,65,0,0,-78.06,0);
-INSERT INTO `chartdetails` VALUES (256000,66,0,0,-78.06,0);
-INSERT INTO `chartdetails` VALUES (256000,67,0,0,-78.06,0);
-INSERT INTO `chartdetails` VALUES (256000,68,0,0,-78.06,0);
+INSERT INTO `chartdetails` VALUES (256000,56,0,-145.350006103516,0,0);
+INSERT INTO `chartdetails` VALUES (256000,57,0,67.2900009155273,-145.350006103516,0);
+INSERT INTO `chartdetails` VALUES (256000,58,0,0,-78.0599975585938,0);
+INSERT INTO `chartdetails` VALUES (256000,59,0,0,-78.0599975585938,0);
+INSERT INTO `chartdetails` VALUES (256000,60,0,0,-78.0599975585938,0);
+INSERT INTO `chartdetails` VALUES (256000,61,0,0,-78.0599975585938,0);
+INSERT INTO `chartdetails` VALUES (256000,62,0,0,-78.0599975585938,0);
+INSERT INTO `chartdetails` VALUES (256000,63,0,0,-78.0599975585938,0);
+INSERT INTO `chartdetails` VALUES (256000,64,0,0,-78.0599975585938,0);
+INSERT INTO `chartdetails` VALUES (256000,65,0,0,-78.0599975585938,0);
+INSERT INTO `chartdetails` VALUES (256000,66,0,0,-78.0599975585938,0);
+INSERT INTO `chartdetails` VALUES (256000,67,0,0,-78.0599975585938,0);
+INSERT INTO `chartdetails` VALUES (256000,68,0,0,-78.0599975585938,0);
 INSERT INTO `chartdetails` VALUES (257000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (257000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (257000,54,0,0,0,0);
@@ -2180,20 +2180,20 @@ INSERT INTO `chartdetails` VALUES (258000,68,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (259000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (259000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (259000,54,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (259000,55,0,-2.23025,0,0);
-INSERT INTO `chartdetails` VALUES (259000,56,0,0,-2.23025,0);
-INSERT INTO `chartdetails` VALUES (259000,57,0,0,-2.23025,0);
-INSERT INTO `chartdetails` VALUES (259000,58,0,0,-2.23025,0);
-INSERT INTO `chartdetails` VALUES (259000,59,0,0,-2.23025,0);
-INSERT INTO `chartdetails` VALUES (259000,60,0,0,-2.23025,0);
-INSERT INTO `chartdetails` VALUES (259000,61,0,0,-2.23025,0);
-INSERT INTO `chartdetails` VALUES (259000,62,0,0,-2.23025,0);
-INSERT INTO `chartdetails` VALUES (259000,63,0,0,-2.23025,0);
-INSERT INTO `chartdetails` VALUES (259000,64,0,0,-2.23025,0);
-INSERT INTO `chartdetails` VALUES (259000,65,0,0,-2.23025,0);
-INSERT INTO `chartdetails` VALUES (259000,66,0,0,-2.23025,0);
-INSERT INTO `chartdetails` VALUES (259000,67,0,0,-2.23025,0);
-INSERT INTO `chartdetails` VALUES (259000,68,0,0,-2.23025,0);
+INSERT INTO `chartdetails` VALUES (259000,55,0,-2.23024988174438,0,0);
+INSERT INTO `chartdetails` VALUES (259000,56,0,0,-2.23024988174438,0);
+INSERT INTO `chartdetails` VALUES (259000,57,0,0,-2.23024988174438,0);
+INSERT INTO `chartdetails` VALUES (259000,58,0,0,-2.23024988174438,0);
+INSERT INTO `chartdetails` VALUES (259000,59,0,0,-2.23024988174438,0);
+INSERT INTO `chartdetails` VALUES (259000,60,0,0,-2.23024988174438,0);
+INSERT INTO `chartdetails` VALUES (259000,61,0,0,-2.23024988174438,0);
+INSERT INTO `chartdetails` VALUES (259000,62,0,0,-2.23024988174438,0);
+INSERT INTO `chartdetails` VALUES (259000,63,0,0,-2.23024988174438,0);
+INSERT INTO `chartdetails` VALUES (259000,64,0,0,-2.23024988174438,0);
+INSERT INTO `chartdetails` VALUES (259000,65,0,0,-2.23024988174438,0);
+INSERT INTO `chartdetails` VALUES (259000,66,0,0,-2.23024988174438,0);
+INSERT INTO `chartdetails` VALUES (259000,67,0,0,-2.23024988174438,0);
+INSERT INTO `chartdetails` VALUES (259000,68,0,0,-2.23024988174438,0);
 INSERT INTO `chartdetails` VALUES (261000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (261000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (261000,54,0,0,0,0);
@@ -2525,15 +2525,15 @@ INSERT INTO `chartdetails` VALUES (412000,56,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (412000,57,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (412000,58,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (412000,59,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (412000,60,0,16.19,0,0);
-INSERT INTO `chartdetails` VALUES (412000,61,0,0,16.19,0);
-INSERT INTO `chartdetails` VALUES (412000,62,0,0,16.19,0);
-INSERT INTO `chartdetails` VALUES (412000,63,0,0,16.19,0);
-INSERT INTO `chartdetails` VALUES (412000,64,0,0,16.19,0);
-INSERT INTO `chartdetails` VALUES (412000,65,0,0,16.19,0);
-INSERT INTO `chartdetails` VALUES (412000,66,0,0,16.19,0);
-INSERT INTO `chartdetails` VALUES (412000,67,0,0,16.19,0);
-INSERT INTO `chartdetails` VALUES (412000,68,0,0,16.19,0);
+INSERT INTO `chartdetails` VALUES (412000,60,0,16.1900005340576,0,0);
+INSERT INTO `chartdetails` VALUES (412000,61,0,0,16.1900005340576,0);
+INSERT INTO `chartdetails` VALUES (412000,62,0,0,16.1900005340576,0);
+INSERT INTO `chartdetails` VALUES (412000,63,0,0,16.1900005340576,0);
+INSERT INTO `chartdetails` VALUES (412000,64,0,0,16.1900005340576,0);
+INSERT INTO `chartdetails` VALUES (412000,65,0,0,16.1900005340576,0);
+INSERT INTO `chartdetails` VALUES (412000,66,0,0,16.1900005340576,0);
+INSERT INTO `chartdetails` VALUES (412000,67,0,0,16.1900005340576,0);
+INSERT INTO `chartdetails` VALUES (412000,68,0,0,16.1900005340576,0);
 INSERT INTO `chartdetails` VALUES (413000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (413000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (413000,54,0,0,0,0);
@@ -2622,20 +2622,20 @@ INSERT INTO `chartdetails` VALUES (452000,68,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (455000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (455000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (455000,54,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (455000,55,0,0.140187,0,0);
-INSERT INTO `chartdetails` VALUES (455000,56,0,0,0.140187,0);
-INSERT INTO `chartdetails` VALUES (455000,57,0,0,0.140187,0);
-INSERT INTO `chartdetails` VALUES (455000,58,0,0,0.140187,0);
-INSERT INTO `chartdetails` VALUES (455000,59,0,2.5,0.140187,0);
-INSERT INTO `chartdetails` VALUES (455000,60,0,-1.875,2.64019,0);
-INSERT INTO `chartdetails` VALUES (455000,61,0,20,0.76519,0);
-INSERT INTO `chartdetails` VALUES (455000,62,0,0,20.7652,0);
-INSERT INTO `chartdetails` VALUES (455000,63,0,0,20.7652,0);
-INSERT INTO `chartdetails` VALUES (455000,64,0,0,20.7652,0);
-INSERT INTO `chartdetails` VALUES (455000,65,0,0,20.7652,0);
-INSERT INTO `chartdetails` VALUES (455000,66,0,0,20.7652,0);
-INSERT INTO `chartdetails` VALUES (455000,67,0,0,20.7652,0);
-INSERT INTO `chartdetails` VALUES (455000,68,0,0,20.7652,0);
+INSERT INTO `chartdetails` VALUES (455000,55,0,0.140186995267868,0,0);
+INSERT INTO `chartdetails` VALUES (455000,56,0,0,0.140186995267868,0);
+INSERT INTO `chartdetails` VALUES (455000,57,0,0,0.140186995267868,0);
+INSERT INTO `chartdetails` VALUES (455000,58,0,0,0.140186995267868,0);
+INSERT INTO `chartdetails` VALUES (455000,59,0,2.5,0.140186995267868,0);
+INSERT INTO `chartdetails` VALUES (455000,60,0,-1.875,2.64018988609314,0);
+INSERT INTO `chartdetails` VALUES (455000,61,0,20,0.765190005302429,0);
+INSERT INTO `chartdetails` VALUES (455000,62,0,0,20.7651996612549,0);
+INSERT INTO `chartdetails` VALUES (455000,63,0,0,20.7651996612549,0);
+INSERT INTO `chartdetails` VALUES (455000,64,0,0,20.7651996612549,0);
+INSERT INTO `chartdetails` VALUES (455000,65,0,0,20.7651996612549,0);
+INSERT INTO `chartdetails` VALUES (455000,66,0,0,20.7651996612549,0);
+INSERT INTO `chartdetails` VALUES (455000,67,0,0,20.7651996612549,0);
+INSERT INTO `chartdetails` VALUES (455000,68,0,0,20.7651996612549,0);
 INSERT INTO `chartdetails` VALUES (460000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (460000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (460000,54,0,0,0,0);
@@ -3120,32 +3120,32 @@ INSERT INTO `chartdetails` VALUES (700000,56,0,0,200,0);
 INSERT INTO `chartdetails` VALUES (700000,57,0,0,200,0);
 INSERT INTO `chartdetails` VALUES (700000,58,0,0,200,0);
 INSERT INTO `chartdetails` VALUES (700000,59,0,-746.25,200,0);
-INSERT INTO `chartdetails` VALUES (700000,60,0,-350.533,-546.25,0);
-INSERT INTO `chartdetails` VALUES (700000,61,0,-100.2,-896.783,0);
-INSERT INTO `chartdetails` VALUES (700000,62,0,0,-996.983,0);
-INSERT INTO `chartdetails` VALUES (700000,63,0,0,-996.983,0);
-INSERT INTO `chartdetails` VALUES (700000,64,0,0,-996.983,0);
-INSERT INTO `chartdetails` VALUES (700000,65,0,0,-996.983,0);
-INSERT INTO `chartdetails` VALUES (700000,66,0,0,-996.983,0);
-INSERT INTO `chartdetails` VALUES (700000,67,0,0,-996.983,0);
-INSERT INTO `chartdetails` VALUES (700000,68,0,0,-996.983,0);
+INSERT INTO `chartdetails` VALUES (700000,60,0,-350.532989501953,-546.25,0);
+INSERT INTO `chartdetails` VALUES (700000,61,0,-100.199996948242,-896.783020019531,0);
+INSERT INTO `chartdetails` VALUES (700000,62,0,0,-996.982971191406,0);
+INSERT INTO `chartdetails` VALUES (700000,63,0,0,-996.982971191406,0);
+INSERT INTO `chartdetails` VALUES (700000,64,0,0,-996.982971191406,0);
+INSERT INTO `chartdetails` VALUES (700000,65,0,0,-996.982971191406,0);
+INSERT INTO `chartdetails` VALUES (700000,66,0,0,-996.982971191406,0);
+INSERT INTO `chartdetails` VALUES (700000,67,0,0,-996.982971191406,0);
+INSERT INTO `chartdetails` VALUES (700000,68,0,0,-996.982971191406,0);
 INSERT INTO `chartdetails` VALUES (700100,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (700100,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (700100,54,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (700100,55,0,7.54036,0,0);
-INSERT INTO `chartdetails` VALUES (700100,56,0,0,7.54036,0);
-INSERT INTO `chartdetails` VALUES (700100,57,0,0,7.54036,0);
-INSERT INTO `chartdetails` VALUES (700100,58,0,0,7.54036,0);
-INSERT INTO `chartdetails` VALUES (700100,59,0,128.88,7.54036,0);
-INSERT INTO `chartdetails` VALUES (700100,60,0,0,136.42,0);
-INSERT INTO `chartdetails` VALUES (700100,61,0,0,136.42,0);
-INSERT INTO `chartdetails` VALUES (700100,62,0,0,136.42,0);
-INSERT INTO `chartdetails` VALUES (700100,63,0,0,136.42,0);
-INSERT INTO `chartdetails` VALUES (700100,64,0,0,136.42,0);
-INSERT INTO `chartdetails` VALUES (700100,65,0,0,136.42,0);
-INSERT INTO `chartdetails` VALUES (700100,66,0,0,136.42,0);
-INSERT INTO `chartdetails` VALUES (700100,67,0,0,136.42,0);
-INSERT INTO `chartdetails` VALUES (700100,68,0,0,136.42,0);
+INSERT INTO `chartdetails` VALUES (700100,55,0,7.54035997390747,0,0);
+INSERT INTO `chartdetails` VALUES (700100,56,0,0,7.54035997390747,0);
+INSERT INTO `chartdetails` VALUES (700100,57,0,0,7.54035997390747,0);
+INSERT INTO `chartdetails` VALUES (700100,58,0,0,7.54035997390747,0);
+INSERT INTO `chartdetails` VALUES (700100,59,0,128.880004882812,7.54035997390747,0);
+INSERT INTO `chartdetails` VALUES (700100,60,0,0,136.419998168945,0);
+INSERT INTO `chartdetails` VALUES (700100,61,0,0,136.419998168945,0);
+INSERT INTO `chartdetails` VALUES (700100,62,0,0,136.419998168945,0);
+INSERT INTO `chartdetails` VALUES (700100,63,0,0,136.419998168945,0);
+INSERT INTO `chartdetails` VALUES (700100,64,0,0,136.419998168945,0);
+INSERT INTO `chartdetails` VALUES (700100,65,0,0,136.419998168945,0);
+INSERT INTO `chartdetails` VALUES (700100,66,0,0,136.419998168945,0);
+INSERT INTO `chartdetails` VALUES (700100,67,0,0,136.419998168945,0);
+INSERT INTO `chartdetails` VALUES (700100,68,0,0,136.419998168945,0);
 INSERT INTO `chartdetails` VALUES (701000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (701000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (701000,54,0,0,0,0);
@@ -3166,37 +3166,37 @@ INSERT INTO `chartdetails` VALUES (701000,68,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (710000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (710000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (710000,54,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (710000,55,0,-59.5093,0,0);
-INSERT INTO `chartdetails` VALUES (710000,56,0,32.0667,-59.5093,0);
-INSERT INTO `chartdetails` VALUES (710000,57,0,387.832,-27.4426,0);
-INSERT INTO `chartdetails` VALUES (710000,58,0,0,360.389,0);
-INSERT INTO `chartdetails` VALUES (710000,59,0,-1105.15,360.389,0);
-INSERT INTO `chartdetails` VALUES (710000,60,0,0,-744.758,0);
-INSERT INTO `chartdetails` VALUES (710000,61,0,-70.25,-744.758,0);
-INSERT INTO `chartdetails` VALUES (710000,62,0,0,-815.008,0);
-INSERT INTO `chartdetails` VALUES (710000,63,0,0,-815.008,0);
-INSERT INTO `chartdetails` VALUES (710000,64,0,0,-815.008,0);
-INSERT INTO `chartdetails` VALUES (710000,65,0,0,-815.008,0);
-INSERT INTO `chartdetails` VALUES (710000,66,0,0,-815.008,0);
-INSERT INTO `chartdetails` VALUES (710000,67,0,0,-815.008,0);
-INSERT INTO `chartdetails` VALUES (710000,68,0,0,-815.008,0);
+INSERT INTO `chartdetails` VALUES (710000,55,0,-59.5093002319336,0,0);
+INSERT INTO `chartdetails` VALUES (710000,56,0,32.0666999816895,-59.5093002319336,0);
+INSERT INTO `chartdetails` VALUES (710000,57,0,387.832000732422,-27.4426002502441,0);
+INSERT INTO `chartdetails` VALUES (710000,58,0,0,360.389007568359,0);
+INSERT INTO `chartdetails` VALUES (710000,59,0,-1105.15002441406,360.389007568359,0);
+INSERT INTO `chartdetails` VALUES (710000,60,0,0,-744.757995605469,0);
+INSERT INTO `chartdetails` VALUES (710000,61,0,-70.25,-744.757995605469,0);
+INSERT INTO `chartdetails` VALUES (710000,62,0,0,-815.007995605469,0);
+INSERT INTO `chartdetails` VALUES (710000,63,0,0,-815.007995605469,0);
+INSERT INTO `chartdetails` VALUES (710000,64,0,0,-815.007995605469,0);
+INSERT INTO `chartdetails` VALUES (710000,65,0,0,-815.007995605469,0);
+INSERT INTO `chartdetails` VALUES (710000,66,0,0,-815.007995605469,0);
+INSERT INTO `chartdetails` VALUES (710000,67,0,0,-815.007995605469,0);
+INSERT INTO `chartdetails` VALUES (710000,68,0,0,-815.007995605469,0);
 INSERT INTO `chartdetails` VALUES (720000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (720000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (720000,54,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (720000,55,0,744,0,0);
-INSERT INTO `chartdetails` VALUES (720000,56,0,12.4,744,0);
-INSERT INTO `chartdetails` VALUES (720000,57,0,51.5,756.4,0);
-INSERT INTO `chartdetails` VALUES (720000,58,0,0,807.9,0);
-INSERT INTO `chartdetails` VALUES (720000,59,0,143.84,807.9,0);
-INSERT INTO `chartdetails` VALUES (720000,60,0,57.7875,951.74,0);
-INSERT INTO `chartdetails` VALUES (720000,61,0,0,1009.53,0);
-INSERT INTO `chartdetails` VALUES (720000,62,0,0,1009.53,0);
-INSERT INTO `chartdetails` VALUES (720000,63,0,0,1009.53,0);
-INSERT INTO `chartdetails` VALUES (720000,64,0,0,1009.53,0);
-INSERT INTO `chartdetails` VALUES (720000,65,0,0,1009.53,0);
-INSERT INTO `chartdetails` VALUES (720000,66,0,0,1009.53,0);
-INSERT INTO `chartdetails` VALUES (720000,67,0,0,1009.53,0);
-INSERT INTO `chartdetails` VALUES (720000,68,0,0,1009.53,0);
+INSERT INTO `chartdetails` VALUES (720000,56,0,12.3999996185303,744,0);
+INSERT INTO `chartdetails` VALUES (720000,57,0,51.5,756.400024414062,0);
+INSERT INTO `chartdetails` VALUES (720000,58,0,0,807.900024414062,0);
+INSERT INTO `chartdetails` VALUES (720000,59,0,143.839996337891,807.900024414062,0);
+INSERT INTO `chartdetails` VALUES (720000,60,0,57.7874984741211,951.739990234375,0);
+INSERT INTO `chartdetails` VALUES (720000,61,0,0,1009.53002929688,0);
+INSERT INTO `chartdetails` VALUES (720000,62,0,0,1009.53002929688,0);
+INSERT INTO `chartdetails` VALUES (720000,63,0,0,1009.53002929688,0);
+INSERT INTO `chartdetails` VALUES (720000,64,0,0,1009.53002929688,0);
+INSERT INTO `chartdetails` VALUES (720000,65,0,0,1009.53002929688,0);
+INSERT INTO `chartdetails` VALUES (720000,66,0,0,1009.53002929688,0);
+INSERT INTO `chartdetails` VALUES (720000,67,0,0,1009.53002929688,0);
+INSERT INTO `chartdetails` VALUES (720000,68,0,0,1009.53002929688,0);
 INSERT INTO `chartdetails` VALUES (721000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (721000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (721000,54,0,0,0,0);
@@ -3217,71 +3217,71 @@ INSERT INTO `chartdetails` VALUES (721000,68,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (722000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (722000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (722000,54,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (722000,55,0,4941.09,0,0);
-INSERT INTO `chartdetails` VALUES (722000,56,0,29.07,4941.09,0);
-INSERT INTO `chartdetails` VALUES (722000,57,0,-170.29,4970.16,0);
-INSERT INTO `chartdetails` VALUES (722000,58,0,0,4799.87,0);
-INSERT INTO `chartdetails` VALUES (722000,59,0,25.6,4799.87,0);
-INSERT INTO `chartdetails` VALUES (722000,60,0,0,4825.47,0);
-INSERT INTO `chartdetails` VALUES (722000,61,0,0,4825.47,0);
-INSERT INTO `chartdetails` VALUES (722000,62,0,0,4825.47,0);
-INSERT INTO `chartdetails` VALUES (722000,63,0,0,4825.47,0);
-INSERT INTO `chartdetails` VALUES (722000,64,0,0,4825.47,0);
-INSERT INTO `chartdetails` VALUES (722000,65,0,0,4825.47,0);
-INSERT INTO `chartdetails` VALUES (722000,66,0,0,4825.47,0);
-INSERT INTO `chartdetails` VALUES (722000,67,0,0,4825.47,0);
-INSERT INTO `chartdetails` VALUES (722000,68,0,0,4825.47,0);
+INSERT INTO `chartdetails` VALUES (722000,55,0,4941.08984375,0,0);
+INSERT INTO `chartdetails` VALUES (722000,56,0,29.0699996948242,4941.08984375,0);
+INSERT INTO `chartdetails` VALUES (722000,57,0,-170.289993286133,4970.16015625,0);
+INSERT INTO `chartdetails` VALUES (722000,58,0,0,4799.8701171875,0);
+INSERT INTO `chartdetails` VALUES (722000,59,0,25.6000003814697,4799.8701171875,0);
+INSERT INTO `chartdetails` VALUES (722000,60,0,0,4825.47021484375,0);
+INSERT INTO `chartdetails` VALUES (722000,61,0,0,4825.47021484375,0);
+INSERT INTO `chartdetails` VALUES (722000,62,0,0,4825.47021484375,0);
+INSERT INTO `chartdetails` VALUES (722000,63,0,0,4825.47021484375,0);
+INSERT INTO `chartdetails` VALUES (722000,64,0,0,4825.47021484375,0);
+INSERT INTO `chartdetails` VALUES (722000,65,0,0,4825.47021484375,0);
+INSERT INTO `chartdetails` VALUES (722000,66,0,0,4825.47021484375,0);
+INSERT INTO `chartdetails` VALUES (722000,67,0,0,4825.47021484375,0);
+INSERT INTO `chartdetails` VALUES (722000,68,0,0,4825.47021484375,0);
 INSERT INTO `chartdetails` VALUES (723000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (723000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (723000,54,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (723000,55,0,-5633.16,0,0);
-INSERT INTO `chartdetails` VALUES (723000,56,0,0,-5633.16,0);
-INSERT INTO `chartdetails` VALUES (723000,57,0,-58.9,-5633.16,0);
-INSERT INTO `chartdetails` VALUES (723000,58,0,0,-5692.06,0);
-INSERT INTO `chartdetails` VALUES (723000,59,0,-142.583,-5692.06,0);
-INSERT INTO `chartdetails` VALUES (723000,60,0,127.1,-5834.64,0);
-INSERT INTO `chartdetails` VALUES (723000,61,0,0,-5707.54,0);
-INSERT INTO `chartdetails` VALUES (723000,62,0,0,-5707.54,0);
-INSERT INTO `chartdetails` VALUES (723000,63,0,0,-5707.54,0);
-INSERT INTO `chartdetails` VALUES (723000,64,0,0,-5707.54,0);
-INSERT INTO `chartdetails` VALUES (723000,65,0,0,-5707.54,0);
-INSERT INTO `chartdetails` VALUES (723000,66,0,0,-5707.54,0);
-INSERT INTO `chartdetails` VALUES (723000,67,0,0,-5707.54,0);
-INSERT INTO `chartdetails` VALUES (723000,68,0,0,-5707.54,0);
+INSERT INTO `chartdetails` VALUES (723000,55,0,-5633.16015625,0,0);
+INSERT INTO `chartdetails` VALUES (723000,56,0,0,-5633.16015625,0);
+INSERT INTO `chartdetails` VALUES (723000,57,0,-58.9000015258789,-5633.16015625,0);
+INSERT INTO `chartdetails` VALUES (723000,58,0,0,-5692.06005859375,0);
+INSERT INTO `chartdetails` VALUES (723000,59,0,-142.582992553711,-5692.06005859375,0);
+INSERT INTO `chartdetails` VALUES (723000,60,0,127.099998474121,-5834.64013671875,0);
+INSERT INTO `chartdetails` VALUES (723000,61,0,0,-5707.5400390625,0);
+INSERT INTO `chartdetails` VALUES (723000,62,0,0,-5707.5400390625,0);
+INSERT INTO `chartdetails` VALUES (723000,63,0,0,-5707.5400390625,0);
+INSERT INTO `chartdetails` VALUES (723000,64,0,0,-5707.5400390625,0);
+INSERT INTO `chartdetails` VALUES (723000,65,0,0,-5707.5400390625,0);
+INSERT INTO `chartdetails` VALUES (723000,66,0,0,-5707.5400390625,0);
+INSERT INTO `chartdetails` VALUES (723000,67,0,0,-5707.5400390625,0);
+INSERT INTO `chartdetails` VALUES (723000,68,0,0,-5707.5400390625,0);
 INSERT INTO `chartdetails` VALUES (800000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (800000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (800000,54,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (800000,55,0,-258.87,0,0);
-INSERT INTO `chartdetails` VALUES (800000,56,0,0,-258.87,0);
-INSERT INTO `chartdetails` VALUES (800000,57,0,0,-258.87,0);
-INSERT INTO `chartdetails` VALUES (800000,58,0,0,-258.87,0);
-INSERT INTO `chartdetails` VALUES (800000,59,0,-75.03,-258.87,0);
-INSERT INTO `chartdetails` VALUES (800000,60,0,-1133.42,-333.9,0);
-INSERT INTO `chartdetails` VALUES (800000,61,0,0,-1467.32,0);
-INSERT INTO `chartdetails` VALUES (800000,62,0,0,-1467.32,0);
-INSERT INTO `chartdetails` VALUES (800000,63,0,0,-1467.32,0);
-INSERT INTO `chartdetails` VALUES (800000,64,0,0,-1467.32,0);
-INSERT INTO `chartdetails` VALUES (800000,65,0,0,-1467.32,0);
-INSERT INTO `chartdetails` VALUES (800000,66,0,0,-1467.32,0);
-INSERT INTO `chartdetails` VALUES (800000,67,0,0,-1467.32,0);
-INSERT INTO `chartdetails` VALUES (800000,68,0,0,-1467.32,0);
+INSERT INTO `chartdetails` VALUES (800000,55,0,-258.869995117188,0,0);
+INSERT INTO `chartdetails` VALUES (800000,56,0,0,-258.869995117188,0);
+INSERT INTO `chartdetails` VALUES (800000,57,0,0,-258.869995117188,0);
+INSERT INTO `chartdetails` VALUES (800000,58,0,0,-258.869995117188,0);
+INSERT INTO `chartdetails` VALUES (800000,59,0,-75.0299987792969,-258.869995117188,0);
+INSERT INTO `chartdetails` VALUES (800000,60,0,-1133.42004394531,-333.899993896484,0);
+INSERT INTO `chartdetails` VALUES (800000,61,0,0,-1467.31994628906,0);
+INSERT INTO `chartdetails` VALUES (800000,62,0,0,-1467.31994628906,0);
+INSERT INTO `chartdetails` VALUES (800000,63,0,0,-1467.31994628906,0);
+INSERT INTO `chartdetails` VALUES (800000,64,0,0,-1467.31994628906,0);
+INSERT INTO `chartdetails` VALUES (800000,65,0,0,-1467.31994628906,0);
+INSERT INTO `chartdetails` VALUES (800000,66,0,0,-1467.31994628906,0);
+INSERT INTO `chartdetails` VALUES (800000,67,0,0,-1467.31994628906,0);
+INSERT INTO `chartdetails` VALUES (800000,68,0,0,-1467.31994628906,0);
 INSERT INTO `chartdetails` VALUES (810000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (810000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (810000,54,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (810000,55,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (810000,56,0,0.78375,0,0);
-INSERT INTO `chartdetails` VALUES (810000,57,0,0,0.78375,0);
-INSERT INTO `chartdetails` VALUES (810000,58,0,0,0.78375,0);
-INSERT INTO `chartdetails` VALUES (810000,59,0,12.5,0.78375,0);
-INSERT INTO `chartdetails` VALUES (810000,60,0,0,13.2837,0);
-INSERT INTO `chartdetails` VALUES (810000,61,0,0,13.2837,0);
-INSERT INTO `chartdetails` VALUES (810000,62,0,0,13.2837,0);
-INSERT INTO `chartdetails` VALUES (810000,63,0,0,13.2837,0);
-INSERT INTO `chartdetails` VALUES (810000,64,0,0,13.2837,0);
-INSERT INTO `chartdetails` VALUES (810000,65,0,0,13.2837,0);
-INSERT INTO `chartdetails` VALUES (810000,66,0,0,13.2837,0);
-INSERT INTO `chartdetails` VALUES (810000,67,0,0,13.2837,0);
-INSERT INTO `chartdetails` VALUES (810000,68,0,0,13.2837,0);
+INSERT INTO `chartdetails` VALUES (810000,56,0,0.783749997615814,0,0);
+INSERT INTO `chartdetails` VALUES (810000,57,0,0,0.783749997615814,0);
+INSERT INTO `chartdetails` VALUES (810000,58,0,0,0.783749997615814,0);
+INSERT INTO `chartdetails` VALUES (810000,59,0,12.5,0.783749997615814,0);
+INSERT INTO `chartdetails` VALUES (810000,60,0,0,13.2836999893188,0);
+INSERT INTO `chartdetails` VALUES (810000,61,0,0,13.2836999893188,0);
+INSERT INTO `chartdetails` VALUES (810000,62,0,0,13.2836999893188,0);
+INSERT INTO `chartdetails` VALUES (810000,63,0,0,13.2836999893188,0);
+INSERT INTO `chartdetails` VALUES (810000,64,0,0,13.2836999893188,0);
+INSERT INTO `chartdetails` VALUES (810000,65,0,0,13.2836999893188,0);
+INSERT INTO `chartdetails` VALUES (810000,66,0,0,13.2836999893188,0);
+INSERT INTO `chartdetails` VALUES (810000,67,0,0,13.2836999893188,0);
+INSERT INTO `chartdetails` VALUES (810000,68,0,0,13.2836999893188,0);
 INSERT INTO `chartdetails` VALUES (820000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (820000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (820000,54,0,0,0,0);
@@ -3302,20 +3302,20 @@ INSERT INTO `chartdetails` VALUES (820000,68,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (890000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (890000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (890000,54,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (890000,55,0,5.35,0,0);
-INSERT INTO `chartdetails` VALUES (890000,56,0,0,5.35,0);
-INSERT INTO `chartdetails` VALUES (890000,57,0,-0.375,5.35,0);
-INSERT INTO `chartdetails` VALUES (890000,58,0,0,4.975,0);
-INSERT INTO `chartdetails` VALUES (890000,59,0,17.19,4.975,0);
-INSERT INTO `chartdetails` VALUES (890000,60,0,135.09,22.165,0);
-INSERT INTO `chartdetails` VALUES (890000,61,0,0,157.255,0);
-INSERT INTO `chartdetails` VALUES (890000,62,0,0,157.255,0);
-INSERT INTO `chartdetails` VALUES (890000,63,0,0,157.255,0);
-INSERT INTO `chartdetails` VALUES (890000,64,0,0,157.255,0);
-INSERT INTO `chartdetails` VALUES (890000,65,0,0,157.255,0);
-INSERT INTO `chartdetails` VALUES (890000,66,0,0,157.255,0);
-INSERT INTO `chartdetails` VALUES (890000,67,0,0,157.255,0);
-INSERT INTO `chartdetails` VALUES (890000,68,0,0,157.255,0);
+INSERT INTO `chartdetails` VALUES (890000,55,0,5.34999990463257,0,0);
+INSERT INTO `chartdetails` VALUES (890000,56,0,0,5.34999990463257,0);
+INSERT INTO `chartdetails` VALUES (890000,57,0,-0.375,5.34999990463257,0);
+INSERT INTO `chartdetails` VALUES (890000,58,0,0,4.97499990463257,0);
+INSERT INTO `chartdetails` VALUES (890000,59,0,17.1900005340576,4.97499990463257,0);
+INSERT INTO `chartdetails` VALUES (890000,60,0,135.089996337891,22.1650009155273,0);
+INSERT INTO `chartdetails` VALUES (890000,61,0,0,157.255004882812,0);
+INSERT INTO `chartdetails` VALUES (890000,62,0,0,157.255004882812,0);
+INSERT INTO `chartdetails` VALUES (890000,63,0,0,157.255004882812,0);
+INSERT INTO `chartdetails` VALUES (890000,64,0,0,157.255004882812,0);
+INSERT INTO `chartdetails` VALUES (890000,65,0,0,157.255004882812,0);
+INSERT INTO `chartdetails` VALUES (890000,66,0,0,157.255004882812,0);
+INSERT INTO `chartdetails` VALUES (890000,67,0,0,157.255004882812,0);
+INSERT INTO `chartdetails` VALUES (890000,68,0,0,157.255004882812,0);
 INSERT INTO `chartdetails` VALUES (900000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (900000,53,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (900000,54,0,0,0,0);
@@ -3641,31 +3641,31 @@ INSERT INTO `debtorsmaster` VALUES ('WATTSGRP','Watts Motor Group Inc','P O Box 
 -- Dumping data for table `debtortrans`
 --
 
-INSERT INTO `debtortrans` VALUES (56,1,10,'WALMON','WALM','2004-07-14 00:00:00',55,0,'','EX',27,1.700000,637.188,0,0,0,0,181.235,'','1',0,'');
-INSERT INTO `debtortrans` VALUES (57,1,11,'JOHNSON','JOHNTEMPE','2004-07-15 00:00:00',55,0,'','WS',0,1.000000,-364.55,0,0,0,0,-141.482,'','',0,'');
+INSERT INTO `debtortrans` VALUES (56,1,10,'WALMON','WALM','2004-07-14 00:00:00',55,0,'','EX',27,1.700000,637.18798828125,0,0,0,0,181.235000610352,'','1',0,'');
+INSERT INTO `debtortrans` VALUES (57,1,11,'JOHNSON','JOHNTEMPE','2004-07-15 00:00:00',55,0,'','WS',0,1.000000,-364.549987792969,0,0,0,0,-141.481994628906,'','',0,'');
 INSERT INTO `debtortrans` VALUES (59,2,11,'BILLYBUNT','BILLYBUNT','2004-07-17 00:00:00',55,0,'','WS',0,0.800000,-70.5,0,0,0,0,0,'','',0,'');
-INSERT INTO `debtortrans` VALUES (60,1,12,'BILLYBUNT','','2004-07-17 00:00:00',55,0,'Direct Credit','',0,2.354000,-12.5,0,0,-0.33,0,0,'','',0,'');
+INSERT INTO `debtortrans` VALUES (60,1,12,'BILLYBUNT','','2004-07-17 00:00:00',55,0,'Direct Credit','',0,2.354000,-12.5,0,0,-0.330000013113022,0,0,'','',0,'');
 INSERT INTO `debtortrans` VALUES (61,3,11,'WALMON','WALM','2004-07-17 00:00:00',55,1,'Inv-1','EX',27,1.700000,-73.125,0,0,0,0,-73.125,'Less restocking fee 2.5% as agreed','',0,'');
-INSERT INTO `debtortrans` VALUES (62,2,10,'WATTSGRP','WATTLA','2004-07-30 00:00:00',55,1,'','WS',28,1.000000,79.3,0,0,0,0,79.3,'','1',0,'');
-INSERT INTO `debtortrans` VALUES (63,3,10,'WALMON','WALM','2004-08-20 16:00:00',56,0,'','EX',29,1.700000,311.1,0,0,0,0,0,'','1',0,'QFG-23332-122-2');
-INSERT INTO `debtortrans` VALUES (64,4,11,'GRANHR','GRAN','2004-08-23 00:00:00',56,0,'','EX',0,1.000000,-142.312,0,0,0,0,-100.3,'','',0,'');
-INSERT INTO `debtortrans` VALUES (65,5,11,'WALMON','WALMOADEL','2004-08-23 00:00:00',56,1,'','EX',0,1.700000,-7.8375,-0.78375,0,0,0,-8.62,'','',0,'');
+INSERT INTO `debtortrans` VALUES (62,2,10,'WATTSGRP','WATTLA','2004-07-30 00:00:00',55,1,'','WS',28,1.000000,79.3000030517578,0,0,0,0,79.3000030517578,'','1',0,'');
+INSERT INTO `debtortrans` VALUES (63,3,10,'WALMON','WALM','2004-08-20 16:00:00',56,0,'','EX',29,1.700000,311.100006103516,0,0,0,0,0,'','1',0,'QFG-23332-122-2');
+INSERT INTO `debtortrans` VALUES (64,4,11,'GRANHR','GRAN','2004-08-23 00:00:00',56,0,'','EX',0,1.000000,-142.311996459961,0,0,0,0,-100.300003051758,'','',0,'');
+INSERT INTO `debtortrans` VALUES (65,5,11,'WALMON','WALMOADEL','2004-08-23 00:00:00',56,1,'','EX',0,1.700000,-7.83750009536743,-0.783749997615814,0,0,0,-8.61999988555908,'','',0,'');
 INSERT INTO `debtortrans` VALUES (66,6,11,'WALMON','WALM','2004-08-20 23:00:00',56,1,'Inv-1','EX',27,1.700000,0,0,0,0,0,0,'','',0,'');
 INSERT INTO `debtortrans` VALUES (67,4,10,'WALMON','WALM','2004-09-21 00:00:00',57,0,'','EX',30,1.700000,99,0,0,0,0,0,'','1',0,'TEG3288');
-INSERT INTO `debtortrans` VALUES (68,7,11,'WALMON','WALM','2004-09-20 00:00:00',57,1,'','EX',0,1.700000,-99.0002,0,0,0,0,-99,'','',0,'');
-INSERT INTO `debtortrans` VALUES (69,5,10,'GRANHR','GRAN','2004-09-21 00:00:00',57,0,'','EX',31,1.000000,25.3,0,0,0,0,0,'','1',0,'');
-INSERT INTO `debtortrans` VALUES (70,6,10,'WATTSGRP','WATTLA','2004-09-21 00:00:00',57,1,'','WS',28,1.000000,3.99,0,0,0,0,3.99,'','1',0,'');
-INSERT INTO `debtortrans` VALUES (71,7,10,'GRANHR','GRAN','2004-09-21 00:00:00',57,0,'','EX',31,1.000000,12.65,0,0,0,0,0,'','1',0,'');
+INSERT INTO `debtortrans` VALUES (68,7,11,'WALMON','WALM','2004-09-20 00:00:00',57,1,'','EX',0,1.700000,-99.0001983642578,0,0,0,0,-99,'','',0,'');
+INSERT INTO `debtortrans` VALUES (69,5,10,'GRANHR','GRAN','2004-09-21 00:00:00',57,0,'','EX',31,1.000000,25.2999992370605,0,0,0,0,0,'','1',0,'');
+INSERT INTO `debtortrans` VALUES (70,6,10,'WATTSGRP','WATTLA','2004-09-21 00:00:00',57,1,'','WS',28,1.000000,3.99000000953674,0,0,0,0,3.99000000953674,'','1',0,'');
+INSERT INTO `debtortrans` VALUES (71,7,10,'GRANHR','GRAN','2004-09-21 00:00:00',57,0,'','EX',31,1.000000,12.6499996185303,0,0,0,0,0,'','1',0,'');
 INSERT INTO `debtortrans` VALUES (72,8,10,'GRANHR','GRAN','2004-09-20 00:00:00',57,1,'','EX',31,1.000000,0,0,0,0,0,0,'','1',0,'');
-INSERT INTO `debtortrans` VALUES (73,9,10,'GRANHR','GRAN','2004-09-25 00:00:00',57,1,'','EX',33,1.000000,100.3,0,0,0,0,100.3,'','1',0,'');
+INSERT INTO `debtortrans` VALUES (73,9,10,'GRANHR','GRAN','2004-09-25 00:00:00',57,1,'','EX',33,1.000000,100.300003051758,0,0,0,0,100.300003051758,'','1',0,'');
 INSERT INTO `debtortrans` VALUES (74,10,10,'WATTSGRP','WATT','2004-09-25 00:00:00',57,1,'','WS',34,1.000000,129.5,0.375,15,0,0,144.875,'','1',0,'');
-INSERT INTO `debtortrans` VALUES (76,12,10,'JOHNSON','JOHNTEMPE','2004-09-25 00:00:00',57,1,'','WS',35,1.000000,141.482,0,0,0,0,141.482,'','1',0,'');
-INSERT INTO `debtortrans` VALUES (77,8,11,'WATTSGRP','WATTLA','2004-11-01 00:00:00',59,0,'','WS',0,1.000000,-824.72,-1.25,-25,0,0,-228.165,'test','',0,'');
-INSERT INTO `debtortrans` VALUES (78,13,10,'JOHNSON','JOHNTEMPE','2004-11-29 00:00:00',59,0,'','WS',35,1.000000,15.86,0,0,0,0,0,'','1',0,'');
+INSERT INTO `debtortrans` VALUES (76,12,10,'JOHNSON','JOHNTEMPE','2004-09-25 00:00:00',57,1,'','WS',35,1.000000,141.481994628906,0,0,0,0,141.481994628906,'','1',0,'');
+INSERT INTO `debtortrans` VALUES (77,8,11,'WATTSGRP','WATTLA','2004-11-01 00:00:00',59,0,'','WS',0,1.000000,-824.719970703125,-1.25,-25,0,0,-228.164993286133,'test','',0,'');
+INSERT INTO `debtortrans` VALUES (78,13,10,'JOHNSON','JOHNTEMPE','2004-11-29 00:00:00',59,0,'','WS',35,1.000000,15.8599996566772,0,0,0,0,0,'','1',0,'');
 INSERT INTO `debtortrans` VALUES (79,9,11,'WALMON','WALM','2004-11-27 00:00:00',59,0,'','EX',0,1.700000,-125,-12.5,0,0,0,0,'','',0,'');
-INSERT INTO `debtortrans` VALUES (80,10,11,'WALMON','WALM','2004-11-27 00:00:00',59,1,'','EX',0,1.700000,-0.4875,0,0,0,0,-0.49,'','',0,'');
-INSERT INTO `debtortrans` VALUES (81,2,12,'WATTSGRP','','2004-11-28 00:00:00',59,0,'Cash testing agains','',0,1.000000,-122.9,0,0,-2.5,0,0,'','',0,'');
-INSERT INTO `debtortrans` VALUES (82,11,11,'BILLYBUNT','BILLYBUNT','2004-11-30 00:00:00',59,0,'','WS',0,0.800000,-6.65,0,0,0,0,0,'','',0,'');
+INSERT INTO `debtortrans` VALUES (80,10,11,'WALMON','WALM','2004-11-27 00:00:00',59,1,'','EX',0,1.700000,-0.487500011920929,0,0,0,0,-0.490000009536743,'','',0,'');
+INSERT INTO `debtortrans` VALUES (81,2,12,'WATTSGRP','','2004-11-28 00:00:00',59,0,'Cash testing agains','',0,1.000000,-122.900001525879,0,0,-2.5,0,0,'','',0,'');
+INSERT INTO `debtortrans` VALUES (82,11,11,'BILLYBUNT','BILLYBUNT','2004-11-30 00:00:00',59,0,'','WS',0,0.800000,-6.65000009536743,0,0,0,0,0,'','',0,'');
 INSERT INTO `debtortrans` VALUES (83,4,12,'DSSAD','','2005-01-03 00:00:00',61,0,'Cheques one two thre','',0,1.000000,-50.25,0,0,-20,0,0,'','',0,'');
 
 --
@@ -3891,38 +3891,38 @@ INSERT INTO `edimessageformat` VALUES (54,'WALMON','INVOIC','Summary',310,'UNT+[
 -- Dumping data for table `gltrans`
 --
 
-INSERT INTO `gltrans` VALUES (525,25,12,0,'2004-07-13',55,720000,'PO: 14 BIGBISC - 125 - 12.5mm round steel x 1170 @ 0.62',725.4,1,'');
-INSERT INTO `gltrans` VALUES (526,25,12,0,'2004-07-13',55,723000,'PO: 14 BIGBISC - 125 - 12.5mm round steel x 1170 @ 0.62',-725.4,1,'');
-INSERT INTO `gltrans` VALUES (527,25,12,0,'2004-07-13',55,722000,'PO: 14 BIGBISC - HON90021 - Honda Civic front coil spring 1990-94 x 512 @ 9.69',4961.28,1,'');
-INSERT INTO `gltrans` VALUES (528,25,12,0,'2004-07-13',55,723000,'PO: 14 BIGBISC - HON90021 - Honda Civic front coil spring 1990-94 x 512 @ 9.69',-4961.28,1,'');
-INSERT INTO `gltrans` VALUES (529,10,1,0,'2004-07-14',55,1,'WALMON - 125 x 10 @ 0.6200',6.2,1,'');
-INSERT INTO `gltrans` VALUES (530,10,1,0,'2004-07-14',55,720000,'WALMON - 125 x 10 @ 0.6200',-6.2,1,'');
-INSERT INTO `gltrans` VALUES (531,10,1,0,'2004-07-14',55,107,'WALMON - 125 x 10 @ 1.2500',-7.35294,1,'');
-INSERT INTO `gltrans` VALUES (532,10,1,0,'2004-07-14',55,1,'WALMON - 125 @ 2.5%',0.183824,1,'');
+INSERT INTO `gltrans` VALUES (525,25,12,0,'2004-07-13',55,720000,'PO: 14 BIGBISC - 125 - 12.5mm round steel x 1170 @ 0.62',725.400024414062,1,'');
+INSERT INTO `gltrans` VALUES (526,25,12,0,'2004-07-13',55,723000,'PO: 14 BIGBISC - 125 - 12.5mm round steel x 1170 @ 0.62',-725.400024414062,1,'');
+INSERT INTO `gltrans` VALUES (527,25,12,0,'2004-07-13',55,722000,'PO: 14 BIGBISC - HON90021 - Honda Civic front coil spring 1990-94 x 512 @ 9.69',4961.27978515625,1,'');
+INSERT INTO `gltrans` VALUES (528,25,12,0,'2004-07-13',55,723000,'PO: 14 BIGBISC - HON90021 - Honda Civic front coil spring 1990-94 x 512 @ 9.69',-4961.27978515625,1,'');
+INSERT INTO `gltrans` VALUES (529,10,1,0,'2004-07-14',55,1,'WALMON - 125 x 10 @ 0.6200',6.19999980926514,1,'');
+INSERT INTO `gltrans` VALUES (530,10,1,0,'2004-07-14',55,720000,'WALMON - 125 x 10 @ 0.6200',-6.19999980926514,1,'');
+INSERT INTO `gltrans` VALUES (531,10,1,0,'2004-07-14',55,107,'WALMON - 125 x 10 @ 1.2500',-7.35294008255005,1,'');
+INSERT INTO `gltrans` VALUES (532,10,1,0,'2004-07-14',55,1,'WALMON - 125 @ 2.5%',0.183824002742767,1,'');
 INSERT INTO `gltrans` VALUES (533,10,1,0,'2004-07-14',55,1,'WALMON - HON90021 x 25 @ 9.6900',242.25,1,'');
 INSERT INTO `gltrans` VALUES (534,10,1,0,'2004-07-14',55,722000,'WALMON - HON90021 x 25 @ 9.6900',-242.25,1,'');
-INSERT INTO `gltrans` VALUES (535,10,1,0,'2004-07-14',55,107,'WALMON - HON90021 x 25 @ 25.0000',-367.647,1,'');
-INSERT INTO `gltrans` VALUES (536,10,1,0,'2004-07-14',55,710000,'WALMON',374.816,1,'');
-INSERT INTO `gltrans` VALUES (537,11,1,0,'2004-07-15',55,1,'JOHNSON - 125 x 10 @ 0.6200',-6.2,1,'');
-INSERT INTO `gltrans` VALUES (538,11,1,0,'2004-07-15',55,720000,'JOHNSON - 125 x 10 @ 0.6200',6.2,1,'');
-INSERT INTO `gltrans` VALUES (539,11,1,0,'2004-07-15',55,107,'JOHNSON - 125 x 10 @ 2.33',23.3,1,'');
-INSERT INTO `gltrans` VALUES (540,11,1,0,'2004-07-15',55,1,'JOHNSON - HON90021 x 21 @ 9.6900',-203.49,1,'');
-INSERT INTO `gltrans` VALUES (541,11,1,0,'2004-07-15',55,722000,'JOHNSON - HON90021 x 21 @ 9.6900',203.49,1,'');
+INSERT INTO `gltrans` VALUES (535,10,1,0,'2004-07-14',55,107,'WALMON - HON90021 x 25 @ 25.0000',-367.647003173828,1,'');
+INSERT INTO `gltrans` VALUES (536,10,1,0,'2004-07-14',55,710000,'WALMON',374.816009521484,1,'');
+INSERT INTO `gltrans` VALUES (537,11,1,0,'2004-07-15',55,1,'JOHNSON - 125 x 10 @ 0.6200',-6.19999980926514,1,'');
+INSERT INTO `gltrans` VALUES (538,11,1,0,'2004-07-15',55,720000,'JOHNSON - 125 x 10 @ 0.6200',6.19999980926514,1,'');
+INSERT INTO `gltrans` VALUES (539,11,1,0,'2004-07-15',55,107,'JOHNSON - 125 x 10 @ 2.33',23.2999992370605,1,'');
+INSERT INTO `gltrans` VALUES (540,11,1,0,'2004-07-15',55,1,'JOHNSON - HON90021 x 21 @ 9.6900',-203.490005493164,1,'');
+INSERT INTO `gltrans` VALUES (541,11,1,0,'2004-07-15',55,722000,'JOHNSON - HON90021 x 21 @ 9.6900',203.490005493164,1,'');
 INSERT INTO `gltrans` VALUES (542,11,1,0,'2004-07-15',55,107,'JOHNSON - HON90021 x 21 @ 16.25',341.25,1,'');
-INSERT INTO `gltrans` VALUES (543,11,1,0,'2004-07-15',55,710000,'JOHNSON',-364.55,1,'');
-INSERT INTO `gltrans` VALUES (547,20,14,0,'2004-07-14',55,723000,'FREDBLOW Shipment charge against 3',53.52,1,'');
-INSERT INTO `gltrans` VALUES (548,20,14,0,'2004-07-14',55,890000,'FREDBLOW - Inv 5442 USD5.35 @ a rate of 1.0000',5.35,1,'');
-INSERT INTO `gltrans` VALUES (549,20,14,0,'2004-07-14',55,800000,'FREDBLOW - Inv 5442 USD58.87 @ a rate of 1.0000',-58.87,1,'');
-INSERT INTO `gltrans` VALUES (550,11,2,0,'2004-07-17',55,1,'BILLYBUNT - 125 x 30 @ 0.6200',-18.6,1,'');
-INSERT INTO `gltrans` VALUES (551,11,2,0,'2004-07-17',55,720000,'BILLYBUNT - 125 x 30 @ 0.6200',18.6,1,'');
+INSERT INTO `gltrans` VALUES (543,11,1,0,'2004-07-15',55,710000,'JOHNSON',-364.549987792969,1,'');
+INSERT INTO `gltrans` VALUES (547,20,14,0,'2004-07-14',55,723000,'FREDBLOW Shipment charge against 3',53.5200004577637,1,'');
+INSERT INTO `gltrans` VALUES (548,20,14,0,'2004-07-14',55,890000,'FREDBLOW - Inv 5442 USD5.35 @ a rate of 1.0000',5.34999990463257,1,'');
+INSERT INTO `gltrans` VALUES (549,20,14,0,'2004-07-14',55,800000,'FREDBLOW - Inv 5442 USD58.87 @ a rate of 1.0000',-58.8699989318848,1,'');
+INSERT INTO `gltrans` VALUES (550,11,2,0,'2004-07-17',55,1,'BILLYBUNT - 125 x 30 @ 0.6200',-18.6000003814697,1,'');
+INSERT INTO `gltrans` VALUES (551,11,2,0,'2004-07-17',55,720000,'BILLYBUNT - 125 x 30 @ 0.6200',18.6000003814697,1,'');
 INSERT INTO `gltrans` VALUES (552,11,2,0,'2004-07-17',55,107,'BILLYBUNT - 125 x 30 @ 2.35',70.5,1,'');
 INSERT INTO `gltrans` VALUES (553,11,2,0,'2004-07-17',55,710000,'BILLYBUNT',-70.5,1,'');
-INSERT INTO `gltrans` VALUES (554,12,1,0,'2004-07-17',55,259000,'Re-imbursed private drinks',-2.23025,1,'');
-INSERT INTO `gltrans` VALUES (555,12,1,0,'2004-07-17',55,700100,'',7.54036,1,'');
-INSERT INTO `gltrans` VALUES (556,12,1,0,'2004-07-17',55,710000,'',-5.4503,1,'');
-INSERT INTO `gltrans` VALUES (557,12,1,0,'2004-07-17',55,455000,'',0.140187,1,'');
-INSERT INTO `gltrans` VALUES (558,11,3,0,'2004-07-17',55,1,'WALMON - HON90021 x 3 @ 9.6900',-29.07,1,'');
-INSERT INTO `gltrans` VALUES (559,11,3,0,'2004-07-17',55,722000,'WALMON - HON90021 x 3 @ 9.6900',29.07,1,'');
+INSERT INTO `gltrans` VALUES (554,12,1,0,'2004-07-17',55,259000,'Re-imbursed private drinks',-2.23024988174438,1,'');
+INSERT INTO `gltrans` VALUES (555,12,1,0,'2004-07-17',55,700100,'',7.54035997390747,1,'');
+INSERT INTO `gltrans` VALUES (556,12,1,0,'2004-07-17',55,710000,'',-5.4503002166748,1,'');
+INSERT INTO `gltrans` VALUES (557,12,1,0,'2004-07-17',55,455000,'',0.140186995267868,1,'');
+INSERT INTO `gltrans` VALUES (558,11,3,0,'2004-07-17',55,1,'WALMON - HON90021 x 3 @ 9.6900',-29.0699996948242,1,'');
+INSERT INTO `gltrans` VALUES (559,11,3,0,'2004-07-17',55,722000,'WALMON - HON90021 x 3 @ 9.6900',29.0699996948242,1,'');
 INSERT INTO `gltrans` VALUES (560,11,3,0,'2004-07-17',55,107,'WALMON - HON90021 x 3 @ 25.000',75,1,'');
 INSERT INTO `gltrans` VALUES (561,11,3,0,'2004-07-17',55,1,'WALMON - HON90021 @ 2.5%',-1.875,1,'');
 INSERT INTO `gltrans` VALUES (562,11,3,0,'2004-07-17',55,710000,'WALMON',-73.125,1,'');
@@ -3930,130 +3930,130 @@ INSERT INTO `gltrans` VALUES (563,22,4,0,'2004-07-29',55,800000,'BIGBISC-',-200,
 INSERT INTO `gltrans` VALUES (564,22,4,0,'2004-07-29',55,700000,'BIGBISC-',200,1,'');
 INSERT INTO `gltrans` VALUES (565,10,2,0,'2004-07-30',55,1,'WATTSGRP - HON90022 x 5 @ 2.1000',10.5,1,'');
 INSERT INTO `gltrans` VALUES (566,10,2,0,'2004-07-30',55,722000,'WATTSGRP - HON90022 x 5 @ 2.1000',-10.5,1,'');
-INSERT INTO `gltrans` VALUES (567,10,2,0,'2004-07-30',55,107,'WATTSGRP - HON90022 x 5 @ 15.8600',-79.3,1,'');
-INSERT INTO `gltrans` VALUES (568,10,2,0,'2004-07-30',55,710000,'WATTSGRP',79.3,1,'');
-INSERT INTO `gltrans` VALUES (569,10,3,0,'2004-08-20',56,1,'WALMON - 125 x 5 @ 0.6200',3.1,1,'');
-INSERT INTO `gltrans` VALUES (570,10,3,0,'2004-08-20',56,720000,'WALMON - 125 x 5 @ 0.6200',-3.1,1,'');
-INSERT INTO `gltrans` VALUES (571,10,3,0,'2004-08-20',56,107,'WALMON - 125 x 5 @ 2.2200',-6.52941,1,'');
-INSERT INTO `gltrans` VALUES (572,10,3,0,'2004-08-20',56,1,'WALMON - HON90021 x 12 @ 9.6900',116.28,1,'');
-INSERT INTO `gltrans` VALUES (573,10,3,0,'2004-08-20',56,722000,'WALMON - HON90021 x 12 @ 9.6900',-116.28,1,'');
-INSERT INTO `gltrans` VALUES (574,10,3,0,'2004-08-20',56,107,'WALMON - HON90021 x 12 @ 25.0000',-176.471,1,'');
+INSERT INTO `gltrans` VALUES (567,10,2,0,'2004-07-30',55,107,'WATTSGRP - HON90022 x 5 @ 15.8600',-79.3000030517578,1,'');
+INSERT INTO `gltrans` VALUES (568,10,2,0,'2004-07-30',55,710000,'WATTSGRP',79.3000030517578,1,'');
+INSERT INTO `gltrans` VALUES (569,10,3,0,'2004-08-20',56,1,'WALMON - 125 x 5 @ 0.6200',3.09999990463257,1,'');
+INSERT INTO `gltrans` VALUES (570,10,3,0,'2004-08-20',56,720000,'WALMON - 125 x 5 @ 0.6200',-3.09999990463257,1,'');
+INSERT INTO `gltrans` VALUES (571,10,3,0,'2004-08-20',56,107,'WALMON - 125 x 5 @ 2.2200',-6.52940988540649,1,'');
+INSERT INTO `gltrans` VALUES (572,10,3,0,'2004-08-20',56,1,'WALMON - HON90021 x 12 @ 9.6900',116.279998779297,1,'');
+INSERT INTO `gltrans` VALUES (573,10,3,0,'2004-08-20',56,722000,'WALMON - HON90021 x 12 @ 9.6900',-116.279998779297,1,'');
+INSERT INTO `gltrans` VALUES (574,10,3,0,'2004-08-20',56,107,'WALMON - HON90021 x 12 @ 25.0000',-176.470993041992,1,'');
 INSERT INTO `gltrans` VALUES (575,10,3,0,'2004-08-20',56,710000,'WALMON',183,1,'');
-INSERT INTO `gltrans` VALUES (576,11,4,0,'2004-08-23',56,256000,'GRANHR - HON90021 x 15 @ 9.6900',-145.35,1,'');
-INSERT INTO `gltrans` VALUES (577,11,4,0,'2004-08-23',56,722000,'GRANHR - HON90021 x 15 @ 9.6900',145.35,1,'');
+INSERT INTO `gltrans` VALUES (576,11,4,0,'2004-08-23',56,256000,'GRANHR - HON90021 x 15 @ 9.6900',-145.350006103516,1,'');
+INSERT INTO `gltrans` VALUES (577,11,4,0,'2004-08-23',56,722000,'GRANHR - HON90021 x 15 @ 9.6900',145.350006103516,1,'');
 INSERT INTO `gltrans` VALUES (578,11,4,0,'2004-08-23',56,112,'GRANHR - HON90021 x 15 @ 12.6500',189.75,1,'');
 INSERT INTO `gltrans` VALUES (579,11,4,0,'2004-08-23',56,1,'GRANHR - HON90021 @ 25%',-47.4375,1,'');
-INSERT INTO `gltrans` VALUES (580,11,4,0,'2004-08-23',56,710000,'GRANHR',-142.312,1,'');
+INSERT INTO `gltrans` VALUES (580,11,4,0,'2004-08-23',56,710000,'GRANHR',-142.311996459961,1,'');
 INSERT INTO `gltrans` VALUES (581,11,5,0,'2004-08-23',56,1,'WALMON - 125 x 25 @ 0.6200',-15.5,1,'');
 INSERT INTO `gltrans` VALUES (582,11,5,0,'2004-08-23',56,720000,'WALMON - 125 x 25 @ 0.6200',15.5,1,'');
 INSERT INTO `gltrans` VALUES (583,11,5,0,'2004-08-23',56,107,'WALMON - 125 x 25 @ .33',8.25,1,'');
-INSERT INTO `gltrans` VALUES (584,11,5,0,'2004-08-23',56,1,'WALMON - 125 @ 5%',-0.4125,1,'');
-INSERT INTO `gltrans` VALUES (585,11,5,0,'2004-08-23',56,710000,'WALMON',-8.62125,1,'');
-INSERT INTO `gltrans` VALUES (586,11,5,0,'2004-08-23',56,810000,'WALMON',0.78375,1,'');
-INSERT INTO `gltrans` VALUES (587,10,4,0,'2004-09-21',57,1,'WALMON - HON90021 x 2 @ 9.6900',19.38,1,'');
-INSERT INTO `gltrans` VALUES (588,10,4,0,'2004-09-21',57,722000,'WALMON - HON90021 x 2 @ 9.6900',-19.38,1,'');
-INSERT INTO `gltrans` VALUES (589,10,4,0,'2004-09-21',57,107,'WALMON - HON90021 x 2 @ 25.0000',-29.4118,1,'');
-INSERT INTO `gltrans` VALUES (590,10,4,0,'2004-09-21',57,1,'WALMON - HON90022 x 2 @ 2.1000',4.2,1,'');
-INSERT INTO `gltrans` VALUES (591,10,4,0,'2004-09-21',57,722000,'WALMON - HON90022 x 2 @ 2.1000',-4.2,1,'');
-INSERT INTO `gltrans` VALUES (592,10,4,0,'2004-09-21',57,107,'WALMON - HON90022 x 2 @ 24.5000',-28.8235,1,'');
-INSERT INTO `gltrans` VALUES (593,10,4,0,'2004-09-21',57,710000,'WALMON',58.2353,1,'');
-INSERT INTO `gltrans` VALUES (594,11,7,0,'2004-09-20',57,1,'WALMON - HON90021 x 2 @ 9.6900',-19.38,1,'');
-INSERT INTO `gltrans` VALUES (595,11,7,0,'2004-09-20',57,722000,'WALMON - HON90021 x 2 @ 9.6900',19.38,1,'');
+INSERT INTO `gltrans` VALUES (584,11,5,0,'2004-08-23',56,1,'WALMON - 125 @ 5%',-0.412499994039536,1,'');
+INSERT INTO `gltrans` VALUES (585,11,5,0,'2004-08-23',56,710000,'WALMON',-8.62125015258789,1,'');
+INSERT INTO `gltrans` VALUES (586,11,5,0,'2004-08-23',56,810000,'WALMON',0.783749997615814,1,'');
+INSERT INTO `gltrans` VALUES (587,10,4,0,'2004-09-21',57,1,'WALMON - HON90021 x 2 @ 9.6900',19.3799991607666,1,'');
+INSERT INTO `gltrans` VALUES (588,10,4,0,'2004-09-21',57,722000,'WALMON - HON90021 x 2 @ 9.6900',-19.3799991607666,1,'');
+INSERT INTO `gltrans` VALUES (589,10,4,0,'2004-09-21',57,107,'WALMON - HON90021 x 2 @ 25.0000',-29.4118003845215,1,'');
+INSERT INTO `gltrans` VALUES (590,10,4,0,'2004-09-21',57,1,'WALMON - HON90022 x 2 @ 2.1000',4.19999980926514,1,'');
+INSERT INTO `gltrans` VALUES (591,10,4,0,'2004-09-21',57,722000,'WALMON - HON90022 x 2 @ 2.1000',-4.19999980926514,1,'');
+INSERT INTO `gltrans` VALUES (592,10,4,0,'2004-09-21',57,107,'WALMON - HON90022 x 2 @ 24.5000',-28.8234996795654,1,'');
+INSERT INTO `gltrans` VALUES (593,10,4,0,'2004-09-21',57,710000,'WALMON',58.2352981567383,1,'');
+INSERT INTO `gltrans` VALUES (594,11,7,0,'2004-09-20',57,1,'WALMON - HON90021 x 2 @ 9.6900',-19.3799991607666,1,'');
+INSERT INTO `gltrans` VALUES (595,11,7,0,'2004-09-20',57,722000,'WALMON - HON90021 x 2 @ 9.6900',19.3799991607666,1,'');
 INSERT INTO `gltrans` VALUES (596,11,7,0,'2004-09-20',57,107,'WALMON - HON90021 x 2 @ 25.0000',50,1,'');
-INSERT INTO `gltrans` VALUES (597,11,7,0,'2004-09-20',57,1,'WALMON - HON90022 x 2.0000 @ 2.1000',-4.2,1,'');
-INSERT INTO `gltrans` VALUES (598,11,7,0,'2004-09-20',57,722000,'WALMON - HON90022 x 2.0000 @ 2.1000',4.2,1,'');
-INSERT INTO `gltrans` VALUES (599,11,7,0,'2004-09-20',57,107,'WALMON - HON90022 x 2.0000 @ 24.5001',49.0002,1,'');
-INSERT INTO `gltrans` VALUES (600,11,7,0,'2004-09-20',57,710000,'WALMON',-99.0002,1,'');
-INSERT INTO `gltrans` VALUES (601,10,5,0,'2004-09-21',57,256000,'GRANHR - HON90021 x 2 @ 9.6900',19.38,1,'');
-INSERT INTO `gltrans` VALUES (602,10,5,0,'2004-09-21',57,722000,'GRANHR - HON90021 x 2 @ 9.6900',-19.38,1,'');
-INSERT INTO `gltrans` VALUES (603,10,5,0,'2004-09-21',57,112,'GRANHR - HON90021 x 2 @ 12.6500',-25.3,1,'');
-INSERT INTO `gltrans` VALUES (604,10,5,0,'2004-09-21',57,710000,'GRANHR',25.3,1,'');
-INSERT INTO `gltrans` VALUES (605,25,13,0,'2004-09-20',57,720000,'PO: 15 BIGBISC - 125 - 12.5mm round steel x 95 @ 0.62',58.9,1,'');
-INSERT INTO `gltrans` VALUES (606,25,13,0,'2004-09-20',57,723000,'PO: 15 BIGBISC - 125 - 12.5mm round steel x 95 @ 0.62',-58.9,1,'');
-INSERT INTO `gltrans` VALUES (607,10,6,0,'2004-09-21',57,1,'WATTSGRP - 125 x 3 @ 0.6200',1.86,1,'');
-INSERT INTO `gltrans` VALUES (608,10,6,0,'2004-09-21',57,720000,'WATTSGRP - 125 x 3 @ 0.6200',-1.86,1,'');
-INSERT INTO `gltrans` VALUES (609,10,6,0,'2004-09-21',57,107,'WATTSGRP - 125 x 3 @ 1.3300',-3.99,1,'');
-INSERT INTO `gltrans` VALUES (610,10,6,0,'2004-09-21',57,710000,'WATTSGRP',3.99,1,'');
-INSERT INTO `gltrans` VALUES (611,10,7,0,'2004-09-21',57,256000,'GRANHR - HON90021 x 1 @ 9.6900',9.69,1,'');
-INSERT INTO `gltrans` VALUES (612,10,7,0,'2004-09-21',57,722000,'GRANHR - HON90021 x 1 @ 9.6900',-9.69,1,'');
-INSERT INTO `gltrans` VALUES (613,10,7,0,'2004-09-21',57,112,'GRANHR - HON90021 x 1 @ 12.6500',-12.65,1,'');
-INSERT INTO `gltrans` VALUES (614,10,7,0,'2004-09-21',57,710000,'GRANHR',12.65,1,'');
+INSERT INTO `gltrans` VALUES (597,11,7,0,'2004-09-20',57,1,'WALMON - HON90022 x 2.0000 @ 2.1000',-4.19999980926514,1,'');
+INSERT INTO `gltrans` VALUES (598,11,7,0,'2004-09-20',57,722000,'WALMON - HON90022 x 2.0000 @ 2.1000',4.19999980926514,1,'');
+INSERT INTO `gltrans` VALUES (599,11,7,0,'2004-09-20',57,107,'WALMON - HON90022 x 2.0000 @ 24.5001',49.0001983642578,1,'');
+INSERT INTO `gltrans` VALUES (600,11,7,0,'2004-09-20',57,710000,'WALMON',-99.0001983642578,1,'');
+INSERT INTO `gltrans` VALUES (601,10,5,0,'2004-09-21',57,256000,'GRANHR - HON90021 x 2 @ 9.6900',19.3799991607666,1,'');
+INSERT INTO `gltrans` VALUES (602,10,5,0,'2004-09-21',57,722000,'GRANHR - HON90021 x 2 @ 9.6900',-19.3799991607666,1,'');
+INSERT INTO `gltrans` VALUES (603,10,5,0,'2004-09-21',57,112,'GRANHR - HON90021 x 2 @ 12.6500',-25.2999992370605,1,'');
+INSERT INTO `gltrans` VALUES (604,10,5,0,'2004-09-21',57,710000,'GRANHR',25.2999992370605,1,'');
+INSERT INTO `gltrans` VALUES (605,25,13,0,'2004-09-20',57,720000,'PO: 15 BIGBISC - 125 - 12.5mm round steel x 95 @ 0.62',58.9000015258789,1,'');
+INSERT INTO `gltrans` VALUES (606,25,13,0,'2004-09-20',57,723000,'PO: 15 BIGBISC - 125 - 12.5mm round steel x 95 @ 0.62',-58.9000015258789,1,'');
+INSERT INTO `gltrans` VALUES (607,10,6,0,'2004-09-21',57,1,'WATTSGRP - 125 x 3 @ 0.6200',1.86000001430511,1,'');
+INSERT INTO `gltrans` VALUES (608,10,6,0,'2004-09-21',57,720000,'WATTSGRP - 125 x 3 @ 0.6200',-1.86000001430511,1,'');
+INSERT INTO `gltrans` VALUES (609,10,6,0,'2004-09-21',57,107,'WATTSGRP - 125 x 3 @ 1.3300',-3.99000000953674,1,'');
+INSERT INTO `gltrans` VALUES (610,10,6,0,'2004-09-21',57,710000,'WATTSGRP',3.99000000953674,1,'');
+INSERT INTO `gltrans` VALUES (611,10,7,0,'2004-09-21',57,256000,'GRANHR - HON90021 x 1 @ 9.6900',9.6899995803833,1,'');
+INSERT INTO `gltrans` VALUES (612,10,7,0,'2004-09-21',57,722000,'GRANHR - HON90021 x 1 @ 9.6900',-9.6899995803833,1,'');
+INSERT INTO `gltrans` VALUES (613,10,7,0,'2004-09-21',57,112,'GRANHR - HON90021 x 1 @ 12.6500',-12.6499996185303,1,'');
+INSERT INTO `gltrans` VALUES (614,10,7,0,'2004-09-21',57,710000,'GRANHR',12.6499996185303,1,'');
 INSERT INTO `gltrans` VALUES (615,0,10,0,'2004-07-31',55,10000,'Testing 1234 once again',52.5,1,'');
 INSERT INTO `gltrans` VALUES (616,0,10,0,'2004-07-31',55,70200,'Testing 1234 once again',-52.5,1,'');
-INSERT INTO `gltrans` VALUES (617,10,9,0,'2004-09-25',57,256000,'GRANHR - 123 x 2 @ 0.3000',0.6,1,'');
-INSERT INTO `gltrans` VALUES (618,10,9,0,'2004-09-25',57,720000,'GRANHR - 123 x 2 @ 0.3000',-0.6,1,'');
-INSERT INTO `gltrans` VALUES (619,10,9,0,'2004-09-25',57,112,'GRANHR - 123 x 2 @ 2.9500',-5.9,1,'');
-INSERT INTO `gltrans` VALUES (620,10,9,0,'2004-09-25',57,256000,'GRANHR - 125 x 2 @ 0.6200',1.24,1,'');
-INSERT INTO `gltrans` VALUES (621,10,9,0,'2004-09-25',57,720000,'GRANHR - 125 x 2 @ 0.6200',-1.24,1,'');
+INSERT INTO `gltrans` VALUES (617,10,9,0,'2004-09-25',57,256000,'GRANHR - 123 x 2 @ 0.3000',0.600000023841858,1,'');
+INSERT INTO `gltrans` VALUES (618,10,9,0,'2004-09-25',57,720000,'GRANHR - 123 x 2 @ 0.3000',-0.600000023841858,1,'');
+INSERT INTO `gltrans` VALUES (619,10,9,0,'2004-09-25',57,112,'GRANHR - 123 x 2 @ 2.9500',-5.90000009536743,1,'');
+INSERT INTO `gltrans` VALUES (620,10,9,0,'2004-09-25',57,256000,'GRANHR - 125 x 2 @ 0.6200',1.24000000953674,1,'');
+INSERT INTO `gltrans` VALUES (621,10,9,0,'2004-09-25',57,720000,'GRANHR - 125 x 2 @ 0.6200',-1.24000000953674,1,'');
 INSERT INTO `gltrans` VALUES (622,10,9,0,'2004-09-25',57,112,'GRANHR - 125 x 2 @ 1.2500',-2.5,1,'');
-INSERT INTO `gltrans` VALUES (623,10,9,0,'2004-09-25',57,256000,'GRANHR - HON92FrSus x 2 @ 18.19',36.38,1,'');
-INSERT INTO `gltrans` VALUES (624,10,9,0,'2004-09-25',57,722000,'GRANHR - HON92FrSus x 2 @ 18.19',-36.38,1,'');
-INSERT INTO `gltrans` VALUES (625,10,9,0,'2004-09-25',57,112,'GRANHR - HON92FrSus x 2 @ 45.9500',-91.9,1,'');
-INSERT INTO `gltrans` VALUES (626,10,9,0,'2004-09-25',57,710000,'GRANHR',100.3,1,'');
+INSERT INTO `gltrans` VALUES (623,10,9,0,'2004-09-25',57,256000,'GRANHR - HON92FrSus x 2 @ 18.19',36.3800010681152,1,'');
+INSERT INTO `gltrans` VALUES (624,10,9,0,'2004-09-25',57,722000,'GRANHR - HON92FrSus x 2 @ 18.19',-36.3800010681152,1,'');
+INSERT INTO `gltrans` VALUES (625,10,9,0,'2004-09-25',57,112,'GRANHR - HON92FrSus x 2 @ 45.9500',-91.9000015258789,1,'');
+INSERT INTO `gltrans` VALUES (626,10,9,0,'2004-09-25',57,710000,'GRANHR',100.300003051758,1,'');
 INSERT INTO `gltrans` VALUES (627,10,10,0,'2004-09-25',57,1,'WATTSGRP - HONShock x 5 @ 8.5000',42.5,1,'');
 INSERT INTO `gltrans` VALUES (628,10,10,0,'2004-09-25',57,722000,'WATTSGRP - HONShock x 5 @ 8.5000',-42.5,1,'');
 INSERT INTO `gltrans` VALUES (629,10,10,0,'2004-09-25',57,107,'WATTSGRP - HONShock x 5 @ 25.9000',-129.5,1,'');
 INSERT INTO `gltrans` VALUES (630,10,10,0,'2004-09-25',57,710000,'WATTSGRP',144.875,1,'');
 INSERT INTO `gltrans` VALUES (631,10,10,0,'2004-09-25',57,450000,'WATTSGRP',-15,1,'');
 INSERT INTO `gltrans` VALUES (632,10,10,0,'2004-09-25',57,890000,'WATTSGRP',-0.375,1,'');
-INSERT INTO `gltrans` VALUES (636,10,12,0,'2004-09-25',57,1,'JOHNSON - 123 x 2 @ 0.3000',0.6,1,'');
-INSERT INTO `gltrans` VALUES (637,10,12,0,'2004-09-25',57,720000,'JOHNSON - 123 x 2 @ 0.3000',-0.6,1,'');
-INSERT INTO `gltrans` VALUES (638,10,12,0,'2004-09-25',57,107,'JOHNSON - 123 x 2 @ 3.2000',-6.4,1,'');
-INSERT INTO `gltrans` VALUES (639,10,12,0,'2004-09-25',57,1,'JOHNSON - 125 x 5 @ 0.6200',3.1,1,'');
-INSERT INTO `gltrans` VALUES (640,10,12,0,'2004-09-25',57,720000,'JOHNSON - 125 x 5 @ 0.6200',-3.1,1,'');
+INSERT INTO `gltrans` VALUES (636,10,12,0,'2004-09-25',57,1,'JOHNSON - 123 x 2 @ 0.3000',0.600000023841858,1,'');
+INSERT INTO `gltrans` VALUES (637,10,12,0,'2004-09-25',57,720000,'JOHNSON - 123 x 2 @ 0.3000',-0.600000023841858,1,'');
+INSERT INTO `gltrans` VALUES (638,10,12,0,'2004-09-25',57,107,'JOHNSON - 123 x 2 @ 3.2000',-6.40000009536743,1,'');
+INSERT INTO `gltrans` VALUES (639,10,12,0,'2004-09-25',57,1,'JOHNSON - 125 x 5 @ 0.6200',3.09999990463257,1,'');
+INSERT INTO `gltrans` VALUES (640,10,12,0,'2004-09-25',57,720000,'JOHNSON - 125 x 5 @ 0.6200',-3.09999990463257,1,'');
 INSERT INTO `gltrans` VALUES (641,10,12,0,'2004-09-25',57,107,'JOHNSON - 125 x 5 @ 2.6500',-13.25,1,'');
-INSERT INTO `gltrans` VALUES (642,10,12,0,'2004-09-25',57,1,'JOHNSON - 125 @ 15%',1.9875,1,'');
-INSERT INTO `gltrans` VALUES (643,10,12,0,'2004-09-25',57,1,'JOHNSON - HON90021 x 6 @ 9.6900',58.14,1,'');
-INSERT INTO `gltrans` VALUES (644,10,12,0,'2004-09-25',57,722000,'JOHNSON - HON90021 x 6 @ 9.6900',-58.14,1,'');
-INSERT INTO `gltrans` VALUES (645,10,12,0,'2004-09-25',57,107,'JOHNSON - HON90021 x 6 @ 15.3500',-92.1,1,'');
-INSERT INTO `gltrans` VALUES (646,10,12,0,'2004-09-25',57,1,'JOHNSON - HON90022 x 2 @ 2.1000',4.2,1,'');
-INSERT INTO `gltrans` VALUES (647,10,12,0,'2004-09-25',57,722000,'JOHNSON - HON90022 x 2 @ 2.1000',-4.2,1,'');
-INSERT INTO `gltrans` VALUES (648,10,12,0,'2004-09-25',57,107,'JOHNSON - HON90022 x 2 @ 15.8600',-31.72,1,'');
-INSERT INTO `gltrans` VALUES (649,10,12,0,'2004-09-25',57,710000,'JOHNSON',141.482,1,'');
-INSERT INTO `gltrans` VALUES (650,11,8,0,'2004-11-01',59,1,'WATTSGRP - HON90022 x 52 @ 2.1000',-109.2,1,'');
-INSERT INTO `gltrans` VALUES (651,11,8,0,'2004-11-01',59,20000,'WATTSGRP - HON90022 x 52 @ 2.1000',109.2,1,'');
-INSERT INTO `gltrans` VALUES (652,11,8,0,'2004-11-01',59,107,'WATTSGRP - HON90022 x 52 @ 15.8600',824.72,1,'');
-INSERT INTO `gltrans` VALUES (653,11,8,0,'2004-11-01',59,710000,'WATTSGRP',-850.97,1,'');
+INSERT INTO `gltrans` VALUES (642,10,12,0,'2004-09-25',57,1,'JOHNSON - 125 @ 15%',1.98749995231628,1,'');
+INSERT INTO `gltrans` VALUES (643,10,12,0,'2004-09-25',57,1,'JOHNSON - HON90021 x 6 @ 9.6900',58.1399993896484,1,'');
+INSERT INTO `gltrans` VALUES (644,10,12,0,'2004-09-25',57,722000,'JOHNSON - HON90021 x 6 @ 9.6900',-58.1399993896484,1,'');
+INSERT INTO `gltrans` VALUES (645,10,12,0,'2004-09-25',57,107,'JOHNSON - HON90021 x 6 @ 15.3500',-92.0999984741211,1,'');
+INSERT INTO `gltrans` VALUES (646,10,12,0,'2004-09-25',57,1,'JOHNSON - HON90022 x 2 @ 2.1000',4.19999980926514,1,'');
+INSERT INTO `gltrans` VALUES (647,10,12,0,'2004-09-25',57,722000,'JOHNSON - HON90022 x 2 @ 2.1000',-4.19999980926514,1,'');
+INSERT INTO `gltrans` VALUES (648,10,12,0,'2004-09-25',57,107,'JOHNSON - HON90022 x 2 @ 15.8600',-31.7199993133545,1,'');
+INSERT INTO `gltrans` VALUES (649,10,12,0,'2004-09-25',57,710000,'JOHNSON',141.481994628906,1,'');
+INSERT INTO `gltrans` VALUES (650,11,8,0,'2004-11-01',59,1,'WATTSGRP - HON90022 x 52 @ 2.1000',-109.199996948242,1,'');
+INSERT INTO `gltrans` VALUES (651,11,8,0,'2004-11-01',59,20000,'WATTSGRP - HON90022 x 52 @ 2.1000',109.199996948242,1,'');
+INSERT INTO `gltrans` VALUES (652,11,8,0,'2004-11-01',59,107,'WATTSGRP - HON90022 x 52 @ 15.8600',824.719970703125,1,'');
+INSERT INTO `gltrans` VALUES (653,11,8,0,'2004-11-01',59,710000,'WATTSGRP',-850.969970703125,1,'');
 INSERT INTO `gltrans` VALUES (654,11,8,0,'2004-11-01',59,450000,'WATTSGRP',25,1,'');
 INSERT INTO `gltrans` VALUES (655,11,8,0,'2004-11-01',59,890000,'WATTSGRP',1.25,1,'');
-INSERT INTO `gltrans` VALUES (656,21,5,0,'2004-11-05',59,723000,'BIGBISC - GRN 26 - 125 x 3 @ GBP.33 @ a rate of .83',-1.19277,1,'');
-INSERT INTO `gltrans` VALUES (657,21,5,0,'2004-11-05',59,890000,'BIGBISC - Credit Note 532214 GBP0.099 @ a rate of .83',-0.12,1,'');
-INSERT INTO `gltrans` VALUES (658,21,5,0,'2004-11-05',59,800000,'BIGBISC - Credit Note 532214 GBP1.09 @ a rate of .83',1.31,1,'');
-INSERT INTO `gltrans` VALUES (659,20,15,0,'2004-11-18',59,301,'BIGBISC',65.69,1,'');
-INSERT INTO `gltrans` VALUES (660,20,15,0,'2004-11-18',59,23700,'BIGBISC',118.88,1,'');
-INSERT INTO `gltrans` VALUES (661,20,15,0,'2004-11-18',59,890000,'BIGBISC - Inv 4545221 GBP14.77 @ a rate of 0.8000',18.46,1,'');
-INSERT INTO `gltrans` VALUES (662,20,15,0,'2004-11-18',59,800000,'BIGBISC - Inv 4545221 GBP162.42 @ a rate of 0.8000',-203.03,1,'');
-INSERT INTO `gltrans` VALUES (663,21,6,0,'2004-11-01',59,23700,'BIGBISC',-24.03,1,'');
-INSERT INTO `gltrans` VALUES (664,21,6,0,'2004-11-01',59,890000,'BIGBISC - Credit Note 78777 GBP2 @ a rate of .8322',-2.4,1,'');
-INSERT INTO `gltrans` VALUES (665,21,6,0,'2004-11-01',59,800000,'BIGBISC - Credit Note 78777 GBP22.00 @ a rate of .8322',26.44,1,'');
+INSERT INTO `gltrans` VALUES (656,21,5,0,'2004-11-05',59,723000,'BIGBISC - GRN 26 - 125 x 3 @ GBP.33 @ a rate of .83',-1.19277000427246,1,'');
+INSERT INTO `gltrans` VALUES (657,21,5,0,'2004-11-05',59,890000,'BIGBISC - Credit Note 532214 GBP0.099 @ a rate of .83',-0.119999997317791,1,'');
+INSERT INTO `gltrans` VALUES (658,21,5,0,'2004-11-05',59,800000,'BIGBISC - Credit Note 532214 GBP1.09 @ a rate of .83',1.30999994277954,1,'');
+INSERT INTO `gltrans` VALUES (659,20,15,0,'2004-11-18',59,301,'BIGBISC',65.6900024414062,1,'');
+INSERT INTO `gltrans` VALUES (660,20,15,0,'2004-11-18',59,23700,'BIGBISC',118.879997253418,1,'');
+INSERT INTO `gltrans` VALUES (661,20,15,0,'2004-11-18',59,890000,'BIGBISC - Inv 4545221 GBP14.77 @ a rate of 0.8000',18.4599990844727,1,'');
+INSERT INTO `gltrans` VALUES (662,20,15,0,'2004-11-18',59,800000,'BIGBISC - Inv 4545221 GBP162.42 @ a rate of 0.8000',-203.029998779297,1,'');
+INSERT INTO `gltrans` VALUES (663,21,6,0,'2004-11-01',59,23700,'BIGBISC',-24.0300006866455,1,'');
+INSERT INTO `gltrans` VALUES (664,21,6,0,'2004-11-01',59,890000,'BIGBISC - Credit Note 78777 GBP2 @ a rate of .8322',-2.40000009536743,1,'');
+INSERT INTO `gltrans` VALUES (665,21,6,0,'2004-11-01',59,800000,'BIGBISC - Credit Note 78777 GBP22.00 @ a rate of .8322',26.4400005340576,1,'');
 INSERT INTO `gltrans` VALUES (666,25,14,0,'2004-11-23',59,24000,'PO: 17 BIGBISC -  - Test nominal item x 1 @ 0.00',0,1,'');
 INSERT INTO `gltrans` VALUES (667,25,14,0,'2004-11-23',59,723000,'PO: 17 BIGBISC -  - Test nominal item x 1 @ 1.88',-1.875,1,'');
 INSERT INTO `gltrans` VALUES (668,25,15,0,'2004-11-23',59,24000,'PO: 17 BIGBISC -  - Test nominal item x 1 @ 1.88',1.875,1,'');
 INSERT INTO `gltrans` VALUES (669,25,15,0,'2004-11-23',59,723000,'PO: 17 BIGBISC -  - Test nominal item x 1 @ 1.88',-1.875,1,'');
-INSERT INTO `gltrans` VALUES (670,10,13,0,'2004-11-29',59,70200,'JOHNSON - HOND9022 x 1 @ 2.1000',2.1,1,'');
-INSERT INTO `gltrans` VALUES (671,10,13,0,'2004-11-29',59,722000,'JOHNSON - HOND9022 x 1 @ 2.1000',-2.1,1,'');
-INSERT INTO `gltrans` VALUES (672,10,13,0,'2004-11-29',59,107,'JOHNSON - HOND9022 x 1 @ 15.8600',-15.86,1,'');
-INSERT INTO `gltrans` VALUES (673,10,13,0,'2004-11-29',59,710000,'JOHNSON',15.86,1,'');
-INSERT INTO `gltrans` VALUES (674,11,9,0,'2004-11-27',59,70200,'WALMON - HON90021 x 5 @ 9.6900',-48.45,1,'');
-INSERT INTO `gltrans` VALUES (675,11,9,0,'2004-11-27',59,722000,'WALMON - HON90021 x 5 @ 9.6900',48.45,1,'');
+INSERT INTO `gltrans` VALUES (670,10,13,0,'2004-11-29',59,70200,'JOHNSON - HOND9022 x 1 @ 2.1000',2.09999990463257,1,'');
+INSERT INTO `gltrans` VALUES (671,10,13,0,'2004-11-29',59,722000,'JOHNSON - HOND9022 x 1 @ 2.1000',-2.09999990463257,1,'');
+INSERT INTO `gltrans` VALUES (672,10,13,0,'2004-11-29',59,107,'JOHNSON - HOND9022 x 1 @ 15.8600',-15.8599996566772,1,'');
+INSERT INTO `gltrans` VALUES (673,10,13,0,'2004-11-29',59,710000,'JOHNSON',15.8599996566772,1,'');
+INSERT INTO `gltrans` VALUES (674,11,9,0,'2004-11-27',59,70200,'WALMON - HON90021 x 5 @ 9.6900',-48.4500007629395,1,'');
+INSERT INTO `gltrans` VALUES (675,11,9,0,'2004-11-27',59,722000,'WALMON - HON90021 x 5 @ 9.6900',48.4500007629395,1,'');
 INSERT INTO `gltrans` VALUES (676,11,9,0,'2004-11-27',59,107,'WALMON - HON90021 x 5 @ 25.0000',125,1,'');
 INSERT INTO `gltrans` VALUES (677,11,9,0,'2004-11-27',59,710000,'WALMON',-137.5,1,'');
 INSERT INTO `gltrans` VALUES (678,11,9,0,'2004-11-27',59,810000,'WALMON',12.5,1,'');
-INSERT INTO `gltrans` VALUES (679,11,10,0,'2004-11-27',59,70200,'WALMON - 125 x 10 @ 0.6200',-6.2,1,'');
-INSERT INTO `gltrans` VALUES (680,11,10,0,'2004-11-27',59,720000,'WALMON - 125 x 10 @ 0.6200',6.2,1,'');
+INSERT INTO `gltrans` VALUES (679,11,10,0,'2004-11-27',59,70200,'WALMON - 125 x 10 @ 0.6200',-6.19999980926514,1,'');
+INSERT INTO `gltrans` VALUES (680,11,10,0,'2004-11-27',59,720000,'WALMON - 125 x 10 @ 0.6200',6.19999980926514,1,'');
 INSERT INTO `gltrans` VALUES (681,11,10,0,'2004-11-27',59,107,'WALMON - 125 x 10 @ .05',0.5,1,'');
-INSERT INTO `gltrans` VALUES (682,11,10,0,'2004-11-27',59,1,'WALMON - 125 @ 2.5%',-0.0125,1,'');
-INSERT INTO `gltrans` VALUES (683,11,10,0,'2004-11-27',59,710000,'WALMON',-0.4875,1,'');
-INSERT INTO `gltrans` VALUES (684,12,2,0,'2004-11-28',59,23400,'Testing once more',-5.98,1,'');
-INSERT INTO `gltrans` VALUES (685,12,2,0,'2004-11-28',59,700100,'',128.88,1,'');
-INSERT INTO `gltrans` VALUES (686,12,2,0,'2004-11-28',59,710000,'',-125.4,1,'');
+INSERT INTO `gltrans` VALUES (682,11,10,0,'2004-11-27',59,1,'WALMON - 125 @ 2.5%',-0.0125000001862645,1,'');
+INSERT INTO `gltrans` VALUES (683,11,10,0,'2004-11-27',59,710000,'WALMON',-0.487500011920929,1,'');
+INSERT INTO `gltrans` VALUES (684,12,2,0,'2004-11-28',59,23400,'Testing once more',-5.98000001907349,1,'');
+INSERT INTO `gltrans` VALUES (685,12,2,0,'2004-11-28',59,700100,'',128.880004882812,1,'');
+INSERT INTO `gltrans` VALUES (686,12,2,0,'2004-11-28',59,710000,'',-125.400001525879,1,'');
 INSERT INTO `gltrans` VALUES (687,12,2,0,'2004-11-28',59,455000,'',2.5,1,'');
 INSERT INTO `gltrans` VALUES (688,25,16,0,'2004-11-28',59,720000,'PO: 16 GREGCA - 123 - 12.3mm Round Steel coil x 250 @ 0.30',75,1,'');
 INSERT INTO `gltrans` VALUES (689,25,16,0,'2004-11-28',59,723000,'PO: 16 GREGCA - 123 - 12.3mm Round Steel coil x 250 @ 0.30',-75,1,'');
-INSERT INTO `gltrans` VALUES (690,25,16,0,'2004-11-28',59,720000,'PO: 16 GREGCA - 125 - 12.5mm round steel x 202 @ 0.62',125.24,1,'');
-INSERT INTO `gltrans` VALUES (691,25,16,0,'2004-11-28',59,723000,'PO: 16 GREGCA - 125 - 12.5mm round steel x 202 @ 0.62',-125.24,1,'');
-INSERT INTO `gltrans` VALUES (692,25,17,0,'2004-11-28',59,720000,'PO: 15 BIGBISC - 125 - 12.5mm round steel x 20 @ 0.62',12.4,1,'');
-INSERT INTO `gltrans` VALUES (693,25,17,0,'2004-11-28',59,723000,'PO: 15 BIGBISC - 125 - 12.5mm round steel x 20 @ 0.62',-12.4,1,'');
+INSERT INTO `gltrans` VALUES (690,25,16,0,'2004-11-28',59,720000,'PO: 16 GREGCA - 125 - 12.5mm round steel x 202 @ 0.62',125.23999786377,1,'');
+INSERT INTO `gltrans` VALUES (691,25,16,0,'2004-11-28',59,723000,'PO: 16 GREGCA - 125 - 12.5mm round steel x 202 @ 0.62',-125.23999786377,1,'');
+INSERT INTO `gltrans` VALUES (692,25,17,0,'2004-11-28',59,720000,'PO: 15 BIGBISC - 125 - 12.5mm round steel x 20 @ 0.62',12.3999996185303,1,'');
+INSERT INTO `gltrans` VALUES (693,25,17,0,'2004-11-28',59,723000,'PO: 15 BIGBISC - 125 - 12.5mm round steel x 20 @ 0.62',-12.3999996185303,1,'');
 INSERT INTO `gltrans` VALUES (694,1,18,0,'2004-11-28',59,10000,'asdad',22,1,'');
 INSERT INTO `gltrans` VALUES (695,1,18,0,'2004-11-28',59,24000,'adsdads asddsa  as asd ads ds ad',655.25,1,'');
 INSERT INTO `gltrans` VALUES (696,1,18,0,'2004-11-28',59,700000,'',-677.25,1,'');
@@ -4063,39 +4063,39 @@ INSERT INTO `gltrans` VALUES (699,25,29,0,'2004-11-28',59,720000,'GRN Reversal f
 INSERT INTO `gltrans` VALUES (700,25,29,0,'2004-11-28',59,723000,'GRN Reversal PO: 16 GREGCA - 123-12.3mm Round Steel coil x 250 @ 0.30',75,1,'');
 INSERT INTO `gltrans` VALUES (701,11,11,0,'2004-11-30',59,70200,'BILLYBUNT - HON90022 x 5 @ 2.1000',-10.5,1,'');
 INSERT INTO `gltrans` VALUES (702,11,11,0,'2004-11-30',59,722000,'BILLYBUNT - HON90022 x 5 @ 2.1000',10.5,1,'');
-INSERT INTO `gltrans` VALUES (703,11,11,0,'2004-11-30',59,107,'BILLYBUNT - HON90022 x 5 @ 1.33',6.65,1,'');
-INSERT INTO `gltrans` VALUES (704,11,11,0,'2004-11-30',59,710000,'BILLYBUNT',-6.65,1,'');
-INSERT INTO `gltrans` VALUES (705,35,4,0,'2004-12-02',60,20000,'125 cost was 0.62 changed to 0.6325 x Quantity on hand of 1541.0',-19.2625,1,'');
-INSERT INTO `gltrans` VALUES (706,35,4,0,'2004-12-02',60,720000,'125 cost was 0.62 changed to 0.6325 x Quantity on hand of 1541.0',19.2625,1,'');
-INSERT INTO `gltrans` VALUES (707,35,5,0,'2004-12-02',60,20000,'125 cost was 0.62 changed to 0.6325 x Quantity on hand of 1541.0',-19.2625,1,'');
-INSERT INTO `gltrans` VALUES (708,35,5,0,'2004-12-02',60,720000,'125 cost was 0.62 changed to 0.6325 x Quantity on hand of 1541.0',19.2625,1,'');
-INSERT INTO `gltrans` VALUES (709,35,6,0,'2004-12-02',60,20000,'125 cost was 0.62 changed to 0.6325 x Quantity on hand of 1541.0',-19.2625,1,'');
-INSERT INTO `gltrans` VALUES (710,35,6,0,'2004-12-02',60,720000,'125 cost was 0.62 changed to 0.6325 x Quantity on hand of 1541.0',19.2625,1,'');
-INSERT INTO `gltrans` VALUES (711,20,16,0,'2004-12-02',60,412000,'GREGCA testing 21344',16.19,1,'');
-INSERT INTO `gltrans` VALUES (712,20,16,0,'2004-12-02',60,723000,'GREGCA - GRN 30 - 125 x 205 @  std cost of 0.6200',127.1,1,'');
-INSERT INTO `gltrans` VALUES (713,20,16,0,'2004-12-02',60,23400,'GREGCA - GRN 30 - 125 x 205 x  price var of 5.78',1184.9,1,'');
-INSERT INTO `gltrans` VALUES (714,20,16,0,'2004-12-02',60,890000,'GREGCA - Inv 32212 GBP106.26 @ a rate of 0.8000',132.83,1,'');
-INSERT INTO `gltrans` VALUES (715,20,16,0,'2004-12-02',60,800000,'GREGCA - Inv 32212 GBP1,168.81 @ a rate of 0.8000',-1461.02,1,'');
+INSERT INTO `gltrans` VALUES (703,11,11,0,'2004-11-30',59,107,'BILLYBUNT - HON90022 x 5 @ 1.33',6.65000009536743,1,'');
+INSERT INTO `gltrans` VALUES (704,11,11,0,'2004-11-30',59,710000,'BILLYBUNT',-6.65000009536743,1,'');
+INSERT INTO `gltrans` VALUES (705,35,4,0,'2004-12-02',60,20000,'125 cost was 0.62 changed to 0.6325 x Quantity on hand of 1541.0',-19.2625007629395,1,'');
+INSERT INTO `gltrans` VALUES (706,35,4,0,'2004-12-02',60,720000,'125 cost was 0.62 changed to 0.6325 x Quantity on hand of 1541.0',19.2625007629395,1,'');
+INSERT INTO `gltrans` VALUES (707,35,5,0,'2004-12-02',60,20000,'125 cost was 0.62 changed to 0.6325 x Quantity on hand of 1541.0',-19.2625007629395,1,'');
+INSERT INTO `gltrans` VALUES (708,35,5,0,'2004-12-02',60,720000,'125 cost was 0.62 changed to 0.6325 x Quantity on hand of 1541.0',19.2625007629395,1,'');
+INSERT INTO `gltrans` VALUES (709,35,6,0,'2004-12-02',60,20000,'125 cost was 0.62 changed to 0.6325 x Quantity on hand of 1541.0',-19.2625007629395,1,'');
+INSERT INTO `gltrans` VALUES (710,35,6,0,'2004-12-02',60,720000,'125 cost was 0.62 changed to 0.6325 x Quantity on hand of 1541.0',19.2625007629395,1,'');
+INSERT INTO `gltrans` VALUES (711,20,16,0,'2004-12-02',60,412000,'GREGCA testing 21344',16.1900005340576,1,'');
+INSERT INTO `gltrans` VALUES (712,20,16,0,'2004-12-02',60,723000,'GREGCA - GRN 30 - 125 x 205 @  std cost of 0.6200',127.099998474121,1,'');
+INSERT INTO `gltrans` VALUES (713,20,16,0,'2004-12-02',60,23400,'GREGCA - GRN 30 - 125 x 205 x  price var of 5.78',1184.90002441406,1,'');
+INSERT INTO `gltrans` VALUES (714,20,16,0,'2004-12-02',60,890000,'GREGCA - Inv 32212 GBP106.26 @ a rate of 0.8000',132.830001831055,1,'');
+INSERT INTO `gltrans` VALUES (715,20,16,0,'2004-12-02',60,800000,'GREGCA - Inv 32212 GBP1,168.81 @ a rate of 0.8000',-1461.02001953125,1,'');
 INSERT INTO `gltrans` VALUES (716,21,7,0,'2004-12-02',60,413000,'GREGCA',-32.75,1,'');
-INSERT INTO `gltrans` VALUES (717,21,7,0,'2004-12-02',60,23400,'GREGCA - GRN Credit Note 30 - 125 x -3.0000 x  6.44',19.31,1,'');
-INSERT INTO `gltrans` VALUES (718,21,7,0,'2004-12-02',60,890000,'GREGCA - Credit Note 8445 GBP1.075 @ a rate of 0.8000',-1.34,1,'');
-INSERT INTO `gltrans` VALUES (719,21,7,0,'2004-12-02',60,800000,'GREGCA - Credit Note 8445 GBP11.83 @ a rate of 0.8000',14.78,1,'');
+INSERT INTO `gltrans` VALUES (717,21,7,0,'2004-12-02',60,23400,'GREGCA - GRN Credit Note 30 - 125 x -3.0000 x  6.44',19.3099994659424,1,'');
+INSERT INTO `gltrans` VALUES (718,21,7,0,'2004-12-02',60,890000,'GREGCA - Credit Note 8445 GBP1.075 @ a rate of 0.8000',-1.3400000333786,1,'');
+INSERT INTO `gltrans` VALUES (719,21,7,0,'2004-12-02',60,800000,'GREGCA - Credit Note 8445 GBP11.83 @ a rate of 0.8000',14.7799997329712,1,'');
 INSERT INTO `gltrans` VALUES (720,21,8,0,'2004-11-30',59,722000,'HISPUN Terrible nightmares',-31.25,1,'');
 INSERT INTO `gltrans` VALUES (721,21,8,0,'2004-11-30',59,800000,'HISPUN - Credit Note DF12554-125 GBP25.00 @ a rate of 0.8000',31.25,1,'');
-INSERT INTO `gltrans` VALUES (722,22,6,0,'2004-12-06',60,800000,'GREGCA-',293.538,1,'');
+INSERT INTO `gltrans` VALUES (722,22,6,0,'2004-12-06',60,800000,'GREGCA-',293.537994384766,1,'');
 INSERT INTO `gltrans` VALUES (723,22,6,0,'2004-12-06',60,455000,'GREGCA-',-1.875,1,'');
-INSERT INTO `gltrans` VALUES (724,22,6,0,'2004-12-06',60,700000,'GREGCA-',-291.663,1,'');
-INSERT INTO `gltrans` VALUES (725,22,7,0,'2004-12-31',60,700000,'FREDBLOW - Frederick Blowers & Co Inc payment run on 07/12/2004 - 1',-58.87,1,'');
-INSERT INTO `gltrans` VALUES (726,22,7,0,'2004-12-31',60,800000,'FREDBLOW - Frederick Blowers & Co Inc payment run on 07/12/2004 - 1',58.87,1,'');
-INSERT INTO `gltrans` VALUES (727,20,17,0,'2004-12-06',60,20000,'FREDBLOW sklsdalnk',35.99,1,'');
-INSERT INTO `gltrans` VALUES (728,20,17,0,'2004-12-06',60,890000,'FREDBLOW - Inv 56444 USD3.6 @ a rate of 1.0000',3.6,1,'');
-INSERT INTO `gltrans` VALUES (729,20,17,0,'2004-12-06',60,800000,'FREDBLOW - Inv 56444 USD39.59 @ a rate of 1.0000',-39.59,1,'');
+INSERT INTO `gltrans` VALUES (724,22,6,0,'2004-12-06',60,700000,'GREGCA-',-291.662994384766,1,'');
+INSERT INTO `gltrans` VALUES (725,22,7,0,'2004-12-31',60,700000,'FREDBLOW - Frederick Blowers & Co Inc payment run on 07/12/2004 - 1',-58.8699989318848,1,'');
+INSERT INTO `gltrans` VALUES (726,22,7,0,'2004-12-31',60,800000,'FREDBLOW - Frederick Blowers & Co Inc payment run on 07/12/2004 - 1',58.8699989318848,1,'');
+INSERT INTO `gltrans` VALUES (727,20,17,0,'2004-12-06',60,20000,'FREDBLOW sklsdalnk',35.9900016784668,1,'');
+INSERT INTO `gltrans` VALUES (728,20,17,0,'2004-12-06',60,890000,'FREDBLOW - Inv 56444 USD3.6 @ a rate of 1.0000',3.59999990463257,1,'');
+INSERT INTO `gltrans` VALUES (729,20,17,0,'2004-12-06',60,800000,'FREDBLOW - Inv 56444 USD39.59 @ a rate of 1.0000',-39.5900001525879,1,'');
 INSERT INTO `gltrans` VALUES (730,12,4,0,'2005-01-03',61,502000,'dreams',-2.5,1,'');
 INSERT INTO `gltrans` VALUES (731,12,4,0,'2005-01-03',61,700000,'',52.75,1,'');
 INSERT INTO `gltrans` VALUES (732,12,4,0,'2005-01-03',61,710000,'',-70.25,1,'');
 INSERT INTO `gltrans` VALUES (733,12,4,0,'2005-01-03',61,455000,'',20,1,'');
-INSERT INTO `gltrans` VALUES (734,1,19,0,'2005-01-23',61,24000,'Erich Von Hammer Haulage',152.95,1,'');
-INSERT INTO `gltrans` VALUES (735,1,19,0,'2005-01-23',61,700000,'',-152.95,1,'');
+INSERT INTO `gltrans` VALUES (734,1,19,0,'2005-01-23',61,24000,'Erich Von Hammer Haulage',152.949996948242,1,'');
+INSERT INTO `gltrans` VALUES (735,1,19,0,'2005-01-23',61,700000,'',-152.949996948242,1,'');
 
 --
 -- Dumping data for table `grns`
@@ -4396,23 +4396,23 @@ INSERT INTO `salesorderdetails` VALUES (43,'FROOM',0.0000,58.9000,4.0000,0,0.000
 -- Dumping data for table `salesorders`
 --
 
-INSERT INTO `salesorders` VALUES (27,'WALMON','WALM','',NULL,' Inv 1','2004-07-13','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',0.00,'MEL','2004-07-13',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (28,'WATTSGRP','WATTLA','',NULL,' Inv 2 Inv 6','2004-07-29','WS',1,'922 Acton Lane','Reefston','Los Angeles','California','235 446 998','','Watts Group Los Angeles',0.00,'DEN','2004-07-30',1,'2004-07-29',0);
-INSERT INTO `salesorders` VALUES (29,'WALMON','WALM','',NULL,' Inv 3','2004-08-15','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',0.00,'MEL','2004-08-20',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (30,'WALMON','WALM','',NULL,' Inv 4','2004-09-20','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',0.00,'MEL','2004-09-21',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (31,'GRANHR','GRAN','',NULL,' Inv 5 Inv 7 Inv 8','2004-09-20','EX',1,'2 Growler Terraces','West Hemington','BE22 FD2','England','','','Gramtham Horton PLC',0.00,'MUC','2004-09-21',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (32,'WALMON','WALMOADEL','',NULL,'','2004-09-24','EX',1,'2-6 Devon Street','Clovelly Park','Adelaide South','Australia','+61 3544 2113','','Wallace Monterey - Adelaide',0.00,'MEL','2004-09-25',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (33,'GRANHR','GRAN','9887',NULL,' Inv 9','2004-09-24','EX',1,'2 Growler Terraces','West Hemington','BE22 FD2','England','','','Gramtham Horton PLC',0.00,'MUC','2004-09-25',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (34,'WATTSGRP','WATT','',NULL,' Inv 10','2004-09-24','WS',1,'81 Trimble Road','Gimlet Rock','Greater Hampton','Arizona','233 5442 3255','','Watts Motor Group Head Office and Admin',0.00,'MEL','2004-09-25',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (35,'JOHNSON','JOHNTEMPE','',NULL,' Inv 12 Inv 13','2004-09-24','WS',1,'654 Roberto Street','Tempe','Arizona','USA','56565 444 44','','Johnson Vehicles Tempe',0.00,'DEN','2004-09-25',1,'2031-10-20',0);
-INSERT INTO `salesorders` VALUES (36,'WALMON','WALM','',NULL,'','2004-11-19','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',0.00,'MEL','2004-11-19',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (37,'GRANHR','GRAN','',NULL,'','2004-11-28','EX',1,'2 Growler Terraces','West Hemington','BE22 FD2','England','','','Gramtham Horton PLC',0.00,'MUC','2004-11-29',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (38,'BILLYBUNT','BILLYBUNT','',NULL,'','2004-11-28','WS',10,'Unit C Fatboy Industrial Estate','Donut Drive','Colchester','England','','','William Bunter Inc',0.00,'MUC','2004-11-29',1,'2004-11-28',0);
-INSERT INTO `salesorders` VALUES (39,'BILLYBUNT','BILLYBUNT','',NULL,'','2004-11-30','WS',10,'Unit C Fatboy Industrial Estate','Donut Drive','Colchester','England','','','William Bunter Inc',0.00,'MUC','2004-11-30',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (40,'12345678','1234','FR12335',NULL,NULL,'2004-12-01','WS',10,'','','','','','','One Two Three Four Five Six Seven Eight',0.00,'DEN','2005-01-01',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (41,'12345678','1234','221114',NULL,NULL,'2004-12-01','WS',10,'','','','','','','One Two Three Four Five Six Seven Eight',0.00,'DEN','2004-12-02',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (42,'WALMON','WALM','',NULL,'','2004-12-06','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',0.00,'MEL','2004-12-06',1,'2004-12-06',0);
-INSERT INTO `salesorders` VALUES (43,'JOHNSON','JOHNTEMPE','',NULL,'','2005-02-05','WS',1,'654 Roberto Street','Tempe','Arizona','USA','56565 444 44','','Johnson Vehicles Tempe',0.00,'DEN','2005-02-07',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (27,'WALMON','WALM','',NULL,' Inv 1','2004-07-13','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',0,'MEL','2004-07-13',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (28,'WATTSGRP','WATTLA','',NULL,' Inv 2 Inv 6','2004-07-29','WS',1,'922 Acton Lane','Reefston','Los Angeles','California','235 446 998','','Watts Group Los Angeles',0,'DEN','2004-07-30',1,'2004-07-29',0);
+INSERT INTO `salesorders` VALUES (29,'WALMON','WALM','',NULL,' Inv 3','2004-08-15','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',0,'MEL','2004-08-20',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (30,'WALMON','WALM','',NULL,' Inv 4','2004-09-20','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',0,'MEL','2004-09-21',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (31,'GRANHR','GRAN','',NULL,' Inv 5 Inv 7 Inv 8','2004-09-20','EX',1,'2 Growler Terraces','West Hemington','BE22 FD2','England','','','Gramtham Horton PLC',0,'MUC','2004-09-21',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (32,'WALMON','WALMOADEL','',NULL,'','2004-09-24','EX',1,'2-6 Devon Street','Clovelly Park','Adelaide South','Australia','+61 3544 2113','','Wallace Monterey - Adelaide',0,'MEL','2004-09-25',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (33,'GRANHR','GRAN','9887',NULL,' Inv 9','2004-09-24','EX',1,'2 Growler Terraces','West Hemington','BE22 FD2','England','','','Gramtham Horton PLC',0,'MUC','2004-09-25',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (34,'WATTSGRP','WATT','',NULL,' Inv 10','2004-09-24','WS',1,'81 Trimble Road','Gimlet Rock','Greater Hampton','Arizona','233 5442 3255','','Watts Motor Group Head Office and Admin',0,'MEL','2004-09-25',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (35,'JOHNSON','JOHNTEMPE','',NULL,' Inv 12 Inv 13','2004-09-24','WS',1,'654 Roberto Street','Tempe','Arizona','USA','56565 444 44','','Johnson Vehicles Tempe',0,'DEN','2004-09-25',1,'2031-10-20',0);
+INSERT INTO `salesorders` VALUES (36,'WALMON','WALM','',NULL,'','2004-11-19','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',0,'MEL','2004-11-19',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (37,'GRANHR','GRAN','',NULL,'','2004-11-28','EX',1,'2 Growler Terraces','West Hemington','BE22 FD2','England','','','Gramtham Horton PLC',0,'MUC','2004-11-29',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (38,'BILLYBUNT','BILLYBUNT','',NULL,'','2004-11-28','WS',10,'Unit C Fatboy Industrial Estate','Donut Drive','Colchester','England','','','William Bunter Inc',0,'MUC','2004-11-29',1,'2004-11-28',0);
+INSERT INTO `salesorders` VALUES (39,'BILLYBUNT','BILLYBUNT','',NULL,'','2004-11-30','WS',10,'Unit C Fatboy Industrial Estate','Donut Drive','Colchester','England','','','William Bunter Inc',0,'MUC','2004-11-30',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (40,'12345678','1234','FR12335',NULL,NULL,'2004-12-01','WS',10,'','','','','','','One Two Three Four Five Six Seven Eight',0,'DEN','2005-01-01',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (41,'12345678','1234','221114',NULL,NULL,'2004-12-01','WS',10,'','','','','','','One Two Three Four Five Six Seven Eight',0,'DEN','2004-12-02',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (42,'WALMON','WALM','',NULL,'','2004-12-06','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',0,'MEL','2004-12-06',1,'2004-12-06',0);
+INSERT INTO `salesorders` VALUES (43,'JOHNSON','JOHNTEMPE','',NULL,'','2005-02-05','WS',1,'654 Roberto Street','Tempe','Arizona','USA','56565 444 44','','Johnson Vehicles Tempe',0,'DEN','2005-02-07',0,'0000-00-00',0);
 
 --
 -- Dumping data for table `salestypes`
@@ -4677,8 +4677,8 @@ INSERT INTO `securitytokens` VALUES (15,'User management, System Admin setup & u
 -- Dumping data for table `shipmentcharges`
 --
 
-INSERT INTO `shipmentcharges` VALUES (1,3,20,14,'',53.52);
-INSERT INTO `shipmentcharges` VALUES (2,3,21,5,'125',-1.19);
+INSERT INTO `shipmentcharges` VALUES (1,3,20,14,'',53.5200004577637);
+INSERT INTO `shipmentcharges` VALUES (2,3,21,5,'125',-1.19000005722046);
 
 --
 -- Dumping data for table `shipments`
@@ -4768,7 +4768,7 @@ INSERT INTO `stockmoves` VALUES (166,'HOND9022',10,2,'DEN','2004-07-30','WATTSGR
 INSERT INTO `stockmoves` VALUES (167,'125',10,3,'MEL','2004-08-20','WALMON','WALM','1.3059',56,'29',-5.0000,0.0000,0.6200,1,1155,0,0,'Testing one two three');
 INSERT INTO `stockmoves` VALUES (168,'HON90021',10,3,'MEL','2004-08-20','WALMON','WALM','14.7059',56,'29',-12.0000,0.0000,9.6900,1,478,0,0,'');
 INSERT INTO `stockmoves` VALUES (169,'HON90021',11,4,'MUC','2004-08-23','GRANHR','GRAN','12.6500',56,'',15.0000,0.2500,9.6900,1,0,0,0,'');
-INSERT INTO `stockmoves` VALUES (170,'125',11,5,'MEL','2004-08-23','WALMON','WALMOADEL','0.1941',56,'',25.0000,0.0500,0.6200,1,1180,0,0.1,'Scrap steel credited in lieu');
+INSERT INTO `stockmoves` VALUES (170,'125',11,5,'MEL','2004-08-23','WALMON','WALMOADEL','0.1941',56,'',25.0000,0.0500,0.6200,1,1180,0,0.100000001490116,'Scrap steel credited in lieu');
 INSERT INTO `stockmoves` VALUES (171,'HON90021',10,4,'MEL','2004-09-21','WALMON','WALM','14.7059',57,'30',-2.0000,0.0000,9.6900,1,476,0,0,'');
 INSERT INTO `stockmoves` VALUES (172,'HOND9022',10,4,'MEL','2004-09-21','WALMON','WALM','14.4118',57,'30',-2.0000,0.0000,2.1000,1,-2,0,0,'');
 INSERT INTO `stockmoves` VALUES (173,'HON90021',11,7,'MEL','2004-09-20','WALMON','WALM','14.7059',57,'',2.0000,0.0000,9.6900,1,478,0,0,'');
@@ -4792,7 +4792,7 @@ INSERT INTO `stockmoves` VALUES (195,'HOND9022',10,12,'DEN','2004-09-25','JOHNSO
 INSERT INTO `stockmoves` VALUES (196,'HOND9022',11,8,'DEN','2004-11-01','WATTSGRP','WATTLA','15.8600',59,'test',52.0000,0.0000,2.1000,1,45,0,0,'');
 INSERT INTO `stockmoves` VALUES (197,'HOND9022',11,8,'DEN','2004-11-01','WATTSGRP','WATTLA','15.8600',59,'test',-52.0000,0.0000,2.1000,0,-7,0,0,'');
 INSERT INTO `stockmoves` VALUES (198,'HOND9022',10,13,'DEN','2004-11-29','JOHNSON','JOHNTEMPE','15.8600',59,'35',-1.0000,0.0000,2.1000,1,-1,0,0,'I cant imagine any other sucker going to such extraordinary lengths to test the narrative formating of invoices. I really am one sicko.');
-INSERT INTO `stockmoves` VALUES (199,'HON90021',11,9,'MEL','2004-11-27','WALMON','WALM','14.7059',59,'',5.0000,0.0000,9.6900,1,488,0,0.1,'');
+INSERT INTO `stockmoves` VALUES (199,'HON90021',11,9,'MEL','2004-11-27','WALMON','WALM','14.7059',59,'',5.0000,0.0000,9.6900,1,488,0,0.100000001490116,'');
 INSERT INTO `stockmoves` VALUES (200,'125',11,10,'MEL','2004-11-27','WALMON','WALM','0.0294',59,'',10.0000,0.0250,0.6200,1,1190,0,0,'');
 INSERT INTO `stockmoves` VALUES (201,'123',25,16,'DEN','2004-11-28','','','66.5000',59,'GREGCA (Gregor Capel Inc) - 16',250.0000,0.0000,0.3000,1,248,0,0,'');
 INSERT INTO `stockmoves` VALUES (202,'125',25,16,'DEN','2004-11-28','','','6.5000',59,'GREGCA (Gregor Capel Inc) - 16',202.0000,0.0000,0.6200,1,289,0,0,'');
@@ -4835,7 +4835,7 @@ INSERT INTO `stockserialitems` VALUES ('125','DEN','sdadada',32);
 INSERT INTO `stockserialitems` VALUES ('HON90021','MEL','1224344',3);
 INSERT INTO `stockserialitems` VALUES ('HON90021','DEN','1224454',33);
 INSERT INTO `stockserialitems` VALUES ('HON90021','MEL','1232344',2);
-INSERT INTO `stockserialitems` VALUES ('HON90021','DEN','2335421-ABC',38.2);
+INSERT INTO `stockserialitems` VALUES ('HON90021','DEN','2335421-ABC',38.2000007629395);
 INSERT INTO `stockserialitems` VALUES ('HON90021','DEN','4544111',7);
 INSERT INTO `stockserialitems` VALUES ('HON90021','MEL','4544111',5);
 INSERT INTO `stockserialitems` VALUES ('HON90021','MUC','4544111',0);
@@ -4896,7 +4896,7 @@ INSERT INTO `stockserialmoves` VALUES (320,202,'125','dsklj399',33);
 INSERT INTO `stockserialmoves` VALUES (321,202,'125','dsklmnlknm',30);
 INSERT INTO `stockserialmoves` VALUES (322,203,'125','45444201',20);
 INSERT INTO `stockserialmoves` VALUES (323,206,'HON90021','1224454',33);
-INSERT INTO `stockserialmoves` VALUES (324,206,'HON90021','2335421-ABC',38.2);
+INSERT INTO `stockserialmoves` VALUES (324,206,'HON90021','2335421-ABC',38.2000007629395);
 INSERT INTO `stockserialmoves` VALUES (325,208,'125','124442221',5);
 INSERT INTO `stockserialmoves` VALUES (326,209,'125','112wqe1dsa',-10);
 INSERT INTO `stockserialmoves` VALUES (327,210,'125','112wqe1dsa',10);
@@ -4905,8 +4905,8 @@ INSERT INTO `stockserialmoves` VALUES (327,210,'125','112wqe1dsa',10);
 -- Dumping data for table `suppallocs`
 --
 
-INSERT INTO `suppallocs` VALUES (1,55.20,'2004-12-03',30,31);
-INSERT INTO `suppallocs` VALUES (2,58.87,'2004-12-31',36,25);
+INSERT INTO `suppallocs` VALUES (1,55.2000007629395,'2004-12-03',30,31);
+INSERT INTO `suppallocs` VALUES (2,58.8699989318848,'2004-12-31',36,25);
 
 --
 -- Dumping data for table `suppliercontacts`
