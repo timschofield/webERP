@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $title = "Sales Area Maintenance";
 
 $PageSecurity = 3;
@@ -110,12 +110,13 @@ if ($_POST['submit']) {
 
 	}
 	//END WHILE LIST LOOP
+	echo "</TABLE></CENTER>";
 }
 
 //end of ifs and buts!
 
 ?>
-</CENTER></table>
+
 <p>
 <?php
 if (isset($SelectedArea)) {  ?>

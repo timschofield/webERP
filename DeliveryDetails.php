@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
 */
@@ -207,7 +207,43 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 
 	$DelDate = FormatDateforSQL($_SESSION['Items']->DeliveryDate);
 
-	$HeaderSQL = "INSERT INTO SalesOrders (DebtorNo, BranchCode, CustomerRef, Comments, OrdDate, OrderType, ShipVia, DeliverTo, DelAdd1, DelAdd2, DelAdd3, DelAdd4, ContactPhone, ContactEmail, FreightCost, FromStkLoc, DeliveryDate) VALUES ('" . $_SESSION['Items']->DebtorNo . "', '" . $_SESSION['Items']->Branch . "', '". $_SESSION['Items']->CustRef ."','". $_SESSION['Items']->Comments ."','" . Date("Y-m-d H:i") . "', '" . $_SESSION['Items']->DefaultSalesType . "', " . $_POST['ShipVia'] .",'" . $_SESSION['Items']->DeliverTo . "', '" . $_SESSION['Items']->BrAdd1 . "', '" . $_SESSION['Items']->BrAdd2 . "', '" . $_SESSION['Items']->BrAdd3 . "', '" . $_SESSION['Items']->BrAdd4 . "', '" . $_SESSION['Items']->PhoneNo . "', '" . $_SESSION['Items']->Email . "', " . $_SESSION['Items']->FreightCost .", '" . $_SESSION['Items']->Location ."', '" . $DelDate . "')";
+	$HeaderSQL = "INSERT INTO SalesOrders (
+				DebtorNo, 
+				BranchCode, 
+				CustomerRef, 
+				Comments, 
+				OrdDate, 
+				OrderType, 
+				ShipVia, 
+				DeliverTo, 
+				DelAdd1, 
+				DelAdd2, 
+				DelAdd3, 
+				DelAdd4, 
+				ContactPhone, 
+				ContactEmail, 
+				FreightCost, 
+				FromStkLoc, 
+				DeliveryDate) 
+			VALUES (
+				'" . $_SESSION['Items']->DebtorNo . "', 
+				'" . $_SESSION['Items']->Branch . "', 
+				'". $_SESSION['Items']->CustRef ."',
+				'". $_SESSION['Items']->Comments ."',
+				'" . Date("Y-m-d H:i") . "', 
+				'" . $_SESSION['Items']->DefaultSalesType . "', 
+				" . $_POST['ShipVia'] .",
+				'" . $_SESSION['Items']->DeliverTo . "', 
+				'" . $_SESSION['Items']->BrAdd1 . "', 
+				'" . $_SESSION['Items']->BrAdd2 . "', 
+				'" . $_SESSION['Items']->BrAdd3 . "', 
+				'" . $_SESSION['Items']->BrAdd4 . "', 
+				'" . $_SESSION['Items']->PhoneNo . "', 
+				'" . $_SESSION['Items']->Email . "', 
+				" . $_SESSION['Items']->FreightCost .", 
+				'" . $_SESSION['Items']->Location ."', 
+				'" . $DelDate . "'
+				)";
 
 	$InsertQryResult = DB_query($HeaderSQL,$db);
 
@@ -215,10 +251,25 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 		echo "<BR>The order cannot be added because - " . DB_error_msg($db) . ". The incorrect SQL used to perform this insert operation was: <BR>$HeaderSQL";
 	} else {
 		$OrderNo = DB_Last_Insert_ID($db);
-		$StartOf_LineItemsSQL = "INSERT INTO SalesOrderDetails (OrderNo, StkCode, UnitPrice, Quantity, DiscountPercent) VALUES (";
+		$StartOf_LineItemsSQL = "INSERT INTO SalesOrderDetails (
+						OrderNo, 
+						StkCode, 
+						UnitPrice, 
+						Quantity, 
+						DiscountPercent, 
+						Narrative) 
+					VALUES (";
 
 		foreach ($_SESSION['Items']->LineItems as $StockItem) {
-			$LineItemsSQL = $StartOf_LineItemsSQL . $OrderNo . ",'" . $StockItem->StockID . "',". $StockItem->Price . ", " . $StockItem->Quantity . ", " . $StockItem->DiscountPercent . ")";
+		
+			$LineItemsSQL = $StartOf_LineItemsSQL . 
+						$OrderNo . ",
+						'" . $StockItem->StockID . "',
+						". $StockItem->Price . ", 
+						" . $StockItem->Quantity . ", 
+						" . $StockItem->DiscountPercent . ",
+						'" . $StockItem->Narrative . "'
+					)";
 			$Ins_LineItemResult = DB_query($LineItemsSQL,$db);
 		} /* inserted line items into sales order details */
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 if (isset($_GET['Title'])){
 	$HelpPageTitle = $_GET['Title'];
@@ -55,8 +55,15 @@ if ($_POST['submit']) {
 	} elseif ($InputError !=1) {
 
 	/*Must be submitting new entries in the help narrative addition form */
-
-		$sql = "INSERT INTO Help (PageID, Narrative) VALUES (" . $_POST['PageID'] . ", '" . $_POST['Narrative'] . "')";
+		
+		if ($_SESSION['ModulesEnabled'][7]!=1){ /*User has no access to system set up */
+		/*User help records will be added as help type U */
+			$HelpType = "U";
+		} else {
+		/*Sys Admin help admin records will be added as help type A */
+			$HelpType = "A";
+		}
+		$sql = "INSERT INTO Help (PageID, Narrative, HelpType) VALUES (" . $_POST['PageID'] . ", '" . $_POST['Narrative'] . "')";
 		$msg = "The new help narrative has been added";
 		if ($ContributeHelpText==true){
 			$Recipients = array("'Phil' <p.daintree@paradise.net.nz>");
@@ -102,11 +109,11 @@ $sql = "SELECT PageID, PageDescription FROM Scripts WHERE FileName='" . $Page ."
 $result = DB_query($sql,$db);
 
 echo "<CENTER><table border=0 cellpadding=0>\n";
-echo "<tr><td class='tableheader'>Overview of " . $HelpPageTitle ."</td></tr>\n";
+echo "<tr><td class='HelpTableHeader'>Help On " . $HelpPageTitle ."</td></tr>\n";
 
 $myrow = DB_fetch_row($result);
 
-echo "<TR><TD>" . $myrow[1] . "</TD></TR>";
+echo "<TR><TD><FONT SIZE=3><BR>" . $myrow[1] . "<BR></TD></TR>";
 
 echo "<TR><TD><HR></TD></TR>";
 
@@ -114,14 +121,21 @@ $PageID = $myrow[0];
 
 /*Now get the help records recorded for PageID */
 
-$sql = "SELECT Narrative, ID FROM Help WHERE PageID=" . $PageID . " ORDER BY ID";
+$sql = "SELECT Narrative, ID, HelpType FROM Help WHERE PageID=" . $PageID . " ORDER BY HelpType, ID";
 $result = DB_query($sql,$db);
 
 while ($myrow = DB_fetch_row($result)) {
 
-
-	printf("<tr><td>%s</td><td><a href='%sHelpID=%s&Page=%s&Title=%s'>Edit</td><td><a href='%sHelpID=%s&delete=yes&Page=%s&Title=%s'>DELETE</td></tr>", $myrow[0], $_SERVER['PHP_SELF'] . "?" . SID, $myrow[1], $Page, $HelpPageTitle, $_SERVER['PHP_SELF'] . "?" . SID, $myrow[1], $Page, $HelpPageTitle);
-
+	if ($_SESSION['ModulesEnabled'][7]!=1 AND ($myrow[2]=='S' OR $myrow[2]=='A')){
+		
+		/*Help is Admin or System help and cannot be edited or deleted by non Sys Admins */
+		
+		printf("<tr><td>%s</td></tr>", $myrow[0]);
+		
+	} else { /*allow System Admins to modify/delete any help */
+	
+		printf("<tr><td>%s</td><td><a href='%sHelpID=%s&Page=%s&Title=%s'>Edit</td><td>&nbsp;<a href='%sHelpID=%s&delete=yes&Page=%s&Title=%s'>DELETE</td></tr>", $myrow[0], $_SERVER['PHP_SELF'] . "?" . SID, $myrow[1], $Page, $HelpPageTitle, $_SERVER['PHP_SELF'] . "?" . SID, $myrow[1], $Page, $HelpPageTitle);
+	}
 //END WHILE LIST LOOP
 }
 

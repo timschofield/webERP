@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 if (isset($_GET['ModifyOrderNumber'])) {
 	$title = "Modifying Order " . $_GET['ModifyOrderNumber'];
 } else {
@@ -146,6 +146,7 @@ if (isset($_GET['ModifyOrderNumber']) AND $_GET['ModifyOrderNumber']!=""){
 				DiscountPercent,
 				ActualDispatchDate,
 				QtyInvoiced,
+				SalesOrderDetails.Narrative,
 				LocStock.Quantity AS QOHatLoc,
 				StockMaster.MBflag,
 				StockMaster.DiscountCategory,
@@ -177,7 +178,8 @@ if (isset($_GET['ModifyOrderNumber']) AND $_GET['ModifyOrderNumber']!=""){
 								$myrow['DiscountCategory'],
 								0,	/*Controlled*/
 								0,	/*Serialised */
-								$myrow['DecimalPlaces']);
+								$myrow['DecimalPlaces'],
+								$myrow['Narrative']);
 				/*Just populating with existing order - no DBUpdates */
 
 			} /* line items from sales order details */
@@ -248,11 +250,29 @@ if ($_POST['SearchCust']=="Search Now" AND $_SESSION['RequireCustomerSelection']
 			}
 			$SearchString = $SearchString. substr($_POST['Keywords'],$i)."%";
 
-			$SQL = "SELECT CustBranch.BrName, CustBranch.ContactName, CustBranch.PhoneNo, CustBranch.FaxNo, CustBranch.BranchCode, CustBranch.DebtorNo FROM CustBranch WHERE CustBranch.BrName LIKE '$SearchString' AND CustBranch.DisableTrans=0";
+			$SQL = "SELECT CustBranch.BrName, 
+					CustBranch.ContactName, 
+					CustBranch.PhoneNo, 
+					CustBranch.FaxNo, 
+					CustBranch.BranchCode, 
+					CustBranch.DebtorNo 
+				FROM CustBranch 
+				WHERE CustBranch.BrName LIKE '$SearchString' 
+				AND CustBranch.DisableTrans=0";
 
 		} elseif (strlen($_POST['CustCode'])>0){
+			
 			$_POST["CustCode"] = strtoupper($_POST["CustCode"]);
-			$SQL = "SELECT CustBranch.BrName, CustBranch.ContactName, CustBranch.PhoneNo, CustBranch.FaxNo, CustBranch.BranchCode, CustBranch.DebtorNo FROM CustBranch WHERE CustBranch.BranchCode LIKE '%" . $_POST['CustCode'] . "%'  AND CustBranch.DisableTrans=0";
+			
+			$SQL = "SELECT CustBranch.BrName, 
+					CustBranch.ContactName, 
+					CustBranch.PhoneNo, 
+					CustBranch.FaxNo, 
+					CustBranch.BranchCode, 
+					CustBranch.DebtorNo 
+				FROM CustBranch 
+				WHERE CustBranch.BranchCode LIKE '%" . $_POST['CustCode'] . "%'  
+				AND CustBranch.DisableTrans=0";
 		}
 
 		$result_CustSelect = DB_query($SQL,$db);
@@ -273,13 +293,22 @@ if ($_POST['SearchCust']=="Search Now" AND $_SESSION['RequireCustomerSelection']
 // record returned from a search so parse the $Select string into customer code and branch code */
 if (isset($_POST['Select']) AND $_POST['Select']!="") {
 
-
 	$_SESSION['Items']->Branch = substr($_POST['Select'],strrpos($_POST['Select']," - ")+3);
 
 	$_POST['Select'] = substr($_POST['Select'],0,strpos($_POST['Select']," - "));
 
 	// Now check to ensure this account is not on hold */
-	$sql = "SELECT DebtorsMaster.Name, HoldReasons.DissallowInvoices, DebtorsMaster.SalesType, SalesTypes.Sales_Type, DebtorsMaster.CurrCode From DebtorsMaster, HoldReasons, SalesTypes WHERE DebtorsMaster.SalesType=SalesTypes.TypeAbbrev AND DebtorsMaster.HoldReason=HoldReasons.ReasonCode AND DebtorsMaster.DebtorNo = '" . $_POST['Select'] . "'";
+	$sql = "SELECT DebtorsMaster.Name, 
+			HoldReasons.DissallowInvoices, 
+			DebtorsMaster.SalesType, 
+			SalesTypes.Sales_Type, 
+			DebtorsMaster.CurrCode 
+		FROM DebtorsMaster, 
+			HoldReasons, 
+			SalesTypes 
+		WHERE DebtorsMaster.SalesType=SalesTypes.TypeAbbrev 
+		AND DebtorsMaster.HoldReason=HoldReasons.ReasonCode 
+		AND DebtorsMaster.DebtorNo = '" . $_POST['Select'] . "'";
 
 	$ErrMsg = "The details of the customer selected: " .  $_POST['Select'] . " cannot be retrieved because";
 	$DbgMsg = "<BR>The SQL used to retrieve the customer details (and failed) was:";
@@ -393,11 +422,10 @@ if (isset($_POST['Select']) AND $_POST['Select']!="") {
 		$_SESSION['Items']->Location = $myrow[7];
 
 	} else {
-		echo "<P>The " . $myrow[0] . " account is <B>currently on hold </B>please contact the credit control personnel to discuss this account.";
+		echo "<BR><BR><FONT SIZE=3 COLOR=RED><P>The " . $myrow[0] . " account is <B>currently on hold </B>please contact the credit control personnel to discuss this account.</FONT>";
 		exit;
 	}
 }
-
 
 if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->DebtorNo) OR $_SESSION['Items']->DebtorNo=="" ) {
 	?>
@@ -425,7 +453,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 
 		echo "<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>";
 
-		$TableHeader = "<TR><TD class='tableheader'>Code</TD><TD class='tableheader'>Branch</TD><TD class='tableheader'>Contact</TD><TD class='tableheader'>Phone</TD><TD class='tableheader'>Fax</TD></TR>";
+		$TableHeader = "<TR>
+				<TD class='tableheader'>Code</TD>
+				<TD class='tableheader'>Branch</TD>
+				<TD class='tableheader'>Contact</TD>
+				<TD class='tableheader'>Phone</TD>
+				<TD class='tableheader'>Fax</TD>
+				</TR>";
 		echo $TableHeader;
 
 		$j = 1;
@@ -465,11 +499,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 
 		echo "</TABLE>";
 
-	}
-//end if results to show
+	}//end if results to show
 
 //end if RequireCustomerSelection
-} else {
+} else { //dont require customer selection
 // everything below here only do if a customer is selected
 	if (!isset($_POST['CancelOrder'])) $_POST['CancelOrder']='No';
 	 if ($_POST['CancelOrder']=="Cancel Whole Order") {
@@ -550,8 +583,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 
 			if ($_POST['StockCat']=="All"){
 				$SQL = "SELECT StockMaster.StockID,
-					StockMaster.Description,
-					StockMaster.Units
+						StockMaster.Description,
+						StockMaster.Units
 					FROM StockMaster, StockCategory
 					WHERE StockMaster.CategoryID=StockCategory.CategoryID
 					AND (StockCategory.StockType='F' OR StockCategory.StockType='D')
@@ -559,8 +592,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 					ORDER BY StockMaster.StockID";
 			} else {
 				$SQL = "SELECT StockMaster.StockID,
-					StockMaster.Description,
-					StockMaster.Units
+						StockMaster.Description,
+						StockMaster.Units
 					FROM StockMaster, StockCategory
 					WHERE  StockMaster.CategoryID=StockCategory.CategoryID
 					AND (StockCategory.StockType='F' OR StockCategory.StockType='D')
@@ -575,8 +608,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 
 			if ($_POST['StockCat']=="All"){
 				$SQL = "SELECT StockMaster.StockID,
-					StockMaster.Description,
-					StockMaster.Units
+						StockMaster.Description,
+						StockMaster.Units
 					FROM StockMaster, StockCategory
 					WHERE StockMaster.CategoryID=StockCategory.CategoryID
 					AND (StockCategory.StockType='F' OR StockCategory.StockType='D')
@@ -584,8 +617,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 					ORDER BY StockMaster.StockID";
 			} else {
 				$SQL = "SELECT StockMaster.StockID,
-					StockMaster.Description,
-					StockMaster.Units
+						StockMaster.Description,
+						StockMaster.Units
 					FROM StockMaster, StockCategory
 					WHERE StockMaster.CategoryID=StockCategory.CategoryID
 					AND (StockCategory.StockType='F' OR StockCategory.StockType='D')
@@ -597,16 +630,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 		} else {
 			if ($_POST['StockCat']=="All"){
 				$SQL = "SELECT StockMaster.StockID,
-					StockMaster.Description,
-					StockMaster.Units
+						StockMaster.Description,
+						StockMaster.Units
 					FROM StockMaster, StockCategory
 					WHERE  StockMaster.CategoryID=StockCategory.CategoryID
 					AND (StockCategory.StockType='F' OR StockCategory.StockType='D')
 					ORDER BY StockMaster.StockID";
 			} else {
 				$SQL = "SELECT StockMaster.StockID,
-					StockMaster.Description,
-					StockMaster.Units
+						StockMaster.Description,
+						StockMaster.Units
 					FROM StockMaster, StockCategory
 					WHERE StockMaster.CategoryID=StockCategory.CategoryID
 					AND (StockCategory.StockType='F' OR StockCategory.StockType='D')
@@ -667,10 +700,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 		   		FROM StockMaster
 				WHERE StockMaster.StockID='". $NewItem ."'";
 
-		   $ErrMsg = "<BR>Could not determine if the part being ordered was a kitset or not because ";		   $DbgMsg = "<BR>The SQL that failed was:";
+		   $ErrMsg = "<BR>Could not determine if the part being ordered was a kitset or not because ";
+		   $DbgMsg = "<BR>The SQL that failed was:";
 		   $KitResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
 
-		   if ($myrow=DB_fetch_array($KitResult)){
+		   
+		   if (DB_num_rows($KitResult)==0){
+		   	echo "<BR><FONT COLOR=RED><B>Warning:</FONT>The item code $NewItem could not be retrieved from the database and has not been added to the order</B><BR>";
+		   }elseif ($myrow=DB_fetch_array($KitResult)){
 		     if ($myrow["MBFlag"]=="K"){	/*It is a kit set item */
 			    $sql = "SELECT BOM.Component,
 			    		BOM.Quantity
@@ -717,7 +754,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 				$Quantity = $_POST['Quantity_' . $StockItem->StockID];
 				$Price = $_POST['Price_' . $StockItem->StockID];
 				$DiscountPercentage = $_POST['Discount_' . $StockItem->StockID];
-
+				$Narrative = $_POST['Narrative_' . $StockItem->StockID];
+				
 				If ($Quantity<0 OR $Price <0 OR $DiscountPercentage >100 OR $DiscountPercentage <0){
 					echo "<BR>The item could not be updated because you are attempting to set the quantity ordered to less than 0, or the price less than 0 or the discount more than 100% or less than 0%";
 
@@ -731,11 +769,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 
 				} elseif ($_SESSION['Items']->LineItems[$StockItem->StockID]->QtyInv > $Quantity){
 					echo "<BR>You are attempting to make the quantity ordered a quantity less than has already been invoiced. The quantity delivered and invoiced cannot be modified retrospectively";
-				} elseif ($StockItem->Quantity !=$Quantity OR $StockItem->Price != $Price OR ABS($StockItem->Disc -$DiscountPercentage/100) >0.001) {
+				} elseif ($StockItem->Quantity !=$Quantity OR $StockItem->Price != $Price OR ABS($StockItem->Disc -$DiscountPercentage/100) >0.001 OR $StockItem->Narrative != $Narrative) {
+									
 					$_SESSION['Items']->update_cart_item($StockItem->StockID,
 										$Quantity,
 										$Price,
 										($DiscountPercentage/100),
+										$Narrative,
 										'Yes' /*Update DB */);
 				}
 			} //page not called from itself - POST variables not set
@@ -752,15 +792,15 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 		If (isset($NewItem)){
 /* get the item details from the database and hold them in the cart object make the quantity 1 by default then add it to the cart */
 /*Now figure out if the item is a kit set - the field MBFlag='K'*/
-		   $sql = "SELECT StockMaster.MBFlag FROM StockMaster WHERE StockMaster.StockID='". $NewItem ."'";
-		   $KitResult = DB_query($sql, $db);
-		   if (DB_error_no($db)!=0){
-			echo "<BR>Could not determine if the part being ordered was a kitset or not because - " . DB_error_msg($db);
-			if ($debug==1){
-				 echo "<BR>Failed to determine if the part being ordered was a kitset because - " . DB_error_msg($db) . "<BR> The SQL that failed was:<BR>$sql";
-			}
-			exit;
-		   }
+		   $sql = "SELECT StockMaster.MBFlag 
+		   		FROM StockMaster 
+				WHERE StockMaster.StockID='". $NewItem ."'";
+		   
+		   $ErrMsg = "<BR>Could not determine if the part being ordered was a kitset or not because";
+		   $DbgMsg = "<BR> The SQL that failed was:";
+		
+		   $KitResult = DB_query($sql, $db,$ErrMsg, $DbgMsg);
+		   	
 		   $NewItemQty = 1; /*By Default */
 		   if ($myrow=DB_fetch_array($KitResult)){
 		     if ($myrow["MBFlag"]=="K"){	/*It is a kit set item */
@@ -845,15 +885,17 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 				if ($StockItem->QOHatLoc < $StockItem->Quantity AND ($StockItem->MBflag=="B" OR $StockItem->MBflag=="M")) {
 				/*There is a stock deficiency in the stock location selected */
 
-					echo "<tr bgcolor='#EEAABB'>";
+					$RowStarter = "<tr bgcolor='#EEAABB'>";
 				} elseif ($k==1){
-					echo "<tr bgcolor='#CCCCCC'>";
+					$RowStarter = "<tr bgcolor='#CCCCCC'>";
 					$k=0;
 				} else {
-					echo "<tr bgcolor='#EEEEEE'>";
+					$RowStarter = "<tr bgcolor='#EEEEEE'>";
 					$k=1;
 				}
-
+				
+				echo $RowStarter;
+				
 				echo "<TD><A target='_blank' HREF='$rootpath/StockStatus.php?" . SID . "StockID=" . $StockItem->StockID . "'>$StockItem->StockID</A></TD>
 					<TD>" . $StockItem->ItemDescription . "</TD>
 					<TD><INPUT TYPE=TEXT NAME='Quantity_" . $StockItem->StockID . "' SIZE=6 MAXLENGTH=6 VALUE=" . $StockItem->Quantity . "></TD>
@@ -871,6 +913,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1 OR !isset($_SESSION['Items']->Debt
 
 				echo "<TD ALIGN=RIGHT>" . $DisplayLineTotal . "</FONT></TD><TD><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "Delete=" . $StockItem->StockID . "'>Delete</A></TD></TR>";
 
+				echo $RowStarter;
+				echo "<TD COLSPAN=7><TEXTAREA  NAME='Narrative_" . $StockItem->StockID . "' cols=100% rows=1>" . $StockItem->Narrative . "</TEXTAREA><BR><HR></TD></TR>";
+				
+				
 				$_SESSION['Items']->total = $_SESSION['Items']->total + $LineTotal;
 				$_SESSION['Items']->totalVolume = $_SESSION['Items']->totalVolume + $StockItem->Quantity * $StockItem->Volume;
 				$_SESSION['Items']->totalWeight = $_SESSION['Items']->totalWeight + $StockItem->Quantity * $StockItem->Weight;

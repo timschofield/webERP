@@ -344,6 +344,13 @@ input.small {
 	color: #330000;
 }
 
+.HelpTableHeader {
+	font-weight: bold;
+	background-color: #cccce5;
+	font-size: 18px;
+	color: #330000;
+}
+
 .OsRow {
 	background-color: #234567;
 	color: #FFFFFF;

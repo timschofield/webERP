@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
@@ -26,7 +26,7 @@
 	if ($title AND substr($title,0,4)!="Help") {
 		echo "<table cellpadding='0' cellspacing='0'><tr>";
 			echo "<td align='left' width='100%' class='quick_menu_left'>";
-				echo  $CompanyName . " : " . $_SESSION['UsersRealName'] . " : " . $DatabaseName ;
+				echo  $CompanyName . ":" . $_SESSION['UsersRealName'];
 				echo "<BR>$title</td>";
 				echo "<td align='right'>";
 					echo "<img src='$rootpath/css/". $theme ."/images/menucurve.gif' width='30' height='30' alt='' />";

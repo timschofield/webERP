@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*SelectOrderItems_IntoCart.inc
 
 This snippet is used to enter order line items into the cart object:
@@ -7,8 +7,8 @@ This snippet is used to enter order line items into the cart object:
 Used only in: SelectOrderItems.php
 
 The reason that it is in this seperate file is because it is used within a loop to get kitset
-items into the cart as well as plain vanilla items outside of the kitset loop
-just reduces a double up in the typing and if it does need to be modified - it is all in one place */
+items into the cart as well as plain vanilla items outside of the kitset loop  
+*/
 
 $AlreadyOnThisOrder =0;
 
@@ -46,8 +46,12 @@ if ($AlreadyOnThisOrder!=1){
     $ErrMsg = "The details for " . $NewItem . " could not be retrieved because";
     $DbgMsg = "<BR>The SQL used to retrieve the pricing details but failed was:<BR>$sql";
     $result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-
-   if ($myrow = DB_fetch_array($result1)){
+    
+    if (DB_num_rows($result1)==0){
+    		
+		echo "<P><FONT COLOR=RED><B>Warning:</FONT>The item code $NewItem could not be found in the database - it has not been added to the order</B>";
+    
+    } elseif ($myrow = DB_fetch_array($result1)){
 
    		if ($_SESSION['ExistingOrder']!=0){
 			$UpdateDB = "Yes";
@@ -71,14 +75,13 @@ if ($AlreadyOnThisOrder!=1){
 							0, /*Controlled - dont care */
 							0, /*serialised - dont care */
 							$myrow['DecimalPlaces'],
+							'', /*Narrative - none yet */
 							$UpdateDB
 							)==1){
 
 		      $_SESSION['Items']->LineItems[$NewItem]->StandardCost = $myrow["StandardCost"];
              }
-   } else {
-             echo "<FONT COLOR=RED SIZE=4>The part code '" . $NewItem . "' cannot be added to the order because the item cannot be found in the database.</FONT><P>";
-   }
+   } 
 
 } /* end of if not already on the order */
 

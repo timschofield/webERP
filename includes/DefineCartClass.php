@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 /* Definition of the cart class
 this class can hold all the information for:
 
@@ -39,6 +39,7 @@ Class Cart {
 	var $ShipVia;
 	var $FreightCost;
 	Var $OrderNo;
+	Var $Consignment;
 
 	function Cart(){
 	/*Constructor function initialises a new shopping cart */
@@ -64,14 +65,16 @@ Class Cart {
 				$Controlled=0,
 				$Serialised=0,
 				$DecimalPlaces=0,
+				$Narrative='',
 				$UpdateDB='No'){
 
+				
 		if (isset($StockID) AND $StockID!="" AND $Qty>0 AND isset($Qty)){
 
 			if ($Price<0){ /*madness check - use a credit note to give money away!*/
 				$Price=0;
 			}
-
+			
 			$this->LineItems[$StockID] = new LineDetails($StockID,
 									$Descr,
 									$Qty,
@@ -87,7 +90,8 @@ Class Cart {
 									$DiscCat,
 									$Controlled,
 									$Serialised,
-									$DecimalPlaces);
+									$DecimalPlaces,
+									$Narrative);
 			$this->ItemsOrdered++;
 
 			if ($UpdateDB=='Yes'){
@@ -108,17 +112,26 @@ Class Cart {
 		Return 0;
 	}
 
-	function update_cart_item($UpdateItem, $Qty, $Price, $Disc, $UpdateDB='No'){
+	function update_cart_item($UpdateItem, $Qty, $Price, $Disc, $Narrative, $UpdateDB='No'){
 
 		if ($Qty>0){
 			$this->LineItems[$UpdateItem]->Quantity = $Qty;
 		}
 		$this->LineItems[$UpdateItem]->Price = $Price;
 		$this->LineItems[$UpdateItem]->DiscountPercent = $Disc;
+		$this->LineItems[$UpdateItem]->Narrative = $Narrative;
 
 		if ($UpdateDB=='Yes'){
 			global $db;
-			$result = DB_query("UPDATE SalesOrderDetails SET Quantity=" . $Qty . ", UnitPrice=" . $Price . ", DiscountPercent=" . $Disc . " WHERE OrderNo=" . $_SESSION['ExistingOrder'] . " AND StkCode='" . $UpdateItem ."'" , $db , "<BR>The order line for " . $UpdateItem . " could not be updated");
+			$result = DB_query("UPDATE SalesOrderDetails 
+						SET Quantity=" . $Qty . ", 
+						UnitPrice=" . $Price . ", 
+						DiscountPercent=" . $Disc . ",
+						Narrative ='" . $Narrative . "'  
+					WHERE OrderNo=" . $_SESSION['ExistingOrder'] . " 
+					AND StkCode='" . $UpdateItem ."'" 
+				, $db 
+				, "<BR>The order line for " . $UpdateItem . " could not be updated");
 		}
 	}
 
@@ -190,6 +203,7 @@ Class LineDetails {
 	Var $Serialised;
 	Var $DecimalPlaces;
 	Var $SerialItems;
+	Var $Narrative;
 
 	function LineDetails ($StockItem,
 				$Descr,
@@ -206,7 +220,8 @@ Class LineDetails {
 				$DiscCat,
 				$Controlled,
 				$Serialised,
-				$DecimalPlaces){
+				$DecimalPlaces,
+				$Narrative){
 
 /* Constructor function to add a new LineDetail object with passed params */
 
@@ -232,6 +247,7 @@ Class LineDetails {
 		$this->Serialised = $Serialised;
 		$this->DecimalPlaces = $DecimalPlaces;
 		$this->SerialItems = array();
+		$this->Narrative = $Narrative;
 	}
 }
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /* R&OS PHP-pdf class code to head up a new page */
 
 $YPos = $Page_Height - $Top_Margin;
@@ -51,8 +51,8 @@ if ($InvOrCredit=="Invoice") {
 	$pdf->addText($Page_Width-180, $YPos-52, $FontSize, $myrow["OrderNo"]);
 	$pdf->addText($Page_Width-268, $YPos-65, $FontSize, "Order Date");
 	$pdf->addText($Page_Width-180, $YPos-65, $FontSize, ConvertSQLDate($myrow["OrdDate"]));
-	$pdf->addText($Page_Width-268, $YPos-78, $FontSize, "Dispatch Method");
-	$pdf->addText($Page_Width-180, $YPos-78, $FontSize, $myrow["ShipperName"]);
+	$pdf->addText($Page_Width-268, $YPos-78, $FontSize, "Dispatch Detail");
+	$pdf->addText($Page_Width-180, $YPos-78, $FontSize, $myrow["ShipperName"] . "-" . $myrow['Consignment']);
 	$pdf->addText($Page_Width-268, $YPos-91, $FontSize, "Dispatched From"); 
 	$pdf->addText($Page_Width-180, $YPos-91, $FontSize, $myrow["LocationName"]); 
 }
