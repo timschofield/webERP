@@ -10,7 +10,7 @@ if (isset($_POST['SelectedAccount'])){
 	$SelectedAccount = $_GET['SelectedAccount'];
 }
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
@@ -105,14 +105,14 @@ if ($_POST['submit']) {
 				$CancelDelete = 1;
 				echo "Cannot delete this account because it is used as one of the company default accounts.";
 
-			} else {
-//PREVENT DELETES IF SALES POSTINGS USE THE GL ACCOUNT
-				$sql= "SELECT COUNT(*) FROM SalesGLPostings WHERE SalesGLCode=$SelectedAccount OR DiscountGLCode=$SelectedAccount";
+			} else  {
+				//PREVENT DELETES IF Company default accounts set up to this account
+				$sql= "SELECT COUNT(*) FROM TaxAuthorities WHERE TaxGLCode=$SelectedAccount OR PurchTaxGLAccount =$SelectedAccount";
 				$result = DB_query($sql,$db);
 				if (DB_error_no($db)!=0){
-					echo "Couldn't test for existing sales interface GL codes because - " . DB_error_msg($db);
+					echo "<BR>Couldn't test for tax authority GL codes because - " . DB_error_msg($db);
 					if ($debug==1){
-						echo "<BR>The SQL that was used and failed was:<BR>". $sql;
+						echo "<BR>The SQL that was used and failed was:<BR>" . $sql;
 					}
 					exit;
 				}
@@ -120,16 +120,16 @@ if ($_POST['submit']) {
 				$myrow = DB_fetch_row($result);
 				if ($myrow[0]>0) {
 					$CancelDelete = 1;
-					echo "Cannot delete this account because it is used by one of the  sales GL posting interface records.";
-				} else {
-//PREVENT DELETES IF COGS POSTINGS USE THE GL ACCOUNT
-					$sql= "SELECT COUNT(*) FROM COGSGLPostings WHERE GLCode=$SelectedAccount";
-					$result = DB_query($sql,$db);
+					echo "<BR>Cannot delete this account because it is used as one of the tax authority accounts.";
 
+				}else {
+//PREVENT DELETES IF SALES POSTINGS USE THE GL ACCOUNT
+					$sql= "SELECT COUNT(*) FROM SalesGLPostings WHERE SalesGLCode=$SelectedAccount OR DiscountGLCode=$SelectedAccount";
+					$result = DB_query($sql,$db);
 					if (DB_error_no($db)!=0){
-						echo "Couldn't test for existing cost of sales interface codes because - " . DB_error_msg($db);
+						echo "<BR>Couldn't test for existing sales interface GL codes because - " . DB_error_msg($db);
 						if ($debug==1){
-							echo "<BR>The SQL that was used and failed was:<BR>$sql";
+							echo "<BR>The SQL that was used and failed was:<BR>". $sql;
 						}
 						exit;
 					}
@@ -137,28 +137,62 @@ if ($_POST['submit']) {
 					$myrow = DB_fetch_row($result);
 					if ($myrow[0]>0) {
 						$CancelDelete = 1;
-						echo "Cannot delete this account because it is used by one of the cost of sales GL posting interface records.";
-
+						echo "<BR>Cannot delete this account because it is used by one of the  sales GL posting interface records.";
 					} else {
-//PREVENT DELETES IF STOCK POSTINGS USE THE GL ACCOUNT
-						$sql= "SELECT COUNT(*) FROM StockCategory WHERE StockAct=$SelectedAccount OR AdjGLAct=$SelectedAccount OR PurchPriceVarAct=$SelectedAccount OR MaterialUseageVarAc=$SelectedAccount OR WIPAct=$SelectedAccount";
+//PREVENT DELETES IF COGS POSTINGS USE THE GL ACCOUNT
+						$sql= "SELECT COUNT(*) FROM COGSGLPostings WHERE GLCode=$SelectedAccount";
 						$result = DB_query($sql,$db);
+
 						if (DB_error_no($db)!=0){
-							echo "Couldn't test for existing stock GL codes because - " . DB_error_msg($db);
+							echo "<BR>Couldn't test for existing cost of sales interface codes because - " . DB_error_msg($db);
 							if ($debug==1){
-								echo "<BR>The SQL that was used and failed was:<BR>" . $sql;
+								echo "<BR>The SQL that was used and failed was:<BR>$sql";
 							}
 							exit;
 						}
+
 						$myrow = DB_fetch_row($result);
 						if ($myrow[0]>0) {
 							$CancelDelete = 1;
-							echo "Cannot delete this account because it is used by one of the stock GL posting interface records.";
-						} else {
+							echo "<BR>Cannot delete this account because it is used by one of the cost of sales GL posting interface records.";
 
-							$sql="DELETE FROM ChartMaster WHERE AccountCode=$SelectedAccount";
+						} else {
+//PREVENT DELETES IF STOCK POSTINGS USE THE GL ACCOUNT
+							$sql= "SELECT COUNT(*) FROM StockCategory WHERE StockAct=$SelectedAccount OR AdjGLAct=$SelectedAccount OR PurchPriceVarAct=$SelectedAccount OR MaterialUseageVarAc=$SelectedAccount OR WIPAct=$SelectedAccount";
 							$result = DB_query($sql,$db);
-							echo "<BR><CENTER><FONT COLOR=RED><B>Account Deleted ! </B></FONT></CENTER><p>";
+							if (DB_error_no($db)!=0){
+								echo "<BR>Couldn't test for existing stock GL codes because - " . DB_error_msg($db);
+								if ($debug==1){
+									echo "<BR>The SQL that was used and failed was:<BR>" . $sql;
+								}
+								exit;
+							}
+							$myrow = DB_fetch_row($result);
+							if ($myrow[0]>0) {
+								$CancelDelete = 1;
+								echo "<BR>Cannot delete this account because it is used by one of the stock GL posting interface records.";
+							} else {
+//PREVENT DELETES IF STOCK POSTINGS USE THE GL ACCOUNT
+								$sql= "SELECT COUNT(*) FROM BankAccounts WHERE AccountCode=$SelectedAccount";
+								$result = DB_query($sql,$db);
+								if (DB_error_no($db)!=0){
+									echo "<BR>Couldn't test for existing bank account GL codes because - " . DB_error_msg($db);
+									if ($debug==1){
+										echo "<BR>The SQL that was used and failed was:<BR>" . $sql;
+									}
+									exit;
+								}
+								$myrow = DB_fetch_row($result);
+								if ($myrow[0]>0) {
+									$CancelDelete = 1;
+									echo "<BR>Cannot delete this account because it is used by one the defined bank accounts.";
+								} else {
+
+									$sql="DELETE FROM ChartMaster WHERE AccountCode=$SelectedAccount";
+									$result = DB_query($sql,$db);
+									echo "<BR><CENTER><FONT COLOR=RED><B>Account $SelectedAccount has been deleted ! </B></FONT></CENTER><p>";
+								}
+							}
 						}
 					}
 				}

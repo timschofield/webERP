@@ -12,7 +12,7 @@ include("includes/SQL_CommonFunctions.inc"); //need for EDITransNo
 include("includes/htmlMimeMail.php"); // need for sending email attachments
 include("includes/DefineCartClass.php");
 
-echo "<!-- \$Revision: 1.1 $ -->"
+echo "<!-- \$Revision: 1.2 $ -->"
 
 $CompanyRecord = ReadInCompanyRecord($db);
 
@@ -24,11 +24,9 @@ Get the list of files in EDI_Incoming_Orders - work through each one as follows
 
 Read in the flat file one line at a time
 
-Read in the EDI_ORDERS_SEGS
+Compare the SegTag in the flat file with the expected SegTag from EDI_ORDERS_Segs
 
-Compare the SegTag in the flat file with the expected SegTag from EDI_ORDERS_SEGS
-
-retrieve data from the flat file to enable the order to be created
+parse the data in the line of text from the flat file to enable the order to be created
 
 Compile an html email to the customer service person based on the location
 of the customer doing the ordering and where it would be best to pick the order
@@ -111,8 +109,6 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . "/" . $rootpath . "/" . $EDI_In
 				}
 			}
 		}
-
-
 
 		switch ($SegTag){
 			case = 'UNH':
@@ -224,6 +220,50 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . "/" . $rootpath . "/" . $EDI_In
 					}
 				}
 			case = 'DTM':
+				/*explode into an arrage all items delimited by the : - only after the + */
+				$DTM_C507 = explode(':',substr($LineText,4));
+				$LocalFormatDate = ConvertEDIDate($DTM_C507[1],$DTM_C507[2]);
+
+				switch ($DTM_C507[0]){
+					case = '2': /*Delivery date */
+					case = '10': /*shipment date requested */
+					case = '11': /*dispatch date */
+					case = 'X14': /*Reguested delivery week commencing EAN code */
+					case = '64': /*Earliest delivery date */
+					case = '69': /*Promised delivery date */
+						$Order->DeliveryDate = $LocalFormatDate;
+						$EmailText .= "<BR>Requested delivery date " . $Order->DeliveryDate;
+						break;
+					case = '15': /*promotion start date */
+						$EmailText .= "<BR>Promotion start date " . $LocalFormatDate;
+						break;
+					case = '37': /*ship not before */
+						$EmailText .= "<BR>Do NOT ship before " . $LocalFormatDate;
+						break;
+					case = '38': /*ship not later than */
+					case = '61': /*Cancel if not delivered by this date */
+					case = '63': /*Latest delivery date */
+					case = '393': /*Cancel if not shipped by this date */
+						$EmailText .= "<BR>Cancel order if not dispatched before " . $LocalFormatDate;
+						break;
+					case = '137': /*Order date */
+						$Order->Orig_OrderDate = $LocalFormatDate;
+						$EmailText .= "<BR>Order date " . $LocalFormatDate;
+						break;
+					case = '200': /*Pickup collection date/time */
+						$EmailText .= "<BR><FONT COLOR=RED SIZE=4>Pickup date " . $LocalFormatDate;
+						$Order->DeliveryDate = $LocalFormatDate;
+						break;
+					case = '263': /*Invoicing period */
+						$EmailText .= "<BR>Invoice " . $LocalFormatDate;
+						break;
+					case = '273': /*Validity period */
+						$EmailText .= "<BR>Valid to " . $LocalFormatDate;
+						break;
+					case = '282': /*Confirmation date lead time */
+						$EmailText .= "<BR>Confirmation of date lead time " . $LocalFormatDate;
+						break;
+				}
 
 
 

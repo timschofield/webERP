@@ -172,6 +172,47 @@ and converts to a yyyymmdd - EANCOM format 102*/
 
 } // end function to convert DefaultDateFormat Date to EDI format 102
 
+function ConvertEDIDate($DateEntry, $EDIFormatCode) {
+
+	/*EDI Format codes:
+		102  -  CCYYMMDD
+		203  -  CCYYMMDDHHMM
+		616  -  CCYYWW  - cant handle the week number
+		718  -  CCYYMMDD-CCYYMMDD  can't handle this either a date range
+	*/
+
+	global $DefaultDateFormat;
+
+	switch ($EDIFormatCode) {
+	case 102:
+		if ($DefaultDateFormat=="d/m/Y"){
+			Return substr($DateEntry,6,2)."/".substr($DateEntry,4,2)."/".substr($DateEntry,0,4);
+
+		} elseif ($DefaultDateFormat=="m/d/Y") {
+						Return substr($DateEntry,4,2)."/".substr($DateEntry,6,2)."/".substr($DateEntry,0,4);
+
+		}
+		break;
+	case 203:
+		if ($DefaultDateFormat=="d/m/Y"){
+			Return substr($DateEntry,6,2)."/".substr($DateEntry,4,2)."/".substr($DateEntry,0,4)." " . substr($DateEntry,6,2).":" . substr($DateEntry,8,2);
+
+		} elseif ($DefaultDateFormat=="m/d/Y") {
+						Return substr($DateEntry,4,2)."/".substr($DateEntry,6,2)."/".substr($DateEntry,0,4)." " . substr($DateEntry,6,2).":" . substr($DateEntry,8,2);
+
+		}
+		break;
+	case 616:
+		/*multiply the week number by 7 and add to the 1/1/CCYY */
+		Return date($DefaultDateFormat, mktime(0,0,0, 1,1+(7*(int)substr($DateEntry,4,2)),substr($DateEntry,0,4)));
+		break;
+	case 718:
+
+		break;
+	}
+
+
+}
 
 
 
