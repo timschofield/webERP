@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*This page can be called with
 
 1. A DebtorTrans ID
@@ -438,17 +438,17 @@ if (isset($_POST['AllocTrans'])){
 	    if ($AllocnItem->TransAmount < 0) {
 	    	echo '</TD></TR>';
 	    } else {
-	    	echo "<input type=hidden name='YetToAlloc" . $Counter . "' value=" . $YetToAlloc . '></TD>';
+	    	echo "<input type=hidden name='YetToAlloc" . $Counter . "' value=" . round($YetToAlloc,2) . '></TD>';
 	    	echo "<TD ALIGN=RIGHT><input type='checkbox' name='All" .  $Counter . "'";
 	    	if (ABS($AllocnItem->AllocAmt-$YetToAlloc)<0.01){
 			echo ' VALUE=' . True . '>';
 	    	} else {
 	    		echo '>';
 	    	}
-	    	echo "<input type=text name='Amt" . $Counter ."' maxlength=12 SIZE=13 value=" . $AllocnItem->AllocAmt . "><input type=hidden name='AllocID" . $Counter . "' value=" . $AllocnItem->ID . '></TD></TR>';
+	    	echo "<input type=text name='Amt" . $Counter ."' maxlength=12 SIZE=13 value=" . round($AllocnItem->AllocAmt,2) . "><input type=hidden name='AllocID" . $Counter . "' value=" . $AllocnItem->ID . '></TD></TR>';
 	    }
 
-	    $TotalAllocated =$TotalAllocated + $AllocnItem->AllocAmt;
+	    $TotalAllocated =$TotalAllocated + round($AllocnItem->AllocAmt,2);
 
 	    $Counter++;
    }

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 2;
 
@@ -109,7 +109,7 @@ if (isset($_POST['ShowResults'])){
 		if ($_POST['TransType']==10){ /* invoices */
 
 			printf("$format_base
-				<td><a target='_blank' href='%s/PrintCustTrans.php?%&FromTransNo=%s&InvOrCredit=Invoice'><IMG SRC='%s' alt='" . _('Click to preview the invoice') . "'></a></td>
+				<td><a target='_blank' href='%s/PrintCustTrans.php?%&FromTransNo=%s&InvOrCredit=Invoice'><IMG SRC='%s' TITLE='" . _('Click to preview the invoice') . "'></a></td>
 				</tr>",
 				$myrow['transno'],
 				ConvertSQLDate($myrow['trandate']),
@@ -127,7 +127,7 @@ if (isset($_POST['ShowResults'])){
 				$rootpath.'/css/'.$theme.'/images/preview.gif');
 		} elseif ($_POST['TransType']==11){ /* credit notes */
 			printf("$format_base
-				<td><a target='_blank' href='%s/PrintCustTrans.php?%s&FromTransNo=%s&InvOrCredit=Credit'><IMG SRC='%s' alt='" . _('Click to preview the credit') . "'></a></td>
+				<td><a target='_blank' href='%s/PrintCustTrans.php?%s&FromTransNo=%s&InvOrCredit=Credit'><IMG SRC='%s' TITLE='" . _('Click to preview the credit') . "'></a></td>
 				</tr>",
 				$myrow['transno'],
 				ConvertSQLDate($myrow['trandate']),

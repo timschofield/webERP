@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 $PageSecurity = 1;
 
 if (isset($_GET['FromTransNo'])){
@@ -423,23 +423,23 @@ If (isset($PrintPDF) AND $PrintPDF!='' AND isset($FromTransNo) AND isset($InvOrC
 	if (isset($_GET['Email'])){ //email the invoice to address supplied
 
 		$mail = new htmlMimeMail();
-		$filename = $_SESSION['reports_dir'] . '/' . $InvOrCredit . $FromTransNo . '.pdf';
+		$filename = $_SESSION['reports_dir'] . '/' . $InvOrCredit . $_GET['FromTransNo'] . '.pdf';
 		$fp = fopen($filename, 'wb');
 		fwrite ($fp, $pdfcode);
 		fclose ($fp);
 
 		$attachment = $mail->getFile($filename);
-		$mail->setText(_('Please find attached') . ' ' . $InvOrCredit . ' ' . $FromTransNo );
-		$mail->SetSubject($InvOrCredit . ' ' . $FromTransNo);
+		$mail->setText(_('Please find attached') . ' ' . $InvOrCredit . ' ' . $_GET['FromTransNo'] );
+		$mail->SetSubject($InvOrCredit . ' ' . $_GET['FromTransNo']);
 		$mail->addAttachment($attachment, $filename, 'application/pdf');
-		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
+		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
 		$result = $mail->send(array($_GET['Email']));
 
 		unlink($filename); //delete the temporary file
 
 		$title = _('Emailing') . ' ' .$InvOrCredit . ' ' . _('Number') . ' ' . $FromTransNo;
 		include('includes/header.inc');
-		echo "<P>$InvOrCredit " . _('number') . ' ' . $FromTransNo . ' ' . _('has been emailed to') . ' ' . $_GET['Email'];
+		echo "<P>$InvOrCredit " . _('number') . ' ' . $_GET['FromTransNo'] . ' ' . _('has been emailed to') . ' ' . $_GET['Email'];
 		include('includes/footer.inc');
 		exit;
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.31 $ */
+/* $Revision: 1.32 $ */
 
 $PageSecurity = 1;
 
@@ -655,7 +655,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table>
 							<tr>
 							<td>
-								<?php echo "<img src=$rootpath/css/$theme/images/company.gif alt=" . _('General Setup Options') . '>'; ?>
+								<?php echo "<img src=$rootpath/css/$theme/images/company.gif TITLE=" . _('General Setup Options') . '>'; ?>
 							</td>
 							<td class="menu_group_headers_text">
 								<?php echo _('General'); ?>
@@ -667,7 +667,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table>
 							<tr>
 							<td>
-								<?php echo "<img src=$rootpath/css/$theme/images/ar.gif alt=" . _('Receivables/Payables Setup') . '>'; ?>
+								<?php echo "<img src=$rootpath/css/$theme/images/ar.gif TITLE=" . _('Receivables/Payables Setup') . '>'; ?>
 							</td>
 							<td class="menu_group_headers_text">
 								<?php echo _('Receivables/Payables'); ?>
@@ -680,7 +680,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table>
 							<tr>
 							<td>
-								<?php echo "<img src=$rootpath/css/$theme/images/inventory.gif alt=" . _('Inventory Setup') . '>'; ?>
+								<?php echo "<img src=$rootpath/css/$theme/images/inventory.gif TITLE=" . _('Inventory Setup') . '>'; ?>
 							</td>
 							<td class="menu_group_headers_text">
 								<?php echo _('Inventory Setup'); ?>
@@ -955,7 +955,7 @@ global $rootpath, $theme;
 		<table>
 			<tr>
 			<td>
-				<?php echo "<img src=$rootpath/css/$theme/images/transactions.gif alt=" . _('Transactions') . '>'; ?>
+				<?php echo "<img src=$rootpath/css/$theme/images/transactions.gif TITLE=" . _('Transactions') . '>'; ?>
 			</td>
 			<td class="menu_group_headers_text">
 				<?php echo _('Transactions'); ?>
@@ -967,7 +967,7 @@ global $rootpath, $theme;
 		<table>
 			<tr>
 			<td>
-				<?php echo '<img src=' . $rootpath . '/css/' . $theme . '/images/reports.gif alt="' . _('Inquiries and Reports') . '">'; ?>
+				<?php echo '<img src=' . $rootpath . '/css/' . $theme . '/images/reports.gif TITLE="' . _('Inquiries and Reports') . '">'; ?>
 			</td>
 			<td class="menu_group_headers_text">
 				<?php echo _('Inquiries and Reports'); ?>
@@ -979,7 +979,7 @@ global $rootpath, $theme;
 		<table>
 			<tr>
 			<td>
-				<?php echo "<img src=$rootpath/css/$theme/images/maintenance.gif alt=" . _('Maintenance') . '>'; ?>
+				<?php echo "<img src=$rootpath/css/$theme/images/maintenance.gif TITLE=" . _('Maintenance') . '>'; ?>
 			</td>
 			<td class="menu_group_headers_text">
 				<?php echo _('Maintenance'); ?>
