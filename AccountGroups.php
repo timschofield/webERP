@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $title = "Account Groups";
 
 $PageSecurity = 10;
@@ -90,10 +90,21 @@ then none of the above are true and the list of account groups will be displayed
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT GroupName, SectionInAccounts, SequenceInTB, PandL FROM AccountGroups ORDER BY SequenceInTB";
-	$result = DB_query($sql,$db);
+	$sql = "SELECT GroupName,
+			SectionInAccounts,
+			SequenceInTB,
+			PandL
+		FROM AccountGroups
+		ORDER BY SequenceInTB";
+	$result = DB_query($sql,$db,"<BR>Could not get account groups because ","<BR>The SQL that failed was:");
 
-	echo "<center><table><tr><td class='tableheader'>Group Name</td><td class='tableheader'>Section</td><td class='tableheader'>Sequence In TB</td><td class='tableheader'>Profit and Loss</td></tr>\n";
+	echo "<center><table>
+		<tr>
+		<td class='tableheader'>Group Name</td>
+		<td class='tableheader'>Section</td>
+		<td class='tableheader'>Sequence In TB</td>
+		<td class='tableheader'>Profit and Loss</td>
+		</tr>";
 
 	$k=0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
@@ -104,24 +115,6 @@ or deletion of the records*/
 		} else {
 			echo "<tr bgcolor='#EEEEEE'>";
 			$k++;
-		}
-
-		if ($myrow[1] ==1) {
-			$SectionText = "Sales";
-		} elseif ($myrow[1] ==2) {
-			$SectionText = "Cost Of Sales";
-		} elseif ($myrow[1] ==5) {
-			$SectionText = "Overheads";
-		} elseif ($myrow[1] ==20) {
-			$SectionText = "Current Assets";
-		} elseif ($myrow[1] ==30) {
-			$SectionText = "Current Liabilities";
-		} elseif ($myrow[1] ==40) {
-			$SectionText = "Fixed Assets";
-		} elseif ($myrow[1] ==50) {
-			$SectionText = "Equity";
-		} else {
-			$SectionText = "Undefined";
 		}
 
 		switch ($myrow[3]) {
@@ -136,7 +129,21 @@ or deletion of the records*/
 			break;
 		} //end of switch statment
 
-	printf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td><td><a href=\"%sSelectedAccountGroup=%s\">EDIT</a></td><td><a href=\"%sSelectedAccountGroup=%s&delete=1\">DELETE</a></td></tr>", $myrow[0], $SectionText, $myrow[2], $PandLText,$_SERVER['PHP_SELF'] . "?" . SID ,$myrow[0], $_SERVER['PHP_SELF'] . "?" . SID, $myrow[0]);
+	printf("<td>%s</td>
+		<td>%s</td>
+		<td>%s</td>
+		<td>%s</td>
+		<td><a href=\"%sSelectedAccountGroup=%s\">EDIT</a></td>
+		<td><a href=\"%sSelectedAccountGroup=%s&delete=1\">DELETE</a></td>
+		</tr>",
+		$myrow[0],
+		$Sections[$myrow[1]],
+		$myrow[2],
+		$PandLText,
+		$_SERVER['PHP_SELF'] . "?" . SID ,
+		$myrow[0],
+		$_SERVER['PHP_SELF'] . "?" . SID,
+		$myrow[0]);
 
 	} //END WHILE LIST LOOP
 } //end of ifs and buts!
@@ -199,43 +206,15 @@ if (! isset($_GET['delete'])) {
 	<TD>
 	<SELECT name="SectionInAccounts">
 	<?php
-	if ($_POST['SectionInAccounts']==1) {
-		echo "<OPTION SELECTED VALUE=1>Sales";
-	} else {
-		echo "<OPTION VALUE=1>Sales";
-	}
 
-	if ($_POST['SectionInAccounts']==2) {
-		echo "<OPTION SELECTED VALUE=2>Cost Of Sales";
-	} else {
-		echo "<OPTION VALUE=2>Cost of Sales";
+	foreach ($Sections AS $SectionNo=>$SectionName ) {
+		if ($_POST['SectionInAccounts']==$SectionNo) {
+			echo "<OPTION SELECTED VALUE=$SectionNo>$SectionName";
+		} else {
+			echo "<OPTION VALUE=$SectionNo>$SectionName";
+		}
 	}
-	if ($_POST['SectionInAccounts']==5) {
-		echo "<OPTION SELECTED VALUE=5>Overheads";
-	} else {
-		echo "<OPTION VALUE=5>Overheads";
-	}
-	if ($_POST['SectionInAccounts']==20) {
-		echo "<OPTION SELECTED VALUE=20>Current Assets";
-	} else {
-		echo "<OPTION VALUE=20>Current Assets";
-	}
-	if ($_POST['SectionInAccounts']==30) {
-		echo "<OPTION SELECTED VALUE=30>Current Liabilites";
-	} else {
-		echo "<OPTION VALUE=30>Current Liabilites";
-	}
-	if ($_POST['SectionInAccounts']==40) {
-		echo "<OPTION SELECTED VALUE=40>Fixed Assets";
-	} else {
-		echo "<OPTION VALUE=40>Fixed Assets";
-	}
-	if ($_POST['SectionInAccounts']==50) {
-		echo "<OPTION SELECTED VALUE=50>Equity";
-	} else {
-		echo "<OPTION VALUE=50>Equity";
-	}
-	echo "</select>";
+	echo "</SELECT>";
 
 	?>
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -27,7 +27,7 @@
     // $host is the computer ip address or name where the database is located
     // assuming that the web server is also the sql server
     $host = "localhost";
-    $DatabaseName = "weberp";
+    $DatabaseName = "aquadux";
 
     // sql user & password
     $dbuser = "weberp_db_user";
@@ -131,6 +131,18 @@
 
     /*Report Page Length in lines */
     $PageLength = 48;
+
+    /*Sections in Accounts  - the numbers 1 (income) and 2 (COGS) are hard coded other sections can be added any of the narrative can be changed at will*/
+
+    $Sections = array(
+    1 => "Income",		/*Can't delete this line but can change the name */
+    2 => "Cost Of Sales",	/*Can't delete this line but can change the name */
+    5 => "Overheads",
+    10 => "Fixed Assets",
+    20 => "Amounts Receivable",
+    30 => "Amounts Falling Due In Less Than One Year",
+    50 => "Financed By"
+    );
 
     /*Directory under the main directory where part photos/ pictures are to be stored
     NB no slashes are necessary. Part pictures in this directory must be .jpg format with this extension

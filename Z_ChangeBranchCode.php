@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /*Script to Delete all sales transactions*/
 
 $title = "UTILITY PAGE To Changes A Customer Branch Code In All Tables";
@@ -116,6 +116,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 		exit;
 	}
 
+	$result = DB_query("commit",$db);
 
 	echo "<BR>Deleting the old customer branch record";
 	$sql = "DELETE FROM CustBranch WHERE DebtorNo='" . $_POST['DebtorNo'] . "' AND BranchCode='" . $_POST['OldBranchCode'] . "'";
@@ -126,7 +127,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 		exit;
 	}
 
-	$result = DB_query("commit",$db);
+
 }
 
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?=" . $SID . "' METHOD=POST>";

@@ -2,6 +2,11 @@
 
 Upgrade script 2.8 - 2.9 is necessary to be applied against a 2.8 database.
 
+17/6/04 AccountGroups now use an array for Section in accounts defined in config.php $Sections array
+17/6/04 GLProfit_Loss.php added - index.php modified to add a link to this script
+8/6/04 DefineCartClass.inc updates to DB new parameters for delete, remove, add to cart class - changes to SelectIntoCartClass and other scripts to pass appropriate variables rather than rely on SESSION['ExistingOrder']. Also DecimalPlaces field added to order data in add_to_cart.
+8/6/04 Updates to SelectOrderItems.php now uses new DB_query error message/debug message parameters
+8/6/04 SelectCreditItems.php now uses Quantity not QtyDispatched
 5/6/04 New script StockSerialItems.php shows the stock status of serial or controlled items - the total shown should tie up with the StockStatus total quantities on hand.
 29/5/04 New script StockTransfersControlled.php allows input of serial items for stock transfers.
 29/5/04 New script StockAdjustmentsControlled.php allows input of serial items for stock adjustments.

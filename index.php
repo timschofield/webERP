@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $title="Main Menu";
 
 $PageSecurity = 1;
@@ -649,7 +649,7 @@ Case "GL": //General Ledger
 				</table>
 				</td>
             </tr>
-            
+
             <tr>
                 <td class="menu_group_img"><img src="<?php echo $rootpath;?>/css/<?php echo $theme;?>/images/reports.png" alt="Inquiries and Reports" /></td>
 
@@ -660,10 +660,12 @@ Case "GL": //General Ledger
 				    </tr>
 				    <tr>
 				    	<td class="menu_group_items">
-						<a href="<?php echo $rootpath."/GLTrialBalance.php?" . SID; ?>">Trial Balance</a><br />
+
 						<a href="<?php echo $rootpath."/SelectGLAccount.php?" . SID; ?>">Account Inquiry</a><br />
 						<a href="<?php echo $rootpath."/BankReconciliation.php?" . SID; ?>">Bank Reconciliation Statement</a><br />
 						<a href="<?php echo $rootpath."/PDFChequeListing.php?" . SID; ?>">Cheque Payments Listing</a><br />
+						<a href="<?php echo $rootpath."/GLTrialBalance.php?" . SID; ?>">Trial Balance</a><br />
+						<a href="<?php echo $rootpath."/GLProfit_Loss.php?" . SID; ?>">Profit and Loss Statement</a><br />
 				    	</td>
 				    </tr>
 				</table>
