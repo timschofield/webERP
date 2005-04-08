@@ -1,7 +1,7 @@
 <?php
 
 $PageSecurity = 2;
-
+include('includes/session.inc');
 
 If (isset($_POST['PrintPDF'])
 	AND isset($_POST['FromCriteria'])
@@ -9,9 +9,6 @@ If (isset($_POST['PrintPDF'])
 	AND isset($_POST['ToCriteria'])
 	AND strlen($_POST['ToCriteria'])>=1){
 
-	include('config.php');
-	include('includes/ConnectDB.inc');
-	include('includes/DateFunctions.inc');
         include ('includes/class.pdf.php');
 
 	/* A4_Landscape */
@@ -343,7 +340,6 @@ If (isset($_POST['PrintPDF'])
 
 } else { /*The option to print PDF was not hit */
 
-	include('includes/session.inc');
 	$title=_('Inventory Planning Reporting');
 	include('includes/header.inc');
 	

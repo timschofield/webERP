@@ -350,6 +350,7 @@ CREATE TABLE `custbranch` (
   `defaultlocation` varchar(5) NOT NULL default '',
   `taxauthority` tinyint(4) NOT NULL default '1',
   `defaultshipvia` int(11) NOT NULL default '1',
+  `deliverblind` tinyint(1) default '1',
   `disabletrans` tinyint(4) NOT NULL default '0',
   `brpostaddr1` varchar(40) NOT NULL default '',
   `brpostaddr2` varchar(40) NOT NULL default '',
@@ -1096,6 +1097,7 @@ CREATE TABLE `salesorders` (
   `contactphone` varchar(25) default NULL,
   `contactemail` varchar(25) default NULL,
   `deliverto` varchar(40) NOT NULL default '',
+  `deliverblind` tinyint(1) default '1',
   `freightcost` double NOT NULL default '0',
   `fromstkloc` varchar(5) NOT NULL default '',
   `deliverydate` date NOT NULL default '0000-00-00',
@@ -1990,7 +1992,7 @@ INSERT INTO `systypes` VALUES (0,'Journal - GL',10);
 INSERT INTO `systypes` VALUES (1,'Payment - GL',19);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',3);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',14);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',15);
 INSERT INTO `systypes` VALUES (11,'Credit Note',11);
 INSERT INTO `systypes` VALUES (12,'Receipt',4);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
@@ -2049,8 +2051,8 @@ INSERT INTO `taxauthlevels` VALUES (6,6,2,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-03-27 11:09:00','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
-INSERT INTO `www_users` VALUES ('testy','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Test Remote User','GRANHR','','','DEN',7,'2005-02-10 21:11:20','GRAN','A4','0,0,0,0,0,0,0,0,',0,50,'fresh','pt_PT');
+INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-04-07 20:15:35','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
+INSERT INTO `www_users` VALUES ('testy','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Test Remote User','GRANHR','','','DEN',7,'2005-04-02 21:55:16','GRAN','A4','0,0,0,0,0,0,0,0,',0,50,'fresh','pt_PT');
 
 --
 -- Dumping data for table `edi_orders_segs`
@@ -2244,8 +2246,11 @@ INSERT INTO `config` VALUES ('RadioBeaconFTP_user_name','RadioBeacon ftp server 
 INSERT INTO `config` VALUES ('RadionBeaconFTP_user_pass','Radio Beacon remote ftp server password');
 INSERT INTO `config` VALUES ('AutoDebtorNo','0');
 INSERT INTO `config` VALUES ('HTTPS_Only','0');
-INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-03-27');
+INSERT INTO `config` VALUES ('DB_Maintenance','7');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-03-31');
+INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
+INSERT INTO `config` VALUES ('PackNoteFormat','1');
+INSERT INTO `config` VALUES ('CheckCreditLimits','2');
 
 --
 -- Dumping data for table `unitsofmeasure`

@@ -1,9 +1,12 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
 <P><B>Version 3.0
-<P>31st March 2005</B>
+<P>April 2005</B>
 <P>
-<P>31/3/05 Scott Rosa - Blind packing noted - system parameter to default all customer branches to blind - ie not to show the company and logo of the webERP company dispatching the product - useful for where the webERP system is dispatching to customers' of customers. Changes to SelectOrderItems.php DefineCartClass.php and DeliveryDetails.php to allow the default to be overridden and CustomerBranches.php to allow entry of the setting.
+<P>
+<P>7/4/05 Added a check to SelectOrderItems_IntoCart.inc and to SelectOrderItems.php to check credit limits - new parameter in SystemParameters and the config table to set the level of credit limit checking to not checked, warn only or prohibit sales. Calculation of credit available in SQL_CommonFunctions.inc
+<P>7/4/05 Changed fpdf.php output method/function to send a string by default - this preserves the way the ros code was written - and was causing issues with the headers/filenames
+<P>31/3/05 Scott Rosa - Blind packing notes - system parameter to default all customer branches to blind - ie not to show the company and logo of the webERP company dispatching the product - useful for where the webERP system is dispatching to customers' of customers. Changes to SelectOrderItems.php DefineCartClass.php and DeliveryDetails.php to allow the default to be overridden and CustomerBranches.php to allow entry of the setting.
 <P>31/3/05 Defaulted new users to see all modules on screen - WWW_Users.php
 <P>31/3/05 Made new system parameter to set the PackNoteFormat - this ensures that the link to print the packing slip uses the correct script - the pre-printed stationery template script or the laser packing slip script.
 <P>27/3/05 Added a new configuration variable DB_Maintenance and DB_Maintenance_LastRun. This variable is checked in session.inc to see if it is set to maintain the DB using a new function in the DB specific include DB_Connect_XXXXX.inc (where XXXX is the $dbtype) - there is a new function in these files called DB_Maintenance($Conn) that runs the routines necessary to keep the DB on top form. pg needs regular vacuums to run optimally. Changes also in SystemParameters.php to allow the variable to be set.

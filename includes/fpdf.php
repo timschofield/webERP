@@ -990,7 +990,7 @@ function SetXY($x,$y)
 	$this->SetX($x);
 }
 
-function Output($name='',$dest='')
+function Output($name='pdf',$dest='S')
 {
 	//Output PDF to some destination
 	global $HTTP_SERVER_VARS;
@@ -1016,8 +1016,7 @@ function Output($name='',$dest='')
 	{
 		case 'I':
 			//Send to standard output
-			if(isset($HTTP_SERVER_VARS['SERVER_NAME']))
-			{
+			if(isset($HTTP_SERVER_VARS['SERVER_NAME'])) {
 				//We send to a browser
 				Header('Content-Type: application/pdf');
 				if(headers_sent())
@@ -1025,6 +1024,7 @@ function Output($name='',$dest='')
 				Header('Content-Length: '.strlen($this->buffer));
 				Header('Content-disposition: inline; filename='.$name);
 			}
+			
 			echo $this->buffer;
 			break;
 		case 'D':

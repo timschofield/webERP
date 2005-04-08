@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 /* Definition of the cart class
 this class can hold all the information for:
 
@@ -47,6 +47,7 @@ Class Cart {
 	Var $Consignment;
 	Var $Quotation;
 	Var $DeliverBlind;
+	Var $CreditAvailable; //in customer currency
 
 	function Cart(){
 	/*Constructor function initialises a new shopping cart */

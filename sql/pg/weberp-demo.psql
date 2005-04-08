@@ -1114,7 +1114,8 @@ CREATE TABLE custbranch (
     brpostaddr2 text DEFAULT ''::text NOT NULL,
     brpostaddr3 text DEFAULT ''::text NOT NULL,
     brpostaddr4 text DEFAULT ''::text NOT NULL,
-    custbranchcode text DEFAULT ''::text NOT NULL
+    custbranchcode text DEFAULT ''::text NOT NULL,
+    deliverblind integer DEFAULT 1
 );
 
 
@@ -1187,7 +1188,8 @@ CREATE TABLE salesorders (
     deliverydate date,
     printedpackingslip integer DEFAULT 0 NOT NULL,
     datepackingslipprinted date,
-    quotation integer DEFAULT 0
+    quotation integer DEFAULT 0,
+    deliverblind integer DEFAULT 1
 );
 
 
@@ -2618,7 +2620,7 @@ COPY taxauthorities (taxid, description, taxglcode, purchtaxglaccount, bank, ban
 --
 
 COPY companies (coycode, coyname, gstno, companynumber, postaladdress, regoffice1, regoffice2, regoffice3, telephone, fax, email, currencydefault, debtorsact, pytdiscountact, creditorsact, payrollact, grnact, exchangediffact, purchasesexchangediffact, retainedearnings, gllink_debtors, gllink_creditors, gllink_stock, freightact) FROM stdin;
-1	weberp Demo		0	123 no name road	12 Downing Street,	Wagga Wagga	Victoria	03 45444 5442 	03 54444 45454		ZAR	800000	100000	900000	925000	910000	250000	220000	520000	1	1	1	340000
+1	webERP Demo		0	123 no name road	12 Downing Street,	Wagga Wagga	Victoria	03 45444 5442 	03 54444 45454		ZAR	800000	100000	900000	925000	910000	250000	220000	520000	1	1	1	340000
 \.
 
 
@@ -2693,7 +2695,7 @@ SYD	Sydney						weberp@paradise.net.nz	Eric Von Hammer	1
 --
 
 COPY reportheaders (reportid, reportheading, groupbydata1, newpageafter1, lower1, upper1, groupbydata2, newpageafter2, lower2, upper2, groupbydata3, newpageafter3, lower3, upper3, groupbydata4, newpageafter4, upper4, lower4) FROM stdin;
-1	Sales in 2004	Customer Code	0	0	zzzzzzz	Not Used	0			Not Used	0			Not Used	0		
+1	Sales in 2005	Customer Code	0	0	zzzzzzz	Not Used	0			Not Used	0			Not Used	0		
 \.
 
 
@@ -2703,8 +2705,9 @@ COPY reportheaders (reportid, reportheading, groupbydata1, newpageafter1, lower1
 --
 
 COPY reportcolumns (reportid, colno, heading1, heading2, calculation, periodfrom, periodto, datatype, colnumerator, coldenominator, calcoperator, budgetoractual, valformat, constant) FROM stdin;
-1	2	Quantity		0	51	60	Quantity	0	0		1	N	0
-1	3	Budget	Value	0	51	59	Gross Value	0	0		0	N	0
+1	2	Quantity		0	49	63	Quantity	0	0		1	N	0
+1	3	Budget	Value	0	49	63	Gross Value	0	0		0	N	0
+1	1	Sales Value		0	49	63	Net Value	0	0		1	N	0
 \.
 
 
@@ -3001,10 +3004,10 @@ BOLTS	Bolts	F	770000	210000	220000	240000	760000
 --
 
 COPY stockmaster (stockid, categoryid, description, longdescription, units, mbflag, lastcurcostdate, actualcost, lastcost, materialcost, labourcost, overheadcost, lowestlevel, discontinued, controlled, eoq, volume, kgs, barcode, discountcategory, taxlevel, serialised, decimalplaces) FROM stdin;
+PHIS01	MISC	A physical Stock Item	A physical Stock Item	each	B	1800-01-01	0.0000	0.0000	10.0000	0.0000	0.0000	0	0	0	5.00	1.0000	4.0000			1	0	0
 STEELBAR10MMROUND	BOLTS	10mm Round Mild Steel Bar	10mm Round Mild Steel Bar	each	B	1800-01-01	0.0000	0.0000	0.0000	0.0000	0.0000	0	0	0	0.00	0.0000	0.0000			1	0	0
 DEVDB	MISC	Database Development	The design and/or migration of a database stucture for the purpose of retaining and recalling relational data.	each	D	1800-01-01	0.0000	0.0000	0.0000	0.0000	0.0000	0	0	0	0.00	0.0000	0.0000			1	0	0
 BOLT13MMX10	BOLTS	13mm hex head bolt 10mm thread	13mm hex head bolt 10mm thread	each	M	1800-01-01	0.0000	0.0000	1.3300	0.0000	0.0000	0	0	1	0.00	0.0000	0.0000			1	0	0
-PHIS01	MISC	A physical Stock Item	A physical Stock Item	each	B	1800-01-01	0.0000	0.0000	10.0000	0.0000	0.0000	0	0	0	5.00	1.0000	4.0000			1	0	0
 PHIS02	MISC	Another Physical Item	Another Physical Item	each	M	1800-01-01	0.0000	0.0000	36.9890	0.0000	0.0000	0	0	0	0.00	0.0000	0.0000			1	0	0
 \.
 
@@ -3190,7 +3193,7 @@ COPY taxauthlevels (taxauthority, dispatchtaxauthority, "level", taxrate) FROM s
 --
 
 COPY www_users (userid, "password", realname, customerid, phone, email, defaultlocation, fullaccess, lastvisitdate, branchcode, pagesize, modulesallowed, blocked, displayrecordsmax, theme, "language", pinno, swipecard) FROM stdin;
-demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2005-03-25 15:12:53		A4	1,1,1,1,1,1,1,1,	0	50	fresh	en_GB	\N	\N
+demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2005-03-31 21:36:38		A4	1,1,1,1,1,1,1,1,	0	50	professional	en_GB	\N	\N
 \.
 
 
@@ -5171,10 +5174,11 @@ FREDBLOGG	Fred Bloggs and partners	23 Bald Hill Terraces	Guinnesston 	Ireland		E
 -- Name: custbranch; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY custbranch (branchcode, debtorno, brname, braddress1, braddress2, braddress3, braddress4, estdeliverydays, area, salesman, fwddate, phoneno, faxno, contactname, email, defaultlocation, taxauthority, defaultshipvia, disabletrans, brpostaddr1, brpostaddr2, brpostaddr3, brpostaddr4, custbranchcode) FROM stdin;
-CUST01	CUST01	Customer	Na	Na	Na	Na	5	ZA	GEN	0	NA	NA	Testy	NA	CPT	1	1	0	NA	Na	Na	Na	NA
-FREDBLOGG	FREDBLOGG	Fred Bloggs and partners	23 Bald Hill Terraces	Guinnesston 	Ireland		12	EU	REF	0			Walter Bloggs		CPT	1	1	0					
-100001	100001	Eric Van Halen	453A Globus Contrabandus St	Aardvarkston			1	ZA	GEN	0					CPT	1	2	0					
+COPY custbranch (branchcode, debtorno, brname, braddress1, braddress2, braddress3, braddress4, estdeliverydays, area, salesman, fwddate, phoneno, faxno, contactname, email, defaultlocation, taxauthority, defaultshipvia, disabletrans, brpostaddr1, brpostaddr2, brpostaddr3, brpostaddr4, custbranchcode, deliverblind) FROM stdin;
+CUST01	CUST01	Customer	Na	Na	Na	Na	5	ZA	GEN	0	NA	NA	Testy	NA	CPT	1	1	0	NA	Na	Na	Na	NA	\N
+100001	100001	Eric Van Halen	453A Globus Contrabandus St	Aardvarkston			1	ZA	GEN	0					CPT	1	2	0						\N
+ERCC	FREDBLOGG	Ersteem Raichle unt Cloggs	333 444				1	EU	GEN	0			123		SYD	1	2	0						2
+FREDBLOGG	FREDBLOGG	Fred Bloggs and partners	23 Bald Hill Terraces	Guinnesston 	Ireland		12	EU	REF	0			Walter Bloggs		CPT	1	1	0						1
 \.
 
 
@@ -5201,33 +5205,35 @@ COPY contractreqts (contractreqid, contract, component, quantity, priceperunit) 
 -- Name: salesorders; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY salesorders (orderno, debtorno, branchcode, customerref, buyername, comments, orddate, ordertype, shipvia, deladd1, deladd2, deladd3, deladd4, contactphone, contactemail, deliverto, freightcost, fromstkloc, deliverydate, printedpackingslip, datepackingslipprinted, quotation) FROM stdin;
-1	CUST01	CUST01	REF01	\N		2004-12-03	WS	2	N/a	N/a	N/a	N/a	N/A		Customer	50.00	CPT	2004-12-04	0	\N	\N
-2	CUST01	CUST01	REF01	\N	 Inv 4	2004-12-03	WS	2	N/a	N/a	N/a	N/a	N/A		Customer	50.00	CPT	2004-12-04	1	2004-04-12	\N
-4	CUST01	CUST01	REFC01	\N	\N	2004-12-04	WS	1	Na	Na	Na	Na	NA	NA	Customer	0.00	CPT	2004-12-05	0	\N	\N
-5	CUST01	CUST01		\N	 Inv 10	2005-01-13	WS	1	Na	Na	Na	Na	NA		Customer	0.00	CPT	2005-01-14	1	2005-01-13	\N
-7	CUST01	CUST01		\N	 Inv 11	2005-01-14	WS	1	Na	Na	Na	Na	NA	NA	Customer	0.00	CPT	2005-01-15	1	2005-01-14	0
-6	CUST01	CUST01		\N	 Inv 12	2005-01-13	WS	1	Na	Na	Na	Na	NA	NA	Customer	0.00	CPT	2005-01-14	0	\N	0
-9	FREDBLOGG	FREDBLOGG		\N	 Inv 15	2005-03-19	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-21	0	\N	0
-8	FREDBLOGG	FREDBLOGG		\N	 Inv 14	2005-03-18	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-19	0	\N	0
-10	FREDBLOGG	FREDBLOGG		\N		2005-03-19	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-21	0	\N	0
-15	CUST01	CUST01		\N		2005-06-03	WS	1					NA	NA	Customer	0.00	CPT	2005-06-03	0	\N	0
-16	CUST01	CUST01		\N		2005-06-03	WS	1					NA	NA	Customer	0.00	CPT	2005-06-03	0	\N	0
-17	CUST01	CUST01		\N		2005-06-03	WS	1					NA	NA	Customer	0.00	CPT	2005-06-03	0	\N	0
-18	CUST01	CUST01		\N		2005-06-03	WS	1					NA	NA	Customer	0.00	CPT	2005-06-03	0	\N	0
-19	CUST01	CUST01		\N		2005-06-03	WS	1					NA	NA	Customer	0.00	CPT	2005-06-03	0	\N	0
-20	CUST01	CUST01		\N		2005-03-08	WS	1					NA	NA	Customer	0.00	CPT	2005-03-08	0	\N	0
-21	CUST01	CUST01		\N		2005-03-15	WS	1					NA	NA	Customer	0.00	CPT	2005-03-15	0	\N	0
-22	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-02-08	WS	2							Eric Van Halen	0.00	CPT	2005-02-08	0	\N	0
-23	CUST01	CUST01		\N		2005-03-22	WS	1					NA	NA	Customer	0.00	CPT	2005-03-22	0	\N	0
-24	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-02-15	WS	2							Eric Van Halen	0.00	CPT	2005-02-15	0	\N	0
-25	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-02-22	WS	2							Eric Van Halen	0.00	CPT	2005-02-22	0	\N	0
-26	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-03-01	WS	2							Eric Van Halen	0.00	CPT	2005-03-01	0	\N	0
-27	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-03-08	WS	2							Eric Van Halen	0.00	CPT	2005-03-08	0	\N	0
-28	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-03-15	WS	2							Eric Van Halen	0.00	CPT	2005-03-15	0	\N	0
-29	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-03-22	WS	2							Eric Van Halen	0.00	CPT	2005-03-22	0	\N	0
-30	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-01-08	WS	2							Eric Van Halen	0.00	CPT	2005-01-08	0	\N	0
-11	FREDBLOGG	FREDBLOGG		\N	 Inv 1	2005-03-19	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-21	0	\N	0
+COPY salesorders (orderno, debtorno, branchcode, customerref, buyername, comments, orddate, ordertype, shipvia, deladd1, deladd2, deladd3, deladd4, contactphone, contactemail, deliverto, freightcost, fromstkloc, deliverydate, printedpackingslip, datepackingslipprinted, quotation, deliverblind) FROM stdin;
+1	CUST01	CUST01	REF01	\N		2004-12-03	WS	2	N/a	N/a	N/a	N/a	N/A		Customer	50.00	CPT	2004-12-04	0	\N	\N	\N
+2	CUST01	CUST01	REF01	\N	 Inv 4	2004-12-03	WS	2	N/a	N/a	N/a	N/a	N/A		Customer	50.00	CPT	2004-12-04	1	2004-04-12	\N	\N
+4	CUST01	CUST01	REFC01	\N	\N	2004-12-04	WS	1	Na	Na	Na	Na	NA	NA	Customer	0.00	CPT	2004-12-05	0	\N	\N	\N
+5	CUST01	CUST01		\N	 Inv 10	2005-01-13	WS	1	Na	Na	Na	Na	NA		Customer	0.00	CPT	2005-01-14	1	2005-01-13	\N	\N
+7	CUST01	CUST01		\N	 Inv 11	2005-01-14	WS	1	Na	Na	Na	Na	NA	NA	Customer	0.00	CPT	2005-01-15	1	2005-01-14	0	\N
+6	CUST01	CUST01		\N	 Inv 12	2005-01-13	WS	1	Na	Na	Na	Na	NA	NA	Customer	0.00	CPT	2005-01-14	0	\N	0	\N
+9	FREDBLOGG	FREDBLOGG		\N	 Inv 15	2005-03-19	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-21	0	\N	0	\N
+8	FREDBLOGG	FREDBLOGG		\N	 Inv 14	2005-03-18	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-19	0	\N	0	\N
+10	FREDBLOGG	FREDBLOGG		\N		2005-03-19	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-21	0	\N	0	\N
+15	CUST01	CUST01		\N		2005-06-03	WS	1					NA	NA	Customer	0.00	CPT	2005-06-03	0	\N	0	\N
+16	CUST01	CUST01		\N		2005-06-03	WS	1					NA	NA	Customer	0.00	CPT	2005-06-03	0	\N	0	\N
+17	CUST01	CUST01		\N		2005-06-03	WS	1					NA	NA	Customer	0.00	CPT	2005-06-03	0	\N	0	\N
+18	CUST01	CUST01		\N		2005-06-03	WS	1					NA	NA	Customer	0.00	CPT	2005-06-03	0	\N	0	\N
+19	CUST01	CUST01		\N		2005-06-03	WS	1					NA	NA	Customer	0.00	CPT	2005-06-03	0	\N	0	\N
+20	CUST01	CUST01		\N		2005-03-08	WS	1					NA	NA	Customer	0.00	CPT	2005-03-08	0	\N	0	\N
+21	CUST01	CUST01		\N		2005-03-15	WS	1					NA	NA	Customer	0.00	CPT	2005-03-15	0	\N	0	\N
+22	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-02-08	WS	2							Eric Van Halen	0.00	CPT	2005-02-08	0	\N	0	\N
+23	CUST01	CUST01		\N		2005-03-22	WS	1					NA	NA	Customer	0.00	CPT	2005-03-22	0	\N	0	\N
+24	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-02-15	WS	2							Eric Van Halen	0.00	CPT	2005-02-15	0	\N	0	\N
+25	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-02-22	WS	2							Eric Van Halen	0.00	CPT	2005-02-22	0	\N	0	\N
+26	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-03-01	WS	2							Eric Van Halen	0.00	CPT	2005-03-01	0	\N	0	\N
+27	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-03-08	WS	2							Eric Van Halen	0.00	CPT	2005-03-08	0	\N	0	\N
+28	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-03-15	WS	2							Eric Van Halen	0.00	CPT	2005-03-15	0	\N	0	\N
+29	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-03-22	WS	2							Eric Van Halen	0.00	CPT	2005-03-22	0	\N	0	\N
+30	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-01-08	WS	2							Eric Van Halen	0.00	CPT	2005-01-08	0	\N	0	\N
+52	FREDBLOGG	FREDBLOGG		\N		2005-03-31	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-04-01	0	\N	0	2
+53	FREDBLOGG	ERCC		\N		2005-03-31	WS	2	333 444						Ersteem Raichle unt Cloggs	0.00	SYD	2005-04-01	0	\N	0	2
+11	FREDBLOGG	FREDBLOGG		\N	 Inv 1	2005-03-19	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-21	0	\N	0	\N
 \.
 
 
@@ -5257,6 +5263,8 @@ COPY salesorderdetails (orderno, stkcode, qtyinvoiced, unitprice, quantity, esti
 9	PHIS02	0.0000	166.7500	133.0000	0	0.0000	2005-03-21 00:00:00	0	
 10	PHIS01	0.0000	0.0000	2.0000	0	0.0000	\N	0	
 11	PHIS02	5.0000	355.0000	6.0000	0	0.0000	2005-03-26 00:00:00	0	
+52	DEVDB	0.0000	0.0000	4.0000	0	0.0000	\N	0	
+53	DEVDB	0.0000	0.0000	4.0000	0	0.0000	\N	0	
 \.
 
 
@@ -5500,10 +5508,13 @@ RadioBeaconFTP_user_name	RadioBeacon ftp server user name
 RadionBeaconFTP_user_pass	Radio Beacon remote ftp server password
 CountryOfOperation	EUR
 DefaultTheme	professional
-DB_Maintenance_LastRun	2005-03-27
 AutoDebtorNo	1
+DB_Maintenance_LastRun	2005-03-31
 HTTPS_Only	0
 DB_Maintenance	1
+PackNoteFormat	1
+DefaultBlindPackNote	1
+CheckCreditLimits	0
 \.
 
 
@@ -9230,7 +9241,7 @@ SELECT pg_catalog.setval('contractreqts_contractreqid_seq', 1, false);
 -- Name: salesorders_orderno_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('salesorders_orderno_seq', 51, true);
+SELECT pg_catalog.setval('salesorders_orderno_seq', 53, true);
 
 
 --

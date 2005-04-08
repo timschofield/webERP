@@ -350,6 +350,7 @@ CREATE TABLE `custbranch` (
   `defaultlocation` varchar(5) NOT NULL default '',
   `taxauthority` tinyint(4) NOT NULL default '1',
   `defaultshipvia` int(11) NOT NULL default '1',
+  `deliverblind` tinyint(1) default '1',
   `disabletrans` tinyint(4) NOT NULL default '0',
   `brpostaddr1` varchar(40) NOT NULL default '',
   `brpostaddr2` varchar(40) NOT NULL default '',
@@ -1096,6 +1097,7 @@ CREATE TABLE `salesorders` (
   `contactphone` varchar(25) default NULL,
   `contactemail` varchar(25) default NULL,
   `deliverto` varchar(40) NOT NULL default '',
+  `deliverblind` tinyint(1) default '1',
   `freightcost` double NOT NULL default '0',
   `fromstkloc` varchar(5) NOT NULL default '',
   `deliverydate` date NOT NULL default '0000-00-00',
@@ -1757,12 +1759,12 @@ INSERT INTO `chartdetails` VALUES (107,59,0,941.009971141815,-3196.75860404968,0
 INSERT INTO `chartdetails` VALUES (107,60,0,0,5272.33117485046,0);
 INSERT INTO `chartdetails` VALUES (107,61,0,0,5272.33117485046,0);
 INSERT INTO `chartdetails` VALUES (107,62,0,0,5272.33117485046,0);
-INSERT INTO `chartdetails` VALUES (107,63,0,0,5272.33117485046,0);
-INSERT INTO `chartdetails` VALUES (107,64,0,0,5272.33117485046,0);
-INSERT INTO `chartdetails` VALUES (107,65,0,0,5272.33117485046,0);
-INSERT INTO `chartdetails` VALUES (107,66,0,0,5272.33117485046,0);
-INSERT INTO `chartdetails` VALUES (107,67,0,0,5272.33117485046,0);
-INSERT INTO `chartdetails` VALUES (107,68,0,0,5272.33117485046,0);
+INSERT INTO `chartdetails` VALUES (107,63,0,-585.2,5272.33117485046,0);
+INSERT INTO `chartdetails` VALUES (107,64,0,0,4687.13117485046,0);
+INSERT INTO `chartdetails` VALUES (107,65,0,0,4687.13117485046,0);
+INSERT INTO `chartdetails` VALUES (107,66,0,0,4687.13117485046,0);
+INSERT INTO `chartdetails` VALUES (107,67,0,0,4687.13117485046,0);
+INSERT INTO `chartdetails` VALUES (107,68,0,0,4687.13117485046,0);
 INSERT INTO `chartdetails` VALUES (112,51,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (112,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (112,53,0,0,0,0);
@@ -1776,11 +1778,11 @@ INSERT INTO `chartdetails` VALUES (112,60,0,0,463.499996185303,0);
 INSERT INTO `chartdetails` VALUES (112,61,0,0,463.499996185303,0);
 INSERT INTO `chartdetails` VALUES (112,62,0,0,463.499996185303,0);
 INSERT INTO `chartdetails` VALUES (112,63,0,0,463.499996185303,0);
-INSERT INTO `chartdetails` VALUES (112,64,0,0,463.499996185303,0);
-INSERT INTO `chartdetails` VALUES (112,65,0,0,463.499996185303,0);
-INSERT INTO `chartdetails` VALUES (112,66,0,0,463.499996185303,0);
-INSERT INTO `chartdetails` VALUES (112,67,0,0,463.499996185303,0);
-INSERT INTO `chartdetails` VALUES (112,68,0,0,463.499996185303,0);
+INSERT INTO `chartdetails` VALUES (112,64,0,-1125,463.499996185303,0);
+INSERT INTO `chartdetails` VALUES (112,65,0,0,-661.500003814697,0);
+INSERT INTO `chartdetails` VALUES (112,66,0,0,-661.500003814697,0);
+INSERT INTO `chartdetails` VALUES (112,67,0,0,-661.500003814697,0);
+INSERT INTO `chartdetails` VALUES (112,68,0,0,-661.500003814697,0);
 INSERT INTO `chartdetails` VALUES (200,51,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (200,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (200,53,0,0,0,0);
@@ -2064,11 +2066,11 @@ INSERT INTO `chartdetails` VALUES (70300,60,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (70300,61,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (70300,62,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (70300,63,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (70300,64,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (70300,65,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (70300,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (70300,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (70300,68,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (70300,64,0,105,0,0);
+INSERT INTO `chartdetails` VALUES (70300,65,0,0,105,0);
+INSERT INTO `chartdetails` VALUES (70300,66,0,0,105,0);
+INSERT INTO `chartdetails` VALUES (70300,67,0,0,105,0);
+INSERT INTO `chartdetails` VALUES (70300,68,0,0,105,0);
 INSERT INTO `chartdetails` VALUES (210000,51,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (210000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (210000,53,0,0,0,0);
@@ -3287,12 +3289,12 @@ INSERT INTO `chartdetails` VALUES (710000,59,0,-1105.14747267962,3243.5056018829
 INSERT INTO `chartdetails` VALUES (710000,60,0,0,-6702.82118272782,0);
 INSERT INTO `chartdetails` VALUES (710000,61,0,-70.25,-6702.82118272782,0);
 INSERT INTO `chartdetails` VALUES (710000,62,0,0,-7335.07118272782,0);
-INSERT INTO `chartdetails` VALUES (710000,63,0,0,-7335.07118272782,0);
-INSERT INTO `chartdetails` VALUES (710000,64,0,0,-7335.07118272782,0);
-INSERT INTO `chartdetails` VALUES (710000,65,0,0,-7335.07118272782,0);
-INSERT INTO `chartdetails` VALUES (710000,66,0,0,-7335.07118272782,0);
-INSERT INTO `chartdetails` VALUES (710000,67,0,0,-7335.07118272782,0);
-INSERT INTO `chartdetails` VALUES (710000,68,0,0,-7335.07118272782,0);
+INSERT INTO `chartdetails` VALUES (710000,63,0,643.72,-7335.07118272782,0);
+INSERT INTO `chartdetails` VALUES (710000,64,0,1125,-6691.35118272782,0);
+INSERT INTO `chartdetails` VALUES (710000,65,0,0,-5566.35118272782,0);
+INSERT INTO `chartdetails` VALUES (710000,66,0,0,-5566.35118272782,0);
+INSERT INTO `chartdetails` VALUES (710000,67,0,0,-5566.35118272782,0);
+INSERT INTO `chartdetails` VALUES (710000,68,0,0,-5566.35118272782,0);
 INSERT INTO `chartdetails` VALUES (720000,51,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (720000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (720000,53,0,0,0,0);
@@ -3342,11 +3344,11 @@ INSERT INTO `chartdetails` VALUES (722000,60,0,0,43429.2286109924,0);
 INSERT INTO `chartdetails` VALUES (722000,61,0,0,43429.2286109924,0);
 INSERT INTO `chartdetails` VALUES (722000,62,0,0,43429.2286109924,0);
 INSERT INTO `chartdetails` VALUES (722000,63,0,0,43429.2286109924,0);
-INSERT INTO `chartdetails` VALUES (722000,64,0,0,43429.2286109924,0);
-INSERT INTO `chartdetails` VALUES (722000,65,0,0,43429.2286109924,0);
-INSERT INTO `chartdetails` VALUES (722000,66,0,0,43429.2286109924,0);
-INSERT INTO `chartdetails` VALUES (722000,67,0,0,43429.2286109924,0);
-INSERT INTO `chartdetails` VALUES (722000,68,0,0,43429.2286109924,0);
+INSERT INTO `chartdetails` VALUES (722000,64,0,-105,43429.2286109924,0);
+INSERT INTO `chartdetails` VALUES (722000,65,0,0,43324.2286109924,0);
+INSERT INTO `chartdetails` VALUES (722000,66,0,0,43324.2286109924,0);
+INSERT INTO `chartdetails` VALUES (722000,67,0,0,43324.2286109924,0);
+INSERT INTO `chartdetails` VALUES (722000,68,0,0,43324.2286109924,0);
 INSERT INTO `chartdetails` VALUES (723000,51,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (723000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (723000,53,0,0,0,0);
@@ -3395,12 +3397,12 @@ INSERT INTO `chartdetails` VALUES (810000,59,0,12.5,7.05374997854233,0);
 INSERT INTO `chartdetails` VALUES (810000,60,0,0,119.553699970245,0);
 INSERT INTO `chartdetails` VALUES (810000,61,0,0,119.553699970245,0);
 INSERT INTO `chartdetails` VALUES (810000,62,0,0,119.553699970245,0);
-INSERT INTO `chartdetails` VALUES (810000,63,0,0,119.553699970245,0);
-INSERT INTO `chartdetails` VALUES (810000,64,0,0,119.553699970245,0);
-INSERT INTO `chartdetails` VALUES (810000,65,0,0,119.553699970245,0);
-INSERT INTO `chartdetails` VALUES (810000,66,0,0,119.553699970245,0);
-INSERT INTO `chartdetails` VALUES (810000,67,0,0,119.553699970245,0);
-INSERT INTO `chartdetails` VALUES (810000,68,0,0,119.553699970245,0);
+INSERT INTO `chartdetails` VALUES (810000,63,0,-58.52,119.553699970245,0);
+INSERT INTO `chartdetails` VALUES (810000,64,0,0,61.0336999702454,0);
+INSERT INTO `chartdetails` VALUES (810000,65,0,0,61.0336999702454,0);
+INSERT INTO `chartdetails` VALUES (810000,66,0,0,61.0336999702454,0);
+INSERT INTO `chartdetails` VALUES (810000,67,0,0,61.0336999702454,0);
+INSERT INTO `chartdetails` VALUES (810000,68,0,0,61.0336999702454,0);
 INSERT INTO `chartdetails` VALUES (820000,51,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (820000,52,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (820000,53,0,0,0,0);
@@ -3696,8 +3698,11 @@ INSERT INTO `config` VALUES ('RadioBeaconFTP_user_name','RadioBeacon ftp server 
 INSERT INTO `config` VALUES ('RadionBeaconFTP_user_pass','Radio Beacon remote ftp server password');
 INSERT INTO `config` VALUES ('AutoDebtorNo','0');
 INSERT INTO `config` VALUES ('HTTPS_Only','0');
-INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-03-27');
+INSERT INTO `config` VALUES ('DB_Maintenance','7');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-03-31');
+INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
+INSERT INTO `config` VALUES ('PackNoteFormat','1');
+INSERT INTO `config` VALUES ('CheckCreditLimits','2');
 
 --
 -- Dumping data for table `contractbom`
@@ -3742,18 +3747,18 @@ INSERT INTO `custallocns` VALUES (54,'99.0000','2004-11-28',68,56);
 -- Dumping data for table `custbranch`
 --
 
-INSERT INTO `custbranch` VALUES ('1234','12345678','One Two Three Four Five Six Seven Eight','','','','',1,'AR','25',0,'','','','','DEN',1,10,0,'','','','','');
-INSERT INTO `custbranch` VALUES ('BILLYBUNT','BILLYBUNT','William Bunter Inc','Unit C Fatboy Industrial Estate','Donut Drive','Colchester','England',3,'UK','25',0,'','','','','MUC',6,10,0,'','','','','');
-INSERT INTO `custbranch` VALUES ('DSSAD','DSSAD','Dressner und Dressner','133 Strasse Grunter','Berlin','Deutcshe','',1,'AR','2',0,'','','','','DEN',1,8,0,'','','','','');
-INSERT INTO `custbranch` VALUES ('GRAN','GRANHR','Gramtham Horton PLC','2 Growler Terraces','West Hemington','BE22 FD2','England',4,'UK','25',0,'','','Ed Heath','','MUC',6,1,0,'','','','','');
-INSERT INTO `custbranch` VALUES ('JOHN','JOHNSON','San Diego','198 Greater Lofty Heights','San Diego','California','USA',2,'AR','25',0,'2412 22356','2412 23549','Rod Champion','rod.champion@johnson.com','DEN',5,1,0,'','','','','');
-INSERT INTO `custbranch` VALUES ('JOHNTEMPE','JOHNSON','Johnson Vehicles Tempe','654 Roberto Street','Tempe','Arizona','USA',2,'AR','2',0,'56565 444 44','222 44 55','Holly Drako','','DEN',5,1,0,'','','','','');
-INSERT INTO `custbranch` VALUES ('TRFGSDIDSI','WALMON','l;sdlm\'mkl\'vm','ldsfklmvkl','','','',1,'AR','2',0,'','','kmvdklmfdklm','','DEN',1,1,0,'','','','','');
-INSERT INTO `custbranch` VALUES ('WALM','WALMON','Wallace Monterey - Sydney','309 Centennial Highway','Ballmain, Sydney','New South Wales 4133','Australia',16,'AR','25',0,'+61 2 3546 8875','+61 2 3546 8874','Phyllis Archibald','phyllis@WallMonterey.com.au','MEL',1,1,0,'','','','','');
-INSERT INTO `custbranch` VALUES ('WALMOADEL','WALMON','Wallace Monterey - Adelaide','2-6 Devon Street','Clovelly Park','Adelaide South Australia 3122','Australia',18,'AR','25',0,'+61 3544 2113','+61 3544 2103','Brian Morrisey','brian@WallMonterey.com.au','MEL',1,1,0,'','','','','');
-INSERT INTO `custbranch` VALUES ('WATT','WATTSGRP','Watts Motor Group Head Office and Admin','81 Trimble Road','Gimlet Rock','Greater Hampton','Arizona',2,'AR','25',0,'233 5442 3255','233 5442 3254','Bill Gobster','billg@watts.motors.com','MEL',5,1,0,'','','','','');
-INSERT INTO `custbranch` VALUES ('WATTLA','WATTSGRP','Watts Group Los Angeles','922 Acton Lane','Reefston','Los Angeles','California',2,'CA','25',0,'235 446 998','235 446 654','Graham Bigglesworth','gbiggles@watts.motors.com','DEN',5,1,0,'','','','','');
-INSERT INTO `custbranch` VALUES ('WATTSSAND','WATTSGRP','Watts Group San Diego','42 Grafton Place','San Diego','California','',2,'CA','25',0,'355 224 566','355 224 544','Sharon Stonely','sstonely@watts.motors.com','DEN',5,1,0,'','','','','');
+INSERT INTO `custbranch` VALUES ('1234','12345678','One Two Three Four Five Six Seven Eight','','','','',1,'AR','25',0,'','','','','DEN',1,10,1,0,'','','','','');
+INSERT INTO `custbranch` VALUES ('BILLYBUNT','BILLYBUNT','William Bunter Inc','Unit C Fatboy Industrial Estate','Donut Drive','Colchester','England',3,'UK','25',0,'','','','','MUC',6,10,1,0,'','','','','');
+INSERT INTO `custbranch` VALUES ('DSSAD','DSSAD','Dressner und Dressner','133 Strasse Grunter','Berlin','Deutcshe','',1,'AR','2',0,'','','','','DEN',1,8,1,0,'','','','','');
+INSERT INTO `custbranch` VALUES ('GRAN','GRANHR','Gramtham Horton PLC','2 Growler Terraces','West Hemington','BE22 FD2','England',4,'UK','25',0,'','','Ed Heath','','MUC',6,1,1,0,'','','','','');
+INSERT INTO `custbranch` VALUES ('JOHN','JOHNSON','San Diego','198 Greater Lofty Heights','San Diego','California','USA',2,'AR','25',0,'2412 22356','2412 23549','Rod Champion','rod.champion@johnson.com','DEN',5,1,1,0,'','','','','');
+INSERT INTO `custbranch` VALUES ('JOHNTEMPE','JOHNSON','Johnson Vehicles Tempe','654 Roberto Street','Tempe','Arizona','USA',2,'AR','2',0,'56565 444 44','222 44 55','Holly Drako','','DEN',5,1,1,0,'','','','','');
+INSERT INTO `custbranch` VALUES ('TRFGSDIDSI','WALMON','l;sdlm\'mkl\'vm','ldsfklmvkl','','','',1,'AR','2',0,'','','kmvdklmfdklm','','DEN',1,1,1,0,'','','','','');
+INSERT INTO `custbranch` VALUES ('WALM','WALMON','Wallace Monterey - Sydney','309 Centennial Highway','Ballmain, Sydney','New South Wales 4133','Australia',16,'AR','25',0,'+61 2 3546 8875','+61 2 3546 8874','Phyllis Archibald','phyllis@WallMonterey.com.au','MEL',1,1,1,0,'','','','','');
+INSERT INTO `custbranch` VALUES ('WALMOADEL','WALMON','Wallace Monterey - Adelaide','2-6 Devon Street','Clovelly Park','Adelaide South Australia 3122','Australia',18,'AR','25',0,'+61 3544 2113','+61 3544 2103','Brian Morrisey','brian@WallMonterey.com.au','MEL',1,1,1,0,'','','','','');
+INSERT INTO `custbranch` VALUES ('WATT','WATTSGRP','Watts Motor Group Head Office and Admin','81 Trimble Road','Gimlet Rock','Greater Hampton','Arizona',2,'AR','25',0,'233 5442 3255','233 5442 3254','Bill Gobster','billg@watts.motors.com','MEL',5,1,1,0,'','','','','');
+INSERT INTO `custbranch` VALUES ('WATTLA','WATTSGRP','Watts Group Los Angeles','922 Acton Lane','Reefston','Los Angeles','California',2,'CA','25',0,'235 446 998','235 446 654','Graham Bigglesworth','gbiggles@watts.motors.com','DEN',5,1,1,0,'','','','','');
+INSERT INTO `custbranch` VALUES ('WATTSSAND','WATTSGRP','Watts Group San Diego','42 Grafton Place','San Diego','California','',2,'CA','25',0,'355 224 566','355 224 544','Sharon Stonely','sstonely@watts.motors.com','DEN',5,1,1,0,'','','','','');
 
 --
 -- Dumping data for table `debtorsmaster`
@@ -3798,6 +3803,7 @@ INSERT INTO `debtortrans` VALUES (81,2,12,'WATTSGRP','','2004-11-28 00:00:00',59
 INSERT INTO `debtortrans` VALUES (82,11,11,'BILLYBUNT','BILLYBUNT','2004-11-30 00:00:00',59,0,'','WS',0,0.800000,-6.65000009536743,0,0,0,0,0,'','',0,'');
 INSERT INTO `debtortrans` VALUES (83,4,12,'DSSAD','','2005-01-03 00:00:00',61,0,'Cheques one two thre','',0,1.000000,-50.25,0,0,-20,0,0,'','',0,'');
 INSERT INTO `debtortrans` VALUES (84,14,10,'DSSAD','DSSAD','2005-03-28 00:00:00',63,0,'','WS',46,1.000000,585.2,58.52,0,0,0,0,'Balance of Shocks to follow','8',0,'');
+INSERT INTO `debtortrans` VALUES (85,15,10,'GRANHR','GRAN','2005-04-04 00:00:00',64,0,'','EX',48,1.000000,1125,0,0,0,0,0,'','1',0,'');
 
 --
 -- Dumping data for table `discountmatrix`
@@ -4227,9 +4233,13 @@ INSERT INTO `gltrans` VALUES (732,12,4,0,'2005-01-03',61,710000,'',-70.25,1,'');
 INSERT INTO `gltrans` VALUES (733,12,4,0,'2005-01-03',61,455000,'',20,1,'');
 INSERT INTO `gltrans` VALUES (734,1,19,0,'2005-01-23',61,24000,'Erich Von Hammer Haulage',152.949996948242,1,'');
 INSERT INTO `gltrans` VALUES (735,1,19,0,'2005-01-23',61,700000,'',-152.949996948242,1,'');
-INSERT INTO `gltrans` VALUES (736,10,14,0,'2005-03-28',63,107,'DSSAD - HON92FrSus x 11 @ 53.2000',-585.2,0,'');
-INSERT INTO `gltrans` VALUES (737,10,14,0,'2005-03-28',63,710000,'DSSAD',643.72,0,'');
-INSERT INTO `gltrans` VALUES (738,10,14,0,'2005-03-28',63,810000,'DSSAD',-58.52,0,'');
+INSERT INTO `gltrans` VALUES (736,10,14,0,'2005-03-28',63,107,'DSSAD - HON92FrSus x 11 @ 53.2000',-585.2,1,'');
+INSERT INTO `gltrans` VALUES (737,10,14,0,'2005-03-28',63,710000,'DSSAD',643.72,1,'');
+INSERT INTO `gltrans` VALUES (738,10,14,0,'2005-03-28',63,810000,'DSSAD',-58.52,1,'');
+INSERT INTO `gltrans` VALUES (739,10,15,0,'2005-04-04',64,70300,'GRANHR - HON90022 x 50 @ 2.1000',105,1,'');
+INSERT INTO `gltrans` VALUES (740,10,15,0,'2005-04-04',64,722000,'GRANHR - HON90022 x 50 @ 2.1000',-105,1,'');
+INSERT INTO `gltrans` VALUES (741,10,15,0,'2005-04-04',64,112,'GRANHR - HON90022 x 50 @ 22.5000',-1125,1,'');
+INSERT INTO `gltrans` VALUES (742,10,15,0,'2005-04-04',64,710000,'GRANHR',1125,1,'');
 
 --
 -- Dumping data for table `grns`
@@ -4304,7 +4314,7 @@ INSERT INTO `locstock` VALUES ('MUC','130',0.0,0);
 INSERT INTO `locstock` VALUES ('MUC','140',0.0,0);
 INSERT INTO `locstock` VALUES ('MUC','FROOM',0.0,0);
 INSERT INTO `locstock` VALUES ('MUC','HON90021',-4.0,1);
-INSERT INTO `locstock` VALUES ('MUC','HON90022',5.0,0);
+INSERT INTO `locstock` VALUES ('MUC','HON90022',-45.0,0);
 INSERT INTO `locstock` VALUES ('MUC','HON92FrSus',0.0,0);
 INSERT INTO `locstock` VALUES ('MUC','HONCIVIC92SET',0.0,0);
 INSERT INTO `locstock` VALUES ('MUC','HONShock',-4.0,0);
@@ -4445,7 +4455,7 @@ INSERT INTO `reportcolumns` VALUES (2,3,'Budget','Value',0,51,59,'Gross Value',0
 -- Dumping data for table `reportheaders`
 --
 
-INSERT INTO `reportheaders` VALUES (2,'Sales in 2004','Customer Code',0,'0','zzzzzzz','Not Used',0,'','','Not Used',0,'','','Not Used',0,'','');
+INSERT INTO `reportheaders` VALUES (2,'Sales in 2004','Sales Area',0,'0','zzzzzzz','Customer Code',0,'','zzzzzzzzzz','Product Code',0,'','zzzzzzzzzz','Not Used',0,'','');
 
 --
 -- Dumping data for table `salesanalysis`
@@ -4479,6 +4489,7 @@ INSERT INTO `salesanalysis` VALUES ('EX',59,-73.5294,-48.4500,'WALMON','WALM',-5
 INSERT INTO `salesanalysis` VALUES ('EX',59,-0.2941,-6.2000,'WALMON','WALM',-10.0000,-0.0074,'125','AR',1,'25','Steel',67);
 INSERT INTO `salesanalysis` VALUES ('WS',59,-8.3125,-10.5000,'BILLYBUNT','BILLYBUNT',-5.0000,0.0000,'HON90022','UK',1,'25','Coil',68);
 INSERT INTO `salesanalysis` VALUES ('WS',63,585.2000,0.0000,'DSSAD','DSSAD',11.0000,0.0000,'HON92FrSus','AR',1,'2','SUSASS',69);
+INSERT INTO `salesanalysis` VALUES ('EX',64,1125.0000,105.0000,'GRANHR','GRAN',50.0000,0.0000,'HON90022','UK',1,'25','Coil',70);
 
 --
 -- Dumping data for table `salescat`
@@ -4545,32 +4556,34 @@ INSERT INTO `salesorderdetails` VALUES (45,'HON90022',0.0000,26.9000,5.0000,0,0.
 INSERT INTO `salesorderdetails` VALUES (46,'HON92FrSus',11.0000,53.2000,15.0000,0,0.0000,'2005-03-28 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (46,'HONShock',0.0000,25.9000,3.0000,0,0.0500,'0000-00-00 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (47,'HON90022',0.0000,25.2100,5.0000,0,0.2000,'0000-00-00 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (48,'HON90022',50.0000,22.5000,100.0000,0,0.0000,'2005-04-04 00:00:00',0,'');
 
 --
 -- Dumping data for table `salesorders`
 --
 
-INSERT INTO `salesorders` VALUES (27,'WALMON','WALM','',NULL,' Inv 1','2004-07-13','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',0,'MEL','2004-07-13',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (28,'WATTSGRP','WATTLA','',NULL,' Inv 2 Inv 6','2004-07-29','WS',1,'922 Acton Lane','Reefston','Los Angeles','California','235 446 998','','Watts Group Los Angeles',0,'DEN','2004-07-30',1,'2004-07-29',0);
-INSERT INTO `salesorders` VALUES (29,'WALMON','WALM','',NULL,' Inv 3','2004-08-15','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',0,'MEL','2004-08-20',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (30,'WALMON','WALM','',NULL,' Inv 4','2004-09-20','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',0,'MEL','2004-09-21',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (31,'GRANHR','GRAN','',NULL,' Inv 5 Inv 7 Inv 8','2004-09-20','EX',1,'2 Growler Terraces','West Hemington','BE22 FD2','England','','','Gramtham Horton PLC',0,'MUC','2004-09-21',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (32,'WALMON','WALMOADEL','',NULL,'','2004-09-24','EX',1,'2-6 Devon Street','Clovelly Park','Adelaide South','Australia','+61 3544 2113','','Wallace Monterey - Adelaide',0,'MEL','2004-09-25',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (33,'GRANHR','GRAN','9887',NULL,' Inv 9','2004-09-24','EX',1,'2 Growler Terraces','West Hemington','BE22 FD2','England','','','Gramtham Horton PLC',0,'MUC','2004-09-25',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (34,'WATTSGRP','WATT','',NULL,' Inv 10','2004-09-24','WS',1,'81 Trimble Road','Gimlet Rock','Greater Hampton','Arizona','233 5442 3255','','Watts Motor Group Head Office and Admin',0,'MEL','2004-09-25',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (35,'JOHNSON','JOHNTEMPE','',NULL,' Inv 12 Inv 13','2004-09-24','WS',1,'654 Roberto Street','Tempe','Arizona','USA','56565 444 44','','Johnson Vehicles Tempe',0,'DEN','2004-09-25',1,'2031-10-20',0);
-INSERT INTO `salesorders` VALUES (36,'WALMON','WALM','',NULL,'','2004-11-19','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',0,'MEL','2004-11-19',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (37,'GRANHR','GRAN','',NULL,'','2004-11-28','EX',1,'2 Growler Terraces','West Hemington','BE22 FD2','England','','','Gramtham Horton PLC',0,'MUC','2004-11-29',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (38,'BILLYBUNT','BILLYBUNT','',NULL,'','2004-11-28','WS',10,'Unit C Fatboy Industrial Estate','Donut Drive','Colchester','England','','','William Bunter Inc',0,'MUC','2004-11-29',1,'2004-11-28',0);
-INSERT INTO `salesorders` VALUES (39,'BILLYBUNT','BILLYBUNT','',NULL,'','2004-11-30','WS',10,'Unit C Fatboy Industrial Estate','Donut Drive','Colchester','England','','','William Bunter Inc',0,'MUC','2004-11-30',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (40,'12345678','1234','FR12335',NULL,NULL,'2004-12-01','WS',10,'','','','','','','One Two Three Four Five Six Seven Eight',0,'DEN','2005-01-01',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (41,'12345678','1234','221114',NULL,NULL,'2004-12-01','WS',10,'','','','','','','One Two Three Four Five Six Seven Eight',0,'DEN','2004-12-02',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (42,'WALMON','WALM','',NULL,'','2004-12-06','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',0,'MEL','2004-12-06',1,'2004-12-06',0);
-INSERT INTO `salesorders` VALUES (43,'JOHNSON','JOHNTEMPE','',NULL,'','2005-02-05','WS',1,'654 Roberto Street','Tempe','Arizona','USA','56565 444 44','','Johnson Vehicles Tempe',0,'DEN','2005-02-07',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (44,'BILLYBUNT','BILLYBUNT','',NULL,'','2005-03-19','WS',10,'Unit C Fatboy Industrial Estate','Donut Drive','Colchester','England','','','William Bunter Inc',0,'MUC','2005-03-21',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (45,'WALMON','WALM','CF_44321',NULL,'','2005-03-03','EX',8,'','','','','+61 2 3546 8875','phyllis@WallMonterey.com.','Wallace Monterey - Sydney',0,'MEL','2005-03-03',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (46,'DSSAD','DSSAD','844321',NULL,' Inv 14','2005-03-26','WS',8,'133 Strasse Grunter','Berlin','Deutcshe','','','','Dressner und Dressner',0,'DEN','2005-03-28',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (47,'DSSAD','DSSAD','',NULL,'','2005-03-26','WS',8,'133 Strasse Grunter','Berlin','Deutcshe','','','','Dressner und Dressner',0,'DEN','2005-03-28',0,'0000-00-00',1);
+INSERT INTO `salesorders` VALUES (27,'WALMON','WALM','',NULL,' Inv 1','2004-07-13','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',1,0,'MEL','2004-07-13',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (28,'WATTSGRP','WATTLA','',NULL,' Inv 2 Inv 6','2004-07-29','WS',1,'922 Acton Lane','Reefston','Los Angeles','California','235 446 998','','Watts Group Los Angeles',1,0,'DEN','2004-07-30',1,'2004-07-29',0);
+INSERT INTO `salesorders` VALUES (29,'WALMON','WALM','',NULL,' Inv 3','2004-08-15','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',1,0,'MEL','2004-08-20',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (30,'WALMON','WALM','',NULL,' Inv 4','2004-09-20','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',1,0,'MEL','2004-09-21',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (31,'GRANHR','GRAN','',NULL,' Inv 5 Inv 7 Inv 8','2004-09-20','EX',1,'2 Growler Terraces','West Hemington','BE22 FD2','England','','','Gramtham Horton PLC',1,0,'MUC','2004-09-21',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (32,'WALMON','WALMOADEL','',NULL,'','2004-09-24','EX',1,'2-6 Devon Street','Clovelly Park','Adelaide South','Australia','+61 3544 2113','','Wallace Monterey - Adelaide',1,0,'MEL','2004-09-25',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (33,'GRANHR','GRAN','9887',NULL,' Inv 9','2004-09-24','EX',1,'2 Growler Terraces','West Hemington','BE22 FD2','England','','','Gramtham Horton PLC',1,0,'MUC','2004-09-25',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (34,'WATTSGRP','WATT','',NULL,' Inv 10','2004-09-24','WS',1,'81 Trimble Road','Gimlet Rock','Greater Hampton','Arizona','233 5442 3255','','Watts Motor Group Head Office and Admin',1,0,'MEL','2004-09-25',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (35,'JOHNSON','JOHNTEMPE','',NULL,' Inv 12 Inv 13','2004-09-24','WS',1,'654 Roberto Street','Tempe','Arizona','USA','56565 444 44','','Johnson Vehicles Tempe',1,0,'DEN','2004-09-25',1,'2031-10-20',0);
+INSERT INTO `salesorders` VALUES (36,'WALMON','WALM','',NULL,'','2004-11-19','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',1,0,'MEL','2004-11-19',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (37,'GRANHR','GRAN','',NULL,'','2004-11-28','EX',1,'2 Growler Terraces','West Hemington','BE22 FD2','England','','','Gramtham Horton PLC',1,0,'MUC','2004-11-29',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (38,'BILLYBUNT','BILLYBUNT','',NULL,'','2004-11-28','WS',10,'Unit C Fatboy Industrial Estate','Donut Drive','Colchester','England','','','William Bunter Inc',1,0,'MUC','2004-11-29',1,'2004-11-28',0);
+INSERT INTO `salesorders` VALUES (39,'BILLYBUNT','BILLYBUNT','',NULL,'','2004-11-30','WS',10,'Unit C Fatboy Industrial Estate','Donut Drive','Colchester','England','','','William Bunter Inc',1,0,'MUC','2004-11-30',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (40,'12345678','1234','FR12335',NULL,NULL,'2004-12-01','WS',10,'','','','','','','One Two Three Four Five Six Seven Eight',1,0,'DEN','2005-01-01',1,'2005-04-07',0);
+INSERT INTO `salesorders` VALUES (41,'12345678','1234','221114',NULL,NULL,'2004-12-01','WS',10,'','','','','','','One Two Three Four Five Six Seven Eight',1,0,'DEN','2004-12-02',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (42,'WALMON','WALM','',NULL,'','2004-12-06','EX',1,'309 Centennial Highway','Ballmain, Sydney','New South Wales','Australia','+61 2 3546 8875','','Wallace Monterey - Sydney',1,0,'MEL','2004-12-06',1,'2004-12-06',0);
+INSERT INTO `salesorders` VALUES (43,'JOHNSON','JOHNTEMPE','',NULL,'','2005-02-05','WS',1,'654 Roberto Street','Tempe','Arizona','USA','56565 444 44','','Johnson Vehicles Tempe',1,0,'DEN','2005-02-07',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (44,'BILLYBUNT','BILLYBUNT','',NULL,'','2005-03-19','WS',10,'Unit C Fatboy Industrial Estate','Donut Drive','Colchester','England','','','William Bunter Inc',1,0,'MUC','2005-03-21',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (45,'WALMON','WALM','CF_44321',NULL,'','2005-03-03','EX',8,'','','','','+61 2 3546 8875','phyllis@WallMonterey.com.','Wallace Monterey - Sydney',1,0,'MEL','2005-03-03',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (46,'DSSAD','DSSAD','844321',NULL,' Inv 14','2005-03-26','WS',8,'133 Strasse Grunter','Berlin','Deutcshe','','','','Dressner und Dressner',1,0,'DEN','2005-03-28',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (47,'DSSAD','DSSAD','',NULL,'','2005-03-26','WS',8,'133 Strasse Grunter','Berlin','Deutcshe','','','','Dressner und Dressner',1,0,'DEN','2005-03-28',0,'0000-00-00',1);
+INSERT INTO `salesorders` VALUES (48,'GRANHR','GRAN','',NULL,' Inv 15','2005-04-03','EX',1,'2 Growler Terraces','West Hemington','BE22 FD2','England','','','Gramtham Horton PLC',1,0,'MUC','2005-04-04',0,'0000-00-00',0);
 
 --
 -- Dumping data for table `salestypes`
@@ -4968,6 +4981,7 @@ INSERT INTO `stockmoves` VALUES (212,'HONShock',10,14,'DEN','2005-03-28','DSSAD'
 INSERT INTO `stockmoves` VALUES (213,'HON92FrSus',10,14,'DEN','2005-03-28','DSSAD','DSSAD','53.2000',63,'46',-11.0000,0.0000,0.0000,1,0,0,0.1,'');
 INSERT INTO `stockmoves` VALUES (214,'130',17,7,'DEN','2005-03-26','','','0.0000',63,'',5.0000,0.0000,0.0000,1,5,0,0,'');
 INSERT INTO `stockmoves` VALUES (215,'130',17,8,'DEN','2005-03-26','','','0.0000',63,'',-5.0000,0.0000,0.0000,1,0,0,0,'');
+INSERT INTO `stockmoves` VALUES (216,'HON90022',10,15,'MUC','2005-04-04','GRANHR','GRAN','22.5000',64,'48',-50.0000,0.0000,2.1000,1,-45,0,0,'');
 
 --
 -- Dumping data for table `stockserialitems`
@@ -5118,7 +5132,7 @@ INSERT INTO `systypes` VALUES (0,'Journal - GL',10);
 INSERT INTO `systypes` VALUES (1,'Payment - GL',19);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',3);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',14);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',15);
 INSERT INTO `systypes` VALUES (11,'Credit Note',11);
 INSERT INTO `systypes` VALUES (12,'Receipt',4);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
@@ -5199,8 +5213,8 @@ INSERT INTO `workcentres` VALUES ('ASSEM','DEN','Assembly',1.0000,'20.0000',5600
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-03-27 11:09:00','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
-INSERT INTO `www_users` VALUES ('testy','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Test Remote User','GRANHR','','','DEN',7,'2005-02-10 21:11:20','GRAN','A4','0,0,0,0,0,0,0,0,',0,50,'fresh','pt_PT');
+INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-04-07 20:15:35','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
+INSERT INTO `www_users` VALUES ('testy','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Test Remote User','GRANHR','','','DEN',7,'2005-04-02 21:55:16','GRAN','A4','0,0,0,0,0,0,0,0,',0,50,'fresh','pt_PT');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

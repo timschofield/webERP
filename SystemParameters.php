@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $PageSecurity =15;
 
 include('includes/session.inc');
@@ -194,6 +194,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['PackNoteFormat'] != $_POST['X_PackNoteFormat'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_PackNoteFormat'])."' WHERE confname = 'PackNoteFormat'";
 		}
+		if ($_SESSION['CheckCreditLimits'] != $_POST['X_CheckCreditLimits'] ) {
+			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_CheckCreditLimits'])."' WHERE confname = 'CheckCreditLimits'";
+		}
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 0 ) {
 			$result = DB_query('BEGIN',$db,$ErrMsg);
@@ -268,6 +271,15 @@ echo '<TR><TD>' . _('Default Credit Limit') . ':</TD>
 	<TD><input type="Text" Name="X_DefaultCreditLimit" value="' . $_SESSION['DefaultCreditLimit'] . '" SIZE=6 MAXLENGTH=12></TD>
 	<TD>' . _('The default used in new customer set up') . '</TD></TR>';
 
+// Check Credit Limits
+echo '<TR><TD>' . _('Check Credit Limits') . ':</TD>
+	<TD><SELECT Name="X_CheckCreditLimits">
+	<OPTION '.($_SESSION['CheckCreditLimits']==0?'SELECTED ':'').'VALUE="0">'._('Do not check').'
+	<OPTION '.($_SESSION['CheckCreditLimits']==1?'SELECTED ':'').'VALUE="1">'._('Warn on breach').'
+	<OPTION '.($_SESSION['CheckCreditLimits']==2?'SELECTED ':'').'VALUE="2">'._('Prohibit Sales').'
+	</SELECT></TD>
+	<TD>' . _('Credit limits can be checked at order entry to warn only or to stop the order from being entered where it would take a customer account balance over their limit') . '</TD></TR>';
+		
 // Show_Settled_LastMonth
 echo '<TR><TD>' . _('Show Settled Last Month') . ':</TD>
 	<TD><SELECT Name="X_Show_Settled_LastMonth">

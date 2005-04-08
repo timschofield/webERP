@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 /* Common SQL Functions */
 
 
@@ -87,5 +87,41 @@ Function ContainsIllegalCharacters ($CheckVariable) {
 	} else {
 		return false;
 	}
+}
+
+Function GetCreditAvailable($DebtorNo,&$db) {
+
+	$sql = "SELECT debtorsmaster.debtorno, 
+			debtorsmaster.creditlimit
+			SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) as balance
+		FROM debtorsmaster INNER JOIN debtortrans 
+			ON debtorsmaster.debtorno=debtortrans.debtorno
+		WHERE debtorsmaster.debtorno='" . $debtorno . "'";
+		
+	$ErrMsg =  _('The current account balance of the customer could not be retrieved because');
+	$GetAccountBalanceResult = DB_query($sql, $db, $ErrMsg);
+	
+	$myrow = DB_fetch_array($GetAccountBalanceResult);
+	$CreditAvailable = $myrow['creditlimit'] - $myrow['balance'];
+	
+	/*Take into account the value of outstanding sales orders too */
+	$sql = "SELECT SUM(salesorderdetails.unitprice *
+				(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) *
+				(1 - salesorderdetails.discountpercent)) AS ordervalue
+				FROM salesorders,
+					salesorderdetails
+				WHERE salesorders.orderno = salesorderdetails.orderno
+				AND salesorders.debtorno = '" . $debtorno . "'
+				AND salesorderdetails.completed = 0
+				AND salesorders.quotation = 0";
+	
+	$ErrMsg =  _('The value of outstanding orders for the customer could not be retrieved because');
+	$GetOSOrdersResult = DB_query($sql, $db, $ErrMsg);
+	
+	$myrow = DB_fetch_array($GetOSOrdersResult);
+	$CreditAvailable -= myrow['ordervalue'];
+	
+	Return $CreditAvailable;
+	
 }
 ?>

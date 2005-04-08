@@ -10,6 +10,7 @@ define('FPDF_FONTPATH','./fonts/');
 
 class Cpdf extends FPDF {
 
+
 function Cpdf($pageSize=array(0,0,612,792))
 {
  $this->fpdf( 'P', 'pt',array($pageSize[2]-$pageSize[0],$pageSize[3]-$pageSize[1]));
@@ -166,9 +167,8 @@ function ellipse($x0,$y0,$r1,$r2=0,$angle=0,$nSeg=8,$astart=0,$afinish=360,$clos
   $this->_out($tmp);
 }
  
-function Stream()
-{
-  $this->Output();
+function Stream() {
+  $this->Output('','I');
 }
 
 function addTextWrap($xb, $yb, $w, $h, $txt, $align='J', $border=0, $fill=0) 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 2;
 
@@ -115,13 +115,13 @@ If (isset($_POST['PrintPDF'])
 	$CatTot_Val=0;
 	While ($PriceList = DB_fetch_array($PricesResult,$db)){
 
-		if ($CurrCode!=$PriceList['currabrev']){
+		if ($CurrCode != $PriceList['currabrev']){
 			$FontSize=10;
 			$YPos -=(2*$line_height);
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize, _('Prices in') . ' ' . $PriceList['currabrev']);
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300-$Left_Margin,$FontSize, $PriceList['currabrev'] . ' ' . _('Prices'));
 			$CurrCode = $PriceList['currabrev'];
-			$FontSize=8;
-			$YPos -=$line_height;
+			$FontSize = 8;
+			$YPos -= $line_height;
 		}
 
 		if ($Category!=$PriceList['categoryid']){
@@ -173,7 +173,6 @@ If (isset($_POST['PrintPDF'])
 	$FontSize =10;
 /*Print out the category totals */
 
-
 	$pdfcode = $pdf->output();
 	$len = strlen($pdfcode);
 
@@ -193,7 +192,6 @@ If (isset($_POST['PrintPDF'])
 		header('Pragma: public');
 
 		$pdf->Stream();
-
 	}
 } else { /*The option to print PDF was not hit */
 
@@ -250,5 +248,4 @@ If (isset($_POST['PrintPDF'])
 	include('includes/footer.inc');
 
 } /*end of else not PrintPDF */
-
 ?>

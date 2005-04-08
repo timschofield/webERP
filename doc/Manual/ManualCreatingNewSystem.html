@@ -105,7 +105,32 @@ Ideally, all the opening transactions should be entered immediately prior to a m
 <font size="+1"><b>Reconciling the Debtors Ledger Control Account</b></font>
 <br><br>
 It is important to check that the balance on all customers accounts from the aged listing agrees to the control account in the old system, in both local and overseas currency. The balance in the general ledger (of all customer balances) would normally be entered as a manual journal, but the amount of this journal should agree to the amount as per the customer listing. Of course balances entered in different currencies will have a different local value depending upon the rate at which they were entered. There is a facility to value all the currency balances in local currency looking at the rate at which each transaction was entered. This is the script Z_CurrencyDebtorBalances.php. A similar facility is available for suppliers balances. A double check should be done account by account before going live. Once all customer accounts are reconciled and entered (and double checked) the General Ledger interface should be re-enabled from the Company preferences screen (System Setup Tab). The system will then maintain the control account in the general ledger which should always agree to the list of balances.
+br><br>
+<font size="+1"><b>Bringing On General Ledger Balances</b></font>
 <br><br>
+Consider a trial balance with the entries:
+<br><br>
+<TABLE>
+<TR><TD>Account</TD><TD>Amount</TD></TR>
+<TR><TD>Bank Account</TD><TD ALIGN=RIGHT>1,000.00</TD></TR>
+<TR><TD>Debtors Control</TD><TD ALIGN=RIGHT>5,000.00</TD></TR>
+<TR><TD>Creditors Control</TD><TD ALIGN=RIGHT>(2,000.00)</TD></TR>
+<TR><TD>Motor Vehicles</TD><TD ALIGN=RIGHT>10,000.00</TD></TR>
+<TR><TD>Loan</TD><TD ALIGN=RIGHT>(3,000.00)</TD></TR>
+<TR><TD>Accum Profits</TD><TD ALIGN=RIGHT>(11,000.00)</TD></TR>
+<TR><TD></TD><TD><HR></TD></TR>
+<TR><TD>Check Total</TD><TD ALIGN=RIGHT>0.00</TD></TR>
+<TR><TD></TD><TD><HR></TD></TR>
+</TABLE>
+<BR><BR>
+The system stops the user from entering journals to general ledger accounts defined as bank accounts. The Bank Account must be defined as such first.
+<BR><BR>
+However, general ledger receipts can be entered and an analysis of the general ledger entries that make up the receipt can also be entered. This is how general ledger balances can be brought on. Creating a general ledger receipt for 1,000.00 with an analysis of the receipt as above - -5,000 Debtors control, 2,000 Creditors control, -10,000 Motor vehicles, 3,000 loan and 11,000 accumulated profits will leave a balance of 1,000 received into the bank account. It is important to date the receipt in the month prior to when the new webERP system will commence activity. In this way the brought forward balances for the new period will be correct.
+<br><br>
+Where there are several bank accounts each defined with different general ledger accounts, then a receipt should be entered to each bank account with a balance (or a payment if the bank account is overdrawn) - these balances can be cleared through postings to a suspense account.
+<BR><BR>
+It is important that the general ledger entries to the debtors control account and creditors control account tie up to the total of the functional currency balances of the AR and AP respectively.
+<BR><BR>
 <font size="+1"><b>Finally</b></font>
 <br><br>
 Once all entries are made to reconcile the customers accounts with the general ledger debtors account the system should be backed up. The mysql utility mysqldump is one method that produces an sql script that will restore the system to where it was when the script was created. With users out of the system - to avoid any locking issues - and assuming mysqldump is in the system path:

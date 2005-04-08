@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 include ('includes/class.pdf.php');
 
 if (isset($SessionSavePath)){
@@ -7,6 +7,26 @@ if (isset($SessionSavePath)){
 }
 
 session_start();
+include('includes/GetConfig.php');
+
+If (isset($_POST['Theme'])) {
+	$_SESSION['Theme'] = $_POST['Theme'];
+	$theme = $_POST['Theme'];
+} elseif (!isset($_SESSION['Theme'])) {
+	$theme = $_SESSION['DefaultTheme'];
+	$_SESSION['Theme'] = $_SESSION['DefaultTheme'];
+	
+} else {
+	$theme = $_SESSION['Theme'];
+}
+
+if ($_SESSION['HTTPS_Only']==1){
+	if (!strstr('HTTPS',$_SERVER['SERVER_PROTOCOL'])){
+		prnMsg('webERP is configured to allow only secure socket connections. Pages must be called with https:// ....','error');
+		exit;
+	}
+}
+
 include('includes/LanguageSetup.php');
 
 /* Standard PDF file creation header stuff */
