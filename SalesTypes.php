@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 15;
 
@@ -56,15 +56,18 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['Sales_Type'] . "')";
 		$msg = _('Sales type') . ' ' . $_POST["Sales_Type"] .  ' ' . _('has been added to the database');
 	}
+	
+	if ( $InputError !=1) {
 	//run the SQL from either of the above possibilites
-	$result = DB_query($sql,$db);
-
-	prnMsg($msg,'success');
-
-	unset ($SelectedType);
-	unset($_POST['TypeAbbrev']);
-	unset($_POST['Sales_Type']);
-
+		$result = DB_query($sql,$db);
+	
+		prnMsg($msg,'success');
+	
+		unset ($SelectedType);
+		unset($_POST['TypeAbbrev']);
+		unset($_POST['Sales_Type']);
+	}
+	
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
@@ -152,11 +155,10 @@ while ($myrow = DB_fetch_row($result)) {
 }
 
 //end of ifs and buts!
-
-echo '<P>';
-echo '<CENTER><P><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Show All Sales Types Defined') . '</A></CENTER>';
-echo '<P>';
-
+if (isset($SelectedType)) {
+	
+	echo '<CENTER><P><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Show All Sales Types Defined') . '</A></CENTER><p>';
+}
 if (! isset($_GET['delete'])) {
 
 	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';

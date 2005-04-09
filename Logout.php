@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $PageSecurity =1;
 
 include('includes/session.inc');
@@ -42,7 +42,7 @@ include('includes/session.inc');
 											<br /><br /><?php echo _('Thank you for using webERP'); ?><br /><br />
 				<?php echo $_SESSION['CompanyRecord']['coyname'];?>
 											<br />
-											<a href=" <?php echo $rootpath;?>/index.php? SID;?>"><b><?php echo _('Click here to Login Again'); ?></b></a>
+											<a href=" <?php echo $rootpath . '/index.php?' . SID . '"><b>' . _('Click here to Login Again'); ?></b></a>
 										</td>
 									</tr>
                                 </table>

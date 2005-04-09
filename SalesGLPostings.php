@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $PageSecurity = 10;
 
 include('includes/session.inc');
@@ -93,7 +93,25 @@ if (!isset($SelectedSalesPostingID)) {
 	$result = DB_query($SQL,$db);
 
 	if (DB_num_rows($result)==0){
-	/* there is no default set up so need to check that account 1 is not already used */
+		/* there is no default set up so need to check that account 1 is not already used */
+		/* First Check if we have at least a group_ caled Sales */
+		$SQL = "SELECT groupname FROM accountgroups WHERE groupname = 'Sales'";
+		$result = DB_query($SQL,$db);
+		if (DB_num_rows($result)==0){
+			/* The required group does not seem to exist so we create it */
+			$SQL = "INSERT INTO accountgroups (
+					groupname, 
+					sectioninaccounts, 
+					pandl, 
+					sequenceintb 
+				) VALUES (
+					'Sales',
+					1,
+					1,
+					10)";
+					
+			$result = DB_query($SQL,$db);	
+		}		
 		$SQL = 'SELECT accountcode FROM chartmaster WHERE accountcode =1';
 		$result = DB_query($SQL,$db);
 		if (DB_num_rows($result)==0){
@@ -109,7 +127,6 @@ if (!isset($SelectedSalesPostingID)) {
 						)";
 			$result = DB_query($SQL,$db);
 		}
-		/* now insert default row for postings */
 
 		$SQL = "INSERT INTO salesglpostings (
 						area,
@@ -121,7 +138,7 @@ if (!isset($SelectedSalesPostingID)) {
 					'ANY',
 					'AN',
 					1,
-					1)";
+					1)";						
 		$result = DB_query($SQL,$db);
 
 		/*now re-run the query and we should have default record */

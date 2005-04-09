@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 11;
 
@@ -287,7 +287,7 @@ if (! isset($_GET['delete'])) {
 		} else {
 			echo '<OPTION VALUE=';
 		}
-		echo $myrow['accountcode'] . '>' . $myrow['accountname'];
+		echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
 	} //end while loop
 	DB_data_seek($result,0);
 	echo '</SELECT></TD></TR>';
@@ -300,7 +300,7 @@ if (! isset($_GET['delete'])) {
 		} else {
 			echo '<OPTION VALUE=';
 		}
-		echo $myrow['accountcode'] . '>' . $myrow['accountname'];
+		echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
 
 	} //end while loop
 	echo '</SELECT></TD></TR>';
@@ -324,7 +324,7 @@ if (! isset($_GET['delete'])) {
 		} else {
 			echo '<OPTION VALUE=';
 		}
-		echo $myrow['accountcode'] . '>' . $myrow['accountname'];
+		echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
 
 	} //end while loop
 	DB_data_seek($result1,0);
@@ -339,7 +339,7 @@ if (! isset($_GET['delete'])) {
 		} else {
 			echo '<OPTION VALUE=';
 		}
-		echo $myrow['accountcode'] . '>' . $myrow['accountname'];
+		echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
 
 	} //end while loop
 	DB_data_seek($result1,0);
@@ -354,7 +354,7 @@ if (! isset($_GET['delete'])) {
 		} else {
 			echo '<OPTION VALUE=';
 		}
-		echo $myrow['accountcode'] . '>' . $myrow['accountname'];
+		echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
 
 	} //end while loop
 	DB_free_result($result1);

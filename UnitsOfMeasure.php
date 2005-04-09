@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity = 15;
 
@@ -28,6 +28,10 @@ if (isset($_POST['submit'])) {
 	if (strpos($_POST['MeasureName'],'&')>0 OR strpos($_POST['MeasureName'],"'")>0) {
 		$InputError = 1;
 		prnMsg( _('The unit of measure cannot contain the character') . " '&' " . _('or the character') ." '",'error');
+	}
+	if (trim($_POST['MeasureName']) == '') {
+		$InputError = 1;
+		prnMsg( _('The unit of measure may not be empty'), 'error');
 	}
 
 	if ($_POST['SelectedMeasureID']!='' AND $InputError !=1) {

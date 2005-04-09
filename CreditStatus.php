@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 3;
 include('includes/session.inc');
@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
 	$result = DB_query($sql,$db);
 	prnMsg($msg,'success');
 	unset ($SelectedReason);
-
+	unset ($_POST['ReasonDescription']);
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 

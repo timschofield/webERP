@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 10;
 
@@ -97,6 +97,10 @@ if (isset($_POST['submit'])) {
 	$result = DB_query($sql,$db);
 	prnMsg($msg,'success');
 	unset($SelectedTerms);
+	unset($_POST['DaysOrFoll']);
+	unset($_POST['TermsIndicator']);
+	unset($_POST['Terms']);
+	unset($_POST['DayNumber']);
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
@@ -214,7 +218,8 @@ if (!isset($_GET['delete'])) {
 
 		if (!isset($_POST['TermsIndicator'])) $_POST['TermsIndicator']='';
 		if (!isset($DaysBeforeDue)) $DaysBeforeDue=0;
-		if (!isset($DayInFollowingMonth)) $DayInFollowingMonth=0;
+		//if (!isset($DayInFollowingMonth)) $DayInFollowingMonth=0;
+		unset($DayInFollowingMonth); // Rather unset for a new record
 		if (!isset($_POST['Terms'])) $_POST['Terms']='';
 
 		echo '<CENTER><TABLE><TR><TD>' . _('Term Code') . ':</TD><TD><input type="Text" name="TermsIndicator" value="' . $_POST['TermsIndicator'] . '" SIZE=3 MAXLENGTH=2></TD></TR>';
@@ -229,7 +234,7 @@ if (!isset($_GET['delete'])) {
 	<INPUT TYPE="text" name="Terms" VALUE="<?php echo $_POST['Terms'];?>" SIZE=35 MAXLENGTH=40>
 	</TD></TR>
 	<TR><TD><?php echo _('Due After A Given No. Of Days'); ?>:</TD>
-	<TD><INPUT TYPE="checkbox" name="DaysOrFoll">
+	<TD><INPUT TYPE="checkbox" name="DaysOrFoll" <?php if ( isset($DayInFollowingMonth) && !$DayInFollowingMonth) { echo "checked"; }?> >
 	</TD></TR>
 	<TR><TD><?php echo _('Days (Or Day In Following Month)'); ?>:</TD>
 	<TD>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity = 15;
 
@@ -29,7 +29,10 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg( _('The payment method cannot contain the character') . " '&' " . _('or the character') ." '",'error');
 	}
-
+	if ( trim($_POST['MethodName']) == "") {
+		$InputError = 1;
+		prnMsg( _('The payment method may not be empty.'),'error');
+	}
 	if ($_POST['SelectedPaymentID']!='' AND $InputError !=1) {
 
 		/*SelectedPaymentID could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/

@@ -4,6 +4,15 @@
 <P>April 2005</B>
 <P>
 <P>
+<P>9/4/05 Danie: Areas.php - Fix handling of empty fields and make opperation compatible with rest of system.
+<P>9/4/05 Danie: Shippers.php - Fix handling of empty fields and make opperation compatible with rest of system.
+<P>9/4/05 Danie: StockCategories.php - Fix handling of empty fields and make opperation compatible with rest of system.
+<P>9/4/05 Danie: DiscountCategories - Fix automatic use of 0 value should be empty string.
+<P>9/4/05 Danie: FreightCosts.php - Fix default values, change "do while" to "while" loop so an empty record is not displayed, also conformity.
+<P>9/4/05 Danie: Locations.php - Fix conformity and Error generated after error report.
+<P>9/4/05 Danie: SalesTypes.php - Fix conformity and Error generated after error report.
+<P>9/4/05 Danie: BankAccounts.php - Fix conformity and Error generated after error report.
+<P>9/4/05 Danie: CompanyPreferences - Add account code to display of account names
 <P>7/4/05 Added a check to SelectOrderItems_IntoCart.inc and to SelectOrderItems.php to check credit limits - new parameter in SystemParameters and the config table to set the level of credit limit checking to not checked, warn only or prohibit sales. Calculation of credit available in SQL_CommonFunctions.inc
 <P>7/4/05 Changed fpdf.php output method/function to send a string by default - this preserves the way the ros code was written - and was causing issues with the headers/filenames
 <P>31/3/05 Scott Rosa - Blind packing notes - system parameter to default all customer branches to blind - ie not to show the company and logo of the webERP company dispatching the product - useful for where the webERP system is dispatching to customers' of customers. Changes to SelectOrderItems.php DefineCartClass.php and DeliveryDetails.php to allow the default to be overridden and CustomerBranches.php to allow entry of the setting.

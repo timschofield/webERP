@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 11;
 
@@ -24,7 +24,10 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	$_POST['LocCode']=strtoupper($_POST['LocCode']);
-
+	if( trim($_POST['LocCode']) == '' ) {
+		$InputError = 1;
+		prnMsg( _('The location code may not be empty'), 'error');
+	}
 
 	if (isset($SelectedLocation) AND $InputError !=1) {
 
@@ -57,6 +60,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Fax']);
 		unset($_POST['Email']);
 		unset($_POST['TaxAuthority']);
+		unset($_POST['Contact']);
 
 
 	} elseif ($InputError !=1) {
@@ -120,6 +124,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Fax']);
 		unset($_POST['Email']);
 		unset($_POST['TaxAuthority']);
+		unset($_POST['Contact']);
 	}
 
 
@@ -130,30 +135,31 @@ if (isset($_POST['submit'])) {
 
 	$result = DB_query('SELECT taxauthority FROM locations GROUP BY taxauthority',$db);
 	$Levels = DB_query('SELECT DISTINCT taxlevel FROM stockmaster',$db);
-
-	while ($DispTaxAuths=DB_fetch_row($result)){
-
-		/*Check to see there are TaxAuthLevel records set up for this DispathTaxAuthority */
-		$NoTaxAuthLevels = DB_query('SELECT taxauthority FROM taxauthlevels WHERE dispatchtaxauthority=' . $DispTaxAuths[0], $db);
-
-		if (DB_num_rows($NoTaxAuthLevels) < $NoTaxAuths[0]){
-
-			/*First off delete any tax authoritylevels already existing */
-			$DelTaxAuths = DB_query('DELETE FROM taxauthlevels WHERE dispatchtaxauthority=' . $DispTaxAuths[0],$db);
-
-			/*Now add the new taxAuthLevels required */
-			while ($LevelRow = DB_fetch_row($Levels)){
-				$sql = 'INSERT INTO taxauthlevels (taxauthority, 
-									dispatchtaxauthority, 
-									level) 
-						SELECT taxid,
-							' . $DispTaxAuths[0] . ', 
-							' . $LevelRow[0] . ' 
-						FROM taxauthorities';
-
-				$InsTaxAuths = DB_query($sql,$db);
+	if (DB_num_rows($Levels) > 0 ) { // This will only work if there are levels else we get an error on seek.
+		while ($DispTaxAuths=DB_fetch_row($result)){
+	
+			/*Check to see there are TaxAuthLevel records set up for this DispathTaxAuthority */
+			$NoTaxAuthLevels = DB_query('SELECT taxauthority FROM taxauthlevels WHERE dispatchtaxauthority=' . $DispTaxAuths[0], $db);
+	
+			if (DB_num_rows($NoTaxAuthLevels) < $NoTaxAuths[0]){
+	
+				/*First off delete any tax authoritylevels already existing */
+				$DelTaxAuths = DB_query('DELETE FROM taxauthlevels WHERE dispatchtaxauthority=' . $DispTaxAuths[0],$db);
+	
+				/*Now add the new taxAuthLevels required */
+				while ($LevelRow = DB_fetch_row($Levels)){
+					$sql = 'INSERT INTO taxauthlevels (taxauthority, 
+										dispatchtaxauthority, 
+										level) 
+							SELECT taxid,
+								' . $DispTaxAuths[0] . ', 
+								' . $LevelRow[0] . ' 
+							FROM taxauthorities';
+	
+					$InsTaxAuths = DB_query($sql,$db);
+				}
+				DB_data_seek($Levels,0);
 			}
-			DB_data_seek($Levels,0);
 		}
 	}
 
@@ -238,6 +244,8 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('Location') . ' ' . $SelectedLocation . ' ' . _('has been deleted') . '!', 'success');
 		unset ($SelectedLocation);
 	} //end if Delete Location
+	unset($SelectedLocation);
+	unset($_GET['delete']);
 }
 
 if (!isset($SelectedLocation)) {

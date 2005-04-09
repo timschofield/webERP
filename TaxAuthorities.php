@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 
 $PageSecurity=15;
@@ -20,9 +20,12 @@ if (isset($_POST['submit'])) {
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
+	if ( trim( $_POST['Description'] ) == '' ) {
+		$InputError = 1;
+		prnMsg( _('The tax type description may not be empty'), 'error');
+	}
 
-
-	if (isset($SelectedTaxID)) {
+	if ($InputError !=1 && isset($SelectedTaxID)) {
 
 		/*SelectedTaxID could also exist if submit had not been clicked this code
 		would not run in this case cos submit is false of course  see the
@@ -89,8 +92,12 @@ if (isset($_POST['submit'])) {
 
 	}
 	//run the SQL from either of the above possibilites
-
-
+	if ($InputError !=1) {
+		unset( $_POST['TaxGLCode']);
+		unset( $_POST['PurchTaxGLCode']);
+		unset( $_POST['Description']);
+		unset( $SelectedTaxID );
+	}
 	echo "<P>$msg<BR>";
 
 } elseif (isset($_GET['delete'])) {
@@ -238,7 +245,7 @@ while ($myrow = DB_fetch_array($result)) {
 	} else {
 		echo "<OPTION VALUE='";
 	}
-	echo $myrow['accountcode'] . "'>" . $myrow['accountname'];
+	echo $myrow['accountcode'] . "'>" . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
 
 } //end while loop
 
@@ -255,7 +262,7 @@ while ($myrow = DB_fetch_array($result)) {
 	} else {
 		echo '<OPTION VALUE=';
 	}
-	echo $myrow['accountcode'] . '>' . $myrow['accountname'];
+	echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
 
 } //end while loop
 

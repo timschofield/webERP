@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -31,8 +31,14 @@ if (isset($_POST['submit'])) {
 	} elseif (strlen($_POST['AreaDescription']) >50) {
 		$InputError = 1;
 		prnMsg(_('The area description must be fifty characters or less long'),'error');
+	} elseif ( trim($_POST['AreaCode']) == '' ) {
+		$InputError = 1;
+		prnMsg(_('The area code may not be empty'),'error');
+	} elseif ( trim($_POST['AreaDescription']) == '' ) {
+		$InputError = 1;
+		prnMsg(_('The area description may not be empty'),'error');
 	}
-
+	
 	if ($SelectedArea AND $InputError !=1) {
 
 		/*SelectedArea could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
@@ -63,7 +69,12 @@ if (isset($_POST['submit'])) {
 	$ErrMsg = _('The area could not be added or updated because');
 	$DbgMsg = _('The SQL that failed was');
 	$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
-
+	if ($InputError !=1) {
+		unset($SelectedArea);
+		unset($_POST['AreaCode']);
+		unset($_POST['AreaDescription']);
+	}
+	
 	prnMsg($msg,'success');
 
 } elseif (isset($_GET['delete'])) {
@@ -97,7 +108,11 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$db);
 		prnMsg(_('Area Code') . ' ' . $SelectedArea . ' ' . _('has been deleted') .' !','success');
 	} //end if Delete area
-} elseif (!isset($SelectedArea)) {
+	unset($SelectedArea);
+	unset($_GET['delete']);
+} 
+
+if (!isset($SelectedArea)) {
 
 	$sql = 'SELECT * FROM areas';
 	$result = DB_query($sql,$db);

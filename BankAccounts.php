@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 10;
 
@@ -29,6 +29,9 @@ if (isset($_POST['submit'])) {
 	if (strlen($_POST['BankAccountName']) >50) {
 		$InputError = 1;
 		prnMsg(_('The bank account name must be fifty characters or less long'),'error');
+	}  elseif ( trim($_POST['BankAccountName']) == '' ) {
+		$InputError = 1;
+		prnMsg(_('The bank account name may not be empty.'),'error');
 	} elseif (strlen($_POST['BankAccountNumber']) >50) {
 		$InputError = 1;
 		prnMsg(_('The bank account number must be fifty characters or less long'),'error');
@@ -64,18 +67,19 @@ if (isset($_POST['submit'])) {
 	}
 
 	//run the SQL from either of the above possibilites
-
-	$ErrMsg = _('The bank account could not be inserted or modified because');
-	$Dbgmsg = _('The SQL used to insert/modify the bank account details was');
-	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-
-	prnMsg($msg,'success');
-	unset($_POST['AccountCode']);
-	unset($_POST['BankAccountName']);
-	unset($_POST['BankAccountNumber']);
-	unset($_POST['BankAddress']);
-	unset($SelectedBankAccount);
-
+	if( $InputError !=1 ) {
+		$ErrMsg = _('The bank account could not be inserted or modified because');
+		$Dbgmsg = _('The SQL used to insert/modify the bank account details was');
+		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	
+		prnMsg($msg,'success');
+		unset($_POST['AccountCode']);
+		unset($_POST['BankAccountName']);
+		unset($_POST['BankAccountNumber']);
+		unset($_POST['BankAddress']);
+		unset($SelectedBankAccount);
+	}
+	
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
@@ -98,67 +102,73 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$db);
 		prnMsg(_('Bank account deleted'),'success');
 	} //end if Delete bank account
+	
+	unset($_GET['delete']);
+	unset($SelectedBankAccount);
 }
 
 /* Always show the list of accounts */
-
-$sql = "SELECT bankaccounts.accountcode,
-		chartmaster.accountname,
-		bankaccountname,
-		bankaccountnumber,
-		bankaddress
-	FROM bankaccounts,
-		chartmaster
-	WHERE bankaccounts.accountcode = chartmaster.accountcode";
-
-$ErrMsg = _('The bank accounts set up could not be retreived because');
-$Dbgmsg = _('The SQL used to retrieve the bank account details was') . '<BR>' . $sql;
-$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-
-echo '<CENTER><table>';
-
-echo "<tr><td class='tableheader'>" . _('GL Account') . "</td>
-	<td class='tableheader'>" . _('Account Name') . "</td>
-	<td class='tableheader'>" . _('Account Number') . "</td>
-	<td class='tableheader'>" . _('Bank Address') . "</td>
-</tr>";
-
-$k=0; //row colour counter
-while ($myrow = DB_fetch_row($result)) {
-if ($k==1){
-	echo "<tr bgcolor='#CCCCCC'>";
-	$k=0;
-} else {
-	echo "<tr bgcolor='#EEEEEE'>";
-	$k++;
+If (!isset($SelectedBankAccount)) {
+	$sql = "SELECT bankaccounts.accountcode,
+			chartmaster.accountname,
+			bankaccountname,
+			bankaccountnumber,
+			bankaddress
+		FROM bankaccounts,
+			chartmaster
+		WHERE bankaccounts.accountcode = chartmaster.accountcode";
+	
+	$ErrMsg = _('The bank accounts set up could not be retreived because');
+	$Dbgmsg = _('The SQL used to retrieve the bank account details was') . '<BR>' . $sql;
+	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	
+	echo '<CENTER><table>';
+	
+	echo "<tr><td class='tableheader'>" . _('GL Account') . "</td>
+		<td class='tableheader'>" . _('Account Name') . "</td>
+		<td class='tableheader'>" . _('Account Number') . "</td>
+		<td class='tableheader'>" . _('Bank Address') . "</td>
+	</tr>";
+	
+	$k=0; //row colour counter
+	while ($myrow = DB_fetch_row($result)) {
+	if ($k==1){
+		echo "<tr bgcolor='#CCCCCC'>";
+		$k=0;
+	} else {
+		echo "<tr bgcolor='#EEEEEE'>";
+		$k++;
+	}
+	
+	printf("<td>%s<BR><FONT SIZE=2>%s</FONT></td>
+		<td>%s</td>
+		<td>%s</td>
+		<td>%s</td>
+		<td><a href=\"%s?SelectedBankAccount=%s\">" . _('Edit') . "</td>
+		<td><a href=\"%s?SelectedBankAccount=%s&delete=1\">" . _('Delete') . "</td>
+		</tr>",
+		$myrow[0],
+		$myrow[1],
+		$myrow[2],
+		$myrow[3],
+		$myrow[4],
+		$_SERVER['PHP_SELF'],
+		$myrow[0],
+		$_SERVER['PHP_SELF'],
+		$myrow[0]);
+	
+	}
+	//END WHILE LIST LOOP
+	
+	
+	echo '</CENTER></table><p>';
 }
 
-printf("<td>%s<BR><FONT SIZE=2>%s</FONT></td>
-	<td>%s</td>
-	<td>%s</td>
-	<td>%s</td>
-	<td><a href=\"%s?SelectedBankAccount=%s\">" . _('Edit') . "</td>
-	<td><a href=\"%s?SelectedBankAccount=%s&delete=1\">" . _('Delete') . "</td>
-	</tr>",
-	$myrow[0],
-	$myrow[1],
-	$myrow[2],
-	$myrow[3],
-	$myrow[4],
-	$_SERVER['PHP_SELF'],
-	$myrow[0],
-	$_SERVER['PHP_SELF'],
-	$myrow[0]);
-
+if (isset($SelectedBankAccount)) {
+	echo '<P>';
+	echo '<CENTER><P><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Show All Bank Accounts Defined') . '</A></CENTER>';
+	echo '<P>';
 }
-//END WHILE LIST LOOP
-
-
-?>
-</CENTER></table>
-<p>
-
-<?php
 
 echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . ">";
 

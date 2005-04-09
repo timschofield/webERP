@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $PageSecurity =15;
 
 include('includes/session.inc');
@@ -197,6 +197,7 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['CheckCreditLimits'] != $_POST['X_CheckCreditLimits'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_CheckCreditLimits'])."' WHERE confname = 'CheckCreditLimits'";
 		}
+		
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 0 ) {
 			$result = DB_query('BEGIN',$db,$ErrMsg);

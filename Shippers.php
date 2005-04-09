@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 15;
 
@@ -29,6 +29,9 @@ if ( isset($_POST['submit']) ) {
 	} elseif (strlen($_POST['ShipperName']) >40) {
 		$InputError = 1;
 		prnMsg( _("The shipper's name must be forty characters or less long"), 'error');
+	} elseif( trim($_POST['ShipperName']) == '' ) {
+		$InputError = 1;
+		prnMsg( _("The shipper's name may not be empty"), 'error');
 	}
 
 	if ($SelectedShipper AND $InputError !=1) {
@@ -48,12 +51,14 @@ if ( isset($_POST['submit']) ) {
 	}
 
 	//run the SQL from either of the above possibilites
-	$result = DB_query($sql,$db);
-	echo '<BR>';
-	prnMsg($msg, 'success');
-	unset($SelectedShipper);
-	unset($_POST['ShipperName']);
-	unset($_POST['Shipper_ID']);
+	if ($InputError !=1) {
+		$result = DB_query($sql,$db);
+		echo '<BR>';
+		prnMsg($msg, 'success');
+		unset($SelectedShipper);
+		unset($_POST['ShipperName']);
+		unset($_POST['Shipper_ID']);
+	}
 
 } elseif ($_GET['delete']) {
 //the link to delete a selected record was clicked instead of the submit button
@@ -97,6 +102,8 @@ if ( isset($_POST['submit']) ) {
 			}
 		}
 	}
+	unset($SelectedShipper);
+	unset($_GET['delete']);
 }
 
 if (!isset($SelectedShipper)) {

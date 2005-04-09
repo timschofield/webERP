@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity = 9;
 
 include('includes/session.inc');
@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
     } elseif (strlen($_POST['HundredsName']) > 15) {
         $InputError = 1;
         prnMsg(_('The hundredths name must be 15 characters or less long'),'error');
-    } elseif ($SelectedCurrency == $FunctionalCurrency){
+    } elseif (($FunctionalCurrency != '') and $SelectedCurrency == $FunctionalCurrency){
         $InputError = 1;
         prnMsg(_('The functional currency cannot be modified or deleted'),'error');
     } elseif (strstr($_POST['Abbreviation'],"'") OR strstr($_POST['Abbreviation'],'+') OR strstr($_POST['Abbreviation'],"\"") OR strstr($_POST['Abbreviation'],'&') OR strstr($_POST['Abbreviation'],' ') OR strstr($_POST['Abbreviation'],"\\") OR strstr($_POST['Abbreviation'],'.') OR strstr($_POST['Abbreviation'],'"')) {

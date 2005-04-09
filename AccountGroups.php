@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 10;
 
@@ -71,7 +71,8 @@ if (isset($_POST['submit'])) {
 		prnMsg($msg,'success');
 	}
 	unset ($_POST['SelectedAccountGroup']);
-
+	unset ($_POST['GroupName']);
+	unset ($_POST['SequenceInTB']);
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
@@ -218,9 +219,9 @@ if (! isset($_GET['delete'])) {
 	$secresult = DB_query($sql, $db);
 	while( $secrow = DB_fetch_array($secresult) ) {
 		if ($_POST['SectionInAccounts']==$secrow['sectionid']) {
-			echo "<OPTION SELECTED VALUE=".$secrow['sectionid'].">".$secrow['sectionname'];
+			echo "<OPTION SELECTED VALUE=".$secrow['sectionid'].">".$secrow['sectionname'].' ('.$secrow['sectionid'].')';
 		} else {
-			echo "<OPTION VALUE=".$secrow['sectionid'].">".$secrow['sectionname'];
+			echo "<OPTION VALUE=".$secrow['sectionid'].">".$secrow['sectionname'].' ('.$secrow['sectionid'].')';
 		}
 	}
 	echo '</SELECT>';

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 11;
 include('includes/session.inc');
@@ -85,9 +85,28 @@ if (isset($_POST['submit'])) {
 	if (!is_double((double) $_POST['CubRate']) OR !is_double((double) $_POST['KGRate']) OR !is_double((double) $_POST['MAXKGs']) OR !is_double((double) $_POST['MAXCub']) OR !is_double((double) $_POST['FixedPrice']) OR !is_double((double) $_POST['MinimumChg'])) {
 		$InputError=1;
 		prnMsg(_('The entries for Cubic Rate, KG Rate, Maxmimum Weight, Maximum Volume, Fixed Price and Minimum charge must be numeric'),'warn');
+		if (trim($_POST['CubRate']) == '' ) {
+			$_POST['CubRate'] = 0;
+		}
+		if (trim($_POST['KGRate']) == '' ) {
+			$_POST['KGRate'] = 0;
+		}
+		if (trim($_POST['MAXKGs']) == '' ) {
+			$_POST['MAXKGs'] = 0;
+		}
+		if (trim($_POST['MAXCub']) == '' ) {
+			$_POST['MAXCub'] = 0;
+		}
+		if (trim($_POST['FixedPrice']) == '' ){
+			$_POST['FixedPrice'] = 0;
+		}
+		if (trim($_POST['MinimumChg']) == '' ) {
+			$_POST['MinimumChg'] = 0;
+		}
 	}
 
-
+	
+ 
 	if (isset($SelectedFreightCost) AND $InputError !=1) {
 
 		$sql = "UPDATE freightcosts
@@ -141,6 +160,14 @@ if (isset($_POST['submit'])) {
 	$result = DB_query($sql,$db,$ErrMsg);
 
 	prnMsg($msg,'success');
+	
+	unset($SelectedFreightCost);
+	unset($_POST['CubRate']);
+	unset($_POST['KGRate']);
+	unset($_POST['MAXKGs']);
+	unset($_POST['MAXCub']);
+	unset($_POST['FixedPrice']);
+	unset($_POST['MinimumChg']);
 
 } elseif (isset($_GET['delete'])) {
 
@@ -148,6 +175,7 @@ if (isset($_POST['submit'])) {
 	$result = DB_query($sql,$db);
 	prnMsg( _('Freight cost record deleted'),'success');
 	unset ($SelectedFreightCost);
+	unset($_GET['delete']);
 }
 
 if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID)){
@@ -167,8 +195,7 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 		ORDER BY destination";
 
 	$result = DB_query($sql,$db);
-	$myrow = DB_fetch_row($result);
-
+	
 	echo '<table border=1>';
 	$TableHeader = "<tr>
 				<td class='tableheader'>" . _('Destination') . "</td>
@@ -185,7 +212,7 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 	$k = 0; //row counter to determine background colour
 	$PageFullCounter=0;
 
-	do {
+	while ($myrow = DB_fetch_row($result)) {
 		$PageFullCounter++;
 		if ($PageFullCounter==15){
 				$PageFullCounter=0;
@@ -224,7 +251,7 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 			$LocationFrom,
 			$ShipperID);
 
-	} while ($myrow = DB_fetch_row($result));
+	}
 
 	//END WHILE LIST LOOP
 	echo '</table>';
