@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.53 $ */
+/* $Revision: 1.54 $ */
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -19,7 +19,7 @@ $DefaultLanguage ='en_GB';
 $allow_demo_mode = True;
 
 // Application version
-$Version = '3.0rc1';
+$Version = '3.0rc2.1';
 
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time

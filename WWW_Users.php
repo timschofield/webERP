@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -121,7 +121,8 @@ if (isset($_POST['submit'])) {
 						pagesize,
 						fullaccess,
 						defaultlocation,
-						modulesallowed)
+						modulesallowed,
+						theme)
 					VALUES ('" . $_POST['UserID'] . "',
 						'" . DB_escape_string($_POST['RealName']) ."',
 						'" . DB_escape_string($_POST['Cust']) ."',
@@ -132,7 +133,8 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['PageSize'] ."',
 						" . $_POST['Access'] . ",
 						'" . $_POST['DefaultLocation'] ."',
-						'" . $ModulesAllowed . "')";
+						'" . $ModulesAllowed . "',
+						'" . $_SESSION['DefaultTheme'] . "')";
 		$msg = _('A new user record has been inserted');
 	}
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $PageSecurity = 2;
 
 If (isset($_POST['PrintPDF'])
@@ -91,6 +91,9 @@ If (isset($_POST['PrintPDF'])
 				/* need to print the total of previous category */
 				if ($_POST['DetailedReport']=='Yes'){
 					$YPos -= (2*$line_height);
+					if ($YPos < $Bottom_Margin + (3*$line_height)){
+		 				  include('includes/PDFInventoryValnPageHeader.inc');
+					}
 					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Category . ' - ' . $CategoryName);
 				}
 
@@ -136,28 +139,29 @@ If (isset($_POST['PrintPDF'])
 	$FontSize =10;
 /*Print out the category totals */
 	if ($_POST['DetailedReport']=='Yes'){
-		$YPos -=$line_height;
+		$YPos -= (2*$line_height);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize, _('Total for') . ' ' . $Category . ' - ' . $CategoryName, 'left');
 	}
 	$DisplayCatTotVal = number_format($CatTot_Val,2);
 	$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, 'right');
-
+	
+	
 	If ($_POST['DetailedReport']=='Yes'){
-			/*draw a line under the CATEGORY TOTAL*/
-			$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
-			$YPos -=(2*$line_height);
+		/*draw a line under the CATEGORY TOTAL*/
+		$YPos -= ($line_height);
+		$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
 	}
-
+	
 	$YPos -= (2*$line_height);
 
+	if ($YPos < $Bottom_Margin + $line_height){
+		   include('includes/PDFInventoryValnPageHeader.inc');
+	}
 /*Print out the grand totals */
 	$LeftOvers = $pdf->addTextWrap(80,$YPos,260-$Left_Margin,$FontSize,_('Grand Total Value'), 'right');
 	$DisplayTotalVal = number_format($Tot_Val,2);
 	$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
-	If ($_POST['DetailedReport']=='Yes'){
-		$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
-		$YPos -=(2*$line_height);
-	}
+	
 
 	$pdfcode = $pdf->output();
 	$len = strlen($pdfcode);

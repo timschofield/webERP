@@ -665,8 +665,7 @@ ALTER TABLE `worksorders` CHANGE AccumValueTrfd accumvaluetrfd decimal(20,4)  NO
 ALTER TABLE `worksorders` CHANGE Closed closed tinyint(4)  NOT NULL default '0';
 ALTER TABLE `worksorders` CHANGE Released released tinyint(4)  NOT NULL default '0';
 
-
-ALTER TABLE `taxauthorities` CHANGE `taxid` 'taxid' tinyint NOT NULL auto_increment;
+ALTER TABLE `taxauthorities` CHANGE taxid taxid tinyint NOT NULL auto_increment;
 
 ALTER TABLE `salesorders` ADD `quotation` TINYINT DEFAULT '0' NOT NULL ;
 ALTER TABLE `salesorders` ADD INDEX ( `quotation` ) ;
@@ -928,7 +927,7 @@ INSERT INTO `config` VALUES ('CheckCreditLimits', '0');
 
 INSERT INTO systypes VALUES ( 500, 'Auto Debtor Number', 10000 );
 
-ALTER TABLE www_users CHANGE password `password TEXT NOT NULL;
+ALTER TABLE www_users CHANGE password password TEXT NOT NULL;
 UPDATE www_users SET password ='f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4' WHERE userid='demo';
 
 ALTER TABLE www_users ADD COLUMN pinno varchar(30) NOT NULL;

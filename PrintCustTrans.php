@@ -1,6 +1,8 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 $PageSecurity = 1;
+
+include('includes/session.inc');
 
 if (isset($_GET['FromTransNo'])){
 	$FromTransNo = $_GET['FromTransNo'];
@@ -20,34 +22,41 @@ if (isset($_GET['PrintPDF'])){
 	$PrintPDF = $_POST['PrintPDF'];
 }
 
-include('includes/session.inc');
-include('includes/SQL_CommonFunctions.inc');
-include ('includes/class.pdf.php');
-include ('includes/htmlMimeMail.php');
 
 
-if (isset($_GET['FromTransNo'])){
-	$FromTransNo = $_GET['FromTransNo'];
-} elseif (isset($_POST['FromTransNo'])){
-	$FromTransNo = $_POST['FromTransNo'];
-} else {
-	$FromTransNo ='';
+If (!isset($_POST['ToTransNo']) 
+	OR trim($_POST['ToTransNo'])==''
+	OR $_POST['ToTransNo'] < $FromTransNo){
+	
+	$_POST['ToTransNo'] = $FromTransNo;
 }
 
-If (!isset($_POST['ToTransNo']) OR $_POST['ToTransNo']==''){
-	      $_POST['ToTransNo'] = $FromTransNo;
-}
 $FirstTrans = $FromTransNo; /*Need to start a new page only on subsequent transactions */
 
-If (isset($PrintPDF) AND $PrintPDF!='' AND isset($FromTransNo) AND isset($InvOrCredit) AND $FromTransNo!=''){
+If (isset($PrintPDF) 
+	AND $PrintPDF!='' 
+	AND isset($FromTransNo) 
+	AND isset($InvOrCredit) 
+	AND $FromTransNo!=''){
 
+	include ('includes/class.pdf.php');
+	
+	/*
+	All this lot unnecessary if session.inc included at the start
+	previously it was not possible to start a session before initiating a class
+	include('config.php');
+	include('includes/ConnectDB.inc');
+	include('includes/GetConfig.php');
+	include('includes/DateFunctions.inc');
 	if (isset($SessionSavePath)){
 		session_save_path($SessionSavePath);
-    	}
+	}
+	ini_set('session.gc_Maxlifetime',$SessionLifeTime);
+	ini_set('max_execution_time',$MaximumExecutionTime);
 
 	session_start();
-
-
+	*/
+	
 	/*This invoice is hard coded for A4 Landscape invoices or credit notes  so can't use PDFStarter.inc*/
 	$Page_Width=842;
 	$Page_Height=595;
@@ -65,10 +74,10 @@ If (isset($PrintPDF) AND $PrintPDF!='' AND isset($FromTransNo) AND isset($InvOrC
 	$FirstPage = true;
 
 	if ($InvOrCredit=='Invoice'){
-		$pdf->addinfo('Title',_('Sales Invoice'));
+		$pdf->addinfo('Title',_('Sales Invoice') . ' ' . $FromTransNo . ' to ' . $_POST['ToTransNo']);
 		$pdf->addinfo('Subject',_('Invoices from') . ' ' . $FromTransNo . ' ' . _('to') . ' ' . $_POST['ToTransNo']);
 	} else {
-		$pdf->addinfo('Title',_('Sales Credit Note'));
+		$pdf->addinfo('Title',_('Sales Credit Note') );
 		$pdf->addinfo('Subject',_('Credit Notes from') . ' ' . $FromTransNo . ' ' . _('to') . ' ' . $_POST['ToTransNo']);
 	}
 
@@ -80,8 +89,8 @@ If (isset($PrintPDF) AND $PrintPDF!='' AND isset($FromTransNo) AND isset($InvOrC
 	notice that salesorder record must be present to print the invoice purging of sales orders will
 	nobble the invoice reprints */
 
-	   if ($InvOrCredit=='Invoice') {
-		$sql = 'SELECT debtortrans.trandate,
+		if ($InvOrCredit=='Invoice') {
+			$sql = 'SELECT debtortrans.trandate,
 				debtortrans.ovamount,
 				debtortrans.ovdiscount,
 				debtortrans.ovfreight,
@@ -142,7 +151,7 @@ If (isset($PrintPDF) AND $PrintPDF!='' AND isset($FromTransNo) AND isset($InvOrC
 		if ($_POST['PrintEDI']=='No'){
 			$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
 		}
-	   } else {
+	} else {
 
 		$sql = 'SELECT debtortrans.trandate,
 				debtortrans.ovamount,
@@ -420,6 +429,8 @@ If (isset($PrintPDF) AND $PrintPDF!='' AND isset($FromTransNo) AND isset($InvOrC
 	}
 
 	if (isset($_GET['Email'])){ //email the invoice to address supplied
+		
+		include ('includes/htmlMimeMail.php');
 
 		$mail = new htmlMimeMail();
 		$filename = $_SESSION['reports_dir'] . '/' . $InvOrCredit . $_GET['FromTransNo'] . '.pdf';
@@ -454,7 +465,7 @@ If (isset($PrintPDF) AND $PrintPDF!='' AND isset($FromTransNo) AND isset($InvOrC
 	}
 
 } else { /*The option to print PDF was not hit */
-
+	
 	$title=_('Select Invoices/Credit Notes To Print');
 	include('includes/header.inc');
 

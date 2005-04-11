@@ -3654,7 +3654,7 @@ INSERT INTO `companies` VALUES (1,'Demo System','15-325-122','','PO Box 999 Well
 --
 
 INSERT INTO `config` VALUES ('DefaultLanguage','en_GB');
-INSERT INTO `config` VALUES ('DefaultDateFormat','m/d/Y');
+INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
 INSERT INTO `config` VALUES ('DefaultTheme','professional');
 INSERT INTO `config` VALUES ('PastDueDays1','30');
 INSERT INTO `config` VALUES ('PastDueDays2','60');
@@ -3699,7 +3699,7 @@ INSERT INTO `config` VALUES ('RadionBeaconFTP_user_pass','Radio Beacon remote ft
 INSERT INTO `config` VALUES ('AutoDebtorNo','0');
 INSERT INTO `config` VALUES ('HTTPS_Only','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','7');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-03-31');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-04-08');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('PackNoteFormat','1');
 INSERT INTO `config` VALUES ('CheckCreditLimits','2');
@@ -3725,8 +3725,7 @@ INSERT INTO `config` VALUES ('CheckCreditLimits','2');
 
 INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',1.7000);
 INSERT INTO `currencies` VALUES ('Deutsche','DEM','German','Pfenig',1.8000);
-INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',0.8000);
-INSERT INTO `currencies` VALUES ('N Z Dollars','NZD','New Zealand','Cents',2.0000);
+INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',0.8800);
 INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',1.0000);
 
 --
@@ -4240,6 +4239,8 @@ INSERT INTO `gltrans` VALUES (739,10,15,0,'2005-04-04',64,70300,'GRANHR - HON900
 INSERT INTO `gltrans` VALUES (740,10,15,0,'2005-04-04',64,722000,'GRANHR - HON90022 x 50 @ 2.1000',-105,1,'');
 INSERT INTO `gltrans` VALUES (741,10,15,0,'2005-04-04',64,112,'GRANHR - HON90022 x 50 @ 22.5000',-1125,1,'');
 INSERT INTO `gltrans` VALUES (742,10,15,0,'2005-04-04',64,710000,'GRANHR',1125,1,'');
+INSERT INTO `gltrans` VALUES (743,25,18,0,'2005-04-09',64,722000,'PO: 21 BUCKROG - NISSMAX33 - Nissan Maxima Rear Coils 95-03 x 10 @ 0.00',0,0,'');
+INSERT INTO `gltrans` VALUES (744,25,18,0,'2005-04-09',64,723000,'PO: 21 BUCKROG - NISSMAX33 - Nissan Maxima Rear Coils 95-03 x 10 @ 0.00',0,0,'');
 
 --
 -- Dumping data for table `grns`
@@ -4253,6 +4254,7 @@ INSERT INTO `grns` VALUES (15,28,33,'','2004-11-23','Test nominal item',1.0000,0
 INSERT INTO `grns` VALUES (16,29,31,'123','2004-11-28','12.3mm Round Steel coil',0.0000,0.0000,'GREGCA');
 INSERT INTO `grns` VALUES (16,30,32,'125','2004-11-28','12.5mm round steel',202.0000,208.0000,'GREGCA');
 INSERT INTO `grns` VALUES (17,31,30,'125','2004-11-28','12.5mm round steel',20.0000,0.0000,'BIGBISC');
+INSERT INTO `grns` VALUES (18,32,37,'NISSMAX33','2005-04-09','Nissan Maxima Rear Coils 95-03',10.0000,0.0000,'BUCKROG');
 
 --
 -- Dumping data for table `holdreasons`
@@ -4291,7 +4293,9 @@ INSERT INTO `locstock` VALUES ('DEN','HON90021',56.2,12);
 INSERT INTO `locstock` VALUES ('DEN','HON90022',-7.0,0);
 INSERT INTO `locstock` VALUES ('DEN','HON92FrSus',0.0,0);
 INSERT INTO `locstock` VALUES ('DEN','HONCIVIC92SET',0.0,0);
+INSERT INTO `locstock` VALUES ('DEN','HOND9022',0.0,0);
 INSERT INTO `locstock` VALUES ('DEN','HONShock',-22.0,0);
+INSERT INTO `locstock` VALUES ('DEN','NISSMAX33',10.0,0);
 INSERT INTO `locstock` VALUES ('MEL','*19_1',0.0,0);
 INSERT INTO `locstock` VALUES ('MEL','*20_1',0.0,0);
 INSERT INTO `locstock` VALUES ('MEL','123',0.0,0);
@@ -4304,7 +4308,9 @@ INSERT INTO `locstock` VALUES ('MEL','HON90021',488.0,12);
 INSERT INTO `locstock` VALUES ('MEL','HON90022',0.0,0);
 INSERT INTO `locstock` VALUES ('MEL','HON92FrSus',0.0,0);
 INSERT INTO `locstock` VALUES ('MEL','HONCIVIC92SET',0.0,0);
+INSERT INTO `locstock` VALUES ('MEL','HOND9022',0.0,0);
 INSERT INTO `locstock` VALUES ('MEL','HONShock',-5.0,0);
+INSERT INTO `locstock` VALUES ('MEL','NISSMAX33',0.0,0);
 INSERT INTO `locstock` VALUES ('MUC','*19_1',0.0,0);
 INSERT INTO `locstock` VALUES ('MUC','*20_1',0.0,0);
 INSERT INTO `locstock` VALUES ('MUC','123',-2.0,0);
@@ -4317,7 +4323,9 @@ INSERT INTO `locstock` VALUES ('MUC','HON90021',-4.0,1);
 INSERT INTO `locstock` VALUES ('MUC','HON90022',-45.0,0);
 INSERT INTO `locstock` VALUES ('MUC','HON92FrSus',0.0,0);
 INSERT INTO `locstock` VALUES ('MUC','HONCIVIC92SET',0.0,0);
+INSERT INTO `locstock` VALUES ('MUC','HOND9022',0.0,0);
 INSERT INTO `locstock` VALUES ('MUC','HONShock',-4.0,0);
+INSERT INTO `locstock` VALUES ('MUC','NISSMAX33',0.0,0);
 
 --
 -- Dumping data for table `loctransfers`
@@ -4335,9 +4343,9 @@ INSERT INTO `orderdeliverydifferenceslog` VALUES (35,13,'HOND9022',2.0000,'JOHNS
 -- Dumping data for table `paymentmethods`
 --
 
-INSERT INTO `paymentmethods` VALUES (1,'Cheques',1,1);
 INSERT INTO `paymentmethods` VALUES (2,'Cash',1,1);
 INSERT INTO `paymentmethods` VALUES (3,'Direct Credit',1,1);
+INSERT INTO `paymentmethods` VALUES (4,'Cheques',1,1);
 
 --
 -- Dumping data for table `paymentterms`
@@ -4402,6 +4410,8 @@ INSERT INTO `prices` VALUES ('HONShock','WS','USD','','25.9000','\'\'');
 --
 
 INSERT INTO `purchdata` VALUES ('BHPSTEEL','125','1.2000','',1.0000,'',60,1);
+INSERT INTO `purchdata` VALUES ('BUCKROG','NISSMAX33','3.3300','each',1.0000,'900214482-EEG',20,1);
+INSERT INTO `purchdata` VALUES ('FREDBLOW','NISSMAX33','4.2000','each',1.0000,'',10,0);
 INSERT INTO `purchdata` VALUES ('GREGCA','123','0.3500','',1.0000,'',1,1);
 
 --
@@ -4418,6 +4428,7 @@ INSERT INTO `purchorderdetails` VALUES (33,17,'','2004-11-24','Test nominal item
 INSERT INTO `purchorderdetails` VALUES (34,18,'123','2005-02-23','12.3mm Round Steel coil',720000,0.0000,12.5000,0.0000,0.0000,521.0000,0.0000,8,'0',0);
 INSERT INTO `purchorderdetails` VALUES (35,19,'*19_1','2005-05-31','1300kg 520mm height, 160mm dia spring',722000,0.0000,23.5000,0.0000,0.0000,25.0000,0.0000,12,'',0);
 INSERT INTO `purchorderdetails` VALUES (36,20,'*20_1','2004-12-02','testing any old item',722000,0.0000,5.0000,0.0000,0.0000,15.0000,0.0000,0,'',0);
+INSERT INTO `purchorderdetails` VALUES (37,21,'NISSMAX33','2005-04-20','Nissan Maxima Rear Coils 95-03',722000,0.0000,3.3300,0.0000,0.0000,25.0000,10.0000,0,'0',0);
 
 --
 -- Dumping data for table `purchorders`
@@ -4430,6 +4441,7 @@ INSERT INTO `purchorders` VALUES (17,'BIGBISC','','2004-11-23 00:00:00',0.8000,N
 INSERT INTO `purchorders` VALUES (18,'GREGCA','','2004-11-28 00:00:00',0.8000,'2004-11-28 00:00:00',0,'','','DEN','532-536 Wentworth Street','Denver','Colorado','233 5532 216');
 INSERT INTO `purchorders` VALUES (19,'GREGCA','','2004-12-01 00:00:00',0.8000,'2004-12-20 00:00:00',0,'FDS','1223','DEN','Graham Bouvert','532-536 Wentworth Street','Denver','Colorado');
 INSERT INTO `purchorders` VALUES (20,'GREGCA','','2004-12-01 00:00:00',0.8000,NULL,1,'PGD','544','DEN','Graham Bouvert','532-536 Wentworth Street','Denver','Colorado');
+INSERT INTO `purchorders` VALUES (21,'BUCKROG','','2005-04-09 00:00:00',1.0000,'2005-04-09 00:00:00',0,'','','DEN','532-536 Wentworth Street','Denver','Colorado','233 5532 216');
 
 --
 -- Dumping data for table `recurringsalesorders`
@@ -4789,7 +4801,6 @@ INSERT INTO `securitygroups` VALUES (6,3);
 INSERT INTO `securitygroups` VALUES (6,4);
 INSERT INTO `securitygroups` VALUES (6,5);
 INSERT INTO `securitygroups` VALUES (6,7);
-INSERT INTO `securitygroups` VALUES (6,8);
 INSERT INTO `securitygroups` VALUES (6,10);
 INSERT INTO `securitygroups` VALUES (6,11);
 INSERT INTO `securitygroups` VALUES (7,1);
@@ -4904,10 +4915,10 @@ INSERT INTO `stockcounts` VALUES (2,'125','MUC',10,'');
 
 INSERT INTO `stockmaster` VALUES ('*19_1','Coil','1300kg 520mm height, 160mm dia spring','1300kg 520mm height, 160mm dia spring','each','B','1800-01-01','0.0000','0.0000','23.5000','0.0000','0.0000',0,0,0,0.00,'0.0000','0.0000','','',1,0,0);
 INSERT INTO `stockmaster` VALUES ('*20_1','SHOCKS','testing any old item','testing any old item','each','B','1800-01-01','0.0000','0.0000','5.0000','0.0000','0.0000',0,0,0,0.00,'0.0000','0.0000','','',1,0,0);
-INSERT INTO `stockmaster` VALUES ('123','Steel','12.3mm Round Steel coil','X4k grade 12.3mm round steel in coils','Kgs','B','1800-01-01','0.0000','0.0000','0.3000','0.0000','0.0000',0,0,0,14000.00,'0.0200','1.0000','','',1,0,0);
+INSERT INTO `stockmaster` VALUES ('123','Steel','12.3mm Round Steel coil','X4k grade 12.3mm round steel in coils','kgs','B','1800-01-01','0.0000','0.0000','0.3000','0.0000','0.0000',0,0,0,14000.00,'0.0200','1.0000','','',1,0,0);
 INSERT INTO `stockmaster` VALUES ('125','Steel','12.5mm round steel','12.5mm diameter round steel X4K grade	','each','B','1800-01-01','0.0000','0.6200','0.6325','0.0000','0.0000',0,0,1,1200.00,'0.0210','1.0000','','',1,0,0);
 INSERT INTO `stockmaster` VALUES ('127','Steel','X3K 12.7mm spring steel','X3K 12.7mm spring steel','each','B','1800-01-01','0.0000','0.0000','0.0000','0.0000','0.0000',0,0,1,200.00,'0.0000','0.0000','','',1,0,3);
-INSERT INTO `stockmaster` VALUES ('130','Steel','13mm round spring steel X4K grade','13mm round spring steel X4K grade	','Kgs','B','1800-01-01','0.0000','0.0000','0.6200','0.0000','0.0000',0,0,0,1200.00,'0.0600','1.0000','','',1,0,0);
+INSERT INTO `stockmaster` VALUES ('130','Steel','13mm round spring steel X4K grade','13mm round spring steel X4K grade	','kgs','B','1800-01-01','0.0000','0.0000','0.6200','0.0000','0.0000',0,0,0,1200.00,'0.0600','1.0000','','',1,0,0);
 INSERT INTO `stockmaster` VALUES ('140','Steel','14mm round steel X4k grade','14mm round steel X4k grade	','meters','B','1800-01-01','0.0000','0.0000','0.6200','0.0000','0.0000',0,0,0,1250.00,'0.0200','1.0000','','',1,0,0);
 INSERT INTO `stockmaster` VALUES ('FROOM','Steel','Frodo Omosis Experiment','Frodo Omosis Experiment','each','B','1800-01-01','0.0000','0.0000','36.2500','0.0000','0.0000',0,0,0,0.00,'0.0000','0.0000','','',1,0,0);
 INSERT INTO `stockmaster` VALUES ('HON90021','Coil','Honda Civic front coil spring 1990-94','Honda Civic front coil spring 1990-94	','each','M','1800-01-01','0.0000','0.0000','6.8900','1.6000','1.2000',0,0,1,50.00,'0.3000','3.0000','','SP',1,0,3);
@@ -4916,6 +4927,7 @@ INSERT INTO `stockmaster` VALUES ('HON92FrSus','SUSASS','Honda 92 Front suspensi
 INSERT INTO `stockmaster` VALUES ('HONCIVIC92SET','Coil','Honda Civic 90-94 spring set','Honda Civic 90-94 spring set','each','A','1800-01-01','0.0000','0.0000','0.0000','0.0000','0.0000',0,0,0,0.00,'0.3000','6.0000','','',1,0,0);
 INSERT INTO `stockmaster` VALUES ('HOND9022','Coil','Honda Civic rear coil spring 1990-94','Honda Civic rear coil spring 1990-94	','each','M','1800-01-01','0.0000','0.0000','2.1000','0.0000','0.0000',0,0,0,50.00,'0.0000','3.0000','','',1,0,0);
 INSERT INTO `stockmaster` VALUES ('HONShock','SHOCKS','Honda 92 Monroe Shock Absorber','Honda 92 Monroe Shock Absorber','each','B','1800-01-01','0.0000','0.0000','8.5000','0.0000','0.0000',0,0,0,0.00,'0.0000','0.0000','','',1,0,0);
+INSERT INTO `stockmaster` VALUES ('NISSMAX33','Coil','Nissan Maxima Rear Coils 95-03','Nissan Maxima Rear Coils 95-03','each','M','1800-01-01','0.0000','0.0000','0.0000','0.0000','0.0000',0,0,0,0.00,'0.3000','6.0000','','',1,0,0);
 
 --
 -- Dumping data for table `stockmoves`
@@ -4982,6 +4994,7 @@ INSERT INTO `stockmoves` VALUES (213,'HON92FrSus',10,14,'DEN','2005-03-28','DSSA
 INSERT INTO `stockmoves` VALUES (214,'130',17,7,'DEN','2005-03-26','','','0.0000',63,'',5.0000,0.0000,0.0000,1,5,0,0,'');
 INSERT INTO `stockmoves` VALUES (215,'130',17,8,'DEN','2005-03-26','','','0.0000',63,'',-5.0000,0.0000,0.0000,1,0,0,0,'');
 INSERT INTO `stockmoves` VALUES (216,'HON90022',10,15,'MUC','2005-04-04','GRANHR','GRAN','22.5000',64,'48',-50.0000,0.0000,2.1000,1,-45,0,0,'');
+INSERT INTO `stockmoves` VALUES (217,'NISSMAX33',25,18,'DEN','2005-04-09','','','3.3300',64,'BUCKROG (Buck Rogers Inc) - 21',10.0000,0.0000,0.0000,1,10,0,0,'');
 
 --
 -- Dumping data for table `stockserialitems`
@@ -5143,7 +5156,7 @@ INSERT INTO `systypes` VALUES (20,'Purchase Invoice',17);
 INSERT INTO `systypes` VALUES (21,'Debit Note',8);
 INSERT INTO `systypes` VALUES (22,'Creditors Payment',7);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
-INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',17);
+INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',18);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',0);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',0);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',0);
@@ -5213,7 +5226,7 @@ INSERT INTO `workcentres` VALUES ('ASSEM','DEN','Assembly',1.0000,'20.0000',5600
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-04-07 20:15:35','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
+INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-04-11 20:08:54','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','ru_RU');
 INSERT INTO `www_users` VALUES ('testy','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Test Remote User','GRANHR','','','DEN',7,'2005-04-02 21:55:16','GRAN','A4','0,0,0,0,0,0,0,0,',0,50,'fresh','pt_PT');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

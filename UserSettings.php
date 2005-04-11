@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity=1;
 
@@ -104,7 +104,7 @@ echo $_SESSION['UsersRealName'] . '</TD></TR>';
 
 echo '<TR>
 	<TD>' . _('Maximum Number of Records to Display') . ":</TD>
-	<TD><INPUT TYPE='Text' name='DisplayRecordsMax' VALUE=" . $_POST['DisplayRecordsMax'] . " SIZE=32 MAXLENGTH=30></TD>
+	<TD><INPUT TYPE='Text' name='DisplayRecordsMax' SIZE=3 MAXLENGTH=3 VALUE=" . $_POST['DisplayRecordsMax'] . " ></TD>
 	</TR>";
 	
 	

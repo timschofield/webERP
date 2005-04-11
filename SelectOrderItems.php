@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 require('includes/DefineCartClass.php');
 
@@ -17,6 +17,7 @@ if (isset($_GET['ModifyOrderNumber'])) {
 
 include('includes/header.inc');
 include('includes/GetPrice.inc');
+include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_POST['QuickEntry'])){
    unset($_POST['PartSearch']);
@@ -144,9 +145,6 @@ if (isset($_GET['ModifyOrderNumber'])
 		$_SESSION['DatePackingSlipPrinted'] = $myrow['datepackingslipprinted'];
 		$_SESSION['Items']->DeliverBlind = $myrow['deliverblind'];
 		
-		if ($_SESSION['CheckCreditLimits']==1){
-			$_SESSION['Items']->CreditAvailable = GetCreditAvailable($myrow['debtorno'],$db); 
-		}
 /*need to look up customer name from debtors master then populate the line items array with the sales order details records */
 		$LineItemsSQL = "SELECT salesorderdetails.stkcode,
 				stockmaster.description,
@@ -378,7 +376,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 		$_SESSION['Items']->DeliverBlind = $myrow[9];
 		
 		if ($_SESSION['CheckCreditLimits'] > 0){  /*Check credit limits is 1 for warn and 2 for prohibit sales */
-			$_SESSION['Items']->CreditAvailable = GetCreditAvailable($myrow['debtorno'],$db);
+			$_SESSION['Items']->CreditAvailable = GetCreditAvailable($_POST['Select'],$db);
 			
 			if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items']->CreditAvailable <=0){
 				prnMsg(_('The') . ' ' . $myrow[0] . ' ' . _('account is currently at or over their credit limit'),'warn');

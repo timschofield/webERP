@@ -1776,8 +1776,7 @@ INSERT INTO `companies` VALUES (1,'Demo System','15-325-122','','PO Box 999 Well
 
 INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',1.7000);
 INSERT INTO `currencies` VALUES ('Deutsche','DEM','German','Pfenig',1.8000);
-INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',0.8000);
-INSERT INTO `currencies` VALUES ('N Z Dollars','NZD','New Zealand','Cents',2.0000);
+INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',0.8800);
 INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',1.0000);
 
 --
@@ -2003,7 +2002,7 @@ INSERT INTO `systypes` VALUES (20,'Purchase Invoice',17);
 INSERT INTO `systypes` VALUES (21,'Debit Note',8);
 INSERT INTO `systypes` VALUES (22,'Creditors Payment',7);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
-INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',17);
+INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',18);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',0);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',0);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',0);
@@ -2051,7 +2050,7 @@ INSERT INTO `taxauthlevels` VALUES (6,6,2,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-04-07 20:15:35','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
+INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-04-11 20:08:54','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','ru_RU');
 INSERT INTO `www_users` VALUES ('testy','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Test Remote User','GRANHR','','','DEN',7,'2005-04-02 21:55:16','GRAN','A4','0,0,0,0,0,0,0,0,',0,50,'fresh','pt_PT');
 
 --
@@ -2202,7 +2201,7 @@ INSERT INTO `edi_orders_seg_groups` VALUES (50,1,0);
 --
 
 INSERT INTO `config` VALUES ('DefaultLanguage','en_GB');
-INSERT INTO `config` VALUES ('DefaultDateFormat','m/d/Y');
+INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
 INSERT INTO `config` VALUES ('DefaultTheme','professional');
 INSERT INTO `config` VALUES ('PastDueDays1','30');
 INSERT INTO `config` VALUES ('PastDueDays2','60');
@@ -2247,7 +2246,7 @@ INSERT INTO `config` VALUES ('RadionBeaconFTP_user_pass','Radio Beacon remote ft
 INSERT INTO `config` VALUES ('AutoDebtorNo','0');
 INSERT INTO `config` VALUES ('HTTPS_Only','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','7');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-03-31');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-04-08');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('PackNoteFormat','1');
 INSERT INTO `config` VALUES ('CheckCreditLimits','2');
@@ -2267,9 +2266,9 @@ INSERT INTO `unitsofmeasure` VALUES (1,'each');
 -- Dumping data for table `paymentmethods`
 --
 
-INSERT INTO `paymentmethods` VALUES (1,'Cheques',1,1);
 INSERT INTO `paymentmethods` VALUES (2,'Cash',1,1);
 INSERT INTO `paymentmethods` VALUES (3,'Direct Credit',1,1);
+INSERT INTO `paymentmethods` VALUES (4,'Cheques',1,1);
 
 --
 -- Dumping data for table `securitygroups`
@@ -2297,7 +2296,6 @@ INSERT INTO `securitygroups` VALUES (6,3);
 INSERT INTO `securitygroups` VALUES (6,4);
 INSERT INTO `securitygroups` VALUES (6,5);
 INSERT INTO `securitygroups` VALUES (6,7);
-INSERT INTO `securitygroups` VALUES (6,8);
 INSERT INTO `securitygroups` VALUES (6,10);
 INSERT INTO `securitygroups` VALUES (6,11);
 INSERT INTO `securitygroups` VALUES (7,1);
