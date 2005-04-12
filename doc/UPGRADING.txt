@@ -1,0 +1,36 @@
+Upgrading from Previous Versions of webERP
+
+Converting the database 
+
+As each new version is released the new php scripts will use new database fields or changed field names. A a consequence, the new scripts will most likely not work unless the database structure has been converted to the new database structure. Normally the changes to the database between versions are small. However, between 2.9b and 3.0 the changes have been significant and the upgrade script may take some time to run. It should not be run from a phpMyAdmin window since PHP will time out long before the upgrade script will have finished.
+
+It is important to make a copy of an sql dump of the database before attempting to run the upgrade script.
+
+An SQL script is provided that changes the old database to the new structure retaining all the data from the old database. This script must be applied against the old database. In general the script is held under the sql directory. Under the sql directory there is a pg directory containing the postgres specific SQL and a mysql directory containing the mysql specific SQL. The upgrade script is named:
+
+upgradeXX.X-YY.Y.sql
+
+where XX.X is the old version number and YY.Y is the new version number.
+
+No other users should be using the database. The upgrade script will need to be edited to use the name of the database that your webERP installation was created with - by default this is weberp. If the default has not been changed then the following line will need to be pre-pended to the upgrade sql script.
+
+use weberp;
+
+Upgrading a mysql installation, the script should then be run through mysql from the command line:
+
+/usr/local/mysql/bin/mysql -u weberp_db_user -p weberp_db_pwd < path_to_upgraded_webERP_install/sql/mysql/upgradeXX.X-YY.Y.sql
+
+where:
+- the mysql client binary is under /usr/local/mysql/bin/mysql
+- the mysql user name is weberp_db_user
+- the mysql password for weberp_db_user is weberp_db_pwd
+- the path to the new webERP installation is path_to_upgraded_webERP_install
+- XX.X is the old version number
+- YY.Y is the new version number
+
+The new php scripts should be copied into the webERP directory under the web-server root directory.
+
+Upgrading From 2.9b to 3.0
+
+There are extensive changes to the database and the upgrade2.9b-3.0.sql may take some time to run depending on how much data there is in the system. A backup of the 2.9b database dump should be taken prior to attempting to run the upgrade script.
+

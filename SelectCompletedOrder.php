@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 1;
 
@@ -168,6 +168,7 @@ if ($_POST['SearchParts']!=''){
 				AND salesorders.debtorno = debtorsmaster.debtorno 
 				AND debtorsmaster.debtorno = custbranch.debtorno 
 				AND salesorders.orderno=". $OrderNumber ." 
+				AND salesorders.quotation=0 
 				GROUP BY salesorders.orderno,
 					debtorsmaster.name, 
 					custbranch.brname, 
@@ -200,6 +201,7 @@ if ($_POST['SearchParts']!=''){
 					AND salesorderdetails.stkcode='". $SelectedStockItem ."' 
 					AND salesorders.debtorno='" . $SelectedCustomer ."' 
 					AND salesorders.orddate >= '" . $DateAfterCriteria ."' 
+					AND salesorders.quotation=0 
 					GROUP BY salesorders.orderno, 
 						debtorsmaster.name, 
 						custbranch.brname, 
@@ -226,6 +228,7 @@ if ($_POST['SearchParts']!=''){
 					AND debtorsmaster.debtorno = custbranch.debtorno 
 					AND salesorders.debtorno='" . $SelectedCustomer . "' 
 					AND salesorders.orddate >= '" . $DateAfterCriteria . "' 
+					AND salesorders.quotation=0 
 					GROUP BY salesorders.orderno, 
 						debtorsmaster.name, 
 						custbranch.brname, 
@@ -254,6 +257,7 @@ if ($_POST['SearchParts']!=''){
 					AND debtorsmaster.debtorno = custbranch.debtorno 
 					AND salesorderdetails.stkcode='". $SelectedStockItem ."'  
 					AND salesorders.orddate >= '" . $DateAfterCriteria . "' 
+					AND salesorders.quotation=0 
 					GROUP BY salesorders.orderno, 
 						debtorsmaster.name, 
 						custbranch.brname, 
@@ -279,6 +283,7 @@ if ($_POST['SearchParts']!=''){
 					AND salesorders.branchcode = custbranch.branchcode 
 					AND debtorsmaster.debtorno = custbranch.debtorno 
 					AND salesorders.orddate >= '$DateAfterCriteria' 
+					AND salesorders.quotation=0 
 					GROUP BY salesorders.orderno, 
 						debtorsmaster.name, 
 						custbranch.brname, 
