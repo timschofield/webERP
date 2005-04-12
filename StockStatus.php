@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 2;
 
@@ -104,6 +104,7 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
                  WHERE salesorders.orderno = salesorderdetails.orderno AND
                  salesorders.fromstkloc='" . $myrow['loccode'] . "' AND
                  salesorderdetails.completed=0 AND
+		 salesorders.quotation=0 AND
                  salesorderdetails.stkcode='" . $StockID . "'";
 
 	$ErrMsg = _('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
@@ -127,7 +128,8 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
                        salesorders.fromstkloc='" . $myrow['loccode'] . "' AND
                        salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0 AND
                        bom.component='" . $StockID . "' AND stockmaster.stockid=bom.parent AND
-                       stockmaster.mbflag='A'";
+                       stockmaster.mbflag='A'
+		       AND salesorders.quotation=0";
 
 	$ErrMsg = _('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
 	$DemandResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);

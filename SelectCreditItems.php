@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
 
@@ -315,7 +315,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					FROM stockmaster, stockcategory
 					WHERE stockmaster.categoryid=stockcategory.categoryid
 					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.description" . LIKE . "'$SearchString'
+					AND stockmaster.description " . LIKE . "'$SearchString'
 					GROUP BY stockmaster.stockid, 
 						stockmaster.description, 
 						stockmaster.units
@@ -346,7 +346,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						stockcategory
 					WHERE stockmaster.categoryid=stockcategory.categoryid
 					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND  stockmaster.stockid" . LIKE . " '" . $_POST['StockCode'] . "'
+					AND  stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
 					GROUP BY stockmaster.stockid, 
 						stockmaster.description, 
 						stockmaster.units
@@ -665,7 +665,7 @@ $_SESSION['CreditItems']->LineItems[$_POST['NewItem']]->TaxRate = GetTaxRate($_S
 			<TD><INPUT TYPE="CheckBox" NAME="Gross" VALUE=False></TD>
 			<TD><INPUT TYPE=TEXT NAME="Discount_' . $StockItem->StockID . '" SIZE=3 MAXLENGTH=3 VALUE=' . ($StockItem->DiscountPercent * 100) . '>%</TD>
 			<TD ALIGN=RIGHT>' . $DisplayLineTotal . '</TD>
-			<TD><INPUT TYPE=TEXT NAME="TaxRate_' . $StockItem->StockID . '" SIZE=2 MAXLENGTH=2 VALUE=' . ($StockItem->TaxRate * 100) . '>%</TD>
+			<TD><INPUT TYPE=TEXT NAME="TaxRate_' . $StockItem->StockID . '" SIZE=4 MAXLENGTH=4 VALUE=' . ($StockItem->TaxRate * 100) . '>%</TD>
 			<TD ALIGN=RIGHT>' . number_format($LineTotal*$StockItem->TaxRate,2) . '</TD>
 			<TD ALIGN=RIGHT>' . number_format($LineTotal*(1+$StockItem->TaxRate),2) . '</TD>
 			<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . 'Delete=' . $StockItem->StockID . '">' . _('Delete') . '</A></TD>
@@ -694,7 +694,7 @@ $_SESSION['CreditItems']->LineItems[$_POST['NewItem']]->TaxRate = GetTaxRate($_S
 		echo '<TR>
 			<TD COLSPAN=7 ALIGN=RIGHT>' . _('Credit Freight') . '</TD>
 			<TD><FONT SIZE=2><INPUT TYPE=TEXT SIZE=6 MAXLENGTH=6 NAME=ChargeFreight VALUE=' . $_POST['ChargeFreight'] . '></TD>
-			<TD><INPUT TYPE=TEXT SIZE=2 MAXLENGTH=2 NAME=FreightTaxRate VALUE=' . $_POST['FreightTaxRate'] . '>%</TD>
+			<TD><INPUT TYPE=TEXT SIZE=4 MAXLENGTH=4 NAME=FreightTaxRate VALUE=' . $_POST['FreightTaxRate'] . '>%</TD>
 			<TD ALIGN=RIGHT>' . number_format($_POST['FreightTaxRate']*$_POST['ChargeFreight']/100,2) . '</TD>
 			<TD ALIGN=RIGHT>' . number_format((100+$_POST['FreightTaxRate'])*$_POST['ChargeFreight']/100,2) . '</TD>
 		</TR>';
@@ -737,7 +737,7 @@ $_SESSION['CreditItems']->LineItems[$_POST['NewItem']]->TaxRate = GetTaxRate($_S
 
 			echo '<TR><TD>' . _('Goods Returned to Location') . ' :</TD><TD><SELECT NAME=Location>';
 
-			$SQL="SELECT LocCode, LocationName FROM Locations";
+			$SQL="SELECT loccode, locationname FROM locations";
 			$Result = DB_query($SQL,$db);
 
 			if (!isset($_POST['Location'])){
@@ -745,10 +745,10 @@ $_SESSION['CreditItems']->LineItems[$_POST['NewItem']]->TaxRate = GetTaxRate($_S
 			}
 			while ($myrow = DB_fetch_array($Result)) {
 
-				if ($_POST['Location']==$myrow["loccode"]){
-					echo '<OPTION SELECTED VALUE="' . $myrow["loccode"] . '">' . $myrow["locationname"];
+				if ($_POST['Location']==$myrow['loccode']){
+					echo '<OPTION SELECTED VALUE="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 				} else {
-					echo '<OPTION VALUE="' . $myrow["loccode"] . '">' . $myrow["locationname"];
+					echo '<OPTION VALUE="' . $myrow['loccode'] . '">' . $myrow['locationname'];
 				}
 			}
 			echo '</SELECT></TD></TR>';
