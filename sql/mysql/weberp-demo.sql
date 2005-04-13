@@ -3748,6 +3748,7 @@ INSERT INTO `custallocns` VALUES (54,'99.0000','2004-11-28',68,56);
 
 INSERT INTO `custbranch` VALUES ('1234','12345678','One Two Three Four Five Six Seven Eight','','','','',1,'AR','25',0,'','','','','DEN',1,10,1,0,'','','','','');
 INSERT INTO `custbranch` VALUES ('BILLYBUNT','BILLYBUNT','William Bunter Inc','Unit C Fatboy Industrial Estate','Donut Drive','Colchester','England',3,'UK','25',0,'','','','','MUC',6,10,1,0,'','','','','');
+INSERT INTO `custbranch` VALUES ('COBLYSON','COBLYSON','Uncle Tom Cobly & Sons Inc','392 Great Oaks Drive','Grimbolton','Greater Manchester','England',30,'UK','25',0,'','','','','MUC',6,1,1,0,'','','','','');
 INSERT INTO `custbranch` VALUES ('DSSAD','DSSAD','Dressner und Dressner','133 Strasse Grunter','Berlin','Deutcshe','',1,'AR','2',0,'','','','','DEN',1,8,1,0,'','','','','');
 INSERT INTO `custbranch` VALUES ('GRAN','GRANHR','Gramtham Horton PLC','2 Growler Terraces','West Hemington','BE22 FD2','England',4,'UK','25',0,'','','Ed Heath','','MUC',6,1,1,0,'','','','','');
 INSERT INTO `custbranch` VALUES ('JOHN','JOHNSON','San Diego','198 Greater Lofty Heights','San Diego','California','USA',2,'AR','25',0,'2412 22356','2412 23549','Rod Champion','rod.champion@johnson.com','DEN',5,1,1,0,'','','','','');
@@ -3765,6 +3766,7 @@ INSERT INTO `custbranch` VALUES ('WATTSSAND','WATTSGRP','Watts Group San Diego',
 
 INSERT INTO `debtorsmaster` VALUES ('12345678','One Two Three Four Five Six Seven Eight','','','','','USD','WS','2003-03-27 00:00:00',1,'20',0.1000,0.0200,53.2500,'2003-03-27 00:00:00',1000,'',0,'',0,0,'','email','','','');
 INSERT INTO `debtorsmaster` VALUES ('BILLYBUNT','William Bunter Inc','Unit C Fatboy Industrial Estate','Donut Drive','Colchester','England','GBP','WS','2004-07-17 00:00:00',1,'30',0.0000,0.0000,12.5000,'2004-07-17 00:00:00',1000,'',0,'',0,0,'','email','','','');
+INSERT INTO `debtorsmaster` VALUES ('COBLYSON','Uncle Tom Cobly & Sons Inc','392 Great Oaks Drive','Grimbolton','Greater Manchester','England','GBP','WS','2005-04-13 00:00:00',1,'7',0.0000,0.0000,0.0000,NULL,5000,'',0,'',0,0,'','email','','','');
 INSERT INTO `debtorsmaster` VALUES ('DSSAD','Dressner und Dressner','133 Strasse Grunter','Berlin','Deutcshe','','USD','WS','2004-11-28 00:00:00',1,'20',0.0000,0.0000,50.2500,'2005-01-03 00:00:00',1000,'',0,'',0,0,'','email','','','');
 INSERT INTO `debtorsmaster` VALUES ('GRANHR','Gramtham Horton PLC','P O Box 7755','West Hemington','BE22 FD2','England','USD','EX','2003-03-24 00:00:00',1,'20',0.0000,0.0000,30.0000,'2003-06-23 00:00:00',1000,'',0,'',0,0,'','email','','','');
 INSERT INTO `debtorsmaster` VALUES ('JOHNSON','Johnson Vehicle Company Inc','1103 Garrison Road East','Detroit','Michigan','','USD','WS','1978-02-26 00:00:00',1,'30',0.0000,0.0000,2203.3100,'2004-01-14 00:00:00',10000,'',0,'',0,0,'','email','','','');
@@ -3803,6 +3805,7 @@ INSERT INTO `debtortrans` VALUES (82,11,11,'BILLYBUNT','BILLYBUNT','2004-11-30 0
 INSERT INTO `debtortrans` VALUES (83,4,12,'DSSAD','','2005-01-03 00:00:00',61,0,'Cheques one two thre','',0,1.000000,-50.25,0,0,-20,0,0,'','',0,'');
 INSERT INTO `debtortrans` VALUES (84,14,10,'DSSAD','DSSAD','2005-03-28 00:00:00',63,0,'','WS',46,1.000000,585.2,58.52,0,0,0,0,'Balance of Shocks to follow','8',0,'');
 INSERT INTO `debtortrans` VALUES (85,15,10,'GRANHR','GRAN','2005-04-04 00:00:00',64,0,'','EX',48,1.000000,1125,0,0,0,0,0,'','1',0,'');
+INSERT INTO `debtortrans` VALUES (86,12,11,'WALMON','WALM','2005-04-12 00:00:00',64,0,'','EX',0,1.700000,-22.75,-2.275,0,0,0,0,'','',0,'');
 
 --
 -- Dumping data for table `discountmatrix`
@@ -4239,8 +4242,13 @@ INSERT INTO `gltrans` VALUES (739,10,15,0,'2005-04-04',64,70300,'GRANHR - HON900
 INSERT INTO `gltrans` VALUES (740,10,15,0,'2005-04-04',64,722000,'GRANHR - HON90022 x 50 @ 2.1000',-105,1,'');
 INSERT INTO `gltrans` VALUES (741,10,15,0,'2005-04-04',64,112,'GRANHR - HON90022 x 50 @ 22.5000',-1125,1,'');
 INSERT INTO `gltrans` VALUES (742,10,15,0,'2005-04-04',64,710000,'GRANHR',1125,1,'');
-INSERT INTO `gltrans` VALUES (743,25,18,0,'2005-04-09',64,722000,'PO: 21 BUCKROG - NISSMAX33 - Nissan Maxima Rear Coils 95-03 x 10 @ 0.00',0,0,'');
-INSERT INTO `gltrans` VALUES (744,25,18,0,'2005-04-09',64,723000,'PO: 21 BUCKROG - NISSMAX33 - Nissan Maxima Rear Coils 95-03 x 10 @ 0.00',0,0,'');
+INSERT INTO `gltrans` VALUES (743,25,18,0,'2005-04-09',64,722000,'PO: 21 BUCKROG - NISSMAX33 - Nissan Maxima Rear Coils 95-03 x 10 @ 0.00',0,1,'');
+INSERT INTO `gltrans` VALUES (744,25,18,0,'2005-04-09',64,723000,'PO: 21 BUCKROG - NISSMAX33 - Nissan Maxima Rear Coils 95-03 x 10 @ 0.00',0,1,'');
+INSERT INTO `gltrans` VALUES (745,11,12,0,'2005-04-12',64,70200,'WALMON - HON90021 x 1 @ 9.6900',-9.69,0,'');
+INSERT INTO `gltrans` VALUES (746,11,12,0,'2005-04-12',64,722000,'WALMON - HON90021 x 1 @ 9.6900',9.69,0,'');
+INSERT INTO `gltrans` VALUES (747,11,12,0,'2005-04-12',64,107,'WALMON - HON90021 x 1 @ 22.7500',22.75,0,'');
+INSERT INTO `gltrans` VALUES (748,11,12,0,'2005-04-12',64,710000,'WALMON',-25.025,0,'');
+INSERT INTO `gltrans` VALUES (749,11,12,0,'2005-04-12',64,810000,'WALMON',2.275,0,'');
 
 --
 -- Dumping data for table `grns`
@@ -4502,6 +4510,7 @@ INSERT INTO `salesanalysis` VALUES ('EX',59,-0.2941,-6.2000,'WALMON','WALM',-10.
 INSERT INTO `salesanalysis` VALUES ('WS',59,-8.3125,-10.5000,'BILLYBUNT','BILLYBUNT',-5.0000,0.0000,'HON90022','UK',1,'25','Coil',68);
 INSERT INTO `salesanalysis` VALUES ('WS',63,585.2000,0.0000,'DSSAD','DSSAD',11.0000,0.0000,'HON92FrSus','AR',1,'2','SUSASS',69);
 INSERT INTO `salesanalysis` VALUES ('EX',64,1125.0000,105.0000,'GRANHR','GRAN',50.0000,0.0000,'HON90022','UK',1,'25','Coil',70);
+INSERT INTO `salesanalysis` VALUES ('EX',64,-13.3824,-9.6900,'WALMON','WALM',-1.0000,0.0000,'HON90021','AR',1,'25','Coil',71);
 
 --
 -- Dumping data for table `salescat`
@@ -4569,6 +4578,8 @@ INSERT INTO `salesorderdetails` VALUES (46,'HON92FrSus',11.0000,53.2000,15.0000,
 INSERT INTO `salesorderdetails` VALUES (46,'HONShock',0.0000,25.9000,3.0000,0,0.0500,'0000-00-00 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (47,'HON90022',0.0000,25.2100,5.0000,0,0.2000,'0000-00-00 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (48,'HON90022',50.0000,22.5000,100.0000,0,0.0000,'2005-04-04 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (49,'HON90022',0.0000,25.2100,4.0000,0,0.2000,'0000-00-00 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (50,'HON90021',0.0000,12.5000,21.0000,0,0.2000,'0000-00-00 00:00:00',0,'');
 
 --
 -- Dumping data for table `salesorders`
@@ -4596,6 +4607,8 @@ INSERT INTO `salesorders` VALUES (45,'WALMON','WALM','CF_44321',NULL,'','2005-03
 INSERT INTO `salesorders` VALUES (46,'DSSAD','DSSAD','844321',NULL,' Inv 14','2005-03-26','WS',8,'133 Strasse Grunter','Berlin','Deutcshe','','','','Dressner und Dressner',1,0,'DEN','2005-03-28',0,'0000-00-00',0);
 INSERT INTO `salesorders` VALUES (47,'DSSAD','DSSAD','',NULL,'','2005-03-26','WS',8,'133 Strasse Grunter','Berlin','Deutcshe','','','','Dressner und Dressner',1,0,'DEN','2005-03-28',0,'0000-00-00',1);
 INSERT INTO `salesorders` VALUES (48,'GRANHR','GRAN','',NULL,' Inv 15','2005-04-03','EX',1,'2 Growler Terraces','West Hemington','BE22 FD2','England','','','Gramtham Horton PLC',1,0,'MUC','2005-04-04',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (49,'JOHNSON','JOHNTEMPE','',NULL,'','2005-04-12','WS',1,'654 Roberto Street','Tempe','Arizona','USA','56565 444 44','','Johnson Vehicles Tempe',1,0,'DEN','2005-04-13',1,'2005-04-12',0);
+INSERT INTO `salesorders` VALUES (50,'JOHNSON','JOHNTEMPE','',NULL,'','2005-04-12','WS',1,'654 Roberto Street','Tempe','Arizona','USA','56565 444 44','','Johnson Vehicles Tempe',1,0,'DEN','2005-04-13',1,'0000-00-00',0);
 
 --
 -- Dumping data for table `salestypes`
@@ -4995,6 +5008,7 @@ INSERT INTO `stockmoves` VALUES (214,'130',17,7,'DEN','2005-03-26','','','0.0000
 INSERT INTO `stockmoves` VALUES (215,'130',17,8,'DEN','2005-03-26','','','0.0000',63,'',-5.0000,0.0000,0.0000,1,0,0,0,'');
 INSERT INTO `stockmoves` VALUES (216,'HON90022',10,15,'MUC','2005-04-04','GRANHR','GRAN','22.5000',64,'48',-50.0000,0.0000,2.1000,1,-45,0,0,'');
 INSERT INTO `stockmoves` VALUES (217,'NISSMAX33',25,18,'DEN','2005-04-09','','','3.3300',64,'BUCKROG (Buck Rogers Inc) - 21',10.0000,0.0000,0.0000,1,10,0,0,'');
+INSERT INTO `stockmoves` VALUES (218,'HON90021',11,12,'MEL','2005-04-12','WALMON','WALM','13.3824',64,'',1.0000,0.0000,9.6900,1,0,0,0.1,'');
 
 --
 -- Dumping data for table `stockserialitems`
@@ -5146,7 +5160,7 @@ INSERT INTO `systypes` VALUES (1,'Payment - GL',19);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',3);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
 INSERT INTO `systypes` VALUES (10,'Sales Invoice',15);
-INSERT INTO `systypes` VALUES (11,'Credit Note',11);
+INSERT INTO `systypes` VALUES (11,'Credit Note',12);
 INSERT INTO `systypes` VALUES (12,'Receipt',4);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',8);
@@ -5226,7 +5240,7 @@ INSERT INTO `workcentres` VALUES ('ASSEM','DEN','Assembly',1.0000,'20.0000',5600
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-04-11 20:08:54','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','ru_RU');
+INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-04-13 22:17:41','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
 INSERT INTO `www_users` VALUES ('testy','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Test Remote User','GRANHR','','','DEN',7,'2005-04-02 21:55:16','GRAN','A4','0,0,0,0,0,0,0,0,',0,50,'fresh','pt_PT');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

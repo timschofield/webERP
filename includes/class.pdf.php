@@ -219,7 +219,7 @@ function addTextWrap($xb, $yb, $w, $h, $txt, $align='J', $border=0, $fill=0) {
 
 	$c=$s{$i};
  
-	if($c==' ') {
+	if($c==' ' AND $i>0) {
 		$sep=$i;
 		$ls=$l;
 		$ns++;

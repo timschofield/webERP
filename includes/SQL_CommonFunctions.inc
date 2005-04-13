@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 /* Common SQL Functions */
 
 
@@ -103,10 +103,18 @@ Function GetCreditAvailable($DebtorNo,&$db) {
 	$ErrMsg =  _('The current account balance of the customer could not be retrieved because');
 	$GetAccountBalanceResult = DB_query($sql, $db, $ErrMsg);
 	
-	$myrow = DB_fetch_array($GetAccountBalanceResult);
-	$CreditAvailable = $myrow['creditlimit'] - $myrow['balance'];
-	
-	
+	if (DB_num_rows($GetAccountBalanceResult)==1){
+		
+		$myrow = DB_fetch_array($GetAccountBalanceResult);
+		$CreditAvailable = $myrow['creditlimit'] - $myrow['balance'];
+	} else {
+		$sql = "SELECT creditlimit
+				FROM debtorsmaster 
+				WHERE debtorno='" . $DebtorNo . "'";
+		$GetAccountBalanceResult = DB_query($sql, $db, $ErrMsg);
+		$myrow = DB_fetch_array($GetAccountBalanceResult);
+		$CreditAvailable = $myrow['creditlimit'];
+	}
 	/*Take into account the value of outstanding sales orders too */
 	$sql = "SELECT SUM(salesorderdetails.unitprice *
 				(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) *

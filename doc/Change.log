@@ -3,7 +3,8 @@
 <P><B>Version 3.0
 <P>April 2005</B>
 <P>
-<P>11/4/05 Fix credit check code of 7/4/05 - buggy.
+<P>13/4/05 David Hawke - fixed pdf printing bug error in addTextWrap - leading spaces not handled
+<P>11/4/05 Fix credit check code of 7/4/05 - buggy and fixed again 14/4/05 Tan Hock Chye noted bug where no transactions
 <P>9/4/05 Danie: Areas.php - Fix handling of empty fields and make opperation compatible with rest of system.
 <P>9/4/05 Danie: Shippers.php - Fix handling of empty fields and make opperation compatible with rest of system.
 <P>9/4/05 Danie: StockCategories.php - Fix handling of empty fields and make opperation compatible with rest of system.

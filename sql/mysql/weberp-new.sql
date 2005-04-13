@@ -1992,7 +1992,7 @@ INSERT INTO `systypes` VALUES (1,'Payment - GL',19);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',3);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
 INSERT INTO `systypes` VALUES (10,'Sales Invoice',15);
-INSERT INTO `systypes` VALUES (11,'Credit Note',11);
+INSERT INTO `systypes` VALUES (11,'Credit Note',12);
 INSERT INTO `systypes` VALUES (12,'Receipt',4);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',8);
@@ -2050,7 +2050,7 @@ INSERT INTO `taxauthlevels` VALUES (6,6,2,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-04-11 20:08:54','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','ru_RU');
+INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-04-13 22:17:41','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
 INSERT INTO `www_users` VALUES ('testy','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Test Remote User','GRANHR','','','DEN',7,'2005-04-02 21:55:16','GRAN','A4','0,0,0,0,0,0,0,0,',0,50,'fresh','pt_PT');
 
 --

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 $PageSecurity = 1;
 
 include('includes/session.inc');
@@ -402,7 +402,7 @@ If (isset($PrintPDF)
 		if ($InvOrCredit=='Invoice'){
 			$pdf->addText($Page_Width-$Right_Margin-220, $YPos - ($line_height*3)-6,$FontSize, _('TOTAL INVOICE'));
 			$FontSize=6;
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,245,$FontSize,$_SESSION['RomalpaClause']);
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos-2,245,$FontSize,$_SESSION['RomalpaClause']);
 			while (strlen($LeftOvers)>0 AND $YPos > $Bottom_Margin){
 				$YPos -=7;
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,245,$FontSize,$LeftOvers);
