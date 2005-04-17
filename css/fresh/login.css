@@ -6,7 +6,8 @@
 | by Logic Works Ltd                                |
 |---------------------------------------------------|
 | Developer:                                        |
-| Shane Barnaby                                     |
+| Shane Barnaby					    |	
+| BrainX 	                                    |
 |                                                   |
 |---------------------------------------------------|
 | Note:                                             |
@@ -16,7 +17,7 @@
 |                                                   |
 \--------------------------------------------------*/
 
-<!-- \$Revision: 1.1 $ -->
+<!-- \$Revision: 1.2 $ -->
 
 body {
 	background: "#ffffff";
@@ -26,7 +27,28 @@ body {
 
 .loginText {
 	font-family: arial, verdana;
-	font-size: 10px;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.borderBox{
+	background-color: #555555;
+}
+
+.middleBar{
+	background-color: #367CB5;
+}
+
+.loginBox{
+	background-image: url(images/outline/bg.gif);
+}
+
+.logoBackground{
+	background-color: #FFFFFF;
+}
+
+.mainTable{
+	background-color: #285B86;
 }
 
 a:hover {

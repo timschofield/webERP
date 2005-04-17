@@ -7,7 +7,7 @@
 |---------------------------------------------------|
 | Developer:                                        |
 | Shane Barnaby                                     |
-|                                                   |
+| BrainX                                            |
 |---------------------------------------------------|
 | Note:                                             |
 | Changes can be made to this CSS that will be      |
@@ -16,7 +16,7 @@
 |                                                   |
 \--------------------------------------------------*/
 
-<!-- \$Revision: 1.2 $ -->
+<!-- \$Revision: 1.3 $ -->
 
 body {
 	background: "#ffffff";
@@ -26,7 +26,28 @@ body {
 
 .loginText {
 	font-family: arial, verdana;
-	font-size: 10px;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.borderBox{
+	background-color: #555555;
+}
+
+.middleBar{
+	background-color: #367CB5;
+}
+
+.loginBox{
+	background-image: url(css/bg.gif);
+}
+
+.logoBackground{
+	background-color: #285B86;
+}
+
+.mainTable{
+	background-color: #285B86;
 }
 
 a:hover {

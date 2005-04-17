@@ -73,9 +73,9 @@ $MovtsResult = DB_query($sql, $db,$ErrMsg);
 
 echo '<TABLE CELLPADDING=5 CELLSPACING=4 BORDER=0>';
 $tableheader = '<TR>
-		<TD class="tableheader">' . _('StockID') . '</TD>
+		<TD class="tableheader">' . _('Item Code') . '</TD>
 		<TD class="tableheader">' . _('Type') . '</TD>
-		<TD class="tableheader">' . _('Trans ID') . '</TD>
+		<TD class="tableheader">' . _('Trans No') . '</TD>
 		<TD class="tableheader">' . _('Date') . '</TD>
 		<TD class="tableheader">' . _('Customer') . '</TD>
 		<TD class="tableheader">' . _('Quantity') . '</TD>

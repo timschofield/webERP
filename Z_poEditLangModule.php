@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 /* Steve Kitchen */
 
@@ -67,7 +67,7 @@ if (isset($_POST['module'])) {
 
 		for ($i=17; $i<=$LangFileEntries; $i++) {
 			if (isset($_POST['msgstr_'.$i])) {
-				$LangFile[$i] = 'msgstr "' . $_POST['moduletext_'.$i] . '"' . "\n";
+				$LangFile[$i] = 'msgstr "' . htmlentities($_POST['moduletext_'.$i]) . '"' . "\n";
 			}
 		}
 		$fpOut = fopen($PathToNewLanguage, 'w');
@@ -92,6 +92,7 @@ if (isset($_POST['module'])) {
 		echo '</TD></TR></TABLE>';
 		echo '</CENTER>';
 	
+	/* End of Submit block */
 	} else {
 
     /* now we need to parse the resulting array into something we can show the user */

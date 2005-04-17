@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 include ('includes/class.pdf.php');
 
 if (isset($SessionSavePath)){
@@ -21,7 +21,7 @@ If (isset($_POST['Theme'])) {
 }
 
 if ($_SESSION['HTTPS_Only']==1){
-	if (!strstr('HTTPS',$_SERVER['SERVER_PROTOCOL'])){
+	if ($_SERVER['HTTPS']!='on'){
 		prnMsg('webERP is configured to allow only secure socket connections. Pages must be called with https:// ....','error');
 		exit;
 	}

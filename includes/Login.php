@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 // Display demo user name and password within login form if $allow_demo_mode is true
 include ('includes/LanguageSetup.php');
 
@@ -19,7 +19,7 @@ if ($allow_demo_mode == True AND !isset($demo_text)) {
 </HEAD>
 
 <BODY leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
-    <TABLE bgcolor="#285B86" width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+    <TABLE width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" class="mainTable">
         <TR>
             <TD align="left" valign="top"><img src="css/webERP.gif"></TD>
 		</TR>
@@ -35,23 +35,24 @@ if ($allow_demo_mode == True AND !isset($demo_text)) {
                         <TR>
                             <TD colspan="5" bgcolor="#FFFFFF"><img src="css/spacer.gif"></TD>
 			</TR>
+			
 
                         <TR>
 
-			<TD VALIGN="CENTER" ALIGN="CENTER"><img src="logo.jpg" ></TD>
+			<TD VALIGN="CENTER" ALIGN="CENTER" class="logoBackground"><img src="logo.jpg" ></TD>
 
-                            <TD bgcolor="#367CB5"><img src="css/spacer.gif" width="12"></TD>
+                            <TD class="middleBar"><img src="css/spacer.gif" width="12"></TD>
 
-                            <TD background="css/bg.gif" colspan="3" valign="top">
-                                <TABLE border="0" cellpadding="3" cellspacing="0" width="100%">
+                          <TD background="css/bg.gif" colspan="3" valign="top">	
+                                <TABLE border="0" cellpadding="3" cellspacing="0" width="100%" class="loginBox">
 
                                     <TR>
-                                        <TD class="loginText"><span><?php echo _('User name'); ?>:</span><br />
+                                        <TD><span class="loginText"><?php echo _('User name'); ?>:</span><br />
                                          <input type="TEXT" name="UserNameEntryField"/><br />
-                                         <span><?php echo _('Password'); ?>:</span><br />
+                                         <span class="loginText"><?php echo _('Password'); ?>:</span><br />
                                          <input type="PASSWORD" name="Password">
                                          <br />
-                                         <?php echo $demo_text;?>
+                                         <span class="loginText"><?php echo $demo_text;?></span>
                                         </TD>
                                     </TR>
 
@@ -69,13 +70,13 @@ if ($allow_demo_mode == True AND !isset($demo_text)) {
                     </table>
 
 		            </TD>
-		            <TD bgcolor="#555555" WIDTH="3"> </TD>
+		            <TD WIDTH="3" class="borderBox"> </TD>
 		        </TR>
 		        <TR>
-		            <TD bgcolor="#555555"><FONT SIZE="1" COLOR="#555555">Bl</FONT></TD>
+		            <TD class="borderBox">&nbsp;</TD>
 		        </TR>
 		   	<TR>
-		            <TD COLSPAN="3" bgcolor="#555555"><FONT SIZE="1" COLOR="#555555">Blank</FONT></TD>
+		            <TD COLSPAN="3" class="borderBox"></TD>
 		        </TR>
 		    </table>
 

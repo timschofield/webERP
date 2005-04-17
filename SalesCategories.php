@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity = 11;
 
@@ -283,6 +283,7 @@ echo '</center></p>';
 
 echo '<p><FORM ENCTYPE="MULTIPART/FORM-DATA" METHOD="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 
+// This array will contain the stockids in use for this category
 if (isset($SelectedCategory)) {
 	//editing an existing stock category
 
@@ -332,17 +333,35 @@ echo '</FORM></p>';
 // Always display Stock Select screen
 
 // $sql = "SELECT stockid, description FROM stockmaster ORDER BY stockid";
-$sql = "SELECT sm.stockid, sm.description 
-			FROM stockmaster sm
-			WHERE NOT EXISTS (
-				SELECT stockid 
-					FROM salescatprod scp 
-					WHERE scp.salescatid". (isset($ParentCategory)?('='.$ParentCategory):' is NULL') . " 
-						AND scp.stockid = sm.stockid
-			) ORDER BY sm.stockid";
+/*
+$sql = "SELECT sm.stockid, sm.description FROM stockmaster as sm
+	WHERE NOT EXISTS 
+		( SELECT scp.stockid FROM salescatprod as scp
+			WHERE 
+				scp.salescatid". (isset($ParentCategory)?('='.$ParentCategory):' IS NULL') ." 
+			AND 
+				scp.stockid = sm.stockid 
+	) ORDER BY sm.stockid";
+*/
 
+// Now add this stockid to the array
+$stockids = array();
+$sql = "SELECT stockid FROM salescatprod 
+		WHERE salescatid". (isset($ParentCategory)?('='.$ParentCategory):' is NULL') . " 
+		ORDER BY stockid";
 $result = DB_query($sql,$db);
 if($result && DB_num_rows($result)) {
+	while( $myrow = DB_fetch_array($result) ) {
+		$stockids[] = $myrow['stockid']; // Add Stock
+	}
+	DB_free_result($result);	
+}
+
+// This query will return the stock that is available
+$sql = "SELECT stockid, description FROM stockmaster ORDER BY stockid";
+$result = DB_query($sql,$db);
+if($result && DB_num_rows($result)) {
+	// continue id stock id in the stockid array
 	echo '<p><FORM ENCTYPE="MULTIPART/FORM-DATA" METHOD="POST" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 	if( isset($SelectedCategory) ) { // If we selected a category we need to keep it selected
 		echo '<INPUT TYPE=HIDDEN NAME="SelectedCategory" VALUE="' . $SelectedCategory . '">';
@@ -355,12 +374,15 @@ if($result && DB_num_rows($result)) {
 	echo '<tr><td class="tableheader" colspan="2">'._('Add Inventory to this category.').'</td></tr>';
 	echo '<TR><TD>' . _('Select Inv. Item') . ':</TD><TD>';
 	echo '<select name="AddStockID">';
-		while( $myrow = DB_fetch_array($result) ) {
+	while( $myrow = DB_fetch_array($result) ) {
+		if ( !array_keys( $stockids, $myrow['stockid']  ) ) {
+			// Only if the StockID is not already selected
 			echo '<option value="'.$myrow['stockid'].'">'.
 				htmlentities($myrow['stockid']).
 				'&nbsp;-&nbsp;&quot;'.
 				htmlentities($myrow['description']).'&quot;';
 		}
+	}
 	echo '</select>';
 	echo '</TD></TR></TABLE></CENTER>';
 	echo '<CENTER><input type="Submit" name="submit" value="' . _('Add Inventory Item') . '">';
@@ -374,7 +396,7 @@ if($result && DB_num_rows($result)) {
 if( $result ) {
 	DB_free_result($result);
 }
-
+unset($stockids);
 // END Always display Stock Select screen
 // ----------------------------------------------------------------------------------------
 

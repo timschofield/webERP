@@ -3,6 +3,7 @@
 $PageSecurity = 2;
 include('includes/session.inc');
 
+
 If (isset($_POST['PrintPDF'])
 	AND isset($_POST['FromCriteria'])
 	AND strlen($_POST['FromCriteria'])>=1

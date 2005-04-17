@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
  
     
 include('config.php');
@@ -22,17 +22,6 @@ if (!isset($_SESSION['AttemptsCounter'])){
 	$_SESSION['AttemptsCounter'] = 0;
 }
 
-    
-// 5 login attempts, show failed login screen
-if (!isset($_SESSION['AttemptsCounter'])) {
-	$_SESSION['AttemptsCounter'] = 0;
-} elseif ($_SESSION['AttemptsCounter'] >= 5 AND isset($_POST['UserNameEntryField'])) {
-	/*User blocked from future accesses until sysadmin releases */
-	$sql = "UPDATE www_users SET blocked=1 WHERE www_users.userid='" . $_POST['UserNameEntryField'] . "'";
-	$Auth_Result = DB_query($sql, $db);
-	die(include('includes/FailedLogin.php'));
-}
-
 
 if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
 
@@ -49,6 +38,14 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 		$_SESSION['UserStockLocation'] = '';
 		$_SESSION['AttemptsCounter']++;
 	
+		// Set Default theme for initial Screen.
+		$sql = "SELECT config.confvalue 
+			FROM config
+			WHERE config.confname='DefaultTheme'";
+		$ThemeResult = DB_query($sql, $db);
+		$myrow = DB_fetch_row($ThemeResult);
+		$theme = $myrow[0];
+		
 		// Show login screen
 		if (!isset($_POST['UserNameEntryField']) or $_POST['UserNameEntryField'] == '') {
 			include('includes/Login.php');
@@ -128,9 +125,17 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 			}
 	
 		} else {     // Incorrect password
-	
+			// 5 login attempts, show failed login screen
+			if (!isset($_SESSION['AttemptsCounter'])) {
+				$_SESSION['AttemptsCounter'] = 0;
+			} elseif ($_SESSION['AttemptsCounter'] >= 5 AND isset($_POST['UserNameEntryField'])) {
+				/*User blocked from future accesses until sysadmin releases */
+				$sql = "UPDATE www_users SET blocked=1 WHERE www_users.userid='" . $_POST['UserNameEntryField'] . "'";
+				$Auth_Result = DB_query($sql, $db);
+				die(include('includes/FailedLogin.php'));
+			}
 			$demo_text = '<FONT SIZE="3" COLOR="red"><b>' .  _('incorrect password') . '</B></FONT><BR><B>' . _('The user/password combination') . '<BR>' . _('is not a valid user of the system') . '</B>';
-			include('includes/Login.php');
+			die(include('includes/Login.php'));
 		}
 	}		// End of userid/password check
 } /* only do security checks if AllowAnyone is not true */
@@ -163,7 +168,7 @@ If (isset($_POST['Theme'])) {
 }
 
 if ($_SESSION['HTTPS_Only']==1){
-	if (!strstr('HTTPS',$_SERVER['SERVER_PROTOCOL'])){
+	if ($_SERVER['HTTPS']!='on'){
 		prnMsg('webERP is configured to allow only secure socket connections. Pages must be called with https:// ....','error');
 		exit;
 	}
