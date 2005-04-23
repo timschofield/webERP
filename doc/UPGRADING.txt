@@ -12,11 +12,11 @@ upgradeXX.XX-YY.YY.sql
 
 where XX.XX is the old version number and YY.YY is the new version number.
 
-No other users should be using the database. The upgrade script will need to be edited to use the name of the database that your webERP installation was created with - by default this is weberp. If the default has been changed then the line in the upgrade script:
+No other users should be using the database. The upgrade script will need to be edited to use the name of the database that your webERP installation was created with - by default this is weberp. If the default has not been changed then the following line will need to be added to the upgrade script - right at the beginning:
  
 	use weberp;
  
-will need to be amended to the name of the database that your installation uses.
+A similar line will be required but substituting the name of the database that your installation uses where the default database name has been changed.
 
 
 Upgrading a mysql installation, the script should then be run through mysql from the command line:
@@ -48,5 +48,3 @@ There are extensive changes to the database and the upgrade2.9b-3.0.sql may take
 IMPORTANT: Note that version of mysql 4.1.8 or greater is required because from the mysql change log: 
 	"Fix two hangs: FOREIGN KEY constraints treated table and database names as case-insensitive. RENAME TABLE t TO T would hang in an endless loop if t had a foreign key constraint defined on it. Fix also a hang over the dictionary mutex that would occur if one tried in ALTER TABLE or RENAME TABLE to create a foreign key constraint name that collided with another existing name. (Bug
 #3478)"
-
-

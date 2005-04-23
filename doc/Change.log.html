@@ -1,7 +1,7 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
 <P><B>Version 3.0
-<P>April 2005</B>
+<P>23rd April 2005</B>
 <P>
 <P>13/4/05 David Hawke - fixed pdf printing bug error in addTextWrap - leading spaces not handled
 <P>11/4/05 Fix credit check code of 7/4/05 - buggy and fixed again 14/4/05 Tan Hock Chye noted bug where no transactions
@@ -39,7 +39,7 @@
 <P>23/2/05 Danie - Z_GetStockImage.php image manipluation script
 <P>21/2/05 New script to print quotations PDFQuotation.php includes/PDFQuotationPageHeader.inc
 <P>20/2/05 Modification to DeliveryDetails.php to allow flagging of sales orders as quotations. Also modification to select outstanding orders to allow viewing of quotations
-<P>18/2/05 Bug fixes - <CENTER> on BankMatching.php, GLAccountInquiry.php integrity checking against wrong chartdetail record, lower casing errors in some Z scripts - Dick Stins, StockCostUpdate.php - OverheadCost added twice
+<P>18/2/05 Bug fixes - on BankMatching.php, GLAccountInquiry.php integrity checking against wrong chartdetail record, lower casing errors in some Z scripts - Dick Stins, StockCostUpdate.php - OverheadCost added twice
 <P>17/2/05 maximum execution time now as a config.php parameter defaults to 2 mins - 120 seconds
 <P>9/2/05 Customer login SelectCompletedOrder.php now shows just the orders for the customer without resort to a new script
 <P>9/2/05 Scott Rosa - Discount Category logic was not applied on quick entry - bug corrected
@@ -61,7 +61,7 @@
 <P>2/1/05 changing all INTERVAL to use the DB specific function and new DB_Connect_postgres (Danie) and DB_Connect_mysql
 <P>19/1/05 Danie - Moved Account Sections to the db from config.php new table in db
 <P>26-30/12/04 Khattak/Phil lower case all sql and array elements of returns from DB_fetch_array to enable compatibility with postgres
-<P>
+<HR><P>
 <P>Version 2.9b
 <P>23rd December 2004
 <P>
@@ -149,7 +149,7 @@
 <P>9/8/04 Extreme make-over MkII! - Included Steve Kaill's index.php and css/default.css. These changes make the menus columnar and has a cleaner look to the main menu. Also, includes/header.inc now with company name, user name and database and shortcut keys to quick menu options.
 <P>8/8/04 New Customer listing report PDFCustomerList.php with options to print for selected areas and sales folks, also customers below or above a certain level of activity since a specified date.
 <P>1/8/04 New scripts for reconciliation of GL for debtor and creditor balances as at the end of a prior period. DebtorsAtPeriodEnd.php includes/PDFDebtorBalsPageHeader.inc SupplierBalsAtPeriodEnd.php includes/PDFSupplierBalsPageHeader.inc
-
+<HR>
 
 <P><P>Version 2.9
 <P>17th July 2004
@@ -201,7 +201,7 @@
 <P>14/3/04 Added new tables for EDI_ORDERS_Segs and EDI_ORDERS_SegGroups that hold the defined segments for the EANCOM EDI ORDERS message and the segment groups info.
 <P>14/3/04 AccountGroups.php modified to disallow & or ' - also fixed class='tableheader' as per css.
 <P>14/3/04 GLAccounts.php modified to check for related records in BankAccounts and TaxAuthorities to avoid data integrity issues. Foriegn  Keys added as necessary - in the upgrade2.8-2.9.sql script
-
+<HR>
 
 <P><P>Version 2.8
 <P>26 February 2004
@@ -249,7 +249,7 @@
 <P>28/1/04 Subject and from of email purchase order was incorrect.
 <P>28/1/04 Could not modify currencies - fixed
 <P>28/1/04 using zip format archive (compression is not as good) for 2.7 and on to increase compatability.
-
+<HR>
 <P><P>Version 2.7
 <P>14 January 2004
 
@@ -275,7 +275,7 @@
 <P>16/12/03 SelectCreditItems.php bug in salesanalysis insert new record on Overcharge type credit note QtyDispatched should be Quantity.
 <P>16/12/03 SelectOrderItems.php made so that price/quantity/discount can be modified as displayed rather than hitting select to bring up the line for editing.
 <P>16/12/03 DeliveryDetails.php made to have button to modify line items and save any entries made on the form first using META refresh - taken off the select link on the order summary.
-
+<HR>
 <P><P>Version 2.6
 <P>15 December 2003
 
@@ -303,7 +303,7 @@
 <P>13/11/03 PrintCustStatements.php now settles transactions that should have allocated == the amount of the trans.
 <P>11/11/03 GLPostings.inc now checks for and creates ChartDetails records where none existed even though they should have existed.
 <P>30/11/03 PDFChequeListing.php now fixed include("includes/htmlMimeMail.php") so that reports do indeed get mailed! Also moved receipients of this report variable to config.php
-
+<HR>
 Version 2.5
 27 October 2003
 
@@ -339,7 +339,7 @@ Cost sh/be StdCostUnit.
 <P>Phil 7/10/03 SelectProduct.php tidy display when only one item returned from search
 <P>Phil 5/10/03 OutstandingGRNs.php from and to criteria were not used by the SQL and no defaults - totals out of alignment with detail lines. Now fixed.
 <P>Phil 5/10/03 GoodsReceived.php was not creating GL entries correctly at the standard cost due to setting the standard cost inside the for each loop have to use full vble name not the for each vble. Now fixed.
-
+<HR>
 
 Version 0.2.4
 1st October 2003
@@ -358,7 +358,7 @@ Version 0.2.4
 <P>Phil 19/9/03 SelectOrderItems removed extra AND in stock search SQL - thanks Al.
 <P>Phil 14/9/03 New config.php variable $PO_AllowSameItemMultipleTimes and effected in PO_Items.php
 <P>Phil 14/9/03 InventoryValuation.php SQL_CommonFunctions.inc now in includes corrected path
-
+<HR>
 Version 0.2.3
 13th September 2003
 
@@ -368,7 +368,7 @@ Version 0.2.3
 <P>Phil 13/9/03 Fixed bugs caused from re-structure of files all class definitions in includes forgot to modify some of the supplier transactions scripts - quite a few !!
 <P>Phil 12/9/03 modified PDFStarter_ros.inc/session.inc/PrintCustTrans.php/PrintCustOrder.php to have save_session_path($SaveSessionPath) for load balancing web servers. Re-instated variable $SaveSessionPath in Config.php
 <P>Phil 12/9/03 modified session.inc to include ConnectDB.inc from includes
-
+<HR>
 Version 0.2.2
 10th September 2003
 
@@ -447,7 +447,7 @@ Version 0.2.2
 <P>(Phil)PDFBankingSummary.php modified to use PHP-PDF class by R & OS and now in a prettier tabular format
 <P>(Phil)PO_PDFPurchOrder.php and PO_PDFPageHeader.inc modified to use R & OS PHP-PDF class. Also now allows selection of a supplier contact to email the order to rather than print it then fax it as was the traditional method.
 <P>(Phil)New scripts for StockCheck.php and PDFStockCheckPageHeader.inc pdflib based stock sheets print outs.
-
+<HR>
 Version 0.2.0
 26th July 2003
 
@@ -492,7 +492,7 @@ Version 0.2.0
 <P>(Phil) Deleted redundant fonts from the distribution only using helvetica
 <P>(Phil) PrintCustTrans.php corrections to format of InvText printing and select box for Credit Notes or Invoices to allow correct parameter to be sent for printing a credit note - was not showing charge branch.
 <P>(Phil) PrintCustStatements.php and PDFStatementPageHeader.inc now uses R & OS class.pdf.php class for creation of pdf statements.
-
+<HR>
 Version 0.1.10
 6 July 2003
 
@@ -533,7 +533,7 @@ Version 0.1.10
 <P>(Sherif) StockUsage.php - HTML cleanup, use tableheader style
 <P>(Sherif) SupplierInvoice.php - hide 'Enter Against Shipment' button for incomplete features flag
 <P>(Sherif) web-erp.css - add tableheader class to standardize table headers
-
+<HR>
 
 Version 0.1.9
 30 June 2003
@@ -606,7 +606,7 @@ fix recalculation of tax on update. (phil) Fix GL trans created in functional cu
 <P>Payments.php (Phil) ensure that the company default currency is selected by default
 <P>CustomerReceipt.php (Phil) check to see that there are entries in the receipt batch before processing
 <P>header.inc (Phil) checked for AccessLevel==0 no longer appropriate sends user back to login screen - access level inquiries only
-
+<HR>
 Version 0.1.8
 22 June 2003
 
@@ -643,7 +643,7 @@ to the lowest level of the transaction.
 <P>Stocks.php after updating an item the user is returned to a new select item screen (SelectProduct.php?NewSearch=True)
 <P>SalesPeople.php - checked so that cannot have zero length salesperson code.
 <P>Dropped redundant tables Hedges, TempMRP, StandingJournals (standing journals can be created live at any time since user can post forward and backwards at will).
-
+<HR>
 
 Version 0.1.7
 May 16 2003
@@ -688,7 +688,7 @@ necessary GL journal if integrated stock journals are active. Cost changes must 
 
 <P>Entry of a payment to a general ledger act already defined as a bank account (be it a different bank account or the same bank account as the payment is from) now creates the necessary banktrans record for the receipt into the other (or same) bank account.
 <P>Entry of a receipt to a general ledger act defined as a bank account now creates the necessary banktrans record for the payment from the other bank account as above.
-
+<HR>
 Version 0.1.6
 
 22 Mar 03
@@ -699,7 +699,7 @@ this problem so the selection of parts no longer shows current sales order deman
 <P>Additional error trapping to check that a stock location is not a default stock location for an existing customer branch
 before allowing deletion.Also, an additional error trap to check that the default_shipper in config.php cannot be deleted from the shipper maintenance form
 Further error trap to check that shipping companies that have debtortrans records (ie invoices created using them) cannot be deleted.
-
+<HR>
 Version 0.1.5
 
 <P>User created with Access level less than or equal to 10 and with a customer code and branch code selected will be able to view
@@ -718,7 +718,7 @@ some old logic that was superseeded.
 <P>It was possible to add a sales type with a blank sales type code - now corrected
 
 <P>Editing of a sales type was not possible - fixed.
-
+<HR>
 
 <P>Version 0.1.4
 
@@ -742,7 +742,7 @@ Also, dropped field ShiptRef - transactions now created in seperate tablef
 <P>Payment.php - was not unsetting the fields when a new GL analysis line was added to the payment.
 
 <P>Periods table - LastDateInPeriod field changed from DateTime to Date.
-
+<HR>
 
 <P>Version 0.1.3
 
@@ -786,7 +786,8 @@ all goods received records.
 
 <P>Now have SupplierCredit.php working creating GL entries as appropriate and shipment charge records etc.
 
-<P>________________________________________________________________________________________________________________
+<P>
+<HR>
 <P>Version 0.1.2
 
 <P>20 Jan 03
@@ -815,7 +816,7 @@ Modified the select box BudgetOrActual to be 1 for Budget and 0 for Actual (NOT 
 Also modified so that the returned 1 or 0 interpreted correctly on display of the column details from the
 printf statement.
 
-<P>________________________________________________________________________________________________________________
+<P><HR>
 <P>Version 0.1.1
 
 <P>11 Jan 03

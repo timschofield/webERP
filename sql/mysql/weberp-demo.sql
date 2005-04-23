@@ -13,6 +13,10 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- Current Database: `weberp`
 --
 
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `weberp` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `weberp`;
+
 --
 -- Table structure for table `accountgroups`
 --
@@ -60,7 +64,6 @@ CREATE TABLE `bankaccounts` (
   PRIMARY KEY  (`accountcode`),
   KEY `BankAccountName` (`bankaccountname`),
   KEY `BankAccountNumber` (`bankaccountnumber`),
-  KEY `bankaccounts_ibfk_1` (`accountcode`),
   CONSTRAINT `bankaccounts_ibfk_1` FOREIGN KEY (`accountcode`) REFERENCES `chartmaster` (`AccountCode`)
 ) TYPE=InnoDB;
 
@@ -86,8 +89,6 @@ CREATE TABLE `banktrans` (
   KEY `TransType` (`banktranstype`),
   KEY `Type` (`type`,`transno`),
   KEY `CurrCode` (`currcode`),
-  KEY `banktrans_ibfk_1` (`type`),
-  KEY `banktrans_ibfk_2` (`bankact`),
   CONSTRAINT `banktrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`TypeID`),
   CONSTRAINT `banktrans_ibfk_2` FOREIGN KEY (`bankact`) REFERENCES `bankaccounts` (`accountcode`)
 ) TYPE=InnoDB;
@@ -112,10 +113,6 @@ CREATE TABLE `bom` (
   KEY `Parent` (`parent`,`effectiveafter`,`effectiveto`,`loccode`),
   KEY `Parent_2` (`parent`),
   KEY `WorkCentreAdded` (`workcentreadded`),
-  KEY `bom_ibfk_1` (`parent`),
-  KEY `bom_ibfk_2` (`component`),
-  KEY `bom_ibfk_3` (`workcentreadded`),
-  KEY `bom_ibfk_4` (`loccode`),
   CONSTRAINT `bom_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `stockmaster` (`StockID`),
   CONSTRAINT `bom_ibfk_2` FOREIGN KEY (`component`) REFERENCES `stockmaster` (`StockID`),
   CONSTRAINT `bom_ibfk_3` FOREIGN KEY (`workcentreadded`) REFERENCES `workcentres` (`Code`),
@@ -133,7 +130,6 @@ CREATE TABLE `buckets` (
   PRIMARY KEY  (`workcentre`,`availdate`),
   KEY `WorkCentre` (`workcentre`),
   KEY `AvailDate` (`availdate`),
-  KEY `buckets_ibfk_1` (`workcentre`),
   CONSTRAINT `buckets_ibfk_1` FOREIGN KEY (`workcentre`) REFERENCES `workcentres` (`Code`)
 ) TYPE=InnoDB;
 
@@ -150,8 +146,6 @@ CREATE TABLE `chartdetails` (
   `bfwdbudget` double NOT NULL default '0',
   PRIMARY KEY  (`accountcode`,`period`),
   KEY `Period` (`period`),
-  KEY `chartdetails_ibfk_1` (`accountcode`),
-  KEY `chartdetails_ibfk_2` (`period`),
   CONSTRAINT `chartdetails_ibfk_1` FOREIGN KEY (`accountcode`) REFERENCES `chartmaster` (`AccountCode`),
   CONSTRAINT `chartdetails_ibfk_2` FOREIGN KEY (`period`) REFERENCES `periods` (`PeriodNo`)
 ) TYPE=InnoDB;
@@ -168,7 +162,6 @@ CREATE TABLE `chartmaster` (
   KEY `AccountCode` (`accountcode`),
   KEY `AccountName` (`accountname`),
   KEY `Group_` (`group_`),
-  KEY `chartmaster_ibfk_1` (`group_`),
   CONSTRAINT `chartmaster_ibfk_1` FOREIGN KEY (`group_`) REFERENCES `accountgroups` (`groupname`)
 ) TYPE=InnoDB;
 
@@ -248,9 +241,6 @@ CREATE TABLE `contractbom` (
   KEY `ContractRef` (`contractref`),
   KEY `WorkCentreAdded` (`workcentreadded`),
   KEY `WorkCentreAdded_2` (`workcentreadded`),
-  KEY `contractbom_ibfk_1` (`workcentreadded`),
-  KEY `contractbom_ibfk_2` (`loccode`),
-  KEY `contractbom_ibfk_3` (`component`),
   CONSTRAINT `contractbom_ibfk_1` FOREIGN KEY (`workcentreadded`) REFERENCES `workcentres` (`Code`),
   CONSTRAINT `contractbom_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`LocCode`),
   CONSTRAINT `contractbom_ibfk_3` FOREIGN KEY (`component`) REFERENCES `stockmaster` (`StockID`)
@@ -268,7 +258,6 @@ CREATE TABLE `contractreqts` (
   `priceperunit` decimal(20,4) NOT NULL default '0.0000',
   PRIMARY KEY  (`contractreqid`),
   KEY `Contract` (`contract`),
-  KEY `contractreqts_ibfk_1` (`contract`),
   CONSTRAINT `contractreqts_ibfk_1` FOREIGN KEY (`contract`) REFERENCES `contracts` (`ContractRef`)
 ) TYPE=InnoDB;
 
@@ -303,9 +292,6 @@ CREATE TABLE `contracts` (
   KEY `TypeAbbrev` (`typeabbrev`),
   KEY `WORef` (`woref`),
   KEY `DebtorNo` (`debtorno`,`branchcode`),
-  KEY `contracts_ibfk_1` (`debtorno`,`branchcode`),
-  KEY `contracts_ibfk_2` (`categoryid`),
-  KEY `contracts_ibfk_3` (`typeabbrev`),
   CONSTRAINT `contracts_ibfk_1` FOREIGN KEY (`debtorno`, `branchcode`) REFERENCES `custbranch` (`DebtorNo`, `BranchCode`),
   CONSTRAINT `contracts_ibfk_2` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`CategoryID`),
   CONSTRAINT `contracts_ibfk_3` FOREIGN KEY (`typeabbrev`) REFERENCES `salestypes` (`TypeAbbrev`)
@@ -339,8 +325,6 @@ CREATE TABLE `custallocns` (
   KEY `DateAlloc` (`datealloc`),
   KEY `TransID_AllocFrom` (`transid_allocfrom`),
   KEY `TransID_AllocTo` (`transid_allocto`),
-  KEY `custallocns_ibfk_1` (`transid_allocfrom`),
-  KEY `custallocns_ibfk_2` (`transid_allocto`),
   CONSTRAINT `custallocns_ibfk_1` FOREIGN KEY (`transid_allocfrom`) REFERENCES `debtortrans` (`ID`),
   CONSTRAINT `custallocns_ibfk_2` FOREIGN KEY (`transid_allocto`) REFERENCES `debtortrans` (`ID`)
 ) TYPE=InnoDB;
@@ -385,12 +369,6 @@ CREATE TABLE `custbranch` (
   KEY `DefaultLocation` (`defaultlocation`),
   KEY `TaxAuthority` (`taxauthority`),
   KEY `DefaultShipVia` (`defaultshipvia`),
-  KEY `custbranch_ibfk_1` (`debtorno`),
-  KEY `custbranch_ibfk_2` (`area`),
-  KEY `custbranch_ibfk_3` (`salesman`),
-  KEY `custbranch_ibfk_4` (`defaultlocation`),
-  KEY `custbranch_ibfk_5` (`taxauthority`),
-  KEY `custbranch_ibfk_6` (`defaultshipvia`),
   CONSTRAINT `custbranch_ibfk_1` FOREIGN KEY (`debtorno`) REFERENCES `debtorsmaster` (`DebtorNo`),
   CONSTRAINT `custbranch_ibfk_2` FOREIGN KEY (`area`) REFERENCES `areas` (`areacode`),
   CONSTRAINT `custbranch_ibfk_3` FOREIGN KEY (`salesman`) REFERENCES `salesman` (`SalesmanCode`),
@@ -438,10 +416,6 @@ CREATE TABLE `debtorsmaster` (
   KEY `SalesType` (`salestype`),
   KEY `EDIInvoices` (`ediinvoices`),
   KEY `EDIOrders` (`ediorders`),
-  KEY `debtorsmaster_ibfk_1` (`holdreason`),
-  KEY `debtorsmaster_ibfk_2` (`currcode`),
-  KEY `debtorsmaster_ibfk_3` (`paymentterms`),
-  KEY `debtorsmaster_ibfk_4` (`salestype`),
   CONSTRAINT `debtorsmaster_ibfk_1` FOREIGN KEY (`holdreason`) REFERENCES `holdreasons` (`ReasonCode`),
   CONSTRAINT `debtorsmaster_ibfk_2` FOREIGN KEY (`currcode`) REFERENCES `currencies` (`currabrev`),
   CONSTRAINT `debtorsmaster_ibfk_3` FOREIGN KEY (`paymentterms`) REFERENCES `paymentterms` (`TermsIndicator`),
@@ -486,9 +460,6 @@ CREATE TABLE `debtortrans` (
   KEY `TransNo` (`transno`),
   KEY `Type_2` (`type`,`transno`),
   KEY `EDISent` (`edisent`),
-  KEY `debtortrans_ibfk_1` (`debtorno`),
-  KEY `debtortrans_ibfk_2` (`type`),
-  KEY `debtortrans_ibfk_3` (`prd`),
   CONSTRAINT `debtortrans_ibfk_1` FOREIGN KEY (`debtorno`) REFERENCES `custbranch` (`debtorno`),
   CONSTRAINT `debtortrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`TypeID`),
   CONSTRAINT `debtortrans_ibfk_3` FOREIGN KEY (`prd`) REFERENCES `periods` (`PeriodNo`)
@@ -507,7 +478,6 @@ CREATE TABLE `discountmatrix` (
   KEY `QuantityBreak` (`quantitybreak`),
   KEY `DiscountCategory` (`discountcategory`),
   KEY `SalesType` (`salestype`),
-  KEY `discountmatrix_ibfk_1` (`salestype`),
   CONSTRAINT `discountmatrix_ibfk_1` FOREIGN KEY (`salestype`) REFERENCES `salestypes` (`TypeAbbrev`)
 ) TYPE=InnoDB;
 
@@ -588,8 +558,6 @@ CREATE TABLE `freightcosts` (
   KEY `LocationFrom` (`locationfrom`),
   KEY `ShipperID` (`shipperid`),
   KEY `Destination_2` (`destination`,`locationfrom`,`shipperid`),
-  KEY `freightcosts_ibfk_1` (`locationfrom`),
-  KEY `freightcosts_ibfk_2` (`shipperid`),
   CONSTRAINT `freightcosts_ibfk_1` FOREIGN KEY (`locationfrom`) REFERENCES `locations` (`LocCode`),
   CONSTRAINT `freightcosts_ibfk_2` FOREIGN KEY (`shipperid`) REFERENCES `shippers` (`Shipper_ID`)
 ) TYPE=InnoDB;
@@ -619,9 +587,6 @@ CREATE TABLE `gltrans` (
   KEY `TypeNo` (`typeno`),
   KEY `Type_and_Number` (`type`,`typeno`),
   KEY `JobRef` (`jobref`),
-  KEY `gltrans_ibfk_1` (`account`),
-  KEY `gltrans_ibfk_2` (`type`),
-  KEY `gltrans_ibfk_3` (`periodno`),
   CONSTRAINT `gltrans_ibfk_1` FOREIGN KEY (`account`) REFERENCES `chartmaster` (`accountcode`),
   CONSTRAINT `gltrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`TypeID`),
   CONSTRAINT `gltrans_ibfk_3` FOREIGN KEY (`periodno`) REFERENCES `periods` (`PeriodNo`)
@@ -646,8 +611,6 @@ CREATE TABLE `grns` (
   KEY `ItemCode` (`itemcode`),
   KEY `PODetailItem` (`podetailitem`),
   KEY `SupplierID` (`supplierid`),
-  KEY `grns_ibfk_1` (`supplierid`),
-  KEY `grns_ibfk_2` (`podetailitem`),
   CONSTRAINT `grns_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`SupplierID`),
   CONSTRAINT `grns_ibfk_2` FOREIGN KEY (`podetailitem`) REFERENCES `purchorderdetails` (`PODetailItem`)
 ) TYPE=InnoDB;
@@ -712,8 +675,6 @@ CREATE TABLE `locstock` (
   `reorderlevel` bigint(20) NOT NULL default '0',
   PRIMARY KEY  (`loccode`,`stockid`),
   KEY `StockID` (`stockid`),
-  KEY `locstock_ibfk_1` (`loccode`),
-  KEY `locstock_ibfk_2` (`stockid`),
   CONSTRAINT `locstock_ibfk_1` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `locstock_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`)
 ) TYPE=InnoDB;
@@ -735,9 +696,6 @@ CREATE TABLE `loctransfers` (
   KEY `ShipLoc` (`shiploc`),
   KEY `RecLoc` (`recloc`),
   KEY `StockID` (`stockid`),
-  KEY `loctransfers_ibfk_1` (`shiploc`),
-  KEY `loctransfers_ibfk_2` (`recloc`),
-  KEY `loctransfers_ibfk_3` (`stockid`),
   CONSTRAINT `loctransfers_ibfk_1` FOREIGN KEY (`shiploc`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `loctransfers_ibfk_2` FOREIGN KEY (`recloc`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `loctransfers_ibfk_3` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`)
@@ -760,9 +718,6 @@ CREATE TABLE `orderdeliverydifferenceslog` (
   KEY `DebtorNo` (`debtorno`,`branch`),
   KEY `Can_or_BO` (`can_or_bo`),
   KEY `OrderNo` (`orderno`),
-  KEY `orderdeliverydifferenceslog_ibfk_1` (`stockid`),
-  KEY `orderdeliverydifferenceslog_ibfk_2` (`debtorno`,`branch`),
-  KEY `orderdeliverydifferenceslog_ibfk_3` (`orderno`),
   CONSTRAINT `orderdeliverydifferenceslog_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`),
   CONSTRAINT `orderdeliverydifferenceslog_ibfk_2` FOREIGN KEY (`debtorno`, `branch`) REFERENCES `custbranch` (`debtorno`, `branchcode`),
   CONSTRAINT `orderdeliverydifferenceslog_ibfk_3` FOREIGN KEY (`orderno`) REFERENCES `salesorders` (`OrderNo`)
@@ -821,9 +776,6 @@ CREATE TABLE `prices` (
   KEY `DebtorNo` (`debtorno`),
   KEY `StockID` (`stockid`),
   KEY `TypeAbbrev` (`typeabbrev`),
-  KEY `prices_ibfk_1` (`stockid`),
-  KEY `prices_ibfk_2` (`currabrev`),
-  KEY `prices_ibfk_3` (`typeabbrev`),
   CONSTRAINT `prices_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`),
   CONSTRAINT `prices_ibfk_2` FOREIGN KEY (`currabrev`) REFERENCES `currencies` (`currabrev`),
   CONSTRAINT `prices_ibfk_3` FOREIGN KEY (`typeabbrev`) REFERENCES `salestypes` (`TypeAbbrev`)
@@ -846,8 +798,6 @@ CREATE TABLE `purchdata` (
   KEY `StockID` (`stockid`),
   KEY `SupplierNo` (`supplierno`),
   KEY `Preferred` (`preferred`),
-  KEY `purchdata_ibfk_1` (`stockid`),
-  KEY `purchdata_ibfk_2` (`supplierno`),
   CONSTRAINT `purchdata_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`),
   CONSTRAINT `purchdata_ibfk_2` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`SupplierID`)
 ) TYPE=InnoDB;
@@ -880,7 +830,6 @@ CREATE TABLE `purchorderdetails` (
   KEY `OrderNo` (`orderno`),
   KEY `ShiptRef` (`shiptref`),
   KEY `Completed` (`completed`),
-  KEY `purchorderdetails_ibfk_1` (`orderno`),
   CONSTRAINT `purchorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `purchorders` (`OrderNo`)
 ) TYPE=InnoDB;
 
@@ -908,8 +857,6 @@ CREATE TABLE `purchorders` (
   KEY `SupplierNo` (`supplierno`),
   KEY `IntoStockLocation` (`intostocklocation`),
   KEY `AllowPrintPO` (`allowprint`),
-  KEY `purchorders_ibfk_1` (`supplierno`),
-  KEY `purchorders_ibfk_2` (`intostocklocation`),
   CONSTRAINT `purchorders_ibfk_1` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`SupplierID`),
   CONSTRAINT `purchorders_ibfk_2` FOREIGN KEY (`intostocklocation`) REFERENCES `locations` (`loccode`)
 ) TYPE=InnoDB;
@@ -988,7 +935,6 @@ CREATE TABLE `reportcolumns` (
   `valformat` char(1) NOT NULL default 'N',
   `constant` double NOT NULL default '0',
   PRIMARY KEY  (`reportid`,`colno`),
-  KEY `reportcolumns_ibfk_1` (`reportid`),
   CONSTRAINT `reportcolumns_ibfk_1` FOREIGN KEY (`reportid`) REFERENCES `reportheaders` (`ReportID`)
 ) TYPE=InnoDB;
 
@@ -1048,7 +994,6 @@ CREATE TABLE `salesanalysis` (
   KEY `Area` (`area`),
   KEY `BudgetOrActual` (`budgetoractual`),
   KEY `Salesperson` (`salesperson`),
-  KEY `salesanalysis_ibfk_1` (`periodno`),
   CONSTRAINT `salesanalysis_ibfk_1` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
 ) TYPE=InnoDB;
 
@@ -1073,8 +1018,8 @@ CREATE TABLE `salescatprod` (
   PRIMARY KEY  (`salescatid`,`stockid`),
   KEY `salescatid` (`salescatid`),
   KEY `stockid` (`stockid`),
-  CONSTRAINT `salescatprod_ibfk_2` FOREIGN KEY (`salescatid`) REFERENCES `salescat` (`salescatid`),
-  CONSTRAINT `salescatprod_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
+  CONSTRAINT `salescatprod_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
+  CONSTRAINT `salescatprod_ibfk_2` FOREIGN KEY (`salescatid`) REFERENCES `salescat` (`salescatid`)
 ) TYPE=InnoDB;
 
 --
@@ -1129,8 +1074,6 @@ CREATE TABLE `salesorderdetails` (
   KEY `OrderNo` (`orderno`),
   KEY `StkCode` (`stkcode`),
   KEY `Completed` (`completed`),
-  KEY `salesorderdetails_ibfk_1` (`orderno`),
-  KEY `salesorderdetails_ibfk_2` (`stkcode`),
   CONSTRAINT `salesorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `salesorders` (`OrderNo`),
   CONSTRAINT `salesorderdetails_ibfk_2` FOREIGN KEY (`stkcode`) REFERENCES `stockmaster` (`StockID`)
 ) TYPE=InnoDB;
@@ -1171,9 +1114,6 @@ CREATE TABLE `salesorders` (
   KEY `BranchCode` (`branchcode`,`debtorno`),
   KEY `ShipVia` (`shipvia`),
   KEY `quotation` (`quotation`),
-  KEY `salesorders_ibfk_1` (`branchcode`,`debtorno`),
-  KEY `salesorders_ibfk_2` (`shipvia`),
-  KEY `salesorders_ibfk_3` (`fromstkloc`),
   CONSTRAINT `salesorders_ibfk_1` FOREIGN KEY (`branchcode`, `debtorno`) REFERENCES `custbranch` (`branchcode`, `debtorno`),
   CONSTRAINT `salesorders_ibfk_2` FOREIGN KEY (`shipvia`) REFERENCES `shippers` (`Shipper_ID`),
   CONSTRAINT `salesorders_ibfk_3` FOREIGN KEY (`fromstkloc`) REFERENCES `locations` (`loccode`)
@@ -1212,8 +1152,8 @@ CREATE TABLE `securitygroups` (
   PRIMARY KEY  (`secroleid`,`tokenid`),
   KEY `secroleid` (`secroleid`),
   KEY `tokenid` (`tokenid`),
-  CONSTRAINT `securitygroups_tokenid_fk` FOREIGN KEY (`tokenid`) REFERENCES `securitytokens` (`tokenid`),
-  CONSTRAINT `securitygroups_secroleid_fk` FOREIGN KEY (`secroleid`) REFERENCES `securityroles` (`secroleid`)
+  CONSTRAINT `securitygroups_secroleid_fk` FOREIGN KEY (`secroleid`) REFERENCES `securityroles` (`secroleid`),
+  CONSTRAINT `securitygroups_tokenid_fk` FOREIGN KEY (`tokenid`) REFERENCES `securitytokens` (`tokenid`)
 ) TYPE=InnoDB;
 
 --
@@ -1252,8 +1192,6 @@ CREATE TABLE `shipmentcharges` (
   KEY `ShiptRef` (`shiptref`),
   KEY `StockID` (`stockid`),
   KEY `TransType_2` (`transtype`),
-  KEY `shipmentcharges_ibfk_1` (`shiptref`),
-  KEY `shipmentcharges_ibfk_2` (`transtype`),
   CONSTRAINT `shipmentcharges_ibfk_1` FOREIGN KEY (`shiptref`) REFERENCES `shipments` (`ShiptRef`),
   CONSTRAINT `shipmentcharges_ibfk_2` FOREIGN KEY (`transtype`) REFERENCES `systypes` (`TypeID`)
 ) TYPE=InnoDB;
@@ -1275,7 +1213,6 @@ CREATE TABLE `shipments` (
   KEY `SupplierID` (`supplierid`),
   KEY `ShipperRef` (`voyageref`),
   KEY `Vessel` (`vessel`),
-  KEY `shipments_ibfk_1` (`supplierid`),
   CONSTRAINT `shipments_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`SupplierID`)
 ) TYPE=InnoDB;
 
@@ -1318,8 +1255,6 @@ CREATE TABLE `stockcheckfreeze` (
   `qoh` double NOT NULL default '0',
   PRIMARY KEY  (`stockid`),
   KEY `LocCode` (`loccode`),
-  KEY `stockcheckfreeze_ibfk_1` (`stockid`),
-  KEY `stockcheckfreeze_ibfk_2` (`loccode`),
   CONSTRAINT `stockcheckfreeze_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`),
   CONSTRAINT `stockcheckfreeze_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
 ) TYPE=InnoDB;
@@ -1337,8 +1272,6 @@ CREATE TABLE `stockcounts` (
   PRIMARY KEY  (`id`),
   KEY `StockID` (`stockid`),
   KEY `LocCode` (`loccode`),
-  KEY `stockcounts_ibfk_1` (`stockid`),
-  KEY `stockcounts_ibfk_2` (`loccode`),
   CONSTRAINT `stockcounts_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`),
   CONSTRAINT `stockcounts_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
 ) TYPE=InnoDB;
@@ -1379,7 +1312,6 @@ CREATE TABLE `stockmaster` (
   KEY `StockID` (`stockid`,`categoryid`),
   KEY `Controlled` (`controlled`),
   KEY `DiscountCategory` (`discountcategory`),
-  KEY `stockmaster_ibfk_1` (`categoryid`),
   CONSTRAINT `stockmaster_ibfk_1` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`)
 ) TYPE=InnoDB;
 
@@ -1418,10 +1350,6 @@ CREATE TABLE `stockmoves` (
   KEY `Type` (`type`),
   KEY `Show_On_Inv_Crds` (`show_on_inv_crds`),
   KEY `Hide` (`hidemovt`),
-  KEY `stockmoves_ibfk_1` (`stockid`),
-  KEY `stockmoves_ibfk_2` (`type`),
-  KEY `stockmoves_ibfk_3` (`loccode`),
-  KEY `stockmoves_ibfk_4` (`prd`),
   CONSTRAINT `stockmoves_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
   CONSTRAINT `stockmoves_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`TypeID`),
   CONSTRAINT `stockmoves_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
@@ -1440,8 +1368,6 @@ CREATE TABLE `stockserialitems` (
   PRIMARY KEY  (`stockid`,`serialno`,`loccode`),
   KEY `StockID` (`stockid`),
   KEY `LocCode` (`loccode`),
-  KEY `stockserialitems_ibfk_1` (`stockid`),
-  KEY `stockserialitems_ibfk_2` (`loccode`),
   CONSTRAINT `stockserialitems_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
   CONSTRAINT `stockserialitems_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
 ) TYPE=InnoDB;
@@ -1459,8 +1385,6 @@ CREATE TABLE `stockserialmoves` (
   PRIMARY KEY  (`stkitmmoveno`),
   KEY `StockMoveNo` (`stockmoveno`),
   KEY `StockID_SN` (`stockid`,`serialno`),
-  KEY `stockserialmoves_ibfk_1` (`stockmoveno`),
-  KEY `stockserialmoves_ibfk_2` (`stockid`,`serialno`),
   CONSTRAINT `stockserialmoves_ibfk_1` FOREIGN KEY (`stockmoveno`) REFERENCES `stockmoves` (`stkmoveno`),
   CONSTRAINT `stockserialmoves_ibfk_2` FOREIGN KEY (`stockid`, `serialno`) REFERENCES `stockserialitems` (`stockid`, `serialno`)
 ) TYPE=InnoDB;
@@ -1479,8 +1403,6 @@ CREATE TABLE `suppallocs` (
   KEY `TransID_AllocFrom` (`transid_allocfrom`),
   KEY `TransID_AllocTo` (`transid_allocto`),
   KEY `DateAlloc` (`datealloc`),
-  KEY `suppallocs_ibfk_1` (`transid_allocfrom`),
-  KEY `suppallocs_ibfk_2` (`transid_allocto`),
   CONSTRAINT `suppallocs_ibfk_1` FOREIGN KEY (`transid_allocfrom`) REFERENCES `supptrans` (`ID`),
   CONSTRAINT `suppallocs_ibfk_2` FOREIGN KEY (`transid_allocto`) REFERENCES `supptrans` (`ID`)
 ) TYPE=InnoDB;
@@ -1501,7 +1423,6 @@ CREATE TABLE `suppliercontacts` (
   PRIMARY KEY  (`supplierid`,`contact`),
   KEY `Contact` (`contact`),
   KEY `SupplierID` (`supplierid`),
-  KEY `suppliercontacts_ibfk_1` (`supplierid`),
   CONSTRAINT `suppliercontacts_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`SupplierID`)
 ) TYPE=InnoDB;
 
@@ -1532,9 +1453,6 @@ CREATE TABLE `suppliers` (
   KEY `SupplierID` (`supplierid`),
   KEY `SuppName` (`suppname`),
   KEY `TaxAuthority` (`taxauthority`),
-  KEY `suppliers_ibfk_1` (`currcode`),
-  KEY `suppliers_ibfk_2` (`paymentterms`),
-  KEY `suppliers_ibfk_3` (`taxauthority`),
   CONSTRAINT `suppliers_ibfk_1` FOREIGN KEY (`currcode`) REFERENCES `currencies` (`currabrev`),
   CONSTRAINT `suppliers_ibfk_2` FOREIGN KEY (`paymentterms`) REFERENCES `paymentterms` (`termsindicator`),
   CONSTRAINT `suppliers_ibfk_3` FOREIGN KEY (`taxauthority`) REFERENCES `taxauthorities` (`TaxID`)
@@ -1571,8 +1489,6 @@ CREATE TABLE `supptrans` (
   KEY `TranDate` (`trandate`),
   KEY `TransNo` (`transno`),
   KEY `Type` (`type`),
-  KEY `supptrans_ibfk_1` (`type`),
-  KEY `supptrans_ibfk_2` (`supplierno`),
   CONSTRAINT `supptrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`TypeID`),
   CONSTRAINT `supptrans_ibfk_2` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`)
 ) TYPE=InnoDB;
@@ -1601,8 +1517,6 @@ CREATE TABLE `taxauthlevels` (
   PRIMARY KEY  (`taxauthority`,`dispatchtaxauthority`,`level`),
   KEY `TaxAuthority` (`taxauthority`),
   KEY `DispatchTaxAuthority` (`dispatchtaxauthority`),
-  KEY `taxauthlevels_ibfk_1` (`taxauthority`),
-  KEY `taxauthlevels_ibfk_2` (`dispatchtaxauthority`),
   CONSTRAINT `taxauthlevels_ibfk_1` FOREIGN KEY (`taxauthority`) REFERENCES `taxauthorities` (`TaxID`),
   CONSTRAINT `taxauthlevels_ibfk_2` FOREIGN KEY (`dispatchtaxauthority`) REFERENCES `taxauthorities` (`TaxID`)
 ) TYPE=InnoDB;
@@ -1623,8 +1537,6 @@ CREATE TABLE `taxauthorities` (
   PRIMARY KEY  (`taxid`),
   KEY `TaxGLCode` (`taxglcode`),
   KEY `PurchTaxGLAccount` (`purchtaxglaccount`),
-  KEY `taxauthorities_ibfk_1` (`taxglcode`),
-  KEY `taxauthorities_ibfk_2` (`purchtaxglaccount`),
   CONSTRAINT `taxauthorities_ibfk_1` FOREIGN KEY (`taxglcode`) REFERENCES `chartmaster` (`accountcode`),
   CONSTRAINT `taxauthorities_ibfk_2` FOREIGN KEY (`purchtaxglaccount`) REFERENCES `chartmaster` (`accountcode`)
 ) TYPE=InnoDB;
@@ -1654,7 +1566,6 @@ CREATE TABLE `workcentres` (
   PRIMARY KEY  (`code`),
   KEY `Description` (`description`),
   KEY `Location` (`location`),
-  KEY `workcentres_ibfk_1` (`location`),
   CONSTRAINT `workcentres_ibfk_1` FOREIGN KEY (`location`) REFERENCES `locations` (`loccode`)
 ) TYPE=InnoDB;
 
@@ -1681,8 +1592,6 @@ CREATE TABLE `worksorders` (
   KEY `ReleasedDate` (`releaseddate`),
   KEY `RequiredBy` (`requiredby`),
   KEY `WORef` (`woref`,`loccode`),
-  KEY `worksorders_ibfk_1` (`loccode`),
-  KEY `worksorders_ibfk_2` (`stockid`),
   CONSTRAINT `worksorders_ibfk_1` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
   CONSTRAINT `worksorders_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
 ) TYPE=InnoDB;
@@ -1713,7 +1622,6 @@ CREATE TABLE `www_users` (
   PRIMARY KEY  (`userid`),
   KEY `CustomerID` (`customerid`),
   KEY `DefaultLocation` (`defaultlocation`),
-  KEY `www_users_ibfk_1` (`defaultlocation`),
   CONSTRAINT `www_users_ibfk_1` FOREIGN KEY (`defaultlocation`) REFERENCES `locations` (`loccode`)
 ) TYPE=InnoDB;
 
@@ -3655,7 +3563,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-03-01');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-04-23');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
@@ -5156,7 +5064,7 @@ INSERT INTO `workcentres` VALUES ('ASSEM','DEN','Assembly',1.0000,'20.0000',5600
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2004-12-27 13:43:36','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','es','','');
+INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-04-23 14:11:00','','A4','1,1,1,1,1,1,1,1,',0,50,'default','en','','');
 INSERT INTO `www_users` VALUES ('NewOne','weberp','New User Admin','','','','DEN',8,'2004-12-26 14:15:05','','A4','1,1,1,1,1,1,1,1,',0,0,'fresh','en','','');
 INSERT INTO `www_users` VALUES ('testy','weberp','Test Remote User','GRANHR','','','DEN',7,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en','','');
 

@@ -1,6 +1,6 @@
 Thankyou for using webERP.
 
-Installation instructions are in the file INSTALL.txt in the doc directory. It is important to read this file in its entirety before proceeding.
+Installation instructions are in the file INSTALL.txt in the doc directory. It is important to read the INSTALL.txt file in its entirety before proceeding.
 
 The user documentation contains a wealth of information and is installed under the doc/Manual directory in html format. Links to it are available from the application itself.
 
@@ -14,8 +14,8 @@ Feedback, wants and gripes are encouraged in the interests of improving this app
 
 DEVELOPING 
 
-All contributions of code are strongly encouraged. 
-Guidelines for contributing code are in the document CONTRIBUTIONING.txt developers should read this document.
+All contributions of code are needed and encouraged. 
+Guidelines for contributing code are in the document CONTRIBUTING.txt developers should read this document.
 
 TRANSLATIONS
 
@@ -36,4 +36,4 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
 A copy of the GNU General Public License is included in the doc directory along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-Copyright Logic Works Ltd - Contact: info@weberp.org
+Copyright Logic Works Ltd - 2005 - Contact: info@weberp.org

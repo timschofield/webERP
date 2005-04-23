@@ -1,5 +1,5 @@
 WEB-ERP Installation
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 Upgrading
 
 A script is included under webERP/sql/mysql/ to update an existing mysql weberp database to the current version. The upgrade script assumes the weberp database is called weberp. The script must be edited to change the name of the database if this is not the case.
@@ -24,16 +24,13 @@ New Installations
 Pre-requisites:
 
 - A working PHP web server - v 4.3 or later - with mysql or postgres databases and ftp
-- A working MySQL or Postgres server (MySql version 4 or above - innodb tables must be enabled - this needs a my.cnf file - see the MySQL manual. Postgres v 7.4 or later).
+- A working MySQL or Postgres server (MySql version 4.1 or above - innodb tables must be enabled - this needs a my.cnf file - see the MySQL manual. Postgres v 7.4 or later).
 
 Installing these components are well covered elsewhere.
 
-One critical aspect of the PHP installation is the setting of session.auto_start in the php.ini file
-Some .rpm distributions of PHP (as of 4.3.2) have the default setting of session.auto_start = 1
-This starts a new session at the beginning of each script. However, this makes it impossible to instatiate any class objects that the system relies on. web-ERP starts a session when it needs one and the setting of session.auto_start should be therefore be set to 0.
+Another is that php must have register globals off.  This is the default and how it is set on almost all servers.  This flag can be set in the php.ini on the server.  If it can't be changed, it is possibe in Linux to create a file called .htaccess in the root of the webERP system.  In that file put the line:
 
-Another is that php must have register globals off.  This is the default and how it is set on almost all servers.  This flag can be set in the php.ini on the server.  If it can't be changed, it is possibe in Linux to create a file called .htaccess in the root of the webERP system.  In that file put the line 
-php_flag register_globals off.
+php_flag register_globals off
 
 One more issue with php setup - by default the setting session.use_cookies is set to 1, if it is set to 0 this can also cause problems.
 
@@ -42,8 +39,6 @@ There are a number of traps with PHP installation depending on the web-server - 
 The system can be used with either MySQL or Postgres database servers - both work well. Instructions here are for mysql. However, the necessary scripts for postgres are also included under the webERP/sql/pg directory.
 
 ftp is only required for sending order files to a Radio Beacon ftp server for remote warehouse services.
-
-NB. Please try not to refer questions about PHP or database configuration.
 
 The installation consists of:
 
@@ -154,7 +149,7 @@ $DefaultLanguage ='en_GB';
 $allow_demo_mode = True;
 
 // Application version
-$Version = '2.9c';
+$Version = '3.00';
 
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time
@@ -235,6 +230,10 @@ Now the accounting starts....
 
 All the standing configuration data is defined from the system setup tab and each link should be reviewed to enter appropriate data for the business.
 
+
+
+
+Please try not to refer questions about PHP or database configuration - check your PHP web server works by installing phpMyAdmin before referring any installation issues
 
 _____________________________________________________________________
 
