@@ -1,5 +1,3 @@
-use weberp;
-
 BEGIN;
 DROP TABLE WORequirements;
 DROP TABLE WOIssues;

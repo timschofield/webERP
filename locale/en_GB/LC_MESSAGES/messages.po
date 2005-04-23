@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-13 22:37+1200\n"
+"POT-Creation-Date: 2005-04-23 14:09+1200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -266,9 +266,9 @@ msgstr ""
 
 #: AgedDebtors.php:263 AgedDebtors.php:359 AgedDebtors.php:427
 #: AgedSuppliers.php:105 BOMListing.php:48 BOMListing.php:59
-#: DebtorsAtPeriodEnd.php:57 InventoryPlanning.php:88
-#: InventoryPlanning.php:158 InventoryPlanning.php:191
-#: InventoryPlanning.php:234 InventoryPlanning.php:268
+#: DebtorsAtPeriodEnd.php:57 InventoryPlanning.php:89
+#: InventoryPlanning.php:159 InventoryPlanning.php:192
+#: InventoryPlanning.php:235 InventoryPlanning.php:269
 #: InventoryValuation.php:70 MailInventoryValuation.php:99
 #: OutstandingGRNs.php:50 PDFCustomerList.php:16 PDFCustomerList.php:216
 #: PDFLowGP.php:17 PDFStockCheckComparison.php:26
@@ -291,10 +291,10 @@ msgstr ""
 #: AgedDebtors.php:266 AgedDebtors.php:362 AgedDebtors.php:433
 #: AgedSuppliers.php:108 AgedSuppliers.php:188 BOMListing.php:51
 #: Credit_Invoice.php:190 DebtorsAtPeriodEnd.php:60 FTP_RadioBeacon.php:183
-#: GetStockImage.php:153 GLTransInquiry.php:13 InventoryPlanning.php:91
-#: InventoryPlanning.php:161 InventoryPlanning.php:194
-#: InventoryPlanning.php:237 InventoryPlanning.php:271
-#: InventoryPlanning.php:326 InventoryValuation.php:73
+#: GetStockImage.php:153 GLTransInquiry.php:13 InventoryPlanning.php:92
+#: InventoryPlanning.php:162 InventoryPlanning.php:195
+#: InventoryPlanning.php:238 InventoryPlanning.php:272
+#: InventoryPlanning.php:327 InventoryValuation.php:73
 #: InventoryValuation.php:173 MailInventoryValuation.php:102
 #: MailInventoryValuation.php:201 OutstandingGRNs.php:53
 #: OutstandingGRNs.php:140 PDFCustomerList.php:219 PDFCustomerList.php:340
@@ -346,7 +346,7 @@ msgstr ""
 #: SelectCreditItems.php:1220 StockCheck.php:217 StockCostUpdate.php:86
 #: StockCostUpdate.php:95 StockLocStatus.php:128 StockMovements.php:83
 #: StockQuantityByDate.php:78 StockReorderLevel.php:35 StockTransfers.php:135
-#: StockUsage.php:110 SupplierInquiry.php:76 SupplierInquiry.php:97
+#: StockUsage.php:112 SupplierInquiry.php:76 SupplierInquiry.php:97
 #: SupplierInquiry.php:128 SupplierInquiry.php:173 SuppPaymentRun.php:117
 #: SuppPaymentRun.php:184 SuppPaymentRun.php:216 WorkOrderEntry.php:144
 #: WorkOrderEntry.php:186 WorkOrderEntry.php:212 WorkOrderEntry.php:230
@@ -410,7 +410,7 @@ msgid "Detailed Report"
 msgstr ""
 
 #: AgedDebtors.php:492 AgedSuppliers.php:309 BOMListing.php:139
-#: DebtorsAtPeriodEnd.php:149 InventoryPlanning.php:388
+#: DebtorsAtPeriodEnd.php:149 InventoryPlanning.php:389
 #: InventoryValuation.php:235 OutstandingGRNs.php:166 PDFCustomerList.php:400
 #: PDFLowGP.php:147 PDFPriceList.php:246 PDFStockCheckComparison.php:372
 #: PrintCustTrans.php:511 SupplierBalsAtPeriodEnd.php:150 Tax.php:475
@@ -943,11 +943,11 @@ msgstr ""
 #: PO_Items.php:699 PO_OrderDetails.php:124 PrintCustTrans.php:763
 #: PrintCustTrans.php:844 PrintCustTrans.php:886 RecurringSalesOrders.php:301
 #: ReverseGRN.php:326 SelectCreditItems.php:619 SelectOrderItems.php:920
-#: StockLocTransfer.php:158 StockLocTransferReceive.php:399
-#: StockQuantityByDate.php:87 Stocks.php:452 Stocks.php:495 Stocks.php:499
-#: SuppCreditGRNs.php:68 SuppCreditGRNs.php:140 SuppInvGRNs.php:101
-#: SuppInvGRNs.php:255 SupplierCredit.php:229 SupplierInvoice.php:230
-#: includes/PDFOrderPageHeader_generic.inc:91
+#: StockLocMovements.php:76 StockLocTransfer.php:158
+#: StockLocTransferReceive.php:399 StockQuantityByDate.php:87 Stocks.php:452
+#: Stocks.php:495 Stocks.php:499 SuppCreditGRNs.php:68 SuppCreditGRNs.php:140
+#: SuppInvGRNs.php:101 SuppInvGRNs.php:255 SupplierCredit.php:229
+#: SupplierInvoice.php:230 includes/PDFOrderPageHeader_generic.inc:91
 #: includes/PDFQuotationPageHeader.inc:109
 #: includes/PDFStockLocTransferHeader.inc:30
 #: includes/PDFTransPageHeader.inc:190
@@ -982,7 +982,7 @@ msgstr ""
 #: CreditStatus.php:181 GoodsReceived.php:51 PaymentTerms.php:147
 #: PDFOrdersInvoiced.php:248 PDFOrderStatus.php:255 PO_Items.php:744
 #: PO_Items.php:869 PO_SelectOSPurchOrder.php:196 PO_SelectPurchOrder.php:191
-#: ReverseGRN.php:327 SalesCategories.php:395 SelectCompletedOrder.php:359
+#: ReverseGRN.php:327 SalesCategories.php:417 SelectCompletedOrder.php:359
 #: SelectCreditItems.php:832 SelectOrderItems.php:1061 SelectProduct.php:309
 #: SelectSalesOrder.php:189 Shipt_Select.php:190 StockCategories.php:142
 #: StockLocStatus.php:135 StockQuantityByDate.php:88 SuppCreditGRNs.php:69
@@ -1349,11 +1349,11 @@ msgid "Enter extract of the"
 msgstr ""
 
 #: BOMs.php:568 DiscountCategories.php:139 PO_SelectOSPurchOrder.php:183
-#: PO_SelectPurchOrder.php:178 PurchData.php:154 SalesCategories.php:394
+#: PO_SelectPurchOrder.php:178 PurchData.php:154 SalesCategories.php:416
 #: SelectOrderItems.php:1034 SelectProduct.php:89 Shipt_Select.php:176
 #: StockAdjustments.php:284 StockCostUpdate.php:124 StockCounts.php:31
 #: StockMovements.php:21 StockReorderLevel.php:21 StockStatus.php:53
-#: StockTransfers.php:388 StockUsage.php:42 Z_ChangeStockCode.php:197
+#: StockTransfers.php:388 StockUsage.php:44 Z_ChangeStockCode.php:197
 msgid "Stock Code"
 msgstr ""
 
@@ -5327,7 +5327,7 @@ msgstr ""
 #: FTP_RadioBeacon.php:49 PO_SelectOSPurchOrder.php:381
 #: SelectRecurringSalesOrder.php:76 SelectSalesOrder.php:399
 #: SelectSalesOrder.php:411 Shipt_Select.php:328 SuppInvGRNs.php:119
-#: UserSettings.php:175 Z_poEditLangHeader.php:94 Z_poEditLangModule.php:159
+#: UserSettings.php:175 Z_poEditLangHeader.php:94 Z_poEditLangModule.php:160
 #, php-format
 msgid "Modify"
 msgstr ""
@@ -6498,7 +6498,7 @@ msgstr ""
 msgid "Inventory Valuation Report"
 msgstr ""
 
-#: index.php:514 InventoryPlanning.php:34
+#: index.php:514 InventoryPlanning.php:35
 msgid "Inventory Planning Report"
 msgstr ""
 
@@ -6718,77 +6718,77 @@ msgstr ""
 msgid "Maintenance"
 msgstr ""
 
-#: InventoryPlanning.php:38 InventoryPlanning.php:88 InventoryPlanning.php:158
-#: InventoryPlanning.php:191 InventoryPlanning.php:234
-#: InventoryPlanning.php:268
+#: InventoryPlanning.php:39 InventoryPlanning.php:89 InventoryPlanning.php:159
+#: InventoryPlanning.php:192 InventoryPlanning.php:235
+#: InventoryPlanning.php:269
 msgid "Inventory Planning"
 msgstr ""
 
-#: InventoryPlanning.php:90 StockCheck.php:142
+#: InventoryPlanning.php:91 StockCheck.php:142
 msgid "The inventory quantities could not be retrieved by the SQL because"
 msgstr ""
 
-#: InventoryPlanning.php:160
+#: InventoryPlanning.php:161
 msgid "The sales quantities could not be retrieved by the SQL because"
 msgstr ""
 
-#: InventoryPlanning.php:193 StockCheck.php:186
+#: InventoryPlanning.php:194 StockCheck.php:186
 msgid "The sales order demand quantities could not be retrieved by the SQL because"
 msgstr ""
 
-#: InventoryPlanning.php:236
+#: InventoryPlanning.php:237
 msgid "The sales order demand quantities from parent assemblies could not be retrieved by the SQL because"
 msgstr ""
 
-#: InventoryPlanning.php:270
+#: InventoryPlanning.php:271
 msgid "The purchase order quantities could not be retrieved by the SQL because"
 msgstr ""
 
-#: InventoryPlanning.php:299
+#: InventoryPlanning.php:300
 msgid "Nil"
 msgstr ""
 
-#: InventoryPlanning.php:323
+#: InventoryPlanning.php:324
 msgid "Print Inventory Planning Report Empty"
 msgstr ""
 
-#: InventoryPlanning.php:325
+#: InventoryPlanning.php:326
 msgid "There were no items in the range and location specified"
 msgstr ""
 
-#: InventoryPlanning.php:343
+#: InventoryPlanning.php:344
 msgid "Inventory Planning Reporting"
 msgstr ""
 
-#: InventoryPlanning.php:353 InventoryValuation.php:200 PDFPriceList.php:208
+#: InventoryPlanning.php:354 InventoryValuation.php:200 PDFPriceList.php:208
 #: StockCheck.php:283
 msgid "From Inventory Category Code"
 msgstr ""
 
-#: InventoryPlanning.php:362 InventoryValuation.php:209 PDFPriceList.php:217
+#: InventoryPlanning.php:363 InventoryValuation.php:209 PDFPriceList.php:217
 #: StockCheck.php:292
 msgid "To Inventory Category Code"
 msgstr ""
 
-#: InventoryPlanning.php:372 InventoryValuation.php:219 StockCheck.php:302
+#: InventoryPlanning.php:373 InventoryValuation.php:219 StockCheck.php:302
 msgid "For Inventory in Location"
 msgstr ""
 
-#: InventoryPlanning.php:376 InventoryValuation.php:223
+#: InventoryPlanning.php:377 InventoryValuation.php:223
 #: PDFDeliveryDifferences.php:44 PDFOrdersInvoiced.php:52
-#: PDFOrderStatus.php:48 StockUsage.php:64 StockUsage.php:66
+#: PDFOrderStatus.php:48 StockUsage.php:66 StockUsage.php:68
 msgid "All Locations"
 msgstr ""
 
-#: InventoryPlanning.php:383
+#: InventoryPlanning.php:384
 msgid "Maximum No Months Holding"
 msgstr ""
 
-#: InventoryPlanning.php:384
+#: InventoryPlanning.php:385
 msgid "Three Months"
 msgstr ""
 
-#: InventoryPlanning.php:385
+#: InventoryPlanning.php:386
 msgid "Four Months"
 msgstr ""
 
@@ -8976,7 +8976,7 @@ msgid "You must first set up supplier contacts before emailing an order"
 msgstr ""
 
 #: PO_SelectOSPurchOrder.php:8 SelectProduct.php:417 StockStatus.php:205
-#: StockUsage.php:158
+#: StockUsage.php:160
 msgid "Search Outstanding Purchase Orders"
 msgstr ""
 
@@ -9900,26 +9900,26 @@ msgstr ""
 #: PurchData.php:458 SelectProduct.php:411 StockAdjustments.php:335
 #: StockCostUpdate.php:169 StockLocStatus.php:77 StockMovements.php:201
 #: StockQuantityByDate.php:63 StockStatus.php:55 StockTransfers.php:455
-#: StockUsage.php:154
+#: StockUsage.php:156
 msgid "Show Stock Status"
 msgstr ""
 
 #: PurchData.php:459 SelectProduct.php:408 StockCostUpdate.php:170
 #: StockLocMovements.php:42 StockMovements.php:53 StockReorderLevel.php:88
-#: StockUsage.php:155
+#: StockUsage.php:157
 msgid "Show Stock Movements"
 msgstr ""
 
 #: PurchData.php:460 SelectProduct.php:414 SelectSalesOrder.php:6
 #: StockAdjustments.php:338 StockCostUpdate.php:172 StockMovements.php:203
 #: StockReorderLevel.php:90 StockStatus.php:202 StockTransfers.php:458
-#: StockUsage.php:156
+#: StockUsage.php:158
 msgid "Search Outstanding Sales Orders"
 msgstr ""
 
 #: PurchData.php:461 SelectProduct.php:415 StockAdjustments.php:339
 #: StockCostUpdate.php:173 StockMovements.php:204 StockReorderLevel.php:91
-#: StockStatus.php:203 StockTransfers.php:459 StockUsage.php:157
+#: StockStatus.php:203 StockTransfers.php:459 StockUsage.php:159
 msgid "Search Completed Sales Orders"
 msgstr ""
 
@@ -10741,7 +10741,7 @@ msgid "Group By 4"
 msgstr ""
 
 #: SalesAnalysis_UserDefined.php:15 includes/PDFStarter_ros.inc:38
-#: includes/session.inc:197
+#: includes/session.inc:202
 msgid "The security settings on your account do not permit you to access this function"
 msgstr ""
 
@@ -10854,52 +10854,52 @@ msgstr ""
 msgid "Sub Category"
 msgstr ""
 
-#: SalesCategories.php:302
+#: SalesCategories.php:303
 msgid "Edit Sub Category"
 msgstr ""
 
-#: SalesCategories.php:309
+#: SalesCategories.php:310
 msgid "New Sub Category"
 msgstr ""
 
-#: SalesCategories.php:314
+#: SalesCategories.php:315
 msgid "Category Name"
 msgstr ""
 
-#: SalesCategories.php:319 Stocks.php:509
+#: SalesCategories.php:320 Stocks.php:509
 msgid "Image File (.jpg)"
 msgstr ""
 
-#: SalesCategories.php:324
+#: SalesCategories.php:325
 msgid "Submit Information"
 msgstr ""
 
-#: SalesCategories.php:355
+#: SalesCategories.php:374
 msgid "Add Inventory to this category."
 msgstr ""
 
-#: SalesCategories.php:356
+#: SalesCategories.php:375
 msgid "Select Inv. Item"
 msgstr ""
 
-#: SalesCategories.php:366
+#: SalesCategories.php:388
 msgid "Add Inventory Item"
 msgstr ""
 
-#: SalesCategories.php:371
+#: SalesCategories.php:393
 msgid "No more Inventory items to add."
 msgstr ""
 
-#: SalesCategories.php:393
+#: SalesCategories.php:415
 msgid "Inventory items in this category."
 msgstr ""
 
-#: SalesCategories.php:412 StockAdjustments.php:321 WWW_Access.php:206
+#: SalesCategories.php:434 StockAdjustments.php:321 WWW_Access.php:206
 #, php-format
 msgid "Remove"
 msgstr ""
 
-#: SalesCategories.php:417
+#: SalesCategories.php:439
 msgid "No Inventory items in this category."
 msgstr ""
 
@@ -11742,7 +11742,7 @@ msgstr ""
 
 #: SelectProduct.php:412 StockAdjustments.php:337 StockCostUpdate.php:171
 #: StockMovements.php:202 StockReorderLevel.php:89 StockTransfers.php:457
-#: StockUsage.php:71
+#: StockUsage.php:73
 msgid "Show Stock Usage"
 msgstr ""
 
@@ -11815,7 +11815,7 @@ msgid "The Order Number entered MUST be numeric"
 msgstr ""
 
 #: SelectSalesOrder.php:116 StockLocMovements.php:13 StockLocStatus.php:27
-#: StockLocTransfer.php:121 StockMovements.php:23 StockUsage.php:44
+#: StockLocTransfer.php:121 StockMovements.php:23 StockUsage.php:46
 msgid "From Stock Location"
 msgstr ""
 
@@ -13005,12 +13005,9 @@ msgstr ""
 msgid "The stock movements for the selected criteria could not be retrieved because"
 msgstr ""
 
-#: StockLocMovements.php:76 StockLocStatus.php:134
-msgid "StockID"
-msgstr ""
-
-#: StockLocMovements.php:78
-msgid "Trans ID"
+#: StockLocMovements.php:78 Z_CheckAllocationsFrom.php:28
+#: Z_CheckAllocationsFrom.php:51
+msgid "Trans No"
 msgstr ""
 
 #: StockLocStatus.php:7
@@ -13019,6 +13016,10 @@ msgstr ""
 
 #: StockLocStatus.php:127 StockReorderLevel.php:34 StockStatus.php:67
 msgid "The stock held at each location cannot be retrieved because"
+msgstr ""
+
+#: StockLocStatus.php:134
+msgid "StockID"
 msgstr ""
 
 #: StockLocStatus.php:136 StockQuantityByDate.php:89 StockReorderLevel.php:43
@@ -13974,31 +13975,31 @@ msgstr ""
 msgid "Stock Usage"
 msgstr ""
 
-#: StockUsage.php:34
+#: StockUsage.php:36
 msgid "The selected item is a dummy or assembly or kit-set item and cannot have a stock holding"
 msgstr ""
 
-#: StockUsage.php:34
+#: StockUsage.php:36
 msgid "Please select a different item"
 msgstr ""
 
-#: StockUsage.php:38 WhereUsedInquiry.php:28
+#: StockUsage.php:40 WhereUsedInquiry.php:28
 msgid "in units of"
 msgstr ""
 
-#: StockUsage.php:108
+#: StockUsage.php:110
 msgid "The stock usage for the selected criteria could not be retrieved because"
 msgstr ""
 
-#: StockUsage.php:116
+#: StockUsage.php:118
 msgid "Month"
 msgstr ""
 
-#: StockUsage.php:116
+#: StockUsage.php:118
 msgid "Usage"
 msgstr ""
 
-#: StockUsage.php:152
+#: StockUsage.php:154
 msgid "Average Usage per month is"
 msgstr ""
 
@@ -16645,7 +16646,7 @@ msgstr ""
 msgid "User code"
 msgstr ""
 
-#: WWW_Users.php:318 includes/Login.php:51
+#: WWW_Users.php:318 includes/Login.php:52
 msgid "Password"
 msgstr ""
 
@@ -17081,10 +17082,6 @@ msgstr ""
 
 #: Z_CheckAllocationsFrom.php:6
 msgid "Identify Allocation Stuff Ups"
-msgstr ""
-
-#: Z_CheckAllocationsFrom.php:28 Z_CheckAllocationsFrom.php:51
-msgid "Trans No"
 msgstr ""
 
 #: Z_CheckAllocationsFrom.php:29 Z_CheckAllocationsFrom.php:52
@@ -17772,7 +17769,7 @@ msgstr ""
 msgid "If the language already exists then you cannot recreate it"
 msgstr ""
 
-#: Z_poAddLanguage.php:83 Z_poEditLangHeader.php:78 Z_poEditLangModule.php:119
+#: Z_poAddLanguage.php:83 Z_poEditLangHeader.php:78 Z_poEditLangModule.php:120
 #: Z_poRebuildDefault.php:50
 msgid "PLEASE NOTE"
 msgstr ""
@@ -17781,7 +17778,7 @@ msgstr ""
 msgid "Full code of the new language in the format en_US"
 msgstr ""
 
-#: Z_poAddLanguage.php:92 Z_poEditLangModule.php:204 Z_poRebuildDefault.php:54
+#: Z_poAddLanguage.php:92 Z_poEditLangModule.php:205 Z_poRebuildDefault.php:54
 msgid "Proceed"
 msgstr ""
 
@@ -17846,7 +17843,7 @@ msgstr ""
 msgid "Make sure you have selected the correct language to translate!"
 msgstr ""
 
-#: Z_poEditLangHeader.php:74 Z_poEditLangModule.php:116
+#: Z_poEditLangHeader.php:74 Z_poEditLangModule.php:117
 msgid "When finished modifying you must click on Modify at the bottom in order to save changes"
 msgstr ""
 
@@ -17878,35 +17875,35 @@ msgstr ""
 msgid "Writing the language file"
 msgstr ""
 
-#: Z_poEditLangModule.php:119
+#: Z_poEditLangModule.php:120
 msgid "Your existing translation file (messages.po) will be saved as messages.po.old"
 msgstr ""
 
-#: Z_poEditLangModule.php:124
+#: Z_poEditLangModule.php:125
 msgid "Language File for"
 msgstr ""
 
-#: Z_poEditLangModule.php:125
+#: Z_poEditLangModule.php:126
 msgid "Module"
 msgstr ""
 
-#: Z_poEditLangModule.php:131
+#: Z_poEditLangModule.php:132
 msgid "Default text"
 msgstr ""
 
-#: Z_poEditLangModule.php:132
+#: Z_poEditLangModule.php:133
 msgid "Translation"
 msgstr ""
 
-#: Z_poEditLangModule.php:133
+#: Z_poEditLangModule.php:134
 msgid "Exists in"
 msgstr ""
 
-#: Z_poEditLangModule.php:194
+#: Z_poEditLangModule.php:195
 msgid "Select the module to edit"
 msgstr ""
 
-#: Z_poEditLangModule.php:205
+#: Z_poEditLangModule.php:206
 msgid "Refresh messages with latest strings"
 msgstr ""
 
@@ -18446,11 +18443,11 @@ msgstr ""
 msgid "Please login here"
 msgstr ""
 
-#: includes/Login.php:49
+#: includes/Login.php:50
 msgid "User name"
 msgstr ""
 
-#: includes/Login.php:59
+#: includes/Login.php:60
 msgid "Login"
 msgstr ""
 
@@ -19213,31 +19210,31 @@ msgstr ""
 msgid "does not have a cost set up and order entry is set up to prohibit sales of items with no cost data entered"
 msgstr ""
 
-#: includes/session.inc:116 includes/session.inc:181
+#: includes/session.inc:113 includes/session.inc:186
 msgid "Account Error Report"
 msgstr ""
 
-#: includes/session.inc:119
+#: includes/session.inc:116
 msgid "Your user role does not have any access defined for webERP. There is an error in the security setup for this user account"
 msgstr ""
 
-#: includes/session.inc:132
+#: includes/session.inc:137
 msgid "incorrect password"
 msgstr ""
 
-#: includes/session.inc:132
+#: includes/session.inc:137
 msgid "The user/password combination"
 msgstr ""
 
-#: includes/session.inc:132
+#: includes/session.inc:137
 msgid "is not a valid user of the system"
 msgstr ""
 
-#: includes/session.inc:184
+#: includes/session.inc:189
 msgid "Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server"
 msgstr ""
 
-#: includes/session.inc:191
+#: includes/session.inc:196
 msgid "Security Permissions Problem"
 msgstr ""
 

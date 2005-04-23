@@ -1,5 +1,3 @@
-use weberp;
-
 begin;
 
 ALTER TABLE Locations ADD TaxAuthority tinyint(4) NOT NULL default 1;

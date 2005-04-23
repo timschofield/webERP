@@ -1,7 +1,3 @@
-
---
--- Rename All 2.9 Tables to lowercase
---
 RENAME TABLE `AccountGroups` TO `accountgroups`;
 RENAME TABLE `Areas` TO `areas`;
 RENAME TABLE `BOM` TO `bom`;
@@ -70,10 +66,6 @@ RENAME TABLE `TaxAuthorities` TO `taxauthorities`;
 RENAME TABLE `WWW_Users` TO `www_users`;
 RENAME TABLE `WorkCentres` TO `workcentres`;
 RENAME TABLE `WorksOrders` TO `worksorders`;
-
---
--- Rename All 2.9 Table fields to lowercase
---
 ALTER TABLE `accountgroups` CHANGE GroupName groupname char(30)  NOT NULL default '';
 ALTER TABLE `accountgroups` CHANGE SectionInAccounts sectioninaccounts smallint(6)  NOT NULL default '0';
 ALTER TABLE `accountgroups` CHANGE PandL pandl tinyint(4)  NOT NULL default '1';
@@ -664,12 +656,9 @@ ALTER TABLE `worksorders` CHANGE AccumValueIssued accumvalueissued decimal(20,4)
 ALTER TABLE `worksorders` CHANGE AccumValueTrfd accumvaluetrfd decimal(20,4)  NOT NULL default '0.0000';
 ALTER TABLE `worksorders` CHANGE Closed closed tinyint(4)  NOT NULL default '0';
 ALTER TABLE `worksorders` CHANGE Released released tinyint(4)  NOT NULL default '0';
-
 ALTER TABLE `taxauthorities` CHANGE taxid taxid tinyint NOT NULL auto_increment;
-
 ALTER TABLE `salesorders` ADD `quotation` TINYINT DEFAULT '0' NOT NULL ;
 ALTER TABLE `salesorders` ADD INDEX ( `quotation` ) ;
-
 CREATE TABLE `recurringsalesorders` (
   `recurrorderno` int(11) NOT NULL auto_increment,
   `debtorno` varchar(10) NOT NULL default '',
@@ -736,10 +725,10 @@ INSERT INTO accountsection (sectionid, sectionname) VALUES (20, 'Amounts Receiva
 INSERT INTO accountsection (sectionid, sectionname) VALUES (30, 'Amounts Payable');
 INSERT INTO accountsection (sectionid, sectionname) VALUES (50, 'Financed By');
 
+ALTER TABLE `accountgroups` CHANGE `sectioninaccounts` `sectioninaccounts` INT( 11 ) DEFAULT '0' NOT NULL;
 ALTER TABLE `accountgroups` ADD INDEX ( `sectioninaccounts` );
 
-ALTER TABLE `accountsection`
-  ADD CONSTRAINT `accountsection_ibfk_1` FOREIGN KEY (`sectionid`) REFERENCES `accountgroups` (`sectioninaccounts`);
+ALTER TABLE `accountgroups` ADD CONSTRAINT `accountgroups_ibfk_1` FOREIGN KEY ( `sectioninaccounts` ) REFERENCES `accountsection` ( `sectionid` );
 
 
 CREATE TABLE securityroles (
@@ -788,7 +777,7 @@ CREATE TABLE securitygroups (
     PRIMARY KEY (secroleid, tokenid),
     KEY (secroleid),
     KEY (tokenid)
-) TYPE=INNODB;
+) ENGINE=INNODB;
 
 
 INSERT INTO securitygroups VALUES (1, 1);
@@ -850,7 +839,7 @@ CREATE TABLE paymentmethods (
     paymenttype integer DEFAULT 1 NOT NULL,
     receipttype integer DEFAULT 1 NOT NULL,
     PRIMARY KEY (paymentid)
-);
+)ENGINE=Innodb;
 
 INSERT INTO paymentmethods VALUES (1, 'Cheque', 1, 1);
 INSERT INTO paymentmethods VALUES (2, 'Cash', 1, 1);
@@ -860,7 +849,7 @@ CREATE TABLE unitsofmeasure (
 	unitid tinyint NOT NULL auto_increment,
 	unitname varchar(15) NOT NULL,
 	PRIMARY KEY (unitid)
-);
+)ENGINE=Innodb;
 
 INSERT INTO unitsofmeasure VALUES (2, 'metres');
 INSERT INTO unitsofmeasure VALUES (3, 'kgs');
@@ -873,7 +862,7 @@ CREATE TABLE config(
 confname varchar( 35 ) NOT NULL ,
 confvalue text NOT NULL ,
 PRIMARY KEY ( confname )
-)
+)ENGINE=Innodb;
 
 INSERT INTO config VALUES('DefaultDateFormat','d/m/Y');
 INSERT INTO config VALUES('DefaultTheme','fresh');
