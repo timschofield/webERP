@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
  
     
 include('config.php');
@@ -143,6 +143,9 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 /*User is logged in so get configuration parameters  - save in session*/
 include('includes/GetConfig.php');
 
+/*Now users language has been set include the language setup script */
+include('includes/LanguageSetup.php');
+
 if(isset($_SESSION['DB_Maintenance'])){ 
 	if ($_SESSION['DB_Maintenance']!=0)  {	
 		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
@@ -169,13 +172,10 @@ If (isset($_POST['Theme'])) {
 
 if ($_SESSION['HTTPS_Only']==1){
 	if ($_SERVER['HTTPS']!='on'){
-		prnMsg('webERP is configured to allow only secure socket connections. Pages must be called with https:// ....','error');
+		prnMsg(_('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....','error');
 		exit;
 	}
 }
-
-/*Now users language has been set include the language setup script */
-include('includes/LanguageSetup.php');
 
 // Now check that the user as logged in has access to the page being called. The $PageSecurity
 // value must be set in the script before header.inc is included. $SecurityGroups is an array of

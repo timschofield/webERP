@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 11;
 
@@ -105,6 +105,9 @@ if (isset($_POST['submit'])) {
 	} elseif (($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K' OR $_POST['MBFlag']=='D') AND $_POST['Controlled']==1){
 		$InputError = 1;
 		prnMsg(_('Assembly/Kitset/Dummy items cannot also be controlled items') . '. ' . _('Assemblies/Dummies and Kitsets are not physical items and batch/serial control is therefore not appropriate'),'error');
+	} elseif (trim($_POST['CategoryID'])==''){
+		$InputError = 1;
+		prnMsg(_('There are no inventory categories defined. All inventory items must belong to a valid inventory category,'),'error');
 	}
 
 	if ($InputError !=1){

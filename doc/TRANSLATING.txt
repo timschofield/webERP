@@ -71,6 +71,12 @@ It is recommended that translations start with the index.php module since this m
 
 When changing a module's translation it is important to click the "Modify" to ensure the changes to translations are updated.
 
+Also, due to the nature of the web it is always appropriate to backup your work after you have done significant amounts of translation by downloading the messages.po after every session make a favouites/bookmark for the translation:
+
+http://www.weberp.org/translate/locale/xx_XX/LC_MESSAGES/messages.po
+
+where xx_XX is the locale name of your translation. You can use this file to test the translation of your local installation.
+
 
 That's it! However, for the more curious and technically minded more detail is provided below on the mechanics of the gettext system.
 

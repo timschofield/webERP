@@ -1616,7 +1616,7 @@ CREATE TABLE `www_users` (
   `blocked` tinyint(4) NOT NULL default '0',
   `displayrecordsmax` int(11) NOT NULL default '0',
   `theme` varchar(30) NOT NULL default 'fresh',
-  `language` char(2) NOT NULL default 'en',
+  `language` char(5) NOT NULL default 'en_GB',
   `pinno` varchar(30) NOT NULL default '',
   `swipecard` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`userid`),
@@ -2056,8 +2056,7 @@ INSERT INTO `taxauthlevels` VALUES (6,6,2,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-04-23 14:11:00','','A4','1,1,1,1,1,1,1,1,',0,50,'default','en','','');
-INSERT INTO `www_users` VALUES ('NewOne','weberp','New User Admin','','','','DEN',8,'2004-12-26 14:15:05','','A4','1,1,1,1,1,1,1,1,',0,0,'fresh','en','','');
+INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-04-23 16:03:39','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en','','');
 INSERT INTO `www_users` VALUES ('testy','weberp','Test Remote User','GRANHR','','','DEN',7,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en','','');
 
 --
