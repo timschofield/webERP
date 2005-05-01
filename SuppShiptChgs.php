@@ -1,6 +1,8 @@
 <?php
 
-/* $Revision: 1.6 $ */
+
+/* $Revision: 1.7 $ */
+
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of Shipts objects - containing details of all shipment charges for invoicing
 Shipment charges are posted to the debit of GRN suspense if the Creditors - GL link is on

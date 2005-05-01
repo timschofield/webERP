@@ -1,6 +1,8 @@
 <?php
 
-/* $Revision: 1.6 $ */
+
+/* $Revision: 1.7 $ */
+
 /*
 	This page can be called with...
 

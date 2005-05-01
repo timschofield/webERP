@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 // Display demo user name and password within login form if $allow_demo_mode is true
 include ('includes/LanguageSetup.php');
 

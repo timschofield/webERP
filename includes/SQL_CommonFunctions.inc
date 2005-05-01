@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.12 $ */
+
+/* $Revision: 1.13 $ */
+
 /* Common SQL Functions */
 
 
@@ -135,4 +137,5 @@ Function GetCreditAvailable($DebtorNo,&$db) {
 	Return $CreditAvailable;
 	
 }
+
 ?>

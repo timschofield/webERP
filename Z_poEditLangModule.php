@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 /* Steve Kitchen */
 
@@ -38,10 +38,11 @@ if (isset($_POST['ReMergePO'])){
 	system($xgettextCmd);
 /*now merge the translated file with the new template to get new strings*/
 	
-	$msgMergeCmd = 'msgmerge --no-wrap ' . $PathToLanguage . ' ' . $PathToDefault . ' > ' . $PathToNewLanguage;
+	$msgMergeCmd = 'msgmerge --no-wrap --update ' . $PathToLanguage . ' ' . $PathToDefault;
 	
 	system($msgMergeCmd);
-	$Result = rename($PathToNewLanguage, $PathToLanguage);
+	//$Result = rename($PathToNewLanguage, $PathToLanguage);
+	exit;
 }
 	
 if (isset($_POST['module'])) {	

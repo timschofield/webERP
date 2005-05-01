@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 Function GetDataSQL($SQLData){
 
 /*This function determines the SQL to use to get the value for the columns defined */

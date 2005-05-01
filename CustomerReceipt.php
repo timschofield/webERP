@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.9 $ */
+
+/* $Revision: 1.10 $ */
+
 include('includes/DefineReceiptClass.php');
 
 $PageSecurity = 3;

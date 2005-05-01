@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.15 $ */
+
+/* $Revision: 1.16 $ */
+
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -41,8 +43,10 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('User names cannot contain any of the following characters') . " - ' & + \" \\ " . _('or a space'),'error');
 	} elseif (strlen($_POST['Password'])<5){
-		$InputError = 1;
-		prnMsg(_('The password entered must be at least 5 characters long'),'error');
+		if (!$SelectedUser){
+			$InputError = 1;
+			prnMsg(_('The password entered must be at least 5 characters long'),'error');
+		}
 	} elseif (strstr($_POST['Password'],$_POST['UserID'])!= False){
 		$InputError = 1;
 		prnMsg(_('The password cannot contain the user id'),'error');
@@ -94,12 +98,16 @@ if (isset($_POST['submit'])) {
 			$_POST['Cust']='';
 			$_POST['BranchCode']='';
 		}
+		$UpdatePassword = "";
+		if ($_POST['Password'] != ""){
+			$UpdatePassword = "password='" . CryptPass($_POST['Password']) . "',";
+		}
 
 		$sql = "UPDATE www_users SET realname='" . DB_escape_string($_POST['RealName']) . "',
 						customerid='" . DB_escape_string($_POST['Cust']) ."',
 						phone='" . DB_escape_string($_POST['Phone']) ."',
 						email='" . DB_escape_string($_POST['Email']) ."',
-						password='" . CryptPass($_POST['Password']) . "',
+						".$UpdatePassword."
 						branchcode='" . DB_escape_string($_POST['BranchCode']) . "',
 						pagesize='" . $_POST['PageSize'] . "',
 						fullaccess=" . $_POST['Access'] . ",
@@ -122,7 +130,9 @@ if (isset($_POST['submit'])) {
 						fullaccess,
 						defaultlocation,
 						modulesallowed,
-						theme)
+						displayrecordsmax,
+						theme,
+						language)
 					VALUES ('" . $_POST['UserID'] . "',
 						'" . DB_escape_string($_POST['RealName']) ."',
 						'" . DB_escape_string($_POST['Cust']) ."',
@@ -134,7 +144,9 @@ if (isset($_POST['submit'])) {
 						" . $_POST['Access'] . ",
 						'" . $_POST['DefaultLocation'] ."',
 						'" . $ModulesAllowed . "',
-						'" . $_SESSION['DefaultTheme'] . "')";
+						" . $_SESSION['DefaultDisplayRecordsMax'] . "
+						'" . $_SESSION['DefaultTheme'] . "',
+						'". $DefaultLanguage ."')";
 		$msg = _('A new user record has been inserted');
 	}
 

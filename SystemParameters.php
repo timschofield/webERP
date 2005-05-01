@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.10 $ */
+
+/* $Revision: 1.11 $ */
+
 $PageSecurity =15;
 
 include('includes/session.inc');
@@ -75,20 +77,9 @@ if (isset($_POST['submit'])) {
 	}
 
 	if ($InputError !=1){
-		/*
-			Variables that we manage currently are:
 		
-			DefaultDateFormat, DefaultTheme, PastDueDays1, PastDueDays2, DefaultCreditLimit,
-			Show_Settled_LastMonth, RomalpaClause, QuickEntries, DispatchCutOffTime, AllowSalesOfZeroCostItems,
-			CreditingControlledItems_MustExist, DefaultPriceList, Default_Shipper,
-			DoFreightCalc, FreightChargeAppliesIfLessThan, DefaultTaxLevel,
-			TaxAuthorityReferenceName, CountryOfOperation, NumberOfPeriodsOfStockUsage,
-			Check_Qty_Charged_vs_Del_Qty, Check_Price_Charged_vs_Order_Price,
-			OverChargeProportion, OverReceiveProportion, PO_AllowSameItemMultipleTimes,
-			YearEnd, PageLength
-		
-		*/
 		$sql = array();
+		
 		if ($_SESSION['DefaultDateFormat'] != $_POST['X_DefaultDateFormat'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".DB_escape_string($_POST['X_DefaultDateFormat'])."' WHERE confname = 'DefaultDateFormat'";
 		}
@@ -160,6 +151,9 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['PO_AllowSameItemMultipleTimes'] != $_POST['X_PO_AllowSameItemMultipleTimes'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_PO_AllowSameItemMultipleTimes']."' WHERE confname = 'PO_AllowSameItemMultipleTimes'";
+		}
+		if ($_SESSION['SO_AllowSameItemMultipleTimes'] != $_POST['X_SO_AllowSameItemMultipleTimes'] ) {
+			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_SO_AllowSameItemMultipleTimes']."' WHERE confname = 'SO_AllowSameItemMultipleTimes'";
 		}
 		if ($_SESSION['YearEnd'] != $_POST['X_YearEnd'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_YearEnd']."' WHERE confname = 'YearEnd'";
@@ -385,7 +379,7 @@ echo '<TR><TD>' . _('Do Freight Calculation') . ':</TD>
 //FreightChargeAppliesIfLessThan
 echo '<TR><TD>' . _('Apply freight charges if an order is less than') . ':</TD>
 	<TD><input type="Text" Name="X_FreightChargeAppliesIfLessThan" SIZE=6 MAXLENGTH=12 value="' . $_SESSION['FreightChargeAppliesIfLessThan'] . '"></TD>
-	<TD>' . ('This parameter is only effective if Do Freight Calculation is set to Yes. If it is set to 0 then freight is always charged. The total order value is compared to this value in deciding whether or not to charge freight') .'</TD></TR>';
+	<TD>' . _('This parameter is only effective if Do Freight Calculation is set to Yes. If it is set to 0 then freight is always charged. The total order value is compared to this value in deciding whether or not to charge freight') .'</TD></TR>';
 
 	
 // AutoDebtorNo
@@ -400,17 +394,17 @@ if ($_SESSION['AutoDebtorNo']==0) {
 	echo '<OPTION Value=0>' . _('Manual Entry');
 }
 echo '</SELECT></TD>
-	<TD>' . ('Set to Automatic - customer codes are automatically created - as a sequential number') .'</TD></TR>';
+	<TD>' . _('Set to Automatic - customer codes are automatically created - as a sequential number') .'</TD></TR>';
 
 //DefaultTaxLevel
 echo '<TR><TD>' . _('Default Tax Level') . ':</TD>
 	<TD><input type="Text" Name="X_DefaultTaxLevel" SIZE=2 MAXLENGTH=1 value="' . $_SESSION['DefaultTaxLevel'] . '"></TD>
-	<TD>' . ('This is the tax level used for entry of supplier invoices and the level at which frieght attracts tax') .'</TD></TR>';
+	<TD>' . _('This is the tax level used for entry of supplier invoices and the level at which frieght attracts tax') .'</TD></TR>';
 
 //TaxAuthorityReferenceName
 echo '<TR><TD>' . _('TaxAuthorityReferenceName') . ':</TD>
 	<TD><input type="Text" Name="X_TaxAuthorityReferenceName" SIZE=16 MAXLENGTH=25 value="' . $_SESSION['TaxAuthorityReferenceName'] . '"></TD>
-	<TD>' . ('This parameter is what is displayed on tax invoices and credits for the tax authority of the company eg. in Australian this would by A.B.N.: - in NZ it would be GST No: in the UK it would be VAT Regn. No') .'</TD></TR>';
+	<TD>' . _('This parameter is what is displayed on tax invoices and credits for the tax authority of the company eg. in Australian this would by A.B.N.: - in NZ it would be GST No: in the UK it would be VAT Regn. No') .'</TD></TR>';
 
 // CountryOfOperation
 $sql = 'SELECT currabrev, country FROM currencies ORDER BY country';
@@ -426,14 +420,14 @@ if( DB_num_rows($result) == 0 ) {
 	}
 }
 echo '</SELECT></TD>
-	<TD>' . ('This parameter is only effective if Do Freight Calculation is set to Yes.') .'</TD></TR>';
+	<TD>' . _('This parameter is only effective if Do Freight Calculation is set to Yes.') .'</TD></TR>';
 
 // NumberOfPeriodsOfStockUsage
 echo '<TR><TD>' . _('Number Of Periods Of StockUsage') . ':</TD>
 	<TD><SELECT Name="X_NumberOfPeriodsOfStockUsage">';
 for ($i=1; $i <= 12; $i++ )
 	echo '<OPTION '.($_SESSION['NumberOfPeriodsOfStockUsage'] == $i?'SELECTED ':'').'VALUE="'.$i.'">'.$i;
-echo '</SELECT></TD><TD>' . ('In stock usage inquiries this determines how many periods of stock usage to show. An average is calculated over this many periods') .'</TD></TR>';
+echo '</SELECT></TD><TD>' . _('In stock usage inquiries this determines how many periods of stock usage to show. An average is calculated over this many periods') .'</TD></TR>';
 
 // Check_Qty_Charged_vs_Del_Qty
 echo '<TR><TD>' . _('Check Quantity Charged vs Deliver Qty') . ':</TD>
@@ -441,7 +435,7 @@ echo '<TR><TD>' . _('Check Quantity Charged vs Deliver Qty') . ':</TD>
 	<OPTION '.($_SESSION['Check_Qty_Charged_vs_Del_Qty']?'SELECTED ':'').'VALUE="1">'._('Yes').'
 	<OPTION '.(!$_SESSION['Check_Qty_Charged_vs_Del_Qty']?'SELECTED ':'').'VALUE="0">'._('No').'
 	</SELECT></TD>
-	<TD>' . ('In entry of AP invoices this determines whether or not to check the quantites received into stock tie up with the quantities invoiced') .'</TD></TR>';
+	<TD>' . _('In entry of AP invoices this determines whether or not to check the quantites received into stock tie up with the quantities invoiced') .'</TD></TR>';
 
 // Check_Price_Charged_vs_Order_Price
 echo '<TR><TD>' . _('Check Price Charged vs Order Price') . ':</TD>
@@ -449,24 +443,31 @@ echo '<TR><TD>' . _('Check Price Charged vs Order Price') . ':</TD>
 	<OPTION '.($_SESSION['Check_Price_Charged_vs_Order_Price']?'SELECTED ':'').'VALUE="1">'._('Yes').'
 	<OPTION '.(!$_SESSION['Check_Price_Charged_vs_Order_Price']?'SELECTED ':'').'VALUE="0">'._('No').'
 	</SELECT></TD>
-	<TD>' . ('In entry of AP invoices this parameter determines whether or not to check invoice prices tie up to ordered prices') .'</TD></TR>';
+	<TD>' . _('In entry of AP invoices this parameter determines whether or not to check invoice prices tie up to ordered prices') .'</TD></TR>';
 
 // OverChargeProportion
 echo '<TR><TD>' . _('Allowed OverCharge Proportion') . ':</TD>
 	<TD><input type="Text" Name="X_OverChargeProportion" SIZE=4 MAXLENGTH=3 value="' . $_SESSION['OverChargeProportion'] . '"></TD>
-	<TD>' . ('If check price charges vs Order price is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to price') .'</TD></TR>';
+	<TD>' . _('If check price charges vs Order price is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to price') .'</TD></TR>';
 
 // OverReceiveProportion
 echo '<TR><TD>' . _('Allowed Over Receive Proportion') . ':</TD>
 	<TD><input type="Text" Name="X_OverReceiveProportion" SIZE=4 MAXLENGTH=3 value="' . $_SESSION['OverReceiveProportion'] . '"></TD>
-	<TD>' . ('If check quantity charged vs delivery quantity is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to delivery') .'</TD></TR>';
+	<TD>' . _('If check quantity charged vs delivery quantity is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to delivery') .'</TD></TR>';
 
 // PO_AllowSameItemMultipleTimes
 echo '<TR><TD>' . _('Purchase Order Allows Same Item Multiple Times') . ':</TD>
 	<TD><SELECT Name="X_PO_AllowSameItemMultipleTimes">
 	<OPTION '.($_SESSION['PO_AllowSameItemMultipleTimes']?'SELECTED ':'').'VALUE="1">'._('Yes').'
 	<OPTION '.(!$_SESSION['PO_AllowSameItemMultipleTimes']?'SELECTED ':'').'VALUE="0">'._('No').'
-	</SELECT></TD><TD></TD></TR>';
+	</SELECT></TD>&nbsp;<TD></TD></TR>';
+
+// SO_AllowSameItemMultipleTimes
+echo '<TR><TD>' . _('Sales Order Allows Same Item Multiple Times') . ':</TD>
+	<TD><SELECT Name="X_SO_AllowSameItemMultipleTimes">
+	<OPTION '.($_SESSION['SO_AllowSameItemMultipleTimes']?'SELECTED ':'').'VALUE="1">'._('Yes').'
+	<OPTION '.(!$_SESSION['SO_AllowSameItemMultipleTimes']?'SELECTED ':'').'VALUE="0">'._('No').'
+	</SELECT></TD><TD>&nbsp;</TD></TR>';
 
 echo '<TR><TD COLSPAN=3 class="tableheader"><CENTER>' . _('General Settings') . '</CENTER></TD></TR>';
 echo $TableHeader;	
@@ -489,11 +490,11 @@ echo '<TR><TD>' . _('Financial Year Ends On') . ':</TD>
 for ($i=0; $i < sizeof($MonthNames); $i++ )
 	echo '<OPTION '.($_SESSION['YearEnd'] == $i ? 'SELECTED ' : '').'VALUE="'.$i.'">'.$MonthNames[$i];
 echo '</SELECT></TD>
-	<TD>' . ('Defining the month in which the financial year ends enables the system to provide useful defaults for general ledger reports') .'</TD></TR>';
+	<TD>' . _('Defining the month in which the financial year ends enables the system to provide useful defaults for general ledger reports') .'</TD></TR>';
 
 //PageLength
 echo '<TR><TD>' . _('Report Page Length') . ':</TD>
-	<TD><input type="Text" Name="X_PageLength" SIZE=4 MAXLENGTH=6 value="' . $_SESSION['PageLength'] . '"></TD>
+	<TD><input type="Text" Name="X_PageLength" SIZE=4 MAXLENGTH=6 value="' . $_SESSION['PageLength'] . '"></TD><TD>&nbsp;</TD>
 </TR>';
 
 //DefaultDisplayRecordsMax
@@ -505,7 +506,7 @@ echo '<TR><TD>' . _('Default Maximum Number of Records to Show') . ':</TD>
 //MaxImageSize
 echo '<TR><TD>' . _('Maximum Size in KB of uploaded images') . ':</TD>
 	<TD><input type="Text" Name="X_MaxImageSize" SIZE=4 MAXLENGTH=3 value="' . $_SESSION['MaxImageSize'] . '"></TD>
-	<TD>' . ('Picture files of items can be uploaded to the server. The system will check that files uploaded are less than this size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen.') .'</TD>
+	<TD>' . _('Picture files of items can be uploaded to the server. The system will check that files uploaded are less than this size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen.') .'</TD>
 </TR>';
 
 

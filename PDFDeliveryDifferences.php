@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.9 $ */
+
+/* $Revision: 1.10 $ */
+
 
 $PageSecurity = 3;
 include ('includes/session.inc');
@@ -116,7 +118,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 		AND trandate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 		AND trandate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
 
-} elseif ($_POST['CategoryID']!='All' AND $_POST['location']!='Áll'){
+} elseif ($_POST['CategoryID']!='All' AND $_POST['location']!='ï¿½l'){
 
 	$sql = "SELECT invoiceno,
 			orderdeliverydifferenceslog.orderno,

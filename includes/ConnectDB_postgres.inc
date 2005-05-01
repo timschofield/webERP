@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.4 $ */
+
+/* $Revision: 1.5 $ */
+
 define ('LIKE','ILIKE');
 /* $PgConnStr = $PgConnStr = "host=".$host." dbname=".$DatabaseName; */
  $PgConnStr = 'dbname='.$DatabaseName;
@@ -39,6 +41,9 @@ function DB_query ($SQL,
 	}
 	//if (DB_error_no($Conn) != 0){
 	if ( !$result AND $TrapErrors){
+		if ($TrapErrors){
+			require_once('includes/header.inc');
+		}
 		prnMsg($ErrorMessage.'<BR>' . DB_error_msg($Conn),'error', _('DB ERROR:'));
 		if ($debug==1){
 			echo '<BR>' . $DebugMessage. "<BR>$SQL<BR>";

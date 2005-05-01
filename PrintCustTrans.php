@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.18 $ */
+
+/* $Revision: 1.19 $ */
+
 $PageSecurity = 1;
 
 include('includes/session.inc');
@@ -21,7 +23,6 @@ if (isset($_GET['PrintPDF'])){
 } elseif (isset($_POST['PrintPDF'])){
 	$PrintPDF = $_POST['PrintPDF'];
 }
-
 
 
 If (!isset($_POST['ToTransNo']) 

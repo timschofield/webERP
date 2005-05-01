@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.7 $ */
+
+/* $Revision: 1.8 $ */
+
 include('includes/DefineJournalClass.php');
 
 $PageSecurity = 10;

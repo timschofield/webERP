@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.56 $ */
+
+/* $Revision: 1.57 $ */
+
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
 	|---------------------------------------------------|
@@ -19,7 +21,9 @@ $DefaultLanguage ='en_GB';
 $allow_demo_mode = True;
 
 // Application version
-$Version = '3.00';
+
+$Version = '3.01 unstable';
+
 
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time
@@ -77,6 +81,9 @@ eg. if the files are under the webserver root directory then rootpath =''; if th
 */
 
 $rootpath = dirname($_SERVER['PHP_SELF']);
+if ($rootpath == "/") {
+	$rootpath = "";
+}
 //$rootpath = '/web-erp';
 
 /* Report all errors except E_NOTICE

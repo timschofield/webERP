@@ -1,5 +1,6 @@
 <?php
-/* $Revision: 1.5 $ */
+
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 10;
 

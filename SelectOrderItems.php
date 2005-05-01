@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 require('includes/DefineCartClass.php');
 
@@ -320,7 +320,12 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 	$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	$myrow = DB_fetch_row($result);
-	if ($myrow[1] == 0){
+	if ($myrow[1] != 1){
+		
+		if ($myrow[1]==2){
+			prnMsg(_('The') . ' ' . $myrow[0] . ' ' . _('account is currently flagged as an account that needs to be watched please contact the credit control personnel to discuss'),'warn');
+		}
+		
 		$_SESSION['Items']->DebtorNo=$_POST['Select'];
 		$_SESSION['RequireCustomerSelection']=0;
 		$_SESSION['Items']->CustomerName = $myrow[0];
@@ -452,7 +457,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 		$_SESSION['Items']->DeliverBlind = $myrow[8];
 
 	} else {
-		prnMsg(_('The') . ' ' . $myrow[0] . ' ' . _('account is') . ' <B>' . _('currently on hold') . ' </B>' . _('please contact the credit control personnel to discuss this account'),'warn');
+		prnMsg(_('Sorry, your account has been put on hold for some reason, please contact the credit control personnel.'),'warn');
 		include('includes/footer.inc');
 		exit;
 	}
@@ -707,7 +712,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 		}
 		if (DB_num_rows($SearchResult)==1){
-
 			$myrow=DB_fetch_array($SearchResult);
 			$NewItem = $myrow['stockid'];
 			DB_data_seek($SearchResult,0);
@@ -729,95 +733,95 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	     
 	     $i=1;
 	     do {
-
-	     	   do { //this loop is only to check there is a valid entry in the field and increment $i
-			  $QuickEntryCode = 'part_' . $i;
-			  $QuickEntryQty = 'qty_' . $i;
-			  $i++;
-		   } while (!is_numeric($_POST[$QuickEntryQty]) AND $_POST[$QuickEntryQty] <=0 AND strlen($_POST[$QuickEntryCode])!=0 AND $i<=$QuickEntires);
-
-		   $NewItem = strtoupper($_POST[$QuickEntryCode]);
-		   $NewItemQty = $_POST[$QuickEntryQty];
-
-		   if (strlen($NewItem)==0){
-			  break;    /* break out of the loop if nothing in the quick entry fields*/
-		   }
-		    
-		   /*Now figure out if the item is a kit set - the field MBFlag='K'*/
-		   $sql = "SELECT stockmaster.mbflag
-		   		FROM stockmaster
-				WHERE stockmaster.stockid='". $NewItem ."'";
-
-		   $ErrMsg = _('Could not determine if the part being ordered was a kitset or not because');
-		   $KitResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
-
-
-		   if (DB_num_rows($KitResult)==0){
-		   	prnMsg( _('The item code') . ' ' . $NewItem . ' ' . _('could not be retrieved from the database and has not been added to the order'),'warn');
-		   }elseif ($myrow=DB_fetch_array($KitResult)){
-		     if ($myrow['mbflag']=='K'){	/*It is a kit set item */
-			    $sql = "SELECT bom.component,
-			    		bom.quantity
-					FROM bom
-					WHERE bom.parent='" . $NewItem . "'
-					AND bom.effectiveto > '" . Date("Y-m-d") . "'
-					AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
-
-			    $ErrMsg =  _('Could not retrieve kitset components from the database because') . ' ';
-			    $KitResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-
-			    $ParentQty = $NewItemQty;
-			    while ($KitParts = DB_fetch_array($KitResult,$db)){
-				   $NewItem = $KitParts['component'];
-				   $NewItemQty = $KitParts['quantity'] * $ParentQty;
-				   include('includes/SelectOrderItems_IntoCart.inc');
-			    }
-
-		     } else { /*Its not a kit set item*/
-			   include('includes/SelectOrderItems_IntoCart.inc');
-		     }
-		   }
+			$QuickEntryCode = 'part_' . $i;
+			$QuickEntryQty = 'qty_' . $i;
+			$i++;
+		   
+			$NewItem = strtoupper($_POST[$QuickEntryCode]);
+			$NewItemQty = $_POST[$QuickEntryQty];
+	
+			if (strlen($NewItem)==0){
+				unset($NewItem);
+				break;    /* break out of the loop if nothing in the quick entry fields*/
+			}
+	
+			/*Now figure out if the item is a kit set - the field MBFlag='K'*/
+			$sql = "SELECT stockmaster.mbflag
+					FROM stockmaster
+					WHERE stockmaster.stockid='". $NewItem ."'";
+	
+			$ErrMsg = _('Could not determine if the part being ordered was a kitset or not because');
+			$KitResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
+	
+	
+			if (DB_num_rows($KitResult)==0){
+				prnMsg( _('The item code') . ' ' . $NewItem . ' ' . _('could not be retrieved from the database and has not been added to the order'),'warn');
+			} elseif ($myrow=DB_fetch_array($KitResult)){
+				if ($myrow['mbflag']=='K'){	/*It is a kit set item */
+					$sql = "SELECT bom.component,
+							bom.quantity
+							FROM bom
+							WHERE bom.parent='" . $NewItem . "'
+							AND bom.effectiveto > '" . Date("Y-m-d") . "'
+							AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+		
+					$ErrMsg =  _('Could not retrieve kitset components from the database because') . ' ';
+					$KitResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		
+					$ParentQty = $NewItemQty;
+					while ($KitParts = DB_fetch_array($KitResult,$db)){
+						$NewItem = $KitParts['component'];
+						$NewItemQty = $KitParts['quantity'] * $ParentQty;
+						include('includes/SelectOrderItems_IntoCart.inc');
+					}
+		
+				} else { /*Its not a kit set item*/
+					include('includes/SelectOrderItems_IntoCart.inc');
+				}
+			}
 	     } while ($i<=$_SESSION['QuickEntries']); /*loop to the next quick entry record */
 
 	     unset($NewItem);
 	 } /* end of if quick entry */
+	 
+	 
+	 /*Now do non-quick entry delete/edits/adds */
 
 	If ((isset($_SESSION['Items'])) OR isset($NewItem)){
 
-		If(isset($_GET['Delete'])){ //page called attempting to delete a line
+		If(isset($_GET['Delete'])){ 
+			//page called attempting to delete a line - GET['Delete'] = the line number to delete
 			if($_SESSION['Items']->Some_Already_Delivered($_GET['Delete'])==0){
-				$_SESSION['Items']->remove_from_cart($_GET['Delete'],
-									'Yes' /*Do update DB */
-									);
+				$_SESSION['Items']->remove_from_cart($_GET['Delete'], 'Yes');  /*Do update DB */
 			} else {
 				prnMsg( _('This item cannot be deleted because some of it has already been invoiced'),'warn');
 			}
 		}
 
-		foreach ($_SESSION['Items']->LineItems as $StockItem) {
+		foreach ($_SESSION['Items']->LineItems as $OrderLine) {
 
-			if (isset($_POST['Quantity_' . $StockItem->StockID])){
-				$Quantity = $_POST['Quantity_' . $StockItem->StockID];
-				$Price = $_POST['Price_' . $StockItem->StockID];
-				$DiscountPercentage = $_POST['Discount_' . $StockItem->StockID];
-				$Narrative = $_POST['Narrative_' . $StockItem->StockID];
+			if (isset($_POST['Quantity_' . $OrderLine->LineNumber])){
+				$Quantity = $_POST['Quantity_' . $OrderLine->LineNumber];
+				$Price = $_POST['Price_' . $OrderLine->LineNumber];
+				$DiscountPercentage = $_POST['Discount_' . $OrderLine->LineNumber];
+				$Narrative = $_POST['Narrative_' . $OrderLine->LineNumber];
 
 				If ($Quantity<0 OR $Price <0 OR $DiscountPercentage >100 OR $DiscountPercentage <0){
 					prnMsg(_('The item could not be updated because you are attempting to set the quantity ordered to less than 0 or the price less than 0 or the discount more than 100% or less than 0%'),'warn');
 
-				} elseif($_SESSION['Items']->Some_Already_Delivered($StockItem->StockID)!=0 AND $_SESSION['Items']->LineItems[$StockItem->StockID]->Price != $Price) {
+				} elseif($_SESSION['Items']->Some_Already_Delivered($OrderLine->LineNumber)!=0 AND $_SESSION['Items']->LineItems[$OrderLine->LineNumber]->Price != $Price) {
 
 					prnMsg(_('The item you attempting to modify the price for has already had some quantity invoiced at the old price the items unit price cannot be modified retrospectively'),'warn');
 
-				} elseif($_SESSION['Items']->Some_Already_Delivered($StockItem->StockID)!=0 AND $_SESSION['Items']->LineItems[$StockItem->StockID]->DiscountPercent != ($DiscountPercentage/100)) {
+				} elseif($_SESSION['Items']->Some_Already_Delivered($OrderLine->LineNumber)!=0 AND $_SESSION['Items']->LineItems[$OrderLine->LineNumber]->DiscountPercent != ($DiscountPercentage/100)) {
 
 					prnMsg(_('The item you attempting to modify has had some quantity invoiced at the old discount percent the items discount cannot be modified retrospectively'),'warn');
 
-				} elseif ($_SESSION['Items']->LineItems[$StockItem->StockID]->QtyInv > $Quantity){
+				} elseif ($_SESSION['Items']->LineItems[$OrderLine->LineNumber]->QtyInv > $Quantity){
 					prnMsg( _('You are attempting to make the quantity ordered a quantity less than has already been invoiced') . '. ' . _('The quantity delivered and invoiced cannot be modified retrospectively'),'warn');
-				} elseif ($StockItem->Quantity !=$Quantity OR $StockItem->Price != $Price OR ABS($StockItem->Disc -$DiscountPercentage/100) >0.001 OR $StockItem->Narrative != $Narrative) {
+				} elseif ($OrderLine->Quantity !=$Quantity OR $OrderLine->Price != $Price OR ABS($OrderLine->Disc -$DiscountPercentage/100) >0.001 OR $OrderLine->Narrative != $Narrative) {
 
-					$_SESSION['Items']->update_cart_item($StockItem->StockID,
+					$_SESSION['Items']->update_cart_item($OrderLine->LineNumber,
 										$Quantity,
 										$Price,
 										($DiscountPercentage/100),
@@ -868,7 +872,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				}
 
 			} else { /*Its not a kit set item*/
-
+				
 			     include('includes/SelectOrderItems_IntoCart.inc');
 			}
 
@@ -879,36 +883,34 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	/* Run through each line of the order and work out the appropriate discount from the discount matrix */
 	$DiscCatsDone = array();
 	$counter =0;
-	foreach ($_SESSION['Items']->LineItems as $StockItem) {
+	foreach ($_SESSION['Items']->LineItems as $OrderLine) {
 
-		if ($StockItem->DiscCat !="" AND ! in_array($StockItem->DiscCat,$DiscCatsDone)){
-			$DiscCatsDone[$Counter]=$StockItem->DiscCat;
+		if ($OrderLine->DiscCat !="" AND ! in_array($OrderLine->DiscCat,$DiscCatsDone)){
+			$DiscCatsDone[$Counter]=$OrderLine->DiscCat;
 			$QuantityOfDiscCat =0;
 
 			foreach ($_SESSION['Items']->LineItems as $StkItems_2) {
 				/* add up total quantity of all lines of this DiscCat */
-				if ($StkItems_2->DiscCat==$StockItem->DiscCat){
+				if ($StkItems_2->DiscCat==$OrderLine->DiscCat){
 					$QuantityOfDiscCat += $StkItems_2->Quantity;
 				}
 			}
 			$result = DB_query("SELECT MAX(discountrate) AS discount
 						FROM discountmatrix
 						WHERE salestype='" .  $_SESSION['Items']->DefaultSalesType . "'
-						AND discountcategory ='" . $StockItem->DiscCat . "'
+						AND discountcategory ='" . $OrderLine->DiscCat . "'
 						AND quantitybreak <" . $QuantityOfDiscCat,$db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]!=0){ /* need to update the lines affected */
 				foreach ($_SESSION['Items']->LineItems as $StkItems_2) {
 					/* add up total quantity of all lines of this DiscCat */
-					if ($StkItems_2->DiscCat==$StockItem->DiscCat AND $StkItems_2->DiscountPercent < $myrow[0]){
-						$_SESSION['Items']->LineItems[$StkItems_2->StockID]->DiscountPercent = $myrow[0];
+					if ($StkItems_2->DiscCat==$OrderLine->DiscCat AND $StkItems_2->DiscountPercent < $myrow[0]){
+						$_SESSION['Items']->LineItems[$StkItems_2->LineNumber]->DiscountPercent = $myrow[0];
 					}
 				}
 			}
 		}
 	} /* end of discount matrix lookup code */
-
-	
 
 	if (count($_SESSION['Items']->LineItems)>0){ /*only show order lines if there are any */
 
@@ -930,15 +932,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$_SESSION['Items']->totalVolume = 0;
 		$_SESSION['Items']->totalWeight = 0;
 		$k =0;  //row colour counter
-		foreach ($_SESSION['Items']->LineItems as $StockItem) {
+		foreach ($_SESSION['Items']->LineItems as $OrderLine) {
 
-			$LineTotal =	$StockItem->Quantity * $StockItem->Price * (1 - $StockItem->DiscountPercent);
+			$LineTotal = $OrderLine->Quantity * $OrderLine->Price * (1 - $OrderLine->DiscountPercent);
 			$DisplayLineTotal = number_format($LineTotal,2);
-			$DisplayDiscount = number_format(($StockItem->DiscountPercent * 100),2);
+			$DisplayDiscount = number_format(($OrderLine->DiscountPercent * 100),2);
 
-			if ($StockItem->QOHatLoc < $StockItem->Quantity AND ($StockItem->MBflag=='B' OR $StockItem->MBflag=='M')) {
+			if ($OrderLine->QOHatLoc < $OrderLine->Quantity AND ($OrderLine->MBflag=='B' OR $OrderLine->MBflag=='M')) {
 				/*There is a stock deficiency in the stock location selected */
-
 				$RowStarter = '<tr bgcolor="#EEAABB">';
 			} elseif ($k==1){
 				$RowStarter = '<tr bgcolor="#CCCCCC">';
@@ -950,30 +951,30 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			echo $RowStarter;
 
-			echo '<TD><A target="_blank" HREF="' . $rootpath . '/StockStatus.php?' . SID . 'StockID=' . $StockItem->StockID . '">' . $StockItem->StockID . '</A></TD>
-				<TD>' . $StockItem->ItemDescription . '</TD>
-				<TD><INPUT TYPE=TEXT NAME="Quantity_' . $StockItem->StockID . '" SIZE=6 MAXLENGTH=6 VALUE=' . $StockItem->Quantity . '></TD>
-				<TD>' . $StockItem->Units . '</TD>';
+			echo '<TD><A target="_blank" HREF="' . $rootpath . '/StockStatus.php?' . SID . 'StockID=' . $OrderLine->StockID . '">' . $OrderLine->StockID . '</A></TD>
+				<TD>' . $OrderLine->ItemDescription . '</TD>
+				<TD><INPUT TYPE=TEXT NAME="Quantity_' . $OrderLine->LineNumber . '" SIZE=6 MAXLENGTH=6 VALUE=' . $OrderLine->Quantity . '></TD>
+				<TD>' . $OrderLine->Units . '</TD>';
 
 			if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 				/*OK to display with discount if it is an internal user with appropriate permissions */
 
-				echo '<TD><INPUT TYPE=TEXT NAME="Price_' . $StockItem->StockID . '" SIZE=16 MAXLENGTH=16 VALUE=' . $StockItem->Price . '></TD>
-					<TD><INPUT TYPE=TEXT NAME="Discount_' . $StockItem->StockID . '" SIZE=5 MAXLENGTH=4 VALUE=' . ($StockItem->DiscountPercent * 100) . '>%</TD>';
+				echo '<TD><INPUT TYPE=TEXT NAME="Price_' . $OrderLine->LineNumber . '" SIZE=16 MAXLENGTH=16 VALUE=' . $OrderLine->Price . '></TD>
+					<TD><INPUT TYPE=TEXT NAME="Discount_' . $OrderLine->LineNumber . '" SIZE=5 MAXLENGTH=4 VALUE=' . ($OrderLine->DiscountPercent * 100) . '>%</TD>';
 
 			} else {
-				echo '<TD ALIGN=RIGHT>' . number_format($StockItem->Price,2) . '</TD><TD></TD>';
-				echo '<INPUT TYPE=HIDDEN NAME="Price_' . $StockItem->StockID . '" VALUE=' . $StockItem->Price . '>';
+				echo '<TD ALIGN=RIGHT>' . number_format($OrderLine->Price,2) . '</TD><TD></TD>';
+				echo '<INPUT TYPE=HIDDEN NAME="Price_' . $OrderLine->LineNumber . '" VALUE=' . $OrderLine->Price . '>';
 			}
 
-			echo '<TD ALIGN=RIGHT>' . $DisplayLineTotal . '</FONT></TD><TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $StockItem->StockID . '">' . _('Delete') . '</A></TD></TR>';
+			echo '<TD ALIGN=RIGHT>' . $DisplayLineTotal . '</FONT></TD><TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $OrderLine->LineNumber . '">' . _('Delete') . '</A></TD></TR>';
 
 			echo $RowStarter;
-			echo '<TD COLSPAN=7><TEXTAREA  NAME="Narrative_' . $StockItem->StockID . '" cols=100% rows=1>' . $StockItem->Narrative . '</TEXTAREA><BR><HR></TD></TR>';
+			echo '<TD COLSPAN=7><TEXTAREA  NAME="Narrative_' . $OrderLine->LineNumber . '" cols=100% rows=1>' . $OrderLine->Narrative . '</TEXTAREA><BR><HR></TD></TR>';
 
 			$_SESSION['Items']->total = $_SESSION['Items']->total + $LineTotal;
-			$_SESSION['Items']->totalVolume = $_SESSION['Items']->totalVolume + $StockItem->Quantity * $StockItem->Volume;
-			$_SESSION['Items']->totalWeight = $_SESSION['Items']->totalWeight + $StockItem->Quantity * $StockItem->Weight;
+			$_SESSION['Items']->totalVolume = $_SESSION['Items']->totalVolume + $OrderLine->Quantity * $OrderLine->Volume;
+			$_SESSION['Items']->totalWeight = $_SESSION['Items']->totalWeight + $OrderLine->Quantity * $OrderLine->Weight;
 
 		} /* end of loop around items */
 

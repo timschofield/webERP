@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.8 $ */
+
+/* $Revision: 1.9 $ */
+
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;

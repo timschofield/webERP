@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.36 $ */
+
+/* $Revision: 1.37 $ */
+
 
 $PageSecurity = 1;
 
@@ -743,7 +745,12 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/TaxAuthorities.php?' . SID . "'><li>" . _('Tax Types and Rates Maintenance') . '</li></a>'; ?>
+								<?php echo "<a href='" . $rootpath . '/TaxAuthorities.php?' . SID . "'><li>" . _('Tax Authorities and Rates Maintenance') . '</li></a>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/TaxGroups.php?' . SID . "'><li>" . _('Tax Group Maintenance') . '</li></a>'; ?>
 							</td>
 							</tr>
 							<tr>

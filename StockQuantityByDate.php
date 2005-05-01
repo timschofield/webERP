@@ -1,6 +1,7 @@
 <?php
 
-/* $Revision: 1.6 $ */
+
+/* $Revision: 1.7 $ */
 /* Contributed by Chris Bice - gettext by Kitch*/
 
 

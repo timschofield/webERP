@@ -2,7 +2,8 @@
 
 $PageSecurity = 2;
 
-/* $Revision: 1.7 $ */
+
+/* $Revision: 1.8 $ */
 
 If (isset($_POST['PrintPDF']) 
 	AND isset($_POST['FromCriteria']) 

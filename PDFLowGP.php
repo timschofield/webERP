@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.6 $ */
+
+/* $Revision: 1.7 $ */
+
 include('config.php');
 
 if (!isset($_POST['FromCat'])  OR $_POST['FromCat']=='') {

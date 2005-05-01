@@ -1,5 +1,6 @@
 <?php
-/* $Revision: 1.16 $ */
+
+/* $Revision: 1.17 $ */
 
 $PageSecurity=1;
 
@@ -116,6 +117,7 @@ if (!function_exists('gettext')){
 	
 	echo '<TR>
 	<TD>' . _('Language') . ":</TD>
+
 	<TD><SELECT name='Language'>";
 
 	$LangDirHandle = dir('locale/');

@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.6 $ */
+
+/* $Revision: 1.7 $ */
+
 $PageSecurity = 3;
 include ('includes/session.inc');
 include('includes/SQL_CommonFunctions.inc');

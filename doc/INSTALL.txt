@@ -1,5 +1,7 @@
 WEB-ERP Installation
-/* $Revision: 1.10 $ */
+
+/* $Revision: 1.11 $ */
+
 Upgrading
 
 A script is included under webERP/sql/mysql/ to update an existing mysql weberp database to the current version. The upgrade script assumes the weberp database is called weberp. The script must be edited to change the name of the database if this is not the case.

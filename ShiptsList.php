@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.6 $ */
+
+/* $Revision: 1.7 $ */
+
 $PageSecurity = 2;
 include ('includes/session.inc');
 $title = _('Shipments Open Inquiry');

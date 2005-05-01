@@ -1,5 +1,6 @@
 <?php
-/* $Revision: 1.9 $ */
+
+/* $Revision: 1.10 $ */
 
 
 $PageSecurity=15;
@@ -8,10 +9,10 @@ $title = _('Tax Authorities');
 include('includes/header.inc');
 
 
-if (isset($_POST['SelectedTaxID'])){
-	$SelectedTaxID =$_POST['SelectedTaxID'];
-} elseif(isset($_GET['SelectedTaxID'])){
-	$SelectedTaxID =$_GET['SelectedTaxID'];
+if (isset($_POST['SelectedTaxAuthID'])){
+	$SelectedTaxAuthID =$_POST['SelectedTaxAuthID'];
+} elseif(isset($_GET['SelectedTaxAuthID'])){
+	$SelectedTaxAuthID =$_GET['SelectedTaxAuthID'];
 }
 
 
@@ -25,17 +26,21 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('The tax type description may not be empty'), 'error');
 	}
 
-	if ($InputError !=1 && isset($SelectedTaxID)) {
+	if (isset($SelectedTaxAuthID)) {
 
-		/*SelectedTaxID could also exist if submit had not been clicked this code
+		/*SelectedTaxAuthID could also exist if submit had not been clicked this code
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
 
 		$sql = 'UPDATE taxauthorities
 				SET taxglcode =' . $_POST['TaxGLCode'] . ',
 				purchtaxglaccount =' . $_POST['PurchTaxGLCode'] . ",
-				description = '" . DB_escape_string($_POST['Description']) . "'
-			WHERE taxid = " . $SelectedTaxID;
+				description = '" . DB_escape_string($_POST['Description']) . "',
+				bank = '".DB_escape_string($_POST['Bank'])."',
+				bankacctype = '".DB_escape_string($_POST['BankAccType'])."',
+				bankacc = '".DB_escape_string($_POST['BankAcc'])."',
+				bankswift = '".DB_escape_string($_POST['BankSwift'])."'
+			WHERE taxid = " . $SelectedTaxAuthID;
 
 		$ErrMsg = _('The update of this tax authority failed because');
 		$result = DB_query($sql,$db,$ErrMsg);
@@ -49,11 +54,19 @@ if (isset($_POST['submit'])) {
 		$sql = "INSERT INTO taxauthorities (
 						taxglcode,
 						purchtaxglaccount,
-						description)
+						description,
+						bank,
+						bankacctype,
+						bankacc,
+						bankswift
 			VALUES (
 				" . $_POST['TaxGLCode'] . ",
 				" . $_POST['PurchTaxGLCode'] . ",
-				'" .DB_escape_string($_POST['Description']) . "'
+				'" .DB_escape_string($_POST['Description']) . "',
+				'" .DB_escape_string($_POST['Bank']) . "',
+				'" .DB_escape_string($_POST['BankAccType']) . "',
+				'" .DB_escape_string($_POST['BankAcc']) . "',
+				'" .DB_escape_string($_POST['BankSwift']) . "')
 				)";
 
 
@@ -64,32 +77,21 @@ if (isset($_POST['submit'])) {
 
 		$NewTaxID = DB_Last_Insert_ID($db,'taxauthorities','taxid');
 
-		$ErrMsg = _('Could not retrieve the currently in use TaxLevels because');
-		$TaxLevelResult = DB_query('SELECT taxlevel
-						FROM stockmaster
-						GROUP BY taxlevel',$db,$ErrMsg);
-
-
-		$ErrMsg =  _('Could not retrieve the currently in use dispatch tax authorities from the inventory location records failed because');
-		$DispTaxAuthResult = DB_query('SELECT taxauthority FROM locations GROUP BY taxauthority',$db,$ErrMsg);
-
-
 		while ($DispTaxAuthRow = DB_fetch_array($DispTaxAuthResult)){
-			while ($TaxLevelRow = DB_fetch_array($TaxLevelResult)){
-				$sql = 'INSERT INTO taxauthlevels (
-							taxauthority,
-							dispatchtaxauthority,
-							level)
-						VALUES (
-							' . $NewTaxID  . ',
-							' . $DispTaxAuthRow['taxauthority'] . ',
-							' . $TaxLevelRow['taxlevel'] . '
-							)';
-				$InsertResult = DB_query($sql,$db);
-			}
-			DB_data_seek($TaxLevelResult,0);
+			$sql = 'INSERT INTO taxauthrates (
+						taxauthority,
+						dispatchtaxprovince,
+						taxcatid
+						)
+						SELECT 
+						' . $NewTaxID  . ',
+						taxprovinces.taxprovinceid,
+						taxcategories.taxcatid
+						FROM taxprovinces, taxcategories
+						)';
+			$InsertResult = DB_query($sql,$db);
+			
 		}
-
 	}
 	//run the SQL from either of the above possibilites
 	if ($InputError !=1) {
@@ -100,54 +102,39 @@ if (isset($_POST['submit'])) {
 	}
 	echo "<P>$msg<BR>";
 
+	prnMsg($msg);
+		
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN OTHER TABLES
 
-	$sql= 'SELECT COUNT(*) FROM custbranch WHERE custbranch.taxauthority=' . $SelectedTaxID;
+	$sql= 'SELECT COUNT(*) FROM taxgrouptaxes WHERE taxauthid=' . $SelectedTaxAuthID;
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
-		prnmsg(_('Cannot delete this tax authority because there are customer branches created with this tax authority') . ' - ' . _('change these branches first'),'warn');
-		echo '<BR>' . _('There are') . ' ' . $myrow[0] .  ' ' . _('customer branches referring to this authority');
+		prnmsg(_('Cannot delete this tax authority because there are tax groups defined that use it'),'warn');
 	} else {
-		// S.O add check if there are suppliers using this tax authority
-		$sql= 'SELECT COUNT(*) FROM suppliers WHERE suppliers.taxauthority=' . $SelectedTaxID;
-		$result = DB_query($sql,$db);
-		$myrow = DB_fetch_row($result);
-		if ($myrow[0]>0) {
-			prnMsg(_('Cannot delete this tax authority because there are suppliers created with this tax authority') . ' - ' . _('change these suppliers first'),'warn');
-			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('suppliers referring to this authority');
-		} else {
-			// S.O add check if there are suppliers using this tax authority
-			$sql= 'SELECT count(*) FROM locations WHERE locations.taxauthority=' . $SelectedTaxID;
-			$result = DB_query($sql,$db);
-			$myrow = DB_fetch_row($result);
-			if ($myrow[0]>0){
-				prnMsg(_('Cannot delete this tax authority because there are inventory locations created with this tax authority') . ' - ' . _('change the inventory location record first'),'warn');
-				echo '<br>' . _('There are') . ' ' . $myrow[0] .  ' ' . _('inventory locations referring to this authority');
-			} else {
-
-			/*Cascade deletes in TaxAuthLevels */
-				$result = DB_query('DELETE FROM taxauthlevels WHERE taxauthority= ' . $SelectedTaxID,$db);
-				$result = DB_query('DELETE FROM taxauthlevels WHERE dispatchtaxauthority= ' . $SelectedTaxID,$db);
-				$result = DB_query('DELETE FROM taxauthorities WHERE taxid= ' . $SelectedTaxID,$db);
-				prnMsg(_('The selected tax authority record has been deleted'),'success');
-				unset ($SelectedTaxID);
-			}
-		}
+		/*Cascade deletes in TaxAuthLevels */
+		$result = DB_query('DELETE FROM taxauthrates WHERE taxauthority= ' . $SelectedTaxAuthID,$db);
+		$result = DB_query('DELETE FROM taxauthorities WHERE taxid= ' . $SelectedTaxAuthID,$db);
+		prnMsg(_('The selected tax authority record has been deleted'),'success');
+		unset ($SelectedTaxAuthID);
 	} // end of related records testing
-
 }
 
-if (!isset($SelectedTaxID)) {
+if (!isset($SelectedTaxAuthID)) {
 
-/* It could still be the second time the page has been run and a record has been selected for modification - SelectedTaxID will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters then none of the above are true and the list of tax authorities will be displayed with links to delete or edit each. These will call the same page again and allow update/input or deletion of the records*/
+/* It could still be the second time the page has been run and a record has been selected for modification - SelectedTaxAuthID will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters then none of the above are true and the list of tax authorities will be displayed with links to delete or edit each. These will call the same page again and allow update/input or deletion of the records*/
 
-	$sql = 'SELECT taxauthorities.taxid,
-			taxauthorities.description,
-			taxglcode, purchtaxglaccount
+	$sql = 'SELECT taxid,
+			description,
+			taxglcode, 
+			purchtaxglaccount,
+			bank,
+			bankacc,
+			bankacctype,
+			bankswift
 		FROM taxauthorities';
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The defined tax authorities could not be retrieved because');
@@ -160,6 +147,10 @@ if (!isset($SelectedTaxID)) {
 		<td class='tableheader'>" . _('Description') . "</td>
 		<td class='tableheader'>" . _('Output Tax') . '<BR>' . _('GL Account') . "</td>
 		<td class='tableheader'>" . _('Input Tax') . '<BR>' . _('GL Account') . "</td>
+		<td class='tableheader'>" . _('Bank') . "</td>
+		<td class='tableheader'>" . _('Bank Account') . "</td>
+		<td class='tableheader'>" . _('Bank Act Type') . "</td>
+		<td class='tableheader'>" . _('Bank Swift') . "</td>
 		</tr></FONT>";
 
 	while ($myrow = DB_fetch_row($result)) {
@@ -170,14 +161,22 @@ if (!isset($SelectedTaxID)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
 				<td><td><a href=\"%s&TaxAuthority=%s\">" . _('Edit Rates') . "</a></td>
-				<td><a href=\"%s&SelectedTaxID=%s\">" . _('Edit') . "</a></td>
-				<td><a href=\"%s&SelectedTaxID=%s&delete=yes\">" . _('Delete') . '</a></td>
+				<td><a href=\"%s&SelectedTaxAuthID=%s\">" . _('Edit') . "</a></td>
+				<td><a href=\"%s&SelectedTaxAuthID=%s&delete=yes\">" . _('Delete') . '</a></td>
 			</tr>',
 			$myrow[0],
 			$myrow[1],
 			$myrow[2],
 			$myrow[3],
+			$myrow[4],
+			$myrow[5],
+			$myrow[6],
+			$myrow[7],
 			$rootpath . '/TaxAuthorityRates.php?' . SID,
 			$myrow[0],
 			$_SERVER['PHP_SELF'] . '?' . SID,
@@ -195,21 +194,25 @@ if (!isset($SelectedTaxID)) {
 
 
 
-if (isset($SelectedTaxID)) {
+if (isset($SelectedTaxAuthID)) {
 	echo "<Center><a href='" .  $_SERVER['PHP_SELF'] . '?' . SID ."'>" . _('Reveiw all defined tax authority records') . '</a></Center>';
  }
 
 
 echo "<P><FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID .'>';
 
-if (isset($SelectedTaxID)) {
+if (isset($SelectedTaxAuthID)) {
 	//editing an existing tax authority
 
 	$sql = 'SELECT taxglcode, 
 			purchtaxglaccount, 
-			description 
+			description,
+			bank,
+			bankacc,
+			bankacctype,
+			bankswift 
 		FROM taxauthorities 
-		WHERE taxid=' . $SelectedTaxID;
+		WHERE taxid=' . $SelectedTaxAuthID;
 
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_array($result);
@@ -217,10 +220,15 @@ if (isset($SelectedTaxID)) {
 	$_POST['TaxGLCode']	= $myrow['taxglcode'];
 	$_POST['PurchTaxGLCode']= $myrow['purchtaxglaccount'];
 	$_POST['Description']	= $myrow['description'];
+	$_POST['Bank']		= $myrow['bank'];
+	$_POST['BankAccType']	= $myrow['bankacctype'];
+	$_POST['BankAcc'] 	= $myrow['bankacc'];
+	$_POST['BankSwift']	= $myrow['bankswift'];
+ 
 
-	echo "<INPUT TYPE=HIDDEN NAME='SelectedTaxID' VALUE=" . $SelectedTaxID . '>';
+	echo "<INPUT TYPE=HIDDEN NAME='SelectedTaxAuthID' VALUE=" . $SelectedTaxAuthID . '>';
 
-}  //end of if $SelectedTaxID only do the else when a new record is being entered
+}  //end of if $SelectedTaxAuthID only do the else when a new record is being entered
 
 
 $SQL = 'SELECT accountcode,
@@ -266,8 +274,18 @@ while ($myrow = DB_fetch_array($result)) {
 
 } //end while loop
 
+echo '</SELECT></TD></TR>';
 
-echo '</SELECT></TD></TR></TABLE>';
+echo '<TR><TD>' . _('Bank Name') . ':</TD>';
+echo '<TD><input type=Text name="Bank" SIZE=41 MAXLENGTH=40 value="' . $_POST['Bank'] . '"></TD></TR>';
+echo '<TR><TD>' . _('Bank Account Type') . ':</TD>';
+echo '<TD><input type=Text name="BankAccType" SIZE=15 MAXLENGTH=20 value="' . $_POST['BankAccType'] . '"></TD></TR>';
+echo '<TR><TD>' . _('Bank Account') . ':</TD>';
+echo '<TD><input type=Text name="BankAcc" SIZE=21 MAXLENGTH=20 value="' . $_POST['BankAcc'] . '"></TD></TR>';
+echo '<TR><TD>' . _('Bank Swift No') . ':</TD>';
+echo '<TD><input type=Text name="BankSwift" SIZE=15 MAXLENGTH=14 value="' . $_POST['BankSwift'] . '"></TD></TR>';
+
+echo '</TABLE>';
 
 echo '<input type=submit name=submit value=' . _('Enter Information') . '></CENTER></FORM>';
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 	echo '<BR><BR>';
 	echo '</TD>';
@@ -11,7 +11,7 @@
 /*Do the borders */
 	echo '<TD BGCOLOR="#555555" COLSPAN="3"></TD></TR>';
 	echo '<TR><TD BGCOLOR="#555555" WIDTH="10"></TD></TR>';
-	echo '<TR BGCOLOR="#555555"><TD COLSPAN=3><FONT SIZE="1" COLOR="#555555">Wont see this cos same colour as background</FONT></TD></TR>';
+	echo '<TR BGCOLOR="#555555"><TD COLSPAN=3><FONT SIZE="1">&nbsp;</FONT></TD></TR>';
 	
 	echo '</TABLE>';
 

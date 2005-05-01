@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.11 $ */
+
+/* $Revision: 1.12 $ */
+
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');

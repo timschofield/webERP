@@ -1,5 +1,6 @@
 <?php
-/* $Revision: 1.6 $ */
+
+/* $Revision: 1.7 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 

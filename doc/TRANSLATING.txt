@@ -69,6 +69,7 @@ When there have been changes to the underlying scripts and new strings need to b
 
 It is recommended that translations start with the index.php module since this main menu is the most visible of all pages.
 
+
 When changing a module's translation it is important to click the "Modify" to ensure the changes to translations are updated.
 
 Also, due to the nature of the web it is always appropriate to backup your work after you have done significant amounts of translation by downloading the messages.po after every session make a favouites/bookmark for the translation:

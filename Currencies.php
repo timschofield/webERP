@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $PageSecurity = 9;
 
 include('includes/session.inc');
@@ -251,7 +251,7 @@ if (!isset($_GET['delete'])) {
     echo '<TD>';
     echo '<INPUT TYPE="text" name="HundredsName" SIZE=10 MAXLENGTH=15 VALUE="'. $_POST['HundredsName'].'">';
     echo '</TD></TR>';
-    echo '<TR><TD>'.('Exchange Rate').':</TD>';
+    echo '<TR><TD>'._('Exchange Rate').':</TD>';
     echo '<TD>';
     echo '<INPUT TYPE="text" name="ExchangeRate" SIZE=10 MAXLENGTH=9 VALUE='. $_POST['ExchangeRate'].'>';
     echo '</TD></TR>';

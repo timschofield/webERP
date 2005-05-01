@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.3 $ */
+
+/* $Revision: 1.4 $ */
+
 
 define ('LIKE','LIKE');
 
@@ -23,6 +25,9 @@ function DB_query ($SQL,
 		$DebugMessage = _('The SQL that failed was');
 	}
 	if (DB_error_no($Conn) != 0 AND $TrapErrors==true){
+		if ($TrapErrors){
+			require_once('includes/header.inc');
+		}
 		prnMsg($ErrorMessage.'<BR>' . DB_error_msg($Conn),'error', _('Database Error'));
 		if ($debug==1){
 			prnMsg($DebugMessage. "<BR>$SQL<BR>",'error',_('Database SQL Failure'));

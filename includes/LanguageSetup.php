@@ -25,13 +25,14 @@ if (function_exists('gettext')){
 	
 	$Locale = setlocale (LC_CTYPE, $_SESSION['Language']);
 	$Locale = setlocale (LC_MESSAGES, $_SESSION['Language']);
-		
+	
 	// possibly even if locale fails the language will still switch by using Language instead of locale variable
 	putenv('LANG=' . $_SESSION['Language']);
 	putenv('LANGUAGE=' . $_SESSION['Language']);
   //putenv('LANG=$Language_Country');
-	bindtextdomain ('messages', './locale/');
+	bindtextdomain ('messages', './locale');
 	textdomain ('messages');
 }
 
+	
 ?>

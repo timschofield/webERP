@@ -1,5 +1,6 @@
 <?php
-/* $Revision: 1.11 $ */
+
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 5;
 
@@ -351,7 +352,7 @@ if (isset($_POST['submit'])) {
 							bankref='" . $_POST['BankRef'] . "', 
 					 		bankact='" . $_POST['BankAct'] . "', 
 							remittance=" . $_POST['Remittance'] . ", 
-							taxauthority=" . $_POST['TaxAuthority'] . " 
+							taxgroupid=" . $_POST['TaxGroup'] . " 
 						WHERE supplierid = '$SupplierID'";
 
 			$ErrMsg = _('The supplier could not be updated because');
@@ -376,7 +377,7 @@ if (isset($_POST['submit'])) {
 							bankref, 
 							bankact, 
 							remittance, 
-							taxauthority) 
+							taxgroupid) 
 					 VALUES ('$SupplierID', 
 					 	'" . $_POST['SuppName'] . "', 
 						'" . $_POST['Address1'] . "', 
@@ -390,7 +391,7 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['BankRef'] . "', 
 						'" . $_POST['BankAct'] . "', 
 						" .  $_POST['Remittance'] . ", 
-						" . $_POST['TaxAuthority'] . ")";
+						" . $_POST['TaxGroup'] . ")";
 
 			$ErrMsg = _('The supplier') . ' ' . $_POST['SuppName'] . ' ' . _('could not be added because');
 			$DbgMsg = _('The SQL that was used to insert the supplier but failed was');
@@ -412,7 +413,7 @@ if (isset($_POST['submit'])) {
 			unset($_POST['BankRef']);
 			unset($_POST['BankAct']);
 			unset($_POST['Remittance']);
-			unset($_POST['TaxAuthority']);
+			unset($_POST['TaxGroup']);
 
 		}
 		
@@ -524,15 +525,19 @@ if (!isset($SupplierID)) {
 
 	echo '</SELECT></TD></TR>';
 
-	echo '<TR><TD>' . _('Tax Authority') . ":</TD><TD><SELECT NAME='TaxAuthority'>";
+	echo '<TR><TD>' . _('Tax Group') . ":</TD><TD><SELECT NAME='TaxGroup'>";
 
 	DB_data_seek($result, 0);
 
-	$sql = 'SELECT taxid, description FROM taxauthorities';
+	$sql = 'SELECT taxgroupid, taxgroupdescription FROM taxgroups';
 	$result = DB_query($sql, $db);
 
 	while ($myrow = DB_fetch_array($result)) {
-			echo '<OPTION VALUE=' . $myrow['taxid'] . '>' . $myrow['description'];
+		if ($_POST['TaxGroup'] == $myrow['taxgroupid']){
+			echo '<OPTION SELECTED VALUE=' . $myrow['taxgroupid'] . '>' . $myrow['taxgroupdescription'];
+		} else {
+			echo '<OPTION VALUE=' . $myrow['taxgroupid'] . '>' . $myrow['taxgroupdescription'];
+		}
 	} //end while loop
 
 	echo "</SELECT></TD></TR></TABLE><p><CENTER><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Insert New Supplier') . "'>";
@@ -559,7 +564,7 @@ if (!isset($SupplierID)) {
 				bankref, 
 				bankact, 
 				remittance, 
-				taxauthority 
+				taxgroupid 
 			FROM suppliers 
 			WHERE supplierid = '$SupplierID'";
 				  
@@ -578,7 +583,7 @@ if (!isset($SupplierID)) {
 		$_POST['Remittance']  = $myrow['remittance'];
 		$_POST['BankRef']  = $myrow['bankref'];
 		$_POST['BankAct']  = $myrow['bankact'];
-		$_POST['TaxAuthority'] = $myrow['taxauthority'];
+		$_POST['TaxGroup'] = $myrow['taxgroupid'];
 
 		echo "<INPUT TYPE=HIDDEN NAME='SupplierID' VALUE='$SupplierID'>";
 
@@ -638,20 +643,20 @@ if (!isset($SupplierID)) {
 	echo '</SELECT></TD></TR>';
 
 
-	echo '<TR><TD>' . _('Tax Authority') . ":</TD><TD><SELECT NAME='TaxAuthority'>";
+	echo '<TR><TD>' . _('Tax Group') . ":</TD><TD><SELECT NAME='TaxGroup'>";
 
 	DB_data_seek($result, 0);
 
-	$sql = 'SELECT taxid, description FROM taxauthorities';
+	$sql = 'SELECT taxgroupid, taxgroupdescription FROM taxgroups';
 	$result = DB_query($sql, $db);
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['taxid'] == $_POST['TaxAuthority']) {
+		if ($myrow['taxgroupid'] == $_POST['TaxGroup']) {
 			echo '<OPTION SELECTED VALUE=';
 		} else {
 			echo '<OPTION VALUE=';
 		}
-		echo $myrow['taxid'] . '>' . $myrow['description'];
+		echo $myrow['taxgroupid'] . '>' . $myrow['taxgroupdescription'];
 
 	} //end while loop
 

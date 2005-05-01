@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.15 $ */
+
+/* $Revision: 1.16 $ */
+
 /*SelectOrderItems_IntoCart.inc
 
 This snippet is used to enter order line items into the cart object:
@@ -12,7 +14,7 @@ items into the cart as well as plain vanilla items outside of the kitset loop
 
 $AlreadyOnThisOrder =0;
 
-if (count($_SESSION['Items']->LineItems)>0){
+if (count($_SESSION['Items']->LineItems)>0 AND $_SESSION['SO_AllowSameItemMultipleTimes']==0){
 
 	foreach ($_SESSION['Items']->LineItems AS $OrderItem) {
 
@@ -21,7 +23,7 @@ if (count($_SESSION['Items']->LineItems)>0){
 
 		if (strcasecmp($OrderItem->StockID, $NewItem)==0) {
 			$AlreadyOnThisOrder = 1;
-			echo '<B>' . _('Warning') . ':</B> ' . _('the part') . ' ' . $NewItem . ' ' . _('is already on this order') . ' - ' . _('the system will not allow the same item on the order more than once') . '. ' . _('However you can change the quantity ordered of the existing line if necessary');
+			prnMsg(_('The item') . ' ' . $NewItem . ' ' . _('is already on this order the system is set up to prevent the same item being on the order more than once. However you can change the quantity ordered of the existing line if necessary'));
        		}
 	} /* end of the foreach loop to look for preexisting items of the same code */
 }
@@ -33,7 +35,7 @@ if ($AlreadyOnThisOrder!=1){
 		stockmaster.units,
 		stockmaster.volume,
 		stockmaster.kgs,
-		(materialcost+labourcost+overheadcost) as standardcost,
+		(materialcost+labourcost+overheadcost) AS standardcost,
 		locstock.quantity,
 		stockmaster.mbflag,
 		stockmaster.discountcategory,
@@ -79,7 +81,6 @@ if ($AlreadyOnThisOrder!=1){
 			if ( $myrow['DiscountCategory'] != "" ){
                                 $DiscCatsDone[$Counter]=$StockItem->DiscCat;
                                 $QuantityOfDiscCat =0;
-
                                 $result = DB_query("SELECT MAX(discountrate) AS discount
                                                         FROM discountmatrix
                                                         WHERE salestype='" .  $_SESSION['Items']->DefaultSalesType . "'
@@ -91,13 +92,16 @@ if ($AlreadyOnThisOrder!=1){
 				} else {
 					$Discount = 0;
 				}
-                        }
+                        } elseif (!isset($Discount)){
+				$Discount = 0;
+			}
 			
 			$Price = GetPrice ($NewItem, $_SESSION['Items']->DebtorNo,$_SESSION['Items']->Branch, &$db);
 			
 			$WithinCreditLimit = true;
 			
-			if ($_SESSION['CheckCreditLimits'] > 0){  /*Check credit limits is 1 for warn and 2 for prohibit sales */
+			if ($_SESSION['CheckCreditLimits'] > 0){  /*Check credit limits is 1 for warn 
+											and 2 for prohibit sales */
 				$_SESSION['Items']->CreditAvailable -= ($NewItemQty * $Price * (1-$Discount));
 			
 				if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items']->CreditAvailable <=0){
@@ -129,13 +133,13 @@ if ($AlreadyOnThisOrder!=1){
 							$UpdateDB
 							)==1){
 
-		      			$_SESSION['Items']->LineItems[$NewItem]->StandardCost = $myrow['standardcost'];
-				}
+		      		$_SESSION['Items']->LineItems[($_SESSION['Items']->LineCounter -1)]->StandardCost = $myrow['standardcost'];
 			}
+		}
              } else {
-			echo '<BR><FONT COLOR=RED SIZE=3><B>' . _('Warning') . ': </FONT></B>' . _('the item code') . ' ' . $NewItem . ' ' . _('does not have a cost set up and order entry is set up to prohibit sales of items with no cost data entered');
+			prnMsg(_('The item code') . ' ' . $NewItem . ' ' . _('does not have a cost set up and order entry is set up to prohibit sales of items with no cost data entered'),'warn');
 	     }
-   }
+	}
 
 } /* end of if not already on the order */
 

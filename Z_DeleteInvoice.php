@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.7 $ */
+
+/* $Revision: 1.8 $ */
+
 /* Script to delete an invoice expects and invoice number to delete
 not included on any menu for obvious reasons
 This page must be called directly using path/Z_DeleteInvoice.php?InvoiceNo=?????    !! */

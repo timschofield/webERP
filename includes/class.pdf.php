@@ -51,6 +51,7 @@ function line($x1,$y1,$x2,$y2)
 
 function addText($xb,$yb,$size,$text)//,$angle=0,$wordSpaceAdjust=0)
 {
+    $text = html_entity_decode($text);
     $this->SetFontSize($size);
     $this->Text($xb, $this->h-$yb, $text);
 }
@@ -172,6 +173,7 @@ function Stream() {
 }
 
 function addTextWrap($xb, $yb, $w, $h, $txt, $align='J', $border=0, $fill=0) {
+  $txt = html_entity_decode($txt);
   $this->x = $xb;
   $this->y = $this->h - $yb - $h;
  
@@ -248,8 +250,6 @@ function addTextWrap($xb, $yb, $w, $h, $txt, $align='J', $border=0, $fill=0) {
     $this->Cell($w,$h,substr($s,0,$sep),$b,2,$align,$fill);
     $this->x=$this->lMargin;
 
-
-    
     return substr($s,$sep);
 }
 		

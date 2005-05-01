@@ -1,6 +1,8 @@
 <?php
 
-/* $Revision: 1.12 $ */
+
+/* $Revision: 1.13 $ */
+
 $PageSecurity = 11;
 
 /* Session started in header.inc for password checking and authorisation level check */

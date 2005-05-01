@@ -1,5 +1,7 @@
 <?php
-/* $Revision: 1.16 $ */
+
+/* $Revision: 1.17 $ */
+
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
 */
@@ -278,6 +280,7 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 
 	$OrderNo = DB_Last_Insert_ID($db,'salesorders','orderno');
 	$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (
+						orderlineno,
 						orderno,
 						stkcode,
 						unitprice,
@@ -289,7 +292,8 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 	foreach ($_SESSION['Items']->LineItems as $StockItem) {
 
 		$LineItemsSQL = $StartOf_LineItemsSQL .
-					$OrderNo . ",
+					$StockItem->LineNumber . ",
+					" . $OrderNo . ",
 					'" . $StockItem->StockID . "',
 					". $StockItem->Price . ",
 					" . $StockItem->Quantity . ",
@@ -372,9 +376,9 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 		/* Check to see if the quantity reduced to the same quantity
 		as already invoiced - so should set the line to completed */
 		if ($StockItem->Quantity == $StockItem->QtyInv){
-		$Completed = 1;
+			$Completed = 1;
 		} else {  /* order line is not complete */
-		$Completed = 0;
+			$Completed = 0;
 		}
 
 		$LineItemsSQL = "UPDATE salesorderdetails SET unitprice="  . $StockItem->Price . ', 
@@ -382,7 +386,7 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 								discountpercent=' . floatval($StockItem->DiscountPercent) . ', 
 								completed=' . $Completed . ' 
 					WHERE salesorderdetails.orderno=' . $_SESSION['ExistingOrder'] . " 
-					AND salesorderdetails.stkcode='" . $StockItem->StockID . "'";
+					AND salesorderdetails.orderlineno='" . $StockItem->LineNumber . "'";
 
 		$ErrMsg = _('The updated order line cannot be modified because');
 		$Upd_LineItemResult = DB_query($LineItemsSQL,$db,$ErrMsg,$DbgMsg,true);

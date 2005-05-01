@@ -1,6 +1,7 @@
 <?php
 $PageSecurity = 2;
-/* $Revision: 1.5 $ */
+
+/* $Revision: 1.6 $ */
 
 
 If (isset($_POST['PrintPDF'])
