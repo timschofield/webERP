@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity=1;
 
@@ -91,9 +91,9 @@ if (isset($_POST['Modify'])) {
 
 echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
-If (!isset($_POST['DisplayRecordsMax'])) {
+If (!isset($_POST['DisplayRecordsMax']) OR $_POST['DisplayRecordsMax']=='') {
 
-  $_POST['DisplayRecordsMax'] = $_SESSION['DisplayRecordsMax'];
+  $_POST['DisplayRecordsMax'] = $_SESSION['DefaultDisplayRecordsMax'];
 
 }
 
@@ -109,15 +109,8 @@ echo '<TR>
 	</TR>";
 	
 	
-	
-if (!function_exists('gettext')){
-	echo '<TR>
-	<TD COLSPAN=2><FONT SIZE=1><I>' . _('The GNU gettext system must be installed on the web-server for other languages to be displayed') . '<BR>' . _('Once gettext is installed an option to allow changes to the language will show') . '</I></FONT></TD></TR>';
-} else { 
-	
-	echo '<TR>
+echo '<TR>
 	<TD>' . _('Language') . ":</TD>
-
 	<TD><SELECT name='Language'>";
 
 	$LangDirHandle = dir('locale/');
@@ -136,7 +129,7 @@ if (!function_exists('gettext')){
 	}
 	
 	echo '</SELECT></TD></TR>';
-}
+
 	
 echo '<TR>
 	<TD>' . _('Theme') . ":</TD>

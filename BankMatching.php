@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 7;
 
@@ -267,10 +267,10 @@ if ($InputError !=1 AND isset($_POST["BankAccount"]) AND $_POST["BankAccount"]!=
 	}
 	//end of while loop
 
-	echo "</TABLE><INPUT TYPE=HIDDEN NAME='RowCounter' VALUE=$i><INPUT TYPE=SUBMIT NAME='Update' VALUE='" . _('Update Matching') . '></CENTER>';
+	echo "</TABLE><INPUT TYPE=HIDDEN NAME='RowCounter' VALUE=$i><INPUT TYPE=SUBMIT NAME='Update' VALUE='" . _('Update Matching') . "'></CENTER>";
 
 }
 
-echo '</form>';
+echo '</FORM>';
 include('includes/footer.inc');
 ?>

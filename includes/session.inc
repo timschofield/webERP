@@ -1,10 +1,9 @@
 <?php
-/* $Revision: 1.35 $ */
+/* $Revision: 1.36 $ */
  
     
 include('config.php');
-include('includes/ConnectDB.inc');
-include('includes/DateFunctions.inc');
+
         
 if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);
@@ -14,7 +13,11 @@ ini_set('session.gc_Maxlifetime',$SessionLifeTime);
 ini_set('max_execution_time',$MaximumExecutionTime);
  
 session_start();
-    
+
+include('includes/LanguageSetup.php');
+include('includes/ConnectDB.inc');
+include('includes/DateFunctions.inc');
+   
 // Un comment to turn off attempts counter
 //$_SESSION['AttemptsCounter'] = 0;
 
@@ -142,9 +145,6 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 
 /*User is logged in so get configuration parameters  - save in session*/
 include('includes/GetConfig.php');
-
-/*Now users language has been set include the language setup script */
-include('includes/LanguageSetup.php');
 
 if(isset($_SESSION['DB_Maintenance'])){ 
 	if ($_SESSION['DB_Maintenance']!=0)  {	

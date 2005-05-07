@@ -32,7 +32,35 @@ if (function_exists('gettext')){
   //putenv('LANG=$Language_Country');
 	bindtextdomain ('messages', './locale');
 	textdomain ('messages');
-}
-
+} else {
+/*
+	PHPGettext integration by Braian Gomez
+	http://www.vairux.com/
+*/
+	echo '<BR>Language:' . $_SESSION['Language'];
 	
+	require_once('includes/php-gettext/streams.php');
+	require_once('includes/php-gettext/gettext.php');
+	if(isset($_SESSION['Language'])){
+		$Locale = $_SESSION['Language'];
+	} else {
+		$Locale = $DefaultLanguage;
+	}
+	$LangFile = 'locale/' . $Locale . '/LC_MESSAGES/messages.mo';
+	if (file_exists($LangFile)){
+		$input = new FileReader($LangFile);
+		$PhpGettext = new gettext_reader($input);
+		
+		if (!function_exists('_')){
+			function _($text) {
+				global $PhpGettext;
+				return $PhpGettext->translate($text);
+			}
+		}
+	} elseif (!function_exists('_')) {
+		function _($text){
+			return $text;
+		}
+	}
+}
 ?>

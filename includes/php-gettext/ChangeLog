@@ -1,0 +1,71 @@
+2005-02-28  Danilo Šegan  <dsegan@gmx.net>
+
+	* AUTHORS: Added Nico to the list.
+
+	* Makefile (VERSION): Up to 1.0.3.
+
+	* README: Updated.
+
+2005-02-28  Danilo Šegan  <dsegan@gmx.net>
+
+	* gettext.php: Added pre-loading, code documentation, and many
+	code clean-ups by Nico Kaiser <nico@siriux.net>.
+
+2005-02-28  Danilo Šegan  <dsegan@gmx.net>
+
+	* streams.php (FileReader.read): Handle read($bytes = 0).
+
+	* examples/pigs.php: Prefix gettext function names with T or T_.
+
+	* examples/update: Use the same keywords T_ and T_ngettext.
+
+	* streams.php: Added CachedFileReader.
+
+2003-11-11  Danilo Šegan  <dsegan@gmx.net>
+
+	* gettext.php: Added hashing to find_string.
+
+2003-11-01  Danilo Šegan  <dsegan@gmx.net>
+
+	* Makefile (DIST_FILES): Replaced LICENSE with COPYING.
+	(VERSION): Up to 1.0.2.
+
+	* AUTHORS: Minor edits.
+
+	* README: Minor edits.
+
+	* COPYING: Removed LICENSE, added this file.
+
+	* gettext.php: Added copyright notice and disclaimer.
+	* streams.php: Same.
+	* examples/pigs.php: Same.
+
+2003-10-23  Danilo Šegan  <dsegan@gmx.net>
+
+	* Makefile: Upped version to 1.0.1.
+
+	* gettext.php (gettext_reader): Remove a call to set_total_plurals.
+	(set_total_plurals): Removed unused function for some better days.
+
+2003-10-23  Danilo Šegan  <dsegan@gmx.net>
+
+	* Makefile: Added, version 1.0.0.
+
+	* examples/*: Added an example of usage.
+
+	* README: Described all the crap.
+	
+2003-10-22  Danilo Šegan  <dsegan@gmx.net>
+
+	* gettext.php: Plural forms implemented too.
+
+	* streams.php: Added FileReader for direct access to files (no
+	need to keep file in memory).
+
+	* gettext.php: It works, except for plural forms.
+
+	* streams.php: Created abstract class StreamReader.
+	Added StringReader class.
+
+	* gettext.php: Started writing gettext_reader.
+

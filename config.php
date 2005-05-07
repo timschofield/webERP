@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.57 $ */
+/* $Revision: 1.58 $ */
 
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
@@ -81,7 +81,7 @@ eg. if the files are under the webserver root directory then rootpath =''; if th
 */
 
 $rootpath = dirname($_SERVER['PHP_SELF']);
-if ($rootpath == "/") {
+if ($rootpath == "/" OR $rootpath == "\\") {
 	$rootpath = "";
 }
 //$rootpath = '/web-erp';
@@ -92,14 +92,6 @@ turning on NOTICES destroys things */
 
 error_reporting (E_ALL & ~E_NOTICE);
 
-/*Dont modify this bit
-function required if gettext is not installed */
-
-if (!function_exists('_')){
-	function _($text){
-		return ($text);
-	}
-}
 
 /*Make sure there is nothing - not even spaces after this last ?> */
 ?>
