@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity =15;
 
@@ -487,7 +487,7 @@ $MonthNames = array( 1=>_('January'),
 			12=>_('December') );
 echo '<TR><TD>' . _('Financial Year Ends On') . ':</TD>
 	<TD><SELECT Name="X_YearEnd">';
-for ($i=0; $i < sizeof($MonthNames); $i++ )
+for ($i=1; $i < sizeof($MonthNames); $i++ )
 	echo '<OPTION '.($_SESSION['YearEnd'] == $i ? 'SELECTED ' : '').'VALUE="'.$i.'">'.$MonthNames[$i];
 echo '</SELECT></TD>
 	<TD>' . _('Defining the month in which the financial year ends enables the system to provide useful defaults for general ledger reports') .'</TD></TR>';
