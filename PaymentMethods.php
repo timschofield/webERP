@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 15;
 
@@ -243,14 +243,14 @@ if (! isset($_GET['delete'])) {
 	echo "<TR>
 		<TD>" . _('Use For Payments') . ':' . "</TD>
 		<TD><SELECT name='ForPayment'>";
-	echo "<OPTION".($_POST['ForPayment'] ? ' SELECTED' : '') ." VALUE='1'> Yes" ;
-	echo "<OPTION".($_POST['ForPayment'] ? '' : ' SELECTED') ." VALUE='0'> No" ;
+	echo "<OPTION".($_POST['ForPayment'] ? ' SELECTED' : '') ." VALUE='1'>" . _('Yes');
+	echo "<OPTION".($_POST['ForPayment'] ? '' : ' SELECTED') ." VALUE='0'>" . _('No');
 	echo "</SELECT></TD></TR>";
 	echo "<TR>
 		<TD>" . _('Use For Receipts') . ':' . "</TD>
 		<TD><SELECT name='ForReceipt'>";
-	echo "<OPTION".($_POST['ForReceipt'] ? ' SELECTED' : '') ." VALUE='1'> Yes" ;
-	echo "<OPTION".($_POST['ForReceipt'] ? '' : ' SELECTED') ." VALUE='0'> No" ;
+	echo "<OPTION".($_POST['ForReceipt'] ? ' SELECTED' : '') ." VALUE='1'>" . _('Yes');
+	echo "<OPTION".($_POST['ForReceipt'] ? '' : ' SELECTED') ." VALUE='0'>" . _('No');
 	echo "</SELECT></TD></TR>";
 
 	echo '</TABLE>';

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 3;
 
@@ -173,7 +173,7 @@ or deletion of the records*/
 		<td class='tableheader'>" . _('Facsimile') . "</td>
 		<td class='tableheader'>" . _('Comm Rate 1') . "</td>
 		<td class='tableheader'>" . _('Break') . "</td>
-		<td class='tableheader'>" . ('Comm Rate 2') . "</td></tr>";
+		<td class='tableheader'>" . _('Comm Rate 2') . "</td></tr>";
 
 	while ($myrow=DB_fetch_row($result)) {
 

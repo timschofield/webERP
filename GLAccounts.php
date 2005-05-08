@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 10;
 include('includes/session.inc');
@@ -197,7 +197,7 @@ if (isset($_POST['submit'])) {
 									$sql="DELETE FROM chartmaster 
 									WHERE accountcode=$SelectedAccount";
 									$result = DB_query($sql,$db);
-									prnMsg( _('Account') . $SelectedAccount . _('has been deleted'),'succes');
+									prnMsg( _('Account') . ' ' . $SelectedAccount . ' ' . _('has been deleted'),'succes');
 								}
 							}
 						}
@@ -301,7 +301,7 @@ if (!isset($_GET['delete'])) {
 		echo "<CENTER><TABLE><TR><TD>" . _('Account Code') . ":</TD><TD>" . $_POST['AccountCode'] . "</TD></TR>";
 	} else {
 		echo "<CENTER><TABLE>";
-		echo "<TR><TD>Account Code</TD><TD><INPUT TYPE=TEXT NAME='AccountCode' SIZE=11 MAXLENGTH=10></TD></TR>";
+		echo "<TR><TD>" . _('Account Code') . ":</TD><TD><INPUT TYPE=TEXT NAME='AccountCode' SIZE=11 MAXLENGTH=10></TD></TR>";
 	}
 
 
@@ -310,7 +310,7 @@ if (!isset($_GET['delete'])) {
 	$sql = 'SELECT groupname FROM accountgroups ORDER BY sequenceintb';
 	$result = DB_query($sql, $db);
 
-	echo '<TR><TD>' . _('Account Group') . '</TD><TD><SELECT NAME=Group>';
+	echo '<TR><TD>' . _('Account Group') . ':</TD><TD><SELECT NAME=Group>';
 
 	while ($myrow = DB_fetch_array($result)){
 		if ($myrow[0]==$_POST['Group']){

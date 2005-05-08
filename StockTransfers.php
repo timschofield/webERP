@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
@@ -396,7 +396,7 @@ if (strlen($_SESSION['Transfer']->TransferItem[0]->ItemDescription)>1){
 	echo '<TR><TD COLSPAN=3><FONT COLOR=BLUE SIZE=3>' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Transfer']->TransferItem[0]->PartUnit . ' )</FONT></TD></TR>';
 }
 
-echo '<TR><TD>' .('From Stock Location').':</TD><TD><SELECT name="StockLocationFrom">';
+echo '<TR><TD>' . _('From Stock Location').':</TD><TD><SELECT name="StockLocationFrom">';
 
 $sql = 'SELECT loccode, locationname FROM locations';
 $resultStkLocs = DB_query($sql,$db);

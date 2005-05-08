@@ -37,8 +37,6 @@ if (function_exists('gettext')){
 	PHPGettext integration by Braian Gomez
 	http://www.vairux.com/
 */
-	echo '<BR>Language:' . $_SESSION['Language'];
-	
 	require_once('includes/php-gettext/streams.php');
 	require_once('includes/php-gettext/gettext.php');
 	if(isset($_SESSION['Language'])){

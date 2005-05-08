@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 /*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen while the user is selecting the criteria the system is posting any unposted transactions */
 
@@ -145,7 +145,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 				<TD class='tableheader'>"._('Account')."</TD>
 				<TD class='tableheader'>"._('Account Name')."</TD>
 				<TD COLSPAN=2 class='tableheader'>"._('Period Actual')."</TD>
-				<TD COLSPAN=2 class='tableheader'>"._('Period Budget')."t</TD>
+				<TD COLSPAN=2 class='tableheader'>"._('Period Budget')."</TD>
 				<TD COLSPAN=2 class='tableheader'>"._('Last Year').'</TD>
 				</TR>';
 	} else { /*summary */

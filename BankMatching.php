@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 7;
 
@@ -97,7 +97,7 @@ if ($_POST["First20_or_All"]=='All'){
 	echo '<OPTION SELECTED Value="All">' . _('Show all') . ' ' . $TypeName . ' ' . _('in the date range');
 	echo '<OPTION Value="First20">' . _('Show only the first 20') . ' ' . $TypeName;
 } else {
-	echo '<OPTION Value="All">' . _('Show all') . ' ' . $TypeName . _('in the date range');
+	echo '<OPTION Value="All">' . _('Show all') . ' ' . $TypeName . ' ' . _('in the date range');
 	echo '<OPTION SELECTED Value="First20">' . _('Show only the first 20') . ' ' . $TypeName;
 }
 echo '</SELECT></TD></TR>';

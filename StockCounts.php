@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 2;
 
@@ -11,7 +11,7 @@ include('includes/header.inc');
 
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "' METHOD=POST>";
 
-echo "<CENTER>Stock Check Counts at Location:<SELECT NAME='Location'>";
+echo "<CENTER>" . _('Stock Check Counts at Location') . ":<SELECT NAME='Location'>";
 $sql = 'SELECT loccode, locationname FROM locations';
 $result = DB_query($sql,$db);
 
