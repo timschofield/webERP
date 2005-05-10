@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 
 define ('LIKE','LIKE');
@@ -20,10 +20,13 @@ function DB_query ($SQL,
 		$TrapErrors=true){
 
 	global $debug;
+	
 	$result=mysql_query($SQL,$Conn);
+	
 	if ($DebugMessage == '') {
 		$DebugMessage = _('The SQL that failed was');
 	}
+	
 	if (DB_error_no($Conn) != 0 AND $TrapErrors==true){
 		if ($TrapErrors){
 			require_once('includes/header.inc');

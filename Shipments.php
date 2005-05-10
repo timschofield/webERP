@@ -1,13 +1,13 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 11;
-include('includes/DefineShiptClass.php');
-/* Session started in header.inc for password checking and authorisation level check */
+
 include('includes/session.inc');
 $title = _('Shipments');
 include('includes/header.inc');
+include('includes/DefineShiptClass.php');
 include('includes/SQL_CommonFunctions.inc');
 
 
@@ -147,8 +147,13 @@ if (!isset($_SESSION['Shipment'])){
 
 	$_SESSION['Shipment'] = new Shipment;
 
+	if (!isset($db)){
+		echo 'The DB handle is not initiated';
+	}
+	
 	$sql = "SELECT suppname, currcode FROM suppliers WHERE supplierid='" . $_SESSION['SupplierID'] . "'";
-	$result = DB_query($sql,$db);
+	$ErrMsg = _('The supplier details for the shipment could not be retrieved because');
+	$result = DB_query($sql,$db,$ErrMsg);
 	$myrow = DB_fetch_row($result);
 
 	$_SESSION['Shipment']->SupplierID = $_SESSION['SupplierID'];
