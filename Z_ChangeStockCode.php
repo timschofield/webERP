@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -68,7 +68,7 @@ if (isset($_POST['ProcessStockChange'])){
 				lastcost,
 				materialcost,
 				labourcost,
-				dverheadcost,
+				overheadcost,
 				lowestlevel,
 				discontinued,
 				controlled,
@@ -114,46 +114,46 @@ if (isset($_POST['ProcessStockChange'])){
 
 	echo '<BR>' . _('Changing pricing records');
 	$sql = "UPDATE prices SET stockid='" . $_POST['NewStockID'] . "' WHERE stockid='" . $_POST['OldStockID'] . "'";
-	$ErrMsg = '<BR>' . _('The SQL to update the pricing records failed');
+	$ErrMsg =  _('The SQL to update the pricing records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
 
 
 	echo '<BR>' . _('Changing sales orders detail records');
 	$sql = "UPDATE salesorderdetails SET stkcode='" . $_POST['NewStockID'] . "' WHERE stkcode='" . $_POST['OldStockID'] . "'";
-	$ErrMsg = '<BR>' . _('The SQL to update the sales order header records failed');
+	$ErrMsg = _('The SQL to update the sales order header records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
 
 
 	echo '<BR>' . _('Changing purchase order details records');
 	$sql = "UPDATE purchorderdetails SET itemcode='" . $_POST['NewStockID'] . "' WHERE itemcode='" . $_POST['OldStockID'] . "'";
-	$ErrMsg = '<BR>' . _('The SQL to update the purchase order detail records failed');
+	$ErrMsg =  _('The SQL to update the purchase order detail records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
 
 
 	echo '<BR>' . _('Changing purchasing data records');
 	$sql = "UPDATE purchdata SET stockid='" . $_POST['NewStockID'] . "' WHERE stockid='" . $_POST['OldStockID'] . "'";
-	echo '<BR>' . _('The SQL to update the purchasing data records failed');
+	$ErrMsg = _('The SQL to update the purchasing data records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
 
 	echo '<BR>' . _('Changing the stock code in shipment charges records');
 	$sql = "UPDATE shipmentcharges SET stockid='" . $_POST['NewStockID'] . "' WHERE stockid='" . $_POST['OldStockID'] . "'";
-	echo '<BR>' . _('The SQL to update Shipment Charges records failed');
+	$ErrMsg = _('The SQL to update Shipment Charges records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
 
 	echo '<BR>' . _('Changing the stock check freeze file records');
 	$sql = "UPDATE stockcheckfreeze SET stockid='" . $_POST['NewStockID'] . "' WHERE stockid='" . $_POST['OldStockID'] . "'";
-	echo '<BR>' . _('The SQL to update stock check freeze records failed');
+	$ErrMsg = _('The SQL to update stock check freeze records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
 
 	echo '<BR>' . _('Changing the stock counts table records');
 	$sql = "UPDATE stockcounts SET stockid='" . $_POST['NewStockID'] . "' WHERE stockid='" . $_POST['OldStockID'] . "'";
-	$ErrMsg = '<BR>' . _('The SQL to update stock counts records failed');
+	$ErrMsg =  _('The SQL to update stock counts records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.36 $ */
+/* $Revision: 1.37 $ */
  
     
 include('config.php');
@@ -127,6 +127,8 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 				}
 			}
 	
+			echo "<META HTTP-EQUIV='refresh' CONTENT='0; URL=" . $_SERVER['PHP_SELF'] . "?" . SID . "'>";
+			exit;
 		} else {     // Incorrect password
 			// 5 login attempts, show failed login screen
 			if (!isset($_SESSION['AttemptsCounter'])) {
@@ -194,7 +196,7 @@ if (!is_array($_SESSION['AllowedPageSecurityTokens']) AND !isset($AllowAnyone)) 
 if (!isset($AllowAnyone)){
 	if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
 		$title = _('Security Permissions Problem');
-		include('header.inc');
+		include('includes/header.inc');
 		echo '<TR>
 			<TD CLASS="menu_group_items">
 				<TABLE WIDTH="100%" CLASS="table_index">
@@ -206,7 +208,7 @@ if (!isset($AllowAnyone)){
 		</TABLE>
 		</TD>';
 	
-		include('footer.inc');
+		include('includes/footer.inc');
 		exit;
 	}
 

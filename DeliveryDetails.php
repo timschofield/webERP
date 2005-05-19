@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -401,7 +401,7 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 	prnMsg(_('Order number') .' ' . $_SESSION['ExistingOrder'] . ' ' . _('has been updated'),'success');
 	
 	echo "<BR><A HREF='$rootpath/PrintCustOrder.php?" . SID . '&TransNo=' . $_SESSION['ExistingOrder'] . "'>". _('Reprint packing slip - pre-printed stationery') .'</A>';
-	echo "<BR><A  target='_blank' HREF='$rootpath/PrintCustOrder_generic.php?" . SID . '&TransNo=' . $OrderNo . "'>". _('Print packing slip') . ' (' . _('Laser') . ')' .'</A>';
+	echo "<BR><A  target='_blank' HREF='$rootpath/PrintCustOrder_generic.php?" . SID . '&TransNo=' . $_SESSION['ExistingOrder'] . "'>". _('Print packing slip') . ' (' . _('Laser') . ')' .'</A>';
 	echo "<P><A HREF='$rootpath/SelectSalesOrder.php?" . SID  . "'>". _('Select A Different Order') .'</A>';
 	include('includes/footer.inc');
 	exit;

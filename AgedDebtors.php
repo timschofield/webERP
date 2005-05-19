@@ -2,7 +2,7 @@
 
 $PageSecurity = 2;
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 
 If (isset($_POST['PrintPDF'])
@@ -133,7 +133,7 @@ If (isset($_POST['PrintPDF'])
 		      		CASE WHEN (paymentterms.daysbeforedue > 0)
 	      				THEN
 						CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ") 
-	      					THEN Debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc 
+	      					THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc 
 	      					ELSE 0 END
 	      				ELSE
 						CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . INTERVAL('1', 'MONTH') . "), " . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))', 'DAY') . ")) >= " . $_SESSION['PastDueDays2'] . ") 

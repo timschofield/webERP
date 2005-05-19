@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 
 $PageSecurity = 3;
@@ -118,7 +118,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 		AND trandate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 		AND trandate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
 
-} elseif ($_POST['CategoryID']!='All' AND $_POST['location']!='�l'){
+} elseif ($_POST['CategoryID']!='All' AND $_POST['location']!='All'){
 
 	$sql = "SELECT invoiceno,
 			orderdeliverydifferenceslog.orderno,
