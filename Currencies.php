@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $PageSecurity = 9;
 
 include('includes/session.inc');
@@ -13,6 +13,9 @@ if (isset($_GET['SelectedCurrency'])){
 } elseif (isset($_POST['SelectedCurrency'])){
     $SelectedCurrency = $_POST['SelectedCurrency'];
 }
+
+$ForceConfigReload = true;
+include('includes/GetConfig.php');
 
 $FunctionalCurrency = $_SESSION['CompanyRecord']['currencydefault'];
 

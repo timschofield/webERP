@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*
 	R & OS PHP-PDF class code to set up a new page
 	a new page is implicit on the establishment of a new pdf object so
@@ -119,7 +119,7 @@ $pdf->addText($XPos,$YPos, $FontSize, _('Comments') . ':' );
 $YPos -= $line_height;
 $LeftOvers = $pdf->addTextWrap($XPos, $YPos,250,$FontSize,$POHeader['comments'], 'left');
 if (strlen($LeftOvers)>0){
-	$LeftOvers = $pdf->addTextWrap($XPos, $YPos-$line_height,250,$FontSize,$leftOvers, 'left');
+	$LeftOvers = $pdf->addTextWrap($XPos, $YPos-$line_height,250,$FontSize,$LeftOvers, 'left');
 }
 
 $XPos = $Left_Margin;
