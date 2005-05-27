@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -79,6 +79,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 	$GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($GetOrdHdrResult)==1) {
+	
 		$myrow = DB_fetch_array($GetOrdHdrResult);
 
 		$_SESSION['Items']->DebtorNo = $myrow['debtorno'];
@@ -124,20 +125,22 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 					stockmaster.kgs,
 					stockmaster.units,
 					stockmaster.decimalplaces,
-					taxcatid,
-					unitprice,
-					quantity,
-					discountpercent,
-					actualdispatchdate,
-					qtyinvoiced,
+					stockmaster.mbflag,
+					stockmaster.taxcatid,
+					stockmaster.discountcategory,
+					salesorderdetails.unitprice,
+					salesorderdetails.quantity,
+					salesorderdetails.discountpercent,
+					salesorderdetails.actualdispatchdate,
+					salesorderdetails.qtyinvoiced,
 					salesorderdetails.narrative,
 					salesorderdetails.orderlineno,
-					stockmaster.discountcategory,
-					stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost as standardcost
-				FROM salesorderdetails,
-					stockmaster
-				WHERE salesorderdetails.stkcode = stockmaster.stockid
-				AND salesorderdetails.orderno =' . $_GET['OrderNumber'] . '
+					stockmaster.materialcost + 
+						stockmaster.labourcost + 
+						stockmaster.overheadcost AS standardcost
+				FROM salesorderdetails INNER JOIN stockmaster
+				 	ON salesorderdetails.stkcode = stockmaster.stockid
+				WHERE salesorderdetails.orderno =' . $_GET['OrderNumber'] . '
 				AND salesorderdetails.quantity - salesorderdetails.qtyinvoiced >0';
 
 		$ErrMsg = _('The line items of the order cannot be retrieved because');
@@ -152,10 +155,11 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 						$myrow['description'],
 						$myrow['unitprice'],
 						$myrow['discountpercent'],
-						$myrow['units'],$myrow['volume'],
+						$myrow['units'],
+						$myrow['volume'],
 						$myrow['kgs'],
 						0,
-						'B',
+						$myrow['mbflag'],
 						$myrow['actualdispatchdate'],
 						$myrow['qtyinvoiced'],
 						$myrow['discountcategory'],
