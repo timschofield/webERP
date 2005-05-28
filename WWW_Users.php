@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity=15;
 
@@ -144,7 +144,7 @@ if (isset($_POST['submit'])) {
 						" . $_POST['Access'] . ",
 						'" . $_POST['DefaultLocation'] ."',
 						'" . $ModulesAllowed . "',
-						" . $_SESSION['DefaultDisplayRecordsMax'] . "
+						" . $_SESSION['DefaultDisplayRecordsMax'] . ",
 						'" . $_SESSION['DefaultTheme'] . "',
 						'". $DefaultLanguage ."')";
 		$msg = _('A new user record has been inserted');
