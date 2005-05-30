@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -56,7 +56,7 @@ if (isset($_POST['ProcessStockChange'])){
 					kgs,
 					barcode,
 					discountcategory,
-					taxlevel)
+					taxcatid)
 			SELECT '" . $_POST['NewStockID'] . "',
 				categoryid,
 				description,
@@ -77,7 +77,7 @@ if (isset($_POST['ProcessStockChange'])){
 				kgs,
 				barcode,
 				discountcategory,
-				taxlevel
+				taxcatid
 			FROM stockmaster
 			WHERE stockid='" . $_POST['OldStockID'] . "'";
 
@@ -184,7 +184,23 @@ if (isset($_POST['ProcessStockChange'])){
 	$ErrMsg = _('The SQL to update the BOM parent records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
-
+	
+	echo '<BR>' . _('Changing any serialised item information');
+	
+	$sql = 'SET FOREIGN_KEY_CHECKS=0';
+	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+	
+	$sql = "UPDATE stockserialitems SET stockid='" . $_POST['NewStockID'] . "' WHERE stockid='" . $_POST['OldStockID'] . "'";
+	$ErrMsg = _('The SQL to update the stockserialitem records failed');
+	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+	$sql = "UPDATE stockserialmoves SET stockid='" . $_POST['NewStockID'] . "' WHERE stockid='" . $_POST['OldStockID'] . "'";
+	$ErrMsg = _('The SQL to update the stockserialitem records failed');
+	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+	echo ' ... ' . _('completed');
+	
+	$sql = 'SET FOREIGN_KEY_CHECKS=1';
+	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
+	
 	$result = DB_query('COMMIT',$db);
 
 	echo '<BR>' . _('Deleting the old stock master record');
