@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 /**
 If the User has selected Keyed Entry, show them this special select list...
@@ -20,8 +20,12 @@ if ($_POST['EntryType'] == 'KEYED'){
 	echo '<TABLE><TR>';
         if (DB_num_rows($Bundles)>0){
                 $AllSerials=array();
-                foreach ($LineItem->SerialItems as $Itm){ $AllSerials[$Itm->BundleRef] = $Itm->BundleQty; }
-                echo '<TD VALIGN=TOP><B>'. _('Select Existing Items'). '</B><BR>';
+                
+		foreach ($LineItem->SerialItems as $Itm){ 
+			$AllSerials[$Itm->BundleRef] = $Itm->BundleQty; 
+		}
+                
+		echo '<TD VALIGN=TOP><B>'. _('Select Existing Items'). '</B><BR>';
                 
 		echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?=' . $SID . '" METHOD="POST">
                         <input type=hidden name=LineNo value="' . $LineNo . '">

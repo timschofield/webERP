@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity =15;
 
@@ -420,7 +420,7 @@ if( DB_num_rows($result) == 0 ) {
 	}
 }
 echo '</SELECT></TD>
-	<TD>' . _('This parameter is only effective if Do Freight Calculation is set to Yes.') .'</TD></TR>';
+	<TD>' . _('This parameter is only effective if Do Freight Calculation is set to Yes. Country names come from the currencies table.') .'</TD></TR>';
 
 // NumberOfPeriodsOfStockUsage
 echo '<TR><TD>' . _('Number Of Periods Of StockUsage') . ':</TD>
@@ -446,7 +446,7 @@ echo '<TR><TD>' . _('Check Price Charged vs Order Price') . ':</TD>
 	<TD>' . _('In entry of AP invoices this parameter determines whether or not to check invoice prices tie up to ordered prices') .'</TD></TR>';
 
 // OverChargeProportion
-echo '<TR><TD>' . _('Allowed OverCharge Proportion') . ':</TD>
+echo '<TR><TD>' . _('Allowed Over Charge Proportion') . ':</TD>
 	<TD><input type="Text" Name="X_OverChargeProportion" SIZE=4 MAXLENGTH=3 value="' . $_SESSION['OverChargeProportion'] . '"></TD>
 	<TD>' . _('If check price charges vs Order price is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to price') .'</TD></TR>';
 

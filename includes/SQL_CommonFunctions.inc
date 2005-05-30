@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 /* Common SQL Functions */
 
@@ -53,15 +53,15 @@ Function GetStockGLCode ($StockID, &$db){
 	return $myrow;
 }
 
-Function GetTaxRate ($TaxAuthority, $DispatchTaxAuthority, $TaxLevel, &$db){
+Function GetTaxRate ($TaxAuthority, $DispatchTaxProvince, $TaxCategory, &$db){
 
 /*Gets the Tax rate applicable to an item from the TaxAuthority of the branch and TaxLevel of the item */
 
 	$QuerySQL = "SELECT taxrate 
-			FROM taxauthlevels 
+			FROM taxauthrates 
 			WHERE taxauthority=" . $TaxAuthority . " 
-			AND dispatchtaxauthority=" . $DispatchTaxAuthority . " 
-			AND level = " . $TaxLevel;
+			AND dispatchtaxprovince=" . $DispatchTaxProvince . " 
+			AND taxcatid = " . $TaxCategory;
 
 	$ErrMsg = _('The tax rate for this item could not be retreived because');
 	$GetTaxRateResult = DB_query($QuerySQL,$db,$ErrMsg);
@@ -75,6 +75,37 @@ Function GetTaxRate ($TaxAuthority, $DispatchTaxAuthority, $TaxLevel, &$db){
 	}
 
 }
+
+Function GetTaxes ($TaxGroup, $DispatchTaxProvince, $TaxCategory, &$db) {
+
+	$SQL = "SELECT taxgrouptaxes.calculationorder,
+					taxauthorities.description,
+					taxgrouptaxes.taxauthid,
+					taxauthorities.taxglcode,
+					taxgrouptaxes.taxontax,
+					taxauthrates.taxrate
+			FROM taxauthrates INNER JOIN taxgrouptaxes ON
+				taxauthrates.taxauthority=taxgrouptaxes.taxauthid
+				INNER JOIN taxauthorities ON
+				taxauthrates.taxauthority=taxauthorities.taxid
+			WHERE taxgrouptaxes.taxgroupid=" . $TaxGroup . " 
+			AND taxauthrates.dispatchtaxprovince=" . $DispatchTaxProvince . " 
+			AND taxauthrates.taxcatid = " . $TaxCategory . "
+			ORDER BY taxgrouptaxes.calculationorder";
+
+
+	$ErrMsg = _('The taxes and rate for this tax group could not be retreived because');
+	$GetTaxesResult = DB_query($SQL,$db,$ErrMsg);
+
+	if (DB_num_rows($GetTaxesResult)>=1){
+		return $GetTaxesResult;
+	} else {
+		/*The tax group is not defined with rates */
+		return 0;
+	}
+}
+
+
 
 Function ContainsIllegalCharacters ($CheckVariable) {
 

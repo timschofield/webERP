@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -109,8 +109,9 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 		$_POST['ChargeFreightCost'] = $_SESSION['Old_FreightCost'];
 		$_SESSION['Items']->$Orig_OrderDate = $myrow['orddate'];
 		$_SESSION['CurrencyRate'] = $myrow['currency_rate'];
-		$TaxGroup = $myrow['taxgroupid'];
-		$DispatchTaxProvince = $myrow['taxprovinceid'];
+		$_SESSION['Items']->TaxGroup = $myrow['taxgroupid'];
+		$_SESSION['Items']->DispatchTaxProvince = $myrow['taxprovinceid'];
+		
 		//$_POST['FreightTaxRate'] = GetTaxRate($TaxGroup, $DispatchTaxProvince, $_SESSION['DefaultTaxLevel'],$db)*100;
 
 		DB_free_result($GetOrdHdrResult);
@@ -168,12 +169,15 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 						$myrow['decimalplaces'],
 						$myrow['narrative'],
 						'No',
-						$myrow['orderlineno']);	/*NB NO Update to DB */
+						$myrow['orderlineno'],
+						$myrow['taxcatid']);	/*NB NO Updates to DB */
 
 				$_SESSION['Items']->LineItems[$myrow['orderlineno']]->StandardCost = $myrow['standardcost'];
 
 				/*Calculate the taxes applicable to this line item from the customer branch Tax Group and Item Tax Category */
-				$_SESSION['Items']->LineItems[$myrow['orderlineno']]->GetTaxes($TaxGroup, $DispatchTaxProvince, $myrow['taxcatid'], &$db);
+				
+				$_SESSION['Items']->GetTaxes($myrow['orderlineno']);
+				
 			} /* line items from sales order details */
 		} else { /* there are no line items that have a quantity to deliver */
 			echo '<CENTER><A HREF="'. $rootpath. '/SelectSalesOrder.php?' . SID . '">' ._('Select a different sales order to invoice') .'</A></CENTER>';
@@ -197,11 +201,14 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 /* if processing, a dispatch page has been called and ${$StkItm->StockID} would have been set from the post */
 	foreach ($_SESSION['Items']->LineItems as $Itm) {
 
-		if (is_numeric($_POST[$Itm->LineNumber .  '_QtyDispatched' ])AND $_POST[$Itm->LineNumber .  '_QtyDispatched'] <=($_SESSION['Items']->LineItems[$Itm->StockID]->Quantity - $_SESSION['Items']->LineItems[$Itm->LineNumber]->QtyInv)){
+		if (is_numeric($_POST[$Itm->LineNumber .  '_QtyDispatched' ])AND $_POST[$Itm->LineNumber .  '_QtyDispatched'] <=($_SESSION['Items']->LineItems[$Itm->LineNumber]->Quantity - $_SESSION['Items']->LineItems[$Itm->LineNumber]->QtyInv)){
 			$_SESSION['Items']->LineItems[$Itm->LineNumber]->QtyDispatched = $_POST[$Itm->LineNumber  . '_QtyDispatched'];
 		}
-
-		$_SESSION['Items']->LineItems[$Itm->LineNumber]->TaxRate = $_POST[$Itm->LineNumber  . '_TaxRate']/100;
+		foreach ($Itm->Taxes as $TaxLine) {
+			if (isset($_POST[$Itm->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate'])){
+				$_SESSION['Items']->LineItems[$Itm->LineNumber]->Taxes[$TaxLine->TaxCalculationOrder]->TaxRate = $_POST[$Itm->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate']/100;
+			}
+		}
 	}
 	$_SESSION['Items']->$ShipVia = $_POST['ShipVia'];
 }
@@ -227,7 +234,8 @@ echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>
 		<TD class="tableheader">' . _('Price') . '</TD>
 		<TD class="tableheader">' . _('Discount') . '</TD>
 		<TD class="tableheader">' . _('Total') . '<BR>' . _('Excl Tax') . '</TD>
-		<TD class="tableheader">' . _('Tax') . ' %<BR>' . _('Rate') . '</TD>
+		<TD class="tableheader">' . _('Tax Authority') . '</TD>
+		<TD class="tableheader">' . _('Tax %') . '</TD>
 		<TD class="tableheader">' . _('Tax') . '<BR>' . _('Amount') . '</TD>
 		<TD class="tableheader">' . _('Total') . '<BR>' . _('Incl Tax') . '</TD>
 	</TR>';
@@ -266,11 +274,11 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 
 	if ($LnItm->Controlled==1){
 
-		echo '<TD ALIGN=RIGHT><input type=hidden name="' . $LnItm->StockID . '_QtyDispatched"  value="' . $LnItm->QtyDispatched . '"><a href="' . $rootpath .'/ConfirmDispatchControlled_Invoice.php?' . SID . '&StockID='. $LnItm->StockID.'">' .$LnItm->QtyDispatched . '</a></TD>';
+		echo '<TD ALIGN=RIGHT><input type=hidden name="' . $LnItm->LineNumber . '_QtyDispatched"  value="' . $LnItm->QtyDispatched . '"><a href="' . $rootpath .'/ConfirmDispatchControlled_Invoice.php?' . SID . '&LineNo='. $LnItm->LineNumber.'">' .$LnItm->QtyDispatched . '</a></TD>';
 
 	} else {
 
-		echo '<TD ALIGN=RIGHT><input type=text name="' . $LnItm->StockID .'_QtyDispatched" maxlength=5 SIZE=6 value="' . $LnItm->QtyDispatched . '"></TD>';
+		echo '<TD ALIGN=RIGHT><input type=text name="' . $LnItm->LineNumber .'_QtyDispatched" maxlength=5 SIZE=6 value="' . $LnItm->QtyDispatched . '"></TD>';
 
 	}
 	$DisplayDiscountPercent = number_format($LnItm->DiscountPercent*100,2) . '%';
@@ -283,7 +291,7 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 	/*Need to list the taxes applicable to this line */
 	echo '<TD>';
 	$i=0;
-	foreach ($LnItm->Taxes AS $Tax) {
+	foreach ($_SESSION['Items']->LineItems[$LnItm->LineNumber]->Taxes AS $Tax) {
 		if ($i>0){
 			echo '<BR>';
 		}
@@ -292,32 +300,41 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 	}
 	echo '</TD>';
 	echo '<TD ALIGN=RIGHT>';
-	$i=0;
+	
+	$i=0; // initialise the number of taxes iterated through
+	$TaxLineTotal =0; //initialise tax total for the line
+	
 	foreach ($LnItm->Taxes AS $Tax) {
 		if ($i>0){
 			echo '<BR>';
 		}
 		echo '<input type=text name="' . $LnItm->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" maxlength=4 SIZE=4 value="' . $Tax->TaxRate*100 . '">';
 		$i++;
+		if ($Tax->TaxOnTax ==1){
+			$TaxLineTotal += ($Tax->TaxRate * ($LineTotal + $TaxLineTotal));
+		} else {
+			$TaxLineTotal += ($Tax->TaxRate * $LineTotal);
+		}
 	}
 	echo '</TD>';		
 	
 
-	$DisplayTaxAmount = number_format($LnItm->TaxRate * $LineTotal ,2);
+	$DisplayTaxAmount = number_format($TaxLineTotal ,2);
 
-	$TaxTotal += $LnItm->TaxRate * $LineTotal;
-
-	$DisplayGrossLineTotal = number_format($LineTotal*(1+ $LnItm->TaxRate),2);
+	$DisplayGrossLineTotal = number_format($LineTotal+ $TaxLineTotal,2);
+	
 	echo '<TD ALIGN=RIGHT>'.$DisplayTaxAmount.'</TD><TD ALIGN=RIGHT>'.$DisplayGrossLineTotal.'</TD>';
 
 	if ($LnItm->Controlled==1){
-		echo '<TD><a href="' . $rootpath . '/ConfirmDispatchControlled_Invoice.php?' . SID . 'StockID=' . $LnItm->StockID.'">';
+		
+		echo '<TD><a href="' . $rootpath . '/ConfirmDispatchControlled_Invoice.php?' . SID . '&LineNo='. $LnItm->LineNumber.'">';
+		
 		if ($LnItm->Serialised==1){
 			echo _("Enter Serial Numbers");
 		} else { /*Just batch/roll/lot control */
-			echo _('Enter Batches');
+			echo _('Enter Batch/Roll/Lot #');
 		}
-		echo '</a></TD>';
+		echo '</A></TD>';
 	}
 	echo '</TR>';
 	if (strlen($LnItm->Narrative)>1){
@@ -351,7 +368,7 @@ if ($_SESSION['DoFreightCalc']==True){
 	  $FreightCost =0;
   }
   if (!is_numeric($BestShipper)){
-  	$SQL =  "SELECT shipper_id FROM shippers WHERE shipper_id=" . $_SESSION['Default_Shipper'];
+  	$SQL =  'SELECT shipper_id FROM shippers WHERE shipper_id=' . $_SESSION['Default_Shipper'];
 	$ErrMsg = _('There was a problem testing for a the default shipper because');
 	$TestShipperExists = DB_query($SQL,$db, $ErrMsg);
 	if (DB_num_rows($TestShipperExists)==1){
@@ -364,8 +381,7 @@ if ($_SESSION['DoFreightCalc']==True){
 			$ShipperReturned = DB_fetch_row($TestShipperExists);
 			$BestShipper = $ShipperReturned[0];
 		} else {
-			echo '<P>';
-			prnMsg( _('We have a problem') . ' - ' . _('there are no shippers defined') . '. ' . _('Please use the link below to set up shipping freight companies') . ', ' . _('the system expects the shipping company to be selected or a default freight company to be used'),'error');
+			prnMsg( _('There are no shippers defined') . '. ' . _('Please use the link below to set up shipping freight companies, the system expects the shipping company to be selected or a default freight company to be used'),'error');
 			echo '<A HREF="' . $rootpath . 'Shippers.php">'. _('Enter') . '/' . _('Amend Freight Companies'). '</A>';
 		}
 	}
@@ -382,19 +398,43 @@ echo '<TR>
 
 if ($_SESSION['DoFreightCalc']==True){
 	echo '<TD COLSPAN=2 ALIGN=RIGHT>' ._('Recalculated Freight Cost'). '</TD>
-	<TD ALIGN=RIGHT>$FreightCost</TD>';
+		<TD ALIGN=RIGHT>' . $FreightCost . '</TD>';
 } else {
 	echo '<TD COLSPAN=3></TD>';
 }
 
 echo '<TD COLSPAN=2 ALIGN=RIGHT>'. _('Charge Freight Cost').'</TD>
-	<TD><INPUT TYPE=TEXT SIZE=6 MAXLENGTH=6 NAME=ChargeFreightCost VALUE=' . $_POST['ChargeFreightCost'] . '></TD>
-	<TD><INPUT TYPE=TEXT SIZE=4 MAXLENGTH=4 NAME=FreightTaxRate VALUE=' . $_POST['FreightTaxRate'] . '></TD>
-	<TD ALIGN=RIGHT>' . number_format($_POST['FreightTaxRate']*$_POST['ChargeFreightCost']/100,2) . '</TD>
-	<TD ALIGN=RIGHT>' . number_format((100+$_POST['FreightTaxRate'])*$_POST['ChargeFreightCost']/100,2) . '</TD>
-</TR>';
+	<TD><INPUT TYPE=TEXT SIZE=6 MAXLENGTH=6 NAME=ChargeFreightCost VALUE=' . $_POST['ChargeFreightCost'] . '></TD>';
+	
+$FreightTaxesResult = GetTaxes($_SESSION['Items']->TaxGroup,
+				$_SESSION['Items']->DispatchTaxProvince,
+				$_SESSION['FreightTaxCategory'],
+				$db);
+			//$_SESSION['FreightTaxCategory'] is a config parameter
+$i=0; // initialise the number of taxes iterated through
+$FreightTaxTotal =0; //initialise tax total
 
-$TaxTotal += $_POST['FreightTaxRate']*$_POST['ChargeFreightCost']/100;
+echo '<TD COLSPAN=2>';
+	
+while ($myrow = DB_fetch_array($FreightTaxesResult)) {
+	if ($i>0){
+		echo '<BR>';
+	}
+	
+	echo  $myrow['description'] . ' ' . ($myrow['taxrate']*100) . '%';
+	$i++;
+	if ($Tax->TaxOnTax ==1){
+		$FreightTaxTotal += ($myrow['taxrate'] * ($_POST['ChargeFreightCost'] + $FreightTaxTotal));
+	} else {
+		$FreightTaxTotal += ($myrow['taxrate'] * $_POST['ChargeFreightCost']);
+	}
+}
+echo '</TD>';		
+echo '<TD ALIGN=RIGHT>' . number_format($FreightTaxTotal,2) . '</TD>
+	<TD ALIGN=RIGHT>' . number_format($FreightTaxTotal+ $_POST['ChargeFreightCost'],2) . '</TD>
+	</TR>';
+
+$TaxTotal += $FreightTaxTotal;
 
 $DisplaySubTotal = number_format(($_SESSION['Items']->total + $_POST['ChargeFreightCost']),2);
 
@@ -407,7 +447,7 @@ $_POST['ChargeFreightCost'] = round($_POST['ChargeFreightCost'],2);
 echo '<TR>
 	<TD COLSPAN=8 ALIGN=RIGHT>' . _('Invoice Totals'). '</TD>
 	<TD  ALIGN=RIGHT><HR><B>'.$DisplaySubTotal.'</B><HR></TD>
-	<TD></TD>
+	<TD COLSPAN=2></TD>
 	<TD ALIGN=RIGHT><HR><B>' . number_format($TaxTotal,2) . '</B><HR></TD>
 	<TD ALIGN=RIGHT><HR><B>' . number_format($TaxTotal+($_SESSION['Items']->total + $_POST['ChargeFreightCost']),2) . '</B><HR></TD>
 </TR>';

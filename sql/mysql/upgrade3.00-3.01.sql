@@ -101,3 +101,5 @@ ALTER TABLE suppliers ADD FOREIGN KEY (taxgroupid) REFERENCES taxgroups (taxgrou
 ALTER TABLE `salesorderdetails` ADD `orderlineno` INT DEFAULT '0' NOT NULL FIRST ;
 ALTER TABLE `salesorderdetails` DROP PRIMARY KEY;
 ALTER TABLE salesorderdetails ADD PRIMARY KEY (orderlineno,orderno);
+
+INSERT INTO config VALUES('FreightTaxCategory','1');

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 $PageSecurity = 11;
@@ -9,10 +9,10 @@ $title = _('Specifiy Dispatched Controlled Items');
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/header.inc');
 
-if (isset($_GET['StockID'])){
-        $StockID = $_GET['StockID'];
-} elseif (isset($_POST['StockID'])){
-        $StockID = $_POST['StockID'];
+if (isset($_GET['LineNo'])){
+        $LineNo = $_GET['LineNo'];
+} elseif (isset($_POST['LineNo'])){
+        $LineNo = $_POST['LineNo'];
 } else {
 	echo '<CENTER><A HREF="' . $rootpath . '/ConfirmDispatch_Invoice.php?' . SID . '">'.
 		_('Select a line item to invoice').'</A><br>';
@@ -35,7 +35,7 @@ if (!isset($_SESSION['Items']) OR !isset($_SESSION['ProcessingOrder'])) {
 
 
 /*Save some typing by referring to the line item class object in short form */
-$LineItem = &$_SESSION['Items']->LineItems[$StockID];
+$LineItem = &$_SESSION['Items']->LineItems[$LineNo];
 
 
 //Make sure this item is really controlled
@@ -55,18 +55,20 @@ echo '<CENTER>';
 echo '<br><a href="'. $rootpath. '/ConfirmDispatch_Invoice.php?' . SID . '">'. _('Back to Confirmation of Dispatch') . '/' . _('Invoice'). '</a>';
 
 echo '<br><FONT SIZE=2><B>'. _('Dispatch of up to').' '. number_format($LineItem->Quantity-$LineItem->QtyInv, $LineItem->DecimalPlaces). ' '. _('Controlled items').' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' '. _('on order').' ' . $_SESSION['Items']->OrderNo . ' '. _('to'). ' ' . $_SESSION['Items']->CustomerName . '</B></FONT>';
+
 /** vars needed by InputSerialItem : **/
-//$StockID set above...
+$StockID = $LineItem->StockID;
 $ItemMustExist = true;  /*Can only invoice valid batches/serial numbered items that exist */
 $LocationOut = $_SESSION['Items']->Location;
 $InOutModifier=1;
 $ShowExisting=true;
+
 include ('includes/InputSerialItems.php');
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for dispatch */
-$_SESSION['Items']->LineItems[$LineItem->StockID]->QtyDispatched = $TotalQuantity;
-/*Also a multi select box for adding bundles to the adjustment without keying, showing only when keying */
+$_SESSION['Items']->LineItems[$LineNo]->QtyDispatched = $TotalQuantity;
+
 include('includes/footer.inc');
 exit;
 ?>

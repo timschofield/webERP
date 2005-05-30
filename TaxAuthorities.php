@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 
 $PageSecurity=15;
@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
 						bank,
 						bankacctype,
 						bankacc,
-						bankswift
+						bankswift) 
 			VALUES (
 				" . $_POST['TaxGLCode'] . ",
 				" . $_POST['PurchTaxGLCode'] . ",
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
 				'" .DB_escape_string($_POST['Bank']) . "',
 				'" .DB_escape_string($_POST['BankAccType']) . "',
 				'" .DB_escape_string($_POST['BankAcc']) . "',
-				'" .DB_escape_string($_POST['BankSwift']) . "')
+				'" .DB_escape_string($_POST['BankSwift']) . "'
 				)";
 
 
@@ -77,21 +77,19 @@ if (isset($_POST['submit'])) {
 
 		$NewTaxID = DB_Last_Insert_ID($db,'taxauthorities','taxid');
 
-		while ($DispTaxAuthRow = DB_fetch_array($DispTaxAuthResult)){
-			$sql = 'INSERT INTO taxauthrates (
-						taxauthority,
-						dispatchtaxprovince,
-						taxcatid
-						)
-						SELECT 
-						' . $NewTaxID  . ',
-						taxprovinces.taxprovinceid,
-						taxcategories.taxcatid
-						FROM taxprovinces, taxcategories
-						)';
+		$sql = 'INSERT INTO taxauthrates (
+					taxauthority,
+					dispatchtaxprovince,
+					taxcatid
+					)
+				SELECT 
+					' . $NewTaxID  . ',
+					taxprovinces.taxprovinceid,
+					taxcategories.taxcatid
+				FROM taxprovinces, 
+					taxcategories';
+							
 			$InsertResult = DB_query($sql,$db);
-			
-		}
 	}
 	//run the SQL from either of the above possibilites
 	if ($InputError !=1) {
@@ -109,7 +107,10 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN OTHER TABLES
 
-	$sql= 'SELECT COUNT(*) FROM taxgrouptaxes WHERE taxauthid=' . $SelectedTaxAuthID;
+	$sql= 'SELECT COUNT(*) 
+			FROM taxgrouptaxes 
+		WHERE taxauthid=' . $SelectedTaxAuthID;
+		
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
