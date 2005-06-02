@@ -1,6 +1,8 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity = 1;
+$AllowAnyone = true;
+
 $FromCriteria ='1'; /*Category From */
 $ToCriteria ='zzzzzzzz'; /*Category To */
 $Location =  'All';  /* Location to report on */
@@ -13,8 +15,7 @@ $_POST['FromCriteria']=$FromCriteria; /* so PDFInventoryValnPageHeader.inc works
 $_POST['ToCriteria']=$ToCriteria; /* so PDFInventoryValnPageHeader.inc works too */
 $_POST["Location"] = $Location; /* so PDFInventoryValnPageHeader.inc works too */
 
-include('config.php');
-include('includes/ConnectDB.inc');
+include('includes/session.inc');
 include ('includes/class.pdf.php');
 
 /* A4_Portrait */

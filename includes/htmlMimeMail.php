@@ -1,14 +1,14 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /**
 * Filename.......: class.html.mime.mail.inc
 * Project........: HTML Mime mail class
-* Last Modified..: $Date: 2005-02-12 04:38:10 $
-* CVS Revision...: $Revision: 1.3 $
+* Last Modified..: $Date: 2005-06-02 09:40:14 $
+* CVS Revision...: $Revision: 1.4 $
 * Copyright......: 2001, 2002 Richard Heyes
 */
 
-require_once('mimePart.php');
+require_once('inlcudes/mimePart.php');
 
 class htmlMimeMail
 {

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -46,6 +46,7 @@ Class Cart {
 	var $TransID;
 	var $ShipVia;
 	var $FreightCost;
+	var $FreightTaxes;
 	Var $OrderNo;
 	Var $Consignment;
 	Var $Quotation;
@@ -61,6 +62,7 @@ Class Cart {
 		$this->ItemsOrdered=0;
 		$this->LineCounter=0;
 		$this->DefaltSalesType="";
+		$this->FreightTaxes = array();
 	}
 
 	function add_to_cart($StockID,
@@ -274,6 +276,42 @@ Class Cart {
 		}
 	} //end method GetTaxes
 
+	function GetFreightTaxes () {
+		
+		global $db;
+		
+		/*Gets the Taxes and rates applicable to the freight bases on the tax group of the branch 
+		and SESSION['FreightTaxCategory'] the taxprovince of the dispatch location */
+
+		$SQL = "SELECT taxgrouptaxes.calculationorder,
+					taxauthorities.description,
+					taxgrouptaxes.taxauthid,
+					taxauthorities.taxglcode,
+					taxgrouptaxes.taxontax,
+					taxauthrates.taxrate
+			FROM taxauthrates INNER JOIN taxgrouptaxes ON
+				taxauthrates.taxauthority=taxgrouptaxes.taxauthid
+				INNER JOIN taxauthorities ON
+				taxauthrates.taxauthority=taxauthorities.taxid
+			WHERE taxgrouptaxes.taxgroupid=" . $this->TaxGroup . " 
+			AND taxauthrates.dispatchtaxprovince=" . $this->DispatchTaxProvince . " 
+			AND taxauthrates.taxcatid = " . $_SESSION['FreightTaxCategory'] . "
+			ORDER BY taxgrouptaxes.calculationorder";
+
+		$ErrMsg = _('The taxes and rates for this item could not be retreived because');
+		$GetTaxRatesResult = DB_query($SQL,$db,$ErrMsg);
+		
+		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
+		
+			$this->FreightTaxes[$myrow['calculationorder']] = new Tax($myrow['calculationorder'],
+											$myrow['taxauthid'],
+											$myrow['description'],
+											$myrow['taxrate'],
+											$myrow['taxontax'],
+											$myrow['taxglcode']);
+		}
+	} //end method GetFreightTaxes()				
+	
 } /* end of cart class defintion */
 
 Class LineDetails {
@@ -369,4 +407,5 @@ Class Tax {
 		$this->TaxGLCode = $TaxGLCode;
 	}
 }
+
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -111,9 +111,8 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 		$_SESSION['CurrencyRate'] = $myrow['currency_rate'];
 		$_SESSION['Items']->TaxGroup = $myrow['taxgroupid'];
 		$_SESSION['Items']->DispatchTaxProvince = $myrow['taxprovinceid'];
+		$_SESSION['Items']->GetFreightTaxes();
 		
-		//$_POST['FreightTaxRate'] = GetTaxRate($TaxGroup, $DispatchTaxProvince, $_SESSION['DefaultTaxLevel'],$db)*100;
-
 		DB_free_result($GetOrdHdrResult);
 
 /*now populate the line items array with the sales order details records */
@@ -198,19 +197,35 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 		exit;
 	} //valid order returned from the entered order number
 } else {
-/* if processing, a dispatch page has been called and ${$StkItm->StockID} would have been set from the post */
+
+/* if processing, a dispatch page has been called and ${$StkItm->LineNumber} would have been set from the post 
+set all the necessary session variables changed by the POST  */
+	if (isset($_POST['ShipVia'])){
+		$_SESSION['Items']->ShipVia = $_POST['ShipVia'];
+	}
+	if (isset($_POST['ChargeFreightCost'])){
+		$_SESSION['Items']->FreightCost = $_POST['ChargeFreightCost'];
+	}
+	foreach ($_SESSION['Items']->FreightTaxes as $FreightTaxLine) {
+		if (isset($_POST['FreightTaxRate'  . $FreightTaxLine->TaxCalculationOrder])){
+			$_SESSION['Items']->FreightTaxes[$FreightTaxLine->TaxCalculationOrder]->TaxRate = $_POST['FreightTaxRate'  . $FreightTaxLine->TaxCalculationOrder]/100;
+		}
+	}
+	
 	foreach ($_SESSION['Items']->LineItems as $Itm) {
 
 		if (is_numeric($_POST[$Itm->LineNumber .  '_QtyDispatched' ])AND $_POST[$Itm->LineNumber .  '_QtyDispatched'] <=($_SESSION['Items']->LineItems[$Itm->LineNumber]->Quantity - $_SESSION['Items']->LineItems[$Itm->LineNumber]->QtyInv)){
 			$_SESSION['Items']->LineItems[$Itm->LineNumber]->QtyDispatched = $_POST[$Itm->LineNumber  . '_QtyDispatched'];
 		}
+		
 		foreach ($Itm->Taxes as $TaxLine) {
 			if (isset($_POST[$Itm->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate'])){
 				$_SESSION['Items']->LineItems[$Itm->LineNumber]->Taxes[$TaxLine->TaxCalculationOrder]->TaxRate = $_POST[$Itm->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate']/100;
 			}
 		}
+		
 	}
-	$_SESSION['Items']->$ShipVia = $_POST['ShipVia'];
+	
 }
 
 /* Always display dispatch quantities and recalc freight for items being dispatched */
@@ -318,7 +333,8 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 	}
 	echo '</TD>';		
 	
-
+	$TaxTotal += $TaxLineTotal;
+	
 	$DisplayTaxAmount = number_format($TaxLineTotal ,2);
 
 	$DisplayGrossLineTotal = number_format($LineTotal+ $TaxLineTotal,2);
@@ -349,43 +365,41 @@ was not fully delivered the first time ?? */
 
 if ($_SESSION['Items']->AnyAlreadyDelivered==1) {
 	$_POST['ChargeFreightCost'] = 0;
-} else {
-
-
-if ($_SESSION['DoFreightCalc']==True){
-	list ($FreightCost, $BestShipper) = CalcFreightCost($_SESSION['Items']->total,
+} elseif(!isset($_SESSION['Items']->FreightCost)) {
+	if ($_SESSION['DoFreightCalc']==True){
+		list ($FreightCost, $BestShipper) = CalcFreightCost($_SESSION['Items']->total,
 								$_SESSION['Items']->BrAdd2,
 								$_SESSION['Items']->BrAdd3,
 								$_SESSION['Items']->totalVolume,
 								$_SESSION['Items']->totalWeight,
 								$_SESSION['Items']->Location,
 								$db);
-	$_SESSION['Items']->ShipVia = $BestShipper;
-}
-  if (is_numeric($FreightCost)){
-	  $FreightCost = $FreightCost / $_SESSION['CurrencyRate'];
-  } else {
-	  $FreightCost =0;
-  }
-  if (!is_numeric($BestShipper)){
-  	$SQL =  'SELECT shipper_id FROM shippers WHERE shipper_id=' . $_SESSION['Default_Shipper'];
-	$ErrMsg = _('There was a problem testing for a the default shipper because');
-	$TestShipperExists = DB_query($SQL,$db, $ErrMsg);
-	if (DB_num_rows($TestShipperExists)==1){
-		$BestShipper = $_SESSION['Default_Shipper'];
-	} else {
-		$SQL =  'SELECT shipper_id FROM shippers';
-		$ErrMsg = _('There was a problem testing for a the default shipper');
+		$_SESSION['Items']->ShipVia = $BestShipper;
+	}
+  	if (is_numeric($FreightCost)){
+		$FreightCost = $FreightCost / $_SESSION['CurrencyRate'];
+  	} else {
+		$FreightCost =0;
+  	}
+  	if (!is_numeric($BestShipper)){
+  		$SQL =  'SELECT shipper_id FROM shippers WHERE shipper_id=' . $_SESSION['Default_Shipper'];
+		$ErrMsg = _('There was a problem testing for a the default shipper because');
 		$TestShipperExists = DB_query($SQL,$db, $ErrMsg);
-		if (DB_num_rows($TestShipperExists)>=1){
-			$ShipperReturned = DB_fetch_row($TestShipperExists);
-			$BestShipper = $ShipperReturned[0];
+		if (DB_num_rows($TestShipperExists)==1){
+			$BestShipper = $_SESSION['Default_Shipper'];
 		} else {
-			prnMsg( _('There are no shippers defined') . '. ' . _('Please use the link below to set up shipping freight companies, the system expects the shipping company to be selected or a default freight company to be used'),'error');
-			echo '<A HREF="' . $rootpath . 'Shippers.php">'. _('Enter') . '/' . _('Amend Freight Companies'). '</A>';
+			$SQL =  'SELECT shipper_id FROM shippers';
+			$ErrMsg = _('There was a problem testing for a the default shipper');
+			$TestShipperExists = DB_query($SQL,$db, $ErrMsg);
+			if (DB_num_rows($TestShipperExists)>=1){
+				$ShipperReturned = DB_fetch_row($TestShipperExists);
+				$BestShipper = $ShipperReturned[0];
+			} else {
+				prnMsg( _('There are no shippers defined') . '. ' . _('Please use the link below to set up shipping freight companies, the system expects the shipping company to be selected or a default freight company to be used'),'error');
+				echo '<A HREF="' . $rootpath . 'Shippers.php">'. _('Enter') . '/' . _('Amend Freight Companies'). '</A>';
+			}
 		}
 	}
-  }
 }
 
 if (!is_numeric($_POST['ChargeFreightCost'])){
@@ -404,32 +418,41 @@ if ($_SESSION['DoFreightCalc']==True){
 }
 
 echo '<TD COLSPAN=2 ALIGN=RIGHT>'. _('Charge Freight Cost').'</TD>
-	<TD><INPUT TYPE=TEXT SIZE=6 MAXLENGTH=6 NAME=ChargeFreightCost VALUE=' . $_POST['ChargeFreightCost'] . '></TD>';
+	<TD><INPUT TYPE=TEXT SIZE=6 MAXLENGTH=6 NAME=ChargeFreightCost VALUE=' . $_SESSION['Items']->FreightCost . '></TD>';
+
 	
-$FreightTaxesResult = GetTaxes($_SESSION['Items']->TaxGroup,
-				$_SESSION['Items']->DispatchTaxProvince,
-				$_SESSION['FreightTaxCategory'],
-				$db);
-			//$_SESSION['FreightTaxCategory'] is a config parameter
-$i=0; // initialise the number of taxes iterated through
 $FreightTaxTotal =0; //initialise tax total
 
-echo '<TD COLSPAN=2>';
-	
-while ($myrow = DB_fetch_array($FreightTaxesResult)) {
+echo '<TD>';
+
+$i=0; // initialise the number of taxes iterated through
+foreach ($_SESSION['Items']->FreightTaxes as $FreightTaxLine) {
+	if ($i>0){
+		echo '<BR>';
+	}
+	echo  $FreightTaxLine->TaxAuthDescription;
+	$i++;
+}
+
+echo '</TD><TD>';
+
+$i=0;
+foreach ($_SESSION['Items']->FreightTaxes as $FreightTaxLine) {
 	if ($i>0){
 		echo '<BR>';
 	}
 	
-	echo  $myrow['description'] . ' ' . ($myrow['taxrate']*100) . '%';
-	$i++;
-	if ($Tax->TaxOnTax ==1){
-		$FreightTaxTotal += ($myrow['taxrate'] * ($_POST['ChargeFreightCost'] + $FreightTaxTotal));
+	echo  '<INPUT TYPE=TEXT NAME=FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . ' MAXLENGTH=4 SIZE=4 VALUE=' . $FreightTaxLine->TaxRate * 100 . '>';
+	
+	if ($FreightTaxLine->TaxOnTax ==1){
+		$FreightTaxTotal += ($FreightTaxLine->TaxRate * ($_SESSION['Items']->FreightCost + $FreightTaxTotal));
 	} else {
-		$FreightTaxTotal += ($myrow['taxrate'] * $_POST['ChargeFreightCost']);
+		$FreightTaxTotal += ($FreightTaxLine->TaxRate * $_SESSION['Items']->FreightCost);
 	}
+	$i++;
 }
-echo '</TD>';		
+echo '</TD>';
+
 echo '<TD ALIGN=RIGHT>' . number_format($FreightTaxTotal,2) . '</TD>
 	<TD ALIGN=RIGHT>' . number_format($FreightTaxTotal+ $_POST['ChargeFreightCost'],2) . '</TD>
 	</TR>';

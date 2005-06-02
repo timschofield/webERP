@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*Now this is not secure so a malicious user could send multiple emails of the report to the intended receipients
 
 The intention is that this script is called from cron at intervals defined with a command like:
@@ -11,21 +11,15 @@ and an array of the receipients */
 
 /*The Sales report to send */
 $ReportID = 4;
+$AllowAnyone = true;
 
 /*The people to receive the emailed report */
 $Recipients = array('"Root" <root@localhost>','"someone else" <someoneelese@sowhere.com>');
 
 /* ----------------------------------------------------------------------------------------------*/
 
-include('config.php');
-include('includes/ConnectDB.inc');
 
-if (isset($SessionSavePath)){
-	session_save_path($SessionSavePath);
-}
-
-session_start();
-
+include('includes/session.inc');
 include('includes/ConstructSQLForUserDefinedSalesReport.inc');
 include('includes/CSVSalesAnalysis.inc');
 
