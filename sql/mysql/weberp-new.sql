@@ -1837,16 +1837,14 @@ INSERT INTO `chartmaster` VALUES (940000,'Revaluation Reserve','Equity');
 -- Dumping data for table `companies`
 --
 
-INSERT INTO `companies` VALUES (1,'Demo System','15-325-122','','PO Box 999 Wellington Mail Centre, New Zealand','12 Downing Street,','Upper Hutt','New Zealand','+(64) (04) 567 5411','+(64) (04) 567 5412','info@weberp.org','USD',710000,455000,800000,810000,723000,23700,23700,900000,1,1,1,450000);
+INSERT INTO `companies` VALUES (1,'Demo System','15-325-122','','PO Box 999 Wellington Mail Centre, New Zealand','12 Downing Street,','Upper Hutt','New Zealand','+(64) (04) 567 5411','+(64) (04) 567 5412','info@weberp.org','AUD',710000,455000,800000,810000,723000,23700,23700,900000,1,1,1,450000);
 
 --
 -- Dumping data for table `currencies`
 --
 
 INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',1.7000);
-INSERT INTO `currencies` VALUES ('Deutsche','DEM','German','Pfenig',1.8000);
 INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',0.8000);
-INSERT INTO `currencies` VALUES ('N Z Dollars','NZD','New Zealand','Cents',2.0000);
 INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',1.0000);
 
 --
@@ -2076,7 +2074,7 @@ INSERT INTO `systypes` VALUES (26,'Work Order Receipt',0);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',0);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',0);
 INSERT INTO `systypes` VALUES (30,'Sales Order',0);
-INSERT INTO `systypes` VALUES (31,'Shipment Close',0);
+INSERT INTO `systypes` VALUES (31,'Shipment Close',10);
 INSERT INTO `systypes` VALUES (35,'Cost Update',0);
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
 INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',0);
@@ -2087,6 +2085,8 @@ INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',0);
 
 INSERT INTO `taxauthorities` VALUES (1,'Australian GST',810000,890000,'','','','');
 INSERT INTO `taxauthorities` VALUES (5,'Sales Tax',890000,890000,'','','','');
-INSERT INTO `taxauthorities` VALUES (6,'UK VAT',890000,890000,'','','','');
+INSERT INTO `taxauthorities` VALUES (11,'Canadian GST',890000,890000,'','','','');
+INSERT INTO `taxauthorities` VALUES (12,'Ontario PST',890000,890000,'','','','');
+INSERT INTO `taxauthorities` VALUES (13,'UK VAT',890000,890000,'','','','');
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;

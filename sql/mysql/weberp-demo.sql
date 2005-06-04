@@ -8347,7 +8347,7 @@ INSERT INTO `cogsglpostings` VALUES (1,'AN','ANY',70200,'AN');
 -- Dumping data for table `companies`
 --
 
-INSERT INTO `companies` VALUES (1,'Demo System','15-325-122','','PO Box 999 Wellington Mail Centre, New Zealand','12 Downing Street,','Upper Hutt','New Zealand','+(64) (04) 567 5411','+(64) (04) 567 5412','info@weberp.org','USD',710000,455000,800000,810000,723000,23700,23700,900000,1,1,1,450000);
+INSERT INTO `companies` VALUES (1,'Demo System','15-325-122','','PO Box 999 Wellington Mail Centre, New Zealand','12 Downing Street,','Upper Hutt','New Zealand','+(64) (04) 567 5411','+(64) (04) 567 5412','info@weberp.org','AUD',710000,455000,800000,810000,723000,23700,23700,900000,1,1,1,450000);
 
 --
 -- Dumping data for table `config`
@@ -8361,7 +8361,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-05-01');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-06-02');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
@@ -8378,6 +8378,7 @@ INSERT INTO `config` VALUES ('EDI_Incoming_Orders','EDI_Incoming_Orders');
 INSERT INTO `config` VALUES ('EDI_MsgPending','EDI_Pending');
 INSERT INTO `config` VALUES ('EDI_MsgSent','EDI_Sent');
 INSERT INTO `config` VALUES ('FreightChargeAppliesIfLessThan','1000');
+INSERT INTO `config` VALUES ('FreightTaxCategory','1');
 INSERT INTO `config` VALUES ('HTTPS_Only','0');
 INSERT INTO `config` VALUES ('MaxImageSize','300');
 INSERT INTO `config` VALUES ('NumberOfPeriodsOfStockUsage','12');
@@ -8423,9 +8424,7 @@ INSERT INTO `config` VALUES ('YearEnd','3');
 --
 
 INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',1.7000);
-INSERT INTO `currencies` VALUES ('Deutsche','DEM','German','Pfenig',1.8000);
 INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',0.8000);
-INSERT INTO `currencies` VALUES ('N Z Dollars','NZD','New Zealand','Cents',2.0000);
 INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',1.0000);
 
 --
@@ -8437,7 +8436,7 @@ INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',1.00
 -- Dumping data for table `custbranch`
 --
 
-INSERT INTO `custbranch` VALUES ('ANGRY','ANGRY','Angus Rouledge - Michigan','P O Box 67','Gowerbridge','Upperton','Michigan',3,'MI','ERI',0,'0422 2245 2213','0422 2245 2215','Granville Thomas','graville@angry.com','DEN',1,8,1,0,'','','','','');
+INSERT INTO `custbranch` VALUES ('ANGRY','ANGRY','Angus Rouledge - Toronto','P O Box 67','Gowerbridge','Upperton','Toronto Canada',3,'TR','ERI',0,'0422 2245 2213','0422 2245 2215','Granville Thomas','graville@angry.com','DEN',2,8,1,0,'','','','','');
 INSERT INTO `custbranch` VALUES ('ANGRYFL','ANGRY','Angus Rouledge - Florida','1821 Sunnyside','Ft Lauderdale','Florida','42554',3,'FL','PHO',0,'2445 2232 524','2445 2232 522','Wendy Blowers','wendy@angry.com','DEN',1,1,1,0,'','','','','');
 
 --
@@ -8648,9 +8647,9 @@ INSERT INTO `locations` VALUES ('TOR','Toronto Distribution Centre','','','','',
 -- Dumping data for table `locstock`
 --
 
-INSERT INTO `locstock` VALUES ('DEN','HIT3042-4',0.0,0);
+INSERT INTO `locstock` VALUES ('DEN','HIT3034-4',0.0,0);
 INSERT INTO `locstock` VALUES ('DEN','HIT3043-5',0.0,0);
-INSERT INTO `locstock` VALUES ('TOR','HIT3042-4',26.0,0);
+INSERT INTO `locstock` VALUES ('TOR','HIT3034-4',26.0,0);
 INSERT INTO `locstock` VALUES ('TOR','HIT3043-5',0.0,0);
 
 --
@@ -8753,12 +8752,14 @@ INSERT INTO `periods` VALUES (64,'2005-04-30');
 -- Dumping data for table `prices`
 --
 
+INSERT INTO `prices` VALUES ('HIT3034-4','DE','USD','','1680.0000','');
+INSERT INTO `prices` VALUES ('HIT3043-5','DE','USD','','2300.0000','');
 
 --
 -- Dumping data for table `purchdata`
 --
 
-INSERT INTO `purchdata` VALUES ('BINGO','HIT3042-4','853.0000','',1.0000,'',1,1);
+INSERT INTO `purchdata` VALUES ('BINGO','HIT3034-4','853.0000','',1.0000,'',1,1);
 INSERT INTO `purchdata` VALUES ('BINGO','HIT3043-5','1235.0000','',1.0000,'',5,1);
 
 --
@@ -8823,11 +8824,18 @@ INSERT INTO `salesman` VALUES ('PHO','Phone Contact','','',0.0000,'0.0000',0.000
 -- Dumping data for table `salesorderdetails`
 --
 
+INSERT INTO `salesorderdetails` VALUES (0,2,'HIT3034-4',0.0000,1680.0000,3.0000,0,0.0000,'0000-00-00 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (0,3,'HIT3034-4',0.0000,1680.0000,4.0000,0,0.0000,'0000-00-00 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (1,1,'HIT3034-4',0.0000,1680.0000,2.0000,0,0.0000,'0000-00-00 00:00:00',0,'Installation experts at 1800 12345667');
+INSERT INTO `salesorderdetails` VALUES (1,2,'HIT3043-5',0.0000,2300.0000,3.0000,0,0.0000,'0000-00-00 00:00:00',0,'');
 
 --
 -- Dumping data for table `salesorders`
 --
 
+INSERT INTO `salesorders` VALUES (1,'ANGRY','ANGRY','895542',NULL,'','2005-05-10','DE',1,'P O Box 67','Gowerbridge','Upperton','Michigan','0422 2245 2213','graville@angry.com','Angus Rouledge - Michigan',1,0,'TOR','2005-05-11',1,'2005-05-12',0);
+INSERT INTO `salesorders` VALUES (2,'ANGRY','ANGRY','',NULL,'','2005-05-21','DE',8,'P O Box 67','Gowerbridge','Upperton','Michigan','0422 2245 2213','graville@angry.com','Angus Rouledge - Michigan',1,0,'TOR','2005-05-23',1,'2005-05-23',0);
+INSERT INTO `salesorders` VALUES (3,'ANGRY','ANGRY','',NULL,'','2005-05-23','DE',8,'P O Box 67','Gowerbridge','Upperton','Michigan','0422 2245 2213','graville@angry.com','Angus Rouledge - Michigan',1,0,'DEN','2005-05-24',1,'0000-00-00',0);
 
 --
 -- Dumping data for table `salestypes`
@@ -9127,6 +9135,7 @@ INSERT INTO `stockcategory` VALUES ('AIRCON','Air Conditioning','F',722000,19000
 -- Dumping data for table `stockmaster`
 --
 
+INSERT INTO `stockmaster` VALUES ('HIT3034-4','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor Unit - wall hung complete with brackets and screws. 220V-240V AC\r\n5 year guaranttee','each','B','1800-01-01','0.0000','0.0000','853.0000','0.0000','0.0000',0,0,1,5.00,'0.4000','7.8000','','',1,0,0);
 INSERT INTO `stockmaster` VALUES ('HIT3042-4','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor Unit - wall hung complete with brackets and screws. 220V-240V AC\r\n5 year guaranttee','each','B','1800-01-01','0.0000','0.0000','853.0000','0.0000','0.0000',0,0,1,5.00,'0.4000','7.8000','','',1,1,0);
 INSERT INTO `stockmaster` VALUES ('HIT3043-5','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor unit - including 5m piping for fitting to HIT3042-4 indoor unit\r\n5 year guaranttee','each','B','1800-01-01','0.0000','0.0000','1235.0000','0.0000','0.0000',0,0,1,5.00,'0.8500','16.0000','','',1,1,0);
 
@@ -9134,7 +9143,7 @@ INSERT INTO `stockmaster` VALUES ('HIT3043-5','AIRCON','Hitachi Aircond Rev Cycl
 -- Dumping data for table `stockmoves`
 --
 
-INSERT INTO `stockmoves` VALUES (1,'HIT3042-4',17,1,'TOR','2005-04-30','','','0.0000',64,'',26.0000,0.0000,0.0000,1,26,0,'');
+INSERT INTO `stockmoves` VALUES (1,'HIT3034-4',17,1,'TOR','2005-04-30','','','0.0000',64,'',26.0000,0.0000,0.0000,1,26,0,'');
 
 --
 -- Dumping data for table `stockmovestaxes`
@@ -9145,63 +9154,63 @@ INSERT INTO `stockmoves` VALUES (1,'HIT3042-4',17,1,'TOR','2005-04-30','','','0.
 -- Dumping data for table `stockserialitems`
 --
 
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1234-00',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1234-01',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1234-02',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1234-03',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1234-04',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1234-05',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1234-06',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1234-07',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1234-08',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1234-09',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1234-10',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1234-11',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1234-12',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1234-13',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1234-14',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1234-15',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1234-16',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1234-20',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1530-02',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1530-03',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1530-05',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1530-06',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1530-07',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1530-08',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1530-09',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','1530-11',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1234-00',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1234-01',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1234-02',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1234-03',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1234-04',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1234-05',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1234-06',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1234-07',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1234-08',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1234-09',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1234-10',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1234-11',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1234-12',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1234-13',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1234-14',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1234-15',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1234-16',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1234-20',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1530-02',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1530-03',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1530-05',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1530-06',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1530-07',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1530-08',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1530-09',1);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1530-11',1);
 
 --
 -- Dumping data for table `stockserialmoves`
 --
 
-INSERT INTO `stockserialmoves` VALUES (1,1,'HIT3042-4','1234-00',1);
-INSERT INTO `stockserialmoves` VALUES (2,1,'HIT3042-4','1234-01',1);
-INSERT INTO `stockserialmoves` VALUES (3,1,'HIT3042-4','1234-02',1);
-INSERT INTO `stockserialmoves` VALUES (4,1,'HIT3042-4','1234-03',1);
-INSERT INTO `stockserialmoves` VALUES (5,1,'HIT3042-4','1234-05',1);
-INSERT INTO `stockserialmoves` VALUES (6,1,'HIT3042-4','1234-04',1);
-INSERT INTO `stockserialmoves` VALUES (7,1,'HIT3042-4','1234-06',1);
-INSERT INTO `stockserialmoves` VALUES (8,1,'HIT3042-4','1234-07',1);
-INSERT INTO `stockserialmoves` VALUES (9,1,'HIT3042-4','1234-08',1);
-INSERT INTO `stockserialmoves` VALUES (10,1,'HIT3042-4','1234-09',1);
-INSERT INTO `stockserialmoves` VALUES (11,1,'HIT3042-4','1234-10',1);
-INSERT INTO `stockserialmoves` VALUES (12,1,'HIT3042-4','1234-11',1);
-INSERT INTO `stockserialmoves` VALUES (13,1,'HIT3042-4','1234-12',1);
-INSERT INTO `stockserialmoves` VALUES (14,1,'HIT3042-4','1234-13',1);
-INSERT INTO `stockserialmoves` VALUES (15,1,'HIT3042-4','1234-14',1);
-INSERT INTO `stockserialmoves` VALUES (16,1,'HIT3042-4','1234-15',1);
-INSERT INTO `stockserialmoves` VALUES (17,1,'HIT3042-4','1234-16',1);
-INSERT INTO `stockserialmoves` VALUES (18,1,'HIT3042-4','1234-20',1);
-INSERT INTO `stockserialmoves` VALUES (19,1,'HIT3042-4','1530-02',1);
-INSERT INTO `stockserialmoves` VALUES (20,1,'HIT3042-4','1530-03',1);
-INSERT INTO `stockserialmoves` VALUES (21,1,'HIT3042-4','1530-05',1);
-INSERT INTO `stockserialmoves` VALUES (22,1,'HIT3042-4','1530-06',1);
-INSERT INTO `stockserialmoves` VALUES (23,1,'HIT3042-4','1530-07',1);
-INSERT INTO `stockserialmoves` VALUES (24,1,'HIT3042-4','1530-08',1);
-INSERT INTO `stockserialmoves` VALUES (25,1,'HIT3042-4','1530-09',1);
-INSERT INTO `stockserialmoves` VALUES (26,1,'HIT3042-4','1530-11',1);
+INSERT INTO `stockserialmoves` VALUES (1,1,'HIT3034-4','1234-00',1);
+INSERT INTO `stockserialmoves` VALUES (2,1,'HIT3034-4','1234-01',1);
+INSERT INTO `stockserialmoves` VALUES (3,1,'HIT3034-4','1234-02',1);
+INSERT INTO `stockserialmoves` VALUES (4,1,'HIT3034-4','1234-03',1);
+INSERT INTO `stockserialmoves` VALUES (5,1,'HIT3034-4','1234-05',1);
+INSERT INTO `stockserialmoves` VALUES (6,1,'HIT3034-4','1234-04',1);
+INSERT INTO `stockserialmoves` VALUES (7,1,'HIT3034-4','1234-06',1);
+INSERT INTO `stockserialmoves` VALUES (8,1,'HIT3034-4','1234-07',1);
+INSERT INTO `stockserialmoves` VALUES (9,1,'HIT3034-4','1234-08',1);
+INSERT INTO `stockserialmoves` VALUES (10,1,'HIT3034-4','1234-09',1);
+INSERT INTO `stockserialmoves` VALUES (11,1,'HIT3034-4','1234-10',1);
+INSERT INTO `stockserialmoves` VALUES (12,1,'HIT3034-4','1234-11',1);
+INSERT INTO `stockserialmoves` VALUES (13,1,'HIT3034-4','1234-12',1);
+INSERT INTO `stockserialmoves` VALUES (14,1,'HIT3034-4','1234-13',1);
+INSERT INTO `stockserialmoves` VALUES (15,1,'HIT3034-4','1234-14',1);
+INSERT INTO `stockserialmoves` VALUES (16,1,'HIT3034-4','1234-15',1);
+INSERT INTO `stockserialmoves` VALUES (17,1,'HIT3034-4','1234-16',1);
+INSERT INTO `stockserialmoves` VALUES (18,1,'HIT3034-4','1234-20',1);
+INSERT INTO `stockserialmoves` VALUES (19,1,'HIT3034-4','1530-02',1);
+INSERT INTO `stockserialmoves` VALUES (20,1,'HIT3034-4','1530-03',1);
+INSERT INTO `stockserialmoves` VALUES (21,1,'HIT3034-4','1530-05',1);
+INSERT INTO `stockserialmoves` VALUES (22,1,'HIT3034-4','1530-06',1);
+INSERT INTO `stockserialmoves` VALUES (23,1,'HIT3034-4','1530-07',1);
+INSERT INTO `stockserialmoves` VALUES (24,1,'HIT3034-4','1530-08',1);
+INSERT INTO `stockserialmoves` VALUES (25,1,'HIT3034-4','1530-09',1);
+INSERT INTO `stockserialmoves` VALUES (26,1,'HIT3034-4','1530-11',1);
 
 --
 -- Dumping data for table `suppallocs`
@@ -9249,7 +9258,7 @@ INSERT INTO `systypes` VALUES (26,'Work Order Receipt',0);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',0);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',0);
 INSERT INTO `systypes` VALUES (30,'Sales Order',0);
-INSERT INTO `systypes` VALUES (31,'Shipment Close',0);
+INSERT INTO `systypes` VALUES (31,'Shipment Close',10);
 INSERT INTO `systypes` VALUES (35,'Cost Update',0);
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
 INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',0);
@@ -9260,7 +9269,9 @@ INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',0);
 
 INSERT INTO `taxauthorities` VALUES (1,'Australian GST',810000,890000,'','','','');
 INSERT INTO `taxauthorities` VALUES (5,'Sales Tax',890000,890000,'','','','');
-INSERT INTO `taxauthorities` VALUES (6,'UK VAT',890000,890000,'','','','');
+INSERT INTO `taxauthorities` VALUES (11,'Canadian GST',890000,890000,'','','','');
+INSERT INTO `taxauthorities` VALUES (12,'Ontario PST',890000,890000,'','','','');
+INSERT INTO `taxauthorities` VALUES (13,'UK VAT',890000,890000,'','','','');
 
 --
 -- Dumping data for table `taxauthrates`
@@ -9270,8 +9281,15 @@ INSERT INTO `taxauthrates` VALUES (1,1,1,0.1);
 INSERT INTO `taxauthrates` VALUES (1,1,2,0);
 INSERT INTO `taxauthrates` VALUES (5,1,1,0.2);
 INSERT INTO `taxauthrates` VALUES (5,1,2,0.35);
-INSERT INTO `taxauthrates` VALUES (6,1,1,0);
-INSERT INTO `taxauthrates` VALUES (6,1,2,0);
+INSERT INTO `taxauthrates` VALUES (11,1,1,0.07);
+INSERT INTO `taxauthrates` VALUES (11,1,2,0.12);
+INSERT INTO `taxauthrates` VALUES (11,1,3,0);
+INSERT INTO `taxauthrates` VALUES (12,1,1,0.05);
+INSERT INTO `taxauthrates` VALUES (12,1,2,0.075);
+INSERT INTO `taxauthrates` VALUES (12,1,3,0);
+INSERT INTO `taxauthrates` VALUES (13,1,1,0.175);
+INSERT INTO `taxauthrates` VALUES (13,1,2,0.215);
+INSERT INTO `taxauthrates` VALUES (13,1,3,0);
 
 --
 -- Dumping data for table `taxcategories`
@@ -9286,12 +9304,16 @@ INSERT INTO `taxcategories` VALUES (3,'Exempt');
 --
 
 INSERT INTO `taxgroups` VALUES (1,'Default tax group');
+INSERT INTO `taxgroups` VALUES (2,'Ontario');
 
 --
 -- Dumping data for table `taxgrouptaxes`
 --
 
 INSERT INTO `taxgrouptaxes` VALUES (1,1,0,0);
+INSERT INTO `taxgrouptaxes` VALUES (1,5,1,1);
+INSERT INTO `taxgrouptaxes` VALUES (2,11,1,1);
+INSERT INTO `taxgrouptaxes` VALUES (2,12,0,0);
 
 --
 -- Dumping data for table `taxprovinces`
@@ -9324,7 +9346,7 @@ INSERT INTO `unitsofmeasure` VALUES (6,'pack');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','pt_BR','','');
+INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB','','');
 INSERT INTO `www_users` VALUES ('Fred','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Fred Bloggs','','','','DEN',1,'2005-04-29 22:41:10','','A4','1,1,0,1,1,0,1,1,',0,50,'fresh','en_GB','','');
 INSERT INTO `www_users` VALUES ('testy','weberp','Test Remote User','GRANHR','','','DEN',7,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en','','');
 

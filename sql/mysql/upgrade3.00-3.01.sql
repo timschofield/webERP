@@ -60,16 +60,23 @@ ALTER TABLE taxgrouptaxes ADD FOREIGN KEY (taxauthid) REFERENCES taxauthorities 
 CREATE TABLE stockmovestaxes (
 	stkmoveno int NOT NULL,
 	taxauthid tinyint NOT NULL,
+	taxontax TINYINT DEFAULT 0 NOT NULL,
+	taxcalculationorder TINYINT NOT NULL,
 	taxrate double DEFAULT 0 NOT NULL,
 	PRIMARY KEY (stkmoveno,taxauthid),
-	KEY (taxauthid)
+	KEY (taxauthid),
+	KEY (calculationorder)
 ) ENGINE=InnoDB;
 
 ALTER TABLE stockmovestaxes ADD FOREIGN KEY (taxauthid) REFERENCES taxauthorities (taxid);
 
 INSERT INTO stockmovestaxes (stkmoveno, taxauthid, taxrate)
-	SELECT stockmoves.stkmoveno, custbranch.taxauthority, stockmoves.taxrate FROM stockmoves INNER JOIN custbranch 
-		ON stockmoves.debtorno=custbranch.debtorno AND stockmoves.branchcode=custbranch.branchcode;
+	SELECT stockmoves.stkmoveno, 
+		custbranch.taxauthority, 
+		stockmoves.taxrate 
+	FROM stockmoves INNER JOIN custbranch 
+		ON stockmoves.debtorno=custbranch.debtorno 
+		AND stockmoves.branchcode=custbranch.branchcode;
 
 ALTER TABLE stockmoves DROP COLUMN taxrate;
 		
@@ -103,3 +110,15 @@ ALTER TABLE `salesorderdetails` DROP PRIMARY KEY;
 ALTER TABLE salesorderdetails ADD PRIMARY KEY (orderlineno,orderno);
 
 INSERT INTO config VALUES('FreightTaxCategory','1');
+
+CREATE TABLE debtortranstaxes (
+	`debtortransid` INT NOT NULL ,
+	`taxauthid` TINYINT NOT NULL ,
+	`taxamount` DOUBLE NOT NULL,
+	PRIMARY KEY(debtortransid,
+			taxauthid),
+	KEY (taxauthid)
+) ENGINE=innodb;
+
+ALTER TABLE debtortranstaxes ADD FOREIGN KEY (taxauthid) REFERENCES taxauthorities (taxid);
+ALTER TABLE debtortranstaxes ADD FOREIGN KEY (debtortransid) REFERENCES debtortrans (id);

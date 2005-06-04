@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -372,7 +372,7 @@ Class LineDetails {
 		$this->ActDispDate = $ActDispatchDate;
 		$this->QtyInv = $QtyInvoiced;
 		if ($Controlled==1){
-			$this->QtyDispatched =0;
+			$this->QtyDispatched = 0;
 		} else {
 			$this->QtyDispatched = $Qty - $QtyInvoiced;
 		}
@@ -398,7 +398,13 @@ Class Tax {
 	Var $TaxOnTax;
 	var $TaxGLCode;
 		
-	function Tax ($TaxCalculationOrder, $TaxAuthID, $TaxAuthDescription, $TaxRate, $TaxOnTax, $TaxGLCode){
+	function Tax ($TaxCalculationOrder, 
+			$TaxAuthID, 
+			$TaxAuthDescription, 
+			$TaxRate, 
+			$TaxOnTax, 
+			$TaxGLCode){
+			
 		$this->TaxCalculationOrder = $TaxCalculationOrder;
 		$this->TaxAuthID = $TaxAuthID;
 		$this->TaxAuthDescription = $TaxAuthDescription;
