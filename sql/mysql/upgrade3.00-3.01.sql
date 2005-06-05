@@ -1,4 +1,3 @@
-
 CREATE TABLE taxcategories(
 taxcatid tinyint( 4 ) AUTO_INCREMENT NOT NULL ,
 taxcatname varchar( 30 ) NOT NULL ,
@@ -79,6 +78,23 @@ INSERT INTO stockmovestaxes (stkmoveno, taxauthid, taxrate)
 		AND stockmoves.branchcode=custbranch.branchcode;
 
 ALTER TABLE stockmoves DROP COLUMN taxrate;
+
+CREATE TABLE debtortranstaxes (
+	`debtortransid` INT NOT NULL ,
+	`taxauthid` TINYINT NOT NULL ,
+	`taxamount` DOUBLE NOT NULL,
+	PRIMARY KEY(debtortransid,
+			taxauthid),
+	KEY (taxauthid)
+) ENGINE=innodb;
+
+ALTER TABLE debtortranstaxes ADD FOREIGN KEY (taxauthid) REFERENCES taxauthorities (taxid);
+ALTER TABLE debtortranstaxes ADD FOREIGN KEY (debtortransid) REFERENCES debtortrans (id);
+
+INSERT INTO debtortranstaxes (debtortransid, taxauthid, taxamount)
+	SELECT debtortrans.id, custbranch.taxauthority, debtortrans.ovgst
+		FROM debtortrans INNER JOIN custbranch ON debtortrans.debtorno=custbranch.debtorno AND debtortrans.branchcode=custbranch.branchcode
+		WHERE debtortrans.type=10 or debtortrans.type=11;
 		
 ALTER TABLE custbranch DROP FOREIGN KEY custbranch_ibfk_5;
 ALTER TABLE `custbranch` CHANGE `taxauthority` `taxgroupid` TINYINT( 4 ) DEFAULT '1' NOT NULL;
@@ -111,14 +127,3 @@ ALTER TABLE salesorderdetails ADD PRIMARY KEY (orderlineno,orderno);
 
 INSERT INTO config VALUES('FreightTaxCategory','1');
 
-CREATE TABLE debtortranstaxes (
-	`debtortransid` INT NOT NULL ,
-	`taxauthid` TINYINT NOT NULL ,
-	`taxamount` DOUBLE NOT NULL,
-	PRIMARY KEY(debtortransid,
-			taxauthid),
-	KEY (taxauthid)
-) ENGINE=innodb;
-
-ALTER TABLE debtortranstaxes ADD FOREIGN KEY (taxauthid) REFERENCES taxauthorities (taxid);
-ALTER TABLE debtortranstaxes ADD FOREIGN KEY (debtortransid) REFERENCES debtortrans (id);

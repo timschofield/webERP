@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -263,8 +263,8 @@ Class Cart {
 		
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
 		
-			$this->LineItems[$LineNumber]->Taxes[$myrow['calculationorder']] =
-								  new Tax($myrow['calculationorder'],
+			$this->LineItems[$LineNumber]->Taxes[$myrow['taxcalculationorder']] =
+								  new Tax($myrow['taxcalculationorder'],
 										$myrow['taxauthid'],
 										$myrow['description'],
 										$myrow['taxrate'],

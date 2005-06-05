@@ -465,6 +465,20 @@ CREATE TABLE `debtortrans` (
 ) TYPE=InnoDB;
 
 --
+-- Table structure for table `debtortranstaxes`
+--
+
+CREATE TABLE `debtortranstaxes` (
+  `debtortransid` int(11) NOT NULL default '0',
+  `taxauthid` tinyint(4) NOT NULL default '0',
+  `taxamount` double NOT NULL default '0',
+  PRIMARY KEY  (`debtortransid`,`taxauthid`),
+  KEY `taxauthid` (`taxauthid`),
+  CONSTRAINT `debtortranstaxes_ibfk_2` FOREIGN KEY (`debtortransid`) REFERENCES `debtortrans` (`id`),
+  CONSTRAINT `debtortranstaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`)
+) TYPE=InnoDB;
+
+--
 -- Table structure for table `discountmatrix`
 --
 
@@ -1367,8 +1381,11 @@ CREATE TABLE `stockmovestaxes` (
   `stkmoveno` int(11) NOT NULL default '0',
   `taxauthid` tinyint(4) NOT NULL default '0',
   `taxrate` double NOT NULL default '0',
+  `taxontax` tinyint(4) NOT NULL default '0',
+  `taxcalculationorder` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`stkmoveno`,`taxauthid`),
   KEY `taxauthid` (`taxauthid`),
+  KEY `calculationorder` (`taxcalculationorder`),
   CONSTRAINT `stockmovestaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`)
 ) TYPE=InnoDB;
 
@@ -2058,7 +2075,7 @@ INSERT INTO `systypes` VALUES (0,'Journal - GL',0);
 INSERT INTO `systypes` VALUES (1,'Payment - GL',0);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',0);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',6);
 INSERT INTO `systypes` VALUES (11,'Credit Note',0);
 INSERT INTO `systypes` VALUES (12,'Receipt',1);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);

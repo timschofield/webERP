@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 $PageSecurity =3;
 
 
@@ -138,7 +138,7 @@ if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 
 			while ($myrow=db_fetch_array($LineItemsResult)) {
 				
-				$LineNumber = ($_SESSION['CreditItems']->LineCounter);
+				$LineNumber = $_SESSION['CreditItems']->LineCounter;
 				
 				$_SESSION['CreditItems']->add_to_cart($myrow['stockid'],
 								$myrow['quantity'],
@@ -166,7 +166,6 @@ if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 								
 					
 				$_SESSION['CreditItems']->GetExistingTaxes($LineNumber, $myrow['stkmoveno']);
-				
 				
 				if ($myrow['controlled']==1){/* Populate the SerialItems array too*/
 
@@ -205,7 +204,9 @@ if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 if (isset($_POST['Location'])){
 	$_SESSION['CreditItems']->Location = $_POST['Location'];
 }
-
+if (isset($_POST['ChargeFreightCost'])){
+	$_SESSION['CreditItems']->FreightCost = $_POST['ChargeFreightCost'];
+}
 
 foreach ($_SESSION['CreditItems']->FreightTaxes as $FreightTaxLine) {
 	if (isset($_POST['FreightTaxRate'  . $FreightTaxLine->TaxCalculationOrder])){
@@ -377,7 +378,7 @@ echo '<TR>
 	<TD ALIGN=RIGHT>' . $_SESSION['Old_FreightCost'] . '</TD>
 	<TD></TD>
 	<TD COLSPAN=2 ALIGN=RIGHT>' . _('Credit Freight Cost') . "</TD>
-	<TD><INPUT TYPE=TEXT SIZE=6 MAXLENGTH=6 NAME='ChargeFreightCost' VALUE=" . $_POST['ChargeFreightCost'] . "></TD>";
+	<TD><INPUT TYPE=TEXT SIZE=6 MAXLENGTH=6 NAME='ChargeFreightCost' VALUE=" . $_SESSION['CreditItems']->FreightCost . "></TD>";
 
 
 $FreightTaxTotal =0; //initialise tax total
@@ -426,7 +427,7 @@ $DisplayTotal = number_format($_SESSION['CreditItems']->total + $_POST['ChargeFr
 echo '<TR>
 	<TD COLSPAN=7 ALIGN=RIGHT>' . _('Credit Totals') . "</TD>
 	<TD ALIGN=RIGHT><HR><B>$DisplayTotal</B><HR></TD>
-	<TD></TD>
+	<TD COLSPAN=2></TD>
 	<TD ALIGN=RIGHT><HR><B>" . number_format($TaxTotal,2) . "<HR></TD>
 	<TD ALIGN=RIGHT><HR><B>" . number_format($TaxTotal+($_SESSION['CreditItems']->total + $_POST['ChargeFreightCost']),2) . "</B><HR></TD>
 </TR></TABLE>";
@@ -481,7 +482,6 @@ if (isset($_POST['ProcessCredit'])){
 	/*Do some rounding */
 
 	$_SESSION['CreditItems']->total = round($_SESSION['CreditItems']->total,2);
-	$_POST['ChargeFreightCost'] = round($_POST['ChargeFreightCost'],2);
 	$TaxTotal = round($TaxTotal,2);
 
 	$Allocate_amount=0;
@@ -491,7 +491,7 @@ if (isset($_POST['ProcessCredit'])){
 
 		if ($myrow[0] > ($_SESSION['CreditItems']->total + $_POST['ChargeFreightCost'] + $TaxTotal)){
 
-			$Allocate_amount = $_SESSION['CreditItems']->total + $_POST['ChargeFreightCost'] + $TaxTotal;
+			$Allocate_amount = $_SESSION['CreditItems']->total + $_SESSION['CreditItems']->FreightCost + $TaxTotal;
 			$Settled = 1;
 		} else { /*the balance left to allocate is less than the credit note value */
 			$Allocate_amount = $myrow[0];

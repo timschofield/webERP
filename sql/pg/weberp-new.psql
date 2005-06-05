@@ -1,0 +1,6808 @@
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- TOC entry 397 (OID 35739)
+-- Name: plpgsql_call_handler(); Type: FUNC PROCEDURAL LANGUAGE; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION plpgsql_call_handler() RETURNS language_handler
+    AS 'plpgsql.so', 'plpgsql_call_handler'
+    LANGUAGE c;
+
+
+--
+-- TOC entry 396 (OID 35740)
+-- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: public; Owner: 
+--
+
+CREATE TRUSTED PROCEDURAL LANGUAGE plpgsql HANDLER plpgsql_call_handler;
+
+
+--
+-- TOC entry 4 (OID 2200)
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- TOC entry 5 (OID 35741)
+-- Name: pgblob; Type: DOMAIN; Schema: public; Owner: weberp_db_user
+--
+
+CREATE DOMAIN pgblob AS text;
+
+
+--
+-- TOC entry 7 (OID 35742)
+-- Name: holdreasons; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE holdreasons (
+    reasoncode integer DEFAULT 1 NOT NULL,
+    reasondescription text DEFAULT ''::text NOT NULL,
+    dissallowinvoices integer DEFAULT -1 NOT NULL
+);
+
+
+--
+-- TOC entry 8 (OID 35750)
+-- Name: currencies; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE currencies (
+    currency text DEFAULT ''::text NOT NULL,
+    currabrev text DEFAULT ''::text NOT NULL,
+    country text DEFAULT ''::text NOT NULL,
+    hundredsname text DEFAULT 'Cents'::text NOT NULL,
+    rate numeric(16,4) DEFAULT 1.0000 NOT NULL
+);
+
+
+--
+-- TOC entry 9 (OID 35760)
+-- Name: paymentterms; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE paymentterms (
+    termsindicator text DEFAULT ''::text NOT NULL,
+    terms text DEFAULT ''::text NOT NULL,
+    daysbeforedue integer DEFAULT 0 NOT NULL,
+    dayinfollowingmonth integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- TOC entry 10 (OID 35769)
+-- Name: systypes; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE systypes (
+    typeid integer DEFAULT 0 NOT NULL,
+    typename text DEFAULT ''::text NOT NULL,
+    typeno integer DEFAULT 1 NOT NULL
+);
+
+
+--
+-- TOC entry 11 (OID 35777)
+-- Name: periods; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE periods (
+    periodno integer DEFAULT 0 NOT NULL,
+    lastdate_in_period date
+);
+
+
+--
+-- TOC entry 12 (OID 35780)
+-- Name: accountgroups; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE accountgroups (
+    groupname text DEFAULT ''::text NOT NULL,
+    sectioninaccounts integer DEFAULT 0 NOT NULL,
+    pandl integer DEFAULT 1 NOT NULL,
+    sequenceintb integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- TOC entry 13 (OID 35791)
+-- Name: cogsglpostings; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE cogsglpostings (
+    id serial NOT NULL,
+    area text DEFAULT ''::text NOT NULL,
+    stkcat text DEFAULT ''::text NOT NULL,
+    glcode integer DEFAULT 0 NOT NULL,
+    salestype text DEFAULT 'AN'::text NOT NULL
+);
+
+
+--
+-- TOC entry 14 (OID 35801)
+-- Name: chartmaster; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE chartmaster (
+    accountcode integer DEFAULT 0 NOT NULL,
+    accountname text DEFAULT ''::text NOT NULL,
+    group_ text DEFAULT ''::text NOT NULL
+);
+
+
+--
+-- TOC entry 15 (OID 35811)
+-- Name: taxauthorities; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE taxauthorities (
+    taxid serial NOT NULL,
+    description text DEFAULT ''::text NOT NULL,
+    taxglcode integer DEFAULT 0 NOT NULL,
+    purchtaxglaccount integer DEFAULT 0 NOT NULL,
+    bank text,
+    bankacctype text,
+    bankacc text,
+    bankswift text
+);
+
+
+--
+-- TOC entry 16 (OID 35820)
+-- Name: companies; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE companies (
+    coycode integer DEFAULT 1 NOT NULL,
+    coyname text DEFAULT ''::text NOT NULL,
+    gstno text DEFAULT ''::text NOT NULL,
+    companynumber text DEFAULT '0'::text NOT NULL,
+    postaladdress text DEFAULT ''::text NOT NULL,
+    regoffice1 text DEFAULT ''::text NOT NULL,
+    regoffice2 text DEFAULT ''::text NOT NULL,
+    regoffice3 text DEFAULT ''::text NOT NULL,
+    telephone text DEFAULT ''::text NOT NULL,
+    fax text DEFAULT ''::text NOT NULL,
+    email text DEFAULT ''::text NOT NULL,
+    currencydefault text DEFAULT ''::text NOT NULL,
+    debtorsact integer DEFAULT 70000 NOT NULL,
+    pytdiscountact integer DEFAULT 55000 NOT NULL,
+    creditorsact integer DEFAULT 80000 NOT NULL,
+    payrollact integer DEFAULT 84000 NOT NULL,
+    grnact integer DEFAULT 72000 NOT NULL,
+    exchangediffact integer DEFAULT 65000 NOT NULL,
+    purchasesexchangediffact integer DEFAULT 0 NOT NULL,
+    retainedearnings integer DEFAULT 90000 NOT NULL,
+    gllink_debtors integer DEFAULT 1,
+    gllink_creditors integer DEFAULT 1,
+    gllink_stock integer DEFAULT 1,
+    freightact integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- TOC entry 17 (OID 35849)
+-- Name: ediitemmapping; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE ediitemmapping (
+    supporcust text DEFAULT ''::text NOT NULL,
+    partnercode text DEFAULT ''::text NOT NULL,
+    stockid text DEFAULT ''::text NOT NULL,
+    partnerstockid text DEFAULT ''::text NOT NULL
+);
+
+
+--
+-- TOC entry 18 (OID 35860)
+-- Name: edimessageformat; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE edimessageformat (
+    id serial NOT NULL,
+    partnercode text DEFAULT ''::text NOT NULL,
+    messagetype text DEFAULT ''::text NOT NULL,
+    section text DEFAULT ''::text NOT NULL,
+    sequenceno integer DEFAULT 0 NOT NULL,
+    linetext text DEFAULT ''::text NOT NULL
+);
+
+
+--
+-- TOC entry 19 (OID 35871)
+-- Name: edi_orders_seg_groups; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE edi_orders_seg_groups (
+    seggroupno integer DEFAULT 0 NOT NULL,
+    maxoccur integer DEFAULT 0 NOT NULL,
+    parentseggroup integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- TOC entry 20 (OID 35878)
+-- Name: edi_orders_segs; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE edi_orders_segs (
+    id serial NOT NULL,
+    segtag text DEFAULT ''::text NOT NULL,
+    seggroup integer DEFAULT 0 NOT NULL,
+    maxoccur integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- TOC entry 21 (OID 35889)
+-- Name: gltrans; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE gltrans (
+    counterindex serial NOT NULL,
+    "type" integer DEFAULT 0 NOT NULL,
+    typeno bigint DEFAULT (1)::bigint NOT NULL,
+    chequeno integer DEFAULT 0 NOT NULL,
+    trandate date,
+    periodno integer DEFAULT 0 NOT NULL,
+    account integer DEFAULT 0 NOT NULL,
+    narrative text DEFAULT ''::text NOT NULL,
+    amount double precision DEFAULT (0)::double precision NOT NULL,
+    posted integer DEFAULT 0 NOT NULL,
+    jobref text DEFAULT ''::text NOT NULL
+);
+
+
+--
+-- TOC entry 22 (OID 35904)
+-- Name: lastcostrollup; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE lastcostrollup (
+    stockid text DEFAULT ''::text NOT NULL,
+    totalonhand numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    matcost numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    labcost numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    oheadcost numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    categoryid text DEFAULT ''::text NOT NULL,
+    stockact integer DEFAULT 0 NOT NULL,
+    adjglact integer DEFAULT 0 NOT NULL,
+    newmatcost numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    newlabcost numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    newoheadcost numeric(20,4) DEFAULT 0.0000 NOT NULL
+);
+
+
+--
+-- TOC entry 23 (OID 35920)
+-- Name: locations; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE locations (
+    loccode text DEFAULT ''::text NOT NULL,
+    locationname text DEFAULT ''::text NOT NULL,
+    deladd1 text DEFAULT ''::text NOT NULL,
+    deladd2 text DEFAULT ''::text NOT NULL,
+    deladd3 text DEFAULT ''::text NOT NULL,
+    tel text DEFAULT ''::text NOT NULL,
+    fax text DEFAULT ''::text NOT NULL,
+    email text DEFAULT ''::text NOT NULL,
+    contact text DEFAULT ''::text NOT NULL,
+    taxauthority integer DEFAULT 1 NOT NULL
+);
+
+
+--
+-- TOC entry 24 (OID 35937)
+-- Name: reportheaders; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE reportheaders (
+    reportid serial NOT NULL,
+    reportheading text DEFAULT ''::text NOT NULL,
+    groupbydata1 text DEFAULT ''::text NOT NULL,
+    newpageafter1 integer DEFAULT 0 NOT NULL,
+    lower1 text DEFAULT ''::text NOT NULL,
+    upper1 text DEFAULT ''::text NOT NULL,
+    groupbydata2 text,
+    newpageafter2 integer DEFAULT 0 NOT NULL,
+    lower2 text,
+    upper2 text,
+    groupbydata3 text,
+    newpageafter3 integer DEFAULT 0 NOT NULL,
+    lower3 text,
+    upper3 text,
+    groupbydata4 text DEFAULT ''::text NOT NULL,
+    newpageafter4 integer DEFAULT 0 NOT NULL,
+    upper4 text DEFAULT ''::text NOT NULL,
+    lower4 text DEFAULT ''::text NOT NULL
+);
+
+
+--
+-- TOC entry 25 (OID 35954)
+-- Name: reportcolumns; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE reportcolumns (
+    reportid integer DEFAULT 0 NOT NULL,
+    colno integer DEFAULT 0 NOT NULL,
+    heading1 text DEFAULT ''::text NOT NULL,
+    heading2 text,
+    calculation integer DEFAULT 0 NOT NULL,
+    periodfrom integer,
+    periodto integer,
+    datatype text,
+    colnumerator integer,
+    coldenominator integer,
+    calcoperator text,
+    budgetoractual integer DEFAULT 0 NOT NULL,
+    valformat text DEFAULT 'N'::text NOT NULL,
+    constant double precision DEFAULT (0)::double precision NOT NULL
+);
+
+
+--
+-- TOC entry 26 (OID 35968)
+-- Name: salesanalysis; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE salesanalysis (
+    typeabbrev text DEFAULT ''::text NOT NULL,
+    periodno integer DEFAULT 0 NOT NULL,
+    amt numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    cost numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    cust text DEFAULT ''::text NOT NULL,
+    custbranch text DEFAULT ''::text NOT NULL,
+    qty numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    disc numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    stockid text DEFAULT ''::text NOT NULL,
+    area text DEFAULT ''::text NOT NULL,
+    budgetoractual integer DEFAULT 0 NOT NULL,
+    salesperson text DEFAULT ''::text NOT NULL,
+    stkcategory text DEFAULT ''::text NOT NULL,
+    id serial NOT NULL
+);
+
+
+--
+-- TOC entry 27 (OID 35989)
+-- Name: salesglpostings; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE salesglpostings (
+    id serial NOT NULL,
+    area text DEFAULT ''::text NOT NULL,
+    stkcat text DEFAULT ''::text NOT NULL,
+    discountglcode integer DEFAULT 0 NOT NULL,
+    salesglcode integer DEFAULT 0 NOT NULL,
+    salestype text DEFAULT 'AN'::text NOT NULL
+);
+
+
+--
+-- TOC entry 28 (OID 36000)
+-- Name: salestypes; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE salestypes (
+    typeabbrev text DEFAULT ''::text NOT NULL,
+    sales_type text DEFAULT ''::text NOT NULL
+);
+
+
+--
+-- TOC entry 29 (OID 36007)
+-- Name: discountmatrix; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE discountmatrix (
+    salestype text DEFAULT ''::text NOT NULL,
+    discountcategory text DEFAULT ''::text NOT NULL,
+    quantitybreak integer DEFAULT 1 NOT NULL,
+    discountrate numeric(16,4) DEFAULT 0.0000 NOT NULL
+);
+
+
+--
+-- TOC entry 30 (OID 36016)
+-- Name: salesman; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE salesman (
+    salesmancode text DEFAULT ''::text NOT NULL,
+    salesmanname text DEFAULT ''::text NOT NULL,
+    smantel text DEFAULT ''::text NOT NULL,
+    smanfax text DEFAULT ''::text NOT NULL,
+    commissionrate1 numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    breakpoint numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    commissionrate2 numeric(16,4) DEFAULT 0.0000 NOT NULL
+);
+
+
+--
+-- TOC entry 31 (OID 36028)
+-- Name: scripts; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE scripts (
+    pageid integer DEFAULT nextval('public.scripts_id_seq'::text) NOT NULL,
+    filename text DEFAULT ''::text NOT NULL,
+    pagedescription text DEFAULT ''::text NOT NULL
+);
+
+
+--
+-- TOC entry 32 (OID 36036)
+-- Name: suppliers; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE suppliers (
+    supplierid text DEFAULT ''::text NOT NULL,
+    suppname text DEFAULT ''::text NOT NULL,
+    address1 text DEFAULT ''::text NOT NULL,
+    address2 text DEFAULT ''::text NOT NULL,
+    address3 text DEFAULT ''::text NOT NULL,
+    address4 text DEFAULT ''::text NOT NULL,
+    currcode text DEFAULT ''::text NOT NULL,
+    suppliersince date,
+    paymentterms text DEFAULT ''::text NOT NULL,
+    lastpaid numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    lastpaiddate timestamp without time zone,
+    bankact text DEFAULT ''::text NOT NULL,
+    bankref text DEFAULT ''::text NOT NULL,
+    bankpartics text DEFAULT ''::text NOT NULL,
+    remittance integer DEFAULT 1 NOT NULL,
+    taxauthority integer DEFAULT 1 NOT NULL
+);
+
+
+--
+-- TOC entry 33 (OID 36055)
+-- Name: shipments; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE shipments (
+    shiptref integer DEFAULT 0 NOT NULL,
+    voyageref text DEFAULT '0'::text NOT NULL,
+    vessel text DEFAULT ''::text NOT NULL,
+    eta timestamp without time zone,
+    accumvalue numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    supplierid text DEFAULT ''::text NOT NULL,
+    closed integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- TOC entry 34 (OID 36068)
+-- Name: shipmentcharges; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE shipmentcharges (
+    shiptchgid serial NOT NULL,
+    shiptref integer DEFAULT 0 NOT NULL,
+    transtype integer DEFAULT 0 NOT NULL,
+    transno integer DEFAULT 0 NOT NULL,
+    stockid text DEFAULT ''::text NOT NULL,
+    value double precision DEFAULT (0)::double precision NOT NULL
+);
+
+
+--
+-- TOC entry 35 (OID 36081)
+-- Name: shippers; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE shippers (
+    shipper_id serial NOT NULL,
+    shippername text DEFAULT ''::text NOT NULL,
+    mincharge numeric(16,4) DEFAULT 0.0000 NOT NULL
+);
+
+
+--
+-- TOC entry 36 (OID 36091)
+-- Name: freightcosts; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE freightcosts (
+    shipcostfromid serial NOT NULL,
+    locationfrom text DEFAULT ''::text NOT NULL,
+    destination text DEFAULT ''::text NOT NULL,
+    shipperid integer DEFAULT 0 NOT NULL,
+    cubrate numeric(16,2) DEFAULT 0.00 NOT NULL,
+    kgrate numeric(16,2) DEFAULT 0.00 NOT NULL,
+    maxkgs numeric(16,2) DEFAULT 999999.00 NOT NULL,
+    maxcub numeric(16,2) DEFAULT 999999.00 NOT NULL,
+    fixedprice numeric(16,2) DEFAULT 0.00 NOT NULL,
+    minimumchg numeric(16,2) DEFAULT 0.00 NOT NULL
+);
+
+
+--
+-- TOC entry 37 (OID 36106)
+-- Name: stockcategory; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE stockcategory (
+    categoryid text DEFAULT ''::text NOT NULL,
+    categorydescription text DEFAULT ''::text NOT NULL,
+    stocktype text DEFAULT 'F'::text NOT NULL,
+    stockact integer DEFAULT 0 NOT NULL,
+    adjglact integer DEFAULT 0 NOT NULL,
+    purchpricevaract integer DEFAULT 80000 NOT NULL,
+    materialuseagevarac integer DEFAULT 80000 NOT NULL,
+    wipact integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- TOC entry 38 (OID 36119)
+-- Name: stockmaster; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE stockmaster (
+    stockid text DEFAULT ''::text NOT NULL,
+    categoryid text DEFAULT ''::text NOT NULL,
+    description text DEFAULT ''::text NOT NULL,
+    longdescription text NOT NULL,
+    units text DEFAULT 'each'::text NOT NULL,
+    mbflag text DEFAULT 'B'::text NOT NULL,
+    lastcurcostdate date DEFAULT '1800-01-01'::date NOT NULL,
+    actualcost numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    lastcost numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    materialcost numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    labourcost numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    overheadcost numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    lowestlevel integer DEFAULT 0 NOT NULL,
+    discontinued integer DEFAULT 0 NOT NULL,
+    controlled integer DEFAULT 0 NOT NULL,
+    eoq numeric(10,2) DEFAULT 0.00 NOT NULL,
+    volume numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    kgs numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    barcode text DEFAULT ''::text NOT NULL,
+    discountcategory text DEFAULT ''::text NOT NULL,
+    taxlevel integer DEFAULT 1 NOT NULL,
+    serialised integer DEFAULT 0 NOT NULL,
+    decimalplaces integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- TOC entry 39 (OID 36148)
+-- Name: stockcounts; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE stockcounts (
+    id serial NOT NULL,
+    stockid text DEFAULT ''::text NOT NULL,
+    loccode text DEFAULT ''::text NOT NULL,
+    qtycounted double precision DEFAULT (0)::double precision NOT NULL,
+    reference text DEFAULT ''::text NOT NULL
+);
+
+
+--
+-- TOC entry 40 (OID 36158)
+-- Name: stockcheckfreeze; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE stockcheckfreeze (
+    stockid text DEFAULT ''::text NOT NULL,
+    loccode text DEFAULT ''::text NOT NULL,
+    qoh double precision DEFAULT (0)::double precision NOT NULL
+);
+
+
+--
+-- TOC entry 41 (OID 36166)
+-- Name: prices; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE prices (
+    stockid text DEFAULT ''::text NOT NULL,
+    typeabbrev text DEFAULT ''::text NOT NULL,
+    currabrev text DEFAULT ''::text NOT NULL,
+    debtorno text DEFAULT ''::text NOT NULL,
+    price numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    branchcode text DEFAULT ''::text NOT NULL
+);
+
+
+--
+-- TOC entry 42 (OID 36177)
+-- Name: purchdata; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE purchdata (
+    supplierno text DEFAULT ''::text NOT NULL,
+    stockid text DEFAULT ''::text NOT NULL,
+    price numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    suppliersuom text DEFAULT ''::text NOT NULL,
+    conversionfactor numeric(16,4) DEFAULT 1.0000 NOT NULL,
+    supplierdescription text DEFAULT ''::text NOT NULL,
+    leadtime integer DEFAULT 1 NOT NULL,
+    preferred integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- TOC entry 43 (OID 36190)
+-- Name: locstock; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE locstock (
+    loccode text DEFAULT ''::text NOT NULL,
+    stockid text DEFAULT ''::text NOT NULL,
+    quantity numeric(16,1) DEFAULT 0.0 NOT NULL,
+    reorderlevel bigint DEFAULT (0)::bigint NOT NULL
+);
+
+
+--
+-- TOC entry 44 (OID 36199)
+-- Name: loctransfers; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE loctransfers (
+    reference integer DEFAULT 0 NOT NULL,
+    stockid text DEFAULT ''::text NOT NULL,
+    shipqty integer DEFAULT 0 NOT NULL,
+    recqty integer DEFAULT 0 NOT NULL,
+    shipdate date,
+    recdate date,
+    shiploc text DEFAULT ''::text NOT NULL,
+    recloc text DEFAULT ''::text NOT NULL
+);
+
+
+--
+-- TOC entry 45 (OID 36212)
+-- Name: stockmoves; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE stockmoves (
+    stkmoveno serial NOT NULL,
+    stockid text DEFAULT ''::text NOT NULL,
+    "type" integer DEFAULT 0 NOT NULL,
+    transno integer DEFAULT 0 NOT NULL,
+    loccode text DEFAULT ''::text NOT NULL,
+    trandate date,
+    debtorno text DEFAULT ''::text NOT NULL,
+    branchcode text DEFAULT ''::text NOT NULL,
+    price numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    prd integer DEFAULT 0 NOT NULL,
+    reference text DEFAULT ''::text NOT NULL,
+    qty numeric(16,4) DEFAULT 1.0000 NOT NULL,
+    discountpercent numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    standardcost numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    show_on_inv_crds integer DEFAULT 1 NOT NULL,
+    newqoh double precision DEFAULT (0)::double precision NOT NULL,
+    hidemovt integer DEFAULT 0 NOT NULL,
+    taxrate double precision DEFAULT (0)::double precision NOT NULL,
+    narrative text DEFAULT ''::text NOT NULL
+);
+
+
+--
+-- TOC entry 46 (OID 36235)
+-- Name: stockserialitems; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE stockserialitems (
+    stockid text DEFAULT ''::text NOT NULL,
+    loccode text DEFAULT ''::text NOT NULL,
+    serialno text DEFAULT ''::text NOT NULL,
+    quantity double precision DEFAULT (0)::double precision NOT NULL
+);
+
+
+--
+-- TOC entry 47 (OID 36246)
+-- Name: stockserialmoves; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE stockserialmoves (
+    stkitmmoveno serial NOT NULL,
+    stockmoveno integer DEFAULT 0 NOT NULL,
+    stockid text DEFAULT ''::text NOT NULL,
+    serialno text DEFAULT ''::text NOT NULL,
+    moveqty double precision DEFAULT (0)::double precision NOT NULL
+);
+
+
+--
+-- TOC entry 48 (OID 36258)
+-- Name: supptrans; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE supptrans (
+    transno integer DEFAULT 0 NOT NULL,
+    "type" integer DEFAULT 0 NOT NULL,
+    supplierno text DEFAULT ''::text NOT NULL,
+    suppreference text DEFAULT ''::text NOT NULL,
+    trandate date,
+    duedate date,
+    settled integer DEFAULT 0 NOT NULL,
+    rate numeric(16,6) DEFAULT 1.000000 NOT NULL,
+    ovamount numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    ovgst numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    diffonexch numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    alloc numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    transtext pgblob,
+    "hold" integer DEFAULT 0 NOT NULL,
+    id serial NOT NULL
+);
+
+
+--
+-- TOC entry 49 (OID 36277)
+-- Name: suppallocs; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE suppallocs (
+    id serial NOT NULL,
+    amt numeric(20,2) DEFAULT 0.00 NOT NULL,
+    datealloc date,
+    transid_allocfrom integer DEFAULT 0 NOT NULL,
+    transid_allocto integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- TOC entry 50 (OID 36283)
+-- Name: suppliercontacts; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE suppliercontacts (
+    supplierid text DEFAULT ''::text NOT NULL,
+    contact text DEFAULT ''::text NOT NULL,
+    "position" text DEFAULT ''::text NOT NULL,
+    tel text DEFAULT ''::text NOT NULL,
+    fax text DEFAULT ''::text NOT NULL,
+    mobile text DEFAULT ''::text NOT NULL,
+    email text DEFAULT ''::text NOT NULL,
+    ordercontact integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- TOC entry 51 (OID 36298)
+-- Name: purchorders; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE purchorders (
+    orderno serial NOT NULL,
+    supplierno text DEFAULT ''::text NOT NULL,
+    comments pgblob,
+    orddate timestamp without time zone,
+    rate numeric(16,4) DEFAULT 1.0000 NOT NULL,
+    dateprinted timestamp without time zone,
+    allowprint integer DEFAULT 1 NOT NULL,
+    initiator text,
+    requisitionno text,
+    intostocklocation text DEFAULT ''::text NOT NULL,
+    deladd1 text DEFAULT ''::text NOT NULL,
+    deladd2 text DEFAULT ''::text NOT NULL,
+    deladd3 text DEFAULT ''::text NOT NULL,
+    deladd4 text DEFAULT ''::text NOT NULL
+);
+
+
+--
+-- TOC entry 52 (OID 36314)
+-- Name: purchorderdetails; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE purchorderdetails (
+    podetailitem serial NOT NULL,
+    orderno integer DEFAULT 0 NOT NULL,
+    itemcode text DEFAULT ''::text NOT NULL,
+    deliverydate date,
+    itemdescription text DEFAULT ''::text NOT NULL,
+    glcode integer DEFAULT 0 NOT NULL,
+    qtyinvoiced numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    unitprice numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    actprice numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    stdcostunit numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    quantityord numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    quantityrecd numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    shiptref integer DEFAULT 0 NOT NULL,
+    jobref text DEFAULT ''::text,
+    completed integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- TOC entry 53 (OID 36335)
+-- Name: grns; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE grns (
+    grnbatch integer DEFAULT 0 NOT NULL,
+    grnno serial NOT NULL,
+    podetailitem integer DEFAULT 0 NOT NULL,
+    itemcode text DEFAULT ''::text NOT NULL,
+    deliverydate date,
+    itemdescription text DEFAULT ''::text NOT NULL,
+    qtyrecd numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    quantityinv numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    supplierid text DEFAULT ''::text NOT NULL
+);
+
+
+--
+-- TOC entry 54 (OID 36348)
+-- Name: taxauthlevels; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE taxauthlevels (
+    taxauthority integer DEFAULT 1 NOT NULL,
+    dispatchtaxauthority integer DEFAULT 1 NOT NULL,
+    "level" integer DEFAULT 0 NOT NULL,
+    taxrate double precision DEFAULT (0)::double precision NOT NULL
+);
+
+
+--
+-- TOC entry 55 (OID 36354)
+-- Name: www_users; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE www_users (
+    userid text DEFAULT ''::text NOT NULL,
+    "password" text DEFAULT ''::text NOT NULL,
+    realname text DEFAULT ''::text NOT NULL,
+    customerid text DEFAULT ''::text NOT NULL,
+    phone text DEFAULT ''::text NOT NULL,
+    email text,
+    defaultlocation text DEFAULT ''::text,
+    fullaccess integer DEFAULT 1 NOT NULL,
+    lastvisitdate timestamp without time zone,
+    branchcode text DEFAULT ''::text NOT NULL,
+    pagesize text DEFAULT 'A4'::text NOT NULL,
+    modulesallowed text DEFAULT ''::text NOT NULL,
+    blocked integer DEFAULT 0 NOT NULL,
+    displayrecordsmax integer DEFAULT 0 NOT NULL,
+    theme text DEFAULT 'fresh'::text NOT NULL,
+    "language" text DEFAULT 'en'::text NOT NULL,
+    pinno text,
+    swipecard text
+);
+
+
+--
+-- TOC entry 56 (OID 36373)
+-- Name: workcentres; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE workcentres (
+    code text DEFAULT ''::text NOT NULL,
+    "location" text DEFAULT ''::text NOT NULL,
+    description text DEFAULT ''::text NOT NULL,
+    capacity numeric(16,4) DEFAULT 1.0000 NOT NULL,
+    overheadperhour numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    overheadrecoveryact integer DEFAULT 0 NOT NULL,
+    setuphrs numeric(20,4) DEFAULT 0.0000 NOT NULL
+);
+
+
+--
+-- TOC entry 57 (OID 36385)
+-- Name: worksorders; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE worksorders (
+    woref text DEFAULT ''::text NOT NULL,
+    loccode text DEFAULT ''::text NOT NULL,
+    unitsreqd integer DEFAULT 1 NOT NULL,
+    stockid text DEFAULT ''::text NOT NULL,
+    stdcost numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    requiredby date,
+    releaseddate date DEFAULT '1800-01-01'::date NOT NULL,
+    accumvalueissued numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    accumvaluetrfd numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    closed integer DEFAULT 0 NOT NULL,
+    released integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- TOC entry 58 (OID 36400)
+-- Name: woissues; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE woissues (
+    issueno integer DEFAULT 0 NOT NULL,
+    woref text DEFAULT ''::text NOT NULL,
+    stockid text DEFAULT ''::text NOT NULL,
+    issuetype text DEFAULT 'M'::text NOT NULL,
+    workcentre text DEFAULT ''::text NOT NULL,
+    qtyissued numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    stdcost numeric(20,4) DEFAULT 0.0000 NOT NULL
+);
+
+
+--
+-- TOC entry 59 (OID 36414)
+-- Name: worequirements; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE worequirements (
+    id serial NOT NULL,
+    woref text DEFAULT ''::text NOT NULL,
+    stockid text DEFAULT ''::text NOT NULL,
+    wrkcentre text DEFAULT ''::text NOT NULL,
+    unitsreq numeric(16,4) DEFAULT 1.0000 NOT NULL,
+    stdcost numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    resourcetype text DEFAULT 'M'::text NOT NULL
+);
+
+
+--
+-- TOC entry 60 (OID 36426)
+-- Name: bom; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE bom (
+    parent text DEFAULT ''::text NOT NULL,
+    component text DEFAULT ''::text NOT NULL,
+    workcentreadded text DEFAULT ''::text NOT NULL,
+    loccode text DEFAULT ''::text NOT NULL,
+    effectiveafter date,
+    effectiveto date DEFAULT '9999-12-31'::date NOT NULL,
+    quantity numeric(16,4) DEFAULT 1.0000 NOT NULL
+);
+
+
+--
+-- TOC entry 61 (OID 36437)
+-- Name: bankaccounts; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE bankaccounts (
+    accountcode integer DEFAULT 0 NOT NULL,
+    bankaccountname text DEFAULT ''::text NOT NULL,
+    bankaccountnumber text DEFAULT ''::text NOT NULL,
+    bankaddress text
+);
+
+
+--
+-- TOC entry 62 (OID 36447)
+-- Name: banktrans; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE banktrans (
+    banktransid serial NOT NULL,
+    "type" integer DEFAULT 0 NOT NULL,
+    transno bigint DEFAULT (0)::bigint NOT NULL,
+    bankact integer DEFAULT 0 NOT NULL,
+    ref text DEFAULT ''::text NOT NULL,
+    amountcleared double precision DEFAULT (0)::double precision NOT NULL,
+    exrate double precision DEFAULT (1)::double precision NOT NULL,
+    transdate date,
+    banktranstype text DEFAULT ''::text NOT NULL,
+    amount double precision DEFAULT (0)::double precision NOT NULL,
+    currcode text DEFAULT ''::text NOT NULL
+);
+
+
+--
+-- TOC entry 63 (OID 36462)
+-- Name: buckets; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE buckets (
+    workcentre text DEFAULT ''::text NOT NULL,
+    availdate timestamp without time zone NOT NULL,
+    capacity numeric(10,2) DEFAULT 0.00 NOT NULL
+);
+
+
+--
+-- TOC entry 64 (OID 36469)
+-- Name: chartdetails; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE chartdetails (
+    accountcode integer DEFAULT 0 NOT NULL,
+    period integer DEFAULT 0 NOT NULL,
+    budget double precision DEFAULT (0)::double precision NOT NULL,
+    actual double precision DEFAULT (0)::double precision NOT NULL,
+    bfwd double precision DEFAULT (0)::double precision NOT NULL,
+    bfwdbudget double precision DEFAULT (0)::double precision NOT NULL
+);
+
+
+--
+-- TOC entry 65 (OID 36477)
+-- Name: contractbom; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE contractbom (
+    contractref text DEFAULT ''::text NOT NULL,
+    component text DEFAULT ''::text NOT NULL,
+    workcentreadded text DEFAULT ''::text NOT NULL,
+    loccode text DEFAULT ''::text NOT NULL,
+    quantity numeric(16,4) DEFAULT 1.0000 NOT NULL
+);
+
+
+--
+-- TOC entry 66 (OID 36487)
+-- Name: debtorsmaster; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE debtorsmaster (
+    debtorno text DEFAULT ''::text NOT NULL,
+    name text DEFAULT ''::text NOT NULL,
+    address1 text DEFAULT ''::text NOT NULL,
+    address2 text DEFAULT ''::text NOT NULL,
+    address3 text DEFAULT ''::text NOT NULL,
+    address4 text DEFAULT ''::text NOT NULL,
+    currcode text DEFAULT ''::text NOT NULL,
+    salestype text DEFAULT ''::text NOT NULL,
+    clientsince timestamp without time zone,
+    holdreason integer DEFAULT 0 NOT NULL,
+    paymentterms text DEFAULT 'f'::text NOT NULL,
+    discount numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    pymtdiscount numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    lastpaid numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    lastpaiddate timestamp without time zone,
+    creditlimit double precision DEFAULT (1000)::double precision NOT NULL,
+    invaddrbranch integer DEFAULT 0 NOT NULL,
+    discountcode text DEFAULT ''::text NOT NULL,
+    ediinvoices integer DEFAULT 0 NOT NULL,
+    ediorders integer DEFAULT 0 NOT NULL,
+    edireference text DEFAULT ''::text NOT NULL,
+    editransport text DEFAULT 'email'::text NOT NULL,
+    ediaddress text DEFAULT ''::text NOT NULL,
+    ediserveruser text DEFAULT ''::text NOT NULL,
+    ediserverpwd text DEFAULT ''::text NOT NULL,
+    taxref text DEFAULT ''::text
+);
+
+
+--
+-- TOC entry 67 (OID 36516)
+-- Name: custbranch; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE custbranch (
+    branchcode text DEFAULT ''::text NOT NULL,
+    debtorno text DEFAULT ''::text NOT NULL,
+    brname text DEFAULT ''::text NOT NULL,
+    braddress1 text DEFAULT ''::text NOT NULL,
+    braddress2 text DEFAULT ''::text NOT NULL,
+    braddress3 text DEFAULT ''::text NOT NULL,
+    braddress4 text DEFAULT ''::text NOT NULL,
+    estdeliverydays integer DEFAULT 1 NOT NULL,
+    area text DEFAULT ''::text NOT NULL,
+    salesman text DEFAULT ''::text NOT NULL,
+    fwddate integer DEFAULT 0 NOT NULL,
+    phoneno text DEFAULT ''::text NOT NULL,
+    faxno text DEFAULT ''::text NOT NULL,
+    contactname text DEFAULT ''::text NOT NULL,
+    email text DEFAULT ''::text NOT NULL,
+    defaultlocation text DEFAULT ''::text NOT NULL,
+    taxauthority integer DEFAULT 1 NOT NULL,
+    defaultshipvia integer DEFAULT 1 NOT NULL,
+    disabletrans integer DEFAULT 0 NOT NULL,
+    brpostaddr1 text DEFAULT ''::text NOT NULL,
+    brpostaddr2 text DEFAULT ''::text NOT NULL,
+    brpostaddr3 text DEFAULT ''::text NOT NULL,
+    brpostaddr4 text DEFAULT ''::text NOT NULL,
+    custbranchcode text DEFAULT ''::text NOT NULL,
+    deliverblind integer DEFAULT 1
+);
+
+
+--
+-- TOC entry 68 (OID 36545)
+-- Name: contracts; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE contracts (
+    contractref text DEFAULT ''::text NOT NULL,
+    contractdescription text DEFAULT ''::text NOT NULL,
+    debtorno text DEFAULT ''::text NOT NULL,
+    branchcode text DEFAULT ''::text NOT NULL,
+    status text DEFAULT 'Quotation'::text NOT NULL,
+    categoryid text DEFAULT ''::text NOT NULL,
+    typeabbrev text DEFAULT ''::text NOT NULL,
+    orderno integer DEFAULT 0 NOT NULL,
+    quotedpricefx numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    margin numeric(16,4) DEFAULT 1.0000 NOT NULL,
+    woref text DEFAULT ''::text NOT NULL,
+    requireddate timestamp without time zone,
+    canceldate timestamp without time zone,
+    quantityreqd numeric(16,4) DEFAULT 1.0000 NOT NULL,
+    specifications pgblob NOT NULL,
+    datequoted timestamp without time zone,
+    units text DEFAULT 'Each'::text NOT NULL,
+    drawing pgblob NOT NULL,
+    rate numeric(16,4) DEFAULT 1.0000 NOT NULL
+);
+
+
+--
+-- TOC entry 69 (OID 36566)
+-- Name: contractreqts; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE contractreqts (
+    contractreqid serial NOT NULL,
+    contract text DEFAULT ''::text NOT NULL,
+    component text DEFAULT ''::text NOT NULL,
+    quantity numeric(16,4) DEFAULT 1.0000 NOT NULL,
+    priceperunit numeric(20,4) DEFAULT 0.0000 NOT NULL
+);
+
+
+--
+-- TOC entry 70 (OID 36578)
+-- Name: salesorders; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE salesorders (
+    orderno serial NOT NULL,
+    debtorno text DEFAULT ''::text NOT NULL,
+    branchcode text DEFAULT ''::text NOT NULL,
+    customerref text DEFAULT ''::text NOT NULL,
+    buyername text,
+    comments pgblob,
+    orddate date,
+    ordertype text DEFAULT ''::text NOT NULL,
+    shipvia integer DEFAULT 0 NOT NULL,
+    deladd1 text DEFAULT ''::text NOT NULL,
+    deladd2 text DEFAULT ''::text NOT NULL,
+    deladd3 text DEFAULT ''::text NOT NULL,
+    deladd4 text,
+    contactphone text,
+    contactemail text,
+    deliverto text DEFAULT ''::text NOT NULL,
+    freightcost numeric(10,2) DEFAULT 0.00 NOT NULL,
+    fromstkloc text DEFAULT ''::text NOT NULL,
+    deliverydate date,
+    printedpackingslip integer DEFAULT 0 NOT NULL,
+    datepackingslipprinted date,
+    quotation integer DEFAULT 0,
+    deliverblind integer DEFAULT 1
+);
+
+
+--
+-- TOC entry 71 (OID 36597)
+-- Name: orderdeliverydifferenceslog; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE orderdeliverydifferenceslog (
+    orderno integer DEFAULT 0 NOT NULL,
+    invoiceno integer DEFAULT 0 NOT NULL,
+    stockid text DEFAULT ''::text NOT NULL,
+    quantitydiff numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    debtorno text DEFAULT ''::text NOT NULL,
+    branch text DEFAULT ''::text NOT NULL,
+    can_or_bo text DEFAULT 'CAN'::text NOT NULL
+);
+
+
+--
+-- TOC entry 72 (OID 36609)
+-- Name: salesorderdetails; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE salesorderdetails (
+    orderno integer DEFAULT 0 NOT NULL,
+    stkcode text DEFAULT ''::text NOT NULL,
+    qtyinvoiced numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    unitprice numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    quantity numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    estimate integer DEFAULT 0 NOT NULL,
+    discountpercent numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    actualdispatchdate timestamp without time zone,
+    completed integer DEFAULT 0 NOT NULL,
+    narrative text NOT NULL
+);
+
+
+--
+-- TOC entry 73 (OID 36624)
+-- Name: debtortrans; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE debtortrans (
+    id serial NOT NULL,
+    transno integer DEFAULT 0 NOT NULL,
+    "type" integer DEFAULT 0 NOT NULL,
+    debtorno text DEFAULT ''::text NOT NULL,
+    branchcode text DEFAULT ''::text NOT NULL,
+    trandate timestamp without time zone,
+    prd integer DEFAULT 0 NOT NULL,
+    settled integer DEFAULT 0 NOT NULL,
+    reference text DEFAULT ''::text NOT NULL,
+    tpe text DEFAULT ''::text NOT NULL,
+    order_ integer DEFAULT 0 NOT NULL,
+    rate numeric(16,6) DEFAULT 0.000000 NOT NULL,
+    ovamount double precision DEFAULT (0)::double precision NOT NULL,
+    ovgst double precision DEFAULT (0)::double precision NOT NULL,
+    ovfreight double precision DEFAULT (0)::double precision NOT NULL,
+    ovdiscount double precision DEFAULT (0)::double precision NOT NULL,
+    diffonexch double precision DEFAULT (0)::double precision NOT NULL,
+    alloc double precision DEFAULT (0)::double precision NOT NULL,
+    invtext text,
+    shipvia text DEFAULT ''::text NOT NULL,
+    edisent integer DEFAULT 0 NOT NULL,
+    consignment text DEFAULT ''::text NOT NULL
+);
+
+
+--
+-- TOC entry 74 (OID 36651)
+-- Name: custallocns; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE custallocns (
+    id serial NOT NULL,
+    amt numeric(20,4) DEFAULT 0.0000 NOT NULL,
+    datealloc date,
+    transid_allocfrom integer DEFAULT 0 NOT NULL,
+    transid_allocto integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- TOC entry 75 (OID 36657)
+-- Name: areas; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE areas (
+    areacode text DEFAULT ''::text NOT NULL,
+    areadescription text DEFAULT ''::text NOT NULL
+);
+
+
+--
+-- TOC entry 398 (OID 36664)
+-- Name: getstkmoveloc(integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION getstkmoveloc(integer) RETURNS text
+    AS '
+DECLARE
+  pStockMoveID ALIAS FOR $1;
+  pLocCode INTEGER;
+BEGIN
+	SELECT INTO pLocCode LocCode FROM StockMoves WHERE StockMoveNo = pStockMoveID;
+	IF pLocCode ISNULL THEN
+		RAISE EXCEPTION "StockNoveNo does not spec a valid LocCode.";
+	ELSE
+		RETURN pLocCode;
+	END IF;
+END;'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 399 (OID 36665)
+-- Name: chkstockserialmoves(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION chkstockserialmoves() RETURNS "trigger"
+    AS '
+BEGIN
+	NEW.LocCode := getStkMoveLoc( NEW.StockMoveNo );
+	RETURN NEW;
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 400 (OID 36666)
+-- Name: to_days(timestamp without time zone); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION to_days(timestamp without time zone) RETURNS integer
+    AS '
+DECLARE
+  pDate ALIAS FOR $1;
+BEGIN
+  RETURN to_days(pDate::timestamp with time zone);
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 401 (OID 36667)
+-- Name: to_days(timestamp with time zone); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION to_days(timestamp with time zone) RETURNS integer
+    AS '
+DECLARE
+  pDate ALIAS FOR $1;
+  vDays interval;
+  vResult integer;
+BEGIN
+  vDays := (DATE_TRUNC(''day'', pDate) - DATE_TRUNC(''day'', ''0000-01-01''::timestamp));
+  vResult := EXTRACT(''day'' FROM vDays);
+  RETURN vResult;
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 402 (OID 36668)
+-- Name: dayofmonth(timestamp without time zone); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION dayofmonth(timestamp without time zone) RETURNS integer
+    AS '
+DECLARE
+  pDate ALIAS FOR $1;
+BEGIN
+  RETURN EXTRACT(''day'' FROM pDate);
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 403 (OID 36669)
+-- Name: dayofmonth(timestamp with time zone); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION dayofmonth(timestamp with time zone) RETURNS integer
+    AS '
+DECLARE
+  pDate ALIAS FOR $1;
+BEGIN
+  RETURN EXTRACT(''day'' FROM pDate);
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 404 (OID 36670)
+-- Name: to_days(date); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION to_days(date) RETURNS integer
+    AS '
+DECLARE
+  pDate ALIAS FOR $1;
+BEGIN
+  RETURN to_days(pDate::timestamp);
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 405 (OID 36671)
+-- Name: date_add(date, interval); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_add(date, interval) RETURNS date
+    AS '
+DECLARE
+  pDate     ALIAS FOR $1;
+  pInterval ALIAS FOR $2;
+BEGIN
+  RETURN (pDate + pInterval)::date;
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 406 (OID 36672)
+-- Name: time_add_hours(timestamp with time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION time_add_hours(timestamp with time zone, integer) RETURNS timestamp without time zone
+    AS '
+DECLARE
+  pTime  ALIAS FOR $1;
+  pHours ALIAS FOR $2;
+BEGIN
+  RETURN (pTime + (pHours || '' hours'')::interval)::timestamp ;
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 407 (OID 36673)
+-- Name: time_add_hours(timestamp without time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION time_add_hours(timestamp without time zone, integer) RETURNS timestamp without time zone
+    AS '
+DECLARE
+  pTime  ALIAS FOR $1;
+  pHours ALIAS FOR $2;
+BEGIN
+  RETURN time_add_hours(pTime::timestamp with time zone, pHours);
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 408 (OID 36674)
+-- Name: time_add_hours(time without time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION time_add_hours(time without time zone, integer) RETURNS time without time zone
+    AS '
+DECLARE
+  pTime  ALIAS FOR $1;
+  pHours ALIAS FOR $2;
+BEGIN
+  RETURN (pTime + (pHours || '' hours'')::interval)::time;
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 409 (OID 36675)
+-- Name: time_add_minutes(timestamp with time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION time_add_minutes(timestamp with time zone, integer) RETURNS timestamp without time zone
+    AS '
+DECLARE
+  pTime    ALIAS FOR $1;
+  pMinutes ALIAS FOR $2;
+BEGIN
+  RETURN (pTime + (pMinutes || '' minutes'')::interval)::timestamp;
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 410 (OID 36676)
+-- Name: time_add_minutes(timestamp without time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION time_add_minutes(timestamp without time zone, integer) RETURNS timestamp without time zone
+    AS '
+DECLARE
+  pTime    ALIAS FOR $1;
+  pMinutes ALIAS FOR $2;
+BEGIN
+  RETURN time_add_minutes(pTime::timestamp with time zone, pMinutes)::timestamp;
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 411 (OID 36677)
+-- Name: time_add_minutes(time without time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION time_add_minutes(time without time zone, integer) RETURNS time without time zone
+    AS '
+DECLARE
+  pTime    ALIAS FOR $1;
+  pMinutes ALIAS FOR $2;
+BEGIN
+  RETURN (pTime + (pMinutes || '' minutes'')::interval)::time;
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 412 (OID 36678)
+-- Name: date_add_days(timestamp with time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_add_days(timestamp with time zone, integer) RETURNS timestamp without time zone
+    AS '
+DECLARE
+  pDate ALIAS FOR $1;
+  pDays ALIAS FOR $2;
+BEGIN
+  RETURN (pDate + (pDays || '' days'')::interval)::timestamp;
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 413 (OID 36679)
+-- Name: date_add_days(timestamp without time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_add_days(timestamp without time zone, integer) RETURNS timestamp without time zone
+    AS '
+DECLARE
+  pDate ALIAS FOR $1;
+  pDays ALIAS FOR $2;
+BEGIN
+  RETURN date_add_days(pDate::timestamp with time zone, pDays)::timestamp;
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 414 (OID 36680)
+-- Name: date_add_days(date, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_add_days(date, integer) RETURNS date
+    AS '
+DECLARE
+  pDate ALIAS FOR $1;
+  pDays ALIAS FOR $2;
+BEGIN
+  RETURN date_add_days(pDate::timestamp with time zone, pDays)::date;
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 415 (OID 36681)
+-- Name: date_add_months(timestamp with time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_add_months(timestamp with time zone, integer) RETURNS timestamp without time zone
+    AS '
+DECLARE
+  pDate   ALIAS FOR $1;
+  pMonths ALIAS FOR $2;
+BEGIN
+  RETURN (pDate + (pMonths || '' months'')::interval)::timestamp;
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 416 (OID 36682)
+-- Name: date_add_months(timestamp without time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_add_months(timestamp without time zone, integer) RETURNS timestamp without time zone
+    AS '
+DECLARE
+  pDate   ALIAS FOR $1;
+  pMonths ALIAS FOR $2;
+BEGIN
+  RETURN date_add_months(pDate::timestamp with time zone, pMonths);
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 417 (OID 36683)
+-- Name: date_add_months(date, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_add_months(date, integer) RETURNS date
+    AS '
+DECLARE
+  pDate   ALIAS FOR $1;
+  pMonths ALIAS FOR $2;
+BEGIN
+  RETURN date_add_months(pDate::timestamp with time zone, pMonths)::date;
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 418 (OID 36684)
+-- Name: date_add_years(timestamp with time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_add_years(timestamp with time zone, integer) RETURNS timestamp without time zone
+    AS '
+DECLARE
+  pDate  ALIAS FOR $1;
+  pYears ALIAS FOR $2;
+BEGIN
+  RETURN (pDate + (pYears || '' years'')::interval)::timestamp;
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 419 (OID 36685)
+-- Name: date_add_years(timestamp without time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_add_years(timestamp without time zone, integer) RETURNS timestamp without time zone
+    AS '
+DECLARE
+  pDate  ALIAS FOR $1;
+  pYears ALIAS FOR $2;
+BEGIN
+  RETURN date_add_years(pDate::timestamp with time zone, pYears);
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 420 (OID 36686)
+-- Name: date_add_years(date, integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_add_years(date, integer) RETURNS date
+    AS '
+DECLARE
+  pDate  ALIAS FOR $1;
+  pYears ALIAS FOR $2;
+BEGIN
+  RETURN date_add_years(pDate::timestamp with time zone, pYears)::date;
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 421 (OID 36687)
+-- Name: dayofmonth(date); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION dayofmonth(date) RETURNS integer
+    AS '
+DECLARE
+  pDate ALIAS FOR $1;
+BEGIN
+  RETURN EXTRACT(''day'' FROM pDate);
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 422 (OID 36688)
+-- Name: date_diff_days(timestamp with time zone, timestamp with time zone); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_diff_days(timestamp with time zone, timestamp with time zone) RETURNS integer
+    AS '
+DECLARE
+  pStartDate ALIAS FOR $1;
+  pEndDate   ALIAS FOR $2;
+  vInterval  interval;
+BEGIN
+  vInterval := DATE_TRUNC(''day'', pEndDate) - DATE_TRUNC(''day'', pStartDate);
+  RETURN EXTRACT(''day'' FROM vInterval);
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 423 (OID 36689)
+-- Name: date_diff_days(timestamp without time zone, timestamp without time zone); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_diff_days(timestamp without time zone, timestamp without time zone) RETURNS integer
+    AS '
+DECLARE
+  pStartDate ALIAS FOR $1;
+  pEndDate   ALIAS FOR $2;
+BEGIN
+  RETURN  to_days(pEndDate) - to_days(pStartDate);
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 424 (OID 36690)
+-- Name: date_diff_days(date, date); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_diff_days(date, date) RETURNS integer
+    AS '
+DECLARE
+  pStartDate ALIAS FOR $1;
+  pEndDate   ALIAS FOR $2;
+BEGIN
+  RETURN  to_days(pEndDate) - to_days(pStartDate);
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 425 (OID 36691)
+-- Name: date_diff_months(timestamp with time zone, timestamp with time zone); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_diff_months(timestamp with time zone, timestamp with time zone) RETURNS integer
+    AS '
+DECLARE
+  pStartDate ALIAS FOR $1;
+  pEndDate   ALIAS FOR $2;
+  vInterval  interval;
+BEGIN
+  vInterval := AGE(pEndDate, pStartDate);
+  RETURN EXTRACT(''month'' FROM vInterval) + (12 * EXTRACT(''year'' FROM vInterval));
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 426 (OID 36692)
+-- Name: date_diff_months(timestamp without time zone, timestamp without time zone); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_diff_months(timestamp without time zone, timestamp without time zone) RETURNS integer
+    AS '
+DECLARE
+  pStartDate ALIAS FOR $1;
+  pEndDate   ALIAS FOR $2;
+BEGIN
+  RETURN date_diff_months(pStartDate::timestamp with time zone, pEndDate::timestamp with time zone);
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 427 (OID 36693)
+-- Name: date_diff_months(date, date); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_diff_months(date, date) RETURNS integer
+    AS '
+DECLARE
+  pStartDate ALIAS FOR $1;
+  pEndDate   ALIAS FOR $2;
+BEGIN
+  RETURN date_diff_months(pStartDate::timestamp with time zone, pEndDate::timestamp with time zone);
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 428 (OID 36694)
+-- Name: date_diff_years(timestamp with time zone, timestamp with time zone); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_diff_years(timestamp with time zone, timestamp with time zone) RETURNS integer
+    AS '
+DECLARE
+  pStartDate ALIAS FOR $1;
+  pEndDate   ALIAS FOR $2;
+BEGIN
+  RETURN EXTRACT(''year'' FROM AGE(DATE_TRUNC(''month'', pEndDate), DATE_TRUNC(''month'', pStartDate)));
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 429 (OID 36695)
+-- Name: date_diff_years(timestamp without time zone, timestamp without time zone); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_diff_years(timestamp without time zone, timestamp without time zone) RETURNS integer
+    AS '
+DECLARE
+  pStartDate ALIAS FOR $1;
+  pEndDate   ALIAS FOR $2;
+BEGIN
+  RETURN date_diff_years(pStartDate::timestamp with time zone, pEndDate::timestamp with time zone);
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 430 (OID 36696)
+-- Name: date_diff_years(date, date); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_diff_years(date, date) RETURNS integer
+    AS '
+DECLARE
+  pStartDate ALIAS FOR $1;
+  pEndDate   ALIAS FOR $2;
+BEGIN
+  RETURN date_diff_years(pStartDate::timestamp with time zone, pEndDate::timestamp with time zone);
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 431 (OID 36697)
+-- Name: time_diff_hours(timestamp with time zone, timestamp with time zone); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION time_diff_hours(timestamp with time zone, timestamp with time zone) RETURNS integer
+    AS '
+DECLARE
+  pStartTime ALIAS FOR $1;
+  pEndTime   ALIAS FOR $2;
+  vDays      integer;
+  vHours     integer;
+BEGIN
+  vDays  := EXTRACT(''day''  FROM (DATE_TRUNC(''day'', pEndTime) - DATE_TRUNC(''day'', pStartTime)));
+  vHours := EXTRACT(''hour'' FROM (pEndTime - pStartTime));
+  RETURN (vDays * 24) + vHours;
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 432 (OID 36698)
+-- Name: time_diff_hours(timestamp without time zone, timestamp without time zone); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION time_diff_hours(timestamp without time zone, timestamp without time zone) RETURNS integer
+    AS '
+DECLARE
+  pStartTime ALIAS FOR $1;
+  pEndTime   ALIAS FOR $2;
+BEGIN
+  RETURN time_diff_hours(pStartTime::timestamp with time zone, pEndTime::timestamp with time zone);
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 433 (OID 36699)
+-- Name: time_diff_hours(time without time zone, time without time zone); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION time_diff_hours(time without time zone, time without time zone) RETURNS integer
+    AS '
+DECLARE
+  pStartTime ALIAS FOR $1;
+  pEndTime   ALIAS FOR $2;
+BEGIN
+  RETURN EXTRACT(''hour'' FROM (pEndTime - pStartTime));
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 434 (OID 36700)
+-- Name: time_diff_minutes(timestamp with time zone, timestamp with time zone); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION time_diff_minutes(timestamp with time zone, timestamp with time zone) RETURNS integer
+    AS '
+DECLARE
+  pStartTime ALIAS FOR $1;
+  pEndTime   ALIAS FOR $2;
+  vHours     integer;
+  vMinutes   integer;
+BEGIN
+  vHours   := time_diff_hours(pStartTime, pEndTime);
+  vMinutes := EXTRACT(''minute'' FROM AGE(pEndTime, pStartTime));
+  RETURN (vHours * 60) + vMinutes;
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 435 (OID 36701)
+-- Name: time_diff_minutes(timestamp without time zone, timestamp without time zone); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION time_diff_minutes(timestamp without time zone, timestamp without time zone) RETURNS integer
+    AS '
+DECLARE
+  pStartTime ALIAS FOR $1;
+  pEndTime   ALIAS FOR $2;
+BEGIN
+  RETURN time_diff_minutes(pStartTime::timestamp with time zone, pEndTime::timestamp with time zone);
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 436 (OID 36702)
+-- Name: time_diff_minutes(time without time zone, time without time zone); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION time_diff_minutes(time without time zone, time without time zone) RETURNS integer
+    AS '
+DECLARE
+  pStartTime ALIAS FOR $1;
+  pEndTime   ALIAS FOR $2;
+  vHours     integer;
+  vMinutes   integer;
+BEGIN
+  vHours   := EXTRACT(''hour'' FROM (pEndTime - pStartTime));
+  vMinutes := EXTRACT(''minute'' FROM (pEndTime - pStartTime));
+  RETURN (vHours * 60) + vMinutes;
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 437 (OID 36703)
+-- Name: date_add(timestamp with time zone, interval); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_add(timestamp with time zone, interval) RETURNS timestamp without time zone
+    AS '
+DECLARE
+  pDate     ALIAS FOR $1;
+  pInterval ALIAS FOR $2;
+BEGIN
+  RETURN (pDate + pInterval)::timestamp with time zone;
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 438 (OID 36704)
+-- Name: date_add(timestamp without time zone, interval); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION date_add(timestamp without time zone, interval) RETURNS timestamp without time zone
+    AS '
+DECLARE
+  pDate     ALIAS FOR $1;
+  pInterval ALIAS FOR $2;
+BEGIN
+  RETURN (pDate + pInterval)::timestamp;
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 439 (OID 36705)
+-- Name: concat(text, text); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION concat(text, text) RETURNS text
+    AS '
+DECLARE
+  pTxt1 ALIAS FOR $1;
+  pTxt2 ALIAS FOR $2;
+BEGIN
+  RETURN (pTxt1 || pTxt2);
+END;
+
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 440 (OID 36706)
+-- Name: concat(text, text, text); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION concat(text, text, text) RETURNS text
+    AS '
+DECLARE
+  pTxt1 ALIAS FOR $1;
+  pTxt2 ALIAS FOR $2;
+  pTxt3 ALIAS FOR $3;
+BEGIN
+  RETURN (pTxt1 || pTxt2 || pTxt3);
+END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 441 (OID 36707)
+-- Name: getmonth(timestamp without time zone); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION getmonth(timestamp without time zone) RETURNS integer
+    AS '
+DECLARE
+   pDate ALIAS FOR $1;
+   vResult integer;
+ BEGIN
+   vResult := EXTRACT(''month'' FROM pDate);
+   RETURN vResult;
+ END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 442 (OID 36708)
+-- Name: getmonth(timestamp with time zone); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION getmonth(timestamp with time zone) RETURNS integer
+    AS '
+DECLARE
+    pDate ALIAS FOR $1;
+    vResult integer;
+  BEGIN
+    vResult := EXTRACT(''month'' FROM pDate);
+    RETURN vResult;
+  END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 443 (OID 36709)
+-- Name: monthname(integer); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION monthname(integer) RETURNS text
+    AS '
+DECLARE
+    pMonth ALIAS FOR $1;
+    vResult text;
+BEGIN
+    vResult := CASE 
+	WHEN pMonth = 1 THEN ''January''
+	WHEN pMonth = 2 THEN ''February''
+	WHEN pMonth = 3 THEN ''March''
+	WHEN pMonth = 4 THEN ''April''
+	WHEN pMonth = 5 THEN ''May''
+	WHEN pMonth = 6 THEN ''June''
+	WHEN pMonth = 7 THEN ''Jully''
+	WHEN pMonth = 8 THEN ''August''
+	WHEN pMonth = 9 THEN ''September''
+	WHEN pMonth = 10 THEN ''October''
+	WHEN pMonth = 11 THEN ''November''
+	WHEN pMonth = 12 THEN ''December''
+        WHEN (pMonth < 1) OR (pMonth > 12) THEN null
+    END;
+    RETURN vResult;
+END;
+
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 444 (OID 36710)
+-- Name: monthname(date); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION monthname(date) RETURNS text
+    AS '
+DECLARE
+  vDate ALIAS FOR $1;
+  vResult text;
+BEGIN
+  vResult := monthname(getmonth(vdate::timestamp));
+  RETURN vResult;
+END;
+
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 445 (OID 36711)
+-- Name: monthname(timestamp with time zone); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION monthname(timestamp with time zone) RETURNS text
+    AS '
+DECLARE
+   vDate ALIAS FOR $1;
+   vResult text;
+ BEGIN
+   vResult := monthname(getmonth(vdate));
+   RETURN vResult;
+ END;
+ 
+
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 446 (OID 36712)
+-- Name: year(date); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION "year"(date) RETURNS integer
+    AS '
+DECLARE
+    pDate ALIAS FOR $1;
+    vResult integer;
+  BEGIN
+    vResult := EXTRACT(''year'' FROM pDate);
+    RETURN vResult;
+  END;
+'
+    LANGUAGE plpgsql;
+
+
+--
+-- TOC entry 76 (OID 36715)
+-- Name: recurringsalesorders; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE recurringsalesorders (
+    recurrorderno serial NOT NULL,
+    debtorno text DEFAULT ''::text NOT NULL,
+    branchcode text DEFAULT ''::text NOT NULL,
+    customerref text DEFAULT ''::text NOT NULL,
+    buyername text,
+    comments pgblob,
+    orddate date,
+    ordertype text DEFAULT ''::text NOT NULL,
+    shipvia integer DEFAULT 0 NOT NULL,
+    deladd1 text DEFAULT ''::text NOT NULL,
+    deladd2 text DEFAULT ''::text NOT NULL,
+    deladd3 text DEFAULT ''::text NOT NULL,
+    deladd4 text,
+    contactphone text,
+    contactemail text,
+    deliverto text DEFAULT ''::text NOT NULL,
+    freightcost numeric(10,2) DEFAULT 0.00 NOT NULL,
+    fromstkloc text DEFAULT ''::text NOT NULL,
+    deliverydate date,
+    lastrecurrence date DEFAULT now(),
+    frequency integer DEFAULT 1 NOT NULL,
+    stopdate date,
+    autoinvoice integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- TOC entry 77 (OID 36735)
+-- Name: recurrsalesorderdetails; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE recurrsalesorderdetails (
+    recurrorderno integer DEFAULT 0 NOT NULL,
+    stkcode text DEFAULT ''::text NOT NULL,
+    unitprice numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    quantity numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    discountpercent numeric(16,4) DEFAULT 0.0000 NOT NULL,
+    narrative text NOT NULL
+);
+
+
+--
+-- TOC entry 6 (OID 36745)
+-- Name: scripts_id_seq; Type: SEQUENCE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE SEQUENCE scripts_id_seq
+    START WITH 0
+    INCREMENT BY 1
+    MAXVALUE 999999
+    MINVALUE 0
+    CACHE 1;
+
+
+--
+-- TOC entry 78 (OID 36747)
+-- Name: accountsection; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE accountsection (
+    sectionid integer NOT NULL,
+    sectionname text NOT NULL
+);
+
+
+--
+-- TOC entry 79 (OID 36754)
+-- Name: securityroles; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE securityroles (
+    secroleid serial NOT NULL,
+    secrolename text NOT NULL
+);
+
+
+--
+-- TOC entry 80 (OID 36760)
+-- Name: securitytokens; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE securitytokens (
+    tokenid integer NOT NULL,
+    tokenname text NOT NULL
+);
+
+
+--
+-- TOC entry 81 (OID 36765)
+-- Name: securitygroups; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE securitygroups (
+    secroleid integer NOT NULL,
+    tokenid integer NOT NULL
+);
+
+
+--
+-- TOC entry 82 (OID 36769)
+-- Name: paymentmethods; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE paymentmethods (
+    paymentid serial NOT NULL,
+    paymentname text NOT NULL,
+    paymenttype integer DEFAULT 1 NOT NULL,
+    receipttype integer DEFAULT 1 NOT NULL
+);
+
+
+--
+-- TOC entry 83 (OID 36779)
+-- Name: unitsofmeasure; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE unitsofmeasure (
+    unitid serial NOT NULL,
+    unitname text NOT NULL
+);
+
+
+--
+-- TOC entry 84 (OID 36785)
+-- Name: config; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE config (
+    confname text NOT NULL,
+    confvalue text NOT NULL
+);
+
+
+--
+-- TOC entry 85 (OID 45972)
+-- Name: salescat; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE salescat (
+    salescatid serial NOT NULL,
+    parentcatid integer,
+    salescatname text
+);
+
+
+--
+-- TOC entry 86 (OID 45980)
+-- Name: salescatprod; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE salescatprod (
+    salescatid integer,
+    stockid text NOT NULL
+);
+
+
+--
+-- TOC entry 100 (OID 45103)
+-- Name: idxsequenceintb; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsequenceintb ON accountgroups USING btree (sequenceintb);
+
+
+--
+-- TOC entry 299 (OID 45104)
+-- Name: idxbomcomponent; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxbomcomponent ON bom USING btree (component);
+
+
+--
+-- TOC entry 302 (OID 45105)
+-- Name: idxeffectiveafter; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxeffectiveafter ON bom USING btree (effectiveafter);
+
+
+--
+-- TOC entry 303 (OID 45106)
+-- Name: idxeffectiveto; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxeffectiveto ON bom USING btree (effectiveto);
+
+
+--
+-- TOC entry 300 (OID 45107)
+-- Name: idxbomloccode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxbomloccode ON bom USING btree (loccode);
+
+
+--
+-- TOC entry 304 (OID 45108)
+-- Name: idxparent; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxparent ON bom USING btree (parent, effectiveafter, effectiveto, loccode);
+
+
+--
+-- TOC entry 305 (OID 45109)
+-- Name: idxparent_2; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxparent_2 ON bom USING btree (parent);
+
+
+--
+-- TOC entry 301 (OID 45110)
+-- Name: idxbomworkcentreadded; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxbomworkcentreadded ON bom USING btree (workcentreadded);
+
+
+--
+-- TOC entry 307 (OID 45111)
+-- Name: idxbankaccountname; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxbankaccountname ON bankaccounts USING btree (bankaccountname);
+
+
+--
+-- TOC entry 308 (OID 45112)
+-- Name: idxbankaccountnumber; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxbankaccountnumber ON bankaccounts USING btree (bankaccountnumber);
+
+
+--
+-- TOC entry 310 (OID 45113)
+-- Name: idxbankact; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxbankact ON banktrans USING btree (bankact, ref);
+
+
+--
+-- TOC entry 314 (OID 45114)
+-- Name: idxtransdate; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxtransdate ON banktrans USING btree (transdate);
+
+
+--
+-- TOC entry 312 (OID 45115)
+-- Name: idxbttranstype; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxbttranstype ON banktrans USING btree (banktranstype);
+
+
+--
+-- TOC entry 313 (OID 45116)
+-- Name: idxbttype; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxbttype ON banktrans USING btree ("type", transno);
+
+
+--
+-- TOC entry 311 (OID 45117)
+-- Name: idxbtcurrcode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxbtcurrcode ON banktrans USING btree (currcode);
+
+
+--
+-- TOC entry 317 (OID 45118)
+-- Name: idxbworkcentre; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxbworkcentre ON buckets USING btree (workcentre);
+
+
+--
+-- TOC entry 316 (OID 45119)
+-- Name: idxavaildate; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxavaildate ON buckets USING btree (availdate);
+
+
+--
+-- TOC entry 103 (OID 45120)
+-- Name: idxcparea; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcparea ON cogsglpostings USING btree (area);
+
+
+--
+-- TOC entry 106 (OID 45121)
+-- Name: idxcpstkcat; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcpstkcat ON cogsglpostings USING btree (stkcat);
+
+
+--
+-- TOC entry 104 (OID 45122)
+-- Name: idxcpglcode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcpglcode ON cogsglpostings USING btree (glcode);
+
+
+--
+-- TOC entry 105 (OID 45123)
+-- Name: idxcpsalestype; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcpsalestype ON cogsglpostings USING btree (salestype);
+
+
+--
+-- TOC entry 107 (OID 45124)
+-- Name: uidxcparea_stkcat; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE UNIQUE INDEX uidxcparea_stkcat ON cogsglpostings USING btree (area, stkcat, salestype);
+
+
+--
+-- TOC entry 319 (OID 45125)
+-- Name: idxperiod; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxperiod ON chartdetails USING btree (period);
+
+
+--
+-- TOC entry 109 (OID 45126)
+-- Name: idxaccountcode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxaccountcode ON chartmaster USING btree (accountcode);
+
+
+--
+-- TOC entry 110 (OID 45127)
+-- Name: idxaccountname; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxaccountname ON chartmaster USING btree (accountname);
+
+
+--
+-- TOC entry 111 (OID 45128)
+-- Name: idxgroup_; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxgroup_ ON chartmaster USING btree (group_);
+
+
+--
+-- TOC entry 321 (OID 45129)
+-- Name: idxcbcomponent; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcbcomponent ON contractbom USING btree (component);
+
+
+--
+-- TOC entry 322 (OID 45130)
+-- Name: idxcbloccode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcbloccode ON contractbom USING btree (loccode);
+
+
+--
+-- TOC entry 325 (OID 45131)
+-- Name: idxcontractref; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcontractref ON contractbom USING btree (contractref);
+
+
+--
+-- TOC entry 323 (OID 45132)
+-- Name: idxcbworkcentreadded; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcbworkcentreadded ON contractbom USING btree (workcentreadded);
+
+
+--
+-- TOC entry 324 (OID 45133)
+-- Name: idxcbworkcentreadded_2; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcbworkcentreadded_2 ON contractbom USING btree (workcentreadded);
+
+
+--
+-- TOC entry 352 (OID 45134)
+-- Name: idxcontract; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcontract ON contractreqts USING btree (contract);
+
+
+--
+-- TOC entry 347 (OID 45135)
+-- Name: idxcorderno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcorderno ON contracts USING btree (orderno);
+
+
+--
+-- TOC entry 345 (OID 45136)
+-- Name: idxccategoryid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxccategoryid ON contracts USING btree (categoryid);
+
+
+--
+-- TOC entry 350 (OID 45137)
+-- Name: idxstatus; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxstatus ON contracts USING btree (status);
+
+
+--
+-- TOC entry 348 (OID 45138)
+-- Name: idxctypeabbrev; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxctypeabbrev ON contracts USING btree (typeabbrev);
+
+
+--
+-- TOC entry 349 (OID 45139)
+-- Name: idxcworef; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcworef ON contracts USING btree (woref);
+
+
+--
+-- TOC entry 346 (OID 45140)
+-- Name: idxcdebtorno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcdebtorno ON contracts USING btree (debtorno, branchcode);
+
+
+--
+-- TOC entry 91 (OID 45141)
+-- Name: idxcountry; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcountry ON currencies USING btree (country);
+
+
+--
+-- TOC entry 381 (OID 45142)
+-- Name: idxcadatealloc; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcadatealloc ON custallocns USING btree (datealloc);
+
+
+--
+-- TOC entry 382 (OID 45143)
+-- Name: idxcatransid_allocfrom; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcatransid_allocfrom ON custallocns USING btree (transid_allocfrom);
+
+
+--
+-- TOC entry 383 (OID 45144)
+-- Name: idxcatransid_allocto; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcatransid_allocto ON custallocns USING btree (transid_allocto);
+
+
+--
+-- TOC entry 338 (OID 45145)
+-- Name: idxcbbranchcode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcbbranchcode ON custbranch USING btree (branchcode);
+
+
+--
+-- TOC entry 335 (OID 45146)
+-- Name: idxbrname; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxbrname ON custbranch USING btree (brname);
+
+
+--
+-- TOC entry 339 (OID 45147)
+-- Name: idxcbdebtorno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcbdebtorno ON custbranch USING btree (debtorno);
+
+
+--
+-- TOC entry 343 (OID 45148)
+-- Name: idxsalesman; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsalesman ON custbranch USING btree (salesman);
+
+
+--
+-- TOC entry 336 (OID 45149)
+-- Name: idxcbarea; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcbarea ON custbranch USING btree (area);
+
+
+--
+-- TOC entry 337 (OID 45150)
+-- Name: idxcbarea_2; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcbarea_2 ON custbranch USING btree (area);
+
+
+--
+-- TOC entry 340 (OID 45151)
+-- Name: idxcbdefaultlocation; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcbdefaultlocation ON custbranch USING btree (defaultlocation);
+
+
+--
+-- TOC entry 341 (OID 45152)
+-- Name: idxcbtaxauthority; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcbtaxauthority ON custbranch USING btree (taxauthority);
+
+
+--
+-- TOC entry 342 (OID 45153)
+-- Name: idxdefaultshipvia; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxdefaultshipvia ON custbranch USING btree (defaultshipvia);
+
+
+--
+-- TOC entry 370 (OID 45154)
+-- Name: idxdtdebtorno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxdtdebtorno ON debtortrans USING btree (debtorno, branchcode);
+
+
+--
+-- TOC entry 378 (OID 45155)
+-- Name: idxorder_; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxorder_ ON debtortrans USING btree (order_);
+
+
+--
+-- TOC entry 371 (OID 45156)
+-- Name: idxdtprd; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxdtprd ON debtortrans USING btree (prd);
+
+
+--
+-- TOC entry 379 (OID 45157)
+-- Name: idxtpe; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxtpe ON debtortrans USING btree (tpe);
+
+
+--
+-- TOC entry 375 (OID 45158)
+-- Name: idxdttype; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxdttype ON debtortrans USING btree ("type");
+
+
+--
+-- TOC entry 372 (OID 45159)
+-- Name: idxdtsettled; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxdtsettled ON debtortrans USING btree (settled);
+
+
+--
+-- TOC entry 373 (OID 45160)
+-- Name: idxdttrandate; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxdttrandate ON debtortrans USING btree (trandate);
+
+
+--
+-- TOC entry 374 (OID 45161)
+-- Name: idxdttransno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxdttransno ON debtortrans USING btree (transno);
+
+
+--
+-- TOC entry 376 (OID 45162)
+-- Name: idxdttype_2; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxdttype_2 ON debtortrans USING btree ("type", transno);
+
+
+--
+-- TOC entry 377 (OID 45163)
+-- Name: idxedisent; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxedisent ON debtortrans USING btree (edisent);
+
+
+--
+-- TOC entry 327 (OID 45164)
+-- Name: idxcurrency; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcurrency ON debtorsmaster USING btree (currcode);
+
+
+--
+-- TOC entry 332 (OID 45165)
+-- Name: idxholdreason; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxholdreason ON debtorsmaster USING btree (holdreason);
+
+
+--
+-- TOC entry 333 (OID 45166)
+-- Name: idxname; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxname ON debtorsmaster USING btree (name);
+
+
+--
+-- TOC entry 329 (OID 45167)
+-- Name: idxdmpaymentterms; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxdmpaymentterms ON debtorsmaster USING btree (paymentterms);
+
+
+--
+-- TOC entry 328 (OID 45168)
+-- Name: idxdebmsalestype; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxdebmsalestype ON debtorsmaster USING btree (salestype);
+
+
+--
+-- TOC entry 330 (OID 45169)
+-- Name: idxediinvoices; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxediinvoices ON debtorsmaster USING btree (ediinvoices);
+
+
+--
+-- TOC entry 331 (OID 45170)
+-- Name: idxediorders; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxediorders ON debtorsmaster USING btree (ediorders);
+
+
+--
+-- TOC entry 161 (OID 45171)
+-- Name: idxquantitybreak; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxquantitybreak ON discountmatrix USING btree (quantitybreak);
+
+
+--
+-- TOC entry 160 (OID 45172)
+-- Name: idxdmdiscountcategory; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxdmdiscountcategory ON discountmatrix USING btree (discountcategory);
+
+
+--
+-- TOC entry 159 (OID 45173)
+-- Name: idxdismsalestype; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxdismsalestype ON discountmatrix USING btree (salestype);
+
+
+--
+-- TOC entry 118 (OID 45174)
+-- Name: idxpartnercode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxpartnercode ON ediitemmapping USING btree (partnercode);
+
+
+--
+-- TOC entry 117 (OID 45175)
+-- Name: idxeimstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxeimstockid ON ediitemmapping USING btree (stockid);
+
+
+--
+-- TOC entry 119 (OID 45176)
+-- Name: idxpartnerstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxpartnerstockid ON ediitemmapping USING btree (partnerstockid);
+
+
+--
+-- TOC entry 120 (OID 45177)
+-- Name: idxsupporcust; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsupporcust ON ediitemmapping USING btree (supporcust);
+
+
+--
+-- TOC entry 122 (OID 45178)
+-- Name: idxsection; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsection ON edimessageformat USING btree (section);
+
+
+--
+-- TOC entry 123 (OID 45179)
+-- Name: uidxpartnercode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE UNIQUE INDEX uidxpartnercode ON edimessageformat USING btree (partnercode, messagetype, sequenceno);
+
+
+--
+-- TOC entry 127 (OID 45180)
+-- Name: idxsegtag; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsegtag ON edi_orders_segs USING btree (segtag);
+
+
+--
+-- TOC entry 126 (OID 45181)
+-- Name: idxsegno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsegno ON edi_orders_segs USING btree (seggroup);
+
+
+--
+-- TOC entry 183 (OID 45182)
+-- Name: idxdestination; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxdestination ON freightcosts USING btree (destination);
+
+
+--
+-- TOC entry 185 (OID 45183)
+-- Name: idxlocationfrom; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxlocationfrom ON freightcosts USING btree (locationfrom);
+
+
+--
+-- TOC entry 186 (OID 45184)
+-- Name: idxshipperid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxshipperid ON freightcosts USING btree (shipperid);
+
+
+--
+-- TOC entry 184 (OID 45185)
+-- Name: idxdestination_2; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxdestination_2 ON freightcosts USING btree (destination, locationfrom, shipperid);
+
+
+--
+-- TOC entry 129 (OID 45186)
+-- Name: idxaccount; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxaccount ON gltrans USING btree (account);
+
+
+--
+-- TOC entry 130 (OID 45187)
+-- Name: idxchequeno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxchequeno ON gltrans USING btree (chequeno);
+
+
+--
+-- TOC entry 132 (OID 45188)
+-- Name: idxgtperiodno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxgtperiodno ON gltrans USING btree (periodno);
+
+
+--
+-- TOC entry 135 (OID 45189)
+-- Name: idxposted; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxposted ON gltrans USING btree (posted);
+
+
+--
+-- TOC entry 133 (OID 45190)
+-- Name: idxgttrandate; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxgttrandate ON gltrans USING btree (trandate);
+
+
+--
+-- TOC entry 134 (OID 45191)
+-- Name: idxgttypeno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxgttypeno ON gltrans USING btree (typeno);
+
+
+--
+-- TOC entry 136 (OID 45192)
+-- Name: idxtype_and_number; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxtype_and_number ON gltrans USING btree ("type", typeno);
+
+
+--
+-- TOC entry 131 (OID 45193)
+-- Name: idxgtjobref; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxgtjobref ON gltrans USING btree (jobref);
+
+
+--
+-- TOC entry 267 (OID 45194)
+-- Name: idxgrndeliverydate; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxgrndeliverydate ON grns USING btree (deliverydate);
+
+
+--
+-- TOC entry 268 (OID 45195)
+-- Name: idxgrnitemcode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxgrnitemcode ON grns USING btree (itemcode);
+
+
+--
+-- TOC entry 270 (OID 45196)
+-- Name: idxpodetailitem; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxpodetailitem ON grns USING btree (podetailitem);
+
+
+--
+-- TOC entry 269 (OID 45197)
+-- Name: idxgrnsupplierid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxgrnsupplierid ON grns USING btree (supplierid);
+
+
+--
+-- TOC entry 88 (OID 45198)
+-- Name: idxreasoncode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxreasoncode ON holdreasons USING btree (reasoncode);
+
+
+--
+-- TOC entry 89 (OID 45199)
+-- Name: idxreasondescription; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxreasondescription ON holdreasons USING btree (reasondescription);
+
+
+--
+-- TOC entry 212 (OID 45200)
+-- Name: idxlsstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxlsstockid ON locstock USING btree (stockid);
+
+
+--
+-- TOC entry 216 (OID 45201)
+-- Name: idxreference; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxreference ON loctransfers USING btree (reference, stockid);
+
+
+--
+-- TOC entry 217 (OID 45202)
+-- Name: idxshiploc; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxshiploc ON loctransfers USING btree (shiploc);
+
+
+--
+-- TOC entry 215 (OID 45203)
+-- Name: idxrecloc; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxrecloc ON loctransfers USING btree (recloc);
+
+
+--
+-- TOC entry 214 (OID 45204)
+-- Name: idxltstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxltstockid ON loctransfers USING btree (stockid);
+
+
+--
+-- TOC entry 363 (OID 45205)
+-- Name: idxoddlstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxoddlstockid ON orderdeliverydifferenceslog USING btree (stockid);
+
+
+--
+-- TOC entry 361 (OID 45206)
+-- Name: idxodddebtorno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxodddebtorno ON orderdeliverydifferenceslog USING btree (debtorno, branch);
+
+
+--
+-- TOC entry 360 (OID 45207)
+-- Name: idxcan_or_bo; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcan_or_bo ON orderdeliverydifferenceslog USING btree (can_or_bo);
+
+
+--
+-- TOC entry 362 (OID 45208)
+-- Name: idxoddlorderno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxoddlorderno ON orderdeliverydifferenceslog USING btree (orderno);
+
+
+--
+-- TOC entry 93 (OID 45209)
+-- Name: idxdaysbeforedue; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxdaysbeforedue ON paymentterms USING btree (daysbeforedue);
+
+
+--
+-- TOC entry 92 (OID 45210)
+-- Name: idxdayinfollowingmonth; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxdayinfollowingmonth ON paymentterms USING btree (dayinfollowingmonth);
+
+
+--
+-- TOC entry 97 (OID 45211)
+-- Name: idxlastdate_in_period; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxlastdate_in_period ON periods USING btree (lastdate_in_period);
+
+
+--
+-- TOC entry 203 (OID 45212)
+-- Name: idxcurrabrev; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcurrabrev ON prices USING btree (currabrev);
+
+
+--
+-- TOC entry 204 (OID 45213)
+-- Name: idxpdebtorno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxpdebtorno ON prices USING btree (debtorno);
+
+
+--
+-- TOC entry 205 (OID 45214)
+-- Name: idxpstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxpstockid ON prices USING btree (stockid);
+
+
+--
+-- TOC entry 206 (OID 45215)
+-- Name: idxptypeabbrev; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxptypeabbrev ON prices USING btree (typeabbrev);
+
+
+--
+-- TOC entry 208 (OID 45216)
+-- Name: idxpdstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxpdstockid ON purchdata USING btree (stockid);
+
+
+--
+-- TOC entry 209 (OID 45217)
+-- Name: idxpdsupplierno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxpdsupplierno ON purchdata USING btree (supplierno);
+
+
+--
+-- TOC entry 210 (OID 45218)
+-- Name: idxpreferred; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxpreferred ON purchdata USING btree (preferred);
+
+
+--
+-- TOC entry 259 (OID 45219)
+-- Name: idxpoddeliverydate; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxpoddeliverydate ON purchorderdetails USING btree (deliverydate);
+
+
+--
+-- TOC entry 260 (OID 45220)
+-- Name: idxpodglcode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxpodglcode ON purchorderdetails USING btree (glcode);
+
+
+--
+-- TOC entry 261 (OID 45221)
+-- Name: idxpoditemcode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxpoditemcode ON purchorderdetails USING btree (itemcode);
+
+
+--
+-- TOC entry 262 (OID 45222)
+-- Name: idxpodjobref; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxpodjobref ON purchorderdetails USING btree (jobref);
+
+
+--
+-- TOC entry 263 (OID 45223)
+-- Name: idxpodorderno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxpodorderno ON purchorderdetails USING btree (orderno);
+
+
+--
+-- TOC entry 264 (OID 45224)
+-- Name: idxpodshiptref; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxpodshiptref ON purchorderdetails USING btree (shiptref);
+
+
+--
+-- TOC entry 258 (OID 45225)
+-- Name: idxpodcompleted; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxpodcompleted ON purchorderdetails USING btree (completed);
+
+
+--
+-- TOC entry 255 (OID 45226)
+-- Name: idxpoorddate; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxpoorddate ON purchorders USING btree (orddate);
+
+
+--
+-- TOC entry 256 (OID 45227)
+-- Name: idxposupplierno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxposupplierno ON purchorders USING btree (supplierno);
+
+
+--
+-- TOC entry 254 (OID 45228)
+-- Name: idxintostocklocation; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxintostocklocation ON purchorders USING btree (intostocklocation);
+
+
+--
+-- TOC entry 253 (OID 45229)
+-- Name: idxallowprintpo; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxallowprintpo ON purchorders USING btree (allowprint);
+
+
+--
+-- TOC entry 138 (OID 45230)
+-- Name: idxreportheading; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxreportheading ON reportheaders USING btree (reportheading);
+
+
+--
+-- TOC entry 143 (OID 45231)
+-- Name: idxcustbranch; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcustbranch ON salesanalysis USING btree (custbranch);
+
+
+--
+-- TOC entry 142 (OID 45232)
+-- Name: idxcust; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcust ON salesanalysis USING btree (cust);
+
+
+--
+-- TOC entry 146 (OID 45233)
+-- Name: idxsaperiodno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsaperiodno ON salesanalysis USING btree (periodno);
+
+
+--
+-- TOC entry 147 (OID 45234)
+-- Name: idxsastkcategory; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsastkcategory ON salesanalysis USING btree (stkcategory);
+
+
+--
+-- TOC entry 148 (OID 45235)
+-- Name: idxsastockid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsastockid ON salesanalysis USING btree (stockid);
+
+
+--
+-- TOC entry 149 (OID 45236)
+-- Name: idxsatypeabbrev; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsatypeabbrev ON salesanalysis USING btree (typeabbrev);
+
+
+--
+-- TOC entry 144 (OID 45237)
+-- Name: idxsaarea; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsaarea ON salesanalysis USING btree (area);
+
+
+--
+-- TOC entry 141 (OID 45238)
+-- Name: idxbudgetoractual; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxbudgetoractual ON salesanalysis USING btree (budgetoractual);
+
+
+--
+-- TOC entry 145 (OID 45239)
+-- Name: idxsalesperson; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsalesperson ON salesanalysis USING btree (salesperson);
+
+
+--
+-- TOC entry 151 (OID 45240)
+-- Name: idxsparea; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsparea ON salesglpostings USING btree (area);
+
+
+--
+-- TOC entry 153 (OID 45241)
+-- Name: idxspstkcat; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxspstkcat ON salesglpostings USING btree (stkcat);
+
+
+--
+-- TOC entry 152 (OID 45242)
+-- Name: idxspsalestype; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxspsalestype ON salesglpostings USING btree (salestype);
+
+
+--
+-- TOC entry 155 (OID 45243)
+-- Name: uidxsgparea_stkcat; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE UNIQUE INDEX uidxsgparea_stkcat ON salesglpostings USING btree (area, stkcat, salestype);
+
+
+--
+-- TOC entry 366 (OID 45244)
+-- Name: idxsodorderno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsodorderno ON salesorderdetails USING btree (orderno);
+
+
+--
+-- TOC entry 367 (OID 45245)
+-- Name: idxstkcode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxstkcode ON salesorderdetails USING btree (stkcode);
+
+
+--
+-- TOC entry 365 (OID 45246)
+-- Name: idxsodcompleted; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsodcompleted ON salesorderdetails USING btree (completed);
+
+
+--
+-- TOC entry 357 (OID 45247)
+-- Name: idxsodebtorno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsodebtorno ON salesorders USING btree (debtorno);
+
+
+--
+-- TOC entry 358 (OID 45248)
+-- Name: idxsodorddate; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsodorddate ON salesorders USING btree (orddate);
+
+
+--
+-- TOC entry 354 (OID 45249)
+-- Name: idxordertype; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxordertype ON salesorders USING btree (ordertype);
+
+
+--
+-- TOC entry 353 (OID 45250)
+-- Name: idxlocationindex; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxlocationindex ON salesorders USING btree (fromstkloc);
+
+
+--
+-- TOC entry 356 (OID 45251)
+-- Name: idxsobranchcode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsobranchcode ON salesorders USING btree (branchcode, debtorno);
+
+
+--
+-- TOC entry 355 (OID 45252)
+-- Name: idxshipvia; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxshipvia ON salesorders USING btree (shipvia);
+
+
+--
+-- TOC entry 156 (OID 45253)
+-- Name: idxsales_type; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsales_type ON salestypes USING btree (sales_type);
+
+
+--
+-- TOC entry 163 (OID 45254)
+-- Name: idxfilename; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxfilename ON scripts USING btree (filename);
+
+
+--
+-- TOC entry 178 (OID 45255)
+-- Name: idxsctranstype; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsctranstype ON shipmentcharges USING btree (transtype, transno);
+
+
+--
+-- TOC entry 176 (OID 45256)
+-- Name: idxscshiptref; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxscshiptref ON shipmentcharges USING btree (shiptref);
+
+
+--
+-- TOC entry 177 (OID 45257)
+-- Name: idxscstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxscstockid ON shipmentcharges USING btree (stockid);
+
+
+--
+-- TOC entry 179 (OID 45258)
+-- Name: idxsctranstype_2; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsctranstype_2 ON shipmentcharges USING btree (transtype);
+
+
+--
+-- TOC entry 171 (OID 45259)
+-- Name: idxeta; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxeta ON shipments USING btree (eta);
+
+
+--
+-- TOC entry 173 (OID 45260)
+-- Name: idxshipsupplierid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxshipsupplierid ON shipments USING btree (supplierid);
+
+
+--
+-- TOC entry 172 (OID 45261)
+-- Name: idxshipperref; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxshipperref ON shipments USING btree (voyageref);
+
+
+--
+-- TOC entry 174 (OID 45262)
+-- Name: idxvessel; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxvessel ON shipments USING btree (vessel);
+
+
+--
+-- TOC entry 187 (OID 45263)
+-- Name: idxcategorydescription; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcategorydescription ON stockcategory USING btree (categorydescription);
+
+
+--
+-- TOC entry 188 (OID 45264)
+-- Name: idxstocktype; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxstocktype ON stockcategory USING btree (stocktype);
+
+
+--
+-- TOC entry 201 (OID 45265)
+-- Name: idxscfloccode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxscfloccode ON stockcheckfreeze USING btree (loccode);
+
+
+--
+-- TOC entry 199 (OID 45266)
+-- Name: idxscntstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxscntstockid ON stockcounts USING btree (stockid);
+
+
+--
+-- TOC entry 198 (OID 45267)
+-- Name: idxscntloccode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxscntloccode ON stockcounts USING btree (loccode);
+
+
+--
+-- TOC entry 193 (OID 45268)
+-- Name: idxsmcategoryid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsmcategoryid ON stockmaster USING btree (categoryid);
+
+
+--
+-- TOC entry 194 (OID 45269)
+-- Name: idxsmdescription; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsmdescription ON stockmaster USING btree (description);
+
+
+--
+-- TOC entry 191 (OID 45270)
+-- Name: idxlastcurcostdate; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxlastcurcostdate ON stockmaster USING btree (lastcurcostdate);
+
+
+--
+-- TOC entry 192 (OID 45271)
+-- Name: idxmbflag; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxmbflag ON stockmaster USING btree (mbflag);
+
+
+--
+-- TOC entry 196 (OID 45272)
+-- Name: idxsmstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsmstockid ON stockmaster USING btree (stockid, categoryid);
+
+
+--
+-- TOC entry 190 (OID 45273)
+-- Name: idxcontrolled; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcontrolled ON stockmaster USING btree (controlled);
+
+
+--
+-- TOC entry 195 (OID 45274)
+-- Name: idxsmdiscountcategory; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsmdiscountcategory ON stockmaster USING btree (discountcategory);
+
+
+--
+-- TOC entry 220 (OID 45275)
+-- Name: idxsmdebtorno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsmdebtorno ON stockmoves USING btree (debtorno);
+
+
+--
+-- TOC entry 221 (OID 45276)
+-- Name: idxsmloccode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsmloccode ON stockmoves USING btree (loccode);
+
+
+--
+-- TOC entry 222 (OID 45277)
+-- Name: idxsmprd; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsmprd ON stockmoves USING btree (prd);
+
+
+--
+-- TOC entry 226 (OID 45278)
+-- Name: idxsmvstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsmvstockid ON stockmoves USING btree (stockid, loccode);
+
+
+--
+-- TOC entry 227 (OID 45279)
+-- Name: idxsmvstockid_2; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsmvstockid_2 ON stockmoves USING btree (stockid);
+
+
+--
+-- TOC entry 223 (OID 45280)
+-- Name: idxsmtrandate; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsmtrandate ON stockmoves USING btree (trandate);
+
+
+--
+-- TOC entry 224 (OID 45281)
+-- Name: idxsmtransno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsmtransno ON stockmoves USING btree (transno);
+
+
+--
+-- TOC entry 225 (OID 45282)
+-- Name: idxsmtype; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsmtype ON stockmoves USING btree ("type");
+
+
+--
+-- TOC entry 219 (OID 45283)
+-- Name: idxshow_on_inv_crds; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxshow_on_inv_crds ON stockmoves USING btree (show_on_inv_crds);
+
+
+--
+-- TOC entry 218 (OID 45284)
+-- Name: idxhide; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxhide ON stockmoves USING btree (hidemovt);
+
+
+--
+-- TOC entry 230 (OID 45285)
+-- Name: idxssistockid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxssistockid ON stockserialitems USING btree (stockid);
+
+
+--
+-- TOC entry 229 (OID 45286)
+-- Name: idxssiloccode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxssiloccode ON stockserialitems USING btree (loccode);
+
+
+--
+-- TOC entry 233 (OID 45287)
+-- Name: idxstockmoveno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxstockmoveno ON stockserialmoves USING btree (stockmoveno);
+
+
+--
+-- TOC entry 232 (OID 45288)
+-- Name: idxssmstockid_sn; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxssmstockid_sn ON stockserialmoves USING btree (stockid, serialno);
+
+
+--
+-- TOC entry 247 (OID 45289)
+-- Name: idxsatransid_allocfrom; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsatransid_allocfrom ON suppallocs USING btree (transid_allocfrom);
+
+
+--
+-- TOC entry 248 (OID 45290)
+-- Name: idxsatransid_allocto; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsatransid_allocto ON suppallocs USING btree (transid_allocto);
+
+
+--
+-- TOC entry 246 (OID 45291)
+-- Name: idxsadatealloc; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsadatealloc ON suppallocs USING btree (datealloc);
+
+
+--
+-- TOC entry 235 (OID 45292)
+-- Name: idxduedate; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxduedate ON supptrans USING btree (duedate);
+
+
+--
+-- TOC entry 236 (OID 45293)
+-- Name: idxhold; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxhold ON supptrans USING btree ("hold");
+
+
+--
+-- TOC entry 238 (OID 45294)
+-- Name: idxstsupplierno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxstsupplierno ON supptrans USING btree (supplierno);
+
+
+--
+-- TOC entry 237 (OID 45295)
+-- Name: idxstsettled; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxstsettled ON supptrans USING btree (settled);
+
+
+--
+-- TOC entry 239 (OID 45296)
+-- Name: idxstsupplierno_2; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxstsupplierno_2 ON supptrans USING btree (supplierno, suppreference);
+
+
+--
+-- TOC entry 243 (OID 45297)
+-- Name: idxsuppreference; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsuppreference ON supptrans USING btree (suppreference);
+
+
+--
+-- TOC entry 240 (OID 45298)
+-- Name: idxsttrandate; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsttrandate ON supptrans USING btree (trandate);
+
+
+--
+-- TOC entry 241 (OID 45299)
+-- Name: idxsttransno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsttransno ON supptrans USING btree (transno);
+
+
+--
+-- TOC entry 242 (OID 45300)
+-- Name: idxsttype; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsttype ON supptrans USING btree ("type");
+
+
+--
+-- TOC entry 245 (OID 45301)
+-- Name: uidxtypetransno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE UNIQUE INDEX uidxtypetransno ON supptrans USING btree (transno, "type");
+
+
+--
+-- TOC entry 250 (OID 45302)
+-- Name: idxcontact; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcontact ON suppliercontacts USING btree (contact);
+
+
+--
+-- TOC entry 251 (OID 45303)
+-- Name: idxscsupplierid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxscsupplierid ON suppliercontacts USING btree (supplierid);
+
+
+--
+-- TOC entry 165 (OID 45304)
+-- Name: idxscurrcode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxscurrcode ON suppliers USING btree (currcode);
+
+
+--
+-- TOC entry 166 (OID 45305)
+-- Name: idxspaymentterms; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxspaymentterms ON suppliers USING btree (paymentterms);
+
+
+--
+-- TOC entry 169 (OID 45306)
+-- Name: idxsupsupplierid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsupsupplierid ON suppliers USING btree (supplierid);
+
+
+--
+-- TOC entry 168 (OID 45307)
+-- Name: idxsuppname; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsuppname ON suppliers USING btree (suppname);
+
+
+--
+-- TOC entry 167 (OID 45308)
+-- Name: idxstaxauthority; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxstaxauthority ON suppliers USING btree (taxauthority);
+
+
+--
+-- TOC entry 95 (OID 45309)
+-- Name: idxsttypeno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxsttypeno ON systypes USING btree (typeno);
+
+
+--
+-- TOC entry 272 (OID 45310)
+-- Name: idxtaltaxauthority; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxtaltaxauthority ON taxauthlevels USING btree (taxauthority);
+
+
+--
+-- TOC entry 271 (OID 45311)
+-- Name: idxdispatchtaxauthority; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxdispatchtaxauthority ON taxauthlevels USING btree (dispatchtaxauthority);
+
+
+--
+-- TOC entry 113 (OID 45312)
+-- Name: idxtaxglcode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxtaxglcode ON taxauthorities USING btree (taxglcode);
+
+
+--
+-- TOC entry 112 (OID 45313)
+-- Name: idxpurchtaxglaccount; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxpurchtaxglaccount ON taxauthorities USING btree (purchtaxglaccount);
+
+
+--
+-- TOC entry 291 (OID 45314)
+-- Name: idxwoiworkcentre; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxwoiworkcentre ON woissues USING btree (workcentre);
+
+
+--
+-- TOC entry 286 (OID 45315)
+-- Name: idxissueno; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxissueno ON woissues USING btree (issueno);
+
+
+--
+-- TOC entry 287 (OID 45316)
+-- Name: idxissueno_2; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxissueno_2 ON woissues USING btree (issueno, woref, stockid);
+
+
+--
+-- TOC entry 289 (OID 45317)
+-- Name: idxwoistockid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxwoistockid ON woissues USING btree (stockid);
+
+
+--
+-- TOC entry 288 (OID 45318)
+-- Name: idxissuetype; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxissuetype ON woissues USING btree (issuetype);
+
+
+--
+-- TOC entry 290 (OID 45319)
+-- Name: idxwoiworef; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxwoiworef ON woissues USING btree (woref);
+
+
+--
+-- TOC entry 296 (OID 45320)
+-- Name: idxwrkcentre; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxwrkcentre ON worequirements USING btree (wrkcentre);
+
+
+--
+-- TOC entry 292 (OID 45321)
+-- Name: idxresourcetype; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxresourcetype ON worequirements USING btree (resourcetype);
+
+
+--
+-- TOC entry 294 (OID 45322)
+-- Name: idxworworef; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxworworef ON worequirements USING btree (woref, stockid);
+
+
+--
+-- TOC entry 293 (OID 45323)
+-- Name: idxworstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxworstockid ON worequirements USING btree (stockid);
+
+
+--
+-- TOC entry 295 (OID 45324)
+-- Name: idxworworef_2; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxworworef_2 ON worequirements USING btree (woref);
+
+
+--
+-- TOC entry 274 (OID 45325)
+-- Name: idxcustomerid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxcustomerid ON www_users USING btree (customerid);
+
+
+--
+-- TOC entry 275 (OID 45326)
+-- Name: idxusrdefaultlocation; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxusrdefaultlocation ON www_users USING btree (defaultlocation);
+
+
+--
+-- TOC entry 278 (OID 45327)
+-- Name: idxwcdescription; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxwcdescription ON workcentres USING btree (description);
+
+
+--
+-- TOC entry 277 (OID 45328)
+-- Name: idxlocation; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxlocation ON workcentres USING btree ("location");
+
+
+--
+-- TOC entry 283 (OID 45329)
+-- Name: idxwostockid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxwostockid ON worksorders USING btree (stockid);
+
+
+--
+-- TOC entry 282 (OID 45330)
+-- Name: idxwoloccode; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxwoloccode ON worksorders USING btree (loccode);
+
+
+--
+-- TOC entry 280 (OID 45331)
+-- Name: idxreleaseddate; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxreleaseddate ON worksorders USING btree (releaseddate);
+
+
+--
+-- TOC entry 281 (OID 45332)
+-- Name: idxrequiredby; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxrequiredby ON worksorders USING btree (requiredby);
+
+
+--
+-- TOC entry 284 (OID 45333)
+-- Name: idxwoworef; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxwoworef ON worksorders USING btree (woref, loccode);
+
+
+--
+-- TOC entry 101 (OID 45334)
+-- Name: section; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX section ON accountgroups USING btree (sectioninaccounts);
+
+
+--
+-- TOC entry 395 (OID 45993)
+-- Name: idxsalescatprod; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE UNIQUE INDEX idxsalescatprod ON salescatprod USING btree (salescatid, stockid);
+
+
+--
+-- TOC entry 87 (OID 45335)
+-- Name: holdreasons_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY holdreasons
+    ADD CONSTRAINT holdreasons_pkey PRIMARY KEY (reasoncode);
+
+
+--
+-- TOC entry 90 (OID 45337)
+-- Name: currencies_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY currencies
+    ADD CONSTRAINT currencies_pkey PRIMARY KEY (currabrev);
+
+
+--
+-- TOC entry 94 (OID 45339)
+-- Name: paymentterms_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY paymentterms
+    ADD CONSTRAINT paymentterms_pkey PRIMARY KEY (termsindicator);
+
+
+--
+-- TOC entry 96 (OID 45341)
+-- Name: systypes_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY systypes
+    ADD CONSTRAINT systypes_pkey PRIMARY KEY (typeid);
+
+
+--
+-- TOC entry 98 (OID 45343)
+-- Name: periods_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY periods
+    ADD CONSTRAINT periods_pkey PRIMARY KEY (periodno);
+
+
+--
+-- TOC entry 99 (OID 45345)
+-- Name: accountgroups_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY accountgroups
+    ADD CONSTRAINT accountgroups_pkey PRIMARY KEY (groupname);
+
+
+--
+-- TOC entry 102 (OID 45347)
+-- Name: cogsglpostings_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY cogsglpostings
+    ADD CONSTRAINT cogsglpostings_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 108 (OID 45349)
+-- Name: chartmaster_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY chartmaster
+    ADD CONSTRAINT chartmaster_pkey PRIMARY KEY (accountcode);
+
+
+--
+-- TOC entry 114 (OID 45351)
+-- Name: taxauthorities_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY taxauthorities
+    ADD CONSTRAINT taxauthorities_pkey PRIMARY KEY (taxid);
+
+
+--
+-- TOC entry 115 (OID 45353)
+-- Name: companies_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY companies
+    ADD CONSTRAINT companies_pkey PRIMARY KEY (coycode);
+
+
+--
+-- TOC entry 116 (OID 45355)
+-- Name: ediitemmapping_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY ediitemmapping
+    ADD CONSTRAINT ediitemmapping_pkey PRIMARY KEY (supporcust, partnercode, stockid);
+
+
+--
+-- TOC entry 121 (OID 45357)
+-- Name: edimessageformat_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY edimessageformat
+    ADD CONSTRAINT edimessageformat_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 124 (OID 45359)
+-- Name: edi_orders_seg_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY edi_orders_seg_groups
+    ADD CONSTRAINT edi_orders_seg_groups_pkey PRIMARY KEY (seggroupno);
+
+
+--
+-- TOC entry 125 (OID 45361)
+-- Name: edi_orders_segs_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY edi_orders_segs
+    ADD CONSTRAINT edi_orders_segs_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 128 (OID 45363)
+-- Name: gltrans_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY gltrans
+    ADD CONSTRAINT gltrans_pkey PRIMARY KEY (counterindex);
+
+ALTER TABLE gltrans CLUSTER ON gltrans_pkey;
+
+
+--
+-- TOC entry 137 (OID 45365)
+-- Name: locations_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY locations
+    ADD CONSTRAINT locations_pkey PRIMARY KEY (loccode);
+
+
+--
+-- TOC entry 139 (OID 45367)
+-- Name: reportheaders_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY reportheaders
+    ADD CONSTRAINT reportheaders_pkey PRIMARY KEY (reportid);
+
+
+--
+-- TOC entry 140 (OID 45369)
+-- Name: reportcolumns_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY reportcolumns
+    ADD CONSTRAINT reportcolumns_pkey PRIMARY KEY (reportid, colno);
+
+
+--
+-- TOC entry 150 (OID 45371)
+-- Name: salesanalysis_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY salesanalysis
+    ADD CONSTRAINT salesanalysis_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 154 (OID 45373)
+-- Name: salesglpostings_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY salesglpostings
+    ADD CONSTRAINT salesglpostings_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 157 (OID 45375)
+-- Name: salestypes_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY salestypes
+    ADD CONSTRAINT salestypes_pkey PRIMARY KEY (typeabbrev);
+
+
+--
+-- TOC entry 158 (OID 45377)
+-- Name: discountmatrix_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY discountmatrix
+    ADD CONSTRAINT discountmatrix_pkey PRIMARY KEY (salestype, discountcategory, quantitybreak);
+
+
+--
+-- TOC entry 162 (OID 45379)
+-- Name: salesman_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY salesman
+    ADD CONSTRAINT salesman_pkey PRIMARY KEY (salesmancode);
+
+
+--
+-- TOC entry 164 (OID 45381)
+-- Name: scripts_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY scripts
+    ADD CONSTRAINT scripts_pkey PRIMARY KEY (pageid);
+
+
+--
+-- TOC entry 170 (OID 45383)
+-- Name: suppliers_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY suppliers
+    ADD CONSTRAINT suppliers_pkey PRIMARY KEY (supplierid);
+
+
+--
+-- TOC entry 175 (OID 45385)
+-- Name: shipments_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY shipments
+    ADD CONSTRAINT shipments_pkey PRIMARY KEY (shiptref);
+
+
+--
+-- TOC entry 180 (OID 45387)
+-- Name: shipmentcharges_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY shipmentcharges
+    ADD CONSTRAINT shipmentcharges_pkey PRIMARY KEY (shiptchgid);
+
+
+--
+-- TOC entry 181 (OID 45389)
+-- Name: shippers_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY shippers
+    ADD CONSTRAINT shippers_pkey PRIMARY KEY (shipper_id);
+
+
+--
+-- TOC entry 182 (OID 45391)
+-- Name: freightcosts_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY freightcosts
+    ADD CONSTRAINT freightcosts_pkey PRIMARY KEY (shipcostfromid);
+
+
+--
+-- TOC entry 189 (OID 45393)
+-- Name: stockcategory_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockcategory
+    ADD CONSTRAINT stockcategory_pkey PRIMARY KEY (categoryid);
+
+
+--
+-- TOC entry 197 (OID 45395)
+-- Name: stockmaster_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockmaster
+    ADD CONSTRAINT stockmaster_pkey PRIMARY KEY (stockid);
+
+
+--
+-- TOC entry 200 (OID 45397)
+-- Name: stockcounts_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockcounts
+    ADD CONSTRAINT stockcounts_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 202 (OID 45399)
+-- Name: stockcheckfreeze_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockcheckfreeze
+    ADD CONSTRAINT stockcheckfreeze_pkey PRIMARY KEY (stockid);
+
+
+--
+-- TOC entry 207 (OID 45401)
+-- Name: prices_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY prices
+    ADD CONSTRAINT prices_pkey PRIMARY KEY (stockid, typeabbrev, currabrev, debtorno);
+
+
+--
+-- TOC entry 211 (OID 45403)
+-- Name: purchdata_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY purchdata
+    ADD CONSTRAINT purchdata_pkey PRIMARY KEY (supplierno, stockid);
+
+
+--
+-- TOC entry 213 (OID 45405)
+-- Name: locstock_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY locstock
+    ADD CONSTRAINT locstock_pkey PRIMARY KEY (loccode, stockid);
+
+
+--
+-- TOC entry 228 (OID 45407)
+-- Name: stockmoves_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockmoves
+    ADD CONSTRAINT stockmoves_pkey PRIMARY KEY (stkmoveno);
+
+
+--
+-- TOC entry 231 (OID 45409)
+-- Name: stockserialitems_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockserialitems
+    ADD CONSTRAINT stockserialitems_pkey PRIMARY KEY (stockid, serialno, loccode);
+
+
+--
+-- TOC entry 234 (OID 45411)
+-- Name: stockserialmoves_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockserialmoves
+    ADD CONSTRAINT stockserialmoves_pkey PRIMARY KEY (stkitmmoveno);
+
+
+--
+-- TOC entry 244 (OID 45413)
+-- Name: supptrans_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY supptrans
+    ADD CONSTRAINT supptrans_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 249 (OID 45415)
+-- Name: suppallocs_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY suppallocs
+    ADD CONSTRAINT suppallocs_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 252 (OID 45417)
+-- Name: suppliercontacts_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY suppliercontacts
+    ADD CONSTRAINT suppliercontacts_pkey PRIMARY KEY (supplierid, contact);
+
+
+--
+-- TOC entry 257 (OID 45419)
+-- Name: purchorders_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY purchorders
+    ADD CONSTRAINT purchorders_pkey PRIMARY KEY (orderno);
+
+
+--
+-- TOC entry 265 (OID 45421)
+-- Name: purchorderdetails_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY purchorderdetails
+    ADD CONSTRAINT purchorderdetails_pkey PRIMARY KEY (podetailitem);
+
+
+--
+-- TOC entry 266 (OID 45423)
+-- Name: grns_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY grns
+    ADD CONSTRAINT grns_pkey PRIMARY KEY (grnno);
+
+
+--
+-- TOC entry 273 (OID 45425)
+-- Name: taxauthlevels_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY taxauthlevels
+    ADD CONSTRAINT taxauthlevels_pkey PRIMARY KEY (taxauthority, dispatchtaxauthority, "level");
+
+
+--
+-- TOC entry 276 (OID 45427)
+-- Name: www_users_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY www_users
+    ADD CONSTRAINT www_users_pkey PRIMARY KEY (userid);
+
+
+--
+-- TOC entry 279 (OID 45429)
+-- Name: workcentres_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY workcentres
+    ADD CONSTRAINT workcentres_pkey PRIMARY KEY (code);
+
+
+--
+-- TOC entry 285 (OID 45431)
+-- Name: worksorders_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY worksorders
+    ADD CONSTRAINT worksorders_pkey PRIMARY KEY (woref);
+
+
+--
+-- TOC entry 297 (OID 45433)
+-- Name: worequirements_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY worequirements
+    ADD CONSTRAINT worequirements_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 298 (OID 45435)
+-- Name: bom_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY bom
+    ADD CONSTRAINT bom_pkey PRIMARY KEY (parent, component, workcentreadded, loccode);
+
+
+--
+-- TOC entry 306 (OID 45437)
+-- Name: bankaccounts_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY bankaccounts
+    ADD CONSTRAINT bankaccounts_pkey PRIMARY KEY (accountcode);
+
+
+--
+-- TOC entry 309 (OID 45439)
+-- Name: banktrans_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY banktrans
+    ADD CONSTRAINT banktrans_pkey PRIMARY KEY (banktransid);
+
+
+--
+-- TOC entry 315 (OID 45441)
+-- Name: buckets_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY buckets
+    ADD CONSTRAINT buckets_pkey PRIMARY KEY (workcentre, availdate);
+
+
+--
+-- TOC entry 318 (OID 45443)
+-- Name: chartdetails_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY chartdetails
+    ADD CONSTRAINT chartdetails_pkey PRIMARY KEY (accountcode, period);
+
+
+--
+-- TOC entry 320 (OID 45445)
+-- Name: contractbom_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY contractbom
+    ADD CONSTRAINT contractbom_pkey PRIMARY KEY (contractref, component, workcentreadded, loccode);
+
+
+--
+-- TOC entry 326 (OID 45447)
+-- Name: debtorsmaster_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY debtorsmaster
+    ADD CONSTRAINT debtorsmaster_pkey PRIMARY KEY (debtorno);
+
+
+--
+-- TOC entry 334 (OID 45449)
+-- Name: custbranch_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY custbranch
+    ADD CONSTRAINT custbranch_pkey PRIMARY KEY (branchcode, debtorno);
+
+
+--
+-- TOC entry 344 (OID 45451)
+-- Name: contracts_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY contracts
+    ADD CONSTRAINT contracts_pkey PRIMARY KEY (contractref);
+
+
+--
+-- TOC entry 351 (OID 45453)
+-- Name: contractreqts_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY contractreqts
+    ADD CONSTRAINT contractreqts_pkey PRIMARY KEY (contractreqid);
+
+
+--
+-- TOC entry 359 (OID 45455)
+-- Name: salesorders_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY salesorders
+    ADD CONSTRAINT salesorders_pkey PRIMARY KEY (orderno);
+
+
+--
+-- TOC entry 364 (OID 45457)
+-- Name: orderdeliverydifferenceslog_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY orderdeliverydifferenceslog
+    ADD CONSTRAINT orderdeliverydifferenceslog_pkey PRIMARY KEY (orderno, invoiceno, stockid);
+
+
+--
+-- TOC entry 368 (OID 45459)
+-- Name: salesorderdetails_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY salesorderdetails
+    ADD CONSTRAINT salesorderdetails_pkey PRIMARY KEY (orderno, stkcode);
+
+
+--
+-- TOC entry 369 (OID 45461)
+-- Name: debtortrans_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY debtortrans
+    ADD CONSTRAINT debtortrans_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 380 (OID 45463)
+-- Name: custallocns_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY custallocns
+    ADD CONSTRAINT custallocns_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 384 (OID 45465)
+-- Name: areas_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY areas
+    ADD CONSTRAINT areas_pkey PRIMARY KEY (areacode);
+
+
+--
+-- TOC entry 385 (OID 45467)
+-- Name: recurringsalesorders_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY recurringsalesorders
+    ADD CONSTRAINT recurringsalesorders_pkey PRIMARY KEY (recurrorderno);
+
+
+--
+-- TOC entry 386 (OID 45469)
+-- Name: recurrsalesorderdetails_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY recurrsalesorderdetails
+    ADD CONSTRAINT recurrsalesorderdetails_pkey PRIMARY KEY (recurrorderno, stkcode);
+
+
+--
+-- TOC entry 387 (OID 45471)
+-- Name: accountsection_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY accountsection
+    ADD CONSTRAINT accountsection_pkey PRIMARY KEY (sectionid);
+
+
+--
+-- TOC entry 388 (OID 45473)
+-- Name: securityheadings_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY securityroles
+    ADD CONSTRAINT securityheadings_pkey PRIMARY KEY (secroleid);
+
+
+--
+-- TOC entry 389 (OID 45475)
+-- Name: securitytokens_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY securitytokens
+    ADD CONSTRAINT securitytokens_pkey PRIMARY KEY (tokenid);
+
+
+--
+-- TOC entry 390 (OID 45477)
+-- Name: securitygroups_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY securitygroups
+    ADD CONSTRAINT securitygroups_pkey PRIMARY KEY (secroleid, tokenid);
+
+
+--
+-- TOC entry 391 (OID 45479)
+-- Name: paymentmethods_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY paymentmethods
+    ADD CONSTRAINT paymentmethods_pkey PRIMARY KEY (paymentname);
+
+
+--
+-- TOC entry 392 (OID 45481)
+-- Name: unitsofmeasure_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY unitsofmeasure
+    ADD CONSTRAINT unitsofmeasure_pkey PRIMARY KEY (unitname);
+
+
+--
+-- TOC entry 393 (OID 45483)
+-- Name: config_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY config
+    ADD CONSTRAINT config_pkey PRIMARY KEY (confname);
+
+
+--
+-- TOC entry 394 (OID 45978)
+-- Name: salescat_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY salescat
+    ADD CONSTRAINT salescat_pkey PRIMARY KEY (salescatid);
+
+
+--
+-- TOC entry 448 (OID 45485)
+-- Name: cnt001254; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY chartmaster
+    ADD CONSTRAINT cnt001254 FOREIGN KEY (group_) REFERENCES accountgroups(groupname);
+
+
+--
+-- TOC entry 449 (OID 45489)
+-- Name: cnt001389; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY taxauthorities
+    ADD CONSTRAINT cnt001389 FOREIGN KEY (taxglcode) REFERENCES chartmaster(accountcode);
+
+
+--
+-- TOC entry 450 (OID 45493)
+-- Name: cnt001390; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY taxauthorities
+    ADD CONSTRAINT cnt001390 FOREIGN KEY (purchtaxglaccount) REFERENCES chartmaster(accountcode);
+
+
+--
+-- TOC entry 451 (OID 45497)
+-- Name: cnt001296; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY gltrans
+    ADD CONSTRAINT cnt001296 FOREIGN KEY (account) REFERENCES chartmaster(accountcode);
+
+
+--
+-- TOC entry 452 (OID 45501)
+-- Name: cnt001297; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY gltrans
+    ADD CONSTRAINT cnt001297 FOREIGN KEY ("type") REFERENCES systypes(typeid);
+
+
+--
+-- TOC entry 453 (OID 45505)
+-- Name: cnt001298; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY gltrans
+    ADD CONSTRAINT cnt001298 FOREIGN KEY (periodno) REFERENCES periods(periodno);
+
+
+--
+-- TOC entry 454 (OID 45509)
+-- Name: cnt001331; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY reportcolumns
+    ADD CONSTRAINT cnt001331 FOREIGN KEY (reportid) REFERENCES reportheaders(reportid);
+
+
+--
+-- TOC entry 455 (OID 45513)
+-- Name: cnt001334; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY salesanalysis
+    ADD CONSTRAINT cnt001334 FOREIGN KEY (periodno) REFERENCES periods(periodno);
+
+
+--
+-- TOC entry 456 (OID 45517)
+-- Name: cnt001287; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY discountmatrix
+    ADD CONSTRAINT cnt001287 FOREIGN KEY (salestype) REFERENCES salestypes(typeabbrev);
+
+
+--
+-- TOC entry 457 (OID 45521)
+-- Name: cnt001381; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY suppliers
+    ADD CONSTRAINT cnt001381 FOREIGN KEY (currcode) REFERENCES currencies(currabrev);
+
+
+--
+-- TOC entry 458 (OID 45525)
+-- Name: cnt001382; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY suppliers
+    ADD CONSTRAINT cnt001382 FOREIGN KEY (paymentterms) REFERENCES paymentterms(termsindicator);
+
+
+--
+-- TOC entry 459 (OID 45529)
+-- Name: cnt001383; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY suppliers
+    ADD CONSTRAINT cnt001383 FOREIGN KEY (taxauthority) REFERENCES taxauthorities(taxid);
+
+
+--
+-- TOC entry 460 (OID 45533)
+-- Name: cnt001350; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY shipments
+    ADD CONSTRAINT cnt001350 FOREIGN KEY (supplierid) REFERENCES suppliers(supplierid);
+
+
+--
+-- TOC entry 461 (OID 45537)
+-- Name: cnt001347; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY shipmentcharges
+    ADD CONSTRAINT cnt001347 FOREIGN KEY (shiptref) REFERENCES shipments(shiptref);
+
+
+--
+-- TOC entry 462 (OID 45541)
+-- Name: cnt001348; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY shipmentcharges
+    ADD CONSTRAINT cnt001348 FOREIGN KEY (transtype) REFERENCES systypes(typeid);
+
+
+--
+-- TOC entry 463 (OID 45545)
+-- Name: cnt001293; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY freightcosts
+    ADD CONSTRAINT cnt001293 FOREIGN KEY (locationfrom) REFERENCES locations(loccode);
+
+
+--
+-- TOC entry 464 (OID 45549)
+-- Name: cnt001294; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY freightcosts
+    ADD CONSTRAINT cnt001294 FOREIGN KEY (shipperid) REFERENCES shippers(shipper_id);
+
+
+--
+-- TOC entry 465 (OID 45553)
+-- Name: cnt001360; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockmaster
+    ADD CONSTRAINT cnt001360 FOREIGN KEY (categoryid) REFERENCES stockcategory(categoryid);
+
+
+--
+-- TOC entry 466 (OID 45557)
+-- Name: cnt001357; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockcounts
+    ADD CONSTRAINT cnt001357 FOREIGN KEY (stockid) REFERENCES stockmaster(stockid);
+
+
+--
+-- TOC entry 467 (OID 45561)
+-- Name: cnt001358; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockcounts
+    ADD CONSTRAINT cnt001358 FOREIGN KEY (loccode) REFERENCES locations(loccode);
+
+
+--
+-- TOC entry 468 (OID 45565)
+-- Name: cnt001354; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockcheckfreeze
+    ADD CONSTRAINT cnt001354 FOREIGN KEY (stockid) REFERENCES stockmaster(stockid);
+
+
+--
+-- TOC entry 469 (OID 45569)
+-- Name: cnt001355; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockcheckfreeze
+    ADD CONSTRAINT cnt001355 FOREIGN KEY (loccode) REFERENCES locations(loccode);
+
+
+--
+-- TOC entry 470 (OID 45573)
+-- Name: cnt001319; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY prices
+    ADD CONSTRAINT cnt001319 FOREIGN KEY (stockid) REFERENCES stockmaster(stockid);
+
+
+--
+-- TOC entry 471 (OID 45577)
+-- Name: cnt001320; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY prices
+    ADD CONSTRAINT cnt001320 FOREIGN KEY (currabrev) REFERENCES currencies(currabrev);
+
+
+--
+-- TOC entry 472 (OID 45581)
+-- Name: cnt001321; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY prices
+    ADD CONSTRAINT cnt001321 FOREIGN KEY (typeabbrev) REFERENCES salestypes(typeabbrev);
+
+
+--
+-- TOC entry 473 (OID 45585)
+-- Name: cnt001323; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY purchdata
+    ADD CONSTRAINT cnt001323 FOREIGN KEY (stockid) REFERENCES stockmaster(stockid);
+
+
+--
+-- TOC entry 474 (OID 45589)
+-- Name: cnt001324; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY purchdata
+    ADD CONSTRAINT cnt001324 FOREIGN KEY (supplierno) REFERENCES suppliers(supplierid);
+
+
+--
+-- TOC entry 475 (OID 45593)
+-- Name: cnt001305; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY locstock
+    ADD CONSTRAINT cnt001305 FOREIGN KEY (loccode) REFERENCES locations(loccode);
+
+
+--
+-- TOC entry 476 (OID 45597)
+-- Name: cnt001306; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY locstock
+    ADD CONSTRAINT cnt001306 FOREIGN KEY (stockid) REFERENCES stockmaster(stockid);
+
+
+--
+-- TOC entry 477 (OID 45601)
+-- Name: cnt001308; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY loctransfers
+    ADD CONSTRAINT cnt001308 FOREIGN KEY (shiploc) REFERENCES locations(loccode);
+
+
+--
+-- TOC entry 478 (OID 45605)
+-- Name: cnt001309; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY loctransfers
+    ADD CONSTRAINT cnt001309 FOREIGN KEY (recloc) REFERENCES locations(loccode);
+
+
+--
+-- TOC entry 479 (OID 45609)
+-- Name: cnt001310; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY loctransfers
+    ADD CONSTRAINT cnt001310 FOREIGN KEY (stockid) REFERENCES stockmaster(stockid);
+
+
+--
+-- TOC entry 480 (OID 45613)
+-- Name: cnt001362; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockmoves
+    ADD CONSTRAINT cnt001362 FOREIGN KEY (stockid) REFERENCES stockmaster(stockid);
+
+
+--
+-- TOC entry 481 (OID 45617)
+-- Name: cnt001363; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockmoves
+    ADD CONSTRAINT cnt001363 FOREIGN KEY ("type") REFERENCES systypes(typeid);
+
+
+--
+-- TOC entry 482 (OID 45621)
+-- Name: cnt001364; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockmoves
+    ADD CONSTRAINT cnt001364 FOREIGN KEY (loccode) REFERENCES locations(loccode);
+
+
+--
+-- TOC entry 483 (OID 45625)
+-- Name: cnt001365; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockmoves
+    ADD CONSTRAINT cnt001365 FOREIGN KEY (prd) REFERENCES periods(periodno);
+
+
+--
+-- TOC entry 484 (OID 45629)
+-- Name: cnt001367; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockserialitems
+    ADD CONSTRAINT cnt001367 FOREIGN KEY (stockid) REFERENCES stockmaster(stockid);
+
+
+--
+-- TOC entry 485 (OID 45633)
+-- Name: cnt001368; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockserialitems
+    ADD CONSTRAINT cnt001368 FOREIGN KEY (loccode) REFERENCES locations(loccode);
+
+
+--
+-- TOC entry 486 (OID 45637)
+-- Name: cnt001370; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockserialmoves
+    ADD CONSTRAINT cnt001370 FOREIGN KEY (stockmoveno) REFERENCES stockmoves(stkmoveno);
+
+
+--
+-- TOC entry 487 (OID 45641)
+-- Name: cnt001376; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY supptrans
+    ADD CONSTRAINT cnt001376 FOREIGN KEY ("type") REFERENCES systypes(typeid);
+
+
+--
+-- TOC entry 488 (OID 45645)
+-- Name: cnt001377; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY supptrans
+    ADD CONSTRAINT cnt001377 FOREIGN KEY (supplierno) REFERENCES suppliers(supplierid);
+
+
+--
+-- TOC entry 489 (OID 45649)
+-- Name: cnt001373; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY suppallocs
+    ADD CONSTRAINT cnt001373 FOREIGN KEY (transid_allocfrom) REFERENCES supptrans(id);
+
+
+--
+-- TOC entry 490 (OID 45653)
+-- Name: cnt001374; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY suppallocs
+    ADD CONSTRAINT cnt001374 FOREIGN KEY (transid_allocto) REFERENCES supptrans(id);
+
+
+--
+-- TOC entry 491 (OID 45657)
+-- Name: cnt001379; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY suppliercontacts
+    ADD CONSTRAINT cnt001379 FOREIGN KEY (supplierid) REFERENCES suppliers(supplierid);
+
+
+--
+-- TOC entry 492 (OID 45661)
+-- Name: cnt001328; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY purchorders
+    ADD CONSTRAINT cnt001328 FOREIGN KEY (supplierno) REFERENCES suppliers(supplierid);
+
+
+--
+-- TOC entry 493 (OID 45665)
+-- Name: cnt001329; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY purchorders
+    ADD CONSTRAINT cnt001329 FOREIGN KEY (intostocklocation) REFERENCES locations(loccode);
+
+
+--
+-- TOC entry 494 (OID 45669)
+-- Name: cnt001326; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY purchorderdetails
+    ADD CONSTRAINT cnt001326 FOREIGN KEY (orderno) REFERENCES purchorders(orderno);
+
+
+--
+-- TOC entry 495 (OID 45673)
+-- Name: cnt001300; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY grns
+    ADD CONSTRAINT cnt001300 FOREIGN KEY (supplierid) REFERENCES suppliers(supplierid);
+
+
+--
+-- TOC entry 496 (OID 45677)
+-- Name: cnt001301; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY grns
+    ADD CONSTRAINT cnt001301 FOREIGN KEY (podetailitem) REFERENCES purchorderdetails(podetailitem);
+
+
+--
+-- TOC entry 497 (OID 45681)
+-- Name: cnt001386; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY taxauthlevels
+    ADD CONSTRAINT cnt001386 FOREIGN KEY (taxauthority) REFERENCES taxauthorities(taxid);
+
+
+--
+-- TOC entry 498 (OID 45685)
+-- Name: cnt001387; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY taxauthlevels
+    ADD CONSTRAINT cnt001387 FOREIGN KEY (dispatchtaxauthority) REFERENCES taxauthorities(taxid);
+
+
+--
+-- TOC entry 499 (OID 45689)
+-- Name: cnt001400; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY www_users
+    ADD CONSTRAINT cnt001400 FOREIGN KEY (defaultlocation) REFERENCES locations(loccode);
+
+
+--
+-- TOC entry 500 (OID 45693)
+-- Name: cnt001402; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY workcentres
+    ADD CONSTRAINT cnt001402 FOREIGN KEY ("location") REFERENCES locations(loccode);
+
+
+--
+-- TOC entry 501 (OID 45697)
+-- Name: cnt001404; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY worksorders
+    ADD CONSTRAINT cnt001404 FOREIGN KEY (loccode) REFERENCES locations(loccode);
+
+
+--
+-- TOC entry 502 (OID 45701)
+-- Name: cnt001405; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY worksorders
+    ADD CONSTRAINT cnt001405 FOREIGN KEY (stockid) REFERENCES stockmaster(stockid);
+
+
+--
+-- TOC entry 503 (OID 45705)
+-- Name: cnt001392; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY woissues
+    ADD CONSTRAINT cnt001392 FOREIGN KEY (woref) REFERENCES worksorders(woref);
+
+
+--
+-- TOC entry 504 (OID 45709)
+-- Name: cnt001393; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY woissues
+    ADD CONSTRAINT cnt001393 FOREIGN KEY (stockid) REFERENCES stockmaster(stockid);
+
+
+--
+-- TOC entry 505 (OID 45713)
+-- Name: cnt001394; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY woissues
+    ADD CONSTRAINT cnt001394 FOREIGN KEY (workcentre) REFERENCES workcentres(code);
+
+
+--
+-- TOC entry 506 (OID 45717)
+-- Name: cnt001396; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY worequirements
+    ADD CONSTRAINT cnt001396 FOREIGN KEY (woref) REFERENCES worksorders(woref);
+
+
+--
+-- TOC entry 507 (OID 45721)
+-- Name: cnt001397; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY worequirements
+    ADD CONSTRAINT cnt001397 FOREIGN KEY (stockid) REFERENCES stockmaster(stockid);
+
+
+--
+-- TOC entry 508 (OID 45725)
+-- Name: cnt001398; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY worequirements
+    ADD CONSTRAINT cnt001398 FOREIGN KEY (wrkcentre) REFERENCES workcentres(code);
+
+
+--
+-- TOC entry 509 (OID 45729)
+-- Name: cnt001238; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY bom
+    ADD CONSTRAINT cnt001238 FOREIGN KEY (parent) REFERENCES stockmaster(stockid);
+
+
+--
+-- TOC entry 510 (OID 45733)
+-- Name: cnt001239; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY bom
+    ADD CONSTRAINT cnt001239 FOREIGN KEY (component) REFERENCES stockmaster(stockid);
+
+
+--
+-- TOC entry 511 (OID 45737)
+-- Name: cnt001240; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY bom
+    ADD CONSTRAINT cnt001240 FOREIGN KEY (workcentreadded) REFERENCES workcentres(code);
+
+
+--
+-- TOC entry 512 (OID 45741)
+-- Name: cnt001241; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY bom
+    ADD CONSTRAINT cnt001241 FOREIGN KEY (loccode) REFERENCES locations(loccode);
+
+
+--
+-- TOC entry 513 (OID 45745)
+-- Name: cnt001243; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY bankaccounts
+    ADD CONSTRAINT cnt001243 FOREIGN KEY (accountcode) REFERENCES chartmaster(accountcode);
+
+
+--
+-- TOC entry 514 (OID 45749)
+-- Name: cnt001245; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY banktrans
+    ADD CONSTRAINT cnt001245 FOREIGN KEY ("type") REFERENCES systypes(typeid);
+
+
+--
+-- TOC entry 515 (OID 45753)
+-- Name: cnt001246; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY banktrans
+    ADD CONSTRAINT cnt001246 FOREIGN KEY (bankact) REFERENCES bankaccounts(accountcode);
+
+
+--
+-- TOC entry 516 (OID 45757)
+-- Name: cnt001248; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY buckets
+    ADD CONSTRAINT cnt001248 FOREIGN KEY (workcentre) REFERENCES workcentres(code);
+
+
+--
+-- TOC entry 517 (OID 45761)
+-- Name: cnt001251; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY chartdetails
+    ADD CONSTRAINT cnt001251 FOREIGN KEY (accountcode) REFERENCES chartmaster(accountcode);
+
+
+--
+-- TOC entry 518 (OID 45765)
+-- Name: cnt001252; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY chartdetails
+    ADD CONSTRAINT cnt001252 FOREIGN KEY (period) REFERENCES periods(periodno);
+
+
+--
+-- TOC entry 519 (OID 45769)
+-- Name: cnt001257; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY contractbom
+    ADD CONSTRAINT cnt001257 FOREIGN KEY (workcentreadded) REFERENCES workcentres(code);
+
+
+--
+-- TOC entry 520 (OID 45773)
+-- Name: cnt001258; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY contractbom
+    ADD CONSTRAINT cnt001258 FOREIGN KEY (loccode) REFERENCES locations(loccode);
+
+
+--
+-- TOC entry 521 (OID 45777)
+-- Name: cnt001259; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY contractbom
+    ADD CONSTRAINT cnt001259 FOREIGN KEY (component) REFERENCES stockmaster(stockid);
+
+
+--
+-- TOC entry 522 (OID 45781)
+-- Name: cnt001282; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY debtorsmaster
+    ADD CONSTRAINT cnt001282 FOREIGN KEY (holdreason) REFERENCES holdreasons(reasoncode);
+
+
+--
+-- TOC entry 523 (OID 45785)
+-- Name: cnt001283; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY debtorsmaster
+    ADD CONSTRAINT cnt001283 FOREIGN KEY (currcode) REFERENCES currencies(currabrev);
+
+
+--
+-- TOC entry 524 (OID 45789)
+-- Name: cnt001284; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY debtorsmaster
+    ADD CONSTRAINT cnt001284 FOREIGN KEY (paymentterms) REFERENCES paymentterms(termsindicator);
+
+
+--
+-- TOC entry 525 (OID 45793)
+-- Name: cnt001285; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY debtorsmaster
+    ADD CONSTRAINT cnt001285 FOREIGN KEY (salestype) REFERENCES salestypes(typeabbrev);
+
+
+--
+-- TOC entry 526 (OID 45797)
+-- Name: cnt001271; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY custbranch
+    ADD CONSTRAINT cnt001271 FOREIGN KEY (debtorno) REFERENCES debtorsmaster(debtorno);
+
+
+--
+-- TOC entry 527 (OID 45801)
+-- Name: cnt001273; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY custbranch
+    ADD CONSTRAINT cnt001273 FOREIGN KEY (salesman) REFERENCES salesman(salesmancode);
+
+
+--
+-- TOC entry 528 (OID 45805)
+-- Name: cnt001274; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY custbranch
+    ADD CONSTRAINT cnt001274 FOREIGN KEY (defaultlocation) REFERENCES locations(loccode);
+
+
+--
+-- TOC entry 529 (OID 45809)
+-- Name: cnt001275; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY custbranch
+    ADD CONSTRAINT cnt001275 FOREIGN KEY (taxauthority) REFERENCES taxauthorities(taxid);
+
+
+--
+-- TOC entry 530 (OID 45813)
+-- Name: cnt001276; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY custbranch
+    ADD CONSTRAINT cnt001276 FOREIGN KEY (defaultshipvia) REFERENCES shippers(shipper_id);
+
+
+--
+-- TOC entry 532 (OID 45817)
+-- Name: cnt001263; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY contracts
+    ADD CONSTRAINT cnt001263 FOREIGN KEY (debtorno, branchcode) REFERENCES custbranch(debtorno, branchcode);
+
+
+--
+-- TOC entry 533 (OID 45821)
+-- Name: cnt001264; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY contracts
+    ADD CONSTRAINT cnt001264 FOREIGN KEY (categoryid) REFERENCES stockcategory(categoryid);
+
+
+--
+-- TOC entry 534 (OID 45825)
+-- Name: cnt001265; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY contracts
+    ADD CONSTRAINT cnt001265 FOREIGN KEY (typeabbrev) REFERENCES salestypes(typeabbrev);
+
+
+--
+-- TOC entry 535 (OID 45829)
+-- Name: cnt001261; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY contractreqts
+    ADD CONSTRAINT cnt001261 FOREIGN KEY (contract) REFERENCES contracts(contractref);
+
+
+--
+-- TOC entry 536 (OID 45833)
+-- Name: cnt001340; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY salesorders
+    ADD CONSTRAINT cnt001340 FOREIGN KEY (branchcode, debtorno) REFERENCES custbranch(branchcode, debtorno);
+
+
+--
+-- TOC entry 537 (OID 45837)
+-- Name: cnt001341; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY salesorders
+    ADD CONSTRAINT cnt001341 FOREIGN KEY (shipvia) REFERENCES shippers(shipper_id);
+
+
+--
+-- TOC entry 538 (OID 45841)
+-- Name: cnt001342; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY salesorders
+    ADD CONSTRAINT cnt001342 FOREIGN KEY (fromstkloc) REFERENCES locations(loccode);
+
+
+--
+-- TOC entry 539 (OID 45845)
+-- Name: cnt001313; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY orderdeliverydifferenceslog
+    ADD CONSTRAINT cnt001313 FOREIGN KEY (stockid) REFERENCES stockmaster(stockid);
+
+
+--
+-- TOC entry 540 (OID 45849)
+-- Name: cnt001314; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY orderdeliverydifferenceslog
+    ADD CONSTRAINT cnt001314 FOREIGN KEY (debtorno, branch) REFERENCES custbranch(debtorno, branchcode);
+
+
+--
+-- TOC entry 541 (OID 45853)
+-- Name: cnt001315; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY orderdeliverydifferenceslog
+    ADD CONSTRAINT cnt001315 FOREIGN KEY (orderno) REFERENCES salesorders(orderno);
+
+
+--
+-- TOC entry 542 (OID 45857)
+-- Name: cnt001337; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY salesorderdetails
+    ADD CONSTRAINT cnt001337 FOREIGN KEY (orderno) REFERENCES salesorders(orderno);
+
+
+--
+-- TOC entry 543 (OID 45861)
+-- Name: cnt001338; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY salesorderdetails
+    ADD CONSTRAINT cnt001338 FOREIGN KEY (stkcode) REFERENCES stockmaster(stockid);
+
+
+--
+-- TOC entry 544 (OID 45865)
+-- Name: cnt001278; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY debtortrans
+    ADD CONSTRAINT cnt001278 FOREIGN KEY (debtorno) REFERENCES debtorsmaster(debtorno);
+
+
+--
+-- TOC entry 545 (OID 45869)
+-- Name: cnt001279; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY debtortrans
+    ADD CONSTRAINT cnt001279 FOREIGN KEY ("type") REFERENCES systypes(typeid);
+
+
+--
+-- TOC entry 546 (OID 45873)
+-- Name: cnt001280; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY debtortrans
+    ADD CONSTRAINT cnt001280 FOREIGN KEY (prd) REFERENCES periods(periodno);
+
+
+--
+-- TOC entry 547 (OID 45877)
+-- Name: cnt001268; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY custallocns
+    ADD CONSTRAINT cnt001268 FOREIGN KEY (transid_allocfrom) REFERENCES debtortrans(id);
+
+
+--
+-- TOC entry 548 (OID 45881)
+-- Name: cnt001269; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY custallocns
+    ADD CONSTRAINT cnt001269 FOREIGN KEY (transid_allocto) REFERENCES debtortrans(id);
+
+
+--
+-- TOC entry 531 (OID 45885)
+-- Name: cnt001272; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY custbranch
+    ADD CONSTRAINT cnt001272 FOREIGN KEY (area) REFERENCES areas(areacode);
+
+
+--
+-- TOC entry 549 (OID 45889)
+-- Name: recurrorderno; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY recurrsalesorderdetails
+    ADD CONSTRAINT recurrorderno FOREIGN KEY (recurrorderno) REFERENCES recurringsalesorders(recurrorderno);
+
+
+--
+-- TOC entry 550 (OID 45893)
+-- Name: recurrorderstkcode; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY recurrsalesorderdetails
+    ADD CONSTRAINT recurrorderstkcode FOREIGN KEY (stkcode) REFERENCES stockmaster(stockid);
+
+
+--
+-- TOC entry 447 (OID 45897)
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY accountgroups
+    ADD CONSTRAINT "$1" FOREIGN KEY (sectioninaccounts) REFERENCES accountsection(sectionid);
+
+
+--
+-- TOC entry 551 (OID 45901)
+-- Name: securitygroups_secgroupid_fk; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY securitygroups
+    ADD CONSTRAINT securitygroups_secgroupid_fk FOREIGN KEY (secroleid) REFERENCES securityroles(secroleid);
+
+
+--
+-- TOC entry 552 (OID 45905)
+-- Name: securitygroups_tokenid_fk; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY securitygroups
+    ADD CONSTRAINT securitygroups_tokenid_fk FOREIGN KEY (tokenid) REFERENCES securitytokens(tokenid);
+
+
+--
+-- TOC entry 553 (OID 45985)
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY salescatprod
+    ADD CONSTRAINT "$1" FOREIGN KEY (salescatid) REFERENCES salescat(salescatid);
+
+
+--
+-- TOC entry 554 (OID 45989)
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY salescatprod
+    ADD CONSTRAINT "$2" FOREIGN KEY (stockid) REFERENCES stockmaster(stockid);
+
+
+--
+-- TOC entry 3 (OID 2200)
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON SCHEMA public IS 'Standard public schema';
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 2 (OID 36747)
+-- Name: accountsection; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY accountsection (sectionid, sectionname) FROM stdin;
+1	Income
+2	Cost of Sales
+10	Fixed Assets
+20	Accounts Receivable
+30	Amounts Payable
+5	Overheads
+50	Financed By
+\.
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 2 (OID 35780)
+-- Name: accountgroups; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY accountgroups (groupname, sectioninaccounts, pandl, sequenceintb) FROM stdin;
+Accounts Payable	30	0	80
+Accounts Receivable	20	0	74
+Bank	20	0	76
+Cost of Sales	2	1	15
+Dividents Paid	5	1	35
+Expenses	5	1	25
+Goodwill or Intangable Assets	20	0	71
+Inventory - W.I.P	20	0	73
+Investments	20	0	70
+Long Term Liabilities	30	0	55
+Manufacturing Cost Adj	2	1	18
+Non Distributable Reserve	50	0	48
+Normal Taxation	5	1	30
+Other Balance Sheet Accs	30	0	99
+Other Current Assets	20	0	78
+Other Current Liabilities	30	0	88
+Other Income	5	1	20
+Other Income / Expenses	5	1	1
+Other Long Term Liabilities	30	0	58
+Provision for Expenses	30	0	90
+Retained Income/(Loss)	50	0	45
+Sales	1	1	10
+Share Capital	50	0	40
+Shareholders Loans	30	0	50
+VAT / Tax Payable	30	0	85
+FA-Land and Buildings	10	0	60
+FA-Plant and Machinery	10	0	61
+FA-Motor Vehicles	10	0	62
+FA-Computer Equipment	10	0	63
+FA-Office Equipment	10	0	64
+FA-Furniture and Fittings	10	0	65
+FA-Other Assets - 1	10	0	66
+Inventory - on Hand	20	0	72
+\.
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 2 (OID 35801)
+-- Name: chartmaster; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY chartmaster (accountcode, accountname, group_) FROM stdin;
+100000	Sales / Discount / Service Fee Income	Sales
+200000	Operating Cost / Cost of Sales / Purchases	Cost of Sales
+210000	Inv Adjustment / Other Direct Operating Costs	Cost of Sales
+220000	Purchase Variance	Cost of Sales
+230000	Freight on Goods Purchased	Cost of Sales
+235000	Packing Costs	Cost of Sales
+240000	Manufacturing Cost / Recovery Account	Manufacturing Cost Adj
+240010	Labour Manufacture Cost / Recovery	Manufacturing Cost Adj
+240020	Direct Manufacture Cost / Recovery	Manufacturing Cost Adj
+240030	Other Manufacture Cost / Recovery	Manufacturing Cost Adj
+250000	Pft/Loss on Foreign Currency	Cost of Sales
+270000	Discount Received for Cash	Other Income
+275000	Interest Received	Other Income
+280000	Pft/Loss on Sale of Non Current Assets	Other Income
+285000	Bad Debt Recovery	Other Income
+290000	Sundry Income	Other Income
+300000	Accounting Fees	Expenses
+305000	Advertising and Promotions	Expenses
+310000	Accounting / Audit Fees	Expenses
+315000	Bad Debts	Expenses
+320000	Bank Charges	Expenses
+325000	Cleaning	Expenses
+330000	Computer Expenses	Expenses
+335000	Consulting Fees	Expenses
+340000	Courier & Postage	Expenses
+345000	Depreciation	Expenses
+350000	Directors Fees / Members Remuneration	Expenses
+355000	Discount Allowed for Cash	Expenses
+360000	Donations	Expenses
+365000	Electricity and Water	Expenses
+370000	Entertainment Expenses	Expenses
+375000	Finance Charges	Expenses
+380000	General Expenses	Expenses
+380010	General Expenses - Gifts	Expenses
+380020	General Expenses - Fines	Expenses
+385000	Insurance	Expenses
+390000	Interest Paid	Expenses
+395000	Leasing Charges	Expenses
+400000	Legal Fees	Expenses
+405000	Levies	Expenses
+415000	Motor Vehicle Expenses	Expenses
+415010	Motor Vehicle - Perol and Oil	Expenses
+415020	Motor Vehicle - Repairs and Maintenance	Expenses
+415030	Motor Vehicle - Insurance and Licence	Expenses
+415040	Motor Vehicle - Parking and Toll	Expenses
+420000	Printing and Stationery	Expenses
+430000	Rent Paid	Expenses
+435000	Repairs and Maintenance	Expenses
+438000	Royalty Expenses	Expenses
+440000	Salaries and Wages	Expenses
+445000	Staff Training	Expenses
+450000	Staff Welfare	Expenses
+455000	Subscriptions	Expenses
+460000	Telephone and Fax	Expenses
+465000	Travel - Abroad	Expenses
+465010	Travel - Abroad - Travelling	Expenses
+465020	Travel - Abroad - Accommodation and subsistance	Expenses
+466000	Travel - Local	Expenses
+466010	Travel - Local - Travelling	Expenses
+466020	Travel - Local - Accommodation and subsistance	Expenses
+480000	Normal Taxation	Normal Taxation
+485000	Deferred Taxation	Normal Taxation
+490000	Dividends Declared / Paid	Dividents Paid
+510000	Share Capital / Members Contribution	Share Capital
+520000	Retained Income / (Accumulated Loss)	Retained Income/(Loss)
+540000	Shareholders / Directors / Members Loans	Shareholders Loans
+550000	Long Term Liabilities	Long Term Liabilities
+560000	Instalment Sale Creditors	Other Long Term Liabilities
+570000	Deferred Taxation Provision	Other Long Term Liabilities
+610000	Land and Buildings - Net Value	FA-Land and Buildings
+610010	Land and Buildings - at Cost	FA-Land and Buildings
+610020	Land and Buildings - Accum Depreciation	FA-Land and Buildings
+615000	Plant and Machinery - Net Value	FA-Plant and Machinery
+615010	Plant and Machinery - at Cost	FA-Plant and Machinery
+615020	Plant and Machinery - Accum Depreciation	FA-Plant and Machinery
+620000	Motor Vehicles - Net Value	FA-Motor Vehicles
+620010	Motor Vehicles - at Cost	FA-Motor Vehicles
+620020	Motor Vehicles - Accum Depreciation	FA-Motor Vehicles
+625000	Computer Equipment - Net Value	FA-Computer Equipment
+625010	Computer Equipment - at Cost	FA-Computer Equipment
+625020	Computer Equipment - Accum Depreciation	FA-Computer Equipment
+630000	Office Equipment - Net Value	FA-Office Equipment
+630010	Office Equipment - at Cost	FA-Office Equipment
+630020	Office Equipment - Accum Depreciation	FA-Office Equipment
+635000	Furniture and Fittings - Net Value	FA-Furniture and Fittings
+635010	Furniture and Fittings - at Cost	FA-Furniture and Fittings
+635020	Furniture and Fittings - Accum Depreciation	FA-Furniture and Fittings
+660000	Other Fixed Assets - Net Value	FA-Other Assets - 1
+660010	Other Fixed Assets - at Cost	FA-Other Assets - 1
+660020	Other Fixed Assets - Accum Depreciation	FA-Other Assets - 1
+700000	Goodwill or Intangable Assets	Goodwill or Intangable Assets
+710000	Investments	Investments
+710100	Listed Shares - at Cost	Investments
+710200	Unlisted Shares - at Cost	Investments
+720000	Shares in Subsidiary Companies	Investments
+740000	Loans To /(From) Subsidiary Companies	Investments
+750000	Inventory Control - Raw Materials	Inventory - on Hand
+760000	Inventory Control - W.I.P / Sub Assembly	Inventory - W.I.P
+770000	Inventory Control - Finished Goods / Other Assets	Inventory - on Hand
+800000	Customer Control Account	Accounts Receivable
+805000	Less:Provision For Doubtful Debts	Accounts Receivable
+810000	POS Cash Control	Other Current Assets
+820000	Sundry Customers	Other Current Assets
+820010	Prepayments / Deferred Expenses	Other Current Assets
+820020	Staff Loans	Other Current Assets
+840000	Petty Cash	Bank
+841000	Bank Account 1	Bank
+842000	Bank Account 2	Bank
+900000	Supplier Control Account	Accounts Payable
+910000	GRN Accrual Account	Accounts Payable
+920000	Sundry Suppliers	Other Current Liabilities
+920010	Accounting / Audit Fee Accrual	Other Current Liabilities
+920020	Other Accruals	Other Current Liabilities
+925000	Salary and Wages Control	Other Current Liabilities
+930000	Taxation Payable	Other Current Liabilities
+935000	Dividends Payable	Other Current Liabilities
+940000	Provision for Future Expenses	Provision for Expenses
+940010	Provision for Insurance	Provision for Expenses
+940020	Provision for Salary Bonus	Provision for Expenses
+950000	VAT / Tax Control Account	VAT / Tax Payable
+951000	VAT / Tax Provision Account	VAT / Tax Payable
+999000	Opening Balance / Suspense Account	Other Current Liabilities
+1	Default Sales and COGS	Sales
+215000	Inv Count Variance / Other Indirect Operating Cost	Cost of Sales
+\.
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 2 (OID 36437)
+-- Name: bankaccounts; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY bankaccounts (accountcode, bankaccountname, bankaccountnumber, bankaddress) FROM stdin;
+841000	Bank Account Name	Account No	Address
+840000	Petty Cash	N/A	N/A
+\.
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 2 (OID 35820)
+-- Name: companies; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY companies (coycode, coyname, gstno, companynumber, postaladdress, regoffice1, regoffice2, regoffice3, telephone, fax, email, currencydefault, debtorsact, pytdiscountact, creditorsact, payrollact, grnact, exchangediffact, purchasesexchangediffact, retainedearnings, gllink_debtors, gllink_creditors, gllink_stock, freightact) FROM stdin;
+1	webERP Demo		0	123 no name road	12 Downing Street,	Wagga Wagga	Victoria	03 45444 5442 	03 54444 45454		ZAR	800000	100000	900000	925000	910000	250000	220000	520000	1	1	1	340000
+\.
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 2 (OID 35750)
+-- Name: currencies; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY currencies (currency, currabrev, country, hundredsname, rate) FROM stdin;
+Rand	ZAR	South Africa	cents	1.0000
+Euros Europe	EUR	European Union	cents	2.4540
+\.
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 2 (OID 35742)
+-- Name: holdreasons; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY holdreasons (reasoncode, reasondescription, dissallowinvoices) FROM stdin;
+20	Watch	0
+30	No more work until payment rec	1
+1	Good History	0
+51	In liquidation	1
+\.
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 2 (OID 35920)
+-- Name: locations; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY locations (loccode, locationname, deladd1, deladd2, deladd3, tel, fax, email, contact, taxauthority) FROM stdin;
+CPT	Cape Town	na	na	na	na	na	weberp@paradise.net.nz	na	1
+SYD	Sydney						weberp@paradise.net.nz	Eric Von Hammer	1
+\.
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 2 (OID 35760)
+-- Name: paymentterms; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY paymentterms (termsindicator, terms, daysbeforedue, dayinfollowingmonth) FROM stdin;
+7	Payment due within 7 days	7	0
+20	Due 20th Of the Following Month	0	22
+30	Due By End Of The Following Month	0	30
+CA	Cash Only	0	1
+\.
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 2 (OID 36028)
+-- Name: scripts; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY scripts (pageid, filename, pagedescription) FROM stdin;
+1	AccountGroups.php	Defines the groupings of general ledger accounts
+2	AgedDebtors.php	Lists customer account balances in detail or summary in selected currency
+3	AgedSuppliers.php	Lists supplier account balances in detail or summary in selected currency
+4	Areas.php	Defines the sales areas - all customers must belong to a sales area for the purposes of sales analysis
+5	BOMInquiry.php	Displays the bill of material with cost information
+6	BOMListing.php	Lists the bills of material for a selected range of items
+7	BOMs.php	Administers the bills of material for a selected item
+8	BankAccounts.php	Defines the general ledger code for bank accounts and specifies that bank transactions be created for these accounts for the purposes of reconciliation
+9	BankMatching.php	Allows payments and receipts to be matched off against bank statements
+10	BankReconciliation.php	Displays the bank reconciliation for a selected bank account
+11	COGSGLPostings.php	Defines the general ledger account to be used for cost of sales entries
+12	CompanyPreferences.php	Defines the settings applicable for the company, including name, address, tax authority reference, whether GL integration used etc.
+13	ConfirmDispatchControlled_Invoice.php	Specifies the batch references/serial numbers of items dispatched that are being invoiced
+14	ConfirmDispatch_Invoice.php	Creates sales invoices from entered sales orders based on the quantities dispatched that can be modified
+15	CreditItemsControlled.php	Specifies the batch references/serial numbers of items being credited back into stock
+16	CreditStatus.php	Defines the credit status records. Each customer account is given a credit status from this table. Some credit status records can prohibit invoicing and new orders being entered.
+17	Credit_Invoice.php	Creates a credit note based on the details of an existing invoice
+18	Currencies.php	Defines the currencies available. Each customer and supplier must be defined as transacting in one of the currencies defined here.
+19	CustEDISetup.php	Allows the set up the customer specified EDI parameters for server, email or ftp.
+20	CustWhereAlloc.php	Shows to which invoices a receipt was allocated to
+21	CustomerAllocations.php	Allows customer receipts and credit notes to be allocated to sales invoices
+22	CustomerBranches.php	Defines the details of customer branches such as delivery address and contact details - also sales area, representative etc
+23	CustomerInquiry.php	Shows the customers account transactions with balances outstanding, links available to drill down to invoice/credit note or email invoices/credit notes
+24	CustomerReceipt.php	Entry of both customer receipts against accounts receivable and also general ledger or nominal receipts
+25	CustomerTransInquiry.php	Lists in html the sequence of customer transactions, invoices, credit notes or receipts by a user entered date range
+26	Customers.php	Defines the setup of a customer account, including payment terms, billing address, credit status, currency etc
+27	DeliveryDetails.php	Used during order entry to allow the entry of delivery addresses other than the defaulted branch delivery address and information about carrier/shipping method etc
+30	EDIMessageFormat.php	Specifies the EDI message format used by a customer - administrator use only.
+31	EDIProcessOrders.php	Processes incoming EDI orders into sales orders
+32	EDISendInvoices.php	Processes invoiced EDI customer invoices into EDI messages and sends using the customers preferred method either ftp or email attachments.
+33	EmailCustTrans.php	Emails selected invoice or credit to the customer
+34	FTP_RadioBeacon.php	FTPs sales orders for dispatch to a radio beacon software enabled warehouse dispatching facility
+35	FreightCosts.php	Defines the setup of the freight cost using different shipping methods to different destinations. The system can use this information to calculate applicable freight if the items are defined with the correct kgs and cubic volume
+36	GLAccountInquiry.php	Shows the general ledger transactions for a specified account over a specified range of periods
+37	GLAccounts.php	Defines the general ledger accounts
+38	GLBalanceSheet.php	Shows the balance sheet for the company as at a specified date
+39	GLCodesInquiry.php	Shows the list of general ledger codes defined with account names and groupings
+40	GLJournal.php	Entry of general ledger journals, periods are calculated based on the date entered here
+41	GLProfit_Loss.php	Shows the profit and loss of the company for the range of periods entered
+42	GLTransInquiry.php	Shows the general ledger journal created for the sub ledger transaction specified
+43	GLTrialBalance.php	Shows the trial balance for the month and the for the period selected together with the budgeted trial balances
+44	GoodsReceived.php	Entry of items received against purchase orders
+45	GoodsReceivedControlled.php	Entry of the serial numbers or batch references for controlled items received against purchase orders
+46	InventoryPlanning.php	Creates a pdf report showing the last 4 months use of items including as a component of assemblies together with stock quantity on hand, current demand for the item and current quantity on sales order.
+47	InventoryValuation.php	Creates a pdf report showing the value of stock at standard cost for a range of product categories selected
+48	Locations.php	Defines the inventory stocking locations or warehouses
+49	Logout.php	Shows when the user logs out of webERP
+50	MailInventoryValuation.php	Meant to be run as a scheduled process to email the stock valuation off to a specified person. Creates the same stock valuation report as InventoryValuation.php
+51	MailSalesReport.php	Creates a sales analysis pdf report and emails it to the defined receipients. This script is meant to be run as a scheduled process for daily or weekly sales reporting
+144	Z_CreateChartDetails.php	Utility page to create chart detail records for all general ledger accounts and periods created - needs expert assistance in use
+52	MailSalesReport_csv.php	Creates a sales analysis report as a comma separated values (csv) file and emails it to the defined receipients. This script is meant to be run as a scheduled process for daily or weekly sales reporting
+53	OrderDetails.php	Shows the detail of a sales order
+54	OutstandingGRNs.php	Creates a pdf showing all GRNs for which there has been no purchase invoice matched off against.
+55	PDFBankingSummary.php	Creates a pdf showing the amounts entered as receipts on a specified date together with references for the purposes of banking
+56	PDFChequeListing.php	Creates a pdf showing all payments that have been made from a specified bank account over a specified period. This can be emailed to an email account defined in config.php - ie a financial controller
+57	PDFDeliveryDifferences.php	Creates a pdf report listing the delivery differences from what the customer requested as recorded in the order entry. The report calculates a percentage of order fill based on the number of orders filled in full on time
+58	PDFLowGP.php	Creates a pdf report showing the low gross profit sales made in the selected date range. The percentage of gp deemed acceptable can also be entered
+59	PDFPriceList.php	Creates a pdf of the price list applicable to a given sales type and customer. Also allows the listing of prices specific to a customer
+60	PDFStockCheckComparison.php	Creates a pdf comparing the quantites entered as counted at a given range of locations against the quantity stored as on hand as at the time a stock check was initiated.
+61	PDFStockLocTransfer.php	Creates a stock location transfer docket for the selected location transfer reference number
+62	PO_Chk_ShiptRef_JobRef.php	Checks the Shipment of JobReference number is correct during AP invoice entry
+63	PO_Header.php	Entry of a purchase order header record - date, references buyer etc
+64	PO_Items.php	Entry of a purchase order items - allows entry of items with lookup of currency cost from Purchasing Data previously entered also allows entry of nominal items against a general ledger code if the AP is integrated to the GL
+65	PO_OrderDetails.php	Purchase order inquiry shows the quantity received and invoiced of purchase order items as well as the header information
+66	PO_PDFPurchOrder.php	Creates a pdf of the selected purchase order for printing or email to one of the supplier contacts entered
+67	PO_SelectOSPurchOrder.php	Shows the outstanding purchase orders for selecting with links to receive or modify the purchase order header and items
+68	PO_SelectPurchOrder.php	Allows selection of any purchase order with links to the inquiry
+69	PaymentTerms.php	Defines the payment terms records, these can be expressed as either a number of days credit or a day in the following month. All customers and suppliers must have a corresponding payment term recorded against their account
+70	Payments.php	Entry of bank account payments either against an AP account or a general ledger payment - if the AP-GL link in company preferences is set
+71	PeriodsInquiry.php	Shows a list of all the system defined periods
+72	Prices.php	Entry of prices for a selected item also allows selection of sales type and currency for the price
+73	Prices_Customer.php	Entry of prices for a selected item and selected customer/branch. The currency and sales type is defaulted from the customer's record
+74	PrintCustOrder.php	Creates a pdf of the dispatch note - by default this is expected to be on two part pre-printed stationery to allow pickers to note discrepancies for the confirmer to update the dispatch at the time of invoicing
+75	PrintCustOrder_generic.php	Creates two copies of a laser printed dispatch note - both copies need to be written on by the pickers with any discrepancies to advise customer of any shortfall and on the office copy to ensure the correct quantites are invoiced
+76	PrintCustStatements.php	Creates a pdf for the customer statements in the selected range
+77	PrintCustTrans.php	Creates either a html invoice or credit note or a pdf. A range of invoices or credit notes can be selected also.
+78	PurchData.php	Entry of supplier purchasing data, the suppliers part reference and the suppliers currency cost of the item
+79	ReverseGRN.php	Reverses the entry of goods received - creating stock movements back out and necessary general ledger journals to effect the reversal
+80	SalesAnalReptCols.php	Entry of the definition of a sales analysis report's columns.
+81	SalesAnalRepts.php	Entry of the definition of a sales analysis report headers
+82	SalesAnalysis_UserDefined.php	Creates a pdf of a selected user defined sales analysis report
+83	SalesGLPostings.php	Defines the general ledger accounts used to post sales to based on product categories and sales areas
+84	SalesPeople.php	Defines the sales people of the business
+85	SalesTypes.php	Defines the sales types - prices are held against sales types they can be considered price lists. Sales analysis records are held by sales type too.
+86	SelectCompletedOrder.php	Allows the selection of completed sales orders for inquiries - choices to select by item code or customer
+87	SelectCreditItems.php	Entry of credit notes from scratch, selecting the items in either quick entry mode or searching for them manually
+88	SelectCustomer.php	Selection of customer - from where all customer related maintenance, transactions and inquiries start
+89	SelectGLAccount.php	Selection of general ledger account from where all general ledger account maintenance, or inquiries are initiated
+90	SelectOrderItems.php	Entry of sales order items with both quick entry and part search functions
+91	SelectProduct.php	Selection of items. All item maintenance, transactions and inquiries start with this script
+92	SelectSalesOrder.php	Selects a sales order irrespective of completed or not for inquiries
+93	SelectSupplier.php	Selects a supplier. A supplier is required to be selected before any AP transactions and before any maintenance or inquiry of the supplier
+94	ShipmentCosting.php	Shows the costing of a shipment with all the items invoice values and any shipment costs apportioned. Updating the shipment has an option to update standard costs of all items on the shipment and create any general ledger variance journals
+95	Shipments.php	Entry of shipments from outstanding purchase orders for a selected supplier - changes in the delivery date will cascade into the different purchase orders on the shipment
+96	Shippers.php	Defines the shipping methods available. Each customer branch has a default shipping method associated with it which must match a record from this table
+97	Shipt_Select.php	Selection of a shipment for displaying and modification or updating
+98	ShiptsList.php	Shows a list of all the open shipments for a selected supplier. Linked from POItems.php
+99	SpecialOrder.php	Allows for a sales order to be created and an indent order to be created on a supplier for a one off item that may never be purchased again. A dummy part is created based on the description and cost details given.
+100	StockAdjustments.php	Entry of quantity corrections to stocks in a selected location.
+101	StockAdjustmentsControlled.php	Entry of batch references or serial numbers on controlled stock items being adjusted
+102	StockCategories.php	Defines the stock categories. All items must refer to one of these categories. The category record also allows the specification of the general ledger codes where stock items are to be posted - the balance sheet account and the profit and loss effect of any adjustments and the profit and loss effect of any price variances
+103	StockCheck.php	Allows creation of a stock check file - copying the current quantites in stock for later comparison to the entered counts. Also produces a pdf for the count sheets.
+104	StockCostUpdate.php	Allows update of the standard cost of items producing general ledger journals if the company preferences stock GL interface is active
+105	StockCounts.php	Allows entry of stock counts
+106	StockLocMovements.php	Inquiry shows the Movements of all stock items for a specified location
+107	StockLocQties_csv.php	Makes a comma separated values (CSV)file of the stock item codes and quantities
+108	StockLocStatus.php	Shows the stock on hand together with outstanding sales orders and outstanding purchase orders by stock location for all items in the selected stock category
+109	StockLocTransfer.php	Entry of a bulk stock location transfer for many parts from one location to another.
+110	StockLocTransferReceive.php	Effects the transfer and creates the stock movements for a bulk stock location transfer initiated from StockLocTransfer.php
+111	StockMovements.php	Shows a list of all the stock movements for a selected item and stock location including the price at which they were sold in local currency and the price at which they were purchased for in local currency
+112	StockQties_csv.php	Makes a comma separated values (CSV)file of the stock item codes and quantities
+113	StockReorderLevel.php	Entry and review of the re-order level of items by stocking location
+114	StockSerialItems.php	Shows a list of the serial numbers or the batch references and quantities of controlled items. This inquiry is linked from the stock status inquiry
+115	StockStatus.php	Shows the stock on hand together with outstanding sales orders and outstanding purchase orders by stock location for a selected part. Has a link to show the serial numbers in stock at the location selected if the item is controlled
+116	StockTransferControlled.php	Entry of serial numbers/batch references for controlled items being received on a stock transfer. The script is used by both bulk transfers and point to point transfers
+117	StockTransfers.php	Entry of point to point stock location transfers of a single part
+118	StockUsage.php	Inquiry showing the quantity of stock used by period calculated from the sum of the stock movements over that period - by item and stock location. Also available over all locations
+119	Stocks.php	Defines an item - maintenance and addition of new parts
+120	SuppCreditGRNs.php	Entry of a supplier credit notes (debit notes) against existing GRN which have already been matched in full or in part
+121	SuppInvGRNs.php	Entry of supplier invoices against goods received
+122	SuppPaymentRun.php	Automatic creation of payment records based on calculated amounts due from AP invoices entered
+123	SuppShiptChgs.php	Entry of supplier invoices against shipments as charges against a shipment
+124	SuppTransGLAnalysis.php	Entry of supplier invoices against general ledger codes
+125	SupplierAllocations.php	Entry of allocations of supplier payments and credit notes to invoices
+126	SupplierContacts.php	Entry of supplier contacts and contact details including email addresses
+127	SupplierCredit.php	Entry of supplier credit notes (debit notes)
+128	SupplierInquiry.php	Inquiry showing invoices, credit notes and payments made to suppliers together with the amounts outstanding
+129	SupplierInvoice.php	Entry of supplier invoices
+130	Suppliers.php	Entry of new suppliers and maintenance of existing suppliers
+131	TaxAuthorities.php	Entry of tax authorities - the state intitutions that charge tax
+132	TaxAuthorityRates.php	Entry of the rates of tax applicable to the tax authority depending on the item tax level
+133	WWW_Users.php	Entry of users and security settings of users
+134	WhereUsedInquiry.php	Inquiry showing where an item is used ie all the parents where the item is a component of
+135	WorkCentres.php	Defines the various centres of work within a manufacturing company. Also the overhead and labour rates applicable to the work centre and its standard capacity
+136	WorkOrderEntry.php	Entry of new work orders
+137	WorkOrderIssue.php	Issue of materials to a work order
+138	Z_ChangeBranchCode.php	Utility to change the branch code of a customer that cascades the change through all the necessary tables
+139	Z_ChangeCustomerCode.php	Utility to change a customer code that cascades the change through all the necessary tables
+140	Z_ChangeStockCode.php	Utility to change an item code that cascades the change through all the necessary tables
+141	Z_CheckAllocationsFrom.php	
+142	Z_CheckAllocs.php	
+143	Z_CheckDebtorsControl.php	Inquiry that shows the total local currency (functional currency) balance of all customer accounts to reconcile with the general ledger debtors account
+145	Z_CreateCompany.php	Utility to insert company number 1 if not already there - actually only company 1 is used - the system is not multi-company
+146	Z_CurrencyDebtorsBalances.php	Inquiry that shows the total foreign currency together with the total local currency (functional currency) balances of all customer accounts to reconcile with the general ledger debtors account
+147	Z_CurrencySuppliersBalances.php	Inquiry that shows the total foreign currency amounts and also the local currency (functional currency) balances of all supplier accounts to reconcile with the general ledger creditors account
+148	Z_DeleteCreditNote.php	Utility to reverse a customer credit note - a desperate measure that should not be used except in extreme circumstances
+149	Z_DeleteInvoice.php	Utility to reverse a customer invoice - a desperate measure that should not be used except in extreme circumstances
+150	Z_DeleteSalesTransActions.php	Utility to delete all sales transactions, sales analysis the lot! Extreme care required!!!
+151	Z_MakeStockLocns.php	Utility to make LocStock records for all items and locations if not already set up.
+152	Z_PriceChanges.php	Utility to make bulk pricing alterations to selected sales type price lists or selected customer prices only
+153	Z_ReApplyCostToSA.php	Utility to allow the sales analysis table to be updated with the latest cost information - the sales analysis takes the cost at the time the sale was made to reconcile with the enteries made in the gl.
+154	Z_RePostGLFromPeriod.php	Utility to repost all general ledger transaction commencing from a specified period. This can take some time in busy environments. Normally GL transactions are posted automatically each time a trial balance or profit and loss account is run
+155	Z_ReverseSuppPaymentRun.php	Utility to reverse an entire Supplier payment run
+156	Z_UpdateChartDetailsBFwd.php	Utility to recalculate the ChartDetails table B/Fwd balances - extreme care!!
+157	Z_UploadForm.php	Utility to upload a file to a remote server
+158	Z_UploadResult.php	Utility to upload a file to a remote server
+159	Z_index.php	Utility menu page
+160	index.php	The main menu from where all functions available to the user are accessed by clicking on the links
+161	phpinfo.php	Details about PHP installation on the server
+162	UserSettings.php	Allows the user to change system wide defaults for the theme - appearance, the number of records to show in searches and the language to display messages in
+163	StockQuantityByDate.php	Shows the stock on hand for each item at a selected location and stock category as at a specified date
+164	PDFOrderStatus.php	Reports on sales order status by date range, by stock location and stock category - producing a pdf showing each line items and any quantites delivered
+165	Tax.php	Creates a report of the ad-valoerm tax - GST/VAT - for the period selected from accounts payable and accounts receivable data
+166	PDFCustomerList.php	Creates a report of the customer and branch information held. This report has options to print only customer branches in a specified sales area and sales person. Additional option allows to list only those customers with activity either under or over a specified amount, since a specified date.
+29	DiscountMatrix.php	Defines the rates of discount applicable to discount categories and the customer groupings to which the rates are to apply\r\n
+28	DiscountCategories.php	Defines the items belonging to a discount category. Discount Categories are used to allow discounts based on quantities across a range of producs.\r\n<br>\r\nDiscount categories are free-form created on stock items and must exist on at least one stock item before a discount can be set using the Discount Matrix.\r\n<br>\r\nYou may use this interface to asisgn a discount category to any stock item.
+\.
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 3 (OID 36081)
+-- Name: shippers; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY shippers (shipper_id, shippername, mincharge) FROM stdin;
+2	Courier Post	0.0000
+1	Not Specified	0.0000
+\.
+
+
+--
+-- TOC entry 2 (OID 36079)
+-- Name: shippers_shipper_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
+--
+
+SELECT pg_catalog.setval('shippers_shipper_id_seq', 2, true);
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 2 (OID 35769)
+-- Name: systypes; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY systypes (typeid, typename, typeno) FROM stdin;
+2	Receipt - GL	0
+3	Standing Journal	0
+18	Purchase Order	0
+21	Debit Note	0
+23	Creditors Journal	0
+26	Work Order Receipt	0
+28	Work Order Issue	0
+29	Work Order Variance	0
+30	Sales Order	0
+0	Journal - GL	1
+50	Opening Balance	0
+31	Shipment Close	3
+1	Payment - GL	2
+22	Creditors Payment	2
+25	Purchase Order Delivery	2
+20	Purchase Invoice	1
+35	Cost Update	2
+500	"Debtor Number"	100001
+15	Journal - Debtors	0
+11	Credit Note	0
+12	Receipt	0
+16	Location Transfer	0
+17	Stock Adjustment	0
+10	Sales Invoice	1
+\.
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 3 (OID 35811)
+-- Name: taxauthorities; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY taxauthorities (taxid, description, taxglcode, purchtaxglaccount, bank, bankacctype, bankacc, bankswift) FROM stdin;
+1	VAT	951000	951000	\N	\N	\N	\N
+\.
+
+
+--
+-- TOC entry 2 (OID 35809)
+-- Name: taxauthorities_taxid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
+--
+
+SELECT pg_catalog.setval('taxauthorities_taxid_seq', 1, true);
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 2 (OID 36348)
+-- Name: taxauthlevels; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY taxauthlevels (taxauthority, dispatchtaxauthority, "level", taxrate) FROM stdin;
+1	1	1	0
+\.
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 2 (OID 36354)
+-- Name: www_users; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY www_users (userid, "password", realname, customerid, phone, email, defaultlocation, fullaccess, lastvisitdate, branchcode, pagesize, modulesallowed, blocked, displayrecordsmax, theme, "language", pinno, swipecard) FROM stdin;
+demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2005-03-31 21:36:38		A4	1,1,1,1,1,1,1,1,	0	50	professional	en_GB	\N	\N
+\.
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 3 (OID 35878)
+-- Name: edi_orders_segs; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY edi_orders_segs (id, segtag, seggroup, maxoccur) FROM stdin;
+\.
+
+
+--
+-- TOC entry 2 (OID 35876)
+-- Name: edi_orders_segs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
+--
+
+SELECT pg_catalog.setval('edi_orders_segs_id_seq', 1, false);
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 2 (OID 35871)
+-- Name: edi_orders_seg_groups; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY edi_orders_seg_groups (seggroupno, maxoccur, parentseggroup) FROM stdin;
+\.
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 2 (OID 36785)
+-- Name: config; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY config (confname, confvalue) FROM stdin;
+DefaultDateFormat	d/m/Y
+PastDueDays1	30
+PastDueDays2	60
+DefaultCreditLimit	1000
+Show_Settled_LastMonth	1
+RomalpaClause	Ownership will not pass to the buyer until the goods have been paid for in full.
+QuickEntries	10
+DispatchCutOffTime	14
+AllowSalesOfZeroCostItems	0
+CreditingControlledItems_MustExist	0
+DefaultPriceList	WS
+Default_Shipper	1
+DoFreightCalc	0
+FreightChargeAppliesIfLessThan	1000
+DefaultTaxLevel	1
+TaxAuthorityReferenceName	Tax Ref
+NumberOfPeriodsOfStockUsage	12
+Check_Qty_Charged_vs_Del_Qty	1
+Check_Price_Charged_vs_Order_Price	1
+OverChargeProportion	30
+OverReceiveProportion	20
+PO_AllowSameItemMultipleTimes	1
+YearEnd	3
+PageLength	48
+part_pics_dir	part_pics
+MaxImageSize	300
+reports_dir	reports
+EDIHeaderMsgId	D:01B:UN:EAN010
+EDIReference	WEBERP
+EDI_MsgPending	EDI_Pending
+EDI_MsgSent	EDI_Sent
+EDI_Incoming_Orders	EDI_Incoming_Orders
+DefaultDisplayRecordsMax	50
+RadioBeaconStockLocation	BL
+RadioBeaconHomeDir	/home/RadioBeacon
+RadioBeaconFileCounter	/home/RadioBeacon/FileCounter
+RadioBreaconFilePrefix	ORDXX
+RadioBraconFTP_server	192.168.2.2
+RadioBeaconFTP_user_name	RadioBeacon ftp server user name
+RadionBeaconFTP_user_pass	Radio Beacon remote ftp server password
+CountryOfOperation	EUR
+DefaultTheme	professional
+AutoDebtorNo	1
+DB_Maintenance_LastRun	2005-03-31
+HTTPS_Only	0
+DB_Maintenance	1
+PackNoteFormat	1
+DefaultBlindPackNote	1
+CheckCreditLimits	0
+\.
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 3 (OID 36779)
+-- Name: unitsofmeasure; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY unitsofmeasure (unitid, unitname) FROM stdin;
+2	metres
+3	kgs
+4	litres
+5	length
+6	pack
+1	each
+\.
+
+
+--
+-- TOC entry 2 (OID 36777)
+-- Name: unitsofmeasure_unitid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
+--
+
+SELECT pg_catalog.setval('unitsofmeasure_unitid_seq', 6, true);
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 3 (OID 36769)
+-- Name: paymentmethods; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY paymentmethods (paymentid, paymentname, paymenttype, receipttype) FROM stdin;
+1	Cheque	1	1
+2	Cash	1	1
+3	Direct Credit	1	1
+\.
+
+
+--
+-- TOC entry 2 (OID 36767)
+-- Name: paymentmethods_paymentid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
+--
+
+SELECT pg_catalog.setval('paymentmethods_paymentid_seq', 4, true);
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 2 (OID 36760)
+-- Name: securitytokens; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY securitytokens (tokenid, tokenname) FROM stdin;
+9	Ledger Maintenance and Manufacturing
+1	Menu and order entry only
+2	Inventory, AR & AP inquiries & reports 
+3	AR setup customers, areas, receipts, allocations, credit notes, salesfolk, credit status
+4	PO Entry, Purchasing data & reorder levels
+5	AP Invoice, Credit, Payment entry. Supplier maintenance
+6	Not used
+7	Bank reconciliations
+10	GL Journals, COA, sales/COGS GL postings, terms, cost update, company prefs
+11	Pricing & Inventory locations, categories, receiving & adjustments 
+15	User management, System Admin setup & utilities
+12	No Used
+14	Not Used
+13	Not Used
+8	GL Journals, COA, sales/COGS GL postings, terms, cost update, company prefs
+\.
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 3 (OID 36754)
+-- Name: securityroles; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY securityroles (secroleid, secrolename) FROM stdin;
+1	Inquiries/Order Entry
+2	Manufac/Stock Admin
+3	Purchasing Officer
+4	AP Clerk
+5	AR Clerk
+6	Accountant
+7	Customer Log On Only
+8	System Administrator
+\.
+
+
+--
+-- TOC entry 2 (OID 36752)
+-- Name: securityroles_secroleid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
+--
+
+SELECT pg_catalog.setval('securityroles_secroleid_seq', 1, false);
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 2 (OID 36765)
+-- Name: securitygroups; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY securitygroups (secroleid, tokenid) FROM stdin;
+1	1
+1	2
+2	1
+2	2
+3	1
+3	2
+3	3
+3	4
+3	5
+3	11
+4	1
+4	2
+4	5
+5	1
+5	2
+5	3
+5	11
+6	1
+6	2
+6	3
+6	4
+6	5
+6	6
+6	7
+6	8
+6	9
+6	10
+6	11
+7	1
+8	1
+8	2
+8	3
+8	4
+8	5
+8	6
+8	7
+8	8
+8	9
+8	10
+8	11
+8	12
+8	13
+8	14
+8	15
+4	13
+2	11
+\.
+
+
