@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /*
 	R & OS PHP-PDF class code to set up a new page
 	a new page is implicit on the establishment of a new pdf object so
@@ -111,7 +111,7 @@ $pdf->addText($XPos+70,$YPos, $FontSize, ConvertSQLDate($POHeader['orddate']));
 
 
 $YPos -= $line_height;
-$pdf->addText($XPos,$YPos, $FontSize, _('Initator').': ');
+$pdf->addText($XPos,$YPos, $FontSize, _('Initiator').': ');
 $pdf->addText($XPos+70,$YPos, $FontSize, $POHeader['initiator']);
 
 $YPos -= $line_height;

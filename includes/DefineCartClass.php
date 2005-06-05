@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -84,7 +84,7 @@ Class Cart {
 				$Narrative='',
 				$UpdateDB='No',
 				$LineNumber=0,
-				$TaxCategory){
+				$TaxCategory=0){
 		
 				
 		if (isset($StockID) AND $StockID!="" AND $Qty>0 AND isset($Qty)){
@@ -240,6 +240,39 @@ Class Cart {
 		return true;
 	}
 	
+	function GetExistingTaxes($LineNumber, $stkmoveno){
+	
+		global $db;
+		
+		/*Gets the Taxes and rates applicable to this line from the TaxGroup of the branch and TaxCategory of the item 
+		and the taxprovince of the dispatch location */
+
+		$sql = 'SELECT stockmovestaxes.taxauthid, 
+				taxauthorities.description,
+				taxauthorities.taxglcode, 
+				stockmovestaxes.taxcalculationorder,
+				stockmovestaxes.taxontax,
+				stockmovestaxes.taxrate
+			FROM stockmovestaxes INNER JOIN taxauthorities
+				ON stockmovestaxes.taxauthid = taxauthorities.taxid
+			WHERE stkmoveno = ' . $stkmoveno . '
+			ORDER BY taxcalculationorder';
+
+		$ErrMsg = _('The taxes and rates for this item could not be retreived because');
+		$GetTaxRatesResult = DB_query($sql,$db,$ErrMsg);
+		
+		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
+		
+			$this->LineItems[$LineNumber]->Taxes[$myrow['calculationorder']] =
+								  new Tax($myrow['calculationorder'],
+										$myrow['taxauthid'],
+										$myrow['description'],
+										$myrow['taxrate'],
+										$myrow['taxontax'],
+										$myrow['taxglcode']);
+		}
+	} //end method GetTaxes		
+	
 	function GetTaxes($LineNumber){
 	
 		global $db;
@@ -310,7 +343,7 @@ Class Cart {
 											$myrow['taxontax'],
 											$myrow['taxglcode']);
 		}
-	} //end method GetFreightTaxes()				
+	} //end method GetFreightTaxes()
 	
 } /* end of cart class defintion */
 
@@ -386,8 +419,8 @@ Class LineDetails {
 		$this->Narrative = $Narrative;
 		$this->Taxes = array();
 		$this->TaxCategory = $TaxCategory;
-	} //end constructor function for LineDetails
-	
+	} //end constructor function for LineDetails		
+		
 }
 
 Class Tax {

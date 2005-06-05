@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $PageSecurity = 10;
 
 include('includes/session.inc');
@@ -164,7 +164,7 @@ if (!isset($SelectedSalesPostingID)) {
 		<td class='tableheader'>" . _('Stock Category') . "</td>
 		<td class='tableheader'>" . _('Sales Type') . "</td>
 		<td class='tableheader'>" . _('Sales Account') . "</td>
-		<td class='tableheader'>" . ('Discount Account') . "</td>
+		<td class='tableheader'>" . _('Discount Account') . "</td>
 		</tr>";
 
 	$k=0; //row colour counter

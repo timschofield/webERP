@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -665,12 +665,16 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
  	$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 	
+	$DebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
+	
 /* Insert the tax totals for each tax authority where tax was charged on the invoice */
 	foreach ($TaxTotals AS $TaxAuthID => $TaxAmount) {
 	
-		$SQL = 'INSERT INTO debtortranstaxes (taxauthid,
+		$SQL = 'INSERT INTO debtortranstaxes (debtortransid,
+							taxauthid,
 							taxamount)
-				VALUES (' . $TaxAuthID . ',
+				VALUES (' . $DebtorTransID . ',
+					' . $TaxAuthID . ',
 					' . $TaxAmount . ')';
 		
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction taxes records could not be inserted because');
@@ -952,7 +956,6 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						qty,
 						discountpercent,
 						standardcost,
-						taxrate,
 						narrative
 						)
 					VALUES (
@@ -969,7 +972,6 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						" . -$OrderLine->QtyDispatched . ",
 						" . $OrderLine->DiscountPercent . ",
 						" . $OrderLine->StandardCost . ",
-						" . $OrderLine->TaxRate . ",
 						'" . addslashes($OrderLine->Narrative) . "'
 					)";
 			}

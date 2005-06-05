@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 4;
 
@@ -203,10 +203,10 @@ if (!isset($_GET['Edit'])){
 		$k++;
 	}
 	if ($myrow['preferred']==1){
-	  $DisplayPreferred="Yes";
+	  $DisplayPreferred= _('Yes');
 	  $CountPreferreds++;
 	} else {
-	  $DisplayPreferred="No";
+	  $DisplayPreferred=_('No');
 	}
 
 	printf("<TD>%s</TD>

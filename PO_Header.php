@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 4;
 include('includes/DefinePOClass.php');
@@ -215,7 +215,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 	</TR>
 	</TABLE>
 	<CENTER><INPUT TYPE=SUBMIT NAME='SearchSuppliers' VALUE=" . _('Search Now') . ">
-	<INPUT TYPE=SUBMIT ACTION=RESET VALUE='Reset'></CENTER>";
+	<INPUT TYPE=SUBMIT ACTION=RESET VALUE='" . _('Reset') . "'></CENTER>";
 
 	If ($result_SuppSelect) {
 
@@ -360,7 +360,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 		  $_SESSION['PO']->DelAdd4 = $_POST['DelAdd4'];
 	      }
 	  }
-	  echo '<TR><TD>' . ('Deliver to') . ' - ' . _('Street') . ":</TD>
+	  echo '<TR><TD>' . _('Deliver to') . ' - ' . _('Street') . ":</TD>
 	  		<TD><INPUT TYPE=text NAME=DelAdd1 SIZE=41 MAXLENGTH=40 Value='" . $_POST['DelAdd1'] . "'></TD>
 		</TR>";
 	  echo '<TR><TD>' . _('Deliver to') . ' - ' . _('Suburb') . ":</TD>

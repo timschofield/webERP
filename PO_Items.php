@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 
 $PageSecurity = 4;
@@ -326,7 +326,7 @@ If ($_POST['Search']){  /*ie seach for stock items */
 
 /* Always do the stuff below if not looking for a supplierid */
 
-If($_POST['Delete']=='Delete'){
+if(isset($_POST['Delete'])){
 	if($_SESSION['PO']->Some_Already_Received($_POST['LineNo'])==0){
 		$_SESSION['PO']->remove_from_order($_POST['LineNo']);
 		include ('includes/PO_UnsetFormVbls.php');
@@ -356,7 +356,7 @@ if (isset($_POST['LookupPrice']) AND $_POST['StockID']!=''){
 	}
 }
 
-If(isset($_POST['UpdateLine']) AND $_POST['UpdateLine']=='Update Line'){
+If(isset($_POST['UpdateLine'])){
 	$AllowUpdate=True; /*Start assuming the best ... now look for the worst*/
 
 	if ($_POST['Qty']==0 OR $_POST['Price'] < 0){
@@ -774,7 +774,7 @@ if ($hide_incomplete_features == False)	{
 
 	echo "<input type='hidden' name='LineNo' value=" . ($_SESSION['PO']->LinesOnOrder + 1) .">";
 
-	echo '<TABLE><TR><TD>' . _('Stock Code for Item Ordered') . ': <FONT SIZE=1>(' . ('Leave blank if NOT a stock order') . ")</TD>
+	echo '<TABLE><TR><TD>' . _('Stock Code for Item Ordered') . ': <FONT SIZE=1>(' . _('Leave blank if NOT a stock order') . ")</TD>
 			<TD><input type='text' name='StockID' size=21 maxlength=20 value='" . $_POST['StockID'] . "'></TD></TR>";
 
 	echo '<TR><TD>' . _('Ordered item Description') . ':<BR><FONT SIZE=1>(' . _('If a stock code is entered above, its description will overide this entry') . ")</FONT></TD>
@@ -806,7 +806,7 @@ if ($hide_incomplete_features==False)	{
 	echo '<TR><TD>' . _('Contract Ref') . ': <FONT SIZE=1>' . _('(Leave blank if N/A)') . "</FONT></TD>
 		<TD><input type='Text' SIZE=10 MAXLENGTH=9 name='JobRef' value=" . $_POST['JobRef'] . "> <a target='_blank' href='$rootpath/ContractsList.php?" . SID . "'>" . _('Show Contracts') . '</a></TD></TR>';
 }
-	echo "</TABLE><CENTER><INPUT TYPE=SUBMIT NAME='EnterLine' VALUE='" . ('Enter Line') . "'><BR><BR>";
+	echo "</TABLE><CENTER><INPUT TYPE=SUBMIT NAME='EnterLine' VALUE='" . _('Enter Line') . "'><BR><BR>";
 
 	echo "<INPUT TYPE=SUBMIT NAME='Commit' VALUE='" . _('Place Order') . "'></CENTER>";
 

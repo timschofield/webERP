@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity=9;
 
@@ -234,10 +234,9 @@ echo '</SELECT></TD></TR>
 //SQL to poulate account selection boxes
 $SQL = 'SELECT accountcode,
 		accountname
-	FROM chartmaster,
-		accountgroups
-	WHERE chartmaster.group_=accountgroups.groupname
-	AND accountGroups.pandl!=0
+	FROM chartmaster INNER JOIN accountgroups
+		ON chartmaster.group_=accountgroups.groupname
+	WHERE accountgroups.pandl!=0
 	ORDER BY accountcode';
 
 $result = DB_query($SQL,$db);

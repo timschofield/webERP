@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $PageSecurity = 2;
 
 
@@ -328,9 +328,9 @@ if (DB_error_no($db) !=0) {
 		} else {
 			echo '<OPTION VALUE="PrintOnly">' . _('Print Stock Check Sheets Only');
 		}
-		echo "</SELECT></TD></TR>";
+		echo '</SELECT></TD></TR>';
 		
-		echo "<TR><TD>Show system quantity on sheets:</TD><TD>";
+		echo '<TR><TD>' . _('Show system quantity on sheets') . ':</TD><TD>';
 		
 		if ($_POST['ShowInfo'] == false){
 		        echo "<INPUT TYPE=CHECKBOX NAME='ShowInfo' VALUE=FALSE>";
@@ -339,7 +339,7 @@ if (DB_error_no($db) !=0) {
 		}
 		echo "</TD></TR>";
 																		
-		echo "<TR><TD>Only print items with non zero quantities:</TD><TD>";
+		echo '<TR><TD>' . _('Only print items with non zero quantities') . ':</TD><TD>';
 		if ($_POST['NonZerosOnly'] == false){
 		        echo "<INPUT TYPE=CHECKBOX NAME='NonZerosOnly' VALUE=FALSE>";
 		} else {

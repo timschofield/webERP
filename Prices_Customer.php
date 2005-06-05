@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $PageSecurity = 11;
 
 include('includes/session.inc');
@@ -189,7 +189,7 @@ if (DB_num_rows($result) == 0) {
 	while ($myrow = DB_fetch_array($result)) {
 
 	if ($myrow['branchcode']==''){
-		$Branch = 'All Branches';
+		$Branch = _('All Branches');
 	} else {
 		$Branch = $myrow['brname'];
 	}

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 
 $PageSecurity = 11;
@@ -290,7 +290,7 @@ if (isset($_POST['submit'])) {
 				$InsResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 				if (DB_error_no($db) ==0) {
-					echo '<BR>' . _('New Item') .' ' . $StockID  . ' '. _('has been added to the database');
+					prnMsg( _('New Item') .' ' . $StockID  . ' '. _('has been added to the database'),'success');
 					unset($_POST['LongDescription']);
 					unset($_POST['Description']);
 					unset($_POST['EOQ']);
@@ -635,16 +635,20 @@ echo '<TR><TD>' . _('Bar Code') . ':</TD><TD><input type="Text" name="BarCode" S
 echo '<TR><TD>' . _('Discount Category') . ':</TD><TD><input type="Text" name="DiscountCategory" SIZE=2 MAXLENGTH=2 value="' . $_POST['DiscountCategory'] . '"></TD></TR>';
 
 echo '<TR><TD>' . _('Tax Category') . ':</TD><TD><SELECT NAME="TaxCat">';
-	$sql = 'SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname';
-	$result = DB_query($sql, $db);
+$sql = 'SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname';
+$result = DB_query($sql, $db);
 
-	while ($myrow = DB_fetch_array($result)) {
-		if ($_POST['TaxCat'] == $myrow['taxcatid']){
-			echo '<OPTION SELECTED VALUE=' . $myrow['taxcatid'] . '>' . $myrow['taxcatname'];
-		} else {
-			echo '<OPTION VALUE=' . $myrow['taxcatid'] . '>' . $myrow['taxcatname'];
-		}
-	} //end while loop
+if (!isset($_POST['TaxCat'])){
+	$_POST['TaxCat'] = $_SESSION['DefaultTaxCategory'];
+}
+	
+while ($myrow = DB_fetch_array($result)) {
+	if ($_POST['TaxCat'] == $myrow['taxcatid']){
+		echo '<OPTION SELECTED VALUE=' . $myrow['taxcatid'] . '>' . $myrow['taxcatname'];
+	} else {
+		echo '<OPTION VALUE=' . $myrow['taxcatid'] . '>' . $myrow['taxcatname'];
+	}
+} //end while loop
 
 echo '</SELECT></TD></TR>';
 
@@ -669,11 +673,8 @@ if (function_exists('imagecreatefrompng')){
 	}
 }
 
-echo '</TABLE></TD><TD><CENTER>' . _('Image') . '<BR>'.$StockImgLink . '</CENTER></TD></TR></TABLE>';
+echo '</TABLE></TD><TD><CENTER>' . _('Image') . '<BR>'.$StockImgLink . '</CENTER></TD></TR></TABLE><CENTER>';
 	
-//echo '</TABLE></TD><TD><CENTER>' . _('Image') . '<BR><img src=' . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg' . '>' . '</CENTER></TD></TR></TABLE>';
-
-
 
 if (isset($_POST['New']) OR $_POST['New']!="") {
 	echo '<input type="Submit" name="submit" value="' . _('Insert New Item') . '">';

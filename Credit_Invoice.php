@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 $PageSecurity =3;
 
 
@@ -29,10 +29,7 @@ if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 
 	Session_register('CreditItems');
 	Session_register('ProcessingCredit');
-	Session_register('TaxRate');
-	Session_Register('TaxDescription');
 	Session_Register('CurrencyRate');
-	Session_Register('TaxGLCode');
 	Session_Register('Old_FreightCost');
 
 	$_SESSION['ProcessingCredit'] = $_GET['InvoiceNumber'];
@@ -53,29 +50,26 @@ if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 				debtortrans.tpe,
 				debtortrans.shipvia,
 				debtortrans.ovfreight,
+				debtortrans.rate AS currency_rate,
 				debtorsmaster.currcode,
 				custbranch.defaultlocation,
-				taxauthorities.description,
-				currencies.rate as currency_rate,
-				taxauthorities.taxglcode,
-				taxauthorities.taxid,
-				stockmoves.loccode
-			FROM debtortrans, 
-				debtorsmaster, 
-				custbranch, 
-				taxauthorities, 
-				currencies, 
-				stockmoves, 
-				locations
-			WHERE debtortrans.debtorno = debtorsmaster.debtorno
-			AND debtortrans.branchcode = custbranch.branchcode
-			AND debtortrans.debtorno = custbranch.debtorno
-			AND custbranch.taxauthority = taxauthorities.taxid
-			AND debtorsmaster.currcode = currencies.currabrev
-			AND debtortrans.transno = " . $_GET['InvoiceNumber'] . "
-			AND debtortrans.type=10
-			AND stockmoves.type=10
-			AND stockmoves.transno=debtortrans.transno";
+				custbranch.taxgroupid,
+				stockmoves.loccode,
+				locations.taxprovinceid
+			FROM debtortrans INNER JOIN debtorsmaster ON
+				debtortrans.debtorno = debtorsmaster.debtorno
+				INNER JOIN custbranch ON 
+				debtortrans.branchcode = custbranch.branchcode
+				AND debtortrans.debtorno = custbranch.debtorno
+				INNER JOIN currencies ON
+				debtorsmaster.currcode = currencies.currabrev
+				INNER JOIN stockmoves ON
+				stockmoves.transno=debtortrans.transno
+				INNER JOIN locations ON
+				stockmoves.loccode = locations.loccode
+			WHERE debtortrans.transno = " . $_GET['InvoiceNumber'] . "
+				AND debtortrans.type=10
+				AND stockmoves.type=10";
 
 	$ErrMsg = _('A credit cannot be produced for the selected invoice') . '. ' . _('The invoice details cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the invoice details was');
@@ -96,20 +90,16 @@ if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 		$_SESSION['CreditItems']->DefaultCurrency = $myrow['currcode'];
 		$_SESSION['CreditItems']->Location = $myrow['loccode'];
 		$_SESSION['Old_FreightCost'] = $myrow['ovfreight'];
-		$_SESSION['TaxDescription'] = $myrow['description'];
-		$_SESSION['TaxGLCode'] = $myrow['taxglcode'];
-		$_SESSION['TaxAuthority'] = $myrow['taxid'];
 		$_SESSION['CurrencyRate'] = $myrow['currency_rate'];
 		$_SESSION['CreditItems']->OrderNo = $myrow['order_'];
 		$_SESSION['CreditItems']->ShipVia = $myrow['shipvia'];
-
+		$_SESSION['CreditItems']->TaxGroup = $myrow['taxgroupid'];
+		$_SESSION['CreditItems']->FreightCost = $myrow['ovfreight'];
+		$_SESSION['CreditItems']->DispatchTaxProvince = $myrow['taxprovinceid'];
+		$_SESSION['CreditItems']->GetFreightTaxes();
+		
 		DB_free_result($GetInvHdrResult);
 
-		$DispTaxAuthResult = DB_query("SELECT taxauthority FROM locations WHERE loccode='" . $_SESSION['CreditItems']->Location . "'",$db);
-		$myrow = DB_fetch_row($DispTaxAuthResult);
-
-		$_SESSION['DispatchTaxAuthority'] = $myrow[0];
-		$_SESSION['FreightTaxRate'] = GetTaxRate($_SESSION['TaxAuthority'], $_SESSION['DispatchTaxAuthority'],$_SESSION['DefaultTaxLevel'],$db)*100;
 /*now populate the line items array with the stock movement records for the invoice*/
 
 
@@ -122,14 +112,16 @@ if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 					stockmaster.controlled,
 					stockmaster.serialised,
 					stockmaster.decimalplaces,
+					stockmaster.taxcatid,
 					stockmaster.units,
 					stockmaster.discountcategory,
 					(stockmoves.price * " . $_SESSION['CurrencyRate'] . ") AS price, -
 					stockmoves.qty as quantity,
 					stockmoves.discountpercent,
 					stockmoves.trandate,
-					stockmoves.taxrate,
-					stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS standardcost,
+					stockmaster.materialcost 
+						+ stockmaster.labourcost 
+						+ stockmaster.overheadcost AS standardcost,
 					stockmoves.narrative
 				FROM stockmoves, stockmaster
 				WHERE stockmoves.stockid = stockmaster.stockid
@@ -145,7 +137,9 @@ if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 		if (db_num_rows($LineItemsResult)>0) {
 
 			while ($myrow=db_fetch_array($LineItemsResult)) {
-
+				
+				$LineNumber = ($_SESSION['CreditItems']->LineCounter);
+				
 				$_SESSION['CreditItems']->add_to_cart($myrow['stockid'],
 								$myrow['quantity'],
 								$myrow['description'],
@@ -162,11 +156,18 @@ if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 								$myrow['controlled'],
 								$myrow['serialised'],
 								$myrow['decimalplaces'],
-								$myrow['narrative']
+								$myrow['narrative'],
+								'No',
+								0,
+								$myrow['taxcatid']
 								);
 
-				$_SESSION['CreditItems']->LineItems[$myrow['stockid']]->StandardCost= $myrow['standardcost'];
-				$_SESSION['CreditItems']->LineItems[$myrow['stockid']]->TaxRate = $myrow['taxrate'];
+				$_SESSION['CreditItems']->LineItems[$LineNumber]->StandardCost = $myrow['standardcost'];
+								
+					
+				$_SESSION['CreditItems']->GetExistingTaxes($LineNumber, $myrow['stkmoveno']);
+				
+				
 				if ($myrow['controlled']==1){/* Populate the SerialItems array too*/
 
 					$SQL = "SELECT 	serialno,
@@ -180,7 +181,7 @@ if (!$_GET['InvoiceNumber'] && !$_SESSION['ProcessingCredit']) {
 					$SerialItemsResult = DB_query($SQL,$db,$ErrMsg, $DbgMsg);
 
 					while ($SerialItemsRow = DB_fetch_array($SerialItemsResult)){
-						$_SESSION['CreditItems']->LineItems[$myrow['stockid']]->SerialItems[$SerialItemsRow['serialno']] = new SerialItem($SerialItemsRow['serialno'], -$SerialItemsRow['moveqty']);
+						$_SESSION['CreditItems']->LineItems[$LineNumber]->SerialItems[$SerialItemsRow['serialno']] = new SerialItem($SerialItemsRow['serialno'], -$SerialItemsRow['moveqty']);
 					}
 				} /* end if the item is a controlled item */
 			} /* loop thro line items from stock movement records */
@@ -206,32 +207,42 @@ if (isset($_POST['Location'])){
 }
 
 
+foreach ($_SESSION['CreditItems']->FreightTaxes as $FreightTaxLine) {
+	if (isset($_POST['FreightTaxRate'  . $FreightTaxLine->TaxCalculationOrder])){
+		$_SESSION['CreditItems']->FreightTaxes[$FreightTaxLine->TaxCalculationOrder]->TaxRate = $_POST['FreightTaxRate'  . $FreightTaxLine->TaxCalculationOrder]/100;
+	}
+}
+
 If ($_SESSION['CreditItems']->ItemsOrdered > 0 OR isset($_POST['NewItem'])){
 
 	If(isset($_GET['Delete'])){
 		$_SESSION['CreditItems']->remove_from_cart($_GET['Delete']);
 	}
 
-	foreach ($_SESSION['CreditItems']->LineItems as $StockItem) {
+	foreach ($_SESSION['CreditItems']->LineItems as $LineItem) {
 
-		if (isset($_POST['Quantity_' . $StockItem->StockID])){
+		if (isset($_POST['Quantity_' . $LineItem->LineNumber])){
 
-			$Narrative = $_POST['Narrative_' . $StockItem->StockID];
-			$Quantity = $_POST['Quantity_' . $StockItem->StockID];
-			$Price = $_POST['Price_' . $StockItem->StockID];
-			$DiscountPercentage = $_POST['Discount_' . $StockItem->StockID];
+			$Narrative = $_POST['Narrative_' . $LineItem->LineNumber];
+			$Quantity = $_POST['Quantity_' . $LineItem->LineNumber];
+			$Price = $_POST['Price_' . $LineItem->LineNumber];
+			$DiscountPercentage = $_POST['Discount_' . $LineItem->LineNumber];
 
 			If ($Quantity<0 OR $Price <0 OR $DiscountPercentage >100 OR $DiscountPercentage <0){
 				prnMsg(_('The item could not be updated because you are attempting to set the quantity credited to less than 0 or the price less than 0 or the discount more than 100% or less than 0%'),'error');
 			} else {
-				$_SESSION['CreditItems']->LineItems[$StockItem->StockID]->QtyDispatched=$Quantity;
-				$_SESSION['CreditItems']->LineItems[$StockItem->StockID]->Price=$Price;
-				$_SESSION['CreditItems']->LineItems[$StockItem->StockID]->DiscountPercent=($DiscountPercentage/100);
-				$_SESSION['CreditItems']->LineItems[$StockItem->StockID]->Narrative=$Narrative;
+				$_SESSION['CreditItems']->LineItems[$LineItem->LineNumber]->QtyDispatched=$Quantity;
+				$_SESSION['CreditItems']->LineItems[$LineItem->LineNumber]->Price=$Price;
+				$_SESSION['CreditItems']->LineItems[$LineItem->LineNumber]->DiscountPercent=($DiscountPercentage/100);
+				$_SESSION['CreditItems']->LineItems[$LineItem->LineNumber]->Narrative=$Narrative;
+			}
+			foreach ($LineItem->Taxes as $TaxLine) {
+				if (isset($_POST[$Itm->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate'])){
+					$_SESSION['CreditItems']->LineItems[$LineItem->LineNumber]->Taxes[$TaxLine->TaxCalculationOrder]->TaxRate = $_POST[$LineItem->LineNumber  . $TaxLine->TaxCalculationOrder . '_TaxRate']/100;
+				}
 			}
 		}
 	}
-
 }
 
 
@@ -254,13 +265,19 @@ echo "<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=0><TR>
 <TD class='tableheader'>" . _('Price') . "</TD>
 <TD class='tableheader'>" . _('Discount') . "</TD>
 <TD class='tableheader'>" . _('Total') . '<BR>' . _('Excl Tax') . "</TD>
+<TD class='tableheader'>" . _('Tax Authority') . "</TD>
 <TD class='tableheader'>" . _('Tax') . ' %' . "</TD>
 <TD class='tableheader'>" . _('Tax') . '<BR>' . _('Amount') . "</TD>
 <TD class='tableheader'>" . _('Total') . '<BR>' . _('Incl Tax') . "</TD></TR>";
 
+
 $_SESSION['CreditItems']->total = 0;
 $_SESSION['CreditItems']->totalVolume = 0;
 $_SESSION['CreditItems']->totalWeight = 0;
+
+$TaxTotals = array();
+$TaxGLCodes = array();
+$TaxTotal =0;
 
 /*show the line items on the invoice with the quantity to credit and price being available for modification */
 
@@ -278,47 +295,82 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 
 	$LineTotal =($LnItm->QtyDispatched * $LnItm->Price * (1 - $LnItm->DiscountPercent));
 
-	$_SESSION['CreditItems']->total = $_SESSION['CreditItems']->total + $LineTotal;								$_SESSION['CreditItems']->totalVolume = $_SESSION['CreditItems']->totalVolume + $LnItm->QtyDispatched * $LnItm->Volume;
+	$_SESSION['CreditItems']->total = $_SESSION['CreditItems']->total + $LineTotal;
+	$_SESSION['CreditItems']->totalVolume = $_SESSION['CreditItems']->totalVolume + $LnItm->QtyDispatched * $LnItm->Volume;
 	$_SESSION['CreditItems']->totalWeight = $_SESSION['CreditItems']->totalWeight + $LnItm->QtyDispatched * $LnItm->Weight;
 
-	echo $RowStarter .	"<TD>" . $LnItm->StockID . "</TD>
-				<TD>$LnItm->ItemDescription</TD>
-				<TD ALIGN=RIGHT>$LnItm->Quantity</TD>
-				<TD>$LnItm->Units</TD>";
+	echo $RowStarter.'<TD>' . $LnItm->StockID . '</TD>
+			  <TD>' . $LnItm->ItemDescription . '</TD>
+			  <TD ALIGN=RIGHT>' . number_format($LnItm->Quantity,$LnItm->DecimalPlaces) . '</TD>
+			  <TD>' . $LnItm->Units . '</TD>';
 
 	if ($LnItm->Controlled==1){
 
-		echo "<TD><input type=hidden name='Quantity_" . $LnItm->StockID ."'  value=" . $LnItm->QtyDispatched . "><A HREF='$rootpath/CreditItemsControlled.php?" . SID . "StockID=" . $LnItm->StockID . "&CreditInvoice=Yes'>" . $LnItm->QtyDispatched . "</A></TD>";
+		echo "<TD><input type=hidden name='Quantity_" . $LnItm->LineNumber ."'  value=" . $LnItm->QtyDispatched . "><A HREF='$rootpath/CreditItemsControlled.php?" . SID . "LineNo=" . $LnItm->LineNumber . "&CreditInvoice=Yes'>" . $LnItm->QtyDispatched . "</A></TD>";
 
 	} else {
 
-		echo "<TD><input type=text name='Quantity_" . $LnItm->StockID ."' maxlength=6 SIZE=6 value=" . $LnItm->QtyDispatched . "></TD>";
+		echo "<TD><input type=text name='Quantity_" . $LnItm->LineNumber ."' maxlength=6 SIZE=6 value=" . $LnItm->QtyDispatched . "></TD>";
 
 	}
 
 	$DisplayLineTotal = number_format($LineTotal,2);
 
-	echo "<TD><INPUT TYPE=TEXT NAME='Price_" . $LnItm->StockID . "' MAXLENGTH=6 SIZE=6 VALUE=" . $LnItm->Price . "></TD>
-	<TD><INPUT TYPE=TEXT NAME='Discount_" . $LnItm->StockID . "' MAXLENGTH=3 SIZE=3 VALUE=" . ($LnItm->DiscountPercent * 100) . "></TD>
-	<TD ALIGN=RIGHT>$DisplayLineTotal</TD><TD ALIGN=RIGHT>" . round($StockItem->TaxRate * 100,2) . "%</TD>
-	<TD ALIGN=RIGHT>" . number_format($LineTotal*$StockItem->TaxRate,2) . "</TD>
-	<TD ALIGN=RIGHT>" . number_format($LineTotal*(1+$StockItem->TaxRate),2) . "</TD>
-	<TD><A HREF='". $_SERVER['PHP_SELF'] . "?" . SID . "Delete=" . $LnItm->StockID . "'>" . _('Delete') . '</A></TD></TR>';
+	echo "<TD><INPUT TYPE=TEXT NAME='Price_" . $LnItm->LineNumber . "' MAXLENGTH=6 SIZE=6 VALUE=" . $LnItm->Price . "></TD>
+	<TD><INPUT TYPE=TEXT NAME='Discount_" . $LnItm->LineNumber . "' MAXLENGTH=3 SIZE=3 VALUE=" . ($LnItm->DiscountPercent * 100) . "></TD>
+	<TD ALIGN=RIGHT>$DisplayLineTotal</TD>";
+	
+		/*Need to list the taxes applicable to this line */
+	echo '<TD>';
+	$i=0;
+	foreach ($_SESSION['CreditItems']->LineItems[$LnItm->LineNumber]->Taxes AS $Tax) {
+		if ($i>0){
+			echo '<BR>';
+		}
+		echo $Tax->TaxAuthDescription;
+		$i++;
+	}
+	echo '</TD>';
+	echo '<TD ALIGN=RIGHT>';
+	
+	$i=0; // initialise the number of taxes iterated through
+	$TaxLineTotal =0; //initialise tax total for the line
+	
+	foreach ($LnItm->Taxes AS $Tax) {
+		if ($i>0){
+			echo '<BR>';
+		}
+		echo '<input type=text name="' . $LnItm->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" maxlength=4 SIZE=4 value="' . $Tax->TaxRate*100 . '">';
+		$i++;
+		if ($Tax->TaxOnTax ==1){
+			$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * ($LineTotal + $TaxLineTotal));
+			$TaxLineTotal += ($Tax->TaxRate * ($LineTotal + $TaxLineTotal));
+		} else {
+			$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * $LineTotal);
+			$TaxLineTotal += ($Tax->TaxRate * $LineTotal);
+		}
+		$TaxGLCodes[$Tax->TaxAuthID] = $Tax->TaxGLCode;
+	}
+	echo '</TD>';		
+	
+	$TaxTotal += $TaxLineTotal;
+	
+	$DisplayTaxAmount = number_format($TaxLineTotal ,2);
+	$DisplayGrossLineTotal = number_format($LineTotal+ $TaxLineTotal,2);
 
-	echo $RowStarter . "<TD COLSPAN=7><TEXTAREA  NAME='Narrative_" . $LnItm->StockID . "' cols=100% rows=1>" . $LnItm->Narrative . "</TEXTAREA><BR><HR></TD></TR>";
+	echo '<TD ALIGN=RIGHT>' . $DisplayTaxAmount . '</TD>
+	      <TD ALIGN=RIGHT>' . $DisplayGrossLineTotal . "</TD>
+	<TD><A HREF='". $_SERVER['PHP_SELF'] . "?" . SID . "Delete=" . $LnItm->LineNumber . "'>" . _('Delete') . '</A></TD></TR>';
 
-	$TaxTotal += $LineTotal*$StockItem->TaxRate;
+	echo $RowStarter . "<TD COLSPAN=7><TEXTAREA  NAME='Narrative_" . $LnItm->LineNumber . "' cols=100% rows=1>" . $LnItm->Narrative . "</TEXTAREA><BR><HR></TD></TR>";
+
 } /*end foreach loop displaying the invoice lines to credit */
 
 if (!isset($_POST['ChargeFreightCost'])){
 	$_POST['ChargeFreightCost']=0;
 }
 
-if  (!isset($_POST['FreightTaxRate'])) {
-        $_POST['FreightTaxRate']=$_SESSION['FreightTaxRate'];
-} else {
-	$_SESSION['FreightTaxRate']=$_POST['FreightTaxRate'];
-}
+
 
 echo '<TR>
 	<TD COLSPAN=3 ALIGN=RIGHT>' . _('Freight cost charged on invoice') . '</TD>
@@ -328,13 +380,48 @@ echo '<TR>
 	<TD><INPUT TYPE=TEXT SIZE=6 MAXLENGTH=6 NAME='ChargeFreightCost' VALUE=" . $_POST['ChargeFreightCost'] . "></TD>";
 
 
-echo "<TD><INPUT TYPE=TEXT SIZE=2 MAXLENGTH=2 NAME='FreightTaxRate' VALUE=" . $_POST['FreightTaxRate'] . ">%</TD>
-	<TD ALIGN=RIGHT>" . number_format($_POST['FreightTaxRate']*$_POST['ChargeFreightCost']/100,2) . "</TD>
-	<TD ALIGN=RIGHT>" . number_format((100+$_POST['FreightTaxRate'])*$_POST['ChargeFreightCost']/100,2) . "</TD>
-</TR>";
+$FreightTaxTotal =0; //initialise tax total
 
+echo '<TD>';
+
+$i=0; // initialise the number of taxes iterated through
+foreach ($_SESSION['CreditItems']->FreightTaxes as $FreightTaxLine) {
+	if ($i>0){
+		echo '<BR>';
+	}
+	echo  $FreightTaxLine->TaxAuthDescription;
+	$i++;
+}
+
+echo '</TD><TD>';
+
+$i=0;
+foreach ($_SESSION['CreditItems']->FreightTaxes as $FreightTaxLine) {
+	if ($i>0){
+		echo '<BR>';
+	}
+	
+	echo  '<INPUT TYPE=TEXT NAME=FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . ' MAXLENGTH=4 SIZE=4 VALUE=' . $FreightTaxLine->TaxRate * 100 . '>';
+	
+	if ($FreightTaxLine->TaxOnTax ==1){
+		$TaxTotals[$FreightTaxLine->TaxAuthID] += ($FreightTaxLine->TaxRate * ($_SESSION['CreditItems']->FreightCost + $FreightTaxTotal));
+		$FreightTaxTotal += ($FreightTaxLine->TaxRate * ($_SESSION['CreditItems']->FreightCost + $FreightTaxTotal));
+	} else {
+		$TaxTotals[$FreightTaxLine->TaxAuthID] += ($FreightTaxLine->TaxRate * $_SESSION['CreditItems']->FreightCost);
+		$FreightTaxTotal += ($FreightTaxLine->TaxRate * $_SESSION['CreditItems']->FreightCost);
+	}
+	$i++;
+	$TaxGLCodes[$FreightTaxLine->TaxAuthID] = $FreightTaxLine->TaxGLCode;
+}
+echo '</TD>';
+
+echo '<TD ALIGN=RIGHT>' . number_format($FreightTaxTotal,2) . '</TD>
+	<TD ALIGN=RIGHT>' . number_format($FreightTaxTotal+ $_POST['ChargeFreightCost'],2) . '</TD>
+	</TR>';
+
+$TaxTotal += $FreightTaxTotal;
 $DisplayTotal = number_format($_SESSION['CreditItems']->total + $_POST['ChargeFreightCost'],2);
-$TaxTotal += $_POST['FreightTaxRate']*$_POST['ChargeFreightCost']/100;
+
 
 echo '<TR>
 	<TD COLSPAN=7 ALIGN=RIGHT>' . _('Credit Totals') . "</TD>
