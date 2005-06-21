@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 /* pdf-php by R&OS code to set up a new sales order page */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -36,8 +36,8 @@ $pdf->addText($XPos, $YPos,$FontSize, _('Quotation For').':');
 $pdf->addText($XPos, $YPos-15,$FontSize, $myrow['name']);
 $pdf->addText($XPos, $YPos-30,$FontSize, $myrow['address1']);
 $pdf->addText($XPos, $YPos-45,$FontSize, $myrow['address2']);
-$pdf->addText($XPos, $YPos-60,$FontSize, $myrow['address3']);
-$pdf->addText($XPos, $YPos-75,$FontSize, $myrow['address4']);
+$pdf->addText($XPos, $YPos-60,$FontSize, $myrow['address3'] . ' ' . $myrow['address4']);
+
 
 $XPos= 50;
 $YPos += 25;

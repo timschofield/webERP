@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 require('includes/DefineCartClass.php');
 
@@ -705,10 +705,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$SearchResult = DB_query($SQL,$db,$ErrMsg, $DbgMsg);
 
 		if (DB_num_rows($SearchResult)==0 ){
-			prnMsg (_('Sorry') . ' ... ' . _('there are no products available meeting the criteria specified'),'info');
+			prnMsg (_('There are no products available meeting the criteria specified'),'info');
 
 			if ($debug==1){
-				echo '<P>' . _('The SQL statement used was') . ':<BR>' . $SQL;
+				prnMsg(_('The SQL statement used was') . ':<BR>' . $SQL,'info');
 			}
 		}
 		if (DB_num_rows($SearchResult)==1){

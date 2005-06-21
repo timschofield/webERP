@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 /*Script to Delete all sales transactions*/
 
@@ -26,8 +26,10 @@ if (isset($_POST['ProcessDeletions'])){
 		$ErrMsg = _('The SQL to delete customer transaction records failed because');
 
 		$Result = DB_query('TRUNCATE TABLE custallocns',$db,$ErrMsg);
+		$Result = DB_query('DELETE FROM debtortranstaxes',$db,$ErrMsg);
 		$Result = DB_query('DELETE FROM debtortrans',$db,$ErrMsg);
 		$Result = DB_query('DELETE FROM stockserialmoves',$db,$ErrMsg);
+		$Result = DB_query('DELETE FROM stockmovestaxes' ,$db,$ErrMsg);
 		$Result = DB_query('DELETE FROM stockmoves WHERE type=10 OR type=11',$db,$ErrMsg);
 
 		$ErrMsg = _('The SQL to update the transaction numbers for all sales transactions because');
@@ -56,10 +58,14 @@ if (isset($_POST['ProcessDeletions'])){
 	if ($_POST['ZeroStock']=='on'){
 
 		prnMsg (_('Making stock for all parts and locations nil'),'info');
-
-		$sql = 'UPDATE locstock SET quantity=0';
-		$Result = DB_query($sql,$db);
 		$ErrMsg = _('The SQL to make all stocks zero failed because');
+		$result = DB_query('TRUNCATE TABLE stockserialitems',$db,$ErrMsg);
+		$result = DB_query('TRUNCATE TABLE stockserialmoves',$db,$ErrMsg);
+		$result = DB_query('TRUNCATE TABLE stockmovestaxes',$db,$ErrMsg);
+		$result = DB_query('TRUNCATE TABLE stockmoves',$db,$ErrMsg);
+		$sql = 'UPDATE locstock SET quantity=0';
+		$Result = DB_query($sql,$db,$ErrMsg);
+		
 
 	}
 	if ($_POST['ZeroSalesOrders']=='on'){
@@ -106,7 +112,7 @@ if (isset($_POST['ProcessDeletions'])){
 		$Result = DB_query('DELETE FROM grns',$db,$ErrMsg);
 
 		$ErrMsg = _('The SQL to update the transaction number of stock receipts has failed because');
-		$Result = DB_query('UPDATE SysTypes SET typeid =1 WHERE typeno =25',$db,$ErrMsg);
+		$Result = DB_query('UPDATE systypes SET typeid =1 WHERE typeno =25',$db,$ErrMsg);
 	}
 	if ($_POST['PurchOrders']=='on'){
 
@@ -122,18 +128,9 @@ if (isset($_POST['ProcessDeletions'])){
 		$Result = DB_query('UPDATE systypes SET typeno=0 WHERE typeid =18',$db,$ErrMsg);
 
 	}
-	if ($_POST['ReceiptStockMoves']=='on'){
+	
 
-		prnMsg (_('Deleting all stock movements for receipt of stocks'),'info');
-
-		$ErrMsg =_('The SQL to delete all stock movements for the receipt of goods failed because');
-		$Result = DB_query('DELETE FROM stockmoves WHERE type=25',$db,$ErrMsg);
-
-		$ErrMsg = _('The SQL to reinitialise to 0 the transaction number of stock adjustments and location transfers has failed because');
-		$Result = DB_query('UPDATE systypes SET typeno=0 WHERE typeid =16 OR typeid=17',$db,$ErrMsg);
-
-	}
-
+	prnMsg(_('It is necessary to re-post the remaining general ledger transactions for the general ledger to get back in sync with the transatiions that remain. This is an option from the Z_index.php page'),'warn');
 }
 
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?=' . $SID . "' METHOD=POST>";

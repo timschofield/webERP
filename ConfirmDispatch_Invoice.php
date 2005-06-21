@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -530,13 +530,12 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 	if ($_SESSION['CompanyRecord']==0){
 		/*The company data and preferences could not be retrieved for some reason */
-		echo '<P>';
 		prnMsg( _('The company infomation and preferences could not be retrieved') . ' - ' . _('see your system administrator'), 'error');
 		include('includes/footer.inc');
 		exit;
 	}
 
-/*Now need to check that the order details are the same as they were when they were read into the Items array. If they've changed then someone else may have invoiced them  - as modified for bug pointed out by Sherif 1-7-03*/
+/*Now need to check that the order details are the same as they were when they were read into the Items array. If they've changed then someone else may have invoiced them */
 
 	$SQL = "SELECT stkcode,
 			quantity,
@@ -675,7 +674,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 							taxamount)
 				VALUES (' . $DebtorTransID . ',
 					' . $TaxAuthID . ',
-					' . $TaxAmount . ')';
+					' . $TaxAmount/$_SESSION['CurrencyRate'] . ')';
 		
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction taxes records could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the debtor transaction taxes record was used');
@@ -834,7 +833,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				$AssResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 				while ($AssParts = DB_fetch_array($AssResult,$db)){
-					$StandardCost += $AssParts['Standard'];
+				
+					$StandardCost += $AssParts['standard'];
 					/* Need to get the current location quantity
 					will need it later for the stock movement */
 	                  		$SQL="SELECT locstock.quantity
@@ -898,7 +898,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				} /* end of assembly explosion and updates */
 
 				/*Update the cart with the recalculated standard cost from the explosion of the assembly's components*/
-				$_SESSION['Items']->LineItems[$OrderLine->StockID]->StandardCost = $StandardCost;
+				$_SESSION['Items']->LineItems[$OrderLine->LineNumber]->StandardCost = $StandardCost;
 				$OrderLine->StandardCost = $StandardCost;
 			} /* end of its an assembly */
 
@@ -921,10 +921,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						discountpercent,
 						standardcost,
 						newqoh,
-						narrative
-						)
-					VALUES (
-						'" . $OrderLine->StockID . "',
+						narrative )
+					VALUES ('" . $OrderLine->StockID . "',
 						10,
 						" . $InvoiceNo . ",
 						'" . $_SESSION['Items']->Location . "',
@@ -938,8 +936,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						" . $OrderLine->DiscountPercent . ",
 						" . $OrderLine->StandardCost . ",
 						" . ($QtyOnHandPrior - $OrderLine->QtyDispatched) . ",
-						'" . DB_escape_string($OrderLine->Narrative) . "'
-					)";
+						'" . DB_escape_string($OrderLine->Narrative) . "' )";
 			} else {
             // its an assembly or dummy and assemblies/dummies always have nil stock (by definition they are made up at the time of dispatch  so new qty on hand will be nil
 				$SQL = "INSERT INTO stockmoves (
@@ -956,10 +953,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						qty,
 						discountpercent,
 						standardcost,
-						narrative
-						)
-					VALUES (
-						'" . $OrderLine->StockID . "',
+						narrative )
+					VALUES ('" . $OrderLine->StockID . "',
 						10,
 						" . $InvoiceNo . ",
 						'" . $_SESSION['Items']->Location . "',
@@ -972,8 +967,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						" . -$OrderLine->QtyDispatched . ",
 						" . $OrderLine->DiscountPercent . ",
 						" . $OrderLine->StandardCost . ",
-						'" . addslashes($OrderLine->Narrative) . "'
-					)";
+						'" . addslashes($OrderLine->Narrative) . "')";
 			}
 
 
@@ -1035,7 +1029,6 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
 					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
-
 				}/* foreach controlled item in the serialitems array */
 			} /*end if the orderline is a controlled item */
 
@@ -1177,8 +1170,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 							periodno,
 							account, 
 							narrative,
-							amount
-						) 
+							amount) 
 					VALUES (
 						10, 
 						" . $InvoiceNo . ", 

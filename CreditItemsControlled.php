@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 
@@ -18,14 +18,13 @@ if ($_GET['CreditInvoice']=='Yes' OR $_POST['CreditInvoice']=='Yes'){
 }
 
 
-if (isset($_GET['StockID'])){
-	$StockID = $_GET['StockID'];
-} elseif (isset($_POST['StockID'])){
-	$StockID = $_POST['StockID'];
-} else {
-	echo '<CENTER><A HREF="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Select Credit Items'). '</A><BR>';
-	echo '<BR>';
-	prnMsg( _('This page can only be opened if a Line Item on a credit note has been selected') . '. ' . _('Please do that first'), 'error');
+if (isset($_GET['LineNo'])){
+        $LineNo = $_GET['LineNo'];
+} elseif (isset($_POST['LineNo'])){
+        $LineNo = $_POST['LineNo'];
+} else { 
+	echo '<CENTER><A HREF="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Select Credit Items'). '</A><BR><BR>';
+	prnMsg( _('This page can only be opened if a Line Item on a credit note has been selected.') . ' ' . _('Please do that first'), 'error');
 	echo '</CENTER>';
 	include('includes/footer.inc');
 	exit;
@@ -35,9 +34,8 @@ if (isset($_GET['StockID'])){
 
 if (!isset($_SESSION['CreditItems'])) {
 	/* This page can only be called with a credit note entry part entered */
-	echo '<CENTER><A HREF="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Select Credit Items'). '</A><BR>';
-	echo '<BR>';
-	prnMsg( _('This page can only be opened if a controlled credit note line item has been selected') . '. ' . _('Please do that first'),'error');
+	echo '<CENTER><A HREF="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Select Credit Items'). '</A><BR><BR>';
+	prnMsg( _('This page can only be opened if a controlled credit note line item has been selected.') . ' ' . _('Please do that first'),'error');
 	echo '</CENTER>';
 	include('includes/footer.inc');
 	exit;
@@ -45,7 +43,7 @@ if (!isset($_SESSION['CreditItems'])) {
 
 
 /*Save some typing by referring to the line item class object in short form */
-$LineItem = &$_SESSION['CreditItems']->LineItems[$StockID];
+$LineItem = &$_SESSION['CreditItems']->LineItems[$LineNo];
 
 //Make sure this item is really controlled
 if ( $LineItem->Controlled != 1 ){
@@ -78,18 +76,18 @@ if (isset($_GET['Delete'])){
 }
 
 echo '<CENTER><FORM METHOD="POST" ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
-echo '<INPUT TYPE=HIDDEN NAME="StockID" VALUE="'.$StockID.'">';
+echo '<INPUT TYPE=HIDDEN NAME="LineNo" VALUE="'.$LineNo.'">';
 
 if ($CreditLink == 'Credit_Invoice.php'){
 	echo '<INPUT TYPE=HIDDEN NAME="CreditInvoice" VALUE="Yes">';
 }
 
-echo '<br><a href="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Back to Credit Note Entry'). '</a>';
+echo '<BR><A HREF="' . $rootpath . '/' . $CreditLink . '?' . SID . '">'. _('Back to Credit Note Entry'). '</A>';
 
-echo '<br><FONT SIZE=2><B>'. _('Credit of Controlled Item'). ' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' '. _('from') .' '. $_SESSION['Items']->CustomerName . '</B></FONT>';
+echo '<BR><FONT SIZE=2><B>'. _('Credit of Controlled Item'). ' ' . $LineItem->StockID  . ' - ' . $LineItem->ItemDescription . ' '. _('from') .' '. $_SESSION['CreditItems']->CustomerName . '</B></FONT>';
 
 /** vars needed by InputSerialItem : **/
-$LocationOut = $_SESSION['Transfer']->StockLocationFrom;
+$LocationOut = $_SESSION['CreditItems']->Location;
 /* $_SESSION['CreditingControlledItems_MustExist'] is in config.php - Phil and Jesse disagree on the default treatment
 compromise position make it user configurable */
 $ItemMustExist = $_SESSION['CreditingControlledItems_MustExist'];
@@ -103,9 +101,9 @@ echo '</TR></TABLE>';
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for dispatch */
 if ($CreditLink == 'Credit_Invoice.php'){
-	$_SESSION['CreditItems']->LineItems[$StockID]->QtyDispatched = $TotalQuantity;
+	$_SESSION['CreditItems']->LineItems[$LineNo]->QtyDispatched = $TotalQuantity;
 } else {
-	$_SESSION['CreditItems']->LineItems[$StockID]->Quantity = $TotalQuantity;
+	$_SESSION['CreditItems']->LineItems[$LineNo]->Quantity = $TotalQuantity;
 }
 
 include('includes/footer.inc');

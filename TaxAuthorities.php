@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 
 $PageSecurity=15;
@@ -146,8 +146,8 @@ if (!isset($SelectedTaxAuthID)) {
 	echo "<tr>
 		<td class='tableheader'>" . _('ID') . "</td>
 		<td class='tableheader'>" . _('Description') . "</td>
-		<td class='tableheader'>" . _('Output Tax') . '<BR>' . _('GL Account') . "</td>
 		<td class='tableheader'>" . _('Input Tax') . '<BR>' . _('GL Account') . "</td>
+		<td class='tableheader'>" . _('Output Tax') . '<BR>' . _('GL Account') . "</td>
 		<td class='tableheader'>" . _('Bank') . "</td>
 		<td class='tableheader'>" . _('Bank Account') . "</td>
 		<td class='tableheader'>" . _('Bank Act Type') . "</td>
@@ -172,8 +172,8 @@ if (!isset($SelectedTaxAuthID)) {
 			</tr>',
 			$myrow[0],
 			$myrow[1],
-			$myrow[2],
 			$myrow[3],
+			$myrow[2],
 			$myrow[4],
 			$myrow[5],
 			$myrow[6],
