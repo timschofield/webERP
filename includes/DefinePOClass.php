@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /* Definition of the PurchOrder class to hold all the information for a purchase order and delivery
 */
 
@@ -48,7 +48,7 @@ Class PurchOrder {
 				$QtyInv=0,
 				$QtyRecd=0,
 				$GLActName='',
-				$DecimalPlaces=0){
+				$DecimalPlaces=2){
 
 		if ($Qty!=0 && isset($Qty)){
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /* Definition of the Supplier Transactions class to hold all the information for an accounts payable invoice or credit note
 */
 
@@ -13,9 +13,6 @@ Class SuppTrans {
 	var $CurrCode;
 	var $TermsDescription;
 	var $Terms;
-	var $TaxDescription;
-	var $TaxRate;
-	var $TaxGLCode;
 	var $GLLink_Creditors;
 	var $GRNAct;
 	var $CreditorsAct;
@@ -29,14 +26,56 @@ Class SuppTrans {
 	var $OvGST;
 	var $GLCodesCounter=0;
 	var $ShiptsCounter=0;
+	var $TaxGroup;
+	var $LocalTaxProvince;
+	var $TaxGroupDescription;
+	var $Taxes;
 
 	function SuppTrans(){
 	/*Constructor function initialises a new Supplier Transaction object */
 		$this->GRNs = array();
 		$this->GLCodes = array();
 		$this->Shipts = array();
+		$this->Taxes = array();
 	}
+	
+	function GetTaxes () {
+		
+		global $db;
+		
+		/*Gets the Taxes and rates applicable to the tax group of the supplier 
+		and SESSION['DefaultTaxCategory'] and the taxprovince of the location that the user is setup to use*/
 
+		$SQL = "SELECT taxgrouptaxes.calculationorder,
+					taxauthorities.description,
+					taxgrouptaxes.taxauthid,
+					taxauthorities.purchtaxglaccount,
+					taxgrouptaxes.taxontax,
+					taxauthrates.taxrate
+			FROM taxauthrates INNER JOIN taxgrouptaxes ON
+				taxauthrates.taxauthority=taxgrouptaxes.taxauthid
+				INNER JOIN taxauthorities ON
+				taxauthrates.taxauthority=taxauthorities.taxid
+			WHERE taxgrouptaxes.taxgroupid=" . $this->TaxGroup . " 
+			AND taxauthrates.dispatchtaxprovince=" . $this->LocalTaxProvince . " 
+			AND taxauthrates.taxcatid = " . $_SESSION['DefaultTaxCategory'] . "
+			ORDER BY taxgrouptaxes.calculationorder";
+
+		$ErrMsg = _('The taxes and rates for this item could not be retreived because');
+		$GetTaxRatesResult = DB_query($SQL,$db,$ErrMsg);
+		
+		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
+		
+			$this->Taxes[$myrow['calculationorder']] = new Tax($myrow['calculationorder'],
+											$myrow['taxauthid'],
+											$myrow['description'],
+											$myrow['taxrate'],
+											$myrow['taxontax'],
+											$myrow['purchtaxglaccount']);
+		}
+	} //end method GetTaxes()
+	
+	
 	function Add_GRN_To_Trans($GRNNo, $PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit, $ShiptRef, $JobRef, $GLCode){
 		if ($This_QuantityInv!=0 && isset($This_QuantityInv)){
 			$this->GRNs[$GRNNo] = new GRNs($GRNNo, $PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit, $ShiptRef, $JobRef, $GLCode);
@@ -55,7 +94,21 @@ Class SuppTrans {
 
 	function Copy_GRN_To_Trans($GRNSrc){
 		if ($GRNSrc->This_QuantityInv!=0 && isset($GRNSrc->This_QuantityInv)){
-			$this->GRNs[$GRNSrc->GRNNo] = new GRNs($GRNSrc->GRNNo, $GRNSrc->PODetailItem, $GRNSrc->ItemCode, $GRNSrc->ItemDescription, $GRNSrc->QtyRecd, $GRNSrc->Prev_QuantityInv, $GRNSrc->This_QuantityInv, $GRNSrc->OrderPrice, $GRNSrc->ChgPrice, $GRNSrc->Complete, $GRNSrc->StdCostUnit, $GRNSrc->ShiptRef, $GRNSrc->JobRef, $GRNSrc->GLCode);
+			
+			$this->GRNs[$GRNSrc->GRNNo] = new GRNs($GRNSrc->GRNNo, 
+								$GRNSrc->PODetailItem, 
+								$GRNSrc->ItemCode, 
+								$GRNSrc->ItemDescription, 
+								$GRNSrc->QtyRecd, 
+								$GRNSrc->Prev_QuantityInv, 
+								$GRNSrc->This_QuantityInv, 
+								$GRNSrc->OrderPrice, 
+								$GRNSrc->ChgPrice, 
+								$GRNSrc->Complete, 
+								$GRNSrc->StdCostUnit, 
+								$GRNSrc->ShiptRef, 
+								$GRNSrc->JobRef, 
+								$GRNSrc->GLCode);
 			Return 1;
 		}
 		Return 0;
@@ -63,7 +116,12 @@ Class SuppTrans {
 
 	function Add_GLCodes_To_Trans($GLCode, $GLActName, $Amount, $JobRef, $Narrative){
 		if ($Amount!=0 AND isset($Amount)){
-			$this->GLCodes[$this->GLCodesCounter] = new GLCodes($this->GLCodesCounter, $GLCode, $GLActName, $Amount, $JobRef, $Narrative);
+			$this->GLCodes[$this->GLCodesCounter] = new GLCodes($this->GLCodesCounter, 
+										$GLCode, 
+										$GLActName, 
+										$Amount, 
+										$JobRef, 
+										$Narrative);
 			$this->GLCodesCounter++;
 			Return 1;
 		}
@@ -72,7 +130,9 @@ Class SuppTrans {
 
 	function Add_Shipt_To_Trans($ShiptRef, $Amount){
 		if ($Amount!=0){
-			$this->Shipts[$this->ShiptCounter] = new Shipment($this->ShiptCounter, $ShiptRef, $Amount);
+			$this->Shipts[$this->ShiptCounter] = new Shipment($this->ShiptCounter, 
+										$ShiptRef, 
+										$Amount);
 			$this->ShiptCounter++;
 			Return 1;
 		}
@@ -181,6 +241,31 @@ Class Shipment {
 		$this->Counter = $Counter;
 		$this->ShiptRef = $ShiptRef;
 		$this->Amount = $Amount;
+	}
+}
+
+Class Tax {
+	Var $TaxCalculationOrder;  /*the index for the array */
+	Var $TaxAuthID;
+	Var $TaxAuthDescription;
+	Var $TaxRate;
+	Var $TaxOnTax;
+	Var $TaxGLCode;
+	Var $TaxOvAmount;
+		
+	function Tax ($TaxCalculationOrder, 
+			$TaxAuthID, 
+			$TaxAuthDescription, 
+			$TaxRate, 
+			$TaxOnTax, 
+			$TaxGLCode){
+			
+		$this->TaxCalculationOrder = $TaxCalculationOrder;
+		$this->TaxAuthID = $TaxAuthID;
+		$this->TaxAuthDescription = $TaxAuthDescription;
+		$this->TaxRate =  $TaxRate;
+		$this->TaxOnTax = $TaxOnTax;
+		$this->TaxGLCode = $TaxGLCode;
 	}
 }
 ?>

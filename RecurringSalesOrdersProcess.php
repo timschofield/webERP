@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 /*need to allow this script to run from Cron or windows scheduler */
 $AllowAnyone = true;
@@ -9,6 +9,7 @@ include('includes/session.inc');
 $title = _('Recurring Orders Process');
 
 include('includes/header.inc');
+include('includes/SQL_CommonFunctions.inc');
 include('includes/GetSalesTransGLCodes.inc');
 include('includes/htmlMimeMail.php');
 
@@ -526,9 +527,6 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 			}
 		} /*end of if Sales and GL integrated */
-
-
-
 
 	/*Update order header for invoice charged on */
 		$SQL = "UPDATE salesorders SET comments = CONCAT(comments,' Inv ','" . $InvoiceNo . "') WHERE orderno= " . $OrderNo;

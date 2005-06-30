@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -371,6 +371,7 @@ Class LineDetails {
 	Var $Narrative;
 	Var $TaxCategory;
 	Var $Taxes;
+	Var $WorkOrderNo;
 
 	function LineDetails ($LineNumber,
 				$StockItem,
@@ -419,6 +420,7 @@ Class LineDetails {
 		$this->Narrative = $Narrative;
 		$this->Taxes = array();
 		$this->TaxCategory = $TaxCategory;
+		$this->WorkOrderNo = 0;
 	} //end constructor function for LineDetails		
 		
 }

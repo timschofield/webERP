@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 
 $PageSecurity = 8;
@@ -64,8 +64,13 @@ echo '<CENTER><TABLE>
 
 /* End of the Form  rest of script is what happens if the show button is hit*/
 
-if (isset($_POST['Show'])){
-
+if (isset($_POST['Show']) ){
+	
+	if (!isset($SelectedPeriod)){
+		prnMsg(_('A period or range of periods must be selected from the list box'),'info');
+		include('includes/footer.inc');
+		exit;
+	}
 	/*Is the account a balance sheet or a profit and loss account */
 	$result = DB_query("SELECT pandl
 				FROM accountgroups

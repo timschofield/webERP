@@ -474,8 +474,8 @@ CREATE TABLE `debtortranstaxes` (
   `taxamount` double NOT NULL default '0',
   PRIMARY KEY  (`debtortransid`,`taxauthid`),
   KEY `taxauthid` (`taxauthid`),
-  CONSTRAINT `debtortranstaxes_ibfk_2` FOREIGN KEY (`debtortransid`) REFERENCES `debtortrans` (`id`),
-  CONSTRAINT `debtortranstaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`)
+  CONSTRAINT `debtortranstaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`),
+  CONSTRAINT `debtortranstaxes_ibfk_2` FOREIGN KEY (`debtortransid`) REFERENCES `debtortrans` (`id`)
 ) TYPE=InnoDB;
 
 --
@@ -1527,6 +1527,20 @@ CREATE TABLE `supptrans` (
 ) TYPE=InnoDB;
 
 --
+-- Table structure for table `supptranstaxes`
+--
+
+CREATE TABLE `supptranstaxes` (
+  `supptransid` int(11) NOT NULL default '0',
+  `taxauthid` tinyint(4) NOT NULL default '0',
+  `taxamount` double NOT NULL default '0',
+  PRIMARY KEY  (`supptransid`,`taxauthid`),
+  KEY `taxauthid` (`taxauthid`),
+  CONSTRAINT `supptranstaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`),
+  CONSTRAINT `supptranstaxes_ibfk_2` FOREIGN KEY (`supptransid`) REFERENCES `supptrans` (`id`)
+) TYPE=InnoDB;
+
+--
 -- Table structure for table `systypes`
 --
 
@@ -2075,24 +2089,24 @@ INSERT INTO `systypes` VALUES (0,'Journal - GL',0);
 INSERT INTO `systypes` VALUES (1,'Payment - GL',0);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',6);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',3);
 INSERT INTO `systypes` VALUES (11,'Credit Note',0);
-INSERT INTO `systypes` VALUES (12,'Receipt',1);
+INSERT INTO `systypes` VALUES (12,'Receipt',0);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',0);
-INSERT INTO `systypes` VALUES (17,'Stock Adjustment',1);
+INSERT INTO `systypes` VALUES (17,'Stock Adjustment',8);
 INSERT INTO `systypes` VALUES (18,'Purchase Order',0);
-INSERT INTO `systypes` VALUES (20,'Purchase Invoice',0);
-INSERT INTO `systypes` VALUES (21,'Debit Note',0);
+INSERT INTO `systypes` VALUES (20,'Purchase Invoice',3);
+INSERT INTO `systypes` VALUES (21,'Debit Note',1);
 INSERT INTO `systypes` VALUES (22,'Creditors Payment',0);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
-INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',0);
+INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',1);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',0);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',0);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',0);
 INSERT INTO `systypes` VALUES (30,'Sales Order',0);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',10);
-INSERT INTO `systypes` VALUES (35,'Cost Update',0);
+INSERT INTO `systypes` VALUES (35,'Cost Update',2);
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
 INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',0);
 
@@ -2105,5 +2119,366 @@ INSERT INTO `taxauthorities` VALUES (5,'Sales Tax',890000,890000,'','','','');
 INSERT INTO `taxauthorities` VALUES (11,'Canadian GST',890000,890000,'','','','');
 INSERT INTO `taxauthorities` VALUES (12,'Ontario PST',890000,890000,'','','','');
 INSERT INTO `taxauthorities` VALUES (13,'UK VAT',890000,890000,'','','','');
+
+--
+-- Dumping data for table `taxgroups`
+--
+
+INSERT INTO `taxgroups` VALUES (1,'Default tax group');
+INSERT INTO `taxgroups` VALUES (2,'Ontario');
+INSERT INTO `taxgroups` VALUES (3,'UK Inland Revenue');
+
+--
+-- Dumping data for table `taxauthrates`
+--
+
+INSERT INTO `taxauthrates` VALUES (1,1,1,0.1);
+INSERT INTO `taxauthrates` VALUES (1,1,2,0);
+INSERT INTO `taxauthrates` VALUES (5,1,1,0.2);
+INSERT INTO `taxauthrates` VALUES (5,1,2,0.35);
+INSERT INTO `taxauthrates` VALUES (11,1,1,0.07);
+INSERT INTO `taxauthrates` VALUES (11,1,2,0.12);
+INSERT INTO `taxauthrates` VALUES (11,1,3,0);
+INSERT INTO `taxauthrates` VALUES (12,1,1,0.05);
+INSERT INTO `taxauthrates` VALUES (12,1,2,0.075);
+INSERT INTO `taxauthrates` VALUES (12,1,3,0);
+INSERT INTO `taxauthrates` VALUES (13,1,1,0);
+INSERT INTO `taxauthrates` VALUES (13,1,2,0);
+INSERT INTO `taxauthrates` VALUES (13,1,3,0);
+
+--
+-- Dumping data for table `taxcategories`
+--
+
+INSERT INTO `taxcategories` VALUES (1,'Taxable supply');
+INSERT INTO `taxcategories` VALUES (2,'Luxury Items');
+INSERT INTO `taxcategories` VALUES (3,'Exempt');
+
+--
+-- Dumping data for table `www_users`
+--
+
+INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB','','');
+INSERT INTO `www_users` VALUES ('Fred','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Fred Bloggs','','','','DEN',1,'2005-04-29 22:41:10','','A4','1,1,0,1,1,0,1,1,',0,50,'fresh','en_GB','','');
+INSERT INTO `www_users` VALUES ('testy','weberp','Test Remote User','GRANHR','','','DEN',7,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en','','');
+
+--
+-- Dumping data for table `edi_orders_segs`
+--
+
+INSERT INTO `edi_orders_segs` VALUES (1,'UNB',0,1);
+INSERT INTO `edi_orders_segs` VALUES (2,'UNH',0,1);
+INSERT INTO `edi_orders_segs` VALUES (3,'BGM',0,1);
+INSERT INTO `edi_orders_segs` VALUES (4,'DTM',0,35);
+INSERT INTO `edi_orders_segs` VALUES (5,'PAI',0,1);
+INSERT INTO `edi_orders_segs` VALUES (6,'ALI',0,5);
+INSERT INTO `edi_orders_segs` VALUES (7,'FTX',0,99);
+INSERT INTO `edi_orders_segs` VALUES (8,'RFF',1,1);
+INSERT INTO `edi_orders_segs` VALUES (9,'DTM',1,5);
+INSERT INTO `edi_orders_segs` VALUES (10,'NAD',2,1);
+INSERT INTO `edi_orders_segs` VALUES (11,'LOC',2,99);
+INSERT INTO `edi_orders_segs` VALUES (12,'FII',2,5);
+INSERT INTO `edi_orders_segs` VALUES (13,'RFF',3,1);
+INSERT INTO `edi_orders_segs` VALUES (14,'CTA',5,1);
+INSERT INTO `edi_orders_segs` VALUES (15,'COM',5,5);
+INSERT INTO `edi_orders_segs` VALUES (16,'TAX',6,1);
+INSERT INTO `edi_orders_segs` VALUES (17,'MOA',6,1);
+INSERT INTO `edi_orders_segs` VALUES (18,'CUX',7,1);
+INSERT INTO `edi_orders_segs` VALUES (19,'DTM',7,5);
+INSERT INTO `edi_orders_segs` VALUES (20,'PAT',8,1);
+INSERT INTO `edi_orders_segs` VALUES (21,'DTM',8,5);
+INSERT INTO `edi_orders_segs` VALUES (22,'PCD',8,1);
+INSERT INTO `edi_orders_segs` VALUES (23,'MOA',9,1);
+INSERT INTO `edi_orders_segs` VALUES (24,'TDT',10,1);
+INSERT INTO `edi_orders_segs` VALUES (25,'LOC',11,1);
+INSERT INTO `edi_orders_segs` VALUES (26,'DTM',11,5);
+INSERT INTO `edi_orders_segs` VALUES (27,'TOD',12,1);
+INSERT INTO `edi_orders_segs` VALUES (28,'LOC',12,2);
+INSERT INTO `edi_orders_segs` VALUES (29,'PAC',13,1);
+INSERT INTO `edi_orders_segs` VALUES (30,'PCI',14,1);
+INSERT INTO `edi_orders_segs` VALUES (31,'RFF',14,1);
+INSERT INTO `edi_orders_segs` VALUES (32,'DTM',14,5);
+INSERT INTO `edi_orders_segs` VALUES (33,'GIN',14,10);
+INSERT INTO `edi_orders_segs` VALUES (34,'EQD',15,1);
+INSERT INTO `edi_orders_segs` VALUES (35,'ALC',19,1);
+INSERT INTO `edi_orders_segs` VALUES (36,'ALI',19,5);
+INSERT INTO `edi_orders_segs` VALUES (37,'DTM',19,5);
+INSERT INTO `edi_orders_segs` VALUES (38,'QTY',20,1);
+INSERT INTO `edi_orders_segs` VALUES (39,'RNG',20,1);
+INSERT INTO `edi_orders_segs` VALUES (40,'PCD',21,1);
+INSERT INTO `edi_orders_segs` VALUES (41,'RNG',21,1);
+INSERT INTO `edi_orders_segs` VALUES (42,'MOA',22,1);
+INSERT INTO `edi_orders_segs` VALUES (43,'RNG',22,1);
+INSERT INTO `edi_orders_segs` VALUES (44,'RTE',23,1);
+INSERT INTO `edi_orders_segs` VALUES (45,'RNG',23,1);
+INSERT INTO `edi_orders_segs` VALUES (46,'TAX',24,1);
+INSERT INTO `edi_orders_segs` VALUES (47,'MOA',24,1);
+INSERT INTO `edi_orders_segs` VALUES (48,'LIN',28,1);
+INSERT INTO `edi_orders_segs` VALUES (49,'PIA',28,25);
+INSERT INTO `edi_orders_segs` VALUES (50,'IMD',28,99);
+INSERT INTO `edi_orders_segs` VALUES (51,'MEA',28,99);
+INSERT INTO `edi_orders_segs` VALUES (52,'QTY',28,99);
+INSERT INTO `edi_orders_segs` VALUES (53,'ALI',28,5);
+INSERT INTO `edi_orders_segs` VALUES (54,'DTM',28,35);
+INSERT INTO `edi_orders_segs` VALUES (55,'MOA',28,10);
+INSERT INTO `edi_orders_segs` VALUES (56,'GIN',28,127);
+INSERT INTO `edi_orders_segs` VALUES (57,'QVR',28,1);
+INSERT INTO `edi_orders_segs` VALUES (58,'FTX',28,99);
+INSERT INTO `edi_orders_segs` VALUES (59,'PRI',32,1);
+INSERT INTO `edi_orders_segs` VALUES (60,'CUX',32,1);
+INSERT INTO `edi_orders_segs` VALUES (61,'DTM',32,5);
+INSERT INTO `edi_orders_segs` VALUES (62,'RFF',33,1);
+INSERT INTO `edi_orders_segs` VALUES (63,'DTM',33,5);
+INSERT INTO `edi_orders_segs` VALUES (64,'PAC',34,1);
+INSERT INTO `edi_orders_segs` VALUES (65,'QTY',34,5);
+INSERT INTO `edi_orders_segs` VALUES (66,'PCI',36,1);
+INSERT INTO `edi_orders_segs` VALUES (67,'RFF',36,1);
+INSERT INTO `edi_orders_segs` VALUES (68,'DTM',36,5);
+INSERT INTO `edi_orders_segs` VALUES (69,'GIN',36,10);
+INSERT INTO `edi_orders_segs` VALUES (70,'LOC',37,1);
+INSERT INTO `edi_orders_segs` VALUES (71,'QTY',37,1);
+INSERT INTO `edi_orders_segs` VALUES (72,'DTM',37,5);
+INSERT INTO `edi_orders_segs` VALUES (73,'TAX',38,1);
+INSERT INTO `edi_orders_segs` VALUES (74,'MOA',38,1);
+INSERT INTO `edi_orders_segs` VALUES (75,'NAD',39,1);
+INSERT INTO `edi_orders_segs` VALUES (76,'CTA',42,1);
+INSERT INTO `edi_orders_segs` VALUES (77,'COM',42,5);
+INSERT INTO `edi_orders_segs` VALUES (78,'ALC',43,1);
+INSERT INTO `edi_orders_segs` VALUES (79,'ALI',43,5);
+INSERT INTO `edi_orders_segs` VALUES (80,'DTM',43,5);
+INSERT INTO `edi_orders_segs` VALUES (81,'QTY',44,1);
+INSERT INTO `edi_orders_segs` VALUES (82,'RNG',44,1);
+INSERT INTO `edi_orders_segs` VALUES (83,'PCD',45,1);
+INSERT INTO `edi_orders_segs` VALUES (84,'RNG',45,1);
+INSERT INTO `edi_orders_segs` VALUES (85,'MOA',46,1);
+INSERT INTO `edi_orders_segs` VALUES (86,'RNG',46,1);
+INSERT INTO `edi_orders_segs` VALUES (87,'RTE',47,1);
+INSERT INTO `edi_orders_segs` VALUES (88,'RNG',47,1);
+INSERT INTO `edi_orders_segs` VALUES (89,'TAX',48,1);
+INSERT INTO `edi_orders_segs` VALUES (90,'MOA',48,1);
+INSERT INTO `edi_orders_segs` VALUES (91,'TDT',49,1);
+INSERT INTO `edi_orders_segs` VALUES (92,'UNS',50,1);
+INSERT INTO `edi_orders_segs` VALUES (93,'MOA',50,1);
+INSERT INTO `edi_orders_segs` VALUES (94,'CNT',50,1);
+INSERT INTO `edi_orders_segs` VALUES (95,'UNT',50,1);
+
+--
+-- Dumping data for table `edi_orders_seg_groups`
+--
+
+INSERT INTO `edi_orders_seg_groups` VALUES (0,1,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (1,9999,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (2,99,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (3,99,2);
+INSERT INTO `edi_orders_seg_groups` VALUES (5,5,2);
+INSERT INTO `edi_orders_seg_groups` VALUES (6,5,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (7,5,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (8,10,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (9,9999,8);
+INSERT INTO `edi_orders_seg_groups` VALUES (10,10,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (11,10,10);
+INSERT INTO `edi_orders_seg_groups` VALUES (12,5,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (13,99,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (14,5,13);
+INSERT INTO `edi_orders_seg_groups` VALUES (15,10,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (19,99,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (20,1,19);
+INSERT INTO `edi_orders_seg_groups` VALUES (21,1,19);
+INSERT INTO `edi_orders_seg_groups` VALUES (22,2,19);
+INSERT INTO `edi_orders_seg_groups` VALUES (23,1,19);
+INSERT INTO `edi_orders_seg_groups` VALUES (24,5,19);
+INSERT INTO `edi_orders_seg_groups` VALUES (28,200000,0);
+INSERT INTO `edi_orders_seg_groups` VALUES (32,25,28);
+INSERT INTO `edi_orders_seg_groups` VALUES (33,9999,28);
+INSERT INTO `edi_orders_seg_groups` VALUES (34,99,28);
+INSERT INTO `edi_orders_seg_groups` VALUES (36,5,34);
+INSERT INTO `edi_orders_seg_groups` VALUES (37,9999,28);
+INSERT INTO `edi_orders_seg_groups` VALUES (38,10,28);
+INSERT INTO `edi_orders_seg_groups` VALUES (39,999,28);
+INSERT INTO `edi_orders_seg_groups` VALUES (42,5,39);
+INSERT INTO `edi_orders_seg_groups` VALUES (43,99,28);
+INSERT INTO `edi_orders_seg_groups` VALUES (44,1,43);
+INSERT INTO `edi_orders_seg_groups` VALUES (45,1,43);
+INSERT INTO `edi_orders_seg_groups` VALUES (46,2,43);
+INSERT INTO `edi_orders_seg_groups` VALUES (47,1,43);
+INSERT INTO `edi_orders_seg_groups` VALUES (48,5,43);
+INSERT INTO `edi_orders_seg_groups` VALUES (49,10,28);
+INSERT INTO `edi_orders_seg_groups` VALUES (50,1,0);
+
+--
+-- Dumping data for table `config`
+--
+
+INSERT INTO `config` VALUES ('AllowSalesOfZeroCostItems','0');
+INSERT INTO `config` VALUES ('AutoDebtorNo','0');
+INSERT INTO `config` VALUES ('CheckCreditLimits','0');
+INSERT INTO `config` VALUES ('Check_Price_Charged_vs_Order_Price','1');
+INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
+INSERT INTO `config` VALUES ('CountryOfOperation','USD');
+INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
+INSERT INTO `config` VALUES ('DB_Maintenance','1');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-06-30');
+INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
+INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
+INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
+INSERT INTO `config` VALUES ('DefaultDisplayRecordsMax','50');
+INSERT INTO `config` VALUES ('DefaultPriceList','WS');
+INSERT INTO `config` VALUES ('DefaultTaxCategory','1');
+INSERT INTO `config` VALUES ('DefaultTheme','fresh');
+INSERT INTO `config` VALUES ('Default_Shipper','1');
+INSERT INTO `config` VALUES ('DispatchCutOffTime','14');
+INSERT INTO `config` VALUES ('DoFreightCalc','0');
+INSERT INTO `config` VALUES ('EDIHeaderMsgId','D:01B:UN:EAN010');
+INSERT INTO `config` VALUES ('EDIReference','WEBERP');
+INSERT INTO `config` VALUES ('EDI_Incoming_Orders','EDI_Incoming_Orders');
+INSERT INTO `config` VALUES ('EDI_MsgPending','EDI_Pending');
+INSERT INTO `config` VALUES ('EDI_MsgSent','EDI_Sent');
+INSERT INTO `config` VALUES ('FreightChargeAppliesIfLessThan','1000');
+INSERT INTO `config` VALUES ('FreightTaxCategory','1');
+INSERT INTO `config` VALUES ('HTTPS_Only','0');
+INSERT INTO `config` VALUES ('MaxImageSize','300');
+INSERT INTO `config` VALUES ('NumberOfPeriodsOfStockUsage','12');
+INSERT INTO `config` VALUES ('OverChargeProportion','30');
+INSERT INTO `config` VALUES ('OverReceiveProportion','20');
+INSERT INTO `config` VALUES ('PackNoteFormat','1');
+INSERT INTO `config` VALUES ('PageLength','48');
+INSERT INTO `config` VALUES ('part_pics_dir','part_pics');
+INSERT INTO `config` VALUES ('PastDueDays1','30');
+INSERT INTO `config` VALUES ('PastDueDays2','60');
+INSERT INTO `config` VALUES ('PO_AllowSameItemMultipleTimes','1');
+INSERT INTO `config` VALUES ('QuickEntries','10');
+INSERT INTO `config` VALUES ('RadioBeaconFileCounter','/home/RadioBeacon/FileCounter');
+INSERT INTO `config` VALUES ('RadioBeaconFTP_user_name','RadioBeacon ftp server user name');
+INSERT INTO `config` VALUES ('RadioBeaconHomeDir','/home/RadioBeacon');
+INSERT INTO `config` VALUES ('RadioBeaconStockLocation','BL');
+INSERT INTO `config` VALUES ('RadioBraconFTP_server','192.168.2.2');
+INSERT INTO `config` VALUES ('RadioBreaconFilePrefix','ORDXX');
+INSERT INTO `config` VALUES ('RadionBeaconFTP_user_pass','Radio Beacon remote ftp server password');
+INSERT INTO `config` VALUES ('reports_dir','reports');
+INSERT INTO `config` VALUES ('RomalpaClause','Ownership will not pass to the buyer until the goods have been paid for in full.');
+INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
+INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
+INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','Tax Ref');
+INSERT INTO `config` VALUES ('YearEnd','3');
+
+--
+-- Dumping data for table `unitsofmeasure`
+--
+
+INSERT INTO `unitsofmeasure` VALUES (1,'each');
+INSERT INTO `unitsofmeasure` VALUES (2,'metres');
+INSERT INTO `unitsofmeasure` VALUES (3,'kgs');
+INSERT INTO `unitsofmeasure` VALUES (4,'litres');
+INSERT INTO `unitsofmeasure` VALUES (5,'length');
+INSERT INTO `unitsofmeasure` VALUES (6,'pack');
+
+--
+-- Dumping data for table `paymentmethods`
+--
+
+INSERT INTO `paymentmethods` VALUES (1,'Cheque',1,1);
+INSERT INTO `paymentmethods` VALUES (2,'Cash',1,1);
+INSERT INTO `paymentmethods` VALUES (3,'Direct Credit',1,1);
+
+--
+-- Dumping data for table `securitygroups`
+--
+
+INSERT INTO `securitygroups` VALUES (1,1);
+INSERT INTO `securitygroups` VALUES (1,2);
+INSERT INTO `securitygroups` VALUES (2,1);
+INSERT INTO `securitygroups` VALUES (2,2);
+INSERT INTO `securitygroups` VALUES (2,11);
+INSERT INTO `securitygroups` VALUES (3,1);
+INSERT INTO `securitygroups` VALUES (3,2);
+INSERT INTO `securitygroups` VALUES (3,3);
+INSERT INTO `securitygroups` VALUES (3,4);
+INSERT INTO `securitygroups` VALUES (3,5);
+INSERT INTO `securitygroups` VALUES (3,11);
+INSERT INTO `securitygroups` VALUES (4,1);
+INSERT INTO `securitygroups` VALUES (4,2);
+INSERT INTO `securitygroups` VALUES (4,5);
+INSERT INTO `securitygroups` VALUES (5,1);
+INSERT INTO `securitygroups` VALUES (5,2);
+INSERT INTO `securitygroups` VALUES (5,3);
+INSERT INTO `securitygroups` VALUES (5,11);
+INSERT INTO `securitygroups` VALUES (6,1);
+INSERT INTO `securitygroups` VALUES (6,2);
+INSERT INTO `securitygroups` VALUES (6,3);
+INSERT INTO `securitygroups` VALUES (6,4);
+INSERT INTO `securitygroups` VALUES (6,5);
+INSERT INTO `securitygroups` VALUES (6,6);
+INSERT INTO `securitygroups` VALUES (6,7);
+INSERT INTO `securitygroups` VALUES (6,8);
+INSERT INTO `securitygroups` VALUES (6,9);
+INSERT INTO `securitygroups` VALUES (6,10);
+INSERT INTO `securitygroups` VALUES (6,11);
+INSERT INTO `securitygroups` VALUES (7,1);
+INSERT INTO `securitygroups` VALUES (8,1);
+INSERT INTO `securitygroups` VALUES (8,2);
+INSERT INTO `securitygroups` VALUES (8,3);
+INSERT INTO `securitygroups` VALUES (8,4);
+INSERT INTO `securitygroups` VALUES (8,5);
+INSERT INTO `securitygroups` VALUES (8,6);
+INSERT INTO `securitygroups` VALUES (8,7);
+INSERT INTO `securitygroups` VALUES (8,8);
+INSERT INTO `securitygroups` VALUES (8,9);
+INSERT INTO `securitygroups` VALUES (8,10);
+INSERT INTO `securitygroups` VALUES (8,11);
+INSERT INTO `securitygroups` VALUES (8,12);
+INSERT INTO `securitygroups` VALUES (8,13);
+INSERT INTO `securitygroups` VALUES (8,14);
+INSERT INTO `securitygroups` VALUES (8,15);
+
+--
+-- Dumping data for table `securitytokens`
+--
+
+INSERT INTO `securitytokens` VALUES (1,'Order Entry/Inquiries customer access only');
+INSERT INTO `securitytokens` VALUES (2,'Basic Reports and Inquiries with selection options');
+INSERT INTO `securitytokens` VALUES (3,'Credit notes and AR management');
+INSERT INTO `securitytokens` VALUES (4,'Purchasing data/PO Entry/Reorder Levels');
+INSERT INTO `securitytokens` VALUES (5,'Accounts Payable');
+INSERT INTO `securitytokens` VALUES (6,'Not Used');
+INSERT INTO `securitytokens` VALUES (7,'Bank Reconciliations');
+INSERT INTO `securitytokens` VALUES (8,'General ledger reports/inquiries');
+INSERT INTO `securitytokens` VALUES (9,'Not Used');
+INSERT INTO `securitytokens` VALUES (10,'General Ledger Maintenance, stock valuation & Configuration');
+INSERT INTO `securitytokens` VALUES (11,'Inventory Management and Pricing');
+INSERT INTO `securitytokens` VALUES (12,'Unknown');
+INSERT INTO `securitytokens` VALUES (13,'Unknown');
+INSERT INTO `securitytokens` VALUES (14,'Unknown');
+INSERT INTO `securitytokens` VALUES (15,'User Management and System Administration');
+
+--
+-- Dumping data for table `securityroles`
+--
+
+INSERT INTO `securityroles` VALUES (1,'Inquiries/Order Entry');
+INSERT INTO `securityroles` VALUES (2,'Manufac/Stock Admin');
+INSERT INTO `securityroles` VALUES (3,'Purchasing Officer');
+INSERT INTO `securityroles` VALUES (4,'AP Clerk');
+INSERT INTO `securityroles` VALUES (5,'AR Clerk');
+INSERT INTO `securityroles` VALUES (6,'Accountant');
+INSERT INTO `securityroles` VALUES (7,'Customer Log On Only');
+INSERT INTO `securityroles` VALUES (8,'System Administrator');
+
+--
+-- Dumping data for table `accountsection`
+--
+
+INSERT INTO `accountsection` VALUES (1,'Income');
+INSERT INTO `accountsection` VALUES (2,'Cost Of Sales');
+INSERT INTO `accountsection` VALUES (5,'Overheads');
+INSERT INTO `accountsection` VALUES (10,'Fixed Assets');
+INSERT INTO `accountsection` VALUES (20,'Amounts Receivable');
+INSERT INTO `accountsection` VALUES (30,'Amounts Payable');
+INSERT INTO `accountsection` VALUES (50,'Financed By');
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;

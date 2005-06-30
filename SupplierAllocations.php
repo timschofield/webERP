@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 /*
 	This page can be called with...
@@ -234,7 +234,7 @@ if (isset($_POST['UpdateDatabase'])){
 						'" . $_SESSION['Alloc']->TransDate . "', 
 						" . $PeriodNo . ', 
 						' . $_SESSION['CompanyRecord']['creditorsact'] . ', 
-						' . _('Exchg Diff') . ', 
+						"' . _('Exchg Diff') . '", 
 						' . -$MovtInDiffOnExch . ')';
 
 		      $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ' : ' .

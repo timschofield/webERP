@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -42,15 +42,15 @@ if (isset($_GET['SupplierID'])){
 			paymentterms.dayinfollowingmonth,
 	 		suppliers.currcode,
 			currencies.rate AS exrate,
-			taxauthorities.description AS taxdesc,
-	 		taxauthorities.taxid,
-			taxauthorities.purchtaxglaccount AS taxglcode
+			suppliers.taxgroupid,
+			taxgroups.taxgroupdescription
 	 	FROM suppliers,
+			taxgroups,
 			currencies,
 			paymentterms,
 			taxauthorities
-	 	WHERE suppliers.taxauthority = taxauthorities.taxid
-	 	AND suppliers.currcode=currencies.currabrev
+	 	WHERE suppliers.taxgroupid=taxgroups.taxgroupid
+		AND suppliers.currcode=currencies.currabrev
 	 	AND suppliers.paymentterms=paymentterms.termsindicator
 	 	AND suppliers.supplierid = '" . $_GET['SupplierID'] . "'";
 
@@ -66,30 +66,32 @@ if (isset($_GET['SupplierID'])){
 	$_SESSION['SuppTrans']->TermsDescription = $myrow['terms'];
 	$_SESSION['SuppTrans']->CurrCode = $myrow['currcode'];
 	$_SESSION['SuppTrans']->ExRate = $myrow['exrate'];
-
+	$_SESSION['SuppTrans']->TaxGroup = $myrow['taxgroupid'];
+	$_SESSION['SuppTrans']->TaxGroupDescription = $myrow['taxgroupdescription'];
+	
 	if ($myrow['daysbeforedue'] == 0){
 		 $_SESSION['SuppTrans']->Terms = '1' . $myrow['dayinfollowingmonth'];
 	} else {
 		 $_SESSION['SuppTrans']->Terms = '0' . $myrow['daysbeforedue'];
 	}
 	$_SESSION['SuppTrans']->SupplierID = $_GET['SupplierID'];
-	$_SESSION['SuppTrans']->TaxDescription = $myrow['taxdesc'];
+	
+	$LocalTaxProvinceResult = DB_query("SELECT taxprovinceid 
+						FROM locations 
+						WHERE loccode = '" . $_SESSION['UserStockLocation'] . "'", $db);
 
-	$LocalTaxAuthResult = DB_query("SELECT taxauthority FROM locations WHERE loccode='" .
-	 										  $_SESSION['UserStockLocation'] . "'", $db);
-
-	if(DB_num_rows($LocalTaxAuthResult)==0){
-		prnMsg(_('The tax authority associated with your user account has not been set up in this database. Tax calculations are based on the tax authority of the supplier and the tax authority of the user entering the invoice. The system administrator should redefine your account with a valid default stocking location and this location should refer to a valid tax authority'),'error');
+	if(DB_num_rows($LocalTaxProvinceResult)==0){
+		prnMsg(_('The tax province associated with your user account has not been set up in this database. Tax calculations are based on the tax group of the supplier and the tax province of the user entering the invoice. The system administrator should redefine your account with a valid default stocking location and this location should refer to a valid tax provincce'),'error');
 		include('includes/footer.inc');
 		exit;
 	}
 	
-	$LocalTaxAuthRow = DB_fetch_row($LocalTaxAuthResult);
-
+	$LocalTaxProvinceRow = DB_fetch_row($LocalTaxProvinceResult);
+	$_SESSION['SuppTrans']->LocalTaxProvince = $LocalTaxProvinceRow[0];
 	
-	$_SESSION['SuppTrans']->TaxRate = GetTaxRate($myrow['taxid'],$LocalTaxAuthRow[0], $_SESSION['DefaultTaxLevel'], $db);
-	$_SESSION['SuppTrans']->TaxGLCode = $myrow['taxglcode'];
-
+	$_SESSION['SuppTrans']->GetTaxes();
+	
+	
 	$_SESSION['SuppTrans']->GLLink_Creditors = $_SESSION['CompanyRecord']['gllink_creditors'];
 	$_SESSION['SuppTrans']->GRNAct = $_SESSION['CompanyRecord']['grnact'];
 	$_SESSION['SuppTrans']->CreditorsAct = $_SESSION['CompanyRecord']['creditorsact'];
@@ -112,10 +114,10 @@ if (isset($_POST['ExRate'])){
 	$_SESSION['SuppTrans']->Comments = $_POST['Comments'];
 	$_SESSION['SuppTrans']->TranDate = $_POST['TranDate'];
 
-	if (substr( $_SESSION['SuppTrans']->Terms,0,1)=="1") { /*Its a day in the following month when due */
-		$_SESSION['SuppTrans']->DueDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date("m")+1, substr( $_SESSION['SuppTrans']->Terms,1),Date("y")));
+	if (substr( $_SESSION['SuppTrans']->Terms,0,1)=='1') { /*Its a day in the following month when due */
+		$_SESSION['SuppTrans']->DueDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')+1, substr( $_SESSION['SuppTrans']->Terms,1),Date('y')));
 	} else { /*Use the Days Before Due to add to the invoice date */
-		$_SESSION['SuppTrans']->DueDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date("m"),Date("d") + (int) substr( $_SESSION['SuppTrans']->$Terms,1),Date("y")));
+		$_SESSION['SuppTrans']->DueDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d') + (int) substr( $_SESSION['SuppTrans']->$Terms,1),Date('y')));
 	}
 
 	$_SESSION['SuppTrans']->SuppReference = $_POST['SuppReference'];
@@ -145,11 +147,6 @@ if the link is not active then OvAmount must be entered manually. */
 	}else {
 /*OvAmount must be entered manually */
 		 $_SESSION['SuppTrans']->OvAmount = round($_POST['OvAmount'],2);
-	}
-	if ($_POST['OverrideTax']=='Man'){
-		 $_SESSION['SuppTrans']->OvGST = round($_POST['OvGST'],2);
-	} else {
-		 $_SESSION['SuppTrans']->OvGST = round($_SESSION['SuppTrans']->TaxRate * $_SESSION['SuppTrans']->OvAmount,2);
 	}
 }
 
@@ -190,14 +187,14 @@ echo '<TR><TD><FONT COLOR=blue><B>' . $_SESSION['SuppTrans']->SupplierID . ' - '
 	  $_SESSION['SuppTrans']->SupplierName . '</B></FONT></TD>
 	  <TD ALIGN=CENTER><FONT COLOR=blue><B>' .  $_SESSION['SuppTrans']->CurrCode . '</B></FONT></TD>
 	  <TD><FONT COLOR=blue><B>' . $_SESSION['SuppTrans']->TermsDescription . '</B></FONT></TD>
-	  <TD ALIGN=CENTER><FONT COLOR=blue><B>' . $_SESSION['SuppTrans']->TaxDescription . ' (' . (($_SESSION['SuppTrans']->TaxRate)*100) .
-	  '%)</B></FONT></TD>
+	  <TD><FONT COLOR=blue><B>' . $_SESSION['SuppTrans']->TaxGroupDescription . '</B></FONT></TD>
 	  </TR>
 	  </TABLE>';
 
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 
 echo '<TABLE>';
+
 echo '<TR><TD>' . _('Supplier Invoice Reference') . ":</TD>
 	   <TD><FONT SIZE=2><INPUT TYPE=TEXT SIZE=20 MAXLENGTH=20 NAME=SuppReference VALUE='" .
 	   $_SESSION['SuppTrans']->SuppReference . "'></TD>";
@@ -335,51 +332,84 @@ if ( $_SESSION['SuppTrans']->GLLink_Creditors == 1){
 	
 	$_SESSION['SuppTrans']->OvAmount = $TotalGRNValue + $TotalGLValue + $TotalShiptValue;
 	 
-	echo '<TABLE><TR><TD>' . _('Amount in supplier currency') . ':</TD><TD ALIGN=RIGHT>' .
+	echo '<TABLE><TR><TD>' . _('Amount in supplier currency') . ':</TD><TD COLSPAN=2 ALIGN=RIGHT>' .
 		  number_format( $_SESSION['SuppTrans']->OvAmount,2) . '</TD></TR>';
 } else {
 	echo '<TABLE><TR><TD>' . _('Amount in supplier currency') .
-		  ':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT SIZE=12 MAXLENGTH=10 NAME=OvAmount VALUE=' .
+		  ':</TD><TD COLSPAN=2 ALIGN=RIGHT><INPUT TYPE=TEXT SIZE=12 MAXLENGTH=10 NAME=OvAmount VALUE=' .
 		  number_format( $_SESSION['SuppTrans']->OvAmount,2) . '></TD></TR>';
 }
 
-echo "<TR><TD><INPUT TYPE=Submit NAME='ToggleTaxMethod' VALUE='" . _('Change Tax Calculation Method') . "'></TD><TD><SELECT NAME='OverRideTax'>";
+echo "<TR><TD COLSPAN=2><INPUT TYPE=Submit NAME='ToggleTaxMethod' VALUE='" . _('Change Tax Calculation Method') .
+	  "'></TD><TD><SELECT NAME='OverRideTax'>";
 
-if ($_POST['OverRideTax'] == 'Man'){
+if ($_POST['OverRideTax']=='Man'){
 	echo "<OPTION VALUE='Auto'>" . _('Automatic') . "<OPTION SELECTED VALUE='Man'>" . _('Manual');
-	if (!isset( $_SESSION['SuppTrans']->OvGST) OR $_SESSION['SuppTrans']->OvGST == ''){
-		 $_SESSION['SuppTrans']->OvGST = 0;
-	}
-
 } else {
 	echo "<OPTION SELECTED VALUE='Auto'>" . _('Automatic') . "<OPTION VALUE='Man'>" . _('Manual');
-	 $_SESSION['SuppTrans']->OvGST = round($_SESSION['SuppTrans']->TaxRate * $_SESSION['SuppTrans']->OvAmount,2);
 }
 
 echo '</SELECT></TD></TR>';
+$TaxTotal =0; //initialise tax total
+$TaxTotals = array();
 
-$_SESSION['SuppTrans']->OvGST = round($_SESSION['SuppTrans']->OvGST,2);
-$_SESSION['SuppTrans']->OvAmount = round($_SESSION['SuppTrans']->OvAmount,2);
-
-if ($_POST['OverRideTax'] == 'Man'){
-
-	if (is_numeric($_POST['OvGST'])){  /*If Post['OvGST'] has not yet been set cos first call to page then dont alter it from the previous auto calculation */
-	 	$_SESSION['SuppTrans']->OvGST = round($_POST['OvGST'],2);
+foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
+	
+	echo '<TR><TD>'  . $Tax->TaxAuthDescription . '</TD><TD>';
+	
+	/*Set the tax rate to what was entered */
+	if (isset($_POST['TaxRate'  . $Tax->TaxCalculationOrder])){
+		$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate = $_POST['TaxRate'  . $Tax->TaxCalculationOrder]/100;
 	}
-
-	echo '<TR><TD>' . _('Tax') . ':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT SIZE=12 MAXLENGTH=12 NAME=OvGST VALUE=' .
-		  round( $_SESSION['SuppTrans']->OvGST,2) . '></TD></TR>';
-
-} else {
-
-	echo '<TR><TD>' . _('Tax') . ':</TD><TD ALIGN=RIGHT>' .
-		  number_format( $_SESSION['SuppTrans']->OvGST,2) . '</TD></TR>';
-
+	
+	/*If a tax rate is entered that is not the same as it was previously then recalculate automatically the tax amounts */
+	
+	if ($_POST['OverRideTax']=='Auto' OR !isset($_POST['OverRideTax'])){
+	
+		echo  ' <INPUT TYPE=TEXT NAME=TaxRate' . $Tax->TaxCalculationOrder . ' MAXLENGTH=4 SIZE=4 VALUE=' . $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100 . '>%';
+		
+		/*Now recaluclate the tax depending on the method */
+		if ($Tax->TaxOnTax ==1){
+			
+			$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * ($_SESSION['SuppTrans']->OvAmount + $TaxTotal);
+		
+			$TaxTotals[$Tax->TaxAuthID] = $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * ($_SESSION['SuppTrans']->OvAmount + $TaxTotal);
+		} else { /*Calculate tax without the tax on tax */
+			
+			$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * $_SESSION['SuppTrans']->OvAmount;
+		
+			$TaxTotals[$Tax->TaxAuthID] = $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * $_SESSION['SuppTrans']->OvAmount;
+		}
+		
+		
+		echo '<INPUT TYPE=HIDDEN NAME="TaxAmount'  . $Tax->TaxCalculationOrder . '"  VALUE=' . round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2) . '>';
+		
+		echo '</TD><TD ALIGN=RIGHT>' . number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2);
+		
+	} else { /*Tax being entered manually accept the taxamount entered as is*/
+		$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_POST['TaxAmount'  . $Tax->TaxCalculationOrder];
+		$TaxTotals[$Tax->TaxAuthID] = $_POST['TaxAmount'  . $Tax->TaxCalculationOrder];
+		
+		echo  ' <INPUT TYPE=HIDDEN NAME=TaxRate' . $Tax->TaxCalculationOrder . ' VALUE=' . $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100 . '>';
+		
+				
+		echo '</TD><TD><INPUT TYPE=TEXT SIZE=12 MAXLENGTH=12 NAME="TaxAmount'  . $Tax->TaxCalculationOrder . '"  VALUE=' . round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2) . '>';
+		
+	}
+	
+	$TaxTotal += $TaxTotals[$Tax->TaxAuthID];
+	
+	
+	echo '</TD></TR>';	
 }
 
-$DisplayTotal = number_format(( $_SESSION['SuppTrans']->OvAmount + $_SESSION['SuppTrans']->OvGST), 2);
+ 
+$_SESSION['SuppTrans']->OvAmount = round($_SESSION['SuppTrans']->OvAmount,2);
 
-echo '<TR><TD>' . _('Invoice Total') . ':</TD><TD ALIGN=RIGHT><B>' . $DisplayTotal . '</B></TD></TR></TABLE>';
+
+$DisplayTotal = number_format(( $_SESSION['SuppTrans']->OvAmount + $TaxTotal), 2);
+
+echo '<TR><TD>' . _('Invoice Total') . ':</TD><TD COLSPAN=2 ALIGN=RIGHT><B>' . $DisplayTotal . '</B></TD></TR></TABLE>';
 
 echo '<TABLE><TR><TD>Comments</TD><TD><TEXTAREA NAME=Comments COLS=40 ROWS=2>' .
 	  $_SESSION['SuppTrans']->Comments . '</TEXTAREA></TD></TR></TABLE>';
@@ -387,13 +417,13 @@ echo '<TABLE><TR><TD>Comments</TD><TD><TEXTAREA NAME=Comments COLS=40 ROWS=2>' .
 echo "<P><INPUT TYPE=SUBMIT NAME='PostInvoice' VALUE='" . _('Enter Invoice') . "'>";
 
 
-if ($_POST['PostInvoice'] == _('Enter Invoice') AND $InputError != 1){
+if (isset($_POST['PostInvoice'])){
 
 /*First do input reasonableness checks
 then do the updates and inserts to process the invoice entered */
 
 	$InputError = False;
-	if ( $_SESSION['SuppTrans']->OvGST + $_SESSION['SuppTrans']->OvAmount <= 0){
+	if ( $TaxTotal + $_SESSION['SuppTrans']->OvAmount <= 0){
 		$InputError = True;
 		prnMsg(_('The invoice as entered cannot be processed because the total amount of the invoice is less than or equal to 0') . '. ' . _('Invoices are expected to have a charge'),'error');
 
@@ -441,7 +471,7 @@ then do the updates and inserts to process the invoice entered */
 
 	/*Start an SQL transaction */
 
-		$SQL = "BEGIN";
+		$SQL = 'BEGIN';
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The database does not support transactions');
 		$DbgMsg = _('The following SQL to start an SQL transaction was used');
@@ -659,7 +689,7 @@ then do the updates and inserts to process the invoice entered */
 						( $_SESSION['SuppTrans']->OvAmount / $_SESSION['SuppTrans']->ExRate);
 			}
 
-			if ($_SESSION['SuppTrans']->OvGST != 0){
+			foreach ($_SESSION['SuppTrans']->Taxes as $Tax){
 				/* Now the TAX account */
 
 				$SQL = 'INSERT INTO gltrans (type, 
@@ -670,11 +700,15 @@ then do the updates and inserts to process the invoice entered */
 								narrative, 
 								amount) 
 						VALUES (20, ' .
-						 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $_SESSION['SuppTrans']->TaxGLCode .
-						 ", '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Inv') . ' ' .
+						 	$InvoiceNo . ", 
+						 	'" . $SQLInvoiceDate . "', 
+							" . $PeriodNo . ', 
+							' . $Tax->TaxGLCode . ", 
+						 	'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Inv') . ' ' .
 						 $_SESSION['SuppTrans']->SuppReference . ' ' . $_SESSION['SuppTrans']->CurrCode .
-						 $_SESSION['SuppTrans']->OvGST  . ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate .
-						 "', " . round( $_SESSION['SuppTrans']->OvGST/ $_SESSION['SuppTrans']->ExRate,2) . ')';
+						 $Tax->TaxOvAmount  . ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate .
+						 "', 
+						 	" . round( $Tax->TaxOvAmount/ $_SESSION['SuppTrans']->ExRate,2) . ')';
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the tax could not be added because');
 
@@ -682,7 +716,7 @@ then do the updates and inserts to process the invoice entered */
 
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 
-			}
+			} /*end of loop to post the tax */
 			/* Now the control account */
 
 			$SQL = 'INSERT INTO gltrans (type, 
@@ -696,9 +730,9 @@ then do the updates and inserts to process the invoice entered */
 					 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $_SESSION['SuppTrans']->CreditorsAct .
 					 ", '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Inv') . ' ' .
 					 $_SESSION['SuppTrans']->SuppReference . ' ' . $_SESSION['SuppTrans']->CurrCode .
-					 number_format( $_SESSION['SuppTrans']->OvAmount + $_SESSION['SuppTrans']->OvGST,2)  .
+					 number_format( $_SESSION['SuppTrans']->OvAmount + $TaxTotal,2)  .
 					 ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate . "', " .
-					 -round(($LocalTotal + ( $_SESSION['SuppTrans']->OvGST / $_SESSION['SuppTrans']->ExRate)),2) . ')';
+					 -round(($LocalTotal + ( $TaxTotal / $_SESSION['SuppTrans']->ExRate)),2) . ')';
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the control total could not be added because');
 
@@ -727,7 +761,7 @@ then do the updates and inserts to process the invoice entered */
 				'" . $SQLInvoiceDate . "', 
 				'" . FormatDateForSQL($_SESSION['SuppTrans']->DueDate) . "', 
 				" . round($_SESSION['SuppTrans']->OvAmount,2) . ', 
-				' . round($_SESSION['SuppTrans']->OvGST,2) . ', 
+				' . round($TaxTotal,2) . ', 
 				' .  $_SESSION['SuppTrans']->ExRate . ", 
 				'" . $_SESSION['SuppTrans']->Comments . "')";
 
@@ -736,7 +770,24 @@ then do the updates and inserts to process the invoice entered */
 		$DbgMsg = _('The following SQL to insert the supplier invoice was used');
 
 		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
-
+		
+		$SuppTransID = DB_Last_Insert_ID($db,'supptrans','id');
+		
+		/* Insert the tax totals for each tax authority where tax was charged on the invoice */
+		foreach ($_SESSION['SuppTrans']->Taxes AS $TaxTotals) {
+	
+			$SQL = 'INSERT INTO supptranstaxes (supptransid,
+							taxauthid,
+							taxamount)
+				VALUES (' . $SuppTransID . ',
+					' . $TaxTotals->TaxAuthID . ',
+					' . $TaxTotals->TaxOvAmount . ')';
+		
+			$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The supplier transaction taxes records could not be inserted because');
+			$DbgMsg = _('The following SQL to insert the supplier transaction taxes record was used:');
+ 			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		}
+		
 		/* Now update the GRN and PurchOrderDetails records for amounts invoiced */
 
 		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){

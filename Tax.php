@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 2;
 
@@ -325,7 +325,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,60,$FontSize,_('Tax Rate'),'center');
 	$LeftOvers = $pdf->addTextWrap(100,$YPos,100,$FontSize,_('Outputs'),'center');
-	$LeftOvers = $pdf->addTextWrap(200,$YPos,100,$FontSize,_('Ouptput Tax'),'center');
+	$LeftOvers = $pdf->addTextWrap(200,$YPos,100,$FontSize,_('Output Tax'),'center');
 	$LeftOvers = $pdf->addTextWrap(300,$YPos,100,$FontSize,_('Inputs'),'center');
 	$LeftOvers = $pdf->addTextWrap(400,$YPos,100,$FontSize,_('Input Tax'),'center');
 

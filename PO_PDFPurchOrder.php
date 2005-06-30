@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -216,7 +216,7 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 
 		$DisplayOrderTotal = number_format($OrderTotal,2);
 		$YPos = $Bottom_Margin + $line_height;
-		$pdf->addText(560,$YPos, 14, _('Order Total - excl tax'). ' ' . $POHeader['currcode']);
+		$pdf->addText(450,$YPos, 14, _('Order Total - excl tax'). ' ' . $POHeader['currcode']);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64+300+85+40+60+75,$YPos,95,14,$DisplayOrderTotal, 'right');
 
 	} /*end if there are order details to show on the order*/

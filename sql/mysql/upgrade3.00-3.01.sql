@@ -127,3 +127,16 @@ ALTER TABLE salesorderdetails ADD PRIMARY KEY (orderlineno,orderno);
 
 INSERT INTO config VALUES('FreightTaxCategory','1');
 
+
+CREATE TABLE `supptranstaxes` (
+  `supptransid` int(11) NOT NULL default '0',
+  `taxauthid` tinyint(4) NOT NULL default '0',
+  `taxamount` double NOT NULL default '0',
+  PRIMARY KEY  (`supptransid`,`taxauthid`),
+  KEY `taxauthid` (`taxauthid`),
+  CONSTRAINT `supptranstaxes_ibfk_2` FOREIGN KEY (`supptransid`) REFERENCES `supptrans` (`id`)
+) ENGINE=InnoDB;
+
+ALTER TABLE `supptranstaxes`
+  ADD CONSTRAINT `supptranstaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`);
+  

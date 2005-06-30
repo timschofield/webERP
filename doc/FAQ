@@ -76,7 +76,7 @@ note the trailing / is not required.
 
 Q7: I am starting from a point well into the business can I start issuing PO and invoices using the same sequence I am already running?
 
-A7: Yes. Use a DB tool like phpMyAdmin to edit the current transactions numbers in the table SysTypes. This table stores the current transaction number for all transaction types. eg. Sales invoices are typeid=10 and sales credit notes are typeid=11 - simply change the typeno field to the number you would like the next invoice/credit note to start at.
+A7: Yes. Use a DB tool like phpMyAdmin to edit the current transactions numbers in the table systypes. This table stores the current transaction number for all transaction types. eg. Sales invoices are typeid=10 and sales credit notes are typeid=11 - simply change the typeno field to the number you would like the next invoice/credit note to start at.
 
 Q8: How about sales order numbers? - I wish these to start from x how can I do this?
 
