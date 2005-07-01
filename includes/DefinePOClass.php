@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 /* Definition of the PurchOrder class to hold all the information for a purchase order and delivery
 */
 
@@ -62,7 +62,7 @@ Class PurchOrder {
 								$UOM,
 								$GLCode,
 								$ReqDelDate,
-								$ShiptRef,
+								$ShiptRef = 0,
 								$JobRef,
 								$QtyInv,
 								$QtyRecd,

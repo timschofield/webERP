@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 1;
 
@@ -271,6 +271,7 @@ If (isset($PrintPDF)
 			$PageNumber = 1;
 
 			include('includes/PDFTransPageHeader.inc');
+			$FirstPage = False;
 
 		        while ($myrow2=DB_fetch_array($result)){
 

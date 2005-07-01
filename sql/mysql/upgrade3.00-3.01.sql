@@ -114,16 +114,8 @@ UPDATE stockmaster SET taxcatid=3 WHERE taxcatid>3;
 
 ALTER TABLE stockmaster ADD FOREIGN KEY (taxcatid) REFERENCES taxcategories (taxcatid);
 
-ALTER TABLE suppliers DROP FOREIGN KEY `suppliers_ibfk_3`;
-ALTER TABLE `suppliers` CHANGE `taxauthority` `taxgroupid` TINYINT( 4 ) DEFAULT '1' NOT NULL;
-ALTER TABLE `suppliers` DROP INDEX `taxauthority` , ADD INDEX `taxgroupid` ( `taxgroupid` );
-UPDATE suppliers SET taxgroupid=1;
-ALTER TABLE suppliers ADD FOREIGN KEY (taxgroupid) REFERENCES taxgroups (taxgroupid);
-
-
 ALTER TABLE `salesorderdetails` ADD `orderlineno` INT DEFAULT '0' NOT NULL FIRST ;
 ALTER TABLE `salesorderdetails` DROP PRIMARY KEY;
-ALTER TABLE salesorderdetails ADD PRIMARY KEY (orderlineno,orderno);
 
 INSERT INTO config VALUES('FreightTaxCategory','1');
 
@@ -139,4 +131,14 @@ CREATE TABLE `supptranstaxes` (
 
 ALTER TABLE `supptranstaxes`
   ADD CONSTRAINT `supptranstaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`);
-  
+
+  INSERT INTO supptranstaxes (supptransid, taxauthid, taxamount)
+	SELECT supptrans.id, suppliers.taxauthority, supptrans.ovgst
+		FROM supptrans INNER JOIN suppliers ON supptrans.supplierno=suppliers.supplierid 
+		WHERE supptrans.type=20 or supptrans.type=21;
+
+ALTER TABLE suppliers DROP FOREIGN KEY `suppliers_ibfk_3`;
+ALTER TABLE `suppliers` CHANGE `taxauthority` `taxgroupid` TINYINT( 4 ) DEFAULT '1' NOT NULL;
+ALTER TABLE `suppliers` DROP INDEX `taxauthority` , ADD INDEX `taxgroupid` ( `taxgroupid` );
+UPDATE suppliers SET taxgroupid=1;
+ALTER TABLE suppliers ADD FOREIGN KEY (taxgroupid) REFERENCES taxgroups (taxgroupid);  
