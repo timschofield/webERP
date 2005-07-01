@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 11;
 
@@ -32,6 +32,12 @@ if (isset($_POST['submit'])) {
 
 	if (isset($SelectedLocation) AND $InputError !=1) {
 
+		/* Set the managed field to 1 if it is checked, otherwise 0 */
+		if($_POST['Managed'] == 'on'){
+			 $_POST['Managed'] = 1;
+		} else {
+			$_POST['Managed'] = 0;
+		}
 
 		$sql = "UPDATE locations SET
 				loccode='" . $_POST['LocCode'] . "',
@@ -43,7 +49,8 @@ if (isset($_POST['submit'])) {
 				fax='" . $_POST['Fax'] . "',
 				email='" . $_POST['Email'] . "',
 				contact='" . $_POST['Contact'] . "',
-				taxprovinceid = " . $_POST['TaxProvince'] . "
+				taxprovinceid = " . $_POST['TaxProvince'] . ",
+				managed = " . $_POST['Managed'] . "
 			WHERE loccode = '$SelectedLocation'";
 
 		$ErrMsg = _('An error occurred updating the') . ' ' . $SelectedLocation . ' ' . _('location record because');
@@ -61,12 +68,17 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Fax']);
 		unset($_POST['Email']);
 		unset($_POST['TaxProvince']);
+		unset($_POST['Managed']);
 		unset($SelectedLocation);
 		unset($_POST['Contact']);
 
 
 	} elseif ($InputError !=1) {
 
+	/* Set the managed field to 1 if it is checked, otherwise 0 */
+	if($_POST['Managed'] == 'on') $_POST['Managed'] = 1;
+	else $_POST['Managed'] = 0;
+		
 	/*SelectedLocation is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Location form */
 
 		$sql = "INSERT INTO locations (
@@ -79,7 +91,8 @@ if (isset($_POST['submit'])) {
 					fax,
 					email,
 					contact,
-					taxprovinceid
+					taxprovinceid,
+					managed
 					)
 			VALUES (
 				'" . $_POST['LocCode'] . "',
@@ -91,7 +104,8 @@ if (isset($_POST['submit'])) {
 				'" . $_POST['Fax'] . "',
 				'" . $_POST['Email'] . "',
 				'" . $_POST['Contact'] . "',
-				" . $_POST['TaxProvince'] . "
+				" . $_POST['TaxProvince'] . ",
+				" . $_POST['Managed'] . "
 			)";
 
 		$ErrMsg =  _('An error occurred inserting the new location record because');
@@ -127,6 +141,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Fax']);
 		unset($_POST['Email']);
 		unset($_POST['TaxProvince']);
+		unset($_POST['Managed']);
 		unset($SelectedLocation);
 		unset($_POST['Contact']);
 
@@ -262,7 +277,8 @@ or deletion of the records*/
 
 	$sql = "SELECT loccode,
 			locationname,
-			taxprovinces.taxprovincename as description
+			taxprovinces.taxprovincename as description, 
+			managed
 		FROM locations INNER JOIN taxprovinces ON locations.taxprovinceid=taxprovinces.taxprovinceid";
 	$result = DB_query($sql,$db);
 
@@ -270,6 +286,7 @@ or deletion of the records*/
 	echo '<TR><TD class="tableheader">' . _('Location Code') . '</TD>
 			<TD class="tableheader">' . _('Location Name') . '</TD>
 			<TD class="tableheader">' . _('Tax Province') . '</TD>
+			<TD class="tableheader">' . _('Managed') . '</TD>
 		</TR>';
 
 $k=0; //row colour counter
@@ -282,7 +299,14 @@ while ($myrow = DB_fetch_array($result)) {
 		$k=1;
 	}
 
+	if($myrow['managed'] == 1) {
+		$myrow['managed'] = _('Yes');
+	}  else {
+		$myrow['managed'] = _('No');
+	}
+	
 	printf("<TD>%s</TD>
+		<TD>%s</TD>
 		<TD>%s</TD>
 		<TD>%s</TD>
 		<TD><a href='%sSelectedLocation=%s'>" . _('Edit') . "</TD>
@@ -291,6 +315,7 @@ while ($myrow = DB_fetch_array($result)) {
 		$myrow['loccode'],
 		$myrow['locationname'],
 		$myrow['description'],
+		$myrow['managed'],
 		$_SERVER['PHP_SELF'] . '?' . SID . '&',
 		$myrow['loccode'],
 		$_SERVER['PHP_SELF'] . '?' . SID . '&',
@@ -334,7 +359,8 @@ if (!isset($_GET['delete'])) {
 				fax,
 				tel,
 				email,
-				taxprovinceid
+				taxprovinceid,
+				managed
 			FROM locations
 			WHERE loccode='$SelectedLocation'";
 
@@ -351,6 +377,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['Fax'] = $myrow['fax'];
 		$_POST['Email'] = $myrow['email'];
 		$_POST['TaxProvince'] = $myrow['taxprovinceid'];
+		$_POST['Managed'] = $myrow['managed'];
 		
 
 		echo "<INPUT TYPE=HIDDEN NAME=SelectedLocation VALUE=" . $SelectedLocation . '>';
@@ -393,6 +420,8 @@ if (!isset($_GET['delete'])) {
 
 	?>
 	</SELECT></TD></TR>
+	<TR><TD><?php echo _('Enable Warehouse Management') . ':'; ?></TD>
+	<TD><INPUT TYPE='checkbox' name='Managed'<?php if($_POST['Managed'] == 1) echo ' checked';?>></TD></TR>
 	</TABLE>
 
 	<CENTER><input type="Submit" name="submit" value="<?php echo _('Enter Information'); ?>">
