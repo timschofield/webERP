@@ -62,7 +62,30 @@ However, accounts receivable also requires that certain branch information, rela
 </ul>
 Having got this base information set up then the business of setting up customer accounts and customer branches with delivery addresses can start.
 <br><br>
-Desktop databases, spreadsheets and comma separated variables (CSV) export files can also be used to import this information. Using MS Access, the process involves installing an ODBC driver for MySQL on the windows desktop machine that has MS Access on it and then attaching to the weberp database tables DebtorsMaster and CustBranch in a new blank Access database. The CSV file or the spreadsheet is imported into the Access database, then an append query is made to map the fields from the CSV table/spreadsheet into DebtorsMaster and or CustBranch. There are potentially many records in CustBranch each with a different branch code for one customer account in DebtorsMaster. This method is dangerous in the sense that it is imperative to ensure that no customer records or branch records refer to non-existent base data in the fields described above.
+<font size="+1"><b>Importing Customers Branches and Inventory Items</b></font>
+<br><br>
+Before attempting to import any data in bulk into the webERP system it is imperative to ensure that the base information described above:
+<UL>
+<LI>Payment Terms</LI>
+<LI>Credit status</LI>
+<LI>Sales Areas</LI>
+<LI>Stock Categories</LI>
+<LI>Sales People</LI>
+<LI>Currencies</LI>
+<LI>Sales Types</LI>
+<LI>Freight Companies</LI>
+</UL>
+It is unlikely that this infomation will require importation since it is generally small enough to input manually. However, there is no reason why it could not be imported into the approprate tables. The structure of the webERP database tables can be examined easily using the phpMyAdmin or equivalent for postgres. The naming of tables and fields has attempted to attach plain english names to each table and field to enable the structure to be easily assimilated.
+<br><br>
+Desktop databases, spreadsheets and comma separated variables (CSV) export files can also be used to import data. Using MS Access, the process involves installing an ODBC driver for MySQL on the windows desktop machine that has MS Access on it and then creating a data source under Control Panel, Administrative tool, Data Sources. Setting up the data source will require telling the windows machine where the webERP mysql (or Postgres) server is ie its name and the name of the database on the host to connect to - by default weberp. From MS Access, click File, Get External Data, Link then choose ODBC data sources, the newly created Data Source Name should be visible. All the webERP tables are then available. MS Access provides a nice user interface for entering and viewing the data in bulk. 
+<br><br>
+A CSV file or spreadsheet of data can easily be imported into an Access database, then an append query is made to map the fields from the CSV table/spreadsheet into DebtorsMaster and or CustBranch. There are potentially many records in CustBranch each with a different branch code for one customer account in DebtorsMaster. 
+<br><br>
+It is also possible to import comma seperated values files directly into mysql using the mysql command line as well as the phpMyAdmin web interface. The command line option is a little tricky but the phpMyAdmin option is a good one. The phpMyAdmin documentation describes this process well.
+<br><br>
+Importing stock items can be done in the same way as customers, customer branches or suppliers as above. However, entry of inventory items also needs to create the locstock records that record the stock on hand at each inventory location. If items are imported using spreadsheets, CSV files etc then the script Z_MakeStockLocns.php must be run from a browser after the importation of the items has been done.
+<br><br>
+Great effort has gone into ensuring the integrity of the data entered manually and importing data manually is dangerous in the sense that it is imperative to ensure that no customer records, branch records, or inventory records refer to non-existent base data.
 <br><br>
 <font size="+1"><b>Setting Up Inventory Items</b></font>
 <br><br>
