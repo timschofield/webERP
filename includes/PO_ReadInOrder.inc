@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 /*PO_ReadInOrder.inc is used by the modify existing order code in PO_Header.php and also by GoodsReceived.php */
 
        if (isset($_SESSION['PO'])){
@@ -34,8 +34,10 @@
 				purchorders.requisitionno, 
 				purchorders.intostocklocation, 
 				purchorders.initiator, 
-				suppliers.currcode 
-			FROM purchorders, 
+				suppliers.currcode,
+				locations.managed 
+			FROM purchorders 
+				LEFT JOIN locations ON purchorders.intostocklocation=locations.loccode,
 				suppliers 
 			WHERE purchorders.supplierno = suppliers.supplierid 
 			AND purchorders.orderno = ' . $_GET['ModifyOrderNumber'];
@@ -63,6 +65,7 @@
               $_SESSION['PO']->DelAdd2 = $myrow['deladd2'];
               $_SESSION['PO']->DelAdd3 = $myrow['deladd3'];
               $_SESSION['PO']->DelAdd4 = $myrow['deladd4'];
+              $_SESSION['PO']->Managed = $myrow['managed'];
 
 /*now populate the line PO array with the purchase order details records */
 
@@ -88,7 +91,7 @@
 					LEFT JOIN chartmaster
 					ON purchorderdetails.glcode=chartmaster.accountcode
 				WHERE purchorderdetails.completed=0
-					AND orderno =' . $_GET['ModifyOrderNumber'] . "
+					AND purchorderdetails.orderno =' . $_GET['ModifyOrderNumber'] . "
 				ORDER BY podetailitem";
 
 	      $ErrMsg =  _('The lines on the purchase order cannot be retrieved because');

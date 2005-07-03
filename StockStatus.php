@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 
 $PageSecurity = 2;
@@ -59,7 +59,8 @@ echo ' <INPUT TYPE=SUBMIT NAME="ShowStatus" VALUE="' . _('Show Stock Status') . 
 $sql = "SELECT locstock.loccode,
                locations.locationname,
                locstock.quantity,
-               locstock.reorderlevel
+               locstock.reorderlevel,
+	       locations.managed
                FROM locstock,
                     locations
                WHERE locstock.loccode=locations.loccode AND
@@ -144,10 +145,10 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 	if ($Its_A_KitSet_Assembly_Or_Dummy == False){
 
 		$sql = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) AS qoo
-                   FROM purchorderdetails
-                   INNER JOIN purchorders ON purchorderdetails.orderno=purchorders.orderno
-                   WHERE purchorders.intostocklocation='" . $myrow['loccode'] . "' AND
-                   purchorderdetails.itemcode='" . $StockID . "'";
+                   	FROM purchorderdetails
+                   	INNER JOIN purchorders ON purchorderdetails.orderno=purchorders.orderno
+                   	WHERE purchorders.intostocklocation='" . $myrow['loccode'] . "' AND
+                   	purchorderdetails.itemcode='" . $StockID . "'";
 		$ErrMsg = _('The quantity on order for this product to be received into') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
 		$QOOResult = DB_query($sql,$db,$ErrMsg, $DbgMsg);
 
@@ -158,18 +159,22 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 			$QOOQty = 0;
 		}
 
-		printf("<td>%s</td>
-			<td ALIGN=RIGHT>%s</td>
+		if ($myrow['managed']==true){
+			echo "<TD><A HREF='#' onclick=\"window.open('BinStockStatus.php?Location=". $myrow['loccode'] ."&StockID=". $StockID ."','BinStockStatus','height=250,width=250,menubar=no,status=no,resizable=no,left=5,top=5,location=no,scrollbars=no')\">" . $myrow['locationname'] . '</A></TD>';
+		} else {
+			echo '<TD>' . $myrow['locationname'] . '</TD>';
+		}
+		
+		printf("<td ALIGN=RIGHT>%s</td>
 			<td ALIGN=RIGHT>%s</td>
 			<td ALIGN=RIGHT>%s</td>
 			<td ALIGN=RIGHT>%s</td>
 			<td ALIGN=RIGHT>%s</td>",
-			$myrow['locationname'],
-			number_format($myrow['quantity'],$DecimalPlaces),
-			number_format($myrow['reorderlevel'],$DecimalPlaces),
-			number_format($DemandQty,$DecimalPlaces),
-			number_format($myrow['quantity'] - $DemandQty,$DecimalPlaces),
-			number_format($QOO,$DecimalPlaces)
+			number_format($myrow['quantity'], $DecimalPlaces),
+			number_format($myrow['reorderlevel'], $DecimalPlaces),
+			number_format($DemandQty, $DecimalPlaces),
+			number_format($myrow['quantity'] - $DemandQty, $DecimalPlaces),
+			number_format($QOO, $DecimalPlaces)
 			);
 
 		if ($Serialised ==1){ /*The line is a serialised item*/

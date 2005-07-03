@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 /* Definition of the PurchOrder class to hold all the information for a purchase order and delivery
 */
 
@@ -16,6 +16,7 @@ Class PurchOrder {
 	var $DelAdd4;
 	var $Comments;
 	var $Location;
+	Var $Managed;
 	Var $SupplierID;
 	var $SupplierName;
 	var $Orig_OrderDate;

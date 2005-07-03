@@ -2374,6 +2374,7 @@ INSERT INTO `holdreasons` VALUES (51,'In liquidation',1);
 --
 
 INSERT INTO `locations` VALUES ('DEN','Denver','532-536 Wentworth Street','Denver','Colorado','233 5532 216','233 5532 215','g.bovert@weberp.com','Graham Bouvert',1);
+INSERT INTO `locations` VALUES ('DOG','test','','','','','','','',1);
 INSERT INTO `locations` VALUES ('TOR','Toronto Distribution Centre','','','','','','','Clive Contrary',1);
 
 --
@@ -2387,6 +2388,13 @@ INSERT INTO `locstock` VALUES ('DEN','HIT3034-4',192.0,0);
 INSERT INTO `locstock` VALUES ('DEN','HIT3042-4',0.0,0);
 INSERT INTO `locstock` VALUES ('DEN','HIT3042-ASS',0.0,0);
 INSERT INTO `locstock` VALUES ('DEN','HIT3043-5',0.0,0);
+INSERT INTO `locstock` VALUES ('DOG','FUJI990101',0.0,0);
+INSERT INTO `locstock` VALUES ('DOG','FUJI990102',0.0,0);
+INSERT INTO `locstock` VALUES ('DOG','FUJI9901ASS',0.0,0);
+INSERT INTO `locstock` VALUES ('DOG','HIT3034-4',0.0,0);
+INSERT INTO `locstock` VALUES ('DOG','HIT3042-4',0.0,0);
+INSERT INTO `locstock` VALUES ('DOG','HIT3042-ASS',0.0,0);
+INSERT INTO `locstock` VALUES ('DOG','HIT3043-5',0.0,0);
 INSERT INTO `locstock` VALUES ('TOR','FUJI990101',30.0,0);
 INSERT INTO `locstock` VALUES ('TOR','FUJI990102',45.0,0);
 INSERT INTO `locstock` VALUES ('TOR','FUJI9901ASS',0.0,0);
@@ -2448,12 +2456,14 @@ INSERT INTO `purchdata` VALUES ('BINGO','HIT3043-5','1235.0000','',1.0000,'',5,1
 
 INSERT INTO `purchorderdetails` VALUES (1,1,'FUJI990101','2005-06-23','Fujitsu 990101 Split type Indoor Unit 3.5kw',722000,0.0000,305.9500,0.0000,530.0000,50.0000,35.0000,0,'0',0);
 INSERT INTO `purchorderdetails` VALUES (2,1,'FUJI990102','2005-06-23','Fujitsu 990102 split type A/C Outdoor unit 3.5kw',722000,0.0000,265.4100,0.0000,633.0000,50.0000,50.0000,0,'0',1);
+INSERT INTO `purchorderdetails` VALUES (3,2,'HIT3034-4','2005-07-01','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor',722000,0.0000,211.0000,0.0000,0.0000,4.0000,0.0000,0,'0',0);
 
 --
 -- Dumping data for table `purchorders`
 --
 
 INSERT INTO `purchorders` VALUES (1,'REGNEW','','2005-06-23 00:00:00',1.0000,'2005-06-23 00:00:00',0,'','','TOR','532-536 Wentworth Street','Denver','Colorado','233 5532 216');
+INSERT INTO `purchorders` VALUES (2,'CAMPBELL','','2005-07-01 00:00:00',1.0000,NULL,1,'','','TOR','532-536 Wentworth Street','Denver','Colorado','233 5532 216');
 
 --
 -- Dumping data for table `recurringsalesorders`

@@ -1891,6 +1891,7 @@ INSERT INTO `holdreasons` VALUES (51,'In liquidation',1);
 --
 
 INSERT INTO `locations` VALUES ('DEN','Denver','532-536 Wentworth Street','Denver','Colorado','233 5532 216','233 5532 215','g.bovert@weberp.com','Graham Bouvert',1);
+INSERT INTO `locations` VALUES ('DOG','test','','','','','','','',1);
 INSERT INTO `locations` VALUES ('TOR','Toronto Distribution Centre','','','','','','','Clive Contrary',1);
 
 --

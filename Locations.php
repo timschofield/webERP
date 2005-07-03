@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 11;
 
@@ -76,8 +76,11 @@ if (isset($_POST['submit'])) {
 	} elseif ($InputError !=1) {
 
 	/* Set the managed field to 1 if it is checked, otherwise 0 */
-	if($_POST['Managed'] == 'on') $_POST['Managed'] = 1;
-	else $_POST['Managed'] = 0;
+	if($_POST['Managed'] == 'on') {
+		$_POST['Managed'] = 1;
+	} else {
+		$_POST['Managed'] = 0;
+	}
 		
 	/*SelectedLocation is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Location form */
 
@@ -153,32 +156,32 @@ if (isset($_POST['submit'])) {
 	$result = DB_query('SELECT COUNT(taxid) FROM taxauthorities',$db);
 	$NoTaxAuths =DB_fetch_row($result);
 
-	$result = DB_query('SELECT taxauthority FROM locations GROUP BY taxauthority',$db);
-	$Levels = DB_query('SELECT DISTINCT taxlevel FROM stockmaster',$db);
-	if (DB_num_rows($Levels) > 0 ) { // This will only work if there are levels else we get an error on seek.
-		while ($DispTaxAuths=DB_fetch_row($result)){
+	$result = DB_query('SELECT taxprovinceid FROM locations',$db);
+	$TaxCatsResult = DB_query('SELECT taxcatid FROM taxcategories',$db);
+	if (DB_num_rows($TaxCatsResult) > 0 ) { // This will only work if there are levels else we get an error on seek.
+		
+		while ($DispTaxProvinces=DB_fetch_row($result)){
+			/*Check to see there are TaxAuthRates records set up for this TaxProvince */
+			$NoTaxRates = DB_query('SELECT taxauthority FROM taxauthrates WHERE dispatchtaxprovince=' . $DispTaxProvinces[0], $db);
 	
-			/*Check to see there are TaxAuthLevel records set up for this DispathTaxAuthority */
-			$NoTaxAuthLevels = DB_query('SELECT taxauthority FROM taxauthlevels WHERE dispatchtaxauthority=' . $DispTaxAuths[0], $db);
-	
-			if (DB_num_rows($NoTaxAuthLevels) < $NoTaxAuths[0]){
+			if (DB_num_rows($NoTaxRates) < $NoTaxAuths[0]){
 	
 				/*First off delete any tax authoritylevels already existing */
-				$DelTaxAuths = DB_query('DELETE FROM taxauthlevels WHERE dispatchtaxauthority=' . $DispTaxAuths[0],$db);
+				$DelTaxAuths = DB_query('DELETE FROM taxauthrates WHERE dispatchtaxprovince=' . $DispTaxProvinces[0],$db);
 	
-				/*Now add the new taxAuthLevels required */
-				while ($LevelRow = DB_fetch_row($Levels)){
-					$sql = 'INSERT INTO taxauthlevels (taxauthority, 
-										dispatchtaxauthority, 
-										level) 
+				/*Now add the new TaxAuthRates required */
+				while ($CatRow = DB_fetch_row($Levels)){
+					$sql = 'INSERT INTO taxauthrates (taxauthority, 
+										dispatchtaxprovince, 
+										taxcatid) 
 							SELECT taxid,
-								' . $DispTaxAuths[0] . ', 
-								' . $LevelRow[0] . ' 
+								' . $DispTaxProvinces[0] . ', 
+								' . $CatRow[0] . ' 
 							FROM taxauthorities';
 	
-					$InsTaxAuths = DB_query($sql,$db);
+					$InsTaxAuthRates = DB_query($sql,$db);
 				}
-				DB_data_seek($Levels,0);
+				DB_data_seek($TaxCatsResult,0);
 			}
 		}
 	}

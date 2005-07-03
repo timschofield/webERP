@@ -64,7 +64,7 @@ CREATE TABLE stockmovestaxes (
 	taxrate double DEFAULT 0 NOT NULL,
 	PRIMARY KEY (stkmoveno,taxauthid),
 	KEY (taxauthid),
-	KEY (calculationorder)
+	KEY (taxcalculationorder)
 ) ENGINE=InnoDB;
 
 ALTER TABLE stockmovestaxes ADD FOREIGN KEY (taxauthid) REFERENCES taxauthorities (taxid);
