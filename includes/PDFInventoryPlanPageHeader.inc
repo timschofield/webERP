@@ -40,17 +40,17 @@ $pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Marg
 $XPos = $Left_Margin+1;
 
 $LeftOvers = $pdf->addTextWrap($XPos,$YPos,180,$FontSize,_('Item'),'centre');
-$LeftOvers = $pdf->addTextWrap(251,$YPos,40,$FontSize,$Period_4_Name . ' ' . _('Qty'),'centre');
-$LeftOvers = $pdf->addTextWrap(292,$YPos,40,$FontSize,$Period_3_Name . ' ' . _('Qty'),'centre');
-$LeftOvers = $pdf->addTextWrap(333,$YPos,40,$FontSize,$Period_2_Name . ' ' . _('Qty'),'centre');
-$LeftOvers = $pdf->addTextWrap(374,$YPos,40,$FontSize,$Period_1_Name . ' ' . _('Qty'),'centre');
-$LeftOvers = $pdf->addTextWrap(415,$YPos,40,$FontSize,$Period_0_Name . ' ' . _('MTD'),'centre');
+$LeftOvers = $pdf->addTextWrap(270,$YPos,40,$FontSize,$Period_4_Name . ' ' . _('Qty'),'centre');
+$LeftOvers = $pdf->addTextWrap(307,$YPos,40,$FontSize,$Period_3_Name . ' ' . _('Qty'),'centre');
+$LeftOvers = $pdf->addTextWrap(348,$YPos,40,$FontSize,$Period_2_Name . ' ' . _('Qty'),'centre');
+$LeftOvers = $pdf->addTextWrap(389,$YPos,40,$FontSize,$Period_1_Name . ' ' . _('Qty'),'centre');
+$LeftOvers = $pdf->addTextWrap(430,$YPos,40,$FontSize,$Period_0_Name . ' ' . _('MTD'),'centre');
 
-$LeftOvers = $pdf->addTextWrap(456,$YPos,40,$FontSize,$_POST['NumberMonthsHolding'] . ' ' . _('ms stk'),'centre');
-$LeftOvers = $pdf->addTextWrap(597,$YPos,40,$FontSize,_('QOH'),'centre');
-$LeftOvers = $pdf->addTextWrap(638,$YPos,40,$FontSize,_('Cust Ords'),'centre');
-$LeftOvers = $pdf->addTextWrap(679,$YPos,40,$FontSize,_('Splr Ords'),'centre');
-$LeftOvers = $pdf->addTextWrap(720,$YPos,40,$FontSize,_('Sugg Ord'),'centre');
+$LeftOvers = $pdf->addTextWrap(471,$YPos,40,$FontSize,$_POST['NumberMonthsHolding'] . ' ' . _('ms stk'),'centre');
+$LeftOvers = $pdf->addTextWrap(617,$YPos,40,$FontSize,_('QOH'),'centre');
+$LeftOvers = $pdf->addTextWrap(648,$YPos,40,$FontSize,_('Cust Ords'),'centre');
+$LeftOvers = $pdf->addTextWrap(694,$YPos,40,$FontSize,_('Splr Ords'),'centre');
+$LeftOvers = $pdf->addTextWrap(735,$YPos,40,$FontSize,_('Sugg Ord'),'centre');
 
 $YPos =$YPos - (2*$line_height);
 $FontSize=8;

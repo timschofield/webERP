@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 
 $PageSecurity = 11;
@@ -56,7 +56,13 @@ echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>
 	<TD class="tableheader">' . _('Already Received') . '</TD>
 	<TD class="tableheader">' . _('This Delivery') . '<BR>' . _('Quantity') . '</TD>
 	<TD class="tableheader">' . _('Price') . '</TD>
-	<TD class="tableheader">' . _('Total Value') . '<BR>' . _('Received') . '</TD>
+	<TD class="tableheader">' . _('Total Value') . '<BR>' . _('Received') . '</TD>';
+
+if($_SESSION['PO']->Managed == 1) {
+	echo '<TD class="tableheader">' . _('Receive Into Bin') . '</TD>';
+}
+
+echo '<TD>&nbsp;</TD>
 	</TR>';
 /*show the line items on the order with the quantity being received for modification */
 
@@ -65,6 +71,8 @@ $k=0; //row colour counter
 
 if (count($_SESSION['PO']->LineItems)>0){
 	foreach ($_SESSION['PO']->LineItems as $LnItm) {
+		/* Include the Set Bin so we can update the line item if neccessary */
+		include('includes/PO_SetBin.inc');
 
 		if ($k==1){
 			echo '<tr bgcolor="#CCCCCC">';
@@ -113,6 +121,18 @@ if (count($_SESSION['PO']->LineItems)>0){
 		echo '<TD ALIGN=RIGHT><FONT size=2>' . $DisplayPrice . '</TD>';
 		echo '<TD ALIGN=RIGHT><FONT size=2>' . $DisplayLineTotal . '</FONT></TD>';
 
+		if($_SESSION['PO']->Managed == 1) {
+			echo '<TD ALIGN=RIGHT><FONT size=2><a href="GoodsReceivedManaged.php?' . SID . '&LineNo=' . $LnItm->LineNo . '">';
+			
+			if($LnItm->BinID == '') {
+				echo _('Enter Bin');
+			} else {
+				echo $LnItm->BinID;
+			}
+	
+			echo '</a></TD>';
+		}
+		
 		if ($LnItm->Controlled == 1) {
 			if ($LnItm->Serialised==1){
 				echo '<TD><a href="GoodsReceivedControlled.php?' . SID . '&LineNo=' . $LnItm->LineNo . '">'.
@@ -145,9 +165,10 @@ if (count($_SESSION['PO']->LineItems)>0){
 /************************* LINE ITEM VALIDATION ************************/
 
 /* Check whether trying to deliver more items than are recorded on the purchase order
-(+ overreceive allowance) */
+(+ overreceive allowance), or that the bin is not set for managed locations */
 
 $DeliveryQuantityTooLarge = 0;
+$NoBinSet = 0;
 
 $InputError = false;
 
@@ -158,6 +179,11 @@ if (count($_SESSION['PO']->LineItems)>0){
 	  if ($OrderLine->ReceiveQty+$OrderLine->QtyReceived > $OrderLine->Quantity * (1+ ($_SESSION['OverReceiveProportion'] / 100))){
 		$DeliveryQuantityTooLarge =1;
 		$InputError = true;
+	  }
+	  
+	  if(($_SESSION['PO']->Managed == 1) AND ($OrderLine->BinID == '') AND ($OrderLine->QtyReceived > 0)) {
+	  	$NoBinSet = 1;
+	  	$InputError = true;
 	  }
    }
 }
@@ -171,6 +197,10 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 	prnMsg(_('Entered quantities cannot be greater than the quantity entered on the purchase invoice including the allowed over-receive percentage'). ' ' . '(' . $_SESSION['OverReceiveProportion'] .'%)','error');
 	echo '<BR>';
 	prnMsg(_('Modify the ordered items on the purchase invoice if you wish to increase the quantities'),'info');
+
+} elseif (($NoBinSet==1) AND isset($_POST['ProcessGoodsReceived'])){
+
+	prnMsg(_('You are receiving goods into a managed warehouse, you must set the bin location for all items.'));
 
 } elseif (isset($_POST['ProcessGoodsReceived']) AND $SomethingReceived==1 AND $InputError == false){
 
@@ -445,8 +475,54 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 						$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
 						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
+						if($_SESSION['PO']->Managed == 1) {
+							$SQL = "INSERT INTO binstock (binid,
+											loccode,
+											stockid,
+											qty,
+											serialno) 
+									VALUES ('" . $OrderLine->BinID . "',
+										'" . $_SESSION['PO']->Location . "',
+										'" . $OrderLine->StockID . "',
+										" . $Item->BundleQty . ",
+										'" . $Item->BundleRef . "')";	
+	
+							$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock item record could not be inserted because');
+							$DbgMsg =  _('The following SQL to insert the stock item bin stock was used');
+							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+						}
+					} //end foreach
 
-					}//foreach item
+				} elseif ($_SESSION['PO']->Managed == 1) {
+					$SQL = "INSERT INTO binstock (binid,
+									loccode,
+									stockid,
+									qty) 
+							VALUES ('" . $OrderLine->BinID . "',
+								'" . $_SESSION['PO']->Location . "',
+								'" . $OrderLine->StockID . "',
+								" . $OrderLine->ReceiveQty . ")";	
+					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock item record could not be inserted because');
+					$DbgMsg =  _('The following SQL to insert the stock item bin stock was used');
+					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+				}
+				
+				/* Do the bin INSERTS HERE if neccessary */
+				if($_SESSION['PO']->Managed == 1) {
+					$SQL = "INSERT INTO binmoves (stockmoveno,
+							stockid,
+							binid,
+							loccode,
+							moveqty) 
+						VALUES (" . $StkMoveNo . ",
+							'" . $OrderLine->StockID . "',
+							'" . $OrderLine->BinID . "',
+							'" . $_SESSION['PO']->Location . "',
+							" . $OrderLine->ReceiveQty . ")";	
+
+					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock item record could not be inserted because');
+					$DbgMsg =  _('The following SQL to insert the  stock item bin move was used');
+					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 				}
 			} /*end of its a stock item - updates to locations and insert movements*/
 

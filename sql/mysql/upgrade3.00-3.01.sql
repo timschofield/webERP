@@ -142,3 +142,45 @@ ALTER TABLE `suppliers` CHANGE `taxauthority` `taxgroupid` TINYINT( 4 ) DEFAULT 
 ALTER TABLE `suppliers` DROP INDEX `taxauthority` , ADD INDEX `taxgroupid` ( `taxgroupid` );
 UPDATE suppliers SET taxgroupid=1;
 ALTER TABLE suppliers ADD FOREIGN KEY (taxgroupid) REFERENCES taxgroups (taxgroupid);  
+
+
+CREATE TABLE bins (
+  binid varchar(11) NOT NULL default '',
+  loccode varchar(5) NOT NULL default '',
+  PRIMARY KEY  (binid,loccode),
+  UNIQUE KEY binid (binid)
+) ENGINE=Innodb DEFAULT CHARSET=latin1;
+
+ALTER TABLE bins ADD FOREIGN KEY (loccode) REFERENCES locations (loccode);  
+
+CREATE TABLE binmoves (
+  stkitmmoveno int(11) NOT NULL auto_increment,
+  stockmoveno int(11) NOT NULL default '0',
+  stockid varchar(20) NOT NULL default '',
+  binid varchar(11) NOT NULL default '',
+  moveqty double NOT NULL default '0',
+  loccode varchar(5) NOT NULL default '''''',
+  PRIMARY KEY  (stkitmmoveno),
+  KEY loccode (loccode)
+) ENGINE=Innodb DEFAULT CHARSET=latin1;
+
+
+ALTER TABLE binmoves ADD FOREIGN KEY (binid) REFERENCES bins (binid); 
+ALTER TABLE binmoves ADD FOREIGN KEY (stockid) REFERENCES stockmaster (stockid); 
+ALTER TABLE binmoves ADD FOREIGN KEY (stockmoveno) REFERENCES stockmoves (stkmoveno);  
+
+CREATE TABLE binstock (
+  binid varchar(11) NOT NULL default '',
+  stockid varchar(20) NOT NULL default '',
+  qty double NOT NULL default '0',
+  serialno varchar(30) NOT NULL default '',
+  loccode varchar(5) NOT NULL default '',
+  PRIMARY KEY  (binid,
+  		stockid,
+		serialno,
+		loccode)
+) ENGINE=Innodb DEFAULT CHARSET=latin1;
+
+ALTER TABLE binstock ADD FOREIGN KEY (loccode) REFERENCES locations (loccode);  
+ALTER TABLE binstock ADD FOREIGN KEY (stockid) REFERENCES stockmaster (stockid);  
+ALTER TABLE binstock ADD FOREIGN KEY (binid) REFERENCES bins (binid);  
