@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity=1;
 
@@ -74,7 +74,6 @@ if (isset($_POST['Modify'])) {
 			$DbgMsg = _('The SQL that was used to update the user and failed was');
 
 			$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
-
 
 			prnMsg(_('The user settings have been updated'),'success');
 		}

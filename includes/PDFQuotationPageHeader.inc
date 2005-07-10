@@ -1,12 +1,12 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /* pdf-php by R&OS code to set up a new sales order page */
 if ($PageNumber>1){
 	$pdf->newPage();
 }
 
 $XPos = $Page_Width/2 - 60;
-$pdf->addJpegFromFile('logo.jpg',$XPos+20,520,90,60);
+$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg',$XPos+20,520,90,60);
 $FontSize=18;
 $pdf->addText($XPos, 500,$FontSize, _('Quotation'));
 

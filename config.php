@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.58 $ */
+/* $Revision: 1.59 $ */
 
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
@@ -22,7 +22,7 @@ $allow_demo_mode = True;
 
 // Application version
 
-$Version = '3.01 unstable';
+$Version = '3.01';
 
 
 // The timezone of the business - this allows the possibility of having
@@ -43,11 +43,11 @@ $dbType = 'mysql';
 //$dbType = 'postgres';
 //$dbType = 'mysql';
 
-$DatabaseName = 'weberp';
-
 // sql user & password
 $dbuser = 'weberp_db_user';
 $dbpassword = 'weberp_db_pwd';
+
+$DefaultCompany = 'weberp';
 
 //The maximum time that a login session can be idle before automatic logout
 //time is in seconds  3600 seconds in an hour

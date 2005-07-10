@@ -1,12 +1,12 @@
 <?php
 
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 
 define ('LIKE','LIKE');
 
 $db = mysql_connect($host , $dbuser, $dbpassword);
-mysql_select_db($DatabaseName,$db);
+mysql_select_db($_SESSION['DatabaseName'],$db);
 
 require_once ('includes/MiscFunctions.php');
 

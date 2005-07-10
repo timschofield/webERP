@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 include ('includes/class.pdf.php');
 
@@ -294,10 +294,10 @@ if ($ThisLineHasOutput==True){
 		}
 		$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize,$DisplayValue, 'right');
 
-		$AccumLvl1[$Cols['colno']] += $myrow[$columnno];
-		$AccumLvl2[$Cols['colno']] += $myrow[$columnno];
-		$AccumLvl3[$Cols['colno']] += $myrow[$columnno];
-		$AccumLvl4[$Cols['colno']] += $myrow[$columnno];
+		$AccumLvl1[$Cols['colno']] += $myrow[$ColumnNo];
+		$AccumLvl2[$Cols['colno']] += $myrow[$ColumnNo];
+		$AccumLvl3[$Cols['colno']] += $myrow[$ColumnNo];
+		$AccumLvl4[$Cols['colno']] += $myrow[$ColumnNo];
 	}
 
 	$Ypos -=$line_height;

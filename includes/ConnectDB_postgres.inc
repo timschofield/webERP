@@ -1,13 +1,15 @@
 <?php
 
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 define ('LIKE','ILIKE');
-/* $PgConnStr = $PgConnStr = "host=".$host." dbname=".$DatabaseName; */
- $PgConnStr = 'dbname='.$DatabaseName;
- if ( isset($host) && ($host != "")) {
+/* $PgConnStr = $PgConnStr = "host=".$host." dbname=".$_SESSION['DatabaseName']; */
+$PgConnStr = 'dbname='.$_SESSION['DatabaseName'];
+
+if ( isset($host) && ($host != "")) {
 	$PgConnStr = 'host='.$host.' '.$PgConnStr;
 } 
+
 if ( isset( $dbuser ) && ($dbuser != "") ) {
     // if we have a user we need to use password if supplied
     $PgConnStr .= " user=".$dbuser;
@@ -17,6 +19,7 @@ if ( isset( $dbuser ) && ($dbuser != "") ) {
 }
 
 $db = pg_connect( $PgConnStr );
+
 if ( !$db ) {
 	echo '<BR>' . $PgConnStr . '<BR>';
   die( "<BR>Could not establish connection to postgres database. Please check configuration.");

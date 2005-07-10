@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity =15;
 
@@ -168,10 +168,10 @@ if (isset($_POST['submit'])) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_MaxImageSize']."' WHERE confname = 'MaxImageSize'";
 		}
 		if ($_SESSION['part_pics_dir'] != $_POST['X_part_pics_dir'] ) {
-			$sql[] = "UPDATE config SET confvalue = '".DB_escape_string($_POST['X_part_pics_dir'])."' WHERE confname = 'part_pics_dir'";
+			$sql[] = "UPDATE config SET confvalue = 'companies/" . $_SESSION['DatabaseName'] . '/' . DB_escape_string($_POST['X_part_pics_dir'])."' WHERE confname = 'part_pics_dir'";
 		}
 		if ($_SESSION['reports_dir'] != $_POST['X_reports_dir'] ) {
-			$sql[] = "UPDATE config SET confvalue = '".DB_escape_string($_POST['X_reports_dir'])."' WHERE confname = 'reports_dir'";
+			$sql[] = "UPDATE config SET confvalue = 'companies/" . $_SESSION['DatabaseName'] . '/' . DB_escape_string($_POST['X_reports_dir'])."' WHERE confname = 'reports_dir'";
 		}
 		if ($_SESSION['AutoDebtorNo'] != $_POST['X_AutoDebtorNo'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_AutoDebtorNo'])."' WHERE confname = 'AutoDebtorNo'";
@@ -513,7 +513,7 @@ echo '<TR><TD>' . _('Maximum Size in KB of uploaded images') . ':</TD>
 //$part_pics_dir
 echo '<TR><TD>' . _('The directory where images are stored') . ':</TD>
 	<TD><SELECT NAME="X_part_pics_dir">';
-$DirHandle = dir('.');
+$DirHandle = dir('./companies/' . $_SESSION['DatabaseName']);
 
 
 while (false != ($DirEntry = $DirHandle->read())){
@@ -550,7 +550,7 @@ echo '</SELECT></TD>
 //$reports_dir
 echo '<TR><TD>' . _('The directory where reports are stored') . ':</TD>
 	<TD><SELECT NAME="X_reports_dir">';
-$DirHandle = dir('.');
+$DirHandle = dir('./companies/' . $_SESSION['DatabaseName']);
 
 
 while (false != ($DirEntry = $DirHandle->read())){

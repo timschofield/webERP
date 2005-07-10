@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 /* pdf-php by R&OS code to set up a new sales order page */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -9,7 +9,7 @@ $XPos = $Page_Width/2 - 60;
 /* if the deliver blind flag is set on the order, we do not want to output
 the company logo */
 if ($DeliverBlind < 2) {
-    $pdf->addJpegFromFile('logo.jpg',$XPos+20,520,90,60);
+    $pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg',$XPos+20,520,90,60);
 }
 $FontSize=18;
 

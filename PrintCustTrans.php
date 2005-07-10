@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity = 1;
 
@@ -637,7 +637,7 @@ If (isset($PrintPDF)
 				$ExchRate = $myrow['rate'];
 				$PageNumber = 1;
 
-				echo "<TABLE WIDTH=100%><TR><TD VALIGN=TOP WIDTH=10%><img src='logo.jpg'></TD><TD BGCOLOR='#BBBBBB'><B>";
+				echo "<TABLE WIDTH=100%><TR><TD VALIGN=TOP WIDTH=10%><img src='companies/" . $_SESSION['DatabaseName'] . "/logo.jpg'></TD><TD BGCOLOR='#BBBBBB'><B>";
 
 				if ($InvOrCredit=='Invoice') {
 				   echo '<FONT SIZE=4>' . _('TAX INVOICE') . ' ';
@@ -823,7 +823,7 @@ If (isset($PrintPDF)
 						/* head up a new invoice/credit note page */
 
 						   $PageNumber++;
-						   echo "</TABLE><TABLE WIDTH=100%><TR><TD VALIGN=TOP><img src='logo.jpg'></TD><TD BGCOLOR='#BBBBBB'><CENTER><B>";
+						   echo "</TABLE><TABLE WIDTH=100%><TR><TD VALIGN=TOP><img src='companies/" . $_SESSION['DatabaseName'] . "/logo.jpg'></TD><TD BGCOLOR='#BBBBBB'><CENTER><B>";
 
 						   if ($InvOrCredit=='Invoice') {
 							    echo '<FONT SIZE=4>' . _('TAX INVOICE') . ' ';
@@ -866,7 +866,7 @@ If (isset($PrintPDF)
 					/* head up a new invoice/credit note page */
 
 					$PageNumber++;
-					echo "<TABLE WIDTH=100%><TR><TD VALIGN=TOP><img src='logo.jpg'></TD><TD BGCOLOR='#BBBBBB'><CENTER><B>";
+					echo "<TABLE WIDTH=100%><TR><TD VALIGN=TOP><img src='companies/" . $_SESSION['DatabaseName'] . "/logo.jpg'></TD><TD BGCOLOR='#BBBBBB'><CENTER><B>";
 
 					if ($InvOrCredit=='Invoice') {
 					      echo '<FONT SIZE=4>' . _('TAX INVOICE') .' ';

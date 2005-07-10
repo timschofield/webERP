@@ -26,7 +26,7 @@ Note that in some countries the word "Vendor" is used instead of "Supplier" - pl
 
 <font size="+2"><b>Entering Supplier (Vendors)</b></font>
 <br><br>
-From the menu Payables tab, under Maintenance, click on "Add A New Supplier". The new details entered are only committed to the database as a new supplier once the user clicks on the button to "Insert New Supplier". If the user moves to another screen without clicking this button any entries are lost.
+>From the menu Payables tab, under Maintenance, click on "Add A New Supplier". The new details entered are only committed to the database as a new supplier once the user clicks on the button to "Insert New Supplier". If the user moves to another screen without clicking this button any entries are lost.
 <br><br>
 <font size="+1"><b>Supplier Code</b></font>
 <br><br>
@@ -79,11 +79,11 @@ This is a memo field only.
 <!-- Help End: Suppliers -->
 
 <!-- Help Begin: SelectSupplier -->
-<br><br>
+
 <font size="+2"><b>Selecting Suppliers</b></font>
 <br><br>
 With most operations to operate on a specific supplier, the supplier must first be selected. This applies to any supplier inquiry as well as entry of purchase orders or purchase invoices or debit notes. It is the convention of webERP to select the customer, item or supplier required before performing any function in these areas. For this reason the shortcut menu accross the top of every screen has links to each of these selection screens.
-<BR>To select a supplier then - from any screen - click on Select Supplier, or press the ALT key and the 4 key - in Internet Explorer one must press the Enter key also.
+<BR>To select a supplier then - from any screen - click on Select Supplier, or press the ALT key and the S key - in Internet Explorer one must press the Enter key also.
 <BR><BR>
 In common with the other selection screens the focus automatically goes to the supplier code where any character or series of characters of the supplier code can be entered. Having entered as much of the supplier code as is known click the "Search Now" button - this will then retrieve all the suppliers with this extract of the supplier code in the supplier code field.
 <BR>If only one supplier is returned it is automatically selected for operating on. However if several suppliers exist with the same extract within their code they will be listed with their full name, currency and address. A button showing the code for each of the suppliers allows selection of the supplier required.
@@ -108,5 +108,67 @@ As with most operations to operate on a specific supplier, the supplier must fir
 <LI>Email Address</LI>
 </UL>
 <br><br>
-
+<font size="+1"><b>Supplier Code</b></font>
 <br><br>
+
+
+
+As with all transactions in webERP the entity to be transacted with must first be selected i.e. a customer, item or
+supplier. Entering accounts payable transactions then requires the selection of a supplier first. Once a supplier is
+selected, the menu of options shows for the supplier among them "Enter an Invoice".
+
+In every case, entry of invoices requires entry of:
+
+Invoice Date
+Invoice Reference
+Invoice exchange rate
+
+Invoice Date
+
+This is the date from which webERP determines the accounting period to create the general ledger postings for the invoice -
+should AP general ledger interface be activated. It is also the date from which, in conjunction with the supplier's payment
+terms the due date of the invoice is determined. This is used by the payment run to get all amounts due to a supplier for
+payment collated and listed.
+
+Invoice Reference
+
+This is the supplier's invoice number or alpha reference uniquely identifying the invoice for the supplier. webERP checks
+that the same supplier invoice reference is not entered previously.
+
+Invoice Exchange rate
+
+This rate is used to convert the currency amounts entered on the invoice to the local currency and for the purposes of
+posting the invoice to the general ledger (in local currency) should the gl interface be active. This rate is recorded with
+the invoice and forms the basis of the calculation of differences on exchange against the rates entered against payments to
+the supplier when the payments are allocated to the invoices. General ledger journals are created for differences on
+exchange also (if the AP interface is active).
+
+
+Depending on the nature of the supplier's charge and the items purchased there are several choices as to how the amount of
+the invoice is entered. Supplier invoices can be entered for any or all of the choices together.
+
+Entry of Invoices for stock items
+
+Stock items must be received into stock and in the process a GRN (goods received note) entry created. Goods received will
+be evidenced in webERP by the stock movements inquiry showing the receipt of stock and also by the creation of a GRN
+against the supplier. If the general ledger interface is active a liability is posted to the GRN suspense account (defined
+in the company record) and the stock value is increased by the standard cost of the item at the time it is entered as
+received. The purchase order inquiry will also show the quantity received of the item (against the order). Entering a
+purchase invoice for stock items requires that the GRN record created be matched off against the invoice. A special screen
+is available to search the GRNs outstanding for the supplier. This screen can be accessed directly from the invoice entry
+screen by clicking the button to enter against stock items.
+
+The list of all the outstanding GRNs is shown and the price the supplier charged can be entered and the number of the items
+being invoiced on this invoice can be entered against the GRN too. This allows the actual charge for the item to be
+recorded against the GRN. Ultimately when the invoice is posted the actual cost (as converted at the invoice exchange rate)
+is recorded against the stock movement inquiry and any purchase price variance calculated and posted to the general ledger (
+assuming the GL interface is active).
+
+If the GL interface is active the total of the invoice is accumulated from the selection of the outstanding GRNs into the
+main invoice entry screen.
+
+Entry of Invoices for Shipment Charges
+
+Shipment charges for freight, duty and cartage that the business wishes to cost into the purchase price of stock items must 
+be entered against shipments. The shipment accumulates all these costs together before apportioning these costs to the 
+items in the shipment and calculating the approriate purchase price variance.

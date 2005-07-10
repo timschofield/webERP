@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.37 $ */
+/* $Revision: 1.38 $ */
  
     
 include('config.php');
@@ -41,20 +41,16 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 		$_SESSION['UserStockLocation'] = '';
 		$_SESSION['AttemptsCounter']++;
 	
-		// Set Default theme for initial Screen.
-		$sql = "SELECT config.confvalue 
-			FROM config
-			WHERE config.confname='DefaultTheme'";
-		$ThemeResult = DB_query($sql, $db);
-		$myrow = DB_fetch_row($ThemeResult);
-		$theme = $myrow[0];
 		
+		$theme = 'professional';
+
 		// Show login screen
 		if (!isset($_POST['UserNameEntryField']) or $_POST['UserNameEntryField'] == '') {
 			include('includes/Login.php');
 			exit;
 		}
-	
+		
+			
 		$sql = "SELECT www_users.fullaccess,
 				www_users.customerid,
 				www_users.lastvisitdate,

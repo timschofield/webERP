@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 
 $PageSecurity = 11;
@@ -45,7 +45,7 @@ if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 	
 	if ($UploadTheFile=='Yes'){
 		$result  =  move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $filename);
-		$message = ($result)?_('File url') ."<a href='". $filename ."'>" .  $filename . '</a>' : "Somthing is wrong with uploading a file.";
+		$message = ($result)?_('File url') ."<a href='". $filename ."'>" .  $filename . '</a>' : "Something is wrong with uploading a file.";
 	}
  /* EOR Add Image upload for New Item  - by Ori */
 }

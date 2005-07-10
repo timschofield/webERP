@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 // Display demo user name and password within login form if $allow_demo_mode is true
 include ('includes/LanguageSetup.php');
 
@@ -39,7 +39,7 @@ if ($allow_demo_mode == True AND !isset($demo_text)) {
 
                         <TR>
 
-			<TD VALIGN="CENTER" ALIGN="CENTER" class="logoBackground"><img src="logo.jpg" ></TD>
+			<TD VALIGN="CENTER" ALIGN="CENTER" class="logoBackground"><img src="logo_server.jpg" ></TD>
 
                             <TD class="middleBar"><img src="css/spacer.gif" width="12"></TD>
 
@@ -47,12 +47,17 @@ if ($allow_demo_mode == True AND !isset($demo_text)) {
                                 <TABLE border="0" cellpadding="3" cellspacing="0" width="100%" class="loginBox">
 
                                     <TR>
-                                        <TD><span class="loginText"><?php echo _('User name'); ?>:</span><br />
-                                         <input type="TEXT" name="UserNameEntryField"/><br />
-                                         <span class="loginText"><?php echo _('Password'); ?>:</span><br />
-                                         <input type="PASSWORD" name="Password">
-                                         <br />
-                                         <span class="loginText"><?php echo $demo_text;?></span>
+                                        <TD><SPAN class="loginText"><?php echo _('Company'); ?>:</SPAN><BR />
+                                         <INPUT type="TEXT" name="CompanyNameField" 
+					 
+					 <?php echo ' VALUE="' . $DefaultCompany . '"'; ?>
+					 ><br />
+					 <SPAN class="loginText"><?php echo _('User name'); ?>:</SPAN><BR />
+                                         <INPUT type="TEXT" name="UserNameEntryField"/><br />
+                                         <SPAN class="loginText"><?php echo _('Password'); ?>:</SPAN><BR />
+                                         <INPUT type="PASSWORD" name="Password">
+                                         <BR />
+                                         <SPAN class="loginText"><?php echo $demo_text;?></SPAN>
                                         </TD>
                                     </TR>
 
@@ -86,8 +91,8 @@ if ($allow_demo_mode == True AND !isset($demo_text)) {
     <script language="JavaScript" type="text/javascript">
     //<![CDATA[
             <!--
-            document.forms[0].UserNameEntryField.select();
-            document.forms[0].UserNameEntryField.focus();
+            document.forms[0].CompanyField.select();
+            document.forms[0].CompanyField.focus();
             //-->
     //]]>
     </script>
