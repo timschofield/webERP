@@ -1,7 +1,7 @@
 <?php
 $PageSecurity = 2;
 
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 
 If (isset($_POST['PrintPDF'])
@@ -38,6 +38,9 @@ If (isset($_POST['PrintPDF'])
 			SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) AS fxbalance,
 			SUM(CASE WHEN debtortrans.prd > ' . $_POST['PeriodEnd'] . ' THEN
 			(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount)/debtortrans.rate ELSE 0 END) AS afterdatetrans,
+			SUM(CASE WHEN debtortrans.prd > ' . $_POST['PeriodEnd'] . ' 
+				AND (debtortrans.type=11 OR debtortrans.type=12) THEN
+				debtortrans.diffonexch ELSE 0 END) AS afterdatediffonexch,
 			SUM(CASE WHEN debtortrans.prd > ' . $_POST['PeriodEnd'] . " THEN
 			debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount ELSE 0 END
 			) AS fxafterdatetrans
@@ -72,7 +75,7 @@ If (isset($_POST['PrintPDF'])
 
 	While ($DebtorBalances = DB_fetch_array($CustomerResult,$db)){
 
-		$Balance = $DebtorBalances['balance'] - $DebtorBalances['afterdatetrans'];
+		$Balance = $DebtorBalances['balance'] - $DebtorBalances['afterdatetrans'] + $DebtorBalances['afterdatediffonexch'] ;
 		$FXBalance = $DebtorBalances['fxbalance'] - $DebtorBalances['fxafterdatetrans'];
 
 		if (ABS($Balance)>0.009 OR ABS($FXBalance)>0.009) {

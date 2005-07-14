@@ -3,7 +3,7 @@
 $PageSecurity = 2;
 
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 If (isset($_POST['PrintPDF']) 
 	AND isset($_POST['FromCriteria']) 
@@ -34,6 +34,10 @@ If (isset($_POST['PrintPDF'])
 			SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
 	(supptrans.ovamount + supptrans.ovgst)/supptrans.rate ELSE 0 END)
 	 AS afterdatetrans,
+	 	Sum(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' 
+				AND (supptrans.type=22 OR supptrans.type=21) THEN
+	       supptrans.diffonexch ELSE 0 END)
+	 AS afterdatediffonexch,
 			Sum(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
 	supptrans.ovamount + supptrans.ovgst ELSE 0 END
 	) AS fxafterdatetrans
@@ -68,7 +72,7 @@ If (isset($_POST['PrintPDF'])
 
 	While ($SupplierBalances = DB_fetch_array($SupplierResult,$db)){
 
-		$Balance = $SupplierBalances['balance'] - $SupplierBalances['afterdatetrans'];
+		$Balance = $SupplierBalances['balance'] - $SupplierBalances['afterdatetrans'] + $SupplierBalances['afterdatediffonexch'];
 		$FXBalance = $SupplierBalances['fxbalance'] - $SupplierBalances['fxafterdatetrans'];
 
 		if (ABS($Balance)>0.009 OR ABS($FXBalance)>0.009) {

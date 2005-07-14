@@ -1,16 +1,19 @@
-<br><br>
-<a name="CreatingNewSystem"><font size="+3"><b>Creating a New System</b></font></a>
-<br><br>
-<font size="+2"><b>Running the Demonstration Database</b></font>
-<br><br>
+<BR><BR>
+<A NAME="CreatingNewSystem"><FONT SIZE="+3"><B>Creating a New System</B></FONT></A>
+<BR><BR>
+<FONT SIZE="+2"><B>Running the Demonstration Database</B></FONT>
+<BR><BR>
 The demonstration system has bogus data already entered so that the features of the system can be explored without creating data from scratch. If all that you wish to do is explore the features available then the demonstration data supplied is all you need. There is certain base Data that determines how the system works. This base information is defined from the System Setup tab of the main menu as well as the file config.php. To run the demonstration system it is not necessary to modify any of these, save for modifying the details for the mysql connection in config.php. 
-<br><br>
+<BR><BR>
 
 <!-- Help Begin: CompanyPreferences -->
 
-<font size="+2"><b>Setting Up A System</b></font>
-<br><br>
-For the company logo to appear on the each screen, it must be saved in the format of a .jpg file and be copied to the file logo.jpg in the directory with all the other php scripts. The logo needs to have read permissions for the user that the web server is running as normally "nobody" for apache on linux. Permissions issues are a none issue under windows.
+<FONT SIZE="+2"><B>Setting Up A System</B></FONT>
+<BR><BR>
+Assuming the server is already installed and the demo system is working, a new company can be initated from the utility menu - Z_index.php. This URL will need to be type manually into the browser since there are no links to it on the main menu. The links on this utility menu are really not everyday requirements and therefore have been confined to this menu outside the system proper. To initate a new company enter an abbreviation for the company that will be required for future logins - this can be up to 10 characters - and will be converted to lower case. For the company logo to appear on external reports, it must be uploaded at this time. The logo must be in the format of a .jpg file and less than the default 300k. The file can be browsed for and uploaded from the local machine. As many companies/systems as required can be installed under the one web-server sharing the same webERP program scripts. Once the new company database has been created, links to enter the company details are provided - it is very important to work through this set up phase carefully, since in an integrated system such as webERP it is an unfortunate truth that configuration errors are propogated right through the system!
+<BR><BR>
+When a new company is created, the only login provided is the default username: demo and password: weberp. It is critical to ensure security of the business data to create a new system administrator account known only to the authorised person. The demo user should then be deleted. New users can be added and deleted from the set up tab, under the General section called "User Accounts".
+<BR><BR>
 <br><br>
 Company parameters need to be set correctly from the company set up screen. Most of these parameters are self -explanatory. Company name, company number, postal address, physical address etc. Also, telephone numbers and the default home currency of the business. If the default currency is not already set up, then from the main menu system set up tab, the link to the currency maintenance form allows new currencies to be defined and for default rates to be updated.
 <br><br>

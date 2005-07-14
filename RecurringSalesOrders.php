@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /* This is where the details specific to the recurring order are entered and the template committed to the database once the Process button is hit */
 
 include('includes/DefineCartClass.php');
@@ -434,7 +434,7 @@ if ($_POST['Frequency']==6){
 } else {
 	echo '<OPTION VALUE=6>' . _('Bi-monthly');
 }
-if ($_POST['Frequency']==3){
+if ($_POST['Frequency']==4){
 	echo '<OPTION SELECTED VALUE=3>' . _('Quarterly');
 } else {
 	echo '<OPTION VALUE=3>' . _('Quarterly');
