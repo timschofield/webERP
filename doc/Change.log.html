@@ -1,5 +1,8 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
+<P>15/7/05 Z_PriceChanges.php lowercased to work with new db
+<P>13/7/05 SupplierBalsAtPeriodEnd.php was not taking into account FX diffs that had been realised after the year end. Same for DebtorBalsAtPeriodEnd.php
+<P>13/7/05 RecurringOrders templates set to recurr quarterly were only recurring 3 times per annum - now fixed
 <P>10/7/05 Added Z_MakeNewCompany.php and modified the rest of the system to allow alternative company login - includes/login.php defaulting to $DefaultCompany in config.php. Also now reading part_pics from a new directory companies/{Company Abbreviation}/part_pics reports and EDI files also kept under the company directory. The new Z_MakeNewCompany.php creates a new database from the sql/mysql/weberp-new.sql or sql/pg/weberp-new.psql depending on which $dbType is set in config.php. The idea for this was prompted by the work done by EDO and ITWorx on behalf of EDO - that was contributed by EDO.
 <P>7/7/05 Scott Rosa bug in includes/PDFSalesAnalysis.inc - $columnno should be $ColumnNo
 <P>4/7/05 Jake Stride GoodsReceived.php modified and GoodsReceivedManaged.php to allow entry of warehouse bin where goods received into.
