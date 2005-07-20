@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 
 $PageSecurity = 2;
@@ -159,12 +159,8 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 			$QOOQty = 0;
 		}
 
-		if ($myrow['managed']==true){
-			echo "<TD><A HREF='#' onclick=\"window.open('BinStockStatus.php?Location=". $myrow['loccode'] ."&StockID=". $StockID ."','BinStockStatus','height=250,width=250,menubar=no,status=no,resizable=no,left=5,top=5,location=no,scrollbars=no')\">" . $myrow['locationname'] . '</A></TD>';
-		} else {
-			echo '<TD>' . $myrow['locationname'] . '</TD>';
-		}
-		
+		echo '<TD>' . $myrow['locationname'] . '</TD>';
+				
 		printf("<td ALIGN=RIGHT>%s</td>
 			<td ALIGN=RIGHT>%s</td>
 			<td ALIGN=RIGHT>%s</td>

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 
 $PageSecurity = 11;
@@ -58,9 +58,6 @@ echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>
 	<TD class="tableheader">' . _('Price') . '</TD>
 	<TD class="tableheader">' . _('Total Value') . '<BR>' . _('Received') . '</TD>';
 
-if($_SESSION['PO']->Managed == 1) {
-	echo '<TD class="tableheader">' . _('Receive Into Bin') . '</TD>';
-}
 
 echo '<TD>&nbsp;</TD>
 	</TR>';
@@ -121,18 +118,7 @@ if (count($_SESSION['PO']->LineItems)>0){
 		echo '<TD ALIGN=RIGHT><FONT size=2>' . $DisplayPrice . '</TD>';
 		echo '<TD ALIGN=RIGHT><FONT size=2>' . $DisplayLineTotal . '</FONT></TD>';
 
-		if($_SESSION['PO']->Managed == 1) {
-			echo '<TD ALIGN=RIGHT><FONT size=2><a href="GoodsReceivedManaged.php?' . SID . '&LineNo=' . $LnItm->LineNo . '">';
-			
-			if($LnItm->BinID == '') {
-				echo _('Enter Bin');
-			} else {
-				echo $LnItm->BinID;
-			}
-	
-			echo '</a></TD>';
-		}
-		
+				
 		if ($LnItm->Controlled == 1) {
 			if ($LnItm->Serialised==1){
 				echo '<TD><a href="GoodsReceivedControlled.php?' . SID . '&LineNo=' . $LnItm->LineNo . '">'.
@@ -180,11 +166,7 @@ if (count($_SESSION['PO']->LineItems)>0){
 		$DeliveryQuantityTooLarge =1;
 		$InputError = true;
 	  }
-	  
-	  if(($_SESSION['PO']->Managed == 1) AND ($OrderLine->BinID == '') AND ($OrderLine->QtyReceived > 0)) {
-	  	$NoBinSet = 1;
-	  	$InputError = true;
-	  }
+	 
    }
 }
 
@@ -475,54 +457,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 						$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
 						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
-						if($_SESSION['PO']->Managed == 1) {
-							$SQL = "INSERT INTO binstock (binid,
-											loccode,
-											stockid,
-											qty,
-											serialno) 
-									VALUES ('" . $OrderLine->BinID . "',
-										'" . $_SESSION['PO']->Location . "',
-										'" . $OrderLine->StockID . "',
-										" . $Item->BundleQty . ",
-										'" . $Item->BundleRef . "')";	
-	
-							$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock item record could not be inserted because');
-							$DbgMsg =  _('The following SQL to insert the stock item bin stock was used');
-							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
-						}
 					} //end foreach
-
-				} elseif ($_SESSION['PO']->Managed == 1) {
-					$SQL = "INSERT INTO binstock (binid,
-									loccode,
-									stockid,
-									qty) 
-							VALUES ('" . $OrderLine->BinID . "',
-								'" . $_SESSION['PO']->Location . "',
-								'" . $OrderLine->StockID . "',
-								" . $OrderLine->ReceiveQty . ")";	
-					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock item record could not be inserted because');
-					$DbgMsg =  _('The following SQL to insert the stock item bin stock was used');
-					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
-				}
-				
-				/* Do the bin INSERTS HERE if neccessary */
-				if($_SESSION['PO']->Managed == 1) {
-					$SQL = "INSERT INTO binmoves (stockmoveno,
-							stockid,
-							binid,
-							loccode,
-							moveqty) 
-						VALUES (" . $StkMoveNo . ",
-							'" . $OrderLine->StockID . "',
-							'" . $OrderLine->BinID . "',
-							'" . $_SESSION['PO']->Location . "',
-							" . $OrderLine->ReceiveQty . ")";	
-
-					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock item record could not be inserted because');
-					$DbgMsg =  _('The following SQL to insert the  stock item bin move was used');
-					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 				}
 			} /*end of its a stock item - updates to locations and insert movements*/
 

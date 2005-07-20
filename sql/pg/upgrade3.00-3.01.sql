@@ -63,3 +63,4 @@ create index idxstt_taxgroupid on suppliers (taxgroupid);
 UPDATE suppliers SET taxgroupid=1;
 ALTER TABLE suppliers ADD FOREIGN KEY (taxgroupid) REFERENCES taxgroups (taxgroupid);  
 ALTER TABLE salesorderdetails ALTER COLUMN narrative SET NOT NULL;
+ALTER TABLE locations add column managed integer not null default 0;

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 5;
 
@@ -21,7 +21,6 @@ $result = DB_query($sql, $db, $ErrMsg);
 $fp = fopen($_SESSION['reports_dir'] . '/StockQties.csv', "w");
 
 While ($myrow = DB_fetch_row($result)){
-
 	$line = stripcomma($myrow[0]) . ', ' . stripcomma($myrow[1]);
 	fputs($fp, $line . "\n");
 }

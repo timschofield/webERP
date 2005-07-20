@@ -17,7 +17,7 @@ PHP code written using control structures in a consistent way throughout. (See s
 Well spaced and rigorously indented.
 Extensive commenting.
 Long descriptive variable names.
-There is also an interesting compromise between good programming practise in maximising code reuse through the use of includes, classes and common functions and in the number of separate scripts required to be understood before a developer has enough condidence to consider modifying the script. I believe that too many levels of abstraction can detract from ease of understanding the script. webERP uses a few common include files that must be understood:
+There is also an interesting compromise between good programming practise in maximising code reuse through the use of includes, classes and common functions and in the number of separate scripts required to be understood before a developer has enough condidence to consider modifying the script. I believe that too many levels of abstraction can detract from ease of understanding the script. webERP uses a few common include files that must be understood - please do take time to understand the following scripts and use re-use the functions contained therein before creating new functions that do similar things:
 
 includes/ConnectDB.inc   	- database abstraction
 includes/session.inc	 	- initiation of session and security checking
@@ -25,6 +25,7 @@ includes/header.inc 	 	- page headings and quick menu links
 includes/footer.inc	 	- page footer
 includes/PDFStarter_ros.inc	- PDF report generation substitute for session.inc
 includes/DateFunctions.inc	- Date functions
+includes/MiscFunctions.inc	- Error reporting function
 
 and config.php which is included by includes/session.inc. Most scripts use all the first 4. Transactional scripts also use an includes/DefineXXXXXXClass.php script. Apart from these files most scripts are otherwise self contained so that a knowledge of these includes and the script should be all thats needed to be confident in modifying the script.
 
@@ -226,7 +227,7 @@ are preferred. But all comments gratefully received!
 
 All scripts should have a comment in the first few lines with the script revision number in it if the following comment is pasted into it the CVS automatically updates the revision number.
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 
 Messages

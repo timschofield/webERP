@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.38 $ */
+/* $Revision: 1.39 $ */
 
 
 $PageSecurity = 1;
@@ -758,6 +758,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 								<?php echo "<a href='" . $rootpath . '/PeriodsInquiry.php?' . SID . "'><li>" . _('List Periods Defined') . ' <FONT SIZE=1>(' . _('Periods are automatically maintained') . ')</FONT></a>'; ?>
 							</td>
 							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/Export_Import.php?' . SID . "'><li>" . _('Export and Import') . '</FONT></a>'; ?>
+							</td>
+							</tr>
 						</table>
 					</td>
 
@@ -831,11 +836,6 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<a href='" . $rootpath . '/Locations.php?' . SID . "'><li>" . _('Inventory Locations Maintenance') . '</li></a>'; ?>
-							</td>
-							</tr>
-							<tr>
-							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/Bins.php?' . SID . "'><li>" . _('Inventory Bins Maintenance') . '</li></a>'; ?>
 							</td>
 							</tr>
 							<tr>
