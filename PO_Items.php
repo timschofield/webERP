@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 
 $PageSecurity = 4;
@@ -79,7 +79,6 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		     /*Insert the purchase order detail records */
 		     foreach ($_SESSION['PO']->LineItems as $POLine) {
 			 	if ($POLine->Deleted==False) {
-
 					$sql = "INSERT INTO purchorderdetails (
 							orderno,
 							itemcode,
@@ -485,7 +484,8 @@ If (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 
 				if ($_SESSION['PO']->GLLink==1){
 
-					 $_SESSION['PO']->add_to_order ($_POST['LineNo'], $_POST['StockID'],
+					 $_SESSION['PO']->add_to_order ($_POST['LineNo'], 
+					 				$_POST['StockID'],
 					 				0, /*Serialised */
 									0, /*Controlled */
 									$_POST['Qty'],
@@ -747,7 +747,7 @@ If ($_GET['Edit']){
 	      if ($_SESSION['PO']->GLLink==1) {
 		      echo '<TR><TD>' . _('GL Code') . ":</TD><TD><input type='Text' SIZE=15 MAXLENGTH=14 name='GLCode' value=" .$_SESSION['PO']->LineItems[$_GET['Edit']]->GLCode . "> <a target='_blank' href='$rootpath/GLCodesInquiry.php'>" . _('List GL Codes') . '</a></TD></TR>';
 	      } else {
-		      echo "<input type='hidden' name='GLCode' value=''>";
+		      echo "<input type='hidden' name='GLCode' value='0'>";
 	      }
 	} else {
 	      echo '<TR><TD>' . _('Stock Item Ordered') . ':</TD><TD>' . $_SESSION['PO']->LineItems[$_GET['Edit']]->ItemDescription . "</TD></TR>";

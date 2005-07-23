@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 4;
 include('includes/DefinePOClass.php');
@@ -378,8 +378,8 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 	  echo '</TD><TD>'; /*sub table nested */
 
 	  echo '<TABLE><TR><TD>' . _('Originally Ordered') . ':</TD><TD>';
-	  if ($_SESSION['ExistingOrder']==1){ echo
-		 ConvertSQLDate($_SESSION['PO']->Orig_OrderDate);
+	  if ($_SESSION['ExistingOrder']!=0){ 
+		echo ConvertSQLDate($_SESSION['PO']->Orig_OrderDate);
 	  } else {
 	  	/* DefaultDateFormat defined in config.php */
 		 echo Date($_SESSION['DefaultDateFormat']);
