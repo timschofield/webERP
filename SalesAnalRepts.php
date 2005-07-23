@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 2;
 
@@ -393,7 +393,7 @@ if (!$_GET['delete']) {
 
 	GrpByDataOptions($_POST['GroupByData1']);
 
-	echo '</SELECT></TD><TD>' . _('Page Break After') . ':<SELECT name=NewPageAfter1>';
+	echo '</SELECT></TD><TD>' . _('Page Break After') . ': <SELECT name=NewPageAfter1>';
 
 	if ($_POST['NewPageAfter1']==0){
 	  echo "<OPTION SELECTED value=0>" . _('No');

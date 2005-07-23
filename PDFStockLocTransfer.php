@@ -1,13 +1,12 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity =1;
 
 include('config.php');
 $title = _('Stock Location Transfer Docket Error');
-include('includes/ConnectDB.inc');
-session_start();
 include('includes/PDFStarter_ros.inc');
+include('includes/ConnectDB.inc');
 include('includes/DateFunctions.inc');
 
 if (!isset($_GET['TransferNo'])){

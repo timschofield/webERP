@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 2;
 
@@ -10,8 +10,8 @@ If (isset($_POST['PrintPDF'])
 		 AND strlen($_POST['ToCriteria'])>=1){
 
 	include('config.php');
-	include('includes/ConnectDB.inc');
 	include('includes/PDFStarter_ros.inc');
+	include('includes/ConnectDB.inc');
 
 	$FontSize=10;
 	$pdf->addinfo('Title', _('Price Listing Report') );

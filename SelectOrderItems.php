@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 require('includes/DefineCartClass.php');
 
@@ -484,8 +484,17 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	<CENTER><INPUT TYPE=SUBMIT NAME="SearchCust" VALUE="<?php echo _('Search Now'); ?>">
 	<INPUT TYPE=SUBMIT ACTION=RESET VALUE="<?php echo _('Reset'); ?>"></CENTER>
 
-
+	<script language='JavaScript' type='text/javascript'>
+    	//<![CDATA[
+            <!--
+            document.forms[0].CustCode.select();
+            document.forms[0].CustCode.focus();
+            //-->
+    	//]]>
+	</script>
 	<?php
+	
+	
 
 	If (isset($result_CustSelect)) {
 
@@ -611,7 +620,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		If ($_POST['Keywords'] AND $_POST['StockCode']) {
 			$msg='<BR>' . _('Stock description keywords have been used in preference to the Stock code extract entered') . '.';
 		}
-		If (isset($_POST['Keywords'])) {
+		If (strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
 			$_POST['Keywords'] = strtoupper($_POST['Keywords']);
 
@@ -643,12 +652,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					WHERE  stockmaster.categoryid=stockcategory.categoryid
 					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
 					AND stockmaster.discontinued=0
-					AND stockmaster.description " . LIKE . " '$SearchString'
+					AND stockmaster.description " . LIKE . " '" . $SearchString . "'
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 					ORDER BY stockmaster.stockid";
 			}
 
-		} elseif ($_POST['StockCode']){
+		} elseif (strlen($_POST['StockCode'])>0){
+		
 			$_POST['StockCode'] = strtoupper($_POST['StockCode']);
 			$_POST['StockCode'] = '%' . $_POST['StockCode'] . '%';
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 include('config.php');
 
@@ -12,8 +12,8 @@ $PageSecurity = 2;
 
 If (isset($_POST['PrintPDF']) {
 	
-	include('includes/ConnectDB.inc');
 	include('includes/PDFStarter_ros.inc');
+	include('includes/ConnectDB.inc');
 	include('includes/DateFunctions.inc');
 	
 	$title = _('Low GP sales') . ' - ' . _('Problem Report');

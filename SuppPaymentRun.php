@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 5;
 
@@ -14,6 +14,7 @@ Class Allocation {
 }
 
 include('config.php');
+include('includes/session.inc');
 include('includes/ConnectDB.inc');
 
 include('includes/GetPaymentMethods.php');
@@ -27,12 +28,8 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 /*then print the report */
 
-	include('includes/PDFStarter_ros.inc');
-	include('includes/DateFunctions.inc');
-
 	$RefCounter = 0;
-
-
+	include('includes/PDFStarter_ros.inc');
 	$pdf->addinfo('Title',_('Payment Run Report'));
 	$pdf->addinfo('Subject',_('Payment Run') . ' - ' . _('suppliers from') . ' ' . $_POST['FromCriteria'] . ' to ' . $_POST['ToCriteria'] . ' in ' . $_POST['Currency'] . ' ' . _('and Due By') . ' ' .  $_POST['AmountsDueBy']);
 
@@ -245,7 +242,6 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 } else { /*The option to print PDF was not hit */
 
-	include('includes/session.inc');
 	$title=_('Payment Run');
 	include('includes/header.inc');
 

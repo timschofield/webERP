@@ -1,11 +1,11 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity =1;
 
 include('config.php');
-include('includes/ConnectDB.inc');
 include('includes/PDFStarter_ros.inc');
+include('includes/ConnectDB.inc');
 include('includes/DateFunctions.inc');
 $title = _('Negative Stock Listing Error');
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 include ('includes/class.pdf.php');
 
 if (isset($SessionSavePath)){

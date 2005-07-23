@@ -2,7 +2,7 @@
 
 $PageSecurity = 2;
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 
 If (isset($_POST['PrintPDF'])
@@ -12,9 +12,8 @@ If (isset($_POST['PrintPDF'])
 	AND strlen($_POST['ToCriteria'])>=1){
 
 	include('config.php');
-	include('includes/ConnectDB.inc');
-
 	include('includes/PDFStarter_ros.inc');
+	include('includes/ConnectDB.inc');
 	include('includes/DateFunctions.inc');
 
 	$FontSize=12;
