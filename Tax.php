@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 2;
 
@@ -25,11 +25,10 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['NoOfPeriods']) AND isset($_POST[
 
 
 	include('config.php');
+	include('includes/PDFStarter_ros.inc');
 	include('includes/ConnectDB.inc');
 	include('includes/DateFunctions.inc');
-	include('includes/PDFStarter_ros.inc');
-
-
+	
 	$sql = 'SELECT lastdate_in_period 
 		FROM periods 
 		WHERE periodno=' . $_POST['ToPeriod'];

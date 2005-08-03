@@ -12,6 +12,11 @@ SET FOREIGN_KEY_CHECKS = 0;
 --
 -- Current Database: `weberp`
 --
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `weberp` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `weberp`;
+
 --
 -- Table structure for table `accountgroups`
 --
@@ -669,6 +674,7 @@ CREATE TABLE `locations` (
   `email` varchar(55) NOT NULL default '',
   `contact` varchar(30) NOT NULL default '',
   `taxprovinceid` tinyint(4) NOT NULL default '1',
+  `managed` int(11) default '0',
   PRIMARY KEY  (`loccode`),
   KEY `taxprovinceid` (`taxprovinceid`),
   CONSTRAINT `locations_ibfk_1` FOREIGN KEY (`taxprovinceid`) REFERENCES `taxprovinces` (`taxprovinceid`)
@@ -1863,7 +1869,7 @@ INSERT INTO `chartmaster` VALUES (940000,'Revaluation Reserve','Equity');
 -- Dumping data for table `companies`
 --
 
-INSERT INTO `companies` VALUES (1,'Demo System','15-325-122','','PO Box 999 Wellington Mail Centre, New Zealand','12 Downing Street,','Upper Hutt','New Zealand','+(64) (04) 567 5411','+(64) (04) 567 5412','info@weberp.org','AUD',710000,455000,800000,810000,723000,23700,23700,900000,1,1,1,450000);
+INSERT INTO `companies` VALUES (1,'Demo System - Old One','15-325-122','','PO Box 999 Wellington Mail Centre, New Zealand','12 Downing Street,','Upper Hutt','New Zealand','+(64) (04) 567 5411','+(64) (04) 567 5412','info@weberp.org','AUD',710000,455000,800000,810000,723000,23700,23700,900000,1,1,1,450000);
 
 --
 -- Dumping data for table `currencies`
@@ -1885,9 +1891,9 @@ INSERT INTO `holdreasons` VALUES (51,'In liquidation',1);
 -- Dumping data for table `locations`
 --
 
-INSERT INTO `locations` VALUES ('DEN','Denver','532-536 Wentworth Street','Denver','Colorado','233 5532 216','233 5532 215','g.bovert@weberp.com','Graham Bouvert',1);
-INSERT INTO `locations` VALUES ('DOG','test','','','','','','','',1);
-INSERT INTO `locations` VALUES ('TOR','Toronto Distribution Centre','','','','','','','Clive Contrary',1);
+INSERT INTO `locations` VALUES ('DEN','Denver','532-536 Wentworth Street','Denver','Colorado','233 5532 216','233 5532 215','g.bovert@weberp.com','Graham Bouvert',1,0);
+INSERT INTO `locations` VALUES ('DOG','test','','','','','','','',1,0);
+INSERT INTO `locations` VALUES ('TOR','Toronto Distribution Centre','','','','','','','Clive Contrary',1,1);
 
 --
 -- Dumping data for table `paymentterms`
@@ -2096,7 +2102,7 @@ INSERT INTO `systypes` VALUES (20,'Purchase Invoice',3);
 INSERT INTO `systypes` VALUES (21,'Debit Note',1);
 INSERT INTO `systypes` VALUES (22,'Creditors Payment',0);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
-INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',1);
+INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',3);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',0);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',0);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',0);
@@ -2154,7 +2160,7 @@ INSERT INTO `taxcategories` VALUES (3,'Exempt');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB','','');
+INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'fresh','en_GB','','');
 INSERT INTO `www_users` VALUES ('Fred','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Fred Bloggs','','','','DEN',1,'2005-04-29 22:41:10','','A4','1,1,0,1,1,0,1,1,',0,50,'fresh','en_GB','','');
 INSERT INTO `www_users` VALUES ('testy','weberp','Test Remote User','GRANHR','','','DEN',7,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en','','');
 
@@ -2313,7 +2319,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-06-30');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-07-23');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
@@ -2326,9 +2332,9 @@ INSERT INTO `config` VALUES ('DispatchCutOffTime','14');
 INSERT INTO `config` VALUES ('DoFreightCalc','0');
 INSERT INTO `config` VALUES ('EDIHeaderMsgId','D:01B:UN:EAN010');
 INSERT INTO `config` VALUES ('EDIReference','WEBERP');
-INSERT INTO `config` VALUES ('EDI_Incoming_Orders','EDI_Incoming_Orders');
-INSERT INTO `config` VALUES ('EDI_MsgPending','EDI_Pending');
-INSERT INTO `config` VALUES ('EDI_MsgSent','EDI_Sent');
+INSERT INTO `config` VALUES ('EDI_Incoming_Orders','companies/weberp/EDI_Incoming_Orders');
+INSERT INTO `config` VALUES ('EDI_MsgPending','companies/weberp/EDI_Pending');
+INSERT INTO `config` VALUES ('EDI_MsgSent','companies/weberp/EDI_Sent');
 INSERT INTO `config` VALUES ('FreightChargeAppliesIfLessThan','1000');
 INSERT INTO `config` VALUES ('FreightTaxCategory','1');
 INSERT INTO `config` VALUES ('HTTPS_Only','0');
@@ -2338,7 +2344,7 @@ INSERT INTO `config` VALUES ('OverChargeProportion','30');
 INSERT INTO `config` VALUES ('OverReceiveProportion','20');
 INSERT INTO `config` VALUES ('PackNoteFormat','1');
 INSERT INTO `config` VALUES ('PageLength','48');
-INSERT INTO `config` VALUES ('part_pics_dir','part_pics');
+INSERT INTO `config` VALUES ('part_pics_dir','companies/weberp/part_pics');
 INSERT INTO `config` VALUES ('PastDueDays1','30');
 INSERT INTO `config` VALUES ('PastDueDays2','60');
 INSERT INTO `config` VALUES ('PO_AllowSameItemMultipleTimes','1');
@@ -2350,7 +2356,7 @@ INSERT INTO `config` VALUES ('RadioBeaconStockLocation','BL');
 INSERT INTO `config` VALUES ('RadioBraconFTP_server','192.168.2.2');
 INSERT INTO `config` VALUES ('RadioBreaconFilePrefix','ORDXX');
 INSERT INTO `config` VALUES ('RadionBeaconFTP_user_pass','Radio Beacon remote ftp server password');
-INSERT INTO `config` VALUES ('reports_dir','reports');
+INSERT INTO `config` VALUES ('reports_dir','companies/weberp/reports');
 INSERT INTO `config` VALUES ('RomalpaClause','Ownership will not pass to the buyer until the goods have been paid for in full.');
 INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
@@ -2478,3 +2484,4 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
+INSERT INTO shippers (1,'Default Shipper',0); UPDATE config SET confvalue='1' WHERE confname='Default_Shipper';

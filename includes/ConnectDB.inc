@@ -1,9 +1,15 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 if (!isset($_SESSION['DatabaseName'])){
-	$_SESSION['DatabaseName'] = $_POST['CompanyNameField'];
+	if (isset($_POST['CompanyNameField'])){ 
+		$_SESSION['DatabaseName'] = $_POST['CompanyNameField'];
+		include_once 'includes/ConnectDB_' . $dbType . '.inc';
+	}
 }
-include_once "includes/ConnectDB_$dbType.inc";
+
+if (isset($_SESSION['DatabaseName'])){
+ 	include_once 'includes/ConnectDB_' . $dbType . '.inc';
+}
 
 ?>

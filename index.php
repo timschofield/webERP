@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.39 $ */
+/* $Revision: 1.40 $ */
 
 
 $PageSecurity = 1;
@@ -756,11 +756,6 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<a href='" . $rootpath . '/PeriodsInquiry.php?' . SID . "'><li>" . _('List Periods Defined') . ' <FONT SIZE=1>(' . _('Periods are automatically maintained') . ')</FONT></a>'; ?>
-							</td>
-							</tr>
-							<tr>
-							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/Export_Import.php?' . SID . "'><li>" . _('Export and Import') . '</FONT></a>'; ?>
 							</td>
 							</tr>
 						</table>

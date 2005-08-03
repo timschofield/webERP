@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
@@ -710,7 +710,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			   }
 
 			echo '<TD>' . $LineItem->Units . '</TD>
-			<TD><INPUT TYPE=TEXT NAME="Price_' . $LineItem->LineNumber . '" SIZE=8 MAXLENGTH=8 VALUE=' . $LineItem->Price . '></TD>
+			<TD><INPUT TYPE=TEXT NAME="Price_' . $LineItem->LineNumber . '" SIZE=10 MAXLENGTH=12 VALUE=' . $LineItem->Price . '></TD>
 			<TD><INPUT TYPE="CheckBox" NAME="Gross" VALUE=False></TD>
 			<TD><INPUT TYPE=TEXT NAME="Discount_' . $LineItem->LineNumber . '" SIZE=3 MAXLENGTH=3 VALUE=' . ($LineItem->DiscountPercent * 100) . '>%</TD>
 			<TD ALIGN=RIGHT>' . $DisplayLineTotal . '</TD>';

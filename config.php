@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.59 $ */
+/* $Revision: 1.60 $ */
 
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
@@ -22,7 +22,7 @@ $allow_demo_mode = True;
 
 // Application version
 
-$Version = '3.01';
+$Version = '3.02';
 
 
 // The timezone of the business - this allows the possibility of having
@@ -39,7 +39,7 @@ $Version = '3.01';
 $host = 'localhost';
 
 //The type of db server being used - currently only postgres or mysql
-$dbType = 'mysql';
+$dbType = 'postgres';
 //$dbType = 'postgres';
 //$dbType = 'mysql';
 
@@ -57,7 +57,7 @@ $SessionLifeTime = 3600;
 $MaximumExecutionTime =120;
 
 //The path to which session files should be stored in the server
-//this can be left commented out if only one company is running on the server
+//this can be left commented out
 //However if multiple webERP installations are on the same server then a separate session directory is required for each install
 //$SessionSavePath = '/tmp';
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -658,7 +658,7 @@ if (!isset($_POST['FreightCost'])) {
 }
 
 echo '<TR><TD>'. _('Freight Charge') .':</TD>';
-echo "<TD><INPUT TYPE=TEXT SIZE=10 max=10 NAME='FreightCost' VALUE=" . $_POST['FreightCost'] . '></TD>';
+echo "<TD><INPUT TYPE=TEXT SIZE=10 MAXLENGTH=12 NAME='FreightCost' VALUE=" . $_SESSION['Items']->FreightCost . '></TD>';
 
 if ($_SESSION['DoFreightCalc']==True){
 	echo "<TD><INPUT TYPE=SUBMIT NAME='Update' VALUE='" . _('Recalc Freight Cost') . "'></TD></TR>";

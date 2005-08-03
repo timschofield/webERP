@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -46,9 +46,11 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 		$TaxAuthority = $_GET['TaxAuthority'];
 		if( isset($_GET['add']) ) { // adding a tax authority to a tax group
 			$sql = "INSERT INTO taxgrouptaxes ( taxgroupid, 
-								taxauthid) 
+								taxauthid,
+								calculationorder) 
 					VALUES (" . $SelectedGroup . ", 
-						" . $TaxAuthority . ")";
+						" . $TaxAuthority . ",
+						0)";
 					
 			$ErrMsg = _('The addition of the tax failed because');
 			$SuccessMsg = _('The tax  was added.');

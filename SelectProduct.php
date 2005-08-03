@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 2;
 
@@ -253,114 +253,117 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 
 // display list if there is more than one record
 
-If (isset($result) AND !isset($_POST['Select']) ) {
-  // If the user hit the search button and there is more than one item to show
-  $ListCount=DB_num_rows($result);
-  $ListPageMax=ceil($ListCount/$_SESSION['DisplayRecordsMax']);
+if (isset($result) AND !isset($_POST['Select'])) {
+	
+	$ListCount = DB_num_rows($result);
+	if ($ListCount > 0) {
+	// If the user hit the search button and there is more than one item to show
+				
+		$ListPageMax=ceil($ListCount/$_SESSION['DisplayRecordsMax']);
 
-  if (isset($_POST['Next'])) {
-    if ($_POST['PageOffset'] < $ListPageMax) {
-	    $_POST['PageOffset'] = $_POST['PageOffset'] + 1;
-    }
+		if (isset($_POST['Next'])) {
+			if ($_POST['PageOffset'] < $ListPageMax) {
+				$_POST['PageOffset'] = $_POST['PageOffset'] + 1;
+			}
+		}
+
+		if (isset($_POST['Previous'])) {
+			if ($_POST['PageOffset'] > 1) {
+				$_POST['PageOffset'] = $_POST['PageOffset'] - 1;
+			}
+		}
+	
+		if ($_POST['PageOffset']>$ListPageMax){
+			$_POST['PageOffset'] = $ListPageMax;
+		}
+		echo '<CENTER><BR>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+	?>
+	
+	<select name="PageOffset">
+	
+	<?php
+		$ListPage=1;
+		while($ListPage<=$ListPageMax) {
+			if ($ListPage==$_POST['PageOffset']) {
+	?>
+	
+				<option value=<?php echo($ListPage); ?> selected><?php echo($ListPage); ?></option>
+	<?php
+			} else {
+	?>
+				<option value=<?php echo($ListPage); ?>><?php echo($ListPage); ?></option>
+	
+	<?php
+			}
+			$ListPage=$ListPage+1;
+		}
+	?>
+		</select>
+		<INPUT TYPE=SUBMIT NAME="Go" VALUE="<?php echo _('Go'); ?>">
+		<INPUT TYPE=SUBMIT NAME="Previous" VALUE="<?php echo _('Previous'); ?>">
+		<INPUT TYPE=SUBMIT NAME="Next" VALUE="<?php echo _('Next'); ?>">
+	<?php
+	
+		echo '<br><br>';
+	
+		echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
+		$tableheader = '<TR>
+					<TD class="tableheader">' . _('Code') . '</TD>
+					<TD class="tableheader">' . _('Description') . '</TD>
+					<TD class="tableheader">' . _('Total Qty On Hand') . '</TD>
+					<TD class="tableheader">' . _('Units') . '</TD>
+				</TR>';
+		echo $tableheader;
+	
+		$j = 1;
+	
+		$k = 0; //row counter to determine background colour
+	
+	$RowIndex = 0;
+	
+	if (DB_num_rows($result)<>0){
+		DB_data_seek($result, ($_POST['PageOffset']-1)*$_SESSION['DisplayRecordsMax']);
 	}
-
-  if (isset($_POST['Previous'])) {
-    if ($_POST['PageOffset'] > 1) {
-	    $_POST['PageOffset'] = $_POST['PageOffset'] - 1;
-    }
-  }
-
-  if ($_POST['PageOffset']>$ListPageMax){
-  	$_POST['PageOffset'] = $ListPageMax;
-  }
-  echo '<CENTER><BR>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
-?>
-
-  <select name="PageOffset">
-
-<?php
-  $ListPage=1;
-  while($ListPage<=$ListPageMax) {
-	  if ($ListPage==$_POST['PageOffset']) {
-?>
-
-  		<option value=<?php echo($ListPage); ?> selected><?php echo($ListPage); ?></option>
-<?php
-	  } else {
-?>
-		  <option value=<?php echo($ListPage); ?>><?php echo($ListPage); ?></option>
-
-<?php
-	  }
-	  $ListPage=$ListPage+1;
-  }
-?>
-  </select>
-  <INPUT TYPE=SUBMIT NAME="Go" VALUE="<?php echo _('Go'); ?>">
-  <INPUT TYPE=SUBMIT NAME="Previous" VALUE="<?php echo _('Previous'); ?>">
-  <INPUT TYPE=SUBMIT NAME="Next" VALUE="<?php echo _('Next'); ?>">
-<?php
-
-  echo '<br><br>';
-
-	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
-	$tableheader = '<TR>
-				<TD class="tableheader">' . _('Code') . '</TD>
-				<TD class="tableheader">' . _('Description') . '</TD>
-				<TD class="tableheader">' . _('Total Qty On Hand') . '</TD>
-				<TD class="tableheader">' . _('Units') . '</TD>
-			</TR>';
-	echo $tableheader;
-
-	$j = 1;
-
-	$k = 0; //row counter to determine background colour
-
-  $RowIndex = 0;
-
-  if (DB_num_rows($result)<>0){
- 	DB_data_seek($result, ($_POST['PageOffset']-1)*$_SESSION['DisplayRecordsMax']);
-  }
-
-	while (($myrow=DB_fetch_array($result)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
-
-		if ($k==1){
-			echo '<tr bgcolor="#CCCCCC">';
-			$k=0;
-		} else {
-			echo '<tr bgcolor="#EEEEEE">';
-			$k++;
+	
+		while (($myrow=DB_fetch_array($result)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
+	
+			if ($k==1){
+				echo '<tr bgcolor="#CCCCCC">';
+				$k=0;
+			} else {
+				echo '<tr bgcolor="#EEEEEE">';
+				$k++;
+			}
+	
+			if ($myrow['mbflag']=='D') {
+				$qoh = 'N/A';
+			} else {
+				$qoh = number_format($myrow["qoh"],1);
+			}
+	
+			printf("<td><INPUT TYPE=SUBMIT NAME='Select' VALUE='%s'</td>
+				<td>%s</td>
+				<td ALIGN=RIGHT>%s</td>
+				<td>%s</td>
+				</tr>", 
+				$myrow['stockid'], 
+				$myrow['description'], 
+				$qoh, 
+				$myrow['units']);
+	
+			$j++;
+			If ($j == 20 AND ($RowIndex+1 != $_SESSION['DisplayRecordsMax'])){
+				$j=1;
+				echo $tableheader;
+	
+			}
+	$RowIndex = $RowIndex + 1;
+	//end of page full new headings if
 		}
-
-		if ($myrow['mbflag']=='D') {
-			$qoh = 'N/A';
-		} else {
-			$qoh = number_format($myrow["qoh"],1);
-		}
-
-		printf("<td><INPUT TYPE=SUBMIT NAME='Select' VALUE='%s'</td>
-            		<td>%s</td>
-            		<td ALIGN=RIGHT>%s</td>
-            		<td>%s</td>
-            		</tr>", 
-            		$myrow['stockid'], 
-            		$myrow['description'], 
-            		$qoh, 
-            		$myrow['units']);
-
-		$j++;
-		If ($j == 12 AND ($RowIndex+1 != $_SESSION['DisplayRecordsMax'])){
-			$j=1;
-			echo $tableheader;
-
-		}
-    $RowIndex = $RowIndex + 1;
-//end of page full new headings if
+	//end of while loop
+	
+		echo '</TABLE>';
 	}
-//end of while loop
-
-	echo '</TABLE>';
-
 }
 // end display list if there is more than one record
 

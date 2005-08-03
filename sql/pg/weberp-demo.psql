@@ -10,7 +10,7 @@ SET SESSION AUTHORIZATION 'postgres';
 SET search_path = public, pg_catalog;
 
 --
--- TOC entry 428 (OID 35739)
+-- TOC entry 450 (OID 35739)
 -- Name: plpgsql_call_handler(); Type: FUNC PROCEDURAL LANGUAGE; Schema: public; Owner: postgres
 --
 
@@ -22,7 +22,7 @@ CREATE FUNCTION plpgsql_call_handler() RETURNS language_handler
 SET SESSION AUTHORIZATION DEFAULT;
 
 --
--- TOC entry 427 (OID 35740)
+-- TOC entry 449 (OID 35740)
 -- Name: plpgsql; Type: PROCEDURAL LANGUAGE; Schema: public; Owner: 
 --
 
@@ -309,7 +309,8 @@ CREATE TABLE locations (
     fax text DEFAULT ''::text NOT NULL,
     email text DEFAULT ''::text NOT NULL,
     contact text DEFAULT ''::text NOT NULL,
-    taxauthority integer DEFAULT 1 NOT NULL
+    taxprovinceid integer DEFAULT 1 NOT NULL,
+    managed integer DEFAULT 0
 );
 
 
@@ -474,7 +475,7 @@ CREATE TABLE suppliers (
     bankref text DEFAULT ''::text NOT NULL,
     bankpartics text DEFAULT ''::text NOT NULL,
     remittance integer DEFAULT 1 NOT NULL,
-    taxauthority integer DEFAULT 1 NOT NULL
+    taxgroupid integer DEFAULT 1 NOT NULL
 );
 
 
@@ -583,7 +584,7 @@ CREATE TABLE stockmaster (
     kgs numeric(20,4) DEFAULT 0.0000 NOT NULL,
     barcode text DEFAULT ''::text NOT NULL,
     discountcategory text DEFAULT ''::text NOT NULL,
-    taxlevel integer DEFAULT 1 NOT NULL,
+    taxcatid integer DEFAULT 1 NOT NULL,
     serialised integer DEFAULT 0 NOT NULL,
     decimalplaces integer DEFAULT 0 NOT NULL
 );
@@ -700,7 +701,6 @@ CREATE TABLE stockmoves (
     show_on_inv_crds integer DEFAULT 1 NOT NULL,
     newqoh double precision DEFAULT (0)::double precision NOT NULL,
     hidemovt integer DEFAULT 0 NOT NULL,
-    taxrate double precision DEFAULT (0)::double precision NOT NULL,
     narrative text DEFAULT ''::text NOT NULL
 );
 
@@ -854,13 +854,13 @@ CREATE TABLE grns (
 
 --
 -- TOC entry 55 (OID 36348)
--- Name: taxauthlevels; Type: TABLE; Schema: public; Owner: weberp_db_user
+-- Name: taxauthrates; Type: TABLE; Schema: public; Owner: weberp_db_user
 --
 
-CREATE TABLE taxauthlevels (
+CREATE TABLE taxauthrates (
     taxauthority integer DEFAULT 1 NOT NULL,
-    dispatchtaxauthority integer DEFAULT 1 NOT NULL,
-    "level" integer DEFAULT 0 NOT NULL,
+    dispatchtaxprovince integer DEFAULT 1 NOT NULL,
+    taxcatid integer DEFAULT 0 NOT NULL,
     taxrate double precision DEFAULT (0)::double precision NOT NULL
 );
 
@@ -886,7 +886,7 @@ CREATE TABLE www_users (
     blocked integer DEFAULT 0 NOT NULL,
     displayrecordsmax integer DEFAULT 0 NOT NULL,
     theme text DEFAULT 'fresh'::text NOT NULL,
-    "language" text DEFAULT 'en'::text NOT NULL,
+    "language" text DEFAULT 'en_GB'::text NOT NULL,
     pinno text,
     swipecard text
 );
@@ -1107,7 +1107,7 @@ CREATE TABLE custbranch (
     contactname text DEFAULT ''::text NOT NULL,
     email text DEFAULT ''::text NOT NULL,
     defaultlocation text DEFAULT ''::text NOT NULL,
-    taxauthority integer DEFAULT 1 NOT NULL,
+    taxgroupid integer DEFAULT 1 NOT NULL,
     defaultshipvia integer DEFAULT 1 NOT NULL,
     disabletrans integer DEFAULT 0 NOT NULL,
     brpostaddr1 text DEFAULT ''::text NOT NULL,
@@ -1224,7 +1224,8 @@ CREATE TABLE salesorderdetails (
     discountpercent numeric(16,4) DEFAULT 0.0000 NOT NULL,
     actualdispatchdate timestamp without time zone,
     completed integer DEFAULT 0 NOT NULL,
-    narrative text NOT NULL
+    narrative text NOT NULL,
+    orderlineno integer
 );
 
 
@@ -1287,7 +1288,7 @@ CREATE TABLE areas (
 SET SESSION AUTHORIZATION 'postgres';
 
 --
--- TOC entry 429 (OID 36664)
+-- TOC entry 451 (OID 36664)
 -- Name: getstkmoveloc(integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1308,7 +1309,7 @@ END;'
 
 
 --
--- TOC entry 430 (OID 36665)
+-- TOC entry 452 (OID 36665)
 -- Name: chkstockserialmoves(); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1323,7 +1324,7 @@ END;
 
 
 --
--- TOC entry 431 (OID 36666)
+-- TOC entry 453 (OID 36666)
 -- Name: to_days(timestamp without time zone); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1339,7 +1340,7 @@ END;
 
 
 --
--- TOC entry 432 (OID 36667)
+-- TOC entry 454 (OID 36667)
 -- Name: to_days(timestamp with time zone); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1359,7 +1360,7 @@ END;
 
 
 --
--- TOC entry 433 (OID 36668)
+-- TOC entry 455 (OID 36668)
 -- Name: dayofmonth(timestamp without time zone); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1375,7 +1376,7 @@ END;
 
 
 --
--- TOC entry 434 (OID 36669)
+-- TOC entry 456 (OID 36669)
 -- Name: dayofmonth(timestamp with time zone); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1391,7 +1392,7 @@ END;
 
 
 --
--- TOC entry 435 (OID 36670)
+-- TOC entry 457 (OID 36670)
 -- Name: to_days(date); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1407,7 +1408,7 @@ END;
 
 
 --
--- TOC entry 436 (OID 36671)
+-- TOC entry 458 (OID 36671)
 -- Name: date_add(date, interval); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1424,7 +1425,7 @@ END;
 
 
 --
--- TOC entry 437 (OID 36672)
+-- TOC entry 459 (OID 36672)
 -- Name: time_add_hours(timestamp with time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1441,7 +1442,7 @@ END;
 
 
 --
--- TOC entry 438 (OID 36673)
+-- TOC entry 460 (OID 36673)
 -- Name: time_add_hours(timestamp without time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1458,7 +1459,7 @@ END;
 
 
 --
--- TOC entry 439 (OID 36674)
+-- TOC entry 461 (OID 36674)
 -- Name: time_add_hours(time without time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1475,7 +1476,7 @@ END;
 
 
 --
--- TOC entry 440 (OID 36675)
+-- TOC entry 462 (OID 36675)
 -- Name: time_add_minutes(timestamp with time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1492,7 +1493,7 @@ END;
 
 
 --
--- TOC entry 441 (OID 36676)
+-- TOC entry 463 (OID 36676)
 -- Name: time_add_minutes(timestamp without time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1509,7 +1510,7 @@ END;
 
 
 --
--- TOC entry 442 (OID 36677)
+-- TOC entry 464 (OID 36677)
 -- Name: time_add_minutes(time without time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1526,7 +1527,7 @@ END;
 
 
 --
--- TOC entry 443 (OID 36678)
+-- TOC entry 465 (OID 36678)
 -- Name: date_add_days(timestamp with time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1543,7 +1544,7 @@ END;
 
 
 --
--- TOC entry 444 (OID 36679)
+-- TOC entry 466 (OID 36679)
 -- Name: date_add_days(timestamp without time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1560,7 +1561,7 @@ END;
 
 
 --
--- TOC entry 445 (OID 36680)
+-- TOC entry 467 (OID 36680)
 -- Name: date_add_days(date, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1577,7 +1578,7 @@ END;
 
 
 --
--- TOC entry 446 (OID 36681)
+-- TOC entry 468 (OID 36681)
 -- Name: date_add_months(timestamp with time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1594,7 +1595,7 @@ END;
 
 
 --
--- TOC entry 447 (OID 36682)
+-- TOC entry 469 (OID 36682)
 -- Name: date_add_months(timestamp without time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1611,7 +1612,7 @@ END;
 
 
 --
--- TOC entry 448 (OID 36683)
+-- TOC entry 470 (OID 36683)
 -- Name: date_add_months(date, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1628,7 +1629,7 @@ END;
 
 
 --
--- TOC entry 449 (OID 36684)
+-- TOC entry 471 (OID 36684)
 -- Name: date_add_years(timestamp with time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1645,7 +1646,7 @@ END;
 
 
 --
--- TOC entry 450 (OID 36685)
+-- TOC entry 472 (OID 36685)
 -- Name: date_add_years(timestamp without time zone, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1662,7 +1663,7 @@ END;
 
 
 --
--- TOC entry 451 (OID 36686)
+-- TOC entry 473 (OID 36686)
 -- Name: date_add_years(date, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1679,7 +1680,7 @@ END;
 
 
 --
--- TOC entry 452 (OID 36687)
+-- TOC entry 474 (OID 36687)
 -- Name: dayofmonth(date); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1695,7 +1696,7 @@ END;
 
 
 --
--- TOC entry 453 (OID 36688)
+-- TOC entry 475 (OID 36688)
 -- Name: date_diff_days(timestamp with time zone, timestamp with time zone); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1714,7 +1715,7 @@ END;
 
 
 --
--- TOC entry 454 (OID 36689)
+-- TOC entry 476 (OID 36689)
 -- Name: date_diff_days(timestamp without time zone, timestamp without time zone); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1731,7 +1732,7 @@ END;
 
 
 --
--- TOC entry 455 (OID 36690)
+-- TOC entry 477 (OID 36690)
 -- Name: date_diff_days(date, date); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1748,7 +1749,7 @@ END;
 
 
 --
--- TOC entry 456 (OID 36691)
+-- TOC entry 478 (OID 36691)
 -- Name: date_diff_months(timestamp with time zone, timestamp with time zone); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1767,7 +1768,7 @@ END;
 
 
 --
--- TOC entry 457 (OID 36692)
+-- TOC entry 479 (OID 36692)
 -- Name: date_diff_months(timestamp without time zone, timestamp without time zone); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1784,7 +1785,7 @@ END;
 
 
 --
--- TOC entry 458 (OID 36693)
+-- TOC entry 480 (OID 36693)
 -- Name: date_diff_months(date, date); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1801,7 +1802,7 @@ END;
 
 
 --
--- TOC entry 459 (OID 36694)
+-- TOC entry 481 (OID 36694)
 -- Name: date_diff_years(timestamp with time zone, timestamp with time zone); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1818,7 +1819,7 @@ END;
 
 
 --
--- TOC entry 460 (OID 36695)
+-- TOC entry 482 (OID 36695)
 -- Name: date_diff_years(timestamp without time zone, timestamp without time zone); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1835,7 +1836,7 @@ END;
 
 
 --
--- TOC entry 461 (OID 36696)
+-- TOC entry 483 (OID 36696)
 -- Name: date_diff_years(date, date); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1852,7 +1853,7 @@ END;
 
 
 --
--- TOC entry 462 (OID 36697)
+-- TOC entry 484 (OID 36697)
 -- Name: time_diff_hours(timestamp with time zone, timestamp with time zone); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1873,7 +1874,7 @@ END;
 
 
 --
--- TOC entry 463 (OID 36698)
+-- TOC entry 485 (OID 36698)
 -- Name: time_diff_hours(timestamp without time zone, timestamp without time zone); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1890,7 +1891,7 @@ END;
 
 
 --
--- TOC entry 464 (OID 36699)
+-- TOC entry 486 (OID 36699)
 -- Name: time_diff_hours(time without time zone, time without time zone); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1907,7 +1908,7 @@ END;
 
 
 --
--- TOC entry 465 (OID 36700)
+-- TOC entry 487 (OID 36700)
 -- Name: time_diff_minutes(timestamp with time zone, timestamp with time zone); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1928,7 +1929,7 @@ END;
 
 
 --
--- TOC entry 466 (OID 36701)
+-- TOC entry 488 (OID 36701)
 -- Name: time_diff_minutes(timestamp without time zone, timestamp without time zone); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1945,7 +1946,7 @@ END;
 
 
 --
--- TOC entry 467 (OID 36702)
+-- TOC entry 489 (OID 36702)
 -- Name: time_diff_minutes(time without time zone, time without time zone); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1966,7 +1967,7 @@ END;
 
 
 --
--- TOC entry 468 (OID 36703)
+-- TOC entry 490 (OID 36703)
 -- Name: date_add(timestamp with time zone, interval); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1983,7 +1984,7 @@ END;
 
 
 --
--- TOC entry 469 (OID 36704)
+-- TOC entry 491 (OID 36704)
 -- Name: date_add(timestamp without time zone, interval); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -2000,7 +2001,7 @@ END;
 
 
 --
--- TOC entry 470 (OID 36705)
+-- TOC entry 492 (OID 36705)
 -- Name: concat(text, text); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -2018,7 +2019,7 @@ END;
 
 
 --
--- TOC entry 471 (OID 36706)
+-- TOC entry 493 (OID 36706)
 -- Name: concat(text, text, text); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -2036,7 +2037,7 @@ END;
 
 
 --
--- TOC entry 472 (OID 36707)
+-- TOC entry 494 (OID 36707)
 -- Name: getmonth(timestamp without time zone); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -2054,7 +2055,7 @@ DECLARE
 
 
 --
--- TOC entry 473 (OID 36708)
+-- TOC entry 495 (OID 36708)
 -- Name: getmonth(timestamp with time zone); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -2072,7 +2073,7 @@ DECLARE
 
 
 --
--- TOC entry 474 (OID 36709)
+-- TOC entry 496 (OID 36709)
 -- Name: monthname(integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -2105,7 +2106,7 @@ END;
 
 
 --
--- TOC entry 475 (OID 36710)
+-- TOC entry 497 (OID 36710)
 -- Name: monthname(date); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -2124,7 +2125,7 @@ END;
 
 
 --
--- TOC entry 476 (OID 36711)
+-- TOC entry 498 (OID 36711)
 -- Name: monthname(timestamp with time zone); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -2144,7 +2145,7 @@ DECLARE
 
 
 --
--- TOC entry 477 (OID 36712)
+-- TOC entry 499 (OID 36712)
 -- Name: year(date); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -2326,7 +2327,91 @@ CREATE TABLE salescatprod (
 
 
 --
--- Data for TOC entry 478 (OID 35742)
+-- TOC entry 88 (OID 62219)
+-- Name: taxcategories; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE taxcategories (
+    taxcatid serial NOT NULL,
+    taxcatname character varying(30) NOT NULL
+);
+
+
+--
+-- TOC entry 89 (OID 62235)
+-- Name: taxprovinces; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE taxprovinces (
+    taxprovinceid serial NOT NULL,
+    taxprovincename character varying(30) NOT NULL
+);
+
+
+--
+-- TOC entry 90 (OID 62248)
+-- Name: taxgroups; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE taxgroups (
+    taxgroupid serial NOT NULL,
+    taxgroupdescription character varying(30) NOT NULL
+);
+
+
+--
+-- TOC entry 91 (OID 62253)
+-- Name: taxgrouptaxes; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE taxgrouptaxes (
+    taxgroupid integer NOT NULL,
+    taxauthid integer NOT NULL,
+    calculationorder integer NOT NULL,
+    taxontax integer DEFAULT 0 NOT NULL
+);
+
+
+--
+-- TOC entry 92 (OID 62268)
+-- Name: stockmovestaxes; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE stockmovestaxes (
+    stkmoveno integer NOT NULL,
+    taxauthid integer NOT NULL,
+    taxontax integer DEFAULT 0 NOT NULL,
+    taxcalculationorder integer DEFAULT 0 NOT NULL,
+    taxrate double precision DEFAULT 0 NOT NULL
+);
+
+
+--
+-- TOC entry 93 (OID 62280)
+-- Name: debtortranstaxes; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE debtortranstaxes (
+    debtortransid integer NOT NULL,
+    taxauthid integer NOT NULL,
+    taxamount double precision NOT NULL
+);
+
+
+--
+-- TOC entry 94 (OID 62304)
+-- Name: supptranstaxes; Type: TABLE; Schema: public; Owner: weberp_db_user
+--
+
+CREATE TABLE supptranstaxes (
+    supptransid integer NOT NULL,
+    taxauthid integer NOT NULL,
+    taxamount double precision NOT NULL
+);
+
+
+--
+-- Data for TOC entry 500 (OID 35742)
 -- Name: holdreasons; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2339,7 +2424,7 @@ COPY holdreasons (reasoncode, reasondescription, dissallowinvoices) FROM stdin;
 
 
 --
--- Data for TOC entry 479 (OID 35750)
+-- Data for TOC entry 501 (OID 35750)
 -- Name: currencies; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2350,7 +2435,7 @@ Euros Europe	EUR	European Union	cents	2.4540
 
 
 --
--- Data for TOC entry 480 (OID 35760)
+-- Data for TOC entry 502 (OID 35760)
 -- Name: paymentterms; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2363,7 +2448,7 @@ CA	Cash Only	0	1
 
 
 --
--- Data for TOC entry 481 (OID 35769)
+-- Data for TOC entry 503 (OID 35769)
 -- Name: systypes; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2396,11 +2481,14 @@ COPY systypes (typeid, typename, typeno) FROM stdin;
 
 
 --
--- Data for TOC entry 482 (OID 35777)
+-- Data for TOC entry 504 (OID 35777)
 -- Name: periods; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
 COPY periods (periodno, lastdate_in_period) FROM stdin;
+64	2005-04-30
+65	2005-05-31
+66	2005-06-30
 49	2004-01-31
 50	2004-02-29
 51	2004-03-31
@@ -2420,7 +2508,7 @@ COPY periods (periodno, lastdate_in_period) FROM stdin;
 
 
 --
--- Data for TOC entry 483 (OID 35780)
+-- Data for TOC entry 505 (OID 35780)
 -- Name: accountgroups; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2462,7 +2550,7 @@ Inventory - on Hand	20	0	72
 
 
 --
--- Data for TOC entry 484 (OID 35791)
+-- Data for TOC entry 506 (OID 35791)
 -- Name: cogsglpostings; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2472,7 +2560,7 @@ COPY cogsglpostings (id, area, stkcat, glcode, salestype) FROM stdin;
 
 
 --
--- Data for TOC entry 485 (OID 35801)
+-- Data for TOC entry 507 (OID 35801)
 -- Name: chartmaster; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2605,7 +2693,7 @@ COPY chartmaster (accountcode, accountname, group_) FROM stdin;
 
 
 --
--- Data for TOC entry 486 (OID 35811)
+-- Data for TOC entry 508 (OID 35811)
 -- Name: taxauthorities; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2615,7 +2703,7 @@ COPY taxauthorities (taxid, description, taxglcode, purchtaxglaccount, bank, ban
 
 
 --
--- Data for TOC entry 487 (OID 35820)
+-- Data for TOC entry 509 (OID 35820)
 -- Name: companies; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2625,7 +2713,7 @@ COPY companies (coycode, coyname, gstno, companynumber, postaladdress, regoffice
 
 
 --
--- Data for TOC entry 488 (OID 35849)
+-- Data for TOC entry 510 (OID 35849)
 -- Name: ediitemmapping; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2634,7 +2722,7 @@ COPY ediitemmapping (supporcust, partnercode, stockid, partnerstockid) FROM stdi
 
 
 --
--- Data for TOC entry 489 (OID 35860)
+-- Data for TOC entry 511 (OID 35860)
 -- Name: edimessageformat; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2643,7 +2731,7 @@ COPY edimessageformat (id, partnercode, messagetype, section, sequenceno, linete
 
 
 --
--- Data for TOC entry 490 (OID 35871)
+-- Data for TOC entry 512 (OID 35871)
 -- Name: edi_orders_seg_groups; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2652,7 +2740,7 @@ COPY edi_orders_seg_groups (seggroupno, maxoccur, parentseggroup) FROM stdin;
 
 
 --
--- Data for TOC entry 491 (OID 35878)
+-- Data for TOC entry 513 (OID 35878)
 -- Name: edi_orders_segs; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2661,7 +2749,7 @@ COPY edi_orders_segs (id, segtag, seggroup, maxoccur) FROM stdin;
 
 
 --
--- Data for TOC entry 492 (OID 35889)
+-- Data for TOC entry 514 (OID 35889)
 -- Name: gltrans; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2670,7 +2758,7 @@ COPY gltrans (counterindex, "type", typeno, chequeno, trandate, periodno, accoun
 
 
 --
--- Data for TOC entry 493 (OID 35904)
+-- Data for TOC entry 515 (OID 35904)
 -- Name: lastcostrollup; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2679,18 +2767,18 @@ COPY lastcostrollup (stockid, totalonhand, matcost, labcost, oheadcost, category
 
 
 --
--- Data for TOC entry 494 (OID 35920)
+-- Data for TOC entry 516 (OID 35920)
 -- Name: locations; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY locations (loccode, locationname, deladd1, deladd2, deladd3, tel, fax, email, contact, taxauthority) FROM stdin;
-CPT	Cape Town	na	na	na	na	na	weberp@paradise.net.nz	na	1
-SYD	Sydney						weberp@paradise.net.nz	Eric Von Hammer	1
+COPY locations (loccode, locationname, deladd1, deladd2, deladd3, tel, fax, email, contact, taxprovinceid, managed) FROM stdin;
+CPT	Cape Town	na	na	na	na	na	weberp@paradise.net.nz	na	1	\N
+SYD	Sydney						weberp@paradise.net.nz	Eric Von Hammer	1	\N
 \.
 
 
 --
--- Data for TOC entry 495 (OID 35937)
+-- Data for TOC entry 517 (OID 35937)
 -- Name: reportheaders; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2700,7 +2788,7 @@ COPY reportheaders (reportid, reportheading, groupbydata1, newpageafter1, lower1
 
 
 --
--- Data for TOC entry 496 (OID 35954)
+-- Data for TOC entry 518 (OID 35954)
 -- Name: reportcolumns; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2712,7 +2800,7 @@ COPY reportcolumns (reportid, colno, heading1, heading2, calculation, periodfrom
 
 
 --
--- Data for TOC entry 497 (OID 35968)
+-- Data for TOC entry 519 (OID 35968)
 -- Name: salesanalysis; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2722,7 +2810,7 @@ WS	63	723.3089	184.9450	FREDBLOGG	FREDBLOGG	5.0000	0.0000	PHIS02	EU	1	REF	MISC	1
 
 
 --
--- Data for TOC entry 498 (OID 35989)
+-- Data for TOC entry 520 (OID 35989)
 -- Name: salesglpostings; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2732,7 +2820,7 @@ COPY salesglpostings (id, area, stkcat, discountglcode, salesglcode, salestype) 
 
 
 --
--- Data for TOC entry 499 (OID 36000)
+-- Data for TOC entry 521 (OID 36000)
 -- Name: salestypes; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2742,7 +2830,7 @@ WS	Wholesale
 
 
 --
--- Data for TOC entry 500 (OID 36007)
+-- Data for TOC entry 522 (OID 36007)
 -- Name: discountmatrix; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2751,7 +2839,7 @@ COPY discountmatrix (salestype, discountcategory, quantitybreak, discountrate) F
 
 
 --
--- Data for TOC entry 501 (OID 36016)
+-- Data for TOC entry 523 (OID 36016)
 -- Name: salesman; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2762,7 +2850,7 @@ REF	Referral			0.0000	0.0000	0.0000
 
 
 --
--- Data for TOC entry 502 (OID 36028)
+-- Data for TOC entry 524 (OID 36028)
 -- Name: scripts; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2937,11 +3025,11 @@ COPY scripts (pageid, filename, pagedescription) FROM stdin;
 
 
 --
--- Data for TOC entry 503 (OID 36036)
+-- Data for TOC entry 525 (OID 36036)
 -- Name: suppliers; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY suppliers (supplierid, suppname, address1, address2, address3, address4, currcode, suppliersince, paymentterms, lastpaid, lastpaiddate, bankact, bankref, bankpartics, remittance, taxauthority) FROM stdin;
+COPY suppliers (supplierid, suppname, address1, address2, address3, address4, currcode, suppliersince, paymentterms, lastpaid, lastpaiddate, bankact, bankref, bankpartics, remittance, taxgroupid) FROM stdin;
 SUP01	Test Supplier	Na	Na	Na	Na	ZAR	2004-12-01	CA	130.0000	2004-12-05 00:00:00		0	Na	0	1
 TEST	etstt	sst	stt	sst		ZAR	2004-12-28	CA	0.0000	\N		0		0	1
 MAUKAU	Tisco Manukau					ZAR	2005-02-03	7	0.0000	\N		0		0	1
@@ -2949,7 +3037,7 @@ MAUKAU	Tisco Manukau					ZAR	2005-02-03	7	0.0000	\N		0		0	1
 
 
 --
--- Data for TOC entry 504 (OID 36055)
+-- Data for TOC entry 526 (OID 36055)
 -- Name: shipments; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2958,7 +3046,7 @@ COPY shipments (shiptref, voyageref, vessel, eta, accumvalue, supplierid, closed
 
 
 --
--- Data for TOC entry 505 (OID 36068)
+-- Data for TOC entry 527 (OID 36068)
 -- Name: shipmentcharges; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2967,7 +3055,7 @@ COPY shipmentcharges (shiptchgid, shiptref, transtype, transno, stockid, value) 
 
 
 --
--- Data for TOC entry 506 (OID 36081)
+-- Data for TOC entry 528 (OID 36081)
 -- Name: shippers; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2978,7 +3066,7 @@ COPY shippers (shipper_id, shippername, mincharge) FROM stdin;
 
 
 --
--- Data for TOC entry 507 (OID 36091)
+-- Data for TOC entry 529 (OID 36091)
 -- Name: freightcosts; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2988,7 +3076,7 @@ COPY freightcosts (shipcostfromid, locationfrom, destination, shipperid, cubrate
 
 
 --
--- Data for TOC entry 508 (OID 36106)
+-- Data for TOC entry 530 (OID 36106)
 -- Name: stockcategory; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -2999,11 +3087,11 @@ BOLTS	Bolts	F	770000	210000	220000	240000	760000
 
 
 --
--- Data for TOC entry 509 (OID 36119)
+-- Data for TOC entry 531 (OID 36119)
 -- Name: stockmaster; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY stockmaster (stockid, categoryid, description, longdescription, units, mbflag, lastcurcostdate, actualcost, lastcost, materialcost, labourcost, overheadcost, lowestlevel, discontinued, controlled, eoq, volume, kgs, barcode, discountcategory, taxlevel, serialised, decimalplaces) FROM stdin;
+COPY stockmaster (stockid, categoryid, description, longdescription, units, mbflag, lastcurcostdate, actualcost, lastcost, materialcost, labourcost, overheadcost, lowestlevel, discontinued, controlled, eoq, volume, kgs, barcode, discountcategory, taxcatid, serialised, decimalplaces) FROM stdin;
 PHIS01	MISC	A physical Stock Item	A physical Stock Item	each	B	1800-01-01	0.0000	0.0000	10.0000	0.0000	0.0000	0	0	0	5.00	1.0000	4.0000			1	0	0
 STEELBAR10MMROUND	BOLTS	10mm Round Mild Steel Bar	10mm Round Mild Steel Bar	each	B	1800-01-01	0.0000	0.0000	0.0000	0.0000	0.0000	0	0	0	0.00	0.0000	0.0000			1	0	0
 DEVDB	MISC	Database Development	The design and/or migration of a database stucture for the purpose of retaining and recalling relational data.	each	D	1800-01-01	0.0000	0.0000	0.0000	0.0000	0.0000	0	0	0	0.00	0.0000	0.0000			1	0	0
@@ -3013,7 +3101,7 @@ PHIS02	MISC	Another Physical Item	Another Physical Item	each	M	1800-01-01	0.0000
 
 
 --
--- Data for TOC entry 510 (OID 36148)
+-- Data for TOC entry 532 (OID 36148)
 -- Name: stockcounts; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3022,7 +3110,7 @@ COPY stockcounts (id, stockid, loccode, qtycounted, reference) FROM stdin;
 
 
 --
--- Data for TOC entry 511 (OID 36158)
+-- Data for TOC entry 533 (OID 36158)
 -- Name: stockcheckfreeze; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3031,7 +3119,7 @@ COPY stockcheckfreeze (stockid, loccode, qoh) FROM stdin;
 
 
 --
--- Data for TOC entry 512 (OID 36166)
+-- Data for TOC entry 534 (OID 36166)
 -- Name: prices; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3043,7 +3131,7 @@ PHIS01	WS	ZAR		63.2200
 
 
 --
--- Data for TOC entry 513 (OID 36177)
+-- Data for TOC entry 535 (OID 36177)
 -- Name: purchdata; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3053,7 +3141,7 @@ SUP01	PHIS01	32.9500	each	1.0000	supplier 1 description for physical item 1	15	1
 
 
 --
--- Data for TOC entry 514 (OID 36190)
+-- Data for TOC entry 536 (OID 36190)
 -- Name: locstock; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3072,7 +3160,7 @@ CPT	PHIS02	0.0	0
 
 
 --
--- Data for TOC entry 515 (OID 36199)
+-- Data for TOC entry 537 (OID 36199)
 -- Name: loctransfers; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3081,20 +3169,20 @@ COPY loctransfers (reference, stockid, shipqty, recqty, shipdate, recdate, shipl
 
 
 --
--- Data for TOC entry 516 (OID 36212)
+-- Data for TOC entry 538 (OID 36212)
 -- Name: stockmoves; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY stockmoves (stkmoveno, stockid, "type", transno, loccode, trandate, debtorno, branchcode, price, prd, reference, qty, discountpercent, standardcost, show_on_inv_crds, newqoh, hidemovt, taxrate, narrative) FROM stdin;
-19	BOLT13MMX10	17	4	CPT	2005-01-16			0.0000	61	initial stock	67990.0000	0.0000	0.0000	1	67990	0	0	
-27	PHIS01	17	5	CPT	2005-03-21			0.0000	63		5.0000	0.0000	0.0000	1	278	0	0	
-28	PHIS01	17	6	CPT	2005-03-21			0.0000	63		5.0000	0.0000	0.0000	1	283	0	0	
-41	PHIS02	10	1	CPT	2005-03-26	FREDBLOGG	FREDBLOGG	144.6618	63	11	-5.0000	0.0000	36.9890	1	-5	0	0	
+COPY stockmoves (stkmoveno, stockid, "type", transno, loccode, trandate, debtorno, branchcode, price, prd, reference, qty, discountpercent, standardcost, show_on_inv_crds, newqoh, hidemovt, narrative) FROM stdin;
+19	BOLT13MMX10	17	4	CPT	2005-01-16			0.0000	61	initial stock	67990.0000	0.0000	0.0000	1	67990	0	
+27	PHIS01	17	5	CPT	2005-03-21			0.0000	63		5.0000	0.0000	0.0000	1	278	0	
+28	PHIS01	17	6	CPT	2005-03-21			0.0000	63		5.0000	0.0000	0.0000	1	283	0	
+41	PHIS02	10	1	CPT	2005-03-26	FREDBLOGG	FREDBLOGG	144.6618	63	11	-5.0000	0.0000	36.9890	1	-5	0	
 \.
 
 
 --
--- Data for TOC entry 517 (OID 36235)
+-- Data for TOC entry 539 (OID 36235)
 -- Name: stockserialitems; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3106,7 +3194,7 @@ BOLT13MMX10	CPT	WO1222	23400
 
 
 --
--- Data for TOC entry 518 (OID 36246)
+-- Data for TOC entry 540 (OID 36246)
 -- Name: stockserialmoves; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3115,7 +3203,7 @@ COPY stockserialmoves (stkitmmoveno, stockmoveno, stockid, serialno, moveqty) FR
 
 
 --
--- Data for TOC entry 519 (OID 36258)
+-- Data for TOC entry 541 (OID 36258)
 -- Name: supptrans; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3126,7 +3214,7 @@ COPY supptrans (transno, "type", supplierno, suppreference, trandate, duedate, s
 
 
 --
--- Data for TOC entry 520 (OID 36277)
+-- Data for TOC entry 542 (OID 36277)
 -- Name: suppallocs; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3135,7 +3223,7 @@ COPY suppallocs (id, amt, datealloc, transid_allocfrom, transid_allocto) FROM st
 
 
 --
--- Data for TOC entry 521 (OID 36283)
+-- Data for TOC entry 543 (OID 36283)
 -- Name: suppliercontacts; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3145,7 +3233,7 @@ SUP01	Jonny Dep	Owner	na	na	na	jowny@unknown.com	0
 
 
 --
--- Data for TOC entry 522 (OID 36298)
+-- Data for TOC entry 544 (OID 36298)
 -- Name: purchorders; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3157,7 +3245,7 @@ COPY purchorders (orderno, supplierno, comments, orddate, rate, dateprinted, all
 
 
 --
--- Data for TOC entry 523 (OID 36314)
+-- Data for TOC entry 545 (OID 36314)
 -- Name: purchorderdetails; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3169,7 +3257,7 @@ COPY purchorderdetails (podetailitem, orderno, itemcode, deliverydate, itemdescr
 
 
 --
--- Data for TOC entry 524 (OID 36335)
+-- Data for TOC entry 546 (OID 36335)
 -- Name: grns; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3178,27 +3266,27 @@ COPY grns (grnbatch, grnno, podetailitem, itemcode, deliverydate, itemdescriptio
 
 
 --
--- Data for TOC entry 525 (OID 36348)
--- Name: taxauthlevels; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+-- Data for TOC entry 547 (OID 36348)
+-- Name: taxauthrates; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY taxauthlevels (taxauthority, dispatchtaxauthority, "level", taxrate) FROM stdin;
-1	1	1	0
+COPY taxauthrates (taxauthority, dispatchtaxprovince, taxcatid, taxrate) FROM stdin;
+1	1	1	0.17499999999999999
 \.
 
 
 --
--- Data for TOC entry 526 (OID 36354)
+-- Data for TOC entry 548 (OID 36354)
 -- Name: www_users; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
 COPY www_users (userid, "password", realname, customerid, phone, email, defaultlocation, fullaccess, lastvisitdate, branchcode, pagesize, modulesallowed, blocked, displayrecordsmax, theme, "language", pinno, swipecard) FROM stdin;
-demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2005-03-31 21:36:38		A4	1,1,1,1,1,1,1,1,	0	50	professional	en_GB	\N	\N
+demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2005-07-31 11:42:06		A4	1,1,1,1,1,1,1,1,	0	50	professional	en_GB	\N	\N
 \.
 
 
 --
--- Data for TOC entry 527 (OID 36373)
+-- Data for TOC entry 549 (OID 36373)
 -- Name: workcentres; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3210,7 +3298,7 @@ TURNC	CPT	Turning CP	1.0000	12.3000	1	0.0000
 
 
 --
--- Data for TOC entry 528 (OID 36385)
+-- Data for TOC entry 550 (OID 36385)
 -- Name: worksorders; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3219,7 +3307,7 @@ COPY worksorders (woref, loccode, unitsreqd, stockid, stdcost, requiredby, relea
 
 
 --
--- Data for TOC entry 529 (OID 36400)
+-- Data for TOC entry 551 (OID 36400)
 -- Name: woissues; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3228,7 +3316,7 @@ COPY woissues (issueno, woref, stockid, issuetype, workcentre, qtyissued, stdcos
 
 
 --
--- Data for TOC entry 530 (OID 36414)
+-- Data for TOC entry 552 (OID 36414)
 -- Name: worequirements; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3237,7 +3325,7 @@ COPY worequirements (id, woref, stockid, wrkcentre, unitsreq, stdcost, resourcet
 
 
 --
--- Data for TOC entry 531 (OID 36426)
+-- Data for TOC entry 553 (OID 36426)
 -- Name: bom; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3246,7 +3334,7 @@ COPY bom (parent, component, workcentreadded, loccode, effectiveafter, effective
 
 
 --
--- Data for TOC entry 532 (OID 36437)
+-- Data for TOC entry 554 (OID 36437)
 -- Name: bankaccounts; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3257,7 +3345,7 @@ COPY bankaccounts (accountcode, bankaccountname, bankaccountnumber, bankaddress)
 
 
 --
--- Data for TOC entry 533 (OID 36447)
+-- Data for TOC entry 555 (OID 36447)
 -- Name: banktrans; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3270,7 +3358,7 @@ COPY banktrans (banktransid, "type", transno, bankact, ref, amountcleared, exrat
 
 
 --
--- Data for TOC entry 534 (OID 36462)
+-- Data for TOC entry 556 (OID 36462)
 -- Name: buckets; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -3279,7 +3367,7 @@ COPY buckets (workcentre, availdate, capacity) FROM stdin;
 
 
 --
--- Data for TOC entry 535 (OID 36469)
+-- Data for TOC entry 557 (OID 36469)
 -- Name: chartdetails; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5112,6 +5200,49 @@ COPY chartdetails (accountcode, period, budget, actual, bfwd, bfwdbudget) FROM s
 445000	49	0	0	0	0
 450000	49	0	0	0	0
 455000	49	0	0	0	0
+100000	64	0	0	0	0
+200000	64	0	0	0	0
+210000	64	0	0	0	0
+220000	64	0	0	0	0
+230000	64	0	0	0	0
+235000	64	0	0	0	0
+240000	64	0	0	0	0
+240010	64	0	0	0	0
+240020	64	0	0	0	0
+240030	64	0	0	0	0
+250000	64	0	0	0	0
+270000	64	0	0	0	0
+275000	64	0	0	0	0
+280000	64	0	0	0	0
+285000	64	0	0	0	0
+290000	64	0	0	0	0
+300000	64	0	0	0	0
+305000	64	0	0	0	0
+310000	64	0	0	0	0
+315000	64	0	0	0	0
+320000	64	0	0	0	0
+325000	64	0	0	0	0
+330000	64	0	0	0	0
+335000	64	0	0	0	0
+340000	64	0	0	0	0
+345000	64	0	0	0	0
+350000	64	0	0	0	0
+355000	64	0	0	0	0
+360000	64	0	0	0	0
+365000	64	0	0	0	0
+370000	64	0	0	0	0
+375000	64	0	0	0	0
+380000	64	0	0	0	0
+380010	64	0	0	0	0
+380020	64	0	0	0	0
+385000	64	0	0	0	0
+390000	64	0	0	0	0
+395000	64	0	0	0	0
+400000	64	0	0	0	0
+405000	64	0	0	0	0
+415000	64	0	0	0	0
+415010	64	0	0	0	0
+415020	64	0	0	0	0
 510000	62	0	-521.85000000000002	0	0
 510000	63	0	0	-521.85000000000002	0
 760000	62	0	-322	0	0
@@ -5130,6 +5261,7 @@ COPY chartdetails (accountcode, period, budget, actual, bfwd, bfwdbudget) FROM s
 215000	63	0	0	21.649999999999999	0
 1	62	0	33.200000000000003	0	0
 1	63	0	0	33.200000000000003	0
+415030	64	0	0	0	0
 210000	63	0	-90204.766000000003	0	0
 900000	61	0	-3719.0999999999999	0	0
 900000	62	0	0	-3719.0999999999999	0
@@ -5144,11 +5276,339 @@ COPY chartdetails (accountcode, period, budget, actual, bfwd, bfwdbudget) FROM s
 770000	63	0	90019.820999999996	0	0
 100000	63	0	-723.30888345599999	0	0
 800000	63	0	723.30888345599999	0	0
+415040	64	0	0	0	0
+420000	64	0	0	0	0
+430000	64	0	0	0	0
+435000	64	0	0	0	0
+438000	64	0	0	0	0
+440000	64	0	0	0	0
+445000	64	0	0	0	0
+450000	64	0	0	0	0
+455000	64	0	0	0	0
+460000	64	0	0	0	0
+465000	64	0	0	0	0
+465010	64	0	0	0	0
+465020	64	0	0	0	0
+466000	64	0	0	0	0
+466010	64	0	0	0	0
+466020	64	0	0	0	0
+480000	64	0	0	0	0
+485000	64	0	0	0	0
+490000	64	0	0	0	0
+510000	64	0	0	0	0
+520000	64	0	0	0	0
+540000	64	0	0	0	0
+550000	64	0	0	0	0
+560000	64	0	0	0	0
+570000	64	0	0	0	0
+610000	64	0	0	0	0
+610010	64	0	0	0	0
+610020	64	0	0	0	0
+615000	64	0	0	0	0
+615010	64	0	0	0	0
+615020	64	0	0	0	0
+620000	64	0	0	0	0
+620010	64	0	0	0	0
+620020	64	0	0	0	0
+625000	64	0	0	0	0
+625010	64	0	0	0	0
+625020	64	0	0	0	0
+630000	64	0	0	0	0
+630010	64	0	0	0	0
+630020	64	0	0	0	0
+635000	64	0	0	0	0
+635010	64	0	0	0	0
+635020	64	0	0	0	0
+660000	64	0	0	0	0
+660010	64	0	0	0	0
+660020	64	0	0	0	0
+700000	64	0	0	0	0
+710000	64	0	0	0	0
+710100	64	0	0	0	0
+710200	64	0	0	0	0
+720000	64	0	0	0	0
+740000	64	0	0	0	0
+750000	64	0	0	0	0
+760000	64	0	0	0	0
+770000	64	0	0	0	0
+800000	64	0	0	0	0
+805000	64	0	0	0	0
+810000	64	0	0	0	0
+820000	64	0	0	0	0
+820010	64	0	0	0	0
+820020	64	0	0	0	0
+840000	64	0	0	0	0
+841000	64	0	0	0	0
+842000	64	0	0	0	0
+900000	64	0	0	0	0
+910000	64	0	0	0	0
+920000	64	0	0	0	0
+920010	64	0	0	0	0
+920020	64	0	0	0	0
+925000	64	0	0	0	0
+930000	64	0	0	0	0
+935000	64	0	0	0	0
+940000	64	0	0	0	0
+940010	64	0	0	0	0
+940020	64	0	0	0	0
+950000	64	0	0	0	0
+951000	64	0	0	0	0
+999000	64	0	0	0	0
+1	64	0	0	0	0
+215000	64	0	0	0	0
+100000	65	0	0	0	0
+200000	65	0	0	0	0
+210000	65	0	0	0	0
+220000	65	0	0	0	0
+230000	65	0	0	0	0
+235000	65	0	0	0	0
+240000	65	0	0	0	0
+240010	65	0	0	0	0
+240020	65	0	0	0	0
+240030	65	0	0	0	0
+250000	65	0	0	0	0
+270000	65	0	0	0	0
+275000	65	0	0	0	0
+280000	65	0	0	0	0
+285000	65	0	0	0	0
+290000	65	0	0	0	0
+300000	65	0	0	0	0
+305000	65	0	0	0	0
+310000	65	0	0	0	0
+315000	65	0	0	0	0
+320000	65	0	0	0	0
+325000	65	0	0	0	0
+330000	65	0	0	0	0
+335000	65	0	0	0	0
+340000	65	0	0	0	0
+345000	65	0	0	0	0
+350000	65	0	0	0	0
+355000	65	0	0	0	0
+360000	65	0	0	0	0
+365000	65	0	0	0	0
+370000	65	0	0	0	0
+375000	65	0	0	0	0
+380000	65	0	0	0	0
+380010	65	0	0	0	0
+380020	65	0	0	0	0
+385000	65	0	0	0	0
+390000	65	0	0	0	0
+395000	65	0	0	0	0
+400000	65	0	0	0	0
+405000	65	0	0	0	0
+415000	65	0	0	0	0
+415010	65	0	0	0	0
+415020	65	0	0	0	0
+415030	65	0	0	0	0
+415040	65	0	0	0	0
+420000	65	0	0	0	0
+430000	65	0	0	0	0
+435000	65	0	0	0	0
+438000	65	0	0	0	0
+440000	65	0	0	0	0
+445000	65	0	0	0	0
+450000	65	0	0	0	0
+455000	65	0	0	0	0
+460000	65	0	0	0	0
+465000	65	0	0	0	0
+465010	65	0	0	0	0
+465020	65	0	0	0	0
+466000	65	0	0	0	0
+466010	65	0	0	0	0
+466020	65	0	0	0	0
+480000	65	0	0	0	0
+485000	65	0	0	0	0
+490000	65	0	0	0	0
+510000	65	0	0	0	0
+520000	65	0	0	0	0
+540000	65	0	0	0	0
+550000	65	0	0	0	0
+560000	65	0	0	0	0
+570000	65	0	0	0	0
+610000	65	0	0	0	0
+610010	65	0	0	0	0
+610020	65	0	0	0	0
+615000	65	0	0	0	0
+615010	65	0	0	0	0
+615020	65	0	0	0	0
+620000	65	0	0	0	0
+620010	65	0	0	0	0
+620020	65	0	0	0	0
+625000	65	0	0	0	0
+625010	65	0	0	0	0
+625020	65	0	0	0	0
+630000	65	0	0	0	0
+630010	65	0	0	0	0
+630020	65	0	0	0	0
+635000	65	0	0	0	0
+635010	65	0	0	0	0
+635020	65	0	0	0	0
+660000	65	0	0	0	0
+660010	65	0	0	0	0
+660020	65	0	0	0	0
+700000	65	0	0	0	0
+710000	65	0	0	0	0
+710100	65	0	0	0	0
+710200	65	0	0	0	0
+720000	65	0	0	0	0
+740000	65	0	0	0	0
+750000	65	0	0	0	0
+760000	65	0	0	0	0
+770000	65	0	0	0	0
+800000	65	0	0	0	0
+805000	65	0	0	0	0
+810000	65	0	0	0	0
+820000	65	0	0	0	0
+820010	65	0	0	0	0
+820020	65	0	0	0	0
+840000	65	0	0	0	0
+841000	65	0	0	0	0
+842000	65	0	0	0	0
+900000	65	0	0	0	0
+910000	65	0	0	0	0
+920000	65	0	0	0	0
+920010	65	0	0	0	0
+920020	65	0	0	0	0
+925000	65	0	0	0	0
+930000	65	0	0	0	0
+935000	65	0	0	0	0
+940000	65	0	0	0	0
+940010	65	0	0	0	0
+940020	65	0	0	0	0
+950000	65	0	0	0	0
+951000	65	0	0	0	0
+999000	65	0	0	0	0
+1	65	0	0	0	0
+215000	65	0	0	0	0
+100000	66	0	0	0	0
+200000	66	0	0	0	0
+210000	66	0	0	0	0
+220000	66	0	0	0	0
+230000	66	0	0	0	0
+235000	66	0	0	0	0
+240000	66	0	0	0	0
+240010	66	0	0	0	0
+240020	66	0	0	0	0
+240030	66	0	0	0	0
+250000	66	0	0	0	0
+270000	66	0	0	0	0
+275000	66	0	0	0	0
+280000	66	0	0	0	0
+285000	66	0	0	0	0
+290000	66	0	0	0	0
+300000	66	0	0	0	0
+305000	66	0	0	0	0
+310000	66	0	0	0	0
+315000	66	0	0	0	0
+320000	66	0	0	0	0
+325000	66	0	0	0	0
+330000	66	0	0	0	0
+335000	66	0	0	0	0
+340000	66	0	0	0	0
+345000	66	0	0	0	0
+350000	66	0	0	0	0
+355000	66	0	0	0	0
+360000	66	0	0	0	0
+365000	66	0	0	0	0
+370000	66	0	0	0	0
+375000	66	0	0	0	0
+380000	66	0	0	0	0
+380010	66	0	0	0	0
+380020	66	0	0	0	0
+385000	66	0	0	0	0
+390000	66	0	0	0	0
+395000	66	0	0	0	0
+400000	66	0	0	0	0
+405000	66	0	0	0	0
+415000	66	0	0	0	0
+415010	66	0	0	0	0
+415020	66	0	0	0	0
+415030	66	0	0	0	0
+415040	66	0	0	0	0
+420000	66	0	0	0	0
+430000	66	0	0	0	0
+435000	66	0	0	0	0
+438000	66	0	0	0	0
+440000	66	0	0	0	0
+445000	66	0	0	0	0
+450000	66	0	0	0	0
+455000	66	0	0	0	0
+460000	66	0	0	0	0
+465000	66	0	0	0	0
+465010	66	0	0	0	0
+465020	66	0	0	0	0
+466000	66	0	0	0	0
+466010	66	0	0	0	0
+466020	66	0	0	0	0
+480000	66	0	0	0	0
+485000	66	0	0	0	0
+490000	66	0	0	0	0
+510000	66	0	0	0	0
+520000	66	0	0	0	0
+540000	66	0	0	0	0
+550000	66	0	0	0	0
+560000	66	0	0	0	0
+570000	66	0	0	0	0
+610000	66	0	0	0	0
+610010	66	0	0	0	0
+610020	66	0	0	0	0
+615000	66	0	0	0	0
+615010	66	0	0	0	0
+615020	66	0	0	0	0
+620000	66	0	0	0	0
+620010	66	0	0	0	0
+620020	66	0	0	0	0
+625000	66	0	0	0	0
+625010	66	0	0	0	0
+625020	66	0	0	0	0
+630000	66	0	0	0	0
+630010	66	0	0	0	0
+630020	66	0	0	0	0
+635000	66	0	0	0	0
+635010	66	0	0	0	0
+635020	66	0	0	0	0
+660000	66	0	0	0	0
+660010	66	0	0	0	0
+660020	66	0	0	0	0
+700000	66	0	0	0	0
+710000	66	0	0	0	0
+710100	66	0	0	0	0
+710200	66	0	0	0	0
+720000	66	0	0	0	0
+740000	66	0	0	0	0
+750000	66	0	0	0	0
+760000	66	0	0	0	0
+770000	66	0	0	0	0
+800000	66	0	0	0	0
+805000	66	0	0	0	0
+810000	66	0	0	0	0
+820000	66	0	0	0	0
+820010	66	0	0	0	0
+820020	66	0	0	0	0
+840000	66	0	0	0	0
+841000	66	0	0	0	0
+842000	66	0	0	0	0
+900000	66	0	0	0	0
+910000	66	0	0	0	0
+920000	66	0	0	0	0
+920010	66	0	0	0	0
+920020	66	0	0	0	0
+925000	66	0	0	0	0
+930000	66	0	0	0	0
+935000	66	0	0	0	0
+940000	66	0	0	0	0
+940010	66	0	0	0	0
+940020	66	0	0	0	0
+950000	66	0	0	0	0
+951000	66	0	0	0	0
+999000	66	0	0	0	0
+1	66	0	0	0	0
+215000	66	0	0	0	0
 \.
 
 
 --
--- Data for TOC entry 536 (OID 36477)
+-- Data for TOC entry 558 (OID 36477)
 -- Name: contractbom; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5157,7 +5617,7 @@ COPY contractbom (contractref, component, workcentreadded, loccode, quantity) FR
 
 
 --
--- Data for TOC entry 537 (OID 36487)
+-- Data for TOC entry 559 (OID 36487)
 -- Name: debtorsmaster; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5170,11 +5630,11 @@ FREDBLOGG	Fred Bloggs and partners	23 Bald Hill Terraces	Guinnesston 	Ireland		E
 
 
 --
--- Data for TOC entry 538 (OID 36516)
+-- Data for TOC entry 560 (OID 36516)
 -- Name: custbranch; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY custbranch (branchcode, debtorno, brname, braddress1, braddress2, braddress3, braddress4, estdeliverydays, area, salesman, fwddate, phoneno, faxno, contactname, email, defaultlocation, taxauthority, defaultshipvia, disabletrans, brpostaddr1, brpostaddr2, brpostaddr3, brpostaddr4, custbranchcode, deliverblind) FROM stdin;
+COPY custbranch (branchcode, debtorno, brname, braddress1, braddress2, braddress3, braddress4, estdeliverydays, area, salesman, fwddate, phoneno, faxno, contactname, email, defaultlocation, taxgroupid, defaultshipvia, disabletrans, brpostaddr1, brpostaddr2, brpostaddr3, brpostaddr4, custbranchcode, deliverblind) FROM stdin;
 CUST01	CUST01	Customer	Na	Na	Na	Na	5	ZA	GEN	0	NA	NA	Testy	NA	CPT	1	1	0	NA	Na	Na	Na	NA	\N
 100001	100001	Eric Van Halen	453A Globus Contrabandus St	Aardvarkston			1	ZA	GEN	0					CPT	1	2	0						\N
 ERCC	FREDBLOGG	Ersteem Raichle unt Cloggs	333 444				1	EU	GEN	0			123		SYD	1	2	0						2
@@ -5183,7 +5643,7 @@ FREDBLOGG	FREDBLOGG	Fred Bloggs and partners	23 Bald Hill Terraces	Guinnesston 	
 
 
 --
--- Data for TOC entry 539 (OID 36545)
+-- Data for TOC entry 561 (OID 36545)
 -- Name: contracts; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5192,7 +5652,7 @@ COPY contracts (contractref, contractdescription, debtorno, branchcode, status, 
 
 
 --
--- Data for TOC entry 540 (OID 36566)
+-- Data for TOC entry 562 (OID 36566)
 -- Name: contractreqts; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5201,7 +5661,7 @@ COPY contractreqts (contractreqid, contract, component, quantity, priceperunit) 
 
 
 --
--- Data for TOC entry 541 (OID 36578)
+-- Data for TOC entry 563 (OID 36578)
 -- Name: salesorders; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5231,6 +5691,7 @@ COPY salesorders (orderno, debtorno, branchcode, customerref, buyername, comment
 28	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-03-15	WS	2							Eric Van Halen	0.00	CPT	2005-03-15	0	\N	0	\N
 29	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-03-22	WS	2							Eric Van Halen	0.00	CPT	2005-03-22	0	\N	0	\N
 30	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-01-08	WS	2							Eric Van Halen	0.00	CPT	2005-01-08	0	\N	0	\N
+54	FREDBLOGG	FREDBLOGG		\N		2005-07-30	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-08-01	0	\N	0	1
 52	FREDBLOGG	FREDBLOGG		\N		2005-03-31	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-04-01	0	\N	0	2
 53	FREDBLOGG	ERCC		\N		2005-03-31	WS	2	333 444						Ersteem Raichle unt Cloggs	0.00	SYD	2005-04-01	0	\N	0	2
 11	FREDBLOGG	FREDBLOGG		\N	 Inv 1	2005-03-19	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-21	0	\N	0	\N
@@ -5238,7 +5699,7 @@ COPY salesorders (orderno, debtorno, branchcode, customerref, buyername, comment
 
 
 --
--- Data for TOC entry 542 (OID 36597)
+-- Data for TOC entry 564 (OID 36597)
 -- Name: orderdeliverydifferenceslog; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5248,28 +5709,30 @@ COPY orderdeliverydifferenceslog (orderno, invoiceno, stockid, quantitydiff, deb
 
 
 --
--- Data for TOC entry 543 (OID 36609)
+-- Data for TOC entry 565 (OID 36609)
 -- Name: salesorderdetails; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY salesorderdetails (orderno, stkcode, qtyinvoiced, unitprice, quantity, estimate, discountpercent, actualdispatchdate, completed, narrative) FROM stdin;
-2	DEVDB	0.0000	40.0000	15.0000	0	0.0000	2004-12-07 00:00:00	0	
-5	PHIS01	0.0000	60.0000	12.0000	0	0.0350	2005-01-14 00:00:00	0	
-7	DEVDB	0.0000	40.0000	24.2000	0	0.0000	2005-02-07 00:00:00	0	
-6	DEVDB	0.0000	40.0000	6.5000	0	0.2500	2005-02-07 00:00:00	0	
-6	PHIS02	0.0000	70.0000	6.0000	0	0.0000	2005-02-07 00:00:00	0	
-8	BOLT13MMX10	0.0000	2.3300	150.0000	0	0.0000	2005-03-19 00:00:00	0	
-9	PHIS01	0.0000	89.8700	35.0000	0	0.0000	2005-03-21 00:00:00	0	
-9	PHIS02	0.0000	166.7500	133.0000	0	0.0000	2005-03-21 00:00:00	0	
-10	PHIS01	0.0000	0.0000	2.0000	0	0.0000	\N	0	
-11	PHIS02	5.0000	355.0000	6.0000	0	0.0000	2005-03-26 00:00:00	0	
-52	DEVDB	0.0000	0.0000	4.0000	0	0.0000	\N	0	
-53	DEVDB	0.0000	0.0000	4.0000	0	0.0000	\N	0	
+COPY salesorderdetails (orderno, stkcode, qtyinvoiced, unitprice, quantity, estimate, discountpercent, actualdispatchdate, completed, narrative, orderlineno) FROM stdin;
+2	DEVDB	0.0000	40.0000	15.0000	0	0.0000	2004-12-07 00:00:00	0		0
+5	PHIS01	0.0000	60.0000	12.0000	0	0.0350	2005-01-14 00:00:00	0		0
+6	DEVDB	0.0000	40.0000	6.5000	0	0.2500	2005-02-07 00:00:00	0		0
+6	PHIS02	0.0000	70.0000	6.0000	0	0.0000	2005-02-07 00:00:00	0		1
+7	DEVDB	0.0000	40.0000	24.2000	0	0.0000	2005-02-07 00:00:00	0		0
+8	BOLT13MMX10	0.0000	2.3300	150.0000	0	0.0000	2005-03-19 00:00:00	0		0
+9	PHIS01	0.0000	89.8700	35.0000	0	0.0000	2005-03-21 00:00:00	0		0
+9	PHIS02	0.0000	166.7500	133.0000	0	0.0000	2005-03-21 00:00:00	0		1
+10	PHIS01	0.0000	0.0000	2.0000	0	0.0000	\N	0		0
+11	PHIS02	5.0000	355.0000	6.0000	0	0.0000	2005-03-26 00:00:00	0		0
+52	DEVDB	0.0000	0.0000	4.0000	0	0.0000	\N	0		0
+53	DEVDB	0.0000	0.0000	4.0000	0	0.0000	\N	0		0
+54	PHIS02	0.0000	16.0000	5.0000	0	0.0000	\N	0		0
+54	PHIS01	0.0000	9.6500	2.0000	0	0.0000	\N	0		1
 \.
 
 
 --
--- Data for TOC entry 544 (OID 36624)
+-- Data for TOC entry 566 (OID 36624)
 -- Name: debtortrans; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5279,7 +5742,7 @@ COPY debtortrans (id, transno, "type", debtorno, branchcode, trandate, prd, sett
 
 
 --
--- Data for TOC entry 545 (OID 36651)
+-- Data for TOC entry 567 (OID 36651)
 -- Name: custallocns; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5288,7 +5751,7 @@ COPY custallocns (id, amt, datealloc, transid_allocfrom, transid_allocto) FROM s
 
 
 --
--- Data for TOC entry 546 (OID 36657)
+-- Data for TOC entry 568 (OID 36657)
 -- Name: areas; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5299,7 +5762,7 @@ EU	Europe
 
 
 --
--- Data for TOC entry 547 (OID 36715)
+-- Data for TOC entry 569 (OID 36715)
 -- Name: recurringsalesorders; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5310,7 +5773,7 @@ COPY recurringsalesorders (recurrorderno, debtorno, branchcode, customerref, buy
 
 
 --
--- Data for TOC entry 548 (OID 36735)
+-- Data for TOC entry 570 (OID 36735)
 -- Name: recurrsalesorderdetails; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5322,7 +5785,7 @@ COPY recurrsalesorderdetails (recurrorderno, stkcode, unitprice, quantity, disco
 
 
 --
--- Data for TOC entry 549 (OID 36747)
+-- Data for TOC entry 571 (OID 36747)
 -- Name: accountsection; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5338,7 +5801,7 @@ COPY accountsection (sectionid, sectionname) FROM stdin;
 
 
 --
--- Data for TOC entry 550 (OID 36754)
+-- Data for TOC entry 572 (OID 36754)
 -- Name: securityroles; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5355,7 +5818,7 @@ COPY securityroles (secroleid, secrolename) FROM stdin;
 
 
 --
--- Data for TOC entry 551 (OID 36760)
+-- Data for TOC entry 573 (OID 36760)
 -- Name: securitytokens; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5379,7 +5842,7 @@ COPY securitytokens (tokenid, tokenname) FROM stdin;
 
 
 --
--- Data for TOC entry 552 (OID 36765)
+-- Data for TOC entry 574 (OID 36765)
 -- Name: securitygroups; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5434,7 +5897,7 @@ COPY securitygroups (secroleid, tokenid) FROM stdin;
 
 
 --
--- Data for TOC entry 553 (OID 36769)
+-- Data for TOC entry 575 (OID 36769)
 -- Name: paymentmethods; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5446,7 +5909,7 @@ COPY paymentmethods (paymentid, paymentname, paymenttype, receipttype) FROM stdi
 
 
 --
--- Data for TOC entry 554 (OID 36779)
+-- Data for TOC entry 576 (OID 36779)
 -- Name: unitsofmeasure; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5461,7 +5924,7 @@ COPY unitsofmeasure (unitid, unitname) FROM stdin;
 
 
 --
--- Data for TOC entry 555 (OID 36785)
+-- Data for TOC entry 577 (OID 36785)
 -- Name: config; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5490,9 +5953,7 @@ OverReceiveProportion	20
 PO_AllowSameItemMultipleTimes	1
 YearEnd	3
 PageLength	48
-part_pics_dir	part_pics
 MaxImageSize	300
-reports_dir	reports
 EDIHeaderMsgId	D:01B:UN:EAN010
 EDIReference	WEBERP
 EDI_MsgPending	EDI_Pending
@@ -5508,18 +5969,21 @@ RadioBeaconFTP_user_name	RadioBeacon ftp server user name
 RadionBeaconFTP_user_pass	Radio Beacon remote ftp server password
 CountryOfOperation	EUR
 DefaultTheme	professional
-AutoDebtorNo	1
-DB_Maintenance_LastRun	2005-03-31
+DB_Maintenance_LastRun	2005-07-30
 HTTPS_Only	0
 DB_Maintenance	1
+part_pics_dir	companies/weberp/
+reports_dir	companies/weberp/
+AutoDebtorNo	0
 PackNoteFormat	1
 DefaultBlindPackNote	1
 CheckCreditLimits	0
+FreightTaxCategory	1
 \.
 
 
 --
--- Data for TOC entry 556 (OID 45972)
+-- Data for TOC entry 578 (OID 45972)
 -- Name: salescat; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5530,7 +5994,7 @@ COPY salescat (salescatid, parentcatid, salescatname) FROM stdin;
 
 
 --
--- Data for TOC entry 557 (OID 45980)
+-- Data for TOC entry 579 (OID 45980)
 -- Name: salescatprod; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
@@ -5539,7 +6003,79 @@ COPY salescatprod (salescatid, stockid) FROM stdin;
 
 
 --
--- TOC entry 131 (OID 45103)
+-- Data for TOC entry 580 (OID 62219)
+-- Name: taxcategories; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY taxcategories (taxcatid, taxcatname) FROM stdin;
+1	Taxable supply
+2	Luxury Items
+0	Exempt
+\.
+
+
+--
+-- Data for TOC entry 581 (OID 62235)
+-- Name: taxprovinces; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY taxprovinces (taxprovinceid, taxprovincename) FROM stdin;
+1	Default Tax province
+\.
+
+
+--
+-- Data for TOC entry 582 (OID 62248)
+-- Name: taxgroups; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY taxgroups (taxgroupid, taxgroupdescription) FROM stdin;
+1	Default tax group
+\.
+
+
+--
+-- Data for TOC entry 583 (OID 62253)
+-- Name: taxgrouptaxes; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY taxgrouptaxes (taxgroupid, taxauthid, calculationorder, taxontax) FROM stdin;
+1	1	0	0
+\.
+
+
+--
+-- Data for TOC entry 584 (OID 62268)
+-- Name: stockmovestaxes; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY stockmovestaxes (stkmoveno, taxauthid, taxontax, taxcalculationorder, taxrate) FROM stdin;
+41	1	0	0	0
+\.
+
+
+--
+-- Data for TOC entry 585 (OID 62280)
+-- Name: debtortranstaxes; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY debtortranstaxes (debtortransid, taxauthid, taxamount) FROM stdin;
+31	1	0
+\.
+
+
+--
+-- Data for TOC entry 586 (OID 62304)
+-- Name: supptranstaxes; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+COPY supptranstaxes (supptransid, taxauthid, taxamount) FROM stdin;
+2	1	0
+\.
+
+
+--
+-- TOC entry 141 (OID 45103)
 -- Name: idxsequenceintb; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5547,7 +6083,7 @@ CREATE INDEX idxsequenceintb ON accountgroups USING btree (sequenceintb);
 
 
 --
--- TOC entry 330 (OID 45104)
+-- TOC entry 343 (OID 45104)
 -- Name: idxbomcomponent; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5555,7 +6091,7 @@ CREATE INDEX idxbomcomponent ON bom USING btree (component);
 
 
 --
--- TOC entry 333 (OID 45105)
+-- TOC entry 346 (OID 45105)
 -- Name: idxeffectiveafter; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5563,7 +6099,7 @@ CREATE INDEX idxeffectiveafter ON bom USING btree (effectiveafter);
 
 
 --
--- TOC entry 334 (OID 45106)
+-- TOC entry 347 (OID 45106)
 -- Name: idxeffectiveto; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5571,7 +6107,7 @@ CREATE INDEX idxeffectiveto ON bom USING btree (effectiveto);
 
 
 --
--- TOC entry 331 (OID 45107)
+-- TOC entry 344 (OID 45107)
 -- Name: idxbomloccode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5579,7 +6115,7 @@ CREATE INDEX idxbomloccode ON bom USING btree (loccode);
 
 
 --
--- TOC entry 335 (OID 45108)
+-- TOC entry 348 (OID 45108)
 -- Name: idxparent; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5587,7 +6123,7 @@ CREATE INDEX idxparent ON bom USING btree (parent, effectiveafter, effectiveto, 
 
 
 --
--- TOC entry 336 (OID 45109)
+-- TOC entry 349 (OID 45109)
 -- Name: idxparent_2; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5595,7 +6131,7 @@ CREATE INDEX idxparent_2 ON bom USING btree (parent);
 
 
 --
--- TOC entry 332 (OID 45110)
+-- TOC entry 345 (OID 45110)
 -- Name: idxbomworkcentreadded; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5603,7 +6139,7 @@ CREATE INDEX idxbomworkcentreadded ON bom USING btree (workcentreadded);
 
 
 --
--- TOC entry 338 (OID 45111)
+-- TOC entry 351 (OID 45111)
 -- Name: idxbankaccountname; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5611,7 +6147,7 @@ CREATE INDEX idxbankaccountname ON bankaccounts USING btree (bankaccountname);
 
 
 --
--- TOC entry 339 (OID 45112)
+-- TOC entry 352 (OID 45112)
 -- Name: idxbankaccountnumber; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5619,7 +6155,7 @@ CREATE INDEX idxbankaccountnumber ON bankaccounts USING btree (bankaccountnumber
 
 
 --
--- TOC entry 341 (OID 45113)
+-- TOC entry 354 (OID 45113)
 -- Name: idxbankact; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5627,7 +6163,7 @@ CREATE INDEX idxbankact ON banktrans USING btree (bankact, ref);
 
 
 --
--- TOC entry 345 (OID 45114)
+-- TOC entry 358 (OID 45114)
 -- Name: idxtransdate; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5635,7 +6171,7 @@ CREATE INDEX idxtransdate ON banktrans USING btree (transdate);
 
 
 --
--- TOC entry 343 (OID 45115)
+-- TOC entry 356 (OID 45115)
 -- Name: idxbttranstype; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5643,7 +6179,7 @@ CREATE INDEX idxbttranstype ON banktrans USING btree (banktranstype);
 
 
 --
--- TOC entry 344 (OID 45116)
+-- TOC entry 357 (OID 45116)
 -- Name: idxbttype; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5651,7 +6187,7 @@ CREATE INDEX idxbttype ON banktrans USING btree ("type", transno);
 
 
 --
--- TOC entry 342 (OID 45117)
+-- TOC entry 355 (OID 45117)
 -- Name: idxbtcurrcode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5659,7 +6195,7 @@ CREATE INDEX idxbtcurrcode ON banktrans USING btree (currcode);
 
 
 --
--- TOC entry 348 (OID 45118)
+-- TOC entry 361 (OID 45118)
 -- Name: idxbworkcentre; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5667,7 +6203,7 @@ CREATE INDEX idxbworkcentre ON buckets USING btree (workcentre);
 
 
 --
--- TOC entry 347 (OID 45119)
+-- TOC entry 360 (OID 45119)
 -- Name: idxavaildate; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5675,7 +6211,7 @@ CREATE INDEX idxavaildate ON buckets USING btree (availdate);
 
 
 --
--- TOC entry 134 (OID 45120)
+-- TOC entry 144 (OID 45120)
 -- Name: idxcparea; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5683,7 +6219,7 @@ CREATE INDEX idxcparea ON cogsglpostings USING btree (area);
 
 
 --
--- TOC entry 137 (OID 45121)
+-- TOC entry 147 (OID 45121)
 -- Name: idxcpstkcat; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5691,7 +6227,7 @@ CREATE INDEX idxcpstkcat ON cogsglpostings USING btree (stkcat);
 
 
 --
--- TOC entry 135 (OID 45122)
+-- TOC entry 145 (OID 45122)
 -- Name: idxcpglcode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5699,7 +6235,7 @@ CREATE INDEX idxcpglcode ON cogsglpostings USING btree (glcode);
 
 
 --
--- TOC entry 136 (OID 45123)
+-- TOC entry 146 (OID 45123)
 -- Name: idxcpsalestype; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5707,7 +6243,7 @@ CREATE INDEX idxcpsalestype ON cogsglpostings USING btree (salestype);
 
 
 --
--- TOC entry 138 (OID 45124)
+-- TOC entry 148 (OID 45124)
 -- Name: uidxcparea_stkcat; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5715,7 +6251,7 @@ CREATE UNIQUE INDEX uidxcparea_stkcat ON cogsglpostings USING btree (area, stkca
 
 
 --
--- TOC entry 350 (OID 45125)
+-- TOC entry 363 (OID 45125)
 -- Name: idxperiod; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5723,7 +6259,7 @@ CREATE INDEX idxperiod ON chartdetails USING btree (period);
 
 
 --
--- TOC entry 140 (OID 45126)
+-- TOC entry 150 (OID 45126)
 -- Name: idxaccountcode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5731,7 +6267,7 @@ CREATE INDEX idxaccountcode ON chartmaster USING btree (accountcode);
 
 
 --
--- TOC entry 141 (OID 45127)
+-- TOC entry 151 (OID 45127)
 -- Name: idxaccountname; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5739,7 +6275,7 @@ CREATE INDEX idxaccountname ON chartmaster USING btree (accountname);
 
 
 --
--- TOC entry 142 (OID 45128)
+-- TOC entry 152 (OID 45128)
 -- Name: idxgroup_; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5747,7 +6283,7 @@ CREATE INDEX idxgroup_ ON chartmaster USING btree (group_);
 
 
 --
--- TOC entry 352 (OID 45129)
+-- TOC entry 365 (OID 45129)
 -- Name: idxcbcomponent; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5755,7 +6291,7 @@ CREATE INDEX idxcbcomponent ON contractbom USING btree (component);
 
 
 --
--- TOC entry 353 (OID 45130)
+-- TOC entry 366 (OID 45130)
 -- Name: idxcbloccode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5763,7 +6299,7 @@ CREATE INDEX idxcbloccode ON contractbom USING btree (loccode);
 
 
 --
--- TOC entry 356 (OID 45131)
+-- TOC entry 369 (OID 45131)
 -- Name: idxcontractref; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5771,7 +6307,7 @@ CREATE INDEX idxcontractref ON contractbom USING btree (contractref);
 
 
 --
--- TOC entry 354 (OID 45132)
+-- TOC entry 367 (OID 45132)
 -- Name: idxcbworkcentreadded; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5779,7 +6315,7 @@ CREATE INDEX idxcbworkcentreadded ON contractbom USING btree (workcentreadded);
 
 
 --
--- TOC entry 355 (OID 45133)
+-- TOC entry 368 (OID 45133)
 -- Name: idxcbworkcentreadded_2; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5787,7 +6323,7 @@ CREATE INDEX idxcbworkcentreadded_2 ON contractbom USING btree (workcentreadded)
 
 
 --
--- TOC entry 383 (OID 45134)
+-- TOC entry 395 (OID 45134)
 -- Name: idxcontract; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5795,7 +6331,7 @@ CREATE INDEX idxcontract ON contractreqts USING btree (contract);
 
 
 --
--- TOC entry 378 (OID 45135)
+-- TOC entry 390 (OID 45135)
 -- Name: idxcorderno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5803,7 +6339,7 @@ CREATE INDEX idxcorderno ON contracts USING btree (orderno);
 
 
 --
--- TOC entry 376 (OID 45136)
+-- TOC entry 388 (OID 45136)
 -- Name: idxccategoryid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5811,7 +6347,7 @@ CREATE INDEX idxccategoryid ON contracts USING btree (categoryid);
 
 
 --
--- TOC entry 381 (OID 45137)
+-- TOC entry 393 (OID 45137)
 -- Name: idxstatus; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5819,7 +6355,7 @@ CREATE INDEX idxstatus ON contracts USING btree (status);
 
 
 --
--- TOC entry 379 (OID 45138)
+-- TOC entry 391 (OID 45138)
 -- Name: idxctypeabbrev; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5827,7 +6363,7 @@ CREATE INDEX idxctypeabbrev ON contracts USING btree (typeabbrev);
 
 
 --
--- TOC entry 380 (OID 45139)
+-- TOC entry 392 (OID 45139)
 -- Name: idxcworef; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5835,7 +6371,7 @@ CREATE INDEX idxcworef ON contracts USING btree (woref);
 
 
 --
--- TOC entry 377 (OID 45140)
+-- TOC entry 389 (OID 45140)
 -- Name: idxcdebtorno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5843,7 +6379,7 @@ CREATE INDEX idxcdebtorno ON contracts USING btree (debtorno, branchcode);
 
 
 --
--- TOC entry 122 (OID 45141)
+-- TOC entry 132 (OID 45141)
 -- Name: idxcountry; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5851,7 +6387,7 @@ CREATE INDEX idxcountry ON currencies USING btree (country);
 
 
 --
--- TOC entry 412 (OID 45142)
+-- TOC entry 424 (OID 45142)
 -- Name: idxcadatealloc; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5859,7 +6395,7 @@ CREATE INDEX idxcadatealloc ON custallocns USING btree (datealloc);
 
 
 --
--- TOC entry 413 (OID 45143)
+-- TOC entry 425 (OID 45143)
 -- Name: idxcatransid_allocfrom; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5867,7 +6403,7 @@ CREATE INDEX idxcatransid_allocfrom ON custallocns USING btree (transid_allocfro
 
 
 --
--- TOC entry 414 (OID 45144)
+-- TOC entry 426 (OID 45144)
 -- Name: idxcatransid_allocto; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5875,7 +6411,7 @@ CREATE INDEX idxcatransid_allocto ON custallocns USING btree (transid_allocto);
 
 
 --
--- TOC entry 369 (OID 45145)
+-- TOC entry 382 (OID 45145)
 -- Name: idxcbbranchcode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5883,7 +6419,7 @@ CREATE INDEX idxcbbranchcode ON custbranch USING btree (branchcode);
 
 
 --
--- TOC entry 366 (OID 45146)
+-- TOC entry 380 (OID 45146)
 -- Name: idxbrname; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5891,7 +6427,7 @@ CREATE INDEX idxbrname ON custbranch USING btree (brname);
 
 
 --
--- TOC entry 370 (OID 45147)
+-- TOC entry 383 (OID 45147)
 -- Name: idxcbdebtorno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5899,7 +6435,7 @@ CREATE INDEX idxcbdebtorno ON custbranch USING btree (debtorno);
 
 
 --
--- TOC entry 374 (OID 45148)
+-- TOC entry 386 (OID 45148)
 -- Name: idxsalesman; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5907,7 +6443,7 @@ CREATE INDEX idxsalesman ON custbranch USING btree (salesman);
 
 
 --
--- TOC entry 367 (OID 45149)
+-- TOC entry 381 (OID 45149)
 -- Name: idxcbarea; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5915,15 +6451,7 @@ CREATE INDEX idxcbarea ON custbranch USING btree (area);
 
 
 --
--- TOC entry 368 (OID 45150)
--- Name: idxcbarea_2; Type: INDEX; Schema: public; Owner: weberp_db_user
---
-
-CREATE INDEX idxcbarea_2 ON custbranch USING btree (area);
-
-
---
--- TOC entry 371 (OID 45151)
+-- TOC entry 384 (OID 45151)
 -- Name: idxcbdefaultlocation; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5931,15 +6459,7 @@ CREATE INDEX idxcbdefaultlocation ON custbranch USING btree (defaultlocation);
 
 
 --
--- TOC entry 372 (OID 45152)
--- Name: idxcbtaxauthority; Type: INDEX; Schema: public; Owner: weberp_db_user
---
-
-CREATE INDEX idxcbtaxauthority ON custbranch USING btree (taxauthority);
-
-
---
--- TOC entry 373 (OID 45153)
+-- TOC entry 385 (OID 45153)
 -- Name: idxdefaultshipvia; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5947,7 +6467,7 @@ CREATE INDEX idxdefaultshipvia ON custbranch USING btree (defaultshipvia);
 
 
 --
--- TOC entry 401 (OID 45154)
+-- TOC entry 413 (OID 45154)
 -- Name: idxdtdebtorno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5955,7 +6475,7 @@ CREATE INDEX idxdtdebtorno ON debtortrans USING btree (debtorno, branchcode);
 
 
 --
--- TOC entry 409 (OID 45155)
+-- TOC entry 421 (OID 45155)
 -- Name: idxorder_; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5963,7 +6483,7 @@ CREATE INDEX idxorder_ ON debtortrans USING btree (order_);
 
 
 --
--- TOC entry 402 (OID 45156)
+-- TOC entry 414 (OID 45156)
 -- Name: idxdtprd; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5971,7 +6491,7 @@ CREATE INDEX idxdtprd ON debtortrans USING btree (prd);
 
 
 --
--- TOC entry 410 (OID 45157)
+-- TOC entry 422 (OID 45157)
 -- Name: idxtpe; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5979,7 +6499,7 @@ CREATE INDEX idxtpe ON debtortrans USING btree (tpe);
 
 
 --
--- TOC entry 406 (OID 45158)
+-- TOC entry 418 (OID 45158)
 -- Name: idxdttype; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5987,7 +6507,7 @@ CREATE INDEX idxdttype ON debtortrans USING btree ("type");
 
 
 --
--- TOC entry 403 (OID 45159)
+-- TOC entry 415 (OID 45159)
 -- Name: idxdtsettled; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -5995,7 +6515,7 @@ CREATE INDEX idxdtsettled ON debtortrans USING btree (settled);
 
 
 --
--- TOC entry 404 (OID 45160)
+-- TOC entry 416 (OID 45160)
 -- Name: idxdttrandate; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6003,7 +6523,7 @@ CREATE INDEX idxdttrandate ON debtortrans USING btree (trandate);
 
 
 --
--- TOC entry 405 (OID 45161)
+-- TOC entry 417 (OID 45161)
 -- Name: idxdttransno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6011,7 +6531,7 @@ CREATE INDEX idxdttransno ON debtortrans USING btree (transno);
 
 
 --
--- TOC entry 407 (OID 45162)
+-- TOC entry 419 (OID 45162)
 -- Name: idxdttype_2; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6019,7 +6539,7 @@ CREATE INDEX idxdttype_2 ON debtortrans USING btree ("type", transno);
 
 
 --
--- TOC entry 408 (OID 45163)
+-- TOC entry 420 (OID 45163)
 -- Name: idxedisent; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6027,7 +6547,7 @@ CREATE INDEX idxedisent ON debtortrans USING btree (edisent);
 
 
 --
--- TOC entry 358 (OID 45164)
+-- TOC entry 371 (OID 45164)
 -- Name: idxcurrency; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6035,7 +6555,7 @@ CREATE INDEX idxcurrency ON debtorsmaster USING btree (currcode);
 
 
 --
--- TOC entry 363 (OID 45165)
+-- TOC entry 376 (OID 45165)
 -- Name: idxholdreason; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6043,7 +6563,7 @@ CREATE INDEX idxholdreason ON debtorsmaster USING btree (holdreason);
 
 
 --
--- TOC entry 364 (OID 45166)
+-- TOC entry 377 (OID 45166)
 -- Name: idxname; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6051,7 +6571,7 @@ CREATE INDEX idxname ON debtorsmaster USING btree (name);
 
 
 --
--- TOC entry 360 (OID 45167)
+-- TOC entry 373 (OID 45167)
 -- Name: idxdmpaymentterms; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6059,7 +6579,7 @@ CREATE INDEX idxdmpaymentterms ON debtorsmaster USING btree (paymentterms);
 
 
 --
--- TOC entry 359 (OID 45168)
+-- TOC entry 372 (OID 45168)
 -- Name: idxdebmsalestype; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6067,7 +6587,7 @@ CREATE INDEX idxdebmsalestype ON debtorsmaster USING btree (salestype);
 
 
 --
--- TOC entry 361 (OID 45169)
+-- TOC entry 374 (OID 45169)
 -- Name: idxediinvoices; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6075,7 +6595,7 @@ CREATE INDEX idxediinvoices ON debtorsmaster USING btree (ediinvoices);
 
 
 --
--- TOC entry 362 (OID 45170)
+-- TOC entry 375 (OID 45170)
 -- Name: idxediorders; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6083,7 +6603,7 @@ CREATE INDEX idxediorders ON debtorsmaster USING btree (ediorders);
 
 
 --
--- TOC entry 192 (OID 45171)
+-- TOC entry 203 (OID 45171)
 -- Name: idxquantitybreak; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6091,7 +6611,7 @@ CREATE INDEX idxquantitybreak ON discountmatrix USING btree (quantitybreak);
 
 
 --
--- TOC entry 191 (OID 45172)
+-- TOC entry 202 (OID 45172)
 -- Name: idxdmdiscountcategory; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6099,7 +6619,7 @@ CREATE INDEX idxdmdiscountcategory ON discountmatrix USING btree (discountcatego
 
 
 --
--- TOC entry 190 (OID 45173)
+-- TOC entry 201 (OID 45173)
 -- Name: idxdismsalestype; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6107,7 +6627,7 @@ CREATE INDEX idxdismsalestype ON discountmatrix USING btree (salestype);
 
 
 --
--- TOC entry 149 (OID 45174)
+-- TOC entry 159 (OID 45174)
 -- Name: idxpartnercode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6115,7 +6635,7 @@ CREATE INDEX idxpartnercode ON ediitemmapping USING btree (partnercode);
 
 
 --
--- TOC entry 148 (OID 45175)
+-- TOC entry 158 (OID 45175)
 -- Name: idxeimstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6123,7 +6643,7 @@ CREATE INDEX idxeimstockid ON ediitemmapping USING btree (stockid);
 
 
 --
--- TOC entry 150 (OID 45176)
+-- TOC entry 160 (OID 45176)
 -- Name: idxpartnerstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6131,7 +6651,7 @@ CREATE INDEX idxpartnerstockid ON ediitemmapping USING btree (partnerstockid);
 
 
 --
--- TOC entry 151 (OID 45177)
+-- TOC entry 161 (OID 45177)
 -- Name: idxsupporcust; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6139,7 +6659,7 @@ CREATE INDEX idxsupporcust ON ediitemmapping USING btree (supporcust);
 
 
 --
--- TOC entry 153 (OID 45178)
+-- TOC entry 163 (OID 45178)
 -- Name: idxsection; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6147,7 +6667,7 @@ CREATE INDEX idxsection ON edimessageformat USING btree (section);
 
 
 --
--- TOC entry 154 (OID 45179)
+-- TOC entry 164 (OID 45179)
 -- Name: uidxpartnercode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6155,7 +6675,7 @@ CREATE UNIQUE INDEX uidxpartnercode ON edimessageformat USING btree (partnercode
 
 
 --
--- TOC entry 158 (OID 45180)
+-- TOC entry 168 (OID 45180)
 -- Name: idxsegtag; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6163,7 +6683,7 @@ CREATE INDEX idxsegtag ON edi_orders_segs USING btree (segtag);
 
 
 --
--- TOC entry 157 (OID 45181)
+-- TOC entry 167 (OID 45181)
 -- Name: idxsegno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6171,7 +6691,7 @@ CREATE INDEX idxsegno ON edi_orders_segs USING btree (seggroup);
 
 
 --
--- TOC entry 214 (OID 45182)
+-- TOC entry 226 (OID 45182)
 -- Name: idxdestination; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6179,7 +6699,7 @@ CREATE INDEX idxdestination ON freightcosts USING btree (destination);
 
 
 --
--- TOC entry 216 (OID 45183)
+-- TOC entry 228 (OID 45183)
 -- Name: idxlocationfrom; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6187,7 +6707,7 @@ CREATE INDEX idxlocationfrom ON freightcosts USING btree (locationfrom);
 
 
 --
--- TOC entry 217 (OID 45184)
+-- TOC entry 229 (OID 45184)
 -- Name: idxshipperid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6195,7 +6715,7 @@ CREATE INDEX idxshipperid ON freightcosts USING btree (shipperid);
 
 
 --
--- TOC entry 215 (OID 45185)
+-- TOC entry 227 (OID 45185)
 -- Name: idxdestination_2; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6203,7 +6723,7 @@ CREATE INDEX idxdestination_2 ON freightcosts USING btree (destination, location
 
 
 --
--- TOC entry 160 (OID 45186)
+-- TOC entry 170 (OID 45186)
 -- Name: idxaccount; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6211,7 +6731,7 @@ CREATE INDEX idxaccount ON gltrans USING btree (account);
 
 
 --
--- TOC entry 161 (OID 45187)
+-- TOC entry 171 (OID 45187)
 -- Name: idxchequeno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6219,7 +6739,7 @@ CREATE INDEX idxchequeno ON gltrans USING btree (chequeno);
 
 
 --
--- TOC entry 163 (OID 45188)
+-- TOC entry 173 (OID 45188)
 -- Name: idxgtperiodno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6227,7 +6747,7 @@ CREATE INDEX idxgtperiodno ON gltrans USING btree (periodno);
 
 
 --
--- TOC entry 166 (OID 45189)
+-- TOC entry 176 (OID 45189)
 -- Name: idxposted; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6235,7 +6755,7 @@ CREATE INDEX idxposted ON gltrans USING btree (posted);
 
 
 --
--- TOC entry 164 (OID 45190)
+-- TOC entry 174 (OID 45190)
 -- Name: idxgttrandate; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6243,7 +6763,7 @@ CREATE INDEX idxgttrandate ON gltrans USING btree (trandate);
 
 
 --
--- TOC entry 165 (OID 45191)
+-- TOC entry 175 (OID 45191)
 -- Name: idxgttypeno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6251,7 +6771,7 @@ CREATE INDEX idxgttypeno ON gltrans USING btree (typeno);
 
 
 --
--- TOC entry 167 (OID 45192)
+-- TOC entry 177 (OID 45192)
 -- Name: idxtype_and_number; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6259,7 +6779,7 @@ CREATE INDEX idxtype_and_number ON gltrans USING btree ("type", typeno);
 
 
 --
--- TOC entry 162 (OID 45193)
+-- TOC entry 172 (OID 45193)
 -- Name: idxgtjobref; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6267,7 +6787,7 @@ CREATE INDEX idxgtjobref ON gltrans USING btree (jobref);
 
 
 --
--- TOC entry 298 (OID 45194)
+-- TOC entry 310 (OID 45194)
 -- Name: idxgrndeliverydate; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6275,7 +6795,7 @@ CREATE INDEX idxgrndeliverydate ON grns USING btree (deliverydate);
 
 
 --
--- TOC entry 299 (OID 45195)
+-- TOC entry 311 (OID 45195)
 -- Name: idxgrnitemcode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6283,7 +6803,7 @@ CREATE INDEX idxgrnitemcode ON grns USING btree (itemcode);
 
 
 --
--- TOC entry 301 (OID 45196)
+-- TOC entry 313 (OID 45196)
 -- Name: idxpodetailitem; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6291,7 +6811,7 @@ CREATE INDEX idxpodetailitem ON grns USING btree (podetailitem);
 
 
 --
--- TOC entry 300 (OID 45197)
+-- TOC entry 312 (OID 45197)
 -- Name: idxgrnsupplierid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6299,7 +6819,7 @@ CREATE INDEX idxgrnsupplierid ON grns USING btree (supplierid);
 
 
 --
--- TOC entry 119 (OID 45198)
+-- TOC entry 129 (OID 45198)
 -- Name: idxreasoncode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6307,7 +6827,7 @@ CREATE INDEX idxreasoncode ON holdreasons USING btree (reasoncode);
 
 
 --
--- TOC entry 120 (OID 45199)
+-- TOC entry 130 (OID 45199)
 -- Name: idxreasondescription; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6315,7 +6835,7 @@ CREATE INDEX idxreasondescription ON holdreasons USING btree (reasondescription)
 
 
 --
--- TOC entry 243 (OID 45200)
+-- TOC entry 255 (OID 45200)
 -- Name: idxlsstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6323,7 +6843,7 @@ CREATE INDEX idxlsstockid ON locstock USING btree (stockid);
 
 
 --
--- TOC entry 247 (OID 45201)
+-- TOC entry 259 (OID 45201)
 -- Name: idxreference; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6331,7 +6851,7 @@ CREATE INDEX idxreference ON loctransfers USING btree (reference, stockid);
 
 
 --
--- TOC entry 248 (OID 45202)
+-- TOC entry 260 (OID 45202)
 -- Name: idxshiploc; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6339,7 +6859,7 @@ CREATE INDEX idxshiploc ON loctransfers USING btree (shiploc);
 
 
 --
--- TOC entry 246 (OID 45203)
+-- TOC entry 258 (OID 45203)
 -- Name: idxrecloc; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6347,7 +6867,7 @@ CREATE INDEX idxrecloc ON loctransfers USING btree (recloc);
 
 
 --
--- TOC entry 245 (OID 45204)
+-- TOC entry 257 (OID 45204)
 -- Name: idxltstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6355,7 +6875,7 @@ CREATE INDEX idxltstockid ON loctransfers USING btree (stockid);
 
 
 --
--- TOC entry 394 (OID 45205)
+-- TOC entry 406 (OID 45205)
 -- Name: idxoddlstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6363,7 +6883,7 @@ CREATE INDEX idxoddlstockid ON orderdeliverydifferenceslog USING btree (stockid)
 
 
 --
--- TOC entry 392 (OID 45206)
+-- TOC entry 404 (OID 45206)
 -- Name: idxodddebtorno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6371,7 +6891,7 @@ CREATE INDEX idxodddebtorno ON orderdeliverydifferenceslog USING btree (debtorno
 
 
 --
--- TOC entry 391 (OID 45207)
+-- TOC entry 403 (OID 45207)
 -- Name: idxcan_or_bo; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6379,7 +6899,7 @@ CREATE INDEX idxcan_or_bo ON orderdeliverydifferenceslog USING btree (can_or_bo)
 
 
 --
--- TOC entry 393 (OID 45208)
+-- TOC entry 405 (OID 45208)
 -- Name: idxoddlorderno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6387,7 +6907,7 @@ CREATE INDEX idxoddlorderno ON orderdeliverydifferenceslog USING btree (orderno)
 
 
 --
--- TOC entry 124 (OID 45209)
+-- TOC entry 134 (OID 45209)
 -- Name: idxdaysbeforedue; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6395,7 +6915,7 @@ CREATE INDEX idxdaysbeforedue ON paymentterms USING btree (daysbeforedue);
 
 
 --
--- TOC entry 123 (OID 45210)
+-- TOC entry 133 (OID 45210)
 -- Name: idxdayinfollowingmonth; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6403,7 +6923,7 @@ CREATE INDEX idxdayinfollowingmonth ON paymentterms USING btree (dayinfollowingm
 
 
 --
--- TOC entry 128 (OID 45211)
+-- TOC entry 138 (OID 45211)
 -- Name: idxlastdate_in_period; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6411,7 +6931,7 @@ CREATE INDEX idxlastdate_in_period ON periods USING btree (lastdate_in_period);
 
 
 --
--- TOC entry 234 (OID 45212)
+-- TOC entry 246 (OID 45212)
 -- Name: idxcurrabrev; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6419,7 +6939,7 @@ CREATE INDEX idxcurrabrev ON prices USING btree (currabrev);
 
 
 --
--- TOC entry 235 (OID 45213)
+-- TOC entry 247 (OID 45213)
 -- Name: idxpdebtorno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6427,7 +6947,7 @@ CREATE INDEX idxpdebtorno ON prices USING btree (debtorno);
 
 
 --
--- TOC entry 236 (OID 45214)
+-- TOC entry 248 (OID 45214)
 -- Name: idxpstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6435,7 +6955,7 @@ CREATE INDEX idxpstockid ON prices USING btree (stockid);
 
 
 --
--- TOC entry 237 (OID 45215)
+-- TOC entry 249 (OID 45215)
 -- Name: idxptypeabbrev; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6443,7 +6963,7 @@ CREATE INDEX idxptypeabbrev ON prices USING btree (typeabbrev);
 
 
 --
--- TOC entry 239 (OID 45216)
+-- TOC entry 251 (OID 45216)
 -- Name: idxpdstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6451,7 +6971,7 @@ CREATE INDEX idxpdstockid ON purchdata USING btree (stockid);
 
 
 --
--- TOC entry 240 (OID 45217)
+-- TOC entry 252 (OID 45217)
 -- Name: idxpdsupplierno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6459,7 +6979,7 @@ CREATE INDEX idxpdsupplierno ON purchdata USING btree (supplierno);
 
 
 --
--- TOC entry 241 (OID 45218)
+-- TOC entry 253 (OID 45218)
 -- Name: idxpreferred; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6467,7 +6987,7 @@ CREATE INDEX idxpreferred ON purchdata USING btree (preferred);
 
 
 --
--- TOC entry 290 (OID 45219)
+-- TOC entry 302 (OID 45219)
 -- Name: idxpoddeliverydate; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6475,7 +6995,7 @@ CREATE INDEX idxpoddeliverydate ON purchorderdetails USING btree (deliverydate);
 
 
 --
--- TOC entry 291 (OID 45220)
+-- TOC entry 303 (OID 45220)
 -- Name: idxpodglcode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6483,7 +7003,7 @@ CREATE INDEX idxpodglcode ON purchorderdetails USING btree (glcode);
 
 
 --
--- TOC entry 292 (OID 45221)
+-- TOC entry 304 (OID 45221)
 -- Name: idxpoditemcode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6491,7 +7011,7 @@ CREATE INDEX idxpoditemcode ON purchorderdetails USING btree (itemcode);
 
 
 --
--- TOC entry 293 (OID 45222)
+-- TOC entry 305 (OID 45222)
 -- Name: idxpodjobref; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6499,7 +7019,7 @@ CREATE INDEX idxpodjobref ON purchorderdetails USING btree (jobref);
 
 
 --
--- TOC entry 294 (OID 45223)
+-- TOC entry 306 (OID 45223)
 -- Name: idxpodorderno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6507,7 +7027,7 @@ CREATE INDEX idxpodorderno ON purchorderdetails USING btree (orderno);
 
 
 --
--- TOC entry 295 (OID 45224)
+-- TOC entry 307 (OID 45224)
 -- Name: idxpodshiptref; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6515,7 +7035,7 @@ CREATE INDEX idxpodshiptref ON purchorderdetails USING btree (shiptref);
 
 
 --
--- TOC entry 289 (OID 45225)
+-- TOC entry 301 (OID 45225)
 -- Name: idxpodcompleted; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6523,7 +7043,7 @@ CREATE INDEX idxpodcompleted ON purchorderdetails USING btree (completed);
 
 
 --
--- TOC entry 286 (OID 45226)
+-- TOC entry 298 (OID 45226)
 -- Name: idxpoorddate; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6531,7 +7051,7 @@ CREATE INDEX idxpoorddate ON purchorders USING btree (orddate);
 
 
 --
--- TOC entry 287 (OID 45227)
+-- TOC entry 299 (OID 45227)
 -- Name: idxposupplierno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6539,7 +7059,7 @@ CREATE INDEX idxposupplierno ON purchorders USING btree (supplierno);
 
 
 --
--- TOC entry 285 (OID 45228)
+-- TOC entry 297 (OID 45228)
 -- Name: idxintostocklocation; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6547,7 +7067,7 @@ CREATE INDEX idxintostocklocation ON purchorders USING btree (intostocklocation)
 
 
 --
--- TOC entry 284 (OID 45229)
+-- TOC entry 296 (OID 45229)
 -- Name: idxallowprintpo; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6555,7 +7075,7 @@ CREATE INDEX idxallowprintpo ON purchorders USING btree (allowprint);
 
 
 --
--- TOC entry 169 (OID 45230)
+-- TOC entry 180 (OID 45230)
 -- Name: idxreportheading; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6563,7 +7083,7 @@ CREATE INDEX idxreportheading ON reportheaders USING btree (reportheading);
 
 
 --
--- TOC entry 174 (OID 45231)
+-- TOC entry 185 (OID 45231)
 -- Name: idxcustbranch; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6571,7 +7091,7 @@ CREATE INDEX idxcustbranch ON salesanalysis USING btree (custbranch);
 
 
 --
--- TOC entry 173 (OID 45232)
+-- TOC entry 184 (OID 45232)
 -- Name: idxcust; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6579,7 +7099,7 @@ CREATE INDEX idxcust ON salesanalysis USING btree (cust);
 
 
 --
--- TOC entry 177 (OID 45233)
+-- TOC entry 188 (OID 45233)
 -- Name: idxsaperiodno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6587,7 +7107,7 @@ CREATE INDEX idxsaperiodno ON salesanalysis USING btree (periodno);
 
 
 --
--- TOC entry 178 (OID 45234)
+-- TOC entry 189 (OID 45234)
 -- Name: idxsastkcategory; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6595,7 +7115,7 @@ CREATE INDEX idxsastkcategory ON salesanalysis USING btree (stkcategory);
 
 
 --
--- TOC entry 179 (OID 45235)
+-- TOC entry 190 (OID 45235)
 -- Name: idxsastockid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6603,7 +7123,7 @@ CREATE INDEX idxsastockid ON salesanalysis USING btree (stockid);
 
 
 --
--- TOC entry 180 (OID 45236)
+-- TOC entry 191 (OID 45236)
 -- Name: idxsatypeabbrev; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6611,7 +7131,7 @@ CREATE INDEX idxsatypeabbrev ON salesanalysis USING btree (typeabbrev);
 
 
 --
--- TOC entry 175 (OID 45237)
+-- TOC entry 186 (OID 45237)
 -- Name: idxsaarea; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6619,7 +7139,7 @@ CREATE INDEX idxsaarea ON salesanalysis USING btree (area);
 
 
 --
--- TOC entry 172 (OID 45238)
+-- TOC entry 183 (OID 45238)
 -- Name: idxbudgetoractual; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6627,7 +7147,7 @@ CREATE INDEX idxbudgetoractual ON salesanalysis USING btree (budgetoractual);
 
 
 --
--- TOC entry 176 (OID 45239)
+-- TOC entry 187 (OID 45239)
 -- Name: idxsalesperson; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6635,7 +7155,7 @@ CREATE INDEX idxsalesperson ON salesanalysis USING btree (salesperson);
 
 
 --
--- TOC entry 182 (OID 45240)
+-- TOC entry 193 (OID 45240)
 -- Name: idxsparea; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6643,7 +7163,7 @@ CREATE INDEX idxsparea ON salesglpostings USING btree (area);
 
 
 --
--- TOC entry 184 (OID 45241)
+-- TOC entry 195 (OID 45241)
 -- Name: idxspstkcat; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6651,7 +7171,7 @@ CREATE INDEX idxspstkcat ON salesglpostings USING btree (stkcat);
 
 
 --
--- TOC entry 183 (OID 45242)
+-- TOC entry 194 (OID 45242)
 -- Name: idxspsalestype; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6659,7 +7179,7 @@ CREATE INDEX idxspsalestype ON salesglpostings USING btree (salestype);
 
 
 --
--- TOC entry 186 (OID 45243)
+-- TOC entry 197 (OID 45243)
 -- Name: uidxsgparea_stkcat; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6667,7 +7187,7 @@ CREATE UNIQUE INDEX uidxsgparea_stkcat ON salesglpostings USING btree (area, stk
 
 
 --
--- TOC entry 397 (OID 45244)
+-- TOC entry 409 (OID 45244)
 -- Name: idxsodorderno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6675,7 +7195,7 @@ CREATE INDEX idxsodorderno ON salesorderdetails USING btree (orderno);
 
 
 --
--- TOC entry 398 (OID 45245)
+-- TOC entry 410 (OID 45245)
 -- Name: idxstkcode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6683,7 +7203,7 @@ CREATE INDEX idxstkcode ON salesorderdetails USING btree (stkcode);
 
 
 --
--- TOC entry 396 (OID 45246)
+-- TOC entry 408 (OID 45246)
 -- Name: idxsodcompleted; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6691,7 +7211,7 @@ CREATE INDEX idxsodcompleted ON salesorderdetails USING btree (completed);
 
 
 --
--- TOC entry 388 (OID 45247)
+-- TOC entry 400 (OID 45247)
 -- Name: idxsodebtorno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6699,7 +7219,7 @@ CREATE INDEX idxsodebtorno ON salesorders USING btree (debtorno);
 
 
 --
--- TOC entry 389 (OID 45248)
+-- TOC entry 401 (OID 45248)
 -- Name: idxsodorddate; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6707,7 +7227,7 @@ CREATE INDEX idxsodorddate ON salesorders USING btree (orddate);
 
 
 --
--- TOC entry 385 (OID 45249)
+-- TOC entry 397 (OID 45249)
 -- Name: idxordertype; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6715,7 +7235,7 @@ CREATE INDEX idxordertype ON salesorders USING btree (ordertype);
 
 
 --
--- TOC entry 384 (OID 45250)
+-- TOC entry 396 (OID 45250)
 -- Name: idxlocationindex; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6723,7 +7243,7 @@ CREATE INDEX idxlocationindex ON salesorders USING btree (fromstkloc);
 
 
 --
--- TOC entry 387 (OID 45251)
+-- TOC entry 399 (OID 45251)
 -- Name: idxsobranchcode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6731,7 +7251,7 @@ CREATE INDEX idxsobranchcode ON salesorders USING btree (branchcode, debtorno);
 
 
 --
--- TOC entry 386 (OID 45252)
+-- TOC entry 398 (OID 45252)
 -- Name: idxshipvia; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6739,7 +7259,7 @@ CREATE INDEX idxshipvia ON salesorders USING btree (shipvia);
 
 
 --
--- TOC entry 187 (OID 45253)
+-- TOC entry 198 (OID 45253)
 -- Name: idxsales_type; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6747,7 +7267,7 @@ CREATE INDEX idxsales_type ON salestypes USING btree (sales_type);
 
 
 --
--- TOC entry 194 (OID 45254)
+-- TOC entry 205 (OID 45254)
 -- Name: idxfilename; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6755,7 +7275,7 @@ CREATE INDEX idxfilename ON scripts USING btree (filename);
 
 
 --
--- TOC entry 209 (OID 45255)
+-- TOC entry 221 (OID 45255)
 -- Name: idxsctranstype; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6763,7 +7283,7 @@ CREATE INDEX idxsctranstype ON shipmentcharges USING btree (transtype, transno);
 
 
 --
--- TOC entry 207 (OID 45256)
+-- TOC entry 219 (OID 45256)
 -- Name: idxscshiptref; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6771,7 +7291,7 @@ CREATE INDEX idxscshiptref ON shipmentcharges USING btree (shiptref);
 
 
 --
--- TOC entry 208 (OID 45257)
+-- TOC entry 220 (OID 45257)
 -- Name: idxscstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6779,7 +7299,7 @@ CREATE INDEX idxscstockid ON shipmentcharges USING btree (stockid);
 
 
 --
--- TOC entry 210 (OID 45258)
+-- TOC entry 222 (OID 45258)
 -- Name: idxsctranstype_2; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6787,7 +7307,7 @@ CREATE INDEX idxsctranstype_2 ON shipmentcharges USING btree (transtype);
 
 
 --
--- TOC entry 202 (OID 45259)
+-- TOC entry 214 (OID 45259)
 -- Name: idxeta; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6795,7 +7315,7 @@ CREATE INDEX idxeta ON shipments USING btree (eta);
 
 
 --
--- TOC entry 204 (OID 45260)
+-- TOC entry 216 (OID 45260)
 -- Name: idxshipsupplierid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6803,7 +7323,7 @@ CREATE INDEX idxshipsupplierid ON shipments USING btree (supplierid);
 
 
 --
--- TOC entry 203 (OID 45261)
+-- TOC entry 215 (OID 45261)
 -- Name: idxshipperref; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6811,7 +7331,7 @@ CREATE INDEX idxshipperref ON shipments USING btree (voyageref);
 
 
 --
--- TOC entry 205 (OID 45262)
+-- TOC entry 217 (OID 45262)
 -- Name: idxvessel; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6819,7 +7339,7 @@ CREATE INDEX idxvessel ON shipments USING btree (vessel);
 
 
 --
--- TOC entry 218 (OID 45263)
+-- TOC entry 230 (OID 45263)
 -- Name: idxcategorydescription; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6827,7 +7347,7 @@ CREATE INDEX idxcategorydescription ON stockcategory USING btree (categorydescri
 
 
 --
--- TOC entry 219 (OID 45264)
+-- TOC entry 231 (OID 45264)
 -- Name: idxstocktype; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6835,7 +7355,7 @@ CREATE INDEX idxstocktype ON stockcategory USING btree (stocktype);
 
 
 --
--- TOC entry 232 (OID 45265)
+-- TOC entry 244 (OID 45265)
 -- Name: idxscfloccode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6843,7 +7363,7 @@ CREATE INDEX idxscfloccode ON stockcheckfreeze USING btree (loccode);
 
 
 --
--- TOC entry 230 (OID 45266)
+-- TOC entry 242 (OID 45266)
 -- Name: idxscntstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6851,7 +7371,7 @@ CREATE INDEX idxscntstockid ON stockcounts USING btree (stockid);
 
 
 --
--- TOC entry 229 (OID 45267)
+-- TOC entry 241 (OID 45267)
 -- Name: idxscntloccode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6859,7 +7379,7 @@ CREATE INDEX idxscntloccode ON stockcounts USING btree (loccode);
 
 
 --
--- TOC entry 224 (OID 45268)
+-- TOC entry 236 (OID 45268)
 -- Name: idxsmcategoryid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6867,7 +7387,7 @@ CREATE INDEX idxsmcategoryid ON stockmaster USING btree (categoryid);
 
 
 --
--- TOC entry 225 (OID 45269)
+-- TOC entry 237 (OID 45269)
 -- Name: idxsmdescription; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6875,7 +7395,7 @@ CREATE INDEX idxsmdescription ON stockmaster USING btree (description);
 
 
 --
--- TOC entry 222 (OID 45270)
+-- TOC entry 234 (OID 45270)
 -- Name: idxlastcurcostdate; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6883,7 +7403,7 @@ CREATE INDEX idxlastcurcostdate ON stockmaster USING btree (lastcurcostdate);
 
 
 --
--- TOC entry 223 (OID 45271)
+-- TOC entry 235 (OID 45271)
 -- Name: idxmbflag; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6891,7 +7411,7 @@ CREATE INDEX idxmbflag ON stockmaster USING btree (mbflag);
 
 
 --
--- TOC entry 227 (OID 45272)
+-- TOC entry 239 (OID 45272)
 -- Name: idxsmstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6899,7 +7419,7 @@ CREATE INDEX idxsmstockid ON stockmaster USING btree (stockid, categoryid);
 
 
 --
--- TOC entry 221 (OID 45273)
+-- TOC entry 233 (OID 45273)
 -- Name: idxcontrolled; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6907,7 +7427,7 @@ CREATE INDEX idxcontrolled ON stockmaster USING btree (controlled);
 
 
 --
--- TOC entry 226 (OID 45274)
+-- TOC entry 238 (OID 45274)
 -- Name: idxsmdiscountcategory; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6915,7 +7435,7 @@ CREATE INDEX idxsmdiscountcategory ON stockmaster USING btree (discountcategory)
 
 
 --
--- TOC entry 251 (OID 45275)
+-- TOC entry 263 (OID 45275)
 -- Name: idxsmdebtorno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6923,7 +7443,7 @@ CREATE INDEX idxsmdebtorno ON stockmoves USING btree (debtorno);
 
 
 --
--- TOC entry 252 (OID 45276)
+-- TOC entry 264 (OID 45276)
 -- Name: idxsmloccode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6931,7 +7451,7 @@ CREATE INDEX idxsmloccode ON stockmoves USING btree (loccode);
 
 
 --
--- TOC entry 253 (OID 45277)
+-- TOC entry 265 (OID 45277)
 -- Name: idxsmprd; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6939,7 +7459,7 @@ CREATE INDEX idxsmprd ON stockmoves USING btree (prd);
 
 
 --
--- TOC entry 257 (OID 45278)
+-- TOC entry 269 (OID 45278)
 -- Name: idxsmvstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6947,7 +7467,7 @@ CREATE INDEX idxsmvstockid ON stockmoves USING btree (stockid, loccode);
 
 
 --
--- TOC entry 258 (OID 45279)
+-- TOC entry 270 (OID 45279)
 -- Name: idxsmvstockid_2; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6955,7 +7475,7 @@ CREATE INDEX idxsmvstockid_2 ON stockmoves USING btree (stockid);
 
 
 --
--- TOC entry 254 (OID 45280)
+-- TOC entry 266 (OID 45280)
 -- Name: idxsmtrandate; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6963,7 +7483,7 @@ CREATE INDEX idxsmtrandate ON stockmoves USING btree (trandate);
 
 
 --
--- TOC entry 255 (OID 45281)
+-- TOC entry 267 (OID 45281)
 -- Name: idxsmtransno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6971,7 +7491,7 @@ CREATE INDEX idxsmtransno ON stockmoves USING btree (transno);
 
 
 --
--- TOC entry 256 (OID 45282)
+-- TOC entry 268 (OID 45282)
 -- Name: idxsmtype; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6979,7 +7499,7 @@ CREATE INDEX idxsmtype ON stockmoves USING btree ("type");
 
 
 --
--- TOC entry 250 (OID 45283)
+-- TOC entry 262 (OID 45283)
 -- Name: idxshow_on_inv_crds; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6987,7 +7507,7 @@ CREATE INDEX idxshow_on_inv_crds ON stockmoves USING btree (show_on_inv_crds);
 
 
 --
--- TOC entry 249 (OID 45284)
+-- TOC entry 261 (OID 45284)
 -- Name: idxhide; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -6995,7 +7515,7 @@ CREATE INDEX idxhide ON stockmoves USING btree (hidemovt);
 
 
 --
--- TOC entry 261 (OID 45285)
+-- TOC entry 273 (OID 45285)
 -- Name: idxssistockid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7003,7 +7523,7 @@ CREATE INDEX idxssistockid ON stockserialitems USING btree (stockid);
 
 
 --
--- TOC entry 260 (OID 45286)
+-- TOC entry 272 (OID 45286)
 -- Name: idxssiloccode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7011,7 +7531,7 @@ CREATE INDEX idxssiloccode ON stockserialitems USING btree (loccode);
 
 
 --
--- TOC entry 264 (OID 45287)
+-- TOC entry 276 (OID 45287)
 -- Name: idxstockmoveno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7019,7 +7539,7 @@ CREATE INDEX idxstockmoveno ON stockserialmoves USING btree (stockmoveno);
 
 
 --
--- TOC entry 263 (OID 45288)
+-- TOC entry 275 (OID 45288)
 -- Name: idxssmstockid_sn; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7027,7 +7547,7 @@ CREATE INDEX idxssmstockid_sn ON stockserialmoves USING btree (stockid, serialno
 
 
 --
--- TOC entry 278 (OID 45289)
+-- TOC entry 290 (OID 45289)
 -- Name: idxsatransid_allocfrom; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7035,7 +7555,7 @@ CREATE INDEX idxsatransid_allocfrom ON suppallocs USING btree (transid_allocfrom
 
 
 --
--- TOC entry 279 (OID 45290)
+-- TOC entry 291 (OID 45290)
 -- Name: idxsatransid_allocto; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7043,7 +7563,7 @@ CREATE INDEX idxsatransid_allocto ON suppallocs USING btree (transid_allocto);
 
 
 --
--- TOC entry 277 (OID 45291)
+-- TOC entry 289 (OID 45291)
 -- Name: idxsadatealloc; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7051,7 +7571,7 @@ CREATE INDEX idxsadatealloc ON suppallocs USING btree (datealloc);
 
 
 --
--- TOC entry 266 (OID 45292)
+-- TOC entry 278 (OID 45292)
 -- Name: idxduedate; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7059,7 +7579,7 @@ CREATE INDEX idxduedate ON supptrans USING btree (duedate);
 
 
 --
--- TOC entry 267 (OID 45293)
+-- TOC entry 279 (OID 45293)
 -- Name: idxhold; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7067,7 +7587,7 @@ CREATE INDEX idxhold ON supptrans USING btree ("hold");
 
 
 --
--- TOC entry 269 (OID 45294)
+-- TOC entry 281 (OID 45294)
 -- Name: idxstsupplierno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7075,7 +7595,7 @@ CREATE INDEX idxstsupplierno ON supptrans USING btree (supplierno);
 
 
 --
--- TOC entry 268 (OID 45295)
+-- TOC entry 280 (OID 45295)
 -- Name: idxstsettled; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7083,7 +7603,7 @@ CREATE INDEX idxstsettled ON supptrans USING btree (settled);
 
 
 --
--- TOC entry 270 (OID 45296)
+-- TOC entry 282 (OID 45296)
 -- Name: idxstsupplierno_2; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7091,7 +7611,7 @@ CREATE INDEX idxstsupplierno_2 ON supptrans USING btree (supplierno, suppreferen
 
 
 --
--- TOC entry 274 (OID 45297)
+-- TOC entry 286 (OID 45297)
 -- Name: idxsuppreference; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7099,7 +7619,7 @@ CREATE INDEX idxsuppreference ON supptrans USING btree (suppreference);
 
 
 --
--- TOC entry 271 (OID 45298)
+-- TOC entry 283 (OID 45298)
 -- Name: idxsttrandate; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7107,7 +7627,7 @@ CREATE INDEX idxsttrandate ON supptrans USING btree (trandate);
 
 
 --
--- TOC entry 272 (OID 45299)
+-- TOC entry 284 (OID 45299)
 -- Name: idxsttransno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7115,7 +7635,7 @@ CREATE INDEX idxsttransno ON supptrans USING btree (transno);
 
 
 --
--- TOC entry 273 (OID 45300)
+-- TOC entry 285 (OID 45300)
 -- Name: idxsttype; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7123,7 +7643,7 @@ CREATE INDEX idxsttype ON supptrans USING btree ("type");
 
 
 --
--- TOC entry 276 (OID 45301)
+-- TOC entry 288 (OID 45301)
 -- Name: uidxtypetransno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7131,7 +7651,7 @@ CREATE UNIQUE INDEX uidxtypetransno ON supptrans USING btree (transno, "type");
 
 
 --
--- TOC entry 281 (OID 45302)
+-- TOC entry 293 (OID 45302)
 -- Name: idxcontact; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7139,7 +7659,7 @@ CREATE INDEX idxcontact ON suppliercontacts USING btree (contact);
 
 
 --
--- TOC entry 282 (OID 45303)
+-- TOC entry 294 (OID 45303)
 -- Name: idxscsupplierid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7147,7 +7667,7 @@ CREATE INDEX idxscsupplierid ON suppliercontacts USING btree (supplierid);
 
 
 --
--- TOC entry 196 (OID 45304)
+-- TOC entry 207 (OID 45304)
 -- Name: idxscurrcode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7155,7 +7675,7 @@ CREATE INDEX idxscurrcode ON suppliers USING btree (currcode);
 
 
 --
--- TOC entry 197 (OID 45305)
+-- TOC entry 208 (OID 45305)
 -- Name: idxspaymentterms; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7163,7 +7683,7 @@ CREATE INDEX idxspaymentterms ON suppliers USING btree (paymentterms);
 
 
 --
--- TOC entry 200 (OID 45306)
+-- TOC entry 212 (OID 45306)
 -- Name: idxsupsupplierid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7171,7 +7691,7 @@ CREATE INDEX idxsupsupplierid ON suppliers USING btree (supplierid);
 
 
 --
--- TOC entry 199 (OID 45307)
+-- TOC entry 211 (OID 45307)
 -- Name: idxsuppname; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7179,15 +7699,15 @@ CREATE INDEX idxsuppname ON suppliers USING btree (suppname);
 
 
 --
--- TOC entry 198 (OID 45308)
+-- TOC entry 209 (OID 45308)
 -- Name: idxstaxauthority; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
-CREATE INDEX idxstaxauthority ON suppliers USING btree (taxauthority);
+CREATE INDEX idxstaxauthority ON suppliers USING btree (taxgroupid);
 
 
 --
--- TOC entry 126 (OID 45309)
+-- TOC entry 136 (OID 45309)
 -- Name: idxsttypeno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7195,23 +7715,15 @@ CREATE INDEX idxsttypeno ON systypes USING btree (typeno);
 
 
 --
--- TOC entry 303 (OID 45310)
+-- TOC entry 315 (OID 45310)
 -- Name: idxtaltaxauthority; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
-CREATE INDEX idxtaltaxauthority ON taxauthlevels USING btree (taxauthority);
+CREATE INDEX idxtaltaxauthority ON taxauthrates USING btree (taxauthority);
 
 
 --
--- TOC entry 302 (OID 45311)
--- Name: idxdispatchtaxauthority; Type: INDEX; Schema: public; Owner: weberp_db_user
---
-
-CREATE INDEX idxdispatchtaxauthority ON taxauthlevels USING btree (dispatchtaxauthority);
-
-
---
--- TOC entry 144 (OID 45312)
+-- TOC entry 154 (OID 45312)
 -- Name: idxtaxglcode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7219,7 +7731,7 @@ CREATE INDEX idxtaxglcode ON taxauthorities USING btree (taxglcode);
 
 
 --
--- TOC entry 143 (OID 45313)
+-- TOC entry 153 (OID 45313)
 -- Name: idxpurchtaxglaccount; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7227,7 +7739,7 @@ CREATE INDEX idxpurchtaxglaccount ON taxauthorities USING btree (purchtaxglaccou
 
 
 --
--- TOC entry 322 (OID 45314)
+-- TOC entry 335 (OID 45314)
 -- Name: idxwoiworkcentre; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7235,7 +7747,7 @@ CREATE INDEX idxwoiworkcentre ON woissues USING btree (workcentre);
 
 
 --
--- TOC entry 317 (OID 45315)
+-- TOC entry 330 (OID 45315)
 -- Name: idxissueno; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7243,7 +7755,7 @@ CREATE INDEX idxissueno ON woissues USING btree (issueno);
 
 
 --
--- TOC entry 318 (OID 45316)
+-- TOC entry 331 (OID 45316)
 -- Name: idxissueno_2; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7251,7 +7763,7 @@ CREATE INDEX idxissueno_2 ON woissues USING btree (issueno, woref, stockid);
 
 
 --
--- TOC entry 320 (OID 45317)
+-- TOC entry 333 (OID 45317)
 -- Name: idxwoistockid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7259,7 +7771,7 @@ CREATE INDEX idxwoistockid ON woissues USING btree (stockid);
 
 
 --
--- TOC entry 319 (OID 45318)
+-- TOC entry 332 (OID 45318)
 -- Name: idxissuetype; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7267,7 +7779,7 @@ CREATE INDEX idxissuetype ON woissues USING btree (issuetype);
 
 
 --
--- TOC entry 321 (OID 45319)
+-- TOC entry 334 (OID 45319)
 -- Name: idxwoiworef; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7275,7 +7787,7 @@ CREATE INDEX idxwoiworef ON woissues USING btree (woref);
 
 
 --
--- TOC entry 327 (OID 45320)
+-- TOC entry 340 (OID 45320)
 -- Name: idxwrkcentre; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7283,7 +7795,7 @@ CREATE INDEX idxwrkcentre ON worequirements USING btree (wrkcentre);
 
 
 --
--- TOC entry 323 (OID 45321)
+-- TOC entry 336 (OID 45321)
 -- Name: idxresourcetype; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7291,7 +7803,7 @@ CREATE INDEX idxresourcetype ON worequirements USING btree (resourcetype);
 
 
 --
--- TOC entry 325 (OID 45322)
+-- TOC entry 338 (OID 45322)
 -- Name: idxworworef; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7299,7 +7811,7 @@ CREATE INDEX idxworworef ON worequirements USING btree (woref, stockid);
 
 
 --
--- TOC entry 324 (OID 45323)
+-- TOC entry 337 (OID 45323)
 -- Name: idxworstockid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7307,7 +7819,7 @@ CREATE INDEX idxworstockid ON worequirements USING btree (stockid);
 
 
 --
--- TOC entry 326 (OID 45324)
+-- TOC entry 339 (OID 45324)
 -- Name: idxworworef_2; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7315,7 +7827,7 @@ CREATE INDEX idxworworef_2 ON worequirements USING btree (woref);
 
 
 --
--- TOC entry 305 (OID 45325)
+-- TOC entry 318 (OID 45325)
 -- Name: idxcustomerid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7323,7 +7835,7 @@ CREATE INDEX idxcustomerid ON www_users USING btree (customerid);
 
 
 --
--- TOC entry 306 (OID 45326)
+-- TOC entry 319 (OID 45326)
 -- Name: idxusrdefaultlocation; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7331,7 +7843,7 @@ CREATE INDEX idxusrdefaultlocation ON www_users USING btree (defaultlocation);
 
 
 --
--- TOC entry 309 (OID 45327)
+-- TOC entry 322 (OID 45327)
 -- Name: idxwcdescription; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7339,7 +7851,7 @@ CREATE INDEX idxwcdescription ON workcentres USING btree (description);
 
 
 --
--- TOC entry 308 (OID 45328)
+-- TOC entry 321 (OID 45328)
 -- Name: idxlocation; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7347,7 +7859,7 @@ CREATE INDEX idxlocation ON workcentres USING btree ("location");
 
 
 --
--- TOC entry 314 (OID 45329)
+-- TOC entry 327 (OID 45329)
 -- Name: idxwostockid; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7355,7 +7867,7 @@ CREATE INDEX idxwostockid ON worksorders USING btree (stockid);
 
 
 --
--- TOC entry 313 (OID 45330)
+-- TOC entry 326 (OID 45330)
 -- Name: idxwoloccode; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7363,7 +7875,7 @@ CREATE INDEX idxwoloccode ON worksorders USING btree (loccode);
 
 
 --
--- TOC entry 311 (OID 45331)
+-- TOC entry 324 (OID 45331)
 -- Name: idxreleaseddate; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7371,7 +7883,7 @@ CREATE INDEX idxreleaseddate ON worksorders USING btree (releaseddate);
 
 
 --
--- TOC entry 312 (OID 45332)
+-- TOC entry 325 (OID 45332)
 -- Name: idxrequiredby; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7379,7 +7891,7 @@ CREATE INDEX idxrequiredby ON worksorders USING btree (requiredby);
 
 
 --
--- TOC entry 315 (OID 45333)
+-- TOC entry 328 (OID 45333)
 -- Name: idxwoworef; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7387,7 +7899,7 @@ CREATE INDEX idxwoworef ON worksorders USING btree (woref, loccode);
 
 
 --
--- TOC entry 132 (OID 45334)
+-- TOC entry 142 (OID 45334)
 -- Name: section; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7395,7 +7907,7 @@ CREATE INDEX section ON accountgroups USING btree (sectioninaccounts);
 
 
 --
--- TOC entry 426 (OID 45993)
+-- TOC entry 438 (OID 45993)
 -- Name: idxsalescatprod; Type: INDEX; Schema: public; Owner: weberp_db_user
 --
 
@@ -7403,7 +7915,71 @@ CREATE UNIQUE INDEX idxsalescatprod ON salescatprod USING btree (salescatid, sto
 
 
 --
--- TOC entry 118 (OID 45335)
+-- TOC entry 314 (OID 62224)
+-- Name: idxdispatchtaxauthority; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxdispatchtaxauthority ON taxauthrates USING btree (dispatchtaxprovince);
+
+
+--
+-- TOC entry 316 (OID 62225)
+-- Name: idxtaxcatid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxtaxcatid ON taxauthrates USING btree (taxcatid);
+
+
+--
+-- TOC entry 179 (OID 62240)
+-- Name: locations_taxprovinceid_index; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX locations_taxprovinceid_index ON locations USING btree (taxprovinceid);
+
+
+--
+-- TOC entry 444 (OID 62266)
+-- Name: tgt_taxgroupid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX tgt_taxgroupid ON taxgrouptaxes USING btree (taxgroupid);
+
+
+--
+-- TOC entry 443 (OID 62267)
+-- Name: tgt_taxauthid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX tgt_taxauthid ON taxgrouptaxes USING btree (taxauthid);
+
+
+--
+-- TOC entry 378 (OID 62293)
+-- Name: cb_taxgroupid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX cb_taxgroupid ON custbranch USING btree (taxgroupid);
+
+
+--
+-- TOC entry 447 (OID 62316)
+-- Name: idxstt_taxauthid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxstt_taxauthid ON supptranstaxes USING btree (taxauthid);
+
+
+--
+-- TOC entry 210 (OID 62356)
+-- Name: idxstt_taxgroupid; Type: INDEX; Schema: public; Owner: weberp_db_user
+--
+
+CREATE INDEX idxstt_taxgroupid ON suppliers USING btree (taxgroupid);
+
+
+--
+-- TOC entry 128 (OID 45335)
 -- Name: holdreasons_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7412,7 +7988,7 @@ ALTER TABLE ONLY holdreasons
 
 
 --
--- TOC entry 121 (OID 45337)
+-- TOC entry 131 (OID 45337)
 -- Name: currencies_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7421,7 +7997,7 @@ ALTER TABLE ONLY currencies
 
 
 --
--- TOC entry 125 (OID 45339)
+-- TOC entry 135 (OID 45339)
 -- Name: paymentterms_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7430,7 +8006,7 @@ ALTER TABLE ONLY paymentterms
 
 
 --
--- TOC entry 127 (OID 45341)
+-- TOC entry 137 (OID 45341)
 -- Name: systypes_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7439,7 +8015,7 @@ ALTER TABLE ONLY systypes
 
 
 --
--- TOC entry 129 (OID 45343)
+-- TOC entry 139 (OID 45343)
 -- Name: periods_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7448,7 +8024,7 @@ ALTER TABLE ONLY periods
 
 
 --
--- TOC entry 130 (OID 45345)
+-- TOC entry 140 (OID 45345)
 -- Name: accountgroups_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7457,7 +8033,7 @@ ALTER TABLE ONLY accountgroups
 
 
 --
--- TOC entry 133 (OID 45347)
+-- TOC entry 143 (OID 45347)
 -- Name: cogsglpostings_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7466,7 +8042,7 @@ ALTER TABLE ONLY cogsglpostings
 
 
 --
--- TOC entry 139 (OID 45349)
+-- TOC entry 149 (OID 45349)
 -- Name: chartmaster_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7475,7 +8051,7 @@ ALTER TABLE ONLY chartmaster
 
 
 --
--- TOC entry 145 (OID 45351)
+-- TOC entry 155 (OID 45351)
 -- Name: taxauthorities_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7484,7 +8060,7 @@ ALTER TABLE ONLY taxauthorities
 
 
 --
--- TOC entry 146 (OID 45353)
+-- TOC entry 156 (OID 45353)
 -- Name: companies_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7493,7 +8069,7 @@ ALTER TABLE ONLY companies
 
 
 --
--- TOC entry 147 (OID 45355)
+-- TOC entry 157 (OID 45355)
 -- Name: ediitemmapping_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7502,7 +8078,7 @@ ALTER TABLE ONLY ediitemmapping
 
 
 --
--- TOC entry 152 (OID 45357)
+-- TOC entry 162 (OID 45357)
 -- Name: edimessageformat_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7511,7 +8087,7 @@ ALTER TABLE ONLY edimessageformat
 
 
 --
--- TOC entry 155 (OID 45359)
+-- TOC entry 165 (OID 45359)
 -- Name: edi_orders_seg_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7520,7 +8096,7 @@ ALTER TABLE ONLY edi_orders_seg_groups
 
 
 --
--- TOC entry 156 (OID 45361)
+-- TOC entry 166 (OID 45361)
 -- Name: edi_orders_segs_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7529,7 +8105,7 @@ ALTER TABLE ONLY edi_orders_segs
 
 
 --
--- TOC entry 159 (OID 45363)
+-- TOC entry 169 (OID 45363)
 -- Name: gltrans_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7540,7 +8116,7 @@ ALTER TABLE gltrans CLUSTER ON gltrans_pkey;
 
 
 --
--- TOC entry 168 (OID 45365)
+-- TOC entry 178 (OID 45365)
 -- Name: locations_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7549,7 +8125,7 @@ ALTER TABLE ONLY locations
 
 
 --
--- TOC entry 170 (OID 45367)
+-- TOC entry 181 (OID 45367)
 -- Name: reportheaders_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7558,7 +8134,7 @@ ALTER TABLE ONLY reportheaders
 
 
 --
--- TOC entry 171 (OID 45369)
+-- TOC entry 182 (OID 45369)
 -- Name: reportcolumns_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7567,7 +8143,7 @@ ALTER TABLE ONLY reportcolumns
 
 
 --
--- TOC entry 181 (OID 45371)
+-- TOC entry 192 (OID 45371)
 -- Name: salesanalysis_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7576,7 +8152,7 @@ ALTER TABLE ONLY salesanalysis
 
 
 --
--- TOC entry 185 (OID 45373)
+-- TOC entry 196 (OID 45373)
 -- Name: salesglpostings_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7585,7 +8161,7 @@ ALTER TABLE ONLY salesglpostings
 
 
 --
--- TOC entry 188 (OID 45375)
+-- TOC entry 199 (OID 45375)
 -- Name: salestypes_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7594,7 +8170,7 @@ ALTER TABLE ONLY salestypes
 
 
 --
--- TOC entry 189 (OID 45377)
+-- TOC entry 200 (OID 45377)
 -- Name: discountmatrix_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7603,7 +8179,7 @@ ALTER TABLE ONLY discountmatrix
 
 
 --
--- TOC entry 193 (OID 45379)
+-- TOC entry 204 (OID 45379)
 -- Name: salesman_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7612,7 +8188,7 @@ ALTER TABLE ONLY salesman
 
 
 --
--- TOC entry 195 (OID 45381)
+-- TOC entry 206 (OID 45381)
 -- Name: scripts_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7621,7 +8197,7 @@ ALTER TABLE ONLY scripts
 
 
 --
--- TOC entry 201 (OID 45383)
+-- TOC entry 213 (OID 45383)
 -- Name: suppliers_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7630,7 +8206,7 @@ ALTER TABLE ONLY suppliers
 
 
 --
--- TOC entry 206 (OID 45385)
+-- TOC entry 218 (OID 45385)
 -- Name: shipments_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7639,7 +8215,7 @@ ALTER TABLE ONLY shipments
 
 
 --
--- TOC entry 211 (OID 45387)
+-- TOC entry 223 (OID 45387)
 -- Name: shipmentcharges_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7648,7 +8224,7 @@ ALTER TABLE ONLY shipmentcharges
 
 
 --
--- TOC entry 212 (OID 45389)
+-- TOC entry 224 (OID 45389)
 -- Name: shippers_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7657,7 +8233,7 @@ ALTER TABLE ONLY shippers
 
 
 --
--- TOC entry 213 (OID 45391)
+-- TOC entry 225 (OID 45391)
 -- Name: freightcosts_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7666,7 +8242,7 @@ ALTER TABLE ONLY freightcosts
 
 
 --
--- TOC entry 220 (OID 45393)
+-- TOC entry 232 (OID 45393)
 -- Name: stockcategory_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7675,7 +8251,7 @@ ALTER TABLE ONLY stockcategory
 
 
 --
--- TOC entry 228 (OID 45395)
+-- TOC entry 240 (OID 45395)
 -- Name: stockmaster_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7684,7 +8260,7 @@ ALTER TABLE ONLY stockmaster
 
 
 --
--- TOC entry 231 (OID 45397)
+-- TOC entry 243 (OID 45397)
 -- Name: stockcounts_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7693,7 +8269,7 @@ ALTER TABLE ONLY stockcounts
 
 
 --
--- TOC entry 233 (OID 45399)
+-- TOC entry 245 (OID 45399)
 -- Name: stockcheckfreeze_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7702,7 +8278,7 @@ ALTER TABLE ONLY stockcheckfreeze
 
 
 --
--- TOC entry 238 (OID 45401)
+-- TOC entry 250 (OID 45401)
 -- Name: prices_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7711,7 +8287,7 @@ ALTER TABLE ONLY prices
 
 
 --
--- TOC entry 242 (OID 45403)
+-- TOC entry 254 (OID 45403)
 -- Name: purchdata_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7720,7 +8296,7 @@ ALTER TABLE ONLY purchdata
 
 
 --
--- TOC entry 244 (OID 45405)
+-- TOC entry 256 (OID 45405)
 -- Name: locstock_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7729,7 +8305,7 @@ ALTER TABLE ONLY locstock
 
 
 --
--- TOC entry 259 (OID 45407)
+-- TOC entry 271 (OID 45407)
 -- Name: stockmoves_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7738,7 +8314,7 @@ ALTER TABLE ONLY stockmoves
 
 
 --
--- TOC entry 262 (OID 45409)
+-- TOC entry 274 (OID 45409)
 -- Name: stockserialitems_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7747,7 +8323,7 @@ ALTER TABLE ONLY stockserialitems
 
 
 --
--- TOC entry 265 (OID 45411)
+-- TOC entry 277 (OID 45411)
 -- Name: stockserialmoves_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7756,7 +8332,7 @@ ALTER TABLE ONLY stockserialmoves
 
 
 --
--- TOC entry 275 (OID 45413)
+-- TOC entry 287 (OID 45413)
 -- Name: supptrans_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7765,7 +8341,7 @@ ALTER TABLE ONLY supptrans
 
 
 --
--- TOC entry 280 (OID 45415)
+-- TOC entry 292 (OID 45415)
 -- Name: suppallocs_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7774,7 +8350,7 @@ ALTER TABLE ONLY suppallocs
 
 
 --
--- TOC entry 283 (OID 45417)
+-- TOC entry 295 (OID 45417)
 -- Name: suppliercontacts_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7783,7 +8359,7 @@ ALTER TABLE ONLY suppliercontacts
 
 
 --
--- TOC entry 288 (OID 45419)
+-- TOC entry 300 (OID 45419)
 -- Name: purchorders_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7792,7 +8368,7 @@ ALTER TABLE ONLY purchorders
 
 
 --
--- TOC entry 296 (OID 45421)
+-- TOC entry 308 (OID 45421)
 -- Name: purchorderdetails_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7801,7 +8377,7 @@ ALTER TABLE ONLY purchorderdetails
 
 
 --
--- TOC entry 297 (OID 45423)
+-- TOC entry 309 (OID 45423)
 -- Name: grns_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7810,16 +8386,16 @@ ALTER TABLE ONLY grns
 
 
 --
--- TOC entry 304 (OID 45425)
+-- TOC entry 317 (OID 45425)
 -- Name: taxauthlevels_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
-ALTER TABLE ONLY taxauthlevels
-    ADD CONSTRAINT taxauthlevels_pkey PRIMARY KEY (taxauthority, dispatchtaxauthority, "level");
+ALTER TABLE ONLY taxauthrates
+    ADD CONSTRAINT taxauthlevels_pkey PRIMARY KEY (taxauthority, dispatchtaxprovince, taxcatid);
 
 
 --
--- TOC entry 307 (OID 45427)
+-- TOC entry 320 (OID 45427)
 -- Name: www_users_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7828,7 +8404,7 @@ ALTER TABLE ONLY www_users
 
 
 --
--- TOC entry 310 (OID 45429)
+-- TOC entry 323 (OID 45429)
 -- Name: workcentres_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7837,7 +8413,7 @@ ALTER TABLE ONLY workcentres
 
 
 --
--- TOC entry 316 (OID 45431)
+-- TOC entry 329 (OID 45431)
 -- Name: worksorders_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7846,7 +8422,7 @@ ALTER TABLE ONLY worksorders
 
 
 --
--- TOC entry 328 (OID 45433)
+-- TOC entry 341 (OID 45433)
 -- Name: worequirements_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7855,7 +8431,7 @@ ALTER TABLE ONLY worequirements
 
 
 --
--- TOC entry 329 (OID 45435)
+-- TOC entry 342 (OID 45435)
 -- Name: bom_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7864,7 +8440,7 @@ ALTER TABLE ONLY bom
 
 
 --
--- TOC entry 337 (OID 45437)
+-- TOC entry 350 (OID 45437)
 -- Name: bankaccounts_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7873,7 +8449,7 @@ ALTER TABLE ONLY bankaccounts
 
 
 --
--- TOC entry 340 (OID 45439)
+-- TOC entry 353 (OID 45439)
 -- Name: banktrans_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7882,7 +8458,7 @@ ALTER TABLE ONLY banktrans
 
 
 --
--- TOC entry 346 (OID 45441)
+-- TOC entry 359 (OID 45441)
 -- Name: buckets_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7891,7 +8467,7 @@ ALTER TABLE ONLY buckets
 
 
 --
--- TOC entry 349 (OID 45443)
+-- TOC entry 362 (OID 45443)
 -- Name: chartdetails_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7900,7 +8476,7 @@ ALTER TABLE ONLY chartdetails
 
 
 --
--- TOC entry 351 (OID 45445)
+-- TOC entry 364 (OID 45445)
 -- Name: contractbom_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7909,7 +8485,7 @@ ALTER TABLE ONLY contractbom
 
 
 --
--- TOC entry 357 (OID 45447)
+-- TOC entry 370 (OID 45447)
 -- Name: debtorsmaster_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7918,7 +8494,7 @@ ALTER TABLE ONLY debtorsmaster
 
 
 --
--- TOC entry 365 (OID 45449)
+-- TOC entry 379 (OID 45449)
 -- Name: custbranch_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7927,7 +8503,7 @@ ALTER TABLE ONLY custbranch
 
 
 --
--- TOC entry 375 (OID 45451)
+-- TOC entry 387 (OID 45451)
 -- Name: contracts_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7936,7 +8512,7 @@ ALTER TABLE ONLY contracts
 
 
 --
--- TOC entry 382 (OID 45453)
+-- TOC entry 394 (OID 45453)
 -- Name: contractreqts_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7945,7 +8521,7 @@ ALTER TABLE ONLY contractreqts
 
 
 --
--- TOC entry 390 (OID 45455)
+-- TOC entry 402 (OID 45455)
 -- Name: salesorders_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7954,7 +8530,7 @@ ALTER TABLE ONLY salesorders
 
 
 --
--- TOC entry 395 (OID 45457)
+-- TOC entry 407 (OID 45457)
 -- Name: orderdeliverydifferenceslog_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7963,7 +8539,7 @@ ALTER TABLE ONLY orderdeliverydifferenceslog
 
 
 --
--- TOC entry 399 (OID 45459)
+-- TOC entry 411 (OID 45459)
 -- Name: salesorderdetails_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7972,7 +8548,7 @@ ALTER TABLE ONLY salesorderdetails
 
 
 --
--- TOC entry 400 (OID 45461)
+-- TOC entry 412 (OID 45461)
 -- Name: debtortrans_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7981,7 +8557,7 @@ ALTER TABLE ONLY debtortrans
 
 
 --
--- TOC entry 411 (OID 45463)
+-- TOC entry 423 (OID 45463)
 -- Name: custallocns_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7990,7 +8566,7 @@ ALTER TABLE ONLY custallocns
 
 
 --
--- TOC entry 415 (OID 45465)
+-- TOC entry 427 (OID 45465)
 -- Name: areas_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -7999,7 +8575,7 @@ ALTER TABLE ONLY areas
 
 
 --
--- TOC entry 416 (OID 45467)
+-- TOC entry 428 (OID 45467)
 -- Name: recurringsalesorders_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8008,7 +8584,7 @@ ALTER TABLE ONLY recurringsalesorders
 
 
 --
--- TOC entry 417 (OID 45469)
+-- TOC entry 429 (OID 45469)
 -- Name: recurrsalesorderdetails_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8017,7 +8593,7 @@ ALTER TABLE ONLY recurrsalesorderdetails
 
 
 --
--- TOC entry 418 (OID 45471)
+-- TOC entry 430 (OID 45471)
 -- Name: accountsection_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8026,7 +8602,7 @@ ALTER TABLE ONLY accountsection
 
 
 --
--- TOC entry 419 (OID 45473)
+-- TOC entry 431 (OID 45473)
 -- Name: securityheadings_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8035,7 +8611,7 @@ ALTER TABLE ONLY securityroles
 
 
 --
--- TOC entry 420 (OID 45475)
+-- TOC entry 432 (OID 45475)
 -- Name: securitytokens_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8044,7 +8620,7 @@ ALTER TABLE ONLY securitytokens
 
 
 --
--- TOC entry 421 (OID 45477)
+-- TOC entry 433 (OID 45477)
 -- Name: securitygroups_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8053,7 +8629,7 @@ ALTER TABLE ONLY securitygroups
 
 
 --
--- TOC entry 422 (OID 45479)
+-- TOC entry 434 (OID 45479)
 -- Name: paymentmethods_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8062,7 +8638,7 @@ ALTER TABLE ONLY paymentmethods
 
 
 --
--- TOC entry 423 (OID 45481)
+-- TOC entry 435 (OID 45481)
 -- Name: unitsofmeasure_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8071,7 +8647,7 @@ ALTER TABLE ONLY unitsofmeasure
 
 
 --
--- TOC entry 424 (OID 45483)
+-- TOC entry 436 (OID 45483)
 -- Name: config_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8080,7 +8656,7 @@ ALTER TABLE ONLY config
 
 
 --
--- TOC entry 425 (OID 45978)
+-- TOC entry 437 (OID 45978)
 -- Name: salescat_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8089,7 +8665,70 @@ ALTER TABLE ONLY salescat
 
 
 --
--- TOC entry 559 (OID 45485)
+-- TOC entry 439 (OID 62222)
+-- Name: taxcategories_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY taxcategories
+    ADD CONSTRAINT taxcategories_pkey PRIMARY KEY (taxcatid);
+
+
+--
+-- TOC entry 440 (OID 62238)
+-- Name: taxprovinces_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY taxprovinces
+    ADD CONSTRAINT taxprovinces_pkey PRIMARY KEY (taxprovinceid);
+
+
+--
+-- TOC entry 441 (OID 62251)
+-- Name: taxgroups_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY taxgroups
+    ADD CONSTRAINT taxgroups_pkey PRIMARY KEY (taxgroupid);
+
+
+--
+-- TOC entry 442 (OID 62256)
+-- Name: taxgrouptaxes_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY taxgrouptaxes
+    ADD CONSTRAINT taxgrouptaxes_pkey PRIMARY KEY (taxgroupid, taxauthid);
+
+
+--
+-- TOC entry 445 (OID 62272)
+-- Name: stockmovestaxes_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockmovestaxes
+    ADD CONSTRAINT stockmovestaxes_pkey PRIMARY KEY (stkmoveno, taxauthid);
+
+
+--
+-- TOC entry 446 (OID 62282)
+-- Name: debtortranstaxes_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY debtortranstaxes
+    ADD CONSTRAINT debtortranstaxes_pkey PRIMARY KEY (debtortransid, taxauthid);
+
+
+--
+-- TOC entry 448 (OID 62306)
+-- Name: supptranstaxes_pkey; Type: CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY supptranstaxes
+    ADD CONSTRAINT supptranstaxes_pkey PRIMARY KEY (supptransid, taxauthid);
+
+
+--
+-- TOC entry 588 (OID 45485)
 -- Name: cnt001254; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8098,7 +8737,7 @@ ALTER TABLE ONLY chartmaster
 
 
 --
--- TOC entry 560 (OID 45489)
+-- TOC entry 589 (OID 45489)
 -- Name: cnt001389; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8107,7 +8746,7 @@ ALTER TABLE ONLY taxauthorities
 
 
 --
--- TOC entry 561 (OID 45493)
+-- TOC entry 590 (OID 45493)
 -- Name: cnt001390; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8116,7 +8755,7 @@ ALTER TABLE ONLY taxauthorities
 
 
 --
--- TOC entry 562 (OID 45497)
+-- TOC entry 591 (OID 45497)
 -- Name: cnt001296; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8125,7 +8764,7 @@ ALTER TABLE ONLY gltrans
 
 
 --
--- TOC entry 563 (OID 45501)
+-- TOC entry 592 (OID 45501)
 -- Name: cnt001297; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8134,7 +8773,7 @@ ALTER TABLE ONLY gltrans
 
 
 --
--- TOC entry 564 (OID 45505)
+-- TOC entry 593 (OID 45505)
 -- Name: cnt001298; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8143,7 +8782,7 @@ ALTER TABLE ONLY gltrans
 
 
 --
--- TOC entry 565 (OID 45509)
+-- TOC entry 595 (OID 45509)
 -- Name: cnt001331; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8152,7 +8791,7 @@ ALTER TABLE ONLY reportcolumns
 
 
 --
--- TOC entry 566 (OID 45513)
+-- TOC entry 596 (OID 45513)
 -- Name: cnt001334; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8161,7 +8800,7 @@ ALTER TABLE ONLY salesanalysis
 
 
 --
--- TOC entry 567 (OID 45517)
+-- TOC entry 597 (OID 45517)
 -- Name: cnt001287; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8170,7 +8809,7 @@ ALTER TABLE ONLY discountmatrix
 
 
 --
--- TOC entry 568 (OID 45521)
+-- TOC entry 598 (OID 45521)
 -- Name: cnt001381; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8179,7 +8818,7 @@ ALTER TABLE ONLY suppliers
 
 
 --
--- TOC entry 569 (OID 45525)
+-- TOC entry 599 (OID 45525)
 -- Name: cnt001382; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8188,16 +8827,16 @@ ALTER TABLE ONLY suppliers
 
 
 --
--- TOC entry 570 (OID 45529)
+-- TOC entry 600 (OID 45529)
 -- Name: cnt001383; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
 ALTER TABLE ONLY suppliers
-    ADD CONSTRAINT cnt001383 FOREIGN KEY (taxauthority) REFERENCES taxauthorities(taxid);
+    ADD CONSTRAINT cnt001383 FOREIGN KEY (taxgroupid) REFERENCES taxauthorities(taxid);
 
 
 --
--- TOC entry 571 (OID 45533)
+-- TOC entry 602 (OID 45533)
 -- Name: cnt001350; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8206,7 +8845,7 @@ ALTER TABLE ONLY shipments
 
 
 --
--- TOC entry 572 (OID 45537)
+-- TOC entry 603 (OID 45537)
 -- Name: cnt001347; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8215,7 +8854,7 @@ ALTER TABLE ONLY shipmentcharges
 
 
 --
--- TOC entry 573 (OID 45541)
+-- TOC entry 604 (OID 45541)
 -- Name: cnt001348; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8224,7 +8863,7 @@ ALTER TABLE ONLY shipmentcharges
 
 
 --
--- TOC entry 574 (OID 45545)
+-- TOC entry 605 (OID 45545)
 -- Name: cnt001293; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8233,7 +8872,7 @@ ALTER TABLE ONLY freightcosts
 
 
 --
--- TOC entry 575 (OID 45549)
+-- TOC entry 606 (OID 45549)
 -- Name: cnt001294; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8242,7 +8881,7 @@ ALTER TABLE ONLY freightcosts
 
 
 --
--- TOC entry 576 (OID 45553)
+-- TOC entry 607 (OID 45553)
 -- Name: cnt001360; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8251,7 +8890,7 @@ ALTER TABLE ONLY stockmaster
 
 
 --
--- TOC entry 577 (OID 45557)
+-- TOC entry 608 (OID 45557)
 -- Name: cnt001357; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8260,7 +8899,7 @@ ALTER TABLE ONLY stockcounts
 
 
 --
--- TOC entry 578 (OID 45561)
+-- TOC entry 609 (OID 45561)
 -- Name: cnt001358; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8269,7 +8908,7 @@ ALTER TABLE ONLY stockcounts
 
 
 --
--- TOC entry 579 (OID 45565)
+-- TOC entry 610 (OID 45565)
 -- Name: cnt001354; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8278,7 +8917,7 @@ ALTER TABLE ONLY stockcheckfreeze
 
 
 --
--- TOC entry 580 (OID 45569)
+-- TOC entry 611 (OID 45569)
 -- Name: cnt001355; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8287,7 +8926,7 @@ ALTER TABLE ONLY stockcheckfreeze
 
 
 --
--- TOC entry 581 (OID 45573)
+-- TOC entry 612 (OID 45573)
 -- Name: cnt001319; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8296,7 +8935,7 @@ ALTER TABLE ONLY prices
 
 
 --
--- TOC entry 582 (OID 45577)
+-- TOC entry 613 (OID 45577)
 -- Name: cnt001320; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8305,7 +8944,7 @@ ALTER TABLE ONLY prices
 
 
 --
--- TOC entry 583 (OID 45581)
+-- TOC entry 614 (OID 45581)
 -- Name: cnt001321; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8314,7 +8953,7 @@ ALTER TABLE ONLY prices
 
 
 --
--- TOC entry 584 (OID 45585)
+-- TOC entry 615 (OID 45585)
 -- Name: cnt001323; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8323,7 +8962,7 @@ ALTER TABLE ONLY purchdata
 
 
 --
--- TOC entry 585 (OID 45589)
+-- TOC entry 616 (OID 45589)
 -- Name: cnt001324; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8332,7 +8971,7 @@ ALTER TABLE ONLY purchdata
 
 
 --
--- TOC entry 586 (OID 45593)
+-- TOC entry 617 (OID 45593)
 -- Name: cnt001305; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8341,7 +8980,7 @@ ALTER TABLE ONLY locstock
 
 
 --
--- TOC entry 587 (OID 45597)
+-- TOC entry 618 (OID 45597)
 -- Name: cnt001306; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8350,7 +8989,7 @@ ALTER TABLE ONLY locstock
 
 
 --
--- TOC entry 588 (OID 45601)
+-- TOC entry 619 (OID 45601)
 -- Name: cnt001308; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8359,7 +8998,7 @@ ALTER TABLE ONLY loctransfers
 
 
 --
--- TOC entry 589 (OID 45605)
+-- TOC entry 620 (OID 45605)
 -- Name: cnt001309; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8368,7 +9007,7 @@ ALTER TABLE ONLY loctransfers
 
 
 --
--- TOC entry 590 (OID 45609)
+-- TOC entry 621 (OID 45609)
 -- Name: cnt001310; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8377,7 +9016,7 @@ ALTER TABLE ONLY loctransfers
 
 
 --
--- TOC entry 591 (OID 45613)
+-- TOC entry 622 (OID 45613)
 -- Name: cnt001362; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8386,7 +9025,7 @@ ALTER TABLE ONLY stockmoves
 
 
 --
--- TOC entry 592 (OID 45617)
+-- TOC entry 623 (OID 45617)
 -- Name: cnt001363; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8395,7 +9034,7 @@ ALTER TABLE ONLY stockmoves
 
 
 --
--- TOC entry 593 (OID 45621)
+-- TOC entry 624 (OID 45621)
 -- Name: cnt001364; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8404,7 +9043,7 @@ ALTER TABLE ONLY stockmoves
 
 
 --
--- TOC entry 594 (OID 45625)
+-- TOC entry 625 (OID 45625)
 -- Name: cnt001365; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8413,7 +9052,7 @@ ALTER TABLE ONLY stockmoves
 
 
 --
--- TOC entry 595 (OID 45629)
+-- TOC entry 626 (OID 45629)
 -- Name: cnt001367; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8422,7 +9061,7 @@ ALTER TABLE ONLY stockserialitems
 
 
 --
--- TOC entry 596 (OID 45633)
+-- TOC entry 627 (OID 45633)
 -- Name: cnt001368; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8431,7 +9070,7 @@ ALTER TABLE ONLY stockserialitems
 
 
 --
--- TOC entry 597 (OID 45637)
+-- TOC entry 628 (OID 45637)
 -- Name: cnt001370; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8440,7 +9079,7 @@ ALTER TABLE ONLY stockserialmoves
 
 
 --
--- TOC entry 598 (OID 45641)
+-- TOC entry 629 (OID 45641)
 -- Name: cnt001376; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8449,7 +9088,7 @@ ALTER TABLE ONLY supptrans
 
 
 --
--- TOC entry 599 (OID 45645)
+-- TOC entry 630 (OID 45645)
 -- Name: cnt001377; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8458,7 +9097,7 @@ ALTER TABLE ONLY supptrans
 
 
 --
--- TOC entry 600 (OID 45649)
+-- TOC entry 631 (OID 45649)
 -- Name: cnt001373; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8467,7 +9106,7 @@ ALTER TABLE ONLY suppallocs
 
 
 --
--- TOC entry 601 (OID 45653)
+-- TOC entry 632 (OID 45653)
 -- Name: cnt001374; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8476,7 +9115,7 @@ ALTER TABLE ONLY suppallocs
 
 
 --
--- TOC entry 602 (OID 45657)
+-- TOC entry 633 (OID 45657)
 -- Name: cnt001379; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8485,7 +9124,7 @@ ALTER TABLE ONLY suppliercontacts
 
 
 --
--- TOC entry 603 (OID 45661)
+-- TOC entry 634 (OID 45661)
 -- Name: cnt001328; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8494,7 +9133,7 @@ ALTER TABLE ONLY purchorders
 
 
 --
--- TOC entry 604 (OID 45665)
+-- TOC entry 635 (OID 45665)
 -- Name: cnt001329; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8503,7 +9142,7 @@ ALTER TABLE ONLY purchorders
 
 
 --
--- TOC entry 605 (OID 45669)
+-- TOC entry 636 (OID 45669)
 -- Name: cnt001326; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8512,7 +9151,7 @@ ALTER TABLE ONLY purchorderdetails
 
 
 --
--- TOC entry 606 (OID 45673)
+-- TOC entry 637 (OID 45673)
 -- Name: cnt001300; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8521,7 +9160,7 @@ ALTER TABLE ONLY grns
 
 
 --
--- TOC entry 607 (OID 45677)
+-- TOC entry 638 (OID 45677)
 -- Name: cnt001301; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8530,25 +9169,25 @@ ALTER TABLE ONLY grns
 
 
 --
--- TOC entry 608 (OID 45681)
+-- TOC entry 639 (OID 45681)
 -- Name: cnt001386; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
-ALTER TABLE ONLY taxauthlevels
+ALTER TABLE ONLY taxauthrates
     ADD CONSTRAINT cnt001386 FOREIGN KEY (taxauthority) REFERENCES taxauthorities(taxid);
 
 
 --
--- TOC entry 609 (OID 45685)
+-- TOC entry 640 (OID 45685)
 -- Name: cnt001387; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
-ALTER TABLE ONLY taxauthlevels
-    ADD CONSTRAINT cnt001387 FOREIGN KEY (dispatchtaxauthority) REFERENCES taxauthorities(taxid);
+ALTER TABLE ONLY taxauthrates
+    ADD CONSTRAINT cnt001387 FOREIGN KEY (dispatchtaxprovince) REFERENCES taxauthorities(taxid);
 
 
 --
--- TOC entry 610 (OID 45689)
+-- TOC entry 643 (OID 45689)
 -- Name: cnt001400; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8557,7 +9196,7 @@ ALTER TABLE ONLY www_users
 
 
 --
--- TOC entry 611 (OID 45693)
+-- TOC entry 644 (OID 45693)
 -- Name: cnt001402; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8566,7 +9205,7 @@ ALTER TABLE ONLY workcentres
 
 
 --
--- TOC entry 612 (OID 45697)
+-- TOC entry 645 (OID 45697)
 -- Name: cnt001404; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8575,7 +9214,7 @@ ALTER TABLE ONLY worksorders
 
 
 --
--- TOC entry 613 (OID 45701)
+-- TOC entry 646 (OID 45701)
 -- Name: cnt001405; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8584,7 +9223,7 @@ ALTER TABLE ONLY worksorders
 
 
 --
--- TOC entry 614 (OID 45705)
+-- TOC entry 647 (OID 45705)
 -- Name: cnt001392; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8593,7 +9232,7 @@ ALTER TABLE ONLY woissues
 
 
 --
--- TOC entry 615 (OID 45709)
+-- TOC entry 648 (OID 45709)
 -- Name: cnt001393; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8602,7 +9241,7 @@ ALTER TABLE ONLY woissues
 
 
 --
--- TOC entry 616 (OID 45713)
+-- TOC entry 649 (OID 45713)
 -- Name: cnt001394; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8611,7 +9250,7 @@ ALTER TABLE ONLY woissues
 
 
 --
--- TOC entry 617 (OID 45717)
+-- TOC entry 650 (OID 45717)
 -- Name: cnt001396; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8620,7 +9259,7 @@ ALTER TABLE ONLY worequirements
 
 
 --
--- TOC entry 618 (OID 45721)
+-- TOC entry 651 (OID 45721)
 -- Name: cnt001397; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8629,7 +9268,7 @@ ALTER TABLE ONLY worequirements
 
 
 --
--- TOC entry 619 (OID 45725)
+-- TOC entry 652 (OID 45725)
 -- Name: cnt001398; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8638,7 +9277,7 @@ ALTER TABLE ONLY worequirements
 
 
 --
--- TOC entry 620 (OID 45729)
+-- TOC entry 653 (OID 45729)
 -- Name: cnt001238; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8647,7 +9286,7 @@ ALTER TABLE ONLY bom
 
 
 --
--- TOC entry 621 (OID 45733)
+-- TOC entry 654 (OID 45733)
 -- Name: cnt001239; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8656,7 +9295,7 @@ ALTER TABLE ONLY bom
 
 
 --
--- TOC entry 622 (OID 45737)
+-- TOC entry 655 (OID 45737)
 -- Name: cnt001240; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8665,7 +9304,7 @@ ALTER TABLE ONLY bom
 
 
 --
--- TOC entry 623 (OID 45741)
+-- TOC entry 656 (OID 45741)
 -- Name: cnt001241; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8674,7 +9313,7 @@ ALTER TABLE ONLY bom
 
 
 --
--- TOC entry 624 (OID 45745)
+-- TOC entry 657 (OID 45745)
 -- Name: cnt001243; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8683,7 +9322,7 @@ ALTER TABLE ONLY bankaccounts
 
 
 --
--- TOC entry 625 (OID 45749)
+-- TOC entry 658 (OID 45749)
 -- Name: cnt001245; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8692,7 +9331,7 @@ ALTER TABLE ONLY banktrans
 
 
 --
--- TOC entry 626 (OID 45753)
+-- TOC entry 659 (OID 45753)
 -- Name: cnt001246; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8701,7 +9340,7 @@ ALTER TABLE ONLY banktrans
 
 
 --
--- TOC entry 627 (OID 45757)
+-- TOC entry 660 (OID 45757)
 -- Name: cnt001248; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8710,7 +9349,7 @@ ALTER TABLE ONLY buckets
 
 
 --
--- TOC entry 628 (OID 45761)
+-- TOC entry 661 (OID 45761)
 -- Name: cnt001251; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8719,7 +9358,7 @@ ALTER TABLE ONLY chartdetails
 
 
 --
--- TOC entry 629 (OID 45765)
+-- TOC entry 662 (OID 45765)
 -- Name: cnt001252; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8728,7 +9367,7 @@ ALTER TABLE ONLY chartdetails
 
 
 --
--- TOC entry 630 (OID 45769)
+-- TOC entry 663 (OID 45769)
 -- Name: cnt001257; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8737,7 +9376,7 @@ ALTER TABLE ONLY contractbom
 
 
 --
--- TOC entry 631 (OID 45773)
+-- TOC entry 664 (OID 45773)
 -- Name: cnt001258; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8746,7 +9385,7 @@ ALTER TABLE ONLY contractbom
 
 
 --
--- TOC entry 632 (OID 45777)
+-- TOC entry 665 (OID 45777)
 -- Name: cnt001259; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8755,7 +9394,7 @@ ALTER TABLE ONLY contractbom
 
 
 --
--- TOC entry 633 (OID 45781)
+-- TOC entry 666 (OID 45781)
 -- Name: cnt001282; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8764,7 +9403,7 @@ ALTER TABLE ONLY debtorsmaster
 
 
 --
--- TOC entry 634 (OID 45785)
+-- TOC entry 667 (OID 45785)
 -- Name: cnt001283; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8773,7 +9412,7 @@ ALTER TABLE ONLY debtorsmaster
 
 
 --
--- TOC entry 635 (OID 45789)
+-- TOC entry 668 (OID 45789)
 -- Name: cnt001284; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8782,7 +9421,7 @@ ALTER TABLE ONLY debtorsmaster
 
 
 --
--- TOC entry 636 (OID 45793)
+-- TOC entry 669 (OID 45793)
 -- Name: cnt001285; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8791,7 +9430,7 @@ ALTER TABLE ONLY debtorsmaster
 
 
 --
--- TOC entry 637 (OID 45797)
+-- TOC entry 670 (OID 45797)
 -- Name: cnt001271; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8800,7 +9439,7 @@ ALTER TABLE ONLY custbranch
 
 
 --
--- TOC entry 638 (OID 45801)
+-- TOC entry 671 (OID 45801)
 -- Name: cnt001273; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8809,7 +9448,7 @@ ALTER TABLE ONLY custbranch
 
 
 --
--- TOC entry 639 (OID 45805)
+-- TOC entry 672 (OID 45805)
 -- Name: cnt001274; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8818,16 +9457,7 @@ ALTER TABLE ONLY custbranch
 
 
 --
--- TOC entry 640 (OID 45809)
--- Name: cnt001275; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
---
-
-ALTER TABLE ONLY custbranch
-    ADD CONSTRAINT cnt001275 FOREIGN KEY (taxauthority) REFERENCES taxauthorities(taxid);
-
-
---
--- TOC entry 641 (OID 45813)
+-- TOC entry 673 (OID 45813)
 -- Name: cnt001276; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8836,7 +9466,7 @@ ALTER TABLE ONLY custbranch
 
 
 --
--- TOC entry 643 (OID 45817)
+-- TOC entry 676 (OID 45817)
 -- Name: cnt001263; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8845,7 +9475,7 @@ ALTER TABLE ONLY contracts
 
 
 --
--- TOC entry 644 (OID 45821)
+-- TOC entry 677 (OID 45821)
 -- Name: cnt001264; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8854,7 +9484,7 @@ ALTER TABLE ONLY contracts
 
 
 --
--- TOC entry 645 (OID 45825)
+-- TOC entry 678 (OID 45825)
 -- Name: cnt001265; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8863,7 +9493,7 @@ ALTER TABLE ONLY contracts
 
 
 --
--- TOC entry 646 (OID 45829)
+-- TOC entry 679 (OID 45829)
 -- Name: cnt001261; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8872,7 +9502,7 @@ ALTER TABLE ONLY contractreqts
 
 
 --
--- TOC entry 647 (OID 45833)
+-- TOC entry 680 (OID 45833)
 -- Name: cnt001340; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8881,7 +9511,7 @@ ALTER TABLE ONLY salesorders
 
 
 --
--- TOC entry 648 (OID 45837)
+-- TOC entry 681 (OID 45837)
 -- Name: cnt001341; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8890,7 +9520,7 @@ ALTER TABLE ONLY salesorders
 
 
 --
--- TOC entry 649 (OID 45841)
+-- TOC entry 682 (OID 45841)
 -- Name: cnt001342; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8899,7 +9529,7 @@ ALTER TABLE ONLY salesorders
 
 
 --
--- TOC entry 650 (OID 45845)
+-- TOC entry 683 (OID 45845)
 -- Name: cnt001313; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8908,7 +9538,7 @@ ALTER TABLE ONLY orderdeliverydifferenceslog
 
 
 --
--- TOC entry 651 (OID 45849)
+-- TOC entry 684 (OID 45849)
 -- Name: cnt001314; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8917,7 +9547,7 @@ ALTER TABLE ONLY orderdeliverydifferenceslog
 
 
 --
--- TOC entry 652 (OID 45853)
+-- TOC entry 685 (OID 45853)
 -- Name: cnt001315; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8926,7 +9556,7 @@ ALTER TABLE ONLY orderdeliverydifferenceslog
 
 
 --
--- TOC entry 653 (OID 45857)
+-- TOC entry 686 (OID 45857)
 -- Name: cnt001337; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8935,7 +9565,7 @@ ALTER TABLE ONLY salesorderdetails
 
 
 --
--- TOC entry 654 (OID 45861)
+-- TOC entry 687 (OID 45861)
 -- Name: cnt001338; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8944,7 +9574,7 @@ ALTER TABLE ONLY salesorderdetails
 
 
 --
--- TOC entry 655 (OID 45865)
+-- TOC entry 688 (OID 45865)
 -- Name: cnt001278; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8953,7 +9583,7 @@ ALTER TABLE ONLY debtortrans
 
 
 --
--- TOC entry 656 (OID 45869)
+-- TOC entry 689 (OID 45869)
 -- Name: cnt001279; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8962,7 +9592,7 @@ ALTER TABLE ONLY debtortrans
 
 
 --
--- TOC entry 657 (OID 45873)
+-- TOC entry 690 (OID 45873)
 -- Name: cnt001280; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8971,7 +9601,7 @@ ALTER TABLE ONLY debtortrans
 
 
 --
--- TOC entry 658 (OID 45877)
+-- TOC entry 691 (OID 45877)
 -- Name: cnt001268; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8980,7 +9610,7 @@ ALTER TABLE ONLY custallocns
 
 
 --
--- TOC entry 659 (OID 45881)
+-- TOC entry 692 (OID 45881)
 -- Name: cnt001269; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8989,7 +9619,7 @@ ALTER TABLE ONLY custallocns
 
 
 --
--- TOC entry 642 (OID 45885)
+-- TOC entry 674 (OID 45885)
 -- Name: cnt001272; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8998,7 +9628,7 @@ ALTER TABLE ONLY custbranch
 
 
 --
--- TOC entry 660 (OID 45889)
+-- TOC entry 693 (OID 45889)
 -- Name: recurrorderno; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9007,7 +9637,7 @@ ALTER TABLE ONLY recurrsalesorderdetails
 
 
 --
--- TOC entry 661 (OID 45893)
+-- TOC entry 694 (OID 45893)
 -- Name: recurrorderstkcode; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9016,7 +9646,7 @@ ALTER TABLE ONLY recurrsalesorderdetails
 
 
 --
--- TOC entry 558 (OID 45897)
+-- TOC entry 587 (OID 45897)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9025,7 +9655,7 @@ ALTER TABLE ONLY accountgroups
 
 
 --
--- TOC entry 662 (OID 45901)
+-- TOC entry 695 (OID 45901)
 -- Name: securitygroups_secgroupid_fk; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9034,7 +9664,7 @@ ALTER TABLE ONLY securitygroups
 
 
 --
--- TOC entry 663 (OID 45905)
+-- TOC entry 696 (OID 45905)
 -- Name: securitygroups_tokenid_fk; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9043,7 +9673,7 @@ ALTER TABLE ONLY securitygroups
 
 
 --
--- TOC entry 664 (OID 45985)
+-- TOC entry 697 (OID 45985)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9052,7 +9682,7 @@ ALTER TABLE ONLY salescatprod
 
 
 --
--- TOC entry 665 (OID 45989)
+-- TOC entry 698 (OID 45989)
 -- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9061,7 +9691,115 @@ ALTER TABLE ONLY salescatprod
 
 
 --
--- TOC entry 88 (OID 35789)
+-- TOC entry 641 (OID 62229)
+-- Name: taxcatid_fk; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY taxauthrates
+    ADD CONSTRAINT taxcatid_fk FOREIGN KEY (taxcatid) REFERENCES taxcategories(taxcatid);
+
+
+--
+-- TOC entry 594 (OID 62242)
+-- Name: taxprovinceid_fk; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY locations
+    ADD CONSTRAINT taxprovinceid_fk FOREIGN KEY (taxprovinceid) REFERENCES taxprovinces(taxprovinceid);
+
+
+--
+-- TOC entry 699 (OID 62258)
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY taxgrouptaxes
+    ADD CONSTRAINT "$1" FOREIGN KEY (taxgroupid) REFERENCES taxgroups(taxgroupid);
+
+
+--
+-- TOC entry 700 (OID 62262)
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY taxgrouptaxes
+    ADD CONSTRAINT "$2" FOREIGN KEY (taxauthid) REFERENCES taxauthorities(taxid);
+
+
+--
+-- TOC entry 701 (OID 62274)
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY stockmovestaxes
+    ADD CONSTRAINT "$1" FOREIGN KEY (taxauthid) REFERENCES taxauthorities(taxid);
+
+
+--
+-- TOC entry 702 (OID 62284)
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY debtortranstaxes
+    ADD CONSTRAINT "$1" FOREIGN KEY (debtortransid) REFERENCES debtortrans(id);
+
+
+--
+-- TOC entry 703 (OID 62288)
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY debtortranstaxes
+    ADD CONSTRAINT "$2" FOREIGN KEY (taxauthid) REFERENCES taxauthorities(taxid);
+
+
+--
+-- TOC entry 675 (OID 62295)
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY custbranch
+    ADD CONSTRAINT "$1" FOREIGN KEY (taxgroupid) REFERENCES taxgroups(taxgroupid);
+
+
+--
+-- TOC entry 642 (OID 62299)
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY taxauthrates
+    ADD CONSTRAINT "$1" FOREIGN KEY (dispatchtaxprovince) REFERENCES taxprovinces(taxprovinceid);
+
+
+--
+-- TOC entry 704 (OID 62308)
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY supptranstaxes
+    ADD CONSTRAINT "$1" FOREIGN KEY (supptransid) REFERENCES supptrans(id);
+
+
+--
+-- TOC entry 705 (OID 62312)
+-- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY supptranstaxes
+    ADD CONSTRAINT "$2" FOREIGN KEY (taxauthid) REFERENCES taxauthorities(taxid);
+
+
+--
+-- TOC entry 601 (OID 62357)
+-- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
+--
+
+ALTER TABLE ONLY suppliers
+    ADD CONSTRAINT "$1" FOREIGN KEY (taxgroupid) REFERENCES taxgroups(taxgroupid);
+
+
+--
+-- TOC entry 95 (OID 35789)
 -- Name: cogsglpostings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9069,7 +9807,7 @@ SELECT pg_catalog.setval('cogsglpostings_id_seq', 2, true);
 
 
 --
--- TOC entry 89 (OID 35809)
+-- TOC entry 96 (OID 35809)
 -- Name: taxauthorities_taxid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9077,7 +9815,7 @@ SELECT pg_catalog.setval('taxauthorities_taxid_seq', 1, true);
 
 
 --
--- TOC entry 90 (OID 35858)
+-- TOC entry 97 (OID 35858)
 -- Name: edimessageformat_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9085,7 +9823,7 @@ SELECT pg_catalog.setval('edimessageformat_id_seq', 1, false);
 
 
 --
--- TOC entry 91 (OID 35876)
+-- TOC entry 98 (OID 35876)
 -- Name: edi_orders_segs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9093,7 +9831,7 @@ SELECT pg_catalog.setval('edi_orders_segs_id_seq', 1, false);
 
 
 --
--- TOC entry 92 (OID 35887)
+-- TOC entry 99 (OID 35887)
 -- Name: gltrans_counterindex_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9101,7 +9839,7 @@ SELECT pg_catalog.setval('gltrans_counterindex_seq', 80, true);
 
 
 --
--- TOC entry 93 (OID 35935)
+-- TOC entry 100 (OID 35935)
 -- Name: reportheaders_reportid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9109,7 +9847,7 @@ SELECT pg_catalog.setval('reportheaders_reportid_seq', 1, true);
 
 
 --
--- TOC entry 94 (OID 35966)
+-- TOC entry 101 (OID 35966)
 -- Name: salesanalysis_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9117,7 +9855,7 @@ SELECT pg_catalog.setval('salesanalysis_id_seq', 14, true);
 
 
 --
--- TOC entry 95 (OID 35987)
+-- TOC entry 102 (OID 35987)
 -- Name: salesglpostings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9125,7 +9863,7 @@ SELECT pg_catalog.setval('salesglpostings_id_seq', 2, true);
 
 
 --
--- TOC entry 96 (OID 36066)
+-- TOC entry 103 (OID 36066)
 -- Name: shipmentcharges_shiptchgid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9133,7 +9871,7 @@ SELECT pg_catalog.setval('shipmentcharges_shiptchgid_seq', 1, false);
 
 
 --
--- TOC entry 97 (OID 36079)
+-- TOC entry 104 (OID 36079)
 -- Name: shippers_shipper_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9141,7 +9879,7 @@ SELECT pg_catalog.setval('shippers_shipper_id_seq', 2, true);
 
 
 --
--- TOC entry 98 (OID 36089)
+-- TOC entry 105 (OID 36089)
 -- Name: freightcosts_shipcostfromid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9149,7 +9887,7 @@ SELECT pg_catalog.setval('freightcosts_shipcostfromid_seq', 1, true);
 
 
 --
--- TOC entry 99 (OID 36146)
+-- TOC entry 106 (OID 36146)
 -- Name: stockcounts_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9157,7 +9895,7 @@ SELECT pg_catalog.setval('stockcounts_id_seq', 1, false);
 
 
 --
--- TOC entry 100 (OID 36210)
+-- TOC entry 107 (OID 36210)
 -- Name: stockmoves_stkmoveno_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9165,7 +9903,7 @@ SELECT pg_catalog.setval('stockmoves_stkmoveno_seq', 41, true);
 
 
 --
--- TOC entry 101 (OID 36244)
+-- TOC entry 108 (OID 36244)
 -- Name: stockserialmoves_stkitmmoveno_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9173,7 +9911,7 @@ SELECT pg_catalog.setval('stockserialmoves_stkitmmoveno_seq', 8, true);
 
 
 --
--- TOC entry 102 (OID 36256)
+-- TOC entry 109 (OID 36256)
 -- Name: supptrans_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9181,7 +9919,7 @@ SELECT pg_catalog.setval('supptrans_id_seq', 2, true);
 
 
 --
--- TOC entry 103 (OID 36275)
+-- TOC entry 110 (OID 36275)
 -- Name: suppallocs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9189,7 +9927,7 @@ SELECT pg_catalog.setval('suppallocs_id_seq', 1, false);
 
 
 --
--- TOC entry 104 (OID 36296)
+-- TOC entry 111 (OID 36296)
 -- Name: purchorders_orderno_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9197,7 +9935,7 @@ SELECT pg_catalog.setval('purchorders_orderno_seq', 6, true);
 
 
 --
--- TOC entry 105 (OID 36312)
+-- TOC entry 112 (OID 36312)
 -- Name: purchorderdetails_podetailitem_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9205,7 +9943,7 @@ SELECT pg_catalog.setval('purchorderdetails_podetailitem_seq', 4, true);
 
 
 --
--- TOC entry 106 (OID 36333)
+-- TOC entry 113 (OID 36333)
 -- Name: grns_grnno_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9213,7 +9951,7 @@ SELECT pg_catalog.setval('grns_grnno_seq', 6, true);
 
 
 --
--- TOC entry 107 (OID 36412)
+-- TOC entry 114 (OID 36412)
 -- Name: worequirements_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9221,7 +9959,7 @@ SELECT pg_catalog.setval('worequirements_id_seq', 1, false);
 
 
 --
--- TOC entry 108 (OID 36445)
+-- TOC entry 115 (OID 36445)
 -- Name: banktrans_banktransid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9229,7 +9967,7 @@ SELECT pg_catalog.setval('banktrans_banktransid_seq', 4, true);
 
 
 --
--- TOC entry 109 (OID 36564)
+-- TOC entry 116 (OID 36564)
 -- Name: contractreqts_contractreqid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9237,15 +9975,15 @@ SELECT pg_catalog.setval('contractreqts_contractreqid_seq', 1, false);
 
 
 --
--- TOC entry 110 (OID 36576)
+-- TOC entry 117 (OID 36576)
 -- Name: salesorders_orderno_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('salesorders_orderno_seq', 53, true);
+SELECT pg_catalog.setval('salesorders_orderno_seq', 54, true);
 
 
 --
--- TOC entry 111 (OID 36622)
+-- TOC entry 118 (OID 36622)
 -- Name: debtortrans_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9253,7 +9991,7 @@ SELECT pg_catalog.setval('debtortrans_id_seq', 31, true);
 
 
 --
--- TOC entry 112 (OID 36649)
+-- TOC entry 119 (OID 36649)
 -- Name: custallocns_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9261,7 +9999,7 @@ SELECT pg_catalog.setval('custallocns_id_seq', 1, false);
 
 
 --
--- TOC entry 113 (OID 36713)
+-- TOC entry 120 (OID 36713)
 -- Name: recurringsalesorders_recurrorderno_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9277,7 +10015,7 @@ SELECT pg_catalog.setval('scripts_id_seq', 0, false);
 
 
 --
--- TOC entry 114 (OID 36752)
+-- TOC entry 121 (OID 36752)
 -- Name: securityroles_secroleid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9285,7 +10023,7 @@ SELECT pg_catalog.setval('securityroles_secroleid_seq', 1, false);
 
 
 --
--- TOC entry 115 (OID 36767)
+-- TOC entry 122 (OID 36767)
 -- Name: paymentmethods_paymentid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9293,7 +10031,7 @@ SELECT pg_catalog.setval('paymentmethods_paymentid_seq', 4, true);
 
 
 --
--- TOC entry 116 (OID 36777)
+-- TOC entry 123 (OID 36777)
 -- Name: unitsofmeasure_unitid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
@@ -9301,11 +10039,35 @@ SELECT pg_catalog.setval('unitsofmeasure_unitid_seq', 6, true);
 
 
 --
--- TOC entry 117 (OID 45970)
+-- TOC entry 124 (OID 45970)
 -- Name: salescat_salescatid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
 SELECT pg_catalog.setval('salescat_salescatid_seq', 2, true);
+
+
+--
+-- TOC entry 125 (OID 62217)
+-- Name: taxcategories_taxcatid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
+--
+
+SELECT pg_catalog.setval('taxcategories_taxcatid_seq', 1, false);
+
+
+--
+-- TOC entry 126 (OID 62233)
+-- Name: taxprovinces_taxprovinceid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
+--
+
+SELECT pg_catalog.setval('taxprovinces_taxprovinceid_seq', 1, false);
+
+
+--
+-- TOC entry 127 (OID 62246)
+-- Name: taxgroups_taxgroupid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
+--
+
+SELECT pg_catalog.setval('taxgroups_taxgroupid_seq', 1, false);
 
 
 SET SESSION AUTHORIZATION 'postgres';

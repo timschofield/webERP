@@ -1,7 +1,6 @@
 <?php
 
-/* $Revision: 1.6 $ */
-
+/* $Revision: 1.7 $ */
 
 define ('LIKE','LIKE');
 

@@ -6,7 +6,7 @@ include('includes/session.inc');
 $lineno = 1;
 $orderno = 0;
 
-$SalesOrdersResult = DB_query($db, 'SELECT orderno, stkcode FROM salesorderdetails ORDER BY orderno');
+$SalesOrdersResult = DB_query('SELECT orderno, stkcode FROM salesorderdetails ORDER BY orderno', $db);
 
 while ($SalesOrderDetails = DB_fetch_array($SalesOrdersResult)) {
 	
@@ -19,13 +19,13 @@ while ($SalesOrderDetails = DB_fetch_array($SalesOrdersResult)) {
 	$OrderNo = $SalesOrderDetails['orderno'];
 	DB_query('UPDATE salesorderdetails 
 		SET orderlineno=' . $LineNo . ' 
-		WHERE orderno=' . $OrderNo . ' 
-		AND stkcode="' . $SalesOrderDetails['stkcode'] . '"', $db);
+		WHERE orderno=' . $OrderNo . " 
+		AND stkcode='" . $SalesOrderDetails['stkcode'] ."'", $db);
 
 }
 
-DB_query($db, 'ALTER TABLE salesorderdetails ADD CONSTRAINT salesorderdetails_pk primary key(orderno, orderlineno)');
+DB_query( 'ALTER TABLE salesorderdetails ADD CONSTRAINT salesorderdetails_pk primary key(orderno, orderlineno)',$db);
 
-prnMsg(_('The sales orderdetails lines have been numbered appropriately for version 3.02','success');
+prnMsg(_('The sales orderdetails lines have been numbered appropriately for version 3.02','success'));
 
 ?>
