@@ -1,7 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
-
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 5;
 
@@ -184,7 +183,7 @@ if ($TotalAmount==0 AND ($_SESSION["PaymentDetail"]->Discount + $_SESSION["Payme
 								currcode) ";
 				$SQL= $SQL . "VALUES (" . $ReceiptTransNo . ",
 							2,
-							" . $PaymentItem->GLCode . ", " 
+							" . $PaymentItem->GLCode . ", '" 
 							. _('Act Transfer') . ' - ' . $PaymentItem->Narrative . "',
 							" . $_SESSION['PaymentDetail']->ExRate . " ,
 							'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',

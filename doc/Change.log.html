@@ -1,16 +1,16 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
+<P>1/4/05-6/8/05 Tax changes to allow multiple taxes per line and compounding taxes on previous taxes - this now allows Canadian and some European taxes to be accomodated. Implemented for invoices, credit notes in AR and AP. New tax groups - allocated to suppliers and customer branches for the basis for the taxes that will apply to invoices in conjunction with the location where the goods/services are provided from - the dispatch tax province - on the stock location record. Tax calculations show on the transaction entry screen but only the totals show on invoices. All the transaction entry work is done - reporting still to be done. Largely as per specs worked on by Danie and Steve
+<P>6/8/05 Suren Naidu - Payments.php sql quotation marks error in narrative fixed
 <P>23/7/05 Tom Fox - PO_Header.php was printing existing purchase orders as at todays date rather than the date at which it was initiated - fixed
 <P>15/7/05 Z_PriceChanges.php lowercased to work with new db
 <P>13/7/05 SupplierBalsAtPeriodEnd.php was not taking into account FX diffs that had been realised after the year end. Same for DebtorBalsAtPeriodEnd.php
 <P>13/7/05 RecurringOrders templates set to recurr quarterly were only recurring 3 times per annum - now fixed
 <P>10/7/05 Added Z_MakeNewCompany.php and modified the rest of the system to allow alternative company login - includes/login.php defaulting to $DefaultCompany in config.php. Also now reading part_pics from a new directory companies/{Company Abbreviation}/part_pics reports and EDI files also kept under the company directory. The new Z_MakeNewCompany.php creates a new database from the sql/mysql/weberp-new.sql or sql/pg/weberp-new.psql depending on which $dbType is set in config.php. The idea for this was prompted by the work done by EDO and ITWorx on behalf of EDO - that was contributed by EDO.
 <P>7/7/05 Scott Rosa bug in includes/PDFSalesAnalysis.inc - $columnno should be $ColumnNo
-<P>4/7/05 Jake Stride GoodsReceived.php modified and GoodsReceivedManaged.php to allow entry of warehouse bin where goods received into.
 <P>3/7/05 Chris Bice modified StockStatus.php to show bin locations of items for managed locations. Also added BinStockStatus.php
-<P>3/7/05 Chris Bice added Bins.php for defining bins for warehouse management
-<P>30/6/05 Chris Bice Locations.php now has flag for warehouse management
-<P>30/6/05 Jake Stride postgres upgrade script for 3.00 - 3.02 and Z_Upgrade_3.00-3.02.php to renumber salesorderdetail lines as required
+<P>30/6/05 Chris Bice/Jake Stride Locations.php now has flag for warehouse management
+<P>30/6/05 Jake Stride postgres upgrade script for 3.01 - 3.02 and Z_Upgrade_3.01-3.02.php to renumber salesorderdetail lines as required
 <P>30/6/05 SupplierInvoice.php SupplierCredit.php now allow for entry of multiple taxes
 <P>30/6/05 GLAccountInquiry.php checks for entry of period range now
 <P>30/6/05 Murray PO_PDFOrderPageHeader.inc changed "THIS IN NOT AN ORDER" to "THIS IS NOT AN ORDER"
@@ -28,7 +28,6 @@ consistent "look and feel"
 <P>5/6/05 Gunnar Rikardsson PurchData.php Line 206: gettext function missing for 'Yes' Line 209: gettext function missing for 'No'
 <P>5/6/05 Gunnar Rikardsson StockCheck.php Line 333: gettext function missing for 'Show system quantity on sheets' Line 342: gettext function missing for 'Only print items with non zero quantities'
 <P>5/6/05 Gunnar Rikardsson includes/PO_PDFOrderPageHeader.inc Line 114: misspelling: Initator -> Initiator
-
 <P>5/6/05 WorkCentres.php error in sql accountGroup sb/been accountgroup
 <P>4/6/05 ConfirmDispatch_Invoice.php includes/DefineCartClass.php - mods to allow mulitple taxes
 <P>8/5/05 Shipments.php DefineShipmentClass.php moved below session.inc - fixed bug could not initiate new shipments

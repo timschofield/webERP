@@ -1,7 +1,5 @@
 <?php
-
-/* $Revision: 1.17 $ */
-
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 11;
 
@@ -68,9 +66,7 @@ $k=0; //row colour counter
 
 if (count($_SESSION['PO']->LineItems)>0){
 	foreach ($_SESSION['PO']->LineItems as $LnItm) {
-		/* Include the Set Bin so we can update the line item if neccessary */
-		include('includes/PO_SetBin.inc');
-
+		
 		if ($k==1){
 			echo '<tr bgcolor="#CCCCCC">';
 			$k=0;
@@ -151,10 +147,9 @@ if (count($_SESSION['PO']->LineItems)>0){
 /************************* LINE ITEM VALIDATION ************************/
 
 /* Check whether trying to deliver more items than are recorded on the purchase order
-(+ overreceive allowance), or that the bin is not set for managed locations */
+(+ overreceive allowance) */
 
 $DeliveryQuantityTooLarge = 0;
-$NoBinSet = 0;
 
 $InputError = false;
 
@@ -180,11 +175,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 	echo '<BR>';
 	prnMsg(_('Modify the ordered items on the purchase invoice if you wish to increase the quantities'),'info');
 
-} elseif (($NoBinSet==1) AND isset($_POST['ProcessGoodsReceived'])){
-
-	prnMsg(_('You are receiving goods into a managed warehouse, you must set the bin location for all items.'));
-
-} elseif (isset($_POST['ProcessGoodsReceived']) AND $SomethingReceived==1 AND $InputError == false){
+}  elseif (isset($_POST['ProcessGoodsReceived']) AND $SomethingReceived==1 AND $InputError == false){
 
 /* SQL to process the postings for goods received... */
 /* Company record set at login for information on GL Links and debtors GL account*/

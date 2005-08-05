@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 $PageSecurity =3;
 
 
@@ -606,7 +606,7 @@ if (isset($_POST['ProcessCredit'])){
 					_('The SQL used that failed was'),true);
 			$MBFlagRow = DB_fetch_row($Result);
 			$MBFlag = $MBFlagRow[0];
-			if ($MBFlag=='M' oR $MBFlag=='B'){
+			if ($MBFlag=='M' OR $MBFlag=='B'){
 				/*Need to get the current location quantity will need it later for the stock movements */
 		 		$SQL="SELECT locstock.quantity
 					FROM locstock
@@ -684,7 +684,7 @@ if (isset($_POST['ProcessCredit'])){
 				 	   $Component_MBFlag = $MBFlagRow[0];
 
 					   /* Insert stock movements for the stock coming back in - with unit cost */
-					   if ($Component_MBFlag=="M" oR $Component_MBFlag=="B"){
+					   if ($Component_MBFlag=='M' OR $Component_MBFlag=='B'){
 			   			/*Need to get the current location quantity will need it later for the stock movement */
 		 	    			$SQL="SELECT locstock.quantity
 							FROM locstock
