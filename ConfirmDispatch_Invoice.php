@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -834,7 +834,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 				while ($AssParts = DB_fetch_array($AssResult,$db)){
 				
-					$StandardCost += $AssParts['standard'];
+					$StandardCost += ($AssParts['standard'] * $AssParts['quantity']) ;
 					/* Need to get the current location quantity
 					will need it later for the stock movement */
 	                  		$SQL="SELECT locstock.quantity
@@ -876,7 +876,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 							 '" . $_SESSION['Items']->DebtorNo . "',
 							 '" . $_SESSION['Items']->Branch . "',
 							 " . $PeriodNo . ",
-							 'Assembly: " . $OrderLine->StockID . " Order: " . $_SESSION['ProcessingOrder'] . "',
+							 '" . _('Assembly') . ': ' . $OrderLine->StockID . ' ' . _('Order') . ': ' . $_SESSION['ProcessingOrder'] . "',
 							 " . -$AssParts['quantity'] * $OrderLine->QtyDispatched . ",
 							 " . $AssParts['standard'] . ",
 							 0,
@@ -905,7 +905,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			// Insert stock movements - with unit cost
 			$LocalCurrencyPrice= ($OrderLine->Price / $_SESSION['CurrencyRate']);
 
-			if ($MBFlag=="B" OR $MBFlag=="M"){
+			if ($MBFlag=='B' OR $MBFlag=='M'){
             			$SQL = "INSERT INTO stockmoves (
 						stockid,
 						type,

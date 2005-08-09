@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 $PageSecurity = 15;
 
@@ -17,6 +17,15 @@ if (isset($_POST['EnterCompanyDetails'])) {
 $title = _('Make New Company Database Utility');
 
 include('includes/header.inc');
+
+
+
+if($dbType=='postgres'){
+	prnMsg(_('This script does not work for postgres'),'error');
+	include('includes/footer.inc');
+	exit;
+}
+
 
 /* Your webserver user MUST have read/write access to here,
 	otherwise you'll be wasting your time */
@@ -81,33 +90,9 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 			
 			$result = DB_query('CREATE DATABASE ' . $_POST['NewCompany'],$db);
 			
-			if ($dbType=='mysql'){
+			mysql_select_db($_POST['NewCompany'],$db);
+			$SQLScriptFile = file('./sql/mysql/weberp-new.sql');
 				
-				mysql_select_db($_POST['NewCompany'],$db);
-				$SQLScriptFile = file('./sql/mysql/weberp-new.sql');
-				
-			} elseif($dbType=='postgres'){
-				
-				unset($db);
-				
-				$PgConnStr = 'dbname=' . $_POST['NewCompany'];
-
-				if ( isset($host) && ($host != "")) {
-					$PgConnStr = 'host='.$host.' '.$PgConnStr;
-				} 
-
-				if ( isset( $dbuser ) && ($dbuser != "") ) {
-    				// if we have a user we need to use password if supplied
-    					$PgConnStr .= " user=".$dbuser;
-    					if ( isset( $dbpassword ) && ($dbpassword != "") ) {
-						$PgConnStr .= " password=".$dbpassword;
-    					}
-				}
-				
-				$db = pg_connect( $PgConnStr );
-				$SQLScriptFile = file('./sql/pg/weberp-new.psql');
-			}
-			
 			$ScriptFileEntries = sizeof($SQLScriptFile);
 			$ErrMsg = _('The script to create the new company database failed because');
 			$SQL ='';
@@ -124,16 +109,14 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 						$result = DB_query($SQL,$db,$ErrMsg);
 						$SQL='';
 					}
-				}
-			}
+				} //end if its a valid sql line not a comment
+			} //end of for loop around the lines of the sql script
 			
 			/*Now create directory for the session files to be held 
 			Change required to always store session files in a company subdirectory of the default session directory*/
 			
-		
-		
 		} else {
-			prnMsg(_('This language cannot be added because either it already exists or no logo is being uploaded!'),'error');
+			prnMsg(_('This company cannot be added because either it already exists or no logo is being uploaded!'),'error');
 			if (isset($_FILES['LogoFile'])){
 				echo '<BR>Files LogoFile is set ok';
 			} else  {
