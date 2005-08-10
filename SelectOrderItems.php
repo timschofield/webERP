@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.31 $ */
+/* $Revision: 1.32 $ */
 
 require('includes/DefineCartClass.php');
 
@@ -8,9 +8,6 @@ $PageSecurity = 1;
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
 include('includes/session.inc');
-
-
-echo $_SESSION['part_pics_dir'];
 
 if (isset($_GET['ModifyOrderNumber'])) {
 	$title = _('Modifying Order') . ' ' . $_GET['ModifyOrderNumber'];

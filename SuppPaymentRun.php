@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 5;
 
@@ -13,10 +13,8 @@ Class Allocation {
 	}
 }
 
-include('config.php');
 include('includes/session.inc');
-include('includes/ConnectDB.inc');
-
+include('includes/SQL_CommonFunctions.inc');
 include('includes/GetPaymentMethods.php');
 
 If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))

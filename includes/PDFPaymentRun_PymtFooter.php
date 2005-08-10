@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*Code to print footer details for each supplier being paid and process payment total for each supplier
 as necessary an include file used since the same code is used twice */
 $YPos -= (0.5*$line_height);
@@ -73,9 +73,9 @@ if (isset($_POST['PrintPDFAndProcess'])){
 						datealloc,
 						transid_allocfrom,
 						transid_allocto)
-				VALUES (' . $AllocTrans->Amount . ',
-		                         "' . FormatDateForSQL($_POST['AmountsDueBy']) . '",
-                	                ' . $PaymentTransID . ',
+				VALUES (' . $AllocTrans->Amount . ",
+		                         '" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
+                	                " . $PaymentTransID . ',
                         	        ' . $AllocTrans->TransID . ')';
 
 		$ProcessResult = DB_query($SQL,$db);
