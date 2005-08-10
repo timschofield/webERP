@@ -1,12 +1,11 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
 
-$title = _('Receive Controlled Items');
 $PageSecurity = 11;
 include('includes/session.inc');
-
+$title = _('Receive Controlled Items');
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/header.inc');
 

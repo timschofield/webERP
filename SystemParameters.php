@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity =15;
 
@@ -9,7 +9,6 @@ include('includes/session.inc');
 $title = _('System Configuration');
 
 include('includes/header.inc');
-
 
 if (isset($_POST['submit'])) {
 
@@ -509,53 +508,44 @@ echo '<TR><TD>' . _('Maximum Size in KB of uploaded images') . ':</TD>
 	<TD>' . _('Picture files of items can be uploaded to the server. The system will check that files uploaded are less than this size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen.') .'</TD>
 </TR>';
 
-
 //$part_pics_dir
-echo '<TR><TD>' . _('The directory where images are stored') . ':</TD>
+echo '<TR><TD>' . _('The directory where images are stored') . $CompanyDirectory . ':</TD>
 	<TD><SELECT NAME="X_part_pics_dir">';
-$DirHandle = dir('./companies/' . $_SESSION['DatabaseName']);
+	
+$CompanyDirectory = 'companies/' . $_SESSION['DatabaseName'] . '/';
+$DirHandle = dir($CompanyDirectory);
 
-
-while (false != ($DirEntry = $DirHandle->read())){
-
-	if (is_dir($DirEntry) 
+while ($DirEntry = $DirHandle->read() ){
+	
+	if (is_dir($CompanyDirectory . $DirEntry)
 		AND $DirEntry != '..' 
-		AND $DirEntry != 'includes' 
 		AND $DirEntry!='.' 
-		AND $DirEntry != 'doc' 
-		AND $DirEntry != 'css' 
 		AND $DirEntry != 'CVS' 
-		AND $DirEntry != 'sql' 
 		AND $DirEntry != 'reports' 
 		AND $DirEntry != 'locale' 
-		AND $DirEntry != 'fonts'      ){
+		AND $DirEntry != 'fonts'   ){
 
-		if ($_SESSION['part_pics_dir'] == $DirEntry){
+		if ($_SESSION['part_pics_dir'] == $CompanyDirectory . $DirEntry){
 			echo "<OPTION SELECTED VALUE='$DirEntry'>$DirEntry";
 		} else {
 			echo "<OPTION VALUE='$DirEntry'>$DirEntry";
 		}
 	}
 }
-
 echo '</SELECT></TD>
 	<TD>' . _('The directory under which all image files should be stored. Image files take the format of ItemCode.jpg - they must all be .jpg files and the part code will be the name of the image file. This is named automatically on upload. The system will check to ensure that the image is a .jpg file') . '</TD>
 	</TR>';
-
-	
-	
-	
 	
 	
 //$reports_dir
 echo '<TR><TD>' . _('The directory where reports are stored') . ':</TD>
 	<TD><SELECT NAME="X_reports_dir">';
-$DirHandle = dir('./companies/' . $_SESSION['DatabaseName']);
 
+$DirHandle = dir($CompanyDirectory);
 
 while (false != ($DirEntry = $DirHandle->read())){
 
-	if (is_dir($DirEntry) 
+	if (is_dir($CompanyDirectory . $DirEntry)
 		AND $DirEntry != '..' 
 		AND $DirEntry != 'includes' 
 		AND $DirEntry!='.' 
@@ -567,7 +557,7 @@ while (false != ($DirEntry = $DirHandle->read())){
 		AND $DirEntry != 'locale' 
 		AND $DirEntry != 'fonts'      ){
 
-		if ($_SESSION['reports_dir'] == $DirEntry){
+		if ($_SESSION['reports_dir'] == $CompanyDirectory . $DirEntry){
 			echo "<OPTION SELECTED VALUE='$DirEntry'>$DirEntry";
 		} else {
 			echo "<OPTION VALUE='$DirEntry'>$DirEntry";
