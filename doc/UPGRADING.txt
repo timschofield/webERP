@@ -51,4 +51,4 @@ IMPORTANT: Note that version of mysql 4.1.8 or greater is required because from 
 
 NOTES ON UPGRADING FROM 3.01 to 3.02
 
-3.02 includes extensive changes (once again) to the tax schema in webERP and also allows for the same item on a sales order muliple times. This requires all existing sales orders to be updated with an appropriate number to avoid stange behaviour. A special script must be run to effect these changes after the SQL script has been run. The script Z_Upgrade3.00-3.02.php must be opened in the browser to effect these changes.
+3.02 includes extensive changes to the tax schema in webERP and also allows for the same item on a sales order multiple times. This requires all existing sales orders to be updated with an appropriate number to avoid strange behaviour. A special script must be run to effect these changes after the SQL script has been run. The script Z_Upgrade_3.01-3.02.php must be opened in the browser to effect these changes.

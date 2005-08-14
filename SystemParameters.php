@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity =15;
 
@@ -509,7 +509,7 @@ echo '<TR><TD>' . _('Maximum Size in KB of uploaded images') . ':</TD>
 </TR>';
 
 //$part_pics_dir
-echo '<TR><TD>' . _('The directory where images are stored') . $CompanyDirectory . ':</TD>
+echo '<TR><TD>' . _('The directory where images are stored') . ':</TD>
 	<TD><SELECT NAME="X_part_pics_dir">';
 	
 $CompanyDirectory = 'companies/' . $_SESSION['DatabaseName'] . '/';

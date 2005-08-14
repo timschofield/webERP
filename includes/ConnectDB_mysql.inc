@@ -1,11 +1,21 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 define ('LIKE','LIKE');
 
 $db = mysql_connect($host , $dbuser, $dbpassword);
-mysql_select_db($_SESSION['DatabaseName'],$db);
+
+if ( !$db ) {
+	echo '<BR>' . _('The configuration in the file config.php for the database user name and password do not provide the information required to connect to the database server');
+	exit;
+}
+
+if (! mysql_select_db($_SESSION['DatabaseName'],$db)) {
+	echo '<BR>' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
+	unset ($_SESSION['DatabaseName']);
+	exit;
+}
 
 require_once ('includes/MiscFunctions.php');
 

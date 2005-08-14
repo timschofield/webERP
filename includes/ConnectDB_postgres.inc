@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 define ('LIKE','ILIKE');
 /* $PgConnStr = $PgConnStr = "host=".$host." dbname=".$_SESSION['DatabaseName']; */
@@ -21,8 +21,12 @@ if ( isset( $dbuser ) && ($dbuser != "") ) {
 $db = pg_connect( $PgConnStr );
 
 if ( !$db ) {
-	echo '<BR>' . $PgConnStr . '<BR>';
-  die( "<BR>Could not establish connection to postgres database. Please check configuration.");
+	if ($debug==1){
+		echo '<BR>' . $PgConnStr . '<BR>';
+	}
+	echo '<BR>' . _('The company name entered together with the configuration in the file config.php for the database user name and password do not provide the information required to connect to the database.') . '<BR><BR>' . _(' Try logging in with an alternative company name.');
+	unset($_SESSION['DatabaseName']);
+	exit;
 }
 
 require_once ('includes/MiscFunctions.php');
