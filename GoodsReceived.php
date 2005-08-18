@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 11;
 
@@ -495,8 +495,8 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 								" . $GRN . ",
 								'" . $_POST['DefaultReceivedDate'] . "',
 								" . $PeriodNo . ",
-								" . $StockGLCodes['purchpricevaract'] . ',
-								' . _('Cost diff on') . ' ' . $_SESSION['PO']->SupplierID . ' - ' . $OrderLine->StockID . " " . $OrderLine->ReceiveQty . " @ (" . number_format($CurrentStandardCost,2) . ' - ' ._('Prev std') . ' ' . number_format($UnitCost,2) . ")',
+								" . $StockGLCodes['purchpricevaract'] . ",
+								'" . _('Cost diff on') . ' ' . $_SESSION['PO']->SupplierID . ' - ' . $OrderLine->StockID . " " . $OrderLine->ReceiveQty . " @ (" . number_format($CurrentStandardCost,2) . ' - ' ._('Prev std') . ' ' . number_format($UnitCost,2) . ")',
 								" . ($UnitCostDifference * $OrderLine->ReceiveQty) . ")";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The standard cost difference GL posting could not be inserted because');
