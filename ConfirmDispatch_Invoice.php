@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -140,7 +140,8 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 				FROM salesorderdetails INNER JOIN stockmaster
 				 	ON salesorderdetails.stkcode = stockmaster.stockid
 				WHERE salesorderdetails.orderno =' . $_GET['OrderNumber'] . '
-				AND salesorderdetails.quantity - salesorderdetails.qtyinvoiced >0';
+				AND salesorderdetails.quantity - salesorderdetails.qtyinvoiced >0 
+				ORDER BY salesorderdetails.orderlineno';
 
 		$ErrMsg = _('The line items of the order cannot be retrieved because');
 		$DbgMsg = _('The SQL that failed was');
@@ -149,6 +150,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 		if (db_num_rows($LineItemsResult)>0) {
 
 			while ($myrow=db_fetch_array($LineItemsResult)) {
+			
 				$_SESSION['Items']->add_to_cart($myrow['stkcode'],
 						$myrow['quantity'],
 						$myrow['description'],
