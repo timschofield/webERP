@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 /*SelectOrderItems_IntoCart.inc
 
@@ -96,7 +96,7 @@ if ($AlreadyOnThisOrder!=1){
 				$Discount = 0;
 			}
 			
-			$Price = GetPrice ($NewItem, $_SESSION['Items']->DebtorNo,$_SESSION['Items']->Branch, &$db);
+			$Price = GetPrice ($NewItem, $_SESSION['Items']->DebtorNo,$_SESSION['Items']->Branch, $db);
 			
 			$WithinCreditLimit = true;
 			

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 
 $PageSecurity = 11;
@@ -16,7 +16,6 @@ if (isset($_GET['StockID'])){
 } elseif (isset($_POST['StockID'])){
 	$StockID =strtoupper($_POST['StockID']);
 }
-
 
 if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 	
@@ -45,7 +44,7 @@ if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 	
 	if ($UploadTheFile=='Yes'){
 		$result  =  move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $filename);
-		$message = ($result)?_('File url') ."<a href='". $filename ."'>" .  $filename . '</a>' : "Something is wrong with uploading a file.";
+		$message = ($result)?_('File url') ."<a href='". $filename ."'>" .  $filename . '</a>' : _('Something is wrong with uploading a file');
 	}
  /* EOR Add Image upload for New Item  - by Ori */
 }
@@ -239,76 +238,83 @@ if (isset($_POST['submit'])) {
 
 		} else { //it is a NEW part
 
-			$sql = "INSERT INTO stockmaster (
-						stockid,
-						description,
-						longdescription,
-						categoryid,
-						units,
-						mbflag,
-						eoq,
-						discontinued,
-						controlled,
-						serialised,
-						volume,
-						kgs,
-						barcode,
-						discountcategory,
-						taxcatid,
-						decimalplaces)
-					VALUES ('$StockID',
-						'" . DB_escape_string($_POST['Description']) . "',
-						'" . DB_escape_string($_POST['LongDescription']) . "',
-						'" . $_POST['CategoryID'] . "',
-						'" . DB_escape_string($_POST['Units']) . "',
-						'" . $_POST['MBFlag'] . "',
-						" . $_POST['EOQ'] . ",
-						" . $_POST['Discontinued'] . ",
-						" . $_POST['Controlled'] . ",
-						" . $_POST['Serialised']. ",
-						" . $_POST['Volume'] . ",
-						" . $_POST['KGS'] . ",
-						'" . $_POST['BarCode'] . "',
-						'" . $_POST['DiscountCategory'] . "',
-						" . $_POST['TaxCat'] . ",
-						" . $_POST['DecimalPlaces']. "
-						)";
-
-			$ErrMsg =  _('The item could not be added because');
-			$DbgMsg = _('The SQL that was used to add the item failed was');
-			$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
-			if (DB_error_no($db) ==0) {
-
-				$sql = "INSERT INTO locstock (loccode,
-								stockid)
-						SELECT locations.loccode,
-							'" . $StockID . "'
-						FROM locations";
-
-				$ErrMsg =  _('The locations for the item') . ' ' . $myrow[0] .  ' ' . _('could not be added because');
-				$DbgMsg = _('NB Locations records can be added by opening the utility page') . ' <i>Z_MakeStockLocns.php</i> ' . _('The SQL that was used to add the location records that failed was');
-				$InsResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-
+			//but lets be really sure here
+			$result = DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $StockID ."'",$db);
+			if (DB_num_rows($result)==1){
+				prnMsg(_('The stock code entered is actually already in the database - duplicate stock codes are prohibited by the system. Try choosing an alternative stock code'),'error');
+				exit;
+			} else {
+				$sql = "INSERT INTO stockmaster (
+							stockid,
+							description,
+							longdescription,
+							categoryid,
+							units,
+							mbflag,
+							eoq,
+							discontinued,
+							controlled,
+							serialised,
+							volume,
+							kgs,
+							barcode,
+							discountcategory,
+							taxcatid,
+							decimalplaces)
+						VALUES ('$StockID',
+							'" . DB_escape_string($_POST['Description']) . "',
+							'" . DB_escape_string($_POST['LongDescription']) . "',
+							'" . $_POST['CategoryID'] . "',
+							'" . DB_escape_string($_POST['Units']) . "',
+							'" . $_POST['MBFlag'] . "',
+							" . $_POST['EOQ'] . ",
+							" . $_POST['Discontinued'] . ",
+							" . $_POST['Controlled'] . ",
+							" . $_POST['Serialised']. ",
+							" . $_POST['Volume'] . ",
+							" . $_POST['KGS'] . ",
+							'" . $_POST['BarCode'] . "',
+							'" . $_POST['DiscountCategory'] . "',
+							" . $_POST['TaxCat'] . ",
+							" . $_POST['DecimalPlaces']. "
+							)";
+	
+				$ErrMsg =  _('The item could not be added because');
+				$DbgMsg = _('The SQL that was used to add the item failed was');
+				$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 				if (DB_error_no($db) ==0) {
-					prnMsg( _('New Item') .' ' . $StockID  . ' '. _('has been added to the database'),'success');
-					unset($_POST['LongDescription']);
-					unset($_POST['Description']);
-					unset($_POST['EOQ']);
-					unset($_POST['CategoryID']);
-					unset($_POST['Units']);
-					unset($_POST['MBFlag']);
-					unset($_POST['Discontinued']);
-					unset($_POST['Controlled']);
-					unset($_POST['Serialised']);
-					unset($_POST['Volume']);
-					unset($_POST['KGS']);
-					unset($_POST['BarCode']);
-					unset($_POST['ReorderLevel']);
-					unset($_POST['DiscountCategory']);
-					unset($_POST['DecimalPlaces']);
-					unset($StockID);
-				}
-			}
+	
+					$sql = "INSERT INTO locstock (loccode,
+									stockid)
+							SELECT locations.loccode,
+								'" . $StockID . "'
+							FROM locations";
+	
+					$ErrMsg =  _('The locations for the item') . ' ' . $myrow[0] .  ' ' . _('could not be added because');
+					$DbgMsg = _('NB Locations records can be added by opening the utility page') . ' <i>Z_MakeStockLocns.php</i> ' . _('The SQL that was used to add the location records that failed was');
+					$InsResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	
+					if (DB_error_no($db) ==0) {
+						prnMsg( _('New Item') .' ' . $StockID  . ' '. _('has been added to the database'),'success');
+						unset($_POST['LongDescription']);
+						unset($_POST['Description']);
+						unset($_POST['EOQ']);
+						unset($_POST['CategoryID']);
+						unset($_POST['Units']);
+						unset($_POST['MBFlag']);
+						unset($_POST['Discontinued']);
+						unset($_POST['Controlled']);
+						unset($_POST['Serialised']);
+						unset($_POST['Volume']);
+						unset($_POST['KGS']);
+						unset($_POST['BarCode']);
+						unset($_POST['ReorderLevel']);
+						unset($_POST['DiscountCategory']);
+						unset($_POST['DecimalPlaces']);
+						unset($StockID);
+					}//ALL WORKED WELL RESET THE FORM VARIABLES 
+				}//THE INSERT OF THE NEW CODE WORKED SO BANG IN THE STOCK LOCATION RECORDS TOO 
+			}//END CHECK FOR ALREADY EXISTING ITEM OF THE SAME CODE
 		}
 
 	} else {
@@ -652,13 +658,7 @@ while ($myrow = DB_fetch_array($result)) {
 
 echo '</SELECT></TD></TR>';
 
-$html_imagefile = $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg';
-$dir_imagefile = './' . $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg';
-
-
-echo '</TABLE></TD><TD><CENTER>' . _('Image') . '<BR>'.$StockImgLink . '</CENTER></TD></TR></TABLE>';
-
-if (function_exists('imagecreatefrompng')){
+ if (function_exists('imagecreatefrompng')){
 	$StockImgLink = '<img src="GetStockImage.php?SID&automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
 		'&stockid='.urlencode($StockID.'.jpg').
 		'&text='.
@@ -667,14 +667,14 @@ if (function_exists('imagecreatefrompng')){
 		'" >';
 } else {
 	if( file_exists($_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg') ) {
-		$StockImgLink = '<img src="'.$rootpath . '/' . $_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg" >';
+		$StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' .$StockID.'.jpg" >';
 	} else {
-		$StockImgLink = 'No Image';
+		$StockImgLink = _('No Image');
 	}
 }
 
 echo '</TABLE></TD><TD><CENTER>' . _('Image') . '<BR>'.$StockImgLink . '</CENTER></TD></TR></TABLE><CENTER>';
-	
+
 
 if (isset($_POST['New']) OR $_POST['New']!="") {
 	echo '<input type="Submit" name="submit" value="' . _('Insert New Item') . '">';

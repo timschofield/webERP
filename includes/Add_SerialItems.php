@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /*ProcessSerialItems.php takes the posted variables and adds to the SerialItems array
  in either the cartclass->LineItems->SerialItems or the POClass->LineItems->SerialItems */
 
@@ -81,7 +81,7 @@ if ( isset($_POST['AddSequence']) && $_POST['AddSequence']!='') {
 		$sql = "SELECT serialno FROM stockserialitems 
 			WHERE serialno BETWEEN '". $BeginNo . "' AND '". $EndNo . "' 
 			AND stockid = '". $StockID."' AND loccode='". $LocationOut . "'";
-		echo $sql;
+
                 $SeqItems = DB_query($sql,$db);
 
                 while ($myrow=db_fetch_array($SeqItems)) {

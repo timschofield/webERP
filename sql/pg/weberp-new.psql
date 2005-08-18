@@ -5061,7 +5061,7 @@ ALTER TABLE ONLY chartmaster
 
 
 --
--- TOC entry 468 (OID 45489)
+-- TOC entry 469 (OID 45489)
 -- Name: cnt001389; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5070,7 +5070,7 @@ ALTER TABLE ONLY taxauthorities
 
 
 --
--- TOC entry 469 (OID 45493)
+-- TOC entry 468 (OID 45493)
 -- Name: cnt001390; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5169,7 +5169,7 @@ ALTER TABLE ONLY shipments
 
 
 --
--- TOC entry 482 (OID 45537)
+-- TOC entry 483 (OID 45537)
 -- Name: cnt001347; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5178,7 +5178,7 @@ ALTER TABLE ONLY shipmentcharges
 
 
 --
--- TOC entry 483 (OID 45541)
+-- TOC entry 482 (OID 45541)
 -- Name: cnt001348; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5187,7 +5187,7 @@ ALTER TABLE ONLY shipmentcharges
 
 
 --
--- TOC entry 484 (OID 45545)
+-- TOC entry 485 (OID 45545)
 -- Name: cnt001293; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5196,7 +5196,7 @@ ALTER TABLE ONLY freightcosts
 
 
 --
--- TOC entry 485 (OID 45549)
+-- TOC entry 484 (OID 45549)
 -- Name: cnt001294; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5214,7 +5214,7 @@ ALTER TABLE ONLY stockmaster
 
 
 --
--- TOC entry 487 (OID 45557)
+-- TOC entry 488 (OID 45557)
 -- Name: cnt001357; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5223,7 +5223,7 @@ ALTER TABLE ONLY stockcounts
 
 
 --
--- TOC entry 488 (OID 45561)
+-- TOC entry 487 (OID 45561)
 -- Name: cnt001358; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5232,7 +5232,7 @@ ALTER TABLE ONLY stockcounts
 
 
 --
--- TOC entry 489 (OID 45565)
+-- TOC entry 490 (OID 45565)
 -- Name: cnt001354; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5241,7 +5241,7 @@ ALTER TABLE ONLY stockcheckfreeze
 
 
 --
--- TOC entry 490 (OID 45569)
+-- TOC entry 489 (OID 45569)
 -- Name: cnt001355; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5277,7 +5277,7 @@ ALTER TABLE ONLY prices
 
 
 --
--- TOC entry 494 (OID 45585)
+-- TOC entry 495 (OID 45585)
 -- Name: cnt001323; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5286,7 +5286,7 @@ ALTER TABLE ONLY purchdata
 
 
 --
--- TOC entry 495 (OID 45589)
+-- TOC entry 494 (OID 45589)
 -- Name: cnt001324; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5295,7 +5295,7 @@ ALTER TABLE ONLY purchdata
 
 
 --
--- TOC entry 496 (OID 45593)
+-- TOC entry 497 (OID 45593)
 -- Name: cnt001305; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5304,7 +5304,7 @@ ALTER TABLE ONLY locstock
 
 
 --
--- TOC entry 497 (OID 45597)
+-- TOC entry 496 (OID 45597)
 -- Name: cnt001306; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5313,7 +5313,7 @@ ALTER TABLE ONLY locstock
 
 
 --
--- TOC entry 498 (OID 45601)
+-- TOC entry 500 (OID 45601)
 -- Name: cnt001308; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5331,7 +5331,7 @@ ALTER TABLE ONLY loctransfers
 
 
 --
--- TOC entry 500 (OID 45609)
+-- TOC entry 498 (OID 45609)
 -- Name: cnt001310; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5376,7 +5376,7 @@ ALTER TABLE ONLY stockmoves
 
 
 --
--- TOC entry 505 (OID 45629)
+-- TOC entry 506 (OID 45629)
 -- Name: cnt001367; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5385,7 +5385,7 @@ ALTER TABLE ONLY stockserialitems
 
 
 --
--- TOC entry 506 (OID 45633)
+-- TOC entry 505 (OID 45633)
 -- Name: cnt001368; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5403,7 +5403,7 @@ ALTER TABLE ONLY stockserialmoves
 
 
 --
--- TOC entry 508 (OID 45641)
+-- TOC entry 509 (OID 45641)
 -- Name: cnt001376; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5412,7 +5412,7 @@ ALTER TABLE ONLY supptrans
 
 
 --
--- TOC entry 509 (OID 45645)
+-- TOC entry 508 (OID 45645)
 -- Name: cnt001377; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5421,7 +5421,7 @@ ALTER TABLE ONLY supptrans
 
 
 --
--- TOC entry 510 (OID 45649)
+-- TOC entry 511 (OID 45649)
 -- Name: cnt001373; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5430,7 +5430,7 @@ ALTER TABLE ONLY suppallocs
 
 
 --
--- TOC entry 511 (OID 45653)
+-- TOC entry 510 (OID 45653)
 -- Name: cnt001374; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5448,7 +5448,7 @@ ALTER TABLE ONLY suppliercontacts
 
 
 --
--- TOC entry 513 (OID 45661)
+-- TOC entry 514 (OID 45661)
 -- Name: cnt001328; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5457,7 +5457,7 @@ ALTER TABLE ONLY purchorders
 
 
 --
--- TOC entry 514 (OID 45665)
+-- TOC entry 513 (OID 45665)
 -- Name: cnt001329; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5475,7 +5475,7 @@ ALTER TABLE ONLY purchorderdetails
 
 
 --
--- TOC entry 516 (OID 45673)
+-- TOC entry 517 (OID 45673)
 -- Name: cnt001300; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5484,7 +5484,7 @@ ALTER TABLE ONLY grns
 
 
 --
--- TOC entry 517 (OID 45677)
+-- TOC entry 516 (OID 45677)
 -- Name: cnt001301; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5529,7 +5529,7 @@ ALTER TABLE ONLY workcentres
 
 
 --
--- TOC entry 524 (OID 45697)
+-- TOC entry 525 (OID 45697)
 -- Name: cnt001404; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5538,7 +5538,7 @@ ALTER TABLE ONLY worksorders
 
 
 --
--- TOC entry 525 (OID 45701)
+-- TOC entry 524 (OID 45701)
 -- Name: cnt001405; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5547,7 +5547,7 @@ ALTER TABLE ONLY worksorders
 
 
 --
--- TOC entry 526 (OID 45705)
+-- TOC entry 528 (OID 45705)
 -- Name: cnt001392; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5565,7 +5565,7 @@ ALTER TABLE ONLY woissues
 
 
 --
--- TOC entry 528 (OID 45713)
+-- TOC entry 526 (OID 45713)
 -- Name: cnt001394; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5646,7 +5646,7 @@ ALTER TABLE ONLY bankaccounts
 
 
 --
--- TOC entry 537 (OID 45749)
+-- TOC entry 538 (OID 45749)
 -- Name: cnt001245; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5655,7 +5655,7 @@ ALTER TABLE ONLY banktrans
 
 
 --
--- TOC entry 538 (OID 45753)
+-- TOC entry 537 (OID 45753)
 -- Name: cnt001246; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5673,7 +5673,7 @@ ALTER TABLE ONLY buckets
 
 
 --
--- TOC entry 540 (OID 45761)
+-- TOC entry 541 (OID 45761)
 -- Name: cnt001251; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5682,7 +5682,7 @@ ALTER TABLE ONLY chartdetails
 
 
 --
--- TOC entry 541 (OID 45765)
+-- TOC entry 540 (OID 45765)
 -- Name: cnt001252; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5790,7 +5790,7 @@ ALTER TABLE ONLY custbranch
 
 
 --
--- TOC entry 555 (OID 45817)
+-- TOC entry 557 (OID 45817)
 -- Name: cnt001263; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5808,7 +5808,7 @@ ALTER TABLE ONLY contracts
 
 
 --
--- TOC entry 557 (OID 45825)
+-- TOC entry 555 (OID 45825)
 -- Name: cnt001265; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5826,7 +5826,7 @@ ALTER TABLE ONLY contractreqts
 
 
 --
--- TOC entry 559 (OID 45833)
+-- TOC entry 561 (OID 45833)
 -- Name: cnt001340; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5844,7 +5844,7 @@ ALTER TABLE ONLY salesorders
 
 
 --
--- TOC entry 561 (OID 45841)
+-- TOC entry 559 (OID 45841)
 -- Name: cnt001342; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5853,7 +5853,7 @@ ALTER TABLE ONLY salesorders
 
 
 --
--- TOC entry 562 (OID 45845)
+-- TOC entry 564 (OID 45845)
 -- Name: cnt001313; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5871,7 +5871,7 @@ ALTER TABLE ONLY orderdeliverydifferenceslog
 
 
 --
--- TOC entry 564 (OID 45853)
+-- TOC entry 562 (OID 45853)
 -- Name: cnt001315; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5880,7 +5880,7 @@ ALTER TABLE ONLY orderdeliverydifferenceslog
 
 
 --
--- TOC entry 565 (OID 45857)
+-- TOC entry 566 (OID 45857)
 -- Name: cnt001337; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5889,7 +5889,7 @@ ALTER TABLE ONLY salesorderdetails
 
 
 --
--- TOC entry 566 (OID 45861)
+-- TOC entry 565 (OID 45861)
 -- Name: cnt001338; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5898,7 +5898,7 @@ ALTER TABLE ONLY salesorderdetails
 
 
 --
--- TOC entry 567 (OID 45865)
+-- TOC entry 569 (OID 45865)
 -- Name: cnt001278; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5916,7 +5916,7 @@ ALTER TABLE ONLY debtortrans
 
 
 --
--- TOC entry 569 (OID 45873)
+-- TOC entry 567 (OID 45873)
 -- Name: cnt001280; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5925,7 +5925,7 @@ ALTER TABLE ONLY debtortrans
 
 
 --
--- TOC entry 570 (OID 45877)
+-- TOC entry 571 (OID 45877)
 -- Name: cnt001268; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5934,7 +5934,7 @@ ALTER TABLE ONLY custallocns
 
 
 --
--- TOC entry 571 (OID 45881)
+-- TOC entry 570 (OID 45881)
 -- Name: cnt001269; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5952,7 +5952,7 @@ ALTER TABLE ONLY custbranch
 
 
 --
--- TOC entry 572 (OID 45889)
+-- TOC entry 573 (OID 45889)
 -- Name: recurrorderno; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5961,7 +5961,7 @@ ALTER TABLE ONLY recurrsalesorderdetails
 
 
 --
--- TOC entry 573 (OID 45893)
+-- TOC entry 572 (OID 45893)
 -- Name: recurrorderstkcode; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5979,7 +5979,7 @@ ALTER TABLE ONLY accountgroups
 
 
 --
--- TOC entry 574 (OID 45901)
+-- TOC entry 575 (OID 45901)
 -- Name: securitygroups_secgroupid_fk; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5988,7 +5988,7 @@ ALTER TABLE ONLY securitygroups
 
 
 --
--- TOC entry 575 (OID 45905)
+-- TOC entry 574 (OID 45905)
 -- Name: securitygroups_tokenid_fk; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5997,7 +5997,7 @@ ALTER TABLE ONLY securitygroups
 
 
 --
--- TOC entry 576 (OID 45985)
+-- TOC entry 577 (OID 45985)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -6006,7 +6006,7 @@ ALTER TABLE ONLY salescatprod
 
 
 --
--- TOC entry 577 (OID 45989)
+-- TOC entry 576 (OID 45989)
 -- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -6033,7 +6033,7 @@ ALTER TABLE ONLY locations
 
 
 --
--- TOC entry 578 (OID 62258)
+-- TOC entry 579 (OID 62258)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -6042,7 +6042,7 @@ ALTER TABLE ONLY taxgrouptaxes
 
 
 --
--- TOC entry 579 (OID 62262)
+-- TOC entry 578 (OID 62262)
 -- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -6060,7 +6060,7 @@ ALTER TABLE ONLY stockmovestaxes
 
 
 --
--- TOC entry 581 (OID 62284)
+-- TOC entry 582 (OID 62284)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -6069,7 +6069,7 @@ ALTER TABLE ONLY debtortranstaxes
 
 
 --
--- TOC entry 582 (OID 62288)
+-- TOC entry 581 (OID 62288)
 -- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -6096,7 +6096,7 @@ ALTER TABLE ONLY taxauthrates
 
 
 --
--- TOC entry 583 (OID 62308)
+-- TOC entry 584 (OID 62308)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -6105,7 +6105,7 @@ ALTER TABLE ONLY supptranstaxes
 
 
 --
--- TOC entry 584 (OID 62312)
+-- TOC entry 583 (OID 62312)
 -- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -6698,8 +6698,10 @@ SET search_path = public, pg_catalog;
 --
 
 COPY systypes (typeid, typename, typeno) FROM stdin;
+25	Purchase Order Delivery	3
 2	Receipt - GL	0
 3	Standing Journal	0
+10	Sales Invoice	2
 18	Purchase Order	0
 21	Debit Note	0
 23	Creditors Journal	0
@@ -6709,10 +6711,9 @@ COPY systypes (typeid, typename, typeno) FROM stdin;
 30	Sales Order	0
 0	Journal - GL	1
 50	Opening Balance	0
+22	Creditors Payment	3
 31	Shipment Close	3
 1	Payment - GL	2
-22	Creditors Payment	2
-25	Purchase Order Delivery	2
 20	Purchase Invoice	1
 35	Cost Update	2
 500	"Debtor Number"	100001
@@ -6721,7 +6722,6 @@ COPY systypes (typeid, typename, typeno) FROM stdin;
 12	Receipt	0
 16	Location Transfer	0
 17	Stock Adjustment	0
-10	Sales Invoice	1
 \.
 
 
@@ -6842,7 +6842,7 @@ SET search_path = public, pg_catalog;
 --
 
 COPY www_users (userid, "password", realname, customerid, phone, email, defaultlocation, fullaccess, lastvisitdate, branchcode, pagesize, modulesallowed, blocked, displayrecordsmax, theme, "language", pinno, swipecard) FROM stdin;
-demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2005-07-31 11:42:06		A4	1,1,1,1,1,1,1,1,	0	50	professional	en_GB	\N	\N
+demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2005-08-18 20:56:50		A4	1,1,1,1,1,1,1,1,	0	50	professional	en_GB	\N	\N
 \.
 
 
@@ -6929,6 +6929,7 @@ OverReceiveProportion	20
 PO_AllowSameItemMultipleTimes	1
 YearEnd	3
 PageLength	48
+DB_Maintenance_LastRun	2005-08-18
 MaxImageSize	300
 EDIHeaderMsgId	D:01B:UN:EAN010
 EDIReference	WEBERP
@@ -6945,11 +6946,10 @@ RadioBeaconFTP_user_name	RadioBeacon ftp server user name
 RadionBeaconFTP_user_pass	Radio Beacon remote ftp server password
 CountryOfOperation	EUR
 DefaultTheme	professional
-DB_Maintenance_LastRun	2005-07-30
+part_pics_dir	companies/weberp/part_pics
+reports_dir	companies/weberp/reports
 HTTPS_Only	0
 DB_Maintenance	1
-part_pics_dir	companies/weberp/
-reports_dir	companies/weberp/
 AutoDebtorNo	0
 PackNoteFormat	1
 DefaultBlindPackNote	1

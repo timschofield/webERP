@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
 
@@ -158,14 +158,13 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+10,$YPos,200,$FontSize,$Sections[$Section]);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($SectionBalance),'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($SectionBalanceLY),'right');
-				$YPos -= $line_height;
+				$YPos -= (2 * $line_height);
 			}
 			$SectionBalanceLY = 0;
 			$SectionBalance = 0;
 
 			$Section = $myrow['sectioninaccounts'];
 			if ($_POST['Detail']=='Detailed'){
-				$YPos -= (2 * $line_height);
 				$FontSize = 10;
 				$pdf->selectFont('./fonts/Helvetica.afm');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$Sections[$myrow['sectioninaccounts']]);
@@ -206,8 +205,10 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($LYAccountBalance),'right');
 			$YPos -= $line_height;
 		}
-	}
-	//end of loop
+		if ($YPos < ($Bottom_Margin)){
+			include('includes/PDFBalanceSheetPageHeader.inc');
+		}
+	}//end of loop
 
 	if ($SectionBalanceLY+$SectionBalance !=0){
 		if ($_POST['Detail']=='Summary'){
@@ -238,7 +239,6 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 	$pdfcode = $pdf->output();
 	$len = strlen($pdfcode);
 	
-	$len = 100;
 	if ($len<=20){
 		$title = _('Print Balance Sheet Error');
 		include('includes/header.inc');

@@ -104,7 +104,7 @@ CREATE TABLE `bom` (
   `loccode` char(5) NOT NULL default '',
   `effectiveafter` date NOT NULL default '0000-00-00',
   `effectiveto` date NOT NULL default '9999-12-31',
-  `quantity` double(16,4) NOT NULL default '1.0000',
+  `quantity` double NOT NULL default '1',
   PRIMARY KEY  (`parent`,`component`,`workcentreadded`,`loccode`),
   KEY `Component` (`component`),
   KEY `EffectiveAfter` (`effectiveafter`),
@@ -234,7 +234,7 @@ CREATE TABLE `contractbom` (
   `component` char(20) NOT NULL default '',
   `workcentreadded` char(5) NOT NULL default '',
   `loccode` char(5) NOT NULL default '',
-  `quantity` double(16,4) NOT NULL default '1.0000',
+  `quantity` double NOT NULL default '1',
   PRIMARY KEY  (`contractref`,`component`,`workcentreadded`,`loccode`),
   KEY `Component` (`component`),
   KEY `LocCode` (`loccode`),
@@ -254,7 +254,7 @@ CREATE TABLE `contractreqts` (
   `contractreqid` int(11) NOT NULL auto_increment,
   `contract` char(20) NOT NULL default '',
   `component` char(40) NOT NULL default '',
-  `quantity` double(16,4) NOT NULL default '1.0000',
+  `quantity` double NOT NULL default '1',
   `priceperunit` decimal(20,4) NOT NULL default '0.0000',
   PRIMARY KEY  (`contractreqid`),
   KEY `Contract` (`contract`),
@@ -275,16 +275,16 @@ CREATE TABLE `contracts` (
   `typeabbrev` char(2) NOT NULL default '',
   `orderno` int(11) NOT NULL default '0',
   `quotedpricefx` decimal(20,4) NOT NULL default '0.0000',
-  `margin` double(16,4) NOT NULL default '1.0000',
+  `margin` double NOT NULL default '1',
   `woref` varchar(20) NOT NULL default '',
   `requireddate` datetime NOT NULL default '0000-00-00 00:00:00',
   `canceldate` datetime NOT NULL default '0000-00-00 00:00:00',
-  `quantityreqd` double(16,4) NOT NULL default '1.0000',
+  `quantityreqd` double NOT NULL default '1',
   `specifications` longblob NOT NULL,
   `datequoted` datetime NOT NULL default '0000-00-00 00:00:00',
   `units` varchar(15) NOT NULL default 'Each',
   `drawing` longblob NOT NULL,
-  `rate` double(16,4) NOT NULL default '1.0000',
+  `rate` double NOT NULL default '1',
   PRIMARY KEY  (`contractref`),
   KEY `OrderNo` (`orderno`),
   KEY `CategoryID` (`categoryid`),
@@ -306,7 +306,7 @@ CREATE TABLE `currencies` (
   `currabrev` char(3) NOT NULL default '',
   `country` char(50) NOT NULL default '',
   `hundredsname` char(15) NOT NULL default 'Cents',
-  `rate` double(16,4) NOT NULL default '1.0000',
+  `rate` double NOT NULL default '1',
   PRIMARY KEY  (`currabrev`),
   KEY `Country` (`country`)
 ) TYPE=InnoDB;
@@ -392,9 +392,9 @@ CREATE TABLE `debtorsmaster` (
   `clientsince` datetime NOT NULL default '0000-00-00 00:00:00',
   `holdreason` smallint(6) NOT NULL default '0',
   `paymentterms` char(2) NOT NULL default 'f',
-  `discount` double(16,4) NOT NULL default '0.0000',
-  `pymtdiscount` double(16,4) NOT NULL default '0.0000',
-  `lastpaid` double(16,4) NOT NULL default '0.0000',
+  `discount` double NOT NULL default '0',
+  `pymtdiscount` double NOT NULL default '0',
+  `lastpaid` double NOT NULL default '0',
   `lastpaiddate` datetime default NULL,
   `creditlimit` double NOT NULL default '1000',
   `invaddrbranch` tinyint(4) NOT NULL default '0',
@@ -437,7 +437,7 @@ CREATE TABLE `debtortrans` (
   `reference` varchar(20) NOT NULL default '',
   `tpe` char(2) NOT NULL default '',
   `order_` int(11) NOT NULL default '0',
-  `rate` double(16,6) NOT NULL default '0.000000',
+  `rate` double NOT NULL default '0',
   `ovamount` double NOT NULL default '0',
   `ovgst` double NOT NULL default '0',
   `ovfreight` double NOT NULL default '0',
@@ -486,7 +486,7 @@ CREATE TABLE `discountmatrix` (
   `salestype` char(2) NOT NULL default '',
   `discountcategory` char(2) NOT NULL default '',
   `quantitybreak` int(11) NOT NULL default '1',
-  `discountrate` double(16,4) NOT NULL default '0.0000',
+  `discountrate` double NOT NULL default '0',
   PRIMARY KEY  (`salestype`,`discountcategory`,`quantitybreak`),
   KEY `QuantityBreak` (`quantitybreak`),
   KEY `DiscountCategory` (`discountcategory`),
@@ -560,12 +560,12 @@ CREATE TABLE `freightcosts` (
   `locationfrom` varchar(5) NOT NULL default '',
   `destination` varchar(40) NOT NULL default '',
   `shipperid` int(11) NOT NULL default '0',
-  `cubrate` double(16,2) NOT NULL default '0.00',
-  `kgrate` double(16,2) NOT NULL default '0.00',
-  `maxkgs` double(16,2) NOT NULL default '999999.00',
-  `maxcub` double(16,2) NOT NULL default '999999.00',
-  `fixedprice` double(16,2) NOT NULL default '0.00',
-  `minimumchg` double(16,2) NOT NULL default '0.00',
+  `cubrate` double NOT NULL default '0',
+  `kgrate` double NOT NULL default '0',
+  `maxkgs` double NOT NULL default '999999',
+  `maxcub` double NOT NULL default '999999',
+  `fixedprice` double NOT NULL default '0',
+  `minimumchg` double NOT NULL default '0',
   PRIMARY KEY  (`shipcostfromid`),
   KEY `Destination` (`destination`),
   KEY `LocationFrom` (`locationfrom`),
@@ -616,8 +616,8 @@ CREATE TABLE `grns` (
   `itemcode` varchar(20) NOT NULL default '',
   `deliverydate` date NOT NULL default '0000-00-00',
   `itemdescription` varchar(100) NOT NULL default '',
-  `qtyrecd` double(16,4) NOT NULL default '0.0000',
-  `quantityinv` double(16,4) NOT NULL default '0.0000',
+  `qtyrecd` double NOT NULL default '0',
+  `quantityinv` double NOT NULL default '0',
   `supplierid` varchar(10) NOT NULL default '',
   PRIMARY KEY  (`grnno`),
   KEY `DeliveryDate` (`deliverydate`),
@@ -647,7 +647,7 @@ CREATE TABLE `holdreasons` (
 
 CREATE TABLE `lastcostrollup` (
   `stockid` char(20) NOT NULL default '',
-  `totalonhand` double(16,4) NOT NULL default '0.0000',
+  `totalonhand` double NOT NULL default '0',
   `matcost` decimal(20,4) NOT NULL default '0.0000',
   `labcost` decimal(20,4) NOT NULL default '0.0000',
   `oheadcost` decimal(20,4) NOT NULL default '0.0000',
@@ -687,7 +687,7 @@ CREATE TABLE `locations` (
 CREATE TABLE `locstock` (
   `loccode` varchar(5) NOT NULL default '',
   `stockid` varchar(20) NOT NULL default '',
-  `quantity` double(16,1) NOT NULL default '0.0',
+  `quantity` double NOT NULL default '0',
   `reorderlevel` bigint(20) NOT NULL default '0',
   PRIMARY KEY  (`loccode`,`stockid`),
   KEY `StockID` (`stockid`),
@@ -725,7 +725,7 @@ CREATE TABLE `orderdeliverydifferenceslog` (
   `orderno` int(11) NOT NULL default '0',
   `invoiceno` int(11) NOT NULL default '0',
   `stockid` varchar(20) NOT NULL default '',
-  `quantitydiff` double(16,4) NOT NULL default '0.0000',
+  `quantitydiff` double NOT NULL default '0',
   `debtorno` varchar(10) NOT NULL default '',
   `branch` varchar(10) NOT NULL default '',
   `can_or_bo` char(3) NOT NULL default 'CAN',
@@ -806,7 +806,7 @@ CREATE TABLE `purchdata` (
   `stockid` char(20) NOT NULL default '',
   `price` decimal(20,4) NOT NULL default '0.0000',
   `suppliersuom` char(50) NOT NULL default '',
-  `conversionfactor` double(16,4) NOT NULL default '1.0000',
+  `conversionfactor` double NOT NULL default '1',
   `supplierdescription` char(50) NOT NULL default '',
   `leadtime` smallint(6) NOT NULL default '1',
   `preferred` tinyint(4) NOT NULL default '0',
@@ -829,12 +829,12 @@ CREATE TABLE `purchorderdetails` (
   `deliverydate` date NOT NULL default '0000-00-00',
   `itemdescription` varchar(100) NOT NULL default '',
   `glcode` int(11) NOT NULL default '0',
-  `qtyinvoiced` double(16,4) NOT NULL default '0.0000',
-  `unitprice` double(16,4) NOT NULL default '0.0000',
-  `actprice` double(16,4) NOT NULL default '0.0000',
-  `stdcostunit` double(16,4) NOT NULL default '0.0000',
-  `quantityord` double(16,4) NOT NULL default '0.0000',
-  `quantityrecd` double(16,4) NOT NULL default '0.0000',
+  `qtyinvoiced` double NOT NULL default '0',
+  `unitprice` double NOT NULL default '0',
+  `actprice` double NOT NULL default '0',
+  `stdcostunit` double NOT NULL default '0',
+  `quantityord` double NOT NULL default '0',
+  `quantityrecd` double NOT NULL default '0',
   `shiptref` int(1) NOT NULL default '0',
   `jobref` varchar(20) NOT NULL default '',
   `completed` tinyint(4) NOT NULL default '0',
@@ -858,7 +858,7 @@ CREATE TABLE `purchorders` (
   `supplierno` varchar(10) NOT NULL default '',
   `comments` longblob,
   `orddate` datetime NOT NULL default '0000-00-00 00:00:00',
-  `rate` double(16,4) NOT NULL default '1.0000',
+  `rate` double NOT NULL default '1',
   `dateprinted` datetime default NULL,
   `allowprint` tinyint(4) NOT NULL default '1',
   `initiator` varchar(10) default NULL,
@@ -920,9 +920,9 @@ CREATE TABLE `recurringsalesorders` (
 CREATE TABLE `recurrsalesorderdetails` (
   `recurrorderno` int(11) NOT NULL default '0',
   `stkcode` varchar(20) NOT NULL default '',
-  `unitprice` double(16,4) NOT NULL default '0.0000',
-  `quantity` double(16,4) NOT NULL default '0.0000',
-  `discountpercent` double(16,4) NOT NULL default '0.0000',
+  `unitprice` double NOT NULL default '0',
+  `quantity` double NOT NULL default '0',
+  `discountpercent` double NOT NULL default '0',
   `narrative` text NOT NULL,
   PRIMARY KEY  (`recurrorderno`,`stkcode`),
   KEY `orderno` (`recurrorderno`),
@@ -988,12 +988,12 @@ CREATE TABLE `reportheaders` (
 CREATE TABLE `salesanalysis` (
   `typeabbrev` char(2) NOT NULL default '',
   `periodno` smallint(6) NOT NULL default '0',
-  `amt` double(16,4) NOT NULL default '0.0000',
-  `cost` double(16,4) NOT NULL default '0.0000',
+  `amt` double NOT NULL default '0',
+  `cost` double NOT NULL default '0',
   `cust` varchar(10) NOT NULL default '',
   `custbranch` varchar(10) NOT NULL default '',
-  `qty` double(16,4) NOT NULL default '0.0000',
-  `disc` double(16,4) NOT NULL default '0.0000',
+  `qty` double NOT NULL default '0',
+  `disc` double NOT NULL default '0',
   `stockid` varchar(20) NOT NULL default '',
   `area` char(2) NOT NULL default '',
   `budgetoractual` tinyint(1) NOT NULL default '0',
@@ -1065,9 +1065,9 @@ CREATE TABLE `salesman` (
   `salesmanname` char(30) NOT NULL default '',
   `smantel` char(20) NOT NULL default '',
   `smanfax` char(20) NOT NULL default '',
-  `commissionrate1` double(16,4) NOT NULL default '0.0000',
-  `breakpoint` decimal(20,4) NOT NULL default '0.0000',
-  `commissionrate2` double(16,4) NOT NULL default '0.0000',
+  `commissionrate1` double NOT NULL default '0',
+  `breakpoint` decimal(10,0) NOT NULL default '0',
+  `commissionrate2` double NOT NULL default '0',
   PRIMARY KEY  (`salesmancode`)
 ) TYPE=InnoDB;
 
@@ -1079,11 +1079,11 @@ CREATE TABLE `salesorderdetails` (
   `orderlineno` int(11) NOT NULL default '0',
   `orderno` int(11) NOT NULL default '0',
   `stkcode` varchar(20) NOT NULL default '',
-  `qtyinvoiced` double(16,4) NOT NULL default '0.0000',
-  `unitprice` double(16,4) NOT NULL default '0.0000',
-  `quantity` double(16,4) NOT NULL default '0.0000',
+  `qtyinvoiced` double NOT NULL default '0',
+  `unitprice` double NOT NULL default '0',
+  `quantity` double NOT NULL default '0',
   `estimate` tinyint(4) NOT NULL default '0',
-  `discountpercent` double(16,4) NOT NULL default '0.0000',
+  `discountpercent` double NOT NULL default '0',
   `actualdispatchdate` datetime NOT NULL default '0000-00-00 00:00:00',
   `completed` tinyint(1) NOT NULL default '0',
   `narrative` text NOT NULL,
@@ -1222,7 +1222,7 @@ CREATE TABLE `shipments` (
   `voyageref` varchar(20) NOT NULL default '0',
   `vessel` varchar(50) NOT NULL default '',
   `eta` datetime NOT NULL default '0000-00-00 00:00:00',
-  `accumvalue` double(16,4) NOT NULL default '0.0000',
+  `accumvalue` double NOT NULL default '0',
   `supplierid` varchar(10) NOT NULL default '',
   `closed` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`shiptref`),
@@ -1240,7 +1240,7 @@ CREATE TABLE `shipments` (
 CREATE TABLE `shippers` (
   `shipper_id` int(11) NOT NULL auto_increment,
   `shippername` char(40) NOT NULL default '',
-  `mincharge` double(16,4) NOT NULL default '0.0000',
+  `mincharge` double NOT NULL default '0',
   PRIMARY KEY  (`shipper_id`)
 ) TYPE=InnoDB;
 
@@ -1313,7 +1313,7 @@ CREATE TABLE `stockmaster` (
   `lowestlevel` smallint(6) NOT NULL default '0',
   `discontinued` tinyint(4) NOT NULL default '0',
   `controlled` tinyint(4) NOT NULL default '0',
-  `eoq` double(10,2) NOT NULL default '0.00',
+  `eoq` double NOT NULL default '0',
   `volume` decimal(20,4) NOT NULL default '0.0000',
   `kgs` decimal(20,4) NOT NULL default '0.0000',
   `barcode` varchar(50) NOT NULL default '',
@@ -1350,9 +1350,9 @@ CREATE TABLE `stockmoves` (
   `price` decimal(20,4) NOT NULL default '0.0000',
   `prd` smallint(6) NOT NULL default '0',
   `reference` varchar(40) NOT NULL default '',
-  `qty` double(16,4) NOT NULL default '1.0000',
-  `discountpercent` double(16,4) NOT NULL default '0.0000',
-  `standardcost` double(16,4) NOT NULL default '0.0000',
+  `qty` double NOT NULL default '1',
+  `discountpercent` double NOT NULL default '0',
+  `standardcost` double NOT NULL default '0',
   `show_on_inv_crds` tinyint(4) NOT NULL default '1',
   `newqoh` double NOT NULL default '0',
   `hidemovt` tinyint(4) NOT NULL default '0',
@@ -1474,7 +1474,7 @@ CREATE TABLE `suppliers` (
   `currcode` char(3) NOT NULL default '',
   `suppliersince` date NOT NULL default '0000-00-00',
   `paymentterms` char(2) NOT NULL default '',
-  `lastpaid` double(16,4) NOT NULL default '0.0000',
+  `lastpaid` double NOT NULL default '0',
   `lastpaiddate` datetime default NULL,
   `bankact` char(16) NOT NULL default '',
   `bankref` char(12) NOT NULL default '',
@@ -1504,11 +1504,11 @@ CREATE TABLE `supptrans` (
   `trandate` date NOT NULL default '0000-00-00',
   `duedate` date NOT NULL default '0000-00-00',
   `settled` tinyint(4) NOT NULL default '0',
-  `rate` double(16,6) NOT NULL default '1.000000',
-  `ovamount` double(16,4) NOT NULL default '0.0000',
-  `ovgst` double(16,4) NOT NULL default '0.0000',
-  `diffonexch` double(16,4) NOT NULL default '0.0000',
-  `alloc` double(16,4) NOT NULL default '0.0000',
+  `rate` double NOT NULL default '1',
+  `ovamount` double NOT NULL default '0',
+  `ovgst` double NOT NULL default '0',
+  `diffonexch` double NOT NULL default '0',
+  `alloc` double NOT NULL default '0',
   `transtext` longblob,
   `hold` tinyint(4) NOT NULL default '0',
   `id` int(11) NOT NULL auto_increment,
@@ -1586,7 +1586,7 @@ CREATE TABLE `taxauthrates` (
   KEY `TaxAuthority` (`taxauthority`),
   KEY `dispatchtaxprovince` (`dispatchtaxprovince`),
   KEY `taxcatid` (`taxcatid`),
-  CONSTRAINT `taxauthrates_ibfk_1` FOREIGN KEY (`taxauthority`) REFERENCES `taxauthorities` (`TaxID`),
+  CONSTRAINT `taxauthrates_ibfk_1` FOREIGN KEY (`taxauthority`) REFERENCES `taxauthorities` (`taxid`),
   CONSTRAINT `taxauthrates_ibfk_2` FOREIGN KEY (`taxcatid`) REFERENCES `taxcategories` (`taxcatid`),
   CONSTRAINT `taxauthrates_ibfk_3` FOREIGN KEY (`dispatchtaxprovince`) REFERENCES `taxprovinces` (`taxprovinceid`)
 ) TYPE=InnoDB;
@@ -1655,10 +1655,10 @@ CREATE TABLE `workcentres` (
   `code` char(5) NOT NULL default '',
   `location` char(5) NOT NULL default '',
   `description` char(20) NOT NULL default '',
-  `capacity` double(16,4) NOT NULL default '1.0000',
-  `overheadperhour` decimal(20,4) NOT NULL default '0.0000',
+  `capacity` double NOT NULL default '1',
+  `overheadperhour` decimal(10,0) NOT NULL default '0',
   `overheadrecoveryact` int(11) NOT NULL default '0',
-  `setuphrs` decimal(20,4) NOT NULL default '0.0000',
+  `setuphrs` decimal(10,0) NOT NULL default '0',
   PRIMARY KEY  (`code`),
   KEY `Description` (`description`),
   KEY `Location` (`location`),
@@ -1788,8 +1788,8 @@ INSERT INTO `bankaccounts` VALUES (700100,'Petty Cash account','NA','');
 -- Dumping data for table `bom`
 --
 
-INSERT INTO `bom` VALUES ('FUJI9901ASS','FUJI990101','ASS','DEN','2005-06-04','2035-06-05',1.0000);
-INSERT INTO `bom` VALUES ('FUJI9901ASS','FUJI990102','ASS','DEN','2005-06-04','2035-06-05',1.0000);
+INSERT INTO `bom` VALUES ('FUJI9901ASS','FUJI990101','ASS','DEN','2005-06-04','2035-06-05',1);
+INSERT INTO `bom` VALUES ('FUJI9901ASS','FUJI990102','ASS','DEN','2005-06-04','2035-06-05',1);
 
 --
 -- Dumping data for table `buckets`
@@ -2196,9 +2196,9 @@ INSERT INTO `config` VALUES ('YearEnd','3');
 -- Dumping data for table `currencies`
 --
 
-INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',1.7000);
-INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',0.8000);
-INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',1.0000);
+INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',1.7);
+INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',0.8);
+INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',1);
 
 --
 -- Dumping data for table `custallocns`
@@ -2218,17 +2218,17 @@ INSERT INTO `custbranch` VALUES ('JOLOMU','JOLOMU','Lorrima Productions Inc','32
 -- Dumping data for table `debtorsmaster`
 --
 
-INSERT INTO `debtorsmaster` VALUES ('ANGRY','Angus Rouledge Younger & Son','P O Box 67','Gowerbridge','Upperton','Michigan','USD','DE','2005-04-30 00:00:00',1,'7',0.0000,0.0000,0.0000,NULL,5000,0,'',0,0,'','email','','','','1344-654-112');
-INSERT INTO `debtorsmaster` VALUES ('DUMBLE','Dumbledoor McGonagal & Co','Hogwarts castle','Platform 9.75','','','GBP','DE','2005-06-18 00:00:00',1,'30',0.0000,0.0000,0.0000,NULL,1000,0,'',0,0,'','email','','','','');
-INSERT INTO `debtorsmaster` VALUES ('JOLOMU','Lorrima Productions Inc','3215 Great Western Highway','Blubberhouses','Yorkshire','England','GBP','DE','2005-06-15 00:00:00',1,'30',0.0000,0.0000,0.0000,NULL,1000,0,'',0,0,'','email','','','','');
+INSERT INTO `debtorsmaster` VALUES ('ANGRY','Angus Rouledge Younger & Son','P O Box 67','Gowerbridge','Upperton','Michigan','USD','DE','2005-04-30 00:00:00',1,'7',0,0,0,NULL,5000,0,'',0,0,'','email','','','','1344-654-112');
+INSERT INTO `debtorsmaster` VALUES ('DUMBLE','Dumbledoor McGonagal & Co','Hogwarts castle','Platform 9.75','','','GBP','DE','2005-06-18 00:00:00',1,'30',0,0,0,NULL,1000,0,'',0,0,'','email','','','','');
+INSERT INTO `debtorsmaster` VALUES ('JOLOMU','Lorrima Productions Inc','3215 Great Western Highway','Blubberhouses','Yorkshire','England','GBP','DE','2005-06-15 00:00:00',1,'30',0,0,0,NULL,1000,0,'',0,0,'','email','','','','');
 
 --
 -- Dumping data for table `debtortrans`
 --
 
-INSERT INTO `debtortrans` VALUES (2,1,10,'ANGRY','ANGRY','2005-06-20 00:00:00',66,0,'','DE',4,1.000000,6800,852.15,100,0,0,0,'','8',0,'');
-INSERT INTO `debtortrans` VALUES (3,2,10,'DUMBLE','DUMBLE','2005-06-20 00:00:00',66,0,'','DE',8,0.800000,1425,275.63,150,0,0,0,'','10',0,'');
-INSERT INTO `debtortrans` VALUES (4,3,10,'DUMBLE','DUMBLE','2005-06-20 00:00:00',66,0,'','DE',9,0.800000,11600,2091.25,350,0,0,0,'','10',0,'');
+INSERT INTO `debtortrans` VALUES (2,1,10,'ANGRY','ANGRY','2005-06-20 00:00:00',66,0,'','DE',4,1,6800,852.15,100,0,0,0,'','8',0,'');
+INSERT INTO `debtortrans` VALUES (3,2,10,'DUMBLE','DUMBLE','2005-06-20 00:00:00',66,0,'','DE',8,0.8,1425,275.63,150,0,0,0,'','10',0,'');
+INSERT INTO `debtortrans` VALUES (4,3,10,'DUMBLE','DUMBLE','2005-06-20 00:00:00',66,0,'','DE',9,0.8,11600,2091.25,350,0,0,0,'','10',0,'');
 
 --
 -- Dumping data for table `debtortranstaxes`
@@ -2459,10 +2459,10 @@ INSERT INTO `gltrans` VALUES (137,25,3,0,'2005-07-17',67,723000,'PO: 1 REGNEW - 
 -- Dumping data for table `grns`
 --
 
-INSERT INTO `grns` VALUES (1,1,1,'FUJI990101','2005-06-23','Fujitsu 990101 Split type Indoor Unit 3.5kw',35.0000,0.0000,'REGNEW');
-INSERT INTO `grns` VALUES (1,2,2,'FUJI990102','2005-06-23','Fujitsu 990102 split type A/C Outdoor unit 3.5kw',50.0000,0.0000,'REGNEW');
-INSERT INTO `grns` VALUES (2,3,3,'HIT3034-4','2005-07-04','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor',4.0000,0.0000,'CAMPBELL');
-INSERT INTO `grns` VALUES (3,4,1,'FUJI990101','2005-07-17','Fujitsu 990101 Split type Indoor Unit 3.5kw',25.0000,0.0000,'REGNEW');
+INSERT INTO `grns` VALUES (1,1,1,'FUJI990101','2005-06-23','Fujitsu 990101 Split type Indoor Unit 3.5kw',35,0,'REGNEW');
+INSERT INTO `grns` VALUES (1,2,2,'FUJI990102','2005-06-23','Fujitsu 990102 split type A/C Outdoor unit 3.5kw',50,0,'REGNEW');
+INSERT INTO `grns` VALUES (2,3,3,'HIT3034-4','2005-07-04','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor',4,0,'CAMPBELL');
+INSERT INTO `grns` VALUES (3,4,1,'FUJI990101','2005-07-17','Fujitsu 990101 Split type Indoor Unit 3.5kw',25,0,'REGNEW');
 
 --
 -- Dumping data for table `holdreasons`
@@ -2489,27 +2489,27 @@ INSERT INTO `locations` VALUES ('TOR','Toronto Distribution Centre','','','','',
 -- Dumping data for table `locstock`
 --
 
-INSERT INTO `locstock` VALUES ('DEN','FUJI990101',-2.0,0);
-INSERT INTO `locstock` VALUES ('DEN','FUJI990102',-2.0,0);
-INSERT INTO `locstock` VALUES ('DEN','FUJI9901ASS',0.0,0);
-INSERT INTO `locstock` VALUES ('DEN','HIT3034-4',192.0,0);
-INSERT INTO `locstock` VALUES ('DEN','HIT3042-4',0.0,0);
-INSERT INTO `locstock` VALUES ('DEN','HIT3042-ASS',0.0,0);
-INSERT INTO `locstock` VALUES ('DEN','HIT3043-5',0.0,0);
-INSERT INTO `locstock` VALUES ('DOG','FUJI990101',0.0,0);
-INSERT INTO `locstock` VALUES ('DOG','FUJI990102',0.0,0);
-INSERT INTO `locstock` VALUES ('DOG','FUJI9901ASS',0.0,0);
-INSERT INTO `locstock` VALUES ('DOG','HIT3034-4',0.0,0);
-INSERT INTO `locstock` VALUES ('DOG','HIT3042-4',0.0,0);
-INSERT INTO `locstock` VALUES ('DOG','HIT3042-ASS',0.0,0);
-INSERT INTO `locstock` VALUES ('DOG','HIT3043-5',0.0,0);
-INSERT INTO `locstock` VALUES ('TOR','FUJI990101',55.0,0);
-INSERT INTO `locstock` VALUES ('TOR','FUJI990102',45.0,0);
-INSERT INTO `locstock` VALUES ('TOR','FUJI9901ASS',0.0,0);
-INSERT INTO `locstock` VALUES ('TOR','HIT3034-4',111.0,0);
-INSERT INTO `locstock` VALUES ('TOR','HIT3042-4',18.0,0);
-INSERT INTO `locstock` VALUES ('TOR','HIT3042-ASS',0.0,0);
-INSERT INTO `locstock` VALUES ('TOR','HIT3043-5',0.0,0);
+INSERT INTO `locstock` VALUES ('DEN','FUJI990101',-2,0);
+INSERT INTO `locstock` VALUES ('DEN','FUJI990102',-2,0);
+INSERT INTO `locstock` VALUES ('DEN','FUJI9901ASS',0,0);
+INSERT INTO `locstock` VALUES ('DEN','HIT3034-4',192,0);
+INSERT INTO `locstock` VALUES ('DEN','HIT3042-4',0,0);
+INSERT INTO `locstock` VALUES ('DEN','HIT3042-ASS',0,0);
+INSERT INTO `locstock` VALUES ('DEN','HIT3043-5',0,0);
+INSERT INTO `locstock` VALUES ('DOG','FUJI990101',0,0);
+INSERT INTO `locstock` VALUES ('DOG','FUJI990102',0,0);
+INSERT INTO `locstock` VALUES ('DOG','FUJI9901ASS',0,0);
+INSERT INTO `locstock` VALUES ('DOG','HIT3034-4',0,0);
+INSERT INTO `locstock` VALUES ('DOG','HIT3042-4',0,0);
+INSERT INTO `locstock` VALUES ('DOG','HIT3042-ASS',0,0);
+INSERT INTO `locstock` VALUES ('DOG','HIT3043-5',0,0);
+INSERT INTO `locstock` VALUES ('TOR','FUJI990101',55,0);
+INSERT INTO `locstock` VALUES ('TOR','FUJI990102',45,0);
+INSERT INTO `locstock` VALUES ('TOR','FUJI9901ASS',0,0);
+INSERT INTO `locstock` VALUES ('TOR','HIT3034-4',111,0);
+INSERT INTO `locstock` VALUES ('TOR','HIT3042-4',18,0);
+INSERT INTO `locstock` VALUES ('TOR','HIT3042-ASS',0,0);
+INSERT INTO `locstock` VALUES ('TOR','HIT3043-5',0,0);
 
 --
 -- Dumping data for table `loctransfers`
@@ -2556,23 +2556,23 @@ INSERT INTO `prices` VALUES ('HIT3043-5','DE','USD','','2300.0000','');
 -- Dumping data for table `purchdata`
 --
 
-INSERT INTO `purchdata` VALUES ('BINGO','HIT3034-4','853.0000','',1.0000,'',1,1);
-INSERT INTO `purchdata` VALUES ('BINGO','HIT3043-5','1235.0000','',1.0000,'',5,1);
+INSERT INTO `purchdata` VALUES ('BINGO','HIT3034-4','853.0000','',1,'',1,1);
+INSERT INTO `purchdata` VALUES ('BINGO','HIT3043-5','1235.0000','',1,'',5,1);
 
 --
 -- Dumping data for table `purchorderdetails`
 --
 
-INSERT INTO `purchorderdetails` VALUES (1,1,'FUJI990101','2005-06-23','Fujitsu 990101 Split type Indoor Unit 3.5kw',722000,0.0000,305.9500,0.0000,530.0000,50.0000,60.0000,0,'0',1);
-INSERT INTO `purchorderdetails` VALUES (2,1,'FUJI990102','2005-06-23','Fujitsu 990102 split type A/C Outdoor unit 3.5kw',722000,0.0000,265.4100,0.0000,633.0000,50.0000,50.0000,0,'0',1);
-INSERT INTO `purchorderdetails` VALUES (3,2,'HIT3034-4','2005-07-01','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor',722000,0.0000,211.0000,0.0000,853.0000,4.0000,4.0000,0,'0',1);
+INSERT INTO `purchorderdetails` VALUES (1,1,'FUJI990101','2005-06-23','Fujitsu 990101 Split type Indoor Unit 3.5kw',722000,0,305.95,0,530,50,60,0,'0',1);
+INSERT INTO `purchorderdetails` VALUES (2,1,'FUJI990102','2005-06-23','Fujitsu 990102 split type A/C Outdoor unit 3.5kw',722000,0,265.41,0,633,50,50,0,'0',1);
+INSERT INTO `purchorderdetails` VALUES (3,2,'HIT3034-4','2005-07-01','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor',722000,0,211,0,853,4,4,0,'0',1);
 
 --
 -- Dumping data for table `purchorders`
 --
 
-INSERT INTO `purchorders` VALUES (1,'REGNEW','','2005-06-23 00:00:00',1.0000,'2005-07-13 00:00:00',0,'','','TOR','532-536 Wentworth Street','Denver','Colorado','233 5532 216');
-INSERT INTO `purchorders` VALUES (2,'CAMPBELL','','2005-07-01 00:00:00',1.0000,'2005-07-13 00:00:00',0,'','','TOR','532-536 Wentworth Street','Denver','Colorado','233 5532 216');
+INSERT INTO `purchorders` VALUES (1,'REGNEW','','2005-06-23 00:00:00',1,'2005-07-13 00:00:00',0,'','','TOR','532-536 Wentworth Street','Denver','Colorado','233 5532 216');
+INSERT INTO `purchorders` VALUES (2,'CAMPBELL','','2005-07-01 00:00:00',1,'2005-07-13 00:00:00',0,'','','TOR','532-536 Wentworth Street','Denver','Colorado','233 5532 216');
 
 --
 -- Dumping data for table `recurringsalesorders`
@@ -2584,7 +2584,7 @@ INSERT INTO `recurringsalesorders` VALUES (1,'DUMBLE','DUMBLE','',NULL,'','2005-
 -- Dumping data for table `recurrsalesorderdetails`
 --
 
-INSERT INTO `recurrsalesorderdetails` VALUES (1,'HIT3042-ASS',234.0000,5.0000,0.0000,'');
+INSERT INTO `recurrsalesorderdetails` VALUES (1,'HIT3042-ASS',234,5,0,'');
 
 --
 -- Dumping data for table `reportcolumns`
@@ -2600,10 +2600,10 @@ INSERT INTO `recurrsalesorderdetails` VALUES (1,'HIT3042-ASS',234.0000,5.0000,0.
 -- Dumping data for table `salesanalysis`
 --
 
-INSERT INTO `salesanalysis` VALUES ('DE',66,6800.0000,2326.0000,'ANGRY','ANGRY',2.0000,0.0000,'FUJI9901ASS','TR',1,'ERI','AIRCON',2);
-INSERT INTO `salesanalysis` VALUES ('DE',66,1875.0000,0.0000,'DUMBLE','DUMBLE',1.0000,93.7500,'HIT3042-ASS','TR',1,'ERI','AIRCON',3);
-INSERT INTO `salesanalysis` VALUES ('DE',66,10000.0000,5815.0000,'DUMBLE','DUMBLE',5.0000,500.0000,'FUJI9901ASS','TR',1,'ERI','AIRCON',4);
-INSERT INTO `salesanalysis` VALUES ('DE',66,5000.0000,8530.0000,'DUMBLE','DUMBLE',10.0000,0.0000,'HIT3034-4','TR',1,'ERI','AIRCON',5);
+INSERT INTO `salesanalysis` VALUES ('DE',66,6800,2326,'ANGRY','ANGRY',2,0,'FUJI9901ASS','TR',1,'ERI','AIRCON',2);
+INSERT INTO `salesanalysis` VALUES ('DE',66,1875,0,'DUMBLE','DUMBLE',1,93.75,'HIT3042-ASS','TR',1,'ERI','AIRCON',3);
+INSERT INTO `salesanalysis` VALUES ('DE',66,10000,5815,'DUMBLE','DUMBLE',5,500,'FUJI9901ASS','TR',1,'ERI','AIRCON',4);
+INSERT INTO `salesanalysis` VALUES ('DE',66,5000,8530,'DUMBLE','DUMBLE',10,0,'HIT3034-4','TR',1,'ERI','AIRCON',5);
 
 --
 -- Dumping data for table `salescat`
@@ -2625,25 +2625,25 @@ INSERT INTO `salesglpostings` VALUES (1,'AN','ANY',107,107,'AN');
 -- Dumping data for table `salesman`
 --
 
-INSERT INTO `salesman` VALUES ('ERI','Eric Browlee','','',0.0000,'0.0000',0.0000);
-INSERT INTO `salesman` VALUES ('PHO','Phone Contact','','',0.0000,'0.0000',0.0000);
+INSERT INTO `salesman` VALUES ('ERI','Eric Browlee','','',0,'0',0);
+INSERT INTO `salesman` VALUES ('PHO','Phone Contact','','',0,'0',0);
 
 --
 -- Dumping data for table `salesorderdetails`
 --
 
-INSERT INTO `salesorderdetails` VALUES (0,2,'HIT3034-4',0.0000,1680.0000,3.0000,0,0.0000,'2005-06-06 00:00:00',0,'');
-INSERT INTO `salesorderdetails` VALUES (0,3,'HIT3034-4',0.0000,1680.0000,4.0000,0,0.0000,'0000-00-00 00:00:00',0,'');
-INSERT INTO `salesorderdetails` VALUES (0,4,'FUJI9901ASS',2.0000,3400.0000,2.0000,0,0.0000,'2005-06-20 00:00:00',1,'');
-INSERT INTO `salesorderdetails` VALUES (0,5,'FUJI9901ASS',0.0000,3650.0000,25.0000,0,0.0000,'2005-06-13 00:00:00',0,'');
-INSERT INTO `salesorderdetails` VALUES (0,6,'HIT3042-4',0.0000,650.0000,2.0000,0,0.0250,'0000-00-00 00:00:00',0,'');
-INSERT INTO `salesorderdetails` VALUES (0,7,'HIT3042-4',0.0000,600.0000,2.0000,0,0.0000,'2005-06-17 00:00:00',0,'');
-INSERT INTO `salesorderdetails` VALUES (0,8,'HIT3042-ASS',1.0000,1500.0000,1.0000,0,0.0500,'2005-06-20 00:00:00',1,'');
-INSERT INTO `salesorderdetails` VALUES (0,9,'FUJI9901ASS',5.0000,1600.0000,5.0000,0,0.0500,'2005-06-20 00:00:00',1,'');
-INSERT INTO `salesorderdetails` VALUES (1,1,'HIT3034-4',0.0000,1680.0000,2.0000,0,0.0000,'0000-00-00 00:00:00',0,'Installation experts at 1800 12345667');
-INSERT INTO `salesorderdetails` VALUES (1,2,'HIT3043-5',0.0000,2300.0000,3.0000,0,0.0000,'0000-00-00 00:00:00',0,'');
-INSERT INTO `salesorderdetails` VALUES (1,7,'HIT3042-ASS',0.0000,2500.0000,1.0000,0,0.0250,'2005-06-17 00:00:00',0,'');
-INSERT INTO `salesorderdetails` VALUES (1,9,'HIT3034-4',10.0000,400.0000,10.0000,0,0.0000,'2005-06-20 00:00:00',1,'');
+INSERT INTO `salesorderdetails` VALUES (0,2,'HIT3034-4',0,1680,3,0,0,'2005-06-06 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (0,3,'HIT3034-4',0,1680,4,0,0,'0000-00-00 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (0,4,'FUJI9901ASS',2,3400,2,0,0,'2005-06-20 00:00:00',1,'');
+INSERT INTO `salesorderdetails` VALUES (0,5,'FUJI9901ASS',0,3650,25,0,0,'2005-06-13 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (0,6,'HIT3042-4',0,650,2,0,0.025,'0000-00-00 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (0,7,'HIT3042-4',0,600,2,0,0,'2005-06-17 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (0,8,'HIT3042-ASS',1,1500,1,0,0.05,'2005-06-20 00:00:00',1,'');
+INSERT INTO `salesorderdetails` VALUES (0,9,'FUJI9901ASS',5,1600,5,0,0.05,'2005-06-20 00:00:00',1,'');
+INSERT INTO `salesorderdetails` VALUES (1,1,'HIT3034-4',0,1680,2,0,0,'0000-00-00 00:00:00',0,'Installation experts at 1800 12345667');
+INSERT INTO `salesorderdetails` VALUES (1,2,'HIT3043-5',0,2300,3,0,0,'0000-00-00 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (1,7,'HIT3042-ASS',0,2500,1,0,0.025,'2005-06-17 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (1,9,'HIT3034-4',10,400,10,0,0,'2005-06-20 00:00:00',1,'');
 
 --
 -- Dumping data for table `salesorders`
@@ -2933,9 +2933,9 @@ INSERT INTO `securitytokens` VALUES (15,'User Management and System Administrati
 -- Dumping data for table `shippers`
 --
 
-INSERT INTO `shippers` VALUES (1,'Courier Post',0.0000);
-INSERT INTO `shippers` VALUES (8,'Ansett',0.0000);
-INSERT INTO `shippers` VALUES (10,'Not Specified',0.0000);
+INSERT INTO `shippers` VALUES (1,'Courier Post',0);
+INSERT INTO `shippers` VALUES (8,'Ansett',0);
+INSERT INTO `shippers` VALUES (10,'Not Specified',0);
 
 --
 -- Dumping data for table `stockcategory`
@@ -2957,33 +2957,33 @@ INSERT INTO `stockcategory` VALUES ('AIRCON','Air Conditioning','F',722000,19000
 -- Dumping data for table `stockmaster`
 --
 
-INSERT INTO `stockmaster` VALUES ('FUJI990101','AIRCON','Fujitsu 990101 Split type Indoor Unit 3.5kw','Fujitsu 990101 Split type Indoor Unit 3.5kw Heat Pump with mounting screws and isolating switch','each','B','1800-01-01','0.0000','0.0000','530.0000','0.0000','0.0000',0,0,0,0.00,'0.0000','0.0000','','',1,0,0);
-INSERT INTO `stockmaster` VALUES ('FUJI990102','AIRCON','Fujitsu 990102 split type A/C Outdoor unit 3.5kw','Fujitsu 990102 split type A/C Outdoor unit 3.5kw with 5m piping & insulation','each','B','1800-01-01','0.0000','0.0000','633.0000','0.0000','0.0000',0,0,0,0.00,'0.0000','0.0000','','',1,0,0);
-INSERT INTO `stockmaster` VALUES ('FUJI9901ASS','AIRCON','Fujitsu 990101 Split type A/C 3.5kw complete','Fujitsu 990101 Split type A/C 3.5kw complete with indoor and outdoor units 5m pipe and insulation isolating switch. 5 year warranty','each','A','1800-01-01','0.0000','0.0000','0.0000','0.0000','0.0000',0,0,0,0.00,'0.0000','0.0000','','',1,0,0);
-INSERT INTO `stockmaster` VALUES ('HIT3034-4','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor Unit - wall hung complete with brackets and screws. 220V-240V AC\r\n5 year guaranttee','each','B','1800-01-01','0.0000','0.0000','853.0000','0.0000','0.0000',0,0,1,5.00,'0.4000','7.8000','','',1,0,0);
-INSERT INTO `stockmaster` VALUES ('HIT3042-4','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor Unit - wall hung complete with brackets and screws. 220V-240V AC\r\n5 year guaranttee','each','B','1800-01-01','0.0000','0.0000','853.0000','0.0000','0.0000',0,0,1,5.00,'0.4000','7.8000','','',1,1,0);
-INSERT INTO `stockmaster` VALUES ('HIT3042-ASS','AIRCON','Split typeHitachi 3042 Air Cond - complete','Split typeHitachi 3042 Air Cond - complete with 4044 Outdoor unit.','each','A','1800-01-01','0.0000','0.0000','0.0000','0.0000','0.0000',0,0,0,0.00,'0.0000','0.0000','','',1,0,0);
-INSERT INTO `stockmaster` VALUES ('HIT3043-5','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor unit - including 5m piping for fitting to HIT3042-4 indoor unit\r\n5 year guaranttee','each','B','1800-01-01','0.0000','0.0000','1235.0000','0.0000','0.0000',0,0,1,5.00,'0.8500','16.0000','','',1,1,0);
+INSERT INTO `stockmaster` VALUES ('FUJI990101','AIRCON','Fujitsu 990101 Split type Indoor Unit 3.5kw','Fujitsu 990101 Split type Indoor Unit 3.5kw Heat Pump with mounting screws and isolating switch','each','B','1800-01-01','0.0000','0.0000','530.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,0);
+INSERT INTO `stockmaster` VALUES ('FUJI990102','AIRCON','Fujitsu 990102 split type A/C Outdoor unit 3.5kw','Fujitsu 990102 split type A/C Outdoor unit 3.5kw with 5m piping & insulation','each','B','1800-01-01','0.0000','0.0000','633.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,0);
+INSERT INTO `stockmaster` VALUES ('FUJI9901ASS','AIRCON','Fujitsu 990101 Split type A/C 3.5kw complete','Fujitsu 990101 Split type A/C 3.5kw complete with indoor and outdoor units 5m pipe and insulation isolating switch. 5 year warranty','each','A','1800-01-01','0.0000','0.0000','0.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,0);
+INSERT INTO `stockmaster` VALUES ('HIT3034-4','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor Unit - wall hung complete with brackets and screws. 220V-240V AC\r\n5 year guaranttee','each','B','1800-01-01','0.0000','0.0000','853.0000','0.0000','0.0000',0,0,1,5,'0.4000','7.8000','','',1,0,0);
+INSERT INTO `stockmaster` VALUES ('HIT3042-4','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor Unit - wall hung complete with brackets and screws. 220V-240V AC\r\n5 year guaranttee','each','B','1800-01-01','0.0000','0.0000','853.0000','0.0000','0.0000',0,0,1,5,'0.4000','7.8000','','',1,1,0);
+INSERT INTO `stockmaster` VALUES ('HIT3042-ASS','AIRCON','Split typeHitachi 3042 Air Cond - complete','Split typeHitachi 3042 Air Cond - complete with 4044 Outdoor unit.','each','A','1800-01-01','0.0000','0.0000','0.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,0);
+INSERT INTO `stockmaster` VALUES ('HIT3043-5','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor unit - including 5m piping for fitting to HIT3042-4 indoor unit\r\n5 year guaranttee','each','B','1800-01-01','0.0000','0.0000','1235.0000','0.0000','0.0000',0,0,1,5,'0.8500','16.0000','','',1,1,0);
 
 --
 -- Dumping data for table `stockmoves`
 --
 
-INSERT INTO `stockmoves` VALUES (9,'HIT3034-4',17,6,'DEN','2005-06-19','','','0.0000',66,'',192.0000,0.0000,0.0000,1,192,0,'');
-INSERT INTO `stockmoves` VALUES (10,'FUJI990101',10,1,'DEN','2005-06-20','ANGRY','ANGRY','0.0000',66,'Assembly: FUJI9901ASS Order: 4',-2.0000,0.0000,530.0000,0,-2,0,'');
-INSERT INTO `stockmoves` VALUES (11,'FUJI990102',10,1,'DEN','2005-06-20','ANGRY','ANGRY','0.0000',66,'Assembly: FUJI9901ASS Order: 4',-2.0000,0.0000,633.0000,0,-2,0,'');
-INSERT INTO `stockmoves` VALUES (12,'FUJI9901ASS',10,1,'DEN','2005-06-20','ANGRY','ANGRY','3400.0000',66,'4',-2.0000,0.0000,1163.0000,1,0,0,'');
-INSERT INTO `stockmoves` VALUES (13,'HIT3042-ASS',10,2,'TOR','2005-06-20','DUMBLE','DUMBLE','1875.0000',66,'8',-1.0000,0.0500,0.0000,1,0,0,'');
-INSERT INTO `stockmoves` VALUES (14,'HIT3042-4',17,7,'TOR','2005-06-19','','','0.0000',66,'',18.0000,0.0000,0.0000,1,18,0,'');
-INSERT INTO `stockmoves` VALUES (15,'HIT3034-4',17,8,'TOR','2005-06-19','','','0.0000',66,'',117.0000,0.0000,0.0000,1,117,0,'');
-INSERT INTO `stockmoves` VALUES (16,'FUJI990101',10,3,'TOR','2005-06-20','DUMBLE','DUMBLE','0.0000',66,'Assembly: FUJI9901ASS Order: 9',-5.0000,0.0000,530.0000,0,-5,0,'');
-INSERT INTO `stockmoves` VALUES (17,'FUJI990102',10,3,'TOR','2005-06-20','DUMBLE','DUMBLE','0.0000',66,'Assembly: FUJI9901ASS Order: 9',-5.0000,0.0000,633.0000,0,-5,0,'');
-INSERT INTO `stockmoves` VALUES (18,'FUJI9901ASS',10,3,'TOR','2005-06-20','DUMBLE','DUMBLE','2000.0000',66,'9',-5.0000,0.0500,1163.0000,1,0,0,'');
-INSERT INTO `stockmoves` VALUES (19,'HIT3034-4',10,3,'TOR','2005-06-20','DUMBLE','DUMBLE','500.0000',66,'9',-10.0000,0.0000,853.0000,1,107,0,'');
-INSERT INTO `stockmoves` VALUES (20,'FUJI990101',25,1,'TOR','2005-06-23','','','305.9500',66,'REGNEW (Reg Newall Inc) - 1',35.0000,0.0000,530.0000,1,30,0,'');
-INSERT INTO `stockmoves` VALUES (21,'FUJI990102',25,1,'TOR','2005-06-23','','','265.4100',66,'REGNEW (Reg Newall Inc) - 1',50.0000,0.0000,633.0000,1,45,0,'');
-INSERT INTO `stockmoves` VALUES (22,'HIT3034-4',25,2,'TOR','2005-07-04','','','211.0000',67,'CAMPBELL (Campbell Roberts Inc) - 2',4.0000,0.0000,853.0000,1,111,0,'');
-INSERT INTO `stockmoves` VALUES (23,'FUJI990101',25,3,'TOR','2005-07-17','','','305.9500',67,'REGNEW (Reg Newall Inc) - 1',25.0000,0.0000,530.0000,1,55,0,'');
+INSERT INTO `stockmoves` VALUES (9,'HIT3034-4',17,6,'DEN','2005-06-19','','','0.0000',66,'',192,0,0,1,192,0,'');
+INSERT INTO `stockmoves` VALUES (10,'FUJI990101',10,1,'DEN','2005-06-20','ANGRY','ANGRY','0.0000',66,'Assembly: FUJI9901ASS Order: 4',-2,0,530,0,-2,0,'');
+INSERT INTO `stockmoves` VALUES (11,'FUJI990102',10,1,'DEN','2005-06-20','ANGRY','ANGRY','0.0000',66,'Assembly: FUJI9901ASS Order: 4',-2,0,633,0,-2,0,'');
+INSERT INTO `stockmoves` VALUES (12,'FUJI9901ASS',10,1,'DEN','2005-06-20','ANGRY','ANGRY','3400.0000',66,'4',-2,0,1163,1,0,0,'');
+INSERT INTO `stockmoves` VALUES (13,'HIT3042-ASS',10,2,'TOR','2005-06-20','DUMBLE','DUMBLE','1875.0000',66,'8',-1,0.05,0,1,0,0,'');
+INSERT INTO `stockmoves` VALUES (14,'HIT3042-4',17,7,'TOR','2005-06-19','','','0.0000',66,'',18,0,0,1,18,0,'');
+INSERT INTO `stockmoves` VALUES (15,'HIT3034-4',17,8,'TOR','2005-06-19','','','0.0000',66,'',117,0,0,1,117,0,'');
+INSERT INTO `stockmoves` VALUES (16,'FUJI990101',10,3,'TOR','2005-06-20','DUMBLE','DUMBLE','0.0000',66,'Assembly: FUJI9901ASS Order: 9',-5,0,530,0,-5,0,'');
+INSERT INTO `stockmoves` VALUES (17,'FUJI990102',10,3,'TOR','2005-06-20','DUMBLE','DUMBLE','0.0000',66,'Assembly: FUJI9901ASS Order: 9',-5,0,633,0,-5,0,'');
+INSERT INTO `stockmoves` VALUES (18,'FUJI9901ASS',10,3,'TOR','2005-06-20','DUMBLE','DUMBLE','2000.0000',66,'9',-5,0.05,1163,1,0,0,'');
+INSERT INTO `stockmoves` VALUES (19,'HIT3034-4',10,3,'TOR','2005-06-20','DUMBLE','DUMBLE','500.0000',66,'9',-10,0,853,1,107,0,'');
+INSERT INTO `stockmoves` VALUES (20,'FUJI990101',25,1,'TOR','2005-06-23','','','305.9500',66,'REGNEW (Reg Newall Inc) - 1',35,0,530,1,30,0,'');
+INSERT INTO `stockmoves` VALUES (21,'FUJI990102',25,1,'TOR','2005-06-23','','','265.4100',66,'REGNEW (Reg Newall Inc) - 1',50,0,633,1,45,0,'');
+INSERT INTO `stockmoves` VALUES (22,'HIT3034-4',25,2,'TOR','2005-07-04','','','211.0000',67,'CAMPBELL (Campbell Roberts Inc) - 2',4,0,853,1,111,0,'');
+INSERT INTO `stockmoves` VALUES (23,'FUJI990101',25,3,'TOR','2005-07-17','','','305.9500',67,'REGNEW (Reg Newall Inc) - 1',25,0,530,1,55,0,'');
 
 --
 -- Dumping data for table `stockmovestaxes`
@@ -3093,19 +3093,19 @@ INSERT INTO `suppallocs` VALUES (1,26,'2005-07-21',5,4);
 -- Dumping data for table `suppliers`
 --
 
-INSERT INTO `suppliers` VALUES ('BINGO','Binary Green Ocean Inc','Box 3499','Gardenier','San Fransisco','California 54424','USD','2003-03-01','30',0.0000,NULL,'','0','',0,1);
-INSERT INTO `suppliers` VALUES ('CAMPBELL','Campbell Roberts Inc','Box 9882','Ottowa Rise','','','USD','2005-06-23','30',0.0000,NULL,'','0','',0,2);
-INSERT INTO `suppliers` VALUES ('CRUISE','Cruise Company Inc','Box 2001','Ft Lauderdale, Florida','','','GBP','2005-06-23','30',0.0000,NULL,'','0','',0,3);
-INSERT INTO `suppliers` VALUES ('REGNEW','Reg Newall Inc','P O 5432','Wichita','Wyoming','','USD','2005-04-30','30',0.0000,NULL,'','0','',0,1);
+INSERT INTO `suppliers` VALUES ('BINGO','Binary Green Ocean Inc','Box 3499','Gardenier','San Fransisco','California 54424','USD','2003-03-01','30',0,NULL,'','0','',0,1);
+INSERT INTO `suppliers` VALUES ('CAMPBELL','Campbell Roberts Inc','Box 9882','Ottowa Rise','','','USD','2005-06-23','30',0,NULL,'','0','',0,2);
+INSERT INTO `suppliers` VALUES ('CRUISE','Cruise Company Inc','Box 2001','Ft Lauderdale, Florida','','','GBP','2005-06-23','30',0,NULL,'','0','',0,3);
+INSERT INTO `suppliers` VALUES ('REGNEW','Reg Newall Inc','P O 5432','Wichita','Wyoming','','USD','2005-04-30','30',0,NULL,'','0','',0,1);
 
 --
 -- Dumping data for table `supptrans`
 --
 
-INSERT INTO `supptrans` VALUES (1,20,'CAMPBELL','q11222','2005-06-29','2005-07-30',0,1.000000,1000.0000,0.0000,0.0000,0.0000,'',0,2);
-INSERT INTO `supptrans` VALUES (2,20,'CAMPBELL','fdf3344','2005-06-29','2005-07-30',0,1.000000,521.0000,105.0000,0.0000,0.0000,'Test narrative',0,3);
-INSERT INTO `supptrans` VALUES (3,20,'CRUISE','978778','2005-06-29','2005-07-30',0,0.800000,250.0000,12.5000,0.0000,26.0000,'',0,4);
-INSERT INTO `supptrans` VALUES (1,21,'CRUISE','21222','2005-06-29','2005-07-30',1,0.800000,-23.0000,-3.0000,0.0000,-26.0000,'',0,5);
+INSERT INTO `supptrans` VALUES (1,20,'CAMPBELL','q11222','2005-06-29','2005-07-30',0,1,1000,0,0,0,'',0,2);
+INSERT INTO `supptrans` VALUES (2,20,'CAMPBELL','fdf3344','2005-06-29','2005-07-30',0,1,521,105,0,0,'Test narrative',0,3);
+INSERT INTO `supptrans` VALUES (3,20,'CRUISE','978778','2005-06-29','2005-07-30',0,0.8,250,12.5,0,26,'',0,4);
+INSERT INTO `supptrans` VALUES (1,21,'CRUISE','21222','2005-06-29','2005-07-30',1,0.8,-23,-3,0,-26,'',0,5);
 
 --
 -- Dumping data for table `supptranstaxes`
@@ -3220,7 +3220,7 @@ INSERT INTO `unitsofmeasure` VALUES (6,'pack');
 -- Dumping data for table `workcentres`
 --
 
-INSERT INTO `workcentres` VALUES ('ASS','TOR','Assembly',1.0000,'50.0000',560000,'0.0000');
+INSERT INTO `workcentres` VALUES ('ASS','TOR','Assembly',1,'50',560000,'0');
 
 --
 -- Dumping data for table `worksorders`

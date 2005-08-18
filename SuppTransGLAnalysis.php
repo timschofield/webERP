@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice or credit note
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing/crediting and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -163,7 +163,12 @@ echo '<TR>
 	</TR>';
 echo '<TR>
 	<TD>' . _('Contract Ref') . ":</TD>
-	<TD><INPUT TYPE='Text' NAME='JobRef' SIZE=21 MAXLENGTH=20 VALUE=" . $_POST['JobRef'] . "> <A TARGET='_blank' HREF='$rootpath/ContractsList.php?" . SID . "'>" . _('View Open Contracts/Jobs') . '</A></TD>
+	<TD><INPUT TYPE='Text' NAME='JobRef' SIZE=21 MAXLENGTH=20 VALUE=" . $_POST['JobRef'] . ">";
+	 
+	 /* Once the contract stuff is written then it would be appropriate to have:
+	  <A TARGET='_blank' HREF='$rootpath/ContractsList.php?" . SID . "'>" . _('View Open Contracts/Jobs') . '</A> */
+	  
+echo ' </TD>
 	</TR>';
 echo '<TR>
 	<TD>' . _('Narrative') . ":</TD>

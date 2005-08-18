@@ -1,19 +1,16 @@
-<BR><BR>
-<A NAME="CreatingNewSystem"><FONT SIZE="+3"><B>Creating a New System</B></FONT></A>
-<BR><BR>
-<FONT SIZE="+2"><B>Running the Demonstration Database</B></FONT>
-<BR><BR>
-The demonstration system has bogus data already entered so that the features of the system can be explored without creating data from scratch. If all that you wish to do is explore the features available then the demonstration data supplied is all you need. There is certain base Data that determines how the system works. This base information is defined from the System Setup tab of the main menu as well as the file config.php. To run the demonstration system it is not necessary to modify any of these, save for modifying the details for the mysql connection in config.php. 
-<BR><BR>
+<br><br>
+<a name="CreatingNewSystem"><font size="+3"><b>Creating a New System</b></font></a>
+<br><br>
+<font size="+2"><b>Running the Demonstration Database</b></font>
+<br><br>
+The demonstration system has bogus data already entered so that the features of the system can be explored without creating data from scratch. If all that you wish to do is explore the features available then the demonstration data supplied is all you need. There is certain base Data that determines how the system works. This base information is defined from the System Setup tab of the main menu as well as the file config.php. To run the demonstration system it is not necessary to modify any of these, save for modifying the details for the mysql connection in config.php. The file config.php in the main scripts directory contains essentially the connection parameters for the database and the database type (currently only mysql and postgres are supported). There are also some session parameters and php warning levels that are set in this file and can be left at their defaults for most purposes. 
+<br><br>
 
 <!-- Help Begin: CompanyPreferences -->
 
-<FONT SIZE="+2"><B>Setting Up A System</B></FONT>
-<BR><BR>
-Assuming the server is already installed and the demo system is working, a new company can be initated from the utility menu - Z_index.php. This URL will need to be type manually into the browser since there are no links to it on the main menu. The links on this utility menu are really not everyday requirements and therefore have been confined to this menu outside the system proper. To initate a new company enter an abbreviation for the company that will be required for future logins - this can be up to 10 characters - and will be converted to lower case. For the company logo to appear on external reports, it must be uploaded at this time. The logo must be in the format of a .jpg file and less than the default 300k. The file can be browsed for and uploaded from the local machine. As many companies/systems as required can be installed under the one web-server sharing the same webERP program scripts. Once the new company database has been created, links to enter the company details are provided - it is very important to work through this set up phase carefully, since in an integrated system such as webERP it is an unfortunate truth that configuration errors are propogated right through the system!
-<BR><BR>
-When a new company is created, the only login provided is the default username: demo and password: weberp. It is critical to ensure security of the business data to create a new system administrator account known only to the authorised person. The demo user should then be deleted. New users can be added and deleted from the set up tab, under the General section called "User Accounts".
-<BR><BR>
+<font size="+2"><b>Setting Up A System</b></font>
+<br><br>
+For the company logo to appear on the each screen, it must be saved in the format of a .jpg file and be copied to the file logo.jpg in the directory with all the other php scripts. The logo needs to have read permissions for the user that the web server is running as normally "nobody" for apache on linux. Permissions issues are a none issue under windows.
 <br><br>
 Company parameters need to be set correctly from the company set up screen. Most of these parameters are self -explanatory. Company name, company number, postal address, physical address etc. Also, telephone numbers and the default home currency of the business. If the default currency is not already set up, then from the main menu system set up tab, the link to the currency maintenance form allows new currencies to be defined and for default rates to be updated.
 <br><br>
@@ -41,9 +38,173 @@ The company record also records the GL integration set up:
 <li>Create GL entries for stock transactions (at standard cost): 
 </ul>
 Notice that the stock GL integration is a separate flag. If GL integration of accounts receivable is set to yes, then GL journals are created for invoices and credits to sales and debtors but not for cost of sales and stock. For the later integration this requires that the GL entries for stock transactions be set to yes also.
-
+<br><br>
 <!-- Help End: CompanyPreferences -->
 
+<!-- Help Begin: SystemConfiguration -->
+
+<font size="+2"><b>System Configuration</b></font>
+<br><br>
+>From the setup tab the main system configuration parameters can be set from the link "Configuration Settings". Narrative is shown alongside each parameter to give the user an idea of where the setting is used.
+<br><br>
+<TABLE BORDER=1 WIDTH=100%><TR><TD><B>Parameter</B></TD><TD><B>Description</B></TD></TR>
+<TR>
+<TD>Default Date Format (for input and to appear on reports)</TD>
+<TD>The default date format for entry of dates and display use d/m/Y for England/Australia/NZ or m/d/Y for US and Canada</TD>
+</TR>
+<TR>
+<TD>New Users Default Theme:</TD>
+<TD>The default theme is used for new users who have not yet defined the display colour scheme theme of their choice</TD>
+</TR>
+<TR>
+<TD COLSPAN=2 ALIGN=CENTER><B>Accounts Receivable/Payable Settings</B></TD>
+</TR>
+<TR>
+<TD>First Overdue Deadline in (days):</TD>
+<TD>Customer and supplier balances are displayed as overdue by this many days. This parameter is used on customer and supplier enquiry screens and aged listings</TD>
+</TR>
+<TR>
+<TD>Second Overdue Deadline in (days):</TD>
+<TD>As above but the next level of overdue</TD>
+</TR>
+<TR><TD>Default Credit Limit:</TD>
+<TD>The default used in new customer set up</TD>
+</TR>
+<TR>
+<TD>Check Credit Limits:</TD>
+<TD>Credit limits can be checked at order entry to warn only or to stop the order from being entered where it would take a customer account balance over their limit</TD>
+</TR>
+<TR>
+<TD>Show Settled Last Month:</TD>
+<TD>This setting refers to the format of customer statements. If the invoices and credit notes that have been paid and settled during the course of the current month should be shown then select Yes. Selecting No will only show currently outstanding invoices, credits and payments that have not been allocated</TD>
+</TR>
+<TR>
+<TD>Romalpa Clause:</TD>
+<TD>This text appears on invoices and credit notes in small print. Normally a reservation of title clause that gives the company (very limited in most authorities) rights to collect goods which have not been paid for - to give some protection for bad debts.</TD>
+</TR>
+<TR>
+<TD>Quick Entries:</TD>
+<TD>This parameter defines the layout of the sales order entry screen. The number of fields available for quick entries. Any number from 1 to 99 can be entered.</TD>
+</TR>
+<TR>
+<TD>Format of Packing Slips:</TD>
+<TD>Choose the format that packing notes should be printed by default</TD>
+</TR>
+<TR>
+<TD>Show company details on packing slips:</TD>
+<TD>Customer branches can be set by default not to print packing slips with the company logo and address. This is useful for companies that ship to customers customers and to show the source of the shipment would be inappropriate. There is an option on the setup of customer branches to ship blind, this setting is the default applied to all new customer branches</TD>
+</TR>
+<TR>
+<TD>Dispatch Cut-Off Time:</TD>
+<TD>Orders entered after this time will default to be dispatched the following day, this can be over-ridden at the time of sales order entry</TD>
+</TR>
+<TR>
+<TD>Allow Sales Of Zero Cost Items:</TD>
+<TD>If an item selected at order entry does not have a cost set up then if this parameter is set to No then the order line will not be able to be entered. In an integrated system such as webERP propogation of incorrect data can cause difficulties down the line. The cost of sales for items with zero cost is also recorded as zero in sales analysis and general ledger postings. This is a useful trap for those running full integration.</TD>
+</TR>
+<TR>
+<TD>Controlled Items Must Exist For Crediting:</TD>
+<TD>This parameter relates to the behaviour of the controlled items code. If a serial numbered item has not previously existed then a credit note for it will not be allowed if this is set to Yes. Some care is needed with this since if it is set to yes then it will not be possible to credit new serial numbered items back into stock where perhaps old data has been purged</TD>
+</TR>
+<TR>
+<TD>Default Price List:</TD>
+<TD>This price list is used as a last resort where there is no price set up for an item in the price list that the customer is set up for</TD>
+</TR>
+<TR>
+<TD>Default Shipper:</TD>
+<TD>This shipper is used where the best shipper for a customer branch has not been defined previously. It is critical to ensure that the shipper entered here is actually defined in the shippers table. Shippers are maintained from the setup tab Shippers maintenance</TD>
+</TR>
+<TR>
+<TD>Do Freight Calculation:</TD>
+<TD>If this is set to Yes then the system will attempt to calculate the freight cost of a dispatch based on the weight and cubic and the data defined for each shipper and their rates for shipping to various locations. The results of this calculation will only be meaningful if the data is entered for the item weight and volume in the stock item setup for all items and the freight costs for each shipper properly maintained.</TD>
+</TR>
+<TR>
+<TD>Apply freight charges if an order is less than:</TD>
+<TD>This parameter is only effective if Do Freight Calculation is set to Yes. If it is set to 0 then freight is always charged. The total order value is compared to this value in deciding whether or not to charge freight</TD>
+</TR>
+<TR>
+<TD>Create Debtor Codes Automatically:</TD>
+<TD>Set to Automatic - customer codes are automatically created - as a sequential number. The number of the next customer is defined in the systypes table as with all other transaction numbers.</TD>
+</TR>
+<TR>
+<TD>Default Tax Category:</TD>
+<TD>This is the tax category used for entry of supplier invoices and the category at which frieght attracts tax</TD>
+</TR>
+<TR>
+<TD>Tax Authority Reference Name:</TD>
+<TD>This parameter is what is displayed on tax invoices and credits for the tax authority of the company eg. in Australian this would by A.B.N.: - in NZ it would be GST No: in the UK it would be VAT Regn. No</TD>
+</TR>
+<TR>
+<TD>Country Of Operation:</TD>
+<TD>This parameter is only effective if Do Freight Calculation is set to Yes. It is required for the freight calculation</TD>
+</TR>
+<TR>
+<TD>Number Of Periods Of Stock Usage:</TD>
+<TD>In stock usage inquiries this determines how many periods of stock usage to show. An average is calculated over this many periods</TD>
+</TR>
+<TR>
+<TD>Check Quantity Charged vs Deliver Qty:</TD>
+<TD>In entry of AP invoices this determines whether or not to check the quantites received into stock tie up with the quantities invoiced</TD>
+</TR>
+<TR>
+<TD>Check Price Charged vs Order Price:</TD>
+<TD>In entry of AP invoices this parameter determines whether or not to check invoice prices tie up to ordered prices</TD>
+</TR>
+<TR>
+<TD>Allowed OverCharge Proportion:</TD>
+<TD>If check price charges vs Order price is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to price</TD>
+</TR>
+<TR>
+<TD>Allowed Over Receive Proportion:</TD>
+<TD>If check quantity charged vs delivery quantity is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to delivery</TD>
+</TR>
+<TR>
+<TD>Purchase Order Allows Same Item Multiple Times:</TD>
+<TD>If set to yes then a purchase order can have the same item on it several times - it is possible to set delivery schedules for suppliers by entering the same item with different quantites on different delivery dates.</TD>
+</TR>
+<TR><TD COLSPAN=2 ALIGN=CENTER><B>General Settings</B></TD></TR>
+<TR><TD><B>Parameter</B></TD><TD><B>Description</B></TD></TR>
+<TR>
+<TD>Financial Year Ends On:</TD>
+<TD>Defining the month in which the financial year ends enables the system to provide useful defaults for general ledger reports. A selection of the month of the year is provided</TD>
+</TR>
+<TR>
+<TD>Report Page Length:</TD>
+<TD></TD>
+</TR>
+<TR> 	
+<TD>Default Maximum Number of Records to Show:</TD>
+<TD>When pages have code to limit the number of returned records - such as select customer, select supplier and select item, then this will be the default number of records to show for a user who has not changed this for themselves in user settings.</TD>
+</TR>
+<TR>
+<TD>Maximum Size in KB of uploaded images:</TD>
+<TD>Picture files of items can be uploaded to the server. The system will check that files uploaded are less than this size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow (particularly over dial up) and will be difficult to view in the stock maintenance screen.</TD>
+</TR>
+<TR>
+<TD>The directory where images are stored:</TD>
+<TD>The directory under which all image files should be stored. Image files take the format of <I>Item Code</I>.jpg - they must all be .jpg files and the part code will be the name of the image file. This is named automatically on upload. The system will check to ensure that the image is a .jpg file</TD>
+</TR>
+<TR>
+<TD>The directory where reports are stored:</TD>
+<TD>The directory under which all report pdf files should be created in. A separate directory is recommended</TD>
+</TR>
+<TR>
+<TD>Only allow secure socket connections:</TD>
+<TD>Force connections to be only over secure sockets - ie encrypted data only. Beware of setting this to yes since the system will not allow connections over normal http protocol and will insist on https connections only. If your web-server does not support https then the config parameters will need to be edited directly from the database to get back to standard http connections.</TD>
+</TR>
+<TR>
+<TD>Perform Database Maintenance At Logon:</TD>
+<TD>Uses the function DB_Maintenance defined in ConnectDB_XXXX.inc to perform database maintenance tasks, to run at regular intervals - checked at each and every user login. This is most useful for those databases that require regular re-indexing such as postgres. Mysql/innodb is less demanding of database administration. It is recommended to use cron or scheduled jobs for database maintenance outside of normal work hours where possible as this can delay a users login on larger databases.</TD>
+</TR>
+</TABLE>
+<br><br>
+
+<!-- Help End: SystemConfiguration -->
+
+
+<!-- Help Begin: BaseInformation -->
+
+<font size="+2"><b>Base Data Required</b></font>
 <br><br>
 Before customers can be set up the following base information is required (all this information is set up from the system setup tab):
 <br><br>
@@ -65,30 +226,7 @@ However, accounts receivable also requires that certain branch information, rela
 </ul>
 Having got this base information set up then the business of setting up customer accounts and customer branches with delivery addresses can start.
 <br><br>
-<font size="+1"><b>Importing Customers Branches and Inventory Items</b></font>
-<br><br>
-Before attempting to import any data in bulk into the webERP system it is imperative to ensure that the base information described above:
-<UL>
-<LI>Payment Terms</LI>
-<LI>Credit status</LI>
-<LI>Sales Areas</LI>
-<LI>Stock Categories</LI>
-<LI>Sales People</LI>
-<LI>Currencies</LI>
-<LI>Sales Types</LI>
-<LI>Freight Companies</LI>
-</UL>
-It is unlikely that this infomation will require importation since it is generally small enough to input manually. However, there is no reason why it could not be imported into the approprate tables. The structure of the webERP database tables can be examined easily using the phpMyAdmin or equivalent for postgres. The naming of tables and fields has attempted to attach plain english names to each table and field to enable the structure to be easily assimilated.
-<br><br>
-Desktop databases, spreadsheets and comma separated variables (CSV) export files can also be used to import data. Using MS Access, the process involves installing an ODBC driver for MySQL on the windows desktop machine that has MS Access on it and then creating a data source under Control Panel, Administrative tool, Data Sources. Setting up the data source will require telling the windows machine where the webERP mysql (or Postgres) server is ie its name and the name of the database on the host to connect to - by default weberp. From MS Access, click File, Get External Data, Link then choose ODBC data sources, the newly created Data Source Name should be visible. All the webERP tables are then available. MS Access provides a nice user interface for entering and viewing the data in bulk. 
-<br><br>
-A CSV file or spreadsheet of data can easily be imported into an Access database, then an append query is made to map the fields from the CSV table/spreadsheet into DebtorsMaster and or CustBranch. There are potentially many records in CustBranch each with a different branch code for one customer account in DebtorsMaster. 
-<br><br>
-It is also possible to import comma seperated values files directly into mysql using the mysql command line as well as the phpMyAdmin web interface. The command line option is a little tricky but the phpMyAdmin option is a good one. The phpMyAdmin documentation describes this process well.
-<br><br>
-Importing stock items can be done in the same way as customers, customer branches or suppliers as above. However, entry of inventory items also needs to create the locstock records that record the stock on hand at each inventory location. If items are imported using spreadsheets, CSV files etc then the script Z_MakeStockLocns.php must be run from a browser after the importation of the items has been done.
-<br><br>
-Great effort has gone into ensuring the integrity of the data entered manually and importing data manually is dangerous in the sense that it is imperative to ensure that no customer records, branch records, or inventory records refer to non-existent base data.
+Desktop databases, spreadsheets and comma separated variables (CSV) export files can also be used to import this information. Using MS Access, the process involves installing an ODBC driver for MySQL on the windows desktop machine that has MS Access on it and then attaching to the weberp database tables DebtorsMaster and CustBranch in a new blank Access database. The CSV file or the spreadsheet is imported into the Access database, then an append query is made to map the fields from the CSV table/spreadsheet into DebtorsMaster and or CustBranch. There are potentially many records in CustBranch each with a different branch code for one customer account in DebtorsMaster. This method is dangerous in the sense that it is imperative to ensure that no customer records or branch records refer to non-existent base data in the fields described above.
 <br><br>
 <font size="+1"><b>Setting Up Inventory Items</b></font>
 <br><br>
@@ -161,6 +299,9 @@ It is important that the general ledger entries to the debtors control account a
 <br><br>
 Once all entries are made to reconcile the customers accounts with the general ledger debtors account the system should be backed up. The mysql utility mysqldump is one method that produces an sql script that will restore the system to where it was when the script was created. With users out of the system - to avoid any locking issues - and assuming mysqldump is in the system path:
 <br><br>
-Using a username and password as created when mysql was installed.
+>From a command prompt, using a username and password as created when mysql was installed.
 <br><br>
 #mysqldump -u username -p password --opt weberp > /home/myhomedir/weberp_backup.sql
+
+postgres has a similar utility
+<!-- Help End: BaseInformation -->

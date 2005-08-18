@@ -2453,8 +2453,10 @@ CA	Cash Only	0	1
 --
 
 COPY systypes (typeid, typename, typeno) FROM stdin;
+25	Purchase Order Delivery	3
 2	Receipt - GL	0
 3	Standing Journal	0
+10	Sales Invoice	2
 18	Purchase Order	0
 21	Debit Note	0
 23	Creditors Journal	0
@@ -2464,10 +2466,9 @@ COPY systypes (typeid, typename, typeno) FROM stdin;
 30	Sales Order	0
 0	Journal - GL	1
 50	Opening Balance	0
+22	Creditors Payment	3
 31	Shipment Close	3
 1	Payment - GL	2
-22	Creditors Payment	2
-25	Purchase Order Delivery	2
 20	Purchase Invoice	1
 35	Cost Update	2
 500	"Debtor Number"	100001
@@ -2476,7 +2477,6 @@ COPY systypes (typeid, typename, typeno) FROM stdin;
 12	Receipt	0
 16	Location Transfer	0
 17	Stock Adjustment	0
-10	Sales Invoice	1
 \.
 
 
@@ -2489,6 +2489,8 @@ COPY periods (periodno, lastdate_in_period) FROM stdin;
 64	2005-04-30
 65	2005-05-31
 66	2005-06-30
+67	2005-07-31
+68	2005-08-31
 49	2004-01-31
 50	2004-02-29
 51	2004-03-31
@@ -2754,6 +2756,16 @@ COPY edi_orders_segs (id, segtag, seggroup, maxoccur) FROM stdin;
 --
 
 COPY gltrans (counterindex, "type", typeno, chequeno, trandate, periodno, account, narrative, amount, posted, jobref) FROM stdin;
+85	10	2	0	2005-08-19	68	200000	CUST01 - ASSEM1 x 10 @ 56.989	569.88999999999999	0	
+86	10	2	0	2005-08-19	68	770000	CUST01 - ASSEM1 x 10 @ 56.989	-569.88999999999999	0	
+87	10	2	0	2005-08-19	68	100000	CUST01 - ASSEM1 x 10 @ 2.5000	-25	0	
+88	10	2	0	2005-08-19	68	100000	CUST01 - ASSEM1 @ 5%	1.25	0	
+81	25	3	0	2005-08-06	68	770000	PO: 6 SUP01 - PHIS01 - A phisical Stock Item x 32 @ 10.00	320	1	
+82	25	3	0	2005-08-06	68	910000	PO: 6 SUP01 - PHIS01 - A phisical Stock Item x 32 @ 10.00	-320	1	
+83	22	3	0	2005-08-31	68	841000	SUP01 - Test Supplier payment run on 10/08/2005 - 1	-3719.0999999999999	1	
+84	22	3	0	2005-08-31	68	900000	SUP01 - Test Supplier payment run on 10/08/2005 - 1	3719.0999999999999	1	
+89	10	2	0	2005-08-19	68	800000	CUST01	27.91	0	
+90	10	2	0	2005-08-19	68	951000	CUST01	-4.15625	0	
 \.
 
 
@@ -2806,6 +2818,7 @@ COPY reportcolumns (reportid, colno, heading1, heading2, calculation, periodfrom
 
 COPY salesanalysis (typeabbrev, periodno, amt, cost, cust, custbranch, qty, disc, stockid, area, budgetoractual, salesperson, stkcategory, id) FROM stdin;
 WS	63	723.3089	184.9450	FREDBLOGG	FREDBLOGG	5.0000	0.0000	PHIS02	EU	1	REF	MISC	14
+WS	68	25.0000	569.8900	CUST01	CUST01	10.0000	1.2500	ASSEM1	ZA	1	GEN	MISC	15
 \.
 
 
@@ -3093,6 +3106,7 @@ BOLTS	Bolts	F	770000	210000	220000	240000	760000
 
 COPY stockmaster (stockid, categoryid, description, longdescription, units, mbflag, lastcurcostdate, actualcost, lastcost, materialcost, labourcost, overheadcost, lowestlevel, discontinued, controlled, eoq, volume, kgs, barcode, discountcategory, taxcatid, serialised, decimalplaces) FROM stdin;
 PHIS01	MISC	A physical Stock Item	A physical Stock Item	each	B	1800-01-01	0.0000	0.0000	10.0000	0.0000	0.0000	0	0	0	5.00	1.0000	4.0000			1	0	0
+ASSEM1	MISC	Assembly item 1	Assembly item 1	each	A	1800-01-01	0.0000	0.0000	0.0000	0.0000	0.0000	0	0	0	0.00	0.0000	0.0000			1	0	0
 STEELBAR10MMROUND	BOLTS	10mm Round Mild Steel Bar	10mm Round Mild Steel Bar	each	B	1800-01-01	0.0000	0.0000	0.0000	0.0000	0.0000	0	0	0	0.00	0.0000	0.0000			1	0	0
 DEVDB	MISC	Database Development	The design and/or migration of a database stucture for the purpose of retaining and recalling relational data.	each	D	1800-01-01	0.0000	0.0000	0.0000	0.0000	0.0000	0	0	0	0.00	0.0000	0.0000			1	0	0
 BOLT13MMX10	BOLTS	13mm hex head bolt 10mm thread	13mm hex head bolt 10mm thread	each	M	1800-01-01	0.0000	0.0000	1.3300	0.0000	0.0000	0	0	1	0.00	0.0000	0.0000			1	0	0
@@ -3146,6 +3160,10 @@ SUP01	PHIS01	32.9500	each	1.0000	supplier 1 description for physical item 1	15	1
 --
 
 COPY locstock (loccode, stockid, quantity, reorderlevel) FROM stdin;
+CPT	ASSEM1	0.0	0
+SYD	ASSEM1	0.0	0
+CPT	PHIS01	12.0	0
+CPT	PHIS02	-10.0	0
 CPT	DEVDB	0.0	0
 CPT	STEELBAR10MMROUND	0.0	0
 SYD	DEVDB	0.0	0
@@ -3153,9 +3171,7 @@ SYD	PHIS02	0.0	0
 SYD	PHIS01	0.0	0
 SYD	BOLT13MMX10	0.0	0
 SYD	STEELBAR10MMROUND	0.0	0
-CPT	PHIS01	0.0	0
 CPT	BOLT13MMX10	0.0	0
-CPT	PHIS02	0.0	0
 \.
 
 
@@ -3174,6 +3190,10 @@ COPY loctransfers (reference, stockid, shipqty, recqty, shipdate, recdate, shipl
 --
 
 COPY stockmoves (stkmoveno, stockid, "type", transno, loccode, trandate, debtorno, branchcode, price, prd, reference, qty, discountpercent, standardcost, show_on_inv_crds, newqoh, hidemovt, narrative) FROM stdin;
+42	PHIS01	25	3	CPT	2005-08-06			12.0000	68	SUP01 (Test Supplier) - 6	32.0000	0.0000	10.0000	1	32	0	
+43	PHIS01	10	2	CPT	2005-08-19	CUST01	CUST01	0.0000	68	Assembly: ASSEM1 Order: 55	-20.0000	0.0000	10.0000	0	12	0	
+44	PHIS02	10	2	CPT	2005-08-19	CUST01	CUST01	0.0000	68	Assembly: ASSEM1 Order: 55	-10.0000	0.0000	36.9890	0	-10	0	
+45	ASSEM1	10	2	CPT	2005-08-19	CUST01	CUST01	2.5000	68	55	-10.0000	0.0500	56.9890	1	0	0	
 19	BOLT13MMX10	17	4	CPT	2005-01-16			0.0000	61	initial stock	67990.0000	0.0000	0.0000	1	67990	0	
 27	PHIS01	17	5	CPT	2005-03-21			0.0000	63		5.0000	0.0000	0.0000	1	278	0	
 28	PHIS01	17	6	CPT	2005-03-21			0.0000	63		5.0000	0.0000	0.0000	1	283	0	
@@ -3209,7 +3229,8 @@ COPY stockserialmoves (stkitmmoveno, stockmoveno, stockid, serialno, moveqty) FR
 
 COPY supptrans (transno, "type", supplierno, suppreference, trandate, duedate, settled, rate, ovamount, ovgst, diffonexch, alloc, transtext, "hold", id) FROM stdin;
 2	22	SUP01	Cheque	2004-12-05	\N	0	1.000000	-130.0000	0.0000	0.0000	0.0000		0	1
-1	20	SUP01	854442	2005-01-12	2005-02-01	0	1.000000	3719.1000	0.0000	0.0000	0.0000		0	2
+1	20	SUP01	854442	2005-01-12	2005-02-01	1	1.000000	3719.1000	0.0000	0.0000	3719.1000		0	2
+3	22	SUP01	1	2005-08-31	2005-08-31	1	1.000000	-3719.1000	0.0000	0.0000	-3719.1000	\N	0	4
 \.
 
 
@@ -3219,6 +3240,7 @@ COPY supptrans (transno, "type", supplierno, suppreference, trandate, duedate, s
 --
 
 COPY suppallocs (id, amt, datealloc, transid_allocfrom, transid_allocto) FROM stdin;
+1	3719.10	2005-08-31	4	2
 \.
 
 
@@ -3250,9 +3272,9 @@ COPY purchorders (orderno, supplierno, comments, orddate, rate, dateprinted, all
 --
 
 COPY purchorderdetails (podetailitem, orderno, itemcode, deliverydate, itemdescription, glcode, qtyinvoiced, unitprice, actprice, stdcostunit, quantityord, quantityrecd, shiptref, jobref, completed) FROM stdin;
+4	6	PHIS01	2005-01-13	A phisical Stock Item	770000	0.0000	12.0000	0.0000	10.0000	455.0000	32.0000	0	0	0
 1	2	PHIS01	2004-12-02	A phisical Stock Item	770000	0.0000	35.0000	0.0000	0.0000	5.0000	0.0000	0	0	0
 3	5	*5_1	2004-12-05	A Jar of JAM	770000	0.0000	20.0000	0.0000	0.0000	2.0000	0.0000	0		0
-4	6	PHIS01	2005-01-13	A phisical Stock Item	770000	0.0000	12.0000	0.0000	10.0000	455.0000	0.0000	0	0	0
 \.
 
 
@@ -3262,6 +3284,7 @@ COPY purchorderdetails (podetailitem, orderno, itemcode, deliverydate, itemdescr
 --
 
 COPY grns (grnbatch, grnno, podetailitem, itemcode, deliverydate, itemdescription, qtyrecd, quantityinv, supplierid) FROM stdin;
+3	7	4	PHIS01	2005-08-06	A phisical Stock Item	32.0000	0.0000	SUP01
 \.
 
 
@@ -3281,7 +3304,7 @@ COPY taxauthrates (taxauthority, dispatchtaxprovince, taxcatid, taxrate) FROM st
 --
 
 COPY www_users (userid, "password", realname, customerid, phone, email, defaultlocation, fullaccess, lastvisitdate, branchcode, pagesize, modulesallowed, blocked, displayrecordsmax, theme, "language", pinno, swipecard) FROM stdin;
-demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2005-07-31 11:42:06		A4	1,1,1,1,1,1,1,1,	0	50	professional	en_GB	\N	\N
+demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2005-08-18 20:56:50		A4	1,1,1,1,1,1,1,1,	0	50	professional	en_GB	\N	\N
 \.
 
 
@@ -3330,6 +3353,8 @@ COPY worequirements (id, woref, stockid, wrkcentre, unitsreq, stdcost, resourcet
 --
 
 COPY bom (parent, component, workcentreadded, loccode, effectiveafter, effectiveto, quantity) FROM stdin;
+ASSEM1	PHIS01	ASS	CPT	2005-08-17	2035-08-18	2.0000
+ASSEM1	PHIS02	ASS	CPT	2005-08-17	2035-08-18	1.0000
 \.
 
 
@@ -3354,6 +3379,7 @@ COPY banktrans (banktransid, "type", transno, bankact, ref, amountcleared, exrat
 2	1	2	841000		0	1	2004-12-05	Cheque	-130	ZAR
 3	22	2	840000	SUP01-	0	1	2004-12-05	Cheque	-130	ZAR
 4	12	5	841000		0	1	2005-01-03	Cheques	3.5	ZAR
+5	0	0	841000	1 SUP01	0	1	2005-08-31	Cash	-3719.0999999999999	
 \.
 
 
@@ -3372,6 +3398,253 @@ COPY buckets (workcentre, availdate, capacity) FROM stdin;
 --
 
 COPY chartdetails (accountcode, period, budget, actual, bfwd, bfwdbudget) FROM stdin;
+100000	67	0	0	0	0
+200000	67	0	0	0	0
+210000	67	0	0	0	0
+220000	67	0	0	0	0
+230000	67	0	0	0	0
+235000	67	0	0	0	0
+240000	67	0	0	0	0
+240010	67	0	0	0	0
+240020	67	0	0	0	0
+240030	67	0	0	0	0
+250000	67	0	0	0	0
+270000	67	0	0	0	0
+275000	67	0	0	0	0
+280000	67	0	0	0	0
+285000	67	0	0	0	0
+290000	67	0	0	0	0
+300000	67	0	0	0	0
+305000	67	0	0	0	0
+310000	67	0	0	0	0
+315000	67	0	0	0	0
+320000	67	0	0	0	0
+325000	67	0	0	0	0
+330000	67	0	0	0	0
+335000	67	0	0	0	0
+340000	67	0	0	0	0
+345000	67	0	0	0	0
+350000	67	0	0	0	0
+355000	67	0	0	0	0
+360000	67	0	0	0	0
+365000	67	0	0	0	0
+370000	67	0	0	0	0
+375000	67	0	0	0	0
+380000	67	0	0	0	0
+380010	67	0	0	0	0
+380020	67	0	0	0	0
+385000	67	0	0	0	0
+390000	67	0	0	0	0
+395000	67	0	0	0	0
+400000	67	0	0	0	0
+405000	67	0	0	0	0
+415000	67	0	0	0	0
+415010	67	0	0	0	0
+415020	67	0	0	0	0
+415030	67	0	0	0	0
+415040	67	0	0	0	0
+420000	67	0	0	0	0
+430000	67	0	0	0	0
+435000	67	0	0	0	0
+438000	67	0	0	0	0
+440000	67	0	0	0	0
+445000	67	0	0	0	0
+450000	67	0	0	0	0
+455000	67	0	0	0	0
+460000	67	0	0	0	0
+465000	67	0	0	0	0
+465010	67	0	0	0	0
+465020	67	0	0	0	0
+466000	67	0	0	0	0
+466010	67	0	0	0	0
+466020	67	0	0	0	0
+480000	67	0	0	0	0
+485000	67	0	0	0	0
+490000	67	0	0	0	0
+510000	67	0	0	0	0
+520000	67	0	0	0	0
+540000	67	0	0	0	0
+550000	67	0	0	0	0
+560000	67	0	0	0	0
+570000	67	0	0	0	0
+610000	67	0	0	0	0
+610010	67	0	0	0	0
+610020	67	0	0	0	0
+615000	67	0	0	0	0
+615010	67	0	0	0	0
+615020	67	0	0	0	0
+620000	67	0	0	0	0
+620010	67	0	0	0	0
+620020	67	0	0	0	0
+625000	67	0	0	0	0
+625010	67	0	0	0	0
+625020	67	0	0	0	0
+630000	67	0	0	0	0
+630010	67	0	0	0	0
+630020	67	0	0	0	0
+635000	67	0	0	0	0
+635010	67	0	0	0	0
+635020	67	0	0	0	0
+660000	67	0	0	0	0
+660010	67	0	0	0	0
+660020	67	0	0	0	0
+700000	67	0	0	0	0
+710000	67	0	0	0	0
+710100	67	0	0	0	0
+710200	67	0	0	0	0
+720000	67	0	0	0	0
+740000	67	0	0	0	0
+750000	67	0	0	0	0
+760000	67	0	0	0	0
+770000	67	0	0	0	0
+800000	67	0	0	0	0
+805000	67	0	0	0	0
+810000	67	0	0	0	0
+820000	67	0	0	0	0
+820010	67	0	0	0	0
+820020	67	0	0	0	0
+840000	67	0	0	0	0
+841000	67	0	0	0	0
+842000	67	0	0	0	0
+900000	67	0	0	0	0
+910000	67	0	0	0	0
+920000	67	0	0	0	0
+920010	67	0	0	0	0
+920020	67	0	0	0	0
+925000	67	0	0	0	0
+930000	67	0	0	0	0
+935000	67	0	0	0	0
+940000	67	0	0	0	0
+940010	67	0	0	0	0
+940020	67	0	0	0	0
+950000	67	0	0	0	0
+951000	67	0	0	0	0
+999000	67	0	0	0	0
+1	67	0	0	0	0
+215000	67	0	0	0	0
+100000	68	0	0	0	0
+200000	68	0	0	0	0
+210000	68	0	0	0	0
+220000	68	0	0	0	0
+230000	68	0	0	0	0
+235000	68	0	0	0	0
+240000	68	0	0	0	0
+240010	68	0	0	0	0
+240020	68	0	0	0	0
+240030	68	0	0	0	0
+250000	68	0	0	0	0
+270000	68	0	0	0	0
+275000	68	0	0	0	0
+280000	68	0	0	0	0
+285000	68	0	0	0	0
+290000	68	0	0	0	0
+300000	68	0	0	0	0
+305000	68	0	0	0	0
+310000	68	0	0	0	0
+315000	68	0	0	0	0
+320000	68	0	0	0	0
+325000	68	0	0	0	0
+330000	68	0	0	0	0
+335000	68	0	0	0	0
+340000	68	0	0	0	0
+345000	68	0	0	0	0
+350000	68	0	0	0	0
+355000	68	0	0	0	0
+360000	68	0	0	0	0
+365000	68	0	0	0	0
+370000	68	0	0	0	0
+375000	68	0	0	0	0
+380000	68	0	0	0	0
+380010	68	0	0	0	0
+380020	68	0	0	0	0
+385000	68	0	0	0	0
+390000	68	0	0	0	0
+395000	68	0	0	0	0
+400000	68	0	0	0	0
+405000	68	0	0	0	0
+415000	68	0	0	0	0
+415010	68	0	0	0	0
+415020	68	0	0	0	0
+415030	68	0	0	0	0
+415040	68	0	0	0	0
+420000	68	0	0	0	0
+430000	68	0	0	0	0
+435000	68	0	0	0	0
+438000	68	0	0	0	0
+440000	68	0	0	0	0
+445000	68	0	0	0	0
+450000	68	0	0	0	0
+455000	68	0	0	0	0
+460000	68	0	0	0	0
+465000	68	0	0	0	0
+465010	68	0	0	0	0
+465020	68	0	0	0	0
+466000	68	0	0	0	0
+466010	68	0	0	0	0
+466020	68	0	0	0	0
+480000	68	0	0	0	0
+485000	68	0	0	0	0
+490000	68	0	0	0	0
+510000	68	0	0	0	0
+520000	68	0	0	0	0
+540000	68	0	0	0	0
+550000	68	0	0	0	0
+560000	68	0	0	0	0
+570000	68	0	0	0	0
+610000	68	0	0	0	0
+610010	68	0	0	0	0
+610020	68	0	0	0	0
+615000	68	0	0	0	0
+615010	68	0	0	0	0
+615020	68	0	0	0	0
+620000	68	0	0	0	0
+620010	68	0	0	0	0
+620020	68	0	0	0	0
+625000	68	0	0	0	0
+625010	68	0	0	0	0
+625020	68	0	0	0	0
+630000	68	0	0	0	0
+630010	68	0	0	0	0
+630020	68	0	0	0	0
+635000	68	0	0	0	0
+635010	68	0	0	0	0
+635020	68	0	0	0	0
+660000	68	0	0	0	0
+660010	68	0	0	0	0
+660020	68	0	0	0	0
+700000	68	0	0	0	0
+710000	68	0	0	0	0
+710100	68	0	0	0	0
+710200	68	0	0	0	0
+720000	68	0	0	0	0
+740000	68	0	0	0	0
+750000	68	0	0	0	0
+760000	68	0	0	0	0
+800000	68	0	0	0	0
+805000	68	0	0	0	0
+810000	68	0	0	0	0
+820000	68	0	0	0	0
+820010	68	0	0	0	0
+820020	68	0	0	0	0
+840000	68	0	0	0	0
+842000	68	0	0	0	0
+920000	68	0	0	0	0
+920010	68	0	0	0	0
+920020	68	0	0	0	0
+925000	68	0	0	0	0
+930000	68	0	0	0	0
+935000	68	0	0	0	0
+940000	68	0	0	0	0
+940010	68	0	0	0	0
+940020	68	0	0	0	0
+950000	68	0	0	0	0
+951000	68	0	0	0	0
+999000	68	0	0	0	0
+1	68	0	0	0	0
+215000	68	0	0	0	0
+910000	68	0	-320	0	0
+841000	68	0	-3719.0999999999999	0	0
+900000	68	0	3719.0999999999999	0	0
 1	61	0	0	0	0
 770000	61	0	0	0	0
 770000	62	0	0	0	0
@@ -5604,6 +5877,7 @@ COPY chartdetails (accountcode, period, budget, actual, bfwd, bfwdbudget) FROM s
 999000	66	0	0	0	0
 1	66	0	0	0	0
 215000	66	0	0	0	0
+770000	68	0	320	0	0
 \.
 
 
@@ -5694,6 +5968,7 @@ COPY salesorders (orderno, debtorno, branchcode, customerref, buyername, comment
 54	FREDBLOGG	FREDBLOGG		\N		2005-07-30	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-08-01	0	\N	0	1
 52	FREDBLOGG	FREDBLOGG		\N		2005-03-31	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-04-01	0	\N	0	2
 53	FREDBLOGG	ERCC		\N		2005-03-31	WS	2	333 444						Ersteem Raichle unt Cloggs	0.00	SYD	2005-04-01	0	\N	0	2
+55	CUST01	CUST01		\N	 Inv 2	2005-08-18	WS	1	Na	Na	Na	Na	NA	NA	Customer	0.00	CPT	2005-08-19	1	2005-08-18	0	1
 11	FREDBLOGG	FREDBLOGG		\N	 Inv 1	2005-03-19	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-21	0	\N	0	\N
 \.
 
@@ -5715,6 +5990,7 @@ COPY orderdeliverydifferenceslog (orderno, invoiceno, stockid, quantitydiff, deb
 
 COPY salesorderdetails (orderno, stkcode, qtyinvoiced, unitprice, quantity, estimate, discountpercent, actualdispatchdate, completed, narrative, orderlineno) FROM stdin;
 2	DEVDB	0.0000	40.0000	15.0000	0	0.0000	2004-12-07 00:00:00	0		0
+55	ASSEM1	10.0000	2.5000	10.0000	0	0.0500	2005-08-19 00:00:00	1		0
 5	PHIS01	0.0000	60.0000	12.0000	0	0.0350	2005-01-14 00:00:00	0		0
 6	DEVDB	0.0000	40.0000	6.5000	0	0.2500	2005-02-07 00:00:00	0		0
 6	PHIS02	0.0000	70.0000	6.0000	0	0.0000	2005-02-07 00:00:00	0		1
@@ -5737,6 +6013,7 @@ COPY salesorderdetails (orderno, stkcode, qtyinvoiced, unitprice, quantity, esti
 --
 
 COPY debtortrans (id, transno, "type", debtorno, branchcode, trandate, prd, settled, reference, tpe, order_, rate, ovamount, ovgst, ovfreight, ovdiscount, diffonexch, alloc, invtext, shipvia, edisent, consignment) FROM stdin;
+32	2	10	CUST01	CUST01	2005-08-19 00:00:00	68	0		WS	55	1.000000	23.75	4.1600000000000001	0	0	0	0		1	0	
 31	1	10	FREDBLOGG	FREDBLOGG	2005-03-26 00:00:00	63	0		WS	11	2.454000	1775	0	0	0	0	0		1	0	
 \.
 
@@ -5953,6 +6230,7 @@ OverReceiveProportion	20
 PO_AllowSameItemMultipleTimes	1
 YearEnd	3
 PageLength	48
+DB_Maintenance_LastRun	2005-08-18
 MaxImageSize	300
 EDIHeaderMsgId	D:01B:UN:EAN010
 EDIReference	WEBERP
@@ -5969,11 +6247,10 @@ RadioBeaconFTP_user_name	RadioBeacon ftp server user name
 RadionBeaconFTP_user_pass	Radio Beacon remote ftp server password
 CountryOfOperation	EUR
 DefaultTheme	professional
-DB_Maintenance_LastRun	2005-07-30
+part_pics_dir	companies/weberp/part_pics
+reports_dir	companies/weberp/reports
 HTTPS_Only	0
 DB_Maintenance	1
-part_pics_dir	companies/weberp/
-reports_dir	companies/weberp/
 AutoDebtorNo	0
 PackNoteFormat	1
 DefaultBlindPackNote	1
@@ -6051,6 +6328,7 @@ COPY taxgrouptaxes (taxgroupid, taxauthid, calculationorder, taxontax) FROM stdi
 
 COPY stockmovestaxes (stkmoveno, taxauthid, taxontax, taxcalculationorder, taxrate) FROM stdin;
 41	1	0	0	0
+45	1	0	0	0.17499999999999999
 \.
 
 
@@ -6061,6 +6339,7 @@ COPY stockmovestaxes (stkmoveno, taxauthid, taxontax, taxcalculationorder, taxra
 
 COPY debtortranstaxes (debtortransid, taxauthid, taxamount) FROM stdin;
 31	1	0
+32	1	4.15625
 \.
 
 
@@ -8737,7 +9016,7 @@ ALTER TABLE ONLY chartmaster
 
 
 --
--- TOC entry 589 (OID 45489)
+-- TOC entry 590 (OID 45489)
 -- Name: cnt001389; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8746,7 +9025,7 @@ ALTER TABLE ONLY taxauthorities
 
 
 --
--- TOC entry 590 (OID 45493)
+-- TOC entry 589 (OID 45493)
 -- Name: cnt001390; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8845,7 +9124,7 @@ ALTER TABLE ONLY shipments
 
 
 --
--- TOC entry 603 (OID 45537)
+-- TOC entry 604 (OID 45537)
 -- Name: cnt001347; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8854,7 +9133,7 @@ ALTER TABLE ONLY shipmentcharges
 
 
 --
--- TOC entry 604 (OID 45541)
+-- TOC entry 603 (OID 45541)
 -- Name: cnt001348; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8863,7 +9142,7 @@ ALTER TABLE ONLY shipmentcharges
 
 
 --
--- TOC entry 605 (OID 45545)
+-- TOC entry 606 (OID 45545)
 -- Name: cnt001293; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8872,7 +9151,7 @@ ALTER TABLE ONLY freightcosts
 
 
 --
--- TOC entry 606 (OID 45549)
+-- TOC entry 605 (OID 45549)
 -- Name: cnt001294; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8890,7 +9169,7 @@ ALTER TABLE ONLY stockmaster
 
 
 --
--- TOC entry 608 (OID 45557)
+-- TOC entry 609 (OID 45557)
 -- Name: cnt001357; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8899,7 +9178,7 @@ ALTER TABLE ONLY stockcounts
 
 
 --
--- TOC entry 609 (OID 45561)
+-- TOC entry 608 (OID 45561)
 -- Name: cnt001358; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8908,7 +9187,7 @@ ALTER TABLE ONLY stockcounts
 
 
 --
--- TOC entry 610 (OID 45565)
+-- TOC entry 611 (OID 45565)
 -- Name: cnt001354; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8917,7 +9196,7 @@ ALTER TABLE ONLY stockcheckfreeze
 
 
 --
--- TOC entry 611 (OID 45569)
+-- TOC entry 610 (OID 45569)
 -- Name: cnt001355; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8953,7 +9232,7 @@ ALTER TABLE ONLY prices
 
 
 --
--- TOC entry 615 (OID 45585)
+-- TOC entry 616 (OID 45585)
 -- Name: cnt001323; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8962,7 +9241,7 @@ ALTER TABLE ONLY purchdata
 
 
 --
--- TOC entry 616 (OID 45589)
+-- TOC entry 615 (OID 45589)
 -- Name: cnt001324; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8971,7 +9250,7 @@ ALTER TABLE ONLY purchdata
 
 
 --
--- TOC entry 617 (OID 45593)
+-- TOC entry 618 (OID 45593)
 -- Name: cnt001305; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8980,7 +9259,7 @@ ALTER TABLE ONLY locstock
 
 
 --
--- TOC entry 618 (OID 45597)
+-- TOC entry 617 (OID 45597)
 -- Name: cnt001306; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -8989,7 +9268,7 @@ ALTER TABLE ONLY locstock
 
 
 --
--- TOC entry 619 (OID 45601)
+-- TOC entry 621 (OID 45601)
 -- Name: cnt001308; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9007,7 +9286,7 @@ ALTER TABLE ONLY loctransfers
 
 
 --
--- TOC entry 621 (OID 45609)
+-- TOC entry 619 (OID 45609)
 -- Name: cnt001310; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9052,7 +9331,7 @@ ALTER TABLE ONLY stockmoves
 
 
 --
--- TOC entry 626 (OID 45629)
+-- TOC entry 627 (OID 45629)
 -- Name: cnt001367; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9061,7 +9340,7 @@ ALTER TABLE ONLY stockserialitems
 
 
 --
--- TOC entry 627 (OID 45633)
+-- TOC entry 626 (OID 45633)
 -- Name: cnt001368; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9079,7 +9358,7 @@ ALTER TABLE ONLY stockserialmoves
 
 
 --
--- TOC entry 629 (OID 45641)
+-- TOC entry 630 (OID 45641)
 -- Name: cnt001376; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9088,7 +9367,7 @@ ALTER TABLE ONLY supptrans
 
 
 --
--- TOC entry 630 (OID 45645)
+-- TOC entry 629 (OID 45645)
 -- Name: cnt001377; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9097,7 +9376,7 @@ ALTER TABLE ONLY supptrans
 
 
 --
--- TOC entry 631 (OID 45649)
+-- TOC entry 632 (OID 45649)
 -- Name: cnt001373; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9106,7 +9385,7 @@ ALTER TABLE ONLY suppallocs
 
 
 --
--- TOC entry 632 (OID 45653)
+-- TOC entry 631 (OID 45653)
 -- Name: cnt001374; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9124,7 +9403,7 @@ ALTER TABLE ONLY suppliercontacts
 
 
 --
--- TOC entry 634 (OID 45661)
+-- TOC entry 635 (OID 45661)
 -- Name: cnt001328; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9133,7 +9412,7 @@ ALTER TABLE ONLY purchorders
 
 
 --
--- TOC entry 635 (OID 45665)
+-- TOC entry 634 (OID 45665)
 -- Name: cnt001329; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9151,7 +9430,7 @@ ALTER TABLE ONLY purchorderdetails
 
 
 --
--- TOC entry 637 (OID 45673)
+-- TOC entry 638 (OID 45673)
 -- Name: cnt001300; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9160,7 +9439,7 @@ ALTER TABLE ONLY grns
 
 
 --
--- TOC entry 638 (OID 45677)
+-- TOC entry 637 (OID 45677)
 -- Name: cnt001301; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9205,7 +9484,7 @@ ALTER TABLE ONLY workcentres
 
 
 --
--- TOC entry 645 (OID 45697)
+-- TOC entry 646 (OID 45697)
 -- Name: cnt001404; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9214,7 +9493,7 @@ ALTER TABLE ONLY worksorders
 
 
 --
--- TOC entry 646 (OID 45701)
+-- TOC entry 645 (OID 45701)
 -- Name: cnt001405; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9223,7 +9502,7 @@ ALTER TABLE ONLY worksorders
 
 
 --
--- TOC entry 647 (OID 45705)
+-- TOC entry 649 (OID 45705)
 -- Name: cnt001392; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9241,7 +9520,7 @@ ALTER TABLE ONLY woissues
 
 
 --
--- TOC entry 649 (OID 45713)
+-- TOC entry 647 (OID 45713)
 -- Name: cnt001394; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9322,7 +9601,7 @@ ALTER TABLE ONLY bankaccounts
 
 
 --
--- TOC entry 658 (OID 45749)
+-- TOC entry 659 (OID 45749)
 -- Name: cnt001245; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9331,7 +9610,7 @@ ALTER TABLE ONLY banktrans
 
 
 --
--- TOC entry 659 (OID 45753)
+-- TOC entry 658 (OID 45753)
 -- Name: cnt001246; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9349,7 +9628,7 @@ ALTER TABLE ONLY buckets
 
 
 --
--- TOC entry 661 (OID 45761)
+-- TOC entry 662 (OID 45761)
 -- Name: cnt001251; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9358,7 +9637,7 @@ ALTER TABLE ONLY chartdetails
 
 
 --
--- TOC entry 662 (OID 45765)
+-- TOC entry 661 (OID 45765)
 -- Name: cnt001252; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9466,7 +9745,7 @@ ALTER TABLE ONLY custbranch
 
 
 --
--- TOC entry 676 (OID 45817)
+-- TOC entry 678 (OID 45817)
 -- Name: cnt001263; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9484,7 +9763,7 @@ ALTER TABLE ONLY contracts
 
 
 --
--- TOC entry 678 (OID 45825)
+-- TOC entry 676 (OID 45825)
 -- Name: cnt001265; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9502,7 +9781,7 @@ ALTER TABLE ONLY contractreqts
 
 
 --
--- TOC entry 680 (OID 45833)
+-- TOC entry 682 (OID 45833)
 -- Name: cnt001340; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9520,7 +9799,7 @@ ALTER TABLE ONLY salesorders
 
 
 --
--- TOC entry 682 (OID 45841)
+-- TOC entry 680 (OID 45841)
 -- Name: cnt001342; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9529,7 +9808,7 @@ ALTER TABLE ONLY salesorders
 
 
 --
--- TOC entry 683 (OID 45845)
+-- TOC entry 685 (OID 45845)
 -- Name: cnt001313; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9547,7 +9826,7 @@ ALTER TABLE ONLY orderdeliverydifferenceslog
 
 
 --
--- TOC entry 685 (OID 45853)
+-- TOC entry 683 (OID 45853)
 -- Name: cnt001315; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9556,7 +9835,7 @@ ALTER TABLE ONLY orderdeliverydifferenceslog
 
 
 --
--- TOC entry 686 (OID 45857)
+-- TOC entry 687 (OID 45857)
 -- Name: cnt001337; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9565,7 +9844,7 @@ ALTER TABLE ONLY salesorderdetails
 
 
 --
--- TOC entry 687 (OID 45861)
+-- TOC entry 686 (OID 45861)
 -- Name: cnt001338; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9574,7 +9853,7 @@ ALTER TABLE ONLY salesorderdetails
 
 
 --
--- TOC entry 688 (OID 45865)
+-- TOC entry 690 (OID 45865)
 -- Name: cnt001278; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9592,7 +9871,7 @@ ALTER TABLE ONLY debtortrans
 
 
 --
--- TOC entry 690 (OID 45873)
+-- TOC entry 688 (OID 45873)
 -- Name: cnt001280; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9601,7 +9880,7 @@ ALTER TABLE ONLY debtortrans
 
 
 --
--- TOC entry 691 (OID 45877)
+-- TOC entry 692 (OID 45877)
 -- Name: cnt001268; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9610,7 +9889,7 @@ ALTER TABLE ONLY custallocns
 
 
 --
--- TOC entry 692 (OID 45881)
+-- TOC entry 691 (OID 45881)
 -- Name: cnt001269; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9628,7 +9907,7 @@ ALTER TABLE ONLY custbranch
 
 
 --
--- TOC entry 693 (OID 45889)
+-- TOC entry 694 (OID 45889)
 -- Name: recurrorderno; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9637,7 +9916,7 @@ ALTER TABLE ONLY recurrsalesorderdetails
 
 
 --
--- TOC entry 694 (OID 45893)
+-- TOC entry 693 (OID 45893)
 -- Name: recurrorderstkcode; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9655,7 +9934,7 @@ ALTER TABLE ONLY accountgroups
 
 
 --
--- TOC entry 695 (OID 45901)
+-- TOC entry 696 (OID 45901)
 -- Name: securitygroups_secgroupid_fk; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9664,7 +9943,7 @@ ALTER TABLE ONLY securitygroups
 
 
 --
--- TOC entry 696 (OID 45905)
+-- TOC entry 695 (OID 45905)
 -- Name: securitygroups_tokenid_fk; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9673,7 +9952,7 @@ ALTER TABLE ONLY securitygroups
 
 
 --
--- TOC entry 697 (OID 45985)
+-- TOC entry 698 (OID 45985)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9682,7 +9961,7 @@ ALTER TABLE ONLY salescatprod
 
 
 --
--- TOC entry 698 (OID 45989)
+-- TOC entry 697 (OID 45989)
 -- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9709,7 +9988,7 @@ ALTER TABLE ONLY locations
 
 
 --
--- TOC entry 699 (OID 62258)
+-- TOC entry 700 (OID 62258)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9718,7 +9997,7 @@ ALTER TABLE ONLY taxgrouptaxes
 
 
 --
--- TOC entry 700 (OID 62262)
+-- TOC entry 699 (OID 62262)
 -- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9736,7 +10015,7 @@ ALTER TABLE ONLY stockmovestaxes
 
 
 --
--- TOC entry 702 (OID 62284)
+-- TOC entry 703 (OID 62284)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9745,7 +10024,7 @@ ALTER TABLE ONLY debtortranstaxes
 
 
 --
--- TOC entry 703 (OID 62288)
+-- TOC entry 702 (OID 62288)
 -- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9772,7 +10051,7 @@ ALTER TABLE ONLY taxauthrates
 
 
 --
--- TOC entry 704 (OID 62308)
+-- TOC entry 705 (OID 62308)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9781,7 +10060,7 @@ ALTER TABLE ONLY supptranstaxes
 
 
 --
--- TOC entry 705 (OID 62312)
+-- TOC entry 704 (OID 62312)
 -- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -9835,7 +10114,7 @@ SELECT pg_catalog.setval('edi_orders_segs_id_seq', 1, false);
 -- Name: gltrans_counterindex_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('gltrans_counterindex_seq', 80, true);
+SELECT pg_catalog.setval('gltrans_counterindex_seq', 90, true);
 
 
 --
@@ -9851,7 +10130,7 @@ SELECT pg_catalog.setval('reportheaders_reportid_seq', 1, true);
 -- Name: salesanalysis_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('salesanalysis_id_seq', 14, true);
+SELECT pg_catalog.setval('salesanalysis_id_seq', 15, true);
 
 
 --
@@ -9899,7 +10178,7 @@ SELECT pg_catalog.setval('stockcounts_id_seq', 1, false);
 -- Name: stockmoves_stkmoveno_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('stockmoves_stkmoveno_seq', 41, true);
+SELECT pg_catalog.setval('stockmoves_stkmoveno_seq', 45, true);
 
 
 --
@@ -9915,7 +10194,7 @@ SELECT pg_catalog.setval('stockserialmoves_stkitmmoveno_seq', 8, true);
 -- Name: supptrans_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('supptrans_id_seq', 2, true);
+SELECT pg_catalog.setval('supptrans_id_seq', 4, true);
 
 
 --
@@ -9923,7 +10202,7 @@ SELECT pg_catalog.setval('supptrans_id_seq', 2, true);
 -- Name: suppallocs_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('suppallocs_id_seq', 1, false);
+SELECT pg_catalog.setval('suppallocs_id_seq', 1, true);
 
 
 --
@@ -9947,7 +10226,7 @@ SELECT pg_catalog.setval('purchorderdetails_podetailitem_seq', 4, true);
 -- Name: grns_grnno_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('grns_grnno_seq', 6, true);
+SELECT pg_catalog.setval('grns_grnno_seq', 7, true);
 
 
 --
@@ -9963,7 +10242,7 @@ SELECT pg_catalog.setval('worequirements_id_seq', 1, false);
 -- Name: banktrans_banktransid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('banktrans_banktransid_seq', 4, true);
+SELECT pg_catalog.setval('banktrans_banktransid_seq', 5, true);
 
 
 --
@@ -9979,7 +10258,7 @@ SELECT pg_catalog.setval('contractreqts_contractreqid_seq', 1, false);
 -- Name: salesorders_orderno_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('salesorders_orderno_seq', 54, true);
+SELECT pg_catalog.setval('salesorders_orderno_seq', 55, true);
 
 
 --
@@ -9987,7 +10266,7 @@ SELECT pg_catalog.setval('salesorders_orderno_seq', 54, true);
 -- Name: debtortrans_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('debtortrans_id_seq', 31, true);
+SELECT pg_catalog.setval('debtortrans_id_seq', 32, true);
 
 
 --
