@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 require('includes/DefineCartClass.php');
 
@@ -660,7 +660,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		} elseif (strlen($_POST['StockCode'])>0){
 		
 			$_POST['StockCode'] = strtoupper($_POST['StockCode']);
-			$_POST['StockCode'] = '%' . $_POST['StockCode'] . '%';
+			$SearchString = '%' . $_POST['StockCode'] . '%';
 
 			if ($_POST['StockCat']=='All'){
 				$SQL = "SELECT stockmaster.stockid,
@@ -669,7 +669,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					FROM stockmaster, stockcategory
 					WHERE stockmaster.categoryid=stockcategory.categoryid
 					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
+					AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 					AND stockmaster.discontinued=0
 					ORDER BY stockmaster.stockid";
 			} else {
@@ -679,7 +679,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					FROM stockmaster, stockcategory
 					WHERE stockmaster.categoryid=stockcategory.categoryid
 					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D')
-					AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
+					AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 					AND stockmaster.discontinued=0
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 					ORDER BY stockmaster.stockid";

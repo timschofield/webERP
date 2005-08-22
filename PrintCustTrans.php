@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 $PageSecurity = 1;
 
@@ -199,18 +199,17 @@ If (isset($PrintPDF)
 			$sql = $sql . ' AND debtorsmaster.ediinvoices=0';
 		}
 	   }
-	   $result=DB_query($sql,$db);
+	   $result=DB_query($sql,$db,'','',false,false);
 
 	   if (DB_error_no($db)!=0) {
 
 		$title = _('Transaction Print Error Report');
 		include ('includes/header.inc');
 
-		echo '<BR>' . _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available');
+		prnMsg( _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available'),'error');
 		if ($debug==1){
-		    echo _('The SQL used to get this information that failed was') . "<BR>$sql";
+		    prnMsg (_('The SQL used to get this information that failed was') . "<BR>" . $sql,'error');
 		}
-		break;
 		include ('includes/footer.inc');
 		exit;
 	   }
