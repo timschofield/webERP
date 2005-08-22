@@ -2453,10 +2453,8 @@ CA	Cash Only	0	1
 --
 
 COPY systypes (typeid, typename, typeno) FROM stdin;
-25	Purchase Order Delivery	3
 2	Receipt - GL	0
 3	Standing Journal	0
-10	Sales Invoice	2
 18	Purchase Order	0
 21	Debit Note	0
 23	Creditors Journal	0
@@ -2468,7 +2466,9 @@ COPY systypes (typeid, typename, typeno) FROM stdin;
 50	Opening Balance	0
 22	Creditors Payment	3
 31	Shipment Close	3
+25	Purchase Order Delivery	4
 1	Payment - GL	2
+10	Sales Invoice	3
 20	Purchase Invoice	1
 35	Cost Update	2
 500	"Debtor Number"	100001
@@ -2756,16 +2756,28 @@ COPY edi_orders_segs (id, segtag, seggroup, maxoccur) FROM stdin;
 --
 
 COPY gltrans (counterindex, "type", typeno, chequeno, trandate, periodno, account, narrative, amount, posted, jobref) FROM stdin;
-85	10	2	0	2005-08-19	68	200000	CUST01 - ASSEM1 x 10 @ 56.989	569.88999999999999	0	
-86	10	2	0	2005-08-19	68	770000	CUST01 - ASSEM1 x 10 @ 56.989	-569.88999999999999	0	
-87	10	2	0	2005-08-19	68	100000	CUST01 - ASSEM1 x 10 @ 2.5000	-25	0	
-88	10	2	0	2005-08-19	68	100000	CUST01 - ASSEM1 @ 5%	1.25	0	
 81	25	3	0	2005-08-06	68	770000	PO: 6 SUP01 - PHIS01 - A phisical Stock Item x 32 @ 10.00	320	1	
 82	25	3	0	2005-08-06	68	910000	PO: 6 SUP01 - PHIS01 - A phisical Stock Item x 32 @ 10.00	-320	1	
 83	22	3	0	2005-08-31	68	841000	SUP01 - Test Supplier payment run on 10/08/2005 - 1	-3719.0999999999999	1	
 84	22	3	0	2005-08-31	68	900000	SUP01 - Test Supplier payment run on 10/08/2005 - 1	3719.0999999999999	1	
-89	10	2	0	2005-08-19	68	800000	CUST01	27.91	0	
-90	10	2	0	2005-08-19	68	951000	CUST01	-4.15625	0	
+85	10	2	0	2005-08-19	68	200000	CUST01 - ASSEM1 x 10 @ 56.989	569.88999999999999	1	
+86	10	2	0	2005-08-19	68	770000	CUST01 - ASSEM1 x 10 @ 56.989	-569.88999999999999	1	
+87	10	2	0	2005-08-19	68	100000	CUST01 - ASSEM1 x 10 @ 2.5000	-25	1	
+88	10	2	0	2005-08-19	68	100000	CUST01 - ASSEM1 @ 5%	1.25	1	
+89	10	2	0	2005-08-19	68	800000	CUST01	27.91	1	
+90	10	2	0	2005-08-19	68	951000	CUST01	-4.15625	1	
+91	25	4	0	2005-08-18	68	770000	PO: 7 TEST - BOLT13MMX10 - 13mm hex head bolt 10mm thread x 420 @ 1.33	558.60000000000002	1	
+92	25	4	0	2005-08-18	68	910000	PO: 7 TEST - BOLT13MMX10 - 13mm hex head bolt 10mm thread x 420 @ 1.33	-558.60000000000002	1	
+93	10	3	0	2005-08-19	68	200000	100001 - BOLT13MMX10 x 100 @ 1.3300	133	1	
+94	10	3	0	2005-08-19	68	770000	100001 - BOLT13MMX10 x 100 @ 1.3300	-133	1	
+95	10	3	0	2005-08-19	68	100000	100001 - BOLT13MMX10 x 100 @ 2.9500	-295	1	
+96	10	3	0	2005-08-19	68	100000	100001 - BOLT13MMX10 @ 2.5%	7.375	1	
+97	10	3	0	2005-08-19	68	200000	100001 - ASSEM1 x 100 @ 56.989	5698.8999999999996	1	
+98	10	3	0	2005-08-19	68	770000	100001 - ASSEM1 x 100 @ 56.989	-5698.8999999999996	1	
+99	10	3	0	2005-08-19	68	100000	100001 - ASSEM1 x 100 @ 2.9500	-295	1	
+100	10	3	0	2005-08-19	68	100000	100001 - ASSEM1 @ 2.5%	7.375	1	
+101	10	3	0	2005-08-19	68	800000	100001	675.91999999999996	1	
+102	10	3	0	2005-08-19	68	951000	100001	-100.66875	1	
 \.
 
 
@@ -2819,6 +2831,8 @@ COPY reportcolumns (reportid, colno, heading1, heading2, calculation, periodfrom
 COPY salesanalysis (typeabbrev, periodno, amt, cost, cust, custbranch, qty, disc, stockid, area, budgetoractual, salesperson, stkcategory, id) FROM stdin;
 WS	63	723.3089	184.9450	FREDBLOGG	FREDBLOGG	5.0000	0.0000	PHIS02	EU	1	REF	MISC	14
 WS	68	25.0000	569.8900	CUST01	CUST01	10.0000	1.2500	ASSEM1	ZA	1	GEN	MISC	15
+WS	68	295.0000	133.0000	100001	100001	100.0000	7.3750	BOLT13MMX10	ZA	1	GEN	BOLTS	16
+WS	68	295.0000	5698.9000	100001	100001	100.0000	7.3750	ASSEM1	ZA	1	GEN	MISC	17
 \.
 
 
@@ -3162,8 +3176,9 @@ SUP01	PHIS01	32.9500	each	1.0000	supplier 1 description for physical item 1	15	1
 COPY locstock (loccode, stockid, quantity, reorderlevel) FROM stdin;
 CPT	ASSEM1	0.0	0
 SYD	ASSEM1	0.0	0
-CPT	PHIS01	12.0	0
-CPT	PHIS02	-10.0	0
+CPT	BOLT13MMX10	320.0	0
+CPT	PHIS01	-188.0	0
+CPT	PHIS02	-110.0	0
 CPT	DEVDB	0.0	0
 CPT	STEELBAR10MMROUND	0.0	0
 SYD	DEVDB	0.0	0
@@ -3171,7 +3186,6 @@ SYD	PHIS02	0.0	0
 SYD	PHIS01	0.0	0
 SYD	BOLT13MMX10	0.0	0
 SYD	STEELBAR10MMROUND	0.0	0
-CPT	BOLT13MMX10	0.0	0
 \.
 
 
@@ -3194,7 +3208,12 @@ COPY stockmoves (stkmoveno, stockid, "type", transno, loccode, trandate, debtorn
 43	PHIS01	10	2	CPT	2005-08-19	CUST01	CUST01	0.0000	68	Assembly: ASSEM1 Order: 55	-20.0000	0.0000	10.0000	0	12	0	
 44	PHIS02	10	2	CPT	2005-08-19	CUST01	CUST01	0.0000	68	Assembly: ASSEM1 Order: 55	-10.0000	0.0000	36.9890	0	-10	0	
 45	ASSEM1	10	2	CPT	2005-08-19	CUST01	CUST01	2.5000	68	55	-10.0000	0.0500	56.9890	1	0	0	
+46	BOLT13MMX10	25	4	CPT	2005-08-18			0.0000	68	TEST (etstt) - 7	420.0000	0.0000	1.3300	1	420	0	
+47	BOLT13MMX10	10	3	CPT	2005-08-19	100001	100001	2.9500	68	56	-100.0000	0.0250	1.3300	1	320	0	
 19	BOLT13MMX10	17	4	CPT	2005-01-16			0.0000	61	initial stock	67990.0000	0.0000	0.0000	1	67990	0	
+48	PHIS01	10	3	CPT	2005-08-19	100001	100001	0.0000	68	Assembly: ASSEM1 Order: 56	-200.0000	0.0000	10.0000	0	-188	0	
+49	PHIS02	10	3	CPT	2005-08-19	100001	100001	0.0000	68	Assembly: ASSEM1 Order: 56	-100.0000	0.0000	36.9890	0	-110	0	
+50	ASSEM1	10	3	CPT	2005-08-19	100001	100001	2.9500	68	56	-100.0000	0.0250	56.9890	1	0	0	
 27	PHIS01	17	5	CPT	2005-03-21			0.0000	63		5.0000	0.0000	0.0000	1	278	0	
 28	PHIS01	17	6	CPT	2005-03-21			0.0000	63		5.0000	0.0000	0.0000	1	283	0	
 41	PHIS02	10	1	CPT	2005-03-26	FREDBLOGG	FREDBLOGG	144.6618	63	11	-5.0000	0.0000	36.9890	1	-5	0	
@@ -3207,9 +3226,23 @@ COPY stockmoves (stkmoveno, stockid, "type", transno, loccode, trandate, debtorn
 --
 
 COPY stockserialitems (stockid, loccode, serialno, quantity) FROM stdin;
+BOLT13MMX10	CPT	Z-0021	30
 BOLT13MMX10	CPT	WO1355	20510
-BOLT13MMX10	CPT	WO1655	23930
+BOLT13MMX10	CPT	Z-0022	30
 BOLT13MMX10	CPT	WO1222	23400
+BOLT13MMX10	CPT	Z-0023	30
+BOLT13MMX10	CPT	Z-0024	30
+BOLT13MMX10	CPT	Z-0025	30
+BOLT13MMX10	CPT	Z-0036	30
+BOLT13MMX10	CPT	Z-0028	30
+BOLT13MMX10	CPT	Z-0032	30
+BOLT13MMX10	CPT	Z-0033	30
+BOLT13MMX10	CPT	Z-0034	30
+BOLT13MMX10	CPT	Z-0027	30
+BOLT13MMX10	CPT	Z-0029	30
+BOLT13MMX10	CPT	Z-0031	30
+BOLT13MMX10	CPT	Z-0030	30
+BOLT13MMX10	CPT	WO1655	23830
 \.
 
 
@@ -3219,6 +3252,21 @@ BOLT13MMX10	CPT	WO1222	23400
 --
 
 COPY stockserialmoves (stkitmmoveno, stockmoveno, stockid, serialno, moveqty) FROM stdin;
+9	46	BOLT13MMX10	Z-0021	30
+10	46	BOLT13MMX10	Z-0022	30
+11	46	BOLT13MMX10	Z-0023	30
+12	46	BOLT13MMX10	Z-0024	30
+13	46	BOLT13MMX10	Z-0025	30
+14	46	BOLT13MMX10	Z-0036	30
+15	46	BOLT13MMX10	Z-0028	30
+16	46	BOLT13MMX10	Z-0032	30
+17	46	BOLT13MMX10	Z-0033	30
+18	46	BOLT13MMX10	Z-0034	30
+19	46	BOLT13MMX10	Z-0027	30
+20	46	BOLT13MMX10	Z-0029	30
+21	46	BOLT13MMX10	Z-0031	30
+22	46	BOLT13MMX10	Z-0030	30
+23	47	BOLT13MMX10	WO1655	-100
 \.
 
 
@@ -3263,6 +3311,7 @@ COPY purchorders (orderno, supplierno, comments, orddate, rate, dateprinted, all
 2	SUP01		2004-12-02 00:00:00	1.0000	\N	1			CPT	n/a	n/a	n/a	n/a
 5	SUP01		2004-12-04 00:00:00	1.0000	\N	1	testy	REF0001	CPT	na	na	na	na
 6	SUP01		2005-01-13 00:00:00	1.0000	2005-01-13 00:00:00	0	pdg		CPT	Some Road	Some Town	Some City	0231 122211
+7	TEST		2005-08-18 00:00:00	1.0000	\N	1	pdg		CPT	Percy Montgomery Drive	Ollieville	Cape Town	233120100
 \.
 
 
@@ -3273,6 +3322,7 @@ COPY purchorders (orderno, supplierno, comments, orddate, rate, dateprinted, all
 
 COPY purchorderdetails (podetailitem, orderno, itemcode, deliverydate, itemdescription, glcode, qtyinvoiced, unitprice, actprice, stdcostunit, quantityord, quantityrecd, shiptref, jobref, completed) FROM stdin;
 4	6	PHIS01	2005-01-13	A phisical Stock Item	770000	0.0000	12.0000	0.0000	10.0000	455.0000	32.0000	0	0	0
+5	7	BOLT13MMX10	2005-08-18	13mm hex head bolt 10mm thread	770000	0.0000	0.0000	0.0000	1.3300	500.0000	420.0000	0	0	0
 1	2	PHIS01	2004-12-02	A phisical Stock Item	770000	0.0000	35.0000	0.0000	0.0000	5.0000	0.0000	0	0	0
 3	5	*5_1	2004-12-05	A Jar of JAM	770000	0.0000	20.0000	0.0000	0.0000	2.0000	0.0000	0		0
 \.
@@ -3285,6 +3335,7 @@ COPY purchorderdetails (podetailitem, orderno, itemcode, deliverydate, itemdescr
 
 COPY grns (grnbatch, grnno, podetailitem, itemcode, deliverydate, itemdescription, qtyrecd, quantityinv, supplierid) FROM stdin;
 3	7	4	PHIS01	2005-08-06	A phisical Stock Item	32.0000	0.0000	SUP01
+4	8	5	BOLT13MMX10	2005-08-18	13mm hex head bolt 10mm thread	420.0000	0.0000	TEST
 \.
 
 
@@ -3304,7 +3355,7 @@ COPY taxauthrates (taxauthority, dispatchtaxprovince, taxcatid, taxrate) FROM st
 --
 
 COPY www_users (userid, "password", realname, customerid, phone, email, defaultlocation, fullaccess, lastvisitdate, branchcode, pagesize, modulesallowed, blocked, displayrecordsmax, theme, "language", pinno, swipecard) FROM stdin;
-demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2005-08-18 20:56:50		A4	1,1,1,1,1,1,1,1,	0	50	professional	en_GB	\N	\N
+demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2005-08-22 21:42:13		A4	1,1,1,1,1,1,1,1,	0	50	professional	en_GB	\N	\N
 \.
 
 
@@ -3522,8 +3573,6 @@ COPY chartdetails (accountcode, period, budget, actual, bfwd, bfwdbudget) FROM s
 999000	67	0	0	0	0
 1	67	0	0	0	0
 215000	67	0	0	0	0
-100000	68	0	0	0	0
-200000	68	0	0	0	0
 210000	68	0	0	0	0
 220000	68	0	0	0	0
 230000	68	0	0	0	0
@@ -3620,7 +3669,6 @@ COPY chartdetails (accountcode, period, budget, actual, bfwd, bfwdbudget) FROM s
 740000	68	0	0	0	0
 750000	68	0	0	0	0
 760000	68	0	0	0	0
-800000	68	0	0	0	0
 805000	68	0	0	0	0
 810000	68	0	0	0	0
 820000	68	0	0	0	0
@@ -3638,13 +3686,16 @@ COPY chartdetails (accountcode, period, budget, actual, bfwd, bfwdbudget) FROM s
 940010	68	0	0	0	0
 940020	68	0	0	0	0
 950000	68	0	0	0	0
-951000	68	0	0	0	0
 999000	68	0	0	0	0
 1	68	0	0	0	0
 215000	68	0	0	0	0
-910000	68	0	-320	0	0
 841000	68	0	-3719.0999999999999	0	0
 900000	68	0	3719.0999999999999	0	0
+910000	68	0	-878.60000000000002	0	0
+200000	68	0	6401.79	0	0
+100000	68	0	-599	0	0
+800000	68	0	703.82999999999993	0	0
+951000	68	0	-104.825	0	0
 1	61	0	0	0	0
 770000	61	0	0	0	0
 770000	62	0	0	0	0
@@ -5877,7 +5928,7 @@ COPY chartdetails (accountcode, period, budget, actual, bfwd, bfwdbudget) FROM s
 999000	66	0	0	0	0
 1	66	0	0	0	0
 215000	66	0	0	0	0
-770000	68	0	320	0	0
+770000	68	0	-5523.1899999999996	0	0
 \.
 
 
@@ -5969,6 +6020,8 @@ COPY salesorders (orderno, debtorno, branchcode, customerref, buyername, comment
 52	FREDBLOGG	FREDBLOGG		\N		2005-03-31	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-04-01	0	\N	0	2
 53	FREDBLOGG	ERCC		\N		2005-03-31	WS	2	333 444						Ersteem Raichle unt Cloggs	0.00	SYD	2005-04-01	0	\N	0	2
 55	CUST01	CUST01		\N	 Inv 2	2005-08-18	WS	1	Na	Na	Na	Na	NA	NA	Customer	0.00	CPT	2005-08-19	1	2005-08-18	0	1
+57	100001	100001		\N		2005-08-18	WS	2	453A Globus Contrabandus St	Aardvarkston					Eric Van Halen	0.00	CPT	2005-08-19	0	\N	0	1
+56	100001	100001		\N	 Inv 3	2005-08-18	WS	2	453A Globus Contrabandus St	Aardvarkston					Eric Van Halen	0.00	CPT	2005-08-19	0	\N	0	1
 11	FREDBLOGG	FREDBLOGG		\N	 Inv 1	2005-03-19	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-21	0	\N	0	\N
 \.
 
@@ -5991,6 +6044,9 @@ COPY orderdeliverydifferenceslog (orderno, invoiceno, stockid, quantitydiff, deb
 COPY salesorderdetails (orderno, stkcode, qtyinvoiced, unitprice, quantity, estimate, discountpercent, actualdispatchdate, completed, narrative, orderlineno) FROM stdin;
 2	DEVDB	0.0000	40.0000	15.0000	0	0.0000	2004-12-07 00:00:00	0		0
 55	ASSEM1	10.0000	2.5000	10.0000	0	0.0500	2005-08-19 00:00:00	1		0
+57	BOLT13MMX10	0.0000	3.5000	20.0000	0	0.0000	\N	0		0
+56	BOLT13MMX10	100.0000	2.9500	100.0000	0	0.0250	2005-08-19 00:00:00	1		0
+56	ASSEM1	100.0000	2.9500	100.0000	0	0.0250	2005-08-19 00:00:00	1		1
 5	PHIS01	0.0000	60.0000	12.0000	0	0.0350	2005-01-14 00:00:00	0		0
 6	DEVDB	0.0000	40.0000	6.5000	0	0.2500	2005-02-07 00:00:00	0		0
 6	PHIS02	0.0000	70.0000	6.0000	0	0.0000	2005-02-07 00:00:00	0		1
@@ -6014,6 +6070,7 @@ COPY salesorderdetails (orderno, stkcode, qtyinvoiced, unitprice, quantity, esti
 
 COPY debtortrans (id, transno, "type", debtorno, branchcode, trandate, prd, settled, reference, tpe, order_, rate, ovamount, ovgst, ovfreight, ovdiscount, diffonexch, alloc, invtext, shipvia, edisent, consignment) FROM stdin;
 32	2	10	CUST01	CUST01	2005-08-19 00:00:00	68	0		WS	55	1.000000	23.75	4.1600000000000001	0	0	0	0		1	0	
+33	3	10	100001	100001	2005-08-19 00:00:00	68	0		WS	56	1.000000	575.25	100.67	0	0	0	0		2	0	
 31	1	10	FREDBLOGG	FREDBLOGG	2005-03-26 00:00:00	63	0		WS	11	2.454000	1775	0	0	0	0	0		1	0	
 \.
 
@@ -6248,9 +6305,9 @@ RadionBeaconFTP_user_pass	Radio Beacon remote ftp server password
 CountryOfOperation	EUR
 DefaultTheme	professional
 part_pics_dir	companies/weberp/part_pics
-reports_dir	companies/weberp/reports
 HTTPS_Only	0
-DB_Maintenance	1
+reports_dir	companies/weberp/reports
+DB_Maintenance	7
 AutoDebtorNo	0
 PackNoteFormat	1
 DefaultBlindPackNote	1
@@ -6329,6 +6386,8 @@ COPY taxgrouptaxes (taxgroupid, taxauthid, calculationorder, taxontax) FROM stdi
 COPY stockmovestaxes (stkmoveno, taxauthid, taxontax, taxcalculationorder, taxrate) FROM stdin;
 41	1	0	0	0
 45	1	0	0	0.17499999999999999
+47	1	0	0	0.17499999999999999
+50	1	0	0	0.17499999999999999
 \.
 
 
@@ -6340,6 +6399,7 @@ COPY stockmovestaxes (stkmoveno, taxauthid, taxontax, taxcalculationorder, taxra
 COPY debtortranstaxes (debtortransid, taxauthid, taxamount) FROM stdin;
 31	1	0
 32	1	4.15625
+33	1	100.66875
 \.
 
 
@@ -10114,7 +10174,7 @@ SELECT pg_catalog.setval('edi_orders_segs_id_seq', 1, false);
 -- Name: gltrans_counterindex_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('gltrans_counterindex_seq', 90, true);
+SELECT pg_catalog.setval('gltrans_counterindex_seq', 102, true);
 
 
 --
@@ -10130,7 +10190,7 @@ SELECT pg_catalog.setval('reportheaders_reportid_seq', 1, true);
 -- Name: salesanalysis_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('salesanalysis_id_seq', 15, true);
+SELECT pg_catalog.setval('salesanalysis_id_seq', 17, true);
 
 
 --
@@ -10178,7 +10238,7 @@ SELECT pg_catalog.setval('stockcounts_id_seq', 1, false);
 -- Name: stockmoves_stkmoveno_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('stockmoves_stkmoveno_seq', 45, true);
+SELECT pg_catalog.setval('stockmoves_stkmoveno_seq', 50, true);
 
 
 --
@@ -10186,7 +10246,7 @@ SELECT pg_catalog.setval('stockmoves_stkmoveno_seq', 45, true);
 -- Name: stockserialmoves_stkitmmoveno_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('stockserialmoves_stkitmmoveno_seq', 8, true);
+SELECT pg_catalog.setval('stockserialmoves_stkitmmoveno_seq', 23, true);
 
 
 --
@@ -10210,7 +10270,7 @@ SELECT pg_catalog.setval('suppallocs_id_seq', 1, true);
 -- Name: purchorders_orderno_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('purchorders_orderno_seq', 6, true);
+SELECT pg_catalog.setval('purchorders_orderno_seq', 7, true);
 
 
 --
@@ -10218,7 +10278,7 @@ SELECT pg_catalog.setval('purchorders_orderno_seq', 6, true);
 -- Name: purchorderdetails_podetailitem_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('purchorderdetails_podetailitem_seq', 4, true);
+SELECT pg_catalog.setval('purchorderdetails_podetailitem_seq', 5, true);
 
 
 --
@@ -10226,7 +10286,7 @@ SELECT pg_catalog.setval('purchorderdetails_podetailitem_seq', 4, true);
 -- Name: grns_grnno_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('grns_grnno_seq', 7, true);
+SELECT pg_catalog.setval('grns_grnno_seq', 8, true);
 
 
 --
@@ -10258,7 +10318,7 @@ SELECT pg_catalog.setval('contractreqts_contractreqid_seq', 1, false);
 -- Name: salesorders_orderno_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('salesorders_orderno_seq', 55, true);
+SELECT pg_catalog.setval('salesorders_orderno_seq', 57, true);
 
 
 --
@@ -10266,7 +10326,7 @@ SELECT pg_catalog.setval('salesorders_orderno_seq', 55, true);
 -- Name: debtortrans_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('debtortrans_id_seq', 32, true);
+SELECT pg_catalog.setval('debtortrans_id_seq', 33, true);
 
 
 --
