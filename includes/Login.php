@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 // Display demo user name and password within login form if $allow_demo_mode is true
 include ('includes/LanguageSetup.php');
 
@@ -48,10 +48,21 @@ if ($allow_demo_mode == True AND !isset($demo_text)) {
 
                                     <TR>
                                         <TD><SPAN class="loginText"><?php echo _('Company'); ?>:</SPAN><BR />
-                                         <INPUT type="TEXT" name="CompanyNameField" 
-					 
-					 <?php echo ' VALUE="' . $DefaultCompany . '"'; ?>
-					 ><br />
+					<?php
+						if ($AllowCompanySelectionBox == true){
+							echo '<SELECT name="CompanyNameField">';
+							$DirHandle = dir('companies/');
+							while (false != ($CompanyEntry = $DirHandle->read())){
+								if (is_dir('companies/' . $CompanyEntry) AND $CompanyEntry != '..' AND $CompanyEntry != 'CVS' AND $CompanyEntry!='.'){
+									echo "<OPTION  VALUE='$CompanyEntry'>$CompanyEntry";
+								}
+							}
+							echo '</SELECT>';
+						} else {
+                                         		echo '<INPUT type="TEXT" name="CompanyNameField"  VALUE="' . $DefaultCompany . '">';
+						}
+					?>
+					 <br />
 					 <SPAN class="loginText"><?php echo _('User name'); ?>:</SPAN><BR />
                                          <INPUT type="TEXT" name="UserNameEntryField"/><br />
                                          <SPAN class="loginText"><?php echo _('Password'); ?>:</SPAN><BR />

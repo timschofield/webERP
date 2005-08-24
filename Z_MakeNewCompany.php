@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity = 15;
 
@@ -17,8 +17,6 @@ if (isset($_POST['EnterCompanyDetails'])) {
 $title = _('Make New Company Database Utility');
 
 include('includes/header.inc');
-
-
 
 if($dbType=='postgres'){
 	prnMsg(_('This script does not work for postgres'),'error');
@@ -48,20 +46,10 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 		if (!file_exists('./companies/' . $_POST['NewCompany']) 
 				AND (isset($_FILES['LogoFile']) AND $_FILES['LogoFile']['name'] !='')) {
 			
-			prnMsg (_('Attempting to create the new company directories') . '.....<BR>', 'info');
-			$Result = mkdir('./companies/' . $_POST['NewCompany']);
-			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/part_pics');
-			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/EDI_Incoming_Orders');
-			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/reports');
-			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/EDI_Sent');
-			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/EDI_Pending');
-				
-		/*OK Now upload the logo */
-		
 			$result    = $_FILES['LogoFile']['error'];
 			$UploadTheLogo = 'Yes'; //Assume all is well to start off with
 			$filename = './companies/' . $_POST['NewCompany'] . '/logo.jpg';
-			
+						
 			//But check for the worst 
 			if (strtoupper(substr(trim($_FILES['LogoFile']['name']),strlen($_FILES['LogoFile']['name'])-3))!='JPG'){
 				prnMsg(_('Only jpg files are supported - a file extension of .jpg is expected'),'warn');
@@ -79,11 +67,6 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 					prnMsg(_('The existing image could not be removed'),'error');
 					$UploadTheLogo ='No';
 				}
-			}
-			
-			if ($UploadTheLogo=='Yes'){
-				$result  =  move_uploaded_file($_FILES['LogoFile']['tmp_name'], $filename);
-				$message = ($result)?_('File url') ."<a href='". $filename ."'>" .  $filename . '</a>' : _('Something is wrong with uploading a file');
 			}
 			
 			/* Need to read in the sql script and process the queries to initate a new DB */
@@ -112,8 +95,19 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 				} //end if its a valid sql line not a comment
 			} //end of for loop around the lines of the sql script
 			
-			/*Now create directory for the session files to be held 
-			Change required to always store session files in a company subdirectory of the default session directory*/
+			prnMsg (_('Attempting to create the new company directories') . '.....<BR>', 'info');
+			$Result = mkdir('./companies/' . $_POST['NewCompany']);
+			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/part_pics');
+			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/EDI_Incoming_Orders');
+			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/reports');
+			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/EDI_Sent');
+			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/EDI_Pending');
+				
+			/*OK Now upload the logo */
+			if ($UploadTheLogo=='Yes'){
+				$result  =  move_uploaded_file($_FILES['LogoFile']['tmp_name'], $filename);
+				$message = ($result)?_('File url') ."<a href='". $filename ."'>" .  $filename . '</a>' : _('Something is wrong with uploading a file');
+			}
 			
 		} else {
 			prnMsg(_('This company cannot be added because either it already exists or no logo is being uploaded!'),'error');
@@ -156,7 +150,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 		$ForceConfigReload=true;
 		include('includes/GetConfig.php');
 		
-		prnMsg (_('The new company database has been created for' . ' ' . $_POST['NewCompany'] . ' ' . _('the company details and parameters should now be set up for the new company. NB: Only a single user "demo" is defined with the password "weberp" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
+		prnMsg (_('The new company database has been created for' . ' ' . $_POST['NewCompany'] . '. ' . _('The company details and parameters should now be set up for the new company. NB: Only a single user "demo" is defined with the password "weberp" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
 		
 		echo '<P><A HREF="' . $rootpath . '/CompanyPreferences.php?' . SID .'">' . _('Set Up New Company Details') . '</A>';
 		echo '<P><A HREF="' . $rootpath . '/SystemParameters.php?' . SID .'">' . _('Set Up Configuration Details') . '</A>';

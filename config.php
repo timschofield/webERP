@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.60 $ */
+/* $Revision: 1.61 $ */
 
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
@@ -48,6 +48,9 @@ $dbuser = 'weberp_db_user';
 $dbpassword = 'weberp_db_pwd';
 
 $DefaultCompany = 'weberp';
+
+//It would probably be inappropraite to allow selection of the company in a hosted envionment so this option can be turned off with this parameter
+$AllowCompanySelectionBox = true;
 
 //The maximum time that a login session can be idle before automatic logout
 //time is in seconds  3600 seconds in an hour

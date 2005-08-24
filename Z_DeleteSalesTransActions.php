@@ -1,7 +1,5 @@
 <?php
-
-/* $Revision: 1.10 $ */
-
+/* $Revision: 1.11 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -33,7 +31,11 @@ if (isset($_POST['ProcessDeletions'])){
 		$Result = DB_query('DELETE FROM stockmoves WHERE type=10 OR type=11',$db,$ErrMsg);
 
 		$ErrMsg = _('The SQL to update the transaction numbers for all sales transactions because');
-		$sql = 'UPDATE systypes SET typeno =0 WHERE typeid =10 OR typeid=11 OR typeid=15 OR typeid=12';
+		$sql = 'UPDATE systypes SET typeno =0 
+						WHERE typeid =10 
+						OR typeid=11 
+						OR typeid=15 
+						OR typeid=12';
 		$Result = DB_query($sql,$db,$ErrMsg);
 
 	}
@@ -59,10 +61,10 @@ if (isset($_POST['ProcessDeletions'])){
 
 		prnMsg (_('Making stock for all parts and locations nil'),'info');
 		$ErrMsg = _('The SQL to make all stocks zero failed because');
-		$result = DB_query('TRUNCATE TABLE stockserialitems',$db,$ErrMsg);
 		$result = DB_query('TRUNCATE TABLE stockserialmoves',$db,$ErrMsg);
+		$result = DB_query('TRUNCATE TABLE stockserialitems',$db,$ErrMsg);
 		$result = DB_query('TRUNCATE TABLE stockmovestaxes',$db,$ErrMsg);
-		$result = DB_query('TRUNCATE TABLE stockmoves',$db,$ErrMsg);
+		$result = DB_query('DELETE FROM stockmoves',$db,$ErrMsg);
 		$sql = 'UPDATE locstock SET quantity=0';
 		$Result = DB_query($sql,$db,$ErrMsg);
 		
@@ -80,7 +82,6 @@ if (isset($_POST['ProcessDeletions'])){
 	if ($_POST['SalesGL']=='on'){
 
 		prnMsg(_('Deleting all sales related GL Transactions'),'info');
-
 		$sql = 'DELETE FROM gltrans WHERE type>=10 AND type <=15';
 		$ErrMsg = _('The SQL to delete sales related GL Transactions failed');
 		$Result = DB_query($sql,$db,$ErrMsg);

@@ -55,9 +55,6 @@ if(isset($ForceConfigReload) OR !isset($_SESSION['CompanyDefaultsLoaded'])) {
 	} else {
 		$_SESSION['CompanyRecord'] = DB_fetch_array($ReadCoyResult);
 	}
-
-
-	
 } //end if force reload or not set already
 
 	/*	
