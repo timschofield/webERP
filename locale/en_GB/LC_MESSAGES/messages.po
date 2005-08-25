@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-08-22 22:03+1200\n"
+"POT-Creation-Date: 2005-08-25 22:27+1200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -10883,27 +10883,27 @@ msgstr ""
 msgid "You should automatically be forwarded to the CSV Sales Analysis file when it is ready"
 msgstr ""
 
-#: SalesCategories.php:43 Stocks.php:28 Z_MakeNewCompany.php:67
+#: SalesCategories.php:43 Stocks.php:28 Z_MakeNewCompany.php:55
 msgid "Only jpg files are supported - a file extension of .jpg is expected"
 msgstr ""
 
-#: SalesCategories.php:46 Stocks.php:31 Z_MakeNewCompany.php:70
+#: SalesCategories.php:46 Stocks.php:31 Z_MakeNewCompany.php:58
 msgid "The file size is over the maximum allowed. The maximum size allowed in KB is"
 msgstr ""
 
-#: SalesCategories.php:49 Stocks.php:34 Z_MakeNewCompany.php:73
+#: SalesCategories.php:49 Stocks.php:34 Z_MakeNewCompany.php:61
 msgid "Only graphics files can be uploaded"
 msgstr ""
 
-#: SalesCategories.php:52 Stocks.php:37 Z_MakeNewCompany.php:76
+#: SalesCategories.php:52 Stocks.php:37 Z_MakeNewCompany.php:64
 msgid "Attempting to overwrite an existing item image"
 msgstr ""
 
-#: SalesCategories.php:55 Stocks.php:40 Z_MakeNewCompany.php:79
+#: SalesCategories.php:55 Stocks.php:40 Z_MakeNewCompany.php:67
 msgid "The existing image could not be removed"
 msgstr ""
 
-#: SalesCategories.php:62 Stocks.php:47 Z_MakeNewCompany.php:86
+#: SalesCategories.php:62 Stocks.php:47 Z_MakeNewCompany.php:109
 msgid "File url"
 msgstr ""
 
@@ -13539,7 +13539,7 @@ msgstr ""
 msgid "Total quantity"
 msgstr ""
 
-#: Stocks.php:47 Z_MakeNewCompany.php:86
+#: Stocks.php:47 Z_MakeNewCompany.php:109
 msgid "Something is wrong with uploading a file"
 msgstr ""
 
@@ -16912,7 +16912,7 @@ msgstr ""
 msgid "User code"
 msgstr ""
 
-#: WWW_Users.php:330 includes/Login.php:57
+#: WWW_Users.php:330 includes/Login.php:68
 msgid "Password"
 msgstr ""
 
@@ -17081,7 +17081,7 @@ msgid "New Branch Code"
 msgstr ""
 
 #: Z_ChangeBranchCode.php:197 Z_ChangeCustomerCode.php:125
-#: Z_ChangeStockCode.php:226 Z_DeleteSalesTransActions.php:177
+#: Z_ChangeStockCode.php:226 Z_DeleteSalesTransActions.php:178
 msgid "Process"
 msgstr ""
 
@@ -17121,7 +17121,7 @@ msgstr ""
 msgid "The SQL to insert the new debtors master record failed"
 msgstr ""
 
-#: Z_ChangeCustomerCode.php:40 Z_DeleteSalesTransActions.php:54
+#: Z_ChangeCustomerCode.php:40 Z_DeleteSalesTransActions.php:56
 #: Z_PurgePeriods.php:61
 msgid "the SQL statement was"
 msgstr ""
@@ -17725,157 +17725,157 @@ msgstr ""
 msgid "The stock movement records associated with the invoice have been deleted"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:9
+#: Z_DeleteSalesTransActions.php:7
 msgid "Delete Sales Transactions"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:16 Z_PurgePeriods.php:32
+#: Z_DeleteSalesTransActions.php:14 Z_PurgePeriods.php:32
 msgid "Deleting sales analysis records"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:19 Z_DeleteSalesTransActions.php:111
+#: Z_DeleteSalesTransActions.php:17 Z_DeleteSalesTransActions.php:112
 #: Z_PurgePeriods.php:35 Z_PurgePeriods.php:96
 msgid "The SQL to delete Sales Analysis records failed because"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:24 Z_PurgePeriods.php:38
+#: Z_DeleteSalesTransActions.php:22 Z_PurgePeriods.php:38
 msgid "Deleting customer statement transactions and allocation records"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:26 Z_PurgePeriods.php:40
+#: Z_DeleteSalesTransActions.php:24 Z_PurgePeriods.php:40
 msgid "The SQL to delete customer transaction records failed because"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:35 Z_PurgePeriods.php:46
+#: Z_DeleteSalesTransActions.php:33 Z_PurgePeriods.php:46
 msgid "The SQL to update the transaction numbers for all sales transactions because"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:42 Z_PurgePeriods.php:50
+#: Z_DeleteSalesTransActions.php:44 Z_PurgePeriods.php:50
 msgid "Deleting all sales order records"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:44 Z_PurgePeriods.php:52
+#: Z_DeleteSalesTransActions.php:46 Z_PurgePeriods.php:52
 msgid "The SQL to delete sales order detail records failed because"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:49 Z_PurgePeriods.php:57
+#: Z_DeleteSalesTransActions.php:51 Z_PurgePeriods.php:57
 msgid "The SQL to delete sales order header records failed because"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:54 Z_PurgePeriods.php:61
+#: Z_DeleteSalesTransActions.php:56 Z_PurgePeriods.php:61
 msgid "The SQL to update the transaction number of sales orders has failed"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:60 Z_PurgePeriods.php:64
+#: Z_DeleteSalesTransActions.php:62 Z_PurgePeriods.php:64
 msgid "Making stock for all parts and locations nil"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:61 Z_PurgePeriods.php:68
+#: Z_DeleteSalesTransActions.php:63 Z_PurgePeriods.php:68
 msgid "The SQL to make all stocks zero failed because"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:73 Z_PurgePeriods.php:70
+#: Z_DeleteSalesTransActions.php:75 Z_PurgePeriods.php:70
 msgid "Making the quantity invoiced zero on all orders"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:76 Z_PurgePeriods.php:73
+#: Z_DeleteSalesTransActions.php:78 Z_PurgePeriods.php:73
 msgid "The SQL to un-invoice all sales orders failed"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:82 Z_PurgePeriods.php:76
+#: Z_DeleteSalesTransActions.php:84 Z_PurgePeriods.php:76
 msgid "Deleting all sales related GL Transactions"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:85 Z_PurgePeriods.php:79
+#: Z_DeleteSalesTransActions.php:86 Z_PurgePeriods.php:79
 msgid "The SQL to delete sales related GL Transactions failed"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:91 Z_PurgePeriods.php:82
+#: Z_DeleteSalesTransActions.php:92 Z_PurgePeriods.php:82
 msgid "Deleting all stock related GL Transactions"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:94 Z_PurgePeriods.php:85
+#: Z_DeleteSalesTransActions.php:95 Z_PurgePeriods.php:85
 msgid "The SQL to delete stock related GL Transactions failed"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:100 Z_PurgePeriods.php:88
+#: Z_DeleteSalesTransActions.php:101 Z_PurgePeriods.php:88
 msgid "Zeroing all purchase order quantities received and uncompleting all purchase orders"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:103 Z_PurgePeriods.php:91
+#: Z_DeleteSalesTransActions.php:104 Z_PurgePeriods.php:91
 msgid "The SQL to zero quantity received for all purchase orders line items and uncompleted all purchase order line items because"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:109 Z_PurgePeriods.php:94
+#: Z_DeleteSalesTransActions.php:110 Z_PurgePeriods.php:94
 msgid "Deleting all GRN records"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:114 Z_DeleteSalesTransActions.php:127
+#: Z_DeleteSalesTransActions.php:115 Z_DeleteSalesTransActions.php:128
 #: Z_PurgePeriods.php:99 Z_PurgePeriods.php:110
 msgid "The SQL to update the transaction number of stock receipts has failed because"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:119 Z_PurgePeriods.php:102
+#: Z_DeleteSalesTransActions.php:120 Z_PurgePeriods.php:102
 msgid "Deleting all Purchase Orders"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:121 Z_PurgePeriods.php:104
+#: Z_DeleteSalesTransActions.php:122 Z_PurgePeriods.php:104
 msgid "The SQL to delete all purchase order details failed, the SQL statement was"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:124 Z_PurgePeriods.php:107
+#: Z_DeleteSalesTransActions.php:125 Z_PurgePeriods.php:107
 msgid "The SQL to delete all purchase orders failed because"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:133
+#: Z_DeleteSalesTransActions.php:134
 msgid "It is necessary to re-post the remaining general ledger transactions for the general ledger to get back in sync with the transatiions that remain. This is an option from the Z_index.php page"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:139
+#: Z_DeleteSalesTransActions.php:140
 msgid "Delete All Sales Analysis"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:142
+#: Z_DeleteSalesTransActions.php:143
 msgid "Delete All statement transactions"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:145
+#: Z_DeleteSalesTransActions.php:146
 msgid "Zero All stock balances"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:148
+#: Z_DeleteSalesTransActions.php:149
 msgid "Make Invoiced Qty Of All Sales Orders Nil"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:151
+#: Z_DeleteSalesTransActions.php:152
 msgid "Delete All Sales Orders"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:154
+#: Z_DeleteSalesTransActions.php:155
 msgid "Zero Received Qty of all purchase orders"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:157
+#: Z_DeleteSalesTransActions.php:158
 msgid "Delete All Purchase Orders"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:160
+#: Z_DeleteSalesTransActions.php:161
 msgid "Delete All Sales related stock movements"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:163
+#: Z_DeleteSalesTransActions.php:164
 msgid "Delete All Stock Receipt stock movements"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:166
+#: Z_DeleteSalesTransActions.php:167
 msgid "Delete All Sales GL Transactions"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:169
+#: Z_DeleteSalesTransActions.php:170
 msgid "Delete All Stock GL Transactions"
 msgstr ""
 
-#: Z_DeleteSalesTransActions.php:172
+#: Z_DeleteSalesTransActions.php:173
 msgid "Delete All PO Goods Received (GRNs)"
 msgstr ""
 
@@ -17987,76 +17987,80 @@ msgstr ""
 msgid "Make New Company Database Utility"
 msgstr ""
 
-#: Z_MakeNewCompany.php:24
+#: Z_MakeNewCompany.php:22
 msgid "This script does not work for postgres"
 msgstr ""
 
-#: Z_MakeNewCompany.php:38
+#: Z_MakeNewCompany.php:36
 msgid "Company abbreviations must not contain spaces, \\& or \" or '"
 msgstr ""
 
-#: Z_MakeNewCompany.php:51
-msgid "Attempting to create the new company directories"
-msgstr ""
-
-#: Z_MakeNewCompany.php:97
+#: Z_MakeNewCompany.php:80
 msgid "The script to create the new company database failed because"
 msgstr ""
 
-#: Z_MakeNewCompany.php:119
+#: Z_MakeNewCompany.php:98
+msgid "Attempting to create the new company directories"
+msgstr ""
+
+#: Z_MakeNewCompany.php:113
 msgid "This company cannot be added because either it already exists or no logo is being uploaded!"
 msgstr ""
 
-#: Z_MakeNewCompany.php:159
+#: Z_MakeNewCompany.php:153
 msgid "The new company database has been created for"
 msgstr ""
 
-#: Z_MakeNewCompany.php:159
+#: Z_MakeNewCompany.php:153
 msgid " "
 msgstr ""
 
-#: Z_MakeNewCompany.php:159
+#: Z_MakeNewCompany.php:153
 msgid "NewCompany"
 msgstr ""
 
-#: Z_MakeNewCompany.php:159
-msgid "the company details and parameters should now be set up for the new company. NB: Only a single user \"demo\" is defined with the password \"weberp\" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately."
+#: Z_MakeNewCompany.php:153
+msgid ". "
 msgstr ""
 
-#: Z_MakeNewCompany.php:161
+#: Z_MakeNewCompany.php:153
+msgid "The company details and parameters should now be set up for the new company. NB: Only a single user \"demo\" is defined with the password \"weberp\" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately."
+msgstr ""
+
+#: Z_MakeNewCompany.php:155
 msgid "Set Up New Company Details"
 msgstr ""
 
-#: Z_MakeNewCompany.php:162
+#: Z_MakeNewCompany.php:156
 msgid "Set Up Configuration Details"
 msgstr ""
 
-#: Z_MakeNewCompany.php:163
+#: Z_MakeNewCompany.php:157
 msgid "Set Up User Accounts"
 msgstr ""
 
-#: Z_MakeNewCompany.php:176
+#: Z_MakeNewCompany.php:170
 msgid "This utility will create a new company"
 msgstr ""
 
-#: Z_MakeNewCompany.php:177
+#: Z_MakeNewCompany.php:171
 msgid "If the company name already exists then you cannot recreate it"
 msgstr ""
 
-#: Z_MakeNewCompany.php:177 Z_poAddLanguage.php:83 Z_poEditLangHeader.php:78
+#: Z_MakeNewCompany.php:171 Z_poAddLanguage.php:83 Z_poEditLangHeader.php:78
 #: Z_poEditLangModule.php:121 Z_poRebuildDefault.php:50
 msgid "PLEASE NOTE"
 msgstr ""
 
-#: Z_MakeNewCompany.php:182
+#: Z_MakeNewCompany.php:176
 msgid "Enter 10 lower case character abbreviation for the company"
 msgstr ""
 
-#: Z_MakeNewCompany.php:184
+#: Z_MakeNewCompany.php:178
 msgid "Logo Image File (.jpg)"
 msgstr ""
 
-#: Z_MakeNewCompany.php:187 Z_poAddLanguage.php:92 Z_poEditLangModule.php:206
+#: Z_MakeNewCompany.php:181 Z_poAddLanguage.php:92 Z_poEditLangModule.php:206
 #: Z_poRebuildDefault.php:54
 msgid "Proceed"
 msgstr ""
@@ -18811,11 +18815,11 @@ msgstr ""
 msgid "Company"
 msgstr ""
 
-#: includes/Login.php:55
+#: includes/Login.php:66
 msgid "User name"
 msgstr ""
 
-#: includes/Login.php:65
+#: includes/Login.php:76
 msgid "Login"
 msgstr ""
 
