@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 /* This file contains the code to post GL transactions.
 
@@ -29,11 +29,18 @@ NEED to have a function that reposts from a given period having first checked th
 
 $FirstPeriodResult = DB_query('SELECT MIN(periodno) FROM periods',$db);
 $FirstPeriodRow = DB_fetch_row($FirstPeriodResult);
+$CreateFrom = $FirstPeriodRow[0];
+
+if (is_null($FirstPeriodRow[0])){
+	//There are no periods defined
+	$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (1,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y'))) . "')",$db,_('Could not insert first period'));
+	$CreateFrom=1;
+}
 
 $LastPeriodResult = DB_query('SELECT MAX(periodno) FROM periods',$db);
 $LastPeriodRow = DB_fetch_row($LastPeriodResult);
 
-$CreateFrom = $FirstPeriodRow[0];
+
 $CreateTo = $LastPeriodRow[0];
 
 
@@ -137,8 +144,6 @@ if (DB_num_rows($ChartDetailsNotSetUpResult)>0){
 		}
 					
 		DB_query('COMMIT',$db);
-			
-		DB_free_result($ChartDetailsCFwd);
 	}
 }
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 9;
 
@@ -27,7 +27,7 @@ ie the BOM is recursive otherwise false ie 0 */
 				return 1;
 			}
 
-			if (CheckForRecursiveBOM($UltimateParent, $myrow[0],&$db)){
+			if (CheckForRecursiveBOM($UltimateParent, $myrow[0],$db)){
 				return 1;
 			}
 		} //(while loop)
@@ -231,7 +231,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		//need to check not recursive BOM component of itself!
 
-			If (!CheckForRecursiveBOM ($SelectedParent, $_POST['Component'], &$db)) {
+			If (!CheckForRecursiveBOM ($SelectedParent, $_POST['Component'], $db)) {
 
 				/*Now check to see that the component is not already on the BOM */
 				$sql = "SELECT component

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity=9;
 
@@ -87,29 +87,18 @@ if (isset($_POST['submit'])) {
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		prnMsg(_('Cannot delete this work centre because bills of material have been created requiring components to be added at this work center') . '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' ._('BOM items referring to this work centre code'),'warn');
-	} else {
-		$sql= "SELECT COUNT(*) FROM worequirements WHERE worequirements.wrkcentre='$SelectedWC'";
+	}  else {
+		$sql= "SELECT COUNT(*) FROM contractbom WHERE contractbom.workcentreadded='$SelectedWC'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
-			prnMsg(_('Cannot delete this work centre because works orders have been released requiring components to be added at this work center') . '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('WO requirement items referring to this work centre code'),'warn');
+			prnMsg(_('Cannot delete this work centre because contract bills of material have been created having components added at this work center') . '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('Contract BOM items referring to this work centre code'),'warn');
 		} else {
-
-			$sql= "SELECT COUNT(*) FROM contractbom WHERE contractbom.workcentreadded='$SelectedWC'";
+			$sql="DELETE FROM workcentres WHERE code='$SelectedWC'";
 			$result = DB_query($sql,$db);
-			$myrow = DB_fetch_row($result);
-			if ($myrow[0]>0) {
-				prnMsg(_('Cannot delete this work centre because contract bills of material have been created having components added at this work center') . '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('Contract BOM items referring to this work centre code'),'warn');
-
-			} else {
-				$sql="DELETE FROM workcentres WHERE code='$SelectedWC'";
-				$result = DB_query($sql,$db);
-				prnMsg(_('The selected work centre record has been deleted'),'succes');
-
-			} // end of Contract BOM test
-		} //end of WO requiremnets test
+			prnMsg(_('The selected work centre record has been deleted'),'succes');
+		} // end of Contract BOM test
 	} // end of BOM test
-
 }
 
 if (!isset($SelectedWC)) {

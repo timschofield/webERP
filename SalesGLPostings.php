@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 $PageSecurity = 10;
 
 include('includes/session.inc');
@@ -315,8 +315,8 @@ if (!isset($_GET['delete'])) {
 			accountgroups
 		WHERE chartmaster.group_=accountgroups.groupname
 		AND accountgroups.pandl=1
-		ORDER BY accountgroups.sequenceintb,
-			chartmaster.accountname";
+		ORDER BY accountgroups.sequenceintb, 
+			chartmaster.accountcode";
 
 	$result = DB_query($SQL,$db);
 
@@ -326,7 +326,7 @@ if (!isset($_GET['delete'])) {
 		} else {
 			echo "<OPTION VALUE='";
 		}
-		echo $myrow['accountcode'] . "'>" . $myrow['accountname'];
+		echo $myrow['accountcode'] . "'>" . $myrow['accountcode'] . ' - ' . $myrow['accountname'];
 
 	} //end while loop
 
@@ -342,7 +342,7 @@ if (!isset($_GET['delete'])) {
 		} else {
 			echo "<OPTION VALUE='";
 		}
-		echo $myrow['accountcode'] . "'>" . $myrow['accountname'];
+		echo $myrow['accountcode'] . "'>" . $myrow['accountcode'] . ' - ' . $myrow['accountname'];
 
 	} //end while loop
 

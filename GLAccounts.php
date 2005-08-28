@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 10;
 include('includes/session.inc');
@@ -208,14 +208,66 @@ if (isset($_POST['submit'])) {
 	}
 }
 
-if (!isset($SelectedAccount)) {
+if (!isset($_GET['delete'])) {
 
+	echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] .  '?' . SID . "'>";
+
+	if ($SelectedAccount) {
+		//editing an existing account
+
+		$sql = "SELECT accountcode, accountname, group_ FROM chartmaster WHERE accountcode=$SelectedAccount";
+
+		$result = DB_query($sql, $db);
+		$myrow = DB_fetch_array($result);
+
+		$_POST['AccountCode'] = $myrow['accountcode'];
+		$_POST['AccountName']	= $myrow['accountname'];
+		$_POST['Group'] = $myrow['group_'];
+
+		echo "<INPUT TYPE=HIDDEN NAME='SelectedAccount' VALUE=$SelectedAccount>";
+		echo "<INPUT TYPE=HIDDEN NAME='AccountCode' VALUE=" . $_POST['AccountCode'] .">";
+		echo "<CENTER><TABLE><TR><TD>" . _('Account Code') . ":</TD><TD>" . $_POST['AccountCode'] . "</TD></TR>";
+	} else {
+		echo "<CENTER><TABLE>";
+		echo "<TR><TD>" . _('Account Code') . ":</TD><TD><INPUT TYPE=TEXT NAME='AccountCode' SIZE=11 MAXLENGTH=10></TD></TR>";
+	}
+
+
+	echo '<TR><TD>' . _('Account Name') . ":</TD><TD><input type='Text' SIZE=51 MAXLENGTH=50 name='AccountName' value='" . $_POST['AccountName'] . "'></TD></TR>";
+
+	$sql = 'SELECT groupname FROM accountgroups ORDER BY sequenceintb';
+	$result = DB_query($sql, $db);
+
+	echo '<TR><TD>' . _('Account Group') . ':</TD><TD><SELECT NAME=Group>';
+
+	while ($myrow = DB_fetch_array($result)){
+		if ($myrow[0]==$_POST['Group']){
+			echo "<OPTION SELECTED VALUE='";
+		} else {
+			echo "<OPTION VALUE='";
+		}
+		echo $myrow[0] . "'>" . $myrow[0];
+	}
+
+	?>
+
+	</SELECT></TD></TR>
+
+	</TABLE></CENTER>
+
+	<CENTER><input type="Submit" name="submit" value="<?php echo _('Enter Information'); ?>"></CENTER>
+
+	</FORM>
+
+<?php } //end if record deleted no point displaying form to add record
+
+
+if (!isset($SelectedAccount)) {
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedAccount will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
 then none of the above are true and the list of ChartMaster will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	
 	$sql = "SELECT accountcode,
 			accountname,
 			group_,
@@ -280,57 +332,5 @@ if (isset($SelectedAccount)) {
 
 echo '<P>';
 
-if (!isset($_GET['delete'])) {
-
-	echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] .  '?' . SID . "'>";
-
-	if ($SelectedAccount) {
-		//editing an existing account
-
-		$sql = "SELECT accountcode, accountname, group_ FROM chartmaster WHERE accountcode=$SelectedAccount";
-
-		$result = DB_query($sql, $db);
-		$myrow = DB_fetch_array($result);
-
-		$_POST['AccountCode'] = $myrow['accountcode'];
-		$_POST['AccountName']	= $myrow['accountname'];
-		$_POST['Group'] = $myrow['group_'];
-
-		echo "<INPUT TYPE=HIDDEN NAME='SelectedAccount' VALUE=$SelectedAccount>";
-		echo "<INPUT TYPE=HIDDEN NAME='AccountCode' VALUE=" . $_POST['AccountCode'] .">";
-		echo "<CENTER><TABLE><TR><TD>" . _('Account Code') . ":</TD><TD>" . $_POST['AccountCode'] . "</TD></TR>";
-	} else {
-		echo "<CENTER><TABLE>";
-		echo "<TR><TD>" . _('Account Code') . ":</TD><TD><INPUT TYPE=TEXT NAME='AccountCode' SIZE=11 MAXLENGTH=10></TD></TR>";
-	}
-
-
-	echo '<TR><TD>' . _('Account Name') . ":</TD><TD><input type='Text' SIZE=51 MAXLENGTH=50 name='AccountName' value='" . $_POST['AccountName'] . "'></TD></TR>";
-
-	$sql = 'SELECT groupname FROM accountgroups ORDER BY sequenceintb';
-	$result = DB_query($sql, $db);
-
-	echo '<TR><TD>' . _('Account Group') . ':</TD><TD><SELECT NAME=Group>';
-
-	while ($myrow = DB_fetch_array($result)){
-		if ($myrow[0]==$_POST['Group']){
-			echo "<OPTION SELECTED VALUE='";
-		} else {
-			echo "<OPTION VALUE='";
-		}
-		echo $myrow[0] . "'>" . $myrow[0];
-	}
-
-	?>
-
-	</SELECT></TD></TR>
-
-	</TABLE></CENTER>
-
-	<CENTER><input type="Submit" name="submit" value="<?php echo _('Enter Information'); ?>"></CENTER>
-
-	</FORM>
-
-<?php } //end if record deleted no point displaying form to add record
 include('includes/footer.inc');
 ?>

@@ -244,7 +244,7 @@ Once information about stock items is all entered and by implication the base da
 <br><br>
 The stock/general ledger interface should be disabled in the company preferences screen until the stock balance in the general ledger (which would be set up using a manual journal in the general ledger) is reconciled to the standard cost of all stock items entered into the system, per the stock valuation report. This reconciliation requires that the standard cost for each stock item entered be correct as well as the total units held in all locations. 
 <br><br>
-<font size="+1"><b>Inventory Ledger Integration to General Ledger Issues</b></font>
+<font size="+1"><b>Inventory Integration to General Ledger Issues</b></font>
 <br><br>
 Once the reconciliation of the stock accounts in the financials module agrees to the stock valuation report, the stock general ledger integration flag can then be re-enabled from the company preferences form. Movements in stock will then be reflected with general ledger journals. The balance of the stock accounts should then always agree to the stock valuation report provided there are no manual journals entered to these accounts.
 <br><br>
@@ -256,6 +256,11 @@ Secondly, stock integration enables the automatic creation of general ledger jou
 <br><br>
 It is not necessary to use the stock integration to the general ledger although a fully standard costing based accounting system with full general ledger integration, will arguably provide the fastest and most informative financial reporting system for manufacturers. 
 <br><br>
+<font size="+1"><b>Sales Ledger - Accounts Receivable Integration to General Ledger Issues</b></font>
+<br><br>
+Some flexibility is provided in how sales transactions are posted to the general ledger. Different sales accounts can be used depending on any combination of the sales area of the customer, the sales type and the stock category of the item sold. Before entering any sales it is important to defined the posting schema under setup - Sales GL Interface Postings. The same flexibility is also afforded to the posting of cost of goods sold (COGS)- of course these journals are only created if the stock GL interface is activated. If it is then again it is critical to ensure the proper set up of the posting schema for COGS under the setup tab - COGS GL Interface posting
+
+
 <font size="+1"><b>Setting Up Customers</b></font>
 <br><br>
 As many branches as required can be set up, it is recommended that branches be used liberally for all customer contacts even though the branch may not be invoiced. Thus all contacts can be kept against the customer they belong with. Each branch requires a sales area and a salesperson. Sales Areas are the areas defined for analysis purposes. Both Sales Areas and Salespeople are set up from the System Setup tab of the main menu.

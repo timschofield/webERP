@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 /* Common SQL Functions */
 
@@ -21,13 +21,13 @@ Also updates the transaction number
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': <BR>' . _('The next transaction number could not be retrieved from the database because');
 	$DbgMsg =  _('The following SQL to retrieve the transaction number was used');
 
-	$GetTransNoResult = DB_query($SQL,&$db,$ErrMsg,$DbgMsg);
+	$GetTransNoResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
 	$myrow = DB_fetch_row($GetTransNoResult);
 	$SQL = 'UPDATE systypes SET typeno = ' . ($myrow[0] + 1) . ' WHERE typeid = ' . $TransType;
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The transaction number could not be incremented');
 	$DbgMsg =  _('The following SQL to increment the transaction number was used');
-	$UpdTransNoResult = DB_query($SQL,&$db,$ErrMsg,$DbgMsg);
+	$UpdTransNoResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
 	return $myrow[0] + 1;
 }

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 10;
 
@@ -243,7 +243,8 @@ if (!isset($_GET['delete'])) {
 			accountgroups
 		WHERE chartmaster.group_=accountgroups.groupname
 		AND accountgroups.pandl=1
-		ORDER BY accountgroups.sequenceintb,
+		ORDER BY accountgroups.sequenceintb, 
+			chartmaster.accountcode,
 			chartmaster.accountname";
 	$result = DB_query($SQL,$db);
 
@@ -253,7 +254,7 @@ if (!isset($_GET['delete'])) {
 		} else {
 			echo "<OPTION VALUE='";
 		}
-		echo $myrow['accountcode'] . "'>" . $myrow['accountname'];
+		echo $myrow['accountcode'] . "'>" . $myrow['accountcode']  . ' - '  . $myrow['accountname'];
 
 	} //end while loop
 

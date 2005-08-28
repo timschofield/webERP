@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 2;
 
@@ -121,7 +121,7 @@ if (isset($_SESSION['SupplierID'])){
 
 	echo '<BR>';
 
-	echo "<BR><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Outstanding Purchase Orders') . '</A>';
+	echo "<BR><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Receive / Outstanding Purchase Orders') . '</A>';
 	echo "<BR><A HREF='$rootpath/PO_SelectPurchOrder.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('View All Purchase Orders') . '</A>';
 
 	echo '<BR>';

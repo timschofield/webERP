@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 11; // only allow accountant access
 
@@ -14,7 +14,7 @@ include('includes/session.inc');
 $title = _('Tax Rates');
 include('includes/header.inc');
 
-/* <-- $Revision: 1.8 $ --> */
+/* <-- $Revision: 1.9 $ --> */
 
 if (!isset($TaxAuthority)){
 	prnMsg(_('This page can only be called after selecting the tax authority to edit the rates for') . '. ' . _('Please select the Rates link from the tax authority page') . ".<BR><A HREF='$rootpath/TaxAuthorities.php'>" . _('click here') . '</A> ' . _('to go to the Tax Authority page'),'error');
@@ -28,8 +28,9 @@ if (isset($_POST['UpdateRates'])){
 	$TaxRatesResult = DB_query('SELECT taxauthrates.taxcatid,
 						taxauthrates.taxrate,
 						taxauthrates.dispatchtaxprovince
-					FROM taxauthrates
-					WHERE taxauthrates.taxauthority=' . $TaxAuthority, $db);
+						FROM taxauthrates
+						WHERE taxauthrates.taxauthority=' . $TaxAuthority, 
+						$db);
 
 	while ($myrow=DB_fetch_array($TaxRatesResult)){
 
@@ -63,7 +64,7 @@ $TaxRatesResult = DB_query('SELECT taxauthrates.taxcatid,
 				taxauthrates.dispatchtaxprovince,
 				taxprovinces.taxprovincename
 				FROM taxauthrates INNER JOIN taxauthorities
-					ON taxauthrates.dispatchtaxprovince=taxauthorities.taxid
+					ON taxauthrates.taxauthority=taxauthorities.taxid
 					INNER JOIN taxprovinces 
 					ON taxauthrates.dispatchtaxprovince= taxprovinces.taxprovinceid
 					INNER JOIN taxcategories 
