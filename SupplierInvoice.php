@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -79,7 +79,7 @@ if (isset($_GET['SupplierID'])){
 	$LocalTaxProvinceResult = DB_query("SELECT taxprovinceid 
 						FROM locations 
 						WHERE loccode = '" . $_SESSION['UserStockLocation'] . "'", $db);
-
+						
 	if(DB_num_rows($LocalTaxProvinceResult)==0){
 		prnMsg(_('The tax province associated with your user account has not been set up in this database. Tax calculations are based on the tax group of the supplier and the tax province of the user entering the invoice. The system administrator should redefine your account with a valid default stocking location and this location should refer to a valid tax provincce'),'error');
 		include('includes/footer.inc');

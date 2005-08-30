@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 $PageSecurity = 10;
 
 include('includes/session.inc');
@@ -244,7 +244,7 @@ if (!isset($_GET['delete'])) {
 	echo '<CENTER><TABLE>
 		<TR>
 		<TD>' . _('Area') . ":</TD>
-		<TD><SELECT name='Area'><OPTION VALUE='ANY'>" . _('Any Other');
+		<TD><SELECT name='Area'><OPTION VALUE='AN'>" . _('Any Other');
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['areacode']==$_POST['Area']) {

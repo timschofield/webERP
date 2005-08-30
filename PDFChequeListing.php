@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 3;
 include('includes/SQL_CommonFunctions.inc');
@@ -197,7 +197,7 @@ if ($_POST['Email']=='Yes'){
 	$attachment = $mail->getFile($_SESSION['reports_dir'] . '/PaymentListing.pdf');
 	$mail->setText(_('Please find herewith payments listing from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
 	$mail->addAttachment($attachment, 'PaymentListing.pdf', 'application/pdf');
-	$mail->setFrom(array("$_SESSION['CompanyRecord']['coyname'] <" . $_SESSION['CompanyRecord']['email'] . '>'));
+	$mail->setFrom(array('"' . $_SESSION['CompanyRecord']['coyname'] . '" <' . $_SESSION['CompanyRecord']['email'] . '>'));
 
 	/* $ChkListingRecipients defined in config.php */
 	$result = $mail->send($ChkListingRecipients);

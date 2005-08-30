@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 /*Functions to get the GL codes for customer transactions based on
 $Area, $StockID to determine the stock category and the SalesType (Price List)
@@ -119,7 +119,6 @@ Function GetCOGSGLAccount ($Area, $StockID, $SalesType, &$db) {
 		}
 		return 1;
 	}
-
 
 	$myrow = DB_fetch_row($Result);
 	Return $myrow[0];
@@ -243,7 +242,8 @@ Function GetSalesGLAccount ($Area, $StockID, $SalesType, &$db) {
 			$SQL = "INSERT INTO chartmaster VALUES (1, 'Default Sales and COGS', 'Sales')";
 			$Result = DB_query($SQL,$db);
 		}
-		return array(1);
+		return array(salesglcode=>1,
+				discountglcode=>1);
 	}
 
 	$myrow = DB_fetch_array($Result);

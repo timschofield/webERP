@@ -46,6 +46,7 @@ ALTER TABLE custbranch ADD FOREIGN KEY (taxgroupid) REFERENCES taxgroups (taxgro
 ALTER TABLE taxauthlevels RENAME TO taxauthrates;
 ALTER TABLE taxauthrates ADD FOREIGN KEY (dispatchtaxprovince) REFERENCES taxprovinces(taxprovinceid);
 ALTER TABLE stockmaster RENAME taxlevel TO taxcatid;
+UPDATE config SET confname='DefaultTaxCategory'  WHERE confname='DefaultTaxLevel';
 INSERT INTO config VALUES('FreightTaxCategory','1');
 
 CREATE TABLE supptranstaxes ( supptransid int NOT NULL REFERENCES supptrans (id),taxauthid int NOT NULL REFERENCES taxauthorities (taxid), taxamount double precision NOT NULL, PRIMARY KEY  (supptransid,taxauthid));

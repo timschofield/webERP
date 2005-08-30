@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 11;
 
@@ -192,62 +192,69 @@ if (isset($_POST['submit'])) {
 
 	$CancelDelete = 0;
 
-// PREVENT DELETES IF DEPENDENT RECORDS IN 'StockMoves'
-
-	$sql= "SELECT COUNT(*) FROM stockmoves WHERE stockmoves.loccode='$SelectedLocation'";
+// PREVENT DELETES IF DEPENDENT RECORDS
+	$sql= "SELECT COUNT(*) FROM salesorders WHERE fromstkloc='$SelectedLocation'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		$CancelDelete = 1;
-		prnMsg( _('Cannot delete this location because stock movements have been created using this location'),'warn');
-		echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock movements with this Location code');
-
+		prnMsg( _('Cannot delete this location because sales orders have been created delivering from this location'),'warn');
+		echo  _('There are') . ' ' . $myrow[0] . ' ' . _('sales orders with this Location code');
 	} else {
-		$sql= "SELECT COUNT(*) FROM locstock WHERE locstock.loccode='$SelectedLocation' AND locstock.quantity !=0";
+		$sql= "SELECT COUNT(*) FROM stockmoves WHERE stockmoves.loccode='$SelectedLocation'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			$CancelDelete = 1;
-			prnMsg(_('Cannot delete this location because location stock records exist that use this location and have a quantity on hand not equal to 0'),'warn');
-			echo '<BR> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock items with stock on hand at this location code');
+			prnMsg( _('Cannot delete this location because stock movements have been created using this location'),'warn');
+			echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock movements with this Location code');
+	
 		} else {
-			$sql= "SELECT COUNT(*) FROM www_users WHERE www_users.defaultlocation='$SelectedLocation'";
+			$sql= "SELECT COUNT(*) FROM locstock WHERE locstock.loccode='$SelectedLocation' AND locstock.quantity !=0";
 			$result = DB_query($sql,$db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]>0) {
 				$CancelDelete = 1;
-				prnMsg(_('Cannot delete this location because it is the default location for a user') . '. ' . _('The user record must be modified first'),'warn');
-				echo '<BR> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('users using this location as their default location');
+				prnMsg(_('Cannot delete this location because location stock records exist that use this location and have a quantity on hand not equal to 0'),'warn');
+				echo '<BR> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock items with stock on hand at this location code');
 			} else {
-				$sql= "SELECT COUNT(*) FROM worksorders WHERE worksorders.loccode='$SelectedLocation'";
+				$sql= "SELECT COUNT(*) FROM www_users WHERE www_users.defaultlocation='$SelectedLocation'";
 				$result = DB_query($sql,$db);
 				$myrow = DB_fetch_row($result);
 				if ($myrow[0]>0) {
 					$CancelDelete = 1;
-					prnMsg( _('Cannot delete this location because it is used by some work orders records'),'warn');
-					echo '<BR> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('works orders using this location');
+					prnMsg(_('Cannot delete this location because it is the default location for a user') . '. ' . _('The user record must be modified first'),'warn');
+					echo '<BR> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('users using this location as their default location');
 				} else {
-					$sql= "SELECT COUNT(*) FROM workcentres WHERE workcentres.location='$SelectedLocation'";
+					$sql= "SELECT COUNT(*) FROM worksorders WHERE worksorders.loccode='$SelectedLocation'";
 					$result = DB_query($sql,$db);
 					$myrow = DB_fetch_row($result);
 					if ($myrow[0]>0) {
 						$CancelDelete = 1;
-						prnMsg( _('Cannot delete this location because it is used by some work centre records'),'warn');
-						echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('works centres using this location');
+						prnMsg( _('Cannot delete this location because it is used by some work orders records'),'warn');
+						echo '<BR> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('works orders using this location');
 					} else {
-						$sql= "SELECT COUNT(*) FROM custbranch WHERE custbranch.defaultlocation='$SelectedLocation'";
+						$sql= "SELECT COUNT(*) FROM workcentres WHERE workcentres.location='$SelectedLocation'";
 						$result = DB_query($sql,$db);
 						$myrow = DB_fetch_row($result);
 						if ($myrow[0]>0) {
 							$CancelDelete = 1;
-							prnMsg(_('Cannot delete this location because it is used by some branch records as the default location to deliver from'),'warn');
-							echo '<BR> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches set up to use this location by default');
+							prnMsg( _('Cannot delete this location because it is used by some work centre records'),'warn');
+							echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('works centres using this location');
+						} else {
+							$sql= "SELECT COUNT(*) FROM custbranch WHERE custbranch.defaultlocation='$SelectedLocation'";
+							$result = DB_query($sql,$db);
+							$myrow = DB_fetch_row($result);
+							if ($myrow[0]>0) {
+								$CancelDelete = 1;
+								prnMsg(_('Cannot delete this location because it is used by some branch records as the default location to deliver from'),'warn');
+								echo '<BR> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches set up to use this location by default');
+							}
 						}
 					}
 				}
 			}
 		}
-
 	}
 	if (! $CancelDelete) {
 
