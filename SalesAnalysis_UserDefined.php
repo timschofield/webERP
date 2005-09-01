@@ -1,16 +1,20 @@
 <?php
-/* $Revision: 1.6 $ */
-
+/* $Revision: 1.7 $ */
+$PageSecurity = 2;
+include('includes/session.inc');
+/*
 include('config.php');
 include('includes/ConnectDB.inc');
+*/
 
-$PageSecurity = 2;
-if (isset($SessionSavePath)){
+
+ /*
+ if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);
 }
 
 session_start();
-
+*/
 if (!in_array($PageSecurity,$_SESSION['AllowedPageSecurityTokens'])){
 	echo '<html><body><BR><BR><BR><BR><BR><BR><BR><CENTER><FONT COLOR=RED SIZE=4><B>' . _('The security settings on your account do not permit you to access this function') . '</B></FONT></body></html>';
 	exit;
@@ -43,13 +47,13 @@ if (isset($_GET['ProducePDF'])){
 			$pdf->Stream();
 		}
 	} else {
-	    $title = _('User Defined Sales Analysis Problem');
-	   include('includes/header.inc');
-	    echo '<P>' . _('The report did not have any none zero lines of information to show and so it has not been created');
-	    echo "<BR><A HREF='$rootpath/SalesAnalRepts.php?" . SID . "SelectedReport=" . $_GET['ReportID'] . "'>" . _('Look at the design of this report') . '</A>';
-	    echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
-	    include('includes/footer.inc');
-	    exit;
+		$title = _('User Defined Sales Analysis Problem');
+		include('includes/header.inc');
+		echo '<P>' . _('The report did not have any none zero lines of information to show and so it has not been created');
+		echo "<BR><A HREF='$rootpath/SalesAnalRepts.php?" . SID . "SelectedReport=" . $_GET['ReportID'] . "'>" . _('Look at the design of this report') . '</A>';
+		echo "<BR><A HREF='$rootpath/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
+		include('includes/footer.inc');
+		exit;
 	}
 } /* end if we wanted a PDF file */
 
@@ -59,7 +63,7 @@ if ($_GET['ProduceCVSFile']==True){
 
 	include('includes/CSVSalesAnalysis.inc');
 
-	 $title = _('Sales Analysis Comma Seperated File (CSV) Generation');
+	$title = _('Sales Analysis Comma Seperated File (CSV) Generation');
 	include('includes/header.inc');
 
 	 echo 'http://' . getenv(SERVER_NAME) . $rootpath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv';

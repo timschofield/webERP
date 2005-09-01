@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 Function GetDataSQL($SQLData){
 
 /*This function determines the SQL to use to get the value for the columns defined */
@@ -191,7 +191,7 @@ If (DB_num_rows($ColsResult)== 0) {
 }
 
 
-$SQLFromCls = ' FROM ((((((salesanalysis LEFT JOIN salestypes ON salesanalysis.typeabbrev = salestypes.typeabbrev) LEFT JOIN stockmaster ON salesanalysis.stockid = stockmaster.stockid) LEFT JOIN areas ON salesanalysis.area = areas.areacode) LEFT JOIN debtorsmaster ON salesanalysis.cust = debtorsmaster.debtorno) LEFT JOIN custbranch ON (salesanalysis.custbranch = custbranch.branchcode AND salesanalysis.debtorno=custbranch.debtorno)) LEFT JOIN stockcategory ON salesanalysis.stkcategory = stockcategory.categoryid) LEFT JOIN salesman ON salesanalysis.salesperson = salesman.salesmancode ';
+$SQLFromCls = ' FROM ((((((salesanalysis LEFT JOIN salestypes ON salesanalysis.typeabbrev = salestypes.typeabbrev) LEFT JOIN stockmaster ON salesanalysis.stockid = stockmaster.stockid) LEFT JOIN areas ON salesanalysis.area = areas.areacode) LEFT JOIN debtorsmaster ON salesanalysis.cust = debtorsmaster.debtorno) LEFT JOIN custbranch ON (salesanalysis.custbranch = custbranch.branchcode AND salesanalysis.cust=custbranch.debtorno)) LEFT JOIN stockcategory ON salesanalysis.stkcategory = stockcategory.categoryid) LEFT JOIN salesman ON salesanalysis.salesperson = salesman.salesmancode ';
 $SQLSelectCls = 'SELECT ';
 $SQLGroupCls = 'GROUP BY ';
 

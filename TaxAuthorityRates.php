@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 11; // only allow accountant access
 
@@ -14,7 +14,7 @@ include('includes/session.inc');
 $title = _('Tax Rates');
 include('includes/header.inc');
 
-/* <-- $Revision: 1.9 $ --> */
+/* <-- $Revision: 1.10 $ --> */
 
 if (!isset($TaxAuthority)){
 	prnMsg(_('This page can only be called after selecting the tax authority to edit the rates for') . '. ' . _('Please select the Rates link from the tax authority page') . ".<BR><A HREF='$rootpath/TaxAuthorities.php'>" . _('click here') . '</A> ' . _('to go to the Tax Authority page'),'error');
@@ -83,9 +83,13 @@ if (DB_num_rows($TaxRatesResult)>0){
 	echo $TableHeader;
 	$j = 1;
 	$k = 0; //row counter to determine background colour
-	$NewProvince='';
+	$OldProvince='';
 	
 	while ($myrow = DB_fetch_array($TaxRatesResult)){
+		
+		if ($OldProvince!=$myrow['dispatchtaxprovince'] AND $OldProvince!=''){
+			echo '<TR BGCOLOR="#555555"><FONT SIZE=1> </FONT><TD COLSPAN=3></TD></TR>';
+		}
 
 		if ($k==1){
 			echo "<tr bgcolor='#CCCCCC'>";
@@ -94,7 +98,7 @@ if (DB_num_rows($TaxRatesResult)>0){
 			echo "<tr bgcolor='#EEEEEE'>";
 			$k=1;
 		}
-		$OldProvince = $myrow['dispatchtaxprovince'];
+
 		printf('<td>%s</td>
 			<td>%s</td>
 			<td><INPUT TYPE=TEXT NAME=%s MAXLENGTH=5 SIZE=5 VALUE=%s></td>
@@ -104,10 +108,7 @@ if (DB_num_rows($TaxRatesResult)>0){
 			$myrow['dispatchtaxprovince'] . '_' . $myrow['taxcatid'],
 			$myrow['taxrate']*100 );
 		
-		if ($OldProvince !=$NewProvince AND $NewProvince!=''){
-			echo '<TR BGCOLOR="#555555"><FONT SIZE=1> </FONT><TD COLSPAN=3></TD></TR>';
-		}	
-		$NewProvince = $myrow['dispatchtaxprovince'];
+		$OldProvince = $myrow['dispatchtaxprovince'];
 
 	}
 //end of while loop
@@ -123,6 +124,7 @@ prnMsg(_('Tax rates must be specified for all defined tax categories for every p
 echo '<BR><A HREF="' . $rootpath . '/TaxAuthorities.php?' . SID . '">' . _('Back to Tax Authorities') .  '</A>';
 echo '<BR><A HREF="' . $rootpath . '/TaxGroups.php?' . SID . '">' . _('Tax Groupings') .  '</A>';
 echo '<BR><A HREF="' . $rootpath . '/TaxCategories.php?' . SID . '">' . _('Tax Categories') .  '</A>';
+echo '<BR><A HREF="' . $rootpath . '/TaxProvinces.php?' . SID . '">' . _('Dispatch Tax Provinces') .  '</A>';
 
 include( 'includes/footer.inc' );
 ?>

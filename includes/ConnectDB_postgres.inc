@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 define ('LIKE','ILIKE');
 /* $PgConnStr = $PgConnStr = "host=".$host." dbname=".$_SESSION['DatabaseName']; */
@@ -35,11 +35,11 @@ require_once ('includes/MiscFunctions.php');
 //DB wrapper functions to change only once for whole application
 
 function DB_query ($SQL,
-		&$Conn,
-		$ErrorMessage='',
-		$DebugMessage= '',
-		$Transaction=false,
-		$TrapErrors=true){
+				&$Conn,
+				$ErrorMessage='',
+				$DebugMessage= '',
+				$Transaction=false,
+				$TrapErrors=true){
 
 	global $debug;
 	
