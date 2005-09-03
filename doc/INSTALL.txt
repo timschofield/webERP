@@ -1,6 +1,6 @@
 WEB-ERP Installation
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 Upgrading
 
@@ -224,9 +224,9 @@ A pdf reader - Acrobat should be installed on the client machines that will acce
 
 5. Setting Up System Parameters and Company Specific Data
 
-To have your company's logo printed on the top of reports and appear at the top left of the screen - all that is required is to copy a .jpg format file of your company's logo to logo.jpg in the scripts directory.
+To initiate a new company go into the script Z_MakeNewCompany.php this creates a new company database with a name of your choice and uploads the logo to the required place - the logo must be a .jpg around.
 
-From the main menu click on the Setup tab and then the Configuration Settings. Each of these settings together with the narrative explaining what each of the settings does should be reviewed in detail before starting off with the system.
+It is imperative to go through each of the screens from the setup tab and enter the appropriate information. Particularly the company informaiton and the configuration settings. Each of these settings together with the narrative explaining what each of the settings does should be reviewed in detail before starting off with the system.
 
 Now the accounting starts....
 
@@ -234,8 +234,9 @@ All the standing configuration data is defined from the system setup tab and eac
 
 
 
-
-Please try not to refer questions about PHP or database configuration - check your PHP web server works by installing phpMyAdmin before referring any installation issues
+Please try not to refer questions about PHP or database configuration 
+- check your PHP web server works by installing phpMyAdmin before referring any installation issues
+- check http://wikidocs.weberp.org for Installation FAQ
 
 _____________________________________________________________________
 

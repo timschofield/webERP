@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 10;
 
@@ -68,55 +68,161 @@ if (isset($_POST['submit'])) {
 
 if (!isset($SelectedCOGSPostingID)) {
 
-/* It could still be the second time the page has been run and a record has been selected for modification - SelectedID will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters then none of the above are true and the list of Sales GL Postings will be displayed with links to delete or edit each. These will call the same page again and allow update/input or deletion of the records*/
-
+	$ShowLivePostingRecords = true;
+	
 	$sql = 'SELECT cogsglpostings.id,
 			cogsglpostings.area,
 			cogsglpostings.stkcat,
 			cogsglpostings.salestype,
 			chartmaster.accountname
-		FROM cogsglpostings,
-			chartmaster
-		WHERE cogsglpostings.glcode = chartmaster.accountcode';
+		FROM cogsglpostings LEFT JOIN chartmaster 
+			ON cogsglpostings.glcode = chartmaster.accountcode
+				WHERE chartmaster.accountcode IS NULL';
+				
+	$result = DB_query($sql,$db);
+	if (DB_num_rows($result)>0){
+		$ShowLivePostingRecords = false;
+		prnMsg (_('The following cost of sales posting records that do not have valid general ledger code specified - these records must be amended.'),'error');
+		echo '<CENTER><TABLE BORDER=1>';
+		echo "<TR><TD CLASS='tableheader'>" . _('Area') . "</TD>
+				<TD CLASS='tableheader'>" . _('Stock Category') . "</TD>
+				<TD CLASS='tableheader'>" . _('Sales Type') . "</TD>
+				<TD CLASS='tableheader'>" . _('COGS Account') . "</TD>
+			</TR>";
+		$k=0; //row colour counter
+	
+		while ($myrow = DB_fetch_row($result)) {
+			if ($k==1){
+				echo "<TR BGCOLOR='#CCCCCC'>";
+				$k=0;
+			} else {
+				echo "<TR BGCOLOR='#EEEEEE'>";
+				$k=1;
+			}
+	
+			printf("<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td><a href=\"%sSelectedCOGSPostingID=%s\">" . _('Edit') . "</td>
+				<td><a href=\"%sSelectedCOGSPostingID=%s&delete=yes\">". _('Delete') . "</td></tr>",
+				$myrow[1],
+				$myrow[2],
+				$myrow[3],
+				$myrow[4],
+				$_SERVER['PHP_SELF'] . '?' . SID . '&',
+				$myrow[0],
+				$_SERVER['PHP_SELF']. '?' . SID . '&',
+				$myrow[0]);
+		}//end while 
+		echo '</table></CENTER>';
+	}
 
+	$sql = 'SELECT cogsglpostings.id,
+			cogsglpostings.area,
+			cogsglpostings.stkcat,
+			cogsglpostings.salestype
+		FROM cogsglpostings';
+		
 	$result = DB_query($sql,$db);
 
-	echo '<CENTER><table border=1>';
-	echo '<tr><td class="tableheader">' . _('Area') .
-		'</td><td class="tableheader">' . _('Stock Category') .
-		'</td><td class="tableheader">' . _('Sales Type') .
-		'</td><td class="tableheader">' . _('GL Account') .
-		'</td></tr>';
-
-	while ($myrow = DB_fetch_row($result)) {
-
-		if ($k==1){
-			echo '<tr bgcolor="#CCCCCC">';
-			$k=0;
-		} else {
-			echo '<tr bgcolor="#EEEEEE">';
-			$k=1;
+	if (DB_num_rows($result)==0){
+		/* there is no default set up so need to check that account 1 is not already used */
+		/* First Check if we have at least a group_ caled Sales */
+		$sql = "SELECT groupname FROM accountgroups WHERE groupname = 'Sales'";
+		$result = DB_query($sql,$db);
+		if (DB_num_rows($result)==0){
+			/* The required group does not seem to exist so we create it */
+			$sql = "INSERT INTO accountgroups (
+					groupname, 
+					sectioninaccounts, 
+					pandl, 
+					sequenceintb 
+				) VALUES (
+					'Sales',
+					1,
+					1,
+					10)";
+					
+			$result = DB_query($sql,$db);	
+		}		
+		$sql = 'SELECT accountcode FROM chartmaster WHERE accountcode =1';
+		$result = DB_query($sql,$db);
+		if (DB_num_rows($result)==0){
+		/* account number 1 is not used, so insert a new account */
+			$sql = "INSERT INTO chartmaster (
+							accountcode,
+							accountname,
+							group_
+							)
+					VALUES (
+							1,
+							'Default Sales/Discounts',
+							'Sales'
+							)";
+			$result = DB_query($sql,$db);
 		}
-	printf("<td>%s</td>
-	        <td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td><a href=\"%sSelectedCOGSPostingID=%s\">" . _('Edit') . "</td>
-		<td><a href=\"%sSelectedCOGSPostingID=%s&delete=yes\">" . _('Delete') . "</td>
-		</tr>",
-		$myrow[1],
-		$myrow[2],
-		$myrow[3],
-		$myrow[4],
-		$_SERVER['PHP_SELF'] . '?' . SID . '&',
-		$myrow[0],
-		$_SERVER['PHP_SELF'] . '?' . SID . '&',
-		$myrow[0]);
+
+		$sql = "INSERT INTO cogsglpostings (
+						area,
+						stkcat,
+						salestype,
+						glcode)
+				VALUES ('AN',
+						'ANY',	
+						'AN',
+						1)";						
+		$result = DB_query($sql,$db);
 
 	}
-	//END WHILE LIST LOOP
 
-	echo '</table></CENTER>';
+	if ($ShowLivePostingRecords){
+		$sql = 'SELECT cogsglpostings.id,
+				cogsglpostings.area,
+				cogsglpostings.stkcat,
+				cogsglpostings.salestype,
+				chartmaster.accountname
+			FROM cogsglpostings,
+				chartmaster
+			WHERE cogsglpostings.glcode = chartmaster.accountcode';
+	
+		$result = DB_query($sql,$db);
+	
+		echo '<CENTER><table border=1>';
+		echo '<tr><td class="tableheader">' . _('Area') .
+			'</td><td class="tableheader">' . _('Stock Category') .
+			'</td><td class="tableheader">' . _('Sales Type') .
+			'</td><td class="tableheader">' . _('GL Account') .
+			'</td></tr>';
+	
+		while ($myrow = DB_fetch_row($result)) {
+	
+			if ($k==1){
+				echo '<tr bgcolor="#CCCCCC">';
+				$k=0;
+			} else {
+				echo '<tr bgcolor="#EEEEEE">';
+				$k=1;
+			}
+		printf("<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td><a href=\"%sSelectedCOGSPostingID=%s\">" . _('Edit') . "</td>
+			<td><a href=\"%sSelectedCOGSPostingID=%s&delete=yes\">" . _('Delete') . "</td>
+			</tr>",
+			$myrow[1],
+			$myrow[2],
+			$myrow[3],
+			$myrow[4],
+			$_SERVER['PHP_SELF'] . '?' . SID . '&',
+			$myrow[0],
+			$_SERVER['PHP_SELF'] . '?' . SID . '&',
+			$myrow[0]);
+	
+		}//END WHILE LIST LOOP
+		echo '</table></CENTER>';
+	}
 }
 //end of ifs and buts!
 
@@ -156,10 +262,10 @@ if (!isset($_GET['delete'])) {
 	}  //end of if $SelectedCOGSPostingID only do the else when a new record is being entered
 
 
-	$SQL = "SELECT areacode,
+	$sql = "SELECT areacode,
 			areadescription
 		FROM areas";
-	$result = DB_query($SQL,$db);
+	$result = DB_query($sql,$db);
 
 	?>
 
@@ -181,8 +287,8 @@ if (!isset($_GET['delete'])) {
 	} //end while loop
 	DB_free_result($result);
 
-	$SQL = 'SELECT categoryid, categorydescription FROM stockcategory';
-	$result = DB_query($SQL,$db);
+	$sql = 'SELECT categoryid, categorydescription FROM stockcategory';
+	$result = DB_query($sql,$db);
 
 	?>
 
@@ -205,8 +311,8 @@ if (!isset($_GET['delete'])) {
 
 	DB_free_result($result);
 
-	$SQL = 'SELECT typeabbrev, sales_type FROM salestypes';
-	$result = DB_query($SQL,$db);
+	$sql = 'SELECT typeabbrev, sales_type FROM salestypes';
+	$result = DB_query($sql,$db);
 
 	?>
 
@@ -237,7 +343,7 @@ if (!isset($_GET['delete'])) {
 
 	<?php
 	DB_free_result($result);
-	$SQL = "SELECT chartmaster.accountcode,
+	$sql = "SELECT chartmaster.accountcode,
 			chartmaster.accountname
 		FROM chartmaster,
 			accountgroups
@@ -246,7 +352,7 @@ if (!isset($_GET['delete'])) {
 		ORDER BY accountgroups.sequenceintb, 
 			chartmaster.accountcode,
 			chartmaster.accountname";
-	$result = DB_query($SQL,$db);
+	$result = DB_query($sql,$db);
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['accountcode']==$_POST['GLCode']) {

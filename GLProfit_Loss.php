@@ -1,18 +1,14 @@
 <?php
 
-/* $Revision: 1.8 $ */
-
-/*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen while the user is selecting the criteria the system is posting any unposted transactions */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 8;
 
 include ('includes/session.inc');
 $title = _('Profit and Loss');
-include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
 
-echo "<FORM METHOD='POST' ACTION=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 if ($_POST['FromPeriod'] > $_POST['ToPeriod']){
 	prnMsg(_('The selected period from is actually after the period to') . '! ' . _('Please reselect the reporting period'),'error');
@@ -21,6 +17,9 @@ if ($_POST['FromPeriod'] > $_POST['ToPeriod']){
 
 if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_POST['SelectADifferentPeriod'])){
 
+	include('includes/header.inc');
+	echo "<FORM METHOD='POST' ACTION=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	
 	if (Date('m') > $_SESSION['YearEnd']){
 		/*Dates in SQL format */
 		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')));
@@ -28,7 +27,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 	}
 
-/*Show a form to allow input of criteria for TB to show */
+	/*Show a form to allow input of criteria for profit and loss to show */
 	echo '<CENTER><TABLE><TR><TD>'._('Select Period From').":</TD><TD><SELECT Name='FromPeriod'>";
 
 	$sql = 'SELECT periodno, lastdate_in_period FROM periods';
@@ -84,13 +83,323 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 	echo '</TABLE>';
 
 	echo "<INPUT TYPE=SUBMIT Name='ShowPL' Value='"._('Show Statement of Profit and Loss')."'></CENTER>";
+	echo "<CENTER><INPUT TYPE=SUBMIT Name='PrintPDF' Value='"._('PrintPDF')."'></CENTER>";
 
-/*Now do the posting while the user is thinking about the period to select */
+	/*Now do the posting while the user is thinking about the period to select */
 
 	include ('includes/GLPostings.inc');
 
+} else if (isset($_POST['PrintPDF'])) {
+	
+	include('includes/PDFStarter_ros.inc');
+	$PageNumber = 0;
+	$FontSize = 10;
+	$pdf->addinfo('Title', _('Profit and Loss') );
+	$pdf->addinfo('Subject', _('Profit and Loss') );
+	$line_height = 12;
+
+	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
+
+	if ($NumberOfMonths > 12){
+		include('includes/header.inc');
+		echo '<P>';
+		prnMsg(_('A period up to 12 months in duration can be specified') . ' - ' . _('the system automatically shows a comparative for the same period from the previous year') . ' - ' . _('it cannot do this if a period of more than 12 months is specified') . '. ' . _('Please select an alternative period range'),'error');
+		include('includes/footer.inc');
+		exit;
+	}
+
+	$sql = 'SELECT lastdate_in_period FROM periods WHERE periodno=' . $_POST['ToPeriod'];
+	$PrdResult = DB_query($sql, $db);
+	$myrow = DB_fetch_row($PrdResult);
+	$PeriodToDate = MonthAndYearFromSQLDate($myrow[0]);
+
+
+	$SQL = 'SELECT accountgroups.sectioninaccounts, 
+			accountgroups.groupname,
+			chartdetails.accountcode ,
+			chartmaster.accountname,
+			Sum(CASE WHEN chartdetails.period=' . $_POST['FromPeriod'] . ' THEN chartdetails.bfwd ELSE 0 END) AS firstprdbfwd,
+			Sum(CASE WHEN chartdetails.period=' . $_POST['FromPeriod'] . ' THEN chartdetails.bfwdbudget ELSE 0 END) AS firstprdbudgetbfwd,
+			Sum(CASE WHEN chartdetails.period=' . $_POST['ToPeriod'] . ' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lastprdcfwd,
+			Sum(CASE WHEN chartdetails.period=' . ($_POST['FromPeriod'] - 12) . ' THEN chartdetails.bfwd ELSE 0 END) AS lyfirstprdbfwd,
+			Sum(CASE WHEN chartdetails.period=' . ($_POST['ToPeriod']-12) . ' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lylastprdcfwd,
+			Sum(CASE WHEN chartdetails.period=' . $_POST['ToPeriod'] . ' THEN chartdetails.bfwdbudget + chartdetails.budget ELSE 0 END) AS lastprdbudgetcfwd
+		FROM chartmaster INNER JOIN accountgroups
+		ON chartmaster.group_ = accountgroups.groupname INNER JOIN chartdetails
+		ON chartmaster.accountcode= chartdetails.accountcode
+		WHERE accountgroups.pandl=1
+		GROUP BY accountgroups.sectioninaccounts,
+			accountgroups.groupname,
+			chartdetails.accountcode,
+			chartmaster.accountname,
+			accountgroups.sequenceintb
+		ORDER BY accountgroups.sectioninaccounts, 
+			accountgroups.sequenceintb, 
+			chartdetails.accountcode';
+
+	$AccountsResult = DB_query($SQL,$db);
+	if (DB_error_no($db) != 0) {
+		$title = _('Profit and Loss') . ' - ' . _('Problem Report') . '....';
+		include('includes/header.inc');
+		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg($db) );
+		echo '<BR><A HREF="' .$rootpath .'/index.php?' . SID . '">'. _('Back to the menu'). '</A>';
+		if ($debug == 1){
+			echo '<BR>'. $SQL;
+		}
+		include('includes/footer.inc');
+		exit;
+	}
+	
+	include('includes/PDFProfitAndLossPageHeader.inc');
+
+	$Section = '';
+	$SectionPrdActual = 0;
+	$SectionPrdLY = 0;
+	$SectionPrdBudget = 0;
+
+	$ActGrp = '';
+	$GrpPrdActual = 0;
+	$GrpPrdLY = 0;
+	$GrpPrdBudget = 0;
+
+	while ($myrow = DB_fetch_array($AccountsResult)){
+
+		// Print heading if at end of page
+		if ($YPos < ($Bottom_Margin)){
+			include('includes/PDFProfitAndLossPageHeader.inc');
+		}
+		
+		if ($myrow['groupname'] != $ActGrp){
+
+			if ($ActGrp != ''){
+
+				if ($_POST['Detail'] == 'Detailed'){
+					$ActGrpLabel = $ActGrp . ' ' . _('total');
+				} else {
+					$ActGrpLabel = $ActGrp;
+				}
+
+				if ($Section == 1){ /*Income */
+					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$ActGrpLabel);
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format(-$GrpPrdActual),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format(-$GrpPrdBudget),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format(-$GrpPrdLY),'right');
+					$YPos -= (2 * $line_height);
+				} else { /*Costs */
+					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$ActGrpLabel);
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpPrdActual),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdBudget),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdLY),'right');
+					$YPos -= (2 * $line_height);
+				}
+			}
+			$GrpPrdLY = 0;
+			$GrpPrdActual = 0;
+			$GrpPrdBudget = 0;
+		}
+
+		if ($myrow['sectioninaccounts'] != $Section){
+
+			$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+			$FontSize =10;
+			if ($Section != ''){
+				$pdf->line($Left_Margin+310, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
+				$pdf->line($Left_Margin+310, $YPos,$Left_Margin+500, $YPos);
+				if ($Section == 1) { /*Income*/
+
+					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$Sections[$Section]);
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format(-$SectionPrdActual),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format(-$SectionPrdBudget),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format(-$SectionPrdLY),'right');
+					$YPos -= (2 * $line_height);
+					
+					$TotalIncome = -$SectionPrdActual;
+					$TotalBudgetIncome = -$SectionPrdBudget;
+					$TotalLYIncome = -$SectionPrdLY;
+				} else {
+					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$Sections[$Section]);
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($SectionPrdActual),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($SectionPrdBudget),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($SectionPrdLY),'right');
+					$YPos -= (2 * $line_height);
+				}
+				if ($Section == 2){ /*Cost of Sales - need sub total for Gross Profit*/
+					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Gross Profit'));
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($TotalIncome - $SectionPrdActual),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($TotalBudgetIncome - $SectionPrdBudget),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($TotalLYIncome - $SectionPrdLY),'right');
+					$pdf->line($Left_Margin+310, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
+					$pdf->line($Left_Margin+310, $YPos,$Left_Margin+500, $YPos);
+					$YPos -= (2 * $line_height);
+
+					if ($TotalIncome != 0){
+						$PrdGPPercent = 100 *($TotalIncome - $SectionPrdActual) / $TotalIncome;
+					} else {
+						$PrdGPPercent = 0;
+					}
+					if ($TotalBudgetIncome != 0){
+						$BudgetGPPercent = 100 * ($TotalBudgetIncome - $SectionPrdBudget) / $TotalBudgetIncome;
+					} else {
+						$BudgetGPPercent = 0;
+					}
+					if ($TotalLYIncome != 0){
+						$LYGPPercent = 100 * ($TotalLYIncome - $SectionPrdLY) / $TotalLYIncome;
+					} else {
+						$LYGPPercent = 0;
+					}
+					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Gross Profit Percent'));
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($PrdGPPercent,1) . '%','right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($BudgetGPPercent,1) . '%','right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($LYGPPercent,1). '%','right');
+					$YPos -= (2 * $line_height);
+				}
+			}
+			$SectionPrdLY = 0;
+			$SectionPrdActual = 0;
+			$SectionPrdBudget = 0;
+
+			$Section = $myrow['sectioninaccounts'];
+
+			if ($_POST['Detail'] == 'Detailed'){
+				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$Sections[$myrow['sectioninaccounts']]);
+				$YPos -= (2 * $line_height);
+			}
+			$FontSize =8;
+			$pdf->selectFont('./fonts/Helvetica.afm');
+		}
+
+		if ($myrow['groupname'] != $ActGrp){
+			$ActGrp = $myrow['groupname'];
+			if ($_POST['Detail'] == 'Detailed'){
+				$FontSize =10;
+				$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$myrow['groupname']);
+				$YPos -= (2 * $line_height);
+				$FontSize =8;
+				$pdf->selectFont('./fonts/Helvetica.afm');
+			}
+		}
+
+		$AccountPeriodActual = $myrow['lastprdcfwd'] - $myrow['firstprdbfwd'];
+		$AccountPeriodLY = $myrow['lylastprdcfwd'] - $myrow['lyfirstprdbfwd'];
+		$AccountPeriodBudget = $myrow['lastprdbudgetcfwd'] - $myrow['firstprdbudgetbfwd'];
+		$PeriodProfitLoss += $AccountPeriodActual;
+		$PeriodBudgetProfitLoss += $AccountPeriodBudget;
+		$PeriodLYProfitLoss += $AccountPeriodLY;
+
+		$GrpPrdLY +=$AccountPeriodLY;
+		$GrpPrdActual +=$AccountPeriodActual;
+		$GrpPrdBudget +=$AccountPeriodBudget;
+
+		$SectionPrdLY +=$AccountPeriodLY;
+		$SectionPrdActual +=$AccountPeriodActual;
+		$SectionPrdBudget +=$AccountPeriodBudget;
+
+		if ($_POST['Detail'] == _('Detailed')) {
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$myrow['accountcode']);
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$myrow['accountname']);
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($AccountPeriodActual),'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($AccountPeriodBudget),'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($AccountPeriodLY),'right');
+			$YPos -= $line_height;
+		}
+	}
+	//end of loop
+
+	if ($ActGrp != ''){
+
+		if ($_POST['Detail'] == 'Detailed'){
+			$ActGrpLabel = $ActGrp . ' '._('total');
+		} else {
+			$ActGrpLabel = $ActGrp;
+		}
+
+		if ($Section == 1){ /*Income */
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$ActGrpLabel);
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format(-$GrpPrdActual),'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format(-$GrpPrdBudget),'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format(-$GrpPrdLY),'right');
+			$YPos -= (2 * $line_height);
+		} else { /*Costs */
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$ActGrpLabel);
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpPrdActual),'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdBudget),'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdLY),'right');
+			$YPos -= (2 * $line_height);
+		}
+	}
+
+	if ($Section != ''){
+
+		$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+		$pdf->line($Left_Margin+310, $YPos+10,$Left_Margin+500, $YPos+10);
+		$pdf->line($Left_Margin+310, $YPos,$Left_Margin+500, $YPos);
+		
+		if ($Section == 1) { /*Income*/
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$Sections[$Section]);
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format(-$SectionPrdActual),'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format(-$SectionPrdBudget),'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format(-$SectionPrdLY),'right');
+			$YPos -= (2 * $line_height);
+			
+			$TotalIncome = -$SectionPrdActual;
+			$TotalBudgetIncome = -$SectionPrdBudget;
+			$TotalLYIncome = -$SectionPrdLY;
+		} else {
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$Sections[$Section]);
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($SectionPrdActual),'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($SectionPrdBudget),'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($SectionPrdLY),'right');
+			$YPos -= (2 * $line_height);
+		}
+		if ($Section == 2){ /*Cost of Sales - need sub total for Gross Profit*/
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Gross Profit'));
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($TotalIncome - $SectionPrdActual),'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($TotalBudgetIncome - $SectionPrdBudget),'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($TotalLYIncome - $SectionPrdLY),'right');
+			$YPos -= (2 * $line_height);
+			
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format(100*($TotalIncome - $SectionPrdActual)/$TotalIncome,1) . '%','right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format(100*($TotalBudgetIncome - $SectionPrdBudget)/$TotalBudgetIncome,1) . '%','right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format(100*($TotalLYIncome - $SectionPrdLY)/$TotalLYIncome,1). '%','right');
+			$YPos -= (2 * $line_height);
+		}
+	}
+
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Profit').' - '._('Loss'));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format(-$PeriodProfitLoss),'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format(-$PeriodBudgetProfitLoss),'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format(-$PeriodLYProfitLoss),'right');
+	
+	$pdf->line($Left_Margin+310, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
+	$pdf->line($Left_Margin+310, $YPos,$Left_Margin+500, $YPos);	
+	
+	$pdfcode = $pdf->output();
+	$len = strlen($pdfcode);
+	
+	if ($len <= 20){
+		$title = _('Print Profit and Loss Error');
+		include('includes/header.inc');
+		echo '<p>';
+		prnMsg( _('There were no entries to print out for the selections specified') );
+		echo '<BR><A HREF="'. $rootpath.'/index.php?' . SID . '">'. _('Back to the menu'). '</A>';
+		include('includes/footer.inc');
+		exit;
+	} else {
+		header('Content-type: application/pdf');
+		header('Content-Length: ' . $len);
+		header('Content-Disposition: inline; filename=CustomerList.pdf');
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+		header('Pragma: public');
+		$pdf->Stream();
+	}
+	exit;
+	
 } else {
 
+	include('includes/header.inc');
+	echo "<FORM METHOD='POST' ACTION=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	echo "<INPUT TYPE=HIDDEN NAME='FromPeriod' VALUE=" . $_POST['FromPeriod'] . "><INPUT TYPE=HIDDEN NAME='ToPeriod' VALUE=" . $_POST['ToPeriod'] . '>';
 
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
@@ -191,7 +500,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 
 				if ($Section ==1){ /*Income */
 					printf('<TR>
-						<TD COLSPAN=2><FONT SIZE=2>%s '._('total').'</FONT></td>
+						<TD COLSPAN=2><FONT SIZE=2>%s </FONT></td>
 						<TD></TD>
 						<TD ALIGN=RIGHT>%s</TD>
 						<TD></TD>
@@ -205,7 +514,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 						number_format(-$GrpPrdLY));
 				} else { /*Costs */
 					printf('<TR>
-						<TD COLSPAN=2><FONT SIZE=2>%s '._('total').'</FONT></td>
+						<TD COLSPAN=2><FONT SIZE=2>%s </FONT></td>
 						<TD ALIGN=RIGHT>%s</TD>
 						<TD></TD>
 						<TD ALIGN=RIGHT>%s</TD>

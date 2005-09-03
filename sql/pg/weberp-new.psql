@@ -5464,16 +5464,7 @@ ALTER TABLE ONLY taxauthrates
 
 
 --
--- TOC entry 515 (OID 45685)
--- Name: cnt001387; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
---
-
-ALTER TABLE ONLY taxauthrates
-    ADD CONSTRAINT cnt001387 FOREIGN KEY (dispatchtaxprovince) REFERENCES taxauthorities(taxid);
-
-
---
--- TOC entry 518 (OID 45689)
+-- TOC entry 517 (OID 45689)
 -- Name: cnt001400; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5482,7 +5473,7 @@ ALTER TABLE ONLY www_users
 
 
 --
--- TOC entry 519 (OID 45693)
+-- TOC entry 518 (OID 45693)
 -- Name: cnt001402; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5491,7 +5482,7 @@ ALTER TABLE ONLY workcentres
 
 
 --
--- TOC entry 521 (OID 45697)
+-- TOC entry 520 (OID 45697)
 -- Name: cnt001404; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5500,7 +5491,7 @@ ALTER TABLE ONLY worksorders
 
 
 --
--- TOC entry 520 (OID 45701)
+-- TOC entry 519 (OID 45701)
 -- Name: cnt001405; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5509,7 +5500,7 @@ ALTER TABLE ONLY worksorders
 
 
 --
--- TOC entry 524 (OID 45705)
+-- TOC entry 523 (OID 45705)
 -- Name: cnt001392; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5518,7 +5509,7 @@ ALTER TABLE ONLY woissues
 
 
 --
--- TOC entry 523 (OID 45709)
+-- TOC entry 522 (OID 45709)
 -- Name: cnt001393; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5527,7 +5518,7 @@ ALTER TABLE ONLY woissues
 
 
 --
--- TOC entry 522 (OID 45713)
+-- TOC entry 521 (OID 45713)
 -- Name: cnt001394; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5536,7 +5527,7 @@ ALTER TABLE ONLY woissues
 
 
 --
--- TOC entry 525 (OID 45717)
+-- TOC entry 524 (OID 45717)
 -- Name: cnt001396; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5545,7 +5536,7 @@ ALTER TABLE ONLY worequirements
 
 
 --
--- TOC entry 526 (OID 45721)
+-- TOC entry 525 (OID 45721)
 -- Name: cnt001397; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5554,7 +5545,7 @@ ALTER TABLE ONLY worequirements
 
 
 --
--- TOC entry 527 (OID 45725)
+-- TOC entry 526 (OID 45725)
 -- Name: cnt001398; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5563,7 +5554,7 @@ ALTER TABLE ONLY worequirements
 
 
 --
--- TOC entry 528 (OID 45729)
+-- TOC entry 527 (OID 45729)
 -- Name: cnt001238; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5572,7 +5563,7 @@ ALTER TABLE ONLY bom
 
 
 --
--- TOC entry 529 (OID 45733)
+-- TOC entry 528 (OID 45733)
 -- Name: cnt001239; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5581,7 +5572,7 @@ ALTER TABLE ONLY bom
 
 
 --
--- TOC entry 530 (OID 45737)
+-- TOC entry 529 (OID 45737)
 -- Name: cnt001240; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5590,7 +5581,7 @@ ALTER TABLE ONLY bom
 
 
 --
--- TOC entry 531 (OID 45741)
+-- TOC entry 530 (OID 45741)
 -- Name: cnt001241; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5599,7 +5590,7 @@ ALTER TABLE ONLY bom
 
 
 --
--- TOC entry 532 (OID 45745)
+-- TOC entry 531 (OID 45745)
 -- Name: cnt001243; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5608,7 +5599,7 @@ ALTER TABLE ONLY bankaccounts
 
 
 --
--- TOC entry 534 (OID 45749)
+-- TOC entry 533 (OID 45749)
 -- Name: cnt001245; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5617,7 +5608,7 @@ ALTER TABLE ONLY banktrans
 
 
 --
--- TOC entry 533 (OID 45753)
+-- TOC entry 532 (OID 45753)
 -- Name: cnt001246; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5626,7 +5617,7 @@ ALTER TABLE ONLY banktrans
 
 
 --
--- TOC entry 535 (OID 45757)
+-- TOC entry 534 (OID 45757)
 -- Name: cnt001248; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5635,7 +5626,7 @@ ALTER TABLE ONLY buckets
 
 
 --
--- TOC entry 537 (OID 45761)
+-- TOC entry 536 (OID 45761)
 -- Name: cnt001251; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5644,7 +5635,7 @@ ALTER TABLE ONLY chartdetails
 
 
 --
--- TOC entry 536 (OID 45765)
+-- TOC entry 535 (OID 45765)
 -- Name: cnt001252; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5653,7 +5644,7 @@ ALTER TABLE ONLY chartdetails
 
 
 --
--- TOC entry 538 (OID 45769)
+-- TOC entry 537 (OID 45769)
 -- Name: cnt001257; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5662,7 +5653,7 @@ ALTER TABLE ONLY contractbom
 
 
 --
--- TOC entry 539 (OID 45773)
+-- TOC entry 538 (OID 45773)
 -- Name: cnt001258; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5671,7 +5662,7 @@ ALTER TABLE ONLY contractbom
 
 
 --
--- TOC entry 540 (OID 45777)
+-- TOC entry 539 (OID 45777)
 -- Name: cnt001259; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5680,7 +5671,7 @@ ALTER TABLE ONLY contractbom
 
 
 --
--- TOC entry 541 (OID 45781)
+-- TOC entry 540 (OID 45781)
 -- Name: cnt001282; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5689,7 +5680,7 @@ ALTER TABLE ONLY debtorsmaster
 
 
 --
--- TOC entry 542 (OID 45785)
+-- TOC entry 541 (OID 45785)
 -- Name: cnt001283; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5698,7 +5689,7 @@ ALTER TABLE ONLY debtorsmaster
 
 
 --
--- TOC entry 543 (OID 45789)
+-- TOC entry 542 (OID 45789)
 -- Name: cnt001284; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5707,7 +5698,7 @@ ALTER TABLE ONLY debtorsmaster
 
 
 --
--- TOC entry 544 (OID 45793)
+-- TOC entry 543 (OID 45793)
 -- Name: cnt001285; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5716,7 +5707,7 @@ ALTER TABLE ONLY debtorsmaster
 
 
 --
--- TOC entry 545 (OID 45797)
+-- TOC entry 544 (OID 45797)
 -- Name: cnt001271; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5725,7 +5716,7 @@ ALTER TABLE ONLY custbranch
 
 
 --
--- TOC entry 546 (OID 45801)
+-- TOC entry 545 (OID 45801)
 -- Name: cnt001273; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5734,7 +5725,7 @@ ALTER TABLE ONLY custbranch
 
 
 --
--- TOC entry 547 (OID 45805)
+-- TOC entry 546 (OID 45805)
 -- Name: cnt001274; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5743,7 +5734,7 @@ ALTER TABLE ONLY custbranch
 
 
 --
--- TOC entry 548 (OID 45813)
+-- TOC entry 547 (OID 45813)
 -- Name: cnt001276; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5752,7 +5743,7 @@ ALTER TABLE ONLY custbranch
 
 
 --
--- TOC entry 553 (OID 45817)
+-- TOC entry 552 (OID 45817)
 -- Name: cnt001263; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5761,7 +5752,7 @@ ALTER TABLE ONLY contracts
 
 
 --
--- TOC entry 552 (OID 45821)
+-- TOC entry 551 (OID 45821)
 -- Name: cnt001264; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5770,7 +5761,7 @@ ALTER TABLE ONLY contracts
 
 
 --
--- TOC entry 551 (OID 45825)
+-- TOC entry 550 (OID 45825)
 -- Name: cnt001265; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5779,7 +5770,7 @@ ALTER TABLE ONLY contracts
 
 
 --
--- TOC entry 554 (OID 45829)
+-- TOC entry 553 (OID 45829)
 -- Name: cnt001261; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5788,7 +5779,7 @@ ALTER TABLE ONLY contractreqts
 
 
 --
--- TOC entry 557 (OID 45833)
+-- TOC entry 556 (OID 45833)
 -- Name: cnt001340; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5797,7 +5788,7 @@ ALTER TABLE ONLY salesorders
 
 
 --
--- TOC entry 556 (OID 45837)
+-- TOC entry 555 (OID 45837)
 -- Name: cnt001341; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5806,7 +5797,7 @@ ALTER TABLE ONLY salesorders
 
 
 --
--- TOC entry 555 (OID 45841)
+-- TOC entry 554 (OID 45841)
 -- Name: cnt001342; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5815,7 +5806,7 @@ ALTER TABLE ONLY salesorders
 
 
 --
--- TOC entry 560 (OID 45845)
+-- TOC entry 559 (OID 45845)
 -- Name: cnt001313; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5824,7 +5815,7 @@ ALTER TABLE ONLY orderdeliverydifferenceslog
 
 
 --
--- TOC entry 559 (OID 45849)
+-- TOC entry 558 (OID 45849)
 -- Name: cnt001314; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5833,7 +5824,7 @@ ALTER TABLE ONLY orderdeliverydifferenceslog
 
 
 --
--- TOC entry 558 (OID 45853)
+-- TOC entry 557 (OID 45853)
 -- Name: cnt001315; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5842,7 +5833,7 @@ ALTER TABLE ONLY orderdeliverydifferenceslog
 
 
 --
--- TOC entry 562 (OID 45857)
+-- TOC entry 561 (OID 45857)
 -- Name: cnt001337; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5851,7 +5842,7 @@ ALTER TABLE ONLY salesorderdetails
 
 
 --
--- TOC entry 561 (OID 45861)
+-- TOC entry 560 (OID 45861)
 -- Name: cnt001338; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5860,7 +5851,7 @@ ALTER TABLE ONLY salesorderdetails
 
 
 --
--- TOC entry 565 (OID 45865)
+-- TOC entry 564 (OID 45865)
 -- Name: cnt001278; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5869,7 +5860,7 @@ ALTER TABLE ONLY debtortrans
 
 
 --
--- TOC entry 564 (OID 45869)
+-- TOC entry 563 (OID 45869)
 -- Name: cnt001279; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5878,7 +5869,7 @@ ALTER TABLE ONLY debtortrans
 
 
 --
--- TOC entry 563 (OID 45873)
+-- TOC entry 562 (OID 45873)
 -- Name: cnt001280; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5887,7 +5878,7 @@ ALTER TABLE ONLY debtortrans
 
 
 --
--- TOC entry 567 (OID 45877)
+-- TOC entry 566 (OID 45877)
 -- Name: cnt001268; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5896,7 +5887,7 @@ ALTER TABLE ONLY custallocns
 
 
 --
--- TOC entry 566 (OID 45881)
+-- TOC entry 565 (OID 45881)
 -- Name: cnt001269; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5905,7 +5896,7 @@ ALTER TABLE ONLY custallocns
 
 
 --
--- TOC entry 549 (OID 45885)
+-- TOC entry 548 (OID 45885)
 -- Name: cnt001272; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5914,7 +5905,7 @@ ALTER TABLE ONLY custbranch
 
 
 --
--- TOC entry 569 (OID 45889)
+-- TOC entry 568 (OID 45889)
 -- Name: recurrorderno; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5923,7 +5914,7 @@ ALTER TABLE ONLY recurrsalesorderdetails
 
 
 --
--- TOC entry 568 (OID 45893)
+-- TOC entry 567 (OID 45893)
 -- Name: recurrorderstkcode; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5941,7 +5932,7 @@ ALTER TABLE ONLY accountgroups
 
 
 --
--- TOC entry 571 (OID 45901)
+-- TOC entry 570 (OID 45901)
 -- Name: securitygroups_secgroupid_fk; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5950,7 +5941,7 @@ ALTER TABLE ONLY securitygroups
 
 
 --
--- TOC entry 570 (OID 45905)
+-- TOC entry 569 (OID 45905)
 -- Name: securitygroups_tokenid_fk; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5959,7 +5950,7 @@ ALTER TABLE ONLY securitygroups
 
 
 --
--- TOC entry 573 (OID 45985)
+-- TOC entry 572 (OID 45985)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5968,7 +5959,7 @@ ALTER TABLE ONLY salescatprod
 
 
 --
--- TOC entry 572 (OID 45989)
+-- TOC entry 571 (OID 45989)
 -- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5977,7 +5968,7 @@ ALTER TABLE ONLY salescatprod
 
 
 --
--- TOC entry 516 (OID 62229)
+-- TOC entry 515 (OID 62229)
 -- Name: taxcatid_fk; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -5995,7 +5986,7 @@ ALTER TABLE ONLY locations
 
 
 --
--- TOC entry 575 (OID 62258)
+-- TOC entry 574 (OID 62258)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -6004,7 +5995,7 @@ ALTER TABLE ONLY taxgrouptaxes
 
 
 --
--- TOC entry 574 (OID 62262)
+-- TOC entry 573 (OID 62262)
 -- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -6013,7 +6004,7 @@ ALTER TABLE ONLY taxgrouptaxes
 
 
 --
--- TOC entry 576 (OID 62274)
+-- TOC entry 575 (OID 62274)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -6022,7 +6013,7 @@ ALTER TABLE ONLY stockmovestaxes
 
 
 --
--- TOC entry 578 (OID 62284)
+-- TOC entry 577 (OID 62284)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -6031,7 +6022,7 @@ ALTER TABLE ONLY debtortranstaxes
 
 
 --
--- TOC entry 577 (OID 62288)
+-- TOC entry 576 (OID 62288)
 -- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -6040,7 +6031,7 @@ ALTER TABLE ONLY debtortranstaxes
 
 
 --
--- TOC entry 550 (OID 62295)
+-- TOC entry 549 (OID 62295)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -6049,7 +6040,7 @@ ALTER TABLE ONLY custbranch
 
 
 --
--- TOC entry 517 (OID 62299)
+-- TOC entry 516 (OID 62299)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -6058,7 +6049,7 @@ ALTER TABLE ONLY taxauthrates
 
 
 --
--- TOC entry 580 (OID 62308)
+-- TOC entry 579 (OID 62308)
 -- Name: $1; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -6067,7 +6058,7 @@ ALTER TABLE ONLY supptranstaxes
 
 
 --
--- TOC entry 579 (OID 62312)
+-- TOC entry 578 (OID 62312)
 -- Name: $2; Type: FK CONSTRAINT; Schema: public; Owner: weberp_db_user
 --
 
@@ -6132,6 +6123,7 @@ SET search_path = public, pg_catalog;
 --
 
 COPY accountgroups (groupname, sectioninaccounts, pandl, sequenceintb) FROM stdin;
+Sales	1	1	10
 Revenue	1	1	4000
 Liabilities	30	0	2000
 Equity	50	0	3000
@@ -6160,6 +6152,153 @@ SET search_path = public, pg_catalog;
 --
 
 COPY chartmaster (accountcode, accountname, group_) FROM stdin;
+1010	Petty Cash	Current Assets
+1030	Cheque Accounts	Current Assets
+1040	Savings Accounts	Current Assets
+1050	Payroll Accounts	Current Assets
+1060	Special Accounts	Current Assets
+1070	Money Market Investments	Current Assets
+1080	Short-Term Investments (< 90 days)	Current Assets
+1090	Interest Receivable	Current Assets
+1100	Accounts Receivable	Current Assets
+1150	Allowance for Doubtful Accounts	Current Assets
+1200	Notes Receivable	Current Assets
+1250	Income Tax Receivable	Current Assets
+1300	Prepaid Expenses	Current Assets
+1350	Advances	Current Assets
+1400	Supplies Inventory	Current Assets
+1420	Raw Material Inventory	Current Assets
+1440	Work in Progress Inventory	Current Assets
+1460	Finished Goods Inventory	Current Assets
+1500	Land	Fixed Assets
+1550	Bonds	Fixed Assets
+1600	Buildings	Fixed Assets
+1620	Accumulated Depreciation of Buildings	Fixed Assets
+1650	Equipment	Fixed Assets
+1670	Accumulated Depreciation of Equipment	Fixed Assets
+1700	Furniture & Fixtures	Fixed Assets
+1710	Accumulated Depreciation of Furniture & Fixtures	Fixed Assets
+1720	Office Equipment	Fixed Assets
+1730	Accumulated Depreciation of Office Equipment	Fixed Assets
+1740	Software	Fixed Assets
+1750	Accumulated Depreciation of Software	Fixed Assets
+1760	Vehicles	Fixed Assets
+1770	Accumulated Depreciation Vehicles	Fixed Assets
+1780	Other Depreciable Property	Fixed Assets
+1790	Accumulated Depreciation of Other Depreciable Property	Fixed Assets
+1800	Patents	Fixed Assets
+1850	Goodwill	Fixed Assets
+1900	Future Income Tax Receivable	Current Assets
+2010	Bank Indedebtedness (overdraft)	Liabilities
+2020	Retainers or Advances on Work	Liabilities
+2050	Interest Payable	Liabilities
+2100	Accounts Payable	Liabilities
+2200	Short-Term Loan Payable	Liabilities
+2230	Current Portion of Long-Term Debt Payable	Liabilities
+2250	Income Tax Payable	Liabilities
+2300	GST Payable	Liabilities
+2310	GST Recoverable	Liabilities
+2320	PST Payable	Liabilities
+2330	PST Recoverable (commission)	Liabilities
+2340	Payroll Tax Payable	Liabilities
+2350	Withholding Income Tax Payable	Liabilities
+2360	Other Taxes Payable	Liabilities
+2400	Employee Salaries Payable	Liabilities
+2410	Management Salaries Payable	Liabilities
+2420	Director / Partner Fees Payable	Liabilities
+2450	Health Benefits Payable	Liabilities
+2460	Pension Benefits Payable	Liabilities
+2470	Canada Pension Plan Payable	Liabilities
+2480	Employment Insurance Premiums Payable	Liabilities
+2500	Land Payable	Liabilities
+2550	Long-Term Bank Loan	Liabilities
+2560	Notes Payable	Liabilities
+2600	Building & Equipment Payable	Liabilities
+2700	Furnishing & Fixture Payable	Liabilities
+2720	Office Equipment Payable	Liabilities
+2740	Vehicle Payable	Liabilities
+2760	Other Property Payable	Liabilities
+2800	Shareholder Loans	Liabilities
+2900	Suspense	Liabilities
+3100	Capital Stock	Equity
+3200	Capital Surplus / Dividends	Equity
+3300	Dividend Taxes Payable	Equity
+3400	Dividend Taxes Refundable	Equity
+3500	Retained Earnings	Equity
+4100	Product / Service Sales	Revenue
+4500	Consulting Services	Revenue
+4600	Rentals	Revenue
+4700	Finance Charge Income	Revenue
+4800	Sales Returns & Allowances	Revenue
+4900	Sales Discounts	Revenue
+5100	Production Expenses	COG Sold
+5500	Direct Labour Costs	COG Sold
+5600	Freight Charges	COG Sold
+5700	Inventory Adjustment	COG Sold
+5800	Purchase Returns & Allowances	COG Sold
+5900	Purchase Discounts	COG Sold
+6100	Advertising	Marketing Expenses
+6150	Promotion	Marketing Expenses
+6200	Communications	Marketing Expenses
+6250	Meeting Expenses	Marketing Expenses
+6300	Travelling Expenses	Marketing Expenses
+6400	Delivery Expenses	Marketing Expenses
+6500	Sales Salaries & Commission	Marketing Expenses
+6550	Sales Salaries & Commission Deductions	Marketing Expenses
+6590	Benefits	Marketing Expenses
+6600	Other Selling Expenses	Marketing Expenses
+6700	Permits, Licenses & License Fees	Marketing Expenses
+6800	Research & Development	Marketing Expenses
+6900	Professional Services	Marketing Expenses
+7020	Support Salaries & Wages	Operating Expenses
+7030	Support Salary & Wage Deductions	Operating Expenses
+7040	Management Salaries	Operating Expenses
+7050	Management Salary deductions	Operating Expenses
+7060	Director / Partner Fees	Operating Expenses
+7070	Director / Partner Deductions	Operating Expenses
+7080	Payroll Tax	Operating Expenses
+7090	Benefits	Operating Expenses
+7100	Training & Education Expenses	Operating Expenses
+7150	Dues & Subscriptions	Operating Expenses
+7200	Accounting Fees	Operating Expenses
+7210	Audit Fees	Operating Expenses
+7220	Banking Fees	Operating Expenses
+7230	Credit Card Fees	Operating Expenses
+7240	Consulting Fees	Operating Expenses
+7260	Legal Fees	Operating Expenses
+7280	Other Professional Fees	Operating Expenses
+7300	Business Tax	Operating Expenses
+7350	Property Tax	Operating Expenses
+7390	Corporation Capital Tax	Operating Expenses
+7400	Office Rent	Operating Expenses
+7450	Equipment Rental	Operating Expenses
+7500	Office Supplies	Operating Expenses
+7550	Office Repair & Maintenance	Operating Expenses
+7600	Automotive Expenses	Operating Expenses
+7610	Communication Expenses	Operating Expenses
+7620	Insurance Expenses	Operating Expenses
+7630	Postage & Courier Expenses	Operating Expenses
+7640	Miscellaneous Expenses	Operating Expenses
+7650	Travel Expenses	Operating Expenses
+7660	Utilities	Operating Expenses
+7700	Ammortization Expenses	Operating Expenses
+7750	Depreciation Expenses	Operating Expenses
+7800	Interest Expense	Operating Expenses
+7900	Bad Debt Expense	Operating Expenses
+8100	Gain on Sale of Assets	Other Revenue and Expenses
+8200	Interest Income	Other Revenue and Expenses
+8300	Recovery on Bad Debt	Other Revenue and Expenses
+8400	Other Revenue	Other Revenue and Expenses
+8500	Loss on Sale of Assets	Other Revenue and Expenses
+8600	Charitable Contributions	Other Revenue and Expenses
+8900	Other Expenses	Other Revenue and Expenses
+9100	Income Tax Provision	Income Tax
+1020	Cash on Hand	Current Assets
+1	Default Sales/Discounts	Sales
+5200	Cost of Sales	COG Sold
+2150	Goods Received Suspense	Liabilities
+5250	Purchases Exchange Gains/Losses	COG Sold
+4850	Sales Exchange Gains/Losses	Sales
 \.
 
 
@@ -6178,6 +6317,9 @@ SET search_path = public, pg_catalog;
 --
 
 COPY bankaccounts (accountcode, bankaccountname, bankaccountnumber, bankaddress) FROM stdin;
+1030	Cheque Account	1234567899 	
+1010	Petty Cash		
+1040	Savings Account		
 \.
 
 
@@ -6196,7 +6338,7 @@ SET search_path = public, pg_catalog;
 --
 
 COPY companies (coycode, coyname, gstno, companynumber, postaladdress, regoffice1, regoffice2, regoffice3, telephone, fax, email, currencydefault, debtorsact, pytdiscountact, creditorsact, payrollact, grnact, exchangediffact, purchasesexchangediffact, retainedearnings, gllink_debtors, gllink_creditors, gllink_stock, freightact) FROM stdin;
-1	webERP Demo		0	123 no name road	12 Downing Street,	Wagga Wagga	Victoria	03 45444 5442 	03 54444 45454		ZAR	800000	100000	900000	925000	910000	250000	220000	520000	1	1	1	340000
+1	webERP Demo		0	123 Post Office Box	The White House	Washnington DC	USA	03 45444 5442 	03 54444 45454		USD	1100	4900	2100	2400	2150	4850	5250	3500	1	1	1	5600
 \.
 
 
@@ -6215,8 +6357,9 @@ SET search_path = public, pg_catalog;
 --
 
 COPY currencies (currency, currabrev, country, hundredsname, rate) FROM stdin;
-Rand	ZAR	South Africa	cents	1.0000
-Euros Europe	EUR	European Union	cents	2.4540
+US Dollars	USD	USA	cents	1.0000
+Euros Europe	EUR	European Union	cents	0.8000
+Rand	ZAR	South Africa	cents	3.0000
 \.
 
 
@@ -6258,7 +6401,6 @@ SET search_path = public, pg_catalog;
 
 COPY locations (loccode, locationname, deladd1, deladd2, deladd3, tel, fax, email, contact, taxprovinceid, managed) FROM stdin;
 CPT	Cape Town	na	na	na	na	na	weberp@paradise.net.nz	na	1	\N
-SYD	Sydney						weberp@paradise.net.nz	Eric Von Hammer	1	\N
 \.
 
 
@@ -6340,12 +6482,12 @@ COPY systypes (typeid, typename, typeno) FROM stdin;
 50	Opening Balance	0
 22	Creditors Payment	3
 31	Shipment Close	3
-25	Purchase Order Delivery	4
 1	Payment - GL	2
 20	Purchase Invoice	1
 35	Cost Update	2
 500	"Debtor Number"	100001
-10	Sales Invoice	0
+25	Purchase Order Delivery	5
+10	Sales Invoice	7
 15	Journal - Debtors	0
 11	Credit Note	0
 12	Receipt	0
@@ -6369,6 +6511,8 @@ SET search_path = public, pg_catalog;
 --
 
 COPY taxauthorities (taxid, description, taxglcode, purchtaxglaccount, bank, bankacctype, bankacc, bankswift) FROM stdin;
+4	GST	2300	2310				
+5	PST	2320	2330				
 \.
 
 
@@ -6377,7 +6521,7 @@ COPY taxauthorities (taxid, description, taxglcode, purchtaxglaccount, bank, ban
 -- Name: taxauthorities_taxid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('taxauthorities_taxid_seq', 1, true);
+SELECT pg_catalog.setval('taxauthorities_taxid_seq', 5, true);
 
 
 --
@@ -6395,6 +6539,14 @@ SET search_path = public, pg_catalog;
 --
 
 COPY taxauthrates (taxauthority, dispatchtaxprovince, taxcatid, taxrate) FROM stdin;
+4	1	1	0.050000000000000003
+4	1	0	0
+5	1	1	0.089999999999999997
+5	1	0	0
+4	6	1	0
+4	6	0	0
+5	6	1	0
+5	6	0	0
 \.
 
 
@@ -6422,7 +6574,7 @@ COPY taxgroups (taxgroupid, taxgroupdescription) FROM stdin;
 -- Name: taxgroups_taxgroupid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval('taxgroups_taxgroupid_seq', 1, false);
+SELECT pg_catalog.setval('taxgroups_taxgroupid_seq', 3, true);
 
 
 --
@@ -6441,7 +6593,6 @@ SET search_path = public, pg_catalog;
 
 COPY taxcategories (taxcatid, taxcatname) FROM stdin;
 1	Taxable supply
-2	Luxury Items
 0	Exempt
 \.
 
@@ -6469,7 +6620,7 @@ SET search_path = public, pg_catalog;
 --
 
 COPY www_users (userid, "password", realname, customerid, phone, email, defaultlocation, fullaccess, lastvisitdate, branchcode, pagesize, modulesallowed, blocked, displayrecordsmax, theme, "language", pinno, swipecard) FROM stdin;
-demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2005-08-24 20:55:02		A4	1,1,1,1,1,1,1,1,	0	50	professional	en_GB	\N	\N
+demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2005-09-01 19:56:13		A4	1,1,1,1,1,1,1,1,	0	50	fresh	en_GB	\N	\N
 \.
 
 
@@ -6546,7 +6697,6 @@ DefaultPriceList	WS
 Default_Shipper	1
 DoFreightCalc	0
 FreightChargeAppliesIfLessThan	1000
-DefaultTaxLevel	1
 TaxAuthorityReferenceName	Tax Ref
 NumberOfPeriodsOfStockUsage	12
 Check_Qty_Charged_vs_Del_Qty	1
@@ -6556,8 +6706,8 @@ OverReceiveProportion	20
 PO_AllowSameItemMultipleTimes	1
 YearEnd	3
 PageLength	48
-DB_Maintenance_LastRun	2005-08-18
 MaxImageSize	300
+DB_Maintenance_LastRun	2005-08-27
 EDIHeaderMsgId	D:01B:UN:EAN010
 EDIReference	WEBERP
 EDI_MsgPending	EDI_Pending
@@ -6573,6 +6723,7 @@ RadioBeaconFTP_user_name	RadioBeacon ftp server user name
 RadionBeaconFTP_user_pass	Radio Beacon remote ftp server password
 CountryOfOperation	EUR
 DefaultTheme	professional
+DefaultTaxCategory	1
 part_pics_dir	companies/weberp/part_pics
 HTTPS_Only	0
 reports_dir	companies/weberp/reports

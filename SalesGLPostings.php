@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 $PageSecurity = 10;
 
 include('includes/session.inc');
@@ -18,7 +18,6 @@ if (isset($_POST['submit'])) {
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
-
 
 	if (isset($SelectedSalesPostingID)) {
 
@@ -77,18 +76,64 @@ if (isset($_POST['submit'])) {
 
 if (!isset($SelectedSalesPostingID)) {
 
+	$ShowLivePostingRecords = true;
+	
+	$SQL = "SELECT salesglpostings.id,
+				salesglpostings.area,
+				salesglpostings.stkcat,
+				salesglpostings.salestype,
+				salesglpostings.salesglcode,
+				salesglpostings.discountglcode
+				FROM salesglpostings LEFT JOIN chartmaster 
+					ON salesglpostings.salesglcode = chartmaster.accountcode
+				WHERE chartmaster.accountcode IS NULL";
+				
+	$result = DB_query($SQL,$db);
+	if (DB_num_rows($result)>0){
+		$ShowLivePostingRecords = false;
+		prnMsg (_('The following posting records that do not have valid general ledger code specified - these records must be amended.'),'error');
+		echo '<CENTER><table border=1>';
+		echo "<tr><td class='tableheader'>" . _('Area') . "</td>
+				<td class='tableheader'>" . _('Stock Category') . "</td>
+				<td class='tableheader'>" . _('Sales Type') . "</td>
+				<td class='tableheader'>" . _('Sales Account') . "</td>
+				<td class='tableheader'>" . _('Discount Account') . "</td>
+			</tr>";
+		$k=0; //row colour counter
+	
+		while ($myrow = DB_fetch_row($result)) {
+			if ($k==1){
+				echo "<tr bgcolor='#CCCCCC'>";
+				$k=0;
+			} else {
+				echo "<tr bgcolor='#EEEEEE'>";
+				$k=1;
+			}
+	
+			printf("<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td><a href=\"%sSelectedSalesPostingID=%s\">" . _('Edit') . "</td>
+				<td><a href=\"%sSelectedSalesPostingID=%s&delete=yes\">". _('Delete') . "</td></tr>",
+				$myrow[1],
+				$myrow[2],
+				$myrow[3],
+				$myrow[4],
+				$myrow[5],
+				$_SERVER['PHP_SELF'] . '?' . SID . '&',
+				$myrow[0],
+				$_SERVER['PHP_SELF']. '?' . SID . '&',
+				$myrow[0]);
+		}
+	}
+
 	$SQL = "SELECT salesglpostings.id,
 			salesglpostings.area,
 			salesglpostings.stkcat,
-			salesglpostings.salestype,
-			chart1.accountname,
-			chart2.accountname
-		FROM salesglpostings,
-			chartmaster as chart1,
-			chartmaster as chart2
-		WHERE salesglpostings.salesglcode = chart1.accountcode
-		AND salesglpostings.discountglcode = chart2.accountcode";
-
+			salesglpostings.salestype
+		FROM salesglpostings";
 
 	$result = DB_query($SQL,$db);
 
@@ -141,7 +186,9 @@ if (!isset($SelectedSalesPostingID)) {
 					1)";						
 		$result = DB_query($SQL,$db);
 
-		/*now re-run the query and we should have default record */
+	}
+	if ($ShowLivePostingRecords){
+	
 		$SQL = "SELECT salesglpostings.id,
 				salesglpostings.area,
 				salesglpostings.stkcat,
@@ -153,51 +200,48 @@ if (!isset($SelectedSalesPostingID)) {
 				chartmaster as chart2
 			WHERE salesglpostings.salesglcode = chart1.accountcode
 			AND salesglpostings.discountglcode = chart2.accountcode";
-
-
+		
 		$result = DB_query($SQL,$db);
-
-	}
-
-	echo '<CENTER><table border=1>';
-	echo "<tr><td class='tableheader'>" . _('Area') . "</td>
-		<td class='tableheader'>" . _('Stock Category') . "</td>
-		<td class='tableheader'>" . _('Sales Type') . "</td>
-		<td class='tableheader'>" . _('Sales Account') . "</td>
-		<td class='tableheader'>" . _('Discount Account') . "</td>
-		</tr>";
-
-	$k=0; //row colour counter
-
-	while ($myrow = DB_fetch_row($result)) {
-		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
-			$k=0;
-		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
-			$k=1;
+		
+		echo '<CENTER><table border=1>';
+		echo "<tr><td class='tableheader'>" . _('Area') . "</td>
+			<td class='tableheader'>" . _('Stock Category') . "</td>
+			<td class='tableheader'>" . _('Sales Type') . "</td>
+			<td class='tableheader'>" . _('Sales Account') . "</td>
+			<td class='tableheader'>" . _('Discount Account') . "</td>
+			</tr>";
+	
+		$k=0; //row colour counter
+	
+		while ($myrow = DB_fetch_row($result)) {
+			if ($k==1){
+				echo "<tr bgcolor='#CCCCCC'>";
+				$k=0;
+			} else {
+				echo "<tr bgcolor='#EEEEEE'>";
+				$k=1;
+			}
+	
+			printf("<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td><a href=\"%sSelectedSalesPostingID=%s\">" . _('Edit') . "</td>
+				<td><a href=\"%sSelectedSalesPostingID=%s&delete=yes\">". _('Delete') . "</td></tr>",
+				$myrow[1],
+				$myrow[2],
+				$myrow[3],
+				$myrow[4],
+				$myrow[5],
+				$_SERVER['PHP_SELF'] . '?' . SID . '&',
+				$myrow[0],
+				$_SERVER['PHP_SELF']. '?' . SID . '&',
+				$myrow[0]);
 		}
-
-		printf("<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td><a href=\"%sSelectedSalesPostingID=%s\">" . _('Edit') . "</td>
-			<td><a href=\"%sSelectedSalesPostingID=%s&delete=yes\">". _('Delete') . "</td></tr>",
-			$myrow[1],
-			$myrow[2],
-			$myrow[3],
-			$myrow[4],
-			$myrow[5],
-			$_SERVER['PHP_SELF'] . '?' . SID . '&',
-			$myrow[0],
-			$_SERVER['PHP_SELF']. '?' . SID . '&',
-			$myrow[0]);
-
+		//END WHILE LIST LOOP
+		echo '</TABLE></CENTER>';
 	}
-	//END WHILE LIST LOOP
-	echo '</TABLE></CENTER>';
 }
 
 //end of ifs and buts!

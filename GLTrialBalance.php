@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 /*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances
 and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen
@@ -163,13 +163,18 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 
 			// Print total at end of each account group
 			if ($ActGrp != ''){
+				$YPos -= (.5 * $line_height);
+				$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);  
+				$pdf->selectFont('./fonts/Helvetica-Bold.afm');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ActGrp);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual,2),'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpBudget,2),'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdActual,2),'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget,2),'right');
+				$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
 				$YPos -= (2 * $line_height);
+				$pdf->selectFont('./fonts/Helvetica.afm');
 			} else {
 				$YPos -= (2 * $line_height);			
 			}
@@ -180,10 +185,12 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 			$GrpPrdBudget = 0;
 
 			// Print account group name
+			$pdf->selectFont('./fonts/Helvetica-Bold.afm');
 			$ActGrp = $myrow['groupname'];
+			$FontSize = 10;
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$myrow['groupname']);
 			$FontSize = 8;
 			$pdf->selectFont('./fonts/Helvetica.afm');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$myrow['groupname']);
 			$YPos -= (2 * $line_height);
 			$j++;
 
@@ -237,19 +244,25 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 		
 	}  //end of while loop
 	
+	$YPos -= (.5 * $line_height);
+	$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);  
+	$pdf->selectFont('./fonts/Helvetica-Bold.afm');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ActGrp);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual,2),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpBudget,2),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdActual,2),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget,2),'right');
+	$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  
 	
 	$YPos -= (2 * $line_height);
+	$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);  
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Check Totals'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($CheckMonth,2),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($CheckBudgetMonth,2),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($CheckPeriodActual,2),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($CheckPeriodBudget,2),'right');
+	$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  
 	
 	$pdfcode = $pdf->output();
 	$len = strlen($pdfcode);

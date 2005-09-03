@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 /* Script to delete a credit note - it expects and credit note number to delete
 not included on any menu for obvious reasons
@@ -31,7 +31,6 @@ $OrderNo = $myrow[0];
 
 $SQL = 'SELECT stockid,
                loccode,
-               bundle,
                debtorno,
                branchcode,
                prd,
@@ -100,11 +99,11 @@ $SQL = 'DELETE FROM stockmoves
 
 $ErrMsg = _('SQL to delete the stock movement record failed with the message');
 $Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
-prnMsg(_('Deleted the credit note stock movements'.'info');
+prnMsg(_('Deleted the credit note stock movements').'info');
 echo '<BR><BR>';
 
 $result = DB_query('COMMIT',$db);
-prnMsg(_('Credit note number') . ' ' . $_GET['CreditNoteNo') . ' ' . _('has been completely deleted') . '. ' . _('To ensure the integrity of the general ledger transactions must be reposted from the period the credit note was created'),'info');
+prnMsg(_('Credit note number') . ' ' . $_GET['CreditNoteNo'] . ' ' . _('has been completely deleted') . '. ' . _('To ensure the integrity of the general ledger transactions must be reposted from the period the credit note was created'),'info');
 
 include('includes/footer.inc');
 ?>

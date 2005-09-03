@@ -12,21 +12,18 @@
 
 	$FontSize = 8;
 	$YPos = $Page_Height - $Top_Margin;
+	$pdf->selectFont('./fonts/Helvetica.afm');
 	$pdf->addText($Left_Margin,$YPos,$FontSize,$_SESSION['CompanyRecord']['coyname']);
+	$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed'). ': ' . Date($_SESSION['DefaultDateFormat'])  . '   ' . _('Page'). ' ' . $PageNumber);
 
 	$YPos -= $line_height;
 	$FontSize =10;
 	$pdf->selectFont('./fonts/Helvetica-Bold.afm');
 	$Heading = _('Trial Balance for the month of ') . $PeriodToDate . _(' and for the ') . $NumberOfMonths . _(' months to ') . $PeriodToDate;
 	$pdf->addText($Left_Margin, $YPos, $FontSize, $Heading);
-
-	$FontSize = 8;
-	$pdf->selectFont('./fonts/Helvetica.afm');
-	$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize,
-		_('Printed'). ': ' . Date($_SESSION['DefaultDateFormat'])
-		. '   '. _('Page'). ' ' . $PageNumber);
-
+	
 	$YPos -= (2 * $line_height);
+	$FontSize = 8;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Account'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,100,$FontSize,_('Account Name'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,_('Month Actual'),'right');

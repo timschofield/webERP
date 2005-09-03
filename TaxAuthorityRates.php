@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 11; // only allow accountant access
 
@@ -14,7 +14,7 @@ include('includes/session.inc');
 $title = _('Tax Rates');
 include('includes/header.inc');
 
-/* <-- $Revision: 1.10 $ --> */
+/* <-- $Revision: 1.11 $ --> */
 
 if (!isset($TaxAuthority)){
 	prnMsg(_('This page can only be called after selecting the tax authority to edit the rates for') . '. ' . _('Please select the Rates link from the tax authority page') . ".<BR><A HREF='$rootpath/TaxAuthorities.php'>" . _('click here') . '</A> ' . _('to go to the Tax Authority page'),'error');
@@ -119,9 +119,8 @@ if (DB_num_rows($TaxRatesResult)>0){
 echo '</TABLE>';
 echo "<BR><INPUT TYPE=SUBMIT NAME='UpdateRates' VALUE='" . _('Update Rates') . "'></CENTER>";
 echo '</FORM>';
-prnMsg(_('Tax rates must be specified for all defined tax categories for every province where the supply could be made from. Where the supply is to be made to a tax authority in a different province - an export then normally this would be 0%. However, this is not always the case some tax authorities will charge tax even though the supply was from a different province. Normally this would occur only where there is a sales office or otherwise registered for tax in the destination tax authority. The tax category refers to the specific tax attributable to different items. Each items is defined a being a member of a specfic tax category.'),'info');
 
-echo '<BR><A HREF="' . $rootpath . '/TaxAuthorities.php?' . SID . '">' . _('Back to Tax Authorities') .  '</A>';
+echo '<BR><A HREF="' . $rootpath . '/TaxAuthorities.php?' . SID . '">' . _('Tax Authorities') .  '</A>';
 echo '<BR><A HREF="' . $rootpath . '/TaxGroups.php?' . SID . '">' . _('Tax Groupings') .  '</A>';
 echo '<BR><A HREF="' . $rootpath . '/TaxCategories.php?' . SID . '">' . _('Tax Categories') .  '</A>';
 echo '<BR><A HREF="' . $rootpath . '/TaxProvinces.php?' . SID . '">' . _('Dispatch Tax Provinces') .  '</A>';

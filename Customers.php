@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 3;
 
@@ -157,15 +157,16 @@ if ($_POST['submit']) {
 			$ErrMsg = _('This customer could not be added because');
 			$result = DB_query($sql,$db,$ErrMsg);
 
-
-			prnMsg(_('A new customer record has been inserted'),'success');
-
 			$BranchCode = substr($_POST['DebtorNo'],0,4);
-
-			echo "<CENTER><A HREF='$rootpath/CustomerBranches.php?" . SID . "&DebtorNo=" . $_POST['DebtorNo'] ."&BrName=" . $_POST['CustName'] .'&BranchCode=' . $BranchCode . '&BrAddress1=' . $_POST['Address1'] . '&BrAddress2=' . $_POST['Address2'] . '&BrAddress3=' . $_POST['Address3'] . '&BrAddress4=' . $_POST['Address4'] . "'>" . _('Enter Branch Details') . '</A>';
+			
+			echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath ."/CustomerBranches.php?" . SID . "&DebtorNo=" . $_POST['DebtorNo'] ."&BrName=" . $_POST['CustName'] .'&BranchCode=' . $BranchCode . '&BrAddress1=' . $_POST['Address1'] . '&BrAddress2=' . $_POST['Address2'] . '&BrAddress3=' . $_POST['Address3'] . '&BrAddress4=' . $_POST['Address4'] . "'>";
+			
+			echo '<P>' . _('You should automatically be forwarded to the entry of invoices against goods received page') .
+			'. ' . _('If this does not happen') .' (' . _('if the browser does not support META Refresh') . ') ' .
+			"<A HREF='" . $rootpath . "/CustomerBranches.php?" . SID . "&DebtorNo=" . $_POST['DebtorNo'] ."&BrName=" . $_POST['CustName'] .'&BranchCode=' . $BranchCode . '&BrAddress1=' . $_POST['Address1'] . '&BrAddress2=' . $_POST['Address2'] . '&BrAddress3=' . $_POST['Address3'] . '&BrAddress4=' . $_POST['Address4'] . "'>" . _('click here') . '</a> ' . _('to continue') . '.<BR>';
+		
 			include('includes/footer.inc');
 			exit;
-
 		}
 	} else {
 		prnMsg( _('Validation failed') . '. ' . _('No updates or deletes took place'),'error');

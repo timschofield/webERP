@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 
 $PageSecurity = 8;
@@ -64,8 +64,8 @@ echo '<CENTER><TABLE>
 
 /* End of the Form  rest of script is what happens if the show button is hit*/
 
-if (isset($_POST['Show']) ){
-	
+if (isset($_POST['Show'])){
+
 	if (!isset($SelectedPeriod)){
 		prnMsg(_('A period or range of periods must be selected from the list box'),'info');
 		include('includes/footer.inc');
@@ -120,6 +120,19 @@ if (isset($_POST['Show']) ){
 	if ($PandLAccount==True) {
 		$RunningTotal = 0;
 	} else {
+	       // added to fix bug with Brought Forward Balance always being zero
+					$sql = "SELECT bfwd, 
+						actual,
+						period 
+					FROM chartdetails 
+					WHERE chartdetails.accountcode= $SelectedAccount 
+					AND chartdetails.period=" . $FirstPeriodSelected; 
+					
+				$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
+				$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
+				$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
+				// --------------------
+				
 		$RunningTotal =$ChartDetailRow['bfwd'];
 		if ($RunningTotal < 0 ){ //its a credit balance b/fwd
 			echo "<TR bgcolor='#FDFEEF'>

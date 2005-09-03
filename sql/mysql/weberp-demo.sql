@@ -1740,17 +1740,16 @@ CREATE TABLE `www_users` (
 -- Dumping data for table `accountgroups`
 --
 
-INSERT INTO `accountgroups` VALUES ('Admin Expenses',5,1,80);
-INSERT INTO `accountgroups` VALUES ('Current Assets',20,0,150);
-INSERT INTO `accountgroups` VALUES ('Current Liabilites',30,0,160);
-INSERT INTO `accountgroups` VALUES ('Equity',50,0,300);
-INSERT INTO `accountgroups` VALUES ('Labour',2,1,15);
-INSERT INTO `accountgroups` VALUES ('Materials and Supplies',2,1,10);
-INSERT INTO `accountgroups` VALUES ('Overhead Recovery',5,1,90);
-INSERT INTO `accountgroups` VALUES ('Sales',1,1,5);
-INSERT INTO `accountgroups` VALUES ('Selling Expenses',5,1,95);
-INSERT INTO `accountgroups` VALUES ('Share Capital',50,0,100);
-INSERT INTO `accountgroups` VALUES ('Standard Cost Of Goods Sold',2,1,8);
+INSERT INTO `accountgroups` VALUES ('Cost of Goods Sold',2,1,5000);
+INSERT INTO `accountgroups` VALUES ('Current Assets',20,0,1000);
+INSERT INTO `accountgroups` VALUES ('Equity',50,0,3000);
+INSERT INTO `accountgroups` VALUES ('Fixed Assets',10,0,500);
+INSERT INTO `accountgroups` VALUES ('Income Tax',5,1,9000);
+INSERT INTO `accountgroups` VALUES ('Liabilities',30,0,2000);
+INSERT INTO `accountgroups` VALUES ('Marketing Expenses',5,1,6000);
+INSERT INTO `accountgroups` VALUES ('Operating Expenses',5,1,7000);
+INSERT INTO `accountgroups` VALUES ('Other Revenue and Expenses',5,1,8000);
+INSERT INTO `accountgroups` VALUES ('Revenue',1,1,4000);
 
 --
 -- Dumping data for table `accountsection`
@@ -1800,314 +1799,153 @@ INSERT INTO `bom` VALUES ('FUJI9901ASS','FUJI990102','ASS','DEN','2005-06-04','2
 -- Dumping data for table `chartdetails`
 --
 
-INSERT INTO `chartdetails` VALUES (1,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (100,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (100,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (107,66,0,-23081.25,0,0);
-INSERT INTO `chartdetails` VALUES (107,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (112,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (112,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (200,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (200,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (301,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (301,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (10000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (10000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (11000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (11000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (12000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (12000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (19000,66,0,-278931,0,0);
-INSERT INTO `chartdetails` VALUES (19000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (20000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (20000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (21000,66,0,283.75,0,0);
-INSERT INTO `chartdetails` VALUES (21000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (23400,66,0,1000,0,0);
-INSERT INTO `chartdetails` VALUES (23400,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (23500,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (23500,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (23600,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (23600,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (23700,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (23700,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (24000,66,0,521,0,0);
-INSERT INTO `chartdetails` VALUES (24000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (70100,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (70100,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (70200,66,0,16671,0,0);
-INSERT INTO `chartdetails` VALUES (70200,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (70300,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (70300,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (210000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (210000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (250000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (250000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (251000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (251000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (252000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (252000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (253000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (253000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (255000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (255000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (256000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (256000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (257000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (257000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (258000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (258000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (259000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (259000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (261000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (261000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (262000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (262000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (263000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (263000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (263100,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (263100,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (264000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (264000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (265000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (265000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (266000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (266000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (267000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (267000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (267100,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (267100,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (270000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (270000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (271000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (271000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (310000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (310000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (320000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (320000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (330000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (330000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (340000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (340000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (342000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (342000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (400000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (400000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (410000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (410000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (411000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (411000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (412000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (412000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (413000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (413000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (420000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (420000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (450000,66,0,-725,0,0);
-INSERT INTO `chartdetails` VALUES (450000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (451000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (451000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (452000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (452000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (455000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (455000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (460000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (460000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (470000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (470000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (480000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (480000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (481000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (481000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (500000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (500000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (501000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (501000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (501800,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (501800,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (501900,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (501900,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (502000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (502000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (502100,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (502100,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (503000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (503000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (503100,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (503100,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (504000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (504000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (505000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (505000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (505100,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (505100,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (505110,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (505110,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (510000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (510000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (511000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (511000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (513000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (513000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (514000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (514000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (515000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (515000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (516000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (516000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (520000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (520000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (540000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (540000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (541000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (541000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (542000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (542000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (550000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (550000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (560000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (560000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (700000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (700000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (700100,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (700100,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (701000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (701000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (710000,66,0,27617,0,0);
-INSERT INTO `chartdetails` VALUES (710000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (720000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (720000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (721000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (721000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (722000,66,0,312460,0,0);
-INSERT INTO `chartdetails` VALUES (722000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (723000,66,0,-50200,0,0);
-INSERT INTO `chartdetails` VALUES (723000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (800000,66,0,-1921.63,0,0);
-INSERT INTO `chartdetails` VALUES (800000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (810000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (810000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (820000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (820000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (890000,66,0,-3693.86375,0,0);
-INSERT INTO `chartdetails` VALUES (890000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (900000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (900000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (910000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (910000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (920000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (920000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (930000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (930000,67,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (940000,66,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (940000,67,0,0,0,0);
 
 --
 -- Dumping data for table `chartmaster`
 --
 
-INSERT INTO `chartmaster` VALUES (1,'Default Sales/Discounts','Sales');
-INSERT INTO `chartmaster` VALUES (100,'Sales - Retail','Sales');
-INSERT INTO `chartmaster` VALUES (107,'Sales  - Wholesale','Sales');
-INSERT INTO `chartmaster` VALUES (112,'Sales - Export','Sales');
-INSERT INTO `chartmaster` VALUES (200,'Sales of Other items','Sales');
-INSERT INTO `chartmaster` VALUES (301,'Difference On Exchange','Sales');
-INSERT INTO `chartmaster` VALUES (10000,'Direct Labour','Labour');
-INSERT INTO `chartmaster` VALUES (11000,'Direct Labour Recovery','Labour');
-INSERT INTO `chartmaster` VALUES (12000,'Labour Efficiency Variance','Labour');
-INSERT INTO `chartmaster` VALUES (19000,'Material Usage Varaiance','Materials and Supplies');
-INSERT INTO `chartmaster` VALUES (20000,'Consumable Materials','Materials and Supplies');
-INSERT INTO `chartmaster` VALUES (21000,'Samples','Materials and Supplies');
-INSERT INTO `chartmaster` VALUES (23400,'Purchase Price Variance','Materials and Supplies');
-INSERT INTO `chartmaster` VALUES (23500,'Purchases of materials','Materials and Supplies');
-INSERT INTO `chartmaster` VALUES (23600,'Discounts Received','Materials and Supplies');
-INSERT INTO `chartmaster` VALUES (23700,'Exchange Variation','Materials and Supplies');
-INSERT INTO `chartmaster` VALUES (24000,'Freight Inwards','Materials and Supplies');
-INSERT INTO `chartmaster` VALUES (70100,'Cost of Goods Sold - Retail','Standard Cost Of Goods Sold');
-INSERT INTO `chartmaster` VALUES (70200,'Cost of Goods Sold - Wholesale','Standard Cost Of Goods Sold');
-INSERT INTO `chartmaster` VALUES (70300,'Cost of Goods Sold - Export','Standard Cost Of Goods Sold');
-INSERT INTO `chartmaster` VALUES (210000,'Bank Charges','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (250000,'Salaries - Administration','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (251000,'ACC Admin Salaries','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (252000,'Holiday Pay - Admin Salaries','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (253000,'Audit Fees','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (255000,'Insurances','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (256000,'Consultancy','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (257000,'Director\'s fees','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (258000,'Donations','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (259000,'Entertainments','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (261000,'Fringe Benefit Tax','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (262000,'Legal Expenses','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (263000,'Office Supplies','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (263100,'Stationery','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (264000,'Repairs and Maintenance Office','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (265000,'Staff Recruitment Admin','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (266000,'Staff Training Admin','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (267000,'Telephone','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (267100,'Fax','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (270000,'Vehicle Expenses','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (271000,'Vehicle Depreciation','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (310000,'Bad Debts','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (320000,'Bank Interest','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (330000,'Credit Control','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (340000,'Depreciation Office Equipment','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (342000,'Loss/(Profit) on disposals','Admin Expenses');
-INSERT INTO `chartmaster` VALUES (400000,'Salaries - Sales','Selling Expenses');
-INSERT INTO `chartmaster` VALUES (410000,'ACC Sales','Selling Expenses');
-INSERT INTO `chartmaster` VALUES (411000,'Holiday Pay - Sales','Selling Expenses');
-INSERT INTO `chartmaster` VALUES (412000,'Staff training Sales','Selling Expenses');
-INSERT INTO `chartmaster` VALUES (413000,'Entertainments Sales','Selling Expenses');
-INSERT INTO `chartmaster` VALUES (420000,'Advertising','Selling Expenses');
-INSERT INTO `chartmaster` VALUES (450000,'Freight Outwards','Selling Expenses');
-INSERT INTO `chartmaster` VALUES (451000,'Packaging','Selling Expenses');
-INSERT INTO `chartmaster` VALUES (452000,'Commissions','Selling Expenses');
-INSERT INTO `chartmaster` VALUES (455000,'Prompt Payment Discounts','Selling Expenses');
-INSERT INTO `chartmaster` VALUES (460000,'General Expenses','Selling Expenses');
-INSERT INTO `chartmaster` VALUES (470000,'Travel - Sales','Selling Expenses');
-INSERT INTO `chartmaster` VALUES (480000,'Vehicle expenses - Sales','Selling Expenses');
-INSERT INTO `chartmaster` VALUES (481000,'Vehicle Depreciation - Sales','Selling Expenses');
-INSERT INTO `chartmaster` VALUES (500000,'Salaries Manufacturing','Labour');
-INSERT INTO `chartmaster` VALUES (501000,'Indirect Labour','Labour');
-INSERT INTO `chartmaster` VALUES (501800,'Indirect Labour Sick Pay','Labour');
-INSERT INTO `chartmaster` VALUES (501900,'Indirect Labour Holiday Pay','Labour');
-INSERT INTO `chartmaster` VALUES (502000,'Electricity','Labour');
-INSERT INTO `chartmaster` VALUES (502100,'Gas','Labour');
-INSERT INTO `chartmaster` VALUES (503000,'Plant Repairs','Labour');
-INSERT INTO `chartmaster` VALUES (503100,'Research and Development','Labour');
-INSERT INTO `chartmaster` VALUES (504000,'Outside Contractors','Labour');
-INSERT INTO `chartmaster` VALUES (505000,'Depreciation Plant','Labour');
-INSERT INTO `chartmaster` VALUES (505100,'Depreciation Buildings','Labour');
-INSERT INTO `chartmaster` VALUES (505110,'Building and Grounds Maintenance','Labour');
-INSERT INTO `chartmaster` VALUES (510000,'ACC Manufacturing','Labour');
-INSERT INTO `chartmaster` VALUES (511000,'Holiday Pay manufacturing','Labour');
-INSERT INTO `chartmaster` VALUES (513000,'Staff training - Manufacturing','Labour');
-INSERT INTO `chartmaster` VALUES (514000,'Staff Social Club','Labour');
-INSERT INTO `chartmaster` VALUES (515000,'Staff Medical Insurance','Labour');
-INSERT INTO `chartmaster` VALUES (516000,'Superanuation Manufacturing','Labour');
-INSERT INTO `chartmaster` VALUES (520000,'Cleaning Factory','Labour');
-INSERT INTO `chartmaster` VALUES (540000,'Entertainments - Manufacturing','Labour');
-INSERT INTO `chartmaster` VALUES (541000,'General Expenses - Manufacturing','Labour');
-INSERT INTO `chartmaster` VALUES (542000,'Subscriptions and Magazines','Labour');
-INSERT INTO `chartmaster` VALUES (550000,'Travel - Manufacturing','Labour');
-INSERT INTO `chartmaster` VALUES (560000,'Overhead Recovery','Overhead Recovery');
-INSERT INTO `chartmaster` VALUES (700000,'Bank Account','Current Assets');
-INSERT INTO `chartmaster` VALUES (700100,'Petty Cash','Current Assets');
-INSERT INTO `chartmaster` VALUES (701000,'Foreign Currency Account','Current Assets');
-INSERT INTO `chartmaster` VALUES (710000,'Debtors Control Account','Current Assets');
-INSERT INTO `chartmaster` VALUES (720000,'Stocks of Raw Materials','Current Assets');
-INSERT INTO `chartmaster` VALUES (721000,'Stocks of Work In Progress','Current Assets');
-INSERT INTO `chartmaster` VALUES (722000,'Stocks of Finsihed Goods','Current Assets');
-INSERT INTO `chartmaster` VALUES (723000,'Goods Received Clearing Account','Current Liabilites');
-INSERT INTO `chartmaster` VALUES (800000,'Creditors Control Account','Current Liabilites');
-INSERT INTO `chartmaster` VALUES (810000,'Sundry Creditors','Current Liabilites');
-INSERT INTO `chartmaster` VALUES (820000,'Sundry Accruals','Current Liabilites');
-INSERT INTO `chartmaster` VALUES (890000,'VAT Outstanding','Current Liabilites');
-INSERT INTO `chartmaster` VALUES (900000,'Retained Earnings','Equity');
-INSERT INTO `chartmaster` VALUES (910000,'Share Capital','Equity');
-INSERT INTO `chartmaster` VALUES (920000,'Shareholders loans','Equity');
-INSERT INTO `chartmaster` VALUES (930000,'Capital Reserves','Equity');
-INSERT INTO `chartmaster` VALUES (940000,'Revaluation Reserve','Equity');
+INSERT INTO `chartmaster` VALUES (1010,'Petty Cash','Current Assets');
+INSERT INTO `chartmaster` VALUES (1020,'Cash on Hand','Current Assets');
+INSERT INTO `chartmaster` VALUES (1030,'Cheque Accounts','Current Assets');
+INSERT INTO `chartmaster` VALUES (1040,'Savings Accounts','Current Assets');
+INSERT INTO `chartmaster` VALUES (1050,'Payroll Accounts','Current Assets');
+INSERT INTO `chartmaster` VALUES (1060,'Special Accounts','Current Assets');
+INSERT INTO `chartmaster` VALUES (1070,'Money Market Investments','Current Assets');
+INSERT INTO `chartmaster` VALUES (1080,'Short-Term Investments (< 90 days)','Current Assets');
+INSERT INTO `chartmaster` VALUES (1090,'Interest Receivable','Current Assets');
+INSERT INTO `chartmaster` VALUES (1100,'Accounts Receivable','Current Assets');
+INSERT INTO `chartmaster` VALUES (1150,'Allowance for Doubtful Accounts','Current Assets');
+INSERT INTO `chartmaster` VALUES (1200,'Notes Receivable','Current Assets');
+INSERT INTO `chartmaster` VALUES (1250,'Income Tax Receivable','Current Assets');
+INSERT INTO `chartmaster` VALUES (1300,'Prepaid Expenses','Current Assets');
+INSERT INTO `chartmaster` VALUES (1350,'Advances','Current Assets');
+INSERT INTO `chartmaster` VALUES (1400,'Supplies Inventory','Current Assets');
+INSERT INTO `chartmaster` VALUES (1420,'Raw Material Inventory','Current Assets');
+INSERT INTO `chartmaster` VALUES (1440,'Work in Progress Inventory','Current Assets');
+INSERT INTO `chartmaster` VALUES (1460,'Finished Goods Inventory','Current Assets');
+INSERT INTO `chartmaster` VALUES (1500,'Land','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1550,'Bonds','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1600,'Buildings','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1620,'Accumulated Depreciation of Buildings','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1650,'Equipment','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1670,'Accumulated Depreciation of Equipment','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1700,'Furniture & Fixtures','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1710,'Accumulated Depreciation of Furniture & Fixtures','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1720,'Office Equipment','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1730,'Accumulated Depreciation of Office Equipment','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1740,'Software','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1750,'Accumulated Depreciation of Software','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1760,'Vehicles','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1770,'Accumulated Depreciation Vehicles','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1780,'Other Depreciable Property','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1790,'Accumulated Depreciation of Other Depreciable Prop','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1800,'Patents','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1850,'Goodwill','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1900,'Future Income Tax Receivable','Current Assets');
+INSERT INTO `chartmaster` VALUES (2010,'Bank Indedebtedness (overdraft)','Liabilities');
+INSERT INTO `chartmaster` VALUES (2020,'Retainers or Advances on Work','Liabilities');
+INSERT INTO `chartmaster` VALUES (2050,'Interest Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2100,'Accounts Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2200,'Short-Term Loan Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2230,'Current Portion of Long-Term Debt Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2250,'Income Tax Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2300,'GST Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2310,'GST Recoverable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2320,'PST Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2330,'PST Recoverable (commission)','Liabilities');
+INSERT INTO `chartmaster` VALUES (2340,'Payroll Tax Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2350,'Withholding Income Tax Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2360,'Other Taxes Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2400,'Employee Salaries Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2410,'Management Salaries Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2420,'Director / Partner Fees Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2450,'Health Benefits Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2460,'Pension Benefits Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2470,'Canada Pension Plan Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2480,'Employment Insurance Premiums Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2500,'Land Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2550,'Long-Term Bank Loan','Liabilities');
+INSERT INTO `chartmaster` VALUES (2560,'Notes Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2600,'Building & Equipment Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2700,'Furnishing & Fixture Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2720,'Office Equipment Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2740,'Vehicle Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2760,'Other Property Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2800,'Shareholder Loans','Liabilities');
+INSERT INTO `chartmaster` VALUES (2900,'Suspense','Liabilities');
+INSERT INTO `chartmaster` VALUES (3100,'Capital Stock','Equity');
+INSERT INTO `chartmaster` VALUES (3200,'Capital Surplus / Dividends','Equity');
+INSERT INTO `chartmaster` VALUES (3300,'Dividend Taxes Payable','Equity');
+INSERT INTO `chartmaster` VALUES (3400,'Dividend Taxes Refundable','Equity');
+INSERT INTO `chartmaster` VALUES (3500,'Retained Earnings','Equity');
+INSERT INTO `chartmaster` VALUES (4100,'Product / Service Sales','Revenue');
+INSERT INTO `chartmaster` VALUES (4500,'Consulting Services','Revenue');
+INSERT INTO `chartmaster` VALUES (4600,'Rentals','Revenue');
+INSERT INTO `chartmaster` VALUES (4700,'Finance Charge Income','Revenue');
+INSERT INTO `chartmaster` VALUES (4800,'Sales Returns & Allowances','Revenue');
+INSERT INTO `chartmaster` VALUES (4900,'Sales Discounts','Revenue');
+INSERT INTO `chartmaster` VALUES (5100,'Production Expenses','Cost of Goods Sold');
+INSERT INTO `chartmaster` VALUES (5500,'Direct Labour Costs','Cost of Goods Sold');
+INSERT INTO `chartmaster` VALUES (5600,'Freight Charges','Cost of Goods Sold');
+INSERT INTO `chartmaster` VALUES (5700,'Inventory Adjustment','Cost of Goods Sold');
+INSERT INTO `chartmaster` VALUES (5800,'Purchase Returns & Allowances','Cost of Goods Sold');
+INSERT INTO `chartmaster` VALUES (5900,'Purchase Discounts','Cost of Goods Sold');
+INSERT INTO `chartmaster` VALUES (6100,'Advertising','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6150,'Promotion','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6200,'Communications','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6250,'Meeting Expenses','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6300,'Travelling Expenses','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6400,'Delivery Expenses','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6500,'Sales Salaries & Commission','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6550,'Sales Salaries & Commission Deductions','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6590,'Benefits','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6600,'Other Selling Expenses','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6700,'Permits, Licenses & License Fees','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6800,'Research & Development','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6900,'Professional Services','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (7020,'Support Salaries & Wages','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7030,'Support Salary & Wage Deductions','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7040,'Management Salaries','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7050,'Management Salary deductions','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7060,'Director / Partner Fees','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7070,'Director / Partner Deductions','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7080,'Payroll Tax','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7090,'Benefits','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7100,'Training & Education Expenses','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7150,'Dues & Subscriptions','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7200,'Accounting Fees','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7210,'Audit Fees','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7220,'Banking Fees','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7230,'Credit Card Fees','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7240,'Consulting Fees','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7260,'Legal Fees','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7280,'Other Professional Fees','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7300,'Business Tax','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7350,'Property Tax','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7390,'Corporation Capital Tax','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7400,'Office Rent','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7450,'Equipment Rental','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7500,'Office Supplies','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7550,'Office Repair & Maintenance','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7600,'Automotive Expenses','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7610,'Communication Expenses','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7620,'Insurance Expenses','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7630,'Postage & Courier Expenses','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7640,'Miscellaneous Expenses','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7650,'Travel Expenses','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7660,'Utilities','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7700,'Ammortization Expenses','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7750,'Depreciation Expenses','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7800,'Interest Expense','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7900,'Bad Debt Expense','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (8100,'Gain on Sale of Assets','Other Revenue and Expenses');
+INSERT INTO `chartmaster` VALUES (8200,'Interest Income','Other Revenue and Expenses');
+INSERT INTO `chartmaster` VALUES (8300,'Recovery on Bad Debt','Other Revenue and Expenses');
+INSERT INTO `chartmaster` VALUES (8400,'Other Revenue','Other Revenue and Expenses');
+INSERT INTO `chartmaster` VALUES (8500,'Loss on Sale of Assets','Other Revenue and Expenses');
+INSERT INTO `chartmaster` VALUES (8600,'Charitable Contributions','Other Revenue and Expenses');
+INSERT INTO `chartmaster` VALUES (8900,'Other Expenses','Other Revenue and Expenses');
+INSERT INTO `chartmaster` VALUES (9100,'Income Tax Provision','Income Tax');
 
 --
 -- Dumping data for table `cogsglpostings`
@@ -2119,7 +1957,7 @@ INSERT INTO `cogsglpostings` VALUES (1,'AN','ANY',70200,'AN');
 -- Dumping data for table `companies`
 --
 
-INSERT INTO `companies` VALUES (1,'Demo System - Old One','15-325-122','','PO Box 999 Wellington Mail Centre, New Zealand','12 Downing Street,','Upper Hutt','New Zealand','+(64) (04) 567 5411','+(64) (04) 567 5412','info@weberp.org','AUD',710000,455000,800000,810000,723000,23700,23700,900000,1,1,1,450000);
+INSERT INTO `companies` VALUES (1,'Demo System','not entered yet','','PO Box 999 Wellington Mail Centre, New Zealand','12 Downing Street,','Upper Hutt','New Zealand','+(64) (04) 567 5411','+(64) (04) 567 5412','info@weberp.org','AUD',1100,4900,2100,2400,1010,4900,5900,3500,1,1,1,5600);
 
 --
 -- Dumping data for table `config`
@@ -2133,7 +1971,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-07-23');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-09-01');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
@@ -2226,18 +2064,11 @@ INSERT INTO `debtorsmaster` VALUES ('JOLOMU','Lorrima Productions Inc','3215 Gre
 -- Dumping data for table `debtortrans`
 --
 
-INSERT INTO `debtortrans` VALUES (2,1,10,'ANGRY','ANGRY','2005-06-20 00:00:00',66,0,'','DE',4,1,6800,852.15,100,0,0,0,'','8',0,'');
-INSERT INTO `debtortrans` VALUES (3,2,10,'DUMBLE','DUMBLE','2005-06-20 00:00:00',66,0,'','DE',8,0.8,1425,275.63,150,0,0,0,'','10',0,'');
-INSERT INTO `debtortrans` VALUES (4,3,10,'DUMBLE','DUMBLE','2005-06-20 00:00:00',66,0,'','DE',9,0.8,11600,2091.25,350,0,0,0,'','10',0,'');
 
 --
 -- Dumping data for table `debtortranstaxes`
 --
 
-INSERT INTO `debtortranstaxes` VALUES (2,11,507.15);
-INSERT INTO `debtortranstaxes` VALUES (2,12,345);
-INSERT INTO `debtortranstaxes` VALUES (3,13,344.53125);
-INSERT INTO `debtortranstaxes` VALUES (4,13,2614.0625);
 
 --
 -- Dumping data for table `discountmatrix`
@@ -2408,32 +2239,10 @@ INSERT INTO `edi_orders_segs` VALUES (95,'UNT',50,1);
 
 INSERT INTO `gltrans` VALUES (86,17,6,0,'2005-06-19',66,19000,'HIT3034-4 x 192 @ 853.0000',-163776,1,'');
 INSERT INTO `gltrans` VALUES (87,17,6,0,'2005-06-19',66,722000,'HIT3034-4 x 192 @ 853.0000',163776,1,'');
-INSERT INTO `gltrans` VALUES (88,10,1,0,'2005-06-20',66,70200,'ANGRY - FUJI9901ASS x 2 @ 1163',2326,1,'');
-INSERT INTO `gltrans` VALUES (89,10,1,0,'2005-06-20',66,722000,'ANGRY - FUJI9901ASS x 2 @ 1163',-2326,1,'');
-INSERT INTO `gltrans` VALUES (90,10,1,0,'2005-06-20',66,107,'ANGRY - FUJI9901ASS x 2 @ 3400.0000',-6800,1,'');
-INSERT INTO `gltrans` VALUES (91,10,1,0,'2005-06-20',66,710000,'ANGRY',7752.15,1,'');
-INSERT INTO `gltrans` VALUES (92,10,1,0,'2005-06-20',66,450000,'ANGRY',-100,1,'');
-INSERT INTO `gltrans` VALUES (93,10,1,0,'2005-06-20',66,890000,'ANGRY',-345,1,'');
-INSERT INTO `gltrans` VALUES (94,10,1,0,'2005-06-20',66,890000,'ANGRY',-507.15,1,'');
-INSERT INTO `gltrans` VALUES (95,10,2,0,'2005-06-20',66,107,'DUMBLE - HIT3042-ASS x 1 @ 1500.0000',-1875,1,'');
-INSERT INTO `gltrans` VALUES (96,10,2,0,'2005-06-20',66,107,'DUMBLE - HIT3042-ASS @ 5%',93.75,1,'');
-INSERT INTO `gltrans` VALUES (97,10,2,0,'2005-06-20',66,710000,'DUMBLE',2313.2875,1,'');
-INSERT INTO `gltrans` VALUES (98,10,2,0,'2005-06-20',66,450000,'DUMBLE',-187.5,1,'');
-INSERT INTO `gltrans` VALUES (99,10,2,0,'2005-06-20',66,890000,'DUMBLE',-344.53125,1,'');
 INSERT INTO `gltrans` VALUES (100,17,7,0,'2005-06-19',66,19000,'HIT3042-4 x 18 @ 853.0000',-15354,1,'');
 INSERT INTO `gltrans` VALUES (101,17,7,0,'2005-06-19',66,722000,'HIT3042-4 x 18 @ 853.0000',15354,1,'');
 INSERT INTO `gltrans` VALUES (102,17,8,0,'2005-06-19',66,19000,'HIT3034-4 x 117 @ 853.0000',-99801,1,'');
 INSERT INTO `gltrans` VALUES (103,17,8,0,'2005-06-19',66,722000,'HIT3034-4 x 117 @ 853.0000',99801,1,'');
-INSERT INTO `gltrans` VALUES (104,10,3,0,'2005-06-20',66,70200,'DUMBLE - FUJI9901ASS x 5 @ 1163',5815,1,'');
-INSERT INTO `gltrans` VALUES (105,10,3,0,'2005-06-20',66,722000,'DUMBLE - FUJI9901ASS x 5 @ 1163',-5815,1,'');
-INSERT INTO `gltrans` VALUES (106,10,3,0,'2005-06-20',66,107,'DUMBLE - FUJI9901ASS x 5 @ 1600.0000',-10000,1,'');
-INSERT INTO `gltrans` VALUES (107,10,3,0,'2005-06-20',66,107,'DUMBLE - FUJI9901ASS @ 5%',500,1,'');
-INSERT INTO `gltrans` VALUES (108,10,3,0,'2005-06-20',66,70200,'DUMBLE - HIT3034-4 x 10 @ 853.0000',8530,1,'');
-INSERT INTO `gltrans` VALUES (109,10,3,0,'2005-06-20',66,722000,'DUMBLE - HIT3034-4 x 10 @ 853.0000',-8530,1,'');
-INSERT INTO `gltrans` VALUES (110,10,3,0,'2005-06-20',66,107,'DUMBLE - HIT3034-4 x 10 @ 400.0000',-5000,1,'');
-INSERT INTO `gltrans` VALUES (111,10,3,0,'2005-06-20',66,710000,'DUMBLE',17551.5625,1,'');
-INSERT INTO `gltrans` VALUES (112,10,3,0,'2005-06-20',66,450000,'DUMBLE',-437.5,1,'');
-INSERT INTO `gltrans` VALUES (113,10,3,0,'2005-06-20',66,890000,'DUMBLE',-2614.0625,1,'');
 INSERT INTO `gltrans` VALUES (114,25,1,0,'2005-06-23',66,722000,'PO: 1 REGNEW - FUJI990101 - Fujitsu 990101 Split type Indoor Unit 3.5kw x 35 @ 530.00',18550,1,'');
 INSERT INTO `gltrans` VALUES (115,25,1,0,'2005-06-23',66,723000,'PO: 1 REGNEW - FUJI990101 - Fujitsu 990101 Split type Indoor Unit 3.5kw x 35 @ 530.00',-18550,1,'');
 INSERT INTO `gltrans` VALUES (116,25,1,0,'2005-06-23',66,722000,'PO: 1 REGNEW - FUJI990102 - Fujitsu 990102 split type A/C Outdoor unit 3.5kw x 50 @ 633.00',31650,1,'');
@@ -2459,10 +2268,6 @@ INSERT INTO `gltrans` VALUES (137,25,3,0,'2005-07-17',67,723000,'PO: 1 REGNEW - 
 -- Dumping data for table `grns`
 --
 
-INSERT INTO `grns` VALUES (1,1,1,'FUJI990101','2005-06-23','Fujitsu 990101 Split type Indoor Unit 3.5kw',35,0,'REGNEW');
-INSERT INTO `grns` VALUES (1,2,2,'FUJI990102','2005-06-23','Fujitsu 990102 split type A/C Outdoor unit 3.5kw',50,0,'REGNEW');
-INSERT INTO `grns` VALUES (2,3,3,'HIT3034-4','2005-07-04','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor',4,0,'CAMPBELL');
-INSERT INTO `grns` VALUES (3,4,1,'FUJI990101','2005-07-17','Fujitsu 990101 Split type Indoor Unit 3.5kw',25,0,'REGNEW');
 
 --
 -- Dumping data for table `holdreasons`
@@ -2489,10 +2294,10 @@ INSERT INTO `locations` VALUES ('TOR','Toronto Distribution Centre','','','','',
 -- Dumping data for table `locstock`
 --
 
-INSERT INTO `locstock` VALUES ('DEN','FUJI990101',-2,0);
-INSERT INTO `locstock` VALUES ('DEN','FUJI990102',-2,0);
+INSERT INTO `locstock` VALUES ('DEN','FUJI990101',0,0);
+INSERT INTO `locstock` VALUES ('DEN','FUJI990102',0,0);
 INSERT INTO `locstock` VALUES ('DEN','FUJI9901ASS',0,0);
-INSERT INTO `locstock` VALUES ('DEN','HIT3034-4',192,0);
+INSERT INTO `locstock` VALUES ('DEN','HIT3034-4',0,0);
 INSERT INTO `locstock` VALUES ('DEN','HIT3042-4',0,0);
 INSERT INTO `locstock` VALUES ('DEN','HIT3042-ASS',0,0);
 INSERT INTO `locstock` VALUES ('DEN','HIT3043-5',0,0);
@@ -2503,11 +2308,11 @@ INSERT INTO `locstock` VALUES ('DOG','HIT3034-4',0,0);
 INSERT INTO `locstock` VALUES ('DOG','HIT3042-4',0,0);
 INSERT INTO `locstock` VALUES ('DOG','HIT3042-ASS',0,0);
 INSERT INTO `locstock` VALUES ('DOG','HIT3043-5',0,0);
-INSERT INTO `locstock` VALUES ('TOR','FUJI990101',55,0);
-INSERT INTO `locstock` VALUES ('TOR','FUJI990102',45,0);
+INSERT INTO `locstock` VALUES ('TOR','FUJI990101',0,0);
+INSERT INTO `locstock` VALUES ('TOR','FUJI990102',0,0);
 INSERT INTO `locstock` VALUES ('TOR','FUJI9901ASS',0,0);
-INSERT INTO `locstock` VALUES ('TOR','HIT3034-4',111,0);
-INSERT INTO `locstock` VALUES ('TOR','HIT3042-4',18,0);
+INSERT INTO `locstock` VALUES ('TOR','HIT3034-4',0,0);
+INSERT INTO `locstock` VALUES ('TOR','HIT3042-4',0,0);
 INSERT INTO `locstock` VALUES ('TOR','HIT3042-ASS',0,0);
 INSERT INTO `locstock` VALUES ('TOR','HIT3043-5',0,0);
 
@@ -2542,8 +2347,6 @@ INSERT INTO `paymentterms` VALUES ('CA','Cash Only',1,0);
 -- Dumping data for table `periods`
 --
 
-INSERT INTO `periods` VALUES (66,'2005-06-30');
-INSERT INTO `periods` VALUES (67,'2005-07-31');
 
 --
 -- Dumping data for table `prices`
@@ -2563,9 +2366,9 @@ INSERT INTO `purchdata` VALUES ('BINGO','HIT3043-5','1235.0000','',1,'',5,1);
 -- Dumping data for table `purchorderdetails`
 --
 
-INSERT INTO `purchorderdetails` VALUES (1,1,'FUJI990101','2005-06-23','Fujitsu 990101 Split type Indoor Unit 3.5kw',722000,0,305.95,0,530,50,60,0,'0',1);
-INSERT INTO `purchorderdetails` VALUES (2,1,'FUJI990102','2005-06-23','Fujitsu 990102 split type A/C Outdoor unit 3.5kw',722000,0,265.41,0,633,50,50,0,'0',1);
-INSERT INTO `purchorderdetails` VALUES (3,2,'HIT3034-4','2005-07-01','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor',722000,0,211,0,853,4,4,0,'0',1);
+INSERT INTO `purchorderdetails` VALUES (1,1,'FUJI990101','2005-06-23','Fujitsu 990101 Split type Indoor Unit 3.5kw',722000,0,305.95,0,530,50,0,0,'0',0);
+INSERT INTO `purchorderdetails` VALUES (2,1,'FUJI990102','2005-06-23','Fujitsu 990102 split type A/C Outdoor unit 3.5kw',722000,0,265.41,0,633,50,0,0,'0',0);
+INSERT INTO `purchorderdetails` VALUES (3,2,'HIT3034-4','2005-07-01','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor',722000,0,211,0,853,4,0,0,'0',0);
 
 --
 -- Dumping data for table `purchorders`
@@ -2600,10 +2403,6 @@ INSERT INTO `recurrsalesorderdetails` VALUES (1,'HIT3042-ASS',234,5,0,'');
 -- Dumping data for table `salesanalysis`
 --
 
-INSERT INTO `salesanalysis` VALUES ('DE',66,6800,2326,'ANGRY','ANGRY',2,0,'FUJI9901ASS','TR',1,'ERI','AIRCON',2);
-INSERT INTO `salesanalysis` VALUES ('DE',66,1875,0,'DUMBLE','DUMBLE',1,93.75,'HIT3042-ASS','TR',1,'ERI','AIRCON',3);
-INSERT INTO `salesanalysis` VALUES ('DE',66,10000,5815,'DUMBLE','DUMBLE',5,500,'FUJI9901ASS','TR',1,'ERI','AIRCON',4);
-INSERT INTO `salesanalysis` VALUES ('DE',66,5000,8530,'DUMBLE','DUMBLE',10,0,'HIT3034-4','TR',1,'ERI','AIRCON',5);
 
 --
 -- Dumping data for table `salescat`
@@ -2634,16 +2433,16 @@ INSERT INTO `salesman` VALUES ('PHO','Phone Contact','','',0,'0',0);
 
 INSERT INTO `salesorderdetails` VALUES (0,2,'HIT3034-4',0,1680,3,0,0,'2005-06-06 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (0,3,'HIT3034-4',0,1680,4,0,0,'0000-00-00 00:00:00',0,'');
-INSERT INTO `salesorderdetails` VALUES (0,4,'FUJI9901ASS',2,3400,2,0,0,'2005-06-20 00:00:00',1,'');
+INSERT INTO `salesorderdetails` VALUES (0,4,'FUJI9901ASS',0,3400,2,0,0,'2005-06-20 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (0,5,'FUJI9901ASS',0,3650,25,0,0,'2005-06-13 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (0,6,'HIT3042-4',0,650,2,0,0.025,'0000-00-00 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (0,7,'HIT3042-4',0,600,2,0,0,'2005-06-17 00:00:00',0,'');
-INSERT INTO `salesorderdetails` VALUES (0,8,'HIT3042-ASS',1,1500,1,0,0.05,'2005-06-20 00:00:00',1,'');
-INSERT INTO `salesorderdetails` VALUES (0,9,'FUJI9901ASS',5,1600,5,0,0.05,'2005-06-20 00:00:00',1,'');
+INSERT INTO `salesorderdetails` VALUES (0,8,'HIT3042-ASS',0,1500,1,0,0.05,'2005-06-20 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (0,9,'FUJI9901ASS',0,1600,5,0,0.05,'2005-06-20 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (1,1,'HIT3034-4',0,1680,2,0,0,'0000-00-00 00:00:00',0,'Installation experts at 1800 12345667');
 INSERT INTO `salesorderdetails` VALUES (1,2,'HIT3043-5',0,2300,3,0,0,'0000-00-00 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (1,7,'HIT3042-ASS',0,2500,1,0,0.025,'2005-06-17 00:00:00',0,'');
-INSERT INTO `salesorderdetails` VALUES (1,9,'HIT3034-4',10,400,10,0,0,'2005-06-20 00:00:00',1,'');
+INSERT INTO `salesorderdetails` VALUES (1,9,'HIT3034-4',0,400,10,0,0,'2005-06-20 00:00:00',0,'');
 
 --
 -- Dumping data for table `salesorders`
@@ -2969,114 +2768,21 @@ INSERT INTO `stockmaster` VALUES ('HIT3043-5','AIRCON','Hitachi Aircond Rev Cycl
 -- Dumping data for table `stockmoves`
 --
 
-INSERT INTO `stockmoves` VALUES (9,'HIT3034-4',17,6,'DEN','2005-06-19','','','0.0000',66,'',192,0,0,1,192,0,'');
-INSERT INTO `stockmoves` VALUES (10,'FUJI990101',10,1,'DEN','2005-06-20','ANGRY','ANGRY','0.0000',66,'Assembly: FUJI9901ASS Order: 4',-2,0,530,0,-2,0,'');
-INSERT INTO `stockmoves` VALUES (11,'FUJI990102',10,1,'DEN','2005-06-20','ANGRY','ANGRY','0.0000',66,'Assembly: FUJI9901ASS Order: 4',-2,0,633,0,-2,0,'');
-INSERT INTO `stockmoves` VALUES (12,'FUJI9901ASS',10,1,'DEN','2005-06-20','ANGRY','ANGRY','3400.0000',66,'4',-2,0,1163,1,0,0,'');
-INSERT INTO `stockmoves` VALUES (13,'HIT3042-ASS',10,2,'TOR','2005-06-20','DUMBLE','DUMBLE','1875.0000',66,'8',-1,0.05,0,1,0,0,'');
-INSERT INTO `stockmoves` VALUES (14,'HIT3042-4',17,7,'TOR','2005-06-19','','','0.0000',66,'',18,0,0,1,18,0,'');
-INSERT INTO `stockmoves` VALUES (15,'HIT3034-4',17,8,'TOR','2005-06-19','','','0.0000',66,'',117,0,0,1,117,0,'');
-INSERT INTO `stockmoves` VALUES (16,'FUJI990101',10,3,'TOR','2005-06-20','DUMBLE','DUMBLE','0.0000',66,'Assembly: FUJI9901ASS Order: 9',-5,0,530,0,-5,0,'');
-INSERT INTO `stockmoves` VALUES (17,'FUJI990102',10,3,'TOR','2005-06-20','DUMBLE','DUMBLE','0.0000',66,'Assembly: FUJI9901ASS Order: 9',-5,0,633,0,-5,0,'');
-INSERT INTO `stockmoves` VALUES (18,'FUJI9901ASS',10,3,'TOR','2005-06-20','DUMBLE','DUMBLE','2000.0000',66,'9',-5,0.05,1163,1,0,0,'');
-INSERT INTO `stockmoves` VALUES (19,'HIT3034-4',10,3,'TOR','2005-06-20','DUMBLE','DUMBLE','500.0000',66,'9',-10,0,853,1,107,0,'');
-INSERT INTO `stockmoves` VALUES (20,'FUJI990101',25,1,'TOR','2005-06-23','','','305.9500',66,'REGNEW (Reg Newall Inc) - 1',35,0,530,1,30,0,'');
-INSERT INTO `stockmoves` VALUES (21,'FUJI990102',25,1,'TOR','2005-06-23','','','265.4100',66,'REGNEW (Reg Newall Inc) - 1',50,0,633,1,45,0,'');
-INSERT INTO `stockmoves` VALUES (22,'HIT3034-4',25,2,'TOR','2005-07-04','','','211.0000',67,'CAMPBELL (Campbell Roberts Inc) - 2',4,0,853,1,111,0,'');
-INSERT INTO `stockmoves` VALUES (23,'FUJI990101',25,3,'TOR','2005-07-17','','','305.9500',67,'REGNEW (Reg Newall Inc) - 1',25,0,530,1,55,0,'');
 
 --
 -- Dumping data for table `stockmovestaxes`
 --
 
-INSERT INTO `stockmovestaxes` VALUES (12,11,0.07,1,1);
-INSERT INTO `stockmovestaxes` VALUES (12,12,0.05,0,0);
-INSERT INTO `stockmovestaxes` VALUES (13,13,0.175,0,0);
-INSERT INTO `stockmovestaxes` VALUES (18,13,0.175,0,0);
-INSERT INTO `stockmovestaxes` VALUES (19,13,0.175,0,0);
 
 --
 -- Dumping data for table `stockserialitems`
 --
 
-INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','7288118',2);
-INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','7288119',2);
-INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','854423',15);
-INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','854435',20);
-INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','854436',20);
-INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','854437',19);
-INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','854438',18);
-INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','854439',15);
-INSERT INTO `stockserialitems` VALUES ('HIT3034-4','DEN','8892',20);
-INSERT INTO `stockserialitems` VALUES ('HIT3034-4','DEN','8893',21);
-INSERT INTO `stockserialitems` VALUES ('HIT3034-4','DEN','8970',23);
-INSERT INTO `stockserialitems` VALUES ('HIT3034-4','DEN','8971',13);
-INSERT INTO `stockserialitems` VALUES ('HIT3034-4','DEN','8972',13);
-INSERT INTO `stockserialitems` VALUES ('HIT3034-4','DEN','8973',15);
-INSERT INTO `stockserialitems` VALUES ('HIT3034-4','DEN','8975',22);
-INSERT INTO `stockserialitems` VALUES ('HIT3034-4','DEN','8976',23);
-INSERT INTO `stockserialitems` VALUES ('HIT3034-4','DEN','8977',20);
-INSERT INTO `stockserialitems` VALUES ('HIT3034-4','DEN','8978',22);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','12344',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','12345',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','12346',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','12347',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','12348',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','12349',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','12350',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','12351',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','12352',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','12353',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','12354',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','12355',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','12356',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','12357',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','12358',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','12359',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','12360',1);
-INSERT INTO `stockserialitems` VALUES ('HIT3042-4','TOR','12361',1);
 
 --
 -- Dumping data for table `stockserialmoves`
 --
 
-INSERT INTO `stockserialmoves` VALUES (43,9,'HIT3034-4','8977',20);
-INSERT INTO `stockserialmoves` VALUES (44,9,'HIT3034-4','8978',22);
-INSERT INTO `stockserialmoves` VALUES (45,9,'HIT3034-4','8976',23);
-INSERT INTO `stockserialmoves` VALUES (46,9,'HIT3034-4','8975',22);
-INSERT INTO `stockserialmoves` VALUES (47,9,'HIT3034-4','8972',13);
-INSERT INTO `stockserialmoves` VALUES (48,9,'HIT3034-4','8971',13);
-INSERT INTO `stockserialmoves` VALUES (49,9,'HIT3034-4','8973',15);
-INSERT INTO `stockserialmoves` VALUES (50,9,'HIT3034-4','8970',23);
-INSERT INTO `stockserialmoves` VALUES (51,9,'HIT3034-4','8892',20);
-INSERT INTO `stockserialmoves` VALUES (52,9,'HIT3034-4','8893',21);
-INSERT INTO `stockserialmoves` VALUES (53,14,'HIT3042-4','12344',1);
-INSERT INTO `stockserialmoves` VALUES (54,14,'HIT3042-4','12345',1);
-INSERT INTO `stockserialmoves` VALUES (55,14,'HIT3042-4','12346',1);
-INSERT INTO `stockserialmoves` VALUES (56,14,'HIT3042-4','12347',1);
-INSERT INTO `stockserialmoves` VALUES (57,14,'HIT3042-4','12348',1);
-INSERT INTO `stockserialmoves` VALUES (58,14,'HIT3042-4','12349',1);
-INSERT INTO `stockserialmoves` VALUES (59,14,'HIT3042-4','12350',1);
-INSERT INTO `stockserialmoves` VALUES (60,14,'HIT3042-4','12351',1);
-INSERT INTO `stockserialmoves` VALUES (61,14,'HIT3042-4','12352',1);
-INSERT INTO `stockserialmoves` VALUES (62,14,'HIT3042-4','12353',1);
-INSERT INTO `stockserialmoves` VALUES (63,14,'HIT3042-4','12354',1);
-INSERT INTO `stockserialmoves` VALUES (64,14,'HIT3042-4','12355',1);
-INSERT INTO `stockserialmoves` VALUES (65,14,'HIT3042-4','12356',1);
-INSERT INTO `stockserialmoves` VALUES (66,14,'HIT3042-4','12357',1);
-INSERT INTO `stockserialmoves` VALUES (67,14,'HIT3042-4','12358',1);
-INSERT INTO `stockserialmoves` VALUES (68,14,'HIT3042-4','12359',1);
-INSERT INTO `stockserialmoves` VALUES (69,14,'HIT3042-4','12360',1);
-INSERT INTO `stockserialmoves` VALUES (70,14,'HIT3042-4','12361',1);
-INSERT INTO `stockserialmoves` VALUES (71,15,'HIT3034-4','854423',25);
-INSERT INTO `stockserialmoves` VALUES (72,15,'HIT3034-4','854435',20);
-INSERT INTO `stockserialmoves` VALUES (73,15,'HIT3034-4','854436',20);
-INSERT INTO `stockserialmoves` VALUES (74,15,'HIT3034-4','854437',19);
-INSERT INTO `stockserialmoves` VALUES (75,15,'HIT3034-4','854438',18);
-INSERT INTO `stockserialmoves` VALUES (76,15,'HIT3034-4','854439',15);
-INSERT INTO `stockserialmoves` VALUES (77,19,'HIT3034-4','854423',-10);
-INSERT INTO `stockserialmoves` VALUES (78,22,'HIT3034-4','7288119',2);
-INSERT INTO `stockserialmoves` VALUES (79,22,'HIT3034-4','7288118',2);
 
 --
 -- Dumping data for table `suppallocs`
@@ -3124,7 +2830,7 @@ INSERT INTO `systypes` VALUES (0,'Journal - GL',0);
 INSERT INTO `systypes` VALUES (1,'Payment - GL',0);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',3);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',0);
 INSERT INTO `systypes` VALUES (11,'Credit Note',0);
 INSERT INTO `systypes` VALUES (12,'Receipt',0);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
