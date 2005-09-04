@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 11;
 
@@ -421,8 +421,22 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
                                         	/* we know that StockItems return an array of SerialItem (s)
 						We need to add the StockSerialItem record and
 						The StockSerialMoves as well */
-
-						$SQL = "INSERT INTO stockserialitems (stockid,
+						if ($OrderLine->Serialised !=1) { //need to test if the controlled item exists first already
+							$SQL = "SELECT COUNT(*) FROM stockserialitems 
+									WHERE stockid='" . $OrderLine->StockID . "' 
+									AND loccode = '" . $_SESSION['PO']->Location . "' 
+									AND serialno = '" . $Item->BundleRef . "'";
+							$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not check if a batch or lot stock item already exists because');
+							$DbgMsg =  _('The following SQL to test for an already existing controlled but not serialised stock item was used');
+							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+							$AlreadyExistsRow = DB_fetch_row($Result);
+							if ($AlreadyExistsRow[0]>0){
+								$SQL = "UPDATE stockserialitems SET quantity = quantity + " . $Item->BundleQty . "
+										WHERE stockid='" . $OrderLine->StockID . "' 
+										AND loccode = '" . $_SESSION['PO']->Location . "' 
+										AND serialno = '" . $Item->BundleRef . "'";
+							} else {
+								$SQL = "INSERT INTO stockserialitems (stockid,
 											loccode,
 											serialno,
 											quantity)
@@ -430,10 +444,24 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 											'" . $_SESSION['PO']->Location . "',
 											'" . $Item->BundleRef . "',
 											" . $Item->BundleQty . ")";
-						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
-						$DbgMsg =  _('The following SQL to insert the serial stock item records was used');
-						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
-
+							}
+							$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
+							$DbgMsg =  _('The following SQL to insert the serial stock item records was used');
+							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);	
+						} else {   //now just concern ourselves with serialised items
+							$SQL = "INSERT INTO stockserialitems (stockid,
+											loccode,
+											serialno,
+											quantity)
+										VALUES ('" . $OrderLine->StockID . "',
+											'" . $_SESSION['PO']->Location . "',
+											'" . $Item->BundleRef . "',
+											" . $Item->BundleQty . ")";
+							$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
+							$DbgMsg =  _('The following SQL to insert the serial stock item records was used');
+							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+						} // end of not serialised or serialised
+						
 						/*now insert the serial stock movement */
 
 						$SQL = "INSERT INTO stockserialmoves (stockmoveno,

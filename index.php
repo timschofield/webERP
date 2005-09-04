@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.42 $ */
+/* $Revision: 1.43 $ */
 
 
 $PageSecurity = 1;
@@ -457,6 +457,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 					<tr>
 					<td class="menu_group_items">
 						<table width="100%" class="table_index">
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<a href='" . $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . "'><li>" . _('Receive Purchase Orders') . '</li></a>'; ?>
+							</td>
+							</tr>
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<a href='" . $rootpath . '/StockLocTransfer.php' . SID . "'><li>" . _('Bulk Inventory Transfer') . ' - ' . _('Dispatch') . '</li></a>'; ?>

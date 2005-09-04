@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 11;
 
@@ -191,8 +191,8 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 				" . $_GET['GRNNo'] . ",
 				'" . $GRN['intostocklocation'] . "',
 				'" . $GRN['deliverydate'] . "',
-				" . $PeriodNo . ", " .
-				_('GRN Reversal') . ' - ' . $_POST['SupplierID'] . ' - ' . $_POST['SuppName'] . ' - ' . $GRN['orderno'] . "',
+				" . $PeriodNo . ", 
+				'" . _('GRN Reversal') . ' - ' . $_POST['SupplierID'] . ' - ' . $_POST['SuppName'] . ' - ' . $GRN['orderno'] . "',
 				" . -$QtyToReverse . ',
 				' . $GRN['stdcostunit'] . ',
 				' . ($QtyOnHandPrior - $QtyToReverse) . '
@@ -212,7 +212,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 						serialno,
 						moveqty)
 					VALUES (
-						" . $StockMoveNo . ",
+						" . $StkMoveNo . ",
 						'" . $GRN['itemcode'] . "',
 						'" . $SerialStockMoves['serialno'] . "',
 						" . -$SerialStockMoves['moveqty'] . ")";
@@ -247,8 +247,8 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 				" . $_GET['GRNNo'] . ",
 				'" . $GRN['deliverydate'] . "',
 				" . $PeriodNo . ",
-				" . $GRN['glcode'] . ", "
-				. _('GRN Reversal for PO') .": " . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . $GRN['itemdescription'] . " x " . $QtyToReverse . " @ " . number_format($GRN['stdcostunit'],2) . "',
+				" . $GRN['glcode'] . ", 
+				'" . _('GRN Reversal for PO') .": " . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . $GRN['itemdescription'] . " x " . $QtyToReverse . " @ " . number_format($GRN['stdcostunit'],2) . "',
 				" . -($GRN['stdcostunit'] * $QtyToReverse) . "
 				)";
 
