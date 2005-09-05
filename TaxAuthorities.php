@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 
 $PageSecurity=15;
@@ -237,7 +237,8 @@ $SQL = 'SELECT accountcode,
 	FROM chartmaster,
 		accountgroups
 	WHERE chartmaster.group_=accountgroups.groupname
-	AND accountgroups.pandl=0';
+	AND accountgroups.pandl=0 
+	ORDER BY accountcode';
 $result = DB_query($SQL,$db);
 
 echo '<CENTER><TABLE>

@@ -1750,18 +1750,20 @@ INSERT INTO `accountgroups` VALUES ('Marketing Expenses',5,1,6000);
 INSERT INTO `accountgroups` VALUES ('Operating Expenses',5,1,7000);
 INSERT INTO `accountgroups` VALUES ('Other Revenue and Expenses',5,1,8000);
 INSERT INTO `accountgroups` VALUES ('Revenue',1,1,4000);
+INSERT INTO `accountgroups` VALUES ('Sales',1,1,10);
 
 --
 -- Dumping data for table `bankaccounts`
 --
 
-INSERT INTO `bankaccounts` VALUES (700000,'Chase Morgan Current account','5332 12210 11212','');
-INSERT INTO `bankaccounts` VALUES (700100,'Petty Cash account','NA','');
+INSERT INTO `bankaccounts` VALUES (1030,'Cheque Account','','');
+INSERT INTO `bankaccounts` VALUES (1040,'Savings Account','','');
 
 --
 -- Dumping data for table `chartmaster`
 --
 
+INSERT INTO `chartmaster` VALUES (1,'Default Sales/Discounts','Sales');
 INSERT INTO `chartmaster` VALUES (1010,'Petty Cash','Current Assets');
 INSERT INTO `chartmaster` VALUES (1020,'Cash on Hand','Current Assets');
 INSERT INTO `chartmaster` VALUES (1030,'Cheque Accounts','Current Assets');
@@ -1804,6 +1806,7 @@ INSERT INTO `chartmaster` VALUES (2010,'Bank Indedebtedness (overdraft)','Liabil
 INSERT INTO `chartmaster` VALUES (2020,'Retainers or Advances on Work','Liabilities');
 INSERT INTO `chartmaster` VALUES (2050,'Interest Payable','Liabilities');
 INSERT INTO `chartmaster` VALUES (2100,'Accounts Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2150,'Goods Received Suspense','Liabilities');
 INSERT INTO `chartmaster` VALUES (2200,'Short-Term Loan Payable','Liabilities');
 INSERT INTO `chartmaster` VALUES (2230,'Current Portion of Long-Term Debt Payable','Liabilities');
 INSERT INTO `chartmaster` VALUES (2250,'Income Tax Payable','Liabilities');
@@ -1837,12 +1840,15 @@ INSERT INTO `chartmaster` VALUES (3300,'Dividend Taxes Payable','Equity');
 INSERT INTO `chartmaster` VALUES (3400,'Dividend Taxes Refundable','Equity');
 INSERT INTO `chartmaster` VALUES (3500,'Retained Earnings','Equity');
 INSERT INTO `chartmaster` VALUES (4100,'Product / Service Sales','Revenue');
+INSERT INTO `chartmaster` VALUES (4200,'Sales Exchange Gains/Losses','Revenue');
 INSERT INTO `chartmaster` VALUES (4500,'Consulting Services','Revenue');
 INSERT INTO `chartmaster` VALUES (4600,'Rentals','Revenue');
 INSERT INTO `chartmaster` VALUES (4700,'Finance Charge Income','Revenue');
 INSERT INTO `chartmaster` VALUES (4800,'Sales Returns & Allowances','Revenue');
 INSERT INTO `chartmaster` VALUES (4900,'Sales Discounts','Revenue');
+INSERT INTO `chartmaster` VALUES (5000,'Cost of Sales','Cost of Goods Sold');
 INSERT INTO `chartmaster` VALUES (5100,'Production Expenses','Cost of Goods Sold');
+INSERT INTO `chartmaster` VALUES (5200,'Purchases Exchange Gains/Losses','Cost of Goods Sold');
 INSERT INTO `chartmaster` VALUES (5500,'Direct Labour Costs','Cost of Goods Sold');
 INSERT INTO `chartmaster` VALUES (5600,'Freight Charges','Cost of Goods Sold');
 INSERT INTO `chartmaster` VALUES (5700,'Inventory Adjustment','Cost of Goods Sold');
@@ -1909,7 +1915,7 @@ INSERT INTO `chartmaster` VALUES (9100,'Income Tax Provision','Income Tax');
 -- Dumping data for table `companies`
 --
 
-INSERT INTO `companies` VALUES (1,'Demo System','not entered yet','','PO Box 999 Wellington Mail Centre, New Zealand','12 Downing Street,','Upper Hutt','New Zealand','+(64) (04) 567 5411','+(64) (04) 567 5412','info@weberp.org','AUD',1100,4900,2100,2400,1010,4900,5900,3500,1,1,1,5600);
+INSERT INTO `companies` VALUES (1,'Demo System','not entered yet','','PO Box 1000','The White House','Washnington DC','USA','','','info@weberp.org','USD',1100,4900,2100,2400,2150,4200,5200,3500,1,1,1,5600);
 
 --
 -- Dumping data for table `currencies`
@@ -1932,7 +1938,6 @@ INSERT INTO `holdreasons` VALUES (51,'In liquidation',1);
 --
 
 INSERT INTO `locations` VALUES ('DEN','Denver','532-536 Wentworth Street','Denver','Colorado','233 5532 216','233 5532 215','g.bovert@weberp.com','Graham Bouvert',1,0);
-INSERT INTO `locations` VALUES ('DOG','test','','','','','','','',1,0);
 INSERT INTO `locations` VALUES ('TOR','Toronto Distribution Centre','','','','','','','Clive Contrary',1,1);
 
 --
@@ -1945,14 +1950,6 @@ INSERT INTO `paymentterms` VALUES ('7','Payment due within 7 days',7,0);
 INSERT INTO `paymentterms` VALUES ('CA','Cash Only',1,0);
 
 --
--- Dumping data for table `shippers`
---
-
-INSERT INTO `shippers` VALUES (1,'Courier Post',0);
-INSERT INTO `shippers` VALUES (8,'Ansett',0);
-INSERT INTO `shippers` VALUES (10,'Not Specified',0);
-
---
 -- Dumping data for table `systypes`
 --
 
@@ -1960,7 +1957,7 @@ INSERT INTO `systypes` VALUES (0,'Journal - GL',0);
 INSERT INTO `systypes` VALUES (1,'Payment - GL',0);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',0);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',2);
 INSERT INTO `systypes` VALUES (11,'Credit Note',0);
 INSERT INTO `systypes` VALUES (12,'Receipt',0);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
@@ -1971,7 +1968,7 @@ INSERT INTO `systypes` VALUES (20,'Purchase Invoice',3);
 INSERT INTO `systypes` VALUES (21,'Debit Note',1);
 INSERT INTO `systypes` VALUES (22,'Creditors Payment',0);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
-INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',3);
+INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',5);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',0);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',0);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',0);
@@ -1985,11 +1982,11 @@ INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',0);
 -- Dumping data for table `taxauthorities`
 --
 
-INSERT INTO `taxauthorities` VALUES (1,'Australian GST',810000,890000,'','','','');
-INSERT INTO `taxauthorities` VALUES (5,'Sales Tax',890000,890000,'','','','');
-INSERT INTO `taxauthorities` VALUES (11,'Canadian GST',890000,890000,'','','','');
-INSERT INTO `taxauthorities` VALUES (12,'Ontario PST',890000,890000,'','','','');
-INSERT INTO `taxauthorities` VALUES (13,'UK VAT',890000,890000,'','','','');
+INSERT INTO `taxauthorities` VALUES (1,'Australian GST',2300,2310,'','','','');
+INSERT INTO `taxauthorities` VALUES (5,'Sales Tax',2300,2310,'','','','');
+INSERT INTO `taxauthorities` VALUES (11,'Canadian GST',2300,2310,'','','','');
+INSERT INTO `taxauthorities` VALUES (12,'Ontario PST',2300,2310,'','','','');
+INSERT INTO `taxauthorities` VALUES (13,'UK VAT',2300,2300,'','','','');
 
 --
 -- Dumping data for table `taxgroups`
@@ -2009,13 +2006,10 @@ INSERT INTO `taxauthrates` VALUES (5,1,1,0.2);
 INSERT INTO `taxauthrates` VALUES (5,1,2,0.35);
 INSERT INTO `taxauthrates` VALUES (11,1,1,0.07);
 INSERT INTO `taxauthrates` VALUES (11,1,2,0.12);
-INSERT INTO `taxauthrates` VALUES (11,1,3,0);
 INSERT INTO `taxauthrates` VALUES (12,1,1,0.05);
 INSERT INTO `taxauthrates` VALUES (12,1,2,0.075);
-INSERT INTO `taxauthrates` VALUES (12,1,3,0);
 INSERT INTO `taxauthrates` VALUES (13,1,1,0);
 INSERT INTO `taxauthrates` VALUES (13,1,2,0);
-INSERT INTO `taxauthrates` VALUES (13,1,3,0);
 
 --
 -- Dumping data for table `taxcategories`
@@ -2023,15 +2017,13 @@ INSERT INTO `taxauthrates` VALUES (13,1,3,0);
 
 INSERT INTO `taxcategories` VALUES (1,'Taxable supply');
 INSERT INTO `taxcategories` VALUES (2,'Luxury Items');
-INSERT INTO `taxcategories` VALUES (3,'Exempt');
+INSERT INTO `taxcategories` VALUES (4,'Exempt');
 
 --
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'fresh','en_GB','','');
-INSERT INTO `www_users` VALUES ('Fred','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Fred Bloggs','','','','DEN',1,'2005-04-29 22:41:10','','A4','1,1,0,1,1,0,1,1,',0,50,'fresh','en_GB','','');
-INSERT INTO `www_users` VALUES ('testy','weberp','Test Remote User','GRANHR','','','DEN',7,'2004-11-06 18:19:15','GRAN','A4','0,0,0,0,0,0,0,0,',0,0,'fresh','en','','');
+INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB','','');
 
 --
 -- Dumping data for table `edi_orders_segs`
@@ -2188,7 +2180,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-09-01');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-09-05');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
