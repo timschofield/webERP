@@ -1,11 +1,11 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
 $title=_('Check Period Sales Ledger Control Account');
 include('includes/header.inc');
-include('include/DateFunctions.inc');
+include('includes/DateFunctions.inc');
 
 
 $Period = GetPeriod(Date($_SESSION['DefaultDateFormat']));

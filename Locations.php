@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 11;
 
@@ -291,6 +291,10 @@ or deletion of the records*/
 			managed
 		FROM locations INNER JOIN taxprovinces ON locations.taxprovinceid=taxprovinces.taxprovinceid";
 	$result = DB_query($sql,$db);
+	
+	if (DB_num_rows($result)==0){
+		prnMsg (_('There are no locations that match up with a tax province record to display. Check that tax provinces are set up for all dispatch locations'),'error');
+	}
 
 	echo '<CENTER><table border=1>';
 	echo '<TR><TD class="tableheader">' . _('Location Code') . '</TD>

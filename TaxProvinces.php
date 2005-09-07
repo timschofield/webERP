@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 $PageSecurity = 15;
 
@@ -218,7 +218,7 @@ if (! isset($_GET['delete'])) {
 		echo "<CENTER><TABLE>";
 	}
 	echo "<TR>
-		<TD>" . _('Tax Category Name') . ':' . "</TD>
+		<TD>" . _('Tax Province Name') . ':' . "</TD>
 		<TD><input type='Text' name='TaxProvinceName' SIZE=30 MAXLENGTH=30 value='" . $_POST['TaxProvinceName'] . "'></TD>
 		</TR>";
 	echo '</TABLE>';

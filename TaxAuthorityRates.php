@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 11; // only allow accountant access
 
@@ -14,7 +14,7 @@ include('includes/session.inc');
 $title = _('Tax Rates');
 include('includes/header.inc');
 
-/* <-- $Revision: 1.11 $ --> */
+/* <-- $Revision: 1.12 $ --> */
 
 if (!isset($TaxAuthority)){
 	prnMsg(_('This page can only be called after selecting the tax authority to edit the rates for') . '. ' . _('Please select the Rates link from the tax authority page') . ".<BR><A HREF='$rootpath/TaxAuthorities.php'>" . _('click here') . '</A> ' . _('to go to the Tax Authority page'),'error');
@@ -59,20 +59,20 @@ echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID ."' METHOD=POST>";
 echo "<INPUT TYPE=HIDDEN NAME='TaxAuthority' VALUE=$TaxAuthority>";
 
 $TaxRatesResult = DB_query('SELECT taxauthrates.taxcatid,
-				taxcategories.taxcatname,
-				taxauthrates.taxrate,
-				taxauthrates.dispatchtaxprovince,
-				taxprovinces.taxprovincename
-				FROM taxauthrates INNER JOIN taxauthorities
-					ON taxauthrates.taxauthority=taxauthorities.taxid
-					INNER JOIN taxprovinces 
-					ON taxauthrates.dispatchtaxprovince= taxprovinces.taxprovinceid
-					INNER JOIN taxcategories 
-					ON taxauthrates.taxcatid=taxcategories.taxcatid
-				WHERE taxauthrates.taxauthority=' . $TaxAuthority . "
-				ORDER BY taxauthrates.dispatchtaxprovince, 
-					taxauthrates.taxcatid",
-				$db);
+						taxcategories.taxcatname,
+						taxauthrates.taxrate,
+						taxauthrates.dispatchtaxprovince,
+						taxprovinces.taxprovincename
+						FROM taxauthrates INNER JOIN taxauthorities
+							ON taxauthrates.taxauthority=taxauthorities.taxid
+							INNER JOIN taxprovinces 
+							ON taxauthrates.dispatchtaxprovince= taxprovinces.taxprovinceid
+							INNER JOIN taxcategories 
+							ON taxauthrates.taxcatid=taxcategories.taxcatid
+						WHERE taxauthrates.taxauthority=' . $TaxAuthority . "
+						ORDER BY taxauthrates.dispatchtaxprovince, 
+						taxauthrates.taxcatid",
+					$db);
 
 if (DB_num_rows($TaxRatesResult)>0){
 
@@ -112,12 +112,13 @@ if (DB_num_rows($TaxRatesResult)>0){
 
 	}
 //end of while loop
-
-
-} //end if tax taxcatid/rates to show
-
 echo '</TABLE>';
 echo "<BR><INPUT TYPE=SUBMIT NAME='UpdateRates' VALUE='" . _('Update Rates') . "'></CENTER>";
+} //end if tax taxcatid/rates to show 
+	else {
+	prnMsg(_('There are no tax rates to show - perhaps the dispatch tax province records have not yet been created?'),'warn');
+}
+
 echo '</FORM>';
 
 echo '<BR><A HREF="' . $rootpath . '/TaxAuthorities.php?' . SID . '">' . _('Tax Authorities') .  '</A>';

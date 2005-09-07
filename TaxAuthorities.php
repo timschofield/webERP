@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 
 $PageSecurity=15;
@@ -17,7 +17,6 @@ if (isset($_POST['SelectedTaxAuthID'])){
 
 
 if (isset($_POST['submit'])) {
-
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
@@ -69,7 +68,6 @@ if (isset($_POST['submit'])) {
 				'" .DB_escape_string($_POST['BankSwift']) . "'
 				)";
 
-
 		$Errmsg = _('The addition of this tax authority failed because');
 		$result = DB_query($sql,$db,$ErrMsg);
 
@@ -98,8 +96,7 @@ if (isset($_POST['submit'])) {
 		unset( $_POST['Description']);
 		unset( $SelectedTaxID );
 	}
-	echo "<P>$msg<BR>";
-
+	
 	prnMsg($msg);
 		
 } elseif (isset($_GET['delete'])) {
@@ -155,8 +152,6 @@ if (!isset($SelectedTaxAuthID)) {
 		</tr></FONT>";
 
 	while ($myrow = DB_fetch_row($result)) {
-
-		$DisplayTaxRate	= number_format($myrow[2] * 100, 2) . '%';
 
 		printf("<tr><td>%s</td>
 				<td>%s</td>
