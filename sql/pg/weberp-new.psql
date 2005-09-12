@@ -6097,15 +6097,13 @@ SET search_path = public, pg_catalog;
 -- Name: accountsection; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY accountsection (sectionid, sectionname) FROM stdin;
-2	Cost of Sales
-10	Fixed Assets
-30	Amounts Payable
-5	Overheads
-50	Financed By
-1	Revenue
-20	Amounts Receivable
-\.
+INSERT INTO accountsection VALUES (2, 'Cost of Sales');
+INSERT INTO accountsection VALUES (10, 'Fixed Assets');
+INSERT INTO accountsection VALUES (30, 'Amounts Payable');
+INSERT INTO accountsection VALUES (5, 'Overheads');
+INSERT INTO accountsection VALUES (50, 'Financed By');
+INSERT INTO accountsection VALUES (1, 'Revenue');
+INSERT INTO accountsection VALUES (20, 'Amounts Receivable');
 
 
 --
@@ -6122,19 +6120,17 @@ SET search_path = public, pg_catalog;
 -- Name: accountgroups; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY accountgroups (groupname, sectioninaccounts, pandl, sequenceintb) FROM stdin;
-Sales	1	1	10
-Revenue	1	1	4000
-Liabilities	30	0	2000
-Equity	50	0	3000
-COG Sold	2	1	5000
-Marketing Expenses	5	1	6000
-Operating Expenses	5	1	7000
-Other Revenue and Expenses	5	1	8000
-Income Tax	5	1	9000
-Fixed Assets	10	0	1000
-Current Assets	20	0	1500
-\.
+INSERT INTO accountgroups VALUES ('Sales', 1, 1, 10);
+INSERT INTO accountgroups VALUES ('Revenue', 1, 1, 4000);
+INSERT INTO accountgroups VALUES ('Liabilities', 30, 0, 2000);
+INSERT INTO accountgroups VALUES ('Equity', 50, 0, 3000);
+INSERT INTO accountgroups VALUES ('COG Sold', 2, 1, 5000);
+INSERT INTO accountgroups VALUES ('Marketing Expenses', 5, 1, 6000);
+INSERT INTO accountgroups VALUES ('Operating Expenses', 5, 1, 7000);
+INSERT INTO accountgroups VALUES ('Other Revenue and Expenses', 5, 1, 8000);
+INSERT INTO accountgroups VALUES ('Income Tax', 5, 1, 9000);
+INSERT INTO accountgroups VALUES ('Fixed Assets', 10, 0, 1000);
+INSERT INTO accountgroups VALUES ('Current Assets', 20, 0, 1500);
 
 
 --
@@ -6151,155 +6147,180 @@ SET search_path = public, pg_catalog;
 -- Name: chartmaster; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY chartmaster (accountcode, accountname, group_) FROM stdin;
-1010	Petty Cash	Current Assets
-1030	Cheque Accounts	Current Assets
-1040	Savings Accounts	Current Assets
-1050	Payroll Accounts	Current Assets
-1060	Special Accounts	Current Assets
-1070	Money Market Investments	Current Assets
-1080	Short-Term Investments (< 90 days)	Current Assets
-1090	Interest Receivable	Current Assets
-1100	Accounts Receivable	Current Assets
-1150	Allowance for Doubtful Accounts	Current Assets
-1200	Notes Receivable	Current Assets
-1250	Income Tax Receivable	Current Assets
-1300	Prepaid Expenses	Current Assets
-1350	Advances	Current Assets
-1400	Supplies Inventory	Current Assets
-1420	Raw Material Inventory	Current Assets
-1440	Work in Progress Inventory	Current Assets
-1460	Finished Goods Inventory	Current Assets
-1500	Land	Fixed Assets
-1550	Bonds	Fixed Assets
-1600	Buildings	Fixed Assets
-1620	Accumulated Depreciation of Buildings	Fixed Assets
-1650	Equipment	Fixed Assets
-1670	Accumulated Depreciation of Equipment	Fixed Assets
-1700	Furniture & Fixtures	Fixed Assets
-1710	Accumulated Depreciation of Furniture & Fixtures	Fixed Assets
-1720	Office Equipment	Fixed Assets
-1730	Accumulated Depreciation of Office Equipment	Fixed Assets
-1740	Software	Fixed Assets
-1750	Accumulated Depreciation of Software	Fixed Assets
-1760	Vehicles	Fixed Assets
-1770	Accumulated Depreciation Vehicles	Fixed Assets
-1780	Other Depreciable Property	Fixed Assets
-1790	Accumulated Depreciation of Other Depreciable Property	Fixed Assets
-1800	Patents	Fixed Assets
-1850	Goodwill	Fixed Assets
-1900	Future Income Tax Receivable	Current Assets
-2010	Bank Indedebtedness (overdraft)	Liabilities
-2020	Retainers or Advances on Work	Liabilities
-2050	Interest Payable	Liabilities
-2100	Accounts Payable	Liabilities
-2200	Short-Term Loan Payable	Liabilities
-2230	Current Portion of Long-Term Debt Payable	Liabilities
-2250	Income Tax Payable	Liabilities
-2300	GST Payable	Liabilities
-2310	GST Recoverable	Liabilities
-2320	PST Payable	Liabilities
-2330	PST Recoverable (commission)	Liabilities
-2340	Payroll Tax Payable	Liabilities
-2350	Withholding Income Tax Payable	Liabilities
-2360	Other Taxes Payable	Liabilities
-2400	Employee Salaries Payable	Liabilities
-2410	Management Salaries Payable	Liabilities
-2420	Director / Partner Fees Payable	Liabilities
-2450	Health Benefits Payable	Liabilities
-2460	Pension Benefits Payable	Liabilities
-2470	Canada Pension Plan Payable	Liabilities
-2480	Employment Insurance Premiums Payable	Liabilities
-2500	Land Payable	Liabilities
-2550	Long-Term Bank Loan	Liabilities
-2560	Notes Payable	Liabilities
-2600	Building & Equipment Payable	Liabilities
-2700	Furnishing & Fixture Payable	Liabilities
-2720	Office Equipment Payable	Liabilities
-2740	Vehicle Payable	Liabilities
-2760	Other Property Payable	Liabilities
-2800	Shareholder Loans	Liabilities
-2900	Suspense	Liabilities
-3100	Capital Stock	Equity
-3200	Capital Surplus / Dividends	Equity
-3300	Dividend Taxes Payable	Equity
-3400	Dividend Taxes Refundable	Equity
-3500	Retained Earnings	Equity
-4100	Product / Service Sales	Revenue
-4500	Consulting Services	Revenue
-4600	Rentals	Revenue
-4700	Finance Charge Income	Revenue
-4800	Sales Returns & Allowances	Revenue
-4900	Sales Discounts	Revenue
-5100	Production Expenses	COG Sold
-5500	Direct Labour Costs	COG Sold
-5600	Freight Charges	COG Sold
-5700	Inventory Adjustment	COG Sold
-5800	Purchase Returns & Allowances	COG Sold
-5900	Purchase Discounts	COG Sold
-6100	Advertising	Marketing Expenses
-6150	Promotion	Marketing Expenses
-6200	Communications	Marketing Expenses
-6250	Meeting Expenses	Marketing Expenses
-6300	Travelling Expenses	Marketing Expenses
-6400	Delivery Expenses	Marketing Expenses
-6500	Sales Salaries & Commission	Marketing Expenses
-6550	Sales Salaries & Commission Deductions	Marketing Expenses
-6590	Benefits	Marketing Expenses
-6600	Other Selling Expenses	Marketing Expenses
-6700	Permits, Licenses & License Fees	Marketing Expenses
-6800	Research & Development	Marketing Expenses
-6900	Professional Services	Marketing Expenses
-7020	Support Salaries & Wages	Operating Expenses
-7030	Support Salary & Wage Deductions	Operating Expenses
-7040	Management Salaries	Operating Expenses
-7050	Management Salary deductions	Operating Expenses
-7060	Director / Partner Fees	Operating Expenses
-7070	Director / Partner Deductions	Operating Expenses
-7080	Payroll Tax	Operating Expenses
-7090	Benefits	Operating Expenses
-7100	Training & Education Expenses	Operating Expenses
-7150	Dues & Subscriptions	Operating Expenses
-7200	Accounting Fees	Operating Expenses
-7210	Audit Fees	Operating Expenses
-7220	Banking Fees	Operating Expenses
-7230	Credit Card Fees	Operating Expenses
-7240	Consulting Fees	Operating Expenses
-7260	Legal Fees	Operating Expenses
-7280	Other Professional Fees	Operating Expenses
-7300	Business Tax	Operating Expenses
-7350	Property Tax	Operating Expenses
-7390	Corporation Capital Tax	Operating Expenses
-7400	Office Rent	Operating Expenses
-7450	Equipment Rental	Operating Expenses
-7500	Office Supplies	Operating Expenses
-7550	Office Repair & Maintenance	Operating Expenses
-7600	Automotive Expenses	Operating Expenses
-7610	Communication Expenses	Operating Expenses
-7620	Insurance Expenses	Operating Expenses
-7630	Postage & Courier Expenses	Operating Expenses
-7640	Miscellaneous Expenses	Operating Expenses
-7650	Travel Expenses	Operating Expenses
-7660	Utilities	Operating Expenses
-7700	Ammortization Expenses	Operating Expenses
-7750	Depreciation Expenses	Operating Expenses
-7800	Interest Expense	Operating Expenses
-7900	Bad Debt Expense	Operating Expenses
-8100	Gain on Sale of Assets	Other Revenue and Expenses
-8200	Interest Income	Other Revenue and Expenses
-8300	Recovery on Bad Debt	Other Revenue and Expenses
-8400	Other Revenue	Other Revenue and Expenses
-8500	Loss on Sale of Assets	Other Revenue and Expenses
-8600	Charitable Contributions	Other Revenue and Expenses
-8900	Other Expenses	Other Revenue and Expenses
-9100	Income Tax Provision	Income Tax
-1020	Cash on Hand	Current Assets
-1	Default Sales/Discounts	Sales
-5200	Cost of Sales	COG Sold
-2150	Goods Received Suspense	Liabilities
-5250	Purchases Exchange Gains/Losses	COG Sold
-4850	Sales Exchange Gains/Losses	Sales
-\.
+INSERT INTO chartmaster VALUES (1010, 'Petty Cash', 'Current Assets');
+INSERT INTO chartmaster VALUES (1030, 'Cheque Accounts', 'Current Assets');
+INSERT INTO chartmaster VALUES (1040, 'Savings Accounts', 'Current Assets');
+INSERT INTO chartmaster VALUES (1050, 'Payroll Accounts', 'Current Assets');
+INSERT INTO chartmaster VALUES (1060, 'Special Accounts', 'Current Assets');
+INSERT INTO chartmaster VALUES (1070, 'Money Market Investments', 'Current Assets');
+INSERT INTO chartmaster VALUES (1080, 'Short-Term Investments (< 90 days)', 'Current Assets');
+INSERT INTO chartmaster VALUES (1090, 'Interest Receivable', 'Current Assets');
+INSERT INTO chartmaster VALUES (1100, 'Accounts Receivable', 'Current Assets');
+INSERT INTO chartmaster VALUES (1150, 'Allowance for Doubtful Accounts', 'Current Assets');
+INSERT INTO chartmaster VALUES (1200, 'Notes Receivable', 'Current Assets');
+INSERT INTO chartmaster VALUES (1250, 'Income Tax Receivable', 'Current Assets');
+INSERT INTO chartmaster VALUES (1300, 'Prepaid Expenses', 'Current Assets');
+INSERT INTO chartmaster VALUES (1350, 'Advances', 'Current Assets');
+INSERT INTO chartmaster VALUES (1400, 'Supplies Inventory', 'Current Assets');
+INSERT INTO chartmaster VALUES (1420, 'Raw Material Inventory', 'Current Assets');
+INSERT INTO chartmaster VALUES (1440, 'Work in Progress Inventory', 'Current Assets');
+INSERT INTO chartmaster VALUES (1460, 'Finished Goods Inventory', 'Current Assets');
+INSERT INTO chartmaster VALUES (1500, 'Land', 'Fixed Assets');
+INSERT INTO chartmaster VALUES (1550, 'Bonds', 'Fixed Assets');
+INSERT INTO chartmaster VALUES (1600, 'Buildings', 'Fixed Assets');
+INSERT INTO chartmaster VALUES (1620, 'Accumulated Depreciation of Buildings', 'Fixed Assets');
+INSERT INTO chartmaster VALUES (1650, 'Equipment', 'Fixed Assets');
+INSERT INTO chartmaster VALUES (1670, 'Accumulated Depreciation of Equipment', 'Fixed Assets');
+INSERT INTO chartmaster VALUES (1700, 'Furniture & Fixtures', 'Fixed Assets');
+INSERT INTO chartmaster VALUES (1710, 'Accumulated Depreciation of Furniture & Fixtures', 'Fixed Assets');
+INSERT INTO chartmaster VALUES (1720, 'Office Equipment', 'Fixed Assets');
+INSERT INTO chartmaster VALUES (1730, 'Accumulated Depreciation of Office Equipment', 'Fixed Assets');
+INSERT INTO chartmaster VALUES (1740, 'Software', 'Fixed Assets');
+INSERT INTO chartmaster VALUES (1750, 'Accumulated Depreciation of Software', 'Fixed Assets');
+INSERT INTO chartmaster VALUES (1760, 'Vehicles', 'Fixed Assets');
+INSERT INTO chartmaster VALUES (1770, 'Accumulated Depreciation Vehicles', 'Fixed Assets');
+INSERT INTO chartmaster VALUES (1780, 'Other Depreciable Property', 'Fixed Assets');
+INSERT INTO chartmaster VALUES (1790, 'Accumulated Depreciation of Other Depreciable Property', 'Fixed Assets');
+INSERT INTO chartmaster VALUES (1800, 'Patents', 'Fixed Assets');
+INSERT INTO chartmaster VALUES (1850, 'Goodwill', 'Fixed Assets');
+INSERT INTO chartmaster VALUES (1900, 'Future Income Tax Receivable', 'Current Assets');
+INSERT INTO chartmaster VALUES (2010, 'Bank Indedebtedness (overdraft)', 'Liabilities');
+INSERT INTO chartmaster VALUES (2020, 'Retainers or Advances on Work', 'Liabilities');
+INSERT INTO chartmaster VALUES (2050, 'Interest Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2100, 'Accounts Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2200, 'Short-Term Loan Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2230, 'Current Portion of Long-Term Debt Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2250, 'Income Tax Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2300, 'GST Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2310, 'GST Recoverable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2320, 'PST Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2330, 'PST Recoverable (commission)', 'Liabilities');
+INSERT INTO chartmaster VALUES (2340, 'Payroll Tax Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2350, 'Withholding Income Tax Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2360, 'Other Taxes Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2400, 'Employee Salaries Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2410, 'Management Salaries Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2420, 'Director / Partner Fees Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2450, 'Health Benefits Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2460, 'Pension Benefits Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2470, 'Canada Pension Plan Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2480, 'Employment Insurance Premiums Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2500, 'Land Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2550, 'Long-Term Bank Loan', 'Liabilities');
+INSERT INTO chartmaster VALUES (2560, 'Notes Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2600, 'Building & Equipment Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2700, 'Furnishing & Fixture Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2720, 'Office Equipment Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2740, 'Vehicle Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2760, 'Other Property Payable', 'Liabilities');
+INSERT INTO chartmaster VALUES (2800, 'Shareholder Loans', 'Liabilities');
+INSERT INTO chartmaster VALUES (2900, 'Suspense', 'Liabilities');
+INSERT INTO chartmaster VALUES (3100, 'Capital Stock', 'Equity');
+INSERT INTO chartmaster VALUES (3200, 'Capital Surplus / Dividends', 'Equity');
+INSERT INTO chartmaster VALUES (3300, 'Dividend Taxes Payable', 'Equity');
+INSERT INTO chartmaster VALUES (3400, 'Dividend Taxes Refundable', 'Equity');
+INSERT INTO chartmaster VALUES (3500, 'Retained Earnings', 'Equity');
+INSERT INTO chartmaster VALUES (4100, 'Product / Service Sales', 'Revenue');
+INSERT INTO chartmaster VALUES (4500, 'Consulting Services', 'Revenue');
+INSERT INTO chartmaster VALUES (4600, 'Rentals', 'Revenue');
+INSERT INTO chartmaster VALUES (4700, 'Finance Charge Income', 'Revenue');
+INSERT INTO chartmaster VALUES (4800, 'Sales Returns & Allowances', 'Revenue');
+INSERT INTO chartmaster VALUES (4900, 'Sales Discounts', 'Revenue');
+INSERT INTO chartmaster VALUES (5100, 'Production Expenses', 'COG Sold');
+INSERT INTO chartmaster VALUES (5500, 'Direct Labour Costs', 'COG Sold');
+INSERT INTO chartmaster VALUES (5600, 'Freight Charges', 'COG Sold');
+INSERT INTO chartmaster VALUES (5700, 'Inventory Adjustment', 'COG Sold');
+INSERT INTO chartmaster VALUES (5800, 'Purchase Returns & Allowances', 'COG Sold');
+INSERT INTO chartmaster VALUES (5900, 'Purchase Discounts', 'COG Sold');
+INSERT INTO chartmaster VALUES (6100, 'Advertising', 'Marketing Expenses');
+INSERT INTO chartmaster VALUES (6150, 'Promotion', 'Marketing Expenses');
+INSERT INTO chartmaster VALUES (6200, 'Communications', 'Marketing Expenses');
+INSERT INTO chartmaster VALUES (6250, 'Meeting Expenses', 'Marketing Expenses');
+INSERT INTO chartmaster VALUES (6300, 'Travelling Expenses', 'Marketing Expenses');
+INSERT INTO chartmaster VALUES (6400, 'Delivery Expenses', 'Marketing Expenses');
+INSERT INTO chartmaster VALUES (6500, 'Sales Salaries & Commission', 'Marketing Expenses');
+INSERT INTO chartmaster VALUES (6550, 'Sales Salaries & Commission Deductions', 'Marketing Expenses');
+INSERT INTO chartmaster VALUES (6590, 'Benefits', 'Marketing Expenses');
+INSERT INTO chartmaster VALUES (6600, 'Other Selling Expenses', 'Marketing Expenses');
+INSERT INTO chartmaster VALUES (6700, 'Permits, Licenses & License Fees', 'Marketing Expenses');
+INSERT INTO chartmaster VALUES (6800, 'Research & Development', 'Marketing Expenses');
+INSERT INTO chartmaster VALUES (6900, 'Professional Services', 'Marketing Expenses');
+INSERT INTO chartmaster VALUES (7020, 'Support Salaries & Wages', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7030, 'Support Salary & Wage Deductions', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7040, 'Management Salaries', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7050, 'Management Salary deductions', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7060, 'Director / Partner Fees', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7070, 'Director / Partner Deductions', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7080, 'Payroll Tax', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7090, 'Benefits', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7100, 'Training & Education Expenses', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7150, 'Dues & Subscriptions', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7200, 'Accounting Fees', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7210, 'Audit Fees', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7220, 'Banking Fees', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7230, 'Credit Card Fees', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7240, 'Consulting Fees', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7260, 'Legal Fees', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7280, 'Other Professional Fees', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7300, 'Business Tax', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7350, 'Property Tax', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7390, 'Corporation Capital Tax', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7400, 'Office Rent', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7450, 'Equipment Rental', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7500, 'Office Supplies', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7550, 'Office Repair & Maintenance', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7600, 'Automotive Expenses', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7610, 'Communication Expenses', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7620, 'Insurance Expenses', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7630, 'Postage & Courier Expenses', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7640, 'Miscellaneous Expenses', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7650, 'Travel Expenses', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7660, 'Utilities', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7700, 'Ammortization Expenses', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7750, 'Depreciation Expenses', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7800, 'Interest Expense', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (7900, 'Bad Debt Expense', 'Operating Expenses');
+INSERT INTO chartmaster VALUES (8100, 'Gain on Sale of Assets', 'Other Revenue and Expenses');
+INSERT INTO chartmaster VALUES (8200, 'Interest Income', 'Other Revenue and Expenses');
+INSERT INTO chartmaster VALUES (8300, 'Recovery on Bad Debt', 'Other Revenue and Expenses');
+INSERT INTO chartmaster VALUES (8400, 'Other Revenue', 'Other Revenue and Expenses');
+INSERT INTO chartmaster VALUES (8500, 'Loss on Sale of Assets', 'Other Revenue and Expenses');
+INSERT INTO chartmaster VALUES (8600, 'Charitable Contributions', 'Other Revenue and Expenses');
+INSERT INTO chartmaster VALUES (8900, 'Other Expenses', 'Other Revenue and Expenses');
+INSERT INTO chartmaster VALUES (9100, 'Income Tax Provision', 'Income Tax');
+INSERT INTO chartmaster VALUES (1020, 'Cash on Hand', 'Current Assets');
+INSERT INTO chartmaster VALUES (1, 'Default Sales/Discounts', 'Sales');
+INSERT INTO chartmaster VALUES (5200, 'Cost of Sales', 'COG Sold');
+INSERT INTO chartmaster VALUES (2150, 'Goods Received Suspense', 'Liabilities');
+INSERT INTO chartmaster VALUES (5250, 'Purchases Exchange Gains/Losses', 'COG Sold');
+INSERT INTO chartmaster VALUES (4850, 'Sales Exchange Gains/Losses', 'Sales');
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 3 (OID 36769)
+-- Name: paymentmethods; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+INSERT INTO paymentmethods VALUES (1, 'Cheque', 1, 1);
+INSERT INTO paymentmethods VALUES (2, 'Cash', 1, 1);
+INSERT INTO paymentmethods VALUES (3, 'Direct Credit', 1, 1);
+
+
+--
+-- TOC entry 2 (OID 36767)
+-- Name: paymentmethods_paymentid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
+--
+
+SELECT pg_catalog.setval('paymentmethods_paymentid_seq', 4, true);
 
 
 --
@@ -6316,11 +6337,9 @@ SET search_path = public, pg_catalog;
 -- Name: bankaccounts; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY bankaccounts (accountcode, bankaccountname, bankaccountnumber, bankaddress) FROM stdin;
-1030	Cheque Account	1234567899 	
-1010	Petty Cash		
-1040	Savings Account		
-\.
+INSERT INTO bankaccounts VALUES (1030, 'Cheque Account', '1234567899 ', '');
+INSERT INTO bankaccounts VALUES (1010, 'Petty Cash', '', '');
+INSERT INTO bankaccounts VALUES (1040, 'Savings Account', '', '');
 
 
 --
@@ -6337,9 +6356,7 @@ SET search_path = public, pg_catalog;
 -- Name: companies; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY companies (coycode, coyname, gstno, companynumber, postaladdress, regoffice1, regoffice2, regoffice3, telephone, fax, email, currencydefault, debtorsact, pytdiscountact, creditorsact, payrollact, grnact, exchangediffact, purchasesexchangediffact, retainedearnings, gllink_debtors, gllink_creditors, gllink_stock, freightact) FROM stdin;
-1	webERP Demo		0	123 Post Office Box	The White House	Washnington DC	USA	03 45444 5442 	03 54444 45454		USD	1100	4900	2100	2400	2150	4850	5250	3500	1	1	1	5600
-\.
+INSERT INTO companies VALUES (1, 'webERP Demo', '', '0', '123 Post Office Box', 'The White House', 'Washnington DC', 'USA', '03 45444 5442 ', '03 54444 45454', '', 'USD', 1100, 4900, 2100, 2400, 2150, 4850, 5250, 3500, 1, 1, 1, 5600);
 
 
 --
@@ -6356,11 +6373,9 @@ SET search_path = public, pg_catalog;
 -- Name: currencies; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY currencies (currency, currabrev, country, hundredsname, rate) FROM stdin;
-US Dollars	USD	USA	cents	1.0000
-Euros Europe	EUR	European Union	cents	0.8000
-Rand	ZAR	South Africa	cents	3.0000
-\.
+INSERT INTO currencies VALUES ('US Dollars', 'USD', 'USA', 'cents', 1.0000);
+INSERT INTO currencies VALUES ('Euros Europe', 'EUR', 'European Union', 'cents', 0.8000);
+INSERT INTO currencies VALUES ('Rand', 'ZAR', 'South Africa', 'cents', 3.0000);
 
 
 --
@@ -6377,12 +6392,36 @@ SET search_path = public, pg_catalog;
 -- Name: holdreasons; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY holdreasons (reasoncode, reasondescription, dissallowinvoices) FROM stdin;
-20	Watch	0
-30	No more work until payment rec	1
-1	Good History	0
-51	In liquidation	1
-\.
+INSERT INTO holdreasons VALUES (20, 'Watch', 0);
+INSERT INTO holdreasons VALUES (30, 'No more work until payment rec', 1);
+INSERT INTO holdreasons VALUES (1, 'Good History', 0);
+INSERT INTO holdreasons VALUES (51, 'In liquidation', 1);
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 3 (OID 62235)
+-- Name: taxprovinces; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+INSERT INTO taxprovinces VALUES (1, 'Default Tax Province');
+INSERT INTO taxprovinces VALUES (6, 'Tax Province 2');
+
+
+--
+-- TOC entry 2 (OID 62233)
+-- Name: taxprovinces_taxprovinceid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
+--
+
+SELECT pg_catalog.setval('taxprovinces_taxprovinceid_seq', 6, true);
 
 
 --
@@ -6399,9 +6438,7 @@ SET search_path = public, pg_catalog;
 -- Name: locations; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY locations (loccode, locationname, deladd1, deladd2, deladd3, tel, fax, email, contact, taxprovinceid, managed) FROM stdin;
-CPT	Cape Town	na	na	na	na	na	weberp@paradise.net.nz	na	1	\N
-\.
+INSERT INTO locations VALUES ('CPT', 'Cape Town', 'na', 'na', 'na', 'na', 'na', 'weberp@paradise.net.nz', 'na', 1, NULL);
 
 
 --
@@ -6418,12 +6455,10 @@ SET search_path = public, pg_catalog;
 -- Name: paymentterms; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY paymentterms (termsindicator, terms, daysbeforedue, dayinfollowingmonth) FROM stdin;
-7	Payment due within 7 days	7	0
-20	Due 20th Of the Following Month	0	22
-30	Due By End Of The Following Month	0	30
-CA	Cash Only	0	1
-\.
+INSERT INTO paymentterms VALUES ('7', 'Payment due within 7 days', 7, 0);
+INSERT INTO paymentterms VALUES ('20', 'Due 20th Of the Following Month', 0, 22);
+INSERT INTO paymentterms VALUES ('30', 'Due By End Of The Following Month', 0, 30);
+INSERT INTO paymentterms VALUES ('CA', 'Cash Only', 0, 1);
 
 
 --
@@ -6440,86 +6475,30 @@ SET search_path = public, pg_catalog;
 -- Name: systypes; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY systypes (typeid, typename, typeno) FROM stdin;
-2	Receipt - GL	0
-3	Standing Journal	0
-18	Purchase Order	0
-21	Debit Note	0
-23	Creditors Journal	0
-26	Work Order Receipt	0
-28	Work Order Issue	0
-29	Work Order Variance	0
-30	Sales Order	0
-0	Journal - GL	1
-50	Opening Balance	0
-22	Creditors Payment	3
-31	Shipment Close	3
-1	Payment - GL	2
-20	Purchase Invoice	1
-35	Cost Update	2
-500	"Debtor Number"	100001
-25	Purchase Order Delivery	5
-10	Sales Invoice	7
-15	Journal - Debtors	0
-11	Credit Note	0
-12	Receipt	0
-16	Location Transfer	0
-17	Stock Adjustment	0
-\.
-
-
---
--- PostgreSQL database dump
---
-
-SET client_encoding = 'SQL_ASCII';
-SET check_function_bodies = false;
-
-SET search_path = public, pg_catalog;
-
---
--- Data for TOC entry 3 (OID 35811)
--- Name: taxauthorities; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
---
-
-COPY taxauthorities (taxid, description, taxglcode, purchtaxglaccount, bank, bankacctype, bankacc, bankswift) FROM stdin;
-4	GST	2300	2310				
-5	PST	2320	2330				
-\.
-
-
---
--- TOC entry 2 (OID 35809)
--- Name: taxauthorities_taxid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
---
-
-SELECT pg_catalog.setval('taxauthorities_taxid_seq', 5, true);
-
-
---
--- PostgreSQL database dump
---
-
-SET client_encoding = 'SQL_ASCII';
-SET check_function_bodies = false;
-
-SET search_path = public, pg_catalog;
-
---
--- Data for TOC entry 2 (OID 36348)
--- Name: taxauthrates; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
---
-
-COPY taxauthrates (taxauthority, dispatchtaxprovince, taxcatid, taxrate) FROM stdin;
-4	1	1	0.050000000000000003
-4	1	0	0
-5	1	1	0.089999999999999997
-5	1	0	0
-4	6	1	0
-4	6	0	0
-5	6	1	0
-5	6	0	0
-\.
+INSERT INTO systypes VALUES (2, 'Receipt - GL', 0);
+INSERT INTO systypes VALUES (3, 'Standing Journal', 0);
+INSERT INTO systypes VALUES (18, 'Purchase Order', 0);
+INSERT INTO systypes VALUES (21, 'Debit Note', 0);
+INSERT INTO systypes VALUES (23, 'Creditors Journal', 0);
+INSERT INTO systypes VALUES (26, 'Work Order Receipt', 0);
+INSERT INTO systypes VALUES (28, 'Work Order Issue', 0);
+INSERT INTO systypes VALUES (29, 'Work Order Variance', 0);
+INSERT INTO systypes VALUES (30, 'Sales Order', 0);
+INSERT INTO systypes VALUES (0, 'Journal - GL', 1);
+INSERT INTO systypes VALUES (50, 'Opening Balance', 0);
+INSERT INTO systypes VALUES (22, 'Creditors Payment', 3);
+INSERT INTO systypes VALUES (31, 'Shipment Close', 3);
+INSERT INTO systypes VALUES (1, 'Payment - GL', 2);
+INSERT INTO systypes VALUES (20, 'Purchase Invoice', 1);
+INSERT INTO systypes VALUES (35, 'Cost Update', 2);
+INSERT INTO systypes VALUES (500, '"Debtor Number"', 100001);
+INSERT INTO systypes VALUES (25, 'Purchase Order Delivery', 5);
+INSERT INTO systypes VALUES (10, 'Sales Invoice', 7);
+INSERT INTO systypes VALUES (15, 'Journal - Debtors', 0);
+INSERT INTO systypes VALUES (11, 'Credit Note', 0);
+INSERT INTO systypes VALUES (12, 'Receipt', 0);
+INSERT INTO systypes VALUES (16, 'Location Transfer', 0);
+INSERT INTO systypes VALUES (17, 'Stock Adjustment', 0);
 
 
 --
@@ -6536,9 +6515,7 @@ SET search_path = public, pg_catalog;
 -- Name: taxgroups; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY taxgroups (taxgroupid, taxgroupdescription) FROM stdin;
-1	Default tax group
-\.
+INSERT INTO taxgroups VALUES (1, 'Default tax group');
 
 
 --
@@ -6563,10 +6540,8 @@ SET search_path = public, pg_catalog;
 -- Name: taxcategories; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY taxcategories (taxcatid, taxcatname) FROM stdin;
-1	Taxable supply
-0	Exempt
-\.
+INSERT INTO taxcategories VALUES (1, 'Taxable supply');
+INSERT INTO taxcategories VALUES (0, 'Exempt');
 
 
 --
@@ -6587,13 +6562,61 @@ SET check_function_bodies = false;
 SET search_path = public, pg_catalog;
 
 --
+-- Data for TOC entry 3 (OID 35811)
+-- Name: taxauthorities; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+INSERT INTO taxauthorities VALUES (4, 'GST', 2300, 2310, '', '', '', '');
+INSERT INTO taxauthorities VALUES (5, 'PST', 2320, 2330, '', '', '', '');
+
+
+--
+-- TOC entry 2 (OID 35809)
+-- Name: taxauthorities_taxid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
+--
+
+SELECT pg_catalog.setval('taxauthorities_taxid_seq', 5, true);
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
+-- Data for TOC entry 2 (OID 36348)
+-- Name: taxauthrates; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+INSERT INTO taxauthrates VALUES (4, 1, 1, 0.050000000000000003);
+INSERT INTO taxauthrates VALUES (4, 1, 0, 0);
+INSERT INTO taxauthrates VALUES (5, 1, 1, 0.089999999999999997);
+INSERT INTO taxauthrates VALUES (5, 1, 0, 0);
+INSERT INTO taxauthrates VALUES (4, 6, 1, 0);
+INSERT INTO taxauthrates VALUES (4, 6, 0, 0);
+INSERT INTO taxauthrates VALUES (5, 6, 1, 0);
+INSERT INTO taxauthrates VALUES (5, 6, 0, 0);
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
 -- Data for TOC entry 2 (OID 36354)
 -- Name: www_users; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY www_users (userid, "password", realname, customerid, phone, email, defaultlocation, fullaccess, lastvisitdate, branchcode, pagesize, modulesallowed, blocked, displayrecordsmax, theme, "language", pinno, swipecard) FROM stdin;
-demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2005-09-01 19:56:13		A4	1,1,1,1,1,1,1,1,	0	50	fresh	en_GB	\N	\N
-\.
+INSERT INTO www_users VALUES ('demo', 'f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4', 'administrator', '', '', '', 'CPT', 8, '2005-09-10 16:58:22', '', 'A4', '1,1,1,1,1,1,1,1,', 0, 50, 'fresh', 'en_GB', NULL, NULL);
 
 
 --
@@ -6610,8 +6633,6 @@ SET search_path = public, pg_catalog;
 -- Name: edi_orders_segs; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY edi_orders_segs (id, segtag, seggroup, maxoccur) FROM stdin;
-\.
 
 
 --
@@ -6636,8 +6657,6 @@ SET search_path = public, pg_catalog;
 -- Name: edi_orders_seg_groups; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY edi_orders_seg_groups (seggroupno, maxoccur, parentseggroup) FROM stdin;
-\.
 
 
 --
@@ -6654,58 +6673,56 @@ SET search_path = public, pg_catalog;
 -- Name: config; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY config (confname, confvalue) FROM stdin;
-DefaultDateFormat	d/m/Y
-PastDueDays1	30
-PastDueDays2	60
-DefaultCreditLimit	1000
-Show_Settled_LastMonth	1
-RomalpaClause	Ownership will not pass to the buyer until the goods have been paid for in full.
-QuickEntries	10
-DispatchCutOffTime	14
-AllowSalesOfZeroCostItems	0
-CreditingControlledItems_MustExist	0
-DefaultPriceList	WS
-Default_Shipper	1
-DoFreightCalc	0
-FreightChargeAppliesIfLessThan	1000
-TaxAuthorityReferenceName	Tax Ref
-NumberOfPeriodsOfStockUsage	12
-Check_Qty_Charged_vs_Del_Qty	1
-Check_Price_Charged_vs_Order_Price	1
-OverChargeProportion	30
-OverReceiveProportion	20
-PO_AllowSameItemMultipleTimes	1
-YearEnd	3
-PageLength	48
-MaxImageSize	300
-DB_Maintenance_LastRun	2005-08-27
-EDIHeaderMsgId	D:01B:UN:EAN010
-EDIReference	WEBERP
-EDI_MsgPending	EDI_Pending
-EDI_MsgSent	EDI_Sent
-EDI_Incoming_Orders	EDI_Incoming_Orders
-DefaultDisplayRecordsMax	50
-RadioBeaconStockLocation	BL
-RadioBeaconHomeDir	/home/RadioBeacon
-RadioBeaconFileCounter	/home/RadioBeacon/FileCounter
-RadioBreaconFilePrefix	ORDXX
-RadioBraconFTP_server	192.168.2.2
-RadioBeaconFTP_user_name	RadioBeacon ftp server user name
-RadionBeaconFTP_user_pass	Radio Beacon remote ftp server password
-CountryOfOperation	EUR
-DefaultTheme	professional
-DefaultTaxCategory	1
-part_pics_dir	companies/weberp/part_pics
-HTTPS_Only	0
-reports_dir	companies/weberp/reports
-DB_Maintenance	7
-AutoDebtorNo	0
-PackNoteFormat	1
-DefaultBlindPackNote	1
-CheckCreditLimits	0
-FreightTaxCategory	1
-\.
+INSERT INTO config VALUES ('DefaultDateFormat', 'd/m/Y');
+INSERT INTO config VALUES ('PastDueDays1', '30');
+INSERT INTO config VALUES ('PastDueDays2', '60');
+INSERT INTO config VALUES ('DefaultCreditLimit', '1000');
+INSERT INTO config VALUES ('Show_Settled_LastMonth', '1');
+INSERT INTO config VALUES ('RomalpaClause', 'Ownership will not pass to the buyer until the goods have been paid for in full.');
+INSERT INTO config VALUES ('QuickEntries', '10');
+INSERT INTO config VALUES ('DispatchCutOffTime', '14');
+INSERT INTO config VALUES ('AllowSalesOfZeroCostItems', '0');
+INSERT INTO config VALUES ('CreditingControlledItems_MustExist', '0');
+INSERT INTO config VALUES ('DefaultPriceList', 'WS');
+INSERT INTO config VALUES ('Default_Shipper', '1');
+INSERT INTO config VALUES ('DoFreightCalc', '0');
+INSERT INTO config VALUES ('FreightChargeAppliesIfLessThan', '1000');
+INSERT INTO config VALUES ('DB_Maintenance_LastRun', '2005-09-10');
+INSERT INTO config VALUES ('TaxAuthorityReferenceName', 'Tax Ref');
+INSERT INTO config VALUES ('NumberOfPeriodsOfStockUsage', '12');
+INSERT INTO config VALUES ('Check_Qty_Charged_vs_Del_Qty', '1');
+INSERT INTO config VALUES ('Check_Price_Charged_vs_Order_Price', '1');
+INSERT INTO config VALUES ('OverChargeProportion', '30');
+INSERT INTO config VALUES ('OverReceiveProportion', '20');
+INSERT INTO config VALUES ('PO_AllowSameItemMultipleTimes', '1');
+INSERT INTO config VALUES ('YearEnd', '3');
+INSERT INTO config VALUES ('PageLength', '48');
+INSERT INTO config VALUES ('MaxImageSize', '300');
+INSERT INTO config VALUES ('EDIHeaderMsgId', 'D:01B:UN:EAN010');
+INSERT INTO config VALUES ('EDIReference', 'WEBERP');
+INSERT INTO config VALUES ('EDI_MsgPending', 'EDI_Pending');
+INSERT INTO config VALUES ('EDI_MsgSent', 'EDI_Sent');
+INSERT INTO config VALUES ('EDI_Incoming_Orders', 'EDI_Incoming_Orders');
+INSERT INTO config VALUES ('DefaultDisplayRecordsMax', '50');
+INSERT INTO config VALUES ('RadioBeaconStockLocation', 'BL');
+INSERT INTO config VALUES ('RadioBeaconHomeDir', '/home/RadioBeacon');
+INSERT INTO config VALUES ('RadioBeaconFileCounter', '/home/RadioBeacon/FileCounter');
+INSERT INTO config VALUES ('RadioBreaconFilePrefix', 'ORDXX');
+INSERT INTO config VALUES ('RadioBraconFTP_server', '192.168.2.2');
+INSERT INTO config VALUES ('RadioBeaconFTP_user_name', 'RadioBeacon ftp server user name');
+INSERT INTO config VALUES ('RadionBeaconFTP_user_pass', 'Radio Beacon remote ftp server password');
+INSERT INTO config VALUES ('CountryOfOperation', 'EUR');
+INSERT INTO config VALUES ('DefaultTheme', 'professional');
+INSERT INTO config VALUES ('DefaultTaxCategory', '1');
+INSERT INTO config VALUES ('part_pics_dir', 'companies/weberp/part_pics');
+INSERT INTO config VALUES ('HTTPS_Only', '0');
+INSERT INTO config VALUES ('reports_dir', 'companies/weberp/reports');
+INSERT INTO config VALUES ('DB_Maintenance', '7');
+INSERT INTO config VALUES ('AutoDebtorNo', '0');
+INSERT INTO config VALUES ('PackNoteFormat', '1');
+INSERT INTO config VALUES ('DefaultBlindPackNote', '1');
+INSERT INTO config VALUES ('CheckCreditLimits', '0');
+INSERT INTO config VALUES ('FreightTaxCategory', '1');
 
 
 --
@@ -6722,14 +6739,12 @@ SET search_path = public, pg_catalog;
 -- Name: unitsofmeasure; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY unitsofmeasure (unitid, unitname) FROM stdin;
-2	metres
-3	kgs
-4	litres
-5	length
-6	pack
-1	each
-\.
+INSERT INTO unitsofmeasure VALUES (2, 'metres');
+INSERT INTO unitsofmeasure VALUES (3, 'kgs');
+INSERT INTO unitsofmeasure VALUES (4, 'litres');
+INSERT INTO unitsofmeasure VALUES (5, 'length');
+INSERT INTO unitsofmeasure VALUES (6, 'pack');
+INSERT INTO unitsofmeasure VALUES (1, 'each');
 
 
 --
@@ -6750,56 +6765,25 @@ SET check_function_bodies = false;
 SET search_path = public, pg_catalog;
 
 --
--- Data for TOC entry 3 (OID 36769)
--- Name: paymentmethods; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
---
-
-COPY paymentmethods (paymentid, paymentname, paymenttype, receipttype) FROM stdin;
-1	Cheque	1	1
-2	Cash	1	1
-3	Direct Credit	1	1
-\.
-
-
---
--- TOC entry 2 (OID 36767)
--- Name: paymentmethods_paymentid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
---
-
-SELECT pg_catalog.setval('paymentmethods_paymentid_seq', 4, true);
-
-
---
--- PostgreSQL database dump
---
-
-SET client_encoding = 'SQL_ASCII';
-SET check_function_bodies = false;
-
-SET search_path = public, pg_catalog;
-
---
 -- Data for TOC entry 2 (OID 36760)
 -- Name: securitytokens; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY securitytokens (tokenid, tokenname) FROM stdin;
-9	Ledger Maintenance and Manufacturing
-1	Menu and order entry only
-2	Inventory, AR & AP inquiries & reports 
-3	AR setup customers, areas, receipts, allocations, credit notes, salesfolk, credit status
-4	PO Entry, Purchasing data & reorder levels
-5	AP Invoice, Credit, Payment entry. Supplier maintenance
-6	Not used
-7	Bank reconciliations
-10	GL Journals, COA, sales/COGS GL postings, terms, cost update, company prefs
-11	Pricing & Inventory locations, categories, receiving & adjustments 
-15	User management, System Admin setup & utilities
-12	No Used
-14	Not Used
-13	Not Used
-8	GL Journals, COA, sales/COGS GL postings, terms, cost update, company prefs
-\.
+INSERT INTO securitytokens VALUES (9, 'Ledger Maintenance and Manufacturing');
+INSERT INTO securitytokens VALUES (1, 'Menu and order entry only');
+INSERT INTO securitytokens VALUES (2, 'Inventory, AR & AP inquiries & reports ');
+INSERT INTO securitytokens VALUES (3, 'AR setup customers, areas, receipts, allocations, credit notes, salesfolk, credit status');
+INSERT INTO securitytokens VALUES (4, 'PO Entry, Purchasing data & reorder levels');
+INSERT INTO securitytokens VALUES (5, 'AP Invoice, Credit, Payment entry. Supplier maintenance');
+INSERT INTO securitytokens VALUES (6, 'Not used');
+INSERT INTO securitytokens VALUES (7, 'Bank reconciliations');
+INSERT INTO securitytokens VALUES (10, 'GL Journals, COA, sales/COGS GL postings, terms, cost update, company prefs');
+INSERT INTO securitytokens VALUES (11, 'Pricing & Inventory locations, categories, receiving & adjustments ');
+INSERT INTO securitytokens VALUES (15, 'User management, System Admin setup & utilities');
+INSERT INTO securitytokens VALUES (12, 'No Used');
+INSERT INTO securitytokens VALUES (14, 'Not Used');
+INSERT INTO securitytokens VALUES (13, 'Not Used');
+INSERT INTO securitytokens VALUES (8, 'GL Journals, COA, sales/COGS GL postings, terms, cost update, company prefs');
 
 
 --
@@ -6816,16 +6800,14 @@ SET search_path = public, pg_catalog;
 -- Name: securityroles; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY securityroles (secroleid, secrolename) FROM stdin;
-1	Inquiries/Order Entry
-2	Manufac/Stock Admin
-3	Purchasing Officer
-4	AP Clerk
-5	AR Clerk
-6	Accountant
-7	Customer Log On Only
-8	System Administrator
-\.
+INSERT INTO securityroles VALUES (1, 'Inquiries/Order Entry');
+INSERT INTO securityroles VALUES (2, 'Manufac/Stock Admin');
+INSERT INTO securityroles VALUES (3, 'Purchasing Officer');
+INSERT INTO securityroles VALUES (4, 'AP Clerk');
+INSERT INTO securityroles VALUES (5, 'AR Clerk');
+INSERT INTO securityroles VALUES (6, 'Accountant');
+INSERT INTO securityroles VALUES (7, 'Customer Log On Only');
+INSERT INTO securityroles VALUES (8, 'System Administrator');
 
 
 --
@@ -6850,55 +6832,54 @@ SET search_path = public, pg_catalog;
 -- Name: securitygroups; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY securitygroups (secroleid, tokenid) FROM stdin;
-1	1
-1	2
-2	1
-2	2
-3	1
-3	2
-3	3
-3	4
-3	5
-3	11
-4	1
-4	2
-4	5
-5	1
-5	2
-5	3
-5	11
-6	1
-6	2
-6	3
-6	4
-6	5
-6	6
-6	7
-6	8
-6	9
-6	10
-6	11
-7	1
-8	1
-8	2
-8	3
-8	4
-8	5
-8	6
-8	7
-8	8
-8	9
-8	10
-8	11
-8	12
-8	13
-8	14
-8	15
-4	13
-2	11
-\.
+INSERT INTO securitygroups VALUES (1, 1);
+INSERT INTO securitygroups VALUES (1, 2);
+INSERT INTO securitygroups VALUES (2, 1);
+INSERT INTO securitygroups VALUES (2, 2);
+INSERT INTO securitygroups VALUES (3, 1);
+INSERT INTO securitygroups VALUES (3, 2);
+INSERT INTO securitygroups VALUES (3, 3);
+INSERT INTO securitygroups VALUES (3, 4);
+INSERT INTO securitygroups VALUES (3, 5);
+INSERT INTO securitygroups VALUES (3, 11);
+INSERT INTO securitygroups VALUES (4, 1);
+INSERT INTO securitygroups VALUES (4, 2);
+INSERT INTO securitygroups VALUES (4, 5);
+INSERT INTO securitygroups VALUES (5, 1);
+INSERT INTO securitygroups VALUES (5, 2);
+INSERT INTO securitygroups VALUES (5, 3);
+INSERT INTO securitygroups VALUES (5, 11);
+INSERT INTO securitygroups VALUES (6, 1);
+INSERT INTO securitygroups VALUES (6, 2);
+INSERT INTO securitygroups VALUES (6, 3);
+INSERT INTO securitygroups VALUES (6, 4);
+INSERT INTO securitygroups VALUES (6, 5);
+INSERT INTO securitygroups VALUES (6, 6);
+INSERT INTO securitygroups VALUES (6, 7);
+INSERT INTO securitygroups VALUES (6, 8);
+INSERT INTO securitygroups VALUES (6, 9);
+INSERT INTO securitygroups VALUES (6, 10);
+INSERT INTO securitygroups VALUES (6, 11);
+INSERT INTO securitygroups VALUES (7, 1);
+INSERT INTO securitygroups VALUES (8, 1);
+INSERT INTO securitygroups VALUES (8, 2);
+INSERT INTO securitygroups VALUES (8, 3);
+INSERT INTO securitygroups VALUES (8, 4);
+INSERT INTO securitygroups VALUES (8, 5);
+INSERT INTO securitygroups VALUES (8, 6);
+INSERT INTO securitygroups VALUES (8, 7);
+INSERT INTO securitygroups VALUES (8, 8);
+INSERT INTO securitygroups VALUES (8, 9);
+INSERT INTO securitygroups VALUES (8, 10);
+INSERT INTO securitygroups VALUES (8, 11);
+INSERT INTO securitygroups VALUES (8, 12);
+INSERT INTO securitygroups VALUES (8, 13);
+INSERT INTO securitygroups VALUES (8, 14);
+INSERT INTO securitygroups VALUES (8, 15);
+INSERT INTO securitygroups VALUES (4, 13);
+INSERT INTO securitygroups VALUES (2, 11);
 
 
 UPDATE systypes SET typeno=0;
-INSERT INTO shippers (1,'Default Shipper',0); UPDATE config SET confvalue='1' WHERE confname='Default_Shipper';
+INSERT INTO shippers VALUES (1,'Default Shipper',0);
+UPDATE config SET confvalue='1' WHERE confname='Default_Shipper';

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 /* Script to delete an invoice expects and invoice number to delete
 not included on any menu for obvious reasons
@@ -116,7 +116,6 @@ Delete Sales Analysis records */
 }
 
 /* Delete the stock movements  */
-
 $SQL = 'DELETE FROM stockmoves WHERE type=10 AND transno = ' . $_GET['InvoiceNo'];
 
 $ErrMsg _('The SQL to delete the stock movement records failed because');

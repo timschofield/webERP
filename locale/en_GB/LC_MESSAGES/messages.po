@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-09-05 21:28+1200\n"
+"POT-Creation-Date: 2005-09-11 10:14+1200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -107,7 +107,7 @@ msgstr ""
 #: CompanyPreferences.php:364 CompanyPreferences.php:366
 #: CompanyPreferences.php:376 CompanyPreferences.php:378
 #: DeliveryDetails.php:646 DeliveryDetails.php:687 DeliveryDetails.php:690
-#: GLTransInquiry.php:91 Locations.php:313 PaymentMethods.php:186
+#: GLTransInquiry.php:91 Locations.php:317 PaymentMethods.php:186
 #: PaymentMethods.php:187 PaymentMethods.php:246 PaymentMethods.php:252
 #: PDFChequeListing.php:57 PDFDeliveryDifferences.php:55 PO_Header.php:409
 #: PurchData.php:206 PurchData.php:327 PurchData.php:330
@@ -129,7 +129,7 @@ msgstr ""
 #: CompanyPreferences.php:363 CompanyPreferences.php:367
 #: CompanyPreferences.php:375 CompanyPreferences.php:379
 #: DeliveryDetails.php:647 DeliveryDetails.php:688 DeliveryDetails.php:691
-#: GLTransInquiry.php:89 Locations.php:315 PaymentMethods.php:186
+#: GLTransInquiry.php:89 Locations.php:319 PaymentMethods.php:186
 #: PaymentMethods.php:187 PaymentMethods.php:247 PaymentMethods.php:253
 #: PDFChequeListing.php:56 PDFDeliveryDifferences.php:54 PO_Header.php:409
 #: PurchData.php:209 PurchData.php:328 PurchData.php:331
@@ -151,12 +151,12 @@ msgstr ""
 #: BankAccounts.php:147 BOMs.php:91 COGSGLPostings.php:107
 #: COGSGLPostings.php:211 CreditStatus.php:126 Currencies.php:172
 #: CustomerBranches.php:319 EDIMessageFormat.php:161 FreightCosts.php:236
-#: GLAccounts.php:308 Locations.php:322 PaymentMethods.php:188
+#: GLAccounts.php:308 Locations.php:326 PaymentMethods.php:188
 #: PaymentTerms.php:170 Prices_Customer.php:200 Prices.php:175
 #: PurchData.php:217 SalesCategories.php:257 SalesGLPostings.php:118
 #: SalesGLPostings.php:230 SalesPeople.php:189 SalesTypes.php:144
 #: Shippers.php:135 StockCategories.php:168 SupplierContacts.php:151
-#: TaxAuthorities.php:170 TaxCategories.php:184 TaxGroups.php:170
+#: TaxAuthorities.php:165 TaxCategories.php:184 TaxGroups.php:170
 #: TaxProvinces.php:176 UnitsOfMeasure.php:199 WorkCentres.php:137
 #: WWW_Access.php:124 WWW_Users.php:246 includes/InputSerialItems.php:82
 #, php-format
@@ -168,7 +168,7 @@ msgstr ""
 #: COGSGLPostings.php:212 Credit_Invoice.php:370 CreditStatus.php:127
 #: Currencies.php:175 CustomerBranches.php:323 CustomerReceipt.php:535
 #: DiscountCategories.php:115 DiscountMatrix.php:100 EDIMessageFormat.php:162
-#: FreightCosts.php:237 GLAccounts.php:309 GLJournal.php:244 Locations.php:323
+#: FreightCosts.php:237 GLAccounts.php:309 GLJournal.php:244 Locations.php:327
 #: PaymentMethods.php:189 Payments.php:580 PaymentTerms.php:171
 #: PO_Items.php:771 Prices_Customer.php:201 Prices.php:176 PurchData.php:218
 #: SalesAnalReptCols.php:293 SalesAnalRepts.php:303 SalesCategories.php:258
@@ -177,7 +177,7 @@ msgstr ""
 #: Shipments.php:426 Shippers.php:136 SpecialOrder.php:550
 #: StockCategories.php:169 SuppCreditGRNs.php:88 SuppInvGLAnalysis.php:65
 #: SuppInvGRNs.php:122 SupplierContacts.php:152 SuppShiptChgs.php:80
-#: SuppTransGLAnalysis.php:105 TaxAuthorities.php:171 TaxCategories.php:185
+#: SuppTransGLAnalysis.php:105 TaxAuthorities.php:166 TaxCategories.php:185
 #: TaxGroups.php:171 TaxProvinces.php:177 UnitsOfMeasure.php:200
 #: WorkCentres.php:138 WWW_Access.php:125 WWW_Users.php:247
 #: includes/InputSerialItemsKeyed.php:53
@@ -205,11 +205,11 @@ msgstr ""
 #: BankAccounts.php:231 BOMs.php:483 COGSGLPostings.php:374
 #: CreditStatus.php:187 Currencies.php:263 CustomerBranches.php:621
 #: DiscountCategories.php:143 DiscountMatrix.php:147 EDIMessageFormat.php:252
-#: FreightCosts.php:326 GLAccounts.php:258 Locations.php:437
+#: FreightCosts.php:326 GLAccounts.php:258 Locations.php:441
 #: PaymentMethods.php:258 PaymentTerms.php:251 Prices_Customer.php:237
 #: SalesAnalReptCols.php:465 SalesAnalRepts.php:458 SalesGLPostings.php:397
 #: SalesPeople.php:280 SalesTypes.php:191 Shippers.php:185
-#: StockCategories.php:363 SupplierContacts.php:230 TaxAuthorities.php:292
+#: StockCategories.php:363 SupplierContacts.php:230 TaxAuthorities.php:287
 #: TaxCategories.php:234 TaxProvinces.php:226 UnitsOfMeasure.php:250
 #: WorkCentres.php:249 WWW_Users.php:455
 msgid "Enter Information"
@@ -545,7 +545,7 @@ msgstr ""
 
 #: Areas.php:109 Customers.php:223 GLAccounts.php:200 Locations.php:274
 #: SalesAnalReptCols.php:214 SalesCategories.php:137 SalesTypes.php:101
-#: StockCategories.php:123 Suppliers.php:466 Z_DeleteInvoice.php:126
+#: StockCategories.php:123 Suppliers.php:466 Z_DeleteInvoice.php:125
 msgid "has been deleted"
 msgstr ""
 
@@ -614,8 +614,8 @@ msgid "The SQL used to retrieve the bank account details was"
 msgstr ""
 
 #: BankAccounts.php:127 COGSGLPostings.php:195 CustomerReceipt.php:691
-#: GLJournal.php:237 index.php:955 Payments.php:570 TaxAuthorities.php:149
-#: TaxAuthorities.php:150
+#: GLJournal.php:237 index.php:955 Payments.php:570 TaxAuthorities.php:146
+#: TaxAuthorities.php:147
 msgid "GL Account"
 msgstr ""
 
@@ -688,8 +688,8 @@ msgid "Could not unclear this bank transaction because"
 msgstr ""
 
 #: BankMatching.php:58 BankReconciliation.php:25 CustomerReceipt.php:563
-#: Payments.php:482 PDFChequeListing.php:40 TaxAuthorities.php:152
-#: TaxAuthorities.php:285
+#: Payments.php:482 PDFChequeListing.php:40 TaxAuthorities.php:149
+#: TaxAuthorities.php:280
 msgid "Bank Account"
 msgstr ""
 
@@ -1004,7 +1004,7 @@ msgstr ""
 #: SelectSalesOrder.php:191 Shipt_Select.php:191 StockCategories.php:142
 #: StockLocStatus.php:135 StockQuantityByDate.php:89 SuppCreditGRNs.php:71
 #: SuppCreditGRNs.php:143 SuppInvGRNs.php:104 SuppInvGRNs.php:258
-#: SupplierCredit.php:245 SupplierInvoice.php:233 TaxAuthorities.php:148
+#: SupplierCredit.php:245 SupplierInvoice.php:233 TaxAuthorities.php:145
 #: WorkCentres.php:124 includes/PDFOstdgGRNsPageHeader.inc:32
 #: includes/PDFStockLocTransferHeader.inc:31
 #: includes/PDFTransPageHeader.inc:191
@@ -2061,7 +2061,7 @@ msgstr ""
 #: SupplierInvoice.php:715 SupplierInvoice.php:739 SupplierInvoice.php:770
 #: SupplierInvoice.php:788 SupplierInvoice.php:801 SupplierInvoice.php:811
 #: SupplierInvoice.php:833 SupplierInvoice.php:857 SupplierInvoice.php:869
-#: TaxAuthorities.php:141 includes/SQL_CommonFunctions.inc:21
+#: TaxAuthorities.php:138 includes/SQL_CommonFunctions.inc:21
 #: includes/SQL_CommonFunctions.inc:28
 msgid "CRITICAL ERROR"
 msgstr ""
@@ -2141,7 +2141,7 @@ msgstr ""
 #: SupplierInvoice.php:715 SupplierInvoice.php:739 SupplierInvoice.php:770
 #: SupplierInvoice.php:788 SupplierInvoice.php:801 SupplierInvoice.php:811
 #: SupplierInvoice.php:833 SupplierInvoice.php:857 SupplierInvoice.php:869
-#: TaxAuthorities.php:141 includes/SQL_CommonFunctions.inc:21
+#: TaxAuthorities.php:138 includes/SQL_CommonFunctions.inc:21
 #: includes/SQL_CommonFunctions.inc:28
 msgid "NOTE DOWN THIS ERROR AND SEEK ASSISTANCE"
 msgstr ""
@@ -2388,7 +2388,7 @@ msgid "The tax GL posting could not be inserted because"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:1339 RecurringSalesOrdersProcess.php:581
-#: Z_DeleteInvoice.php:126
+#: Z_DeleteInvoice.php:125
 msgid "Invoice number"
 msgstr ""
 
@@ -3339,7 +3339,7 @@ msgid "Fax No"
 msgstr ""
 
 #: CustomerBranches.php:291 CustomerBranches.php:543 EmailCustTrans.php:15
-#: EmailCustTrans.php:57 Locations.php:416 OrderDetails.php:136
+#: EmailCustTrans.php:57 Locations.php:420 OrderDetails.php:136
 #: PO_PDFPurchOrder.php:296 PO_PDFPurchOrder.php:299 PrintCustTrans.php:655
 #: PrintCustTrans.php:842 PrintCustTrans.php:884 SupplierContacts.php:142
 #: SupplierContacts.php:226 UserSettings.php:158 WWW_Users.php:214
@@ -4537,12 +4537,12 @@ msgstr ""
 msgid "Street"
 msgstr ""
 
-#: DeliveryDetails.php:591 Locations.php:408 PO_Header.php:366
+#: DeliveryDetails.php:591 Locations.php:412 PO_Header.php:366
 #: RecurringSalesOrders.php:365
 msgid "Suburb"
 msgstr ""
 
-#: DeliveryDetails.php:596 Locations.php:410 PO_Header.php:369
+#: DeliveryDetails.php:596 Locations.php:414 PO_Header.php:369
 #: RecurringSalesOrders.php:369
 msgid "City"
 msgstr ""
@@ -7047,48 +7047,52 @@ msgstr ""
 msgid "branches set up to use this location by default"
 msgstr ""
 
-#: Locations.php:296 Locations.php:395 Locations.php:398
+#: Locations.php:296
+msgid "There are no locations that match up with a tax province record to display. Check that tax provinces are set up for all dispatch locations"
+msgstr ""
+
+#: Locations.php:300 Locations.php:399 Locations.php:402
 msgid "Location Code"
 msgstr ""
 
-#: Locations.php:297 Locations.php:402
+#: Locations.php:301 Locations.php:406
 msgid "Location Name"
 msgstr ""
 
-#: Locations.php:298 Locations.php:419 TaxAuthorityRates.php:80
+#: Locations.php:302 Locations.php:423 TaxAuthorityRates.php:80
 msgid "Tax Province"
 msgstr ""
 
-#: Locations.php:299
+#: Locations.php:303
 msgid "Managed"
 msgstr ""
 
-#: Locations.php:346 Shippers.php:150
+#: Locations.php:350 Shippers.php:150
 msgid "REVIEW RECORDS"
 msgstr ""
 
-#: Locations.php:404
+#: Locations.php:408
 msgid "Contact for deliveries"
 msgstr ""
 
-#: Locations.php:406
+#: Locations.php:410
 msgid "Delivery Street"
 msgstr ""
 
-#: Locations.php:410
+#: Locations.php:414
 msgid "State"
 msgstr ""
 
-#: Locations.php:412 SalesPeople.php:272 SupplierContacts.php:220
+#: Locations.php:416 SalesPeople.php:272 SupplierContacts.php:220
 #: WWW_Users.php:334
 msgid "Telephone No"
 msgstr ""
 
-#: Locations.php:414 SalesPeople.php:273 SupplierContacts.php:222
+#: Locations.php:418 SalesPeople.php:273 SupplierContacts.php:222
 msgid "Facsimile No"
 msgstr ""
 
-#: Locations.php:433
+#: Locations.php:437
 msgid "Enable Warehouse Management"
 msgstr ""
 
@@ -10932,27 +10936,27 @@ msgstr ""
 msgid "You should automatically be forwarded to the CSV Sales Analysis file when it is ready"
 msgstr ""
 
-#: SalesCategories.php:43 Stocks.php:28 Z_MakeNewCompany.php:55
+#: SalesCategories.php:43 Stocks.php:28 Z_MakeNewCompany.php:50
 msgid "Only jpg files are supported - a file extension of .jpg is expected"
 msgstr ""
 
-#: SalesCategories.php:46 Stocks.php:31 Z_MakeNewCompany.php:58
+#: SalesCategories.php:46 Stocks.php:31 Z_MakeNewCompany.php:53
 msgid "The file size is over the maximum allowed. The maximum size allowed in KB is"
 msgstr ""
 
-#: SalesCategories.php:49 Stocks.php:34 Z_MakeNewCompany.php:61
+#: SalesCategories.php:49 Stocks.php:34 Z_MakeNewCompany.php:56
 msgid "Only graphics files can be uploaded"
 msgstr ""
 
-#: SalesCategories.php:52 Stocks.php:37 Z_MakeNewCompany.php:64
+#: SalesCategories.php:52 Stocks.php:37 Z_MakeNewCompany.php:59
 msgid "Attempting to overwrite an existing item image"
 msgstr ""
 
-#: SalesCategories.php:55 Stocks.php:40 Z_MakeNewCompany.php:67
+#: SalesCategories.php:55 Stocks.php:40 Z_MakeNewCompany.php:62
 msgid "The existing image could not be removed"
 msgstr ""
 
-#: SalesCategories.php:62 Stocks.php:47 Z_MakeNewCompany.php:109
+#: SalesCategories.php:62 Stocks.php:47 Z_MakeNewCompany.php:139
 msgid "File url"
 msgstr ""
 
@@ -13596,7 +13600,7 @@ msgstr ""
 msgid "Total quantity"
 msgstr ""
 
-#: Stocks.php:47 Z_MakeNewCompany.php:109
+#: Stocks.php:47 Z_MakeNewCompany.php:139
 msgid "Something is wrong with uploading a file"
 msgstr ""
 
@@ -15936,100 +15940,100 @@ msgstr ""
 msgid "Uses the function DB_Maintenance defined in ConnectDB_XXXX.inc to perform database maintenance tasks, to run at regular intervals - checked at each and every user login"
 msgstr ""
 
-#: TaxAuthorities.php:8 TaxAuthorityRates.php:123
+#: TaxAuthorities.php:8 TaxAuthorityRates.php:124
 msgid "Tax Authorities"
 msgstr ""
 
-#: TaxAuthorities.php:26
+#: TaxAuthorities.php:25
 msgid "The tax type description may not be empty"
 msgstr ""
 
-#: TaxAuthorities.php:45
+#: TaxAuthorities.php:44
 msgid "The update of this tax authority failed because"
 msgstr ""
 
-#: TaxAuthorities.php:48
+#: TaxAuthorities.php:47
 msgid "The tax authority for record has been updated"
 msgstr ""
 
-#: TaxAuthorities.php:73
+#: TaxAuthorities.php:71
 msgid "The addition of this tax authority failed because"
 msgstr ""
 
-#: TaxAuthorities.php:76
+#: TaxAuthorities.php:74
 msgid "The new tax authority record has been added to the database"
 msgstr ""
 
-#: TaxAuthorities.php:117
+#: TaxAuthorities.php:114
 msgid "Cannot delete this tax authority because there are tax groups defined that use it"
 msgstr ""
 
-#: TaxAuthorities.php:122
+#: TaxAuthorities.php:119
 msgid "The selected tax authority record has been deleted"
 msgstr ""
 
-#: TaxAuthorities.php:141
+#: TaxAuthorities.php:138
 msgid "The defined tax authorities could not be retrieved because"
 msgstr ""
 
-#: TaxAuthorities.php:142
+#: TaxAuthorities.php:139
 msgid "The following SQL to retrieve the tax authorities was used"
 msgstr ""
 
-#: TaxAuthorities.php:147
+#: TaxAuthorities.php:144
 msgid "ID"
 msgstr ""
 
-#: TaxAuthorities.php:149 Tax.php:329
+#: TaxAuthorities.php:146 Tax.php:329
 msgid "Input Tax"
 msgstr ""
 
-#: TaxAuthorities.php:150 Tax.php:327
+#: TaxAuthorities.php:147 Tax.php:327
 msgid "Output Tax"
 msgstr ""
 
-#: TaxAuthorities.php:151
+#: TaxAuthorities.php:148
 msgid "Bank"
 msgstr ""
 
-#: TaxAuthorities.php:153
+#: TaxAuthorities.php:150
 msgid "Bank Act Type"
 msgstr ""
 
-#: TaxAuthorities.php:154
+#: TaxAuthorities.php:151
 msgid "Bank Swift"
 msgstr ""
 
-#: TaxAuthorities.php:169
+#: TaxAuthorities.php:164
 #, php-format
 msgid "Edit Rates"
 msgstr ""
 
-#: TaxAuthorities.php:199
+#: TaxAuthorities.php:194
 msgid "Reveiw all defined tax authority records"
 msgstr ""
 
-#: TaxAuthorities.php:245
+#: TaxAuthorities.php:240
 msgid "Tax Type Description"
 msgstr ""
 
-#: TaxAuthorities.php:248
+#: TaxAuthorities.php:243
 msgid "Output tax GL Account"
 msgstr ""
 
-#: TaxAuthorities.php:266
+#: TaxAuthorities.php:261
 msgid "Input tax GL Account"
 msgstr ""
 
-#: TaxAuthorities.php:281
+#: TaxAuthorities.php:276
 msgid "Bank Name"
 msgstr ""
 
-#: TaxAuthorities.php:283
+#: TaxAuthorities.php:278
 msgid "Bank Account Type"
 msgstr ""
 
-#: TaxAuthorities.php:287
+#: TaxAuthorities.php:282
 msgid "Bank Swift No"
 msgstr ""
 
@@ -16065,19 +16069,23 @@ msgstr ""
 msgid "Tax Rate"
 msgstr ""
 
-#: TaxAuthorityRates.php:120
+#: TaxAuthorityRates.php:116
 msgid "Update Rates"
 msgstr ""
 
-#: TaxAuthorityRates.php:124
+#: TaxAuthorityRates.php:119
+msgid "There are no tax rates to show - perhaps the dispatch tax province records have not yet been created?"
+msgstr ""
+
+#: TaxAuthorityRates.php:125
 msgid "Tax Groupings"
 msgstr ""
 
-#: TaxAuthorityRates.php:125 TaxCategories.php:8 TaxCategories.php:169
+#: TaxAuthorityRates.php:126 TaxCategories.php:8 TaxCategories.php:169
 msgid "Tax Categories"
 msgstr ""
 
-#: TaxAuthorityRates.php:126 TaxProvinces.php:8
+#: TaxAuthorityRates.php:127 TaxProvinces.php:8
 msgid "Dispatch Tax Provinces"
 msgstr ""
 
@@ -16145,7 +16153,7 @@ msgstr ""
 msgid "Could not retrieve the requested tax category, please try again."
 msgstr ""
 
-#: TaxCategories.php:229 TaxProvinces.php:221
+#: TaxCategories.php:229
 msgid "Tax Category Name"
 msgstr ""
 
@@ -16479,6 +16487,10 @@ msgstr ""
 
 #: TaxProvinces.php:205
 msgid "Could not retrieve the requested tax province, please try again."
+msgstr ""
+
+#: TaxProvinces.php:221
+msgid "Tax Province Name"
 msgstr ""
 
 #: TaxProvinces.php:232
@@ -17902,11 +17914,11 @@ msgstr ""
 msgid "this deleted all sales analysis for the customer/branch and items on this invoice"
 msgstr ""
 
-#: Z_DeleteInvoice.php:122
+#: Z_DeleteInvoice.php:121
 msgid "The SQL to delete the stock movement records failed because"
 msgstr ""
 
-#: Z_DeleteInvoice.php:124
+#: Z_DeleteInvoice.php:123
 msgid "The stock movement records associated with the invoice have been deleted"
 msgstr ""
 
@@ -18172,80 +18184,80 @@ msgstr ""
 msgid "Make New Company Database Utility"
 msgstr ""
 
-#: Z_MakeNewCompany.php:22
-msgid "This script does not work for postgres"
+#: Z_MakeNewCompany.php:24
+msgid "The web-server does not appear to be able to write to the companies directory to create the required directories for the new company and to upload the logo to. The system administrator will need to modify the permissions on your installation before a new company can be created"
 msgstr ""
 
-#: Z_MakeNewCompany.php:36
+#: Z_MakeNewCompany.php:34
 msgid "Company abbreviations must not contain spaces, \\& or \" or '"
 msgstr ""
 
-#: Z_MakeNewCompany.php:80
+#: Z_MakeNewCompany.php:94
 msgid "The script to create the new company database failed because"
 msgstr ""
 
-#: Z_MakeNewCompany.php:98
+#: Z_MakeNewCompany.php:128
 msgid "Attempting to create the new company directories"
 msgstr ""
 
-#: Z_MakeNewCompany.php:113
+#: Z_MakeNewCompany.php:143
 msgid "This company cannot be added because either it already exists or no logo is being uploaded!"
 msgstr ""
 
-#: Z_MakeNewCompany.php:153
+#: Z_MakeNewCompany.php:183
 msgid "The new company database has been created for"
 msgstr ""
 
-#: Z_MakeNewCompany.php:153
+#: Z_MakeNewCompany.php:183
 msgid " "
 msgstr ""
 
-#: Z_MakeNewCompany.php:153
+#: Z_MakeNewCompany.php:183
 msgid "NewCompany"
 msgstr ""
 
-#: Z_MakeNewCompany.php:153
+#: Z_MakeNewCompany.php:183
 msgid ". "
 msgstr ""
 
-#: Z_MakeNewCompany.php:153
+#: Z_MakeNewCompany.php:183
 msgid "The company details and parameters should now be set up for the new company. NB: Only a single user \"demo\" is defined with the password \"weberp\" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately."
 msgstr ""
 
-#: Z_MakeNewCompany.php:155
+#: Z_MakeNewCompany.php:185
 msgid "Set Up New Company Details"
 msgstr ""
 
-#: Z_MakeNewCompany.php:156
+#: Z_MakeNewCompany.php:186
 msgid "Set Up Configuration Details"
 msgstr ""
 
-#: Z_MakeNewCompany.php:157
+#: Z_MakeNewCompany.php:187
 msgid "Set Up User Accounts"
 msgstr ""
 
-#: Z_MakeNewCompany.php:170
+#: Z_MakeNewCompany.php:200
 msgid "This utility will create a new company"
 msgstr ""
 
-#: Z_MakeNewCompany.php:171
+#: Z_MakeNewCompany.php:201
 msgid "If the company name already exists then you cannot recreate it"
 msgstr ""
 
-#: Z_MakeNewCompany.php:171 Z_poAddLanguage.php:83 Z_poEditLangHeader.php:78
+#: Z_MakeNewCompany.php:201 Z_poAddLanguage.php:83 Z_poEditLangHeader.php:78
 #: Z_poEditLangModule.php:121 Z_poRebuildDefault.php:50
 msgid "PLEASE NOTE"
 msgstr ""
 
-#: Z_MakeNewCompany.php:176
+#: Z_MakeNewCompany.php:206
 msgid "Enter 10 lower case character abbreviation for the company"
 msgstr ""
 
-#: Z_MakeNewCompany.php:178
+#: Z_MakeNewCompany.php:208
 msgid "Logo Image File (.jpg)"
 msgstr ""
 
-#: Z_MakeNewCompany.php:181 Z_poAddLanguage.php:92 Z_poEditLangModule.php:206
+#: Z_MakeNewCompany.php:211 Z_poAddLanguage.php:92 Z_poEditLangModule.php:206
 #: Z_poRebuildDefault.php:54
 msgid "Proceed"
 msgstr ""

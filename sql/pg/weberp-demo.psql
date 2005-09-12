@@ -3126,7 +3126,7 @@ COPY taxauthrates (taxauthority, dispatchtaxprovince, taxcatid, taxrate) FROM st
 --
 
 COPY www_users (userid, "password", realname, customerid, phone, email, defaultlocation, fullaccess, lastvisitdate, branchcode, pagesize, modulesallowed, blocked, displayrecordsmax, theme, "language", pinno, swipecard) FROM stdin;
-demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2005-09-01 19:56:13		A4	1,1,1,1,1,1,1,1,	0	50	fresh	en_GB	\N	\N
+demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2005-09-10 16:58:22		A4	1,1,1,1,1,1,1,1,	0	50	fresh	en_GB	\N	\N
 \.
 
 
@@ -3705,6 +3705,7 @@ DefaultPriceList	WS
 Default_Shipper	1
 DoFreightCalc	0
 FreightChargeAppliesIfLessThan	1000
+DB_Maintenance_LastRun	2005-09-10
 TaxAuthorityReferenceName	Tax Ref
 NumberOfPeriodsOfStockUsage	12
 Check_Qty_Charged_vs_Del_Qty	1
@@ -3715,7 +3716,6 @@ PO_AllowSameItemMultipleTimes	1
 YearEnd	3
 PageLength	48
 MaxImageSize	300
-DB_Maintenance_LastRun	2005-08-27
 EDIHeaderMsgId	D:01B:UN:EAN010
 EDIReference	WEBERP
 EDI_MsgPending	EDI_Pending

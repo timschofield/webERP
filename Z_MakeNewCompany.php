@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 15;
 
@@ -18,31 +18,26 @@ $title = _('Make New Company Database Utility');
 
 include('includes/header.inc');
 
-if($dbType=='postgres'){
-	prnMsg(_('This script does not work for postgres'),'error');
-	include('includes/footer.inc');
-	exit;
-}
-
-
 /* Your webserver user MUST have read/write access to here,
 	otherwise you'll be wasting your time */
+if (! is_writeable('./companies/')){
+		prnMsg(_('The web-server does not appear to be able to write to the companies directory to create the required directories for the new company and to upload the logo to. The system administrator will need to modify the permissions on your installation before a new company can be created'),'error');
+		include('includes/footer.inc');
+		exit;
+}
 
+ 
 if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 	
 	if(strlen($_POST['NewCompany'])>10 
 		OR ContainsIllegalCharacters($_POST['NewCompany'])){
-		
 		prnMsg(_('Company abbreviations must not contain spaces, \& or " or \''),'error');
 	} else {
 				
 		$_POST['NewCompany'] = strtolower($_POST['NewCompany']);
-		
 		echo '<CENTER>';
 		echo '<FORM METHOD="post" ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
-	
 		/* check for directory existence */
-		    
 		if (!file_exists('./companies/' . $_POST['NewCompany']) 
 				AND (isset($_FILES['LogoFile']) AND $_FILES['LogoFile']['name'] !='')) {
 			
@@ -73,25 +68,58 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 			
 			$result = DB_query('CREATE DATABASE ' . $_POST['NewCompany'],$db);
 			
-			mysql_select_db($_POST['NewCompany'],$db);
-			$SQLScriptFile = file('./sql/mysql/weberp-new.sql');
+			if ($dbType=='postgres'){
+				
+				$PgConnStr = 'dbname=' . $_POST['NewCompany'];
+				if ( isset($host) && ($host != "")) {
+					$PgConnStr = 'host=' . $host . ' ' . $PgConnStr;
+				}
+
+				if (isset( $dbuser ) && ($dbuser != "")) {
+    					// if we have a user we need to use password if supplied
+    					$PgConnStr .= " user=".$dbuser;
+    					if ( isset( $dbpassword ) && ($dbpassword != "") ) {
+						$PgConnStr .= " password=".$dbpassword;
+    					}
+				}
+				$db = pg_connect( $PgConnStr );
+				$SQLScriptFile = file('./sql/pg/weberp-new.psql');
+			
+			} elseif ($dbType ='mysql') { //its a mysql db
+				mysql_select_db($_POST['NewCompany'],$db);
+				$SQLScriptFile = file('./sql/mysql/weberp-new.sql');
+			}
 				
 			$ScriptFileEntries = sizeof($SQLScriptFile);
 			$ErrMsg = _('The script to create the new company database failed because');
 			$SQL ='';
+			$InAFunction = false;
+			
 			for ($i=0; $i<=$ScriptFileEntries; $i++) {
-												
-				if (strstr($SQLScriptFile[$i],'--') == FALSE 
-					AND strstr($SQLScriptFile[$i],addslashes('/*'))==FALSE 
+				
+				$SQLScriptFile[$i] = trim($SQLScriptFile[$i]);
+					
+				if (substr($SQLScriptFile[$i], 0, 2) != '--' 
+					AND substr($SQLScriptFile[$i], 0, 3) != 'USE' 
+					AND strstr($SQLScriptFile[$i],'/*')==FALSE 
 					AND strlen($SQLScriptFile[$i])>1){
-					
-					$SQL .= ' ' . trim($SQLScriptFile[$i]);
-					
-					if (strpos($SQLScriptFile[$i],';')>0){
+						
+					$SQL .= ' ' . $SQLScriptFile[$i];
+
+					//check if this line kicks off a function definition - pg chokes otherwise
+					if (substr($SQLScriptFile[$i],0,15) == 'CREATE FUNCTION'){
+						$InAFunction = true;
+					}
+					//check if this line completes a function definition - pg chokes otherwise
+ 					if (substr($SQLScriptFile[$i],0,8) == 'LANGUAGE'){
+						$InAFunction = false;
+					}
+					if (strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
 						$SQL = substr($SQL,0,strlen($SQL)-1);
-						$result = DB_query($SQL,$db,$ErrMsg);
+						$result = DB_query($SQL, $db, $ErrMsg);
 						$SQL='';
 					}
+					
 				} //end if its a valid sql line not a comment
 			} //end of for loop around the lines of the sql script
 			
@@ -127,7 +155,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 			include('includes/footer.inc');
 			exit;
 		}
-		
+	
 		$_SESSION['DatabaseName'] = $_POST['NewCompany'];
 		
 		unset ($_SESSION['CustomerID']);
@@ -136,15 +164,15 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 		unset ($_SESSION['Items']);
 		unset ($_SESSION['CreditItems']);
 		
-		$SQL ='UPDATE config SET confvalue="companies/' . $_POST['NewCompany'] . '/EDI__Sent" WHERE confname="EDI_MsgSent"';
+		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewCompany'] . "/EDI__Sent' WHERE confname='EDI_MsgSent'";
 		$result = DB_query($SQL,$db);
-		$SQL ='UPDATE config SET confvalue="companies/' . $_POST['NewCompany'] . '/EDI_Incoming_Orders" WHERE confname="EDI_Incoming_Orders"';
+		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewCompany'] . "/EDI_Incoming_Orders' WHERE confname='EDI_Incoming_Orders'";
 		$result = DB_query($SQL,$db);
-		$SQL ='UPDATE config SET confvalue="companies/' . $_POST['NewCompany'] . '/part_pics" WHERE confname="part_pics_dir"';
+		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewCompany'] . "/part_pics' WHERE confname='part_pics_dir'";
 		$result = DB_query($SQL,$db);
-		$SQL ='UPDATE config SET confvalue="companies/' . $_POST['NewCompany'] . '/reports" WHERE confname="reports_dir"';
+		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewCompany'] . "/reports' WHERE confname='reports_dir'";
 		$result = DB_query($SQL,$db);
-		$SQL ='UPDATE config SET confvalue="companies/' . $_POST['NewCompany'] . '/EDI_Pending" WHERE confname="EDI_MsgPending"';
+		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewCompany'] . "/EDI_Pending' WHERE confname='EDI_MsgPending'";
 		$result = DB_query($SQL,$db);
 		
 		$ForceConfigReload=true;

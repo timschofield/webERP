@@ -2180,7 +2180,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-09-05');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-09-10');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
@@ -2345,4 +2345,5 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
-INSERT INTO shippers (1,'Default Shipper',0); UPDATE config SET confvalue='1' WHERE confname='Default_Shipper';
+INSERT INTO shippers VALUES (1,'Default Shipper',0);
+UPDATE config SET confvalue='1' WHERE confname='Default_Shipper';
