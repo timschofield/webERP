@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -175,7 +175,7 @@ echo '<P><CENTER><TABLE>
 	</TR>
 </TABLE>';
 
-echo '<INPUT TYPE=SUBMIT NAME=ProcessDeletions VALUE=' . _('Process') . '>';
+echo '<INPUT TYPE=SUBMIT NAME=ProcessDeletions VALUE="' . _('Process') . '"  onclick="return confirm(\'' . _('Are You Really REALLY Sure?') . '\');">';
 
 echo '</FORM>';
 

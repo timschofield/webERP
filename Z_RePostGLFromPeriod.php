@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity=15;
 
@@ -31,7 +31,7 @@ if (!isset($_POST['FromPeriod'])){
              </TR>
              </TABLE>';
 
-	echo "<INPUT TYPE=SUBMIT Name='recalc' Value='" . _('Do the Recalculation') . "'></CENTER></FORM>";
+	echo "<INPUT TYPE=SUBMIT Name='recalc' Value='" . _('Do the Recalculation') . "'   onclick=\"return confirm('" . _('Are you sure you wish to re-post all general ledger transactions since the selected period .... this can take some time?') . '\');"></CENTER></FORM>';
 
 } else {  /*OK do the updates */
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $PageSecurity=15;
 
 
@@ -65,7 +65,8 @@ echo '<TR><TD>' . _('Percentage Increase (positive) or decrease (negative)') . "
                 <TD><INPUT name='IncreasePercent' SIZE=4 MAXLENGTH=4 VALUE=" . $_POST['IncreasePercent'] . "></TD></TR></TABLE>";
 
 
-echo "<P><INPUT TYPE=SUBMIT NAME='UpdatePrices' VALUE='" . _('Update Prices') . "'></CENTER>";
+echo "<P><INPUT TYPE=SUBMIT NAME='UpdatePrices' VALUE='" . _('Update Prices') . '\'  onclick="return confirm(\'' . _('Are you sure you wish to update all the prices according to the criteria selected?') . '\');"></CENTER>';
+
 echo '</FORM>';
 
 if (isset($_POST['UpdatePrices']) AND isset($_POST['StkCat'])){

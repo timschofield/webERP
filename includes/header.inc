@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
@@ -52,7 +52,9 @@
 
 		}
 
-		echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="0" HREF="' . $rootpath . '/Logout.php?' . SID . '"><U>0</U>. ' . _('Logout') . '</A></TD>';
+		echo "<TD CLASS=\"quick_menu_tabs\" ALIGN=\"center\"><A ACCESSKEY=\"0\" HREF=\"" . $rootpath . '/Logout.php?' . SID . "\" onclick=\"return confirm('" . _('Are you sure you wish to logout?') . "');\"><U>0</U> "  . _('Logout') . '</A></TD>'; 
+		
+		
 
 		echo '</TR></TABLE>';
 		echo '</TD></TR></TABLE>';

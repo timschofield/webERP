@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
@@ -756,7 +756,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		
 			echo '<TD ALIGN=RIGHT>' . $DisplayTaxAmount . '</TD>
 				<TD ALIGN=RIGHT>' . $DisplayGrossLineTotal . '</TD>
-				<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $LineItem->LineNumber . '">' . _('Delete') . '</A></TD>
+				<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $LineItem->LineNumber . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this line item from the credit note?') . '\');">' . _('Delete') . '</A></TD>
 				</TR>';
 
 			echo $RowStarter;
@@ -900,7 +900,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		  if (!isset($_POST['ProcessCredit'])){
 				    echo '<CENTER><INPUT TYPE=SUBMIT NAME="Update" VALUE="' . _('Update') . '">
-                  				<INPUT TYPE=SUBMIT NAME="CancelCredit" VALUE="' . _('Cancel') . '">
+                  				<INPUT TYPE=SUBMIT NAME="CancelCredit" VALUE="' . _('Cancel') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel the whole of this credit note?') . '\');">
                   				<INPUT TYPE=SUBMIT NAME="ProcessCredit" VALUE="' . _('Process Credit Note') . '"></CENTER><HR>';
 		  }
 	 } # end of if lines

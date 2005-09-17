@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 
 require('includes/DefineCartClass.php');
 
@@ -977,7 +977,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				echo '<INPUT TYPE=HIDDEN NAME="Price_' . $OrderLine->LineNumber . '" VALUE=' . $OrderLine->Price . '>';
 			}
 
-			echo '<TD ALIGN=RIGHT>' . $DisplayLineTotal . '</FONT></TD><TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $OrderLine->LineNumber . '">' . _('Delete') . '</A></TD></TR>';
+			echo '<TD ALIGN=RIGHT>' . $DisplayLineTotal . '</FONT></TD><TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . _('Delete') . '</A></TD></TR>';
 
 			echo $RowStarter;
 			echo '<TD COLSPAN=7><TEXTAREA  NAME="Narrative_' . $OrderLine->LineNumber . '" cols=100% rows=1>' . $OrderLine->Narrative . '</TEXTAREA><BR><HR></TD></TR>';
@@ -1162,7 +1162,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	}
 	if ($_SESSION['Items']->ItemsOrdered >=1){
-      		echo '<CENTER><BR><INPUT TYPE=SUBMIT NAME="CancelOrder" VALUE="' . _('Cancel Whole Order') . '"></CENTER>';
+      		echo '<CENTER><BR><INPUT TYPE=SUBMIT NAME="CancelOrder" VALUE="' . _('Cancel Whole Order') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this entire order?') . '\');"></CENTER>';
 	}
 }#end of else not selecting a customer
 

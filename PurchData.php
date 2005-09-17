@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 4;
 
@@ -215,7 +215,7 @@ if (!isset($_GET['Edit'])){
 		<TD ALIGN=RIGHT>%s " . _('days') . "</TD>
 		<TD>%s</TD>
 		<TD><A HREF='%s?%s&StockID=%s&SupplierID=%s&Edit=1'>" . _('Edit') . "</a></TD>
-		<TD><A HREF='%s?%s&StockID=%s&SupplierID=%s&Delete=1'>" . _('Delete') . "</a></TD>
+		<TD><A HREF='%s?%s&StockID=%s&SupplierID=%s&Delete=1' onclick=\"return confirm('" . _('Are you sure you wish to delete this suppliers price?') . "');\">" . _('Delete') . "</a></TD>
 		</tr>",
 		$myrow['suppname'],
 		number_format($myrow['price'],2),

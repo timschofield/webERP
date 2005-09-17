@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 /*need to allow this script to run from Cron or windows scheduler */
 $AllowAnyone = true;
@@ -39,7 +39,7 @@ $sql = 'SELECT recurringsalesorders.recurrorderno,
 		debtorsmaster.currcode,
 		salestypes.sales_type,
 		custbranch.area,
-		custbranch.taxauthority,
+		custbranch.taxgroupid,
 		taxauthorities.taxglcode,
 		locations.contact,
 		locations.email

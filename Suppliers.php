@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 5;
 
@@ -668,7 +668,7 @@ if (!isset($SupplierID)) {
 	} else {
 		echo "</TABLE><P><CENTER><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Update Supplier') . "'>";
 		echo '<P><FONT COLOR=red><B>' . _('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed') . '<BR></FONT></B>';
-		echo "<INPUT TYPE='Submit' NAME='delete' VALUE='" . _('Delete Supplier') . "'></FORM>";
+		echo "<INPUT TYPE='Submit' NAME='delete' VALUE='" . _('Delete Supplier') . "' onclick=\"return confirm('" . _('Are you sure you wish to delete this supplier?') . "');\"></FORM>";
 		echo "<BR><CENTER><A HREF='$rootpath/SupplierContacts.php?" . SID . "SupplierID=$SupplierID'>" . _('Review Contact Details') . '</A></CENTER>';
 	}
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 2;
 
@@ -300,7 +300,7 @@ while ($myrow = DB_fetch_array($result)) {
 		<td><a href=\"%s/SalesAnalReptCols.php?" . SID . "&ReportID=%s\">" . _('Define Columns') . "</A></td>
 		<td><a href=\"%s/SalesAnalysis_UserDefined.php?" . SID . "&ReportID=%s&ProducePDF=True\">" . _('Make PDF Report') . "</A></td>
 		<td><a href=\"%s/SalesAnalysis_UserDefined.php?" . SID . "&ReportID=%s&ProduceCVSFile=True\">" . _('Make CSV File') . "</A></td>
-		<td><a href=\"%s&SelectedReport=%s&delete=1\">" . _('Delete') . "</td>
+		<td><a href=\"%s&SelectedReport=%s&delete=1\" onclick=\"return confirm('" . _('Are you sure you wish to remove this report design?') . "');\">" . _('Delete') . "</td>
 		</tr>",
 		$myrow[0],
 		$myrow[1],

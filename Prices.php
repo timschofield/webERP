@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 2;
 
@@ -173,7 +173,7 @@ if ($InputError ==0){
 			        <td>%s</td>
 				<td ALIGN=RIGHT>%0.2f</td>
 				<td><a href='%s?%s&Item=%s&TypeAbbrev=%s&CurrAbrev=%s&Price=%s&Edit=1'>" . _('Edit') . "</td>
-				<td><a href='%s?%s&Item=%s&TypeAbbrev=%s&CurrAbrev=%s&delete=yes'>" . _('Delete') . "</td></tr>",
+				<td><a href='%s?%s&Item=%s&TypeAbbrev=%s&CurrAbrev=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this price?') . "');\">" . _('Delete') . '</td></tr>',
 				$myrow['currency'],
 				$myrow['sales_type'],
 				$myrow['price'],

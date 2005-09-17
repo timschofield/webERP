@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 3;
 
@@ -533,7 +533,8 @@ if (!isset($DebtorNo)) {
 	if ($_POST['New']) {
 		echo "</TABLE><CENTER><input type='Submit' name='submit' value='" . _('Add New Customer') . "'><BR><INPUT TYPE=SUBMIT name='reset' VALUE='" . _('Reset') . "'></FORM>";
 	} else {
-		echo "</TABLE><HR><CENTER><input type='Submit' name='submit' value='" . _('Update Customer') . "'><HR><FONT COLOR=RED><B>" . _('Be careful there is no second warning if you hit the DELETE button below') . "<B><BR><input type='Submit' name='delete' font='14' value='" . _('Delete Customer') . "'>";
+		echo "</TABLE><HR><CENTER><input type='Submit' name='submit' value='" . _('Update Customer') . "'><HR><FONT COLOR=RED><B>" . _('Be careful there is no second warning if you hit the DELETE button below') . "<B><BR>";
+		echo '<P><input type="Submit" name="delete" value="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';
 	}
 } // end of main ifs
 

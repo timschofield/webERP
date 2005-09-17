@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /* This is where the details specific to the recurring order are entered and the template committed to the database once the Process button is hit */
 
 include('includes/DefineCartClass.php');
@@ -480,7 +480,7 @@ if ($NewRecurringOrder=='Yes'){
 	
 	echo "<INPUT TYPE=SUBMIT NAME='Process' VALUE='" . _('Update Reccurring Order Details') . "'>";
 	echo '<HR>';
-	echo '<BR><BR><INPUT TYPE=SUBMIT NAME="DeleteRecurringOrder" VALUE="' . _('Delete Recurring Order') . ' ' . $_POST['ExistingRecurrOrderNo'] . '">';
+	echo '<BR><BR><INPUT TYPE=SUBMIT NAME="DeleteRecurringOrder" VALUE="' . _('Delete Recurring Order') . ' ' . $_POST['ExistingRecurrOrderNo'] . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this recurring order template?') . '\');">';
 }
 
 echo '</FORM></CENTER>';

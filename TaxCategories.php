@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 $PageSecurity = 15;
 
@@ -56,10 +56,11 @@ if (isset($_POST['submit'])) {
 				// This is probably the safest way there is
 				$myrow = DB_fetch_row($result);
 				$OldTaxCategoryName = $myrow[0];
-				$sql = array();
-				$sql[] = "UPDATE taxcategories
+				$sql = "UPDATE taxcategories
 					SET taxcatname='" . DB_escape_string($_POST['TaxCategoryName']) . "'
 					WHERE taxcatname ".LIKE." '".$OldTaxCategoryName."'";
+				$ErrMsg = _('The tax category could not be updated');
+				$result = DB_query($sql,$db,$ErrMsg);
 			} else {
 				$InputError = 1;
 				prnMsg( _('The tax category no longer exists'),'error');
@@ -76,36 +77,32 @@ if (isset($_POST['submit'])) {
 			$InputError = 1;
 			prnMsg( _('The tax category cannot be created because another with the same name already exists'),'error');
 		} else {
+			$result = DB_query('BEGIN',$db);
 			$sql = "INSERT INTO taxcategories (
 						taxcatname )
 				VALUES (
 					'" . DB_escape_string($_POST['TaxCategoryName']) ."'
 					)";
+			$ErrMsg = _('The new tax category could not be added');
+			$result = DB_query($sql,$db,$ErrMsg,true);
+			
+			$LastTaxCatID = DB_Last_Insert_ID($db, 'taxcategories','taxcatid');
+			
+			$sql = 'INSERT INTO taxauthrates (taxauthority, 
+                                                dispatchtaxprovince, 
+                                                taxcatid)
+        				SELECT taxauthorities.taxid,
+                        			taxprovinces.taxprovinceid,
+                        			' . $LastTaxCatID . '
+        			FROM taxauthorities, taxprovinces';
+			$result = DB_query($sql,$db,$ErrMsg,true);
+			
+			$result = DB_query('COMMIT',$db);
 		}
 		$msg = _('New tax category added');
 	}
 
 	if ($InputError!=1){
-		//run the SQL from either of the above possibilites
-		if (is_array($sql)) {
-			$result = DB_query('BEGIN',$db);
-			$tmpErr = _('Could not update tax category');
-			$tmpDbg = _('The sql that failed was') . ':';
-			foreach ($sql as $stmt ) {
-				$result = DB_query($stmt,$db, $tmpErr,$tmpDbg,true);
-				if(!$result) {
-					$InputError = 1;
-					break;
-				}
-			}
-			if ($InputError!=1){
-				$result = DB_query('COMMIT',$db);
-			} else {
-				$result = DB_query('ROLLBACK',$db);
-			}
-		} else {
-			$result = DB_query($sql,$db);
-		}
 		prnMsg($msg,'success');
 	}
 	unset ($SelectedTaxCategory);

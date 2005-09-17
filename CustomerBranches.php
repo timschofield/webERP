@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 3;
 
@@ -302,7 +302,7 @@ if (!isset($SelectedBranch)){
 				<td><font size=2><a href=\"Mailto:%s\">%s</a></font></td>
 				<td><font size=2>%s</font></td>
 				<td><font size=2><a href=\"%s?DebtorNo=%s&SelectedBranch=%s\">%s</font></td>
-				<td><font size=2><a href=\"%s?DebtorNo=%s&SelectedBranch=%s&delete=yes\">%s</font></td></tr>",
+				<td><font size=2><a href=\"%s?DebtorNo=%s&SelectedBranch=%s&delete=yes\" onclick=\"return confirm('" . _('Are you sure you wish to delete this branch?') . "');\">%s</font></td></tr>",
 				$myrow[10],
 				$myrow[2],
 				$myrow[5],
