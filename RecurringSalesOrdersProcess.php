@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 /*need to allow this script to run from Cron or windows scheduler */
 $AllowAnyone = true;
@@ -40,7 +40,6 @@ $sql = 'SELECT recurringsalesorders.recurrorderno,
 		salestypes.sales_type,
 		custbranch.area,
 		custbranch.taxgroupid,
-		taxauthorities.taxglcode,
 		locations.contact,
 		locations.email
 	FROM recurringsalesorders,
@@ -53,7 +52,6 @@ $sql = 'SELECT recurringsalesorders.recurrorderno,
 	AND recurringsalesorders.debtorno = debtorsmaster.debtorno
 	AND recurringsalesorders.debtorno = custbranch.debtorno
 	AND recurringsalesorders.branchcode = custbranch.branchcode
-	AND custbranch.taxauthority=taxauthorities.taxid 
 	AND recurringsalesorders.fromstkloc=locations.loccode 
 	AND (TO_DAYS(NOW()) - TO_DAYS(recurringsalesorders.lastrecurrence)) > (365/recurringsalesorders.frequency) 
 	AND DATE_ADD(recurringsalesorders.lastrecurrence, ' . INTERVAL ('365/recurringsalesorders.frequency', 'DAY') . ') <= recurringsalesorders.stopdate';
@@ -126,18 +124,23 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 				recurrsalesorderdetails.unitprice,
 				recurrsalesorderdetails.quantity,
 				recurrsalesorderdetails.discountpercent,
-				recurrsalesorderdetails.narrative
-			FROM recurrsalesorderdetails
+				recurrsalesorderdetails.narrative,
+				stockmaster.taxcatid
+			FROM recurrsalesorderdetails INNER JOIN stockmaster
+				ON recurrsalesorderdetails.stkcode = stockmaster.stockid
 			WHERE recurrsalesorderdetails.recurrorderno =" . $RecurrOrderRow['recurrorderno'];
 
 	$ErrMsg = _('The line items of the recurring order cannot be retrieved because');
 	$LineItemsResult = db_query($LineItemsSQL,$db,$ErrMsg);
-
+	
+	$LineCounter = 0;
+	
 	if (db_num_rows($LineItemsResult)>0) {
 
 		$OrderTotal =0; //intialise
 		$OrderLineTotal =0;
 		$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (
+						orderlineno,
 						orderno,
 						stkcode,
 						unitprice,
@@ -148,14 +151,15 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 
 		while ($RecurrOrderLineRow=DB_fetch_array($LineItemsResult)) {
 			$LineItemsSQL = $StartOf_LineItemsSQL .
-					"'" . $RecurrOrderLineRow['stkcode'] . "',
+					"'" . $LineCounter . ",
+					'" . $RecurrOrderLineRow['stkcode'] . "',
 					". $RecurrOrderLineRow['unitprice'] . ',
 					' . $RecurrOrderLineRow['quantity'] . ',
 					' . floatval($RecurrOrderLineRow['discountpercent']) . ",
 					'" . DB_escape_string($RecurrOrderLineRow['narrative']) . "')";
 
 			$Ins_LineItemResult = DB_query($LineItemsSQL,$db);	/*Populating a new order line items*/
-
+			$LineCounter ++;
 		} /* line items from recurring sales order details */
 	} //end if there are line items on the recurring order
 
@@ -197,11 +201,11 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		$myrow = DB_fetch_row($Result);
 		$CurrencyRate = $myrow[0];
 
-		$SQL = "SELECT taxauthority FROM locations WHERE loccode='" . $RecurrOrderRow['fromstkloc'] ."'";
-		$ErrMsg = _('Could not retreive the tax authority of the location from where the order was fulfilled because:');
+		$SQL = "SELECT taxprovinceid FROM locations WHERE loccode='" . $RecurrOrderRow['fromstkloc'] ."'";
+		$ErrMsg = _('Could not retreive the tax province of the location from where the order was fulfilled because:');
 		$Result = DB_query($SQL,$db,$ErrMsg);
 		$myrow=DB_fetch_row($Result);
-		$DispTaxAuth = $myrow[0];
+		$DispTaxProvinceID = $myrow[0];
 
 	/*Now Get the next invoice number - function in SQL_CommonFunctions*/
 		$InvoiceNo = GetNextTransNo(10, $db);
@@ -215,26 +219,66 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		$TotalFXTax = 0;
 
 		DB_data_seek($LineItemsResult,0);
+		
+		$LineCounter =0;
+		
 		while ($RecurrOrderLineRow = DB_fetch_array($LineItemsResult)) {
+		
+			$LineNetAmount = $RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity'] *(1- floatval($RecurrOrderLineRow['discountpercent']));
+				
+			/*Gets the Taxes and rates applicable to this line from the TaxGroup of the branch and TaxCategory of the item 
+			and the taxprovince of the dispatch location */
 
+			$SQL = "SELECT taxgrouptaxes.calculationorder,
+					taxauthorities.description,
+					taxgrouptaxes.taxauthid,
+					taxauthorities.taxglcode,
+					taxgrouptaxes.taxontax,
+					taxauthrates.taxrate
+			FROM taxauthrates INNER JOIN taxgrouptaxes ON
+				taxauthrates.taxauthority=taxgrouptaxes.taxauthid
+				INNER JOIN taxauthorities ON
+				taxauthrates.taxauthority=taxauthorities.taxid
+			WHERE taxgrouptaxes.taxgroupid=" . $RecurrOrderRow['taxgroupid'] . " 
+			AND taxauthrates.dispatchtaxprovince=" . $DispTaxProvinceID . " 
+			AND taxauthrates.taxcatid = " . $RecurrOrderLineRow['taxcatid'] . "
+			ORDER BY taxgrouptaxes.calculationorder";
+
+			$ErrMsg = _('The taxes and rates for this item could not be retreived because');
+			$GetTaxRatesResult = DB_query($SQL,$db,$ErrMsg);
+			
+			$LineTaxAmount = 0;
+			$TaxTotals =array();
+				
+			while ($myrow = DB_fetch_array($GetTaxRatesResult)){
+				
+				$TaxTotals[$myrow['taxauthid']]['GLCode'] = $myrow['taxglcode'];
+				$TaxTotals[$myrow['taxauthid']]['TaxRate'] = $myrow['taxrate'];
+				$TaxTotals[$myrow['taxauthid']]['TaxAuthDescription'] = $myrow['description'];
+				
+				if ($myrow['taxontax'] ==1){
+					  $TaxAuthAmount = ($LineNetAmount+$LineTaxAmount) * $myrow['taxrate'];
+					  $TaxTotals[$myrow['taxauthid']]['FXAmount'] += ($LineNetAmount+$LineTaxAmount) * $myrow['taxrate'];
+				} else {
+					$TaxAuthAmount =  $LineNetAmount * $myrow['taxrate'];
+					$TaxTotals[$myrow['taxauthid']]['FXAmount'] += $LineNetAmount * $myrow['taxrate'];
+				}
+				
+				/*Make an array of the taxes and amounts including GLcodes for later posting - need debtortransid
+				so can only post once the debtor trans is posted - can only post debtor trans when all tax is calculated */
+				$LineTaxes[$LineCounter][$myrow['calculationorder']] = array('TaxCalculationOrder' =>$myrow['calculationorder'],
+												'TaxAuthID' =>$myrow['taxauthid'],
+												'TaxAuthDescription'=>$myrow['description'],
+												'TaxRate'=>$myrow['taxrate'],
+												'TaxOnTax'=>$myrow['taxontax'],
+												'TaxAuthAmount'=>$TaxAuthAmount);
+				$LineTaxAmount += $TaxAuthAmount;
+				
+			}
+					
 			$LineNetAmount = $RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity'] *(1- floatval($RecurrOrderLineRow['discountpercent']));
 
 			$TotalFXNetInvoice += $LineNetAmount;
-			/*Need to get tax level first of the item being invoiced */
-			$SQL = "SELECT taxlevel,
-					categoryid
-				FROM stockmaster
-				WHERE stockid ='" . DB_escape_string($RecurrOrderLineRow['stkcode']) . "'";
-			$ErrMsg = _('The tax level of the item could not be retrieved because:');
-			$Result = DB_query($SQL,$db,$ErrMsg);
-			$myrow = DB_fetch_row($Result);
-			$TaxLevel = $myrow[0];
-			$CategoryID = $myrow[1];
-			
-
-			$TaxRate = GetTaxRate($CustTaxAuth, $DispTaxAuth, $TaxLevel, $db);
-			$LineTaxAmount = $TaxRate *$LineNetAmount;
-			
 			$TotalFXTax += $LineTaxAmount;
 
 			/*Now update SalesOrderDetails for the quantity invoiced and the actual dispatch dates. */
@@ -267,7 +311,6 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 						qty,
 						discountpercent,
 						standardcost,
-						taxrate,
 						narrative
 						)
 					VALUES (
@@ -284,13 +327,33 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 						" . -$RecurrOrderLineRow['quantity'] . ",
 						" . $RecurrOrderLineRow['discountpercent'] . ",
 						0,
-						" . $TaxRate . ",
 						'" . DB_escape_string($RecurrOrderLineRow['narrative']) . "')";
 				
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the stock movement records was used');
 			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
+			/*Get the ID of the StockMove... */
+			$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
+						
+			/*Insert the taxes that applied to this line */
+			foreach ($LineTaxes[$LineCounter] as $Tax) {
+			
+				$SQL = 'INSERT INTO stockmovestaxes (stkmoveno,
+									taxauthid,
+									taxrate,
+									taxcalculationorder,
+									taxontax)
+						VALUES (' . $StkMoveNo . ',
+							' . $Tax['TaxAuthID'] . ',
+							' . $Tax['TaxRate'] . ',
+							' . $Tax['TaxCalculationOrder'] . ',
+							' . $Tax['TaxOnTax'] . ')';
+
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Taxes and rates applicable to this invoice line item could not be inserted because');
+				$DbgMsg = _('The following SQL to insert the stock movement tax detail records was used');
+				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+			}
 			/*Insert Sales Analysis records */
 
 			$SQL="SELECT COUNT(*),
@@ -392,7 +455,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 			if ($_SESSION['CompanyRecord']['gllink_debtors']==1 && $RecurrOrderLineRow['unitprice'] !=0){
 
 				//Post sales transaction to GL credit sales
-				$SalesGLAccounts = GetSalesGLAccount($Area, $RecurrOrderLineRow['stkcode'], $_SESSION['Items']->DefaultSalesType, $db);
+				$SalesGLAccounts = GetSalesGLAccount($Area, $RecurrOrderLineRow['stkcode'], $RecurrOrderRow['ordertype'], $db);
 
 				$SQL = "INSERT INTO gltrans (
 							type,
@@ -416,7 +479,9 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales GL posting could not be inserted because');
 				$DbgMsg = '<BR>' ._('The following SQL to insert the GLTrans record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-
+				
+				/* Don't care about COGS because it can only be a dummy items being invoiced ... no cost of sales to mess with */
+				
 				if ($RecurrOrderLineRow['discountpercent'] !=0){
 
 					$SQL = "INSERT INTO gltrans (
@@ -441,15 +506,49 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales discount GL posting could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				
 				} /*end of if discount !=0 */
-			} /*end of if sales integrated with debtors */
-
+			
+			} /*end of if sales integrated with gl */
+			
+			$LineCounter++;
 		} /*end of OrderLine loop */
 
 		$TotalInvLocalCurr = ($TotalFXNetInvoice + $TotalFXTax + $RecurrOrderRow['freightcost'])/$CurrencyRate;
 		
 		if ($_SESSION['CompanyRecord']['gllink_debtors']==1){
 		
+			/*Now post the tax to the GL at local currency equivalent */
+			if ($_SESSION['CompanyRecord']['gllink_debtors']==1 AND $TaxAuthAmount !=0) {
+			
+			
+				/*Loop through the tax authorities array to post each total to the taxauth glcode */
+				foreach ($TaxTotals as $Tax){
+					$SQL = "INSERT INTO gltrans (
+					type, 
+					typeno, 
+					trandate, 
+					periodno, 
+					account, 
+					narrative, 
+					amount
+					) 
+					VALUES (
+					10, 
+					" . $InvoiceNo . ", 
+					'" . $DelDate. "', 
+					" . $PeriodNo . ", 
+					" . $Tax['TaxGLCode'] . ", 
+					'" . $RecurrOrderRow['debtorno'] . "-" . $Tax['Description'] . "', 
+					" . (-$Tax['FXAmount']/$CurrencyRate) . "
+					)";
+
+					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The tax GL posting could not be inserted because');
+					$DbgMsg = _('The following SQL to insert the tax GLTrans record was used');
+					$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+				}
+			}
+				
 			/*Post debtors transaction to GL debit debtors, credit freight re-charged and credit sales */
 			if (($TotalInvLocalCurr) !=0) {
 				$SQL = "INSERT INTO gltrans (
@@ -502,30 +601,6 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 			}
-			if ($TotalFXTax !=0){
-				$SQL = "INSERT INTO gltrans (
-						type,
-						typeno,
-						trandate,
-						periodno,
-						account,
-						narrative,
-						amount
-						)
-					VALUES (
-						10,
-						" . $InvoiceNo . ",
-						'" . $DelDate . "',
-						" . $PeriodNo . ",
-						" . $RecurrOrderRow['taxglcode'] . ",
-						'" . $RecurrOrderRow['debtorno'] . "',
-						" . (-$TotalFXTax/$CurrencyRate) . "
-					)";
-
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The tax GL posting could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-			}
 		} /*end of if Sales and GL integrated */
 
 	/*Update order header for invoice charged on */
@@ -574,7 +649,31 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction record could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-
+		
+		$DebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
+		
+		
+		
+		
+		
+		
+		
+		
+		$SQL = 'INSERT INTO debtortranstaxes (debtortransid,
+							taxauthid,
+							taxamount)
+				VALUES (' . $DebtorTransID . ',
+					' . $TaxAuthID . ',
+					' . $TaxAmount/$_SESSION['CurrencyRate'] . ')';
+		
+		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction taxes records could not be inserted because');
+		$DbgMsg = _('The following SQL to insert the debtor transaction taxes record was used');
+ 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		
+		
+		
+		
+		
 		$SQL='COMMIT';
 		$Result = DB_query($SQL,$db);
 
