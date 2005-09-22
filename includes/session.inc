@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.38 $ */
+/* $Revision: 1.39 $ */
  
     
 include('config.php');
@@ -175,6 +175,14 @@ if ($_SESSION['HTTPS_Only']==1){
 	}
 }
 
+
+// Run with debugging messages for the system administrator(s) but not anyone else
+if (in_array(15, $_SESSION['AllowedPageSecurityTokens'])) {
+	$debug = 1;
+} else {
+	$debug = 0;
+}
+
 // Now check that the user as logged in has access to the page being called. The $PageSecurity
 // value must be set in the script before header.inc is included. $SecurityGroups is an array of
 // arrays defining access for each group of users. These definitions can be modified by a system admin under setup
@@ -208,12 +216,7 @@ if (!isset($AllowAnyone)){
 		exit;
 	}
 
-	// Run with debugging messages for the system administrator(s) but not anyone else
-	if (in_array(15, $_SESSION['AllowedPageSecurityTokens'])) {
-		$debug = 1;
-	} else {
-		$debug = 0;
-	}
+	
  }
     
 function CryptPass( $Password ) {

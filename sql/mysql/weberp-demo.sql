@@ -15,6 +15,9 @@ SET FOREIGN_KEY_CHECKS = 0;
 --
 -- Table structure for table `accountgroups`
 --
+CREATE DATABASE weberp;
+
+use weberp;
 
 CREATE TABLE `accountgroups` (
   `groupname` char(30) NOT NULL default '',

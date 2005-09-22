@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 /*need to allow this script to run from Cron or windows scheduler */
 $AllowAnyone = true;
@@ -46,13 +46,13 @@ $sql = 'SELECT recurringsalesorders.recurrorderno,
 		debtorsmaster,
 		custbranch,
 		salestypes,
-		taxauthorities,
 		locations
 	WHERE recurringsalesorders.ordertype=salestypes.typeabbrev
 	AND recurringsalesorders.debtorno = debtorsmaster.debtorno
 	AND recurringsalesorders.debtorno = custbranch.debtorno
 	AND recurringsalesorders.branchcode = custbranch.branchcode
 	AND recurringsalesorders.fromstkloc=locations.loccode 
+	AND recurringsalesorders.ordertype=salestypes.typeabbrev
 	AND (TO_DAYS(NOW()) - TO_DAYS(recurringsalesorders.lastrecurrence)) > (365/recurringsalesorders.frequency) 
 	AND DATE_ADD(recurringsalesorders.lastrecurrence, ' . INTERVAL ('365/recurringsalesorders.frequency', 'DAY') . ') <= recurringsalesorders.stopdate';
 
@@ -64,10 +64,14 @@ if (DB_num_rows($RecurrOrdersDueResult)==0){
 	exit;
 }
 
+echo '<BR>The number of recurring orders to process is : ' . DB_num_rows($RecurrOrdersDueResult);
+
 while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 
 	$EmailText ='';
 	echo '<BR>' . _('Recurring order') . ' ' . $RecurrOrderRow['recurrorderno'] . ' ' . _('for') . ' ' . $RecurrOrderRow['debtorno'] . ' - ' . $RecurrOrderRow['branchcode'] . ' ' . _('is being processed');
+	
+	$result = DB_query('BEGIN',$db);
 	
 	/*the last recurrence was the date of the last time the order recurred
 	the frequency is the number of times per annum that the order should recurr
@@ -75,6 +79,8 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 	
 	$DelDate = FormatDateforSQL(DateAdd(ConvertSQLDate($RecurrOrderRow['lastrecurrence']),'d',(365/$RecurrOrderRow['frequency'])));
 
+	echo '<BR>Date calculated for the next recurrence was: ' . $DelDate;
+	
 	$HeaderSQL = "INSERT INTO salesorders (
 				debtorno,
 				branchcode,
@@ -113,7 +119,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 				'" . $DelDate . "')";
 
 	$ErrMsg = _('The order cannot be added because');
-	$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg);
+	$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg,true);
 
 	$OrderNo = DB_Last_Insert_ID($db,'salesorders','orderno');
 	
@@ -140,8 +146,8 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		$OrderTotal =0; //intialise
 		$OrderLineTotal =0;
 		$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (
-						orderlineno,
 						orderno,
+						orderlineno,
 						stkcode,
 						unitprice,
 						quantity,
@@ -151,14 +157,14 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 
 		while ($RecurrOrderLineRow=DB_fetch_array($LineItemsResult)) {
 			$LineItemsSQL = $StartOf_LineItemsSQL .
-					"'" . $LineCounter . ",
+					' ' . $LineCounter . ",
 					'" . $RecurrOrderLineRow['stkcode'] . "',
 					". $RecurrOrderLineRow['unitprice'] . ',
 					' . $RecurrOrderLineRow['quantity'] . ',
 					' . floatval($RecurrOrderLineRow['discountpercent']) . ",
 					'" . DB_escape_string($RecurrOrderLineRow['narrative']) . "')";
 
-			$Ins_LineItemResult = DB_query($LineItemsSQL,$db);	/*Populating a new order line items*/
+			$Ins_LineItemResult = DB_query($LineItemsSQL,$db,_('Could not insert the order lines from the recurring order template'),true);	/*Populating a new order line items*/
 			$LineCounter ++;
 		} /* line items from recurring sales order details */
 	} //end if there are line items on the recurring order
@@ -166,9 +172,11 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 	$sql = "UPDATE recurringsalesorders SET lastrecurrence = '" . $DelDate . "' 
 			WHERE recurrorderno=" . $RecurrOrderRow['recurrorderno'];
 	$ErrMsg = _('Could not update the last recurrence of the recurring order template. The database reported the error:');
-	$Result = DB_query($sql,$db,$ErrMsg);
+	$Result = DB_query($sql,$db,$ErrMsg,true);
 	
-	prnMsg(_('Recurring order was created for') . ' ' . $RecurrOrderRow['name'] . ' ' . _('with order Number') . ' ' . $OrderNo,'success');
+	$Result = DB_query('COMMIT',$db);
+	
+	prnMsg(_('Recurring order was created for') . ' ' . $RecurrOrderRow['name'] . ' ' . _('with order Number') . ' ' . $OrderNo, 'success');
 
 	if ($RecurrOrderRow['autoinvoice']==1){
 		/*Only dummy item orders can have autoinvoice =1
@@ -183,14 +191,13 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 			WHERE custbranch.debtorno ='". $RecurrOrderRow['debtorno'] . "'
 			AND custbranch.branchcode = '" . $RecurrOrderRow['branchcode'] . "'";
 
-		$ErrMsg = _('Unable to determine the area where the sale is to, from the customr branches table, please select an area for this branch');
+		$ErrMsg = _('Unable to determine the area where the sale is to, from the customer branches table, please select an area for this branch');
 		$Result = DB_query($SQL,$db, $ErrMsg);
 		$myrow = DB_fetch_row($Result);
 		$Area = $myrow[0];
 		$DefaultShipVia = $myrow[1];
 		$CustTaxAuth = $myrow[2];
 		DB_free_result($Result);
-
 
 		$SQL = "SELECT rate
 				FROM currencies INNER JOIN debtorsmaster
