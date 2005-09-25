@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 /* R&OS PHP-pdf class code to head up a new page */
 
 if (!$FirstPage){ /* only initiate a new page if its not the first */
@@ -99,7 +99,7 @@ if ($myrow['invaddrbranch']==0){
 	$pdf->addText($XPos, $YPos, $FontSize, $myrow['name']);
 	$pdf->addText($XPos, $YPos-14, $FontSize, $myrow['brpostaddr1']);
 	$pdf->addText($XPos, $YPos-28, $FontSize, $myrow['brpostaddr2']);
-	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['brpostaddr3'] . ' ' . $myrow['brpostaddr4']);
+	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['brpostaddr3'] . ' ' . $myrow['brpostaddr4'] . ' ' . $myrow['brpostaddr5'] . ' ' . $myrow['brpostaddr6']);
 }
 
 
@@ -124,7 +124,7 @@ if ($InvOrCredit=='Credit'){
 	$pdf->addText($XPos, $YPos, $FontSize, $myrow['brname']);
 	$pdf->addText($XPos, $YPos-14, $FontSize, $myrow['braddress1']);
 	$pdf->addText($XPos, $YPos-28, $FontSize, $myrow['braddress2']);
-	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['braddress3'] . ' ' . $myrow['braddress4']);
+	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['braddress3'] . ' ' . $myrow['braddress4'] . ' ' . $myrow['braddress5'] . ' ' . $myrow['braddress6']);
 	$XPos -=80;
 }
 

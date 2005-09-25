@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -41,7 +41,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 	prnMsg(_('Inserting new customer branch records'),'info');
-	$sql = "INSERT INTO custbranch ( `branchcode`, `debtorno`, `brname`, `braddress1`, `braddress2`, `braddress3`, `braddress4`, `estdeliverydays`, `area`, `salesman`, `fwddate`, `phoneno`, `faxno`, `contactname`, `email`, `defaultlocation`, `taxauthority`, `disabletrans`, `brpostaddr1`, `brpostaddr2`, `brpostaddr3`, `brpostaddr4`, `defaultshipvia`, `custbranchcode`) SELECT branchcode, '" . $_POST['NewDebtorNo'] . "', `brname`, `braddress1`, `braddress2`, `braddress3`, `braddress4`, `estdeliverydays`, `area`, `salesman`, `fwddate`, `phoneno`, `faxno`, `contactname`, `email`, `defaultlocation`, `taxauthority`, `disabletrans`, `brpostaddr1`, `brpostaddr2`, `brpostaddr3`, `brpostaddr4`, `defaultshipvia`, `custbranchcode` FROM custbranch WHERE debtorno='" . $_POST['OldDebtorNo'] . "'";
+	$sql = "INSERT INTO custbranch ( `branchcode`, `debtorno`, `brname`, `braddress1`, `braddress2`, `braddress3`, `braddress4`, `braddress5`, `braddress6`, `estdeliverydays`, `area`, `salesman`, `fwddate`, `phoneno`, `faxno`, `contactname`, `email`, `defaultlocation`, `taxauthority`, `disabletrans`, `brpostaddr1`, `brpostaddr2`, `brpostaddr3`, `brpostaddr4`, `brpostaddr5`, `brpostaddr6`, `defaultshipvia`, `custbranchcode`) SELECT branchcode, '" . $_POST['NewDebtorNo'] . "', `brname`, `braddress1`, `braddress2`, `braddress3`, `braddress4`, `braddress5`, `braddress6`, `estdeliverydays`, `area`, `salesman`, `fwddate`, `phoneno`, `faxno`, `contactname`, `email`, `defaultlocation`, `taxauthority`, `disabletrans`, `brpostaddr1`, `brpostaddr2`, `brpostaddr3`, `brpostaddr4`, `brpostaddr5`, `brpostaddr6`, `defaultshipvia`, `custbranchcode` FROM custbranch WHERE debtorno='" . $_POST['OldDebtorNo'] . "'";
 
 	$ErrMsg = _('The SQL to insert new customer branch records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);

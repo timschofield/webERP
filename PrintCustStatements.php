@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 2;
 
@@ -43,6 +43,8 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 			debtorsmaster.address2,
 			debtorsmaster.address3,
 			debtorsmaster.address4,
+			debtorsmaster.address5,
+			debtorsmaster.address6,
 			debtorsmaster.lastpaid,
 			debtorsmaster.lastpaiddate,
 			currencies.currency,

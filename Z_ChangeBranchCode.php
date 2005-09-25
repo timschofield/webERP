@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -53,6 +53,8 @@ if (isset($_POST['ProcessCustomerChange'])){
 					`braddress2`,
 					`braddress3`,
 					`braddress4`,
+					`braddress5`,
+					`braddress6`,
 					`estdeliverydays`,
 					`area`,
 					`salesman`,
@@ -68,6 +70,8 @@ if (isset($_POST['ProcessCustomerChange'])){
 					`brPostaddr2`,
 					`brPostaddr3`,
 					`brPostaddr4`,
+					`brPostaddr5`,
+					`brPostaddr6`,
 					`defaultshipvia`,
 					`custbranchcode`)
 			SELECT '" . $_POST['NewBranchCode'] . "',
@@ -77,6 +81,8 @@ if (isset($_POST['ProcessCustomerChange'])){
 					`braddress2`,
 					`braddress3`,
 					`braddress4`,
+					`braddress5`,
+					`braddress6`,
 					`estdeliverydays`,
 					`area`,
 					`salesman`,
@@ -92,6 +98,8 @@ if (isset($_POST['ProcessCustomerChange'])){
 					`brpostaddr2`,
 					`brpostaddr3`,
 					`brpostaddr4`,
+					`brpostaddr5`,
+					`brpostaddr6`,
 					`defaultshipvia`,
 					`custbranchcode`
 			FROM custbranch

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 3;
 
@@ -48,6 +48,12 @@ if ($_POST['submit']) {
 	} elseif (strlen($_POST['Address4']) >50) {
 		$InputError = 1;
 		prnMsg( _('The Line 4 of the address must be fifty characters or less long'),'error');
+	} elseif (strlen($_POST['Address5']) >20) {
+		$InputError = 1;
+		prnMsg( _('The Line 5 of the address must be twenty characters or less long'),'error');
+	} elseif (strlen($_POST['Address6']) >15) {
+		$InputError = 1;
+		prnMsg( _('The Line 6 of the address must be fifteen characters or less long'),'error');
 	} elseif (!is_double((double) $_POST['CreditLimit'])) {
 		$InputError = 1;
 		prnMsg( _('The credit limit must be numeric'),'error');
@@ -90,6 +96,8 @@ if ($_POST['submit']) {
 					address2='" . DB_escape_string($_POST['Address2']) . "',
 					address3='" . DB_escape_string($_POST['Address3']) ."',
 					address4='" . DB_escape_string($_POST['Address4']) . "',
+					address5='" . DB_escape_string($_POST['Address5']) . "',
+					address6='" . DB_escape_string($_POST['Address6']) . "',
 					currcode='" . $_POST['CurrCode'] . "',
 					clientsince='$SQL_ClientSince',
 					holdreason='" . $_POST['HoldReason'] . "',
@@ -124,6 +132,8 @@ if ($_POST['submit']) {
 							address2,
 							address3,
 							address4,
+							address5,
+							address6,
 							currcode,
 							clientsince,
 							holdreason,
@@ -141,6 +151,8 @@ if ($_POST['submit']) {
 					'" . DB_escape_string($_POST['Address2']) ."',
 					'" . DB_escape_string($_POST['Address3']) . "',
 					'" . DB_escape_string($_POST['Address4']) . "',
+					'" . DB_escape_string($_POST['Address5']) . "',
+					'" . DB_escape_string($_POST['Address6']) . "',
 					'" . $_POST['CurrCode'] . "',
 					'" . $SQL_ClientSince . "',
 					" . $_POST['HoldReason'] . ",
@@ -159,11 +171,11 @@ if ($_POST['submit']) {
 
 			$BranchCode = substr($_POST['DebtorNo'],0,4);
 			
-			echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath ."/CustomerBranches.php?" . SID . "&DebtorNo=" . $_POST['DebtorNo'] ."&BrName=" . $_POST['CustName'] .'&BranchCode=' . $BranchCode . '&BrAddress1=' . $_POST['Address1'] . '&BrAddress2=' . $_POST['Address2'] . '&BrAddress3=' . $_POST['Address3'] . '&BrAddress4=' . $_POST['Address4'] . "'>";
+			echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath ."/CustomerBranches.php?" . SID . "&DebtorNo=" . $_POST['DebtorNo'] ."&BrName=" . $_POST['CustName'] .'&BranchCode=' . $BranchCode . '&BrAddress1=' . $_POST['Address1'] . '&BrAddress2=' . $_POST['Address2'] . '&BrAddress3=' . $_POST['Address3'] . '&BrAddress4=' . $_POST['Address4'] . '&BrAddress5=' . $_POST['Address5'] . '&BrAddress6=' . $_POST['Address6'] . "'>";
 			
 			echo '<P>' . _('You should automatically be forwarded to the entry of invoices against goods received page') .
 			'. ' . _('If this does not happen') .' (' . _('if the browser does not support META Refresh') . ') ' .
-			"<A HREF='" . $rootpath . "/CustomerBranches.php?" . SID . "&DebtorNo=" . $_POST['DebtorNo'] ."&BrName=" . $_POST['CustName'] .'&BranchCode=' . $BranchCode . '&BrAddress1=' . $_POST['Address1'] . '&BrAddress2=' . $_POST['Address2'] . '&BrAddress3=' . $_POST['Address3'] . '&BrAddress4=' . $_POST['Address4'] . "'>" . _('click here') . '</a> ' . _('to continue') . '.<BR>';
+			"<A HREF='" . $rootpath . "/CustomerBranches.php?" . SID . "&DebtorNo=" . $_POST['DebtorNo'] ."&BrName=" . $_POST['CustName'] .'&BranchCode=' . $BranchCode . '&BrAddress1=' . $_POST['Address1'] . '&BrAddress2=' . $_POST['Address2'] . '&BrAddress3=' . $_POST['Address3'] . '&BrAddress4=' . $_POST['Address4'] . '&BrAddress5=' . $_POST['Address5'] . '&BrAddress6=' . $_POST['Address6'] . "'>" . _('click here') . '</a> ' . _('to continue') . '.<BR>';
 		
 			include('includes/footer.inc');
 			exit;
@@ -232,6 +244,8 @@ if($reset){
 	unset($_POST['Address2']);
 	unset($_POST['Address3']);
 	unset($_POST['Address4']);
+	unset($_POST['Address5']);
+	unset($_POST['Address6']);
 	unset($_POST['HoldReason']);
 	unset($_POST['PaymentTerms']);
 	unset($_POST['Discount']);
@@ -280,6 +294,10 @@ if (!isset($DebtorNo)) {
 		<TD><input type='Text' name='Address3' SIZE=42 MAXLENGTH=40></TD></TR>";
 	echo '<TR><TD>' . _('Address Line 4') . ":</TD>
 		<TD><input type='Text' name='Address4' SIZE=42 MAXLENGTH=40></TD></TR>";
+	echo '<TR><TD>' . _('Address Line 5') . ":</TD>
+		<TD><input type='Text' name='Address5' SIZE=22 MAXLENGTH=20></TD></TR>";
+	echo '<TR><TD>' . _('Address Line 6') . ":</TD>
+		<TD><input type='Text' name='Address6' SIZE=17 MAXLENGTH=15></TD></TR>";
 
 	$result=DB_query('SELECT typeabbrev, sales_type FROM salestypes ',$db);
 	if (DB_num_rows($result)==0){
@@ -386,6 +404,8 @@ if (!isset($DebtorNo)) {
 				address2,
 				address3,
 				address4,
+				address5,
+				address6,
 				currcode,
 				salestype,
 				clientsince,
@@ -411,6 +431,8 @@ if (!isset($DebtorNo)) {
 		$_POST['Address2']  = $myrow['address2'];
 		$_POST['Address3']  = $myrow['address3'];
 		$_POST['Address4']  = $myrow['address4'];
+		$_POST['Address5']  = $myrow['address5'];
+		$_POST['Address6']  = $myrow['address6'];
 		$_POST['SalesType'] = $myrow['salestype'];
 		$_POST['CurrCode']  = $myrow['currcode'];
 		$_POST['ClientSince'] = ConvertSQLDate($myrow['clientsince']);
@@ -447,6 +469,10 @@ if (!isset($DebtorNo)) {
 		<TD><input type='Text' name='Address3' SIZE=42 MAXLENGTH=40 value='" . $_POST['Address3'] . "'></TD></TR>";
 	echo '<TR><TD>' . _('Address Line 4') . ":</TD>
 		<TD><input type='Text' name='Address4' SIZE=42 MAXLENGTH=40 value='" . $_POST['Address4'] . "'></TD></TR>";
+	echo '<TR><TD>' . _('Address Line 5') . ":</TD>
+		<TD><input type='Text' name='Address5' SIZE=22 MAXLENGTH=20 value='" . $_POST['Address5'] . "'></TD></TR>";
+	echo '<TR><TD>' . _('Address Line 6') . ":</TD>
+		<TD><input type='Text' name='Address6' SIZE=17 MAXLENGTH=15 value='" . $_POST['Address6'] . "'></TD></TR>";
 
 	$result=DB_query('SELECT typeabbrev, sales_type FROM salestypes ',$db);
 

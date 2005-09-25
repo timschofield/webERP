@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 3;
 
@@ -79,6 +79,8 @@ if (isset($_POST['submit'])) {
 						braddress2 = '" . DB_escape_string($_POST['BrAddress2']) . "',
 						braddress3 = '" . DB_escape_string($_POST['BrAddress3']) . "',
 						braddress4 = '" . DB_escape_string($_POST['BrAddress4']) . "',
+						braddress5 = '" . DB_escape_string($_POST['BrAddress5']) . "',
+						braddress6 = '" . DB_escape_string($_POST['BrAddress6']) . "',
 						phoneno='" . DB_escape_string($_POST['PhoneNo']) . "',
 						faxno='" . DB_escape_string($_POST['FaxNo']) . "',
 						fwddate= " . $_POST['FwdDate'] . ",
@@ -112,6 +114,8 @@ if (isset($_POST['submit'])) {
 						braddress2,
 						braddress3,
 						braddress4,
+						braddress5,
+						braddress6,
 						estdeliverydays,
 						fwddate,
 						salesman,
@@ -137,6 +141,8 @@ if (isset($_POST['submit'])) {
 					'" . DB_escape_string($_POST['BrAddress2']) . "',
 					'" . DB_escape_string($_POST['BrAddress3']) . "',
 					'" . DB_escape_string($_POST['BrAddress4']) . "',
+					'" . DB_escape_string($_POST['BrAddress5']) . "',
+					'" . DB_escape_string($_POST['BrAddress6']) . "',
 					" . $_POST['EstDeliveryDays'] . ",
 					" . $_POST['FwdDate'] . ",
 					'" . $_POST['Salesman'] . "',
@@ -172,6 +178,8 @@ if (isset($_POST['submit'])) {
 		unset($_POST['BrAddress2']);
 		unset($_POST['BrAddress3']);
 		unset($_POST['BrAddress4']);
+		unset($_POST['BrAddress5']);
+		unset($_POST['BrAddress6']);
 		unset($_POST['EstDeliveryDays']);
 		unset($_POST['FwdDate']);
 		unset($_POST['Salesman']);
@@ -330,7 +338,9 @@ if (!isset($SelectedBranch)){
 				address1,
 				address2,
 				address3,
-				address4
+				address4,
+				address5,
+				address6
 			FROM debtorsmaster
 			WHERE debtorno = '$DebtorNo'";
 
@@ -343,6 +353,8 @@ if (!isset($SelectedBranch)){
 		$_POST['BrAddress2'] = $myrow[2];
 		$_POST['BrAddress3'] = $myrow[3];
 		$_POST['BrAddress4'] = $myrow[4];
+		$_POST['BrAddress5'] = $myrow[5];
+		$_POST['BrAddress6'] = $myrow[6];
 		unset($myrow);
 	}
 
@@ -369,6 +381,8 @@ if (! isset($_GET['delete'])) {
 				braddress2,
 				braddress3,
 				braddress4,
+				braddress5,
+				braddress6,
 				estdeliverydays,
 				fwddate,
 				salesman,
@@ -400,6 +414,8 @@ if (! isset($_GET['delete'])) {
 		$_POST['BrAddress2']  = $myrow['braddress2'];
 		$_POST['BrAddress3']  = $myrow['braddress3'];
 		$_POST['BrAddress4']  = $myrow['braddress4'];
+		$_POST['BrAddress5']  = $myrow['braddress5'];
+		$_POST['BrAddress6']  = $myrow['braddress6'];
 		$_POST['BrPostAddr1']  = $myrow['brpostaddr1'];
 		$_POST['BrPostAddr2']  = $myrow['brpostaddr2'];
 		$_POST['BrPostAddr3']  = $myrow['brpostaddr3'];
@@ -459,6 +475,10 @@ if (! isset($_GET['delete'])) {
 	echo '<TD><input type="Text" name="BrAddress3" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrAddress3'].'"></TD></TR>';
 	echo '<TR><TD>'._('Street Address 4').':</TD>';
 	echo '<TD><input type="Text" name="BrAddress4" SIZE=31 MAXLENGTH=30 value="'. $_POST['BrAddress4'].'"></TD></TR>';
+	echo '<TR><TD>'._('Street Address 5').':</TD>';
+	echo '<TD><input type="Text" name="BrAddress5" SIZE=21 MAXLENGTH=20 value="'. $_POST['BrAddress5'].'"></TD></TR>';
+	echo '<TR><TD>'._('Street Address 6').':</TD>';
+	echo '<TD><input type="Text" name="BrAddress6" SIZE=16 MAXLENGTH=15 value="'. $_POST['BrAddress6'].'"></TD></TR>';
 
 	echo '<TR><TD>'._('Delivery Days').':</TD>';
 	echo '<TD><input type="Text" name="EstDeliveryDays" SIZE=4 MAXLENGTH=2 value='. $_POST['EstDeliveryDays'].'></TD></TR>';

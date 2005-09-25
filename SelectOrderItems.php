@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.35 $ */
+/* $Revision: 1.36 $ */
 
 require('includes/DefineCartClass.php');
 
@@ -344,6 +344,8 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 				custbranch.braddress2,
 				custbranch.braddress3,
 				custbranch.braddress4,
+				custbranch.braddress5,
+				custbranch.braddress6,
 				custbranch.phoneno,
 				custbranch.email,
 				custbranch.defaultlocation,
@@ -374,11 +376,13 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 		$_SESSION['Items']->BrAdd2 = $myrow[2];
 		$_SESSION['Items']->BrAdd3 = $myrow[3];
 		$_SESSION['Items']->BrAdd4 = $myrow[4];
-		$_SESSION['Items']->PhoneNo = $myrow[5];
-		$_SESSION['Items']->Email = $myrow[6];
-		$_SESSION['Items']->Location = $myrow[7];
-		$_SESSION['Items']->ShipVia = $myrow[8];
-		$_SESSION['Items']->DeliverBlind = $myrow[9];
+		$_SESSION['Items']->BrAdd5 = $myrow[5];
+		$_SESSION['Items']->BrAdd6 = $myrow[6];
+		$_SESSION['Items']->PhoneNo = $myrow[7];
+		$_SESSION['Items']->Email = $myrow[8];
+		$_SESSION['Items']->Location = $myrow[9];
+		$_SESSION['Items']->ShipVia = $myrow[10];
+		$_SESSION['Items']->DeliverBlind = $myrow[11];
 		
 		if ($_SESSION['CheckCreditLimits'] > 0){  /*Check credit limits is 1 for warn and 2 for prohibit sales */
 			$_SESSION['Items']->CreditAvailable = GetCreditAvailable($_POST['Select'],$db);
@@ -433,6 +437,8 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 			custbranch.braddress2,
 			custbranch.braddress3,
 			custbranch.braddress4,
+			custbranch.braddress5,
+			custbranch.braddress6,
 			custbranch.phoneno,
 			custbranch.email,
 			custbranch.defaultlocation,
@@ -451,10 +457,12 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 		$_SESSION['Items']->BrAdd2 = $myrow[2];
 		$_SESSION['Items']->BrAdd3 = $myrow[3];
 		$_SESSION['Items']->BrAdd4 = $myrow[4];
-		$_SESSION['Items']->PhoneNo = $myrow[5];
-		$_SESSION['Items']->Email = $myrow[6];
-		$_SESSION['Items']->Location = $myrow[7];
-		$_SESSION['Items']->DeliverBlind = $myrow[8];
+		$_SESSION['Items']->BrAdd5 = $myrow[5];
+		$_SESSION['Items']->BrAdd6 = $myrow[6];
+		$_SESSION['Items']->PhoneNo = $myrow[7];
+		$_SESSION['Items']->Email = $myrow[8];
+		$_SESSION['Items']->Location = $myrow[9];
+		$_SESSION['Items']->DeliverBlind = $myrow[10];
 
 	} else {
 		prnMsg(_('Sorry, your account has been put on hold for some reason, please contact the credit control personnel.'),'warn');

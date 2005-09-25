@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
@@ -171,6 +171,8 @@ will be booked back into. */
 			custbranch.braddress2,
 			custbranch.braddress3,
 			custbranch.braddress4,
+			custbranch.braddress5,
+			custbranch.braddress6,
 			custbranch.phoneno,
 			custbranch.email,
 			custbranch.defaultlocation,
@@ -191,6 +193,8 @@ will be booked back into. */
 	 $_SESSION['CreditItems']->BrAdd2 = $myrow['braddress2'];
 	 $_SESSION['CreditItems']->BrAdd3 = $myrow['braddress3'];
 	 $_SESSION['CreditItems']->BrAdd4 = $myrow['braddress4'];
+	 $_SESSION['CreditItems']->BrAdd5 = $myrow['braddress5'];
+	 $_SESSION['CreditItems']->BrAdd6 = $myrow['braddress6'];
 	 $_SESSION['CreditItems']->PhoneNo = $myrow['phoneno'];
 	 $_SESSION['CreditItems']->Email = $myrow['email'];
 	 $_SESSION['CreditItems']->Location = $myrow['defaultlocation'];

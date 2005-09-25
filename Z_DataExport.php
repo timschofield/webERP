@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity=15;
 
@@ -118,6 +118,8 @@ if ( isset($_POST['pricelist']) ) {
 			debtorsmaster.address2,
 			debtorsmaster.address3,
 			debtorsmaster.address4,
+			debtorsmaster.address5,
+			debtorsmaster.address6,
 			debtorsmaster.currcode,
 			debtorsmaster.clientsince,
 			debtorsmaster.creditlimit,
@@ -126,6 +128,8 @@ if ( isset($_POST['pricelist']) ) {
 			custbranch.braddress2,
 			custbranch.braddress3,
 			custbranch.braddress4,
+			custbranch.braddress5,
+			custbranch.braddress6,
 			custbranch.disabletrans,
 			custbranch.phoneno,
 			custbranch.faxno,
@@ -157,6 +161,8 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma('address2') . ', ' .
 			stripcomma('address3') . ', ' .
 			stripcomma('address4') . ', ' .
+			stripcomma('address5') . ', ' .
+			stripcomma('address6') . ', ' .
 			stripcomma('phoneno') . ', ' .
 			stripcomma('faxno') . ', ' .
 			stripcomma('email') . ', ' .
@@ -175,11 +181,15 @@ if ( isset($_POST['pricelist']) ) {
 			$Address2 = $CustList['address2'];
 			$Address3 = $CustList['address3'];
 			$Address4 = $CustList['address4'];
+			$Address5 = $CustList['address5'];
+			$Address6 = $CustList['address6'];
 		} else {
 			$Address1 = $CustList['braddress1'];
 			$Address2 = $CustList['braddress2'];
 			$Address3 = $CustList['braddress3'];
 			$Address4 = $CustList['braddress4'];
+			$Address5 = $CustList['braddress5'];
+			$Address6 = $CustList['braddress6'];
 		}
 
 		$CSVContent .= (stripcomma($CustList['debtorno']) . ', ' . 
@@ -190,6 +200,8 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma($Address2) . ', ' .
 			stripcomma($Address3) . ', ' .
 			stripcomma($Address4) . ', ' .
+			stripcomma($Address5) . ', ' .
+			stripcomma($Address6) . ', ' .
 			stripcomma($CustList['phoneno']) . ', ' .
 			stripcomma($CustList['faxno']) . ', ' .
 			stripcomma($CustList['email']) . ', ' .

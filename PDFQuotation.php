@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 2;
 
@@ -36,6 +36,8 @@ $sql = "SELECT salesorders.customerref,
 		debtorsmaster.address2,
 		debtorsmaster.address3,
 		debtorsmaster.address4,
+		debtorsmaster.address5,
+		debtorsmaster.address6,
 		shippers.shippername,
 		salesorders.printedpackingslip,
 		salesorders.datepackingslipprinted,

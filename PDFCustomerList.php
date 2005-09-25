@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 2;
 
@@ -40,12 +40,17 @@ if (isset($_POST['PrintPDF'])){
 					debtorsmaster.address2,
 					debtorsmaster.address3,
 					debtorsmaster.address4,
+					debtorsmaster.address5,
+					debtorsmaster.address6,
 					debtorsmaster.salestype,
 					custbranch.branchcode,
 					custbranch.brname,
 					custbranch.braddress1,
 					custbranch.braddress2,
 					custbranch.braddress3,
+					custbranch.braddress4,
+					custbranch.braddress5,
+					custbranch.braddress6,
 					custbranch.contactname,
 					custbranch.phoneno,
 					custbranch.faxno,
@@ -72,12 +77,17 @@ if (isset($_POST['PrintPDF'])){
 					debtorsmaster.address2,
 					debtorsmaster.address3,
 					debtorsmaster.address4,
+					debtorsmaster.address5,
+					debtorsmaster.address6,
 					debtorsmaster.salestype,
 					custbranch.branchcode,
 					custbranch.brname,
 					custbranch.braddress1,
 					custbranch.braddress2,
 					custbranch.braddress3,
+					custbranch.braddress4,
+					custbranch.braddress5,
+					custbranch.braddress6,
 					custbranch.contactname,
 					custbranch.phoneno,
 					custbranch.faxno,
@@ -116,12 +126,17 @@ if (isset($_POST['PrintPDF'])){
 					debtorsmaster.address2,
 					debtorsmaster.address3,
 					debtorsmaster.address4,
+					debtorsmaster.address5,
+					debtorsmaster.address6,
 					debtorsmaster.salestype,
 					custbranch.branchcode,
 					custbranch.brname,
 					custbranch.braddress1,
 					custbranch.braddress2,
 					custbranch.braddress3,
+					custbranch.braddress4,
+					custbranch.braddress5,
+					custbranch.braddress6,
 					custbranch.contactname,
 					custbranch.phoneno,
 					custbranch.faxno,
@@ -159,12 +174,17 @@ if (isset($_POST['PrintPDF'])){
 					debtorsmaster.address2,
 					debtorsmaster.address3,
 					debtorsmaster.address4,
+					debtorsmaster.address5,
+					debtorsmaster.address6,
 					debtorsmaster.salestype,
 					custbranch.branchcode,
 					custbranch.brname,
 					custbranch.braddress1,
 					custbranch.braddress2,
 					custbranch.braddress3,
+					custbranch.braddress4,
+					custbranch.braddress5,
+					custbranch.braddress6,
 					custbranch.contactname,
 					custbranch.phoneno,
 					custbranch.faxno,
@@ -301,6 +321,9 @@ if (isset($_POST['PrintPDF'])){
 			$LeftOvers = $pdf->addTextWrap(80,$YPos-10,150,$FontSize,$Customers['address1']);
 			$LeftOvers = $pdf->addTextWrap(80,$YPos-20,150,$FontSize,$Customers['address2']);
 			$LeftOvers = $pdf->addTextWrap(80,$YPos-30,150,$FontSize,$Customers['address3']);
+			$LeftOvers = $pdf->addTextWrap(140,$YPos-30,150,$FontSize,$Customers['address4']);
+			$LeftOvers = $pdf->addTextWrap(180,$YPos-30,150,$FontSize,$Customers['address5']);
+			$LeftOvers = $pdf->addTextWrap(210,$YPos-30,150,$FontSize,$Customers['address6']);
 
 			$LeftOvers = $pdf->addTextWrap(230,$YPos,60,$FontSize,$Customers['branchcode']);
 			$LeftOvers = $pdf->addTextWrap(230,$YPos-10,60,$FontSize, _('Price List') . ': ' . $Customers['salestype']);
@@ -317,6 +340,9 @@ if (isset($_POST['PrintPDF'])){
 			$LeftOvers = $pdf->addTextWrap(440,$YPos,150,$FontSize,$Customers['braddress1']);
 			$LeftOvers = $pdf->addTextWrap(440,$YPos-10,150,$FontSize,$Customers['braddress2']);
 			$LeftOvers = $pdf->addTextWrap(440,$YPos-20,150,$FontSize,$Customers['braddress3']);
+			$LeftOvers = $pdf->addTextWrap(500,$YPos-20,150,$FontSize,$Customers['braddress4']);
+			$LeftOvers = $pdf->addTextWrap(540,$YPos-20,150,$FontSize,$Customers['braddress5']);
+			$LeftOvers = $pdf->addTextWrap(570,$YPos-20,150,$FontSize,$Customers['braddress6']);
 			$LeftOvers = $pdf->addTextWrap(440,$YPos-30,150,$FontSize,$Customers['email']);
 
 			$pdf->line($Page_Width-$Right_Margin, $YPos-32,$Left_Margin, $YPos-32);

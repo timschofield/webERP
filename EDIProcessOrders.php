@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity =11;
 
@@ -462,6 +462,8 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 										braddress2, 
 										braddress3, 
 										braddress4, 
+										braddress5, 
+										braddress6, 
 										contactname, 
 										defaultlocation, 
 										phoneno, 

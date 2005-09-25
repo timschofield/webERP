@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 4;
 
@@ -391,6 +391,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 				braddress2,
 				braddress3,
 				braddress4,
+				braddress5,
+				braddress6,
 				defaultshipvia,
 				email,
 				phoneno
@@ -431,6 +433,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 						'" . $BranchDetails['braddress2'] . "',
 						'" . $BranchDetails['braddress3'] . "',
 						'" . $BranchDetails['braddress4'] . "',
+						'" . $BranchDetails['braddress5'] . "',
+						'" . $BranchDetails['braddress6'] . "',
 						'" . $BranchDetails['phoneno'] . "',
 						'" . $BranchDetails['email'] . "',
 						'" . $_SESSION['SPL']->StkLocation ."',

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity = 1;
 
@@ -104,6 +104,8 @@ If (isset($PrintPDF)
 				debtorsmaster.address2,
 				debtorsmaster.address3,
 				debtorsmaster.address4,
+				debtorsmaster.address5,
+				debtorsmaster.address6,
 				debtorsmaster.currcode,
 				debtorsmaster.invaddrbranch,
 				debtorsmaster.taxref,
@@ -123,10 +125,14 @@ If (isset($PrintPDF)
 				custbranch.braddress2,
 				custbranch.braddress3,
 				custbranch.braddress4,
+				custbranch.braddress5,
+				custbranch.braddress6,
 				custbranch.brpostaddr1,
 				custbranch.brpostaddr2,
 				custbranch.brpostaddr3,
 				custbranch.brpostaddr4,
+				custbranch.brpostaddr5,
+				custbranch.brpostaddr6,
 				salesman.salesmanname,
 				debtortrans.debtorno,
 				debtortrans.branchcode
@@ -167,6 +173,8 @@ If (isset($PrintPDF)
 				debtorsmaster.address2,
 				debtorsmaster.address3,
 				debtorsmaster.address4,
+				debtorsmaster.address5,
+				debtorsmaster.address6,
 				debtorsmaster.currcode,
 				debtorsmaster.taxref,
 				custbranch.brname,
@@ -174,10 +182,14 @@ If (isset($PrintPDF)
 				custbranch.braddress2,
 				custbranch.braddress3,
 				custbranch.braddress4,
+				custbranch.braddress5,
+				custbranch.braddress6,
 				custbranch.brpostaddr1,
 				custbranch.brpostaddr2,
 				custbranch.brpostaddr3,
 				custbranch.brpostaddr4,
+				custbranch.brpostaddr5,
+				custbranch.brpostaddr6,
 				salesman.salesmanname,
 				debtortrans.debtorno,
 				debtortrans.branchcode,
@@ -547,8 +559,10 @@ If (isset($PrintPDF)
 					debtorsmaster.name, 
 					debtorsmaster.address1, 
 					debtorsmaster.address2, 
-					debtorsmaster.address3, 
-					debtorsmaster.address4, 
+					debtorsmaster.address3,
+					debtorsmaster.address4,
+					debtorsmaster.address5,
+					debtorsmaster.address6,
 					debtorsmaster.currcode, 
 					salesorders.deliverto, 
 					salesorders.deladd1, 
@@ -564,6 +578,8 @@ If (isset($PrintPDF)
 					custbranch.braddress2,
 					custbranch.braddress3, 
 					custbranch.braddress4,
+					custbranch.braddress5,
+					custbranch.braddress6,
 					salesman.salesmanname, 
 					debtortrans.debtorno 
 				FROM debtortrans, 
@@ -592,14 +608,18 @@ If (isset($PrintPDF)
 					debtorsmaster.name, 
 					debtorsmaster.address1, 
 					debtorsmaster.address2, 
-					debtorsmaster.address3, 
-					debtorsmaster.address4, 
+					debtorsmaster.address3,
+					debtorsmaster.address4,
+					debtorsmaster.address5,
+					debtorsmaster.address6,
 					debtorsmaster.currcode, 
 					custbranch.brname, 
 					custbranch.braddress1, 
 					custbranch.braddress2, 
 					custbranch.braddress3, 
 					custbranch.braddress4, 
+					custbranch.braddress5, 
+					custbranch.braddress6, 
 					salesman.salesmanname, 
 					debtortrans.debtorno 
 				FROM debtortrans, 
@@ -659,7 +679,7 @@ If (isset($PrintPDF)
 	/*Now the customer charged to details in a sub table within a cell of the main table*/
 
 				echo "<TABLE WIDTH=100%><TR><TD ALIGN=LEFT BGCOLOR='#BBBBBB'><B>" . _('Charge To') . ":</B></TD></TR><TR><TD BGCOLOR='#EEEEEE'>";
-				echo $myrow['name'] . '<BR>' . $myrow['address1'] . '<BR>' . $myrow['address2'] . '<BR>' . $myrow['address3'] . '<BR>' . $myrow['address4'];
+				echo $myrow['name'] . '<BR>' . $myrow['address1'] . '<BR>' . $myrow['address2'] . '<BR>' . $myrow['address3'] . '<BR>' . $myrow['address4'] . '<BR>' . $myrow['address5'] . '<BR>' . $myrow['address6'];
 				echo '</TD></TR></TABLE>';
 				/*end of the small table showing charge to account details */
 				echo _('Page') . ': ' . $PageNumber;
@@ -674,7 +694,7 @@ If (isset($PrintPDF)
 								<TD ALIGN=LEFT BGCOLOR='#BBBBBB'><B>" . _('Delivered To') . ":</B></TD>
 							</TR>";
 				   echo "<TR>
-				   		<TD BGCOLOR='#EEEEEE'>" .$myrow['brname'] . '<BR>' . $myrow['braddress1'] . '<BR>' . $myrow['braddress2'] . '<BR>' . $myrow['braddress3'] . '<BR>' . $myrow['braddress4'] . '</TD>';
+				   		<TD BGCOLOR='#EEEEEE'>" .$myrow['brname'] . '<BR>' . $myrow['braddress1'] . '<BR>' . $myrow['braddress2'] . '<BR>' . $myrow['braddress3'] . '<BR>' . $myrow['braddress4'] . '<BR>' . $myrow['braddress5'] . '<BR>' . $myrow['braddress6'] . '</TD>';
 
 				   	echo "<TD BGCOLOR='#EEEEEE'>" . $myrow['deliverto'] . '<BR>' . $myrow['deladd1'] . '<BR>' . $myrow['deladd2'] . '<BR>' . $myrow['deladd3'] . '<BR>' . $myrow['deladd4'] . '</TD>';
 				   echo '</TR>
@@ -722,7 +742,7 @@ If (isset($PrintPDF)
 				   		<TD ALIGN=LEFT BGCOLOR='#BBBBBB'><B>" . _('Branch') . ":</B></TD>
 						</TR>";
 				   echo "<TR>
-				   		<TD BGCOLOR='#EEEEEE'>" .$myrow['brname'] . '<BR>' . $myrow['braddress1'] . '<BR>' . $myrow['braddress2'] . '<BR>' . $myrow['braddress3'] . '<BR>' . $myrow['braddress4'] . '</TD>
+				   		<TD BGCOLOR='#EEEEEE'>" .$myrow['brname'] . '<BR>' . $myrow['braddress1'] . '<BR>' . $myrow['braddress2'] . '<BR>' . $myrow['braddress3'] . '<BR>' . $myrow['braddress4'] . '<BR>' . $myrow['braddress5'] . '<BR>' . $myrow['braddress6'] . '</TD>
 					</TR></TABLE>';
 				   echo "<HR><TABLE WIDTH=100%><TR>
 				   		<TD ALIGN=LEFT BGCOLOR='#BBBBBB'><B>" . _('Date') . "</B></TD>
