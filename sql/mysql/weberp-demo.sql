@@ -12,12 +12,14 @@ SET FOREIGN_KEY_CHECKS = 0;
 --
 -- Current Database: `weberp`
 --
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `weberp` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `weberp`;
+
 --
 -- Table structure for table `accountgroups`
 --
-CREATE DATABASE weberp;
-
-use weberp;
 
 CREATE TABLE `accountgroups` (
   `groupname` char(30) NOT NULL default '',
@@ -339,6 +341,8 @@ CREATE TABLE `custbranch` (
   `braddress2` varchar(40) NOT NULL default '',
   `braddress3` varchar(40) NOT NULL default '',
   `braddress4` varchar(50) NOT NULL default '',
+  `braddress5` varchar(20) NOT NULL default '',
+  `braddress6` varchar(15) NOT NULL default '',
   `estdeliverydays` smallint(6) NOT NULL default '1',
   `area` char(2) NOT NULL default '',
   `salesman` varchar(4) NOT NULL default '',
@@ -356,6 +360,8 @@ CREATE TABLE `custbranch` (
   `brpostaddr2` varchar(40) NOT NULL default '',
   `brpostaddr3` varchar(30) NOT NULL default '',
   `brpostaddr4` varchar(20) NOT NULL default '',
+  `brpostaddr5` varchar(20) NOT NULL default '',
+  `brpostaddr6` varchar(15) NOT NULL default '',
   `custbranchcode` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`branchcode`,`debtorno`),
   KEY `BranchCode` (`branchcode`),
@@ -385,6 +391,8 @@ CREATE TABLE `debtorsmaster` (
   `address2` varchar(40) NOT NULL default '',
   `address3` varchar(40) NOT NULL default '',
   `address4` varchar(50) NOT NULL default '',
+  `address5` varchar(20) NOT NULL default '',
+  `address6` varchar(15) NOT NULL default '',
   `currcode` char(3) NOT NULL default '',
   `salestype` char(2) NOT NULL default '',
   `clientsince` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -1808,7 +1816,7 @@ INSERT INTO `chartdetails` VALUES (1060,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1070,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1080,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1090,1,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1100,1,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1100,1,0,7639.8,0,0);
 INSERT INTO `chartdetails` VALUES (1150,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1200,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1250,1,0,0,0,0);
@@ -1817,7 +1825,7 @@ INSERT INTO `chartdetails` VALUES (1350,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1400,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1420,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1440,1,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (1460,1,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (1460,1,0,233,0,0);
 INSERT INTO `chartdetails` VALUES (1500,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1550,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (1600,1,0,0,0,0);
@@ -1841,11 +1849,11 @@ INSERT INTO `chartdetails` VALUES (2010,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (2020,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (2050,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (2100,1,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (2150,1,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2150,1,0,-2559,0,0);
 INSERT INTO `chartdetails` VALUES (2200,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (2230,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (2250,1,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (2300,1,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (2300,1,0,-839.8,0,0);
 INSERT INTO `chartdetails` VALUES (2310,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (2320,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (2330,1,0,0,0,0);
@@ -1874,14 +1882,14 @@ INSERT INTO `chartdetails` VALUES (3200,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (3300,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (3400,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (3500,1,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (4100,1,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (4100,1,0,-6800,0,0);
 INSERT INTO `chartdetails` VALUES (4200,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (4500,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (4600,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (4700,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (4800,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (4900,1,0,0,0,0);
-INSERT INTO `chartdetails` VALUES (5000,1,0,0,0,0);
+INSERT INTO `chartdetails` VALUES (5000,1,0,2326,0,0);
 INSERT INTO `chartdetails` VALUES (5100,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (5200,1,0,0,0,0);
 INSERT INTO `chartdetails` VALUES (5500,1,0,0,0,0);
@@ -2122,7 +2130,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-09-10');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-09-25');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
@@ -2198,20 +2206,20 @@ INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',1);
 -- Dumping data for table `custbranch`
 --
 
-INSERT INTO `custbranch` VALUES ('ANGRY','ANGRY','Angus Rouledge - Toronto','P O Box 67','Gowerbridge','Upperton','Toronto Canada',3,'TR','ERI',0,'0422 2245 2213','0422 2245 2215','Granville Thomas','graville@angry.com','DEN',2,8,1,0,'','','','','');
-INSERT INTO `custbranch` VALUES ('ANGRYFL','ANGRY','Angus Rouledge - Florida','1821 Sunnyside','Ft Lauderdale','Florida','42554',3,'FL','PHO',0,'2445 2232 524','2445 2232 522','Wendy Blowers','wendy@angry.com','DEN',1,1,1,0,'','','','','');
-INSERT INTO `custbranch` VALUES ('DUMBLE','DUMBLE','Dumbledoor McGonagal & Co','Hogwarts castle','Platform 9.75','','',1,'TR','ERI',0,'Owls only','Owls only','Minerva McGonagal','mmgonagal@hogwarts.edu.uk','TOR',3,10,1,0,'','','','','');
-INSERT INTO `custbranch` VALUES ('JOLOMU','JOLOMU','Lorrima Productions Inc','3215 Great Western Highway','Blubberhouses','Yorkshire','England',20,'FL','PHO',0,'+44 812 211456','+44 812 211 554','Jo Lomu','jolomu@lorrima.co.uk','TOR',3,1,1,0,'','','','','');
-INSERT INTO `custbranch` VALUES ('QUARTER','QUARTER','Quarter Back to Back','1356 Union Drive','Holborn','England','',5,'FL','ERI',0,'123456','1234567','','','TOR',3,1,1,0,'','','','','');
+INSERT INTO `custbranch` VALUES ('ANGRY','ANGRY','Angus Rouledge - Toronto','P O Box 67','Gowerbridge','Upperton','Toronto Canada','','',3,'TR','ERI',0,'0422 2245 2213','0422 2245 2215','Granville Thomas','graville@angry.com','DEN',2,8,1,0,'','','','','','','');
+INSERT INTO `custbranch` VALUES ('ANGRYFL','ANGRY','Angus Rouledge - Florida','1821 Sunnyside','Ft Lauderdale','Florida','42554','','',3,'FL','PHO',0,'2445 2232 524','2445 2232 522','Wendy Blowers','wendy@angry.com','DEN',1,1,1,0,'','','','','','','');
+INSERT INTO `custbranch` VALUES ('DUMBLE','DUMBLE','Dumbledoor McGonagal & Co','Hogwarts castle','Platform 9.75','','','','',1,'TR','ERI',0,'Owls only','Owls only','Minerva McGonagal','mmgonagal@hogwarts.edu.uk','TOR',3,10,1,0,'','','','','','','');
+INSERT INTO `custbranch` VALUES ('JOLOMU','JOLOMU','Lorrima Productions Inc','3215 Great Western Highway','Blubberhouses','Yorkshire','England','','',20,'FL','PHO',0,'+44 812 211456','+44 812 211 554','Jo Lomu','jolomu@lorrima.co.uk','TOR',3,1,1,0,'','','','','','','');
+INSERT INTO `custbranch` VALUES ('QUARTER','QUARTER','Quarter Back to Back','1356 Union Drive','Holborn','England','','','',5,'FL','ERI',0,'123456','1234567','','','TOR',3,1,1,0,'','','','','','','');
 
 --
 -- Dumping data for table `debtorsmaster`
 --
 
-INSERT INTO `debtorsmaster` VALUES ('ANGRY','Angus Rouledge Younger & Son','P O Box 67','Gowerbridge','Upperton','Michigan','USD','DE','2005-04-30 00:00:00',1,'7',0,0,0,NULL,5000,0,'',0,0,'','email','','','','1344-654-112');
-INSERT INTO `debtorsmaster` VALUES ('DUMBLE','Dumbledoor McGonagal & Co','Hogwarts castle','Platform 9.75','','','GBP','DE','2005-06-18 00:00:00',1,'30',0,0,0,NULL,1000,0,'',0,0,'','email','','','','');
-INSERT INTO `debtorsmaster` VALUES ('JOLOMU','Lorrima Productions Inc','3215 Great Western Highway','Blubberhouses','Yorkshire','England','GBP','DE','2005-06-15 00:00:00',1,'30',0,0,0,NULL,1000,0,'',0,0,'','email','','','','');
-INSERT INTO `debtorsmaster` VALUES ('QUARTER','Quarter Back to Back','1356 Union Drive','Holborn','England','','GBP','DE','2005-09-03 00:00:00',1,'20',0,0,0,NULL,1000,0,'',0,0,'','email','','','','');
+INSERT INTO `debtorsmaster` VALUES ('ANGRY','Angus Rouledge Younger & Son','P O Box 67','Gowerbridge','Upperton','Michigan','','','USD','DE','2005-04-30 00:00:00',1,'7',0,0,0,NULL,5000,0,'',0,0,'','email','','','','1344-654-112');
+INSERT INTO `debtorsmaster` VALUES ('DUMBLE','Dumbledoor McGonagal & Co','Hogwarts castle','Platform 9.75','','','','','GBP','DE','2005-06-18 00:00:00',1,'30',0,0,0,NULL,1000,0,'',0,0,'','email','','','','');
+INSERT INTO `debtorsmaster` VALUES ('JOLOMU','Lorrima Productions Inc','3215 Great Western Highway','Blubberhouses','Yorkshire','England','','','GBP','DE','2005-06-15 00:00:00',1,'30',0,0,0,NULL,1000,0,'',0,0,'','email','','','','');
+INSERT INTO `debtorsmaster` VALUES ('QUARTER','Quarter Back to Back','1356 Union Drive','Holborn','England','','','','GBP','DE','2005-09-03 00:00:00',1,'20',0,0,0,NULL,1000,0,'',0,0,'','email','','','','');
 
 --
 -- Dumping data for table `debtortrans`
@@ -2419,18 +2427,18 @@ INSERT INTO `gltrans` VALUES (134,25,2,0,'2005-07-04',67,722000,'PO: 2 CAMPBELL 
 INSERT INTO `gltrans` VALUES (135,25,2,0,'2005-07-04',67,723000,'PO: 2 CAMPBELL - HIT3034-4 - Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor x 4 @ 853.00',-3412,1,'');
 INSERT INTO `gltrans` VALUES (136,25,3,0,'2005-07-17',67,722000,'PO: 1 REGNEW - FUJI990101 - Fujitsu 990101 Split type Indoor Unit 3.5kw x 25 @ 530.00',13250,1,'');
 INSERT INTO `gltrans` VALUES (137,25,3,0,'2005-07-17',67,723000,'PO: 1 REGNEW - FUJI990101 - Fujitsu 990101 Split type Indoor Unit 3.5kw x 25 @ 530.00',-13250,1,'');
-INSERT INTO `gltrans` VALUES (138,25,4,0,'2005-09-04',1,1460,'PO: 2 CAMPBELL - HIT3034-4 - Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor x 3 @ 853.00',2559,0,'');
-INSERT INTO `gltrans` VALUES (139,25,4,0,'2005-09-04',1,2150,'PO: 2 CAMPBELL - HIT3034-4 - Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor x 3 @ 853.00',-2559,0,'');
-INSERT INTO `gltrans` VALUES (140,25,5,0,'2005-09-04',1,1460,'PO: 2 CAMPBELL - HIT3034-4 - Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor x 1 @ 853.00',853,0,'');
-INSERT INTO `gltrans` VALUES (141,25,5,0,'2005-09-04',1,2150,'PO: 2 CAMPBELL - HIT3034-4 - Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor x 1 @ 853.00',-853,0,'');
-INSERT INTO `gltrans` VALUES (142,25,5,0,'2005-09-04',1,1460,'GRN Reversal for PO: 2 CAMPBELL - HIT3034-4-Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor x 1 @ 853.00',-853,0,'');
-INSERT INTO `gltrans` VALUES (143,25,5,0,'2005-09-04',1,2150,'GRN Reversal PO: 2 CAMPBELL - HIT3034-4-Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor x 1 @ 853.00',853,0,'');
-INSERT INTO `gltrans` VALUES (149,10,2,0,'2005-09-05',1,5000,'ANGRY - FUJI9901ASS x 2 @ 1163',2326,0,'');
-INSERT INTO `gltrans` VALUES (150,10,2,0,'2005-09-05',1,1460,'ANGRY - FUJI9901ASS x 2 @ 1163',-2326,0,'');
-INSERT INTO `gltrans` VALUES (151,10,2,0,'2005-09-05',1,4100,'ANGRY - FUJI9901ASS x 2 @ 3400',-6800,0,'');
-INSERT INTO `gltrans` VALUES (152,10,2,0,'2005-09-05',1,1100,'ANGRY',7639.8,0,'');
-INSERT INTO `gltrans` VALUES (153,10,2,0,'2005-09-05',1,2300,'ANGRY',-340,0,'');
-INSERT INTO `gltrans` VALUES (154,10,2,0,'2005-09-05',1,2300,'ANGRY',-499.8,0,'');
+INSERT INTO `gltrans` VALUES (138,25,4,0,'2005-09-04',1,1460,'PO: 2 CAMPBELL - HIT3034-4 - Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor x 3 @ 853.00',2559,1,'');
+INSERT INTO `gltrans` VALUES (139,25,4,0,'2005-09-04',1,2150,'PO: 2 CAMPBELL - HIT3034-4 - Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor x 3 @ 853.00',-2559,1,'');
+INSERT INTO `gltrans` VALUES (140,25,5,0,'2005-09-04',1,1460,'PO: 2 CAMPBELL - HIT3034-4 - Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor x 1 @ 853.00',853,1,'');
+INSERT INTO `gltrans` VALUES (141,25,5,0,'2005-09-04',1,2150,'PO: 2 CAMPBELL - HIT3034-4 - Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor x 1 @ 853.00',-853,1,'');
+INSERT INTO `gltrans` VALUES (142,25,5,0,'2005-09-04',1,1460,'GRN Reversal for PO: 2 CAMPBELL - HIT3034-4-Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor x 1 @ 853.00',-853,1,'');
+INSERT INTO `gltrans` VALUES (143,25,5,0,'2005-09-04',1,2150,'GRN Reversal PO: 2 CAMPBELL - HIT3034-4-Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor x 1 @ 853.00',853,1,'');
+INSERT INTO `gltrans` VALUES (149,10,2,0,'2005-09-05',1,5000,'ANGRY - FUJI9901ASS x 2 @ 1163',2326,1,'');
+INSERT INTO `gltrans` VALUES (150,10,2,0,'2005-09-05',1,1460,'ANGRY - FUJI9901ASS x 2 @ 1163',-2326,1,'');
+INSERT INTO `gltrans` VALUES (151,10,2,0,'2005-09-05',1,4100,'ANGRY - FUJI9901ASS x 2 @ 3400',-6800,1,'');
+INSERT INTO `gltrans` VALUES (152,10,2,0,'2005-09-05',1,1100,'ANGRY',7639.8,1,'');
+INSERT INTO `gltrans` VALUES (153,10,2,0,'2005-09-05',1,2300,'ANGRY',-340,1,'');
+INSERT INTO `gltrans` VALUES (154,10,2,0,'2005-09-05',1,2300,'ANGRY',-499.8,1,'');
 
 --
 -- Dumping data for table `grns`
@@ -2544,7 +2552,7 @@ INSERT INTO `purchorders` VALUES (2,'CAMPBELL','','2005-07-01 00:00:00',1,'2005-
 -- Dumping data for table `recurringsalesorders`
 --
 
-INSERT INTO `recurringsalesorders` VALUES (1,'DUMBLE','DUMBLE','',NULL,'','2005-06-26','DE',10,'Hogwarts castle','Platform 9.75','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal & Co',0,'TOR','2005-06-26','2006-06-27',52,0);
+INSERT INTO `recurringsalesorders` VALUES (1,'DUMBLE','DUMBLE','',NULL,'','2005-06-26','DE',10,'Hogwarts castle','Platform 9.75','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal & Co',0,'TOR','2005-08-21','2006-06-27',52,0);
 
 --
 -- Dumping data for table `recurrsalesorderdetails`
@@ -2605,6 +2613,8 @@ INSERT INTO `salesorderdetails` VALUES (0,6,'HIT3042-4',0,650,2,0,0.025,'0000-00
 INSERT INTO `salesorderdetails` VALUES (0,7,'HIT3042-4',0,600,2,0,0,'2005-06-17 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (0,8,'HIT3042-ASS',0,1500,1,0,0.05,'2005-06-20 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (0,9,'FUJI9901ASS',0,1600,5,0,0.05,'2005-06-20 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (0,12,'HIT3042-ASS',0,234,5,0,0,'0000-00-00 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (0,43,'HIT3042-ASS',0,234,5,0,0,'0000-00-00 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (1,1,'HIT3034-4',0,1680,2,0,0,'0000-00-00 00:00:00',0,'Installation experts at 1800 12345667');
 INSERT INTO `salesorderdetails` VALUES (1,2,'HIT3043-5',0,2300,3,0,0,'0000-00-00 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (1,7,'HIT3042-ASS',0,2500,1,0,0.025,'2005-06-17 00:00:00',0,'');
@@ -2623,6 +2633,8 @@ INSERT INTO `salesorders` VALUES (6,'JOLOMU','JOLOMU','',NULL,'','2005-06-15','D
 INSERT INTO `salesorders` VALUES (7,'JOLOMU','JOLOMU','',NULL,' Inv 8','2005-06-16','DE',1,'3215 Great Western Highway','Blubberhouses','Yorkshire','England','+44 812 211456','jolomu@lorrima.co.uk','Lorrima Productions Inc',1,0,'TOR','2005-06-17',1,'2005-06-16',0);
 INSERT INTO `salesorders` VALUES (8,'DUMBLE','DUMBLE','',NULL,' Inv 2','2005-06-19','DE',10,'Hogwarts castle','Platform 9.75','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal & Co',1,0,'TOR','2005-06-20',0,'0000-00-00',0);
 INSERT INTO `salesorders` VALUES (9,'DUMBLE','DUMBLE','',NULL,' Inv 3','2005-06-19','DE',10,'Hogwarts castle','Platform 9.75','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal & Co',1,0,'TOR','2005-06-20',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (12,'DUMBLE','DUMBLE','',NULL,'','2005-07-03','DE',10,'','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal & Co',1,0,'TOR','2005-07-03',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (43,'DUMBLE','DUMBLE','',NULL,'','2005-08-21','DE',10,'','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal & Co',1,0,'TOR','2005-08-21',0,'0000-00-00',0);
 
 --
 -- Dumping data for table `salestypes`

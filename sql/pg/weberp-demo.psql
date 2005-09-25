@@ -1069,7 +1069,9 @@ CREATE TABLE debtorsmaster (
     ediaddress text DEFAULT ''::text NOT NULL,
     ediserveruser text DEFAULT ''::text NOT NULL,
     ediserverpwd text DEFAULT ''::text NOT NULL,
-    taxref text DEFAULT ''::text
+    taxref text DEFAULT ''::text,
+    address5 character varying(20) DEFAULT ''::text NOT NULL,
+    address6 character varying(15) DEFAULT ''::text NOT NULL
 );
 
 
@@ -1103,7 +1105,11 @@ CREATE TABLE custbranch (
     brpostaddr3 text DEFAULT ''::text NOT NULL,
     brpostaddr4 text DEFAULT ''::text NOT NULL,
     custbranchcode text DEFAULT ''::text NOT NULL,
-    deliverblind integer DEFAULT 1
+    deliverblind integer DEFAULT 1,
+    braddress5 character varying(20) DEFAULT ''::text NOT NULL,
+    braddress6 character varying(15) DEFAULT ''::text NOT NULL,
+    brpostaddr5 character varying(20) DEFAULT ''::text NOT NULL,
+    brpostaddr6 character varying(15) DEFAULT ''::text NOT NULL
 );
 
 
@@ -3377,11 +3383,11 @@ COPY contractbom (contractref, component, workcentreadded, loccode, quantity) FR
 -- Name: debtorsmaster; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY debtorsmaster (debtorno, name, address1, address2, address3, address4, currcode, salestype, clientsince, holdreason, paymentterms, discount, pymtdiscount, lastpaid, lastpaiddate, creditlimit, invaddrbranch, discountcode, ediinvoices, ediorders, edireference, editransport, ediaddress, ediserveruser, ediserverpwd, taxref) FROM stdin;
-TEST	test	dssd	sd sd 	 dsad asd asd 	asd asd 	ZAR	WS	2004-12-31 00:00:00	20	7	0.0000	0.0000	3.5000	2005-01-03 00:00:00	1000	0		0	0		email				\N
-CUST01	Customer One	Na	Na	Na	Na	ZAR	WS	2004-12-03 00:00:00	20	7	0.0000	0.0000	60.0000	2004-12-05 00:00:00	1000	0		0	0		email				12345678901234567890
-FREDBLOGG	Fred Bloggs and partners	23 Bald Hill Terraces	Guinnesston 	Ireland		EUR	WS	2005-01-15 00:00:00	20	30	0.0000	0.0000	0.0000	\N	10000	0		0	0		email				dsf-212321
-100001	Eric Van Halen	453A Globus Contrabandus St	Aardvarkston			ZAR	WS	2005-03-12 00:00:00	1	7	0.0000	0.0000	0.0000	\N	1000	0		0	0		email				
+COPY debtorsmaster (debtorno, name, address1, address2, address3, address4, currcode, salestype, clientsince, holdreason, paymentterms, discount, pymtdiscount, lastpaid, lastpaiddate, creditlimit, invaddrbranch, discountcode, ediinvoices, ediorders, edireference, editransport, ediaddress, ediserveruser, ediserverpwd, taxref, address5, address6) FROM stdin;
+TEST	test	dssd	sd sd 	 dsad asd asd 	asd asd 	ZAR	WS	2004-12-31 00:00:00	20	7	0.0000	0.0000	3.5000	2005-01-03 00:00:00	1000	0		0	0		email				\N		
+CUST01	Customer One	Na	Na	Na	Na	ZAR	WS	2004-12-03 00:00:00	20	7	0.0000	0.0000	60.0000	2004-12-05 00:00:00	1000	0		0	0		email				12345678901234567890		
+FREDBLOGG	Fred Bloggs and partners	23 Bald Hill Terraces	Guinnesston 	Ireland		EUR	WS	2005-01-15 00:00:00	20	30	0.0000	0.0000	0.0000	\N	10000	0		0	0		email				dsf-212321		
+100001	Eric Van Halen	453A Globus Contrabandus St	Aardvarkston			ZAR	WS	2005-03-12 00:00:00	1	7	0.0000	0.0000	0.0000	\N	1000	0		0	0		email						
 \.
 
 
@@ -3390,11 +3396,11 @@ FREDBLOGG	Fred Bloggs and partners	23 Bald Hill Terraces	Guinnesston 	Ireland		E
 -- Name: custbranch; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY custbranch (branchcode, debtorno, brname, braddress1, braddress2, braddress3, braddress4, estdeliverydays, area, salesman, fwddate, phoneno, faxno, contactname, email, defaultlocation, taxgroupid, defaultshipvia, disabletrans, brpostaddr1, brpostaddr2, brpostaddr3, brpostaddr4, custbranchcode, deliverblind) FROM stdin;
-ERCC	FREDBLOGG	Ersteem Raichle unt Cloggs	333 444				1	EU	GEN	0			123		CPT	1	2	0						2
-CUST01	CUST01	Customer	Na	Na	Na	Na	5	ZA	GEN	0	NA	NA	Testy	NA	CPT	1	1	0	NA	Na	Na	Na	NA	\N
-100001	100001	Eric Van Halen	453A Globus Contrabandus St	Aardvarkston			1	ZA	GEN	0					CPT	1	2	0						\N
-FREDBLOGG	FREDBLOGG	Fred Bloggs and partners	23 Bald Hill Terraces	Guinnesston 	Ireland		12	EU	REF	0			Walter Bloggs		CPT	1	1	0						1
+COPY custbranch (branchcode, debtorno, brname, braddress1, braddress2, braddress3, braddress4, estdeliverydays, area, salesman, fwddate, phoneno, faxno, contactname, email, defaultlocation, taxgroupid, defaultshipvia, disabletrans, brpostaddr1, brpostaddr2, brpostaddr3, brpostaddr4, custbranchcode, deliverblind, braddress5, braddress6, brpostaddr5, brpostaddr6) FROM stdin;
+ERCC	FREDBLOGG	Ersteem Raichle unt Cloggs	333 444				1	EU	GEN	0			123		CPT	1	2	0						2				
+CUST01	CUST01	Customer	Na	Na	Na	Na	5	ZA	GEN	0	NA	NA	Testy	NA	CPT	1	1	0	NA	Na	Na	Na	NA	\N				
+100001	100001	Eric Van Halen	453A Globus Contrabandus St	Aardvarkston			1	ZA	GEN	0					CPT	1	2	0						\N				
+FREDBLOGG	FREDBLOGG	Fred Bloggs and partners	23 Bald Hill Terraces	Guinnesston 	Ireland		12	EU	REF	0			Walter Bloggs		CPT	1	1	0						1				
 \.
 
 

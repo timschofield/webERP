@@ -341,6 +341,8 @@ CREATE TABLE `custbranch` (
   `braddress2` varchar(40) NOT NULL default '',
   `braddress3` varchar(40) NOT NULL default '',
   `braddress4` varchar(50) NOT NULL default '',
+  `braddress5` varchar(20) NOT NULL default '',
+  `braddress6` varchar(15) NOT NULL default '',
   `estdeliverydays` smallint(6) NOT NULL default '1',
   `area` char(2) NOT NULL default '',
   `salesman` varchar(4) NOT NULL default '',
@@ -358,6 +360,8 @@ CREATE TABLE `custbranch` (
   `brpostaddr2` varchar(40) NOT NULL default '',
   `brpostaddr3` varchar(30) NOT NULL default '',
   `brpostaddr4` varchar(20) NOT NULL default '',
+  `brpostaddr5` varchar(20) NOT NULL default '',
+  `brpostaddr6` varchar(15) NOT NULL default '',
   `custbranchcode` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`branchcode`,`debtorno`),
   KEY `BranchCode` (`branchcode`),
@@ -387,6 +391,8 @@ CREATE TABLE `debtorsmaster` (
   `address2` varchar(40) NOT NULL default '',
   `address3` varchar(40) NOT NULL default '',
   `address4` varchar(50) NOT NULL default '',
+  `address5` varchar(20) NOT NULL default '',
+  `address6` varchar(15) NOT NULL default '',
   `currcode` char(3) NOT NULL default '',
   `salestype` char(2) NOT NULL default '',
   `clientsince` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -2180,7 +2186,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-09-10');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-09-25');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');

@@ -1061,7 +1061,9 @@ CREATE TABLE debtorsmaster (
     ediaddress text DEFAULT ''::text NOT NULL,
     ediserveruser text DEFAULT ''::text NOT NULL,
     ediserverpwd text DEFAULT ''::text NOT NULL,
-    taxref text DEFAULT ''::text
+    taxref text DEFAULT ''::text,
+    address5 character varying(20) DEFAULT ''::text NOT NULL,
+    address6 character varying(15) DEFAULT ''::text NOT NULL
 );
 
 
@@ -1095,7 +1097,11 @@ CREATE TABLE custbranch (
     brpostaddr3 text DEFAULT ''::text NOT NULL,
     brpostaddr4 text DEFAULT ''::text NOT NULL,
     custbranchcode text DEFAULT ''::text NOT NULL,
-    deliverblind integer DEFAULT 1
+    deliverblind integer DEFAULT 1,
+    braddress5 character varying(20) DEFAULT ''::text NOT NULL,
+    braddress6 character varying(15) DEFAULT ''::text NOT NULL,
+    brpostaddr5 character varying(20) DEFAULT ''::text NOT NULL,
+    brpostaddr6 character varying(15) DEFAULT ''::text NOT NULL
 );
 
 
