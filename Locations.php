@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 11;
 
@@ -156,7 +156,7 @@ if (isset($_POST['submit'])) {
 	$result = DB_query('SELECT COUNT(taxid) FROM taxauthorities',$db);
 	$NoTaxAuths =DB_fetch_row($result);
 
-	$result = DB_query('SELECT taxprovinceid FROM locations',$db);
+	$DispTaxProvinces = DB_query('SELECT taxprovinceid FROM locations',$db);
 	$TaxCatsResult = DB_query('SELECT taxcatid FROM taxcategories',$db);
 	if (DB_num_rows($TaxCatsResult) > 0 ) { // This will only work if there are levels else we get an error on seek.
 		
@@ -170,7 +170,7 @@ if (isset($_POST['submit'])) {
 				$DelTaxAuths = DB_query('DELETE FROM taxauthrates WHERE dispatchtaxprovince=' . $DispTaxProvinces[0],$db);
 	
 				/*Now add the new TaxAuthRates required */
-				while ($CatRow = DB_fetch_row($Levels)){
+				while ($CatRow = DB_fetch_row($TaxCatsResult)){
 					$sql = 'INSERT INTO taxauthrates (taxauthority, 
 										dispatchtaxprovince, 
 										taxcatid) 
