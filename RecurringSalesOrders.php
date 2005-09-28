@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /* This is where the details specific to the recurring order are entered and the template committed to the database once the Process button is hit */
 
 include('includes/DefineCartClass.php');
@@ -42,6 +42,8 @@ if ($_GET['NewRecurringOrder']=='Yes'){
 				recurringsalesorders.deladd2,
 				recurringsalesorders.deladd3,
 				recurringsalesorders.deladd4,
+				recurringsalesorders.deladd5,
+				recurringsalesorders.deladd6,
 				recurringsalesorders.contactphone,
 				recurringsalesorders.contactemail,
 				recurringsalesorders.freightcost,
@@ -83,6 +85,8 @@ if ($_GET['NewRecurringOrder']=='Yes'){
 			$_SESSION['Items']->BrAdd2 = $myrow['deladd2'];
 			$_SESSION['Items']->BrAdd3 = $myrow['deladd3'];
 			$_SESSION['Items']->BrAdd4 = $myrow['deladd4'];
+			$_SESSION['Items']->BrAdd5 = $myrow['deladd5'];
+			$_SESSION['Items']->BrAdd6 = $myrow['deladd6'];
 			$_SESSION['Items']->PhoneNo = $myrow['contactphone'];
 			$_SESSION['Items']->Email = $myrow['contactemail'];
 			$_SESSION['Items']->Location = $myrow['fromstkloc'];
@@ -208,6 +212,8 @@ If (isset($_POST['Process'])) {
 					deladd2,
 					deladd3,
 					deladd4,
+					deladd5,
+					deladd6,
 					contactphone,
 					contactemail,
 					freightcost,
@@ -229,6 +235,8 @@ If (isset($_POST['Process'])) {
 					'" . DB_escape_string($_SESSION['Items']->BrAdd2) . "',
 					'" . DB_escape_string($_SESSION['Items']->BrAdd3) . "',
 					'" . DB_escape_string($_SESSION['Items']->BrAdd4) . "',
+					'" . DB_escape_string($_SESSION['Items']->BrAdd5) . "',
+					'" . DB_escape_string($_SESSION['Items']->BrAdd6) . "',
 					'" . DB_escape_string($_SESSION['Items']->PhoneNo) . "',
 					'" . DB_escape_string($_SESSION['Items']->Email) . "',
 					" . $_SESSION['Items']->FreightCost .",

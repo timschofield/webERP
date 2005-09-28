@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 /*Variables required to configure this script must be set in config.php */
 
@@ -155,6 +155,8 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 			deladd2,
 			deladd3,
 			deladd4,
+			deladd5,
+			deladd6,
 			contactphone,
 			contactemail,
 			name,
@@ -162,6 +164,8 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 			address2,
 			address3,
 			address4,
+			address5,
+			address6,
 			printedpackingslip,
 			datepackingslipprinted
 		FROM salesorders,
@@ -224,10 +228,11 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
               fclose ($fp);
 
               $PHRecord = 'PH^^^' . $myrow['debtorno'] . '^' . $_GET['OrderNo'] . '^' . $FileNumber . '^' . $myrow['customerref'] . '^^^^^';
-              $PHRecord = $PHRecord . $myrow['deliverto'] . '^' . $myrow['deladd1'] . '^' . $myrow['deladd2'] . '^' . $myrow['deladd3'] . '^' . $myrow['deladd4'] . '^^^^';
-              $PHRecord = $PHRecord . $myrow['contactphone'] . '^' . $myrow['name'] . '^' . $myrow['address1'] . '^' . $myrow['address2'] . '^' .$myrow['address3'] . '^' .$myrow['address4'] . '^^^';
+              $PHRecord = $PHRecord . $myrow['deliverto'] . '^' . $myrow['deladd1'] . '^' . $myrow['deladd2'] . '^' . $myrow['deladd3'] . '^' . $myrow['deladd4'] . '^' . $myrow['deladd5'] . '^' . $myrow['deladd6'] . '^^^^';
+              $PHRecord = $PHRecord . $myrow['contactphone'] . '^' . $myrow['name'] . '^' . $myrow['address1'] . '^' . $myrow['address2'] . '^' .$myrow['address3'] . '^' .$myrow['address4'] . '^' .$myrow['address5'] . '^' .$myrow['address6'] . '^^^';
               $PHRecord = $PHRecord . $myrow['deliverydate'] . '^^^^^^^' . $myrow['orddate'] . '^^^^^^DX^^^^^^^^^^^^^' . $_SESSION['CompanyRecord']['coyname'] . '^' . $_SESSION['CompanyRecord']['regoffice1'] . '^' . $_SESSION['CompanyRecord']['regoffice2'] . '^';
-              $PHRecord = $PHRecord . $_SESSION['CompanyRecord']['regoffice3'] . '^^^^^^^N^N^^H^^^^^^' . $myrow['deliverydate'] . '^^^^^^^' . $myrow['contactphone'] . '^' . $myrow['contactemail'] . '^^^^^^^^^^^^^^^^^^^^^^^^^^\n';
+              $PHRecord = $PHRecord . $_SESSION['CompanyRecord']['regoffice3'] . '^' . $_SESSION['CompanyRecord']['regoffice4'] . '^' . $_SESSION['CompanyRecord']['regoffice5'] . '^' . $_SESSION['CompanyRecord']['regoffice6'] . '^';
+              $PHRecord = $PHRecord . '^^^^^^^N^N^^H^^^^^^' . $myrow['deliverydate'] . '^^^^^^^' . $myrow['contactphone'] . '^' . $myrow['contactemail'] . '^^^^^^^^^^^^^^^^^^^^^^^^^^\n';
 
               $PDRec = array();
               $LineCounter =0;

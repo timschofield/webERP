@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 11;
 
@@ -45,6 +45,9 @@ if (isset($_POST['submit'])) {
 				deladd1='" . $_POST['DelAdd1'] . "',
 				deladd2='" . $_POST['DelAdd2'] . "',
 				deladd3='" . $_POST['DelAdd3'] . "',
+				deladd4='" . $_POST['DelAdd4'] . "',
+				deladd5='" . $_POST['DelAdd5'] . "',
+				deladd6='" . $_POST['DelAdd6'] . "',
 				tel='" . $_POST['Tel'] . "',
 				fax='" . $_POST['Fax'] . "',
 				email='" . $_POST['Email'] . "',
@@ -64,6 +67,9 @@ if (isset($_POST['submit'])) {
 		unset($_POST['DelAdd1']);
 		unset($_POST['DelAdd2']);
 		unset($_POST['DelAdd3']);
+		unset($_POST['DelAdd4']);
+		unset($_POST['DelAdd5']);
+		unset($_POST['DelAdd6']);
 		unset($_POST['Tel']);
 		unset($_POST['Fax']);
 		unset($_POST['Email']);
@@ -90,6 +96,9 @@ if (isset($_POST['submit'])) {
 					deladd1,
 					deladd2,
 					deladd3,
+					deladd4,
+					deladd5,
+					deladd6,
 					tel,
 					fax,
 					email,
@@ -103,6 +112,9 @@ if (isset($_POST['submit'])) {
 				'" . $_POST['DelAdd1'] ."',
 				'" . $_POST['DelAdd2'] ."',
 				'" . $_POST['DelAdd3'] . "',
+				'" . $_POST['DelAdd4'] . "',
+				'" . $_POST['DelAdd5'] . "',
+				'" . $_POST['DelAdd6'] . "',
 				'" . $_POST['Tel'] . "',
 				'" . $_POST['Fax'] . "',
 				'" . $_POST['Email'] . "',
@@ -140,6 +152,9 @@ if (isset($_POST['submit'])) {
 		unset($_POST['DelAdd1']);
 		unset($_POST['DelAdd2']);
 		unset($_POST['DelAdd3']);
+		unset($_POST['DelAdd4']);
+		unset($_POST['DelAdd5']);
+		unset($_POST['DelAdd6']);
 		unset($_POST['Tel']);
 		unset($_POST['Fax']);
 		unset($_POST['Email']);
@@ -369,6 +384,9 @@ if (!isset($_GET['delete'])) {
 				deladd1,
 				deladd2,
 				deladd3,
+				deladd4,
+				deladd5,
+				deladd6,
 				contact,
 				fax,
 				tel,
@@ -386,6 +404,9 @@ if (!isset($_GET['delete'])) {
 		$_POST['DelAdd1'] = $myrow['deladd1'];
 		$_POST['DelAdd2'] = $myrow['deladd2'];
 		$_POST['DelAdd3'] = $myrow['deladd3'];
+		$_POST['DelAdd4'] = $myrow['deladd4'];
+		$_POST['DelAdd5'] = $myrow['deladd5'];
+		$_POST['DelAdd6'] = $myrow['deladd6'];
 		$_POST['Contact'] = $myrow['contact'];
 		$_POST['Tel'] = $myrow['tel'];
 		$_POST['Fax'] = $myrow['fax'];
@@ -407,12 +428,18 @@ if (!isset($_GET['delete'])) {
 	<TD><input type="Text" name="LocationName" value="<?php echo $_POST['LocationName']; ?>" SIZE=51 MAXLENGTH=50></TD></TR>
 	<TR><TD><?php echo _('Contact for deliveries') . ':'; ?></TD>
 	<TD><input type="Text" name="Contact" value="<?php echo $_POST['Contact']; ?>" SIZE=31 MAXLENGTH=30></TD></TR>
-	<TR><TD><?php echo _('Delivery Street') . ':'; ?></TD>
+	<TR><TD><?php echo _('Delivery Address 1') . ':'; ?></TD>
 	<TD><input type="Text" name="DelAdd1" value="<?php echo $_POST['DelAdd1']; ?>" SIZE=41 MAXLENGTH=40></TD></TR>
-	<TR><TD><?php echo _('Suburb') . ':'; ?></TD>
+	<TR><TD><?php echo _('Delivery Address 2') . ':'; ?></TD>
 	<TD><input type="Text" name="DelAdd2" value="<?php echo $_POST['DelAdd2']; ?>" SIZE=41 MAXLENGTH=40></TD></TR>
-	<TR><TD><?php echo _('City') . '/' . _('State') . ':'; ?></TD>
+	<TR><TD><?php echo _('Delivery Address 4') . ':'; ?></TD>
 	<TD><input type="Text" name="DelAdd3" value="<?php echo $_POST['DelAdd3']; ?>" SIZE=41 MAXLENGTH=40></TD></TR>
+	<TR><TD><?php echo _('Delivery Address 4') . ':'; ?></TD>
+	<TD><input type="Text" name="DelAdd4" value="<?php echo $_POST['DelAdd4']; ?>" SIZE=41 MAXLENGTH=40></TD></TR>
+	<TR><TD><?php echo _('Delivery Address 5') . ':'; ?></TD>
+	<TD><input type="Text" name="DelAdd5" value="<?php echo $_POST['DelAdd5']; ?>" SIZE=21 MAXLENGTH=20></TD></TR>
+	<TR><TD><?php echo _('Delivery Address 6') . ':'; ?></TD>
+	<TD><input type="Text" name="DelAdd6" value="<?php echo $_POST['DelAdd6']; ?>" SIZE=16 MAXLENGTH=15></TD></TR>
 	<TR><TD><?php echo _('Telephone No') . ':'; ?></TD>
 	<TD><input type="Text" name="Tel" value="<?php echo $_POST['Tel']; ?>" SIZE=31 MAXLENGTH=30></TD></TR>
 	<TR><TD><?php echo _('Facsimile No') . ':'; ?></TD>

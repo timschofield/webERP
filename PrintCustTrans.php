@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 $PageSecurity = 1;
 
@@ -115,6 +115,8 @@ If (isset($PrintPDF)
 				salesorders.deladd2,
 				salesorders.deladd3,
 				salesorders.deladd4,
+				salesorders.deladd5,
+				salesorders.deladd6,
 				salesorders.customerref,
 				salesorders.orderno,
 				salesorders.orddate,
@@ -569,6 +571,8 @@ If (isset($PrintPDF)
 					salesorders.deladd2, 
 					salesorders.deladd3, 
 					salesorders.deladd4, 
+					salesorders.deladd5, 
+					salesorders.deladd6, 
 					salesorders.customerref, 
 					salesorders.orderno, 
 					salesorders.orddate, 
@@ -667,9 +671,12 @@ If (isset($PrintPDF)
 
 	/*Now print out the logo and company name and address */
 				echo "<TABLE WIDTH=100%><TR><TD><FONT SIZE=4 COLOR='#333333'><B>" . $_SESSION['CompanyRecord']['coyname'] . "</B></FONT><BR>";
-				echo $_SESSION['CompanyRecord']['postaladdress'] . '<BR>';
 				echo $_SESSION['CompanyRecord']['regoffice1'] . '<BR>';
 				echo $_SESSION['CompanyRecord']['regoffice2'] . '<BR>';
+				echo $_SESSION['CompanyRecord']['regoffice3'] . '<BR>';
+				echo $_SESSION['CompanyRecord']['regoffice4'] . '<BR>';
+				echo $_SESSION['CompanyRecord']['regoffice5'] . '<BR>';
+				echo $_SESSION['CompanyRecord']['regoffice6'] . '<BR>';
 				echo _('Telephone') . ': ' . $_SESSION['CompanyRecord']['telephone'] . '<BR>';
 				echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<BR>';
 				echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<BR>';
@@ -696,7 +703,7 @@ If (isset($PrintPDF)
 				   echo "<TR>
 				   		<TD BGCOLOR='#EEEEEE'>" .$myrow['brname'] . '<BR>' . $myrow['braddress1'] . '<BR>' . $myrow['braddress2'] . '<BR>' . $myrow['braddress3'] . '<BR>' . $myrow['braddress4'] . '<BR>' . $myrow['braddress5'] . '<BR>' . $myrow['braddress6'] . '</TD>';
 
-				   	echo "<TD BGCOLOR='#EEEEEE'>" . $myrow['deliverto'] . '<BR>' . $myrow['deladd1'] . '<BR>' . $myrow['deladd2'] . '<BR>' . $myrow['deladd3'] . '<BR>' . $myrow['deladd4'] . '</TD>';
+				   	echo "<TD BGCOLOR='#EEEEEE'>" . $myrow['deliverto'] . '<BR>' . $myrow['deladd1'] . '<BR>' . $myrow['deladd2'] . '<BR>' . $myrow['deladd3'] . '<BR>' . $myrow['deladd4'] . '<BR>' . $myrow['deladd5'] . '<BR>' . $myrow['deladd6'] . '</TD>';
 				   echo '</TR>
 				   </TABLE><HR>';
 				   
@@ -854,9 +861,12 @@ If (isset($PrintPDF)
 	/*Now print out company name and address */
 						    echo "<TABLE WIDTH=100%><TR>
 						    	<TD><FONT SIZE=4 COLOR='#333333'><B>" . $_SESSION['CompanyRecord']['coyname'] . '</B></FONT><BR>';
-						    echo $_SESSION['CompanyRecord']['postaladdress'] . '<BR>';
 						    echo $_SESSION['CompanyRecord']['regoffice1'] . '<BR>';
 						    echo $_SESSION['CompanyRecord']['regoffice2'] . '<BR>';
+						    echo $_SESSION['CompanyRecord']['regoffice3'] . '<BR>';
+						    echo $_SESSION['CompanyRecord']['regoffice4'] . '<BR>';
+						    echo $_SESSION['CompanyRecord']['regoffice5'] . '<BR>';
+						    echo $_SESSION['CompanyRecord']['regoffice6'] . '<BR>';
 						    echo _('Telephone') . ': ' . $_SESSION['CompanyRecord']['telephone'] . '<BR>';
 						    echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<BR>';
 						    echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<BR>';
@@ -896,9 +906,12 @@ If (isset($PrintPDF)
 
 	/*Print out the logo and company name and address */
 					echo "<TABLE WIDTH=100%><TR><TD><FONT SIZE=4 COLOR='#333333'><B>" . $_SESSION['CompanyRecord']['coyname'] . "</B></FONT><BR>";
-					echo $_SESSION['CompanyRecord']['postaladdress'] . '<BR>';
 					echo $_SESSION['CompanyRecord']['regoffice1'] . '<BR>';
 					echo $_SESSION['CompanyRecord']['regoffice2'] . '<BR>';
+					echo $_SESSION['CompanyRecord']['regoffice3'] . '<BR>';
+					echo $_SESSION['CompanyRecord']['regoffice4'] . '<BR>';
+					echo $_SESSION['CompanyRecord']['regoffice5'] . '<BR>';
+					echo $_SESSION['CompanyRecord']['regoffice6'] . '<BR>';
 					echo _('Telephone') . ': ' . $_SESSION['CompanyRecord']['telephone'] . '<BR>';
 					echo _('Facsimile') . ': ' . $_SESSION['CompanyRecord']['fax'] . '<BR>';
 					echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<BR>';

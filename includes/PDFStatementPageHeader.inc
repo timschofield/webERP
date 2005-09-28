@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /* PDFlib code to set up a new page */
 
 $Perforation = $Page_Width - $RightMargin - 160;
@@ -34,10 +34,11 @@ $YPos = $Page_Height - $Top_Margin - 45;
 $pdf->addText($XPos, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
 
 $FontSize =8;
-$pdf->addText($XPos, $YPos-12,$FontSize, $_SESSION['CompanyRecord']['postaladdress']);
-$pdf->addText($XPos, $YPos-21,$FontSize, $_SESSION['CompanyRecord']['regoffice1'] . ' ' . $_SESSION['CompanyRecord']['regoffice2']);
-$pdf->addText($XPos, $YPos-30,$FontSize, _('Ph').': ' . $_SESSION['CompanyRecord']['telephone'] . ' '._('Fax').': ' . $_SESSION['CompanyRecord']['fax']);
-$pdf->addText($XPos, $YPos-39,$FontSize, $_SESSION['CompanyRecord']['email']);
+$pdf->addText($XPos, $YPos-12,$FontSize, $_SESSION['CompanyRecord']['regoffice1']);
+$pdf->addText($XPos, $YPos-21,$FontSize, $_SESSION['CompanyRecord']['regoffice2']);
+$pdf->addText($XPos, $YPos-30,$FontSize, $_SESSION['CompanyRecord']['regoffice3'] . ' ' . $_SESSION['CompanyRecord']['regoffice4'] . ' ' . $_SESSION['CompanyRecord']['regoffice5']);
+$pdf->addText($XPos, $YPos-39,$FontSize, _('Ph').': ' . $_SESSION['CompanyRecord']['telephone'] . ' '._('Fax').': ' . $_SESSION['CompanyRecord']['fax']);
+$pdf->addText($XPos, $YPos-48,$FontSize, $_SESSION['CompanyRecord']['email']);
 
 /*Now the remittance section just company and return postal address */
 $pdf->addText($Perforation+1, $YPos-15,$FontSize, _('Please send with remittance to').':');

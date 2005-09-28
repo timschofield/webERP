@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.31 $ */
+/* $Revision: 1.32 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -51,6 +51,8 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 					salesorders.deladd2,
 					salesorders.deladd3,
 					salesorders.deladd4,
+					salesorders.deladd5,
+					salesorders.deladd6,
 					salesorders.contactphone,
 					salesorders.contactemail,
 					salesorders.freightcost,
@@ -101,6 +103,8 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 		$_SESSION['Items']->BrAdd2 = $myrow['deladd2'];
 		$_SESSION['Items']->BrAdd3 = $myrow['deladd3'];
 		$_SESSION['Items']->BrAdd4 = $myrow['deladd4'];
+		$_SESSION['Items']->BrAdd5 = $myrow['deladd5'];
+		$_SESSION['Items']->BrAdd6 = $myrow['deladd6'];
 		$_SESSION['Items']->PhoneNo = $myrow['contactphone'];
 		$_SESSION['Items']->Email = $myrow['contactemail'];
 		$_SESSION['Items']->Location = $myrow['fromstkloc'];

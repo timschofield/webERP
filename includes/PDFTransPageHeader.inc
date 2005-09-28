@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 /* R&OS PHP-pdf class code to head up a new page */
 
 if (!$FirstPage){ /* only initiate a new page if its not the first */
@@ -74,11 +74,12 @@ $pdf->addText($XPos, $YPos, $FontSize, $_SESSION['CompanyRecord']['coyname']);
 
 $FontSize=8;
 $pdf->addText($XPos, $YPos-10, $FontSize, $_SESSION['TaxAuthorityReferenceName'] . ': ' . $_SESSION['CompanyRecord']['gstno']);
-$pdf->addText($XPos, $YPos-20, $FontSize, $_SESSION['CompanyRecord']['postaladdress']);
-$pdf->addText($XPos, $YPos-30, $FontSize, $_SESSION['CompanyRecord']['regoffice1'] . ' ' . $_SESSION['CompanyRecord']['regoffice2']);
-$pdf->addText($XPos, $YPos-40, $FontSize, $_SESSION['CompanyRecord']['regoffice3']);
-$pdf->addText($XPos, $YPos-50, $FontSize, _('Phone') . ':' . $_SESSION['CompanyRecord']['telephone'] . ' ' . _('Fax') . ': ' . $_SESSION['CompanyRecord']['fax']);
-$pdf->addText($XPos, $YPos-60, $FontSize, _('Email') . ': ' . $_SESSION['CompanyRecord']['email']);
+$pdf->addText($XPos, $YPos-19,$FontSize, $_SESSION['CompanyRecord']['regoffice1']);
+$pdf->addText($XPos, $YPos-28,$FontSize, $_SESSION['CompanyRecord']['regoffice2']);
+$pdf->addText($XPos, $YPos-37,$FontSize, $_SESSION['CompanyRecord']['regoffice3'] . ' ' . $_SESSION['CompanyRecord']['regoffice4'] . ' ' . $_SESSION['CompanyRecord']['regoffice5']);
+$pdf->addText($XPos, $YPos-46, $FontSize, $_SESSION['CompanyRecord']['regoffice3']);
+$pdf->addText($XPos, $YPos-54, $FontSize, _('Phone') . ':' . $_SESSION['CompanyRecord']['telephone'] . ' ' . _('Fax') . ': ' . $_SESSION['CompanyRecord']['fax']);
+$pdf->addText($XPos, $YPos-63, $FontSize, _('Email') . ': ' . $_SESSION['CompanyRecord']['email']);
 
 /*Now the customer charged to details top left */
 
@@ -113,7 +114,7 @@ if ($InvOrCredit=='Invoice') {
 	$pdf->addText($XPos, $YPos, $FontSize, $myrow['deliverto']);
 	$pdf->addText($XPos, $YPos-14, $FontSize, $myrow['deladd1']);
 	$pdf->addText($XPos, $YPos-28, $FontSize, $myrow['deladd2']);
-	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['deladd3'] . ' ' . $myrow['deladd4']);
+	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5']);
 	$XPos -=80;
 }
 if ($InvOrCredit=='Credit'){

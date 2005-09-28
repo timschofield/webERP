@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 
 $PageSecurity = 4;
@@ -26,9 +26,9 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 	if ($_SESSION['PO']->DelAdd1=='' or strlen($_SESSION['PO']->DelAdd1)<3){
 	      prnMsg( _('The purchase order can not be committed to the database because there is no delivery steet address specified'),'error');
 	      $InputError=1;
-	} elseif ($_SESSION['PO']->DelAdd2=='' OR strlen($_SESSION['PO']->DelAdd2)<3){
-	      prnMsg( _('The purchase order can not be committed to the database because there is no suburb address specified'),'error');
-	      $InputError=1;
+//	} elseif ($_SESSION['PO']->DelAdd2=='' OR strlen($_SESSION['PO']->DelAdd2)<3){
+//	      prnMsg( _('The purchase order can not be committed to the database because there is no suburb address specified'),'error');
+//	      $InputError=1;
 	} elseif ($_SESSION['PO']->Location=='' OR ! isset($_SESSION['PO']->Location)){
 	      prnMsg( _('The purchase order can not be committed to the database because there is no location specified to book any stock items into'),'error');
 	      $InputError=1;
@@ -54,7 +54,9 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							deladd1,
 							deladd2,
 							deladd3,
-							deladd4)
+							deladd4,
+							deladd5,
+							deladd6)
 				VALUES(
 				'" . $_SESSION['PO']->SupplierID . "',
 				'" . addslashes($_SESSION['PO']->Comments) . "',
@@ -67,6 +69,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 				'" . addslashes($_SESSION['PO']->DelAdd2) . "',
 				'" . addslashes($_SESSION['PO']->DelAdd3) . "',
 				'" . addslashes($_SESSION['PO']->DelAdd4) . "'
+				'" . addslashes($_SESSION['PO']->DelAdd5) . "'
+				'" . addslashes($_SESSION['PO']->DelAdd6) . "'
 				)";
 
 			$ErrMsg =  _('The purchase order header record could not be inserted into the database because');
@@ -123,6 +127,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 					deladd2='" . addslashes($_SESSION['PO']->DelAdd2) . "',
 					deladd3='" . addslashes($_SESSION['PO']->DelAdd3) . "',
 					deladd4='" . addslashes($_SESSION['PO']->DelAdd4) . "',
+					deladd5='" . addslashes($_SESSION['PO']->DelAdd5) . "',
+					deladd6='" . addslashes($_SESSION['PO']->DelAdd6) . "',
 					allowprint=" . $_SESSION['PO']->AllowPrintPO . "
 		     		WHERE orderno = " . $_SESSION['PO']->OrderNo;
 

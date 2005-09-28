@@ -22,10 +22,12 @@ if(isset($ForceConfigReload) OR !isset($_SESSION['CompanyDefaultsLoaded'])) {
 	$sql=	"SELECT
 		coyname,
 		gstno,
-		postaladdress,
 		regoffice1,
 		regoffice2,
 		regoffice3,
+		regoffice4,
+		regoffice5,
+		regoffice6,
 		telephone,
 		fax,
 		email,

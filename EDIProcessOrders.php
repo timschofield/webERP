@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity =11;
 
@@ -452,6 +452,8 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 							$Order->DelAdd2 = $NAD_C059[1];
 							$Order->DelAdd3 = $NAD_C059[2];
 							$Order->DelAdd4 = $NAD_C059[4];
+							$Order->DelAdd5 = $NAD_C059[5];
+							$Order->DelAdd6 = $NAD_C059[6];
 						}
 						break;
 					case 'SN':
@@ -480,6 +482,8 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 							$Order->DelAdd2 = $BranchRow['braddress2'];
 							$Order->DelAdd3 = $BranchRow['braddress3'];
 							$Order->DelAdd4 = $BranchRow['braddress4'];
+							$Order->DelAdd5 = $BranchRow['braddress5'];
+							$Order->DelAdd6 = $BranchRow['braddress6'];
 							$Order->PhoneNo = $BranchRow['phoneno'];
 							$Order->Email = $BranchRow['email'];
 							$Order->Location = $BranchRow['defaultlocation'];

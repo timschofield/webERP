@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity =10;
 
@@ -23,18 +23,24 @@ if (isset($_POST['submit'])) {
 	if (strlen($_POST['CoyName']) > 40 OR strlen($_POST['CoyName'])==0) {
 		$InputError = 1;
 		prnMsg(_('The company name must be entered and be fifty characters or less long'), 'error');
-	} elseif (strlen($_POST['PostalAddress']) >50) {
+	} elseif (strlen($_POST['RegOffice1']) >40) {
 		$InputError = 1;
-		prnMsg(_('The postal address must be fifty characters or less long'),'error');
-	} elseif (strlen($_POST['RegOffice1']) >50) {
+		prnMsg(_('The Line 1 of the address must be forty characters or less long'),'error');
+	} elseif (strlen($_POST['RegOffice2']) >40) {
 		$InputError = 1;
-		prnMsg(_('The Line 1 of the address must be fifty characters or less long'),'error');
-	} elseif (strlen($_POST['RegOffice2']) >50) {
+		prnMsg(_('The Line 2 of the address must be forty characters or less long'),'error');
+	} elseif (strlen($_POST['RegOffice3']) >40) {
 		$InputError = 1;
-		prnMsg(_('The Line 2 of the address must be fifty characters or less long'),'error');
-	} elseif (strlen($_POST['RegOffice3']) >50) {
+		prnMsg(_('The Line 3 of the address must be forty characters or less long'),'error');
+	} elseif (strlen($_POST['RegOffice4']) >40) {
 		$InputError = 1;
-		prnMsg(_('The Line 3 of the address must be fifty characters or less long'),'error');
+		prnMsg(_('The Line 4 of the address must be forty characters or less long'),'error');
+	} elseif (strlen($_POST['RegOffice5']) >20) {
+		$InputError = 1;
+		prnMsg(_('The Line 5 of the address must be twenty characters or less long'),'error');
+	} elseif (strlen($_POST['RegOffice6']) >15) {
+		$InputError = 1;
+		prnMsg(_('The Line 6 of the address must be fifteen characters or less long'),'error');
 	} elseif (strlen($_POST['Telephone']) >25) {
 		$InputError = 1;
 		prnMsg(_('The telephone number must be 25 characters or less long'),'error');
@@ -52,10 +58,12 @@ if (isset($_POST['submit'])) {
 				coyname='" . $_POST['CoyName'] . "',
 				companynumber = '" . $_POST['CompanyNumber'] . "',
 				gstno='" . $_POST['GSTNo'] . "',
-				postaladdress ='" . $_POST['PostalAddress'] . "',
 				regoffice1='" . $_POST['RegOffice1'] . "',
 				regoffice2='" . $_POST['RegOffice2'] . "',
 				regoffice3='" . $_POST['RegOffice3'] . "',
+				regoffice4='" . $_POST['RegOffice4'] . "',
+				regoffice5='" . $_POST['RegOffice5'] . "',
+				regoffice6='" . $_POST['RegOffice6'] . "',
 				telephone='" . $_POST['Telephone'] . "',
 				fax='" . $_POST['Fax'] . "',
 				email='" . $_POST['Email'] . "',
@@ -92,10 +100,12 @@ echo '<CENTER><TABLE>';
 $sql = "SELECT coyname,
 		gstno,
 		companynumber,
-		postaladdress,
 		regoffice1,
 		regoffice2,
 		regoffice3,
+		regoffice4,
+		regoffice5,
+		regoffice6,
 		telephone,
 		fax,
 		email,
@@ -126,10 +136,12 @@ $myrow = DB_fetch_array($result);
 $_POST['CoyName'] = $myrow['coyname'];
 $_POST['GSTNo'] = $myrow['gstno'];
 $_POST['CompanyNumber']  = $myrow['companynumber'];
-$_POST['PostalAddress']  = $myrow['postaladdress'];
 $_POST['RegOffice1']  = $myrow['regoffice1'];
 $_POST['RegOffice2']  = $myrow['regoffice2'];
 $_POST['RegOffice3']  = $myrow['regoffice3'];
+$_POST['RegOffice4']  = $myrow['regoffice4'];
+$_POST['RegOffice5']  = $myrow['regoffice5'];
+$_POST['RegOffice6']  = $myrow['regoffice6'];
 $_POST['Telephone']  = $myrow['telephone'];
 $_POST['Fax']  = $myrow['fax'];
 $_POST['Email']  = $myrow['email'];
@@ -159,20 +171,28 @@ echo '<TR><TD>' . _('Tax Authority Reference') . ':</TD>
 	<TD><input type="Text" Name="GSTNo" value="' . $_POST['GSTNo'] . '" SIZE=22 MAXLENGTH=20></TD>
 </TR>';
 
-echo '<TR><TD>' . _('Postal Address') . ':</TD>
-	<TD><input type="Text" Name="PostalAddress" SIZE=52 MAXLENGTH=50 value="' . $_POST['PostalAddress'] . '"></TD>
-</TR>';
-
 echo '<TR><TD>' . _('Address Line 1') . ':</TD>
-	<TD><input type="Text" Name="RegOffice1" SIZE=52 MAXLENGTH=50 value="' . $_POST['RegOffice1'] . '"></TD>
+	<TD><input type="Text" Name="RegOffice1" SIZE=42 MAXLENGTH=40 value="' . $_POST['RegOffice1'] . '"></TD>
 </TR>';
 
 echo '<TR><TD>' . _('Address Line 2') . ':</TD>
-	<TD><input type="Text" Name="RegOffice2" SIZE=52 MAXLENGTH=50 value="' . $_POST['RegOffice2'] . '"></TD>
+	<TD><input type="Text" Name="RegOffice2" SIZE=42 MAXLENGTH=40 value="' . $_POST['RegOffice2'] . '"></TD>
 </TR>';
 
 echo '<TR><TD>' . _('Address Line 3') . ':</TD>
-	<TD><input type="Text" Name="RegOffice3" SIZE=52 MAXLENGTH=50 value="' . $_POST['RegOffice3'] . '"></TD>
+	<TD><input type="Text" Name="RegOffice3" SIZE=42 MAXLENGTH=40 value="' . $_POST['RegOffice3'] . '"></TD>
+</TR>';
+
+echo '<TR><TD>' . _('Address Line 4') . ':</TD>
+	<TD><input type="Text" Name="RegOffice4" SIZE=42 MAXLENGTH=40 value="' . $_POST['RegOffice4'] . '"></TD>
+</TR>';
+
+echo '<TR><TD>' . _('Address Line 5') . ':</TD>
+	<TD><input type="Text" Name="RegOffice5" SIZE=22 MAXLENGTH=20 value="' . $_POST['RegOffice5'] . '"></TD>
+</TR>';
+
+echo '<TR><TD>' . _('Address Line 6') . ':</TD>
+	<TD><input type="Text" Name="RegOffice6" SIZE=17 MAXLENGTH=15 value="' . $_POST['RegOffice6'] . '"></TD>
 </TR>';
 
 echo '<TR><TD>' . _('Telephone Number') . ':</TD>

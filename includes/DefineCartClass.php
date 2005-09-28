@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -34,6 +34,8 @@ Class Cart {
 	var $DelAdd2;
 	var $DelAdd3;
 	var $DelAdd4;
+	var $DelAdd5;
+	var $DelAdd6;
 	var $PhoneNo;
 	var $Email;
 	var $CustRef;

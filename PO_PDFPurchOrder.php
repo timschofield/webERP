@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -66,6 +66,8 @@ if (isset($OrderNo) && $OrderNo != "" && $OrderNo > 0){
 			purchorders.deladd2,
 			purchorders.deladd3,
 			purchorders.deladd4,
+			purchorders.deladd5,
+			purchorders.deladd6,
 			purchorders.allowprint,
 			purchorders.requisitionno,
 			purchorders.initiator,

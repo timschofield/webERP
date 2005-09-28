@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 4;
 
@@ -252,7 +252,10 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		$sql = "SELECT contact,
 				deladd1,
 				deladd2,
-				deladd3
+				deladd3,
+				deladd4,
+				deladd5,
+				deladd6
 			FROM locations
 			WHERE loccode='" . $_SESSION['SPL']->StkLocation . "'";
 
@@ -273,7 +276,10 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							deladd1,
 							deladd2,
 							deladd3,
-							deladd4)
+							deladd4,
+							deladd5,
+							deladd6,
+							contact)
 							VALUES(";
 
 		 $sql = $sql . "'" . $_SESSION['SPL']->SupplierID . "',
@@ -286,7 +292,11 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 				'" . $StkLocAddress['Contact'] . "',
 				'" . $StkLocAddress['DelAdd1'] . "',
 				'" . $StkLocAddress['DelAdd2'] . "',
-				'" . $StkLocAddress['DelAdd3'] . "')";
+				'" . $StkLocAddress['DelAdd3'] . "',
+				'" . $StkLocAddress['DelAdd4'] . "',
+				'" . $StkLocAddress['DelAdd5'] . "',
+				'" . $StkLocAddress['DelAdd6'] . "',
+				'" . $StkLocAddress['contact'] . "')";
 
 
 		$ErrMsg = _('The purchase order header record could not be inserted into the database because');
@@ -418,6 +428,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							deladd2,
 							deladd3,
 							deladd4,
+							deladd5,
+							deladd6,
 							contactphone,
 							contactemail,
 							fromstkloc,

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 /*need to allow this script to run from Cron or windows scheduler */
 $AllowAnyone = true;
@@ -26,6 +26,8 @@ $sql = 'SELECT recurringsalesorders.recurrorderno,
   		recurringsalesorders.deladd2,
   		recurringsalesorders.deladd3,
   		recurringsalesorders.deladd4,
+  		recurringsalesorders.deladd5,
+  		recurringsalesorders.deladd6,
   		recurringsalesorders.contactphone,
   		recurringsalesorders.contactemail,
   		recurringsalesorders.deliverto,
@@ -94,6 +96,8 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 				deladd2,
 				deladd3,
 				deladd4,
+				deladd5,
+				deladd6,
 				contactphone,
 				contactemail,
 				freightcost,
@@ -112,6 +116,8 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 				'" . DB_escape_string($RecurrOrderRow['bradd2']) . "',
 				'" . DB_escape_string($RecurrOrderRow['bradd3']) . "',
 				'" . DB_escape_string($RecurrOrderRow['bradd4']) . "',
+				'" . DB_escape_string($RecurrOrderRow['bradd5']) . "',
+				'" . DB_escape_string($RecurrOrderRow['bradd6']) . "',
 				'" . DB_escape_string($RecurrOrderRow['contactphone']) . "',
 				'" . DB_escape_string($RecurrOrderRow['contactemail']) . "',
 				" . $RecurrOrderRow['freightcost'] .",

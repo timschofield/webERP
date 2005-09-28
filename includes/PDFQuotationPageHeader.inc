@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /* pdf-php by R&OS code to set up a new sales order page */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -14,10 +14,11 @@ $FontSize=14;
 $YPos = 480;
 $pdf->addText($XPos, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
 $FontSize =8;
-$pdf->addText($XPos, $YPos-12,$FontSize, $_SESSION['CompanyRecord']['postaladdress']);
-$pdf->addText($XPos, $YPos-21,$FontSize, $_SESSION['CompanyRecord']['regoffice1'] . ' ' . $_SESSION['CompanyRecord']['regoffice2']);
-$pdf->addText($XPos, $YPos-30,$FontSize, _('Ph') . ': ' . $_SESSION['CompanyRecord']['telephone'] . ' ' . _('Fax'). ': ' . $_SESSION['CompanyRecord']['fax']);
-$pdf->addText($XPos, $YPos-39,$FontSize, $_SESSION['CompanyRecord']['email']);
+$pdf->addText($XPos, $YPos-12,$FontSize, $_SESSION['CompanyRecord']['regoffice1']);
+$pdf->addText($XPos, $YPos-21,$FontSize, $_SESSION['CompanyRecord']['regoffice2']);
+$pdf->addText($XPos, $YPos-30,$FontSize, $_SESSION['CompanyRecord']['regoffice3'] . ' ' . $_SESSION['CompanyRecord']['regoffice4'] . ' ' . $_SESSION['CompanyRecord']['regoffice5']);
+$pdf->addText($XPos, $YPos-39,$FontSize, _('Ph') . ': ' . $_SESSION['CompanyRecord']['telephone'] . ' ' . _('Fax'). ': ' . $_SESSION['CompanyRecord']['fax']);
+$pdf->addText($XPos, $YPos-48,$FontSize, $_SESSION['CompanyRecord']['email']);
 
 
 $XPos = 46;
@@ -28,7 +29,7 @@ $pdf->addText($XPos, $YPos,$FontSize, _('Delivery To').':' );
 $pdf->addText($XPos, $YPos-15,$FontSize, $myrow['deliverto']);
 $pdf->addText($XPos, $YPos-30,$FontSize, $myrow['deladd1']);
 $pdf->addText($XPos, $YPos-45,$FontSize, $myrow['deladd2']);
-$pdf->addText($XPos, $YPos-60,$FontSize, $myrow['deladd3'] . ' ' . $myrow['deladd4']);
+$pdf->addText($XPos, $YPos-60,$FontSize, $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5']);
 
 $YPos -= 80;
 
@@ -36,7 +37,7 @@ $pdf->addText($XPos, $YPos,$FontSize, _('Quotation For').':');
 $pdf->addText($XPos, $YPos-15,$FontSize, $myrow['name']);
 $pdf->addText($XPos, $YPos-30,$FontSize, $myrow['address1']);
 $pdf->addText($XPos, $YPos-45,$FontSize, $myrow['address2']);
-$pdf->addText($XPos, $YPos-60,$FontSize, $myrow['address3'] . ' ' . $myrow['address4']);
+$pdf->addText($XPos, $YPos-60,$FontSize, $myrow['address3'] . ' ' . $myrow['address4'] . ' ' . $myrow['address5']);
 
 
 $XPos= 50;

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 /*PO_ReadInOrder.inc is used by the modify existing order code in PO_Header.php and also by GoodsReceived.php */
 
        if (isset($_SESSION['PO'])){
@@ -30,6 +30,8 @@
 				purchorders.deladd2, 
 				purchorders.deladd3, 
 				purchorders.deladd4, 
+				purchorders.deladd5, 
+				purchorders.deladd6, 
 				purchorders.allowprint, 
 				purchorders.requisitionno, 
 				purchorders.intostocklocation, 
@@ -65,6 +67,8 @@
               $_SESSION['PO']->DelAdd2 = $myrow['deladd2'];
               $_SESSION['PO']->DelAdd3 = $myrow['deladd3'];
               $_SESSION['PO']->DelAdd4 = $myrow['deladd4'];
+              $_SESSION['PO']->DelAdd5 = $myrow['deladd5'];
+              $_SESSION['PO']->DelAdd6 = $myrow['deladd6'];
               $_SESSION['PO']->Managed = $myrow['managed'];
 
 /*now populate the line PO array with the purchase order details records */

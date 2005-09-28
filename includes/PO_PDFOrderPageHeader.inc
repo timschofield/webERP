@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 /*
 	R & OS PHP-PDF class code to set up a new page
 	a new page is implicit on the establishment of a new pdf object so
@@ -38,10 +38,11 @@ $XPos = $Left_Margin;
 $YPos -=2*$line_height;
 $pdf->addText($Left_Margin,$YPos, $FontSize, $_SESSION['TaxAuthorityReferenceName'] . ' ' . $_SESSION['CompanyRecord']['gstno']);
 $pdf->addText($Left_Margin,$YPos-$line_height, $FontSize, $_SESSION['CompanyRecord']['coyname']);
-$pdf->addText($Left_Margin,$YPos-(2*$line_height), $FontSize, $_SESSION['CompanyRecord']['postaladdress']);
-$pdf->addText($Left_Margin,$YPos-(3*$line_height), $FontSize, $_SESSION['CompanyRecord']['regoffice1'] . ' ' . $_SESSION['CompanyRecord']['regoffice2']);
-$pdf->addText($Left_Margin,$YPos-(4*$line_height), $FontSize, _('Ph'). ': ' . $_SESSION['CompanyRecord']['telephone'] . ' ' ._('Fax').': ' . $_SESSION['CompanyRecord']['fax'] );
-$pdf->addText($Left_Margin,$YPos-(5*$line_height), $FontSize, _('Email'). ': ' . $_SESSION['CompanyRecord']['email']);
+$pdf->addText($Left_Margin,$YPos-(2*$line_height), $FontSize, $_SESSION['CompanyRecord']['regoffice1']);
+$pdf->addText($Left_Margin,$YPos-(3*$line_height), $FontSize, $_SESSION['CompanyRecord']['regoffice2']);
+$pdf->addText($Left_Margin,$YPos-(4*$line_height), $FontSize, $_SESSION['CompanyRecord']['regoffice3'] . ' ' . $_SESSION['CompanyRecord']['regoffice4'] . ' ' . $_SESSION['CompanyRecord']['regoffice5']);
+$pdf->addText($Left_Margin,$YPos-(5*$line_height), $FontSize, _('Ph'). ': ' . $_SESSION['CompanyRecord']['telephone'] . ' ' ._('Fax').': ' . $_SESSION['CompanyRecord']['fax'] );
+$pdf->addText($Left_Margin,$YPos-(6*$line_height), $FontSize, _('Email'). ': ' . $_SESSION['CompanyRecord']['email']);
 
 
 /*Now the delivery details */
@@ -51,8 +52,8 @@ $FontSize=12;
 $pdf->addText($XPos+2,$YPos, $FontSize, _('Deliver To') . ':' );
 $pdf->addText($XPos+2,$YPos-$line_height, $FontSize, $POHeader['deladd1']);
 $pdf->addText($XPos+2,$YPos-(2*$line_height), $FontSize, $POHeader['deladd2']);
-$pdf->addText($XPos+2,$YPos-(3*$line_height), $FontSize, $POHeader['deladd3']);
-$pdf->addText($XPos+2,$YPos-(4*$line_height), $FontSize, $POHeader['deladd4']);
+$pdf->addText($XPos+2,$YPos-(3*$line_height), $FontSize, $POHeader['deladd3'] . ' ' . $POHeader['deladd4'] . ' ' . $POHeader['deladd5']);
+$pdf->addText($XPos+2,$YPos-(4*$line_height), $FontSize, $POHeader['deladd6']);
 
 
 /*draw a nice curved corner box around the delivery to address */

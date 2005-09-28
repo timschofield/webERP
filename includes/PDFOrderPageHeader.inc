@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /* pdf-php by R&OS code to set up a new sales order page */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -11,15 +11,14 @@ $YPos = 575;
 $pdf->addText($XPos, $YPos,$FontSize, $myrow['deliverto']);
 $pdf->addText($XPos, $YPos-13,$FontSize, $myrow['deladd1']);
 $pdf->addText($XPos, $YPos-26,$FontSize, $myrow['deladd2']);
-$pdf->addText($XPos, $YPos-39,$FontSize, $myrow['deladd3'] . ' ' . $myrow['deladd4']);
+$pdf->addText($XPos, $YPos-39,$FontSize, $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5']);
 
 $YPos = 510;
 
 $pdf->addText($XPos, $YPos,$FontSize, $myrow['name']);
 $pdf->addText($XPos, $YPos-13,$FontSize, $myrow['address1']);
 $pdf->addText($XPos, $YPos-26,$FontSize, $myrow['address2']);
-$pdf->addText($XPos, $YPos-39,$FontSize, $myrow['address3']);
-$pdf->addText($XPos, $YPos-52,$FontSize, $myrow['address4']);
+$pdf->addText($XPos, $YPos-39,$FontSize, $myrow['address3'] . ' ' . $myrow['address4'] . ' ' . $myrow['address5']);
 
 
 /*Print Dispatch Date - as current date

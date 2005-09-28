@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 4;
 include('includes/DefinePOClass.php');
@@ -32,6 +32,8 @@ If (isset($_POST['EnterLines'])){
 	$_SESSION['PO']->DelAdd2 = $_POST['DelAdd2'];
 	$_SESSION['PO']->DelAdd3 = $_POST['DelAdd3'];
 	$_SESSION['PO']->DelAdd4 = $_POST['DelAdd4'];
+	$_SESSION['PO']->DelAdd5 = $_POST['DelAdd5'];
+	$_SESSION['PO']->DelAdd6 = $_POST['DelAdd6'];
 	$_SESSION['PO']->Initiator = $_POST['Initiator'];
 	$_SESSION['PO']->RequisitionNo = $_POST['Requisition'];
 	$_SESSION['PO']->ExRate = $_POST['ExRate'];
@@ -282,6 +284,8 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 	    $_POST['DelAdd2']=$_SESSION['PO']->DelAdd2;
 	    $_POST['DelAdd3']=$_SESSION['PO']->DelAdd3;
 	    $_POST['DelAdd4']=$_SESSION['PO']->DelAdd4;
+	    $_POST['DelAdd5']=$_SESSION['PO']->DelAdd5;
+	    $_POST['DelAdd6']=$_SESSION['PO']->DelAdd6;
 	    $_POST['Initiator']=$_SESSION['PO']->Initiator;
 	    $_POST['Requisition']=$_SESSION['PO']->RequisitionNo;
 	    $_POST['ExRate']=$_SESSION['PO']->ExRate;
@@ -318,6 +322,9 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 	     $sql = "SELECT deladd1, 
 	     			deladd2, 
 				deladd3, 
+				deladd4, 
+				deladd5, 
+				deladd6, 
 				tel 
 			FROM locations 
 			WHERE loccode='" . $_POST['StkLocation'] . "'";
@@ -328,11 +335,17 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 		  $_POST['DelAdd2'] = $LocnRow[1];
 		  $_POST['DelAdd3'] = $LocnRow[2];
 		  $_POST['DelAdd4'] = $LocnRow[3];
+		  $_POST['DelAdd5'] = $LocnRow[4];
+		  $_POST['DelAdd6'] = $LocnRow[5];
+		  $_POST['tel'] = $LocnRow[6];
 		  $_SESSION['PO']->Location= $_POST['StkLocation'];
 		  $_SESSION['PO']->DelAdd1 = $_POST['DelAdd1'];
 		  $_SESSION['PO']->DelAdd2 = $_POST['DelAdd2'];
 		  $_SESSION['PO']->DelAdd3 = $_POST['DelAdd3'];
 		  $_SESSION['PO']->DelAdd4 = $_POST['DelAdd4'];
+		  $_SESSION['PO']->DelAdd5 = $_POST['DelAdd5'];
+		  $_SESSION['PO']->DelAdd6 = $_POST['DelAdd6'];
+		  $_SESSION['PO']->tel = $_POST['tel'];
 
 	     } else { /*The default location of the user is crook */
 		  prnMsg(_('The default stock location set up for this user is not a currently defined stock location') . '. ' . _('Your system administrator needs to amend your user record'),'error');
@@ -342,6 +355,9 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 	      $sql = "SELECT deladd1,
 	      			deladd2,
 				deladd3,
+				deladd4,
+				deladd5,
+				deladd6,
 				tel
 			FROM locations
 			WHERE loccode='" . $_POST['StkLocation'] . "'";
@@ -353,24 +369,39 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 		  $_POST['DelAdd2'] = $LocnRow[1];
 		  $_POST['DelAdd3'] = $LocnRow[2];
 		  $_POST['DelAdd4'] = $LocnRow[3];
+		  $_POST['DelAdd5'] = $LocnRow[4];
+		  $_POST['DelAdd6'] = $LocnRow[5];
+		  $_POST['tel'] = $LocnRow[6];
 		  $_SESSION['PO']->Location= $_POST['StkLocation'];
 		  $_SESSION['PO']->DelAdd1 = $_POST['DelAdd1'];
 		  $_SESSION['PO']->DelAdd2 = $_POST['DelAdd2'];
 		  $_SESSION['PO']->DelAdd3 = $_POST['DelAdd3'];
 		  $_SESSION['PO']->DelAdd4 = $_POST['DelAdd4'];
+		  $_SESSION['PO']->DelAdd5 = $_POST['DelAdd5'];
+		  $_SESSION['PO']->DelAdd6 = $_POST['DelAdd6'];
+		  $_SESSION['PO']->tel = $_POST['tel'];
 	      }
 	  }
-	  echo '<TR><TD>' . _('Deliver to') . ' - ' . _('Street') . ":</TD>
+	  echo '<TR><TD>' . _('Deliver to') . ' - ' . _('Address 1') . ":</TD>
 	  		<TD><INPUT TYPE=text NAME=DelAdd1 SIZE=41 MAXLENGTH=40 Value='" . $_POST['DelAdd1'] . "'></TD>
 		</TR>";
-	  echo '<TR><TD>' . _('Deliver to') . ' - ' . _('Suburb') . ":</TD>
+	  echo '<TR><TD>' . _('Deliver to') . ' - ' . _('Address 2') . ":</TD>
 	  		<TD><INPUT TYPE=text NAME=DelAdd2 SIZE=41 MAXLENGTH=40 Value='" . $_POST['DelAdd2'] . "'></TD>
 		</TR>";
-	  echo '<TR><TD>' . _('Deliver to') . ' - ' . _('City') . ":</TD>
+	  echo '<TR><TD>' . _('Deliver to') . ' - ' . _('Address 3') . ":</TD>
 	  		<TD><INPUT TYPE=text NAME=DelAdd3 SIZE=41 MAXLENGTH=40 Value='" . $_POST['DelAdd3'] . "'></TD>
 		</TR>";
+	  echo '<TR><TD>' . _('Deliver to') . ' - ' . _('Address 4') . ":</TD>
+	  		<TD><INPUT TYPE=text NAME=DelAdd4 SIZE=41 MAXLENGTH=40 Value='" . $_POST['DelAdd4'] . "'></TD>
+		</TR>";
+	  echo '<TR><TD>' . _('Deliver to') . ' - ' . _('Address 5') . ":</TD>
+	  		<TD><INPUT TYPE=text NAME=DelAdd5 SIZE=21 MAXLENGTH=20 Value='" . $_POST['DelAdd5'] . "'></TD>
+		</TR>";
+	  echo '<TR><TD>' . _('Deliver to') . ' - ' . _('Address 6') . ":</TD>
+	  		<TD><INPUT TYPE=text NAME=DelAdd6 SIZE=16 MAXLENGTH=15 Value='" . $_POST['DelAdd6'] . "'></TD>
+		</TR>";
 	  echo '<TR><TD>' . _('Deliver to') . ' - ' . _('Phone') . ":</TD>
-	  	<TD><INPUT TYPE=text NAME=DelAdd4 SIZE=31 MAXLENGTH=30 Value='" . $_POST['DelAdd4'] . "'></TD>
+	  	<TD><INPUT TYPE=text NAME=tel SIZE=31 MAXLENGTH=30 Value='" . $_POST['tel'] . "'></TD>
 		</TR>";
 	  echo '</TABLE>'; /* end of sub table */
 

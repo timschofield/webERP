@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 
 $PageSecurity = 2;
@@ -45,6 +45,8 @@ $OrderHeaderSQL = 'SELECT
 			salesorders.deladd2,
 			salesorders.deladd3,
 			salesorders.deladd4,
+			salesorders.deladd5,
+			salesorders.deladd6,
 			salesorders.contactphone,
 			salesorders.contactemail,
 			salesorders.freightcost,
@@ -82,6 +84,8 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 	$_SESSION['Items']->BrAdd2 = $myrow['deladd2'];
 	$_SESSION['Items']->BrAdd3 = $myrow['deladd3'];
 	$_SESSION['Items']->BrAdd4 = $myrow['deladd4'];
+	$_SESSION['Items']->BrAdd5 = $myrow['deladd5'];
+	$_SESSION['Items']->BrAdd6 = $myrow['deladd6'];
 	$_SESSION['Items']->PhoneNo = $myrow['contactphone'];
 	$_SESSION['Items']->Email = $myrow['contactemail'];
 	$_SESSION['Items']->Location = $myrow['fromstkloc'];
@@ -125,6 +129,18 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		<TD><FONT COLOR=BLUE><B>' . $_SESSION['Items']->Location . '</FONT></B></TD>
 		<TD>' . _('Delivery Address 4') . ':</TD>
 		<TD><FONT COLOR=BLUE><B>' . $_SESSION['Items']->BrAdd4 . '</FONT></B></TD>
+	</TR>';
+	echo '<TR>
+		<TD>' . _('') . ':</TD>
+		<TD><FONT COLOR=BLUE><B>' . _('') . '</FONT></B></TD>
+		<TD>' . _('Delivery Address 5') . ':</TD>
+		<TD><FONT COLOR=BLUE><B>' . $_SESSION['Items']->BrAdd5 . '</FONT></B></TD>
+	</TR>';
+	echo '<TR>
+		<TD>' . _('') . ':</TD>
+		<TD><FONT COLOR=BLUE><B>' . _('') . '</FONT></B></TD>
+		<TD>' . _('Delivery Address 6') . ':</TD>
+		<TD><FONT COLOR=BLUE><B>' . $_SESSION['Items']->BrAdd6 . '</FONT></B></TD>
 	</TR>';
 	echo '<TR>
 		<TD>' . _('Freight Cost') . ':</TD>

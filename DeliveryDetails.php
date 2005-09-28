@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -114,6 +114,8 @@ If (isset($_POST['Update'])){
 		$_SESSION['Items']->BrAdd2 = $_POST['BrAdd2'];
 		$_SESSION['Items']->BrAdd3 = $_POST['BrAdd3'];
 		$_SESSION['Items']->BrAdd4 = $_POST['BrAdd4'];
+		$_SESSION['Items']->BrAdd5 = $_POST['BrAdd5'];
+		$_SESSION['Items']->BrAdd6 = $_POST['BrAdd6'];
 		$_SESSION['Items']->PhoneNo =$_POST['PhoneNo'];
 		$_SESSION['Items']->Email =$_POST['Email'];
 		$_SESSION['Items']->Location = $_POST['Location'];
@@ -246,6 +248,8 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 				deladd2,
 				deladd3,
 				deladd4,
+				deladd5,
+				deladd6,
 				contactphone,
 				contactemail,
 				freightcost,
@@ -266,6 +270,8 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 				'" . DB_escape_string($_SESSION['Items']->BrAdd2) . "',
 				'" . DB_escape_string($_SESSION['Items']->BrAdd3) . "',
 				'" . DB_escape_string($_SESSION['Items']->BrAdd4) . "',
+				'" . DB_escape_string($_SESSION['Items']->BrAdd5) . "',
+				'" . DB_escape_string($_SESSION['Items']->BrAdd6) . "',
 				'" . DB_escape_string($_SESSION['Items']->PhoneNo) . "',
 				'" . DB_escape_string($_SESSION['Items']->Email) . "',
 				" . $_SESSION['Items']->FreightCost .",
@@ -356,6 +362,8 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 				deladd2 = '" . DB_escape_string($_SESSION['Items']->BrAdd2) . "',
 				deladd3 = '" . DB_escape_string($_SESSION['Items']->BrAdd3) . "',
 				deladd4 = '" . DB_escape_string($_SESSION['Items']->BrAdd4) . "',
+				deladd5 = '" . DB_escape_string($_SESSION['Items']->BrAdd5) . "',
+				deladd6 = '" . DB_escape_string($_SESSION['Items']->BrAdd6) . "',
 				contactphone = '" . DB_escape_string($_SESSION['Items']->PhoneNo) . "',
 				contactemail = '" . DB_escape_string($_SESSION['Items']->Email) . "',
 				freightcost = " . $_SESSION['Items']->FreightCost .",
@@ -583,23 +591,33 @@ echo '<TR>
 </TR>";
 
 echo '<TR>
-	<TD>'. _('Street') .":</TD>
+	<TD>'. _('Delivery Address 1') . ":</TD>
 	<TD><input type=text size=42 max=40 name='BrAdd1' value='" . $_SESSION['Items']->BrAdd1 . "'></TD>
 </TR>";
 
 echo "<TR>
-	<TD>". _('Suburb') .":</TD>
-	<TD><input type=text size=22 max=20 name='BrAdd2' value='" . $_SESSION['Items']->BrAdd2 . "'></TD>
+	<TD>". _('Delivery Address 2') . ":</TD>
+	<TD><input type=text size=42 max=40 name='BrAdd2' value='" . $_SESSION['Items']->BrAdd2 . "'></TD>
 </TR>";
 
 echo '<TR>
-	<TD>'. _('City') . '/' . _('Region') .":</TD>
-	<TD><input type=text size=17 max=15 name='BrAdd3' value='" . $_SESSION['Items']->BrAdd3 . "'></TD>
+	<TD>'. _('Delivery Address 3') . ":</TD>
+	<TD><input type=text size=42 max=40 name='BrAdd3' value='" . $_SESSION['Items']->BrAdd3 . "'></TD>
 </TR>";
 
 echo "<TR>
-	<TD>". _('Post Code') .":</TD>
-	<TD><input type=text size=17 max=15 name='BrAdd4' value='" . $_SESSION['Items']->BrAdd4 . "'></TD>
+	<TD>". _('Delivery Address 4') . ":</TD>
+	<TD><input type=text size=42 max=40 name='BrAdd4' value='" . $_SESSION['Items']->BrAdd4 . "'></TD>
+</TR>";
+
+echo "<TR>
+	<TD>". _('Delivery Address 5') . ":</TD>
+	<TD><input type=text size=22 max=20 name='BrAdd5' value='" . $_SESSION['Items']->BrAdd5 . "'></TD>
+</TR>";
+
+echo "<TR>
+	<TD>". _('Delivery Address 6') . ":</TD>
+	<TD><input type=text size=17 max=15 name='BrAdd6' value='" . $_SESSION['Items']->BrAdd6 . "'></TD>
 </TR>";
 
 echo '<TR>
