@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -59,8 +59,8 @@ if (isset($_POST['CommitBatch'])){
 
    foreach ($_SESSION['ReceiptBatch']->Items as $ReceiptItem) {
 
-	    if ($ReceiptItem->GLCode !=""){
-		if ($_SESSION['CompanyRecord']["gllink_debtors"]==1){ /* then enter a GLTrans record */
+	    if ($ReceiptItem->GLCode !=''){
+		if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter a GLTrans record */
 			 $SQL = "INSERT INTO gltrans (type,
 			 			typeno,
 						trandate,
@@ -267,46 +267,54 @@ if (isset($_POST['CommitBatch'])){
 
 } elseif (isset($_POST['BatchInput'])){ //submitted a new batch
 
-    $_POST['BatchNo'] = GetNextTransNo(12,$db);
-
-
-   /*if the session already has a $_SESSION['ReceiptBatch'] set up ... lose it
-   and start a fresh! */
-   if (isset($_SESSION['ReceiptBatch'])){
-      unset($_SESSION['ReceiptBatch']);
-   }
-   $_SESSION['ReceiptBatch'] = new Receipt_Batch;
-   $_SESSION['ReceiptBatch']->BatchNo = $_POST['BatchNo'];
-   $_SESSION['ReceiptBatch']->Account = $_POST['BankAccount'];
-	if (!Is_Date($_POST['DateBanked'])){
-	       $_POST['DateBanked'] = Date($_SESSION['DefaultDateFormat']);
-	  }
-   $_SESSION['ReceiptBatch']->DateBanked = $_POST['DateBanked'];
-   $_SESSION['ReceiptBatch']->ExRate = $_POST['ExRate'];
-   $_SESSION['ReceiptBatch']->ReceiptType = $_POST['ReceiptType'];
-   $_SESSION['ReceiptBatch']->Currency = $_POST['Currency'];
-   $_SESSION['ReceiptBatch']->Narrative = $_POST['BatchNarrative'];
-   $_SESSION['ReceiptBatch']->ID = 1;
-
-   $SQL = "SELECT bankaccountname FROM bankaccounts WHERE accountcode=" . $_POST['BankAccount'];
-   $result= DB_query($SQL,$db,'','',false,false);
-
-   if (DB_error_no($db) !=0) {
-	  prnMsg(_('The bank account name cannot be retrieved because') . ' - ' . DB_error_msg($db),'error');
-	  if ($debug==1) {
-	  	echo '<BR>' . _('SQL used to retrieve the bank account name was') . '<BR>' . $sql;
-	  }
-	  include ('includes/footer.inc');
-	  exit;
-   } elseif (DB_num_rows($result)==1){
-          $myrow = DB_fetch_row($result);
-          $_SESSION['ReceiptBatch']->BankAccountName = $myrow[0];
-          unset($result);
-   } elseif (DB_num_rows($result)==0){
-         prnMsg( _('The bank account number') . ' ' . $_POST['BankAccount'] . ' ' . _('is not set up as a bank account'),'error');
-	 include ('includes/footer.inc');
-	 exit;
-   }
+/*Need to do a reality check on exchange rate entered initially to ensure sensible to proceed */
+	if ($_POST['Currency']!=$_SESSION['CompanyRecord']['DefaultCurrency'] AND $_POST['ExRate']==1){
+	
+		prnMsg(_('An exchange rate of 1 is only appropriate for receipts in the companies functional currency - enter an appropriate exchange rate'),'error');
+		
+	} else {
+		
+		$_POST['BatchNo'] = GetNextTransNo(12,$db);
+		
+		
+		/*if the session already has a $_SESSION['ReceiptBatch'] set up ... lose it
+		and start a fresh! */
+		if (isset($_SESSION['ReceiptBatch'])){
+		unset($_SESSION['ReceiptBatch']);
+		}
+		$_SESSION['ReceiptBatch'] = new Receipt_Batch;
+		$_SESSION['ReceiptBatch']->BatchNo = $_POST['BatchNo'];
+		$_SESSION['ReceiptBatch']->Account = $_POST['BankAccount'];
+			if (!Is_Date($_POST['DateBanked'])){
+			$_POST['DateBanked'] = Date($_SESSION['DefaultDateFormat']);
+			}
+		$_SESSION['ReceiptBatch']->DateBanked = $_POST['DateBanked'];
+		$_SESSION['ReceiptBatch']->ExRate = $_POST['ExRate'];
+		$_SESSION['ReceiptBatch']->ReceiptType = $_POST['ReceiptType'];
+		$_SESSION['ReceiptBatch']->Currency = $_POST['Currency'];
+		$_SESSION['ReceiptBatch']->Narrative = $_POST['BatchNarrative'];
+		$_SESSION['ReceiptBatch']->ID = 1;
+		
+		$SQL = "SELECT bankaccountname FROM bankaccounts WHERE accountcode=" . $_POST['BankAccount'];
+		$result= DB_query($SQL,$db,'','',false,false);
+		
+		if (DB_error_no($db) !=0) {
+			prnMsg(_('The bank account name cannot be retrieved because') . ' - ' . DB_error_msg($db),'error');
+			if ($debug==1) {
+				echo '<BR>' . _('SQL used to retrieve the bank account name was') . '<BR>' . $sql;
+			}
+			include ('includes/footer.inc');
+			exit;
+		} elseif (DB_num_rows($result)==1){
+			$myrow = DB_fetch_row($result);
+			$_SESSION['ReceiptBatch']->BankAccountName = $myrow[0];
+			unset($result);
+		} elseif (DB_num_rows($result)==0){
+			prnMsg( _('The bank account number') . ' ' . $_POST['BankAccount'] . ' ' . _('is not set up as a bank account'),'error');
+			include ('includes/footer.inc');
+			exit;
+		}
+	}
 
 } elseif (isset($_GET['Delete'])){
   /* User hit delete the receipt entry from the batch */

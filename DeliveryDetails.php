@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -44,7 +44,10 @@ If (isset($_POST['ProcessOrder']) OR isset($_POST['MakeRecurringOrder'])) {
 
 }
 
-If (isset($_POST['Update'])){
+If (isset($_POST['Update']) 
+	OR isset($_POST['BackToLineDetails']) 
+	OR isset($_POST['MakeRecurringOrder']))   {
+	
 	$InputErrors =0;
 	If (strlen($_POST['DeliverTo'])<=1){
 		$InputErrors =1;
@@ -79,15 +82,6 @@ If (isset($_POST['Update'])){
 	If (strlen($_POST['BrAdd2'])<=1){
 		$InputErrors =1;
 		echo "<BR>You should enter the suburb in the box provided. Orders cannot be accepted without a valid suburb being entered.<BR>";
-	}
-
-	If ($_SESSION['AccessLevel']<20 && strlen($_POST['PhoneNo'])<=1){
-		$InputErrors =1;
-		echo "<BR>A contact phone number must be entered.<BR>";
-	}
-	If ($_SESSION['AccessLevel']<20	&&strlen($_POST['Email'])<=1){
-		$InputErrors =1;
-		echo "<BR>An email address must be entered.<BR>";
 	}
 
 */
@@ -649,9 +643,11 @@ echo '<TR>
             }
             switch ($p) {
                 case 2:
-                    echo _('Hide Company Details/Logo'); break;
+                    echo _('Hide Company Details/Logo'); 
+		    break;
                 default:
                     echo _('Show Company Details/Logo');
+		    break;
             }
         }
     echo '</SELECT></TD></TR>';
@@ -669,10 +665,6 @@ if ($_SESSION['PrintedPackingSlip']==1){
 
     echo "<INPUT TYPE=hidden name='ReprintPackingSlip' value=0>";
 
-}
-
-if (!isset($_POST['FreightCost'])) {
-	$_POST['FreightCost']=0;
 }
 
 echo '<TR><TD>'. _('Freight Charge') .':</TD>';

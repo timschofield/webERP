@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -64,6 +64,7 @@ Class Cart {
 		$this->ItemsOrdered=0;
 		$this->LineCounter=0;
 		$this->DefaltSalesType="";
+		$this->FreightCost =0;
 		$this->FreightTaxes = array();
 	}
 

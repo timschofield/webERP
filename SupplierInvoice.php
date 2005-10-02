@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -354,8 +354,7 @@ if (!isset($_POST['PostInvoice'])){
 	
 	echo '</SELECT></TD></TR>';
 	$TaxTotal =0; //initialise tax total
-	$TaxTotals = array();
-	
+		
 	foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 		
 		echo '<TR><TD>'  . $Tax->TaxAuthDescription . '</TD><TD>';
@@ -376,12 +375,10 @@ if (!isset($_POST['PostInvoice'])){
 				
 				$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * ($_SESSION['SuppTrans']->OvAmount + $TaxTotal);
 			
-				$TaxTotals[$Tax->TaxAuthID] = $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * ($_SESSION['SuppTrans']->OvAmount + $TaxTotal);
 			} else { /*Calculate tax without the tax on tax */
 				
 				$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * $_SESSION['SuppTrans']->OvAmount;
 			
-				$TaxTotals[$Tax->TaxAuthID] = $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * $_SESSION['SuppTrans']->OvAmount;
 			}
 			
 			
@@ -390,25 +387,19 @@ if (!isset($_POST['PostInvoice'])){
 			echo '</TD><TD ALIGN=RIGHT>' . number_format($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2);
 			
 		} else { /*Tax being entered manually accept the taxamount entered as is*/
+			
 			$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_POST['TaxAmount'  . $Tax->TaxCalculationOrder];
-			$TaxTotals[$Tax->TaxAuthID] = $_POST['TaxAmount'  . $Tax->TaxCalculationOrder];
 			
 			echo  ' <INPUT TYPE=HIDDEN NAME=TaxRate' . $Tax->TaxCalculationOrder . ' VALUE=' . $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100 . '>';
-			
-					
+
 			echo '</TD><TD><INPUT TYPE=TEXT SIZE=12 MAXLENGTH=12 NAME="TaxAmount'  . $Tax->TaxCalculationOrder . '"  VALUE=' . round($_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount,2) . '>';
-			
 		}
 		
-		$TaxTotal += $TaxTotals[$Tax->TaxAuthID];
-		
-		
+		$TaxTotal += $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount;
 		echo '</TD></TR>';	
 	}
 	
-	
 	$_SESSION['SuppTrans']->OvAmount = round($_SESSION['SuppTrans']->OvAmount,2);
-	
 	
 	$DisplayTotal = number_format(( $_SESSION['SuppTrans']->OvAmount + $TaxTotal), 2);
 	
@@ -423,6 +414,12 @@ if (!isset($_POST['PostInvoice'])){
 
 /*First do input reasonableness checks
 then do the updates and inserts to process the invoice entered */
+
+/*Need to recalc the taxtotal */
+	$TaxTotal=0;
+	foreach ($_SESSION['SuppTrans']->Taxes as $Tax){
+		$TaxTotal +=  $Tax->TaxOvAmount;
+	}
 
 	$InputError = False;
 	if ( $TaxTotal + $_SESSION['SuppTrans']->OvAmount <= 0){
@@ -679,7 +676,6 @@ then do the updates and inserts to process the invoice entered */
 					$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
 					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
-
 				}
 				$LocalTotal += round(($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv) / $_SESSION['SuppTrans']->ExRate,2);
 			} /* end of GRN postings */

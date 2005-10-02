@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 
 $PageSecurity = 4;
@@ -68,8 +68,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 				'" . addslashes($_SESSION['PO']->DelAdd1) . "',
 				'" . addslashes($_SESSION['PO']->DelAdd2) . "',
 				'" . addslashes($_SESSION['PO']->DelAdd3) . "',
-				'" . addslashes($_SESSION['PO']->DelAdd4) . "'
-				'" . addslashes($_SESSION['PO']->DelAdd5) . "'
+				'" . addslashes($_SESSION['PO']->DelAdd4) . "',
+				'" . addslashes($_SESSION['PO']->DelAdd5) . "',
 				'" . addslashes($_SESSION['PO']->DelAdd6) . "'
 				)";
 

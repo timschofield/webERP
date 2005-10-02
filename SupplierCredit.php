@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 /*This page is very largely the same as the SupplierInvoice.php script
 the same result could have been acheived by using if statements in that script and just having the one
@@ -356,7 +356,6 @@ if ($_POST['OverRideTax']=='Man'){
 
 echo '</SELECT></TD></TR>';
 $TaxTotal =0; //initialise tax total
-$TaxTotals = array();
 
 foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 	
@@ -378,12 +377,10 @@ foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 			
 			$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * ($_SESSION['SuppTrans']->OvAmount + $TaxTotal);
 		
-			$TaxTotals[$Tax->TaxAuthID] = $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * ($_SESSION['SuppTrans']->OvAmount + $TaxTotal);
 		} else { /*Calculate tax without the tax on tax */
 			
 			$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * $_SESSION['SuppTrans']->OvAmount;
 		
-			$TaxTotals[$Tax->TaxAuthID] = $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * $_SESSION['SuppTrans']->OvAmount;
 		}
 		
 		
@@ -393,8 +390,7 @@ foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 		
 	} else { /*Tax being entered manually accept the taxamount entered as is*/
 		$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_POST['TaxAmount'  . $Tax->TaxCalculationOrder];
-		$TaxTotals[$Tax->TaxAuthID] = $_POST['TaxAmount'  . $Tax->TaxCalculationOrder];
-		
+				
 		echo  ' <INPUT TYPE=HIDDEN NAME=TaxRate' . $Tax->TaxCalculationOrder . ' VALUE=' . $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * 100 . '>';
 		
 				
@@ -402,7 +398,7 @@ foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 		
 	}
 	
-	$TaxTotal += $TaxTotals[$Tax->TaxAuthID];
+	$TaxTotal += $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount;
 	
 	
 	echo '</TD></TR>';	

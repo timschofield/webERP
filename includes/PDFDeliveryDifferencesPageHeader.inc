@@ -1,12 +1,12 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 if ($PageNumber>1){
 	$pdf->newPage();
 }
 
 $YPos = $Page_Height - $Top_Margin - 50;
 
-$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg',$Left_Margin,$YPos,90,60);
+$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg',$Left_Margin,$YPos,60);
 
 $FontSize=15;
 

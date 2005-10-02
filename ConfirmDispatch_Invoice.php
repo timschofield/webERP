@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -108,6 +108,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 		$_SESSION['Items']->PhoneNo = $myrow['contactphone'];
 		$_SESSION['Items']->Email = $myrow['contactemail'];
 		$_SESSION['Items']->Location = $myrow['fromstkloc'];
+		$_SESSION['Items']->FreightCost = $myrow['freightcost'];
 		$_SESSION['Old_FreightCost'] = $myrow['freightcost'];
 		$_POST['ChargeFreightCost'] = $_SESSION['Old_FreightCost'];
 		$_SESSION['Items']->$Orig_OrderDate = $myrow['orddate'];
@@ -218,7 +219,6 @@ set all the necessary session variables changed by the POST  */
 	}
 	
 	foreach ($_SESSION['Items']->LineItems as $Itm) {
-
 		if (is_numeric($_POST[$Itm->LineNumber .  '_QtyDispatched' ])AND $_POST[$Itm->LineNumber .  '_QtyDispatched'] <= ($_SESSION['Items']->LineItems[$Itm->LineNumber]->Quantity - $_SESSION['Items']->LineItems[$Itm->LineNumber]->QtyInv)){
 			$_SESSION['Items']->LineItems[$Itm->LineNumber]->QtyDispatched = $_POST[$Itm->LineNumber  . '_QtyDispatched'];
 		}

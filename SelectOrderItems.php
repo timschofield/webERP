@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.37 $ */
+/* $Revision: 1.38 $ */
 
 require('includes/DefineCartClass.php');
 
@@ -143,7 +143,7 @@ if (isset($_GET['ModifyOrderNumber'])
 		$_SESSION['Items']->Email = $myrow['contactemail'];
 		$_SESSION['Items']->Location = $myrow['fromstkloc'];
 		$_SESSION['Items']->Quotation = $myrow['quotation'];
-		$FreightCost = $myrow['freightcost'];
+		$_SESSION['Items']->FreightCost = $myrow['freightcost'];
 		$_SESSION['Items']->Orig_OrderDate = $myrow['orddate'];
 		$_SESSION['PrintedPackingSlip'] = $myrow['printedpackingslip'];
 		$_SESSION['DatePackingSlipPrinted'] = $myrow['datepackingslipprinted'];
