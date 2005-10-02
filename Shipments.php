@@ -1,17 +1,18 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 11;
-
+include('includes/DefineShiptClass.php');
 include('includes/session.inc');
 $title = _('Shipments');
 include('includes/header.inc');
-include('includes/DefineShiptClass.php');
+
 include('includes/SQL_CommonFunctions.inc');
 
-
 if ($_GET['NewShipment']=='Yes'){
+	
+	
 	unset($_SESSION['Shipment']->LineItems);
 	unset($_SESSION['Shipment']);
 }
@@ -146,10 +147,6 @@ if (isset($_GET['SelectedShipment'])){
 if (!isset($_SESSION['Shipment'])){
 
 	$_SESSION['Shipment'] = new Shipment;
-
-	if (!isset($db)){
-		echo 'The DB handle is not initiated';
-	}
 	
 	$sql = "SELECT suppname, currcode FROM suppliers WHERE supplierid='" . $_SESSION['SupplierID'] . "'";
 	$ErrMsg = _('The supplier details for the shipment could not be retrieved because');
@@ -159,26 +156,17 @@ if (!isset($_SESSION['Shipment'])){
 	$_SESSION['Shipment']->SupplierID = $_SESSION['SupplierID'];
 	$_SESSION['Shipment']->SupplierName = $myrow[0];
 	$_SESSION['Shipment']->CurrCode = $myrow[1];
-
 	$_SESSION['Shipment']->ShiptRef = GetNextTransNo (31, $db);
-
 }
 
 
-//if ($_POST['Update']=='Update Shipment Details' AND !$_SESSION['Shipment']->Closed==1) {
-if ( isset($_POST['Update']) && !$_SESSION['Shipment']->Closed==1) {
+if ( isset($_POST['Update'])) { //user hit the update button
 
 	$_SESSION['Shipment']->Vessel = $_POST['Vessel'];
 	$_SESSION['Shipment']->VoyageRef = $_POST['VoyageRef'];
 
 	$InputError =0;
-
-	if (count($_SESSION['Shipment']->LineItems)==0){
-		echo '<BR>';
-		prnMsg( _('There are no line items on this shipment') . '. ' . _('Select some of the purchase order lines by clicking add on the available purchase order lines shown below'), 'warn');
-
-		$InputError=1;
-	}
+	
 	if (!Is_Date($_POST['ETA'])){
 		$InputError=1;
 		prnMsg( _('The date of expected arrival of the shipment must be entered in the format') . ' ' .$_SESSION['DefaultDateFormat'], 'error');
@@ -196,14 +184,10 @@ if ( isset($_POST['Update']) && !$_SESSION['Shipment']->Closed==1) {
 		prnMsg( _('A reference to the voyage (or HAWB in the case of air-freight) of more than 2 characters is expected'), 'error');
 	}
 
-/*The user hit the update the shipment button */
-	if ($InputError ==0) {
-
-
+/*The user hit the update the shipment button and there are some lines on the shipment*/
+	if ($InputError ==0 AND count($_SESSION['Shipment']->LineItems)>0){
 		$sql = "SELECT shiptref FROM shipments WHERE shiptref =" . $_SESSION['Shipment']->ShiptRef;
-
 		$result = DB_query($sql,$db);
-
 		if (DB_num_rows($result)==1){
 
 			$sql = "UPDATE shipments SET vessel='" . DB_escape_string($_SESSION['Shipment']->Vessel) . "',
@@ -212,7 +196,7 @@ if ( isset($_POST['Update']) && !$_SESSION['Shipment']->Closed==1) {
 					WHERE shiptref =" .  $_SESSION['Shipment']->ShiptRef;
 
 		} else {
-
+			
 			$sql = "INSERT INTO shipments (shiptref,
 							vessel,
 							voyageref,
@@ -243,17 +227,18 @@ if ( isset($_POST['Update']) && !$_SESSION['Shipment']->Closed==1) {
 
 			}
 		}
-   		echo '<BR>';
+		echo '<BR>';
 		prnMsg( _('Updated the shipment record and delivery dates of order lines as necessary'), 'success');
-	}
-}
+	} //error traps all passed ok
+	
+} //user hit Update
 
 
-if (isset($_GET['Delete']) AND ! $_SESSION['Shipment']->Closed==1){
+if (isset($_GET['Delete']) AND $_SESSION['Shipment']->Closed==0){ //shipment is open and user hit delete on a line
 	$_SESSION['Shipment']->remove_from_shipment($_GET['Delete'],$db);
 }
 
-if (isset($_GET['Add']) AND ! $_SESSION['Shipment']->Closed==1){
+if (isset($_GET['Add']) AND $_SESSION['Shipment']->Closed==0){
 
 	$sql = "SELECT purchorderdetails.orderno,
 			purchorderdetails.itemcode,
@@ -282,20 +267,20 @@ if (isset($_GET['Add']) AND ! $_SESSION['Shipment']->Closed==1){
 	}
 
 	$_SESSION['Shipment']->add_to_shipment($_GET['Add'],
-						$myrow['orderno'],
-						$myrow['itemcode'],
-						$myrow['itemdescription'],
-						$myrow['qtyinvoiced'],
-						$myrow['unitprice'],
-						$myrow['units'],
-						$myrow['deliverydate'],
-						$myrow['quantityord'],
-						$myrow['quantityrecd'],
-						$StandardCost,
-						$db);
+								$myrow['orderno'],
+								$myrow['itemcode'],
+								$myrow['itemdescription'],
+								$myrow['qtyinvoiced'],
+								$myrow['unitprice'],
+								$myrow['units'],
+								$myrow['deliverydate'],
+								$myrow['quantityord'],
+								$myrow['quantityrecd'],
+								$StandardCost,
+								$db);
 }
 
-echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
+echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD="POST">';
 
 echo '<CENTER><TABLE><TR><TD><B>'. _('Shipment').': </TD><TD><B>' . $_SESSION['Shipment']->ShiptRef . '</B></TD>
 		<TD><B>'. _('From'). ' ' . $_SESSION['Shipment']->SupplierName . '</B></TD></TR>';
@@ -375,63 +360,60 @@ if (!isset($_SESSION['Shipment']->StockLocation)){
 
 echo '</TD></TR></TABLE>';
 
-/* Always display all shipment lines */
-
-echo '<B><FONT COLOR=BLUE>'. _('Order Lines On This Shipment'). '</FONT></B>';
-echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>';
-
-$TableHeader = '<TR>
-		<TD class="tableheader">'. _('Order'). '</TD>
-		<TD class="tableheader">'. _('Item'). '</TD>
-		<TD class="tableheader">'. _('Quantity'). '<BR>'. _('Ordered'). '</TD>
-		<TD class="tableheader">'. _('Units'). '</TD>
-		<TD class="tableheader">'. _('Quantity').'<BR>'. _('Received'). '</TD>
-		<TD class="tableheader">'. _('Quantity').'<BR>'. _('Invoiced'). '</TD>
-		<TD class="tableheader">'. $_SESSION['Shipment']->CurrCode .' '. _('Price') . '</TD>
-		<TD class="tableheader">'. _('Current'). '<BR>'. _('Std Cost'). '</TD></TR>';
-
-echo  $TableHeader;
-
-/*show the line items on the shipment with the quantity being received for modification */
-
-$k=0; //row colour counter
-$RowCounter =0;
-
 if (count($_SESSION['Shipment']->LineItems)>0){
-
-   foreach ($_SESSION['Shipment']->LineItems as $LnItm) {
-
-	if ($RowCounter==15){
-		echo $TableHeader;
-		$RowCounter =0;
-	}
-	$RowCounter++;
-
-	if ($k==1){
-		echo '<tr bgcolor="#CCCCCC">';
-		$k=0;
-	} else {
-		echo '<tr bgcolor="#EEEEEE">';
-		$k=1;
-	}
-
-
-	echo '<TD>'.$LnItm->OrderNo.'</TD>
-		<TD>'. $LnItm->StockID .' - '. $LnItm->ItemDescription. '</TD><TD ALIGN=RIGHT>' . number_format($LnItm->QuantityOrd,2) . '</TD>
-		<TD>'. $LnItm->UOM .'</TD>
-		<TD ALIGN=RIGHT>' . number_format($LnItm->QuantityRecd,2) . '</TD>
-		<TD ALIGN=RIGHT>' . number_format($LnItm->QtyInvoiced,2) . '</TD>
-		<TD ALIGN=RIGHT>' . number_format($LnItm->UnitPrice,2) . '</TD>
-		<TD ALIGN=RIGHT>' . number_format($LnItm->StdCostUnit,2) . '</TD>
-		<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . 'Delete=' . $LnItm->PODetailItem . '">'. _('Delete'). '</A></TD>
-		</TR>';
-
-   }
-}
-
+	/* Always display all shipment lines */
+	
+	echo '<B><FONT COLOR=BLUE>'. _('Order Lines On This Shipment'). '</FONT></B>';
+	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>';
+		
+	$TableHeader = '<TR>
+			<TD class="tableheader">'. _('Order'). '</TD>
+			<TD class="tableheader">'. _('Item'). '</TD>
+			<TD class="tableheader">'. _('Quantity'). '<BR>'. _('Ordered'). '</TD>
+			<TD class="tableheader">'. _('Units'). '</TD>
+			<TD class="tableheader">'. _('Quantity').'<BR>'. _('Received'). '</TD>
+			<TD class="tableheader">'. _('Quantity').'<BR>'. _('Invoiced'). '</TD>
+			<TD class="tableheader">'. $_SESSION['Shipment']->CurrCode .' '. _('Price') . '</TD>
+			<TD class="tableheader">'. _('Current'). '<BR>'. _('Std Cost'). '</TD></TR>';
+		
+	echo  $TableHeader;
+		
+	/*show the line items on the shipment with the quantity being received for modification */
+		
+	$k=0; //row colour counter
+	$RowCounter =0;
+		
+	foreach ($_SESSION['Shipment']->LineItems as $LnItm) {
+	
+		if ($RowCounter==15){
+			echo $TableHeader;
+			$RowCounter =0;
+		}
+		$RowCounter++;
+	
+		if ($k==1){
+			echo '<tr bgcolor="#CCCCCC">';
+			$k=0;
+		} else {
+			echo '<tr bgcolor="#EEEEEE">';
+			$k=1;
+		}
+	
+	
+		echo '<TD>'.$LnItm->OrderNo.'</TD>
+			<TD>'. $LnItm->StockID .' - '. $LnItm->ItemDescription. '</TD><TD ALIGN=RIGHT>' . number_format($LnItm->QuantityOrd,2) . '</TD>
+			<TD>'. $LnItm->UOM .'</TD>
+			<TD ALIGN=RIGHT>' . number_format($LnItm->QuantityRecd,2) . '</TD>
+			<TD ALIGN=RIGHT>' . number_format($LnItm->QtyInvoiced,2) . '</TD>
+			<TD ALIGN=RIGHT>' . number_format($LnItm->UnitPrice,2) . '</TD>
+			<TD ALIGN=RIGHT>' . number_format($LnItm->StdCostUnit,2) . '</TD>
+			<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . 'Delete=' . $LnItm->PODetailItem . '">'. _('Delete'). '</A></TD>
+			</TR>';
+	}//for each line on the shipment
 echo '</TABLE>';
+}//there are lines on the shipment
 
-echo '<INPUT TYPE=SUBMIT NAME=Update Value="'. _('Update Shipment Details') . '"><P>';
+echo '<BR><INPUT TYPE=SUBMIT NAME="Update" Value="'. _('Update Shipment Details') . '"><P>';
 
 echo '<HR>';
 
@@ -498,7 +480,7 @@ if (DB_num_rows($result)>0){
 			<TD>' . $myrow['units'] . '</TD>
 			<TD ALIGN=RIGHT>' . number_format($myrow['quantityrecd'],2) . '</TD>
 			<TD ALIGN=RIGHT>' . ConvertSQLDate($myrow['deliverydate']) . '</TD>
-			<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . 'Add=' . $myrow['podetailitem'] . '">'. _('Add').'</A></TD>
+			<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Add=' . $myrow['podetailitem'] . '">'. _('Add').'</A></TD>
 			</TR>';
 
 	}

@@ -192,10 +192,12 @@ CREATE TABLE `companies` (
   `coyname` varchar(50) NOT NULL default '',
   `gstno` varchar(20) NOT NULL default '',
   `companynumber` varchar(20) NOT NULL default '0',
-  `postaladdress` varchar(50) NOT NULL default '',
-  `regoffice1` varchar(50) NOT NULL default '',
-  `regoffice2` varchar(50) NOT NULL default '',
-  `regoffice3` varchar(50) NOT NULL default '',
+  `regoffice1` varchar(40) NOT NULL default '',
+  `regoffice2` varchar(40) NOT NULL default '',
+  `regoffice3` varchar(40) NOT NULL default '',
+  `regoffice4` varchar(40) NOT NULL default '',
+  `regoffice5` varchar(20) NOT NULL default '',
+  `regoffice6` varchar(15) NOT NULL default '',
   `telephone` varchar(25) NOT NULL default '',
   `fax` varchar(25) NOT NULL default '',
   `email` varchar(55) NOT NULL default '',
@@ -675,6 +677,9 @@ CREATE TABLE `locations` (
   `deladd1` varchar(40) NOT NULL default '',
   `deladd2` varchar(40) NOT NULL default '',
   `deladd3` varchar(40) NOT NULL default '',
+  `deladd4` varchar(40) NOT NULL default '',
+  `deladd5` varchar(20) NOT NULL default '',
+  `deladd6` varchar(15) NOT NULL default '',
   `tel` varchar(30) NOT NULL default '',
   `fax` varchar(30) NOT NULL default '',
   `email` varchar(55) NOT NULL default '',
@@ -874,6 +879,9 @@ CREATE TABLE `purchorders` (
   `deladd2` varchar(40) NOT NULL default '',
   `deladd3` varchar(40) NOT NULL default '',
   `deladd4` varchar(40) NOT NULL default '',
+  `deladd5` varchar(20) NOT NULL default '',
+  `deladd6` varchar(15) NOT NULL default '',
+  `contact` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`orderno`),
   KEY `OrdDate` (`orddate`),
   KEY `SupplierNo` (`supplierno`),
@@ -898,9 +906,11 @@ CREATE TABLE `recurringsalesorders` (
   `ordertype` char(2) NOT NULL default '',
   `shipvia` int(11) NOT NULL default '0',
   `deladd1` varchar(40) NOT NULL default '',
-  `deladd2` varchar(20) NOT NULL default '',
-  `deladd3` varchar(15) NOT NULL default '',
-  `deladd4` varchar(15) default NULL,
+  `deladd2` varchar(40) NOT NULL default '',
+  `deladd3` varchar(40) NOT NULL default '',
+  `deladd4` varchar(40) default NULL,
+  `deladd5` varchar(20) NOT NULL default '',
+  `deladd6` varchar(15) NOT NULL default '',
   `contactphone` varchar(25) default NULL,
   `contactemail` varchar(25) default NULL,
   `deliverto` varchar(40) NOT NULL default '',
@@ -1116,9 +1126,11 @@ CREATE TABLE `salesorders` (
   `ordertype` char(2) NOT NULL default '',
   `shipvia` int(11) NOT NULL default '0',
   `deladd1` varchar(40) NOT NULL default '',
-  `deladd2` varchar(20) NOT NULL default '',
-  `deladd3` varchar(15) NOT NULL default '',
-  `deladd4` varchar(15) default NULL,
+  `deladd2` varchar(40) NOT NULL default '',
+  `deladd3` varchar(40) NOT NULL default '',
+  `deladd4` varchar(40) default NULL,
+  `deladd5` varchar(20) NOT NULL default '',
+  `deladd6` varchar(15) NOT NULL default '',
   `contactphone` varchar(25) default NULL,
   `contactemail` varchar(25) default NULL,
   `deliverto` varchar(40) NOT NULL default '',
@@ -1471,20 +1483,22 @@ CREATE TABLE `suppliercontacts` (
 --
 
 CREATE TABLE `suppliers` (
-  `supplierid` char(10) NOT NULL default '',
-  `suppname` char(40) NOT NULL default '',
-  `address1` char(40) NOT NULL default '',
-  `address2` char(40) NOT NULL default '',
-  `address3` char(40) NOT NULL default '',
-  `address4` char(50) NOT NULL default '',
+  `supplierid` varchar(10) NOT NULL default '',
+  `suppname` varchar(40) NOT NULL default '',
+  `address1` varchar(40) NOT NULL default '',
+  `address2` varchar(40) NOT NULL default '',
+  `address3` varchar(40) NOT NULL default '',
+  `address4` varchar(50) NOT NULL default '',
+  `address5` varchar(20) NOT NULL default '',
+  `address6` varchar(15) NOT NULL default '',
   `currcode` char(3) NOT NULL default '',
   `suppliersince` date NOT NULL default '0000-00-00',
   `paymentterms` char(2) NOT NULL default '',
   `lastpaid` double NOT NULL default '0',
   `lastpaiddate` datetime default NULL,
-  `bankact` char(16) NOT NULL default '',
-  `bankref` char(12) NOT NULL default '',
-  `bankpartics` char(12) NOT NULL default '',
+  `bankact` varchar(16) NOT NULL default '',
+  `bankref` varchar(12) NOT NULL default '',
+  `bankpartics` varchar(12) NOT NULL default '',
   `remittance` tinyint(4) NOT NULL default '1',
   `taxgroupid` tinyint(4) NOT NULL default '1',
   PRIMARY KEY  (`supplierid`),
@@ -1921,7 +1935,7 @@ INSERT INTO `chartmaster` VALUES (9100,'Income Tax Provision','Income Tax');
 -- Dumping data for table `companies`
 --
 
-INSERT INTO `companies` VALUES (1,'Demo System','not entered yet','','PO Box 1000','The White House','Washnington DC','USA','','','info@weberp.org','USD',1100,4900,2100,2400,2150,4200,5200,3500,1,1,1,5600);
+INSERT INTO `companies` VALUES (1,'Demo System','not entered yet','','PO Box 1000','The White House','Washnington DC','USA','','','','','info@weberp.org','USD',1100,4900,2100,2400,2150,4200,5200,3500,1,1,1,5600);
 
 --
 -- Dumping data for table `currencies`
@@ -1943,8 +1957,8 @@ INSERT INTO `holdreasons` VALUES (51,'In liquidation',1);
 -- Dumping data for table `locations`
 --
 
-INSERT INTO `locations` VALUES ('DEN','Denver','532-536 Wentworth Street','Denver','Colorado','233 5532 216','233 5532 215','g.bovert@weberp.com','Graham Bouvert',1,0);
-INSERT INTO `locations` VALUES ('TOR','Toronto Distribution Centre','','','','','','','Clive Contrary',1,1);
+INSERT INTO `locations` VALUES ('DEN','Denver','532-536 Wentworth Street','Denver','Colorado','','','','233 5532 216','233 5532 215','g.bovert@weberp.com','Graham Bouvert',1,0);
+INSERT INTO `locations` VALUES ('TOR','Toronto Distribution Centre','','','','','','','','','','Clive Contrary',1,1);
 
 --
 -- Dumping data for table `paymentterms`
@@ -1963,23 +1977,23 @@ INSERT INTO `systypes` VALUES (0,'Journal - GL',0);
 INSERT INTO `systypes` VALUES (1,'Payment - GL',0);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',2);
-INSERT INTO `systypes` VALUES (11,'Credit Note',0);
-INSERT INTO `systypes` VALUES (12,'Receipt',0);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',5);
+INSERT INTO `systypes` VALUES (11,'Credit Note',1);
+INSERT INTO `systypes` VALUES (12,'Receipt',1);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',0);
 INSERT INTO `systypes` VALUES (17,'Stock Adjustment',8);
 INSERT INTO `systypes` VALUES (18,'Purchase Order',0);
-INSERT INTO `systypes` VALUES (20,'Purchase Invoice',3);
-INSERT INTO `systypes` VALUES (21,'Debit Note',1);
+INSERT INTO `systypes` VALUES (20,'Purchase Invoice',7);
+INSERT INTO `systypes` VALUES (21,'Debit Note',3);
 INSERT INTO `systypes` VALUES (22,'Creditors Payment',0);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
-INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',5);
+INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',6);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',0);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',0);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',0);
 INSERT INTO `systypes` VALUES (30,'Sales Order',0);
-INSERT INTO `systypes` VALUES (31,'Shipment Close',10);
+INSERT INTO `systypes` VALUES (31,'Shipment Close',24);
 INSERT INTO `systypes` VALUES (35,'Cost Update',2);
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
 INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',0);
@@ -2186,7 +2200,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-09-25');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-10-02');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');

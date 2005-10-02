@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 /*
 date validation and parsing functions
@@ -323,33 +323,43 @@ function Date1GreaterThanDate2 ($Date1, $Date2) {
 	$Date1_array = explode('/', $Date1);
 	$Date2_array = explode('/', $Date2);
 
+	/*Try to make the year of each date comparable - if one date is specified as just 
+	2 characters and the other >2 then take the last 2 characters of the other date only */
+	if (strlen($Date1_array[2])>2 AND strlen($Date2_array[2])==2){
+		$Date1_array[2] = substr($Date1_array[2], strlen($Date1_array[2])-2);
+	}
+	if (strlen($Date2_array[2])>2 AND strlen($Date1_array[2])==2){
+		$Date2_array[2] = substr($Date2_array[2], strlen($Date2_array[2])-2);
+	}
+	
 	/*The 2 element of the array will be the year in either d/m/Y or m/d/Y formats */
 
-	If ($Date1_array[2] > $Date2_array[2]){
+	If (($Date1_array[2] - $Date2_array[2]) >0){
 		Return 1;
-	} Elseif ($Date1_array[2] == $Date2_array[2]){
+	} Elseif (($Date1_array[2] - $Date2_array[2]) ==0){
 
 	/*The 0 and 1 elements of the array are switched depending on the format used */
 
 		if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
-			If ($Date1_array[1] > $Date2_array[1]){
+			If ( ($Date1_array[1] -  $Date2_array[1]) >0){
 				Return 1;
-			} Elseif ($Date1_array[1]==$Date2_array[1]){
-				If ($Date1_array[0] > $Date2_array[0]){
+			} elseif (($Date1_array[1] - $Date2_array[1])==0){
+				If (($Date1_array[0] -  $Date2_array[0])>0){
 					Return 1;
 				}
 			}
 
 		} elseif ($_SESSION['DefaultDateFormat'] =='m/d/Y'){
-			If ($Date1_array[0] > $Date2_array[0]){
+			If (($Date1_array[0] - $Date2_array[0])>0){
 				Return 1;
-			} Elseif ($Date1_array[0]==$Date2_array[0]){
-				If ($Date1_array[1] > $Date2_array[1]){
+			} elseif (($Date1_array[0] - $Date2_array[0])==0){
+				If (($Date1_array[1] - $Date2_array[1])>0){
 					Return 1;
 				}
 			}
 		}
 	}
+	
 	Return 0;
 }
 

@@ -1,12 +1,6 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /* Definition of the Shipment class to hold all the information for a shipment*/
-
-if (!function_exists('_')){
-	function _($String){
-		echo $String;
-	}
-}
 
 Class Shipment {
 
@@ -20,11 +14,13 @@ Class Shipment {
 	Var $Vessel;
 	Var $ETA;
 	Var $StockLocation;
+	Var $Closed;
 
 	function Shipment(){
 	/*Constructor function initialises a new Shipment object */
 		$this->LineItems = array();
-		$this->AccumValue=0;
+		$this->AccumValue =0;
+		$this->Closed =0;
 	}
 
 	function add_to_shipment($PODetailItem,
