@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 5;
 
@@ -102,7 +102,8 @@ foreach ($_SESSION['PaymentDetail']->GLItems AS $PaymentItem) {
 	$TotalAmount += $PaymentItem->Amount;
 }
 
-if ($TotalAmount==0 AND ($_SESSION["PaymentDetail"]->Discount + $_SESSION["PaymentDetail"]->Amount)/$_SESSION['PaymentDetail']->ExRate ==0){
+if ($TotalAmount==0 AND 
+	($_SESSION["PaymentDetail"]->Discount + $_SESSION["PaymentDetail"]->Amount)/$_SESSION['PaymentDetail']->ExRate ==0){
 	prnMsg( _('This payment has no amounts entered and will not be processed'),'warn');
 	include('includes/footer.inc');
 	exit;
@@ -420,13 +421,7 @@ if ($_POST['DatePaid']=="" OR !Is_Date($_SESSION['PaymentDetail']->DatePaid)){
 }
 
 if ($_SESSION['PaymentDetail']->Currency=="" AND $_SESSION['PaymentDetail']->SupplierID==""){
-/* find out what the functional currency of the company is */
-
-	$SQL = 'SELECT currencydefault FROM companies WHERE coycode=1';
-	$result=DB_query($SQL,$db);
-	$myrow=DB_fetch_row($result);
-	$_SESSION['PaymentDetail']->Currency=$myrow[0];
-	unset($result);
+	$_SESSION['PaymentDetail']->Currency=$_SESSION['CompanyRecord']['currencydefault'];
 }
 
 

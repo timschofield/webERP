@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -268,8 +268,7 @@ if (isset($_POST['CommitBatch'])){
 } elseif (isset($_POST['BatchInput'])){ //submitted a new batch
 
 /*Need to do a reality check on exchange rate entered initially to ensure sensible to proceed */
-	if ($_POST['Currency']!=$_SESSION['CompanyRecord']['DefaultCurrency'] AND $_POST['ExRate']==1){
-	
+	if ($_POST['Currency']!=$_SESSION['CompanyRecord']['currencydefault'] AND $_POST['ExRate']==1){
 		prnMsg(_('An exchange rate of 1 is only appropriate for receipts in the companies functional currency - enter an appropriate exchange rate'),'error');
 		
 	} else {

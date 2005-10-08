@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity =15;
 
@@ -61,10 +61,10 @@ if (isset($_POST['submit'])) {
 		$_POST['X_PageLength'] < 1 ) {
 		$InputError = 1;
 		prnMsg(_('Lines per page must be greater than 1'),'error');
-	}elseif (strlen($_POST['X_DefaultTaxLevel']) > 1 || !is_numeric($_POST['X_DefaultTaxLevel']) || 
-		$_POST['X_DefaultTaxLevel'] < 1 ) {
+	}elseif (strlen($_POST['X_DefaultTaxCategory']) > 1 || !is_numeric($_POST['X_DefaultTaxCategory']) || 
+		$_POST['X_DefaultTaxCategory'] < 1 ) {
 		$InputError = 1;
-		prnMsg(_('DefaultTaxLevel must be between 1 and 9'),'error');
+		prnMsg(_('DefaultTaxCategory must be between 1 and 9'),'error');
 	} elseif (strlen($_POST['X_DefaultDisplayRecordsMax']) > 3 || !is_numeric($_POST['X_DefaultDisplayRecordsMax']) || 
 		$_POST['X_DefaultDisplayRecordsMax'] < 1 ) {
 		$InputError = 1;
@@ -124,8 +124,8 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['FreightChargeAppliesIfLessThan'] != $_POST['X_FreightChargeAppliesIfLessThan'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_FreightChargeAppliesIfLessThan']."' WHERE confname = 'FreightChargeAppliesIfLessThan'";
 		}
-		if ($_SESSION['DefaultTaxLevel'] != $_POST['X_DefaultTaxLevel'] ) {
-			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_DefaultTaxLevel']."' WHERE confname = 'DefaultTaxLevel'";
+		if ($_SESSION['DefaultTaxCategory'] != $_POST['X_DefaultTaxCategory'] ) {
+			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_DefaultTaxCategory']."' WHERE confname = 'DefaultTaxCategory'";
 		}
 		if ($_SESSION['TaxAuthorityReferenceName'] != $_POST['X_TaxAuthorityReferenceName'] ) {
 			$sql[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_TaxAuthorityReferenceName']) . "' WHERE confname = 'TaxAuthorityReferenceName'";
@@ -395,10 +395,22 @@ if ($_SESSION['AutoDebtorNo']==0) {
 echo '</SELECT></TD>
 	<TD>' . _('Set to Automatic - customer codes are automatically created - as a sequential number') .'</TD></TR>';
 
-//DefaultTaxLevel
-echo '<TR><TD>' . _('Default Tax Level') . ':</TD>
-	<TD><input type="Text" Name="X_DefaultTaxLevel" SIZE=2 MAXLENGTH=1 value="' . $_SESSION['DefaultTaxLevel'] . '"></TD>
-	<TD>' . _('This is the tax level used for entry of supplier invoices and the level at which frieght attracts tax') .'</TD></TR>';
+//==HJ== drop down list for tax category	
+$sql = 'SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname';
+$ErrMsg = 'Could not load tax categories table';
+$result = DB_query($sql,$db,$ErrMsg);
+echo '<TR><TD>' . _('Default Tax Category') . ':</TD>';
+echo '<TD><SELECT Name="X_DefaultTaxCategory">';
+if( DB_num_rows($result) == 0 ) {
+	echo '<OPTION SELECTED VALUE="">'._('Unavailable');
+} else {
+	while( $row = DB_fetch_array($result) ) {
+		echo '<OPTION '.($_SESSION['DefaultTaxCategory'] == $row['taxcatid']?'SELECTED ':'').'VALUE="'.$row['taxcatid'].'">'.$row['taxcatname'];
+	}
+}
+echo '</SELECT></TD>
+	<TD>' . _('This is the tax category used for entry of supplier invoices and the category at which freight attracts tax') .'</TD></TR>';
+	
 
 //TaxAuthorityReferenceName
 echo '<TR><TD>' . _('TaxAuthorityReferenceName') . ':</TD>

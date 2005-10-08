@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -111,7 +111,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 		$_SESSION['Items']->FreightCost = $myrow['freightcost'];
 		$_SESSION['Old_FreightCost'] = $myrow['freightcost'];
 		$_POST['ChargeFreightCost'] = $_SESSION['Old_FreightCost'];
-		$_SESSION['Items']->$Orig_OrderDate = $myrow['orddate'];
+		$_SESSION['Items']->Orig_OrderDate = $myrow['orddate'];
 		$_SESSION['CurrencyRate'] = $myrow['currency_rate'];
 		$_SESSION['Items']->TaxGroup = $myrow['taxgroupid'];
 		$_SESSION['Items']->DispatchTaxProvince = $myrow['taxprovinceid'];
