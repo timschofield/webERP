@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.38 $ */
+/* $Revision: 1.39 $ */
 
 require('includes/DefineCartClass.php');
 
@@ -133,12 +133,12 @@ if (isset($_GET['ModifyOrderNumber'])
 		$BestShipper = $myrow['shipvia'];
 		$_SESSION['Items']->DeliverTo = $myrow['deliverto'];
 		$_SESSION['Items']->DeliveryDate = ConvertSQLDate($myrow['deliverydate']);
-		$_SESSION['Items']->BrAdd1 = $myrow['deladd1'];
-		$_SESSION['Items']->BrAdd2 = $myrow['deladd2'];
-		$_SESSION['Items']->BrAdd3 = $myrow['deladd3'];
-		$_SESSION['Items']->BrAdd4 = $myrow['deladd4'];
-		$_SESSION['Items']->BrAdd4 = $myrow['deladd5'];
-		$_SESSION['Items']->BrAdd4 = $myrow['deladd6'];
+		$_SESSION['Items']->DelAdd1 = $myrow['deladd1'];
+		$_SESSION['Items']->DelAdd2 = $myrow['deladd2'];
+		$_SESSION['Items']->DelAdd3 = $myrow['deladd3'];
+		$_SESSION['Items']->DelAdd4 = $myrow['deladd4'];
+		$_SESSION['Items']->DelAdd5 = $myrow['deladd5'];
+		$_SESSION['Items']->DelAdd6 = $myrow['deladd6'];
 		$_SESSION['Items']->PhoneNo = $myrow['contactphone'];
 		$_SESSION['Items']->Email = $myrow['contactemail'];
 		$_SESSION['Items']->Location = $myrow['fromstkloc'];
@@ -376,12 +376,12 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 
 		$myrow = DB_fetch_row($result);
 		$_SESSION['Items']->DeliverTo = $myrow[0];
-		$_SESSION['Items']->BrAdd1 = $myrow[1];
-		$_SESSION['Items']->BrAdd2 = $myrow[2];
-		$_SESSION['Items']->BrAdd3 = $myrow[3];
-		$_SESSION['Items']->BrAdd4 = $myrow[4];
-		$_SESSION['Items']->BrAdd5 = $myrow[5];
-		$_SESSION['Items']->BrAdd6 = $myrow[6];
+		$_SESSION['Items']->DelAdd1 = $myrow[1];
+		$_SESSION['Items']->DelAdd2 = $myrow[2];
+		$_SESSION['Items']->DelAdd3 = $myrow[3];
+		$_SESSION['Items']->DelAdd4 = $myrow[4];
+		$_SESSION['Items']->DelAdd5 = $myrow[5];
+		$_SESSION['Items']->DelAdd6 = $myrow[6];
 		$_SESSION['Items']->PhoneNo = $myrow[7];
 		$_SESSION['Items']->Email = $myrow[8];
 		$_SESSION['Items']->Location = $myrow[9];
@@ -457,12 +457,12 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 
 		$myrow = DB_fetch_row($result);
 		$_SESSION['Items']->DeliverTo = $myrow[0];
-		$_SESSION['Items']->BrAdd1 = $myrow[1];
-		$_SESSION['Items']->BrAdd2 = $myrow[2];
-		$_SESSION['Items']->BrAdd3 = $myrow[3];
-		$_SESSION['Items']->BrAdd4 = $myrow[4];
-		$_SESSION['Items']->BrAdd5 = $myrow[5];
-		$_SESSION['Items']->BrAdd6 = $myrow[6];
+		$_SESSION['Items']->DelAdd1 = $myrow[1];
+		$_SESSION['Items']->DelAdd2 = $myrow[2];
+		$_SESSION['Items']->DelAdd3 = $myrow[3];
+		$_SESSION['Items']->DelAdd4 = $myrow[4];
+		$_SESSION['Items']->DelAdd5 = $myrow[5];
+		$_SESSION['Items']->DelAdd6 = $myrow[6];
 		$_SESSION['Items']->PhoneNo = $myrow[7];
 		$_SESSION['Items']->Email = $myrow[8];
 		$_SESSION['Items']->Location = $myrow[9];

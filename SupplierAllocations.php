@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 /*
 	This page can be called with...
@@ -233,9 +233,9 @@ if (isset($_POST['UpdateDatabase'])){
 						' . $_SESSION['Alloc']->TransNo . ", 
 						'" . $_SESSION['Alloc']->TransDate . "', 
 						" . $PeriodNo . ', 
-						' . $_SESSION['CompanyRecord']['creditorsact'] . ', 
-						"' . _('Exchg Diff') . '", 
-						' . -$MovtInDiffOnExch . ')';
+						' . $_SESSION['CompanyRecord']['creditorsact'] . ", 
+						'" . _('Exch Diff') . "', 
+						" . -$MovtInDiffOnExch . ')';
 
 		      $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ' : ' .
 		      			 _('The GL entry for the difference on exchange arising out of this allocation could not be inserted because');
