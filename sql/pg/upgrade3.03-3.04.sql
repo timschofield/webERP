@@ -1,0 +1,1 @@
+UPDATE config SET confname='DefaultTaxCategory' WHERE confname='DefaultTaxLevel';
