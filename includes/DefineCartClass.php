@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -11,11 +11,6 @@ iii) a credit note
 
 */
 
-if (!function_exists('_')){
-	function _($text){
-		return $text;
-	}
-}
 
 Class Cart {
 

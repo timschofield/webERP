@@ -1,13 +1,13 @@
 <?php
-/* $Revision: 1.39 $ */
+/* $Revision: 1.40 $ */
 
-require('includes/DefineCartClass.php');
-
+include('includes/DefineCartClass.php');
 $PageSecurity = 1;
-
 /* Session started in session.inc for password checking and authorisation level check
 config.php is in turn included in session.inc*/
+
 include('includes/session.inc');
+
 
 if (isset($_GET['ModifyOrderNumber'])) {
 	$title = _('Modifying Order') . ' ' . $_GET['ModifyOrderNumber'];
@@ -35,13 +35,14 @@ if (isset($_GET['NewOrder'])){
 		$_SESSION['Items']->ItemsOrdered=0;
 		unset ($_SESSION['Items']);
 	}
+	
 	Session_register('Items');
 	Session_register('RequireCustomerSelection');
 	Session_register('CreditAvailable');
 	Session_register('ExistingOrder');
 	Session_register('PrintedPackingSlip');
 	Session_register('DatePackingSlipPrinted');
-
+		
 	$_SESSION['ExistingOrder']=0;
 	$_SESSION['Items'] = new cart;
 

@@ -1,9 +1,8 @@
 <?php
-/* $Revision: 1.39 $ */
+/* $Revision: 1.40 $ */
  
     
 include('config.php');
-
         
 if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);
@@ -228,5 +227,5 @@ function CryptPass( $Password ) {
 	} else {
     		return $Password;
     	}
-    }
+ }
 ?>
