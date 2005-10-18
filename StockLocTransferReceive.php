@@ -91,7 +91,7 @@ if(isset($_POST['ProcessTransfer'])){
 						'" . $_SESSION['Transfer']->StockLocationFrom . "',
 						'" . $SQLTransferDate . "',
 						" . $PeriodNo . ",
-						'To " . $_SESSION['Transfer']->StockLocationToName . "',
+						'" . _('To') . ' ' . $_SESSION['Transfer']->StockLocationToName . "',
 						" . -$TrfLine->Quantity . ",
 						" . ($QtyOnHandPrior - $TrfLine->Quantity) . "
 					)";
@@ -203,7 +203,7 @@ if(isset($_POST['ProcessTransfer'])){
 						" . $_SESSION['Transfer']->TrfID . ",
 						'" . $_SESSION['Transfer']->StockLocationTo . "',
 						'" . $SQLTransferDate . "'," . $PeriodNo . ",
-						" . _('From') . ' ' . $_SESSION['Transfer']->StockLocationFromName ."',
+						'" . _('From') . ' ' . $_SESSION['Transfer']->StockLocationFromName ."',
 						" . $TrfLine->Quantity . ", " . ($QtyOnHandPrior + $TrfLine->Quantity) . "
 						)";
 

@@ -3,14 +3,12 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#: OrderDetails.php:134 OrderDetails.php:135 OrderDetails.php:140
-#: OrderDetails.php:141 PO_OrderDetails.php:94 PO_OrderDetails.php:97
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-10-02 22:24+1300\n"
+"POT-Creation-Date: 2005-10-18 20:31+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -119,9 +117,9 @@ msgstr ""
 #: SalesAnalRepts.php:418 SalesAnalRepts.php:421 SalesAnalRepts.php:436
 #: SalesAnalRepts.php:439 ShipmentCosting.php:472 Stocks.php:631
 #: Stocks.php:633 SystemParameters.php:280 SystemParameters.php:325
-#: SystemParameters.php:333 SystemParameters.php:373 SystemParameters.php:434
-#: SystemParameters.php:442 SystemParameters.php:460 SystemParameters.php:467
-#: SystemParameters.php:576 TaxGroups.php:284 TaxGroups.php:348
+#: SystemParameters.php:333 SystemParameters.php:373 SystemParameters.php:446
+#: SystemParameters.php:454 SystemParameters.php:472 SystemParameters.php:479
+#: SystemParameters.php:588 TaxGroups.php:284 TaxGroups.php:348
 #: TaxGroups.php:351 WWW_Users.php:434 WWW_Users.php:436
 msgid "Yes"
 msgstr ""
@@ -141,9 +139,9 @@ msgstr ""
 #: SalesAnalRepts.php:417 SalesAnalRepts.php:420 SalesAnalRepts.php:435
 #: SalesAnalRepts.php:438 ShipmentCosting.php:473 Stocks.php:626
 #: Stocks.php:628 SystemParameters.php:281 SystemParameters.php:326
-#: SystemParameters.php:334 SystemParameters.php:374 SystemParameters.php:435
-#: SystemParameters.php:443 SystemParameters.php:461 SystemParameters.php:468
-#: SystemParameters.php:577 TaxGroups.php:286 TaxGroups.php:349
+#: SystemParameters.php:334 SystemParameters.php:374 SystemParameters.php:447
+#: SystemParameters.php:455 SystemParameters.php:473 SystemParameters.php:480
+#: SystemParameters.php:589 TaxGroups.php:286 TaxGroups.php:349
 #: TaxGroups.php:352 WWW_Users.php:433 WWW_Users.php:437
 #: includes/PDFLowGPPageHeader.inc:31 includes/PDFTaxPageHeader.inc:34
 msgid "No"
@@ -168,14 +166,14 @@ msgstr ""
 #: AccountGroups.php:151 AccountSections.php:159 Areas.php:139
 #: BankAccounts.php:148 BOMs.php:92 COGSGLPostings.php:108
 #: COGSGLPostings.php:212 Credit_Invoice.php:370 CreditStatus.php:127
-#: Currencies.php:175 CustomerBranches.php:331 CustomerReceipt.php:543
+#: Currencies.php:175 CustomerBranches.php:331 CustomerReceipt.php:542
 #: DiscountCategories.php:115 DiscountMatrix.php:100 EDIMessageFormat.php:162
 #: FreightCosts.php:237 GLAccounts.php:309 GLJournal.php:244 Locations.php:342
-#: PaymentMethods.php:189 Payments.php:580 PaymentTerms.php:171
+#: PaymentMethods.php:189 Payments.php:575 PaymentTerms.php:171
 #: PO_Items.php:777 Prices_Customer.php:201 Prices.php:176 PurchData.php:218
 #: SalesAnalReptCols.php:293 SalesAnalRepts.php:303 SalesCategories.php:258
 #: SalesGLPostings.php:119 SalesGLPostings.php:231 SalesPeople.php:190
-#: SalesTypes.php:145 SelectCreditItems.php:763 SelectOrderItems.php:992
+#: SalesTypes.php:145 SelectCreditItems.php:763 SelectOrderItems.php:993
 #: Shipments.php:410 Shippers.php:136 SpecialOrder.php:566
 #: StockCategories.php:169 SuppCreditGRNs.php:88 SuppInvGLAnalysis.php:65
 #: SuppInvGRNs.php:122 SupplierContacts.php:152 SuppShiptChgs.php:80
@@ -318,7 +316,7 @@ msgstr ""
 #: PDFPriceList.php:104 PDFPriceList.php:183 PDFQuotation.php:164
 #: PDFStockCheckComparison.php:30 PDFStockCheckComparison.php:56
 #: PDFStockCheckComparison.php:263 PDFStockCheckComparison.php:315
-#: PDFStockLocTransfer.php:84 PDFStockNegatives.php:70 PO_PDFPurchOrder.php:23
+#: PDFStockLocTransfer.php:85 PDFStockNegatives.php:70 PO_PDFPurchOrder.php:23
 #: PO_PDFPurchOrder.php:115 PrintCustOrder_generic.php:180
 #: PrintCustOrder.php:178 SalesAnalysis_UserDefined.php:36
 #: SalesAnalysis_UserDefined.php:54 SelectCreditItems.php:25 StockCheck.php:43
@@ -355,9 +353,9 @@ msgstr ""
 #: AgedDebtors.php:363 AgedSuppliers.php:190 Areas.php:70
 #: ConfirmDispatch_Invoice.php:152 ConfirmDispatch_Invoice.php:838
 #: ConfirmDispatch_Invoice.php:852 Credit_Invoice.php:671
-#: Credit_Invoice.php:693 CustomerReceipt.php:258 CustomerReceipt.php:466
-#: CustomerReceipt.php:494 CustomerTransInquiry.php:69 GLProfit_Loss.php:443
-#: Payments.php:160 PurchData.php:30 PurchData.php:86 PurchData.php:106
+#: Credit_Invoice.php:693 CustomerReceipt.php:258 CustomerReceipt.php:465
+#: CustomerReceipt.php:493 CustomerTransInquiry.php:69 GLProfit_Loss.php:443
+#: Payments.php:161 PurchData.php:30 PurchData.php:86 PurchData.php:106
 #: ReverseGRN.php:143 ReverseGRN.php:157 ReverseGRN.php:318
 #: SelectCreditItems.php:1377 StockCheck.php:217 StockCostUpdate.php:87
 #: StockCostUpdate.php:96 StockLocStatus.php:128 StockMovements.php:85
@@ -615,8 +613,8 @@ msgstr ""
 msgid "The SQL used to retrieve the bank account details was"
 msgstr ""
 
-#: BankAccounts.php:127 COGSGLPostings.php:195 CustomerReceipt.php:699
-#: GLJournal.php:237 index.php:955 Payments.php:570 TaxAuthorities.php:146
+#: BankAccounts.php:127 COGSGLPostings.php:195 CustomerReceipt.php:698
+#: GLJournal.php:237 index.php:955 Payments.php:565 TaxAuthorities.php:146
 #: TaxAuthorities.php:147
 msgid "GL Account"
 msgstr ""
@@ -689,8 +687,8 @@ msgstr ""
 msgid "Could not unclear this bank transaction because"
 msgstr ""
 
-#: BankMatching.php:58 BankReconciliation.php:25 CustomerReceipt.php:571
-#: Payments.php:482 PDFChequeListing.php:40 TaxAuthorities.php:149
+#: BankMatching.php:58 BankReconciliation.php:25 CustomerReceipt.php:570
+#: Payments.php:477 PDFChequeListing.php:40 TaxAuthorities.php:149
 #: TaxAuthorities.php:280
 msgid "Bank Account"
 msgstr ""
@@ -781,7 +779,7 @@ msgstr ""
 msgid "The payments with the selected criteria could not be retrieved because"
 msgstr ""
 
-#: BankMatching.php:192 Payments.php:561 ShipmentCosting.php:345
+#: BankMatching.php:192 Payments.php:556 ShipmentCosting.php:345
 #: ShipmentCosting.php:421 SupplierAllocations.php:468
 msgid "Ref"
 msgstr ""
@@ -801,9 +799,9 @@ msgid "Date"
 msgstr ""
 
 #: BankMatching.php:195 ConfirmDispatch_Invoice.php:259 Credit_Invoice.php:277
-#: CustomerAllocations.php:403 CustomerReceipt.php:528
+#: CustomerAllocations.php:403 CustomerReceipt.php:527
 #: CustomerTransInquiry.php:81 CustWhereAlloc.php:77 GLJournal.php:228
-#: GLJournal.php:236 GLTransInquiry.php:71 Payments.php:569 Payments.php:612
+#: GLJournal.php:236 GLTransInquiry.php:71 Payments.php:564 Payments.php:607
 #: SelectCreditItems.php:677 SuppInvGLAnalysis.php:50 SuppInvGLAnalysis.php:74
 #: SupplierAllocations.php:469 SupplierCredit.php:308 SupplierInvoice.php:267
 #: SupplierInvoice.php:297 SuppShiptChgs.php:71 SuppShiptChgs.php:132
@@ -842,25 +840,25 @@ msgstr ""
 msgid "The bank accounts could not be retrieved by the SQL because"
 msgstr ""
 
-#: BankReconciliation.php:22 CustomerReceipt.php:568 Payments.php:479
+#: BankReconciliation.php:22 CustomerReceipt.php:567 Payments.php:474
 #: SuppPaymentRun.php:307
 msgid "The SQL used to retrieve the bank acconts was"
 msgstr ""
 
-#: BankReconciliation.php:28 CustomerReceipt.php:575
+#: BankReconciliation.php:28 CustomerReceipt.php:574
 msgid "Bank Accounts have not yet been defined"
 msgstr ""
 
-#: BankReconciliation.php:28 CustomerReceipt.php:575
+#: BankReconciliation.php:28 CustomerReceipt.php:574
 msgid "You must first"
 msgstr ""
 
-#: BankReconciliation.php:28 CustomerReceipt.php:575 Payments.php:486
+#: BankReconciliation.php:28 CustomerReceipt.php:574 Payments.php:481
 #: SuppPaymentRun.php:315
 msgid "define the bank accounts"
 msgstr ""
 
-#: BankReconciliation.php:28 CustomerReceipt.php:575 Payments.php:486
+#: BankReconciliation.php:28 CustomerReceipt.php:574 Payments.php:481
 #: SuppPaymentRun.php:315
 msgid "and general ledger accounts to be affected"
 msgstr ""
@@ -958,10 +956,10 @@ msgid "Costed Bill Of Material"
 msgstr ""
 
 #: BOMInquiry.php:16 ConfirmDispatch_Invoice.php:248 Credit_Invoice.php:267
-#: DeliveryDetails.php:430 GoodsReceived.php:50 OrderDetails.php:214
-#: PO_Items.php:707 PO_OrderDetails.php:132 PrintCustTrans.php:791
+#: DeliveryDetails.php:430 GoodsReceived.php:50 OrderDetails.php:209
+#: PO_Items.php:707 PO_OrderDetails.php:130 PrintCustTrans.php:791
 #: PrintCustTrans.php:875 PrintCustTrans.php:920 RecurringSalesOrders.php:309
-#: ReverseGRN.php:328 SelectCreditItems.php:667 SelectOrderItems.php:944
+#: ReverseGRN.php:328 SelectCreditItems.php:667 SelectOrderItems.php:945
 #: StockLocMovements.php:76 StockLocTransfer.php:158
 #: StockLocTransferReceive.php:399 StockQuantityByDate.php:88 Stocks.php:442
 #: Stocks.php:485 Stocks.php:489 SuppCreditGRNs.php:70 SuppCreditGRNs.php:142
@@ -1002,7 +1000,7 @@ msgstr ""
 #: PDFOrdersInvoiced.php:250 PDFOrderStatus.php:257 PO_Items.php:752
 #: PO_Items.php:877 PO_SelectOSPurchOrder.php:197 PO_SelectPurchOrder.php:192
 #: ReverseGRN.php:329 SalesCategories.php:418 SelectCompletedOrder.php:360
-#: SelectCreditItems.php:958 SelectOrderItems.php:1084 SelectProduct.php:312
+#: SelectCreditItems.php:958 SelectOrderItems.php:1085 SelectProduct.php:312
 #: SelectSalesOrder.php:191 Shipt_Select.php:191 StockCategories.php:142
 #: StockLocStatus.php:135 StockQuantityByDate.php:89 SuppCreditGRNs.php:71
 #: SuppCreditGRNs.php:143 SuppInvGRNs.php:104 SuppInvGRNs.php:258
@@ -1015,12 +1013,12 @@ msgstr ""
 
 #: BOMInquiry.php:48 BOMs.php:68 BOMs.php:449 Credit_Invoice.php:271
 #: DeliveryDetails.php:432 DeliveryDetails.php:497 GoodsReceived.php:52
-#: GoodsReceived.php:55 OrderDetails.php:216 PDFOrdersInvoiced.php:290
+#: GoodsReceived.php:55 OrderDetails.php:211 PDFOrdersInvoiced.php:290
 #: PO_Items.php:709 PrintCustTrans.php:793 PrintCustTrans.php:877
 #: PrintCustTrans.php:922 RecurringSalesOrders.php:311 ReverseGRN.php:331
 #: ReverseGRN.php:332 SalesAnalReptCols.php:18 SalesAnalReptCols.php:20
 #: SelectCreditItems.php:669 SelectCreditItems.php:1003
-#: SelectOrderItems.php:946 SelectOrderItems.php:1149 ShipmentCosting.php:132
+#: SelectOrderItems.php:947 SelectOrderItems.php:1150 ShipmentCosting.php:132
 #: Shipments.php:372 Shipments.php:374 Shipments.php:375 Shipments.php:448
 #: Shipments.php:450 SpecialOrder.php:533 StockCounts.php:32
 #: StockLocMovements.php:81 StockLocTransfer.php:158 StockMovements.php:93
@@ -1097,13 +1095,13 @@ msgstr ""
 msgid "The SQL used to retrieve the components was"
 msgstr ""
 
-#: BOMs.php:64 BOMs.php:582 CustomerBranches.php:292 CustomerReceipt.php:769
+#: BOMs.php:64 BOMs.php:582 CustomerBranches.php:292 CustomerReceipt.php:768
 #: GLCodesInquiry.php:27 GLCodesInquiry.php:65 PDFOrdersInvoiced.php:249
 #: PDFOrderStatus.php:256 PO_Header.php:227 PO_Items.php:876
 #: PO_SelectOSPurchOrder.php:196 PO_SelectPurchOrder.php:191 PurchData.php:415
 #: SalesPeople.php:170 SelectCompletedOrder.php:359 SelectCreditItems.php:232
 #: SelectCreditItems.php:957 SelectCustomer.php:232 SelectGLAccount.php:109
-#: SelectOrderItems.php:516 SelectOrderItems.php:1083 SelectProduct.php:311
+#: SelectOrderItems.php:517 SelectOrderItems.php:1084 SelectProduct.php:311
 #: SelectSalesOrder.php:190 SelectSupplier.php:232 Shipt_Select.php:190
 #: SpecialOrder.php:120 includes/PO_PDFOrderPageHeader.inc:141
 msgid "Code"
@@ -1308,7 +1306,7 @@ msgstr ""
 
 #: BOMs.php:496 PO_Items.php:224 PO_SelectOSPurchOrder.php:59
 #: PO_SelectPurchOrder.php:58 SelectCompletedOrder.php:63
-#: SelectCreditItems.php:292 SelectOrderItems.php:633 SelectProduct.php:123
+#: SelectCreditItems.php:292 SelectOrderItems.php:634 SelectProduct.php:123
 #: SelectSalesOrder.php:40 Shipt_Select.php:59
 msgid "Stock description keywords have been used in preference to the Stock code extract entered"
 msgstr ""
@@ -1346,12 +1344,12 @@ msgid "kits or assemblies to be available for construction of a bill of material
 msgstr ""
 
 #: BOMs.php:566 PO_SelectOSPurchOrder.php:181 PO_SelectPurchOrder.php:176
-#: SelectOrderItems.php:1054 Shipt_Select.php:174
+#: SelectOrderItems.php:1055 Shipt_Select.php:174
 msgid "Enter text extracts in the"
 msgstr ""
 
 #: BOMs.php:566 PO_SelectOSPurchOrder.php:181 PO_SelectPurchOrder.php:176
-#: SelectOrderItems.php:1054 SelectProduct.php:73 Shipt_Select.php:174
+#: SelectOrderItems.php:1055 SelectProduct.php:73 Shipt_Select.php:174
 msgid "description"
 msgstr ""
 
@@ -1359,28 +1357,28 @@ msgstr ""
 #: PO_SelectOSPurchOrder.php:184 PO_SelectPurchOrder.php:179 PurchData.php:401
 #: SelectCompletedOrder.php:346 SelectCreditItems.php:220
 #: SelectCreditItems.php:944 SelectCustomer.php:157 SelectGLAccount.php:95
-#: SelectOrderItems.php:491 SelectOrderItems.php:1057 SelectProduct.php:89
+#: SelectOrderItems.php:492 SelectOrderItems.php:1058 SelectProduct.php:89
 #: SelectSalesOrder.php:180 SelectSupplier.php:172 Shipt_Select.php:177
 msgid "OR"
 msgstr ""
 
 #: BOMs.php:569 PO_SelectOSPurchOrder.php:184 PO_SelectPurchOrder.php:179
-#: SelectOrderItems.php:1057 Shipt_Select.php:177
+#: SelectOrderItems.php:1058 Shipt_Select.php:177
 msgid "Enter extract of the"
 msgstr ""
 
 #: BOMs.php:569 DiscountCategories.php:139 PO_SelectOSPurchOrder.php:184
 #: PO_SelectPurchOrder.php:179 PurchData.php:155 SalesCategories.php:417
-#: SelectOrderItems.php:1057 SelectProduct.php:89 Shipt_Select.php:177
+#: SelectOrderItems.php:1058 SelectProduct.php:89 Shipt_Select.php:177
 #: StockAdjustments.php:286 StockCostUpdate.php:125 StockCounts.php:31
 #: StockMovements.php:23 StockReorderLevel.php:23 StockStatus.php:55
 #: StockTransfers.php:390 StockUsage.php:53 Z_ChangeStockCode.php:213
 msgid "Stock Code"
 msgstr ""
 
-#: BOMs.php:573 CustomerReceipt.php:759 PO_Header.php:219 PO_Items.php:866
+#: BOMs.php:573 CustomerReceipt.php:758 PO_Header.php:219 PO_Items.php:866
 #: SelectCreditItems.php:225 SelectCreditItems.php:949 SelectCustomer.php:174
-#: SelectGLAccount.php:101 SelectOrderItems.php:496 SelectOrderItems.php:1061
+#: SelectGLAccount.php:101 SelectOrderItems.php:497 SelectOrderItems.php:1062
 #: SelectProduct.php:105 SelectSupplier.php:189 SelectSupplier.php:226
 msgid "Search Now"
 msgstr ""
@@ -1393,7 +1391,7 @@ msgstr ""
 #: BOMs.php:585 ConfirmDispatch_Invoice.php:251 Credit_Invoice.php:270
 #: GoodsReceived.php:53 PO_Items.php:878 PO_SelectOSPurchOrder.php:200
 #: PO_SelectPurchOrder.php:195 SelectCompletedOrder.php:364
-#: SelectCreditItems.php:959 SelectOrderItems.php:1085 SelectProduct.php:314
+#: SelectCreditItems.php:959 SelectOrderItems.php:1086 SelectProduct.php:314
 #: SelectSalesOrder.php:193 Shipments.php:373 Shipments.php:449
 #: Shipt_Select.php:194 StockLocTransferReceive.php:404
 msgid "Units"
@@ -1644,7 +1642,7 @@ msgstr ""
 #: CompanyPreferences.php:405 ConfirmDispatch_Invoice.php:1371
 #: Credit_Invoice.php:1425 GoodsReceived.php:581 PurchData.php:336
 #: SelectCreditItems.php:906 StockCostUpdate.php:168 StockReorderLevel.php:89
-#: SystemParameters.php:611 TaxAuthorityRates.php:55 WorkOrderIssue.php:131
+#: SystemParameters.php:623 TaxAuthorityRates.php:55 WorkOrderIssue.php:131
 msgid "Update"
 msgstr ""
 
@@ -1706,7 +1704,7 @@ msgid "on order"
 msgstr ""
 
 #: ConfirmDispatchControlled_Invoice.php:57 EmailCustTrans.php:57
-#: FTP_RadioBeacon.php:280 Payments.php:461 PDFChequeListing.php:102
+#: FTP_RadioBeacon.php:280 Payments.php:456 PDFChequeListing.php:102
 #: PDFChequeListing.php:112 PDFChequeListing.php:198
 #: PDFDeliveryDifferences.php:157 PDFDeliveryDifferences.php:170
 #: PDFDeliveryDifferences.php:277 PDFOrdersInvoiced.php:189
@@ -1735,7 +1733,7 @@ msgid "This page can only be opened if an order has been selected Please select 
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:78 OrderDetails.php:63
-#: RecurringSalesOrders.php:63 SelectOrderItems.php:115
+#: RecurringSalesOrders.php:63 SelectOrderItems.php:116
 #: includes/PO_ReadInOrder.inc:47
 msgid "The order cannot be retrieved because"
 msgstr ""
@@ -1744,8 +1742,8 @@ msgstr ""
 msgid "The SQL to get the order header was"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:151 Credit_Invoice.php:131 OrderDetails.php:180
-#: RecurringSalesOrders.php:121 SelectOrderItems.php:175
+#: ConfirmDispatch_Invoice.php:151 Credit_Invoice.php:131 OrderDetails.php:175
+#: RecurringSalesOrders.php:121 SelectOrderItems.php:176
 msgid "The line items of the order cannot be retrieved because"
 msgstr ""
 
@@ -1766,10 +1764,10 @@ msgid "Invoice amounts stated in"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:249 Credit_Invoice.php:268
-#: DeliveryDetails.php:431 DeliveryDetails.php:496 OrderDetails.php:215
-#: PO_Items.php:708 PO_OrderDetails.php:133 PrintCustTrans.php:792
+#: DeliveryDetails.php:431 DeliveryDetails.php:496 OrderDetails.php:210
+#: PO_Items.php:708 PO_OrderDetails.php:131 PrintCustTrans.php:792
 #: PrintCustTrans.php:876 PrintCustTrans.php:921 RecurringSalesOrders.php:310
-#: SelectCreditItems.php:668 SelectOrderItems.php:945 SpecialOrder.php:531
+#: SelectCreditItems.php:668 SelectOrderItems.php:946 SpecialOrder.php:531
 #: StockLocTransferReceive.php:400 includes/PDFOrderPageHeader_generic.inc:92
 #: includes/PDFQuotationPageHeader.inc:111
 #: includes/PDFStockNegativesHeader.inc:31
@@ -1799,12 +1797,12 @@ msgstr ""
 
 #: ConfirmDispatch_Invoice.php:254 Credit_Invoice.php:272
 #: DeliveryDetails.php:434 DeliveryDetails.php:499 GoodsReceived.php:56
-#: OrderDetails.php:218 PDFOrdersInvoiced.php:291 PO_Items.php:712
+#: OrderDetails.php:213 PDFOrdersInvoiced.php:291 PO_Items.php:712
 #: PO_Items.php:766 PO_Items.php:800 Prices_Customer.php:234 Prices.php:155
 #: Prices.php:252 PrintCustTrans.php:795 PrintCustTrans.php:879
 #: PrintCustTrans.php:924 PurchData.php:183 PurchData.php:307
 #: RecurringSalesOrders.php:313 SelectCreditItems.php:671
-#: SelectOrderItems.php:948 Shipments.php:376 StockLocMovements.php:83
+#: SelectOrderItems.php:949 Shipments.php:376 StockLocMovements.php:83
 #: StockMovements.php:94 SuppCreditGRNs.php:217 SuppCreditGRNs.php:218
 #: includes/PDFPriceListPageHeader.inc:46
 #: includes/PDFQuotationPageHeader.inc:113
@@ -1813,10 +1811,10 @@ msgid "Price"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:255 Credit_Invoice.php:273
-#: CustomerReceipt.php:529 DeliveryDetails.php:435 OrderDetails.php:219
+#: CustomerReceipt.php:528 DeliveryDetails.php:435 OrderDetails.php:214
 #: PrintCustTrans.php:796 PrintCustTrans.php:880 PrintCustTrans.php:925
 #: RecurringSalesOrders.php:314 SalesAnalReptCols.php:43
-#: SalesAnalReptCols.php:45 SelectCreditItems.php:673 SelectOrderItems.php:949
+#: SalesAnalReptCols.php:45 SelectCreditItems.php:673 SelectOrderItems.php:950
 #: StockLocMovements.php:84 StockMovements.php:95
 #: includes/PDFQuotationPageHeader.inc:114 includes/PDFTransPageHeader.inc:196
 msgid "Discount"
@@ -1827,9 +1825,9 @@ msgstr ""
 #: CustomerAllocations.php:513 CustomerAllocations.php:581
 #: CustomerInquiry.php:185 DeliveryDetails.php:436 DeliveryDetails.php:500
 #: GLTrialBalance.php:169 GLTrialBalance.php:250 GLTrialBalance.php:367
-#: OrderDetails.php:220 PDFOrdersInvoiced.php:292 PO_Items.php:713
+#: OrderDetails.php:215 PDFOrdersInvoiced.php:292 PO_Items.php:713
 #: RecurringSalesOrders.php:315 SelectCreditItems.php:674
-#: SelectCreditItems.php:678 SelectOrderItems.php:950 SuppInvGLAnalysis.php:81
+#: SelectCreditItems.php:678 SelectOrderItems.php:951 SuppInvGLAnalysis.php:81
 #: SupplierAllocations.php:469 SupplierAllocations.php:580
 #: SupplierAllocations.php:656 SupplierCredit.php:334 SupplierInquiry.php:192
 #: SupplierInvoice.php:286 SupplierInvoice.php:321 SuppShiptChgs.php:92
@@ -2891,8 +2889,8 @@ msgstr ""
 msgid "Hundredths Name"
 msgstr ""
 
-#: Currencies.php:143 Currencies.php:257 CustomerReceipt.php:625
-#: Payments.php:543 PO_Header.php:426 PO_OrderDetails.php:88
+#: Currencies.php:143 Currencies.php:257 CustomerReceipt.php:624
+#: Payments.php:538 PO_Header.php:426 PO_OrderDetails.php:88
 #: SupplierCredit.php:225 SupplierInvoice.php:211 SuppPaymentRun.php:288
 msgid "Exchange Rate"
 msgstr ""
@@ -2952,7 +2950,7 @@ msgstr ""
 msgid "Customer Code"
 msgstr ""
 
-#: CustEDISetup.php:87 CustomerReceipt.php:769 Customers.php:287
+#: CustEDISetup.php:87 CustomerReceipt.php:768 Customers.php:287
 #: Customers.php:462 OrderDetails.php:102 SelectCustomer.php:233
 msgid "Customer Name"
 msgstr ""
@@ -3202,9 +3200,9 @@ msgid "Trans Type"
 msgstr ""
 
 #: CustomerAllocations.php:510 CustomerAllocations.php:578
-#: CustomerReceipt.php:530 CustomerTransInquiry.php:75 DeliveryDetails.php:413
+#: CustomerReceipt.php:529 CustomerTransInquiry.php:75 DeliveryDetails.php:413
 #: FTP_RadioBeacon.php:51 SelectCompletedOrder.php:415 SelectCustomer.php:110
-#: SelectOrderItems.php:625 SelectOrderItems.php:627
+#: SelectOrderItems.php:626 SelectOrderItems.php:628
 #: SelectRecurringSalesOrder.php:77 SelectSalesOrder.php:404
 #: SelectSalesOrder.php:415 StockLocMovements.php:80 StockMovements.php:92
 #: includes/PDFAgedDebtorsPageHeader.inc:40
@@ -3344,7 +3342,7 @@ msgid "Branches Defined for"
 msgstr ""
 
 #: CustomerBranches.php:294 CustomerBranches.php:468 SelectCreditItems.php:234
-#: SelectCustomer.php:235 SelectOrderItems.php:518 SupplierContacts.php:209
+#: SelectCustomer.php:235 SelectOrderItems.php:519 SupplierContacts.php:209
 msgid "Contact"
 msgstr ""
 
@@ -3361,7 +3359,7 @@ msgid "Fax No"
 msgstr ""
 
 #: CustomerBranches.php:299 CustomerBranches.php:563 EmailCustTrans.php:15
-#: EmailCustTrans.php:57 Locations.php:447 OrderDetails.php:152
+#: EmailCustTrans.php:57 Locations.php:447 OrderDetails.php:140
 #: PO_PDFPurchOrder.php:298 PO_PDFPurchOrder.php:301 PrintCustTrans.php:682
 #: PrintCustTrans.php:872 PrintCustTrans.php:917 SupplierContacts.php:142
 #: SupplierContacts.php:226 UserSettings.php:158 WWW_Users.php:214
@@ -3544,54 +3542,54 @@ msgstr ""
 msgid "Select a Customer to Inquire On"
 msgstr ""
 
-#: CustomerInquiry.php:118 CustomerReceipt.php:660 PO_Header.php:275
+#: CustomerInquiry.php:118 CustomerReceipt.php:659 PO_Header.php:275
 #: PO_Items.php:697 PrintCustTrans.php:778 SupplierInquiry.php:117
 #: includes/PDFStatementPageHeader.inc:68 includes/PDFTransPageHeader.inc:143
 #: includes/PO_PDFOrderPageHeader.inc:128
 msgid "All amounts stated in"
 msgstr ""
 
-#: CustomerInquiry.php:118 CustomerReceipt.php:660 SupplierCredit.php:203
+#: CustomerInquiry.php:118 CustomerReceipt.php:659 SupplierCredit.php:203
 #: SupplierInquiry.php:118 SupplierInvoice.php:186
 msgid "Terms"
 msgstr ""
 
-#: CustomerInquiry.php:118 CustomerReceipt.php:660 Customers.php:324
+#: CustomerInquiry.php:118 CustomerReceipt.php:659 Customers.php:324
 #: Customers.php:500
 msgid "Credit Limit"
 msgstr ""
 
-#: CustomerInquiry.php:118 CustomerReceipt.php:660 Customers.php:345
+#: CustomerInquiry.php:118 CustomerReceipt.php:659 Customers.php:345
 #: Customers.php:520 index.php:788
 msgid "Credit Status"
 msgstr ""
 
-#: CustomerInquiry.php:121 CustomerReceipt.php:663
+#: CustomerInquiry.php:121 CustomerReceipt.php:662
 msgid "ACCOUNT ON HOLD"
 msgstr ""
 
-#: CustomerInquiry.php:126 CustomerReceipt.php:668 PrintCustStatements.php:342
+#: CustomerInquiry.php:126 CustomerReceipt.php:667 PrintCustStatements.php:342
 #: SupplierInquiry.php:135
 msgid "Total Balance"
 msgstr ""
 
-#: CustomerInquiry.php:127 CustomerReceipt.php:669 PrintCustStatements.php:338
+#: CustomerInquiry.php:127 CustomerReceipt.php:668 PrintCustStatements.php:338
 #: Shipments.php:377 Stocks.php:598 Stocks.php:600 SupplierInquiry.php:136
 #: includes/PDFAgedDebtorsPageHeader.inc:42
 #: includes/PDFAgedSuppliersPageHeader.inc:36
 msgid "Current"
 msgstr ""
 
-#: CustomerInquiry.php:128 CustomerReceipt.php:670 SupplierInquiry.php:137
+#: CustomerInquiry.php:128 CustomerReceipt.php:669 SupplierInquiry.php:137
 msgid "Now Due"
 msgstr ""
 
-#: CustomerInquiry.php:129 CustomerInquiry.php:130 CustomerReceipt.php:671
-#: CustomerReceipt.php:672 SupplierInquiry.php:139 SupplierInquiry.php:140
+#: CustomerInquiry.php:129 CustomerInquiry.php:130 CustomerReceipt.php:670
+#: CustomerReceipt.php:671 SupplierInquiry.php:139 SupplierInquiry.php:140
 msgid "Days Overdue"
 msgstr ""
 
-#: CustomerInquiry.php:130 CustomerReceipt.php:672 PrintCustStatements.php:341
+#: CustomerInquiry.php:130 CustomerReceipt.php:671 PrintCustStatements.php:341
 #: SupplierInquiry.php:140
 msgid "Over"
 msgstr ""
@@ -3615,7 +3613,7 @@ msgstr ""
 #: CustomerInquiry.php:181 CustomerTransInquiry.php:76 FTP_RadioBeacon.php:52
 #: Prices_Customer.php:187 Prices_Customer.php:231 PrintCustTrans.php:749
 #: SelectCompletedOrder.php:416 SelectCreditItems.php:233
-#: SelectCustomer.php:234 SelectOrderItems.php:517
+#: SelectCustomer.php:234 SelectOrderItems.php:518
 #: SelectRecurringSalesOrder.php:78 SelectSalesOrder.php:405
 #: SelectSalesOrder.php:416 StockMovements.php:93
 #: includes/PDFDeliveryDifferencesPageHeader.inc:45
@@ -3627,7 +3625,7 @@ msgid "Branch"
 msgstr ""
 
 #: CustomerInquiry.php:183 CustomerTransInquiry.php:78 DeliveryDetails.php:629
-#: PO_Header.php:446 PO_OrderDetails.php:115 RecurringSalesOrders.php:395
+#: PO_Header.php:446 PO_OrderDetails.php:113 RecurringSalesOrders.php:395
 #: SpecialOrder.php:518 SupplierCredit.php:412 SupplierInquiry.php:195
 #: includes/PO_PDFOrderPageHeader.inc:119
 msgid "Comments"
@@ -3713,7 +3711,7 @@ msgstr ""
 msgid "The SQL that failed to insert the receipt GL entry was"
 msgstr ""
 
-#: CustomerReceipt.php:102 Payments.php:187
+#: CustomerReceipt.php:102 Payments.php:188
 msgid "Act Transfer"
 msgstr ""
 
@@ -3721,7 +3719,7 @@ msgstr ""
 msgid "The SQL that failed to insert the bank transaction was"
 msgstr ""
 
-#: CustomerReceipt.php:111 Payments.php:342
+#: CustomerReceipt.php:111 Payments.php:343
 msgid "Cannot insert a bank transaction using the SQL"
 msgstr ""
 
@@ -3789,94 +3787,94 @@ msgstr ""
 msgid "Print PDF Batch Summary"
 msgstr ""
 
-#: CustomerReceipt.php:273
+#: CustomerReceipt.php:272
 msgid "An exchange rate of 1 is only appropriate for receipts in the companies functional currency - enter an appropriate exchange rate"
 msgstr ""
 
-#: CustomerReceipt.php:302 Payments.php:440
+#: CustomerReceipt.php:301 Payments.php:435
 msgid "The bank account name cannot be retrieved because"
 msgstr ""
 
-#: CustomerReceipt.php:304 Payments.php:441
+#: CustomerReceipt.php:303 Payments.php:436
 msgid "SQL used to retrieve the bank account name was"
 msgstr ""
 
-#: CustomerReceipt.php:313 Payments.php:450
+#: CustomerReceipt.php:312 Payments.php:445
 msgid "The bank account number"
 msgstr ""
 
-#: CustomerReceipt.php:313
+#: CustomerReceipt.php:312
 msgid "is not set up as a bank account"
 msgstr ""
 
-#: CustomerReceipt.php:351 SelectCreditItems.php:70 SelectCustomer.php:28
-#: SelectOrderItems.php:246
+#: CustomerReceipt.php:350 SelectCreditItems.php:70 SelectCustomer.php:28
+#: SelectOrderItems.php:247
 msgid "Customer name keywords have been used in preference to the customer code extract entered"
 msgstr ""
 
-#: CustomerReceipt.php:354 SelectCreditItems.php:73 SelectCustomer.php:32
-#: SelectOrderItems.php:249
+#: CustomerReceipt.php:353 SelectCreditItems.php:73 SelectCustomer.php:32
+#: SelectOrderItems.php:250
 msgid "At least one Customer Name keyword OR an extract of a Customer Code must be entered for the search"
 msgstr ""
 
-#: CustomerReceipt.php:383 SelectCustomer.php:73 SelectOrderItems.php:288
+#: CustomerReceipt.php:382 SelectCustomer.php:73 SelectOrderItems.php:289
 msgid "The searched customer records requested cannot be retrieved because"
 msgstr ""
 
-#: CustomerReceipt.php:385 SelectCreditItems.php:113 SelectOrderItems.php:422
+#: CustomerReceipt.php:384 SelectCreditItems.php:113 SelectOrderItems.php:423
 msgid "SQL used to retrieve the customer details was"
 msgstr ""
 
-#: CustomerReceipt.php:392 SelectCustomer.php:80 SelectOrderItems.php:295
+#: CustomerReceipt.php:391 SelectCustomer.php:80 SelectOrderItems.php:296
 msgid "No customer records contain the selected text"
 msgstr ""
 
-#: CustomerReceipt.php:392 PO_Header.php:169 SelectCreditItems.php:121
-#: SelectCustomer.php:80 SelectOrderItems.php:295
+#: CustomerReceipt.php:391 PO_Header.php:169 SelectCreditItems.php:121
+#: SelectCustomer.php:80 SelectOrderItems.php:296
 msgid "please alter your search criteria and try again"
 msgstr ""
 
-#: CustomerReceipt.php:465 CustomerReceipt.php:493 Customers.php:423
+#: CustomerReceipt.php:464 CustomerReceipt.php:492 Customers.php:423
 msgid "The customer details could not be retrieved because"
 msgstr ""
 
-#: CustomerReceipt.php:525
+#: CustomerReceipt.php:524
 msgid "Batch"
 msgstr ""
 
-#: CustomerReceipt.php:525
+#: CustomerReceipt.php:524
 msgid "Banked into the"
 msgstr ""
 
-#: CustomerReceipt.php:525 Payments.php:468 PO_Items.php:114
+#: CustomerReceipt.php:524 Payments.php:463 PO_Items.php:114
 #: SpecialOrder.php:392
 msgid "on"
 msgstr ""
 
-#: CustomerReceipt.php:528 GoodsReceived.php:57 ReverseGRN.php:330
+#: CustomerReceipt.php:527 GoodsReceived.php:57 ReverseGRN.php:330
 #: ReverseGRN.php:331 Shipments.php:374 Shipments.php:450
 #: SuppCreditGRNs.php:145
 msgid "Received"
 msgstr ""
 
-#: CustomerReceipt.php:531 PO_Items.php:754 PO_Items.php:789
+#: CustomerReceipt.php:530 PO_Items.php:754 PO_Items.php:789
 msgid "GL Code"
 msgstr ""
 
-#: CustomerReceipt.php:556
+#: CustomerReceipt.php:555
 msgid "Set up a New Batch"
 msgstr ""
 
-#: CustomerReceipt.php:567 Payments.php:478
+#: CustomerReceipt.php:566 Payments.php:473
 msgid "The bank accounts could not be retrieved because"
 msgstr ""
 
-#: CustomerReceipt.php:592
+#: CustomerReceipt.php:591
 msgid "Date Banked"
 msgstr ""
 
-#: CustomerReceipt.php:593 CustomerTransInquiry.php:82 Payments.php:508
-#: Payments.php:529 PO_Header.php:229 PO_SelectOSPurchOrder.php:386
+#: CustomerReceipt.php:592 CustomerTransInquiry.php:82 Payments.php:503
+#: Payments.php:524 PO_Header.php:229 PO_SelectOSPurchOrder.php:386
 #: PO_SelectPurchOrder.php:372 Prices.php:153 Prices.php:219 PurchData.php:184
 #: PurchData.php:305 PurchData.php:417 SelectSupplier.php:234
 #: SupplierCredit.php:202 SupplierInvoice.php:185
@@ -3886,90 +3884,90 @@ msgstr ""
 msgid "Currency"
 msgstr ""
 
-#: CustomerReceipt.php:609 Payments.php:514
+#: CustomerReceipt.php:608 Payments.php:509
 msgid "No currencies are defined yet"
 msgstr ""
 
-#: CustomerReceipt.php:609
+#: CustomerReceipt.php:608
 msgid "Receipts cannot be entered until a currency is defined"
 msgstr ""
 
-#: CustomerReceipt.php:626
+#: CustomerReceipt.php:625
 msgid "Receipt Type"
 msgstr ""
 
-#: CustomerReceipt.php:640 CustomerReceipt.php:739 GLAccountInquiry.php:115
-#: GLJournal.php:238 GLTransInquiry.php:72 Payments.php:571
+#: CustomerReceipt.php:639 CustomerReceipt.php:738 GLAccountInquiry.php:115
+#: GLJournal.php:238 GLTransInquiry.php:72 Payments.php:566
 #: SuppInvGLAnalysis.php:53 SuppInvGLAnalysis.php:77 SupplierCredit.php:311
 #: SupplierInvoice.php:300 SuppTransGLAnalysis.php:92
 #: SuppTransGLAnalysis.php:174 includes/PDFBankingSummaryPageHeader.inc:58
 msgid "Narrative"
 msgstr ""
 
-#: CustomerReceipt.php:644 CustomerReceipt.php:742 FreightCosts.php:57
-#: GLJournal.php:126 GLJournal.php:230 Payments.php:614
+#: CustomerReceipt.php:643 CustomerReceipt.php:741 FreightCosts.php:57
+#: GLJournal.php:126 GLJournal.php:230 Payments.php:609
 msgid "Accept"
 msgstr ""
 
-#: CustomerReceipt.php:696
+#: CustomerReceipt.php:695
 msgid "General Ledger Receipt Entry"
 msgstr ""
 
-#: CustomerReceipt.php:703 GLJournal.php:216 Payments.php:600
+#: CustomerReceipt.php:702 GLJournal.php:216 Payments.php:595
 msgid "No General ledger accounts have been set up yet"
 msgstr ""
 
-#: CustomerReceipt.php:703
+#: CustomerReceipt.php:702
 msgid "receipts cannot be entered against GL accounts until the GL accounts are set up"
 msgstr ""
 
-#: CustomerReceipt.php:726
+#: CustomerReceipt.php:725
 msgid "Amount of Receipt"
 msgstr ""
 
-#: CustomerReceipt.php:731 Payments.php:624
+#: CustomerReceipt.php:730 Payments.php:619
 msgid "Amount of Discount"
 msgstr ""
 
-#: CustomerReceipt.php:732
+#: CustomerReceipt.php:731
 msgid "agreed prompt payment discount is"
 msgstr ""
 
-#: CustomerReceipt.php:737
+#: CustomerReceipt.php:736
 msgid "Payee Bank Details"
 msgstr ""
 
-#: CustomerReceipt.php:742 GLJournal.php:230 Payments.php:614
+#: CustomerReceipt.php:741 GLJournal.php:230 Payments.php:609
 #: SelectCreditItems.php:907
 msgid "Cancel"
 msgstr ""
 
-#: CustomerReceipt.php:750
+#: CustomerReceipt.php:749
 msgid "Select A Customer"
 msgstr ""
 
-#: CustomerReceipt.php:752 SelectCustomer.php:143 SelectProduct.php:73
+#: CustomerReceipt.php:751 SelectCustomer.php:143 SelectProduct.php:73
 #: SelectProduct.php:89
 msgid "Text in the"
 msgstr ""
 
-#: CustomerReceipt.php:752 SelectCustomer.php:143
+#: CustomerReceipt.php:751 SelectCustomer.php:143
 msgid "name"
 msgstr ""
 
-#: CustomerReceipt.php:755 SelectCustomer.php:158
+#: CustomerReceipt.php:754 SelectCustomer.php:158
 msgid "Text extract in the customer"
 msgstr ""
 
-#: CustomerReceipt.php:755 SelectCustomer.php:158
+#: CustomerReceipt.php:754 SelectCustomer.php:158
 msgid "code"
 msgstr ""
 
-#: CustomerReceipt.php:760
+#: CustomerReceipt.php:759
 msgid "Enter A GL Receipt"
 msgstr ""
 
-#: CustomerReceipt.php:763
+#: CustomerReceipt.php:762
 msgid "Accept and Process Batch"
 msgstr ""
 
@@ -4043,7 +4041,7 @@ msgstr ""
 
 #: Customers.php:177 DeliveryDetails.php:172 DeliveryDetails.php:181
 #: EmailCustTrans.php:19 PO_Header.php:57 SalesAnalysis_UserDefined.php:72
-#: SelectOrderItems.php:858 StockUsage.php:21 SupplierCredit.php:168
+#: SelectOrderItems.php:859 StockUsage.php:21 SupplierCredit.php:168
 #: SupplierCredit.php:180 SupplierCredit.php:192 SupplierInvoice.php:160
 #: SupplierInvoice.php:168 SupplierInvoice.php:176
 #: includes/PDFSalesAnalysis.inc:557
@@ -4051,7 +4049,7 @@ msgid "If this does not happen"
 msgstr ""
 
 #: Customers.php:177 DeliveryDetails.php:172 DeliveryDetails.php:181
-#: EmailCustTrans.php:19 PO_Header.php:57 SelectOrderItems.php:858
+#: EmailCustTrans.php:19 PO_Header.php:57 SelectOrderItems.php:859
 #: StockUsage.php:21 SupplierCredit.php:168 SupplierCredit.php:180
 #: SupplierCredit.php:192 SupplierInvoice.php:160 SupplierInvoice.php:168
 #: SupplierInvoice.php:176
@@ -4060,7 +4058,7 @@ msgstr ""
 
 #: Customers.php:178 DeliveryDetails.php:172 DeliveryDetails.php:181
 #: EmailCustTrans.php:19 PO_Header.php:57 SalesAnalysis_UserDefined.php:72
-#: SelectOrderItems.php:859 StockQties_csv.php:30 StockUsage.php:22
+#: SelectOrderItems.php:860 StockQties_csv.php:30 StockUsage.php:22
 #: SupplierCredit.php:170 SupplierCredit.php:182 SupplierCredit.php:194
 #: SupplierInvoice.php:161 SupplierInvoice.php:169 SupplierInvoice.php:177
 #: TaxAuthorityRates.php:20 includes/PDFSalesAnalysis.inc:557
@@ -4068,7 +4066,7 @@ msgid "click here"
 msgstr ""
 
 #: Customers.php:178 DeliveryDetails.php:172 DeliveryDetails.php:181
-#: PO_Header.php:57 SalesAnalysis_UserDefined.php:72 SelectOrderItems.php:859
+#: PO_Header.php:57 SalesAnalysis_UserDefined.php:72 SelectOrderItems.php:860
 #: StockUsage.php:22 SupplierCredit.php:170 SupplierCredit.php:182
 #: SupplierCredit.php:194 SupplierInvoice.php:161 SupplierInvoice.php:169
 #: SupplierInvoice.php:177 includes/PDFSalesAnalysis.inc:557
@@ -4181,7 +4179,7 @@ msgid "Insert New Customer"
 msgstr ""
 
 #: Customers.php:389 Customers.php:560 PO_Header.php:220 PurchData.php:407
-#: SelectCustomer.php:175 SelectGLAccount.php:102 SelectOrderItems.php:497
+#: SelectCustomer.php:175 SelectGLAccount.php:102 SelectOrderItems.php:498
 msgid "Reset"
 msgstr ""
 
@@ -4205,7 +4203,7 @@ msgstr ""
 msgid "Delete Customer"
 msgstr ""
 
-#: Customers.php:563 SelectOrderItems.php:992 Stocks.php:687
+#: Customers.php:563 SelectOrderItems.php:993 Stocks.php:687
 msgid "Are You Sure?"
 msgstr ""
 
@@ -4232,7 +4230,7 @@ msgstr ""
 
 #: CustomerTransInquiry.php:41 SalesAnalRepts.php:408 SalesAnalRepts.php:426
 #: SalesAnalRepts.php:445 SalesAnalRepts.php:454
-#: includes/PO_PDFOrderPageHeader.inc:99
+#: StockLocTransferReceive.php:94 includes/PO_PDFOrderPageHeader.inc:99
 msgid "To"
 msgstr ""
 
@@ -4526,31 +4524,31 @@ msgstr ""
 msgid "Order Summary"
 msgstr ""
 
-#: DeliveryDetails.php:433 DeliveryDetails.php:498 OrderDetails.php:217
+#: DeliveryDetails.php:433 DeliveryDetails.php:498 OrderDetails.php:212
 #: PO_Items.php:710 PrintCustTrans.php:794 PrintCustTrans.php:878
 #: PrintCustTrans.php:923 RecurringSalesOrders.php:312
-#: SelectCreditItems.php:670 SelectOrderItems.php:947
+#: SelectCreditItems.php:670 SelectOrderItems.php:948
 #: includes/PO_PDFOrderPageHeader.inc:144
 msgid "Unit"
 msgstr ""
 
-#: DeliveryDetails.php:477 OrderDetails.php:269 RecurringSalesOrders.php:356
-#: SelectOrderItems.php:1004
+#: DeliveryDetails.php:477 OrderDetails.php:264 RecurringSalesOrders.php:356
+#: SelectOrderItems.php:1005
 msgid "TOTAL Excl Tax/Freight"
 msgstr ""
 
 #: DeliveryDetails.php:484 DeliveryDetails.php:536 DeliveryDetails.php:545
-#: OrderDetails.php:278 SelectOrderItems.php:1008
+#: OrderDetails.php:273 SelectOrderItems.php:1009
 msgid "Total Weight"
 msgstr ""
 
 #: DeliveryDetails.php:486 DeliveryDetails.php:538 DeliveryDetails.php:547
-#: OrderDetails.php:280 SelectOrderItems.php:1010
+#: OrderDetails.php:275 SelectOrderItems.php:1011
 msgid "Total Volume"
 msgstr ""
 
 #: DeliveryDetails.php:554 OrderDetails.php:107 RecurringSalesOrders.php:361
-#: SelectOrderItems.php:626 includes/PO_PDFOrderPageHeader.inc:52
+#: SelectOrderItems.php:627 includes/PO_PDFOrderPageHeader.inc:52
 msgid "Deliver To"
 msgstr ""
 
@@ -5612,7 +5610,7 @@ msgid "The chart details for account"
 msgstr ""
 
 #: GLAccountInquiry.php:131 GLAccountInquiry.php:171 GLTransInquiry.php:21
-#: GLTransInquiry.php:55 SelectOrderItems.php:368
+#: GLTransInquiry.php:55 SelectOrderItems.php:369
 msgid "could not be retrieved"
 msgstr ""
 
@@ -5881,7 +5879,7 @@ msgstr ""
 msgid "Journal"
 msgstr ""
 
-#: GLJournal.php:108 Payments.php:350
+#: GLJournal.php:108 Payments.php:351
 msgid "has been sucessfully entered"
 msgstr ""
 
@@ -5897,11 +5895,11 @@ msgstr ""
 msgid "Bank account general ledger entries must be entered by either a bank account receipt or a bank account payment"
 msgstr ""
 
-#: GLJournal.php:136 Payments.php:386
+#: GLJournal.php:136 Payments.php:387
 msgid "The manual GL code entered does not exist in the database"
 msgstr ""
 
-#: GLJournal.php:136 Payments.php:386
+#: GLJournal.php:136 Payments.php:387
 msgid "so this GL analysis item could not be added"
 msgstr ""
 
@@ -5917,19 +5915,19 @@ msgstr ""
 msgid "Journal Line Entry"
 msgstr ""
 
-#: GLJournal.php:209 Payments.php:591
+#: GLJournal.php:209 Payments.php:586
 msgid "Enter GL Account Manually"
 msgstr ""
 
-#: GLJournal.php:211 Payments.php:593
+#: GLJournal.php:211 Payments.php:588
 msgid "Select GL Account"
 msgstr ""
 
-#: GLJournal.php:216 Payments.php:600
+#: GLJournal.php:216 Payments.php:595
 msgid "payments cannot be analysed against GL accounts until the GL accounts are set up"
 msgstr ""
 
-#: GLJournal.php:227 Payments.php:611
+#: GLJournal.php:227 Payments.php:606
 msgid "GL Narrative"
 msgstr ""
 
@@ -7204,32 +7202,32 @@ msgstr ""
 msgid "Deliver From Location"
 msgstr ""
 
-#: OrderDetails.php:146
-msgid "Freight Cost"
-msgstr ""
-
-#: OrderDetails.php:147 PrintCustTrans.php:680 PrintCustTrans.php:870
+#: OrderDetails.php:134 PrintCustTrans.php:680 PrintCustTrans.php:870
 #: PrintCustTrans.php:915 SalesPeople.php:172 WWW_Users.php:213
 msgid "Telephone"
 msgstr ""
 
-#: OrderDetails.php:181
+#: OrderDetails.php:146
+msgid "Freight Cost"
+msgstr ""
+
+#: OrderDetails.php:176
 msgid "The SQL used to retrieve the line items, that failed was"
 msgstr ""
 
-#: OrderDetails.php:211
+#: OrderDetails.php:206
 msgid "Line Details"
 msgstr ""
 
-#: OrderDetails.php:221
+#: OrderDetails.php:216
 msgid "Qty Del"
 msgstr ""
 
-#: OrderDetails.php:222
+#: OrderDetails.php:217
 msgid "Last Del"
 msgstr ""
 
-#: OrderDetails.php:240 PaymentTerms.php:155 PaymentTerms.php:161
+#: OrderDetails.php:235 PaymentTerms.php:155 PaymentTerms.php:161
 #: SalesAnalReptCols.php:279
 msgid "N/A"
 msgstr ""
@@ -7342,115 +7340,115 @@ msgstr ""
 msgid "If this page is called from the SelectSupplier page then this assures that a valid supplier is selected"
 msgstr ""
 
-#: Payments.php:106
+#: Payments.php:107
 msgid "This payment has no amounts entered and will not be processed"
 msgstr ""
 
-#: Payments.php:159
+#: Payments.php:160
 msgid "Cannot insert a GL entry for the payment using the SQL"
 msgstr ""
 
-#: Payments.php:194 Payments.php:341
+#: Payments.php:195 Payments.php:342
 msgid "Cannot insert a bank transaction because"
 msgstr ""
 
-#: Payments.php:195
+#: Payments.php:196
 msgid "Cannot insert a bank transaction with the SQL"
 msgstr ""
 
-#: Payments.php:228
+#: Payments.php:229
 msgid "Cannot insert a payment transaction against the supplier because"
 msgstr ""
 
-#: Payments.php:229
+#: Payments.php:230
 msgid "Cannot insert a payment transaction against the supplier using the SQL"
 msgstr ""
 
-#: Payments.php:240
+#: Payments.php:241
 msgid "Cannot update the supplier record for the date of the last payment made because"
 msgstr ""
 
-#: Payments.php:241
+#: Payments.php:242
 msgid "Cannot update the supplier record for the date of the last payment made using the SQL"
 msgstr ""
 
-#: Payments.php:264
+#: Payments.php:265
 msgid "Cannot insert a GL transaction for the creditors account debit because"
 msgstr ""
 
-#: Payments.php:265
+#: Payments.php:266
 msgid "Cannot insert a GL transaction for the creditors account debit using the SQL"
 msgstr ""
 
-#: Payments.php:285
+#: Payments.php:286
 msgid "Cannot insert a GL transaction for the payment discount credit because"
 msgstr ""
 
-#: Payments.php:286
+#: Payments.php:287
 msgid "Cannot insert a GL transaction for the payment discount credit using the SQL"
 msgstr ""
 
-#: Payments.php:312
+#: Payments.php:313
 msgid "Cannot insert a GL transaction for the bank account credit because"
 msgstr ""
 
-#: Payments.php:313
+#: Payments.php:314
 msgid "Cannot insert a GL transaction for the bank account credit using the SQL"
 msgstr ""
 
-#: Payments.php:346
+#: Payments.php:347
 msgid "Cannot commit the changes because"
 msgstr ""
 
-#: Payments.php:347
+#: Payments.php:348
 msgid "The commit of the database transaction failed"
 msgstr ""
 
-#: Payments.php:350 Payments.php:458 PrintCustStatements.php:365
+#: Payments.php:351 Payments.php:453 PrintCustStatements.php:365
 msgid "Payment"
 msgstr ""
 
-#: Payments.php:366
+#: Payments.php:367
 msgid "Enter a General Ledger Payment"
 msgstr ""
 
-#: Payments.php:367
+#: Payments.php:368
 msgid "Enter a Supplier Payment"
 msgstr ""
 
-#: Payments.php:450
+#: Payments.php:445
 msgid "is not set up as a bank account with a valid general ledger account"
 msgstr ""
 
-#: Payments.php:465
+#: Payments.php:460
 msgid "from the"
 msgstr ""
 
-#: Payments.php:486 SuppPaymentRun.php:315
+#: Payments.php:481 SuppPaymentRun.php:315
 msgid "Bank Accounts have not yet been defined. You must first"
 msgstr ""
 
-#: Payments.php:502
+#: Payments.php:497
 msgid "Date Paid"
 msgstr ""
 
-#: Payments.php:514
+#: Payments.php:509
 msgid "Payments cannot be entered until a currency is defined"
 msgstr ""
 
-#: Payments.php:544 SuppPaymentRun.php:331
+#: Payments.php:539 SuppPaymentRun.php:331
 msgid "Payment Type"
 msgstr ""
 
-#: Payments.php:588
+#: Payments.php:583
 msgid "General Ledger Payment Analysis Entry"
 msgstr ""
 
-#: Payments.php:621
+#: Payments.php:616
 msgid "Amount of Payment"
 msgstr ""
 
-#: Payments.php:631
+#: Payments.php:626
 msgid "Accept and Process Payment"
 msgstr ""
 
@@ -7732,7 +7730,7 @@ msgid "Ph"
 msgstr ""
 
 #: PDFCustomerList.php:339 SelectCreditItems.php:236 SelectCustomer.php:237
-#: SelectOrderItems.php:520 includes/PDFOrderPageHeader_generic.inc:32
+#: SelectOrderItems.php:521 includes/PDFOrderPageHeader_generic.inc:32
 #: includes/PDFQuotationPageHeader.inc:20
 #: includes/PDFStatementPageHeader.inc:40 includes/PDFTransPageHeader.inc:81
 #: includes/PO_PDFOrderPageHeader.inc:44
@@ -7999,7 +7997,7 @@ msgstr ""
 msgid "Printed"
 msgstr ""
 
-#: PDFOrderStatus.php:247 PO_Header.php:436 PO_OrderDetails.php:106
+#: PDFOrderStatus.php:247 PO_Header.php:436 PO_OrderDetails.php:104
 msgid "Not yet printed"
 msgstr ""
 
@@ -8032,7 +8030,7 @@ msgid "Prices"
 msgstr ""
 
 #: PDFPriceList.php:147 PO_Items.php:849 SelectCreditItems.php:930
-#: SelectOrderItems.php:1036 SelectOrderItems.php:1039 SelectProduct.php:59
+#: SelectOrderItems.php:1037 SelectOrderItems.php:1040 SelectProduct.php:59
 #: SelectProduct.php:61 StockLocStatus.php:61 StockLocStatus.php:63
 msgid "All"
 msgstr ""
@@ -8262,35 +8260,35 @@ msgstr ""
 msgid "Don't Adjust System stock to Nil"
 msgstr ""
 
-#: PDFStockLocTransfer.php:7
+#: PDFStockLocTransfer.php:9
 msgid "Stock Location Transfer Docket Error"
 msgstr ""
 
-#: PDFStockLocTransfer.php:16 PDFStockLocTransfer.php:25
+#: PDFStockLocTransfer.php:17 PDFStockLocTransfer.php:26
 msgid "This page must be called with a location transfer reference number"
 msgstr ""
 
-#: PDFStockLocTransfer.php:22 PDFStockLocTransfer.php:23
+#: PDFStockLocTransfer.php:23 PDFStockLocTransfer.php:24
 msgid "Inventory Location Transfer BOL"
 msgstr ""
 
-#: PDFStockLocTransfer.php:25
+#: PDFStockLocTransfer.php:26
 msgid "An error occurred retrieving the items on the transfer"
 msgstr ""
 
-#: PDFStockLocTransfer.php:26
+#: PDFStockLocTransfer.php:27
 msgid "The SQL that failed while retrieving the items on the transfer was"
 msgstr ""
 
-#: PDFStockLocTransfer.php:47
+#: PDFStockLocTransfer.php:48
 msgid "The transfer reference selected does not appear to be set up"
 msgstr ""
 
-#: PDFStockLocTransfer.php:47
+#: PDFStockLocTransfer.php:48
 msgid "enter the items to be transferred first"
 msgstr ""
 
-#: PDFStockLocTransfer.php:83
+#: PDFStockLocTransfer.php:84
 msgid "There was no stock location transfer to print out"
 msgstr ""
 
@@ -8399,11 +8397,11 @@ msgstr ""
 msgid "Prices cannot be altered for lines that have already been received and quantities cannot be reduced below the quantity already received"
 msgstr ""
 
-#: PO_Header.php:87 SelectOrderItems.php:589
+#: PO_Header.php:87 SelectOrderItems.php:590
 msgid "The order detail lines could not be deleted because"
 msgstr ""
 
-#: PO_Header.php:91 SelectOrderItems.php:595
+#: PO_Header.php:91 SelectOrderItems.php:596
 msgid "The order header could not be deleted because"
 msgstr ""
 
@@ -8432,8 +8430,8 @@ msgid "The supplier record of the supplier selected"
 msgstr ""
 
 #: PO_Header.php:187 SelectCreditItems.php:148 SelectCreditItems.php:186
-#: SelectOrderItems.php:322 SelectOrderItems.php:362 SelectOrderItems.php:421
-#: SelectOrderItems.php:454 SpecialOrder.php:57 SpecialOrder.php:76
+#: SelectOrderItems.php:323 SelectOrderItems.php:363 SelectOrderItems.php:422
+#: SelectOrderItems.php:455 SpecialOrder.php:57 SpecialOrder.php:76
 #: StockCheck.php:215 StockLocStatus.php:166 StockLocStatus.php:190
 #: StockLocStatus.php:205 StockStatus.php:113 StockStatus.php:137
 #: StockStatus.php:152 SupplierCredit.php:68 SupplierInvoice.php:57
@@ -8512,7 +8510,7 @@ msgid "Address 6"
 msgstr ""
 
 #: PO_Header.php:403 SelectCreditItems.php:235 SelectCustomer.php:236
-#: SelectOrderItems.php:519 includes/PDFTransPageHeader.inc:81
+#: SelectOrderItems.php:520 includes/PDFTransPageHeader.inc:81
 msgid "Phone"
 msgstr ""
 
@@ -8524,7 +8522,7 @@ msgstr ""
 msgid "Initiated By"
 msgstr ""
 
-#: PO_Header.php:423 PO_OrderDetails.php:101
+#: PO_Header.php:423 PO_OrderDetails.php:97
 msgid "Requistion Ref"
 msgstr ""
 
@@ -8625,7 +8623,7 @@ msgstr ""
 msgid "Select An Outstanding Purchase Order"
 msgstr ""
 
-#: PO_Items.php:317 SelectCreditItems.php:392 SelectOrderItems.php:725
+#: PO_Items.php:317 SelectCreditItems.php:392 SelectOrderItems.php:726
 msgid "There is a problem selecting the part records to display because"
 msgstr ""
 
@@ -8777,7 +8775,7 @@ msgstr ""
 msgid "However you can change the quantity ordered of the existing line if necessary"
 msgstr ""
 
-#: PO_Items.php:680 SelectOrderItems.php:780
+#: PO_Items.php:680 SelectOrderItems.php:781
 #: includes/SelectOrderItems_IntoCart.inc:55
 #: includes/SelectOrderItems_IntoCart.inc:140
 msgid "The item code"
@@ -8890,7 +8888,7 @@ msgstr ""
 
 #: PO_Items.php:847 PO_SelectOSPurchOrder.php:169 PO_SelectPurchOrder.php:164
 #: SelectCompletedOrder.php:331 SelectCreditItems.php:928
-#: SelectOrderItems.php:1033 SelectSalesOrder.php:168 Shipt_Select.php:162
+#: SelectOrderItems.php:1034 SelectSalesOrder.php:168 Shipt_Select.php:162
 msgid "Select a stock category"
 msgstr ""
 
@@ -8903,7 +8901,7 @@ msgstr ""
 msgid "Enter extract of the Stock Code"
 msgstr ""
 
-#: PO_Items.php:908 SelectOrderItems.php:1107 SelectOrderItems.php:1121
+#: PO_Items.php:908 SelectOrderItems.php:1108 SelectOrderItems.php:1122
 #, php-format
 msgid "Order some"
 msgstr ""
@@ -8920,7 +8918,7 @@ msgstr ""
 msgid "Please restrict your search to only the parts required"
 msgstr ""
 
-#: PO_Items.php:941 SelectOrderItems.php:1075
+#: PO_Items.php:941 SelectOrderItems.php:1076
 msgid "Add a New Stock Item"
 msgstr ""
 
@@ -8983,67 +8981,67 @@ msgstr ""
 msgid "Deliver Into Location"
 msgstr ""
 
-#: PO_OrderDetails.php:100 PO_SelectOSPurchOrder.php:389
+#: PO_OrderDetails.php:94 PO_SelectOSPurchOrder.php:389
 #: PO_SelectPurchOrder.php:375 includes/PO_PDFOrderPageHeader.inc:115
 msgid "Initiator"
 msgstr ""
 
-#: PO_OrderDetails.php:103
+#: PO_OrderDetails.php:101
 msgid "Printing"
 msgstr ""
 
-#: PO_OrderDetails.php:107 PO_PDFPurchOrder.php:297 PO_PDFPurchOrder.php:300
+#: PO_OrderDetails.php:105 PO_PDFPurchOrder.php:297 PO_PDFPurchOrder.php:300
 #: PO_SelectOSPurchOrder.php:384 PrintCustTrans.php:525
 #: SelectSalesOrder.php:455 SelectSalesOrder.php:477
 #, php-format
 msgid "Print"
 msgstr ""
 
-#: PO_OrderDetails.php:109
+#: PO_OrderDetails.php:107
 msgid "Printed on"
 msgstr ""
 
-#: PO_OrderDetails.php:110
+#: PO_OrderDetails.php:108
 msgid "Print a Copy"
 msgstr ""
 
-#: PO_OrderDetails.php:122
+#: PO_OrderDetails.php:120
 msgid "The line items of the purchase order could not be retrieved"
 msgstr ""
 
-#: PO_OrderDetails.php:128
+#: PO_OrderDetails.php:126
 msgid "Order Line Details"
 msgstr ""
 
-#: PO_OrderDetails.php:134
+#: PO_OrderDetails.php:132
 msgid "Ord Qty"
 msgstr ""
 
-#: PO_OrderDetails.php:135 includes/PDFOstdgGRNsPageHeader.inc:33
+#: PO_OrderDetails.php:133 includes/PDFOstdgGRNsPageHeader.inc:33
 msgid "Qty Recd"
 msgstr ""
 
-#: PO_OrderDetails.php:136 includes/PDFOstdgGRNsPageHeader.inc:34
+#: PO_OrderDetails.php:134 includes/PDFOstdgGRNsPageHeader.inc:34
 msgid "Qty Inv"
 msgstr ""
 
-#: PO_OrderDetails.php:137
+#: PO_OrderDetails.php:135
 msgid "Ord Price"
 msgstr ""
 
-#: PO_OrderDetails.php:138
+#: PO_OrderDetails.php:136
 msgid "Chg Price"
 msgstr ""
 
-#: PO_OrderDetails.php:139
+#: PO_OrderDetails.php:137
 msgid "Reqd Date"
 msgstr ""
 
-#: PO_OrderDetails.php:189
+#: PO_OrderDetails.php:187
 msgid "Total Order Value Excluding Tax"
 msgstr ""
 
-#: PO_OrderDetails.php:192
+#: PO_OrderDetails.php:190
 msgid "Total Order Value Received Excluding Tax"
 msgstr ""
 
@@ -10217,7 +10215,7 @@ msgid "Frequency of Recurrence"
 msgstr ""
 
 #: RecurringSalesOrders.php:426 RecurringSalesOrders.php:428
-#: SystemParameters.php:591 SystemParameters.php:593
+#: SystemParameters.php:603 SystemParameters.php:605
 msgid "Weekly"
 msgstr ""
 
@@ -10226,7 +10224,7 @@ msgid "Fortnightly"
 msgstr ""
 
 #: RecurringSalesOrders.php:436 RecurringSalesOrders.php:438
-#: SystemParameters.php:596 SystemParameters.php:598
+#: SystemParameters.php:608 SystemParameters.php:610
 msgid "Monthly"
 msgstr ""
 
@@ -10318,8 +10316,8 @@ msgstr ""
 msgid "Could not retreive the tax province of the location from where the order was fulfilled because:"
 msgstr ""
 
-#: RecurringSalesOrdersProcess.php:260 includes/DefineCartClass.php:264
-#: includes/DefineCartClass.php:301 includes/DefineCartClass.php:337
+#: RecurringSalesOrdersProcess.php:260 includes/DefineCartClass.php:259
+#: includes/DefineCartClass.php:296 includes/DefineCartClass.php:332
 #: includes/DefineSuppTransClass.php:64
 msgid "The taxes and rates for this item could not be retreived because"
 msgstr ""
@@ -10854,8 +10852,8 @@ msgstr ""
 msgid "The SQL used to update the report headers was"
 msgstr ""
 
-#: SalesAnalRepts.php:163 SalesAnalRepts.php:227 SelectOrderItems.php:330
-#: SelectOrderItems.php:395 SelectOrderItems.php:404
+#: SalesAnalRepts.php:163 SalesAnalRepts.php:227 SelectOrderItems.php:331
+#: SelectOrderItems.php:396 SelectOrderItems.php:405
 msgid "The"
 msgstr ""
 
@@ -10973,7 +10971,7 @@ msgid "Group By 4"
 msgstr ""
 
 #: SalesAnalysis_UserDefined.php:19 includes/PDFStarter_ros.inc:38
-#: includes/session.inc:208
+#: includes/session.inc:207
 msgid "The security settings on your account do not permit you to access this function"
 msgstr ""
 
@@ -11444,27 +11442,27 @@ msgstr ""
 msgid "The customer record of the customer selected"
 msgstr ""
 
-#: SelectCreditItems.php:149 SelectOrderItems.php:323 SpecialOrder.php:77
+#: SelectCreditItems.php:149 SelectOrderItems.php:324 SpecialOrder.php:77
 msgid "The SQL used to retrieve the customer details and failed was"
 msgstr ""
 
-#: SelectCreditItems.php:186 SelectOrderItems.php:362 SelectOrderItems.php:454
+#: SelectCreditItems.php:186 SelectOrderItems.php:363 SelectOrderItems.php:455
 msgid "The customer branch record of the customer selected"
 msgstr ""
 
-#: SelectCreditItems.php:187 SelectOrderItems.php:363 SelectOrderItems.php:455
+#: SelectCreditItems.php:187 SelectOrderItems.php:364 SelectOrderItems.php:456
 msgid "SQL used to retrieve the branch details was"
 msgstr ""
 
-#: SelectCreditItems.php:213 SelectOrderItems.php:483
+#: SelectCreditItems.php:213 SelectOrderItems.php:484
 msgid "Customer Selection"
 msgstr ""
 
-#: SelectCreditItems.php:218 SelectOrderItems.php:489
+#: SelectCreditItems.php:218 SelectOrderItems.php:490
 msgid "Enter text in the customer name"
 msgstr ""
 
-#: SelectCreditItems.php:221 SelectOrderItems.php:492
+#: SelectCreditItems.php:221 SelectOrderItems.php:493
 msgid "Enter text extract in the customer code"
 msgstr ""
 
@@ -11472,7 +11470,7 @@ msgstr ""
 msgid "There are no products available that match the criteria specified"
 msgstr ""
 
-#: SelectCreditItems.php:398 SelectOrderItems.php:733
+#: SelectCreditItems.php:398 SelectOrderItems.php:734
 msgid "The SQL statement used was"
 msgstr ""
 
@@ -11548,20 +11546,20 @@ msgstr ""
 msgid "Process Credit Note"
 msgstr ""
 
-#: SelectCreditItems.php:917 SelectOrderItems.php:1024
+#: SelectCreditItems.php:917 SelectOrderItems.php:1025
 msgid "Yes Please"
 msgstr ""
 
-#: SelectCreditItems.php:950 SelectOrderItems.php:1074
+#: SelectCreditItems.php:950 SelectOrderItems.php:1075
 msgid "Change Customer"
 msgstr ""
 
 #: SelectCreditItems.php:951 SelectCreditItems.php:1000
-#: SelectOrderItems.php:1145 SelectOrderItems.php:1160
+#: SelectOrderItems.php:1146 SelectOrderItems.php:1161
 msgid "Quick Entry"
 msgstr ""
 
-#: SelectCreditItems.php:1002 SelectOrderItems.php:1148
+#: SelectCreditItems.php:1002 SelectOrderItems.php:1149
 msgid "Part Code"
 msgstr ""
 
@@ -11569,7 +11567,7 @@ msgstr ""
 msgid "Process Entries"
 msgstr ""
 
-#: SelectCreditItems.php:1013 SelectOrderItems.php:1161
+#: SelectCreditItems.php:1013 SelectOrderItems.php:1162
 msgid "Search Parts"
 msgstr ""
 
@@ -11776,147 +11774,147 @@ msgstr ""
 msgid "Select Order Items"
 msgstr ""
 
-#: SelectOrderItems.php:237
+#: SelectOrderItems.php:238
 msgid "The customer the order is for cannot be modified once some of the order has been invoiced"
 msgstr ""
 
-#: SelectOrderItems.php:322
+#: SelectOrderItems.php:323
 msgid "The details of the customer selected"
 msgstr ""
 
-#: SelectOrderItems.php:330
+#: SelectOrderItems.php:331
 msgid "account is currently flagged as an account that needs to be watched please contact the credit control personnel to discuss"
 msgstr ""
 
-#: SelectOrderItems.php:368
+#: SelectOrderItems.php:369
 msgid "The branch details for branch code"
 msgstr ""
 
-#: SelectOrderItems.php:368
+#: SelectOrderItems.php:369
 msgid "against customer code"
 msgstr ""
 
-#: SelectOrderItems.php:368
+#: SelectOrderItems.php:369
 msgid "Check the set up of the customer and branch"
 msgstr ""
 
-#: SelectOrderItems.php:371
+#: SelectOrderItems.php:372
 msgid "The SQL that failed to get the branch details was"
 msgstr ""
 
-#: SelectOrderItems.php:395
+#: SelectOrderItems.php:396
 msgid "account is currently at or over their credit limit"
 msgstr ""
 
-#: SelectOrderItems.php:397
+#: SelectOrderItems.php:398
 msgid "No more orders can be placed by"
 msgstr ""
 
-#: SelectOrderItems.php:397
+#: SelectOrderItems.php:398
 msgid " their account is currently at or over their credit limit"
 msgstr ""
 
-#: SelectOrderItems.php:404
+#: SelectOrderItems.php:405
 msgid "account is currently on hold please contact the credit control personnel to discuss"
 msgstr ""
 
-#: SelectOrderItems.php:421
+#: SelectOrderItems.php:422
 msgid "The details for the customer selected"
 msgstr ""
 
-#: SelectOrderItems.php:472
+#: SelectOrderItems.php:473
 msgid "Sorry, your account has been put on hold for some reason, please contact the credit control personnel."
 msgstr ""
 
-#: SelectOrderItems.php:582
+#: SelectOrderItems.php:583
 msgid "There are lines on this order that have already been invoiced. Please delete only the lines on the order that are no longer required"
 msgstr ""
 
-#: SelectOrderItems.php:582
+#: SelectOrderItems.php:583
 msgid "There is an option on confirming a dispatch/invoice to automatically cancel any balance on the order at the time of invoicing if you know the customer will not want the back order"
 msgstr ""
 
-#: SelectOrderItems.php:611
+#: SelectOrderItems.php:612
 msgid "This sales order has been cancelled as requested"
 msgstr ""
 
-#: SelectOrderItems.php:620
+#: SelectOrderItems.php:621
 msgid "Quotation for"
 msgstr ""
 
-#: SelectOrderItems.php:622
+#: SelectOrderItems.php:623
 msgid "Order for"
 msgstr ""
 
-#: SelectOrderItems.php:627
+#: SelectOrderItems.php:628
 msgid "A"
 msgstr ""
 
-#: SelectOrderItems.php:726
+#: SelectOrderItems.php:727
 msgid "The SQL used to get the part selection was"
 msgstr ""
 
-#: SelectOrderItems.php:730
+#: SelectOrderItems.php:731
 msgid "There are no products available meeting the criteria specified"
 msgstr ""
 
-#: SelectOrderItems.php:775 SelectOrderItems.php:870
+#: SelectOrderItems.php:776 SelectOrderItems.php:871
 msgid "Could not determine if the part being ordered was a kitset or not because"
 msgstr ""
 
-#: SelectOrderItems.php:780
+#: SelectOrderItems.php:781
 msgid "could not be retrieved from the database and has not been added to the order"
 msgstr ""
 
-#: SelectOrderItems.php:790 SelectOrderItems.php:886
+#: SelectOrderItems.php:791 SelectOrderItems.php:887
 msgid "Could not retrieve kitset components from the database because"
 msgstr ""
 
-#: SelectOrderItems.php:819
+#: SelectOrderItems.php:820
 msgid "This item cannot be deleted because some of it has already been invoiced"
 msgstr ""
 
-#: SelectOrderItems.php:832
+#: SelectOrderItems.php:833
 msgid "The item could not be updated because you are attempting to set the quantity ordered to less than 0 or the price less than 0 or the discount more than 100% or less than 0%"
 msgstr ""
 
-#: SelectOrderItems.php:836
+#: SelectOrderItems.php:837
 msgid "The item you attempting to modify the price for has already had some quantity invoiced at the old price the items unit price cannot be modified retrospectively"
 msgstr ""
 
-#: SelectOrderItems.php:840
+#: SelectOrderItems.php:841
 msgid "The item you attempting to modify has had some quantity invoiced at the old discount percent the items discount cannot be modified retrospectively"
 msgstr ""
 
-#: SelectOrderItems.php:843
+#: SelectOrderItems.php:844
 msgid "You are attempting to make the quantity ordered a quantity less than has already been invoiced"
 msgstr ""
 
-#: SelectOrderItems.php:843
+#: SelectOrderItems.php:844
 msgid "The quantity delivered and invoiced cannot be modified retrospectively"
 msgstr ""
 
-#: SelectOrderItems.php:858
+#: SelectOrderItems.php:859
 msgid "You should automatically be forwarded to the entry of the delivery details page"
 msgstr ""
 
-#: SelectOrderItems.php:1015
+#: SelectOrderItems.php:1016
 msgid "Re-Calculate"
 msgstr ""
 
-#: SelectOrderItems.php:1016
+#: SelectOrderItems.php:1017
 msgid "Enter Delivery Details and Confirm Order"
 msgstr ""
 
-#: SelectOrderItems.php:1062
+#: SelectOrderItems.php:1063
 msgid "Use Quick Entry"
 msgstr ""
 
-#: SelectOrderItems.php:1177
+#: SelectOrderItems.php:1178
 msgid "Cancel Whole Order"
 msgstr ""
 
-#: SelectOrderItems.php:1177
+#: SelectOrderItems.php:1178
 msgid "Are you sure you wish to cancel this entire order?"
 msgstr ""
 
@@ -14572,7 +14570,7 @@ msgid "Exch diff"
 msgstr ""
 
 #: SupplierAllocations.php:237
-msgid "Exchg Diff"
+msgid "Exch Diff"
 msgstr ""
 
 #: SupplierAllocations.php:258 SupplierCredit.php:810
@@ -14775,7 +14773,7 @@ msgid "Automatic"
 msgstr ""
 
 #: SupplierCredit.php:352 SupplierCredit.php:354 SupplierInvoice.php:350
-#: SupplierInvoice.php:352 includes/header.inc:51
+#: SupplierInvoice.php:352 includes/header.inc:52
 msgid "Manual"
 msgstr ""
 
@@ -15603,7 +15601,7 @@ msgid "Lines per page must be greater than 1"
 msgstr ""
 
 #: SystemParameters.php:67
-msgid "DefaultTaxLevel must be between 1 and 9"
+msgid "DefaultTaxCategory must be between 1 and 9"
 msgstr ""
 
 #: SystemParameters.php:71
@@ -15635,7 +15633,7 @@ msgstr ""
 msgid "Notes"
 msgstr ""
 
-#: SystemParameters.php:224 SystemParameters.php:471
+#: SystemParameters.php:224 SystemParameters.php:483
 msgid "General Settings"
 msgstr ""
 
@@ -15795,7 +15793,8 @@ msgstr ""
 msgid "Default Price List"
 msgstr ""
 
-#: SystemParameters.php:345 SystemParameters.php:361 SystemParameters.php:415
+#: SystemParameters.php:345 SystemParameters.php:361 SystemParameters.php:405
+#: SystemParameters.php:427
 msgid "Unavailable"
 msgstr ""
 
@@ -15843,191 +15842,191 @@ msgstr ""
 msgid "Set to Automatic - customer codes are automatically created - as a sequential number"
 msgstr ""
 
-#: SystemParameters.php:399
-msgid "Default Tax Level"
-msgstr ""
-
-#: SystemParameters.php:401
-msgid "This is the tax level used for entry of supplier invoices and the level at which frieght attracts tax"
-msgstr ""
-
-#: SystemParameters.php:404
-msgid "TaxAuthorityReferenceName"
-msgstr ""
-
-#: SystemParameters.php:406
-msgid "This parameter is what is displayed on tax invoices and credits for the tax authority of the company eg. in Australian this would by A.B.N.: - in NZ it would be GST No: in the UK it would be VAT Regn. No"
+#: SystemParameters.php:402
+msgid "Default Tax Category"
 msgstr ""
 
 #: SystemParameters.php:412
+msgid "This is the tax category used for entry of supplier invoices and the category at which freight attracts tax"
+msgstr ""
+
+#: SystemParameters.php:416
+msgid "TaxAuthorityReferenceName"
+msgstr ""
+
+#: SystemParameters.php:418
+msgid "This parameter is what is displayed on tax invoices and credits for the tax authority of the company eg. in Australian this would by A.B.N.: - in NZ it would be GST No: in the UK it would be VAT Regn. No"
+msgstr ""
+
+#: SystemParameters.php:424
 msgid "Country Of Operation"
 msgstr ""
 
-#: SystemParameters.php:422
+#: SystemParameters.php:434
 msgid "This parameter is only effective if Do Freight Calculation is set to Yes. Country names come from the currencies table."
 msgstr ""
 
-#: SystemParameters.php:425
+#: SystemParameters.php:437
 msgid "Number Of Periods Of StockUsage"
 msgstr ""
 
-#: SystemParameters.php:429
+#: SystemParameters.php:441
 msgid "In stock usage inquiries this determines how many periods of stock usage to show. An average is calculated over this many periods"
 msgstr ""
 
-#: SystemParameters.php:432
+#: SystemParameters.php:444
 msgid "Check Quantity Charged vs Deliver Qty"
 msgstr ""
 
-#: SystemParameters.php:437
+#: SystemParameters.php:449
 msgid "In entry of AP invoices this determines whether or not to check the quantites received into stock tie up with the quantities invoiced"
 msgstr ""
 
-#: SystemParameters.php:440
+#: SystemParameters.php:452
 msgid "Check Price Charged vs Order Price"
 msgstr ""
 
-#: SystemParameters.php:445
+#: SystemParameters.php:457
 msgid "In entry of AP invoices this parameter determines whether or not to check invoice prices tie up to ordered prices"
 msgstr ""
 
-#: SystemParameters.php:448
+#: SystemParameters.php:460
 msgid "Allowed Over Charge Proportion"
 msgstr ""
 
-#: SystemParameters.php:450
+#: SystemParameters.php:462
 msgid "If check price charges vs Order price is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to price"
 msgstr ""
 
-#: SystemParameters.php:453
+#: SystemParameters.php:465
 msgid "Allowed Over Receive Proportion"
 msgstr ""
 
-#: SystemParameters.php:455
+#: SystemParameters.php:467
 msgid "If check quantity charged vs delivery quantity is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to delivery"
 msgstr ""
 
-#: SystemParameters.php:458
+#: SystemParameters.php:470
 msgid "Purchase Order Allows Same Item Multiple Times"
 msgstr ""
 
-#: SystemParameters.php:465
+#: SystemParameters.php:477
 msgid "Sales Order Allows Same Item Multiple Times"
 msgstr ""
 
-#: SystemParameters.php:475
+#: SystemParameters.php:487
 msgid "January"
 msgstr ""
 
-#: SystemParameters.php:476
+#: SystemParameters.php:488
 msgid "February"
 msgstr ""
 
-#: SystemParameters.php:477
+#: SystemParameters.php:489
 msgid "March"
 msgstr ""
 
-#: SystemParameters.php:478
+#: SystemParameters.php:490
 msgid "April"
 msgstr ""
 
-#: SystemParameters.php:479
+#: SystemParameters.php:491
 msgid "May"
 msgstr ""
 
-#: SystemParameters.php:480
+#: SystemParameters.php:492
 msgid "June"
 msgstr ""
 
-#: SystemParameters.php:481
+#: SystemParameters.php:493
 msgid "July"
 msgstr ""
 
-#: SystemParameters.php:482
+#: SystemParameters.php:494
 msgid "August"
 msgstr ""
 
-#: SystemParameters.php:483
+#: SystemParameters.php:495
 msgid "September"
 msgstr ""
 
-#: SystemParameters.php:484
+#: SystemParameters.php:496
 msgid "October"
 msgstr ""
 
-#: SystemParameters.php:485
+#: SystemParameters.php:497
 msgid "November"
 msgstr ""
 
-#: SystemParameters.php:486
+#: SystemParameters.php:498
 msgid "December"
 msgstr ""
 
-#: SystemParameters.php:487
+#: SystemParameters.php:499
 msgid "Financial Year Ends On"
 msgstr ""
 
-#: SystemParameters.php:492
+#: SystemParameters.php:504
 msgid "Defining the month in which the financial year ends enables the system to provide useful defaults for general ledger reports"
 msgstr ""
 
-#: SystemParameters.php:495
+#: SystemParameters.php:507
 msgid "Report Page Length"
 msgstr ""
 
-#: SystemParameters.php:500
+#: SystemParameters.php:512
 msgid "Default Maximum Number of Records to Show"
 msgstr ""
 
-#: SystemParameters.php:502
+#: SystemParameters.php:514
 msgid "When pages have code to limit the number of returned records - such as select customer, select supplier and select item, then this will be the default number of records to show for a user who has not changed this for themselves in user settings."
 msgstr ""
 
-#: SystemParameters.php:506
+#: SystemParameters.php:518
 msgid "Maximum Size in KB of uploaded images"
 msgstr ""
 
-#: SystemParameters.php:508
+#: SystemParameters.php:520
 msgid "Picture files of items can be uploaded to the server. The system will check that files uploaded are less than this size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen."
 msgstr ""
 
-#: SystemParameters.php:512
+#: SystemParameters.php:524
 msgid "The directory where images are stored"
 msgstr ""
 
-#: SystemParameters.php:536
+#: SystemParameters.php:548
 msgid "The directory under which all image files should be stored. Image files take the format of ItemCode.jpg - they must all be .jpg files and the part code will be the name of the image file. This is named automatically on upload. The system will check to ensure that the image is a .jpg file"
 msgstr ""
 
-#: SystemParameters.php:541
+#: SystemParameters.php:553
 msgid "The directory where reports are stored"
 msgstr ""
 
-#: SystemParameters.php:569
+#: SystemParameters.php:581
 msgid "The directory under which all report pdf files should be created in. A separate directory is recommended"
 msgstr ""
 
-#: SystemParameters.php:574
+#: SystemParameters.php:586
 msgid "Only allow secure socket connections"
 msgstr ""
 
-#: SystemParameters.php:579
+#: SystemParameters.php:591
 msgid "Force connections to be only over secure sockets - ie encrypted data only"
 msgstr ""
 
-#: SystemParameters.php:583
+#: SystemParameters.php:595
 msgid "Perform Database Maintenance At Logon"
 msgstr ""
 
-#: SystemParameters.php:586 SystemParameters.php:588
+#: SystemParameters.php:598 SystemParameters.php:600
 msgid "Daily"
 msgstr ""
 
-#: SystemParameters.php:601 SystemParameters.php:603
+#: SystemParameters.php:613 SystemParameters.php:615
 msgid "Never"
 msgstr ""
 
-#: SystemParameters.php:607
+#: SystemParameters.php:619
 msgid "Uses the function DB_Maintenance defined in ConnectDB_XXXX.inc to perform database maintenance tasks, to run at regular intervals - checked at each and every user login"
 msgstr ""
 
@@ -18873,23 +18872,23 @@ msgstr ""
 msgid "To Add Items Sequentially, the Begin Number must be less than the End Number"
 msgstr ""
 
-#: includes/DefineCartClass.php:148
+#: includes/DefineCartClass.php:143
 msgid "The order line for"
 msgstr ""
 
-#: includes/DefineCartClass.php:148
+#: includes/DefineCartClass.php:143
 msgid "could not be inserted"
 msgstr ""
 
-#: includes/DefineCartClass.php:176
+#: includes/DefineCartClass.php:171
 msgid "The order line number"
 msgstr ""
 
-#: includes/DefineCartClass.php:176
+#: includes/DefineCartClass.php:171
 msgid "could not be updated"
 msgstr ""
 
-#: includes/DefineCartClass.php:198
+#: includes/DefineCartClass.php:193
 msgid "The order line could not be deleted because"
 msgstr ""
 
@@ -19367,31 +19366,31 @@ msgstr ""
 msgid "Could not insert first period"
 msgstr ""
 
-#: includes/header.inc:15
+#: includes/header.inc:16
 msgid "ISO-8859-1"
 msgstr ""
 
-#: includes/header.inc:41
+#: includes/header.inc:42
 msgid "Main  Menu"
 msgstr ""
 
-#: includes/header.inc:45
+#: includes/header.inc:46
 msgid "Select Customer"
 msgstr ""
 
-#: includes/header.inc:47
+#: includes/header.inc:48
 msgid "Select Item"
 msgstr ""
 
-#: includes/header.inc:49
+#: includes/header.inc:50
 msgid "Select Supplier"
 msgstr ""
 
-#: includes/header.inc:55
+#: includes/header.inc:56
 msgid "Are you sure you wish to logout?"
 msgstr ""
 
-#: includes/header.inc:55
+#: includes/header.inc:56
 msgid "Logout"
 msgstr ""
 
@@ -19889,35 +19888,35 @@ msgstr ""
 msgid "does not have a cost set up and order entry is set up to prohibit sales of items with no cost data entered"
 msgstr ""
 
-#: includes/session.inc:112 includes/session.inc:192
+#: includes/session.inc:111 includes/session.inc:191
 msgid "Account Error Report"
 msgstr ""
 
-#: includes/session.inc:115
+#: includes/session.inc:114
 msgid "Your user role does not have any access defined for webERP. There is an error in the security setup for this user account"
 msgstr ""
 
-#: includes/session.inc:138
+#: includes/session.inc:137
 msgid "incorrect password"
 msgstr ""
 
-#: includes/session.inc:138
+#: includes/session.inc:137
 msgid "The user/password combination"
 msgstr ""
 
-#: includes/session.inc:138
+#: includes/session.inc:137
 msgid "is not a valid user of the system"
 msgstr ""
 
-#: includes/session.inc:173
+#: includes/session.inc:172
 msgid "webERP is configured to allow only secure socket connections. Pages must be called with https://"
 msgstr ""
 
-#: includes/session.inc:195
+#: includes/session.inc:194
 msgid "Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server"
 msgstr ""
 
-#: includes/session.inc:202
+#: includes/session.inc:201
 msgid "Security Permissions Problem"
 msgstr ""
 

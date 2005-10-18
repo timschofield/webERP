@@ -1804,6 +1804,7 @@ INSERT INTO `bankaccounts` VALUES (1040,'Savings Account','','');
 --
 
 INSERT INTO `banktrans` VALUES (1,12,1,1030,'',0,1,'2005-09-30','Cash',5000,'USD');
+INSERT INTO `banktrans` VALUES (2,12,2,1030,'',0,1,'2005-10-08','Cash',5.25,'USD');
 
 --
 -- Dumping data for table `bom`
@@ -2292,7 +2293,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-10-02');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-10-17');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
@@ -2306,7 +2307,7 @@ INSERT INTO `config` VALUES ('DoFreightCalc','0');
 INSERT INTO `config` VALUES ('EDIHeaderMsgId','D:01B:UN:EAN010');
 INSERT INTO `config` VALUES ('EDIReference','WEBERP');
 INSERT INTO `config` VALUES ('EDI_Incoming_Orders','companies/weberp/EDI_Incoming_Orders');
-INSERT INTO `config` VALUES ('EDI_MsgPending','companies/weberp/EDI_Pending');
+INSERT INTO `config` VALUES ('EDI_MsgPending','companies/weberp/EDI_MsgPending');
 INSERT INTO `config` VALUES ('EDI_MsgSent','companies/weberp/EDI_Sent');
 INSERT INTO `config` VALUES ('FreightChargeAppliesIfLessThan','1000');
 INSERT INTO `config` VALUES ('FreightTaxCategory','1');
@@ -2390,10 +2391,12 @@ INSERT INTO `debtorsmaster` VALUES ('QUARTER','Quarter Back to Back','1356 Union
 
 INSERT INTO `debtortrans` VALUES (2,2,10,'ANGRY','ANGRY','2005-09-05 00:00:00',1,0,'','DE',4,1,6800,839.8,0,0,0,0,'','8',0,'');
 INSERT INTO `debtortrans` VALUES (3,3,10,'DUMBLE','DUMBLE','2005-09-26 00:00:00',1,1,'','DE',8,0.8,1425,0,10,0,0,1435,'','10',0,'');
-INSERT INTO `debtortrans` VALUES (4,1,11,'DUMBLE','DUMBLE','2005-09-25 00:00:00',1,0,'Inv-3','DE',8,0.8,-1425,0,-10,0,0,-1435,'','',0,'');
+INSERT INTO `debtortrans` VALUES (4,1,11,'DUMBLE','DUMBLE','2005-09-25 00:00:00',1,1,'Inv-3','DE',8,0.8,-1425,0,-10,0,0,-1435,'','',0,'');
 INSERT INTO `debtortrans` VALUES (5,4,10,'ANGRY','ANGRY','2005-10-01 00:00:00',2,0,'','DE',3,1,6720,829.92,0,0,0,0,'','8',0,'54421');
 INSERT INTO `debtortrans` VALUES (6,1,12,'ANGRY','','2005-09-30 00:00:00',1,0,'Cash','',0,1,-5000,0,0,-50,0,0,'','',0,'');
 INSERT INTO `debtortrans` VALUES (7,5,10,'JOLOMU','JOLOMU','2005-10-03 00:00:00',2,0,'','DE',44,0.8,37500,0,35,0,0,0,'','1',0,'');
+INSERT INTO `debtortrans` VALUES (8,6,10,'QUARTER','QUARTER','2005-10-12 00:00:00',2,0,'','DE',45,0.8,10,0,0,0,0,0,'','1',0,'');
+INSERT INTO `debtortrans` VALUES (9,7,10,'DUMBLE','DUMBLE','2005-10-15 00:00:00',2,0,'','DE',46,0.8,1000,0,0,0,0,0,'','10',0,'');
 
 --
 -- Dumping data for table `debtortranstaxes`
@@ -2406,6 +2409,8 @@ INSERT INTO `debtortranstaxes` VALUES (4,13,0);
 INSERT INTO `debtortranstaxes` VALUES (5,11,493.92);
 INSERT INTO `debtortranstaxes` VALUES (5,12,336);
 INSERT INTO `debtortranstaxes` VALUES (7,13,0);
+INSERT INTO `debtortranstaxes` VALUES (8,13,0);
+INSERT INTO `debtortranstaxes` VALUES (9,13,0);
 
 --
 -- Dumping data for table `discountmatrix`
@@ -2659,6 +2664,16 @@ INSERT INTO `gltrans` VALUES (198,10,5,0,'2005-10-03',2,1460,'JOLOMU - FUJI99010
 INSERT INTO `gltrans` VALUES (199,10,5,0,'2005-10-03',2,4100,'JOLOMU - FUJI990102 x 25 @ 1500',-46875,0,'');
 INSERT INTO `gltrans` VALUES (200,10,5,0,'2005-10-03',2,1100,'JOLOMU',46918.75,0,'');
 INSERT INTO `gltrans` VALUES (201,10,5,0,'2005-10-03',2,5600,'JOLOMU',-43.75,0,'');
+INSERT INTO `gltrans` VALUES (202,12,2,0,'2005-10-08',2,1050,'',-5.25,0,'');
+INSERT INTO `gltrans` VALUES (203,12,2,0,'2005-10-08',2,1030,'',5.25,0,'');
+INSERT INTO `gltrans` VALUES (204,10,6,0,'2005-10-12',2,5000,'QUARTER - FUJI990102 x 1 @ 633.0000',633,0,'');
+INSERT INTO `gltrans` VALUES (205,10,6,0,'2005-10-12',2,1460,'QUARTER - FUJI990102 x 1 @ 633.0000',-633,0,'');
+INSERT INTO `gltrans` VALUES (206,10,6,0,'2005-10-12',2,4100,'QUARTER - FUJI990102 x 1 @ 10',-12.5,0,'');
+INSERT INTO `gltrans` VALUES (207,10,6,0,'2005-10-12',2,1100,'QUARTER',12.5,0,'');
+INSERT INTO `gltrans` VALUES (208,10,7,0,'2005-10-15',2,5000,'DUMBLE - FUJI990101 x 1 @ 530.0000',530,0,'');
+INSERT INTO `gltrans` VALUES (209,10,7,0,'2005-10-15',2,1460,'DUMBLE - FUJI990101 x 1 @ 530.0000',-530,0,'');
+INSERT INTO `gltrans` VALUES (210,10,7,0,'2005-10-15',2,4100,'DUMBLE - FUJI990101 x 1 @ 1000',-1250,0,'');
+INSERT INTO `gltrans` VALUES (211,10,7,0,'2005-10-15',2,1100,'DUMBLE',1250,0,'');
 
 --
 -- Dumping data for table `grns`
@@ -2695,14 +2710,14 @@ INSERT INTO `locations` VALUES ('TOR','Toronto Distribution Centre','','','','',
 INSERT INTO `locstock` VALUES ('DEN','FUJI990101',-2,0);
 INSERT INTO `locstock` VALUES ('DEN','FUJI990102',-2,0);
 INSERT INTO `locstock` VALUES ('DEN','FUJI9901ASS',0,0);
-INSERT INTO `locstock` VALUES ('DEN','HIT3034-4',7,0);
+INSERT INTO `locstock` VALUES ('DEN','HIT3034-4',5,0);
 INSERT INTO `locstock` VALUES ('DEN','HIT3042-4',0,0);
 INSERT INTO `locstock` VALUES ('DEN','HIT3042-ASS',0,0);
 INSERT INTO `locstock` VALUES ('DEN','HIT3043-5',0,0);
-INSERT INTO `locstock` VALUES ('TOR','FUJI990101',0,0);
-INSERT INTO `locstock` VALUES ('TOR','FUJI990102',-25,0);
+INSERT INTO `locstock` VALUES ('TOR','FUJI990101',-1,0);
+INSERT INTO `locstock` VALUES ('TOR','FUJI990102',-26,0);
 INSERT INTO `locstock` VALUES ('TOR','FUJI9901ASS',0,0);
-INSERT INTO `locstock` VALUES ('TOR','HIT3034-4',3,0);
+INSERT INTO `locstock` VALUES ('TOR','HIT3034-4',5,0);
 INSERT INTO `locstock` VALUES ('TOR','HIT3042-4',0,0);
 INSERT INTO `locstock` VALUES ('TOR','HIT3042-ASS',0,0);
 INSERT INTO `locstock` VALUES ('TOR','HIT3043-5',0,0);
@@ -2711,6 +2726,8 @@ INSERT INTO `locstock` VALUES ('TOR','HIT3043-5',0,0);
 -- Dumping data for table `loctransfers`
 --
 
+INSERT INTO `loctransfers` VALUES (3,'FUJI990101',5,0,'2005-10-18','0000-00-00','DEN','TOR');
+INSERT INTO `loctransfers` VALUES (4,'HIT3034-4',2,2,'2005-10-18','2005-10-18','DEN','TOR');
 
 --
 -- Dumping data for table `orderdeliverydifferenceslog`
@@ -2804,6 +2821,8 @@ INSERT INTO `salesanalysis` VALUES ('DE',1,6800,2326,'ANGRY','ANGRY',2,0,'FUJI99
 INSERT INTO `salesanalysis` VALUES ('DE',1,0,0,'DUMBLE','DUMBLE',0,0,'HIT3042-ASS','TR',1,'ERI','AIRCON',3);
 INSERT INTO `salesanalysis` VALUES ('DE',2,6720,3412,'ANGRY','ANGRY',4,0,'HIT3034-4','TR',1,'ERI','AIRCON',4);
 INSERT INTO `salesanalysis` VALUES ('DE',2,46875,15825,'JOLOMU','JOLOMU',25,0,'FUJI990102','FL',1,'PHO','AIRCON',5);
+INSERT INTO `salesanalysis` VALUES ('DE',2,12.5,633,'QUARTER','QUARTER',1,0,'FUJI990102','FL',1,'ERI','AIRCON',6);
+INSERT INTO `salesanalysis` VALUES ('DE',2,1250,530,'DUMBLE','DUMBLE',1,0,'FUJI990101','TR',1,'ERI','AIRCON',7);
 
 --
 -- Dumping data for table `salescat`
@@ -2843,6 +2862,8 @@ INSERT INTO `salesorderdetails` VALUES (0,9,'FUJI9901ASS',0,1600,5,0,0.05,'2005-
 INSERT INTO `salesorderdetails` VALUES (0,12,'HIT3042-ASS',0,234,5,0,0,'0000-00-00 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (0,43,'HIT3042-ASS',0,234,5,0,0,'0000-00-00 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (0,44,'FUJI990102',25,1500,25,0,0,'2005-10-03 00:00:00',1,'');
+INSERT INTO `salesorderdetails` VALUES (0,45,'FUJI990102',1,10,1,0,0,'2005-10-12 00:00:00',1,'');
+INSERT INTO `salesorderdetails` VALUES (0,46,'FUJI990101',1,1000,1,0,0,'2005-10-15 00:00:00',1,'');
 INSERT INTO `salesorderdetails` VALUES (1,1,'HIT3034-4',0,1680,2,0,0,'0000-00-00 00:00:00',0,'Installation experts at 1800 12345667');
 INSERT INTO `salesorderdetails` VALUES (1,2,'HIT3043-5',0,2300,3,0,0,'0000-00-00 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (1,7,'HIT3042-ASS',0,2500,1,0,0.025,'2005-06-17 00:00:00',0,'');
@@ -2857,13 +2878,15 @@ INSERT INTO `salesorders` VALUES (2,'ANGRY','ANGRY','',NULL,' Inv 2','2005-05-21
 INSERT INTO `salesorders` VALUES (3,'ANGRY','ANGRY','',NULL,' Inv 4','2005-05-23','DE',8,'P O Box 67','Gowerbridge','Upperton','Michigan','','','0422 2245 2213','graville@angry.com','Angus Rouledge - Michigan',1,0,'DEN','2005-05-24',1,'0000-00-00',0);
 INSERT INTO `salesorders` VALUES (4,'ANGRY','ANGRY','',NULL,' Inv 6 Inv 1 Inv 1 Inv 1 Inv 2','2005-06-05','DE',8,'P O Box 67','Gowerbridge','Upperton','Toronto Canada','','','0422 2245 2213','graville@angry.com','Angus Rouledge - Toronto',1,0,'DEN','2005-06-06',0,'0000-00-00',0);
 INSERT INTO `salesorders` VALUES (5,'ANGRY','ANGRYFL','',NULL,' Inv 7','2005-06-11','DE',1,'1821 Sunnyside','Ft Lauderdale','Florida','42554','','','2445 2232 524','wendy@angry.com','Angus Rouledge - Florida',1,0,'TOR','2005-06-13',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (6,'JOLOMU','JOLOMU','',NULL,'','2005-06-15','DE',1,'3215 Great Western Highway','Blubberhouses','Yorkshire','England','','','+44 812 211456','jolomu@lorrima.co.uk','Lorrima Productions Inc',1,0,'TOR','2005-06-16',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (7,'JOLOMU','JOLOMU','',NULL,' Inv 8','2005-06-16','DE',1,'3215 Great Western Highway','Blubberhouses','Yorkshire','England','','','+44 812 211456','jolomu@lorrima.co.uk','Lorrima Productions Inc',1,0,'TOR','2005-06-17',1,'2005-06-16',0);
+INSERT INTO `salesorders` VALUES (6,'JOLOMU','JOLOMU','',NULL,'','2005-06-15','DE',1,'3215 Great Western Highway','Blubberhouses','Yorkshire','','','','+44 812 211456','jolomu@lorrima.co.uk','Lorrima Productions Inc',1,0,'TOR','2005-06-16',1,'2005-10-09',0);
+INSERT INTO `salesorders` VALUES (7,'JOLOMU','JOLOMU','',NULL,' Inv 8','2005-06-16','DE',1,'3215 Great Western Highway','Blubberhouses','Yorkshire','England','','','+44 812 211456','jolomu@lorrima.co.uk','Lorrima Productions Inc',1,0,'TOR','2005-06-17',1,'2005-10-11',0);
 INSERT INTO `salesorders` VALUES (8,'DUMBLE','DUMBLE','',NULL,' Inv 2 Inv 3','2005-06-19','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal & Co',1,0,'TOR','2005-06-20',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (9,'DUMBLE','DUMBLE','',NULL,' Inv 3','2005-06-19','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal & Co',1,0,'TOR','2005-06-20',0,'0000-00-00',0);
-INSERT INTO `salesorders` VALUES (12,'DUMBLE','DUMBLE','',NULL,'','2005-07-03','DE',10,'','','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal & Co',1,0,'TOR','2005-07-03',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (9,'DUMBLE','DUMBLE','',NULL,' Inv 3','2005-06-19','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal & Co',1,0,'TOR','2005-06-20',0,'0000-00-00',1);
+INSERT INTO `salesorders` VALUES (12,'DUMBLE','DUMBLE','',NULL,'','2005-07-03','DE',10,'','','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal & Co',1,0,'TOR','2005-07-03',1,'2005-10-08',0);
 INSERT INTO `salesorders` VALUES (43,'DUMBLE','DUMBLE','',NULL,'','2005-08-21','DE',10,'','','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal & Co',1,0,'TOR','2005-08-21',0,'0000-00-00',0);
 INSERT INTO `salesorders` VALUES (44,'JOLOMU','JOLOMU','',NULL,' Inv 5','2005-10-02','DE',1,'3215 Great Western Highway','Blubberhouses','Yorkshire','England','','','+44 812 211456','jolomu@lorrima.co.uk','Lorrima Productions Inc',1,50,'TOR','2005-10-03',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (45,'QUARTER','QUARTER','',NULL,' Inv 6','2005-10-11','DE',1,'123 Road Road','Suburb','Town','Country','Postcode','????','123456','','Quarter Back to Back',1,0,'TOR','2005-10-12',1,'2005-10-11',0);
+INSERT INTO `salesorders` VALUES (46,'DUMBLE','DUMBLE','',NULL,' Inv 7','2005-10-14','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal & Co',1,0,'TOR','2005-10-15',1,'2005-10-14',0);
 
 --
 -- Dumping data for table `salestypes`
@@ -3187,6 +3210,10 @@ INSERT INTO `stockmoves` VALUES (16,'HIT3042-ASS',11,1,'TOR','2005-09-25','DUMBL
 INSERT INTO `stockmoves` VALUES (17,'HIT3034-4',25,6,'DEN','2005-09-30','','','312.5000',1,'CRUISE (Cruise Company Inc) - 3',11,0,853,1,11,0,'');
 INSERT INTO `stockmoves` VALUES (18,'HIT3034-4',10,4,'DEN','2005-10-01','ANGRY','ANGRY','1680.0000',2,'3',-4,0,853,1,7,0,'');
 INSERT INTO `stockmoves` VALUES (19,'FUJI990102',10,5,'TOR','2005-10-03','JOLOMU','JOLOMU','1875.0000',2,'44',-25,0,633,1,-25,0,'');
+INSERT INTO `stockmoves` VALUES (20,'FUJI990102',10,6,'TOR','2005-10-12','QUARTER','QUARTER','12.5000',2,'45',-1,0,633,1,-26,0,'');
+INSERT INTO `stockmoves` VALUES (21,'FUJI990101',10,7,'TOR','2005-10-15','DUMBLE','DUMBLE','1250.0000',2,'46',-1,0,530,1,-1,0,'');
+INSERT INTO `stockmoves` VALUES (22,'HIT3034-4',16,4,'DEN','2005-10-18','','','0.0000',2,'To Toronto Distribution Centre',-2,0,0,1,5,0,'');
+INSERT INTO `stockmoves` VALUES (23,'HIT3034-4',16,4,'TOR','2005-10-18','','','0.0000',2,'From Denver',2,0,0,1,5,0,'');
 
 --
 -- Dumping data for table `stockmovestaxes`
@@ -3199,6 +3226,8 @@ INSERT INTO `stockmovestaxes` VALUES (16,13,0,0,0);
 INSERT INTO `stockmovestaxes` VALUES (18,11,0.07,1,1);
 INSERT INTO `stockmovestaxes` VALUES (18,12,0.05,0,0);
 INSERT INTO `stockmovestaxes` VALUES (19,13,0,0,0);
+INSERT INTO `stockmovestaxes` VALUES (20,13,0,0,0);
+INSERT INTO `stockmovestaxes` VALUES (21,13,0,0,0);
 
 --
 -- Dumping data for table `stockserialitems`
@@ -3208,7 +3237,8 @@ INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1234',1);
 INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','1235',2);
 INSERT INTO `stockserialitems` VALUES ('HIT3034-4','DEN','5442',0);
 INSERT INTO `stockserialitems` VALUES ('HIT3034-4','DEN','5443',0);
-INSERT INTO `stockserialitems` VALUES ('HIT3034-4','DEN','5444',4);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','DEN','5444',2);
+INSERT INTO `stockserialitems` VALUES ('HIT3034-4','TOR','5444',2);
 INSERT INTO `stockserialitems` VALUES ('HIT3034-4','DEN','5445',2);
 INSERT INTO `stockserialitems` VALUES ('HIT3034-4','DEN','5543',1);
 
@@ -3227,6 +3257,8 @@ INSERT INTO `stockserialmoves` VALUES (11,17,'HIT3034-4','5444',4);
 INSERT INTO `stockserialmoves` VALUES (12,17,'HIT3034-4','5445',2);
 INSERT INTO `stockserialmoves` VALUES (13,18,'HIT3034-4','5442',-1);
 INSERT INTO `stockserialmoves` VALUES (14,18,'HIT3034-4','5443',-3);
+INSERT INTO `stockserialmoves` VALUES (15,22,'HIT3034-4','5444',-2);
+INSERT INTO `stockserialmoves` VALUES (16,23,'HIT3034-4','5444',2);
 
 --
 -- Dumping data for table `suppallocs`
@@ -3278,11 +3310,11 @@ INSERT INTO `systypes` VALUES (0,'Journal - GL',0);
 INSERT INTO `systypes` VALUES (1,'Payment - GL',0);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',5);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',7);
 INSERT INTO `systypes` VALUES (11,'Credit Note',1);
-INSERT INTO `systypes` VALUES (12,'Receipt',1);
+INSERT INTO `systypes` VALUES (12,'Receipt',2);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
-INSERT INTO `systypes` VALUES (16,'Location Transfer',0);
+INSERT INTO `systypes` VALUES (16,'Location Transfer',4);
 INSERT INTO `systypes` VALUES (17,'Stock Adjustment',8);
 INSERT INTO `systypes` VALUES (18,'Purchase Order',0);
 INSERT INTO `systypes` VALUES (20,'Purchase Invoice',7);

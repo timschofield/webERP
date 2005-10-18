@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 2;
 
@@ -91,14 +91,12 @@ echo '<TR><TD class="tableheader">' . _('Exchange Rate'). '</TD><TD>' . $myrow['
 echo '<TR><TD class="tableheader">' . _('Deliver Into Location'). '</TD><TD>' . $myrow['intostocklocation'] . '</TD>
 	<TD class="tableheader">' . _('Delivery Address 4'). '</TD><TD>' . $myrow['deladd4'] . '</TD></TR>';
 
-echo '<TR><TD class="tableheader">' . _('') . '</TD><TD>' . _('') . '</TD>
+echo '<TR><TD class="tableheader">' . _('Initiator'). '</TD><TD>' . $myrow['initiator'] . '</TD>
 	<TD class="tableheader">' . _('Delivery Address 5'). '</TD><TD>' . $myrow['deladd5'] . '</TD></TR>';
 
-echo '<TR><TD class="tableheader">' . _('') . '</TD><TD>' .  _('') . '</TD>
+echo '<TR><TD class="tableheader">' . _('Requistion Ref'). '.</TD><TD>' . $myrow['requisitionno'] . '</TD>
 	<TD class="tableheader">' . _('Delivery Address 6'). '</TD><TD>' . $myrow['deladd6'] . '</TD></TR>';
 
-echo '<TR><TD class="tableheader">' . _('Initiator'). '</TD><TD>' . $myrow['initiator'] . '</TD>
-	<TD class="tableheader">' . _('Requistion Ref'). '.</TD><TD>' . $myrow['requisitionno'] . '</TD></TR>';
 
 echo '<TR><TD class="tableheader">'. _('Printing') . '</TD><TD COLSPAN=3>';
 

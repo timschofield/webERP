@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 
 $PageSecurity = 2;
@@ -131,27 +131,22 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		<TD><FONT COLOR=BLUE><B>' . $_SESSION['Items']->BrAdd4 . '</FONT></B></TD>
 	</TR>';
 	echo '<TR>
-		<TD>' . _('') . ':</TD>
-		<TD><FONT COLOR=BLUE><B>' . _('') . '</FONT></B></TD>
+		<TD>' . _('Telephone') . ':</TD>
+		<TD><FONT COLOR=BLUE><B>' . $_SESSION['Items']->PhoneNo . '</FONT></B></TD>
 		<TD>' . _('Delivery Address 5') . ':</TD>
 		<TD><FONT COLOR=BLUE><B>' . $_SESSION['Items']->BrAdd5 . '</FONT></B></TD>
 	</TR>';
 	echo '<TR>
-		<TD>' . _('') . ':</TD>
-		<TD><FONT COLOR=BLUE><B>' . _('') . '</FONT></B></TD>
+		<TD>' . _('Email') . ':</TD>
+		<TD><FONT COLOR=BLUE><B><A HREF="mailto:' . $_SESSION['Items']->Email . '">' . $_SESSION['Items']->Email . '</A></FONT></B></TD>
 		<TD>' . _('Delivery Address 6') . ':</TD>
 		<TD><FONT COLOR=BLUE><B>' . $_SESSION['Items']->BrAdd6 . '</FONT></B></TD>
 	</TR>';
 	echo '<TR>
 		<TD>' . _('Freight Cost') . ':</TD>
-		<TD><FONT COLOR=BLUE><B>' . $FreightCost . '</FONT></B></TD><TD>' . _('Telephone') . ':</TD>
-		<TD><FONT COLOR=BLUE><B>' . $_SESSION['Items']->PhoneNo . '</FONT></B></TD>
+		<TD><FONT COLOR=BLUE><B>' . $FreightCost . '</FONT></B></TD>
 	</TR>';
-	echo '<TR>
-		<TD COLSPAN=2></TD>
-		<TD>' . _('Email') . ':</TD>
-		<TD><FONT COLOR=BLUE><B><A HREF="mailto:' . $_SESSION['Items']->Email . '">' . $_SESSION['Items']->Email . '</A></FONT></B></TD>
-	</TR>';
+	
 	echo '</TABLE>';
 
 	echo $_SESSION['Items']->Comments . '<BR></CENTER>';
