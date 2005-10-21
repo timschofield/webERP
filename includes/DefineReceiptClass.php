@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /* definition of the ReceiptBatch class */
 
 Class Receipt_Batch {
@@ -35,7 +35,7 @@ Class Receipt_Batch {
 
 	function remove_receipt_item($RcptID){
 
-		$this->total = $this->total - ($this->Items[$RcptID]->$amount + $this->Items[$RcptID]->$discount) / $this->ExRate;
+		$this->total = $this->total - ($this->Items[$RcptID]->Amount + $this->Items[$RcptID]->Discount) / $this->ExRate;
 		unset($this->Items[$RcptID]);
 
 	}
