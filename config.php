@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.63 $ */
+/* $Revision: 1.64 $ */
 
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
@@ -22,7 +22,7 @@ $allow_demo_mode = True;
 
 // Application version
 
-$Version = '3.03';
+$Version = '3.04rc1';
 
 
 // The timezone of the business - this allows the possibility of having
