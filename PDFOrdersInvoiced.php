@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 3;
 include ('includes/session.inc');
@@ -64,7 +64,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
      include('includes/footer.inc');
      exit;
 } else {
-	include('includes/PDFStarter_ros.inc');
+	include('includes/PDFStarter.php');
 }
 
 
@@ -194,7 +194,7 @@ if (DB_error_no($db)!=0){
 	exit;
 }
 
-/*PDFStarter_ros.inc has all the variables for page size and width set up depending on the users default preferences for paper size */
+/*PDFStarter.php has all the variables for page size and width set up depending on the users default preferences for paper size */
 
 $pdf->addinfo('Title',_('Orders Invoiced Report'));
 $pdf->addinfo('Subject',_('Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);

@@ -1,5 +1,5 @@
 <?php
-/* This file is included in session.inc or PDFStarter.inc or a report script that does not use PDFStarter.inc
+/* This file is included in session.inc or PDFStarter.php or a report script that does not use PDFStarter.php
 to check for the existance of gettext function and setup the necessary enviroment to allow for automatic translation
 
 Set language - defined in config.php or user variable when logging in (session.inc)

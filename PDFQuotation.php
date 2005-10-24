@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 2;
 
@@ -79,7 +79,7 @@ if (DB_num_rows($result)==0){
 )
 LETS GO */
 $PaperSize = 'A4_Landscape';
-include("includes/PDFStarter_ros.inc");
+include('includes/PDFStarter.php');
 
 $FontSize=12;
 $pdf->selectFont('./fonts/Helvetica.afm');

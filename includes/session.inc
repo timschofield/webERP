@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.40 $ */
+/* $Revision: 1.41 $ */
  
     
 include('config.php');
@@ -89,7 +89,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 			$_SESSION['Theme'] = $myrow[9];
 			$_SESSION['UserID'] = $myrow[11];
 			$_SESSION['Language'] = $myrow[12];
-	
+				
 			if ($myrow[10] > 0) {
 				$_SESSION['DisplayRecordsMax'] = $myrow[10];
 			} else {

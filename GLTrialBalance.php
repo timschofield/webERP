@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 /*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances
 and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen
@@ -13,8 +13,6 @@ include ('includes/session.inc');
 $title = _('Trial Balance');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); //this reads in the Accounts Sections array
-
-
 
 
 if ($_POST['FromPeriod'] > $_POST['ToPeriod']){
@@ -91,7 +89,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 
 } else if (isset($_POST['PrintPDF'])) {
 	
-	include('includes/PDFStarter_ros.inc');
+	include('includes/PDFStarter.php');
 	$PageNumber = 0;
 	$FontSize = 10;
 	$pdf->addinfo('Title', _('Trial Balance') );

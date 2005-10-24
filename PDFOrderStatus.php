@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 3;
 include ('includes/session.inc');
@@ -64,7 +64,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
      exit;
 } else {
 	include('includes/ConnectDB.inc');
-	include('includes/PDFStarter_ros.inc');
+	include('includes/PDFStarter.php');
 }
 
 
@@ -204,7 +204,7 @@ if (DB_error_no($db)!=0){
 }
 
 
-/*PDFStarter_ros.inc has all the variables for page size and width set up depending on the users default preferences for paper size */
+/*PDFStarter.php has all the variables for page size and width set up depending on the users default preferences for paper size */
 
 $pdf->addinfo('Title',_('Order Status Report'));
 $pdf->addinfo('Subject',_('Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);

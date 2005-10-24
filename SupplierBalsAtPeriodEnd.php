@@ -3,7 +3,7 @@
 $PageSecurity = 2;
 
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 If (isset($_POST['PrintPDF']) 
 	AND isset($_POST['FromCriteria']) 
@@ -12,7 +12,7 @@ If (isset($_POST['PrintPDF'])
 	AND strlen($_POST['ToCriteria'])>=1){
 
 	include('config.php');
-	include('includes/PDFStarter_ros.inc');
+	include('includes/PDFStarter.php');
 	include('includes/ConnectDB.inc');
 	include('includes/DateFunctions.inc');
 

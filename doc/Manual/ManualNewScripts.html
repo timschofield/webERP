@@ -33,9 +33,9 @@ This file contains the small logo, company name and copyright notice with the cl
 <br><br>
 The developer should familiarise themselves with the variables in config.php as these are available to all scripts that have included session.inc. Of particular use is $rootpath which is the directory where the web server holds the system files. Having started the page with session.inc and header.inc - and then finishing with footer.inc much of the work to ensure a consistent look and feel is already done. 
 <br><br>
-<font size="+1"><b>PDFStarter_ros.inc</b></font>
+<font size="+1"><b>PDFStarter.php</b></font>
 <br><br>
-The only time when it is not appropriate to include session.inc or header.inc is when a pdf script is to be created. Here the file PDFStarter_ros.inc contains the initiation of the session and the check for proper user authentication and authorisation for the specific page using the $PageSecurity variable which must be defined before PDFStarter_ros.inc is included. Normally, config.php and ConnectDB.inc are included seperately (and before PDF_starter_ros.inc) in PDF scripts.
+The only time when it is not appropriate to include session.inc or header.inc is when a pdf script is to be created. Here the file PDFStarter.php contains the initiation of the session and the check for proper user authentication and authorisation for the specific page using the $PageSecurity variable which must be defined before PDFStarter.php is included. Normally, config.php and ConnectDB.inc are included seperately (and before PDF_starter_ros.inc) in PDF scripts.
 <br><br>
 <font size="+1"><b>Database Abstraction - ConnectDB.inc</b></font>
 <br><br>

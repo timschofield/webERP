@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 5;
 
@@ -27,7 +27,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 /*then print the report */
 
 	$RefCounter = 0;
-	include('includes/PDFStarter_ros.inc');
+	include('includes/PDFStarter.php');
 	$pdf->addinfo('Title',_('Payment Run Report'));
 	$pdf->addinfo('Subject',_('Payment Run') . ' - ' . _('suppliers from') . ' ' . $_POST['FromCriteria'] . ' to ' . $_POST['ToCriteria'] . ' in ' . $_POST['Currency'] . ' ' . _('and Due By') . ' ' .  $_POST['AmountsDueBy']);
 

@@ -1,13 +1,17 @@
 <?php
-/* $Revision: 1.13 $ */
-include ('includes/class.pdf.php');
+/* $Revision: 1.1 $ */
 
+/*this class is an extension to the fpdf class using a syntax that the original reports were written in
+(the R &OS pdf.php class) - due to limitation of this class for foreign character support this wrapper class
+was written to allow the same code base to use the more functional fpdf.class by Olivier Plathey */
 if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);
 }
-
 session_start();
 include('includes/GetConfig.php');
+
+include ('includes/class.pdf.php');
+
 
 If (isset($_POST['Theme'])) {
 	$_SESSION['Theme'] = $_POST['Theme'];
@@ -133,6 +137,12 @@ $pdf = & new Cpdf($PageSize);
 
 $pdf->addinfo('Author','webERP ' . $Version);
 $pdf->addinfo('Creator','webERP http://www.weberp.org');
-$pdf->selectFont('helvetica');
 
+/*depending on the language this font is modified see includes/class.pdf.php
+	selectFont method interprets the text helvetica to be:
+	for Chinese - BIg5
+	for Japanese - SJIS
+	for Korean - UHC
+*/
+$pdf->selectFont('helvetica');
 ?>

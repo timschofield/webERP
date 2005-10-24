@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 3;
 include('includes/SQL_CommonFunctions.inc');
@@ -104,9 +104,9 @@ if (DB_error_no($db)!=0){
   	exit;
 }
 
-include('includes/PDFStarter_ros.inc');
+include('includes/PDFStarter.php');
 
-/*PDFStarter_ros.inc has all the variables for page size and width set up depending on the users default preferences for paper size */
+/*PDFStarter.php has all the variables for page size and width set up depending on the users default preferences for paper size */
 
 $pdf->addinfo('Title',_('Cheque Listing'));
 $pdf->addinfo('Subject',_('Cheque listing from') . '  ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);

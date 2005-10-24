@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 8;
 
@@ -91,7 +91,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 
 } else if (isset($_POST['PrintPDF'])) {
 	
-	include('includes/PDFStarter_ros.inc');
+	include('includes/PDFStarter.php');
 	$PageNumber = 0;
 	$FontSize = 10;
 	$pdf->addinfo('Title', _('Profit and Loss') );

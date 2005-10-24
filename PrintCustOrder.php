@@ -1,11 +1,11 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 2;
 
-include('includes/class.pdf.php');
 include('includes/session.inc');
+include('includes/class.pdf.php');
 include('includes/SQL_CommonFunctions.inc');
 
 //Get Out if we have no order number to work with

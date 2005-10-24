@@ -23,7 +23,7 @@ includes/ConnectDB.inc   	- database abstraction
 includes/session.inc	 	- initiation of session and security checking
 includes/header.inc 	 	- page headings and quick menu links
 includes/footer.inc	 	- page footer
-includes/PDFStarter_ros.inc	- PDF report generation substitute for session.inc
+includes/PDFStarter.php	- PDF report generation substitute for session.inc
 includes/DateFunctions.inc	- Date functions
 includes/MiscFunctions.inc	- Error reporting function
 
@@ -227,7 +227,7 @@ are preferred. But all comments gratefully received!
 
 All scripts should have a comment in the first few lines with the script revision number in it if the following comment is pasted into it the CVS automatically updates the revision number.
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 
 Messages

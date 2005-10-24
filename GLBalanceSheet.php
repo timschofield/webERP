@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
 
@@ -46,7 +46,7 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 
 } else if (isset($_POST['PrintPDF'])) {
 
-	include('includes/PDFStarter_ros.inc');
+	include('includes/PDFStarter.php');
 	$PageNumber = 0;
 	$FontSize = 10;
 	$pdf->addinfo('Title', _('Balance Sheet') );
@@ -518,6 +518,6 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 	echo "<INPUT TYPE=SUBMIT Name='SelectADifferentPeriod' Value='"._('Select A Different Balance Date')."'></CENTER>";
 }
 
-echo '</form>';
+echo '</FORM>';
 include('includes/footer.inc');
 ?>

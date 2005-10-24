@@ -533,13 +533,11 @@ function SetFont($family,$style='',$size=0)
 		return;
 	//Test if used for the first time
 	$fontkey=$family.$style;
-	if(!isset($this->fonts[$fontkey]))
-	{
+	if(!isset($this->fonts[$fontkey])) {
 		//Check if one of the standard fonts
-		if(isset($this->CoreFonts[$fontkey]))
-		{
-			if(!isset($fpdf_charwidths[$fontkey]))
-			{
+		if(isset($this->CoreFonts[$fontkey])) {
+		
+			if(!isset($fpdf_charwidths[$fontkey])) {
 				//Load metric file
 				$file=$family;
 				if($family=='times' or $family=='helvetica')
@@ -549,7 +547,7 @@ function SetFont($family,$style='',$size=0)
 					$file=FPDF_FONTPATH.$file;
 				include($file);
 				if(!isset($fpdf_charwidths[$fontkey]))
-					$this->Error('Could not include font metric file');
+					$this->Error('Could not include font metric file. Font family = ' .$family . ' file = ' . $file );
 			}
 			$i=count($this->fonts)+1;
 			$this->fonts[$fontkey]=array('i'=>$i,'type'=>'core','name'=>$this->CoreFonts[$fontkey],'up'=>-100,'ut'=>50,'cw'=>$fpdf_charwidths[$fontkey]);

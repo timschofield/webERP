@@ -1,12 +1,12 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 2;
 
 if (isset($_POST['PrintPDF'])){
 
 	include('config.php');
-	include('includes/PDFStarter_ros.inc');
+	include('includes/PDFStarter.php');
 	include('includes/ConnectDB.inc');
 	include('includes/DateFunctions.inc');
 

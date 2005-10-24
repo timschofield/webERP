@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -125,7 +125,7 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 
 	$PaperSize = 'A4_Landscape';
 
-	include('includes/PDFStarter_ros.inc');
+	include('includes/PDFStarter.php');
 
 	$pdf->addinfo('Title', _('Purchase Order') );
 	$pdf->addinfo('Subject', _('Purchase Order Number').' ' . $_GET['OrderNo']);

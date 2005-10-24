@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 2;
 
@@ -10,7 +10,7 @@ If (isset($_POST['PrintPDF'])
 	AND strlen($_POST['ToCriteria'])>=1){
 
 	include('config.php');
-	include('includes/PDFStarter_ros.inc');
+	include('includes/PDFStarter.php');
 	include('includes/ConnectDB.inc');
 	include('includes/DateFunctions.inc');
 

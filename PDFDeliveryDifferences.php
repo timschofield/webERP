@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 3;
 include ('includes/session.inc');
@@ -162,9 +162,9 @@ if (DB_error_no($db)!=0){
 	exit;
 }
 
-include('includes/PDFStarter_ros.inc');
+include('includes/PDFStarter.php');
 
-/*PDFStarter_ros.inc has all the variables for page size and width set up depending on the users default preferences for paper size */
+/*PDFStarter.php has all the variables for page size and width set up depending on the users default preferences for paper size */
 
 $pdf->addinfo('Title',_('Variances Between Deliveries and Orders'));
 $pdf->addinfo('Subject',_('Variances Between Deliveries and Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);

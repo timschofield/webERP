@@ -31,7 +31,7 @@ If (isset($_POST['PrintPDF'])
 /* Standard PDF file creation header stuff */
 
 	$pdf->addinfo('Author','webERP ' . $Version);
-	$pdf->addinfo('Creator','webERP http://www.weberp.org - R&OS PHP-PDF http://www.ros.co.nz');
+	$pdf->addinfo('Creator','webERP http://www.weberp.org');
 	$pdf->addinfo('Title',_('Inventory Planning Report') . ' ' . Date($_SESSION['DefaultDateFormat']));
 
 	$line_height=12;

@@ -657,7 +657,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>header.inc</LI>
                 <LI>footer.inc</LI>
                 <LI>config.php</LI>
-                <LI>PDFStarter_ros.inc</LI>
+                <LI>PDFStarter.php</LI>
                 <LI>Database Abstraction - ConnectDB.inc</LI>
                 <LI>DateFunctions.inc</LI>
                 <LI>SQL_CommonFuctions.inc</LI>

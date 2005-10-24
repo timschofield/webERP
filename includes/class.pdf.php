@@ -1,39 +1,72 @@
 <?php
 /*
+	This class is an extension to the fpdf class using a syntax that the original reports were written in
+	(the R &OS pdf.php class) - due to limitation of this class for foreign character support this wrapper class
+	was written to allow the same code base to use the more functional fpdf.class by Olivier Plathey
+	
 *	Wrapper for use R&OSpdf API with fpdf.org class
 *	Janusz Dobrowolski <janusz@iron.from.pl>
 *	David Luo <davidluo188@yahoo.com.cn>
+	extended for Chinese/Japanese/Korean support by Phil Daintree
 */
-include ('fpdf.php');
 
 define('FPDF_FONTPATH','./fonts/');
+include ('fpdf.php');
 
-class Cpdf extends FPDF {
+if ($_SESSION['Language']=='zh_CN'){
+	include('FPDF_Chinese.php');
+} elseif ($_SESSION['Language']=='ja_JP'){
+	include('FPDF_Japanese.php');
+}elseif ($_SESSION['Language']=='ko_KR'){
+	include('FPDF_Korean.php');
+} else {
+	class PDF_Language extends FPDF {
+	}
+}
+
+class Cpdf extends PDF_Language {
 	
 	function Cpdf($pageSize=array(0,0,612,792)) {
 	
-		$this->fpdf( 'P', 'pt',array($pageSize[2]-$pageSize[0],$pageSize[3]-$pageSize[1]));
+		$this->PDF_Language( 'P', 'pt',array($pageSize[2]-$pageSize[0],$pageSize[3]-$pageSize[1]));
 		$this->setAutoPageBreak(0);
 		$this->AddPage();
 		$this->SetLineWidth(1);
 		$this->cMargin = 0;
 		
 		// Next three lines should be here for any fonts genarted with 'makefont' utility
-		$this->AddFont('helvetica');
-		$this->AddFont('helvetica','I');
-		$this->AddFont('helvetica','B');
+		if ($_SESSION['Language']=='zh_CN'){
+			$this->AddBig5Font();
+		}elseif ($_SESSION['Language']=='ja_JP'){
+			$this->AddSJISFont();
+		}elseif ($_SESSION['Language']=='ko_KR'){
+			$this->AddUHCFont();
+		} else {
+			$this->AddFont('helvetica');
+			$this->AddFont('helvetica','I');
+			$this->AddFont('helvetica','B');
+		}
 	}
 	
-	function selectFont($fontName) {
+	function selectFont($FontName) {
 		
 		$type = '';
-		
-		if(strpos($fontName, 'Oblique')) 
-		$type = 'I';
-		if(strpos($fontName, 'Bold')) 
-		$type = 'B';
-		
-		$this->SetFont("helvetica", $type);
+		if(strpos($FontName, 'Oblique')) {
+			$type = 'I';
+		}
+		if(strpos($FontName, 'Bold')) {
+			$type = 'B';
+		}
+		if ($_SESSION['Language']=='zh_CN'){
+			$FontName = 'Big5';
+		} elseif ($_SESSION['Language']=='ja_JP'){
+			$FontName = 'SJIS';
+		} elseif ($_SESSION['Language']=='ko_KR'){
+			$FontName = 'UHC';
+		} else {
+			$FontName ='helvetica';
+		}
+		$this->SetFont($FontName, $type);
 	}
 	
 	function newPage() {
