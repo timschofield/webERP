@@ -1,12 +1,12 @@
 WEB-ERP Installation
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 Upgrading
 
-A script is included under webERP/sql/mysql/ to update an existing mysql weberp database to the current version. The upgrade script assumes the weberp database is called weberp. The script must be edited to change the name of the database if this is not the case.
+A script is included under webERP/sql/mysql/ to update an existing mysql weberp database to the current version. The upgrade script no longer assumes the weberp database is called weberp. The script must be edited to enter the name of the database to upgrade.
 
-The upgrade script should be passed to mysql as follows:
+It is recommended not to use phpMyAdmin to run the upgrade script. The upgrade script should be passed to the command line mysql client as follows:
 
 mysql --user=weberp_db_user --password='some_pass' < /webERP/sql/upgradescriptname.sql
 
@@ -17,30 +17,27 @@ The old scripts should be deleted and the new scripts extracted to the webERP in
 Upgrade scripts for postgres are included under webERP/sql/pg/
 
 
+***************New Installations***************
 
-
-New Installations
-
-
+Note: It is worth printing this document off and checking off the steps as you go.
 
 Pre-requisites:
 
-- A working PHP web server - v 4.3 or later - with mysql or postgres databases and ftp
+- A working PHP web server - v 4.3 or later - with support for mysql or postgres databases, gd, gettext and ftp
 - A working MySQL or Postgres server (MySql version 4.1 or above - innodb tables must be enabled - this needs a my.cnf file - see the MySQL manual. Postgres v 7.4 or later).
 
 Installing these components are well covered elsewhere.
 
-Another is that php must have register globals off.  This is the default and how it is set on almost all servers.  This flag can be set in the php.ini on the server.  If it can't be changed, it is possibe in Linux to create a file called .htaccess in the root of the webERP system.  In that file put the line:
+Another is that php must have register globals off.  This is the default and how it is set on almost all servers.  This flag can be set in the php.ini on the server.  If it can't be changed, it is possibe for apache web servers to create a file called .htaccess in the root of the webERP system.  In that file put the line:
 
 php_flag register_globals off
 
 One more issue with php setup - by default the setting session.use_cookies is set to 1, if it is set to 0 this can also cause problems.
 
-There are a number of traps with PHP installation depending on the web-server - see the FAQ.
+There are a number of traps with PHP installation depending on the web-server - see http://www.weberp.org/wikidocs/FrequentlyAskedQuestionsInstallation?v=efe
 
 The system can be used with either MySQL or Postgres database servers - both work well. Instructions here are for mysql. However, the necessary scripts for postgres are also included under the webERP/sql/pg directory.
 
-ftp is only required for sending order files to a Radio Beacon ftp server for remote warehouse services.
 
 The installation consists of:
 
@@ -54,13 +51,22 @@ The installation consists of:
 1.  Copying all the PHP Scripts to the correct directory
 
 You must have downloaded the archive to be reading this file INSTALL.txt file!
-However, all files in this archive except files under the sql and doc directories should be copied to a directory under the web server root directory. This varies between installations but
+However, all files in this archive should be copied to a directory under the web server root directory. This varies between installations but
+
+In Windows it could be 
+
+C:\Program Files\Apache Group\Apache\htdocs
+
+Under Linux:
 
 /usr/local/httpd/htdocs/
 
+was common
+
+/srv/www/htdocs
+
 is the apache root directory under SuSE Linux.
 
-In windows it could be C:\Program Files\Apache Group\Apache\htdocs
 Normally the Apache document root directory is called "htdocs". However other web-servers can be used and their document root directory names will vary.
 
 Under windows use winzip (or XP's native abilites) to extract the archive under the web server root directory.
@@ -74,9 +80,12 @@ this will create the webERP directory under the web server root directory and pu
 
 2. Creating the Database
 
-The install for MySQL is described here - similar steps are required with Postgres.
+The installation steps for MySQL is described here - similar steps are required with Postgres.
 
-MySQL version 4.x or above is required - Foreign Keys are implemented in the database as from version 2.8 these only became an option in MySQL version 3.23.51. Innodb tables must be enabled in the MySQL server. These tables allow database transactions which are a critical component of ERP software. Innodb tables require some parameters to be set up in my.cnf - there are some examples in the MySQL manual under table types - Innodb tables.
+MySQL version 4.x or above is required - Foreign Keys are implemented in the database as from version 2.8 these only became an option in MySQL version 3.23.51. 
+
+INNODB TABLES MUST BE ENABLED IN THE MYSQL SERVER. 
+These tables allow database transactions which are a critical component of ERP software. Innodb tables require some parameters to be set up in my.cnf - there are some examples in the MySQL manual under table types - Innodb tables.
 
 When using mysql both windows and *nix have the mysql command line client. The command line client is run in a DOS window under Windows. Open a DOS window using Start, Run, cmd ENTER for Windows XP and 2000. Normally the mysql client mysql.exe file is under C:\mysql\bin\mysql.exe by default if this path is not in the default path then commands referred to below as mysql will need to be prefixed by C:\mysql\bin
 
@@ -85,8 +94,7 @@ You need to know the user name and password for the MySQL server. If you have no
 user root
 password ""
 
-BUT you should not use this account - you should set up another user for you mysql installation and change
-the root password to something other than "". There are a number of front ends that allow the mysql user accounts to be maintained and if you are familiar with one of these, it should be used in preference to the mysql command line client discussed below.
+BUT.... you should not use this account - you should set up another user for you mysql installation and change the root password to something other than "". There are a number of front ends that allow the mysql user accounts to be maintained and if you are familiar with one of these, it should be used in preference to the mysql command line client discussed below.
 
 From the MySQL manual (edited):
 
@@ -137,9 +145,10 @@ as required.
 
 3. Editing config.php
 
-config.php contains a series of user defined variables that determine how the system behaves. Critically it contains the user and password of the database connection and the type of database server being used. There is no going forward without the system being provided with this data. It is important to ensure there are no trailing characters at the end of this file.
+config.php contains a series of user defined variables that determine how the system behaves. Critically it contains the user and password of the database connection and the type of database server being used. There is no going forward without the system being provided with this data. It is important to ensure there are no trailing characters at the end of this file - this is a common installation pitfall since some editors add a character at the end of the file.
 
-The file appears as follows for reference purposes. The actual file config.php under the webERP directory with all the other scripts must be edited and saved. As you can see the file is well commented, the critical items are the computer $host, the $dbType the $DatabaseName, the $dbuser and the $dbpassword - other variables can in most cases be left at their defaults. Note that the sha1 encryption requires the PHP version 4.3 or greater.
+The file appears as follows for reference purposes. The actual file config.php under the webERP directory with all the other scripts must be edited and saved. As you can see the file is well commented, the critical items are the computer $host, the $dbType, the $dbuser and the $dbpassword - other variables can in most cases be left at their defaults. Note that the sha1 encryption requires the PHP version 4.3 or greater - if you are using a prior version of php - not recommended - you could try md5 encryption. Lines commencing with // are comments and not interpreted by PHP
+
 
 // User configurable variables
 //---------------------------------------------------
@@ -151,7 +160,7 @@ $DefaultLanguage ='en_GB';
 $allow_demo_mode = True;
 
 // Application version
-$Version = '3.00';
+$Version = 'XXX';
 
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time
@@ -212,19 +221,19 @@ password 'weberp'
 You can set up additional user accounts from the System Setup tab and change the password.
 Be careful not to delete the demo user until a new user has been set up.
 If there are no users defined the next time you try to login you won't be able to!
-The only way then to create a user to login with is to manually edit the SQL table WWW_Users to insert a user.
+The only way then to create a user to login with is to manually edit the SQL table www_users to insert a user.
 
 If for some reason the demo user is deleted before creating a new system administrator account, the following SQL can be used to create a new user with system administrator privileges - assuming a stock location 'DEN' exists - this should be changes to a valid stock location otherwise:
 
 INSERT INTO `www_users` VALUES ('demo','f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4','Demonstration user','','','','DEN',8,'2005-02-12 21:00:42','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
 
-NB The importance of setting a password to use the SQL server otherwise anyone could modify www_Users and gain access to private company information.
+NB See the importance of setting a password to use the SQL server otherwise anyone could modify www_users and gain access to private company information.
 
 A pdf reader - Acrobat should be installed on the client machines that will access the system. It is recommended that the preferences of Acrobat Reader be changed so as to open a seperate window for acrobat documents rather than display them in the browser.
 
 5. Setting Up System Parameters and Company Specific Data
 
-To initiate a new company go into the script Z_MakeNewCompany.php this creates a new company database with a name of your choice and uploads the logo to the required place - the logo must be a .jpg around.
+To initiate a new company go into the script Z_MakeNewCompany.php this creates a new company database with a name of your choice and uploads the logo to the required place - the logo must be a .jpg 
 
 It is imperative to go through each of the screens from the setup tab and enter the appropriate information. Particularly the company informaiton and the configuration settings. Each of these settings together with the narrative explaining what each of the settings does should be reviewed in detail before starting off with the system.
 

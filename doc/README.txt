@@ -1,3 +1,5 @@
+webERP README
+
 Thankyou for using webERP.
 
 Installation instructions are in the file INSTALL.txt in the doc directory. It is important to read the INSTALL.txt file in its entirety before proceeding.
@@ -8,14 +10,14 @@ SUPPORT
 
 The primary means of support queries is through the user mailing list. 
 Please join the list at: http://lists.sourceforge.net/lists/listinfo/web-erp-translation
-if you have queries. The archives and the FAQ contain the most common issues with respect to installation.
+if you have queries. The archives of the mailing lists on sourceforge and the FAQ (see http://www.weberp.org/wikidocs/FrequentlyAskedQuestionsInstallation?v=efe) contain the most common issues with respect to installation.
 
 Feedback, wants and gripes are encouraged in the interests of improving this applicaton.
 
 DEVELOPING 
 
 All contributions of code are needed and encouraged. 
-Guidelines for contributing code are in the document CONTRIBUTING.txt developers should read this document.
+Guidelines for contributing code are in the document CONTRIBUTING.txt (or http://www.weberp.org/wikidocs/ContributingtowebERP?v=1abv ) developers should read this document. Standards and conventions used in the code are rigorously applied in the interests of consistency and readability. Code submitted that does not conform to these standards will be changed so it does where possible.
 
 TRANSLATIONS
 
@@ -23,7 +25,7 @@ Translations that have been contributed are distributed as separate language arc
 
 http://sourceforge.net/project/showfiles.php?group_id=70949
 
-Translators should read the document TRANSLATING.txt which describes the methods available for translating webERP.
+Translators should read the document TRANSLATING.txt (or http://www.weberp.org/wikidocs/HowToTranslate?v=a8p ) which describes how to translate webERP.
 
 LEGAL
 
