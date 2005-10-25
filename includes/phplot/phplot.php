@@ -1,6 +1,6 @@
 <?php
 
-/* $Id: phplot.php,v 1.1 2005-10-02 04:49:15 daintree Exp $ */
+/* $Id: phplot.php,v 1.1 2005-10-25 08:13:53 daintree Exp $ */
 
 /*
  * PHPLOT Version 5.0.rc1

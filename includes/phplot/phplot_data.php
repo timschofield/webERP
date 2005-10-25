@@ -1,5 +1,5 @@
 <?php
-/* $Id: phplot_data.php,v 1.1 2005-10-02 04:49:15 daintree Exp $
+/* $Id: phplot_data.php,v 1.1 2005-10-25 08:13:53 daintree Exp $
  * 
  * Copyright (C) 2000 Afan Ottenheimer.  Released under
  * the GPL and PHP licenses as stated in the the README file which
