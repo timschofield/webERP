@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 
 $PageSecurity = 4;
@@ -59,18 +59,18 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							deladd6)
 				VALUES(
 				'" . $_SESSION['PO']->SupplierID . "',
-				'" . addslashes($_SESSION['PO']->Comments) . "',
+				'" . DB_escape_string($_SESSION['PO']->Comments) . "',
 				'" . Date("Y-m-d") . "',
 				" . $_SESSION['PO']->ExRate . ",
 				'" . $_SESSION['PO']->Initiator . "',
 				'" . $_SESSION['PO']->RequisitionNo . "',
 				'" . $_SESSION['PO']->Location . "',
-				'" . addslashes($_SESSION['PO']->DelAdd1) . "',
-				'" . addslashes($_SESSION['PO']->DelAdd2) . "',
-				'" . addslashes($_SESSION['PO']->DelAdd3) . "',
-				'" . addslashes($_SESSION['PO']->DelAdd4) . "',
-				'" . addslashes($_SESSION['PO']->DelAdd5) . "',
-				'" . addslashes($_SESSION['PO']->DelAdd6) . "'
+				'" . DB_escape_string($_SESSION['PO']->DelAdd1) . "',
+				'" . DB_escape_string($_SESSION['PO']->DelAdd2) . "',
+				'" . DB_escape_string($_SESSION['PO']->DelAdd3) . "',
+				'" . DB_escape_string($_SESSION['PO']->DelAdd4) . "',
+				'" . DB_escape_string($_SESSION['PO']->DelAdd5) . "',
+				'" . DB_escape_string($_SESSION['PO']->DelAdd6) . "'
 				)";
 
 			$ErrMsg =  _('The purchase order header record could not be inserted into the database because');
@@ -98,7 +98,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							" . $_SESSION['PO']->OrderNo . ",
 							'" . $POLine->StockID . "',
 							'" . FormatDateForSQL($POLine->ReqDelDate) . "',
-							'" . addslashes($POLine->ItemDescription) . "',
+							'" . DB_escape_string($POLine->ItemDescription) . "',
 							" . $POLine->GLCode . ",
 							" . $POLine->Price . ",
 							" . $POLine->Quantity . ",
@@ -118,17 +118,17 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		     /*Update the purchase order header with any changes */
 			$sql = "UPDATE purchorders SET
 		     			supplierno = '" . $_SESSION['PO']->SupplierID . "' ,
-					comments='" . addslashes($_SESSION['PO']->Comments) . "',
+					comments='" . DB_escape_string($_SESSION['PO']->Comments) . "',
 					rate=" . $_SESSION['PO']->ExRate . ",
 					initiator='" . $_SESSION['PO']->Initiator . "',
 					requisitionno= '" . $_SESSION['PO']->RequisitionNo . "',
 					intostocklocation='" . $_SESSION['PO']->Location . "',
-					deladd1='" . addslashes($_SESSION['PO']->DelAdd1) . "',
-					deladd2='" . addslashes($_SESSION['PO']->DelAdd2) . "',
-					deladd3='" . addslashes($_SESSION['PO']->DelAdd3) . "',
-					deladd4='" . addslashes($_SESSION['PO']->DelAdd4) . "',
-					deladd5='" . addslashes($_SESSION['PO']->DelAdd5) . "',
-					deladd6='" . addslashes($_SESSION['PO']->DelAdd6) . "',
+					deladd1='" . DB_escape_string($_SESSION['PO']->DelAdd1) . "',
+					deladd2='" . DB_escape_string($_SESSION['PO']->DelAdd2) . "',
+					deladd3='" . DB_escape_string($_SESSION['PO']->DelAdd3) . "',
+					deladd4='" . DB_escape_string($_SESSION['PO']->DelAdd4) . "',
+					deladd5='" . DB_escape_string($_SESSION['PO']->DelAdd5) . "',
+					deladd6='" . DB_escape_string($_SESSION['PO']->DelAdd6) . "',
 					allowprint=" . $_SESSION['PO']->AllowPrintPO . "
 		     		WHERE orderno = " . $_SESSION['PO']->OrderNo;
 
@@ -161,7 +161,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 									. $_SESSION['PO']->OrderNo . ",
 									'" . $POLine->StockID . "',
 									'" . FormatDateForSQL($POLine->ReqDelDate) . "',
-									'" . addslashes($POLine->ItemDescription) . "',
+									'" . DB_escape_string($POLine->ItemDescription) . "',
 									" . $POLine->GLCode . ",
 									" . $POLine->Price . ",
 									" . $POLine->Quantity . ",
@@ -173,7 +173,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 						$sql = "UPDATE purchorderdetails SET
 								itemcode='" . $POLine->StockID . "',
 								deliverydate ='" . FormatDateForSQL($POLine->ReqDelDate) . "',
-								itemdescription='" . addslashes($POLine->ItemDescription) . "',
+								itemdescription='" . DB_escape_string($POLine->ItemDescription) . "',
 								glcode=" . $POLine->GLCode . ",
 								unitprice=" . $POLine->Price . ",
 								quantityord=" . $POLine->Quantity . ",
@@ -185,7 +185,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 						$sql = "UPDATE purchorderdetails SET
 								itemcode='" . $POLine->StockID . "',
 								deliverydate ='" . FormatDateForSQL($POLine->ReqDelDate) . "',
-								itemdescription='" . addslashes($POLine->ItemDescription) . "',
+								itemdescription='" . DB_escape_string($POLine->ItemDescription) . "',
 								glcode=" . $POLine->GLCode . ",
 								unitprice=" . $POLine->Price . ",
 								quantityord=" . $POLine->Quantity . ",
@@ -808,12 +808,11 @@ if ($hide_incomplete_features == False)	{
 	echo '<TR><TD>' . _('Required Delivery Date') . ":</TD>
 		<TD><input type='Text' SIZE=12 MAXLENGTH=11 name='ReqDelDate' value=" . $_POST['ReqDelDate'] . '></TD></TR>';
 
-if ($hide_incomplete_features==False)	{
 	echo '<TR><TD>' . _('Shipment Ref') . ': <FONT SIZE=1>' . _('(Leave blank if N/A)') . "</FONT></TD>
 		<TD><input type='Text' SIZE=10 MAXLENGTH=9 name='ShiptRef' value=" . $_POST['ShiptRef'] . " > <a target='_blank' href='$rootpath/ShiptsList.php?" . SID . "&SupplierID=" . $_SESSION['PO']->SupplierID . "&SupplierName=" . $_SESSION['PO']->SupplierName . "'>" . _('Show Open Shipments') . '</a></TD></TR>';
-	echo '<TR><TD>' . _('Contract Ref') . ': <FONT SIZE=1>' . _('(Leave blank if N/A)') . "</FONT></TD>
+/*	echo '<TR><TD>' . _('Contract Ref') . ': <FONT SIZE=1>' . _('(Leave blank if N/A)') . "</FONT></TD>
 		<TD><input type='Text' SIZE=10 MAXLENGTH=9 name='JobRef' value=" . $_POST['JobRef'] . "> <a target='_blank' href='$rootpath/ContractsList.php?" . SID . "'>" . _('Show Contracts') . '</a></TD></TR>';
-}
+*/
 	echo "</TABLE><CENTER><INPUT TYPE=SUBMIT NAME='EnterLine' VALUE='" . _('Enter Line') . "'><BR><BR>";
 
 	echo "<INPUT TYPE=SUBMIT NAME='Commit' VALUE='" . _('Place Order') . "'></CENTER>";

@@ -1,5 +1,6 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
+<P>27/10/05 PO_Items.php removed the references to contracts as per Clay Mokus advice.
 <P>24/10/05 header.inc now sends a header with the charset if headers not already sent - this will work for 90% of scripts that need to know the charset will fail for any output from ConnectDB_XXX scripts.
 <P>23/10/05 PDFStarter_ros.inc changed to PDFStarter.php accross the board
 <P>23/10/05 included the Olivier Plathey CDI font files for Chinese, Japanese and Korean - with the appropriate fonts installed with the local version of Acrobat Reader these allow pdfs to be created in the Big5 (Chinese), SJIS (Japanese) and UHC (Korean) fonts. Modifications necessary to class.pdf.php to include the appropriate files depending on the locale - eg if the locale is zh_CN - then the Chinese fonts are included and selected.
@@ -23,7 +24,7 @@
 <P>1/10/05 SupplierInvoice.php and SupplierCredit.php - was not posting tax correctly some GL journals created were out of balance.
 <P>29/9/05 Afan Ottenheimer/Miguel de Benito Delgado - Added phplot and an example graph for the usage of stock - new script StockUsageGraph.php
 <P>25/9/05 Dave Premo - 2 additional addresses to the address fields on the databases from the current braddress1-4 structure to a braddress1-6 structure. This will allow more uniform database entry and expanded fields needed for future upgrades in shipping and reporting. 
-<P>17/9/05 Hindra Joshua - onclick confirm javascript function added to provide a double check on critical deletes and updates accross the system - stocks.php customers.php, custbranches.php, price updates, salestrans delete, selectorderitems.php  cancel order - delete a line, creditiems.php delete line cancel the credit note etc
+<P>17/9/05 Hindra Joshua suggestion -  onclick confirm javascript function added to provide a double check on critical deletes and updates accross the system - stocks.php customers.php, custbranches.php, price updates, salestrans delete, selectorderitems.php  cancel order - delete a line, creditiems.php delete line cancel the credit note etc
 <P>
 <P><B>Version 3.02 
 <P>4th September 2005</B>
