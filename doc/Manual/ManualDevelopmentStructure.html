@@ -1,0 +1,451 @@
+<br><br>
+
+<a name="DevelopmentStructure"><font size="+3"><b>Development - Structure</b></font></a>
+
+<br><br>
+This
+page will be of interest primarily to developers wishing to get to
+grips with the system and how the various scripts function.
+<br><br>
+
+<font size="+2"><b>Sales Orders</b></font>
+
+<br><br>
+Initiation of orders is done from
+the script :
+<br><br>
+SelectOrderItems.php
+<br><br>
+This script contains functionality
+to select the customer for the order as well as selecting the parts
+for the order.
+<br><br>
+The order processing logic
+revolves around a cart object called Items which is declared as a
+session variable. It contains an array of LineItem objects, each line
+item contains all the information about the order line items - I hope
+predictably! The Items session variable also contains the order
+header data about customer, currency, sales type etc. The entire
+order is thus cached in this session variable. Updates to the
+database for the cached sales order are only effected when the user
+explicitly commits modifications. This is actually done from the
+<br><br>
+DeliveryDetails.php script.
+<br><br>
+The SelectOrderItems.php script
+also allows modifications to pre-existing orders by repopulating the
+Items session object and the Items-LineItems array directly from the
+database. Checks are necessary to ensure that changes are sensible.
+<br><br>
+The script has two ways to select
+parts to add to an order:
+<br><br>
+1. By selecting the stock category
+or an extract of the code or description. The user must then hit the
+search button to initiate the search. The page displays the choice of
+parts meeting the criteria for selection.
+<br><br>
+2. By entering the part code and
+quantity directly. This allows quick entry of sales orders, where the
+user is familiar with the stock codes. The user must hit the quick
+entry button to initiate the processing of entries in the quick entry
+grid.
+<br><br>
+
+<font size="+2"><b>Pricing</b></font>
+
+<br><br>
+The script looks up the pricing for the customer based on the
+customer currency and sales type. As many sales types as required can
+be set up each with its own price list. Where there is no pricing set
+up for the sales type and currency of the customer then no parts are
+available for adding to the order.
+<br><br>
+<b>Kit set parts</B> can be
+entered - these are defined at the stage of the inventory item setup
+- they are exploded into their components for modification directly
+in the order. They are a short cut to selecting each individual part
+where only one part changes. eg a computer with xyz motherboard,
+case, keyboard, mouse, 256Meg RAM etc. The kitset part could bring
+all these parts into the order, but then allow deletion of the 256Meg
+RAM and replacement with the code for 512Meg RAM or whatever
+modifications are required.
+<br><br>
+<B>Assembly parts</B> can also be
+entered that refer to underlying component parts but priced at the
+assembly level. An assembly part is not exploded into its components
+at the time of order entry like a kitset. It exists in orders and
+sales analysis records but not for stock quantity records maintained
+although movement records are created for the assembly parts as well
+as the components of the assembly.
+<br><br>
+
+<font size="+2"><b>Delivery and Freight Charges</b></font>
+
+<br><br>
+Having selected the customer and
+the line items for the order, the delivery details need to be
+entered. Depending on the entries in logicworks.ini the freight
+charge is calculated. There is an option to NOT calculate a freight
+charge if the total order value is greater than a specific value. The
+freight calculation is based on the entries made for the various
+courier companies from the selected stock location to the city of the
+delivery address entered. If the city is not found in either line 2
+or 3 of the delivery address then the script returns an error. Where
+several courier companies are found then the system selects the one
+with the least cost based on the total of the kgs on the order or the
+volume of the order. The freight calculation is a function held in a
+seperate file FreightCalc.php requiring parameters to be passed, the
+delivery address lines, the from location the volume and weight of
+the order. The function returns an array containing the BestShipper
+and the FreightCost. The FreightCalc file is included into the
+DeliveryDetails.php script. There is therefore a requirement to
+maintain the volume in cubic meters and weight in kgs for each part
+and also the scale of freight costs if this functionality is used.
+<br><br>
+If the data requirement to use
+this effectively is considered too great, it is possible to disable
+this freight calculation too in logicworks.ini.
+<br><br>
+Once the order delivery details
+are all entered in the DeliveryDetails.php script then the order can
+be committed to the database. It is entirely cached in the Items
+session variable to this point and only when the order is placed or
+changes committed is the session variable cleared and the database
+updated.
+<br><br>
+
+<font size="+2"><b>Finding Sales Orders</b></font>
+
+<br><br>
+Orders can be found using the
+script:
+<br><br>
+SelectSalesOrders.php
+<br><br>
+This script allows a number of
+ways to find an outstanding sales order.
+<OL>
+	<LI>By
+	customer - a customer selected from the SelectCustomer.php script
+	can call this script to show only outstanding orders for the
+	customer selected.
+	<LI>By
+	part - selection of a part is built into the script. The purist
+	would have the SelectProduct functionality seperated in a seperate
+	script. However I feel that this way makes for a more intuative user
+	experience.
+	<LI>An order number can be
+	entered directly.
+</OL>
+<br>
+The SelectSalesOrders.php
+<br><br>
+script also provides links on the
+orders returned to allow the order to be modified or invoiced.
+<br><br>
+Modification of order line items
+is done in the same script as originally created ...
+SelectOrderItems.php but it is not possible to change a line quantity
+to a quantity less than is already invoiced, or to delete a line that
+has some quantity already invoiced.
+<br><br>
+
+<font size="+2"><b>Invoicing</b></font>
+
+<br><br>
+An invoice can only be created by
+first selecting the items to invoice onto a sales order. The order
+can then be invoiced.
+<br><br>
+The link to invoice the order from
+the SelectOutstandingOrders.php script shows all the line items on
+the order that are yet to be invoiced. There is opportunity for the
+user to alter the quantity to invoice but not the price/discount.
+There is also opportunity to manually over-ride tax calculations and
+freight charges.
+<br><br>
+The ConfirmDispatch-Invoice.php
+script actually processes the invoice within a database transaction
+creating the DebtorTrans record, the SalesAnalysis record, the stock
+movement records updating the location stock records and the sales
+order delivery details.
+<br><br>
+To look at the details of a
+completed order the script:
+<br><br>
+SelectCompletedOrder.php
+<br><br>
+allows similar selection
+facilities as the outstanding sales orders searches. This page also
+shows the quantities on the order that have been delivered and
+invoiced.
+<br><br>
+
+<font size="+2"><b>Accounts Receivable / Debtors Accounts</b></font>
+
+<br><br>
+A customer account consists of a
+master record ? the branch records set up against the master record
+and the transactions which require a branch record for invoices and
+credits but no branch record for receipts. The balance of the account
+is not held against the master record but is accumulated from the
+transactions that have an amount not yet allocated. Invoices
+(SysTypes TypeID=10) ie charges are recorded as positives in the
+DebtorTrans table and credits (SysTypes TypeID=11) and receipts
+(SysTypes TypeID=12) are recorded as negatives.
+<br><br>
+
+<font size="+2"><b>Accounts Receivable Receipts</b></font>
+
+<br><br>
+Since cash comes in for a number
+of reasons , the most common of which is the payment of invoices ,
+the receipt form allows for entry of GL items as well as customer
+receipts. The total of which may need to be collated for banking. The
+allocation of receipts is a separate process completely see below.
+The script for receipts creates a class to hold all the information
+about the receipt before it is all accecpted. Only then is the
+database updated with the necessary records to record the receipt and
+general ledger impact if the debtors link is active.
+<br><br>
+
+<font size="+2"><b>Accounts Receivable Allocations</b></font>
+
+<br><br>
+The system is designed so that
+allocations can only be made by selecting either receipts or credit
+notes and the available invoices for allocating to are then found.
+Amounts can be entered against invoices until the whole receipt or
+credit is allocated. An update option allows the total left to
+allocate to be recalculated taking into account any amounts entered
+against invoices already.
+<br><br>
+NB. Since there is no use of java
+or client side scripting, there is no way to keep track dynamically
+of how much is left to allocate.
+<br><br>
+The allocations script can be
+called with:
+<br><br>
+1) no parameters where it will
+return all the receipts and credit notes that have a balance yet to
+be allocated to invoices.
+<br><br>
+2) A customer code - all credits
+and reciepts will show for that customer that are yet to be fully
+allocated.
+<br><br>
+3) A transaction type (11 or 12)
+and transaction number ? this will show the transaction and the
+amount previously allocated to it with the invoices it was allocated
+to together with any unallocated invoices. The existing allocations
+can be modified at will and new allocations made.
+<br><br>
+
+<font size="+2"><b>Sales Analysis</b></font>
+
+<br><br>
+All invoices and credit notes
+create or update sales analysis records. Sales analysis records go
+down to the part level. There is some duplication of data by
+maintainig a seperate sales analysis table. The rationale for this
+is:
+<UL>
+	<LI>improve
+	the simplicity of required queries to produce sales analysis and
+	hence speed of creation of reports.
+	<LI>allow
+	indexing of common fields for analysis in sales analysis to further
+	improve performance of sales analysis queries.
+	<LI>to remove the dependencies
+	between data tables. If stock movements are purged this could create
+	problems for sales analysis.
+</UL>
+Sales analysis reports can be
+designed for up to four levels of sorting. The report writer is
+hopefully simple, but offers great flexibility. Report designs can be
+saved for running later. Reports can be run to output pdf files for
+printing directly or saving locally for emailing or archiving.
+Alternatively, reports can be run to create .csv (comma seperated
+values) files for analysis in most spreadsheet applications or import
+into user databases such as Borand?s Paradox or Micosoft Access.
+<br><br>
+Sales analysis reports are
+designed and stored as a header record containing the information
+about the sorting and criteria for selection and detail records
+defining the columns to show on the report.
+<br><br>
+Report column definitions allow
+the period range and type of information to show eg GP, cost, value,
+quantity. Periods are monthly and maintained invisibly to the user.
+The period is only ever used for general ledger reporting and for
+sales analysis. An enquiry page from the report columns definition
+page allows for easy reference to the period required.
+<br><br>
+
+<font size="+2"><b>Purchase Orders</b></font>
+
+<br><br>
+Similar selection facilities exist
+for purchase orders as do for Sales orders using the script
+<br><br>
+POSelectOrders.php
+<br><br>
+this script shows all outstanding
+orders where there are deliveries yet to be received. A specific
+supplier or part can be selected to show only purchase orders meeting
+the criteria selected.
+<br><br>
+The script also shows links to:
+<OL>
+	<LI>Modify
+	the order within certain bounds eg cannot reduce a purchase order
+	line quantity below the quantity already received.
+	<LI>Print
+	the purchase order. This link is disabled if the purchase order has
+	already been printed. Orders can be re-printed but a warning shows
+	that the order has already been printed so that there can be no
+	accidental double printing and sending of an order to a supplier.
+	<LI>Receive items on the order.
+</OL>
+
+<font size="+2"><b>Inventory</b></font>
+
+<br><br>
+Stock movements are created -
+depending on the type of stock item - each time a product is invoiced
+or credited. If an item is credited and written off eg. goods damaged
+in transit then two stock movements are created:
+<OL>
+	<LI>To
+	bring the stock item back into stock and record the credit to the
+	customer.
+	<LI>To write the item off to the
+	selected GL account.
+</OL>
+<br>
+Stock movements are also created
+when an item is received against a purchase order.
+<br><br>
+Each time a stock movement is
+entered the stock quantity at the location is updated.
+<br><br>
+The stock is therefore fully
+integrated with sales and purchasing. The only stock transactions
+that involve direct entry are:
+<OL>
+	<LI>Stock
+	transfers between locations.
+	<LI>Stock quantity adjustments.
+</OL>
+<br>
+It is not possible to enter either
+of these two types of transaction against dummy, assembly or kitset
+parts since no stock movements or stock quantities exist for these
+types of parts.
+<br><br>
+
+<font size="+2"><b>Stock Inquiries</b></font>
+
+<br><br>
+Selecting a product shows all the
+options available to operate on the part.
+<UL>
+	<LI>Stock usage by location
+	<LI>Stock
+	status showing quantity on hand, quantity on order, quantity
+	demanded and re-order quantity.
+	<LI>Stock
+	movements by location for defined date range.
+	<LI>Outstanding sales orders
+</UL>
+<br>
+All inquires follow a similar
+format, that allow input of the stock code directly for users
+familiar with the codes. Alternatively, the enquiry script can be
+called from the SelectProduct.php script which has all the facilities
+to be able to select the part required.
+<br><br>
+
+<font size="+2"><b>Accounts Payable</b></font>
+
+<br><br>
+Supplier invoices are entered
+using the script:
+<br><br>
+SuppInvoice.php
+<br><br>
+This script must be called with a
+SupplierID from the SelectSupplier.php page. Once a supplier is
+passed to the page a new SuppTrans object is created to hold (cache)
+all the information about the invoice. The SuppTrans class has three
+arrays one for the GL analysis, one to hold the shipment charges
+(e.g. freight, cartage and duty) and the third for the Goods Received
+to be invoiced GRNs ? these could also be items on a shipment.
+<br><br>
+If the GL link to creditors in the
+company preferences is set then the amount to invoice must be
+accumulated from stock items received being invoiced, the shipment
+charges and the general ledger postings entered. There is no
+opportunity to enter the total invoice amount manually.
+<br><br>
+General ledger analysis link only
+shows if the GL Creditors link is active. This script allows
+population of the GLCodes array. The page allows a GL code to be
+entered directly by a user familiar with the GLCodes or to select a
+code from a select box. Plenty of space for narrative is available
+too.
+<br><br>
+The link from the
+SupplierInvoice.php script to the SuppInvGRNItems.php allows the
+goods received from the supplier that have not already been invoiced
+to be selected for invoicing. The quantity received shows for each
+part together with the quantity already invoiced. The quantity being
+invoiced is defaulted to the amount received less any amount already
+invoiced. This can be changed as can the price charged. There are
+three parameters in logicworks.ini that affect the behaviour of this
+script. If the parameter to check for over deliveries is set then the
+remaining two parameters are used to check the proportion that the
+order is over invoiced by in terms of the quantity invoiced and the
+price charged respectively.
+<br><br>
+The total of all lines of goods
+received being invoiced are accumulated. If the GL link to creditors
+is active then the order lines and the GL lines are accumulated
+together to get the total currency amount of the invoice. If the link
+is not active the currency amount must be entered manually, but the
+amount must be more than the goods received being invoiced.
+<br><br>
+The due date of supplier invoices
+defaults to the date of the invoice entered after applying the terms
+defined for the supplier. There is an option to create a payment
+directly from the invoice creation. The payment record created will
+be for the total of the single invoice.
+<br><br>
+
+<font size="+2"><b>Supplier Payments</b></font>
+
+<br><br>
+Records can be created for all due
+amounts either by using the payment run or using the manual payment
+entry.
+<br><br>
+The payment run creates payment
+records for all payments due to the specified date in the specified
+currency at the specified exchange rate, from the specified bank
+account. The allocation records necessary are also created by this
+process. The payment run calculates the differences on exchange for
+each invoice settled and updates the invoices for allocated amounts
+and produces general ledger transactions if the creditors link is
+active. The bank payment record is also created for bank
+reconciliation purposes.
+<br><br>
+Manual supplier payments can be
+entered by selecting the supplier then the manual payment link. The
+currency of the supplier is automatically defaulted. However, the
+rate must be entered and the amount together with any reference.
+<br><br>
+Manual payments screen called
+without the SupplierID also allows entry of general ledger analysed
+payments.

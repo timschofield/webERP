@@ -1,0 +1,109 @@
+<br><br>
+
+<a name="Requirements"><font size="+3"><b>Requirements</b></font></a>
+
+<br><br>
+
+<font size="+2"><b>Hardware Requirements</b></font>
+
+<br><br>
+
+There are a many possible
+configurations that could run this application. The scale of the
+enterprise obviously will have a significant bearing on the final
+configuration.
+
+<br><br>
+
+The operating system and the
+database engine chosen will have the largest bearing on the System
+requirements. Each client connection to the web server and database
+engine will also consume RAM so the more connections the larger the
+RAM requirement. Similarly disk space required is a function of the
+volume of customers, suppliers and transactions. Suffice it to say
+that due to the efficiency of the components of the system the
+demands on the hardware are exceptionally light by client server
+application standards.
+
+<br><br>
+
+As a guide the minimal
+installation for up to 50 simultaneous users, using a Linux operating
+system and an Apache web server, could use an entry level server with
+512Meg RAM a 10 Megabit network would give more than adequate
+performance 100 Megabit is now entry level. RAID SCSI swappable disks
+are preferred in any mission critical environment where disk access
+is intensive.
+
+<br><br>
+
+Multiple servers with with SMP and
+load balancing and a separate database server and large amounts of
+RAM the limit on database size and the number of users is large
+enough for the most demanding businesses.
+
+<br><br>
+
+<font size="+2"><b>Software Requirements</b></font>
+
+<br><br>
+
+<UL>
+	<LI><A HREF="http://www.php.net/">PHP</A>
+	greater than 4.2. The system is
+	therefore operating system independent since PHP can be configured
+	as a CGI module for use on MS IIS or as a module for Apache under
+	either Windows (NT, 2000 or XP) or Unix/Linux. Also the ftp
+	extensions for transfer of edi orders if required.
+	<LI><A HREF="http://www.mysql.com/">MySQL</A>-Max
+	with Innodb transactional tables support. Innodb was introduced in
+	2001 to MySQL and has oracle like functionality &ndash; with similar
+	speed. (The system could be used with Oracle or other database
+	systems too with minimal modification) MySQL later than version 4
+	has innodb tables in by default. Since MySQL represents such good
+	value for money it has been used. An example configuration file
+	my.cnf normally under /usr/local/mysql/var is available in the mysql
+	documentation to show typical settings for the innodb configuration.
+	The expected size of the data is useful although additional data
+	files can be created retrospectively as necessary. Note that only
+	the tables that require transaction support are defined as Innodb
+	tables. There is always debate but the MyISAM tables are reputed to
+	be faster.
+	<LI>A	web server. <A HREF="http://www.apache.org/">Apache</A>
+	makes the most sense &ndash; but
+	most web servers are supported by PHP in various forms.
+	<LI>If the web server is
+	accessible over the internet ie not just over a LAN then encrypted
+	communications are required. The openssl and mod-ssl module for
+	apache can be used easily to ensure all data is transmitted in
+	encrypted form.
+</UL>
+
+There are many sources of
+information on the compilation and installation of MySql and PHP. See
+the following links:
+
+<br><br>
+
+<A HREF="http://logidac.com/apache/apache-install-rpm.phtml">http://logidac.com/apache/apache-install-rpm.phtml</a>
+
+<br><br>
+
+<A HREF="http://www.linux-sottises.net/en_apache_install.php">http://www.linux-sottises.net/en_apache_install.php</A>
+
+<br><br>
+
+The system could be used with many
+other database servers but it is tested and developed on MySQL.
+Independent benchmarks show that MySQL is at least one of the fastest
+for most common database tasks, particularly at establishing
+connections &ndash; since this is required for every page, MySql is
+therefore ideally suited to the web environment.
+The ftp library for PHP is only
+required for sending order files to a Radio Beacon ftp server for
+remote warehouse services.
+Using apache with <A HREF="http://www.mod_ssl.org/">mod_ssl</A>
+and <A HREF="http://www.openssl.org/">openssl</A>
+secure sockets makes sense and where
+there is any data transmitted over the internet and not just over a
+LAN.
