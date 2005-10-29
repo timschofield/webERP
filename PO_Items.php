@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 
 $PageSecurity = 4;
@@ -768,7 +768,6 @@ If ($_GET['Edit']){
 		<TD><INPUT TYPE=SUBMIT NAME='LookupPrice' Value='" . _('Lookup Price') . "'></TD></TR>";
 	echo '<TR><TD>' . _('Required Delivery Date') . ":</TD>
 		<TD><input type='Text' SIZE=12 MAXLENGTH=11 name='ReqDelDate' value=" . $_SESSION['PO']->LineItems[$_GET['Edit']]->ReqDelDate . '></TD></TR>';
-if ($hide_incomplete_features == False)	{
 	echo '<TR><TD>' . _('Shipment Ref') . ': <FONT SIZE=1>(' . _('Leave blank if N/A') . ")</FONT></TD>
 		<TD><input type='Text' SIZE=10 MAXLENGTH=9 name='ShiptRef' value=" . $_SESSION['PO']->LineItems[$_GET['Edit']]->ShiptRef . "><a target='_blank' href='$rootpath/ShiptsList.php?" . SID . "SupplierID=" . $_SESSION['PO']->SupplierID . "&SupplierName=" . $_SESSION['PO']->SupplierName . "'>" . _('Show Open Shipments') . '</a></TD></TR>';
 	/*

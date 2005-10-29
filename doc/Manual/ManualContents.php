@@ -67,7 +67,25 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
 ?>
               <UL>
                 <LI>Why Another Accounting Program?</LI>
-                <LI>System Requirements</LI>
+              </UL>
+              <BR>
+            </LI>
+						<LI>
+<?php
+  if (!isset($_POST['Submit'])) {
+?>  
+              <input type="checkbox" name="SelectRequirements">
+              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=Requirements'; ?>">Requirements</A>
+<?php
+  } else {
+?>
+              <A href="#Requirements">Requirements</A>
+<?php	
+	}
+?>
+              <UL>
+                <LI>Hardware Requirements</LI>
+                <LI>Software Requirements</LI>
               </UL>
               <BR>
             </LI>
@@ -643,11 +661,11 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
   if (!isset($_POST['Submit'])) {
 ?>  
               <input type="checkbox" name="SelectNewScripts">
-              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=NewScripts'; ?>">Developing New Scripts</A>
+              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=NewScripts'; ?>">Development - Foundations</A>
 <?php
   } else {
 ?>
-              <A HREF="#NewScripts">Developing New Scripts</A>
+              <A HREF="#NewScripts">Development - Foundations</A>
 <?php	
   }
 ?>
@@ -661,6 +679,37 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
                 <LI>Database Abstraction - ConnectDB.inc</LI>
                 <LI>DateFunctions.inc</LI>
                 <LI>SQL_CommonFuctions.inc</LI>
+              </UL>
+              <BR>
+            </LI>
+            <LI>
+<?php
+  if (!isset($_POST['Submit'])) {
+?>  
+              <input type="checkbox" name="SelectStructure">
+              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=Structure'; ?>">Development - Structure</A>
+<?php
+  } else {
+?>
+              <A HREF="#Structure">Development - Structure</A>
+<?php	
+  }
+?>
+              <UL>
+                <LI>Sales Orders</LI>
+                <LI>Pricing</LI>
+                <LI>Delivery and Freight Charges</LI>
+                <LI>Finding Sales Orders</LI>
+                <LI>Invoicing</LI>
+                <LI>Accounts Receivable / Debtors Accounts</LI>
+                <LI>Accounts Receivable Receipts</LI>
+                <LI>Accounts Receivable Allocations</LI>
+                <LI>Sales Analysis</LI>
+                <LI>Purchase Orders</LI>
+                <LI>Inventory</LI>
+                <LI>Stock Inquiries</LI>
+                <LI>Accounts Payable</LI>
+                <LI>Supplier Payments</LI>
               </UL>
               <BR>
             </LI>
@@ -690,6 +739,10 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
 <?php
 if ($_GET['ViewTopic'] == 'Introduction' OR isset($_POST['SelectIntroduction'])) {
   include('ManualIntroduction.html');
+}
+
+if ($_GET['ViewTopic'] == 'Requirements' OR isset($_POST['SelectRequirements'])) {
+  include('ManualRequirements.html');
 }
 
 if ($_GET['ViewTopic'] == 'GettingStarted' OR isset($_POST['SelectGettingStarted'])) {
@@ -782,6 +835,10 @@ if ($_GET['ViewTopic'] == 'SpecialUtilities' OR isset($_POST['SelectSpecialUtili
 
 if ($_GET['ViewTopic'] == 'NewScripts' OR isset($_POST['SelectNewScripts'])) {
   include('ManualNewScripts.html');
+}
+
+if ($_GET['ViewTopic'] == 'Structure' OR isset($_POST['SelectStructure'])) {
+  include('ManualDevelopmentStructure.html');
 }
 
 if ($_GET['ViewTopic'] == 'Contributors' OR isset($_POST['SelectContributors'])) {

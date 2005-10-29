@@ -1,6 +1,8 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
-<P>27/10/05 PO_Items.php removed the references to contracts as per Clay Mokus advice.
+<P>29/10/05 Clay pointed out that DB_escape_string() was not used in places it should be in Suppliers.php - now fixed - also checking for apostrophes was not working corrected.
+<P>29/10/05 Steve - updates to ManualContents.php, DevelopmentStrucutre, Introduction and Requirements
+<P>27/10/05 PO_Items.php removed the references to contracts as per Clay Mokus advice - and fixed error trapping code not to check contracts on 30/10/05
 <P>24/10/05 header.inc now sends a header with the charset if headers not already sent - this will work for 90% of scripts that need to know the charset will fail for any output from ConnectDB_XXX scripts.
 <P>23/10/05 PDFStarter_ros.inc changed to PDFStarter.php accross the board
 <P>23/10/05 included the Olivier Plathey CDI font files for Chinese, Japanese and Korean - with the appropriate fonts installed with the local version of Acrobat Reader these allow pdfs to be created in the Big5 (Chinese), SJIS (Japanese) and UHC (Korean) fonts. Modifications necessary to class.pdf.php to include the appropriate files depending on the locale - eg if the locale is zh_CN - then the Chinese fonts are included and selected.

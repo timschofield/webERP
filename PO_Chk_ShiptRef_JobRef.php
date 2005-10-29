@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*Code to check that ShiptRef and Contract or JobRef entered are valid entries
 This is used by the UpdateLine button when a purchase order line item is updated and
 by the EnterLine button when a new purchase order line item is entered
@@ -21,9 +21,9 @@ by the EnterLine button when a new purchase order line item is entered
                             }
                      }
               }
-
-              if (($_POST['JobRef']!='' AND $_POST['JobRef']!='0') OR !isset($_POST['JobRef'])) {  /*Dont bother with this lot if there was not Contract selected */
-              /*Check for existance of Shipment Selected */
+		/*
+              if (($_POST['JobRef']!='' AND $_POST['JobRef']!='0') OR !isset($_POST['JobRef'])) {  //Dont bother with this lot if there was not Contract selected 
+             
               $sql = "SELECT COUNT(*) FROM contracts WHERE contractref ='".  $_POST['JobRef'] . "'";
                      $JobResult = DB_query($sql,$db);
                      if (DB_error_no!=0 OR DB_num_rows($JobResult)==0){
@@ -37,5 +37,5 @@ by the EnterLine button when a new purchase order line item is entered
                             }
                      }
               }
-
+	*/
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 5;
 
@@ -9,6 +9,7 @@ include('includes/session.inc');
 $title = _('Supplier Maintenance');
 
 include('includes/header.inc');
+include('includes/SQL_CommonFunctions.inc');
 
 Function Is_ValidAccount ($ActNo) {
 	
@@ -318,7 +319,7 @@ if (isset($_POST['submit'])) {
 	} elseif (strlen($SupplierID) == 0) {
 		$InputError = 1;
 		prnMsg(_('The Supplier Code cannot be empty'),'error');
-	} elseif (strstr($SupplierID,"'") or strstr($SupplierID,"+") or strstr($SupplierID,"\"") or strstr($SupplierID,"&") or strstr($SupplierID," ") or strstr($SupplierID,".") or strstr($SupplierID,'"') or strstr($SupplierID,"\\")) {
+	} elseif (ContainsIllegalCharacters($SupplierID)) {
 		$InputError = 1;
 		prnMsg(_('The supplier code cannot contain any of the following characters') . " - . ' & + \" \\" . ' ' ._('or a space'),'error');
 	} elseif (strlen($_POST['BankRef']) > 12) {
@@ -344,16 +345,16 @@ if (isset($_POST['submit'])) {
 
 		if (!isset($_POST['New'])) {
 
-			$sql = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "', 
-							address1='" . $_POST['Address1'] . "', 
-							address2='" . $_POST['Address2'] . "', 
-							address3='" . $_POST['Address3'] . "', 
-							address4='" . $_POST['Address4'] . "', 
+			$sql = "UPDATE suppliers SET suppname='" . DB_escape_string($_POST['SuppName']) . "', 
+							address1='" . DB_escape_string($_POST['Address1']) . "', 
+							address2='" . DB_escape_string($_POST['Address2']) . "', 
+							address3='" . DB_escape_string($_POST['Address3']) . "', 
+							address4='" . DB_escape_string($_POST['Address4']) . "', 
 							currcode='" . $_POST['CurrCode'] . "', 
 							suppliersince='$SQL_SupplierSince',  
 							paymentterms='" . $_POST['PaymentTerms'] . "', 
-							bankpartics='" . $_POST['BankPartics'] . "', 
-							bankref='" . $_POST['BankRef'] . "', 
+							bankpartics='" .DB_escape_string( $_POST['BankPartics']) . "', 
+							bankref='" . DB_escape_string($_POST['BankRef']) . "', 
 					 		bankact='" . $_POST['BankAct'] . "', 
 							remittance=" . $_POST['Remittance'] . ", 
 							taxgroupid=" . $_POST['TaxGroup'] . " 
@@ -383,16 +384,16 @@ if (isset($_POST['submit'])) {
 							remittance, 
 							taxgroupid) 
 					 VALUES ('$SupplierID', 
-					 	'" . $_POST['SuppName'] . "', 
-						'" . $_POST['Address1'] . "', 
-						'" . $_POST['Address2'] . "', 
-						'" . $_POST['Address3'] . "', 
-						'" . $_POST['Address4'] . "', 
+					 	'" .DB_escape_string($_POST['SuppName']) . "', 
+						'" . DB_escape_string($_POST['Address1']) . "', 
+						'" . DB_escape_string($_POST['Address2']) . "', 
+						'" . DB_escape_string($_POST['Address3']) . "', 
+						'" . DB_escape_string($_POST['Address4']) . "', 
 						'" . $_POST['CurrCode'] . "', 
 						'" . $SQL_SupplierSince . "', 
 						'" . $_POST['PaymentTerms'] . "', 
-						'" . $_POST['BankPartics'] . "', 
-						'" . $_POST['BankRef'] . "', 
+						'" . DB_escape_string($_POST['BankPartics']) . "', 
+						'" . DB_escape_string($_POST['BankRef']) . "', 
 						'" . $_POST['BankAct'] . "', 
 						" .  $_POST['Remittance'] . ", 
 						" . $_POST['TaxGroup'] . ")";
@@ -646,7 +647,6 @@ if (!isset($SupplierID)) {
 
 	echo '</SELECT></TD></TR>';
 
-
 	echo '<TR><TD>' . _('Tax Group') . ":</TD><TD><SELECT NAME='TaxGroup'>";
 
 	DB_data_seek($result, 0);
@@ -663,7 +663,6 @@ if (!isset($SupplierID)) {
 		echo $myrow['taxgroupid'] . '>' . $myrow['taxgroupdescription'];
 
 	} //end while loop
-
 
 	echo '</SELECT></TD></TR>';
 
