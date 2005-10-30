@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 
 $PageSecurity = 4;
@@ -774,7 +774,7 @@ If ($_GET['Edit']){
 	echo '<TR><TD>' . _('Contract Ref') . ': <FONT SIZE=1>(' . _('Leave blank if N/A') . ")</FONT></TD>
 		<TD><input type='Text' SIZE=10 MAXLENGTH=9 name='JobRef' value=" . $_SESSION['PO']->LineItems[$_GET['Edit']]->JobRef . "> <a target='_blank' href='$rootpath/ContractsList.php?" . SID . "'>" . _('Show Contracts') . '</a></TD></TR>';
 	*/
-}
+
 	echo "</TABLE><CENTER><INPUT TYPE=SUBMIT NAME='UpdateLine' VALUE='" . _('Update Line') . "'> <INPUT TYPE=SUBMIT NAME='Delete' VALUE='" . _('Delete') . "'><BR>";
 } elseif ($_SESSION['ExistingOrder']==0) { /* ITS A NEWY */
  /*show a form for putting in a new line item with or without a stock entry */
