@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 2;
 
@@ -101,7 +101,8 @@ $sql = "SELECT salesorderdetails.stkcode,
 		salesorderdetails.quantity, 
 		salesorderdetails.qtyinvoiced, 
 		salesorderdetails.unitprice,
-		salesorderdetails.discountpercent 
+		salesorderdetails.discountpercent,
+		salesorderdetails.narrative
 	FROM salesorderdetails INNER JOIN stockmaster
 		ON salesorderdetails.stkcode=stockmaster.stockid
 	WHERE salesorderdetails.orderno=" . $_GET['QuotationNo'];
@@ -115,7 +116,9 @@ if (DB_num_rows($result)>0){
 	
 	while ($myrow2=DB_fetch_array($result)){
 
-		if ($YPos-$line_height <= 50){
+		if ((strlen($myrow2['narrative']) >200 AND $YPos-$line_height <= 75) 
+			OR (strlen($myrow2['narrative']) >1 AND $YPos-$line_height <= 62) 
+			OR $YPos-$line_height <= 50){
 		/* We reached the end of the page so finsih off the page and start a newy */
 			$PageNumber++;
 			include ('includes/PDFQuotationPageHeader.inc');
@@ -135,21 +138,50 @@ if (DB_num_rows($result)>0){
 		$LeftOvers = $pdf->addTextWrap(525,$YPos,85,$FontSize,$DisplayPrice,'right');
 		$LeftOvers = $pdf->addTextWrap(610,$YPos,85,$FontSize,$DisplayDiscount,'right');
 		$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,$DisplayTotal,'right');
-
+		if (strlen($myrow2['narrative'])>1){
+			$YPos -= 10;
+			$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,750,10,$myrow2['narrative']);
+			if (strlen($LeftOvers>1)){
+				$YPos -= 10;
+				$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,750,10,$LeftOvers);
+			}
+		}
 		$QuotationTotal +=$LineTotal;
 		
 		/*increment a line down for the next line item */
 		$YPos -= ($line_height);
 
 	} //end while there are line items to print out
-	if ($YPos-$line_height <= 50){
+	if ((strlen($myrow['comments']) >200 AND $YPos-$line_height <= 75) 
+			OR (strlen($myrow['comments']) >1 AND $YPos-$line_height <= 62) 
+			OR $YPos-$line_height <= 50){
 		/* We reached the end of the page so finsih off the page and start a newy */
-		$PageNumber++;
-		include ('includes/PDFQuotationPageHeader.inc');
+			$PageNumber++;
+			include ('includes/PDFQuotationPageHeader.inc');
+
 	} //end if need a new page headed up
+	
+	$LeftOvers = $pdf->addTextWrap($XPos,$YPos,700,10,$myrow['comments']);
+
+	if (strlen($LeftOvers)>1){
+		$YPos -= 10;
+		$LeftOvers = $pdf->addTextWrap($XPos,$YPos,700,10,$LeftOvers);
+		if (strlen($LeftOvers)>1){
+			$YPos -= 10;
+			$LeftOvers = $pdf->addTextWrap($XPos,$YPos,700,10,$LeftOvers);
+			if (strlen($LeftOvers)>1){
+				$YPos -= 10;
+				$LeftOvers = $pdf->addTextWrap($XPos,$YPos,700,10,$LeftOvers);
+				if (strlen($LeftOvers)>1){
+					$YPos -= 10;
+					$LeftOvers = $pdf->addTextWrap($XPos,$YPos,10,$FontSize,$LeftOvers);
+				}
+			}
+		}
+	}
+	$YPos -= ($line_height);
 	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Quotation Total Before Tax'),'right');
 	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,number_format($QuotationTotal,2),'right');
-	
 	
 } /*end if there are line details to show on the quotation*/
 

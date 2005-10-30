@@ -5,7 +5,7 @@ GOALS of webERP
 2. To be "low footprint" efficient and fast, with absolutely minimal network traffic.
 
 This is to enable dial up/low band-width connections to work with reasonable
-response times. This will require some compromises with the use of graphics.
+response times. This will require some compromises with the use of graphics/fonts. 
 
 3. Platform independence.
 
@@ -46,7 +46,7 @@ IMPORTANT: Only do development work on the most recent scripts from CVS and upda
 
 http://sourceforge.net/docman/display_doc.php?docid=14033&group_id=1
 
-3. After any modifications to the scripts - email (only) the modified scripts (and ideally a diff file between the latest CVS scripts and your updated scripts) to info@weberp.org within 12 hours of your last update from CVS. The project admin will have to digest the modifications and ensure the coding style is consistent, test the scripts and consider the implications of the modifications in acheiving the goals noted above. Plenty of narrative explaining the modifications should be posted in the developers list so all can consider the implications. They will be committed to CVS as soon as possible after receipt and testing.
+3. After any modifications to the scripts - email (only) the modified scripts as based on the code in the latest CVS scripts to info@weberp.org within 12 hours of your last update from CVS. The project admin will have to digest the modifications and ensure the coding style is consistent, test the scripts and consider the implications of the modifications in acheiving the goals noted above. Plenty of narrative explaining the modifications should be posted in the developers list so all can consider the implications. They will be committed to CVS as soon as possible after receipt and testing.
 
 4. Where modifications span 10 or more scripts at the same time, request a stay on development from other developers using the list.
 
@@ -56,6 +56,8 @@ http://sourceforge.net/docman/display_doc.php?docid=14033&group_id=1
 
 
 CODING STANDARDS
+
+It is very important to ensure that the coding conventions documented here are applied rigorously accross all code in webERP.
 
 Function/Class/Variable Naming
 
@@ -227,7 +229,7 @@ are preferred. But all comments gratefully received!
 
 All scripts should have a comment in the first few lines with the script revision number in it if the following comment is pasted into it the CVS automatically updates the revision number.
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 
 Messages

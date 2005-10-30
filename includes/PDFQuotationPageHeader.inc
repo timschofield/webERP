@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /* pdf-php by R&OS code to set up a new sales order page */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -80,20 +80,6 @@ $pdf->partEllipse($XPos+225, $YPos,270,360,10,10);
 /*Finally join up to the top right corner where started */
 $pdf->line($XPos+235, $YPos,$XPos+235, $YPos+60);
 
-$LeftOvers = $pdf->addTextWrap($XPos,$YPos-115,170,$FontSize,$myrow['comments']);
-
-if (strlen($LeftOvers)>1){
-	$LeftOvers = $pdf->addTextWrap($XPos,$YPos-130,170,$FontSize,$LeftOvers);
-	if (strlen($LeftOvers)>1){
-		$LeftOvers = $pdf->addTextWrap($XPos,$YPos-145,170,$FontSize,$LeftOvers);
-		if (strlen($LeftOvers)>1){
-			$LeftOvers = $pdf->addTextWrap($XPos,$YPos-160,170,$FontSize,$LeftOvers);
-			if (strlen($LeftOvers)>1){
-				$LeftOvers = $pdf->addTextWrap($XPos,$YPos-175,170,$FontSize,$LeftOvers);
-			}
-		}
-	}
-}
 
 $pdf->addText(620, 560,$FontSize, _('Number'). ':');
 $pdf->addText(700, 560,$FontSize, $_GET['QuotationNo']);

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 2;
 
@@ -129,7 +129,8 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 			stockmaster.description, 
 			salesorderdetails.quantity, 
 			salesorderdetails.qtyinvoiced, 
-			salesorderdetails.unitprice
+			salesorderdetails.unitprice,
+			salesorderdetails.narrative
 		FROM salesorderdetails INNER JOIN stockmaster
 			ON salesorderdetails.stkcode=stockmaster.stockid
 		WHERE salesorderdetails.orderno=" . $_GET['TransNo'];
@@ -153,15 +154,11 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 
 			if ($YPos-$line_height <= 50){
 			/* We reached the end of the page so finsih off the page and start a newy */
-
 				$PageNumber++;
 				include ('includes/PDFOrderPageHeader_generic.inc');
-
 			} //end if need a new page headed up
-
 			/*increment a line down for the next line item */
 			$YPos -= ($line_height);
-
 		} //end while there are line items to print out
 
 	} /*end if there are order details to show on the order*/
