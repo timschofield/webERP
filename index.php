@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.43 $ */
+/* $Revision: 1.44 $ */
 
 
 $PageSecurity = 1;
@@ -280,6 +280,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							<tr>
 							<td class="menu_group_item">
 							<?php echo "<a href='" . $rootpath . '/PDFCustomerList.php?' . SID . "'><li>" . _('Customer Listing By Area/Salesperson') . '</li></a>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+							<?php echo "<a href='" . $rootpath . '/SalesGraph.php?' . SID . "'><li>" . _('Sales Graphs') . '</li></a>'; ?>
 							</td>
 							</tr>
 						</table>

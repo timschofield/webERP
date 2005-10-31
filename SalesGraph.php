@@ -3,6 +3,7 @@
  include('includes/session.inc');
  include('includes/phplot/phplot.php');
  $title=_('Sales Report Graph');
+ include('includes/header.inc');
  
  $SelectADifferentPeriod ='';
  
@@ -25,7 +26,7 @@
  if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod'])) 
 	OR $SelectADifferentPeriod==_('Select A Different Period')){
 	
-	include('includes/header.inc');
+
 	echo '<FORM METHOD="POST" ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
  /*Show a form to allow input of criteria for TB to show */
 	echo '<CENTER><TABLE><TR><TD>' . _('Select Period From:') . '</TD><TD><SELECT Name="FromPeriod">';
@@ -160,7 +161,7 @@
 	echo '<br><INPUT TYPE=SUBMIT Name="ShowGraph" Value="' . _('Show Sales Graph') .'"></CENTER>';
  } else {
  
-	$graph =& new PHPlot(800,300);
+	$graph =& new PHPlot(950,450);
 	$SelectClause ='';
 	$WhereClause ='';
 	$GraphTitle ='';
@@ -175,27 +176,24 @@
 		$SelectClause = 'qty';
 	}
 	
-	$GraphTitle .= ' ' . _('From Period') . ' ' . $_POST['FromPeriod'] . ' ' . _('to') . ' ' . $_POST['ToPeriod'];
+	$GraphTitle .= ' ' . _('From Period') . ' ' . $_POST['FromPeriod'] . ' ' . _('to') . ' ' . $_POST['ToPeriod'] . "\n\r";
 	
 	if ($_POST['SalesArea']=='All'){
 		$GraphTitle .= ' ' . _('For All Sales Areas');
 	} else {
-		$result = DB_query("SELECT areaname FROM areas WHERE areacode='" . $_POST['SalesArea'] . "'",$db);
+		$result = DB_query("SELECT areadescription FROM areas WHERE areacode='" . $_POST['SalesArea'] . "'",$db);
 		$myrow = DB_fetch_row($result);
-		$GraphTitle .= ' ' . _('For All Sales Area:') . ' ' . $myrow[0];
-		$WhereClause .= " area='" . $_POST['SalesArea'] . "'";
+		$GraphTitle .= ' ' . _('For') . ' ' . $myrow[0];
+		$WhereClause .= " area='" . $_POST['SalesArea'] . "' AND";
 	}
 	if ($_POST['CategoryID']=='All'){
 		$GraphTitle .= ' ' . _('For All Stock Categories');
 	} else {
 		$result = DB_query("SELECT categorydescription FROM stockcategory WHERE categoryid='" . $_POST['CategoryID'] . "'",$db);
 		$myrow = DB_fetch_row($result);
-		$GraphTitle .= ' ' . _('For Stock Cagegory:') . ' ' . $myrow[0];
-		if (strlen($WhereClause) >2){
-			$WhereClause .= " AND stkcategory='" . $_POST['CategoryID'] . "'";
-		}else {
-			$WhereClause .= " stkcategory='" . $_POST['CategoryID'] . "'";
-		}
+		$GraphTitle .= ' ' . _('For') . ' ' . $myrow[0];
+		$WhereClause .= " stkcategory='" . $_POST['CategoryID'] . "' AND";
+		
 	}
 	if ($_POST['SalesmanCode']=='All'){
 		$GraphTitle .= ' ' . _('For All Salespeople');
@@ -203,43 +201,33 @@
 		$result = DB_query("SELECT salesmanname FROM salesman WHERE salesmancode='" . $_POST['SalesmanCode'] . "'",$db);
 		$myrow = DB_fetch_row($result);
 		$GraphTitle .= ' ' . _('For Salesperson:') . ' ' . $myrow[0];
-		if (strlen($WhereClause) >2){
-			$WhereClause .= " AND salesperson='" . $_POST['SalesmanCode'] . "'";
-		}else {
-			$WhereClause .= " salesperson='" . $_POST['SalesmanCode'] . "'";
-		}
+		$WhereClause .= " salesperson='" . $_POST['SalesmanCode'] . "' AND";
+		
 	}
 	if ($_POST['GraphOn']=='Customer'){
 		$GraphTitle .= ' ' . _('For Customers from') . ' ' . $_POST['ValueFrom'] . ' ' . _('to') . ' ' . $_POST['ValueTo'];
-		if (strlen($WhereClause) >2){
-			$WhereClause .= " AND cust>='" . $_POST['ValueFrom'] . "' AND cust<='" . $_POST['ValueTo'] . "'";
-		}else {
-			$WhereClause .= "  cust>='" . $_POST['ValueFrom'] . "' AND cust<='" . $_POST['ValueTo'] . "'";
-		}
+		$WhereClause .= "  cust>='" . $_POST['ValueFrom'] . "' AND cust<='" . $_POST['ValueTo'] . "' AND";
 	}
 	if ($_POST['GraphOn']=='StockID'){
 		$GraphTitle .= ' ' . _('For Items from') . ' ' . $_POST['ValueFrom'] . ' ' . _('to') . ' ' . $_POST['ValueTo'];
-		if (strlen($WhereClause) >2){
-			$WhereClause .= " AND stockid>='" . $_POST['ValueFrom'] . "' AND stockid<='" . $_POST['ValueTo'] . "'";
-		}else {
-			$WhereClause .= "  stockid>='" . $_POST['ValueFrom'] . "' AND stockid<='" . $_POST['ValueTo'] . "'";
-		}
+		$WhereClause .= "  stockid>='" . $_POST['ValueFrom'] . "' AND stockid<='" . $_POST['ValueTo'] . "' AND";
 	}
 	
-	if (strlen($WhereClause)>5){
-		$WhereClause = 'WHERE ' . $WhereClause;
-	}
-	
-	$SQL = 'SELECT SUM(CASE WHEN periodno >= ' . $_POST['FromPeriod']  .' AND periodno <= ' . $_POST['ToPeriod'] . ' AND budgetoractual=1 THEN ' . $SelectClause . ' ELSE 0 END) AS thisyear,
-		SUM(CASE WHEN periodno >= ' . ($_POST['FromPeriod'] - 12)  .' AND periodno <= ' . ($_POST['ToPeriod']-12) . ' AND budgetoractual=1 THEN ' . $SelectClause . ' ELSE 0 END) AS lastyear,
-		SUM(CASE WHEN periodno >= ' . $_POST['FromPeriod']  .' AND periodno <= ' . $_POST['ToPeriod'] . ' AND budgetoractual=0 THEN ' . $SelectClause . ' ELSE 0 END) AS thisyearbudget
-		FROM salesanalysis ' . $WhereClause;
+	$WhereClause = 'WHERE ' . $WhereClause . ' salesanalysis.periodno>=' . $_POST['FromPeriod'] . ' AND salesanalysis.periodno <= ' . $_POST['ToPeriod'];
 		
-	echo $SQL;
-	exit;
-	
+	$SQL = 'SELECT salesanalysis.periodno, 
+				periods.lastdate_in_period, 
+				SUM(CASE WHEN budgetoractual=1 THEN ' . $SelectClause . ' ELSE 0 END) AS sales,
+				SUM(CASE WHEN  budgetoractual=0 THEN ' . $SelectClause . ' ELSE 0 END) AS budget
+		FROM salesanalysis INNER JOIN periods ON salesanalysis.periodno=periods.periodno ' . $WhereClause . '
+		GROUP BY salesanalysis.periodno,
+			periods.lastdate_in_period
+		ORDER BY salesanalysis.periodno';
+		
+		
 	$graph->SetTitle($GraphTitle);
-	$graph->SetOutputFile('reports/salesgraph.png');
+	$graph->SetTitleColor('blue');
+	$graph->SetOutputFile('companies/' .$_SESSION['DatabaseName'] .  '/reports/salesgraph.png');
 	$graph->SetXTitle(_('Month'));
 	if ($_POST['GraphValue']=='Net'){	
 		$graph->SetYTitle(_('Sales Value'));
@@ -260,34 +248,36 @@
 	$graph->SetMarginsPixels(80,40,40,40);
 	$graph->SetDataType('text-data');
 	
-		
-	$MovtsResult = DB_query($sql, $db);
+	$SalesResult = DB_query($SQL, $db);
 	if (DB_error_no($db) !=0) {
-		$title = _('Graph Problem');
-		include ('includes/header.inc');
-		echo _('The stock usage for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db);
+		
+		prnMsg(_('The sales graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db),'error');
 		include('includes/footer.inc');
 		exit;
 	}
-	if (DB_num_rows($MovtsResult)==0){
-		$title = _('Graph Problem');
-		include ('includes/header.inc');
-		prnMsg(_('There are no movements of this item from the selected location to graph'),'info');
+	if (DB_num_rows($SalesResult)==0){
+		prnMsg(_('There is not sales data for the criteria entered to graph'),'info');
 		include('includes/footer.inc');
 		exit;
 	}
 	
+	$GraphArrays = array();
+	$i = 0;
+	while ($myrow = DB_fetch_array($SalesResult)){
+		$GraphArray[$i] = array(MonthAndYearFromSQLDate($myrow['lastdate_in_period']),$myrow['sales'],$myrow['budget']);
+		$i++;
+	}
 	
-	$graph->SetDataValues($UsageArray);
-	/*$graph->SetDataColors(
-		array("blue","red"),  //Data Colors
-		array("black")  //Border Colors
-	);
-	*/
+	$graph->SetDataValues($GraphArray);
+	$graph->SetDataColors(
+		array('blue','red'),  //Data Colors
+		array('black')	//Border Colors
+	);  
+	$graph->SetLegend(array(_('Actual'),_('Budget')));
+	
 	//Draw it
 	$graph->DrawGraph();
-	echo '<p><center><img src=reports/salesgraph.png alt="Sales Report Graph"></img></center></p>';
+	echo '<p><center><img src="companies/' .$_SESSION['DatabaseName'] .  '/reports/salesgraph.png" alt="Sales Report Graph"></img></center></p>';
 	include('includes/footer.inc');
-	exit;
  }
  ?>
