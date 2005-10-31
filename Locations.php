@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 11;
 
@@ -171,18 +171,18 @@ if (isset($_POST['submit'])) {
 	$result = DB_query('SELECT COUNT(taxid) FROM taxauthorities',$db);
 	$NoTaxAuths =DB_fetch_row($result);
 
-	$DispTaxProvinces = DB_query('SELECT taxprovinceid FROM locations',$db);
+	$DispTaxProvincesResult = DB_query('SELECT taxprovinceid FROM locations',$db);
 	$TaxCatsResult = DB_query('SELECT taxcatid FROM taxcategories',$db);
 	if (DB_num_rows($TaxCatsResult) > 0 ) { // This will only work if there are levels else we get an error on seek.
 		
-		while ($DispTaxProvinces=DB_fetch_row($result)){
+		while ($myrow=DB_fetch_row($DispTaxProvincesResult)){
 			/*Check to see there are TaxAuthRates records set up for this TaxProvince */
-			$NoTaxRates = DB_query('SELECT taxauthority FROM taxauthrates WHERE dispatchtaxprovince=' . $DispTaxProvinces[0], $db);
+			$NoTaxRates = DB_query('SELECT taxauthority FROM taxauthrates WHERE dispatchtaxprovince=' . $myrow[0], $db);
 	
 			if (DB_num_rows($NoTaxRates) < $NoTaxAuths[0]){
 	
 				/*First off delete any tax authoritylevels already existing */
-				$DelTaxAuths = DB_query('DELETE FROM taxauthrates WHERE dispatchtaxprovince=' . $DispTaxProvinces[0],$db);
+				$DelTaxAuths = DB_query('DELETE FROM taxauthrates WHERE dispatchtaxprovince=' . $myrow[0],$db);
 	
 				/*Now add the new TaxAuthRates required */
 				while ($CatRow = DB_fetch_row($TaxCatsResult)){
@@ -190,7 +190,7 @@ if (isset($_POST['submit'])) {
 										dispatchtaxprovince, 
 										taxcatid) 
 							SELECT taxid,
-								' . $DispTaxProvinces[0] . ', 
+								' . $myrow[0] . ', 
 								' . $CatRow[0] . ' 
 							FROM taxauthorities';
 	
