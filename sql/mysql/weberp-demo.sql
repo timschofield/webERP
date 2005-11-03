@@ -2291,7 +2291,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-10-23');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-11-03');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
@@ -2778,6 +2778,7 @@ INSERT INTO `purchorderdetails` VALUES (1,1,'FUJI990101','2005-10-20','Fujitsu 9
 INSERT INTO `purchorderdetails` VALUES (2,1,'FUJI990102','2005-10-20','Fujitsu 990102 split type A/C Outdoor unit 3.5kw',1460,0,265.41,0,633,50,0,24,'0',0);
 INSERT INTO `purchorderdetails` VALUES (3,2,'HIT3034-4','2005-07-01','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor',1460,33,211,250,853,4,3,0,'0',0);
 INSERT INTO `purchorderdetails` VALUES (4,3,'HIT3034-4','2005-09-30','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor',1460,-22,250,0,853,10,11,0,'0',1);
+INSERT INTO `purchorderdetails` VALUES (5,4,'FUJI990102','2005-10-29','Fujitsu 990102 split type A/C Outdoor unit 3.5kw',1460,0,235,0,0,1,0,0,'',0);
 
 --
 -- Dumping data for table `purchorders`
@@ -2786,6 +2787,7 @@ INSERT INTO `purchorderdetails` VALUES (4,3,'HIT3034-4','2005-09-30','Hitachi Ai
 INSERT INTO `purchorders` VALUES (1,'REGNEW','','2005-06-23 00:00:00',1,'2005-07-13 00:00:00',0,'','','TOR','532-536 Wentworth Street','Denver','Colorado','233 5532 216','','','');
 INSERT INTO `purchorders` VALUES (2,'CAMPBELL','','2005-07-01 00:00:00',1,'2005-07-13 00:00:00',0,'','','TOR','532-536 Wentworth Street','Denver','Colorado','233 5532 216','','','');
 INSERT INTO `purchorders` VALUES (3,'CRUISE','','2005-09-30 00:00:00',0.8,NULL,1,'','','DEN','532-536 Wentworth Street','Denver','Colorado','','','','');
+INSERT INTO `purchorders` VALUES (4,'CAMPBELL','','2005-10-29 00:00:00',1,'2005-10-29 00:00:00',0,'','','DEN','532-536 Wentworth Street','Denver','Colorado','','','','');
 
 --
 -- Dumping data for table `recurringsalesorders`
@@ -2862,6 +2864,7 @@ INSERT INTO `salesorderdetails` VALUES (0,43,'HIT3042-ASS',0,234,5,0,0,'0000-00-
 INSERT INTO `salesorderdetails` VALUES (0,44,'FUJI990102',25,1500,25,0,0,'2005-10-03 00:00:00',1,'');
 INSERT INTO `salesorderdetails` VALUES (0,45,'FUJI990102',1,10,1,0,0,'2005-10-12 00:00:00',1,'');
 INSERT INTO `salesorderdetails` VALUES (0,46,'FUJI990101',1,1000,1,0,0,'2005-10-15 00:00:00',1,'');
+INSERT INTO `salesorderdetails` VALUES (0,47,'HIT3042-ASS',0,3550,1,0,0,'0000-00-00 00:00:00',0,'Test line narrative - installation and compliance testing');
 INSERT INTO `salesorderdetails` VALUES (1,1,'HIT3034-4',0,1680,2,0,0,'0000-00-00 00:00:00',0,'Installation experts at 1800 12345667');
 INSERT INTO `salesorderdetails` VALUES (1,2,'HIT3043-5',0,2300,3,0,0,'0000-00-00 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (1,7,'HIT3042-ASS',0,2500,1,0,0.025,'2005-06-17 00:00:00',0,'');
@@ -2885,6 +2888,7 @@ INSERT INTO `salesorders` VALUES (43,'DUMBLE','DUMBLE','',NULL,'','2005-08-21','
 INSERT INTO `salesorders` VALUES (44,'JOLOMU','JOLOMU','',NULL,' Inv 5','2005-10-02','DE',1,'3215 Great Western Highway','Blubberhouses','Yorkshire','England','','','+44 812 211456','jolomu@lorrima.co.uk','Lorrima Productions Inc',1,50,'TOR','2005-10-03',0,'0000-00-00',0);
 INSERT INTO `salesorders` VALUES (45,'QUARTER','QUARTER','',NULL,' Inv 6','2005-10-11','DE',1,'123 Road Road','Suburb','Town','Country','Postcode','????','123456','','Quarter Back to Back',1,0,'TOR','2005-10-12',1,'2005-10-11',0);
 INSERT INTO `salesorders` VALUES (46,'DUMBLE','DUMBLE','',NULL,' Inv 7','2005-10-14','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal & Co',1,0,'TOR','2005-10-15',1,'2005-10-14',0);
+INSERT INTO `salesorders` VALUES (47,'ANGRY','ANGRY','',NULL,'General comment covering all line items on the quotation. Testing to see if it all prints out nicely on a quotation','2005-10-30','DE',8,'P O Box 67','Gowerbridge','Upperton','Toronto Canada','','','0422 2245 2213','graville@angry.com','Angus Rouledge - Toronto',1,0,'DEN','2005-10-31',0,'0000-00-00',1);
 
 --
 -- Dumping data for table `salestypes`
@@ -3267,6 +3271,7 @@ INSERT INTO `stockserialmoves` VALUES (16,23,'HIT3034-4','5444',2);
 -- Dumping data for table `suppliercontacts`
 --
 
+INSERT INTO `suppliercontacts` VALUES ('CRUISE','Barry Toad','Slips','92827','0204389','','',0);
 
 --
 -- Dumping data for table `suppliers`
@@ -3275,6 +3280,7 @@ INSERT INTO `stockserialmoves` VALUES (16,23,'HIT3034-4','5444',2);
 INSERT INTO `suppliers` VALUES ('BINGO','Binary Green Ocean Inc','Box 3499','Gardenier','San Fransisco','California 54424','','','USD','2003-03-01','30',0,NULL,'','0','',0,1);
 INSERT INTO `suppliers` VALUES ('CAMPBELL','Campbell Roberts Inc','Box 9882','Ottowa Rise','','','','','USD','2005-06-23','30',0,NULL,'','0','',0,2);
 INSERT INTO `suppliers` VALUES ('CRUISE','Cruise Company Inc','Box 2001','Ft Lauderdale, Florida','','','','','GBP','2005-06-23','30',0,NULL,'','0','',0,3);
+INSERT INTO `suppliers` VALUES ('GOTSTUFF','We Got the Stuff Inc','Test line 1','Test line 2','Test line 3','Test line 4 - editing','','','USD','2005-10-29','20',0,NULL,'','ok then','tell me abou',0,1);
 INSERT INTO `suppliers` VALUES ('REGNEW','Reg Newall Inc','P O 5432','Wichita','Wyoming','','','','USD','2005-04-30','30',0,NULL,'','0','',0,1);
 
 --
@@ -3412,7 +3418,7 @@ INSERT INTO `workcentres` VALUES ('ASS','TOR','Assembly',1,'50',560000,'0');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','fr_FR');
+INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

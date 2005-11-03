@@ -2038,10 +2038,16 @@ INSERT INTO `taxcategories` VALUES (2,'Luxury Items');
 INSERT INTO `taxcategories` VALUES (4,'Exempt');
 
 --
+-- Dumping data for table `taxprovinces`
+--
+
+INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
+
+--
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','fr_FR');
+INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
 
 --
 -- Dumping data for table `edi_orders_segs`
@@ -2198,7 +2204,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-10-23');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-11-03');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');

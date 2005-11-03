@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.40 $ */
+/* $Revision: 1.41 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -1101,12 +1101,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				}
 
 				if (file_exists($_SERVER['DOCUMENT_ROOT'] . $ImageSource)){
-					printf("<td><FONT SIZE=1>%s</FONT></td>
-						<td><FONT SIZE=1>%s</FONT></td>
-						<td><FONT SIZE=1>%s</FONT></td>
-						<td><img src=%s></td>
-						<td><FONT SIZE=1><a href='%s/SelectOrderItems.php?%s&NewItem=%s'>" . _('Order some') . "</a></FONT></td>
-						</tr>",
+					printf("<TD><FONT SIZE=1>%s</FONT></TD>
+						<TD><FONT SIZE=1>%s</FONT></TD>
+						<TD><FONT SIZE=1>%s</FONT></TD>
+						<TD><IMG SRC=%s WIDTH=250></TD>
+						<TD><FONT SIZE=1><A HREF='%s/SelectOrderItems.php?%s&NewItem=%s'>" . _('Order some') . "</A></FONT></TD>
+						</TR>",
 						$myrow['stockid'],
 						$myrow['description'],
 						$myrow['units'],

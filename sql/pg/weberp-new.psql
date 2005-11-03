@@ -6618,6 +6618,32 @@ SET check_function_bodies = false;
 SET search_path = public, pg_catalog;
 
 --
+-- Data for TOC entry 3 (OID 62235)
+-- Name: taxprovinces; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
+--
+
+INSERT INTO taxprovinces VALUES (1, 'Default Tax Province');
+INSERT INTO taxprovinces VALUES (6, 'Tax Province 2');
+
+
+--
+-- TOC entry 2 (OID 62233)
+-- Name: taxprovinces_taxprovinceid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
+--
+
+SELECT pg_catalog.setval('taxprovinces_taxprovinceid_seq', 6, true);
+
+
+--
+-- PostgreSQL database dump
+--
+
+SET client_encoding = 'SQL_ASCII';
+SET check_function_bodies = false;
+
+SET search_path = public, pg_catalog;
+
+--
 -- Data for TOC entry 2 (OID 36354)
 -- Name: www_users; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
