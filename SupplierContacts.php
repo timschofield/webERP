@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity=5;
 
@@ -149,7 +149,7 @@ if (!isset($SelectedContact)){
 				<TD>%s</TD>
 				<TD><A HREF='mailto:%s'>%s</TD>
 				<TD><A HREF='%s&SupplierID=%s&SelectedContact=%s'>" . _('Edit') . "</TD>
-				<TD><A HREF='%s?SupplierID=%s&SelectedContact=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this contact?') . "');\">" .  _('Delete') . '</TD>
+				<TD><A HREF='%s&SupplierID=%s&SelectedContact=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this contact?') . "');\">" .  _('Delete') . '</TD>
 				</TR>',
 				$myrow[1],
 				$myrow[2],
