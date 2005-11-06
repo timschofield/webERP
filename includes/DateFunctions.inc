@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 /*
 date validation and parsing functions
@@ -76,7 +76,7 @@ function MonthAndYearFromSQLDate($DateEntry) {
 		$Date_Array[2]= substr($Date_Array[2],0,2);
 	}
 
-	Return Date('F Y', mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[2],(int)$Date_Array[0]));
+	Return ucfirst(strftime('%B %Y', mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[2],(int)$Date_Array[0])));
 
 }
 

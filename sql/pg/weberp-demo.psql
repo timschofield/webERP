@@ -178,10 +178,10 @@ CREATE TABLE companies (
     coyname text DEFAULT ''::text NOT NULL,
     gstno text DEFAULT ''::text NOT NULL,
     companynumber text DEFAULT '0'::text NOT NULL,
-    postaladdress text DEFAULT ''::text NOT NULL,
     regoffice1 text DEFAULT ''::text NOT NULL,
     regoffice2 text DEFAULT ''::text NOT NULL,
     regoffice3 text DEFAULT ''::text NOT NULL,
+    regoffice4 text DEFAULT ''::text NOT NULL,
     telephone text DEFAULT ''::text NOT NULL,
     fax text DEFAULT ''::text NOT NULL,
     email text DEFAULT ''::text NOT NULL,
@@ -197,7 +197,9 @@ CREATE TABLE companies (
     gllink_debtors integer DEFAULT 1,
     gllink_creditors integer DEFAULT 1,
     gllink_stock integer DEFAULT 1,
-    freightact integer DEFAULT 0 NOT NULL
+    freightact integer DEFAULT 0 NOT NULL,
+    regoffice5 character varying(20) DEFAULT ''::text,
+    regoffice6 character varying(15) DEFAULT ''::text
 );
 
 
@@ -310,7 +312,10 @@ CREATE TABLE locations (
     email text DEFAULT ''::text NOT NULL,
     contact text DEFAULT ''::text NOT NULL,
     taxprovinceid integer DEFAULT 1 NOT NULL,
-    managed integer DEFAULT 0
+    managed integer DEFAULT 0,
+    deladd4 character varying(40) DEFAULT ''::text,
+    deladd5 character varying(20) DEFAULT ''::text,
+    deladd6 character varying(15) DEFAULT ''::text
 );
 
 
@@ -463,7 +468,9 @@ CREATE TABLE suppliers (
     bankref text DEFAULT ''::text NOT NULL,
     bankpartics text DEFAULT ''::text NOT NULL,
     remittance integer DEFAULT 1 NOT NULL,
-    taxgroupid integer DEFAULT 1 NOT NULL
+    taxgroupid integer DEFAULT 1 NOT NULL,
+    address5 character varying(20) DEFAULT ''::text,
+    address6 character varying(20) DEFAULT ''::text
 );
 
 
@@ -794,7 +801,10 @@ CREATE TABLE purchorders (
     deladd1 text DEFAULT ''::text NOT NULL,
     deladd2 text DEFAULT ''::text NOT NULL,
     deladd3 text DEFAULT ''::text NOT NULL,
-    deladd4 text DEFAULT ''::text NOT NULL
+    deladd4 text DEFAULT ''::text NOT NULL,
+    deladd5 character varying(20) DEFAULT ''::text,
+    deladd6 character varying(15) DEFAULT ''::text,
+    contact character varying(30) DEFAULT ''::text
 );
 
 
@@ -874,9 +884,7 @@ CREATE TABLE www_users (
     blocked integer DEFAULT 0 NOT NULL,
     displayrecordsmax integer DEFAULT 0 NOT NULL,
     theme text DEFAULT 'fresh'::text NOT NULL,
-    "language" text DEFAULT 'en_GB'::text NOT NULL,
-    pinno text,
-    swipecard text
+    "language" text DEFAULT 'en_GB'::text NOT NULL
 );
 
 
@@ -1183,7 +1191,9 @@ CREATE TABLE salesorders (
     printedpackingslip integer DEFAULT 0 NOT NULL,
     datepackingslipprinted date,
     quotation integer DEFAULT 0,
-    deliverblind integer DEFAULT 1
+    deliverblind integer DEFAULT 1,
+    deladd5 character varying(20) DEFAULT ''::text,
+    deladd6 character varying(20) DEFAULT ''::text
 );
 
 
@@ -2186,7 +2196,9 @@ CREATE TABLE recurringsalesorders (
     lastrecurrence date DEFAULT now(),
     frequency integer DEFAULT 1 NOT NULL,
     stopdate date,
-    autoinvoice integer DEFAULT 0 NOT NULL
+    autoinvoice integer DEFAULT 0 NOT NULL,
+    deladd5 character varying(20) DEFAULT ''::text,
+    deladd6 character varying(15) DEFAULT ''::text
 );
 
 
@@ -2687,8 +2699,8 @@ COPY taxauthorities (taxid, description, taxglcode, purchtaxglaccount, bank, ban
 -- Name: companies; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY companies (coycode, coyname, gstno, companynumber, postaladdress, regoffice1, regoffice2, regoffice3, telephone, fax, email, currencydefault, debtorsact, pytdiscountact, creditorsact, payrollact, grnact, exchangediffact, purchasesexchangediffact, retainedearnings, gllink_debtors, gllink_creditors, gllink_stock, freightact) FROM stdin;
-1	webERP Demo		0	123 Post Office Box	The White House	Washnington DC	USA	03 45444 5442 	03 54444 45454		USD	1100	4900	2100	2400	2150	4850	5250	3500	1	1	1	5600
+COPY companies (coycode, coyname, gstno, companynumber, regoffice1, regoffice2, regoffice3, regoffice4, telephone, fax, email, currencydefault, debtorsact, pytdiscountact, creditorsact, payrollact, grnact, exchangediffact, purchasesexchangediffact, retainedearnings, gllink_debtors, gllink_creditors, gllink_stock, freightact, regoffice5, regoffice6) FROM stdin;
+1	webERP Demo		0	123 Post Office Box	The White House	Washnington DC	USA	03 45444 5442 	03 54444 45454		USD	1100	4900	2100	2400	2150	4850	5250	3500	1	1	1	5600	\N	\N
 \.
 
 
@@ -2767,8 +2779,8 @@ COPY lastcostrollup (stockid, totalonhand, matcost, labcost, oheadcost, category
 -- Name: locations; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY locations (loccode, locationname, deladd1, deladd2, deladd3, tel, fax, email, contact, taxprovinceid, managed) FROM stdin;
-CPT	Cape Town	na	na	na	na	na	weberp@paradise.net.nz	na	1	\N
+COPY locations (loccode, locationname, deladd1, deladd2, deladd3, tel, fax, email, contact, taxprovinceid, managed, deladd4, deladd5, deladd6) FROM stdin;
+CPT	Cape Town	na	na	na	na	na	weberp@paradise.net.nz	na	1	\N	\N	\N	\N
 \.
 
 
@@ -2851,10 +2863,10 @@ REF	Referral			0.0000	0.0000	0.0000
 -- Name: suppliers; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY suppliers (supplierid, suppname, address1, address2, address3, address4, currcode, suppliersince, paymentterms, lastpaid, lastpaiddate, bankact, bankref, bankpartics, remittance, taxgroupid) FROM stdin;
-SUP01	Test Supplier	Na	Na	Na	Na	ZAR	2004-12-01	CA	130.0000	2004-12-05 00:00:00		0	Na	0	1
-TEST	etstt	sst	stt	sst		ZAR	2004-12-28	CA	0.0000	\N		0		0	1
-MAUKAU	Tisco Manukau					ZAR	2005-02-03	7	0.0000	\N		0		0	1
+COPY suppliers (supplierid, suppname, address1, address2, address3, address4, currcode, suppliersince, paymentterms, lastpaid, lastpaiddate, bankact, bankref, bankpartics, remittance, taxgroupid, address5, address6) FROM stdin;
+SUP01	Test Supplier	Na	Na	Na	Na	ZAR	2004-12-01	CA	130.0000	2004-12-05 00:00:00		0	Na	0	1	\N	\N
+TEST	etstt	sst	stt	sst		ZAR	2004-12-28	CA	0.0000	\N		0		0	1	\N	\N
+MAUKAU	Tisco Manukau					ZAR	2005-02-03	7	0.0000	\N		0		0	1	\N	\N
 \.
 
 
@@ -3078,11 +3090,11 @@ SUP01	Jonny Dep	Owner	na	na	na	jowny@unknown.com	0
 -- Name: purchorders; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY purchorders (orderno, supplierno, comments, orddate, rate, dateprinted, allowprint, initiator, requisitionno, intostocklocation, deladd1, deladd2, deladd3, deladd4) FROM stdin;
-2	SUP01		2004-12-02 00:00:00	1.0000	\N	1			CPT	n/a	n/a	n/a	n/a
-5	SUP01		2004-12-04 00:00:00	1.0000	\N	1	testy	REF0001	CPT	na	na	na	na
-6	SUP01		2005-01-13 00:00:00	1.0000	2005-01-13 00:00:00	0	pdg		CPT	Some Road	Some Town	Some City	0231 122211
-7	TEST		2005-08-18 00:00:00	1.0000	\N	1	pdg		CPT	Percy Montgomery Drive	Ollieville	Cape Town	233120100
+COPY purchorders (orderno, supplierno, comments, orddate, rate, dateprinted, allowprint, initiator, requisitionno, intostocklocation, deladd1, deladd2, deladd3, deladd4, deladd5, deladd6, contact) FROM stdin;
+2	SUP01		2004-12-02 00:00:00	1.0000	\N	1			CPT	n/a	n/a	n/a	n/a	\N	\N	\N
+5	SUP01		2004-12-04 00:00:00	1.0000	\N	1	testy	REF0001	CPT	na	na	na	na	\N	\N	\N
+6	SUP01		2005-01-13 00:00:00	1.0000	2005-01-13 00:00:00	0	pdg		CPT	Some Road	Some Town	Some City	0231 122211	\N	\N	\N
+7	TEST		2005-08-18 00:00:00	1.0000	\N	1	pdg		CPT	Percy Montgomery Drive	Ollieville	Cape Town	233120100	\N	\N	\N
 \.
 
 
@@ -3131,8 +3143,8 @@ COPY taxauthrates (taxauthority, dispatchtaxprovince, taxcatid, taxrate) FROM st
 -- Name: www_users; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY www_users (userid, "password", realname, customerid, phone, email, defaultlocation, fullaccess, lastvisitdate, branchcode, pagesize, modulesallowed, blocked, displayrecordsmax, theme, "language", pinno, swipecard) FROM stdin;
-demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2005-09-10 16:58:22		A4	1,1,1,1,1,1,1,1,	0	50	fresh	en_GB	\N	\N
+COPY www_users (userid, "password", realname, customerid, phone, email, defaultlocation, fullaccess, lastvisitdate, branchcode, pagesize, modulesallowed, blocked, displayrecordsmax, theme, "language") FROM stdin;
+demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2005-09-10 16:58:22		A4	1,1,1,1,1,1,1,1,	0	50	fresh	en_GB
 \.
 
 
@@ -3427,38 +3439,38 @@ COPY contractreqts (contractreqid, contract, component, quantity, priceperunit) 
 -- Name: salesorders; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY salesorders (orderno, debtorno, branchcode, customerref, buyername, comments, orddate, ordertype, shipvia, deladd1, deladd2, deladd3, deladd4, contactphone, contactemail, deliverto, freightcost, fromstkloc, deliverydate, printedpackingslip, datepackingslipprinted, quotation, deliverblind) FROM stdin;
-1	CUST01	CUST01	REF01	\N		2004-12-03	WS	2	N/a	N/a	N/a	N/a	N/A		Customer	50.00	CPT	2004-12-04	0	\N	\N	\N
-2	CUST01	CUST01	REF01	\N	 Inv 4	2004-12-03	WS	2	N/a	N/a	N/a	N/a	N/A		Customer	50.00	CPT	2004-12-04	1	2004-04-12	\N	\N
-4	CUST01	CUST01	REFC01	\N	\N	2004-12-04	WS	1	Na	Na	Na	Na	NA	NA	Customer	0.00	CPT	2004-12-05	0	\N	\N	\N
-5	CUST01	CUST01		\N	 Inv 10	2005-01-13	WS	1	Na	Na	Na	Na	NA		Customer	0.00	CPT	2005-01-14	1	2005-01-13	\N	\N
-7	CUST01	CUST01		\N	 Inv 11	2005-01-14	WS	1	Na	Na	Na	Na	NA	NA	Customer	0.00	CPT	2005-01-15	1	2005-01-14	0	\N
-54	FREDBLOGG	FREDBLOGG		\N		2005-07-30	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-08-01	0	\N	0	1
-9	FREDBLOGG	FREDBLOGG		\N	 Inv 15	2005-03-19	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-21	0	\N	0	\N
-10	FREDBLOGG	FREDBLOGG		\N		2005-03-19	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-21	0	\N	0	\N
-52	FREDBLOGG	FREDBLOGG		\N		2005-03-31	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-04-01	0	\N	0	2
-55	CUST01	CUST01		\N	 Inv 2	2005-08-18	WS	1	Na	Na	Na	Na	NA	NA	Customer	0.00	CPT	2005-08-19	1	2005-08-18	0	1
-15	CUST01	CUST01		\N		2005-06-03	WS	1					NA	NA	Customer	0.00	CPT	2005-06-03	0	\N	0	\N
-16	CUST01	CUST01		\N		2005-06-03	WS	1					NA	NA	Customer	0.00	CPT	2005-06-03	0	\N	0	\N
-17	CUST01	CUST01		\N		2005-06-03	WS	1					NA	NA	Customer	0.00	CPT	2005-06-03	0	\N	0	\N
-18	CUST01	CUST01		\N		2005-06-03	WS	1					NA	NA	Customer	0.00	CPT	2005-06-03	0	\N	0	\N
-19	CUST01	CUST01		\N		2005-06-03	WS	1					NA	NA	Customer	0.00	CPT	2005-06-03	0	\N	0	\N
-20	CUST01	CUST01		\N		2005-03-08	WS	1					NA	NA	Customer	0.00	CPT	2005-03-08	0	\N	0	\N
-21	CUST01	CUST01		\N		2005-03-15	WS	1					NA	NA	Customer	0.00	CPT	2005-03-15	0	\N	0	\N
-22	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-02-08	WS	2							Eric Van Halen	0.00	CPT	2005-02-08	0	\N	0	\N
-23	CUST01	CUST01		\N		2005-03-22	WS	1					NA	NA	Customer	0.00	CPT	2005-03-22	0	\N	0	\N
-24	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-02-15	WS	2							Eric Van Halen	0.00	CPT	2005-02-15	0	\N	0	\N
-25	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-02-22	WS	2							Eric Van Halen	0.00	CPT	2005-02-22	0	\N	0	\N
-26	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-03-01	WS	2							Eric Van Halen	0.00	CPT	2005-03-01	0	\N	0	\N
-27	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-03-08	WS	2							Eric Van Halen	0.00	CPT	2005-03-08	0	\N	0	\N
-28	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-03-15	WS	2							Eric Van Halen	0.00	CPT	2005-03-15	0	\N	0	\N
-29	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-03-22	WS	2							Eric Van Halen	0.00	CPT	2005-03-22	0	\N	0	\N
-30	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-01-08	WS	2							Eric Van Halen	0.00	CPT	2005-01-08	0	\N	0	\N
-57	100001	100001		\N		2005-08-18	WS	2	453A Globus Contrabandus St	Aardvarkston					Eric Van Halen	0.00	CPT	2005-08-19	0	\N	0	1
-56	100001	100001		\N	 Inv 3	2005-08-18	WS	2	453A Globus Contrabandus St	Aardvarkston					Eric Van Halen	0.00	CPT	2005-08-19	0	\N	0	1
-11	FREDBLOGG	FREDBLOGG		\N	 Inv 1	2005-03-19	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-21	0	\N	0	\N
-6	CUST01	CUST01		\N	 Inv 12 Inv 6	2005-01-13	WS	1	Na	Na	Na	Na	NA	NA	Customer	0.00	CPT	2005-01-14	0	\N	0	\N
-8	FREDBLOGG	FREDBLOGG		\N	 Inv 14 Inv 7	2005-03-18	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-19	0	\N	0	\N
+COPY salesorders (orderno, debtorno, branchcode, customerref, buyername, comments, orddate, ordertype, shipvia, deladd1, deladd2, deladd3, deladd4, contactphone, contactemail, deliverto, freightcost, fromstkloc, deliverydate, printedpackingslip, datepackingslipprinted, quotation, deliverblind, deladd5, deladd6) FROM stdin;
+1	CUST01	CUST01	REF01	\N		2004-12-03	WS	2	N/a	N/a	N/a	N/a	N/A		Customer	50.00	CPT	2004-12-04	0	\N	\N	\N	\N	\N
+2	CUST01	CUST01	REF01	\N	 Inv 4	2004-12-03	WS	2	N/a	N/a	N/a	N/a	N/A		Customer	50.00	CPT	2004-12-04	1	2004-04-12	\N	\N	\N	\N
+4	CUST01	CUST01	REFC01	\N	\N	2004-12-04	WS	1	Na	Na	Na	Na	NA	NA	Customer	0.00	CPT	2004-12-05	0	\N	\N	\N	\N	\N
+5	CUST01	CUST01		\N	 Inv 10	2005-01-13	WS	1	Na	Na	Na	Na	NA		Customer	0.00	CPT	2005-01-14	1	2005-01-13	\N	\N	\N	\N
+7	CUST01	CUST01		\N	 Inv 11	2005-01-14	WS	1	Na	Na	Na	Na	NA	NA	Customer	0.00	CPT	2005-01-15	1	2005-01-14	0	\N	\N	\N
+54	FREDBLOGG	FREDBLOGG		\N		2005-07-30	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-08-01	0	\N	0	1	\N	\N
+9	FREDBLOGG	FREDBLOGG		\N	 Inv 15	2005-03-19	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-21	0	\N	0	\N	\N	\N
+10	FREDBLOGG	FREDBLOGG		\N		2005-03-19	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-21	0	\N	0	\N	\N	\N
+52	FREDBLOGG	FREDBLOGG		\N		2005-03-31	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-04-01	0	\N	0	2	\N	\N
+55	CUST01	CUST01		\N	 Inv 2	2005-08-18	WS	1	Na	Na	Na	Na	NA	NA	Customer	0.00	CPT	2005-08-19	1	2005-08-18	0	1	\N	\N
+15	CUST01	CUST01		\N		2005-06-03	WS	1					NA	NA	Customer	0.00	CPT	2005-06-03	0	\N	0	\N	\N	\N
+16	CUST01	CUST01		\N		2005-06-03	WS	1					NA	NA	Customer	0.00	CPT	2005-06-03	0	\N	0	\N	\N	\N
+17	CUST01	CUST01		\N		2005-06-03	WS	1					NA	NA	Customer	0.00	CPT	2005-06-03	0	\N	0	\N	\N	\N
+18	CUST01	CUST01		\N		2005-06-03	WS	1					NA	NA	Customer	0.00	CPT	2005-06-03	0	\N	0	\N	\N	\N
+19	CUST01	CUST01		\N		2005-06-03	WS	1					NA	NA	Customer	0.00	CPT	2005-06-03	0	\N	0	\N	\N	\N
+20	CUST01	CUST01		\N		2005-03-08	WS	1					NA	NA	Customer	0.00	CPT	2005-03-08	0	\N	0	\N	\N	\N
+21	CUST01	CUST01		\N		2005-03-15	WS	1					NA	NA	Customer	0.00	CPT	2005-03-15	0	\N	0	\N	\N	\N
+22	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-02-08	WS	2							Eric Van Halen	0.00	CPT	2005-02-08	0	\N	0	\N	\N	\N
+23	CUST01	CUST01		\N		2005-03-22	WS	1					NA	NA	Customer	0.00	CPT	2005-03-22	0	\N	0	\N	\N	\N
+24	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-02-15	WS	2							Eric Van Halen	0.00	CPT	2005-02-15	0	\N	0	\N	\N	\N
+25	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-02-22	WS	2							Eric Van Halen	0.00	CPT	2005-02-22	0	\N	0	\N	\N	\N
+26	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-03-01	WS	2							Eric Van Halen	0.00	CPT	2005-03-01	0	\N	0	\N	\N	\N
+27	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-03-08	WS	2							Eric Van Halen	0.00	CPT	2005-03-08	0	\N	0	\N	\N	\N
+28	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-03-15	WS	2							Eric Van Halen	0.00	CPT	2005-03-15	0	\N	0	\N	\N	\N
+29	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-03-22	WS	2							Eric Van Halen	0.00	CPT	2005-03-22	0	\N	0	\N	\N	\N
+30	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-01-08	WS	2							Eric Van Halen	0.00	CPT	2005-01-08	0	\N	0	\N	\N	\N
+57	100001	100001		\N		2005-08-18	WS	2	453A Globus Contrabandus St	Aardvarkston					Eric Van Halen	0.00	CPT	2005-08-19	0	\N	0	1	\N	\N
+56	100001	100001		\N	 Inv 3	2005-08-18	WS	2	453A Globus Contrabandus St	Aardvarkston					Eric Van Halen	0.00	CPT	2005-08-19	0	\N	0	1	\N	\N
+11	FREDBLOGG	FREDBLOGG		\N	 Inv 1	2005-03-19	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-21	0	\N	0	\N	\N	\N
+6	CUST01	CUST01		\N	 Inv 12 Inv 6	2005-01-13	WS	1	Na	Na	Na	Na	NA	NA	Customer	0.00	CPT	2005-01-14	0	\N	0	\N	\N	\N
+8	FREDBLOGG	FREDBLOGG		\N	 Inv 14 Inv 7	2005-03-18	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-19	0	\N	0	\N	\N	\N
 \.
 
 
@@ -3534,9 +3546,9 @@ EU	Europe
 -- Name: recurringsalesorders; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-COPY recurringsalesorders (recurrorderno, debtorno, branchcode, customerref, buyername, comments, orddate, ordertype, shipvia, deladd1, deladd2, deladd3, deladd4, contactphone, contactemail, deliverto, freightcost, fromstkloc, deliverydate, lastrecurrence, frequency, stopdate, autoinvoice) FROM stdin;
-5	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-03-25	WS	2	453A Globus Contrabandus St	Aardvarkston					Eric Van Halen	0.00	CPT	2005-03-25	2005-03-19	52	2005-04-30	1
-4	CUST01	CUST01		\N		2005-03-25	WS	1	Na	Na	Na	Na	NA	NA	Customer	0.00	CPT	2005-03-25	2005-03-19	52	2006-03-26	0
+COPY recurringsalesorders (recurrorderno, debtorno, branchcode, customerref, buyername, comments, orddate, ordertype, shipvia, deladd1, deladd2, deladd3, deladd4, contactphone, contactemail, deliverto, freightcost, fromstkloc, deliverydate, lastrecurrence, frequency, stopdate, autoinvoice, deladd5, deladd6) FROM stdin;
+5	100001	100001	RGD-25441	\N	Standing order for ongoing work	2005-03-25	WS	2	453A Globus Contrabandus St	Aardvarkston					Eric Van Halen	0.00	CPT	2005-03-25	2005-03-19	52	2005-04-30	1	\N	\N
+4	CUST01	CUST01		\N		2005-03-25	WS	1	Na	Na	Na	Na	NA	NA	Customer	0.00	CPT	2005-03-25	2005-03-19	52	2006-03-26	0	\N	\N
 \.
 
 
@@ -3721,12 +3733,11 @@ OverReceiveProportion	20
 PO_AllowSameItemMultipleTimes	1
 YearEnd	3
 PageLength	48
+part_pics_dir	companies/weberp/part_pics
 MaxImageSize	300
 EDIHeaderMsgId	D:01B:UN:EAN010
 EDIReference	WEBERP
-EDI_MsgPending	EDI_Pending
 EDI_MsgSent	EDI_Sent
-EDI_Incoming_Orders	EDI_Incoming_Orders
 DefaultDisplayRecordsMax	50
 RadioBeaconStockLocation	BL
 RadioBeaconHomeDir	/home/RadioBeacon
@@ -3738,11 +3749,12 @@ RadionBeaconFTP_user_pass	Radio Beacon remote ftp server password
 CountryOfOperation	EUR
 DefaultTheme	professional
 DefaultTaxCategory	1
-part_pics_dir	companies/weberp/part_pics
+EDI_Incoming_Orders	companies/weberp/EDI_Incoming_Orders
 HTTPS_Only	0
-reports_dir	companies/weberp/reports
+EDI_MsgPending	companies/weberp/EDI_MsgPending
 DB_Maintenance	7
 AutoDebtorNo	0
+reports_dir	companies/weberp/reports
 PackNoteFormat	1
 DefaultBlindPackNote	1
 CheckCreditLimits	0

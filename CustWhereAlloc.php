@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -10,7 +10,7 @@ echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "' METHOD=POST>";
 
 echo '<CENTER><TABLE CELLPADDING=2><TR>';
 
-echo "<TD>Type:</TD><TD><SELECT name='TransType'> ";
+echo '<TD>' . _('Type') . ":</TD><TD><SELECT name='TransType'> ";
 
 $sql = 'SELECT typeid, typename FROM systypes WHERE typeid = 10 OR typeid=12';
 $resultTypes = DB_query($sql,$db);

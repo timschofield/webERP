@@ -1,5 +1,10 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
+<P>6/11/05 Briain - added LC_NUMERIC in LanguageSetup.php, DateFunctions.inc MonthAndYearFromSQLDate fixed for locale using strftime
+<P>6/11/05 Briain - fixed CustWhereAlloc - string 'Type' not in _('') function
+<P>6/11/05 emdeex - fixed SalesGraph sh/been SalesFolkResult not StockCatsResult and default $_POST['SalesmanCode']
+<P>6/11/05 Fixed bug in SuppInvGRNs.php - nominal purchase order items could not be invoiced since the GL code was lost (it wasn't retrieved in the selectable list of outstanding GRNs)
+<P>5/11/05 Removed references to css/images/bg.gif in includes/login.php and logout.php
 <P>3/11/05 Reported by Ed@unixmania SupplierContacts.php extra ? sh/be an & in the URL string
 <P>31/10/05 Translation.txt transferred to a new section in the manual
 <P>31/10/05 SalesGraph.php script allows printing various sales graphs by stock category, rep, sales area, item and customer linked from index.php

@@ -25,6 +25,7 @@ if (function_exists('gettext')){
 	
 	$Locale = setlocale (LC_CTYPE, $_SESSION['Language']);
 	$Locale = setlocale (LC_MESSAGES, $_SESSION['Language']);
+	$Locale = setlocale (LC_NUMERIC, $_SESSION['Language']); //thought there was a reason why we couldn't do this
 	
 	// possibly even if locale fails the language will still switch by using Language instead of locale variable
 	putenv('LANG=' . $_SESSION['Language']);

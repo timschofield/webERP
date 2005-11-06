@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-03 21:31+1300\n"
+"POT-Creation-Date: 2005-11-06 22:42+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -803,8 +803,8 @@ msgstr ""
 #: CustomerTransInquiry.php:81 CustWhereAlloc.php:77 GLJournal.php:228
 #: GLJournal.php:236 GLTransInquiry.php:71 Payments.php:564 Payments.php:607
 #: SelectCreditItems.php:677 SuppInvGLAnalysis.php:50 SuppInvGLAnalysis.php:74
-#: SupplierAllocations.php:469 SupplierCredit.php:308 SupplierInvoice.php:267
-#: SupplierInvoice.php:297 SuppShiptChgs.php:71 SuppShiptChgs.php:132
+#: SupplierAllocations.php:469 SupplierCredit.php:308 SupplierInvoice.php:268
+#: SupplierInvoice.php:298 SuppShiptChgs.php:71 SuppShiptChgs.php:132
 #: SuppTransGLAnalysis.php:90 SuppTransGLAnalysis.php:161 Z_CheckAllocs.php:63
 #: includes/PDFBankingSummaryPageHeader.inc:55
 #: includes/PDFChequeListingPageHeader.inc:37
@@ -885,10 +885,10 @@ msgstr ""
 
 #: BankReconciliation.php:93 BankReconciliation.php:164
 #: CustomerAllocations.php:400 CustomerInquiry.php:178
-#: CustomerTransInquiry.php:16 CustWhereAlloc.php:73 GLAccountInquiry.php:110
-#: GLJournal.php:188 ShipmentCosting.php:344 ShipmentCosting.php:420
-#: StockCategories.php:143 StockLocMovements.php:77 StockMovements.php:91
-#: SupplierAllocations.php:465 SupplierInquiry.php:189
+#: CustomerTransInquiry.php:16 CustWhereAlloc.php:13 CustWhereAlloc.php:73
+#: GLAccountInquiry.php:110 GLJournal.php:188 ShipmentCosting.php:344
+#: ShipmentCosting.php:420 StockCategories.php:143 StockLocMovements.php:77
+#: StockMovements.php:91 SupplierAllocations.php:465 SupplierInquiry.php:189
 #: Z_CheckAllocationsFrom.php:27 Z_CheckAllocationsFrom.php:50
 #: Z_CheckAllocs.php:59 Z_CheckGLTransBalance.php:12
 #: includes/InputSerialItemsFile.php:85 includes/InputSerialItemsFile.php:126
@@ -959,7 +959,7 @@ msgstr ""
 #: DeliveryDetails.php:430 GoodsReceived.php:50 OrderDetails.php:209
 #: PO_Items.php:707 PO_OrderDetails.php:130 PrintCustTrans.php:791
 #: PrintCustTrans.php:875 PrintCustTrans.php:920 RecurringSalesOrders.php:309
-#: ReverseGRN.php:328 SalesGraph.php:150 SelectCreditItems.php:667
+#: ReverseGRN.php:328 SalesGraph.php:154 SelectCreditItems.php:667
 #: SelectOrderItems.php:945 StockLocMovements.php:76 StockLocTransfer.php:158
 #: StockLocTransferReceive.php:399 StockQuantityByDate.php:88 Stocks.php:442
 #: Stocks.php:485 Stocks.php:489 SuppCreditGRNs.php:70 SuppCreditGRNs.php:142
@@ -1017,7 +1017,7 @@ msgstr ""
 #: PO_Items.php:709 PrintCustTrans.php:793 PrintCustTrans.php:877
 #: PrintCustTrans.php:922 RecurringSalesOrders.php:311 ReverseGRN.php:331
 #: ReverseGRN.php:332 SalesAnalReptCols.php:18 SalesAnalReptCols.php:20
-#: SalesGraph.php:157 SalesGraph.php:237 SelectCreditItems.php:669
+#: SalesGraph.php:161 SalesGraph.php:241 SelectCreditItems.php:669
 #: SelectCreditItems.php:1003 SelectOrderItems.php:947
 #: SelectOrderItems.php:1150 ShipmentCosting.php:132 Shipments.php:372
 #: Shipments.php:374 Shipments.php:375 Shipments.php:448 Shipments.php:450
@@ -1526,7 +1526,7 @@ msgstr ""
 
 #: CompanyPreferences.php:162 CustomerBranches.php:293 SalesPeople.php:171
 #: SuppInvGLAnalysis.php:49 SuppInvGLAnalysis.php:73 SupplierContacts.php:139
-#: SupplierCredit.php:307 SupplierInvoice.php:296 SuppTransGLAnalysis.php:89
+#: SupplierCredit.php:307 SupplierInvoice.php:297 SuppTransGLAnalysis.php:89
 #: includes/InputSerialItemsFile.php:83 includes/InputSerialItemsFile.php:124
 msgid "Name"
 msgstr ""
@@ -1710,8 +1710,8 @@ msgstr ""
 #: PDFDeliveryDifferences.php:277 PDFOrdersInvoiced.php:189
 #: PDFOrdersInvoiced.php:200 PDFOrderStatus.php:198 PDFOrderStatus.php:210
 #: PO_PDFPurchOrder.php:265 PrintCustStatements.php:23 PrintCustTrans.php:79
-#: PrintCustTrans.php:82 SalesGraph.php:179 SalesGraph.php:208
-#: SalesGraph.php:212 StockLocTransferReceive.php:301
+#: PrintCustTrans.php:82 SalesGraph.php:183 SalesGraph.php:212
+#: SalesGraph.php:216 StockLocTransferReceive.php:301
 #: StockLocTransferReceive.php:390 Stocks.php:138 Stocks.php:143
 #: StockTransfers.php:376 includes/PDFAgedDebtorsPageHeader.inc:18
 #: includes/PDFAgedSuppliersPageHeader.inc:17
@@ -1831,7 +1831,7 @@ msgstr ""
 #: SelectCreditItems.php:678 SelectOrderItems.php:951 SuppInvGLAnalysis.php:81
 #: SupplierAllocations.php:469 SupplierAllocations.php:580
 #: SupplierAllocations.php:656 SupplierCredit.php:334 SupplierInquiry.php:192
-#: SupplierInvoice.php:286 SupplierInvoice.php:321 SuppShiptChgs.php:92
+#: SupplierInvoice.php:287 SupplierInvoice.php:322 SuppShiptChgs.php:92
 #: SuppTransGLAnalysis.php:118 includes/PDFQuotationPageHeader.inc:101
 #: includes/PO_PDFOrderPageHeader.inc:147
 #, php-format
@@ -2075,12 +2075,12 @@ msgstr ""
 #: SupplierCredit.php:636 SupplierCredit.php:671 SupplierCredit.php:695
 #: SupplierCredit.php:724 SupplierCredit.php:740 SupplierCredit.php:752
 #: SupplierCredit.php:759 SupplierCredit.php:782 SupplierCredit.php:804
-#: SupplierCredit.php:809 SupplierInvoice.php:455 SupplierInvoice.php:475
-#: SupplierInvoice.php:529 SupplierInvoice.php:557 SupplierInvoice.php:589
-#: SupplierInvoice.php:622 SupplierInvoice.php:647 SupplierInvoice.php:674
-#: SupplierInvoice.php:711 SupplierInvoice.php:735 SupplierInvoice.php:766
-#: SupplierInvoice.php:784 SupplierInvoice.php:797 SupplierInvoice.php:807
-#: SupplierInvoice.php:829 SupplierInvoice.php:853 SupplierInvoice.php:865
+#: SupplierCredit.php:809 SupplierInvoice.php:456 SupplierInvoice.php:476
+#: SupplierInvoice.php:530 SupplierInvoice.php:558 SupplierInvoice.php:590
+#: SupplierInvoice.php:623 SupplierInvoice.php:651 SupplierInvoice.php:677
+#: SupplierInvoice.php:714 SupplierInvoice.php:738 SupplierInvoice.php:769
+#: SupplierInvoice.php:787 SupplierInvoice.php:800 SupplierInvoice.php:810
+#: SupplierInvoice.php:832 SupplierInvoice.php:856 SupplierInvoice.php:868
 #: TaxAuthorities.php:138 includes/SQL_CommonFunctions.inc:21
 #: includes/SQL_CommonFunctions.inc:28
 msgid "CRITICAL ERROR"
@@ -2156,12 +2156,12 @@ msgstr ""
 #: SupplierCredit.php:636 SupplierCredit.php:671 SupplierCredit.php:695
 #: SupplierCredit.php:724 SupplierCredit.php:740 SupplierCredit.php:752
 #: SupplierCredit.php:759 SupplierCredit.php:782 SupplierCredit.php:804
-#: SupplierCredit.php:809 SupplierInvoice.php:455 SupplierInvoice.php:475
-#: SupplierInvoice.php:529 SupplierInvoice.php:557 SupplierInvoice.php:589
-#: SupplierInvoice.php:622 SupplierInvoice.php:647 SupplierInvoice.php:674
-#: SupplierInvoice.php:711 SupplierInvoice.php:735 SupplierInvoice.php:766
-#: SupplierInvoice.php:784 SupplierInvoice.php:797 SupplierInvoice.php:807
-#: SupplierInvoice.php:829 SupplierInvoice.php:853 SupplierInvoice.php:865
+#: SupplierCredit.php:809 SupplierInvoice.php:456 SupplierInvoice.php:476
+#: SupplierInvoice.php:530 SupplierInvoice.php:558 SupplierInvoice.php:590
+#: SupplierInvoice.php:623 SupplierInvoice.php:651 SupplierInvoice.php:677
+#: SupplierInvoice.php:714 SupplierInvoice.php:738 SupplierInvoice.php:769
+#: SupplierInvoice.php:787 SupplierInvoice.php:800 SupplierInvoice.php:810
+#: SupplierInvoice.php:832 SupplierInvoice.php:856 SupplierInvoice.php:868
 #: TaxAuthorities.php:138 includes/SQL_CommonFunctions.inc:21
 #: includes/SQL_CommonFunctions.inc:28
 msgid "NOTE DOWN THIS ERROR AND SEEK ASSISTANCE"
@@ -2657,7 +2657,7 @@ msgid "Credit Note number"
 msgstr ""
 
 #: Credit_Invoice.php:1352 GoodsReceived.php:566 SupplierCredit.php:820
-#: SupplierInvoice.php:876
+#: SupplierInvoice.php:879
 msgid "has been processed"
 msgstr ""
 
@@ -3202,7 +3202,7 @@ msgstr ""
 
 #: CustomerAllocations.php:510 CustomerAllocations.php:578
 #: CustomerReceipt.php:529 CustomerTransInquiry.php:75 DeliveryDetails.php:413
-#: FTP_RadioBeacon.php:51 SalesGraph.php:149 SelectCompletedOrder.php:415
+#: FTP_RadioBeacon.php:51 SalesGraph.php:153 SelectCompletedOrder.php:415
 #: SelectCustomer.php:110 SelectOrderItems.php:626 SelectOrderItems.php:628
 #: SelectRecurringSalesOrder.php:77 SelectSalesOrder.php:404
 #: SelectSalesOrder.php:415 StockLocMovements.php:80 StockMovements.php:92
@@ -3900,7 +3900,7 @@ msgstr ""
 #: CustomerReceipt.php:639 CustomerReceipt.php:738 GLAccountInquiry.php:115
 #: GLJournal.php:238 GLTransInquiry.php:72 Payments.php:566
 #: SuppInvGLAnalysis.php:53 SuppInvGLAnalysis.php:77 SupplierCredit.php:311
-#: SupplierInvoice.php:300 SuppTransGLAnalysis.php:92
+#: SupplierInvoice.php:301 SuppTransGLAnalysis.php:92
 #: SuppTransGLAnalysis.php:174 includes/PDFBankingSummaryPageHeader.inc:58
 msgid "Narrative"
 msgstr ""
@@ -5580,7 +5580,7 @@ msgstr ""
 #: GLAccountInquiry.php:32 GLAccounts.php:200 GLBalanceSheet.php:314
 #: GLProfit_Loss.php:454 GLTransInquiry.php:70 GLTrialBalance.php:336
 #: SuppInvGLAnalysis.php:48 SuppInvGLAnalysis.php:72 SupplierCredit.php:306
-#: SupplierInvoice.php:295 SuppTransGLAnalysis.php:88
+#: SupplierInvoice.php:296 SuppTransGLAnalysis.php:88
 #: includes/PDFProfitAndLossPageHeader.inc:30
 #: includes/PDFTrialBalancePageHeader.inc:27
 msgid "Account"
@@ -5985,7 +5985,7 @@ msgstr ""
 
 #: GLProfit_Loss.php:227 GLProfit_Loss.php:356 GLProfit_Loss.php:600
 #: GLProfit_Loss.php:842 SalesAnalReptCols.php:33 SalesAnalReptCols.php:35
-#: SalesGraph.php:156 SalesGraph.php:172 SalesGraph.php:235
+#: SalesGraph.php:160 SalesGraph.php:176 SalesGraph.php:239
 #, php-format
 msgid "Gross Profit"
 msgstr ""
@@ -8038,7 +8038,7 @@ msgstr ""
 
 #: PDFPriceList.php:147 PO_Items.php:849 SalesGraph.php:90 SalesGraph.php:91
 #: SalesGraph.php:93 SalesGraph.php:110 SalesGraph.php:111 SalesGraph.php:113
-#: SalesGraph.php:127 SalesGraph.php:128 SalesGraph.php:130 SalesGraph.php:148
+#: SalesGraph.php:131 SalesGraph.php:132 SalesGraph.php:134 SalesGraph.php:152
 #: SelectCreditItems.php:930 SelectOrderItems.php:1037
 #: SelectOrderItems.php:1040 SelectProduct.php:59 SelectProduct.php:61
 #: StockLocStatus.php:61 StockLocStatus.php:63
@@ -9273,7 +9273,7 @@ msgstr ""
 
 #: Prices_Customer.php:34 SpecialOrder.php:100 SpecialOrder.php:102
 #: SuppInvGLAnalysis.php:50 SuppInvGLAnalysis.php:74 SupplierCredit.php:247
-#: SupplierCredit.php:248 SupplierCredit.php:308 SupplierInvoice.php:297
+#: SupplierCredit.php:248 SupplierCredit.php:308 SupplierInvoice.php:298
 #: SuppTransGLAnalysis.php:90 Z_CurrencySuppliersBalances.php:28
 msgid "in"
 msgstr ""
@@ -10461,8 +10461,8 @@ msgstr ""
 
 #: ReverseGRN.php:327 SuppCreditGRNs.php:69 SuppCreditGRNs.php:140
 #: SuppCreditGRNs.php:213 SupplierCredit.php:243 SupplierCredit.php:632
-#: SupplierInvoice.php:585 SupplierInvoice.php:617 SupplierInvoice.php:642
-#: SupplierInvoice.php:668 includes/PDFOstdgGRNsPageHeader.inc:30
+#: SupplierInvoice.php:586 SupplierInvoice.php:618 SupplierInvoice.php:646
+#: SupplierInvoice.php:671 includes/PDFOstdgGRNsPageHeader.inc:30
 msgid "GRN"
 msgstr ""
 
@@ -10604,7 +10604,7 @@ msgid "Operator"
 msgstr ""
 
 #: SalesAnalReptCols.php:259 SalesAnalReptCols.php:273
-#: SalesAnalReptCols.php:399 SalesAnalReptCols.php:402 SalesGraph.php:276
+#: SalesAnalReptCols.php:399 SalesAnalReptCols.php:402 SalesGraph.php:280
 msgid "Budget"
 msgstr ""
 
@@ -10613,7 +10613,7 @@ msgid "Or Actual"
 msgstr ""
 
 #: SalesAnalReptCols.php:271 SalesAnalReptCols.php:400
-#: SalesAnalReptCols.php:403 SalesGraph.php:276
+#: SalesAnalReptCols.php:403 SalesGraph.php:280
 msgid "Actual"
 msgstr ""
 
@@ -10657,7 +10657,7 @@ msgstr ""
 msgid "Calculation"
 msgstr ""
 
-#: SalesAnalReptCols.php:392 SalesGraph.php:179
+#: SalesAnalReptCols.php:392 SalesGraph.php:183
 msgid "From Period"
 msgstr ""
 
@@ -11191,79 +11191,79 @@ msgstr ""
 msgid "For Stock Category:"
 msgstr ""
 
-#: SalesGraph.php:126
+#: SalesGraph.php:130
 msgid "For Sales Person:"
 msgstr ""
 
-#: SalesGraph.php:147
+#: SalesGraph.php:151
 msgid "Graph On:"
 msgstr ""
 
-#: SalesGraph.php:151
+#: SalesGraph.php:155
 msgid "From:"
 msgstr ""
 
-#: SalesGraph.php:152
+#: SalesGraph.php:156
 msgid "To:"
 msgstr ""
 
-#: SalesGraph.php:154
+#: SalesGraph.php:158
 msgid "Graph Value:"
 msgstr ""
 
-#: SalesGraph.php:155
+#: SalesGraph.php:159
 msgid "Net Sales Value"
 msgstr ""
 
-#: SalesGraph.php:161
+#: SalesGraph.php:165
 msgid "Show Sales Graph"
 msgstr ""
 
-#: SalesGraph.php:169 SalesGraph.php:233
+#: SalesGraph.php:173 SalesGraph.php:237
 msgid "Sales Value"
 msgstr ""
 
-#: SalesGraph.php:175
+#: SalesGraph.php:179
 msgid "Unit Sales"
 msgstr ""
 
-#: SalesGraph.php:182
+#: SalesGraph.php:186
 msgid "For All Sales Areas"
 msgstr ""
 
-#: SalesGraph.php:186 SalesGraph.php:194
+#: SalesGraph.php:190 SalesGraph.php:198
 msgid "For"
 msgstr ""
 
-#: SalesGraph.php:190
+#: SalesGraph.php:194
 msgid "For All Stock Categories"
 msgstr ""
 
-#: SalesGraph.php:199
+#: SalesGraph.php:203
 msgid "For All Salespeople"
 msgstr ""
 
-#: SalesGraph.php:203
+#: SalesGraph.php:207
 msgid "For Salesperson:"
 msgstr ""
 
-#: SalesGraph.php:208
+#: SalesGraph.php:212
 msgid "For Customers from"
 msgstr ""
 
-#: SalesGraph.php:212
+#: SalesGraph.php:216
 msgid "For Items from"
 msgstr ""
 
-#: SalesGraph.php:231 StockUsageGraph.php:10 StockUsage.php:128
+#: SalesGraph.php:235 StockUsageGraph.php:10 StockUsage.php:128
 msgid "Month"
 msgstr ""
 
-#: SalesGraph.php:254
+#: SalesGraph.php:258
 msgid "The sales graph data for the selected criteria could not be retrieved because"
 msgstr ""
 
-#: SalesGraph.php:259
+#: SalesGraph.php:263
 msgid "There is not sales data for the criteria entered to graph"
 msgstr ""
 
@@ -11656,7 +11656,7 @@ msgstr ""
 msgid "For credit notes created to write off the stock a general ledger account is required to be selected. Please select an account to write the cost of the stock off to then click on Process again"
 msgstr ""
 
-#: SelectCreditItems.php:1055 SupplierCredit.php:450 SupplierInvoice.php:475
+#: SelectCreditItems.php:1055 SupplierCredit.php:450 SupplierInvoice.php:476
 msgid "The database does not support transactions"
 msgstr ""
 
@@ -12260,7 +12260,7 @@ msgstr ""
 #: ShipmentCosting.php:136 ShipmentCosting.php:494 Shipments.php:55
 #: Shipments.php:285 Shipt_Select.php:291 SuppInvGLAnalysis.php:51
 #: SuppInvGLAnalysis.php:75 SupplierCredit.php:278 SupplierCredit.php:293
-#: SupplierCredit.php:309 SupplierInvoice.php:266 SupplierInvoice.php:298
+#: SupplierCredit.php:309 SupplierInvoice.php:267 SupplierInvoice.php:299
 #: SuppShiptChgs.php:70
 msgid "Shipment"
 msgstr ""
@@ -13942,8 +13942,8 @@ msgid "The locations for the item"
 msgstr ""
 
 #: Stocks.php:293 SupplierCredit.php:542 SupplierCredit.php:782
-#: SupplierCredit.php:804 SupplierInvoice.php:558 SupplierInvoice.php:830
-#: SupplierInvoice.php:854 Suppliers.php:401
+#: SupplierCredit.php:804 SupplierInvoice.php:559 SupplierInvoice.php:833
+#: SupplierInvoice.php:857 Suppliers.php:401
 msgid "could not be added because"
 msgstr ""
 
@@ -14480,7 +14480,7 @@ msgid "General Ledger Analysis of Invoice From"
 msgstr ""
 
 #: SuppInvGLAnalysis.php:52 SuppInvGLAnalysis.php:76 SupplierCredit.php:310
-#: SupplierInvoice.php:299 SuppTransGLAnalysis.php:91
+#: SupplierInvoice.php:300 SuppTransGLAnalysis.php:91
 msgid "Job"
 msgstr ""
 
@@ -14529,7 +14529,7 @@ msgstr ""
 msgid "Price Charge in"
 msgstr ""
 
-#: SuppInvGRNs.php:135 SupplierInvoice.php:258
+#: SuppInvGRNs.php:135 SupplierInvoice.php:259
 msgid "Total Value of Goods Charged"
 msgstr ""
 
@@ -14662,7 +14662,7 @@ msgstr ""
 msgid "Allocation of supplier"
 msgstr ""
 
-#: SupplierAllocations.php:450 SupplierInvoice.php:338 SupplierInvoice.php:341
+#: SupplierAllocations.php:450 SupplierInvoice.php:339 SupplierInvoice.php:342
 msgid "Amount in supplier currency"
 msgstr ""
 
@@ -14836,17 +14836,17 @@ msgstr ""
 msgid "Credit Amount in Supplier Currency"
 msgstr ""
 
-#: SupplierCredit.php:348 SupplierInvoice.php:346
+#: SupplierCredit.php:348 SupplierInvoice.php:347
 msgid "Change Tax Calculation Method"
 msgstr ""
 
-#: SupplierCredit.php:352 SupplierCredit.php:354 SupplierInvoice.php:350
-#: SupplierInvoice.php:352 SystemParameters.php:390 SystemParameters.php:392
+#: SupplierCredit.php:352 SupplierCredit.php:354 SupplierInvoice.php:351
+#: SupplierInvoice.php:353 SystemParameters.php:390 SystemParameters.php:392
 msgid "Automatic"
 msgstr ""
 
-#: SupplierCredit.php:352 SupplierCredit.php:354 SupplierInvoice.php:350
-#: SupplierInvoice.php:352 includes/header.inc:54
+#: SupplierCredit.php:352 SupplierCredit.php:354 SupplierInvoice.php:351
+#: SupplierInvoice.php:353 includes/header.inc:54
 msgid "Manual"
 msgstr ""
 
@@ -14890,7 +14890,7 @@ msgstr ""
 msgid "The credit note as entered cannot be processed because the exchange rate for the credit note has been entered as a negative or zero number"
 msgstr ""
 
-#: SupplierCredit.php:438 SupplierInvoice.php:443
+#: SupplierCredit.php:438 SupplierInvoice.php:444
 msgid "The exchange rate is expected to show how many of the suppliers currency there are in 1 of the local currency"
 msgstr ""
 
@@ -14910,20 +14910,20 @@ msgstr ""
 msgid "the credit note as entered will not be processed"
 msgstr ""
 
-#: SupplierCredit.php:451 SupplierInvoice.php:456 SupplierInvoice.php:476
+#: SupplierCredit.php:451 SupplierInvoice.php:457 SupplierInvoice.php:477
 msgid "The following SQL to start an SQL transaction was used"
 msgstr ""
 
-#: SupplierCredit.php:511 SupplierCredit.php:636 SupplierInvoice.php:529
-#: SupplierInvoice.php:589 SupplierInvoice.php:674
+#: SupplierCredit.php:511 SupplierCredit.php:636 SupplierInvoice.php:530
+#: SupplierInvoice.php:590 SupplierInvoice.php:677
 msgid "The general ledger transaction could not be added because"
 msgstr ""
 
 #: SupplierCredit.php:513 SupplierCredit.php:543 SupplierCredit.php:583
 #: SupplierCredit.php:609 SupplierCredit.php:637 SupplierCredit.php:673
-#: SupplierCredit.php:696 SupplierInvoice.php:530 SupplierInvoice.php:560
-#: SupplierInvoice.php:591 SupplierInvoice.php:623 SupplierInvoice.php:649
-#: SupplierInvoice.php:676 SupplierInvoice.php:713 SupplierInvoice.php:737
+#: SupplierCredit.php:696 SupplierInvoice.php:531 SupplierInvoice.php:561
+#: SupplierInvoice.php:592 SupplierInvoice.php:624 SupplierInvoice.php:653
+#: SupplierInvoice.php:679 SupplierInvoice.php:716 SupplierInvoice.php:740
 msgid "The following SQL to insert the GL transaction was used"
 msgstr ""
 
@@ -14931,7 +14931,7 @@ msgstr ""
 msgid "Shipment credit against"
 msgstr ""
 
-#: SupplierCredit.php:542 SupplierInvoice.php:557
+#: SupplierCredit.php:542 SupplierInvoice.php:558
 msgid "The general ledger transaction for the shipment"
 msgstr ""
 
@@ -14939,17 +14939,17 @@ msgstr ""
 msgid "GRN Credit Note"
 msgstr ""
 
-#: SupplierCredit.php:582 SupplierCredit.php:608 SupplierInvoice.php:622
-#: SupplierInvoice.php:647
+#: SupplierCredit.php:582 SupplierCredit.php:608 SupplierInvoice.php:623
+#: SupplierInvoice.php:651
 msgid "The general ledger transaction could not be added for the price variance of the stock item because"
 msgstr ""
 
-#: SupplierCredit.php:605 SupplierInvoice.php:643
+#: SupplierCredit.php:605 SupplierInvoice.php:647
 msgid "price var"
 msgstr ""
 
 #: SupplierCredit.php:632 SupplierCredit.php:667 SupplierCredit.php:692
-#: SupplierInvoice.php:670 SupplierInvoice.php:707 SupplierInvoice.php:732
+#: SupplierInvoice.php:673 SupplierInvoice.php:710 SupplierInvoice.php:735
 msgid "a rate of"
 msgstr ""
 
@@ -14957,7 +14957,7 @@ msgstr ""
 msgid "The total posted to the credit accounts is"
 msgstr ""
 
-#: SupplierCredit.php:647 SupplierInvoice.php:686
+#: SupplierCredit.php:647 SupplierInvoice.php:689
 msgid "but the sum of OvAmount converted at ExRate"
 msgstr ""
 
@@ -14965,11 +14965,11 @@ msgstr ""
 msgid "Credit note"
 msgstr ""
 
-#: SupplierCredit.php:671 SupplierInvoice.php:711
+#: SupplierCredit.php:671 SupplierInvoice.php:714
 msgid "The general ledger transaction for the tax could not be added because"
 msgstr ""
 
-#: SupplierCredit.php:695 SupplierInvoice.php:735
+#: SupplierCredit.php:695 SupplierInvoice.php:738
 msgid "The general ledger transaction for the control total could not be added because"
 msgstr ""
 
@@ -14981,11 +14981,11 @@ msgstr ""
 msgid "The following SQL to insert the supplier credit note was used"
 msgstr ""
 
-#: SupplierCredit.php:740 SupplierInvoice.php:784
+#: SupplierCredit.php:740 SupplierInvoice.php:787
 msgid "The supplier transaction taxes records could not be inserted because"
 msgstr ""
 
-#: SupplierCredit.php:741 SupplierInvoice.php:785
+#: SupplierCredit.php:741 SupplierInvoice.php:788
 msgid "The following SQL to insert the supplier transaction taxes record was used:"
 msgstr ""
 
@@ -14993,7 +14993,7 @@ msgstr ""
 msgid "The quantity credited of the purchase order line could not be updated because"
 msgstr ""
 
-#: SupplierCredit.php:753 SupplierInvoice.php:799
+#: SupplierCredit.php:753 SupplierInvoice.php:802
 msgid "The following SQL to update the purchase order details was used"
 msgstr ""
 
@@ -15005,13 +15005,13 @@ msgstr ""
 msgid "The following SQL to update the GRN quantity credited was used"
 msgstr ""
 
-#: SupplierCredit.php:782 SupplierCredit.php:804 SupplierInvoice.php:829
-#: SupplierInvoice.php:853
+#: SupplierCredit.php:782 SupplierCredit.php:804 SupplierInvoice.php:832
+#: SupplierInvoice.php:856
 msgid "The shipment charge record for the shipment"
 msgstr ""
 
-#: SupplierCredit.php:783 SupplierCredit.php:805 SupplierInvoice.php:832
-#: SupplierInvoice.php:856
+#: SupplierCredit.php:783 SupplierCredit.php:805 SupplierInvoice.php:835
+#: SupplierInvoice.php:859
 msgid "The following SQL to insert the Shipment charge record was used"
 msgstr ""
 
@@ -15085,123 +15085,123 @@ msgstr ""
 msgid "Price in"
 msgstr ""
 
-#: SupplierInvoice.php:406
+#: SupplierInvoice.php:407
 msgid "Invoice Total"
 msgstr ""
 
-#: SupplierInvoice.php:411
+#: SupplierInvoice.php:412
 msgid "Enter Invoice"
 msgstr ""
 
-#: SupplierInvoice.php:427
+#: SupplierInvoice.php:428
 msgid "The invoice as entered cannot be processed because the total amount of the invoice is less than or equal to 0"
 msgstr ""
 
-#: SupplierInvoice.php:427
+#: SupplierInvoice.php:428
 msgid "Invoices are expected to have a charge"
 msgstr ""
 
-#: SupplierInvoice.php:431
+#: SupplierInvoice.php:432
 msgid "The invoice as entered cannot be processed because the there is no suppliers invoice number or reference entered"
 msgstr ""
 
-#: SupplierInvoice.php:431
+#: SupplierInvoice.php:432
 msgid "The supplier invoice number must be entered"
 msgstr ""
 
-#: SupplierInvoice.php:435
+#: SupplierInvoice.php:436
 msgid "The invoice as entered cannot be processed because the invoice date entered is not in the format"
 msgstr ""
 
-#: SupplierInvoice.php:439
+#: SupplierInvoice.php:440
 msgid "The invoice as entered cannot be processed because the invoice date is after today"
 msgstr ""
 
-#: SupplierInvoice.php:439
+#: SupplierInvoice.php:440
 msgid "Purchase invoices are expected to have a date prior to or today"
 msgstr ""
 
-#: SupplierInvoice.php:443
+#: SupplierInvoice.php:444
 msgid "The invoice as entered cannot be processed because the exchange rate for the invoice has been entered as a negative or zero number"
 msgstr ""
 
-#: SupplierInvoice.php:446
+#: SupplierInvoice.php:447
 msgid "The invoice total as entered is less than the sum of the shipment charges, the general ledger entires (if any) and the charges for goods received"
 msgstr ""
 
-#: SupplierInvoice.php:446
+#: SupplierInvoice.php:447
 msgid "There must be a mistake somewhere, the invoice as entered will not be processed"
 msgstr ""
 
-#: SupplierInvoice.php:455
+#: SupplierInvoice.php:456
 msgid "The sql to check for the previous entry of the same invoice failed"
 msgstr ""
 
-#: SupplierInvoice.php:462
+#: SupplierInvoice.php:463
 msgid "The invoice number"
 msgstr ""
 
-#: SupplierInvoice.php:462
+#: SupplierInvoice.php:463
 msgid "has already been entered"
 msgstr ""
 
-#: SupplierInvoice.php:462
+#: SupplierInvoice.php:463
 msgid "It cannot be entered again"
 msgstr ""
 
-#: SupplierInvoice.php:554
+#: SupplierInvoice.php:555
 msgid "Shipment charge against"
 msgstr ""
 
-#: SupplierInvoice.php:586
+#: SupplierInvoice.php:587
 msgid "std cost of"
 msgstr ""
 
-#: SupplierInvoice.php:618
+#: SupplierInvoice.php:619
 msgid "price var of"
 msgstr ""
 
-#: SupplierInvoice.php:685
+#: SupplierInvoice.php:688
 msgid "The total posted to the debit accounts is"
 msgstr ""
 
-#: SupplierInvoice.php:705 SupplierInvoice.php:729
+#: SupplierInvoice.php:708 SupplierInvoice.php:732
 msgid "Inv"
 msgstr ""
 
-#: SupplierInvoice.php:766
+#: SupplierInvoice.php:769
 msgid "The supplier invoice transaction could not be added to the database because"
 msgstr ""
 
-#: SupplierInvoice.php:768
+#: SupplierInvoice.php:771
 msgid "The following SQL to insert the supplier invoice was used"
 msgstr ""
 
-#: SupplierInvoice.php:797
+#: SupplierInvoice.php:800
 msgid "The quantity invoiced of the purchase order line could not be updated because"
 msgstr ""
 
-#: SupplierInvoice.php:807
+#: SupplierInvoice.php:810
 msgid "The quantity invoiced off the goods received record could not be updated because"
 msgstr ""
 
-#: SupplierInvoice.php:809
+#: SupplierInvoice.php:812
 msgid "The following SQL to update the GRN quantity invoiced was used"
 msgstr ""
 
-#: SupplierInvoice.php:865
+#: SupplierInvoice.php:868
 msgid "The SQL COMMIT failed because"
 msgstr ""
 
-#: SupplierInvoice.php:867
+#: SupplierInvoice.php:870
 msgid "The SQL COMMIT failed"
 msgstr ""
 
-#: SupplierInvoice.php:876
+#: SupplierInvoice.php:879
 msgid "Supplier invoice number"
 msgstr ""
 
-#: SupplierInvoice.php:877
+#: SupplierInvoice.php:880
 msgid "Enter Another invoice"
 msgstr ""
 
@@ -19383,11 +19383,11 @@ msgstr ""
 msgid "is set to"
 msgstr ""
 
-#: includes/footer.inc:24 includes/footer.inc:28
+#: includes/footer.inc:23 includes/footer.inc:27
 msgid "Copyright"
 msgstr ""
 
-#: includes/footer.inc:25
+#: includes/footer.inc:24
 msgid "Version"
 msgstr ""
 
