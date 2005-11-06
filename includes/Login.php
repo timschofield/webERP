@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 // Display demo user name and password within login form if $allow_demo_mode is true
 include ('includes/LanguageSetup.php');
 
@@ -44,7 +44,7 @@ if ($allow_demo_mode == True AND !isset($demo_text)) {
                             <TD class="middleBar"><img src="css/spacer.gif" width="12"></TD>
 
                           <TD background="css/bg.gif" colspan="3" valign="top">	
-                                <TABLE border="0" cellpadding="3" cellspacing="0" width="100%" class="loginBox">
+                                <TABLE border="0" cellpadding="3" cellspacing="0" width="100%">
 
                                     <TR>
                                         <TD><SPAN class="loginText"><?php echo _('Company'); ?>:</SPAN><BR />

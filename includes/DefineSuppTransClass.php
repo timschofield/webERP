@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /* Definition of the Supplier Transactions class to hold all the information for an accounts payable invoice or credit note
 */
 
@@ -76,9 +76,36 @@ Class SuppTrans {
 	} //end method GetTaxes()
 	
 	
-	function Add_GRN_To_Trans($GRNNo, $PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit, $ShiptRef, $JobRef, $GLCode){
-		if ($This_QuantityInv!=0 && isset($This_QuantityInv)){
-			$this->GRNs[$GRNNo] = new GRNs($GRNNo, $PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit, $ShiptRef, $JobRef, $GLCode);
+	function Add_GRN_To_Trans($GRNNo, 
+							$PODetailItem, 
+							$ItemCode, 
+							$ItemDescription, 
+							$QtyRecd, 
+							$Prev_QuantityInv, 
+							$This_QuantityInv, 
+							$OrderPrice, 
+							$ChgPrice, 
+							$Complete, 
+							$StdCostUnit=0, 
+							$ShiptRef, 
+							$JobRef, 
+							$GLCode){
+							
+		if ($This_QuantityInv!=0 AND isset($This_QuantityInv)){
+			$this->GRNs[$GRNNo] = new GRNs($GRNNo, 
+										$PODetailItem, 
+										$ItemCode,
+										$ItemDescription, 
+										$QtyRecd, 
+										$Prev_QuantityInv, 
+										$This_QuantityInv, 
+										$OrderPrice, 
+										$ChgPrice, 
+										$Complete, 
+										$StdCostUnit, 
+										$ShiptRef, 
+										$JobRef, 
+										$GLCode);
 			Return 1;
 		}
 		Return 0;
@@ -171,7 +198,20 @@ all the info to do the necessary entries without looking up ie additional querie
 	var $JobRef;
 	var $GLCode;
 
-	function GRNs ($GRNNo, $PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit, $ShiptRef, $JobRef, $GLCode){
+	function GRNs ($GRNNo, 
+					$PODetailItem, 
+					$ItemCode, 
+					$ItemDescription, 
+					$QtyRecd, 
+					$Prev_QuantityInv, 
+					$This_QuantityInv, 
+					$OrderPrice, 
+					$ChgPrice, 
+					$Complete, 
+					$StdCostUnit=0, 
+					$ShiptRef, 
+					$JobRef, 
+					$GLCode){
 
 	/* Constructor function to add a new GRNs object with passed params */
 		$this->GRNNo = $GRNNo;
@@ -190,7 +230,19 @@ all the info to do the necessary entries without looking up ie additional querie
 		$this->GLCode = $GLCode;
 	}
 
-	function Modify ($PODetailItem, $ItemCode, $ItemDescription, $QtyRecd, $Prev_QuantityInv, $This_QuantityInv, $OrderPrice, $ChgPrice, $Complete, $StdCostUnit, $ShiptRef, $JobRef, $GLCode){
+	function Modify ($PODetailItem, 
+					$ItemCode, 
+					$ItemDescription, 
+					$QtyRecd, 
+					$Prev_QuantityInv, 
+					$This_QuantityInv, 
+					$OrderPrice, 
+					$ChgPrice, 
+					$Complete, 
+					$StdCostUnit, 
+					$ShiptRef, 
+					$JobRef, 
+					$GLCode){
 
 	/* Modify function to edit a GRNs object with passed params */
 		$this->PODetailItem = $PODetailItem;

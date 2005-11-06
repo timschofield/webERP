@@ -18,7 +18,7 @@
 \--------------------------------------------------*/
 
 
-<!-- \$Revision: 1.3 $ -->
+<!-- \$Revision: 1.4 $ -->
 
 
 body {
@@ -39,10 +39,6 @@ body {
 
 .middleBar{
 	background-color: #367CB5;
-}
-
-.loginBox{
-	background-image: url(images/outline/bg.gif);
 }
 
 .logoBackground{

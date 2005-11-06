@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -244,7 +244,8 @@ if (!isset($_POST['PostInvoice'])){
 				'</TD><TD>' . $EnteredGRN->ItemDescription . '</TD><TD ALIGN=RIGHT>' .
 				number_format($EnteredGRN->This_QuantityInv,2) . '</TD><TD ALIGN=RIGHT>' .
 				number_format($EnteredGRN->ChgPrice,2) . '</TD><TD ALIGN=RIGHT>' .
-				number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,2) . '</TD><TD></TR>';
+				number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,2) . '</TD>
+				</TR>';
 	
 			$TotalGRNValue = $TotalGRNValue + ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv);
 	
@@ -637,19 +638,21 @@ then do the updates and inserts to process the invoice entered */
 											account, 
 											narrative, 
 											amount) 
-									VALUES (20, ' .
-									 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $EnteredGRN->GLCode . ", '" .
-									 $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' .
+									VALUES (20, 
+											' . $InvoiceNo . ", 
+											'" . $SQLInvoiceDate . "', 
+											" . $PeriodNo . ', 
+											' . $EnteredGRN->GLCode . ", 
+											 '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' .
 									 $EnteredGRN->ItemDescription . ' x ' . $EnteredGRN->This_QuantityInv . ' x  ' . _('price var') .
-									 ' ' . number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2) .
-									 "', " . $PurchPriceVar . ')';
+									 ' ' . number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2) . "', 
+									 " . $PurchPriceVar . ')';
 
 							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
 
 							$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
 							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
-
 						}
 					}
 

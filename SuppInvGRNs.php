@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -149,11 +149,11 @@ $SQL = "SELECT grnbatch,
 		grns.itemdescription,
 		grns.qtyrecd,
 		grns.quantityinv,
-		purchorderdetails.stdcostunit
-	FROM grns,
-		purchorderdetails
-	WHERE grns.podetailitem=purchorderdetails.podetailitem
-	AND grns.supplierid ='" . $_SESSION['SuppTrans']->SupplierID . "'
+		purchorderdetails.stdcostunit,
+		purchorderdetails.glcode
+	FROM grns INNER JOIN purchorderdetails
+		ON  grns.podetailitem=purchorderdetails.podetailitem
+	WHERE grns.supplierid ='" . $_SESSION['SuppTrans']->SupplierID . "'
 	AND grns.qtyrecd - grns.quantityinv > 0
 	ORDER BY grns.grnno";
 $GRNResults = DB_query($SQL,$db);

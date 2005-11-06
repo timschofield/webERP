@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 
 $PageSecurity = 4;
@@ -745,7 +745,7 @@ if (count($_SESSION['PO']->LineItems)>0){
 
 If ($_GET['Edit']){
 
-	echo "<input type='hidden' name='LineNo' value=" . $_GET['Edit'] .">";
+	echo "<INPUT TYPE='HIDDEN' NAME='LineNo' VALUE=" . $_GET['Edit'] .">";
 
 	echo '<TABLE>';
 	if ($_SESSION['PO']->LineItems[$_GET['Edit']]->StockID =='') { /*No stock item on this line */

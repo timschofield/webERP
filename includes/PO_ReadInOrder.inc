@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 /*PO_ReadInOrder.inc is used by the modify existing order code in PO_Header.php and also by GoodsReceived.php */
 
        if (isset($_SESSION['PO'])){
@@ -127,7 +127,7 @@
 							$myrow['controlled'],
 							$myrow['serialised'],
 							$myrow['quantityord'],
-							$myrow['itemdescription'],
+							stripslashes($myrow['itemdescription']),
 							$myrow['unitprice'],
 							$Units,
 							$GLCode,

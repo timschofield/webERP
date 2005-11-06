@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 $PageSecurity =1;
 
 include('includes/session.inc');
@@ -35,7 +35,7 @@ include('includes/session.inc');
 
                             <td class="middleBar"><img src="<?php echo "css/spacer.gif" ?>" width="12" /></td>
 
-                            <td colspan="3" valign="top" class="loginBox">
+                            <td colspan="3" valign="top" >
                                 <table border="0" cellpadding="3" cellspacing="0" width="100%">
 									<tr>
 										<td align="center" class="loginText">
