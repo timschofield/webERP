@@ -1,6 +1,9 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
-<P>6/11/05 Briain - added LC_NUMERIC in LanguageSetup.php, DateFunctions.inc MonthAndYearFromSQLDate fixed for locale using strftime
+
+<P>7/11/05 TaxGroups.php changed to prohibit the same tax group name, automatically enter calculation orders to prevent problems with the same ordered tax authorities. Changed messages when updated and inserted tax groups to show the name of the tax group updated/inserted. Fine tuning all suggested by Steve K.
+<P>7/11/05 CustomerBranches.php now displays the name of the taxgroup rather than the id!
+<P>6/11/05 Briain -  DateFunctions.inc MonthAndYearFromSQLDate fixed for locale using strftime
 <P>6/11/05 Briain - fixed CustWhereAlloc - string 'Type' not in _('') function
 <P>6/11/05 emdeex - fixed SalesGraph sh/been SalesFolkResult not StockCatsResult and default $_POST['SalesmanCode']
 <P>6/11/05 Fixed bug in SuppInvGRNs.php - nominal purchase order items could not be invoiced since the GL code was lost (it wasn't retrieved in the selectable list of outstanding GRNs)

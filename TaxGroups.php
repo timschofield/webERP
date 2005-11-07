@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -34,11 +34,18 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 			$sql = "UPDATE taxgroups SET taxgroupdescription = '". DB_escape_string($_POST['GroupName']) ."' 
 					WHERE taxgroupid = ".$SelectedGroup;
 			$ErrMsg = _('The update of the tax group description failed because');
-			$SuccessMsg = _('The tax group description was updated.');
-		} else { // Add Security Heading
-			$sql = "INSERT INTO taxgroups (taxgroupdescription) VALUES ('". DB_escape_string($_POST['GroupName']) . "')";
-			$ErrMsg = _('The addition of the group failed because');
-			$SuccessMsg = _('The Group was created.');
+			$SuccessMsg = _('The tax group description was updated to') . ' ' . $_POST['GroupName'];
+		} else { // Add new tax group
+		
+			$result = DB_query("SELECT taxgroupid FROM taxgroups WHERE taxgroupdescription='" . $_POST['GroupName'] . "'",$db);
+			if (DB_num_rows($result)==1){
+				prnMsg( _('A new tax group could not be added because a tax group already exists for') . ' ' . $_POST['GroupName'],'warn');
+				unset($sql);
+			} else {
+				$sql = "INSERT INTO taxgroups (taxgroupdescription) VALUES ('". DB_escape_string($_POST['GroupName']) . "')";
+				$ErrMsg = _('The addition of the group failed because');
+				$SuccessMsg = _('Added the new tax group') . ' ' . $_POST['GroupName'];
+			}
 		}
 		unset($_POST['GroupName']);
 		unset($SelectedGroup);
@@ -341,6 +348,11 @@ if (isset($SelectedGroup)) {
 				echo "<TR BGCOLOR='#EEEEEE'>";
 				$k=1;
 			}
+			
+			if ($TaxAuthRow[$i]['calculationorder']==0){
+				$TaxAuthRow[$i]['calculationorder'] = $i;
+			}
+			
 			echo '<TD>' . $TaxAuthRow[$i]['taxname'] . '</TD><TD>'.
 				'<INPUT TYPE="Text" NAME="CalcOrder_' . $TaxAuthRow[$i]['taxauthid'] . '" VALUE="' . $TaxAuthRow[$i]['calculationorder'] . '" size=2 maxlength=2></TD>';
 			echo '<TD><SELECT NAME="TaxOnTax_' . $TaxAuthRow[$i]['taxauthid'] . '">';

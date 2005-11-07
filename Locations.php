@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 11;
 
@@ -81,14 +81,14 @@ if (isset($_POST['submit'])) {
 
 	} elseif ($InputError !=1) {
 
-	/* Set the managed field to 1 if it is checked, otherwise 0 */
-	if($_POST['Managed'] == 'on') {
-		$_POST['Managed'] = 1;
-	} else {
-		$_POST['Managed'] = 0;
-	}
+		/* Set the managed field to 1 if it is checked, otherwise 0 */
+		if($_POST['Managed'] == 'on') {
+			$_POST['Managed'] = 1;
+		} else {
+			$_POST['Managed'] = 0;
+		}
 		
-	/*SelectedLocation is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Location form */
+		/*SelectedLocation is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Location form */
 
 		$sql = "INSERT INTO locations (
 					loccode,
@@ -166,7 +166,7 @@ if (isset($_POST['submit'])) {
 	}
 
 
-	/* Go through the tax authorities for all Locations deleting or adding TaxAuthLevel records as necessary */
+	/* Go through the tax authorities for all Locations deleting or adding TaxAuthRates records as necessary */
 
 	$result = DB_query('SELECT COUNT(taxid) FROM taxauthorities',$db);
 	$NoTaxAuths =DB_fetch_row($result);

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 3;
 
@@ -271,15 +271,17 @@ if (!isset($SelectedBranch)){
 			phoneno,
 			faxno,
 			email,
-			taxgroupid,
+			taxgroups.taxgroupdescription,
 			custbranch.branchcode
 		FROM custbranch,
 			debtorsmaster,
 			areas,
-			salesman
+			salesman,
+			taxgroups
 		WHERE custbranch.debtorno=debtorsmaster.debtorno
 		AND custbranch.area=areas.areacode
 		AND custbranch.salesman=salesman.salesmancode
+		AND custbranch.taxgroupid=taxgroups.taxgroupid
 		AND custbranch.debtorno = '$DebtorNo'";
 
 	$result = DB_query($sql,$db);

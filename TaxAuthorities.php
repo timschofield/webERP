@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 
 $PageSecurity=15;
@@ -240,23 +240,6 @@ echo '<CENTER><TABLE>
 <TR><TD>' . _('Tax Type Description') . ":</TD>
 <TD><input type=Text name='Description' SIZE=21 MAXLENGTH=20 value='" . $_POST['Description'] . "'></TD></TR>";
 
-echo '<TR><TD>' . _('Output tax GL Account') . ':</TD>
-	<TD><SELECT name=TaxGLCode>';
-
-
-while ($myrow = DB_fetch_array($result)) {
-	if ($myrow['accountcode']==$_POST['TaxGLCode']) {
-		echo "<OPTION SELECTED VALUE='";
-	} else {
-		echo "<OPTION VALUE='";
-	}
-	echo $myrow['accountcode'] . "'>" . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
-
-} //end while loop
-
-DB_data_seek($result,0);
-
-echo '</SELECT></TD></TR>';
 
 echo '<TR><TD>' . _('Input tax GL Account') . ':</TD>
 	<TD><SELECT name=PurchTaxGLCode>';
@@ -273,6 +256,25 @@ while ($myrow = DB_fetch_array($result)) {
 
 echo '</SELECT></TD></TR>';
 
+DB_data_seek($result,0);
+
+echo '<TR><TD>' . _('Output tax GL Account') . ':</TD>
+	<TD><SELECT name=TaxGLCode>';
+
+
+while ($myrow = DB_fetch_array($result)) {
+	if ($myrow['accountcode']==$_POST['TaxGLCode']) {
+		echo "<OPTION SELECTED VALUE='";
+	} else {
+		echo "<OPTION VALUE='";
+	}
+	echo $myrow['accountcode'] . "'>" . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
+
+} //end while loop
+
+
+
+echo '</SELECT></TD></TR>';
 echo '<TR><TD>' . _('Bank Name') . ':</TD>';
 echo '<TD><input type=Text name="Bank" SIZE=41 MAXLENGTH=40 value="' . $_POST['Bank'] . '"></TD></TR>';
 echo '<TR><TD>' . _('Bank Account Type') . ':</TD>';
