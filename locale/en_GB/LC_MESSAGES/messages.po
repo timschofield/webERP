@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-06 22:42+1300\n"
+"POT-Creation-Date: 2005-11-07 22:08+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,7 +66,7 @@ msgstr ""
 #: Shippers.php:74 Shippers.php:86 StockCategories.php:106 Stocks.php:338
 #: Stocks.php:347 Stocks.php:355 Stocks.php:363 Stocks.php:371 Stocks.php:379
 #: Suppliers.php:445 Suppliers.php:454 Suppliers.php:462 TaxCategories.php:130
-#: TaxGroups.php:119 TaxGroups.php:126 TaxProvinces.php:125
+#: TaxGroups.php:126 TaxGroups.php:133 TaxProvinces.php:125
 #: UnitsOfMeasure.php:140 UnitsOfMeasure.php:147 WorkCentres.php:89
 #: WorkCentres.php:95 WWW_Access.php:84
 msgid "There are"
@@ -119,8 +119,8 @@ msgstr ""
 #: Stocks.php:633 SystemParameters.php:280 SystemParameters.php:325
 #: SystemParameters.php:333 SystemParameters.php:373 SystemParameters.php:446
 #: SystemParameters.php:454 SystemParameters.php:472 SystemParameters.php:479
-#: SystemParameters.php:588 TaxGroups.php:284 TaxGroups.php:348
-#: TaxGroups.php:351 WWW_Users.php:434 WWW_Users.php:436
+#: SystemParameters.php:588 TaxGroups.php:291 TaxGroups.php:360
+#: TaxGroups.php:363 WWW_Users.php:434 WWW_Users.php:436
 msgid "Yes"
 msgstr ""
 
@@ -141,8 +141,8 @@ msgstr ""
 #: Stocks.php:628 SystemParameters.php:281 SystemParameters.php:326
 #: SystemParameters.php:334 SystemParameters.php:374 SystemParameters.php:447
 #: SystemParameters.php:455 SystemParameters.php:473 SystemParameters.php:480
-#: SystemParameters.php:589 TaxGroups.php:286 TaxGroups.php:349
-#: TaxGroups.php:352 WWW_Users.php:433 WWW_Users.php:437
+#: SystemParameters.php:589 TaxGroups.php:293 TaxGroups.php:361
+#: TaxGroups.php:364 WWW_Users.php:433 WWW_Users.php:437
 #: includes/PDFLowGPPageHeader.inc:31 includes/PDFTaxPageHeader.inc:34
 msgid "No"
 msgstr ""
@@ -150,13 +150,13 @@ msgstr ""
 #: AccountGroups.php:150 AccountSections.php:155 Areas.php:138
 #: BankAccounts.php:147 BOMs.php:91 COGSGLPostings.php:107
 #: COGSGLPostings.php:211 CreditStatus.php:126 Currencies.php:172
-#: CustomerBranches.php:327 EDIMessageFormat.php:161 FreightCosts.php:236
+#: CustomerBranches.php:329 EDIMessageFormat.php:161 FreightCosts.php:236
 #: GLAccounts.php:308 Locations.php:341 PaymentMethods.php:188
 #: PaymentTerms.php:170 Prices_Customer.php:200 Prices.php:175
 #: PurchData.php:217 SalesCategories.php:257 SalesGLPostings.php:118
 #: SalesGLPostings.php:230 SalesPeople.php:189 SalesTypes.php:144
 #: Shippers.php:135 StockCategories.php:168 SupplierContacts.php:151
-#: TaxAuthorities.php:165 TaxCategories.php:181 TaxGroups.php:170
+#: TaxAuthorities.php:165 TaxCategories.php:181 TaxGroups.php:177
 #: TaxProvinces.php:176 UnitsOfMeasure.php:199 WorkCentres.php:137
 #: WWW_Access.php:124 WWW_Users.php:246 includes/InputSerialItems.php:82
 #, php-format
@@ -166,7 +166,7 @@ msgstr ""
 #: AccountGroups.php:151 AccountSections.php:159 Areas.php:139
 #: BankAccounts.php:148 BOMs.php:92 COGSGLPostings.php:108
 #: COGSGLPostings.php:212 Credit_Invoice.php:370 CreditStatus.php:127
-#: Currencies.php:175 CustomerBranches.php:331 CustomerReceipt.php:542
+#: Currencies.php:175 CustomerBranches.php:333 CustomerReceipt.php:542
 #: DiscountCategories.php:115 DiscountMatrix.php:100 EDIMessageFormat.php:162
 #: FreightCosts.php:237 GLAccounts.php:309 GLJournal.php:244 Locations.php:342
 #: PaymentMethods.php:189 Payments.php:575 PaymentTerms.php:171
@@ -178,7 +178,7 @@ msgstr ""
 #: StockCategories.php:169 SuppCreditGRNs.php:88 SuppInvGLAnalysis.php:65
 #: SuppInvGRNs.php:122 SupplierContacts.php:152 SuppShiptChgs.php:80
 #: SuppTransGLAnalysis.php:105 TaxAuthorities.php:166 TaxCategories.php:182
-#: TaxGroups.php:171 TaxProvinces.php:177 UnitsOfMeasure.php:200
+#: TaxGroups.php:178 TaxProvinces.php:177 UnitsOfMeasure.php:200
 #: WorkCentres.php:138 WWW_Access.php:125 WWW_Users.php:247
 #: includes/InputSerialItemsKeyed.php:53
 #, php-format
@@ -203,13 +203,13 @@ msgstr ""
 
 #: AccountGroups.php:251 AccountSections.php:220 Areas.php:188
 #: BankAccounts.php:231 BOMs.php:483 COGSGLPostings.php:374
-#: CreditStatus.php:187 Currencies.php:263 CustomerBranches.php:641
+#: CreditStatus.php:187 Currencies.php:263 CustomerBranches.php:643
 #: DiscountCategories.php:143 DiscountMatrix.php:147 EDIMessageFormat.php:252
 #: FreightCosts.php:326 GLAccounts.php:258 Locations.php:468
 #: PaymentMethods.php:258 PaymentTerms.php:251 Prices_Customer.php:237
 #: SalesAnalReptCols.php:465 SalesAnalRepts.php:458 SalesGLPostings.php:397
 #: SalesPeople.php:280 SalesTypes.php:191 Shippers.php:185
-#: StockCategories.php:363 SupplierContacts.php:230 TaxAuthorities.php:287
+#: StockCategories.php:363 SupplierContacts.php:230 TaxAuthorities.php:289
 #: TaxCategories.php:231 TaxProvinces.php:226 UnitsOfMeasure.php:250
 #: WorkCentres.php:249 WWW_Users.php:455
 msgid "Enter Information"
@@ -689,7 +689,7 @@ msgstr ""
 
 #: BankMatching.php:58 BankReconciliation.php:25 CustomerReceipt.php:570
 #: Payments.php:477 PDFChequeListing.php:40 TaxAuthorities.php:149
-#: TaxAuthorities.php:280
+#: TaxAuthorities.php:282
 msgid "Bank Account"
 msgstr ""
 
@@ -1095,7 +1095,7 @@ msgstr ""
 msgid "The SQL used to retrieve the components was"
 msgstr ""
 
-#: BOMs.php:64 BOMs.php:582 CustomerBranches.php:292 CustomerReceipt.php:768
+#: BOMs.php:64 BOMs.php:582 CustomerBranches.php:294 CustomerReceipt.php:768
 #: GLCodesInquiry.php:27 GLCodesInquiry.php:65 PDFOrdersInvoiced.php:249
 #: PDFOrderStatus.php:256 PO_Header.php:227 PO_Items.php:876
 #: PO_SelectOSPurchOrder.php:196 PO_SelectPurchOrder.php:191 PurchData.php:415
@@ -1418,7 +1418,7 @@ msgid "The following cost of sales posting records that do not have valid genera
 msgstr ""
 
 #: COGSGLPostings.php:87 COGSGLPostings.php:192 COGSGLPostings.php:273
-#: CustomerBranches.php:296 SalesGLPostings.php:96 SalesGLPostings.php:207
+#: CustomerBranches.php:298 SalesGLPostings.php:96 SalesGLPostings.php:207
 #: SalesGLPostings.php:290
 msgid "Area"
 msgstr ""
@@ -1524,7 +1524,7 @@ msgstr ""
 msgid "The company preferences could not be retrieved because"
 msgstr ""
 
-#: CompanyPreferences.php:162 CustomerBranches.php:293 SalesPeople.php:171
+#: CompanyPreferences.php:162 CustomerBranches.php:295 SalesPeople.php:171
 #: SuppInvGLAnalysis.php:49 SuppInvGLAnalysis.php:73 SupplierContacts.php:139
 #: SupplierCredit.php:307 SupplierInvoice.php:297 SuppTransGLAnalysis.php:89
 #: includes/InputSerialItemsFile.php:83 includes/InputSerialItemsFile.php:124
@@ -1844,7 +1844,7 @@ msgid "Excl Tax"
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:257 Credit_Invoice.php:275
-#: SelectCreditItems.php:675 SupplierInvoice.php:187 TaxGroups.php:332
+#: SelectCreditItems.php:675 SupplierInvoice.php:187 TaxGroups.php:339
 msgid "Tax Authority"
 msgstr ""
 
@@ -2250,7 +2250,7 @@ msgstr ""
 #: CustomerTransInquiry.php:79 SelectCompletedOrder.php:414
 #: ShipmentCosting.php:130 Shipments.php:370 Shipments.php:446
 #: SuppCreditGRNs.php:141 SuppCreditGRNs.php:217 SuppInvGRNs.php:256
-#: TaxGroups.php:333 includes/PDFDeliveryDifferencesPageHeader.inc:41
+#: TaxGroups.php:340 includes/PDFDeliveryDifferencesPageHeader.inc:41
 #: includes/PDFOrdersInvoicedPageHeader.inc:40
 #: includes/PDFOrderStatusPageHeader.inc:40
 #: includes/PDFOstdgGRNsPageHeader.inc:31
@@ -2961,12 +2961,12 @@ msgid "Enable Sending of EDI Invoices"
 msgstr ""
 
 #: CustEDISetup.php:94 CustEDISetup.php:97 CustEDISetup.php:108
-#: CustEDISetup.php:111 CustomerBranches.php:588 CustomerBranches.php:590
+#: CustEDISetup.php:111 CustomerBranches.php:590 CustomerBranches.php:592
 msgid "Disabled"
 msgstr ""
 
 #: CustEDISetup.php:95 CustEDISetup.php:98 CustEDISetup.php:109
-#: CustEDISetup.php:112 CustomerBranches.php:587 CustomerBranches.php:591
+#: CustEDISetup.php:112 CustomerBranches.php:589 CustomerBranches.php:593
 msgid "Enabled"
 msgstr ""
 
@@ -3338,28 +3338,28 @@ msgstr ""
 msgid "Branch Deleted"
 msgstr ""
 
-#: CustomerBranches.php:289 CustomerBranches.php:349
+#: CustomerBranches.php:291 CustomerBranches.php:351
 msgid "Branches Defined for"
 msgstr ""
 
-#: CustomerBranches.php:294 CustomerBranches.php:468 SelectCreditItems.php:234
+#: CustomerBranches.php:296 CustomerBranches.php:470 SelectCreditItems.php:234
 #: SelectCustomer.php:235 SelectOrderItems.php:519 SupplierContacts.php:209
 msgid "Contact"
 msgstr ""
 
-#: CustomerBranches.php:295
+#: CustomerBranches.php:297
 msgid "Salesman"
 msgstr ""
 
-#: CustomerBranches.php:297 SupplierContacts.php:141
+#: CustomerBranches.php:299 SupplierContacts.php:141
 msgid "Phone No"
 msgstr ""
 
-#: CustomerBranches.php:298 SupplierContacts.php:142
+#: CustomerBranches.php:300 SupplierContacts.php:142
 msgid "Fax No"
 msgstr ""
 
-#: CustomerBranches.php:299 CustomerBranches.php:563 EmailCustTrans.php:15
+#: CustomerBranches.php:301 CustomerBranches.php:565 EmailCustTrans.php:15
 #: EmailCustTrans.php:57 Locations.php:447 OrderDetails.php:140
 #: PO_PDFPurchOrder.php:298 PO_PDFPurchOrder.php:301 PrintCustTrans.php:682
 #: PrintCustTrans.php:872 PrintCustTrans.php:917 SupplierContacts.php:142
@@ -3368,166 +3368,166 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: CustomerBranches.php:300 CustomerBranches.php:566 SupplierCredit.php:204
-#: Suppliers.php:533 Suppliers.php:650 TaxGroups.php:156 TaxGroups.php:213
+#: CustomerBranches.php:302 CustomerBranches.php:568 SupplierCredit.php:204
+#: Suppliers.php:533 Suppliers.php:650 TaxGroups.php:163 TaxGroups.php:220
 msgid "Tax Group"
 msgstr ""
 
-#: CustomerBranches.php:313
+#: CustomerBranches.php:315
 #, php-format
 msgid "Are you sure you wish to delete this branch?"
 msgstr ""
 
-#: CustomerBranches.php:367
+#: CustomerBranches.php:369
 msgid "Show all branches defined for"
 msgstr ""
 
-#: CustomerBranches.php:440 CustomerBranches.php:445 WWW_Users.php:216
+#: CustomerBranches.php:442 CustomerBranches.php:447 WWW_Users.php:216
 #: WWW_Users.php:374 includes/PDFCustomerListPageHeader.inc:84
 msgid "Branch Code"
 msgstr ""
 
-#: CustomerBranches.php:457
+#: CustomerBranches.php:459
 msgid "There are no sales people defined as yet"
 msgstr ""
 
-#: CustomerBranches.php:457
+#: CustomerBranches.php:459
 msgid "customer branches must be allocated to a sales person"
 msgstr ""
 
-#: CustomerBranches.php:457
+#: CustomerBranches.php:459
 msgid "Please use the link below to define at least one sales person"
 msgstr ""
 
-#: CustomerBranches.php:458
+#: CustomerBranches.php:460
 msgid "Define Sales People"
 msgstr ""
 
-#: CustomerBranches.php:466 SpecialOrder.php:121
+#: CustomerBranches.php:468 SpecialOrder.php:121
 msgid "Branch Name"
 msgstr ""
 
-#: CustomerBranches.php:470
+#: CustomerBranches.php:472
 msgid "Street Address 1"
 msgstr ""
 
-#: CustomerBranches.php:472
+#: CustomerBranches.php:474
 msgid "Street Address 2"
 msgstr ""
 
-#: CustomerBranches.php:474
+#: CustomerBranches.php:476
 msgid "Street Address 3"
 msgstr ""
 
-#: CustomerBranches.php:476
+#: CustomerBranches.php:478
 msgid "Street Address 4"
 msgstr ""
 
-#: CustomerBranches.php:478
+#: CustomerBranches.php:480
 msgid "Street Address 5"
 msgstr ""
 
-#: CustomerBranches.php:480
+#: CustomerBranches.php:482
 msgid "Street Address 6"
 msgstr ""
 
-#: CustomerBranches.php:483
+#: CustomerBranches.php:485
 msgid "Delivery Days"
 msgstr ""
 
-#: CustomerBranches.php:485
+#: CustomerBranches.php:487
 msgid "Forward Date After (day in month)"
 msgstr ""
 
-#: CustomerBranches.php:488 SalesPeople.php:144
+#: CustomerBranches.php:490 SalesPeople.php:144
 msgid "Salesperson"
 msgstr ""
 
-#: CustomerBranches.php:509
+#: CustomerBranches.php:511
 msgid "There are no areas defined as yet"
 msgstr ""
 
-#: CustomerBranches.php:509
+#: CustomerBranches.php:511
 msgid "customer branches must be allocated to an area"
 msgstr ""
 
-#: CustomerBranches.php:509
+#: CustomerBranches.php:511
 msgid "Please use the link below to define at least one sales area"
 msgstr ""
 
-#: CustomerBranches.php:510
+#: CustomerBranches.php:512
 msgid "Define Sales Areas"
 msgstr ""
 
-#: CustomerBranches.php:515 SalesAnalRepts.php:17 SalesAnalRepts.php:19
+#: CustomerBranches.php:517 SalesAnalRepts.php:17 SalesAnalRepts.php:19
 msgid "Sales Area"
 msgstr ""
 
-#: CustomerBranches.php:536
+#: CustomerBranches.php:538
 msgid "There are no stock locations defined as yet"
 msgstr ""
 
-#: CustomerBranches.php:536
+#: CustomerBranches.php:538
 msgid "customer branches must refer to a default location where stock is normally drawn from"
 msgstr ""
 
-#: CustomerBranches.php:536
+#: CustomerBranches.php:538
 msgid "Please use the link below to define at least one stock location"
 msgstr ""
 
-#: CustomerBranches.php:537
+#: CustomerBranches.php:539
 msgid "Define Stock Locations"
 msgstr ""
 
-#: CustomerBranches.php:542
+#: CustomerBranches.php:544
 msgid "Draw Stock From"
 msgstr ""
 
-#: CustomerBranches.php:556
+#: CustomerBranches.php:558
 msgid "Phone Number"
 msgstr ""
 
-#: CustomerBranches.php:559
+#: CustomerBranches.php:561
 msgid "Fax Number"
 msgstr ""
 
-#: CustomerBranches.php:585
+#: CustomerBranches.php:587
 msgid "Disable transactions on this branch"
 msgstr ""
 
-#: CustomerBranches.php:596
+#: CustomerBranches.php:598
 msgid "Default freight company"
 msgstr ""
 
-#: CustomerBranches.php:612
+#: CustomerBranches.php:614
 msgid "Default Packlist"
 msgstr ""
 
-#: CustomerBranches.php:622
+#: CustomerBranches.php:624
 msgid "Show company details and logo"
 msgstr ""
 
-#: CustomerBranches.php:624
+#: CustomerBranches.php:626
 msgid "Hide company details and logo"
 msgstr ""
 
-#: CustomerBranches.php:629
+#: CustomerBranches.php:631
 msgid "Postal Address 1"
 msgstr ""
 
-#: CustomerBranches.php:631
+#: CustomerBranches.php:633
 msgid "Postal Address 2"
 msgstr ""
 
-#: CustomerBranches.php:633
+#: CustomerBranches.php:635
 msgid "Postal Address 3"
 msgstr ""
 
-#: CustomerBranches.php:635
+#: CustomerBranches.php:637
 msgid "Postal Address 4"
 msgstr ""
 
-#: CustomerBranches.php:637
+#: CustomerBranches.php:639
 msgid "Customers Internal Branch Code (EDI)"
 msgstr ""
 
@@ -8851,7 +8851,7 @@ msgstr ""
 msgid "Enter Line"
 msgstr ""
 
-#: PO_Items.php:821 TaxGroups.php:358
+#: PO_Items.php:821 TaxGroups.php:370
 msgid "Update Order"
 msgstr ""
 
@@ -10032,7 +10032,7 @@ msgid "Preferred Supplier"
 msgstr ""
 
 #: PurchData.php:338 Shipments.php:483 StockAdjustments.php:324
-#: TaxGroups.php:313 WWW_Access.php:221
+#: TaxGroups.php:320 WWW_Access.php:221
 #, php-format
 msgid "Add"
 msgstr ""
@@ -11105,7 +11105,7 @@ msgstr ""
 msgid "Inventory items in this category."
 msgstr ""
 
-#: SalesCategories.php:435 StockAdjustments.php:323 TaxGroups.php:293
+#: SalesCategories.php:435 StockAdjustments.php:323 TaxGroups.php:300
 #: WWW_Access.php:208
 #, php-format
 msgid "Remove"
@@ -16180,23 +16180,23 @@ msgstr ""
 msgid "Tax Type Description"
 msgstr ""
 
-#: TaxAuthorities.php:243
-msgid "Output tax GL Account"
-msgstr ""
-
-#: TaxAuthorities.php:261
+#: TaxAuthorities.php:244
 msgid "Input tax GL Account"
 msgstr ""
 
-#: TaxAuthorities.php:276
-msgid "Bank Name"
+#: TaxAuthorities.php:261
+msgid "Output tax GL Account"
 msgstr ""
 
 #: TaxAuthorities.php:278
+msgid "Bank Name"
+msgstr ""
+
+#: TaxAuthorities.php:280
 msgid "Bank Account Type"
 msgstr ""
 
-#: TaxAuthorities.php:282
+#: TaxAuthorities.php:284
 msgid "Bank Swift No"
 msgstr ""
 
@@ -16333,110 +16333,114 @@ msgid "The update of the tax group description failed because"
 msgstr ""
 
 #: TaxGroups.php:37
-msgid "The tax group description was updated."
+msgid "The tax group description was updated to"
 msgstr ""
 
-#: TaxGroups.php:40
+#: TaxGroups.php:42
+msgid "A new tax group could not be added because a tax group already exists for"
+msgstr ""
+
+#: TaxGroups.php:46
 msgid "The addition of the group failed because"
 msgstr ""
 
-#: TaxGroups.php:41
-msgid "The Group was created."
-msgstr ""
-
-#: TaxGroups.php:55
-msgid "The addition of the tax failed because"
-msgstr ""
-
-#: TaxGroups.php:56
-msgid "The tax  was added."
-msgstr ""
-
-#: TaxGroups.php:61
-msgid "The removal of this tax failed because"
+#: TaxGroups.php:47
+msgid "Added the new tax group"
 msgstr ""
 
 #: TaxGroups.php:62
+msgid "The addition of the tax failed because"
+msgstr ""
+
+#: TaxGroups.php:63
+msgid "The tax  was added."
+msgstr ""
+
+#: TaxGroups.php:68
+msgid "The removal of this tax failed because"
+msgstr ""
+
+#: TaxGroups.php:69
 msgid "This tax was removed."
 msgstr ""
 
-#: TaxGroups.php:78 TaxGroups.php:101
+#: TaxGroups.php:85 TaxGroups.php:108
 msgid "Could not get tax authorities in the selected tax group"
 msgstr ""
 
-#: TaxGroups.php:106
+#: TaxGroups.php:113
 msgid "It is inappropriate to set tax on tax where the tax is the first in the calculation order. The system has changed it back to no tax on tax for this tax authority"
 msgstr ""
 
-#: TaxGroups.php:118
+#: TaxGroups.php:125
 msgid "Cannot delete this tax group because some customer branches are setup using it"
 msgstr ""
 
-#: TaxGroups.php:119
+#: TaxGroups.php:126
 msgid "customer branches referring to this tax group"
 msgstr ""
 
-#: TaxGroups.php:125
+#: TaxGroups.php:132
 msgid "Cannot delete this tax group because some suppliers are setup using it"
 msgstr ""
 
-#: TaxGroups.php:126
+#: TaxGroups.php:133
 msgid "suppliers referring to this tax group"
 msgstr ""
 
-#: TaxGroups.php:133
+#: TaxGroups.php:140
 msgid "tax group has been deleted"
 msgstr ""
 
-#: TaxGroups.php:151
+#: TaxGroups.php:158
 msgid "There are no tax groups configured."
 msgstr ""
 
-#: TaxGroups.php:155
+#: TaxGroups.php:162
 msgid "Group No"
 msgstr ""
 
-#: TaxGroups.php:188
+#: TaxGroups.php:195
 msgid "Review Existing Groups"
 msgstr ""
 
-#: TaxGroups.php:200
+#: TaxGroups.php:207
 msgid "The selected tax group is no longer available."
 msgstr ""
 
-#: TaxGroups.php:216
+#: TaxGroups.php:223
 msgid "Enter Group"
 msgstr ""
 
-#: TaxGroups.php:250
+#: TaxGroups.php:257
 msgid "Assigned Taxes"
 msgstr ""
 
-#: TaxGroups.php:252
+#: TaxGroups.php:259
 msgid "Available Taxes"
 msgstr ""
 
-#: TaxGroups.php:256 TaxGroups.php:261
+#: TaxGroups.php:263 TaxGroups.php:268
 msgid "Tax Auth ID"
 msgstr ""
 
-#: TaxGroups.php:257 TaxGroups.php:262
+#: TaxGroups.php:264 TaxGroups.php:269
 msgid "Tax Authority Name"
 msgstr ""
 
-#: TaxGroups.php:258 TaxGroups.php:327
+#: TaxGroups.php:265 TaxGroups.php:334
 msgid "Calculation Order"
 msgstr ""
 
-#: TaxGroups.php:259
+#: TaxGroups.php:266
 msgid "Tax on Prior Tax(es)"
 msgstr ""
 
-#: TaxGroups.php:266
+#: TaxGroups.php:273
 msgid "There are no tax authorities defined to allocate to this tax group"
 msgstr ""
 
-#: TaxGroups.php:334
+#: TaxGroups.php:341
 msgid "Tax on Prior Taxes"
 msgstr ""
 

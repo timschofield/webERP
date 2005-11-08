@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 $PageSecurity = 10;
 
 include('includes/session.inc');
@@ -34,21 +34,29 @@ if (isset($_POST['submit'])) {
 	} elseif ($InputError !=1) {
 
 	/*Selected Sales GL Posting is null cos no item selected on first time round so must be	adding a record must be submitting new entries in the new SalesGLPosting form */
-
-		$sql = 'INSERT INTO salesglpostings (
-					salesglcode,
-					discountglcode,
-					area,
-					stkcat,
-					salestype)
-				VALUES (
-					' . $_POST['SalesGLCode'] . ',
-					' . $_POST['DiscountGLCode'] . ",
-					'" . $_POST['Area'] . "',
-					'" . $_POST['StkCat'] . "',
-					'" . $_POST['SalesType'] . "'
-					)";
-		$msg = _('The new sales GL posting record has been inserted');
+	
+		/* Verify if item doesn't exists to insert it, otherwise just refreshes the page. */
+		$sql = "SELECT count(*) FROM salesglpostings WHERE area='" . $_POST['Area'] . "' AND stkcat='" . $_POST['StkCat'] . "' AND salestype='" . $_POST['SalesType'] . "'";
+		$result = DB_query($sql,$db);
+		$myrow = DB_fetch_row($result);
+		if ($myrow == 0) {
+			$sql = 'INSERT INTO salesglpostings (
+						salesglcode,
+						discountglcode,
+						area,
+						stkcat,
+						salestype)
+					VALUES (
+						' . $_POST['SalesGLCode'] . ',
+						' . $_POST['DiscountGLCode'] . ",
+						'" . $_POST['Area'] . "',
+						'" . $_POST['StkCat'] . "',
+						'" . $_POST['SalesType'] . "'
+						)";
+			$msg = _('The new sales GL posting record has been inserted');
+		} else {
+			// Here could be a warning message.
+		}
 	}
 	//run the SQL from either of the above possibilites
 

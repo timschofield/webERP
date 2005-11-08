@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 2;
 
@@ -8,10 +8,11 @@ $title = _('Search Suppliers');
 include('includes/header.inc');
 
 $msg='';
-
+/*
 if (!isset($_POST['Search'])){
 	$_POST['Search']='';
 }
+*/
 
 if (!isset($_POST['PageOffset'])) {
   $_POST['PageOffset'] = 1;
@@ -39,7 +40,15 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		$msg='<BR>' . _('Supplier name keywords have been used in preference to the Supplier code extract entered');
 	}
 	If ($_POST['Keywords']=='' AND $_POST['SupplierCode']=='') {
-		$msg='<BR>' . _('At least one Supplier Name keyword OR an extract of a Supplier Code must be entered for the search');
+		//$msg='<BR>' . _('At least one Supplier Name keyword OR an extract of a Supplier Code must be entered for the search');
+		$SQL = "SELECT supplierid,
+					suppname,
+					currcode,
+					address1,
+					address2,
+					address3,
+					address4
+				FROM suppliers";
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 
@@ -77,14 +86,14 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 				FROM suppliers
 				WHERE supplierid " . LIKE  . " '%" . $_POST['SupplierCode'] . "%'";
 		}
-
-		$result = DB_query($SQL,$db);
-		if (DB_num_rows($result)==1){
-		   $myrow = DB_fetch_row($result);
-		   $SingleSupplierReturned = $myrow[0];
-		}
-
 	} //one of keywords or SupplierCode was more than a zero length string
+
+	$result = DB_query($SQL,$db);
+	if (DB_num_rows($result)==1){
+	   $myrow = DB_fetch_row($result);
+	   $SingleSupplierReturned = $myrow[0];
+	}
+
 } //end of if search
 
 If (isset($SingleSupplierReturned)) { /*there was only one supplier returned */
@@ -186,7 +195,9 @@ if (isset($_POST['SupplierCode'])) {
 echo "</TD>
 </TR>
 </TABLE>
-<CENTER><INPUT TYPE=SUBMIT NAME='Search' VALUE='" . _('Search Now') . "'>
+<CENTER>
+<INPUT TYPE=SUBMIT NAME='Search' VALUE='" . _('Show All') . "'>
+<INPUT TYPE=SUBMIT NAME='Search' VALUE='" . _('Search Now') . "'>
 </CENTER>";
 
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 2;
 
@@ -29,7 +29,15 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		$_POST['Keywords'] = strtoupper($_POST['Keywords']);
 	}
 	If ($_POST['Keywords']=="" AND $_POST['CustCode']=="") {
-		$msg=_('At least one Customer Name keyword OR an extract of a Customer Code must be entered for the search');
+		//$msg=_('At least one Customer Name keyword OR an extract of a Customer Code must be entered for the search');
+		$SQL= "SELECT debtorsmaster.debtorno,
+					debtorsmaster.name,
+					custbranch.brname,
+					custbranch.contactname,
+					custbranch.phoneno,
+					custbranch.faxno
+				FROM debtorsmaster LEFT JOIN custbranch
+					ON debtorsmaster.debtorno = custbranch.debtorno";
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 
@@ -69,18 +77,16 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					ON debtorsmaster.debtorno = custbranch.debtorno
 				WHERE debtorsmaster.debtorno " . LIKE  . " '%" . $_POST['CustCode'] . "%'";
 		}
-
-		$ErrMsg = _('The searched customer records requested cannot be retrieved because');
-		$result = DB_query($SQL,$db,$ErrMsg);
-		if (DB_num_rows($result)==1){
-			$myrow=DB_fetch_array($result);
-			$_POST['Select'] = $myrow['debtorno'];
-			unset($result);
-		} elseif (DB_num_rows($result)==0){
-			prnMsg(_('No customer records contain the selected text') . ' - ' . _('please alter your search criteria and try again'),'info');
-		}
-
 	} //one of keywords or custcode was more than a zero length string
+	$ErrMsg = _('The searched customer records requested cannot be retrieved because');
+	$result = DB_query($SQL,$db,$ErrMsg);
+	if (DB_num_rows($result)==1){
+		$myrow=DB_fetch_array($result);
+		$_POST['Select'] = $myrow['debtorno'];
+		unset($result);
+	} elseif (DB_num_rows($result)==0){
+		prnMsg(_('No customer records contain the selected text') . ' - ' . _('please alter your search criteria and try again'),'info');
+	}
 } //end of if search
 
 
@@ -171,6 +177,7 @@ if (isset($_POST['CustCode'])) {
 </TD>
 </TR>
 </TABLE>
+<INPUT TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Show All'); ?>">
 <INPUT TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Search Now'); ?>">
 <INPUT TYPE=SUBMIT ACTION=RESET VALUE="<?php echo _('Reset'); ?>"></CENTER>
 

@@ -1936,6 +1936,12 @@ INSERT INTO `chartmaster` VALUES (9100,'Income Tax Provision','Income Tax');
 INSERT INTO `companies` VALUES (1,'Demo System','not entered yet','','PO Box 1000','The White House','Washnington DC','USA','','','','','info@weberp.org','USD',1100,4900,2100,2400,2150,4200,5200,3500,1,1,1,5600);
 
 --
+-- Dumping data for table `cogsglpostings`
+--
+
+INSERT INTO `cogsglpostings` VALUES (1,'AN','ANY',5000,'AN');
+
+--
 -- Dumping data for table `currencies`
 --
 
@@ -1966,6 +1972,12 @@ INSERT INTO `paymentterms` VALUES ('20','Due 20th Of the Following Month',0,22);
 INSERT INTO `paymentterms` VALUES ('30','Due By End Of The Following Month',0,30);
 INSERT INTO `paymentterms` VALUES ('7','Payment due within 7 days',7,0);
 INSERT INTO `paymentterms` VALUES ('CA','Cash Only',1,0);
+
+--
+-- Dumping data for table `salesglpostings`
+--
+
+INSERT INTO `salesglpostings` VALUES (1,'AN','ANY',4900,4100,'AN');
 
 --
 -- Dumping data for table `systypes`
@@ -2004,7 +2016,7 @@ INSERT INTO `taxauthorities` VALUES (1,'Australian GST',2300,2310,'','','','');
 INSERT INTO `taxauthorities` VALUES (5,'Sales Tax',2300,2310,'','','','');
 INSERT INTO `taxauthorities` VALUES (11,'Canadian GST',2300,2310,'','','','');
 INSERT INTO `taxauthorities` VALUES (12,'Ontario PST',2300,2310,'','','','');
-INSERT INTO `taxauthorities` VALUES (13,'UK VAT',2300,2300,'','','','');
+INSERT INTO `taxauthorities` VALUES (13,'UK VAT',2300,2310,'','','','');
 
 --
 -- Dumping data for table `taxgroups`

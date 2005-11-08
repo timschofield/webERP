@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 11; // only allow accountant access
 
@@ -14,7 +14,7 @@ include('includes/session.inc');
 $title = _('Tax Rates');
 include('includes/header.inc');
 
-/* <-- $Revision: 1.12 $ --> */
+/* <-- $Revision: 1.13 $ --> */
 
 if (!isset($TaxAuthority)){
 	prnMsg(_('This page can only be called after selecting the tax authority to edit the rates for') . '. ' . _('Please select the Rates link from the tax authority page') . ".<BR><A HREF='$rootpath/TaxAuthorities.php'>" . _('click here') . '</A> ' . _('to go to the Tax Authority page'),'error');
@@ -77,7 +77,7 @@ $TaxRatesResult = DB_query('SELECT taxauthrates.taxcatid,
 if (DB_num_rows($TaxRatesResult)>0){
 
 	echo '<CENTER><TABLE CELLPADDING=2 BORDER=2>';
-	$TableHeader = "<TR><TD Class='tableheader'>" . _('Deliveres From') . '<BR>' . _('Tax Province') . "</TD>
+	$TableHeader = "<TR><TD Class='tableheader'>" . _('Deliveries From') . '<BR>' . _('Tax Province') . "</TD>
 				<TD Class='tableheader'>" . _('Tax Category') . "</TD>
 				<TD Class='tableheader'>" . _('Tax Rate') . ' %</TD></TR>';
 	echo $TableHeader;

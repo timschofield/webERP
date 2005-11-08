@@ -3503,7 +3503,7 @@ INSERT INTO `taxauthorities` VALUES (1,'Australian GST',2300,2310,'','','','');
 INSERT INTO `taxauthorities` VALUES (5,'Sales Tax',2300,2310,'','','','');
 INSERT INTO `taxauthorities` VALUES (11,'Canadian GST',2300,2310,'','','','');
 INSERT INTO `taxauthorities` VALUES (12,'Ontario PST',2300,2310,'','','','');
-INSERT INTO `taxauthorities` VALUES (13,'UK VAT',2300,2300,'','','','');
+INSERT INTO `taxauthorities` VALUES (13,'UK VAT',2300,2310,'','','','');
 
 --
 -- Dumping data for table `taxauthrates`
@@ -3542,8 +3542,8 @@ INSERT INTO `taxgroups` VALUES (3,'UK Inland Revenue');
 
 INSERT INTO `taxgrouptaxes` VALUES (1,1,0,0);
 INSERT INTO `taxgrouptaxes` VALUES (1,5,1,1);
-INSERT INTO `taxgrouptaxes` VALUES (2,11,1,1);
-INSERT INTO `taxgrouptaxes` VALUES (2,12,0,0);
+INSERT INTO `taxgrouptaxes` VALUES (2,11,0,0);
+INSERT INTO `taxgrouptaxes` VALUES (2,13,0,0);
 INSERT INTO `taxgrouptaxes` VALUES (3,13,0,0);
 
 --
