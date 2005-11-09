@@ -4,7 +4,7 @@ include('includes/session.inc');
 $result = DB_query("SELECT description FROM stockmaster WHERE stockid='" . $_GET['StockID'] . "'",$db);
 $myrow = DB_fetch_row($result);
 
-include('./phplot/phplot.php');
+include('includes/phplot/phplot.php');
 $graph =& new phplot(1000,500);
 $graph->SetTitle($myrow[0] . ' ' . _('Usage'));
 $graph->SetXTitle(_('Month'));

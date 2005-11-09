@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 
 $PageSecurity = 11;
@@ -102,7 +102,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The item can only be serialised if there is lot control enabled already') . '. ' . _('Batch control') . ' - ' . _('with any number of items in a lot/bundle/roll is enabled when controlled is enabled') . '. ' . _('Serialised control requires that only one item is in the batch') . '. ' . _('For serialised control') . ', ' . _('both controlled and serialised must be enabled'),'error');
 	} elseif (($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K' OR $_POST['MBFlag']=='D') AND $_POST['Controlled']==1){
 		$InputError = 1;
-		prnMsg(_('Assembly/Kitset/Dummy items cannot also be controlled items') . '. ' . _('Assemblies/Dummies and Kitsets are not physical items and batch/serial control is therefore not appropriate'),'error');
+		prnMsg(_('Assembly/Kitset/Service items cannot also be controlled items') . '. ' . _('Assemblies/Dummies and Kitsets are not physical items and batch/serial control is therefore not appropriate'),'error');
 	} elseif (trim($_POST['CategoryID'])==''){
 		$InputError = 1;
 		prnMsg(_('There are no inventory categories defined. All inventory items must belong to a valid inventory category,'),'error');
@@ -117,7 +117,7 @@ if (isset($_POST['submit'])) {
 		if (!isset($_POST['New'])) { /*so its an existing one */
 
 			/*first check on the changes being made we must disallow:
-			- changes from manufactured or purchased to Dummy, Assembly or Kitset if there is stock			- changes from manufactured, kitset or assembly where a BOM exists
+			- changes from manufactured or purchased to Service, Assembly or Kitset if there is stock			- changes from manufactured, kitset or assembly where a BOM exists
 			*/
 
 			$sql = "SELECT mbflag, controlled, serialised FROM stockmaster WHERE stockid = '$StockID'";
@@ -563,7 +563,7 @@ while( $UOMrow = DB_fetch_array($UOMResult) ) {
 
 echo '</SELECT></TD></TR>';
 
-echo '<TR><TD>' . _('Make, Buy, Kit, Assembly or Dummy Part') . ':</TD><TD><SELECT name="MBFlag">';
+echo '<TR><TD>' . _('Make, Buy, Kit, Assembly or Service Part') . ':</TD><TD><SELECT name="MBFlag">';
 if ($_POST['MBFlag']=='A'){
 	echo '<OPTION SELECTED VALUE="A">' . _('Assembly');
 } else {
@@ -586,9 +586,9 @@ if ($_POST['MBFlag']=='B' OR !isset($_POST['MBFlag']) OR $_POST['MBFlag']==''){
 }
 
 if ($_POST['MBFlag']=='D'){
-	echo '<OPTION SELECTED VALUE="D">' . _('Dummy');
+	echo '<OPTION SELECTED VALUE="D">' . _('Service');
 } else {
-	echo '<OPTION VALUE="D">' . _('Dummy');
+	echo '<OPTION VALUE="D">' . _('Service');
 }
 
 echo '</SELECT></TD></TR>';

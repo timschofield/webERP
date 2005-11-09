@@ -123,11 +123,13 @@
 	
 	$SalesFolkResult = DB_query('SELECT salesmancode, salesmanname FROM salesman',$db);
 	
-	if (!isset($_POST['SalesmanCode'])){
-                  $_POST['SalesmanCode']='';
-        }
+	
+	if (! isset($_POST['SalesmanCode'])){
+ 		$_POST['SalesmanCode'] = '';
+	}
 	
 	echo '<TR><TD>' . _('For Sales Person:') .'</TD><TD><SELECT Name="SalesmanCode">';
+	
 	if($_POST['SalesmanCode']==_('All')){
 		echo '<OPTION SELECTED VALUE="All">' . _('All');
 	} else {

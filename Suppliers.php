@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 5;
 
@@ -495,7 +495,7 @@ if (!isset($SupplierID)) {
 	echo '<TR><TD>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] . "):</TD><TD><INPUT TYPE='text' NAME='SupplierSince' VALUE=$DateString SIZE=12 MAXLENGTH=10></TD></TR>";
 	echo '<TR><TD>' . _('Bank Particulars') . ":</TD><TD><INPUT TYPE='text' NAME='BankPartics' SIZE=13 MAXLENGTH=12></TD></TR>";
 	echo '<TR><TD>' . _('Bank reference') . ":</TD><TD><INPUT TYPE='text' NAME='BankRef' VALUE=0 SIZE=13 MAXLENGTH=12></TD></TR>";
-	echo '<TR><TD>' . _('Bank Account No') . ":</TD><TD><INPUT TYPE='text' NAME='BankAct' SIZE=17 MAXLENGTH=16></TD></TR>";
+	echo '<TR><TD>' . _('Bank Account No') . ":</TD><TD><INPUT TYPE='text' NAME='BankAct' SIZE=31 MAXLENGTH=30></TD></TR>";
 
 	$result=DB_query('SELECT terms, termsindicator FROM paymentterms', $db);
 
