@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 $PageSecurity = 1;
 
@@ -404,7 +404,7 @@ If (isset($PrintPDF)
 		$pdf->addText($Page_Width-$Right_Margin-220, $YPos-$line_height+5,$FontSize, _('Freight'));
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+642,$YPos-$line_height+5,120,$FontSize,$DisplayFreight, 'right');
 
-		$pdf->addText($Page_Width-$Right_Margin-220, $YPos-(2*$line_height)+5,$FontSize, 'Tax');
+		$pdf->addText($Page_Width-$Right_Margin-220, $YPos-(2*$line_height)+5,$FontSize, _('Tax'));
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+642,$YPos-(2*$line_height)+5,120, $FontSize,$DisplayTax, 'right');
 
 		/*rule off for total */

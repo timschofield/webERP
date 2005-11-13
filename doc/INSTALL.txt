@@ -1,6 +1,6 @@
 WEB-ERP Installation
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 Upgrading
 
@@ -142,6 +142,8 @@ or
 shell > mysql --user=weberp_db_user --password='some_pass' < /path_to_the_sql_script/weberp-new.sql
 
 as required.
+
+An important consideration for lanugage encodings other ISO-8859-1 was contributed by Chan Wai Lun with postgres we may modify the PostgreSQL config file postgresql.conf to add a key "client_encoding=big5" or using "createdb -E EUC_TW" to create a database with suitable encoding. MySQL may have a similar configuration parameter.
 
 3. Editing config.php
 

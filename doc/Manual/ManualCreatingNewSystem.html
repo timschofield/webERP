@@ -10,7 +10,17 @@ The demonstration system has bogus data already entered so that the features of 
 
 <font size="+2"><b>Setting Up A System</b></font>
 <br><br>
-For the company logo to appear on the each screen, it must be saved in the format of a .jpg file and be copied to the file logo.jpg in the directory with all the other php scripts. The logo needs to have read permissions for the user that the web server is running as normally "nobody" for apache on linux. Permissions issues are a none issue under windows.
+<font size="+2"><b>The Company Logo</b></font>
+<br><br>
+For the company logo to appear on the each screen, it must be saved in the format of a .jpg file and be copied to the file logo.jpg in the companies/Your Company Name/ directory. webERP allows for multiple companies to be accessed using the same scripts which each company's configuration stored in the database. The name of the company database has a directory under the directory companies under the webERP root directory. The logo needs to have read permissions for the user that the web server is running as normally "nobody" for apache on linux. Permissions issues are of course a none issue under windows installations.
+<br><br>
+<font size="+2"><b>The Chart Of Accounts</b></font>
+<br><br>
+A default chart of accounts is set up. However, in most cases the company will wish to adopt the chart of accounts it has used traditionally. Chart of accounts maintenance - deletion of accounts and adding of new accounts is done from the General Ledger tab. This would be a starting point for data input of a new system. Where the GL integration features are to be used, setting up the chart of accounts will be a necessary first step. Once a general ledger account has a posting to it then it will not be allowed to be deleted. 
+<br><br>
+In the General Ledger there is a hierarchy of Account Section > Account Group > GL Account. General ledger accounts - the chart of accounts, Account Groups and Account Sections can be added or modified from General Ledger - Maintenance. It is important to get the chart of accounts right before entries are made which make it difficult to modify the chart. You can't delete accounts with postings made to them.
+<br><br>
+<font size="+2"><b>Company Parameters</b></font>
 <br><br>
 Company parameters need to be set correctly from the company set up screen. Most of these parameters are self -explanatory. Company name, company number, postal address, physical address etc. Also, telephone numbers and the default home currency of the business. If the default currency is not already set up, then from the main menu system set up tab, the link to the currency maintenance form allows new currencies to be defined and for default rates to be updated.
 <br><br>
@@ -28,7 +38,6 @@ The company record also provides a convenient place to store default GL codes fo
 <li>Purchases Exchange Variances GL Account: 
 <li>Payment Discount GL Account:
 </ul>
-A default chart of accounts is set up. However, in most cases the company will wish to adopt the chart of accounts it has used traditionally. Chart of accounts maintenance - deletion of accounts and adding of new accounts is done from the General Ledger tab. This would be a starting point for data input of a new system. Where the GL integration features are to be used, setting up the chart of accounts will be a necessary first step.
 <br><br>
 The company record also records the GL integration set up:
 <br><br>
@@ -38,6 +47,10 @@ The company record also records the GL integration set up:
 <li>Create GL entries for stock transactions (at standard cost): 
 </ul>
 Notice that the stock GL integration is a separate flag. If GL integration of accounts receivable is set to yes, then GL journals are created for invoices and credits to sales and debtors but not for cost of sales and stock. For the later integration this requires that the GL entries for stock transactions be set to yes also.
+<br><br>
+For GL integration at the sales level the posting codes for sales for a specific sales type, sales area and stock category need to be defined from Setup > Sales GL Interface Postings.
+For Stock GL integration then the cost of sales posting codes for a specific sales type, sales area and stock catgeory also need to be set up from Setup > COGS GL Interface Postings (COGS = Cost Of Goods Sold).
+If appropriate GL codes are not specified the system will automatically create a new GL account number 1 for the postings to be made to. If you have this account keep appearing then this is a good sign that default posting codes are not created.
 <br><br>
 <!-- Help End: CompanyPreferences -->
 
@@ -260,6 +273,9 @@ It is not necessary to use the stock integration to the general ledger although 
 <br><br>
 Some flexibility is provided in how sales transactions are posted to the general ledger. Different sales accounts can be used depending on any combination of the sales area of the customer, the sales type and the stock category of the item sold. Before entering any sales it is important to defined the posting schema under setup - Sales GL Interface Postings. The same flexibility is also afforded to the posting of cost of goods sold (COGS)- of course these journals are only created if the stock GL interface is activated. If it is then again it is critical to ensure the proper set up of the posting schema for COGS under the setup tab - COGS GL Interface posting
 
+<font size="+1"><b>Tax</b></font>
+<br><br>
+Taxes must be setup.  In Setup there are Tax Group Maintenance, Dispatch Tax Province Maintenance, Tax Categories Maintenance and Tax Authorities and Rates Maintenance.  Before you set up customer branches the tax group that relates the branch must be defined - the tax group specifies the tax authorities to which taxes must be charged on sales to the branch. The system allows any number of tax authorities to be included in a tax group. The tax category must be specified on the setup of items - some items attract tax at higher rates and these must be flagged as such. As many tax categories as necessary can be defined. There is a more detailed section in the manual for further details on tax.
 
 <font size="+1"><b>Setting Up Customers</b></font>
 <br><br>

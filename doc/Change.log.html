@@ -1,5 +1,7 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
+<P>13/11/05 Ed - PaymentTerms.php now checks for payment terms less than 360 days following invoice 99 days was considered too restrictive.
+<P>11/11/05 PrintCustTrans.php during translation couldnt translate "Tax" not in _('') function. 
 <P>9/11/05 Increased the length of the bank account to 30 varchar was text already in pg
 <P>8/11/05 Briain - SelectCustomer.php SelectSupplier now have buttons to show all - with the paging the user is protected from massive downloads over dialup.
 <P>7/11/05 TaxGroups.php changed to prohibit the same tax group name, automatically enter calculation orders to prevent problems with the same ordered tax authorities. Changed messages when updated and inserted tax groups to show the name of the tax group updated/inserted. Fine tuning all suggested by Steve K.

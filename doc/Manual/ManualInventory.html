@@ -92,19 +92,19 @@ If this field is set to obsolete, this indicates that the stock item is no longe
 <br><br>
 This field is compulsory and indicates whether the stock item is:
 <br><br>
-Manufactured
+Manufactured - if the item is defined as manufactured it can have a bill of material - there are no traps that prevent a manufactured item from being purchased. 
 <br><br>
-Purchased from an external supplier. 
+Purchased from an external supplier. Since the item is purchased it cannot also be manufactured and have a bill of material.
 <br><br>
 An assembly of other stock items. An assembly item does not have a physical stock holding itself, nor has it a cost. An invoice for an assembly item creates the stock movements for all the components of the item and the stock of each of the components in proportion to the requirements specified in the bill of material are decremented. The cost of sales entries in the general ledger journals created by an invoice (if the link is active) is created at the sum of the costs of all the items in the bill of material for the assembly as at the time of invoicing.
 <br><br>
 A kit set of other stock items that should be exploded into its components when ordered. A kit set is not a physical item itself it is just a short cut to entering a number of parts onto an order. Unlike an assembly, the kit set part does not appear on invoices or orders, but "explodes" into its component parts for modification. It follows that kit sets do not have any cost or physical stock quantities associated with them.
 <br><br>
-A dummy item that has no physical stock associated with it.
+A service item that has no physical stock associated with it. This if for use with service companies that are not interested in retaining stock quantities by location. However, the same sales analysis and movement history is retained - showing the amounts of the service sold/credited.
 <br><br>
-This field is relevant for MRP and production scheduling. This field can also be set to Dummy Inventory Item - which then disables stock quantity tracking at the locations and in total. Dummy stock items are used for invoicing services and labour or even physical items which do not require tracking. The stock movement records are still created and are available to recall on invoicing and credit note inquiries. Inventory adjustments are not allowed for Dummy Inventory Items. Assembly items can have sales analysis records created for them, but no stock quantity is maintained and stock movement records are created for the components. Assemblies would normally be used where the warehouse keeps the components of the item for several different purposes and only assembles the items as they are picked for dispatch.
+This field is relevant for MRP and production scheduling. This field can also be set to Service Inventory Item - which then disables stock quantity tracking at the locations and in total. Service stock items are used for invoicing services and labour or even physical items which do not require tracking. The stock movement records are still created and are available to recall on invoicing and credit note inquiries. Inventory adjustments are not allowed for Service Inventory Items. Assembly items can have sales analysis records created for them, but no stock quantity is maintained and stock movement records are created for the components. Assemblies would normally be used where the warehouse keeps the components of the item for several different purposes and only assembles the items as they are picked for dispatch.
 <br><br>
-<b>Setting Up Assembly Items</b>
+<font size="+1"><b>Setting Up Assembly Items</b></font>
 <br><br>
 Using the example of toilet suites, where the business wishes to keep track of how many sold - i.e. The sales analysis - but only wishes to track the quantities of stock held of the toilet pans and toilet cisterns that make up the suite.
 <br><br>

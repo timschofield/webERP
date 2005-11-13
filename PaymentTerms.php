@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 10;
 
@@ -38,9 +38,9 @@ if (isset($_POST['submit'])) {
 	} elseif ($_POST['DayNumber'] > 30 AND $_POST['DaysOrFoll']==1) {
 		$InputError = 1;
 		prnMsg( _('When the check box is not checked to indicate a day in the following month is the due date') . ', ' . _('the due date cannot be a day after the 30th') . '. ' . _('A number between 1 and 30 is expected') ,'error');
-	} elseif ($_POST['DayNumber']>100 AND $_POST['DaysOrFoll'] ==0) {
+	} elseif ($_POST['DayNumber']>360 AND $_POST['DaysOrFoll'] ==0) {
 		$InputError = 1;
-		prnMsg( _('When the check box is checked to indicate that the term expects a number of days after which accounts are due') . ', ' . _('the number entered should be less than 100 days') ,'error');
+		prnMsg( _('When the check box is checked to indicate that the term expects a number of days after which accounts are due') . ', ' . _('the number entered should be less than 361 days') ,'error');
 	}
 
 
@@ -93,14 +93,16 @@ if (isset($_POST['submit'])) {
 
 		$msg = _('The payment terms definition record has been added') . '.';
 	}
-	//run the SQL from either of the above possibilites
-	$result = DB_query($sql,$db);
-	prnMsg($msg,'success');
-	unset($SelectedTerms);
-	unset($_POST['DaysOrFoll']);
-	unset($_POST['TermsIndicator']);
-	unset($_POST['Terms']);
-	unset($_POST['DayNumber']);
+	if ($InputError !=1){
+		//run the SQL from either of the above possibilites
+		$result = DB_query($sql,$db);
+		prnMsg($msg,'success');
+		unset($SelectedTerms);
+		unset($_POST['DaysOrFoll']);
+		unset($_POST['TermsIndicator']);
+		unset($_POST['Terms']);
+		unset($_POST['DayNumber']);
+	}
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
@@ -238,7 +240,7 @@ if (!isset($_GET['delete'])) {
 	</TD></TR>
 	<TR><TD><?php echo _('Days (Or Day In Following Month)'); ?>:</TD>
 	<TD>
-	<INPUT TYPE="Text" name="DayNumber"  SIZE=3 MAXLENGTH=2 VALUE=
+	<INPUT TYPE="Text" name="DayNumber"  SIZE=4 MAXLENGTH=3 VALUE=
 		<?php	if ($DaysBeforeDue !=0) {
 			echo $DaysBeforeDue;
 			} else {
