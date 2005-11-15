@@ -1,5 +1,10 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
+<P>
+<P><B>Version 3.04
+<P>15 November 2005</B>
+<P>
+<P>15/11/05 Fixed bug in adding new chart details in the function includes/DateFunctions.inc - GetPeriod for all chartdetails not already setup - this was not happening for periods created before the current period only for subsequent periods.
 <P>13/11/05 Ed - PaymentTerms.php now checks for payment terms less than 360 days following invoice 99 days was considered too restrictive.
 <P>11/11/05 PrintCustTrans.php during translation couldnt translate "Tax" not in _('') function. 
 <P>9/11/05 Increased the length of the bank account to 30 varchar was text already in pg
@@ -28,7 +33,6 @@
 <P>11/10/05 Greg Morehead - removed references to BrAddX which was not defined in the cart class and changed to DelAddX - not sure how this had worked
 <P>9/10/05 Hindra Joshua - addJpegFromFile - changes on 1/1/05 fixed the height and should have focused on the width - the logos are now scaled based on the widths by setting the height argument to 0.
 <P>9/10/05 Exchange rate on entering receipts was not checking the correct variable for the currencydefault - now corrected
-
 <P>
 <P><B>Version 3.03
 <P>1 October 2005</B>

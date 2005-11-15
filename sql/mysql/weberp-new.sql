@@ -1496,7 +1496,7 @@ CREATE TABLE `suppliers` (
   `paymentterms` char(2) NOT NULL default '',
   `lastpaid` double NOT NULL default '0',
   `lastpaiddate` datetime default NULL,
-  `bankact` varchar(16) NOT NULL default '',
+  `bankact` varchar(30) NOT NULL default '',
   `bankref` varchar(12) NOT NULL default '',
   `bankpartics` varchar(12) NOT NULL default '',
   `remittance` tinyint(4) NOT NULL default '1',
@@ -1939,7 +1939,7 @@ INSERT INTO `companies` VALUES (1,'Demo System','not entered yet','','PO Box 100
 -- Dumping data for table `cogsglpostings`
 --
 
-INSERT INTO `cogsglpostings` VALUES (1,'AN','ANY',5000,'AN');
+INSERT INTO `cogsglpostings` VALUES (3,'AN','ANY',5000,'AN');
 
 --
 -- Dumping data for table `currencies`
@@ -2216,7 +2216,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-11-06');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-11-13');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');

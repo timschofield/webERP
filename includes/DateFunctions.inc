@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 /*
 date validation and parsing functions
@@ -595,7 +595,12 @@ Need to insert some new periods */
 				$GetPrdResult = DB_query($GetPrdSQL, $db, $ErrMsg);
 
 				$sql = 'INSERT INTO chartdetails (accountcode, period)
-						SELECT accountcode,' . $LastPeriodNo . ' FROM chartmaster';
+						SELECT chartmaster.accountcode, periods.periodno
+							FROM chartmaster
+								CROSS  JOIN periods
+						WHERE ( chartmaster.accountcode, periods.periodno ) NOT 
+							IN ( SELECT chartdetails.accountcode, chartdetails.period FROM chartdetails )';
+							
 				$InsNewChartDetails = DB_query($sql,$db,'','','',false); /*dont trap errors - chart details records created only as required - duplicate messages ignored */
 
 			}
