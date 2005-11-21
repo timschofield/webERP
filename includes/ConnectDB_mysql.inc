@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 define ('LIKE','LIKE');
 
@@ -18,7 +18,7 @@ if (! mysql_select_db($_SESSION['DatabaseName'],$db)) {
 	exit;
 }
 
-require_once ('includes/MiscFunctions.php');
+require_once ($PathPrefix .'includes/MiscFunctions.php');
 
 //DB wrapper functions to change only once for whole application
 
@@ -30,6 +30,7 @@ function DB_query ($SQL,
 		$TrapErrors=true){
 
 	global $debug;
+	global $PathPrefix;
 	
 	$result=mysql_query($SQL,$Conn);
 	
@@ -39,7 +40,7 @@ function DB_query ($SQL,
 	
 	if (DB_error_no($Conn) != 0 AND $TrapErrors==true){
 		if ($TrapErrors){
-			require_once('includes/header.inc');
+			require_once($PathPrefix . 'includes/header.inc');
 		}
 		prnMsg($ErrorMessage.'<BR>' . DB_error_msg($Conn),'error', _('Database Error'));
 		if ($debug==1){
@@ -53,7 +54,7 @@ function DB_query ($SQL,
 			}
 		}
 		if ($TrapErrors){
-			include('includes/footer.inc');
+			include($PathPrefix . 'includes/footer.inc');
 			exit;
 		}
 	}
@@ -64,6 +65,12 @@ function DB_query ($SQL,
 function DB_fetch_row (&$ResultIndex) {
 
 	$RowPointer=mysql_fetch_row($ResultIndex);
+	Return $RowPointer;
+}
+
+function DB_fetch_assoc (&$ResultIndex) {
+
+	$RowPointer=mysql_fetch_assoc($ResultIndex);
 	Return $RowPointer;
 }
 

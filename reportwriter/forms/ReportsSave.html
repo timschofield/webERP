@@ -1,0 +1,31 @@
+<html>
+<head>
+</head>
+
+<body>
+<h2 align="center"><?echo RPT_REPORT.$Prefs['reportname'].' - '.RPT_PAGESAVE; ?></h2>
+<form name="reporthome" method="post" action="ReportMaker.php?action=go">
+  <input name="ReportID" type="hidden" value="<?PHP echo $ReportID; ?>">
+  <input name="GoBackURL" type="hidden" value="<? echo $GoBackURL; ?>">
+  <table width="400" align="center" border="1" cellspacing="1" cellpadding="1">
+	<tr>
+		<td colspan="3"><div align="center"><? echo RPT_RPTENTER; ?></div></td>
+	</tr>
+	<tr>
+		<td colspan="3"><div align="center">
+		  <input name="ReportName" type="text" value="<? echo $Prefs['reportname']; ?>" size="32" maxlength="30">
+		  </div></td>
+	</tr>
+  </table>
+  <table width="400" align="center" border="0" cellspacing="1" cellpadding="1">
+	<tr>
+	  <td><input name="todo" type="submit" id="todo" value="<? echo RPT_BTN_CANCEL; ?>"></td>
+		<? if ($ShowReplace) { ?>
+	  <td><div align="center"><input type="submit" name="todo" id="todo" value="<? echo RPT_BTN_REPLACE; ?>"></div></td>
+		<? } else echo '<td>&nbsp;</td>'; ?>
+	  <td><div align="right"><input type="submit" name="todo" id="todo" value="<? echo RPT_BTN_SAVE; ?>"></div></td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>

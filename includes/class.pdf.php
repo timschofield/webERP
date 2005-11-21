@@ -42,9 +42,9 @@ class Cpdf extends PDF_Language {
 		}elseif ($_SESSION['Language']=='ko_KR'){
 			$this->AddUHCFont();
 		} else {
-			$this->AddFont('helvetica');
-			$this->AddFont('helvetica','I');
-			$this->AddFont('helvetica','B');
+//			$this->AddFont('helvetica');
+//			$this->AddFont('helvetica','I');
+//			$this->AddFont('helvetica','B');
 		}
 	}
 	

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.44 $ */
+/* $Revision: 1.45 $ */
 
 
 $PageSecurity = 1;
@@ -169,6 +169,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 								<?php echo "<a href='" . $rootpath . '/PDFDeliveryDifferences.php?' . SID . "'><li>" . _('Order Delivery Differences Report') . '</li></a>'; ?>
 							</td>
 							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo GetRptLinks('ord'); ?>
+							</td>
+							</tr>
 						</table>
 					</td>
 
@@ -287,6 +292,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							<?php echo "<a href='" . $rootpath . '/SalesGraph.php?' . SID . "'><li>" . _('Sales Graphs') . '</li></a>'; ?>
 							</td>
 							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo GetRptLinks('ar'); ?>
+							</td>
+							</tr>
 						</table>
 					</td>
 					<td class="menu_group_items">
@@ -361,6 +371,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 								<?php echo "<a href='" . $rootpath . '/SupplierBalsAtPeriodEnd.php?' . SID . "'><li>" . _('Creditor Balances At A Prior Month End') . '</li></a>'; ?>
 							</td>
 							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo GetRptLinks('ap'); ?>
+							</td>
+							</tr>
 						</table>
 					</td>
 					<td class="menu_group_items">   <!-- AP Maintenance Options -->
@@ -427,7 +442,12 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 								<?php echo "<a href='" . $rootpath . '/PO_SelectPurchOrder.php?' . SID . "'><li>" . _('Purchase Order Inquiry') . '</li></a>'; ?>
 							</td>
 							</tr>
-						</table>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo GetRptLinks('purch'); ?>
+							</td>
+							</tr>
+					</table>
 					</td>
 					<td class="menu_group_items">   <!-- PO Maintenance -->
 						<table width="100%" class="table_index">
@@ -561,6 +581,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 								<?php echo "<a href='" . $rootpath . '/PDFStockNegatives.php?' . SID . "'><li>" . _('List Negative Stocks') . '</li></a>'; ?>
 							</td>
 							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo GetRptLinks('inv'); ?>
+							</td>
+							</tr>
 						</table>
 					</td>
 					<td class="menu_group_items">
@@ -621,8 +646,8 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 					<td class="menu_group_items">
 						<table width="100%">
 							<tr>
-							  <td>
-								  &nbsp;
+							  <td>&nbsp;
+								  
 								</td>
 							</tr>
 						</table>
@@ -642,6 +667,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<a href='" . $rootpath . '/BOMListing.php?' . SID . "'><li>" . _('Bills Of Material Listing') . '</li></a>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo GetRptLinks('man'); ?>
 							</td>
 							</tr>
 						</table>
@@ -682,7 +712,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table>
 							<tr>
 							<td>
-								<?php echo "<img src=$rootpath/css/$theme/images/company.gif TITLE=\"" . _('General Setup Options') . '" ALT="">'; ?>
+								<?php echo '<img src="'.$rootpath.'/css/'.$theme.'/images/company.gif" TITLE="' . _('General Setup Options') . '" ALT="">'; ?>
 							</td>
 							<td class="menu_group_headers_text">
 								<?php echo _('General'); ?>
@@ -694,7 +724,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table>
 							<tr>
 							<td>
-								<?php echo "<img src=$rootpath/css/$theme/images/ar.gif TITLE=" . _('Receivables/Payables Setup') . '" ALT="">'; ?>
+								<?php echo '<img src="'.$rootpath.'/css/'.$theme.'/images/ar.gif" TITLE="' . _('Receivables/Payables Setup') . '" ALT="">'; ?>
 							</td>
 							<td class="menu_group_headers_text">
 								<?php echo _('Receivables/Payables'); ?>
@@ -707,7 +737,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table>
 							<tr>
 							<td>
-								<?php echo "<img src=$rootpath/css/$theme/images/inventory.gif TITLE='" . _('Inventory Setup') . "' ALT=''>"; ?>
+								<?php echo '<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.gif" TITLE="' . _('Inventory Setup') . '" ALT="">'; ?>
 							</td>
 							<td class="menu_group_headers_text">
 								<?php echo _('Inventory Setup'); ?>
@@ -776,6 +806,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<a href='" . $rootpath . '/PeriodsInquiry.php?' . SID . "'><li>" . _('List Periods Defined') . ' <FONT SIZE=1>(' . _('Periods are automatically maintained') . ')</FONT></a>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<a href="' . $rootpath . '/reportwriter/admin/ReportCreator.php"><li>' . _('Report Builder Tool') . '</li></a>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -861,6 +896,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<a href='" . $rootpath . '/UnitsOfMeasure.php?' . SID . "'><li>" . _('Units of Measure') . '</li></a>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo GetRptLinks('misc'); ?>
 							</td>
 							</tr>
 						</table>
@@ -950,7 +990,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 								<?php echo "<a href='" . $rootpath . '/Tax.php?' . SID . "'><li>" . _('GST Reports') . '</li></a>'; ?>
 							</td>
 							</tr>
-
+							<tr>
+							<td class="menu_group_item">
+								<?php echo GetRptLinks('gl'); ?>
+							</td>
+							</tr>
 						</table>
 					</td>
 					<td class="menu_group_items">  <!-- Gereral Ledger Maintenance options -->
@@ -997,7 +1041,7 @@ global $rootpath, $theme;
 		<table>
 			<tr>
 			<td>
-				<?php echo "<img src=$rootpath/css/$theme/images/transactions.gif TITLE='" . _('Transactions') . "' ALT=''>"; ?>
+				<?php echo '<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.gif" TITLE="' . _('Transactions') . '" ALT="">'; ?>
 			</td>
 			<td class="menu_group_headers_text">
 				<?php echo _('Transactions'); ?>
@@ -1009,7 +1053,7 @@ global $rootpath, $theme;
 		<table>
 			<tr>
 			<td>
-				<?php echo '<img src=' . $rootpath . '/css/' . $theme . '/images/reports.gif TITLE="' . _('Inquiries and Reports') . '" ALT="">'; ?>
+				<?php echo '<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.gif" TITLE="' . _('Inquiries and Reports') . '" ALT="">'; ?>
 			</td>
 			<td class="menu_group_headers_text">
 				<?php echo _('Inquiries and Reports'); ?>
@@ -1021,7 +1065,7 @@ global $rootpath, $theme;
 		<table>
 			<tr>
 			<td>
-				<?php echo "<img src=$rootpath/css/$theme/images/maintenance.gif TITLE='" . _('Maintenance') . "' ALT=''>"; ?>
+				<?php echo '<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.gif" TITLE="' . _('Maintenance') . '" ALT="">'; ?>
 			</td>
 			<td class="menu_group_headers_text">
 				<?php echo _('Maintenance'); ?>
@@ -1034,4 +1078,38 @@ global $rootpath, $theme;
 <?php
 
 }
+
+function GetRptLinks($GroupID) {
+/* This function retrieves the reports given a certain group id as defined in /reports/admin/defaults.php
+in the acssociative array $ReportGroups[]. It will fetch the reports belonging solely to the group 
+specified to create a list of links for insertion into a table to choose a report. Two table sections will
+be generated, one for standard reports and the other for custom reports.
+
+For use with webERP
+
+Revision History:
+Revision 1.0 - 2005-11-03 - By D. Premo - Initial Release
+*/
+	global $db, $rootpath;
+	$Title= array(_('Custom Reports'), _('Standard Reports'));
+	$RptLinks = '';
+	for ($Def=1; $Def>=0; $Def--) {
+		$RptLinks .= '<tr><td class="menu_group_headers"><div align="center">'.$Title[$Def].'</div></td></tr>';
+		$sql= "SELECT id, reportname FROM reports 
+			WHERE defaultreport='".$Def."' AND groupname='".$GroupID."' 
+			ORDER BY reportname";
+		$Result=DB_query($sql,$db,'','',false,true);
+		if (DB_num_rows($Result)>0) {
+			while ($Temp = DB_fetch_array($Result)) {
+				$RptLinks .= '<tr><td class="menu_group_item">';
+				$RptLinks .= '<a href="'.$rootpath.'/reportwriter/ReportMaker.php?action=go&reportid='.$Temp['id'].'"><li>'._($Temp['reportname']).'</li></a>';
+				$RptLinks .= '</td></tr>';
+			}
+		} else {
+			$RptLinks .= '<tr><td class="menu_group_item">'._('There are no reports to show!').'</td></tr>';
+		}
+	}
+	return $RptLinks;
+}
+
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
@@ -13,10 +13,10 @@
 	
 	
 	echo '<HTML><HEAD><TITLE>' . $title . '</TITLE>';
-	echo '<link REL="shortcut icon" HREF="favicon.ico">';
-	echo '<link REL="icon" HREF="favicon.ico">';
+	echo '<link REL="shortcut icon" HREF="'. $rootpath.'/favicon.ico">';
+	echo '<link REL="icon" HREF="' . $rootpath.'/favicon.ico">';
 	echo '<meta http-equiv="Content-Type" content="text/html; charset=' . _('ISO-8859-1') . '">';
-	echo '<LINK HREF="css/'. $_SESSION['Theme'] .'/default.css" REL="stylesheet" TYPE="text/css">';
+	echo '<LINK HREF="'.$rootpath.'/css/'. $_SESSION['Theme'] .'/default.css" REL="stylesheet" TYPE="text/css">';
 	echo '</HEAD>';
 
 	echo '<BODY>';
@@ -35,23 +35,23 @@
 		echo '<TABLE CELLPADDING="0" CELLSPACING="0">';
 		echo '<TR>';
 		echo '<TD ALIGN="left" WIDTH="100%" CLASS="quick_menu_left">';
-		echo  $_SESSION['CompanyRecord']['coyname'] . ': <A HREF="' . $rootpath . '/UserSettings.php?' . SID . '">' . $_SESSION['UsersRealName'] . '</A>';
+		echo  $_SESSION['CompanyRecord']['coyname'] . ': <A HREF="' .  $rootpath . '/UserSettings.php?' . SID . '">' . $_SESSION['UsersRealName'] . '</A>';
 		echo '<BR>' . $title . '</TD>';
 		echo '<TD ALIGN="right">';
-		echo '<IMG SRC="' . $rootpath . '/css/' . $theme .'/images/menucurve.gif" WIDTH="30" HEIGHT="30" alt=""></TD>';
+		echo '<IMG SRC="' .$rootpath . '/css/' . $theme .'/images/menucurve.gif" WIDTH="30" HEIGHT="30" alt=""></TD>';
 		echo '<TD CLASS="quick_menu_tabs">';
 		echo '<TABLE><TR>';
-		echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="1" HREF="' . $rootpath . '/index.php?' . SID . '"><U>1</U>. ' . _('Main  Menu') . '</A>&nbsp;&nbsp;</TD>';
+		echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="1" HREF="' .  $rootpath . '/index.php?' . SID . '"><U>1</U>. ' . _('Main  Menu') . '</A>&nbsp;&nbsp;</TD>';
 
 		if (count($_SESSION['AllowedPageSecurityTokens'])>1){
 
-			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="2" HREF="' . $rootpath . '/SelectCustomer.php?' . SID . '"><U>2</U>. ' . _('Select Customer') . '</A>&nbsp;&nbsp;</TD>';
+			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="2" HREF="' .  $rootpath . '/SelectCustomer.php?' . SID . '"><U>2</U>. ' . _('Select Customer') . '</A>&nbsp;&nbsp;</TD>';
 
-			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="3" HREF="' . $rootpath . '/SelectProduct.php?' . SID . '"><U>3</U>. ' . _('Select Item') . '</A>&nbsp;&nbsp;</TD>';
+			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="3" HREF="' .  $rootpath . '/SelectProduct.php?' . SID . '"><U>3</U>. ' . _('Select Item') . '</A>&nbsp;&nbsp;</TD>';
 
-			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="4" HREF="' . $rootpath . '/SelectSupplier.php?' . SID . '"><U>4</U>. ' . _('Select Supplier') . '</A>&nbsp;&nbsp;</TD>';
+			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="4" HREF="' .  $rootpath . '/SelectSupplier.php?' . SID . '"><U>4</U>. ' . _('Select Supplier') . '</A>&nbsp;&nbsp;</TD>';
 
-			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A TARGET="_blank" ACCESSKEY="8" HREF="' . $rootpath . '/doc/Manual/ManualContents.php?' . SID . '"><U>8</U>. ' . _('Manual') . '</A>&nbsp;&nbsp;</TD>';
+			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A TARGET="_blank" ACCESSKEY="8" HREF="' .  $rootpath . '/doc/Manual/ManualContents.php?' . SID . '"><U>8</U>. ' . _('Manual') . '</A>&nbsp;&nbsp;</TD>';
 
 		}
 

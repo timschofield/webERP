@@ -1,8 +1,8 @@
 <?php
-/* $Revision: 1.41 $ */
+/* $Revision: 1.42 $ */
  
     
-include('config.php');
+include($PathPrefix . 'config.php');
         
 if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);
@@ -13,9 +13,9 @@ ini_set('max_execution_time',$MaximumExecutionTime);
  
 session_start();
 
-include('includes/LanguageSetup.php');
-include('includes/ConnectDB.inc');
-include('includes/DateFunctions.inc');
+include($PathPrefix . 'includes/LanguageSetup.php');
+include($PathPrefix . 'includes/ConnectDB.inc');
+include($PathPrefix . 'includes/DateFunctions.inc');
    
 // Un comment to turn off attempts counter
 //$_SESSION['AttemptsCounter'] = 0;
@@ -45,7 +45,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 
 		// Show login screen
 		if (!isset($_POST['UserNameEntryField']) or $_POST['UserNameEntryField'] == '') {
-			include('includes/Login.php');
+			include($PathPrefix . 'includes/Login.php');
 			exit;
 		}
 		
@@ -75,7 +75,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 			$myrow = DB_fetch_row($Auth_Result);
 			if ($myrow[7]==1){
 			//the account is blocked
-				die(include('includes/FailedLogin.php'));
+				die(include($PathPrefix . 'includes/FailedLogin.php'));
 			}
 			/*reset the attempts counter on successful login */
 			$_SESSION['AttemptsCounter'] = 0;
@@ -109,10 +109,10 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 			$_SESSION['AllowedPageSecurityTokens'] = array();
 			if (DB_num_rows($Sec_Result)==0){
 				$title = _('Account Error Report');
-				include('includes/header.inc');
+				include($PathPrefix . 'includes/header.inc');
 				echo '<BR><BR><BR>';
 				prnMsg(_('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'),'error');
-				include('includes/footer.inc');
+				include($PathPrefix . 'includes/footer.inc');
 				exit;
 			} else {
 				$i=0;
@@ -132,16 +132,16 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 				/*User blocked from future accesses until sysadmin releases */
 				$sql = "UPDATE www_users SET blocked=1 WHERE www_users.userid='" . $_POST['UserNameEntryField'] . "'";
 				$Auth_Result = DB_query($sql, $db);
-				die(include('includes/FailedLogin.php'));
+				die(include($PathPrefix . 'includes/FailedLogin.php'));
 			}
 			$demo_text = '<FONT SIZE="3" COLOR="red"><b>' .  _('incorrect password') . '</B></FONT><BR><B>' . _('The user/password combination') . '<BR>' . _('is not a valid user of the system') . '</B>';
-			die(include('includes/Login.php'));
+			die(include($PathPrefix . 'includes/Login.php'));
 		}
 	}		// End of userid/password check
 } /* only do security checks if AllowAnyone is not true */
 
 /*User is logged in so get configuration parameters  - save in session*/
-include('includes/GetConfig.php');
+include($PathPrefix . 'includes/GetConfig.php');
 
 if(isset($_SESSION['DB_Maintenance'])){ 
 	if ($_SESSION['DB_Maintenance']!=0)  {	
@@ -189,17 +189,17 @@ if (in_array(15, $_SESSION['AllowedPageSecurityTokens'])) {
 
 if (!is_array($_SESSION['AllowedPageSecurityTokens']) AND !isset($AllowAnyone)) {
 	$title = _('Account Error Report');
-	include('includes/header.inc');
+	include($PathPrefix . 'includes/header.inc');
 	echo '<BR><BR><BR>';
 	prnMsg(_('Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server'),'error');
-	include('includes/footer.inc');
+	include($PathPrefix . 'includes/footer.inc');
 	exit;
 }
 
 if (!isset($AllowAnyone)){
 	if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity))) {
 		$title = _('Security Permissions Problem');
-		include('includes/header.inc');
+		include($PathPrefix . 'includes/header.inc');
 		echo '<TR>
 			<TD CLASS="menu_group_items">
 				<TABLE WIDTH="100%" CLASS="table_index">
@@ -211,7 +211,7 @@ if (!isset($AllowAnyone)){
 		</TABLE>
 		</TD>';
 	
-		include('includes/footer.inc');
+		include($PathPrefix . 'includes/footer.inc');
 		exit;
 	}
 
