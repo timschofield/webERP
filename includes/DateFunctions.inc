@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 /*
 date validation and parsing functions
