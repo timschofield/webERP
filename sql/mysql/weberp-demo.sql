@@ -971,6 +971,24 @@ CREATE TABLE `reportcolumns` (
 ) TYPE=InnoDB;
 
 --
+-- Table structure for table `reportfields`
+--
+
+CREATE TABLE `reportfields` (
+  `id` int(8) NOT NULL auto_increment,
+  `reportid` int(5) NOT NULL default '0',
+  `entrytype` varchar(15) NOT NULL default '',
+  `seqnum` int(3) NOT NULL default '0',
+  `fieldname` varchar(35) NOT NULL default '',
+  `displaydesc` varchar(25) NOT NULL default '',
+  `visible` enum('1','0') NOT NULL default '1',
+  `columnbreak` enum('1','0') NOT NULL default '1',
+  `params` text,
+  PRIMARY KEY  (`id`),
+  KEY `reportid` (`reportid`)
+) TYPE=MyISAM;
+
+--
 -- Table structure for table `reportheaders`
 --
 
@@ -996,6 +1014,70 @@ CREATE TABLE `reportheaders` (
   PRIMARY KEY  (`reportid`),
   KEY `ReportHeading` (`reportheading`)
 ) TYPE=InnoDB;
+
+--
+-- Table structure for table `reports`
+--
+
+CREATE TABLE `reports` (
+  `id` int(5) NOT NULL auto_increment,
+  `reportname` varchar(30) NOT NULL default '',
+  `reporttype` char(3) NOT NULL default 'rpt',
+  `groupname` varchar(4) NOT NULL default 'misc',
+  `defaultreport` enum('1','0') NOT NULL default '0',
+  `papersize` varchar(15) NOT NULL default 'A4,210,297',
+  `paperorientation` enum('P','L') NOT NULL default 'P',
+  `margintop` int(3) NOT NULL default '10',
+  `marginbottom` int(3) NOT NULL default '10',
+  `marginleft` int(3) NOT NULL default '10',
+  `marginright` int(3) NOT NULL default '10',
+  `coynamefont` varchar(20) NOT NULL default 'Helvetica',
+  `coynamefontsize` int(3) NOT NULL default '12',
+  `coynamefontcolor` varchar(11) NOT NULL default '0,0,0',
+  `coynamealign` enum('L','C','R') NOT NULL default 'C',
+  `coynameshow` enum('1','0') NOT NULL default '1',
+  `title1desc` varchar(50) NOT NULL default '%reportname%',
+  `title1font` varchar(20) NOT NULL default 'Helvetica',
+  `title1fontsize` int(3) NOT NULL default '10',
+  `title1fontcolor` varchar(11) NOT NULL default '0,0,0',
+  `title1fontalign` enum('L','C','R') NOT NULL default 'C',
+  `title1show` enum('1','0') NOT NULL default '1',
+  `title2desc` varchar(50) NOT NULL default 'Report Generated %date%',
+  `title2font` varchar(20) NOT NULL default 'Helvetica',
+  `title2fontsize` int(3) NOT NULL default '10',
+  `title2fontcolor` varchar(11) NOT NULL default '0,0,0',
+  `title2fontalign` enum('L','C','R') NOT NULL default 'C',
+  `title2show` enum('1','0') NOT NULL default '1',
+  `filterfont` varchar(10) NOT NULL default 'Helvetica',
+  `filterfontsize` int(3) NOT NULL default '8',
+  `filterfontcolor` varchar(11) NOT NULL default '0,0,0',
+  `filterfontalign` enum('L','C','R') NOT NULL default 'L',
+  `datafont` varchar(10) NOT NULL default 'Helvetica',
+  `datafontsize` int(3) NOT NULL default '10',
+  `datafontcolor` varchar(10) NOT NULL default 'black',
+  `datafontalign` enum('L','C','R') NOT NULL default 'L',
+  `totalsfont` varchar(10) NOT NULL default 'Helvetica',
+  `totalsfontsize` int(3) NOT NULL default '10',
+  `totalsfontcolor` varchar(11) NOT NULL default '0,0,0',
+  `totalsfontalign` enum('L','C','R') NOT NULL default 'L',
+  `col1width` int(3) NOT NULL default '25',
+  `col2width` int(3) NOT NULL default '25',
+  `col3width` int(3) NOT NULL default '25',
+  `col4width` int(3) NOT NULL default '25',
+  `col5width` int(3) NOT NULL default '25',
+  `col6width` int(3) NOT NULL default '25',
+  `col7width` int(3) NOT NULL default '25',
+  `col8width` int(3) NOT NULL default '25',
+  `table1` varchar(25) NOT NULL default '',
+  `table2` varchar(25) default NULL,
+  `table2criteria` varchar(75) default NULL,
+  `table3` varchar(25) default NULL,
+  `table3criteria` varchar(75) default NULL,
+  `table4` varchar(25) default NULL,
+  `table4criteria` varchar(75) default NULL,
+  PRIMARY KEY  (`id`),
+  KEY `name` (`reportname`,`groupname`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `salesanalysis`
@@ -2438,7 +2520,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-11-13');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-11-21');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
@@ -2965,10 +3047,29 @@ INSERT INTO `recurrsalesorderdetails` VALUES (1,'HIT3042-ASS',234,5,0,'');
 INSERT INTO `reportcolumns` VALUES (1,1,'Value','',0,1,1,'Net Value',0,0,'',1,'N',0);
 
 --
+-- Dumping data for table `reportfields`
+--
+
+INSERT INTO `reportfields` VALUES (1803,135,'critlist',1,'prices.currabrev','Currency','0','0','0');
+INSERT INTO `reportfields` VALUES (1802,135,'fieldlist',4,'prices.currabrev','Currency','0','0','0');
+INSERT INTO `reportfields` VALUES (1801,135,'fieldlist',3,'prices.typeabbrev','Price List','0','0','0');
+INSERT INTO `reportfields` VALUES (1800,135,'fieldlist',2,'prices.price','Price','1','1','0');
+INSERT INTO `reportfields` VALUES (1799,135,'fieldlist',1,'stockmaster.stockid','Item','1','1','0');
+INSERT INTO `reportfields` VALUES (1797,135,'trunclong',0,'','','1','1','0');
+INSERT INTO `reportfields` VALUES (1798,135,'dateselect',0,'','','1','1','a');
+INSERT INTO `reportfields` VALUES (1804,135,'sortlist',1,'stockmaster.stockid','Item','0','0','1');
+
+--
 -- Dumping data for table `reportheaders`
 --
 
 INSERT INTO `reportheaders` VALUES (1,'Test report','Sales Area',0,'0','zzzzz','Customer Code',0,'1','zzzzzzzzzz','Product Code',0,'1','zzzzzzzzz','Not Used',0,'','');
+
+--
+-- Dumping data for table `reports`
+--
+
+INSERT INTO `reports` VALUES (135,'Currency Price List','rpt','inv','1','A4:210:297','P',10,10,10,10,'helvetica',12,'0:0:0','C','1','%reportname%','helvetica',10,'0:0:0','C','1','Report Generated %date%','helvetica',10,'0:0:0','C','1','helvetica',8,'0:0:0','L','helvetica',10,'0:0:0','L','helvetica',10,'0:0:0','L',25,25,25,25,25,25,25,25,'stockmaster','prices','stockmaster.stockid=prices.stockid','','','','');
 
 --
 -- Dumping data for table `salesanalysis`
@@ -3490,7 +3591,7 @@ INSERT INTO `systypes` VALUES (26,'Work Order Receipt',0);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',0);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',0);
 INSERT INTO `systypes` VALUES (30,'Sales Order',0);
-INSERT INTO `systypes` VALUES (31,'Shipment Close',24);
+INSERT INTO `systypes` VALUES (31,'Shipment Close',25);
 INSERT INTO `systypes` VALUES (35,'Cost Update',2);
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
 INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',0);
