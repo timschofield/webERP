@@ -4,31 +4,31 @@
 <form action="ReportCreator.php?action=step8" method="post" enctype="multipart/form-data" name="reporthome">
   <table width="500" align="center" border="2" cellspacing="1" cellpadding="1">
     <tr>
-      <td colspan="2"><div align="center"><? echo RPT_DEFIMP; ?></div></td>
+      <td colspan="2"><div align="center"><?php echo RPT_DEFIMP; ?></div></td>
     </tr>
     <tr>
       <td colspan="2"><div align="center">
-	    <select name="RptFileName" size="15"><? echo ReadDefReports(); ?></select>
+	    <select name="RptFileName" size="15"><?php echo ReadDefReports(); ?></select>
       </div></td>
     </tr>
     <tr>
-      <td><? echo RPT_RPTBROWSE; ?></td>
+      <td><?php echo RPT_RPTBROWSE; ?></td>
       <td><input type="file" name="reportfile"></td>
     </tr>
     <tr>
-      <td><? echo RPT_RPTENTER; ?><br><? echo RPT_RPTNOENTER; ?></td>
-      <td><input name="reportname" type="text" value="<? echo $ReportName; ?>" size="32" maxlength="30"></td>
+      <td><?php echo RPT_RPTENTER; ?><br><?php echo RPT_RPTNOENTER; ?></td>
+      <td><input name="reportname" type="text" value="<?php echo $ReportName; ?>" size="32" maxlength="30"></td>
     </tr>
   </table>
   <table width="500" align="center" border="0" cellspacing="1" cellpadding="1">
     <tr>
-      <td><input name="todo" type="submit" id="todo" value="<? echo RPT_BTN_BACK; ?>"></td>
-      <td><div align="right"><input name="todo" type="submit" value="<? echo RPT_BTN_IMPORT; ?>"></div></td>
+      <td><input name="todo" type="submit" id="todo" value="<?php echo RPT_BTN_BACK; ?>"></td>
+      <td><div align="right"><input name="todo" type="submit" value="<?php echo RPT_BTN_IMPORT; ?>"></div></td>
     </tr>
   </table>
 </form>
   <div align="center"><br> 
-  <a href="<? echo $rootpath; ?>/reportwriter/docs/ReportBuilder.html" target="_blank"><? echo RPT_BTN_MAN; ?></a>  </div>
+  <a href="<?php echo $rootpath; ?>/reportwriter/docs/ReportBuilder.html" target="_blank"><?php echo RPT_BTN_MAN; ?></a>  </div>
 <p>&nbsp;</p>
 </body>
 </html>

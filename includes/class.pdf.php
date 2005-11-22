@@ -13,7 +13,7 @@
 define('FPDF_FONTPATH','./fonts/');
 include ('fpdf.php');
 
-if ($_SESSION['Language']=='zh_CN'){
+if ($_SESSION['Language']=='zh_CN' OR $_SESSION['Language']=='zh_HK' OR $_SESSION['Language']=='zh_TW'){
 	include('FPDF_Chinese.php');
 } elseif ($_SESSION['Language']=='ja_JP'){
 	include('FPDF_Japanese.php');
@@ -42,9 +42,9 @@ class Cpdf extends PDF_Language {
 		}elseif ($_SESSION['Language']=='ko_KR'){
 			$this->AddUHCFont();
 		} else {
-//			$this->AddFont('helvetica');
-//			$this->AddFont('helvetica','I');
-//			$this->AddFont('helvetica','B');
+			$this->AddFont('helvetica');
+			$this->AddFont('helvetica','I');
+			$this->AddFont('helvetica','B');
 		}
 	}
 	

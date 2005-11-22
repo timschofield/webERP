@@ -5,27 +5,27 @@
 <form name="reporthome" method="post" action="ReportCreator.php?action=step2">
   <table align="center" border="2" cellspacing="1" cellpadding="1">
     <tr>
-		<td><div align="center"><? echo RPT_DEFRPT; ?></div></td>
-		<td><div align="center"><? echo RPT_CUSTRPT; ?></div></td>
+		<td><div align="center"><?php echo RPT_DEFRPT; ?></div></td>
+		<td><div align="center"><?php echo RPT_CUSTRPT; ?></div></td>
 		<td rowspan="2" valign="top"><br>		  
-		  <p><input name="todo" type="submit" value="<? echo RPT_BTN_NEWRPT; ?>"></p>
-	      <p><input name="todo" type="submit" value="<? echo RPT_BTN_EDIT; ?>"></p>
-		  <p><input name="todo" type="submit" value="<? echo RPT_BTN_RENAME; ?>"></p>
-		  <p><input name="todo" type="submit" value="<? echo RPT_BTN_COPY; ?>"></p>
-		  <p><input name="todo" type="submit" value="<? echo RPT_BTN_DEL; ?>" onClick="return confirm('<? echo RPT_REPDEL; ?>')"></p>
-		  <p><input name="todo" type="submit" value="<? echo RPT_BTN_IMPORT; ?>"></p>
-		  <p><input name="todo" type="submit" value="<? echo RPT_BTN_EXPORT; ?>"></p>
+		  <p><input name="todo" type="submit" value="<?php echo RPT_BTN_NEWRPT; ?>"></p>
+	      <p><input name="todo" type="submit" value="<?php echo RPT_BTN_EDIT; ?>"></p>
+		  <p><input name="todo" type="submit" value="<?php echo RPT_BTN_RENAME; ?>"></p>
+		  <p><input name="todo" type="submit" value="<?php echo RPT_BTN_COPY; ?>"></p>
+		  <p><input name="todo" type="submit" value="<?php echo RPT_BTN_DEL; ?>" onClick="return confirm('<?php echo RPT_REPDEL; ?>')"></p>
+		  <p><input name="todo" type="submit" value="<?php echo RPT_BTN_IMPORT; ?>"></p>
+		  <p><input name="todo" type="submit" value="<?php echo RPT_BTN_EXPORT; ?>"></p>
 	  </td>
     </tr>
     <?php if ($DropDownString <> '') { ?>
 	<tr>
-      <td><select name="ReportID" size="20"><? echo $DropDownString[1]; ?></select></td>
-      <td><select name="ReportID" size="20"><? echo $DropDownString[0]; ?></select></td>
+      <td><select name="ReportID" size="20"><?php echo $DropDownString[1]; ?></select></td>
+      <td><select name="ReportID" size="20"><?php echo $DropDownString[0]; ?></select></td>
     </tr>
 	<?php } // end if($DropDownString <> '') ?> 
   </table>
   <div align="center"><br>
-  <a href="<? echo $rootpath; ?>/reportwriter/docs/ReportBuilder.html" target="_blank"><?php echo RPT_BTN_MAN; ?></a></div>
+  <a href="<?php echo $rootpath; ?>/reportwriter/docs/ReportBuilder.html" target="_blank"><?php echo RPT_BTN_MAN; ?></a></div>
 </form>
 <p>&nbsp;</p>
 </body>

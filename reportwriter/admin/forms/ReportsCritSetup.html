@@ -2,8 +2,8 @@
 <body>
 <h2 align="center"><?PHP echo RPT_RPRBLDR.RPT_REPORT.$reportname.' - '.RPT_BTN_CRIT; ?></h2>
 <form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
-    <input name="ReportID" type="hidden" value="<? echo $ReportID; ?>">
-	<input name="ReportName" type="hidden" value="<? echo $reportname; ?>">
+    <input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">
+	<input name="ReportName" type="hidden" value="<?php echo $reportname; ?>">
   <table width="100%"  border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td width="33%"><input name="todo" type="submit" id="todo" value="<?PHP echo RPT_BTN_BACK; ?>"></td>
@@ -18,64 +18,64 @@
     <tr>
       <td width="33%"><?PHP echo RPT_DATELIST; ?><br><br><?PHP echo RPT_DATEINST; ?></td>
       <td width="33%">
-	    <? if (strpos($DateListings['displaydesc'],'a')===false) $Checked = ''; else $Checked = ' checked'; ?>
-		<input type="checkbox" name="DateRange1" value="a"<? echo $Checked; ?>><? echo $DateChoices['a']; ?><br>
-	    <? if (strpos($DateListings['displaydesc'],'b')===false) $Checked = ''; else $Checked = ' checked'; ?>
-		<input type="checkbox" name="DateRange2" value="b"<? echo $Checked; ?>><? echo $DateChoices['b']; ?><br>
-	    <? if (strpos($DateListings['displaydesc'],'c')===false) $Checked = ''; else $Checked = ' checked'; ?>
-		<input type="checkbox" name="DateRange3" value="c"<? echo $Checked; ?>><? echo $DateChoices['c']; ?><br>
-	    <? if (strpos($DateListings['displaydesc'],'d')===false) $Checked = ''; else $Checked = ' checked'; ?>
-		<input type="checkbox" name="DateRange4" value="d"<? echo $Checked; ?>><? echo $DateChoices['d']; ?><br>
-	    <? if (strpos($DateListings['displaydesc'],'e')===false) $Checked = ''; else $Checked = ' checked'; ?>
-		<input type="checkbox" name="DateRange5" value="e"<? echo $Checked; ?>><? echo $DateChoices['e']; ?><br>
-	    <? if (strpos($DateListings['displaydesc'],'f')===false) $Checked = ''; else $Checked = ' checked'; ?>
-		<input type="checkbox" name="DateRange6" value="f"<? echo $Checked; ?>><? echo $DateChoices['f']; ?><br>
+	    <?php if (strpos($DateListings['displaydesc'],'a')===false) $Checked = ''; else $Checked = ' checked'; ?>
+		<input type="checkbox" name="DateRange1" value="a"<?php echo $Checked; ?>><?php echo $DateChoices['a']; ?><br>
+	    <?php if (strpos($DateListings['displaydesc'],'b')===false) $Checked = ''; else $Checked = ' checked'; ?>
+		<input type="checkbox" name="DateRange2" value="b"<?php echo $Checked; ?>><?php echo $DateChoices['b']; ?><br>
+	    <?php if (strpos($DateListings['displaydesc'],'c')===false) $Checked = ''; else $Checked = ' checked'; ?>
+		<input type="checkbox" name="DateRange3" value="c"<?php echo $Checked; ?>><?php echo $DateChoices['c']; ?><br>
+	    <?php if (strpos($DateListings['displaydesc'],'d')===false) $Checked = ''; else $Checked = ' checked'; ?>
+		<input type="checkbox" name="DateRange4" value="d"<?php echo $Checked; ?>><?php echo $DateChoices['d']; ?><br>
+	    <?php if (strpos($DateListings['displaydesc'],'e')===false) $Checked = ''; else $Checked = ' checked'; ?>
+		<input type="checkbox" name="DateRange5" value="e"<?php echo $Checked; ?>><?php echo $DateChoices['e']; ?><br>
+	    <?php if (strpos($DateListings['displaydesc'],'f')===false) $Checked = ''; else $Checked = ' checked'; ?>
+		<input type="checkbox" name="DateRange6" value="f"<?php echo $Checked; ?>><?php echo $DateChoices['f']; ?><br>
 	  </td>
       <td width="33%">
-	    <? if (strpos($DateListings['displaydesc'],'g')===false) $Checked = ''; else $Checked = ' checked'; ?>
-		<input type="checkbox" name="DateRange7" value="g"<? echo $Checked; ?>><? echo $DateChoices['g']; ?><br>
-	    <? if (strpos($DateListings['displaydesc'],'h')===false) $Checked = ''; else $Checked = ' checked'; ?>
-		<input type="checkbox" name="DateRange8" value="h"<? echo $Checked; ?>><? echo $DateChoices['h']; ?><br>
-	    <? if (strpos($DateListings['displaydesc'],'i')===false) $Checked = ''; else $Checked = ' checked'; ?>
-		<input type="checkbox" name="DateRange9" value="i"<? echo $Checked; ?>><? echo $DateChoices['i']; ?><br>
-	    <? if (strpos($DateListings['displaydesc'],'j')===false) $Checked = ''; else $Checked = ' checked'; ?>
-		<input type="checkbox" name="DateRange10" value="j"<? echo $Checked; ?>><? echo $DateChoices['j']; ?><br>
-	    <? if (strpos($DateListings['displaydesc'],'k')===false) $Checked = ''; else $Checked = ' checked'; ?>
-		<input type="checkbox" name="DateRange11" value="k"<? echo $Checked; ?>><? echo $DateChoices['k']; ?><br>
+	    <?php if (strpos($DateListings['displaydesc'],'g')===false) $Checked = ''; else $Checked = ' checked'; ?>
+		<input type="checkbox" name="DateRange7" value="g"<?php echo $Checked; ?>><?php echo $DateChoices['g']; ?><br>
+	    <?php if (strpos($DateListings['displaydesc'],'h')===false) $Checked = ''; else $Checked = ' checked'; ?>
+		<input type="checkbox" name="DateRange8" value="h"<?php echo $Checked; ?>><?php echo $DateChoices['h']; ?><br>
+	    <?php if (strpos($DateListings['displaydesc'],'i')===false) $Checked = ''; else $Checked = ' checked'; ?>
+		<input type="checkbox" name="DateRange9" value="i"<?php echo $Checked; ?>><?php echo $DateChoices['i']; ?><br>
+	    <?php if (strpos($DateListings['displaydesc'],'j')===false) $Checked = ''; else $Checked = ' checked'; ?>
+		<input type="checkbox" name="DateRange10" value="j"<?php echo $Checked; ?>><?php echo $DateChoices['j']; ?><br>
+	    <?php if (strpos($DateListings['displaydesc'],'k')===false) $Checked = ''; else $Checked = ' checked'; ?>
+		<input type="checkbox" name="DateRange11" value="k"<?php echo $Checked; ?>><?php echo $DateChoices['k']; ?><br>
 	  </td>
     </tr>
     <tr>
-      <td><? echo RPT_DATEDEF; ?></td>
+      <td><?php echo RPT_DATEDEF; ?></td>
       <td colspan="2"><select name="DefDate">
-		<? foreach($DateChoices as $key=>$value) {
+		<?php foreach($DateChoices as $key=>$value) {
 			if ($DateListings['params']==$key) $Selected = ' selected'; else $Selected = '';
 			echo '<option value="'.$key.'"'.$Selected.'>'.$value.'</option>';
 		} ?>
       </select></td>
     </tr>
     <tr>
-      <td><? echo RPT_DATEFNAME; ?></td>
-      <td colspan="4"><input name="DateField" type="text" id="datefield" value="<? echo $DateListings['fieldname']; ?>"size="37" maxlength="35"></td>
+      <td><?php echo RPT_DATEFNAME; ?></td>
+      <td colspan="4"><input name="DateField" type="text" id="datefield" value="<?php echo $DateListings['fieldname']; ?>"size="37" maxlength="35"></td>
     </tr>
     <tr>
-      <td><? echo RPT_TRUNC; ?></td>
+      <td><?php echo RPT_TRUNC; ?></td>
       <td colspan="4"><p>
-	    <? if ($TruncListings['params']=='1') $Checked = ' checked'; else $Checked = ''; ?>
-          <input type="radio" name="TruncLongDesc" value="1"<? echo $Checked; ?>><? echo RPT_YES; ?>
-	    <? if ($TruncListings['params']=='0') $Checked = ' checked'; else $Checked = ''; ?>
-          <input type="radio" name="TruncLongDesc" value="0"<? echo $Checked; ?>><? echo RPT_NO; ?></p></td>
+	    <?php if ($TruncListings['params']=='1') $Checked = ' checked'; else $Checked = ''; ?>
+          <input type="radio" name="TruncLongDesc" value="1"<?php echo $Checked; ?>><?php echo RPT_YES; ?>
+	    <?php if ($TruncListings['params']=='0') $Checked = ' checked'; else $Checked = ''; ?>
+          <input type="radio" name="TruncLongDesc" value="0"<?php echo $Checked; ?>><?php echo RPT_NO; ?></p></td>
     </tr>
 </table>
 </form>
   <table width="100%"  border="2" cellspacing="1" cellpadding="1">
     <tr bgcolor="#CCCCCC">
-      <td colspan="5"><div align="center"><? echo RPT_GRPLIST; ?></div></td>
+      <td colspan="5"><div align="center"><?php echo RPT_GRPLIST; ?></div></td>
     </tr>
     <tr>
-      <td><? echo RPT_SEQ; ?></td>
-      <td><? echo RPT_TBLFNAME; ?></td>
-      <td><? echo RPT_DISPNAME; ?></td>
-      <td><div align="center"><? echo RPT_DEFAULT; ?></div></td>
+      <td><?php echo RPT_SEQ; ?></td>
+      <td><?php echo RPT_TBLFNAME; ?></td>
+      <td><?php echo RPT_DISPNAME; ?></td>
+      <td><div align="center"><?php echo RPT_DEFAULT; ?></div></td>
       <td>&nbsp;</td>
     </tr>
     <tr><form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
@@ -83,26 +83,26 @@
 		<input name="ReportName" type="hidden" value="<?PHP echo $reportname; ?>">
 	    <input name="EntryType" type="hidden" value="grouplist">
 	  <td align="center">
-	    <? if ($GroupListings['defaults']['buttonvalue']=='Change') { ?>
-	    <input name="SeqNum" type="hidden" value="<?echo $GroupListings['defaults']['seqnum']; ?>">
-	    <? echo $GroupListings['defaults']['seqnum']; } else { ?>
+	    <?php if ($GroupListings['defaults']['buttonvalue']=='Change') { ?>
+	    <input name="SeqNum" type="hidden" value="<?php echo $GroupListings['defaults']['seqnum']; ?>">
+	    <?php echo $GroupListings['defaults']['seqnum']; } else { ?>
 	    <input name="SeqNum"  type="text" id="SeqNum" value="<?echo $GroupListings['defaults']['seqnum']; ?>" size="4" maxlength="3">
-	    <? } // end if ?>
+	    <?php } // end if ?>
 	  </td>
       <td>
-	    <input name="FieldName" type="text" id="FieldName" value="<?echo $GroupListings['defaults']['fieldname']; ?>" size="37" maxlength="35">
+	    <input name="FieldName" type="text" id="FieldName" value="<?php echo $GroupListings['defaults']['fieldname']; ?>" size="37" maxlength="35">
 	  </td>
       <td>
-	    <input name="DisplayDesc" type="text" id="DisplayDesc" value="<?echo $GroupListings['defaults']['displaydesc']; ?>" size="26" maxlength="25">
+	    <input name="DisplayDesc" type="text" id="DisplayDesc" value="<?php echo $GroupListings['defaults']['displaydesc']; ?>" size="26" maxlength="25">
 	  </td>
       <td><div align="center">
 	    <input name="Params" type="checkbox" value="1"></div>
 	  </td>
       <td align = "center">
-	    <input name="todo" type="submit" id="todo" value="<? echo $GroupListings['defaults']['buttonvalue']; ?>">
+	    <input name="todo" type="submit" id="todo" value="<?php echo $GroupListings['defaults']['buttonvalue']; ?>">
 	  </td>
     </form></tr>
-<? if (!$GroupListings['lists']) {
+<?php if (!$GroupListings['lists']) {
     echo '<tr><td colspan="7">There are no fields to show</td></tr>';
 	} else { 
 	foreach ($GroupListings['lists'] as $FieldDetails) { ?>
@@ -114,11 +114,11 @@
 		<input name="FieldName" type="hidden" value="<?PHP echo $FieldDetails['fieldname'] ?>">
 		<input name="DisplayDesc" type="hidden" value="<?PHP echo $FieldDetails['displaydesc'] ?>">
 		<input name="Params" type="hidden" value="<?PHP echo $FieldDetails['params'] ?>">
-		  <td align = "center"><? echo $FieldDetails['seqnum']; ?></td>
-		  <td><? echo $FieldDetails['fieldname']; ?></td>
-		  <td><? echo $FieldDetails['displaydesc']; ?></td>
-		  <? if ($FieldDetails['params']=='1') $selected=' checked'; else $selected=''; ?>
-		  <td align = "center"><input disabled type="checkbox"<? echo $selected; ?>></td>
+		  <td align = "center"><?php echo $FieldDetails['seqnum']; ?></td>
+		  <td><?php echo $FieldDetails['fieldname']; ?></td>
+		  <td><?php echo $FieldDetails['displaydesc']; ?></td>
+		  <?php if ($FieldDetails['params']=='1') $selected=' checked'; else $selected=''; ?>
+		  <td align = "center"><input disabled type="checkbox"<?php echo $selected; ?>></td>
 		  <td>
 			<INPUT type=image name="up" value="up" src="../images/upicon.PNG" border="0"> 
 			<INPUT type=image name="dn" value="down" src="../images/downicon.PNG" border="0"> 
@@ -126,16 +126,16 @@
 			<INPUT type=image name="rm" value="delete" src="../images/delicon.png" border="0" onClick="return confirm('Delete this field?')"> 
 		  </td>
 		</form></tr>
-	<? } // end foreach 
+	<?php } // end foreach 
 	} // end else ?>
     <tr bgcolor="#CCCCCC">
-      <td colspan="5"><div align="center"><? echo RPT_SORTLIST; ?></div></td>
+      <td colspan="5"><div align="center"><?php echo RPT_SORTLIST; ?></div></td>
     </tr>
     <tr>
-      <td><? echo RPT_SEQ; ?></td>
-      <td><? echo RPT_TBLFNAME; ?></td>
-      <td><? echo RPT_DISPNAME; ?></td>
-      <td><div align="center"><? echo RPT_DEFAULT; ?></div></td>
+      <td><?php echo RPT_SEQ; ?></td>
+      <td><?php echo RPT_TBLFNAME; ?></td>
+      <td><?php echo RPT_DISPNAME; ?></td>
+      <td><div align="center"><?php echo RPT_DEFAULT; ?></div></td>
       <td>&nbsp;</td>
     </tr>
     <tr><form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
@@ -143,23 +143,23 @@
 		<input name="ReportName" type="hidden" value="<?PHP echo $reportname; ?>">
 	    <input name="EntryType" type="hidden" value="sortlist">
 	  <td align="center">
-	    <? if ($SortListings['defaults']['buttonvalue']=='Change') { ?>
-	    <input name="SeqNum" type="hidden" value="<?echo $SortListings['defaults']['seqnum']; ?>">
-	    <? echo $SortListings['defaults']['seqnum']; } else { ?>
-	    <input name="SeqNum"  type="text" id="SeqNum" value="<?echo $SortListings['defaults']['seqnum']; ?>" size="4" maxlength="3">
-	    <? } // end if ?>
+	    <?php if ($SortListings['defaults']['buttonvalue']=='Change') { ?>
+	    <input name="SeqNum" type="hidden" value="<?php echo $SortListings['defaults']['seqnum']; ?>">
+	    <?php echo $SortListings['defaults']['seqnum']; } else { ?>
+	    <input name="SeqNum"  type="text" id="SeqNum" value="<?php echo $SortListings['defaults']['seqnum']; ?>" size="4" maxlength="3">
+	    <?php } // end if ?>
 	  </td>
       <td>
-	    <input name="FieldName" type="text" id="FieldName" value="<?echo $SortListings['defaults']['fieldname']; ?>" size="37" maxlength="35">
+	    <input name="FieldName" type="text" id="FieldName" value="<?php echo $SortListings['defaults']['fieldname']; ?>" size="37" maxlength="35">
 	  </td>
       <td>
-	    <input name="DisplayDesc" type="text" id="DisplayDesc" value="<?echo $SortListings['defaults']['displaydesc']; ?>" size="26" maxlength="25">
+	    <input name="DisplayDesc" type="text" id="DisplayDesc" value="<?php echo $SortListings['defaults']['displaydesc']; ?>" size="26" maxlength="25">
 	  </td>
       <td><div align="center">
         <input name="Params" type="checkbox" value="1">
       </div></td>
       <td align = "center">
-	    <input name="todo" type="submit" id="todo" value="<? echo $SortListings['defaults']['buttonvalue']; ?>">
+	    <input name="todo" type="submit" id="todo" value="<?php echo $SortListings['defaults']['buttonvalue']; ?>">
 	  </td>
     </form></tr>
 <?PHP if (!$SortListings['lists']) {
@@ -174,11 +174,11 @@ foreach ($SortListings['lists'] as $FieldDetails) { ?>
 	<input name="FieldName" type="hidden" value="<?PHP echo $FieldDetails['fieldname'] ?>">
 	<input name="DisplayDesc" type="hidden" value="<?PHP echo $FieldDetails['displaydesc'] ?>">
 	<input name="Params" type="hidden" value="<?PHP echo $FieldDetails['params'] ?>">
-	  <td align = "center"><? echo $FieldDetails['seqnum']; ?></td>
-      <td><? echo $FieldDetails['fieldname']; ?></td>
-      <td><? echo $FieldDetails['displaydesc']; ?></td>
-	  <? if ($FieldDetails['params']=='1') $selected=' checked'; else $selected=''; ?>
-	  <td align = "center"><input disabled type="checkbox"<? echo $selected; ?>></td>
+	  <td align = "center"><?php echo $FieldDetails['seqnum']; ?></td>
+      <td><?php echo $FieldDetails['fieldname']; ?></td>
+      <td><?php echo $FieldDetails['displaydesc']; ?></td>
+	  <?php if ($FieldDetails['params']=='1') $selected=' checked'; else $selected=''; ?>
+	  <td align = "center"><input disabled type="checkbox"<?php echo $selected; ?>></td>
       <td>
 		<INPUT type=image name="up" value="up" src="../images/upicon.PNG" border="0"> 
 		<INPUT type=image name="dn" value="down" src="../images/downicon.PNG" border="0"> 
@@ -186,16 +186,16 @@ foreach ($SortListings['lists'] as $FieldDetails) { ?>
 		<INPUT type=image name="rm" value="delete" src="../images/delicon.png" border="0" onClick="return confirm('Delete this field?')"> 
 	  </td>
     </form></tr>
-<? } // end foreach 
+<?php } // end foreach 
 } // end else ?>
     <tr bgcolor="#CCCCCC">
-      <td colspan="5"><div align="center"><? echo RPT_BTN_CRIT; ?></div></td>
+      <td colspan="5"><div align="center"><?php echo RPT_BTN_CRIT; ?></div></td>
     </tr>
     <tr>
-      <td><? echo RPT_SEQ; ?></td>
-      <td><? echo RPT_TBLFNAME; ?></td>
-      <td><? echo RPT_DISPNAME; ?></td>
-      <td><? echo RPT_CRITTYPE; ?></td>
+      <td><?php echo RPT_SEQ; ?></td>
+      <td><?php echo RPT_TBLFNAME; ?></td>
+      <td><?php echo RPT_DISPNAME; ?></td>
+      <td><?php echo RPT_CRITTYPE; ?></td>
       <td>&nbsp;</td>
     </tr>
     <tr><form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
@@ -203,46 +203,46 @@ foreach ($SortListings['lists'] as $FieldDetails) { ?>
 		<input name="ReportName" type="hidden" value="<?PHP echo $reportname; ?>">
 	    <input name="EntryType" type="hidden" value="critlist">
 	  <td align="center">
-	    <? if ($CritListings['defaults']['buttonvalue']=='Change') { ?>
-	    <input name="SeqNum" type="hidden" value="<?echo $CritListings['defaults']['seqnum']; ?>">
-	    <? echo $SortListings['defaults']['seqnum']; } else { ?>
-	    <input name="SeqNum"  type="text" id="SeqNum" value="<?echo $CritListings['defaults']['seqnum']; ?>" size="4" maxlength="3">
-	    <? } // end if ?>
+	    <?php if ($CritListings['defaults']['buttonvalue']=='Change') { ?>
+	    <input name="SeqNum" type="hidden" value="<?php echo $CritListings['defaults']['seqnum']; ?>">
+	    <?php echo $SortListings['defaults']['seqnum']; } else { ?>
+	    <input name="SeqNum"  type="text" id="SeqNum" value="<?php echo $CritListings['defaults']['seqnum']; ?>" size="4" maxlength="3">
+	    <?php } // end if ?>
 	  </td>
       <td>
-	    <input name="FieldName" type="text" id="FieldName" value="<?echo $CritListings['defaults']['fieldname']; ?>" size="37" maxlength="35">
+	    <input name="FieldName" type="text" id="FieldName" value="<?php echo $CritListings['defaults']['fieldname']; ?>" size="37" maxlength="35">
 	  </td>
       <td>
-	    <input name="DisplayDesc" type="text" id="DisplayDesc" value="<?echo $CritListings['defaults']['displaydesc']; ?>" size="26" maxlength="25">
+	    <input name="DisplayDesc" type="text" id="DisplayDesc" value="<?php echo $CritListings['defaults']['displaydesc']; ?>" size="26" maxlength="25">
 	  </td>
       <td>
 		<select name="Params">
-		<? foreach($CritChoices as $key=>$value) {
+		<?php foreach($CritChoices as $key=>$value) {
 			$value=substr($value,2);
 			if ($CritListings['defaults']['params']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
 		} ?>
         </select></td>
       <td align = "center">
-	    <input name="todo" type="submit" id="todo" value="<? echo $CritListings['defaults']['buttonvalue']; ?>">
+	    <input name="todo" type="submit" id="todo" value="<?php echo $CritListings['defaults']['buttonvalue']; ?>">
 	  </td>
     </form></tr>
-	<? if (!$CritListings['lists']) {
+	<?php if (!$CritListings['lists']) {
 		echo '<tr><td colspan="7">There are no fields to show</td></tr>';
 	} else { 
 	foreach ($CritListings['lists'] as $FieldDetails) { ?>
     <tr><form name="CritFieldForm" method="post" action="ReportCreator.php?action=step7">
-	<input name="ReportID" type="hidden" value="<?PHP echo $ReportID ?>">
+	<input name="ReportID" type="hidden" value="<?php echo $ReportID ?>">
 	<input name="ReportName" type="hidden" value="<?PHP echo $reportname; ?>">
 	<input name="EntryType" type="hidden" value="critlist">
 	<input name="SeqNum" type="hidden" value="<?PHP echo $FieldDetails['seqnum'] ?>">
 	<input name="FieldName" type="hidden" value="<?PHP echo $FieldDetails['fieldname'] ?>">
 	<input name="DisplayDesc" type="hidden" value="<?PHP echo $FieldDetails['displaydesc'] ?>">
 	<input name="Params" type="hidden" value="<?PHP echo $FieldDetails['params'] ?>">
-	  <td align = "center"><? echo $FieldDetails['seqnum']; ?></td>
-      <td><? echo $FieldDetails['fieldname']; ?></td>
-      <td><? echo $FieldDetails['displaydesc']; ?></td>
-      <td align = "center"><? echo substr($CritChoices[$FieldDetails['params']],2); ?></td>
+	  <td align = "center"><?php echo $FieldDetails['seqnum']; ?></td>
+      <td><?php echo $FieldDetails['fieldname']; ?></td>
+      <td><?php echo $FieldDetails['displaydesc']; ?></td>
+      <td align = "center"><?php echo substr($CritChoices[$FieldDetails['params']],2); ?></td>
       <td>
 		<INPUT type=image name="up" value="up" src="../images/upicon.PNG" border="0"> 
 		<INPUT type=image name="dn" value="down" src="../images/downicon.PNG" border="0"> 
@@ -250,10 +250,10 @@ foreach ($SortListings['lists'] as $FieldDetails) { ?>
 		<INPUT type=image name="rm" value="delete" src="../images/delicon.png" border="0" onClick="return confirm('Delete this field?')"> 
 	  </td>
     </form></tr>
-<? } // end foreach 
+<?php } // end foreach 
 } // end else ?>
   </table>
 <p align="center"><br>
-<a href="<? echo $rootpath; ?>/reportwriter/docs/ReportBuilder.html" target="_blank"><? echo RPT_BTN_MAN; ?></a></p>
+<a href="<?php echo $rootpath; ?>/reportwriter/docs/ReportBuilder.html" target="_blank"><?php echo RPT_BTN_MAN; ?></a></p>
 </body>
 </html>

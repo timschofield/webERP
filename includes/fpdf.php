@@ -508,7 +508,7 @@ function SetFont($family,$style='',$size=0)
 {
 	//Select a font; size given in points
 	global $fpdf_charwidths;
-
+	
 	$family=strtolower($family);
 	if($family=='')
 		$family=$this->FontFamily;
@@ -547,7 +547,7 @@ function SetFont($family,$style='',$size=0)
 					$file=FPDF_FONTPATH.$file;
 				include($file);
 				if(!isset($fpdf_charwidths[$fontkey]))
-					$this->Error('Could not include font metric file. Font family = ' .$family . ' file = ' . $file );
+					$this->Error('Could not include font metric file. Font family = ' . $family . ' file = ' . $file . ' FPDF_FONTPATH = ' . FPDF_FONTPATH);
 			}
 			$i=count($this->fonts)+1;
 			$this->fonts[$fontkey]=array('i'=>$i,'type'=>'core','name'=>$this->CoreFonts[$fontkey],'up'=>-100,'ut'=>50,'cw'=>$fpdf_charwidths[$fontkey]);

@@ -2,31 +2,31 @@
 <body>
 <h2 align="center"><?PHP echo RPT_RPRBLDR.RPT_RPTID; ?></h2>
 <form name="reportidform" method="post" action="ReportCreator.php?action=step3">
-	<input name="ReportID" type="hidden" value="<? echo $ReportID; ?>">
+	<input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">
   <table align="center"  border="0" cellspacing="0" cellpadding="0">
    <tr>
-     <td><? echo RPT_RPTENTER; ?></td>
-     <td colspan="2"><input name="ReportName" type="text" value="<? if (isset($_POST['ReportName'])) echo $_POST['ReportName']; ?>">
-	 <? echo RPT_MAX30; ?></td>
+     <td><?php echo RPT_RPTENTER; ?></td>
+     <td colspan="2"><input name="ReportName" type="text" value="<?php if (isset($_POST['ReportName'])) echo $_POST['ReportName']; ?>">
+	 <?php echo RPT_MAX30; ?></td>
    </tr>
    <tr>
-     <td><? echo RPT_RPTGRP; ?></td>
+     <td><?php echo RPT_RPTGRP; ?></td>
      <td colspan="2">
 	    <select name="GroupName">
-		<? foreach($ReportGroups as $key=>$value) echo '<option value="'.$key.'">'.$value.'</option>'; ?>
+		<?php foreach($ReportGroups as $key=>$value) echo '<option value="'.$key.'">'.$value.'</option>'; ?>
 		</select> 
 	</td>
    </tr>
    <tr>
-     <td><div align="left"><input name="todo" type="submit" value="<? echo RPT_BTN_BACK; ?>"></div></td>
-     <td><div align="left"><? if (isset($_POST['ReportName'])) { ?>
-         <input name="todo" type="submit" value="<? echo RPT_BTN_REPLACE; ?>" onClick="return confirm('<? echo RPT_REPOVER; ?>')">
-		 <? } ?></div></td>
-     <td><div align="right"><input name="todo" type="submit" value="<? echo RPT_BTN_CONT; ?>"></div></td>
+     <td><div align="left"><input name="todo" type="submit" value="<?php echo RPT_BTN_BACK; ?>"></div></td>
+     <td><div align="left"><?php if (isset($_POST['ReportName'])) { ?>
+         <input name="todo" type="submit" value="<?php echo RPT_BTN_REPLACE; ?>" onClick="return confirm('<?php echo RPT_REPOVER; ?>')">
+		 <?php } ?></div></td>
+     <td><div align="right"><input name="todo" type="submit" value="<?php echo RPT_BTN_CONT; ?>"></div></td>
    </tr>
   </table>
   <div align="center"><br>
-      <a href="<? echo $rootpath; ?>/reportwriter/docs/ReportBuilder.html" target="_blank"><? echo RPT_BTN_MAN; ?></a></div>
+      <a href="<?php echo $rootpath; ?>/reportwriter/docs/ReportBuilder.html" target="_blank"><?php echo RPT_BTN_MAN; ?></a></div>
 </form>
 <p>&nbsp;</p>
 </body>

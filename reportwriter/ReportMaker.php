@@ -1,27 +1,23 @@
 <?php
-/* $Revision: 1.1 $ */
-
+/* $Revision: 1.2 $ */
+$DirectoryLevelsDeep =1;
+$PathPrefix = '../';
 $PageSecurity = 1; // set security level for webERP
-session_start();
-
-// Initialize some constants
-$dirpath = $_SESSION['dirpath'];		// disk path to the web app root directory
-$rootpath = $_SESSION['rootpath'];		// relative url path from the web app root directory
 
 // TBD The followiung line needs to be replace when more translations are available
-$Language = 'en_US';					// default language file 
+$ReportLanguage = 'en_US';					// default language file 
 
 define('DBReports','reports');			// name of the databse holding the main report information (ReportID)
 define('DBRptFields','reportfields');	// name of the database holding the report fields
-define('FPDF_FONTPATH',$dirpath.'/fonts/'); // FPDF path to fonts directory
+define('FPDF_FONTPATH','../fonts/'); // FPDF path to fonts directory
 
 // Fetch necessary include files - Host application specific (webERP)
-require($dirpath.'/includes/session.inc');
-require_once($dirpath.'/includes/DateFunctions.inc');
+require($PathPrefix . 'includes/session.inc');
+require_once($PathPrefix . 'includes/DateFunctions.inc');
 
 // Include files for ReportMaker.php
-require($dirpath.'/reportwriter/languages/'.$Language.'/reports.php'); // include translation before defaults.php
-require($dirpath.'/reportwriter/admin/defaults.php'); // load default values
+require('languages/'.$ReportLanguage.'/reports.php'); // include translation before defaults.php
+require('admin/defaults.php'); // load default values
 
 $usrMsg = ''; // setup array for return messages
 if (isset($_REQUEST['reportid'])) { // then entered with report id requested, fix variable to show filter form
@@ -55,7 +51,9 @@ if (!isset($_REQUEST['action']) OR (!isset($_POST['ReportID']))) {
 		$sql = "SELECT seqnum FROM ".DBRptFields." 
 			WHERE reportid = ".$ReportID." AND entrytype = 'fieldlist';";
 		$Result=DB_query($sql,$db,'','',false,true);
-		if ($SeqNum<DB_num_rows($Result)) $success = ChangeSequence($ReportID, $SeqNum, 'fieldlist', 'down');
+		if ($SeqNum<DB_num_rows($Result)) {
+			$success = ChangeSequence($ReportID, $SeqNum, 'fieldlist', 'down');
+		}
 	}
 	// Overrride stored settings with current selected values
 	$Prefs = FetchReportDetails($_POST['ReportID']); // fetch the current settings
@@ -133,8 +131,8 @@ if (!isset($_REQUEST['action']) OR (!isset($_POST['ReportID']))) {
 		case RPT_BTN_EXPPDF:
 			$Prefs = ReadPostData($ReportID, $Prefs);
 			// include the necessary files to build report
-			require($dirpath.'/includes/fpdf.php'); // FPDF class to generate reports
-			require($dirpath.'/reportwriter/WriteReport.inc');
+			require($PathPrefix . 'includes/fpdf.php'); // FPDF class to generate reports
+			require('WriteReport.inc');
 			$ReportData = '';
 			$success = BuildSQL($Prefs);
 			if ($success['level']=='success') { // Generate the output data array
@@ -167,21 +165,35 @@ if (!isset($_REQUEST['action']) OR (!isset($_POST['ReportID']))) {
 	} // end switch 'todo'
 } // end if (!isset($_POST['todo']))
 
-include ($dirpath.'/includes/header.inc');
+include ($PathPrefix . 'includes/header.inc');
 if ($usrMsg) foreach ($usrMsg as $temp) prnmsg($temp['message'],$temp['level']);
 include ($IncludePage);
-include ($dirpath.'/includes/footer.inc');
+include ( $PathPrefix . 'includes/footer.inc');
 // End main body
 
 // Begin functions
 function GetReports($Default) {
+	
 	global $db;
 	$DropDownString = '';
-	if ($Default) $Def=1; else $Def=0;
-	$sql= "SELECT id, reportname, groupname FROM ".DBReports." 
-		WHERE defaultreport='".$Def."' ORDER BY groupname, reportname";
+	if ($Default) {
+		$Def=1; 
+	} else {
+		$Def=0;
+	}
+	
+	$sql= "SELECT id, 
+				reportname, 
+				groupname 
+		FROM ". DBReports." 
+		WHERE defaultreport='".$Def."'
+		ORDER BY groupname, reportname";
+		
 	$Result=DB_query($sql,$db,'','',false,true);
-	while ($Temp = DB_fetch_array($Result)) $DefaultReports[] = $Temp;
+	
+	while ($Temp = DB_fetch_array($Result)) {
+		$DefaultReports[] = $Temp;
+	}
 	$DropDownString = build_dropdown_list($DefaultReports);
 	return $DropDownString;
 }
@@ -208,7 +220,9 @@ function FetchReportDetails($ReportID) {
 	$sql= "SELECT *	FROM ".DBReports." WHERE id = ".$ReportID.";";
 	$Result=DB_query($sql,$db,'','',false,true);
 	$myrow=DB_fetch_assoc($Result);
-	foreach ($myrow as $key=>$value) $Prefs[$key]=$value;
+	foreach ($myrow as $key=>$value) {
+		$Prefs[$key]=$value;
+	}
 	// Build drop down menus for selectable criteria; need $ReportID
 	$Temp = RetrieveFields($ReportID, 'dateselect');
 	$Prefs['DateListings'] = $Temp[0]; // only need the first field
@@ -228,22 +242,36 @@ function RetrieveFields($ReportID, $EntryType) {
 		WHERE reportid = ".$ReportID." AND entrytype = '".$EntryType."'
 		ORDER BY seqnum";
 	$Result=DB_query($sql,$db,'','',false,true);
-	while ($FieldValues = DB_fetch_assoc($Result)) { $FieldListings[] = $FieldValues; }
+	while ($FieldValues = DB_fetch_assoc($Result)) { 
+		$FieldListings[] = $FieldValues; 
+	}
 	return $FieldListings;
 }
 
-function ChangeSequence($ReportID, $SeqNum, $EntryType, $UpDown) {
+function ChangeSequence($ReportID, 
+						$SeqNum, 
+						$EntryType, 
+						$UpDown) {
 	global $db;
 	// find the id of the row to move
 	$sql = "SELECT id FROM ".DBRptFields." 
-		WHERE reportid = ".$ReportID." AND entrytype = '".$EntryType."' AND seqnum = ".$SeqNum.";";
+		WHERE reportid = ".$ReportID." 
+		AND entrytype = '".$EntryType."' 
+		AND seqnum = ".$SeqNum.";";
+		
 	$Result=DB_query($sql,$db,'','',false,true);
 	$myrow = DB_fetch_row($Result);
 	$OrigID = $myrow[0];
-	if ($UpDown=='up') $NewSeqNum = $SeqNum-1; else $NewSeqNum = $SeqNum+1;
+	if ($UpDown=='up') {
+		$NewSeqNum = $SeqNum-1;
+	} else {
+		$NewSeqNum = $SeqNum+1;
+	}
 	// first move affected sequence to seqnum, then seqnum to new position
 	$sql = "UPDATE ".DBRptFields." SET seqnum='".$SeqNum."' 
-		WHERE reportid = ".$ReportID." AND entrytype = '".$EntryType."' AND seqnum = ".$NewSeqNum.";";
+		WHERE reportid = ".$ReportID." 
+		AND entrytype = '".$EntryType."' 
+		AND seqnum = ".$NewSeqNum.";";
 	$Result=DB_query($sql,$db,'','',false,true);
 	$sql = "UPDATE ".DBRptFields." SET seqnum='".$NewSeqNum."' WHERE id = ".$OrigID.";";
 	$Result=DB_query($sql,$db,'','',false,true);

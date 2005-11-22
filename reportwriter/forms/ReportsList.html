@@ -1,20 +1,20 @@
 <html>
 <body>
 <form name="reporthome" method="post" action="ReportMaker.php?action=go">
-  <input name="GoBackURL" type="hidden" value="<? echo $GoBackURL; ?>">
+  <input name="GoBackURL" type="hidden" value="<?php echo $GoBackURL; ?>">
   <table align="center" border="1" cellspacing="1" cellpadding="1">
 	<tr>
-		<td><div align="center"><? echo RPT_DEFRPT; ?></div></td>
-		<td><div align="center"><? echo RPT_MYRPT; ?></div></td>
+		<td><div align="center"><?php echo RPT_DEFRPT; ?></div></td>
+		<td><div align="center"><?php echo RPT_MYRPT; ?></div></td>
 	</tr>
 	<tr>
 		<?PHP if ($DefReportList <> '') { ?>
-		<td><select name="ReportID" size="20" onChange="submit()"><? echo $DefReportList; ?></select></td>
-		<? } else { echo '<td>'.RPT_NOSHOW.'</td>'; } ?>
+		<td><select name="ReportID" size="20" onChange="submit()"><?php echo $DefReportList; ?></select></td>
+		<?php } else { echo '<td>'.RPT_NOSHOW.'</td>'; } ?>
 	
-		<? if ($CustReportList <> '') { ?>
-		<td><select name="ReportID" size="20" onChange="submit()"><? echo $CustReportList; ?></select></td>
-		<? } else { echo '<td>'.RPT_NOSHOW.'</td>'; } ?>
+		<?php if ($CustReportList <> '') { ?>
+		<td><select name="ReportID" size="20" onChange="submit()"><?php echo $CustReportList; ?></select></td>
+		<?php } else { echo '<td>'.RPT_NOSHOW.'</td>'; } ?>
 	</tr>
   </table>
 </form>

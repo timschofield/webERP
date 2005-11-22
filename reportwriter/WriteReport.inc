@@ -1,11 +1,11 @@
 <?PHP
 // for compatability with extended char sets
 if ($_SESSION['Language']=='zh_CN'){
-	include($dirpath.'/includes/FPDF_Chinese.php');
+	include($PathPrefix . 'includes/FPDF_Chinese.php');
 } elseif ($_SESSION['Language']=='ja_JP'){
-	include($dirpath.'/includes/FPDF_Japanese.php');
+	include($PathPrefix . 'includes/FPDF_Japanese.php');
 } elseif ($_SESSION['Language']=='ko_KR'){
-	include($dirpath.'/includes/FPDF_Korean.php');
+	include($PathPrefix . 'includes/FPDF_Korean.php');
 } else {
 	class PDF_Language extends FPDF { }
 }
@@ -77,8 +77,8 @@ function Header() {
 	$this->SetFont($Prefs['datafont'],'',$Prefs['datafontsize']);
 	$Colors = explode(':',$Prefs['datafontcolor']);
 	$this->SetTextColor($Colors[0], $Colors[1], $Colors[2]);
-    $this->SetDrawColor(128,0,0);
-    $this->SetLineWidth(.35); // 1 point
+	$this->SetDrawColor(128,0,0);
+	$this->SetLineWidth(.35); // 1 point
 	$CellHeight = ($Prefs['datafontsize']+RowSpace)*0.35;
 	// fetch the column widths and put into array to match the columns of data
 	$CellXPos[0] = $Prefs['marginleft'];
@@ -143,11 +143,21 @@ function ReportTable($Data) {
 	$CellXPos[0] = $Prefs['marginleft'];
 	for ($x=1; $x<=8; $x++) $CellXPos[$x] = $CellXPos[$x-1] + $Prefs['col'.$x.'width'];
 	// Fetch the column break array
-	foreach ($Seq as $Temp) if ($Temp['break']) $ColBreak[] = true; else $ColBreak[] = false;
+	foreach ($Seq as $Temp) {
+		if ($Temp['break']){
+			 $ColBreak[] = true;
+		} else {
+			$ColBreak[] = false;
+		}
+	}
 	// See if we need to truncate the data
-	if ($Prefs['TruncListings']['params']=='1') $trunc=true; else $trunc=false;
+	if ($Prefs['TruncListings']['params']=='1') {
+		$trunc=true; 
+	} else {
+		$trunc=false;
+	}
 	// Ready to draw the column data
-    $fill=false;
+       $fill=false;
 	$NeedTop='No';
 	$MaxRowHt = 0; //track the tallest row to estimate page breaks
     foreach($Data as $myrow) {
@@ -570,11 +580,11 @@ function GenerateCSVFile($Data, $Prefs) {
 	$FileSize = strlen($CSVOutput);
 	header("Content-type: application/csv");
 	header("Content-disposition: attachment; filename=".$Prefs['reportname'].".csv; size=".$FileSize);
-    header('Pragma: cache');
-    header('Cache-Control: public, must-revalidate, max-age=0');
-    header('Connection: close');
-    header('Expires: '.date('r', time()+60*60));
-    header('Last-Modified: '.date('r', time()));
+	header('Pragma: cache');
+	header('Cache-Control: public, must-revalidate, max-age=0');
+	header('Connection: close');
+	header('Expires: '.date('r', time()+60*60));
+	header('Last-Modified: '.date('r', time()));
 	print $CSVOutput;
 	exit();  
 }

@@ -2,64 +2,64 @@
 <body>
 <h2 align="center"><?PHP echo RPT_RPRBLDR.RPT_REPORT.$reportname.' - '.RPT_BTN_FLDSETUP; ?></h2>
 <form name="RptFieldForm" method="post" action="ReportCreator.php?action=step6">
-	<input name="ReportID" type="hidden" value="<? echo $ReportID; ?>">
-	<input name="ReportName" type="hidden" value="<? echo $reportname; ?>">
+	<input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">
+	<input name="ReportName" type="hidden" value="<?php echo $reportname; ?>">
 	<table width="100%"  border="0" cellspacing="1" cellpadding="1">
     <tr>
-      <td><input name="todo" type="submit" value="<? echo RPT_BTN_BACK; ?>"></td>
-      <td align="right"><input name="todo" type="submit" value="<? echo RPT_BTN_CONT; ?>"></td>
+      <td><input name="todo" type="submit" value="<?php echo RPT_BTN_BACK; ?>"></td>
+      <td align="right"><input name="todo" type="submit" value="<?php echo RPT_BTN_CONT; ?>"></td>
     </tr>
 	</table>
 </form>
 <table width="100%"  border="0" cellspacing="0" cellpadding="0">
     <tr bgcolor="#CCCCCC">
-      <td colspan="7"><div align="center"><? echo RPT_ENTRFLD; ?></div></td>
+      <td colspan="7"><div align="center"><?php echo RPT_ENTRFLD; ?></div></td>
     </tr>
     <tr>
-      <td><div align="center"><? echo RPT_ORDER; ?></div></td>
-      <td><div align="center"><? echo RPT_TBLFNAME; ?></div></td>
-      <td><div align="center"><? echo RPT_DISPNAME; ?></div></td>
-      <td><div align="center"><? echo RPT_BREAK; ?></div></td>
-      <td><div align="center"><? echo RPT_SHOW; ?></div></td>
-      <td><div align="center"><? echo RPT_TOTAL; ?></div></td>
+      <td><div align="center"><?php echo RPT_ORDER; ?></div></td>
+      <td><div align="center"><?php echo RPT_TBLFNAME; ?></div></td>
+      <td><div align="center"><?php echo RPT_DISPNAME; ?></div></td>
+      <td><div align="center"><?php echo RPT_BREAK; ?></div></td>
+      <td><div align="center"><?php echo RPT_SHOW; ?></div></td>
+      <td><div align="center"><?php echo RPT_TOTAL; ?></div></td>
       <td>&nbsp;</td>
     </tr>
     <tr>
 	<form name="RptFieldForm" method="post" action="ReportCreator.php?action=step6">
-	<input name="ReportID" type="hidden" value="<? echo $ReportID ?>">
-	<input name="ReportName" type="hidden" value="<? echo $reportname; ?>">
+	<input name="ReportID" type="hidden" value="<?php echo $ReportID ?>">
+	<input name="ReportName" type="hidden" value="<?php echo $reportname; ?>">
 		<td align="center">
-	  <? if ($FieldListings['defaults']['buttonvalue']=='Change') { ?>
-	  <input name="SeqNum" type="hidden" value="<?echo $FieldListings['defaults']['seqnum']; ?>">
-	  <? echo $FieldListings['defaults']['seqnum']; } else { ?>
-	  <input name="SeqNum"  type="text" value="<?echo $FieldListings['defaults']['seqnum']; ?>" size="4" maxlength="3">
-	  <? } // end if ?>
+	  <?php if ($FieldListings['defaults']['buttonvalue']=='Change') { ?>
+	  <input name="SeqNum" type="hidden" value="<?php echo $FieldListings['defaults']['seqnum']; ?>">
+	  <?php echo $FieldListings['defaults']['seqnum']; } else { ?>
+	  <input name="SeqNum"  type="text" value="<?php echo $FieldListings['defaults']['seqnum']; ?>" size="4" maxlength="3">
+	  <?php } // end if ?>
 		</td>
       <td>
-	  <input name="FieldName" type="text" value="<?echo $FieldListings['defaults']['fieldname']; ?>" size="37" maxlength="35">
+	  <input name="FieldName" type="text" value="<?php echo $FieldListings['defaults']['fieldname']; ?>" size="37" maxlength="35">
 	  </td>
       <td>
-	  <input name="DisplayDesc" type="text" value="<?echo $FieldListings['defaults']['displaydesc']; ?>" size="26" maxlength="25">
+	  <input name="DisplayDesc" type="text" value="<?php echo $FieldListings['defaults']['displaydesc']; ?>" size="26" maxlength="25">
 	  </td>
       <td align = "center">
-	  <? if ($FieldListings['defaults']['columnbreak']=='1') $selected = ' checked'; else  $selected = ''; ?>
-	  <input name="ColumnBreak" type="checkbox" value="1"<? echo $selected ?>>
+	  <?php if ($FieldListings['defaults']['columnbreak']=='1') $selected = ' checked'; else  $selected = ''; ?>
+	  <input name="ColumnBreak" type="checkbox" value="1"<?php echo $selected ?>>
 	  </td>
       <td align = "center">
-	  <? if ($FieldListings['defaults']['visible']=='1') $selected = ' checked'; else  $selected = ''; ?>
-	  <input name="Visible" type="checkbox" value="1"<? echo $selected ?>></td>
+	  <?php if ($FieldListings['defaults']['visible']=='1') $selected = ' checked'; else  $selected = ''; ?>
+	  <input name="Visible" type="checkbox" value="1"<?php echo $selected ?>></td>
       <td>
 		<select name="Params">
-		<? foreach($TotalLevels as $key=>$value) {
+		<?php foreach($TotalLevels as $key=>$value) {
 			if ($FieldListings['defaults']['params']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
 		} ?>
         </select></td>
       <td align = "center">
-	  <input name="todo" type="submit" value="<? echo $FieldListings['defaults']['buttonvalue']; ?>">
+	  <input name="todo" type="submit" value="<?php echo $FieldListings['defaults']['buttonvalue']; ?>">
 	  </td>
     </form></tr>
-    <tr bgcolor="#CCCCCC"><td colspan="7"><div align="center"><? echo RPT_FLDLIST; ?></div></td></tr>
+    <tr bgcolor="#CCCCCC"><td colspan="7"><div align="center"><?php echo RPT_FLDLIST; ?></div></td></tr>
 	<?PHP if (!$FieldListings['lists']) {
 		echo '<tr><td colspan="7">There are no fields to show</td></tr>';
 	} else { 
@@ -73,14 +73,14 @@
 	<input name="ColumnBreak" type="hidden" value="<?PHP echo $FieldDetails['columnbreak'] ?>">
 	<input name="Visible" type="hidden" value="<?PHP echo $FieldDetails['visible'] ?>">
 	<input name="Params" type="hidden" value="<?PHP echo $FieldDetails['params'] ?>">
-	  <td align = "center"><? echo $FieldDetails['seqnum']; ?></td>
-      <td><? echo $FieldDetails['fieldname']; ?></td>
-      <td><? echo $FieldDetails['displaydesc']; ?></td>
-	  <? if ($FieldDetails['columnbreak']=='1') $selected = ' checked'; else $selected = ''; ?>
-      <td align = "center"><input disabled type="checkbox"<? echo $selected; ?>></td>
-	  <? if ($FieldDetails['visible']=='1') $selected=' checked'; else $selected=''; ?>
-      <td align = "center"><input disabled type="checkbox"<? echo $selected; ?>></td>
-      <td align = "center"><? echo $TotalLevels[$FieldDetails['params']]; ?></td>
+	  <td align = "center"><?php echo $FieldDetails['seqnum']; ?></td>
+      <td><?php echo $FieldDetails['fieldname']; ?></td>
+      <td><?php echo $FieldDetails['displaydesc']; ?></td>
+	  <?php if ($FieldDetails['columnbreak']=='1') $selected = ' checked'; else $selected = ''; ?>
+      <td align = "center"><input disabled type="checkbox"<?php echo $selected; ?>></td>
+	  <?php if ($FieldDetails['visible']=='1') $selected=' checked'; else $selected=''; ?>
+      <td align = "center"><input disabled type="checkbox"<?php echo $selected; ?>></td>
+      <td align = "center"><?php echo $TotalLevels[$FieldDetails['params']]; ?></td>
       <td>
 		<INPUT type=image name="up" value="up" src="../images/upicon.PNG" border="0"> 
 		<INPUT type=image name="dn" value="down" src="../images/downicon.PNG" border="0"> 
@@ -88,20 +88,20 @@
 		<INPUT type=image name="rm" value="delete" src="../images/delicon.png" border="0" onClick="return confirm('Delete this field?')"> 
 	  </td>
     </form></tr>
-<? } // end foreach 
+<?php } // end foreach 
 } // end else ?>
 </table>
 <form name="RptFieldForm" method="post" action="ReportCreator.php?action=step6">
-	<input name="ReportID" type="hidden" value="<? echo $ReportID; ?>">
-	<input name="ReportName" type="hidden" value="<? echo $reportname; ?>">
+	<input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">
+	<input name="ReportName" type="hidden" value="<?php echo $reportname; ?>">
 	<table width="100%"  border="0" cellspacing="1" cellpadding="1">
     <tr>
-      <td><input name="todo" type="submit" value="<? echo RPT_BTN_BACK; ?>"></td>
-      <td align="right"><input name="todo" type="submit" value="<? echo RPT_BTN_CONT; ?>"></td>
+      <td><input name="todo" type="submit" value="<?php echo RPT_BTN_BACK; ?>"></td>
+      <td align="right"><input name="todo" type="submit" value="<?php echo RPT_BTN_CONT; ?>"></td>
     </tr>
 	</table>
 </form>
 <p align="center"><br>
-<a href="<? echo $rootpath; ?>/reportwriter/docs/ReportBuilder.html" target="_blank"><? echo RPT_BTN_MAN; ?></a></p>
+<a href="<?php echo $rootpath; ?>/reportwriter/docs/ReportBuilder.html" target="_blank"><?php echo RPT_BTN_MAN; ?></a></p>
 </body>
 </html>

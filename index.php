@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.45 $ */
+/* $Revision: 1.46 $ */
 
 
 $PageSecurity = 1;
@@ -896,11 +896,6 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<a href='" . $rootpath . '/UnitsOfMeasure.php?' . SID . "'><li>" . _('Units of Measure') . '</li></a>'; ?>
-							</td>
-							</tr>
-							<tr>
-							<td class="menu_group_item">
-								<?php echo GetRptLinks('misc'); ?>
 							</td>
 							</tr>
 						</table>
