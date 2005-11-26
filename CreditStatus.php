@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 3;
 include('includes/session.inc');
@@ -102,7 +102,7 @@ or deletion of the records*/
 	echo "<tr>
 		<td class='tableheader'>". _('Status Code') ."</td>
 		<td class='tableheader'>". _('Description') ."</td>
-		<td class='tableheader'>". _('Dissallow Invoices') .'</td>';
+		<td class='tableheader'>". _('Disallow Invoices') .'</td>';
 
 	$k=0; //row colour counter
 	while ($myrow=DB_fetch_row($result)) {
@@ -181,7 +181,7 @@ if (!isset($_GET['delete'])) {
 		<TD>'. _('Description') .":</TD>
 		<TD><INPUT TYPE='text' name='ReasonDescription' VALUE='". $_POST['ReasonDescription'] ."' SIZE=28 MAXLENGTH=30>
 	</TD></TR>
-	<TR><TD>". _('Disallow invoicing') . "</TD>
+	<TR><TD>". _('Disallow invoices') . "</TD>
 	<TD><INPUT TYPE='checkbox' name='DisallowInvoices'></TD></TR>
 	</TABLE>
 	<CENTER><input type='Submit' name='submit' value='" . _('Enter Information') . "'>

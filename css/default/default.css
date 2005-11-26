@@ -32,7 +32,7 @@ a {
 	font-size: 12px;
 	font-weight: bold;
 	text-decoration: none;
-	color: #000000;
+	color: black;
 }
 
 /*links on any screen when mouse is hovering over them */
@@ -54,7 +54,7 @@ td {
 
 #topMenu {
 	width: 100%;
-	color: #000000;
+	color: black;
 	background-color: #E2E9EB;
 	border: none;
 	border-bottom: 1px solid #999999;
@@ -66,7 +66,7 @@ td {
 
 #page {
 	width: 100%;
-	color: #000000;
+	color: black;
 	font-size: 12px;
 	white-space: nowrap;
 	border: none;
@@ -81,7 +81,7 @@ td {
 
 #mainMenu {
 	width: 100%;
-	color: #000000;
+	color: black;
 	background-color: #E3EBE2;
 	border: none;
 	margin: 0px;
@@ -98,13 +98,13 @@ td {
 }
 
 .login {
-	background-color: #FFFFFF;
+	background-color: white;
 	border: none;
 }
 
 .callout_main {
 	font-family: Verdana, Arial, Helvetica;
-	background-color: #FFFFFF;
+	background-color: white;
 	border: none;
 	width: 100%;
 	margin: 0px;
@@ -112,7 +112,7 @@ td {
 }
 
 .main_page {
-	background-color: #FFFFFF;
+	background-color: white;
 	border: none;
 	width: 100%;
 	margin: 0px;
@@ -126,11 +126,11 @@ td {
 	border: none;
 	margin: 0px;
 	padding: 0px;
- 	color: #000000;
+ 	color: black;
 	border-top: 2px #AAAAAA solid;
 	border-left: 2px #AAAAAA solid;
-	border-right: 2px #FFFFFF solid;
-	border-bottom: 4px #FFFFFF solid;
+	border-right: 2px white solid;
+	border-bottom: 4px white solid;
 	text-align: right;
 	/* position: relative;
 	top: 3px; */
@@ -145,13 +145,13 @@ td {
 	white-space: nowrap;
 	margin: 2px;
 	padding: 2px;
-	color: #FFFFFF;
+	color: white;
   text-align: left;
 }
 
 /*the Select Customer / Item / Supplier Menu tabs */
 .quick_menu_tabs {
-	background-color: #FFFFFF;
+	background-color: white;
 	white-space: nowrap;
 	border: none;
 	margin: 0px;
@@ -161,7 +161,7 @@ td {
 
 /*the Select Customer / Item / Supplier Menu tabs */
 .system_menu_tabs {
-	background-color: #FFFFFF;
+	background-color: white;
 	white-space: nowrap;
 	border: none;
 	margin-left: 6px;
@@ -174,18 +174,18 @@ td {
 
 .system_menu_tabs a {
 	font-size: 12px;
-	color: #000000;
+	color: black;
 }
 
 .system_menu_tabs a:hover {
 	font-size: 12px;
-  color: #000000;
+  color: black;
 }
 
 .main_area {
-	border: 2px inset #FFFFFF;
+	border: 2px inset white;
 	width: 100%;
-	background-color: #FFFFFF;
+	background-color: white;
 }
 
 .main_menu {
@@ -218,7 +218,7 @@ td {
 }
 
 .main_menu_selected {
-	background-color: #FFFFFF;
+	background-color: white;
 	border-top: 1px #AAAAAA solid;
 	border-left: 1px #AAAAAA solid;
 	border-right: 1px #AAAAAA solid;
@@ -240,14 +240,14 @@ span.main_menu_nolink {
 }
 
 .main_menu a {
-	color: #000000;
+	color: black;
 	font-weight: bold;
 	text-decoration: none;
 	white-space: nowrap;
 }
 
 .main_menu a:hover {
-	color: #000000;
+	color: black;
 	text-decoration: underline;
 }
 
@@ -267,7 +267,7 @@ span.main_menu_nolink {
 .menu_group_area {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 14px;
-  border: 2px inset #FFFFFF;
+  border: 2px inset white;
 	color: #cc6600;
 	background-color: #CCCCCC;
 	font-weight: bold;
@@ -287,21 +287,21 @@ span.main_menu_nolink {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
 	font-weight: bold;
-	color: #FFFFFF;
+	color: white;
 }
 
 .menu_group_items {
-	background-color: #FFFFFF;
+	background-color: white;
 	font-weight: bold;
 	padding: 15px;
 	border-top: 1px #AAAAAA solid;
 	border-left: 1px #AAAAAA solid;
-	border-right: 1px #FFFFFF solid;
-	border-bottom: 1px #FFFFFF solid;
+	border-right: 1px white solid;
+	border-bottom: 1px white solid;
 }
 
 .menu_group_item {
-	background-color: #FFFFFF;
+	background-color: white;
 	padding-top: 2px;
 	padding-bottom: 2px;
 }
@@ -353,7 +353,7 @@ span.menu_group_nolink {
 .titlebar {
 	font-family: "Times New Roman", Times, serif;
 	font-size: 9px;
-	color: #FFFFFF;
+	color: white;
 	background-color: #336699;
 }
 
@@ -376,17 +376,17 @@ input.small {
 .tableheader {
 	font-weight: normal;
 	background-color: #800000;
-	color: #FFFFFF;
+	color: white;
 }
 
 .HelpTableheader {
 	font-weight: bold;
 	background-color: #800000;
 	font-size: 14px;
-	color: #FFFFFF;
+	color: white;
 }
 
 .OsRow {
 	background-color: #234567;
-	color: #FFFFFF;
+	color: white;
 }

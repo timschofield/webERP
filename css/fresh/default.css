@@ -32,7 +32,7 @@ a {
 	font-size: 12px;
 	font-weight: bold;
 	text-decoration: none;
-	color: #000000;
+	color: black;
 }
 
 /*links on any screen when mouse is hovering over them */
@@ -64,7 +64,7 @@ select {
 
 #topMenu {
 	width: 100%;
-	color: #000000;
+	color: black;
 	background-color: #ffffff;
 	border: none;
 	border-bottom: 1px solid #999999;
@@ -76,7 +76,7 @@ select {
 
 #page {
 	width: 100%;
-	color: #000000;
+	color: black;
 	font-size: 10px;
 	white-space: nowrap;
 	border: none;
@@ -91,7 +91,7 @@ select {
 
 #mainMenu {
 	width: 100%;
-	color: #000000;
+	color: black;
 	background-color: #ffffff;
 	border: none;
 	margin: 0px;
@@ -136,7 +136,7 @@ select {
 	border: none;
 	margin: 0px;
 	padding: 0px;
- 	color: #000000;
+ 	color: black;
 	/*border-top: 2px #aaaaaa solid;
 	border-left: 2px #aaaaaa solid;
 	border-right: 2px #ffffff solid;
@@ -154,7 +154,7 @@ select {
 	white-space: nowrap;
 	margin: 2px;
 	padding: 0px;
-	color: #000000;
+	color: black;
 }
 
 /*the Select Customer / Item / Supplier Menu tabs */
@@ -183,12 +183,12 @@ select {
 
 .system_menu_tabs a {
 	font-size: 12px;
-   	color: #000000;
+   	color: black;
 }
 
 .system_menu_tabs a:hover {
 	font-size: 10px;
-	color: #000000;
+	color: black;
 }
 
 .main_area {
@@ -233,7 +233,7 @@ span.main_menu_nolink {
 
 .main_menu a {
 	font-weight: normal;
-	color: #FFFFFF
+	color: white
 }
 
 .main_menu a:hover {
@@ -272,7 +272,7 @@ span.main_menu_nolink {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
 	font-weight: bold;
-	color: #000000;
+	color: black;
 }
 
 .menu_group_items {
@@ -310,13 +310,13 @@ span.menu_group_nolink {
 }
 a.footer {
 	font-family: Verdana, Arial, Helvetica;
-	color: #000000;
+	color: black;
 	font-weight: normal;
 	font-size: 8px;
 }
 .footer {
 	font-family: Verdana, Arial, Helvetica;
-	color: #000000;
+	color: black;
 	font-weight: normal;
 	font-size: 8px;
 }
@@ -340,7 +340,7 @@ a.footer {
 .titlebar {
 	font-family: "Times New Roman", Times, serif;
 	font-size: 10px;
-	color: #FFFFFF;
+	color: white;
   	background-color: #336699;
 }
 
@@ -364,7 +364,7 @@ input.small {
 .tableheader {
 	font-weight: normal;
 	background-color: #777C59;
-	color: #FFFFFF;
+	color: white;
 }
 
 .HelpTableHeader {
@@ -376,7 +376,7 @@ input.small {
 
 .OsRow {
 	background-color: #234567;
-	color: #FFFFFF;
+	color: white;
 }
 .table_index {
 	background-color: #F1FFDD;

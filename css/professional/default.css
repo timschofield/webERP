@@ -64,19 +64,19 @@ select {
 
 #topMenu {
 	width: 100%;
-	color: #000000;
-	background-color: #FFFFFF;
+	color: black;
+	background-color: white;
 	border: none;
 	border-bottom: 1px solid #999999;
 }
 
 #trim {
-	background: "#FFFFFF";
+	background: "white";
 }
 
 #page {
 	width: 100%;
-	color: #000000;
+	color: black;
 	font-size: 10px;
 	white-space: nowrap;
 	border: none;
@@ -91,8 +91,8 @@ select {
 
 #mainMenu {
 	width: 100%;
-	color: #000000;
-	background-color: #FFFFFF;
+	color: black;
+	background-color: white;
 	border: none;
 	margin: 0px;
 	padding: 0px;
@@ -108,13 +108,13 @@ select {
 }
 
 .login {
-	background-color: #FFFFFF;
+	background-color: white;
 	border: none;
 }
 
 .callout_main {
 	font-family: Verdana, Arial, Helvetica;
-	background-color: #FFFFFF;
+	background-color: white;
 	border: none;
 	width: 100%;
 	margin: 0px;
@@ -122,7 +122,7 @@ select {
 }
 
 .main_page {
-	background-color: #FFFFFF;
+	background-color: white;
 	border: none;
 	width: 100%;
 	margin: 0px;
@@ -132,15 +132,15 @@ select {
 
 /* Main page heading with quick menu within */
 .quick_menu {
-	background-color: #FFFFFF;
+	background-color: white;
 	border: none;
 	margin: 0px;
 	padding: 0px;
- 	color: #000000;
+ 	color: black;
 	border-top: 2px #AAAAAA solid;
 	border-left: 2px #AAAAAA solid;
-	border-right: 2px #FFFFFF solid;
-	border-bottom: 4px #FFFFFF solid;
+	border-right: 2px white solid;
+	border-bottom: 4px white solid;
 	text-align: right;
 	/* position: relative;
 	top: 3px; */
@@ -155,12 +155,12 @@ select {
 	white-space: nowrap;
 	margin: 2px;
 	padding: 2px;
-	color: #000000;
+	color: black;
 }
 
 /*the Select Customer / Item / Supplier Menu tabs */
 .quick_menu_tabs {
-	background-color: #FFFFFF;
+	background-color: white;
 	white-space: nowrap;
 	border: none;
 	margin: 0px;
@@ -171,7 +171,7 @@ select {
 
 /*the Select Customer / Item / Supplier Menu tabs */
 .system_menu_tabs {
-	background-color: #FFFFFF;
+	background-color: white;
 	white-space: nowrap;
 	border: none;
 	margin-left: 6px;
@@ -184,22 +184,22 @@ select {
 
 .system_menu_tabs a {
 	font-size: 12px;
-   color: #000000;
+   color: black;
 }
 
 .system_menu_tabs a:hover {
 	font-size: 12px;
-	color: #000000;
+	color: black;
 }
 
 .main_area {
-	border: 2px inset #FFFFFF;
+	border: 2px inset white;
 	width: 100%;
-  background-color: #FFFFFF;
+  background-color: white;
 }
 
 .main_menu {
-	border: 2px inset #FFFFFF;
+	border: 2px inset white;
 }
 
 .main_menu table {
@@ -211,7 +211,7 @@ select {
 
 .main_menu_unselected {
 	background-color: #CCCCCC;
-	border: 2px outset #FFFFFF;
+	border: 2px outset white;
 /*	position: relative; */
 	text-align: center;
 	white-space: nowrap;
@@ -219,7 +219,7 @@ select {
 
 .main_menu_selected {
 	background-color: #CCCCCC;
-	border: 2px inset #FFFFFF;
+	border: 2px inset white;
 /*	position: relative; */ 
 	text-align: center;
 	white-space: nowrap;
@@ -257,7 +257,7 @@ span.main_menu_nolink {
 }
 
 .menu_group_area {
-  border: 2px inset #FFFFFF;
+  border: 2px inset white;
 }
 
 .blank_area table {
@@ -274,18 +274,18 @@ span.main_menu_nolink {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
 	font-weight: bold;
-	color: #000000;
+	color: black;
 }
 
 .menu_group_items {
 	vertical-align: top;
-	background-color: #FFFFFF;
+	background-color: white;
 	border: 2px outset #AAAAAA;
 	padding: 10px;
 }
 
 .menu_group_item {
-	background-color: #FFFFFF;
+	background-color: white;
 	padding-top: 2px;
 	padding-bottom: 2px;
 }
@@ -313,7 +313,7 @@ span.menu_group_nolink {
 
 .footer {
 	font-family: Verdana, Arial, Helvetica;
-	color: #000000;
+	color: black;
 	font-weight: normal;
 	font-size: 8px;
 }
@@ -337,7 +337,7 @@ span.menu_group_nolink {
 .titlebar {
 	font-family: "Times New Roman", Times, serif;
 	font-size: 9px;
-	color: #FFFFFF;
+	color: white;
   	background-color: #336699;
 }
 
@@ -373,5 +373,5 @@ input.small {
 
 .OsRow {
 	background-color: #234567;
-	color: #FFFFFF;
+	color: white;
 }
