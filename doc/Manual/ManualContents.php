@@ -614,6 +614,33 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
             </LI>
             <LI>
 <?php
+if (!isset($_POST['Submit'])) {
+?>  
+              <input type="checkbox" name="SelectReportBuilder">
+              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=ReportBuilder'; ?>">SQL Report Writer</A>
+<?php
+  } else {
+?>
+              <A HREF="#ReportBuilder">Report Writer</A>
+<?php	
+  }
+?>
+              <UL>
+                <LI>Report Writer Introduction</LI>
+                <LI>Reports Administration</LI>
+                <LI>Importing and Exporting Reports</LI>
+                <LI>Editing Copying Renaming Reports</LI>
+                <LI>Creating A New Report - Identification</LI>
+                <LI>Creating A New Report - Page Setup</LI>
+                <LI>Creating A New Report - Specifying Database Tables and Links</LI>
+                <LI>Creating A New Report - Specifying fields to Retrieve</LI>
+                <LI>Creating A New Report - Entering and Arranging Criteria</LI>
+                <LI>Viewing Reports</LI>
+              </UL>
+              <BR>
+            </LI>
+            <LI>
+<?php
   if (!isset($_POST['Submit'])) {
 ?>  
               <input type="checkbox" name="SelectMultilanguage">
@@ -823,6 +850,9 @@ if ($_GET['ViewTopic'] == 'Shipments' OR isset($_POST['SelectShipments'])) {
 
 if ($_GET['ViewTopic'] == 'GeneralLedger' OR isset($_POST['SelectGeneralLedger'])) {
   include('ManualGeneralLedger.html');
+}
+if ($_GET['ViewTopic'] == 'ReportBuilder' OR isset($_POST['SelectReportBuilder'])) {
+  include('ManualReportBuilder.html');
 }
 
 if ($_GET['ViewTopic'] == 'Multilanguage' OR isset($_POST['SelectMultilanguage'])) {
