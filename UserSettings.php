@@ -1,12 +1,13 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity=1;
 
 include('includes/session.inc');
 $title = _('User Settings');
 include('includes/header.inc');
+
 
 if (isset($_POST['Modify'])) {
 	// no input errors assumed initially before we test

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity=15;
 
@@ -10,6 +10,7 @@ $ModuleList = array(_('Orders'), _('Receivables'), _('Payables'), _('Purchasing'
 
 $title = _('User Maintenance');
 include('includes/header.inc');
+include('includes/SQL_CommonFunctions.inc');
 
 // Make an array of the security roles
 $sql = 'SELECT secroleid, secrolename FROM securityroles ORDER BY secroleid';
@@ -39,7 +40,7 @@ if (isset($_POST['submit'])) {
 	if (strlen($_POST['UserID'])<4){
 		$InputError = 1;
 		prnMsg(_('The user ID entered must be at least 4 characters long'),'error');
-	} elseif (strstr($_POST['UserID'],' ') OR strstr($_POST['UserID'],"'") OR strstr($_POST['UserID'],'+') OR strstr($_POST['UserID'],"\\") OR strstr($_POST['UserID'],"\"") OR strstr($_POST['UserID'],'&') OR strstr($_POST['UserID'],'.') OR strstr($_POST['UserID'],'"')) {
+	} elseif (ContainsIllegalCharacters($_POST['UserID'])) {
 		$InputError = 1;
 		prnMsg(_('User names cannot contain any of the following characters') . " - ' & + \" \\ " . _('or a space'),'error');
 	} elseif (strlen($_POST['Password'])<5){
@@ -111,6 +112,8 @@ if (isset($_POST['submit'])) {
 						branchcode='" . DB_escape_string($_POST['BranchCode']) . "',
 						pagesize='" . $_POST['PageSize'] . "',
 						fullaccess=" . $_POST['Access'] . ",
+						theme='" . $_POST['Theme'] . "',
+						language ='" . $_POST['Language'] . "',
 						defaultlocation='" . $_POST['DefaultLocation'] ."',
 						modulesallowed='" . $ModulesAllowed . "',
 						blocked=" . $_POST['Blocked'] . "
@@ -145,8 +148,8 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['DefaultLocation'] ."',
 						'" . $ModulesAllowed . "',
 						" . $_SESSION['DefaultDisplayRecordsMax'] . ",
-						'" . $_SESSION['DefaultTheme'] . "',
-						'". $DefaultLanguage ."')";
+						'" . $_POST['Theme'] . "',
+						'". $_POST['Language'] ."')";
 		$msg = _('A new user record has been inserted');
 	}
 
@@ -168,6 +171,8 @@ if (isset($_POST['submit'])) {
 		unset($_POST['DefaultLocation']);
 		unset($_POST['ModulesAllowed']);
 		unset($_POST['Blocked']);
+		unset($_POST['Theme']);
+		unset($_POST['Language']);
 		unset($SelectedUser);
 	}
 
@@ -203,7 +208,9 @@ if (!isset($SelectedUser)) {
 			branchcode,
 			lastvisitdate,
 			fullaccess,
-			pagesize
+			pagesize,
+			theme,
+			language
 		FROM www_users";
 	$result = DB_query($sql,$db);
 
@@ -217,6 +224,8 @@ if (!isset($SelectedUser)) {
 		<td class='tableheader'>" . _('Last Visit') . "</td>
 		<td class='tableheader'>" . _('Security Group') ."</td>
 		<td class='tableheader'>" . _('Report Size') ."</td>
+		<td class='tableheader'>" . _('Theme') ."</td>
+		<td class='tableheader'>" . _('Language') ."</td>
 	</tr>";
 
 	$k=0; //row colour counter
@@ -243,6 +252,8 @@ if (!isset($SelectedUser)) {
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
 			<td><a href=\"%s&SelectedUser=%s\">" . _('Edit') . "</a></td>
 			<td><a href=\"%s&SelectedUser=%s&delete=1\">" . _('Delete') . "</a></td>
 			</tr>",
@@ -255,6 +266,8 @@ if (!isset($SelectedUser)) {
 			$LastVisitDate,
 			$SecurityRoles[($myrow[7])],
 			$myrow[8],
+			$myrow[9],
+			$myrow[10],
 			$_SERVER['PHP_SELF']  . "?" . SID,
 			$myrow[0],
 			$_SERVER['PHP_SELF'] . "?" . SID,
@@ -285,7 +298,9 @@ if (isset($SelectedUser)) {
 			fullaccess,
 			defaultlocation,
 			modulesallowed,
-			blocked
+			blocked,
+			theme,
+			language
 		FROM www_users
 		WHERE userid='" . $SelectedUser . "'";
 
@@ -302,6 +317,8 @@ if (isset($SelectedUser)) {
 	$_POST['Access'] = $myrow['fullaccess'];
 	$_POST['DefaultLocation'] = $myrow['defaultlocation'];
 	$_POST['ModulesAllowed'] = $myrow['modulesallowed'];
+	$_POST['theme'] = $myrow['theme'];
+	$_POST['language'] = $myrow['language'];
 	$_POST['Blocked'] = $myrow['blocked'];
 
 	echo "<INPUT TYPE=HIDDEN NAME='SelectedUser' VALUE='" . $SelectedUser . "'>";
@@ -419,6 +436,49 @@ if($_POST['PageSize']=='legal_landscape'){
 	echo "<OPTION Value='legal_landscape'>" . _('Legal') . ' ' . _('landscape');
 }
 
+echo '</SELECT></TD></TR>';
+
+echo '<TR>
+	<TD>' . _('Theme') . ":</TD>
+	<TD><SELECT name='Theme'>";
+
+$ThemeDirectory = dir('css/');
+
+
+while (false != ($ThemeName = $ThemeDirectory->read())){
+
+	if (is_dir("css/$ThemeName") AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != 'CVS'){
+
+		if ($_SESSION['Theme'] == $ThemeName){
+			echo "<OPTION SELECTED VALUE='$ThemeName'>$ThemeName";
+		} else {
+			echo "<OPTION VALUE='$ThemeName'>$ThemeName";
+		}
+	}
+}
+
+echo '</SELECT></TD></TR>';
+
+
+echo '<TR>
+	<TD>' . _('Language') . ":</TD>
+	<TD><SELECT name='Language'>";
+
+$LangDirHandle = dir('locale/');
+
+
+while (false != ($LanguageEntry = $LangDirHandle->read())){
+	
+	if (is_dir('locale/' . $LanguageEntry) AND $LanguageEntry != '..' AND $LanguageEntry != 'CVS' AND $LanguageEntry!='.'){
+	
+		if ($_SESSION['Language'] == $LanguageEntry){
+			echo "<OPTION SELECTED VALUE='$LanguageEntry'>$LanguageEntry";
+		} else {
+			echo "<OPTION VALUE='$LanguageEntry'>$LanguageEntry";
+		}
+	}
+}
+	
 echo '</SELECT></TD></TR>';
 
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 4;
 
@@ -11,15 +11,15 @@ $title = _('Supplier Purchasing Data');
 include('includes/header.inc');
 
 if (isset($_GET['SupplierID'])){
-	$SupplierID = strtoupper($_GET['SupplierID']);
+	$SupplierID = trim(strtoupper($_GET['SupplierID']));
 } elseif (isset($_POST['SupplierID'])){
-	$SupplierID = strtoupper($_POST['SupplierID']);
+	$SupplierID = trim(strtoupper($_POST['SupplierID']));
 }
 
 if (isset($_GET['StockID'])){
-	$StockID = strtoupper($_GET['StockID']);
+	$StockID = trim(strtoupper($_GET['StockID']));
 } elseif (isset($_POST['StockID'])){
-	$StockID = strtoupper($_POST['StockID']);
+	$StockID = trim(strtoupper($_POST['StockID']));
 }
 
 

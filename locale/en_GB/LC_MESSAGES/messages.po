@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-22 22:06+1300\n"
+"POT-Creation-Date: 2005-12-03 13:28+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -121,6 +121,7 @@ msgstr ""
 #: SystemParameters.php:454 SystemParameters.php:472 SystemParameters.php:479
 #: SystemParameters.php:588 TaxGroups.php:291 TaxGroups.php:360
 #: TaxGroups.php:363 WWW_Users.php:434 WWW_Users.php:436
+#: reportwriter/languages/en_US/reports.php:91
 msgid "Yes"
 msgstr ""
 
@@ -144,6 +145,7 @@ msgstr ""
 #: SystemParameters.php:589 TaxGroups.php:293 TaxGroups.php:361
 #: TaxGroups.php:364 WWW_Users.php:433 WWW_Users.php:437
 #: includes/PDFLowGPPageHeader.inc:31 includes/PDFTaxPageHeader.inc:34
+#: reportwriter/languages/en_US/reports.php:70
 msgid "No"
 msgstr ""
 
@@ -159,6 +161,7 @@ msgstr ""
 #: TaxAuthorities.php:165 TaxCategories.php:181 TaxGroups.php:177
 #: TaxProvinces.php:176 UnitsOfMeasure.php:199 WorkCentres.php:137
 #: WWW_Access.php:124 WWW_Users.php:246 includes/InputSerialItems.php:82
+#: reportwriter/languages/en_US/reports.php:128
 #, php-format
 msgid "Edit"
 msgstr ""
@@ -181,6 +184,7 @@ msgstr ""
 #: TaxGroups.php:178 TaxProvinces.php:177 UnitsOfMeasure.php:200
 #: WorkCentres.php:138 WWW_Access.php:125 WWW_Users.php:247
 #: includes/InputSerialItemsKeyed.php:53
+#: reportwriter/languages/en_US/reports.php:126
 #, php-format
 msgid "Delete"
 msgstr ""
@@ -693,7 +697,7 @@ msgstr ""
 msgid "Bank Account"
 msgstr ""
 
-#: BankMatching.php:79
+#: BankMatching.php:79 reportwriter/languages/en_US/reports.php:77
 msgid "Show"
 msgstr ""
 
@@ -795,6 +799,7 @@ msgstr ""
 #: SupplierInquiry.php:191 includes/PDFQuotationPageHeader.inc:88
 #: includes/PDFStatementPageHeader.inc:120 includes/PDFTaxPageHeader.inc:35
 #: includes/PDFTransPageHeader.inc:48
+#: reportwriter/languages/en_US/reports.php:56
 msgid "Date"
 msgstr ""
 
@@ -893,6 +898,7 @@ msgstr ""
 #: Z_CheckAllocs.php:59 Z_CheckGLTransBalance.php:12
 #: includes/InputSerialItemsFile.php:85 includes/InputSerialItemsFile.php:126
 #: includes/PDFTaxPageHeader.inc:33
+#: reportwriter/languages/en_US/reports.php:89
 msgid "Type"
 msgstr ""
 
@@ -1139,7 +1145,7 @@ msgstr ""
 
 #: BOMs.php:161 ConfirmDispatch_Invoice.php:885 Credit_Invoice.php:729
 #: Credit_Invoice.php:758 SelectCreditItems.php:1423 Stocks.php:568
-#: Stocks.php:570
+#: Stocks.php:570 reportwriter/languages/en_US/reports.php:50
 msgid "Assembly"
 msgstr ""
 
@@ -1643,6 +1649,7 @@ msgstr ""
 #: Credit_Invoice.php:1425 GoodsReceived.php:581 PurchData.php:336
 #: SelectCreditItems.php:906 StockCostUpdate.php:168 StockReorderLevel.php:89
 #: SystemParameters.php:623 TaxAuthorityRates.php:55 WorkOrderIssue.php:131
+#: reportwriter/languages/en_US/reports.php:142
 msgid "Update"
 msgstr ""
 
@@ -1834,6 +1841,7 @@ msgstr ""
 #: SupplierInvoice.php:287 SupplierInvoice.php:322 SuppShiptChgs.php:92
 #: SuppTransGLAnalysis.php:118 includes/PDFQuotationPageHeader.inc:101
 #: includes/PO_PDFOrderPageHeader.inc:147
+#: reportwriter/languages/en_US/reports.php:86
 #, php-format
 msgid "Total"
 msgstr ""
@@ -2255,6 +2263,7 @@ msgstr ""
 #: includes/PDFOrdersInvoicedPageHeader.inc:40
 #: includes/PDFOrderStatusPageHeader.inc:40
 #: includes/PDFOstdgGRNsPageHeader.inc:31
+#: reportwriter/languages/en_US/reports.php:72
 msgid "Order"
 msgstr ""
 
@@ -2778,7 +2787,7 @@ msgid "Status Code"
 msgstr ""
 
 #: CreditStatus.php:105
-msgid "Dissallow Invoices"
+msgid "Disallow Invoices"
 msgstr ""
 
 #: CreditStatus.php:111
@@ -2794,7 +2803,7 @@ msgid "Show Defined Credit Status Codes"
 msgstr ""
 
 #: CreditStatus.php:184
-msgid "Disallow invoicing"
+msgid "Disallow invoices"
 msgstr ""
 
 #: Currencies.php:6
@@ -3939,7 +3948,7 @@ msgid "Payee Bank Details"
 msgstr ""
 
 #: CustomerReceipt.php:741 GLJournal.php:230 Payments.php:609
-#: SelectCreditItems.php:907
+#: SelectCreditItems.php:907 reportwriter/languages/en_US/reports.php:119
 msgid "Cancel"
 msgstr ""
 
@@ -4226,12 +4235,14 @@ msgstr ""
 #: includes/PDFOrderStatusPageHeader.inc:19
 #: includes/PDFOrderStatusPageHeader.inc:21
 #: includes/PDFStockLocTransferHeader.inc:15
+#: reportwriter/languages/en_US/reports.php:63
 msgid "From"
 msgstr ""
 
 #: CustomerTransInquiry.php:41 SalesAnalRepts.php:408 SalesAnalRepts.php:426
 #: SalesAnalRepts.php:445 SalesAnalRepts.php:454
 #: StockLocTransferReceive.php:94 includes/PO_PDFOrderPageHeader.inc:99
+#: reportwriter/languages/en_US/reports.php:84
 msgid "To"
 msgstr ""
 
@@ -4789,7 +4800,7 @@ msgid "for"
 msgstr ""
 
 #: EDIMessageFormat.php:141 SuppInvGRNs.php:102 SuppInvGRNs.php:210
-#: SuppInvGRNs.php:255
+#: SuppInvGRNs.php:255 reportwriter/languages/en_US/reports.php:79
 msgid "Sequence"
 msgstr ""
 
@@ -5841,6 +5852,7 @@ msgid "GL Codes Inquiry"
 msgstr ""
 
 #: GLCodesInquiry.php:26 GLCodesInquiry.php:64 SelectGLAccount.php:111
+#: reportwriter/languages/en_US/reports.php:66
 msgid "Group"
 msgstr ""
 
@@ -6391,14 +6403,15 @@ msgstr ""
 
 #: index.php:14 PO_SelectOSPurchOrder.php:199 PO_SelectPurchOrder.php:194
 #: Shipt_Select.php:193 WWW_Users.php:9
+#: reportwriter/languages/en_US/reports.php:195
 msgid "Orders"
 msgstr ""
 
-#: index.php:14 WWW_Users.php:9
+#: index.php:14 WWW_Users.php:9 reportwriter/languages/en_US/reports.php:198
 msgid "Receivables"
 msgstr ""
 
-#: index.php:14 WWW_Users.php:9
+#: index.php:14 WWW_Users.php:9 reportwriter/languages/en_US/reports.php:196
 msgid "Payables"
 msgstr ""
 
@@ -6406,15 +6419,15 @@ msgstr ""
 msgid "Purchasing"
 msgstr ""
 
-#: index.php:14 WWW_Users.php:9
+#: index.php:14 WWW_Users.php:9 reportwriter/languages/en_US/reports.php:199
 msgid "Inventory"
 msgstr ""
 
-#: index.php:14 WWW_Users.php:9
+#: index.php:14 WWW_Users.php:9 reportwriter/languages/en_US/reports.php:200
 msgid "Manufacturing"
 msgstr ""
 
-#: index.php:14 WWW_Users.php:9
+#: index.php:14 WWW_Users.php:9 reportwriter/languages/en_US/reports.php:201
 msgid "General Ledger"
 msgstr ""
 
@@ -6877,7 +6890,7 @@ msgstr ""
 msgid "Maintenance"
 msgstr ""
 
-#: index.php:1089
+#: index.php:1089 reportwriter/languages/en_US/reports.php:161
 msgid "Custom Reports"
 msgstr ""
 
@@ -6889,7 +6902,7 @@ msgstr ""
 msgid "reportname"
 msgstr ""
 
-#: index.php:1104
+#: index.php:1104 reportwriter/languages/en_US/reports.php:25
 msgid "There are no reports to show!"
 msgstr ""
 
@@ -8021,6 +8034,7 @@ msgstr ""
 #: includes/PDFStockNegativesHeader.inc:11
 #: includes/PDFSupplierBalsPageHeader.inc:20 includes/PDFTaxPageHeader.inc:20
 #: includes/PDFTrialBalancePageHeader.inc:17
+#: reportwriter/languages/en_US/reports.php:74
 msgid "Printed"
 msgstr ""
 
@@ -8062,6 +8076,7 @@ msgstr ""
 #: SelectCreditItems.php:930 SelectOrderItems.php:1037
 #: SelectOrderItems.php:1040 SelectProduct.php:59 SelectProduct.php:61
 #: StockLocStatus.php:61 StockLocStatus.php:63
+#: reportwriter/languages/en_US/reports.php:48
 msgid "All"
 msgstr ""
 
@@ -9475,6 +9490,7 @@ msgid "Plain paper"
 msgstr ""
 
 #: PrintCustOrder_generic.php:87 PrintCustOrder.php:84 WWW_Users.php:382
+#: reportwriter/languages/en_US/reports.php:210
 msgid "A4"
 msgstr ""
 
@@ -10550,7 +10566,7 @@ msgid "The SQL used to update the report column was"
 msgstr ""
 
 #: SalesAnalReptCols.php:128 SalesAnalReptCols.php:185
-#: SalesAnalReptCols.php:214
+#: SalesAnalReptCols.php:214 reportwriter/languages/en_US/reports.php:54
 msgid "Column"
 msgstr ""
 
@@ -11364,7 +11380,7 @@ msgstr ""
 msgid "Comm Rate 1"
 msgstr ""
 
-#: SalesPeople.php:175
+#: SalesPeople.php:175 reportwriter/languages/en_US/reports.php:52
 msgid "Break"
 msgstr ""
 
@@ -17294,14 +17310,17 @@ msgid "Reports Page Size"
 msgstr ""
 
 #: WWW_Users.php:388 WWW_Users.php:394 WWW_Users.php:396
+#: reportwriter/languages/en_US/reports.php:209
 msgid "A3"
 msgstr ""
 
 #: WWW_Users.php:400 WWW_Users.php:402 WWW_Users.php:406 WWW_Users.php:408
+#: reportwriter/languages/en_US/reports.php:213
 msgid "Letter"
 msgstr ""
 
 #: WWW_Users.php:412 WWW_Users.php:414 WWW_Users.php:417 WWW_Users.php:419
+#: reportwriter/languages/en_US/reports.php:212
 msgid "Legal"
 msgstr ""
 
@@ -17931,6 +17950,7 @@ msgstr ""
 #: Z_DataExport.php:538 Z_DataExport.php:559 Z_DataExport.php:570
 #: Z_DataExport.php:578 Z_DataExport.php:586 Z_DataExport.php:594
 #: Z_DataExport.php:602 Z_DataExport.php:610
+#: reportwriter/languages/en_US/reports.php:130
 msgid "Export"
 msgstr ""
 
@@ -19068,6 +19088,7 @@ msgid "We received"
 msgstr ""
 
 #: includes/InputSerialItemsFile.php:84 includes/InputSerialItemsFile.php:125
+#: reportwriter/languages/en_US/reports.php:80
 msgid "Size"
 msgstr ""
 
@@ -20052,4 +20073,736 @@ msgstr ""
 
 #: includes/SQL_CommonFunctions.inc:162
 msgid "The value of outstanding orders for the customer could not be retrieved because"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:12
+msgid "The name you entered is a default report. Please enter a new My Report name."
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:13
+msgid "This report name already exists! Press Replace to overwrite or enter a new name and press continue."
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:14
+msgid "There is an error in your database selection. Check your database names and link equations."
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:15
+msgid "There is an error in your database field or description. Pleae check and try again."
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:16
+msgid "There was not any data in this report based on the criteria provided!"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:17
+msgid "You do not have any rows to show!"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:18
+msgid "If you replace this report with one of the same name, the original report will be erased!"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:19
+msgid " was saved and copied to report: "
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:20
+msgid "The report name has been updated!"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:21
+msgid "No report name was selected to perform this operation."
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:22
+msgid "The name you entered is already in use. Please enter a new report name!"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:23
+msgid "Press OK to delete this report."
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:24
+msgid "Press OK to overwrite this report."
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:26
+msgid "Enter a name for this report."
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:27
+msgid "(Leave blank to use default report name from import file)"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:28
+msgid "(maximum 30 characters)"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:29
+msgid "Enter the group this form is a part of:"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:30
+msgid "Please select a report file to import"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:31
+msgid "Select a default report to import."
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:32
+msgid "Or browse for a report to upload."
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:35
+msgid "The filesize exceeds the upload_max_filesize directive in you php.ini settings."
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:36
+msgid "The filesize exceeds the MAX_FLE_SIZE directive in the webERP form."
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:37
+msgid "The file was not completely uploaded. Please retry."
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:38
+msgid "No file was selected to upload."
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:39
+msgid "Unknown php upload error, php returned error # "
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:40
+msgid "This file is not reported by the server as a text file."
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:41
+msgid "The uploaded file does not conatin any data!"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:42
+msgid "webERP could not find a valid report to import in the uploaded file!"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:43
+msgid " was successfully imported!"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:44
+msgid "There was an unexpected error uploading the file!"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:47
+msgid "Active"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:49
+msgid "Align"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:51
+msgid "Bottom"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:53
+msgid "Center"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:55
+msgid "Color"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:57
+msgid "Default"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:58
+msgid "Equal"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:59
+msgid "False"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:60
+msgid "Fields"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:61
+msgid "Filter"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:62
+msgid "Field Name"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:64
+msgid "Font"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:65
+msgid "Fourth"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:67
+msgid "Inactive"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:68
+msgid "Left"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:69
+msgid "Move"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:71
+msgid "None"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:73
+msgid "Primary"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:75
+msgid "Range"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:76
+msgid "Right"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:78
+msgid "Second"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:81
+msgid "Sort"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:82
+msgid "Stock"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:83
+msgid "Third"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:85
+msgid "Top"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:87
+msgid "True"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:88
+msgid "Truncate Long Descriptions"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:90
+msgid "Unprinted"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:94
+msgid "Report: "
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:95
+msgid "Report Builder - "
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:96
+msgid "Report Builder Menu"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:97
+msgid "Report Builder - Step 2"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:98
+msgid "Report Builder - Step 3"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:99
+msgid "Report Builder - Step 4"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:100
+msgid "Report Builder - Step 5"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:101
+msgid "Report Builder - Step 6"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:102
+msgid "Report Builder - Import Report"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:103
+msgid "Reports Menu"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:104
+msgid "Report Criteria"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:105
+msgid "Save Report"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:106
+msgid "Report Page Setup"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:109
+msgid "Form Builder Menu"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:110
+msgid "Form Builder - Step 2"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:111
+msgid "Form Builder - Step 3"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:112
+msgid "Form Builder - Step 4"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:113
+msgid "Form Builder - Step 5"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:114
+msgid "Form Builder - Step 6"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:117
+msgid "Add New"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:118
+msgid "Go Back"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:120
+msgid "Change"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:121
+msgid "Continue"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:122
+msgid "Copy"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:123
+msgid "Copy To My Reports"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:124
+msgid "Criteria Setup"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:125
+msgid "Database Setup"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:127
+msgid "Delete Report"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:129
+msgid "Export CSV"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:131
+msgid "Export PDF"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:132
+msgid "Finish"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:133
+msgid "Field Setup"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:134
+msgid "Import"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:135
+msgid "Report Builder Manual"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:136
+msgid "Create New Report"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:137
+msgid "Page Setup"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:138
+msgid "Replace"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:139
+msgid "Rename"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:140
+msgid "Restore Defaults"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:141
+msgid "Save"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:143
+msgid "Report Filters: "
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:144
+msgid "Grouped by:"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:145
+msgid "Sorted by:"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:146
+msgid "Date Range:"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:147
+msgid "Filters:"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:150
+msgid "Administrator Page"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:151
+msgid "Column 1"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:152
+msgid "Column 2"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:153
+msgid "Column 3"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:154
+msgid "Column 4"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:155
+msgid "Column 5"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:156
+msgid "Column 6"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:157
+msgid "Column 7"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:158
+msgid "Column 8"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:159
+msgid "Type of Criteria"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:160
+msgid "Column widths - mm (0 for same as prior column)"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:162
+msgid "Default Date Selected"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:163
+msgid "Date Fieldname (table.fieldname)"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:164
+msgid "Report Date Information"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:165
+msgid "Uncheck all boxes for date independent reports; leave Date Fieldname empty"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:166
+msgid "Date Field List<br>(check all that apply)"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:167
+msgid "Default Reports"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:168
+msgid "Enter a New Field"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:169
+msgid "Field List"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:170
+msgid "Grouping List"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:171
+msgid "Link Equation (SQL Syntax)<br>example: tablename1.fieldname1=tablename2.fieldname2"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:172
+msgid "My Reports"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:173
+msgid "Name to Display"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:174
+msgid "Company Name"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:175
+msgid "Report Filter Description"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:176
+msgid "Header Information / Formatting"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:177
+msgid "Page Layout"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:178
+msgid "Page Margins"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:179
+msgid "Rename Report"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:180
+msgid "Report Title 1"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:181
+msgid "Report Title 2"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:182
+msgid "Report Data"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:183
+msgid "Report Identification"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:184
+msgid "Report Import"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:185
+msgid "Sorting Information"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:186
+msgid "Table Name"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:187
+msgid "Fieldname (table.fieldname)"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:188
+msgid "Report Totals"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:191
+msgid "Create New Form"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:192
+msgid "Delete Form"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:197
+msgid "Purchases"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:202
+msgid "Financial Reports"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:203
+msgid "Miscellaneous Reports"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:206
+msgid "Paper Size:"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:207
+msgid "Orientation:"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:208
+msgid "mm"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:211
+msgid "A5"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:214
+msgid "Portrait"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:215
+msgid "Landscape"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:218
+msgid "Courier"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:219
+msgid "Helvetica"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:220
+msgid "Times"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:223
+msgid "8"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:224
+msgid "10"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:225
+msgid "12"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:226
+msgid "14"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:227
+msgid "16"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:228
+msgid "18"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:229
+msgid "20"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:230
+msgid "24"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:231
+msgid "28"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:232
+msgid "32"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:233
+msgid "36"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:234
+msgid "40"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:235
+msgid "50"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:238
+msgid "Black"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:239
+msgid "Blue"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:240
+msgid "Red"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:241
+msgid "Orange"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:242
+msgid "Yellow"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:243
+msgid "Green"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:246
+msgid "Today"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:247
+msgid "This Week"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:248
+msgid "This Week To Date"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:249
+msgid "This Month"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:250
+msgid "This Month To Date"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:251
+msgid "This Quarter"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:252
+msgid "This Quarter To Date"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:253
+msgid "This Year"
+msgstr ""
+
+#: reportwriter/languages/en_US/reports.php:254
+msgid "This Year To Date"
 msgstr ""

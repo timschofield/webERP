@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 
 $PageSecurity = 11;
@@ -12,9 +12,9 @@ include('includes/header.inc');
 /*If this form is called with the StockID then it is assumed that the stock item is to be modified */
 
 if (isset($_GET['StockID'])){
-	$StockID =strtoupper($_GET['StockID']);
+	$StockID =trim(strtoupper($_GET['StockID']));
 } elseif (isset($_POST['StockID'])){
-	$StockID =strtoupper($_POST['StockID']);
+	$StockID =trim(strtoupper($_POST['StockID']));
 }
 
 if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {

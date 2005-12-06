@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.67 $ */
+/* $Revision: 1.68 $ */
 
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
@@ -68,6 +68,10 @@ $MaximumExecutionTime =120;
 //$CryptFunction = "md5"; // MD5 Hash
 $CryptFunction = "sha1"; // SHA1 Hash
 //$CryptFunction = ""; // Plain Text
+
+//Setting to 12 or 24 determines the format of the clock display at the end of all screens
+$DefaultClock = 12;
+//$DefaultClock = 24;
 
 
 

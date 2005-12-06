@@ -1,3 +1,24 @@
+2005-07-29  Danilo Šegan  <danilo@gnome.org>
+
+	* Makefile (VERSION): Up to 1.0.5.
+
+2005-07-29  Danilo Šegan  <danilo@gnome.org>
+
+	Fixes bug #13850.
+	
+	* gettext.php (gettext_reader): check $Reader->error as well.
+
+2005-07-29  Danilo Šegan  <danilo@gnome.org>
+
+	* Makefile (VERSION): Up to 1.0.4.
+
+2005-07-29  Danilo Šegan  <danilo@gnome.org>
+
+	Fixes bug #13771.
+
+	* gettext.php (gettext_reader->get_plural_forms): Plural forms
+	header extraction regex change.  Reported by Edgar Gonzales.
+	
 2005-02-28  Danilo Šegan  <dsegan@gmx.net>
 
 	* AUTHORS: Added Nico to the list.

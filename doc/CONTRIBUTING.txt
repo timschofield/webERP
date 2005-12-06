@@ -121,6 +121,12 @@ echo '<TABLE>
 
 Carriage returns should be used in a similar way for printf statements.
 
+HTML colours should be expressed as english readable names rather than the hex 
+
+eg. <FONT COLOR="#FFFFFF">
+should be written
+<FONT COLOR="white">
+
 
 Label Strings and Multi-Language
 
@@ -229,7 +235,7 @@ are preferred. But all comments gratefully received!
 
 All scripts should have a comment in the first few lines with the script revision number in it if the following comment is pasted into it the CVS automatically updates the revision number.
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 
 Messages

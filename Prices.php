@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 2;
 
@@ -15,9 +15,9 @@ $InputError = 0;
 
 
 if (isset($_GET['Item'])){
-	$Item = $_GET['Item'];
+	$Item = trim(strtoupper($_GET['Item']));
 }elseif (isset($_POST['Item'])){
-	$Item = $_POST['Item'];
+	$Item = trim(strtoupper($_POST['Item']));
 }
 
 if (!isset($_POST['TypeAbbrev']) OR $_POST['TypeAbbrev']==""){

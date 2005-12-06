@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 	echo '<BR><BR>';
 	echo '</TD>';
@@ -14,8 +14,14 @@
 	echo '<TR BGCOLOR="#555555"><TD COLSPAN="5"><FONT SIZE="1">&nbsp;</FONT></TD></TR>';
 	
 	echo '</TABLE>';
-
-	echo '<FONT SIZE=2>' .ucfirst(strftime('%A ')). date($_SESSION['DefaultDateFormat'] . ' | g:i A') . '</FONT>';
+	
+	if ($DefaultClock==12) {
+		$hour=date('g:i a');
+	} else {
+		$hour=date('H:i');
+	}
+	
+	echo '<FONT SIZE=2>' .ucfirst(strftime('%A ')). date($_SESSION['DefaultDateFormat'] . ' | '  . $hour) . '</FONT>';
 	
 	echo '<TABLE ALIGN="center" ID="footer">';
 	
