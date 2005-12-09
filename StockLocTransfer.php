@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /* contributed by Chris Bice */
 
 $PageSecurity = 11;
@@ -27,6 +27,7 @@ If (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 	}
 	for ($i=$_POST['LinesCounter']-10;$i<$_POST['LinesCounter'];$i++){
 
+		$_POST['StockID' . $i]=trim(strtoupper($_POST['StockID' . $i]));
 		if ($_POST['StockID' . $i]!=''){
 			$result = DB_query("SELECT COUNT(stockid) FROM stockmaster WHERE stockid='" . $_POST['StockID' . $i] . "'",$db);
 			$myrow = DB_fetch_row($result);
@@ -35,6 +36,7 @@ If (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 				$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('is not set up in the database') . '. ' . _('Only valid parts can be entered for transfers'). '<BR>';
 				$_POST['LinesCounter'] -= 10;
 			}
+			DB_free_result( $result );
 			if (!is_numeric($_POST['StockQTY' . $i])){
 				$InputError = True;
 				$ErrorMessage .= _('The quantity entered of'). ' ' . $_POST['StockQTY' . $i] . ' '. _('for part code'). ' ' . $_POST['StockID' . $i] . ' '. _('is not numeric') . '. ' . _('The quantity entered for transfers is expected to be numeric').'<BR>';
@@ -45,6 +47,15 @@ If (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 				$ErrorMessage .= _('The quantity entered for').' '. $_POST['StockID' . $i] . ' ' . _('is less than or equal to 0') . '. ' . _('Please correct this or remove the item').'<BR>';
 
 			}
+			// Only if stock exist at this location
+			$result = DB_query("SELECT quantity FROM locstock WHERE stockid='" . $_POST['StockID' . $i] . "' and loccode='".$_POST['FromStockLocation']."'",$db);
+			$myrow = DB_fetch_row($result);
+			if ($myrow[0] <= 0){
+				$InputError = True;
+				$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('does not have stock available for transfer.') . '.<BR>';
+				$_POST['LinesCounter'] -= 10;
+			}
+			DB_free_result( $result );
 			$TotalItems++;
 		}
 	}//for all LinesCounter

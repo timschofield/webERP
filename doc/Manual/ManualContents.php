@@ -764,6 +764,11 @@ if (!isset($_POST['Submit'])) {
 ?>
   </form>
 <?php
+
+if (!isset($_GET['ViewTopic'])) {
+	$_GET['ViewTopic'] = '';
+}
+
 if ($_GET['ViewTopic'] == 'Introduction' OR isset($_POST['SelectIntroduction'])) {
   include('ManualIntroduction.html');
 }

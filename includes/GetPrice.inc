@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 function GetPrice ($StockID, $DebtorNo, $BranchCode, $db){
 
 	$Price = 0;
@@ -49,11 +49,11 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $db){
 				WHERE debtorsmaster.salestype=prices.typeabbrev
 				AND debtorsmaster.debtorno='" . $DebtorNo . "'
 				AND prices.stockid = '" . $StockID . "'
+				AND prices.debtorno='' 
 				AND prices.currabrev = debtorsmaster.currcode";
 			$result = DB_query($sql,$db,$ErrMsg);
 			
 			if (DB_num_rows($result)==0){
-
 
 				/* Now use the default salestype/price list cos all else has failed */
 				$sql="SELECT prices.price
@@ -62,7 +62,8 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $db){
 					WHERE prices.stockid = '" . $StockID . "'
 					AND prices.currabrev = debtorsmaster.currcode
 					AND debtorsmaster.debtorno='" . $DebtorNo . "'
-					AND prices.typeabbrev='" . $_SESSION['DefaultPriceList'] . "'";
+					AND prices.typeabbrev='" . $_SESSION['DefaultPriceList'] . "'
+					AND prices.debtorno=''";
 				
 				$result = DB_query($sql, $db,$ErrMsg);
 				
