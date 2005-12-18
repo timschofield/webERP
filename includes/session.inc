@@ -1,7 +1,7 @@
 <?php
-/* $Revision: 1.42 $ */
+/* $Revision: 1.43 $ */
  
-    
+if (!isset($PathPrefix)) $PathPrefix='';
 include($PathPrefix . 'config.php');
         
 if (isset($SessionSavePath)){

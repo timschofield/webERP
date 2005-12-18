@@ -3,7 +3,7 @@
 </head>
 
 <body>
-<h2 align="center"><?php echo RPT_REPORT.$Prefs['reportname'].' - '.RPT_BTN_CRIT; ?></h2>
+<h2 align="center"><?php echo $Prefs['reportname'].' - '.RPT_BTN_CRIT; ?></h2>
 <form name="reporthome" method="post" action="ReportMaker.php?action=go">
   <input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">
   <input name="FilterForm" type="hidden" value="1">

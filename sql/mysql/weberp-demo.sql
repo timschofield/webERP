@@ -1023,7 +1023,7 @@ CREATE TABLE `reports` (
   `id` int(5) NOT NULL auto_increment,
   `reportname` varchar(30) NOT NULL default '',
   `reporttype` char(3) NOT NULL default 'rpt',
-  `groupname` varchar(4) NOT NULL default 'misc',
+  `groupname` varchar(9) NOT NULL default 'misc',
   `defaultreport` enum('1','0') NOT NULL default '0',
   `papersize` varchar(15) NOT NULL default 'A4,210,297',
   `paperorientation` enum('P','L') NOT NULL default 'P',
@@ -1075,6 +1075,10 @@ CREATE TABLE `reports` (
   `table3criteria` varchar(75) default NULL,
   `table4` varchar(25) default NULL,
   `table4criteria` varchar(75) default NULL,
+  `table5` varchar(25) default NULL,
+  `table5criteria` varchar(75) default NULL,
+  `table6` varchar(25) default NULL,
+  `table6criteria` varchar(75) default NULL,
   PRIMARY KEY  (`id`),
   KEY `name` (`reportname`,`groupname`)
 ) TYPE=MyISAM;
@@ -2520,7 +2524,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-12-03');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-12-17');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
@@ -3069,7 +3073,7 @@ INSERT INTO `reportheaders` VALUES (1,'Test report','Sales Area',0,'0','zzzzz','
 -- Dumping data for table `reports`
 --
 
-INSERT INTO `reports` VALUES (135,'Currency Price List','rpt','inv','1','A4:210:297','P',10,10,10,10,'helvetica',12,'0:0:0','C','1','%reportname%','helvetica',10,'0:0:0','C','1','Report Generated %date%','helvetica',10,'0:0:0','C','1','helvetica',8,'0:0:0','L','helvetica',10,'0:0:0','L','helvetica',10,'0:0:0','L',25,25,25,25,25,25,25,25,'stockmaster','prices','stockmaster.stockid=prices.stockid','','','','');
+INSERT INTO `reports` VALUES (135,'Currency Price List','rpt','inv','1','A4:210:297','P',10,10,10,10,'helvetica',12,'0:0:0','C','1','%reportname%','helvetica',10,'0:0:0','C','1','Report Generated %date%','helvetica',10,'0:0:0','C','1','helvetica',8,'0:0:0','L','helvetica',10,'0:0:0','L','helvetica',10,'0:0:0','L',25,25,25,25,25,25,25,25,'stockmaster','prices','stockmaster.stockid=prices.stockid','','','','',NULL,NULL,NULL,NULL);
 
 --
 -- Dumping data for table `salesanalysis`
@@ -3679,7 +3683,7 @@ INSERT INTO `workcentres` VALUES ('ASS','TOR','Assembly',1,'50',560000,'0');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','pt_BR');
+INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

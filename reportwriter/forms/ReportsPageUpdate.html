@@ -2,10 +2,10 @@
 <head>
 </head>
 <body>
-<h2 align="center"><?php echo RPT_REPORT.$Prefs['reportname'].' - '.RPT_BTN_PGSETUP; ?></h2>
+<h2 align="center"><?php echo $Prefs['reportname'].' - '.RPT_BTN_PGSETUP; ?></h2>
 <form name="RptPageSetup" method="post" action="ReportMaker.php?action=go">
   <input name="PageForm" type="hidden" value="1">
-  <input name="ReportID" type="hidden" value="<?PHP echo $ReportID ?>">
+  <input name="ReportID" type="hidden" value="<?php echo $ReportID ?>">
   <input name="GoBackURL" type="hidden" value="<?php echo $GoBackURL; ?>">
   <table width="100%"  border="0" cellspacing="0" cellpadding="0">
    <tr>

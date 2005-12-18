@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 /*
 This script has the responsibility to gather basic information necessary to retrieve data for reports. 
@@ -21,15 +21,13 @@ $DirectoryLevelsDeep =2;
 $PathPrefix = '../../';
 $PageSecurity = 2; // set security level for webERP
 
-// webERP starts session in session.inc below 
-//session_start();
-
 // Initialize some constants
 $dirpath = '../..';	// disk path to the web app root directory
 $ReportLanguage = 'en_US';				// default language file 
 define('DBReports','reports');		// name of the databse holding the main report information (ReportID)
 define('DBRptFields','reportfields');	// name of the database holding the report fields
 define ('DefRptPath','../languages/'.$ReportLanguage.'/');	// path to default reports
+define ('MyDocPath','../languages/'.$ReportLanguage.'/');	// path to user saved documents
 
 // Fetch necessary include files for webERP
 require ('../../includes/session.inc');
@@ -39,92 +37,87 @@ require_once('../languages/' . $ReportLanguage . '/reports.php');
 require_once('defaults.php');
 require('RCFunctions.inc');
 
-$usrMsg = ''; // setup array for return messages
-//check to see how script was entered
-if (!isset($_REQUEST['action'])) {	// then form entered from somewhere other than itself, show start form
-// fetch the existing reports for the selection menus
-	$DropDownString = RetrieveReports();
-	$title=RPT_ADMSTP1;
-	$IncludePage = 'forms/ReportsHome.html';
-} else {
-  // a valid report id needs to be passed as a post field to do anything, except create new report
-  if (!isset($_POST['ReportID'])) $ReportID = ''; else $ReportID = $_POST['ReportID'];
-  switch ($_REQUEST['action']) {
+$usrMsg = ''; // initialize array for return messages
+// a valid report id needs to be passed as a post field to do anything, except create new report
+if (!isset($_POST['ReportID'])) { // entered for the first time or created new report
+	$ReportID = ''; 
+} else { 
+	$ReportID = $_POST['ReportID'];
+	if (isset($_POST['Type'])) { // then the type was passed from the previous form
+		$Type=$_POST['Type'];
+	} else { // we only have a reportid, we need to retrieve the type from thge db to set up the forms correctly
+		$sql = "SELECT reporttype FROM ".DBReports." WHERE id='".$ReportID."'";
+		$Result=DB_query($sql,$db,'','',false,true);
+		$myrow = DB_fetch_array($Result);
+		$Type = $myrow[0];
+	}
+}
+switch ($_GET['action']) {
+	default:
 	case "step2": // entered from select an action (home) page
 		// first check to see if a report was selected (except new report and import)
-		if ($ReportID=='' AND $_POST['todo']<>RPT_BTN_NEWRPT AND $_POST['todo']<>RPT_BTN_IMPORT) {
+		if (!isset($_GET['action']) OR ($ReportID=='' AND $_POST['todo']<>RPT_BTN_ADDNEW AND $_POST['todo']<>RPT_BTN_IMPORT)) {
 			// skip error message if back from import was pressed
-			$usrMsg[] = array('message'=>RPT_NORPT, 'level'=>'error');
 			$DropDownString = RetrieveReports();
-			$title=RPT_ADMSTP1;
-			$IncludePage = 'forms/ReportsHome.html';
+			if (isset($_GET['action'])) $usrMsg[] = array('message'=>FRM_NORPT, 'level'=>'error');
+			$FormParams = PrepStep('1');
 			break;
 		}
 		switch ($_POST['todo']) {
-			case RPT_BTN_NEWRPT: // Fetch the defaults and got to select id screen
+			case RPT_BTN_ADDNEW: // Fetch the defaults and got to select id screen
 				$ReportID = '';
-				$title=RPT_ADMSTP2;
-				$IncludePage = 'forms/ReportsID.html';
+				$FormParams = PrepStep('2');
 				break;
 			case RPT_BTN_EDIT: // fetch the report information and go to the page setup screen
-				$sql = "";
 				$sql = "SELECT * FROM ".DBReports." WHERE id='".$ReportID."'";
 				$Result=DB_query($sql,$db,'','',false,true);
 				$myrow = DB_fetch_array($Result);
-				$title=RPT_ADMSTP3;
-				$IncludePage = 'forms/ReportsPageSetup.html';
+				$FormParams = PrepStep('3');
 				break;
 			case RPT_BTN_RENAME: // Rename a report was selected, fetch the report name and show rename form
 				$sql = "SELECT reportname FROM ".DBReports." WHERE id='".$ReportID."'";
 				$Result=DB_query($sql,$db,'','',false,true);
 				$myrow = DB_fetch_array($Result);
 				$_POST['ReportName'] = $myrow['reportname'];
-				$title=RPT_ADMSTP3;
-				$IncludePage = 'forms/ReportsRename.html';
-				break;
+				// continue like copy was pushed
 			case RPT_BTN_COPY: // Copy a report was selected 
-				$title=RPT_ADMSTP2;
-				$IncludePage = 'forms/ReportsID.html';
+				$FormParams = PrepStep('2');
 				break;
 			case RPT_BTN_DEL: // after confirmation, delete the report and go to the main report admin menu
 				$sql= "DELETE FROM ".DBReports." WHERE id = ".$ReportID.";";
 				$Result=DB_query($sql,$db,'','',false,true);
 				$sql= "DELETE FROM ".DBRptFields." WHERE reportid = ".$ReportID.";";
 				$Result=DB_query($sql,$db,'','',false,true);
+				// reload main entry form
+			default:
 				$DropDownString = RetrieveReports();
-				$title=RPT_ADMSTP1;
-				$IncludePage = 'forms/ReportsHome.html';
+				$FormParams = PrepStep('1');
 				break;
 			case RPT_BTN_EXPORT:
 				ExportReport($ReportID); // We don't return from here, we exit the script
 				break;
 			case RPT_BTN_IMPORT: // show the file import form
 				$ReportName = '';
-				$title=RPT_ADMSTP7;
-				$IncludePage = 'forms/ReportsImport.html';
+				$FormParams = PrepStep('imp');
 				break;
-			default:
-				$DropDownString = RetrieveReports();
-				$title=RPT_ADMSTP1;
-				$IncludePage = 'forms/ReportsHome.html';
 		}
 	break; // End Step 2
-
+	
 	case "step3": // entered from id setup page
 		switch ($_POST['todo']) {
-			case RPT_BTN_REPLACE: // Erase the default report and create a new blank one with the same name
-				$sql= "DELETE FROM ".DBReports." WHERE id = ".$ReportID.";";
-				$Result=DB_query($sql,$db,'','',false,true);
-				$sql= "DELETE FROM ".DBRptFields." WHERE reportid = ".$ReportID.";";
-				$Result=DB_query($sql,$db,'','',false,true);
-				$ReportID=''; // reest the reportid to nothing to trigger creating a new report
-				// report has been deleted, continue to create a new blank report (in case 'Continue' below)
+			case RPT_BTN_REPLACE: // Erase the default report and copy a new one with the same name
+				if (isset($_POST['ReplaceReportID'])) { // then we need to delete the report to replace
+					$sql= "DELETE FROM ".DBReports." WHERE id = ".$_POST['ReplaceReportID'].";";
+					$Result=DB_query($sql,$db,'','',false,true);
+					$sql= "DELETE FROM ".DBRptFields." WHERE reportid = ".$_POST['ReplaceReportID'].";";
+					$Result=DB_query($sql,$db,'','',false,true);
+				}
+				// report has been deleted, continue to create or copy (in case 'Continue' below)
 			case RPT_BTN_CONT: // fetch the report information and go to the page setup screen
 				// input error check reportname, blank duplicate, bad characters, etc.
 				if ($_POST['ReportName']=='') { // no report name was entered, error and reload form
 					$usrMsg[] = array('message'=>RPT_NORPT, 'level'=>'error');
-					$title=RPT_ADMSTP2;
-					$IncludePage = 'forms/ReportsID.html';
+					$FormParams = PrepStep('2');
 					break;
 				}
 				// check for duplicate report name
@@ -132,26 +125,41 @@ if (!isset($_REQUEST['action'])) {	// then form entered from somewhere other tha
 				$Result=DB_query($sql,$db,'','',false,true);
 				if (DB_num_rows($Result)>0) { // then we have a duplicate report name, error and reload
 					$myrow = DB_fetch_array($Result);
-					$ReportID = $myrow['id']; // save the duplicate report id
+					$ReplaceReportID = $myrow['id']; // save the duplicate report id
 					$usrMsg[] = array('message'=>RPT_SAVEDUP, 'level'=>'error');
 					$usrMsg[] = array('message'=>RPT_DEFDEL, 'level'=>'warn');
-					$title=RPT_ADMSTP2;
-					$IncludePage = 'forms/ReportsID.html';
+					$FormParams = PrepStep('2');
 					break;
 				}
 				// Input validated perform requested operation
 				if ($ReportID=='') { // then it's a new report
+					// Check to see if a form or report to create
+					if ($_POST['NewType']=='') { // then no type selected, error and re-display form
+						$usrMsg[] = array('message'=>RPT_NORPTTYPE, 'level'=>'warn');
+						$FormParams = PrepStep('2');
+						break;
+					} elseif ($_POST['NewType']=='rpt') { // a report, read the groupname
+						$GroupName = $_POST['GroupName'];
+					} elseif ($_POST['NewType']=='frm') { // a form, set the groupname
+						$GroupName = $_POST['FormGroup'];
+					}
+					$Type = $_POST['NewType'];
 					$sql = "INSERT INTO ".DBReports." (reportname, reporttype, groupname, defaultreport)
-						VALUES ('".addslashes($_POST['ReportName'])."', 'rpt', '".$_POST['GroupName']."', '1')";
+						VALUES ('".addslashes($_POST['ReportName'])."', '".$Type."', '".$GroupName."', '1')";
 					$Result=DB_query($sql,$db,'','',false,true);
 					$ReportID = DB_Last_Insert_ID($db,DBReports,'id');
 					// Set some default report information: date display default choices to 'ALL'
+					if ($Type<>'frm') { // set the truncate long descriptions default
+						$sql = "INSERT INTO ".DBRptFields." (reportid, entrytype, params, displaydesc)
+							VALUES (".$ReportID.", 'trunclong', '0', '');";
+						$Result=DB_query($sql,$db,'','',false,true);
+					} else { // it's a form so write a default form break record
+						$sql = "INSERT INTO ".DBRptFields." (reportid, entrytype, params, displaydesc)
+							VALUES (".$ReportID.", 'grouplist', '', '');";
+						$Result=DB_query($sql,$db,'','',false,true);
+					}
 					$sql = "INSERT INTO ".DBRptFields." (reportid, entrytype, fieldname, displaydesc)
 						VALUES (".$ReportID.", 'dateselect', '', 'a');";
-					$Result=DB_query($sql,$db,'','',false,true);
-					// truncate long descriptions default
-					$sql = "INSERT INTO ".DBRptFields." (reportid, entrytype, params, displaydesc)
-						VALUES (".$ReportID.", 'trunclong', '0', '');";
 					$Result=DB_query($sql,$db,'','',false,true);
 				} else { // copy the report and all fields to the new report name
 					$OrigID = $ReportID;
@@ -167,8 +175,7 @@ if (!isset($_REQUEST['action'])) {	// then form entered from somewhere other tha
 					$Result=DB_query($sql,$db,'','',false,true);
 					// Set the report name and group name per the form
 					$sql = "UPDATE ".DBReports." SET 
-							reportname = '".addslashes($_POST['ReportName'])."', 
-							groupname = '".$_POST['GroupName']."' 
+							reportname = '".addslashes($_POST['ReportName'])."' 
 						WHERE id =".$ReportID.";";
 					$Result=DB_query($sql,$db,'','',false,true);
 					// fetch the fields and duplicate
@@ -188,16 +195,14 @@ if (!isset($_REQUEST['action'])) {	// then form entered from somewhere other tha
 				$sql = "SELECT * FROM ".DBReports." WHERE id='".$ReportID."'";
 				$Result=DB_query($sql,$db,'','',false,true);
 				$myrow = DB_fetch_array($Result);
-				$title=RPT_ADMSTP3;
-				$IncludePage = 'forms/ReportsPageSetup.html';
+				$FormParams = PrepStep('3');
 				break;
-
+	
 			case RPT_BTN_RENAME: // Rename a report was selected, fetch the report name and update
 				// input error check reportname, blank duplicate, bad characters, etc.
 				if ($_POST['ReportName']=='') { // no report name was entered, error and reload form
 					$usrMsg[] = array('message'=>RPT_NORPT, 'level'=>'error');
-					$title=RPT_ADMSTP2;
-					$IncludePage = 'forms/ReportsRename.html';
+					$FormParams = PrepStep('2');
 					break;
 				}
 				// check for duplicate report name
@@ -207,8 +212,7 @@ if (!isset($_REQUEST['action'])) {	// then form entered from somewhere other tha
 					$myrow = DB_fetch_array($Result);
 					if ($myrow['id']<>$ReportID) { // then the report has a duplicate name to something other than itself, error
 						$usrMsg[] = array('message'=>RPT_REPDUP, 'level'=>'error');
-						$title=RPT_ADMSTP2;
-						$IncludePage = 'forms/ReportsRename.html';
+						$FormParams = PrepStep('2');
 						break;
 					}
 				}
@@ -219,11 +223,10 @@ if (!isset($_REQUEST['action'])) {	// then form entered from somewhere other tha
 			case RPT_BTN_BACK:
 			default:	// bail to reports home
 				$DropDownString = RetrieveReports();
-				$title=RPT_ADMSTP1;
-				$IncludePage = 'forms/ReportsHome.html';
+				$FormParams = PrepStep('1');
 		}
 	break;
-
+	
 	case "step4": // entered from page setup page
 		switch ($_POST['todo']) {
 			case RPT_BTN_UPDATE:
@@ -232,63 +235,81 @@ if (!isset($_REQUEST['action'])) {	// then form entered from somewhere other tha
 				$sql = "SELECT * FROM ".DBReports." WHERE id='".$ReportID."'";
 				$Result=DB_query($sql,$db,'','',false,true);
 				$myrow = DB_fetch_array($Result);
-				$title=RPT_ADMSTP3;
-				$IncludePage = 'forms/ReportsPageSetup.html';
+				$FormParams = PrepStep('3');
 				break;
 			case RPT_BTN_CONT: // fetch the report information and go to the page setup screen
 				$success = UpdatePageFields($ReportID);
 				// read in the data for the next form
-				$sql = "SELECT table1, table2, table2criteria, table3, table3criteria, table4, table4criteria, reportname
+				$sql = "SELECT table1, 
+						table2, table2criteria, 
+						table3, table3criteria, 
+						table4, table4criteria, 
+						table5, table5criteria, 
+						table6, table6criteria, 
+						reportname
 					FROM ".DBReports." WHERE id='".$ReportID."'";
 				$Result=DB_query($sql,$db,'','',false,true);
 				$myrow = DB_fetch_array($Result);
-				$title=RPT_ADMSTP4;
-				$IncludePage = 'forms/ReportsDBSetup.html';
+				$numrows = DB_num_rows($Result);
+				$FormParams = PrepStep('4');
 				break;
 			case RPT_BTN_BACK:
 			default:	// bail to reports home
 				$DropDownString = RetrieveReports();
-				$title=RPT_ADMSTP1;
-				$IncludePage = 'forms/ReportsHome.html';
+				$FormParams = PrepStep('1');
 		}
 	break;
-
+	
 	case "step5": // entered from dbsetup page
 		switch ($_POST['todo']) {
 			case RPT_BTN_BACK:
 				$sql = "SELECT * FROM ".DBReports." WHERE id='".$ReportID."'";
 				$Result=DB_query($sql,$db,'','',false,true);
 				$myrow = DB_fetch_array($Result);
-				$title=RPT_ADMSTP3;
-				$IncludePage = 'forms/ReportsPageSetup.html';
+				$FormParams = PrepStep('3');
 				break;
 			case RPT_BTN_UPDATE:
 			case RPT_BTN_CONT: // fetch the report information and go to the page setup screen
+				if ($_POST['Table1']) {
+					$sql = "SELECT table1 FROM ".DBReports." WHERE id='".$ReportID."'";
+					$Result=DB_query($sql,$db,'','',false,true);
+					$myrow = DB_fetch_row($Result);
+					if ($myrow[0] != $_POST['Table1']) {
+						unset($_POST['Table2']); unset($_POST['Table2Criteria']);
+						unset($_POST['Table3']); unset($_POST['Table3Criteria']);
+						unset($_POST['Table4']); unset($_POST['Table4Criteria']);
+						unset($_POST['Table5']); unset($_POST['Table5Criteria']);
+						unset($_POST['Table6']); unset($_POST['Table6Criteria']);
+					}
+				}
 				$success = UpdateDBFields($ReportID);
 				if (!$success OR $_POST['todo']==RPT_BTN_UPDATE) { // update fields and stay on this form
 					if (!$success) $usrMsg[] = array('message'=>RPT_DUPDB, 'level'=>'error');
 					// read back in new data for next screen (will set defaults as defined in the db)
-					$sql = "SELECT table1, table2, table2criteria, table3, table3criteria, table4, table4criteria, reportname
+					$sql = "SELECT table1, 
+							table2, table2criteria, 
+							table3, table3criteria, 
+							table4, table4criteria, 
+							table5, table5criteria, 
+							table6, table6criteria, 
+							reportname
 						FROM ".DBReports." WHERE id='".$ReportID."'";
 					$Result=DB_query($sql,$db,'','',false,true);
 					$myrow = DB_fetch_array($Result);
-					$title=RPT_ADMSTP4;
-					$IncludePage = 'forms/ReportsDBSetup.html';
+					$FormParams = PrepStep('4');
 					break;
 				}
 				// read in fields and continue to next form
 				$reportname = $_POST['ReportName'];
 				$FieldListings = RetrieveFields('fieldlist');
-				$title=RPT_ADMSTP5;
-				$IncludePage = 'forms/ReportsFieldSetup.html';
+				$FormParams = PrepStep('5');
 				break;
 			default:	// bail to reports home
 				$DropDownString = RetrieveReports();
-				$title=RPT_ADMSTP1;
-				$IncludePage = 'forms/ReportsHome.html';
+				$FormParams = PrepStep('1');
 		}
 	break;
-
+	
 	case "step6": // entered from field setup page
 		if (!isset($_POST['todo'])) {	// then a sequence image button was pushed
 			$SeqNum = $_POST['SeqNum']; //fetch the sequence number
@@ -307,23 +328,27 @@ if (!isset($_REQUEST['action'])) {	// then form entered from somewhere other tha
 					WHERE reportid = ".$ReportID." AND entrytype = 'fieldlist' AND seqnum=".$SeqNum.";";
 				$Result=DB_query($sql,$db,'','',false,true);
 				$FieldListings['defaults'] = DB_fetch_array($Result);
-				$FieldListings['defaults']['buttonvalue'] = 'Change';
+				$FieldListings['defaults']['buttonvalue'] = RPT_BTN_CHANGE;
 			} elseif (isset($_POST['rm_x'])) { // the sequence remove button was pushed
 				$success = DeleteSequence($_POST['SeqNum'], 'fieldlist');
 				$FieldListings = RetrieveFields('fieldlist');
 			}
-			$title=RPT_ADMSTP5;
 			$reportname = $_POST['ReportName'];
-			$IncludePage = 'forms/ReportsFieldSetup.html';
+			$FormParams = PrepStep('5');
 		} else {
 			switch ($_POST['todo']) {
 				case RPT_BTN_BACK:
-					$sql = "SELECT table1, table2, table2criteria, table3, table3criteria, table4, table4criteria, reportname
+					$sql = "SELECT table1, 
+							table2, table2criteria, 
+							table3, table3criteria, 
+							table4, table4criteria, 
+							table5, table5criteria, 
+							table6, table6criteria, 
+							reportname
 						FROM ".DBReports." WHERE id='".$ReportID."'";
 					$Result=DB_query($sql,$db,'','',false,true);
 					$myrow = DB_fetch_array($Result);
-					$title=RPT_ADMSTP4;
-					$IncludePage = 'forms/ReportsDBSetup.html';
+					$FormParams = PrepStep('4');
 					break;
 				case RPT_BTN_ADDNEW:
 				case RPT_BTN_CHANGE:
@@ -344,18 +369,35 @@ if (!isset($_REQUEST['action'])) {	// then form entered from somewhere other tha
 						} else { // exists, so update it.
 							$FieldListings['defaults']['buttonvalue'] = RPT_BTN_CHANGE;
 						}
-					} else { // fetch the input results and save them
-						if ($_POST['todo']==RPT_BTN_ADDNEW) { // add new so insert
-							$success = InsertSequence($_POST['SeqNum'], 'fieldlist', $_POST);
-						} else { // exists, so update it.
-							$success = UpdateSequence('fieldlist', $_POST);
-						}
-						$FieldListings = RetrieveFields('fieldlist');
+						$reportname = $_POST['ReportName'];
+						$FormParams = PrepStep('5');
+						break;
+					} 
+					if ($_POST['todo']==RPT_BTN_ADDNEW) { // add new so insert
+						$_POST['SeqNum'] = InsertSequence($_POST['SeqNum'], 'fieldlist');
+					} else { // exists, so update it.
+						$success = UpdateSequence('fieldlist');
 					}
-					// read in fields for next form
+					if ($Type<>'frm') {
+						$FieldListings = RetrieveFields('fieldlist');
+						$reportname = $_POST['ReportName'];
+						$FormParams = PrepStep('5');
+						break;
+					}
+					// Go to the properties screen for the field just entered
+				case RPT_BTN_PROP: // Enter the properties of a given field
+					// see what form needs to be loaded and load based on index stored in params variable
+					$SeqNum = $_POST['SeqNum'];
+					$sql = "SELECT id, displaydesc, params FROM ".DBRptFields." 
+						WHERE reportid = ".$ReportID." AND entrytype='fieldlist' AND seqnum = ".$SeqNum.";";
+					$Result = DB_query($sql,$db,'','',false,true);
+					$myrow = DB_fetch_assoc($Result);
+					$Params = unserialize($myrow['params']);
 					$reportname = $_POST['ReportName'];
-					$title=RPT_ADMSTP5;
-					$IncludePage = 'forms/ReportsFieldSetup.html';
+					$ButtonValue = RPT_BTN_ADDNEW; // default the field button to Add New for form entry
+					$FormParams = PrepStep('prop');
+					$FormParams['id'] = $myrow['id'];
+					$DisplayName = $myrow['displaydesc'];
 					break;
 				case RPT_BTN_CONT: // fetch the report information and go to the page setup screen
 					$DateListings = RetrieveFields('dateselect');
@@ -366,18 +408,131 @@ if (!isset($_REQUEST['action'])) {	// then form entered from somewhere other tha
 					$GroupListings = RetrieveFields('grouplist');
 					$CritListings = RetrieveFields('critlist');
 					$reportname = $_POST['ReportName'];
-					$title=RPT_ADMSTP6;
-					$IncludePage = 'forms/ReportsCritSetup.html';
+					$FormParams = PrepStep('6');
 					break;
-				default:	// bail to reports home
+				default: // bail to reports home
 					$DropDownString = RetrieveReports();
-					$title=RPT_ADMSTP1;
-					$IncludePage = 'forms/ReportsHome.html';
+					$FormParams = PrepStep('1');
 					break;
 			}
 		}
 	break;
-
+	
+	case "step6a": // entered from properties page for fields
+		$ButtonValue = RPT_BTN_ADDNEW; // default the field button to Add New unless overidden by the edit image pressed
+		$reportname = $_POST['ReportName'];
+		$SeqNum = $_POST['SeqNum'];
+		// first fetch the original Params
+		$sql = "SELECT id, params FROM ".DBRptFields." 
+			WHERE reportid = ".$ReportID." AND entrytype='fieldlist' AND seqnum = ".$SeqNum.";";
+		$Result = DB_query($sql,$db,'','',false,true);
+		$myrow = DB_fetch_assoc($Result);
+		$Params = unserialize($myrow['params']);
+		if (!isset($_POST['todo'])) { // then a sequence image button was pushed, we must be in form table entry
+			$success = ModFormTblEntry($Params);
+			if (!$success) { // check for errors
+				$usrMsg[] = array('message'=>RPT_BADDATA, 'level'=>'error');
+			} else { // update the database
+				$sql = "UPDATE ".DBRptFields." SET params='".serialize($Params)."' WHERE id = ".$_POST['ID'].";";
+				$Result=DB_query($sql,$db,'','',false,true);
+				if ($success=='edit') { // then the edit button was pressed, change button name from Add New to Change
+					$ButtonValue = RPT_BTN_CHANGE;
+				}
+			}
+			// Update field properties 
+			$FormParams = PrepStep('prop');
+			$FormParams['id'] = $myrow['id']; 
+		} else {
+			// fetch the choices with the form post data
+			foreach ($_POST as $key=>$value) $Params[$key]=$value;
+			// check for what button or image was pressed
+			switch ($_POST['todo']) {
+				case RPT_BTN_CANCEL:
+					$FieldListings = RetrieveFields('fieldlist');
+					$FormParams = PrepStep('5');
+					break;
+				case RPT_BTN_ADD:
+				case RPT_BTN_REMOVE: // For the total parameters gather the list of fieldnames
+					// Process the button pushed
+					if ($_POST['todo']==RPT_BTN_REMOVE) { // the remove button was pressed
+						$Index = $_POST['FieldIndex'];
+						if ($Index<>'') $Params['Seq'] = array_merge(array_slice($Params['Seq'],0,$Index),array_slice($Params['Seq'],$Index+1));
+					} else { // it's the add button, error check
+						if ($_POST['TotalField']=='') { 
+							$usrMsg[] = array('message'=>RPT_BADFLD, 'level'=>'error');
+							// reload form with bad data entered as field defaults, ready to be editted
+							$DisplayName =$_POST['DisplayName'];
+							$FormParams = PrepStep('prop');
+							$FormParams['id'] = $myrow['id']; 
+							break;
+						} 
+						$Params['Seq'][] = $_POST['TotalField'];
+					}
+					// Update field properties 
+					$sql = "UPDATE ".DBRptFields." SET params='".serialize($Params)."' WHERE id = ".$_POST['ID'].";";
+					$Result=DB_query($sql,$db,'','',false,true);
+					$Params['TotalField']='';
+					$FormParams = PrepStep('prop');
+					$FormParams['id'] = $myrow['id']; 
+					break;
+				case RPT_BTN_CHANGE:
+				case RPT_BTN_ADDNEW:
+					// Error Check input, see if user entered a bad fieldname or description, error and reload
+					if ($_POST['TblField']=='' OR ($Params['index']=='Tbl' AND $_POST['TblDesc']=='')) { 
+						$usrMsg[] = array('message'=>RPT_BADFLD, 'level'=>'error');
+						// reload form with bad data entered as field defaults, ready to be editted
+						if ($_POST['todo']==RPT_BTN_ADDNEW) $ButtonValue = RPT_BTN_ADDNEW;
+							else $ButtonValue = RPT_BTN_CHANGE;
+						$DisplayName =$_POST['DisplayName'];
+						$FormParams = PrepStep('prop');
+						$FormParams['id'] = $myrow['id']; 
+						break;
+					} 
+					if ($_POST['todo']==RPT_BTN_ADDNEW) $success = InsertFormSeq($Params,'insert');
+						else $success = InsertFormSeq($Params, 'update');
+					// continue on
+				case RPT_BTN_UPDATE:
+				case RPT_BTN_FINISH: // Enter the properties of a given field and return to the field setup screen
+					// additional processing for the image upload in the form image type
+					if ($Params['index']=='Img') {
+						$success = ImportImage();
+						if ($success['result']=='error') { // image upload failed
+							$usrMsg[] = array('message'=>$success['message'], 'level'=>'error');
+							$FormParams = PrepStep('prop');
+							$FormParams['id'] = $myrow['id'];
+							break;
+						} else {
+							$Params['filename'] = $success['filename'];
+						}
+					}
+					// reset the sequence defaults to null for Table type only
+					if ($Params['index']=='Tbl' OR $Params['index']=='TBlk') {
+						$Params['TblSeqNum'] = '';
+						$Params['TblField'] = '';
+						$Params['TblDesc'] = '';
+						$Params['Processing'] = '';
+					}
+					// Update field properties 
+					$sql = "UPDATE ".DBRptFields." SET params='".serialize($Params)."' WHERE id = ".$_POST['ID'].";";
+					$Result=DB_query($sql,$db,'','',false,true);
+					// check for update errors and reload
+					if ($_POST['todo']==RPT_BTN_FINISH) { // no errors and finished so return to field setup
+						$FieldListings = RetrieveFields('fieldlist');
+						$FormParams = PrepStep('5');
+					} else { // print error message if need be and reload parameter form
+						$DisplayName =$_POST['DisplayName'];
+						$FormParams = PrepStep('prop');
+						$FormParams['id'] = $myrow['id']; 
+					}
+					break;
+				default: // bail to reports home
+					$DropDownString = RetrieveReports();
+					$FormParams = PrepStep('1');
+					break;
+			}
+		}
+	break;
+	
 	case "step7": // entered from criteria setup page
 		$OverrideDefaults = false;
 		if (!isset($_POST['todo'])) {	// then a sequence image button was pushed
@@ -401,14 +556,12 @@ if (!isset($_REQUEST['action'])) {	// then form entered from somewhere other tha
 				$success = DeleteSequence($_POST['SeqNum'], $EntryType);
 			}
 			$reportname = $_POST['ReportName'];
-			$title=RPT_ADMSTP6;
-			$IncludePage = 'forms/ReportsCritSetup.html';
+				$FormParams = PrepStep('6');
 		} else {
 			switch ($_POST['todo']) {
 				case RPT_BTN_BACK:
-					$title=RPT_ADMSTP5;
 					$reportname = $_POST['ReportName'];
-					$IncludePage = 'forms/ReportsFieldSetup.html';
+					$FormParams = PrepStep('5');
 					break;
 				case RPT_BTN_ADDNEW:
 				case RPT_BTN_CHANGE:
@@ -430,14 +583,13 @@ if (!isset($_REQUEST['action'])) {	// then form entered from somewhere other tha
 						}
 					} else { // fetch the input results and save them
 						if ($_POST['todo']==RPT_BTN_ADDNEW) { // add new so insert
-							$success = InsertSequence($_POST['SeqNum'], $EntryType, $_POST);
+							$success = InsertSequence($_POST['SeqNum'], $EntryType);
 						} else { // record exists, so update it.
-							$success = UpdateSequence($EntryType, $_POST);
+							$success = UpdateSequence($EntryType);
 						}
 					}
 					$reportname = $_POST['ReportName'];
-					$title=RPT_ADMSTP6;
-					$IncludePage = 'forms/ReportsCritSetup.html';
+					$FormParams = PrepStep('6');
 					break;
 				case RPT_BTN_UPDATE: // update the date and general options fields, reload form
 				case RPT_BTN_FINISH: // update fields and return to report manager screen
@@ -454,7 +606,10 @@ if (!isset($_REQUEST['action'])) {	// then form entered from somewhere other tha
 						$_POST['DateField'] = ''; // clear the date field since we don't need it
 						$IsValidField = true; // 
 					} else { // check the input for a valid fieldname
-						$IsValidField = ValidateField($ReportID, $_POST['DateField'], 'Date');
+						$IsValidField = ValidateField($ReportID, $_POST['DateField'], 'TestField');
+					}
+					if ($Type=='frm' AND $IsValidField) {
+						$IsValidField = ValidateField($ReportID, $_POST['FormBreakField'], 'TestField');
 					}
 					if (!$IsValidField) { // then user entered a bad fieldname or description, error and reload
 						$usrMsg[] = array('message'=>RPT_BADFLD, 'level'=>'error');
@@ -462,10 +617,10 @@ if (!isset($_REQUEST['action'])) {	// then form entered from somewhere other tha
 						$DateListings['displaydesc'] = $DateString;
 						$DateListings['params'] = $_POST['DefDate'];
 						$DateListings['fieldname'] = $_POST['DateField'];
+						if ($Type=='frm') $GroupListings['lists'][0]['fieldname'] = $_POST['FormBreakField'];
 						$reportname = $_POST['ReportName'];
 						$DateError = true;
-						$title=RPT_ADMSTP6;
-						$IncludePage = 'forms/ReportsCritSetup.html';
+						$FormParams = PrepStep('6');
 						break;
 					} else { // fetch the input results and save them
 						$DateError = false;
@@ -474,17 +629,15 @@ if (!isset($_REQUEST['action'])) {	// then form entered from somewhere other tha
 					// read in fields for next form
 					$reportname = $_POST['ReportName'];
 					if ($_POST['todo']==RPT_BTN_FINISH) { // then finish was pressed
-						$title=RPT_ADMSTP1;
-						$IncludePage = 'forms/ReportsHome.html';
-					} else { // return to criteria form
-						$title=RPT_ADMSTP6;
-						$IncludePage = 'forms/ReportsCritSetup.html';
+						$DropDownString = RetrieveReports(); // needed to return to reports manager home
+						$FormParams = PrepStep('1');
+					} else { // update was pressed, return to criteria form
+						$FormParams = PrepStep('6');
 					}
 					break;
 			}
 		}
 		// reload fields to display form
-		$DropDownString = RetrieveReports(); // needed to return to reports manager home
 		$FieldListings = RetrieveFields('fieldlist'); // needed for GO Back (fields) screen
 		// Below needed to reload criteria form
 		if (!$DateError) {
@@ -502,45 +655,42 @@ if (!isset($_REQUEST['action'])) {	// then form entered from somewhere other tha
 				case "sortlist":
 					$SortListings['defaults'] = $NewDefaults['defaults'];
 					$SortListings['defaults']['buttonvalue'] = $NewDefaults['defaults']['buttonvalue'];
-				break;
+					break;
 				case "grouplist":
 					$GroupListings['defaults'] = $NewDefaults['defaults'];
 					$GroupListings['defaults']['buttonvalue'] = $NewDefaults['defaults']['buttonvalue'];
-				break;
+					break;
 				case "critlist":
 					$CritListings['defaults'] = $NewDefaults['defaults'];
 					$CritListings['defaults']['buttonvalue'] = $NewDefaults['defaults']['buttonvalue'];
-				break;
+					break;
 			}
 		}
 	break; // End Step 7
-
+	
 	case "step8": // Entered from import report form
 		switch ($_POST['todo']) {
 			case RPT_BTN_IMPORT: // Error check input and import the new report
 				$success = ImportReport(trim($_POST['reportname']));
 				$usrMsg[] = array('message'=>$success['message'], 'level'=>$success['result']);
 				if ($success['result']=='error') {
-					$title=RPT_ADMSTP8;
-					$IncludePage = 'forms/ReportsImport.html';
+					$FormParams = PrepStep('imp');
 					break;
 				}
 				// All through and imported successfully, return to reports home page
 			case RPT_BTN_BACK:
 			default:
 				$DropDownString = RetrieveReports();
-				$title=RPT_ADMSTP1;
-				$IncludePage = 'forms/ReportsHome.html';
+				$FormParams = PrepStep('1');
 		}
 	break; // End Step 8
+} // end switch
 
-	default:
-  } // end switch
-} // end else (!isset($_REQUEST['action'])
+$title = $FormParams['title']; // fetch the title for the header.inc file
 
-include ('../../includes/header.inc');
+include ($dirpath.'/includes/header.inc');
 if ($usrMsg) foreach ($usrMsg as $temp) prnmsg($temp['message'],$temp['level']);
-include ($IncludePage);
-include ('../../includes/footer.inc');
+include ($FormParams['IncludePage']);
+include ($dirpath.'/includes/footer.inc');
 // End main body
 ?>

@@ -1,18 +1,18 @@
 <?php
 /************************************************************************************
-Default array field setups
+Default setups
 *************************************************************************************/
+define ('CompanyDataBase','companies'); // Defines the db to be used to fetch the company information
 
-// Sets the default groups for reporting
+// Sets the default groups for forms, index max 4 chars
 $ReportGroups = array (
 	'ord' => RPT_ORDERS,
 	'ar' => RPT_RECEIVABLES,
 	'ap' => RPT_PAYABLES,
-	'purch' => RPT_PURCHASES,
+	'prch' => RPT_PURCHASES,
 	'inv' => RPT_INVENTORY,
 	'man' => RPT_MANUFAC,
 	'gl' => RPT_GL,
-//	'fin' => RPT_FINANCIAL,
 	'misc' => RPT_MISC);  // do not delete misc category
 
 // This array is imploded with the first entry = number of text boxes to build (0, 1 or 2), 
@@ -60,9 +60,22 @@ $FontSizes = array (
 	'40' => RPT_40, 
 	'50' => RPT_50);
 
+// Available font sizes in units: points
+$LineSizes = array (
+	'1' => RPT_1, 
+	'2' => RPT_2, 
+	'3' => RPT_3, 
+	'4' => RPT_4, 
+	'5' => RPT_5, 
+	'6' => RPT_6, 
+	'7' => RPT_7, 
+	'8' => RPT_8, 
+	'9' => RPT_9, 
+	'10' => RPT_10);
+
 // Font colors keyed by color Red:Green:Blue
 $FontColors = array (
-	'0:0:0' => RPT_BLACK,
+	'0:0:0' => RPT_BLACK, // Leave black first as it is typically the default value
 	'0:0:255' => RPT_BLUE,
 	'255:0:0' => RPT_RED,
 	'255:128:0' => RPT_ORANGE,
@@ -94,17 +107,62 @@ $DateChoices = array(
 /*********************************************************************************************
 Form unique defaults
 **********************************************************************************************/ 
+// Sets the groupings for forms indexed to a specific report (top level) grouping, 
+// index is of the form ReportGroup[index]:FormGroup[index], each have a max of 4 chars
+// This array is linked to the ReportGroups array by using the index values of ReportGroup
+// the first value must match an index value of ReportGroup.
+$FormGroups = array (
+	'gl:chk' => RPT_BANKCHK,	// Bank checks grouped with the gl report group
+	'ar:col' => RPT_COLLECTLTR,
+	'ar:cust' => RPT_CUSTSTATE,
+	'gl:deps' => RPT_BANKDEPSLIP,
+	'ar:inv' => RPT_INVPKGSLIP,
+	'ar:lblc' => RPT_CUSTLBL,
+	'prch:lblv' => RPT_VENDLBL,
+	'prch:po' => RPT_PURCHORD,
+	'ord:quot' => RPT_CUSTQUOTE,
+	'ar:rcpt' => RPT_SALESREC,
+	'ord:so' => RPT_SALESORD,
+	'misc:misc' => RPT_MISC);  // do not delete misc category
+
 // DataTypes
-$EntryTypes = array(
-	'text' => 'Fixed - Text field',
-	'image' => 'Fixed - JPG, PNG or GIF Image',
-	'box' => 'Fixed - Draws a box',
-	'line' => 'Fixed - Draws a line',
-	'circle' => 'Fixed - Draws a circle',
-	'dataline' => 'Variable - Single line of information',
-	'datablock' => 'Variable - Block of information',
-	'pagenum' => 'Variable - Page numbering',
-	'forminfo' => 'Variable - Form information',
-	'dupforminfo' => 'Variable - Copy of form derived information',
-	'total' => 'Variable - Form total');
+// A corresponding class function needs to be generated for each new function added.
+// The index code is also used to identify the form to include to set the properties.
+$FormEntries = array(
+	'Data' => FRM_DATALINE,
+	'TBlk' => FRM_DATABLOCK,
+	'Tbl' => FRM_DATATABLE,
+	'Ttl' => FRM_DATATOTAL,
+	'Text' => FRM_FIXEDTXT,
+	'Img' => FRM_IMAGE,
+	'Rect' => FRM_RECTANGLE,
+	'Line' => FRM_LINE,
+	'CDta' => FRM_COYDATA,
+	'CBlk' => FRM_COYBLOCK,
+	'PgNum' => FRM_PAGENUM);
+
+// The function to process these values is: ProcessData
+// which is located in the file: WriteForm.php
+// A case statement needs to be generated to process each new value
+$FormProcessing = array(
+	'' => RPT_NONE,
+	'uc' => FRM_UPPERCASE,
+	'lc' => FRM_LOWERCASE,
+	'neg' => FRM_NEGATE,
+	'rnd2d' => FRM_RNDR2,
+	'dlr' => FRM_CNVTDLR,
+	'euro' => FRM_CNVTEURO);
+
+// The function to process these values is: AddSep
+// which is located in the file: WriteForm.php
+// A case statement needs to be generated to process each new value
+$TextProcessing = array(
+	'' => RPT_NONE,
+	'sp' => FRM_SPACE1,
+	'2sp' => FRM_SPACE2,
+	'comma' => FRM_COMMA,
+	'com-sp' => FRM_COMMASP,
+	'nl' => FRM_NEWLINE,
+	'semi-sp' => FRM_SEMISP);
+
 ?>

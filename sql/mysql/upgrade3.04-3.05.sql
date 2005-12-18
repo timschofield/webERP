@@ -3,7 +3,7 @@ CREATE TABLE `reports` (
   `id` int(5) NOT NULL auto_increment,
   `reportname` varchar(30) NOT NULL default '',
   `reporttype` char(3) NOT NULL default 'rpt',
-  `groupname` varchar(4) NOT NULL default 'misc',
+  `groupname` varchar(9) NOT NULL default 'misc',
   `defaultreport` enum('1','0') NOT NULL default '0',
   `papersize` varchar(15) NOT NULL default 'A4,210,297',
   `paperorientation` enum('P','L') NOT NULL default 'P',
@@ -55,6 +55,10 @@ CREATE TABLE `reports` (
   `table3criteria` varchar(75) default NULL,
   `table4` varchar(25) default NULL,
   `table4criteria` varchar(75) default NULL,
+  `table5` VARCHAR(25) ,
+  `table5criteria` VARCHAR(75) ,
+  `table6` VARCHAR(25),
+  `table6criteria` VARCHAR(75), 
   PRIMARY KEY  (`id`),
   KEY `name` (`reportname`,`groupname`)
 ) ENGINE=MyISAM ;
@@ -72,4 +76,7 @@ CREATE TABLE `reportfields` (
   PRIMARY KEY  (`id`),
   KEY `reportid` (`reportid`)
 ) ENGINE=MyISAM;
+
+
+
 

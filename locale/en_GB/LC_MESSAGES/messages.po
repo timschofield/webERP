@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-03 13:28+1300\n"
+"POT-Creation-Date: 2005-12-18 22:06+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -106,11 +106,11 @@ msgstr ""
 #: AccountGroups.php:236 CompanyPreferences.php:372 CompanyPreferences.php:374
 #: CompanyPreferences.php:384 CompanyPreferences.php:386
 #: CompanyPreferences.php:396 CompanyPreferences.php:398
-#: DeliveryDetails.php:660 DeliveryDetails.php:697 DeliveryDetails.php:700
+#: DeliveryDetails.php:663 DeliveryDetails.php:700 DeliveryDetails.php:703
 #: GLTransInquiry.php:91 Locations.php:332 PaymentMethods.php:186
 #: PaymentMethods.php:187 PaymentMethods.php:246 PaymentMethods.php:252
-#: PDFChequeListing.php:57 PDFDeliveryDifferences.php:55 PO_Header.php:440
-#: PurchData.php:206 PurchData.php:327 PurchData.php:330
+#: PDFChequeListing.php:57 PDFDeliveryDifferences.php:55 PDFDIFOT.php:62
+#: PO_Header.php:440 PurchData.php:206 PurchData.php:327 PurchData.php:330
 #: RecurringSalesOrders.php:469 RecurringSalesOrders.php:472
 #: SalesAnalReptCols.php:278 SalesAnalReptCols.php:383
 #: SalesAnalReptCols.php:386 SalesAnalRepts.php:400 SalesAnalRepts.php:403
@@ -120,8 +120,7 @@ msgstr ""
 #: SystemParameters.php:333 SystemParameters.php:373 SystemParameters.php:446
 #: SystemParameters.php:454 SystemParameters.php:472 SystemParameters.php:479
 #: SystemParameters.php:588 TaxGroups.php:291 TaxGroups.php:360
-#: TaxGroups.php:363 WWW_Users.php:434 WWW_Users.php:436
-#: reportwriter/languages/en_US/reports.php:91
+#: TaxGroups.php:363 WWW_Users.php:494 WWW_Users.php:496
 msgid "Yes"
 msgstr ""
 
@@ -129,11 +128,11 @@ msgstr ""
 #: CompanyPreferences.php:371 CompanyPreferences.php:375
 #: CompanyPreferences.php:383 CompanyPreferences.php:387
 #: CompanyPreferences.php:395 CompanyPreferences.php:399
-#: DeliveryDetails.php:661 DeliveryDetails.php:698 DeliveryDetails.php:701
+#: DeliveryDetails.php:664 DeliveryDetails.php:701 DeliveryDetails.php:704
 #: GLTransInquiry.php:89 Locations.php:334 PaymentMethods.php:186
 #: PaymentMethods.php:187 PaymentMethods.php:247 PaymentMethods.php:253
-#: PDFChequeListing.php:56 PDFDeliveryDifferences.php:54 PO_Header.php:440
-#: PurchData.php:209 PurchData.php:328 PurchData.php:331
+#: PDFChequeListing.php:56 PDFDeliveryDifferences.php:54 PDFDIFOT.php:61
+#: PO_Header.php:440 PurchData.php:209 PurchData.php:328 PurchData.php:331
 #: RecurringSalesOrders.php:468 RecurringSalesOrders.php:471
 #: SalesAnalReptCols.php:276 SalesAnalReptCols.php:384
 #: SalesAnalReptCols.php:387 SalesAnalRepts.php:399 SalesAnalRepts.php:402
@@ -143,16 +142,15 @@ msgstr ""
 #: SystemParameters.php:334 SystemParameters.php:374 SystemParameters.php:447
 #: SystemParameters.php:455 SystemParameters.php:473 SystemParameters.php:480
 #: SystemParameters.php:589 TaxGroups.php:293 TaxGroups.php:361
-#: TaxGroups.php:364 WWW_Users.php:433 WWW_Users.php:437
+#: TaxGroups.php:364 WWW_Users.php:493 WWW_Users.php:497
 #: includes/PDFLowGPPageHeader.inc:31 includes/PDFTaxPageHeader.inc:34
-#: reportwriter/languages/en_US/reports.php:70
 msgid "No"
 msgstr ""
 
 #: AccountGroups.php:150 AccountSections.php:155 Areas.php:138
 #: BankAccounts.php:147 BOMs.php:91 COGSGLPostings.php:107
 #: COGSGLPostings.php:211 CreditStatus.php:126 Currencies.php:172
-#: CustomerBranches.php:329 EDIMessageFormat.php:161 FreightCosts.php:236
+#: CustomerBranches.php:329 EDIMessageFormat.php:161 FreightCosts.php:238
 #: GLAccounts.php:308 Locations.php:341 PaymentMethods.php:188
 #: PaymentTerms.php:172 Prices_Customer.php:200 Prices.php:175
 #: PurchData.php:217 SalesCategories.php:257 SalesGLPostings.php:126
@@ -160,8 +158,7 @@ msgstr ""
 #: Shippers.php:135 StockCategories.php:168 SupplierContacts.php:151
 #: TaxAuthorities.php:165 TaxCategories.php:181 TaxGroups.php:177
 #: TaxProvinces.php:176 UnitsOfMeasure.php:199 WorkCentres.php:137
-#: WWW_Access.php:124 WWW_Users.php:246 includes/InputSerialItems.php:82
-#: reportwriter/languages/en_US/reports.php:128
+#: WWW_Access.php:124 WWW_Users.php:257 includes/InputSerialItems.php:82
 #, php-format
 msgid "Edit"
 msgstr ""
@@ -171,7 +168,7 @@ msgstr ""
 #: COGSGLPostings.php:212 Credit_Invoice.php:370 CreditStatus.php:127
 #: Currencies.php:175 CustomerBranches.php:333 CustomerReceipt.php:542
 #: DiscountCategories.php:115 DiscountMatrix.php:100 EDIMessageFormat.php:162
-#: FreightCosts.php:237 GLAccounts.php:309 GLJournal.php:244 Locations.php:342
+#: FreightCosts.php:239 GLAccounts.php:309 GLJournal.php:244 Locations.php:342
 #: PaymentMethods.php:189 Payments.php:575 PaymentTerms.php:173
 #: PO_Items.php:778 Prices_Customer.php:201 Prices.php:176 PurchData.php:218
 #: SalesAnalReptCols.php:293 SalesAnalRepts.php:303 SalesCategories.php:258
@@ -182,9 +179,8 @@ msgstr ""
 #: SuppInvGRNs.php:122 SupplierContacts.php:152 SuppShiptChgs.php:80
 #: SuppTransGLAnalysis.php:105 TaxAuthorities.php:166 TaxCategories.php:182
 #: TaxGroups.php:178 TaxProvinces.php:177 UnitsOfMeasure.php:200
-#: WorkCentres.php:138 WWW_Access.php:125 WWW_Users.php:247
+#: WorkCentres.php:138 WWW_Access.php:125 WWW_Users.php:258
 #: includes/InputSerialItemsKeyed.php:53
-#: reportwriter/languages/en_US/reports.php:126
 #, php-format
 msgid "Delete"
 msgstr ""
@@ -209,13 +205,13 @@ msgstr ""
 #: BankAccounts.php:231 BOMs.php:483 COGSGLPostings.php:374
 #: CreditStatus.php:187 Currencies.php:263 CustomerBranches.php:643
 #: DiscountCategories.php:143 DiscountMatrix.php:147 EDIMessageFormat.php:252
-#: FreightCosts.php:326 GLAccounts.php:258 Locations.php:468
+#: FreightCosts.php:328 GLAccounts.php:258 Locations.php:468
 #: PaymentMethods.php:258 PaymentTerms.php:253 Prices_Customer.php:237
 #: SalesAnalReptCols.php:465 SalesAnalRepts.php:458 SalesGLPostings.php:405
 #: SalesPeople.php:280 SalesTypes.php:191 Shippers.php:185
 #: StockCategories.php:363 SupplierContacts.php:230 TaxAuthorities.php:289
 #: TaxCategories.php:231 TaxProvinces.php:226 UnitsOfMeasure.php:250
-#: WorkCentres.php:249 WWW_Users.php:455
+#: WorkCentres.php:249 WWW_Users.php:515
 msgid "Enter Information"
 msgstr ""
 
@@ -697,7 +693,7 @@ msgstr ""
 msgid "Bank Account"
 msgstr ""
 
-#: BankMatching.php:79 reportwriter/languages/en_US/reports.php:77
+#: BankMatching.php:79
 msgid "Show"
 msgstr ""
 
@@ -734,6 +730,7 @@ msgstr ""
 #: BankMatching.php:88 BankMatching.php:91 ReverseGRN.php:102
 #: includes/PDFCustomerListPageHeader.inc:46
 #: includes/PDFDeliveryDifferencesPageHeader.inc:24
+#: includes/PDFDIFOTPageHeader.inc:24
 #: includes/PDFOrdersInvoicedPageHeader.inc:24
 #: includes/PDFOrderStatusPageHeader.inc:24
 msgid "only"
@@ -799,7 +796,6 @@ msgstr ""
 #: SupplierInquiry.php:191 includes/PDFQuotationPageHeader.inc:88
 #: includes/PDFStatementPageHeader.inc:120 includes/PDFTaxPageHeader.inc:35
 #: includes/PDFTransPageHeader.inc:48
-#: reportwriter/languages/en_US/reports.php:56
 msgid "Date"
 msgstr ""
 
@@ -898,7 +894,6 @@ msgstr ""
 #: Z_CheckAllocs.php:59 Z_CheckGLTransBalance.php:12
 #: includes/InputSerialItemsFile.php:85 includes/InputSerialItemsFile.php:126
 #: includes/PDFTaxPageHeader.inc:33
-#: reportwriter/languages/en_US/reports.php:89
 msgid "Type"
 msgstr ""
 
@@ -966,7 +961,7 @@ msgstr ""
 #: PO_Items.php:707 PO_OrderDetails.php:130 PrintCustTrans.php:791
 #: PrintCustTrans.php:875 PrintCustTrans.php:920 RecurringSalesOrders.php:309
 #: ReverseGRN.php:328 SalesGraph.php:156 SelectCreditItems.php:667
-#: SelectOrderItems.php:945 StockLocMovements.php:76 StockLocTransfer.php:158
+#: SelectOrderItems.php:945 StockLocMovements.php:76 StockLocTransfer.php:169
 #: StockLocTransferReceive.php:399 StockQuantityByDate.php:88 Stocks.php:442
 #: Stocks.php:485 Stocks.php:489 SuppCreditGRNs.php:70 SuppCreditGRNs.php:142
 #: SuppInvGRNs.php:103 SuppInvGRNs.php:257 SupplierCredit.php:244
@@ -1028,10 +1023,11 @@ msgstr ""
 #: SelectOrderItems.php:1150 ShipmentCosting.php:132 Shipments.php:372
 #: Shipments.php:374 Shipments.php:375 Shipments.php:448 Shipments.php:450
 #: SpecialOrder.php:533 StockCounts.php:32 StockLocMovements.php:81
-#: StockLocTransfer.php:158 StockMovements.php:93 StockUsageGraph.php:11
+#: StockLocTransfer.php:169 StockMovements.php:93 StockUsageGraph.php:11
 #: SuppCreditGRNs.php:215 SuppCreditGRNs.php:216 SupplierCredit.php:246
 #: includes/InputSerialItems.php:92 includes/PDFBOMListingPageHeader.inc:44
 #: includes/PDFDeliveryDifferencesPageHeader.inc:43
+#: includes/PDFDIFOTPageHeader.inc:42
 #: includes/PDFInventoryValnPageHeader.inc:33
 #: includes/PDFOrderPageHeader_generic.inc:93
 #: includes/PDFQuotationPageHeader.inc:98
@@ -1145,7 +1141,7 @@ msgstr ""
 
 #: BOMs.php:161 ConfirmDispatch_Invoice.php:885 Credit_Invoice.php:729
 #: Credit_Invoice.php:758 SelectCreditItems.php:1423 Stocks.php:568
-#: Stocks.php:570 reportwriter/languages/en_US/reports.php:50
+#: Stocks.php:570
 msgid "Assembly"
 msgstr ""
 
@@ -1585,7 +1581,7 @@ msgstr ""
 msgid "Facsimile Number"
 msgstr ""
 
-#: CompanyPreferences.php:206 WWW_Users.php:336
+#: CompanyPreferences.php:206 WWW_Users.php:353
 msgid "Email Address"
 msgstr ""
 
@@ -1649,7 +1645,6 @@ msgstr ""
 #: Credit_Invoice.php:1425 GoodsReceived.php:581 PurchData.php:336
 #: SelectCreditItems.php:906 StockCostUpdate.php:168 StockReorderLevel.php:89
 #: SystemParameters.php:623 TaxAuthorityRates.php:55 WorkOrderIssue.php:131
-#: reportwriter/languages/en_US/reports.php:142
 msgid "Update"
 msgstr ""
 
@@ -1714,17 +1709,19 @@ msgstr ""
 #: FTP_RadioBeacon.php:280 Payments.php:456 PDFChequeListing.php:102
 #: PDFChequeListing.php:112 PDFChequeListing.php:198
 #: PDFDeliveryDifferences.php:157 PDFDeliveryDifferences.php:170
-#: PDFDeliveryDifferences.php:277 PDFOrdersInvoiced.php:189
-#: PDFOrdersInvoiced.php:200 PDFOrderStatus.php:198 PDFOrderStatus.php:210
-#: PO_PDFPurchOrder.php:265 PrintCustStatements.php:23 PrintCustTrans.php:79
-#: PrintCustTrans.php:82 SalesGraph.php:185 SalesGraph.php:214
-#: SalesGraph.php:218 StockLocTransferReceive.php:301
-#: StockLocTransferReceive.php:390 Stocks.php:138 Stocks.php:143
-#: StockTransfers.php:376 includes/PDFAgedDebtorsPageHeader.inc:18
+#: PDFDeliveryDifferences.php:277 PDFDIFOT.php:167 PDFDIFOT.php:180
+#: PDFDIFOT.php:293 PDFOrdersInvoiced.php:189 PDFOrdersInvoiced.php:200
+#: PDFOrderStatus.php:198 PDFOrderStatus.php:210 PO_PDFPurchOrder.php:265
+#: PrintCustStatements.php:23 PrintCustTrans.php:79 PrintCustTrans.php:82
+#: SalesGraph.php:185 SalesGraph.php:214 SalesGraph.php:218
+#: StockLocTransferReceive.php:301 StockLocTransferReceive.php:390
+#: Stocks.php:138 Stocks.php:143 StockTransfers.php:376
+#: includes/PDFAgedDebtorsPageHeader.inc:18
 #: includes/PDFAgedSuppliersPageHeader.inc:17
 #: includes/PDFChequeListingPageHeader.inc:17
 #: includes/PDFDeliveryDifferencesPageHeader.inc:19
 #: includes/PDFDeliveryDifferencesPageHeader.inc:21
+#: includes/PDFDIFOTPageHeader.inc:19 includes/PDFDIFOTPageHeader.inc:21
 #: includes/PDFOrdersInvoicedPageHeader.inc:19
 #: includes/PDFOrdersInvoicedPageHeader.inc:21
 #: includes/PDFOrderStatusPageHeader.inc:19
@@ -1841,7 +1838,6 @@ msgstr ""
 #: SupplierInvoice.php:287 SupplierInvoice.php:322 SuppShiptChgs.php:92
 #: SuppTransGLAnalysis.php:118 includes/PDFQuotationPageHeader.inc:101
 #: includes/PO_PDFOrderPageHeader.inc:147
-#: reportwriter/languages/en_US/reports.php:86
 #, php-format
 msgid "Total"
 msgstr ""
@@ -2065,7 +2061,7 @@ msgstr ""
 #: StockAdjustments.php:147 StockAdjustments.php:182 StockAdjustments.php:196
 #: StockAdjustments.php:212 StockAdjustments.php:225 StockAdjustments.php:249
 #: StockAdjustments.php:268 StockCostUpdate.php:55 StockCostUpdate.php:74
-#: StockLocTransfer.php:65 StockLocTransfer.php:82 StockLocTransfer.php:86
+#: StockLocTransfer.php:76 StockLocTransfer.php:93 StockLocTransfer.php:97
 #: StockLocTransferReceive.php:99 StockLocTransferReceive.php:133
 #: StockLocTransferReceive.php:147 StockLocTransferReceive.php:166
 #: StockLocTransferReceive.php:210 StockLocTransferReceive.php:246
@@ -2260,10 +2256,10 @@ msgstr ""
 #: ShipmentCosting.php:130 Shipments.php:370 Shipments.php:446
 #: SuppCreditGRNs.php:141 SuppCreditGRNs.php:217 SuppInvGRNs.php:256
 #: TaxGroups.php:340 includes/PDFDeliveryDifferencesPageHeader.inc:41
+#: includes/PDFDIFOTPageHeader.inc:40
 #: includes/PDFOrdersInvoicedPageHeader.inc:40
 #: includes/PDFOrderStatusPageHeader.inc:40
 #: includes/PDFOstdgGRNsPageHeader.inc:31
-#: reportwriter/languages/en_US/reports.php:72
 msgid "Order"
 msgstr ""
 
@@ -2744,7 +2740,7 @@ msgid "Credit of Controlled Item"
 msgstr ""
 
 #: CreditItemsControlled.php:87 CustomerAllocations.php:388
-#: FreightCosts.php:263 GoodsReceivedControlled.php:55 GoodsReceived.php:46
+#: FreightCosts.php:265 GoodsReceivedControlled.php:55 GoodsReceived.php:46
 #: StockLocTransferReceive.php:390 SupplierAllocations.php:444
 #: SuppShiptChgs.php:127
 msgid "from"
@@ -2839,7 +2835,7 @@ msgid "The currency code cannot contain any of the following characters"
 msgstr ""
 
 #: Currencies.php:53 CustEDISetup.php:27 Customers.php:35 Stocks.php:74
-#: Suppliers.php:324 WorkCentres.php:34 WWW_Users.php:44
+#: Suppliers.php:324 WorkCentres.php:34 WWW_Users.php:45
 #: Z_ChangeBranchCode.php:30
 msgid "or a space"
 msgstr ""
@@ -2956,7 +2952,7 @@ msgstr ""
 
 #: CustEDISetup.php:85 Customers.php:284 Customers.php:457
 #: OrderDetails.php:100 SalesAnalRepts.php:27 SalesAnalRepts.php:29
-#: WWW_Users.php:215 WWW_Users.php:371 Z_ChangeBranchCode.php:200
+#: WWW_Users.php:222 WWW_Users.php:388 Z_ChangeBranchCode.php:200
 #: includes/PDFStatementPageHeader.inc:65 includes/PDFTransPageHeader.inc:46
 msgid "Customer Code"
 msgstr ""
@@ -3220,7 +3216,7 @@ msgstr ""
 #: includes/PDFBankingSummaryPageHeader.inc:56
 #: includes/PDFDebtorBalsPageHeader.inc:33
 #: includes/PDFDeliveryDifferencesPageHeader.inc:44
-#: includes/PDFLowGPPageHeader.inc:33
+#: includes/PDFDIFOTPageHeader.inc:43 includes/PDFLowGPPageHeader.inc:33
 #: includes/PDFOrderPageHeader_generic.inc:48
 #: includes/PDFOrdersInvoicedPageHeader.inc:41
 #: includes/PDFOrderStatusPageHeader.inc:41
@@ -3373,7 +3369,7 @@ msgstr ""
 #: EmailCustTrans.php:57 Locations.php:447 OrderDetails.php:140
 #: PO_PDFPurchOrder.php:298 PO_PDFPurchOrder.php:301 PrintCustTrans.php:682
 #: PrintCustTrans.php:872 PrintCustTrans.php:917 SupplierContacts.php:142
-#: SupplierContacts.php:226 UserSettings.php:158 WWW_Users.php:214
+#: SupplierContacts.php:226 UserSettings.php:159 WWW_Users.php:221
 #: includes/PDFTransPageHeader.inc:82 includes/PO_PDFOrderPageHeader.inc:45
 msgid "Email"
 msgstr ""
@@ -3392,8 +3388,8 @@ msgstr ""
 msgid "Show all branches defined for"
 msgstr ""
 
-#: CustomerBranches.php:442 CustomerBranches.php:447 WWW_Users.php:216
-#: WWW_Users.php:374 includes/PDFCustomerListPageHeader.inc:84
+#: CustomerBranches.php:442 CustomerBranches.php:447 WWW_Users.php:223
+#: WWW_Users.php:391 includes/PDFCustomerListPageHeader.inc:84
 msgid "Branch Code"
 msgstr ""
 
@@ -3628,14 +3624,14 @@ msgstr ""
 #: SelectRecurringSalesOrder.php:78 SelectSalesOrder.php:405
 #: SelectSalesOrder.php:416 StockMovements.php:93
 #: includes/PDFDeliveryDifferencesPageHeader.inc:45
-#: includes/PDFOrderPageHeader.inc:50
+#: includes/PDFDIFOTPageHeader.inc:44 includes/PDFOrderPageHeader.inc:50
 #: includes/PDFOrdersInvoicedPageHeader.inc:42
 #: includes/PDFOrderStatusPageHeader.inc:42
 #: includes/PDFPriceListPageHeader.inc:42 includes/PDFTransPageHeader.inc:47
 msgid "Branch"
 msgstr ""
 
-#: CustomerInquiry.php:183 CustomerTransInquiry.php:78 DeliveryDetails.php:629
+#: CustomerInquiry.php:183 CustomerTransInquiry.php:78 DeliveryDetails.php:632
 #: PO_Header.php:446 PO_OrderDetails.php:113 RecurringSalesOrders.php:395
 #: SpecialOrder.php:518 SupplierCredit.php:412 SupplierInquiry.php:195
 #: includes/PO_PDFOrderPageHeader.inc:119
@@ -3948,7 +3944,7 @@ msgid "Payee Bank Details"
 msgstr ""
 
 #: CustomerReceipt.php:741 GLJournal.php:230 Payments.php:609
-#: SelectCreditItems.php:907 reportwriter/languages/en_US/reports.php:119
+#: SelectCreditItems.php:907
 msgid "Cancel"
 msgstr ""
 
@@ -4228,6 +4224,7 @@ msgstr ""
 #: includes/PDFChequeListingPageHeader.inc:17
 #: includes/PDFDeliveryDifferencesPageHeader.inc:19
 #: includes/PDFDeliveryDifferencesPageHeader.inc:21
+#: includes/PDFDIFOTPageHeader.inc:19 includes/PDFDIFOTPageHeader.inc:21
 #: includes/PDFOrderPageHeader_generic.inc:81
 #: includes/PDFOrderPageHeader.inc:54
 #: includes/PDFOrdersInvoicedPageHeader.inc:19
@@ -4235,14 +4232,12 @@ msgstr ""
 #: includes/PDFOrderStatusPageHeader.inc:19
 #: includes/PDFOrderStatusPageHeader.inc:21
 #: includes/PDFStockLocTransferHeader.inc:15
-#: reportwriter/languages/en_US/reports.php:63
 msgid "From"
 msgstr ""
 
 #: CustomerTransInquiry.php:41 SalesAnalRepts.php:408 SalesAnalRepts.php:426
 #: SalesAnalRepts.php:445 SalesAnalRepts.php:454
 #: StockLocTransferReceive.php:94 includes/PO_PDFOrderPageHeader.inc:99
-#: reportwriter/languages/en_US/reports.php:84
 msgid "To"
 msgstr ""
 
@@ -4424,7 +4419,7 @@ msgstr ""
 msgid "You should automatically be forwarded to the entry of recurring order details page"
 msgstr ""
 
-#: DeliveryDetails.php:178 DeliveryDetails.php:708
+#: DeliveryDetails.php:178 DeliveryDetails.php:711
 msgid "Modify Order Lines"
 msgstr ""
 
@@ -4568,96 +4563,96 @@ msgstr ""
 msgid "Deliver from the warehouse at"
 msgstr ""
 
-#: DeliveryDetails.php:583 StockLocTransferReceive.php:487
+#: DeliveryDetails.php:586 StockLocTransferReceive.php:487
 msgid "Dispatch Date"
 msgstr ""
 
-#: DeliveryDetails.php:588 Locations.php:431 OrderDetails.php:112
+#: DeliveryDetails.php:591 Locations.php:431 OrderDetails.php:112
 #: PO_OrderDetails.php:83
 msgid "Delivery Address 1"
 msgstr ""
 
-#: DeliveryDetails.php:593 Locations.php:433 OrderDetails.php:118
+#: DeliveryDetails.php:596 Locations.php:433 OrderDetails.php:118
 #: PO_OrderDetails.php:86
 msgid "Delivery Address 2"
 msgstr ""
 
-#: DeliveryDetails.php:598 OrderDetails.php:124 PO_OrderDetails.php:89
+#: DeliveryDetails.php:601 OrderDetails.php:124 PO_OrderDetails.php:89
 msgid "Delivery Address 3"
 msgstr ""
 
-#: DeliveryDetails.php:603 Locations.php:435 Locations.php:437
+#: DeliveryDetails.php:606 Locations.php:435 Locations.php:437
 #: OrderDetails.php:130 PO_OrderDetails.php:92
 msgid "Delivery Address 4"
 msgstr ""
 
-#: DeliveryDetails.php:608 Locations.php:439 OrderDetails.php:136
+#: DeliveryDetails.php:611 Locations.php:439 OrderDetails.php:136
 #: PO_OrderDetails.php:95
 msgid "Delivery Address 5"
 msgstr ""
 
-#: DeliveryDetails.php:613 Locations.php:441 OrderDetails.php:142
+#: DeliveryDetails.php:616 Locations.php:441 OrderDetails.php:142
 #: PO_OrderDetails.php:98
 msgid "Delivery Address 6"
 msgstr ""
 
-#: DeliveryDetails.php:618 RecurringSalesOrders.php:385
+#: DeliveryDetails.php:621 RecurringSalesOrders.php:385
 msgid "Contact Phone Number"
 msgstr ""
 
-#: DeliveryDetails.php:622 RecurringSalesOrders.php:388
+#: DeliveryDetails.php:625 RecurringSalesOrders.php:388
 msgid "Contact Email"
 msgstr ""
 
-#: DeliveryDetails.php:624 OrderDetails.php:105 RecurringSalesOrders.php:391
+#: DeliveryDetails.php:627 OrderDetails.php:105 RecurringSalesOrders.php:391
 msgid "Customer Reference"
 msgstr ""
 
-#: DeliveryDetails.php:636
+#: DeliveryDetails.php:639
 msgid "Packlist Type"
 msgstr ""
 
-#: DeliveryDetails.php:646
+#: DeliveryDetails.php:649
 msgid "Hide Company Details/Logo"
 msgstr ""
 
-#: DeliveryDetails.php:649
+#: DeliveryDetails.php:652
 msgid "Show Company Details/Logo"
 msgstr ""
 
-#: DeliveryDetails.php:658
+#: DeliveryDetails.php:661
 msgid "Reprint packing slip"
 msgstr ""
 
-#: DeliveryDetails.php:662
+#: DeliveryDetails.php:665
 msgid "Last printed"
 msgstr ""
 
-#: DeliveryDetails.php:670
+#: DeliveryDetails.php:673
 msgid "Freight Charge"
 msgstr ""
 
-#: DeliveryDetails.php:674
+#: DeliveryDetails.php:677
 msgid "Recalc Freight Cost"
 msgstr ""
 
-#: DeliveryDetails.php:681
+#: DeliveryDetails.php:684
 msgid "Freight Company"
 msgstr ""
 
-#: DeliveryDetails.php:695
+#: DeliveryDetails.php:698
 msgid "Quotation Only"
 msgstr ""
 
-#: DeliveryDetails.php:711 PO_Items.php:817
+#: DeliveryDetails.php:714 PO_Items.php:817
 msgid "Place Order"
 msgstr ""
 
-#: DeliveryDetails.php:712 RecurringSalesOrders.php:484
+#: DeliveryDetails.php:715 RecurringSalesOrders.php:484
 msgid "Create Reccurring Order"
 msgstr ""
 
-#: DeliveryDetails.php:714
+#: DeliveryDetails.php:717
 msgid "Commit Order Changes"
 msgstr ""
 
@@ -4800,7 +4795,7 @@ msgid "for"
 msgstr ""
 
 #: EDIMessageFormat.php:141 SuppInvGRNs.php:102 SuppInvGRNs.php:210
-#: SuppInvGRNs.php:255 reportwriter/languages/en_US/reports.php:79
+#: SuppInvGRNs.php:255
 msgid "Sequence"
 msgstr ""
 
@@ -5343,79 +5338,79 @@ msgstr ""
 msgid "These entries are matched against the town names entered for customer delivery addresses"
 msgstr ""
 
-#: FreightCosts.php:87
+#: FreightCosts.php:107
 msgid "The entries for Cubic Rate, KG Rate, Maxmimum Weight, Maximum Volume, Fixed Price and Minimum charge must be numeric"
 msgstr ""
 
-#: FreightCosts.php:125
+#: FreightCosts.php:127
 msgid "Freight cost record updated"
 msgstr ""
 
-#: FreightCosts.php:153
+#: FreightCosts.php:155
 msgid "Freight cost record inserted"
 msgstr ""
 
-#: FreightCosts.php:159
+#: FreightCosts.php:161
 msgid "The freight cost record could not be updated because"
 msgstr ""
 
-#: FreightCosts.php:176
+#: FreightCosts.php:178
 msgid "Freight cost record deleted"
 msgstr ""
 
-#: FreightCosts.php:201 FreightCosts.php:310
+#: FreightCosts.php:203 FreightCosts.php:312
 msgid "Destination"
 msgstr ""
 
-#: FreightCosts.php:202
+#: FreightCosts.php:204
 msgid "Cubic Rate"
 msgstr ""
 
-#: FreightCosts.php:203
+#: FreightCosts.php:205
 msgid "KG Rate"
 msgstr ""
 
-#: FreightCosts.php:204
+#: FreightCosts.php:206
 msgid "MAX KGs"
 msgstr ""
 
-#: FreightCosts.php:205
+#: FreightCosts.php:207
 msgid "MAX Volume"
 msgstr ""
 
-#: FreightCosts.php:206
+#: FreightCosts.php:208
 msgid "Fixed Price"
 msgstr ""
 
-#: FreightCosts.php:207
+#: FreightCosts.php:209
 msgid "Minimum Charge"
 msgstr ""
 
-#: FreightCosts.php:263
+#: FreightCosts.php:265
 msgid "Show all freight costs for"
 msgstr ""
 
-#: FreightCosts.php:312
+#: FreightCosts.php:314
 msgid "Rate per Cubic Metre"
 msgstr ""
 
-#: FreightCosts.php:314
+#: FreightCosts.php:316
 msgid "Rate Per KG"
 msgstr ""
 
-#: FreightCosts.php:316
+#: FreightCosts.php:318
 msgid "Maximum Weight Per Package (KGs)"
 msgstr ""
 
-#: FreightCosts.php:318
+#: FreightCosts.php:320
 msgid "Maximum Volume Per Package (cubic metres)"
 msgstr ""
 
-#: FreightCosts.php:320
+#: FreightCosts.php:322
 msgid "Fixed Price (zero if rate per KG or Cubic)"
 msgstr ""
 
-#: FreightCosts.php:322
+#: FreightCosts.php:324
 msgid "Minimum Charge (0 is N/A)"
 msgstr ""
 
@@ -5430,7 +5425,7 @@ msgstr ""
 #: FTP_RadioBeacon.php:49 PO_SelectOSPurchOrder.php:382
 #: SelectRecurringSalesOrder.php:76 SelectSalesOrder.php:401
 #: SelectSalesOrder.php:413 Shipt_Select.php:329 SuppInvGRNs.php:121
-#: UserSettings.php:169 Z_poEditLangHeader.php:94 Z_poEditLangModule.php:161
+#: UserSettings.php:170 Z_poEditLangHeader.php:94 Z_poEditLangModule.php:161
 #, php-format
 msgid "Modify"
 msgstr ""
@@ -5852,7 +5847,6 @@ msgid "GL Codes Inquiry"
 msgstr ""
 
 #: GLCodesInquiry.php:26 GLCodesInquiry.php:64 SelectGLAccount.php:111
-#: reportwriter/languages/en_US/reports.php:66
 msgid "Group"
 msgstr ""
 
@@ -6403,15 +6397,14 @@ msgstr ""
 
 #: index.php:14 PO_SelectOSPurchOrder.php:199 PO_SelectPurchOrder.php:194
 #: Shipt_Select.php:193 WWW_Users.php:9
-#: reportwriter/languages/en_US/reports.php:195
 msgid "Orders"
 msgstr ""
 
-#: index.php:14 WWW_Users.php:9 reportwriter/languages/en_US/reports.php:198
+#: index.php:14 WWW_Users.php:9
 msgid "Receivables"
 msgstr ""
 
-#: index.php:14 WWW_Users.php:9 reportwriter/languages/en_US/reports.php:196
+#: index.php:14 WWW_Users.php:9
 msgid "Payables"
 msgstr ""
 
@@ -6419,15 +6412,15 @@ msgstr ""
 msgid "Purchasing"
 msgstr ""
 
-#: index.php:14 WWW_Users.php:9 reportwriter/languages/en_US/reports.php:199
+#: index.php:14 WWW_Users.php:9
 msgid "Inventory"
 msgstr ""
 
-#: index.php:14 WWW_Users.php:9 reportwriter/languages/en_US/reports.php:200
+#: index.php:14 WWW_Users.php:9
 msgid "Manufacturing"
 msgstr ""
 
-#: index.php:14 WWW_Users.php:9 reportwriter/languages/en_US/reports.php:201
+#: index.php:14 WWW_Users.php:9
 msgid "General Ledger"
 msgstr ""
 
@@ -6435,7 +6428,7 @@ msgstr ""
 msgid "Setup"
 msgstr ""
 
-#: index.php:32 WWW_Users.php:443
+#: index.php:32 WWW_Users.php:503
 msgid "Account Status"
 msgstr ""
 
@@ -6890,19 +6883,19 @@ msgstr ""
 msgid "Maintenance"
 msgstr ""
 
-#: index.php:1089 reportwriter/languages/en_US/reports.php:161
+#: index.php:1092
 msgid "Custom Reports"
 msgstr ""
 
-#: index.php:1089
-msgid "Standard Reports"
+#: index.php:1092
+msgid "Standard Reports and Forms"
 msgstr ""
 
-#: index.php:1100
+#: index.php:1107
 msgid "reportname"
 msgstr ""
 
-#: index.php:1104 reportwriter/languages/en_US/reports.php:25
+#: index.php:1127
 msgid "There are no reports to show!"
 msgstr ""
 
@@ -6963,7 +6956,7 @@ msgid "For Inventory in Location"
 msgstr ""
 
 #: InventoryPlanning.php:377 InventoryValuation.php:222
-#: PDFDeliveryDifferences.php:45 PDFOrdersInvoiced.php:54
+#: PDFDeliveryDifferences.php:45 PDFDIFOT.php:52 PDFOrdersInvoiced.php:54
 #: PDFOrderStatus.php:50 StockUsage.php:75 StockUsage.php:77
 msgid "All Locations"
 msgstr ""
@@ -7150,7 +7143,7 @@ msgid "Contact for deliveries"
 msgstr ""
 
 #: Locations.php:443 SalesPeople.php:272 SupplierContacts.php:220
-#: WWW_Users.php:334
+#: WWW_Users.php:351
 msgid "Telephone No"
 msgstr ""
 
@@ -7243,7 +7236,7 @@ msgid "Deliver From Location"
 msgstr ""
 
 #: OrderDetails.php:134 PrintCustTrans.php:680 PrintCustTrans.php:870
-#: PrintCustTrans.php:915 SalesPeople.php:172 WWW_Users.php:213
+#: PrintCustTrans.php:915 SalesPeople.php:172 WWW_Users.php:220
 msgid "Telephone"
 msgstr ""
 
@@ -7603,7 +7596,7 @@ msgid "Enter the batch number of receipts to be printed"
 msgstr ""
 
 #: PDFBankingSummary.php:19 PDFChequeListing.php:58
-#: PDFDeliveryDifferences.php:56 PDFOrdersInvoiced.php:62
+#: PDFDeliveryDifferences.php:56 PDFDIFOT.php:63 PDFOrdersInvoiced.php:62
 #: PDFOrderStatus.php:61
 msgid "Create PDF"
 msgstr ""
@@ -7667,12 +7660,12 @@ msgstr ""
 msgid "BANKED"
 msgstr ""
 
-#: PDFChequeListing.php:11 PDFDeliveryDifferences.php:12
+#: PDFChequeListing.php:11 PDFDeliveryDifferences.php:12 PDFDIFOT.php:12
 #: PDFOrdersInvoiced.php:13 PDFOrderStatus.php:13
 msgid "The date from must be specified in the format"
 msgstr ""
 
-#: PDFChequeListing.php:16 PDFDeliveryDifferences.php:16
+#: PDFChequeListing.php:16 PDFDeliveryDifferences.php:16 PDFDIFOT.php:16
 #: PDFOrdersInvoiced.php:18 PDFOrderStatus.php:18
 msgid "The date to must be specified in the format"
 msgstr ""
@@ -7690,7 +7683,7 @@ msgstr ""
 msgid "Enter the date to which cheques are to be listed"
 msgstr ""
 
-#: PDFChequeListing.php:55 PDFDeliveryDifferences.php:53
+#: PDFChequeListing.php:55 PDFDeliveryDifferences.php:53 PDFDIFOT.php:60
 msgid "Email the report off"
 msgstr ""
 
@@ -7829,25 +7822,25 @@ msgstr ""
 msgid "Delivery Differences Report"
 msgstr ""
 
-#: PDFDeliveryDifferences.php:26
+#: PDFDeliveryDifferences.php:26 PDFDIFOT.php:26
 msgid "Enter the date from which variances between orders and deliveries are to be listed"
 msgstr ""
 
-#: PDFDeliveryDifferences.php:27
+#: PDFDeliveryDifferences.php:27 PDFDIFOT.php:27
 msgid "Enter the date to which variances between orders and deliveries are to be listed"
 msgstr ""
 
-#: PDFDeliveryDifferences.php:28 PDFOrdersInvoiced.php:39
+#: PDFDeliveryDifferences.php:28 PDFDIFOT.php:35 PDFOrdersInvoiced.php:39
 #: PDFOrderStatus.php:35
 msgid "Inventory Category"
 msgstr ""
 
-#: PDFDeliveryDifferences.php:35 PDFOrdersInvoiced.php:46
+#: PDFDeliveryDifferences.php:35 PDFDIFOT.php:42 PDFOrdersInvoiced.php:46
 #: PDFOrderStatus.php:42
 msgid "Over All Categories"
 msgstr ""
 
-#: PDFDeliveryDifferences.php:44 PDFOrdersInvoiced.php:53
+#: PDFDeliveryDifferences.php:44 PDFDIFOT.php:51 PDFOrdersInvoiced.php:53
 #: PDFOrderStatus.php:49
 msgid "Inventory Location"
 msgstr ""
@@ -7864,16 +7857,16 @@ msgstr ""
 msgid "The SQL used to get the variances between deliveries and orders that failed was"
 msgstr ""
 
-#: PDFDeliveryDifferences.php:157
+#: PDFDeliveryDifferences.php:157 PDFDIFOT.php:167
 msgid "There were no variances between deliveries and orders found in the database within the period from"
 msgstr ""
 
-#: PDFDeliveryDifferences.php:157 PDFOrdersInvoiced.php:189
+#: PDFDeliveryDifferences.php:157 PDFDIFOT.php:167 PDFOrdersInvoiced.php:189
 #: PDFOrderStatus.php:198
 msgid "Please try again selecting a different date range"
 msgstr ""
 
-#: PDFDeliveryDifferences.php:159 PDFOrdersInvoiced.php:191
+#: PDFDeliveryDifferences.php:159 PDFDIFOT.php:169 PDFOrdersInvoiced.php:191
 #: PDFOrderStatus.php:200
 msgid "The SQL that returned no rows was"
 msgstr ""
@@ -7886,24 +7879,62 @@ msgstr ""
 msgid "Variances Between Deliveries and Orders from"
 msgstr ""
 
-#: PDFDeliveryDifferences.php:202
+#: PDFDeliveryDifferences.php:202 PDFDIFOT.php:218
 msgid "Total number of differences"
 msgstr ""
 
-#: PDFDeliveryDifferences.php:242
+#: PDFDeliveryDifferences.php:242 PDFDIFOT.php:258
 msgid "Could not retrieve the count of sales order lines in the period under review"
 msgstr ""
 
-#: PDFDeliveryDifferences.php:248
+#: PDFDeliveryDifferences.php:248 PDFDIFOT.php:264
 msgid "Total number of order lines"
 msgstr ""
 
-#: PDFDeliveryDifferences.php:251
+#: PDFDeliveryDifferences.php:251 PDFDIFOT.php:267
 msgid "DIFOT"
 msgstr ""
 
 #: PDFDeliveryDifferences.php:277
 msgid "Please find herewith delivery differences report from"
+msgstr ""
+
+#: PDFDIFOT.php:22
+msgid "Delivery In Full On Time (DIFOT) Report"
+msgstr ""
+
+#: PDFDIFOT.php:33
+msgid ""
+"Enter the number of days considered acceptable between delivery requested date and invoice\n"
+"     date(ie the date dispatched)"
+msgstr ""
+
+#: PDFDIFOT.php:156 PDFDIFOT.php:165
+msgid "DIFOT Report Error"
+msgstr ""
+
+#: PDFDIFOT.php:158
+msgid "An error occurred getting the days between delivery requested and actual invoice"
+msgstr ""
+
+#: PDFDIFOT.php:160
+msgid "The SQL used to get the days between requested delivery and actual invoice dates was"
+msgstr ""
+
+#: PDFDIFOT.php:179
+msgid "Dispatches After"
+msgstr ""
+
+#: PDFDIFOT.php:179
+msgid "Day(s) from Requested Delivery Date"
+msgstr ""
+
+#: PDFDIFOT.php:180
+msgid "Delivery Dates from"
+msgstr ""
+
+#: PDFDIFOT.php:293
+msgid "Please find herewith DIFOT report from"
 msgstr ""
 
 #: PDFLowGP.php:8 PDFLowGP.php:29 PDFLowGP.php:30
@@ -8034,7 +8065,6 @@ msgstr ""
 #: includes/PDFStockNegativesHeader.inc:11
 #: includes/PDFSupplierBalsPageHeader.inc:20 includes/PDFTaxPageHeader.inc:20
 #: includes/PDFTrialBalancePageHeader.inc:17
-#: reportwriter/languages/en_US/reports.php:74
 msgid "Printed"
 msgstr ""
 
@@ -8076,7 +8106,6 @@ msgstr ""
 #: SelectCreditItems.php:930 SelectOrderItems.php:1037
 #: SelectOrderItems.php:1040 SelectProduct.php:59 SelectProduct.php:61
 #: StockLocStatus.php:61 StockLocStatus.php:63
-#: reportwriter/languages/en_US/reports.php:48
 msgid "All"
 msgstr ""
 
@@ -9489,14 +9518,13 @@ msgstr ""
 msgid "Plain paper"
 msgstr ""
 
-#: PrintCustOrder_generic.php:87 PrintCustOrder.php:84 WWW_Users.php:382
-#: reportwriter/languages/en_US/reports.php:210
+#: PrintCustOrder_generic.php:87 PrintCustOrder.php:84 WWW_Users.php:399
 msgid "A4"
 msgstr ""
 
-#: PrintCustOrder_generic.php:87 PrintCustOrder.php:84 WWW_Users.php:394
-#: WWW_Users.php:396 WWW_Users.php:406 WWW_Users.php:408 WWW_Users.php:417
-#: WWW_Users.php:419
+#: PrintCustOrder_generic.php:87 PrintCustOrder.php:84 WWW_Users.php:411
+#: WWW_Users.php:413 WWW_Users.php:423 WWW_Users.php:425 WWW_Users.php:434
+#: WWW_Users.php:436
 msgid "landscape"
 msgstr ""
 
@@ -9797,6 +9825,7 @@ msgstr ""
 #: includes/PDFCustomerListPageHeader.inc:70
 #: includes/PDFDebtorBalsPageHeader.inc:20
 #: includes/PDFDeliveryDifferencesPageHeader.inc:29
+#: includes/PDFDIFOTPageHeader.inc:29
 #: includes/PDFInventoryPlanPageHeader.inc:28
 #: includes/PDFInventoryValnPageHeader.inc:16
 #: includes/PDFLowGPPageHeader.inc:16
@@ -10566,7 +10595,7 @@ msgid "The SQL used to update the report column was"
 msgstr ""
 
 #: SalesAnalReptCols.php:128 SalesAnalReptCols.php:185
-#: SalesAnalReptCols.php:214 reportwriter/languages/en_US/reports.php:54
+#: SalesAnalReptCols.php:214
 msgid "Column"
 msgstr ""
 
@@ -11380,7 +11409,7 @@ msgstr ""
 msgid "Comm Rate 1"
 msgstr ""
 
-#: SalesPeople.php:175 reportwriter/languages/en_US/reports.php:52
+#: SalesPeople.php:175
 msgid "Break"
 msgstr ""
 
@@ -12159,7 +12188,7 @@ msgid "The Order Number entered MUST be numeric"
 msgstr ""
 
 #: SelectSalesOrder.php:118 StockLocMovements.php:13 StockLocStatus.php:27
-#: StockLocTransfer.php:121 StockMovements.php:25 StockTransfers.php:399
+#: StockLocTransfer.php:132 StockMovements.php:25 StockTransfers.php:399
 #: StockUsage.php:55
 msgid "From Stock Location"
 msgstr ""
@@ -13310,7 +13339,7 @@ msgstr ""
 msgid "The quantity entered for line"
 msgstr ""
 
-#: StockCounts.php:58 StockLocTransfer.php:40 StockLocTransferReceive.php:35
+#: StockCounts.php:58 StockLocTransfer.php:42 StockLocTransferReceive.php:35
 msgid "is not numeric"
 msgstr ""
 
@@ -13422,84 +13451,88 @@ msgstr ""
 msgid "Please start over now"
 msgstr ""
 
-#: StockLocTransfer.php:35
+#: StockLocTransfer.php:36 StockLocTransfer.php:55
 msgid "The part code entered of"
 msgstr ""
 
-#: StockLocTransfer.php:35
+#: StockLocTransfer.php:36
 msgid "is not set up in the database"
 msgstr ""
 
-#: StockLocTransfer.php:35
+#: StockLocTransfer.php:36
 msgid "Only valid parts can be entered for transfers"
 msgstr ""
 
-#: StockLocTransfer.php:40
+#: StockLocTransfer.php:42
 msgid "The quantity entered of"
 msgstr ""
 
-#: StockLocTransfer.php:40
+#: StockLocTransfer.php:42
 msgid "for part code"
 msgstr ""
 
-#: StockLocTransfer.php:40
+#: StockLocTransfer.php:42
 msgid "The quantity entered for transfers is expected to be numeric"
 msgstr ""
 
-#: StockLocTransfer.php:45 StockLocTransferReceive.php:35
+#: StockLocTransfer.php:47 StockLocTransferReceive.php:35
 #: StockLocTransferReceive.php:39
 msgid "The quantity entered for"
 msgstr ""
 
-#: StockLocTransfer.php:45
+#: StockLocTransfer.php:47
 msgid "is less than or equal to 0"
 msgstr ""
 
-#: StockLocTransfer.php:45
+#: StockLocTransfer.php:47
 msgid "Please correct this or remove the item"
 msgstr ""
 
-#: StockLocTransfer.php:53
+#: StockLocTransfer.php:55
+msgid "does not have stock available for transfer."
+msgstr ""
+
+#: StockLocTransfer.php:64
 msgid "You must enter at least 1 Stock Item to transfer"
 msgstr ""
 
-#: StockLocTransfer.php:59
+#: StockLocTransfer.php:70
 msgid "The transfer must have a different location to receive into and location sent from"
 msgstr ""
 
-#: StockLocTransfer.php:65
+#: StockLocTransfer.php:76
 msgid "Unable to BEGIN Location Transfer transaction"
 msgstr ""
 
-#: StockLocTransfer.php:82
+#: StockLocTransfer.php:93
 msgid "Unable to enter Location Transfer record for"
 msgstr ""
 
-#: StockLocTransfer.php:86
+#: StockLocTransfer.php:97
 msgid "Unable to COMMIT Location Transfer transaction"
 msgstr ""
 
-#: StockLocTransfer.php:89
+#: StockLocTransfer.php:100
 msgid "The inventory transfer records have been created successfully"
 msgstr ""
 
-#: StockLocTransfer.php:91
+#: StockLocTransfer.php:102
 msgid "Print the Transfer Docket"
 msgstr ""
 
-#: StockLocTransfer.php:117
+#: StockLocTransfer.php:128
 msgid "Inventory Location Transfer Shipment Reference"
 msgstr ""
 
-#: StockLocTransfer.php:139 StockTransfers.php:420
+#: StockLocTransfer.php:150 StockTransfers.php:420
 msgid "To Stock Location"
 msgstr ""
 
-#: StockLocTransfer.php:190
+#: StockLocTransfer.php:201
 msgid "Add More Items"
 msgstr ""
 
-#: StockLocTransfer.php:190
+#: StockLocTransfer.php:201
 msgid "Create Transfer Shipment"
 msgstr ""
 
@@ -16765,63 +16798,63 @@ msgstr ""
 msgid "User Settings"
 msgstr ""
 
-#: UserSettings.php:21
+#: UserSettings.php:22
 msgid "The Maximum Number of Records on Display entered must not be negative"
 msgstr ""
 
-#: UserSettings.php:21
+#: UserSettings.php:22
 msgid "0 will default to system setting"
 msgstr ""
 
-#: UserSettings.php:34 UserSettings.php:42
+#: UserSettings.php:35 UserSettings.php:43
 msgid "The password and password confirmation fields entered do not match"
 msgstr ""
 
-#: UserSettings.php:58 UserSettings.php:73 WWW_Users.php:155
+#: UserSettings.php:59 UserSettings.php:74 WWW_Users.php:158
 msgid "The user alterations could not be processed because"
 msgstr ""
 
-#: UserSettings.php:59 UserSettings.php:74 WWW_Users.php:156
+#: UserSettings.php:60 UserSettings.php:75 WWW_Users.php:159
 msgid "The SQL that was used to update the user and failed was"
 msgstr ""
 
-#: UserSettings.php:63 UserSettings.php:78
+#: UserSettings.php:64 UserSettings.php:79
 msgid "The user settings have been updated"
 msgstr ""
 
-#: UserSettings.php:63
+#: UserSettings.php:64
 msgid "Be sure to remember your password for the next time you login"
 msgstr ""
 
-#: UserSettings.php:99
+#: UserSettings.php:100
 msgid "User ID"
 msgstr ""
 
-#: UserSettings.php:102 WWW_Users.php:332
+#: UserSettings.php:103 WWW_Users.php:349
 msgid "User Name"
 msgstr ""
 
-#: UserSettings.php:106
+#: UserSettings.php:107
 msgid "Maximum Number of Records to Display"
 msgstr ""
 
-#: UserSettings.php:112
+#: UserSettings.php:113 WWW_Users.php:228 WWW_Users.php:464
 msgid "Language"
 msgstr ""
 
-#: UserSettings.php:134
+#: UserSettings.php:135 WWW_Users.php:227 WWW_Users.php:442
 msgid "Theme"
 msgstr ""
 
-#: UserSettings.php:153
+#: UserSettings.php:154
 msgid "New Password"
 msgstr ""
 
-#: UserSettings.php:155
+#: UserSettings.php:156
 msgid "Confirm Password"
 msgstr ""
 
-#: UserSettings.php:157
+#: UserSettings.php:158
 msgid "If you leave the password boxes empty your password will not change"
 msgstr ""
 
@@ -17217,126 +17250,123 @@ msgstr ""
 msgid "User Maintenance"
 msgstr ""
 
-#: WWW_Users.php:41
+#: WWW_Users.php:42
 msgid "The user ID entered must be at least 4 characters long"
 msgstr ""
 
-#: WWW_Users.php:44
+#: WWW_Users.php:45
 msgid "User names cannot contain any of the following characters"
 msgstr ""
 
-#: WWW_Users.php:48
+#: WWW_Users.php:49
 msgid "The password entered must be at least 5 characters long"
 msgstr ""
 
-#: WWW_Users.php:52
+#: WWW_Users.php:53
 msgid "The password cannot contain the user id"
 msgstr ""
 
-#: WWW_Users.php:55
+#: WWW_Users.php:56
 msgid "If you enter a Customer Code you must also enter a Branch Code valid for this Customer"
 msgstr ""
 
-#: WWW_Users.php:72
+#: WWW_Users.php:73
 msgid "The check on validity of the customer code and branch failed  because"
 msgstr ""
 
-#: WWW_Users.php:73
+#: WWW_Users.php:74
 msgid "The SQL that was used to check the customer code and branch was"
 msgstr ""
 
-#: WWW_Users.php:77
+#: WWW_Users.php:78
 msgid "The entered Branch Code is not valid for the entered Customer Code"
 msgstr ""
 
-#: WWW_Users.php:119
+#: WWW_Users.php:122
 msgid "The selected user record has been updated"
 msgstr ""
 
-#: WWW_Users.php:150
+#: WWW_Users.php:153
 msgid "A new user record has been inserted"
 msgstr ""
 
-#: WWW_Users.php:185
+#: WWW_Users.php:190
 msgid "The User could not be deleted because"
 msgstr ""
 
-#: WWW_Users.php:190
+#: WWW_Users.php:195
 msgid "User Deleted"
 msgstr ""
 
-#: WWW_Users.php:211
+#: WWW_Users.php:218
 msgid "User Login"
 msgstr ""
 
-#: WWW_Users.php:212
+#: WWW_Users.php:219
 msgid "Full Name"
 msgstr ""
 
-#: WWW_Users.php:217
+#: WWW_Users.php:224
 msgid "Last Visit"
 msgstr ""
 
-#: WWW_Users.php:218
+#: WWW_Users.php:225
 msgid "Security Group"
 msgstr ""
 
-#: WWW_Users.php:219
+#: WWW_Users.php:226
 msgid "Report Size"
 msgstr ""
 
-#: WWW_Users.php:269
+#: WWW_Users.php:282
 msgid "Review Existing Users"
 msgstr ""
 
-#: WWW_Users.php:311 WWW_Users.php:316
+#: WWW_Users.php:328 WWW_Users.php:333
 msgid "User code"
 msgstr ""
 
-#: WWW_Users.php:330 includes/Login.php:68
+#: WWW_Users.php:347 includes/Login.php:68
 msgid "Password"
 msgstr ""
 
-#: WWW_Users.php:338
+#: WWW_Users.php:355
 msgid "Access Level"
 msgstr ""
 
-#: WWW_Users.php:350
+#: WWW_Users.php:367
 msgid "Default Location"
 msgstr ""
 
-#: WWW_Users.php:378
+#: WWW_Users.php:395
 msgid "Reports Page Size"
 msgstr ""
 
-#: WWW_Users.php:388 WWW_Users.php:394 WWW_Users.php:396
-#: reportwriter/languages/en_US/reports.php:209
+#: WWW_Users.php:405 WWW_Users.php:411 WWW_Users.php:413
 msgid "A3"
 msgstr ""
 
-#: WWW_Users.php:400 WWW_Users.php:402 WWW_Users.php:406 WWW_Users.php:408
-#: reportwriter/languages/en_US/reports.php:213
+#: WWW_Users.php:417 WWW_Users.php:419 WWW_Users.php:423 WWW_Users.php:425
 msgid "Letter"
 msgstr ""
 
-#: WWW_Users.php:412 WWW_Users.php:414 WWW_Users.php:417 WWW_Users.php:419
-#: reportwriter/languages/en_US/reports.php:212
+#: WWW_Users.php:429 WWW_Users.php:431 WWW_Users.php:434 WWW_Users.php:436
 msgid "Legal"
 msgstr ""
 
-#: WWW_Users.php:431
+#: WWW_Users.php:491
 msgid "Display"
 msgstr ""
 
-#: WWW_Users.php:431
+#: WWW_Users.php:491
 msgid "options"
 msgstr ""
 
-#: WWW_Users.php:445 WWW_Users.php:449
+#: WWW_Users.php:505 WWW_Users.php:509
 msgid "Open"
 msgstr ""
 
-#: WWW_Users.php:446 WWW_Users.php:448
+#: WWW_Users.php:506 WWW_Users.php:508
 msgid "Blocked"
 msgstr ""
 
@@ -17950,7 +17980,6 @@ msgstr ""
 #: Z_DataExport.php:538 Z_DataExport.php:559 Z_DataExport.php:570
 #: Z_DataExport.php:578 Z_DataExport.php:586 Z_DataExport.php:594
 #: Z_DataExport.php:602 Z_DataExport.php:610
-#: reportwriter/languages/en_US/reports.php:130
 msgid "Export"
 msgstr ""
 
@@ -19088,7 +19117,6 @@ msgid "We received"
 msgstr ""
 
 #: includes/InputSerialItemsFile.php:84 includes/InputSerialItemsFile.php:125
-#: reportwriter/languages/en_US/reports.php:80
 msgid "Size"
 msgstr ""
 
@@ -19401,23 +19429,23 @@ msgstr ""
 msgid "Nothing To Report"
 msgstr ""
 
-#: includes/DateFunctions.inc:539
+#: includes/DateFunctions.inc:554
 msgid "Dates must be entered in the format"
 msgstr ""
 
-#: includes/DateFunctions.inc:558
+#: includes/DateFunctions.inc:573
 msgid "An error occurred in retrieving the period number"
 msgstr ""
 
-#: includes/DateFunctions.inc:594
+#: includes/DateFunctions.inc:609
 msgid "An error occurred in adding a new period number"
 msgstr ""
 
-#: includes/DateFunctions.inc:613
+#: includes/DateFunctions.inc:628
 msgid "An error occurred in getting the first period number in the database"
 msgstr ""
 
-#: includes/DateFunctions.inc:632
+#: includes/DateFunctions.inc:647
 msgid "An error occurred in inserting periods before the first period to accomodate back dated transactions"
 msgstr ""
 
@@ -19429,11 +19457,11 @@ msgstr ""
 msgid "is set to"
 msgstr ""
 
-#: includes/footer.inc:24 includes/footer.inc:28
+#: includes/footer.inc:30 includes/footer.inc:34
 msgid "Copyright"
 msgstr ""
 
-#: includes/footer.inc:25
+#: includes/footer.inc:31
 msgid "Version"
 msgstr ""
 
@@ -19457,7 +19485,7 @@ msgstr ""
 msgid "the error message returned by the SQL server was"
 msgstr ""
 
-#: includes/GetPrice.inc:72
+#: includes/GetPrice.inc:73
 msgid "There are no prices set up for"
 msgstr ""
 
@@ -19649,19 +19677,31 @@ msgid "Variances Between Orders and Deliveries Listing"
 msgstr ""
 
 #: includes/PDFDeliveryDifferencesPageHeader.inc:19
+#: includes/PDFDIFOTPageHeader.inc:19
 msgid "For Inventory Category"
 msgstr ""
 
 #: includes/PDFDeliveryDifferencesPageHeader.inc:24
+#: includes/PDFDIFOTPageHeader.inc:24
 msgid "Deliveries ex"
 msgstr ""
 
 #: includes/PDFDeliveryDifferencesPageHeader.inc:42
+#: includes/PDFDIFOTPageHeader.inc:41
 msgid "Item and Description"
 msgstr ""
 
 #: includes/PDFDeliveryDifferencesPageHeader.inc:46
+#: includes/PDFDIFOTPageHeader.inc:45
 msgid "Inv Date"
+msgstr ""
+
+#: includes/PDFDIFOTPageHeader.inc:15
+msgid "Days Between Requested Delivery Date and Invoice Date"
+msgstr ""
+
+#: includes/PDFDIFOTPageHeader.inc:46
+msgid "Days"
 msgstr ""
 
 #: includes/PDFInventoryPlanPageHeader.inc:19
@@ -20073,736 +20113,4 @@ msgstr ""
 
 #: includes/SQL_CommonFunctions.inc:162
 msgid "The value of outstanding orders for the customer could not be retrieved because"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:12
-msgid "The name you entered is a default report. Please enter a new My Report name."
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:13
-msgid "This report name already exists! Press Replace to overwrite or enter a new name and press continue."
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:14
-msgid "There is an error in your database selection. Check your database names and link equations."
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:15
-msgid "There is an error in your database field or description. Pleae check and try again."
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:16
-msgid "There was not any data in this report based on the criteria provided!"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:17
-msgid "You do not have any rows to show!"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:18
-msgid "If you replace this report with one of the same name, the original report will be erased!"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:19
-msgid " was saved and copied to report: "
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:20
-msgid "The report name has been updated!"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:21
-msgid "No report name was selected to perform this operation."
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:22
-msgid "The name you entered is already in use. Please enter a new report name!"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:23
-msgid "Press OK to delete this report."
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:24
-msgid "Press OK to overwrite this report."
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:26
-msgid "Enter a name for this report."
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:27
-msgid "(Leave blank to use default report name from import file)"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:28
-msgid "(maximum 30 characters)"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:29
-msgid "Enter the group this form is a part of:"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:30
-msgid "Please select a report file to import"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:31
-msgid "Select a default report to import."
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:32
-msgid "Or browse for a report to upload."
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:35
-msgid "The filesize exceeds the upload_max_filesize directive in you php.ini settings."
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:36
-msgid "The filesize exceeds the MAX_FLE_SIZE directive in the webERP form."
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:37
-msgid "The file was not completely uploaded. Please retry."
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:38
-msgid "No file was selected to upload."
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:39
-msgid "Unknown php upload error, php returned error # "
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:40
-msgid "This file is not reported by the server as a text file."
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:41
-msgid "The uploaded file does not conatin any data!"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:42
-msgid "webERP could not find a valid report to import in the uploaded file!"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:43
-msgid " was successfully imported!"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:44
-msgid "There was an unexpected error uploading the file!"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:47
-msgid "Active"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:49
-msgid "Align"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:51
-msgid "Bottom"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:53
-msgid "Center"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:55
-msgid "Color"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:57
-msgid "Default"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:58
-msgid "Equal"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:59
-msgid "False"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:60
-msgid "Fields"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:61
-msgid "Filter"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:62
-msgid "Field Name"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:64
-msgid "Font"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:65
-msgid "Fourth"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:67
-msgid "Inactive"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:68
-msgid "Left"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:69
-msgid "Move"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:71
-msgid "None"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:73
-msgid "Primary"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:75
-msgid "Range"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:76
-msgid "Right"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:78
-msgid "Second"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:81
-msgid "Sort"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:82
-msgid "Stock"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:83
-msgid "Third"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:85
-msgid "Top"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:87
-msgid "True"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:88
-msgid "Truncate Long Descriptions"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:90
-msgid "Unprinted"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:94
-msgid "Report: "
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:95
-msgid "Report Builder - "
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:96
-msgid "Report Builder Menu"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:97
-msgid "Report Builder - Step 2"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:98
-msgid "Report Builder - Step 3"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:99
-msgid "Report Builder - Step 4"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:100
-msgid "Report Builder - Step 5"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:101
-msgid "Report Builder - Step 6"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:102
-msgid "Report Builder - Import Report"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:103
-msgid "Reports Menu"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:104
-msgid "Report Criteria"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:105
-msgid "Save Report"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:106
-msgid "Report Page Setup"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:109
-msgid "Form Builder Menu"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:110
-msgid "Form Builder - Step 2"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:111
-msgid "Form Builder - Step 3"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:112
-msgid "Form Builder - Step 4"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:113
-msgid "Form Builder - Step 5"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:114
-msgid "Form Builder - Step 6"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:117
-msgid "Add New"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:118
-msgid "Go Back"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:120
-msgid "Change"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:121
-msgid "Continue"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:122
-msgid "Copy"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:123
-msgid "Copy To My Reports"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:124
-msgid "Criteria Setup"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:125
-msgid "Database Setup"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:127
-msgid "Delete Report"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:129
-msgid "Export CSV"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:131
-msgid "Export PDF"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:132
-msgid "Finish"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:133
-msgid "Field Setup"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:134
-msgid "Import"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:135
-msgid "Report Builder Manual"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:136
-msgid "Create New Report"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:137
-msgid "Page Setup"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:138
-msgid "Replace"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:139
-msgid "Rename"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:140
-msgid "Restore Defaults"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:141
-msgid "Save"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:143
-msgid "Report Filters: "
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:144
-msgid "Grouped by:"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:145
-msgid "Sorted by:"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:146
-msgid "Date Range:"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:147
-msgid "Filters:"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:150
-msgid "Administrator Page"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:151
-msgid "Column 1"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:152
-msgid "Column 2"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:153
-msgid "Column 3"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:154
-msgid "Column 4"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:155
-msgid "Column 5"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:156
-msgid "Column 6"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:157
-msgid "Column 7"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:158
-msgid "Column 8"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:159
-msgid "Type of Criteria"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:160
-msgid "Column widths - mm (0 for same as prior column)"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:162
-msgid "Default Date Selected"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:163
-msgid "Date Fieldname (table.fieldname)"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:164
-msgid "Report Date Information"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:165
-msgid "Uncheck all boxes for date independent reports; leave Date Fieldname empty"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:166
-msgid "Date Field List<br>(check all that apply)"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:167
-msgid "Default Reports"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:168
-msgid "Enter a New Field"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:169
-msgid "Field List"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:170
-msgid "Grouping List"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:171
-msgid "Link Equation (SQL Syntax)<br>example: tablename1.fieldname1=tablename2.fieldname2"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:172
-msgid "My Reports"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:173
-msgid "Name to Display"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:174
-msgid "Company Name"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:175
-msgid "Report Filter Description"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:176
-msgid "Header Information / Formatting"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:177
-msgid "Page Layout"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:178
-msgid "Page Margins"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:179
-msgid "Rename Report"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:180
-msgid "Report Title 1"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:181
-msgid "Report Title 2"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:182
-msgid "Report Data"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:183
-msgid "Report Identification"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:184
-msgid "Report Import"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:185
-msgid "Sorting Information"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:186
-msgid "Table Name"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:187
-msgid "Fieldname (table.fieldname)"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:188
-msgid "Report Totals"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:191
-msgid "Create New Form"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:192
-msgid "Delete Form"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:197
-msgid "Purchases"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:202
-msgid "Financial Reports"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:203
-msgid "Miscellaneous Reports"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:206
-msgid "Paper Size:"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:207
-msgid "Orientation:"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:208
-msgid "mm"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:211
-msgid "A5"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:214
-msgid "Portrait"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:215
-msgid "Landscape"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:218
-msgid "Courier"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:219
-msgid "Helvetica"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:220
-msgid "Times"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:223
-msgid "8"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:224
-msgid "10"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:225
-msgid "12"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:226
-msgid "14"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:227
-msgid "16"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:228
-msgid "18"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:229
-msgid "20"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:230
-msgid "24"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:231
-msgid "28"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:232
-msgid "32"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:233
-msgid "36"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:234
-msgid "40"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:235
-msgid "50"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:238
-msgid "Black"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:239
-msgid "Blue"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:240
-msgid "Red"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:241
-msgid "Orange"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:242
-msgid "Yellow"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:243
-msgid "Green"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:246
-msgid "Today"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:247
-msgid "This Week"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:248
-msgid "This Week To Date"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:249
-msgid "This Month"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:250
-msgid "This Month To Date"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:251
-msgid "This Quarter"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:252
-msgid "This Quarter To Date"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:253
-msgid "This Year"
-msgstr ""
-
-#: reportwriter/languages/en_US/reports.php:254
-msgid "This Year To Date"
 msgstr ""

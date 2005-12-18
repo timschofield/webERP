@@ -2,7 +2,7 @@ CREATE TABLE `reports` (
   id integer serial NOT NULL ,
   reportname varchar(30) DEFAULT ''::text NOT NULL,
   reporttype char(3) DEFAULT 'rpt'::text NOT NULL,
-  groupname varchar(4) DEFAULT 'misc'::text NOT NULL,
+  groupname varchar(9) DEFAULT 'misc'::text NOT NULL,
   defaultreport bool DEFAULT 0 NOT NULL ,
   
   
@@ -56,6 +56,10 @@ CREATE TABLE `reports` (
   `table3criteria` varchar(75) default NULL,
   `table4` varchar(25) default NULL,
   `table4criteria` varchar(75) default NULL,
+  `table5` VARCHAR(25) ,
+  `table5criteria` VARCHAR(75) ,
+  `table6` VARCHAR(25),
+  `table6criteria` VARCHAR(75), 
   PRIMARY KEY  (`id`),
   KEY `name` (`reportname`,`groupname`)
 ) ENGINE=MyISAM ;

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 /*
 date validation and parsing functions
@@ -80,7 +80,22 @@ function MonthAndYearFromSQLDate($DateEntry) {
 
 }
 
+function DayOfWeekFromSQLDate($DateEntry) {
 
+
+	if (strpos($DateEntry,'/')) {
+		$Date_Array = explode('/',$DateEntry);
+	} elseif (strpos ($DateEntry,'-')) {
+		$Date_Array = explode('-',$DateEntry);
+	}
+
+	if (strlen($Date_Array[2])>4) {
+		$Date_Array[2]= substr($Date_Array[2],0,2);
+	}
+
+	Return date( 'w', mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[2],(int)$Date_Array[0]));
+
+}
 
 
 function ConvertSQLDate($DateEntry) {

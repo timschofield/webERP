@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.46 $ */
+/* $Revision: 1.47 $ */
 
 
 $PageSecurity = 1;
@@ -444,7 +444,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo GetRptLinks('purch'); ?>
+								<?php echo GetRptLinks('prch'); ?>
 							</td>
 							</tr>
 					</table>
@@ -1086,23 +1086,45 @@ Revision History:
 Revision 1.0 - 2005-11-03 - By D. Premo - Initial Release
 */
 	global $db, $rootpath;
-	$Title= array(_('Custom Reports'), _('Standard Reports'));
+	require_once('reportwriter/languages/en_US/reports.php');
+	require_once('reportwriter/admin/defaults.php');
+	
+	$Title= array(_('Custom Reports'), _('Standard Reports and Forms'));
+
+	$sql= "SELECT id, reporttype, defaultreport, groupname, reportname 
+		FROM reports ORDER BY groupname, reportname";
+	$Result=DB_query($sql,$db,'','',false,true);
+	$ReportList = '';
+	while ($Temp = DB_fetch_array($Result)) $ReportList[] = $Temp;
+
 	$RptLinks = '';
 	for ($Def=1; $Def>=0; $Def--) {
 		$RptLinks .= '<tr><td class="menu_group_headers"><div align="center">'.$Title[$Def].'</div></td></tr>';
-		$sql= "SELECT id, reportname FROM reports 
-			WHERE defaultreport='".$Def."' AND groupname='".$GroupID."' 
-			ORDER BY reportname";
-		$Result=DB_query($sql,$db,'','',false,true);
-		if (DB_num_rows($Result)>0) {
-			while ($Temp = DB_fetch_array($Result)) {
+		$NoEntries = true;
+		foreach ($ReportList as $Report) {
+			if ($Report['groupname']==$GroupID AND $Report['defaultreport']==$Def) {
 				$RptLinks .= '<tr><td class="menu_group_item">';
-				$RptLinks .= '<a href="'.$rootpath.'/reportwriter/ReportMaker.php?action=go&reportid='.$Temp['id'].'"><li>'._($Temp['reportname']).'</li></a>';
+				$RptLinks .= '<a href="'.$rootpath.'/reportwriter/ReportMaker.php?action=go&reportid='.$Report['id'].'"><li>'._($Report['reportname']).'</li></a>';
 				$RptLinks .= '</td></tr>';
+				$NoEntries = false;
 			}
-		} else {
-			$RptLinks .= '<tr><td class="menu_group_item">'._('There are no reports to show!').'</td></tr>';
 		}
+		// now fetch the form groups that are a part of this group (List after reports)
+		$NoForms = true;
+		foreach ($ReportList as $Report) {
+			$Group=explode(':',$Report['groupname']); // break into main group and form group array
+			if ($NoForms AND $Group[0]==$GroupID AND $Report['reporttype']=='frm' AND $Report['defaultreport']==$Def) { 
+				$RptLinks .= '<tr><td class="menu_group_item">';
+				$RptLinks .= '<img src="'.$rootpath.'/css/'.$_SESSION['Theme'].'/images/folders.gif" width="16" height="13">&nbsp;';
+				$RptLinks .= '<a href="'.$rootpath.'/reportwriter/FormMaker.php?id='.$Report['groupname'].'">';
+//				$RptLinks .= '<a href="'.$rootpath.'/reportwriter/FormMaker.php?id='.$Report['groupname'].'&cr0=a&cr1=Range:3:3">';
+				$RptLinks .= $FormGroups[$Report['groupname']].'</a>';
+				$RptLinks .= '</td></tr>';
+				$NoForms = false;
+				$NoEntries = false; 
+			}
+		}
+		if ($NoEntries) $RptLinks .= '<tr><td class="menu_group_item">'._('There are no reports to show!').'</td></tr>';
 	}
 	return $RptLinks;
 }

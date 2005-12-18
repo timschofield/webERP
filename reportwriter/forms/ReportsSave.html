@@ -3,9 +3,9 @@
 </head>
 
 <body>
-<h2 align="center"><?php echo RPT_REPORT.$Prefs['reportname'].' - '.RPT_PAGESAVE; ?></h2>
+<h2 align="center"><?php echo RPT_RPTFRM.$Prefs['reportname'].' - '.RPT_PAGESAVE; ?></h2>
 <form name="reporthome" method="post" action="ReportMaker.php?action=go">
-  <input name="ReportID" type="hidden" value="<?PHP echo $ReportID; ?>">
+  <input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">
   <input name="GoBackURL" type="hidden" value="<?php echo $GoBackURL; ?>">
   <table width="400" align="center" border="1" cellspacing="1" cellpadding="1">
 	<tr>

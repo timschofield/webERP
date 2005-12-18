@@ -1,5 +1,7 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
+<P>12/12/05 Dave - new form creator options for use with his report builder - most files in the reportwriter subdirectory changed - new sql to allow 5 tables in the query
+<P>12/12/05 New delivery performance report PDFDIFOT.php (Delivery In Full On Time - DIFOT) compares order requested delivery date against the date the invoice is prepared - assumed to be the same as the date of dispatch - the number of days that it is acceptable to dispatch product is entered at run time.
 <P>9/12/05 Obscure bug in GetPrice.inc - if special prices set up for a salestype/customer combo but not default price set up for the salestype then the special price is picked up for customers belonging to the sales type even though it is specific to a different customer! - now fixed
 <P>9/12/05 Danie - StockLocTransfers.php -now checks for positive stock in the location before allowing a transfer.
 <P>6/12/05 Updated the webERP php-gettext to the latest version 1.05

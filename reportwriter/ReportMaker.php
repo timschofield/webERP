@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $DirectoryLevelsDeep =1;
 $PathPrefix = '../';
 $PageSecurity = 1; // set security level for webERP
@@ -20,9 +20,9 @@ require('languages/'.$ReportLanguage.'/reports.php'); // include translation bef
 require('admin/defaults.php'); // load default values
 
 $usrMsg = ''; // setup array for return messages
-if (isset($_REQUEST['reportid'])) { // then entered with report id requested, fix variable to show filter form
+if (isset($_GET['reportid'])) { // then entered with report id requested, fix variable to show filter form
 	$_POST['todo'] = RPT_BTN_CONT; // fake the code to think the continue button was pressed
-	$_POST['ReportID'] = $_REQUEST['reportid']; // convert Report ID to a POST variable
+	$_POST['ReportID'] = $_GET['reportid']; // convert Report ID to a POST variable
 	$GoBackURL = $rootpath.'/index.php'; // set the return path to the index.php page
 } elseif (isset($_POST['GoBackURL'])) {
 	$GoBackURL = $_POST['GoBackURL']; // set the return path to the index.php page because entered from a link
@@ -30,7 +30,7 @@ if (isset($_REQUEST['reportid'])) { // then entered with report id requested, fi
 	$GoBackURL=''; // unset the return path to default
 }
 //check to see how script was entered
-if (!isset($_REQUEST['action']) OR (!isset($_POST['ReportID']))) {
+if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 	// then form entered from somewhere other than itself or contained a bad ID, show start form
 	if (isset($_POST['todo']) AND (!isset($_POST['ReportID']))) { // Error - button without report selected
 		$usrMsg[] = array('message'=>RPT_NORPT, 'level'=>'error');

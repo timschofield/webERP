@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -578,6 +578,9 @@ echo '</SELECT></TD></TR>';
 if (!$_SESSION['Items']->DeliveryDate) {
 	$_SESSION['Items']->DeliveryDate = Date($_SESSION['DefaultDateFormat'],$EarliestDispatch);
 }
+
+if($_SESSION['DefaultDateFormat']=="d/m/Y")$jdf=0;
+else $jdf=1;
 
 echo '<TR>
 	<TD>'. _('Dispatch Date') .":</TD>
