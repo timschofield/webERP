@@ -1,0 +1,69 @@
+<html>
+<body>
+<h2 align="center"><?php echo 'Form Field: '.$DisplayName.' - '.RPT_BTN_PROP; ?></h2>
+<form method="post" action="ReportCreator.php?action=step6a" enctype="multipart/form-data" name="DBRptLine">
+	<input name="DisplayName" type="hidden" value="<?php echo $DisplayName; ?>">
+	<input name="index" type="hidden" value="<?php echo $Params['index']; ?>">
+	<input name="ID" type="hidden" value="<?php echo $FormParams['id']; ?>">
+	<input name="SeqNum" type="hidden" value="<?php echo $SeqNum; ?>">
+	<input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">
+	<input name="ReportName" type="hidden" value="<?php echo $reportname; ?>">
+  <table align="center" width="550"  border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><input name="todo" type="submit" id="todo" value="<?php echo RPT_BTN_CANCEL; ?>"></td>
+      <td><div align="center"><input name="todo" type="submit" id="todo" value="<?php echo RPT_BTN_UPDATE; ?>"></div></td>
+      <td><div align="right"><input name="todo" type="submit" id="todo" value="<?php echo RPT_BTN_FINISH; ?>"></div></td>
+    </tr>
+  </table>
+  <table align="center" border="2" cellspacing="1" cellpadding="1">
+    <tr>
+      <td><?php echo RPT_IMAGECUR; ?></td>
+      <td><div align="center">
+	  	<?php if ($Params['filename']) 
+          echo '<img src="'.MyDocPath.$Params['filename'].'" height="32" border="0">';
+          else echo 'No Image Selected!'; ?>
+      </div></td>
+    </tr>
+    <tr bgcolor="#CCCCCC">
+      <td colspan="2"><p align="center"><?php echo RPT_IMAGESEL; ?></p></td>
+    </tr>
+	<tr>
+	  <td><p>
+		<label><input type="radio" name="ImgChoice" value="Upload"></label></p></td>
+	  <td><input type="file" name="imagefile"></td>
+    </tr>
+	<tr>
+	  <td><p>
+	    <label><input type="radio" name="ImgChoice" value="Select" checked><?php echo RPT_IMAGESTORED; ?></label></p></td>
+	  <td><select name="ImgFileName" size="6"><?php echo ReadImages($Params['filename']); ?></select></td>
+    </tr>
+    <tr bgcolor="#CCCCCC">
+      <td colspan="2"><div align="center"><?php echo RPT_STARTPOS; ?></div></td>
+    </tr>
+    <tr>
+      <td width="50%"><div align="center"><?php echo RPT_ABSCISSA; ?>
+	  	<?php if (!$Params['LineXStrt']) $Params['LineXStrt']='10'; ?>
+		<input name="LineXStrt" type="text" value="<?php echo $Params['LineXStrt']; ?>" size="4" maxlength="3">
+      </div></td>
+      <td width="50%"><div align="center"><?php echo RPT_ODINATE; ?> 
+	  	<?php if (!$Params['LineYStrt']) $Params['LineYStrt']='10'; ?>
+        <input name="LineYStrt" type="text" value="<?php echo $Params['LineYStrt']; ?>" size="4" maxlength="3">
+      </div></td>
+    </tr>
+    <tr bgcolor="#CCCCCC">
+      <td colspan="2"><div align="center"><?php echo RPT_IMAGEDIM; ?></div></td>
+    </tr>
+    <tr>
+      <td><div align="center"><?php echo RPT_WIDTH; ?>
+	  	<?php if (!$Params['BoxWidth']) $Params['BoxWidth']=''; ?>
+          <input name="BoxWidth" type="text" value="<?php echo $Params['BoxWidth']; ?>" size="4" maxlength="3">
+      </div></td>
+      <td><div align="center"><?php echo RPT_HEIGHT; ?>
+	  	<?php if (!$Params['BoxHeight']) $Params['BoxHeight']=''; ?>
+          <input name="BoxHeight" type="text" value="<?php echo $Params['BoxHeight']; ?>" size="4" maxlength="3">
+      </div></td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>

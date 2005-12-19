@@ -1,0 +1,50 @@
+<html>
+<body>
+<h2 align="center"><?php echo $FormParams['heading']; ?></h2>
+<form name="reportidform" method="post" action="ReportCreator.php?action=step3">
+  <input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">
+  <input name="Type" type="hidden" value="<?php echo $Type; ?>">
+  <input name="ReplaceReportID" type="hidden" value="<?php echo $ReplaceReportID; ?>">
+  <table align="center"  border="1" cellspacing="1" cellpadding="1">
+   <tr>
+     <td><?php if ($Type=='frm') echo FRM_RPTENTER; else echo RPT_RPTENTER; ?></td>
+     <td colspan="2">
+	   <input name="ReportName" type="text" value="<?php if (isset($_POST['ReportName'])) echo $_POST['ReportName']; ?>">
+	 <?php echo RPT_MAX30; ?></td>
+   </tr>
+   <?php if ($ReportID=='') { ?>
+	   <tr bgcolor="#CCCCCC">
+		 <td colspan="3"><?php echo RPT_TYPECREATE; ?></td>
+	   </tr>
+	   <tr>
+		 <td colspan="2"><input type="radio" name="NewType" value="rpt"><?php echo RPT_REPORT; ?> ====&gt; <?php echo RPT_RPTGRP; ?></td>
+		 <td><select name="GroupName">
+		   <?php foreach($ReportGroups as $key=>$value) echo '<option value="'.$key.'">'.$value.'</option>'; ?>
+		 </select></td>
+	   </tr>
+	   <tr bgcolor="#CCCCCC">
+		 <td colspan="3">&nbsp;</td>
+	   </tr>
+	   <tr>
+		 <td colspan="2"><input type="radio" name="NewType" value="frm"><?php echo RPT_FORM; ?> ====&gt; <?php echo FRM_RPTGRP; ?></td>
+		 <td><select name="FormGroup">
+		   <?php foreach($FormGroups as $key=>$value) echo '<option value="'.$key.'">'.$value.'</option>'; ?>
+		 </select></td>
+	   </tr>
+	   <tr bgcolor="#CCCCCC">
+		 <td colspan="3">&nbsp;</td>
+	   </tr>
+   <?php } // end if ($_POST['todo']==RPT_BTN_ADDNEW) ?>
+   <tr>
+     <td><div align="left"><input name="todo" type="submit" value="<?php echo RPT_BTN_BACK; ?>"></div></td>
+     <td><div align="left">
+	   <?php if (isset($_POST['ReportName']) AND $_POST['todo']<>RPT_BTN_RENAME) { ?>
+         <input name="todo" type="submit" value="<?php echo RPT_BTN_REPLACE; ?>" onClick="return confirm('<?php echo RPT_REPOVER; ?>')">
+	   <?php } ?></div></td>
+	 <?php if ($_POST['todo']==RPT_BTN_RENAME) $Button=RPT_BTN_RENAME; else $Button=RPT_BTN_CONT; ?>
+     <td><div align="right"><input name="todo" type="submit" value="<?php echo $Button; ?>"></div></td>
+   </tr>
+  </table>
+</form>
+</body>
+</html>
