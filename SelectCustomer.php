@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 2;
 
@@ -122,10 +122,14 @@ If ($_POST['Select']!="" OR
 			
 	echo '<TR><TD WIDTH=50%>';
 	
-	
+	/* Customer Inquiry Options */
 	echo '<a href="' . $rootpath . '/CustomerInquiry.php?CustomerID=' . $_SESSION['CustomerID'] . '">' . _('Customer Transaction Inquiries') . '</a><BR>';
 	echo '<a href="' . $rootpath . '/SelectSalesOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Modify Outstanding Sales Orders') . '</a><BR>';
 	echo '<a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Order Inquiries') . '</a><BR>';
+	
+	if ($_SESSION['WackoWiki']==1){
+		echo '<A TARGET="_BLANK" HREF="../' . $_SESSION['WikiPath'] . '/index.php?wakka=Customer' .  $_SESSION['CustomerID'] . '">' . _('Wiki Customer Knowlege Base') . '</A><BR>';
+	}
 	
 	echo '</TD><TD WIDTH=50%>';
 	

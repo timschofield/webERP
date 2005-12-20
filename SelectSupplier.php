@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 2;
 
@@ -133,6 +133,11 @@ if (isset($_SESSION['SupplierID'])){
 	echo "<BR><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Receive / Outstanding Purchase Orders') . '</A>';
 	echo "<BR><A HREF='$rootpath/PO_SelectPurchOrder.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('View All Purchase Orders') . '</A>';
 
+	if ($_SESSION['WackoWiki']==1){
+		echo '<BR><A TARGET="_BLANK" HREF="../' . $_SESSION['WikiPath'] . '/index.php?wakka=Supplier' .  $_SESSION['SupplierID'] . '">' . _('Wiki Supplier Knowlege Base') . '</A><BR>';
+	}
+	
+	
 	echo '<BR>';
 
 	echo "<BR><A HREF='$rootpath/Shipt_Select.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Search Shipments') . '</A>';
