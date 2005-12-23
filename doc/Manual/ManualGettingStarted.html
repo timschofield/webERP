@@ -27,6 +27,8 @@ The main issues with installation of PHP appear to be:
 <br><br>
 The system could be used with many other database servers but it is tested and developed on MySQL a Postgres ConnectDB.inc is provided and there is a setting in config.php - $dbtype that allows the system adminstrator to use a postgres database if preferred. Independent benchmarks show that MySQL is at least one of the fastest for most common database tasks. It is especially fast at initiating a connection and due to the stateless nature of the web, a new connection is required to be established on every page - this makes MySQL particularly suitable for web based applications.
 <br><br>
+If the integration with a company knowlege base is required then an installation of wacko wiki on the same web-server is required. This is entirely optional but is highly recommended as a way to share free form information accross the business. http://wackowiki.com/WackoDownload/InEnglish?v=xlv
+<br><br>
 The ftp library for PHP is only required for sending order files to a Radio Beacon ftp server for remote warehouse services.
 <br><br>
 Assuming that a web-server with PHP  functionality is operational and a MySQL server is available either on the same machine or on the network , a new installation consists of the following five steps:

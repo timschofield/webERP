@@ -209,6 +209,48 @@ If appropriate GL codes are not specified the system will automatically create a
 <TD>Perform Database Maintenance At Logon:</TD>
 <TD>Uses the function DB_Maintenance defined in ConnectDB_XXXX.inc to perform database maintenance tasks, to run at regular intervals - checked at each and every user login. This is most useful for those databases that require regular re-indexing such as postgres. Mysql/innodb is less demanding of database administration. It is recommended to use cron or scheduled jobs for database maintenance outside of normal work hours where possible as this can delay a users login on larger databases.</TD>
 </TR>
+<TR>
+<TD>Enable Wacko Wiki Integration</TD>
+<TD>Wiki is the generic name for web-application that allow for the creation of an interlinked free form notes system. Integration of such a system with webERP is a powerful combination. Notes against a customer, supplier or item can be made and retrieved from within webERP. The wiki application selected for integration was the "wacko wiki" - its a minimal download and has several translations. To make the integration work this settings must be set to "Enabled"</TD>
+</TR>
+<TR>
+<TD>Wiki Path</TD>
+<TD>The wacko wiki install must be on the same web-server and be one directory up from the webERP tree ie not under the webERP tree but along side it - the name of the web-server directory where it is installed is required to be entered here so that links to the wiki pages can be created by webERP. The integration at the moment is limited to the supplier, product and customer menus - after one has been selected. The links only show if "Enable Wacko Wiki Integration" is enabled. If the wiki page does not currently exist then wacko wiki asks if you wish to create a new page - otherwise the page displays. New pages linked 
+off these pages can be created - showing uploaded images or links to other files appropriate to the product/customer/supplier. The wiki would also make 
+a good place to keep the company processes and policies documentation. Wacko wiki allows pages to be secured from alteration if necessary. An entire 
+business knowlege base and intranet can be built up from the cumulative knowlege of the whole team. Since wacko wiki also allows creation of links to any other web pages particularly webERP pointers to specific information can be provided in the wiki that takes the reviewer of the wiki directly to the information in 
+webERP  or the webERP manual. 
+<P>the Product "wiki" could include information such as:
+<ul>
+<li>Product development notes</li>
+<li>Product instructions</li>
+<li>Product warranty</li>
+<li>technical information</li>
+</ul>
+<P>The Customer wiki:
+<ul>
+<li>Account contact log</li>
+<li>Credit issues</li>
+<li>Relationship notes</li>
+<li>Key contact notes</li>
+<li>Contract documents/special terms</li>
+</ul>
+<P>The supplier wiki:
+<ul>
+<li>Key personnel</li>
+<li>RElationship notes</li>
+<li>Payment issues</li>
+<li>Contract documents</li>
+</ul>
+<P>Wikis are a valuable business advantage for a dispersed company. However, they make no sense for a 5 man operation all in the same 
+office - that's why wacko wiki is not bundled with webERP - it is simply not appropriate accross all the businesses that might be using webERP. 
+<P>
+<A HREF="http://wackowiki.com/WackoDownload/InEnglish?v=xlv">Get Wacko Wiki</A>
+<P>
+
+</TD>
+</TR>
+
 </TABLE>
 <br><br>
 

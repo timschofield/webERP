@@ -1,35 +1,34 @@
 <html>
 <body>
-<h2 align="center"><?php echo RPT_RPRBLDR.RPT_REPORT.$myrow['reportname'].' - '.RPT_BTN_PGSETUP; ?></h2>
+<h2 align="center"><?php echo $FormParams['heading'].$myrow['reportname'].' - '.RPT_BTN_PGSETUP; ?></h2>
 <form name="RptPageSetup" method="post" action="ReportCreator.php?action=step4">
 	<input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">
-  <table width="100%"  border="0" cellspacing="0" cellpadding="0">
+	<input name="Type" type="hidden" value="<?php echo $Type; ?>">
+  <table align="center" width="550" border="0" cellspacing="0" cellpadding="0">
     <tr>
 		<td width="33%"><input name="todo" type="submit" value="<?php echo RPT_BTN_BACK; ?>"></td>
 		<td width="34%"><div align="center"><input name="todo" type="submit" value="<?php echo RPT_BTN_UPDATE; ?>"></div></td>
 		<td width="33%"><div align="right"><input name="todo" type="submit" value="<?php echo RPT_BTN_CONT; ?>"></div></td>
     </tr>
   </table>
-  <table width="100%"  border="2" cellspacing="1" cellpadding="1">
+  <table align="center" width="550" border="2" cellspacing="1" cellpadding="1">
     <tr bgcolor="#CCCCCC">
-      <td colspan="2"><div align="center"><?php echo RPT_PGLAYOUT; ?></div></td>
+      <td colspan="4"><div align="center"><?php echo RPT_PGLAYOUT; ?></div></td>
     </tr>
     <tr>
-      <td width="50%"><?php echo RPT_PAPER; ?>
+      <td colspan="2" width="50%"><?php echo RPT_PAPER; ?>
         <select name="PaperSize">
 		<?php foreach($PaperSizes as $key=>$value) {
 			if ($myrow['papersize']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
 		} ?>
         </select></td>
-      <td><?php echo RPT_ORIEN; ?>
+      <td colspan="2" width="50%"><?php echo RPT_ORIEN; ?>
 		<?php if ($myrow['paperorientation']=='P') $selected = ' checked'; else  $selected = ''; ?>
         <label><input name="PaperOrientation" type="radio" value="P"<?php echo $selected ?>><?php echo RPT_PORTRAIT; ?></label>
 		<?php if ($myrow['paperorientation']=='L') $selected = ' checked'; else  $selected = ''; ?>
         <label><input name="PaperOrientation" type="radio" value="L"<?php echo $selected ?>><?php echo RPT_LANDSCAPE; ?></label></td>
     </tr>
-  </table>
-  <table width="100%"  border="2" cellspacing="1" cellpadding="1">
     <tr bgcolor="#CCCCCC">
       <td colspan="6"><div align="center"><?php echo RPT_PGMARGIN; ?></div></td>
     </tr>
@@ -48,173 +47,170 @@
           <?php echo RPT_MM; ?></div></td>
     </tr>
   </table>
-  <table width="100%"  border="2" cellspacing="1" cellpadding="1">
+  <?php if ($Type<>'frm') { ?>
+  <table align="center"  border="2" cellspacing="1" cellpadding="1">
     <tr bgcolor="#CCCCCC">
       <td colspan="8"><div align="center"><?php echo RPT_PGHEADER; ?></div></td>
     </tr>
     <tr>
+      <td colspan="3">&nbsp;</td>
+      <td align="center"><?php echo RPT_SHOW; ?></td>
+      <td align="center"><?php echo RPT_FONT; ?></td>
+      <td align="center"><?php echo RPT_SIZE; ?></td>
+      <td align="center"><?php echo RPT_COLOR; ?></td>
+      <td align="center"><?php echo RPT_ALIGN; ?></td>
+	</td>
+    </tr>
+    <tr>
       <td colspan="3"><?php echo RPT_PGCOYNM; ?></td>
-      <td>
-	  	<?php if ($myrow['coynameshow']=='1') $selected = ' checked'; else  $selected = ''; ?>
-		<?php echo RPT_SHOW; ?> <input name="CoyNameShow" type="checkbox" id="CoyNameShow" value="1"<?php echo $selected ?>></td>
-      <td colspan="4"><?php echo RPT_FONT; ?>
-        <select name="CoyNameFont" id="CoyNameFont">
+      <td><?php if ($myrow['coynameshow']=='1') $selected = ' checked'; else  $selected = ''; ?>
+		<input name="CoyNameShow" type="checkbox" id="CoyNameShow" value="1"<?php echo $selected ?>></td>
+      <td><select name="CoyNameFont" id="CoyNameFont">
 		<?php foreach($Fonts as $key => $value) {
 			if ($myrow['coynamefont']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
-        <?php echo RPT_SIZE; ?> <select name="CoyNameFontSize">
+		} ?> </select></td>
+      <td><select name="CoyNameFontSize">
 		<?php foreach($FontSizes as $key => $value) {
 			if ($myrow['coynamefontsize']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
-        <?php echo RPT_COLOR; ?> <select name="CoyNameFontColor">
+		} ?> </select></td>
+      <td><select name="CoyNameFontColor">
 		<?php foreach($FontColors as $key => $value) {
 			if ($myrow['coynamefontcolor']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select>
-        <?php echo RPT_ALIGN; ?> <select name="CoyNameAlign">
+		} ?> </select></td>
+      <td><select name="CoyNameAlign">
 		<?php foreach($FontAlign as $key => $value) {
 			if ($myrow['coynamealign']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select>
+		} ?> </select></td>
 	</td>
     </tr>
     <tr>
       <td colspan="3"><?php echo RPT_PGTITL1; ?>
         <input name="Title1Desc" type="text" id="Title1Desc" value="<?php echo $myrow['title1desc']; ?>" size="30" maxlength="50"></td>
-      <td><?php echo RPT_SHOW; ?>
-		<?php if ($myrow['title1show']=='1') $selected = ' checked'; else  $selected = ''; ?>
+      <td><?php if ($myrow['title1show']=='1') $selected = ' checked'; else  $selected = ''; ?>
         <input name="Title1Show" type="checkbox" id="Title1Show" value="1"<?php echo $selected ?>></td>
-      <td colspan="4"><?php echo RPT_FONT; ?>
-        <select name="Title1Font" id="Title1Font">
+      <td><select name="Title1Font" id="Title1Font">
 		<?php foreach($Fonts as $key => $value) {
 			if ($myrow['title1font']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
-        <?php echo RPT_SIZE; ?> <select name="Title1FontSize">
+		} ?> </select></td>
+      <td><select name="Title1FontSize">
 		<?php foreach($FontSizes as $key => $value) {
 			if ($myrow['title1fontsize']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
-        <?php echo RPT_COLOR; ?> <select name="Title1FontColor">
+		} ?> </select></td>
+      <td><select name="Title1FontColor">
 		<?php foreach($FontColors as $key => $value) {
 			if ($myrow['title1fontcolor']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select>
-        <?php echo RPT_ALIGN; ?> <select name="Title1FontAlign">
+		} ?> </select></td>
+      <td><select name="Title1FontAlign">
 		<?php foreach($FontAlign as $key => $value) {
 			if ($myrow['title1fontalign']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select>
-	</td>
+		} ?> </select></td>
     </tr>
     <tr>
       <td colspan="3"><?php echo RPT_PGTITL2; ?>
       <input name="Title2Desc" type="text" id="Title2Desc" value="<?php echo $myrow['title2desc']; ?>" size="30" maxlength="50"></td>
-      <td><?php echo RPT_SHOW; ?>
-		<?php if ($myrow['title2show']=='1') $selected = ' checked'; else  $selected = ''; ?>
+      <td><?php if ($myrow['title2show']=='1') $selected = ' checked'; else  $selected = ''; ?>
         <input name="Title2Show" type="checkbox" id="Title2Show" value="1"<?php echo $selected ?>></td>
-      <td colspan="4"><?php echo RPT_FONT; ?>
-        <select name="Title2Font" id="Title2Font">
+      <td><select name="Title2Font" id="Title2Font">
 		<?php foreach($Fonts as $key => $value) {
 			if ($myrow['title2font']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
-        <?php echo RPT_SIZE; ?> <select name="Title2FontSize">
+		} ?> </select></td>
+      <td><select name="Title2FontSize">
 		<?php foreach($FontSizes as $key => $value) {
 			if ($myrow['title2fontsize']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
-       <?php echo RPT_COLOR; ?> <select name="Title2FontColor">
+		} ?> </select></td>
+      <td><select name="Title2FontColor">
 		<?php foreach($FontColors as $key => $value) {
 			if ($myrow['title2fontcolor']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select>
-        <?php echo RPT_ALIGN; ?> <select name="Title2FontAlign">
+		} ?> </select></td>
+      <td><select name="Title2FontAlign">
 		<?php foreach($FontAlign as $key => $value) {
 			if ($myrow['title2fontalign']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select>
-	</td>
+		} ?> </select></td>
     </tr>
     <tr>
       <td colspan="4"><?php echo RPT_PGFILDESC; ?></td>
-      <td colspan="4"><?php echo RPT_FONT; ?>
-          <select name="FilterFont" id="FilterFont">
+      <td><select name="FilterFont" id="FilterFont">
 		<?php foreach($Fonts as $key => $value) {
 			if ($myrow['filterfont']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
-        <?php echo RPT_SIZE; ?> <select name="FilterFontSize">
+		} ?> </select></td>
+      <td><select name="FilterFontSize">
 		<?php foreach($FontSizes as $key => $value) {
 			if ($myrow['filterfontsize']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
-        <?php echo RPT_COLOR; ?> <select name="FilterFontColor">
+		} ?> </select></td>
+      <td><select name="FilterFontColor">
 		<?php foreach($FontColors as $key => $value) {
 			if ($myrow['filterfontcolor']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select>
-        <?php echo RPT_ALIGN; ?> <select name="FilterFontAlign">
+		} ?> </select></td>
+      <td><select name="FilterFontAlign">
 		<?php foreach($FontAlign as $key => $value) {
 			if ($myrow['filterfontalign']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select>
-    </td>
+		} ?> </select></td>
     </tr>
     <tr>
       <td colspan="4"><?php echo RPT_RPTDATA; ?></td>
-      <td colspan="4"><?php echo RPT_FONT; ?>
-        <select name="DataFont" id="DataFont">
+      <td><select name="DataFont" id="DataFont">
 		<?php foreach($Fonts as $key => $value) {
 			if ($myrow['datafont']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
-        <?php echo RPT_SIZE; ?> <select name="DataFontSize">
+		} ?> </select></td>
+      <td><select name="DataFontSize">
 		<?php foreach($FontSizes as $key => $value) {
 			if ($myrow['datafontsize']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
-        <?php echo RPT_COLOR; ?> <select name="DataFontColor">
+		} ?> </select></td>
+      <td><select name="DataFontColor">
 		<?php foreach($FontColors as $key => $value) {
 			if ($myrow['datafontcolor']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select>
-        <?php echo RPT_ALIGN; ?> <select name="DataFontAlign">
+		} ?> </select></td>
+      <td><select name="DataFontAlign">
 		<?php foreach($FontAlign as $key => $value) {
 			if ($myrow['datafontalign']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select>
-    </td>
+		} ?> </select></td>
+    
     </tr>
     <tr>
       <td colspan="4"><?php echo RPT_TOTALS; ?></td>
-      <td colspan="4"><?php echo RPT_FONT; ?>
-        <select name="TotalsFont" id="TotalsFont">
+      <td><select name="TotalsFont" id="TotalsFont">
 		<?php foreach($Fonts as $key => $value) {
 			if ($myrow['totalsfont']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
-        <?php echo RPT_SIZE; ?> <select name="TotalsFontSize">
+		} ?> </select></td>
+      <td><select name="TotalsFontSize">
 		<?php foreach($FontSizes as $key => $value) {
 			if ($myrow['totalsfontsize']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select> 
-        <?php echo RPT_COLOR; ?> <select name="TotalsFontColor">
+		} ?> </select></td>
+      <td><select name="TotalsFontColor">
 		<?php foreach($FontColors as $key => $value) {
 			if ($myrow['totalsfontcolor']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select>
-        <?php echo RPT_ALIGN; ?> <select name="TotalsFontAlign">
+		} ?> </select></td>
+      <td><select name="TotalsFontAlign">
 		<?php foreach($FontAlign as $key => $value) {
 			if ($myrow['totalsfontalign']==$key) $selected = ' selected'; else  $selected = '';
 			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
-		} ?> </select>
-    </td>
+		} ?> </select></td>
     </tr>
   </table>
-  <table width="100%"  border="2" cellspacing="1" cellpadding="1">
+  <table align="center"  border="2" cellspacing="1" cellpadding="1">
     <tr bgcolor="#CCCCCC">
       <td colspan="8"><div align="center"><?php echo RPT_CWDEF; ?></div></td>
     </tr>
@@ -247,6 +243,7 @@
         <input name="Col8Width" type="text" value="<?php echo $myrow['col8width']; ?>" size="5" maxlength="3"></div></td>
     </tr>
   </table>
+  <?php } // end if ($Type<>'frm') ?>
 </form>
 </body>
 </html>

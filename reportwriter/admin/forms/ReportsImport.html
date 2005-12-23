@@ -1,7 +1,8 @@
 <html>
 <body>
-<h2 align="center"><?PHP echo RPT_RPRBLDR.RPT_RPTIMPORT; ?></h2>
+<h2 align="center"><?php echo $FormParams['heading']; ?></h2>
 <form action="ReportCreator.php?action=step8" method="post" enctype="multipart/form-data" name="reporthome">
+  <input name="Type" type="hidden" value="<?php echo $Type; ?>">
   <table width="500" align="center" border="2" cellspacing="1" cellpadding="1">
     <tr>
       <td colspan="2"><div align="center"><?php echo RPT_DEFIMP; ?></div></td>
