@@ -1,0 +1,85 @@
+<html>
+<body>
+<h2 align="center"><?php echo 'Form Field: '.$DisplayName.' - '.RPT_BTN_PROP; ?></h2>
+<form name="DBRptLine" method="post" action="ReportCreator.php?action=step6a">
+	<input name="DisplayName" type="hidden" value="<?php echo $DisplayName; ?>">
+	<input name="index" type="hidden" value="<?php echo $Params['index']; ?>">
+	<input name="ID" type="hidden" value="<?php echo $FormParams['id']; ?>">
+	<input name="SeqNum" type="hidden" value="<?php echo $SeqNum; ?>">
+	<input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">
+	<input name="ReportName" type="hidden" value="<?php echo $reportname; ?>">
+  <table align="center" width="550"  border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><input name="todo" type="submit" id="todo" value="<?php echo RPT_BTN_CANCEL; ?>"></td>
+      <td><div align="center"><input name="todo" type="submit" id="todo" value="<?php echo RPT_BTN_UPDATE; ?>"></div></td>
+      <td><div align="right"><input name="todo" type="submit" id="todo" value="<?php echo RPT_BTN_FINISH; ?>"></div></td>
+    </tr>
+  </table>
+  <table align="center" border="2" cellspacing="1" cellpadding="1">
+    <tr bgcolor="#CCCCCC">
+      <td colspan="2"><div align="center"><?php echo RPT_STARTPOS; ?></div></td>
+    </tr>
+    <tr>
+      <td width="50%"><div align="center"><?php echo RPT_ABSCISSA; ?>
+	  	<?php if (!$Params['LineXStrt']) $Params['LineXStrt']='10'; ?>
+		<input name="LineXStrt" type="text" value="<?php echo $Params['LineXStrt']; ?>" size="4" maxlength="3">
+      </div></td>
+      <td width="50%"><div align="center"><?php echo RPT_ODINATE; ?> 
+	  	<?php if (!$Params['LineYStrt']) $Params['LineYStrt']='10'; ?>
+        <input name="LineYStrt" type="text" value="<?php echo $Params['LineYStrt']; ?>" size="4" maxlength="3">
+      </div></td>
+    </tr>
+    <tr bgcolor="#CCCCCC">
+      <td colspan="2"><div align="center"><?php echo RPT_ENDPOS; ?></div></td>
+    </tr>
+    <tr>
+		<?php if (!$Params['LineType'] OR $Params['LineType']=='1') $selected=' checked'; else $selected=''; ?>
+      <td><input name="LineType" type="radio" value="1"<?php echo $selected; ?>><?php echo RPT_HORIZONTAL; ?></td>
+      <td><?php echo RPT_LENGTH; ?> <input name="HLength" type="text" value="<?php echo $Params['HLength']; ?>" size="4" maxlength="3"></td>
+    </tr>
+    <tr>
+		<?php if ($Params['LineType']=='2') $selected=' checked'; else $selected=''; ?>
+      <td><input name="LineType" type="radio" value="2"<?php echo $selected; ?>><?php echo RPT_VERTICAL; ?></td>
+      <td><?php echo RPT_LENGTH; ?> <input name="VLength" type="text" value="<?php echo $Params['VLength']; ?>" size="4" maxlength="3"></td>
+    </tr>
+    <tr>
+		<?php if ($Params['LineType']=='3') $selected=' checked'; else $selected=''; ?>
+      <td><input name="LineType" type="radio" value="3"<?php echo $selected; ?>><?php echo RPT_CUSTOM; ?></td>
+      <td>		<?php echo RPT_ABSCISSA; ?> 
+		<input name="LineXEnd" type="text" value="<?php echo $Params['LineXEnd']; ?>" size="4" maxlength="3">
+		<?php echo RPT_ODINATE; ?> 
+		<input name="LineYEnd" type="text" value="<?php echo $Params['LineYEnd']; ?>" size="4" maxlength="3">
+	  </td>
+    </tr>
+    <tr bordercolor="#FFFFFF" bgcolor="#CCCCCC">
+      <td colspan="2"><div align="center"><?php echo RPT_LINEATTRIB; ?></div></td>
+    </tr>
+    <tr>
+		<?php if (!$Params['Line'] OR $Params['Line']=='1') $selected=' checked'; else $selected=''; ?>
+      <td><input name="Line" type="radio" value="1"<?php echo $selected; ?>>        <?php echo RPT_STDCOLOR; ?><br>
+		<select name="BrdrColor">
+		  <?php foreach($FontColors as $key => $value) {
+			if ($Params['BrdrColor']==$key) $selected = ' selected'; else  $selected = '';
+			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+		} ?> 
+	    </select></td>
+		<?php if ($Params['Line']=='2') $selected=' checked'; else $selected=''; ?>
+      <td nowrap><input name="Line" type="radio" value="2"<?php echo $selected; ?>><?php echo RPT_CUSTCOLOR; ?><br>
+		<div align="center">
+		<?php echo RPT_RED; ?> <input name="BrdrRed" type="text" value="<?php echo $Params['BrdrRed']; ?>" size="4" maxlength="3"> 
+    	<?php echo RPT_GREEN; ?> <input name="BrdrGreen" type="text" value="<?php echo $Params['BrdrGreen']; ?>" size="4" maxlength="3"> 
+    	<?php echo RPT_BLUE; ?> <input name="BrdrBlue" type="text" value="<?php echo $Params['BrdrBlue']; ?>" size="4" maxlength="3">
+	  </div></td>
+    </tr>
+    <tr>
+      <td><?php echo RPT_LINEWIDTH; ?></td>
+      <td><select name="LineSize">
+		<?php foreach($LineSizes as $key => $value) {
+			if ($Params['LineSize']==$key) $selected = ' selected'; else  $selected = '';
+			echo '<option value="'.$key.'"'.$selected.'>'.$value.'</option>';
+		} ?> </select></td>
+    </tr>
+  </table>
+</form>
+</body>
+</html>

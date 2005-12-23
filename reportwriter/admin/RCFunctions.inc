@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 // Include functions needed for ReportCreator.php
 function PrepStep($StepNum) {
@@ -79,7 +79,7 @@ function RetrieveReports() {
 		while ($Temp = DB_fetch_array($Result)) $FormList[] = $Temp;
 		foreach ($FormGroups as $index=>$value) {
 			$Group=explode(':',$index); // break into main group and form group array
-			if ($Group[0]==$key) { // then it's a part of the group we're showing
+			if ($Group[0]==$key AND $FormList<>'') { // then it's a part of the group we're showing
 				$WriteOnce = true;
 				foreach ($FormList as $Entry) {
 					if ($Entry['groupname']==$index) { // then it's part of this listing
@@ -708,48 +708,44 @@ function CreateLinkList($ReportID,$Table) {
 		FROM ".DBReports." WHERE id='".$ReportID."'";
 	$Result=DB_query($sql,$db,'','',false,true);
 	$myrow = DB_fetch_row($Result);
-	$LinkList = ''; 
-	$j = 0; 
+	$LinkList = ''; $j = 0; 
 
 	/* Get list of link tables from foreign keys */
 	for ($i = 0; $i < $Table; $i++) {
 		$comments = '';
-		$sql = "SHOW TABLE STATUS LIKE '" . $myrow[$i] . "'";
+		$sql = "SELECT table1, table2 FROM reportlinks WHERE table1 = '" . $myrow[$i] . "'";
 		$Result=DB_query($sql,$db,'','',false,true);
-		$mytable=DB_fetch_row($Result);
-		$comments = $mytable[17];
-		while (strpos($comments,'/') > 0) {
-			$comments = substr($comments,strpos($comments,'/')+1,255);
-			$parent = substr($comments,0,strpos($comments,'`'));
-			$parent = strtolower($parent);
+		while($mytable=DB_fetch_row($Result)) {
 			if ($myrow[$Table]) {
-				if ($myrow[$Table] == $parent){
-					$LinkList .= "<OPTION SELECTED Value='" . $parent . "'>" . $parent . "</OPTION>";
+				if ($myrow[$Table] == $mytable[1]){
+					$LinkList .= "<OPTION SELECTED Value='" . $mytable[1] . "'>" . $mytable[1];
 				} else {
-					$LinkList .= "<OPTION Value='" . $parent . "'>" . $parent . "</OPTION>";
+					$LinkList .= "<OPTION Value='" . $mytable[1] . "'>" . $mytable[1];
 				}
 			} else {
-				if ($j == 0) {
-					$LinkList .= "<OPTION SELECTED Value='" . $parent . "'>" . $parent . "</OPTION>";
+				if ($j == 0){
+					$LinkList .= "<OPTION SELECTED Value='" . $mytable[1] . "'>" . $mytable[1];
 				} else {
-					$LinkList .= "<OPTION Value='" . $parent . "'>" . $parent . "</OPTION>";
+					$LinkList .= "<OPTION Value='" . $mytable[1] . "'>" . $mytable[1];
 				}
 				$j++;
 			}
 		} // while
 	} // for
-	if (!$myrow[$Table] && $Table > $j) $LinkList = '';
+	if (!$myrow[$Table] && $Table > $j) {
+		$LinkList = '';
+	}
 	return $LinkList;
 }
 
 function CreateLinkEqList($ReportID,$Table) {
 	global $db;
 	$sql = "SELECT table1, 
-			table2, table2criteria, 
-			table3, table3criteria, 
-			table4, table4criteria,
-			table5, table5criteria,
-			table6, table6criteria
+		table2, table2criteria, 
+		table3, table3criteria, 
+		table4, table4criteria, 
+		table5, table5criteria, 
+		table6, table6criteria
 		FROM ".DBReports." WHERE id='".$ReportID."'";
 	$Result=DB_query($sql,$db,'','',false,true);
 	$myrow = DB_fetch_row($Result);
@@ -758,37 +754,28 @@ function CreateLinkEqList($ReportID,$Table) {
 	/* Get list of foreign key constraints */
 	for ($i = 0; $i < $Table; $i++) {
 		$comments = '';
-		$sql = "SHOW TABLE STATUS LIKE '" . $myrow[$i] . "'";
+		$sql = "SELECT table1, table2, equation FROM reportlinks WHERE table1 = '" . $myrow[$i] . "'";
 		$Result=DB_query($sql,$db,'','',false,true);
-		$mytable=DB_fetch_row($Result);
-		$comments = $mytable[17];
-		while (strpos($comments,'/') > 0) {
-			$childfield = substr($comments,strpos($comments,'`')+1,255);
-			$childfield = substr($childfield,0,strpos($childfield,'`'));
-			$comments = substr($comments,strpos($comments,'/')+1,255);
-			$parent = substr($comments,0,strpos($comments,'`'));
-			$comments = substr($comments,strpos($comments,'`')+3,255);
-			$field = substr($comments,0,strpos($comments,'`'));
-			$comments = substr($comments,strpos($comments,'`')+1,255);
-			$tablecrit = $myrow[$i] . "." . $childfield . "=" . $parent . "." . $field;
-			$tablecrit = strtolower($tablecrit);
+		while($mytable=DB_fetch_row($Result)) {
 			if ($myrow[$Table+3]) {
-				if ($myrow[$Table+3] == $tablecrit){
-					$LinkEqList .= "<OPTION SELECTED Value='" . $tablecrit . "'>" . $tablecrit . "</OPTION>";
+				if ($myrow[$Table+3] == $mytable[2]){
+					$LinkEqList .= "<OPTION SELECTED Value='" . $mytable[2] . "'>" . $mytable[2];
 				} else {
-					$LinkEqList .= "<OPTION Value='" . $tablecrit . "'>" . $tablecrit . "</OPTION>";
+					$LinkEqList .= "<OPTION Value='" . $mytable[2] . "'>" . $mytable[2];
 				}
 			} else {
 				if ($j == 0){
-					$LinkEqList .= "<OPTION SELECTED Value='" . $tablecrit . "'>" . $tablecrit . "</OPTION>";
+					$LinkEqList .= "<OPTION SELECTED Value='" . $mytable[2] . "'>" . $mytable[2];
 				} else {
-					$LinkEqList .= "<OPTION Value='" . $tablecrit . "'>" . $tablecrit . "</OPTION>";
+					$LinkEqList .= "<OPTION Value='" . $mytable[2] . "'>" . $mytable[2];
 				}
 				$j++;
 			}
 		} // while
 	} // for
-	if (!$myrow[$Table] && $Table > $j) $LinkEqList = '';
+	if (!$myrow[$Table] && $Table > $j) {
+		$LinkEqList = '';
+	}
 	return $LinkEqList;
 } // CreateLinkEqList
 

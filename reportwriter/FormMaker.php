@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 $DirectoryLevelsDeep = 1;
 $PathPrefix = '../';
@@ -100,7 +100,7 @@ switch ($_POST['todo']) {
 		} // else use default settings, i.e. no overrides
 		// All done with setup, build the form
 		require($PathPrefix . 'includes/fpdf.php'); // FPDF class to generate reports
-		require('WriteForm.php');
+		require('WriteForm.inc');
 		// build the pdf pages (this function exits the script if successful; otherwise returns with error)
 		$success = BuildPDF($ReportID, $Prefs); // build and output form, should not return from this function
 		// if we are here, there's been an error, report it

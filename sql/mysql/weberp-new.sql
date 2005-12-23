@@ -1016,6 +1016,16 @@ CREATE TABLE `reportheaders` (
 ) TYPE=InnoDB;
 
 --
+-- Table structure for table `reportlinks`
+--
+
+CREATE TABLE `reportlinks` (
+  `table1` varchar(25) NOT NULL default '',
+  `table2` varchar(25) NOT NULL default '',
+  `equation` varchar(75) NOT NULL default ''
+) TYPE=InnoDB;
+
+--
 -- Table structure for table `reports`
 --
 
@@ -2302,12 +2312,12 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-12-17');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-12-22');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
 INSERT INTO `config` VALUES ('DefaultDisplayRecordsMax','50');
-INSERT INTO `config` VALUES ('DefaultPriceList','WS');
+INSERT INTO `config` VALUES ('DefaultPriceList','DE');
 INSERT INTO `config` VALUES ('DefaultTaxCategory','1');
 INSERT INTO `config` VALUES ('DefaultTheme','fresh');
 INSERT INTO `config` VALUES ('Default_Shipper','1');
@@ -2344,6 +2354,8 @@ INSERT INTO `config` VALUES ('RomalpaClause','Ownership will not pass to the buy
 INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','Tax Ref');
+INSERT INTO `config` VALUES ('WackoWiki','1');
+INSERT INTO `config` VALUES ('WikiPath','wiki');
 INSERT INTO `config` VALUES ('YearEnd','3');
 
 --

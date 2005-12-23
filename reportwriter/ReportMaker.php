@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $DirectoryLevelsDeep =1;
 $PathPrefix = '../';
 $PageSecurity = 1; // set security level for webERP
@@ -325,8 +325,8 @@ function BuildFieldList($FieldListings) {
 		} else { 
 			$CriteriaString .= '<td>&nbsp;</td>'; 
 		}
-		$CriteriaString .= '<td align="center"><INPUT type=image name="up'.$SeqNum.'" value="up'.$SeqNum.'" src="images/upicon.PNG" border="0">
-			&nbsp;<INPUT type=image name="dn'.$SeqNum.'" value="dn" src="images/downicon.PNG" border="0"></td>';
+		$CriteriaString .= '<td align="center"><INPUT type=image name="up'.$SeqNum.'" value="up'.$SeqNum.'" src="images/upicon.png" border="0">
+			&nbsp;<INPUT type=image name="dn'.$SeqNum.'" value="dn" src="images/downicon.png" border="0"></td>';
 		$CriteriaString .= '</tr>';
 	}
 	return $CriteriaString;

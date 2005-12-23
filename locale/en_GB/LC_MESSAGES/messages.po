@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-12-18 22:06+1300\n"
+"POT-Creation-Date: 2005-12-23 16:57+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -116,10 +116,10 @@ msgstr ""
 #: SalesAnalReptCols.php:386 SalesAnalRepts.php:400 SalesAnalRepts.php:403
 #: SalesAnalRepts.php:418 SalesAnalRepts.php:421 SalesAnalRepts.php:436
 #: SalesAnalRepts.php:439 ShipmentCosting.php:472 Stocks.php:631
-#: Stocks.php:633 SystemParameters.php:280 SystemParameters.php:325
-#: SystemParameters.php:333 SystemParameters.php:373 SystemParameters.php:446
-#: SystemParameters.php:454 SystemParameters.php:472 SystemParameters.php:479
-#: SystemParameters.php:588 TaxGroups.php:291 TaxGroups.php:360
+#: Stocks.php:633 SystemParameters.php:286 SystemParameters.php:331
+#: SystemParameters.php:339 SystemParameters.php:379 SystemParameters.php:452
+#: SystemParameters.php:460 SystemParameters.php:478 SystemParameters.php:485
+#: SystemParameters.php:594 TaxGroups.php:291 TaxGroups.php:360
 #: TaxGroups.php:363 WWW_Users.php:494 WWW_Users.php:496
 msgid "Yes"
 msgstr ""
@@ -138,10 +138,10 @@ msgstr ""
 #: SalesAnalReptCols.php:387 SalesAnalRepts.php:399 SalesAnalRepts.php:402
 #: SalesAnalRepts.php:417 SalesAnalRepts.php:420 SalesAnalRepts.php:435
 #: SalesAnalRepts.php:438 ShipmentCosting.php:473 Stocks.php:626
-#: Stocks.php:628 SystemParameters.php:281 SystemParameters.php:326
-#: SystemParameters.php:334 SystemParameters.php:374 SystemParameters.php:447
-#: SystemParameters.php:455 SystemParameters.php:473 SystemParameters.php:480
-#: SystemParameters.php:589 TaxGroups.php:293 TaxGroups.php:361
+#: Stocks.php:628 SystemParameters.php:287 SystemParameters.php:332
+#: SystemParameters.php:340 SystemParameters.php:380 SystemParameters.php:453
+#: SystemParameters.php:461 SystemParameters.php:479 SystemParameters.php:486
+#: SystemParameters.php:595 TaxGroups.php:293 TaxGroups.php:361
 #: TaxGroups.php:364 WWW_Users.php:493 WWW_Users.php:497
 #: includes/PDFLowGPPageHeader.inc:31 includes/PDFTaxPageHeader.inc:34
 msgid "No"
@@ -1102,9 +1102,9 @@ msgstr ""
 #: PDFOrderStatus.php:256 PO_Header.php:227 PO_Items.php:876
 #: PO_SelectOSPurchOrder.php:196 PO_SelectPurchOrder.php:191 PurchData.php:415
 #: SalesPeople.php:170 SelectCompletedOrder.php:359 SelectCreditItems.php:232
-#: SelectCreditItems.php:957 SelectCustomer.php:239 SelectGLAccount.php:109
+#: SelectCreditItems.php:957 SelectCustomer.php:243 SelectGLAccount.php:109
 #: SelectOrderItems.php:517 SelectOrderItems.php:1084 SelectProduct.php:311
-#: SelectSalesOrder.php:190 SelectSupplier.php:243 Shipt_Select.php:190
+#: SelectSalesOrder.php:190 SelectSupplier.php:248 Shipt_Select.php:190
 #: SpecialOrder.php:120 includes/PO_PDFOrderPageHeader.inc:141
 msgid "Code"
 msgstr ""
@@ -1358,9 +1358,9 @@ msgstr ""
 #: BOMs.php:568 GLJournal.php:211 PO_Header.php:214 PO_Items.php:862
 #: PO_SelectOSPurchOrder.php:184 PO_SelectPurchOrder.php:179 PurchData.php:401
 #: SelectCompletedOrder.php:346 SelectCreditItems.php:220
-#: SelectCreditItems.php:944 SelectCustomer.php:163 SelectGLAccount.php:95
+#: SelectCreditItems.php:944 SelectCustomer.php:167 SelectGLAccount.php:95
 #: SelectOrderItems.php:492 SelectOrderItems.php:1058 SelectProduct.php:89
-#: SelectSalesOrder.php:180 SelectSupplier.php:181 Shipt_Select.php:177
+#: SelectSalesOrder.php:180 SelectSupplier.php:186 Shipt_Select.php:177
 msgid "OR"
 msgstr ""
 
@@ -1379,9 +1379,9 @@ msgid "Stock Code"
 msgstr ""
 
 #: BOMs.php:573 CustomerReceipt.php:758 PO_Header.php:219 PO_Items.php:866
-#: SelectCreditItems.php:225 SelectCreditItems.php:949 SelectCustomer.php:181
+#: SelectCreditItems.php:225 SelectCreditItems.php:949 SelectCustomer.php:185
 #: SelectGLAccount.php:101 SelectOrderItems.php:497 SelectOrderItems.php:1062
-#: SelectProduct.php:105 SelectSupplier.php:200 SelectSupplier.php:237
+#: SelectProduct.php:105 SelectSupplier.php:205 SelectSupplier.php:242
 msgid "Search Now"
 msgstr ""
 
@@ -1514,11 +1514,11 @@ msgid "Company preferences updated"
 msgstr ""
 
 #: CompanyPreferences.php:90 Customers.php:184 Suppliers.php:427
-#: SystemParameters.php:208
+#: SystemParameters.php:214
 msgid "Validation failed"
 msgstr ""
 
-#: CompanyPreferences.php:90 Suppliers.php:427 SystemParameters.php:208
+#: CompanyPreferences.php:90 Suppliers.php:427 SystemParameters.php:214
 msgid "no updates or deletes took place"
 msgstr ""
 
@@ -1644,7 +1644,7 @@ msgstr ""
 #: CompanyPreferences.php:405 ConfirmDispatch_Invoice.php:1371
 #: Credit_Invoice.php:1425 GoodsReceived.php:581 PurchData.php:336
 #: SelectCreditItems.php:906 StockCostUpdate.php:168 StockReorderLevel.php:89
-#: SystemParameters.php:623 TaxAuthorityRates.php:55 WorkOrderIssue.php:131
+#: SystemParameters.php:650 TaxAuthorityRates.php:55 WorkOrderIssue.php:131
 msgid "Update"
 msgstr ""
 
@@ -2958,7 +2958,7 @@ msgid "Customer Code"
 msgstr ""
 
 #: CustEDISetup.php:87 CustomerReceipt.php:768 Customers.php:287
-#: Customers.php:462 OrderDetails.php:102 SelectCustomer.php:240
+#: Customers.php:462 OrderDetails.php:102 SelectCustomer.php:244
 msgid "Customer Name"
 msgstr ""
 
@@ -2968,11 +2968,13 @@ msgstr ""
 
 #: CustEDISetup.php:94 CustEDISetup.php:97 CustEDISetup.php:108
 #: CustEDISetup.php:111 CustomerBranches.php:590 CustomerBranches.php:592
+#: SystemParameters.php:637 SystemParameters.php:639
 msgid "Disabled"
 msgstr ""
 
 #: CustEDISetup.php:95 CustEDISetup.php:98 CustEDISetup.php:109
 #: CustEDISetup.php:112 CustomerBranches.php:589 CustomerBranches.php:593
+#: SystemParameters.php:632 SystemParameters.php:634
 msgid "Enabled"
 msgstr ""
 
@@ -3349,7 +3351,7 @@ msgid "Branches Defined for"
 msgstr ""
 
 #: CustomerBranches.php:296 CustomerBranches.php:470 SelectCreditItems.php:234
-#: SelectCustomer.php:242 SelectOrderItems.php:519 SupplierContacts.php:209
+#: SelectCustomer.php:246 SelectOrderItems.php:519 SupplierContacts.php:209
 msgid "Contact"
 msgstr ""
 
@@ -3620,7 +3622,7 @@ msgstr ""
 #: CustomerInquiry.php:181 CustomerTransInquiry.php:76 FTP_RadioBeacon.php:52
 #: Prices_Customer.php:187 Prices_Customer.php:231 PrintCustTrans.php:749
 #: SelectCompletedOrder.php:416 SelectCreditItems.php:233
-#: SelectCustomer.php:241 SelectOrderItems.php:518
+#: SelectCustomer.php:245 SelectOrderItems.php:518
 #: SelectRecurringSalesOrder.php:78 SelectSalesOrder.php:405
 #: SelectSalesOrder.php:416 StockMovements.php:93
 #: includes/PDFDeliveryDifferencesPageHeader.inc:45
@@ -3882,7 +3884,7 @@ msgstr ""
 #: CustomerReceipt.php:592 CustomerTransInquiry.php:82 Payments.php:503
 #: Payments.php:524 PO_Header.php:229 PO_SelectOSPurchOrder.php:386
 #: PO_SelectPurchOrder.php:372 Prices.php:153 Prices.php:219 PurchData.php:184
-#: PurchData.php:305 PurchData.php:417 SelectSupplier.php:245
+#: PurchData.php:305 PurchData.php:417 SelectSupplier.php:250
 #: SupplierCredit.php:202 SupplierInvoice.php:185
 #: includes/PDFBankingSummaryPageHeader.inc:42
 #: includes/PDFDebtorBalsPageHeader.inc:36
@@ -3952,20 +3954,20 @@ msgstr ""
 msgid "Select A Customer"
 msgstr ""
 
-#: CustomerReceipt.php:751 SelectCustomer.php:149 SelectProduct.php:73
+#: CustomerReceipt.php:751 SelectCustomer.php:153 SelectProduct.php:73
 #: SelectProduct.php:89
 msgid "Text in the"
 msgstr ""
 
-#: CustomerReceipt.php:751 SelectCustomer.php:149
+#: CustomerReceipt.php:751 SelectCustomer.php:153
 msgid "name"
 msgstr ""
 
-#: CustomerReceipt.php:754 SelectCustomer.php:164
+#: CustomerReceipt.php:754 SelectCustomer.php:168
 msgid "Text extract in the customer"
 msgstr ""
 
-#: CustomerReceipt.php:754 SelectCustomer.php:164
+#: CustomerReceipt.php:754 SelectCustomer.php:168
 msgid "code"
 msgstr ""
 
@@ -4185,7 +4187,7 @@ msgid "Insert New Customer"
 msgstr ""
 
 #: Customers.php:389 Customers.php:560 PO_Header.php:220 PurchData.php:407
-#: SelectCustomer.php:182 SelectGLAccount.php:102 SelectOrderItems.php:498
+#: SelectCustomer.php:186 SelectGLAccount.php:102 SelectOrderItems.php:498
 msgid "Reset"
 msgstr ""
 
@@ -6596,7 +6598,7 @@ msgstr ""
 msgid "Purchase Order Inquiry"
 msgstr ""
 
-#: index.php:456 index.php:615 SelectProduct.php:437
+#: index.php:456 index.php:615 SelectProduct.php:441
 msgid "Maintain Purchasing Data"
 msgstr ""
 
@@ -6687,7 +6689,7 @@ msgstr ""
 msgid "Modify Or Delete A Inventory Item Or Item Pricing"
 msgstr ""
 
-#: index.php:605 SelectProduct.php:435
+#: index.php:605 SelectProduct.php:439
 msgid "Maintain Reorder Levels"
 msgstr ""
 
@@ -7762,7 +7764,7 @@ msgstr ""
 msgid "Ph"
 msgstr ""
 
-#: PDFCustomerList.php:339 SelectCreditItems.php:236 SelectCustomer.php:244
+#: PDFCustomerList.php:339 SelectCreditItems.php:236 SelectCustomer.php:248
 #: SelectOrderItems.php:521 includes/PDFOrderPageHeader_generic.inc:32
 #: includes/PDFQuotationPageHeader.inc:20
 #: includes/PDFStatementPageHeader.inc:40 includes/PDFTransPageHeader.inc:81
@@ -8509,7 +8511,7 @@ msgid "Enter text extract in the supplier code"
 msgstr ""
 
 #: PO_Header.php:228 PO_OrderDetails.php:80 PurchData.php:416
-#: SelectSupplier.php:244 Suppliers.php:488 Suppliers.php:601
+#: SelectSupplier.php:249 Suppliers.php:488 Suppliers.php:601
 msgid "Supplier Name"
 msgstr ""
 
@@ -8538,19 +8540,19 @@ msgstr ""
 msgid "Deliver to"
 msgstr ""
 
-#: PO_Header.php:385 PurchData.php:418 SelectSupplier.php:246
+#: PO_Header.php:385 PurchData.php:418 SelectSupplier.php:251
 msgid "Address 1"
 msgstr ""
 
-#: PO_Header.php:388 PurchData.php:419 SelectSupplier.php:247
+#: PO_Header.php:388 PurchData.php:419 SelectSupplier.php:252
 msgid "Address 2"
 msgstr ""
 
-#: PO_Header.php:391 PurchData.php:420 SelectSupplier.php:248
+#: PO_Header.php:391 PurchData.php:420 SelectSupplier.php:253
 msgid "Address 3"
 msgstr ""
 
-#: PO_Header.php:394 SelectSupplier.php:249
+#: PO_Header.php:394 SelectSupplier.php:254
 msgid "Address 4"
 msgstr ""
 
@@ -8562,7 +8564,7 @@ msgstr ""
 msgid "Address 6"
 msgstr ""
 
-#: PO_Header.php:403 SelectCreditItems.php:235 SelectCustomer.php:243
+#: PO_Header.php:403 SelectCreditItems.php:235 SelectCustomer.php:247
 #: SelectOrderItems.php:520 includes/PDFTransPageHeader.inc:81
 msgid "Phone"
 msgstr ""
@@ -9288,8 +9290,8 @@ msgid "Search Parts Now"
 msgstr ""
 
 #: PO_SelectOSPurchOrder.php:166 PO_SelectPurchOrder.php:161
-#: SelectCompletedOrder.php:328 SelectCustomer.php:180
-#: SelectSalesOrder.php:165 SelectSupplier.php:199 Shipt_Select.php:159
+#: SelectCompletedOrder.php:328 SelectCustomer.php:184
+#: SelectSalesOrder.php:165 SelectSupplier.php:204 Shipt_Select.php:159
 msgid "Show All"
 msgstr ""
 
@@ -10262,7 +10264,7 @@ msgid "Frequency of Recurrence"
 msgstr ""
 
 #: RecurringSalesOrders.php:426 RecurringSalesOrders.php:428
-#: SystemParameters.php:603 SystemParameters.php:605
+#: SystemParameters.php:609 SystemParameters.php:611
 msgid "Weekly"
 msgstr ""
 
@@ -10271,7 +10273,7 @@ msgid "Fortnightly"
 msgstr ""
 
 #: RecurringSalesOrders.php:436 RecurringSalesOrders.php:438
-#: SystemParameters.php:608 SystemParameters.php:610
+#: SystemParameters.php:614 SystemParameters.php:616
 msgid "Monthly"
 msgstr ""
 
@@ -11826,46 +11828,50 @@ msgstr ""
 msgid "Order Inquiries"
 msgstr ""
 
-#: SelectCustomer.php:132
-msgid "Modify Customer Details"
-msgstr ""
-
-#: SelectCustomer.php:133
-msgid "Add/Edit/Delete Customer Branch records"
-msgstr ""
-
-#: SelectCustomer.php:135
-msgid "Special Customer Prices"
+#: SelectCustomer.php:131
+msgid "Wiki Customer Knowlege Base"
 msgstr ""
 
 #: SelectCustomer.php:136
+msgid "Modify Customer Details"
+msgstr ""
+
+#: SelectCustomer.php:137
+msgid "Add/Edit/Delete Customer Branch records"
+msgstr ""
+
+#: SelectCustomer.php:139
+msgid "Special Customer Prices"
+msgstr ""
+
+#: SelectCustomer.php:140
 msgid "Customer EDI Configuration"
 msgstr ""
 
-#: SelectCustomer.php:203 SelectProduct.php:279 SelectSupplier.php:220
+#: SelectCustomer.php:207 SelectProduct.php:279 SelectSupplier.php:225
 #: includes/Add_SerialItemsOut.php:24 includes/Add_SerialItems.php:33
 #: includes/Add_SerialItems.php:155
 #: includes/PDFBankingSummaryPageHeader.inc:19
 msgid "of"
 msgstr ""
 
-#: SelectCustomer.php:203 SelectProduct.php:279 SelectSupplier.php:220
+#: SelectCustomer.php:207 SelectProduct.php:279 SelectSupplier.php:225
 msgid "pages"
 msgstr ""
 
-#: SelectCustomer.php:203 SelectProduct.php:279 SelectSupplier.php:220
+#: SelectCustomer.php:207 SelectProduct.php:279 SelectSupplier.php:225
 msgid "Go to Page"
 msgstr ""
 
-#: SelectCustomer.php:229 SelectProduct.php:302 SelectSupplier.php:234
+#: SelectCustomer.php:233 SelectProduct.php:302 SelectSupplier.php:239
 msgid "Go"
 msgstr ""
 
-#: SelectCustomer.php:230 SelectProduct.php:303 SelectSupplier.php:235
+#: SelectCustomer.php:234 SelectProduct.php:303 SelectSupplier.php:240
 msgid "Previous"
 msgstr ""
 
-#: SelectCustomer.php:231 SelectProduct.php:304 SelectSupplier.php:236
+#: SelectCustomer.php:235 SelectProduct.php:304 SelectSupplier.php:241
 msgid "Next"
 msgstr ""
 
@@ -12135,27 +12141,31 @@ msgstr ""
 msgid "Where This Item Is Used"
 msgstr ""
 
-#: SelectProduct.php:433
+#: SelectProduct.php:431
+msgid "Wiki Product Knowlege Base"
+msgstr ""
+
+#: SelectProduct.php:437
 msgid "Modify Stock Item Details"
 msgstr ""
 
-#: SelectProduct.php:436
+#: SelectProduct.php:440
 msgid "Maintain Standard Cost"
 msgstr ""
 
-#: SelectProduct.php:440
+#: SelectProduct.php:444
 msgid "Maintain Pricing"
 msgstr ""
 
-#: SelectProduct.php:442
+#: SelectProduct.php:446
 msgid "Special Prices for customer"
 msgstr ""
 
-#: SelectProduct.php:449
+#: SelectProduct.php:453
 msgid "Quantity Adjustments"
 msgstr ""
 
-#: SelectProduct.php:450
+#: SelectProduct.php:454
 msgid "Location Transfers"
 msgstr ""
 
@@ -12273,43 +12283,47 @@ msgstr ""
 msgid "View All Purchase Orders"
 msgstr ""
 
-#: SelectSupplier.php:138 Shipt_Select.php:8 Shipt_Select.php:144
+#: SelectSupplier.php:137
+msgid "Wiki Supplier Knowlege Base"
+msgstr ""
+
+#: SelectSupplier.php:143 Shipt_Select.php:8 Shipt_Select.php:144
 msgid "Search Shipments"
 msgstr ""
 
-#: SelectSupplier.php:142
+#: SelectSupplier.php:147
 msgid "Enter a Suppliers Invoice"
 msgstr ""
 
-#: SelectSupplier.php:143
+#: SelectSupplier.php:148
 msgid "Enter a Suppliers Credit Note"
 msgstr ""
 
-#: SelectSupplier.php:144
+#: SelectSupplier.php:149
 msgid "Enter a Payment to the Supplier"
 msgstr ""
 
-#: SelectSupplier.php:148
+#: SelectSupplier.php:153
 msgid "Reverse an Outstanding GRN"
 msgstr ""
 
-#: SelectSupplier.php:152
+#: SelectSupplier.php:157
 msgid "Modify Or Delete Supplier Details"
 msgstr ""
 
-#: SelectSupplier.php:153
+#: SelectSupplier.php:158
 msgid "Modify Or Delete Supplier Contact Details"
 msgstr ""
 
-#: SelectSupplier.php:157
+#: SelectSupplier.php:162
 msgid "Set Up A New Shipment"
 msgstr ""
 
-#: SelectSupplier.php:168
+#: SelectSupplier.php:173
 msgid "Text in the NAME"
 msgstr ""
 
-#: SelectSupplier.php:182
+#: SelectSupplier.php:187
 msgid "Text in CODE"
 msgstr ""
 
@@ -14911,7 +14925,7 @@ msgid "Change Tax Calculation Method"
 msgstr ""
 
 #: SupplierCredit.php:352 SupplierCredit.php:354 SupplierInvoice.php:351
-#: SupplierInvoice.php:353 SystemParameters.php:390 SystemParameters.php:392
+#: SupplierInvoice.php:353 SystemParameters.php:396 SystemParameters.php:398
 msgid "Automatic"
 msgstr ""
 
@@ -15755,422 +15769,438 @@ msgstr ""
 msgid "The maximum size of item image files musst be between 50 and 500 (NB this figure refers to KB)"
 msgstr ""
 
-#: SystemParameters.php:194
+#: SystemParameters.php:200
 msgid "The system configuration could not be updated because"
 msgstr ""
 
-#: SystemParameters.php:202
+#: SystemParameters.php:208
 msgid "System configuration updated"
 msgstr ""
 
-#: SystemParameters.php:220
+#: SystemParameters.php:226
 msgid "System Variable Name"
 msgstr ""
 
-#: SystemParameters.php:221 includes/PDFInventoryValnPageHeader.inc:38
+#: SystemParameters.php:227 includes/PDFInventoryValnPageHeader.inc:38
 #: includes/PDFOstdgGRNsPageHeader.inc:37
 msgid "Value"
 msgstr ""
 
-#: SystemParameters.php:222
+#: SystemParameters.php:228
 msgid "Notes"
 msgstr ""
 
-#: SystemParameters.php:224 SystemParameters.php:483
+#: SystemParameters.php:230 SystemParameters.php:489
 msgid "General Settings"
 msgstr ""
 
-#: SystemParameters.php:228
+#: SystemParameters.php:234
 msgid "DefaultDateFormat"
 msgstr ""
 
-#: SystemParameters.php:228
+#: SystemParameters.php:234
 msgid "for input and to appear on reports"
 msgstr ""
 
-#: SystemParameters.php:233
+#: SystemParameters.php:239
 msgid "The default date format for entry of dates and display use d/m/Y for England/Australia/NZ or m/d/Y for US and Canada"
 msgstr ""
 
-#: SystemParameters.php:236
+#: SystemParameters.php:242
 msgid "New Users Default Theme"
 msgstr ""
 
-#: SystemParameters.php:248
+#: SystemParameters.php:254
 msgid "The default theme is used for new users who have not yet defined the display colour scheme theme of their choice"
 msgstr ""
 
-#: SystemParameters.php:250
+#: SystemParameters.php:256
 msgid "Accounts Receivable/Payable Settings"
 msgstr ""
 
-#: SystemParameters.php:253
+#: SystemParameters.php:259
 msgid "First Overdue Deadline in (days)"
 msgstr ""
 
-#: SystemParameters.php:255
+#: SystemParameters.php:261
 msgid "Customer and supplier balances are displayed as overdue by this many days. This parameter is used on customer and supplier enquiry screens and aged listings"
 msgstr ""
 
-#: SystemParameters.php:258
+#: SystemParameters.php:264
 msgid "Second Overdue Deadline in (days)"
 msgstr ""
 
-#: SystemParameters.php:260
+#: SystemParameters.php:266
 msgid "As above but the next level of overdue"
 msgstr ""
 
-#: SystemParameters.php:264
+#: SystemParameters.php:270
 msgid "Default Credit Limit"
 msgstr ""
 
-#: SystemParameters.php:266
+#: SystemParameters.php:272
 msgid "The default used in new customer set up"
 msgstr ""
 
-#: SystemParameters.php:269
+#: SystemParameters.php:275
 msgid "Check Credit Limits"
 msgstr ""
 
-#: SystemParameters.php:271
+#: SystemParameters.php:277
 msgid "Do not check"
 msgstr ""
 
-#: SystemParameters.php:272
+#: SystemParameters.php:278
 msgid "Warn on breach"
 msgstr ""
 
-#: SystemParameters.php:273
+#: SystemParameters.php:279
 msgid "Prohibit Sales"
 msgstr ""
 
-#: SystemParameters.php:275
+#: SystemParameters.php:281
 msgid "Credit limits can be checked at order entry to warn only or to stop the order from being entered where it would take a customer account balance over their limit"
 msgstr ""
 
-#: SystemParameters.php:278
+#: SystemParameters.php:284
 msgid "Show Settled Last Month"
 msgstr ""
 
-#: SystemParameters.php:283
+#: SystemParameters.php:289
 msgid "This setting refers to the format of customer statements. If the invoices and credit notes that have been paid and settled during the course of the current month should be shown then select Yes. Selecting No will only show currently outstanding invoices, credits and payments that have not been allocated"
 msgstr ""
 
-#: SystemParameters.php:286
+#: SystemParameters.php:292
 msgid "Romalpa Clause"
 msgstr ""
 
-#: SystemParameters.php:288
+#: SystemParameters.php:294
 msgid "This text appears on invoices and credit notes in small print. Normally a reservation of title clause that gives the company rights to collect goods which have not been paid for - to give some protection for bad debts."
 msgstr ""
 
-#: SystemParameters.php:291
+#: SystemParameters.php:297
 msgid "Quick Entries"
 msgstr ""
 
-#: SystemParameters.php:293
+#: SystemParameters.php:299
 msgid "This parameter defines the layout of the sales order entry screen. The number of fields available for quick entries. Any number from 1 to 99 can be entered."
 msgstr ""
 
-#: SystemParameters.php:296
+#: SystemParameters.php:302
 msgid "Format of Packing Slips"
 msgstr ""
 
-#: SystemParameters.php:298
+#: SystemParameters.php:304
 msgid "Laser Printed"
 msgstr ""
 
-#: SystemParameters.php:299
+#: SystemParameters.php:305
 msgid "Special Stationery"
 msgstr ""
 
-#: SystemParameters.php:301
+#: SystemParameters.php:307
 msgid "Choose the format that packing notes should be printed by default"
 msgstr ""
 
-#: SystemParameters.php:305
+#: SystemParameters.php:311
 msgid "Show company details on packing slips"
 msgstr ""
 
-#: SystemParameters.php:307
+#: SystemParameters.php:313
 msgid "Show Company Details"
 msgstr ""
 
-#: SystemParameters.php:308
+#: SystemParameters.php:314
 msgid "Hide Company Details"
 msgstr ""
 
-#: SystemParameters.php:310
+#: SystemParameters.php:316
 msgid "Customer branches can be set by default not to print packing slips with the company logo and address. This is useful for companies that ship to customers customers and to show the source of the shipment would be inappropriate. There is an option on the setup of customer branches to ship blind, this setting is the default applied to all new customer branches"
 msgstr ""
 
-#: SystemParameters.php:315
+#: SystemParameters.php:321
 msgid "Dispatch Cut-Off Time"
 msgstr ""
 
-#: SystemParameters.php:320
+#: SystemParameters.php:326
 msgid "Orders entered after this time will default to be dispatched the following day, this can be over-ridden at the time of sales order entry"
 msgstr ""
 
-#: SystemParameters.php:323
+#: SystemParameters.php:329
 msgid "Allow Sales Of Zero Cost Items"
 msgstr ""
 
-#: SystemParameters.php:328
+#: SystemParameters.php:334
 msgid "If an item selected at order entry does not have a cost set up then if this parameter is set to No then the order line will not be able to be entered"
 msgstr ""
 
-#: SystemParameters.php:331
+#: SystemParameters.php:337
 msgid "Controlled Items Must Exist For Crediting"
 msgstr ""
 
-#: SystemParameters.php:336
+#: SystemParameters.php:342
 msgid "This parameter relates to the behaviour of the controlled items code. If a serial numbered item has not previously existed then a credit note for it will not be allowed if this is set to Yes"
 msgstr ""
 
-#: SystemParameters.php:340
+#: SystemParameters.php:346
 msgid "Could not load price lists"
 msgstr ""
 
-#: SystemParameters.php:342
+#: SystemParameters.php:348
 msgid "Default Price List"
 msgstr ""
 
-#: SystemParameters.php:345 SystemParameters.php:361 SystemParameters.php:405
-#: SystemParameters.php:427
+#: SystemParameters.php:351 SystemParameters.php:367 SystemParameters.php:411
+#: SystemParameters.php:433
 msgid "Unavailable"
 msgstr ""
 
-#: SystemParameters.php:352
+#: SystemParameters.php:358
 msgid "This price list is used as a last resort where there is no price set up for an item in the price list that the customer is set up for"
 msgstr ""
 
-#: SystemParameters.php:356
+#: SystemParameters.php:362
 msgid "Could not load shippers"
 msgstr ""
 
-#: SystemParameters.php:358
+#: SystemParameters.php:364
 msgid "Default Shipper"
 msgstr ""
 
-#: SystemParameters.php:368
+#: SystemParameters.php:374
 msgid "This shipper is used where the best shipper for a customer branch has not been defined previously"
 msgstr ""
 
-#: SystemParameters.php:371
+#: SystemParameters.php:377
 msgid "Do Freight Calculation"
 msgstr ""
 
-#: SystemParameters.php:376
+#: SystemParameters.php:382
 msgid "If this is set to Yes then the system will attempt to calculate the freight cost of a dispatch based on the weight and cubic and the data defined for each shipper and their rates for shipping to various locations. The results of this calculation will only be meaningful if the data is entered for the item weight and volume in the stock item setup for all items and the freight costs for each shipper properly maintained."
 msgstr ""
 
-#: SystemParameters.php:379
+#: SystemParameters.php:385
 msgid "Apply freight charges if an order is less than"
 msgstr ""
 
-#: SystemParameters.php:381
+#: SystemParameters.php:387
 msgid "This parameter is only effective if Do Freight Calculation is set to Yes. If it is set to 0 then freight is always charged. The total order value is compared to this value in deciding whether or not to charge freight"
 msgstr ""
 
-#: SystemParameters.php:385
+#: SystemParameters.php:391
 msgid "Create Debtor Codes Automatically"
 msgstr ""
 
-#: SystemParameters.php:389 SystemParameters.php:393
+#: SystemParameters.php:395 SystemParameters.php:399
 msgid "Manual Entry"
 msgstr ""
 
-#: SystemParameters.php:396
+#: SystemParameters.php:402
 msgid "Set to Automatic - customer codes are automatically created - as a sequential number"
 msgstr ""
 
-#: SystemParameters.php:402
+#: SystemParameters.php:408
 msgid "Default Tax Category"
 msgstr ""
 
-#: SystemParameters.php:412
+#: SystemParameters.php:418
 msgid "This is the tax category used for entry of supplier invoices and the category at which freight attracts tax"
 msgstr ""
 
-#: SystemParameters.php:416
+#: SystemParameters.php:422
 msgid "TaxAuthorityReferenceName"
 msgstr ""
 
-#: SystemParameters.php:418
+#: SystemParameters.php:424
 msgid "This parameter is what is displayed on tax invoices and credits for the tax authority of the company eg. in Australian this would by A.B.N.: - in NZ it would be GST No: in the UK it would be VAT Regn. No"
 msgstr ""
 
-#: SystemParameters.php:424
+#: SystemParameters.php:430
 msgid "Country Of Operation"
 msgstr ""
 
-#: SystemParameters.php:434
+#: SystemParameters.php:440
 msgid "This parameter is only effective if Do Freight Calculation is set to Yes. Country names come from the currencies table."
 msgstr ""
 
-#: SystemParameters.php:437
+#: SystemParameters.php:443
 msgid "Number Of Periods Of StockUsage"
 msgstr ""
 
-#: SystemParameters.php:441
+#: SystemParameters.php:447
 msgid "In stock usage inquiries this determines how many periods of stock usage to show. An average is calculated over this many periods"
 msgstr ""
 
-#: SystemParameters.php:444
+#: SystemParameters.php:450
 msgid "Check Quantity Charged vs Deliver Qty"
 msgstr ""
 
-#: SystemParameters.php:449
+#: SystemParameters.php:455
 msgid "In entry of AP invoices this determines whether or not to check the quantites received into stock tie up with the quantities invoiced"
 msgstr ""
 
-#: SystemParameters.php:452
+#: SystemParameters.php:458
 msgid "Check Price Charged vs Order Price"
 msgstr ""
 
-#: SystemParameters.php:457
+#: SystemParameters.php:463
 msgid "In entry of AP invoices this parameter determines whether or not to check invoice prices tie up to ordered prices"
 msgstr ""
 
-#: SystemParameters.php:460
+#: SystemParameters.php:466
 msgid "Allowed Over Charge Proportion"
 msgstr ""
 
-#: SystemParameters.php:462
+#: SystemParameters.php:468
 msgid "If check price charges vs Order price is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to price"
 msgstr ""
 
-#: SystemParameters.php:465
+#: SystemParameters.php:471
 msgid "Allowed Over Receive Proportion"
 msgstr ""
 
-#: SystemParameters.php:467
+#: SystemParameters.php:473
 msgid "If check quantity charged vs delivery quantity is set to yes then this proportion determines the percentage by which invoices can be overcharged with respect to delivery"
 msgstr ""
 
-#: SystemParameters.php:470
+#: SystemParameters.php:476
 msgid "Purchase Order Allows Same Item Multiple Times"
 msgstr ""
 
-#: SystemParameters.php:477
+#: SystemParameters.php:483
 msgid "Sales Order Allows Same Item Multiple Times"
 msgstr ""
 
-#: SystemParameters.php:487
+#: SystemParameters.php:493
 msgid "January"
 msgstr ""
 
-#: SystemParameters.php:488
+#: SystemParameters.php:494
 msgid "February"
 msgstr ""
 
-#: SystemParameters.php:489
+#: SystemParameters.php:495
 msgid "March"
 msgstr ""
 
-#: SystemParameters.php:490
+#: SystemParameters.php:496
 msgid "April"
 msgstr ""
 
-#: SystemParameters.php:491
+#: SystemParameters.php:497
 msgid "May"
 msgstr ""
 
-#: SystemParameters.php:492
+#: SystemParameters.php:498
 msgid "June"
 msgstr ""
 
-#: SystemParameters.php:493
+#: SystemParameters.php:499
 msgid "July"
 msgstr ""
 
-#: SystemParameters.php:494
+#: SystemParameters.php:500
 msgid "August"
 msgstr ""
 
-#: SystemParameters.php:495
+#: SystemParameters.php:501
 msgid "September"
 msgstr ""
 
-#: SystemParameters.php:496
+#: SystemParameters.php:502
 msgid "October"
 msgstr ""
 
-#: SystemParameters.php:497
+#: SystemParameters.php:503
 msgid "November"
 msgstr ""
 
-#: SystemParameters.php:498
+#: SystemParameters.php:504
 msgid "December"
 msgstr ""
 
-#: SystemParameters.php:499
+#: SystemParameters.php:505
 msgid "Financial Year Ends On"
 msgstr ""
 
-#: SystemParameters.php:504
+#: SystemParameters.php:510
 msgid "Defining the month in which the financial year ends enables the system to provide useful defaults for general ledger reports"
 msgstr ""
 
-#: SystemParameters.php:507
+#: SystemParameters.php:513
 msgid "Report Page Length"
 msgstr ""
 
-#: SystemParameters.php:512
+#: SystemParameters.php:518
 msgid "Default Maximum Number of Records to Show"
 msgstr ""
 
-#: SystemParameters.php:514
+#: SystemParameters.php:520
 msgid "When pages have code to limit the number of returned records - such as select customer, select supplier and select item, then this will be the default number of records to show for a user who has not changed this for themselves in user settings."
 msgstr ""
 
-#: SystemParameters.php:518
+#: SystemParameters.php:524
 msgid "Maximum Size in KB of uploaded images"
 msgstr ""
 
-#: SystemParameters.php:520
+#: SystemParameters.php:526
 msgid "Picture files of items can be uploaded to the server. The system will check that files uploaded are less than this size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen."
 msgstr ""
 
-#: SystemParameters.php:524
+#: SystemParameters.php:530
 msgid "The directory where images are stored"
 msgstr ""
 
-#: SystemParameters.php:548
+#: SystemParameters.php:554
 msgid "The directory under which all image files should be stored. Image files take the format of ItemCode.jpg - they must all be .jpg files and the part code will be the name of the image file. This is named automatically on upload. The system will check to ensure that the image is a .jpg file"
 msgstr ""
 
-#: SystemParameters.php:553
+#: SystemParameters.php:559
 msgid "The directory where reports are stored"
 msgstr ""
 
-#: SystemParameters.php:581
+#: SystemParameters.php:587
 msgid "The directory under which all report pdf files should be created in. A separate directory is recommended"
 msgstr ""
 
-#: SystemParameters.php:586
+#: SystemParameters.php:592
 msgid "Only allow secure socket connections"
 msgstr ""
 
-#: SystemParameters.php:591
+#: SystemParameters.php:597
 msgid "Force connections to be only over secure sockets - ie encrypted data only"
 msgstr ""
 
-#: SystemParameters.php:595
+#: SystemParameters.php:601
 msgid "Perform Database Maintenance At Logon"
 msgstr ""
 
-#: SystemParameters.php:598 SystemParameters.php:600
+#: SystemParameters.php:604 SystemParameters.php:606
 msgid "Daily"
 msgstr ""
 
-#: SystemParameters.php:613 SystemParameters.php:615
+#: SystemParameters.php:619 SystemParameters.php:621
 msgid "Never"
 msgstr ""
 
-#: SystemParameters.php:619
+#: SystemParameters.php:625
 msgid "Uses the function DB_Maintenance defined in ConnectDB_XXXX.inc to perform database maintenance tasks, to run at regular intervals - checked at each and every user login"
+msgstr ""
+
+#: SystemParameters.php:629
+msgid "Enable Wacko Wiki Integration"
+msgstr ""
+
+#: SystemParameters.php:642
+msgid "This feature makes webERP show links to a free form company knowlege base using the unfortunately named wacko wiki. This allows sharing of important company information - about customers, suppliers and products and the set up of work flow menus and/or company procedure documentation"
+msgstr ""
+
+#: SystemParameters.php:645
+msgid "Wiki Path"
+msgstr ""
+
+#: SystemParameters.php:647
+msgid "The path to the wacko wiki installation to form the basis of wiki URLs - this should be the directory on the web-server where the wiki is installed. The wiki must be installed on the same web-server as webERP"
 msgstr ""
 
 #: TaxAuthorities.php:8 TaxAuthorityRates.php:124
@@ -19228,6 +19258,10 @@ msgstr ""
 msgid "Please login here"
 msgstr ""
 
+#: includes/Login.php:17 includes/header.inc:10 includes/header.inc:18
+msgid "ISO-8859-1"
+msgstr ""
+
 #: includes/Login.php:50
 msgid "Company"
 msgstr ""
@@ -19515,10 +19549,6 @@ msgstr ""
 
 #: includes/GLPostings.inc:36
 msgid "Could not insert first period"
-msgstr ""
-
-#: includes/header.inc:10 includes/header.inc:18
-msgid "ISO-8859-1"
 msgstr ""
 
 #: includes/header.inc:44
