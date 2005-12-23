@@ -199,5 +199,6 @@ INSERT INTO `reportlinks` VALUES ('worksorders', 'locations', 'worksorders.locco
 INSERT INTO `reportlinks` VALUES ('worksorders', 'stockmaster', 'worksorders.stockid=stockmaster.stockid');
 INSERT INTO `reportlinks` VALUES ('www_users', 'locations', 'www_users.defaultlocation=locations.loccode');
 
-
+INSERT INTO config VALUES('WackoWiki','1');
+INSERT INTO config VALUES('WikiPath','wiki');
 

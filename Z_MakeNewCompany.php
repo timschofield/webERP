@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 15;
 
@@ -130,6 +130,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/reports');
 			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/EDI_Sent');
 			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/EDI_Pending');
+			$Result = mkdir('./companies/' . $_POST['NewCompany'] . '/reportwriter');
 				
 			/*OK Now upload the logo */
 			if ($UploadTheLogo=='Yes'){
