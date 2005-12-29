@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 $PageSecurity = 10;
 
 include('includes/session.inc');
@@ -31,15 +31,19 @@ if (isset($_POST['submit'])) {
 				salestype = '" . $_POST['SalesType'] . "'
 			WHERE salesglpostings.id = $SelectedSalesPostingID";
 		$msg = _('The sales GL posting record has been updated');
-	} elseif ($InputError !=1) {
+	} else {
 
 	/*Selected Sales GL Posting is null cos no item selected on first time round so must be	adding a record must be submitting new entries in the new SalesGLPosting form */
 	
 		/* Verify if item doesn't exists to insert it, otherwise just refreshes the page. */
-		$sql = "SELECT count(*) FROM salesglpostings WHERE area='" . $_POST['Area'] . "' AND stkcat='" . $_POST['StkCat'] . "' AND salestype='" . $_POST['SalesType'] . "'";
+		$sql = "SELECT count(*) FROM salesglpostings 
+				WHERE area='" . $_POST['Area'] . "' 
+				AND stkcat='" . $_POST['StkCat'] . "' 
+				AND salestype='" . $_POST['SalesType'] . "'";
+				
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
-		if ($myrow == 0) {
+		if ($myrow[0] == 0) {
 			$sql = 'INSERT INTO salesglpostings (
 						salesglcode,
 						discountglcode,
@@ -55,13 +59,17 @@ if (isset($_POST['submit'])) {
 						)";
 			$msg = _('The new sales GL posting record has been inserted');
 		} else {
-			// Here could be a warning message.
+			prnMsg (_('A sales gl posting account already exists for the selected area, stock category, salestype'),'warn');
+			$InputError = true;
 		}
 	}
 	//run the SQL from either of the above possibilites
 
 	$result = DB_query($sql,$db);
-	prnMsg($msg,'success');
+	
+	if ($InputError==false){
+		prnMsg($msg,'success');
+	}
 	unset ($SelectedSalesPostingID);
 	unset($_POST['SalesGLCode']);
 	unset($_POST['DiscountGLCode']);
@@ -73,13 +81,11 @@ if (isset($_POST['submit'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 	$sql="DELETE FROM salesglpostings
-		WHERE id=$SelectedSalesPostingID
-		AND stkcat!='ANY'
-		AND area != 'AN'";
+		WHERE id=$SelectedSalesPostingID";
 
 	$result = DB_query($sql,$db);
 
-	prnMsg('<P>' . _('Sales posting record has been deleted') . '<BR><I>(' . _('That is provided it was not a default sales posting code for any stock category or location') . '. ' . _('To delete a default posting code a new default must be defined') . ', ' . _('then it must be changed to a non default code') . '. ' . _('Only then can it be deleted') .')</I>','success');
+	prnMsg( _('Sales posting record has been deleted'),'success');
 }
 
 if (!isset($SelectedSalesPostingID)) {
