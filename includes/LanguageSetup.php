@@ -38,8 +38,8 @@ if (function_exists('gettext')){
 	PHPGettext integration by Braian Gomez
 	http://www.vairux.com/
 */
-	require_once('includes/php-gettext/streams.php');
-	require_once('includes/php-gettext/gettext.php');
+	require_once($PathPrefix . 'includes/php-gettext/streams.php');
+	require_once($PathPrefix . 'includes/php-gettext/gettext.php');
 	if(isset($_SESSION['Language'])){
 		$Locale = $_SESSION['Language'];
 	} else {

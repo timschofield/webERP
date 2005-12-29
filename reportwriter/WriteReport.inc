@@ -592,18 +592,37 @@ function GenerateCSVFile($Data, $Prefs) {
 function GeneratePDFFile($Data, $Prefs) {
 	$pdf=new PDF();
 	$pdf->ReportTable($Data);
-//	$pdfcode = $pdf->Output();
-//	$FileSize = strlen($pdfcode);
-//	header("Content-type: application/x-pdf");
-//	header("Content-disposition: attachment; filename=".$Prefs['reportname'].".pdf; size=".$FileSize);
-	// additional headers needed for MSIE
-	header('Pragma: cache');
-	header('Cache-Control: public, must-revalidate, max-age=0');
-//	header('Connection: close');
-//	header('Expires: '.date('r', time()+60*60));
-//	header('Last-Modified: '.date('r', time()));
-	$pdf->Stream($Prefs['reportname'].'.pdf');
+	$pdfcode = $pdf->output();
+	$len = strlen($pdfcode);
+	$ReportName = ReplaceNonAllowedCharacters($Prefs['reportname']) .'.pdf';
+	
+	header('Content-type: application/pdf');
+	header('Content-Length: ' . $len);
+	header('Content-Disposition: inline; filename=' . $ReportName);
+	header('Expires: 0');
+	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+	header('Pragma: public');
+	
+	$pdf->Stream($ReportName);
 	exit(); // needs to be here to properly render the pdf file.
 }
 
+
+function ReplaceNonAllowedCharacters ($String) {
+	$DodgyCharactersArray = array('"',' ', '&',"'");
+	$ContainsDodgyCharacters = true;
+	while ($ContainsDodgyCharacters == true){
+		
+		$ContainsDodgyCharacters = false; //assume all dodgy characters are replaced on the last pass
+		
+		foreach ($DodgyCharactersArray as $DodgyCharacter){
+			if (strpos($String,$DodgyCharacter,0)){
+				$StrPointer = strpos($String,$DodgyCharacter,0);
+				$String = substr($String,0,$StrPointer) . '_' . substr($String,$StrPointer+1);
+				$ContainsDodgyCharacters=true;
+			}
+		}
+	}
+	return $String;
+}
 ?>

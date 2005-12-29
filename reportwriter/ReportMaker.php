@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $DirectoryLevelsDeep =1;
 $PathPrefix = '../';
 $PageSecurity = 1; // set security level for webERP
@@ -153,8 +153,12 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 					$IncludePage = 'forms/ReportsPageUpdate.html';
 				}
 			} else { // send the report (Both of these function exit the script (the point of no return)
-				if ($_POST['todo']==RPT_BTN_EXPCSV) GenerateCSVFile($ReportData, $Prefs);
-				if ($_POST['todo']==RPT_BTN_EXPPDF) GeneratePDFFile($ReportData, $Prefs);
+				if ($_POST['todo']==RPT_BTN_EXPCSV) {
+					GenerateCSVFile($ReportData, $Prefs);
+				}
+				if ($_POST['todo']==RPT_BTN_EXPPDF) {
+					GeneratePDFFile($ReportData, $Prefs);
+				}
 			}
 			break;
 

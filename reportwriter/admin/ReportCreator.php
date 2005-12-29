@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 /*
 This script has the responsibility to gather basic information necessary to retrieve data for reports. 
@@ -17,20 +17,19 @@ Export: Handled in action=step2, calls ExportReport to save report as a text fil
 Import: Handled in action=step8, calls an import function to read the setup information from a text file.
 */
 
-$DirectoryLevelsDeep =2;
+$DirectoryLevelsDeep = 2;
 $PathPrefix = '../../';
 $PageSecurity = 2; // set security level for webERP
 
 // Initialize some constants
-$dirpath = '../..';	// disk path to the web app root directory
 $ReportLanguage = 'en_US';				// default language file 
 define('DBReports','reports');		// name of the databse holding the main report information (ReportID)
 define('DBRptFields','reportfields');	// name of the database holding the report fields
-define ('DefRptPath','../languages/'.$ReportLanguage.'/');	// path to default reports
-define ('MyDocPath','../languages/'.$ReportLanguage.'/');	// path to user saved documents
+define ('DefRptPath',$PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/reportwriter/');	// path to default reports
+define ('MyDocPath',$PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/reportwriter/');	// path to user saved documents
 
 // Fetch necessary include files for webERP
-require ('../../includes/session.inc');
+require ($PathPrefix . 'includes/session.inc');
 
 // Fetch necessary include files for report creator
 require_once('../languages/' . $ReportLanguage . '/reports.php');
@@ -688,9 +687,9 @@ switch ($_GET['action']) {
 
 $title = $FormParams['title']; // fetch the title for the header.inc file
 
-include ($dirpath.'/includes/header.inc');
+include ($PathPrefix . 'includes/header.inc');
 if ($usrMsg) foreach ($usrMsg as $temp) prnmsg($temp['message'],$temp['level']);
 include ($FormParams['IncludePage']);
-include ($dirpath.'/includes/footer.inc');
+include ($PathPrefix . 'includes/footer.inc');
 // End main body
 ?>
