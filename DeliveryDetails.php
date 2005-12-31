@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -15,6 +15,7 @@ include('includes/session.inc');
 $title = _('Order Delivery Details');
 include('includes/header.inc');
 include('includes/FreightCalculation.inc');
+
 
 
 if (!isset($_SESSION['Items']) OR !isset($_SESSION['Items']->DebtorNo)){
@@ -579,12 +580,10 @@ if (!$_SESSION['Items']->DeliveryDate) {
 	$_SESSION['Items']->DeliveryDate = Date($_SESSION['DefaultDateFormat'],$EarliestDispatch);
 }
 
-if($_SESSION['DefaultDateFormat']=="d/m/Y")$jdf=0;
-else $jdf=1;
 
 echo '<TR>
 	<TD>'. _('Dispatch Date') .":</TD>
-	<TD><input type='Text' SIZE=15 MAXLENGTH=14 name='DeliveryDate' value=" . $_SESSION['Items']->DeliveryDate . "></TD>
+	<TD><input type='Text' SIZE=15 MAXLENGTH=14 name='DeliveryDate' value='" . $_SESSION['Items']->DeliveryDate . "'></TD>
 </TR>";
 
 echo '<TR>

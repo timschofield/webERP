@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 /*
 This script has the responsibility to gather basic information necessary to retrieve data for reports. 
@@ -20,6 +20,8 @@ Import: Handled in action=step8, calls an import function to read the setup info
 $DirectoryLevelsDeep = 2;
 $PathPrefix = '../../';
 $PageSecurity = 2; // set security level for webERP
+// Fetch necessary include files for webERP
+require ($PathPrefix . 'includes/session.inc');
 
 // Initialize some constants
 $ReportLanguage = 'en_US';				// default language file 
@@ -28,8 +30,6 @@ define('DBRptFields','reportfields');	// name of the database holding the report
 define ('DefRptPath',$PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/reportwriter/');	// path to default reports
 define ('MyDocPath',$PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/reportwriter/');	// path to user saved documents
 
-// Fetch necessary include files for webERP
-require ($PathPrefix . 'includes/session.inc');
 
 // Fetch necessary include files for report creator
 require_once('../languages/' . $ReportLanguage . '/reports.php');
