@@ -21,13 +21,13 @@ $CreateTo = $LastPeriodRow[0];;
 
 /*First off see if there are any chartdetails missing create recordset of */
 
-$sql = 'SELECT chartmaster.accountcode, periods.periodno 
-		FROM chartmaster INNER JOIN periods ON True 
+$sql = 'SELECT chartmaster.accountcode, MIN(periods.periodno) AS startperiod 
+		FROM chartmaster CROSS JOIN periods 
 			LEFT JOIN chartdetails ON chartmaster.accountcode = chartdetails.accountcode 
 				AND periods.periodno = chartdetails.period
 		WHERE (periods.periodno BETWEEN '  . $CreateFrom . ' AND ' . $CreateTo . ') 
 		AND chartdetails.accountcode IS NULL
-		ORDER BY chartmaster.accountcode, periods.periodno';
+		GROUP BY chartmaster.accountcode';
 
 $ChartDetailsNotSetUpResult = DB_query($sql,$db,_('Could not test to see that all chart detail records properly initiated'));
 
@@ -36,12 +36,11 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 	/*Now insert the chartdetails records that do not already exist */
 	$sql = 'INSERT INTO chartdetails (accountcode, period)
 			SELECT chartmaster.accountcode, periods.periodno 
-		FROM chartmaster INNER JOIN periods ON True 
+		FROM chartmaster CROSS JOIN periods 
 			LEFT JOIN chartdetails ON chartmaster.accountcode = chartdetails.accountcode 
 				AND periods.periodno = chartdetails.period
 		WHERE (periods.periodno BETWEEN '  . $CreateFrom . ' AND ' . $CreateTo . ') 
 		AND chartdetails.accountcode IS NULL';
-	
 	
 	$ErrMsg = _('Inserting new chart details records required failed because');
 	$InsChartDetailsRecords = DB_query($sql,$db,$ErrMsg);
@@ -64,7 +63,7 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 	
 		DB_query('BEGIN',$db);
 		$BFwd = '';
-		$BFwdBudget =''
+		$BFwdBudget ='';
 		$CFwd=0;
 		$CFwdBudget=0;
 		while ($myrow = DB_fetch_array($ChartDetails)){

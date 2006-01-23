@@ -1,11 +1,11 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
-
-$title = _('Specifiy Credited Controlled Items');
 $PageSecurity = 3;
 include('includes/session.inc');
+
+$title = _('Specifiy Credited Controlled Items');
 
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/header.inc');

@@ -333,10 +333,43 @@ Ideally, all the opening transactions should be entered immediately prior to a m
 <font size="+1"><b>Reconciling the Debtors Ledger Control Account</b></font>
 <br><br>
 It is important to check that the balance on all customers accounts from the aged listing agrees to the control account in the old system, in both local and overseas currency. The balance in the general ledger (of all customer balances) would normally be entered as a manual journal, but the amount of this journal should agree to the amount as per the customer listing. Of course balances entered in different currencies will have a different local value depending upon the rate at which they were entered. There is a facility to value all the currency balances in local currency looking at the rate at which each transaction was entered. This is the script Z_CurrencyDebtorBalances.php. A similar facility is available for suppliers balances. A double check should be done account by account before going live. Once all customer accounts are reconciled and entered (and double checked) the General Ledger interface should be re-enabled from the Company preferences screen (System Setup Tab). The system will then maintain the control account in the general ledger which should always agree to the list of balances.
-br><br>
-<font size="+1"><b>Bringing On General Ledger Balances</b></font>
 <br><br>
-Consider a trial balance with the entries:
+<font size="+1"><b>Bank Account Balances and Other General Ledger Balances</b></font>
+<br><br>
+General ledger is the accounting hub - and an understanding of the accounting concepts is important in grasping what needs to be done to setup webERP 
+correctly. This document is not a text on general accounting but a brief introduction is necessary.
+<br><br>
+The general ledger like accounts receivable is made up of many accounts although unlike accounts receivable the balances are not related to how much 
+customers owe you - they represent the amounts that the business has:
+<br>
+<UL>
+<LI> in stock</LI>
+<LI>in vehicles and equipment</LI>
+<LI>in the bank</LI>
+<LI>in total customer balances</LI>
+<LI>in total amounts due to suppliers</LI>
+<LI>had contributed to it as loans or sharecapital from investors</LI>
+</UL>
+When these accounts are all listed the report is called a <i>"Balance Sheet"</I> since the value of all of these items will be equal to the accumulated 
+profits net of any drawings or dividends paid to the investors.
+<br><br>
+The general ledger also keeps track of how much is spent on expenses and is charged out to customers as sales - whether or not the amounts are actually 
+paid to the supplier of the expense or the sale has been paid by the customer. It is really only interesting to look at these accounts over a period to see what the income and expenses of the business have been and produce the <i>"Profit and Loss Statement"</I>. However, in bringing a business on to webERP it is the balances that collectively represent the total worth of the business (in historical terms) that are important to record - these are called balance sheet accounts (the expense and revenue accounts are called profit and loss accounts). 
+<br><br>
+<B>Double Entry Bookkeeping</B>
+<br><br>
+When the balance of every account in the general ledger is added together the net result should always be zero - that's because every entry into the 
+general ledger is made up of two parts a debit (a positive amount) and a credit (a negative amount). eg. We spend $100 on fuel - the debit goes to 
+vehicle expenses and the credit goes to the bank account (since the bank balance has gone down by $100) and the accumulated costs of running the 
+vehicle has gone up by $100.
+<br><br>
+Literally every entry is recorded twice once with the account that increases and once with the account that is reduced. This is why when the debit 
+balances are added together with the credit balances the result should always be zero. Historically when accountants checked their manual books to ensure 
+that every entry was recorded correctly they listed all the balances and added them up on a report called a "Trial Balance" - to check that the 
+general ledger did in fact balance. Today a trial balance off the computer is a list of all the general ledger balances - with a check total at the end to 
+show that the computer has done its job recording journals correctly.
+<br><br>
+As a simple example consider a trial balance with the entries:
 <br><br>
 <TABLE>
 <TR><TD>Account</TD><TD>Amount</TD></TR>
@@ -350,14 +383,33 @@ Consider a trial balance with the entries:
 <TR><TD>Check Total</TD><TD ALIGN=RIGHT>0.00</TD></TR>
 <TR><TD></TD><TD><HR></TD></TR>
 </TABLE>
-<BR><BR>
-The system stops the user from entering journals to general ledger accounts defined as bank accounts. The Bank Account must be defined as such first.
-<BR><BR>
-However, general ledger receipts can be entered and an analysis of the general ledger entries that make up the receipt can also be entered. This is how general ledger balances can be brought on. Creating a general ledger receipt for 1,000.00 with an analysis of the receipt as above - -5,000 Debtors control, 2,000 Creditors control, -10,000 Motor vehicles, 3,000 loan and 11,000 accumulated profits will leave a balance of 1,000 received into the bank account. It is important to date the receipt in the month prior to when the new webERP system will commence activity. In this way the brought forward balances for the new period will be correct.
+ <br><br>     
+The system stops the user from entering journals to general ledger accounts defined as bank accounts. The Bank Account must be defined as such first - from the setup tab - Bank Accounts.
 <br><br>
-Where there are several bank accounts each defined with different general ledger accounts, then a receipt should be entered to each bank account with a balance (or a payment if the bank account is overdrawn) - these balances can be cleared through postings to a suspense account.
-<BR><BR>
-It is important that the general ledger entries to the debtors control account and creditors control account tie up to the total of the functional currency balances of the AR and AP respectively.
+However, under general ledger - Bank Account Receipts - it is possible to enter general ledger receipts - a button to enter "General Ledger Receipt" allows receipts to be entered without selecting a customer account. The analysis of the other side of the general ledger entries that make up the receipt can then be entered. This is how general ledger balances should be brought on. 
+<br><br>
+Create a general ledger receipt for 1,000.00 to make the opening bank account balance correct. When creating this receipt the user must select the general 
+ledger accounts that the deposit represents you can enter as many general ledger accounts with different amounts against each. In a normal situation 
+the receipt may be for example the sale of a vehicle - where the appropriate general ledger account may be the loss on fixed asset disposals and maybe 
+some of it may also be sales tax/GST/VAT. However in the case of entering the opening balances the $1,000 deposit in our example is actually
+<br><br>
+<TABLE>
+<TR><TD>Debtors Control</TD><TD ALIGN=RIGHT>5,000.00</TD></TR>
+<TR><TD>Creditors Control</TD><TD ALIGN=RIGHT>(2,000.00)</TD></TR>
+<TR><TD>Motor Vehicles</TD><TD ALIGN=RIGHT>10,000.00</TD></TR>
+<TR><TD>Loan</TD><TD ALIGN=RIGHT>(3,000.00)</TD></TR>
+<TR><TD>Accum Profits</TD><TD ALIGN=RIGHT>(11,000.00)</TD></TR>
+<TR><TD></TD></TR>
+<TR><TD>Total bank deposit</TD><TD ALIGN=RIGHT>$1,000</TD></TR>
+</TABLE>
+<br><br>
+So entering in the receipt the analysis as above - -5,000 Debtors control, 2,000 Creditors control, -10,000 Motor vehicles, 3,000 loan and 11,000 accumulated profits will agree then to the 1,000 received into the bank account. It is important to date the receipt in the month prior to when the new webERP system will commence activity. In this way the brought forward balances for the new period will be correct.
+<br><br>
+Where there are several bank accounts each defined with different general ledger accounts, then a receipt should be entered to each bank account with a 
+balance (or a payment if the bank account is overdrawn) - these balances can be cleared through postings to a suspense account.
+<br><br>
+It is important that the general ledger entries to the debtors control account and creditors control account tie up to the total of the functional currency 
+balances of the AR and AP respectively.
 <BR><BR>
 <font size="+1"><b>Finally</b></font>
 <br><br>

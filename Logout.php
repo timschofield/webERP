@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 $PageSecurity =1;
 
 include('includes/session.inc');
@@ -8,7 +8,7 @@ include('includes/session.inc');
 <html>
 <head>
     <title><?php echo $_SESSION['CompanyRecord']['coyname'];?> - <?php echo _('Log Off'); ?></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+    <meta http-equiv="Content-Type" content="text/html; charset=<?php echo _('ISO-8859-1'); ?>" />
     <link rel="stylesheet" href="css/<?php echo $theme;?>/login.css" type="text/css" />
 </head>
 

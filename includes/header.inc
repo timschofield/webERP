@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
@@ -17,6 +17,9 @@
 	echo '<link REL="icon" HREF="' . $rootpath.'/favicon.ico">';
 	echo '<meta http-equiv="Content-Type" content="text/html; charset=' . _('ISO-8859-1') . '">';
 	echo '<LINK HREF="'.$rootpath. '/css/'. $_SESSION['Theme'] .'/default.css" REL="stylesheet" TYPE="text/css">';
+	/*
+	echo '<script src="' . $rootpath .'/includes/num_date.js" language="JavaScript"></script>';
+	*/
 	
 	echo '</HEAD>';
 

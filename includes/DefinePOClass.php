@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 /* Definition of the PurchOrder class to hold all the information for a purchase order and delivery
 */
 
@@ -65,7 +65,7 @@ Class PurchOrder {
 								$UOM,
 								$GLCode,
 								$ReqDelDate,
-								$ShiptRef = 0,
+								$ShiptRef,
 								$JobRef,
 								$QtyInv,
 								$QtyRecd,
@@ -152,7 +152,7 @@ Class LineDetails {
 
 	Var $SerialItems;  /*An array holding the batch/serial numbers and quantities in each batch*/
 
-	function LineDetails ($LineNo, $StockItem, $Controlled, $Serialised, $Qty, $ItemDescr,  $Prc, $UOM, $GLCode, $ReqDelDate, $ShiptRef, $JobRef, $QtyInv, $QtyRecd, $GLActName, $DecimalPlaces){
+	function LineDetails ($LineNo, $StockItem, $Controlled, $Serialised, $Qty, $ItemDescr,  $Prc, $UOM, $GLCode, $ReqDelDate, $ShiptRef =0, $JobRef, $QtyInv, $QtyRecd, $GLActName, $DecimalPlaces){
 
 	/* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNo = $LineNo;

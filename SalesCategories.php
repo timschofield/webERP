@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 11;
 
@@ -168,7 +168,7 @@ if (isset($_POST['submit'])  && $EditName == 1 ) { // Creating or updating a cat
 // Calculate Path for navigation 
 
 $CategoryPath = '<A href="'.$_SERVER['PHP_SELF'] . '?' . SID . 
-			'&ParentCategory=0">'.htmlentities(_('Main')).'</A>' . "&nbsp;\\&nbsp;";
+			'&ParentCategory=0">' . htmlentities(_('Main'), ENT_QUOTES, _('ISO-8859-1')) . '</A>' . "&nbsp;\\&nbsp;";
 $TempPath = '';
 $TmpParentID = $ParentCategory;
 $LastParentName = '';
@@ -180,7 +180,7 @@ for($Buzy = (isset($TmpParentID) && ($TmpParentID <> ''));
 	if( $result ) {
 		if (DB_num_rows($result) > 0) {
 			$row = DB_fetch_array($result);
-			$LastParentName = htmlentities($row['salescatname']);
+			$LastParentName = $LastParentName = htmlentities($row['salescatname'], ENT_QUOTES, _('ISO-8859-1'));
 			$TempPath = '<A href="'.$_SERVER['PHP_SELF'] . '?' . SID . 
 				'&ParentCategory='.$TmpParentID.'">'.$LastParentName . 
 				'</A>'."&nbsp;\\&nbsp;".$TempPath;
@@ -379,9 +379,9 @@ if($result && DB_num_rows($result)) {
 		if ( !array_keys( $stockids, $myrow['stockid']  ) ) {
 			// Only if the StockID is not already selected
 			echo '<option value="'.$myrow['stockid'].'">'.
-				htmlentities($myrow['stockid']).
+				htmlentities($myrow['stockid'], ENT_QUOTES, _('ISO-8859-1')) .
 				'&nbsp;-&nbsp;&quot;'.
-				htmlentities($myrow['description']).'&quot;';
+				htmlentities($myrow['description'], ENT_QUOTES, _('ISO-8859-1')) . '&quot;';
 		}
 	}
 	echo '</select>';
@@ -428,8 +428,8 @@ if($result ) {
 				$k=1;
 			}
 			
-			echo '<TD>' . htmlentities($myrow['stockid']) . '</TD>';
-			echo '<TD>' . htmlentities($myrow['description']) . '</TD>';
+			echo '<TD>' . htmlentities($myrow['stockid'], ENT_QUOTES, _('ISO-8859-1')) . '</TD>';
+			echo '<TD>' . htmlentities($myrow['description'], ENT_QUOTES, _('ISO-8859-1')) . '</TD>';
 			echo '<TD><A href="'.$_SERVER['PHP_SELF'] . '?' . SID . 
 					'&ParentCategory='.$ParentCategory.'&DelStockID='.$myrow['stockid'].'">'. 
 					_('Remove').

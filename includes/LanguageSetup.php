@@ -45,7 +45,13 @@ if (function_exists('gettext')){
 	} else {
 		$Locale = $DefaultLanguage;
 	}
-	$LangFile = 'locale/' . $Locale . '/LC_MESSAGES/messages.mo';
+	
+	if (isset($PathPrefix)) {
+		$LangFile = $PathPrefix . 'locale/' . $Locale . '/LC_MESSAGES/messages.mo';
+	} else {
+		$LangFile = 'locale/' . $Locale . '/LC_MESSAGES/messages.mo';
+	}
+	
 	if (file_exists($LangFile)){
 		$input = new FileReader($LangFile);
 		$PhpGettext = new gettext_reader($input);
