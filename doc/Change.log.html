@@ -1,5 +1,10 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
+<P>28/1/06 Joerg Aldinger fixed messages in GLAccounts.php also added DB_escape_string to sql queries
+<P>28/1/06 Greg Morehead - PDFOrdersInvoices.php - did not deal with multiple lines of the same item correctly - now adds these order lines together
+<P>28/1/06 Muz - ConfirmDispatch_Invoice.php made quantity input field wider to accomodate larger decimal places and quantities.
+<P>28/1/06 Muz upgrade_3.01-3.02.sql didn't have a line to insert the new SO_AllowSameItemMultipleTimes variable into the config table
+<P>25/1/06 session.inc now DB_escape_string() posted characters into the login text boxes
 <P>22/1/06 Clay Mokus CreditItemsControlled.php moved session.inc above call to _()
 <P>22/1/06 Finjon Kiang login.php required reference to the character set in the Content Type tag.
 <P>22/1/06 Finjon Kiang htmlentities calls in SalesCategories.php now have reference to the character set

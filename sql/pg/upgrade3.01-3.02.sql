@@ -48,6 +48,7 @@ ALTER TABLE taxauthrates ADD FOREIGN KEY (dispatchtaxprovince) REFERENCES taxpro
 ALTER TABLE stockmaster RENAME taxlevel TO taxcatid;
 UPDATE config SET confname='DefaultTaxCategory'  WHERE confname='DefaultTaxLevel';
 INSERT INTO config VALUES('FreightTaxCategory','1');
+INSERT INTO config VALUES('SO_AllowSameItemMultipleTimes','1');
 
 CREATE TABLE supptranstaxes ( supptransid int NOT NULL REFERENCES supptrans (id),taxauthid int NOT NULL REFERENCES taxauthorities (taxid), taxamount double precision NOT NULL, PRIMARY KEY  (supptransid,taxauthid));
 CREATE INDEX idxstt_taxauthid on supptranstaxes (taxauthid);

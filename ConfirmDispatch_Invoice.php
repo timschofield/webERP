@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -300,7 +300,7 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 
 	} else {
 
-		echo '<TD ALIGN=RIGHT><input type=text name="' . $LnItm->LineNumber .'_QtyDispatched" maxlength=5 SIZE=6 value="' . $LnItm->QtyDispatched . '"></TD>';
+		echo '<TD ALIGN=RIGHT><input type=text name="' . $LnItm->LineNumber .'_QtyDispatched" maxlength=12 SIZE=12 value="' . $LnItm->QtyDispatched . '"></TD>';
 
 	}
 	$DisplayDiscountPercent = number_format($LnItm->DiscountPercent*100,2) . '%';

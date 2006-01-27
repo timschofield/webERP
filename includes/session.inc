@@ -1,7 +1,10 @@
 <?php
-/* $Revision: 1.43 $ */
+/* $Revision: 1.44 $ */
  
-if (!isset($PathPrefix)) $PathPrefix='';
+if (!isset($PathPrefix)) {
+	$PathPrefix='';
+}
+
 include($PathPrefix . 'config.php');
         
 if (isset($SessionSavePath)){
@@ -64,9 +67,9 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 				www_users.userid,
 				www_users.language
 			FROM www_users
-			WHERE www_users.userid='" . $_POST['UserNameEntryField'] . "' 
-			AND (www_users.password='" . CryptPass($_POST['Password']) . "'
-			OR  www_users.password='" . $_POST['Password'] . "')";
+			WHERE www_users.userid='" . DB_escape_string($_POST['UserNameEntryField']) . "' 
+			AND (www_users.password='" . CryptPass(DB_escape_string($_POST['Password'])) . "'
+			OR  www_users.password='" . DB_escape_string($_POST['Password']) . "')";
 		$Auth_Result = DB_query($sql, $db);
 		
 		// Populate session variables with data base results
@@ -97,8 +100,8 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 			}
 	
 			$sql = "UPDATE www_users SET lastvisitdate='". date("Y-m-d H:i:s") ."' 
-					WHERE www_users.userid='" . $_POST['UserNameEntryField'] . "' 
-					AND www_users.password='" . CryptPass($_POST['Password']) ."'";
+					WHERE www_users.userid='" . DB_escape_string($_POST['UserNameEntryField']) . "' 
+					AND www_users.password='" . CryptPass(DB_escape_string($_POST['Password'])) ."'";
 			$Auth_Result = DB_query($sql, $db);
 			
 			/*get the security tokens that the user has access to */

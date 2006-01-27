@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 10;
 include('includes/session.inc');
@@ -33,13 +33,13 @@ if (isset($_POST['submit'])) {
 
 	if ($SelectedAccount AND $InputError !=1) {
 
-		$sql = "UPDATE chartmaster SET accountname='" . $_POST['AccountName'] . "',
+		$sql = "UPDATE chartmaster SET accountname='" . DB_escape_string($_POST['AccountName']) . "',
 						group_='" . $_POST['Group'] . "'
 					WHERE accountcode = $SelectedAccount";
 
 		$ErrMsg = _('Could not update the account because');
 		$result = DB_query($sql,$db,$ErrMsg);
-		$msg = _('The general ledger account has been updated');
+		prnMsg _('The general ledger account has been updated'),'success');
 	} elseif ($InputError !=1) {
 
 	/*SelectedAccount is null cos no item selected on first time round so must be adding a	record must be submitting new entries */
@@ -48,8 +48,8 @@ if (isset($_POST['submit'])) {
 		$sql = 'INSERT INTO chartmaster (accountcode,
 						accountname,
 						group_)
-					VALUES (' . $_POST['AccountCode'] . ",
-						'" . $_POST['AccountName'] . "',
+					VALUES (' . DB_escape_string($_POST['AccountCode']) . ",
+						'" . DB_escape_string($_POST['AccountName']) . "',
 						'" . $_POST['Group'] . "')";
 		$result = DB_query($sql,$db,$ErrMsg);
 
@@ -64,15 +64,13 @@ if (isset($_POST['submit'])) {
 				FROM periods';
 		$result = DB_query($sql,$db,$ErrMsg);
 
-		$msg = _('The new general ledger account has been added');
-
+		prnMsg_('The new general ledger account has been added'),'success');
 	}
 
 	unset ($_POST['Group']);
 	unset ($_POST['AccountCode']);
 	unset ($_POST['AccountName']);
 	unset($SelectedAccount);
-	prnMsg($msg,'success');
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button

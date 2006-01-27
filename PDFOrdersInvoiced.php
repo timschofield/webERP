@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 3;
 include ('includes/session.inc');
@@ -67,7 +67,6 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	include('includes/PDFStarter.php');
 }
 
-
 if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 	$sql= "SELECT salesorders.orderno,
                       salesorders.debtorno,
@@ -81,16 +80,26 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
                       stockmaster.description,
                       stockmaster.units,
                       stockmaster.decimalplaces,
-                      salesorderdetails.quantity,
-                      salesorderdetails.qtyinvoiced,
-                      salesorderdetails.completed
-                FROM salesorders
+                      SUM(salesorderdetails.quantity) AS totqty,
+                      SUM(salesorderdetails.qtyinvoiced) AS totqtyinvoiced
+                  FROM salesorders
                      INNER JOIN salesorderdetails
                      ON salesorders.orderno = salesorderdetails.orderno
                      INNER JOIN stockmaster
                      ON salesorderdetails.stkcode = stockmaster.stockid
                 WHERE orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
-                      AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
+                      AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
+	      GROUP BY salesorders.orderno,
+				salesorders.debtorno,
+				salesorders.branchcode,
+				salesorders.customerref,
+				salesorders.orddate,
+				salesorders.fromstkloc,
+				salesorderdetails.stkcode,
+				stockmaster.description,
+				stockmaster.units,
+				stockmaster.decimalplaces";
+
 
 } elseif ($_POST['CategoryID']!='All' AND $_POST['Location']=='All') {
 	$sql= "SELECT salesorders.orderno,
@@ -105,9 +114,8 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
                       stockmaster.description,
                       stockmaster.units,
                       stockmaster.decimalplaces,
-                      salesorderdetails.quantity,
-                      salesorderdetails.qtyinvoiced,
-                      salesorderdetails.completed
+                      SUM(salesorderdetails.quantity) AS totqty,
+                      SUM(salesorderdetails.qtyinvoiced) AS totqtyinvoiced
                 FROM salesorders
                      INNER JOIN salesorderdetails
                      ON salesorders.orderno = salesorderdetails.orderno
@@ -115,8 +123,17 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
                      ON salesorderdetails.stkcode = stockmaster.stockid
                 WHERE stockmaster.categoryid ='" . $_POST['CategoryID'] . "'
                       AND orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
-                      AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
-
+                      AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
+	      GROUP BY salesorders.orderno,
+				salesorders.debtorno,
+				salesorders.branchcode,
+				salesorders.customerref,
+				salesorders.orddate,
+				salesorders.fromstkloc,
+				salesorderdetails.stkcode,
+				stockmaster.description,
+				stockmaster.units,
+				stockmaster.decimalplaces";
 
 } elseif ($_POST['CategoryID']=='All' AND $_POST['Location']!='All') {
 	$sql= "SELECT salesorders.orderno,
@@ -131,9 +148,8 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
                       stockmaster.description,
                       stockmaster.units,
                       stockmaster.decimalplaces,
-                      salesorderdetails.quantity,
-                      salesorderdetails.qtyinvoiced,
-                      salesorderdetails.completed
+                      SUM(salesorderdetails.quantity) AS totqty,
+                      SUM(salesorderdetails.qtyinvoiced) AS totqtyinvoiced
                 FROM salesorders
                      INNER JOIN salesorderdetails
                      ON salesorders.orderno = salesorderdetails.orderno
@@ -141,8 +157,17 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
                      ON salesorderdetails.stkcode = stockmaster.stockid
                 WHERE salesorders.fromstkloc ='" . $_POST['Location'] . "'
                       AND orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
-                      AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
-
+                      AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
+	      GROUP BY salesorders.orderno,
+				salesorders.debtorno,
+				salesorders.branchcode,
+				salesorders.customerref,
+				salesorders.orddate,
+				salesorders.fromstkloc,
+				salesorderdetails.stkcode,
+				stockmaster.description,
+				stockmaster.units,
+				stockmaster.decimalplaces";
 
 } elseif ($_POST['CategoryID']!='All' AND $_POST['location']!='All'){
 
@@ -156,9 +181,8 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
                       stockmaster.description,
                       stockmaster.units,
                       stockmaster.decimalplaces,
-                      salesorderdetails.quantity,
-                      salesorderdetails.qtyinvoiced,
-                      salesorderdetails.completed
+                      SUM(salesorderdetails.quantity) AS totqty,
+                      SUM(salesorderdetails.qtyinvoiced) AS totqtyinvoiced
                 FROM salesorders
                      INNER JOIN salesorderdetails
                      ON salesorders.orderno = salesorderdetails.orderno
@@ -167,10 +191,18 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
                 WHERE STOCKMASTER.CATEGORYID ='" . $_POST['CategoryID'] . "'
                       AND salesorders.fromstkloc ='" . $_POST['Location'] . "'
                       AND orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
-                      AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
-
+                      AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
+		  GROUP BY salesorders.orderno,
+				salesorders.debtorno,
+				salesorders.branchcode,
+				salesorders.customerref,
+				salesorders.orddate,
+				salesorders.fromstkloc,
+				salesorderdetails.stkcode,
+				stockmaster.description,
+				stockmaster.units,
+				stockmaster.decimalplaces";
 }
-
 
 $sql .= ' ORDER BY salesorders.orderno';
 
@@ -257,11 +289,11 @@ while ($myrow=DB_fetch_array($Result)){
        
        $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$myrow['stkcode'], 'left');
        $LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,120,$FontSize,$myrow['description'], 'left');
-       $LeftOvers = $pdf->addTextWrap($Left_Margin+180,$YPos,60,$FontSize,number_format($myrow['quantity'],$myrow['decimalplaces']), 'right');
-       $LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,60,$FontSize,number_format($myrow['qtyinvoiced'],$myrow['decimalplaces']), 'right');
+       $LeftOvers = $pdf->addTextWrap($Left_Margin+180,$YPos,60,$FontSize,number_format($myrow['totqty'],$myrow['decimalplaces']), 'right');
+       $LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,60,$FontSize,number_format($myrow['totqtyinvoiced'],$myrow['decimalplaces']), 'right');
 
-       if ($myrow['quantity']>$myrow['qtyinvoiced']){
-             $LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,60,$FontSize,number_format($myrow['quantity']-$myrow['qtyinvoiced'],$myrow['decimalplaces']), 'right');
+       if ($myrow['totqty']>$myrow['totqtyinvoiced']){
+             $LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,60,$FontSize,number_format($myrow['totqty']-$myrow['totqtyinvoiced'],$myrow['decimalplaces']), 'right');
        } else {
              $LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,60,$FontSize,_('Complete'), 'left');
        }
@@ -280,7 +312,10 @@ while ($myrow=DB_fetch_array($Result)){
 			debtortrans.transno,
 	 		stockmoves.price, 
 			-stockmoves.qty AS quantity
-		FROM debtortrans INNER JOIN stockmoves ON debtortrans.type = stockmoves.type AND debtortrans.transno=stockmoves.transno inner join systypes on debtortrans.type=systypes.typeid
+		FROM debtortrans INNER JOIN stockmoves 
+			ON debtortrans.type = stockmoves.type 
+			AND debtortrans.transno=stockmoves.transno 
+			INNER JOIN systypes ON debtortrans.type=systypes.typeid
 		WHERE debtortrans.order_ =' . $OrderNo . "
 		AND stockmoves.stockid ='" . $myrow['stkcode'] . "'";
 		
@@ -338,5 +373,4 @@ header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 header('Pragma: public');
 
 $pdf->stream();
-
 ?>

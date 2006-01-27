@@ -109,11 +109,11 @@ UPDATE stockmaster SET taxcatid=3 WHERE taxcatid>3;
 
 ALTER TABLE stockmaster ADD FOREIGN KEY (taxcatid) REFERENCES taxcategories (taxcatid);
 
-ALTER TABLE `salesorderdetails` ADD `orderlineno` INT DEFAULT '0' NOT NULL FIRST ;
 ALTER TABLE `salesorderdetails` DROP PRIMARY KEY;
+ALTER TABLE `salesorderdetails` ADD `orderlineno` INT DEFAULT '0' NOT NULL FIRST ;
 
 INSERT INTO config VALUES('FreightTaxCategory','1');
-
+INSERT INTO config VALUES('SO_AllowSameItemMultipleTimes','1');
 
 CREATE TABLE `supptranstaxes` (
   `supptransid` int(11) NOT NULL default '0',

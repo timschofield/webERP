@@ -35,8 +35,10 @@ class Cpdf extends PDF_Language {
 		$this->cMargin = 0;
 		
 		// Next three lines should be here for any fonts genarted with 'makefont' utility
-		if ($_SESSION['Language']=='zh_CN'){
+		if ($_SESSION['Language']=='zh_TW' or $_SESSION['Language']=='zh_HK'){
 			$this->AddBig5Font();
+		} elseif ($_SESSION['Language']=='zh_CN'){
+			$this->AddGBFont();
 		}elseif ($_SESSION['Language']=='ja_JP'){
 			$this->AddSJISFont();
 		}elseif ($_SESSION['Language']=='ko_KR'){

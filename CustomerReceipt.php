@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -135,7 +135,7 @@ if (isset($_POST['CommitBatch'])){
 						'',
 						'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
 						" . $PeriodNo . ",
-						'" . $_SESSION['ReceiptBatch']->ReceiptType  . " " . $ReceiptItem->Narrative . "',
+						'" . DB_escape_string($_SESSION['ReceiptBatch']->ReceiptType  . " " . $ReceiptItem->Narrative) . "',
 						'',
 						" . $_SESSION['ReceiptBatch']->ExRate . ",
 						" . -$ReceiptItem->Amount . ",
