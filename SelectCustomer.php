@@ -1,11 +1,13 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 2;
 
 include('includes/session.inc');
 $title = _('Search Customers');
 include('includes/header.inc');
+
+include('includes/Wiki.php');
 
 $msg="";
 if (!isset($_SESSION['CustomerID'])){ //initialise if not already done
@@ -126,10 +128,8 @@ If ($_POST['Select']!="" OR
 	echo '<a href="' . $rootpath . '/CustomerInquiry.php?CustomerID=' . $_SESSION['CustomerID'] . '">' . _('Customer Transaction Inquiries') . '</a><BR>';
 	echo '<a href="' . $rootpath . '/SelectSalesOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Modify Outstanding Sales Orders') . '</a><BR>';
 	echo '<a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Order Inquiries') . '</a><BR>';
-	
-	if ($_SESSION['WackoWiki']==1){
-		echo '<A TARGET="_BLANK" HREF="../' . $_SESSION['WikiPath'] . '/index.php?wakka=Customer' .  $_SESSION['CustomerID'] . '">' . _('Wiki Customer Knowlege Base') . '</A><BR>';
-	}
+
+	wikiLink('Customer', $_SESSION['CustomerID']);
 	
 	echo '</TD><TD WIDTH=50%>';
 	

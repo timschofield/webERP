@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 2;
 
@@ -8,6 +8,8 @@ include('includes/session.inc');
 $title = _('Search Inventory Items');
 
 include('includes/header.inc');
+
+include('includes/Wiki.php');
 
 $msg='';
 
@@ -426,10 +428,9 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		echo '<A HREF="' . $rootpath . '/BOMInquiry.php?' . SID . '&StockID=' . $StockID . '">' . _('View Costed Bill Of Material') . '</A><BR>';
 		echo '<A HREF="' . $rootpath . '/WhereUsedInquiry.php?' . SID . '&StockID=' . $StockID . '">' . _('Where This Item Is Used') . '</A><BR>';
 	}
-	
-	if ($_SESSION['WackoWiki']==1){
-		echo '<A TARGET="_BLANK" HREF="../' . $_SESSION['WikiPath'] . '/index.php?wakka=Product' .  $StockID . '">' . _('Wiki Product Knowlege Base') . '</A><BR>';
-	}
+
+	wikiLink('Product', $StockID);
+
 	echo '</TD><TD>';
 
 	/*Stock Maintenance Options */

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 $PageSecurity=1;
 
@@ -16,7 +16,7 @@ if (isset($_POST['Modify'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	if ($_POST['DisplayRecordsMax'] < 0){
+	if ($_POST['DisplayRecordsMax'] <= 0){
 		$InputError = 1;
 		prnMsg(_('The Maximum Number of Records on Display entered must not be negative') . '. ' . _('0 will default to system setting'),'error');
 	}

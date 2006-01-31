@@ -1,11 +1,13 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 2;
 
 include('includes/session.inc');
 $title = _('Search Suppliers');
 include('includes/header.inc');
+
+include('includes/Wiki.php');
 
 $msg='';
 /*
@@ -131,12 +133,9 @@ if (isset($_SESSION['SupplierID'])){
 	echo '<BR>';
 
 	echo "<BR><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Receive / Outstanding Purchase Orders') . '</A>';
-	echo "<BR><A HREF='$rootpath/PO_SelectPurchOrder.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('View All Purchase Orders') . '</A>';
+	echo "<BR><A HREF='$rootpath/PO_SelectPurchOrder.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('View All Purchase Orders') . '</A><BR>';
 
-	if ($_SESSION['WackoWiki']==1){
-		echo '<BR><A TARGET="_BLANK" HREF="../' . $_SESSION['WikiPath'] . '/index.php?wakka=Supplier' .  $_SESSION['SupplierID'] . '">' . _('Wiki Supplier Knowlege Base') . '</A><BR>';
-	}
-	
+	wikiLink('Supplier', $_SESSION['SupplierID']);	
 	
 	echo '<BR>';
 
@@ -207,44 +206,44 @@ echo "</TD>
 
 
 If (isset($result) AND !isset($SingleSupplierReturned)) {
-  $ListCount=DB_num_rows($result);
-  $ListPageMax=ceil($ListCount/$_SESSION['DisplayRecordsMax']);
-
-  if (isset($_POST['Next'])) {
-    if ($_POST['PageOffset'] < $ListPageMax) {
-	    $_POST['PageOffset'] = $_POST['PageOffset'] + 1;
-    }
+	$ListCount=DB_num_rows($result);
+	$ListPageMax=ceil($ListCount/$_SESSION['DisplayRecordsMax']);
+	
+	if (isset($_POST['Next'])) {
+		if ($_POST['PageOffset'] < $ListPageMax) {
+			$_POST['PageOffset'] = $_POST['PageOffset'] + 1;
+		}
 	}
 
-  if (isset($_POST['Previous'])) {
-    if ($_POST['PageOffset'] > 1) {
-	    $_POST['PageOffset'] = $_POST['PageOffset'] - 1;
-    }
-  }
+	if (isset($_POST['Previous'])) {
+		if ($_POST['PageOffset'] > 1) {
+			$_POST['PageOffset'] = $_POST['PageOffset'] - 1;
+		}
+	}
 
-  echo "<CENTER>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+  	echo "<CENTER>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 
-  echo "<select name='PageOffset'>";
+  	echo "<select name='PageOffset'>";
 
-  $ListPage=1;
-  while($ListPage<=$ListPageMax) {
-	  if ($ListPage==$_POST['PageOffset']) {
-  		echo '<option value=' . ($ListPage) . ' selected>' . $ListPage . '</option>';
-	  } else {
-		echo '<option value=' . $ListPage .'>' . $ListPage . '</option>';
-	  }
-	  $ListPage=$ListPage+1;
-  }
-  echo "</select>
-  <INPUT TYPE=SUBMIT NAME='Go' VALUE='" . _('Go') . "'>
-  <INPUT TYPE=SUBMIT NAME='Previous' VALUE='" . _('Previous') . "'>
-  <INPUT TYPE=SUBMIT NAME='Next' VALUE='" . _('Next') . "'>
-  <INPUT TYPE=hidden NAME='Search' VALUE='" . _('Search Now') . "'>";
+  	$ListPage=1;
+  	while($ListPage<=$ListPageMax) {
+		if ($ListPage==$_POST['PageOffset']) {
+  			echo '<option value=' . ($ListPage) . ' selected>' . $ListPage . '</option>';
+		} else {
+			echo '<option value=' . $ListPage .'>' . $ListPage . '</option>';
+	  	}
+	  	$ListPage=$ListPage+1;
+  	}
+  	echo "</select>
+  	<INPUT TYPE=SUBMIT NAME='Go' VALUE='" . _('Go') . "'>
+  	<INPUT TYPE=SUBMIT NAME='Previous' VALUE='" . _('Previous') . "'>
+  	<INPUT TYPE=SUBMIT NAME='Next' VALUE='" . _('Next') . "'>
+  	<INPUT TYPE=hidden NAME='Search' VALUE='" . _('Search Now') . "'>";
 
-  echo '<br><br>';
+  	echo '<br><br>';
 
-  echo '<BR><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
-  $tableheader = "<TR class='tableheader'>
+  	echo '<BR><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
+  	$tableheader = "<TR class='tableheader'>
   		<TD class='tableheader'>" . _('Code') . "</TD>
 		<TD class='tableheader'>" . _('Supplier Name') . "</TD>
 		<TD class='tableheader'>" . _('Currency') . "</TD>
@@ -257,11 +256,11 @@ If (isset($result) AND !isset($SingleSupplierReturned)) {
 
 	$j = 1;
 
-  $RowIndex = 0;
+  	$RowIndex = 0;
 
-  if (DB_num_rows($result)<>0){
- 	DB_data_seek($result, ($_POST['PageOffset']-1)*$_SESSION['DisplayRecordsMax']);
-  }
+  	if (DB_num_rows($result)<>0){
+ 		DB_data_seek($result, ($_POST['PageOffset']-1)*$_SESSION['DisplayRecordsMax']);
+  	}
 
 	while (($myrow=DB_fetch_array($result)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 

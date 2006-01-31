@@ -317,6 +317,6 @@ INSERT INTO `reportlinks` VALUES ('www_users', 'locations', 'www_users.defaultlo
 INSERT INTO `reportlinks` VALUES ('locations', 'www_users', 'locations.loccode=www_users.defaultlocation');
 
 
-INSERT INTO config VALUES('WackoWiki','1');
+INSERT INTO config VALUES('WikiApp','Disabled');
 INSERT INTO config VALUES('WikiPath','wiki');
 

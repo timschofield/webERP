@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity =15;
 
@@ -190,8 +190,8 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['CheckCreditLimits'] != $_POST['X_CheckCreditLimits'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_CheckCreditLimits'])."' WHERE confname = 'CheckCreditLimits'";
 		}
-		if ($_SESSION['WackoWiki'] != $_POST['X_WackoWiki'] ) {
-			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_WackoWiki'])."' WHERE confname = 'WackoWiki'";
+		if ($_SESSION['WikiApp'] != $_POST['X_WikiApp'] ) {
+			$sql[] = "UPDATE config SET confvalue = '". DB_escape_string($_POST['X_WikiApp'])."' WHERE confname = 'WikiApp'";
 		}
 		if ($_SESSION['WikiPath'] != $_POST['X_WikiPath'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". DB_escape_string($_POST['X_WikiPath'])."' WHERE confname = 'WikiPath'";
@@ -624,23 +624,18 @@ echo '<TR><TD>' . _('Perform Database Maintenance At Logon') . ':</TD>
 	echo '</SELECT></TD>
 	<TD>' . _('Uses the function DB_Maintenance defined in ConnectDB_XXXX.inc to perform database maintenance tasks, to run at regular intervals - checked at each and every user login') . '</TD>
 	</TR>';
-	
-/*Perform Database maintenance DB_Maintenance*/
-echo '<TR><TD>' . _('Enable Wacko Wiki Integration') . ':</TD>
-	<TD><SELECT Name="X_WackoWiki">';
-	if ($_SESSION['WackoWiki']=='1'){
-		echo '<OPTION SELECTED VALUE="1">'._('Enabled');
-	} else {
-		echo '<OPTION VALUE="1">'._('Enabled');
-	}
-	if ($_SESSION['WackoWiki']=='0'){
-		echo '<OPTION SELECTED VALUE="0">'._('Disabled');
-	} else {
-		echo '<OPTION VALUE="0">'._('Disabled');
-	}
-	echo '</SELECT></TD>
-	<TD>' . _('This feature makes webERP show links to a free form company knowlege base using the unfortunately named wacko wiki. This allows sharing of important company information - about customers, suppliers and products and the set up of work flow menus and/or company procedure documentation') . '</TD>
-	</TR>';
+
+// YearEnd
+$WikiApplications = array( _('Disabled'),
+							_('WackoWiki'),
+							_('MediaWiki') );	
+echo '<TR><TD>' . _('Wiki application:') . ':</TD>
+	<TD><SELECT Name="X_WikiApp">';
+for ($i=0; $i < sizeof($WikiApplications); $i++ ) {
+	echo '<OPTION '.($_SESSION['WikiApp'] == $WikiApplications[$i] ? 'SELECTED ' : '').'VALUE="'.$WikiApplications[$i].'">'.$WikiApplications[$i];
+}
+echo '</SELECT></TD>
+	<TD>' . _('This feature makes webERP show links to a free form company knowlege base using the unfortunately named wacko wiki. This allows sharing of important company information - about customers, suppliers and products and the set up of work flow menus and/or company procedure documentation') .'</TD></TR>';
 
 	echo '<TR><TD>' . _('Wiki Path') . ':</TD>
 	<TD><input type="Text" Name="X_WikiPath" SIZE=40 MAXLENGTH=40 value="' . $_SESSION['WikiPath'] . '"></TD>
