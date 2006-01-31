@@ -8,6 +8,9 @@
 *	Janusz Dobrowolski <janusz@iron.from.pl>
 *	David Luo <davidluo188@yahoo.com.cn>
 	extended for Chinese/Japanese/Korean support by Phil Daintree
+	
+	Chinese GB&BIG5 support by Edward Yang <edward.yangcn@gmail.com>
+	
 */
 
 define('FPDF_FONTPATH','./fonts/');
@@ -59,8 +62,10 @@ class Cpdf extends PDF_Language {
 		if(strpos($FontName, 'Bold')) {
 			$type = 'B';
 		}
-		if ($_SESSION['Language']=='zh_CN'){
+		if ($_SESSION['Language']=='zh_TW' or $_SESSION['Language']=='zh_HK'){
 			$FontName = 'Big5';
+		} elseif ($_SESSION['Language']=='zh_CN'){
+			$FontName = 'GB';
 		} elseif ($_SESSION['Language']=='ja_JP'){
 			$FontName = 'SJIS';
 		} elseif ($_SESSION['Language']=='ko_KR'){

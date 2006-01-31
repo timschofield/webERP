@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity =15;
 
@@ -635,11 +635,11 @@ for ($i=0; $i < sizeof($WikiApplications); $i++ ) {
 	echo '<OPTION '.($_SESSION['WikiApp'] == $WikiApplications[$i] ? 'SELECTED ' : '').'VALUE="'.$WikiApplications[$i].'">'.$WikiApplications[$i];
 }
 echo '</SELECT></TD>
-	<TD>' . _('This feature makes webERP show links to a free form company knowlege base using the unfortunately named wacko wiki. This allows sharing of important company information - about customers, suppliers and products and the set up of work flow menus and/or company procedure documentation') .'</TD></TR>';
+	<TD>' . _('This feature makes webERP show links to a free form company knowlege base using a wiki. This allows sharing of important company information - about customers, suppliers and products and the set up of work flow menus and/or company procedures documentation') .'</TD></TR>';
 
 	echo '<TR><TD>' . _('Wiki Path') . ':</TD>
 	<TD><input type="Text" Name="X_WikiPath" SIZE=40 MAXLENGTH=40 value="' . $_SESSION['WikiPath'] . '"></TD>
-	<TD>' . _('The path to the wacko wiki installation to form the basis of wiki URLs - this should be the directory on the web-server where the wiki is installed. The wiki must be installed on the same web-server as webERP') .'</TD></TR>';
+	<TD>' . _('The path to the wiki installation to form the basis of wiki URLs - this should be the directory on the web-server where the wiki is installed. The wiki must be installed on the same web-server as webERP') .'</TD></TR>';
 	
 	
 echo '</TABLE><input type="Submit" Name="submit" value="' . _('Update') . '"></CENTER></FORM>';
