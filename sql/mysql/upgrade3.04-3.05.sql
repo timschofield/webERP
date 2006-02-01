@@ -319,4 +319,4 @@ INSERT INTO `reportlinks` VALUES ('locations', 'www_users', 'locations.loccode=w
 
 INSERT INTO config VALUES('WikiApp','Disabled');
 INSERT INTO config VALUES('WikiPath','wiki');
-
+INSERT INTO config VALUES('ProhibitJournalsToControlAccounts','0');

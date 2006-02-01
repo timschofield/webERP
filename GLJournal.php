@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 include('includes/DefineJournalClass.php');
 
@@ -29,6 +29,7 @@ if (!isset($_SESSION['JournalDetail'])){
 		$_SESSION['JournalDetail']->BankAccounts[$i]= $Act[0];
 		$i++;
 	}
+	
 }
 
 if (isset($_POST['JournalProcessDate'])){
@@ -52,7 +53,6 @@ if ($_POST['CommitBatch']==_('Accept and Process Journal')){
 */
 
 	$PeriodNo = GetPeriod($_SESSION['JournalDetail']->JnlDate,$db);
-
 
      /*Start a transaction to do the whole lot inside */
 	$result = DB_query('BEGIN',$db);
@@ -127,9 +127,23 @@ if ($_POST['CommitBatch']==_('Accept and Process Journal')){
 
    if ($_POST['GLManualCode']!='' AND is_numeric($_POST['GLManualCode'])){
 				// If a manual code was entered need to check it exists and isnt a bank account
+	$AllowThisPosting =true; //by default
+	if ($_SESSION['ProhibitJournalsToControlAccounts'] ==1){
+		if ($_SESSION['CompanyRecord']['gllink_debtors'] == '1' AND $_POST['GLManualCode'] == $_SESSION['CompanyRecord']['debtorsact']){
+			prnMsg(_('GL Journals involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration'),'warn');
+			$AllowThisPosting = false;
+		}
+		if ($_SESSION['CompanyRecord']['gllink_creditors'] == '1' AND $_POST['GLManualCode'] == $_SESSION['CompanyRecord']['creditorsact']){
+			prnMsg(_('GL Journals involving the creditors control account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration'),'warn');
+			$AllowThisPosting = false;
+		}
+	}
 	if (in_array($_POST['GLManualCode'], $_SESSION['JournalDetail']->BankAccounts)) {
 		prnMsg(_('GL Journals involving a bank account cannot be entered') . '. ' . _('Bank account general ledger entries must be entered by either a bank account receipt or a bank account payment'),'info');
-	} else {
+		$AllowThisPosting =false;
+	} 
+	
+	if ($AllowThisPosting) {
 		$SQL = 'SELECT accountname FROM chartmaster WHERE accountcode=' . $_POST['GLManualCode'];
 		$Result=DB_query($SQL,$db);
 		if (DB_num_rows($Result)==0){
@@ -141,9 +155,24 @@ if ($_POST['CommitBatch']==_('Accept and Process Journal')){
 		}
 	}
    } else {
+   	$AllowThisPosting =true; //by default
+	if ($_SESSION['ProhibitJournalsToControlAccounts'] ==1){
+		if ($_SESSION['CompanyRecord']['gllink_debtors'] == '1' AND $_POST['GLCode'] == $_SESSION['CompanyRecord']['debtorsact']){
+			prnMsg(_('GL Journals involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration'),'warn');
+			$AllowThisPosting = false;
+		}
+		if ($_SESSION['CompanyRecord']['gllink_creditors'] == '1' AND $_POST['GLCode'] == $_SESSION['CompanyRecord']['creditorsact']){
+			prnMsg(_('GL Journals involving the creditors control account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration'),'warn');
+			$AllowThisPosting = false;
+		}
+	}
+	
 	if (in_array($_POST['GLCode'], $_SESSION['JournalDetail']->BankAccounts)) {
 		prnMsg(_('GL Journals involving a bank account cannot be entered') . '. ' . _('Bank account general ledger entries must be entered by either a bank account receipt or a bank account payment'),'warn');
-	} else {
+		$AllowThisPosting = false;
+	} 
+	
+	if ($AllowThisPosting){
 
 		$SQL = 'SELECT accountname FROM chartmaster WHERE accountcode=' . $_POST['GLCode'];
 		$Result=DB_query($SQL,$db);

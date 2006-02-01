@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 $PageSecurity =15;
 
@@ -196,7 +196,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['WikiPath'] != $_POST['X_WikiPath'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". DB_escape_string($_POST['X_WikiPath'])."' WHERE confname = 'WikiPath'";
 		}
-		
+		if ($_SESSION['ProhibitJournalsToControlAccounts'] != $_POST['X_ProhibitJournalsToControlAccounts'] ) {
+			$sql[] = "UPDATE config SET confvalue = '". DB_escape_string($_POST['X_ProhibitJournalsToControlAccounts'])."' WHERE confname = 'ProhibitJournalsToControlAccounts'";
+		}
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 0 ) {
 			$result = DB_query('BEGIN',$db,$ErrMsg);
@@ -625,10 +627,10 @@ echo '<TR><TD>' . _('Perform Database Maintenance At Logon') . ':</TD>
 	<TD>' . _('Uses the function DB_Maintenance defined in ConnectDB_XXXX.inc to perform database maintenance tasks, to run at regular intervals - checked at each and every user login') . '</TD>
 	</TR>';
 
-// YearEnd
 $WikiApplications = array( _('Disabled'),
-							_('WackoWiki'),
-							_('MediaWiki') );	
+					_('WackoWiki'),
+					_('MediaWiki') );
+
 echo '<TR><TD>' . _('Wiki application:') . ':</TD>
 	<TD><SELECT Name="X_WikiApp">';
 for ($i=0; $i < sizeof($WikiApplications); $i++ ) {
@@ -637,10 +639,20 @@ for ($i=0; $i < sizeof($WikiApplications); $i++ ) {
 echo '</SELECT></TD>
 	<TD>' . _('This feature makes webERP show links to a free form company knowlege base using a wiki. This allows sharing of important company information - about customers, suppliers and products and the set up of work flow menus and/or company procedures documentation') .'</TD></TR>';
 
-	echo '<TR><TD>' . _('Wiki Path') . ':</TD>
+echo '<TR><TD>' . _('Wiki Path') . ':</TD>
 	<TD><input type="Text" Name="X_WikiPath" SIZE=40 MAXLENGTH=40 value="' . $_SESSION['WikiPath'] . '"></TD>
 	<TD>' . _('The path to the wiki installation to form the basis of wiki URLs - this should be the directory on the web-server where the wiki is installed. The wiki must be installed on the same web-server as webERP') .'</TD></TR>';
 	
+echo '<TR><TD>' . _('Prohibit GL Journals to Control Accounts') . ':</TD>
+	<TD><SELECT Name="X_ProhibitJournalsToControlAccounts">';
+if ($_SESSION['ProhibitJournalsToControlAccounts']=='1'){
+		echo  '<OPTION SELECTED value="1">' . _('Prohibited');
+		echo  '<OPTION value="0">' . _('Allowed');
+} else {
+		echo  '<OPTION value="1">' . _('Prohibited');
+		echo  '<OPTION SELECTED value="0">' . _('Allowed');
+}
+echo '</SELECT></TD><TD>' . _('Setting this to prohibited prevents accidentally entering a journal to the automatically posted and reconciled control accounts for creditors (AP) and debtors (AR)') . '</TD></TR>';
 	
 echo '</TABLE><input type="Submit" Name="submit" value="' . _('Update') . '"></CENTER></FORM>';
 

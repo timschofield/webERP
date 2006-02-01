@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 $PageSecurity =3;
 
 
@@ -178,6 +178,7 @@ if (!$_GET['InvoiceNumber'] AND !$_SESSION['ProcessingCredit']) {
 
 					while ($SerialItemsRow = DB_fetch_array($SerialItemsResult)){
 						$_SESSION['CreditItems']->LineItems[$LineNumber]->SerialItems[$SerialItemsRow['serialno']] = new SerialItem($SerialItemsRow['serialno'], -$SerialItemsRow['moveqty']);
+						$_SESSION['CreditItems']->LineItems[$LineNumber]->QtyDispatched -= $SerialItemsRow['moveqty'];
 					}
 				} /* end if the item is a controlled item */
 			} /* loop thro line items from stock movement records */
@@ -330,12 +331,14 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 		/*Need to list the taxes applicable to this line */
 	echo '<TD>';
 	$i=0;
-	foreach ($_SESSION['CreditItems']->LineItems[$LnItm->LineNumber]->Taxes AS $Tax) {
-		if ($i>0){
-			echo '<BR>';
+	if (is_array($_SESSION['CreditItems']->LineItems[$LnItm->LineNumber]->Taxes) ){
+		foreach ($_SESSION['CreditItems']->LineItems[$LnItm->LineNumber]->Taxes AS $Tax) {
+			if ($i>0){
+				echo '<BR>';
+			}
+			echo $Tax->TaxAuthDescription;
+			$i++;
 		}
-		echo $Tax->TaxAuthDescription;
-		$i++;
 	}
 	echo '</TD>';
 	echo '<TD ALIGN=RIGHT>';
@@ -343,20 +346,22 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 	$i=0; // initialise the number of taxes iterated through
 	$TaxLineTotal =0; //initialise tax total for the line
 	
-	foreach ($LnItm->Taxes AS $Tax) {
-		if ($i>0){
-			echo '<BR>';
+	if (is_array($LnItm->Taxes) ){
+		foreach ($LnItm->Taxes AS $Tax) {
+			if ($i>0){
+				echo '<BR>';
+			}
+			echo '<input type=text name="' . $LnItm->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" maxlength=4 SIZE=4 value="' . $Tax->TaxRate*100 . '">';
+			$i++;
+			if ($Tax->TaxOnTax ==1){
+				$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * ($LineTotal + $TaxLineTotal));
+				$TaxLineTotal += ($Tax->TaxRate * ($LineTotal + $TaxLineTotal));
+			} else {
+				$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * $LineTotal);
+				$TaxLineTotal += ($Tax->TaxRate * $LineTotal);
+			}
+			$TaxGLCodes[$Tax->TaxAuthID] = $Tax->TaxGLCode;
 		}
-		echo '<input type=text name="' . $LnItm->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" maxlength=4 SIZE=4 value="' . $Tax->TaxRate*100 . '">';
-		$i++;
-		if ($Tax->TaxOnTax ==1){
-			$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * ($LineTotal + $TaxLineTotal));
-			$TaxLineTotal += ($Tax->TaxRate * ($LineTotal + $TaxLineTotal));
-		} else {
-			$TaxTotals[$Tax->TaxAuthID] += ($Tax->TaxRate * $LineTotal);
-			$TaxLineTotal += ($Tax->TaxRate * $LineTotal);
-		}
-		$TaxGLCodes[$Tax->TaxAuthID] = $Tax->TaxGLCode;
 	}
 	echo '</TD>';		
 	
@@ -381,7 +386,7 @@ if (!isset($_POST['ChargeFreightCost']) AND !isset($_SESSION['CreditItems']->Fre
 
 echo '<TR>
 	<TD COLSPAN=3 ALIGN=RIGHT>' . _('Freight cost charged on invoice') . '</TD>
-	<TD ALIGN=RIGHT>' . $_SESSION['Old_FreightCost'] . '</TD>
+	<TD ALIGN=RIGHT>' . number_format($_SESSION['Old_FreightCost'],2) . '</TD>
 	<TD></TD>
 	<TD COLSPAN=2 ALIGN=RIGHT>' . _('Credit Freight Cost') . "</TD>
 	<TD><INPUT TYPE=TEXT SIZE=6 MAXLENGTH=6 NAME='ChargeFreightCost' VALUE=" . $_SESSION['CreditItems']->FreightCost . "></TD>";
@@ -627,10 +632,11 @@ if (isset($_POST['ProcessCredit'])){
 			if ($_POST['CreditType']=='Return'){
 
 				$SQL = "UPDATE salesorderdetails
-					SET qtyinvoiced = qtyinvoiced - " . $OrderLine->QtyDispatched . ",
-					completed=0
-					WHERE orderno = " . $_SESSION['ProcessingCredit'] . "
-					AND stkcode = '" . $OrderLine->StockID . "'";
+							SET qtyinvoiced = qtyinvoiced - " . $OrderLine->QtyDispatched . ",
+								completed=0
+						WHERE orderno = " . $_SESSION['CreditItems']->OrderNo . "
+						AND stkcode = '" . $OrderLine->StockID . "'
+						AND orderlineno=" . $OrderLine->LineNo;
 
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order detail record could not be updated for the reduced quantity invoiced because');
 				$DbgMsg = _('The following SQL to update the sales order detail record was used');
@@ -639,8 +645,7 @@ if (isset($_POST['ProcessCredit'])){
 
 				if ($MBFlag=="B" OR $MBFlag=="M") {
 
-					$SQL = "UPDATE
-						locstock
+					$SQL = "UPDATE locstock
 						SET locstock.quantity = locstock.quantity + " . $OrderLine->QtyDispatched . "
 						WHERE locstock.stockid = '" . $OrderLine->StockID . "'
 						AND loccode = '" . $_SESSION['CreditItems']->Location . "'";
@@ -765,7 +770,6 @@ if (isset($_POST['ProcessCredit'])){
 					   $DbgMsg = _('The following SQL to insert the assembly components stock movement records was used');
 					   $Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
-
    					   if ($Component_MBFlag=="M" OR $Component_MBFlag=="B"){
 					   	$SQL = "UPDATE locstock
 							SET locstock.quantity = locstock.quantity + " . $AssParts['quantity'] * $OrderLine->QtyDispatched . "
@@ -857,7 +861,53 @@ if (isset($_POST['ProcessCredit'])){
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the stock movement records was used');
 				$Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
+				
+				$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
+				
+				/*Insert the StockSerialMovements and update the StockSerialItems  for controlled items*/
+				//echo "<div align=left><pre>"; var_dump($OrderLine); echo "</pre> </div>";
+				if ($OrderLine->Controlled ==1){
+					foreach($OrderLine->SerialItems as $Item){
+					/*We need to add the StockSerialItem record and The StockSerialMoves as well */
+						$SQL = "SELECT quantity from stockserialitems
+								WHERE stockid='" . $OrderLine->StockID . "'
+								AND loccode='" . $_SESSION['CreditItems']->Location . "'
+								AND serialno='" . $Item->BundleRef . "'";
+						
+						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be selected because');
+						$DbgMsg = _('The following SQL to select the serial stock item record was used');
+						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+						
+						if (DB_num_rows($Result)==0){
+							$SQL = "INSERT INTO stockserialitems (stockid, loccode, serialno, quantity)
+								VALUES
+								('" . $OrderLine->StockID . "', '" . $_SESSION['CreditItems']->Location . "', '" . $Item->BundleRef . "',  ". $Item->BundleQty .")";
 
+							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
+							$DbgMsg = _('The following SQL to update the serial stock item record was used');
+							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+						} else {
+						
+							$SQL = "UPDATE stockserialitems
+									SET quantity= quantity + " . $Item->BundleQty . "
+									WHERE stockid='" . $OrderLine->StockID . "'
+									AND loccode='" . $_SESSION['CreditItems']->Location . "'
+									AND serialno='" . $Item->BundleRef . "'";
+
+							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
+							$DbgMsg = _('The following SQL to update the serial stock item record was used');
+							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+						}
+
+						/* now insert the serial stock movement */
+
+						$SQL = "INSERT INTO stockserialmoves (stockmoveno, stockid, serialno, moveqty) VALUES (" . $StkMoveNo . ", '" . $OrderLine->StockID . "', '" . $Item->BundleRef . "', " . $Item->BundleQty . ")";
+						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
+						$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
+						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+
+					}/* foreach controlled item in the serialitems array */
+				} /*end if the orderline is a controlled item */
 
 			}  elseif ($_POST['CreditType']=='WriteOff') {
 			   /*Insert a stock movement coming back in to show the credit note and

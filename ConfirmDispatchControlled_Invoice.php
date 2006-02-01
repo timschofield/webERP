@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 $PageSecurity = 11;
@@ -58,10 +58,11 @@ echo '<br><FONT SIZE=2><B>'. _('Dispatch of up to').' '. number_format($LineItem
 
 /** vars needed by InputSerialItem : **/
 $StockID = $LineItem->StockID;
+$RecvQty = $LineItem->Quantity-$LineItem->QtyInv;
 $ItemMustExist = true;  /*Can only invoice valid batches/serial numbered items that exist */
 $LocationOut = $_SESSION['Items']->Location;
 $InOutModifier=1;
-$ShowExisting=true;
+$ShowExisting=false;
 
 include ('includes/InputSerialItems.php');
 
