@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 10;
 include('includes/session.inc');
@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
 
 		$ErrMsg = _('Could not update the account because');
 		$result = DB_query($sql,$db,$ErrMsg);
-		prnMsg _('The general ledger account has been updated'),'success');
+		prnMsg (_('The general ledger account has been updated'),'success');
 	} elseif ($InputError !=1) {
 
 	/*SelectedAccount is null cos no item selected on first time round so must be adding a	record must be submitting new entries */

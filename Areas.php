@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -28,9 +28,9 @@ if (isset($_POST['submit'])) {
 	if (strlen($_POST['AreaCode']) > 2) {
 		$InputError = 1;
 		prnMsg(_('The area code must be two characters or less long'),'error');
-	} elseif (strlen($_POST['AreaDescription']) >50) {
+	} elseif (strlen($_POST['AreaDescription']) >25) {
 		$InputError = 1;
-		prnMsg(_('The area description must be fifty characters or less long'),'error');
+		prnMsg(_('The area description must be twenty five characters or less long'),'error');
 	} elseif ( trim($_POST['AreaCode']) == '' ) {
 		$InputError = 1;
 		prnMsg(_('The area code may not be empty'),'error');

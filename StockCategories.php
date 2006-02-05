@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 11;
 
@@ -231,7 +231,7 @@ if (! isset($_GET['delete'])) {
 
 		echo '<INPUT TYPE=HIDDEN NAME="SelectedCategory" VALUE="' . $SelectedCategory . '">';
 		echo '<INPUT TYPE=HIDDEN NAME="CategoryID" VALUE="' . $_POST['CategoryID'] . '">';
-		echo '<CENTER><TABLE><TR><TD>' . _('Category Code') . ':</TD><TD>"' . $_POST['CategoryID'] . '"</TD></TR>';
+		echo '<CENTER><TABLE><TR><TD>' . _('Category Code') . ':</TD><TD>' . $_POST['CategoryID'] . '</TD></TR>';
 
 	} else { //end of if $SelectedCategory only do the else when a new record is being entered
 

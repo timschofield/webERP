@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 11;
 
@@ -180,7 +180,7 @@ for($Buzy = (isset($TmpParentID) && ($TmpParentID <> ''));
 	if( $result ) {
 		if (DB_num_rows($result) > 0) {
 			$row = DB_fetch_array($result);
-			$LastParentName = $LastParentName = htmlentities($row['salescatname'], ENT_QUOTES, _('ISO-8859-1'));
+			$LastParentName =  htmlentities($row['salescatname'], ENT_QUOTES, _('ISO-8859-1'));
 			$TempPath = '<A href="'.$_SERVER['PHP_SELF'] . '?' . SID . 
 				'&ParentCategory='.$TmpParentID.'">'.$LastParentName . 
 				'</A>'."&nbsp;\\&nbsp;".$TempPath;
