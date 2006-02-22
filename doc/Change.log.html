@@ -1,5 +1,11 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
-<P>
+<P>22/2/06 Danie - Z_DataExport.php - Fixed CVS Export, to adhere closer to CVS protocol, Fixed TaxLevel to TaxCatId 
+<P>22/2/06 Danie - Stocks.php - Fix Part descriptions so it displays when description contains html entities
+<P>22/2/06 Danie - SelectProduct.php - Time and Uppercase the StockCode and StockID fields, makes finding the product easier.
+<P>22/2/06 SelectOrderItems.php - added number formating to price display
+<P>22/2/06 Danie - PurchData.php Trim Supplier Description as spacing sometimes mess up the reports when it ends with newlines.
+<P>22/2/06 Ditesh - GLAccountInquiry.php Modified to show order based on Transaction Date.
+<P>22/2/06 Steve Credit_Invoice.php : Wrong Name Descriptor ->LineNo used Chaned to ->LineNumber.
 <P>3/2/06 Steve GLAccounts.php missing opening bracket in prnMsg call - removed extra quotes in StockCategories.php Areas.php was checking for 50 character area description but field only 25 in db
 <P>1/2/06 Z_Upgrade3.01-3.02.php  now checks to see if its been run already and exits nicely if it has
 <P>1/2/06 GLJournal.php SystemParameters.php new config parameter to prohibit entering GL journals directly to control accounts.
