@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 4;
 
@@ -20,6 +20,11 @@ if (isset($_GET['StockID'])){
 	$StockID = trim(strtoupper($_GET['StockID']));
 } elseif (isset($_POST['StockID'])){
 	$StockID = trim(strtoupper($_POST['StockID']));
+}
+
+
+if( isset($_POST['SupplierDescription']) ) {
+    $_POST['SupplierDescription'] = trim($_POST['SupplierDescription']);
 }
 
 
