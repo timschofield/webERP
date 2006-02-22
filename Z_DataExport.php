@@ -1,13 +1,34 @@
 <?php
 
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity=15;
 
 include('includes/session.inc');
 
 function stripcomma($str) { //because we're using comma as a delimiter
-	return str_replace(",", "", $str);
+    $str = trim($str);
+    $str = str_replace('"', '""', $str);
+    $str = str_replace("\r", "", $str);
+    $str = str_replace("\n", '\n', $str);
+    if($str == "" )
+        return $str;
+    else
+        return '"'.$str.'"';
+}
+
+function NULLToZero( &$Field ) {
+    if( is_null($Field) )
+        return '0';
+    else
+        return $Field;
+}
+
+function NULLToPrice( &$Field ) {
+    if( is_null($Field) )
+        return '-1';
+    else
+        return $Field;
 }
 
 
@@ -31,7 +52,7 @@ if ( isset($_POST['pricelist']) ) {
 				stockmaster.barcode,
 				stockmaster.units,
 				stockmaster.mbflag,
-				stockmaster.taxlevel,
+				stockmaster.taxcatid,
 				stockmaster.discontinued
 			FROM prices,
 				stockmaster,
@@ -57,16 +78,16 @@ if ( isset($_POST['pricelist']) ) {
 		exit;
 	}
 	
-	$CSVContent = stripcomma('stockid') . ', ' . 
-			stripcomma('description') . ', ' .
-			stripcomma('barcode') . ', ' .
-			stripcomma('units') . ', ' .
-			stripcomma('mbflag') . ', ' .
-			stripcomma('taxlevel') . ', ' .
-			stripcomma('discontinued') . ', ' .
-			stripcomma('price') . ', ' . 
-			stripcomma('qty') . ', ' . 
-			stripcomma('categoryid') . ', ' . 
+	$CSVContent = stripcomma('stockid') . ',' . 
+			stripcomma('description') . ',' .
+			stripcomma('barcode') . ',' .
+			stripcomma('units') . ',' .
+			stripcomma('mbflag') . ',' .
+			stripcomma('taxcatid') . ',' .
+			stripcomma('discontinued') . ',' .
+			stripcomma('price') . ',' . 
+			stripcomma('qty') . ',' . 
+			stripcomma('categoryid') . ',' . 
 			stripcomma('categorydescription') . "\n";
 			
 	While ($PriceList = DB_fetch_array($PricesResult,$db)){
@@ -87,16 +108,16 @@ if ( isset($_POST['pricelist']) ) {
 		
 		$DisplayUnitPrice = $PriceList['price'];
 				
-		$CSVContent .= (stripcomma($PriceList['stockid']) . ', ' . 
-			stripcomma($PriceList['description']) . ', ' . 
-			stripcomma($PriceList['barcode']) . ', ' .
-			stripcomma($PriceList['units']) . ', ' .
-			stripcomma($PriceList['mbflag']) . ', ' .
-			stripcomma($PriceList['taxlevel']) . ', ' .
-			stripcomma($PriceList['discontinued']) . ', ' .
-			stripcomma($DisplayUnitPrice) . ', ' . 
-			stripcomma($Qty) . ', ' .
-			stripcomma($PriceList['categoryid']) . ', ' .
+		$CSVContent .= (stripcomma($PriceList['stockid']) . ',' . 
+			stripcomma($PriceList['description']) . ',' . 
+			stripcomma($PriceList['barcode']) . ',' .
+			stripcomma($PriceList['units']) . ',' .
+			stripcomma($PriceList['mbflag']) . ',' .
+			stripcomma($PriceList['taxcatid']) . ',' .
+			stripcomma($PriceList['discontinued']) . ',' .
+			stripcomma($DisplayUnitPrice) . ',' . 
+			stripcomma($Qty) . ',' .
+			stripcomma($PriceList['categoryid']) . ',' .
 			stripcomma($PriceList['categorydescription']) . "\n"
 			);
 	}
@@ -153,23 +174,23 @@ if ( isset($_POST['pricelist']) ) {
 		exit;
 	}
 
-	$CSVContent = stripcomma('debtorno') . ', ' . 
-			stripcomma('branchcode') . ', ' .
-			stripcomma('name') . ', ' .
-			stripcomma('contactname') . ', ' .
-			stripcomma('address1') . ', ' .
-			stripcomma('address2') . ', ' .
-			stripcomma('address3') . ', ' .
-			stripcomma('address4') . ', ' .
-			stripcomma('address5') . ', ' .
-			stripcomma('address6') . ', ' .
-			stripcomma('phoneno') . ', ' .
-			stripcomma('faxno') . ', ' .
-			stripcomma('email') . ', ' .
-			stripcomma('currcode') . ', ' .
-			stripcomma('clientsince') . ', ' . 
-			stripcomma('creditlimit') . ', ' . 
-			stripcomma('taxref') . ', ' . 
+	$CSVContent = stripcomma('debtorno') . ',' . 
+			stripcomma('branchcode') . ',' .
+			stripcomma('name') . ',' .
+			stripcomma('contactname') . ',' .
+			stripcomma('address1') . ',' .
+			stripcomma('address2') . ',' .
+			stripcomma('address3') . ',' .
+			stripcomma('address4') . ',' .
+			stripcomma('address5') . ',' .
+			stripcomma('address6') . ',' .
+			stripcomma('phoneno') . ',' .
+			stripcomma('faxno') . ',' .
+			stripcomma('email') . ',' .
+			stripcomma('currcode') . ',' .
+			stripcomma('clientsince') . ',' . 
+			stripcomma('creditlimit') . ',' . 
+			stripcomma('taxref') . ',' . 
 			stripcomma('disabletrans') . "\n";
 	
 	
@@ -192,23 +213,23 @@ if ( isset($_POST['pricelist']) ) {
 			$Address6 = $CustList['braddress6'];
 		}
 
-		$CSVContent .= (stripcomma($CustList['debtorno']) . ', ' . 
-			stripcomma($CustList['branchcode']) . ', ' . 
-			stripcomma($CustList['name']) . ', ' .
-			stripcomma($CustList['contactname']) . ', ' .
-			stripcomma($Address1) . ', ' .
-			stripcomma($Address2) . ', ' .
-			stripcomma($Address3) . ', ' .
-			stripcomma($Address4) . ', ' .
-			stripcomma($Address5) . ', ' .
-			stripcomma($Address6) . ', ' .
-			stripcomma($CustList['phoneno']) . ', ' .
-			stripcomma($CustList['faxno']) . ', ' .
-			stripcomma($CustList['email']) . ', ' .
-			stripcomma($CustList['currcode']) . ', ' .
-			stripcomma($CustList['clientsince']) . ', ' .
-			stripcomma($CreditLimit) . ', ' .
-			stripcomma($CustList['taxref']) . ', ' .
+		$CSVContent .= (stripcomma($CustList['debtorno']) . ',' . 
+			stripcomma($CustList['branchcode']) . ',' . 
+			stripcomma($CustList['name']) . ',' .
+			stripcomma($CustList['contactname']) . ',' .
+			stripcomma($Address1) . ',' .
+			stripcomma($Address2) . ',' .
+			stripcomma($Address3) . ',' .
+			stripcomma($Address4) . ',' .
+			stripcomma($Address5) . ',' .
+			stripcomma($Address6) . ',' .
+			stripcomma($CustList['phoneno']) . ',' .
+			stripcomma($CustList['faxno']) . ',' .
+			stripcomma($CustList['email']) . ',' .
+			stripcomma($CustList['currcode']) . ',' .
+			stripcomma($CustList['clientsince']) . ',' .
+			stripcomma($CreditLimit) . ',' .
+			stripcomma($CustList['taxref']) . ',' .
 			stripcomma($CustList['disabletrans']) . "\n");
 	}
 	header('Content-type: application/csv');
@@ -244,12 +265,12 @@ if ( isset($_POST['pricelist']) ) {
 		exit;
 	}
 	
-	$CSVContent = stripcomma('salesmancode') . ', ' . 
-			stripcomma('salesmanname') . ', ' .
-			stripcomma('smantel') . ', ' .
-			stripcomma('smanfax') . ', ' .
-			stripcomma('commissionrate1') . ', ' .
-			stripcomma('breakpoint') . ', ' .
+	$CSVContent = stripcomma('salesmancode') . ',' . 
+			stripcomma('salesmanname') . ',' .
+			stripcomma('smantel') . ',' .
+			stripcomma('smanfax') . ',' .
+			stripcomma('commissionrate1') . ',' .
+			stripcomma('breakpoint') . ',' .
 			stripcomma('commissionrate2') . "\n";
 	
 	
@@ -259,12 +280,12 @@ if ( isset($_POST['pricelist']) ) {
 		$BreakPoint 	 = $SalesManList['breakpoint'];
 		$CommissionRate2 = $SalesManList['commissionrate2'];
 
-		$CSVContent .= (stripcomma($SalesManList['salesmancode']) . ', ' . 
-			stripcomma($SalesManList['salesmanname']) . ', ' . 
-			stripcomma($SalesManList['smantel']) . ', ' .
-			stripcomma($SalesManList['smanfax']) . ', ' .
-			stripcomma($CommissionRate1) . ', ' .
-			stripcomma($BreakPoint) . ', ' .
+		$CSVContent .= (stripcomma($SalesManList['salesmancode']) . ',' . 
+			stripcomma($SalesManList['salesmanname']) . ',' . 
+			stripcomma($SalesManList['smantel']) . ',' .
+			stripcomma($SalesManList['smanfax']) . ',' .
+			stripcomma($CommissionRate1) . ',' .
+			stripcomma($BreakPoint) . ',' .
 			stripcomma($CommissionRate2) . "\n");
 	}
 	header('Content-type: application/csv');
@@ -293,15 +314,15 @@ if ( isset($_POST['pricelist']) ) {
 		exit;
 	}
 
-	$CSVContent = stripcomma('stockid') . ', '. 
-				  stripcomma('filename') . ', '. 
+	$CSVContent = stripcomma('stockid') . ','. 
+				  stripcomma('filename') . ','. 
 				  stripcomma('url') . "\n";
 	$baseurl = 'http://'. $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/' . 'getstockimg.php?automake=1&stockid=%s.png';
 	While ($ImageList = DB_fetch_array($ImageResult,$db)){
 		$url = sprintf($baseurl, urlencode($ImageList['stockid']));
 		$CSVContent .= (
-			stripcomma($ImageList['stockid']) . ', ' . 
-			stripcomma($ImageList['stockid'] . '.png') . ', ' . 
+			stripcomma($ImageList['stockid']) . ',' . 
+			stripcomma($ImageList['stockid'] . '.png') . ',' . 
 			stripcomma($url) . "\n");
 	}
 	
@@ -332,13 +353,13 @@ if ( isset($_POST['pricelist']) ) {
 		exit;
 	}
 	
-	$CSVContent = stripcomma('tokenid') . ', ' . 
+	$CSVContent = stripcomma('tokenid') . ',' . 
 			stripcomma('tokenname') . "\n";
 	
 	
 	While ($SecTokenList = DB_fetch_array($SecTokenResult,$db)){
 
-		$CSVContent .= (stripcomma($SecTokenList['tokenid']) . ', ' . 
+		$CSVContent .= (stripcomma($SecTokenList['tokenid']) . ',' . 
 			stripcomma($SecTokenList['tokenname']) . "\n");
 	}
 	header('Content-type: application/csv');
@@ -368,13 +389,13 @@ if ( isset($_POST['pricelist']) ) {
 		exit;
 	}
 	
-	$CSVContent = stripcomma('secroleid') . ', ' . 
+	$CSVContent = stripcomma('secroleid') . ',' . 
 			stripcomma('secrolename') . "\n";
 	
 	
 	While ($SecRoleList = DB_fetch_array($SecRoleResult,$db)){
 
-		$CSVContent .= (stripcomma($SecRoleList['secroleid']) . ', ' . 
+		$CSVContent .= (stripcomma($SecRoleList['secroleid']) . ',' . 
 			stripcomma($SecRoleList['secrolename']) . "\n");
 	}
 	header('Content-type: application/csv');
@@ -404,13 +425,13 @@ if ( isset($_POST['pricelist']) ) {
 		exit;
 	}
 	
-	$CSVContent = stripcomma('secroleid') . ', ' . 
+	$CSVContent = stripcomma('secroleid') . ',' . 
 			stripcomma('tokenid') . "\n";
 	
 	
 	While ($SecGroupList = DB_fetch_array($SecGroupResult,$db)){
 
-		$CSVContent .= (stripcomma($SecGroupList['secroleid']) . ', ' . 
+		$CSVContent .= (stripcomma($SecGroupList['secroleid']) . ',' . 
 			stripcomma($SecGroupList['tokenid']) . "\n");
 	}
 	header('Content-type: application/csv');
@@ -458,45 +479,45 @@ if ( isset($_POST['pricelist']) ) {
 		exit;
 	}
 	
-	$CSVContent = stripcomma('userid') . ', ' . 
-			stripcomma('password') . ', '.
-			stripcomma('realname') . ', '.
-			stripcomma('customerid') . ', '.
-			stripcomma('phone') . ', '.
-			stripcomma('email') . ', '.
-			stripcomma('defaultlocation') . ', '.
-			stripcomma('fullaccess') . ', '.
-			stripcomma('lastvisitdate') . ', '.
-			stripcomma('branchcode') . ', '.
-			stripcomma('pagesize') . ', '.
-			stripcomma('modulesallowed') . ', '.
-			stripcomma('blocked') . ', '.
-			stripcomma('displayrecordsmax') . ', '.
-			stripcomma('theme') . ', '.
-			stripcomma('language') . ', '.
-			stripcomma('pinno') . ', '.
+	$CSVContent = stripcomma('userid') . ',' . 
+			stripcomma('password') . ','.
+			stripcomma('realname') . ','.
+			stripcomma('customerid') . ','.
+			stripcomma('phone') . ','.
+			stripcomma('email') . ','.
+			stripcomma('defaultlocation') . ','.
+			stripcomma('fullaccess') . ','.
+			stripcomma('lastvisitdate') . ','.
+			stripcomma('branchcode') . ','.
+			stripcomma('pagesize') . ','.
+			stripcomma('modulesallowed') . ','.
+			stripcomma('blocked') . ','.
+			stripcomma('displayrecordsmax') . ','.
+			stripcomma('theme') . ','.
+			stripcomma('language') . ','.
+			stripcomma('pinno') . ','.
 			stripcomma('swipecard') . "\n";
 	
 	
 	While ($SecUserList = DB_fetch_array($SecUserResult,$db)){
 
-		$CSVContent .= (stripcomma($SecUserList['userid']) . ', ' . 
-			stripcomma($SecUserList['password']) . ', ' .
-			stripcomma($SecUserList['realname']) . ', ' .
-			stripcomma($SecUserList['customerid']) . ', ' .
-			stripcomma($SecUserList['phone']) . ', ' .
-			stripcomma($SecUserList['email']) . ', ' .
-			stripcomma($SecUserList['defaultlocation']) . ', ' .
-			stripcomma($SecUserList['fullaccess']) . ', ' .
-			stripcomma($SecUserList['lastvisitdate']) . ', ' .
-			stripcomma($SecUserList['branchcode']) . ', ' .
-			stripcomma($SecUserList['pagesize']) . ', ' .
-			stripcomma($SecUserList['modulesallowed']) . ', ' .
-			stripcomma($SecUserList['blocked']) . ', ' .
-			stripcomma($SecUserList['displayrecordsmax']) . ', ' .
-			stripcomma($SecUserList['theme']) . ', ' .
-			stripcomma($SecUserList['language']) . ', ' .
-			stripcomma($SecUserList['pinno']) . ', ' .
+		$CSVContent .= (stripcomma($SecUserList['userid']) . ',' . 
+			stripcomma($SecUserList['password']) . ',' .
+			stripcomma($SecUserList['realname']) . ',' .
+			stripcomma($SecUserList['customerid']) . ',' .
+			stripcomma($SecUserList['phone']) . ',' .
+			stripcomma($SecUserList['email']) . ',' .
+			stripcomma($SecUserList['defaultlocation']) . ',' .
+			stripcomma($SecUserList['fullaccess']) . ',' .
+			stripcomma($SecUserList['lastvisitdate']) . ',' .
+			stripcomma($SecUserList['branchcode']) . ',' .
+			stripcomma($SecUserList['pagesize']) . ',' .
+			stripcomma($SecUserList['modulesallowed']) . ',' .
+			stripcomma($SecUserList['blocked']) . ',' .
+			stripcomma($SecUserList['displayrecordsmax']) . ',' .
+			stripcomma($SecUserList['theme']) . ',' .
+			stripcomma($SecUserList['language']) . ',' .
+			stripcomma($SecUserList['pinno']) . ',' .
 			stripcomma($SecUserList['swipecard']) . "\n");
 	}
 	header('Content-type: application/csv');
@@ -610,7 +631,7 @@ if ( isset($_POST['pricelist']) ) {
 	echo "<CENTER><input type='Submit' name='secuserlist' value='" . _('Export') . "'></CENTER>";
 	echo "</FORM></CENTER><BR>";
 	
-	
+
 	include('includes/footer.inc');
 }
 ?>
