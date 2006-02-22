@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 $PageSecurity =3;
 
 
@@ -636,7 +636,7 @@ if (isset($_POST['ProcessCredit'])){
 								completed=0
 						WHERE orderno = " . $_SESSION['CreditItems']->OrderNo . "
 						AND stkcode = '" . $OrderLine->StockID . "'
-						AND orderlineno=" . $OrderLine->LineNo;
+						AND orderlineno=" . $OrderLine->LineNumber;
 
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order detail record could not be updated for the reduced quantity invoiced because');
 				$DbgMsg = _('The following SQL to update the sales order detail record was used');
