@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 
 $PageSecurity = 8;
@@ -99,7 +99,7 @@ if (isset($_POST['Show'])){
 		AND posted=1
 		AND periodno>=$FirstPeriodSelected
 		AND periodno<=$LastPeriodSelected
-		ORDER BY periodno, counterindex";
+		ORDER BY periodno, gltrans.trandate, counterindex";
 
 	$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
 	$TransResult = DB_query($sql,$db,$ErrMsg);
