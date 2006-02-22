@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 2;
 
@@ -14,6 +14,7 @@ include('includes/Wiki.php');
 $msg='';
 
 if (isset($_GET['StockID'])){  //The page is called with a StockID
+	$_GET['StockID'] = trim(strtoupper($_GET['StockID']));
 	$_POST['Select'] = $_GET['StockID'];
 }
 
@@ -29,6 +30,10 @@ if (!isset($_POST['PageOffset'])) {
 	if ($_POST['PageOffset']==0) {
 		$_POST['PageOffset'] = 1;
 	}
+}
+
+if( isset($_POST['StockCode']) ) {
+    $_POST['StockCode'] = trim(strtoupper($_POST['StockCode']));
 }
 
 // Always show the search facilities
