@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $DirectoryLevelsDeep =1;
 $PathPrefix = '../';
 $PageSecurity = 1; // set security level for webERP
@@ -194,7 +194,7 @@ function GetReports($Default) {
 		ORDER BY groupname, reportname";
 		
 	$Result=DB_query($sql,$db,'','',false,true);
-	
+	$DefaultReports = array();
 	while ($Temp = DB_fetch_array($Result)) {
 		$DefaultReports[] = $Temp;
 	}
