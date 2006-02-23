@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 2; /*viewing possible with inquiries but not mods */
 
@@ -18,16 +18,49 @@ if (isset($_GET['StockID'])){
 }
 
 if (isset($_POST['UpdateData'])){
+
+    $sql = "SELECT  materialcost,
+                    labourcost,
+                    overheadcost,
+                    mbflag,
+                    sum(quantity) as totalqoh
+                FROM stockmaster INNER JOIN locstock
+                    ON stockmaster.stockid=locstock.stockid
+                WHERE stockmaster.stockid='".$StockID."'
+                GROUP BY description,
+                    units,
+                    lastcost,
+                    actualcost,
+                    materialcost,
+                    labourcost,
+                    overheadcost,
+                    mbflag";
+    $oldresult = DB_query($sql,$db);
+    $oldrow = DB_fetch_array($oldresult);
+    if( !$oldrow ) {
+        prnMsg (_('The entered item code does not exist'),'error',_('Non-existent Item'));
+    } else {
+        $_POST['QOH'] = $oldrow['totalqoh'];
+        $_POST['OldMaterialCost'] = $oldrow['materialcost'];
+        if ($OldRow['mbflag']=='M') {
+            $_POST['OldLabourCost'] = $oldrow['materialcost'];
+            $_POST['OldOverheadCost'] = $oldrow['materialcost'];
+        } else {
+            $_POST['OldLabourCost'] = 0;
+            $_POST['OldOverheadCost'] = 0;
+            $_POST['LabourCost'] = 0;
+            $_POST['OverheadCost'] = 0;
+        }
+    }
+    DB_free_result($oldresult);
+
  	$OldCost =$_POST['OldMaterialCost'] + $_POST['OldLabourCost'] + $_POST['OldOverheadCost'];
    	$NewCost =$_POST['MaterialCost'] + $_POST['LabourCost'] + $_POST['OverheadCost'];
 
 	$result = DB_query("SELECT * FROM stockmaster WHERE stockid='$StockID'",$db);
 	$myrow = DB_fetch_row($result);
-	if (DB_num_rows($result)==0) {
-		prnMsg (_('The entered item code does not exist'),'error',_('Non-existent Item'));
-	} elseif ($OldCost != $NewCost){
-
-		$Result = DB_query('BEGIN',$db);
+	if ($OldCost != $NewCost){
+        $Result = DB_query('BEGIN',$db);
 
 		if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $_POST['QOH']!=0){
 
@@ -114,8 +147,7 @@ $result = DB_query("SELECT description,
 			materialcost,
 			labourcost,
 			overheadcost,
-			mbflag",
-		$db,$ErrMsg,$DbgMsg);
+			mbflag",$db,$ErrMsg,$DbgMsg);
 
 
 $myrow = DB_fetch_array($result);
@@ -129,26 +161,18 @@ echo " <INPUT TYPE=SUBMIT NAME='Show' VALUE='" . _('Show Cost Details') . "'><HR
 if ($myrow['mbflag']=='D' 
 	OR $myrow['mbflag']=='A' 
 	OR $myrow['mbflag']=='K'){
-
+    echo '</FORM>'; // Close the form
    if ($myrow['mbflag']=='D'){
-      	
-	echo "<BR>$StockID " . _('is a dummy part');
+        echo "<BR>$StockID " . _('is a dummy part');
    } else if ($myrow['mbflag']=='A'){
-      
-   	echo "<BR>$StockID " . _('is an assembly part');
+        echo "<BR>$StockID " . _('is an assembly part');
    } else if ($myrow['mbflag']=='K'){
-   
-   	echo "<BR>$StockID " . _('is a kit set part');
+        echo "<BR>$StockID " . _('is a kit set part');
    }
    prnMsg(_('Cost information cannot be modified for kits assemblies or dummy parts') . '. ' . _('Please select a different part'),'warn');
    include('includes/footer.inc');
    exit;
 }
-
-echo '<INPUT TYPE=HIDDEN NAME=OldMaterialCost VALUE=' . $myrow['materialcost'] .'>';
-echo '<INPUT TYPE=HIDDEN NAME=OldLabourCost VALUE=' . $myrow['labourcost'] .'>';
-echo '<INPUT TYPE=HIDDEN NAME=OldOverheadCost VALUE=' . $myrow['overheadcost'] .">";
-echo '<INPUT TYPE=HIDDEN NAME=QOH VALUE=' . $myrow['totalqoh'] .'>';
 
 echo '<CENTER><TABLE CELLPADDING=2 BORDER=2>';
 echo '<TR><TD>' . _('Last Cost') .':</TD><TD ALIGN=RIGHT>' . number_format($myrow['lastcost'],2) . '</TD></TR>';
@@ -160,12 +184,8 @@ if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens']) OR !isset
 	if ($myrow['mbflag']=='M'){
 		echo '<TR><TD>' . _('Standard Labour Cost Per Unit') . ':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME=LabourCost VALUE=' . $myrow['labourcost'] . '></TD></TR>';
 		echo '<TR><TD>' . _('Standard Overhead Cost Per Unit') . ':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME=OverheadCost VALUE=' . $myrow['overheadcost'] . '></TD></TR>';
-	} else {
-		echo '<INPUT TYPE=HIDDEN NAME=LabourCost VALUE=0>';
-		echo '<INPUT TYPE=HIDDEN NAME=OverheadCost VALUE=0>';
-	}
-
-echo "</TABLE><INPUT TYPE=SUBMIT NAME='UpdateData' VALUE='" . _('Update') . "'><HR>";
+	} 
+    echo "</TABLE><INPUT TYPE=SUBMIT NAME='UpdateData' VALUE='" . _('Update') . "'><HR>";
 }
 echo "<A HREF='$rootpath/StockStatus.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Status') . '</A>';
 echo "<BR><A HREF='$rootpath/StockMovements.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Movements') . '</A>';
