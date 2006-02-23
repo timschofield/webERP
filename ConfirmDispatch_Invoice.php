@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.35 $ */
+/* $Revision: 1.36 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -567,7 +567,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		prnMsg( _('This order has been changed or invoiced since this delivery was started to be confirmed') . '. ' . _('Processing halted') . '. ' . _('To enter and confirm this dispatch') . '/' . _('invoice the order must be re-selected and re-read again to update the changes made by the other user'), 'error');
 		echo '<BR>';
 
-		echo '<CENTER><A HREF="'. $rootpath/SelectSalesOrder.php.'?' . SID . '">'. _('Select a sales order for confirming deliveries and invoicing'). '</A></CENTER>';
+		echo '<CENTER><A HREF="'. $rootpath.'/SelectSalesOrder.php?' . SID . '">'. _('Select a sales order for confirming deliveries and invoicing'). '</A></CENTER>';
 
 		unset($_SESSION['Items']->LineItems);
 		unset($_SESSION['Items']);
