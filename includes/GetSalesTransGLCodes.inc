@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 /*Functions to get the GL codes for customer transactions based on
 $Area, $StockID to determine the stock category and the SalesType (Price List)
@@ -84,17 +84,27 @@ Function GetCOGSGLAccount ($Area, $StockID, $SalesType, &$db) {
 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 	}
 
+	if (DB_num_rows($Result)==0) {             
+		DB_free_result($Result);             
+		$SQL = "SELECT glcode,
+			FROM cogsglpostings
+                	WHERE area = 'AN'
+                	AND stkcat = 'ANY'
+                	AND salestype = '" . $SalesType . "'";
+            $Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+      }
+
 	if (DB_num_rows($Result)==0){
 
-		DB_free_result($Result);
-		$SQL = "SELECT glcode 
-			FROM cogsglpostings 
-			WHERE area = 'AN' 
-			AND stkcat = 'ANY' 
-			AND salestype='AN'";
-		
-		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
-	}
+            DB_free_result($Result);
+            $SQL = "SELECT glcode 
+                  FROM cogsglpostings 
+                  WHERE area = 'AN' 
+                  AND stkcat = 'ANY' 
+                  AND salestype='AN'";
+                  $Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+      }
+
 	if (DB_num_rows($Result)==0){ /*STILL!*/
 		/*The default if all else fails */
 		/*Check GL account 1 exists */
@@ -207,6 +217,17 @@ Function GetSalesGLAccount ($Area, $StockID, $SalesType, &$db) {
 		
 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 	}
+
+        if (DB_num_rows($Result)==0) {
+    		DB_free_result($Result);
+        	$SQL = "SELECT salesglcode,
+                        discountglcode
+                	FROM salesglpostings
+                	WHERE area = 'AN'
+                	AND stkcat = 'ANY'
+                	AND salestype = '" . $SalesType . "'";
+        	$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+        }
 
 	if (DB_num_rows($Result)==0){
 
