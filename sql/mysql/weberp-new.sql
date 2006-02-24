@@ -846,7 +846,7 @@ CREATE TABLE `purchorderdetails` (
   `stdcostunit` double NOT NULL default '0',
   `quantityord` double NOT NULL default '0',
   `quantityrecd` double NOT NULL default '0',
-  `shiptref` int(1) NOT NULL default '0',
+  `shiptref` int(11) NOT NULL default '0',
   `jobref` varchar(20) NOT NULL default '',
   `completed` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`podetailitem`),
@@ -2074,6 +2074,7 @@ INSERT INTO `paymentterms` VALUES ('CA','Cash Only',1,0);
 --
 
 INSERT INTO `salesglpostings` VALUES (1,'AN','ANY',4900,4100,'AN');
+INSERT INTO `salesglpostings` VALUES (2,'AN','AIRCON',5000,4800,'DE');
 
 --
 -- Dumping data for table `systypes`
@@ -2084,22 +2085,22 @@ INSERT INTO `systypes` VALUES (1,'Payment - GL',0);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
 INSERT INTO `systypes` VALUES (10,'Sales Invoice',7);
-INSERT INTO `systypes` VALUES (11,'Credit Note',1);
-INSERT INTO `systypes` VALUES (12,'Receipt',2);
+INSERT INTO `systypes` VALUES (11,'Credit Note',3);
+INSERT INTO `systypes` VALUES (12,'Receipt',3);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',4);
 INSERT INTO `systypes` VALUES (17,'Stock Adjustment',8);
 INSERT INTO `systypes` VALUES (18,'Purchase Order',0);
-INSERT INTO `systypes` VALUES (20,'Purchase Invoice',8);
+INSERT INTO `systypes` VALUES (20,'Purchase Invoice',11);
 INSERT INTO `systypes` VALUES (21,'Debit Note',3);
 INSERT INTO `systypes` VALUES (22,'Creditors Payment',0);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
-INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',7);
+INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',8);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',0);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',0);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',0);
 INSERT INTO `systypes` VALUES (30,'Sales Order',0);
-INSERT INTO `systypes` VALUES (31,'Shipment Close',25);
+INSERT INTO `systypes` VALUES (31,'Shipment Close',26);
 INSERT INTO `systypes` VALUES (35,'Cost Update',2);
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
 INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',0);
@@ -2312,7 +2313,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2005-12-22');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2006-02-07');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
@@ -2341,6 +2342,7 @@ INSERT INTO `config` VALUES ('part_pics_dir','companies/weberp/part_pics');
 INSERT INTO `config` VALUES ('PastDueDays1','30');
 INSERT INTO `config` VALUES ('PastDueDays2','60');
 INSERT INTO `config` VALUES ('PO_AllowSameItemMultipleTimes','1');
+INSERT INTO `config` VALUES ('ProhibitJournalsToControlAccounts','1');
 INSERT INTO `config` VALUES ('QuickEntries','10');
 INSERT INTO `config` VALUES ('RadioBeaconFileCounter','/home/RadioBeacon/FileCounter');
 INSERT INTO `config` VALUES ('RadioBeaconFTP_user_name','RadioBeacon ftp server user name');
@@ -2354,7 +2356,7 @@ INSERT INTO `config` VALUES ('RomalpaClause','Ownership will not pass to the buy
 INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','Tax Ref');
-INSERT INTO `config` VALUES ('WackoWiki','1');
+INSERT INTO `config` VALUES ('WikiApp','WackoWiki');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
 INSERT INTO `config` VALUES ('YearEnd','3');
 

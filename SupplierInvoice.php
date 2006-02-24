@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -406,7 +406,7 @@ if (!isset($_POST['PostInvoice'])){
 	
 	echo '<TR><TD>' . _('Invoice Total') . ':</TD><TD COLSPAN=2 ALIGN=RIGHT><B>' . $DisplayTotal . '</B></TD></TR></TABLE>';
 	
-	echo '<TABLE><TR><TD>Comments</TD><TD><TEXTAREA NAME=Comments COLS=40 ROWS=2>' .
+	echo '<TABLE><TR><TD>' . _('Comments') . '</TD><TD><TEXTAREA NAME=Comments COLS=40 ROWS=2>' .
 		$_SESSION['SuppTrans']->Comments . '</TEXTAREA></TD></TR></TABLE>';
 	
 	echo "<P><INPUT TYPE=SUBMIT NAME='PostInvoice' VALUE='" . _('Enter Invoice') . "'>";

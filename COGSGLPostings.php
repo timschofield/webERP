@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 10;
 
@@ -173,7 +173,6 @@ if (!isset($SelectedCOGSPostingID)) {
 						'AN',
 						1)";						
 		$result = DB_query($sql,$db);
-
 	}
 
 	if ($ShowLivePostingRecords){

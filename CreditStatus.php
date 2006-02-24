@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 3;
 include('includes/session.inc');
@@ -181,7 +181,7 @@ if (!isset($_GET['delete'])) {
 		<TD>'. _('Description') .":</TD>
 		<TD><INPUT TYPE='text' name='ReasonDescription' VALUE='". $_POST['ReasonDescription'] ."' SIZE=28 MAXLENGTH=30>
 	</TD></TR>
-	<TR><TD>". _('Disallow invoices') . "</TD>
+	<TR><TD>". _('Disallow Invoices') . "</TD>
 	<TD><INPUT TYPE='checkbox' name='DisallowInvoices'></TD></TR>
 	</TABLE>
 	<CENTER><input type='Submit' name='submit' value='" . _('Enter Information') . "'>
