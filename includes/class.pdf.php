@@ -14,7 +14,7 @@
 */
 
 define('FPDF_FONTPATH','./fonts/');
-include ('fpdf.php');
+include ('includes/fpdf.php');
 
 if ($_SESSION['Language']=='zh_CN' OR $_SESSION['Language']=='zh_HK' OR $_SESSION['Language']=='zh_TW'){
 	include('FPDF_Chinese.php');

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 	echo '<BR><BR>';
 	echo '</TD>';
@@ -21,7 +21,7 @@
 		$hour=date('H:i');
 	}
 	
-	echo '<FONT SIZE=2>' .ucfirst(strftime('%A ')). date($_SESSION['DefaultDateFormat'] . ' | '  . $hour) . '</FONT>';
+	echo '<FONT SIZE=2>' .ucfirst(strftime('%A ') . date($_SESSION['DefaultDateFormat'] . ' | g:i A')) . '</FONT>';
 	
 	echo '<TABLE ALIGN="center" ID="footer">';
 	

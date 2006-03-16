@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 10;
 include('includes/session.inc');
@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
 				FROM periods';
 		$result = DB_query($sql,$db,$ErrMsg);
 
-		prnMsg_('The new general ledger account has been added'),'success');
+		prnMsg_(('The new general ledger account has been added'),'success');
 	}
 
 	unset ($_POST['Group']);

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 
 $PageSecurity = 8;
@@ -44,7 +44,7 @@ echo '<CENTER><TABLE>
          <TR>
          <TD>'._('For Period range').':</TD>
          <TD><SELECT Name=Period[] multiple>';
-	 $sql = 'SELECT periodno, lastdate_in_period FROM periods';
+	 $sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC';
 	 $Periods = DB_query($sql,$db);
          $id=0;
          while ($myrow=DB_fetch_array($Periods,$db)){
