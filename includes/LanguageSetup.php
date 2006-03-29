@@ -17,7 +17,8 @@ If (isset($_POST['Language'])) {
 } else {
 	$Language = $_SESSION['Language'];
 }
- 
+
+
 if (function_exists('gettext')){
   
   //This maybe reqiured in some stubborn installations

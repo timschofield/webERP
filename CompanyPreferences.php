@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity =10;
 
@@ -85,6 +85,10 @@ if (isset($_POST['submit'])) {
 			$ErrMsg =  _('The company preferences could not be updated because');
 			$result = DB_query($sql,$db,$ErrMsg);
 			prnMsg( _('Company preferences updated'),'success');
+			
+			$ForceConfigReload = True; // Required to force a load even if stored in the session vars
+			include('includes/GetConfig.php');
+			$ForceConfigReload = False;
 
 	} else {
 		prnMsg( _('Validation failed') . ', ' . _('no updates or deletes took place'),'warn');

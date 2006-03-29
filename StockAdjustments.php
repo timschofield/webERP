@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
@@ -56,6 +56,7 @@ if ($NewAdjustment){
 
 	if (DB_num_rows($result)==0){
                 prnMsg( _('Unable to locate Stock Code').' '.$_SESSION['Adjustment']->StockID, 'error' );
+		unset($_SESSION['Adjustment']);
 	} elseif (DB_num_rows($result)>0){
 
 		$_SESSION['Adjustment']->ItemDescription = $myrow[0];
