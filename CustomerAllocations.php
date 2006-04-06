@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 /*This page can be called with
 
 1. A DebtorTrans ID
@@ -115,7 +115,7 @@ if (isset($_POST['UpdateDatabase'])){
 					     					amt,
 										transid_allocfrom,
 										transid_allocto)
-								VALUES ('" . FormatDateForSQL(date('d/m/Y')) . "',
+								VALUES ('" . FormatDateForSQL(date($_SESSION['DefaultDateFormat'])) . "',
 									" . $AllocnItem->AllocAmt . ',
 									' . $_SESSION['Alloc']->AllocTrans . ',
 									' . $AllocnItem->ID . ')';

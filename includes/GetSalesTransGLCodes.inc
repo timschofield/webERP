@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 /*Functions to get the GL codes for customer transactions based on
 $Area, $StockID to determine the stock category and the SalesType (Price List)
@@ -86,11 +86,11 @@ Function GetCOGSGLAccount ($Area, $StockID, $SalesType, &$db) {
 
 	if (DB_num_rows($Result)==0) {             
 		DB_free_result($Result);             
-		$SQL = "SELECT glcode,
-			FROM cogsglpostings
-                	WHERE area = 'AN'
-                	AND stkcat = 'ANY'
-                	AND salestype = '" . $SalesType . "'";
+		$SQL = "SELECT glcode
+				FROM cogsglpostings
+                		WHERE area = 'AN'
+                		AND stkcat = 'ANY'
+                		AND salestype = '" . $SalesType . "'";
             $Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
       }
 

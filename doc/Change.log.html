@@ -1,5 +1,9 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 
+<P>3/4/06 Greg Morehead - CustomerAllocations.php missing $_SESSION['DefaultDateFormat'] for FormatDateForSQL statement.
+<P>2/4/06 Steve SalesAnalRepts.php no VALUE in Select OPTION statement
+<P>31/3/06 Jesse Peterson - indexed serialno in stockserialmoves and stockserialitems for performance reasons in larger dbs
+<P>30/3/06 Harald Ringehahn - includes/GetSalesTransGLCodes.inc error in SQL extra comma removed
 <P>29/3/06 Jesse Peterson/Kyle Sasser StockAdjustment.php unset the Adjustment session variable on entry of an incorrect item code to avoid problems as reported by Kyle.
 <P>29/3/06 Neil Williams CompanyPreferences.php now reloads session variables after an update.
 <P>22/3/06 Harald Ringehahn GLAccounts.php fixed incorrect call to _() function inside prnMsg function call and added TABINDEX to sequence focus on tabs

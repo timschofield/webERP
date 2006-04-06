@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 2;
 
@@ -49,9 +49,9 @@ Function GrpByDataOptions ($GroupByDataX){
     echo '<OPTION Value="Sales Person">' . _('Sales Person');
  }
  if ($GroupByDataX==_('Not Used') OR $GroupByDataX == '' OR ! isset($GroupByDataX) OR is_null($GroupByDataX)){
-     echo "<OPTION SELECTED 'Not Used'>" . _('Not Used');
+     echo "<OPTION SELECTED VALUE='Not Used'>" . _('Not Used');
  } else {
-    echo "<OPTION 'Not Used'>" . _('Not Used');
+    echo "<OPTION VALUE='Not Used'>" . _('Not Used');
  }
 }
 
