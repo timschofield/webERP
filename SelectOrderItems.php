@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.42 $ */
+/* $Revision: 1.43 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -151,7 +151,8 @@ if (isset($_GET['ModifyOrderNumber'])
 		$_SESSION['Items']->DeliverBlind = $myrow['deliverblind'];
 		
 /*need to look up customer name from debtors master then populate the line items array with the sales order details records */
-		$LineItemsSQL = "SELECT salesorderdetails.stkcode,
+		$LineItemsSQL = "SELECT salesorderdetails.orderlineno,
+				salesorderdetails.stkcode,
 				stockmaster.description,
 				stockmaster.volume,
 				stockmaster.kgs,
@@ -171,8 +172,9 @@ if (isset($_GET['ModifyOrderNumber'])
 				INNER JOIN locstock ON locstock.stockid = stockmaster.stockid
 				WHERE  locstock.loccode = '" . $myrow['fromstkloc'] . "'
 				AND  salesorderdetails.completed=0
-				AND salesorderdetails.orderno =" . $_GET['ModifyOrderNumber'];
-
+				AND salesorderdetails.orderno =" . $_GET['ModifyOrderNumber'] . "
+				ORDER BY salesorderdetails.orderlineno";
+		
 		$ErrMsg = _('The line items of the order cannot be retrieved because');
 		$LineItemsResult = db_query($LineItemsSQL,$db,$ErrMsg);
 		if (db_num_rows($LineItemsResult)>0) {
@@ -194,7 +196,9 @@ if (isset($_GET['ModifyOrderNumber'])
 								0,	/*Controlled*/
 								0,	/*Serialised */
 								$myrow['decimalplaces'],
-								$myrow['narrative']);
+								$myrow['narrative'],
+								'No',
+								$myrow['orderlineno']);
 				/*Just populating with existing order - no DBUpdates */
 
 			} /* line items from sales order details */
@@ -269,7 +273,8 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 					custbranch.debtorno
 				FROM custbranch
 				WHERE custbranch.brname " . LIKE . " '$SearchString'
-				AND custbranch.disabletrans=0";
+				AND custbranch.disabletrans=0 
+				ORDER BY custbranch.debtorno, custbranch.branchcode";
 
 		} elseif (strlen($_POST['CustCode'])>0){
 
@@ -283,7 +288,8 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 					custbranch.debtorno
 				FROM custbranch
 				WHERE custbranch.branchcode " . LIKE . " '%" . $_POST['CustCode'] . "%'
-				AND custbranch.disabletrans=0";
+				AND custbranch.disabletrans=0
+				ORDER BY custbranch.debtorno, custbranch.branchcode";
 		}
 
 		$ErrMsg = _('The searched customer records requested cannot be retrieved because');

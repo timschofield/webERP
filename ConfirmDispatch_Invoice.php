@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.36 $ */
+/* $Revision: 1.37 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -393,13 +393,13 @@ if ($_SESSION['Items']->AnyAlreadyDelivered==1) {
   	}
   	if (!is_numeric($BestShipper)){
   		$SQL =  'SELECT shipper_id FROM shippers WHERE shipper_id=' . $_SESSION['Default_Shipper'];
-		$ErrMsg = _('There was a problem testing for a the default shipper because');
+		$ErrMsg = _('There was a problem testing for a default shipper because');
 		$TestShipperExists = DB_query($SQL,$db, $ErrMsg);
 		if (DB_num_rows($TestShipperExists)==1){
 			$BestShipper = $_SESSION['Default_Shipper'];
 		} else {
 			$SQL =  'SELECT shipper_id FROM shippers';
-			$ErrMsg = _('There was a problem testing for a the default shipper');
+			$ErrMsg = _('There was a problem testing for a default shipper');
 			$TestShipperExists = DB_query($SQL,$db, $ErrMsg);
 			if (DB_num_rows($TestShipperExists)>=1){
 				$ShipperReturned = DB_fetch_row($TestShipperExists);

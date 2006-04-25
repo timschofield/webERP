@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 2;
 
@@ -50,7 +50,8 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					address2,
 					address3,
 					address4
-				FROM suppliers";
+				FROM suppliers
+				ORDER BY supplierid";
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 
@@ -74,7 +75,8 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					address3,
 					address4
 				FROM suppliers
-				WHERE suppname " . LIKE . " '$SearchString'";
+				WHERE suppname " . LIKE . " '$SearchString' 
+				ORDER BY supplierid";
 
 		} elseif (strlen($_POST['SupplierCode'])>0){
 			$_POST['SupplierCode'] = strtoupper($_POST['SupplierCode']);
@@ -86,7 +88,8 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					address3,
 					address4
 				FROM suppliers
-				WHERE supplierid " . LIKE  . " '%" . $_POST['SupplierCode'] . "%'";
+				WHERE supplierid " . LIKE  . " '%" . $_POST['SupplierCode'] . "%' 
+				ORDER BY supplierid";
 		}
 	} //one of keywords or SupplierCode was more than a zero length string
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
@@ -45,7 +45,7 @@
 		echo '<IMG SRC="' .$rootpath . '/css/' . $theme .'/images/menucurve.gif" WIDTH="30" HEIGHT="30" alt=""></TD>';
 		echo '<TD CLASS="quick_menu_tabs">';
 		echo '<TABLE><TR>';
-		echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="1" HREF="' .  $rootpath . '/index.php?' . SID . '"><U>1</U>. ' . _('Main  Menu') . '</A>&nbsp;&nbsp;</TD>';
+		echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="1" HREF="' .  $rootpath . '/index.php?' . SID . '"><U>1</U>. ' . _('Main Menu') . '</A>&nbsp;&nbsp;</TD>';
 
 		if (count($_SESSION['AllowedPageSecurityTokens'])>1){
 

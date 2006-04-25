@@ -1,5 +1,12 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 
+<P>25/4/06 Suren Nadu includes PDFTransPageHeader.inc - was printing address line 3 twice changed to print line 6 correctly
+<P>25/4/06 Steve K ConfirmDispatch_Invoice.php wording of error message had superfluous "the"
+<P>25/4/06 Steve K Z_MakeNewCompany has the restriction to 10 character company codes removed and option to create DB is optional with a checkbox now.
+<P>25/4/06 SelectSupplier, SelectOrderItems SelectCustomer now have selections ordered by supplier/customer code
+<P>25/4/06 Steve K - SalesAnalRepts.php fixed Not Used translations and comparison test to always use the non-translated Not Used and display the Not Used translation
+<P>25/4/06 Steve K - SelectItemsInto Cart.in fixed case of $myrow['DiscountCategory']
+<P>25/4/06 Steve K - SelectCreditItems.php includes/DefineCartClass.inc CreditInvoice.php SelectOrderItems.php fixes for garbled line numbers
 <P>3/4/06 Greg Morehead - CustomerAllocations.php missing $_SESSION['DefaultDateFormat'] for FormatDateForSQL statement.
 <P>2/4/06 Steve SalesAnalRepts.php no VALUE in Select OPTION statement
 <P>31/3/06 Jesse Peterson - indexed serialno in stockserialmoves and stockserialitems for performance reasons in larger dbs

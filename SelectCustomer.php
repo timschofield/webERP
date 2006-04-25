@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 2;
 
@@ -39,7 +39,8 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					custbranch.phoneno,
 					custbranch.faxno
 				FROM debtorsmaster LEFT JOIN custbranch
-					ON debtorsmaster.debtorno = custbranch.debtorno";
+					ON debtorsmaster.debtorno = custbranch.debtorno
+					ORDER BY debtorsmaster.debtorno";
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 
@@ -63,7 +64,8 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					custbranch.faxno
 				FROM debtorsmaster LEFT JOIN custbranch
 					ON debtorsmaster.debtorno = custbranch.debtorno
-				WHERE debtorsmaster.name " . LIKE . " '$SearchString'";
+				WHERE debtorsmaster.name " . LIKE . " '$SearchString' 
+				ORDER BY debtorsmaster.debtorno";
 
 		} elseif (strlen($_POST['CustCode'])>0){
 
@@ -77,7 +79,8 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					custbranch.faxno
 				FROM debtorsmaster LEFT JOIN custbranch
 					ON debtorsmaster.debtorno = custbranch.debtorno
-				WHERE debtorsmaster.debtorno " . LIKE  . " '%" . $_POST['CustCode'] . "%'";
+				WHERE debtorsmaster.debtorno " . LIKE  . " '%" . $_POST['CustCode'] . "%' 
+				ORDER BY debtorsmaster.debtorno";
 		}
 	} //one of keywords or custcode was more than a zero length string
 	$ErrMsg = _('The searched customer records requested cannot be retrieved because');

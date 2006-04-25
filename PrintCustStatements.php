@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 2;
 
@@ -362,8 +362,8 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 			/*also show the total due in the remittance section */
 			if ($AgedAnalysis['balance']>0){ /*No point showing a negative balance for payment! */
 					$FontSize=8;
-					$LeftOvers = $pdf->addTextWrap($Perforation+2, $Bottom_Margin+(3*$line_height)+8,40,$FontSize, _('Payment'), 'left');
-					$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90, $Bottom_Margin+(3*$line_height)+8,88,$FontSize,$DisplayBalance, 'right');
+					$LeftOvers = $pdf->addTextWrap($Perforation+2, $Bottom_Margin+(2*$line_height)+8,40,$FontSize, _('Payment'), 'left');
+					$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90, $Bottom_Margin+(2*$line_height)+8,88,$FontSize,$DisplayBalance, 'right');
 
 			}
 

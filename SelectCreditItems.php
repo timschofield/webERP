@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
@@ -489,7 +489,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 											$myrow['decimalplaces'],
 											'',
 											'No',
-											0,
+											-1,
 											$myrow['taxcatid']) ==1){
 								
 						$_SESSION['CreditItems']->LineItems[$LineNumber]->StandardCost = $myrow['standardcost'];
@@ -644,7 +644,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 									$myrow['decimalplaces'],
 									'',
 									'No',
-									0,
+									-1,
 									$myrow['taxcatid']) ==1){
 
 					$_SESSION['CreditItems']->LineItems[$LineNumber]->StandardCost = $myrow['standardcost'];

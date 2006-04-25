@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 /*SelectOrderItems_IntoCart.inc
 
@@ -78,7 +78,7 @@ if ($AlreadyOnThisOrder!=1){
 				$UpdateDB = 'No';
 			}
   			
-			if ( $myrow['DiscountCategory'] != "" ){
+			if ( $myrow['discountcategory'] != "" ){
                                 $DiscCatsDone[$Counter]=$StockItem->DiscCat;
                                 $QuantityOfDiscCat =0;
                                 $result = DB_query("SELECT MAX(discountrate) AS discount

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 
 $PageSecurity = 11;
@@ -477,7 +477,6 @@ if (!isset($StockID) OR isset($_POST['New'])) {
 	$_POST['Volume']  = $myrow['volume'];
 	$_POST['KGS']  = $myrow['kgs'];
 	$_POST['BarCode']  = $myrow['barcode'];
-//	$_POST['ReorderLevel']  = $myrow['reorderlevel'];
 	$_POST['DiscountCategory']  = $myrow['discountcategory'];
 	$_POST['TaxCat'] = $myrow['taxcatid'];
 	$_POST['DecimalPlaces'] = $myrow['decimalplaces'];

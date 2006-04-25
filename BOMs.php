@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 9;
 
@@ -186,22 +186,22 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		if (!Is_Date($_POST['EffectiveAfter'])) {
 			$InputError = 1;
 			prnMsg(_('The effective after date field must be a date in the format dd/mm/yy or dd/mm/yyyy or ddmmyy or ddmmyyyy or dd-mm-yy or dd-mm-yyyy'),'error');
-			includes('includes/footer.inc');
+			include('includes/footer.inc');
 			exit;
 		} elseif (!Is_Date($_POST['EffectiveTo'])) {
 			$InputError = 1;
 			prnMsg(_('The effective to date field must be a date in the format dd/mm/yy or dd/mm/yyyy or ddmmyy or ddmmyyyy or dd-mm-yy or dd-mm-yyyy'),'error');
-			includes('includes/footer.inc');
+			include('includes/footer.inc');
 			exit;
 		} elseif (!is_double((double) $_POST['Quantity'])) {
 			$InputError = 1;
 			prnMsg(_('The quantity entered must be numeric'),'error');
-			includes('includes/footer.inc');
+			include('includes/footer.inc');
 			exit;
 		} elseif(!Date1GreaterThanDate2($_POST['EffectiveTo'], $_POST['EffectiveAfter'])){
 			$InputError = 1;
 			prnMsg(_('The effective to date must be a date after the effective after date') . '<BR>' . _('The effective to date is') . ' ' . DateDiff($_POST['EffectiveTo'], $_POST['EffectiveAfter'], 'd') . ' ' . _('days before the effective after date') . '! ' . _('No updates have been performed') . '.<BR>' . _('Effective after was') . ': ' . $_POST['EffectiveAfter'] . ' ' . _('and effective to was') . ': ' . $_POST['EffectiveTo'],'error');
-			includes('includes/footer.inc');
+			include('includes/footer.inc');
 			exit;
 		}
 
@@ -427,7 +427,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		if (DB_num_rows($result)==0){
 			prnMsg( _('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres'),'warn');
 			echo "<BR><A HREF='$rootpath/WorkCentres.php?" . SID . "'>" . _('Work Centre Maintenance') . '</A>';
-			includes('includes/footer.inc');
+			include('includes/footer.inc');
 			exit;
 		}
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -81,7 +81,7 @@ Class Cart {
 				$DecimalPlaces=0,
 				$Narrative='',
 				$UpdateDB='No',
-				$LineNumber=0,
+				$LineNumber=-1,
 				$TaxCategory=0){
 		
 				
@@ -91,7 +91,7 @@ Class Cart {
 				$Price=0;
 			}
 			
-			if ($LineNumber==0){
+			if ($LineNumber==-1){
 				$LineNumber = $this->LineCounter;
 			}
 			
@@ -143,7 +143,7 @@ Class Cart {
 							_('The order line for') . ' ' . $StockID . ' ' ._('could not be inserted'));
 			}
 			
-			$this->LineCounter++;
+			$this->LineCounter = $LineNumber +1;
 			Return 1;
 		}
 		Return 0;

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 $PageSecurity =3;
 
 
@@ -157,7 +157,7 @@ if (!$_GET['InvoiceNumber'] AND !$_SESSION['ProcessingCredit']) {
 								$myrow['decimalplaces'],
 								$myrow['narrative'],
 								'No',
-								0,
+								-1,
 								$myrow['taxcatid']
 								);
 
@@ -1019,7 +1019,7 @@ if (isset($_POST['ProcessCredit'])){
 						'" . $_SESSION['CreditItems']->Branch . "',
 						" . $LocalCurrencyPrice . ",
 						" . $PeriodNo . ",
-						" . _('Ex Inv') .' - ' . $_SESSION['ProcessingCredit'] . "',
+						'" . _('Ex Inv') .' - ' . $_SESSION['ProcessingCredit'] . "',
 						" . $OrderLine->QtyDispatched . ",
 						" . $OrderLine->DiscountPercent . ",
 						" . $OrderLine->StandardCost . ",

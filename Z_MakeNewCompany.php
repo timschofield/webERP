@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 15;
 
@@ -29,7 +29,7 @@ if (! is_writeable('./companies/')){
  
 if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 	
-	if(strlen($_POST['NewCompany'])>10 
+	if(strlen($_POST['NewCompany'])>32 
 		OR ContainsIllegalCharacters($_POST['NewCompany'])){
 		prnMsg(_('Company abbreviations must not contain spaces, \& or " or \''),'error');
 	} else {
@@ -64,64 +64,66 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 				}
 			}
 			
-			/* Need to read in the sql script and process the queries to initate a new DB */
+			if ($_POST['CreateDB']==TRUE){
+				/* Need to read in the sql script and process the queries to initate a new DB */
 			
-			$result = DB_query('CREATE DATABASE ' . $_POST['NewCompany'],$db);
+				$result = DB_query('CREATE DATABASE ' . $_POST['NewCompany'],$db);
 			
-			if ($dbType=='postgres'){
-				
-				$PgConnStr = 'dbname=' . $_POST['NewCompany'];
-				if ( isset($host) && ($host != "")) {
-					$PgConnStr = 'host=' . $host . ' ' . $PgConnStr;
-				}
-
-				if (isset( $dbuser ) && ($dbuser != "")) {
-    					// if we have a user we need to use password if supplied
-    					$PgConnStr .= " user=".$dbuser;
-    					if ( isset( $dbpassword ) && ($dbpassword != "") ) {
-						$PgConnStr .= " password=".$dbpassword;
-    					}
-				}
-				$db = pg_connect( $PgConnStr );
-				$SQLScriptFile = file('./sql/pg/weberp-new.psql');
-			
-			} elseif ($dbType ='mysql') { //its a mysql db
-				mysql_select_db($_POST['NewCompany'],$db);
-				$SQLScriptFile = file('./sql/mysql/weberp-new.sql');
-			}
-				
-			$ScriptFileEntries = sizeof($SQLScriptFile);
-			$ErrMsg = _('The script to create the new company database failed because');
-			$SQL ='';
-			$InAFunction = false;
-			
-			for ($i=0; $i<=$ScriptFileEntries; $i++) {
-				
-				$SQLScriptFile[$i] = trim($SQLScriptFile[$i]);
+				if ($dbType=='postgres'){
 					
-				if (substr($SQLScriptFile[$i], 0, 2) != '--' 
-					AND substr($SQLScriptFile[$i], 0, 3) != 'USE' 
-					AND strstr($SQLScriptFile[$i],'/*')==FALSE 
-					AND strlen($SQLScriptFile[$i])>1){
+					$PgConnStr = 'dbname=' . $_POST['NewCompany'];
+					if ( isset($host) && ($host != "")) {
+						$PgConnStr = 'host=' . $host . ' ' . $PgConnStr;
+					}
+	
+					if (isset( $dbuser ) && ($dbuser != "")) {
+						// if we have a user we need to use password if supplied
+						$PgConnStr .= " user=".$dbuser;
+						if ( isset( $dbpassword ) && ($dbpassword != "") ) {
+							$PgConnStr .= " password=".$dbpassword;
+						}
+					}
+					$db = pg_connect( $PgConnStr );
+					$SQLScriptFile = file('./sql/pg/weberp-new.psql');
+				
+				} elseif ($dbType ='mysql') { //its a mysql db
+					mysql_select_db($_POST['NewCompany'],$db);
+					$SQLScriptFile = file('./sql/mysql/weberp-new.sql');
+				}
+					
+				$ScriptFileEntries = sizeof($SQLScriptFile);
+				$ErrMsg = _('The script to create the new company database failed because');
+				$SQL ='';
+				$InAFunction = false;
+				
+				for ($i=0; $i<=$ScriptFileEntries; $i++) {
+					
+					$SQLScriptFile[$i] = trim($SQLScriptFile[$i]);
 						
-					$SQL .= ' ' . $SQLScriptFile[$i];
-
-					//check if this line kicks off a function definition - pg chokes otherwise
-					if (substr($SQLScriptFile[$i],0,15) == 'CREATE FUNCTION'){
-						$InAFunction = true;
-					}
-					//check if this line completes a function definition - pg chokes otherwise
- 					if (substr($SQLScriptFile[$i],0,8) == 'LANGUAGE'){
-						$InAFunction = false;
-					}
-					if (strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
-						$SQL = substr($SQL,0,strlen($SQL)-1);
-						$result = DB_query($SQL, $db, $ErrMsg);
-						$SQL='';
-					}
-					
-				} //end if its a valid sql line not a comment
-			} //end of for loop around the lines of the sql script
+					if (substr($SQLScriptFile[$i], 0, 2) != '--' 
+						AND substr($SQLScriptFile[$i], 0, 3) != 'USE' 
+						AND strstr($SQLScriptFile[$i],'/*')==FALSE 
+						AND strlen($SQLScriptFile[$i])>1){
+							
+						$SQL .= ' ' . $SQLScriptFile[$i];
+	
+						//check if this line kicks off a function definition - pg chokes otherwise
+						if (substr($SQLScriptFile[$i],0,15) == 'CREATE FUNCTION'){
+							$InAFunction = true;
+						}
+						//check if this line completes a function definition - pg chokes otherwise
+						if (substr($SQLScriptFile[$i],0,8) == 'LANGUAGE'){
+							$InAFunction = false;
+						}
+						if (strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
+							$SQL = substr($SQL,0,strlen($SQL)-1);
+							$result = DB_query($SQL, $db, $ErrMsg);
+							$SQL='';
+						}
+						
+					} //end if its a valid sql line not a comment
+				} //end of for loop around the lines of the sql script
+			} //end if CreateDB was checked
 			
 			prnMsg (_('Attempting to create the new company directories') . '.....<BR>', 'info');
 			$Result = mkdir('./companies/' . $_POST['NewCompany']);
@@ -141,14 +143,14 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 		} else {
 			prnMsg(_('This company cannot be added because either it already exists or no logo is being uploaded!'),'error');
 			if (isset($_FILES['LogoFile'])){
-				echo '<BR>Files LogoFile is set ok';
+				prnMsg(_('Files LogoFile is set ok'),'info');
 			} else  {
-				echo '<BR>_FILES[LogoFile] is not set';
+				prnMsg('_FILES[LogoFile] ' ._('is not set'),'info');
 			}
 			if($_FILES['LogoFile']['name'] !=''){
-				echo '<BR>_FILES[LogoFile][name] is not blank';
+				prnMsg( '_FILES[LogoFile][name] '  . _('is not blank'),'info');
 			} else  {
-				echo '<BR>_FILES[LogoFile][name] is blank';
+				prnMsg('_FILES[LogoFile][name] ' ._('is blank'),'info');
 			}
 			
   			echo '</FORM>';
@@ -202,9 +204,10 @@ echo '<BR>';
 echo '<FORM METHOD="post" ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . ' enctype="multipart/form-data">';
 
 echo '<TABLE><TR>';
-echo '<TD>' . _('Enter 10 lower case character abbreviation for the company') . '</TD>
-	<TD><INPUT TYPE="TEXT" SIZE="11" MAXLENGTH=10 NAME="NewCompany"></TD></TR>
+echo '<TD>' . _('Enter up to 32 character lower case character abbreviation for the company') . '</TD>
+	<TD><INPUT TYPE="TEXT" SIZE="33" MAXLENGTH=32 NAME="NewCompany"></TD></TR>
 	<TR><TD>'. _('Logo Image File (.jpg)') . ':</TD><TD><INPUT TYPE="FILE" ID="LogoFile" NAME="LogoFile"></TD></TR>
+	<TR><TD>' . _('Create Database?') . '</TD><TD><INPUT TYPE="CHECKBOX"> NAME="CreateDB"></TD></TR>
 	</TABLE>';
 
 echo '<BR><INPUT TYPE="SUBMIT" NAME="submit" VALUE="' . _('Proceed') . '">&nbsp;&nbsp;&nbsp;&nbsp;';
@@ -212,5 +215,4 @@ echo '</FORM>';
 echo '</CENTER>';
 
 include('includes/footer.inc');
-
 ?>
