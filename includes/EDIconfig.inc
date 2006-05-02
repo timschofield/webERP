@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 /*EDI configuration variables definition */
 
@@ -69,7 +69,7 @@ while ($LineDetails = DB_fetch_array($MessageLinesResult)){
 
 		$VariableName = substr($LineDetails['linetext'],$LastPositionPointer,$PoistionPointer-$LastPositionPointer);
 
-		$NewLineText = $NewLineText . $($VariableName);
+		$NewLineText = $NewLineText . $$VariableName;
 
 	}
 	/* now add the text from the last ] to the end of the line */

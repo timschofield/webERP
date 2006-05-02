@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 /* Script to delete an invoice expects and invoice number to delete
 not included on any menu for obvious reasons
@@ -118,11 +118,11 @@ Delete Sales Analysis records */
 /* Delete the stock movements  */
 $SQL = 'DELETE FROM stockmoves WHERE type=10 AND transno = ' . $_GET['InvoiceNo'];
 
-$ErrMsg _('The SQL to delete the stock movement records failed because');
+$ErrMsg = _('The SQL to delete the stock movement records failed because');
 $Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
 prnMsg(_('The stock movement records associated with the invoice have been deleted'),'info');
 echo '<BR><BR>';
-prnMsg(_('Invoice number') . ' ' . $_GET['InvoiceNo'} . ' ' . _('has been deleted'),'info');
+prnMsg(_('Invoice number') . ' ' . $_GET['InvoiceNo'] . ' ' . _('has been deleted'),'info');
 /* Delete any GL Transaction records*/
 include('includes/footer.inc');
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 include('config.php');
 
@@ -10,7 +10,7 @@ if (!isset($_POST['FromCat'])  OR $_POST['FromCat']=='') {
 
 $PageSecurity = 2;
 
-If (isset($_POST['PrintPDF']) {
+if (isset($_POST['PrintPDF'])) {
 	
 	include('includes/PDFStarter.php');
 	include('includes/ConnectDB.inc');

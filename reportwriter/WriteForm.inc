@@ -341,10 +341,16 @@ function BuildPDF($ReportID, $Prefs) {
 	$ThisMonth = substr($Today,5,2);
 	$ThisYear = substr($Today,0,4);
 	// find total number of days in this month
-	if ($ThisMonth==04 OR $ThisMonth==06 OR $ThisMonth==09 OR $ThisMonth==11) { $TotalDays=30; }
-		elseif ($ThisMonth==02 AND date('L')) { $TotalDays=29; } // Leap year
-		elseif ($ThisMonth==02 AND !date('L')) { $TotalDays=28; }
-		else { $TotalDays=31; }
+	if ($ThisMonth=='04' OR $ThisMonth=='06' OR $ThisMonth=='09' OR $ThisMonth=='11') { 
+		$TotalDays=30; 
+	} elseif ($ThisMonth=='02' AND date('L')) { 
+		$TotalDays=29; 
+	} // Leap year
+	 elseif ($ThisMonth=='02' AND !date('L')) { 
+		$TotalDays=28; 
+	} else { 
+		$TotalDays=31; 
+	}
 	// Calculate date range
 	$DateArray=explode(':',$Prefs['DateListings']['params']);
 	switch ($DateArray[0]) { // based on the date choice selected
@@ -382,7 +388,9 @@ function BuildPDF($ReportID, $Prefs) {
 		case "h": // RPT_GROUP_QUARTER
 			$QtrStrt = intval(($ThisMonth-1)/3)*3+1;
 			$QtrEnd = intval(($ThisMonth-1)/3)*3+3;
-			if ($QtrEnd==04 OR $QtrEnd==06 OR $QtrEnd==09 OR $QtrEnd==11) { $TotalDays=30; }
+			if ($QtrEnd==4 OR $QtrEnd==6 OR $QtrEnd==9 OR $QtrEnd==11) { 
+				$TotalDays=30; 
+			}
 			$qs = date('Y-m-d', mktime(0,0,0, $QtrStrt, 1, $ThisYear));
 			$qe = date('Y-m-d', mktime(0,0,0, $QtrEnd, $TotalDays, $ThisYear));
 			$d = $df.">='".$qs."' AND ".$df."<='".$qe."'";

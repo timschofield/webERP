@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity =11;
 
@@ -63,7 +63,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 	$FirstSegInGrp =0;
 	$SegGroup =0;
 
-	$fp = fopen($_SERVER['DOCUMENT_ROOT'] . '/$rootpath/$_SESSION['EDI_Incoming_Orders']/$OrderFile','r');
+	$fp = fopen($_SERVER['DOCUMENT_ROOT'] . "/$rootpath/$_SESSION['EDI_Incoming_Orders']/$OrderFile",'r');
 
 	$SegID = 0;
 	$SegCounter =0;
@@ -171,7 +171,7 @@ $dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $rootpath . '/' . $_SESSI
 						break;
 					case '401':
 						$EmailText .= "\n" . _('Trans-shipment order');
-						$Order->Comments .= "\n" . _('Trans-shipment order')
+						$Order->Comments .= "\n" . _('Trans-shipment order');
 						break;
 					case '402':
 						$EmailText .= "\n" . _('Cross docking order');
