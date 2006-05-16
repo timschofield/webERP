@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $PageSecurity = 9;
 
 include('includes/session.inc');
@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
     if (strlen($_POST['Abbreviation']) > 3) {
         $InputError = 1;
         prnMsg(_('The currency abbreviation must be 3 characters or less long'),'error');
-    } elseif (!is_real((real) $_POST['ExchangeRate'])){
+    } elseif (!is_numeric($_POST['ExchangeRate'])){
         $InputError = 1;
        prnMsg(_('The exchange rate must be numeric'),'error');
     } elseif (strlen($_POST['CurrencyName']) > 20) {
