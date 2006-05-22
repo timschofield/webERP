@@ -1,5 +1,7 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 
+<P>16/5/06 Harald Ringehahn includes/ConstructSQLForUserDefinedSalesReport.inc not using 'Not Used" rather than _('Not Used')
+<P>16/5/06 Harald Ringehahn includes/PDFSalesAnalysis.inc ColNo and colNo should be colno fixed lower casing.
 <P>2/5/06 Matthew Sibson EDIProcessOrders.php quotation marks and semi colon. PDFLowGP.php missing bracket on if. Z_DeleteInvoice.php missing = and } sh/be ]. reportwriter/WriteForm.inc was testing for numerical month numbers fixed to text for month strings.
 <P>25/4/06 Ditesh Kumar includes/DBConnect_mysql.inc now uses mysql_real_escape_string rather than mysql_escape_string the former takes into account the character set in use.
 <P>25/4/06 Suren Nadu includes PDFTransPageHeader.inc - was printing address line 3 twice changed to print line 6 correctly
@@ -51,7 +53,7 @@
 <P>9/12/05 Obscure bug in GetPrice.inc - if special prices set up for a salestype/customer combo but not default price set up for the salestype then the special price is picked up for customers belonging to the sales type even though it is specific to a different customer! - now fixed
 <P>9/12/05 Danie - StockLocTransfers.php -now checks for positive stock in the location before allowing a transfer.
 <P>6/12/05 Updated the webERP php-gettext to the latest version 1.05
-<P>3/12/05 João - WWW_Users.php now options to set theme and language before user logs in. Previously had to be set from the user settings when the user logged in themselves now the sysadmin can change them. Changed locale setting to LC_ALL then changed the LC_NUMERIC back to en_GB.
+<P>3/12/05 Joï¿½ - WWW_Users.php now options to set theme and language before user logs in. Previously had to be set from the user settings when the user logged in themselves now the sysadmin can change them. Changed locale setting to LC_ALL then changed the LC_NUMERIC back to en_GB.
 <P>21/11/05 Dave Premo - report writer tool - allows adding reports on any web erp data and formating thereof provided some knowledge of the tables etc. Export to PDF, CSV - import and export of reports too. New directory for the files reportwriter as well as changes to session.inc, header.inc, config.php, footer.inc
 <P> 16/11/05 Tech Nossomy Credit status - tidied up consistency of wording "Disallow invoices". Also used white and black in .css files instead of #FFFFFF and #000000 respectively
 <P>

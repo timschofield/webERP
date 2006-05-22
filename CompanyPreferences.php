@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity =10;
 
@@ -17,6 +17,7 @@ if (isset($_POST['submit'])) {
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
+
 
 	//first off validate inputs sensible
 
@@ -208,7 +209,7 @@ echo '<TR><TD>' . _('Facsimile Number') . ':</TD>
 </TR>';
 
 echo '<TR><TD>' . _('Email Address') . ':</TD>
-	<TD><input type="Text" Name="Email" SIZE=26 MAXLENGTH=55 value="' . $_POST['Email'] . '"></TD>
+	<TD><input type="Text" Name="Email" SIZE=50 MAXLENGTH=55 value="' . $_POST['Email'] . '"></TD>
 </TR>';
 
 

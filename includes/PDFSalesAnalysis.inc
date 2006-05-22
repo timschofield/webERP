@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 include ('includes/class.pdf.php');
 
@@ -77,7 +77,7 @@ if ($ThisLineHasOutput==True){
 
 			DB_data_seek($ColsResult,0);
 			while ($Cols = DB_fetch_array($ColsResult)){
-				$Xpos = 160 + $Cols['ColNo']*60;
+				$Xpos = 160 + $Cols['colno']*60;
 				if ($Cols['Calculation']==0){
 				$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, number_format($AccumLvl3[$Cols['colno']]),'right');
 				} else { /* its a calculation need to re-perform on the totals*/
@@ -322,7 +322,7 @@ if ($Counter>0){ /*Dont want to print totals if this is the first record */
 
 	DB_data_seek($ColsResult,0);
 	while ($Cols = DB_fetch_array($ColsResult)){
-		$Xpos = 160 + $Cols['colNo']*60;
+		$Xpos = 160 + $Cols['colno']*60;
 		if ($Cols['calculation']==0){
 		$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, number_format($AccumLvl3[$Cols['colno']]),'right');
 
