@@ -38,6 +38,6 @@ while ($SalesOrderDetails = DB_fetch_array($SalesOrdersResult)) {
 
 DB_query( 'ALTER TABLE salesorderdetails ADD CONSTRAINT salesorderdetails_pk primary key(orderno, orderlineno)',$db);
 
-prnMsg(_('The sales orderdetails lines have been numbered appropriately for version 3.02','success'));
+prnMsg(_('The sales orderdetails lines have been numbered appropriately for version 3.02'),'success');
 include('includes/footer.inc');
 ?>

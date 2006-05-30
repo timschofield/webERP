@@ -1,13 +1,16 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
 include ('includes/session.inc');
 $title = _('UTILITY PAGE Change A Stock Code');
 include('includes/header.inc');
+include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_POST['ProcessStockChange'])){
+	
+	$_POST['NewStockID'] = strtoupper($_POST['NewStockID']);
 
 /*First check the stock code exists */
 	$result=DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['OldStockID'] . "'",$db);
@@ -16,14 +19,20 @@ if (isset($_POST['ProcessStockChange'])){
 		include('includes/footer.inc');
 		exit;
 	}
-
-
-	if ($_POST['NewStockID']==''){
-		echo '<BR><BR>';
-		prnMsg(-('The new stock code to change the old code to must be entered as well'),'error');
+	
+	if (ContainsIllegalCharacters($_POST['NewStockID'])){
+		prnMsg(_('The new stock code to change the old code to contains illegal characters - no changes will be made'),'error');
 		include('includes/footer.inc');
 		exit;
 	}
+
+	if ($_POST['NewStockID']==''){
+		prnMsg(_('The new stock code to change the old code to must be entered as well'),'error');
+		include('includes/footer.inc');
+		exit;
+	}
+
+	
 /*Now check that the new code doesn't already exist */
 	$result=DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['NewStockID'] . "'",$db);
 	if (DB_num_rows($result)!=0){
@@ -32,7 +41,9 @@ if (isset($_POST['ProcessStockChange'])){
 		include('includes/footer.inc');
 		exit;
 	}
+	
 
+ 
 	$result = DB_query('BEGIN',$db);
 
 	echo '<BR>' . _('Adding the new stock master record');
@@ -210,7 +221,7 @@ if (isset($_POST['ProcessStockChange'])){
 	echo ' ... ' . _('completed');
 
 
-	echo '<P>' . _('Stock Code') . ': ' . $_POST['OldStockCode'] . ' ' . _('was sucessfully changed to') . ' : ' . $_POST['NewStockID'];
+	echo '<P>' . _('Stock Code') . ': ' . $_POST['OldStockID'] . ' ' . _('was sucessfully changed to') . ' : ' . $_POST['NewStockID'];
 
 }
 
