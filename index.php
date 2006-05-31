@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.48 $ */
+/* $Revision: 1.49 $ */
 
 
 $PageSecurity = 1;
@@ -11,7 +11,7 @@ $title=_('Main Menu');
 /*The module link codes are hard coded in a switch statement below to determine the options to show for each tab */
 $ModuleLink = array('orders', 'AR', 'AP', 'PO', 'stock', 'manuf', 'GL', 'system');
 /*The headings showing on the tabs accross the main index used also in WWW_Users for defining what should be visible to the user */
-$ModuleList = array(_('Orders'), _('Receivables'), _('Payables'), _('Purchasing'), _('Inventory'), _('Manufacturing'), _('General Ledger'), _('Setup'));
+$ModuleList = array(_('Sales'), _('Receivables'), _('Payables'), _('Purchases'), _('Inventory'), _('Manufacturing'), _('General Ledger'), _('Setup'));
 
 if (isset($_GET['Application'])){ /*This is sent by this page (to itself) when the user clicks on a tab */
 	$_SESSION['Module'] = $_GET['Application'];
@@ -29,17 +29,17 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 		<table width="100%" class="table_index">
 			<tr>
 			<td class="menu_group_item">
-				<?php echo "<a href='" . $rootpath . '/CustomerInquiry.php?' .SID . '&CustomerID=' . $_SESSION['CustomerID'] . "'><li>" . _('Account Status') . '</li></a>'; ?>
+				<?php echo "<A HREF='" . $rootpath . '/CustomerInquiry.php?' .SID . '&CustomerID=' . $_SESSION['CustomerID'] . "'><LI>" . _('Account Status') . '</LI></A>'; ?>
 			</td>
 			</tr>
 			<tr>
 			<td class="menu_group_item">
-				<?php echo "<a href='" . $rootpath . '/SelectOrderItems.php?' .SID . "&NewOrder=Yes'><li>" . _('Place An Order') . '</li></a>'; ?>
+				<?php echo "<A HREF='" . $rootpath . '/SelectOrderItems.php?' .SID . "&NewOrder=Yes'><LI>" . _('Place An Order') . '</LI></A>'; ?>
 			</td>
 			</tr>
 										<tr>
 			<td class="menu_group_item">
-				<?php echo "<li><a href='" . $rootpath . '/SelectCompletedOrder.php?' .SID . "&SelectedCustomer=" . $_SESSION['CustomerID'] . "'>" . _('Order Status') . '</a></li>'; ?>
+				<?php echo "<LI><A HREF='" . $rootpath . '/SelectCompletedOrder.php?' .SID . "&SelectedCustomer=" . $_SESSION['CustomerID'] . "'>" . _('Order Status') . '</A></LI>'; ?>
 			</td>
 			</tr>
 		</table>
@@ -73,9 +73,9 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 				$_SESSION['Module']=$ModuleLink[$i];
 			}
 			if ($ModuleLink[$i] == $_SESSION['Module']){
-				echo "<td class='main_menu_selected'><a href='". $_SERVER['PHP_SELF'] .'?'. SID . '&Application='. $ModuleLink[$i] ."'>". $ModuleList[$i] .'</a></td>';
+				echo "<td class='main_menu_selected'><A HREF='". $_SERVER['PHP_SELF'] .'?'. SID . '&Application='. $ModuleLink[$i] ."'>". $ModuleList[$i] .'</A></td>';
 			} else {
-				echo "<td class='main_menu_unselected'><a href='". $_SERVER['PHP_SELF'] .'?'. SID . '&Application='. $ModuleLink[$i] ."'>". $ModuleList[$i] .'</a></td>';
+				echo "<td class='main_menu_unselected'><A HREF='". $_SERVER['PHP_SELF'] .'?'. SID . '&Application='. $ModuleLink[$i] ."'>". $ModuleList[$i] .'</A></td>';
 			}
 		}
 		$i++;
@@ -116,27 +116,22 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SelectOrderItems.php?' .SID . "&NewOrder=Yes'><li>" . _('Sales Order Entry') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SelectSalesOrder.php?' . SID . "'><LI>" . _('Sales Orders') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SelectSalesOrder.php?' . SID . "'><li>" . _('Outstanding Sales Orders Maintenance') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SpecialOrder.php?' .SID . "&NewSpecial=Yes'><LI>" . _('Special Order') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SpecialOrder.php?' .SID . "&NewSpecial=Yes'><li>" . _('Special Order') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SelectRecurringSalesOrder.php?' .SID . "'><LI>" . _('Recurring Order Template') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SelectRecurringSalesOrder.php?' .SID . "'><li>" . _('Select Recurring Order Template') . '</li></a>'; ?>
-							</td>
-							</tr>
-							<tr>
-							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/RecurringSalesOrdersProcess.php?' .SID . "'><li>" . _('Process Recurring Sales Orders') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/RecurringSalesOrdersProcess.php?' .SID . "'><LI>" . _('Process Recurring Orders') . '</LI></A>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -145,28 +140,34 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SelectCompletedOrder.php?' . SID . "'><li>" . _('Order Inquiry') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SelectCompletedOrder.php?' . SID . "'><LI>" . _('Order Inquiry') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PDFPriceList.php?' . SID . "'><li>" . _('Print Price Lists') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/PDFPriceList.php?' . SID . "'><LI>" . _('Print Price Lists') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PDFOrderStatus.php?' . SID . "'><li>" . _('Order Status Reports (Print)') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/PDFOrderStatus.php?' . SID . "'><LI>" . _('Order Status Reports (Print)') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PDFOrdersInvoiced.php?' . SID . "'><li>" . _('Orders Invoiced Reports') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/PDFOrdersInvoiced.php?' . SID . "'><LI>" . _('Orders Invoiced Reports') . '</LI></A>'; ?>
 							</td>
 							</tr>
 
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PDFDeliveryDifferences.php?' . SID . "'><li>" . _('Order Delivery Differences Report') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/PDFDeliveryDifferences.php?' . SID . "'><LI>" . _('Order Delivery Differences Report') . '</LI></A>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/PDFDIFOT.php?' . SID . "'><LI>" . _('Delivery In Full On Time (DIFOT) Report') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -214,23 +215,23 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%"class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SelectSalesOrder.php?' . SID . "'><li>" . _('Select Order to Invoice') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SelectSalesOrder.php?' . SID . "'><LI>" . _('Select Order to Invoice') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SelectCreditItems.php?' .SID . "&NewCredit=Yes'><li>" . _('Create A Credit Note') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SelectCreditItems.php?' .SID . "&NewCredit=Yes'><LI>" . _('Create A Credit Note') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/CustomerReceipt.php?' . SID . "'><li>" . _('Enter Receipts') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/CustomerReceipt.php?' . SID . "'><LI>" . _('Enter Receipts') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
 
-								<?php echo "<a href='" . $rootpath . '/CustomerAllocations.php?' . SID . "'><li>" . _('Allocate Receipts or Credit Notes') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/CustomerAllocations.php?' . SID . "'><LI>" . _('Allocate Receipts or Credit Notes') . '</LI></A>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -239,57 +240,63 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SelectCustomer.php?' . SID . "'><li>" . _('Customer Transaction Inquiries') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SelectCustomer.php?' . SID . "'><LI>" . _('Customer Transaction Inquiries') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/CustWhereAlloc.php?' . SID . "'><li>" . _('Where Allocated Inquiry') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/CustWhereAlloc.php?' . SID . "'><LI>" . _('Where Allocated Inquiry') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PrintCustTrans.php?' . SID . "'><li>" . _('Print Invoices or Credit Notes') . '</li></a>'; ?>
+								<?php 
+									if ($_SESSION['InvoicePortraitFormat']==0){
+										echo "<A HREF='" . $rootpath . '/PrintCustTrans.php?' . SID . "'><LI>" . _('Print Invoices or Credit Notes') . '</LI></A>'; 
+									} else {
+										echo "<A HREF='". $rootpath . "/PrintCustTransPortrait.php?" . SID . "'><LI>" . _('Print Invoices or Credit Notes') . '</LI></A>';
+									}
+								?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . "/PrintCustStatements.php?" . SID . "'><li>" . _('Print Statements') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . "/PrintCustStatements.php?" . SID . "'><LI>" . _('Print Statements') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SalesAnalRepts.php?' . SID . "'><li>" . _('Sales Analysis Reports') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SalesAnalRepts.php?' . SID . "'><LI>" . _('Sales Analysis Reports') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/AgedDebtors.php?' . SID . "'><li>" . _('Aged Customer Balances/Overdues Report') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/AgedDebtors.php?' . SID . "'><LI>" . _('Aged Customer Balances/Overdues Report') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/CustomerTransInquiry.php?' . SID . "'><li>" . _('Transaction Inquiries') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/CustomerTransInquiry.php?' . SID . "'><LI>" . _('Transaction Inquiries') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-							<?php echo "<a href='" . $rootpath . '/PDFBankingSummary.php?' . SID . "'><li>" . _('Re-Print A Deposit Listing') . '</li></a>'; ?>
+							<?php echo "<A HREF='" . $rootpath . '/PDFBankingSummary.php?' . SID . "'><LI>" . _('Re-Print A Deposit Listing') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/DebtorsAtPeriodEnd.php?' . SID . "'><li>" . _('Debtor Balances At A Prior Month End') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/DebtorsAtPeriodEnd.php?' . SID . "'><LI>" . _('Debtor Balances At A Prior Month End') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-							<?php echo "<a href='" . $rootpath . '/PDFCustomerList.php?' . SID . "'><li>" . _('Customer Listing By Area/Salesperson') . '</li></a>'; ?>
+							<?php echo "<A HREF='" . $rootpath . '/PDFCustomerList.php?' . SID . "'><LI>" . _('Customer Listing By Area/Salesperson') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-							<?php echo "<a href='" . $rootpath . '/SalesGraph.php?' . SID . "'><li>" . _('Sales Graphs') . '</li></a>'; ?>
+							<?php echo "<A HREF='" . $rootpath . '/SalesGraph.php?' . SID . "'><LI>" . _('Sales Graphs') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -303,12 +310,12 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/Customers.php?' . SID . "'><li>" . _('Add a New Customer') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/Customers.php?' . SID . "'><LI>" . _('Add a New Customer') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SelectCustomer.php?' . SID . "'><li>" . _('Modify/Add/Delete Customers/branches and Special pricing') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SelectCustomer.php?' . SID . "'><LI>" . _('Modify/Add/Delete Customers/branches and Special pricing') . '</LI></A>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -338,13 +345,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SelectSupplier.php?' . SID . "'><li>" . _('Select Supplier For Transactions and Inquiries') . '</li></a>'; ?>
-
-							</td>
-							</tr>
-							<tr>
-							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . "/SupplierAllocations.php?" . SID . "'><li>" . _('Supplier Allocations') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . "/SupplierAllocations.php?" . SID . "'><LI>" . _('Supplier Allocations') . '</LI></A>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -353,22 +354,22 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/AgedSuppliers.php?' . SID . "'><li>" . _('Aged Supplier Report') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/AgedSuppliers.php?' . SID . "'><LI>" . _('Aged Supplier Report') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SuppPaymentRun.php?' . SID . "'><li>" . _('Payment Run Report') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SuppPaymentRun.php?' . SID . "'><LI>" . _('Payment Run Report') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/OutstandingGRNs.php?' . SID . "'><li>" . _('Outstanding GRNs Report') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/OutstandingGRNs.php?' . SID . "'><LI>" . _('Outstanding GRNs Report') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SupplierBalsAtPeriodEnd.php?' . SID . "'><li>" . _('Creditor Balances At A Prior Month End') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SupplierBalsAtPeriodEnd.php?' . SID . "'><LI>" . _('Creditor Balances At A Prior Month End') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -382,12 +383,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/Suppliers.php?' . SID . "'><li>" . _('Add a New Supplier') . '</li></a>'; ?>
-							</td>
-							</tr>
-							<tr>
-							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SelectSupplier.php?' . SID . "'><li>" . _('Modify Or Delete A Supplier') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'><LI>" . _('Suppliers') . '</LI></A>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -415,22 +411,17 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PO_Header.php?' .SID . "&NewOrder=Yes'><li>" . _('Purchase Order Entry') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . "'><LI>" . _('Purchase Orders') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . "'><li>" . _('Outstanding Purchase Orders') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'><LI>" . _('Shipment Entry') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SelectSupplier.php?' . SID . "'><li>" . _('Shipment Entry') . '</li></a>'; ?>
-							</td>
-							</tr>
-							<tr>
-							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/Shipt_Select.php?' . SID . "'><li>" . _('Select A Shipment') . "</li></a>"; ?>
+								<?php echo "<A HREF='" . $rootpath . '/Shipt_Select.php?' . SID . "'><LI>" . _('Select A Shipment') . "</LI></A>"; ?>
 							</td>
 							</tr>
 						</table>
@@ -439,7 +430,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PO_SelectPurchOrder.php?' . SID . "'><li>" . _('Purchase Order Inquiry') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/PO_SelectPurchOrder.php?' . SID . "'><LI>" . _('Purchase Order Inquiry') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -453,7 +444,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PurchData.php?' . SID . "'><li>" . _('Maintain Purchasing Data') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/PurchData.php?' . SID . "'><LI>" . _('Maintain Purchasing Data') . '</LI></A>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -484,37 +475,37 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . "'><li>" . _('Receive Purchase Orders') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . "'><LI>" . _('Receive Purchase Orders') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/StockLocTransfer.php' . SID . "'><li>" . _('Bulk Inventory Transfer') . ' - ' . _('Dispatch') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/StockLocTransfer.php' . SID . "'><LI>" . _('Bulk Inventory Transfer') . ' - ' . _('Dispatch') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/StockLocTransferReceive.php?' . SID . "'><li>" . _('Bulk Inventory Transfer') . ' - ' . _('Receive') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/StockLocTransferReceive.php?' . SID . "'><LI>" . _('Bulk Inventory Transfer') . ' - ' . _('Receive') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/StockTransfers.php?' . SID . "'><li>" . _('Inventory Location Transfers') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/StockTransfers.php?' . SID . "'><LI>" . _('Inventory Location Transfers') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/StockAdjustments.php?' . SID . "'><li>" . _('Inventory Adjustments') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/StockAdjustments.php?' . SID . "'><LI>" . _('Inventory Adjustments') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/ReverseGRN.php?' . SID . "'><li>" . _('Reverse Goods Received') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/ReverseGRN.php?' . SID . "'><LI>" . _('Reverse Goods Received') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/StockCounts.php?' . SID . "'><li>" . _('Enter Stock Counts') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/StockCounts.php?' . SID . "'><LI>" . _('Enter Stock Counts') . '</LI></A>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -523,62 +514,62 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . "/StockMovements.php?" . SID . "'><li>" . _('Inventory Item Movements') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . "/StockMovements.php?" . SID . "'><LI>" . _('Inventory Item Movements') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/StockStatus.php?' . SID . "'><li>" . _('Inventory Item Status') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/StockStatus.php?' . SID . "'><LI>" . _('Inventory Item Status') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/StockUsage.php?' . SID . "'><li>" . _('Inventory Item Usage') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/StockUsage.php?' . SID . "'><LI>" . _('Inventory Item Usage') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/InventoryValuation.php?' . SID . "'><li>" . _('Inventory Valuation Report') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/InventoryValuation.php?' . SID . "'><LI>" . _('Inventory Valuation Report') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/InventoryPlanning.php?' . SID . "'><li>" . _('Inventory Planning Report') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/InventoryPlanning.php?' . SID . "'><LI>" . _('Inventory Planning Report') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/StockCheck.php?' . SID . "'><li>" . _('Inventory Stock Check Sheets') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/StockCheck.php?' . SID . "'><LI>" . _('Inventory Stock Check Sheets') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/StockQties_csv.php?' . SID . "'><li>" . _('Make Inventory Quantities CSV') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/StockQties_csv.php?' . SID . "'><LI>" . _('Make Inventory Quantities CSV') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PDFStockCheckComparison.php?' . SID . "'><li>" . _('Compare Counts Vs Stock Check Data') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/PDFStockCheckComparison.php?' . SID . "'><LI>" . _('Compare Counts Vs Stock Check Data') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/StockLocMovements.php?' . SID . "'><li>" . _('All Inventory Movements By Location/Date') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/StockLocMovements.php?' . SID . "'><LI>" . _('All Inventory Movements By Location/Date') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/StockLocStatus.php?' . SID . "'><li>" . _('List Inventory Status By Location/Category') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/StockLocStatus.php?' . SID . "'><LI>" . _('List Inventory Status By Location/Category') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/StockQuantityByDate.php?' . SID . "'><li>" . _('Historical Stock Quantity By Location/Category') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/StockQuantityByDate.php?' . SID . "'><LI>" . _('Historical Stock Quantity By Location/Category') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PDFStockNegatives.php?' . SID . "'><li>" . _('List Negative Stocks') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/PDFStockNegatives.php?' . SID . "'><LI>" . _('List Negative Stocks') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -592,32 +583,12 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/Stocks.php?' . SID . "'><li>" . _('Add Inventory Items') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SelectProduct.php?' . SID . "'><LI>" . _('Items') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'><li>" . _('Modify Or Delete A Inventory Item Or Item Pricing') . '</li></a>'; ?>
-							</td>
-							</tr>
-							<tr>
-							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/StockReorderLevel.php?' . SID . "'><li>" . _('Maintain Reorder Levels') . '</li></a>'; ?>
-							</td>
-							</tr>
-							<tr>
-							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/StockCostUpdate.php?' . SID . "'><li>" . _('Modify Standard Costs') . '</li></a>'; ?>
-							</td>
-							</tr>
-							<tr>
-							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PurchData.php?' . SID . "'><li>" . _('Maintain Purchasing Data') . '</li></a>'; ?>
-							</td>
-							</tr>
-							<tr>
-							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SalesCategories.php?' . SID . "'><li>" . _('Sales Category Maintenance') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SalesCategories.php?' . SID . "'><LI>" . _('Sales Category Maintenance') . '</LI></A>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -656,17 +627,17 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/BOMInquiry.php?' . SID . "'><li>" . _('Costed Bill Of Material Inquiry') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/BOMInquiry.php?' . SID . "'><LI>" . _('Costed Bill Of Material Inquiry') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/WhereUsedInquiry.php?' . SID . "'><li>" . _('Where Used Inquiry') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/WhereUsedInquiry.php?' . SID . "'><LI>" . _('Where Used Inquiry') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/BOMListing.php?' . SID . "'><li>" . _('Bills Of Material Listing') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/BOMListing.php?' . SID . "'><LI>" . _('Bills Of Material Listing') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -680,12 +651,12 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/WorkCentres.php?' . SID . "'><li>" . _('Work Centre') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/WorkCentres.php?' . SID . "'><LI>" . _('Work Centre') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/BOMs.php?' . SID . "'><li>" . _('Bills Of Material') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/BOMs.php?' . SID . "'><LI>" . _('Bills Of Material') . '</LI></A>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -754,63 +725,63 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/CompanyPreferences.php?' . SID . "'><li>" . _('Company Preferences') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/CompanyPreferences.php?' . SID . "'><LI>" . _('Company Preferences') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SystemParameters.php?' . SID . "'><li>" . _('Configuration Settings') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SystemParameters.php?' . SID . "'><LI>" . _('Configuration Settings') . '</LI></A>'; ?>
 							</td>
 							</tr>
 
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/WWW_Users.php?' . SID . "'><li>" . _('User Accounts') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/WWW_Users.php?' . SID . "'><LI>" . _('User Accounts') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/WWW_Access.php?' . SID . "'><li>" . _('Role Permissions') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/WWW_Access.php?' . SID . "'><LI>" . _('Role Permissions') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/BankAccounts.php?' . SID . "'><li>" . _('Bank Accounts') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/BankAccounts.php?' . SID . "'><LI>" . _('Bank Accounts') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/Currencies.php?' . SID . "'><li>" . _('Currency Maintenance') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/Currencies.php?' . SID . "'><LI>" . _('Currency Maintenance') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/TaxAuthorities.php?' . SID . "'><li>" . _('Tax Authorities and Rates Maintenance') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/TaxAuthorities.php?' . SID . "'><LI>" . _('Tax Authorities and Rates Maintenance') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/TaxGroups.php?' . SID . "'><li>" . _('Tax Group Maintenance') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/TaxGroups.php?' . SID . "'><LI>" . _('Tax Group Maintenance') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/TaxProvinces.php?' . SID . "'><li>" . _('Dispatch Tax Province Maintenance') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/TaxProvinces.php?' . SID . "'><LI>" . _('Dispatch Tax Province Maintenance') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/TaxCategories.php?' . SID . "'><li>" . _('Tax Category Maintenance') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/TaxCategories.php?' . SID . "'><LI>" . _('Tax Category Maintenance') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PeriodsInquiry.php?' . SID . "'><li>" . _('List Periods Defined') . ' <FONT SIZE=1>(' . _('Periods are automatically maintained') . ')</FONT></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/PeriodsInquiry.php?' . SID . "'><LI>" . _('List Periods Defined') . ' <FONT SIZE=1>(' . _('Periods are automatically maintained') . ')</FONT></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo '<a href="' . $rootpath . '/reportwriter/admin/ReportCreator.php"><li>' . _('Report Builder Tool') . '</li></a>'; ?>
+								<?php echo '<A HREF="' . $rootpath . '/reportwriter/admin/ReportCreator.php"><LI>' . _('Report Builder Tool') . '</LI></A>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -820,57 +791,57 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SalesTypes.php?' . SID . "'><li>" . _('Sales Types') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SalesTypes.php?' . SID . "'><LI>" . _('Sales Types') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/CreditStatus.php?' . SID . "'><li>" . _('Credit Status') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/CreditStatus.php?' . SID . "'><LI>" . _('Credit Status') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PaymentTerms.php?' . SID . "'><li>" . _('Payment Terms') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/PaymentTerms.php?' . SID . "'><LI>" . _('Payment Terms') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PaymentMethods.php?' . SID . "'><li>" . _('Payment Methods') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/PaymentMethods.php?' . SID . "'><LI>" . _('Payment Methods') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SalesPeople.php?' . SID . "'><li>" . _('Sales People') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SalesPeople.php?' . SID . "'><LI>" . _('Sales People') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/Areas.php?' . SID . "'><li>" . _('Sales Areas') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/Areas.php?' . SID . "'><LI>" . _('Sales Areas') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/Shippers.php?' . SID . "'><li>" . _('Shippers') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/Shippers.php?' . SID . "'><LI>" . _('Shippers') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SalesGLPostings.php?' . SID . "'><li>" . _('Sales GL Interface Postings') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SalesGLPostings.php?' . SID . "'><LI>" . _('Sales GL Interface Postings') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/COGSGLPostings.php?' . SID . "'><li>" . _('COGS GL Interface Postings') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/COGSGLPostings.php?' . SID . "'><LI>" . _('COGS GL Interface Postings') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/FreightCosts.php?' . SID . "'><li>" . _('Freight Costs Maintenance') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/FreightCosts.php?' . SID . "'><LI>" . _('Freight Costs Maintenance') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/DiscountMatrix.php?' . SID . "'><li>" . _('Discount Matrix') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/DiscountMatrix.php?' . SID . "'><LI>" . _('Discount Matrix') . '</LI></A>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -880,22 +851,22 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/StockCategories.php?' . SID . "'><li>" . _('Inventory Categories Maintenance') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/StockCategories.php?' . SID . "'><LI>" . _('Inventory Categories Maintenance') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/Locations.php?' . SID . "'><li>" . _('Inventory Locations Maintenance') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/Locations.php?' . SID . "'><LI>" . _('Inventory Locations Maintenance') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/DiscountCategories.php?' . SID . "'><li>" . _('Discount Category Maintenance') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/DiscountCategories.php?' . SID . "'><LI>" . _('Discount Category Maintenance') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/UnitsOfMeasure.php?' . SID . "'><li>" . _('Units of Measure') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/UnitsOfMeasure.php?' . SID . "'><LI>" . _('Units of Measure') . '</LI></A>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -923,27 +894,27 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/Payments.php?' .SID . "&NewPayment=Yes'><li>" . _('Bank Account Payments') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/Payments.php?' .SID . "&NewPayment=Yes'><LI>" . _('Bank Account Payments') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/CustomerReceipt.php?' . SID . "'><li>" . _('Bank Account Receipts') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/CustomerReceipt.php?' . SID . "'><LI>" . _('Bank Account Receipts') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/GLJournal.php?' .SID . "&NewJournal=Yes'><li>" . _('Journal Entry') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/GLJournal.php?' .SID . "&NewJournal=Yes'><LI>" . _('Journal Entry') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/BankMatching.php?' .SID . "&Type=Receipts'><li>" . _('Bank Deposits Matching') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/BankMatching.php?' .SID . "&Type=Receipts'><LI>" . _('Bank Deposits Matching') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/BankMatching.php?' .SID . "&Type=Payments'><li>" . _('Bank Payments Matching') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/BankMatching.php?' .SID . "&Type=Payments'><LI>" . _('Bank Payments Matching') . '</LI></A>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -952,37 +923,37 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/GLTrialBalance.php?' . SID . "'><li>" . _('Trial Balance') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/GLTrialBalance.php?' . SID . "'><LI>" . _('Trial Balance') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/SelectGLAccount.php?' . SID . "'><li>" . _('Account Inquiry') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SelectGLAccount.php?' . SID . "'><LI>" . _('Account Inquiry') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/BankReconciliation.php?' . SID . "'><li>" . _('Bank Reconciliation Statement') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/BankReconciliation.php?' . SID . "'><LI>" . _('Bank Reconciliation Statement') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/PDFChequeListing.php?' . SID . "'><li>" . _('Cheque Payments Listing') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/PDFChequeListing.php?' . SID . "'><LI>" . _('Cheque Payments Listing') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . "/GLProfit_Loss.php?" . SID . "'><li>" . _('Profit and Loss Statement') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . "/GLProfit_Loss.php?" . SID . "'><LI>" . _('Profit and Loss Statement') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/GLBalanceSheet.php?' . SID . "'><li>" . _('Balance Sheet') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/GLBalanceSheet.php?' . SID . "'><LI>" . _('Balance Sheet') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/Tax.php?' . SID . "'><li>" . _('GST Reports') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/Tax.php?' . SID . "'><LI>" . _('GST Reports') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -996,17 +967,17 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/GLAccounts.php?' . SID . "'><li>" . _('GL Account') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/GLAccounts.php?' . SID . "'><LI>" . _('GL Account') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/AccountGroups.php?' . SID . "'><li>" . _('Account Groups') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/AccountGroups.php?' . SID . "'><LI>" . _('Account Groups') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<a href='" . $rootpath . '/AccountSections.php?' . SID . "'><li>" . _('Account Sections') . '</li></a>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/AccountSections.php?' . SID . "'><LI>" . _('Account Sections') . '</LI></A>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -1101,7 +1072,7 @@ be generated, one for standard reports and the other for custom reports.
 			foreach ($ReportList as $Report) {
 				if ($Report['groupname']==$GroupID AND $Report['defaultreport']==$Def) {
 					$RptLinks .= '<tr><td class="menu_group_item">';
-					$RptLinks .= '<a href="'.$rootpath.'/reportwriter/ReportMaker.php?action=go&reportid='.$Report['id'].'"><li>'._($Report['reportname']).'</li></a>';
+					$RptLinks .= '<A HREF="'.$rootpath.'/reportwriter/ReportMaker.php?action=go&reportid='.$Report['id'].'"><LI>'._($Report['reportname']).'</LI></A>';
 					$RptLinks .= '</td></tr>';
 					$NoEntries = false;
 				}
@@ -1113,8 +1084,8 @@ be generated, one for standard reports and the other for custom reports.
 				if ($NoForms AND $Group[0]==$GroupID AND $Report['reporttype']=='frm' AND $Report['defaultreport']==$Def) { 
 					$RptLinks .= '<tr><td class="menu_group_item">';
 					$RptLinks .= '<img src="'.$rootpath.'/css/'.$_SESSION['Theme'].'/images/folders.gif" width="16" height="13">&nbsp;';
-					$RptLinks .= '<a href="'.$rootpath.'/reportwriter/FormMaker.php?id='.$Report['groupname'].'">';
-					$RptLinks .= $FormGroups[$Report['groupname']].'</a>';
+					$RptLinks .= '<A HREF="'.$rootpath.'/reportwriter/FormMaker.php?id='.$Report['groupname'].'">';
+					$RptLinks .= $FormGroups[$Report['groupname']].'</A>';
 					$RptLinks .= '</td></tr>';
 					$NoForms = false;
 					$NoEntries = false; 

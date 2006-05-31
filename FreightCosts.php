@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 11;
 include('includes/session.inc');
@@ -121,7 +121,8 @@ if (isset($_POST['submit'])) {
 					maxkgs = " . $_POST['MAXKGs'] . ",
 					maxcub= " . $_POST['MAXCub'] . ",
 					fixedprice = " . $_POST['FixedPrice'] . ",
-					minimumchg= " . $_POST['MinimumChg'] . "
+					minimumchg= " . $_POST['MinimumChg'] . ",
+					taxcatid=" . $_POST['TaxCatID'] . "
 			WHERE shipcostfromid=" . $SelectedFreightCost;
 
 		$msg = _('Freight cost record updated');
@@ -139,7 +140,8 @@ if (isset($_POST['submit'])) {
 				maxkgs,
 				maxcub,
 				fixedprice,
-				minimumchg)
+				minimumchg,
+				taxcatid)
 			VALUES (
 				'$LocationFrom',
 				'" . $_POST['Destination'] . "',
@@ -149,7 +151,8 @@ if (isset($_POST['submit'])) {
 				" . $_POST['MAXKGs'] . ",
 				" . $_POST['MAXCub'] . ",
 				" . $_POST['FixedPrice'] .",
-				" . $_POST['MinimumChg'] . "
+				" . $_POST['MinimumChg'] . ",
+				" . $_POST['TaxCatID'] . "
 			)";
 
 		$msg = _('Freight cost record inserted');
@@ -170,6 +173,7 @@ if (isset($_POST['submit'])) {
 	unset($_POST['MAXCub']);
 	unset($_POST['FixedPrice']);
 	unset($_POST['MinimumChg']);
+	unset($_POST['TaxCatID']);
 
 } elseif (isset($_GET['delete'])) {
 
@@ -190,7 +194,8 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 			maxkgs,
 			maxcub,
 			fixedprice,
-			minimumchg
+			minimumchg,
+			taxcatid
 		FROM freightcosts
 		WHERE freightcosts.locationfrom = '$LocationFrom'
 		AND freightcosts.shipperid = $ShipperID
@@ -207,6 +212,7 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 				<td class='tableheader'>" . _('MAX Volume') . "</td>
 				<td class='tableheader'>" . _('Fixed Price') . "</td>
 				<td class='tableheader'>" . _('Minimum Charge') . "</td>
+				<td class='tableheader'>" . _('Tax Category') . "</td>
 			</tr>\n";
 
 	echo $TableHeader;
@@ -228,7 +234,15 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 			echo "<tr bgcolor='#EEEEEE'>";
 			$k++;
 		}
+
+		$sql = 'SELECT taxcatname FROM taxcategories where taxcatid=' . $myrow[8];
+		$TaxCatQuery = DB_query($sql, $db);
+
+		$TaxCatRow = DB_fetch_array($TaxCatQuery);
+		$TaxCatName = $TaxCatRow['taxcatname'];
+
 		printf("<td>%s</td>
+			<td ALIGN=RIGHT>%s</td>
 			<td ALIGN=RIGHT>%s</td>
 			<td ALIGN=RIGHT>%s</td>
 			<td ALIGN=RIGHT>%s</td>
@@ -244,6 +258,7 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 			$myrow[5],
 			$myrow[6],
 			$myrow[7],
+			$TaxCatName,
 			$_SERVER['PHP_SELF'] . '?' . SID,
 			$myrow[0],
 			$LocationFrom,
@@ -280,7 +295,8 @@ if (isset($LocationFrom) AND isset($ShipperID)) {
 				maxkgs,
 				maxcub,
 				fixedprice,
-				minimumchg
+				minimumchg,
+				taxcatid
 			FROM freightcosts
 			WHERE shipcostfromid=$SelectedFreightCost";
 
@@ -296,6 +312,7 @@ if (isset($LocationFrom) AND isset($ShipperID)) {
 		$_POST['MAXCub'] = $myrow['maxcub'];
 		$_POST['FixedPrice'] = $myrow['fixedprice'];
 		$_POST['MinimumChg'] = $myrow['minimumchg'];
+		$_POST['TaxCatID'] = $myrow['taxcatid'];
 
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedFreightCost' VALUE=$SelectedFreightCost>";
 
@@ -323,6 +340,25 @@ if (isset($LocationFrom) AND isset($ShipperID)) {
 		<TD><input type='Text' name='FixedPrice' SIZE=6 MAXLENGTH=5 value=" . $_POST['FixedPrice'] . "></TD></TR>";
 	echo '<TR><TD>' . _('Minimum Charge (0 is N/A)') . ":</a></TD>
 		<TD><input type='Text' name='MinimumChg' SIZE=6 MAXLENGTH=5 value=" . $_POST['MinimumChg'] . "></TD></TR>";
+
+	echo '<TR><TD>' . _('Tax Category') . ':</TD><TD><SELECT NAME="TaxCatID">';
+	$sql = 'SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname';
+	$result = DB_query($sql, $db);
+
+	if (!isset($_POST['TaxCatID'])){
+	  $_POST['TaxCatID'] = $_SESSION['DefaultTaxCategory'];
+	}
+	
+	while ($myrow = DB_fetch_array($result)) {
+	  if ($_POST['TaxCatID'] == $myrow['taxcatid']){
+		echo '<OPTION SELECTED VALUE=' . $myrow['taxcatid'] . '>' . $myrow['taxcatname'];
+	  } else {
+		echo '<OPTION VALUE=' . $myrow['taxcatid'] . '>' . $myrow['taxcatname'];
+	  }
+	} //end while loop
+
+	echo '</SELECT></TD></TR>';
+	
 	echo '</TABLE>';
 
 	echo "<CENTER><input type='Submit' name='submit' value='" . _('Enter Information') . "'>";

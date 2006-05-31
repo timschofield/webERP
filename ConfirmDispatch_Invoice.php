@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.37 $ */
+/* $Revision: 1.38 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -14,11 +14,12 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/FreightCalculation.inc');
 include('includes/GetSalesTransGLCodes.inc');
 
+echo '<A HREF="'. $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Back to Sales Orders'). '</A>';
 
 if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 	/* This page can only be called with an order number for invoicing*/
 	echo '<CENTER><A HREF="' . $rootpath . '/SelectSalesOrder.php?' . SID . '">' . _('Select a sales order to invoice'). '</A></CENTER>';
-	echo '<P><BR><BR>';
+	echo '<BR><BR>';
 	prnMsg( _('This page can only be opened if an order has been selected Please select an order first from the delivery details screen click on Confirm for invoicing'), 'error' );
 	include ('includes/footer.inc');
 	exit;
@@ -185,8 +186,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 				
 			} /* line items from sales order details */
 		} else { /* there are no line items that have a quantity to deliver */
-			echo '<CENTER><A HREF="'. $rootpath. '/SelectSalesOrder.php?' . SID . '">' ._('Select a different sales order to invoice') .'</A></CENTER>';
-			echo '<P>';
+			echo '<BR>';
 			prnMsg( _('There are no ordered items with a quantity left to deliver. There is nothing left to invoice'));
 			include('includes/footer.inc');
 			exit;
@@ -196,9 +196,8 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 
 	} else { /*end if the order was returned sucessfully */
 
-		echo '<P>'.
+		echo '<BR>'.
 		prnMsg( _('This order item could not be retrieved. Please select another order'), 'warn');
-		echo '<CENTER><A HREF="'. $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Select a different sales order to invoice'). '</A></CENTER>';
 		include ('includes/footer.inc');
 		exit;
 	} //valid order returned from the entered order number
@@ -235,8 +234,10 @@ set all the necessary session variables changed by the POST  */
 
 /* Always display dispatch quantities and recalc freight for items being dispatched */
 
-echo '<CENTER><FONT SIZE=4><B><U>' . $_SESSION['Items']->CustomerName . '</U></B></FONT><FONT SIZE=3> - ' .
-	_('Invoice amounts stated in') . ' ' . $_SESSION['Items']->DefaultCurrency . '</CENTER>';
+echo '<BR><BR><CENTER><FONT SIZE=4><B>' . _('Customer No.') . ': ' . $_SESSION['Items']->DebtorNo;
+echo '&nbsp;&nbsp;' . _('Customer Name') . ' : ' . $_SESSION['Items']->CustomerName. '</B></FONT><FONT SIZE=3>';
+//echo '<CENTER><FONT SIZE=4><B><U>' . $_SESSION['Items']->CustomerName . '</U></B></FONT><FONT SIZE=3> - ' .
+echo '<BR>' . _('Invoice amounts stated in') . ' ' . $_SESSION['Items']->DefaultCurrency . '</CENTER>';
 
 echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
 
@@ -563,11 +564,8 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			echo '<BR>' . _('Count of items in the session') . ' ' . count($_SESSION['Items']->LineItems);
 		}
 
-		echo '<P>';
-		prnMsg( _('This order has been changed or invoiced since this delivery was started to be confirmed') . '. ' . _('Processing halted') . '. ' . _('To enter and confirm this dispatch') . '/' . _('invoice the order must be re-selected and re-read again to update the changes made by the other user'), 'error');
 		echo '<BR>';
-
-		echo '<CENTER><A HREF="'. $rootpath.'/SelectSalesOrder.php?' . SID . '">'. _('Select a sales order for confirming deliveries and invoicing'). '</A></CENTER>';
+		prnMsg( _('This order has been changed or invoiced since this delivery was started to be confirmed') . '. ' . _('Processing halted') . '. ' . _('To enter and confirm this dispatch') . '/' . _('invoice the order must be re-selected and re-read again to update the changes made by the other user'), 'error');
 
 		unset($_SESSION['Items']->LineItems);
 		unset($_SESSION['Items']);
@@ -1074,7 +1072,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					salesanalysis.salesperson";
 
 			$ErrMsg = _('The count of existing Sales analysis records could not run because');
-			$DbgMsg = '<P>'. _('SQL to count the no of sales analysis records');
+			$DbgMsg = '<BR>'. _('SQL to count the no of sales analysis records');
 			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 			$myrow = DB_fetch_row($Result);
@@ -1341,7 +1339,12 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	unset($_SESSION['ProcessingOrder']);
 
 	echo _('Invoice number'). ' '. $InvoiceNo .' '. _('processed'). '<BR>';
-	echo '<A HREF="'.$rootpath.'/PrintCustTrans.php?' . SID . 'FromTransNo='.$InvoiceNo.'&InvOrCredit=Invoice&PrintPDF=True">'. _('Print this invoice'). '</A><BR>';
+	
+	if ($_SESSION['InvoicePortraitFormat']==0){
+		echo '<A HREF="'.$rootpath.'/PrintCustTrans.php?' . SID . 'FromTransNo='.$InvoiceNo.'&InvOrCredit=Invoice&PrintPDF=True">'. _('Print this invoice'). '</A><BR>';
+	} else {
+		echo '<A HREF="'.$rootpath.'/PrintCustTransPortrait.php?' . SID . 'FromTransNo='.$InvoiceNo.'&InvOrCredit=Invoice&PrintPDF=True">'. _('Print this invoice'). '</A><BR>';
+	}
 	echo '<A HREF="'.$rootpath.'/SelectSalesOrder.php?' . SID . '">'. _('Select another order for invoicing'). '</A><BR>';
 	echo '<A HREF="'.$rootpath.'/SelectOrderItems.php?' . SID . 'NewOrder=Yes">'._('Sales Order Entry').'</A><BR>';
 /*end of process invoice */
@@ -1368,7 +1371,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 	echo '</TABLE>
 	<CENTER>
-	<INPUT TYPE=SUBMIT NAME=Update Value=' . _('Update'). '><P>';
+	<INPUT TYPE=SUBMIT NAME=Update Value=' . _('Update'). '><BR>';
 
 	echo '<INPUT TYPE=SUBMIT NAME="ProcessInvoice" Value="'._('Process Invoice').'"</CENTER>';
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 3;
 
@@ -27,9 +27,8 @@ if (isset($_GET['SelectedBranch'])){
 	$SelectedBranch = strtoupper($_POST['SelectedBranch']);
 }
 
-?>
+echo "<a href='" . $rootpath . '/SelectCustomer.php?' . SID . "'>" . _('Back to Customers') . '</a>';
 
-<?php
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test

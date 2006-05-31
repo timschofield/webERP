@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 /*This page can be called with
 
 1. A DebtorTrans ID
@@ -115,7 +115,7 @@ if (isset($_POST['UpdateDatabase'])){
 					     					amt,
 										transid_allocfrom,
 										transid_allocto)
-								VALUES ('" . FormatDateForSQL(date($_SESSION['DefaultDateFormat'])) . "',
+								VALUES ('" . FormatDateForSQL(date('d/m/Y')) . "',
 									" . $AllocnItem->AllocAmt . ',
 									' . $_SESSION['Alloc']->AllocTrans . ',
 									' . $AllocnItem->ID . ')';
@@ -576,6 +576,7 @@ if (isset($_POST['AllocTrans'])){
   echo "<tr>
   		<td class='tableheader'>"._('Trans Type')."</td>
 		<td class='tableheader'>"._('Customer')."</td>
+	        <td class='tableheader'>"._('Cust No.')."</td>
 		<td class='tableheader'>"._('Number')."</td>
 		<td class='tableheader'>"._('Date')."</td>
 		<td class='tableheader'>"._('Total')."</td>
@@ -598,12 +599,14 @@ if (isset($_POST['AllocTrans'])){
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
+		<td>%s</td>
 		<td ALIGN=RIGHT>%0.2f</td>
 		<td ALIGN=RIGHT>%0.2f</td>
 		<td><a href='%sAllocTrans=%s'>%s</td>
 		</tr>",
 		$myrow['typename'],
 		$myrow['name'],
+		$myrow['debtorno'],
 		$myrow['transno'],
 		ConvertSQLDate($myrow['trandate']),
 		$myrow['total'],

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 $PageSecurity =3;
 
 
@@ -1400,7 +1400,11 @@ if (isset($_POST['ProcessCredit'])){
 	unset($_SESSION['ProcessingCredit']);
 
 	echo _('Credit Note number') . ' ' . $CreditNo . ' ' . _('has been processed');
-	echo "<BR><A HREF='". $rootpath . "/PrintCustTrans.php?" . SID . "&FromTransNo=" . $CreditNo . "&InvOrCredit=Credit&PrintPDF=True'>" . _('Print this credit note') . '</A>';
+	if ($_SESSION['InvoicePortraitFormat']==0){
+		echo "<BR><A HREF='". $rootpath . "/PrintCustTrans.php?" . SID . "&FromTransNo=" . $CreditNo . "&InvOrCredit=Credit&PrintPDF=True'>" . _('Print this credit note') . '</A>';
+	} else {
+		echo "<BR><A HREF='". $rootpath . "/PrintCustTransPortrait.php?" . SID . "&FromTransNo=" . $CreditNo . "&InvOrCredit=Credit&PrintPDF=True'>" . _('Print this credit note') . '</A>';
+	}
 
 /*end of process credit note */
 

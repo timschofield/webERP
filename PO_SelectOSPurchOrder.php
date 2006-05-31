@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 2;
 
@@ -153,6 +153,7 @@ if ($OrderNumber=='' OR !isset($OrderNumber)){
 	}
 
 	echo '</SELECT>  <INPUT TYPE=SUBMIT NAME="SearchOrders" VALUE="' . _('Search Purchase Orders') . '">';
+	echo '&nbsp;&nbsp;<a href="' . $rootpath . '/PO_Header.php?' .SID . '&NewOrder=Yes">' . _('New Order') . '</a>';
 }
 
 $SQL='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription';

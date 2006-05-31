@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -16,7 +16,7 @@ $title = _('Order Delivery Details');
 include('includes/header.inc');
 include('includes/FreightCalculation.inc');
 
-
+echo '<A HREF="'. $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Back to Sales Orders'). '</A>';
 
 if (!isset($_SESSION['Items']) OR !isset($_SESSION['Items']->DebtorNo)){
 	prnMsg(_('This page can only be read if an order has been entered') . '. ' . _('To enter an order select customer transactions then sales order entry'),'error');
@@ -326,7 +326,7 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 			echo "<P><A HREF='$rootpath/PDFQuotation.php?" . SID . "&QuotationNo=$OrderNo'>". _('Print Quotation') ."</A>";
 			
 		}
-		echo "<P><A HREF='$rootpath/SelectOrderItems.php?" . SID . "&NewOrder=Yes'>". _('New Order') .'</A>';
+		echo "<P><A HREF='$rootpath/SelectOrderItems.php?" . SID . "&NewOrder=Yes'>". _('Add Sales Order') .'</A>';
 	} else {
 		/*its a customer logon so thank them */
 		prnMsg(_('Thank you for your business'),'success');
@@ -411,7 +411,9 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 }
 
 
-echo '<CENTER><FONT SIZE=4><B>'. _('Customer') .' : ' . $_SESSION['Items']->CustomerName . '</B></FONT></CENTER>';
+echo '<CENTER><FONT SIZE=4><B>' . _('Customer No.') . ': ' . $_SESSION['Items']->DebtorNo;
+echo '&nbsp;&nbsp;' . _('Customer Name') . ' : ' . $_SESSION['Items']->CustomerName . '</B></FONT></CENTER>';
+//echo '<CENTER><FONT SIZE=4><B>'. _('Customer') .' : ' . $_SESSION['Items']->CustomerName . '</B></FONT></CENTER>';
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . $SID . "' METHOD=POST>";
 
 

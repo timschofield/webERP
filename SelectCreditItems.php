@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
@@ -1952,7 +1952,11 @@ then debit the expense account the stock is to written off to */
 
 	 echo _('Credit Note number') . ' ' . $CreditNo . ' ' . _('processed') . '<BR>';
 	 echo '<A target="_blank" HREF="' . $rootpath . '/PrintCustTrans.php?' . SID . '&FromTransNo=' . $CreditNo . '&InvOrCredit=Credit">' . _('Show this Credit Note on screen') . '</A><BR>';
-	 echo '<A HREF="' . $rootpath . '/PrintCustTrans.php?' . SID . '&FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True">' . _('Print this Credit Note') . '</A>';
+	if ($_SESSION['InvoicePortraitFormat']==0){
+	 	echo '<A HREF="' . $rootpath . '/PrintCustTrans.php?' . SID . '&FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True">' . _('Print this Credit Note') . '</A>';
+	} else {
+		echo '<A HREF="' . $rootpath . '/PrintCustTransPortrait.php?' . SID . '&FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True">' . _('Print this Credit Note') . '</A>';
+	}
 	 echo '<P><A HREF="' . $rootpath . '/SelectCreditItems.php">' . _('Enter Another Credit Note') . '</A>';
 
 } /*end of process credit note */

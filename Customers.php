@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 3;
 
@@ -276,7 +276,7 @@ if (!isset($DebtorNo)) {
 	
 	$DataError =0;  
 	
-	echo '<CENTER><TABLE>';
+	echo '<CENTER><TABLE BORDER=2 CELLSPACING=4><TR><TD><TABLE>';
 		
 	/* if $AutoDebtorNo in config.php has not been set or if it has been set to a number less than one,
 	then provide an input box for the DebtorNo to manually assigned */
@@ -299,10 +299,12 @@ if (!isset($DebtorNo)) {
 	echo '<TR><TD>' . _('Address Line 6') . ":</TD>
 		<TD><input type='Text' name='Address6' SIZE=17 MAXLENGTH=15></TD></TR>";
 
+  echo '</TABLE></TD><TD><TABLE>';
+	
 	$result=DB_query('SELECT typeabbrev, sales_type FROM salestypes ',$db);
 	if (DB_num_rows($result)==0){
 		$DataError =1;
-		echo '<TR><TD COLSPAN=2>' . prnMsg(_('There are no sales types/price lists currently defined - go to the setup tab of the main menu and set at least one up first'),'error') . '</TD></TR>';
+		echo '<TR><TD COLSPAN=2>' . prnMsg(_('No sales types/price lists defined'),'error') . '</TD></TR>';
 	} else {
 		echo '<TR><TD>' . _('Sales Type/Price List') . ":</TD>
 			<TD><SELECT name='SalesType'>";
@@ -384,9 +386,9 @@ if (!isset($DebtorNo)) {
 		echo '<OPTION VALUE=1>' . _('Address to Branch');
 	echo '</SELECT></TD></TR>';
 
-	echo'</TABLE>';
+	echo'</TABLE></TD></TR></TABLE></CENTER>';
 	if ($DataError ==0){
-		echo "<CENTER><input type='Submit' name='submit' value='" . _('Insert New Customer') . "'><BR><INPUT TYPE=SUBMIT ACTION=RESET VALUE='" . _('Reset') . "'>";
+		echo "<CENTER><input type='Submit' name='submit' value='" . _('Add New Customer') . "'><BR><INPUT TYPE=SUBMIT ACTION=RESET VALUE='" . _('Reset') . "'></CENTER>";
 	}
 	echo '</FORM>';
 
@@ -395,7 +397,7 @@ if (!isset($DebtorNo)) {
 //DebtorNo exists - either passed when calling the form or from the form itself
 
 	echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID ."'>";
-	echo '<CENTER><TABLE>';
+	echo '<CENTER><TABLE BORDER=2 CELLSPACING=4><TR><TD><TABLE>';
 
 	if (!isset($_POST['New'])) {
 		$sql = "SELECT debtorno,
@@ -426,6 +428,12 @@ if (!isset($DebtorNo)) {
 
 		$myrow = DB_fetch_array($result);
 
+		/* if $AutoDebtorNo in config.php has not been set or if it has been set to a number less than one,
+		then display the DebtorNo */
+		if ($_SESSION['AutoDebtorNo']== 0 )  {
+			echo '<TR><TD>' . _('Customer Code') . ":</TD>
+				<TD>" . $DebtorNo . "</TD></TR>";
+		}
 		$_POST['CustName'] = $myrow['name'];
 		$_POST['Address1']  = $myrow['address1'];
 		$_POST['Address2']  = $myrow['address2'];
@@ -473,6 +481,7 @@ if (!isset($DebtorNo)) {
 		<TD><input type='Text' name='Address5' SIZE=22 MAXLENGTH=20 value='" . $_POST['Address5'] . "'></TD></TR>";
 	echo '<TR><TD>' . _('Address Line 6') . ":</TD>
 		<TD><input type='Text' name='Address6' SIZE=17 MAXLENGTH=15 value='" . $_POST['Address6'] . "'></TD></TR>";
+  echo '</TABLE></TD><TD><TABLE>';
 
 	$result=DB_query('SELECT typeabbrev, sales_type FROM salestypes ',$db);
 
@@ -554,12 +563,14 @@ if (!isset($DebtorNo)) {
 		echo '<OPTION VALUE=0>' . _('Address to HO');
 		echo '<OPTION SELECTED VALUE=1>' . _('Address to Branch');
 	}
+	echo '</SELECT></TD></TR></table></TD></TR></TABLE></CENTER>';
+
 	echo '</SELECT></TD></TR>';
 
 	if ($_POST['New']) {
-		echo "</TABLE><CENTER><input type='Submit' name='submit' value='" . _('Add New Customer') . "'><BR><INPUT TYPE=SUBMIT name='reset' VALUE='" . _('Reset') . "'></FORM>";
+		echo "<CENTER><input type='Submit' name='submit' value='" . _('Add New Customer') . "'><BR><INPUT TYPE=SUBMIT name='reset' VALUE='" . _('Reset') . "'></FORM>";
 	} else {
-		echo "</TABLE><HR><CENTER><input type='Submit' name='submit' value='" . _('Update Customer') . "'><HR><FONT COLOR=RED><B>" . _('Be careful there is no second warning if you hit the DELETE button below') . "<B><BR>";
+		echo "<HR><CENTER><input type='Submit' name='submit' value='" . _('Update Customer') . "'>";
 		echo '<P><input type="Submit" name="delete" value="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';
 	}
 } // end of main ifs

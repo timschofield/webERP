@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.43 $ */
+/* $Revision: 1.44 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -7,7 +7,6 @@ $PageSecurity = 1;
 config.php is in turn included in session.inc*/
 
 include('includes/session.inc');
-
 
 if (isset($_GET['ModifyOrderNumber'])) {
 	$title = _('Modifying Order') . ' ' . $_GET['ModifyOrderNumber'];
@@ -55,6 +54,8 @@ if (isset($_GET['NewOrder'])){
 	}
 
 }
+
+echo '<A HREF="'. $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Back to Sales Orders'). '</A>';
 
 if (isset($_GET['ModifyOrderNumber'])
 	AND $_GET['ModifyOrderNumber']!=''){
@@ -174,7 +175,7 @@ if (isset($_GET['ModifyOrderNumber'])
 				AND  salesorderdetails.completed=0
 				AND salesorderdetails.orderno =" . $_GET['ModifyOrderNumber'] . "
 				ORDER BY salesorderdetails.orderlineno";
-		
+
 		$ErrMsg = _('The line items of the order cannot be retrieved because');
 		$LineItemsResult = db_query($LineItemsSQL,$db,$ErrMsg);
 		if (db_num_rows($LineItemsResult)>0) {
@@ -247,11 +248,14 @@ $msg='';
 
 if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
-	If ($_POST['Keywords']!='' AND $_POST['CustCode']!='') {
-		$msg= _('Customer name keywords have been used in preference to the customer code extract entered');
+	If (($_POST['Keywords']!='') AND (($_POST['CustCode']!='') OR ($_POST['CustPhone']!=''))) {
+		$msg= _('Customer name keywords have been used in preference to the customer code or phone entered');
 	}
-	If ($_POST['Keywords']=='' AND $_POST['CustCode']=='') {
-		$msg=_('At least one Customer Name keyword OR an extract of a Customer Code must be entered for the search');
+	If (($_POST['CustCode']!='') AND ($_POST['CustPhone']!='')) {
+		$msg=_('Customer code has been used in preference to the customer phone entered') . '.';
+	}
+	If (($_POST['Keywords']=='') AND ($_POST['CustCode']=='')  AND ($_POST['CustPhone']=='')) {
+		$msg=_('At least one Customer Name keyword OR an extract of a Customer Code or phone number must be entered for the search');
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 		//insert wildcard characters in spaces
@@ -273,7 +277,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 					custbranch.debtorno
 				FROM custbranch
 				WHERE custbranch.brname " . LIKE . " '$SearchString'
-				AND custbranch.disabletrans=0 
+				AND custbranch.disabletrans=0
 				ORDER BY custbranch.debtorno, custbranch.branchcode";
 
 		} elseif (strlen($_POST['CustCode'])>0){
@@ -289,7 +293,18 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 				FROM custbranch
 				WHERE custbranch.branchcode " . LIKE . " '%" . $_POST['CustCode'] . "%'
 				AND custbranch.disabletrans=0
-				ORDER BY custbranch.debtorno, custbranch.branchcode";
+				ORDER BY custbranch.debtorno";
+		} elseif (strlen($_POST['CustPhone'])>0){
+			$SQL = "SELECT custbranch.brname,
+					custbranch.contactname,
+					custbranch.phoneno,
+					custbranch.faxno,
+					custbranch.branchcode,
+					custbranch.debtorno
+				FROM custbranch
+				WHERE custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%'
+				AND custbranch.disabletrans=0
+				ORDER BY custbranch.debtorno";
 		}
 
 		$ErrMsg = _('The searched customer records requested cannot be retrieved because');
@@ -487,17 +502,20 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	OR $_SESSION['Items']->DebtorNo=='' ) {
 	?>
 
-	<FONT SIZE=3><B><?php echo '- ' . _('Customer Selection'); ?></B></FONT><BR>
+	<BR><BR><FONT SIZE=3><B><?php echo _('Customer Selection'); ?></B></FONT>
 
 	<FORM ACTION="<?php echo $_SERVER['PHP_SELF'] . '?' .SID; ?>" METHOD=POST>
 	<B><?php echo '<BR>' . $msg; ?></B>
 	<TABLE CELLPADDING=3 COLSPAN=4>
 	<TR>
-	<TD><FONT SIZE=1><?php echo _('Enter text in the customer name'); ?>:</FONT></TD>
+	<TD><FONT SIZE=1><?php echo _(' name'); ?>:</FONT></TD>
 	<TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20	MAXLENGTH=25></TD>
 	<TD><FONT SIZE=3><B><?php echo _('OR'); ?></B></FONT></TD>
-	<TD><FONT SIZE=1><?php echo _('Enter text extract in the customer code'); ?>:</FONT></TD>
+	<TD><FONT SIZE=1><?php echo _('Part of the code'); ?>:</FONT></TD>
 	<TD><INPUT TYPE="Text" NAME="CustCode" SIZE=15	MAXLENGTH=18></TD>
+	<TD><FONT SIZE=3><B><?php echo _('OR'); ?></B></FONT></TD>
+	<TD><FONT SIZE=1><?php echo _('Part of the phone'); ?>:</FONT></TD>
+	<TD><INPUT TYPE="Text" NAME="CustPhone" SIZE=15	MAXLENGTH=18></TD>
 	</TR>
 	</TABLE>
 	<CENTER><INPUT TYPE=SUBMIT NAME="SearchCust" VALUE="<?php echo _('Search Now'); ?>">
@@ -621,7 +639,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}
 	} else { /*Not cancelling the order */
 		
-		echo '<CENTER><FONT SIZE=4><B>';
+		echo '<BR><BR><CENTER><FONT SIZE=4><B>';
 		
 		if ($_SESSION['Items']->Quotation==1){
 			echo _('Quotation for') . ' ';
@@ -629,9 +647,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo _('Order for') . ' ';
 		}
 			
-		echo _('Customer') . ' : ' . $_SESSION['Items']->CustomerName;
-		echo ' -  ' . _('Deliver To') . ' : ' . $_SESSION['Items']->DeliverTo;
-		echo '<BR>' . _('A') . ' ' . $_SESSION['Items']->SalesTypeName . ' ' . _('Customer') . ' </B></FONT></CENTER>';
+		echo _('Customer No.') . ': ' . $_SESSION['Items']->DebtorNo;
+		echo '&nbsp;&nbsp;' . _('Customer Name') . ' : ' . $_SESSION['Items']->CustomerName;
+		echo '<BR>' . _('Deliver To') . ': ' . $_SESSION['Items']->DeliverTo;
+		echo '&nbsp;&nbsp;' . _('Sales Type') . '/' . _('Price List') . ': ' . $_SESSION['Items']->SalesTypeName . ' </B></FONT></CENTER>';
 	}
 
 	If (isset($_POST['Search'])){
@@ -951,6 +970,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			<TD class="tableheader">' . _('Item Code') . '</TD>
 			<TD class="tableheader">' . _('Item Description') . '</TD>
 			<TD class="tableheader">' . _('Quantity') . '</TD>
+			<TD class="tableheader">' . _('QOH') . '</TD>
 			<TD class="tableheader">' . _('Unit') . '</TD>
 			<TD class="tableheader">' . _('Price') . '</TD>
 			<TD class="tableheader">' . _('Discount') . '</TD>
@@ -983,6 +1003,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<TD><A target="_blank" HREF="' . $rootpath . '/StockStatus.php?' . SID . 'StockID=' . $OrderLine->StockID . '">' . $OrderLine->StockID . '</A></TD>
 				<TD>' . $OrderLine->ItemDescription . '</TD>
 				<TD><INPUT TYPE=TEXT NAME="Quantity_' . $OrderLine->LineNumber . '" SIZE=6 MAXLENGTH=6 VALUE=' . $OrderLine->Quantity . '></TD>
+				<TD>' . $OrderLine->QOHatLoc . '</TD>
 				<TD>' . $OrderLine->Units . '</TD>';
 
 			if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){

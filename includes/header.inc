@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
@@ -49,11 +49,11 @@
 
 		if (count($_SESSION['AllowedPageSecurityTokens'])>1){
 
-			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="2" HREF="' .  $rootpath . '/SelectCustomer.php?' . SID . '"><U>2</U>. ' . _('Select Customer') . '</A>&nbsp;&nbsp;</TD>';
+			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="2" HREF="' .  $rootpath . '/SelectCustomer.php?' . SID . '"><U>2</U>. ' . _('Customers') . '</A>&nbsp;&nbsp;</TD>';
 
-			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="3" HREF="' .  $rootpath . '/SelectProduct.php?' . SID . '"><U>3</U>. ' . _('Select Item') . '</A>&nbsp;&nbsp;</TD>';
+			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="3" HREF="' .  $rootpath . '/SelectProduct.php?' . SID . '"><U>3</U>. ' . _('Items') . '</A>&nbsp;&nbsp;</TD>';
 
-			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="4" HREF="' .  $rootpath . '/SelectSupplier.php?' . SID . '"><U>4</U>. ' . _('Select Supplier') . '</A>&nbsp;&nbsp;</TD>';
+			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A ACCESSKEY="4" HREF="' .  $rootpath . '/SelectSupplier.php?' . SID . '"><U>4</U>. ' . _('Suppliers') . '</A>&nbsp;&nbsp;</TD>';
 
 			echo '<TD CLASS="quick_menu_tabs" ALIGN="center"><A TARGET="_blank" ACCESSKEY="8" HREF="' .  $rootpath . '/doc/Manual/ManualContents.php?' . SID . '"><U>8</U>. ' . _('Manual') . '</A>&nbsp;&nbsp;</TD>';
 

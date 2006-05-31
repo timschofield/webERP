@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 2;
 
@@ -51,7 +51,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					address3,
 					address4
 				FROM suppliers
-				ORDER BY supplierid";
+				ORDER BY suppname";
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 
@@ -75,8 +75,8 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					address3,
 					address4
 				FROM suppliers
-				WHERE suppname " . LIKE . " '$SearchString' 
-				ORDER BY supplierid";
+				WHERE suppname " . LIKE . " '$SearchString'
+				ORDER BY suppname";
 
 		} elseif (strlen($_POST['SupplierCode'])>0){
 			$_POST['SupplierCode'] = strtoupper($_POST['SupplierCode']);
@@ -88,7 +88,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					address3,
 					address4
 				FROM suppliers
-				WHERE supplierid " . LIKE  . " '%" . $_POST['SupplierCode'] . "%' 
+				WHERE supplierid " . LIKE  . " '%" . $_POST['SupplierCode'] . "%'
 				ORDER BY supplierid";
 		}
 	} //one of keywords or SupplierCode was more than a zero length string
@@ -156,8 +156,9 @@ if (isset($_SESSION['SupplierID'])){
 
 	echo '</TD><TD VALIGN=TOP>'; /* Supplier Maintenance */
 
+        echo '<a href="' . $rootpath . '/Suppliers.php?">' . _('Add a New Supplier') . '</a><br>';
 	echo "<A HREF=\"$rootpath/Suppliers.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Modify Or Delete Supplier Details') . '</A>';
-	echo "<BR><A HREF=\"$rootpath/SupplierContacts.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Modify Or Delete Supplier Contact Details') . '</A>';
+	echo "<BR><A HREF=\"$rootpath/SupplierContacts.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Add/Modify/Delete Supplier Contacts') . '</A>';
 
 	echo '<BR>';
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 4;
 include('includes/DefinePOClass.php');
@@ -56,6 +56,9 @@ If (isset($_POST['EnterLines'])){
 	echo '<P>';
 	prnMsg(_('You should automatically be forwarded to the entry of the purchase order line items page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . "<a href='$rootpath/PO_Items.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue'),'info');
 }
+
+echo '<A HREF="'. $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . '">'. _('Back to Purchase Orders'). '</A>';
+
 /*The page can be called with ModifyOrderNumber=x where x is a purchase order number
 The page then looks up the details of order x and allows these details to be modified */
 
@@ -149,14 +152,16 @@ if (isset($_POST['SearchSuppliers'])){
 					suppliers.suppname, 
 					suppliers.currcode 
 				FROM suppliers 
-				WHERE suppliers.suppname " . LIKE . " '$SearchString'";
+				WHERE suppliers.suppname " . LIKE . " '$SearchString'
+				ORDER BY suppliers.suppname";
 
 		} elseif (strlen($_POST['SuppCode'])>0){
 			$SQL = "SELECT suppliers.supplierid, 
 					suppliers.suppname, 
 					suppliers.currcode 
 				FROM suppliers 
-				WHERE suppliers.supplierid " . LIKE . " '%" . $_POST['SuppCode'] . "%'";
+				WHERE suppliers.supplierid " . LIKE . " '%" . $_POST['SuppCode'] . "%'
+				ORDER BY suppliers.supplierid";
 		}
 
 		$ErrMsg = _('The searched supplier records requested cannot be retrieved because');
@@ -201,7 +206,7 @@ if ($_POST['Select']) {
 
 if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->SupplierID) OR $_SESSION['PO']->SupplierID=='' ) {
 
-	echo '<FONT SIZE=3><B> - ' . _('Supplier Selection') . "</B></FONT><BR>
+	echo '<BR><BR><FONT SIZE=3><B>' . _('Supplier Selection') . "</B></FONT><BR>
 	<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD=POST>";
 	if (strlen($msg)>1){
 		prnMsg($msg,'warn');

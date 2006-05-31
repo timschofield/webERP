@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 2;
 
@@ -151,7 +151,8 @@ if (!isset($StockID)) {
 		}
 		
 		echo '</SELECT> &nbsp&nbsp';
-		echo "<INPUT TYPE=SUBMIT NAME='SearchOrders' VALUE='" . _('Search Orders/Quotations') . "'>";
+		echo "<INPUT TYPE=SUBMIT NAME='SearchOrders' VALUE='" . _('Search') . "'>";
+    echo '&nbsp;&nbsp;<a href="' . $rootpath . '/SelectOrderItems.php?' . SID . '&NewOrder=Yes">' . _('Add Sales Order') . '</a>';
 	}
 
 	$SQL='SELECT categoryid,
@@ -246,6 +247,7 @@ If (isset($StockItemsResult)) {
 					salesorders.orddate,
 					salesorders.deliverydate,
 					salesorders.deliverto,
+					salesorders.printedpackingslip,
 					SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
 				FROM salesorders,
 					salesorderdetails,
@@ -279,6 +281,7 @@ If (isset($StockItemsResult)) {
 						salesorders.orddate,
 						salesorders.deliverydate,
 						salesorders.deliverto,
+					  salesorders.printedpackingslip,
 						salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
 					FROM salesorders,
 						salesorderdetails,
@@ -303,6 +306,7 @@ If (isset($StockItemsResult)) {
 						salesorders.customerref,
 						salesorders.orddate,
 						salesorders.deliverto,
+					  salesorders.printedpackingslip,
 						salesorders.deliverydate, SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
 					FROM salesorders,
 						salesorderdetails,
@@ -335,6 +339,7 @@ If (isset($StockItemsResult)) {
 						salesorders.customerref,
 						salesorders.orddate,
 						salesorders.deliverto,
+					  salesorders.printedpackingslip,
 						salesorders.deliverydate, SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
 					FROM salesorders,
 						salesorderdetails,
@@ -364,6 +369,7 @@ If (isset($StockItemsResult)) {
 						salesorders.orddate,
 						salesorders.deliverto,
 						salesorders.deliverydate,
+					  salesorders.printedpackingslip,
 						SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
 					FROM salesorders,
 						salesorderdetails,
@@ -449,10 +455,16 @@ If (isset($StockItemsResult)) {
 		$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
 		$FormatedOrderValue = number_format($myrow['ordervalue'],2);
 
+		if ($myrow['printedpackingslip']==0) {
+		  $PrintText = _('Print');
+		} else {
+		  $PrintText = _('Reprint');
+		}
+		
 		if ($_POST['Quotations']=='Orders_Only'){
 			printf("<td><A HREF='%s'>%s</A></td>
 				<td><A HREF='%s'>" . _('Invoice') . "</A></td>
-				<td><A target='_blank' HREF='%s'>" . _('Print') . "</A></td>
+				<td><A target='_blank' HREF='%s'>" . $PrintText . "</A></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -474,7 +486,7 @@ If (isset($StockItemsResult)) {
 				$FormatedOrderValue);
 		} else { /*must be quotes only */
 			printf("<td><A HREF='%s'>%s</A></td>
-				<td><A HREF='%s'>" . _('Print') . "</A></td>
+				<td><A HREF='%s'>" . $PrintText . "</A></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>

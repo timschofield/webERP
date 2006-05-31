@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity =15;
 
@@ -199,6 +199,10 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['ProhibitJournalsToControlAccounts'] != $_POST['X_ProhibitJournalsToControlAccounts'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". DB_escape_string($_POST['X_ProhibitJournalsToControlAccounts'])."' WHERE confname = 'ProhibitJournalsToControlAccounts'";
 		}
+		if ($_SESSION['InvoicePortraitFormat'] != $_POST['X_InvoicePortraitFormat'] ) {
+			$sql[] = "UPDATE config SET confvalue = '". DB_escape_string($_POST['X_InvoicePortraitFormat'])."' WHERE confname = 'InvoicePortraitFormat'";
+		}
+
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 0 ) {
 			$result = DB_query('BEGIN',$db,$ErrMsg);
@@ -307,6 +311,15 @@ echo '<TR><TD>' . _('Format of Packing Slips') . ':</TD>
 	<OPTION '.($_SESSION['PackNoteFormat']=='2'?'SELECTED ':'').'VALUE="2">'._('Special Stationery').'
 	</SELECT></TD>
 	<TD>' . _('Choose the format that packing notes should be printed by default') . '</TD>
+	</TR>';
+
+//Default Invoice Format
+echo '<TR><TD>' . _('Invoice Orientation') . ':</TD>
+	<TD><SELECT Name="X_InvoicePortraitFormat">
+	<OPTION '.($_SESSION['InvoicePortraitFormat']=='0'?'SELECTED ':'').'VALUE="0">'._('Landscape').'
+	<OPTION '.($_SESSION['InvoicePortraitFormat']=='1'?'SELECTED ':'').'VALUE="2">'._('Portrait').'
+	</SELECT></TD>
+	<TD>' . _('Select the invoice layout') . '</TD>
 	</TR>';
 
 //Blind packing note 

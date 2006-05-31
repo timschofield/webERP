@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 2;
 
@@ -26,12 +26,15 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	if (isset($_POST['Search'])){
 		$_POST['PageOffset'] = 1;
 	}
-	If ($_POST['Keywords'] AND $_POST['CustCode']) {
-		$msg=_('Customer name keywords have been used in preference to the customer code extract entered') . '.';
+	If ($_POST['Keywords'] AND (($_POST['CustCode']) OR ($_POST['CustPhone']))) {
+		$msg=_('Customer name keywords have been used in preference to customer code or phone  entered') . '.';
 		$_POST['Keywords'] = strtoupper($_POST['Keywords']);
 	}
-	If ($_POST['Keywords']=="" AND $_POST['CustCode']=="") {
-		//$msg=_('At least one Customer Name keyword OR an extract of a Customer Code must be entered for the search');
+	If (($_POST['CustCode']) AND ($_POST['CustPhone'])) {
+		$msg=_('Customer code has been used in preference to the customer phone entered') . '.';
+	}
+	If (($_POST['Keywords']=="") AND ($_POST['CustCode']=="") AND ($_POST['CustPhone']=="")) {
+		//$msg=_('At least one Customer Name keyword OR an extract of a Customer Code or Customer Phone must be entered for the search');
 		$SQL= "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
 					custbranch.brname,
@@ -79,10 +82,22 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					custbranch.faxno
 				FROM debtorsmaster LEFT JOIN custbranch
 					ON debtorsmaster.debtorno = custbranch.debtorno
-				WHERE debtorsmaster.debtorno " . LIKE  . " '%" . $_POST['CustCode'] . "%' 
+				WHERE debtorsmaster.debtorno " . LIKE  . " '%" . $_POST['CustCode'] . "%'
 				ORDER BY debtorsmaster.debtorno";
+		} elseif (strlen($_POST['CustPhone'])>0){
+
+			$SQL = "SELECT debtorsmaster.debtorno,
+					debtorsmaster.name,
+					custbranch.brname,
+					custbranch.contactname,
+					custbranch.phoneno,
+					custbranch.faxno
+				FROM debtorsmaster LEFT JOIN custbranch
+					ON debtorsmaster.debtorno = custbranch.debtorno
+				WHERE custbranch.phoneno " . LIKE  . " '%" . $_POST['CustPhone'] . "%'
+				ORDER BY custbranch.debtorno";
 		}
-	} //one of keywords or custcode was more than a zero length string
+	} //one of keywords or custcode or custphone was more than a zero length string
 	$ErrMsg = _('The searched customer records requested cannot be retrieved because');
 	$result = DB_query($SQL,$db,$ErrMsg);
 	if (DB_num_rows($result)==1){
@@ -99,10 +114,13 @@ If (!isset($_POST['Select'])){
 	$_POST['Select']="";
 }
 
+echo '<BR>';
+
 If ($_POST['Select']!="" OR 
 	($_SESSION['CustomerID']!="" 
 	AND !isset($_POST['Keywords']) 
-	AND !isset($_POST['CustCode']))) {
+	AND !isset($_POST['CustCode']) 
+	AND !isset($_POST['CustPhone']))) {
 
 	If ($_POST['Select']!=""){
 		$SQL = "SELECT name FROM debtorsmaster WHERE debtorno='" . $_POST['Select'] . "'";
@@ -122,7 +140,7 @@ If ($_POST['Select']!="" OR
 
 	$_POST['Select'] = NULL;
 
-	echo "<TABLE WIDTH=50% BORDER=2><TR><TD class='tableheader'>" . _('Customer Inquiries') . "</TD>
+	echo "<TABLE BORDER=2 CELLPADDING=4><TR><TD class='tableheader'>" . _('Customer Inquiries') . "</TD>
 			<TD class='tableheader'>" . _('Customer Maintenance') . "</TD></TR>";
 			
 	echo '<TR><TD WIDTH=50%>';
@@ -136,13 +154,24 @@ If ($_POST['Select']!="" OR
 	
 	echo '</TD><TD WIDTH=50%>';
 	
+        echo '<a href="' . $rootpath . '/Customers.php?">' . _('Add a New Customer') . '</a><br>';
 	echo '<a href="' . $rootpath . '/Customers.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Modify Customer Details') . '</a><BR>';
-	echo '<a href="' . $rootpath . '/CustomerBranches.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add/Edit/Delete Customer Branch records') . '</a><BR>';
+	echo '<a href="' . $rootpath . '/CustomerBranches.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add/Modify/Delete Customer Branches') . '</a><BR>';
 	
 	echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Special Customer Prices') . '</a><BR>';
 	echo '<a href="' . $rootpath . '/CustEDISetup.php">' . _('Customer EDI Configuration') . '</a>';
 
 	
+	echo '</TD></TR></TABLE><BR></CENTER>';
+} else {
+	echo "<CENTER><TABLE WIDTH=50% BORDER=2><TR><TD class='tableheader'>" . _('Customer Inquiries') . "</TD>
+			<TD class='tableheader'>" . _('Customer Maintenance') . "</TD></TR>";
+			
+	echo '<TR><TD WIDTH=50%>';
+	
+	echo '</TD><TD WIDTH=50%>';
+	
+  echo '<a href="' . $rootpath . '/Customers.php?">' . _('Add a New Customer') . '</a><br>';
 	echo '</TD></TR></TABLE><BR></CENTER>';
 }
 
@@ -153,7 +182,7 @@ If ($_POST['Select']!="" OR
 <B><?php echo $msg; ?></B>
 <TABLE CELLPADDING=3 COLSPAN=4>
 <TR>
-<TD><?php echo _('Text in the'); ?> <B><?php echo _('name'); ?></B>:</TD>
+<TD><B><?php echo _('Name'); ?></B>:</TD>
 <TD>
 <?php
 if (isset($_POST['Keywords'])) {
@@ -168,7 +197,7 @@ if (isset($_POST['Keywords'])) {
 ?>
 </TD>
 <TD><FONT SIZE=3><B><?php echo _('OR'); ?></B></FONT></TD>
-<TD><?php echo _('Text extract in the customer'); ?> <B><?php echo _('code'); ?></B>:</TD>
+<TD><B><?php echo _('Code'); ?></B>:</TD>
 <TD>
 <?php
 if (isset($_POST['CustCode'])) {
@@ -178,6 +207,21 @@ if (isset($_POST['CustCode'])) {
 } else {
 ?>
 <INPUT TYPE="Text" NAME="CustCode" SIZE=15 MAXLENGTH=18>
+<?php
+}
+?>
+</TD>
+<TD><FONT SIZE=3><B><?php echo _('OR'); ?></B></FONT></TD>
+<TD><B><?php echo _('Phone'); ?></B>:</TD>
+<TD>
+<?php
+if (isset($_POST['CustPhone'])) {
+?>
+<INPUT TYPE="Text" NAME="CustPhone" value="<?php echo $_POST['CustPhone'] ?>" SIZE=15 MAXLENGTH=18>
+<?php
+} else {
+?>
+<INPUT TYPE="Text" NAME="CustPhone" SIZE=15 MAXLENGTH=18>
 <?php
 }
 ?>

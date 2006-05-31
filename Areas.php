@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -25,9 +25,10 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 	$_POST['AreaCode'] = strtoupper($_POST['AreaCode']);
-	if (strlen($_POST['AreaCode']) > 2) {
+	// mod to handle 3 char area codes
+	if (strlen($_POST['AreaCode']) > 3) {
 		$InputError = 1;
-		prnMsg(_('The area code must be two characters or less long'),'error');
+		prnMsg(_('The area code must be three characters or less long'),'error');
 	} elseif (strlen($_POST['AreaDescription']) >25) {
 		$InputError = 1;
 		prnMsg(_('The area description must be twenty five characters or less long'),'error');
@@ -176,7 +177,7 @@ if (!isset($_GET['delete'])) {
 		echo '<CENTER><TABLE>
 			<TR>
 				<TD>' . _('Area Code') . ":</TD>
-				<TD><input type='Text' name='AreaCode' value='" . $_POST['AreaCode'] . "' SIZE=3 MAXLENGTH=2></TD>
+				<TD><input type='Text' name='AreaCode' value='" . $_POST['AreaCode'] . "' SIZE=3 MAXLENGTH=3></TD>
 			</TR>";
 	}
 

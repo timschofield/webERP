@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 
 $PageSecurity = 11;
@@ -680,7 +680,7 @@ if (isset($_POST['New']) OR $_POST['New']!="") {
 
 } else {
 
-	echo '<input type="Submit" name="submit" value="' . _('Submit Alterations') . '">';
+	echo '<input type="Submit" name="submit" value="' . _('Update') . '">';
 	echo '<P>';
 	prnMsg( _('Only click the Delete button if you are sure you wish to delete the item!') .  _('Checks will be made to ensure that there are no stock movements, sales analysis records, sales order items or purchase order items for the item') . '. ' . _('No deletions will be allowed if they exist'), 'warn', _('WARNING'));
 	echo '<P><input type="Submit" name="delete" value="' . _('Delete This Item') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';

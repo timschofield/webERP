@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 2;
 
@@ -24,7 +24,8 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==""){
 /*retrieve the order details from the database to print */
 $ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
 
-$sql = "SELECT salesorders.customerref,
+$sql = "SELECT salesorders.debtorno,
+    		salesorders.customerref,
 		salesorders.comments,
 		salesorders.orddate,
 		salesorders.deliverto,

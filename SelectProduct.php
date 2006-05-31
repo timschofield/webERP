@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 2;
 
@@ -408,8 +408,8 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	echo '<CENTER><TABLE WIDTH=90% COLSPAN=2 BORDER=2 CELLPADDING=4>';
 	echo '<TR>
 		<TD WIDTH=33% class="tableheader">' . _('Item Inquiries') . '</TD>
-		<TD WIDTH=33% class="tableheader">' . _('Item Maintenance') . '</TD>
 		<TD WIDTH=33% class="tableheader">' . _('Item Transactions') . '</TD>
+		<TD WIDTH=33% class="tableheader">' . _('Item Maintenance') . '</TD>
 	</TR>';
 	echo '<TR><TD>';
 
@@ -438,9 +438,18 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 
 	echo '</TD><TD>';
 
+	/* Stock Transactions */
+	if ($Its_A_Kitset_Assembly_Or_Dummy==False){
+		echo '<A HREF="' . $rootpath . '/StockAdjustments.php?' . SID . '&StockID=' . $StockID . '">' . _('Quantity Adjustments') . '</A><BR>';
+        	echo '<A HREF="' . $rootpath . '/StockTransfers.php?' . SID . '&StockID=' . $StockID . '">' . _('Location Transfers') . '</A><BR>';
+	}
+
+	echo '</TD><TD>';
+
 	/*Stock Maintenance Options */
 
-        echo '<A HREF="' . $rootpath . '/Stocks.php?' . SID . '&StockID=' . $StockID . '">' . _('Modify Stock Item Details') . '</A><BR>';
+  echo '<A HREF="' . $rootpath . '/Stocks.php?">' . _('Add Inventory Items') . '</A><BR>';
+  echo '<A HREF="' . $rootpath . '/Stocks.php?' . SID . '&StockID=' . $StockID . '">' . _('Modify Item Details') . '</A><BR>';
 	if ($Its_A_Kitset_Assembly_Or_Dummy==False){
 		echo '<A HREF="' . $rootpath . '/StockReorderLevel.php?' . SID . '&StockID=' . $StockID . '">' . _('Maintain Reorder Levels') . '</A><BR>';
         	echo '<A HREF="' . $rootpath . '/StockCostUpdate.php?' . SID . '&StockID=' . $StockID . '">' . _('Maintain Standard Cost') . '</A><BR>';
@@ -452,18 +461,33 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			echo '<A HREF="' . $rootpath . '/Prices_Customer.php?' . SID . '&Item=' . $StockID . '">' . _('Special Prices for customer') . ' - ' . $_SESSION['CustomerID'] . '</A><BR>';
         	}
 	}
-	echo '</TD><TD>';
-
-	/* Stock Transactions */
-	if ($Its_A_Kitset_Assembly_Or_Dummy==False){
-		echo '<A HREF="' . $rootpath . '/StockAdjustments.php?' . SID . '&StockID=' . $StockID . '">' . _('Quantity Adjustments') . '</A><BR>';
-        	echo '<A HREF="' . $rootpath . '/StockTransfers.php?' . SID . '&StockID=' . $StockID . '">' . _('Location Transfers') . '</A><BR>';
-	}
-
 
 	echo '</TD></TR></TABLE>';
 
-} //end of if
+} else {
+  // options (links) to pages. This requires stock id also to be passed.
+	echo '<CENTER><TABLE WIDTH=90% COLSPAN=2 BORDER=2 CELLPADDING=4>';
+	echo '<TR>
+		<TD WIDTH=33% class="tableheader">' . _('Item Inquiries') . '</TD>
+		<TD WIDTH=33% class="tableheader">' . _('Item Transactions') . '</TD>
+		<TD WIDTH=33% class="tableheader">' . _('Item Maintenance') . '</TD>
+	</TR>';
+	echo '<TR><TD>';
+
+	/*Stock Inquiry Options */
+
+	echo '</TD><TD>';
+
+	/* Stock Transactions */
+
+	echo '</TD><TD>';
+
+	/*Stock Maintenance Options */
+
+  echo '<A HREF="' . $rootpath . '/Stocks.php?">' . _('Add Inventory Items') . '</A><BR>';
+
+	echo '</TD></TR></TABLE>';
+}
 
 // end displaying item options if there is one and only one record
 

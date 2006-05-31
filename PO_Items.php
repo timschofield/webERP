@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 
 $PageSecurity = 4;
@@ -17,6 +17,8 @@ if (!isset($_SESSION['PO'])){
    header ('Location:' . $rootpath . '/PO_Header.php?' . SID);
    exit;
 }
+
+echo "<A HREF='$rootpath/PO_Header.php?" . SID . "'>" ._('Back To Purchase Order Header') . '</A>';
 
 if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database */
 
@@ -826,10 +828,7 @@ If ($_GET['Edit']){
 
 }
 
-echo "<BR><A HREF='$rootpath/PO_Header.php?" . SID . "'>" ._('Back To Purchase Order Header') . '</A>';
-
-
-echo '<HR>';
+echo '<BR><HR>';
 
 /* Now show the stock item selection search stuff below */
 

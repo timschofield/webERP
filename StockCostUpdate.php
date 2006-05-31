@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 2; /*viewing possible with inquiries but not mods */
 
@@ -59,8 +59,11 @@ if (isset($_POST['UpdateData'])){
 
 	$result = DB_query("SELECT * FROM stockmaster WHERE stockid='$StockID'",$db);
 	$myrow = DB_fetch_row($result);
-	if ($OldCost != $NewCost){
-        $Result = DB_query('BEGIN',$db);
+	if (DB_num_rows($result)==0) {
+		prnMsg (_('The entered item code does not exist'),'error',_('Non-existent Item'));
+	} elseif ($OldCost != $NewCost){
+
+		$Result = DB_query('BEGIN',$db);
 
 		if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $_POST['QOH']!=0){
 
@@ -147,7 +150,8 @@ $result = DB_query("SELECT description,
 			materialcost,
 			labourcost,
 			overheadcost,
-			mbflag",$db,$ErrMsg,$DbgMsg);
+			mbflag",
+		$db,$ErrMsg,$DbgMsg);
 
 
 $myrow = DB_fetch_array($result);
@@ -174,6 +178,11 @@ if ($myrow['mbflag']=='D'
    exit;
 }
 
+echo '<INPUT TYPE=HIDDEN NAME=OldMaterialCost VALUE=' . $myrow['materialcost'] .'>';
+echo '<INPUT TYPE=HIDDEN NAME=OldLabourCost VALUE=' . $myrow['labourcost'] .'>';
+echo '<INPUT TYPE=HIDDEN NAME=OldOverheadCost VALUE=' . $myrow['overheadcost'] .">";
+echo '<INPUT TYPE=HIDDEN NAME=QOH VALUE=' . $myrow['totalqoh'] .'>';
+
 echo '<CENTER><TABLE CELLPADDING=2 BORDER=2>';
 echo '<TR><TD>' . _('Last Cost') .':</TD><TD ALIGN=RIGHT>' . number_format($myrow['lastcost'],2) . '</TD></TR>';
 if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens']) OR !isset($UpdateSecurity)){
@@ -184,7 +193,11 @@ if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens']) OR !isset
 	if ($myrow['mbflag']=='M'){
 		echo '<TR><TD>' . _('Standard Labour Cost Per Unit') . ':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME=LabourCost VALUE=' . $myrow['labourcost'] . '></TD></TR>';
 		echo '<TR><TD>' . _('Standard Overhead Cost Per Unit') . ':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME=OverheadCost VALUE=' . $myrow['overheadcost'] . '></TD></TR>';
-	} 
+	} else {
+		echo '<INPUT TYPE=HIDDEN NAME=LabourCost VALUE=0>';
+		echo '<INPUT TYPE=HIDDEN NAME=OverheadCost VALUE=0>';
+	}
+
     echo "</TABLE><INPUT TYPE=SUBMIT NAME='UpdateData' VALUE='" . _('Update') . "'><HR>";
 }
 echo "<A HREF='$rootpath/StockStatus.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Status') . '</A>';

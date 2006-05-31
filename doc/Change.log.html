@@ -1,5 +1,28 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 
+<P>31/5/06 index.php link to PDFDIFOT.php delivery in full on time report
+<P>31/5/06 added Steve Ks PrintCustTransPortrait.php option  added new config variable and changed the SystemParameters.php script to allow the variable to be switched. Changed all scripts that call PrintCustTrans.php to look at the new session variable before printing
+<P>30/5/06 Steve K - 'lots of changes' 
+	- ConfirmDispatchInvoice changes to <BR> from <P>, format of customer name, moved link to sales orders to top. 
+	- CustEDISetup.php added link to customers form
+	- CustomerAllocations.php added customer code to table display - fixed sql date format
+	- Customers.php modifications to display and wording of strings
+	- DeliveryDetails.php link back to sales order moved - wording changed to New Order
+	- FreightCosts.php now allows selection of tax category - part of improved handling of tax on freight costs
+	- GLAccounts.php removed tabindex statements
+	- index.php - changed wording of links - reduced verbosity
+	- POHeader.php has link back to outstanding purchase orders
+	- POItems.php has link at top back to header
+	- SelectOSPurchOrder.php new order link
+	- PrintCustOrder_generic.php added debtorno
+	- SelectCustomer.php now has search on phone no
+	- SelectOrderItems.php customer selection based on phone - reduced wording of links
+	- SelectProduct.php moved around submenu - changed wording of links
+	- SelectSalesOrder.php shows if printed or not and links to print if not printed
+	- SelectSupplier.php now orders by supplier name not supplier id
+ 	- StockCostUpdate.php now checks for existence of the item whose cost is changed!
+	- includes/header.inc changed name of shortcut links to customers items suppliers
+
 <P>16/5/06 Harald Ringehahn includes/ConstructSQLForUserDefinedSalesReport.inc not using 'Not Used" rather than _('Not Used')
 <P>16/5/06 Harald Ringehahn includes/PDFSalesAnalysis.inc ColNo and colNo should be colno fixed lower casing.
 <P>2/5/06 Matthew Sibson EDIProcessOrders.php quotation marks and semi colon. PDFLowGP.php missing bracket on if. Z_DeleteInvoice.php missing = and } sh/be ]. reportwriter/WriteForm.inc was testing for numerical month numbers fixed to text for month strings.

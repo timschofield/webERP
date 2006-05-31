@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -143,7 +143,7 @@ Class Cart {
 							_('The order line for') . ' ' . $StockID . ' ' ._('could not be inserted'));
 			}
 			
-			$this->LineCounter = $LineNumber +1;
+			$this->LineCounter++;
 			Return 1;
 		}
 		Return 0;
@@ -311,9 +311,19 @@ Class Cart {
 		
 		global $db;
 		
-		/*Gets the Taxes and rates applicable to the freight bases on the tax group of the branch 
+		/*Gets the Taxes and rates applicable to the freight based on the tax group of the branch combined with the tax category for this particular freight
 		and SESSION['FreightTaxCategory'] the taxprovince of the dispatch location */
 
+		$sql = "SELECT taxcatid FROM taxcategories WHERE taxcatname='Freight'";
+		$TaxCatQuery = DB_query($sql, $db);
+
+		if ($TaxCatRow = DB_fetch_array($TaxCatQuery)) {
+		  $TaxCatID = $TaxCatRow['taxcatid'];
+		} else {
+  		  prnMsg( _('Cannot find tax category Freight which must always be defined'),'error');
+		  exit();
+		}
+		
 		$SQL = "SELECT taxgrouptaxes.calculationorder,
 					taxauthorities.description,
 					taxgrouptaxes.taxauthid,
@@ -326,7 +336,7 @@ Class Cart {
 				taxauthrates.taxauthority=taxauthorities.taxid
 			WHERE taxgrouptaxes.taxgroupid=" . $this->TaxGroup . " 
 			AND taxauthrates.dispatchtaxprovince=" . $this->DispatchTaxProvince . " 
-			AND taxauthrates.taxcatid = " . $_SESSION['FreightTaxCategory'] . "
+			AND taxauthrates.taxcatid = " . $TaxCatID . "  
 			ORDER BY taxgrouptaxes.calculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retreived because');
