@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.44 $ */
+/* $Revision: 1.45 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -1009,11 +1009,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 				/*OK to display with discount if it is an internal user with appropriate permissions */
 
-				echo '<TD><INPUT TYPE=TEXT NAME="Price_' . $OrderLine->LineNumber . '" SIZE=16 MAXLENGTH=16 VALUE=' . number_format($OrderLine->Price,2) . '></TD>
+				echo '<TD><INPUT TYPE=TEXT NAME="Price_' . $OrderLine->LineNumber . '" SIZE=16 MAXLENGTH=16 VALUE=' . $OrderLine->Price . '></TD>
 					<TD><INPUT TYPE=TEXT NAME="Discount_' . $OrderLine->LineNumber . '" SIZE=5 MAXLENGTH=4 VALUE=' . ($OrderLine->DiscountPercent * 100) . '>%</TD>';
 
 			} else {
-				echo '<TD ALIGN=RIGHT>' . number_format($OrderLine->Price,2) . '</TD><TD></TD>';
+				echo '<TD ALIGN=RIGHT>' . $OrderLine->Price . '</TD><TD></TD>';
 				echo '<INPUT TYPE=HIDDEN NAME="Price_' . $OrderLine->LineNumber . '" VALUE=' . $OrderLine->Price . '>';
 			}
 
