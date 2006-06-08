@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -43,11 +43,11 @@ if (isset($_POST['ProcessCustomerChange'])){
 	}
 
 
-	$result = DB_query("BEGIN",$db);
+	$result = DB_query('BEGIN',$db);
 
 	prnMsg(_('Inserting the new customer branches master record'),'info');
 	$sql = "INSERT INTO custbranch (`branchcode`,
-					`bebtorno`,
+					`debtorno`,
 					`brname`,
 					`braddress1`,
 					`braddress2`,
@@ -60,18 +60,18 @@ if (isset($_POST['ProcessCustomerChange'])){
 					`salesman`,
 					`fwddate`,
 					`phoneno`,
-					`faxfo`,
+					`faxno`,
 					`contactname`,
 					`email`,
 					`defaultlocation`,
-					`taxauthority`,
+					`taxgroupid`,
 					`disabletrans`,
-					`brPostaddr1`,
-					`brPostaddr2`,
-					`brPostaddr3`,
-					`brPostaddr4`,
-					`brPostaddr5`,
-					`brPostaddr6`,
+					`brpostaddr1`,
+					`brpostaddr2`,
+					`brpostaddr3`,
+					`brpostaddr4`,
+					`brpostaddr5`,
+					`brpostaddr6`,
 					`defaultshipvia`,
 					`custbranchcode`)
 			SELECT '" . $_POST['NewBranchCode'] . "',
@@ -92,7 +92,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 					`contactname`,
 					`email`,
 					`defaultlocation`,
-					`taxauthority`,
+					`taxgroupid`,
 					`disabletrans`,
 					`brpostaddr1`,
 					`brpostaddr2`,
