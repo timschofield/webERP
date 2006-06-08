@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 2;
 
@@ -282,7 +282,7 @@ If (isset($StockItemsResult)) {
 						salesorders.deliverydate,
 						salesorders.deliverto,
 					  salesorders.printedpackingslip,
-						salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
+						salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent) AS ordervalue
 					FROM salesorders,
 						salesorderdetails,
 						debtorsmaster,

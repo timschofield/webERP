@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 4;
 
@@ -289,13 +289,12 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 				'" . $_SESSION['SPL']->Initiator . "',
 				'" . $_SESSION['SPL']->QuotationRef . "',
 				'" . $_SESSION['SPL']->StkLocation . "',
-				'" . $StkLocAddress['Contact'] . "',
-				'" . $StkLocAddress['DelAdd1'] . "',
-				'" . $StkLocAddress['DelAdd2'] . "',
-				'" . $StkLocAddress['DelAdd3'] . "',
-				'" . $StkLocAddress['DelAdd4'] . "',
-				'" . $StkLocAddress['DelAdd5'] . "',
-				'" . $StkLocAddress['DelAdd6'] . "',
+				'" . $StkLocAddress['deladd1'] . "',
+				'" . $StkLocAddress['deladd2'] . "',
+				'" . $StkLocAddress['deladd3'] . "',
+				'" . $StkLocAddress['deladd4'] . "',
+				'" . $StkLocAddress['deladd5'] . "',
+				'" . $StkLocAddress['deladd6'] . "',
 				'" . $StkLocAddress['contact'] . "')";
 
 
@@ -504,7 +503,7 @@ if (!isset($_SESSION['SPL']->StkLocation) OR $_SESSION['SPL']->StkLocation==""){
 
 while ($LocnRow=DB_fetch_array($LocnResult)){
 	if ($_SESSION['SPL']->StkLocation == $LocnRow['loccode']){
-		echo "<OPTION SELECTED Value='" . $LocnRow['Loccode'] . "'>" . $LocnRow['locationname'];
+		echo "<OPTION SELECTED Value='" . $LocnRow['loccode'] . "'>" . $LocnRow['locationname'];
 	} else {
 		echo "<OPTION Value='" . $LocnRow['loccode'] . "'>" . $LocnRow['locationname'];
 	}
