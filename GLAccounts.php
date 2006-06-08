@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 10;
 include('includes/session.inc');
@@ -77,12 +77,14 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'ChartDetails'
 
-	$sql= "SELECT COUNT(*) FROM chartdetails WHERE chartdetails.accountcode = $SelectedAccount";
+	
+
+	$sql= "SELECT COUNT(*) FROM chartdetails WHERE chartdetails.accountcode = $SelectedAccount AND chartdetails.actual <>0";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		$CancelDelete = 1;
-		prnMsg(_('Cannot delete this account because chart details have been created using this account'),'warn');
+		prnMsg(_('Cannot delete this account because chart details have been created using this account and at least one period has postings to it'),'warn');
 		echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('chart details that require this account code');
 
 	} else {
@@ -192,8 +194,9 @@ if (isset($_POST['submit'])) {
 									prnMsg( _('Cannot delete this account because it is used by one the defined bank accounts'),'warn');
 								} else {
 
-									$sql="DELETE FROM chartmaster 
-									WHERE accountcode=$SelectedAccount";
+									$sql = 'DELETE FROM chartdetails WHERE accountcode=' . $SelectedAccount;
+									$result = DB_query($sql,$db);
+									$sql="DELETE FROM chartmaster WHERE accountcode= $SelectedAccount";
 									$result = DB_query($sql,$db);
 									prnMsg( _('Account') . ' ' . $SelectedAccount . ' ' . _('has been deleted'),'succes');
 								}
