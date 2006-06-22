@@ -1649,7 +1649,7 @@ msgid "Update"
 msgstr ""
 
 #: ConfirmDispatchControlled_Invoice.php:7
-msgid "Specifiy Dispatched Controlled Items"
+msgid "Specify Dispatched Controlled Items"
 msgstr ""
 
 #: ConfirmDispatchControlled_Invoice.php:18
@@ -2717,7 +2717,7 @@ msgid "Process Credit"
 msgstr ""
 
 #: CreditItemsControlled.php:8
-msgid "Specifiy Credited Controlled Items"
+msgid "Specify Credited Controlled Items"
 msgstr ""
 
 #: CreditItemsControlled.php:26 CreditItemsControlled.php:37
