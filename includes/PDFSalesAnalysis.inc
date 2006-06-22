@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 include ('includes/class.pdf.php');
 
@@ -23,7 +23,7 @@ $pdf->selectFont('./fonts/Helvetica.afm');
 /* Standard PDF file creation header stuff */
 
 $pdf->addinfo('Author','webERP ' . $Version);
-$pdf->addinfo('Creator','webERP http://www.weberp.org - R&OS PHP-PDF http://www.ros.co.nz');
+$pdf->addinfo('Creator','webERP http://www.weberp.org');
 $pdf->addinfo('Title',$ReportSpec['reportheading']);
 $pdf->addinfo('Subject',_('Sales Analysis Report') . ' ' . $ReportSpec['reportheading']);
 
@@ -78,7 +78,7 @@ if ($ThisLineHasOutput==True){
 			DB_data_seek($ColsResult,0);
 			while ($Cols = DB_fetch_array($ColsResult)){
 				$Xpos = 160 + $Cols['colno']*60;
-				if ($Cols['Calculation']==0){
+				if ($Cols['calculation']==0){
 				$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, number_format($AccumLvl3[$Cols['colno']]),'right');
 				} else { /* its a calculation need to re-perform on the totals*/
 
@@ -287,7 +287,7 @@ if ($ThisLineHasOutput==True){
 	while ($Cols = DB_fetch_array($ColsResult)){
 		$Xpos = 160 + ($Cols['colno']*60);
 		$ColumnNo = 'col' . (string) (($Cols['colno']) +8);
-		if ($Cols['ValFormat']=='P'){
+		if ($Cols['valformat']=='P'){
 			$DisplayValue = number_format($myrow[$ColumnNo] *100) . '%';
 		} else {
 			$DisplayValue = number_format($myrow[$ColumnNo]);

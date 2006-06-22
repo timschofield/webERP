@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*PDF page header for price list report */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -9,11 +9,11 @@ $FontSize=10;
 $YPos= $Page_Height-$Top_Margin;
 
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize, _('Printed').': ' . Date($_SESSION['DefaultDateFormat']) . '   '. _('Page'). ' ' . $PageNumber);
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos,140,$FontSize, _('Printed').': ' . Date($_SESSION['DefaultDateFormat']) . '   '. _('Page'). ' ' . $PageNumber);
 
 $YPos -=$line_height;
 //Note, this is ok for multilang as this is the value of a Select, text in option is different
-if ($_POST['CustomerSpecials']=='Customer Special Prices Only'){
+if ($_POST['CustomerSpecials']==_('Customer Special Prices Only')){
 
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize, _('Special Prices for Inventory Categories between').' ' . $_POST['FromCriteria'] . ' ' . _('and') . ' ' . $_POST['ToCriteria'] . ' ' . _('for') . ' ' . $CustomerName);
 
@@ -37,7 +37,7 @@ $Xpos = $Left_Margin+1;
 
 $LeftOvers = $pdf->addTextWrap($Xpos,$YPos,300-$Left_Margin,$FontSize, _('Category') . '/' . _('Item'), 'centre');
 
-if ($_POST['CustomerSpecials']=='Customer Special Prices Only'){
+if ($_POST['CustomerSpecials']==_('Customer Special Prices Only')){
 
 	$LeftOvers = $pdf->addTextWrap(300,$YPos,120,$FontSize, _('Branch'), 'centre');
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -41,7 +41,7 @@ If (isset($_POST['ProcessOrder']) OR isset($_POST['MakeRecurringOrder'])) {
 
 	/*store the old freight cost before it is recalculated to ensure that there has been no change - test for change after freight recalculated and get user to re-confirm if changed */
 
-	$OldFreightCost = $_POST['FreightCost'];
+	$OldFreightCost = round($_POST['FreightCost'],2);
 
 }
 
@@ -116,7 +116,7 @@ If (isset($_POST['Update'])
 		$_SESSION['Items']->Location = $_POST['Location'];
 		$_SESSION['Items']->CustRef = $_POST['CustRef'];
 		$_SESSION['Items']->Comments = $_POST['Comments'];
-		$_SESSION['Items']->FreightCost = $_POST['FreightCost'];
+		$_SESSION['Items']->FreightCost = round($_POST['FreightCost'],2);
 		$_SESSION['Items']->ShipVia = $_POST['ShipVia'];
 		$_SESSION['Items']->Quotation = $_POST['Quotation'];
 		$_SESSION['Items']->DeliverBlind = $_POST['DeliverBlind'];
@@ -124,7 +124,8 @@ If (isset($_POST['Update'])
 		/*$_SESSION['DoFreightCalc'] is a setting in the config.php file that the user can set to false to turn off freight calculations if necessary */
 
 		if ($_SESSION['DoFreightCalc']==True){
-		      list ($_POST['FreightCost'], $BestShipper) = CalcFreightCost($_SESSION['Items']->total, $_POST['BrAdd2'], $_POST['BrAdd3'], $_SESSION['Items']->totalVolume, $_SESSION['Items']->totalWeight, $_SESSION['Items']->Location, $db) ;
+		      list ($_POST['FreightCost'], $BestShipper) = round(CalcFreightCost($_SESSION['Items']->total, $_POST['BrAdd2'], $_POST['BrAdd3'], $_SESSION['Items']->totalVolume, $_SESSION['Items']->totalWeight, $_SESSION['Items']->Location, $db),2);
+  		      $_POST['FreightCost'] = round($_POST['FreightCost'],2);
 		      $_POST['ShipVia'] = $BestShipper;
 		}
 

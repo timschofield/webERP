@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 3;
 
@@ -563,15 +563,13 @@ if (!isset($DebtorNo)) {
 		echo '<OPTION VALUE=0>' . _('Address to HO');
 		echo '<OPTION SELECTED VALUE=1>' . _('Address to Branch');
 	}
-	echo '</SELECT></TD></TR></table></TD></TR></TABLE></CENTER>';
-
-	echo '</SELECT></TD></TR>';
+	echo '</SELECT></TD></TR></TABLE></TD></TR></TABLE></CENTER>';
 
 	if ($_POST['New']) {
-		echo "<CENTER><input type='Submit' name='submit' value='" . _('Add New Customer') . "'><BR><INPUT TYPE=SUBMIT name='reset' VALUE='" . _('Reset') . "'></FORM>";
+		echo "<CENTER><INPUT TYPe='Submit' NAME='submit' VALUE='" . _('Add New Customer') . "'><BR><INPUT TYPE=SUBMIT name='reset' VALUE='" . _('Reset') . "'></FORM>";
 	} else {
-		echo "<HR><CENTER><input type='Submit' name='submit' value='" . _('Update Customer') . "'>";
-		echo '<P><input type="Submit" name="delete" value="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';
+		echo "<HR><CENTER><INPUT TYPE='Submit' NAME='submit' value='" . _('Update Customer') . "'>";
+		echo '<P><INPUT TYPE="Submit" NAME="delete" VALUE="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';
 	}
 } // end of main ifs
 

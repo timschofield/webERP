@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -143,7 +143,7 @@ Class Cart {
 							_('The order line for') . ' ' . $StockID . ' ' ._('could not be inserted'));
 			}
 			
-			$this->LineCounter++;
+			$this->LineCounter = $LineNumber + 1;
 			Return 1;
 		}
 		Return 0;

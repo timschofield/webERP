@@ -26,7 +26,7 @@
  if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod'])) 
 	OR $SelectADifferentPeriod==_('Select A Different Period')){
 	
-
+	
 	echo '<FORM METHOD="POST" ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
  /*Show a form to allow input of criteria for TB to show */
 	echo '<CENTER><TABLE><TR><TD>' . _('Select Period From:') . '</TD><TD><SELECT Name="FromPeriod">';
@@ -87,7 +87,7 @@
 		$_POST['SalesArea']='';
 	}
 	echo '<TR><TD>' . _('For Sales Area/Region:') .'</TD><TD><SELECT Name="SalesArea">';
-	if($_POST['SalesArea']==_('All')){
+	if($_POST['SalesArea']=='All'){
 		echo '<OPTION SELECTED VALUE="All">' . _('All');
 	} else {
 		echo '<OPTION VALUE="All">' . _('All');
@@ -107,7 +107,7 @@
 		$_POST['CategoryID']='';
 	}
 	echo '<TR><TD>' . _('For Stock Category:') .'</TD><TD><SELECT Name="CategoryID">';
-	if($_POST['CategoryID']==_('All')){
+	if($_POST['CategoryID']=='All'){
 		echo '<OPTION SELECTED VALUE="All">' . _('All');
 	} else {
 		echo '<OPTION VALUE="All">' . _('All');
@@ -130,19 +130,19 @@
 	
 	echo '<TR><TD>' . _('For Sales Person:') .'</TD><TD><SELECT Name="SalesmanCode">';
 	
-	if($_POST['SalesmanCode']==_('All')){
+	if($_POST['SalesmanCode']=='All'){
 		echo '<OPTION SELECTED VALUE="All">' . _('All');
 	} else {
 		echo '<OPTION VALUE="All">' . _('All');
 	}
 	while ($myrow=DB_fetch_array($SalesFolkResult)){
-		if($myrow['salesmancode']==$_POST['SalesmanCode']){
+		if ($myrow['salesmancode']== $_POST['SalesmanCode']){
 			echo '<OPTION SELECTED VALUE="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'];
 		} else {
 			echo '<OPTION VALUE="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'];
 		}
 	}
-	echo '</SELECT></TD></TR>';
+	echo '</SELECT></TD><TD>' . $_POST['SalesmanCode'] . '</TD></TR>';
 	
 	if (!isset($_POST['ValueFrom'])){
 		$_POST['ValueFrom']='';

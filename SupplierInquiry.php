@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -119,9 +119,9 @@ echo '<CENTER><FONT SIZE=4>' . $SupplierRecord['suppname'] . ' </FONT></B> - (' 
 
 if (isset($_GET['HoldType']) AND isset($_GET['HoldTrans'])){
 
-	if ($_GET['HoldStatus'] == 'Hold'){
+	if ($_GET['HoldStatus'] == _('Hold')){
 		$SQL = 'UPDATE supptrans SET hold=1 WHERE type=' . $_GET['HoldType'] . ' AND transno=' . $_GET['HoldTrans'];
-	} elseif ($_GET['HoldStatus'] == 'Release'){
+	} elseif ($_GET['HoldStatus'] == _('Release')){
 		$SQL = 'UPDATE supptrans SET hold=0 WHERE type=' . $_GET['HoldType'] . ' AND transno=' . $_GET['HoldTrans'];
 	}
 
@@ -201,11 +201,11 @@ $k = 0; //row colour counter
 while ($myrow=DB_fetch_array($TransResult)) {
 
 	if ($myrow['hold'] == 0 AND $myrow['settled'] == 0){
-		$HoldValue = 'Hold';
+		$HoldValue = _('Hold');
 	} elseif ($myrow['settled'] == 1) {
 		$HoldValue = '';
 	}else {
-		$HoldValue = 'Release';
+		$HoldValue = _('Release');
 	}
 	if ($myrow['hold'] == 1){
 		echo "<TR BGCOLOR='#DD99BB'>";
