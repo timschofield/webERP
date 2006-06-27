@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 /*This page can be called with
 
 1. A DebtorTrans ID
@@ -576,7 +576,7 @@ if (isset($_POST['AllocTrans'])){
   echo "<tr>
   		<td class='tableheader'>"._('Trans Type')."</td>
 		<td class='tableheader'>"._('Customer')."</td>
-	        <td class='tableheader'>"._('Cust No.')."</td>
+	    <td class='tableheader'>"._('Cust No.')."</td>
 		<td class='tableheader'>"._('Number')."</td>
 		<td class='tableheader'>"._('Date')."</td>
 		<td class='tableheader'>"._('Total')."</td>

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
@@ -22,7 +22,7 @@ if (isset($_GET['NewTransfer'])){
 
 if (isset($_GET['StockID'])){	/*carry the stockid through to the form for additional inputs */
 
-	$_POST['StockID']=$_GET['StockID'];
+	$_POST['StockID'] = trim(strtoupper($_GET['StockID']));
 
 } elseif (isset($_POST['StockID'])){	/* initiate a new transfer only if the StockID is different to the previous entry */
 
@@ -49,14 +49,14 @@ if ($NewTransfer){
 				serialised,
 				decimalplaces
 			FROM stockmaster
-			WHERE stockid='" . $_POST['StockID'] . "'",
+			WHERE stockid='" . trim(strtoupper($_POST['StockID'])) . "'",
 			$db);
 	$myrow = DB_fetch_row($result);
 	if (DB_num_rows($result) == 0){
-		prnMsg( _('Unable to locate Stock Code').' '.$_POST['StockID'], 'error' );
+		prnMsg( _('Unable to locate Stock Code').' '.strtoupper($_POST['StockID']), 'error' );
 	} elseif (DB_num_rows($result)>0){
 
-		$_SESSION['Transfer']->TransferItem[0] = new LineItem ($_POST['StockID'],
+		$_SESSION['Transfer']->TransferItem[0] = new LineItem ( trim(strtoupper($_POST['StockID'])),
 									$myrow[0],
 									$_POST['Quantity'],
 									$myrow[1],

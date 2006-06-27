@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 /*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances
 and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen
@@ -34,8 +34,8 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 
 	/*Show a form to allow input of criteria for TB to show */
 	echo '<CENTER><TABLE><TR><TD>' . _('Select Period From:') . '</TD><TD><SELECT Name="FromPeriod">';
-
-	$sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC';
+	$nextYear = date("Y-m-d",strtotime("+1 Year"));
+	$sql = "SELECT periodno, lastdate_in_period FROM periods where lastdate_in_period < '$nextYear' ORDER BY periodno DESC";
 	$Periods = DB_query($sql,$db);
 
 
@@ -57,11 +57,12 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 
 	echo '</SELECT></TD></TR>';
 	if (!isset($_POST['ToPeriod']) OR $_POST['ToPeriod']==''){
-		$sql = 'SELECT Max(periodno) FROM periods';
+		$lastDate = date("Y-m-d",strtotime("last day"));
+		$sql = "SELECT periodno FROM periods where lastdate_in_period = '$lastDate'";
 		$MaxPrd = DB_query($sql,$db);
 		$MaxPrdrow = DB_fetch_row($MaxPrd);
+		$DefaultToPeriod = (int) ($MaxPrdrow[0]);
 
-		$DefaultToPeriod = (int) ($MaxPrdrow[0]-1);
 	} else {
 		$DefaultToPeriod = $_POST['ToPeriod'];
 	}

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 /*PO_ReadInOrder.inc is used by the modify existing order code in PO_Header.php and also by GoodsReceived.php */
 
        if (isset($_SESSION['PO'])){
@@ -104,25 +104,25 @@
 
 	      if (db_num_rows($LineItemsResult) > 0) {
 
-                     while ($myrow=db_fetch_array($LineItemsResult)) {
+                while ($myrow=db_fetch_array($LineItemsResult)) {
 
-                             if (is_null($myrow['glcode'])){
-                             	$GLCode = '';
-                             } else {
-                             	$GLCode = $myrow['glcode'];
-                             }
-                             if (is_null($myrow['units'])){
-                             	$Units = _('each');
-                             } else {
-                             	$Units = $myrow['units'];
-                             }
-                             if (is_null($myrow['itemcode'])){
-                             	$StockID = '';
-                             } else {
-                             	$StockID = $myrow['itemcode'];
-                             }
+					 if (is_null($myrow['glcode'])){
+						$GLCode = '';
+					 } else {
+						$GLCode = $myrow['glcode'];
+					 }
+					 if (is_null($myrow['units'])){
+						$Units = _('each');
+					 } else {
+						$Units = $myrow['units'];
+					 }
+					 if (is_null($myrow['itemcode'])){
+						$StockID = '';
+					 } else {
+						$StockID = $myrow['itemcode'];
+					 }
 
- 			$_SESSION['PO']->add_to_order($_SESSION['PO']->LinesOnOrder+1,
+					$_SESSION['PO']->add_to_order($_SESSION['PO']->LinesOnOrder+1,
 							$StockID,
 							$myrow['controlled'],
 							$myrow['serialised'],
@@ -139,9 +139,9 @@
 							$myrow['accountname'],
 							$myrow['decimalplaces']);
 
-			    $_SESSION['PO']->LineItems[$_SESSION['PO']->LinesOnOrder]->PODetailRec = $myrow['podetailitem'];
-                            $_SESSION['PO']->LineItems[$_SESSION['PO']->LinesOnOrder]->StandardCost = $myrow['stdcostunit'];  /*Needed for receiving goods and GL interface */
-                     } /* line PO from purchase order details */
+				    $_SESSION['PO']->LineItems[$_SESSION['PO']->LinesOnOrder]->PODetailRec = $myrow['podetailitem'];
+	                $_SESSION['PO']->LineItems[$_SESSION['PO']->LinesOnOrder]->StandardCost = $myrow['stdcostunit'];  /*Needed for receiving goods and GL interface */
+             } /* line PO from purchase order details */
       } //end is there were lines on the order
    } // end if there was a header for the order
 ?>

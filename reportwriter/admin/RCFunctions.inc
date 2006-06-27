@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 // Include functions needed for ReportCreator.php
 function PrepStep($StepNum) {
@@ -607,7 +607,7 @@ function ImportReport($RptName) {
 			}
 		} elseif (!is_uploaded_file($_FILES['reportfile']['tmp_name'])) { // file uploaded
 			$Rtn['message'] = RPT_IMP_ERMSG10;
-		} elseif (strpos($_FILES['reportfile']['type'],'text') === false)  { // not a text file, error
+		} elseif (strpos($_FILES['reportfile']['type'],'txt') === false)  { // not a text file, error
 			$Rtn['message'] = RPT_IMP_ERMSG6;
 		} elseif ($_FILES['reportfile']['size']==0) { // report contains no data, error
 			$Rtn['message'] = RPT_IMP_ERMSG7;

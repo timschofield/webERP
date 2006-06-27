@@ -39,7 +39,7 @@ if ( $_SERVER["PATH_TRANSLATED"][0] == '/' ) {
 }
 $filepath = dirname($_SERVER["PATH_TRANSLATED"]) . $pathsep. $PartPics . $pathsep;
 
-$stockid = $_GET['stockid'];
+$stockid = trim(strtoupper($_GET['StockID']));
 if( isset($_GET['bgcolor']) )
 	$bgcolor = $_GET['bgcolor'];
 if( isset($_GET['textcolor']) )

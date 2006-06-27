@@ -9,9 +9,9 @@ $title = _('All Stock Status By Location/Category');
 include('includes/header.inc');
 
 if (isset($_GET['StockID'])){
-	$StockID =$_GET['StockID'];
+	$StockID = trim(strtoupper($_GET['StockID']));
 } elseif (isset($_POST['StockID'])){
-	$StockID =$_POST['StockID'];
+	$StockID = trim(strtoupper($_POST['StockID']));
 }
 
 

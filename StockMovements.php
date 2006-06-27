@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 2;
 
@@ -10,9 +10,9 @@ include('includes/header.inc');
 
 
 if (isset($_GET['StockID'])){
-	$StockID = $_GET['StockID'];
+	$StockID = trim(strtoupper($_GET['StockID']));
 } elseif (isset($_POST['StockID'])){
-	$StockID = $_POST['StockID'];
+	$StockID = trim(strtoupper($_POST['StockID']));
 }
 
 $result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='$StockID'",$db);

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -44,10 +44,10 @@ $invalid_imports = 0;
 $valid = true;
 
 echo '<FORM METHOD="POST" ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" enctype="multipart/form-data" >';
-echo '<INPUT TYPE=HIDDEN NAME="LineNo" VALUE=' . $LineNo . '>';
-echo "<INPUT TYPE=HIDDEN NAME='StockID' VALUE=$StockID>";
+echo '<INPUT TYPE=HIDDEN NAME="LineNo" VALUE="' . $LineNo . '">';
+echo '<INPUT TYPE=HIDDEN NAME="StockID" VALUE="'. $StockID. '">';
 echo '<CENTER><TABLE BORDER=1><TR><TD>';
-echo '<input type=radio name=EntryType ';
+echo '<input type=radio name=EntryType onClick="submit();" ';
 if ($_POST['EntryType']=='KEYED') {
 	echo ' checked ';
 }
@@ -56,7 +56,7 @@ echo '</TD>';
 
 if ($LineItem->Serialised==1){
 	echo '<TD>';
-	echo '<input type=radio name=EntryType';
+	echo '<input type=radio name=EntryType onClick="submit();" ';
 	if ($_POST['EntryType']=='SEQUENCE') {
 		echo ' checked ';
 	}
@@ -65,16 +65,16 @@ if ($LineItem->Serialised==1){
 }
 
 echo '<TD valign=bottom>';
-echo '<input type=radio name=EntryType';
+echo '<input type=radio id="FileEntry" name=EntryType onClick="submit();" ';
 if ($_POST['EntryType']=='FILE') {
 	echo ' checked ';
 }
 echo ' value="FILE">'. _('File Upload');
-echo '&nbsp; <input type=file name="ImportFile">';
+echo '&nbsp; <input type="file" name="ImportFile" onClick="document.getElementById(\'FileEntry\').checked=true;" >';
 echo '</TD></TR><TR><TD ALIGN=CENTER COLSPAN=3>';
 echo '<input type=submit value="'. _('Set Entry Type'). ':">';
 echo '</TD></TR></TABLE>';
-echo '</FORM>';
+echo '</FORM></CENTER>';
 
 global $tableheader;
 /* Link to clear the list and start from scratch */
@@ -94,19 +94,13 @@ if ($LineItem->Serialised==1){
 }
 
 echo $EditLink . $RemoveLink;
-echo '<TABLE><TR>';
+echo '<TABLE><TR><TD>';
 if ($_POST['EntryType'] == 'FILE'){
-	echo '<TD>';
 	include('includes/InputSerialItemsFile.php');
-	echo '</TD>';
 } elseif ($_POST['EntryType'] == 'SEQUENCE'){
-        echo '<TD>';
         include('includes/InputSerialItemsSequential.php');
-        echo '</TD>';
 } else { /*KEYED or BARCODE */
-	echo '<TD>';
 	include('includes/InputSerialItemsKeyed.php');
-	echo '</TD>';
 }
-echo '</TR></TABLE>';
+echo '</TD></TR></TABLE>';
 ?>

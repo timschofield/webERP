@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 2;
 
@@ -9,7 +9,7 @@ include('includes/header.inc');
 
 
 if (isset($_GET['StockID'])){
-	$StockID =$_GET['StockID'];
+	$StockID = trim(strtoupper($_GET['StockID']));
 } else {
 	prnMsg( _('This page must be called with parameters specifying the item to show the serial references and quantities') . '. ' . _('It cannot be displayed without the proper parameters being passed'),'error');
 	include('includes/footer.inc');

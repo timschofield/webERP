@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.39 $ */
+/* $Revision: 1.40 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -659,7 +659,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			" . $TaxTotal . ",
 			" . $_POST['ChargeFreightCost'] . ",
 			" . $_SESSION['CurrencyRate'] . ",
-			'" . $_POST['InvoiceText'] . "',
+			'" . DB_escape_string($_POST['InvoiceText']) . "',
 			" . $_SESSION['Items']->ShipVia . ",
 			'"  . $_POST['Consignment'] . "'
 		)";
@@ -1354,7 +1354,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 	echo '<TABLE><TR>
 		<TD>' ._('Date Of Dispatch'). ':</TD>
-		<TD><INPUT TYPE=text MAXLENGTH=10 SIZE=10 name=DispatchDate value="'.$DefaultDispatchDate.'"></TD>
+		<TD><INPUT TYPE=text MAXLENGTH=10 SIZE=15 name=DispatchDate value="'.$DefaultDispatchDate.'"></TD>
 	</TR>';
 	echo '<TR>
 		<TD>' . _('Consignment Note Ref'). ':</TD>

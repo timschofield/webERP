@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 $DirectoryLevelsDeep =1;
 $PathPrefix = '../';
 $PageSecurity = 1; // set security level for webERP
@@ -379,6 +379,7 @@ function ReadPostData($ReportID, $Prefs) {
 		$Prefs['CritListings'][$i-1]['params'] = substr($Prefs['CritListings'][$i-1]['params'],0,1);
 		$Prefs['CritListings'][$i-1]['params'] .= ':'.$_POST['defcritsel'.$i];
 		$Prefs['CritListings'][$i-1]['params'] .= ':'.$_POST['fromvalue'.$i];
+		if ($_POST['tovalue'.$i]==''){ $_POST['tovalue'.$i] = $_POST['fromvalue'.$i]; }
 		$Prefs['CritListings'][$i-1]['params'] .= ':'.$_POST['tovalue'.$i];
 		if (!$Prefs['defaultreport']) { // save it since it's a custom report
 			$sql = "UPDATE ".DBRptFields." SET params='".$Prefs['CritListings'][$i-1]['params']."' 

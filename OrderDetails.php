@@ -1,6 +1,5 @@
 <?php
-
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 
 $PageSecurity = 2;
@@ -148,8 +147,13 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 	</TR>';
 	
 	echo '</TABLE>';
-
-	echo $_SESSION['Items']->Comments . '<BR></CENTER>';
+	$invoices = preg_split("/(Inv \n*)/", $_SESSION['Items']->Comments);
+	foreach($invoices as $inv){
+		if (trim($inv)!=''){
+			echo '<A HREF="' . $rootpath. '/PrintCustTrans.php?FromTransNo=' . $inv . '&InvOrCredit=Invoice&PrintPDF=Yes" target=_blank>' . _('Inv') . '# '. $inv . '</A><BR>';
+		}
+	}
+	echo _('Comments:').' '.$_SESSION['Items']->Comments . '<BR></CENTER>';
 
 /*Now get the line items */
 

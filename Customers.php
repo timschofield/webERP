@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 3;
 
@@ -173,7 +173,7 @@ if ($_POST['submit']) {
 			
 			echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath ."/CustomerBranches.php?" . SID . "&DebtorNo=" . $_POST['DebtorNo'] ."&BrName=" . $_POST['CustName'] .'&BranchCode=' . $BranchCode . '&BrAddress1=' . $_POST['Address1'] . '&BrAddress2=' . $_POST['Address2'] . '&BrAddress3=' . $_POST['Address3'] . '&BrAddress4=' . $_POST['Address4'] . '&BrAddress5=' . $_POST['Address5'] . '&BrAddress6=' . $_POST['Address6'] . "'>";
 			
-			echo '<P>' . _('You should automatically be forwarded to the entry of invoices against goods received page') .
+			echo '<P>' . _('You should automatically be forwarded to the entry of a new Customer Branch page') .
 			'. ' . _('If this does not happen') .' (' . _('if the browser does not support META Refresh') . ') ' .
 			"<A HREF='" . $rootpath . "/CustomerBranches.php?" . SID . "&DebtorNo=" . $_POST['DebtorNo'] ."&BrName=" . $_POST['CustName'] .'&BranchCode=' . $BranchCode . '&BrAddress1=' . $_POST['Address1'] . '&BrAddress2=' . $_POST['Address2'] . '&BrAddress3=' . $_POST['Address3'] . '&BrAddress4=' . $_POST['Address4'] . '&BrAddress5=' . $_POST['Address5'] . '&BrAddress6=' . $_POST['Address6'] . "'>" . _('click here') . '</a> ' . _('to continue') . '.<BR>';
 		
@@ -232,7 +232,7 @@ if ($_POST['submit']) {
 	if ($CancelDelete==0) { //ie not cancelled the delete as a result of above tests
 		$sql="DELETE FROM debtorsmaster WHERE debtorno='" . $_POST['DebtorNo'] . "'";
 		$result = DB_query($sql,$db);
-		prnMsg( _('Custmomer') . ' ' . $_POST['DebtorNo'] . ' ' . _('has been deleted') . ' !','success');
+		prnMsg( _('Customer') . ' ' . $_POST['DebtorNo'] . ' ' . _('has been deleted') . ' !','success');
 		include('includes/footer.inc');
 		exit;
 	} //end if Delete Customer
@@ -566,7 +566,7 @@ if (!isset($DebtorNo)) {
 	echo '</SELECT></TD></TR></TABLE></TD></TR></TABLE></CENTER>';
 
 	if ($_POST['New']) {
-		echo "<CENTER><INPUT TYPe='Submit' NAME='submit' VALUE='" . _('Add New Customer') . "'><BR><INPUT TYPE=SUBMIT name='reset' VALUE='" . _('Reset') . "'></FORM>";
+		echo "<CENTER><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Add New Customer') . "'><BR><INPUT TYPE=SUBMIT name='reset' VALUE='" . _('Reset') . "'></FORM>";
 	} else {
 		echo "<HR><CENTER><INPUT TYPE='Submit' NAME='submit' value='" . _('Update Customer') . "'>";
 		echo '<P><INPUT TYPE="Submit" NAME="delete" VALUE="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';

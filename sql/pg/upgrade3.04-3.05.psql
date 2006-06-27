@@ -319,8 +319,8 @@ INSERT INTO `reportlinks` VALUES ('locations', 'www_users', 'locations.loccode=w
 INSERT INTO config VALUES('WikiApp','Disabled');
 INSERT INTO config VALUES('WikiPath','wiki');
 
-ALTER TABLE stockserialitems ADD INDEX (serialno ) ;
-ALTER TABLE stockserialmoves ADD INDEX (serialno) ;
+ALTER TABLE stockserialitems ADD INDEX (serialno);
+ALTER TABLE stockserialmoves ADD INDEX (serialno);
 
 INSERT INTO config VALUES('ProhibitJournalsToControlAccounts','0');
 INSERT INTO config ( confname , confvalue ) VALUES ('InvoicePortraitFormat', '0');

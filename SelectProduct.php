@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 2;
 
@@ -15,7 +15,7 @@ $msg='';
 
 if (isset($_GET['StockID'])){  //The page is called with a StockID
 	$_GET['StockID'] = trim(strtoupper($_GET['StockID']));
-	$_POST['Select'] = $_GET['StockID'];
+	$_POST['Select'] = trim(strtoupper($_GET['StockID']));
 }
 
 if (isset($_GET['NewSearch'])){
@@ -441,7 +441,7 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	/* Stock Transactions */
 	if ($Its_A_Kitset_Assembly_Or_Dummy==False){
 		echo '<A HREF="' . $rootpath . '/StockAdjustments.php?' . SID . '&StockID=' . $StockID . '">' . _('Quantity Adjustments') . '</A><BR>';
-        	echo '<A HREF="' . $rootpath . '/StockTransfers.php?' . SID . '&StockID=' . $StockID . '">' . _('Location Transfers') . '</A><BR>';
+        echo '<A HREF="' . $rootpath . '/StockTransfers.php?' . SID . '&StockID=' . $StockID . '">' . _('Location Transfers') . '</A><BR>';
 	}
 
 	echo '</TD><TD>';

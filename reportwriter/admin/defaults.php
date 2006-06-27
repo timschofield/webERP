@@ -19,11 +19,12 @@ $ReportGroups = array (
 // the remaining is the dropdown menu listings
 $CritChoices = array(
 	0 => '2:'.RPT_ALL.':'.RPT_RANGE,
-	1 => '0:'.RPT_YES.':'.RPT_NO,
-	2 => '0:'.RPT_ALL.':'.RPT_YES.':'.RPT_NO,
-	3 => '0:'.RPT_ALL.':'.RPT_ACTIVE.':'.RPT_INACTIVE,
-	4 => '0:'.RPT_ALL.':'.RPT_PRINTED.':'.RPT_UNPRINTED,
-	5 => '0:'.RPT_ALL.':'.RPT_STOCK.':'.RPT_ASSEMBLY);
+	1 => '2:'.RPT_RANGE.':'.RPT_ALL,
+	2 => '0:'.RPT_YES.':'.RPT_NO,
+	3 => '0:'.RPT_ALL.':'.RPT_YES.':'.RPT_NO,
+	4 => '0:'.RPT_ALL.':'.RPT_ACTIVE.':'.RPT_INACTIVE,
+	5 => '0:'.RPT_ALL.':'.RPT_PRINTED.':'.RPT_UNPRINTED,
+	6 => '0:'.RPT_ALL.':'.RPT_STOCK.':'.RPT_ASSEMBLY);
 
 // Paper orientation
 $PaperOrientation = array (

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 2;
 
@@ -47,7 +47,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 
-			$_POST['Keywords'] = strtoupper($_POST['Keywords']);
+			$_POST['Keywords'] = strtoupper(trim($_POST['Keywords']));
 
 			//insert wildcard characters in spaces
 
@@ -72,7 +72,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 
 		} elseif (strlen($_POST['CustCode'])>0){
 
-			$_POST['CustCode'] = strtoupper($_POST['CustCode']);
+			$_POST['CustCode'] = strtoupper(trim($_POST['CustCode']));
 
 			$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,

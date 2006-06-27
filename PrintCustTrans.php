@@ -1,15 +1,15 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 $PageSecurity = 1;
 
 include('includes/session.inc');
 
 if (isset($_GET['FromTransNo'])){
-	$FromTransNo = $_GET['FromTransNo'];
+	$FromTransNo = trim($_GET['FromTransNo']);
 } elseif (isset($_POST['FromTransNo'])){
-	$FromTransNo = $_POST['FromTransNo'];
+	$FromTransNo = trim($_POST['FromTransNo']);
 }
 
 

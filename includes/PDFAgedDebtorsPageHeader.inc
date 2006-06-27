@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*PDF page header for aged analysis reports */
 $PageNumber++;
 if ($PageNumber>1){
@@ -14,19 +14,27 @@ $pdf->addText($Left_Margin, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname
 $YPos -=$line_height;
 
 $FontSize =10;
-
+$numHeads=2;
 $HeadingLine1 = _('Aged Customer Balances For Customers from') . ' ' . $_POST['FromCriteria'] . ' ' .  _('to') . ' ' . $_POST['ToCriteria'];
 $HeadingLine2 = _('And Trading in') . ' ' . $_POST['Currency'];
-
+if (trim($_POST['Salesman'])!=''){
+	$SQL = 'SELECT salesmanname FROM salesman WHERE salesmancode='.$_POST['Salesman'];
+	$rs = DB_query($SQL,$db,'','',False,False);
+	$row = DB_fetch_array($rs,$db);
+	$HeadingLine3 = _('And Has at Least 1 Branch Serviced By Sales Person #'). ' '. $_POST['Salesman'] . ' - ' . $row['salesmanname'];
+	$numHeads++;
+}
 $pdf->addText($Left_Margin, $YPos,$FontSize, $HeadingLine1);
 $pdf->addText($Left_Margin, $YPos-$line_height,$FontSize, $HeadingLine2);
-
+if ($HeadingLine3 != ''){
+	$pdf->addText($Left_Margin, $YPos-$line_height*2,$FontSize, $HeadingLine3);
+}
 $FontSize = 8;
 
 $DatePrintedString = _('Printed') . ': ' . Date("d M Y") . '   ' . _('Page') . ' ' . $PageNumber;
 $pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, $DatePrintedString);
 
-$YPos -=(3*$line_height);
+$YPos -=(($numHeads+1)*$line_height);
 
 /*Draw a rectangle to put the headings in     */
 $pdf->line($Page_Width-$Right_Margin, $YPos-5,$Left_Margin, $YPos-5);

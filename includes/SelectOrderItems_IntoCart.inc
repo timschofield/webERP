@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 /*SelectOrderItems_IntoCart.inc
 
@@ -54,19 +54,19 @@ if ($AlreadyOnThisOrder!=1){
 
 		prnMsg(_('The item code') . ' ' . $NewItem  . ' '  . _('could not be found in the database') . ' - ' . _('it has not been added to the order'),'warn',_('Item Does Not Exist'));
 
-    } elseif ($myrow = DB_fetch_array($result1)){
+    } elseif ($myItemRow = DB_fetch_array($result1)){
 
-    		if ($myrow['discontinued']==1){
+    		if ($myItemRow['discontinued']==1){
 			prnMsg(_('The item') . ' ' . $NewItem . ' ' . _('could not be added to the order because it has been flagged as obsolete'),'error',_('Obsolete Item'));
 
 		} elseif (($_SESSION['AllowSalesOfZeroCostItems'] == false
-			AND $myrow['standardcost']>0
-			AND ($myrow['mbflag']=='B'
-			OR $myrow['mbflag']=='M'))
+			AND $myItemRow['standardcost']>0
+			AND ($myItemRow['mbflag']=='B'
+			OR $myItemRow['mbflag']=='M'))
 		OR ($_SESSION['AllowSalesOfZeroCostItems'] == false
-			AND ($myrow['mbflag']=='A'
-			OR $myrow['mbflag']=='D'
-			OR $myrow['mbflag']=='K'))
+			AND ($myItemRow['mbflag']=='A'
+			OR $myItemRow['mbflag']=='D'
+			OR $myItemRow['mbflag']=='K'))
 		OR $_SESSION['AllowSalesOfZeroCostItems']==true) {
 
 		/*these checks above ensure that the item has a cost if the
@@ -74,25 +74,33 @@ if ($AlreadyOnThisOrder!=1){
 
 		   	if ($_SESSION['ExistingOrder']!=0){
 				$UpdateDB = 'Yes';
+				$result = DB_query("SELECT MAX(orderlineno) AS newlineno FROM  salesorderdetails WHERE orderno=".$_SESSION['ExistingOrder'],$db);
+				$myrow = DB_fetch_row($result);
+				if ($myrow[0] != "" && $myrow[0] > 0) {
+					$NewLineNo = $myrow[0]+1;
+				} else {
+					$NewLineNo = 0;
+				}
 			} else {
 				$UpdateDB = 'No';
+				$NewLineNo = -1; /* this is ok b/c CartClass will change to the correct line no */
 			}
   			
-			if ( $myrow['discountcategory'] != "" ){
-                                $DiscCatsDone[$Counter]=$StockItem->DiscCat;
-                                $QuantityOfDiscCat =0;
-                                $result = DB_query("SELECT MAX(discountrate) AS discount
-                                                        FROM discountmatrix
-                                                        WHERE salestype='" .  $_SESSION['Items']->DefaultSalesType . "'
-                                                        AND discountcategory ='" . $myrow['discountcategory'] . "'
-                                                        AND quantitybreak <" . $NewItemQty,$db);
-                                $myrow = DB_fetch_row($result);
+			if ( $myItemRow['discountcategory'] != "" ){
+				$DiscCatsDone[$Counter]=$StockItem->DiscCat;
+				$QuantityOfDiscCat =0;
+				$result = DB_query("SELECT MAX(discountrate) AS discount
+										FROM discountmatrix
+										WHERE salestype='" .  $_SESSION['Items']->DefaultSalesType . "'
+										AND discountcategory ='" . $myrow['discountcategory'] . "'
+										AND quantitybreak <" . $NewItemQty,$db);
+				$myrow = DB_fetch_row($result);
 				if ($myrow[0] != "" && $myrow[0] > 0) {
 					$Discount = $myrow[0];
 				} else {
 					$Discount = 0;
 				}
-                        } elseif (!isset($Discount)){
+			} elseif (!isset($Discount)){
 				$Discount = 0;
 			}
 			
@@ -102,9 +110,8 @@ if ($AlreadyOnThisOrder!=1){
 			
 			if ($_SESSION['CheckCreditLimits'] > 0){  /*Check credit limits is 1 for warn 
 											and 2 for prohibit sales */
-				$_SESSION['Items']->CreditAvailable -= ($NewItemQty * $Price * (1-$Discount));
 
-Â 				$_SESSION['Items']->CreditAvailable -= round(($NewItemQty * $Price * (1- $Discount)),2);
+ 				$_SESSION['Items']->CreditAvailable -= round(($NewItemQty * $Price * (1- $Discount)),2);
 			
 				if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items']->CreditAvailable <=0){
 					prnMsg(_('The customer account will breach their credit limit'),'warn');
@@ -117,25 +124,26 @@ if ($AlreadyOnThisOrder!=1){
 			if ($WithinCreditLimit ==true){
    				if ($_SESSION['Items']->add_to_cart ($NewItem,
 							$NewItemQty,
-							$myrow['description'],
+							$myItemRow['description'],
 							$Price,
 							$Discount,
-							$myrow['units'],
-							$myrow['volume'],
-							$myrow['kgs'],
-							$myrow['quantity'],
-							$myrow['mbflag'],
+							$myItemRow['units'],
+							$myItemRow['volume'],
+							$myItemRow['kgs'],
+							$myItemRow['quantity'],
+							$myItemRow['mbflag'],
 							NULL, /*Actual Dispatch Date */
 							0, /*Qty Invoiced */
-							$myrow['discountcategory'],
+							$myItemRow['discountcategory'],
 							0, /*Controlled - dont care */
 							0, /*serialised - dont care */
-							$myrow['decimalplaces'],
+							$myItemRow['decimalplaces'],
 							'', /*Narrative - none yet */
-							$UpdateDB
+							$UpdateDB,
+							$NewLineNo
 							)==1){
 
-		      		$_SESSION['Items']->LineItems[($_SESSION['Items']->LineCounter -1)]->StandardCost = $myrow['standardcost'];
+		      		$_SESSION['Items']->LineItems[($_SESSION['Items']->LineCounter -1)]->StandardCost = $myItemRow['standardcost'];
 			}
 		}
              } else {

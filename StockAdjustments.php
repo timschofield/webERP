@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
@@ -24,12 +24,12 @@ if (!isset($_SESSION['Adjustment'])){
 $NewAdjustment = false;
 
 if (isset($_GET['StockID'])){
-	$_SESSION['Adjustment']->StockID =$_GET['StockID'];
+	$_SESSION['Adjustment']->StockID = trim(strtoupper($_GET['StockID']));
 	$NewAdjustment = true;
 } elseif (isset($_POST['StockID'])){
 	if ($_POST['StockID'] != $_SESSION['Adjustment']->StockID){
 		$NewAdjustment = true;
-		$_SESSION['Adjustment']->StockID =$_POST['StockID'];
+		$_SESSION['Adjustment']->StockID = trim(strtoupper($_POST['StockID']));
 	}
 	$_SESSION['Adjustment']->Narrative = $_POST['Narrative'];
 	$_SESSION['Adjustment']->StockLocation = $_POST['StockLocation'];
@@ -56,7 +56,7 @@ if ($NewAdjustment){
 
 	if (DB_num_rows($result)==0){
                 prnMsg( _('Unable to locate Stock Code').' '.$_SESSION['Adjustment']->StockID, 'error' );
-		unset($_SESSION['Adjustment']);
+				unset($_SESSION['Adjustment']);
 	} elseif (DB_num_rows($result)>0){
 
 		$_SESSION['Adjustment']->ItemDescription = $myrow[0];
@@ -245,7 +245,7 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 						" . $PeriodNo . ", 
 						" .  $StockGLCodes['adjglact'] . ", 
 						" . $_SESSION['Adjustment']->StandardCost * -($_SESSION['Adjustment']->Quantity) . ", 
-						'" . $_SESSION['Adjustment']->StockID . " x " . $_SESSION['Adjustment']->Quantity . " @ " . $_SESSION['Adjustment']->StandardCost . " " . $_SESSION['Adjustment']->Narrative . "')";
+						'" . $_SESSION['Adjustment']->StockID . " x " . $_SESSION['Adjustment']->Quantity . " @ " . $_SESSION['Adjustment']->StandardCost . " " . DB_escape_string($_SESSION['Adjustment']->Narrative) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
 			$DbgMsg = _('The following SQL to insert the GL entries was used');
@@ -264,7 +264,7 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 						" . $PeriodNo . ", 
 						" .  $StockGLCodes['stockact'] . ", 
 						" . $_SESSION['Adjustment']->StandardCost * $_SESSION['Adjustment']->Quantity . ", 
-						'" . $_SESSION['Adjustment']->StockID . " x " . $_SESSION['Adjustment']->Quantity . " @ " . $_SESSION['Adjustment']->StandardCost . " " . $_SESSION['Adjustment']->Narrative . "')";
+						'" . $_SESSION['Adjustment']->StockID . " x " . $_SESSION['Adjustment']->Quantity . " @ " . $_SESSION['Adjustment']->StandardCost . " " . DB_escape_string($_SESSION['Adjustment']->Narrative) . "')";
 
 			$Errmsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
 			$DbgMsg = _('The following SQL to insert the GL entries was used');

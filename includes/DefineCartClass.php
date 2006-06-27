@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -134,13 +134,13 @@ Class Cart {
 									discountpercent)
 								VALUES(" . $this->LineCounter . ",
 									" . $_SESSION['ExistingOrder'] . ",
-									'" . $StockID ."',
+									'" . trim(strtoupper($StockID)) ."',
 									" . $Qty . ",
 									" . $Price . ",
 									" . $Disc . ")";
 				$result = DB_query($sql,
 							$db ,
-							_('The order line for') . ' ' . $StockID . ' ' ._('could not be inserted'));
+							_('The order line for') . ' ' . strtoupper($StockID) . ' ' ._('could not be inserted'));
 			}
 			
 			$this->LineCounter = $LineNumber + 1;
@@ -172,27 +172,38 @@ Class Cart {
 		}
 	}
 
-	function remove_from_cart($LineNumber,$UpdateDB='No'){
-		if (isset($LineNumber)){
-			unset($this->LineItems[$LineNumber]);
-			$this->ItemsOrdered--;
+	function remove_from_cart($LineNumber, $UpdateDB='No'){
+		
+		if (!isset($LineNumber) || $LineNumber=='' || $LineNumber < 0){ /* over check it */
+			prnMsg(_('No Line Number passed to remove_from_cart, so nothing has been removed.'), 'error');
+			return;
 		}
 		if ($UpdateDB=='Yes'){
 			global $db;
-			
-			
-			
-			echo '<BR>Deleted ' . $LineNumber . ' existing order number ' . $_SESSION['ExistingOrder'];
-			
-			
-			
-			$result = DB_query("DELETE FROM salesorderdetails
-						WHERE orderno=" . $_SESSION['ExistingOrder'] . "
-						AND orderlineno='" . $LineNumber ."'",
-						$db,
-						_('The order line could not be deleted because'));
+			if ($this->Some_Already_Delivered($LineNumber)==0){
+				/* nothing has been delivered, delete it. */
+				$result = DB_query("DELETE FROM salesorderdetails
+							WHERE orderno=" . $_SESSION['ExistingOrder'] . "
+							AND orderlineno=" . $LineNumber,
+							$db,
+							_('The order line could not be deleted because')
+							);
+				prnMsg( _('Deleted Line Number'). ' ' . $LineNumber . ' ' . _('from existing Order Number').' ' . $_SESSION['ExistingOrder'], 'success');
+			} else {
+				/* something has been delivered. Clear the remaining Qty and Mark Completed */
+				$result = DB_query("UPDATE salesorderdetails SET quantity=qtyinvoiced, completed=1 
+									WHERE orderno=".$_SESSION['ExistingOrder']." AND orderlineno=" . $LineNumber ,
+									$db,
+								   _('The order line could not be updated as completed because')
+								   );
+				prnMsg(_('Removed Remaining Quantity and set Line Number '). ' ' . $LineNumber . ' ' . _('as Completed for existing Order Number').' ' . $_SESSION['ExistingOrder'], 'success');
+			}
 		}
-	}
+		/* Since we need to check the LineItem above and might affect the DB, don't unset until after DB is updates occur */
+		unset($this->LineItems[$LineNumber]);
+		$this->ItemsOrdered--;
+		
+	}//remove_from_cart()
 
 	function Get_StockID_List(){
 		/* Makes a comma seperated list of the stock items ordered

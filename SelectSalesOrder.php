@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 2;
 
@@ -16,6 +16,7 @@ If (isset($_POST['ResetPart'])){
 }
 
 If (isset($_REQUEST['OrderNumber']) AND $_REQUEST['OrderNumber']!='') {
+	$_REQUEST['OrderNumber'] = trim($_REQUEST['OrderNumber']);
 	if (!is_numeric($_REQUEST['OrderNumber'])){
 		  echo '<BR><B>' . _('The Order Number entered MUST be numeric') . '</B><BR>';
 		  unset ($_REQUEST['OrderNumber']);
@@ -101,9 +102,9 @@ if (isset($_POST['SearchParts'])){
 }
 
 if (isset($_POST['StockID'])){
-	$StockID =$_POST['StockID'];
+	$StockID = trim(strtoupper($_POST['StockID']));
 } elseif (isset($_GET['StockID'])){
-	$StockID =$_GET['StockID'];
+	$StockID = trim(strtoupper($_GET['StockID']));
 }
 
 if (!isset($StockID)) {

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
@@ -281,7 +281,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 //end if RequireCustomerSelection
 } else {
 /* everything below here only do if a customer is selected
-   fisrt add a header to show who we are making a credit note for */
+   first add a header to show who we are making a credit note for */
 
 	 echo '<FONT SIZE=4><B><U>' . $_SESSION['CreditItems']->CustomerName  . ' - ' . $_SESSION['CreditItems']->DeliverTo . '</U></B></FONT></CENTER><BR>';
 
@@ -424,8 +424,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			  $i++;
 		   } while (!is_numeric($_POST[$QuickEntryQty]) AND $_POST[$QuickEntryQty] <=0 AND strlen($_POST[$QuickEntryCode])!=0 AND $i<=$QuickEntires);
 
-		   $_POST['NewItem'] = $_POST[$QuickEntryCode];
-		   $NewItemQty = $_POST[$QuickEntryQty];
+		   $_POST['NewItem'] = trim($_POST[$QuickEntryCode]);
+		   $NewItemQty = trim($_POST[$QuickEntryQty]);
 
 		   if (strlen($_POST['NewItem'])==0){
 			     break;	 /* break out of the loop if nothing in the quick entry fields*/
@@ -438,7 +438,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		   /* do a loop round the items on the credit note to see that the item
 		   is not already on this credit note */
 
-			    if ($OrderItem->StockID == $_POST['NewItem'] AND $_SESSION['SO_AllowSameItemMultipleTimes']==0) {
+			    if ($_SESSION['SO_AllowSameItemMultipleTimes']==0 && strcasecmp($OrderItem->StockID, $_POST['NewItem']) == 0) {
 				     $AlreadyOnThisCredit = 1;
 				     prnMsg($_POST['NewItem'] . ' ' . _('is already on this credit - the system will not allow the same item on the credit note more than once. However you can change the quantity credited of the existing line if necessary'),'warn');
 			    }
@@ -468,8 +468,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		   		if ($myrow = DB_fetch_array($result1)){
 					
 					$LineNumber = $_SESSION['CreditItems']->LineCounter;
-
-					if ($_SESSION['CreditItems']->add_to_cart ($_POST['NewItem'],
+				
+					if ($_SESSION['CreditItems']->add_to_cart ($myrow['stockid'],
 											$NewItemQty,
 											$myrow['description'],
 											GetPrice ($_POST['NewItem'],
@@ -593,7 +593,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			   /* do a loop round the items on the credit note to see that the item
 			   is not already on this credit note */
 
-				    if ($OrderItem->StockID == $_POST['NewItem'] AND $_SESSION['SO_AllowSameItemMultipleTimes']==0) {
+					if ($_SESSION['SO_AllowSameItemMultipleTimes']==0 && strcasecmp($OrderItem->StockID, $_POST['NewItem']) == 0) {				
 					     $AlreadyOnThisCredit = 1;
 					     prnMsg(_('The item selected is already on this credit the system will not allow the same item on the credit note more than once. However you can change the quantity credited of the existing line if necessary.'),'warn');
 				    }
@@ -623,7 +623,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				$LineNumber = $_SESSION['CreditItems']->LineCounter;
 /*validate the data returned before adding to the items to credit */
-				if ($_SESSION['CreditItems']->add_to_cart ($_POST['NewItem'],
+				if ($_SESSION['CreditItems']->add_to_cart ($myrow['stockid'],
 										1,
 										$myrow['description'], 
 										GetPrice($_POST['NewItem'],
@@ -965,6 +965,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			  while ($myrow=DB_fetch_array($SearchResult)) {
 
 				   $ImageSource = $_SESSION['part_pics_dir'] . "/" . $myrow["stockid"] . ".jpg";
+				   if (file_exists($ImageSource)){
+						$ImageSource  = '<img src="'.$ImageSource.'">';
+				   } else {
+						$ImageSource  = '<i>'._('No Image').'</i>';
+				   }
 				   /* $_SESSION['part_pics_dir'] is a user defined variable in config.php */
 
 				   if ($k==1){
@@ -978,7 +983,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				   printf("<td><FONT SIZE=1><INPUT TYPE=SUBMIT NAME='NewItem' VALUE='%s'></FONT></td>
                    				<td><FONT SIZE=1>%s</FONT></td>
                    				<td><FONT SIZE=1>%s</FONT></td>
-                   				<td><img src=%s></td></tr>",
+                   				<td>%s</td></tr>",
                    				$myrow['stockid'],
                    				$myrow['description'],
                    				$myrow['units'],

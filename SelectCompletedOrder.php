@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 1;
 
@@ -22,6 +22,11 @@ if (isset($_GET['OrderNumber'])){
 } elseif (isset($_POST['OrderNumber'])){
 	$OrderNumber = $_POST['OrderNumber'];
 }
+if (isset($_GET['CustomerRef'])){
+	$CustomerRef = $_GET['CustomerRef'];
+} elseif (isset($_POST['CustomerRef'])){
+	$CustomerRef = $_POST['CustomerRef'];
+}
 if (isset($_GET['SelectedCustomer'])){
 	$SelectedCustomer = $_GET['SelectedCustomer'];
 } elseif (isset($_POST['SelectedCustomer'])){
@@ -34,6 +39,9 @@ if ($SelectedStockItem==''){
 if ($OrderNumber==''){
 	unset($OrderNumber);
 }
+if ($CustomerRef==''){
+	unset($CustomerRef);
+}
 if ($SelectedCustomer==''){
 	unset($SelectedCustomer);
 }
@@ -43,10 +51,12 @@ If ($_POST['ResetPart']){
 
 If (isset($OrderNumber)) {
 	echo _('Order Number') . ' - ' . $OrderNumber;
+} elseif (isset($CustomerRef)) {
+	echo _('Customer Ref') . ' - ' . $CustomerRef;
 } else {
 	If (isset($SelectedCustomer)) {
 		echo _('For customer') . ': ' . $SelectedCustomer .' ' . _('and') . ' ';
-		echo "<input type=hidden name='SelectedCustomer' value=$SelectedCustomer>";
+		echo "<input type=hidden name='SelectedCustomer' value='$SelectedCustomer'>";
 	}
 
 	If (isset($SelectedStockItem)) {
@@ -178,10 +188,37 @@ if ($_POST['SearchParts']!=''){
 					salesorders.deliverydate,  
 					salesorders.deliverto
 				ORDER BY salesorders.orderno";
+	} elseif (isset($CustomerRef)) {
+			$SQL = "SELECT salesorders.orderno, 
+					debtorsmaster.name, 
+					custbranch.brname, 
+					salesorders.customerref, 
+					salesorders.orddate, 
+					salesorders.deliverydate,  
+					salesorders.deliverto, SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue 
+				FROM salesorders, 
+					salesorderdetails, 
+					debtorsmaster, 
+					custbranch 
+				WHERE salesorders.orderno = salesorderdetails.orderno 
+				AND salesorders.branchcode = custbranch.branchcode 
+				AND salesorders.debtorno = debtorsmaster.debtorno 
+				AND debtorsmaster.debtorno = custbranch.debtorno 
+				AND salesorders.customerref like '%". $CustomerRef."%'
+				AND salesorders.quotation=0 
+				GROUP BY salesorders.orderno,
+					debtorsmaster.name, 
+					custbranch.brname, 
+					salesorders.customerref, 
+					salesorders.orddate, 
+					salesorders.deliverydate,  
+					salesorders.deliverto
+				ORDER BY salesorders.orderno";
+	
 	} else {
 		$DateAfterCriteria = FormatDateforSQL($_POST['OrdersAfterDate']);
 
-		if (isset($SelectedCustomer) AND !isset($OrderNumber)) {
+		if (isset($SelectedCustomer) AND !isset($OrderNumber) AND !isset($CustomerRef)) {
 
 			if (isset($SelectedStockItem)) {
 				$SQL = "SELECT salesorders.orderno, 
@@ -310,11 +347,14 @@ if ($_POST['SearchParts']!=''){
 if (!isset($_POST['OrdersAfterDate']) OR $_POST['OrdersAfterDate'] == '' OR ! Is_Date($_POST['OrdersAfterDate'])){
 	$_POST['OrdersAfterDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
 }
+echo "<TABLE>";
 if ($OrderNumber=='' OR !isset($OrderNumber)){
-	echo _('order number') . ': ' . "<INPUT type=text name='OrderNumber' MAXLENGTH =8 SIZE=9> " . _('for all orders placed after') .
-			": <INPUT type=text name='OrdersAfterDate' MAXLENGTH =10 SIZE=11 value=" . $_POST['OrdersAfterDate'] . ">" .
-			"<INPUT TYPE=SUBMIT NAME='SearchOrders' VALUE='" . _('Search Orders') . "'>";
+	echo '<TR><TD>' . _('Order Number') . ':</TD><TD>' . "<INPUT type=text name='OrderNumber' MAXLENGTH =8 SIZE=9></TD><TD rowspan=2>" . _('for all orders placed after') .
+			": </TD><TD rowspan=2><INPUT type=text name='OrdersAfterDate' MAXLENGTH =10 SIZE=11 value=" . $_POST['OrdersAfterDate'] . "></td><td rowspan=2>" .
+			"<INPUT TYPE=SUBMIT NAME='SearchOrders' VALUE='" . _('Search Orders') . "'></TD></TR>";
+	echo '<TR><TD>' . _('Customer Ref') . ':</TD><TD>' . "<INPUT type=text name='CustomerRef' MAXLENGTH =8 SIZE=9></TD></TR>";
 }
+echo '</TABLE>';
 
 if (!isset($SelectedStockItem)) {
 	$SQL='SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription';

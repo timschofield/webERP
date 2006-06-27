@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 2;
 
@@ -9,9 +9,9 @@ include('includes/session.inc');
 $title = _('Stock Usage');
 
 if (isset($_GET['StockID'])){
-	$StockID =$_GET['StockID'];
+	$StockID = trim(strtoupper($_GET['StockID']));
 } elseif (isset($_POST['StockID'])){
-	$StockID =$_POST['StockID'];
+	$StockID = trim(strtoupper($_POST['StockID']));
 }
 
 if (isset($_POST['ShowGraphUsage'])) {

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 2; /*viewing possible with inquiries but not mods */
 
@@ -12,9 +12,9 @@ include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_GET['StockID'])){
-	$StockID =$_GET['StockID'];
+	$StockID = trim(strtoupper($_GET['StockID']));
 } elseif (isset($_POST['StockID'])){
-	$StockID =$_POST['StockID'];
+	$StockID =trim(strtoupper($_POST['StockID']));
 }
 
 if (isset($_POST['UpdateData'])){

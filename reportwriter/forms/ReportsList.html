@@ -9,11 +9,11 @@
 	</tr>
 	<tr>
 		<?PHP if ($DefReportList <> '') { ?>
-		<td><select name="ReportID" size="20" onChange="submit()"><?php echo $DefReportList; ?></select></td>
+		<td><select name="ReportID" size="20" style="padding:5px;" onChange="submit()"><?php echo $DefReportList; ?></select></td>
 		<?php } else { echo '<td>'.RPT_NOSHOW.'</td>'; } ?>
 	
 		<?php if ($CustReportList <> '') { ?>
-		<td><select name="ReportID" size="20" onChange="submit()"><?php echo $CustReportList; ?></select></td>
+		<td><select name="ReportID" size="20" style="padding:5px;" onChange="submit()"><?php echo $CustReportList; ?></select></td>
 		<?php } else { echo '<td>'.RPT_NOSHOW.'</td>'; } ?>
 	</tr>
   </table>

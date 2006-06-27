@@ -578,9 +578,9 @@ function GenerateCSVFile($Data, $Prefs) {
 	}
 
 	$FileSize = strlen($CSVOutput);
-	header("Content-type: application/csv");
-	header("Content-disposition: attachment; filename=".$Prefs['reportname'].".csv; size=".$FileSize);
-	header('Pragma: cache');
+	header('Content-type: application/csv');
+	header('Content-disposition: attachment; filename="'.$Prefs['reportname'].'.csv"; size='.$FileSize);
+	header('Pragma: public');
 	header('Cache-Control: public, must-revalidate, max-age=0');
 	header('Connection: close');
 	header('Expires: '.date('r', time()+60*60));

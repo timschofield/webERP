@@ -52,4 +52,10 @@ function IsEmailAddress($TestEmailAddress){
 		}
 	}
 }
+
+function pre_var_dump(&$var){
+	echo "<div align=left><pre>"; 
+	var_dump($var); 
+	echo "</pre></div>";
+}
 ?>

@@ -2,7 +2,7 @@
 
 $PageSecurity = 2;
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 
 If (isset($_POST['PrintPDF'])
@@ -24,7 +24,11 @@ If (isset($_POST['PrintPDF'])
 	$line_height=12;
 
       /*Now figure out the aged analysis for the customer range under review */
-
+	if (trim($_POST['Salesman'])!=''){
+		$SalesLimit = " and debtorsmaster.debtorno in (SELECT DISTINCT debtorno FROM custbranch where salesman = ".$_POST['Salesman'].") ";
+	} else {
+		$SalesLimit = "";
+	}
 	if ($_POST['All_Or_Overdues']=='All'){
 		$SQL = "SELECT debtorsmaster.debtorno, 
 				debtorsmaster.name, 
@@ -81,6 +85,7 @@ If (isset($_POST['PrintPDF'])
 					AND debtorsmaster.debtorno >= '" . $_POST['FromCriteria'] . "' 
 					AND debtorsmaster.debtorno <= '" . $_POST['ToCriteria'] . "' 
 					AND debtorsmaster.currcode ='" . $_POST['Currency'] . "'
+					$SalesLimit
 				GROUP BY debtorsmaster.debtorno, 
 					debtorsmaster.name, 
 					currencies.currency, 
@@ -149,9 +154,10 @@ If (isset($_POST['PrintPDF'])
 	      		AND debtorsmaster.currcode = currencies.currabrev 
 	      		AND debtorsmaster.holdreason = holdreasons.reasoncode 
 	      		AND debtorsmaster.debtorno = debtortrans.debtorno
-			AND debtorsmaster.debtorno >= '" . $_POST['FromCriteria'] . "' 
+				AND debtorsmaster.debtorno >= '" . $_POST['FromCriteria'] . "' 
 	      		AND debtorsmaster.debtorno <= '" . $_POST['ToCriteria'] . "' 
 	      		AND debtorsmaster.currcode ='" . $_POST['Currency'] . "'
+				$SalesLimit
 			GROUP BY debtorsmaster.debtorno, 
 	      			debtorsmaster.name, 
 	      			currencies.currency, 
@@ -238,6 +244,7 @@ If (isset($_POST['PrintPDF'])
 		AND debtorsmaster.debtorno >= '" . $_POST['FromCriteria'] . "'
 		AND debtorsmaster.debtorno <= '" . $_POST['ToCriteria'] . "'
 		AND debtorsmaster.currcode ='" . $_POST['Currency'] . "'
+		$SalesLimit
 		GROUP BY debtorsmaster.debtorno, 
 		debtorsmaster.name, 
 		currencies.currency, 
@@ -255,7 +262,6 @@ If (isset($_POST['PrintPDF'])
 			debtortrans.alloc
 		) <>0";
 	}
-	
 	$CustomerResult = DB_query($SQL,$db,'','',False,False); /*dont trap errors handled below*/
 
 	if (DB_error_no($db) !=0) {
@@ -455,7 +461,7 @@ If (isset($_POST['PrintPDF'])
 
 		echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
 
-		echo '<TR><TD>' . _('From Customer Code') . ':' . "</FONT></TD><TD><input Type=text maxlength=6 size=7 name=FromCriteria value='1'></TD></TR>";
+		echo '<TR><TD>' . _('From Customer Code') . ':' . "</FONT></TD><TD><input Type=text maxlength=6 size=7 name=FromCriteria value='0'></TD></TR>";
 		echo '<TR><TD>' . _('To Customer Code') . ':' . "</TD><TD><input Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></TD></TR>";
 
 		echo '<TR><TD>' . _('All balances or overdues only') . ':' . "</TD><TD><SELECT name='All_Or_Overdues'>";
@@ -464,7 +470,17 @@ If (isset($_POST['PrintPDF'])
 		echo "<OPTION Value='HeldOnly'>" . _('Held accounts only');
 		echo '</SELECT></TD></TR>';
 
+		echo '<TR><TD>' . _('Only Show Customers Of') . ':' . "</TD><TD><SELECT name='Salesman'>";
 
+		$sql = 'SELECT salesmancode, salesmanname FROM salesman';
+
+		$result=DB_query($sql,$db);
+		echo "<OPTION Value=''></OPTION>";
+		while ($myrow=DB_fetch_array($result)){
+				echo "<OPTION Value='" . $myrow['salesmancode'] . "'>" . $myrow['salesmanname'];
+		}
+		echo '</SELECT></TD></TR>';
+		
 
 		echo '<TR><TD>' . _('Only show customers trading in') . ':' . "</TD><TD><SELECT name='Currency'>";
 

@@ -1,5 +1,83 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 
+<p>27/6/06 jesse
+	- includes/Add_SerialItems.php : 
+		+ changed some spacing & line breaks for readability
+		+ Added checks for Serialised items to be sure they have Qty of either 1 or 0, plus links to SerialResearchTool when there are problems
+		+ Added ReValidation option (necessary for current attempts at Manufacture Items scripts)
+	- AgedDebtors.php : added option to pull only Debtors who have a Branch assigned to the selected SalesPerson
+	- ConfirmDispatch_Invoice.php : make Tran Date field size=15 to match others and look more uniform
+	- CreditItemsControlled.php : 
+		+ Ln14-19 - better checks to be sure you are returned to the proper Credit page
+		+ Ln ~66 - remove the AddBatches code - it was not necessary because it exists and is called in the Add_SerialItems code
+	- CustomerBranches.php
+		+ Display Total Enabled/Disabled Branches below list
+		+ Ln449,450 - quote the Hidden Input Values
+		+ Ln459 - add code to collect New BranceCode, Debtor Name, and Debtor Address to prepopulate when creating 1st Branch
+	- Customers.php
+		+ Ln176 - Correct text: "entry of invoice" -> "entry of customer branch"
+		+ Ln235 - typo: Custmomer -> Customer
+		+ Ln569 - Capitalization TYPe -> TYPE
+	- CustomerTransInquiry : Added feature to view ALL transactions
+	- DateFunctions.php : Remove extra line at bottom
+	- reportwriter/admin/defaults.php : Add option to have Range/All w/ Range as default.
+	- includes/DefineCartClass.php : in "remove_from_cart()", added functionality to help clear outstanding Sales Orders
+	- includes/DefineSerialItems.php : removed validation check and moved to Add_SerialItems.php
+	- DeliveryDetails.php : removed high-ascii char @ Ln124
+	- footer.inc : Ln24: make chosen time format display, Ln34 : make &copy always be current year
+	- GLTrialBalance.php : ~Ln60: make the From & To periods select something near where we are at in time
+	- GoodsReceived.php : Better handling on Serial vs Controlled items when updating/inserting
+	- GoodsReceivedControlled.php : $LocationOut should be set to the PO Location
+	- index.php : Added Link for StockSerialItemResearch.php
+	- includes/InputSerialItems.php : Quoted some Hidden Inputs, added a few onClicks() to make navigation easier, added a missing </CENTER>, and removed redundant code.
+	- includes/InputSerialItemsFile.php : Improved file handling, fixed display problems when it had to exit()
+	- includes/MiscFunctions.php : added pre_var_dump() function - very handy for in-page debugging, especially of array/objects
+	- OrderDetails.php : added code to look for Invoices for an order and create links to the Printed PDF version of it
+	- includes/PDFAgedDebtorsPageHeader.inc : additions to allow printing of AgedDebtors for a single Sales Person
+	- POItems.php : 
+		+ moved header include - it would break if you hit the page with no PO in session
+		+ added code to allow PO_AllowSameItemMultipleTimes to work
+		+ added extra link back to PO_Header
+		+ when no Image, changed "n/a" to "No Image" so it can be translated
+	- PO_PDFPurchOrder.php
+		+ Added ability to print the PO with or without prices listed
+	- reportwriter/admin/RCFunctions.php: Ln610: fixed MIME type check on file so ImportReport would work
+	- reportwriter/ReportMaker.php : Ln382: defaulted "To" value to "From" value for ranges so a range can more easily cover a single entity like an Order # or PO# w/ details
+	- reportwriter/forms/ReportsList.html : added padding to list to make it look nicer
+	- SelectCompletedOrder.php : Allow search by Customer Reference
+	- SelectCreditItems.php : 
+		+ Ln284: frist -> first , 
+		+ Ln441,596: getting real strict on checking equalities, even after all the strtouppers.
+		+ Ln472,626: basically same reason as 441
+		+ Ln968: fix to stop reports of missing images in webserver error logs
+	- SelectOrderItems.php
+		+ Ln123: Set the Order # since we have it
+		+ Ln201: add back in comment and standard(?) formatting
+		+ Ln295: Allow the CustCode search to check BranchCode too
+		+ Ln512: extra space in " name"
+		+ Ln832: error moved into DefineCartClass.php
+		+ Lns986 - 1029 : add options to show previous quantities delivered and links to delete/clear the line as needed (in conjunction w/ DefineCartClass.php above too)
+		+ Ln1131: fix to stop reports of missing images in webserver error logs
+	- includes/SelectOrderItems_IntoCart.inc
+		+ Around Ln75, if it was an existing order, the 2nd SQL call would overwrite the $myrow var and cause problems later. Renamed the out $myrow to $myItemRow
+		+ Ln113: removed duplicate "CreditAvailable -=" statement and another high-ascii A
+	- StockCounts.php : Added code to allow entered counts to be more easily viewed and removed.
+	- StockSerialItemResearch.php : refinements. Allow fuzzy searching (sql LIKE), display the SN b/c of that, and correct the SQL used to pull records (would display dupes when same SN had been in more than 1 warehouse)
+	+ sql/mysql/upgrade3.04-3.05.sql : put Ln319 - 324 in more natural order and added col names for config inserts
+	+ UserSettings.php : italics on the password message, made the email field display larger
+	+ reportwriter/WriteReport.inc : quotes filename in CVS download so files w/ spaces in name will work
+	- Several DB_escapes_string()s
+		+ ConfirmDispatch_Invoice.php, CustomerReceipt.php, StockAdjustments.php
+	
+	- Several trim()s & strtoupper()s on StockIds, Order #, PO #, & various Search Parameters
+		+ BOMInquiry.php, includes/DefineCartClass.php, DiscountCategories.php, GetStockImage.php, POItems.php, PO_SelectOSPurchOrder.php, PrintCustTrans.php, SelectCreditItems.php, SelectCustomers.php
+		+ SelectOrderItems.php, SelectProduct.php, SelectSalesOrder, StockAdjustments.php, StockCostUpdate.php, StockLockStatus.php, StockReorderLevel.php, StockSerialItems.php, StockTransfers.php
+		+ StockUsageGraph.php, WhereUsedInquiry.php
+	
+	- Spacing
+		+ CustomerAllocations.php, includes/PO_ReadOrderIn.php, StockAdjustments.php
+		+ sql/pg/upgrade3.04-3.05.psql (Ln322), 
+		
 <P>20/6/06 Steve PDFSalesAnalysis lowercasing missed a few field names now corrected Cols ColNo etc. Various scripts added rounding
 <P>8/6/06 Z_ChangeBranchCode.php fixed sql for taxauthority to taxgroupid and some typos
 <P>8/6/06 GLAccounts.php fixed to allow deletions of a GL account where there are no postings to it. chartdetail records also deleted.

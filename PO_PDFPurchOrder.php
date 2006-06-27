@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -181,9 +181,17 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 			}
 
 			$DisplayQty = number_format($POLine['quantityord'],$POLine['decimalplaces']);
-			$DisplayPrice = number_format($POLine['unitprice'],2);
+			if ($_POST['ShowAmounts']=='Yes'){
+				$DisplayPrice = number_format($POLine['unitprice'],2);
+			} else {
+				$DisplayPrice = "----";
+			}
 			$DisplayDelDate = ConvertSQLDate($POLine['deliverydate'],2);
-			$DisplayLineTotal = number_format($POLine['unitprice']*$POLine['quantityord'],2);
+			if ($_POST['ShowAmounts']=='Yes'){
+				$DisplayLineTotal = number_format($POLine['unitprice']*$POLine['quantityord'],2);
+			} else {
+				$DisplayLineTotal = "----";
+			}
 
 			$OrderTotal += ($POLine['unitprice']*$POLine['quantityord']);
 
@@ -216,7 +224,11 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 		} //end if need a new page headed up
 
 
-		$DisplayOrderTotal = number_format($OrderTotal,2);
+		if ($_POST['ShowAmounts']=='Yes'){
+			$DisplayOrderTotal = number_format($OrderTotal,2);
+		} else {
+			$DisplayOrderTotal = "----";
+		}
 		$YPos = $Bottom_Margin + $line_height;
 		$pdf->addText(450,$YPos, 14, _('Order Total - excl tax'). ' ' . $POHeader['currcode']);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+1+64+300+85+40+60+75,$YPos,95,14,$DisplayOrderTotal, 'right');
@@ -286,7 +298,7 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 	}
 	echo '<BR><BR>';
 	echo '<INPUT TYPE=HIDDEN NAME="OrderNo" VALUE="'. $OrderNo. '">';
-	echo '<CENTER><TABLE><TR><TD>'. _('Print or Email the Order'). '</TD><TD>
+	echo '<DIV ALIGN=CENTER><TABLE><TR><TD>'. _('Print or Email the Order'). '</TD><TD>
 		<SELECT NAME="PrintOrEmail">';
 
 	if (!isset($_POST['PrintOrEmail'])){
@@ -302,6 +314,22 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 	}
 	echo '</SELECT></TD></TR>';
 
+	echo '<TR><TD>'. _('Show Amounts on the Order'). '</TD><TD>
+		<SELECT NAME="ShowAmounts">';
+		
+	if (!isset($_POST['ShowAmounts'])){
+		$_POST['ShowAmounts'] = 'Yes';
+	}
+
+	if ($_POST['ShowAmounts']=='Yes'){
+		echo '<OPTION SELECTED VALUE="Yes">'. _('Yes');
+		echo '<OPTION VALUE="No">' . _('No');
+	} else {
+		echo '<OPTION VALUE="Yes">'. _('Yes');
+		echo '<OPTION SELECTED VALUE="No">'. _('No');
+	}
+	
+	echo '</SELECT></TD></TR>';
 	if ($_POST['PrintOrEmail']=='Email'){
 		$ErrMsg = _('There was a problem retrieving the contact details for the supplier');
 		$SQL = "SELECT suppliercontacts.contact,
@@ -333,7 +361,7 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 		echo '</TABLE>';
 	}
 	echo '<BR><INPUT TYPE=SUBMIT NAME="DoIt" VALUE="' . _('OK') . '">';
-	echo '</CENTER></FORM>';
+	echo '</DIV></FORM>';
 	include('includes/footer.inc');
 }
 ?>

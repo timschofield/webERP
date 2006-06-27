@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 $PageSecurity = 3;
@@ -11,7 +11,12 @@ $title = _('Specify Credited Controlled Items');
 include('includes/header.inc');
 
 
-if ($_GET['CreditInvoice']=='Yes' OR $_POST['CreditInvoice']=='Yes'){
+if ($_GET['CreditInvoice']=='Yes' || $_POST['CreditInvoice']=='Yes'){
+	$_SESSION['CreditInv']=true;
+} else {
+	$_SESSION['CreditInv']=false;
+}
+if ($_SESSION['CreditInv']){
 	$CreditLink = 'Credit_Invoice.php';
 } else {
 	$CreditLink = 'SelectCreditItems.php';
@@ -57,26 +62,11 @@ if ( $LineItem->Controlled != 1 ){
 /*Now add serial items entered - there is debate about whether or not to validate these entries against
 previous sales to the customer - so that only serial items that previously existed can be credited from the customer. However there are circumstances that could warrant crediting items which were never sold to the
 customer - a bad debt recovery, or a contra for example. Also older serial items may have been purged */
-
-if (isset($_POST['AddBatches'])){
-
-	for ($i=0;$i < 10;$i++){
-		if(strlen($_POST['SerialNo' . $i]) >0 AND strlen($_POST['SerialNo' . $i]) <21 AND is_numeric($_POST['Qty' .$i])){
-
-			$LineItem->SerialItems[$_POST['SerialNo' . $i]] = new SerialItem($_POST['SerialNo' . $i], $_POST['Qty' . $i]);
-
-		} /* end if posted [Serialno . i] is not blank */
-
-	} /* end of the loop aroung the form input fields */
-
-} /*end if the user hit the enter button */
-
 if (isset($_GET['Delete'])){
 	unset($LineItem->SerialItems[$_GET['Delete']]);
 }
 
-echo '<CENTER><FORM METHOD="POST" ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
-echo '<INPUT TYPE=HIDDEN NAME="LineNo" VALUE="'.$LineNo.'">';
+echo '<CENTER>';
 
 if ($CreditLink == 'Credit_Invoice.php'){
 	echo '<INPUT TYPE=HIDDEN NAME="CreditInvoice" VALUE="Yes">';

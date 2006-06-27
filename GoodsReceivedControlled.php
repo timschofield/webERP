@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
 
@@ -55,7 +55,7 @@ echo '<BR><FONT SIZE=2><B>'. _('Receive controlled item'). ' '. $LineItem->Stock
 	' ' . _('on order') . ' ' . $_SESSION['PO']->OrderNo . ' ' . _('from') . ' ' . $_SESSION['PO']->SupplierName . '</B></FONT>';
 
 /** vars needed by InputSerialItem : **/
-$LocationOut = $_SESSION['Transfer']->StockLocationFrom;
+$LocationOut = $_SESSION['PO']->Location;
 $ItemMustExist = false;
 $StockID = $LineItem->StockID;
 $InOutModifier=1;

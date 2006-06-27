@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 3;
 
@@ -271,7 +271,8 @@ if (!isset($SelectedBranch)){
 			faxno,
 			email,
 			taxgroups.taxgroupdescription,
-			custbranch.branchcode
+			custbranch.branchcode,
+			custbranch.disabletrans
 		FROM custbranch,
 			debtorsmaster,
 			areas,
@@ -285,7 +286,8 @@ if (!isset($SelectedBranch)){
 
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
-
+	$TotalEnable = 0;
+	$TotalDisable = 0;
 	if ($myrow) {
 		echo '<BR><B>'._('Branches Defined for'). ' '. $DebtorNo . ' - ' . $myrow[0] . '</B>';
 		echo '<table border=1>';
@@ -298,7 +300,8 @@ if (!isset($SelectedBranch)){
 			<td class='tableheader'>"._('Phone No')."</td>
 			<td class='tableheader'>"._('Fax No')."</td>
 			<td class='tableheader'>"._('Email')."</td>
-			<td class='tableheader'>"._('Tax Group')."</td></tr>";
+			<td class='tableheader'>"._('Tax Group')."</td>
+			<td class='tableheader'>"._('Enabled?')."</td></tr>";
 
 		do {
 			printf("<tr><td><font size=2>%s</td>
@@ -309,6 +312,7 @@ if (!isset($SelectedBranch)){
 				<td><font size=2>%s</font></td>
 				<td><font size=2>%s</font></td>
 				<td><font size=2><a href=\"Mailto:%s\">%s</a></font></td>
+				<td><font size=2>%s</font></td>
 				<td><font size=2>%s</font></td>
 				<td><font size=2><a href=\"%s?DebtorNo=%s&SelectedBranch=%s\">%s</font></td>
 				<td><font size=2><a href=\"%s?DebtorNo=%s&SelectedBranch=%s&delete=yes\" onclick=\"return confirm('" . _('Are you sure you wish to delete this branch?') . "');\">%s</font></td></tr>",
@@ -322,18 +326,24 @@ if (!isset($SelectedBranch)){
 				$myrow[8],
 				$myrow[8],
 				$myrow[9],
+				($myrow[11]?"No":"Yes"),
 				$_SERVER['PHP_SELF'],
 				$DebtorNo,
-				$myrow[1],
+				urlencode($myrow[1]),
 				_('Edit'),
 				$_SERVER['PHP_SELF'],
 				$DebtorNo,
-				$myrow[1],
+				urlencode($myrow[1]),
 				_('Delete'));
+			if ($myrow[11]){ $TotalDisable++; }
+			else { $TotalEnable++; }
 
 		} while ($myrow = DB_fetch_row($result));
 		//END WHILE LIST LOOP
 		echo '</table>';
+		echo '<b>'.$TotalEnable.'</b> Branches are enabled.<br>';
+		echo '<b>'.$TotalDisable.'</b> Branches are disabled.<br>';
+		echo '<b>'.($TotalEnable+$TotalDisable). '</b> Total Branches<br>';
 	} else {
 		$sql = "SELECT debtorsmaster.name,
 				address1,
@@ -436,13 +446,25 @@ if (! isset($_GET['delete'])) {
 		$_POST['CustBranchCode'] = $myrow['custbranchcode'];
 		$_POST['DeliverBlind'] = $myrow['deliverblind'];
 
-		echo "<INPUT TYPE=HIDDEN NAME='SelectedBranch' VALUE=" . $SelectedBranch . '>';
-		echo "<INPUT TYPE=HIDDEN NAME='BranchCode'  VALUE=" . $_POST['BranchCode'] . '>';
+		echo "<INPUT TYPE=HIDDEN NAME='SelectedBranch' VALUE='" . $SelectedBranch . "'>";
+		echo "<INPUT TYPE=HIDDEN NAME='BranchCode'  VALUE='" . $_POST['BranchCode'] . "'>";
 		echo "<CENTER><TABLE> <TR><TD>"._('Branch Code').':</TD><TD>';
 		echo $_POST['BranchCode'] . '</TD></TR>';
 
 	} else { //end of if $SelectedBranch only do the else when a new record is being entered
 
+	/** SETUP ANY $_GET VALUES THAT ARE PASSED.  This really is just used coming from the  Customers.php when a new customer is created.
+			Maybe should only do this when that page is the referrer?
+	**/
+		$_POST['BranchCode'] = $_GET['BranchCode']?$_GET['BranchCode']:$_POST['BranchCode'];
+		$_POST['BrName']     = $_GET['BrName']?$_GET['BrName']:$_POST['BrName'];
+		$_POST['BrAddress1'] = $_GET['BrAddress1']?$_GET['BrAddress1']:$_POST['BrAddress1'];
+		$_POST['BrAddress2'] = $_GET['BrAddress2']?$_GET['BrAddress2']:$_POST['BrAddress2'];
+		$_POST['BrAddress3'] = $_GET['BrAddress3']?$_GET['BrAddress3']:$_POST['BrAddress3'];
+		$_POST['BrAddress4'] = $_GET['BrAddress4']?$_GET['BrAddress4']:$_POST['BrAddress4'];
+		$_POST['BrAddress5'] = $_GET['BrAddress5']?$_GET['BrAddress5']:$_POST['BrAddress5'];
+		$_POST['BrAddress6'] = $_GET['BrAddress6']?$_GET['BrAddress6']:$_POST['BrAddress6'];
+		
 		echo '<CENTER><TABLE><TR><TD>'._('Branch Code').":</TD>
 				<TD><input type='Text' name='BranchCode' SIZE=12 MAXLENGTH=10 value=" . $_POST['BranchCode'] . '></TD></TR>';
 		$_POST['DeliverBlind'] = $_SESSION['DefaultBlindPackNote'];

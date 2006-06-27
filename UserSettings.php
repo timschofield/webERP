@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity=1;
 
@@ -154,7 +154,7 @@ echo '</SELECT></TD></TR>
 	<TD><input type='password' name='pass' size=20 value='" .  $_POST['pass'] . "'></TD></TR>
 	<TR><TD>" . _('Confirm Password') . ":</TD>
 	<TD><input type='password' name='passcheck' size=20  value='" . $_POST['passcheck'] . "'></TD></TR>
-	<tr><td colspan=2 align='center'>" . _('If you leave the password boxes empty your password will not change') . '</td></tr>
+	<tr><td colspan=2 align='center'><i>" . _('If you leave the password boxes empty your password will not change') . '</i></td></tr>
 	<TR><TD>' . _('Email') . ':</TD>';
 
 $sql = "SELECT email from www_users WHERE userid = '" . $_SESSION['UserID'] . "'";
@@ -164,7 +164,7 @@ if(!isset($_POST['email'])){
 	$_POST['email'] = $myrow['email'];
 }
 
-echo "<TD><input type=text name='email' size=20 value='" . $_POST['email'] . "'></TD></TR>
+echo "<TD><input type=text name='email' size=40 value='" . $_POST['email'] . "'></TD></TR>
 	</TABLE></CENTER>
 	<CENTER><input type='Submit' name='Modify' value=" . _('Modify') . '></CENTER>
 	</FORM>';

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 	echo '<BR><BR>';
 	echo '</TD>';
@@ -21,7 +21,7 @@
 		$hour=date('H:i');
 	}
 	
-	echo '<FONT SIZE=2>' .ucfirst(strftime('%A ') . date($_SESSION['DefaultDateFormat'] . ' | g:i A')) . '</FONT>';
+	echo '<FONT SIZE=2>' .ucfirst(strftime('%A ')). date($_SESSION['DefaultDateFormat'] . ' | '  . $hour) . '</FONT>';
 	
 	echo '<TABLE ALIGN="center" ID="footer">';
 	
@@ -31,7 +31,7 @@
 	echo '<BR>' . _('Version') . ' - ' . $Version;
 	echo '</TD></TR>';
 
-	echo '<TR><TD ALIGN="center" CLASS="footer">webERP ' . _('Copyright') . ' &copy; Logic Works Ltd - 2006</TD></TR>';
+	echo '<TR><TD ALIGN="center" CLASS="footer">webERP ' . _('Copyright') . ' &copy; Logic Works Ltd - '.date('Y').'</TD></TR>';
 	
 //	echo '<TR><TD ALIGN="center"><a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=70949&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" /></a></TD></TR>';
 

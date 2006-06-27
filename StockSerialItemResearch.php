@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 $PageSecurity = 3;
 
@@ -30,21 +30,30 @@ document.getElementById('serialno').focus();
 <?php
 
 if ($SN!='') {
-	
+	//the point here is to allow a semi fuzzy search, but still keep someone from killing the db server
+	if (strstr($SN,'%')){
+		while(strstr($SN,'%%'))	{
+			$SN = str_replace('%%','%',$SN);
+		}
+		if (strlen($SN) < 11){
+			$SN = str_replace('%','',$SN);
+			prnMsg('You can not use LIKE with short numbers. It has been removed.','warn');
+		}
+	}
 	$SQL = "SELECT ssi.serialno,
 			ssi.stockid, ssi.quantity CurInvQty, 
 			ssm.moveqty, 
 			sm.type, st.typename, 
 			sm.transno, sm.loccode, l.locationname, sm.trandate, sm.debtorno, sm.branchcode, sm.reference, sm.qty TotalMoveQty
-			FROM stockserialitems ssi LEFT JOIN stockserialmoves ssm
+			FROM stockserialitems ssi INNER JOIN stockserialmoves ssm
 				ON ssi.serialno = ssm.serialno AND ssi.stockid=ssm.stockid
-			LEFT JOIN stockmoves sm
-				ON ssm.stockmoveno = sm.stkmoveno
-			LEFT JOIN systypes st
+			INNER JOIN stockmoves sm
+				ON ssm.stockmoveno = sm.stkmoveno and ssi.loccode=sm.loccode
+			INNER JOIN systypes st
 				ON sm.type=st.typeid
-			LEFT JOIN locations l
+			INNER JOIN locations l
 				on sm.loccode = l.loccode
-			WHERE ssi.serialno = '$SN'
+			WHERE ssi.serialno like '$SN'
 			ORDER BY stkmoveno";
 
 	$result = DB_query($SQL,$db);
@@ -68,7 +77,7 @@ if ($SN!='') {
 			</tr>";
 		while ($myrow=DB_fetch_row($result)) {
 			printf("<tr>
-				<td>%s</td>
+				<td>%s<br>%s</td>
 				<td align=right>%s</td>
 				<td align=right>%s</td>
 				<td>%s (%s)</td>
@@ -81,6 +90,7 @@ if ($SN!='') {
 				<td align=right>%s</td>
 				</tr>",
 				$myrow[1],
+				$myrow[0],
 				$myrow[2],
 				$myrow[3],
 				$myrow[5], $myrow[4],

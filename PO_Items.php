@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 
 $PageSecurity = 4;
@@ -11,12 +11,13 @@ include('includes/SQL_CommonFunctions.inc');
 /* Session started in header.inc for password checking and authorisation level check */
 include('includes/session.inc');
 $title = _('Purchase Order Items');
-include('includes/header.inc');
-
 if (!isset($_SESSION['PO'])){
    header ('Location:' . $rootpath . '/PO_Header.php?' . SID);
    exit;
 }
+include('includes/header.inc');
+
+
 
 echo "<A HREF='$rootpath/PO_Header.php?" . SID . "'>" ._('Back To Purchase Order Header') . '</A>';
 
@@ -349,9 +350,9 @@ if (isset($_POST['LookupPrice']) AND $_POST['StockID']!=''){
 			purchdata.supplierdescription
 		FROM purchdata
 		WHERE  purchdata.supplierno = '" . $_SESSION['PO']->SupplierID . "'
-		AND purchdata.stockid = '". $_POST['StockID'] . "'";
+		AND purchdata.stockid = '". strtoupper($_POST['StockID']) . "'";
 
-	$ErrMsg = _('The supplier pricing details for') . ' ' . $_POST['StockID'] . ' ' . _('could not be retrieved because');
+	$ErrMsg = _('The supplier pricing details for') . ' ' . strtoupper($_POST['StockID']) . ' ' . _('could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the pricing details but failed was');
 	$LookupResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
@@ -359,7 +360,7 @@ if (isset($_POST['LookupPrice']) AND $_POST['StockID']!=''){
 		$myrow = DB_fetch_array($LookupResult);
 		$_POST['Price'] = $myrow['price']/$myrow['conversionfactor'];
 	} else {
-		prnMsg(_('Sorry') . ' ... ' . _('there is no purchasing data set up for this supplier') . '  - ' . $_SESSION['PO']->SupplierID . ' ' . _('and item') . ' ' . $_POST['StockID'],'warn');
+		prnMsg(_('Sorry') . ' ... ' . _('there is no purchasing data set up for this supplier') . '  - ' . $_SESSION['PO']->SupplierID . ' ' . _('and item') . ' ' . strtoupper($_POST['StockID']),'warn');
 	}
 }
 
@@ -446,7 +447,7 @@ If (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 
 					if (($OrderItem->StockID == $_POST['StockID']) AND ($OrderItem->Deleted==False)) {
 						$AllowUpdate = False;
-						prnMsg(_('The item') . ' ' . $_POST['StockID'] . ' ' . _('is already on this order') . ' - ' . _('the system will not allow the same item on the order more than once') . '. ' . _('However you can change the quantity by selecting it from the order summary'),'warn');
+						prnMsg(_('The item') . ' ' . strtoupper($_POST['StockID']) . ' ' . _('is already on this order') . ' - ' . _('the system will not allow the same item on the order more than once') . '. ' . _('However you can change the quantity by selecting it from the order summary'),'warn');
 					}
 				} /* end of the foreach loop to look for pre-existing items of the same code */
 			}
@@ -466,17 +467,17 @@ If (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 						stockmaster
 					WHERE chartmaster.accountcode = stockcategory.stockact
 					AND stockcategory.categoryid = stockmaster.categoryid
-					AND stockmaster.stockid = '". $_POST['StockID'] . "'";
+					AND stockmaster.stockid = '". strtoupper($_POST['StockID']) . "'";
 			} else {
 				$sql = "SELECT stockmaster.description,
 			   			stockmaster.units,
 						stockmaster.mbflag,
 						stockmaster.decimalplaces
 					FROM stockmaster
-					WHERE stockmaster.stockid = '". $_POST['StockID'] . "'";
+					WHERE stockmaster.stockid = '". strtoupper($_POST['StockID']) . "'";
 			}
 
-		$ErrMsg =  _('The stock details for') . ' ' . $_POST['StockID'] . ' ' . _('could not be retrieved because');
+		$ErrMsg =  _('The stock details for') . ' ' . strtoupper($_POST['StockID']) . ' ' . _('could not be retrieved because');
 		$DbgMsg =  _('The SQL used to retrieve the details of the item, but failed was');
 		$result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
@@ -493,7 +494,7 @@ If (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 				if ($_SESSION['PO']->GLLink==1){
 
 					 $_SESSION['PO']->add_to_order ($_POST['LineNo'], 
-					 				$_POST['StockID'],
+					 				strtoupper($_POST['StockID']),
 					 				0, /*Serialised */
 									0, /*Controlled */
 									$_POST['Qty'],
@@ -512,7 +513,7 @@ If (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 
 				} else {
 					 $_SESSION['PO']->add_to_order ($_POST['LineNo'],
-					 				$_POST['StockID'],
+					 				strtoupper($_POST['StockID']),
 									0, /*Serialised */
 									0, /*Controlled */
 									$_POST['Qty'],
@@ -530,7 +531,7 @@ If (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 			    	}
 			    	include ('includes/PO_UnsetFormVbls.php');
 		   } else {
-			    prnMsg( _('Cannot Enter this order line') . ':<BR>' . _('Either the part code') . " '" . $_POST['StockID'] . "' " . _('does not exist in the database or the part is an assembly or kit or dummy part and therefore cannot be purchased'),'warn');
+			    prnMsg( _('Cannot Enter this order line') . ':<BR>' . _('Either the part code') . " '" . strtoupper($_POST['StockID']) . "' " . _('does not exist in the database or the part is an assembly or kit or dummy part and therefore cannot be purchased'),'warn');
 			     if ($debug==1){
 				    echo "<BR>$sql";
 			     }
@@ -601,18 +602,19 @@ If (isset($_GET['NewItem'])){ /* NewItem is set from the part selection list as 
 /* take the form entries and enter the data from the form into the PurchOrder class variable */
 	$AlreadyOnThisOrder =0;
 
-	if (count($_SESSION['PO']->LineItems)!=0){
+	if ($_SESSION['PO_AllowSameItemMultipleTimes'] ==False){
+		if (count($_SESSION['PO']->LineItems)!=0){
 
-		foreach ($_SESSION['PO']->LineItems AS $OrderItem) {
+			foreach ($_SESSION['PO']->LineItems AS $OrderItem) {
 
-	/* do a loop round the items on the order to see that the item
-	is not already on this order */
-
-		    if (($OrderItem->StockID == $_GET['NewItem'])  AND ($OrderItem->Deleted==False)) {
-			  $AlreadyOnThisOrder = 1;
-			  prnMsg( _('The item') . ' ' . $_GET['NewItem'] . ' ' . _('is already on this order') . '. ' . _('The system will not allow the same item on the order more than once') . '. ' . _('However you can change the quantity ordered of the existing line if necessary'),'error');
-		    }
-		} /* end of the foreach loop to look for preexisting items of the same code */
+		/* do a loop round the items on the order to see that the item
+		is not already on this order */
+			    if (($OrderItem->StockID == $_GET['NewItem'])  AND ($OrderItem->Deleted==False)) {
+				  $AlreadyOnThisOrder = 1;
+				  prnMsg( _('The item') . ' ' . $_GET['NewItem'] . ' ' . _('is already on this order') . '. ' . _('The system will not allow the same item on the order more than once') . '. ' . _('However you can change the quantity ordered of the existing line if necessary'),'error');
+			    }
+			} /* end of the foreach loop to look for preexisting items of the same code */
+		}
 	}
 	if ($AlreadyOnThisOrder!=1){
 
@@ -784,7 +786,7 @@ If ($_GET['Edit']){
 	echo "<input type='hidden' name='LineNo' value=" . ($_SESSION['PO']->LinesOnOrder + 1) .">";
 
 	echo '<TABLE><TR><TD>' . _('Stock Code for Item Ordered') . ': <FONT SIZE=1>(' . _('Leave blank if NOT a stock order') . ")</TD>
-			<TD><input type='text' name='StockID' size=21 maxlength=20 value='" . $_POST['StockID'] . "'></TD></TR>";
+			<TD><input type='text' name='StockID' size=21 maxlength=20 value='" . strtoupper($_POST['StockID']) . "'></TD></TR>";
 
 	echo '<TR><TD>' . _('Ordered item Description') . ':<BR><FONT SIZE=1>(' . _('If a stock code is entered above, its description will overide this entry') . ")</FONT></TD>
 		<TD><textarea name='ItemDescription' cols=50 rows=2>" . $_POST['ItemDescription'] . "</textarea></TD></TR>";
@@ -828,7 +830,10 @@ If ($_GET['Edit']){
 
 }
 
-echo '<BR><HR>';
+echo "<BR><A HREF='$rootpath/PO_Header.php?" . SID . "'>" ._('Back To Purchase Order Header') . '</A>';
+
+
+echo '<HR>';
 
 /* Now show the stock item selection search stuff below */
 
@@ -897,7 +902,7 @@ If ($SearchResult) {
 			$ImageSource = '<img src="'.$rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg">';
 
 		} else {
-			$ImageSource = '<i> n/a </i>';
+			$ImageSource = '<i>'._('No Image').'</i>';
 		}
 
 		printf("<td>%s</td>

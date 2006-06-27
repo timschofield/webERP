@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 2;
 
@@ -12,21 +12,21 @@ include('includes/header.inc');
 
 
 if (isset($_GET['SelectedStockItem'])){
-	$SelectedStockItem=$_GET['SelectedStockItem'];
+	$SelectedStockItem=trim($_GET['SelectedStockItem']);
 } elseif (isset($_POST['SelectedStockItem'])){
-	$SelectedStockItem=$_POST['SelectedStockItem'];
+	$SelectedStockItem=trim($_POST['SelectedStockItem']);
 }
 
 if (isset($_GET['OrderNumber'])){
-	$OrderNumber=$_GET['OrderNumber'];
+	$OrderNumber=trim($_GET['OrderNumber']);
 } elseif (isset($_POST['OrderNumber'])){
-	$OrderNumber=$_POST['OrderNumber'];
+	$OrderNumber=trim($_POST['OrderNumber']);
 }
 
 if (isset($_GET['SelectedSupplier'])){
-	$SelectedSupplier=$_GET['SelectedSupplier'];
+	$SelectedSupplier=trim($_GET['SelectedSupplier']);
 } elseif (isset($_POST['SelectedSupplier'])){
-	$SelectedSupplier=$_POST['SelectedSupplier'];
+	$SelectedSupplier=trim($_POST['SelectedSupplier']);
 }
 
 echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';

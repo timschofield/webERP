@@ -316,11 +316,10 @@ INSERT INTO `reportlinks` VALUES ('stockmaster', 'worksorders', 'stockmaster.sto
 INSERT INTO `reportlinks` VALUES ('www_users', 'locations', 'www_users.defaultlocation=locations.loccode');
 INSERT INTO `reportlinks` VALUES ('locations', 'www_users', 'locations.loccode=www_users.defaultlocation');
 
-INSERT INTO config VALUES('WikiApp','Disabled');
-INSERT INTO config VALUES('WikiPath','wiki');
-INSERT INTO config VALUES('ProhibitJournalsToControlAccounts','0');
-
-ALTER TABLE stockserialitems ADD INDEX (serialno ) ;
-ALTER TABLE stockserialmoves ADD INDEX (serialno) ;
-
+INSERT INTO config ( confname , confvalue ) VALUES('WikiApp','Disabled');
+INSERT INTO config ( confname , confvalue ) VALUES('WikiPath','wiki');
+INSERT INTO config ( confname , confvalue ) VALUES('ProhibitJournalsToControlAccounts','0');
 INSERT INTO config ( confname , confvalue ) VALUES ('InvoicePortraitFormat', '0');
+ALTER TABLE stockserialitems ADD INDEX (serialno);
+ALTER TABLE stockserialmoves ADD INDEX (serialno);
+

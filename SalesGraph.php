@@ -26,7 +26,6 @@
  if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod'])) 
 	OR $SelectADifferentPeriod==_('Select A Different Period')){
 	
-	
 	echo '<FORM METHOD="POST" ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
  /*Show a form to allow input of criteria for TB to show */
 	echo '<CENTER><TABLE><TR><TD>' . _('Select Period From:') . '</TD><TD><SELECT Name="FromPeriod">';

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.45 $ */
+/* $Revision: 1.46 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -23,7 +23,7 @@ if (isset($_POST['QuickEntry'])){
 }
 
 if (isset($_GET['NewItem'])){
-	$NewItem = $_GET['NewItem'];
+	$NewItem = trim($_GET['NewItem']);
 }
 
 
@@ -120,7 +120,7 @@ if (isset($_GET['ModifyOrderNumber'])
 	if (DB_num_rows($GetOrdHdrResult)==1) {
 
 		$myrow = DB_fetch_array($GetOrdHdrResult);
-
+		$_SESSION['Items']->OrderNo = $_GET['ModifyOrderNumber'];
 		$_SESSION['Items']->DebtorNo = $myrow['debtorno'];
 /*CustomerID defined in header.inc */
 		$_SESSION['Items']->Branch = $myrow['branchcode'];
@@ -198,8 +198,9 @@ if (isset($_GET['ModifyOrderNumber'])
 								0,	/*Serialised */
 								$myrow['decimalplaces'],
 								$myrow['narrative'],
-								'No',
-								$myrow['orderlineno']);
+								'No', /* Update DB */
+								$myrow['orderlineno']
+								);
 				/*Just populating with existing order - no DBUpdates */
 
 			} /* line items from sales order details */
@@ -259,7 +260,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 		//insert wildcard characters in spaces
-			$_POST['Keywords'] = strtoupper($_POST['Keywords']);
+			$_POST['Keywords'] = strtoupper(trim($_POST['Keywords']));
 			$i=0;
 			$SearchString = '%';
 			while (strpos($_POST['Keywords'], ' ', $i)) {
@@ -282,7 +283,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 
 		} elseif (strlen($_POST['CustCode'])>0){
 
-			$_POST['CustCode'] = strtoupper($_POST['CustCode']);
+			$_POST['CustCode'] = strtoupper(trim($_POST['CustCode']));
 
 			$SQL = "SELECT custbranch.brname,
 					custbranch.contactname,
@@ -291,7 +292,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 					custbranch.branchcode,
 					custbranch.debtorno
 				FROM custbranch
-				WHERE custbranch.branchcode " . LIKE . " '%" . $_POST['CustCode'] . "%'
+				WHERE custbranch.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%' OR custbranch.branchcode " . LIKE . " '%" . $_POST['CustCode'] . "%'
 				AND custbranch.disabletrans=0
 				ORDER BY custbranch.debtorno";
 		} elseif (strlen($_POST['CustPhone'])>0){
@@ -508,7 +509,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	<B><?php echo '<BR>' . $msg; ?></B>
 	<TABLE CELLPADDING=3 COLSPAN=4>
 	<TR>
-	<TD><FONT SIZE=1><?php echo _(' name'); ?>:</FONT></TD>
+	<TD><FONT SIZE=1><?php echo _('name'); ?>:</FONT></TD>
 	<TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20	MAXLENGTH=25></TD>
 	<TD><FONT SIZE=3><B><?php echo _('OR'); ?></B></FONT></TD>
 	<TD><FONT SIZE=1><?php echo _('Part of the code'); ?>:</FONT></TD>
@@ -839,11 +840,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		If(isset($_GET['Delete'])){ 
 			//page called attempting to delete a line - GET['Delete'] = the line number to delete
-			if($_SESSION['Items']->Some_Already_Delivered($_GET['Delete'])==0){
-				$_SESSION['Items']->remove_from_cart($_GET['Delete'], 'Yes');  /*Do update DB */
-			} else {
-				prnMsg( _('This item cannot be deleted because some of it has already been invoiced'),'warn');
-			}
+			$_SESSION['Items']->remove_from_cart($_GET['Delete'], 'Yes');  /*Do update DB */
 		}
 
 		foreach ($_SESSION['Items']->LineItems as $OrderLine) {
@@ -986,7 +983,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$LineTotal = $OrderLine->Quantity * $OrderLine->Price * (1 - $OrderLine->DiscountPercent);
 			$DisplayLineTotal = number_format($LineTotal,2);
 			$DisplayDiscount = number_format(($OrderLine->DiscountPercent * 100),2);
-
+			$QtyOrdered = $OrderLine->Quantity; 
+			$QtyRemain = $QtyOrdered - $OrderLine->QtyInv;
+			
 			if ($OrderLine->QOHatLoc < $OrderLine->Quantity AND ($OrderLine->MBflag=='B' OR $OrderLine->MBflag=='M')) {
 				/*There is a stock deficiency in the stock location selected */
 				$RowStarter = '<tr bgcolor="#EEAABB">';
@@ -1001,10 +1000,15 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo $RowStarter;
 
 			echo '<TD><A target="_blank" HREF="' . $rootpath . '/StockStatus.php?' . SID . 'StockID=' . $OrderLine->StockID . '">' . $OrderLine->StockID . '</A></TD>
-				<TD>' . $OrderLine->ItemDescription . '</TD>
-				<TD><INPUT TYPE=TEXT NAME="Quantity_' . $OrderLine->LineNumber . '" SIZE=6 MAXLENGTH=6 VALUE=' . $OrderLine->Quantity . '></TD>
-				<TD>' . $OrderLine->QOHatLoc . '</TD>
-				<TD>' . $OrderLine->Units . '</TD>';
+				<TD>' . $OrderLine->ItemDescription . '</TD>';
+			
+			echo '<TD><INPUT TYPE=TEXT NAME="Quantity_' . $OrderLine->LineNumber . '" SIZE=6 MAXLENGTH=6 VALUE=' . $OrderLine->Quantity . '>';
+			if ($QtyRemain != $QtyOrdered){
+				echo '<br>'.$OrderLine->QtyInv.' of '.$OrderLine->Quantity.' invoiced';
+			}
+			echo '</TD>
+		<TD>' . $OrderLine->QOHatLoc . '</TD>
+		<TD>' . $OrderLine->Units . '</TD>';
 
 			if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 				/*OK to display with discount if it is an internal user with appropriate permissions */
@@ -1016,8 +1020,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				echo '<TD ALIGN=RIGHT>' . $OrderLine->Price . '</TD><TD></TD>';
 				echo '<INPUT TYPE=HIDDEN NAME="Price_' . $OrderLine->LineNumber . '" VALUE=' . $OrderLine->Price . '>';
 			}
-
-			echo '<TD ALIGN=RIGHT>' . $DisplayLineTotal . '</FONT></TD><TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . _('Delete') . '</A></TD></TR>';
+			if ($_SESSION['Items']->Some_Already_Delivered($OrderLine->LineNumber)){
+				$RemTxt = _('Clear Remaining');
+			} else {
+				$RemTxt = _('Delete');
+			}
+			echo '<TD ALIGN=RIGHT>' . $DisplayLineTotal . '</FONT></TD><TD>';
+			echo '<A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . $RemTxt . '</A></TD></TR>';
 
 			echo $RowStarter;
 			echo '<TD COLSPAN=7><TEXTAREA  NAME="Narrative_' . $OrderLine->LineNumber . '" cols=100% rows=1>' . $OrderLine->Narrative . '</TEXTAREA><BR><HR></TD></TR>';
@@ -1118,7 +1127,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			while ($myrow=DB_fetch_array($SearchResult)) {
 
 				$ImageSource = $rootpath. '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg';
-
+				
+				   if (file_exists($ImageSource)){
+						$ImageSource  = '<img src="'.$ImageSource.'">';
+				   } else {
+						$ImageSource  = '<i>'._('No Image').'</i>';
+				   }
+				   
 				if ($k==1){
 					echo '<tr bgcolor="#CCCCCC">';
 					$k=0;

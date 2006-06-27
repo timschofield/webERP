@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -125,7 +125,7 @@ If (isset($_POST['Update'])
 
 		if ($_SESSION['DoFreightCalc']==True){
 		      list ($_POST['FreightCost'], $BestShipper) = round(CalcFreightCost($_SESSION['Items']->total, $_POST['BrAdd2'], $_POST['BrAdd3'], $_SESSION['Items']->totalVolume, $_SESSION['Items']->totalWeight, $_SESSION['Items']->Location, $db),2);
-Â  		      $_POST['FreightCost'] = round($_POST['FreightCost'],2);
+  		      $_POST['FreightCost'] = round($_POST['FreightCost'],2);
 		      $_POST['ShipVia'] = $BestShipper;
 		}
 

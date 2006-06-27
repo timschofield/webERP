@@ -65,7 +65,7 @@ If (isset($_POST['PrintPDF'])
 			ORDER BY stockmaster.categoryid,
 				stockmaster.stockid";
 	} else {
-		$SQL = $SQL = "SELECT stockmaster.categoryid,
+		$SQL = "SELECT stockmaster.categoryid,
 					locstock.stockid,
 					stockmaster.description,
 					stockcategory.categorydescription,

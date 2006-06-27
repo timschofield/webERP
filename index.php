@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.49 $ */
+/* $Revision: 1.50 $ */
 
 
 $PageSecurity = 1;
@@ -512,6 +512,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 					</td>
 					<td class="menu_group_items">
 						<table width="100%" class="table_index">
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . "/StockSerialItemResearch.php?" . SID . "'><LI>" . _('Serial Item Research Tool') . '</LI></A>'; ?>
+							</td>
+							</tr>
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<A HREF='" . $rootpath . "/StockMovements.php?" . SID . "'><LI>" . _('Inventory Item Movements') . '</LI></A>'; ?>
