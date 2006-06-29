@@ -323,3 +323,4 @@ INSERT INTO config ( confname , confvalue ) VALUES ('InvoicePortraitFormat', '0'
 ALTER TABLE stockserialitems ADD INDEX (serialno);
 ALTER TABLE stockserialmoves ADD INDEX (serialno);
 
+INSERT INTO taxcategories (taxcatname) VALUES ('Freight');

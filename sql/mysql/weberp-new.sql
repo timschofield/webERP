@@ -30,8 +30,9 @@ CREATE TABLE `accountgroups` (
   `sequenceintb` smallint(6) NOT NULL default '0',
   PRIMARY KEY  (`groupname`),
   KEY `SequenceInTB` (`sequenceintb`),
-  KEY `sectioninaccounts` (`sectioninaccounts`)
-) TYPE=MyISAM;
+  KEY `sectioninaccounts` (`sectioninaccounts`),
+  CONSTRAINT `accountgroups_ibfk_1` FOREIGN KEY (`sectioninaccounts`) REFERENCES `accountsection` (`sectionid`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `accountsection`
@@ -41,7 +42,7 @@ CREATE TABLE `accountsection` (
   `sectionid` int(11) NOT NULL default '0',
   `sectionname` text NOT NULL,
   PRIMARY KEY  (`sectionid`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `areas`
@@ -51,7 +52,7 @@ CREATE TABLE `areas` (
   `areacode` char(2) NOT NULL default '',
   `areadescription` varchar(25) NOT NULL default '',
   PRIMARY KEY  (`areacode`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `bankaccounts`
@@ -64,8 +65,9 @@ CREATE TABLE `bankaccounts` (
   `bankaddress` char(50) default NULL,
   PRIMARY KEY  (`accountcode`),
   KEY `BankAccountName` (`bankaccountname`),
-  KEY `BankAccountNumber` (`bankaccountnumber`)
-) TYPE=MyISAM;
+  KEY `BankAccountNumber` (`bankaccountnumber`),
+  CONSTRAINT `bankaccounts_ibfk_1` FOREIGN KEY (`accountcode`) REFERENCES `chartmaster` (`AccountCode`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `banktrans`
@@ -88,8 +90,10 @@ CREATE TABLE `banktrans` (
   KEY `TransDate` (`transdate`),
   KEY `TransType` (`banktranstype`),
   KEY `Type` (`type`,`transno`),
-  KEY `CurrCode` (`currcode`)
-) TYPE=MyISAM;
+  KEY `CurrCode` (`currcode`),
+  CONSTRAINT `banktrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`TypeID`),
+  CONSTRAINT `banktrans_ibfk_2` FOREIGN KEY (`bankact`) REFERENCES `bankaccounts` (`accountcode`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `bom`
@@ -110,8 +114,12 @@ CREATE TABLE `bom` (
   KEY `LocCode` (`loccode`),
   KEY `Parent` (`parent`,`effectiveafter`,`effectiveto`,`loccode`),
   KEY `Parent_2` (`parent`),
-  KEY `WorkCentreAdded` (`workcentreadded`)
-) TYPE=MyISAM;
+  KEY `WorkCentreAdded` (`workcentreadded`),
+  CONSTRAINT `bom_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `stockmaster` (`StockID`),
+  CONSTRAINT `bom_ibfk_2` FOREIGN KEY (`component`) REFERENCES `stockmaster` (`StockID`),
+  CONSTRAINT `bom_ibfk_3` FOREIGN KEY (`workcentreadded`) REFERENCES `workcentres` (`Code`),
+  CONSTRAINT `bom_ibfk_4` FOREIGN KEY (`loccode`) REFERENCES `locations` (`LocCode`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `buckets`
@@ -123,8 +131,9 @@ CREATE TABLE `buckets` (
   `capacity` double NOT NULL default '0',
   PRIMARY KEY  (`workcentre`,`availdate`),
   KEY `WorkCentre` (`workcentre`),
-  KEY `AvailDate` (`availdate`)
-) TYPE=MyISAM;
+  KEY `AvailDate` (`availdate`),
+  CONSTRAINT `buckets_ibfk_1` FOREIGN KEY (`workcentre`) REFERENCES `workcentres` (`Code`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `chartdetails`
@@ -138,8 +147,10 @@ CREATE TABLE `chartdetails` (
   `bfwd` double NOT NULL default '0',
   `bfwdbudget` double NOT NULL default '0',
   PRIMARY KEY  (`accountcode`,`period`),
-  KEY `Period` (`period`)
-) TYPE=MyISAM;
+  KEY `Period` (`period`),
+  CONSTRAINT `chartdetails_ibfk_1` FOREIGN KEY (`accountcode`) REFERENCES `chartmaster` (`AccountCode`),
+  CONSTRAINT `chartdetails_ibfk_2` FOREIGN KEY (`period`) REFERENCES `periods` (`PeriodNo`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `chartmaster`
@@ -152,8 +163,9 @@ CREATE TABLE `chartmaster` (
   PRIMARY KEY  (`accountcode`),
   KEY `AccountCode` (`accountcode`),
   KEY `AccountName` (`accountname`),
-  KEY `Group_` (`group_`)
-) TYPE=MyISAM;
+  KEY `Group_` (`group_`),
+  CONSTRAINT `chartmaster_ibfk_1` FOREIGN KEY (`group_`) REFERENCES `accountgroups` (`groupname`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `cogsglpostings`
@@ -171,7 +183,7 @@ CREATE TABLE `cogsglpostings` (
   KEY `StkCat` (`stkcat`),
   KEY `GLCode` (`glcode`),
   KEY `SalesType` (`salestype`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `companies`
@@ -205,7 +217,7 @@ CREATE TABLE `companies` (
   `gllink_stock` tinyint(1) default '1',
   `freightact` int(11) NOT NULL default '0',
   PRIMARY KEY  (`coycode`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `config`
@@ -215,7 +227,7 @@ CREATE TABLE `config` (
   `confname` varchar(35) NOT NULL default '',
   `confvalue` text NOT NULL,
   PRIMARY KEY  (`confname`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `contractbom`
@@ -232,8 +244,11 @@ CREATE TABLE `contractbom` (
   KEY `LocCode` (`loccode`),
   KEY `ContractRef` (`contractref`),
   KEY `WorkCentreAdded` (`workcentreadded`),
-  KEY `WorkCentreAdded_2` (`workcentreadded`)
-) TYPE=MyISAM;
+  KEY `WorkCentreAdded_2` (`workcentreadded`),
+  CONSTRAINT `contractbom_ibfk_1` FOREIGN KEY (`workcentreadded`) REFERENCES `workcentres` (`Code`),
+  CONSTRAINT `contractbom_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`LocCode`),
+  CONSTRAINT `contractbom_ibfk_3` FOREIGN KEY (`component`) REFERENCES `stockmaster` (`StockID`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `contractreqts`
@@ -246,8 +261,9 @@ CREATE TABLE `contractreqts` (
   `quantity` double NOT NULL default '1',
   `priceperunit` decimal(20,4) NOT NULL default '0.0000',
   PRIMARY KEY  (`contractreqid`),
-  KEY `Contract` (`contract`)
-) TYPE=MyISAM;
+  KEY `Contract` (`contract`),
+  CONSTRAINT `contractreqts_ibfk_1` FOREIGN KEY (`contract`) REFERENCES `contracts` (`ContractRef`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `contracts`
@@ -279,8 +295,11 @@ CREATE TABLE `contracts` (
   KEY `Status` (`status`),
   KEY `TypeAbbrev` (`typeabbrev`),
   KEY `WORef` (`woref`),
-  KEY `DebtorNo` (`debtorno`,`branchcode`)
-) TYPE=MyISAM;
+  KEY `DebtorNo` (`debtorno`,`branchcode`),
+  CONSTRAINT `contracts_ibfk_1` FOREIGN KEY (`debtorno`, `branchcode`) REFERENCES `custbranch` (`DebtorNo`, `BranchCode`),
+  CONSTRAINT `contracts_ibfk_2` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`CategoryID`),
+  CONSTRAINT `contracts_ibfk_3` FOREIGN KEY (`typeabbrev`) REFERENCES `salestypes` (`TypeAbbrev`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `currencies`
@@ -294,7 +313,7 @@ CREATE TABLE `currencies` (
   `rate` double NOT NULL default '1',
   PRIMARY KEY  (`currabrev`),
   KEY `Country` (`country`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `custallocns`
@@ -309,8 +328,10 @@ CREATE TABLE `custallocns` (
   PRIMARY KEY  (`id`),
   KEY `DateAlloc` (`datealloc`),
   KEY `TransID_AllocFrom` (`transid_allocfrom`),
-  KEY `TransID_AllocTo` (`transid_allocto`)
-) TYPE=MyISAM;
+  KEY `TransID_AllocTo` (`transid_allocto`),
+  CONSTRAINT `custallocns_ibfk_1` FOREIGN KEY (`transid_allocfrom`) REFERENCES `debtortrans` (`ID`),
+  CONSTRAINT `custallocns_ibfk_2` FOREIGN KEY (`transid_allocto`) REFERENCES `debtortrans` (`ID`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `custbranch`
@@ -354,8 +375,14 @@ CREATE TABLE `custbranch` (
   KEY `Area` (`area`),
   KEY `DefaultLocation` (`defaultlocation`),
   KEY `DefaultShipVia` (`defaultshipvia`),
-  KEY `taxgroupid` (`taxgroupid`)
-) TYPE=MyISAM;
+  KEY `taxgroupid` (`taxgroupid`),
+  CONSTRAINT `custbranch_ibfk_1` FOREIGN KEY (`debtorno`) REFERENCES `debtorsmaster` (`DebtorNo`),
+  CONSTRAINT `custbranch_ibfk_2` FOREIGN KEY (`area`) REFERENCES `areas` (`areacode`),
+  CONSTRAINT `custbranch_ibfk_3` FOREIGN KEY (`salesman`) REFERENCES `salesman` (`SalesmanCode`),
+  CONSTRAINT `custbranch_ibfk_4` FOREIGN KEY (`defaultlocation`) REFERENCES `locations` (`LocCode`),
+  CONSTRAINT `custbranch_ibfk_6` FOREIGN KEY (`defaultshipvia`) REFERENCES `shippers` (`Shipper_ID`),
+  CONSTRAINT `custbranch_ibfk_7` FOREIGN KEY (`taxgroupid`) REFERENCES `taxgroups` (`taxgroupid`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `debtorsmaster`
@@ -397,8 +424,12 @@ CREATE TABLE `debtorsmaster` (
   KEY `PaymentTerms` (`paymentterms`),
   KEY `SalesType` (`salestype`),
   KEY `EDIInvoices` (`ediinvoices`),
-  KEY `EDIOrders` (`ediorders`)
-) TYPE=MyISAM;
+  KEY `EDIOrders` (`ediorders`),
+  CONSTRAINT `debtorsmaster_ibfk_1` FOREIGN KEY (`holdreason`) REFERENCES `holdreasons` (`ReasonCode`),
+  CONSTRAINT `debtorsmaster_ibfk_2` FOREIGN KEY (`currcode`) REFERENCES `currencies` (`currabrev`),
+  CONSTRAINT `debtorsmaster_ibfk_3` FOREIGN KEY (`paymentterms`) REFERENCES `paymentterms` (`TermsIndicator`),
+  CONSTRAINT `debtorsmaster_ibfk_4` FOREIGN KEY (`salestype`) REFERENCES `salestypes` (`TypeAbbrev`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `debtortrans`
@@ -437,8 +468,11 @@ CREATE TABLE `debtortrans` (
   KEY `TranDate` (`trandate`),
   KEY `TransNo` (`transno`),
   KEY `Type_2` (`type`,`transno`),
-  KEY `EDISent` (`edisent`)
-) TYPE=MyISAM;
+  KEY `EDISent` (`edisent`),
+  CONSTRAINT `debtortrans_ibfk_1` FOREIGN KEY (`debtorno`) REFERENCES `custbranch` (`debtorno`),
+  CONSTRAINT `debtortrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`TypeID`),
+  CONSTRAINT `debtortrans_ibfk_3` FOREIGN KEY (`prd`) REFERENCES `periods` (`PeriodNo`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `debtortranstaxes`
@@ -449,8 +483,10 @@ CREATE TABLE `debtortranstaxes` (
   `taxauthid` tinyint(4) NOT NULL default '0',
   `taxamount` double NOT NULL default '0',
   PRIMARY KEY  (`debtortransid`,`taxauthid`),
-  KEY `taxauthid` (`taxauthid`)
-) TYPE=MyISAM;
+  KEY `taxauthid` (`taxauthid`),
+  CONSTRAINT `debtortranstaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`),
+  CONSTRAINT `debtortranstaxes_ibfk_2` FOREIGN KEY (`debtortransid`) REFERENCES `debtortrans` (`id`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `discountmatrix`
@@ -464,8 +500,9 @@ CREATE TABLE `discountmatrix` (
   PRIMARY KEY  (`salestype`,`discountcategory`,`quantitybreak`),
   KEY `QuantityBreak` (`quantitybreak`),
   KEY `DiscountCategory` (`discountcategory`),
-  KEY `SalesType` (`salestype`)
-) TYPE=MyISAM;
+  KEY `SalesType` (`salestype`),
+  CONSTRAINT `discountmatrix_ibfk_1` FOREIGN KEY (`salestype`) REFERENCES `salestypes` (`TypeAbbrev`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `edi_orders_seg_groups`
@@ -476,7 +513,7 @@ CREATE TABLE `edi_orders_seg_groups` (
   `maxoccur` int(4) NOT NULL default '0',
   `parentseggroup` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`seggroupno`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `edi_orders_segs`
@@ -490,7 +527,7 @@ CREATE TABLE `edi_orders_segs` (
   PRIMARY KEY  (`id`),
   KEY `SegTag` (`segtag`),
   KEY `SegNo` (`seggroup`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `ediitemmapping`
@@ -506,7 +543,7 @@ CREATE TABLE `ediitemmapping` (
   KEY `StockID` (`stockid`),
   KEY `PartnerStockID` (`partnerstockid`),
   KEY `SuppOrCust` (`supporcust`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `edimessageformat`
@@ -522,7 +559,7 @@ CREATE TABLE `edimessageformat` (
   PRIMARY KEY  (`id`),
   UNIQUE KEY `PartnerCode` (`partnercode`,`messagetype`,`sequenceno`),
   KEY `Section` (`section`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `freightcosts`
@@ -539,13 +576,14 @@ CREATE TABLE `freightcosts` (
   `maxcub` double NOT NULL default '999999',
   `fixedprice` double NOT NULL default '0',
   `minimumchg` double NOT NULL default '0',
-  `taxcatid` tinyint(4) NOT NULL,
   PRIMARY KEY  (`shipcostfromid`),
   KEY `Destination` (`destination`),
   KEY `LocationFrom` (`locationfrom`),
   KEY `ShipperID` (`shipperid`),
-  KEY `Destination_2` (`destination`,`locationfrom`,`shipperid`)
-) TYPE=MyISAM;
+  KEY `Destination_2` (`destination`,`locationfrom`,`shipperid`),
+  CONSTRAINT `freightcosts_ibfk_1` FOREIGN KEY (`locationfrom`) REFERENCES `locations` (`LocCode`),
+  CONSTRAINT `freightcosts_ibfk_2` FOREIGN KEY (`shipperid`) REFERENCES `shippers` (`Shipper_ID`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `gltrans`
@@ -571,8 +609,11 @@ CREATE TABLE `gltrans` (
   KEY `TranDate` (`trandate`),
   KEY `TypeNo` (`typeno`),
   KEY `Type_and_Number` (`type`,`typeno`),
-  KEY `JobRef` (`jobref`)
-) TYPE=MyISAM;
+  KEY `JobRef` (`jobref`),
+  CONSTRAINT `gltrans_ibfk_1` FOREIGN KEY (`account`) REFERENCES `chartmaster` (`accountcode`),
+  CONSTRAINT `gltrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`TypeID`),
+  CONSTRAINT `gltrans_ibfk_3` FOREIGN KEY (`periodno`) REFERENCES `periods` (`PeriodNo`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `grns`
@@ -592,8 +633,10 @@ CREATE TABLE `grns` (
   KEY `DeliveryDate` (`deliverydate`),
   KEY `ItemCode` (`itemcode`),
   KEY `PODetailItem` (`podetailitem`),
-  KEY `SupplierID` (`supplierid`)
-) TYPE=MyISAM;
+  KEY `SupplierID` (`supplierid`),
+  CONSTRAINT `grns_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`SupplierID`),
+  CONSTRAINT `grns_ibfk_2` FOREIGN KEY (`podetailitem`) REFERENCES `purchorderdetails` (`PODetailItem`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `holdreasons`
@@ -606,7 +649,7 @@ CREATE TABLE `holdreasons` (
   PRIMARY KEY  (`reasoncode`),
   KEY `ReasonCode` (`reasoncode`),
   KEY `ReasonDescription` (`reasondescription`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `lastcostrollup`
@@ -624,7 +667,7 @@ CREATE TABLE `lastcostrollup` (
   `newmatcost` decimal(20,4) NOT NULL default '0.0000',
   `newlabcost` decimal(20,4) NOT NULL default '0.0000',
   `newoheadcost` decimal(20,4) NOT NULL default '0.0000'
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `locations`
@@ -646,8 +689,9 @@ CREATE TABLE `locations` (
   `taxprovinceid` tinyint(4) NOT NULL default '1',
   `managed` int(11) default '0',
   PRIMARY KEY  (`loccode`),
-  KEY `taxprovinceid` (`taxprovinceid`)
-) TYPE=MyISAM;
+  KEY `taxprovinceid` (`taxprovinceid`),
+  CONSTRAINT `locations_ibfk_1` FOREIGN KEY (`taxprovinceid`) REFERENCES `taxprovinces` (`taxprovinceid`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `locstock`
@@ -659,8 +703,10 @@ CREATE TABLE `locstock` (
   `quantity` double NOT NULL default '0',
   `reorderlevel` bigint(20) NOT NULL default '0',
   PRIMARY KEY  (`loccode`,`stockid`),
-  KEY `StockID` (`stockid`)
-) TYPE=MyISAM;
+  KEY `StockID` (`stockid`),
+  CONSTRAINT `locstock_ibfk_1` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
+  CONSTRAINT `locstock_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `loctransfers`
@@ -678,8 +724,11 @@ CREATE TABLE `loctransfers` (
   KEY `Reference` (`reference`,`stockid`),
   KEY `ShipLoc` (`shiploc`),
   KEY `RecLoc` (`recloc`),
-  KEY `StockID` (`stockid`)
-) TYPE=MyISAM COMMENT='Stores Shipments To And From Locations';
+  KEY `StockID` (`stockid`),
+  CONSTRAINT `loctransfers_ibfk_1` FOREIGN KEY (`shiploc`) REFERENCES `locations` (`loccode`),
+  CONSTRAINT `loctransfers_ibfk_2` FOREIGN KEY (`recloc`) REFERENCES `locations` (`loccode`),
+  CONSTRAINT `loctransfers_ibfk_3` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`)
+) TYPE=InnoDB COMMENT='Stores Shipments To And From Locations';
 
 --
 -- Table structure for table `orderdeliverydifferenceslog`
@@ -697,8 +746,11 @@ CREATE TABLE `orderdeliverydifferenceslog` (
   KEY `StockID` (`stockid`),
   KEY `DebtorNo` (`debtorno`,`branch`),
   KEY `Can_or_BO` (`can_or_bo`),
-  KEY `OrderNo` (`orderno`)
-) TYPE=MyISAM;
+  KEY `OrderNo` (`orderno`),
+  CONSTRAINT `orderdeliverydifferenceslog_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`),
+  CONSTRAINT `orderdeliverydifferenceslog_ibfk_2` FOREIGN KEY (`debtorno`, `branch`) REFERENCES `custbranch` (`debtorno`, `branchcode`),
+  CONSTRAINT `orderdeliverydifferenceslog_ibfk_3` FOREIGN KEY (`orderno`) REFERENCES `salesorders` (`OrderNo`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `paymentmethods`
@@ -710,7 +762,7 @@ CREATE TABLE `paymentmethods` (
   `paymenttype` int(11) NOT NULL default '1',
   `receipttype` int(11) NOT NULL default '1',
   PRIMARY KEY  (`paymentid`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `paymentterms`
@@ -724,7 +776,7 @@ CREATE TABLE `paymentterms` (
   PRIMARY KEY  (`termsindicator`),
   KEY `DaysBeforeDue` (`daysbeforedue`),
   KEY `DayInFollowingMonth` (`dayinfollowingmonth`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `periods`
@@ -735,7 +787,7 @@ CREATE TABLE `periods` (
   `lastdate_in_period` date NOT NULL default '0000-00-00',
   PRIMARY KEY  (`periodno`),
   KEY `LastDate_in_Period` (`lastdate_in_period`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `prices`
@@ -752,8 +804,11 @@ CREATE TABLE `prices` (
   KEY `CurrAbrev` (`currabrev`),
   KEY `DebtorNo` (`debtorno`),
   KEY `StockID` (`stockid`),
-  KEY `TypeAbbrev` (`typeabbrev`)
-) TYPE=MyISAM;
+  KEY `TypeAbbrev` (`typeabbrev`),
+  CONSTRAINT `prices_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`),
+  CONSTRAINT `prices_ibfk_2` FOREIGN KEY (`currabrev`) REFERENCES `currencies` (`currabrev`),
+  CONSTRAINT `prices_ibfk_3` FOREIGN KEY (`typeabbrev`) REFERENCES `salestypes` (`TypeAbbrev`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `purchdata`
@@ -771,8 +826,10 @@ CREATE TABLE `purchdata` (
   PRIMARY KEY  (`supplierno`,`stockid`),
   KEY `StockID` (`stockid`),
   KEY `SupplierNo` (`supplierno`),
-  KEY `Preferred` (`preferred`)
-) TYPE=MyISAM;
+  KEY `Preferred` (`preferred`),
+  CONSTRAINT `purchdata_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`),
+  CONSTRAINT `purchdata_ibfk_2` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`SupplierID`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `purchorderdetails`
@@ -801,8 +858,9 @@ CREATE TABLE `purchorderdetails` (
   KEY `JobRef` (`jobref`),
   KEY `OrderNo` (`orderno`),
   KEY `ShiptRef` (`shiptref`),
-  KEY `Completed` (`completed`)
-) TYPE=MyISAM;
+  KEY `Completed` (`completed`),
+  CONSTRAINT `purchorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `purchorders` (`OrderNo`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `purchorders`
@@ -830,8 +888,10 @@ CREATE TABLE `purchorders` (
   KEY `OrdDate` (`orddate`),
   KEY `SupplierNo` (`supplierno`),
   KEY `IntoStockLocation` (`intostocklocation`),
-  KEY `AllowPrintPO` (`allowprint`)
-) TYPE=MyISAM;
+  KEY `AllowPrintPO` (`allowprint`),
+  CONSTRAINT `purchorders_ibfk_1` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`SupplierID`),
+  CONSTRAINT `purchorders_ibfk_2` FOREIGN KEY (`intostocklocation`) REFERENCES `locations` (`loccode`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `recurringsalesorders`
@@ -867,8 +927,9 @@ CREATE TABLE `recurringsalesorders` (
   KEY `orddate` (`orddate`),
   KEY `ordertype` (`ordertype`),
   KEY `locationindex` (`fromstkloc`),
-  KEY `branchcode` (`branchcode`,`debtorno`)
-) TYPE=MyISAM;
+  KEY `branchcode` (`branchcode`,`debtorno`),
+  CONSTRAINT `recurringsalesorders_ibfk_1` FOREIGN KEY (`branchcode`, `debtorno`) REFERENCES `custbranch` (`branchcode`, `debtorno`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `recurrsalesorderdetails`
@@ -883,8 +944,10 @@ CREATE TABLE `recurrsalesorderdetails` (
   `narrative` text NOT NULL,
   PRIMARY KEY  (`recurrorderno`,`stkcode`),
   KEY `orderno` (`recurrorderno`),
-  KEY `stkcode` (`stkcode`)
-) TYPE=MyISAM;
+  KEY `stkcode` (`stkcode`),
+  CONSTRAINT `recurrsalesorderdetails_ibfk_1` FOREIGN KEY (`recurrorderno`) REFERENCES `recurringsalesorders` (`recurrorderno`),
+  CONSTRAINT `recurrsalesorderdetails_ibfk_2` FOREIGN KEY (`stkcode`) REFERENCES `stockmaster` (`stockid`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `reportcolumns`
@@ -905,8 +968,9 @@ CREATE TABLE `reportcolumns` (
   `budgetoractual` tinyint(1) NOT NULL default '0',
   `valformat` char(1) NOT NULL default 'N',
   `constant` double NOT NULL default '0',
-  PRIMARY KEY  (`reportid`,`colno`)
-) TYPE=MyISAM;
+  PRIMARY KEY  (`reportid`,`colno`),
+  CONSTRAINT `reportcolumns_ibfk_1` FOREIGN KEY (`reportid`) REFERENCES `reportheaders` (`ReportID`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `reportfields`
@@ -951,7 +1015,7 @@ CREATE TABLE `reportheaders` (
   `lower4` varchar(10) NOT NULL default '',
   PRIMARY KEY  (`reportid`),
   KEY `ReportHeading` (`reportheading`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `reportlinks`
@@ -961,7 +1025,7 @@ CREATE TABLE `reportlinks` (
   `table1` varchar(25) NOT NULL default '',
   `table2` varchar(25) NOT NULL default '',
   `equation` varchar(75) NOT NULL default ''
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `reports`
@@ -1059,8 +1123,9 @@ CREATE TABLE `salesanalysis` (
   KEY `TypeAbbrev` (`typeabbrev`),
   KEY `Area` (`area`),
   KEY `BudgetOrActual` (`budgetoractual`),
-  KEY `Salesperson` (`salesperson`)
-) TYPE=MyISAM;
+  KEY `Salesperson` (`salesperson`),
+  CONSTRAINT `salesanalysis_ibfk_1` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `salescat`
@@ -1071,7 +1136,7 @@ CREATE TABLE `salescat` (
   `parentcatid` tinyint(4) default NULL,
   `salescatname` varchar(30) default NULL,
   PRIMARY KEY  (`salescatid`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `salescatprod`
@@ -1082,8 +1147,10 @@ CREATE TABLE `salescatprod` (
   `stockid` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`salescatid`,`stockid`),
   KEY `salescatid` (`salescatid`),
-  KEY `stockid` (`stockid`)
-) TYPE=MyISAM;
+  KEY `stockid` (`stockid`),
+  CONSTRAINT `salescatprod_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
+  CONSTRAINT `salescatprod_ibfk_2` FOREIGN KEY (`salescatid`) REFERENCES `salescat` (`salescatid`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `salesglpostings`
@@ -1101,7 +1168,7 @@ CREATE TABLE `salesglpostings` (
   KEY `Area` (`area`),
   KEY `StkCat` (`stkcat`),
   KEY `SalesType` (`salestype`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `salesman`
@@ -1116,7 +1183,7 @@ CREATE TABLE `salesman` (
   `breakpoint` decimal(10,0) NOT NULL default '0',
   `commissionrate2` double NOT NULL default '0',
   PRIMARY KEY  (`salesmancode`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `salesorderdetails`
@@ -1137,8 +1204,10 @@ CREATE TABLE `salesorderdetails` (
   PRIMARY KEY  (`orderlineno`,`orderno`),
   KEY `OrderNo` (`orderno`),
   KEY `StkCode` (`stkcode`),
-  KEY `Completed` (`completed`)
-) TYPE=MyISAM;
+  KEY `Completed` (`completed`),
+  CONSTRAINT `salesorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `salesorders` (`OrderNo`),
+  CONSTRAINT `salesorderdetails_ibfk_2` FOREIGN KEY (`stkcode`) REFERENCES `stockmaster` (`StockID`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `salesorders`
@@ -1177,8 +1246,11 @@ CREATE TABLE `salesorders` (
   KEY `LocationIndex` (`fromstkloc`),
   KEY `BranchCode` (`branchcode`,`debtorno`),
   KEY `ShipVia` (`shipvia`),
-  KEY `quotation` (`quotation`)
-) TYPE=MyISAM;
+  KEY `quotation` (`quotation`),
+  CONSTRAINT `salesorders_ibfk_1` FOREIGN KEY (`branchcode`, `debtorno`) REFERENCES `custbranch` (`branchcode`, `debtorno`),
+  CONSTRAINT `salesorders_ibfk_2` FOREIGN KEY (`shipvia`) REFERENCES `shippers` (`Shipper_ID`),
+  CONSTRAINT `salesorders_ibfk_3` FOREIGN KEY (`fromstkloc`) REFERENCES `locations` (`loccode`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `salestypes`
@@ -1189,7 +1261,7 @@ CREATE TABLE `salestypes` (
   `sales_type` char(20) NOT NULL default '',
   PRIMARY KEY  (`typeabbrev`),
   KEY `Sales_Type` (`sales_type`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `scripts`
@@ -1201,7 +1273,7 @@ CREATE TABLE `scripts` (
   `pagedescription` text NOT NULL,
   PRIMARY KEY  (`pageid`),
   KEY `FileName` (`filename`)
-) TYPE=MyISAM COMMENT='Index of all scripts';
+) TYPE=InnoDB COMMENT='Index of all scripts';
 
 --
 -- Table structure for table `securitygroups`
@@ -1212,8 +1284,10 @@ CREATE TABLE `securitygroups` (
   `tokenid` int(11) NOT NULL default '0',
   PRIMARY KEY  (`secroleid`,`tokenid`),
   KEY `secroleid` (`secroleid`),
-  KEY `tokenid` (`tokenid`)
-) TYPE=MyISAM;
+  KEY `tokenid` (`tokenid`),
+  CONSTRAINT `securitygroups_secroleid_fk` FOREIGN KEY (`secroleid`) REFERENCES `securityroles` (`secroleid`),
+  CONSTRAINT `securitygroups_tokenid_fk` FOREIGN KEY (`tokenid`) REFERENCES `securitytokens` (`tokenid`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `securityroles`
@@ -1223,7 +1297,7 @@ CREATE TABLE `securityroles` (
   `secroleid` int(11) NOT NULL,
   `secrolename` text NOT NULL,
   PRIMARY KEY  (`secroleid`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `securitytokens`
@@ -1233,7 +1307,7 @@ CREATE TABLE `securitytokens` (
   `tokenid` int(11) NOT NULL default '0',
   `tokenname` text NOT NULL,
   PRIMARY KEY  (`tokenid`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `shipmentcharges`
@@ -1250,8 +1324,10 @@ CREATE TABLE `shipmentcharges` (
   KEY `TransType` (`transtype`,`transno`),
   KEY `ShiptRef` (`shiptref`),
   KEY `StockID` (`stockid`),
-  KEY `TransType_2` (`transtype`)
-) TYPE=MyISAM;
+  KEY `TransType_2` (`transtype`),
+  CONSTRAINT `shipmentcharges_ibfk_1` FOREIGN KEY (`shiptref`) REFERENCES `shipments` (`ShiptRef`),
+  CONSTRAINT `shipmentcharges_ibfk_2` FOREIGN KEY (`transtype`) REFERENCES `systypes` (`TypeID`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `shipments`
@@ -1269,8 +1345,9 @@ CREATE TABLE `shipments` (
   KEY `ETA` (`eta`),
   KEY `SupplierID` (`supplierid`),
   KEY `ShipperRef` (`voyageref`),
-  KEY `Vessel` (`vessel`)
-) TYPE=MyISAM;
+  KEY `Vessel` (`vessel`),
+  CONSTRAINT `shipments_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`SupplierID`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `shippers`
@@ -1281,7 +1358,7 @@ CREATE TABLE `shippers` (
   `shippername` char(40) NOT NULL default '',
   `mincharge` double NOT NULL default '0',
   PRIMARY KEY  (`shipper_id`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `stockcategory`
@@ -1299,7 +1376,7 @@ CREATE TABLE `stockcategory` (
   PRIMARY KEY  (`categoryid`),
   KEY `CategoryDescription` (`categorydescription`),
   KEY `StockType` (`stocktype`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `stockcheckfreeze`
@@ -1310,8 +1387,10 @@ CREATE TABLE `stockcheckfreeze` (
   `loccode` varchar(5) NOT NULL default '',
   `qoh` double NOT NULL default '0',
   PRIMARY KEY  (`stockid`),
-  KEY `LocCode` (`loccode`)
-) TYPE=MyISAM;
+  KEY `LocCode` (`loccode`),
+  CONSTRAINT `stockcheckfreeze_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`),
+  CONSTRAINT `stockcheckfreeze_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `stockcounts`
@@ -1325,8 +1404,10 @@ CREATE TABLE `stockcounts` (
   `reference` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`id`),
   KEY `StockID` (`stockid`),
-  KEY `LocCode` (`loccode`)
-) TYPE=MyISAM;
+  KEY `LocCode` (`loccode`),
+  CONSTRAINT `stockcounts_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`),
+  CONSTRAINT `stockcounts_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `stockmaster`
@@ -1364,8 +1445,10 @@ CREATE TABLE `stockmaster` (
   KEY `StockID` (`stockid`,`categoryid`),
   KEY `Controlled` (`controlled`),
   KEY `DiscountCategory` (`discountcategory`),
-  KEY `taxcatid` (`taxcatid`)
-) TYPE=MyISAM;
+  KEY `taxcatid` (`taxcatid`),
+  CONSTRAINT `stockmaster_ibfk_1` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`),
+  CONSTRAINT `stockmaster_ibfk_2` FOREIGN KEY (`taxcatid`) REFERENCES `taxcategories` (`taxcatid`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `stockmoves`
@@ -1400,8 +1483,12 @@ CREATE TABLE `stockmoves` (
   KEY `TransNo` (`transno`),
   KEY `Type` (`type`),
   KEY `Show_On_Inv_Crds` (`show_on_inv_crds`),
-  KEY `Hide` (`hidemovt`)
-) TYPE=MyISAM;
+  KEY `Hide` (`hidemovt`),
+  CONSTRAINT `stockmoves_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
+  CONSTRAINT `stockmoves_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`TypeID`),
+  CONSTRAINT `stockmoves_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
+  CONSTRAINT `stockmoves_ibfk_4` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `stockmovestaxes`
@@ -1415,8 +1502,9 @@ CREATE TABLE `stockmovestaxes` (
   `taxcalculationorder` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`stkmoveno`,`taxauthid`),
   KEY `taxauthid` (`taxauthid`),
-  KEY `calculationorder` (`taxcalculationorder`)
-) TYPE=MyISAM;
+  KEY `calculationorder` (`taxcalculationorder`),
+  CONSTRAINT `stockmovestaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `stockserialitems`
@@ -1429,8 +1517,11 @@ CREATE TABLE `stockserialitems` (
   `quantity` double NOT NULL default '0',
   PRIMARY KEY  (`stockid`,`serialno`,`loccode`),
   KEY `StockID` (`stockid`),
-  KEY `LocCode` (`loccode`)
-) TYPE=MyISAM;
+  KEY `LocCode` (`loccode`),
+  KEY `serialno` (`serialno`),
+  CONSTRAINT `stockserialitems_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
+  CONSTRAINT `stockserialitems_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `stockserialmoves`
@@ -1444,8 +1535,11 @@ CREATE TABLE `stockserialmoves` (
   `moveqty` double NOT NULL default '0',
   PRIMARY KEY  (`stkitmmoveno`),
   KEY `StockMoveNo` (`stockmoveno`),
-  KEY `StockID_SN` (`stockid`,`serialno`)
-) TYPE=MyISAM;
+  KEY `StockID_SN` (`stockid`,`serialno`),
+  KEY `serialno` (`serialno`),
+  CONSTRAINT `stockserialmoves_ibfk_1` FOREIGN KEY (`stockmoveno`) REFERENCES `stockmoves` (`stkmoveno`),
+  CONSTRAINT `stockserialmoves_ibfk_2` FOREIGN KEY (`stockid`, `serialno`) REFERENCES `stockserialitems` (`stockid`, `serialno`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `suppallocs`
@@ -1460,8 +1554,10 @@ CREATE TABLE `suppallocs` (
   PRIMARY KEY  (`id`),
   KEY `TransID_AllocFrom` (`transid_allocfrom`),
   KEY `TransID_AllocTo` (`transid_allocto`),
-  KEY `DateAlloc` (`datealloc`)
-) TYPE=MyISAM;
+  KEY `DateAlloc` (`datealloc`),
+  CONSTRAINT `suppallocs_ibfk_1` FOREIGN KEY (`transid_allocfrom`) REFERENCES `supptrans` (`ID`),
+  CONSTRAINT `suppallocs_ibfk_2` FOREIGN KEY (`transid_allocto`) REFERENCES `supptrans` (`ID`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `suppliercontacts`
@@ -1478,8 +1574,9 @@ CREATE TABLE `suppliercontacts` (
   `ordercontact` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`supplierid`,`contact`),
   KEY `Contact` (`contact`),
-  KEY `SupplierID` (`supplierid`)
-) TYPE=MyISAM;
+  KEY `SupplierID` (`supplierid`),
+  CONSTRAINT `suppliercontacts_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`SupplierID`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `suppliers`
@@ -1509,8 +1606,11 @@ CREATE TABLE `suppliers` (
   KEY `PaymentTerms` (`paymentterms`),
   KEY `SupplierID` (`supplierid`),
   KEY `SuppName` (`suppname`),
-  KEY `taxgroupid` (`taxgroupid`)
-) TYPE=MyISAM;
+  KEY `taxgroupid` (`taxgroupid`),
+  CONSTRAINT `suppliers_ibfk_1` FOREIGN KEY (`currcode`) REFERENCES `currencies` (`currabrev`),
+  CONSTRAINT `suppliers_ibfk_2` FOREIGN KEY (`paymentterms`) REFERENCES `paymentterms` (`termsindicator`),
+  CONSTRAINT `suppliers_ibfk_3` FOREIGN KEY (`taxgroupid`) REFERENCES `taxgroups` (`taxgroupid`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `supptrans`
@@ -1542,8 +1642,10 @@ CREATE TABLE `supptrans` (
   KEY `SuppReference` (`suppreference`),
   KEY `TranDate` (`trandate`),
   KEY `TransNo` (`transno`),
-  KEY `Type` (`type`)
-) TYPE=MyISAM;
+  KEY `Type` (`type`),
+  CONSTRAINT `supptrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`TypeID`),
+  CONSTRAINT `supptrans_ibfk_2` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `supptranstaxes`
@@ -1554,8 +1656,10 @@ CREATE TABLE `supptranstaxes` (
   `taxauthid` tinyint(4) NOT NULL default '0',
   `taxamount` double NOT NULL default '0',
   PRIMARY KEY  (`supptransid`,`taxauthid`),
-  KEY `taxauthid` (`taxauthid`)
-) TYPE=MyISAM;
+  KEY `taxauthid` (`taxauthid`),
+  CONSTRAINT `supptranstaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`),
+  CONSTRAINT `supptranstaxes_ibfk_2` FOREIGN KEY (`supptransid`) REFERENCES `supptrans` (`id`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `systypes`
@@ -1567,7 +1671,7 @@ CREATE TABLE `systypes` (
   `typeno` int(11) NOT NULL default '1',
   PRIMARY KEY  (`typeid`),
   KEY `TypeNo` (`typeno`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `taxauthorities`
@@ -1584,8 +1688,10 @@ CREATE TABLE `taxauthorities` (
   `bankswift` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`taxid`),
   KEY `TaxGLCode` (`taxglcode`),
-  KEY `PurchTaxGLAccount` (`purchtaxglaccount`)
-) TYPE=MyISAM;
+  KEY `PurchTaxGLAccount` (`purchtaxglaccount`),
+  CONSTRAINT `taxauthorities_ibfk_1` FOREIGN KEY (`taxglcode`) REFERENCES `chartmaster` (`accountcode`),
+  CONSTRAINT `taxauthorities_ibfk_2` FOREIGN KEY (`purchtaxglaccount`) REFERENCES `chartmaster` (`accountcode`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `taxauthrates`
@@ -1599,8 +1705,11 @@ CREATE TABLE `taxauthrates` (
   PRIMARY KEY  (`taxauthority`,`dispatchtaxprovince`,`taxcatid`),
   KEY `TaxAuthority` (`taxauthority`),
   KEY `dispatchtaxprovince` (`dispatchtaxprovince`),
-  KEY `taxcatid` (`taxcatid`)
-) TYPE=MyISAM;
+  KEY `taxcatid` (`taxcatid`),
+  CONSTRAINT `taxauthrates_ibfk_1` FOREIGN KEY (`taxauthority`) REFERENCES `taxauthorities` (`taxid`),
+  CONSTRAINT `taxauthrates_ibfk_2` FOREIGN KEY (`taxcatid`) REFERENCES `taxcategories` (`taxcatid`),
+  CONSTRAINT `taxauthrates_ibfk_3` FOREIGN KEY (`dispatchtaxprovince`) REFERENCES `taxprovinces` (`taxprovinceid`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `taxcategories`
@@ -1610,7 +1719,7 @@ CREATE TABLE `taxcategories` (
   `taxcatid` tinyint(4) NOT NULL,
   `taxcatname` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`taxcatid`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `taxgroups`
@@ -1620,7 +1729,7 @@ CREATE TABLE `taxgroups` (
   `taxgroupid` tinyint(4) NOT NULL,
   `taxgroupdescription` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`taxgroupid`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `taxgrouptaxes`
@@ -1633,8 +1742,10 @@ CREATE TABLE `taxgrouptaxes` (
   `taxontax` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`taxgroupid`,`taxauthid`),
   KEY `taxgroupid` (`taxgroupid`),
-  KEY `taxauthid` (`taxauthid`)
-) TYPE=MyISAM;
+  KEY `taxauthid` (`taxauthid`),
+  CONSTRAINT `taxgrouptaxes_ibfk_1` FOREIGN KEY (`taxgroupid`) REFERENCES `taxgroups` (`taxgroupid`),
+  CONSTRAINT `taxgrouptaxes_ibfk_2` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `taxprovinces`
@@ -1644,7 +1755,7 @@ CREATE TABLE `taxprovinces` (
   `taxprovinceid` tinyint(4) NOT NULL,
   `taxprovincename` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`taxprovinceid`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `unitsofmeasure`
@@ -1654,7 +1765,7 @@ CREATE TABLE `unitsofmeasure` (
   `unitid` tinyint(4) NOT NULL,
   `unitname` varchar(15) NOT NULL default '',
   PRIMARY KEY  (`unitid`)
-) TYPE=MyISAM;
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `workcentres`
@@ -1670,8 +1781,9 @@ CREATE TABLE `workcentres` (
   `setuphrs` decimal(10,0) NOT NULL default '0',
   PRIMARY KEY  (`code`),
   KEY `Description` (`description`),
-  KEY `Location` (`location`)
-) TYPE=MyISAM;
+  KEY `Location` (`location`),
+  CONSTRAINT `workcentres_ibfk_1` FOREIGN KEY (`location`) REFERENCES `locations` (`loccode`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `worksorders`
@@ -1695,8 +1807,10 @@ CREATE TABLE `worksorders` (
   KEY `LocCode` (`loccode`),
   KEY `ReleasedDate` (`releaseddate`),
   KEY `RequiredBy` (`requiredby`),
-  KEY `WORef` (`woref`,`loccode`)
-) TYPE=MyISAM;
+  KEY `WORef` (`woref`,`loccode`),
+  CONSTRAINT `worksorders_ibfk_1` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
+  CONSTRAINT `worksorders_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
+) TYPE=InnoDB;
 
 --
 -- Table structure for table `www_users`
@@ -1721,8 +1835,9 @@ CREATE TABLE `www_users` (
   `language` varchar(5) NOT NULL default 'en_GB',
   PRIMARY KEY  (`userid`),
   KEY `CustomerID` (`customerid`),
-  KEY `DefaultLocation` (`defaultlocation`)
-) TYPE=MyISAM;
+  KEY `DefaultLocation` (`defaultlocation`),
+  CONSTRAINT `www_users_ibfk_1` FOREIGN KEY (`defaultlocation`) REFERENCES `locations` (`loccode`)
+) TYPE=InnoDB;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -1787,7 +1902,7 @@ INSERT INTO `accountgroups` VALUES ('Sales',1,1,10);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_US');
+INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
 
 --
 -- Dumping data for table `securitygroups`
@@ -1895,7 +2010,7 @@ INSERT INTO `systypes` VALUES (0,'Journal - GL',0);
 INSERT INTO `systypes` VALUES (1,'Payment - GL',0);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',7);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',8);
 INSERT INTO `systypes` VALUES (11,'Credit Note',3);
 INSERT INTO `systypes` VALUES (12,'Receipt',3);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
@@ -1906,7 +2021,7 @@ INSERT INTO `systypes` VALUES (20,'Purchase Invoice',11);
 INSERT INTO `systypes` VALUES (21,'Debit Note',3);
 INSERT INTO `systypes` VALUES (22,'Creditors Payment',0);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
-INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',9);
+INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',8);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',0);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',0);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',0);
@@ -2081,6 +2196,7 @@ INSERT INTO `chartmaster` VALUES (2100,'Accounts Payable','Liabilities');
 INSERT INTO `chartmaster` VALUES (2150,'Goods Received Suspense','Liabilities');
 INSERT INTO `chartmaster` VALUES (2200,'Short-Term Loan Payable','Liabilities');
 INSERT INTO `chartmaster` VALUES (2230,'Current Portion of Long-Term Debt Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2250,'Income Tax Payable','Liabilities');
 INSERT INTO `chartmaster` VALUES (2300,'GST Payable','Liabilities');
 INSERT INTO `chartmaster` VALUES (2310,'GST Recoverable','Liabilities');
 INSERT INTO `chartmaster` VALUES (2320,'PST Payable','Liabilities');
@@ -2155,6 +2271,7 @@ INSERT INTO `chartmaster` VALUES (7230,'Credit Card Fees','Operating Expenses');
 INSERT INTO `chartmaster` VALUES (7240,'Consulting Fees','Operating Expenses');
 INSERT INTO `chartmaster` VALUES (7260,'Legal Fees','Operating Expenses');
 INSERT INTO `chartmaster` VALUES (7280,'Other Professional Fees','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7300,'Business Tax','Operating Expenses');
 INSERT INTO `chartmaster` VALUES (7350,'Property Tax','Operating Expenses');
 INSERT INTO `chartmaster` VALUES (7390,'Corporation Capital Tax','Operating Expenses');
 INSERT INTO `chartmaster` VALUES (7400,'Office Rent','Operating Expenses');
@@ -2279,7 +2396,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2006-06-27');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2006-06-29');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
@@ -2298,6 +2415,7 @@ INSERT INTO `config` VALUES ('EDI_MsgSent','companies/weberp/EDI_Sent');
 INSERT INTO `config` VALUES ('FreightChargeAppliesIfLessThan','1000');
 INSERT INTO `config` VALUES ('FreightTaxCategory','1');
 INSERT INTO `config` VALUES ('HTTPS_Only','0');
+INSERT INTO `config` VALUES ('InvoicePortraitFormat','0');
 INSERT INTO `config` VALUES ('MaxImageSize','300');
 INSERT INTO `config` VALUES ('NumberOfPeriodsOfStockUsage','12');
 INSERT INTO `config` VALUES ('OverChargeProportion','30');
@@ -2325,7 +2443,6 @@ INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','Tax Ref');
 INSERT INTO `config` VALUES ('WikiApp','WackoWiki');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
 INSERT INTO `config` VALUES ('YearEnd','3');
-INSERT INTO `config` VALUES ('InvoicePortraitFormat','2');
 
 --
 -- Dumping data for table `companies`
@@ -2339,18 +2456,18 @@ INSERT INTO `companies` VALUES (1,'Demo System','not entered yet','','PO Box 100
 
 INSERT INTO `taxauthrates` VALUES (1,1,1,0.1);
 INSERT INTO `taxauthrates` VALUES (1,1,2,0);
+INSERT INTO `taxauthrates` VALUES (1,1,5,0);
 INSERT INTO `taxauthrates` VALUES (5,1,1,0.2);
 INSERT INTO `taxauthrates` VALUES (5,1,2,0.35);
+INSERT INTO `taxauthrates` VALUES (5,1,5,0);
 INSERT INTO `taxauthrates` VALUES (11,1,1,0.07);
 INSERT INTO `taxauthrates` VALUES (11,1,2,0.12);
+INSERT INTO `taxauthrates` VALUES (11,1,5,0);
 INSERT INTO `taxauthrates` VALUES (12,1,1,0.05);
 INSERT INTO `taxauthrates` VALUES (12,1,2,0.075);
+INSERT INTO `taxauthrates` VALUES (12,1,5,0);
 INSERT INTO `taxauthrates` VALUES (13,1,1,0);
 INSERT INTO `taxauthrates` VALUES (13,1,2,0);
-INSERT INTO `taxauthrates` VALUES (1,1,5,0);
-INSERT INTO `taxauthrates` VALUES (5,1,5,0);
-INSERT INTO `taxauthrates` VALUES (11,1,5,0);
-INSERT INTO `taxauthrates` VALUES (12,1,5,0);
 INSERT INTO `taxauthrates` VALUES (13,1,5,0);
 
 --
