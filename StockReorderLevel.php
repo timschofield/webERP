@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 
 $PageSecurity = 4;
@@ -14,6 +14,9 @@ if (isset($_GET['StockID'])){
 } elseif (isset($_POST['StockID'])){
 	$StockID = trim(strtoupper($_POST['StockID']));
 }
+
+
+echo "<A HREF='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</A><BR>';
 
 $result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='$StockID'", $db);
 $myrow = DB_fetch_row($result);

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 2; /*viewing possible with inquiries but not mods */
 
@@ -16,6 +16,9 @@ if (isset($_GET['StockID'])){
 } elseif (isset($_POST['StockID'])){
 	$StockID =trim(strtoupper($_POST['StockID']));
 }
+
+echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><BR>';
+
 
 if (isset($_POST['UpdateData'])){
 

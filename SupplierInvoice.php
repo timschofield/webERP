@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -16,6 +16,8 @@ $title = _('Enter Supplier Invoice');
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
+
+echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</A><BR>';
 
 if (isset($_GET['SupplierID'])){
 

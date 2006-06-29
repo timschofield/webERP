@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.50 $ */
+/* $Revision: 1.51 $ */
 
 
 $PageSecurity = 1;
@@ -116,7 +116,12 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<A HREF='" . $rootpath . '/SelectSalesOrder.php?' . SID . "'><LI>" . _('Sales Orders') . '</LI></A>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SelectOrderItems.php?' .SID . "&NewOrder=Yes'><LI>" . _('Place An Order') . '</LI></A>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/SelectSalesOrder.php?' . SID . "'><LI>" . _('Outstanding Sales Orders') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -310,14 +315,10 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<A HREF='" . $rootpath . '/Customers.php?' . SID . "'><LI>" . _('Add a New Customer') . '</LI></A>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SelectCustomer.php?' . SID . "'><LI>" . _('Customers') . '</LI></A>'; ?>
 							</td>
 							</tr>
-							<tr>
-							<td class="menu_group_item">
-								<?php echo "<A HREF='" . $rootpath . '/SelectCustomer.php?' . SID . "'><LI>" . _('Modify/Add/Delete Customers/branches and Special pricing') . '</LI></A>'; ?>
-							</td>
-							</tr>
+							
 						</table>
 					</td>
 					</tr>

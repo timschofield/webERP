@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -16,7 +16,7 @@ $title = _('Order Delivery Details');
 include('includes/header.inc');
 include('includes/FreightCalculation.inc');
 
-echo '<A HREF="'. $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Back to Sales Orders'). '</A>';
+echo '<A HREF="'. $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Back to Sales Orders'). '</A><BR>';
 
 if (!isset($_SESSION['Items']) OR !isset($_SESSION['Items']->DebtorNo)){
 	prnMsg(_('This page can only be read if an order has been entered') . '. ' . _('To enter an order select customer transactions then sales order entry'),'error');
@@ -125,7 +125,7 @@ If (isset($_POST['Update'])
 
 		if ($_SESSION['DoFreightCalc']==True){
 		      list ($_POST['FreightCost'], $BestShipper) = round(CalcFreightCost($_SESSION['Items']->total, $_POST['BrAdd2'], $_POST['BrAdd3'], $_SESSION['Items']->totalVolume, $_SESSION['Items']->totalWeight, $_SESSION['Items']->Location, $db),2);
-  		      $_POST['FreightCost'] = round($_POST['FreightCost'],2);
+ 		      $_POST['FreightCost'] = round($_POST['FreightCost'],2);
 		      $_POST['ShipVia'] = $BestShipper;
 		}
 

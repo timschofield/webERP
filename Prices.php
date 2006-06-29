@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 2;
 
@@ -27,6 +27,9 @@ if (!isset($_POST['TypeAbbrev']) OR $_POST['TypeAbbrev']==""){
 if (!isset($_POST['CurrAbrev'])){
 	$_POST['CurrAbrev'] = $_SESSION['CompanyRecord']['currencydefault'];
 }
+
+echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><BR>';
+
 
 $result = DB_query("SELECT stockmaster.description, stockmaster.mbflag FROM stockmaster WHERE stockmaster.stockid='$Item'",$db);
 $myrow = DB_fetch_row($result);

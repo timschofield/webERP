@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.46 $ */
+/* $Revision: 1.47 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -55,7 +55,7 @@ if (isset($_GET['NewOrder'])){
 
 }
 
-echo '<A HREF="'. $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Back to Sales Orders'). '</A>';
+echo '<A HREF="'. $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Back to Sales Orders'). '</A><BR>';
 
 if (isset($_GET['ModifyOrderNumber'])
 	AND $_GET['ModifyOrderNumber']!=''){

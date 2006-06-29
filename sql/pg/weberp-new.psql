@@ -6927,3 +6927,6 @@ INSERT INTO securitygroups VALUES (2, 11);
 UPDATE systypes SET typeno=0;
 INSERT INTO shippers VALUES (1,'Default Shipper',0);
 UPDATE config SET confvalue='1' WHERE confname='Default_Shipper';
+UPDATE systypes SET typeno=0;
+INSERT INTO shippers VALUES (1,'Default Shipper',0);
+UPDATE config SET confvalue='1' WHERE confname='Default_Shipper';

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 $PageSecurity = 1;
 
@@ -939,7 +939,7 @@ If (isset($PrintPDF)
 	/*Print out the invoice text entered */
 				echo '<TABLE WIDTH=100%><TR>
 					<TD ALIGN=RIGHT>' . _('Sub Total') . "</TD>
-					<TD ALIGN=RIGHT BGCOLOR='#EEEEEE' WIDTH=15%>$DisplaySubTot</TD></TR>";
+					<TD ALIGN=RIGHT BGCOLOR='#EEEEEE' WIDTH='15%'>$DisplaySubTot</TD></TR>";
 				echo '<TR><TD ALIGN=RIGHT>' . _('Freight') . "</TD>
 					<TD ALIGN=RIGHT BGCOLOR='#EEEEEE'>$DisplayFreight</TD></TR>";
 				echo '<TR><TD ALIGN=RIGHT>' . _('Tax') . "</TD>

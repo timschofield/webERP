@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -280,7 +280,7 @@ Class Cart {
 										$myrow['taxontax'],
 										$myrow['taxglcode']);
 		}
-	} //end method GetTaxes		
+	} //end method GetExistingTaxes		
 	
 	function GetTaxes($LineNumber){
 	

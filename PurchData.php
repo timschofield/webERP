@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 4;
 
@@ -22,6 +22,7 @@ if (isset($_GET['StockID'])){
 	$StockID = trim(strtoupper($_POST['StockID']));
 }
 
+echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><BR>';
 
 if( isset($_POST['SupplierDescription']) ) {
     $_POST['SupplierDescription'] = trim($_POST['SupplierDescription']);

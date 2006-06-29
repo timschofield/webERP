@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity = 11;
 
@@ -12,7 +12,7 @@ include('includes/SQL_CommonFunctions.inc');
 $title = _('Receive Purchase Orders');
 include('includes/header.inc');
 
-
+echo '<A HREF="'. $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . '">' . _('Back to Purchase Orders'). '</A><BR>';
 
 if ($_GET['PONumber']<=0 AND !isset($_SESSION['PO'])) {
 	/* This page can only be called with a purchase order number for invoicing*/

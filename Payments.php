@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 5;
 
@@ -21,6 +21,9 @@ if (!isset($_SESSION['PaymentDetail'])){
 	$_SESSION['PaymentDetail'] = new Payment;
 	$_SESSION['PaymentDetail']->GLItemCounter = 1;
 }
+
+
+echo "<a href='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</a><BR>';
 
 if (isset($_GET['SupplierID'])){
 	/*The page was called with a supplierID check it is valid and default the inputs for Supplier Name and currency of payment */

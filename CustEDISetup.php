@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 11;
 
@@ -7,7 +7,7 @@ include('includes/session.inc');
 $title = _('Customer EDI Set Up');
 include('includes/header.inc');
 
-echo "<a href='" . $rootpath . '/SelectCustomer.php?' . SID . "'>" . _('Back to Customers') . '</a>';
+echo "<A HREF='" . $rootpath . '/SelectCustomer.php?' . SID . "'>" . _('Back to Customers') . '</A><BR>';
 
 if (isset($_POST['submit'])) {
 

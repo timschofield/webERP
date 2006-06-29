@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 
 $PageSecurity = 11;
@@ -8,6 +8,9 @@ $PageSecurity = 11;
 include('includes/session.inc');
 $title = _('Item Maintenance');
 include('includes/header.inc');
+
+echo "<A HREF='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</A><BR>';
+
 
 /*If this form is called with the StockID then it is assumed that the stock item is to be modified */
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 3;
 
@@ -265,6 +265,8 @@ if (isset($_POST['DebtorNo'])){
 } elseif (isset($_GET['DebtorNo'])){
 	$DebtorNo = $_GET['DebtorNo'];
 }
+
+echo "<A HREF='" . $rootpath . '/SelectCustomer.php?' . SID . "'>" . _('Back to Customers') . '</A><BR>';
 
 if (!isset($DebtorNo)) {
 
@@ -568,7 +570,7 @@ if (!isset($DebtorNo)) {
 	if ($_POST['New']) {
 		echo "<CENTER><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Add New Customer') . "'><BR><INPUT TYPE=SUBMIT name='reset' VALUE='" . _('Reset') . "'></FORM>";
 	} else {
-		echo "<HR><CENTER><INPUT TYPE='Submit' NAME='submit' value='" . _('Update Customer') . "'>";
+		echo "<HR><CENTER><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Update Customer') . "'>";
 		echo '<P><INPUT TYPE="Submit" NAME="delete" VALUE="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';
 	}
 } // end of main ifs

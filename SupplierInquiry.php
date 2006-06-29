@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -11,6 +11,8 @@ include('includes/session.inc');
 $title = _('Supplier Inquiry');
 
 include('includes/header.inc');
+
+echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</A><BR>';
 
 // always figure out the SQL required from the inputs available
 

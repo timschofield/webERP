@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 /*This page is very largely the same as the SupplierInvoice.php script
 the same result could have been acheived by using if statements in that script and just having the one
@@ -31,6 +31,7 @@ $title = _('Supplier Credit Note');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
+echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</A><BR>';
 
 if (isset($_GET['SupplierID'])){
 

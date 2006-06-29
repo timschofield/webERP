@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity=5;
 
@@ -15,6 +15,8 @@ if (isset($_GET['SupplierID'])){
 } elseif (isset($_POST['SupplierID'])){
 	$SupplierID = $_POST['SupplierID'];
 }
+
+echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</A><BR>';
 
 if (!isset($SupplierID)) {
 	echo '<P><P>';

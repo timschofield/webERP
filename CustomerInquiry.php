@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -14,7 +14,7 @@ include('includes/header.inc');
 
 if(!isset($_GET['CustomerID']) AND !isset($_SESSION['CustomerID'])){
 	prnMsg(_('To display the enquiry a customer must first be selected from the customer selection screen'),'info');
-	echo "<BR><CENTER><A HREF='". $rootpath . "/SelectCustomer.php?" . SID . "'>" . _('Select a Customer to Inquire On') . '</A></CENTER>';
+	echo "<BR><CENTER><A HREF='". $rootpath . "/SelectCustomer.php?" . SID . "'>" . _('Select a Customer to Inquire On') . '</A><BR></CENTER>';
 	include('includes/footer.inc');
 	exit;
 } else {

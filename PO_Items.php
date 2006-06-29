@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 
 $PageSecurity = 4;
@@ -19,7 +19,7 @@ include('includes/header.inc');
 
 
 
-echo "<A HREF='$rootpath/PO_Header.php?" . SID . "'>" ._('Back To Purchase Order Header') . '</A>';
+echo "<A HREF='$rootpath/PO_Header.php?" . SID . "'>" ._('Back To Purchase Order Header') . '</A><BR>';
 
 if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database */
 

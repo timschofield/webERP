@@ -1,9 +1,11 @@
 SET FOREIGN_KEY_CHECKS = 0;
--- MySQL dump 10.9
+-- MySQL dump 10.10
 --
 -- Host: localhost    Database: weberp
 -- ------------------------------------------------------
--- Server version	4.1.11-standard
+-- Server version	5.0.20
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO,MYSQL40' */;
@@ -28,9 +30,8 @@ CREATE TABLE `accountgroups` (
   `sequenceintb` smallint(6) NOT NULL default '0',
   PRIMARY KEY  (`groupname`),
   KEY `SequenceInTB` (`sequenceintb`),
-  KEY `sectioninaccounts` (`sectioninaccounts`),
-  CONSTRAINT `accountgroups_ibfk_1` FOREIGN KEY (`sectioninaccounts`) REFERENCES `accountsection` (`sectionid`)
-) TYPE=InnoDB;
+  KEY `sectioninaccounts` (`sectioninaccounts`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `accountsection`
@@ -40,7 +41,7 @@ CREATE TABLE `accountsection` (
   `sectionid` int(11) NOT NULL default '0',
   `sectionname` text NOT NULL,
   PRIMARY KEY  (`sectionid`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `areas`
@@ -50,7 +51,7 @@ CREATE TABLE `areas` (
   `areacode` char(2) NOT NULL default '',
   `areadescription` varchar(25) NOT NULL default '',
   PRIMARY KEY  (`areacode`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `bankaccounts`
@@ -63,16 +64,15 @@ CREATE TABLE `bankaccounts` (
   `bankaddress` char(50) default NULL,
   PRIMARY KEY  (`accountcode`),
   KEY `BankAccountName` (`bankaccountname`),
-  KEY `BankAccountNumber` (`bankaccountnumber`),
-  CONSTRAINT `bankaccounts_ibfk_1` FOREIGN KEY (`accountcode`) REFERENCES `chartmaster` (`AccountCode`)
-) TYPE=InnoDB;
+  KEY `BankAccountNumber` (`bankaccountnumber`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `banktrans`
 --
 
 CREATE TABLE `banktrans` (
-  `banktransid` bigint(20) NOT NULL auto_increment,
+  `banktransid` bigint(20) NOT NULL,
   `type` smallint(6) NOT NULL default '0',
   `transno` bigint(20) NOT NULL default '0',
   `bankact` int(11) NOT NULL default '0',
@@ -88,10 +88,8 @@ CREATE TABLE `banktrans` (
   KEY `TransDate` (`transdate`),
   KEY `TransType` (`banktranstype`),
   KEY `Type` (`type`,`transno`),
-  KEY `CurrCode` (`currcode`),
-  CONSTRAINT `banktrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`TypeID`),
-  CONSTRAINT `banktrans_ibfk_2` FOREIGN KEY (`bankact`) REFERENCES `bankaccounts` (`accountcode`)
-) TYPE=InnoDB;
+  KEY `CurrCode` (`currcode`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `bom`
@@ -112,12 +110,8 @@ CREATE TABLE `bom` (
   KEY `LocCode` (`loccode`),
   KEY `Parent` (`parent`,`effectiveafter`,`effectiveto`,`loccode`),
   KEY `Parent_2` (`parent`),
-  KEY `WorkCentreAdded` (`workcentreadded`),
-  CONSTRAINT `bom_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `stockmaster` (`StockID`),
-  CONSTRAINT `bom_ibfk_2` FOREIGN KEY (`component`) REFERENCES `stockmaster` (`StockID`),
-  CONSTRAINT `bom_ibfk_3` FOREIGN KEY (`workcentreadded`) REFERENCES `workcentres` (`Code`),
-  CONSTRAINT `bom_ibfk_4` FOREIGN KEY (`loccode`) REFERENCES `locations` (`LocCode`)
-) TYPE=InnoDB;
+  KEY `WorkCentreAdded` (`workcentreadded`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `buckets`
@@ -129,9 +123,8 @@ CREATE TABLE `buckets` (
   `capacity` double NOT NULL default '0',
   PRIMARY KEY  (`workcentre`,`availdate`),
   KEY `WorkCentre` (`workcentre`),
-  KEY `AvailDate` (`availdate`),
-  CONSTRAINT `buckets_ibfk_1` FOREIGN KEY (`workcentre`) REFERENCES `workcentres` (`Code`)
-) TYPE=InnoDB;
+  KEY `AvailDate` (`availdate`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `chartdetails`
@@ -145,10 +138,8 @@ CREATE TABLE `chartdetails` (
   `bfwd` double NOT NULL default '0',
   `bfwdbudget` double NOT NULL default '0',
   PRIMARY KEY  (`accountcode`,`period`),
-  KEY `Period` (`period`),
-  CONSTRAINT `chartdetails_ibfk_1` FOREIGN KEY (`accountcode`) REFERENCES `chartmaster` (`AccountCode`),
-  CONSTRAINT `chartdetails_ibfk_2` FOREIGN KEY (`period`) REFERENCES `periods` (`PeriodNo`)
-) TYPE=InnoDB;
+  KEY `Period` (`period`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `chartmaster`
@@ -161,16 +152,15 @@ CREATE TABLE `chartmaster` (
   PRIMARY KEY  (`accountcode`),
   KEY `AccountCode` (`accountcode`),
   KEY `AccountName` (`accountname`),
-  KEY `Group_` (`group_`),
-  CONSTRAINT `chartmaster_ibfk_1` FOREIGN KEY (`group_`) REFERENCES `accountgroups` (`groupname`)
-) TYPE=InnoDB;
+  KEY `Group_` (`group_`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `cogsglpostings`
 --
 
 CREATE TABLE `cogsglpostings` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL,
   `area` char(2) NOT NULL default '',
   `stkcat` varchar(6) NOT NULL default '',
   `glcode` int(11) NOT NULL default '0',
@@ -181,7 +171,7 @@ CREATE TABLE `cogsglpostings` (
   KEY `StkCat` (`stkcat`),
   KEY `GLCode` (`glcode`),
   KEY `SalesType` (`salestype`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `companies`
@@ -215,7 +205,7 @@ CREATE TABLE `companies` (
   `gllink_stock` tinyint(1) default '1',
   `freightact` int(11) NOT NULL default '0',
   PRIMARY KEY  (`coycode`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `config`
@@ -225,7 +215,7 @@ CREATE TABLE `config` (
   `confname` varchar(35) NOT NULL default '',
   `confvalue` text NOT NULL,
   PRIMARY KEY  (`confname`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `contractbom`
@@ -242,26 +232,22 @@ CREATE TABLE `contractbom` (
   KEY `LocCode` (`loccode`),
   KEY `ContractRef` (`contractref`),
   KEY `WorkCentreAdded` (`workcentreadded`),
-  KEY `WorkCentreAdded_2` (`workcentreadded`),
-  CONSTRAINT `contractbom_ibfk_1` FOREIGN KEY (`workcentreadded`) REFERENCES `workcentres` (`Code`),
-  CONSTRAINT `contractbom_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`LocCode`),
-  CONSTRAINT `contractbom_ibfk_3` FOREIGN KEY (`component`) REFERENCES `stockmaster` (`StockID`)
-) TYPE=InnoDB;
+  KEY `WorkCentreAdded_2` (`workcentreadded`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `contractreqts`
 --
 
 CREATE TABLE `contractreqts` (
-  `contractreqid` int(11) NOT NULL auto_increment,
+  `contractreqid` int(11) NOT NULL,
   `contract` char(20) NOT NULL default '',
   `component` char(40) NOT NULL default '',
   `quantity` double NOT NULL default '1',
   `priceperunit` decimal(20,4) NOT NULL default '0.0000',
   PRIMARY KEY  (`contractreqid`),
-  KEY `Contract` (`contract`),
-  CONSTRAINT `contractreqts_ibfk_1` FOREIGN KEY (`contract`) REFERENCES `contracts` (`ContractRef`)
-) TYPE=InnoDB;
+  KEY `Contract` (`contract`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `contracts`
@@ -293,11 +279,8 @@ CREATE TABLE `contracts` (
   KEY `Status` (`status`),
   KEY `TypeAbbrev` (`typeabbrev`),
   KEY `WORef` (`woref`),
-  KEY `DebtorNo` (`debtorno`,`branchcode`),
-  CONSTRAINT `contracts_ibfk_1` FOREIGN KEY (`debtorno`, `branchcode`) REFERENCES `custbranch` (`DebtorNo`, `BranchCode`),
-  CONSTRAINT `contracts_ibfk_2` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`CategoryID`),
-  CONSTRAINT `contracts_ibfk_3` FOREIGN KEY (`typeabbrev`) REFERENCES `salestypes` (`TypeAbbrev`)
-) TYPE=InnoDB;
+  KEY `DebtorNo` (`debtorno`,`branchcode`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `currencies`
@@ -311,14 +294,14 @@ CREATE TABLE `currencies` (
   `rate` double NOT NULL default '1',
   PRIMARY KEY  (`currabrev`),
   KEY `Country` (`country`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `custallocns`
 --
 
 CREATE TABLE `custallocns` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL,
   `amt` decimal(20,4) NOT NULL default '0.0000',
   `datealloc` date NOT NULL default '0000-00-00',
   `transid_allocfrom` int(11) NOT NULL default '0',
@@ -326,10 +309,8 @@ CREATE TABLE `custallocns` (
   PRIMARY KEY  (`id`),
   KEY `DateAlloc` (`datealloc`),
   KEY `TransID_AllocFrom` (`transid_allocfrom`),
-  KEY `TransID_AllocTo` (`transid_allocto`),
-  CONSTRAINT `custallocns_ibfk_1` FOREIGN KEY (`transid_allocfrom`) REFERENCES `debtortrans` (`ID`),
-  CONSTRAINT `custallocns_ibfk_2` FOREIGN KEY (`transid_allocto`) REFERENCES `debtortrans` (`ID`)
-) TYPE=InnoDB;
+  KEY `TransID_AllocTo` (`transid_allocto`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `custbranch`
@@ -373,14 +354,8 @@ CREATE TABLE `custbranch` (
   KEY `Area` (`area`),
   KEY `DefaultLocation` (`defaultlocation`),
   KEY `DefaultShipVia` (`defaultshipvia`),
-  KEY `taxgroupid` (`taxgroupid`),
-  CONSTRAINT `custbranch_ibfk_1` FOREIGN KEY (`debtorno`) REFERENCES `debtorsmaster` (`DebtorNo`),
-  CONSTRAINT `custbranch_ibfk_2` FOREIGN KEY (`area`) REFERENCES `areas` (`areacode`),
-  CONSTRAINT `custbranch_ibfk_3` FOREIGN KEY (`salesman`) REFERENCES `salesman` (`SalesmanCode`),
-  CONSTRAINT `custbranch_ibfk_4` FOREIGN KEY (`defaultlocation`) REFERENCES `locations` (`LocCode`),
-  CONSTRAINT `custbranch_ibfk_6` FOREIGN KEY (`defaultshipvia`) REFERENCES `shippers` (`Shipper_ID`),
-  CONSTRAINT `custbranch_ibfk_7` FOREIGN KEY (`taxgroupid`) REFERENCES `taxgroups` (`taxgroupid`)
-) TYPE=InnoDB;
+  KEY `taxgroupid` (`taxgroupid`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `debtorsmaster`
@@ -422,19 +397,15 @@ CREATE TABLE `debtorsmaster` (
   KEY `PaymentTerms` (`paymentterms`),
   KEY `SalesType` (`salestype`),
   KEY `EDIInvoices` (`ediinvoices`),
-  KEY `EDIOrders` (`ediorders`),
-  CONSTRAINT `debtorsmaster_ibfk_1` FOREIGN KEY (`holdreason`) REFERENCES `holdreasons` (`ReasonCode`),
-  CONSTRAINT `debtorsmaster_ibfk_2` FOREIGN KEY (`currcode`) REFERENCES `currencies` (`currabrev`),
-  CONSTRAINT `debtorsmaster_ibfk_3` FOREIGN KEY (`paymentterms`) REFERENCES `paymentterms` (`TermsIndicator`),
-  CONSTRAINT `debtorsmaster_ibfk_4` FOREIGN KEY (`salestype`) REFERENCES `salestypes` (`TypeAbbrev`)
-) TYPE=InnoDB;
+  KEY `EDIOrders` (`ediorders`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `debtortrans`
 --
 
 CREATE TABLE `debtortrans` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL,
   `transno` int(11) NOT NULL default '0',
   `type` smallint(6) NOT NULL default '0',
   `debtorno` varchar(10) NOT NULL default '',
@@ -466,11 +437,8 @@ CREATE TABLE `debtortrans` (
   KEY `TranDate` (`trandate`),
   KEY `TransNo` (`transno`),
   KEY `Type_2` (`type`,`transno`),
-  KEY `EDISent` (`edisent`),
-  CONSTRAINT `debtortrans_ibfk_1` FOREIGN KEY (`debtorno`) REFERENCES `custbranch` (`debtorno`),
-  CONSTRAINT `debtortrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`TypeID`),
-  CONSTRAINT `debtortrans_ibfk_3` FOREIGN KEY (`prd`) REFERENCES `periods` (`PeriodNo`)
-) TYPE=InnoDB;
+  KEY `EDISent` (`edisent`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `debtortranstaxes`
@@ -481,10 +449,8 @@ CREATE TABLE `debtortranstaxes` (
   `taxauthid` tinyint(4) NOT NULL default '0',
   `taxamount` double NOT NULL default '0',
   PRIMARY KEY  (`debtortransid`,`taxauthid`),
-  KEY `taxauthid` (`taxauthid`),
-  CONSTRAINT `debtortranstaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`),
-  CONSTRAINT `debtortranstaxes_ibfk_2` FOREIGN KEY (`debtortransid`) REFERENCES `debtortrans` (`id`)
-) TYPE=InnoDB;
+  KEY `taxauthid` (`taxauthid`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `discountmatrix`
@@ -498,9 +464,8 @@ CREATE TABLE `discountmatrix` (
   PRIMARY KEY  (`salestype`,`discountcategory`,`quantitybreak`),
   KEY `QuantityBreak` (`quantitybreak`),
   KEY `DiscountCategory` (`discountcategory`),
-  KEY `SalesType` (`salestype`),
-  CONSTRAINT `discountmatrix_ibfk_1` FOREIGN KEY (`salestype`) REFERENCES `salestypes` (`TypeAbbrev`)
-) TYPE=InnoDB;
+  KEY `SalesType` (`salestype`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `edi_orders_seg_groups`
@@ -511,21 +476,21 @@ CREATE TABLE `edi_orders_seg_groups` (
   `maxoccur` int(4) NOT NULL default '0',
   `parentseggroup` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`seggroupno`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `edi_orders_segs`
 --
 
 CREATE TABLE `edi_orders_segs` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL,
   `segtag` char(3) NOT NULL default '',
   `seggroup` tinyint(4) NOT NULL default '0',
   `maxoccur` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `SegTag` (`segtag`),
   KEY `SegNo` (`seggroup`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `ediitemmapping`
@@ -541,14 +506,14 @@ CREATE TABLE `ediitemmapping` (
   KEY `StockID` (`stockid`),
   KEY `PartnerStockID` (`partnerstockid`),
   KEY `SuppOrCust` (`supporcust`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `edimessageformat`
 --
 
 CREATE TABLE `edimessageformat` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL,
   `partnercode` varchar(10) NOT NULL default '',
   `messagetype` varchar(6) NOT NULL default '',
   `section` varchar(7) NOT NULL default '',
@@ -557,14 +522,14 @@ CREATE TABLE `edimessageformat` (
   PRIMARY KEY  (`id`),
   UNIQUE KEY `PartnerCode` (`partnercode`,`messagetype`,`sequenceno`),
   KEY `Section` (`section`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `freightcosts`
 --
 
 CREATE TABLE `freightcosts` (
-  `shipcostfromid` int(11) NOT NULL auto_increment,
+  `shipcostfromid` int(11) NOT NULL,
   `locationfrom` varchar(5) NOT NULL default '',
   `destination` varchar(40) NOT NULL default '',
   `shipperid` int(11) NOT NULL default '0',
@@ -574,21 +539,20 @@ CREATE TABLE `freightcosts` (
   `maxcub` double NOT NULL default '999999',
   `fixedprice` double NOT NULL default '0',
   `minimumchg` double NOT NULL default '0',
+  `taxcatid` tinyint(4) NOT NULL,
   PRIMARY KEY  (`shipcostfromid`),
   KEY `Destination` (`destination`),
   KEY `LocationFrom` (`locationfrom`),
   KEY `ShipperID` (`shipperid`),
-  KEY `Destination_2` (`destination`,`locationfrom`,`shipperid`),
-  CONSTRAINT `freightcosts_ibfk_1` FOREIGN KEY (`locationfrom`) REFERENCES `locations` (`LocCode`),
-  CONSTRAINT `freightcosts_ibfk_2` FOREIGN KEY (`shipperid`) REFERENCES `shippers` (`Shipper_ID`)
-) TYPE=InnoDB;
+  KEY `Destination_2` (`destination`,`locationfrom`,`shipperid`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `gltrans`
 --
 
 CREATE TABLE `gltrans` (
-  `counterindex` int(11) NOT NULL auto_increment,
+  `counterindex` int(11) NOT NULL,
   `type` smallint(6) NOT NULL default '0',
   `typeno` bigint(16) NOT NULL default '1',
   `chequeno` int(11) NOT NULL default '0',
@@ -607,11 +571,8 @@ CREATE TABLE `gltrans` (
   KEY `TranDate` (`trandate`),
   KEY `TypeNo` (`typeno`),
   KEY `Type_and_Number` (`type`,`typeno`),
-  KEY `JobRef` (`jobref`),
-  CONSTRAINT `gltrans_ibfk_1` FOREIGN KEY (`account`) REFERENCES `chartmaster` (`accountcode`),
-  CONSTRAINT `gltrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`TypeID`),
-  CONSTRAINT `gltrans_ibfk_3` FOREIGN KEY (`periodno`) REFERENCES `periods` (`PeriodNo`)
-) TYPE=InnoDB;
+  KEY `JobRef` (`jobref`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `grns`
@@ -619,7 +580,7 @@ CREATE TABLE `gltrans` (
 
 CREATE TABLE `grns` (
   `grnbatch` smallint(6) NOT NULL default '0',
-  `grnno` int(11) NOT NULL auto_increment,
+  `grnno` int(11) NOT NULL,
   `podetailitem` int(11) NOT NULL default '0',
   `itemcode` varchar(20) NOT NULL default '',
   `deliverydate` date NOT NULL default '0000-00-00',
@@ -631,10 +592,8 @@ CREATE TABLE `grns` (
   KEY `DeliveryDate` (`deliverydate`),
   KEY `ItemCode` (`itemcode`),
   KEY `PODetailItem` (`podetailitem`),
-  KEY `SupplierID` (`supplierid`),
-  CONSTRAINT `grns_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`SupplierID`),
-  CONSTRAINT `grns_ibfk_2` FOREIGN KEY (`podetailitem`) REFERENCES `purchorderdetails` (`PODetailItem`)
-) TYPE=InnoDB;
+  KEY `SupplierID` (`supplierid`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `holdreasons`
@@ -647,7 +606,7 @@ CREATE TABLE `holdreasons` (
   PRIMARY KEY  (`reasoncode`),
   KEY `ReasonCode` (`reasoncode`),
   KEY `ReasonDescription` (`reasondescription`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `lastcostrollup`
@@ -665,7 +624,7 @@ CREATE TABLE `lastcostrollup` (
   `newmatcost` decimal(20,4) NOT NULL default '0.0000',
   `newlabcost` decimal(20,4) NOT NULL default '0.0000',
   `newoheadcost` decimal(20,4) NOT NULL default '0.0000'
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `locations`
@@ -687,9 +646,8 @@ CREATE TABLE `locations` (
   `taxprovinceid` tinyint(4) NOT NULL default '1',
   `managed` int(11) default '0',
   PRIMARY KEY  (`loccode`),
-  KEY `taxprovinceid` (`taxprovinceid`),
-  CONSTRAINT `locations_ibfk_1` FOREIGN KEY (`taxprovinceid`) REFERENCES `taxprovinces` (`taxprovinceid`)
-) TYPE=InnoDB;
+  KEY `taxprovinceid` (`taxprovinceid`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `locstock`
@@ -701,10 +659,8 @@ CREATE TABLE `locstock` (
   `quantity` double NOT NULL default '0',
   `reorderlevel` bigint(20) NOT NULL default '0',
   PRIMARY KEY  (`loccode`,`stockid`),
-  KEY `StockID` (`stockid`),
-  CONSTRAINT `locstock_ibfk_1` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
-  CONSTRAINT `locstock_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`)
-) TYPE=InnoDB;
+  KEY `StockID` (`stockid`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `loctransfers`
@@ -722,11 +678,8 @@ CREATE TABLE `loctransfers` (
   KEY `Reference` (`reference`,`stockid`),
   KEY `ShipLoc` (`shiploc`),
   KEY `RecLoc` (`recloc`),
-  KEY `StockID` (`stockid`),
-  CONSTRAINT `loctransfers_ibfk_1` FOREIGN KEY (`shiploc`) REFERENCES `locations` (`loccode`),
-  CONSTRAINT `loctransfers_ibfk_2` FOREIGN KEY (`recloc`) REFERENCES `locations` (`loccode`),
-  CONSTRAINT `loctransfers_ibfk_3` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`)
-) TYPE=InnoDB COMMENT='Stores Shipments To And From Locations';
+  KEY `StockID` (`stockid`)
+) TYPE=MyISAM COMMENT='Stores Shipments To And From Locations';
 
 --
 -- Table structure for table `orderdeliverydifferenceslog`
@@ -744,23 +697,20 @@ CREATE TABLE `orderdeliverydifferenceslog` (
   KEY `StockID` (`stockid`),
   KEY `DebtorNo` (`debtorno`,`branch`),
   KEY `Can_or_BO` (`can_or_bo`),
-  KEY `OrderNo` (`orderno`),
-  CONSTRAINT `orderdeliverydifferenceslog_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`),
-  CONSTRAINT `orderdeliverydifferenceslog_ibfk_2` FOREIGN KEY (`debtorno`, `branch`) REFERENCES `custbranch` (`debtorno`, `branchcode`),
-  CONSTRAINT `orderdeliverydifferenceslog_ibfk_3` FOREIGN KEY (`orderno`) REFERENCES `salesorders` (`OrderNo`)
-) TYPE=InnoDB;
+  KEY `OrderNo` (`orderno`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `paymentmethods`
 --
 
 CREATE TABLE `paymentmethods` (
-  `paymentid` tinyint(4) NOT NULL auto_increment,
+  `paymentid` tinyint(4) NOT NULL,
   `paymentname` varchar(15) NOT NULL default '',
   `paymenttype` int(11) NOT NULL default '1',
   `receipttype` int(11) NOT NULL default '1',
   PRIMARY KEY  (`paymentid`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `paymentterms`
@@ -774,7 +724,7 @@ CREATE TABLE `paymentterms` (
   PRIMARY KEY  (`termsindicator`),
   KEY `DaysBeforeDue` (`daysbeforedue`),
   KEY `DayInFollowingMonth` (`dayinfollowingmonth`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `periods`
@@ -785,7 +735,7 @@ CREATE TABLE `periods` (
   `lastdate_in_period` date NOT NULL default '0000-00-00',
   PRIMARY KEY  (`periodno`),
   KEY `LastDate_in_Period` (`lastdate_in_period`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `prices`
@@ -802,11 +752,8 @@ CREATE TABLE `prices` (
   KEY `CurrAbrev` (`currabrev`),
   KEY `DebtorNo` (`debtorno`),
   KEY `StockID` (`stockid`),
-  KEY `TypeAbbrev` (`typeabbrev`),
-  CONSTRAINT `prices_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`),
-  CONSTRAINT `prices_ibfk_2` FOREIGN KEY (`currabrev`) REFERENCES `currencies` (`currabrev`),
-  CONSTRAINT `prices_ibfk_3` FOREIGN KEY (`typeabbrev`) REFERENCES `salestypes` (`TypeAbbrev`)
-) TYPE=InnoDB;
+  KEY `TypeAbbrev` (`typeabbrev`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `purchdata`
@@ -824,17 +771,15 @@ CREATE TABLE `purchdata` (
   PRIMARY KEY  (`supplierno`,`stockid`),
   KEY `StockID` (`stockid`),
   KEY `SupplierNo` (`supplierno`),
-  KEY `Preferred` (`preferred`),
-  CONSTRAINT `purchdata_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`),
-  CONSTRAINT `purchdata_ibfk_2` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`SupplierID`)
-) TYPE=InnoDB;
+  KEY `Preferred` (`preferred`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `purchorderdetails`
 --
 
 CREATE TABLE `purchorderdetails` (
-  `podetailitem` int(11) NOT NULL auto_increment,
+  `podetailitem` int(11) NOT NULL,
   `orderno` int(11) NOT NULL default '0',
   `itemcode` varchar(20) NOT NULL default '',
   `deliverydate` date NOT NULL default '0000-00-00',
@@ -856,16 +801,15 @@ CREATE TABLE `purchorderdetails` (
   KEY `JobRef` (`jobref`),
   KEY `OrderNo` (`orderno`),
   KEY `ShiptRef` (`shiptref`),
-  KEY `Completed` (`completed`),
-  CONSTRAINT `purchorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `purchorders` (`OrderNo`)
-) TYPE=InnoDB;
+  KEY `Completed` (`completed`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `purchorders`
 --
 
 CREATE TABLE `purchorders` (
-  `orderno` int(11) NOT NULL auto_increment,
+  `orderno` int(11) NOT NULL,
   `supplierno` varchar(10) NOT NULL default '',
   `comments` longblob,
   `orddate` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -886,17 +830,15 @@ CREATE TABLE `purchorders` (
   KEY `OrdDate` (`orddate`),
   KEY `SupplierNo` (`supplierno`),
   KEY `IntoStockLocation` (`intostocklocation`),
-  KEY `AllowPrintPO` (`allowprint`),
-  CONSTRAINT `purchorders_ibfk_1` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`SupplierID`),
-  CONSTRAINT `purchorders_ibfk_2` FOREIGN KEY (`intostocklocation`) REFERENCES `locations` (`loccode`)
-) TYPE=InnoDB;
+  KEY `AllowPrintPO` (`allowprint`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `recurringsalesorders`
 --
 
 CREATE TABLE `recurringsalesorders` (
-  `recurrorderno` int(11) NOT NULL auto_increment,
+  `recurrorderno` int(11) NOT NULL,
   `debtorno` varchar(10) NOT NULL default '',
   `branchcode` varchar(10) NOT NULL default '',
   `customerref` varchar(50) NOT NULL default '',
@@ -925,9 +867,8 @@ CREATE TABLE `recurringsalesorders` (
   KEY `orddate` (`orddate`),
   KEY `ordertype` (`ordertype`),
   KEY `locationindex` (`fromstkloc`),
-  KEY `branchcode` (`branchcode`,`debtorno`),
-  CONSTRAINT `recurringsalesorders_ibfk_1` FOREIGN KEY (`branchcode`, `debtorno`) REFERENCES `custbranch` (`branchcode`, `debtorno`)
-) TYPE=InnoDB;
+  KEY `branchcode` (`branchcode`,`debtorno`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `recurrsalesorderdetails`
@@ -942,10 +883,8 @@ CREATE TABLE `recurrsalesorderdetails` (
   `narrative` text NOT NULL,
   PRIMARY KEY  (`recurrorderno`,`stkcode`),
   KEY `orderno` (`recurrorderno`),
-  KEY `stkcode` (`stkcode`),
-  CONSTRAINT `recurrsalesorderdetails_ibfk_1` FOREIGN KEY (`recurrorderno`) REFERENCES `recurringsalesorders` (`recurrorderno`),
-  CONSTRAINT `recurrsalesorderdetails_ibfk_2` FOREIGN KEY (`stkcode`) REFERENCES `stockmaster` (`stockid`)
-) TYPE=InnoDB;
+  KEY `stkcode` (`stkcode`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `reportcolumns`
@@ -966,16 +905,15 @@ CREATE TABLE `reportcolumns` (
   `budgetoractual` tinyint(1) NOT NULL default '0',
   `valformat` char(1) NOT NULL default 'N',
   `constant` double NOT NULL default '0',
-  PRIMARY KEY  (`reportid`,`colno`),
-  CONSTRAINT `reportcolumns_ibfk_1` FOREIGN KEY (`reportid`) REFERENCES `reportheaders` (`ReportID`)
-) TYPE=InnoDB;
+  PRIMARY KEY  (`reportid`,`colno`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `reportfields`
 --
 
 CREATE TABLE `reportfields` (
-  `id` int(8) NOT NULL auto_increment,
+  `id` int(8) NOT NULL,
   `reportid` int(5) NOT NULL default '0',
   `entrytype` varchar(15) NOT NULL default '',
   `seqnum` int(3) NOT NULL default '0',
@@ -993,7 +931,7 @@ CREATE TABLE `reportfields` (
 --
 
 CREATE TABLE `reportheaders` (
-  `reportid` smallint(6) NOT NULL auto_increment,
+  `reportid` smallint(6) NOT NULL,
   `reportheading` varchar(80) NOT NULL default '',
   `groupbydata1` varchar(15) NOT NULL default '',
   `newpageafter1` tinyint(1) NOT NULL default '0',
@@ -1013,7 +951,7 @@ CREATE TABLE `reportheaders` (
   `lower4` varchar(10) NOT NULL default '',
   PRIMARY KEY  (`reportid`),
   KEY `ReportHeading` (`reportheading`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `reportlinks`
@@ -1023,14 +961,14 @@ CREATE TABLE `reportlinks` (
   `table1` varchar(25) NOT NULL default '',
   `table2` varchar(25) NOT NULL default '',
   `equation` varchar(75) NOT NULL default ''
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `reports`
 --
 
 CREATE TABLE `reports` (
-  `id` int(5) NOT NULL auto_increment,
+  `id` int(5) NOT NULL,
   `reportname` varchar(30) NOT NULL default '',
   `reporttype` char(3) NOT NULL default 'rpt',
   `groupname` varchar(9) NOT NULL default 'misc',
@@ -1111,7 +1049,7 @@ CREATE TABLE `salesanalysis` (
   `budgetoractual` tinyint(1) NOT NULL default '0',
   `salesperson` char(3) NOT NULL default '',
   `stkcategory` varchar(6) NOT NULL default '',
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `CustBranch` (`custbranch`),
   KEY `Cust` (`cust`),
@@ -1121,20 +1059,19 @@ CREATE TABLE `salesanalysis` (
   KEY `TypeAbbrev` (`typeabbrev`),
   KEY `Area` (`area`),
   KEY `BudgetOrActual` (`budgetoractual`),
-  KEY `Salesperson` (`salesperson`),
-  CONSTRAINT `salesanalysis_ibfk_1` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) TYPE=InnoDB;
+  KEY `Salesperson` (`salesperson`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `salescat`
 --
 
 CREATE TABLE `salescat` (
-  `salescatid` tinyint(4) NOT NULL auto_increment,
+  `salescatid` tinyint(4) NOT NULL,
   `parentcatid` tinyint(4) default NULL,
   `salescatname` varchar(30) default NULL,
   PRIMARY KEY  (`salescatid`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `salescatprod`
@@ -1145,17 +1082,15 @@ CREATE TABLE `salescatprod` (
   `stockid` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`salescatid`,`stockid`),
   KEY `salescatid` (`salescatid`),
-  KEY `stockid` (`stockid`),
-  CONSTRAINT `salescatprod_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `salescatprod_ibfk_2` FOREIGN KEY (`salescatid`) REFERENCES `salescat` (`salescatid`)
-) TYPE=InnoDB;
+  KEY `stockid` (`stockid`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `salesglpostings`
 --
 
 CREATE TABLE `salesglpostings` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL,
   `area` char(2) NOT NULL default '',
   `stkcat` varchar(6) NOT NULL default '',
   `discountglcode` int(11) NOT NULL default '0',
@@ -1166,7 +1101,7 @@ CREATE TABLE `salesglpostings` (
   KEY `Area` (`area`),
   KEY `StkCat` (`stkcat`),
   KEY `SalesType` (`salestype`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `salesman`
@@ -1181,7 +1116,7 @@ CREATE TABLE `salesman` (
   `breakpoint` decimal(10,0) NOT NULL default '0',
   `commissionrate2` double NOT NULL default '0',
   PRIMARY KEY  (`salesmancode`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `salesorderdetails`
@@ -1202,17 +1137,15 @@ CREATE TABLE `salesorderdetails` (
   PRIMARY KEY  (`orderlineno`,`orderno`),
   KEY `OrderNo` (`orderno`),
   KEY `StkCode` (`stkcode`),
-  KEY `Completed` (`completed`),
-  CONSTRAINT `salesorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `salesorders` (`OrderNo`),
-  CONSTRAINT `salesorderdetails_ibfk_2` FOREIGN KEY (`stkcode`) REFERENCES `stockmaster` (`StockID`)
-) TYPE=InnoDB;
+  KEY `Completed` (`completed`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `salesorders`
 --
 
 CREATE TABLE `salesorders` (
-  `orderno` int(11) NOT NULL auto_increment,
+  `orderno` int(11) NOT NULL,
   `debtorno` varchar(10) NOT NULL default '',
   `branchcode` varchar(10) NOT NULL default '',
   `customerref` varchar(50) NOT NULL default '',
@@ -1244,11 +1177,8 @@ CREATE TABLE `salesorders` (
   KEY `LocationIndex` (`fromstkloc`),
   KEY `BranchCode` (`branchcode`,`debtorno`),
   KEY `ShipVia` (`shipvia`),
-  KEY `quotation` (`quotation`),
-  CONSTRAINT `salesorders_ibfk_1` FOREIGN KEY (`branchcode`, `debtorno`) REFERENCES `custbranch` (`branchcode`, `debtorno`),
-  CONSTRAINT `salesorders_ibfk_2` FOREIGN KEY (`shipvia`) REFERENCES `shippers` (`Shipper_ID`),
-  CONSTRAINT `salesorders_ibfk_3` FOREIGN KEY (`fromstkloc`) REFERENCES `locations` (`loccode`)
-) TYPE=InnoDB;
+  KEY `quotation` (`quotation`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `salestypes`
@@ -1259,19 +1189,19 @@ CREATE TABLE `salestypes` (
   `sales_type` char(20) NOT NULL default '',
   PRIMARY KEY  (`typeabbrev`),
   KEY `Sales_Type` (`sales_type`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `scripts`
 --
 
 CREATE TABLE `scripts` (
-  `pageid` smallint(4) NOT NULL auto_increment,
+  `pageid` smallint(4) NOT NULL,
   `filename` varchar(50) NOT NULL default '',
   `pagedescription` text NOT NULL,
   PRIMARY KEY  (`pageid`),
   KEY `FileName` (`filename`)
-) TYPE=InnoDB COMMENT='Index of all scripts';
+) TYPE=MyISAM COMMENT='Index of all scripts';
 
 --
 -- Table structure for table `securitygroups`
@@ -1282,20 +1212,18 @@ CREATE TABLE `securitygroups` (
   `tokenid` int(11) NOT NULL default '0',
   PRIMARY KEY  (`secroleid`,`tokenid`),
   KEY `secroleid` (`secroleid`),
-  KEY `tokenid` (`tokenid`),
-  CONSTRAINT `securitygroups_secroleid_fk` FOREIGN KEY (`secroleid`) REFERENCES `securityroles` (`secroleid`),
-  CONSTRAINT `securitygroups_tokenid_fk` FOREIGN KEY (`tokenid`) REFERENCES `securitytokens` (`tokenid`)
-) TYPE=InnoDB;
+  KEY `tokenid` (`tokenid`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `securityroles`
 --
 
 CREATE TABLE `securityroles` (
-  `secroleid` int(11) NOT NULL auto_increment,
+  `secroleid` int(11) NOT NULL,
   `secrolename` text NOT NULL,
   PRIMARY KEY  (`secroleid`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `securitytokens`
@@ -1305,14 +1233,14 @@ CREATE TABLE `securitytokens` (
   `tokenid` int(11) NOT NULL default '0',
   `tokenname` text NOT NULL,
   PRIMARY KEY  (`tokenid`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `shipmentcharges`
 --
 
 CREATE TABLE `shipmentcharges` (
-  `shiptchgid` int(11) NOT NULL auto_increment,
+  `shiptchgid` int(11) NOT NULL,
   `shiptref` int(11) NOT NULL default '0',
   `transtype` smallint(6) NOT NULL default '0',
   `transno` int(11) NOT NULL default '0',
@@ -1322,10 +1250,8 @@ CREATE TABLE `shipmentcharges` (
   KEY `TransType` (`transtype`,`transno`),
   KEY `ShiptRef` (`shiptref`),
   KEY `StockID` (`stockid`),
-  KEY `TransType_2` (`transtype`),
-  CONSTRAINT `shipmentcharges_ibfk_1` FOREIGN KEY (`shiptref`) REFERENCES `shipments` (`ShiptRef`),
-  CONSTRAINT `shipmentcharges_ibfk_2` FOREIGN KEY (`transtype`) REFERENCES `systypes` (`TypeID`)
-) TYPE=InnoDB;
+  KEY `TransType_2` (`transtype`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `shipments`
@@ -1343,20 +1269,19 @@ CREATE TABLE `shipments` (
   KEY `ETA` (`eta`),
   KEY `SupplierID` (`supplierid`),
   KEY `ShipperRef` (`voyageref`),
-  KEY `Vessel` (`vessel`),
-  CONSTRAINT `shipments_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`SupplierID`)
-) TYPE=InnoDB;
+  KEY `Vessel` (`vessel`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `shippers`
 --
 
 CREATE TABLE `shippers` (
-  `shipper_id` int(11) NOT NULL auto_increment,
+  `shipper_id` int(11) NOT NULL,
   `shippername` char(40) NOT NULL default '',
   `mincharge` double NOT NULL default '0',
   PRIMARY KEY  (`shipper_id`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `stockcategory`
@@ -1374,7 +1299,7 @@ CREATE TABLE `stockcategory` (
   PRIMARY KEY  (`categoryid`),
   KEY `CategoryDescription` (`categorydescription`),
   KEY `StockType` (`stocktype`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `stockcheckfreeze`
@@ -1385,27 +1310,23 @@ CREATE TABLE `stockcheckfreeze` (
   `loccode` varchar(5) NOT NULL default '',
   `qoh` double NOT NULL default '0',
   PRIMARY KEY  (`stockid`),
-  KEY `LocCode` (`loccode`),
-  CONSTRAINT `stockcheckfreeze_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`),
-  CONSTRAINT `stockcheckfreeze_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
-) TYPE=InnoDB;
+  KEY `LocCode` (`loccode`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `stockcounts`
 --
 
 CREATE TABLE `stockcounts` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL,
   `stockid` varchar(20) NOT NULL default '',
   `loccode` varchar(5) NOT NULL default '',
   `qtycounted` double NOT NULL default '0',
   `reference` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`id`),
   KEY `StockID` (`stockid`),
-  KEY `LocCode` (`loccode`),
-  CONSTRAINT `stockcounts_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`StockID`),
-  CONSTRAINT `stockcounts_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
-) TYPE=InnoDB;
+  KEY `LocCode` (`loccode`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `stockmaster`
@@ -1443,17 +1364,15 @@ CREATE TABLE `stockmaster` (
   KEY `StockID` (`stockid`,`categoryid`),
   KEY `Controlled` (`controlled`),
   KEY `DiscountCategory` (`discountcategory`),
-  KEY `taxcatid` (`taxcatid`),
-  CONSTRAINT `stockmaster_ibfk_1` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`),
-  CONSTRAINT `stockmaster_ibfk_2` FOREIGN KEY (`taxcatid`) REFERENCES `taxcategories` (`taxcatid`)
-) TYPE=InnoDB;
+  KEY `taxcatid` (`taxcatid`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `stockmoves`
 --
 
 CREATE TABLE `stockmoves` (
-  `stkmoveno` int(11) NOT NULL auto_increment,
+  `stkmoveno` int(11) NOT NULL,
   `stockid` varchar(20) NOT NULL default '',
   `type` smallint(6) NOT NULL default '0',
   `transno` int(11) NOT NULL default '0',
@@ -1481,12 +1400,8 @@ CREATE TABLE `stockmoves` (
   KEY `TransNo` (`transno`),
   KEY `Type` (`type`),
   KEY `Show_On_Inv_Crds` (`show_on_inv_crds`),
-  KEY `Hide` (`hidemovt`),
-  CONSTRAINT `stockmoves_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `stockmoves_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`TypeID`),
-  CONSTRAINT `stockmoves_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
-  CONSTRAINT `stockmoves_ibfk_4` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) TYPE=InnoDB;
+  KEY `Hide` (`hidemovt`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `stockmovestaxes`
@@ -1500,9 +1415,8 @@ CREATE TABLE `stockmovestaxes` (
   `taxcalculationorder` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`stkmoveno`,`taxauthid`),
   KEY `taxauthid` (`taxauthid`),
-  KEY `calculationorder` (`taxcalculationorder`),
-  CONSTRAINT `stockmovestaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`)
-) TYPE=InnoDB;
+  KEY `calculationorder` (`taxcalculationorder`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `stockserialitems`
@@ -1515,34 +1429,30 @@ CREATE TABLE `stockserialitems` (
   `quantity` double NOT NULL default '0',
   PRIMARY KEY  (`stockid`,`serialno`,`loccode`),
   KEY `StockID` (`stockid`),
-  KEY `LocCode` (`loccode`),
-  CONSTRAINT `stockserialitems_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
-  CONSTRAINT `stockserialitems_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
-) TYPE=InnoDB;
+  KEY `LocCode` (`loccode`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `stockserialmoves`
 --
 
 CREATE TABLE `stockserialmoves` (
-  `stkitmmoveno` int(11) NOT NULL auto_increment,
+  `stkitmmoveno` int(11) NOT NULL,
   `stockmoveno` int(11) NOT NULL default '0',
   `stockid` varchar(20) NOT NULL default '',
   `serialno` varchar(30) NOT NULL default '',
   `moveqty` double NOT NULL default '0',
   PRIMARY KEY  (`stkitmmoveno`),
   KEY `StockMoveNo` (`stockmoveno`),
-  KEY `StockID_SN` (`stockid`,`serialno`),
-  CONSTRAINT `stockserialmoves_ibfk_1` FOREIGN KEY (`stockmoveno`) REFERENCES `stockmoves` (`stkmoveno`),
-  CONSTRAINT `stockserialmoves_ibfk_2` FOREIGN KEY (`stockid`, `serialno`) REFERENCES `stockserialitems` (`stockid`, `serialno`)
-) TYPE=InnoDB;
+  KEY `StockID_SN` (`stockid`,`serialno`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `suppallocs`
 --
 
 CREATE TABLE `suppallocs` (
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL,
   `amt` double NOT NULL default '0',
   `datealloc` date NOT NULL default '0000-00-00',
   `transid_allocfrom` int(11) NOT NULL default '0',
@@ -1550,10 +1460,8 @@ CREATE TABLE `suppallocs` (
   PRIMARY KEY  (`id`),
   KEY `TransID_AllocFrom` (`transid_allocfrom`),
   KEY `TransID_AllocTo` (`transid_allocto`),
-  KEY `DateAlloc` (`datealloc`),
-  CONSTRAINT `suppallocs_ibfk_1` FOREIGN KEY (`transid_allocfrom`) REFERENCES `supptrans` (`ID`),
-  CONSTRAINT `suppallocs_ibfk_2` FOREIGN KEY (`transid_allocto`) REFERENCES `supptrans` (`ID`)
-) TYPE=InnoDB;
+  KEY `DateAlloc` (`datealloc`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `suppliercontacts`
@@ -1570,9 +1478,8 @@ CREATE TABLE `suppliercontacts` (
   `ordercontact` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`supplierid`,`contact`),
   KEY `Contact` (`contact`),
-  KEY `SupplierID` (`supplierid`),
-  CONSTRAINT `suppliercontacts_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`SupplierID`)
-) TYPE=InnoDB;
+  KEY `SupplierID` (`supplierid`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `suppliers`
@@ -1602,11 +1509,8 @@ CREATE TABLE `suppliers` (
   KEY `PaymentTerms` (`paymentterms`),
   KEY `SupplierID` (`supplierid`),
   KEY `SuppName` (`suppname`),
-  KEY `taxgroupid` (`taxgroupid`),
-  CONSTRAINT `suppliers_ibfk_1` FOREIGN KEY (`currcode`) REFERENCES `currencies` (`currabrev`),
-  CONSTRAINT `suppliers_ibfk_2` FOREIGN KEY (`paymentterms`) REFERENCES `paymentterms` (`termsindicator`),
-  CONSTRAINT `suppliers_ibfk_3` FOREIGN KEY (`taxgroupid`) REFERENCES `taxgroups` (`taxgroupid`)
-) TYPE=InnoDB;
+  KEY `taxgroupid` (`taxgroupid`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `supptrans`
@@ -1627,7 +1531,7 @@ CREATE TABLE `supptrans` (
   `alloc` double NOT NULL default '0',
   `transtext` longblob,
   `hold` tinyint(4) NOT NULL default '0',
-  `id` int(11) NOT NULL auto_increment,
+  `id` int(11) NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `TypeTransNo` (`transno`,`type`),
   KEY `DueDate` (`duedate`),
@@ -1638,10 +1542,8 @@ CREATE TABLE `supptrans` (
   KEY `SuppReference` (`suppreference`),
   KEY `TranDate` (`trandate`),
   KEY `TransNo` (`transno`),
-  KEY `Type` (`type`),
-  CONSTRAINT `supptrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`TypeID`),
-  CONSTRAINT `supptrans_ibfk_2` FOREIGN KEY (`supplierno`) REFERENCES `suppliers` (`supplierid`)
-) TYPE=InnoDB;
+  KEY `Type` (`type`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `supptranstaxes`
@@ -1652,10 +1554,8 @@ CREATE TABLE `supptranstaxes` (
   `taxauthid` tinyint(4) NOT NULL default '0',
   `taxamount` double NOT NULL default '0',
   PRIMARY KEY  (`supptransid`,`taxauthid`),
-  KEY `taxauthid` (`taxauthid`),
-  CONSTRAINT `supptranstaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`),
-  CONSTRAINT `supptranstaxes_ibfk_2` FOREIGN KEY (`supptransid`) REFERENCES `supptrans` (`id`)
-) TYPE=InnoDB;
+  KEY `taxauthid` (`taxauthid`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `systypes`
@@ -1667,14 +1567,14 @@ CREATE TABLE `systypes` (
   `typeno` int(11) NOT NULL default '1',
   PRIMARY KEY  (`typeid`),
   KEY `TypeNo` (`typeno`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `taxauthorities`
 --
 
 CREATE TABLE `taxauthorities` (
-  `taxid` tinyint(4) NOT NULL auto_increment,
+  `taxid` tinyint(4) NOT NULL,
   `description` varchar(20) NOT NULL default '',
   `taxglcode` int(11) NOT NULL default '0',
   `purchtaxglaccount` int(11) NOT NULL default '0',
@@ -1684,10 +1584,8 @@ CREATE TABLE `taxauthorities` (
   `bankswift` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`taxid`),
   KEY `TaxGLCode` (`taxglcode`),
-  KEY `PurchTaxGLAccount` (`purchtaxglaccount`),
-  CONSTRAINT `taxauthorities_ibfk_1` FOREIGN KEY (`taxglcode`) REFERENCES `chartmaster` (`accountcode`),
-  CONSTRAINT `taxauthorities_ibfk_2` FOREIGN KEY (`purchtaxglaccount`) REFERENCES `chartmaster` (`accountcode`)
-) TYPE=InnoDB;
+  KEY `PurchTaxGLAccount` (`purchtaxglaccount`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `taxauthrates`
@@ -1701,31 +1599,28 @@ CREATE TABLE `taxauthrates` (
   PRIMARY KEY  (`taxauthority`,`dispatchtaxprovince`,`taxcatid`),
   KEY `TaxAuthority` (`taxauthority`),
   KEY `dispatchtaxprovince` (`dispatchtaxprovince`),
-  KEY `taxcatid` (`taxcatid`),
-  CONSTRAINT `taxauthrates_ibfk_1` FOREIGN KEY (`taxauthority`) REFERENCES `taxauthorities` (`taxid`),
-  CONSTRAINT `taxauthrates_ibfk_2` FOREIGN KEY (`taxcatid`) REFERENCES `taxcategories` (`taxcatid`),
-  CONSTRAINT `taxauthrates_ibfk_3` FOREIGN KEY (`dispatchtaxprovince`) REFERENCES `taxprovinces` (`taxprovinceid`)
-) TYPE=InnoDB;
+  KEY `taxcatid` (`taxcatid`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `taxcategories`
 --
 
 CREATE TABLE `taxcategories` (
-  `taxcatid` tinyint(4) NOT NULL auto_increment,
+  `taxcatid` tinyint(4) NOT NULL,
   `taxcatname` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`taxcatid`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `taxgroups`
 --
 
 CREATE TABLE `taxgroups` (
-  `taxgroupid` tinyint(4) NOT NULL auto_increment,
+  `taxgroupid` tinyint(4) NOT NULL,
   `taxgroupdescription` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`taxgroupid`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `taxgrouptaxes`
@@ -1738,30 +1633,28 @@ CREATE TABLE `taxgrouptaxes` (
   `taxontax` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`taxgroupid`,`taxauthid`),
   KEY `taxgroupid` (`taxgroupid`),
-  KEY `taxauthid` (`taxauthid`),
-  CONSTRAINT `taxgrouptaxes_ibfk_1` FOREIGN KEY (`taxgroupid`) REFERENCES `taxgroups` (`taxgroupid`),
-  CONSTRAINT `taxgrouptaxes_ibfk_2` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`)
-) TYPE=InnoDB;
+  KEY `taxauthid` (`taxauthid`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `taxprovinces`
 --
 
 CREATE TABLE `taxprovinces` (
-  `taxprovinceid` tinyint(4) NOT NULL auto_increment,
+  `taxprovinceid` tinyint(4) NOT NULL,
   `taxprovincename` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`taxprovinceid`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `unitsofmeasure`
 --
 
 CREATE TABLE `unitsofmeasure` (
-  `unitid` tinyint(4) NOT NULL auto_increment,
+  `unitid` tinyint(4) NOT NULL,
   `unitname` varchar(15) NOT NULL default '',
   PRIMARY KEY  (`unitid`)
-) TYPE=InnoDB;
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `workcentres`
@@ -1777,9 +1670,8 @@ CREATE TABLE `workcentres` (
   `setuphrs` decimal(10,0) NOT NULL default '0',
   PRIMARY KEY  (`code`),
   KEY `Description` (`description`),
-  KEY `Location` (`location`),
-  CONSTRAINT `workcentres_ibfk_1` FOREIGN KEY (`location`) REFERENCES `locations` (`loccode`)
-) TYPE=InnoDB;
+  KEY `Location` (`location`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `worksorders`
@@ -1803,10 +1695,8 @@ CREATE TABLE `worksorders` (
   KEY `LocCode` (`loccode`),
   KEY `ReleasedDate` (`releaseddate`),
   KEY `RequiredBy` (`requiredby`),
-  KEY `WORef` (`woref`,`loccode`),
-  CONSTRAINT `worksorders_ibfk_1` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
-  CONSTRAINT `worksorders_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
-) TYPE=InnoDB;
+  KEY `WORef` (`woref`,`loccode`)
+) TYPE=MyISAM;
 
 --
 -- Table structure for table `www_users`
@@ -1831,24 +1721,51 @@ CREATE TABLE `www_users` (
   `language` varchar(5) NOT NULL default 'en_GB',
   PRIMARY KEY  (`userid`),
   KEY `CustomerID` (`customerid`),
-  KEY `DefaultLocation` (`defaultlocation`),
-  CONSTRAINT `www_users_ibfk_1` FOREIGN KEY (`defaultlocation`) REFERENCES `locations` (`loccode`)
-) TYPE=InnoDB;
+  KEY `DefaultLocation` (`defaultlocation`)
+) TYPE=MyISAM;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- MySQL dump 10.9
+-- MySQL dump 10.10
 --
 -- Host: localhost    Database: weberp
 -- ------------------------------------------------------
--- Server version	4.1.11-standard
+-- Server version	5.0.20
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO,MYSQL40' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Dumping data for table `cogsglpostings`
+--
+
+INSERT INTO `cogsglpostings` VALUES (3,'AN','ANY',5000,'AN');
+
+--
+-- Dumping data for table `paymentmethods`
+--
+
+INSERT INTO `paymentmethods` VALUES (1,'Cheque',1,1);
+INSERT INTO `paymentmethods` VALUES (2,'Cash',1,1);
+INSERT INTO `paymentmethods` VALUES (3,'Direct Credit',1,1);
+
+--
+-- Dumping data for table `unitsofmeasure`
+--
+
+INSERT INTO `unitsofmeasure` VALUES (1,'each');
+INSERT INTO `unitsofmeasure` VALUES (2,'metres');
+INSERT INTO `unitsofmeasure` VALUES (3,'kgs');
+INSERT INTO `unitsofmeasure` VALUES (4,'litres');
+INSERT INTO `unitsofmeasure` VALUES (5,'length');
+INSERT INTO `unitsofmeasure` VALUES (6,'pack');
 
 --
 -- Dumping data for table `accountgroups`
@@ -1867,183 +1784,60 @@ INSERT INTO `accountgroups` VALUES ('Revenue',1,1,4000);
 INSERT INTO `accountgroups` VALUES ('Sales',1,1,10);
 
 --
--- Dumping data for table `bankaccounts`
+-- Dumping data for table `www_users`
 --
 
-INSERT INTO `bankaccounts` VALUES (1030,'Cheque Account','','');
-INSERT INTO `bankaccounts` VALUES (1040,'Savings Account','','');
+INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_US');
 
 --
--- Dumping data for table `chartmaster`
+-- Dumping data for table `securitygroups`
 --
 
-INSERT INTO `chartmaster` VALUES (1,'Default Sales/Discounts','Sales');
-INSERT INTO `chartmaster` VALUES (1010,'Petty Cash','Current Assets');
-INSERT INTO `chartmaster` VALUES (1020,'Cash on Hand','Current Assets');
-INSERT INTO `chartmaster` VALUES (1030,'Cheque Accounts','Current Assets');
-INSERT INTO `chartmaster` VALUES (1040,'Savings Accounts','Current Assets');
-INSERT INTO `chartmaster` VALUES (1050,'Payroll Accounts','Current Assets');
-INSERT INTO `chartmaster` VALUES (1060,'Special Accounts','Current Assets');
-INSERT INTO `chartmaster` VALUES (1070,'Money Market Investments','Current Assets');
-INSERT INTO `chartmaster` VALUES (1080,'Short-Term Investments (< 90 days)','Current Assets');
-INSERT INTO `chartmaster` VALUES (1090,'Interest Receivable','Current Assets');
-INSERT INTO `chartmaster` VALUES (1100,'Accounts Receivable','Current Assets');
-INSERT INTO `chartmaster` VALUES (1150,'Allowance for Doubtful Accounts','Current Assets');
-INSERT INTO `chartmaster` VALUES (1200,'Notes Receivable','Current Assets');
-INSERT INTO `chartmaster` VALUES (1250,'Income Tax Receivable','Current Assets');
-INSERT INTO `chartmaster` VALUES (1300,'Prepaid Expenses','Current Assets');
-INSERT INTO `chartmaster` VALUES (1350,'Advances','Current Assets');
-INSERT INTO `chartmaster` VALUES (1400,'Supplies Inventory','Current Assets');
-INSERT INTO `chartmaster` VALUES (1420,'Raw Material Inventory','Current Assets');
-INSERT INTO `chartmaster` VALUES (1440,'Work in Progress Inventory','Current Assets');
-INSERT INTO `chartmaster` VALUES (1460,'Finished Goods Inventory','Current Assets');
-INSERT INTO `chartmaster` VALUES (1500,'Land','Fixed Assets');
-INSERT INTO `chartmaster` VALUES (1550,'Bonds','Fixed Assets');
-INSERT INTO `chartmaster` VALUES (1600,'Buildings','Fixed Assets');
-INSERT INTO `chartmaster` VALUES (1620,'Accumulated Depreciation of Buildings','Fixed Assets');
-INSERT INTO `chartmaster` VALUES (1650,'Equipment','Fixed Assets');
-INSERT INTO `chartmaster` VALUES (1670,'Accumulated Depreciation of Equipment','Fixed Assets');
-INSERT INTO `chartmaster` VALUES (1700,'Furniture & Fixtures','Fixed Assets');
-INSERT INTO `chartmaster` VALUES (1710,'Accumulated Depreciation of Furniture & Fixtures','Fixed Assets');
-INSERT INTO `chartmaster` VALUES (1720,'Office Equipment','Fixed Assets');
-INSERT INTO `chartmaster` VALUES (1730,'Accumulated Depreciation of Office Equipment','Fixed Assets');
-INSERT INTO `chartmaster` VALUES (1740,'Software','Fixed Assets');
-INSERT INTO `chartmaster` VALUES (1750,'Accumulated Depreciation of Software','Fixed Assets');
-INSERT INTO `chartmaster` VALUES (1760,'Vehicles','Fixed Assets');
-INSERT INTO `chartmaster` VALUES (1770,'Accumulated Depreciation Vehicles','Fixed Assets');
-INSERT INTO `chartmaster` VALUES (1780,'Other Depreciable Property','Fixed Assets');
-INSERT INTO `chartmaster` VALUES (1790,'Accumulated Depreciation of Other Depreciable Prop','Fixed Assets');
-INSERT INTO `chartmaster` VALUES (1800,'Patents','Fixed Assets');
-INSERT INTO `chartmaster` VALUES (1850,'Goodwill','Fixed Assets');
-INSERT INTO `chartmaster` VALUES (1900,'Future Income Tax Receivable','Current Assets');
-INSERT INTO `chartmaster` VALUES (2010,'Bank Indedebtedness (overdraft)','Liabilities');
-INSERT INTO `chartmaster` VALUES (2020,'Retainers or Advances on Work','Liabilities');
-INSERT INTO `chartmaster` VALUES (2050,'Interest Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2100,'Accounts Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2150,'Goods Received Suspense','Liabilities');
-INSERT INTO `chartmaster` VALUES (2200,'Short-Term Loan Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2230,'Current Portion of Long-Term Debt Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2250,'Income Tax Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2300,'GST Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2310,'GST Recoverable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2320,'PST Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2330,'PST Recoverable (commission)','Liabilities');
-INSERT INTO `chartmaster` VALUES (2340,'Payroll Tax Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2350,'Withholding Income Tax Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2360,'Other Taxes Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2400,'Employee Salaries Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2410,'Management Salaries Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2420,'Director / Partner Fees Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2450,'Health Benefits Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2460,'Pension Benefits Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2470,'Canada Pension Plan Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2480,'Employment Insurance Premiums Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2500,'Land Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2550,'Long-Term Bank Loan','Liabilities');
-INSERT INTO `chartmaster` VALUES (2560,'Notes Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2600,'Building & Equipment Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2700,'Furnishing & Fixture Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2720,'Office Equipment Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2740,'Vehicle Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2760,'Other Property Payable','Liabilities');
-INSERT INTO `chartmaster` VALUES (2800,'Shareholder Loans','Liabilities');
-INSERT INTO `chartmaster` VALUES (2900,'Suspense','Liabilities');
-INSERT INTO `chartmaster` VALUES (3100,'Capital Stock','Equity');
-INSERT INTO `chartmaster` VALUES (3200,'Capital Surplus / Dividends','Equity');
-INSERT INTO `chartmaster` VALUES (3300,'Dividend Taxes Payable','Equity');
-INSERT INTO `chartmaster` VALUES (3400,'Dividend Taxes Refundable','Equity');
-INSERT INTO `chartmaster` VALUES (3500,'Retained Earnings','Equity');
-INSERT INTO `chartmaster` VALUES (4100,'Product / Service Sales','Revenue');
-INSERT INTO `chartmaster` VALUES (4200,'Sales Exchange Gains/Losses','Revenue');
-INSERT INTO `chartmaster` VALUES (4500,'Consulting Services','Revenue');
-INSERT INTO `chartmaster` VALUES (4600,'Rentals','Revenue');
-INSERT INTO `chartmaster` VALUES (4700,'Finance Charge Income','Revenue');
-INSERT INTO `chartmaster` VALUES (4800,'Sales Returns & Allowances','Revenue');
-INSERT INTO `chartmaster` VALUES (4900,'Sales Discounts','Revenue');
-INSERT INTO `chartmaster` VALUES (5000,'Cost of Sales','Cost of Goods Sold');
-INSERT INTO `chartmaster` VALUES (5100,'Production Expenses','Cost of Goods Sold');
-INSERT INTO `chartmaster` VALUES (5200,'Purchases Exchange Gains/Losses','Cost of Goods Sold');
-INSERT INTO `chartmaster` VALUES (5500,'Direct Labour Costs','Cost of Goods Sold');
-INSERT INTO `chartmaster` VALUES (5600,'Freight Charges','Cost of Goods Sold');
-INSERT INTO `chartmaster` VALUES (5700,'Inventory Adjustment','Cost of Goods Sold');
-INSERT INTO `chartmaster` VALUES (5800,'Purchase Returns & Allowances','Cost of Goods Sold');
-INSERT INTO `chartmaster` VALUES (5900,'Purchase Discounts','Cost of Goods Sold');
-INSERT INTO `chartmaster` VALUES (6100,'Advertising','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES (6150,'Promotion','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES (6200,'Communications','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES (6250,'Meeting Expenses','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES (6300,'Travelling Expenses','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES (6400,'Delivery Expenses','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES (6500,'Sales Salaries & Commission','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES (6550,'Sales Salaries & Commission Deductions','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES (6590,'Benefits','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES (6600,'Other Selling Expenses','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES (6700,'Permits, Licenses & License Fees','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES (6800,'Research & Development','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES (6900,'Professional Services','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES (7020,'Support Salaries & Wages','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7030,'Support Salary & Wage Deductions','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7040,'Management Salaries','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7050,'Management Salary deductions','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7060,'Director / Partner Fees','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7070,'Director / Partner Deductions','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7080,'Payroll Tax','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7090,'Benefits','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7100,'Training & Education Expenses','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7150,'Dues & Subscriptions','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7200,'Accounting Fees','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7210,'Audit Fees','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7220,'Banking Fees','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7230,'Credit Card Fees','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7240,'Consulting Fees','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7260,'Legal Fees','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7280,'Other Professional Fees','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7300,'Business Tax','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7350,'Property Tax','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7390,'Corporation Capital Tax','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7400,'Office Rent','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7450,'Equipment Rental','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7500,'Office Supplies','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7550,'Office Repair & Maintenance','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7600,'Automotive Expenses','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7610,'Communication Expenses','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7620,'Insurance Expenses','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7630,'Postage & Courier Expenses','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7640,'Miscellaneous Expenses','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7650,'Travel Expenses','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7660,'Utilities','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7700,'Ammortization Expenses','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7750,'Depreciation Expenses','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7800,'Interest Expense','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (7900,'Bad Debt Expense','Operating Expenses');
-INSERT INTO `chartmaster` VALUES (8100,'Gain on Sale of Assets','Other Revenue and Expenses');
-INSERT INTO `chartmaster` VALUES (8200,'Interest Income','Other Revenue and Expenses');
-INSERT INTO `chartmaster` VALUES (8300,'Recovery on Bad Debt','Other Revenue and Expenses');
-INSERT INTO `chartmaster` VALUES (8400,'Other Revenue','Other Revenue and Expenses');
-INSERT INTO `chartmaster` VALUES (8500,'Loss on Sale of Assets','Other Revenue and Expenses');
-INSERT INTO `chartmaster` VALUES (8600,'Charitable Contributions','Other Revenue and Expenses');
-INSERT INTO `chartmaster` VALUES (8900,'Other Expenses','Other Revenue and Expenses');
-INSERT INTO `chartmaster` VALUES (9100,'Income Tax Provision','Income Tax');
-
---
--- Dumping data for table `companies`
---
-
-INSERT INTO `companies` VALUES (1,'Demo System','not entered yet','','PO Box 1000','The White House','Washnington DC','USA','','','','','info@weberp.org','USD',1100,4900,2100,2400,2150,4200,5200,3500,1,1,1,5600);
-
---
--- Dumping data for table `cogsglpostings`
---
-
-INSERT INTO `cogsglpostings` VALUES (3,'AN','ANY',5000,'AN');
-
---
--- Dumping data for table `currencies`
---
-
-INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',1.7);
-INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',0.8);
-INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',1);
+INSERT INTO `securitygroups` VALUES (1,1);
+INSERT INTO `securitygroups` VALUES (1,2);
+INSERT INTO `securitygroups` VALUES (2,1);
+INSERT INTO `securitygroups` VALUES (2,2);
+INSERT INTO `securitygroups` VALUES (2,11);
+INSERT INTO `securitygroups` VALUES (3,1);
+INSERT INTO `securitygroups` VALUES (3,2);
+INSERT INTO `securitygroups` VALUES (3,3);
+INSERT INTO `securitygroups` VALUES (3,4);
+INSERT INTO `securitygroups` VALUES (3,5);
+INSERT INTO `securitygroups` VALUES (3,11);
+INSERT INTO `securitygroups` VALUES (4,1);
+INSERT INTO `securitygroups` VALUES (4,2);
+INSERT INTO `securitygroups` VALUES (4,5);
+INSERT INTO `securitygroups` VALUES (5,1);
+INSERT INTO `securitygroups` VALUES (5,2);
+INSERT INTO `securitygroups` VALUES (5,3);
+INSERT INTO `securitygroups` VALUES (5,11);
+INSERT INTO `securitygroups` VALUES (6,1);
+INSERT INTO `securitygroups` VALUES (6,2);
+INSERT INTO `securitygroups` VALUES (6,3);
+INSERT INTO `securitygroups` VALUES (6,4);
+INSERT INTO `securitygroups` VALUES (6,5);
+INSERT INTO `securitygroups` VALUES (6,6);
+INSERT INTO `securitygroups` VALUES (6,7);
+INSERT INTO `securitygroups` VALUES (6,8);
+INSERT INTO `securitygroups` VALUES (6,9);
+INSERT INTO `securitygroups` VALUES (6,10);
+INSERT INTO `securitygroups` VALUES (6,11);
+INSERT INTO `securitygroups` VALUES (7,1);
+INSERT INTO `securitygroups` VALUES (8,1);
+INSERT INTO `securitygroups` VALUES (8,2);
+INSERT INTO `securitygroups` VALUES (8,3);
+INSERT INTO `securitygroups` VALUES (8,4);
+INSERT INTO `securitygroups` VALUES (8,5);
+INSERT INTO `securitygroups` VALUES (8,6);
+INSERT INTO `securitygroups` VALUES (8,7);
+INSERT INTO `securitygroups` VALUES (8,8);
+INSERT INTO `securitygroups` VALUES (8,9);
+INSERT INTO `securitygroups` VALUES (8,10);
+INSERT INTO `securitygroups` VALUES (8,11);
+INSERT INTO `securitygroups` VALUES (8,12);
+INSERT INTO `securitygroups` VALUES (8,13);
+INSERT INTO `securitygroups` VALUES (8,14);
+INSERT INTO `securitygroups` VALUES (8,15);
 
 --
 -- Dumping data for table `holdreasons`
@@ -2054,27 +1848,44 @@ INSERT INTO `holdreasons` VALUES (20,'Watch',0);
 INSERT INTO `holdreasons` VALUES (51,'In liquidation',1);
 
 --
--- Dumping data for table `locations`
+-- Dumping data for table `taxprovinces`
 --
 
-INSERT INTO `locations` VALUES ('DEN','Denver','532-536 Wentworth Street','Denver','Colorado','','','','233 5532 216','233 5532 215','g.bovert@weberp.com','Graham Bouvert',1,0);
-INSERT INTO `locations` VALUES ('TOR','Toronto Distribution Centre','','','','','','','','','','Clive Contrary',1,1);
+INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 
 --
--- Dumping data for table `paymentterms`
+-- Dumping data for table `accountsection`
 --
 
-INSERT INTO `paymentterms` VALUES ('20','Due 20th Of the Following Month',0,22);
-INSERT INTO `paymentterms` VALUES ('30','Due By End Of The Following Month',0,30);
-INSERT INTO `paymentterms` VALUES ('7','Payment due within 7 days',7,0);
-INSERT INTO `paymentterms` VALUES ('CA','Cash Only',1,0);
+INSERT INTO `accountsection` VALUES (1,'Income');
+INSERT INTO `accountsection` VALUES (2,'Cost Of Sales');
+INSERT INTO `accountsection` VALUES (5,'Overheads');
+INSERT INTO `accountsection` VALUES (10,'Fixed Assets');
+INSERT INTO `accountsection` VALUES (20,'Amounts Receivable');
+INSERT INTO `accountsection` VALUES (30,'Amounts Payable');
+INSERT INTO `accountsection` VALUES (50,'Financed By');
 
 --
--- Dumping data for table `salesglpostings`
+-- Dumping data for table `taxcategories`
 --
 
-INSERT INTO `salesglpostings` VALUES (1,'AN','ANY',4900,4100,'AN');
-INSERT INTO `salesglpostings` VALUES (2,'AN','AIRCON',5000,4800,'DE');
+INSERT INTO `taxcategories` VALUES (1,'Taxable supply');
+INSERT INTO `taxcategories` VALUES (2,'Luxury Items');
+INSERT INTO `taxcategories` VALUES (4,'Exempt');
+INSERT INTO `taxcategories` VALUES (5,'Freight');
+
+--
+-- Dumping data for table `securityroles`
+--
+
+INSERT INTO `securityroles` VALUES (1,'Inquiries/Order Entry');
+INSERT INTO `securityroles` VALUES (2,'Manufac/Stock Admin');
+INSERT INTO `securityroles` VALUES (3,'Purchasing Officer');
+INSERT INTO `securityroles` VALUES (4,'AP Clerk');
+INSERT INTO `securityroles` VALUES (5,'AR Clerk');
+INSERT INTO `securityroles` VALUES (6,'Accountant');
+INSERT INTO `securityroles` VALUES (7,'Customer Log On Only');
+INSERT INTO `securityroles` VALUES (8,'System Administrator');
 
 --
 -- Dumping data for table `systypes`
@@ -2095,7 +1906,7 @@ INSERT INTO `systypes` VALUES (20,'Purchase Invoice',11);
 INSERT INTO `systypes` VALUES (21,'Debit Note',3);
 INSERT INTO `systypes` VALUES (22,'Creditors Payment',0);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
-INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',8);
+INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',9);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',0);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',0);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',0);
@@ -2104,59 +1915,6 @@ INSERT INTO `systypes` VALUES (31,'Shipment Close',26);
 INSERT INTO `systypes` VALUES (35,'Cost Update',2);
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
 INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',0);
-
---
--- Dumping data for table `taxauthorities`
---
-
-INSERT INTO `taxauthorities` VALUES (1,'Australian GST',2300,2310,'','','','');
-INSERT INTO `taxauthorities` VALUES (5,'Sales Tax',2300,2310,'','','','');
-INSERT INTO `taxauthorities` VALUES (11,'Canadian GST',2300,2310,'','','','');
-INSERT INTO `taxauthorities` VALUES (12,'Ontario PST',2300,2310,'','','','');
-INSERT INTO `taxauthorities` VALUES (13,'UK VAT',2300,2310,'','','','');
-
---
--- Dumping data for table `taxgroups`
---
-
-INSERT INTO `taxgroups` VALUES (1,'Default tax group');
-INSERT INTO `taxgroups` VALUES (2,'Ontario');
-INSERT INTO `taxgroups` VALUES (3,'UK Inland Revenue');
-
---
--- Dumping data for table `taxauthrates`
---
-
-INSERT INTO `taxauthrates` VALUES (1,1,1,0.1);
-INSERT INTO `taxauthrates` VALUES (1,1,2,0);
-INSERT INTO `taxauthrates` VALUES (5,1,1,0.2);
-INSERT INTO `taxauthrates` VALUES (5,1,2,0.35);
-INSERT INTO `taxauthrates` VALUES (11,1,1,0.07);
-INSERT INTO `taxauthrates` VALUES (11,1,2,0.12);
-INSERT INTO `taxauthrates` VALUES (12,1,1,0.05);
-INSERT INTO `taxauthrates` VALUES (12,1,2,0.075);
-INSERT INTO `taxauthrates` VALUES (13,1,1,0);
-INSERT INTO `taxauthrates` VALUES (13,1,2,0);
-
---
--- Dumping data for table `taxcategories`
---
-
-INSERT INTO `taxcategories` VALUES (1,'Taxable supply');
-INSERT INTO `taxcategories` VALUES (2,'Luxury Items');
-INSERT INTO `taxcategories` VALUES (4,'Exempt');
-
---
--- Dumping data for table `taxprovinces`
---
-
-INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
-
---
--- Dumping data for table `www_users`
---
-
-INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
 
 --
 -- Dumping data for table `edi_orders_segs`
@@ -2259,6 +2017,214 @@ INSERT INTO `edi_orders_segs` VALUES (94,'CNT',50,1);
 INSERT INTO `edi_orders_segs` VALUES (95,'UNT',50,1);
 
 --
+-- Dumping data for table `currencies`
+--
+
+INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',1.7);
+INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',0.8);
+INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',1);
+
+--
+-- Dumping data for table `bankaccounts`
+--
+
+INSERT INTO `bankaccounts` VALUES (1030,'Cheque Account','','');
+INSERT INTO `bankaccounts` VALUES (1040,'Savings Account','','');
+
+--
+-- Dumping data for table `chartmaster`
+--
+
+INSERT INTO `chartmaster` VALUES (1,'Default Sales/Discounts','Sales');
+INSERT INTO `chartmaster` VALUES (1010,'Petty Cash','Current Assets');
+INSERT INTO `chartmaster` VALUES (1020,'Cash on Hand','Current Assets');
+INSERT INTO `chartmaster` VALUES (1030,'Cheque Accounts','Current Assets');
+INSERT INTO `chartmaster` VALUES (1040,'Savings Accounts','Current Assets');
+INSERT INTO `chartmaster` VALUES (1050,'Payroll Accounts','Current Assets');
+INSERT INTO `chartmaster` VALUES (1060,'Special Accounts','Current Assets');
+INSERT INTO `chartmaster` VALUES (1070,'Money Market Investments','Current Assets');
+INSERT INTO `chartmaster` VALUES (1080,'Short-Term Investments (< 90 days)','Current Assets');
+INSERT INTO `chartmaster` VALUES (1090,'Interest Receivable','Current Assets');
+INSERT INTO `chartmaster` VALUES (1100,'Accounts Receivable','Current Assets');
+INSERT INTO `chartmaster` VALUES (1150,'Allowance for Doubtful Accounts','Current Assets');
+INSERT INTO `chartmaster` VALUES (1200,'Notes Receivable','Current Assets');
+INSERT INTO `chartmaster` VALUES (1250,'Income Tax Receivable','Current Assets');
+INSERT INTO `chartmaster` VALUES (1300,'Prepaid Expenses','Current Assets');
+INSERT INTO `chartmaster` VALUES (1350,'Advances','Current Assets');
+INSERT INTO `chartmaster` VALUES (1400,'Supplies Inventory','Current Assets');
+INSERT INTO `chartmaster` VALUES (1420,'Raw Material Inventory','Current Assets');
+INSERT INTO `chartmaster` VALUES (1440,'Work in Progress Inventory','Current Assets');
+INSERT INTO `chartmaster` VALUES (1460,'Finished Goods Inventory','Current Assets');
+INSERT INTO `chartmaster` VALUES (1500,'Land','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1550,'Bonds','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1600,'Buildings','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1620,'Accumulated Depreciation of Buildings','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1650,'Equipment','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1670,'Accumulated Depreciation of Equipment','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1700,'Furniture & Fixtures','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1710,'Accumulated Depreciation of Furniture & Fixtures','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1720,'Office Equipment','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1730,'Accumulated Depreciation of Office Equipment','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1740,'Software','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1750,'Accumulated Depreciation of Software','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1760,'Vehicles','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1770,'Accumulated Depreciation Vehicles','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1780,'Other Depreciable Property','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1790,'Accumulated Depreciation of Other Depreciable Prop','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1800,'Patents','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1850,'Goodwill','Fixed Assets');
+INSERT INTO `chartmaster` VALUES (1900,'Future Income Tax Receivable','Current Assets');
+INSERT INTO `chartmaster` VALUES (2010,'Bank Indedebtedness (overdraft)','Liabilities');
+INSERT INTO `chartmaster` VALUES (2020,'Retainers or Advances on Work','Liabilities');
+INSERT INTO `chartmaster` VALUES (2050,'Interest Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2100,'Accounts Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2150,'Goods Received Suspense','Liabilities');
+INSERT INTO `chartmaster` VALUES (2200,'Short-Term Loan Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2230,'Current Portion of Long-Term Debt Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2300,'GST Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2310,'GST Recoverable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2320,'PST Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2330,'PST Recoverable (commission)','Liabilities');
+INSERT INTO `chartmaster` VALUES (2340,'Payroll Tax Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2350,'Withholding Income Tax Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2360,'Other Taxes Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2400,'Employee Salaries Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2410,'Management Salaries Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2420,'Director / Partner Fees Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2450,'Health Benefits Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2460,'Pension Benefits Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2470,'Canada Pension Plan Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2480,'Employment Insurance Premiums Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2500,'Land Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2550,'Long-Term Bank Loan','Liabilities');
+INSERT INTO `chartmaster` VALUES (2560,'Notes Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2600,'Building & Equipment Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2700,'Furnishing & Fixture Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2720,'Office Equipment Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2740,'Vehicle Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2760,'Other Property Payable','Liabilities');
+INSERT INTO `chartmaster` VALUES (2800,'Shareholder Loans','Liabilities');
+INSERT INTO `chartmaster` VALUES (2900,'Suspense','Liabilities');
+INSERT INTO `chartmaster` VALUES (3100,'Capital Stock','Equity');
+INSERT INTO `chartmaster` VALUES (3200,'Capital Surplus / Dividends','Equity');
+INSERT INTO `chartmaster` VALUES (3300,'Dividend Taxes Payable','Equity');
+INSERT INTO `chartmaster` VALUES (3400,'Dividend Taxes Refundable','Equity');
+INSERT INTO `chartmaster` VALUES (3500,'Retained Earnings','Equity');
+INSERT INTO `chartmaster` VALUES (4100,'Product / Service Sales','Revenue');
+INSERT INTO `chartmaster` VALUES (4200,'Sales Exchange Gains/Losses','Revenue');
+INSERT INTO `chartmaster` VALUES (4500,'Consulting Services','Revenue');
+INSERT INTO `chartmaster` VALUES (4600,'Rentals','Revenue');
+INSERT INTO `chartmaster` VALUES (4700,'Finance Charge Income','Revenue');
+INSERT INTO `chartmaster` VALUES (4800,'Sales Returns & Allowances','Revenue');
+INSERT INTO `chartmaster` VALUES (4900,'Sales Discounts','Revenue');
+INSERT INTO `chartmaster` VALUES (5000,'Cost of Sales','Cost of Goods Sold');
+INSERT INTO `chartmaster` VALUES (5100,'Production Expenses','Cost of Goods Sold');
+INSERT INTO `chartmaster` VALUES (5200,'Purchases Exchange Gains/Losses','Cost of Goods Sold');
+INSERT INTO `chartmaster` VALUES (5500,'Direct Labour Costs','Cost of Goods Sold');
+INSERT INTO `chartmaster` VALUES (5600,'Freight Charges','Cost of Goods Sold');
+INSERT INTO `chartmaster` VALUES (5700,'Inventory Adjustment','Cost of Goods Sold');
+INSERT INTO `chartmaster` VALUES (5800,'Purchase Returns & Allowances','Cost of Goods Sold');
+INSERT INTO `chartmaster` VALUES (5900,'Purchase Discounts','Cost of Goods Sold');
+INSERT INTO `chartmaster` VALUES (6100,'Advertising','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6150,'Promotion','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6200,'Communications','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6250,'Meeting Expenses','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6300,'Travelling Expenses','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6400,'Delivery Expenses','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6500,'Sales Salaries & Commission','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6550,'Sales Salaries & Commission Deductions','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6590,'Benefits','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6600,'Other Selling Expenses','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6700,'Permits, Licenses & License Fees','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6800,'Research & Development','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6900,'Professional Services','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (7020,'Support Salaries & Wages','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7030,'Support Salary & Wage Deductions','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7040,'Management Salaries','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7050,'Management Salary deductions','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7060,'Director / Partner Fees','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7070,'Director / Partner Deductions','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7080,'Payroll Tax','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7090,'Benefits','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7100,'Training & Education Expenses','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7150,'Dues & Subscriptions','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7200,'Accounting Fees','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7210,'Audit Fees','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7220,'Banking Fees','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7230,'Credit Card Fees','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7240,'Consulting Fees','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7260,'Legal Fees','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7280,'Other Professional Fees','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7350,'Property Tax','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7390,'Corporation Capital Tax','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7400,'Office Rent','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7450,'Equipment Rental','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7500,'Office Supplies','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7550,'Office Repair & Maintenance','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7600,'Automotive Expenses','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7610,'Communication Expenses','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7620,'Insurance Expenses','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7630,'Postage & Courier Expenses','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7640,'Miscellaneous Expenses','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7650,'Travel Expenses','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7660,'Utilities','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7700,'Ammortization Expenses','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7750,'Depreciation Expenses','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7800,'Interest Expense','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (7900,'Bad Debt Expense','Operating Expenses');
+INSERT INTO `chartmaster` VALUES (8100,'Gain on Sale of Assets','Other Revenue and Expenses');
+INSERT INTO `chartmaster` VALUES (8200,'Interest Income','Other Revenue and Expenses');
+INSERT INTO `chartmaster` VALUES (8300,'Recovery on Bad Debt','Other Revenue and Expenses');
+INSERT INTO `chartmaster` VALUES (8400,'Other Revenue','Other Revenue and Expenses');
+INSERT INTO `chartmaster` VALUES (8500,'Loss on Sale of Assets','Other Revenue and Expenses');
+INSERT INTO `chartmaster` VALUES (8600,'Charitable Contributions','Other Revenue and Expenses');
+INSERT INTO `chartmaster` VALUES (8900,'Other Expenses','Other Revenue and Expenses');
+INSERT INTO `chartmaster` VALUES (9100,'Income Tax Provision','Income Tax');
+
+--
+-- Dumping data for table `locations`
+--
+
+INSERT INTO `locations` VALUES ('DEN','Denver','532-536 Wentworth Street','Denver','Colorado','','','','233 5532 216','233 5532 215','g.bovert@weberp.com','Graham Bouvert',1,0);
+INSERT INTO `locations` VALUES ('TOR','Toronto Distribution Centre','','','','','','','','','','Clive Contrary',1,1);
+
+--
+-- Dumping data for table `securitytokens`
+--
+
+INSERT INTO `securitytokens` VALUES (1,'Order Entry/Inquiries customer access only');
+INSERT INTO `securitytokens` VALUES (2,'Basic Reports and Inquiries with selection options');
+INSERT INTO `securitytokens` VALUES (3,'Credit notes and AR management');
+INSERT INTO `securitytokens` VALUES (4,'Purchasing data/PO Entry/Reorder Levels');
+INSERT INTO `securitytokens` VALUES (5,'Accounts Payable');
+INSERT INTO `securitytokens` VALUES (6,'Not Used');
+INSERT INTO `securitytokens` VALUES (7,'Bank Reconciliations');
+INSERT INTO `securitytokens` VALUES (8,'General ledger reports/inquiries');
+INSERT INTO `securitytokens` VALUES (9,'Not Used');
+INSERT INTO `securitytokens` VALUES (10,'General Ledger Maintenance, stock valuation & Configuration');
+INSERT INTO `securitytokens` VALUES (11,'Inventory Management and Pricing');
+INSERT INTO `securitytokens` VALUES (12,'Unknown');
+INSERT INTO `securitytokens` VALUES (13,'Unknown');
+INSERT INTO `securitytokens` VALUES (14,'Unknown');
+INSERT INTO `securitytokens` VALUES (15,'User Management and System Administration');
+
+--
+-- Dumping data for table `salesglpostings`
+--
+
+INSERT INTO `salesglpostings` VALUES (1,'AN','ANY',4900,4100,'AN');
+INSERT INTO `salesglpostings` VALUES (2,'AN','AIRCON',5000,4800,'DE');
+
+--
+-- Dumping data for table `paymentterms`
+--
+
+INSERT INTO `paymentterms` VALUES ('20','Due 20th Of the Following Month',0,22);
+INSERT INTO `paymentterms` VALUES ('30','Due By End Of The Following Month',0,30);
+INSERT INTO `paymentterms` VALUES ('7','Payment due within 7 days',7,0);
+INSERT INTO `paymentterms` VALUES ('CA','Cash Only',1,0);
+
+--
 -- Dumping data for table `edi_orders_seg_groups`
 --
 
@@ -2313,7 +2279,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2006-02-07');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2006-06-27');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
@@ -2359,120 +2325,52 @@ INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','Tax Ref');
 INSERT INTO `config` VALUES ('WikiApp','WackoWiki');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
 INSERT INTO `config` VALUES ('YearEnd','3');
+INSERT INTO `config` VALUES ('InvoicePortraitFormat','2');
 
 --
--- Dumping data for table `unitsofmeasure`
+-- Dumping data for table `companies`
 --
 
-INSERT INTO `unitsofmeasure` VALUES (1,'each');
-INSERT INTO `unitsofmeasure` VALUES (2,'metres');
-INSERT INTO `unitsofmeasure` VALUES (3,'kgs');
-INSERT INTO `unitsofmeasure` VALUES (4,'litres');
-INSERT INTO `unitsofmeasure` VALUES (5,'length');
-INSERT INTO `unitsofmeasure` VALUES (6,'pack');
+INSERT INTO `companies` VALUES (1,'Demo System','not entered yet','','PO Box 1000','The White House','Washnington DC','USA','','','','','info@weberp.org','USD',1100,4900,2100,2400,2150,4200,5200,3500,1,1,1,5600);
 
 --
--- Dumping data for table `paymentmethods`
+-- Dumping data for table `taxauthrates`
 --
 
-INSERT INTO `paymentmethods` VALUES (1,'Cheque',1,1);
-INSERT INTO `paymentmethods` VALUES (2,'Cash',1,1);
-INSERT INTO `paymentmethods` VALUES (3,'Direct Credit',1,1);
+INSERT INTO `taxauthrates` VALUES (1,1,1,0.1);
+INSERT INTO `taxauthrates` VALUES (1,1,2,0);
+INSERT INTO `taxauthrates` VALUES (5,1,1,0.2);
+INSERT INTO `taxauthrates` VALUES (5,1,2,0.35);
+INSERT INTO `taxauthrates` VALUES (11,1,1,0.07);
+INSERT INTO `taxauthrates` VALUES (11,1,2,0.12);
+INSERT INTO `taxauthrates` VALUES (12,1,1,0.05);
+INSERT INTO `taxauthrates` VALUES (12,1,2,0.075);
+INSERT INTO `taxauthrates` VALUES (13,1,1,0);
+INSERT INTO `taxauthrates` VALUES (13,1,2,0);
+INSERT INTO `taxauthrates` VALUES (1,1,5,0);
+INSERT INTO `taxauthrates` VALUES (5,1,5,0);
+INSERT INTO `taxauthrates` VALUES (11,1,5,0);
+INSERT INTO `taxauthrates` VALUES (12,1,5,0);
+INSERT INTO `taxauthrates` VALUES (13,1,5,0);
 
 --
--- Dumping data for table `securitygroups`
+-- Dumping data for table `taxgroups`
 --
 
-INSERT INTO `securitygroups` VALUES (1,1);
-INSERT INTO `securitygroups` VALUES (1,2);
-INSERT INTO `securitygroups` VALUES (2,1);
-INSERT INTO `securitygroups` VALUES (2,2);
-INSERT INTO `securitygroups` VALUES (2,11);
-INSERT INTO `securitygroups` VALUES (3,1);
-INSERT INTO `securitygroups` VALUES (3,2);
-INSERT INTO `securitygroups` VALUES (3,3);
-INSERT INTO `securitygroups` VALUES (3,4);
-INSERT INTO `securitygroups` VALUES (3,5);
-INSERT INTO `securitygroups` VALUES (3,11);
-INSERT INTO `securitygroups` VALUES (4,1);
-INSERT INTO `securitygroups` VALUES (4,2);
-INSERT INTO `securitygroups` VALUES (4,5);
-INSERT INTO `securitygroups` VALUES (5,1);
-INSERT INTO `securitygroups` VALUES (5,2);
-INSERT INTO `securitygroups` VALUES (5,3);
-INSERT INTO `securitygroups` VALUES (5,11);
-INSERT INTO `securitygroups` VALUES (6,1);
-INSERT INTO `securitygroups` VALUES (6,2);
-INSERT INTO `securitygroups` VALUES (6,3);
-INSERT INTO `securitygroups` VALUES (6,4);
-INSERT INTO `securitygroups` VALUES (6,5);
-INSERT INTO `securitygroups` VALUES (6,6);
-INSERT INTO `securitygroups` VALUES (6,7);
-INSERT INTO `securitygroups` VALUES (6,8);
-INSERT INTO `securitygroups` VALUES (6,9);
-INSERT INTO `securitygroups` VALUES (6,10);
-INSERT INTO `securitygroups` VALUES (6,11);
-INSERT INTO `securitygroups` VALUES (7,1);
-INSERT INTO `securitygroups` VALUES (8,1);
-INSERT INTO `securitygroups` VALUES (8,2);
-INSERT INTO `securitygroups` VALUES (8,3);
-INSERT INTO `securitygroups` VALUES (8,4);
-INSERT INTO `securitygroups` VALUES (8,5);
-INSERT INTO `securitygroups` VALUES (8,6);
-INSERT INTO `securitygroups` VALUES (8,7);
-INSERT INTO `securitygroups` VALUES (8,8);
-INSERT INTO `securitygroups` VALUES (8,9);
-INSERT INTO `securitygroups` VALUES (8,10);
-INSERT INTO `securitygroups` VALUES (8,11);
-INSERT INTO `securitygroups` VALUES (8,12);
-INSERT INTO `securitygroups` VALUES (8,13);
-INSERT INTO `securitygroups` VALUES (8,14);
-INSERT INTO `securitygroups` VALUES (8,15);
+INSERT INTO `taxgroups` VALUES (1,'Default tax group');
+INSERT INTO `taxgroups` VALUES (2,'Ontario');
+INSERT INTO `taxgroups` VALUES (3,'UK Inland Revenue');
 
 --
--- Dumping data for table `securitytokens`
+-- Dumping data for table `taxauthorities`
 --
 
-INSERT INTO `securitytokens` VALUES (1,'Order Entry/Inquiries customer access only');
-INSERT INTO `securitytokens` VALUES (2,'Basic Reports and Inquiries with selection options');
-INSERT INTO `securitytokens` VALUES (3,'Credit notes and AR management');
-INSERT INTO `securitytokens` VALUES (4,'Purchasing data/PO Entry/Reorder Levels');
-INSERT INTO `securitytokens` VALUES (5,'Accounts Payable');
-INSERT INTO `securitytokens` VALUES (6,'Not Used');
-INSERT INTO `securitytokens` VALUES (7,'Bank Reconciliations');
-INSERT INTO `securitytokens` VALUES (8,'General ledger reports/inquiries');
-INSERT INTO `securitytokens` VALUES (9,'Not Used');
-INSERT INTO `securitytokens` VALUES (10,'General Ledger Maintenance, stock valuation & Configuration');
-INSERT INTO `securitytokens` VALUES (11,'Inventory Management and Pricing');
-INSERT INTO `securitytokens` VALUES (12,'Unknown');
-INSERT INTO `securitytokens` VALUES (13,'Unknown');
-INSERT INTO `securitytokens` VALUES (14,'Unknown');
-INSERT INTO `securitytokens` VALUES (15,'User Management and System Administration');
-
---
--- Dumping data for table `securityroles`
---
-
-INSERT INTO `securityroles` VALUES (1,'Inquiries/Order Entry');
-INSERT INTO `securityroles` VALUES (2,'Manufac/Stock Admin');
-INSERT INTO `securityroles` VALUES (3,'Purchasing Officer');
-INSERT INTO `securityroles` VALUES (4,'AP Clerk');
-INSERT INTO `securityroles` VALUES (5,'AR Clerk');
-INSERT INTO `securityroles` VALUES (6,'Accountant');
-INSERT INTO `securityroles` VALUES (7,'Customer Log On Only');
-INSERT INTO `securityroles` VALUES (8,'System Administrator');
-
---
--- Dumping data for table `accountsection`
---
-
-INSERT INTO `accountsection` VALUES (1,'Income');
-INSERT INTO `accountsection` VALUES (2,'Cost Of Sales');
-INSERT INTO `accountsection` VALUES (5,'Overheads');
-INSERT INTO `accountsection` VALUES (10,'Fixed Assets');
-INSERT INTO `accountsection` VALUES (20,'Amounts Receivable');
-INSERT INTO `accountsection` VALUES (30,'Amounts Payable');
-INSERT INTO `accountsection` VALUES (50,'Financed By');
+INSERT INTO `taxauthorities` VALUES (1,'Australian GST',2300,2310,'','','','');
+INSERT INTO `taxauthorities` VALUES (5,'Sales Tax',2300,2310,'','','','');
+INSERT INTO `taxauthorities` VALUES (11,'Canadian GST',2300,2310,'','','','');
+INSERT INTO `taxauthorities` VALUES (12,'Ontario PST',2300,2310,'','','','');
+INSERT INTO `taxauthorities` VALUES (13,'UK VAT',2300,2310,'','','','');
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

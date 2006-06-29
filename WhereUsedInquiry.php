@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 2;
 
@@ -13,6 +13,8 @@ if (isset($_GET['StockID'])){
 } elseif (isset($_POST['StockID'])){
 	$StockID = trim(strtoupper($_POST['StockID']));
 }
+
+echo "<A HREF='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</A><BR>';
 
 if (isset($StockID)){
 	$result = DB_query("SELECT description, 

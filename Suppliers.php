@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 5;
 
@@ -301,7 +301,7 @@ if (isset($_GET['SupplierID'])){
 	unset($SupplierID);
 }
 
-
+echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</A><BR>';
 
 if (isset($_POST['submit'])) {
 

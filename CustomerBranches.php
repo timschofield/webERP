@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 3;
 
@@ -27,7 +27,7 @@ if (isset($_GET['SelectedBranch'])){
 	$SelectedBranch = strtoupper($_POST['SelectedBranch']);
 }
 
-echo "<a href='" . $rootpath . '/SelectCustomer.php?' . SID . "'>" . _('Back to Customers') . '</a>';
+echo "<A HREF='" . $rootpath . '/SelectCustomer.php?' . SID . "'>" . _('Back to Customers') . '</A><BR>';
 
 if (isset($_POST['submit'])) {
 

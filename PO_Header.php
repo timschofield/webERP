@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 4;
 include('includes/DefinePOClass.php');
@@ -57,7 +57,7 @@ If (isset($_POST['EnterLines'])){
 	prnMsg(_('You should automatically be forwarded to the entry of the purchase order line items page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . "<a href='$rootpath/PO_Items.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue'),'info');
 }
 
-echo '<A HREF="'. $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . '">'. _('Back to Purchase Orders'). '</A>';
+echo '<A HREF="'. $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . '">'. _('Back to Purchase Orders'). '</A><BR>';
 
 /*The page can be called with ModifyOrderNumber=x where x is a purchase order number
 The page then looks up the details of order x and allows these details to be modified */
