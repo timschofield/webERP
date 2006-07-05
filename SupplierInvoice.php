@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -418,7 +418,39 @@ if (!isset($_POST['PostInvoice'])){
 /*First do input reasonableness checks
 then do the updates and inserts to process the invoice entered */
 
+	foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
+		
+	
+		/*Set the tax rate to what was entered */
+		if (isset($_POST['TaxRate'  . $Tax->TaxCalculationOrder])){
+			$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate = $_POST['TaxRate'  . $Tax->TaxCalculationOrder]/100;
+		}
+		
+
+		if ($_POST['OverRideTax']=='Auto' OR !isset($_POST['OverRideTax'])){
+		
+			/*Now recaluclate the tax depending on the method */
+			if ($Tax->TaxOnTax ==1){
+				
+				$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * ($_SESSION['SuppTrans']->OvAmount + $TaxTotal);
+			
+			} else { /*Calculate tax without the tax on tax */
+				
+				$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxRate * $_SESSION['SuppTrans']->OvAmount;
+			
+			}
+			
+
+		} else { /*Tax being entered manually accept the taxamount entered as is*/
+
+			$_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount = $_POST['TaxAmount'  . $Tax->TaxCalculationOrder];
+
+		}
+		
+	}
+
 /*Need to recalc the taxtotal */
+
 	$TaxTotal=0;
 	foreach ($_SESSION['SuppTrans']->Taxes as $Tax){
 		$TaxTotal +=  $Tax->TaxOvAmount;

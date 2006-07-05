@@ -34,6 +34,9 @@ if (function_exists('gettext')){
   //putenv('LANG=$Language_Country');
 	bindtextdomain ('messages', './locale');
 	textdomain ('messages');
+
+	$locale_info = localeconv();
+	
 } else {
 /*
 	PHPGettext integration by Braian Gomez
@@ -67,6 +70,13 @@ if (function_exists('gettext')){
 		function _($text){
 			return $text;
 		}
+	}
+	if (substr($_SESSION['Language'],0,2) == 'en'){
+		$locale_info['thousands_sep'] = ',';
+		$locale_info['decimal_point'] = '.';
+	} else {
+		$locale_info['thousands_sep'] = '.';
+		$locale_info['decimal_point'] = ',';
 	}
 }
 ?>

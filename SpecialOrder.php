@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 4;
 
@@ -459,14 +459,20 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (orderno, 
 									stkcode, 
 									unitprice, 
-									quantity) 
+									quantity,
+									orderlineno) 
 						VALUES (" .  $SalesOrderNo;
 
 		$ErrMsg = _('There was a problem inserting a line into the sales order because');
 
 		foreach ($_SESSION['SPL']->LineItems as $StockItem) {
 
-			$LineItemsSQL = $StartOf_LineItemsSQL . ", '" . $StockItem->PartCode . "',". $StockItem->Price . ", " . $StockItem->Quantity . ")";
+			$LineItemsSQL = $StartOf_LineItemsSQL . ", 
+						'" . $StockItem->PartCode . "',
+						 ". $StockItem->Price . ", 
+						 " . $StockItem->Quantity . ",
+						 " . $StockItem->LineNo . ")";
+
 			$Ins_LineItemResult = DB_query($LineItemsSQL,$db,$ErrMsg);
 
 		} /* inserted line items into sales order details */

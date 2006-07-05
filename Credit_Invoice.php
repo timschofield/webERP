@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 $PageSecurity =3;
 
 
@@ -929,8 +929,7 @@ if (isset($_POST['ProcessCredit'])){
 							discountpercent,
 							standardcost,
 							newqoh,
-							narrative,
-							taxrate)
+							narrative )
 					VALUES ('" . $OrderLine->StockID . "',
 						11,
 						" . $CreditNo . ",
@@ -939,8 +938,8 @@ if (isset($_POST['ProcessCredit'])){
 						'" . $_SESSION['CreditItems']->DebtorNo . "',
 						'" . $_SESSION['CreditItems']->Branch . "',
 						" . $LocalCurrencyPrice . ",
-						" . $PeriodNo . ",
-						'Ex Inv - " . $_SESSION['ProcessingCredit'] . "',
+						" . $PeriodNo . ", 
+						" . _('Ex Inv') . ' - ' . $_SESSION['ProcessingCredit'] . "',
 						" . $OrderLine->QtyDispatched . ",
 						" . $OrderLine->DiscountPercent . ",
 						" . $OrderLine->StandardCost . ",

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.45 $ */
+/* $Revision: 1.46 $ */
  
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -152,7 +152,6 @@ if(isset($_SESSION['DB_Maintenance'])){
 				ConvertSQLDate($_SESSION['DB_Maintenance_LastRun'])
 				,'d')	> 	$_SESSION['DB_Maintenance']){
 			
-			prnMsg (_('Scheduled database maintenance is being performed ..... please wait'),'info');
 			/*Do the DB maintenance routing for the DB_type selected */
 			DB_Maintenance($db);
 			$_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');
