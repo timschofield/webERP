@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 /* definition of the Payment class */
 
 Class Payment {
@@ -12,6 +12,12 @@ Class Payment {
 	var $Currency; /*Currency being Paid - defaulted to company functional */
 	var $SupplierID; /* supplier code */
 	var $SuppName;
+	var $Address1;
+	var $Address2;
+	var $Address3;
+	var $Address4;
+	var $Address5;
+	var $Address6;
 	var $Discount;
 	var $Amount;
 	var $Narrative;
@@ -23,6 +29,12 @@ Class Payment {
 		$this->GLItemCounter=0;
 		$this->SupplierID ="";
 		$this->SuppName ="";
+		$this->Address1 ="";
+		$this->Address2 ="";
+		$this->Address3 ="";
+		$this->Address4 ="";
+		$this->Address5 ="";
+		$this->Address6 ="";
 
 	}
 

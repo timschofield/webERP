@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 5;
 
@@ -10,7 +10,14 @@ include('includes/session.inc');
 $title = _('Payment Entry');
 
 include('includes/header.inc');
+
 include('includes/SQL_CommonFunctions.inc');
+
+if (isset($_POST['PaymentCancelled'])) {
+  prnMsg(_('Payment Cancelled since cheque was not printed'), 'warning');
+  include('includes/footer.inc');
+  exit();
+}
 
 if ($_GET['NewPayment']=='Yes'){
 	unset($_SESSION['PaymentDetail']->GLItems);
@@ -21,7 +28,6 @@ if (!isset($_SESSION['PaymentDetail'])){
 	$_SESSION['PaymentDetail'] = new Payment;
 	$_SESSION['PaymentDetail']->GLItemCounter = 1;
 }
-
 
 echo "<a href='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</a><BR>';
 
@@ -35,6 +41,12 @@ if (isset($_GET['SupplierID'])){
 
 
 	$SQL= "SELECT suppname,
+			address1,
+			address2,
+			address3,
+			address4,
+			address5,
+			address6,
 			currcode
 		FROM suppliers
 		WHERE supplierid='" . $_GET['SupplierID'] . "'";
@@ -47,6 +59,12 @@ if (isset($_GET['SupplierID'])){
 	} else {
 		$myrow = DB_fetch_array($Result);
 		$_SESSION['PaymentDetail']->SuppName = $myrow['suppname'];
+		$_SESSION['PaymentDetail']->Address1 = $myrow['address1'];
+		$_SESSION['PaymentDetail']->Address2 = $myrow['address2'];
+		$_SESSION['PaymentDetail']->Address3 = $myrow['address3'];
+		$_SESSION['PaymentDetail']->Address4 = $myrow['address4'];
+		$_SESSION['PaymentDetail']->Address5 = $myrow['address5'];
+		$_SESSION['PaymentDetail']->Address6 = $myrow['address6'];
 		$_SESSION['PaymentDetail']->SupplierID = $_GET['SupplierID'];
 		$_SESSION['PaymentDetail']->Currency = $myrow['currcode'];
 	}
@@ -73,12 +91,16 @@ if ($_POST['Narrative']!=""){
 if ($_POST['Amount']!=""){
 	$_SESSION['PaymentDetail']->Amount=$_POST['Amount'];
 } else {
-	$_SESSION['PaymentDetail']->Amount=0;
+	if (!isset($_SESSION['PaymentDetail']->Amount)) {
+	  $_SESSION['PaymentDetail']->Amount=0;
+  }
 }
 if ($_POST['Discount']!=""){
 	$_SESSION['PaymentDetail']->Discount=$_POST['Discount'];
 } else {
-	$_SESSION['PaymentDetail']->Discount=0;
+	if (!isset($_SESSION['PaymentDetail']->Discount)) {
+	  $_SESSION['PaymentDetail']->Discount=0;
+  }
 }
 
 
@@ -86,7 +108,7 @@ $msg="";
 
 if (isset($_POST['CommitBatch'])){
 
- /* once the GL analysis of the payment is entered (if the Creditors_GLLink is active),
+  /* once the GL analysis of the payment is entered (if the Creditors_GLLink is active),
   process all the data in the session cookie into the DB creating a banktrans record for
   the payment in the batch and SuppTrans record for the supplier payment if a supplier was selected
   A GL entry is created for each GL entry (only one for a supplier entry) and one for the bank
@@ -99,47 +121,61 @@ if (isset($_POST['CommitBatch'])){
   create GL Entries for the GL payment items
   */
 
-/*First off  check we have an amount entered as paid ?? */
-$TotalAmount =0;
-foreach ($_SESSION['PaymentDetail']->GLItems AS $PaymentItem) {
-	$TotalAmount += $PaymentItem->Amount;
-}
+  /*First off  check we have an amount entered as paid ?? */
+  $TotalAmount =0;
+  foreach ($_SESSION['PaymentDetail']->GLItems AS $PaymentItem) {
+	  $TotalAmount += $PaymentItem->Amount;
+  }
 
-if ($TotalAmount==0 AND 
-	($_SESSION["PaymentDetail"]->Discount + $_SESSION["PaymentDetail"]->Amount)/$_SESSION['PaymentDetail']->ExRate ==0){
-	prnMsg( _('This payment has no amounts entered and will not be processed'),'warn');
-	include('includes/footer.inc');
-	exit;
-}
-
-
-/*Make an array of the defined bank accounts */
+  if ($TotalAmount==0 AND 
+	  ($_SESSION["PaymentDetail"]->Discount + $_SESSION["PaymentDetail"]->Amount)/$_SESSION['PaymentDetail']->ExRate ==0){
+	  prnMsg( _('This payment has no amounts entered and will not be processed'),'warn');
+	  include('includes/footer.inc');
+	  exit;
+  }
+	
+  /*Make an array of the defined bank accounts */
 	$SQL = "SELECT bankaccounts.accountcode
 			FROM bankaccounts,
 				chartmaster
 		WHERE bankaccounts.accountcode=chartmaster.accountcode";
-  	$result = DB_query($SQL,$db);
-  	$BankAccounts = array();
-  	$i=0;
-  	while ($Act = DB_fetch_row($result)){
+  $result = DB_query($SQL,$db);
+  $BankAccounts = array();
+  $i=0;
+  
+	while ($Act = DB_fetch_row($result)){
 		$BankAccounts[$i]= $Act[0];
 		$i++;
-  	}
+  }
 
-  	$PeriodNo = GetPeriod($_SESSION['PaymentDetail']->DatePaid,$db);
+  $PeriodNo = GetPeriod($_SESSION['PaymentDetail']->DatePaid,$db);
+
+  // first time through commit if supplier cheque then print it first 
+	if ((!isset($_POST['ChequePrinted']))
+		  AND (!isset($_POST['PaymentCancelled']))
+		  AND ($_SESSION['PaymentDetail']->PaymentType == 'Cheque')) {
+     // it is a supplier payment by cheque and haven't printed yet so print cheque 
+
+    echo '<BR><a target="_blank" href="' . $rootpath . '/PrintCheque.php?' . SID . '&ChequeNum=' . $_POST['ChequeNum'] . '">' . _('Print Cheque') . '</a><BR><BR>';
+	
+	  echo '<FORM METHOD="post" action="' . $_SERVER['PHP_SELF'] . '">';
+	  echo _('Has the cheque been printed') . '?<BR>';
+	  echo '<INPUT TYPE="hidden" NAME="CommitBatch" VALUE="' . $_POST['CommitBatch'] . '">';
+	  echo '<INPUT TYPE="submit" NAME="ChequePrinted" VALUE="' . _('Yes') . '">&nbsp;&nbsp;';
+	  echo '<INPUT TYPE="submit" NAME="PaymentCancelled" VALUE="' . _('No') . '">';
+  } else {
+
+  //Start a transaction to do the whole lot inside 
+  $SQL = 'BEGIN';
+  $result = DB_query($SQL,$db);
 
 
-     	/*Start a transaction to do the whole lot inside */
-   	$SQL = 'BEGIN';
-   	$result = DB_query($SQL,$db);
+  if ($_SESSION['PaymentDetail']->SupplierID=='') {
 
+	  //its a nominal bank transaction type 1 
 
-   	if ($_SESSION['PaymentDetail']->SupplierID=='') {
-
-	/*its a nominal bank transaction type 1 */
-
-		$TransNo = GetNextTransNo( 1, $db);
-		$TransType = 1;
+	  $TransNo = GetNextTransNo( 1, $db);
+	  $TransType = 1;
 
 		if ($_SESSION['CompanyRecord']['gllink_creditors']==1){ /* then enter GLTrans */
 			$TotalAmount=0;
@@ -167,9 +203,9 @@ if ($TotalAmount==0 AND
 			}
 			$_SESSION['PaymentDetail']->Amount = $TotalAmount;
 			$_SESSION['PaymentDetail']->Discount=0;
-   		}
+   	}
 
-		/*Run through the GL postings to check to see if there is a posting to another bank account (or the same one) if there is then a receipt needs to be created for this account too */
+		//Run through the GL postings to check to see if there is a posting to another bank account (or the same one) if there is then a receipt needs to be created for this account too 
 
 		foreach ($_SESSION['PaymentDetail']->GLItems as $PaymentItem) {
 
@@ -200,13 +236,11 @@ if ($TotalAmount==0 AND
 				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 			}
-   		}
-
-   	} else {
-
-		/*Its a supplier payment type 22 */
-   		$CreditorTotal = (($_SESSION['PaymentDetail']->Discount + $_SESSION['PaymentDetail']->Amount)/$_SESSION['PaymentDetail']->ExRate);
-
+   	}
+  } else {
+	  /*Its a supplier payment type 22 */
+   	$CreditorTotal = (($_SESSION['PaymentDetail']->Discount + $_SESSION['PaymentDetail']->Amount)/$_SESSION['PaymentDetail']->ExRate);
+		
 		$TransNo = GetNextTransNo(22, $db);
 		$TransType = 22;
 
@@ -235,9 +269,9 @@ if ($TotalAmount==0 AND
 
 		/*Update the supplier master with the date and amount of the last payment made */
 		$SQL = "UPDATE suppliers SET
-				lastpaiddate = '" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
-				lastpaid=" . $_SESSION['PaymentDetail']->Amount ."
-			WHERE suppliers.supplierid='" . $_SESSION['PaymentDetail']->SupplierID . "'";
+		    lastpaiddate = '" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
+		    lastpaid=" . $_SESSION['PaymentDetail']->Amount ."
+			  WHERE suppliers.supplierid='" . $_SESSION['PaymentDetail']->SupplierID . "'";
 
 
 
@@ -248,7 +282,8 @@ if ($TotalAmount==0 AND
 		$_SESSION['PaymentDetail']->Narrative = $_SESSION['PaymentDetail']->SupplierID . "-" . $_SESSION['PaymentDetail']->Narrative;
 
 		if ($_SESSION['CompanyRecord']['gllink_creditors']==1){ /* then do the supplier control GLTrans */
-	/* Now debit creditors account with payment + discount */
+	      /* Now debit creditors account with payment + discount */
+			
 			$SQL="INSERT INTO gltrans ( type,
 							typeno,
 							trandate,
@@ -285,26 +320,26 @@ if ($TotalAmount==0 AND
 						" . $_SESSION['CompanyRecord']["pytdiscountact"] . ",
 						'" . $_SESSION['PaymentDetail']->Narrative . "',
 						" . (-$_SESSION['PaymentDetail']->Discount/$_SESSION['PaymentDetail']->ExRate) . "
-					)";
+					  )";
 				$ErrMsg = _('Cannot insert a GL transaction for the payment discount credit because');
 				$DbgMsg = _('Cannot insert a GL transaction for the payment discount credit using the SQL');
 				$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-			}
-		}
-  	}
+			} // end if discount
+		} // end if gl creditors
+	} // end if supplier
+  
+	if ($_SESSION['CompanyRecord']["gllink_creditors"]==1){ /* then do the common GLTrans */
 
-  	if ($_SESSION['CompanyRecord']["gllink_creditors"]==1){ /* then do the common GLTrans */
-
-		if ($_SESSION['PaymentDetail']->Amount/$_SESSION['PaymentDetail']->ExRate !=0){
-			/* Bank account entry first */
-			$SQL = "INSERT INTO gltrans ( type,
+	  if ($_SESSION['PaymentDetail']->Amount/$_SESSION['PaymentDetail']->ExRate !=0){
+		  /* Bank account entry first */
+		  $SQL = "INSERT INTO gltrans ( type,
 							typeno,
 							trandate,
 							periodno,
 							account,
 							narrative,
 							amount) ";
-			$SQL = $SQL . "VALUES (" . $TransType . ",
+		  $SQL = $SQL . "VALUES (" . $TransType . ",
 						" . $TransNo . ",
 						'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
 						" . $PeriodNo . ",
@@ -313,16 +348,16 @@ if ($TotalAmount==0 AND
 						" . (-$_SESSION['PaymentDetail']->Amount/$_SESSION['PaymentDetail']->ExRate) . "
 					)";
 
-			$ErrMsg =  _('Cannot insert a GL transaction for the bank account credit because');
-			$DbgMsg =  _('Cannot insert a GL transaction for the bank account credit using the SQL');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		  $ErrMsg =  _('Cannot insert a GL transaction for the bank account credit because');
+		  $DbgMsg =  _('Cannot insert a GL transaction for the bank account credit using the SQL');
+		  $result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-		}
-   	}
+	  }
+  }
 
-   	/*now enter the BankTrans entry */
+  /*now enter the BankTrans entry */
 
-   	$SQL="INSERT INTO banktrans (transno,
+  $SQL="INSERT INTO banktrans (transno,
 					type,
 					bankact,
 					ref,
@@ -331,7 +366,7 @@ if ($TotalAmount==0 AND
 					banktranstype,
 					amount,
 					currcode) ";
-   	$SQL= $SQL . "VALUES (" . $TransNo . ",
+  $SQL= $SQL . "VALUES (" . $TransNo . ",
 				" . $TransType . ",
 				" . $_SESSION['PaymentDetail']->Account . ",
 				'" . $_SESSION['PaymentDetail']->Narrative . "',
@@ -346,8 +381,8 @@ if ($TotalAmount==0 AND
 	$DbgMsg = _('Cannot insert a bank transaction using the SQL');
 	$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-   	$SQL = "COMMIT";
-   	$ErrMsg = _('Cannot commit the changes because');
+  $SQL = "COMMIT";
+  $ErrMsg = _('Cannot commit the changes because');
 	$DbgMsg = _('The commit of the database transaction failed');
 	$result= DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
@@ -366,13 +401,12 @@ if ($TotalAmount==0 AND
 	unset($_SESSION['PaymentDetail']->GLItems);
 	unset($_SESSION['PaymentDetail']);
 
-/*Set up a newy in case user wishes to enter another */
+  /*Set up a newy in case user wishes to enter another */
 	echo '<BR><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Enter a General Ledger Payment') . '</A>';
 	echo '<BR><A HREF="' . $rootpath . '/SelectSupplier.php?' . SID . '">' . _('Enter a Supplier Payment') . '</A>';
-	
+  }
 	include('includes/footer.inc');
 	exit;
-
 } elseif (isset($_GET['Delete'])){
   /* User hit delete the receipt entry from the batch */
    $_SESSION['PaymentDetail']->Remove_GLItem($_GET['Delete']);
@@ -555,7 +589,7 @@ if ($_POST['PaymentType']==$PaytType){
 }
 echo '</SELECT></TD></TR>';
 
-
+echo '<TR><TD>' . _('Cheque Number') . ':</TD><TD><INPUT TYPE="text" name="ChequeNum" maxlength=8 size=10 value="' . $_POST['ChequeNum'] . '"></TD></TR>';
 echo '<TR><TD>' . _('Ref') . ':</TD><TD><INPUT TYPE="text" name="Narrative" maxlength=50 size=52 value="' . $_POST['Narrative'] . '"></TD></TR>';
 echo '</TABLE>';
 
@@ -620,6 +654,7 @@ the fields for entry of receipt amt and disc */
 
 	if (isset($_SESSION['PaymentDetail']->SupplierID)){ /*So it is a supplier payment so show the discount entry item */
 		echo '<TR><TD>' . _('Amount of Discount') . ':</TD><TD><INPUT TYPE="text" name="Discount" maxlength=12 size=13 value=' . $_SESSION['PaymentDetail']->Discount . '></TD></TR>';
+		echo '<INPUT TYPE="hidden" name="SuppName" value="' . $_SESSION['PaymentDetail']->SuppName . '">';
 	} else {
 		echo '<INPUT TYPE="HIDDEN" NAME="discount" Value=0>';
 	}
@@ -628,5 +663,6 @@ the fields for entry of receipt amt and disc */
 }
 echo '<BR><BR><INPUT TYPE=SUBMIT NAME="CommitBatch" VALUE="' . _('Accept and Process Payment') . '">';
 echo '</FORM>';
+
 include('includes/footer.inc');
 ?>
