@@ -1,5 +1,8 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 
+<P>11/7/06 SupplierTransInquiry.php allows supplier transactions to be listed with GL transactions created for each.
+<P>11/7/06 Alan J report_runner.php now allows command line arguments to run reports using the php interpreter directly.
+<P>10/7/06 Alan J ConnectDB.inc - now allows for the DatabaseName to be set in hard code for scripts that do not require a login - in particular automated reports.
 <P>5/7/06 SpecialOrder.php was not creating multiple line orders correctly - needed to have orderlineno in SQL to add salesorderdetails records
 <P>4/7/06 SupplierInvoice.php made manual entry of taxes work correctly now takes values at time of processing the invoice previously they were not updated before posting
 <P>4/7/06 Credit_Invoice.php removed taxrate from stockmoves sql insert statement on stock write off option

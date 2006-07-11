@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 $PageSecurity =15;
 
@@ -202,6 +202,10 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['InvoicePortraitFormat'] != $_POST['X_InvoicePortraitFormat'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". DB_escape_string($_POST['X_InvoicePortraitFormat'])."' WHERE confname = 'InvoicePortraitFormat'";
 		}
+		if ($_SESSION['AllowOrderLineItemNarrative'] != $_POST['X_AllowOrderLineItemNarrative'] ) {
+			$sql[] = "UPDATE config SET confvalue = '". DB_escape_string($_POST['X_AllowOrderLineItemNarrative'])."' WHERE confname = 'AllowOrderLineItemNarrative'";
+		}
+
 
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 0 ) {
@@ -303,6 +307,15 @@ echo '<TR><TD>' . _('Romalpa Clause') . ':</TD>
 echo '<TR><TD>' . _('Quick Entries') . ':</TD>
 	<TD><input type="Text" Name="X_QuickEntries" value="' . $_SESSION['QuickEntries'] . '" SIZE=3 MAXLENGTH=2></TD>
 	<TD>' . _('This parameter defines the layout of the sales order entry screen. The number of fields available for quick entries. Any number from 1 to 99 can be entered.') . '</TD></TR>';
+
+//'AllowOrderLineItemNarrative'
+echo '<TR><TD>' . _('Order Entry allows Line Item Narrative') . ':</TD>
+	<TD><SELECT Name="X_AllowOrderLineItemNarrative">
+	<OPTION '.($_SESSION['AllowOrderLineItemNarrative']=='1'?'SELECTED ':'').'VALUE="1">'._('Allow Narrative Entry').'
+	<OPTION '.($_SESSION['AllowOrderLineItemNarrative']=='0'?'SELECTED ':'').'VALUE="0">'._('No Narrative Line').'
+	</SELECT></TD>
+	<TD>' . _('Select whether or not to allow entry of narrative on order line items. This narrative will appear on invoices and packing slips. Useful mainly for service businesses.') . '</TD>
+	</TR>';
 
 //Default Packing Note Format
 echo '<TR><TD>' . _('Format of Packing Slips') . ':</TD>

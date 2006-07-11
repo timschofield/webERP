@@ -324,3 +324,4 @@ ALTER TABLE stockserialitems ADD INDEX (serialno);
 ALTER TABLE stockserialmoves ADD INDEX (serialno);
 
 INSERT INTO taxcategories (taxcatname) VALUES ('Freight');
+NSERT INTO config ( confname , confvalue ) VALUES ('AllowOrderLineItemNarrative', '1');

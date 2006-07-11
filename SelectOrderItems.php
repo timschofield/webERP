@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.47 $ */
+/* $Revision: 1.48 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -1028,8 +1028,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<TD ALIGN=RIGHT>' . $DisplayLineTotal . '</FONT></TD><TD>';
 			echo '<A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . $RemTxt . '</A></TD></TR>';
 
-			echo $RowStarter;
-			echo '<TD COLSPAN=7><TEXTAREA  NAME="Narrative_' . $OrderLine->LineNumber . '" cols=100% rows=1>' . $OrderLine->Narrative . '</TEXTAREA><BR><HR></TD></TR>';
+			if ($_SESSION['AllowOrderLineItemNarrative'] == 1){
+				echo $RowStarter;
+				echo '<TD COLSPAN=7><TEXTAREA  NAME="Narrative_' . $OrderLine->LineNumber . '" cols=100% rows=1>' . $OrderLine->Narrative . '</TEXTAREA><BR><HR></TD></TR>';
+			} else {
+				echo '<INPUT TYPE=HIDDEN NAME="Narrative" VALUE="">';
+			}
 
 			$_SESSION['Items']->total = $_SESSION['Items']->total + $LineTotal;
 			$_SESSION['Items']->totalVolume = $_SESSION['Items']->totalVolume + $OrderLine->Quantity * $OrderLine->Volume;
