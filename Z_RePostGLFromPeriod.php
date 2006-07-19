@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity=15;
 
@@ -43,8 +43,12 @@ if (!isset($_POST['FromPeriod'])){
 	$sql = 'UPDATE chartdetails SET actual =0 WHERE period >= ' . $_POST['FromPeriod'];
 	$UpdActualChartDetails = DB_query($sql,$db);
 
-	$sql = 'UPDATE chartdetails SET bfwd =0 WHERE period > ' . $_POST['FromPeriod'];
-	$UpdActualChartDetails = DB_query($sql,$db);
+	$ChartDetailBFwdResult = DB_query('SELECT accountcode, bfwd FROM chartdetails WHERE period=' . $_POST['FromPeriod'],$db);	
+	while ($ChartRow=DB_fetch_array($ChartDetailBFwdResult)){
+		$sql = 'UPDATE chartdetails SET bfwd =' . $ChartRow['bfwd'] . ' WHERE period > ' . $_POST['FromPeriod'] . ' AND accountcode=' . $ChartRow['accountcode'];
+		$UpdActualChartDetails = DB_query($sql,$db);
+	}
+	
 	/*Now repost the lot */
 
 	include('includes/GLPostings.inc');

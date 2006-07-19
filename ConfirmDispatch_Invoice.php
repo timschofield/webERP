@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.40 $ */
+/* $Revision: 1.41 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -767,13 +767,13 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					actualdispatchdate = '" . $DefaultDispatchDate .  "',
 					completed=1
 					WHERE orderno = " . $_SESSION['ProcessingOrder'] . "
-					AND stkcode = '" . $OrderLine->StockID . "'";
+					AND orderlineno = '" . $OrderLine->LineNumber . "'";
 			} else {
 				$SQL = "UPDATE salesorderdetails
 					SET qtyinvoiced = qtyinvoiced + " . $OrderLine->QtyDispatched . ",
 					actualdispatchdate = '" . $DefaultDispatchDate .  "'
 					WHERE orderno = " . $_SESSION['ProcessingOrder'] . "
-					AND stkcode = '" . $OrderLine->StockID . "'";
+					AND orderlineno = '" . $OrderLine->LineNumber . "'";
 
 			}
 

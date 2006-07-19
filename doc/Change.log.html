@@ -1,5 +1,8 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 
+<P>19/7/06 saras chithra PO_OrderDetails.php link refered to sales orders sh/be purchase orders
+<P>19/7/06 ConfirmDispatch_Invoice.php updates to salesorderdetails did not work correctly for orders with multiple lines of the same item.
+<P>12/7/06 Z_RePostGLFromPeriod.php did not work correctly from periods into the business since bfwd balances were zeroed rather than using the previously bfwd balance - now fixed.
 <P>11/7/06 SupplierTransInquiry.php allows supplier transactions to be listed with GL transactions created for each.
 <P>11/7/06 Alan J report_runner.php now allows command line arguments to run reports using the php interpreter directly.
 <P>10/7/06 Alan J ConnectDB.inc - now allows for the DatabaseName to be set in hard code for scripts that do not require a login - in particular automated reports.
