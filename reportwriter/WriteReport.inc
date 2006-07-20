@@ -34,6 +34,8 @@ function PDF() {
 	$this->AddPage();
 
 	if ($_SESSION['Language']=='zh_CN'){
+		$this->AddGBFont();
+	} elseif ($_SESSION['Language']=='zh_HK'){
 		$this->AddBig5Font();
 	} elseif ($_SESSION['Language']=='ja_JP'){
 		$this->AddSJISFont();
@@ -598,7 +600,7 @@ function GeneratePDFFile($Data, $Prefs) {
 	
 	header('Content-type: application/pdf');
 	header('Content-Length: ' . $len);
-	header('Content-Disposition: inline; filename=' . $ReportName);
+	header('Content-Disposition: inline; filename="' . $ReportName . "'");
 	header('Expires: 0');
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');

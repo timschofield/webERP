@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 $PageSecurity =15;
 
@@ -330,7 +330,7 @@ echo '<TR><TD>' . _('Format of Packing Slips') . ':</TD>
 echo '<TR><TD>' . _('Invoice Orientation') . ':</TD>
 	<TD><SELECT Name="X_InvoicePortraitFormat">
 	<OPTION '.($_SESSION['InvoicePortraitFormat']=='0'?'SELECTED ':'').'VALUE="0">'._('Landscape').'
-	<OPTION '.($_SESSION['InvoicePortraitFormat']=='1'?'SELECTED ':'').'VALUE="2">'._('Portrait').'
+	<OPTION '.($_SESSION['InvoicePortraitFormat']=='1'?'SELECTED ':'').'VALUE="1">'._('Portrait').'
 	</SELECT></TD>
 	<TD>' . _('Select the invoice layout') . '</TD>
 	</TR>';
