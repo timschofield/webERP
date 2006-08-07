@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity = 3;
 
@@ -106,7 +106,74 @@ if (isset($_POST['submit'])) {
 
 	/*Selected branch is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Customer Branches form */
 
-		$sql = "INSERT INTO custbranch (branchcode,
+		if ($_SESSION['vtiger_integration']==1){
+		
+
+/*Gets the Product ID for VTiger */
+			$result = DB_query('SELECT id FROM crmentity_seq',$db);
+			$myrow = DB_fetch_row($result);
+			$vtiger_accountid = $myrow[0] + 1;
+			
+			$sql = "INSERT INTO custbranch (branchcode,
+						debtorno,
+						brname,
+						braddress1,
+						braddress2,
+						braddress3,
+						braddress4,
+						braddress5,
+						braddress6,
+						estdeliverydays,
+						fwddate,
+						salesman,
+						phoneno,
+						faxno,
+						contactname,
+						area,
+						email,
+						taxgroupid,
+						defaultlocation,
+						brpostaddr1,
+						brpostaddr2,
+						brpostaddr3,
+						brpostaddr4,
+						disabletrans,
+						defaultshipvia,
+						custbranchcode,
+						deliverblind,
+						vtiger_accountid)
+				VALUES ('" . $_POST['BranchCode'] . "',
+					'" . $DebtorNo . "',
+					'" . DB_escape_string($_POST['BrName']) . "',
+					'" . DB_escape_string($_POST['BrAddress1']) . "',
+					'" . DB_escape_string($_POST['BrAddress2']) . "',
+					'" . DB_escape_string($_POST['BrAddress3']) . "',
+					'" . DB_escape_string($_POST['BrAddress4']) . "',
+					'" . DB_escape_string($_POST['BrAddress5']) . "',
+					'" . DB_escape_string($_POST['BrAddress6']) . "',
+					" . $_POST['EstDeliveryDays'] . ",
+					" . $_POST['FwdDate'] . ",
+					'" . $_POST['Salesman'] . "',
+					'" . DB_escape_string($_POST['PhoneNo']) . "',
+					'" . DB_escape_string($_POST['FaxNo']) . "',
+					'" . DB_escape_string($_POST['ContactName']) . "',
+					'" . $_POST['Area'] . "',
+					'" . DB_escape_string($_POST['Email']) . "',
+					" . $_POST['TaxGroup'] . ",
+					'" . $_POST['DefaultLocation'] . "',
+					'" . DB_escape_string($_POST['BrPostAddr1']) . "',
+					'" . DB_escape_string($_POST['BrPostAddr2']) . "',
+					'" . DB_escape_string($_POST['BrPostAddr3']) . "',
+					'" . DB_escape_string($_POST['BrPostAddr4']) . "',
+					" . $_POST['DisableTrans'] . ",
+					" . $_POST['DefaultShipVia'] . ",
+					'" . $_POST['CustBranchCode'] ."',
+					" . $_POST['DeliverBlind'] . ",
+					" . $vtiger_accountid . ")";
+		} else {
+
+
+			$sql = "INSERT INTO custbranch (branchcode,
 						debtorno,
 						brname,
 						braddress1,
@@ -161,6 +228,7 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['CustBranchCode'] ."',
 					" . $_POST['DeliverBlind'] . "
 					)";
+		}
 
 		$msg = _('Customer branch').' '. $_POST['BrName'] . ' '._('has been added');
 	}
@@ -168,6 +236,64 @@ if (isset($_POST['submit'])) {
 
 	$ErrMsg = _('The branch record could not be inserted or updated because');
 	$result = DB_query($sql,$db, $ErrMsg);
+
+
+	if ($_SESSION['vtiger_integration']==1){
+		if (isset($SelectedBranch) AND $InputError !=1) {
+
+		/*Gets the accountid for VTiger */
+			$result = DB_query('SELECT vtiger_accountid FROM custbranch WHERE branchcode = "'.$SelectedBranch.'" ');
+			$myrow = DB_fetch_row($result);			
+			$vtiger_accountid = $myrow[0]; // outputs current crmid
+	
+			$today = date("YmdHis");
+					
+			$sql = "UPDATE crmentity SET modifiedtime ='".$today."' WHERE crmid = '".$vtiger_accountid."'";
+	
+			$ErrMsg =  _('Could not update vtiger') . ' ' . $myrow[0] .  ' ' . _('could not be added because');
+			$DbgMsg = _('Could not update vtiger') . ' ' . _('The SQL that was used to update the vtiger CRM entity');
+			$CRMResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+
+
+		} elseif ($InputError !=1) {
+
+			$today = date("YmdHis");
+			$sql = "INSERT INTO crmentity (crmid,
+						smcreatorid,
+						smownerid,
+						setype,
+						description,
+						createdtime,
+						modifiedtime)
+					VALUES('".$vtiger_accountid."',
+						'1',
+						'1',
+						'Accounts',
+						'',
+						'".$today."',
+						'".$today."')";
+	
+			$ErrMsg =  _('The new vtiger CRM entiry could not be added because');
+			$DbgMsg = _('Could not add CRM') . ' ' . _('The SQL that was used to add the CRM entity');
+			$CRMResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+
+			$sql = "UPDATE crmentity_seq SET id = ".$vtiger_accountid."";
+			$ErrMsg =  _('CRM Sequence failed') . ' ' . $myrow[0] .  ' ' . _('could not be added');
+			$DbgMsg = _('CRM Sequence failed') . '   ' . _('The SQL that was used to add the CRM Sequence');
+			$CRMseqResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+
+			$sql = "INSERT INTO accountscf VALUES (".$vtiger_accountid.")";
+
+			$ErrMsg =  _('insert into accountscf failed') . ' ' . $myrow[0] .  ' ' . _('could not be added');
+			$DbgMsg = _('insert into accountscf failed') . ' ' . _('could not be added	');
+			$CRMseqResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+					
+			prnMsg(_('The new CRM entity has been created in vtiger for this new branch'),'success');
+		}
+	}
+
+
+
 
 	if (DB_error_no($db) ==0) {
 		prnMsg($msg,'success');

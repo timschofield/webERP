@@ -73,7 +73,7 @@ function ConvertNumberToWords( $num ){
 
    // zero is shown as "" since it is never used in combined forms
    // 0 .. 19
-   $lowName = array(_(''), 
+   $lowName = array('',
 			_('one'), 
 			_('two'), 
 			_('three'), 

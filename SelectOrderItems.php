@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.48 $ */
+/* $Revision: 1.49 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -80,8 +80,43 @@ if (isset($_GET['ModifyOrderNumber'])
 
 /*read in all the guff from the selected order into the Items cart  */
 
+	if ($_SESSION['vtiger_integration']==1){
+		$OrderHeaderSQL = 'SELECT salesorders.debtorno,
+				debtorsmaster.name,
+				salesorders.branchcode,
+				salesorders.vtiger_accountid,
+				salesorders.customerref,
+				salesorders.comments,
+				salesorders.orddate,
+				salesorders.ordertype,
+				salestypes.sales_type,
+				salesorders.shipvia,
+				salesorders.deliverto,
+				salesorders.deladd1,
+				salesorders.deladd2,
+				salesorders.deladd3,
+				salesorders.deladd4,
+				salesorders.deladd5,
+				salesorders.deladd6,
+				salesorders.contactphone,
+				salesorders.contactemail,
+				salesorders.freightcost,
+				salesorders.deliverydate,
+				debtorsmaster.currcode,
+				salesorders.fromstkloc,
+				salesorders.printedpackingslip,
+				salesorders.datepackingslipprinted,
+				salesorders.quotation,
+				salesorders.deliverblind
+			FROM salesorders, 
+				debtorsmaster, 
+				salestypes
+			WHERE salesorders.ordertype=salestypes.typeabbrev
+			AND salesorders.debtorno = debtorsmaster.debtorno
+			AND salesorders.orderno = ' . $_GET['ModifyOrderNumber'];
 
-	$OrderHeaderSQL = 'SELECT salesorders.debtorno,
+	} else {
+		$OrderHeaderSQL = 'SELECT salesorders.debtorno,
 				debtorsmaster.name,
 				salesorders.branchcode,
 				salesorders.customerref,
@@ -113,6 +148,7 @@ if (isset($_GET['ModifyOrderNumber'])
 			WHERE salesorders.ordertype=salestypes.typeabbrev
 			AND salesorders.debtorno = debtorsmaster.debtorno
 			AND salesorders.orderno = ' . $_GET['ModifyOrderNumber'];
+	}
 
 	$ErrMsg =  _('The order cannot be retrieved because');
 	$GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg);
@@ -152,7 +188,38 @@ if (isset($_GET['ModifyOrderNumber'])
 		$_SESSION['Items']->DeliverBlind = $myrow['deliverblind'];
 		
 /*need to look up customer name from debtors master then populate the line items array with the sales order details records */
-		$LineItemsSQL = "SELECT salesorderdetails.orderlineno,
+		
+		if ($_SESSION['vtiger_integration']==1){
+
+			$LineItemsSQL = "SELECT salesorderdetails.orderlineno,
+				salesorderdetails.stkcode,
+			
+				stockmaster.vtiger_productid,
+			
+				stockmaster.description,
+				stockmaster.volume,
+				stockmaster.kgs,
+				stockmaster.units,
+				salesorderdetails.unitprice,
+				salesorderdetails.quantity,
+				salesorderdetails.discountpercent,
+				salesorderdetails.actualdispatchdate,
+				salesorderdetails.qtyinvoiced,
+				salesorderdetails.narrative,
+				locstock.quantity as qohatloc,
+				stockmaster.mbflag,
+				stockmaster.discountcategory,
+				stockmaster.decimalplaces
+				FROM salesorderdetails INNER JOIN stockmaster
+				ON salesorderdetails.stkcode = stockmaster.stockid
+				INNER JOIN locstock ON locstock.stockid = stockmaster.stockid
+				WHERE  locstock.loccode = '" . $myrow['fromstkloc'] . "'
+				AND  salesorderdetails.completed=0
+				AND salesorderdetails.orderno =" . $_GET['ModifyOrderNumber'] . "
+				ORDER BY salesorderdetails.orderlineno";
+		} else {
+
+			$LineItemsSQL = "SELECT salesorderdetails.orderlineno,
 				salesorderdetails.stkcode,
 				stockmaster.description,
 				stockmaster.volume,

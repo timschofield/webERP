@@ -324,4 +324,7 @@ ALTER TABLE stockserialitems ADD INDEX (serialno);
 ALTER TABLE stockserialmoves ADD INDEX (serialno);
 
 INSERT INTO taxcategories (taxcatname) VALUES ('Freight');
-NSERT INTO config ( confname , confvalue ) VALUES ('AllowOrderLineItemNarrative', '1');
+INSERT INTO config ( confname , confvalue ) VALUES ('AllowOrderLineItemNarrative', '1');
+
+INSERT INTO config ( confname , confvalue ) VALUES ('vtiger_integration', '0');
+ALTER TABLE custbranch DROP INDEX BranchCode 

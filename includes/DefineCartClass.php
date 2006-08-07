@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -51,6 +51,7 @@ Class Cart {
 	Var $CreditAvailable; //in customer currency
 	Var $TaxGroup;
 	Var $DispatchTaxProvince;
+	VAR $vtigerProductID;
 
 	function Cart(){
 	/*Constructor function initialises a new shopping cart */
@@ -82,7 +83,8 @@ Class Cart {
 				$Narrative='',
 				$UpdateDB='No',
 				$LineNumber=-1,
-				$TaxCategory=0){
+				$TaxCategory=0,
+				$vtigerProductID=''){
 		
 				
 		if (isset($StockID) AND $StockID!="" AND $Qty>0 AND isset($Qty)){

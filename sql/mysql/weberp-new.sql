@@ -49,7 +49,7 @@ CREATE TABLE `accountsection` (
 --
 
 CREATE TABLE `areas` (
-  `areacode` char(2) NOT NULL default '',
+  `areacode` char(3) NOT NULL,
   `areadescription` varchar(25) NOT NULL default '',
   PRIMARY KEY  (`areacode`)
 ) TYPE=InnoDB;
@@ -367,8 +367,8 @@ CREATE TABLE `custbranch` (
   `brpostaddr5` varchar(20) NOT NULL default '',
   `brpostaddr6` varchar(15) NOT NULL default '',
   `custbranchcode` varchar(30) NOT NULL default '',
+  `vtiger_accountid` int(11) NOT NULL,
   PRIMARY KEY  (`branchcode`,`debtorno`),
-  KEY `BranchCode` (`branchcode`),
   KEY `BrName` (`brname`),
   KEY `DebtorNo` (`debtorno`),
   KEY `Salesman` (`salesman`),
@@ -1239,6 +1239,7 @@ CREATE TABLE `salesorders` (
   `printedpackingslip` tinyint(4) NOT NULL default '0',
   `datepackingslipprinted` date NOT NULL default '0000-00-00',
   `quotation` tinyint(4) NOT NULL default '0',
+  `vtiger_accountid` int(11) NOT NULL,
   PRIMARY KEY  (`orderno`),
   KEY `DebtorNo` (`debtorno`),
   KEY `OrdDate` (`orddate`),
@@ -1437,6 +1438,7 @@ CREATE TABLE `stockmaster` (
   `taxcatid` tinyint(4) NOT NULL default '1',
   `serialised` tinyint(4) NOT NULL default '0',
   `decimalplaces` tinyint(4) NOT NULL default '0',
+  `vtiger_productid` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`stockid`),
   KEY `CategoryID` (`categoryid`),
   KEY `Description` (`description`),
@@ -1902,7 +1904,7 @@ INSERT INTO `accountgroups` VALUES ('Sales',1,1,10);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
+INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_US');
 
 --
 -- Dumping data for table `securitygroups`
@@ -2017,7 +2019,7 @@ INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',4);
 INSERT INTO `systypes` VALUES (17,'Stock Adjustment',8);
 INSERT INTO `systypes` VALUES (18,'Purchase Order',0);
-INSERT INTO `systypes` VALUES (20,'Purchase Invoice',11);
+INSERT INTO `systypes` VALUES (20,'Purchase Invoice',13);
 INSERT INTO `systypes` VALUES (21,'Debit Note',3);
 INSERT INTO `systypes` VALUES (22,'Creditors Payment',0);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
@@ -2388,6 +2390,7 @@ INSERT INTO `edi_orders_seg_groups` VALUES (50,1,0);
 -- Dumping data for table `config`
 --
 
+INSERT INTO `config` VALUES ('AllowOrderLineItemNarrative','0');
 INSERT INTO `config` VALUES ('AllowSalesOfZeroCostItems','0');
 INSERT INTO `config` VALUES ('AutoDebtorNo','0');
 INSERT INTO `config` VALUES ('CheckCreditLimits','0');
@@ -2395,8 +2398,8 @@ INSERT INTO `config` VALUES ('Check_Price_Charged_vs_Order_Price','1');
 INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','USD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
-INSERT INTO `config` VALUES ('DB_Maintenance','1');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2006-06-29');
+INSERT INTO `config` VALUES ('DB_Maintenance','0');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2006-07-10');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
@@ -2440,6 +2443,7 @@ INSERT INTO `config` VALUES ('RomalpaClause','Ownership will not pass to the buy
 INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','Tax Ref');
+INSERT INTO `config` VALUES ('vtiger_integration','0');
 INSERT INTO `config` VALUES ('WikiApp','WackoWiki');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
 INSERT INTO `config` VALUES ('YearEnd','3');
@@ -2448,7 +2452,7 @@ INSERT INTO `config` VALUES ('YearEnd','3');
 -- Dumping data for table `companies`
 --
 
-INSERT INTO `companies` VALUES (1,'Demo System','not entered yet','','PO Box 1000','The White House','Washnington DC','USA','','','','','info@weberp.org','USD',1100,4900,2100,2400,2150,4200,5200,3500,1,1,1,5600);
+INSERT INTO `companies` VALUES (1,'Demo System','not entered yet','','PO Box 1000','The White House','Washnington DC','USA','','','','','info@weberp.org','AUD',1100,4900,2100,2400,2150,4200,5200,3500,1,1,1,5600);
 
 --
 -- Dumping data for table `taxauthrates`
