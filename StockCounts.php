@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 2;
 
@@ -137,7 +137,7 @@ if ($_GET['Action'] == 'Enter'){
 //END OF ACTION=VIEW
 }
 
-echo '</FORM></DIV>';
+echo '</DIV></FORM>';
 include('includes/footer.inc');
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 /*SelectOrderItems_IntoCart.inc
 
@@ -75,9 +75,9 @@ if ($AlreadyOnThisOrder!=1){
 		   	if ($_SESSION['ExistingOrder']!=0){
 				$UpdateDB = 'Yes';
 				$result = DB_query("SELECT MAX(orderlineno) AS newlineno FROM  salesorderdetails WHERE orderno=".$_SESSION['ExistingOrder'],$db);
-				$myrow = DB_fetch_row($result);
-				if ($myrow[0] != "" && $myrow[0] > 0) {
-					$NewLineNo = $myrow[0]+1;
+				$MaxNumRow = DB_fetch_row($result);
+				if ($MaxNumRow[0] != "" && $MaxNumRow[0] > 0) {
+					$NewLineNo = $MaxNumRow[0]+1;
 				} else {
 					$NewLineNo = 0;
 				}
@@ -94,9 +94,9 @@ if ($AlreadyOnThisOrder!=1){
 										WHERE salestype='" .  $_SESSION['Items']->DefaultSalesType . "'
 										AND discountcategory ='" . $myrow['discountcategory'] . "'
 										AND quantitybreak <" . $NewItemQty,$db);
-				$myrow = DB_fetch_row($result);
-				if ($myrow[0] != "" && $myrow[0] > 0) {
-					$Discount = $myrow[0];
+				$DiscCatRow = DB_fetch_row($result);
+				if ($DiscCatRow[0] != "" && $DiscCatRow[0] > 0) {
+					$Discount = $DiscCatRow[0];
 				} else {
 					$Discount = 0;
 				}

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 $PageSecurity = 11;
 
@@ -423,9 +423,9 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 						The StockSerialMoves as well */
 						 //need to test if the controlled item exists first already
 							$SQL = "SELECT COUNT(*) FROM stockserialitems 
-									WHERE stockid='" . $OrderLine->StockID . "' 
-									AND loccode = '" . $_SESSION['PO']->Location . "' 
-									AND serialno = '" . $Item->BundleRef . "'";
+									WHERE stockid='" . DB_escape_string($OrderLine->StockID) . "' 
+									AND loccode = '" . DB_escape_string($_SESSION['PO']->Location) . "' 
+									AND serialno = '" . DB_escape_string($Item->BundleRef) . "'";
 							$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not check if a batch or lot stock item already exists because');
 							$DbgMsg =  _('The following SQL to test for an already existing controlled but not serialised stock item was used');
 							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -437,17 +437,17 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 									} else {
 										$SQL = 'UPDATE stockserialitems SET quantity = quantity + ' . $Item->BundleQty . ' ';
 									}
-									$SQL .= "WHERE stockid='" . $OrderLine->StockID . "' 
-											 AND loccode = '" . $_SESSION['PO']->Location . "' 
-											 AND serialno = '" . $Item->BundleRef . "'";
+									$SQL .= "WHERE stockid='" . DB_escape_string($OrderLine->StockID) . "' 
+											 AND loccode = '" . DB_escape_string($_SESSION['PO']->Location) . "' 
+											 AND serialno = '" . DB_escape_string($Item->BundleRef) . "'";
 								} else {
 									$SQL = "INSERT INTO stockserialitems (stockid,
 												loccode,
 												serialno,
 												quantity)
-											VALUES ('" . $OrderLine->StockID . "',
-												'" . $_SESSION['PO']->Location . "',
-												'" . $Item->BundleRef . "',
+											VALUES ('" . DB_escape_string($OrderLine->StockID) . "',
+												'" . DB_escape_string($_SESSION['PO']->Location) . "',
+												'" . DB_escape_string($Item->BundleRef) . "',
 												" . $Item->BundleQty . ")";
 								}
 							

@@ -4650,11 +4650,14 @@ INSERT INTO `salesorderdetails` VALUES (0,46,'FUJI990101',1,1000,1,0,0,'2005-10-
 INSERT INTO `salesorderdetails` VALUES (0,47,'HIT3042-ASS',0,3550,1,0,0,'0000-00-00 00:00:00',0,'Test line narrative - installation and compliance testing');
 INSERT INTO `salesorderdetails` VALUES (0,48,'FUJI990101',0,100,1.4144,0,0,'0000-00-00 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (0,49,'FUJI990102',0,564,1,0,0,'0000-00-00 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (0,51,'HIT3043-5',0,1200,20,0,0,'0000-00-00 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (1,1,'HIT3034-4',0,1680,2,0,0,'0000-00-00 00:00:00',0,'Installation experts at 1800 12345667');
 INSERT INTO `salesorderdetails` VALUES (1,2,'HIT3043-5',0,2300,3,0,0,'0000-00-00 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (1,7,'HIT3042-ASS',0,2500,1,0,0.025,'2005-06-17 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (1,9,'HIT3034-4',0,400,10,0,0,'2005-06-20 00:00:00',0,'');
 INSERT INTO `salesorderdetails` VALUES (1,49,'HIT3043-5',0,244,1,0,0,'0000-00-00 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (1,51,'HIT3042-ASS',0,10,1,0,0,'0000-00-00 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (2,51,'FUJI990102',0,1322,1,0,0,'0000-00-00 00:00:00',0,'');
 
 --
 -- Dumping data for table `salesorders`
@@ -4677,6 +4680,8 @@ INSERT INTO `salesorders` VALUES (46,'DUMBLE','DUMBLE','',NULL,' Inv 7','2005-10
 INSERT INTO `salesorders` VALUES (47,'ANGRY','ANGRY','',NULL,'General comment covering all line items on the quotation. Testing to see if it all prints out nicely on a quotation','2005-10-30','DE',8,'P O Box 67','Gowerbridge','Upperton','Toronto Canada','','','0422 2245 2213','graville@angry.com','Angus Rouledge - Toronto',1,0,'DEN','2005-10-31',0,'0000-00-00',1,0);
 INSERT INTO `salesorders` VALUES (48,'DUMBLE','DUMBLE','',NULL,'','2006-01-28','DE',10,'Hogwarts castle','Platform 9.75','','','','','Owls only','mmgonagal@hogwarts.edu.uk','Dumbledoor McGonagal & Co',1,0,'TOR','2006-01-30',0,'0000-00-00',0,0);
 INSERT INTO `salesorders` VALUES (49,'JOLOMU','JOLOMU','',NULL,'','2006-07-10','DE',1,'3215 Great Western Highway','Blubberhouses','Yorkshire','England','','','+44 812 211456','jolomu@lorrima.co.uk','Lorrima Productions Inc',1,0,'TOR','2006-07-11',1,'2006-07-10',0,0);
+INSERT INTO `salesorders` VALUES (50,'ANGRY','ANGRYFL','',NULL,'','2006-08-07','DE',1,'1821 Sunnyside','Ft Lauderdale','Florida','42554','','','2445 2232 524','wendy@angry.com','Angus Rouledge - Florida',1,0,'DEN','2006-08-08',0,'0000-00-00',0,0);
+INSERT INTO `salesorders` VALUES (51,'QUARTER','QUARTER','',NULL,'','2006-08-07','DE',1,'1356 Union Drive','Holborn','England','','','','123456','','Quarter Back to Back',1,0,'TOR','2006-08-08',0,'0000-00-00',0,0);
 
 --
 -- Dumping data for table `salestypes`

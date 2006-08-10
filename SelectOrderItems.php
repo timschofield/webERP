@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.49 $ */
+/* $Revision: 1.50 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -209,12 +209,12 @@ if (isset($_GET['ModifyOrderNumber'])
 				locstock.quantity as qohatloc,
 				stockmaster.mbflag,
 				stockmaster.discountcategory,
-				stockmaster.decimalplaces
+				stockmaster.decimalplaces,
+				salesorderdetails.completed=0
 				FROM salesorderdetails INNER JOIN stockmaster
 				ON salesorderdetails.stkcode = stockmaster.stockid
 				INNER JOIN locstock ON locstock.stockid = stockmaster.stockid
 				WHERE  locstock.loccode = '" . $myrow['fromstkloc'] . "'
-				AND  salesorderdetails.completed=0
 				AND salesorderdetails.orderno =" . $_GET['ModifyOrderNumber'] . "
 				ORDER BY salesorderdetails.orderlineno";
 		} else {
@@ -234,21 +234,23 @@ if (isset($_GET['ModifyOrderNumber'])
 				locstock.quantity as qohatloc,
 				stockmaster.mbflag,
 				stockmaster.discountcategory,
-				stockmaster.decimalplaces
+				stockmaster.decimalplaces,
+				salesorderdetails.completed
 				FROM salesorderdetails INNER JOIN stockmaster
 				ON salesorderdetails.stkcode = stockmaster.stockid
 				INNER JOIN locstock ON locstock.stockid = stockmaster.stockid
 				WHERE  locstock.loccode = '" . $myrow['fromstkloc'] . "'
-				AND  salesorderdetails.completed=0
 				AND salesorderdetails.orderno =" . $_GET['ModifyOrderNumber'] . "
 				ORDER BY salesorderdetails.orderlineno";
+		}
 
 		$ErrMsg = _('The line items of the order cannot be retrieved because');
 		$LineItemsResult = db_query($LineItemsSQL,$db,$ErrMsg);
 		if (db_num_rows($LineItemsResult)>0) {
 
 			while ($myrow=db_fetch_array($LineItemsResult)) {
-					$_SESSION['Items']->add_to_cart($myrow['stkcode'],
+					if ($myrow['completed']==0){
+						$_SESSION['Items']->add_to_cart($myrow['stkcode'],
 								$myrow['quantity'],
 								$myrow['description'],
 								$myrow['unitprice'],
@@ -269,8 +271,10 @@ if (isset($_GET['ModifyOrderNumber'])
 								$myrow['orderlineno']
 								);
 				/*Just populating with existing order - no DBUpdates */
-
+					}
+					$LastLineNo = $myrow['orderlineno'];
 			} /* line items from sales order details */
+			 $_SESSION['Items']->LineCounter = $LastLineNo+1;
 		} //end of checks on returned data set
 	}
 }
@@ -907,7 +911,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		If(isset($_GET['Delete'])){ 
 			//page called attempting to delete a line - GET['Delete'] = the line number to delete
-			$_SESSION['Items']->remove_from_cart($_GET['Delete'], 'Yes');  /*Do update DB */
+			if($_SESSION['Items']->Some_Already_Delivered($_GET['Delete'])==0){
+				$_SESSION['Items']->remove_from_cart($_GET['Delete'], 'Yes');  /*Do update DB */
+			} else {
+				prnMsg( _('This item cannot be deleted because some of it has already been invoiced'),'warn');
+			}
 		}
 
 		foreach ($_SESSION['Items']->LineItems as $OrderLine) {

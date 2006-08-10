@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 $PageSecurity =3;
 
 
@@ -818,7 +818,7 @@ if (isset($_POST['ProcessCredit'])){
 							'" . $_SESSION['CreditItems']->Branch . "',
 							" . $LocalCurrencyPrice . ",
 							" . $PeriodNo . ",
-							'Ex Inv - " . $_SESSION['ProcessingCredit'] . "',
+							'" . _('Ex Inv') .' - ' . $_SESSION['ProcessingCredit'] . "',
 							" . $OrderLine->QtyDispatched . ",
 							" . $OrderLine->DiscountPercent . ",
 							" . $OrderLine->StandardCost . ",
@@ -850,7 +850,7 @@ if (isset($_POST['ProcessCredit'])){
 							'" . $_SESSION['CreditItems']->Branch . "',
 							" . $LocalCurrencyPrice . ",
 							" . $PeriodNo . ",
-							'Ex Inv - " . $_SESSION['ProcessingCredit'] . "',
+							'" . _('Ex Inv') . " - " . $_SESSION['ProcessingCredit'] . "',
 							" . $OrderLine->QtyDispatched . ",
 							" . $OrderLine->DiscountPercent . ",
 							" . $OrderLine->StandardCost . ",
@@ -939,7 +939,7 @@ if (isset($_POST['ProcessCredit'])){
 						'" . $_SESSION['CreditItems']->Branch . "',
 						" . $LocalCurrencyPrice . ",
 						" . $PeriodNo . ", 
-						" . _('Ex Inv') . ' - ' . $_SESSION['ProcessingCredit'] . "',
+						'" . _('Ex Inv') . ' - ' . $_SESSION['ProcessingCredit'] . "',
 						" . $OrderLine->QtyDispatched . ",
 						" . $OrderLine->DiscountPercent . ",
 						" . $OrderLine->StandardCost . ",
