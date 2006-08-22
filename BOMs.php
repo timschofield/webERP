@@ -1,20 +1,58 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 9;
 
 include('includes/session.inc');
 
-$title = _('Bill Of Materials Maintenance');
+$title = _('Multi-Level Bill Of Materials Maintenance');
 
 include('includes/header.inc');
 
+// *** POPAD&T
+function display_children($parent, $level, &$arbore) {
+	// retrive all children of parent
+	$result = mysql_query('select parent, component from bom '.
+							'where parent="'.$parent.'";');
+	if (mysql_num_rows($result) > 0) {
+		echo ("<UL>\n");
+		// display each child
+		while ($row = mysql_fetch_array($result)) {
+			if (!($parent == $row['component'])) {
+				// indent and display the title of this child
+				$ID1 = $row["component"];
+				//echo("<LI>\n");
+				//echo("<A HREF=\""."?Select=".$ID1."\">".$ID1."</A>"."  \n");
+				$arbore[] = $level; 		// Level
+				if ($level > 10) { echo "ERROR"; exit; }
+				$arbore[] = $parent;		// Assemble
+				$arbore[] = $row['component'];	// Component
+				// call this function again to display this
+				// child's children
+				display_children($row['component'], $level + 1, $arbore);
+			}
+		}
+		//echo ("</UL>\n");
+	}
+} 
+
+function conversie($arbore, &$matrice){
+	$j = 0;
+	//
+	for($i = 0; $i < count($arbore); $i = $i + 3){
+		$matrice[$j][0] = $arbore[$i];
+		$matrice[$j][1] = $arbore[$i+1];
+		$matrice[$j][2] = $arbore[$i+2];
+		$j++;
+	}
+	$maxj = $j;
+}
+// *** end POPAD&T
 
 function CheckForRecursiveBOM ($UltimateParent, $ComponentToCheck, $db) {
 
 /* returns true ie 1 if the BOM contains the parent part as a component
 ie the BOM is recursive otherwise false ie 0 */
-
 
 	$sql = "SELECT component FROM bom WHERE parent='$ComponentToCheck'";
 	$ErrMsg = _('An error occurred in retrieving the components of the BOM during the check for recursion');
@@ -26,7 +64,6 @@ ie the BOM is recursive otherwise false ie 0 */
 			if ($myrow[0]==$UltimateParent){
 				return 1;
 			}
-
 			if (CheckForRecursiveBOM($UltimateParent, $myrow[0],$db)){
 				return 1;
 			}
@@ -37,7 +74,8 @@ ie the BOM is recursive otherwise false ie 0 */
 
 } //end of function CheckForRecursiveBOM
 
-function DisplayBOMItems($SelectedParent, $db) {
+function DisplayBOMItems($Parent,$Component,$Level,$db) {
+		// Modified by POPAD&T
 		$sql = "SELECT bom.component,
 				stockmaster.description,
 				locations.locationname,
@@ -49,28 +87,16 @@ function DisplayBOMItems($SelectedParent, $db) {
 				stockmaster,
 				locations,
 				workcentres
-			WHERE bom.component=stockmaster.stockid
+			WHERE bom.component='$Component'
 			AND bom.loccode = locations.loccode
 			AND bom.workcentreadded=workcentres.code
-			AND bom.parent='$SelectedParent'";
+			AND stockmaster.stockid=bom.component";
 
 		$ErrMsg = _('Could not retrieve the BOM components because');
 		$DbgMsg = _('The SQL used to retrieve the components was');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-		echo "<CENTER><table border=1>";
-
-		$TableHeader =  '<tr BGCOLOR =#800000>
-				<td class=tableheader>' . _('Code') . '</td>
-				<td class=tableheader>' . _('Description') . '</td>
-				<td class=tableheader>' . _('Location') . '</td>
-				<td class=tableheader>' . _('Work Centre') . '</td>
-				<td class=tableheader>' . _('Quantity') . '</td>
-				<td class=tableheader>' . _('Effective After') . '</td>
-				<td class=tableheader>' . _('Effective To') . '</td>
-				</tr>';
-
-		echo $TableHeader;
+		//echo $TableHeader;
 		$RowCounter =0;
 		while ($myrow=DB_fetch_row($result)) {
 			if ($k==1){
@@ -80,9 +106,12 @@ function DisplayBOMItems($SelectedParent, $db) {
 				echo "<tr bgcolor='#EEEEEE'>";
 				$k++;
 			}
+			
+			$Level1 = str_repeat('.',$Level-1).$Level;
 
 			printf("<td>%s</td>
-			        <td>%s</td>
+				<td>%s</td>
+			    <td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -91,6 +120,7 @@ function DisplayBOMItems($SelectedParent, $db) {
 				<td><a href=\"%s&Select=%s&SelectedComponent=%s\">" . _('Edit') . "</a></td>
 				 <td><a href=\"%s&Select=%s&SelectedComponent=%s&delete=1\">" . _('Delete') . "</a></td>
 				 </tr>",
+				$Level1,
 				$myrow[0],
 				$myrow[1],
 				$myrow[2],
@@ -99,10 +129,10 @@ function DisplayBOMItems($SelectedParent, $db) {
 				ConvertSQLDate($myrow[5]),
 				ConvertSQLDate($myrow[6]),
 				$_SERVER['PHP_SELF'] . '?' . SID,
-				$SelectedParent,
+				$Parent,
 				$myrow[0],
 				$_SERVER['PHP_SELF'] . '?' . SID,
-				$SelectedParent,
+				$Parent,
 				$myrow[0]);
 
 			$RowCounter++;
@@ -111,7 +141,7 @@ function DisplayBOMItems($SelectedParent, $db) {
 				$RowCounter=0;
 			}
 		} //END WHILE LIST LOOP
-}
+} //end of function DisplayBOMItems
 
 //---------------------------------------------------------------------------------
 
@@ -186,22 +216,22 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		if (!Is_Date($_POST['EffectiveAfter'])) {
 			$InputError = 1;
 			prnMsg(_('The effective after date field must be a date in the format dd/mm/yy or dd/mm/yyyy or ddmmyy or ddmmyyyy or dd-mm-yy or dd-mm-yyyy'),'error');
-			include('includes/footer.inc');
+			includes('includes/footer.inc');
 			exit;
 		} elseif (!Is_Date($_POST['EffectiveTo'])) {
 			$InputError = 1;
 			prnMsg(_('The effective to date field must be a date in the format dd/mm/yy or dd/mm/yyyy or ddmmyy or ddmmyyyy or dd-mm-yy or dd-mm-yyyy'),'error');
-			include('includes/footer.inc');
+			includes('includes/footer.inc');
 			exit;
 		} elseif (!is_double((double) $_POST['Quantity'])) {
 			$InputError = 1;
 			prnMsg(_('The quantity entered must be numeric'),'error');
-			include('includes/footer.inc');
+			includes('includes/footer.inc');
 			exit;
 		} elseif(!Date1GreaterThanDate2($_POST['EffectiveTo'], $_POST['EffectiveAfter'])){
 			$InputError = 1;
 			prnMsg(_('The effective to date must be a date after the effective after date') . '<BR>' . _('The effective to date is') . ' ' . DateDiff($_POST['EffectiveTo'], $_POST['EffectiveAfter'], 'd') . ' ' . _('days before the effective after date') . '! ' . _('No updates have been performed') . '.<BR>' . _('Effective after was') . ': ' . $_POST['EffectiveAfter'] . ' ' . _('and effective to was') . ': ' . $_POST['EffectiveTo'],'error');
-			include('includes/footer.inc');
+			includes('includes/footer.inc');
 			exit;
 		}
 
@@ -304,14 +334,43 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 	} //BOM editing/insertion ifs
 
-	DisplayBOMItems($SelectedParent, $db);
+	//DisplayBOMItems($SelectedParent, $db);
 
-	?>
+?>
 
+	<CENTER><table border=1>
+
+<?php // *** POPAD&T
+	
+	$arbore[] = 1;					// Level
+	$arbore[] = $SelectedParent;	// Ansemble
+	$arbore[] = $SelectedParent;	// Component
+
+	display_children($SelectedParent, 1, $arbore);
+	conversie($arbore, $matrice);
+
+	$TableHeader =  '<tr BGCOLOR =#800000>
+			<td class=tableheader>' . _('Level') . '</td>
+			<td class=tableheader>' . _('Code') . '</td>
+			<td class=tableheader>' . _('Description') . '</td>
+			<td class=tableheader>' . _('Location') . '</td>
+			<td class=tableheader>' . _('Work Centre') . '</td>
+			<td class=tableheader>' . _('Quantity') . '</td>
+			<td class=tableheader>' . _('Effective After') . '</td>
+			<td class=tableheader>' . _('Effective To') . '</td>
+			</tr>';
+	echo $TableHeader;
+
+	foreach($matrice as $elem){
+		$Level = $elem[0];
+		$Parent = $elem[1];
+		$Component = $elem[2];
+		DisplayBOMItems($Parent,$Component,$Level,$db);
+	}
+		
+	// *** end POPAD&T
+?>
 	</table></CENTER>
-	<p>
-
-	<P>
 
 	<?php
 
@@ -427,7 +486,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		if (DB_num_rows($result)==0){
 			prnMsg( _('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres'),'warn');
 			echo "<BR><A HREF='$rootpath/WorkCentres.php?" . SID . "'>" . _('Work Centre Maintenance') . '</A>';
-			include('includes/footer.inc');
+			includes('includes/footer.inc');
 			exit;
 		}
 

@@ -1,5 +1,77 @@
 <html>
 <body>
+
+<script type="text/javascript">
+<!--
+var fActiveMenu = false;
+var oOverMenu = false;
+
+function mouseSelect(e) {
+	if (fActiveMenu) {
+		if (oOverMenu == false) {
+			oOverMenu = false;
+			document.getElementById(fActiveMenu).style.display = "none";
+			fActiveMenu = false;
+			return false;
+		}
+		return false;
+	}
+	return true;
+}
+
+function menuActivate(idEdit, idMenu, idSel) {
+	if (fActiveMenu) return mouseSelect(0);
+
+	oMenu = document.getElementById(idMenu);
+	oEdit = document.getElementById(idEdit);
+	nTop = oEdit.offsetTop + oEdit.offsetHeight;
+	nLeft = oEdit.offsetLeft;
+	while (oEdit.offsetParent != document.body) {
+		oEdit = oEdit.offsetParent;
+		nTop += oEdit.offsetTop;
+		nLeft += oEdit.offsetLeft;
+	}
+	oMenu.style.left = nLeft;
+	oMenu.style.top = nTop;
+	oMenu.style.display = "";
+	fActiveMenu = idMenu;
+	document.getElementById(idSel).focus();
+	return false;
+}
+
+function textSet(idEdit, text) {
+	document.getElementById(idEdit).value = text;
+	oOverMenu = false;
+	mouseSelect(0);
+	document.getElementById(idEdit).focus();
+}
+
+function comboKey(idEdit, idSel) {
+	if (window.event.keyCode == 13 || window.event.keyCode == 32)
+		textSet(idEdit,idSel.value);
+	else if (window.event.keyCode == 27) {
+		mouseSelect(0);
+		document.getElementById(idEdit).focus();
+	}
+}
+
+//pre-load images
+if (document.images) {
+ img_on =new Image();  img_on.src ="../images/pull_down_active.gif"; 
+ img_off=new Image();  img_off.src="../images/pull_down_inactive.gif"; 
+}
+
+function handleOver() { 
+ if (document.images) document.imgName.src=img_on.src;
+}
+
+function handleOut() {
+ if (document.images) document.imgName.src=img_off.src;
+}
+
+document.onmousedown = mouseSelect;
+//--></script>
+
 <h2 align="center"><?php echo $FormParams['heading'].$reportname.' - '.RPT_BTN_FLDSETUP; ?></h2>
 <table align="center" width="550" border="0" cellspacing="1" cellpadding="1">
   <form name="RptFieldForm" method="post" action="ReportCreator.php?action=step6">
@@ -26,7 +98,7 @@
       <td>&nbsp;</td>
     </tr>
     <tr>
-	<form name="RptFieldForm" method="post" action="ReportCreator.php?action=step6">
+	<form name="RptFieldForm1" method="post" action="ReportCreator.php?action=step6">
 	<input name="ReportID" type="hidden" value="<?php echo $ReportID ?>">
 	<input name="Type" type="hidden" value="<?php echo $Type; ?>">
 	<input name="ReportName" type="hidden" value="<?php echo $reportname; ?>">
@@ -37,9 +109,18 @@
 	  <input name="SeqNum"  type="text" value="<?php echo $FieldListings['defaults']['seqnum']; ?>" size="4" maxlength="3">
 	  <?php } // end if ?>
 		</td>
-	  <?php if ($Type<>'frm') { ?><td>
-	    <select name="FieldName"><OPTION Value=""><?php echo RPT_SLCTFIELD; ?>
-		<?php echo CreateFieldList($ReportID,$FieldListings['defaults']['fieldname'],''); ?></select>
+	  <?php if ($Type<>'frm') { ?>
+	    <td>
+			<input type="text" name="FieldName" id="FieldName" value="<?php echo $FieldListings['defaults']['fieldname']; ?>" size="30">
+			<image name="imgName" src="../images/pull_down_inactive.gif" height="20" width="19"
+			onMouseOver="handleOver(); return true;" onMouseOut="handleOut(); return true;" 
+			onclick="JavaScript:menuActivate('FieldName', 'combodiv', 'combosel')">
+			<div id="combodiv" style="position:absolute; display:none; top:0px; left:0px;z-index:10000" onmouseover="javascript:oOverMenu='combodiv';"
+			onmouseout="javascript:oOverMenu=false;">
+			<select size="10" id="combosel" style="width: 220; border-style: none" onclick="JavaScript:textSet('FieldName',this.value);"
+			onkeypress="JavaScript:comboKey('FieldName', this);">
+			<?php echo CreateFieldList($ReportID, $FieldListings['defaults']['fieldname'],''); ?>
+			</select></div>
 		</td>
 	  <?php } ?>
       <td>
