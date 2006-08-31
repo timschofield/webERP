@@ -377,6 +377,8 @@ if(isset($_GET['Trf_ID'])){
 									$myrow['decimalplaces']
 									);
 		$_SESSION['Transfer']->TransferItem[$i]->PrevRecvQty = $myrow['recqty'];
+		$_SESSION['Transfer']->TransferItem[$i]->Quantity = $myrow['shipqty']-$myrow['recqty'];
+
 		$i++; /*numerical index for the TransferItem[] array of LineItem s */
 
 	} while ($myrow=DB_fetch_array($result));

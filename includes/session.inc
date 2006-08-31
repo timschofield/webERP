@@ -1,16 +1,16 @@
 <?php
-/* $Revision: 1.46 $ */
+/* $Revision: 1.47 $ */
  
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
 }
 
 include($PathPrefix . 'config.php');
-        
+
 if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);
 }
-    
+
 ini_set('session.gc_Maxlifetime',$SessionLifeTime);
 ini_set('max_execution_time',$MaximumExecutionTime);
  

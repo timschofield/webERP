@@ -2,7 +2,7 @@
 $PageSecurity = 1;
 include ('includes/session.inc');
 /*
-http://127.0.0.1/~brink/webERP/getstockimg.php
+http://127.0.0.1/~brink/webERP/GetStockImage.php
 ?automake=1&width=81&height=74&stockid=&textcolor=FFFFF0&bevel=3&text=aa&bgcolor=007F00
 
 automake - if specified allows autocreate images
@@ -17,6 +17,35 @@ text - if specified override stockid to be printed on image
 bevel - if specified draws a drop down bevel
 
 */
+// Color decode function
+function DecodeBgColor( $colorstr ) {
+	if ( $colorstr[0] == '#' ) {
+		$colorstr = substr($colorstr,1,strlen($colorstr));
+	}
+	$red = 0;
+	if(strlen($colorstr) > 1) {
+		$red = hexdec(substr($colorstr,0,2));
+		$colorstr = substr($colorstr,2,strlen($colorstr));
+	}
+	$green = 0;
+	if(strlen($colorstr) > 1) {
+		$green = hexdec(substr($colorstr,0,2));
+		$colorstr = substr($colorstr,2,strlen($colorstr));
+	}
+	$blue = 0;
+	if(strlen($colorstr) > 1) {
+		$blue = hexdec(substr($colorstr,0,2));
+		$colorstr = substr($colorstr,2,strlen($colorstr));
+	}
+	if(strlen($colorstr) > 1) {
+		$alpha = hexdec(substr($colorstr,0,2));
+		$colorstr = substr($colorstr,2,strlen($colorstr));
+	}
+	if ( isset($alpha) )
+		return array('red' => $red, 'green' => $green, 'blue' => $blue, 'alpha' => $alpha );
+	else
+		return array('red' => $red, 'green' => $green, 'blue' => $blue );
+}
 
 if (!function_exists('imagecreatefrompng')){
 	$title = _('Image Manipulation Script Problem');
@@ -27,17 +56,15 @@ if (!function_exists('imagecreatefrompng')){
 }
 $defaultimage = 'webERPsmall.png';
 
-$PartPics = $_SESSION['part_pics_dir'];
-
 // FOR APACHE
-if ( $_SERVER["PATH_TRANSLATED"][0] == '/' ) {
-	//Linux
+if ( $_SERVER['PATH_TRANSLATED'][0] == '/' OR $_SERVER['PATH_TRANSLATED'][0]=='') {
+	//*nix
 	$pathsep = "/";
 } else {
 	//Windows
 	$pathsep = "\\";
 }
-$filepath = dirname($_SERVER["PATH_TRANSLATED"]) . $pathsep. $PartPics . $pathsep;
+$filepath = $_SERVER['DOCUMENT_ROOT'] . $rootpath . $pathsep . $_SESSION['part_pics_dir'] . $pathsep;
 
 $stockid = trim(strtoupper($_GET['StockID']));
 if( isset($_GET['bgcolor']) )
@@ -79,35 +106,7 @@ if( isset($_GET['notextbg']) ) {
 
 
 
-// Color decode function
-function DecodeBgColor( $colorstr ) {
-	if ( $colorstr[0] == '#' ) {
-		$colorstr = substr($colorstr,1,strlen($colorstr));
-	}
-	$red = 0;
-	if(strlen($colorstr) > 1) {
-		$red = hexdec(substr($colorstr,0,2));
-		$colorstr = substr($colorstr,2,strlen($colorstr));
-	}
-	$green = 0;
-	if(strlen($colorstr) > 1) {
-		$green = hexdec(substr($colorstr,0,2));
-		$colorstr = substr($colorstr,2,strlen($colorstr));
-	}
-	$blue = 0;
-	if(strlen($colorstr) > 1) {
-		$blue = hexdec(substr($colorstr,0,2));
-		$colorstr = substr($colorstr,2,strlen($colorstr));
-	}
-	if(strlen($colorstr) > 1) {
-		$alpha = hexdec(substr($colorstr,0,2));
-		$colorstr = substr($colorstr,2,strlen($colorstr));
-	}
-	if ( isset($alpha) )
-		return array('red' => $red, 'green' => $green, 'blue' => $blue, 'alpha' => $alpha );
-	else
-		return array('red' => $red, 'green' => $green, 'blue' => $blue );
-}
+
 
 // Extention requirements and Stock ID Issolation
 if($stockid == '') {
@@ -154,6 +153,19 @@ if( !$automake && !isset($filename) ) {
 		include('includes/footer.inc');
 		exit;
 }
+
+/*
+	$title = _('Stock Image Retrieval ....');
+	include('includes/header.inc');
+	echo 'The image ' . $filename . ' using functype ' . $functype 
+	 	. '<BR> The tmpfilename = ' . $tmpfilename . '<BR> The temppath = ' . $filepath . '<BR>The stockid = ' . $stockid . '<BR> filepath . stockid .jpg = ' . $filepath . $stockid .'.jpg<BR> The result of file_exists($filepath . $stockid .jpg) =' . file_exists($filepath . $stockid .'.jpg')
+		. '<BR>filepath = ' . $filepath 
+		. '<BR>rootpath = ' . $rootpath;
+	include('includes/footer.inc');
+	exit;
+*/
+
+
 
 // See if we need to automake this image
 if( $automake && !isset($filename) || $useblank ) {

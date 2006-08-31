@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
@@ -761,6 +761,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<TD ALIGN=RIGHT>' . $DisplayTaxAmount . '</TD>
 				<TD ALIGN=RIGHT>' . $DisplayGrossLineTotal . '</TD>
 				<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $LineItem->LineNumber . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this line item from the credit note?') . '\');">' . _('Delete') . '</A></TD>
+
+
+				<TD>' . $LineItem->LineNumber . '</TD>
 				</TR>';
 
 			echo $RowStarter;

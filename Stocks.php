@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.31 $ */
+/* $Revision: 1.32 $ */
 
 
 $PageSecurity = 11;
@@ -662,7 +662,7 @@ echo '</SELECT></TD></TR>';
 
  if (function_exists('imagecreatefrompng')){
 	$StockImgLink = '<img src="GetStockImage.php?SID&automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
-		'&stockid='.urlencode($StockID.'.jpg').
+		'&StockID='.urlencode($StockID).
 		'&text='.
 		'&width=64'.
 		'&height=64'.

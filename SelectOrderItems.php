@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.50 $ */
+/* $Revision: 1.51 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -1204,15 +1204,18 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$k=0; //row colour counter
 
 			while ($myrow=DB_fetch_array($SearchResult)) {
-
-				$ImageSource = $rootpath. '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg';
 				
-				   if (file_exists($ImageSource)){
-						$ImageSource  = '<img src="'.$ImageSource.'">';
-				   } else {
-						$ImageSource  = '<i>'._('No Image').'</i>';
-				   }
-				   
+				if (function_exists('imagecreatefrompng') ){
+					$ImageSource = '<IMG SRC="GetStockImage.php?SID&automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode($myrow['stockid']). '&text=&width=64&height=64">';
+				} else {
+					if(file_exists($_SERVER['DOCUMENT_ROOT'] . $rootpath. '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg')) {
+						$ImageSource = '<IMG SRC="' .$_SERVER['DOCUMENT_ROOT'] . $rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg">';
+					} else {
+						$ImageSource = _('No Image');
+					}
+				}
+				
+				
 				if ($k==1){
 					echo '<tr bgcolor="#CCCCCC">';
 					$k=0;
@@ -1221,35 +1224,21 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					$k=1;
 				}
 
-				if (file_exists($_SERVER['DOCUMENT_ROOT'] . $ImageSource)){
-					printf("<TD><FONT SIZE=1>%s</FONT></TD>
-						<TD><FONT SIZE=1>%s</FONT></TD>
-						<TD><FONT SIZE=1>%s</FONT></TD>
-						<TD><IMG SRC=%s WIDTH=250></TD>
-						<TD><FONT SIZE=1><A HREF='%s/SelectOrderItems.php?%s&NewItem=%s'>" . _('Order some') . "</A></FONT></TD>
-						</TR>",
-						$myrow['stockid'],
-						$myrow['description'],
-						$myrow['units'],
-						$ImageSource,
-						$rootpath,
-						SID,
-						$myrow['stockid']);
-				} else { /*no picture to display */
-					printf("<td><FONT SIZE=1>%s</FONT></td>
-						<td><FONT SIZE=1>%s</FONT></td>
-						<td><FONT SIZE=1>%s</FONT></td>
-						<td ALIGN=CENTER><i>NO PICTURE</i></td>
-						<td><FONT SIZE=1><a href='%s/SelectOrderItems.php?%s&NewItem=%s'>" . _('Order some') . "</a></FONT></td>
-						</tr>",
-						$myrow['stockid'],
-						$myrow['description'],
-						$myrow['units'],
-						$rootpath,
-						SID,
-						$myrow['stockid']);
-				}
-
+				printf("<TD><FONT SIZE=1>%s</FONT></TD>
+					<TD><FONT SIZE=1>%s</FONT></TD>
+					<TD><FONT SIZE=1>%s</FONT></TD>
+					<TD>%s</TD>
+					<TD><FONT SIZE=1><A HREF='%s/SelectOrderItems.php?%s&NewItem=%s'>"
+					. _('Order some') . '</A></FONT></TD>
+					</TR>',
+					$myrow['stockid'],
+					$myrow['description'],
+					$myrow['units'],
+					$ImageSource,
+					$rootpath,
+					SID,
+					$myrow['stockid']);
+				
 				$j++;
 				If ($j == 25){
 					$j=1;

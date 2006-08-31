@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 11;
 
@@ -432,7 +432,7 @@ if (!isset($_GET['delete'])) {
 	<TD><input type="Text" name="DelAdd1" value="<?php echo $_POST['DelAdd1']; ?>" SIZE=41 MAXLENGTH=40></TD></TR>
 	<TR><TD><?php echo _('Delivery Address 2') . ':'; ?></TD>
 	<TD><input type="Text" name="DelAdd2" value="<?php echo $_POST['DelAdd2']; ?>" SIZE=41 MAXLENGTH=40></TD></TR>
-	<TR><TD><?php echo _('Delivery Address 4') . ':'; ?></TD>
+	<TR><TD><?php echo _('Delivery Address 3') . ':'; ?></TD>
 	<TD><input type="Text" name="DelAdd3" value="<?php echo $_POST['DelAdd3']; ?>" SIZE=41 MAXLENGTH=40></TD></TR>
 	<TR><TD><?php echo _('Delivery Address 4') . ':'; ?></TD>
 	<TD><input type="Text" name="DelAdd4" value="<?php echo $_POST['DelAdd4']; ?>" SIZE=41 MAXLENGTH=40></TD></TR>
