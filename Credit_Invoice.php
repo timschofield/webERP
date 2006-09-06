@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 $PageSecurity =3;
 
 
@@ -445,8 +445,14 @@ echo '<TR>
 
 $DefaultDispatchDate = Date($_SESSION['DefaultDateFormat']);
 
+$OkToProcess = true;
 
-if (isset($_POST['ProcessCredit'])){
+if ($_POST['CreditType']=='WriteOff' AND !isset($_POST['WriteOffGLCode'])){
+	prnMsg (_('The GL code to write off the credit value to must be specified. Please select the appropriate GL code for the selection box'),'info');
+	$OKToProcess = false;
+}
+
+if (isset($_POST['ProcessCredit']) AND $OkToProcess==true){
 
 /* SQL to process the postings for sales credit notes... First Get the area where the credit note is to from the branches table */
 
@@ -677,7 +683,7 @@ if (isset($_POST['ProcessCredit'])){
 				    $AssResult = DB_query($sql,$db, $ErrMsg, $DbgMsg, true);
 
 				    while ($AssParts = DB_fetch_array($AssResult,$db)){
-				    
+				
 					   $StandardCost += $AssParts['standard'];
 					   /*Determine the type of stock item being credited */
 					   $SQL = "SELECT mbflag
@@ -739,7 +745,7 @@ if (isset($_POST['ProcessCredit'])){
 								)";
 					    } else {
 
-					    	$SQL = "INSERT INTO stockmoves (
+						$SQL = "INSERT INTO stockmoves (
 								stockid,
 								type,
 								transno,

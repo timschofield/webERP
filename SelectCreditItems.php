@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
@@ -905,11 +905,18 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			</TR>
 			</TABLE></CENTER>';
 
-		  if (!isset($_POST['ProcessCredit'])){
-				    echo '<CENTER><INPUT TYPE=SUBMIT NAME="Update" VALUE="' . _('Update') . '">
-                  				<INPUT TYPE=SUBMIT NAME="CancelCredit" VALUE="' . _('Cancel') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel the whole of this credit note?') . '\');">
-                  				<INPUT TYPE=SUBMIT NAME="ProcessCredit" VALUE="' . _('Process Credit Note') . '"></CENTER><HR>';
+		  $OKToProcess = true;
+		/*Check for the worst */
+		  if ($_POST['CreditType']=='WriteOff' AND !isset($_POST['WriteOffGLCode'])){
+			prnMsg (_('The GL code to write off the credit value to must be specified. Please select the appropriate GL code for the selection box'),'info');
+			$OKToProcess = false;
 		  }
+		  echo '<CENTER><INPUT TYPE=SUBMIT NAME="Update" VALUE="' . _('Update') . '">
+                  				<INPUT TYPE=SUBMIT NAME="CancelCredit" VALUE="' . _('Cancel') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel the whole of this credit note?') . '\');">';
+		  if (!isset($_POST['ProcessCredit']) AND $OKToProcess == true){
+			echo '<INPUT TYPE=SUBMIT NAME="ProcessCredit" VALUE="' . _('Process Credit Note') . '">';
+		  }
+		  echo '</CENTER><HR>';
 	 } # end of if lines
 
 
@@ -1022,11 +1029,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	}
 
-} #end of else not selecting a customer
+} //end of else not selecting a customer
 
-if (isset($_POST['ProcessCredit'])){
+if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 
-/* SQL to process the postings for sales credit notes... First Get the area where the credit note is to from the branches table */
+/* SQL to process the postings for sales credit notes... 
+	First Get the area where the credit note is to from the branches table */
+
 	 $SQL = "SELECT area 
 	 		FROM custbranch 
 			WHERE custbranch.debtorno ='". $_SESSION['CreditItems']->DebtorNo . "' 
