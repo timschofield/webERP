@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 9;
 
@@ -76,7 +76,7 @@ ie the BOM is recursive otherwise false ie 0 */
 
 } //end of function CheckForRecursiveBOM
 
-function DisplayBOMItems($Parent,$Component,$Level,$db) {
+function DisplayBOMItems($UltimateParent, $Parent,$Component,$Level,$db) {
 		// Modified by POPAD&T
 		$sql = "SELECT bom.component,
 				stockmaster.description,
@@ -84,7 +84,8 @@ function DisplayBOMItems($Parent,$Component,$Level,$db) {
 				workcentres.description,
 				quantity,
 				effectiveafter,
-				effectiveto
+				effectiveto,
+				mbflag
 			FROM bom,
 				stockmaster,
 				locations,
@@ -111,7 +112,15 @@ function DisplayBOMItems($Parent,$Component,$Level,$db) {
 			}
 			
 			$Level1 = str_repeat('-&nbsp;',$Level-1).$Level;
-
+			if( $myrow[7]=='B' || $myrow[7]=='K') {
+				$DrillText = '%s%s';
+				$DrillLink = '<center>----</center>';
+				$DrillID='';
+			} else {
+				$DrillText = '<a href="%s&Select=%s">' . _('Drill Down');
+				$DrillLink = $_SERVER['PHP_SELF'] . '?' . SID;
+				$DrillID=$myrow[0];
+			}
 			printf("<td>%s</td>
 				<td>%s</td>
 			    <td>%s</td>
@@ -121,7 +130,8 @@ function DisplayBOMItems($Parent,$Component,$Level,$db) {
 				<td>%s</td>
 				<td>%s</td>
 				<td><a href=\"%s&Select=%s&SelectedComponent=%s\">" . _('Edit') . "</a></td>
-				 <td><a href=\"%s&Select=%s&SelectedComponent=%s&delete=1\">" . _('Delete') . "</a></td>
+				<td>".$DrillText."</a></td>
+				 <td><a href=\"%s&Select=%s&SelectedComponent=%s&delete=1&ReSelect=%s\">" . _('Delete') . "</a></td>
 				 </tr>",
 				$Level1,
 				$myrow[0],
@@ -134,9 +144,12 @@ function DisplayBOMItems($Parent,$Component,$Level,$db) {
 				$_SERVER['PHP_SELF'] . '?' . SID,
 				$Parent,
 				$myrow[0],
+				$DrillLink,
+				$DrillID,
 				$_SERVER['PHP_SELF'] . '?' . SID,
 				$Parent,
-				$myrow[0]);
+				$myrow[0],
+				$UltimateParent);
 
 			$RowCounter++;
 			if ($RowCounter==20){
@@ -174,43 +187,6 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 	$SelectedParent = $Select;
 	unset($Select);// = NULL;
-
-
-	$sql = "SELECT stockmaster.description,
-			stockmaster.mbflag
-		FROM stockmaster 
-		WHERE stockmaster.stockid='" . $SelectedParent . "'";
-
-	$ErrMsg = _('Could not retrieve the description of the parent part because');
-	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
-	$result=DB_query($sql,$db,$ErrMsg,$DbgMsg);
-
-	$myrow=DB_fetch_row($result);
-	
-	$ParentMBflag = $myrow[1];
-	
-	switch ($ParentMBflag){
-		case 'A': 
-			$MBdesc = _('Assembly'); 
-			break;
-		case 'B': 
-			$MBdesc = _('Purchased'); 
-			break;
-		case 'M': 
-			$MBdesc = _('Manufactured'); 
-			break;
-		case 'K': 
-			$MBdesc = _('Kit Set'); 
-			break;
-	}
-	
-	echo "<BR><FONT COLOR=BLUE SIZE=3><B>$SelectedParent - " . $myrow[0] . ' ('. $MBdesc. ') </FONT></B>';
-	
-	echo '<BR><A HREF=' . $_SERVER['PHP_SELF'] . '?' . SID . '>' . _('Select a Different BOM') . '</A></CENTER>';
-
-	if (isset($SelectedParent)) {
-		echo "<Center><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "Select=$SelectedParent'>" . _('Review Components') . '</a></Center>';
-	}
 
 	If (isset($SelectedParent) AND isset($_POST['Submit'])) {
 
@@ -329,6 +305,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 		prnMsg(_('The component part') . ' - ' . $SelectedComponent . ' - ' . _('has been deleted from this BOM'),'success');
+		// Now reselect
 
 	} elseif (isset($SelectedParent) AND !isset($SelectedComponent) AND ! isset($_POST['submit'])) {
 
@@ -337,10 +314,112 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 	} //BOM editing/insertion ifs
 
+	if(isset($_GET['ReSelect'])) {
+		$SelectedParent = $_GET['ReSelect'];
+	}
+	
 	//DisplayBOMItems($SelectedParent, $db);
+	$sql = "SELECT stockmaster.description,
+			stockmaster.mbflag
+		FROM stockmaster 
+		WHERE stockmaster.stockid='" . $SelectedParent . "'";
+
+	$ErrMsg = _('Could not retrieve the description of the parent part because');
+	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
+	$result=DB_query($sql,$db,$ErrMsg,$DbgMsg);
+
+	$myrow=DB_fetch_row($result);
+	
+	$ParentMBflag = $myrow[1];
+	
+	switch ($ParentMBflag){
+		case 'A': 
+			$MBdesc = _('Assembly'); 
+			break;
+		case 'B': 
+			$MBdesc = _('Purchased'); 
+			break;
+		case 'M': 
+			$MBdesc = _('Manufactured'); 
+			break;
+		case 'K': 
+			$MBdesc = _('Kit Set'); 
+			break;
+	}
+	
+	echo "<BR><FONT COLOR=BLUE SIZE=3><B>$SelectedParent - " . $myrow[0] . ' ('. $MBdesc. ') </FONT></B>';
+	
+	echo '<BR><A HREF=' . $_SERVER['PHP_SELF'] . '?' . SID . '>' . _('Select a Different BOM') . '</A></CENTER>';
+
+	if (isset($SelectedParent)) {
+		echo "<Center><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "Select=$SelectedParent'>" . _('Review Components') . '</a></Center>';
+	}
+?>
+<?php  
+	// Display Manufatured Parent Items
+	$sql = "SELECT bom.parent, stockmaster.description, stockmaster.mbflag
+		FROM bom, stockmaster 
+		WHERE bom.component='".$SelectedParent."' 
+		AND stockmaster.stockid=bom.parent
+		AND stockmaster.mbflag='M'";
+
+	$ErrMsg = _('Could not retrieve the description of the parent part because');
+	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
+	$result=DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	$ix = 0;
+	$reqnl = 0;
+	if( DB_num_rows($result) > 0 ) {
+	 echo '<CENTER>'._('Manufactured parent items').' : ';
+	 while ($myrow = DB_fetch_array($result)){
+	 	   echo (($ix)?', ':'').'<A href="'.$_SERVER['PHP_SELF'] . '?' . SID . 'Select='.$myrow['parent'].'">'.
+			$myrow['description'].'&nbsp;('.$myrow['parent'].')</A>';
+			$ix++;
+	 } //end while loop
+	 echo '</CENTER>';
+	 $reqnl = $ix;
+	}
+	// Display Assembly Parent Items
+	$sql = "SELECT bom.parent, stockmaster.description, stockmaster.mbflag
+		FROM bom, stockmaster 
+		WHERE bom.component='".$SelectedParent."' 
+		AND stockmaster.stockid=bom.parent
+		AND stockmaster.mbflag='A'";
+
+	$ErrMsg = _('Could not retrieve the description of the parent part because');
+	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
+	$result=DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	if( DB_num_rows($result) > 0 ) {
+		echo (($reqnl)?'<BR>':'').'<CENTER>'._('Assembly parent items').' : ';
+	 	$ix = 0;
+	 	while ($myrow = DB_fetch_array($result)){
+	 	   echo (($ix)?', ':'').'<A href="'.$_SERVER['PHP_SELF'] . '?' . SID . 'Select='.$myrow['parent'].'">'.
+			$myrow['description'].'&nbsp;('.$myrow['parent'].')</A>';
+			$ix++;
+	 	} //end while loop
+	 	echo '</CENTER>';
+	}
+	// Display Kit Sets
+	$sql = "SELECT bom.parent, stockmaster.description, stockmaster.mbflag
+		FROM bom, stockmaster 
+		WHERE bom.component='".$SelectedParent."' 
+		AND stockmaster.stockid=bom.parent
+		AND stockmaster.mbflag='K'";
+
+	$ErrMsg = _('Could not retrieve the description of the parent part because');
+	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
+	$result=DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	if( DB_num_rows($result) > 0 ) {
+		echo (($reqnl)?'<BR>':'').'<CENTER>'._('Kit sets').' : ';
+	 	$ix = 0;
+	 	while ($myrow = DB_fetch_array($result)){
+	 	   echo (($ix)?', ':'').'<A href="'.$_SERVER['PHP_SELF'] . '?' . SID . 'Select='.$myrow['parent'].'">'.
+			$myrow['description'].'&nbsp;('.$myrow['parent'].')</A>';
+			$ix++;
+	 	} //end while loop
+	 	echo '</CENTER>';
+	}
 
 ?>
-
 	<CENTER><table border=1>
 
 <?php // *** POPAD&T
@@ -365,11 +444,12 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	if( count($matrice) == 0 ) {
 		echo '<tr bgcolor="#EEEEEE"><td colspan="8">'._('No materials found.').'</td></tr>';
 	} else {
+		$UltimateParent = $SelectedParent;
 		foreach($matrice as $elem){
 			$Level = $elem[0];
 			$Parent = $elem[1];
 			$Component = $elem[2];
-			DisplayBOMItems($Parent,$Component,$Level,$db);
+			DisplayBOMItems($UltimateParent, $Parent,$Component,$Level,$db);
 		}
 	}
 		
