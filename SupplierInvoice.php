@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -836,6 +836,13 @@ then do the updates and inserts to process the invoice entered */
 			$DbgMsg = _('The following SQL to update the purchase order details was used');
 
 			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+
+
+
+
+			echo $SQL;
+
+
 
 
 			$SQL = 'UPDATE grns SET quantityinv = quantityinv + ' . $EnteredGRN->This_QuantityInv .

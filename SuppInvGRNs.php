@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -23,10 +23,11 @@ if (!isset($_SESSION['SuppTrans'])){
 	/*It all stops here if there aint no supplier selected and invoice initiated ie $_SESSION['SuppTrans'] started off*/
 }
 
-/*If the user hit the Add to Invoice button then process this first before showing  all GRNs on the invoice otherwise it wouldnt show the latest additions*/
+/*If the user hit the Add to Invoice button then process this first before showing  all GRNs on the invoice 
+otherwise it wouldnt show the latest additions*/
 if (isset($_POST['AddPOToTrans']) AND $_POST['AddPOToTrans']!=''){
     foreach($_SESSION['SuppTransTmp']->GRNs as $GRNTmp) {
-        if ($_POST['AddPOToTrans']==$GRNTmp->PODetailItem) {
+        if ($_POST['AddPOToTrans']==$GRNTmp->PONo) {
 		    $_SESSION['SuppTrans']->Copy_GRN_To_Trans($GRNTmp);
 		    $_SESSION['SuppTransTmp']->Remove_GRN_From_Trans($GRNTmp->GRNNo);
         }
@@ -53,7 +54,7 @@ if (isset($_POST['ModifyGRN'])){
 		$Complete = False;
 	}
 	if ($_SESSION['Check_Qty_Charged_vs_Del_Qty']==True) {
-		if ($_POST['This_QuantityInv']/($_POST['QtyRecd'] - $_POST['Prev_QuantityInv']) > (1+ ($_SESSION['OverChargeProportion'] / 100))){
+		if (($_POST['This_QuantityInv']+ $_POST['Prev_QuantityInv'])/($_POST['QtyRecd'] ) > (1+ ($_SESSION['OverChargeProportion'] / 100))){
 			prnMsg(_('The quantity being invoiced is more than the outstanding quantity by more than') . ' ' . $_SESSION['OverChargeProportion'] . ' ' . _('percent. The system is set up to prohibit this. See the system administrator to modify the set up parameters if necessary'),'error');
 			$InputError = True;
 		}
@@ -61,7 +62,7 @@ if (isset($_POST['ModifyGRN'])){
 	if (!is_numeric($_POST['ChgPrice']) AND $_POST['ChgPrice']<0){
 		$InputError = True;
 		prnMsg(_('The price charged in the suppliers currency is either not numeric or negative') . '. ' . _('The goods received cannot be invoiced at this price'),'error');
-	} elseif ($_SESSION['Check_Price_Charged_vs_Order_Price']==True) {
+	} elseif ($_SESSION['Check_Price_Charged_vs_Order_Price'] == True) {
 		if ($_POST['ChgPrice']/$_POST['OrderPrice'] > (1+ ($_SESSION['OverChargeProportion'] / 100))){
 			prnMsg(_('The price being invoiced is more than the purchase order price by more than') . ' ' . $_SESSION['OverChargeProportion'] . '%. ' . _('The system is set up to prohibit this') . '. ' . _('See the system administrator to modify the set up parameters if necessary'),'error');
 			$InputError = True;
@@ -150,7 +151,10 @@ $SQL = "SELECT grnbatch,
 		grns.qtyrecd,
 		grns.quantityinv,
 		purchorderdetails.stdcostunit,
-		purchorderdetails.glcode
+		purchorderdetails.glcode,
+		purchorderdetails.shiptref,
+		purchorderdetails.jobref,
+		purchorderdetails.podetailitem
 	FROM grns INNER JOIN purchorderdetails
 		ON  grns.podetailitem=purchorderdetails.podetailitem
 	WHERE grns.supplierid ='" . $_SESSION['SuppTrans']->SupplierID . "'
@@ -181,7 +185,7 @@ if (!isset( $_SESSION['SuppTransTmp'])){
 	    }
 	    if ($GRNAlreadyOnInvoice == False){
 		    $_SESSION['SuppTransTmp']->Add_GRN_To_Trans($myrow['grnno'],
-		    						$myrow['orderno'],
+		    						$myrow['podetailitem'],
 								$myrow['itemcode'],
 								$myrow['itemdescription'],
 								$myrow['qtyrecd'],
@@ -193,7 +197,8 @@ if (!isset( $_SESSION['SuppTransTmp'])){
 								$myrow['stdcostunit'],
 								$myrow['shiptref'],
 								$myrow['jobref'],
-								$myrow['glcode']);
+								$myrow['glcode'],
+								$myrow['orderno']);
 	    }
     }
 }
@@ -265,14 +270,18 @@ else {
         $i = 0;
         $POs = array();
         foreach ($_SESSION['SuppTransTmp']->GRNs as $GRNTmp){
-            if ($POs[$GRNTmp->PODetailItem] != $GRNTmp->PODetailItem) {
-                $POs[$GRNTmp->PODetailItem] = $GRNTmp->PODetailItem;
-                echo "<TR><TD><INPUT TYPE=Submit Name='AddPOToTrans' Value='" . $GRNTmp->PODetailItem . "'></TD><TD COLSPAN=3>" . _('Add Whole PO to Invoice') . '</TD></TR>';
-                $i = 0;
-            }
-            if ($i == 0)
-                echo $tableheader;
-            echo "<TR>
+
+		$_SESSION['SuppTransTmp']->GRNs[$GRNTmp->GRNNo]->This_QuantityInv = $GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv;	
+
+		if ($POs[$GRNTmp->PONo] != $GRNTmp->PONo) {
+                	$POs[$GRNTmp->PONo] = $GRNTmp->PONo;
+                	echo "<TR><TD><INPUT TYPE=Submit Name='AddPOToTrans' Value='" . $GRNTmp->PONo . "'></TD><TD COLSPAN=3>" . _('Add Whole PO to Invoice') . '</TD></TR>';
+                	$i = 0;
+        	}
+        	if ($i == 0){
+        		echo $tableheader;
+		}
+        	echo "<TR>
 	    		<TD><INPUT TYPE=checkbox NAME='GRNNo_" . $GRNTmp->GRNNo . "'></TD>
 			<TD>" . $GRNTmp->GRNNo . '</TD>
 			<TD>' . $GRNTmp->PODetailItem . '</TD>
@@ -280,14 +289,14 @@ else {
 			<TD>' . $GRNTmp->ItemDescription . '</TD>
 			<TD ALIGN=RIGHT>' . $GRNTmp->QtyRecd . '</TD>
 			<TD ALIGN=RIGHT>' . $GRNTmp->Prev_QuantityInv . '</TD>
-			<TD ALIGN=RIGHT>' . $GRNTmp->This_QuantityInv . '</TD>
+			<TD ALIGN=RIGHT>' . ($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv) . '</TD>
 			<TD ALIGN=RIGHT>' . $GRNTmp->OrderPrice . '</TD>
 			<TD ALIGN=RIGHT>' . number_format($GRNTmp->OrderPrice * ($GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv),2) . '</TD>
 			</TR>';
-		    $i++;
-		    if ($i>15){
-			    $i=0;
-		    }
+		$i++;
+		if ($i>15){
+			$i=0;
+		}
         }
         echo '</TABLE>';
         echo "<P><INPUT TYPE=Submit Name='AddGRNToTrans' Value='" . _('Add to Invoice') . "'>";

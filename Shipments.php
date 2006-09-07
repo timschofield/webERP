@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 11;
 include('includes/DefineShiptClass.php');
@@ -11,14 +11,11 @@ include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 if ($_GET['NewShipment']=='Yes'){
-	
-	
 	unset($_SESSION['Shipment']->LineItems);
 	unset($_SESSION['Shipment']);
 }
 
 if (!isset($_SESSION['SupplierID']) AND !isset($_SESSION['Shipment'])){
-	echo '<BR>';
 	prnMsg( _('To set up a shipment') . ', ' . _('the supplier must first be selected from the Select Supplier page'), 'error');
         echo '<BR><table class="table_index">
                 <tr><td class="menu_group_item">
@@ -30,10 +27,10 @@ if (!isset($_SESSION['SupplierID']) AND !isset($_SESSION['Shipment'])){
 
 if (isset($_GET['SelectedShipment'])){
 
-	 if (isset($_SESSION['Shipment'])){
+	if (isset($_SESSION['Shipment'])){
               unset ($_SESSION['Shipment']->LineItems);
               unset ($_SESSION['Shipment']);
-       }
+	}
 
        $_SESSION['Shipment'] = new Shipment;
 
@@ -117,22 +114,22 @@ if (isset($_GET['SelectedShipment'])){
 			while ($myrow=db_fetch_array($LineItemsResult)) {
 
 				if ($myrow['stdcostunit']==0){
-					$StandardCost = $myrow['stdcost'];
+					$StandardCost =$myrow['stdcost'];
 				} else {
 					$StandardCost =$myrow['stdcostunit'];
 				}
 
-				$_SESSION['Shipment']->LineItems[$myrow['podetailitem']] = new LineDetails($myrow['podetailitem'],
-													 $myrow['orderno'],
-													 $myrow['itemcode'],
-													 $myrow['itemdescription'],
-													 $myrow['qtyinvoiced'],
-													 $myrow['unitprice'],
-													 $myrow['units'],
-													 $myrow['deliverydate'],
-													 $myrow['quantityord'],
-													 $myrow['quantityrecd'],
-													 $StandardCost);
+				$_SESSION['Shipment']->LineItems[$myrow['podetailitem']] = new 			LineDetails($myrow['podetailitem'],
+								 $myrow['orderno'],
+								 $myrow['itemcode'],
+								 $myrow['itemdescription'],
+								 $myrow['qtyinvoiced'],
+								 $myrow['unitprice'],
+								 $myrow['units'],
+								 $myrow['deliverydate'],
+								 $myrow['quantityord'],
+								 $myrow['quantityrecd'],
+								 $StandardCost);
 		   } /* line Shipment from shipment details */
 
 		   DB_data_Seek($LineItemsResult,0);
@@ -148,7 +145,11 @@ if (!isset($_SESSION['Shipment'])){
 
 	$_SESSION['Shipment'] = new Shipment;
 	
-	$sql = "SELECT suppname, currcode FROM suppliers WHERE supplierid='" . $_SESSION['SupplierID'] . "'";
+	$sql = "SELECT suppname, 
+			currcode 
+		FROM suppliers 
+		WHERE supplierid='" . $_SESSION['SupplierID'] . "'";
+
 	$ErrMsg = _('The supplier details for the shipment could not be retrieved because');
 	$result = DB_query($sql,$db,$ErrMsg);
 	$myrow = DB_fetch_row($result);
@@ -160,36 +161,42 @@ if (!isset($_SESSION['Shipment'])){
 }
 
 
-if ( isset($_POST['Update'])) { //user hit the update button
 
-	$_SESSION['Shipment']->Vessel = $_POST['Vessel'];
-	$_SESSION['Shipment']->VoyageRef = $_POST['VoyageRef'];
 
-	$InputError =0;
+if (isset($_POST['Update']) OR (isset($_GET['Add']) AND $_SESSION['Shipment']->Closed==0)) { //user hit the update button
+
+	if (isset($_POST['Update'])){
+		$_SESSION['Shipment']->Vessel = $_POST['Vessel'];
+		$_SESSION['Shipment']->VoyageRef = $_POST['VoyageRef'];
 	
-	if (!Is_Date($_POST['ETA'])){
-		$InputError=1;
-		prnMsg( _('The date of expected arrival of the shipment must be entered in the format') . ' ' .$_SESSION['DefaultDateFormat'], 'error');
-	} elseif (Date1GreaterThanDate2($_POST['ETA'],Date($_SESSION['DefaultDateFormat']))==0){
-		$InputError=1;
-		prnMsg( _('An expected arrival of the shipment must be a date after today'), 'error');
-	} else {
-		$_SESSION['Shipment']->ETA = FormatDateForSQL($_POST['ETA']);
-	}
+		$InputError = 0;
+	
+		if (!Is_Date($_POST['ETA'])){
+			$InputError=1;
+			prnMsg( _('The date of expected arrival of the shipment must be entered in the format') . ' ' .$_SESSION['DefaultDateFormat'], 'error');
+		} elseif (Date1GreaterThanDate2($_POST['ETA'],Date($_SESSION['DefaultDateFormat']))==0){
+			$InputError=1;
+			prnMsg( _('An expected arrival of the shipment must be a date after today'), 'error');
+		} else {
+			$_SESSION['Shipment']->ETA = FormatDateForSQL($_POST['ETA']);
+		}
 
-	if (strlen($_POST['Vessel'])<2){
-		prnMsg( _('A reference to the vessel of more than 2 characters is expected'), 'error');
-	}
-	if (strlen($_POST['VoyageRef'])<2){
-		prnMsg( _('A reference to the voyage (or HAWB in the case of air-freight) of more than 2 characters is expected'), 'error');
+		if (strlen($_POST['Vessel'])<2){
+			prnMsg( _('A reference to the vessel of more than 2 characters is expected'), 'error');
+		}
+		if (strlen($_POST['VoyageRef'])<2){
+			prnMsg( _('A reference to the voyage (or HAWB in the case of air-freight) of more than 2 characters is expected'), 'error');
+		}
+	} elseif(strlen($_SESSION['Shipment']->Vessel)<2 OR strlen($_SESSION['Shipment']->VoyageRef)<2){
+		prnMsg(_('Cannot add purchase order lines to the shipment unless the shipment is first initiated - hit update to setup the shipment first'),'info');
+		$InputError = 1;
 	}
 
 /*The user hit the update the shipment button and there are some lines on the shipment*/
-	if ($InputError ==0 AND count($_SESSION['Shipment']->LineItems)>0){
+	if ($InputError == 0 AND (count($_SESSION['Shipment']->LineItems) > 0 OR isset($_GET['Add']))){
 		$sql = "SELECT shiptref FROM shipments WHERE shiptref =" . $_SESSION['Shipment']->ShiptRef;
 		$result = DB_query($sql,$db);
 		if (DB_num_rows($result)==1){
-
 			$sql = "UPDATE shipments SET vessel='" . DB_escape_string($_SESSION['Shipment']->Vessel) . "',
 							voyageref='".  $_SESSION['Shipment']->VoyageRef . "',
 							eta='" .  $_SESSION['Shipment']->ETA . "'
@@ -233,12 +240,7 @@ if ( isset($_POST['Update'])) { //user hit the update button
 	
 } //user hit Update
 
-
-if (isset($_GET['Delete']) AND $_SESSION['Shipment']->Closed==0){ //shipment is open and user hit delete on a line
-	$_SESSION['Shipment']->remove_from_shipment($_GET['Delete'],$db);
-}
-
-if (isset($_GET['Add']) AND $_SESSION['Shipment']->Closed==0){
+if (isset($_GET['Add']) AND $_SESSION['Shipment']->Closed==0 AND $InputError==0){
 
 	$sql = "SELECT purchorderdetails.orderno,
 			purchorderdetails.itemcode,
@@ -279,6 +281,12 @@ if (isset($_GET['Add']) AND $_SESSION['Shipment']->Closed==0){
 								$StandardCost,
 								$db);
 }
+
+if (isset($_GET['Delete']) AND $_SESSION['Shipment']->Closed==0){ //shipment is open and user hit delete on a line
+	$_SESSION['Shipment']->remove_from_shipment($_GET['Delete'],$db);
+}
+
+
 
 echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD="POST">';
 
