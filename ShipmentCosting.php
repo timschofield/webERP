@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 11;
 
@@ -250,35 +250,35 @@ if (db_num_rows($LineItemsResult) > 0) {
 							'" . Date('Y-m-d') . "', 
 							" . $PeriodNo . ", 
 							" . $StockGLCodes['adjglact'] . ", 
-							" . _('Shipment of') . ' ' . $myrow['itemcode'] . " " . _('cost was') . ' ' . $myrow['stdcostunit'] . ' ' . _('changed to') . ' ' . number_format($ItemShipmentCost,2) . ' x ' . _('QOH of') . ' ' . $QOH . "', " . (-$ValueOfChange) . ")";
+							'" . _('Shipment of') . ' ' . $myrow['itemcode'] . " " . _('cost was') . ' ' . $myrow['stdcostunit'] . ' ' . _('changed to') . ' ' . number_format($ItemShipmentCost,2) . ' x ' . _('QOH of') . ' ' . $QOH . "', " . (-$ValueOfChange) . ")";
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL credit for the shipment stock cost adjustment posting could not be inserted because'). ' ' . DB_error_msg($db);
 
 				$Result = DB_query($SQL,$db, $ErrMsg, '', true);
 
-				$SQL = "INSERT INTO gltrans (type, 
-								typeno, 
-								trandate, 
-								periodno, 
-								account, 
-								narrative, 
-								amount) 
-						VALUES (35, 
-							" . $CostUpdateNo . ", 
-							'" . Date('Y-m-d') . "', 
-							" . $PeriodNo . ", 
-							" . $StockGLCodes['stockact'] . ", 
-							" . _('Shipment of') . ' ' . $myrow['itemcode'] .  ' ' . _('cost was') . ' ' . $myrow['stdcostunit'] . ' ' . _('changed to') . ' ' . number_format($ItemShipmentCost,2) . ' x ' . _('QOH of') . ' ' . $QOH . "', " . $ValueOfChange . ")";
+				$SQL = "INSERT INTO gltrans (type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount)
+						VALUES (35,
+							" . $CostUpdateNo . ",
+							'" . Date('Y-m-d') . "',
+							" . $PeriodNo . ",
+							" . $StockGLCodes['stockact'] . ",
+							'" . _('Shipment of') . ' ' . $myrow['itemcode'] .  ' ' . _('cost was') . ' ' . $myrow['stdcostunit'] . ' ' . _('changed to') . ' ' . number_format($ItemShipmentCost,2) . ' x ' . _('QOH of') . ' ' . $QOH . "', " . $ValueOfChange . ")";
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL debit for stock cost adjustment posting could not be inserted because') .' '. DB_error_msg($db);
 
 				$Result = DB_query($SQL,$db, $ErrMsg, '', true);
 
 
-				$sql = "UPDATE stockmaster SET materialcost=" . $ItemShipmentCost . ", 
-								labourcost=0, 
-								overheadcost=0, 
-								lastcost=" . $myrow['stdcostunit'] . " 
+				$sql = "UPDATE stockmaster SET materialcost=" . $ItemShipmentCost . ",
+								labourcost=0,
+								overheadcost=0,
+								lastcost=" . $myrow['stdcostunit'] . "
 						WHERE stockid='" . $myrow['itemcode'] . "'";
-						
+
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The shipment cost details for the stock item could not be updated because'). ': ' . DB_error_msg($db);
 
 				$result = DB_query($sql,$db, $ErrMsg, '', true);
