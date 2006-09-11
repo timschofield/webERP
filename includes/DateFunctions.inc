@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 /*
 date validation and parsing functions
@@ -551,7 +551,7 @@ Dates are parsed using the DefaultDateFormat string */
 	} elseif (strpos($TransDate,'-')){
 		$Date_array = explode('-', $TransDate);
 	} else {
-		echo '<BR>' . _('Dates must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+		prnMsg(_('Dates must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 		exit;
 	}
 
@@ -566,6 +566,30 @@ Dates are parsed using the DefaultDateFormat string */
 	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y'){
 		$TransDate = mktime(0,0,0,$Date_array[0],$Date_array[1],$Date_array[2]);
 	}
+
+	if (strpos($_SESSION['ProhibitPostingsBefore'],'/')) {
+		$ProhibitPostingsBeforeDate_Array = explode('/',$_SESSION['ProhibitPostingsBefore']);
+	} elseif (strpos ($_SESSION['ProhibitPostingsBefore'],'-')) {
+		$ProhibitPostingsBeforeDate_Array = explode('-',$_SESSION['ProhibitPostingsBefore']);
+	}
+
+	if (strlen($ProhibitPostingsBeforeDate_Array[2])>4) {  /*chop off the time stuff */
+		$ProhibitPostingsBeforeDate_Array[2]= substr($ProhibitPostingsBeforeDate_Array[2],0,2);
+	}
+
+	$NoPostingBeforeDate = mktime(0,
+					0,
+					0,
+					$ProhibitPostingsBeforeDate_Array[1],
+					$ProhibitPostingsBeforeDate_Array[2],
+					$ProhibitPostingsBeforeDate_Array[0]);
+
+
+	if ($NoPostingBeforeDate >= $TransDate){
+		prnMsg(_('No postings are allowed before') . ' ' . Date($_SESSION['DefaultDateFormat'],$NoPostingBeforeDate) . ' ' . _('This transaction will be posted in the period following as all previous periods are closed'),'warn');
+		$TransDate = mktime(0,0,0,Date('m',$NoPostingBeforeDate),Date('d',$NoPostingBeforeDate)+1,Date('Y',$NoPostingBeforeDate));
+	}
+
 	$MonthAfterTransDate = Mktime(0,0,0,Date('m',$TransDate)+1,Date('d',$TransDate),Date('Y',$TransDate));
 
 	$GetPrdSQL = "SELECT periodno FROM periods WHERE lastdate_in_period < '" . Date('Y/m/d', $MonthAfterTransDate) . "' AND lastdate_in_period >= '" . Date('Y/m/d', $TransDate) . "'";

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 $PageSecurity =15;
 
@@ -207,6 +207,9 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['vtiger_integration'] != $_POST['X_vtiger_integration'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". DB_escape_string($_POST['X_vtiger_integration'])."' WHERE confname = 'vtiger_integration'";
+		}
+		if ($_SESSION['ProhibitPostingsBefore'] != $_POST['X_ProhibitPostingsBefore'] ) {
+			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_ProhibitPostingsBefore']."' WHERE confname = 'ProhibitPostingsBefore'";
 		}
 
 		$ErrMsg =  _('The system configuration could not be updated because');
@@ -433,7 +436,7 @@ echo '</SELECT></TD>
 
 //==HJ== drop down list for tax category	
 $sql = 'SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname';
-$ErrMsg = 'Could not load tax categories table';
+$ErrMsg = _('Could not load tax categories table');
 $result = DB_query($sql,$db,$ErrMsg);
 echo '<TR><TD>' . _('Default Tax Category') . ':</TD>';
 echo '<TD><SELECT Name="X_DefaultTaxCategory">';
@@ -695,6 +698,24 @@ if ($_SESSION['ProhibitJournalsToControlAccounts']=='1'){
 		echo  '<OPTION SELECTED value="0">' . _('Allowed');
 }
 echo '</SELECT></TD><TD>' . _('Setting this to prohibited prevents accidentally entering a journal to the automatically posted and reconciled control accounts for creditors (AP) and debtors (AR)') . '</TD></TR>';
+
+
+echo '<TR><TD>' . _('Prohibit GL Journals to Periods Prior To') . ':</TD>
+	<TD><SELECT Name="X_ProhibitPostingsBefore">';
+
+$sql = 'SELECT lastdate_in_period FROM periods ORDER BY periodno DESC';
+$ErrMsg = _('Could not load periods table');
+$result = DB_query($sql,$db,$ErrMsg);
+while ($PeriodRow = DB_fetch_row($result)){
+	if ($_SESSION['ProhibitPostingsBefore']==$PeriodRow[0]){
+		echo  '<OPTION SELECTED value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[0]);
+	} else {
+		echo  '<OPTION value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[0]);
+	}
+}
+echo '</SELECT></TD><TD>' . _('This allows all periods before the selected date to be locked from postings. All postings for transactions dated prior to this date will be posted in the period following this date.') . '</TD></TR>';
+
+
 	
 echo '</TABLE><input type="Submit" Name="submit" value="' . _('Update') . '"></CENTER></FORM>';
 

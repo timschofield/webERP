@@ -327,4 +327,6 @@ INSERT INTO taxcategories (taxcatname) VALUES ('Freight');
 INSERT INTO config ( confname , confvalue ) VALUES ('AllowOrderLineItemNarrative', '1');
 
 INSERT INTO config ( confname , confvalue ) VALUES ('vtiger_integration', '0');
-ALTER TABLE custbranch DROP INDEX BranchCode 
+ALTER TABLE custbranch DROP INDEX BranchCode;
+INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('ProhibitPostingsBefore', '2006-01-01');
+INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('WeightedAverageCosting', '1');
