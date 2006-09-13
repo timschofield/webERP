@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 15;
 
@@ -40,21 +40,38 @@ if (isset($_POST['submit'])) {
 
 	if ($SelectedType AND $InputError !=1) {
 
-		$sql = "UPDATE salestypes SET
-				typeabbrev = '" . $_POST['TypeAbbrev'] . "',
-				sales_type = '" . $_POST['Sales_Type'] . "'
+		$sql = "UPDATE salestypes
+			SET sales_type = '" . $_POST['Sales_Type'] . "'
 			WHERE typeabbrev = '$SelectedType'";
 
-		$msg = _('Sales Type') . ' ' . $SelectedType . ' ' .  _('has been updated');
-	} elseif ($InputError !=1) {
+		$msg = _('The customer/sales/pricelist type') . ' ' . $SelectedType . ' ' .  _('has been updated');
+	} elseif ( $InputError !=1 ) {
 
-	/*Selected type is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new sales type form */
+		// First check the type is not being duplicated
 
-		$sql = "INSERT INTO salestypes (typeabbrev,
-						sales_type)
-				VALUES ('" . $_POST['TypeAbbrev'] . "',
+		$checkSql = "SELECT count(*) 
+			     FROM salestypes
+			     WHERE typeabbrev = '" . $_POST['TypeAbbrev'] . "'";
+
+		$checkresult = DB_query($checkSql,$db);
+		$checkrow = DB_fetch_row($checkresult);
+
+		if ( $checkrow[0] > 0 ) {
+			$InputError = 1;
+			prnMsg( _('The customer/sales/pricelist type ') . $_POST['TypeAbbrev'] . _(' already exist.'),'error');
+		} else {
+
+			// Add new record on submit
+
+			$sql = "INSERT INTO salestypes
+						(typeabbrev,
+			 			 sales_type)
+				VALUES ('" . str_replace(' ', '', $_POST['TypeAbbrev']) . "',
 					'" . $_POST['Sales_Type'] . "')";
-		$msg = _('Sales type') . ' ' . $_POST["Sales_Type"] .  ' ' . _('has been added to the database');
+
+			$msg = _('Customer/sales/pricelist type') . ' ' . $_POST["Sales_Type"] .  ' ' . _('has been created');
+
+		}
 	}
 	
 	if ( $InputError !=1) {
@@ -63,21 +80,21 @@ if (isset($_POST['submit'])) {
 	
 		prnMsg($msg,'success');
 	
-		unset ($SelectedType);
+		unset($SelectedType);
 		unset($_POST['TypeAbbrev']);
 		unset($_POST['Sales_Type']);
 	}
 	
-} elseif (isset($_GET['delete'])) {
-//the link to delete a selected record was clicked instead of the submit button
+} elseif ( isset($_GET['delete']) ) {
 
-// PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorTrans'
+	// PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorTrans'
+	// Prevent delete if saletype exist in customer transactions
 
 	$sql= "SELECT COUNT(*)
-		FROM debtortrans
-		WHERE debtortrans.tpe='$SelectedType'";
+	       FROM debtortrans
+	       WHERE debtortrans.tpe='$SelectedType'";
 
-	$ErrMsg = _('The number of transactions using this Sales Type record could not be retrieved because');
+	$ErrMsg = _('The number of transactions using this customer/sales/pricelist type could not be retrieved');
 	$result = DB_query($sql,$db,$ErrMsg);
 
 	$myrow = DB_fetch_row($result);
@@ -122,33 +139,32 @@ or deletion of the records*/
 	$sql = 'SELECT * FROM salestypes';
 	$result = DB_query($sql,$db);
 
-	echo '<CENTER><table border=1>';
+	echo '<CENTER><TABLE BORDER=1>';
 	echo "<tr>
-		<td class='tableheader'>" . _('Type Code') . "</td>
-		<td class='tableheader'>" . _('Type Name') . "</td>
-	</tr>";
+		<TD CLASS='tableheader'>" . _('Type Code') . "</TD>
+		<TD CLASS='tableheader'>" . _('Type Name') . "</TD>
+	</TR>";
 
 $k=0; //row colour counter
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($k==1){
-		echo "<tr bgcolor='#CCCCCC'>";
+		echo "<TR BGCOLOR='#CCCCCC'>";
 		$k=0;
 	} else {
-		echo "<tr bgcolor='#EEEEEE'>";
+		echo "<TR BGCOLOR='#EEEEEE'>";
 		$k=1;
 	}
 
 	printf("<td>%s</td>
 		<td>%s</td>
 		<td><a href='%sSelectedType=%s'>" . _('Edit') . "</td>
-		<td><a href='%sSelectedType=%s&delete=yes'>" . _('Delete') . "</td>
+		<td><a href='%sSelectedType=%s&delete=yes' onclick=\"return confirm('" . _('Are you sure you wish to delete this price list and all the prices it may have set up?') . "');\">" . _('Delete') . "</td>
 		</tr>",
 		$myrow[0],
 		$myrow[1],
 		$_SERVER['PHP_SELF'] . '?' . SID, $myrow[0],
 		$_SERVER['PHP_SELF'] . '?' . SID, $myrow[0]);
-
 	}
 	//END WHILE LIST LOOP
 	echo '</table></CENTER>';
@@ -162,11 +178,19 @@ if (isset($SelectedType)) {
 if (! isset($_GET['delete'])) {
 
 	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
+	echo '<CENTER><FONT SIZE=4 COLOR=blue><B><U>' . _('Sales Type/Price List Setup') . '</B></U></FONT>';
+	echo '<P><TABLE BORDER=1>'; //Main table
+	echo '<TD><TABLE>'; // First column
 
-	if ($SelectedType) {
-		//editing an existing sales type
 
-		$sql = "SELECT typeabbrev, sales_type FROM salestypes WHERE typeabbrev='$SelectedType'";
+	// The user wish to EDIT an existing type
+	if ( isset($SelectedType) AND $SelectedType!='' ) 
+	{
+
+		$sql = "SELECT typeabbrev,
+			       sales_type
+		        FROM salestypes
+		        WHERE typeabbrev='$SelectedType'";
 
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
@@ -176,23 +200,30 @@ if (! isset($_GET['delete'])) {
 
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedType' VALUE=" . $SelectedType . ">";
 		echo "<INPUT TYPE=HIDDEN NAME='TypeAbbrev' VALUE=" . $_POST['TypeAbbrev'] . ">";
-		echo "<CENTER><TABLE> <TR><TD>" . _('Type Abbreviation') . ":</TD><TD>";
+		echo "<CENTER><TABLE> <TR><TD>" . _('Type Code') . ":</TD><TD>";
+
+		// We dont allow the user to change an existing type code
+
 		echo $_POST['TypeAbbrev'] . '</TD></TR>';
 
-	} else { //end of if $SelectedType only do the else when a new record is being entered
+	} else 	{ 
 
-		echo "<CENTER><TABLE><TR><TD>" . _('Type Abbreviation') . ":</TD><TD><input type='Text' SIZE=3 MAXLENGTH=2 name='TypeAbbrev'></TD></TR>";
+		// This is a new type so the user may volunteer a type code
+
+		echo "<CENTER><TABLE><TR><TD>" . _('Type Code') . ":</TD><TD><INPUT TYPE='Text' SIZE=3 MAXLENGTH=2 name='TypeAbbrev'></TD></TR>";
+
 	}
 
 	echo "<TR><TD>" . _('Sales Type Name') . ":</TD><TD><input type='Text' name='Sales_Type' value='" . $_POST['Sales_Type'] . "'></TD></TR>";
 
-	echo '</TABLE>';
+   	echo '</TABLE>'; // close table in first column
+   	echo '</TD></TR></TABLE>'; // close main table
 
-	echo "<CENTER><input type='Submit' name='submit' value='" . _('Enter Information') . "'>";
+	echo '<P><INPUT TYPE=submit NAME=submit VALUE="' . _('Accept') . '"><INPUT TYPE=submit NAME=Cancel VALUE="' . _('Cancel') . '"></CENTER>';
 
 	echo '</FORM>';
 
-} //end if record deleted no point displaying form to add record
+} // end if user wish to delete
 
 
 include('includes/footer.inc');
