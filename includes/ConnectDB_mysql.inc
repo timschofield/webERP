@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 define ('LIKE','LIKE');
 
@@ -90,6 +90,10 @@ function DB_free_result (&$ResultIndex){
 
 function DB_num_rows (&$ResultIndex){
 	return mysql_num_rows($ResultIndex);
+}
+// Added by MGT
+function DB_affected_rows(&$ResultIndex){
+	return mysql_affected_rows($ResultIndex);
 }
 
 function DB_error_no (&$Conn){

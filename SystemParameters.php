@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 $PageSecurity =15;
 
@@ -211,7 +211,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['ProhibitPostingsBefore'] != $_POST['X_ProhibitPostingsBefore'] ) {
 			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_ProhibitPostingsBefore']."' WHERE confname = 'ProhibitPostingsBefore'";
 		}
-
+		if ($_SESSION['WeightedAverageCosting'] != $_POST['X_WeightedAverageCosting'] ) {
+			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_WeightedAverageCosting']."' WHERE confname = 'WeightedAverageCosting'";
+		}
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 0 ) {
 			$result = DB_query('BEGIN',$db,$ErrMsg);
@@ -714,6 +716,19 @@ while ($PeriodRow = DB_fetch_row($result)){
 	}
 }
 echo '</SELECT></TD><TD>' . _('This allows all periods before the selected date to be locked from postings. All postings for transactions dated prior to this date will be posted in the period following this date.') . '</TD></TR>';
+
+echo '<TR><TD>' . _('Inventory Costing Method') . ':</TD>
+	<TD><SELECT Name="X_WeightedAverageCosting">';
+
+if ($_SESSION['WeightedAverageCosting']==1){
+	echo  '<OPTION SELECTED value="1">' . _('Weighted Average Costing');
+	echo  '<OPTION value="0">' . _('Standard Costing');
+} else {
+	echo  '<OPTION SELECTED value="0">' . _('Standard Costing');
+	echo  '<OPTION value="1">' . _('Weighted Average Costing');
+}
+
+echo '</SELECT></TD><TD>' . _('webERP allows inventory to be costed based on the weighted average of items in stock or full standard costing with price variances reported. The selection here determines the method used and the general ledger postings resulting from purchase invoices and shipment closing') . '</TD></TR>';
 
 
 	

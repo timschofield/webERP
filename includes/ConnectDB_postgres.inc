@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 define ('LIKE','ILIKE');
 /* $PgConnStr = $PgConnStr = "host=".$host." dbname=".$_SESSION['DatabaseName']; */
@@ -30,7 +30,7 @@ if ( !$db ) {
 	exit;
 }
 
-require_once ('includes/MiscFunctions.php');
+require_once ($PathPrefix .'includes/MiscFunctions.php');
 
 //DB wrapper functions to change only once for whole application
 
@@ -42,7 +42,8 @@ function DB_query ($SQL,
 				$TrapErrors=true){
 
 	global $debug;
-	
+	global $PathPrefix;
+
 	$result = pg_query($Conn, $SQL);
 	if ($DebugMessage == '') {
 		$DebugMessage = _('The SQL that failed was:');
@@ -50,7 +51,7 @@ function DB_query ($SQL,
 	//if (DB_error_no($Conn) != 0){
 	if ( !$result AND $TrapErrors){
 		if ($TrapErrors){
-			require_once('includes/header.inc');
+			require_once($PathPrefix . 'includes/header.inc');
 		}
 		prnMsg($ErrorMessage.'<BR>' . DB_error_msg($Conn),'error', _('DB ERROR:'));
 		if ($debug==1){
@@ -64,7 +65,7 @@ function DB_query ($SQL,
 			}
 		}
 		if ($TrapErrors){
-			include('includes/footer.inc');
+			include($PathPrefix . 'includes/footer.inc');
 			exit;
 		}
 	}
@@ -93,9 +94,13 @@ function DB_free_result (&$ResultIndex){
 function DB_num_rows (&$ResultIndex){
 	return pg_num_rows($ResultIndex);
 }
+// Added by MGT
+function DB_affected_rows (&$ResultIndex){
+	return pg_affected_rows($ResultIndex);
+}
 
 function DB_error_no (&$Conn){
-	return DB_error_msg(&$Conn) == ""?0:-1;
+	return DB_error_msg($Conn) == ""?0:-1;
 }
 
 function DB_error_msg(&$Conn){
@@ -103,7 +108,7 @@ function DB_error_msg(&$Conn){
 }
 
 function DB_Last_Insert_ID(&$Conn, $table, $fieldname) {
-	$tempres = DB_query ("SELECT currval('".$table."_".$fieldname."_seq') FROM ".$table,&$Conn);
+	$tempres = DB_query ("SELECT currval('".$table."_".$fieldname."_seq') FROM ".$table,$Conn);
 	$Res = pg_fetch_result( $tempres, 0, 0 );
 	DB_free_result($tempres);
 	return $Res;
