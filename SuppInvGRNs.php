@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -150,7 +150,7 @@ $SQL = "SELECT grnbatch,
 		grns.itemdescription,
 		grns.qtyrecd,
 		grns.quantityinv,
-		purchorderdetails.stdcostunit,
+		grns.stdcostunit,
 		purchorderdetails.glcode,
 		purchorderdetails.shiptref,
 		purchorderdetails.jobref,

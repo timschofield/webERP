@@ -330,3 +330,4 @@ INSERT INTO config ( confname , confvalue ) VALUES ('vtiger_integration', '0');
 ALTER TABLE custbranch DROP INDEX BranchCode;
 INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('ProhibitPostingsBefore', '2006-01-01');
 INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('WeightedAverageCosting', '1');
+ALTER TABLE grns ADD COLUMN stdcostunit double NOT NULL DEFAULT 0;

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 $PageSecurity = 11;
 
@@ -329,7 +329,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 
 
 			if ($OrderLine->StockID !=''){ /*Its a stock item so use the standard cost for the journals */
-				$UnitCost = $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost;
+				$UnitCost = $CurrentStandardCost;
 			} else {  /*otherwise its a nominal PO item so use the purchase cost converted to local currecny */
 				$UnitCost = $OrderLine->Price / $_SESSION['PO']->ExRate;
 			}
@@ -342,14 +342,16 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 						itemdescription,
 						deliverydate,
 						qtyrecd,
-						supplierid)
+						supplierid,
+						stdcostunit)
 				VALUES (" . $GRN . ",
 					" . $OrderLine->PODetailRec . ",
 					'" . DB_escape_string($OrderLine->StockID) . "',
 					'" . DB_escape_string($OrderLine->ItemDescription) . "',
 					'" . $_POST['DefaultReceivedDate'] . "',
 					" . DB_escape_string($OrderLine->ReceiveQty) . ",
-					'" . DB_escape_string($_SESSION['PO']->SupplierID) . "')";
+					'" . DB_escape_string($_SESSION['PO']->SupplierID) . "',
+					" . $CurrentStandardCost . ')';
 
 			$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('A GRN record could not be inserted') . '. ' . _('This receipt of goods has not been processed because');
 			$DbgMsg =  _('The following SQL to insert the GRN record was used');
@@ -498,33 +500,9 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 				$DbgMsg = _('The following SQL to insert the purchase GLTrans record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 
-				/* If the CurrentStandardCost != UnitCost (the standard at the time the first delivery was booked in,  and its a stock item, then the difference needs to be booked in against the purchase price variance account*/
+				/* If the CurrentStandardCost != UnitCost (the standard at the time the first delivery was booked in,  and its a stock item, then the difference needs to be booked in against the purchase price variance account */
 
-				if ($UnitCost != $CurrentStandardCost AND $OrderLine->StockID!='') {
-
-					$UnitCostDifference = $UnitCost - $CurrentStandardCost;
-					$StockGLCodes = GetStockGLCode($OrderLine->StockID,$db);
-
-					$SQL = "INSERT INTO gltrans (type,
-									typeno,
-									trandate,
-									periodno,
-									account,
-									narrative,
-									amount)
-							VALUES (25,
-								" . $GRN . ",
-								'" . $_POST['DefaultReceivedDate'] . "',
-								" . $PeriodNo . ",
-								" . $StockGLCodes['purchpricevaract'] . ",
-								'" . _('Cost diff on') . ' ' . DB_escape_string($_SESSION['PO']->SupplierID) . ' - ' . DB_escape_string($OrderLine->StockID) . " " . $OrderLine->ReceiveQty . " @ (" . number_format($CurrentStandardCost,2) . ' - ' ._('Prev std') . ' ' . number_format($UnitCost,2) . ")',
-								" . ($UnitCostDifference * $OrderLine->ReceiveQty) . ")";
-
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The standard cost difference GL posting could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the cost difference GLTrans record was used');
-					$Result = DB_query($SQL,$db, $ErrMsg, $DbgMsg, true);
-				}
-
+				
 	/*now the GRN suspense entry*/
 				$SQL = "INSERT INTO gltrans (type,
 								typeno,

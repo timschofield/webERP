@@ -1,10 +1,11 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
-the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
-an array of GLCodes objects - only used if the AP - GL link is effective */
+the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing 
+Also an array of GLCodes objects - only used if the AP - GL link is effective
+Also an array of shipment charges for charges to shipments to be apportioned accross the cost of stock items */
 
 $PageSecurity = 5;
 
@@ -523,6 +524,7 @@ then do the updates and inserts to process the invoice entered */
 
 			/*the postings here are a little tricky, the logic goes like this:
 			if its a shipment entry then the cost must go against the GRN suspense account defined in the company record
+
 			if its a general ledger amount it goes straight to the account specified
 
 			if its a GRN amount invoiced then there are two possibilities:
@@ -533,9 +535,16 @@ then do the updates and inserts to process the invoice entered */
 			is created. Also, shipment records are created for the charges in local currency.
 
 			2. The order line item is not on a shipment
-			The cost as originally credited to GRN suspense on arrival of goods is debited to GRN suspense. Any difference
-			between the std cost and the currency cost charged as converted at the ex rate of of the invoice is written off
-			to the purchase price variance account applicable to the stock item being invoiced. Or if its not a stock item
+			The cost as originally credited to GRN suspense on arrival of goods is debited to GRN suspense. 
+			Depending on the setting of WeightedAverageCosting:
+			If the order line item is a stock item and WeightedAverageCosting set to OFF then use standard costing .....
+				Any difference
+				between the std cost and the currency cost charged as converted at the ex rate of of the invoice is written off
+				to the purchase price variance account applicable to the stock item being invoiced. 
+			Otherwise 
+				Recalculate the new weighted average cost of the stock and update the cost - post the difference to the appropriate stock code
+			
+			Or if its not a stock item
 			but a nominal item then the GL account in the orignal order is used for the price variance account.
 			*/
 
@@ -602,8 +611,9 @@ then do the updates and inserts to process the invoice entered */
 
 			foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 
-				if (strlen($EnteredGRN->ShiptRef) == 0 OR $EnteredGRN->ShiptRef == 0){ /*so its not a shipment item */
-				/* enter the GL entry to reverse the GRN suspense entry created on delivery at standard cost used on delivery */
+				if (strlen($EnteredGRN->ShiptRef) == 0 OR $EnteredGRN->ShiptRef == 0){ 
+				/*so its not a shipment item 
+				  enter the GL entry to reverse the GRN suspense entry created on delivery at standard cost used on delivery */
 
 					if ($EnteredGRN->StdCostUnit * $EnteredGRN->This_QuantityInv != 0) {
 						$SQL = 'INSERT INTO gltrans (type, 
@@ -628,9 +638,12 @@ then do the updates and inserts to process the invoice entered */
 						$Result = DB_query($SQL, $db, $ErrMsg, $Dbg, True);
 
 					}
-					$PurchPriceVar = round($EnteredGRN->This_QuantityInv * (($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit),2);
 
-					/*Yes but where to post this difference to - if its a stock item the variance account must be retreived from the stock category record
+					
+					$PurchPriceVar = round($EnteredGRN->This_QuantityInv * (($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit),2);
+					
+					
+					/*Yes.... but where to post this difference to - if its a stock item the variance account must be retreived from the stock category record
 					if its a nominal purchase order item with no stock item then there will be no standard cost and it will all be variance so post it to the
 					account specified in the purchase order detail record */
 
@@ -640,7 +653,109 @@ then do the updates and inserts to process the invoice entered */
 							/*need to get the stock category record for this stock item - this is function in SQL_CommonFunctions.inc */
 							$StockGLCode = GetStockGLCode($EnteredGRN->ItemCode,$db);
 
-							$SQL = 'INSERT INTO gltrans (type, 
+							/*We have stock item and a purchase price variance need to see whether we are using Standard or WeightedAverageCosting */
+
+							if ($_SESSION['WeightedAverageCosting']==1){ /*Weighted Average costing */
+
+								/*
+								First off figure out the new weighted average cost Need the following data:
+
+								How many in stock now
+								The quantity being invoiced here - $EnteredGRN->This_QuantityInv
+								The cost of these items - $EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate
+								*/
+								
+								$sql ='SELECT SUM(quantity) FROM locstock WHERE stockid="' . $EnteredGRN->ItemCode . '"';
+								$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity on hand could not be retrieved from the database');
+								$DbgMsg = _('The following SQL to retrieve the total stock quantity was used');
+								$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
+								$QtyRow = DB_fetch_row($Result);
+								$TotalQuantityOnHand = $QtyRow[0];
+
+								
+								/*The cost adjustment is the price variance / the total quantity in stock 
+								But that's only provided that the total quantity in stock is > the quantity charged on this invoice 
+								
+								If the quantity on hand is less the amount charged on this invoice then some must have been sold and the price variance on these must be written off to price variances*/
+								
+								$WriteOffToVariances =0;
+								
+								if ($EnteredGRN->This_QuantityInv > $TotalQuantityOnHand){
+
+									/*So we need to write off some of the variance to variances and only the balance of the quantity in stock to go to stock value */
+	
+									$WriteOffToVariances =  ($EnteredGRN->This_QuantityInv
+										- $TotalQuantityOnHand)
+									* (($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit);
+
+									$SQL = 'INSERT INTO gltrans (type, 
+											typeno, 
+											trandate, 
+											periodno, 
+											account, 
+											narrative, 
+											amount) 
+									VALUES (20, ' .
+									 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $StockGLCode['purchpricevaract'] .
+									 ", '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo .
+									 ' - ' . $EnteredGRN->ItemCode . ' x ' . ($EnteredGRN->This_QuantityInv-$TotalQuantityOnHand) . ' x  ' . _('price var of') . ' ' .
+									 number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  .
+									 "', " . $WriteOffToVariances . ')';
+
+									$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
+									$DbgMsg = _('The following SQL to insert the GL transaction was used');
+
+
+									$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+								}
+								/*Now post any remaining price variance to stock rather than price variances */
+
+								$SQL = 'INSERT INTO gltrans (type, 
+											typeno, 
+											trandate, 
+											periodno, 
+											account, 
+											narrative, 
+											amount) 
+									VALUES (20, ' .
+									 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $StockGLCode['stockact'] .
+									 ", '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . ('Average Cost Adj') .
+									 ' - ' . $EnteredGRN->ItemCode . ' x ' . $TotalQuantityOnHand  . ' x ' .
+									 number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  .
+									 "', " . ($PurchPriceVar - $WriteOffToVariances) . ')';
+
+								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
+								$DbgMsg = _('The following SQL to insert the GL transaction was used');
+
+								$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+
+								/*Now to update the stock cost with the new weighted average */
+								
+								/*Need to consider what to do if the cost has been changed manually between receiving the stock and entering the invoice - this code assumes there has been no cost updates made manually and all the price variance is posted to stock.
+
+								A nicety or important?? */
+
+
+								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The cost could not be updated because');
+								$DbgMsg = _('The following SQL to update the cost was used');
+
+								if ($TotalQuantityOnHand>0) {
+
+									
+									$CostIncrement = ($PurchPriceVar - $WriteOffToVariances) / $TotalQuantityOnHand;
+
+									$sql = 'UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost, materialcost=materialcost+' . $CostIncrement . ' WHERE stockid="' . $EnteredGRN->ItemCode . '"';
+									$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
+								} else {
+									$sql = 'UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
+									materialcost=' . ($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) . ' WHERE stockid="' . $EnteredGRN->ItemCode . '"';
+									$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
+								}
+								/* End of Weighted Average Costing Code */
+
+							} else { //It must be Standard Costing 
+
+								$SQL = 'INSERT INTO gltrans (type, 
 											typeno, 
 											trandate, 
 											periodno, 
@@ -654,11 +769,11 @@ then do the updates and inserts to process the invoice entered */
 									 number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  .
 									 "', " . $PurchPriceVar . ')';
 
-							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
-							$DbgMsg = _('The following SQL to insert the GL transaction was used');
+								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
+								$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
-							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
-
+								$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+							}
 						} else {
 
 						/* its a nominal purchase order item that is not on a shipment so post the whole lot to the GLCode specified in the order, the purchase price var is actually the diff between the
@@ -740,8 +855,8 @@ then do the updates and inserts to process the invoice entered */
 							" . $PeriodNo . ', 
 							' . $Tax->TaxGLCode . ", 
 						 	'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Inv') . ' ' .
-						 $_SESSION['SuppTrans']->SuppReference . ' ' . $_SESSION['SuppTrans']->CurrCode .
-						 $Tax->TaxOvAmount  . ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate .
+						 $_SESSION['SuppTrans']->SuppReference . ' ' . $Tax->TaxAuthDescription . ' ' . number_format($Tax->TaxRate*100,2) . '% ' . $_SESSION['SuppTrans']->CurrCode .
+						 $Tax->TaxOvAmount  . ' @ ' . _('exch rate') . ' ' . $_SESSION['SuppTrans']->ExRate .
 						 "', 
 						 	" . round( $Tax->TaxOvAmount/ $_SESSION['SuppTrans']->ExRate,2) . ')';
 
