@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 11;
 
@@ -45,12 +45,20 @@ if (DB_num_rows($GetShiptHdrResult)==0) {
 
 $HeaderData = DB_fetch_array($GetShiptHdrResult);
 echo '<BR>';
-echo '<CENTER><TABLE><TR><TD><B>'. _('Shipment') .': </TD><TD><B>' . $_GET['SelectedShipment'] . '</B></TD><TD><B>'.
-	_('From').' ' . $HeaderData['suppname'] . '</B></TD></TR>';
+echo '<CENTER><TABLE>
+	<TR>
+		<TD><B>'. _('Shipment') .': </TD>
+		<TD><B>' . $_GET['SelectedShipment'] . '</B></TD>
+		<TD><B>'. _('From').' ' . $HeaderData['suppname'] . '</B></TD>
+	</TR>';
 
-echo '<TR><TD>' . _('Vessel'). ': </TD><TD>' . $HeaderData['vessel'] . '</TD><TD>'. _('Voyage Ref'). ': </TD><TD>' . $HeaderData['voyageref'] . '</TD></TR>';
+echo '<TR><TD>' . _('Vessel'). ': </TD>
+	<TD>' . $HeaderData['vessel'] . '</TD>
+	<TD>'. _('Voyage Ref'). ': </TD>
+	<TD>' . $HeaderData['voyageref'] . '</TD></TR>';
 
-echo '<TR><TD>' . _('Expected Arrival Date (ETA)') . ': </TD><TD>' . ConvertSQLDate($HeaderData['eta']) . '</TD></TR>';
+echo '<TR><TD>' . _('Expected Arrival Date (ETA)') . ': </TD>
+	<TD>' . ConvertSQLDate($HeaderData['eta']) . '</TD></TR>';
 
 echo '</TABLE>';
 

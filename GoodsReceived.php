@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 $PageSecurity = 11;
 
@@ -296,11 +296,13 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 				}
 				$CurrentStandardCost = $myrow[0];
 
+				/*Set the purchase order line stdcostunit = weighted average standard cost used for all receipts of this line */
+				$_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost = (($CurrentStandardCost * $OrderLine->ReceiveQty) + ($_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost *$OrderLine->QtyReceived)) / ($OrderLine->ReceiveQty + $OrderLine->QtyReceived)
+
 			} elseif ($OrderLine->QtyReceived==0 AND $OrderLine->StockID=="") {
 				/*Its a nominal item being received */
 				/*Need to record the value of the order per unit in the standard cost field to ensure GRN account entries clear */
 				$_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost = $LocalCurrencyPrice;
-
 			}
 
 			if ($OrderLine->StockID=='') { /*Its a NOMINAL item line */
