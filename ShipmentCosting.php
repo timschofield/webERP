@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 11;
 
@@ -96,44 +96,54 @@ $myrow = DB_fetch_row($GetShiptCostsResult);
 
 $TotalInvoiceValueOfShipment = $myrow[0];
 
-
 /*Now get the lines on the shipment */
 
-$LineItemsSQL = "SELECT purchorderdetails.orderno, 
-			purchorderdetails.itemcode, 
-			purchorderdetails.itemdescription, 
-			purchorderdetails.glcode, 
-			purchorderdetails.qtyinvoiced, 
-			purchorderdetails.unitprice, 
-			purchorderdetails.quantityrecd, 
-			purchorderdetails.stdcostunit, 
+$LineItemsSQL = "SELECT purchorderdetails.orderno,
+			purchorderdetails.itemcode,
+			purchorderdetails.itemdescription,
+			purchorderdetails.glcode,
+			purchorderdetails.qtyinvoiced,
+			purchorderdetails.unitprice,
+			purchorderdetails.quantityrecd,
+			purchorderdetails.stdcostunit,
 			SUM(shipmentcharges.value) AS invoicedcharges
 			FROM purchorderdetails LEFT JOIN shipmentcharges
 				ON purchorderdetails.itemcode = shipmentcharges.stockid
 				AND purchorderdetails.shiptref=shipmentcharges.shiptref
 		WHERE purchorderdetails.shiptref=" . $_GET['SelectedShipment'] . "
-		GROUP BY purchorderdetails.orderno, 
-			purchorderdetails.itemcode, 
-			purchorderdetails.itemdescription, 
-			purchorderdetails.glcode, 
-			purchorderdetails.qtyinvoiced, 
-			purchorderdetails.unitprice, 
-			purchorderdetails.quantityrecd, 
+		GROUP BY purchorderdetails.orderno,
+			purchorderdetails.itemcode,
+			purchorderdetails.itemdescription,
+			purchorderdetails.glcode,
+			purchorderdetails.qtyinvoiced,
+			purchorderdetails.unitprice,
+			purchorderdetails.quantityrecd,
 			purchorderdetails.stdcostunit";
-			
+
 $ErrMsg = _('The lines on the shipment could not be retrieved from the database');
 $LineItemsResult = db_query($LineItemsSQL,$db, $ErrMsg);
 
 if (db_num_rows($LineItemsResult) > 0) {
 
 	if (isset($_POST['Close'])){
-		/*Set up a transaction to buffer all updates or none */
+		while ($myrow=DB_fetch_array($LineItemsResult)){
+                      if ($myrow['qtyinvoiced']<$myrow['quantityrecd']){
+                         prnMsg(_('Cannot close a shipment where the quantity received is more than the quantity invoiced. Check the item') . ' ' . $myrow['itemcode'] . ' - ' . $myrow['itemdescription'],'warn');
+                         unset($_POST['Close']);
+                      }
+                }
+                DB_data_seek($LineItemsResult,0);
+ 	}
+ 	
+
+
+        if (isset($_POST['Close'])){
+        /*Set up a transaction to buffer all updates or none */
 		$result = DB_query('BEGIN',$db);
 		$PeriodNo = GetPeriod(Date('d/m/Y'), $db);
-	}
+        }
 
-	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>';
-
+        echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>';
 
 	$TableHeader = '<TR><TD class="tableheader">' . _('Order') . '</TD>
 				<TD class="tableheader">'. _('Item'). '</TD>
@@ -145,7 +155,6 @@ if (db_num_rows($LineItemsResult) > 0) {
 				<TD class="tableheader">'. _('Standard'). '<BR>'. _('Cost'). '</TD>
 				<TD class="tableheader">'. _('Variance'). '</TD>
 				<TD class="tableheader">'. _('Variance'). ' %</TD></TR>';
-
 	echo  $TableHeader;
 
 	/*show the line items on the shipment with the value invoiced and shipt cost */
@@ -153,15 +162,13 @@ if (db_num_rows($LineItemsResult) > 0) {
 	$k=0; //row colour counter
 	$RowCounter =0;
 
-	while ($myrow=db_fetch_array($LineItemsResult)) {
-
+	while ($myrow=DB_fetch_array($LineItemsResult)) {
 
 		if ($RowCounter==15){
 			echo $TableHeader;
 			$RowCounter =0;
 		}
 		$RowCounter++;
-
 		if ($k==1){
 			echo '<tr bgcolor="#CCCCCC">';
 			$k=0;
@@ -175,7 +182,6 @@ if (db_num_rows($LineItemsResult) > 0) {
 		} else {
 			$PortionOfCharges = 0;
 		}
-
 
 		if ($myrow['qtyinvoiced']>0){
 			$ItemShipmentCost = ($myrow['invoicedcharges']+$PortionOfCharges)/$myrow['qtyinvoiced'];
@@ -196,74 +202,203 @@ if (db_num_rows($LineItemsResult) > 0) {
 		}
 
 
-		if ( isset($_POST['Close']) && $_SESSION['CompanyRecord']['gllink_stock']==1 AND $Variance !=0){
-			/*Create GL transactions for the variances */
+		if ( isset($_POST['Close']) AND $Variance !=0){
 
-			$StockGLCodes = GetStockGLCode($myrow['itemcode'],$db);
 
-			$sql = "INSERT INTO gltrans (type, 
-							typeno, 
-							trandate, 
-							periodno, 
-							account, 
-							narrative, 
-							amount) 
-					VALUES (31, 
-						" . $_GET['SelectedShipment'] . ", 
-						'" . Date('Y-m-d') . "', 
-						" . $PeriodNo . ", 
-						" . $StockGLCodes['purchpricevaract'] . ", 
+                        if ($_SESSION['CompanyRecord']['gllink_stock']==1){
+                              $StockGLCodes = GetStockGLCode($myrow['itemcode'],$db);
+                        }
+
+                        /*GL journals depend on the costing method used currently:
+                             Standard cost - the price variance between the exisitng system cost and the shipment cost is taken as a variance
+                             to the price varaince account
+                             Weighted Average Cost - the price variance is taken to the stock account and the cost updated to ensure the GL
+                             stock account ties up to the stock valuation
+                        */
+
+                        if ($_SESSION['WeightedAverageCosting'] == 1){   /* Do the WAvg journal and cost update */
+                               	/*
+                                First off figure out the new weighted average cost Need the following data:
+
+                                How many in stock now
+				The quantity being costed here - $myrow['qtyinvoiced']
+				The cost of these items - $ItemShipmentCost
+				*/
+
+				$sql ='SELECT SUM(quantity) FROM locstock WHERE stockid="' . $myrow['itemcode'] . '"';
+				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity on hand could not be retrieved from the database');
+				$DbgMsg = _('The following SQL to retrieve the total stock quantity was used');
+				$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+				$QtyRow = DB_fetch_row($Result);
+				$TotalQuantityOnHand = $QtyRow[0];
+
+
+				/*The cost adjustment is the price variance / the total quantity in stock
+				But that's only provided that the total quantity in stock is > the quantity charged on this invoice
+                                */
+
+                                $WriteOffToVariances =0;
+
+                                if ($myrow['qtyinvoiced'] > $TotalQuantityOnHand){
+
+                                             /*So we need to write off some of the variance to variances and
+                                             only the balance of the quantity in stock to go to stock value */
+
+					     $WriteOffToVariances =  ($myrow['qtyinvoiced'] - $TotalQuantityOnHand)
+                                                                                       * ($ItemShipmentCost - $myrow['stdcostunit']);
+                                 }
+
+
+                                if ($_SESSION['CompanyRecord']['gllink_stock']==1){
+
+				   /* If the quantity on hand is less the amount charged on this invoice then some must have been sold
+                                       and the price variance on these must be written off to price variances*/
+
+
+                                       if ($myrow['qtyinvoiced'] > $TotalQuantityOnHand){
+
+                                            $sql = "INSERT INTO gltrans (type,
+							typeno,
+							trandate,
+							periodno,
+							account,
+							narrative,
+							amount)
+              					VALUES (31,
+	           					" . $_GET['SelectedShipment'] . ",
+		        				'" . Date('Y-m-d') . "',
+			        			" . $PeriodNo . ",
+				         		" . $StockGLCodes['purchpricevaract'] . ",
+					         	'" . $myrow['itemcode'] . ' ' . _('shipment cost') . ' ' .  number_format($ItemShipmentCost,2) . _('shipment quantity > stock held - variance write off') . "',
+                                                         " . $WriteOffToVariances . ")";
+
+                                            $ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL entry for the shipment variance posting for'). ' ' . $myrow['itemcode'] . ' '. _('could not be inserted into the database because');
+	       		                    $result = DB_query($sql,$db, $ErrMsg,'',TRUE);
+
+	                                }
+        				/*Now post any remaining price variance to stock rather than price variances */
+                                        $sql = "INSERT INTO gltrans (type,
+							typeno,
+							trandate,
+							periodno,
+							account,
+							narrative,
+							amount)
+              					VALUES (31,
+	           					" . $_GET['SelectedShipment'] . ",
+		        		    		'" . Date('Y-m-d') . "',
+			        			" . $PeriodNo . ",
+				         		" . $StockGLCodes['stockact'] . ",
+					         	'" . $myrow['itemcode'] . ' ' . _('shipment avg cost adjt') . "',
+                                                         " . ($myrow['qtyinvoiced'] *($ItemShipmentCost - $myrow['stdcostunit'])
+                                                                                    - $WriteOffToVariances) . ")";
+
+                                        $ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL entry for the shipment average cost adjustment for'). ' ' . $myrow['itemcode'] . ' '. _('could not be inserted into the database because');
+       		                        $result = DB_query($sql,$db, $ErrMsg,'',TRUE);
+
+                                } /* end of average cost GL stuff */
+
+
+				/*Now to update the stock cost with the new weighted average */
+
+				/*Need to consider what to do if the cost has been changed manually between receiving
+                                the stock and entering the invoice - this code assumes there has been no cost updates
+                                made manually and all the price variance is posted to stock.
+
+				A nicety or important?? */
+
+				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The cost could not be updated because');
+				$DbgMsg = _('The following SQL to update the cost was used');
+
+				if ($TotalQuantityOnHand>0) {
+
+                                	$CostIncrement = ($myrow['qtyinvoiced'] *($ItemShipmentCost - $myrow['stdcostunit']) - $WriteOffToVariances) / $TotalQuantityOnHand;
+                                	$sql = 'UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
+                                                                   materialcost=materialcost+' . $CostIncrement . ' WHERE stockid="' . $myrow['itemcode'] . '"';
+					$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg,'',TRUE);
+				} else {
+					$sql = 'UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
+								materialcost=' . $ItemShipmentCost . ' WHERE stockid="' . $myrow['itemcode'] . '"';
+					$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg,'',TRUE);
+                                }
+				/* End of Weighted Average Costing Code */
+
+
+                        } else { /*We must be using standard costing do the journals for standard costing then */
+
+                               if ($_SESSION['CompanyRecord']['gllink_stock']==1){
+                               	       $sql = "INSERT INTO gltrans (type,
+							typeno,
+							trandate,
+							periodno,
+							account,
+							narrative,
+							amount)
+					VALUES (31,
+						" . $_GET['SelectedShipment'] . ",
+						'" . Date('Y-m-d') . "',
+						" . $PeriodNo . ",
+						" . $StockGLCodes['purchpricevaract'] . ",
 						'" . $myrow['itemcode'] . ' ' . _('shipment cost') . ' ' .  number_format($ItemShipmentCost,2) . ' x ' . _('Qty recd') .' ' . $myrow['quantityrecd'] . "', " . (-$Variance * $myrow['quantityrecd']) . ")";
-			$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The Positive GL entry for the shipment variance posting for').					' ' . $myrow['itemcode'] . ' '. _('could not be inserted into the database because'). ':' . DB_error_msg($db);
-			$result = DB_query($sql,$db, $ErrMsg, '', true);
+            			       $ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The Positive GL entry for the shipment variance posting for'). ' ' . $myrow['itemcode'] . ' '. _('could not be inserted into the database because');
+	       		               $result = DB_query($sql,$db, $ErrMsg,'',TRUE);
+                               }
+		         } /* end of the costing specific updates */
 
-			$sql = "INSERT INTO gltrans (type, 
-							typeno, 
-							trandate, 
-							periodno, 
-							account, 
-							narrative, 
-							amount) 
-				VALUES (31, 
-					" . $_GET['SelectedShipment'] . ", 
-					'" . Date('Y-m-d') . "', 
-					" . $PeriodNo . ", 
-					" . $_SESSION['CompanyRecord']['grnact'] . ", 
+
+                         if ($_SESSION['CompanyRecord']['gllink_stock']==1){
+                        /*we always need to reverse entries relating to the GRN suspense during delivery and entry of shipment charges */
+                              $sql = "INSERT INTO gltrans (type,
+							typeno,
+							trandate,
+							periodno,
+							account,
+							narrative,
+							amount)
+				VALUES (31,
+					" . $_GET['SelectedShipment'] . ",
+					'" . Date('Y-m-d') . "',
+					" . $PeriodNo . ",
+					" . $_SESSION['CompanyRecord']['grnact'] . ",
 					'" . $myrow['itemcode'] . ' ' ._('shipt cost') . ' ' .  number_format($ItemShipmentCost,2) . ' x ' . _('Qty recd') . ' ' . $myrow['quantityrecd'] . "', " . ($Variance * $myrow['quantityrecd']) . ")";
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The Negative GL entry for the shipment variance posting for').
-				 ' ' . $myrow['itemcode'] . ' ' . _('could not be inserted because'). ':' . DB_error_msg($db);
 
-			$result = DB_query($sql,$db, $ErrMsg,'',true);
+			      $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The credit GL entry for the shipment variance posting for') . ' ' . $myrow['itemcode'] . ' ' . _('could not be inserted because');
 
-			if ( $_POST['UpdateCost'] == 'Yes' ){
+			      $result = DB_query($sql,$db, $ErrMsg,'',TRUE);
+                         }
+
+        		if ( $_POST['UpdateCost'] == 'Yes' ){ /*Only ever a standard costing option
+			                                      Weighted average costing implies cost updates taking place automatically */
 
 				$QOHResult = DB_query("SELECT SUM(quantity) FROM locstock WHERE stockid ='" . $myrow['itemcode'] . "'",$db);
 				$QOHRow = DB_fetch_row($QOHResult);
 				$QOH=$QOHRow[0];
 
-				$CostUpdateNo = GetNextTransNo(35, $db);
-				$PeriodNo = GetPeriod(Date("d/m/Y"), $db);
 
-				$ValueOfChange = $QOH * ($ItemShipmentCost - $myrow['stdcostunit']);
+                                if ($_SESSION['CompanyRecord']['gllink_stock']==1){
+				   $CostUpdateNo = GetNextTransNo(35, $db);
+       				   $PeriodNo = GetPeriod(Date("d/m/Y"), $db);
 
-				$SQL = "INSERT INTO gltrans (type, 
-								typeno, 
-								trandate, 
-								periodno, 
-								account, 
-								narrative, 
-								amount) 
-						VALUES (35, 
-							" . $CostUpdateNo . ", 
-							'" . Date('Y-m-d') . "', 
-							" . $PeriodNo . ", 
-							" . $StockGLCodes['adjglact'] . ", 
+				   $ValueOfChange = $QOH * ($ItemShipmentCost - $myrow['stdcostunit']);
+
+				   $SQL = "INSERT INTO gltrans (type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount)
+						VALUES (35,
+							" . $CostUpdateNo . ",
+							'" . Date('Y-m-d') . "',
+							" . $PeriodNo . ",
+							" . $StockGLCodes['adjglact'] . ",
 							'" . _('Shipment of') . ' ' . $myrow['itemcode'] . " " . _('cost was') . ' ' . $myrow['stdcostunit'] . ' ' . _('changed to') . ' ' . number_format($ItemShipmentCost,2) . ' x ' . _('QOH of') . ' ' . $QOH . "', " . (-$ValueOfChange) . ")";
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL credit for the shipment stock cost adjustment posting could not be inserted because'). ' ' . DB_error_msg($db);
+				   $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL credit for the shipment stock cost adjustment posting could not be inserted because'). ' ' . DB_error_msg($db);
 
-				$Result = DB_query($SQL,$db, $ErrMsg, '', true);
+				   $Result = DB_query($SQL,$db, $ErrMsg,'',TRUE);
 
-				$SQL = "INSERT INTO gltrans (type,
+				   $SQL = "INSERT INTO gltrans (type,
 								typeno,
 								trandate,
 								periodno,
@@ -276,11 +411,13 @@ if (db_num_rows($LineItemsResult) > 0) {
 							" . $PeriodNo . ",
 							" . $StockGLCodes['stockact'] . ",
 							'" . _('Shipment of') . ' ' . $myrow['itemcode'] .  ' ' . _('cost was') . ' ' . $myrow['stdcostunit'] . ' ' . _('changed to') . ' ' . number_format($ItemShipmentCost,2) . ' x ' . _('QOH of') . ' ' . $QOH . "', " . $ValueOfChange . ")";
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL debit for stock cost adjustment posting could not be inserted because') .' '. DB_error_msg($db);
+				   $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL debit for stock cost adjustment posting could not be inserted because') .' '. DB_error_msg($db);
 
-				$Result = DB_query($SQL,$db, $ErrMsg, '', true);
+				   $Result = DB_query($SQL,$db, $ErrMsg,'',TRUE);
 
+                                } /*end of GL entries for a standard cost update */
 
+                                /* Only the material cost is important for imported items */
 				$sql = "UPDATE stockmaster SET materialcost=" . $ItemShipmentCost . ",
 								labourcost=0,
 								overheadcost=0,
@@ -289,7 +426,7 @@ if (db_num_rows($LineItemsResult) > 0) {
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The shipment cost details for the stock item could not be updated because'). ': ' . DB_error_msg($db);
 
-				$result = DB_query($sql,$db, $ErrMsg, '', true);
+				$result = DB_query($sql,$db, $ErrMsg,'',TRUE);
 
 			} // end of update cost code
 		} // end of Close shipment item updates
@@ -307,10 +444,8 @@ if (db_num_rows($LineItemsResult) > 0) {
 		<TD ALIGN=RIGHT>' . number_format($myrow['stdcostunit'],2) . '</TD>
 		<TD ALIGN=RIGHT>' . number_format($Variance,2) . '</TD>
 		<TD ALIGN=RIGHT>' . $VariancePercentage . '</TD></TR>';
-
-   }
+    }
 }
-
 echo '<TR><TD COLSPAN=4 ALIGN=RIGHT><FONT COLOR=BLUE><B>'. _('Total Shipment Charges'). '</B></FONT></TD>
 	<TD ALIGN=RIGHT>' . number_format($TotalInvoiceValueOfShipment) . '</TD>
 	<TD ALIGN=RIGHT>' . number_format($TotalCostsToApportion) .'</TD></TR>';
@@ -320,13 +455,13 @@ echo '</TABLE></CENTER><HR>';
 
 echo '<TABLE COLSPAN=2 WIDTH=100%><TR><TD VALIGN=TOP>'; // put this shipment charges side by side in a table (major table 2 cols)
 
-$sql = "SELECT suppliers.suppname, 
-		supptrans.suppreference, 
-		systypes.typename, 
-		supptrans.trandate, 
-		supptrans.rate, 
-		suppliers.currcode, 
-		shipmentcharges.stockid, 
+$sql = "SELECT suppliers.suppname,
+		supptrans.suppreference,
+		systypes.typename,
+		supptrans.trandate,
+		supptrans.rate,
+		suppliers.currcode,
+		shipmentcharges.stockid,
 		shipmentcharges.value,
 		supptrans.transno,
 		supptrans.supplierno
@@ -336,10 +471,10 @@ $sql = "SELECT suppliers.suppname,
 	INNER JOIN suppliers
 		ON suppliers.supplierid=supptrans.supplierno
 	INNER JOIN systypes ON systypes.typeid=supptrans.type
-	WHERE shipmentcharges.stockid<>'' 
+	WHERE shipmentcharges.stockid<>''
 	AND shipmentcharges.shiptref=" . $_GET['SelectedShipment'] . "
-	ORDER BY supptrans.supplierno, 
-		supptrans.transno, 
+	ORDER BY supptrans.supplierno,
+		supptrans.transno,
 		shipmentcharges.stockid";
 
 $ChargesResult = DB_query($sql,$db);
@@ -398,13 +533,13 @@ echo '</TD><TD VALIGN=TOP>'; //major table
 
 /* Now the shipment freight/duty etc general charges */
 
-$sql = "SELECT suppliers.suppname, 
-		supptrans.suppreference, 
-		systypes.typename, 
-		supptrans.trandate, 
-		supptrans.rate, 
-		suppliers.currcode, 
-		shipmentcharges.stockid, 
+$sql = "SELECT suppliers.suppname,
+		supptrans.suppreference,
+		systypes.typename,
+		supptrans.trandate,
+		supptrans.rate,
+		suppliers.currcode,
+		shipmentcharges.stockid,
 		shipmentcharges.value
 	FROM supptrans INNER JOIN shipmentcharges
 		ON shipmentcharges.transtype=supptrans.type
@@ -413,9 +548,9 @@ $sql = "SELECT suppliers.suppname,
 		ON suppliers.supplierid=supptrans.supplierno
 	INNER JOIN systypes
 		ON systypes.typeid=supptrans.type
-	WHERE shipmentcharges.stockid='' 
+	WHERE shipmentcharges.stockid=''
 	AND shipmentcharges.shiptref=" . $_GET['SelectedShipment'] . "
-	ORDER BY supptrans.supplierno, 
+	ORDER BY supptrans.supplierno,
 		supptrans.transno";
 
 $ChargesResult = DB_query($sql,$db);
@@ -472,19 +607,22 @@ echo '</TABLE>';
 
 echo '</TD></TR></TABLE>'; //major table close
 
-if ( isset($_GET['Close'])) {
+if ( isset($_GET['Close'])) { /* Only an opportunity to confirm user wishes to close */
 
 // if the page was called with Close=Yes then show options to confirm OK to c
-	echo '<HR><FORM METHOD="POST" ACTION="' . $_SERVER['PHP_SELF'] .'?' . SID .'&SelectedShipment=' . $_GET['SelectedShipment'] . '">';
-	echo '<CENTER>' . _('Update Standard Costs') .':<SELECT NAME="UpdateCost">
-		<OPTION SELECTED VALUE="Yes">'. _('Yes') . '
-		<OPTION VALUE="No">'. _('No').'</SELECT>';
+	echo '<HR><CENTER><FORM METHOD="POST" ACTION="' . $_SERVER['PHP_SELF'] .'?' . SID .'&SelectedShipment=' . $_GET['SelectedShipment'] . '">';
 
+        if ($_SESSION['WeightedAverageCosting']==0){
+        /* We are standard costing - so show the option to update costs - under W. Avg cost updates are implicit */
+        	echo _('Update Standard Costs') .':<SELECT NAME="UpdateCost">
+	        <OPTION SELECTED VALUE="Yes">'. _('Yes') . '
+		<OPTION VALUE="No">'. _('No').'</SELECT>';
+        }
 	echo '<BR><BR><INPUT TYPE=SUBMIT NAME="Close" VALUE="'. _('Confirm OK to Close'). '">';
 	echo '</FORM>';
 }
 
-if ( isset($_POST['Close']) ){ // OK do the shipment close journals
+if ( isset($_POST['Close']) ){ /* OK do the shipment close journals */
 
 /*Inside a transaction need to:
  1 . compare shipment costs against standard x qty received and take the variances off to the GL GRN supsense account and variances - this is done in the display loop
@@ -495,7 +633,18 @@ if ( isset($_POST['Close']) ){ // OK do the shipment close journals
 
  1 and 2 done in the display loop above only 3 left*/
 
-	$result = DB_query('UPDATE shipments SET closed=1 WHERE shiptref=' .$_GET['SelectedShipment'],$db);
+/*also need to make sure the purchase order lines that were on this shipment are completed so no more can be received in against the order line */
+
+        $result = DB_query('UPDATE purchorderdetails
+                                   SET quantityord=quantityrecd,
+                                       completed=1
+                            WHERE shiptref = ' . $_GET['SelectedShipment'],
+                            $db,
+                            _('Could not complete the purchase order lines on this shipment'),
+                            '',
+                            TRUE);
+
+	$result = DB_query('UPDATE shipments SET closed=1 WHERE shiptref=' .$_GET['SelectedShipment'],$db,_('Could not update the shipment to closed'),'',TRUE);
 	$result = DB_query('COMMIT',$db);
 
 	echo '<BR><BR>';

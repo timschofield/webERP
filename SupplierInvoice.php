@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing 
@@ -841,41 +841,42 @@ then do the updates and inserts to process the invoice entered */
 
 			foreach ($_SESSION['SuppTrans']->Taxes as $Tax){
 				/* Now the TAX account */
-
-				$SQL = 'INSERT INTO gltrans (type, 
-								typeno, 
-								trandate, 
-								periodno, 
-								account, 
-								narrative, 
-								amount) 
+                                if ($Tax->TaxOvAmount <>0){
+                                	$SQL = 'INSERT INTO gltrans (type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount)
 						VALUES (20, ' .
-						 	$InvoiceNo . ", 
-						 	'" . $SQLInvoiceDate . "', 
-							" . $PeriodNo . ', 
-							' . $Tax->TaxGLCode . ", 
+						 	$InvoiceNo . ",
+						 	'" . $SQLInvoiceDate . "',
+							" . $PeriodNo . ',
+							' . $Tax->TaxGLCode . ",
 						 	'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Inv') . ' ' .
 						 $_SESSION['SuppTrans']->SuppReference . ' ' . $Tax->TaxAuthDescription . ' ' . number_format($Tax->TaxRate*100,2) . '% ' . $_SESSION['SuppTrans']->CurrCode .
 						 $Tax->TaxOvAmount  . ' @ ' . _('exch rate') . ' ' . $_SESSION['SuppTrans']->ExRate .
-						 "', 
+						 "',
 						 	" . round( $Tax->TaxOvAmount/ $_SESSION['SuppTrans']->ExRate,2) . ')';
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the tax could not be added because');
+				        $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the tax could not be added because');
 
-				$DbgMsg = _('The following SQL to insert the GL transaction was used');
+				        $DbgMsg = _('The following SQL to insert the GL transaction was used');
 
-				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+				        $Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
+                                }
 
 			} /*end of loop to post the tax */
 			/* Now the control account */
 
-			$SQL = 'INSERT INTO gltrans (type, 
-							typeno, 
-							trandate, 
-							periodno, 
-							account, 
-							narrative, 
-							amount) 
+			$SQL = 'INSERT INTO gltrans (type,
+							typeno,
+							trandate,
+							periodno,
+							account,
+							narrative,
+							amount)
 					VALUES (20, ' .
 					 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $_SESSION['SuppTrans']->CreditorsAct .
 					 ", '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Inv') . ' ' .

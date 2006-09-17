@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 $PageSecurity = 11;
 
@@ -282,8 +282,8 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 
 			if ($OrderLine->StockID!='') { /*Its a stock item line */
 				/*Need to get the current standard cost as it is now so we can process GL jorunals later*/
-				$SQL = "SELECT materialcost + labourcost + overheadcost as stdcost 
-						FROM stockmaster 
+				$SQL = "SELECT materialcost + labourcost + overheadcost as stdcost
+						FROM stockmaster
 						WHERE stockid='" . DB_escape_string($OrderLine->StockID) . "'";
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The standard cost of the item being received cannot be retrieved because');
 				$DbgMsg = _('The following SQL to retrieve the standard cost was used');
@@ -296,8 +296,10 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 				}
 				$CurrentStandardCost = $myrow[0];
 
-				/*Set the purchase order line stdcostunit = weighted average standard cost used for all receipts of this line */
-				$_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost = (($CurrentStandardCost * $OrderLine->ReceiveQty) + ($_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost *$OrderLine->QtyReceived)) / ($OrderLine->ReceiveQty + $OrderLine->QtyReceived)
+				/*Set the purchase order line stdcostunit = weighted average standard cost used for all receipts of this line 
+                                This assures that the quantity received against the purchase order line multiplied by the weighted average of standard
+                                costs received = the total of standard cost posted to GRN suspense*/
+				$_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost = (($CurrentStandardCost * $OrderLine->ReceiveQty) + ($_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost *$OrderLine->QtyReceived)) / ($OrderLine->ReceiveQty + $OrderLine->QtyReceived);
 
 			} elseif ($OrderLine->QtyReceived==0 AND $OrderLine->StockID=="") {
 				/*Its a nominal item being received */
