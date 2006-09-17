@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 4;
 include('includes/DefinePOClass.php');
@@ -319,7 +319,8 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 			 echo "<OPTION Value='" . $LocnRow['loccode'] . "'>" . $LocnRow['locationname'];
 		 }
 	  }
-	  echo '</SELECT></TD>
+	  echo '</SELECT> 
+		<INPUT TYPE=SUBMIT NAME="LookupDeliveryAddress" VALUE="' ._('Lookup Address') . '"></TD>
 	  	</TR>';
 
 	 if (!isset($_POST['StkLocation']) OR $_POST['StkLocation']==''){ /*If this is the first time the form loaded set up defaults */
@@ -355,7 +356,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 	     } else { /*The default location of the user is crook */
 		  prnMsg(_('The default stock location set up for this user is not a currently defined stock location') . '. ' . _('Your system administrator needs to amend your user record'),'error');
 	     }
-	  } elseif ($_POST['DelAdd1']==''){
+	  } elseif (isset($_POST['LookupDeliveryAddress'])){
 
 	      $sql = "SELECT deladd1,
 	      			deladd2,

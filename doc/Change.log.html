@@ -1,6 +1,8 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 
+<P>17/9/06 PO_Header.php now have a button to update the delivery address based on the selection of the stock location
 <P>17/9/06 ShipmentCosting.php - added code to deal with weighted average costing - similar to SupplierInvoice.php below. Also now checks when closing to make sure that all the purchase order line stock receipts are invoiced before allowing to be closed. Also completes the purchorderdetails and updates the purchase order line quantity to be the quantity received to avoid the possibility of receiving additional stock against this line
+
 <P>16/9/06 SupplierInvoice.php GoodsReceived.php added a field to grns table to allow the standard cost at the time of receiving to be recorded in the GRN record rather than the purchorderdetails table - this allows for multiple receipts against a purchase order to be at different costs - required for average costing. SupplierInvoice.php now has code to deal with average costing GL entries and cost updates. Also deals with where the invoice is for a quantity more than is left in stock now - writes off the variance on the shortfall. GoodsReceived now tracks the weighted average of all receipts of a purchase order line so that the quantity received multiplied by the stdcostunit = sum of all cost received against the line.
 <P>16/9/06 New script Z_Upgrade_3.04-3.05.php required to bring cost data over to the grn records to fit with the new schema of allowing different drops of stock received to be booked in at different costs. Previously 
 <P>13/9/06 Renier du Plessis polish-up of SalesTypes.php
