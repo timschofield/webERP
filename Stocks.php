@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 
 $PageSecurity = 11;
@@ -493,9 +493,9 @@ if (!isset($StockID) OR isset($_POST['New'])) {
 }
 	
 
-echo '<TR><TD>' . _('Part Description') . ' (' . _('short') . '):</TD><TD><input type="Text" name="Description" SIZE=52 MAXLENGTH=50 value="' . htmlentities($_POST['Description']) . '"></TD></TR>';
+echo '<TR><TD>' . _('Part Description') . ' (' . _('short') . '):</TD><TD><input type="Text" name="Description" SIZE=52 MAXLENGTH=50 value="' . htmlentities($_POST['Description'],ENT_QUOTES,_('ISO-8859-1')) . '"></TD></TR>';
 
-echo '<TR><TD>' . _('Part Description') . ' (' . _('long') . '):</TD><TD><textarea name="LongDescription" cols=40 rows=4>' . htmlentities($_POST['LongDescription']) . '</textarea></TD></TR>';
+echo '<TR><TD>' . _('Part Description') . ' (' . _('long') . '):</TD><TD><textarea name="LongDescription" cols=40 rows=4>' . htmlentities($_POST['LongDescription'],ENT_QUOTES,_('ISO-8859-1')) . '</textarea></TD></TR>';
 
 // Add image upload for New Item  - by Ori
 echo '<TR><TD>'. _('Image File (.jpg)') . ':</TD><TD><input type="file" id="ItemPicture" name="ItemPicture"></TD></TR>';

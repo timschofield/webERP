@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $PageSecurity = 9;
 
 include('includes/session.inc');
@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
     } else if ($InputError !=1) {
 
     /*Selected currencies is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new payment terms form */
-    $sql = "INSERT INTO currencies (currency,
+    	$sql = "INSERT INTO currencies (currency,
     					currabrev,
 					country,
 					hundredsname,
@@ -78,11 +78,13 @@ if (isset($_POST['submit'])) {
 				'" . DB_escape_string($_POST['HundredsName']) .  "',
 				" . $_POST['ExchangeRate'] . ")";
 
-    $msg = _('The currency definition record has been added');
+    	$msg = _('The currency definition record has been added');
     }
     //run the SQL from either of the above possibilites
     $result = DB_query($sql,$db);
-    prnMsg( $msg,'success');
+    if ($InputError!=1){
+    	prnMsg( $msg,'success');
+    }
     unset($SelectedCurrency);
 
 } elseif (isset($_GET['delete'])) {

@@ -1,5 +1,9 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 
+
+<P>24/10/06 added the directory Numbers to contain the PEAR module Numbers_to_Words that is a multi-language class. There is one modification required to avoid the dependency on PEAR's raiseerror function - this now refers to the webERP prnMsg function - otherwise updates to this module can be imported as necessary. Needs some testing with other Locales to check translation. It is only used in the PrintChecks.php script.
+<P>27/9/06 includes/LanguageSetup.php  now uses the path prefix for the bindtextdomain statement\ - multi-lang would not have worked with report writer scripts
+<P>27/9/06 Shipt_Select.php now modified SQL per bug report <>'' doesn't work on integers with postgres.
 <P>17/9/06 PO_Header.php now have a button to update the delivery address based on the selection of the stock location
 <P>17/9/06 ShipmentCosting.php - added code to deal with weighted average costing - similar to SupplierInvoice.php below. Also now checks when closing to make sure that all the purchase order line stock receipts are invoiced before allowing to be closed. Also completes the purchorderdetails and updates the purchase order line quantity to be the quantity received to avoid the possibility of receiving additional stock against this line
 

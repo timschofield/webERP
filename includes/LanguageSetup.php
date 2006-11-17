@@ -32,7 +32,7 @@ if (function_exists('gettext')){
 	putenv('LANG=' . $_SESSION['Language']);
 	putenv('LANGUAGE=' . $_SESSION['Language']);
   //putenv('LANG=$Language_Country');
-	bindtextdomain ('messages', './locale');
+	bindtextdomain ('messages', $PathPrefix . 'locale');
 	textdomain ('messages');
 
 	$locale_info = localeconv();

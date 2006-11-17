@@ -1,12 +1,18 @@
 <?php
 
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 $PageSecurity = 5;
 
 include('includes/DefinePaymentClass.php');
 include('includes/session.inc');
 include('includes/PDFStarter.php');
+include('Numbers/Words.php');
+
+
+$result = db_query("SELECT hundredsname FROM currencies WHERE currabrev='" . $_SESSION['PaymentDetail']->Currency . "'",$db);
+$CurrencyRow = db_fetch_row($result);
+$HundredsName = $CurrencyRow[0];
 
 $FontSize=10;
 
@@ -22,12 +28,13 @@ $FontSize=10;
 $YPos= $Page_Height-5*$line_height;
 $LeftOvers = $pdf->addTextWrap($Page_Width-75,$YPos,100,$FontSize,$_GET['ChequeNum'], 'left');					
 $YPos -= 3*$line_height;
-$AmountWords = ConvertNumberToWords(round($_SESSION['PaymentDetail']->Amount,2));
+
+
 $LeftOvers = $pdf->addTextWrap(75,$YPos,475,$FontSize,$AmountWords, 'left');					
 $YPos -= 1*$line_height;
 $LeftOvers = $pdf->addTextWrap($Page_Width-225,$YPos,100,$FontSize,$_SESSION['PaymentDetail']->DatePaid, 'left');					
 $LeftOvers = $pdf->addTextWrap($Page_Width-75,$YPos,75,$FontSize,number_format(round($_SESSION['PaymentDetail']->Amount,2),2), 'left');
-//$AmountWords = ConvertNumberToWords($_SESSION['PaymentDetail']->Amount);
+
 $YPos -= 1*$line_height;
 $LeftOvers = $pdf->addTextWrap(75,$YPos,300,$FontSize,$_SESSION['PaymentDetail']->SuppName, 'left');					
 $YPos -= 1*$line_height;
@@ -38,8 +45,18 @@ $YPos -= 1*$line_height;
 $Address3 = $_SESSION['PaymentDetail']->Address3 . ' ' . $_SESSION['PaymentDetail']->Address4 . ' ' . $_SESSION['PaymentDetail']->Address5 . ' ' . $_SESSION['PaymentDetail']->Address6;
 $LeftOvers = $pdf->addTextWrap(75,$YPos,300,$FontSize, $Address3, 'left');					
 
+$AmountWords = Numbers_Words::toWords(intval($_SESSION['PaymentDetail']->Amount),$Locale);
+$AmountWords .= ' ' . _('and') . ' ' .  Numbers_Words::toWords(intval(($_SESSION['PaymentDetail']->Amount - intval($_SESSION['PaymentDetail']->Amount))*100),$Locale) . ' ' . $HundredsName;
+
+$YPos -= 2*$line_height;
+$LeftOvers = $pdf->addTextWrap(75,$YPos,300,$FontSize, $AmountWords, 'left');
+$LeftOvers = $pdf->addTextWrap(375,$YPos,100,$FontSize, number_format($_SESSION['PaymentDetail']->Amount,2), 'right');
+
+
+
+
 // remittance advice 1
-$YPos -= 16*$line_height;
+$YPos -= 14*$line_height;
 $LeftOvers = $pdf->addTextWrap(0,$YPos,$Page_Width,$FontSize,_('Remittance Advice'), 'center');					
 $YPos -= 2*$line_height;
 $LeftOvers = $pdf->addTextWrap(25,$YPos,75,$FontSize,_('DatePaid'), 'left');					

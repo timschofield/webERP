@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 2;
 
@@ -9,22 +9,25 @@ $title = _('Stock Check Sheets Entry');
 
 include('includes/header.inc');
 
-echo "<FORM NAME=STKCNT ACTION='" . $_SERVER['PHP_SELF'] . "' METHOD=POST>";
+echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "' METHOD=POST>";
 
 echo "<DIV ALIGN=CENTER><BR>";
 
-if (isset($_POST['Action'])) { $_GET['Action'] = $_POST['Action']; }
+if (isset($_POST['Action'])) { 
+	$_GET['Action'] = $_POST['Action']; 
+}
 
-if ($_GET['Action'] != 'View' && $_GET['Action'] != 'Enter'){ echo $_GET['Action'] = 'Enter'; }
+if ($_GET['Action'] != 'View' && $_GET['Action'] != 'Enter'){ 
+	$_GET['Action'] = 'Enter'; 
+}
 
 if ($_GET['Action']=='View'){
-	echo '<a href="/StockCounts.php?Action=Enter">Resuming Entering Counts</a> <b>|</b> Viewing Entered Counts<BR><BR>';
+	echo '<a href="' . $rootpath . '/StockCounts.php?' . PID . '&Action=Enter">' . _('Resuming Entering Counts') . '</a> <b>|</b>' . _('Viewing Entered Counts') . '<BR><BR>';
 } else {
-	echo 'Entering Counts <b>|</b> <a href="/StockCounts.php?Action=View">View Entered Counts</a><BR><BR>';
+	echo _('Entering Counts') .'<b>|</b> <a href="' . $rootpath . '/StockCounts.php?' . PID . '&Action=View">' . _('View Entered Counts') . '</a><BR><BR>';
 }
 
 if ($_GET['Action'] == 'Enter'){
-
 
 	if (isset($_POST['EnterCounts'])){
 
@@ -65,6 +68,7 @@ if ($_GET['Action'] == 'Enter'){
 			}
 		} // end of loop
 		prnMsg($Added . _(' Stock Counts Entered'), 'success' );
+		unset($_POST['EnterCounts']);
 	} // end of if enter counts button hit
 
 	echo _('Stock Check Counts at Location') . ":<SELECT NAME='Location'>";
@@ -115,7 +119,7 @@ if ($_GET['Action'] == 'Enter'){
 	//START OF ACTION=VIEW
 	$SQL = "select * from stockcounts";
 	$result = DB_query($SQL, $db,$ErrMsg);
-	echo '<INPUT TYPE=HIDDEN NAME=Action Value=View>';
+	echo '<INPUT TYPE=HIDDEN NAME=Action Value="View">';
 	echo '<TABLE CELLPADDING=2 BORDER=1>';
 	echo "<TR>
 		<TD class='tableheader'>" . _('Stock Code') . "</TD>
@@ -129,7 +133,7 @@ if ($_GET['Action'] == 'Enter'){
 			<TD>".$myrow['loccode']."</TD>
 			<TD>".$myrow['qtycounted']."</TD>
 			<TD>".$myrow['reference']."</TD>
-			<TD><INPUT TYPE=CHECkBOX NAME='DEL[" .$myrow['id']."]' MAXLENGTH=20 SIZE=20></TD></TR>";
+			<TD><INPUT TYPE=CHECKBOX NAME='DEL[" .$myrow['id']."]' MAXLENGTH=20 SIZE=20></TD></TR>";
 
 	}
 	echo "</TABLE><BR><INPUT TYPE=SUBMIT NAME='SubmitChanges' VALUE='" . _('Save Changes') . "'>";

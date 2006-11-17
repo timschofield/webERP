@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 11;
 
@@ -79,20 +79,20 @@ if ($_POST['SearchParts']){
 		}
 		$SearchString = $SearchString. substr($_POST['Keywords'],$i).'%';
 
-		$SQL .= " WHERE purchorderdetails.shiptref<>''
+		$SQL .= " WHERE purchorderdetails.shiptref IS NOT NULL
 			AND purchorderdetails.shiptref<>0
 			AND stockmaster.description " . LIKE . " '$SearchString'
 			AND categoryid='" . $_POST['StockCat'] . "'";
 
 	 } elseif ($_POST['StockCode']){
 
-		$SQL .= " WHERE purchorderdetails.shiptref<>''
+		$SQL .= " WHERE purchorderdetails.shiptref IS NOT NULL
 			AND purchorderdetails.shiptref<>0
 			AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
 			AND categoryid='" . $_POST['StockCat'];
 
 	 } elseif (!$_POST['StockCode'] AND !$_POST['Keywords']) {
-		$SQL .= " WHERE purchorderdetails.shiptref<>''
+		$SQL .= " WHERE purchorderdetails.shiptref IS NOT NULL
 			AND purchorderdetails.shiptref<>0
 			AND stockmaster.categoryid='" . $_POST['StockCat'] . "'";
 

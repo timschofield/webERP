@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -388,7 +388,7 @@ if (isset($_POST['Search'])){
 			$Select = $myrow["debtorno"];
 			unset($result);
 		} elseif (DB_num_rows($result)==0){
-			prnMsg( _('No customer records contain the selected text') . ' - ' . _('please alter your search criteria and try again'),'info');
+			prnMsg( _('No customers containing the selected text and who trade in the currency of this receipt batch could be found') . ' - ' . _('please alter your search criteria and try again'),'info');
 		}
 
 	} //one of keywords or custcode was more than a zero length string

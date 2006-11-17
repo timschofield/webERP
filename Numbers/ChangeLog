@@ -1,0 +1,151 @@
+2006-06-12
+	* Numbers_Words: Version 0.15.0 released.
+	* Words/lang.nl.php: New language file: nl for Dutch (Thanks to WHAM van Dinter)
+	* Words/lang.et.php: changed locale name for Estonian language from 'ee' to 'et' (#5618).
+	* Words/lang.ru.php: fixed bug in Russian translation (#6654).
+	* Words.php: new Numbers_Words::getLocales() method (Thanks to Bertrand Gugger).
+	* tests/test-numbers-words.php: updated to use getLocales().
+	* package.xml: updated to version 2.0.
+
+2005-09-19
+	* Numbers_Words: Version 0.14.0 released.
+	* Words/lang.*.php: added $convert_fraction optional argument that allow to not convert fraction part in toCurrencyWorkds() method.
+	* Words/lang.en_GB.php: fixed plural of pence; toCurrency() method added.
+
+2005-03-09
+	* Numbers_Words: Version 0.13.1 released.
+	* Words.php: Fixed a problem with no leading zero in fraction of the currency value (reported by geekdom at gmail dot com).
+
+2005-02-28
+	* Numbers_Words: Version 0.13.0 released.
+	* support for a new currency ILS (or NIS) for New Israeli Sheqel
+
+2005-02-15
+	* Words/lang.cs.php: New language file: cs for Czech (Thanks to Petr 'PePa' Pavel)
+
+2005-02-03
+	* Words/lang.he.php: New language file: he for Hebrew (Thanks to Hadar Porat)
+
+2005-01-11
+	* Numbers_Words: Version 0.12.0 released.
+	* Words/lang.fr_BE.php: New language file: fr_BE for French (Belgium) (Thanks to Philippe Bajoit).
+
+2004-10-25
+	* Fixed spell mistake in some files - Britich to British (Thanks to Christian Weiske)
+
+2004-10-22
+	* Numbers_Words: Version 0.11.0 released.
+	* Words/lang.pt_BR.php: toCurrencyWords() support in pt_BR translation (Thanks to Mario H.C.T).
+
+2004-09-30
+	* Numbers_Words: Version 0.10.1 released.
+	* Words/lang.de.php: Small bug fix to German translation (the one thousand) (Thanks to neuner at futureweb dot at for the fix).
+	* tests/test-numbers-words.php: Changed test number.
+
+2004-09-20
+	* Numbers_Words: Version 0.10.0 released.
+	* Words/lang.dk.php: New language file: dk for Danish (Author: Jesper Veggerby)
+
+2004-08-26
+	* Numbers_Words: Version 0.9.0 released.
+	* Words/lang.hu_HU.php: New language file: hu_HU for Hungarian (Author: Nils Homp)
+	* Words/lang.id.php: Updating author list of the Indonesian translation (Arif Rifai Dwiyanto translated
+	into Indonesian first but I missed his file by mistake).
+
+2004-08-09
+	* Numbers_Words: Version 0.8.1 released.
+	* Words/lang.ru.php: fixed two bugs (missing t in 400, and wrong function call) in Russian translation (thanks
+	to Anton Funk and igorag for reporting, and Andrey Demenev for fixing)
+
+2004-06-17
+	* Numbers_Words: Version 0.8 released.
+	* Words/lang.lt.php: New file for Lithuanian language.
+	* Words.php: Fixed a class method finding (should work for PHP5 and PHP4 now)
+
+2004-05-25
+	* Numbers_Words: Version 0.7.1 released.
+	* Words.php: Small fix for PHP 5 support (toWords instead of towords) (Thanks to khlo for bug report).
+
+2004-04-28
+	* Numbers_Words: Version 0.7 released.
+	* Words/lang.fr.php, Words/lang.bg.php: small fix of minus sign (Kouber Saparev)
+	* Words/lang.sv.pl: New language file: sv for Swedish (Author: Robin Ericsson)
+
+2004-04-27
+	* Numbers_Words: Version 0.6 released.
+
+2004-04-17
+	* Words/lang.ru.php: New language file: ru for Russian (Author: Andrey Demenev)
+
+2004-03-25
+	* Words/lang.id.php: New language file: id for Indonesian (Author: Ernas M. Jamil)
+
+2004-03-02
+	* Words/lang.es_AR.php: New language file: es_AR for Argentinian Spanish (Author: Martin Marrese)
+
+2003-12-16
+	* Numbers_Words: Version 0.5.1 release.
+	* Words/lang.fr.php: Small fix to French translation.
+
+2003-12-16
+	* Numbers_Words: Version 0.5 release.
+	* Words/lang.en_US.php: toCurrency() method for spelling given amount of money.
+
+2003-12-11
+	* Words/lang.fr.php: New language file: fr for French (Author: Kouber Saparev)
+
+2003-11-21
+	* Words/lang.bg.php: New language file: bg for Bulgarian (Author: Kouber Saparev)
+
+2003-09-29
+	* Numbers_Words: Version 0.4 release.
+	* Words.php: eliminate PEAR.php run-time loading
+	* all files: comments small changes to be more usable for phpdoc
+
+2003-09-17
+	* Words/lang.it_IT.php: New language file: it_IT for Italian (Authors:
+	Filippo Beltramini, Davide Caironi)
+	* Words.php, Words/lang.pl.php: toCurrency() method for spelling given amount of money.
+
+2003-09-15
+	* Words/lang.ee.php: New language file: ee for Estonian (Author: Erkki Saarniit)
+	* Words/lang.es.php: extranous spaces deleted.
+	* Words.php: trim output, new function for converting currency.
+	* tests: new test suite (PHPUnits).
+2002-11-27
+	* Numbers_Words: Version 0.3.1 release.
+	* Words/lang.pt_BR.php: fixing spell mistake for native language name
+2002-11-26
+	
+	* Numbers_Words: Version 0.3 release (first PEAR release).
+	* Words/lang.es.php: New language file: es for Spanish (Author: Xavier Noguer)
+	* Words/lang.de.php: New language file: de for German (Author: Piotr Klaban)
+	* Words/lang.pt_BR.php: New language file: pt_BR for Brazilian
+	Portuguese (Author: Marcelo Subtil Marcal <jason@conectiva.com.br>)
+	* all files: PHP License upgrade to 3.0
+	* test-numbers-words.php: HTML and text mode enabled
+	* Words/lang.*.php: New $lang_native, $locale variables.
+	* test-numbers-words.php: New language file, en_100 uses Donald Knuth number spelling system.
+
+2002-11-19
+
+	* package.xml: New version 0.2 released.
+	* Words/lang.en_100.php: New language file, en_100 uses Donald Knuth number spelling system.
+	* Words/lang.pt_BR.php: New language file, pt_BR for Brazilian Portuguese (Thanks to Marcelo Subtil Marcal).
+
+2002-11-18 14:00
+
+	* Words/lang.*.php: Bad conversion of zero number fixed (Thanks to Xavier Noguer).
+
+2002-11-18 10:00
+
+	* all files: Changing name from Numbers_Spell to Numbers_Words
+
+2002-11-15 15:04  makler
+
+	* package.xml, Spell.php: Changing file location
+
+2002-11-15 14:47  makler
+
+	* package.xml: CVS initialization.
+

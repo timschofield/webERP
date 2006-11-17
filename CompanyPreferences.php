@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity =10;
 
@@ -56,31 +56,31 @@ if (isset($_POST['submit'])) {
 	if ($InputError !=1){
 
 		$sql = "UPDATE companies SET
-				coyname='" . $_POST['CoyName'] . "',
-				companynumber = '" . $_POST['CompanyNumber'] . "',
+				coyname='" . DB_escape_string($_POST['CoyName']) . "',
+				companynumber = '" . DB_escape_string($_POST['CompanyNumber']) . "',
 				gstno='" . $_POST['GSTNo'] . "',
-				regoffice1='" . $_POST['RegOffice1'] . "',
-				regoffice2='" . $_POST['RegOffice2'] . "',
-				regoffice3='" . $_POST['RegOffice3'] . "',
-				regoffice4='" . $_POST['RegOffice4'] . "',
-				regoffice5='" . $_POST['RegOffice5'] . "',
-				regoffice6='" . $_POST['RegOffice6'] . "',
-				telephone='" . $_POST['Telephone'] . "',
-				fax='" . $_POST['Fax'] . "',
-				email='" . $_POST['Email'] . "',
-				currencydefault='" . $_POST['CurrencyDefault'] . "',
-				debtorsact=" . $_POST['DebtorsAct'] . ",
-				pytdiscountact=" . $_POST['PytDiscountAct'] . ",
-				creditorsact=" . $_POST['CreditorsAct'] . ",
-				payrollact=" . $_POST['PayrollAct'] . ",
-				grnact=" . $_POST['GRNAct'] . ",
-				exchangediffact=" . $_POST['ExchangeDiffAct'] . ",
-				purchasesexchangediffact=" . $_POST['PurchasesExchangeDiffAct'] . ",
-				retainedearnings=" . $_POST['RetainedEarnings'] . ",
+				regoffice1='" . DB_escape_string($_POST['RegOffice1']) . "',
+				regoffice2='" . DB_escape_string($_POST['RegOffice2']) . "',
+				regoffice3='" . DB_escape_string($_POST['RegOffice3']) . "',
+				regoffice4='" . DB_escape_string($_POST['RegOffice4']) . "',
+				regoffice5='" . DB_escape_string($_POST['RegOffice5']) . "',
+				regoffice6='" . DB_escape_string($_POST['RegOffice6']) . "',
+				telephone='" . DB_escape_string($_POST['Telephone']) . "',
+				fax='" . DB_escape_string($_POST['Fax']) . "',
+				email='" . DB_escape_string($_POST['Email']) . "',
+				currencydefault='" . DB_escape_string($_POST['CurrencyDefault']) . "',
+				debtorsact=" . DB_escape_string($_POST['DebtorsAct']) . ",
+				pytdiscountact=" . DB_escape_string($_POST['PytDiscountAct']) . ",
+				creditorsact=" . DB_escape_string($_POST['CreditorsAct']) . ",
+				payrollact=" . DB_escape_string($_POST['PayrollAct']) . ",
+				grnact=" . DB_escape_string($_POST['GRNAct']) . ",
+				exchangediffact=" . DB_escape_string($_POST['ExchangeDiffAct']) . ",
+				purchasesexchangediffact=" . DB_escape_string($_POST['PurchasesExchangeDiffAct']) . ",
+				retainedearnings=" . DB_escape_string($_POST['RetainedEarnings']) . ",
 				gllink_debtors=" . $_POST['GLLink_Debtors'] . ",
 				gllink_creditors=" . $_POST['GLLink_Creditors'] . ",
 				gllink_stock=" . $_POST['GLLink_Stock'] .",
-				freightact=" . $_POST['FreightAct'] . "
+				freightact=" . DB_escape_string($_POST['FreightAct']) . "
 			WHERE coycode=1";
 
 			$ErrMsg =  _('The company preferences could not be updated because');

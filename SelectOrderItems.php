@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.51 $ */
+/* $Revision: 1.52 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -682,16 +682,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		if ($OK_to_delete==1){
 			if($_SESSION['ExistingOrder']!=0){
+				
 				$SQL = 'DELETE FROM salesorderdetails WHERE salesorderdetails.orderno =' . $_SESSION['ExistingOrder'];
 				$ErrMsg =_('The order detail lines could not be deleted because');
 				$DelResult=DB_query($SQL,$db,$ErrMsg);
 
-				$_SESSION['ExistingOrder']=0;
-
 				$SQL = 'DELETE FROM salesorders WHERE salesorders.orderno=' . $_SESSION['ExistingOrder'];
 				$ErrMsg = _('The order header could not be deleted because');
 				$DelResult=DB_query($SQL,$db,$ErrMsg);
-
+				
+				$_SESSION['ExistingOrder']=0;
 			}
 
 			unset($_SESSION['Items']->LineItems);

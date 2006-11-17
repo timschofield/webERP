@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 5;
 
@@ -139,14 +139,14 @@ if (isset($_POST['CommitBatch'])){
 			FROM bankaccounts,
 				chartmaster
 		WHERE bankaccounts.accountcode=chartmaster.accountcode";
-  $result = DB_query($SQL,$db);
-  $BankAccounts = array();
-  $i=0;
-  
+	$result = DB_query($SQL,$db);
+	$BankAccounts = array();
+	$i=0;
+
 	while ($Act = DB_fetch_row($result)){
 		$BankAccounts[$i]= $Act[0];
 		$i++;
-  }
+  	}
 
   $PeriodNo = GetPeriod($_SESSION['PaymentDetail']->DatePaid,$db);
 
@@ -156,7 +156,7 @@ if (isset($_POST['CommitBatch'])){
 		  AND ($_SESSION['PaymentDetail']->PaymentType == 'Cheque')) {
      // it is a supplier payment by cheque and haven't printed yet so print cheque 
 
-    echo '<BR><a target="_blank" href="' . $rootpath . '/PrintCheque.php?' . SID . '&ChequeNum=' . $_POST['ChequeNum'] . '">' . _('Print Cheque') . '</a><BR><BR>';
+    echo '<BR><A  HREF="' . $rootpath . '/PrintCheque.php?' . SID . '&ChequeNum=' . $_POST['ChequeNum'] . '">' . _('Print Cheque') . '</A><BR><BR>';
 	
 	  echo '<FORM METHOD="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	  echo _('Has the cheque been printed') . '?<BR>';
@@ -405,11 +405,13 @@ if (isset($_POST['CommitBatch'])){
 	echo '<BR><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Enter a General Ledger Payment') . '</A>';
 	echo '<BR><A HREF="' . $rootpath . '/SelectSupplier.php?' . SID . '">' . _('Enter a Supplier Payment') . '</A>';
   }
-	include('includes/footer.inc');
-	exit;
+
+  include('includes/footer.inc');
+  exit;
+
 } elseif (isset($_GET['Delete'])){
   /* User hit delete the receipt entry from the batch */
-   $_SESSION['PaymentDetail']->Remove_GLItem($_GET['Delete']);
+	$_SESSION['PaymentDetail']->Remove_GLItem($_GET['Delete']);
 } elseif (isset($_POST['Process'])){ //user hit submit a new GL Analysis line into the payment
 
    if ($_POST['GLManualCode']!="" AND is_numeric($_POST['GLManualCode'])){
