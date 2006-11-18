@@ -1,6 +1,6 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 
-
+<P>18/11/06 Now check on login that the company entered at login has a companies/directory defined to avoid logins to incorrect companies - bug noted by Alan Jones
 <P>24/10/06 added the directory Numbers to contain the PEAR module Numbers_to_Words that is a multi-language class. There is one modification required to avoid the dependency on PEAR's raiseerror function - this now refers to the webERP prnMsg function - otherwise updates to this module can be imported as necessary. Needs some testing with other Locales to check translation. It is only used in the PrintChecks.php script.
 <P>27/9/06 includes/LanguageSetup.php  now uses the path prefix for the bindtextdomain statement\ - multi-lang would not have worked with report writer scripts
 <P>27/9/06 Shipt_Select.php now modified SQL per bug report <>'' doesn't work on integers with postgres.

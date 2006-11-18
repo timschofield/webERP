@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.69 $ */
+/* $Revision: 1.70 $ */
 
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
@@ -47,7 +47,7 @@ $dbuser = 'weberp_db_user';
 $dbpassword = 'weberp_db_pwd';
 
 //It would probably be inappropraite to allow selection of the company in a hosted envionment so this option can be turned off with this parameter
-$AllowCompanySelectionBox = true;
+$AllowCompanySelectionBox = false;
 
 //If $AllowCompanySelectionBox = false above then the $DefaultCompany string is entered in the login screen as a default - otherwise the user is expected to know the name of the company to log into.
 $DefaultCompany = 'weberp';
