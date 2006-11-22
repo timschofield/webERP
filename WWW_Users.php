@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity=15;
 
@@ -330,7 +330,7 @@ if (isset($SelectedUser)) {
 
 } else { //end of if $SelectedUser only do the else when a new record is being entered
 
-	echo '<CENTER><TABLE><TR><TD>' . _('User code') . ":</TD><TD><input type='Text' name='UserID' SIZE=22 MAXLENGTH=20 Value='" . $_POST['UserID'] . "'></TD></TR>";
+	echo '<CENTER><TABLE><TR><TD>' . _('User Login') . ":</TD><TD><input type='Text' name='UserID' SIZE=22 MAXLENGTH=20 Value='" . $_POST['UserID'] . "'></TD></TR>";
 	
 	/*set the default modules to show to all 
 	this had trapped a few people previously*/
@@ -346,7 +346,7 @@ if (isset($SelectedUser)) {
 
 echo '<TR><TD>' . _('Password') . ":</TD>
 	<TD><INPUT TYPE='Password' name='Password' SIZE=22 MAXLENGTH=20 VALUE='" . $_POST['Password'] . "'></TR>";
-echo '<TR><TD>' . _('User Name') . ":</TD>
+echo '<TR><TD>' . _('Full Name') . ":</TD>
 	<TD><INPUT TYPE='text' name='RealName' VALUE='" . $_POST['RealName'] . "' SIZE=36 MAXLENGTH=35></TD></TR>";
 echo '<TR><TD>' . _('Telephone No') . ":</TD>
 	<TD><INPUT TYPE='Text' name='Phone' VALUE='" . $_POST['Phone'] . "' SIZE=32 MAXLENGTH=30></TD></TR>";

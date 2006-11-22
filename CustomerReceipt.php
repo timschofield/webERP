@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -260,7 +260,7 @@ if (isset($_POST['CommitBatch'])){
 
    echo '<P>';
 
-   prnMsg( _('Receipt batch') . ' ' . $_SESSION['ReceiptBatch']->BatchNo . ' ' . _('has been sucessfully entered into the database'),'success');
+   prnMsg( _('Receipt batch') . ' ' . $_SESSION['ReceiptBatch']->BatchNo . ' ' . _('has been successfully entered into the database'),'success');
 
    echo "<BR><A HREF='" . $rootpath . "/PDFBankingSummary.php?BatchNo=" . $_SESSION['ReceiptBatch']->BatchNo . "'>" . _('Print PDF Batch Summary') . "</A>";
    unset($_SESSION['ReceiptBatch']);

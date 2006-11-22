@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.47 $ */
+/* $Revision: 1.48 $ */
  
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -133,7 +133,9 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 				$_SESSION['AttemptsCounter'] = 0;
 			} elseif ($_SESSION['AttemptsCounter'] >= 5 AND isset($_POST['UserNameEntryField'])) {
 				/*User blocked from future accesses until sysadmin releases */
-				$sql = "UPDATE www_users SET blocked=1 WHERE www_users.userid='" . $_POST['UserNameEntryField'] . "'";
+				$sql = "UPDATE www_users 
+						SET blocked=1 
+					WHERE www_users.userid='" . $_POST['UserNameEntryField'] . "'";
 				$Auth_Result = DB_query($sql, $db);
 				die(include($PathPrefix . 'includes/FailedLogin.php'));
 			}

@@ -627,6 +627,7 @@ CREATE TABLE `grns` (
   `qtyrecd` double NOT NULL default '0',
   `quantityinv` double NOT NULL default '0',
   `supplierid` varchar(10) NOT NULL default '',
+  `stdcostunit` double NOT NULL default '0',
   PRIMARY KEY  (`grnno`),
   KEY `DeliveryDate` (`deliverydate`),
   KEY `ItemCode` (`itemcode`),
@@ -1385,7 +1386,7 @@ CREATE TABLE `stockcheckfreeze` (
   `stockid` varchar(20) NOT NULL default '',
   `loccode` varchar(5) NOT NULL default '',
   `qoh` double NOT NULL default '0',
-  PRIMARY KEY  (`stockid`),
+  PRIMARY KEY  (`stockid`,`loccode`),
   KEY `LocCode` (`loccode`),
   CONSTRAINT `stockcheckfreeze_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
   CONSTRAINT `stockcheckfreeze_ibfk_2` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
@@ -2033,7 +2034,7 @@ INSERT INTO `chartmaster` VALUES (9100,'Income Tax Provision','Income Tax');
 -- Dumping data for table `companies`
 --
 
-INSERT INTO `companies` VALUES (1,'Demo System','not entered yet','','PO Box 1000','The White House','Washnington DC','USA','','','','','info@weberp.org','AUD',1100,4900,2100,2400,2150,4200,5200,3500,1,1,1,5600);
+INSERT INTO `companies` VALUES (1,'Demo System\'s Inc','not entered yet','','PO Box 1000','The White House','Washnington DC','USA','','','','','info@weberp.org','USD',1100,4900,2100,2400,2150,4200,5200,3500,1,1,1,5600);
 
 --
 -- Dumping data for table `cogsglpostings`
@@ -2062,7 +2063,7 @@ INSERT INTO `holdreasons` VALUES (51,'In liquidation',1);
 --
 
 INSERT INTO `locations` VALUES ('DEN','Denver','532-536 Wentworth Street','Denver','Colorado','','','','233 5532 216','233 5532 215','g.bovert@weberp.com','Graham Bouvert',1,0);
-INSERT INTO `locations` VALUES ('TOR','Toronto Distribution Centre','','','','','','','','','','Clive Contrary',1,1);
+INSERT INTO `locations` VALUES ('TOR','Toronto Distribution Centre','Level 100 ','CN Tower','Toronto','','','','','','','Clive Contrary',1,1);
 
 --
 -- Dumping data for table `paymentterms`
@@ -2084,8 +2085,8 @@ INSERT INTO `salesglpostings` VALUES (2,'AN','AIRCON',5000,4800,'DE');
 -- Dumping data for table `systypes`
 --
 
-INSERT INTO `systypes` VALUES (0,'Journal - GL',0);
-INSERT INTO `systypes` VALUES (1,'Payment - GL',0);
+INSERT INTO `systypes` VALUES (0,'Journal - GL',2);
+INSERT INTO `systypes` VALUES (1,'Payment - GL',1);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
 INSERT INTO `systypes` VALUES (10,'Sales Invoice',8);
@@ -2095,11 +2096,11 @@ INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',4);
 INSERT INTO `systypes` VALUES (17,'Stock Adjustment',8);
 INSERT INTO `systypes` VALUES (18,'Purchase Order',0);
-INSERT INTO `systypes` VALUES (20,'Purchase Invoice',13);
+INSERT INTO `systypes` VALUES (20,'Purchase Invoice',17);
 INSERT INTO `systypes` VALUES (21,'Debit Note',3);
-INSERT INTO `systypes` VALUES (22,'Creditors Payment',0);
+INSERT INTO `systypes` VALUES (22,'Creditors Payment',3);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
-INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',8);
+INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',12);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',0);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',0);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',0);
@@ -2166,7 +2167,7 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_US');
+INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
 
 --
 -- Dumping data for table `edi_orders_segs`
@@ -2355,6 +2356,7 @@ INSERT INTO `config` VALUES ('PastDueDays1','30');
 INSERT INTO `config` VALUES ('PastDueDays2','60');
 INSERT INTO `config` VALUES ('PO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('ProhibitJournalsToControlAccounts','1');
+INSERT INTO `config` VALUES ('ProhibitPostingsBefore','2005-09-30');
 INSERT INTO `config` VALUES ('QuickEntries','10');
 INSERT INTO `config` VALUES ('RadioBeaconFileCounter','/home/RadioBeacon/FileCounter');
 INSERT INTO `config` VALUES ('RadioBeaconFTP_user_name','RadioBeacon ftp server user name');
@@ -2369,6 +2371,7 @@ INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','Tax Ref');
 INSERT INTO `config` VALUES ('vtiger_integration','0');
+INSERT INTO `config` VALUES ('WeightedAverageCosting','1');
 INSERT INTO `config` VALUES ('WikiApp','WackoWiki');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
 INSERT INTO `config` VALUES ('YearEnd','3');
