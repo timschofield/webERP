@@ -32,7 +32,7 @@ CREATE TABLE reports (
   reportname text DEFAULT ''::text NOT NULL,
   reporttype text DEFAULT 'rpt'::text NOT NULL ,
   groupname text DEFAULT 'misc'::text NOT NULL,
-  report char(1) NOT NULL DEFAULT '0',
+  defaultreport char(1) NOT NULL DEFAULT '0',
   papersize text DEFAULT 'A4,210,297'::text NOT NULL ,
   paperorientation char(1) NOT NULL DEFAULT 'P',
   margintop integer NOT NULL DEFAULT 10,

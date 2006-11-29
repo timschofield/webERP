@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 9;
 
@@ -11,20 +11,24 @@ include('includes/header.inc');
 
 // *** POPAD&T
 function display_children($parent, $level, &$arbore) {
+	
+	global $db;
 	// retrive all children of parent
-	$c_result = mysql_query('select parent, component from bom '.
-							'where parent="'.$parent.'";');
-	if (mysql_num_rows($c_result) > 0) {
+	$c_result = DB_query("SELECT parent, 
+					component 
+				FROM bom WHERE parent='" . $parent. "'",$db);
+	if (DB_num_rows($c_result) > 0) {
 		echo ("<UL>\n");
 		// display each child
-		while ($row = mysql_fetch_array($c_result)) {
+		while ($row = DB_fetch_array($c_result)) {
 			if (!($parent == $row['component'])) {
 				// indent and display the title of this child
 				$ID1 = $row["component"];
-				//echo("<LI>\n");
-				//echo("<A HREF=\""."?Select=".$ID1."\">".$ID1."</A>"."  \n");
 				$arbore[] = $level; 		// Level
-				if ($level > 10) { echo "ERROR"; exit; }
+				if ($level > 15) { 
+					prnMsg(_('A maximum of 15 levels of bill of materials only can be displayed'),'error'); 
+					exit; 
+				}
 				$arbore[] = $parent;		// Assemble
 				$arbore[] = $row['component'];	// Component
 				// call this function again to display this
@@ -32,7 +36,6 @@ function display_children($parent, $level, &$arbore) {
 				display_children($row['component'], $level + 1, $arbore);
 			}
 		}
-		//echo ("</UL>\n");
 	}
 } 
 
@@ -76,7 +79,7 @@ ie the BOM is recursive otherwise false ie 0 */
 
 } //end of function CheckForRecursiveBOM
 
-function DisplayBOMItems($UltimateParent, $Parent,$Component,$Level,$db) {
+function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 		// Modified by POPAD&T
 		$sql = "SELECT bom.component,
 				stockmaster.description,
@@ -90,7 +93,8 @@ function DisplayBOMItems($UltimateParent, $Parent,$Component,$Level,$db) {
 				stockmaster,
 				locations,
 				workcentres
-			WHERE bom.component='$Component'
+			WHERE bom.component='$Component' 
+			AND bom.parent = '$Parent'
 			AND bom.loccode = locations.loccode
 			AND bom.workcentreadded=workcentres.code
 			AND stockmaster.stockid=bom.component";
@@ -101,16 +105,9 @@ function DisplayBOMItems($UltimateParent, $Parent,$Component,$Level,$db) {
 
 		//echo $TableHeader;
 		$RowCounter =0;
-		$k=0;
+
 		while ($myrow=DB_fetch_row($result)) {
-			if ($k==1){
-				echo "<tr bgcolor='#CCCCCC'>";
-				$k=0;
-			} else {
-				echo "<tr bgcolor='#EEEEEE'>";
-				$k++;
-			}
-			
+
 			$Level1 = str_repeat('-&nbsp;',$Level-1).$Level;
 			if( $myrow[7]=='B' || $myrow[7]=='K') {
 				$DrillText = '%s%s';
@@ -347,7 +344,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			break;
 	}
 	
-	echo "<BR><FONT COLOR=BLUE SIZE=3><B>$SelectedParent - " . $myrow[0] . ' ('. $MBdesc. ') </FONT></B>';
+	echo "<BR><FONT COLOR=BLUE SIZE=3><B> $SelectedParent - " . $myrow[0] . ' ('. $MBdesc. ') </FONT></B>';
 	
 	echo '<BR><A HREF=' . $_SERVER['PHP_SELF'] . '?' . SID . '>' . _('Select a Different BOM') . '</A></CENTER>';
 
@@ -441,18 +438,32 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			<td class=tableheader>' . _('Effective To') . '</td>
 			</tr>';
 	echo $TableHeader;
-	if( count($matrice) == 0 ) {
+	if(count($matrice) == 0) {
 		echo '<tr bgcolor="#EEEEEE"><td colspan="8">'._('No materials found.').'</td></tr>';
 	} else {
 		$UltimateParent = $SelectedParent;
+		$k = 0;
+		$RowCounter = 1;
+
 		foreach($matrice as $elem){
 			$Level = $elem[0];
 			$Parent = $elem[1];
 			$Component = $elem[2];
+			if ($k==1){
+				echo "<tr bgcolor='#CCCCCC'>";
+				$k=0;
+			}else {
+				echo "<tr bgcolor='#EEEEEE'>";
+				$k++;
+			}
 			DisplayBOMItems($UltimateParent, $Parent,$Component,$Level,$db);
+			$RowCounter++;
+			if ($RowCounter==20){
+				echo $TableHeader;
+				$RowCounter=0;
+			}
 		}
 	}
-		
 	// *** end POPAD&T
 ?>
 	</table></CENTER>
