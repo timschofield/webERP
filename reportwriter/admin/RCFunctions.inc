@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 // Include functions needed for ReportCreator.php
 function PrepStep($StepNum) {
@@ -692,8 +692,9 @@ function CreateTableList($ReportID,$Table) {
 	$myrow = DB_fetch_row($Result);
 	
 	$TableList = '';
-	$sql = "SHOW TABLES";
-	$Result=DB_query($sql,$db,'','',false,true);
+	
+	$Result=DB_show_tables($db);
+
 	while ($mytable=DB_fetch_row($Result)) {
 		$tablename = strtolower($mytable[0]);
 		if ($myrow[0] == $tablename) $TableList .= "<OPTION SELECTED Value='" . $tablename . "'>" . $tablename . "</OPTION>";

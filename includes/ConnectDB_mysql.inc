@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 define ('LIKE','LIKE');
 
@@ -112,6 +112,10 @@ function DB_escape_string($String){
 	Return mysql_real_escape_string($String);
 }
 
+function DB_show_tables(&$Conn){
+	$Result = DB_query('SHOW TABLES',$Conn);
+	Return $Result;
+}
 
 function INTERVAL( $val, $Inter ){
 		global $dbtype;

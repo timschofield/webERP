@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 define ('LIKE','ILIKE');
 /* $PgConnStr = $PgConnStr = "host=".$host." dbname=".$_SESSION['DatabaseName']; */
@@ -121,6 +121,10 @@ function DB_escape_string($String){
 function INTERVAL( $val, $Inter ) {
 	global $dbtype;
 	return "\n(CAST( (" . $val . ") as text ) || ' ". $Inter ."')::interval\n";
+}
+function DB_show_tables (&$Conn){
+	$Result =DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'",$Conn);
+	Return $Result; 
 }
 
 function DB_Maintenance($Conn){
