@@ -1,4 +1,4 @@
-<br><br>
+<html><head></head><body><br><br>
 
 <a name="Requirements"><font size="+3"><b>Requirements</b></font></a>
 
@@ -8,7 +8,7 @@
 
 <br><br>
 
-There are a many possible
+There are many possible
 configurations that could run this application. The scale of the
 enterprise obviously will have a significant bearing on the final
 configuration.
@@ -16,7 +16,7 @@ configuration.
 <br><br>
 
 The operating system and the
-database engine chosen will have the largest bearing on the System
+database engine chosen will have the largest bearing on System
 requirements. Each client connection to the web server and database
 engine will also consume RAM so the more connections the larger the
 RAM requirement. Similarly disk space required is a function of the
@@ -27,20 +27,19 @@ application standards.
 
 <br><br>
 
-As a guide the minimal
-installation for up to 50 simultaneous users, using a Linux operating
-system and an Apache web server, could use an entry level server with
-512Meg RAM a 10 Megabit network would give more than adequate
-performance 100 Megabit is now entry level. RAID SCSI swappable disks
-are preferred in any mission critical environment where disk access
-is intensive.
+As a guide, an installation for up to 50 simultaneous users could 
+consist of the following: a Linux operating system, an Apache web 
+server, an entry level server with 512 MB RAM and a 10 Megabit 
+network card.  This would provide more than adequate performance. 
+100 Megabit network cards are now entry level. RAID SCSI swappable 
+disks are preferred in any mission critical environment where disk 
+access is intensive.
 
 <br><br>
 
-Multiple servers with with SMP and
-load balancing and a separate database server and large amounts of
-RAM the limit on database size and the number of users is large
-enough for the most demanding businesses.
+With multiple servers with with SMP, load balancing, a separate 
+database server, and large amounts of RAM the limit on database 
+size and the number can be scaled to the most demanding businesses.
 
 <br><br>
 
@@ -48,62 +47,62 @@ enough for the most demanding businesses.
 
 <br><br>
 
-<UL>
-	<LI><A HREF="http://www.php.net/">PHP</A>
+<ul>
+	<li><a href="http://www.php.net/">PHP</a>
 	greater than 4.2. The system is
 	therefore operating system independent since PHP can be configured
 	as a CGI module for use on MS IIS or as a module for Apache under
-	either Windows (NT, 2000 or XP) or Unix/Linux. Also the ftp
-	extensions for transfer of edi orders if required.
-	<LI><A HREF="http://www.mysql.com/">MySQL</A>-Max
+	either Windows (NT, 2000 or XP) or Unix/Linux. If transfer of EDI 
+	orders is required the ftp extensions for PHP will be needed.
+	</li><li><a href="http://www.mysql.com/">MySQL</a>-Max
 	with Innodb transactional tables support. Innodb was introduced in
-	2001 to MySQL and has oracle like functionality &ndash; with similar
+	2001 to MySQL and has Oracle like functionality &#8211; with similar
 	speed. (The system could be used with Oracle or other database
-	systems too with minimal modification) MySQL later than version 4
-	has innodb tables in by default. Since MySQL represents such good
+	systems too with minimal modification.) MySQL later than version 4
+	has Innodb tables in by default. Since MySQL represents such good
 	value for money it has been used. An example configuration file
 	my.cnf normally under /usr/local/mysql/var is available in the mysql
-	documentation to show typical settings for the innodb configuration.
+	documentation to show typical settings for the Innodb configuration.
 	The expected size of the data is useful although additional data
 	files can be created retrospectively as necessary. Note that only
 	the tables that require transaction support are defined as Innodb
 	tables. There is always debate but the MyISAM tables are reputed to
 	be faster.
-	<LI>A	web server. <A HREF="http://www.apache.org/">Apache</A>
-	makes the most sense &ndash; but
+	</li><li>A	web server. <a href="http://www.apache.org/">Apache</a>
+	makes the most sense &#8211; but
 	most web servers are supported by PHP in various forms.
-	<LI>If the web server is
-	accessible over the internet ie not just over a LAN then encrypted
-	communications are required. The openssl and mod-ssl module for
-	apache can be used easily to ensure all data is transmitted in
+	</li><li>If the web server is
+	accessible over the Internet and not just over a LAN then encrypted
+	communications are required. The openssl and mod-ssl modules for
+	apache can be easily used to ensure all data is transmitted in
 	encrypted form.
-</UL>
+</li></ul>
 
 There are many sources of
-information on the compilation and installation of MySql and PHP. See
+information on the compilation and installation of MySQL and PHP. See
 the following links:
 
 <br><br>
 
-<A HREF="http://logidac.com/apache/apache-install-rpm.phtml">http://logidac.com/apache/apache-install-rpm.phtml</a>
+<a href="http://logidac.com/apache/apache-install-rpm.phtml">http://logidac.com/apache/apache-install-rpm.phtml</a>
 
 <br><br>
 
-<A HREF="http://www.linux-sottises.net/en_apache_install.php">http://www.linux-sottises.net/en_apache_install.php</A>
+<a href="http://www.linux-sottises.net/en_apache_install.php">http://www.linux-sottises.net/en_apache_install.php</a>
 
 <br><br>
 
 The system could be used with many
 other database servers but it is tested and developed on MySQL.
-Independent benchmarks show that MySQL is at least one of the fastest
+Independent benchmarks show that MySQL is one of the fastest
 for most common database tasks, particularly at establishing
-connections &ndash; since this is required for every page, MySql is
+connections &#8211; since this is required for every page, MySQL is
 therefore ideally suited to the web environment.
 The ftp library for PHP is only
 required for sending order files to a Radio Beacon ftp server for
 remote warehouse services.
-Using apache with <A HREF="http://www.mod_ssl.org/">mod_ssl</A>
-and <A HREF="http://www.openssl.org/">openssl</A>
-secure sockets makes sense and where
-there is any data transmitted over the internet and not just over a
-LAN.
+Using Apache with <a href="http://www.mod_ssl.org/">mod_ssl</a>
+and <a href="http://www.openssl.org/">openssl</a>
+secure sockets makes sense where
+there is any data transmitted over the Internet and not just over a
+LAN.</body></html>
