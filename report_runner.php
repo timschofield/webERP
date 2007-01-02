@@ -16,8 +16,9 @@
 // see here http://www.gnu.org/licenses/gpl.txt
 //--------------------------------------------------------------------
 //you must tell the script where you main installation is located
-//Rememeber this is difference for each location
+//Rememeber this is different for each location
 //$weberp_home=/srv/www/htdocs/weberp
+
 $usage="USAGE\n".$argv[0].":\n".
        "     -r reportnumber (the number of the weberp report)\n".
        "     -n reportname   (the name you want to give the report)\n".
@@ -85,14 +86,12 @@ for ($i=0;$i<count($Recipients); $i++) {
 	$Recipient[$i]="<".$Recipient[$i].">";
 }
 
-// magic includes - thanks to phil
-
 $AllowAnyone = true;
-include("includes/session.inc");
+include('includes/session.inc');
 
 
-include ("includes/ConstructSQLForUserDefinedSalesReport.inc");
-include ("includes/PDFSalesAnalysis.inc");
+include ('includes/ConstructSQLForUserDefinedSalesReport.inc');
+include ('includes/PDFSalesAnalysis.inc');
 
 include('includes/htmlMimeMail.php');
 $mail = new htmlMimeMail();

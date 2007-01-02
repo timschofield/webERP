@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.51 $ */
+/* $Revision: 1.52 $ */
 
 
 $PageSecurity = 1;
@@ -346,6 +346,10 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'><LI>" . _('Select Supplier') . '</LI></A>'; ?>
+							</td>
+							</tr><tr>
+							<td class="menu_group_item">
 								<?php echo "<A HREF='" . $rootpath . "/SupplierAllocations.php?" . SID . "'><LI>" . _('Supplier Allocations') . '</LI></A>'; ?>
 							</td>
 							</tr>
@@ -384,7 +388,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'><LI>" . _('Suppliers') . '</LI></A>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/Suppliers.php?' . SID . "'><LI>" . _('Add Supplier') . '</LI></A>'; ?>
 							</td>
 							</tr>
 						</table>

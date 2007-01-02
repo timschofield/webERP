@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 /*
 This script has the responsibility to gather basic information necessary to retrieve data for reports. 
@@ -282,7 +282,8 @@ switch ($_GET['action']) {
 					}
 				}
 				$success = UpdateDBFields($ReportID);
-				if (!$success OR $_POST['todo']==RPT_BTN_UPDATE) { // update fields and stay on this form
+				if (!$success OR $_POST['todo']==RPT_BTN_UPDATE) { 
+					// update fields and stay on this form
 					if (!$success) $usrMsg[] = array('message'=>RPT_DUPDB, 'level'=>'error');
 					// read back in new data for next screen (will set defaults as defined in the db)
 					$sql = "SELECT table1, 

@@ -108,5 +108,13 @@ To schedule the report to run an entry in crontab under a linux installation tha
 since the page has no output - it would be pointless running it in a web browser although it would initiate another email to the defined recipients.
 <br><br>
 A similar template script is available called MailSalesReport_csv.php that mails the comma separated values file for a ReportID to the Recipients defined in the script in just the same way as MailSalesReport.php script above.
+<br><br>
+A more elegant solution to automatic emailing of sales analysis reports is available using the report_runner.php script this script can be run from a shell or directly from cron and takes command line parameters. This has the advantage instead of hardcoding a number or scripts this script can be run with the paratmers below:
+<br> -r reportnumber (the number of the webERP report)
+<br> -n reportname   (the name you want to give the report)
+<br> -e emailaddress[;emailaddress;emailaddres...] (who you want to send it to)
+<br> [-t reporttext ]  (some words you want to send with the report-optional)
+<br> [ -H weberpHOME]  (the home directory for weberp - or edit the php file)
+
 
 <!-- Help End: SalesAnalRepts -->

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 define ('LIKE','ILIKE');
 /* $PgConnStr = $PgConnStr = "host=".$host." dbname=".$_SESSION['DatabaseName']; */
@@ -78,6 +78,12 @@ function DB_fetch_row (&$ResultIndex) {
 	Return $RowPointer;
 }
 
+function DB_fetch_assoc (&$ResultIndex) {
+
+	$RowPointer=pg_fetch_assoc($ResultIndex);
+	Return $RowPointer;
+}
+
 function DB_fetch_array (&$ResultIndex) {
 	$RowPointer=pg_fetch_array($ResultIndex);
 	Return $RowPointer;
@@ -126,9 +132,12 @@ function DB_show_tables (&$Conn){
 	$Result =DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'",$Conn);
 	Return $Result; 
 }
-function DB_show_fields(&$Conn,$TableName){
-	$Result = DB_query("SELECT column_name FROM information_schema.columns WHERE table_name ='$TableName'",$Conn);
-	Return $Result;
+function DB_show_fields($TableName,&$Conn){
+	$Result = DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name='" . $TableName . "'",$Conn);
+	if (DB_num_rows($Result)==1){
+		$Result = DB_query("SELECT column_name FROM information_schema.columns WHERE table_name ='$TableName'",$Conn);
+		Return $Result;
+	}
 }
 function DB_Maintenance($Conn){
 

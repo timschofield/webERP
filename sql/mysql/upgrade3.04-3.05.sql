@@ -1,4 +1,3 @@
-
 CREATE TABLE `reports` (
   `id` int(5) NOT NULL auto_increment,
   `reportname` varchar(30) NOT NULL default '',
@@ -83,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `reportlinks` (
   `table1` varchar(25) NOT NULL default '',
   `table2` varchar(25) NOT NULL default '',
   `equation` varchar(75) NOT NULL default ''
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 -- 
 -- Dumping data for table `reportlinks`
@@ -315,17 +314,14 @@ INSERT INTO `reportlinks` VALUES ('worksorders', 'stockmaster', 'worksorders.sto
 INSERT INTO `reportlinks` VALUES ('stockmaster', 'worksorders', 'stockmaster.stockid=worksorders.stockid');
 INSERT INTO `reportlinks` VALUES ('www_users', 'locations', 'www_users.defaultlocation=locations.loccode');
 INSERT INTO `reportlinks` VALUES ('locations', 'www_users', 'locations.loccode=www_users.defaultlocation');
-
 INSERT INTO config ( confname , confvalue ) VALUES('WikiApp','Disabled');
 INSERT INTO config ( confname , confvalue ) VALUES('WikiPath','wiki');
 INSERT INTO config ( confname , confvalue ) VALUES('ProhibitJournalsToControlAccounts','0');
 INSERT INTO config ( confname , confvalue ) VALUES ('InvoicePortraitFormat', '0');
 ALTER TABLE stockserialitems ADD INDEX (serialno);
 ALTER TABLE stockserialmoves ADD INDEX (serialno);
-
 INSERT INTO taxcategories (taxcatname) VALUES ('Freight');
 INSERT INTO config ( confname , confvalue ) VALUES ('AllowOrderLineItemNarrative', '1');
-
 INSERT INTO config ( confname , confvalue ) VALUES ('vtiger_integration', '0');
 ALTER TABLE custbranch DROP INDEX BranchCode;
 INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('ProhibitPostingsBefore', '2006-01-01');

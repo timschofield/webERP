@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 define ('LIKE','LIKE');
 
@@ -117,8 +117,8 @@ function DB_show_tables(&$Conn){
 	Return $Result;
 }
 
-function DB_show_fields(&$Conn,$TableName){
-	$Result = DB_query("DESCRIBE '$TableName'",$Conn);
+function DB_show_fields($TableName, &$Conn){
+	$Result = DB_query("DESCRIBE $TableName",$Conn);
 	Return $Result;
 }
 

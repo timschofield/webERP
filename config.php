@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.71 $ */
+/* $Revision: 1.72 $ */
 
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
@@ -22,7 +22,7 @@ $allow_demo_mode = True;
 
 // webERP version
 
-$Version = '3.05_dev';
+$Version = '3.05';
 
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time
@@ -38,7 +38,7 @@ $Version = '3.05_dev';
 $host = 'localhost';
 
 //The type of db server being used - currently only postgres or mysql
-$dbType = 'postgres';
+$dbType = 'mysql';
 //$dbType = 'postgres';
 //$dbType = 'mysql';
 

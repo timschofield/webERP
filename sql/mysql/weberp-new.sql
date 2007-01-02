@@ -10,14 +10,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Current Database: `weberp`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `weberp` /*!40100 DEFAULT CHARACTER SET latin1 */;
-
-USE `weberp`;
-
---
 -- Table structure for table `accountgroups`
 --
 

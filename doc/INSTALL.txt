@@ -1,6 +1,6 @@
 WEB-ERP Installation
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 Upgrading
 
@@ -242,7 +242,6 @@ It is imperative to go through each of the screens from the setup tab and enter 
 Now the accounting starts....
 
 All the standing configuration data is defined from the system setup tab and each link should be reviewed to enter appropriate data for the business.
-
 
 
 Please try not to refer questions about PHP or database configuration 

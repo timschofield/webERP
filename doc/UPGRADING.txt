@@ -1,5 +1,16 @@
 UPGRADING FROM PREVIOUS VERSIONS OF WEBERP
 
+From version 3.05 an upgrade script will be provided that applies the database modifications automatically and does any data conversions required for the new scripts to work.
+
+The upgrade script to convert a 3.04 database to work with 3.05 scripts is:
+
+Z_Upgrade_3.04-3.05.php
+
+Once the new scripts have been loaded onto the web-server and a backup of the old database taken this script should be opened in a URL - there are no links to this URL so it will need to be typed manually into the browser. This script works with both mysql and postgres.
+
+Previous to version 3.05, the database conversion had to be done manually - the instructions to complete upgrades from older versions are provided below:
+
+
 CONVERTING THE DATABASE 
 
 As each new version is released the new php scripts will use new database fields or changed field names. A a consequence, the new scripts will most likely not work unless the database structure has been converted to the new database structure. Normally the changes to the database between versions are small. However, between 2.9b and 3.0 the changes have been significant and the upgrade script may take some time to run. It should not be run from a phpMyAdmin window since PHP will time out long before the upgrade script will have finished.
@@ -52,3 +63,8 @@ IMPORTANT: Note that version of mysql 4.1.8 or greater is required because from 
 NOTES ON UPGRADING FROM 3.01 to 3.02
 
 3.02 includes extensive changes to the tax schema in webERP and also allows for the same item on a sales order multiple times. This requires all existing sales orders to be updated with an appropriate number to avoid strange behaviour. A special script must be run to effect these changes after the SQL script has been run. The script Z_Upgrade_3.01-3.02.php must be opened in the browser to effect these changes.
+
+NOTES ON UPGRADING FROM 3.04 to 3.05
+
+3.05 now has Dave Premo's report writer scripts included in the distribution - additional tables are required for this functionality. Also, 3.05 allows for weighted average stock valuation - using the existing data fields and retaining integrated general ledger stock values. This requires cost information to be copied over into the grns table.
+The upgrade script Z_Upgrade_3.04-3.05.php applies all the additional tables to the database and does the data conversions required wihtout any manual intervention.

@@ -5974,7 +5974,8 @@ SET search_path = public, pg_catalog;
 -- Data for Name: www_users; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-INSERT INTO www_users VALUES ('demo', 'f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4', 'administrator', '', '', '', 'CPT', 8, '2006-12-01 18:18:03', '', 'A4', '1,1,1,1,1,1,1,1,', 0, 50, 'fresh', 'en_GB');
+INSERT INTO www_users VALUES ('phil', 'bf3d297ef7c3218f38d71de15d4fb11171e7209c', 'Phil Daintree', '', '', '', 'CPT', 1, '2006-12-14 09:59:15', '', 'A4', '1,0,0,1,1,0,1,0,', 0, 50, 'fresh', 'en_GB');
+INSERT INTO www_users VALUES ('demo', 'f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4', 'administrator', '', '', '', 'CPT', 8, '2007-01-02 20:44:20', '', 'A4', '1,1,1,1,1,1,1,1,', 0, 50, 'fresh', 'en_GB');
 
 
 --
@@ -6065,7 +6066,6 @@ INSERT INTO config VALUES ('OverReceiveProportion', '20');
 INSERT INTO config VALUES ('PO_AllowSameItemMultipleTimes', '1');
 INSERT INTO config VALUES ('YearEnd', '3');
 INSERT INTO config VALUES ('PageLength', '48');
-INSERT INTO config VALUES ('part_pics_dir', 'companies/weberp/part_pics');
 INSERT INTO config VALUES ('MaxImageSize', '300');
 INSERT INTO config VALUES ('EDIHeaderMsgId', 'D:01B:UN:EAN010');
 INSERT INTO config VALUES ('EDIReference', 'WEBERP');
@@ -6084,16 +6084,17 @@ INSERT INTO config VALUES ('DefaultTaxCategory', '1');
 INSERT INTO config VALUES ('EDI_Incoming_Orders', 'companies/weberp/EDI_Incoming_Orders');
 INSERT INTO config VALUES ('HTTPS_Only', '0');
 INSERT INTO config VALUES ('EDI_MsgPending', 'companies/weberp/EDI_MsgPending');
-INSERT INTO config VALUES ('DB_Maintenance', '7');
 INSERT INTO config VALUES ('AutoDebtorNo', '0');
-INSERT INTO config VALUES ('reports_dir', 'companies/weberp/reports');
 INSERT INTO config VALUES ('PackNoteFormat', '1');
 INSERT INTO config VALUES ('DefaultBlindPackNote', '1');
 INSERT INTO config VALUES ('CheckCreditLimits', '0');
 INSERT INTO config VALUES ('FreightTaxCategory', '1');
-INSERT INTO config VALUES ('DB_Maintenance_LastRun', '2006-11-24');
-INSERT INTO config VALUES ('ProhibitPostingsBefore', '2006-01-01');
+INSERT INTO config VALUES ('DB_Maintenance_LastRun', '2006-12-14');
+INSERT INTO config VALUES ('part_pics_dir', 'companies/weberp/part_pics');
+INSERT INTO config VALUES ('reports_dir', 'companies/weberp/reports');
+INSERT INTO config VALUES ('DB_Maintenance', '0');
 INSERT INTO config VALUES ('WeightedAverageCosting', '1');
+INSERT INTO config VALUES ('ProhibitPostingsBefore', '2005-08-31');
 
 
 --

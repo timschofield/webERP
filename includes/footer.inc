@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 	echo '<BR><BR>';
 	echo '</TD>';
@@ -27,7 +27,7 @@
 	
 	echo '<TR>';
 	echo '<TD ALIGN="center">';
-	echo '<A HREF="http://www.weberp.org" TARGET="_blank"><IMG SRC="'. $PathPrefix . $rootpath.'/css/webERPsm.gif" BORDER="0" ALT="" TITLE="webERP ' . _('Copyright') . ' &copy; Logic Works Ltd - 2005"></A>';
+	echo '<A HREF="http://www.weberp.org" TARGET="_blank"><IMG SRC="'. $rootpath . '/css/webERPsm.gif" BORDER="0" ALT="" TITLE="webERP ' . _('Copyright') . ' &copy; Logic Works Ltd - ' . date('Y') . '"></A>';
 	echo '<BR>' . _('Version') . ' - ' . $Version;
 	echo '</TD></TR>';
 

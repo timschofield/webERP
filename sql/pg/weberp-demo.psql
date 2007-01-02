@@ -1902,7 +1902,7 @@ ALTER TABLE public.reportfields OWNER TO weberp_db_user;
 -- Name: reportfields_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('reportfields', 'id'), 2, true);
+SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('reportfields', 'id'), 12, true);
 
 
 --
@@ -2026,7 +2026,7 @@ ALTER TABLE public.reports OWNER TO weberp_db_user;
 -- Name: reports_id_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('reports', 'id'), 1, true);
+SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('reports', 'id'), 2, true);
 
 
 --
@@ -4407,7 +4407,6 @@ OverReceiveProportion	20
 PO_AllowSameItemMultipleTimes	1
 YearEnd	3
 PageLength	48
-part_pics_dir	companies/weberp/part_pics
 MaxImageSize	300
 EDIHeaderMsgId	D:01B:UN:EAN010
 EDIReference	WEBERP
@@ -4426,16 +4425,17 @@ DefaultTaxCategory	1
 EDI_Incoming_Orders	companies/weberp/EDI_Incoming_Orders
 HTTPS_Only	0
 EDI_MsgPending	companies/weberp/EDI_MsgPending
-DB_Maintenance	7
 AutoDebtorNo	0
-reports_dir	companies/weberp/reports
 PackNoteFormat	1
 DefaultBlindPackNote	1
 CheckCreditLimits	0
 FreightTaxCategory	1
-DB_Maintenance_LastRun	2006-11-24
-ProhibitPostingsBefore	2006-01-01
+DB_Maintenance_LastRun	2006-12-14
+part_pics_dir	companies/weberp/part_pics
+reports_dir	companies/weberp/reports
+DB_Maintenance	0
 WeightedAverageCosting	1
+ProhibitPostingsBefore	2005-08-31
 \.
 
 
@@ -4792,6 +4792,14 @@ COPY reportcolumns (reportid, colno, heading1, heading2, calculation, periodfrom
 --
 
 COPY reportfields (id, reportid, entrytype, seqnum, fieldname, displaydesc, visible, columnbreak, params) FROM stdin;
+11	2	grouplist	1	prices.typeabbrev	Price List	0	0	0
+7	2	fieldlist	1	prices.stockid	Item	1	0	0
+8	2	fieldlist	2	stockmaster.description	Description	1	0	0
+9	2	fieldlist	3	prices.typeabbrev	Price List	1	0	0
+10	2	fieldlist	4	prices.price	Price	1	0	0
+12	2	critlist	1	prices.typeabbrev	Price List	0	0	0
+4	2	dateselect	0			1	1	a
+3	2	trunclong	0			1	1	0
 \.
 
 
@@ -4817,6 +4825,7 @@ COPY reportlinks (table1, table2, equation) FROM stdin;
 --
 
 COPY reports (id, reportname, reporttype, groupname, defaultreport, papersize, paperorientation, margintop, marginbottom, marginleft, marginright, coynamefont, coynamefontsize, coynamefontcolor, coynamealign, coynameshow, title1desc, title1font, title1fontsize, title1fontcolor, title1fontalign, title1show, title2desc, title2font, title2fontsize, title2fontcolor, title2fontalign, title2show, filterfont, filterfontsize, filterfontcolor, filterfontalign, datafont, datafontsize, datafontcolor, datafontalign, totalsfont, totalsfontsize, totalsfontcolor, totalsfontalign, col1width, col2width, col3width, col4width, col5width, col6width, col7width, col8width, table1, table2, table2criteria, table3, table3criteria, table4, table4criteria, table5, table5criteria, table6, table6criteria) FROM stdin;
+2	Price List	rpt	inv	1	A4:210:297	P	10	10	10	10	helvetica	12	0:0:0	C	1	%reportname%	helvetica	10	0:0:0	C	1	Report Generated %date%	helvetica	10	0:0:0	C	1	helvetica	8	0:0:0	L	helvetica	10	0:0:0	L	helvetica	10	0:0:0	L	25	80	25	25	0	0	0	0	prices	stockmaster	prices.stockid=stockmaster.stockid								
 \.
 
 
@@ -5349,7 +5358,8 @@ ASS	CPT	Assembly	1.0000	25.0000	240000	0.0000
 --
 
 COPY www_users (userid, "password", realname, customerid, phone, email, defaultlocation, fullaccess, lastvisitdate, branchcode, pagesize, modulesallowed, blocked, displayrecordsmax, theme, "language") FROM stdin;
-demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2006-12-01 18:18:03		A4	1,1,1,1,1,1,1,1,	0	50	fresh	en_GB
+phil	bf3d297ef7c3218f38d71de15d4fb11171e7209c	Phil Daintree				CPT	1	2006-12-14 09:59:15		A4	1,0,0,1,1,0,1,0,	0	50	fresh	en_GB
+demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2007-01-02 20:44:20		A4	1,1,1,1,1,1,1,1,	0	50	fresh	en_GB
 \.
 
 

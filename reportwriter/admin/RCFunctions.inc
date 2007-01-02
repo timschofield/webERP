@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 // Include functions needed for ReportCreator.php
 function PrepStep($StepNum) {
@@ -796,7 +796,7 @@ function CreateFieldList($ReportID,$FName,$Type) {
 
 	for ($i = 0; $i < 6; $i++) {
 		if ($myrow[$i]) {
-			$Result=DB_show_fields($myrow[$i],$db);
+			$Result = DB_show_fields($myrow[$i],$db);
 			while ($mytable=DB_fetch_row($Result)) {
 				$fieldname = strtolower($myrow[$i]) . "." . strtolower($mytable[0]);
 				if ($FName == $fieldname){
