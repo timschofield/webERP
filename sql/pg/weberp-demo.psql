@@ -2192,7 +2192,7 @@ ALTER TABLE public.salesorders OWNER TO weberp_db_user;
 -- Name: salesorders_orderno_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('salesorders', 'orderno'), 59, true);
+SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('salesorders', 'orderno'), 60, true);
 
 
 --
@@ -4792,8 +4792,6 @@ COPY reportcolumns (reportid, colno, heading1, heading2, calculation, periodfrom
 --
 
 COPY reportfields (id, reportid, entrytype, seqnum, fieldname, displaydesc, visible, columnbreak, params) FROM stdin;
-1	1	trunclong	0			1	1	0
-2	1	dateselect	0		a	1	1	\N
 \.
 
 
@@ -4819,7 +4817,6 @@ COPY reportlinks (table1, table2, equation) FROM stdin;
 --
 
 COPY reports (id, reportname, reporttype, groupname, defaultreport, papersize, paperorientation, margintop, marginbottom, marginleft, marginright, coynamefont, coynamefontsize, coynamefontcolor, coynamealign, coynameshow, title1desc, title1font, title1fontsize, title1fontcolor, title1fontalign, title1show, title2desc, title2font, title2fontsize, title2fontcolor, title2fontalign, title2show, filterfont, filterfontsize, filterfontcolor, filterfontalign, datafont, datafontsize, datafontcolor, datafontalign, totalsfont, totalsfontsize, totalsfontcolor, totalsfontalign, col1width, col2width, col3width, col4width, col5width, col6width, col7width, col8width, table1, table2, table2criteria, table3, table3criteria, table4, table4criteria, table5, table5criteria, table6, table6criteria) FROM stdin;
-1	Test Report 1	rpt	ar	1	A4:210:297	L	10	10	10	10	helvetica	12	0:0:0	C	1	%reportname%	helvetica	10	0:0:0	C	1	Report Generated %date%	helvetica	10	0:0:0	C	1	helvetica	8	0:0:0	L	helvetica	10	0:0:0	L	helvetica	10	0:0:0	L	25	25	25	25	25	25	25	25		\N	\N	\N	\N	\N	\N	\N	\N	\N	\N
 \.
 
 
@@ -4897,6 +4894,7 @@ COPY salesorderdetails (orderno, stkcode, qtyinvoiced, unitprice, quantity, esti
 6	DEVDB	6.5000	40.0000	6.5000	0	0.2500	2005-08-31 00:00:00	1		0
 6	PHIS02	6.0000	70.0000	6.0000	0	0.0000	2005-08-31 00:00:00	1		1
 8	BOLT13MMX10	126.0000	2.3300	150.0000	0	0.0000	2005-08-31 00:00:00	0		0
+60	PHIS01	0.0000	63.2200	3.0000	0	0.0000	\N	0		0
 \.
 
 
@@ -4938,6 +4936,7 @@ COPY salesorders (orderno, debtorno, branchcode, customerref, buyername, comment
 11	FREDBLOGG	FREDBLOGG		\N	 Inv 1	2005-03-19	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-21	0	\N	0	\N	\N	\N
 6	CUST01	CUST01		\N	 Inv 12 Inv 6	2005-01-13	WS	1	Na	Na	Na	Na	NA	NA	Customer	0.00	CPT	2005-01-14	0	\N	0	\N	\N	\N
 8	FREDBLOGG	FREDBLOGG		\N	 Inv 14 Inv 7	2005-03-18	WS	1	23 Bald Hill Terraces	Guinnesston 	Ireland				Fred Bloggs and partners	0.00	CPT	2005-03-19	0	\N	0	\N	\N	\N
+60	CUST01	CUST01		\N		2006-11-29	WS	1	Na	Na	Na	Na	NA	NA	Customer	0.00	CPT	2006-11-29	1	2006-11-29	0	1		
 \.
 
 
@@ -5350,7 +5349,7 @@ ASS	CPT	Assembly	1.0000	25.0000	240000	0.0000
 --
 
 COPY www_users (userid, "password", realname, customerid, phone, email, defaultlocation, fullaccess, lastvisitdate, branchcode, pagesize, modulesallowed, blocked, displayrecordsmax, theme, "language") FROM stdin;
-demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2006-11-27 21:16:29		A4	1,1,1,1,1,1,1,1,	0	50	fresh	en_GB
+demo	f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4	administrator				CPT	8	2006-12-01 18:18:03		A4	1,1,1,1,1,1,1,1,	0	50	fresh	en_GB
 \.
 
 

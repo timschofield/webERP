@@ -1,235 +1,420 @@
-<br><br>
-<a name="GettingStarted"><font size="+3"><b>Getting Started</b></font></a>
-<br><br>
-<font size="+2"><b>Prerequisites</b></font>
-<br><br>
+<html><head></head><body><br><br>
+<a name="GettingStarted"><font size="+3"><b>Getting Started</b></font></a><br>
+<br>
+<font size="+2"><b>Prerequisites</b></font><br>
+<br>
 <ul>
-<li>PHP greater than 4.2. The system is therefore operating system independent since PHP can be configured as a CGI module for use on MS IIS or as a module for Apache under either Windows (NT, 2000 or XP) or Unix/Linux. It has been tested under both windows (NT and XP) and linux. 
-<li>MySQL greater than version 4, with Innodb transactional tables support - foreign key constraints are also required - these were added to Innodb in 2003. Innodb was introduced in 2001 to MySQL and has oracle like functionality - row level locking and database transactions with similar speed. (The system could be used with Oracle or other database systems, with minimal modification) An example configuration file my.cnf normally under /usr/local/mysql/var is available in the mysql documentation to show typical settings for the innodb configuration. The expected size of the data is useful although innodb can create an auto-extending data file and does so by default as of MySQL 4. All tables are defined as Innodb tables as of version 2.8.
-<li>A web server. Apache - the software serving nearly 70% of all web pages - is recommended - but most web servers are supported by PHP in various forms the most popular choice on windows will likley be MS IIS.
-<li>If the web server is accessible over the internet ie not just over a LAN then encrypted communications are required. The openssl and mod-ssl module for apache can be used easily to ensure all data is transmitted in encrypted form.
-</ul>
-Using apache with mod_ssl and openssl secure sockets makes sense and where there is any data transmitted over the internet and not just over a LAN.
-
-Getting PHP and MySQL installed are well covered elsewhere - see the following links:
-<br><br>
-<a href="http://logidac.com/apache/apache-install-rpm.phtml">http://logidac.com/apache/apache-install-rpm.phtml</a>
-<br><br>
-<a href="http://www.linux-sottises.net/en_apache_install.php">http://www.linux-sottises.net/en_apache_install.php</a>
-<br><br>
-It is important to ensure that the php.ini setting for session.auto_start = 0. Some rpm distributions come with this set to 1 which makes it impossible to use classes within php code. Classes are used extensively in the system and the system starts sessions whenever it needs them - it is safe to set this  to 0.
-<br><br>
+<li>PHP greater than 4.2. The system is therefore operating system
+independent since PHP can be configured as a CGI module for use on MS
+IIS or as a module for Apache under either Windows (NT, 2000 or XP) or
+Unix/Linux. It has been tested under both Windows (NT and XP) and
+Linux. 
+</li><li>MySQL greater than version 4 with Innodb transactional
+tables support. Foreign key constraints are also required. These were
+added to Innodb in 2003. Innodb was introduced in 2001 to MySQL and has
+Oracle like functionality - row level locking and database transactions
+with similar speed. (The system could be used with Oracle or other
+database systems, with minimal modification.) An example configuration
+file, my.cnf, normally under /usr/local/mysql/var is available in the
+MyySQL documentation to show typical settings for the Innodb
+configuration. The expected size of the data is useful although Innodb
+can create an auto-extending data file and does so by default as of
+MySQL 4. All tables are defined as Innodb tables as of version 2.8.
+</li><li>A web server. Apache - the software serving most
+web pages - is recommended but most web servers are supported by PHP
+in various forms. The most popular choice on Windows will likely be MS
+IIS.
+</li><li>If the web server is accessible over the Internet and not just
+over a LAN then encrypted communications are required. The openssl and
+mod-ssl modules for Apache can be easily used to ensure all data is
+transmitted in encrypted form.
+</li></ul>Using Apache with mod_ssl and openssl secure sockets makes
+sense where there is any data transmitted over the Internet and not
+just over a LAN.
+Getting PHP and MySQL installed are well covered elsewhere - see the
+following links:<br>
+<br>
+<a href="http://logidac.com/apache/apache-install-rpm.phtml">http://logidac.com/apache/apache-install-rpm.phtml</a><br>
+<br>
+<a href="http://www.linux-sottises.net/en_apache_install.php">http://www.linux-sottises.net/en_apache_install.php</a><br>
+<br>
+It is important to ensure that the php.ini setting for
+session.auto_start = 0. Some rpm distributions come with this set to 1
+which makes it impossible to use classes within php code. Classes are
+used extensively in the system and the system starts sessions whenever
+it needs them. It is safe to set this to 0.<br>
+<br>
 The main issues with installation of PHP appear to be:
 <ol>
-<li>Some windows installations come with a setting for session.save_path= /tmp this is inappropriate directory for windows and it should be changed to session.save_path=C:\temp or something more appropriate.
-<li>When the system is hosted on a multi-homed web server farm, the session needs a directory to be specified as a permanent directory otherwise alternative servers serving subsequent pages depending on the load at the time will not be able to find the session cookie. There is a config.php setting for $SessionSavePath this should be set appropriately for the web server host.
-<li>For a reason unknown some servers are unable to obtain the correct directory automatically using the line: $rootpath = dirname($_SERVER['PHP_SELF']); This will be evidenced by the system's inability to find the page links for the various system options. If this happens the $rootpath variable can be set to the root path of the scripts directly.
-<br><br>
-The system could be used with many other database servers but it is tested and developed on MySQL a Postgres ConnectDB.inc is provided and there is a setting in config.php - $dbtype that allows the system adminstrator to use a postgres database if preferred. Independent benchmarks show that MySQL is at least one of the fastest for most common database tasks. It is especially fast at initiating a connection and due to the stateless nature of the web, a new connection is required to be established on every page - this makes MySQL particularly suitable for web based applications.
-<br><br>
-If the integration with a company knowlege base is required then an installation of wacko wiki on the same web-server is required. This is entirely optional but is highly recommended as a way to share free form information accross the business. http://wackowiki.com/WackoDownload/InEnglish?v=xlv
-<br><br>
-The ftp library for PHP is only required for sending order files to a Radio Beacon ftp server for remote warehouse services.
-<br><br>
-Assuming that a web-server with PHP  functionality is operational and a MySQL server is available either on the same machine or on the network , a new installation consists of the following five steps:
-<br><br>
+<li>Some Windows installations come with a setting for
+session.save_path= /tmp this is an inappropriate directory for Windows 
+and should be changed to session.save_path=C:\temp or something more
+appropriate.
+</li><li>When the system is hosted on a multi-homed web server farm,
+the session needs a directory to be specified as a permanent directory
+otherwise alternative servers serving subsequent pages depending on the
+load at the time will not be able to find the session cookie. There is
+a config.php setting for $SessionSavePath which should be set
+appropriately for the web server host.
+</li><li>For a reason unknown some servers are unable to obtain the
+correct directory automatically using the line: $rootpath =
+dirname($_SERVER['PHP_SELF']); This will be evidenced by the system's
+inability to find the page links for the various system options. If
+this happens the $rootpath variable can be set to the root path of the
+scripts directly.<br>
+<br>
+The system could be used with many other database servers but
+it is tested and developed on MySQL. A Postgres ConnectDB.inc is
+provided and there is a $dbtype setting in config.php that allows the
+system administrator to use a Postgres database if preferred.
+Postgres database dumps are also available for building a postgres webERP installation.
+Independent benchmarks show that MySQL is one of the fastest databases
+for most common database tasks. It is especially fast at initiating a
+connection. Due to the stateless nature of the web, a new connection
+is required to be established on every page. This makes MySQL
+particularly suitable for web based applications.<br>
+<br>
+If integration with a company knowledge base is required
+then an installation of Wacko Wiki on the same web-server is required.
+This is entirely optional but is highly recommended as a way to share
+free form information across the business.
+<a href="http://wackowiki.com/WackoDownload/InEnglish?v=xlv">http://wackowiki.com/WackoDownload/InEnglish?v=xlv</a><br>
+<br>
+The ftp library for PHP is only required for sending order files to a Radio Beacon ftp server for remote warehouse services.<br>
+<br>
+Assuming that a web server with PHP functionality is
+operational and a MySQL database server is available either on the same machine
+or on the network, a new installation consists of the following five
+steps:<br>
+<br>
 <ul>
-<li>Copying all the PHP scripts and include files to a directory under the web server root directory.</li>
+<li>Copying all the PHP scripts and include files to a directory under the web server document root directory.</li>
 <li>Creating the database and populating it with initial data </li>
 <li>Editing config.php for the database connection information and any other requirements </li>
 <li>Logging into the system for the first time </li>
 <li>Setting system parameters </li>
 <li>Setting up company specific information in the system </li>
-</ul>
-<font size="+2"><b>Copying the PHP Scripts</b></font> 
-<br><br>
-All files in the archive except the installation instructions in INSTALL.txt, web-erp-demo.sql and web-erp-new.sql should be copied to a directory under the web server root directory. This varies between installations but:
-<br><br>
-/usr/local/httpd/htdocs/
-<br><br>
-is the apache root directory under SuSE. Normally the Apache document root directory is called something ? "/htdocs"
-<br><br>
-Copy the archive to the this directory and then extract the archive andl create the web-erp directory under the web server root directory and put all the scripts in that directory.
-<br><br>
-<font size="+2"><b>Creating the Database</b></font>
-<br><br> 
-The information provided assumes that you are using a mysql database server. An sql dump file suitable for postgres is also provided. However these instructions refer to the set up necessary using MySql.
-<br><br>You need to know the user name and password for the MySQL server. If you have not set these up the default is
-<br><br>
+</ul><br>
+<br>
+<font size="+2"><b>Copying the PHP Scripts</b></font><br>
+<br>
+All files in the archive except the installation instructions
+in INSTALL.txt, web-erp-demo.sql and web-erp-new.sql should be copied
+to a directory under the web server DocumentRoot directory. This varies 
+by distribution but:<br>
+<br>
+/srv/www/htdocs<br>
+<br>
+is the default Apache DocumentRoot directory under SuSE.<br>
+<br>
+Copy the archive to this directory and then extract the
+archive. The webERP directory will be created here (/srv/www/htdocs/webERP)
+and all scripts and other directories will be copied to that directory.<br>
+<br>
+<font size="+2"><b>Creating the Database</b></font><br>
+<br>
+The information provided assumes that you are using a MySQL
+database server. An sql dump file suitable for Postgres is also
+provided. However these instructions refer to the set up necessary
+using MySQL.<br>
+<br>
+You need to know the user name and password for the MySQL server. If you have not set these up the default is<br>
+<br>
 user root
 <br>
-password ""
-<br><br>
-BUT ... you should NOT use this account - you should set up another user for your mysql installation and change the root password to something other than "".
-<br><br>
-All instructions for using MySQL will refer to the command line client that comes with mysql. To run this under windows, a DOS box must be opened - from XP or 2000 click, Start, Run, enter cmd and click run. The mysql.exe binary is located by default under C:\mysql\bin\mysql.exe this would be the command line statement required to run mysql client, the options discussed below should be appended as required.
-<br><br>
-From the MySQL manual (edited):
-<br><br>
-" The MySQL root user is created as a superuser who can do anything. Connections must be made from the local host. NOTE: The initial root password is empty, so anyone can connect as root without a password and be granted all privileges. Because your installation is initially wide open, one of the first things you should do is specify a password for the MySQL root user. You can do this as follows (note that you specify the password using the PASSWORD() function):
-<br><br>
-You can, in MySQL Version 3.22 and above, use the SET PASSWORD statement:
-<br><br>
-shell> mysql -u root mysql
+password ""<br>
 <br>
-mysql> SET PASSWORD FOR root=PASSWORD('new_password');"
-<br><br>
-where 'new_password' is the new password you chose for the root user.
-<br><br>
-Also from the MySQL manual (edited):
-" Also, if you have changed the root user password, you must specify it for the mysql commands below.
-You can add new users by issuing GRANT statements:
-<br><br>
-shell> mysql --user=root -p 'new_password' mysql
+BUT ... you should NOT use this account. You should set up
+another user for your MySQL installation and change the root password
+to something other than "".<br>
 <br>
-mysql> GRANT ALL PRIVILEGES ON *.* TO weberp@localhost IDENTIFIED BY 'some_pass' WITH GRANT OPTION;"
-<br><br>
-Where 'some_pass' is a password of your choice for the new user 'weberp'. Note that this user, weberp, can only connect from the local machine so if the web server is on a different machine to the MySQL server then you need to give privileges to connect from other computers. See the MySQL manual.
-<br><br>
-Innodb tables must be enabled in the MySQL server. These tables allow database transactions which are a critical component of ERP software. Innodb tables require some parameters to be set up in my.cnf - there are some examples in the MySQL manual under table types - Innodb tables.
-<br><br>
-If you have an account set up already in MySQL and innodb tables enabled, then all you need to do is to run one of the sql scripts.
-<br><br>
-Two scripts are provided:
-<br><br>
+All instructions for using MySQL refer to the command
+line client that comes with MySQL. To run this under Windows a DOS box
+must be opened. From XP or 2000 click Start, Run, enter "cmd" and click
+Run. The mysql.exe binary is located by default under
+C:\mysql\bin\mysql.exe. This would be the command line statement
+required to run the mysql client. The options discussed below should be
+appended as required.<br>
+<br>
+From the MySQL manual (edited):<br>
+The MySQL root user is created as a superuser who can do
+anything. Connections must be made from the local host. NOTE: The
+initial root password is empty, so anyone can connect as root without a
+password and would have all privileges. Because your installation is
+initially wide open, one of the first things you should do is specify a
+password for the MySQL root user. You can do this as follows (note that
+you specify the password using the PASSWORD() function):<br>
+<br>
+You can, in MySQL Version 3.22 and above, use the SET PASSWORD statement:<br>
+<br>
+shell&gt; mysql -u root mysql
+<br>
+mysql&gt; SET PASSWORD FOR root=PASSWORD('new_password');"<br>
+<br>
+where 'new_password' is the new password you chose for the root user.<br>
+<br>
+Also from the MySQL manual (edited):<br>
+Also, if you have changed the root user password, you must specify it for the mysql commands below.
+You can add new users by issuing GRANT statements:<br>
+<br>
+shell&gt; mysql --user=root -p 'new_password' mysql
+<br>
+mysql&gt; GRANT ALL PRIVILEGES ON *.* TO weberp@localhost IDENTIFIED BY 'some_pass' WITH GRANT OPTION;"<br>
+<br>
+Where 'some_pass' is a password of your choice for the new user
+'weberp'. Note that this user 'weberp' can only connect from the local
+machine so if the web server is on a different machine then the MySQL
+server you need to give privileges to connect from other computers. 
+See the MySQL manual.<br>
+<br>
+Innodb tables must be enabled in the MySQL server. These
+tables allow database transactions which are a critical component of
+ERP software. Innodb tables require some parameters to be set up in
+my.cnf. There are some examples in the MySQL manual under table types
+- Innodb tables.<br>
+<br>
+If you have an account set up already in MySQL and Innodb
+tables enabled, then all you need to do is to run one of the sql
+scripts.<br>
+<br>
+Two scripts are provided:<br>
+<br>
 <ol>
-<li>web-erp-demo.sql This has a minimal amount of demonstration data with a bogus company set up so that transactions can be tried to see how the system works.
-<li>web-erp-new.sql This script has only the basic data necessary to start a new company system off. If you wish to set up your company using the web-erp software, then this is the script to use.This creates a weberp database and populates it with only the very basic data to start off.
-</ol>
-The files web-erp-demo.sql and web-erp-new.sql should be in the directory with all the PHP scripts - first change directory to where the scripts are held then enter:
-<br><br>
-shell > mysql --user=weberp --password='some_pass' < /path_to_the_sql_script/web-erp-demo.sql
-<br><br>
-or
-<br><br>
-shell > mysql --user=weberp --password='some_pass' < /path_to_the_sql_script/web-erp-new.sql
-<br><br>
-as required - modifying the user entered here as weberp to the user you created in mysql for the purpose and the password stated here as 'some_pass' to the password appropriate for the user and also the path_to_the_sql_script to the appropriate path perhaps something like /usr/local/httpd/htdocs/web-erp/
-<br><br> 
-<font size="+2"><b>Editing config.php</b></font>
-<br><br>
-config.php contains a series of user defined variables that determine how the system behaves. Critically it contains the host (computer name), username and password of the database connection required to connect to the database server. There is also an option to chose which type of database server is to be used. Currently there is only mysql and postgres options. There is no going forward without the system being provided with this data.
-<br><br>
-The default contents of the config.php file are as follows and must be edited in an editor of choice (KATE, Wordpad etc) and then saved in the web directory where the scripts are. However, the system is continually evolving and may well have changed since this was written.
-<br><br>
-Lines beginning with a # are commented out. Sections beginning with 
-/* are comments - they must be terminated with */
-<br><br>
-/ User configurable variables
-//---------------------------------------------------
-<br><br>
-//DefaultLanguage - this is the language that the login screen will use - other users can have different languages but they will see the default language before they login - once logged in the user settings are retrieved including their preferred language
-$DefaultLanguage ='en_GB';
-<br><br>
-// Whether to display the demo login and password or not 
-$allow_demo_mode = True;
-<br><br>
-// Application version
-$Version = '2.9c';
-<br><br>
-// The timezone of the business - this allows the possibility of having
+<li>web-erp-demo.sql This has a minimal amount of demonstration data
+with a bogus company set up so that transactions can be tried to see
+how the system works.
+</li><li>web-erp-new.sql This script has only the basic data necessary
+to start a new company. If you wish to set up your company
+using the webERP software, then this is the script to use. This creates
+a webERP database and populates it with only the very basic starting data. 
+</li></ol><br>
 <br>
-// the web-server on a overseas machine but record local time
+The files web-erp-demo.sql and web-erp-new.sql should be in
+the directory with all the PHP scripts. Change to the  directory 
+where the scripts are held or use the full path and enter:<br>
 <br>
-// this is not necessary if you have your own server locally
+shell &gt; mysql --user=weberp --password='some_pass' &lt; /path_to_the_sql_script/web-erp-demo.sql<br>
 <br>
-// putenv('TZ=Europe/London');
+or<br>
 <br>
-// putenv('Australia/Melbourne');
+shell &gt; mysql --user=weberp --password='some_pass' &lt; /path_to_the_sql_script/web-erp-new.sql<br>
 <br>
-// putenv('Australia/Sydney');
+as required. Modify the user entered here as 'weberp' to the
+user you created in MySQL for the purpose, and modify the password stated here
+as 'some_pass' to the password appropriate for the user. Also modify the
+path_to_the_sql_script to the appropriate path - perhaps something like
+/srv/www/htdocs/webERP/.<br>
 <br>
-// putenv('TZ=Pacific/Auckland');
-<br><br>
-// Connection information for the database
+<font size="+2"><b>Editing config.php</b></font><br>
 <br>
-// $host is the computer ip address or name where the database is located
+config.php contains a series of user defined variables that
+determine how the system behaves. Critically it contains the host
+(computer name), username and password of the database connection
+required to connect to the database server. There is also an option to
+chose which type of database server is to be used. Currently there are
+only options for mysql and postgres. There is no going forward without 
+this data.<br>
 <br>
-// assuming that the web server is also the sql server
+The default contents of the config.php file are as follows and
+must be edited in an editor of choice (KATE, Wordpad, etc.).  Then,
+save config.php in the web directory where the scripts are located. 
+Note, the system is continually evolving and may well have changed 
+since this was written.<br>
 <br>
-$host = 'localhost';
-<br><br>
-//The type of db server being used - currently only postgres or mysql
+============================================<br>
+beginning of config.php<br>
+============================================<br>
+&lt;?php<br>
 <br>
-$dbType = 'postgres';
+/* $Revision: 1.5 $<br>
+config.php<br>
+Web-ERP - http://web-erp.sourceforge.net<br>
+by Logic Works Ltd<br>
+*/<br>
 <br>
-//$dbType = 'postgres';
+// User configurable variables<br>
+//---------------------------------------------------<br>
 <br>
-//$dbType = 'mysql';
-<br><br>
-$DatabaseName = 'weberp';
-<br><br>
-// sql user & password
+//DefaultLanguage to use for the login screen and the setup of new users - the users language selection will override<br>
+$DefaultLanguage ='en_GB';<br>
 <br>
-$dbuser = 'weberp_db_user';
+// Whether to display the demo login and password or not on the login screen<br>
+$allow_demo_mode = True;<br>
 <br>
-$dbpassword = 'weberp_db_pwd';
-<br><br>
-//The maximum time that a login session can be idle before automatic logout
+// webERP version<br>
+$Version = '3.04';<br>
 <br>
-//time is in seconds  3600 seconds in an hour
+// The timezone of the business - this allows the possibility of having<br>
+// the web-server on a overseas machine but record local time<br>
+// this is not necessary if you have your own server locally<br>
+// putenv('TZ=Europe/London');<br>
+// putenv('Australia/Melbourne');<br>
+// putenv('Australia/Sydney');<br>
+// putenv('TZ=Pacific/Auckland');<br>
 <br>
-$SessionLifeTime = 3600;
-<br><br>
-<br><br>
-$rootpath = dirname($_SERVER['PHP_SELF']);
-<br>//$rootpath = '/web-erp';<br><br>
-<br><br>
-/* ******************END OF USER CONFIGURABLE VARIABLES ******************* */
-<br><br>
-/*The $rootpath is used in most scripts to tell the script the installation details of the files.
-<br><br>
+// Connection information for the database<br>
+// $host is the computer ip address or name where the database is located<br>
+// assuming that the web server is also the sql server<br>
+$host = 'localhost';<br>
+<br>
+//The type of db server being used - currently only postgres or mysql<br>
+$dbType = 'mysql';<br>
+//$dbType = 'postgres';<br>
+//$dbType = 'mysql';<br>
+<br>
+// sql user & password<br>
+$dbuser = 'weberp_db_user';<br>
+$dbpassword = 'weberp_db_pwd';<br>
+<br>
+//It would probably be inappropriate to allow selection of the company in a hosted environment so this option can be turned off with this parameter<br>
+$AllowCompanySelectionBox = true;<br>
+<br>
+//If $AllowCompanySelectionBox = false above then the $DefaultCompany string is entered in the login screen as a default - otherwise the user is expected to know the name of the company to log into.<br>
+$DefaultCompany = 'weberp';<br>
+<br>
+//The maximum time that a login session can be idle before automatic logout<br>
+//time is in seconds  3600 seconds in an hour<br>
+$SessionLifeTime = 3600;<br>
+<br>
+//The maximum time that a script can execute for before the web-server should terminate it<br>
+$MaximumExecutionTime =120;<br>
+<br>
+//The path to which session files should be stored in the server - useful for some multi-host web servers<br>
+//this can be left commented out<br>
+//$SessionSavePath = '/tmp';<br>
+<br>
+// which encryption function should be used<br>
+//$CryptFunction = "md5"; // MD5 Hash<br>
+$CryptFunction = "sha1"; // SHA1 Hash<br>
+//$CryptFunction = ""; // Plain Text<br>
+<br>
+<br>
+<br>
+// END OF USER CONFIGURABLE VARIABLES<br>
+<br>
+<br>
+<br>
+/*The $rootpath is used in most scripts to tell the script the installation details of the files.<br>
+<br>
 NOTE: In some windows installation this command doesn't work and the administrator must set this to the path of the installation manually:
+eg. if the files are under the web server root directory then rootpath =''; if they are under weberp then weberp is the rootpath - notice no additional slashes are necessary.<br>
+*/<br>
 <br>
-eg. if the files are under the webserver root directory then rootpath =""; if they are under weberp then weberp is the rootpath - notice no additional slashes are necessary.
+$rootpath = dirname($_SERVER['PHP_SELF']);<br>
+if ($rootpath == "/" OR $rootpath == "\\") {<br>
+	$rootpath = "";<br>
+}<br>
+//$rootpath = '/web-erp';<br>
 <br>
-*/
-<br><br>
-$rootpath = dirname($_SERVER['PHP_SELF']);
+/* Report all errors except E_NOTICE
+This is the default value set in php.ini for most installations but just to be sure it is forced here
+turning on NOTICES destroys things */<br>
 <br>
-//$rootpath = '/web-erp';
-<br><br>
-/*Its important to make sure there are no lines after the following "?>" */
+error_reporting (E_ALL & ~E_NOTICE);<br>
 <br>
-&#x3F;>
-<br><br>
-<font size="+2"><b>Logging In For the First Time</b></font>
-<br><br>
-Open a browser connected to the network upon which the web-server is also connected and enter the URL for the web server directory where web-erp is installed if the browser is on the same machine as the server then perhaps:
-<br><br>
-http://localhost/web-erp/index.php
-<br><br>
-enter the user name of 'demo'
+/*Make sure there is nothing - not even spaces after this last ?> */
+?&gt;<br>
+============================================<br>
+end of config.php<br>
+============================================<br>
 <br>
-password 'weberp'
-<br><br>
-(the quotation marks are not required).
-You can set up additional user accounts from the System Setup tab and change the password. (Users can change there own passwords at any time - by clicking on their user name shown at the top left of the screen) Be careful not to delete the demonstration user until a new System Administrator user has been set up. If there are no users defined the next time you try to login you won't be able to! In this situation the only way then to create a user to login with is to manually edit the SQL table WWW_Users to insert a user. If phpMyAdmin is installed on the web server as well then this can be achieved by adding a new record to WWW_Users.
-<br><br>
-NB The importance of setting a password for the root user of MySQL, otherwise anyone could modify WWW_Users and gain access  to private company information.
-<br><br>
-<font size="+2"><b>Configuration Parameters</b></font>
-<br><br>
-In previous versions prior to version 3.0 configuration parameters were stored under the config.php file which required manual editing of the system parameters. Since version 3.0 a new screen for System Parameters was developed that allows all the system wide configuration variables to be set - these are now stored in the database allowing for upgrades without then having to re-edit the config.php file. The system parameters screen is linked from the main menu under the set up tab, under general. Each of these settings should be reviewed in detail, notes describing the function of each variable are shown along side it.
-<br><br>
-<font size="+2"><b>Themes and GUI Modification</b></font>
-<br><br>
-Often what visually appeals to one does not appeal to another. Whilst accounting software is primarily about function - appearances do matter! Some flexibility is available with the colour scheme and font sizes of the GUI using cascading style sheets. (css)
-<br><br>
-The user interface can be modified by adopting one of the defined themes or making up a new theme. There are currently only three themes defined in the distribution - 'default', 'professional' and 'fresh'.
-<br><br>
-Each user can select their own preference from the user settings screen - this is revealed by clicking on the user name shown at the top left of the screen.
-<br><br>
-To make up a new theme copy the directory of one of the defined themes to a new name. The the themes are held under the css directory of the distribution, there is a directory under the css directory for each theme. Having copied the files to a new directory say 'New_theme' they should be edited to reflect the look desired. New theme directories are revealed automatically on the user setting screen, so users can select the customised theme.
-<br><br>
+<font size="+2"><b>Logging In For the First Time</b></font><br>
+<br>
+Open a browser connected to the network upon which the
+web server is also connected. Enter the URL for the web server
+directory where webERP is installed. If the browser is on the same
+machine as the web server then perhaps:<br>
+<br>
+http://localhost/webERP/index.php<br>
+<br>
+enter user name 'demo'<br>
+enter password 'weberp'<br>
+<br>
+The quotation marks are not required. To set up additional users go to
+Main Menu &gt; Setup &gt; User Accounts. Users can change there own 
+passwords at any time by clicking on their user name shown at the top 
+left of the screen. For example: "webERP Demo: <i>administrator</i>".
+Be careful not to delete the demonstration user until a new System
+Administrator user has been set up. If there are no users defined the
+next time you try to login you won't be able to! In this situation the
+only way then to create a user to login with is to manually edit the
+SQL table WWW_Users to insert a user. If phpMyAdmin is installed on the
+web server as well then this can be achieved by adding a new record to
+WWW_Users.<br>
+<br>
+NB The importance of setting a password for the root user of
+MySQL, otherwise anyone could modify WWW_Users and gain access to
+private company information.<br>
+<br>
+<font size="+2"><b>Configuration Parameters</b></font><br>
+<br>
+In versions prior to version 3.0, configuration
+parameters were stored under the config.php file which required manual
+editing of the system parameters. Since version 3.0 a new screen for
+System Parameters was developed that allows all the system wide
+configuration variables to be set. These are now stored in the
+database allowing for upgrades without then having to re-edit the
+config.php file. The system parameters screen is at Main Menu &gt; Setup
+&gt; Configuration Settings.  Each of these settings should
+be reviewed in detail. Notes describing the function of each variable
+are shown along side it.<br>
+<br>
+<font size="+2"><b>Themes and GUI Modification</b></font><br>
+<br>
+Often what visually appeals to one does not appeal to another.
+Whilst accounting software is primarily about function - appearances do
+matter! Some flexibility is available with the colour scheme and font
+sizes of the GUI using cascading style sheets (css).<br>
+<br>
+The user interface can be modified by adopting one of the
+defined themes or making up a new theme. There are currently three
+themes defined in the distribution: 'default', 'professional' and
+'fresh'.<br>
+<br>
+Each user can select their own preference from the user settings screen.
+This is revealed by clicking on their user name shown at the top left of 
+the screen. For example: "webERP Demo: <i>administrator</i>".<br>
+<br>
+To create a new theme copy the directory of one of the
+defined themes to a new name. The themes are held under the css
+directory of the distribution. There is a directory under the css
+directory for each theme. After copying the files to a new directory,
+say 'New_theme', they should be edited to reflect the look desired. New
+theme directories are revealed automatically on the user setting
+screen so users can select the customised theme.<br>
+<br>
 
 <!-- Help Begin: WWW_Users -->
 
-<font size="+2"><b>Setting Up Users</b></font>
-<br><br>
-Having logged in as the demonstration user. A new user should be defined whom has administrative privileges and the demonstration user should be deleted. From the menu click on the Setup tab and the select Set Up User Accounts, the users defined are displayed and User names must be 5 characters or more and the password entered must be 5 characters or more too. The password cannot also be the user name or contain the user name. It is not necessary to enter the full name telephone and other details. The access level selected is important as this determines the pages that the user can access. In any business where the employees are not also the owners it is advisable to split the functions between staff so that no user can complete an entire transaction. There are occasions in smaller businesses where this is impractical. However, the system has great flexibility to allow the user access to be finely defined. See the security schema section. 
-<br><br>
-As well as allowing the access to be restricted there is some flexibility about the links that are made available to a user. In the user account screen the system administrator can define which tabs of the main menu are activiated and available to the user.
-<br><br>
-There is also the facility to set up customers with their own logon. This restricts them to inquiries on their account including invoice re-prints and to entering new sales order. Customer logins do not allow any modification to the pricing. To do this the access level must be set to customer logon and the settings for customer logon in config.php must not be modified - ie $PageSecurity = 1 allowed only. In addition, the customer code and branch code applicable to the person logging on must be entered.
-<!-- Help End: WWW_Users -->
+<font size="+2"><b>Setting Up Users</b></font><br>
+<br>
+Having logged in as user 'demo'. A new user should
+be defined whom has administrative privileges and the user 'demo'
+should be deleted. From the menu click on the 'Setup' tab and then
+click 'User Accounts'. The users defined are displayed. User
+names must be 5 characters or more. Passwords entered must be 5
+characters or more too. The password cannot also be the user name or
+contain the user name. It is not necessary to enter the full name
+telephone and other details. The access level selected is important as
+this determines the pages that the user can access. In any business
+where the employees are not also the owners it is advisable to split
+the functions between staff so that no user can complete an entire
+transaction. There are occasions in smaller businesses where this is
+impractical. However, the system has great flexibility to allow the
+user access to be finely defined. See the security schema section.<br> 
+<br>
+As well as allowing the access to be restricted there is some
+flexibility about the links that are made available to a user. In the
+'User Accounts' screen the system administrator can define which tabs of
+the main menu are activated and available to the user.<br>
+<br>
+There is also the facility to set up customers with their own
+logon. This restricts them to inquiries on their account including
+invoice re-prints and to entering new sales orders. Customer logins do
+not allow any modification to the pricing. To do this the access level
+must be set to customer logon and the settings for customer logon in
+config.php must not be modified - i.e. $PageSecurity = 1 allowed only. In
+addition, the customer code and branch code applicable to the person
+logging on must be entered.<br>
+
+<!-- Help End: WWW_Users --></li></ol></body></html>

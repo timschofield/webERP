@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 /*
 This script has the responsibility to gather basic information necessary to retrieve data for reports. 
@@ -174,7 +174,7 @@ switch ($_GET['action']) {
 					$Result=DB_query($sql,$db,'','',false,true);
 					// Set the report name and group name per the form
 					$sql = "UPDATE ".DBReports." SET 
-							reportname = '".addslashes($_POST['ReportName'])."' 
+							reportname = '" . DB_escape_string($_POST['ReportName']) . "' 
 						WHERE id =".$ReportID.";";
 					$Result=DB_query($sql,$db,'','',false,true);
 					// fetch the fields and duplicate
@@ -240,13 +240,13 @@ switch ($_GET['action']) {
 				$success = UpdatePageFields($ReportID);
 				// read in the data for the next form
 				$sql = "SELECT table1, 
-						table2, table2criteria, 
-						table3, table3criteria, 
-						table4, table4criteria, 
-						table5, table5criteria, 
-						table6, table6criteria, 
+						table2, table2criteria,
+						table3, table3criteria,
+						table4, table4criteria,
+						table5, table5criteria,
+						table6, table6criteria,
 						reportname
-					FROM ".DBReports." WHERE id='".$ReportID."'";
+					FROM " . DBReports . " WHERE id='".$ReportID."'";
 				$Result=DB_query($sql,$db,'','',false,true);
 				$myrow = DB_fetch_array($Result);
 				$numrows = DB_num_rows($Result);

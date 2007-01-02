@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 define ('LIKE','LIKE');
 
@@ -114,6 +114,11 @@ function DB_escape_string($String){
 
 function DB_show_tables(&$Conn){
 	$Result = DB_query('SHOW TABLES',$Conn);
+	Return $Result;
+}
+
+function DB_show_fields(&$Conn,$TableName){
+	$Result = DB_query("DESCRIBE '$TableName'",$Conn);
 	Return $Result;
 }
 

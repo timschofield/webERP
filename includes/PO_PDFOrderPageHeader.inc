@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 /*
 	R & OS PHP-PDF class code to set up a new page
 	a new page is implicit on the establishment of a new pdf object so
@@ -35,15 +35,16 @@ $pdf->addText($XPos,$YPos +40, $FontSize, _('Page') . ': ' .$PageNumber);
 
 /*Now print out the company name and address */
 $XPos = $Left_Margin;
-$YPos -=2*$line_height;
+$YPos -= 1*$line_height;
 $pdf->addText($Left_Margin,$YPos, $FontSize, $_SESSION['TaxAuthorityReferenceName'] . ' ' . $_SESSION['CompanyRecord']['gstno']);
-$pdf->addText($Left_Margin,$YPos-$line_height, $FontSize, $_SESSION['CompanyRecord']['coyname']);
-$pdf->addText($Left_Margin,$YPos-(2*$line_height), $FontSize, $_SESSION['CompanyRecord']['regoffice1']);
-$pdf->addText($Left_Margin,$YPos-(3*$line_height), $FontSize, $_SESSION['CompanyRecord']['regoffice2']);
-$pdf->addText($Left_Margin,$YPos-(4*$line_height), $FontSize, $_SESSION['CompanyRecord']['regoffice3'] . ' ' . $_SESSION['CompanyRecord']['regoffice4'] . ' ' . $_SESSION['CompanyRecord']['regoffice5']);
-$pdf->addText($Left_Margin,$YPos-(5*$line_height), $FontSize, _('Ph'). ': ' . $_SESSION['CompanyRecord']['telephone'] . ' ' ._('Fax').': ' . $_SESSION['CompanyRecord']['fax'] );
-$pdf->addText($Left_Margin,$YPos-(6*$line_height), $FontSize, _('Email'). ': ' . $_SESSION['CompanyRecord']['email']);
+$pdf->addText($Left_Margin,$YPos-(0.8*$line_height), $FontSize, $_SESSION['CompanyRecord']['coyname']);
+$pdf->addText($Left_Margin,$YPos-(1.6*$line_height), $FontSize, $_SESSION['CompanyRecord']['regoffice1']);
+$pdf->addText($Left_Margin,$YPos-(2.4*$line_height), $FontSize, $_SESSION['CompanyRecord']['regoffice2']);
+$pdf->addText($Left_Margin,$YPos-(3.2*$line_height), $FontSize, $_SESSION['CompanyRecord']['regoffice3'] . ' ' . $_SESSION['CompanyRecord']['regoffice4'] . ' ' . $_SESSION['CompanyRecord']['regoffice5']);
+$pdf->addText($Left_Margin,$YPos-(4*$line_height), $FontSize, _('Ph'). ': ' . $_SESSION['CompanyRecord']['telephone'] . ' ' ._('Fax').': ' . $_SESSION['CompanyRecord']['fax'] );
+$pdf->addText($Left_Margin,$YPos-(4.8*$line_height), $FontSize, _('Email'). ': ' . $_SESSION['CompanyRecord']['email']);
 
+$YPos -=2*$line_height;
 
 /*Now the delivery details */
 $YPos -= 8;

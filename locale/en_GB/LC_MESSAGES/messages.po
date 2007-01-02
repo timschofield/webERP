@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-27 21:50+1300\n"
+"POT-Creation-Date: 2006-12-04 19:38+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -150,7 +150,7 @@ msgid "No"
 msgstr ""
 
 #: AccountGroups.php:150 AccountSections.php:155 Areas.php:139
-#: BankAccounts.php:147 BOMs.php:132 COGSGLPostings.php:107
+#: BankAccounts.php:147 BOMs.php:129 COGSGLPostings.php:107
 #: COGSGLPostings.php:210 CreditStatus.php:126 Currencies.php:174
 #: CustomerBranches.php:459 EDIMessageFormat.php:161 FreightCosts.php:252
 #: GLAccounts.php:309 Locations.php:341 PaymentMethods.php:188
@@ -159,15 +159,14 @@ msgstr ""
 #: SalesGLPostings.php:244 SalesPeople.php:189 SalesTypes.php:161
 #: Shippers.php:135 StockCategories.php:168 SupplierContacts.php:153
 #: TaxAuthorities.php:165 TaxCategories.php:181 TaxGroups.php:177
-#: TaxProvinces.php:176 TreeBOMs.php:120 UnitsOfMeasure.php:199
-#: WorkCentres.php:137 WWW_Access.php:124 WWW_Users.php:257
-#: includes/InputSerialItems.php:82
+#: TaxProvinces.php:176 UnitsOfMeasure.php:199 WorkCentres.php:137
+#: WWW_Access.php:124 WWW_Users.php:257 includes/InputSerialItems.php:82
 #, php-format
 msgid "Edit"
 msgstr ""
 
 #: AccountGroups.php:151 AccountSections.php:159 Areas.php:140
-#: BankAccounts.php:148 BOMs.php:134 COGSGLPostings.php:108
+#: BankAccounts.php:148 BOMs.php:131 COGSGLPostings.php:108
 #: COGSGLPostings.php:211 Credit_Invoice.php:375 CreditStatus.php:127
 #: Currencies.php:177 CustomerBranches.php:463 CustomerReceipt.php:542
 #: DiscountCategories.php:115 DiscountMatrix.php:100 EDIMessageFormat.php:162
@@ -181,9 +180,9 @@ msgstr ""
 #: StockCategories.php:169 SuppCreditGRNs.php:88 SuppInvGLAnalysis.php:65
 #: SuppInvGRNs.php:123 SupplierContacts.php:154 SuppShiptChgs.php:80
 #: SuppTransGLAnalysis.php:105 TaxAuthorities.php:166 TaxCategories.php:182
-#: TaxGroups.php:178 TaxProvinces.php:177 TreeBOMs.php:121
-#: UnitsOfMeasure.php:200 WorkCentres.php:138 WWW_Access.php:125
-#: WWW_Users.php:258 includes/InputSerialItemsKeyed.php:53
+#: TaxGroups.php:178 TaxProvinces.php:177 UnitsOfMeasure.php:200
+#: WorkCentres.php:138 WWW_Access.php:125 WWW_Users.php:258
+#: includes/InputSerialItemsKeyed.php:53
 #, php-format
 msgid "Delete"
 msgstr ""
@@ -205,7 +204,7 @@ msgid "Section In Accounts"
 msgstr ""
 
 #: AccountGroups.php:251 AccountSections.php:220 Areas.php:189
-#: BankAccounts.php:231 BOMs.php:627 COGSGLPostings.php:373
+#: BankAccounts.php:231 BOMs.php:638 COGSGLPostings.php:373
 #: CreditStatus.php:187 Currencies.php:265 CustomerBranches.php:790
 #: DiscountCategories.php:143 DiscountMatrix.php:147 EDIMessageFormat.php:252
 #: FreightCosts.php:364 GLAccounts.php:259 Locations.php:468
@@ -213,8 +212,8 @@ msgstr ""
 #: SalesAnalReptCols.php:465 SalesAnalRepts.php:458 SalesGLPostings.php:411
 #: SalesPeople.php:280 Shippers.php:185 StockCategories.php:363
 #: SupplierContacts.php:232 TaxAuthorities.php:289 TaxCategories.php:231
-#: TaxProvinces.php:226 TreeBOMs.php:545 UnitsOfMeasure.php:250
-#: WorkCentres.php:249 WWW_Users.php:515
+#: TaxProvinces.php:226 UnitsOfMeasure.php:250 WorkCentres.php:249
+#: WWW_Users.php:515
 msgid "Enter Information"
 msgstr ""
 
@@ -1014,11 +1013,11 @@ msgstr ""
 msgid "there are no components defined for it"
 msgstr ""
 
-#: BOMInquiry.php:46 BOMs.php:490 TreeBOMs.php:408
+#: BOMInquiry.php:46 BOMs.php:501
 msgid "Component"
 msgstr ""
 
-#: BOMInquiry.php:47 BOMs.php:436 BOMs.php:730 CreditStatus.php:104
+#: BOMInquiry.php:47 BOMs.php:433 BOMs.php:741 CreditStatus.php:104
 #: CreditStatus.php:181 GoodsReceived.php:51 PaymentTerms.php:149
 #: PDFOrdersInvoiced.php:282 PDFOrderStatus.php:257 PO_Items.php:756
 #: PO_Items.php:881 PO_SelectOSPurchOrder.php:198 PO_SelectPurchOrder.php:192
@@ -1028,15 +1027,14 @@ msgstr ""
 #: StockLocStatus.php:135 StockQuantityByDate.php:89 SuppCreditGRNs.php:71
 #: SuppCreditGRNs.php:143 SuppInvGRNs.php:105 SuppInvGRNs.php:263
 #: SupplierCredit.php:246 SupplierInvoice.php:236 TaxAuthorities.php:145
-#: TreeBOMs.php:357 TreeBOMs.php:645 WorkCentres.php:124
-#: includes/PDFOstdgGRNsPageHeader.inc:32
+#: WorkCentres.php:124 includes/PDFOstdgGRNsPageHeader.inc:32
 #: includes/PDFStockLocTransferHeader.inc:31
 #: includes/PDFTransPageHeader.inc:192
 #: includes/PDFTransPageHeaderPortrait.inc:244
 msgid "Description"
 msgstr ""
 
-#: BOMInquiry.php:48 BOMs.php:439 BOMs.php:593 Credit_Invoice.php:272
+#: BOMInquiry.php:48 BOMs.php:436 BOMs.php:604 Credit_Invoice.php:272
 #: DeliveryDetails.php:436 DeliveryDetails.php:501 GoodsReceived.php:52
 #: GoodsReceived.php:55 OrderDetails.php:215 PDFOrdersInvoiced.php:325
 #: PO_Items.php:713 PrintCustTrans.php:793 PrintCustTrans.php:877
@@ -1050,8 +1048,8 @@ msgstr ""
 #: Shipments.php:458 SpecialOrder.php:538 StockCounts.php:91
 #: StockLocMovements.php:81 StockLocTransfer.php:169 StockMovements.php:96
 #: StockUsageGraph.php:11 SuppCreditGRNs.php:215 SuppCreditGRNs.php:216
-#: SupplierCredit.php:247 TreeBOMs.php:360 TreeBOMs.php:511
-#: includes/InputSerialItems.php:92 includes/PDFBOMListingPageHeader.inc:44
+#: SupplierCredit.php:247 includes/InputSerialItems.php:92
+#: includes/PDFBOMListingPageHeader.inc:44
 #: includes/PDFDeliveryDifferencesPageHeader.inc:43
 #: includes/PDFDIFOTPageHeader.inc:42
 #: includes/PDFInventoryValnPageHeader.inc:33
@@ -1103,186 +1101,190 @@ msgstr ""
 msgid "To Inventory Part Code"
 msgstr ""
 
-#: BOMs.php:8 TreeBOMs.php:8
+#: BOMs.php:8
 msgid "Multi-Level Bill Of Materials Maintenance"
 msgstr ""
 
-#: BOMs.php:60 TreeBOMs.php:58
+#: BOMs.php:29
+msgid "A maximum of 15 levels of bill of materials only can be displayed"
+msgstr ""
+
+#: BOMs.php:63
 msgid "An error occurred in retrieving the components of the BOM during the check for recursion"
 msgstr ""
 
-#: BOMs.php:61 TreeBOMs.php:59
+#: BOMs.php:64
 msgid "The SQL that was used to retrieve the components of the BOM and that failed in the process was"
 msgstr ""
 
-#: BOMs.php:98 TreeBOMs.php:95
+#: BOMs.php:102
 msgid "Could not retrieve the BOM components because"
 msgstr ""
 
-#: BOMs.php:99 TreeBOMs.php:96
+#: BOMs.php:103
 msgid "The SQL used to retrieve the components was"
 msgstr ""
 
-#: BOMs.php:120
+#: BOMs.php:117
 msgid "Drill Down"
 msgstr ""
 
-#: BOMs.php:197 TreeBOMs.php:218
+#: BOMs.php:194
 msgid "The effective after date field must be a date in the format dd/mm/yy or dd/mm/yyyy or ddmmyy or ddmmyyyy or dd-mm-yy or dd-mm-yyyy"
 msgstr ""
 
-#: BOMs.php:202 TreeBOMs.php:223
+#: BOMs.php:199
 msgid "The effective to date field must be a date in the format dd/mm/yy or dd/mm/yyyy or ddmmyy or ddmmyyyy or dd-mm-yy or dd-mm-yyyy"
 msgstr ""
 
-#: BOMs.php:207 StockAdjustments.php:90 StockTransfers.php:108
-#: TreeBOMs.php:228 WorkOrderEntry.php:51
+#: BOMs.php:204 StockAdjustments.php:90 StockTransfers.php:108
+#: WorkOrderEntry.php:51
 msgid "The quantity entered must be numeric"
 msgstr ""
 
-#: BOMs.php:212 TreeBOMs.php:233
+#: BOMs.php:209
 msgid "The effective to date must be a date after the effective after date"
 msgstr ""
 
-#: BOMs.php:212 TreeBOMs.php:233
+#: BOMs.php:209
 msgid "The effective to date is"
 msgstr ""
 
-#: BOMs.php:212 TreeBOMs.php:233
+#: BOMs.php:209
 msgid "days before the effective after date"
 msgstr ""
 
-#: BOMs.php:212 TreeBOMs.php:233
+#: BOMs.php:209
 msgid "No updates have been performed"
 msgstr ""
 
-#: BOMs.php:212 TreeBOMs.php:233
+#: BOMs.php:209
 msgid "Effective after was"
 msgstr ""
 
-#: BOMs.php:212 TreeBOMs.php:233
+#: BOMs.php:209
 msgid "and effective to was"
 msgstr ""
 
-#: BOMs.php:231 TreeBOMs.php:252
+#: BOMs.php:228
 msgid "Could not update this BOM component because"
 msgstr ""
 
-#: BOMs.php:232 TreeBOMs.php:253
+#: BOMs.php:229
 msgid "The SQL used to update the component was"
 msgstr ""
 
-#: BOMs.php:235 TreeBOMs.php:256
+#: BOMs.php:232
 msgid "Details for"
 msgstr ""
 
-#: BOMs.php:235 TreeBOMs.php:256
+#: BOMs.php:232
 msgid "have been updated"
 msgstr ""
 
-#: BOMs.php:253 TreeBOMs.php:274
+#: BOMs.php:250
 msgid "An error occurred in checking the component is not already on the BOM"
 msgstr ""
 
-#: BOMs.php:254 TreeBOMs.php:275
+#: BOMs.php:251
 msgid "The SQL that was used to check the component was not already on the BOM and that failed in the process was"
 msgstr ""
 
-#: BOMs.php:275 TreeBOMs.php:296
+#: BOMs.php:272
 msgid "Could not insert the BOM component because"
 msgstr ""
 
-#: BOMs.php:276 TreeBOMs.php:297
+#: BOMs.php:273
 msgid "The SQL used to insert the component was"
 msgstr ""
 
-#: BOMs.php:280 TreeBOMs.php:301
+#: BOMs.php:277
 msgid "A new component part"
 msgstr ""
 
-#: BOMs.php:280 TreeBOMs.php:301
+#: BOMs.php:277
 msgid "has been added to the bill of material for part"
 msgstr ""
 
-#: BOMs.php:287 TreeBOMs.php:308
+#: BOMs.php:284
 msgid "The component"
 msgstr ""
 
-#: BOMs.php:287 TreeBOMs.php:308
+#: BOMs.php:284
 msgid "is already recorded as a component of"
 msgstr ""
 
-#: BOMs.php:287 TreeBOMs.php:308
+#: BOMs.php:284
 msgid "Whilst the quantity of the component required can be modified it is inappropriate for a component to appear more than once in a bill of material"
 msgstr ""
 
-#: BOMs.php:303 TreeBOMs.php:324
+#: BOMs.php:300
 msgid "Could not delete this BOM components because"
 msgstr ""
 
-#: BOMs.php:304 TreeBOMs.php:325
+#: BOMs.php:301
 msgid "The SQL used to delete the BOM was"
 msgstr ""
 
-#: BOMs.php:307 TreeBOMs.php:328
+#: BOMs.php:304
 msgid "The component part"
 msgstr ""
 
-#: BOMs.php:307 TreeBOMs.php:328
+#: BOMs.php:304
 msgid "has been deleted from this BOM"
 msgstr ""
 
-#: BOMs.php:327 BOMs.php:366 BOMs.php:388 BOMs.php:408 TreeBOMs.php:181
+#: BOMs.php:324 BOMs.php:363 BOMs.php:385 BOMs.php:405
 msgid "Could not retrieve the description of the parent part because"
 msgstr ""
 
-#: BOMs.php:328 BOMs.php:367 BOMs.php:389 BOMs.php:409 TreeBOMs.php:182
+#: BOMs.php:325 BOMs.php:364 BOMs.php:386 BOMs.php:406
 msgid "The SQL used to retrieve description of the parent part was"
 msgstr ""
 
-#: BOMs.php:337 ConfirmDispatch_Invoice.php:883 Credit_Invoice.php:740
+#: BOMs.php:334 ConfirmDispatch_Invoice.php:883 Credit_Invoice.php:740
 #: Credit_Invoice.php:769 SelectCreditItems.php:1440 Stocks.php:570
-#: Stocks.php:572 TreeBOMs.php:191
+#: Stocks.php:572
 msgid "Assembly"
 msgstr ""
 
-#: BOMs.php:340 Stocks.php:585 Stocks.php:587 TreeBOMs.php:194
+#: BOMs.php:337 Stocks.php:585 Stocks.php:587
 msgid "Purchased"
 msgstr ""
 
-#: BOMs.php:343 Stocks.php:580 Stocks.php:582 TreeBOMs.php:197
+#: BOMs.php:340 Stocks.php:580 Stocks.php:582
 msgid "Manufactured"
 msgstr ""
 
-#: BOMs.php:346 TreeBOMs.php:200
+#: BOMs.php:343
 msgid "Kit Set"
 msgstr ""
 
-#: BOMs.php:352 TreeBOMs.php:206
+#: BOMs.php:349
 msgid "Select a Different BOM"
 msgstr ""
 
-#: BOMs.php:355 TreeBOMs.php:209
+#: BOMs.php:352
 msgid "Review Components"
 msgstr ""
 
-#: BOMs.php:372
+#: BOMs.php:369
 msgid "Manufactured parent items"
 msgstr ""
 
-#: BOMs.php:392
+#: BOMs.php:389
 msgid "Assembly parent items"
 msgstr ""
 
-#: BOMs.php:412
+#: BOMs.php:409
 msgid "Kit sets"
 msgstr ""
 
-#: BOMs.php:434 TreeBOMs.php:355
+#: BOMs.php:431
 msgid "Level"
 msgstr ""
 
-#: BOMs.php:435 BOMs.php:729 CustomerBranches.php:421 CustomerReceipt.php:768
+#: BOMs.php:432 BOMs.php:740 CustomerBranches.php:421 CustomerReceipt.php:768
 #: GLCodesInquiry.php:27 GLCodesInquiry.php:65 PDFOrdersInvoiced.php:281
 #: PDFOrderStatus.php:256 PO_Header.php:232 PO_Items.php:880
 #: PO_SelectOSPurchOrder.php:197 PO_SelectPurchOrder.php:191 PurchData.php:421
@@ -1290,169 +1292,165 @@ msgstr ""
 #: SelectCreditItems.php:967 SelectCustomer.php:200 SelectCustomer.php:290
 #: SelectGLAccount.php:109 SelectOrderItems.php:613 SelectOrderItems.php:1199
 #: SelectProduct.php:318 SelectSalesOrder.php:192 SelectSupplier.php:251
-#: Shipt_Select.php:190 SpecialOrder.php:120 TreeBOMs.php:356 TreeBOMs.php:644
+#: Shipt_Select.php:190 SpecialOrder.php:120
 #: includes/PO_PDFOrderPageHeader.inc:141
 msgid "Code"
 msgstr ""
 
-#: BOMs.php:437 BOMs.php:536 Locations.php:289 StockCounts.php:126
+#: BOMs.php:434 BOMs.php:547 Locations.php:289 StockCounts.php:126
 #: StockReorderLevel.php:47 StockSerialItemResearch.php:71 StockStatus.php:78
-#: StockStatus.php:83 TreeBOMs.php:358 TreeBOMs.php:454
-#: WhereUsedInquiry.php:60 WorkCentres.php:125 WorkCentres.php:203
-#: includes/PDFStockNegativesHeader.inc:30
+#: StockStatus.php:83 WhereUsedInquiry.php:60 WorkCentres.php:125
+#: WorkCentres.php:203 includes/PDFStockNegativesHeader.inc:30
 msgid "Location"
 msgstr ""
 
-#: BOMs.php:438 index.php:660 TreeBOMs.php:359 WhereUsedInquiry.php:59
-#: WorkOrderEntry.php:286 WorkOrderEntry.php:289 WorkOrderIssue.php:111
+#: BOMs.php:435 index.php:660 WhereUsedInquiry.php:59 WorkOrderEntry.php:286
+#: WorkOrderEntry.php:289 WorkOrderIssue.php:111
 msgid "Work Centre"
 msgstr ""
 
-#: BOMs.php:440 BOMs.php:615 TreeBOMs.php:361 TreeBOMs.php:533
-#: WhereUsedInquiry.php:62 includes/PDFBOMListingPageHeader.inc:40
+#: BOMs.php:437 BOMs.php:626 WhereUsedInquiry.php:62
+#: includes/PDFBOMListingPageHeader.inc:40
 msgid "Effective After"
 msgstr ""
 
-#: BOMs.php:441 BOMs.php:619 TreeBOMs.php:362 TreeBOMs.php:537
-#: WhereUsedInquiry.php:63 includes/PDFBOMListingPageHeader.inc:41
+#: BOMs.php:438 BOMs.php:630 WhereUsedInquiry.php:63
+#: includes/PDFBOMListingPageHeader.inc:41
 msgid "Effective To"
 msgstr ""
 
-#: BOMs.php:445
+#: BOMs.php:442
 msgid "No materials found."
 msgstr ""
 
-#: BOMs.php:487 TreeBOMs.php:405
+#: BOMs.php:498
 msgid "Edit the details of the selected component in the fields below"
 msgstr ""
 
-#: BOMs.php:487 TreeBOMs.php:405
+#: BOMs.php:498
 msgid "Click on the Enter Information button to update the component details"
 msgstr ""
 
-#: BOMs.php:497 TreeBOMs.php:415
+#: BOMs.php:508
 msgid "Component code"
 msgstr ""
 
-#: BOMs.php:523 TreeBOMs.php:441
+#: BOMs.php:534
 msgid "Could not retrieve the list of potential components because"
 msgstr ""
 
-#: BOMs.php:524 TreeBOMs.php:442
+#: BOMs.php:535
 msgid "The SQL used to retrieve the list of potential components part was"
 msgstr ""
 
-#: BOMs.php:562 TreeBOMs.php:480
+#: BOMs.php:573
 msgid "Work Centre Added"
 msgstr ""
 
-#: BOMs.php:572 TreeBOMs.php:490
+#: BOMs.php:583
 msgid "There are no work centres set up yet"
 msgstr ""
 
-#: BOMs.php:572 TreeBOMs.php:490
+#: BOMs.php:583
 msgid "Please use the link below to set up work centres"
 msgstr ""
 
-#: BOMs.php:573 TreeBOMs.php:491
+#: BOMs.php:584
 msgid "Work Centre Maintenance"
 msgstr ""
 
-#: BOMs.php:643 PO_Items.php:227 PO_SelectOSPurchOrder.php:59
+#: BOMs.php:654 PO_Items.php:227 PO_SelectOSPurchOrder.php:59
 #: PO_SelectPurchOrder.php:58 SelectCompletedOrder.php:73
 #: SelectCreditItems.php:292 SelectOrderItems.php:731 SelectProduct.php:130
-#: SelectSalesOrder.php:41 Shipt_Select.php:59 TreeBOMs.php:558
+#: SelectSalesOrder.php:41 Shipt_Select.php:59
 msgid "Stock description keywords have been used in preference to the Stock code extract entered"
 msgstr ""
 
-#: BOMs.php:646 TreeBOMs.php:561
+#: BOMs.php:657
 msgid "At least one stock description keyword or an extract of a stock code must be entered for the search"
 msgstr ""
 
-#: BOMs.php:698 TreeBOMs.php:613
+#: BOMs.php:709
 msgid "The SQL to find the parts selected failed with the message"
 msgstr ""
 
-#: BOMs.php:709 TreeBOMs.php:624
+#: BOMs.php:720
 msgid "Select a manufactured part"
 msgstr ""
 
-#: BOMs.php:709 TreeBOMs.php:624
+#: BOMs.php:720
 msgid "or Assembly or Kit part"
 msgstr ""
 
-#: BOMs.php:709 TreeBOMs.php:624
+#: BOMs.php:720
 msgid "to maintain the bill of material for using the options below"
 msgstr ""
 
-#: BOMs.php:710 TreeBOMs.php:625
+#: BOMs.php:721
 msgid "Parts must be defined in the stock item entry"
 msgstr ""
 
-#: BOMs.php:710 TreeBOMs.php:625
+#: BOMs.php:721
 msgid "modification screen as manufactured"
 msgstr ""
 
-#: BOMs.php:710 TreeBOMs.php:625
+#: BOMs.php:721
 msgid "kits or assemblies to be available for construction of a bill of material"
 msgstr ""
 
-#: BOMs.php:713 PO_SelectOSPurchOrder.php:182 PO_SelectPurchOrder.php:176
-#: SelectOrderItems.php:1170 Shipt_Select.php:174 TreeBOMs.php:628
+#: BOMs.php:724 PO_SelectOSPurchOrder.php:182 PO_SelectPurchOrder.php:176
+#: SelectOrderItems.php:1170 Shipt_Select.php:174
 msgid "Enter text extracts in the"
 msgstr ""
 
-#: BOMs.php:713 PO_SelectOSPurchOrder.php:182 PO_SelectPurchOrder.php:176
+#: BOMs.php:724 PO_SelectOSPurchOrder.php:182 PO_SelectPurchOrder.php:176
 #: SelectOrderItems.php:1170 SelectProduct.php:80 Shipt_Select.php:174
-#: TreeBOMs.php:628
 msgid "description"
 msgstr ""
 
-#: BOMs.php:715 GLJournal.php:240 PO_Header.php:219 PO_Items.php:866
+#: BOMs.php:726 GLJournal.php:240 PO_Header.php:219 PO_Items.php:866
 #: PO_SelectOSPurchOrder.php:185 PO_SelectPurchOrder.php:179 PurchData.php:407
 #: SelectCompletedOrder.php:386 SelectCreditItems.php:220
 #: SelectCreditItems.php:954 SelectCustomer.php:199 SelectCustomer.php:214
 #: SelectGLAccount.php:95 SelectOrderItems.php:585 SelectOrderItems.php:588
 #: SelectOrderItems.php:1173 SelectProduct.php:96 SelectSalesOrder.php:182
-#: SelectSupplier.php:189 Shipt_Select.php:177 TreeBOMs.php:630
+#: SelectSupplier.php:189 Shipt_Select.php:177
 msgid "OR"
 msgstr ""
 
-#: BOMs.php:716 PO_SelectOSPurchOrder.php:185 PO_SelectPurchOrder.php:179
-#: SelectOrderItems.php:1173 Shipt_Select.php:177 TreeBOMs.php:631
+#: BOMs.php:727 PO_SelectOSPurchOrder.php:185 PO_SelectPurchOrder.php:179
+#: SelectOrderItems.php:1173 Shipt_Select.php:177
 msgid "Enter extract of the"
 msgstr ""
 
-#: BOMs.php:716 DiscountCategories.php:139 PO_SelectOSPurchOrder.php:185
+#: BOMs.php:727 DiscountCategories.php:139 PO_SelectOSPurchOrder.php:185
 #: PO_SelectPurchOrder.php:179 PurchData.php:161 SalesCategories.php:417
 #: SelectOrderItems.php:1173 SelectProduct.php:96 Shipt_Select.php:177
 #: StockAdjustments.php:287 StockCostUpdate.php:164 StockCounts.php:90
 #: StockCounts.php:125 StockMovements.php:26 StockReorderLevel.php:26
 #: StockStatus.php:56 StockTransfers.php:390 StockUsage.php:53
-#: TreeBOMs.php:631 Z_ChangeStockCode.php:224
+#: Z_ChangeStockCode.php:224
 msgid "Stock Code"
 msgstr ""
 
-#: BOMs.php:720 CustomerReceipt.php:758 PO_Header.php:224 PO_Items.php:870
+#: BOMs.php:731 CustomerReceipt.php:758 PO_Header.php:224 PO_Items.php:870
 #: SelectCreditItems.php:225 SelectCreditItems.php:959 SelectCustomer.php:232
 #: SelectGLAccount.php:101 SelectOrderItems.php:593 SelectOrderItems.php:1177
 #: SelectProduct.php:112 SelectSupplier.php:208 SelectSupplier.php:245
-#: TreeBOMs.php:635
 msgid "Search Now"
 msgstr ""
 
-#: BOMs.php:731 PO_SelectOSPurchOrder.php:199 PO_SelectPurchOrder.php:193
+#: BOMs.php:742 PO_SelectOSPurchOrder.php:199 PO_SelectPurchOrder.php:193
 #: SelectCompletedOrder.php:401 SelectSalesOrder.php:194 Shipt_Select.php:192
-#: TreeBOMs.php:646
 msgid "On Hand"
 msgstr ""
 
-#: BOMs.php:732 ConfirmDispatch_Invoice.php:252 Credit_Invoice.php:271
+#: BOMs.php:743 ConfirmDispatch_Invoice.php:252 Credit_Invoice.php:271
 #: GoodsReceived.php:53 PO_Items.php:882 PO_SelectOSPurchOrder.php:201
 #: PO_SelectPurchOrder.php:195 SelectCompletedOrder.php:404
 #: SelectCreditItems.php:969 SelectOrderItems.php:1201 SelectProduct.php:321
 #: SelectSalesOrder.php:195 Shipments.php:381 Shipments.php:457
-#: Shipt_Select.php:194 StockLocTransferReceive.php:406 TreeBOMs.php:647
+#: Shipt_Select.php:194 StockLocTransferReceive.php:406
 msgid "Units"
 msgstr ""
 
@@ -20101,7 +20099,7 @@ msgstr ""
 msgid "Database Rollback Error"
 msgstr ""
 
-#: includes/ConnectDB_mysql.inc:123
+#: includes/ConnectDB_mysql.inc:127
 msgid "The system has just run the regular database administration and optimisation routine."
 msgstr ""
 
@@ -20125,7 +20123,7 @@ msgstr ""
 msgid "DB DEBUG:"
 msgstr ""
 
-#: includes/ConnectDB_postgres.inc:128
+#: includes/ConnectDB_postgres.inc:132
 msgid "The system has just run the regular database administration and optimisation routine"
 msgstr ""
 

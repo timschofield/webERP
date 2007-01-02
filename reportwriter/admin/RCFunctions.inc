@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 // Include functions needed for ReportCreator.php
 function PrepStep($StepNum) {
@@ -102,7 +102,9 @@ function RetrieveFields($EntryType) {
 		ORDER BY seqnum";
 	$Result=DB_query($sql,$db,'','',false,true);
 	if (DB_num_rows($Result)>0) {
-		while ($FieldValues = DB_fetch_array($Result)) { $FieldListings['lists'][] = $FieldValues; }
+		while ($FieldValues = DB_fetch_array($Result)) { 
+			$FieldListings['lists'][] = $FieldValues; 
+		}
 	}
 	// set the form field defaults
 	$FieldListings['defaults']['seqnum'] = '';
@@ -135,13 +137,13 @@ function UpdatePageFields($ReportID) {
 				coynamefontcolor = '".$_POST['CoyNameFontColor']."',
 				coynamealign = '".$_POST['CoyNameAlign']."',
 				coynameshow = '".$_POST['CoyNameShow']."',
-				title1desc = '".addslashes($_POST['Title1Desc'])."',
+				title1desc = '".DB_escape_string($_POST['Title1Desc'])."',
 				title1font = '".$_POST['Title1Font']."',
 				title1fontsize = ".$_POST['Title1FontSize'].",
 				title1fontcolor = '".$_POST['Title1FontColor']."',
 				title1fontalign = '".$_POST['Title1FontAlign']."',
 				title1show = '".$_POST['Title1Show']."',
-				title2desc = '".addslashes($_POST['Title2Desc'])."',
+				title2desc = '".DB_escape_string($_POST['Title2Desc'])."',
 				title2font = '".$_POST['Title2Font']."',
 				title2fontsize = ".$_POST['Title2FontSize'].",
 				title2fontcolor = '".$_POST['Title2FontColor']."',
@@ -178,7 +180,7 @@ function UpdateCritFields($ReportID, $DateString) {
 	$sql = "UPDATE ".DBRptFields." SET 
 		reportid = '".$ReportID."',
 		entrytype = 'dateselect',
-		fieldname = '".addslashes($_POST['DateField'])."',
+		fieldname = '".DB_escape_string($_POST['DateField'])."',
 		displaydesc = '".$DateString."',
 		params = '".$_POST['DefDate']."'
 		WHERE reportid = ".$ReportID." AND entrytype = 'dateselect';";
@@ -210,28 +212,28 @@ function UpdateCritFields($ReportID, $DateString) {
 function UpdateDBFields($ReportID) {
 	global $db;
 	// Test inputs to see if they are valid
-	$strTable = addslashes($_POST['Table1']);
-	if ($_POST['Table2']) $strTable .= ' INNER JOIN '.addslashes($_POST['Table2']).' ON '.addslashes($_POST['Table2Criteria']);
-	if ($_POST['Table3']) $strTable .= ' INNER JOIN '.addslashes($_POST['Table3']).' ON '.addslashes($_POST['Table3Criteria']);
-	if ($_POST['Table4']) $strTable .= ' INNER JOIN '.addslashes($_POST['Table4']).' ON '.addslashes($_POST['Table4Criteria']);
-	if ($_POST['Table5']) $strTable .= ' INNER JOIN '.addslashes($_POST['Table5']).' ON '.addslashes($_POST['Table5Criteria']);
-	if ($_POST['Table6']) $strTable .= ' INNER JOIN '.addslashes($_POST['Table6']).' ON '.addslashes($_POST['Table6Criteria']);
+	$strTable = DB_escape_string($_POST['Table1']);
+	if ($_POST['Table2']) $strTable .= ' INNER JOIN '.DB_escape_string($_POST['Table2']).' ON '.DB_escape_string($_POST['Table2Criteria']);
+	if ($_POST['Table3']) $strTable .= ' INNER JOIN '.DB_escape_string($_POST['Table3']).' ON '.DB_escape_string($_POST['Table3Criteria']);
+	if ($_POST['Table4']) $strTable .= ' INNER JOIN '.DB_escape_string($_POST['Table4']).' ON '.DB_escape_string($_POST['Table4Criteria']);
+	if ($_POST['Table5']) $strTable .= ' INNER JOIN '.DB_escape_string($_POST['Table5']).' ON '.DB_escape_string($_POST['Table5Criteria']);
+	if ($_POST['Table6']) $strTable .= ' INNER JOIN '.DB_escape_string($_POST['Table6']).' ON '.DB_escape_string($_POST['Table6Criteria']);
 	$sql = "SELECT * FROM ".$strTable." LIMIT 1";
 	$Result=DB_query($sql,$db,'','',false,false);
 	// if we have a row, sql was valid
 	if (DB_num_rows($Result)==0) return false;
 	$sql = "UPDATE ".DBReports." SET 
-			table1 = '".addslashes($_POST['Table1'])."',
-			table2 = '".addslashes($_POST['Table2'])."',
-			table2criteria = '".addslashes($_POST['Table2Criteria'])."',
-			table3 = '".addslashes($_POST['Table3'])."',
-			table3criteria = '".addslashes($_POST['Table3Criteria'])."',
-			table4 = '".addslashes($_POST['Table4'])."',
-			table4criteria = '".addslashes($_POST['Table4Criteria'])."',
-			table5 = '".addslashes($_POST['Table5'])."',
-			table5criteria = '".addslashes($_POST['Table5Criteria'])."',
-			table6 = '".addslashes($_POST['Table6'])."',
-			table6criteria = '".addslashes($_POST['Table6Criteria'])."'
+			table1 = '".DB_escape_string($_POST['Table1'])."',
+			table2 = '".DB_escape_string($_POST['Table2'])."',
+			table2criteria = '".DB_escape_string($_POST['Table2Criteria'])."',
+			table3 = '".DB_escape_string($_POST['Table3'])."',
+			table3criteria = '".DB_escape_string($_POST['Table3Criteria'])."',
+			table4 = '".DB_escape_string($_POST['Table4'])."',
+			table4criteria = '".DB_escape_string($_POST['Table4Criteria'])."',
+			table5 = '".DB_escape_string($_POST['Table5'])."',
+			table5criteria = '".DB_escape_string($_POST['Table5Criteria'])."',
+			table6 = '".DB_escape_string($_POST['Table6'])."',
+			table6criteria = '".DB_escape_string($_POST['Table6Criteria'])."'
 		WHERE id =".$ReportID.";";
 	$Result=DB_query($sql,$db,'','',false,true);
 	return true;
@@ -243,8 +245,8 @@ function UpdateSequence($EntryType) {
 	if (!isset($_POST['ColumnBreak'])) $_POST['ColumnBreak'] = '0';
 	if (!isset($_POST['Params'])) $Params = '0'; else $Params = $_POST['Params'];
 	$sql = "UPDATE ".DBRptFields." SET 
-			fieldname = '".addslashes($_POST['FieldName'])."',
-			displaydesc = '".addslashes($_POST['DisplayDesc'])."',
+			fieldname = '".DB_escape_string($_POST['FieldName'])."',
+			displaydesc = '".DB_escape_string($_POST['DisplayDesc'])."',
 			visible = '".$_POST['Visible']."',
 			columnbreak = '".$_POST['ColumnBreak']."' ";
 	// Only update params if not a form (cannot update params once initially set)
@@ -302,8 +304,8 @@ function InsertSequence($SeqNum, $EntryType) {
 	}
 	$sql = "INSERT INTO ".DBRptFields."
 			(reportid, entrytype, seqnum, fieldname, displaydesc, visible, columnbreak, params)
-		VALUES (".$ReportID.",'".$EntryType."',".$SeqNum.",'".addslashes($_POST['FieldName'])."',
-			'".addslashes($_POST['DisplayDesc'])."','".$Visible."','".$ColumnBreak."','".$Params."');";
+		VALUES (".$ReportID.",'".$EntryType."',".$SeqNum.",'".DB_escape_string($_POST['FieldName'])."',
+			'".DB_escape_string($_POST['DisplayDesc'])."','".$Visible."','".$ColumnBreak."','".$Params."');";
 	$Result=DB_query($sql,$db,'','',false,true);
 	return $SeqNum;
 }
@@ -546,10 +548,10 @@ function ExportReport($ReportID) {
 	$CSVOutput .= '/* Language Fields. */'.$crlf;
 	$CSVOutput .= '/* Only modify the language portion between the single quotes after the colon. */'.$crlf.$crlf;
 	$CSVOutput .= '/* Report Name and Title Information: */'.$crlf;
-	$CSVOutput .= "ReportName:'".addslashes($ReportName)."'".$crlf;
+	$CSVOutput .= "ReportName:'".DB_escape_string($ReportName)."'".$crlf;
 	if ($myrow['reporttype']<>'frm') {
-		$CSVOutput .= "Title1Desc:'".addslashes($myrow['title1desc'])."'".$crlf;
-		$CSVOutput .= "Title2Desc:'".addslashes($myrow['title2desc'])."'".$crlf;
+		$CSVOutput .= "Title1Desc:'".DB_escape_string($myrow['title1desc'])."'".$crlf;
+		$CSVOutput .= "Title2Desc:'".DB_escape_string($myrow['title2desc'])."'".$crlf;
 	}
 	// Now add the report fields
 	$CSVOutput .= $crlf.'/* Report Field Description Information: */'.$crlf;
@@ -558,11 +560,11 @@ function ExportReport($ReportID) {
 	$i=0;
 	while ($FieldRows = DB_fetch_assoc($Result)) {
 		if ($FieldRows['entrytype']<>'dateselect' AND $FieldRows['entrytype']<>'trunclong') {
-			$CSVOutput .= "FieldDesc".$i.":'".addslashes($FieldRows['displaydesc'])."'".$crlf;
+			$CSVOutput .= "FieldDesc".$i.":'".DB_escape_string($FieldRows['displaydesc'])."'".$crlf;
 		}
 		$sql = 'FieldData'.$i.':';
 		foreach ($FieldRows as $key=>$value) {
-			if ($key<>'id' AND $key<>'reportid') $sql .= $key."='".addslashes($value)."', ";
+			if ($key<>'id' AND $key<>'reportid') $sql .= $key."='".DB_escape_string($value)."', ";
 		}
 		$sql = substr($sql,0,-2).";"; // Strip the last comma and space and add a semicolon
 		$FieldData[$i] = $sql;
@@ -573,7 +575,7 @@ function ExportReport($ReportID) {
 	$CSVOutput .= '/* SQL report data. */'.$crlf;
 	// Build the report sql string
 	$RptData = 'ReportData:';
-	foreach ($myrow as $key=>$value) if ($key<>'id') $RptData .= $key."='".addslashes($value)."', ";
+	foreach ($myrow as $key=>$value) if ($key<>'id') $RptData .= $key."='".DB_escape_string($value)."', ";
 	$RptData = substr($RptData,0,-2).";"; // Strip the last comma and space and add a semicolon
 	$CSVOutput .= $RptData.$crlf.$crlf;
 	$CSVOutput .= '/* SQL field data. */'.$crlf;
@@ -627,7 +629,7 @@ function ImportReport($RptName) {
 	}
 	// check for valid file, duplicate report name
 	if ($RptName=='') $RptName = $ReportName; // then no report was entered use reportname from file
-	$sql= "SELECT id FROM ".DBReports." WHERE reportname='".addslashes($RptName)."';";
+	$sql= "SELECT id FROM ".DBReports." WHERE reportname='".DB_escape_string($RptName)."';";
 	$Result=DB_query($sql,$db,'','',false,true);
 	if (DB_num_rows($Result)>0) { // the report name already exists, error 
 		$Rtn['result'] = 'error';
@@ -786,7 +788,7 @@ function CreateFieldList($ReportID,$FName,$Type) {
 		$myrow[]=CompanyDataBase;
 	} else { // pull from user selected tables for this report
 		$sql = "SELECT table1, table2, table3, table4, table5, table6
-			FROM ".DBReports." WHERE id='".$ReportID."'";
+			FROM " . DBReports . " WHERE id='" . $ReportID . "'";
 		$Result=DB_query($sql,$db,'','',false,true);
 		$myrow = DB_fetch_row($Result);
 	}
@@ -794,8 +796,7 @@ function CreateFieldList($ReportID,$FName,$Type) {
 
 	for ($i = 0; $i < 6; $i++) {
 		if ($myrow[$i]) {
-			$sql = "DESCRIBE " . $myrow[$i];
-			$Result=DB_query($sql,$db,'','',false,true);
+			$Result=DB_show_fields($myrow[$i],$db);
 			while ($mytable=DB_fetch_row($Result)) {
 				$fieldname = strtolower($myrow[$i]) . "." . strtolower($mytable[0]);
 				if ($FName == $fieldname){

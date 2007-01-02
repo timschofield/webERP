@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 define ('LIKE','ILIKE');
 /* $PgConnStr = $PgConnStr = "host=".$host." dbname=".$_SESSION['DatabaseName']; */
@@ -126,7 +126,10 @@ function DB_show_tables (&$Conn){
 	$Result =DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'",$Conn);
 	Return $Result; 
 }
-
+function DB_show_fields(&$Conn,$TableName){
+	$Result = DB_query("SELECT column_name FROM information_schema.columns WHERE table_name ='$TableName'",$Conn);
+	Return $Result;
+}
 function DB_Maintenance($Conn){
 
 	prnMsg(_('The system has just run the regular database administration and optimisation routine'),'info');
