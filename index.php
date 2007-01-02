@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.52 $ */
+/* $Revision: 1.53 $ */
 
 
 $PageSecurity = 1;
@@ -313,6 +313,10 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 					</td>
 					<td class="menu_group_items">
 						<table width="100%" class="table_index">
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/Customers.php?' . SID . "'><LI>" . _('Add Customer') . '</LI></A>'; ?>
+							</td>
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<A HREF='" . $rootpath . '/SelectCustomer.php?' . SID . "'><LI>" . _('Customers') . '</LI></A>'; ?>

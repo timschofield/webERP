@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 $PageSecurity =3;
 
 
@@ -1271,7 +1271,6 @@ if (isset($_POST['ProcessCredit']) AND $OkToProcess==true){
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 				$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 
-
 			} /* end of if GL and stock integrated and standard cost !=0 */
 
 			if ($_SESSION['CompanyRecord']['gllink_debtors']==1 AND $OrderLine->Price !=0){
@@ -1349,7 +1348,12 @@ if (isset($_POST['ProcessCredit']) AND $OkToProcess==true){
 			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
 			$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 		}
-		if ($_SESSION['CreditItems']->FreightCost !=0) {
+
+
+/*Could do with setting up a more flexible freight posting schema that looks at the sales type and area of the customer branch to determine where to post the freight recovery */
+
+
+		if (round($_SESSION['CreditItems']->FreightCost,2) !=0 ) {
 			$SQL = "INSERT INTO gltrans (type,
 							typeno,
 							trandate,
@@ -1363,12 +1367,14 @@ if (isset($_POST['ProcessCredit']) AND $OkToProcess==true){
 					" . $PeriodNo . ",
 					" . $_SESSION['CompanyRecord']['freightact'] . ",
 					'" . $_SESSION['CreditItems']->DebtorNo . "',
-					" . $_SESSION['CreditItems']->FreightCost/$_SESSION['CurrencyRate'] . "
+					" . round($_SESSION['CreditItems']->FreightCost/$_SESSION['CurrencyRate'],2) . "
 					)";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The freight GL posting for this credit note could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
+			$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 		}
+
 		foreach ( $TaxTotals as $TaxAuthID => $TaxAmount){	
 			if ($TaxAmount !=0 ){
 				$SQL = "INSERT INTO gltrans (
