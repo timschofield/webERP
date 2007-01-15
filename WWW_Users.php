@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity=15;
 
@@ -222,7 +222,7 @@ if (!isset($SelectedUser)) {
 		<td class='tableheader'>" . _('Customer Code') . "</td>
 		<td class='tableheader'>" . _('Branch Code') . "</td>
 		<td class='tableheader'>" . _('Last Visit') . "</td>
-		<td class='tableheader'>" . _('Security Group') ."</td>
+		<td class='tableheader'>" . _('Security Role') ."</td>
 		<td class='tableheader'>" . _('Report Size') ."</td>
 		<td class='tableheader'>" . _('Theme') ."</td>
 		<td class='tableheader'>" . _('Language') ."</td>
@@ -352,7 +352,7 @@ echo '<TR><TD>' . _('Telephone No') . ":</TD>
 	<TD><INPUT TYPE='Text' name='Phone' VALUE='" . $_POST['Phone'] . "' SIZE=32 MAXLENGTH=30></TD></TR>";
 echo '<TR><TD>' . _('Email Address') .":</TD>
 	<TD><INPUT TYPE='Text' name='Email' VALUE='" . $_POST['Email'] ."' SIZE=32 MAXLENGTH=55></TD></TR>";
-echo '<TR><TD>' . _('Access Level') . ":</TD><TD><SELECT NAME='Access'>";
+echo '<TR><TD>' . _('Security Role') . ":</TD><TD><SELECT NAME='Access'>";
 
 foreach ($SecurityRoles as $SecKey => $SecVal) {
 	if ($SecKey == $_POST['Access']){
