@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 8;
 
@@ -40,16 +40,16 @@ echo '<BR><CENTER><FONT SIZE=4 COLOR=BLUE>'.$TransName.' ' . $_GET['TransNo'] . 
 
 
 $SQL = "SELECT trandate,
+		account,
 		periodno,
 		accountname,
 		narrative,
 		amount,
 		posted
-	FROM gltrans,
-		chartmaster
-	WHERE gltrans.account = chartmaster.accountcode
-	AND type= " . $_GET['TypeID'] . "
-	AND typeno = " . $_GET['TransNo'] . "
+	FROM gltrans INNER JOIN chartmaster
+	ON gltrans.account = chartmaster.accountcode
+	WHERE gltrans.type= " . $_GET['TypeID'] . "
+	AND gltrans.typeno = " . $_GET['TransNo'] . "
 	ORDER BY counterindex";
 
 $ErrMsg = _('The transactions for') . ' ' . $TransName . ' ' . _('number') . ' ' .  $_GET['TransNo'] . ' '. _('could not be retrieved');
@@ -93,13 +93,14 @@ while ($myrow=DB_fetch_array($TransResult)) {
        $FormatedTranDate = ConvertSQLDate($myrow["trandate"]);
        printf('<td>%s</td>
        		<td ALIGN=RIGHT>%s</td>
-		<td>%s</td>
+		<td>%s - %s</td>
 		<td ALIGN=RIGHT>%s</td>
 		<td>%s</td>
 		<td>%s</td>
 		</tr>',
 		$FormatedTranDate,
 		$myrow['periodno'],
+		$myrow['account'],
 		$myrow['accountname'],
 		number_format($myrow['amount'],2),
 		$myrow['narrative'],

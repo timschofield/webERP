@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 2;
 
@@ -283,35 +283,26 @@ if (isset($result) AND !isset($_POST['Select'])) {
 		if ($_POST['PageOffset']>$ListPageMax){
 			$_POST['PageOffset'] = $ListPageMax;
 		}
-		echo '<CENTER><BR>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
-	?>
-	
-	<select name="PageOffset">
-	
-	<?php
-		$ListPage=1;
-		while($ListPage<=$ListPageMax) {
-			if ($ListPage==$_POST['PageOffset']) {
-	?>
-	
-				<option value=<?php echo($ListPage); ?> selected><?php echo($ListPage); ?></option>
-	<?php
-			} else {
-	?>
-				<option value=<?php echo($ListPage); ?>><?php echo($ListPage); ?></option>
-	
-	<?php
+		if ($ListPageMax >1) {
+			echo "<P>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+			
+			echo '<SELECT NAME="PageOffset">';
+			
+			$ListPage=1;
+			while($ListPage <= $ListPageMax) {
+				if ($ListPage == $_POST['PageOffset']) {
+					echo '<OPTION VALUE=' . $ListPage . ' SELECTED>' . $ListPage . '</OPTION>';
+				} else {
+					echo '<OPTION VALUE=' . $ListPage . '>' . $ListPage . '</OPTION>';
+				}
+				$ListPage++;
 			}
-			$ListPage=$ListPage+1;
+			echo '</SELECT>
+				<INPUT TYPE=SUBMIT NAME="Go" VALUE="' . _('Go') . '">
+				<INPUT TYPE=SUBMIT NAME="Previous" VALUE="' . _('Previous') . '">
+				<INPUT TYPE=SUBMIT NAME="Next" VALUE="' . _('Next') . '">';
+			echo '<P>';
 		}
-	?>
-		</select>
-		<INPUT TYPE=SUBMIT NAME="Go" VALUE="<?php echo _('Go'); ?>">
-		<INPUT TYPE=SUBMIT NAME="Previous" VALUE="<?php echo _('Previous'); ?>">
-		<INPUT TYPE=SUBMIT NAME="Next" VALUE="<?php echo _('Next'); ?>">
-	<?php
-	
-		echo '<br><br>';
 	
 		echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
 		$tableheader = '<TR>
@@ -370,6 +361,26 @@ if (isset($result) AND !isset($_POST['Select'])) {
 	//end of while loop
 	
 		echo '</TABLE>';
+		if ($ListPageMax >1) {
+			echo "<P>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+			
+			echo '<SELECT NAME="PageOffset">';
+			
+			$ListPage=1;
+			while($ListPage <= $ListPageMax) {
+				if ($ListPage == $_POST['PageOffset']) {
+					echo '<OPTION VALUE=' . $ListPage . ' SELECTED>' . $ListPage . '</OPTION>';
+				} else {
+					echo '<OPTION VALUE=' . $ListPage . '>' . $ListPage . '</OPTION>';
+				}
+				$ListPage++;
+			}
+			echo '</SELECT>
+				<INPUT TYPE=SUBMIT NAME="Go" VALUE="' . _('Go') . '">
+				<INPUT TYPE=SUBMIT NAME="Previous" VALUE="' . _('Previous') . '">
+				<INPUT TYPE=SUBMIT NAME="Next" VALUE="' . _('Next') . '">';
+			echo '<P>';
+		}
 	}
 }
 // end display list if there is more than one record
