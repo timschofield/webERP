@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 11;
 include('includes/DefineShiptClass.php');
@@ -293,9 +293,9 @@ echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD="POST">';
 echo '<CENTER><TABLE><TR><TD><B>'. _('Shipment').': </TD><TD><B>' . $_SESSION['Shipment']->ShiptRef . '</B></TD>
 		<TD><B>'. _('From'). ' ' . $_SESSION['Shipment']->SupplierName . '</B></TD></TR>';
 
-echo '<TR><TD>'. _('Vessel'). ': </TD>
+echo '<TR><TD>'. _('Vessel Name /Transport Agent'). ': </TD>
 	<TD COLSPAN=3><INPUT TYPE=Text NAME="Vessel" MAXLENGTH=50 SIZE=50 VALUE="' . $_SESSION['Shipment']->Vessel . '"></TD>
-	<TD>'._('Voyage Ref').': </TD>
+	<TD>'._('Voyage Ref / Consignment Note').': </TD>
 	<TD><INPUT TYPE=Text NAME="VoyageRef" MAXLENGTH=20 SIZE=20 VALUE="' . $_SESSION['Shipment']->VoyageRef . '"></TD>
 </TR>';
 

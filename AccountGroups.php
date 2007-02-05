@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 10;
 
@@ -8,6 +8,29 @@ include('includes/session.inc');
 $title = _('Account Groups');
 
 include('includes/header.inc');
+include('includes/SQL_CommonFunctions.inc');
+
+function CheckForRecursiveGroup ($ParentGroupName, $GroupName, $db) {
+
+/* returns true ie 1 if the group contains the parent group as a child group
+ie the parent group results in a recursive group structure otherwise false ie 0 */
+
+	$ErrMsg = _('An error occurred in retrieving the account groups of the parent account group during the check for recursion');
+	$DbgMsg = _('The SQL that was used to retrieve the account groups of the parent account group and that failed in the process was');
+	
+	do {
+		$sql = "SELECT parentgroupname FROM accountgroups WHERE groupname='" . $GroupName ."'";
+		
+		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		$myrow = DB_fetch_row($result);
+		if ($ParentGroupName == $myrow[0]){
+			return true;
+		}
+		$GroupName = $myrow[0];
+	} while ($myrow[0]!='');
+	
+	return false;
+} //end of function CheckForRecursiveGroupName
 
 
 if (isset($_POST['submit'])) {
@@ -21,9 +44,33 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	if (strpos($_POST['GroupName'],'&')>0 OR strpos($_POST['GroupName'],"'")>0) {
+	
+
+	if (ContainsIllegalCharacters($_POST['GroupName'])) {
 		$InputError = 1;
 		prnMsg( _('The account group name cannot contain the character') . " '&' " . _('or the character') ." '",'error');
+	}
+	if (strlen($_POST['GroupName'])==0){
+		$InputError = 1;
+		prnMsg( _('The account group name must be at least one character long'),'error');
+	}
+	if ($_POST['ParentGroupName'] !=''){
+		if (CheckForRecursiveGroup($_POST['GroupName'],$_POST['ParentGroupName'],$db)) {
+			$InputError =1;
+			prnMsg(_('The parent account group selected appears to result in a recursive account structure - select an alternative parent account group or make this group a top level account group'),'error');
+		} else {
+			$sql = "SELECT pandl, 
+				sequenceintb, 
+				sectioninaccounts 
+			FROM accountgroups 
+			WHERE groupname='" . $_POST['ParentGroupName'] . "'";
+			
+			$result = DB_query($sql,$db);
+			$ParentGroupRow = DB_fetch_array($result);
+			$_POST['SequenceInTB'] = $ParentGroupRow['sequenceintb'];
+			$_POST['PandL'] = $ParentGroupRow['pandl'];
+			$_POST['SectionInAccounts']= $ParentGroupRow['sectioninaccounts'];
+		}
 	} elseif (!is_long((int) $_POST['SectionInAccounts'])) {
 		$InputError = 1;
 		prnMsg( _('The section in accounts must be an integer'),'error');
@@ -33,7 +80,8 @@ if (isset($_POST['submit'])) {
 	} elseif ($_POST['SequenceInTB'] > 10000) {
 		$InputError = 1;
 		prnMsg( _('The sequence in the TB must be less than') . ' 10,000','error');
-	}
+	} 
+
 
 	if ($_POST['SelectedAccountGroup']!='' AND $InputError !=1) {
 
@@ -43,7 +91,8 @@ if (isset($_POST['submit'])) {
 				SET groupname='" . $_POST['GroupName'] . "',
 					sectioninaccounts=" . $_POST['SectionInAccounts'] . ",
 					pandl=" . $_POST['PandL'] . ",
-					sequenceintb=" . $_POST['SequenceInTB'] . "
+					sequenceintb=" . $_POST['SequenceInTB'] . ",
+					parentgroupname='" . $_POST['ParentGroupName'] . "'
 				WHERE groupname = '" . $_POST['SelectedAccountGroup'] . "'";
 
 		$msg = _('Record Updated');
@@ -55,12 +104,14 @@ if (isset($_POST['submit'])) {
 					groupname,
 					sectioninaccounts,
 					sequenceintb,
-					pandl)
+					pandl,
+					parentgroupname)
 			VALUES (
 				'" . $_POST['GroupName'] . "',
 				" . $_POST['SectionInAccounts'] . ",
 				" . $_POST['SequenceInTB'] . ",
-				" . $_POST['PandL'] . "
+				" . $_POST['PandL'] . ",
+				'" . $_POST['ParentGroupName'] . "'
 				)";
 		$msg = _('Record inserted');
 	}
@@ -86,10 +137,17 @@ if (isset($_POST['submit'])) {
 		echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('general ledger accounts that refer to this account group') . '</FONT>';
 
 	} else {
-
-		$sql="DELETE FROM accountgroups WHERE groupname='" . $_GET['SelectedAccountGroup'] . "'";
+		$sql = "SELECT COUNT(groupname) FROM accountgroups WHERE parentgroupname = '" . $_GET['SelectedAccountGroup'] . "'";
 		$result = DB_query($sql,$db);
-		prnMsg( $_GET['SelectedAccountGroup'] . ' ' . _('group has been deleted') . '!','success');
+		$myrow = DB_fetch_row($result);
+		if ($myrow[0]>0) {
+			prnMsg( _('Cannot delete this account group because it is a parent account group of other account group(s)'),'warn');
+			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('account groups that have this group as its/there parent account group') . '</FONT>';
+		} else {
+			$sql="DELETE FROM accountgroups WHERE groupname='" . $_GET['SelectedAccountGroup'] . "'";
+			$result = DB_query($sql,$db);
+			prnMsg( $_GET['SelectedAccountGroup'] . ' ' . _('group has been deleted') . '!','success');
+		}
 
 	} //end if account group used in GL accounts
 
@@ -107,7 +165,8 @@ or deletion of the records*/
 	$sql = "SELECT groupname,
 			sectionname,
 			sequenceintb,
-			pandl
+			pandl,
+			parentgroupname
 		FROM accountgroups 
 		LEFT JOIN accountsection ON sectionid = sectioninaccounts
 		ORDER BY sequenceintb";
@@ -121,6 +180,7 @@ or deletion of the records*/
 		<td class='tableheader'>" . _('Section') . "</td>
 		<td class='tableheader'>" . _('Sequence In TB') . "</td>
 		<td class='tableheader'>" . _('Profit and Loss') . "</td>
+		<td class='tableheader'>" . _('Parent Group') . "</td>
 		</tr>";
 
 	$k=0; //row colour counter
@@ -146,7 +206,11 @@ or deletion of the records*/
 			break;
 		} //end of switch statment
 
-		echo '<TD>' . $myrow[0] . '</TD><TD>' . $myrow[1] . '</TD><TD>' . $myrow[2] . '</TD><TD>' . $PandLText . '</TD>';
+		echo '<TD>' . $myrow[0] . '</TD>
+			<TD>' . $myrow[1] . '</TD>
+			<TD>' . $myrow[2] . '</TD>
+			<TD>' . $PandLText . '</TD>
+			<TD>' . $myrow[4] . '</TD>';
 		echo '<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedAccountGroup=' . $myrow[0] . '">' . _('Edit') . '</A></TD>';
 		echo '<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&SelectedAccountGroup=' . $myrow[0] . '&delete=1">' . _('Delete') .'</A></TD>';
 
@@ -171,7 +235,8 @@ if (! isset($_GET['delete'])) {
 		$sql = "SELECT groupname,
 				sectioninaccounts,
 				sequenceintb,
-				pandl
+				pandl,
+				parentgroupname
 			FROM accountgroups
 			WHERE groupname='" . $_GET['SelectedAccountGroup'] ."'";
 
@@ -182,6 +247,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['SectionInAccounts']  = $myrow['sectioninaccounts'];
 		$_POST['SequenceInTB']  = $myrow['sequenceintb'];
 		$_POST['PandL']  = $myrow['pandl'];
+		$_POST['ParentGroupName'] = $myrow['parentgroupname'];
 
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedAccountGroup' VALUE='" . $_GET['SelectedAccountGroup'] . "'>";
 		echo "<INPUT TYPE=HIDDEN NAME='GroupName' VALUE='" . $_POST['GroupName'] . "'>";
@@ -208,9 +274,31 @@ if (! isset($_GET['delete'])) {
 		if (!isset($_POST['PandL'])){
 			$_POST['PandL']='';
 		}
+		
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedAccountGroup' VALUE='" . $_POST['SelectedAccountGroup'] . "'>";
 		echo "<CENTER><TABLE><TR><TD>" . _('Acount Group Name') . ':' . "</TD><TD><input type='Text' name='GroupName' SIZE=30 MAXLENGTH=30 value='" . $_POST['GroupName'] . "'></TD></TR>";
 	}
+	echo '<TR><TD>' . _('Parent Group') . ':' . '</TD>
+	<TD><SELECT name="ParentGroupName">';
+
+	$sql = 'SELECT groupname FROM accountgroups';
+	$groupresult = DB_query($sql, $db);
+	if (!isset($_POST['ParentGroupName'])){
+		echo "<OPTION SELECTED VALUE=''>" ._('Top Level Group');
+	} else {
+		echo "<OPTION VALUE=''>" ._('Top Level Group');
+	}
+
+	while ( $grouprow = DB_fetch_array($groupresult) ) {
+
+		if ($_POST['ParentGroupName']==$grouprow['groupname']) {
+			echo "<OPTION SELECTED VALUE='".$grouprow['groupname']."'>" .$grouprow['groupname'];
+		} else {
+			echo "<OPTION VALUE='".$grouprow['groupname']."'>" .$grouprow['groupname'];
+		}
+	}
+	echo '</SELECT>';
+	echo '</TD></TR>';
 
 	echo '<TR><TD>' . _('Section In Accounts') . ':' . '</TD>
 	<TD><SELECT name=SectionInAccounts>';

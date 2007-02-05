@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 15;
 
@@ -207,7 +207,7 @@ echo '<TABLE><TR>';
 echo '<TD>' . _('Enter up to 32 character lower case character abbreviation for the company') . '</TD>
 	<TD><INPUT TYPE="TEXT" SIZE="33" MAXLENGTH=32 NAME="NewCompany"></TD></TR>
 	<TR><TD>'. _('Logo Image File (.jpg)') . ':</TD><TD><INPUT TYPE="FILE" ID="LogoFile" NAME="LogoFile"></TD></TR>
-	<TR><TD>' . _('Create Database?') . '</TD><TD><INPUT TYPE="CHECKBOX"> NAME="CreateDB"></TD></TR>
+	<TR><TD>' . _('Create Database?') . '</TD><TD><INPUT TYPE="CHECKBOX" NAME="CreateDB"></TD></TR>
 	</TABLE>';
 
 echo '<BR><INPUT TYPE="SUBMIT" NAME="submit" VALUE="' . _('Proceed') . '">&nbsp;&nbsp;&nbsp;&nbsp;';

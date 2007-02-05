@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 $PageSecurity =15;
 
@@ -683,10 +683,6 @@ echo '<TR><TD>' . _('vtiger Integration:') . ':</TD>
 
 echo '</SELECT></TD>
 	<TD>' . _('This feature makes webERP create entries in vtiger tables in the same database as webERP to allow an instance of vtiger to be integrated with webERP data') .'</TD></TR>';
-
-echo '<TR><TD>' . _('Wiki Path') . ':</TD>
-	<TD><input type="Text" Name="X_WikiPath" SIZE=40 MAXLENGTH=40 value="' . $_SESSION['WikiPath'] . '"></TD>
-	<TD>' . _('The path to the wiki installation to form the basis of wiki URLs - this should be the directory on the web-server where the wiki is installed. The wiki must be installed on the same web-server as webERP') .'</TD></TR>';
 
 
 	

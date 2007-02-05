@@ -101,7 +101,7 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 	$DisplayTranDate = ConvertSQLDate($myrow['trandate']);
 
 
-		printf("<td><a target='_blank' href='StockStatus.php?StockID=%s'>%s</td>
+		printf("<td><a target='_blank' href='StockStatus.php?" . SID . "&StockID=%s'>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 /*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances
 and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen
@@ -107,6 +107,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 	$RetainedEarningsAct = $_SESSION['CompanyRecord']['retainedearnings'];
 
 	$SQL = 'SELECT accountgroups.groupname,
+			accountgroups.parentgroupname,
 			accountgroups.pandl,
 			chartdetails.accountcode ,
 			chartmaster.accountname,
@@ -119,6 +120,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 		FROM chartmaster INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname
 			INNER JOIN chartdetails ON chartmaster.accountcode= chartdetails.accountcode
 		GROUP BY accountgroups.groupname,
+				accountgroups.parentgroupname
 				accountgroups.pandl,
 				accountgroups.sequenceintb,
 				chartdetails.accountcode,
@@ -302,6 +304,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 	$RetainedEarningsAct = $_SESSION['CompanyRecord']['retainedearnings'];
 
 	$SQL = 'SELECT accountgroups.groupname,
+			accountgroups.parentgroupname,
 			accountgroups.pandl,
 			chartdetails.accountcode ,
 			chartmaster.accountname,
@@ -320,6 +323,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 				chartmaster.accountname
 		ORDER BY accountgroups.pandl desc,
 			accountgroups.sequenceintb,
+			accountgroups.groupname,
 			chartdetails.accountcode';
 
 	$AccountsResult = DB_query($SQL,
@@ -346,16 +350,67 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 	$j = 1;
 	$k=0; //row colour counter
 	$ActGrp ='';
+	$SubActGrp ='';
 
 	$GrpActual =0;
 	$GrpBudget =0;
 	$GrpPrdActual =0;
 	$GrpPrdBudget =0;
+	
+	$SubGrpActual =0;
+	$SubGrpBudget =0;
+	$SubGrpPrdActual =0;
+	$SubGrpPrdBudget =0;
 
 	while ($myrow=DB_fetch_array($AccountsResult)) {
 
+		if ($myrow['parentgroupname']!='' AND $myrow['groupname']!= $SubActGrp ){
+			if ($SubGrpActual+$SubGrpBudget+$SubGrpPrdActual+$SubGrpPrdBudget !=0 AND $SubActGrp!=''){
+				
+				printf('<TR>
+					<td COLSPAN=2><FONT SIZE=2><I>%s ' . _('Total') . '</I></FONT></td>
+					<td ALIGN=RIGHT><I>%s</I></td>
+					<td ALIGN=RIGHT><I>%s</I></td>
+					<td ALIGN=RIGHT><I>%s</I></td>
+					<td ALIGN=RIGHT><I>%s</I></td>
+					</tr>',
+					$SubActGrp,
+					number_format($SubGrpActual,2),
+					number_format($SubGrpBudget,2),
+					number_format($SubGrpPrdActual,2),
+					number_format($SubGrpPrdBudget,2));
+			}
+			$SubGrpActual =0;
+			$SubGrpBudget =0;
+			$SubGrpPrdActual =0;
+			$SubGrpPrdBudget =0;
 
-		if ($myrow['groupname']!= $ActGrp){
+			$SubActGrp = $myrow['groupname'];
+			printf('<TR>
+				<td COLSPAN=6><FONT SIZE=2 COLOR=GREEN><B>%s</B></FONT></TD>
+				</TR>',
+				$myrow['groupname']);
+			$j++;
+
+		}
+
+		if ($myrow['parentgroupname']=='' AND $myrow['groupname']!= $ActGrp ){
+			
+			if ($SubGrpActual+$SubGrpBudget+$SubGrpPrdActual+$SubGrpPrdBudget !=0 AND $SubActGrp!=''){
+				
+				printf('<TR>
+					<td COLSPAN=2><FONT COLOR=GREEN SIZE=2><I>%s ' . _('Total') . '</I></FONT></td>
+					<td ALIGN=RIGHT><I>%s</I></td>
+					<td ALIGN=RIGHT><I>%s</I></td>
+					<td ALIGN=RIGHT><I>%s</I></td>
+					<td ALIGN=RIGHT><I>%s</I></td>
+					</tr>',
+					$SubActGrp,
+					number_format($SubGrpActual,2),
+					number_format($SubGrpBudget,2),
+					number_format($SubGrpPrdActual,2),
+					number_format($SubGrpPrdBudget,2));
+			}
 
 			if ($GrpActual+$GrpBudget+$GrpPrdActual+$GrpPrdBudget !=0){
 				echo '<TR>
@@ -379,15 +434,20 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 			$GrpBudget =0;
 			$GrpPrdActual =0;
 			$GrpPrdBudget =0;
-
+			
+			$SubGrpActual =0;
+			$SubGrpBudget =0;
+			$SubGrpPrdActual =0;
+			$SubGrpPrdBudget =0;
+			
 			$ActGrp = $myrow['groupname'];
 			printf('<TR>
 				<td COLSPAN=6><FONT SIZE=4 COLOR=BLUE><B>%s</B></FONT></TD>
 				</TR>',
 				$myrow['groupname']);
 			$j++;
-
 		}
+
 		if ($k==1){
 			echo '<tr bgcolor="#CCCCCC">';
 			$k=0;
@@ -424,6 +484,11 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 		$GrpBudget +=$myrow['monthbudget'];
 		$GrpPrdActual +=$AccountPeriodActual;
 		$GrpPrdBudget +=$AccountPeriodBudget;
+
+		$SubGrpActual +=$myrow['monthactual'];
+		$SubGrpBudget +=$myrow['monthbudget'];
+		$SubGrpPrdActual +=$AccountPeriodActual;
+		$SubGrpPrdBudget +=$AccountPeriodBudget;
 
 		$CheckMonth += $myrow['monthactual'];
 		$CheckBudgetMonth += $myrow['monthbudget'];
