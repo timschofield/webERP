@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
@@ -38,10 +38,6 @@ if (isset($_GET['NewCredit'])){
 
 if (!isset($_SESSION['CreditItems'])){
 	 /* It must be a new credit note being created $_SESSION['CreditItems'] would be set up from a previous call*/
-
-	 Session_register('CreditItems');
-	 Session_register('RequireCustomerSelection');
-	 Session_Register('CurrencyRate');
 
 	 $_SESSION['CreditItems'] = new cart;
 

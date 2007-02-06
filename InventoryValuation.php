@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 $PageSecurity = 2;
 
 If (isset($_POST['PrintPDF'])
@@ -12,7 +12,7 @@ If (isset($_POST['PrintPDF'])
 	include('includes/PDFStarter.php');
 	include('includes/ConnectDB.inc');
 
-	$FontSize=10;
+	$FontSize=9;
 	$pdf->addinfo('Title',_('Inventory Valuation Report'));
 	$pdf->addinfo('Subject',_('Inventory Valuation'));
 
@@ -78,9 +78,12 @@ If (isset($_POST['PrintPDF'])
 	}
 
 	include ('includes/PDFInventoryValnPageHeader.inc');
-	$Tot_Val=0;
+	
+        $Tot_Val=0;
 	$Category = '';
 	$CatTot_Val=0;
+        $CatTot_Qty=0;
+        
 	While ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
 
 		if ($Category!=$InventoryValn['categoryid']){
@@ -97,8 +100,10 @@ If (isset($_POST['PrintPDF'])
 				}
 
 				$DisplayCatTotVal = number_format($CatTot_Val,2);
-				$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, 'right');
-				$YPos -=$line_height;
+				$DisplayCatTotQty = number_format($CatTot_Qty,0);
+                                $LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, 'right');
+	                        $LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,$DisplayCatTotQty, 'right');
+                                $YPos -=$line_height;
 
 				If ($_POST['DetailedReport']=='Yes'){
 				/*draw a line under the CATEGORY TOTAL*/
@@ -106,6 +111,7 @@ If (isset($_POST['PrintPDF'])
 					$YPos -=(2*$line_height);
 				}
 				$CatTot_Val=0;
+                                $CatTot_Qty=0;
 			}
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,$InventoryValn['categoryid'] . ' - ' . $InventoryValn['categorydescription']);
 			$Category = $InventoryValn['categoryid'];
@@ -116,7 +122,7 @@ If (isset($_POST['PrintPDF'])
 			$YPos -=$line_height;
 			$FontSize=8;
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$InventoryValn['stockid']);				$LeftOvers = $pdf->addTextWrap(120,$YPos,260,$FontSize,$InventoryValn['description']);
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$InventoryValn['stockid']);				$LeftOvers = $pdf->addTextWrap(130,$YPos,260,$FontSize,$InventoryValn['description']);
 			$DisplayUnitCost = number_format($InventoryValn['unitcost'],2);
 			$DisplayQtyOnHand = number_format($InventoryValn['qtyonhand'],0);
 			$DisplayItemTotal = number_format($InventoryValn['itemtotal'],2);
@@ -128,7 +134,8 @@ If (isset($_POST['PrintPDF'])
 		}
 		$Tot_Val += $InventoryValn['itemtotal'];
 		$CatTot_Val += $InventoryValn['itemtotal'];
-
+                $CatTot_Qty += $InventoryValn['qtyonhand'];
+                
 		if ($YPos < $Bottom_Margin + $line_height){
 		   include('includes/PDFInventoryValnPageHeader.inc');
 		}
@@ -142,9 +149,10 @@ If (isset($_POST['PrintPDF'])
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize, _('Total for') . ' ' . $Category . ' - ' . $CategoryName, 'left');
 	}
 	$DisplayCatTotVal = number_format($CatTot_Val,2);
-	$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, 'right');
-	
-	
+        $LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, 'right');
+	$DisplayCatTotQty = number_format($CatTot_Qty,0);
+        $LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,$DisplayCatTotQty, 'right');
+
 	If ($_POST['DetailedReport']=='Yes'){
 		/*draw a line under the CATEGORY TOTAL*/
 		$YPos -= ($line_height);
@@ -159,9 +167,8 @@ If (isset($_POST['PrintPDF'])
 /*Print out the grand totals */
 	$LeftOvers = $pdf->addTextWrap(80,$YPos,260-$Left_Margin,$FontSize,_('Grand Total Value'), 'right');
 	$DisplayTotalVal = number_format($Tot_Val,2);
-	$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
+        $LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 	
-
 	$pdfcode = $pdf->output();
 	$len = strlen($pdfcode);
 

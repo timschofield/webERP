@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing 
@@ -34,8 +34,7 @@ if (isset($_GET['SupplierID'])){
 		unset ( $_SESSION['SuppTransTmp']->GLCodes);
 		unset ( $_SESSION['SuppTransTmp']);
 	}
-	 Session_register('SuppInv');
-	 $_SESSION['SuppTrans'] = new SuppTrans;
+	  $_SESSION['SuppTrans'] = new SuppTrans;
 
 /*Now retrieve supplier information - name, currency, default ex rate, terms, tax rate etc */
 

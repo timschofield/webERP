@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 4;
 include('includes/DefinePOClass.php');
@@ -99,10 +99,6 @@ if (isset($_POST['CancelOrder']) AND $_POST['CancelOrder']!='') { /*The cancel b
 
 if (!isset($_SESSION['PO'])){
 	/* It must be a new order being created $_SESSION['PO'] would be set up from the order modification code above if a modification to an existing order. Also $ExistingOrder would be set to 1. The delivery check screen is where the details of the order are either updated or inserted depending on the value of ExistingOrder */
-
-	Session_register('PO');
-	Session_register('RequireSupplierSelection');
-	Session_register('ExistingOrder');
 
 	$_SESSION['ExistingOrder']=0;
 	$_SESSION['PO'] = new PurchOrder;

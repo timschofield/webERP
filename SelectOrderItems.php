@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.52 $ */
+/* $Revision: 1.53 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -35,13 +35,6 @@ if (isset($_GET['NewOrder'])){
 		unset ($_SESSION['Items']);
 	}
 	
-	Session_register('Items');
-	Session_register('RequireCustomerSelection');
-	Session_register('CreditAvailable');
-	Session_register('ExistingOrder');
-	Session_register('PrintedPackingSlip');
-	Session_register('DatePackingSlipPrinted');
-		
 	$_SESSION['ExistingOrder']=0;
 	$_SESSION['Items'] = new cart;
 
@@ -66,13 +59,6 @@ if (isset($_GET['ModifyOrderNumber'])
 		unset ($_SESSION['Items']->LineItems);
 		unset ($_SESSION['Items']);
 	}
-
-	Session_register('Items');
-	Session_register('RequireCustomerSelection');
-	Session_register('CreditAvailable');
-	Session_register('ExistingOrder');
-	Session_register('PrintedPackingSlip');
-	Session_register('DatePackingSlipPrinted');
 
 	$_SESSION['ExistingOrder']=$_GET['ModifyOrderNumber'];
 	$_SESSION['RequireCustomerSelection'] = 0;
@@ -284,13 +270,6 @@ if (!isset($_SESSION['Items'])){
 	modification code above if a modification to an existing order. Also $ExistingOrder would be
 	set to 1. The delivery check screen is where the details of the order are either updated or
 	inserted depending on the value of ExistingOrder */
-
-	Session_register('Items');
-	Session_register('RequireCustomerSelection');
-	Session_register('CreditAvailable');
-	Session_register('ExistingOrder');
-	Session_register('PrintedPackingSlip');
-	Session_register('DatePackingSlipPrinted');
 
 	$_SESSION['ExistingOrder']=0;
 	$_SESSION['Items'] = new cart;

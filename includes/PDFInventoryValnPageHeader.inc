@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*PDF page header for inventory valuation report */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -35,7 +35,8 @@ if ($_POST['DetailedReport']=='Yes'){
 	$LeftOvers = $pdf->addTextWrap(510,$YPos,60,$FontSize,_('Item Value'), 'centre');
 } else {
 	$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,320-$Left_Margin,$FontSize,_('Category'), 'centre');
-	$LeftOvers = $pdf->addTextWrap(510,$YPos,60,$FontSize,_('Value'), 'centre');
+	$LeftOvers = $pdf->addTextWrap(390,$YPos,60,$FontSize,_('Quantity'), 'centre');
+        $LeftOvers = $pdf->addTextWrap(510,$YPos,60,$FontSize,_('Value'), 'centre');
 }
 
 $FontSize=8;

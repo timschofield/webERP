@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.41 $ */
+/* $Revision: 1.42 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -28,11 +28,6 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 	unset($_SESSION['Items']->LineItems);
 	unset ($_SESSION['Items']);
 
-	Session_register('Items');
-	Session_register('ProcessingOrder');
-	Session_register('Old_FreightCost');
-	Session_Register('CurrencyRate');
-	
 	$_SESSION['ProcessingOrder']=$_GET['OrderNumber'];
 	$_SESSION['Items'] = new cart;
 

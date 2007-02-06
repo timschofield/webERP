@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 /*
 	This page can be called with...
@@ -294,10 +294,6 @@ If (isset($_GET['AllocTrans'])){
 	- Display the supplier name the transaction being allocated amount and trans no
 	- Display the invoices for allocating to with a form entry for each one
 	for the allocated amount to be entered */
-
-
-	Session_register('AllocTrans');
-	Session_register('Alloc');
 
 
 	$_SESSION['Alloc'] = new Allocation;

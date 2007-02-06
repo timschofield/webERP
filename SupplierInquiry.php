@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -164,7 +164,8 @@ $SQL = "SELECT supptrans.id,
 		supptrans.alloc AS allocated, 
 		supptrans.hold, 
 		supptrans.settled, 
-		supptrans.transtext 
+		supptrans.transtext,
+		supptrans.supplierno
 	FROM supptrans, 
 		systypes 
 	WHERE supptrans.type = systypes.typeid 
@@ -236,11 +237,11 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					<TD ALIGN=RIGHT>%s</TD>
 					<TD ALIGN=RIGHT>%s</TD>
 					<TD ALIGN=LEFT>%s</TD>
-					<TD><A TARGET='_blank' HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . 
-						  _('View GL Postings') . '</A></td></tr>', 
+					<TD><A TARGET='_blank' HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Postings') . "</A></td>
+					<TD><A HREF='%s/PaymentAllocations.php?%sSuppID=%s&InvID=%s'>" . _('View Payments') . '</A></TD></tr>',
 					$myrow['transno'], 
 					$myrow['typename'], 
-					$myrow['suppreference'], 
+					$myrow['suppreference'],
 					ConvertSQLDate($myrow['trandate']), 
 					number_format($myrow['totalamount'],2), 
 					number_format($myrow['allocated'],2),
@@ -249,13 +250,17 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					$rootpath,
 					SID, 
 					$myrow['type'], 
-					$myrow['transno'] );
+					$myrow['transno'],
+					$rootpath,
+                                        SID,
+                                        $myrow['supplierno'],
+                                        $myrow['suppreference']);
 						  
 			} else {
 			
 				printf("<TD>%s</TD>
 					<TD>%s</TD>
-					<TD>%s</TD>
+					<TD>%s <A HREF='%s/PaymentAllocations.php?%sSuppID=%s&InvID=%s'>" . _('View Payments') . "</A></TD>
 					<TD>%s</TD>
 					<TD ALIGN=RIGHT>%s</TD>
 					<TD ALIGN=RIGHT>%s</TD>
@@ -267,6 +272,10 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					$myrow['transno'],
 					$myrow['typename'],
 					$myrow['suppreference'],
+					$rootpath,
+                                        SID,
+                                        $myrow['supplierno'],
+                                        $myrow['suppreference'],
 					ConvertSQLDate($myrow['trandate']),
 					number_format($myrow['totalamount'],2),
 					number_format($myrow['allocated'],2),
@@ -281,8 +290,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					$HoldValue,
 					$rootpath,
 					$myrow['type'],
-					$myrow['transno'] );
-
+					$myrow['transno']);
 			}
 
 		} else {
@@ -293,7 +301,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 
 				printf("<TD>%s</TD>
 					<TD>%s</TD>
-					<TD>%s</TD>
+					<TD>%s <A HREF='%s/PaymentAllocations.php?%sSuppID=%s&InvID=%s'>" . _('View Payments') . "</A></TD>
 					<TD>%s</TD>
 					<TD ALIGN=RIGHT>%s</TD>
 					<TD ALIGN=RIGHT>%s</TD>
@@ -303,6 +311,10 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					$myrow['transno'],
 					$myrow['typename'],
 					$myrow['suppreference'],
+					$rootpath,
+                                        SID,
+                                        $myrow['supplierno'],
+                                        $myrow['suppreference'],
 					ConvertSQLDate($myrow['trandate']),
 					number_format($myrow['totalamount'],2),
 					number_format($myrow['allocated'],2),
@@ -313,7 +325,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 
 				printf("<TD>%s</TD>
 					<TD>%s</TD>
-					<TD>%s</TD>
+					<TD>%s <A HREF='%s/PaymentAllocations.php?%sSuppID=%s&InvID=%s'>" . _('View Payments') . "</A></TD>
 					<TD>%s</TD>
 					<TD ALIGN=RIGHT>%s</TD>
 					<TD ALIGN=RIGHT>%s</TD>
@@ -323,6 +335,10 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					$myrow['transno'],
 					$myrow['typename'],
 					$myrow['suppreference'],
+					$rootpath,
+                                        SID,
+                                        $myrow['supplierno'],
+                                        $myrow['suppreference'],
 					ConvertSQLDate($myrow['trandate']),
 					number_format($myrow['totalamount'],2),
 					number_format($myrow['allocated'],2),
@@ -352,7 +368,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				<TD ALIGN=RIGHT>%s</TD>
 				<TD ALIGN=LEFT>%s</TD>
 				<TD><A HREF='%s/SupplierAllocations.php?%sAllocTrans=%s'>" .
-					  _('Allocations') . "</A></TD>
+					  _('View Allocations') . "</A></TD>
 				<TD><A TARGET='_blank' HREF='%s/GLTransInquiry.php?%sTypeID=%s&TransNo=%s'>" .
 					  _('View GL Postings') . '</A></TD>
 				</TR>',
@@ -382,7 +398,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				<TD ALIGN=RIGHT>%s</TD>
 				<TD ALIGN=RIGHT>%s</TD>
 				<TD ALIGN=LEFT>%s</TD>
-				<TD><A HREF='%s/SupplierAllocations.php?%sAllocTrans=%s'>" . _('Allocations') . '</A></TD>
+				<TD><A HREF='%s/SupplierAllocations.php?%sAllocTrans=%s'>" . _('View Allocations') . '</A></TD>
 				</TR>',
 				$myrow['transno'],
 				$myrow['typename'],

@@ -1,16 +1,11 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 /*PO_ReadInOrder.inc is used by the modify existing order code in PO_Header.php and also by GoodsReceived.php */
 
        if (isset($_SESSION['PO'])){
               unset ($_SESSION['PO']->LineItems);
               unset ($_SESSION['PO']);
        }
-
-       Session_register('PO');
-       Session_register('RequireSupplierSelection');
-       Session_register('ExistingOrder');
-
 
        $_SESSION['ExistingOrder']=$_GET['ModifyOrderNumber'];
        $_SESSION['RequireSupplierSelection'] = 0;

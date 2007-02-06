@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 $PageSecurity =3;
 
 
@@ -25,11 +25,6 @@ if (!$_GET['InvoiceNumber'] AND !$_SESSION['ProcessingCredit']) {
 
 	unset($_SESSION['CreditItems']->LineItems);
 	unset($_SESSION['CreditItems']);
-
-	Session_register('CreditItems');
-	Session_register('ProcessingCredit');
-	Session_Register('CurrencyRate');
-	Session_Register('Old_FreightCost');
 
 	$_SESSION['ProcessingCredit'] = $_GET['InvoiceNumber'];
 	$_SESSION['CreditItems'] = new cart;

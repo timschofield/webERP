@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 4;
 
@@ -39,8 +39,6 @@ if (isset($_POST['Cancel'])){
 if (!isset($_SESSION['SPL'])){
 	/* It must be a new special order being created $_SESSION['SPL'] would be set up from the order modification code above if a modification to an existing order.  */
 
-	Session_register('SPL');
-
 	$_SESSION['SPL'] = new SpecialOrder;
 
 }
@@ -64,25 +62,36 @@ if (!isset($_SESSION['SPL']->SupplierID)){
 	$_SESSION['SPL']->SuppCurrCode = $myrow[1];
 	$_SESSION['SPL']->SuppCurrExRate = $myrow[2];
 }
-
 if (!isset($_SESSION['SPL']->CustomerID)){
+	// Now check to ensure this account is not on hold */
 	$sql = "SELECT debtorsmaster.name,
+			holdreasons.dissallowinvoices,
 			debtorsmaster.currcode,
-			currencies.rate
-		FROM debtorsmaster INNER JOIN currencies
-			ON debtorsmaster.currcode=currencies.currabrev
-		WHERE debtorno='" . $_SESSION['CustomerID'] . "'";
+                        currencies.rate
+		FROM debtorsmaster,
+			holdreasons,
+                        currencies
+		WHERE debtorsmaster.holdreason=holdreasons.reasoncode
+                AND debtorsmaster.currcode=currencies.currabrev
+		AND debtorsmaster.debtorno = '" . $_SESSION['CustomerID'] . "'";
 
 	$ErrMsg = _('The customer record for') . ' : ' . $_SESSION['CustomerID']  . ' ' . _('cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the customer details and failed was');
 	$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	$myrow = DB_fetch_row($result);
+	if ($myrow[1] != 1){
+		if ($myrow[1]==2){
+			prnMsg(_('The') . ' ' . $myrow[0] . ' ' . _('account is currently flagged as an account that needs to be watched please contact the credit control personnel to discuss'),'warn');
+		}
+        }
 	$_SESSION['SPL']->CustomerID = $_SESSION['CustomerID'];
 	$_SESSION['SPL']->CustomerName = $myrow[0];
-	$_SESSION['SPL']->CustCurrCode = $myrow[1];
-	$_SESSION['SPL']->CustCurrExRate = $myrow[2];
+	$_SESSION['SPL']->CustCurrCode = $myrow[2];
+	$_SESSION['SPL']->CustCurrExRate = $myrow[3];
 }
+
+
 
 if (isset($_POST['SelectBranch'])){
 
@@ -467,12 +476,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 		foreach ($_SESSION['SPL']->LineItems as $StockItem) {
 
-			$LineItemsSQL = $StartOf_LineItemsSQL . ", 
-						'" . $StockItem->PartCode . "',
-						 ". $StockItem->Price . ", 
-						 " . $StockItem->Quantity . ",
-						 " . $StockItem->LineNo . ")";
-
+			$LineItemsSQL = $StartOf_LineItemsSQL . ", '" . $StockItem->PartCode . "',". $StockItem->Price . ", " . $StockItem->Quantity . ", " . $StockItem->LineNo . ")";
 			$Ins_LineItemResult = DB_query($LineItemsSQL,$db,$ErrMsg);
 
 		} /* inserted line items into sales order details */

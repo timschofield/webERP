@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 /*This page can be called with
 
 1. A DebtorTrans ID
@@ -248,9 +248,7 @@ If (isset($_GET['AllocTrans'])){
 	- Display the invoices for allocating to with a form entry for each one
 	for the allocated amount to be entered */
 
-	Session_register('AllocTrans');
-	Session_register('Alloc');
-
+	
 	if (isset($_SESSION['Alloc'])){
 		unset($_SESSION['Alloc']->Allocs);
 		unset($_SESSION['Alloc']);
