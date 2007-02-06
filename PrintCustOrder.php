@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 2;
 
@@ -188,7 +188,7 @@ if ($len<=20){
 
 	$pdf->Stream();
 
-	$sql = "UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted='" . Date($_SESSION['DefaultDateFormat']) . "' WHERE salesorders.orderno=" .$_GET['TransNo'];
+	$sql = "UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted='" . Date('Y-m-d') . "' WHERE salesorders.orderno=" .$_GET['TransNo'];
 	$result = DB_query($sql,$db);
 }
 
