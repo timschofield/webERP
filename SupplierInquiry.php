@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -190,7 +190,7 @@ if (DB_num_rows($TransResult) == 0){
 echo '<TABLE CELLPADDING=2 COLSPAN=7>';
 $TableHeader = "<TR><TD CLASS='tableheader'>" . _('Trans') . ' #' . 
 		"</TD><TD CLASS='tableheader'>" . _('Type') . 
-		"</TD><TD CLASS='tableheader'>" . _('Supplier Invoice') . ' #' . 
+		"</TD><TD CLASS='tableheader'>" . _('Supplier Ref') . ' #' . 
 		"</TD><TD CLASS='tableheader'>" . _('Date') . 
 		"</TD><TD CLASS='tableheader'>" . _('Total') . 
 		"</TD><TD CLASS='tableheader'>" . _('Allocated') . 

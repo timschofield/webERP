@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 2;
 
@@ -36,6 +36,7 @@ $sql = "SELECT salesorders.customerref,
 		salesorders.deladd6,
 		salesorders.debtorno,
 		salesorders.branchcode,
+                salesorders.deliverydate,
 		debtorsmaster.name,
 		debtorsmaster.address1,
 		debtorsmaster.address2,
@@ -78,7 +79,7 @@ if (DB_num_rows($result)==0){
 		echo '<P>';
 		prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
 			_('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($myrow['datepackingslipprinted']) .
-			'<br>' . _('This check is there toensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
+			'<br>' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
 	      echo '<P><A HREF="' . $rootpath . '/PrintCustOrder.php?' . SID . 'TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'
 		. _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</A><P>' .
 		'<A HREF="' . $rootpath. '/PrintCustOrder_generic.php?' . SID . 'TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'. _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</A>';
@@ -94,7 +95,7 @@ if (DB_num_rows($result)==0){
 		exit;
    	}//packing slip has been printed.
 }
-/* Then there's an order to print and its not been printed already (or its been flagged for reprinting)
+/* Then there's an order to print and it's not been printed already (or its been flagged for reprinting)
 LETS GO */
 
 

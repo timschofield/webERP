@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 /*
 	This page is called from SupplierInquiry.php when the 'view payments' button is selected
@@ -60,7 +60,9 @@ $SQL= "SELECT supptrans.supplierno,
 
 $Result = DB_query($SQL, $db);
 if (DB_num_rows($Result) == 0){
-	echo _('There may be a problem retrieving the information') . '. ' . _('No data is returned');
+	prnMsg(_('There may be a problem retrieving the information. No data is returned');
+	echo '<BR><A HREF ="javascript:history.back()">' . _('Go back') . '</A>';
+	include('includes/foooter.inc');
 	exit;
 }
 
