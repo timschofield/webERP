@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity = 15;
 
@@ -89,12 +89,12 @@ if (isset($_POST['submit'])) {
 			$LastTaxCatID = DB_Last_Insert_ID($db, 'taxcategories','taxcatid');
 			
 			$sql = 'INSERT INTO taxauthrates (taxauthority, 
-                                                dispatchtaxprovince, 
-                                                taxcatid)
-        				SELECT taxauthorities.taxid,
-                        			taxprovinces.taxprovinceid,
-                        			' . $LastTaxCatID . '
-        			FROM taxauthorities, taxprovinces';
+					dispatchtaxprovince, 
+					taxcatid)
+				SELECT taxauthorities.taxid,
+ 					taxprovinces.taxprovinceid,
+					' . $LastTaxCatID . '
+				FROM taxauthorities CROSS JOIN taxprovinces';
 			$result = DB_query($sql,$db,$ErrMsg,true);
 			
 			$result = DB_query('COMMIT',$db);

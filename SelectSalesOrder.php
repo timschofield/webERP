@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 2;
 
@@ -267,7 +267,8 @@ If (isset($StockItemsResult)) {
 					salesorders.customerref,
 					salesorders.orddate,
 					salesorders.deliverydate,
-					salesorders.deliverto
+					salesorders.deliverto,
+					salesorders.printedpackingslip
 				ORDER BY salesorders.orderno";
 	} else {
 	      /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
@@ -340,7 +341,7 @@ If (isset($StockItemsResult)) {
 						salesorders.customerref,
 						salesorders.orddate,
 						salesorders.deliverto,
-					  salesorders.printedpackingslip,
+					  	salesorders.printedpackingslip,
 						salesorders.deliverydate, SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue
 					FROM salesorders,
 						salesorderdetails,
@@ -360,7 +361,8 @@ If (isset($StockItemsResult)) {
 						salesorders.customerref,
 						salesorders.orddate,
 						salesorders.deliverto,
-						salesorders.deliverydate
+						salesorders.deliverydate,
+						salesorders.printedpackingslip
 					ORDER BY salesorders.orderno";
 			} else {
 				$SQL = "SELECT salesorders.orderno,
@@ -389,7 +391,8 @@ If (isset($StockItemsResult)) {
 						salesorders.customerref,
 						salesorders.orddate,
 						salesorders.deliverto,
-						salesorders.deliverydate
+						salesorders.deliverydate,
+						salesorders.printedpackingslip
 					ORDER BY salesorders.orderno";
 			}
 
@@ -508,7 +511,6 @@ If (isset($StockItemsResult)) {
 				$FormatedOrderValue);
 		}
 		
-
 		$j++;
 		If ($j == 12){
 			$j=1;

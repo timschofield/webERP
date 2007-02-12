@@ -1,5 +1,7 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
+<P>12/2/07 SelectSalesOrder.php fails with postgres printpackingslip needs to be in the group by now fixed
+<P>12/2/07 Tax Categories now uses a cross join to be more ansi sql friendly - failed with postgres otherwise
 <P>12/2/07 Wayne McDougal OrderDetails.php is not honouring the Landscape/Portrait config switch for invoice printing - now fixed.
 <P>12/2/07 Errol Livingston - Locations.php was checking for existence of worksorders in a non-existant table before allowing deletion!
 <P>9/2/07 Wayne McDougal - bug fix on width of terms in PrintCustTransPortrait.php
@@ -14,6 +16,7 @@
 <P>
 <P><B>Version 3.05
 <P>2 January 2007</B>
+<P>
 <P>
 <P>2/1/07 Got webERP logo showing on footer.inc in report writer scripts. Updated copyright to change year on title.
 <P>2/1/07 Fixed bad bug that didn't post freight on Credit_Invoice.php script!!! This resulted in control account out of balance issues.
