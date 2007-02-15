@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 /* This file contains the code to post GL transactions.
 
@@ -73,8 +73,66 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 
 }
 
+
+
 /*All the ChartDetail records should have been created now and be available to accept postings */
 
+for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
+	
+		$sql = 'SELECT counterindex,
+			periodno,
+			account,
+			amount
+		FROM gltrans
+		WHERE posted=0
+		AND periodno=' . $CurrPeriod . '
+		ORDER BY account';
+		
+	$UnpostedTransResult = DB_query($sql, $db);
+
+	$TransStart = DB_query('BEGIN',$db);
+	$CurrentAccount=0;
+	$TotalAmount=0;
+	while ($UnpostedTrans=DB_fetch_array($UnpostedTransResult)){
+		if($CurrentAccount != $UnpostedTrans['account']) {
+			if($CurrentAccount != 0) {
+				$sql = 'UPDATE chartdetails SET actual = actual + ' . $TotalAmount . '
+					WHERE accountcode = ' . $CurrentAccount . '
+					AND period= ' . $CurrPeriod;
+				$PostPrd = DB_query($sql,$db);
+				/*Update the BFwd for all following ChartDetail records */
+				$sql = 'UPDATE chartdetails SET bfwd = bfwd + ' . $TotalAmount . '
+					WHERE accountcode = ' . $CurrentAccount . '
+					AND period > ' . $CurrPeriod;
+				$PostBFwds = DB_query($sql,$db);
+			}
+			$TotalAmount = 0;
+			$CurrentAccount = $UnpostedTrans['account'];
+		}
+		$TotalAmount = $TotalAmount + $UnpostedTrans['amount'];
+		/*Update the Actual charge in the period of the transaction */
+		$sql = 'UPDATE gltrans SET posted = 1 WHERE counterindex = ' . $UnpostedTrans['counterindex'];
+		$Posted = DB_query($sql,$db);
+	}
+	// There will be one chartdetail update outstanding if we processed anything
+	if($CurrentAccount != 0) {
+		$sql = 'UPDATE chartdetails SET actual = actual + ' . $TotalAmount . '
+			WHERE accountcode = ' . $CurrentAccount . '
+			AND period= ' . $CurrPeriod;
+		$PostPrd = DB_query($sql,$db);
+		/*Update the BFwd for all following ChartDetail records */
+		$sql = 'UPDATE chartdetails SET bfwd = bfwd + ' . $TotalAmount . '
+			WHERE accountcode = ' . $CurrentAccount . '
+			AND period > ' . $CurrPeriod;
+		$PostBFwds = DB_query($sql,$db);
+	}
+	$TransCommit = DB_query('COMMIT',$db);
+}
+
+/* The Code below has been superseeded by Danie's above - this grouping by account then summing the total postings for an account
+was required as an optimisation for postgres */
+
+/*
 $sql = 'SELECT counterindex, periodno, account, amount FROM gltrans WHERE posted=0';
 
 $UnpostedTransResult = DB_query($sql, $db);
@@ -82,17 +140,11 @@ $UnpostedTransResult = DB_query($sql, $db);
 $TransStart = DB_query('BEGIN',$db);
 
 while ($UnpostedTrans=DB_fetch_array($UnpostedTransResult)){
-	/*
-	if ($debug==1){
-		echo '<BR>GLTrans Counter ' . $UnpostedTrans['counterindex'] . ' period ' . $UnpostedTrans['periodno'] . ' account - ' . $UnpostedTrans['account'] . ' amount= ' . $UnpostedTrans['amount'];
-	}
-	*/
-	/*Update the Actual charge in the period of the transaction */
 	$sql = 'UPDATE chartdetails SET actual = actual + ' . $UnpostedTrans['amount'] . ' 
 		WHERE accountcode = ' . $UnpostedTrans['account'] . ' 
 		AND period= ' . $UnpostedTrans['periodno'];
 	$PostPrd = DB_query($sql,$db);
-	/*Update the BFwd for all following ChartDetail records */
+
 	$sql = 'UPDATE chartdetails SET bfwd = bfwd + ' . $UnpostedTrans['amount'] . ' 
 			WHERE accountcode = ' . $UnpostedTrans['account'] . ' 
 			AND period > ' . $UnpostedTrans['periodno'];
@@ -102,9 +154,8 @@ while ($UnpostedTrans=DB_fetch_array($UnpostedTransResult)){
 	$Posted = DB_query($sql,$db);
 	
 }
-
 $TransCommit = DB_query('COMMIT',$db);
-
+*/
 
 if (DB_num_rows($ChartDetailsNotSetUpResult)>0){
 

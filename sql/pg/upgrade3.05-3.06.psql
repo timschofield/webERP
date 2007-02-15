@@ -1,0 +1,2 @@
+ALTER TABLE custbranch ADD specialinstructions TEXT;
+ALTER TABLE accountgroups ADD COLUMN parentgroupname VARCHAR(3) DEFAULT '';
