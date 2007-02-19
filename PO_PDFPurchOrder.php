@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -104,8 +104,8 @@ if (isset($OrderNo) && $OrderNo != "" && $OrderNo > 0){
 				ConvertSQLDate($POHeader['dateprinted']) . '<BR>'.
 				_('To re-print the order it must be modified to allow a reprint'). '<BR>'.
 				_('This check is there to ensure that duplicate purchase orders are not sent to the supplier	resulting in several deliveries of the same supplies'), 'warn');
-           echo '<BR><table class="table_index">
-                <tr><td class="menu_group_item">
+           echo '<BR><TABLE class="table_index">
+                <TR><TD class="menu_group_item">
  					 <LI><A HREF="' . $rootpath . '/PO_PDFPurchOrder.php?' . SID . 'OrderNo=' . $OrderNo . '&ViewingOnly=1">'.
 				_('Print This Order as a Copy'). '</A>
  				<LI><A HREF="' . $rootpath . '/PO_Header.php?' . SID . 'ModifyOrderNumber=' . $OrderNo . '">'.
@@ -113,7 +113,7 @@ if (isset($OrderNo) && $OrderNo != "" && $OrderNo > 0){
 			  	'<LI><A HREF="'. $rootpath .'/PO_SelectPurchOrder.php?' . SID . '">'.
 				_('Select another order'). '</A>'.
 			  	'<LI><A HREF="' . $rootpath . '/index.php?' . SID . '">'. _('Back to the menu').'</A>';
-			  echo '</body</html>';
+			  echo '</BODY</HTML>';
 			  include('includes/footer.inc');
 			  exit;
 		   }//AllowedToPrint
@@ -298,7 +298,7 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 	}
 	echo '<BR><BR>';
 	echo '<INPUT TYPE=HIDDEN NAME="OrderNo" VALUE="'. $OrderNo. '">';
-	echo '<DIV ALIGN=CENTER><TABLE><TR><TD>'. _('Print or Email the Order'). '</TD><TD>
+	echo '<TABLE><TR><TD>'. _('Print or Email the Order'). '</TD><TD>
 		<SELECT NAME="PrintOrEmail">';
 
 	if (!isset($_POST['PrintOrEmail'])){
@@ -361,7 +361,7 @@ If ($MakePDFThenDisplayIt OR $MakePDFThenEmailIt){
 		echo '</TABLE>';
 	}
 	echo '<BR><INPUT TYPE=SUBMIT NAME="DoIt" VALUE="' . _('OK') . '">';
-	echo '</DIV></FORM>';
+	echo '</FORM>';
 	include('includes/footer.inc');
 }
 ?>

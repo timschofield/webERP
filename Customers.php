@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 3;
 
@@ -76,10 +76,6 @@ if ($_POST['submit']) {
 		$InputError = 1;
 		prnMsg( _('The discount is expected to be less than 100% and greater than or equal to 0'),'error');
 	} 
-
-	if ($_POST['CreditLimit']==0) {
-		$_POST['CreditLimit']= $_SESSION['DefaultCreditLimit'];
-	}
 
 	if ($InputError !=1){
 		if ($_POST['CreditLimit']==0) {

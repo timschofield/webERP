@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 2;
 
@@ -11,7 +11,7 @@ include('includes/header.inc');
 
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "' METHOD=POST>";
 
-echo "<DIV ALIGN=CENTER><BR>";
+echo "<BR>";
 
 if (isset($_POST['Action'])) { 
 	$_GET['Action'] = $_POST['Action']; 
@@ -141,7 +141,7 @@ if ($_GET['Action'] == 'Enter'){
 //END OF ACTION=VIEW
 }
 
-echo '</DIV></FORM>';
+echo '</FORM>';
 include('includes/footer.inc');
 
 ?>
