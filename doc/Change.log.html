@@ -1,5 +1,7 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
+<P>20/2/07 Took out the default credit limit when a 0 credit limit is entered. If the user enters 0 then a zero credit limit is set.
+<P>20/2/07 ShipmentCosting bug with multiple lines of the same item on the shipment (albethey different POs) caused incorrect costings.
 <P>15/2/07 Danie optimised GLPostings.inc for postgres - thinks mysql performance will be even better too - sorting postings by account and doing one post for each period/account combination
 <P>12/2/07 SelectSalesOrder.php fails with postgres printpackingslip needs to be in the group by now fixed
 <P>12/2/07 Tax Categories now uses a cross join to be more ansi sql friendly - failed with postgres otherwise

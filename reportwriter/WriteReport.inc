@@ -600,7 +600,7 @@ function GeneratePDFFile($Data, $Prefs) {
 	
 	header('Content-type: application/pdf');
 	header('Content-Length: ' . $len);
-	header('Content-Disposition: inline; filename="' . $ReportName . "'");
+	header('Content-Disposition: inline; filename="' . $ReportName . '"');
 	header('Expires: 0');
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');

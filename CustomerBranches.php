@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity = 3;
 
@@ -579,17 +579,33 @@ if (! isset($_GET['delete'])) {
 
 	} else { //end of if $SelectedBranch only do the else when a new record is being entered
 
-	/** SETUP ANY $_GET VALUES THAT ARE PASSED.  This really is just used coming from the  Customers.php when a new customer is created.
+	/* SETUP ANY $_GET VALUES THAT ARE PASSED.  This really is just used coming from the Customers.php when a new customer is created.
 			Maybe should only do this when that page is the referrer?
-	**/
-		$_POST['BranchCode'] = $_GET['BranchCode']?$_GET['BranchCode']:$_POST['BranchCode'];
-		$_POST['BrName']     = $_GET['BrName']?$_GET['BrName']:$_POST['BrName'];
-		$_POST['BrAddress1'] = $_GET['BrAddress1']?$_GET['BrAddress1']:$_POST['BrAddress1'];
-		$_POST['BrAddress2'] = $_GET['BrAddress2']?$_GET['BrAddress2']:$_POST['BrAddress2'];
-		$_POST['BrAddress3'] = $_GET['BrAddress3']?$_GET['BrAddress3']:$_POST['BrAddress3'];
-		$_POST['BrAddress4'] = $_GET['BrAddress4']?$_GET['BrAddress4']:$_POST['BrAddress4'];
-		$_POST['BrAddress5'] = $_GET['BrAddress5']?$_GET['BrAddress5']:$_POST['BrAddress5'];
-		$_POST['BrAddress6'] = $_GET['BrAddress6']?$_GET['BrAddress6']:$_POST['BrAddress6'];
+	*/
+		if (isset($_GET['BranchCode'])){
+			$_POST['BranchCode'] = $_GET['BranchCode'];
+		}
+		if (isset($_GET['BrName'])){
+			$_POST['BrName']     = $_GET['BrName'];
+		}
+		if (isset($_GET['BrAddress1'])){
+		 	$_POST['BrAddress1'] = $_GET['BrAddress1'];
+		}
+		if (isset($_GET['BrAddress2'])){
+	        	$_POST['BrAddress2'] = $_GET['BrAddress2'];
+		}
+		if (isset($_GET['BrAddress3'])){
+			$_POST['BrAddress3'] = $_GET['BrAddress3'];
+		}
+		if (isset($_GET['BrAddress4'])){
+			$_POST['BrAddress4'] = $_GET['BrAddress4'];
+		}
+		if (isset($_GET['BrAddress5'])){
+			$_POST['BrAddress5'] = $_GET['BrAddress5'];
+		}
+		if (isset($_GET['BrAddress6'])){
+			$_POST['BrAddress6'] = $_GET['BrAddress6'];
+		}
 		
 		echo '<CENTER><TABLE><TR><TD>'._('Branch Code').":</TD>
 				<TD><input type='Text' name='BranchCode' SIZE=12 MAXLENGTH=10 value=" . $_POST['BranchCode'] . '></TD></TR>';

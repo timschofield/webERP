@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity = 3;
 
@@ -78,10 +78,7 @@ if ($_POST['submit']) {
 	} 
 
 	if ($InputError !=1){
-		if ($_POST['CreditLimit']==0) {
-			$_POST['CreditLimit']= $_SESSION['DefaultCreditLimit'];
-		}
-
+		
 		$SQL_ClientSince = FormatDateForSQL($_POST['ClientSince']);
 
 		if (!isset($_POST['New'])) {
