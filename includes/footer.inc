@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 	echo '<BR><BR>';
 	echo '</TD>';
@@ -15,14 +15,9 @@
 	
 	echo '</TABLE>';
 	
-	if ($DefaultClock==12) {
-		$hour=date('g:i a');
-	} else {
-		$hour=date('H:i');
-	}
-	
-	echo '<FONT SIZE=2>' .ucfirst(strftime('%A ')). date($_SESSION['DefaultDateFormat'] . ' | '  . $hour) . '</FONT>';
-	
+		
+	echo '<p style="text-align:right">'.(strftime('%A')).','.(date($_SESSION['DefaultDateFormat']).' | '.(strftime(($DefaultClock==12) ? '%I:%M %p' : '%H:%M'))).'</p>';
+
 	echo '<TABLE ALIGN="center" ID="footer">';
 	
 	echo '<TR>';

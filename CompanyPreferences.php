@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity =10;
 
@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
 		$sql = "UPDATE companies SET
 				coyname='" . DB_escape_string($_POST['CoyName']) . "',
 				companynumber = '" . DB_escape_string($_POST['CompanyNumber']) . "',
-				gstno='" . $_POST['GSTNo'] . "',
+				gstno='" . DB_escape_string($_POST['GSTNo']) . "',
 				regoffice1='" . DB_escape_string($_POST['RegOffice1']) . "',
 				regoffice2='" . DB_escape_string($_POST['RegOffice2']) . "',
 				regoffice3='" . DB_escape_string($_POST['RegOffice3']) . "',
