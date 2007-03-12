@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing 
@@ -166,7 +166,7 @@ if (!isset($_POST['PostInvoice'])){
 	if ($_POST['Shipts'] == _('Enter Against Shipment')){
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
 		echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . "/SuppShiptChgs.php?" . SID . "'>";
-		echo '<P>' . _('You should automatically be forwarded to the entry of invoices against goods received page') .
+		echo '<P>' . _('You should automatically be forwarded to the entry of invoices against shipments page') .
 			'. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' .
 			"<A HREF='" . $rootpath . "/SuppShiptChgs.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue') . '.<BR>';
 		exit;
@@ -215,9 +215,8 @@ if (!isset($_POST['PostInvoice'])){
 	echo '</TABLE>';
 	
 	echo "<BR><CENTER><INPUT TYPE=SUBMIT NAME='GRNS' VALUE='" . _('Enter Against Goods Recd') . "'> ";
-	if ($hide_incomplete_features == False) {
+	
 	echo "<INPUT TYPE=SUBMIT NAME='Shipts' VALUE='" . _('Enter Against Shipment') . "'> ";
-	}
 	
 	if ( $_SESSION['SuppTrans']->GLLink_Creditors == 1){
 		echo "<INPUT TYPE=SUBMIT NAME='GL' VALUE='" . _('Enter General Ledger Analysis') . "'></CENTER>";
@@ -287,7 +286,7 @@ if (!isset($_POST['PostInvoice'])){
 		}
 	
 		echo '<TR><TD COLSPAN=2 ALIGN=RIGHT><FONT SIZE=4 COLOR=blue>' . _('Total') . ':</FONT></TD>
-			<TD ALIGN=RIGHT><FONT SIZE=4 COLOR=BLUE><U>' .  number_format($TotalShiptValue,2) . '</U></FONT></TD></TR>';
+			<TD ALIGN=RIGHT><FONT SIZE=4 COLOR=BLUE><U>' .  number_format($TotalShiptValue,2) . '</U></FONT></TD></TR></TABLE>';
 	}
 	
 	

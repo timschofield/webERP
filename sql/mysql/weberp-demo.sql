@@ -1,5 +1,4 @@
-CREATE DATABASE weberp;
-USE weberp;
+
 SET FOREIGN_KEY_CHECKS = 0;
 -- MySQL dump 10.9
 --
