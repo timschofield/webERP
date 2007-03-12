@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 $PageSecurity =3;
 
 
@@ -197,7 +197,7 @@ if (!$_GET['InvoiceNumber'] AND !$_SESSION['ProcessingCredit']) {
 if (isset($_POST['Location'])){
 	$_SESSION['CreditItems']->Location = $_POST['Location'];
 	
-	$NewDispatchTaxProvResult = DB_query('SELECT taxprovinceid FROM locations WHERE loccode="' . $_POST['Location'] . '"',$db);
+	$NewDispatchTaxProvResult = DB_query("SELECT taxprovinceid FROM locations WHERE loccode='" . $_POST['Location'] . "'",$db);
 	$myrow = DB_fetch_array($NewDispatchTaxProvResult);
 	
 	$_SESSION['CreditItems']->DispatchTaxProvince = $myrow['taxprovinceid'];
@@ -440,14 +440,17 @@ echo '<TR>
 
 $DefaultDispatchDate = Date($_SESSION['DefaultDateFormat']);
 
-$OkToProcess = true;
+$OKToProcess = true;
 
 if ($_POST['CreditType']=='WriteOff' AND !isset($_POST['WriteOffGLCode'])){
+
 	prnMsg (_('The GL code to write off the credit value to must be specified. Please select the appropriate GL code for the selection box'),'info');
+
 	$OKToProcess = false;
+
 }
 
-if (isset($_POST['ProcessCredit']) AND $OkToProcess==true){
+if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 /* SQL to process the postings for sales credit notes... First Get the area where the credit note is to from the branches table */
 
@@ -910,7 +913,7 @@ if (isset($_POST['ProcessCredit']) AND $OkToProcess==true){
 					}/* foreach controlled item in the serialitems array */
 				} /*end if the orderline is a controlled item */
 
-			}  elseif ($_POST['CreditType']=='WriteOff') {
+			} elseif ($_POST['CreditType']=='WriteOff') {
 			   /*Insert a stock movement coming back in to show the credit note and
 			   a reversing stock movement to show the write off
 			   no mods to location stock records*/
@@ -1125,7 +1128,7 @@ if (isset($_POST['ProcessCredit']) AND $OkToProcess==true){
 
 				if ($_POST['CreditType']=='ReverseOverCharge'){
 
-					$SQL = "INSERT salesanalysis (typeabbrev,
+					$SQL = "INSERT INTO salesanalysis (typeabbrev,
 									periodno,
 									amt,
 									cust,
@@ -1157,7 +1160,7 @@ if (isset($_POST['ProcessCredit']) AND $OkToProcess==true){
 
 				} else {
 
-					$SQL = "INSERT salesanalysis (typeabbrev,
+					$SQL = "INSERT INTO salesanalysis (typeabbrev,
 									periodno,
 									amt,
 									cost,
@@ -1425,7 +1428,7 @@ if (isset($_POST['ProcessCredit']) AND $OkToProcess==true){
 		echo "<OPTION SELECTED VALUE='Return'>" . _('Goods returned to store');
 		echo "<OPTION VALUE='WriteOff'>" . _('Goods written off');
 		echo "<OPTION VALUE='ReverseOverCharge'>" . _('Reverse overcharge');
-	} elseif($_POST['CreditType']=="WriteOff") {
+	} elseif($_POST['CreditType']=='WriteOff') {
 		echo "<OPTION SELECTED VALUE='WriteOff'>" . _('Goods written off');
 		echo "<OPTION VALUE='Return'>" . _('Goods returned to store');
 		echo "<OPTION VALUE='ReverseOverCharge'>" . _('Reverse overcharge');
@@ -1461,7 +1464,7 @@ if (isset($_POST['ProcessCredit']) AND $OkToProcess==true){
 
 	} elseif($_POST['CreditType']=='WriteOff') { /* the goods are to be written off to somewhere */
 
-		echo '<TR><TD>' . _('Write off the cost of the goods to') . '</TD><TD><SELECT NAME=WriteOffGLCode>';
+		echo '<TR><TD>' . _('Write off the cost of the goods to') . '</TD><TD><SELECT NAME="WriteOffGLCode">';
 
 		$SQL='SELECT accountcode, 
 				accountname 
@@ -1484,7 +1487,6 @@ if (isset($_POST['ProcessCredit']) AND $OkToProcess==true){
 	echo '<TR><TD>' . _('Credit note text') . '</TD><TD><TEXTAREA NAME=CreditText COLS=31 ROWS=5>' . $_POST['CreditText'] . '</TEXTAREA></TD></TR>';
 	echo '</TABLE><CENTER><INPUT TYPE=SUBMIT NAME=Update Value=' . _('Update') . '><P>';
 	echo "<INPUT TYPE=SUBMIT NAME='ProcessCredit' Value='" . _('Process Credit') ."'></CENTER>";
-
 }
 
 echo "</FORM>";
