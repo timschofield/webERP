@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 /*This page is very largely the same as the SupplierInvoice.php script
 the same result could have been acheived by using if statements in that script and just having the one
@@ -504,9 +504,9 @@ then do the updates and inserts to process the credit note entered */
 								'" . $SQLCreditNoteDate . "',
 								" . $PeriodNo . ',
 								' . $EnteredGLCode->GLCode . ",
-								'" . $_SESSION['SuppTrans']->SupplierID . " " . $EnteredGLCode->Narrative . "',
+								'" . $_SESSION['SuppTrans']->SupplierID . " " . DB_escape_string($EnteredGLCode->Narrative) . "',
 						 		" . round(-$EnteredGLCode->Amount/$_SESSION['SuppTrans']->ExRate,2) .
-						 ", '" . $EnteredGLCode->JobRef . "'
+						 ", '" . DB_escape_string($EnteredGLCode->JobRef) . "'
 						 		)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');
@@ -630,7 +630,7 @@ then do the updates and inserts to process the credit note entered */
 								'" . $SQLCreditNoteDate . "',
 								" . $PeriodNo . ',
 								' . $_SESSION['SuppTrans']->GRNAct . ",
-								'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') .' ' . $EnteredGRN->GRNNo . ' - ' . $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' @ ' . $_SESSION['SuppTrans']->CurrCode . $EnteredGRN->ChgPrice . ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate . "',
+								'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') .' ' . $EnteredGRN->GRNNo . ' - ' . DB_escape_string($EnteredGRN->ItemCode) . ' x ' . $EnteredGRN->This_QuantityInv . ' @ ' . $_SESSION['SuppTrans']->CurrCode . $EnteredGRN->ChgPrice . ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate . "',
 								" . round(-$EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv,2) / $_SESSION['SuppTrans']->ExRate . '
 								)';
 
@@ -664,7 +664,7 @@ then do the updates and inserts to process the credit note entered */
 							" . $PeriodNo . ', 
 							' . $Tax->TaxGLCode . ", 
 						 	'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Credit note') . ' ' .
-						 $_SESSION['SuppTrans']->SuppReference . ' ' . $_SESSION['SuppTrans']->CurrCode .
+						 DB_escape_string($_SESSION['SuppTrans']->SuppReference) . ' ' . $_SESSION['SuppTrans']->CurrCode .
 						 $Tax->TaxOvAmount  . ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate .
 						 "', 
 						 	" . round(-$Tax->TaxOvAmount/ $_SESSION['SuppTrans']->ExRate,2) . ')';
@@ -690,7 +690,7 @@ then do the updates and inserts to process the credit note entered */
 						'" . $SQLCreditNoteDate . "',
 						" . $PeriodNo . ',
 						' . $_SESSION['SuppTrans']->CreditorsAct . ",
-						'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Credit Note') . ' ' . $_SESSION['SuppTrans']->SuppReference . ' ' .  $_SESSION['SuppTrans']->CurrCode . number_format($_SESSION['SuppTrans']->OvAmount + $_SESSION['SuppTrans']->OvGST,2)  . ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate .  "',
+						'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('Credit Note') . ' ' . DB_escape_string($_SESSION['SuppTrans']->SuppReference) . ' ' .  $_SESSION['SuppTrans']->CurrCode . number_format($_SESSION['SuppTrans']->OvAmount + $_SESSION['SuppTrans']->OvGST,2)  . ' @ ' . _('a rate of') . ' ' . $_SESSION['SuppTrans']->ExRate .  "',
 						" . round($LocalTotal + ($TaxTotal / $_SESSION['SuppTrans']->ExRate),2) . ')';
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the control total could not be added because');
@@ -714,13 +714,13 @@ then do the updates and inserts to process the credit note entered */
 			VALUES ('. $CreditNoteNo . ",
 				21,
 				'" . $_SESSION['SuppTrans']->SupplierID . "',
-				'" . $_SESSION['SuppTrans']->SuppReference . "',
+				'" . DB_escape_string($_SESSION['SuppTrans']->SuppReference) . "',
 				'" . $SQLCreditNoteDate . "',
 				'" . FormatDateForSQL($_SESSION['SuppTrans']->DueDate) . "',
 				" . round(-$_SESSION['SuppTrans']->OvAmount,2) . ',
 				' .round(-$TaxTotal,2) . ',
 				' . $_SESSION['SuppTrans']->ExRate . ",
-				'" . $_SESSION['SuppTrans']->Comments . "')";
+				'" . DB_escape_string($_SESSION['SuppTrans']->Comments) . "')";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The supplier credit note transaction could not be added to the database because');
 		$DbgMsg = _('The following SQL to insert the supplier credit note was used');
@@ -776,7 +776,7 @@ then do the updates and inserts to process the credit note entered */
 							VALUES (' . $EnteredGRN->ShiptRef . ',
 								21,
 								' . $CreditNoteNo . ",
-								'" . $EnteredGRN->ItemCode . "',
+								'" . DB_escape_string($EnteredGRN->ItemCode) . "',
 								" . round(-$EnteredGRN->This_QuantityInv * $EnteredGRN->ChgPrice / $_SESSION['SuppTrans']->ExRate,2) . '
 								)';
 

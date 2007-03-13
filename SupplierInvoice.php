@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing 
@@ -564,9 +564,9 @@ then do the updates and inserts to process the invoice entered */
 							'" . $SQLInvoiceDate . "', 
 							" . $PeriodNo . ', 
 							' . $EnteredGLCode->GLCode . ", 
-							'" . $_SESSION['SuppTrans']->SupplierID . ' ' . $EnteredGLCode->Narrative . "', 
+							'" . DB_escape_string($_SESSION['SuppTrans']->SupplierID) . ' ' . DB_escape_string($EnteredGLCode->Narrative) . "', 
 							" . round($EnteredGLCode->Amount/ $_SESSION['SuppTrans']->ExRate,2) . ", 
-							'" . $EnteredGLCode->JobRef . "')";
+							'" . DB_escape_string($EnteredGLCode->JobRef) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');
 				$DbgMsg = _('The following SQL to insert the GL transaction was used');
@@ -593,7 +593,7 @@ then do the updates and inserts to process the invoice entered */
 								'" . $SQLInvoiceDate . "', 
 								" . $PeriodNo . ', 
 								' . $_SESSION['SuppTrans']->GRNAct . ", 
-								'" . $_SESSION['SuppTrans']->SupplierID . ' ' . _('Shipment charge against') . ' ' . $ShiptChg->ShiptRef . "', 
+								'" . DB_escape_string($_SESSION['SuppTrans']->SupplierID) . ' ' . _('Shipment charge against') . ' ' . $ShiptChg->ShiptRef . "', 
 								" . $ShiptChg->Amount/ $_SESSION['SuppTrans']->ExRate . ')';
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the shipment') .
@@ -625,7 +625,7 @@ then do the updates and inserts to process the invoice entered */
 									'" . $SQLInvoiceDate . "', 
 									" . $PeriodNo . ', 
 									' . $_SESSION['SuppTrans']->GRNAct . ", 
-									'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' . $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' @  ' .
+									'" . DB_escape_string($_SESSION['SuppTrans']->SupplierID) . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' . DB_escape_string($EnteredGRN->ItemCode) . ' x ' . $EnteredGRN->This_QuantityInv . ' @  ' .
 								 _('std cost of') . ' ' . $EnteredGRN->StdCostUnit  . "', 
 								 	" . $EnteredGRN->StdCostUnit * $EnteredGRN->This_QuantityInv . ')';
 
@@ -696,7 +696,7 @@ then do the updates and inserts to process the invoice entered */
 									VALUES (20, ' .
 									 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $StockGLCode['purchpricevaract'] .
 									 ", '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo .
-									 ' - ' . $EnteredGRN->ItemCode . ' x ' . ($EnteredGRN->This_QuantityInv-$TotalQuantityOnHand) . ' x  ' . _('price var of') . ' ' .
+									 ' - ' . DB_escape_string($EnteredGRN->ItemCode) . ' x ' . ($EnteredGRN->This_QuantityInv-$TotalQuantityOnHand) . ' x  ' . _('price var of') . ' ' .
 									 number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  .
 									 "', " . $WriteOffToVariances . ')';
 
@@ -716,9 +716,12 @@ then do the updates and inserts to process the invoice entered */
 											narrative, 
 											amount) 
 									VALUES (20, ' .
-									 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $StockGLCode['stockact'] .
-									 ", '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . ('Average Cost Adj') .
-									 ' - ' . $EnteredGRN->ItemCode . ' x ' . $TotalQuantityOnHand  . ' x ' .
+									 $InvoiceNo . ", 
+									'" . $SQLInvoiceDate . "', 
+									" . $PeriodNo . ', 
+									' . $StockGLCode['stockact'] . ", 
+									'" . DB_escape_string($_SESSION['SuppTrans']->SupplierID) . ' - ' . ('Average Cost Adj') .
+									 ' - ' . DB_escape_string($EnteredGRN->ItemCode) . ' x ' . $TotalQuantityOnHand  . ' x ' .
 									 number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  .
 									 "', " . ($PurchPriceVar - $WriteOffToVariances) . ')';
 
@@ -742,7 +745,8 @@ then do the updates and inserts to process the invoice entered */
 									
 									$CostIncrement = ($PurchPriceVar - $WriteOffToVariances) / $TotalQuantityOnHand;
 
-									$sql = 'UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost, materialcost=materialcost+' . $CostIncrement . ' WHERE stockid="' . $EnteredGRN->ItemCode . '"';
+									$sql = 'UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost, 
+									materialcost=materialcost+' . $CostIncrement . ' WHERE stockid="' . $EnteredGRN->ItemCode . '"';
 									$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
 								} else {
 									$sql = 'UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
@@ -763,7 +767,7 @@ then do the updates and inserts to process the invoice entered */
 									VALUES (20, ' .
 									 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $StockGLCode['purchpricevaract'] .
 									 ", '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo .
-									 ' - ' . $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' x  ' . _('price var of') . ' ' .
+									 ' - ' . DB_escape_string($EnteredGRN->ItemCode) . ' x ' . $EnteredGRN->This_QuantityInv . ' x  ' . _('price var of') . ' ' .
 									 number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  .
 									 "', " . $PurchPriceVar . ')';
 
@@ -817,7 +821,7 @@ then do the updates and inserts to process the invoice entered */
 							 $InvoiceNo . ", '" . $SQLInvoiceDate . "', " . $PeriodNo . ', ' . $_SESSION['SuppTrans']->GRNAct .
 							 ", '" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' .
 							 $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' @ ' .
-							 $_SESSION['SuppTrans']->CurrCode . $EnteredGRN->ChgPrice . ' @ ' . _('a rate of') . ' ' .
+							 $_SESSION['SuppTrans']->CurrCode . ' ' . $EnteredGRN->ChgPrice . ' @ ' . _('a rate of') . ' ' .
 							 $_SESSION['SuppTrans']->ExRate . "', " .
 							 round(($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv) / $_SESSION['SuppTrans']->ExRate,2) . ')';
 
@@ -912,7 +916,7 @@ then do the updates and inserts to process the invoice entered */
 				" . round($_SESSION['SuppTrans']->OvAmount,2) . ', 
 				' . round($TaxTotal,2) . ', 
 				' .  $_SESSION['SuppTrans']->ExRate . ", 
-				'" . $_SESSION['SuppTrans']->Comments . "')";
+				'" . DB_escape_string($_SESSION['SuppTrans']->Comments) . "')";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The supplier invoice transaction could not be added to the database because');
 
@@ -973,7 +977,7 @@ then do the updates and inserts to process the invoice entered */
 						VALUES (' . $EnteredGRN->ShiptRef . ', 
 							20, 
 							' . $InvoiceNo . ", 
-							'" . $EnteredGRN->ItemCode . "', 
+							'" . DB_escape_string($EnteredGRN->ItemCode) . "', 
 							" . ($EnteredGRN->This_QuantityInv * $EnteredGRN->ChgPrice) / $_SESSION['SuppTrans']->ExRate . ')';
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The shipment charge record for the shipment') .
