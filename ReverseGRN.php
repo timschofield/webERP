@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 11;
 
@@ -99,7 +99,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 			if ($GetQOH[0] < $SerialStockMoves['moveqty']){
 				/*Then some of the original goods received must have been sold
 				or transfered so cannot reverse the GRN */
-				echo '<BR>' . _('Unfortunately, of the original number') . ' (' . $SerialStockMoves['moveqty'] . ') ' . _('that were received on serial number') . ' ' . $SerialStockMoves['serialno'] . ' ' . _('only') . ' ' . $GetQOH[0] . ' ' . _('remain') . '. ' . _('The GRN can only be reversed if all the original serial number items are still in stock in the location they were received into');
+				prnMsg(_('Unfortunately, of the original number') . ' (' . $SerialStockMoves['moveqty'] . ') ' . _('that were received on serial number') . ' ' . $SerialStockMoves['serialno'] . ' ' . _('only') . ' ' . $GetQOH[0] . ' ' . _('remain') . '. ' . _('The GRN can only be reversed if all the original serial number items are still in stock in the location they were received into'),'error');
 				include ('includes/footer.inc');
 				exit;
 			}
@@ -192,7 +192,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 				'" . $GRN['intostocklocation'] . "',
 				'" . $GRN['deliverydate'] . "',
 				" . $PeriodNo . ", 
-				'" . _('GRN Reversal') . ' - ' . $_POST['SupplierID'] . ' - ' . $_POST['SuppName'] . ' - ' . $GRN['orderno'] . "',
+				'" . _('Reversal') . ' - ' . $_POST['SupplierID'] . ' - ' . $GRN['orderno'] . "',
 				" . -$QtyToReverse . ',
 				' . $GRN['stdcostunit'] . ',
 				' . ($QtyOnHandPrior - $QtyToReverse) . '
