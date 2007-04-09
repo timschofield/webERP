@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $PageSecurity = 2;
 
 If (isset($_POST['PrintPDF'])
@@ -31,7 +31,7 @@ If (isset($_POST['PrintPDF'])
 			grns.itemdescription,
 			qtyrecd,
 			quantityinv,
-			stdcostunit,
+			grns.stdcostunit,
 			actprice,
 			unitprice
 		FROM grns,

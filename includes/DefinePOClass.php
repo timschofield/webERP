@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 /* Definition of the PurchOrder class to hold all the information for a purchase order and delivery
 */
 
@@ -170,7 +170,7 @@ Class LineDetails {
 		$this->QtyInv = $QtyInv;
 		$this->GLCode = $GLCode;
 		$this->JobRef = $JobRef;
-		if (is_numeric($ShiptRef))){
+		if (is_numeric($ShiptRef)){
 			$this->ShiptRef = $ShiptRef;
 		} else {
 			$this->ShiptRef = 0;

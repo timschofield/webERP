@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 /*
 	This page is called from SupplierInquiry.php when the 'view payments' button is selected
@@ -35,32 +35,32 @@ echo "<BR><CENTER><FONT SIZE=4 COLOR=BLUE>Payment Allocation for Supplier: '$Sup
 //	$_SESSION['SuppID'] = new SupplierID;
 //	$_SESSION['InvID'] = new InvoiceID;
 
-$SQL= "SELECT supptrans.supplierno, 
-		supptrans.suppreference, 
-		supptrans.trandate, 
-		supptrans.alloc 
-	FROM supptrans	
-	WHERE supptrans.id IN (SELECT suppallocs.transid_allocfrom 
-				FROM supptrans, suppallocs 
-				WHERE supptrans.supplierno = '$SuppID' 
-				AND supptrans.suppreference = '$InvID' 
+$SQL= "SELECT supptrans.supplierno,
+		supptrans.suppreference,
+		supptrans.trandate,
+		supptrans.alloc
+	FROM supptrans
+	WHERE supptrans.id IN (SELECT suppallocs.transid_allocfrom
+				FROM supptrans, suppallocs
+				WHERE supptrans.supplierno = '$SuppID'
+				AND supptrans.suppreference = '$InvID'
 				AND supptrans.id = suppallocs.transid_allocto)";
 
 /*
-Might be a way of doing this query without a subquery 
+Might be a way of doing this query without a subquery
 
-$SQL= "SELECT supptrans.supplierno, 
-		supptrans.suppreference, 
-		supptrans.trandate, 
-		supptrans.alloc 
+$SQL= "SELECT supptrans.supplierno,
+		supptrans.suppreference,
+		supptrans.trandate,
+		supptrans.alloc
 	FROM supptrans INNER JOIN suppallocs ON supptrans.id=suppallocs.transid_allocfrom
-	WHERE supptrans.supplierno = '$SuppID' 
-	AND supptrans.suppreference = '$InvID' 
+	WHERE supptrans.supplierno = '$SuppID'
+	AND supptrans.suppreference = '$InvID'
 */
 
 $Result = DB_query($SQL, $db);
 if (DB_num_rows($Result) == 0){
-	prnMsg(_('There may be a problem retrieving the information. No data is returned');
+	prnMsg(_('There may be a problem retrieving the information. No data is returned'),'warn');
 	echo '<BR><A HREF ="javascript:history.back()">' . _('Go back') . '</A>';
 	include('includes/foooter.inc');
 	exit;

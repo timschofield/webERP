@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -239,28 +239,28 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					<TD ALIGN=LEFT>%s</TD>
 					<TD><A TARGET='_blank' HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Postings') . "</A></td>
 					<TD><A HREF='%s/PaymentAllocations.php?%sSuppID=%s&InvID=%s'>" . _('View Payments') . '</A></TD></tr>',
-					$myrow['transno'], 
-					$myrow['typename'], 
+					$myrow['transno'],
+					$myrow['typename'],
 					$myrow['suppreference'],
-					ConvertSQLDate($myrow['trandate']), 
-					number_format($myrow['totalamount'],2), 
+					ConvertSQLDate($myrow['trandate']),
+					number_format($myrow['totalamount'],2),
 					number_format($myrow['allocated'],2),
-					number_format($myrow['totalamount']-$myrow['allocated'],2), 
-					$myrow['transtext'], 
+					number_format($myrow['totalamount']-$myrow['allocated'],2),
+					$myrow['transtext'],
 					$rootpath,
-					SID, 
-					$myrow['type'], 
+					SID,
+					$myrow['type'],
 					$myrow['transno'],
 					$rootpath,
                                         SID,
                                         $myrow['supplierno'],
                                         $myrow['suppreference']);
-						  
+
 			} else {
-			
+
 				printf("<TD>%s</TD>
 					<TD>%s</TD>
-					<TD>%s <A HREF='%s/PaymentAllocations.php?%sSuppID=%s&InvID=%s'>" . _('View Payments') . "</A></TD>
+					<TD>%s</TD>
 					<TD>%s</TD>
 					<TD ALIGN=RIGHT>%s</TD>
 					<TD ALIGN=RIGHT>%s</TD>
@@ -272,10 +272,6 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					$myrow['transno'],
 					$myrow['typename'],
 					$myrow['suppreference'],
-					$rootpath,
-                                        SID,
-                                        $myrow['supplierno'],
-                                        $myrow['suppreference'],
 					ConvertSQLDate($myrow['trandate']),
 					number_format($myrow['totalamount'],2),
 					number_format($myrow['allocated'],2),
@@ -301,7 +297,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 
 				printf("<TD>%s</TD>
 					<TD>%s</TD>
-					<TD>%s <A HREF='%s/PaymentAllocations.php?%sSuppID=%s&InvID=%s'>" . _('View Payments') . "</A></TD>
+                                        <TD>%s</TD>
 					<TD>%s</TD>
 					<TD ALIGN=RIGHT>%s</TD>
 					<TD ALIGN=RIGHT>%s</TD>
@@ -311,10 +307,6 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					$myrow['transno'],
 					$myrow['typename'],
 					$myrow['suppreference'],
-					$rootpath,
-                                        SID,
-                                        $myrow['supplierno'],
-                                        $myrow['suppreference'],
 					ConvertSQLDate($myrow['trandate']),
 					number_format($myrow['totalamount'],2),
 					number_format($myrow['allocated'],2),
@@ -325,20 +317,17 @@ while ($myrow=DB_fetch_array($TransResult)) {
 
 				printf("<TD>%s</TD>
 					<TD>%s</TD>
-					<TD>%s <A HREF='%s/PaymentAllocations.php?%sSuppID=%s&InvID=%s'>" . _('View Payments') . "</A></TD>
+					<TD>%s</TD>
 					<TD>%s</TD>
 					<TD ALIGN=RIGHT>%s</TD>
 					<TD ALIGN=RIGHT>%s</TD>
 					<TD ALIGN=RIGHT>%s</TD>
 					<TD ALIGN=LEFT>%s</TD>
-					<TD><A HREF='%s?%s&HoldType=%s&HoldTrans=%s&HoldStatus=%s&FromDate=%s'>%s</A></TD></TR>",
+					<TD><A HREF='%s?%s&HoldType=%s&HoldTrans=%s&HoldStatus=%s&FromDate=%s'>%s</A></TD>
+                                        <TD><A HREF='%s/PaymentAllocations.php?%sSuppID=%s&InvID=%s'>" . _('View Payments') . "</A></TR>",
 					$myrow['transno'],
 					$myrow['typename'],
 					$myrow['suppreference'],
-					$rootpath,
-                                        SID,
-                                        $myrow['supplierno'],
-                                        $myrow['suppreference'],
 					ConvertSQLDate($myrow['trandate']),
 					number_format($myrow['totalamount'],2),
 					number_format($myrow['allocated'],2),
@@ -350,7 +339,11 @@ while ($myrow=DB_fetch_array($TransResult)) {
 					$myrow['transno'],
 					$HoldValue,
 					$_POST['TransAfterDate'],
-					$HoldValue);
+					$HoldValue,
+                                        $rootpath,
+                                        SID,
+                                        $myrow['supplierno'],
+                                        $myrow['suppreference']);
 
 			}
 		}
