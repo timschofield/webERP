@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 /*SelectOrderItems_IntoCart.inc
 
@@ -51,7 +51,6 @@ if ($AlreadyOnThisOrder!=1){
     $result1 = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
     if (DB_num_rows($result1)==0){
-
 		prnMsg(_('The item code') . ' ' . $NewItem  . ' '  . _('could not be found in the database') . ' - ' . _('it has not been added to the order'),'warn',_('Item Does Not Exist'));
 
     } elseif ($myItemRow = DB_fetch_array($result1)){
@@ -108,12 +107,17 @@ if ($AlreadyOnThisOrder!=1){
 			
 			$WithinCreditLimit = true;
 			
+			if (!$WarnOnce and $_SESSION['Items']->SpecialInstructions) {
+			  	prnMsg($_SESSION['Items']->SpecialInstructions,'warn');
+		        	$WarnOnce=1;
+                  	}  
 			if ($_SESSION['CheckCreditLimits'] > 0){  /*Check credit limits is 1 for warn 
 											and 2 for prohibit sales */
 				$_SESSION['Items']->CreditAvailable -= round(($NewItemQty * $Price * (1- $Discount)),2);
 			
 				if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items']->CreditAvailable <=0){
-					prnMsg(_('The customer account will breach their credit limit'),'warn');
+					if ($WarnOnce < 2) prnMsg(_('The customer account will breach their credit limit'),'warn');
+					$WarnOnce=2;
 				} elseif ($_SESSION['CheckCreditLimits']==2 AND $_SESSION['Items']->CreditAvailable <=0){
 					prnMsg(_('No more lines can be added to this order the customer account is currently at or over their credit limit'),'warn');
 					$WithinCreditLimit = false;

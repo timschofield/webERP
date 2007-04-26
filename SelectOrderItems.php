@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.53 $ */
+/* $Revision: 1.54 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -400,7 +400,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 	if ($myrow[1] != 1){
 		
 		if ($myrow[1]==2){
-			prnMsg(_('The') . ' ' . $myrow[0] . ' ' . _('account is currently flagged as an account that needs to be watched please contact the credit control personnel to discuss'),'warn');
+			prnMsg(_('The') . ' ' . $myrow[0] . ' ' . _('account is currently flagged as an account that needs to be watched. Please contact the credit control personnel to discuss'),'warn');
 		}
 		
 		$_SESSION['Items']->DebtorNo=$_POST['Select'];
@@ -413,6 +413,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 		$_SESSION['Items']->DefaultSalesType = $myrow[2];
 		$_SESSION['Items']->SalesTypeName = $myrow[3];
 		$_SESSION['Items']->DefaultCurrency = $myrow[4];
+
 
 # the branch was also selected from the customer selection so default the delivery details from the customer branches table CustBranch. The order process will ask for branch details later anyway
 
@@ -427,7 +428,8 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 				custbranch.email,
 				custbranch.defaultlocation,
 				custbranch.defaultshipvia,
-				custbranch.deliverblind
+				custbranch.deliverblind,
+	                        custbranch.specialinstructions
 			FROM custbranch
 			WHERE custbranch.branchcode='" . $_SESSION['Items']->Branch . "'
 			AND custbranch.debtorno = '" . $_POST['Select'] . "'";
@@ -460,7 +462,12 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 		$_SESSION['Items']->Location = $myrow[9];
 		$_SESSION['Items']->ShipVia = $myrow[10];
 		$_SESSION['Items']->DeliverBlind = $myrow[11];
-		
+		$_SESSION['Items']->SpecialInstructions = $myrow[12];
+
+		if ($_SESSION['Items']->SpecialInstructions) { 
+		  prnMsg($_SESSION['Items']->SpecialInstructions,'warn');
+		}
+
 		if ($_SESSION['CheckCreditLimits'] > 0){  /*Check credit limits is 1 for warn and 2 for prohibit sales */
 			$_SESSION['Items']->CreditAvailable = GetCreditAvailable($_POST['Select'],$db);
 			
@@ -497,6 +504,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 
 	$myrow = DB_fetch_row($result);
 	if ($myrow[1] == 0){
+
 		$_SESSION['Items']->CustomerName = $myrow[0];
 
 # the sales type determines the price list to be used by default the customer of the user is
@@ -701,7 +709,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo _('Customer No.') . ': ' . $_SESSION['Items']->DebtorNo;
 		echo '&nbsp;&nbsp;' . _('Customer Name') . ' : ' . $_SESSION['Items']->CustomerName;
 		echo '<BR>' . _('Deliver To') . ': ' . $_SESSION['Items']->DeliverTo;
-		echo '&nbsp;&nbsp;' . _('Sales Type') . '/' . _('Price List') . ': ' . $_SESSION['Items']->SalesTypeName . ' </B></FONT></CENTER>';
+		echo '&nbsp;&nbsp;' . _('Sales Type') . '/' . _('Price List') . ': ' . $_SESSION['Items']->SalesTypeName;
+		echo '</B></FONT></CENTER>';
 	}
 
 	If (isset($_POST['Search'])){
@@ -883,7 +892,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	     unset($NewItem);
 	 } /* end of if quick entry */
 	 
-	 
+
 	 /*Now do non-quick entry delete/edits/adds */
 
 	If ((isset($_SESSION['Items'])) OR isset($NewItem)){
@@ -937,6 +946,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	   	exit;
 	}
 
+
 	If (isset($NewItem)){
 /* get the item details from the database and hold them in the cart object make the quantity 1 by default then add it to the cart */
 /*Now figure out if the item is a kit set - the field MBFlag='K'*/
@@ -978,7 +988,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		} /* end of if its a new item */
 		
 	} /*end of if its a new item */
-		
+
+
 	/* Run through each line of the order and work out the appropriate discount from the discount matrix */
 	$DiscCatsDone = array();
 	$counter =0;
@@ -1096,7 +1107,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		} /* end of loop around items */
 
 		$DisplayTotal = number_format($_SESSION['Items']->total,2);
-		echo '<TR><TD></TD><TD><B>' . _('TOTAL Excl Tax/Freight') . '</B></TD><TD COLSPAN=5 ALIGN=RIGHT>' . $DisplayTotal . '</TD></TR></TABLE>';
+		echo '<TR><TD></TD><TD><B>' . _('TOTAL Excl Tax/Freight') . '</B></TD><TD COLSPAN=6 ALIGN=RIGHT>' . $DisplayTotal . '</TD></TR></TABLE>';
 
 		$DisplayVolume = number_format($_SESSION['Items']->totalVolume,2);
 		$DisplayWeight = number_format($_SESSION['Items']->totalWeight,2);

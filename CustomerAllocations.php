@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 /*This page can be called with
 
 1. A DebtorTrans ID
@@ -248,7 +248,6 @@ If (isset($_GET['AllocTrans'])){
 	- Display the invoices for allocating to with a form entry for each one
 	for the allocated amount to be entered */
 
-	
 	if (isset($_SESSION['Alloc'])){
 		unset($_SESSION['Alloc']->Allocs);
 		unset($_SESSION['Alloc']);
@@ -309,7 +308,7 @@ If (isset($_GET['AllocTrans'])){
 		WHERE debtortrans.type = systypes.typeid
 		AND debtortrans.settled=0
 		AND debtorno='" . $_SESSION['Alloc']->DebtorNo . "'
-		ORDER BY debtortrans.id";
+		ORDER BY debtortrans.trandate";
 
     $ErrMsg = _('There was a problem retrieving the transactions available to allocate to');
     $DbgMsg = _('The following SQL to delete the allocation record was used');
@@ -350,7 +349,7 @@ If (isset($_GET['AllocTrans'])){
 		AND debtortrans.id=custallocns.transid_allocto
 		AND custallocns.transid_allocfrom=" . $_POST['AllocTrans'] . "
 		AND debtorno='" . $_SESSION['Alloc']->DebtorNo . "'
-		ORDER BY debtortrans.id";
+		ORDER BY debtortrans.trandate";
 
     $ErrMsg = _('There was a problem retrieving the previously allocated transactions for modification');
     $DbgMsg = _('The following SQL to delete the allocation record was used');
@@ -401,15 +400,24 @@ if (isset($_POST['AllocTrans'])){
 				<TD class='tableheader'>"._('Total').'<BR>'._('Amount')."</TD>
 				<TD class='tableheader'>"._('Yet to').'<BR>'._('Allocate')."</TD>
 				<TD class='tableheader'>"._('This').'<BR>'._('Allocation')."</TD>
+				<TD class='tableheader'>"._('Running').'<BR>'._('Balance')."</TD>
 			</TR>";
 
-        echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>' . $TableHeader;
+        echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>';
 
         $k=0;
         $RowCounter =0;
 	    $Counter = 0;
         $TotalAllocated =0;
         foreach ($_SESSION['Alloc']->Allocs as $AllocnItem) {
+
+	    $RowCounter--;
+	    if ($RowCounter<0){
+		/*Set up another row of headings to ensure always a heading on the screen of potential allocns*/
+		echo $TableHeader;
+		$RowCounter=14;
+	    }
+
 	    /*Alternate the background colour for each potential allocation line */
 	    if ($k==1){
 		  echo "<tr bgcolor='#CCCCCC'>";
@@ -417,12 +425,6 @@ if (isset($_POST['AllocTrans'])){
 	    } else {
 		  echo "<tr bgcolor='#EEEEEE'>";
 		  $k=1;
-	    }
-	    $RowCounter++;
-	    if ($RowCounter==15){
-		/*Set up another row of headings to ensure always a heading on the screen of potential allocns*/
-		echo $TableHeader;
-		$RowCounter=1;
 	    }
 	    $YetToAlloc = ($AllocnItem->TransAmount - $AllocnItem->PrevAlloc);
 
@@ -433,7 +435,8 @@ if (isset($_POST['AllocTrans'])){
 		<TD ALIGN=RIGHT>' . number_format($YetToAlloc,2);
 
 	    if ($AllocnItem->TransAmount < 0) {
-	    	echo '</TD></TR>';
+            	$balance+=$YetToAlloc;
+	    	echo '</TD><td></td><td align=right>' . number_format($balance,2) . '<td></TR>';
 	    } else {
 	    	echo "<input type=hidden name='YetToAlloc" . $Counter . "' value=" . round($YetToAlloc,2) . '></TD>';
 	    	echo "<TD ALIGN=RIGHT><input type='checkbox' name='All" .  $Counter . "'";
@@ -442,7 +445,8 @@ if (isset($_POST['AllocTrans'])){
 	    	} else {
 	    		echo '>';
 	    	}
-	    	echo "<input type=text name='Amt" . $Counter ."' maxlength=12 SIZE=13 value=" . round($AllocnItem->AllocAmt,2) . "><input type=hidden name='AllocID" . $Counter . "' value=" . $AllocnItem->ID . '></TD></TR>';
+		$balance+=$YetToAlloc-$AllocnItem->AllocAmt;
+	    	echo "<input type=text name='Amt" . $Counter ."' maxlength=12 SIZE=13 value=" . round($AllocnItem->AllocAmt,2) . "><input type=hidden name='AllocID" . $Counter . "' value=" . $AllocnItem->ID . '></TD><td align=right>' . number_format($balance,2) . '<td></TR>';
 	    }
 
 	    $TotalAllocated =$TotalAllocated + round($AllocnItem->AllocAmt,2);

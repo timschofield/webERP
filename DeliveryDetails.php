@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -412,6 +412,9 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 }
 
 
+if ($_SESSION['Items']->SpecialInstructions) {
+  prnMsg($_SESSION['Items']->SpecialInstructions,'warn');
+}
 echo '<CENTER><FONT SIZE=4><B>' . _('Customer No.') . ': ' . $_SESSION['Items']->DebtorNo;
 echo '&nbsp;&nbsp;' . _('Customer Name') . ' : ' . $_SESSION['Items']->CustomerName . '</B></FONT></CENTER>';
 //echo '<CENTER><FONT SIZE=4><B>'. _('Customer') .' : ' . $_SESSION['Items']->CustomerName . '</B></FONT></CENTER>';

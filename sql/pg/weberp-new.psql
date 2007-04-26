@@ -876,7 +876,8 @@ CREATE TABLE accountgroups (
     groupname text DEFAULT ''::text NOT NULL,
     sectioninaccounts integer DEFAULT 0 NOT NULL,
     pandl integer DEFAULT 1 NOT NULL,
-    sequenceintb integer DEFAULT 0 NOT NULL
+    sequenceintb integer DEFAULT 0 NOT NULL,
+    parentgroupname character varying(3) DEFAULT ''::character varying
 );
 
 
@@ -1140,7 +1141,8 @@ CREATE TABLE custbranch (
     braddress5 character varying(20) DEFAULT ''::text NOT NULL,
     braddress6 character varying(15) DEFAULT ''::text NOT NULL,
     brpostaddr5 character varying(20) DEFAULT ''::text NOT NULL,
-    brpostaddr6 character varying(15) DEFAULT ''::text NOT NULL
+    brpostaddr6 character varying(15) DEFAULT ''::text NOT NULL,
+    specialinstructions text
 );
 
 
@@ -5394,17 +5396,17 @@ SET search_path = public, pg_catalog;
 -- Data for Name: accountgroups; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-INSERT INTO accountgroups VALUES ('Sales', 1, 1, 10);
-INSERT INTO accountgroups VALUES ('Revenue', 1, 1, 4000);
-INSERT INTO accountgroups VALUES ('Liabilities', 30, 0, 2000);
-INSERT INTO accountgroups VALUES ('Equity', 50, 0, 3000);
-INSERT INTO accountgroups VALUES ('COG Sold', 2, 1, 5000);
-INSERT INTO accountgroups VALUES ('Marketing Expenses', 5, 1, 6000);
-INSERT INTO accountgroups VALUES ('Operating Expenses', 5, 1, 7000);
-INSERT INTO accountgroups VALUES ('Other Revenue and Expenses', 5, 1, 8000);
-INSERT INTO accountgroups VALUES ('Income Tax', 5, 1, 9000);
-INSERT INTO accountgroups VALUES ('Fixed Assets', 10, 0, 1000);
-INSERT INTO accountgroups VALUES ('Current Assets', 20, 0, 1500);
+INSERT INTO accountgroups VALUES ('Sales', 1, 1, 10, '');
+INSERT INTO accountgroups VALUES ('Revenue', 1, 1, 4000, '');
+INSERT INTO accountgroups VALUES ('Liabilities', 30, 0, 2000, '');
+INSERT INTO accountgroups VALUES ('Equity', 50, 0, 3000, '');
+INSERT INTO accountgroups VALUES ('COG Sold', 2, 1, 5000, '');
+INSERT INTO accountgroups VALUES ('Marketing Expenses', 5, 1, 6000, '');
+INSERT INTO accountgroups VALUES ('Operating Expenses', 5, 1, 7000, '');
+INSERT INTO accountgroups VALUES ('Other Revenue and Expenses', 5, 1, 8000, '');
+INSERT INTO accountgroups VALUES ('Income Tax', 5, 1, 9000, '');
+INSERT INTO accountgroups VALUES ('Fixed Assets', 10, 0, 1000, '');
+INSERT INTO accountgroups VALUES ('Current Assets', 20, 0, 1500, '');
 
 
 --
@@ -5787,7 +5789,6 @@ SET search_path = public, pg_catalog;
 -- Data for Name: systypes; Type: TABLE DATA; Schema: public; Owner: weberp_db_user
 --
 
-INSERT INTO systypes VALUES (10, 'Sales Invoice', 8);
 INSERT INTO systypes VALUES (2, 'Receipt - GL', 0);
 INSERT INTO systypes VALUES (3, 'Standing Journal', 0);
 INSERT INTO systypes VALUES (18, 'Purchase Order', 0);
@@ -5807,10 +5808,11 @@ INSERT INTO systypes VALUES (35, 'Cost Update', 2);
 INSERT INTO systypes VALUES (500, '"Debtor Number"', 100001);
 INSERT INTO systypes VALUES (25, 'Purchase Order Delivery', 5);
 INSERT INTO systypes VALUES (15, 'Journal - Debtors', 0);
-INSERT INTO systypes VALUES (11, 'Credit Note', 0);
 INSERT INTO systypes VALUES (12, 'Receipt', 0);
 INSERT INTO systypes VALUES (16, 'Location Transfer', 0);
 INSERT INTO systypes VALUES (17, 'Stock Adjustment', 0);
+INSERT INTO systypes VALUES (10, 'Sales Invoice', 9);
+INSERT INTO systypes VALUES (11, 'Credit Note', 3);
 
 
 --
@@ -5859,7 +5861,7 @@ SET search_path = public, pg_catalog;
 -- Name: taxcategories_taxcatid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('taxcategories', 'taxcatid'), 1, true);
+SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('taxcategories', 'taxcatid'), 5, true);
 
 
 --
@@ -5868,6 +5870,7 @@ SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('taxcategories', 'tax
 
 INSERT INTO taxcategories VALUES (1, 'Taxable supply');
 INSERT INTO taxcategories VALUES (0, 'Exempt');
+INSERT INTO taxcategories VALUES (5, 'Freight');
 
 
 --
@@ -5925,6 +5928,10 @@ INSERT INTO taxauthrates VALUES (4, 6, 1, 0);
 INSERT INTO taxauthrates VALUES (4, 6, 0, 0);
 INSERT INTO taxauthrates VALUES (5, 6, 1, 0);
 INSERT INTO taxauthrates VALUES (5, 6, 0, 0);
+INSERT INTO taxauthrates VALUES (4, 1, 5, 0);
+INSERT INTO taxauthrates VALUES (4, 6, 5, 0);
+INSERT INTO taxauthrates VALUES (5, 1, 5, 0);
+INSERT INTO taxauthrates VALUES (5, 6, 5, 0);
 
 
 --
@@ -5975,7 +5982,7 @@ SET search_path = public, pg_catalog;
 --
 
 INSERT INTO www_users VALUES ('phil', 'bf3d297ef7c3218f38d71de15d4fb11171e7209c', 'Phil Daintree', '', '', '', 'CPT', 1, '2006-12-14 09:59:15', '', 'A4', '1,0,0,1,1,0,1,0,', 0, 50, 'fresh', 'en_GB');
-INSERT INTO www_users VALUES ('demo', 'f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4', 'administrator', '', '', '', 'CPT', 8, '2007-01-02 20:44:20', '', 'A4', '1,1,1,1,1,1,1,1,', 0, 50, 'fresh', 'en_GB');
+INSERT INTO www_users VALUES ('demo', 'f0f77a7f88e7c1e93ab4e316b4574c7843b00ea4', 'administrator', '', '', '', 'CPT', 8, '2007-03-18 13:17:56', '', 'A4', '1,1,1,1,1,1,1,1,', 0, 50, 'fresh', 'en_GB');
 
 
 --
@@ -6183,7 +6190,7 @@ SET search_path = public, pg_catalog;
 -- Name: securityroles_secroleid_seq; Type: SEQUENCE SET; Schema: public; Owner: weberp_db_user
 --
 
-SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('securityroles', 'secroleid'), 1, false);
+SELECT pg_catalog.setval(pg_catalog.pg_get_serial_sequence('securityroles', 'secroleid'), 9, true);
 
 
 --

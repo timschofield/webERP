@@ -18,9 +18,11 @@ CREATE TABLE `accountgroups` (
   `sectioninaccounts` int(11) NOT NULL default '0',
   `pandl` tinyint(4) NOT NULL default '1',
   `sequenceintb` smallint(6) NOT NULL default '0',
+  `parentgroupname` varchar(30) NOT NULL,
   PRIMARY KEY  (`groupname`),
   KEY `SequenceInTB` (`sequenceintb`),
   KEY `sectioninaccounts` (`sectioninaccounts`),
+  KEY `parentgroupname` (`parentgroupname`),
   CONSTRAINT `accountgroups_ibfk_1` FOREIGN KEY (`sectioninaccounts`) REFERENCES `accountsection` (`sectionid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -338,7 +340,7 @@ CREATE TABLE `custbranch` (
   `braddress5` varchar(20) NOT NULL default '',
   `braddress6` varchar(15) NOT NULL default '',
   `estdeliverydays` smallint(6) NOT NULL default '1',
-  `area` char(2) NOT NULL default '',
+  `area` char(3) NOT NULL,
   `salesman` varchar(4) NOT NULL default '',
   `fwddate` smallint(6) NOT NULL default '0',
   `phoneno` varchar(20) NOT NULL default '',
@@ -356,6 +358,7 @@ CREATE TABLE `custbranch` (
   `brpostaddr4` varchar(20) NOT NULL default '',
   `brpostaddr5` varchar(20) NOT NULL default '',
   `brpostaddr6` varchar(15) NOT NULL default '',
+  `specialinstructions` text NOT NULL,
   `custbranchcode` varchar(30) NOT NULL default '',
   `vtiger_accountid` int(11) NOT NULL,
   PRIMARY KEY  (`branchcode`,`debtorno`),
@@ -1622,7 +1625,7 @@ CREATE TABLE `supptrans` (
   `ovgst` double NOT NULL default '0',
   `diffonexch` double NOT NULL default '0',
   `alloc` double NOT NULL default '0',
-  `transtext` longblob,
+  `transtext` text,
   `hold` tinyint(4) NOT NULL default '0',
   `id` int(11) NOT NULL auto_increment,
   PRIMARY KEY  (`id`),
@@ -1851,17 +1854,21 @@ CREATE TABLE `www_users` (
 -- Dumping data for table `accountgroups`
 --
 
-INSERT INTO `accountgroups` VALUES ('Cost of Goods Sold',2,1,5000);
-INSERT INTO `accountgroups` VALUES ('Current Assets',20,0,1000);
-INSERT INTO `accountgroups` VALUES ('Equity',50,0,3000);
-INSERT INTO `accountgroups` VALUES ('Fixed Assets',10,0,500);
-INSERT INTO `accountgroups` VALUES ('Income Tax',5,1,9000);
-INSERT INTO `accountgroups` VALUES ('Liabilities',30,0,2000);
-INSERT INTO `accountgroups` VALUES ('Marketing Expenses',5,1,6000);
-INSERT INTO `accountgroups` VALUES ('Operating Expenses',5,1,7000);
-INSERT INTO `accountgroups` VALUES ('Other Revenue and Expenses',5,1,8000);
-INSERT INTO `accountgroups` VALUES ('Revenue',1,1,4000);
-INSERT INTO `accountgroups` VALUES ('Sales',1,1,10);
+INSERT INTO `accountgroups` VALUES ('BBQs',5,1,6000,'Promotions');
+INSERT INTO `accountgroups` VALUES ('Cost of Goods Sold',2,1,5000,'');
+INSERT INTO `accountgroups` VALUES ('Current Assets',20,0,1000,'');
+INSERT INTO `accountgroups` VALUES ('Equity',50,0,3000,'');
+INSERT INTO `accountgroups` VALUES ('Fixed Assets',10,0,500,'');
+INSERT INTO `accountgroups` VALUES ('Giveaways',5,1,6000,'Promotions');
+INSERT INTO `accountgroups` VALUES ('Income Tax',5,1,9000,'');
+INSERT INTO `accountgroups` VALUES ('Liabilities',30,0,2000,'');
+INSERT INTO `accountgroups` VALUES ('Marketing Expenses',5,1,6000,'');
+INSERT INTO `accountgroups` VALUES ('Operating Expenses',5,1,7000,'');
+INSERT INTO `accountgroups` VALUES ('Other Revenue and Expenses',5,1,8000,'');
+INSERT INTO `accountgroups` VALUES ('Outward Freight',2,1,5000,'Cost of Goods Sold');
+INSERT INTO `accountgroups` VALUES ('Promotions',5,1,6000,'Marketing Expenses');
+INSERT INTO `accountgroups` VALUES ('Revenue',1,1,4000,'');
+INSERT INTO `accountgroups` VALUES ('Sales',1,1,10,'');
 
 --
 -- Dumping data for table `bankaccounts`
@@ -1961,12 +1968,12 @@ INSERT INTO `chartmaster` VALUES (5000,'Cost of Sales','Cost of Goods Sold');
 INSERT INTO `chartmaster` VALUES (5100,'Production Expenses','Cost of Goods Sold');
 INSERT INTO `chartmaster` VALUES (5200,'Purchases Exchange Gains/Losses','Cost of Goods Sold');
 INSERT INTO `chartmaster` VALUES (5500,'Direct Labour Costs','Cost of Goods Sold');
-INSERT INTO `chartmaster` VALUES (5600,'Freight Charges','Cost of Goods Sold');
+INSERT INTO `chartmaster` VALUES (5600,'Freight Charges','Outward Freight');
 INSERT INTO `chartmaster` VALUES (5700,'Inventory Adjustment','Cost of Goods Sold');
 INSERT INTO `chartmaster` VALUES (5800,'Purchase Returns & Allowances','Cost of Goods Sold');
 INSERT INTO `chartmaster` VALUES (5900,'Purchase Discounts','Cost of Goods Sold');
 INSERT INTO `chartmaster` VALUES (6100,'Advertising','Marketing Expenses');
-INSERT INTO `chartmaster` VALUES (6150,'Promotion','Marketing Expenses');
+INSERT INTO `chartmaster` VALUES (6150,'Promotion','Promotions');
 INSERT INTO `chartmaster` VALUES (6200,'Communications','Marketing Expenses');
 INSERT INTO `chartmaster` VALUES (6250,'Meeting Expenses','Marketing Expenses');
 INSERT INTO `chartmaster` VALUES (6300,'Travelling Expenses','Marketing Expenses');
@@ -2081,18 +2088,18 @@ INSERT INTO `systypes` VALUES (0,'Journal - GL',2);
 INSERT INTO `systypes` VALUES (1,'Payment - GL',1);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',9);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',10);
 INSERT INTO `systypes` VALUES (11,'Credit Note',5);
 INSERT INTO `systypes` VALUES (12,'Receipt',3);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
-INSERT INTO `systypes` VALUES (16,'Location Transfer',4);
+INSERT INTO `systypes` VALUES (16,'Location Transfer',5);
 INSERT INTO `systypes` VALUES (17,'Stock Adjustment',8);
 INSERT INTO `systypes` VALUES (18,'Purchase Order',0);
 INSERT INTO `systypes` VALUES (20,'Purchase Invoice',17);
 INSERT INTO `systypes` VALUES (21,'Debit Note',3);
 INSERT INTO `systypes` VALUES (22,'Creditors Payment',3);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
-INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',12);
+INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',15);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',0);
 INSERT INTO `systypes` VALUES (28,'Work Order Issue',0);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',0);
@@ -2159,7 +2166,7 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
+INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_US');
 
 --
 -- Dumping data for table `edi_orders_segs`

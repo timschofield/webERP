@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.43 $ */
+/* $Revision: 1.44 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -58,7 +58,8 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 					locations.taxprovinceid,
 					custbranch.taxgroupid,
 					currencies.rate as currency_rate,
-					custbranch.defaultshipvia
+					custbranch.defaultshipvia,
+					custbranch.specialinstructions
 			FROM salesorders,
 				debtorsmaster,
 				custbranch,
@@ -112,6 +113,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 		$_SESSION['Items']->TaxGroup = $myrow['taxgroupid'];
 		$_SESSION['Items']->DispatchTaxProvince = $myrow['taxprovinceid'];
 		$_SESSION['Items']->GetFreightTaxes();
+		$_SESSION['Items']->SpecialInstructions = $myrow['specialinstructions'];
 		
 		DB_free_result($GetOrdHdrResult);
 
@@ -229,6 +231,9 @@ set all the necessary session variables changed by the POST  */
 
 /* Always display dispatch quantities and recalc freight for items being dispatched */
 
+if ($_SESSION['Items']->SpecialInstructions) {
+  prnMsg($_SESSION['Items']->SpecialInstructions,'warn');
+}
 echo '<BR><BR><CENTER><FONT SIZE=4><B>' . _('Customer No.') . ': ' . $_SESSION['Items']->DebtorNo;
 echo '&nbsp;&nbsp;' . _('Customer Name') . ' : ' . $_SESSION['Items']->CustomerName. '</B></FONT><FONT SIZE=3>';
 //echo '<CENTER><FONT SIZE=4><B><U>' . $_SESSION['Items']->CustomerName . '</U></B></FONT><FONT SIZE=3> - ' .
@@ -1336,9 +1341,9 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	echo _('Invoice number'). ' '. $InvoiceNo .' '. _('processed'). '<BR>';
 	
 	if ($_SESSION['InvoicePortraitFormat']==0){
-		echo '<A target="_BLANK" HREF="'.$rootpath.'/PrintCustTrans.php?' . SID . 'FromTransNo='.$InvoiceNo.'&InvOrCredit=Invoice&PrintPDF=True">'. _('Print this invoice'). '</A><BR>';
+		echo '<A target="_blank" HREF="'.$rootpath.'/PrintCustTrans.php?' . SID . 'FromTransNo='.$InvoiceNo.'&InvOrCredit=Invoice&PrintPDF=True">'. _('Print this invoice'). '</A><BR>';
 	} else {
-		echo '<A target="_BLANK" HREF="'.$rootpath.'/PrintCustTransPortrait.php?' . SID . 'FromTransNo='.$InvoiceNo.'&InvOrCredit=Invoice&PrintPDF=True">'. _('Print this invoice'). '</A><BR>';
+		echo '<A target="_blank" HREF="'.$rootpath.'/PrintCustTransPortrait.php?' . SID . 'FromTransNo='.$InvoiceNo.'&InvOrCredit=Invoice&PrintPDF=True">'. _('Print this invoice'). '</A><BR>';
 	}
 	echo '<A HREF="'.$rootpath.'/SelectSalesOrder.php?' . SID . '">'. _('Select another order for invoicing'). '</A><BR>';
 	echo '<A HREF="'.$rootpath.'/SelectOrderItems.php?' . SID . 'NewOrder=Yes">'._('Sales Order Entry').'</A><BR>';
