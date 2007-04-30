@@ -1,6 +1,9 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
-<P>20/2/07 
+<P>30/4/07 StockLocTransferReceive.php now has an option to delete the balance of a transfer if the quantity received is less than the amount recorded as dispatched.
+<P>30/4/07 Portrait invoice now shows serial numbers/lot numbers and qty for controlled items sold. Work sponsored by Tip Top Tips Sarl
+<P>26/4/07 CustomerReceipt fixed bug where a GL receipt and a customer negative receipt (or vice versa) resulted in a zero batch that did not have the correct GL entries created for it - result TB out of balance and debtors control out of balance with list of balances.
+<P>26/4/07 Wayne McDougal using the new Special Instructions field held against the branch record - CustomerBranches now allows entry and editing of the field. DeliveryDetails shows the messasge as does SelectOrderItems. Credit message only appears once now instead of for each line where the credit limit is exceeded. 
 <P>20/2/07 CustomerBranches.php - removed ? syntax for comparison and assignment of GET values
 <P>20/2/07 Took out the default credit limit when a 0 credit limit is entered. If the user enters 0 then a zero credit limit is set.
 <P>20/2/07 ShipmentCosting bug with multiple lines of the same item on the shipment (albethey different POs) caused incorrect costings.

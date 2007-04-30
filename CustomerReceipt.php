@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -181,57 +181,10 @@ if (isset($_POST['CommitBatch'])){
 		$DbgMsg = _('The SQL that failed to insert the GL transaction fro the bank account debit was');
 		$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+                
+                /*now enter the BankTrans entry */
 
-		if ($BatchDebtorTotal!=0){
-			/* Now Credit Debtors account with receipts + discounts */
-			$SQL="INSERT INTO gltrans ( type,
-						typeno,
-						trandate,
-						periodno,
-						account,
-						narrative,
-						amount)
-				VALUES (12,
-					" . $_SESSION['ReceiptBatch']->BatchNo . ",
-					'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
-					" . $PeriodNo . ",
-					" . $_SESSION['CompanyRecord']['debtorsact'] . ",
-					'" . DB_escape_string($_SESSION['ReceiptBatch']->Narrative) . "',
-					" . -$BatchDebtorTotal . "
-				)";
-			$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
-			$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-
-		}
-
-		if ($BatchDiscount!=0){
-			/* Now Debit Discount account with discounts allowed*/
-			$SQL="INSERT INTO gltrans ( type,
-						typeno,
-						trandate,
-						periodno,
-						account,
-						narrative,
-						amount)
-				VALUES (12,
-					" . $_SESSION['ReceiptBatch']->BatchNo . ",
-					'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
-					" . $PeriodNo . ",
-					" . $_SESSION['CompanyRecord']['pytdiscountact'] . ",
-					'" . DB_escape_string($_SESSION['ReceiptBatch']->Narrative) . "',
-					" . $BatchDiscount . "
-				)";
-			$DbgMsg = _('The SQL that failed to insert the GL transaction for the payment discount debit was');
-			$ErrMsg = _('Cannot insert a GL transaction for the payment discount debit');
-			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-		}
-	}
-   }
-
-   /*now enter the BankTrans entry */
-
-   $SQL="INSERT INTO banktrans (type,
+                $SQL="INSERT INTO banktrans (type,
    				transno,
 				bankact,
 				ref,
@@ -240,19 +193,66 @@ if (isset($_POST['CommitBatch'])){
 				banktranstype,
 				amount,
 				currcode)
-   	VALUES (12,
-		" . $_SESSION['ReceiptBatch']->BatchNo . ",
-		" . $_SESSION['ReceiptBatch']->Account . ",
-		'" . DB_escape_string($_SESSION['ReceiptBatch']->Narrative) . "',
-		" . $_SESSION['ReceiptBatch']->ExRate . ",
-		'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
-		'" . $_SESSION['ReceiptBatch']->ReceiptType . "',
-		" . ($BatchReceiptsTotal * $_SESSION["ReceiptBatch"]->ExRate) . ",
-		'" . $_SESSION['ReceiptBatch']->Currency . "'
-	)";
-	$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
-	$ErrMsg = _('Cannot insert a bank transaction');
-	$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+                VALUES (12,
+                      " . $_SESSION['ReceiptBatch']->BatchNo . ",
+                      " . $_SESSION['ReceiptBatch']->Account . ",
+                      '" . $_SESSION['ReceiptBatch']->Narrative . "',
+                      " . $_SESSION['ReceiptBatch']->ExRate . ",
+                      '" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
+                      '" . $_SESSION['ReceiptBatch']->ReceiptType . "',
+                      " . ($BatchReceiptsTotal * $_SESSION["ReceiptBatch"]->ExRate) . ",
+                      '" . $_SESSION['ReceiptBatch']->Currency . "'
+                        )";
+              $DbgMsg = _('The SQL that failed to insert the bank account transaction was');
+              $ErrMsg = _('Cannot insert a bank transaction');
+              $result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+      }
+      if ($BatchDebtorTotal!=0){
+		/* Now Credit Debtors account with receipts + discounts */
+		$SQL="INSERT INTO gltrans ( type,
+					typeno,
+					trandate,
+					periodno,
+					account,
+					narrative,
+					amount)
+			VALUES (12,
+				" . $_SESSION['ReceiptBatch']->BatchNo . ",
+				'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
+				" . $PeriodNo . ",
+				" . $_SESSION['CompanyRecord']['debtorsact'] . ",
+					'" . DB_escape_string($_SESSION['ReceiptBatch']->Narrative) . "',
+					" . -$BatchDebtorTotal . "
+				)";
+			$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
+			$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
+			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+
+      }
+
+      if ($BatchDiscount!=0){
+			/* Now Debit Discount account with discounts allowed*/
+		$SQL="INSERT INTO gltrans ( type,
+					typeno,
+					trandate,
+					periodno,
+					account,
+					narrative,
+					amount)
+			VALUES (12,
+				" . $_SESSION['ReceiptBatch']->BatchNo . ",
+				'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
+				" . $PeriodNo . ",
+				" . $_SESSION['CompanyRecord']['pytdiscountact'] . ",
+					'" . DB_escape_string($_SESSION['ReceiptBatch']->Narrative) . "',
+				" . $BatchDiscount . "
+			)";
+		$DbgMsg = _('The SQL that failed to insert the GL transaction for the payment discount debit was');
+		$ErrMsg = _('Cannot insert a GL transaction for the payment discount debit');
+		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+	}
+   }
+
 
    $ErrMsg = _('Cannot commit the changes');
    $DbgMsg = _('The SQL that failed was');
@@ -388,7 +388,7 @@ if (isset($_POST['Search'])){
 			$Select = $myrow["debtorno"];
 			unset($result);
 		} elseif (DB_num_rows($result)==0){
-			prnMsg( _('No customers containing the selected text and who trade in the currency of this receipt batch could be found') . ' - ' . _('please alter your search criteria and try again'),'info');
+			prnMsg( _('No customer records contain the selected text') . ' - ' . _('please alter your search criteria and try again'),'info');
 		}
 
 	} //one of keywords or custcode was more than a zero length string

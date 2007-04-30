@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 1;
 
@@ -25,31 +25,31 @@ if (isset($_GET['PrintPDF'])){
 }
 
 
-If (!isset($_POST['ToTransNo']) 
+If (!isset($_POST['ToTransNo'])
 	OR trim($_POST['ToTransNo'])==''
 	OR $_POST['ToTransNo'] < $FromTransNo){
-	
+
 	$_POST['ToTransNo'] = $FromTransNo;
 }
 
 $FirstTrans = $FromTransNo; /*Need to start a new page only on subsequent transactions */
 
-If (isset($PrintPDF) 
-	AND $PrintPDF!='' 
-	AND isset($FromTransNo) 
-	AND isset($InvOrCredit) 
+If (isset($PrintPDF)
+	AND $PrintPDF!=''
+	AND isset($FromTransNo)
+	AND isset($InvOrCredit)
 	AND $FromTransNo!=''){
 
 	include ('includes/class.pdf.php');
-	
-	
+
+
         $Page_Width=595;
         $Page_Height=842;
         $Top_Margin=30;
         $Bottom_Margin=30;
         $Left_Margin=40;
         $Right_Margin=30;
-	
+
 	$PageSize = array(0,0,$Page_Width,$Page_Height);
 	$pdf = & new Cpdf($PageSize);
 	$pdf->selectFont('helvetica');
@@ -217,15 +217,20 @@ If (isset($PrintPDF)
 		$ExchRate = $myrow['rate'];
 
 		if ($InvOrCredit=='Invoice'){
-
-			 $sql = 'SELECT stockmoves.stockid,
-					stockmaster.description,
-					-stockmoves.qty as quantity,
-					stockmoves.discountpercent,
-					((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . '* -stockmoves.qty) AS fxnet,
-					(stockmoves.price * ' . $ExchRate . ') AS fxprice,
-					stockmoves.narrative,
-					stockmaster.units
+	$sql = 'SELECT stockmoves.stkmoveno,
+				stockmoves.stockid,
+				stockmaster.description,
+				stockmaster.serialised,
+				stockmaster.controlled,
+				-stockmoves.qty as quantity,
+				stockmoves.narrative,
+				stockmaster.units,
+				stockmaster.decimalplaces,
+			 	stockmoves.discountpercent,
+				((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . '* -stockmoves.qty) AS fxnet,
+				(stockmoves.price * ' . $ExchRate . ') AS fxprice,
+				stockmoves.narrative,
+				stockmaster.units
 				FROM stockmoves,
 					stockmaster
 				WHERE stockmoves.stockid = stockmaster.stockid
@@ -234,20 +239,26 @@ If (isset($PrintPDF)
 				AND stockmoves.show_on_inv_crds=1';
 		} else {
 		/* only credit notes to be retrieved */
-			 $sql = 'SELECT stockmoves.stockid,
-			 		stockmaster.description,
-					stockmoves.qty as quantity,
-					stockmoves.discountpercent,
-					((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . ' * stockmoves.qty) AS fxnet,
-					(stockmoves.price * ' . $ExchRate . ') AS fxprice,
-					stockmoves.narrative,
-					stockmaster.units
-				FROM stockmoves,
-					stockmaster
-				WHERE stockmoves.stockid = stockmaster.stockid
-				AND stockmoves.type=11
-				AND stockmoves.transno=' . $FromTransNo . '
-				AND stockmoves.show_on_inv_crds=1';
+			 $sql = 'SELECT  stockmoves.stkmoveno,
+						stockmoves.stockid,
+						stockmaster.description,
+						stockmaster.serialised,
+						stockmaster.controlled,
+						stockmoves.qty as quantity,
+						stockmoves.narrative,
+						stockmaster.units,
+						stockmaster.decimalplaces,
+			 			stockmoves.discountpercent,
+						((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . ' * stockmoves.qty) AS fxnet,
+						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
+						stockmoves.narrative,
+						stockmaster.units
+					FROM stockmoves,
+						stockmaster
+					WHERE stockmoves.stockid = stockmaster.stockid
+					AND stockmoves.type=11
+					AND stockmoves.transno=' . $FromTransNo . '
+					AND stockmoves.show_on_inv_crds=1';
 		}
 
 		$result=DB_query($sql,$db);
@@ -290,6 +301,37 @@ If (isset($PrintPDF)
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+420,$YPos,26,$FontSize,$DisplayDiscount,'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+450,$YPos,72,$FontSize,$DisplayNet,'right');
 
+				if ($myrow2['controlled']==1){
+
+					$GetControlMovts = DB_query('SELECT moveqty, serialno
+									FROM stockserialmoves
+									WHERE stockmoveno=' . $myrow2['stkmoveno'],$db);
+
+					if ($myrow2['serialised']==1){
+						while ($ControlledMovtRow = DB_fetch_array($GetControlMovts)){
+							$YPos -= 10;
+							$LeftOvers = $pdf->addTextWrap($Left_Margin+82,$YPos,100,$FontSize,$ControlledMovtRow['serialno'],'left');
+							if ($YPos-$line_height <= $Bottom_Margin){
+								/* head up a new invoice/credit note page */
+								/*draw the vertical column lines right to the bottom */
+								PrintLinesToBottom ();
+	   		        			include ('includes/PDFTransPageHeaderPortrait.inc');
+			   				} //end if need a new page headed up
+						}
+					} else {
+						while ($ControlledMovtRow = DB_fetch_array($GetControlMovts)){
+							$YPos -= 10;
+							$LeftOvers = $pdf->addTextWrap($Left_Margin+82,$YPos,100,$FontSize,(-$ControlledMovtRow['moveqty']) . ' x ' . $ControlledMovtRow['serialno'],'left');
+							if ($YPos-$line_height <= $Bottom_Margin){
+								/* head up a new invoice/credit note page */
+								/*draw the vertical column lines right to the bottom */
+								PrintLinesToBottom ();
+	   		        			include ('includes/PDFTransPageHeaderPortrait.inc');
+			   				} //end if need a new page headed up
+
+						}
+					}
+				}
 				$YPos -= ($line_height);
 
 				$Narrative = $myrow2['narrative'];
@@ -298,11 +340,11 @@ If (isset($PrintPDF)
 						/* head up a new invoice/credit note page */
 						/*draw the vertical column lines right to the bottom */
 						PrintLinesToBottom ();
-	   		        		include ('includes/PDFTransPageHeaderPortrait.inc');
+	   		        	include ('includes/PDFTransPageHeaderPortrait.inc');
 			   		} //end if need a new page headed up
 			   		/*increment a line down for the next line item */
 			   		if (strlen($Narrative)>1){
-						$Narrative = $pdf->addTextWrap($Left_Margin+100,$YPos,186,$FontSize,$Narrative);
+						$Narrative = $pdf->addTextWrap($Left_Margin+85,$YPos,181,$FontSize,$Narrative);
 					}
 					$YPos -= ($line_height);
 				}
@@ -313,8 +355,6 @@ If (isset($PrintPDF)
 					PrintLinesToBottom ();
 					include ('includes/PDFTransPageHeaderPortrait.inc');
 				} //end if need a new page headed up
-
-
 			} //end while there are line items to print out
 		} /*end if there are stock movements to show on the invoice or credit note*/
 
@@ -369,7 +409,7 @@ If (isset($PrintPDF)
 		$YPos = $Bottom_Margin+(3*$line_height);
 	/* Print out the payment terms */
 
-  		$pdf->addTextWrap($Left_Margin+5,$YPos+3,280,$FontSize,_('Payment Terms') . ': ' . $myrow['terms']);
+  		$pdf->addTextWrap($Left_Margin+5,$YPos+3,180,$FontSize,_('Payment Terms') . ': ' . $myrow['terms']);
 
 		$FontSize =8;
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-12,280,$FontSize,$myrow['invtext']);
@@ -428,7 +468,7 @@ If (isset($PrintPDF)
 	}
 
 	if (isset($_GET['Email'])){ //email the invoice to address supplied
-		
+
 		include ('includes/htmlMimeMail.php');
 
 		$mail = new htmlMimeMail();
@@ -464,7 +504,7 @@ If (isset($PrintPDF)
 	}
 
 } else { /*The option to print PDF was not hit */
-	
+
 	$title=_('Select Invoices/Credit Notes To Print');
 	include('includes/header.inc');
 
@@ -535,90 +575,90 @@ If (isset($PrintPDF)
 
 			   $sql = "SELECT
 			   		debtortrans.trandate,
-					debtortrans.ovamount, 
-					debtortrans.ovdiscount, 
-					debtortrans.ovfreight, 
-					debtortrans.ovgst, 
-					debtortrans.rate, 
-					debtortrans.invtext, 
-					debtortrans.consignment, 
-					debtorsmaster.name, 
-					debtorsmaster.address1, 
-					debtorsmaster.address2, 
+					debtortrans.ovamount,
+					debtortrans.ovdiscount,
+					debtortrans.ovfreight,
+					debtortrans.ovgst,
+					debtortrans.rate,
+					debtortrans.invtext,
+					debtortrans.consignment,
+					debtorsmaster.name,
+					debtorsmaster.address1,
+					debtorsmaster.address2,
 					debtorsmaster.address3,
 					debtorsmaster.address4,
 					debtorsmaster.address5,
 					debtorsmaster.address6,
-					debtorsmaster.currcode, 
-					salesorders.deliverto, 
-					salesorders.deladd1, 
-					salesorders.deladd2, 
-					salesorders.deladd3, 
-					salesorders.deladd4, 
-					salesorders.deladd5, 
-					salesorders.deladd6, 
-					salesorders.customerref, 
-					salesorders.orderno, 
-					salesorders.orddate, 
-					shippers.shippername, 
-					custbranch.brname, 
-					custbranch.braddress1, 
+					debtorsmaster.currcode,
+					salesorders.deliverto,
+					salesorders.deladd1,
+					salesorders.deladd2,
+					salesorders.deladd3,
+					salesorders.deladd4,
+					salesorders.deladd5,
+					salesorders.deladd6,
+					salesorders.customerref,
+					salesorders.orderno,
+					salesorders.orddate,
+					shippers.shippername,
+					custbranch.brname,
+					custbranch.braddress1,
 					custbranch.braddress2,
-					custbranch.braddress3, 
+					custbranch.braddress3,
 					custbranch.braddress4,
 					custbranch.braddress5,
 					custbranch.braddress6,
-					salesman.salesmanname, 
-					debtortrans.debtorno 
-				FROM debtortrans, 
-					debtorsmaster, 
-					custbranch, 
-					salesorders, 
-					shippers, 
-					salesman 
-				WHERE debtortrans.order_ = salesorders.orderno 
-				AND debtortrans.type=10 
+					salesman.salesmanname,
+					debtortrans.debtorno
+				FROM debtortrans,
+					debtorsmaster,
+					custbranch,
+					salesorders,
+					shippers,
+					salesman
+				WHERE debtortrans.order_ = salesorders.orderno
+				AND debtortrans.type=10
 				AND debtortrans.transno=" . $FromTransNo . "
-				AND debtortrans.shipvia=shippers.shipper_id 
-				AND debtortrans.debtorno=debtorsmaster.debtorno 
-				AND debtortrans.debtorno=custbranch.debtorno 
-				AND debtortrans.branchcode=custbranch.branchcode 
+				AND debtortrans.shipvia=shippers.shipper_id
+				AND debtortrans.debtorno=debtorsmaster.debtorno
+				AND debtortrans.debtorno=custbranch.debtorno
+				AND debtortrans.branchcode=custbranch.branchcode
 				AND custbranch.salesman=salesman.salesmancode";
 			} else {
 
 			   $sql = 'SELECT debtortrans.trandate,
-			   		debtortrans.ovamount, 
-					debtortrans.ovdiscount, 
-					debtortrans.ovfreight, 
-					debtortrans.ovgst, 
-					debtortrans.rate, 
-					debtortrans.invtext, 
-					debtorsmaster.name, 
-					debtorsmaster.address1, 
-					debtorsmaster.address2, 
+			   		debtortrans.ovamount,
+					debtortrans.ovdiscount,
+					debtortrans.ovfreight,
+					debtortrans.ovgst,
+					debtortrans.rate,
+					debtortrans.invtext,
+					debtorsmaster.name,
+					debtorsmaster.address1,
+					debtorsmaster.address2,
 					debtorsmaster.address3,
 					debtorsmaster.address4,
 					debtorsmaster.address5,
 					debtorsmaster.address6,
-					debtorsmaster.currcode, 
-					custbranch.brname, 
-					custbranch.braddress1, 
-					custbranch.braddress2, 
-					custbranch.braddress3, 
-					custbranch.braddress4, 
-					custbranch.braddress5, 
-					custbranch.braddress6, 
-					salesman.salesmanname, 
-					debtortrans.debtorno 
-				FROM debtortrans, 
-					debtorsmaster, 
-					custbranch, 
-					salesman 
+					debtorsmaster.currcode,
+					custbranch.brname,
+					custbranch.braddress1,
+					custbranch.braddress2,
+					custbranch.braddress3,
+					custbranch.braddress4,
+					custbranch.braddress5,
+					custbranch.braddress6,
+					salesman.salesmanname,
+					debtortrans.debtorno
+				FROM debtortrans,
+					debtorsmaster,
+					custbranch,
+					salesman
 				WHERE debtortrans.type=11
 				AND debtortrans.transno=' . $FromTransNo . '
 				AND debtortrans.debtorno=debtorsmaster.debtorno
-				AND debtortrans.debtorno=custbranch.debtorno 
-				AND debtortrans.branchcode=custbranch.branchcode 
+				AND debtortrans.debtorno=custbranch.debtorno
+				AND debtortrans.branchcode=custbranch.branchcode
 				AND custbranch.salesman=salesman.salesmancode';
 
 			}
@@ -690,7 +730,7 @@ If (isset($PrintPDF)
 				   	echo "<TD BGCOLOR='#EEEEEE'>" . $myrow['deliverto'] . '<BR>' . $myrow['deladd1'] . '<BR>' . $myrow['deladd2'] . '<BR>' . $myrow['deladd3'] . '<BR>' . $myrow['deladd4'] . '<BR>' . $myrow['deladd5'] . '<BR>' . $myrow['deladd6'] . '</TD>';
 				   echo '</TR>
 				   </TABLE><HR>';
-				   
+
 				   echo "<TABLE WIDTH=100%>
 				   		<TR>
 							<TD ALIGN=LEFT BGCOLOR='#BBBBBB'><B>" . _('Your Order Ref') . "</B></TD>
@@ -711,19 +751,20 @@ If (isset($PrintPDF)
 							<TD BGCOLOR='#EEEEEE'>" . $myrow['consignment'] . "</TD>
 						</TR>
 					</TABLE>";
-					
-				   $sql ="SELECT stockmoves.stockid,
-				   		stockmaster.description, 
-						-stockmoves.qty as quantity, 
-						stockmoves.discountpercent, 
-						((1 - stockmoves.discountpercent) * stockmoves.price * " . $ExchRate . '* -stockmoves.qty) AS fxnet,
+
+				   $sql ='SELECT stockmoves.stockid,
+				   		stockmaster.description,
+						-stockmoves.qty as quantity,
+						stockmoves.discountpercent,
+						((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . '* -stockmoves.qty) AS fxnet,
 						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
-						stockmoves.narrative, 
-						stockmaster.units 
-					FROM stockmoves, 
-						stockmaster 
-					WHERE stockmoves.stockid = stockmaster.stockid 
-					AND stockmoves.type=10 
+						stockmoves.narrative,
+						stockmaster.units,
+						stockmaster.decimalplaces
+					FROM stockmoves,
+						stockmaster
+					WHERE stockmoves.stockid = stockmaster.stockid
+					AND stockmoves.type=10
 					AND stockmoves.transno=' . $FromTransNo . '
 					AND stockmoves.show_on_inv_crds=1';
 
@@ -743,17 +784,17 @@ If (isset($PrintPDF)
 				   		<TD BGCOLOR='#EEEEEE'>" . ConvertSQLDate($myrow['trandate']) . "</TD>
 						<TD BGCOLOR='#EEEEEE'>" . $myrow['salesmanname'] . '</TD>
 					</TR></TABLE>';
-				   
+
 				   $sql ='SELECT stockmoves.stockid,
-				   		stockmaster.description, 
-						stockmoves.qty as quantity, 
+				   		stockmaster.description,
+						stockmoves.qty as quantity,
 						stockmoves.discountpercent, ((1 - stockmoves.discountpercent) * stockmoves.price * ' . $ExchRate . ' * stockmoves.qty) AS fxnet,
 						(stockmoves.price * ' . $ExchRate . ') AS fxprice,
-						stockmaster.units 
-					FROM stockmoves, 
-						stockmaster 
-					WHERE stockmoves.stockid = stockmaster.stockid 
-					AND stockmoves.type=11 
+						stockmaster.units
+					FROM stockmoves,
+						stockmaster
+					WHERE stockmoves.stockid = stockmaster.stockid
+					AND stockmoves.type=11
 					AND stockmoves.transno=' . $FromTransNo . '
 					AND stockmoves.show_on_inv_crds=1';
 				}
@@ -792,9 +833,9 @@ If (isset($PrintPDF)
 						  $RowStarter = "<tr bgcolor='#EEEEEE'>";
 						  $k=1;
 					      }
-					      
+
 					      echo $RowStarter;
-					      
+
 					      $DisplayPrice = number_format($myrow2['fxprice'],2);
 					      $DisplayQty = number_format($myrow2['quantity'],2);
 					      $DisplayNet = number_format($myrow2['fxnet'],2);
@@ -815,17 +856,17 @@ If (isset($PrintPDF)
 							</TR>',
 							$myrow2['stockid'],
 							$myrow2['description'],
-							$DisplayQty, 
+							$DisplayQty,
 							$myrow2['units'],
-							$DisplayPrice, 
-							$DisplayDiscount, 
+							$DisplayPrice,
+							$DisplayDiscount,
 							$DisplayNet);
 
 					      if (strlen($myrow2['narrative'])>1){
 					      		echo $RowStarter . '<TD></TD><TD COLSPAN=6>' . $myrow2['narrative'] . '</TD></TR>';
 							$LineCounter++;
 					      }
-						
+
 					      $LineCounter++;
 
 					      if ($LineCounter == ($_SESSION['PageLength'] - 2)){
@@ -971,7 +1012,7 @@ function PrintLinesToBottom () {
 	global $Bottom_Margin;
 	global $line_height;
 
-	
+
 /*draw the vertical column lines right to the bottom */
 	$pdf->line($Left_Margin+97, $TopOfColHeadings+12,$Left_Margin+97,$Bottom_Margin);
 

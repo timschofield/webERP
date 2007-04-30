@@ -43,6 +43,11 @@ if(isset($_POST['ProcessTransfer'])){
 			prnMsg( _('The Quantity entered plus the Quantity Previously Received can not be greater than the Total Quantity shipped for').' '. $TrfLine->StockID , 'error');
 			$InputError = True;
 		}
+                if ($_POST['CancelBalance' . $i]==1){
+                    $_SESSION['Transfer']->TransferItem[$i]->CancelBalance=1;
+                } else {
+                     $_SESSION['Transfer']->TransferItem[$i]->CancelBalance=0;
+                }
 		$TotalQuantity += $TrfLine->Quantity;
 		$i++;
 	} /*end loop to validate and update the SESSION['Transfer'] data */
@@ -299,16 +304,31 @@ if(isset($_POST['ProcessTransfer'])){
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
 				prnMsg(_('A stock transfer for item code'). ' - '  . $TrfLine->StockID . ' ' . $TrfLine->ItemDescription . ' '. _('has been created from').' ' . $_SESSION['Transfer']->StockLocationFromName . ' '. _('to'). ' ' . $_SESSION['Transfer']->StockLocationToName . ' ' . _('for a quantity of'). ' '. $TrfLine->Quantity,'success');
-
-				$sql = "UPDATE loctransfers SET recqty = recqty + ". $TrfLine->Quantity . ", 
+                                
+                                if ($TrfLine->CancelBalance==1){
+                                      $sql = "UPDATE loctransfers SET recqty = recqty + ". $TrfLine->Quantity . ",
+                                                                      shipqty = recqty + ". $TrfLine->Quantity . ",
 								recdate = '".date('Y-m-d H:i:s'). "' 
 						WHERE reference = '". $_SESSION['Transfer']->TrfID . "' 
 						AND stockid = '".  $TrfLine->StockID."'";
+                                } else {
+                                      $sql = "UPDATE loctransfers SET recqty = recqty + ". $TrfLine->Quantity . ",
+                                                                      recdate = '".date('Y-m-d H:i:s'). "' 
+                                                WHERE reference = '". $_SESSION['Transfer']->TrfID . "' 
+                                                AND stockid = '".  $TrfLine->StockID."'";
+                                }
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to update the Location Transfer Record');
 				$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, true);
 				unset ($_SESSION['Transfer']->LineItem[$i]);
 				unset ($_POST['Qty' . $i]);
 			} /*end if Quantity > 0 */
+                        if ($TrfLine->CancelBalance==1){
+                               $sql = "UPDATE loctransfers SET shipqty = recqty 
+                                        WHERE reference = '". $_SESSION['Transfer']->TrfID . "' 
+					AND stockid = '".  $TrfLine->StockID."'";
+        			$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to set the quantity received to the quantity shipped to cancel the balance on this transfer line');
+				$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, true);
+                        }
 			$i++;
 		} /*end of foreach TransferItem */
 
@@ -404,6 +424,7 @@ if (isset($_SESSION['Transfer'])){
 			<TD class="tableheader">'. _('Quantity Received'). '</TD>
 			<TD class="tableheader">'. _('Quantity To Receive'). '</TD>
 			<TD class="tableheader">'. _('Units'). '</TD>
+                        <TD class="tableheader">'. _('Cancel Balance') . '</TD>
 			</TR>';
 
 	echo $tableheader;
@@ -430,6 +451,11 @@ if (isset($_SESSION['Transfer'])){
 		}
 
 		echo '<td>' . $TrfLine->PartUnit . '</TD>';
+                if ($TrfLine->CancelBalance==1){
+                   echo '<td><input type="checkbox" checked name="CancelBalance' . $i . '" value=1></td>';
+                } else {
+                   echo '<td><input type="checkbox" name="CancelBalance' . $i . '" value=0></td>';
+                }
 
 		if ($TrfLine->Controlled==1){
 			if ($TrfLine->Serialised==1){
@@ -438,7 +464,6 @@ if (isset($_SESSION['Transfer'])){
 				echo '<TD><A HREF="' . $rootpath .'/StockTransferControlled.php?' . SID . '&TransferItem=' . $i . '">' . _('Enter Batch Refs') . '</A></td>';
 			}
 		}
-
 
 		echo '</TR>';
 
