@@ -1,21 +1,24 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
+<p>1/5/07 Wayne McDougall - Use DefaultDateFormat in all PDF report headings
+<p>1/5/07 Wayne McDougall - InventoryPlanning.php now supports translation of abbreviated month names in the page headers
+<p>30/4/07 Wayne McDougall - StockStatus.php now displays a summarised sales pricing history for the selected customer (if any). When called from SelectOrderItems.php, shows the sales pricing history for the customer whose order is being entered.
 <P>30/4/07 StockLocTransferReceive.php now has an option to delete the balance of a transfer if the quantity received is less than the amount recorded as dispatched.
 <P>30/4/07 Portrait invoice now shows serial numbers/lot numbers and qty for controlled items sold. Work sponsored by Tip Top Tips Sarl
 <P>26/4/07 CustomerReceipt fixed bug where a GL receipt and a customer negative receipt (or vice versa) resulted in a zero batch that did not have the correct GL entries created for it - result TB out of balance and debtors control out of balance with list of balances.
-<P>26/4/07 Wayne McDougal using the new Special Instructions field held against the branch record - CustomerBranches now allows entry and editing of the field. DeliveryDetails shows the messasge as does SelectOrderItems. Credit message only appears once now instead of for each line where the credit limit is exceeded. 
+<P>26/4/07 Wayne McDougall - using the new Special Instructions field held against the branch record - CustomerBranches now allows entry and editing of the field. DeliveryDetails shows the messasge as does SelectOrderItems. Credit message only appears once now instead of for each line where the credit limit is exceeded. 
 <P>20/2/07 CustomerBranches.php - removed ? syntax for comparison and assignment of GET values
 <P>20/2/07 Took out the default credit limit when a 0 credit limit is entered. If the user enters 0 then a zero credit limit is set.
 <P>20/2/07 ShipmentCosting bug with multiple lines of the same item on the shipment (albethey different POs) caused incorrect costings.
 <P>15/2/07 Danie optimised GLPostings.inc for postgres - thinks mysql performance will be even better too - sorting postings by account and doing one post for each period/account combination
 <P>12/2/07 SelectSalesOrder.php fails with postgres printpackingslip needs to be in the group by now fixed
 <P>12/2/07 Tax Categories now uses a cross join to be more ansi sql friendly - failed with postgres otherwise
-<P>12/2/07 Wayne McDougal OrderDetails.php is not honouring the Landscape/Portrait config switch for invoice printing - now fixed.
+<P>12/2/07 Wayne McDougall - OrderDetails.php is not honouring the Landscape/Portrait config switch for invoice printing - now fixed.
 <P>12/2/07 Errol Livingston - Locations.php was checking for existence of worksorders in a non-existant table before allowing deletion!
-<P>9/2/07 Wayne McDougal - bug fix on width of terms in PrintCustTransPortrait.php
+<P>9/2/07 Wayne McDougall - bug fix on width of terms in PrintCustTransPortrait.php
 <P>6/2/07 emdeex - PaymentAllocations.php and modifications to SupplierInquiry to allow viewing of where a payment made was allocated.
 <P>6/2/07 Ditesh - taken out references to session_register in several files - historical code no longer necessary implicit in $_SESSION
-<P>3/2/07 The Code Works - bug fix in Z_CreateNewCompany.php the checkbox to create the new DB was incorrectly coded and would not have worked. Also SystemParameters.php the WikiPath variable was defined twice - this should not have caused issues in practise.
+<P>3/2/07 Wayne McDougall - bug fix in Z_CreateNewCompany.php the checkbox to create the new DB was incorrectly coded and would not have worked. Also SystemParameters.php the WikiPath variable was defined twice - this should not have caused issues in practise.
 <P> 30/1/07 AccountGroups.php now allows hierarchical account groups GLTrialBalance.php now shows account groups within the new hierachy.
 <P>18/1/07 SpecialOrder.php now checks for customer hold reasons to ensure the customer is not on hold prior to placing the order so there is a warning if there is some credit issues
 <P>18/1/07 InventoryValuation.php now shows the quantitiy total for each product group which may or may not be meaningful 

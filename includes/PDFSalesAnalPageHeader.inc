@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /*PDF page header for user defined sales reports */
 
 if ($PageNumber>0){
@@ -10,7 +10,7 @@ $PageNumber++;
 $FontSize=12;
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$Page_Height-$Top_Margin,250,$FontSize,$ReportSpec['reportheading']);
 $LeftOvers = $pdf->addTextWrap($Page_Width/2 -60,$Page_Height-$Top_Margin,150,$FontSize,$_SESSION['CompanyRecord']['coyname']);
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-160,$Page_Height-$Top_Margin,150,$FontSize,_('Printed') . ': ' . Date('d M Y') . '   ' . _('Page') . ' ' . $PageNumber);
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-160,$Page_Height-$Top_Margin,150,$FontSize,_('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber);
 
 
 /*Draw a rectangle to put the headings in     */
