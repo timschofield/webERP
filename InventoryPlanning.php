@@ -96,11 +96,11 @@ If (isset($_POST['PrintPDF'])
 	   include('includes/footer.inc');
 	   exit;
 	}
-	$Period_0_Name = Date('M',mktime(0,0,0,Date('m'),Date('d'),Date('Y')));
-	$Period_1_Name = Date('M',mktime(0,0,0,Date('m')-1,Date('d'),Date('Y')));
-	$Period_2_Name = Date('M',mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
-	$Period_3_Name = Date('M',mktime(0,0,0,Date('m')-3,Date('d'),Date('Y')));
-	$Period_4_Name = Date('M',mktime(0,0,0,Date('m')-4,Date('d'),Date('Y')));
+	$Period_0_Name = _(Date('M',mktime(0,0,0,Date('m'),Date('d'),Date('Y'))));
+	$Period_1_Name = _(Date('M',mktime(0,0,0,Date('m')-1,Date('d'),Date('Y'))));
+	$Period_2_Name = _(Date('M',mktime(0,0,0,Date('m')-2,Date('d'),Date('Y'))));
+	$Period_3_Name = _(Date('M',mktime(0,0,0,Date('m')-3,Date('d'),Date('Y'))));
+	$Period_4_Name = _(Date('M',mktime(0,0,0,Date('m')-4,Date('d'),Date('Y'))));
 
 	include ('includes/PDFInventoryPlanPageHeader.inc');
 
