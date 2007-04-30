@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 
 $PageSecurity = 2;
@@ -199,8 +199,114 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 //end of page full new headings if
 }
 //end of while loop
-
 echo '</TABLE><HR>';
+
+if (isset($_GET['DebtorNo'])){
+	$DebtorNo = trim(strtoupper($_GET['DebtorNo']));
+} elseif (isset($_POST['DebtorNo'])){
+	$DebtorNo = trim(strtoupper($_POST['DebtorNo']));
+} elseif (isset($_SESSION['CustomerID'])){
+	$DebtorNo=$_SESSION['CustomerID'];
+}
+
+if ($DebtorNo) { /* display recent pricing history for this debtor and this stock item */
+
+	$sql = "SELECT stockmoves.trandate,
+				stockmoves.qty,
+				stockmoves.price,
+				stockmoves.discountpercent
+			FROM stockmoves
+			WHERE stockmoves.debtorno='" . $DebtorNo . "'
+				AND stockmoves.type=10 
+				AND stockmoves.stockid = '" . $StockID . "'
+				AND stockmoves.hidemovt=0
+			ORDER BY stockmoves.trandate DESC";
+	
+	/* only show pricing history for sales invoices - type=10 */
+	
+	$ErrMsg = _('The stock movements for the selected criteria could not be retrieved because') . ' - ';
+	$DbgMsg = _('The SQL that failed was') . ' ';
+	
+	$MovtsResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
+	
+	$k=1;
+	while ($myrow=DB_fetch_array($MovtsResult)) {
+	  if ($LastPrice != $myrow['price'] or $LastDiscount != $myrow['discount']) { /* consolidate price history for records with same price/discount */
+	    if ($qty) {
+	    	$DateRange=ConvertSQLDate($FromDate);
+	    	if ($FromDate != $ToDate) {
+	        	$DateRange .= ' - ' . ConvertSQLDate($ToDate);
+	     	}
+	    	$PriceHistory[] = array($DateRange, $qty, $LastPrice, $LastDiscount);
+	    	$k++;
+	    	if ($k > 9) break; /* 10 price records is enough to display */
+	    	if ($myrow['trandate'] < FormatDateForSQL(time() - 366*86400))
+	    	  break; /* stop displaying pirce history more than a year old once we have at least one  to display */
+	    }	
+		$LastPrice = $myrow['price'];
+		$LastDiscount = $myrow['discount'];
+	    $ToDate = $myrow['trandate'];
+		$qty = 0;
+	  }
+	  $qty += $myrow['qty'];
+	  $FromDate = $myrow['trandate'];
+	}
+	if ($qty) {
+		$DateRange = ConvertSQLDate($FromDate);
+		if ($FromDate != $ToDate) {
+	   		$DateRange .= ' - '.ConvertSQLDate($ToDate);
+		}
+		$PriceHistory[] = array($DateRange, $qty, $LastPrice, $LastDiscount);
+	}
+	if ($PriceHistory) {
+	  echo '<p>' . _('Pricing history for sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo;
+	  echo '<TABLE CELLPADDING=2 BORDER=0>';
+	  $tableheader = "<TR>
+			<TD CLASS='tableheader'>" . _('Date Range') . "</TD>
+			<TD CLASS='tableheader'>" . _('Quantity') . "</TD>
+			<TD CLASS='tableheader'>" . _('Price') . "</TD>
+			<TD CLASS='tableheader'>" . _('Discount') . "</TD>
+			</TR>";
+	
+	  $j = 0;
+	  $k = 0; //row colour counter
+	
+	  foreach($PriceHistory as $ph) {
+		$j--;
+		If ($j < 0 ){
+			$j = 11;
+			echo $tableheader;
+		}
+	
+		if ($k==1){
+			echo "<TR BGCOLOR='#CCCCCC'>";
+			$k=0;
+		} else {
+			echo "<TR BGCOLOR='#EEEEEE'>";
+			$k=1;
+		}
+	
+			printf("<TD>%s</TD>
+			<TD ALIGN=RIGHT>%s</TD>
+			<TD ALIGN=RIGHT>%s</TD>
+			<TD ALIGN=RIGHT>%s%%</TD>
+			</TR>",
+			$ph[0],
+			number_format($ph[1],$DecimalPlaces),
+			number_format($ph[2],2),
+			number_format($ph[3]*100,2)
+			);
+	  }
+	 echo '</TABLE>';
+	 }
+	//end of while loop
+	else {
+	  echo '<p>'._('No history of sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo;
+	}
+} 
+//end of displaying price history for a debtor
+echo '<hr>';
+
 echo '<A HREF="' . $rootpath . '/StockMovements.php?' . SID . '&StockID=' . $StockID . '">' . _('Show Movements') . '</A>';
 echo '<BR><A HREF="' . $rootpath . '/StockUsage.php?' . SID . '&StockID=' . $StockID . '">' . _('Show Usage') . '</A>';
 echo '<BR><A HREF="' . $rootpath . '/SelectSalesOrder.php?' . SID . '&SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</A>';

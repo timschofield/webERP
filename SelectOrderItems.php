@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.54 $ */
+/* $Revision: 1.55 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -34,7 +34,7 @@ if (isset($_GET['NewOrder'])){
 		$_SESSION['Items']->ItemsOrdered=0;
 		unset ($_SESSION['Items']);
 	}
-	
+		
 	$_SESSION['ExistingOrder']=0;
 	$_SESSION['Items'] = new cart;
 
@@ -59,7 +59,6 @@ if (isset($_GET['ModifyOrderNumber'])
 		unset ($_SESSION['Items']->LineItems);
 		unset ($_SESSION['Items']);
 	}
-
 	$_SESSION['ExistingOrder']=$_GET['ModifyOrderNumber'];
 	$_SESSION['RequireCustomerSelection'] = 0;
 	$_SESSION['Items'] = new cart;
@@ -429,7 +428,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 				custbranch.defaultlocation,
 				custbranch.defaultshipvia,
 				custbranch.deliverblind,
-	                        custbranch.specialinstructions
+                        custbranch.specialinstructions
 			FROM custbranch
 			WHERE custbranch.branchcode='" . $_SESSION['Items']->Branch . "'
 			AND custbranch.debtorno = '" . $_POST['Select'] . "'";
@@ -464,9 +463,8 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 		$_SESSION['Items']->DeliverBlind = $myrow[11];
 		$_SESSION['Items']->SpecialInstructions = $myrow[12];
 
-		if ($_SESSION['Items']->SpecialInstructions) { 
+		if ($_SESSION['Items']->SpecialInstructions) 
 		  prnMsg($_SESSION['Items']->SpecialInstructions,'warn');
-		}
 
 		if ($_SESSION['CheckCreditLimits'] > 0){  /*Check credit limits is 1 for warn and 2 for prohibit sales */
 			$_SESSION['Items']->CreditAvailable = GetCreditAvailable($_POST['Select'],$db);
@@ -833,7 +831,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	/*Process Quick Entry */
 
-	 If (isset($_POST['QuickEntry'])){
+	 If (isset($_POST['QuickEntry']) or isset($_POST['Recalculate'])){ // if enter is pressed on the quick entry screen, the default button may be Recalculate
 	     /* get the item details from the database and hold them in the cart object */
 	     
 	     /*Discount can only be set later on  -- after quick entry -- so default discount to 0 in the first place */
@@ -1064,7 +1062,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			echo $RowStarter;
 
-			echo '<TD><A target="_blank" HREF="' . $rootpath . '/StockStatus.php?' . SID . 'StockID=' . $OrderLine->StockID . '">' . $OrderLine->StockID . '</A></TD>
+			echo '<TD><A target="_blank" HREF="' . $rootpath . '/StockStatus.php?' . SID . '&StockID=' . $OrderLine->StockID . '&DebtorNo=' . $_SESSION['Items']->DebtorNo . '">' . $OrderLine->StockID . '</A></TD>
 				<TD>' . $OrderLine->ItemDescription . '</TD>';
 			
 			echo '<TD><INPUT TYPE=TEXT NAME="Quantity_' . $OrderLine->LineNumber . '" SIZE=6 MAXLENGTH=6 VALUE=' . $OrderLine->Quantity . '>';
@@ -1195,6 +1193,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			while ($myrow=DB_fetch_array($SearchResult)) {
 				
+/*
 				if (function_exists('imagecreatefrompng') ){
 					$ImageSource = '<IMG SRC="GetStockImage.php?SID&automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode($myrow['stockid']). '&text=&width=64&height=64">';
 				} else {
@@ -1205,7 +1204,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					}
 				}
 				
-				
+*/				
 				if ($k==1){
 					echo '<tr bgcolor="#CCCCCC">';
 					$k=0;
