@@ -1,10 +1,12 @@
 WEB-ERP Installation
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 Upgrading
 
-A script is included under webERP/sql/mysql/ to update an existing mysql weberp database to the current version. The upgrade script no longer assumes the weberp database is called weberp. The script must be edited to enter the name of the database to upgrade.
+A php upgrade script is provided for versions from 3.05 that applies the database changes required to move from the previous version to the newer version - this script also updates any data as required to work with the new version scripts.
+
+If the database must be updated manually (as it must for versions prior to 3.05), the SQL scripts are included under webERP/sql/mysql/ to update an existing mysql webERP database to the current version. The upgrade script no longer assumes the weberp database is called webERP. The script must be edited to enter the name of the database to upgrade.
 
 It is recommended not to use phpMyAdmin to run the upgrade script. The upgrade script should be passed to the command line mysql client as follows:
 
@@ -28,15 +30,17 @@ Pre-requisites:
 
 Installing these components are well covered elsewhere.
 
-Another is that php must have register globals off.  This is the default and how it is set on almost all servers.  This flag can be set in the php.ini on the server.  If it can't be changed, it is possibe for apache web servers to create a file called .htaccess in the root of the webERP system.  In that file put the line:
+PHP must have the register globals configuration parameter set to off.  This is the default (now).  This flag can be set in the php.ini on the server.  If it can't be changed, it is possibe for apache web servers to create a file called .htaccess in the root of the webERP system.  In that file put the line:
 
 php_flag register_globals off
+
+Also the magic_quote_gpc setting must also be set to off. This is a configuration parameter in the php.ini file on the web-server. If you don't have access to the web-server's php.ini, then the webERP distribution has an .htaccess file to ensure that this is set to off for apache servers and thos other servers that look at the parameters in the .htaccess file. If magic_quotes_gpc is not set to off then this can leave annoying "\" characters in some fields otherwise webERP works as normal.
 
 One more issue with php setup - by default the setting session.use_cookies is set to 1, if it is set to 0 this can also cause problems.
 
 There are a number of traps with PHP installation depending on the web-server - see http://www.weberp.org/wikidocs/FrequentlyAskedQuestionsInstallation?v=efe
 
-The system can be used with either MySQL or Postgres database servers - both work well. Instructions here are for mysql. However, the necessary scripts for postgres are also included under the webERP/sql/pg directory.
+The system is developed using MySQL. webERP was also tested up to version 3.05 with the Postgres database server. Postgres is no longer supported due to other developer priorities. Instructions here are for mysql.
 
 
 The installation consists of:
@@ -53,19 +57,26 @@ The installation consists of:
 You must have downloaded the archive to be reading this file INSTALL.txt file!
 However, all files in this archive should be copied to a directory under the web server root directory. This varies between installations but
 
-In Windows it could be 
+In Windows it could be:
 
 C:\Program Files\Apache Group\Apache\htdocs
 
-Under Linux:
+or for apache2triad installations:
+
+C:\apache2triad\htdocs\
+
+Under Linux something like:
 
 /usr/local/httpd/htdocs/
 
-was common
+or
+
+/usr/local/apache2/htdocs/
+
+or
 
 /srv/www/htdocs
 
-is the apache root directory under SuSE Linux.
 
 Normally the Apache document root directory is called "htdocs". However other web-servers can be used and their document root directory names will vary.
 
@@ -85,7 +96,8 @@ The installation steps for MySQL is described here - similar steps are required 
 MySQL version 4.x or above is required - Foreign Keys are implemented in the database as from version 2.8 these only became an option in MySQL version 3.23.51. 
 
 INNODB TABLES MUST BE ENABLED IN THE MYSQL SERVER. 
-These tables allow database transactions which are a critical component of ERP software. Innodb tables require some parameters to be set up in my.cnf - there are some examples in the MySQL manual under table types - Innodb tables.
+These tables allow database transactions and foreign key support, both of which are critical components of ERP software. 
+Innodb tables require some parameters to be set up in my.cnf - there are some examples in the MySQL manual under table types - Innodb tables.
 
 When using mysql both windows and *nix have the mysql command line client. The command line client is run in a DOS window under Windows. Open a DOS window using Start, Run, cmd ENTER for Windows XP and 2000. Normally the mysql client mysql.exe file is under C:\mysql\bin\mysql.exe by default if this path is not in the default path then commands referred to below as mysql will need to be prefixed by C:\mysql\bin
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.74 $ */
+/* $Revision: 1.75 $ */
 
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
@@ -79,7 +79,6 @@ $DefaultClock = 12;
 
 
 
-
 /*The $rootpath is used in most scripts to tell the script the installation details of the files.
 
 NOTE: In some windows installation this command doesn't work and the administrator must set this to the path of the installation manually:
@@ -104,6 +103,7 @@ turning on NOTICES destroys things */
 
 error_reporting (E_ALL & ~E_NOTICE);
 
+ini_set('magic_quotes_gpc','0');
 
 /*Make sure there is nothing - not even spaces after this last ?> */
 ?>
