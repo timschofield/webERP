@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 	echo '<BR><BR>';
 	echo '</TD>';
@@ -14,30 +14,8 @@
 	echo '<TR BGCOLOR="#555555"><TD COLSPAN="5"><FONT SIZE="1">&nbsp;</FONT></TD></TR>';
 	
 	echo '</TABLE>';
-
-	if ($DefaultClock==12) {
-		$hour=date('g:i a');
-	} else {
-		$hour=date('H:i');
-	}
-
-      $weekDay=strtolower(date('l'));
-      if ($weekDay!=_($weekDay)) {
-        $weekDay=_($weekday);
-      } else {
-        $weekDay=strftime('%A');
-      }
-      if ($DefaultClock==12) {
-        $ampm='_'.date('a');
-        if ($ampm!=_($ampm)) {
-          $ampm=_($ampm);
-        } else { 
-          $ampm=strftime('%p');
-        }
-      } else {
-        $ampm='';
-      }
-	echo '<p style="text-align:right">'.$weekDay.', '.(date($_SESSION['DefaultDateFormat'].' | '.(($DefaultClock==12) ? 'g:i ' : 'H:i')).$ampm).'</p>';
+	
+	echo '<p style="text-align:right">'.(strftime('%A')).', '.(date($_SESSION['DefaultDateFormat']).' | '.(strftime(($DefaultClock==12) ? '%I:%M %p' : '%H:%M'))).'</p>';
 
 	echo '<TABLE ALIGN="center" ID="footer">';
 	
