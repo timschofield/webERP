@@ -1,5 +1,7 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
+<p>7/5/07 Wayne McDougall - includes/Login.php checks for magic_quotes_gpc and issues a warning if they are enabled.
+<p>3/5/07 Updated installation instructions to recommend magic quotes off. Added .htaccess file for the main directory to default magic quotes for those web-servers that support .htaccess files.
 <p>6/5/07 Wayne McDougall - footer.inc / InventoryPlanning.php use strftime to get locale specific dates rather than gettext translation
 <p>1/5/07 Wayne McDougall - footer.inc nows uses phpgettext for date/time translation, and the webserver locale date/time if no translation is available
 <p>1/5/07 Wayne McDougall - Use DefaultDateFormat in all PDF report headings

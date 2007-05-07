@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 // Display demo user name and password within login form if $allow_demo_mode is true
 include ('includes/LanguageSetup.php');
 
@@ -19,6 +19,8 @@ if ($allow_demo_mode == True AND !isset($demo_text)) {
 </HEAD>
 
 <BODY leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+
     <TABLE width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" class="mainTable">
         <TR>
             <TD align="left" valign="top"><img src="css/webERP.gif"></TD>
@@ -27,7 +29,15 @@ if ($allow_demo_mode == True AND !isset($demo_text)) {
         <TR>
             <TD align="center" valign="top">
 
-		    <TABLE class="login" border="0" cellpadding="0" cellspacing="0">
+			<?php
+				if (get_magic_quotes_gpc()){ 
+					echo '<p style="background:white">';
+					echo _('Your webserver is configured to enable Magic Quotes. This may cause problems if you use punctuation (such as quotes) when doing data entry. You should contact your webmaster to disable Magic Quotes');
+					echo '</p>';
+				}
+			?>
+
+		    <TABLE class="login" border="1" cellpadding="0" cellspacing="0">
 		        <TR>
 		            <TD colspan="2" rowspan="2">
                     <TABLE border="0" cellpadding="0" cellspacing="0">
@@ -36,7 +46,6 @@ if ($allow_demo_mode == True AND !isset($demo_text)) {
                             <TD colspan="5" bgcolor="#FFFFFF"><img src="css/spacer.gif"></TD>
 			</TR>
 			
-
                         <TR>
 
 			<TD VALIGN="CENTER" ALIGN="CENTER" class="logoBackground"><img src="logo_server.jpg" ></TD>
