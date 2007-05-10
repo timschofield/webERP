@@ -1,6 +1,6 @@
 WEB-ERP Installation
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 Upgrading
 
@@ -16,7 +16,6 @@ the upgrade script name will be of the format upgrade(old version number)-(new v
 
 The old scripts should be deleted and the new scripts extracted to the webERP installation directory under the web-server root directory. config.php will require modification for your database username and password and company specific details.
 
-Upgrade scripts for postgres are included under webERP/sql/pg/
 
 
 ***************New Installations***************
@@ -26,19 +25,17 @@ Note: It is worth printing this document off and checking off the steps as you g
 Pre-requisites:
 
 - A working PHP web server - v 4.3 or later - with support for mysql or postgres databases, gd, gettext and ftp
-- A working MySQL or Postgres server (MySql version 4.1 or above - innodb tables must be enabled - this needs a my.cnf file - see the MySQL manual. Postgres v 7.4 or later).
+- A working MySQL or Postgres server (MySql version 4.1 or above - innodb tables must be enabled - this needs a my.cnf file - see the MySQL manual).
 
 Installing these components are well covered elsewhere.
 
-PHP must have the register globals configuration parameter set to off.  This is the default (now).  This flag can be set in the php.ini on the server.  If it can't be changed, it is possibe for apache web servers to create a file called .htaccess in the root of the webERP system.  In that file put the line:
+PHP must have the register globals configuration parameter set to off.  This is the default (now).  This flag can be set in the php.ini on the server.  If it can't be changed, it is possibe for apache web servers to create a file called .htaccess. A .htaccess file is included in the webERP directory that ensures the register_globals flag is set to off for those web-servers that support .htaccess files.
 
-php_flag register_globals off
-
-Also the magic_quote_gpc setting must also be set to off. This is a configuration parameter in the php.ini file on the web-server. If you don't have access to the web-server's php.ini, then the webERP distribution has an .htaccess file to ensure that this is set to off for apache servers and thos other servers that look at the parameters in the .htaccess file. If magic_quotes_gpc is not set to off then this can leave annoying "\" characters in some fields otherwise webERP works as normal.
+In addition the magic_quote_gpc setting must also be set to off. This is a configuration parameter in the php.ini file on the web-server. If you don't have access to the web-server's php.ini, then the webERP distribution has an .htaccess file to ensure that this is set to off for apache servers and thos other servers that look at the parameters in the .htaccess file. If magic_quotes_gpc is not set to off then this can leave annoying "\" characters in some fields otherwise webERP works as normal.
 
 One more issue with php setup - by default the setting session.use_cookies is set to 1, if it is set to 0 this can also cause problems.
 
-There are a number of traps with PHP installation depending on the web-server - see http://www.weberp.org/wikidocs/FrequentlyAskedQuestionsInstallation?v=efe
+There are a number of traps with PHP installation depending on the web-server - see http://www.weberp.org/wikidocs/FrequentlyAskedQuestionsInstallation
 
 The system is developed using MySQL. webERP was also tested up to version 3.05 with the Postgres database server. Postgres is no longer supported due to other developer priorities. Instructions here are for mysql.
 
@@ -189,9 +186,9 @@ $Version = 'XXX';
 // assuming that the web server is also the sql server
 $host = 'localhost';
 
-//The type of db server being used - currently only postgres or mysql
+//The type of db server being used - now only mysql is supported
 $dbType = 'mysql';
-//$dbType = 'postgres';
+//$dbType = 'postgres'; /*now depreciated */
 //$dbType = 'mysql';
 
 $DatabaseName = 'weberp';
@@ -265,7 +262,7 @@ _____________________________________________________________________
 LEGAL
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+as published by the Free Software Foundation; version 2 of the License.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
@@ -273,4 +270,4 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public
 A copy of the GNU General Public License is included in the doc directory along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-Copyright Logic Works Ltd - Contact: info@weberp.org
+Copyright Logic Works Ltd 2007 - Contact: info@weberp.org

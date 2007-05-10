@@ -6,18 +6,18 @@ The upgrade script to convert a 3.04 database to work with 3.05 scripts is:
 
 Z_Upgrade_3.04-3.05.php
 
-Once the new scripts have been loaded onto the web-server and a backup of the old database taken this script should be opened in a URL - there are no links to this URL so it will need to be typed manually into the browser. This script works with both mysql and postgres.
+Once the new scripts have been loaded onto the web-server and a backup of the old database taken this script should be opened in a URL - there are no links to this URL so it will need to be typed manually into the browser.
 
 Previous to version 3.05, the database conversion had to be done manually - the instructions to complete upgrades from older versions are provided below:
 
 
 CONVERTING THE DATABASE 
 
-As each new version is released the new php scripts will use new database fields or changed field names. A a consequence, the new scripts will most likely not work unless the database structure has been converted to the new database structure. Normally the changes to the database between versions are small. However, between 2.9b and 3.0 the changes have been significant and the upgrade script may take some time to run. It should not be run from a phpMyAdmin window since PHP will time out long before the upgrade script will have finished.
+As each new version is released the new php scripts will use new database fields or changed field names. A a consequence, the new scripts will most likely not work unless the database structure has been converted to the new database structure. Normally the changes to the database between versions are small. However, between 2.9b and 3.0 the changes were significant and the upgrade script may take some time to run. It should not be run from a phpMyAdmin window since PHP will time out long before the upgrade script will have finished.
 
 It is important to make a copy of an sql dump of the database before attempting to run the upgrade script.
 
-An SQL script is provided for each version increment that changes the old database to the new structure retaining all the data from the old database. This script must be applied against the old database. In general the script is held under the sql directory. Under the sql directory there is a pg directory containing the postgres specific SQL and a mysql directory containing the mysql specific SQL. The upgrade script is named:
+An SQL script is provided for each version increment that changes the old database to the new structure retaining all the data from the old database. This script must be applied against the old database. In general the script is held under the sql directory. Under the sql directory there is a mysql directory containing the mysql specific SQL - Postgres was previously also supported up to version 3.05. The upgrade script is named:
 
 upgradeXX.XX-YY.YY.sql
 
