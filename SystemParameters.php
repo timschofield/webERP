@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 $PageSecurity =15;
 
@@ -35,50 +35,50 @@ if (isset($_POST['submit'])) {
 	} elseif (strstr($_POST['X_RomalpaClause'], "'") || strlen($_POST['X_RomalpaClause']) > 5000) {
 		$InputError = 1;
 		prnMsg(_('The Romalpa Clause may not contain single qoutes and may not be longer than 5000 chars'),'error');
-	} elseif (strlen($_POST['X_QuickEntries']) > 2 || !is_numeric($_POST['X_QuickEntries']) || 
+	} elseif (strlen($_POST['X_QuickEntries']) > 2 || !is_numeric($_POST['X_QuickEntries']) ||
 		$_POST['X_QuickEntries'] < 1 || $_POST['X_QuickEntries'] > 99 ) {
 		$InputError = 1;
 		prnMsg(_('No less than 1 and more than 99 Quick entries allowed'),'error');
 	} elseif (strlen($_POST['X_FreightChargeAppliesIfLessThan']) > 12 || !is_numeric($_POST['X_FreightChargeAppliesIfLessThan']) ) {
 		$InputError = 1;
 		prnMsg(_('Freight Charge Applies If Less Than must be a number'),'error');
-	} elseif (strlen($_POST['X_NumberOfPeriodsOfStockUsage']) > 2 || !is_numeric($_POST['X_NumberOfPeriodsOfStockUsage']) || 
+	} elseif (strlen($_POST['X_NumberOfPeriodsOfStockUsage']) > 2 || !is_numeric($_POST['X_NumberOfPeriodsOfStockUsage']) ||
 		$_POST['X_NumberOfPeriodsOfStockUsage'] < 1 || $_POST['X_NumberOfPeriodsOfStockUsage'] > 12 ) {
 		$InputError = 1;
 		prnMsg(_('Finantial period per year must be a number between 1 and 12'),'error');
 	} elseif (strlen($_POST['X_TaxAuthorityReferenceName']) >25) {
 		$InputError = 1;
 		prnMsg(_('The Tax Authority Reference Name must be 25 characters or less long'),'error');
-	} elseif (strlen($_POST['X_OverChargeProportion']) > 3 || !is_numeric($_POST['X_OverChargeProportion']) || 
+	} elseif (strlen($_POST['X_OverChargeProportion']) > 3 || !is_numeric($_POST['X_OverChargeProportion']) ||
 		$_POST['X_OverChargeProportion'] < 0 || $_POST['X_OverChargeProportion'] > 100 ) {
 		$InputError = 1;
 		prnMsg(_('Over Charge Proportion must be a percentage'),'error');
-	} elseif (strlen($_POST['X_OverReceiveProportion']) > 3 || !is_numeric($_POST['X_OverReceiveProportion']) || 
+	} elseif (strlen($_POST['X_OverReceiveProportion']) > 3 || !is_numeric($_POST['X_OverReceiveProportion']) ||
 		$_POST['X_OverReceiveProportion'] < 0 || $_POST['X_OverReceiveProportion'] > 100 ) {
 		$InputError = 1;
 		prnMsg(_('Over Receive Proportion must be a percentage'),'error');
-	} elseif (strlen($_POST['X_PageLength']) > 3 || !is_numeric($_POST['X_PageLength']) || 
+	} elseif (strlen($_POST['X_PageLength']) > 3 || !is_numeric($_POST['X_PageLength']) ||
 		$_POST['X_PageLength'] < 1 ) {
 		$InputError = 1;
 		prnMsg(_('Lines per page must be greater than 1'),'error');
-	}elseif (strlen($_POST['X_DefaultTaxCategory']) > 1 || !is_numeric($_POST['X_DefaultTaxCategory']) || 
+	}elseif (strlen($_POST['X_DefaultTaxCategory']) > 1 || !is_numeric($_POST['X_DefaultTaxCategory']) ||
 		$_POST['X_DefaultTaxCategory'] < 1 ) {
 		$InputError = 1;
 		prnMsg(_('DefaultTaxCategory must be between 1 and 9'),'error');
-	} elseif (strlen($_POST['X_DefaultDisplayRecordsMax']) > 3 || !is_numeric($_POST['X_DefaultDisplayRecordsMax']) || 
+	} elseif (strlen($_POST['X_DefaultDisplayRecordsMax']) > 3 || !is_numeric($_POST['X_DefaultDisplayRecordsMax']) ||
 		$_POST['X_DefaultDisplayRecordsMax'] < 1 ) {
 		$InputError = 1;
 		prnMsg(_('Default maximum number of records to display must be between 1 and 500'),'error');
-	}elseif (strlen($_POST['X_MaxImageSize']) > 3 || !is_numeric($_POST['X_MaxImageSize']) || 
+	}elseif (strlen($_POST['X_MaxImageSize']) > 3 || !is_numeric($_POST['X_MaxImageSize']) ||
 		$_POST['X_MaxImageSize'] < 1 ) {
 		$InputError = 1;
 		prnMsg(_('The maximum size of item image files musst be between 50 and 500 (NB this figure refers to KB)'),'error');
 	}
 
 	if ($InputError !=1){
-		
+
 		$sql = array();
-		
+
 		if ($_SESSION['DefaultDateFormat'] != $_POST['X_DefaultDateFormat'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".DB_escape_string($_POST['X_DefaultDateFormat'])."' WHERE confname = 'DefaultDateFormat'";
 		}
@@ -214,6 +214,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['WeightedAverageCosting'] != $_POST['X_WeightedAverageCosting'] ) {
 			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_WeightedAverageCosting']."' WHERE confname = 'WeightedAverageCosting'";
 		}
+		if ($_SESSION['AutoIssue'] != $_POST['X_AutoIssue']){
+			$sql = 'UPDATE config SET confvalue=' . $_POST['X_AutoIssue'] . " WHERE confname='AutoIssue'";
+		}
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 0 ) {
 			$result = DB_query('BEGIN',$db,$ErrMsg);
@@ -230,8 +233,8 @@ if (isset($_POST['submit'])) {
 	} else {
 		prnMsg( _('Validation failed') . ', ' . _('no updates or deletes took place'),'warn');
 	}
-	
-	
+
+
 
 } /* end of if submit */
 
@@ -272,7 +275,7 @@ echo '</SELECT></TD>
 
 echo '<TR><TD COLSPAN=3 class="tableheader"><CENTER>' . _('Accounts Receivable/Payable Settings') . '</CENTER></TD></TR>';
 
-// PastDueDays1 
+// PastDueDays1
 echo '<TR><TD>' . _('First Overdue Deadline in (days)') . ':</TD>
 	<TD><input type="Text" Name="X_PastDueDays1" value="' . $_SESSION['PastDueDays1'] . '" SIZE=3 MAXLENGTH=3></TD>
 	<TD>' . _('Customer and supplier balances are displayed as overdue by this many days. This parameter is used on customer and supplier enquiry screens and aged listings') . '</TD></TR>';
@@ -281,8 +284,8 @@ echo '<TR><TD>' . _('First Overdue Deadline in (days)') . ':</TD>
 echo '<TR><TD>' . _('Second Overdue Deadline in (days)') . ':</TD>
 	<TD><input type="Text" Name="X_PastDueDays2" value="' . $_SESSION['PastDueDays2'] . '" SIZE=3 MAXLENGTH=3></TD>
 	<TD>' . _('As above but the next level of overdue') . '</TD></TR>';
-	
-	
+
+
 // DefaultCreditLimit
 echo '<TR><TD>' . _('Default Credit Limit') . ':</TD>
 	<TD><input type="Text" Name="X_DefaultCreditLimit" value="' . $_SESSION['DefaultCreditLimit'] . '" SIZE=6 MAXLENGTH=12></TD>
@@ -296,7 +299,7 @@ echo '<TR><TD>' . _('Check Credit Limits') . ':</TD>
 	<OPTION '.($_SESSION['CheckCreditLimits']==2?'SELECTED ':'').'VALUE="2">'._('Prohibit Sales').'
 	</SELECT></TD>
 	<TD>' . _('Credit limits can be checked at order entry to warn only or to stop the order from being entered where it would take a customer account balance over their limit') . '</TD></TR>';
-		
+
 // Show_Settled_LastMonth
 echo '<TR><TD>' . _('Show Settled Last Month') . ':</TD>
 	<TD><SELECT Name="X_Show_Settled_LastMonth">
@@ -342,7 +345,7 @@ echo '<TR><TD>' . _('Invoice Orientation') . ':</TD>
 	<TD>' . _('Select the invoice layout') . '</TD>
 	</TR>';
 
-//Blind packing note 
+//Blind packing note
 echo '<TR><TD>' . _('Show company details on packing slips') . ':</TD>
 	<TD><SELECT Name="X_DefaultBlindPackNote">
 	<OPTION '.($_SESSION['DefaultBlindPackNote']=="1"?'SELECTED ':'').'VALUE="1">'._('Show Company Details').'
@@ -421,11 +424,11 @@ echo '<TR><TD>' . _('Apply freight charges if an order is less than') . ':</TD>
 	<TD><input type="Text" Name="X_FreightChargeAppliesIfLessThan" SIZE=6 MAXLENGTH=12 value="' . $_SESSION['FreightChargeAppliesIfLessThan'] . '"></TD>
 	<TD>' . _('This parameter is only effective if Do Freight Calculation is set to Yes. If it is set to 0 then freight is always charged. The total order value is compared to this value in deciding whether or not to charge freight') .'</TD></TR>';
 
-	
+
 // AutoDebtorNo
 echo '<TR><TD>' . _('Create Debtor Codes Automatically') . ':</TD>
 	<TD><SELECT Name="X_AutoDebtorNo">';
-	 
+
 if ($_SESSION['AutoDebtorNo']==0) {
 	echo '<OPTION SELECTED Value=0>' . _('Manual Entry');
 	echo '<OPTION Value=1>' . _('Automatic');
@@ -436,7 +439,7 @@ if ($_SESSION['AutoDebtorNo']==0) {
 echo '</SELECT></TD>
 	<TD>' . _('Set to Automatic - customer codes are automatically created - as a sequential number') .'</TD></TR>';
 
-//==HJ== drop down list for tax category	
+//==HJ== drop down list for tax category
 $sql = 'SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname';
 $ErrMsg = _('Could not load tax categories table');
 $result = DB_query($sql,$db,$ErrMsg);
@@ -451,7 +454,7 @@ if( DB_num_rows($result) == 0 ) {
 }
 echo '</SELECT></TD>
 	<TD>' . _('This is the tax category used for entry of supplier invoices and the category at which freight attracts tax') .'</TD></TR>';
-	
+
 
 //TaxAuthorityReferenceName
 echo '<TR><TD>' . _('TaxAuthorityReferenceName') . ':</TD>
@@ -522,20 +525,20 @@ echo '<TR><TD>' . _('Sales Order Allows Same Item Multiple Times') . ':</TD>
 	</SELECT></TD><TD>&nbsp;</TD></TR>';
 
 echo '<TR><TD COLSPAN=3 class="tableheader"><CENTER>' . _('General Settings') . '</CENTER></TD></TR>';
-echo $TableHeader;	
-	
+echo $TableHeader;
+
 // YearEnd
 $MonthNames = array( 1=>_('January'),
 			2=>_('February'),
 			3=>_('March'),
 			4=>_('April'),
-			5=>_('May'), 
+			5=>_('May'),
 			6=>_('June'),
-			7=>_('July'), 
-			8=>_('August'), 
-			9=>_('September'), 
-			10=>_('October'), 
-			11=>_('November'), 
+			7=>_('July'),
+			8=>_('August'),
+			9=>_('September'),
+			10=>_('October'),
+			11=>_('November'),
 			12=>_('December') );
 echo '<TR><TD>' . _('Financial Year Ends On') . ':</TD>
 	<TD><SELECT Name="X_YearEnd">';
@@ -564,18 +567,18 @@ echo '<TR><TD>' . _('Maximum Size in KB of uploaded images') . ':</TD>
 //$part_pics_dir
 echo '<TR><TD>' . _('The directory where images are stored') . ':</TD>
 	<TD><SELECT NAME="X_part_pics_dir">';
-	
+
 $CompanyDirectory = 'companies/' . $_SESSION['DatabaseName'] . '/';
 $DirHandle = dir($CompanyDirectory);
 
 while ($DirEntry = $DirHandle->read() ){
-	
+
 	if (is_dir($CompanyDirectory . $DirEntry)
-		AND $DirEntry != '..' 
-		AND $DirEntry!='.' 
-		AND $DirEntry != 'CVS' 
-		AND $DirEntry != 'reports' 
-		AND $DirEntry != 'locale' 
+		AND $DirEntry != '..'
+		AND $DirEntry!='.'
+		AND $DirEntry != 'CVS'
+		AND $DirEntry != 'reports'
+		AND $DirEntry != 'locale'
 		AND $DirEntry != 'fonts'   ){
 
 		if ($_SESSION['part_pics_dir'] == $CompanyDirectory . $DirEntry){
@@ -588,8 +591,8 @@ while ($DirEntry = $DirHandle->read() ){
 echo '</SELECT></TD>
 	<TD>' . _('The directory under which all image files should be stored. Image files take the format of ItemCode.jpg - they must all be .jpg files and the part code will be the name of the image file. This is named automatically on upload. The system will check to ensure that the image is a .jpg file') . '</TD>
 	</TR>';
-	
-	
+
+
 //$reports_dir
 echo '<TR><TD>' . _('The directory where reports are stored') . ':</TD>
 	<TD><SELECT NAME="X_reports_dir">';
@@ -599,15 +602,15 @@ $DirHandle = dir($CompanyDirectory);
 while (false != ($DirEntry = $DirHandle->read())){
 
 	if (is_dir($CompanyDirectory . $DirEntry)
-		AND $DirEntry != '..' 
-		AND $DirEntry != 'includes' 
-		AND $DirEntry!='.' 
-		AND $DirEntry != 'doc' 
-		AND $DirEntry != 'css' 
-		AND $DirEntry != 'CVS' 
-		AND $DirEntry != 'sql' 
-		AND $DirEntry != 'part_pics' 
-		AND $DirEntry != 'locale' 
+		AND $DirEntry != '..'
+		AND $DirEntry != 'includes'
+		AND $DirEntry!='.'
+		AND $DirEntry != 'doc'
+		AND $DirEntry != 'css'
+		AND $DirEntry != 'CVS'
+		AND $DirEntry != 'sql'
+		AND $DirEntry != 'part_pics'
+		AND $DirEntry != 'locale'
 		AND $DirEntry != 'fonts'      ){
 
 		if ($_SESSION['reports_dir'] == $CompanyDirectory . $DirEntry){
@@ -655,7 +658,7 @@ echo '<TR><TD>' . _('Perform Database Maintenance At Logon') . ':</TD>
 	} else {
 		echo '<OPTION VALUE="0">'._('Never');
 	}
-	
+
 	echo '</SELECT></TD>
 	<TD>' . _('Uses the function DB_Maintenance defined in ConnectDB_XXXX.inc to perform database maintenance tasks, to run at regular intervals - checked at each and every user login') . '</TD>
 	</TR>';
@@ -685,7 +688,7 @@ echo '</SELECT></TD>
 	<TD>' . _('This feature makes webERP create entries in vtiger tables in the same database as webERP to allow an instance of vtiger to be integrated with webERP data') .'</TD></TR>';
 
 
-	
+
 echo '<TR><TD>' . _('Prohibit GL Journals to Control Accounts') . ':</TD>
 	<TD><SELECT Name="X_ProhibitJournalsToControlAccounts">';
 if ($_SESSION['ProhibitJournalsToControlAccounts']=='1'){
@@ -726,8 +729,18 @@ if ($_SESSION['WeightedAverageCosting']==1){
 
 echo '</SELECT></TD><TD>' . _('webERP allows inventory to be costed based on the weighted average of items in stock or full standard costing with price variances reported. The selection here determines the method used and the general ledger postings resulting from purchase invoices and shipment closing') . '</TD></TR>';
 
+echo '<TR><TD>' . _('Auto Issue Components') . ':</TD>
+		<TD>
+		<SELECT name="X_AutoIssue">';
+if ($_SESSION['AutoIssue']==0) {
+	echo '<OPTION SELECTED VALUE=0>' . _('No');
+	echo '<OPTION VALUE=1>' . _('Yes');
+} else {
+	echo '<OPTION SELECTED VALUE=1>' . _('Yes');
+	echo '<OPTION VALUE=0>' . _('No');
+	}
+echo '</SELECT></TD><TD>' . _('When items are manufactured it is possible for the components of the item to be automatically decremented from stock in accordance with the Bill of Material setting') . '</TD></TR>' ;
 
-	
 echo '</TABLE><input type="Submit" Name="submit" value="' . _('Update') . '"></CENTER></FORM>';
 
 include('includes/footer.inc');

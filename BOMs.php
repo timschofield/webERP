@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 9;
 
@@ -11,11 +11,11 @@ include('includes/header.inc');
 
 // *** POPAD&T
 function display_children($parent, $level, &$arbore) {
-	
+
 	global $db;
 	// retrive all children of parent
-	$c_result = DB_query("SELECT parent, 
-					component 
+	$c_result = DB_query("SELECT parent,
+					component
 				FROM bom WHERE parent='" . $parent. "'",$db);
 	if (DB_num_rows($c_result) > 0) {
 		echo ("<UL>\n");
@@ -25,9 +25,9 @@ function display_children($parent, $level, &$arbore) {
 				// indent and display the title of this child
 				$ID1 = $row["component"];
 				$arbore[] = $level; 		// Level
-				if ($level > 15) { 
-					prnMsg(_('A maximum of 15 levels of bill of materials only can be displayed'),'error'); 
-					exit; 
+				if ($level > 15) {
+					prnMsg(_('A maximum of 15 levels of bill of materials only can be displayed'),'error');
+					exit;
 				}
 				$arbore[] = $parent;		// Assemble
 				$arbore[] = $row['component'];	// Component
@@ -37,7 +37,7 @@ function display_children($parent, $level, &$arbore) {
 			}
 		}
 	}
-} 
+}
 
 function conversie($arbore, &$matrice){
 	$j = 0;
@@ -80,6 +80,8 @@ ie the BOM is recursive otherwise false ie 0 */
 } //end of function CheckForRecursiveBOM
 
 function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
+
+		global $ParentMBflag;
 		// Modified by POPAD&T
 		$sql = "SELECT bom.component,
 				stockmaster.description,
@@ -88,12 +90,14 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 				quantity,
 				effectiveafter,
 				effectiveto,
-				mbflag
+				mbflag,
+				bom.autoissue,
+				stockmaster.controlled
 			FROM bom,
 				stockmaster,
 				locations,
 				workcentres
-			WHERE bom.component='$Component' 
+			WHERE bom.component='$Component'
 			AND bom.parent = '$Parent'
 			AND bom.loccode = locations.loccode
 			AND bom.workcentreadded=workcentres.code
@@ -118,9 +122,19 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 				$DrillLink = $_SERVER['PHP_SELF'] . '?' . SID;
 				$DrillID=$myrow[0];
 			}
+			if ($ParentMBflag!='M'){
+				$AutoIssue = _('N/A');
+			} elseif ($myrow[9]==0 AND $myrow[8]==1){//autoissue and not controlled
+				$AutoIssue = _('Yes');
+			} elseif ($myrow[9]==0) {
+				$AutoIssue = _('No');
+			} else {
+				$AutoIssue = _('N/A');
+			}
 			printf("<td>%s</td>
 				<td>%s</td>
 			    <td>%s</td>
+				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -138,6 +152,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 				$myrow[4],
 				ConvertSQLDate($myrow[5]),
 				ConvertSQLDate($myrow[6]),
+				$AutoIssue,
 				$_SERVER['PHP_SELF'] . '?' . SID,
 				$Parent,
 				$myrow[0],
@@ -209,6 +224,12 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			prnMsg(_('The effective to date must be a date after the effective after date') . '<BR>' . _('The effective to date is') . ' ' . DateDiff($_POST['EffectiveTo'], $_POST['EffectiveAfter'], 'd') . ' ' . _('days before the effective after date') . '! ' . _('No updates have been performed') . '.<BR>' . _('Effective after was') . ': ' . $_POST['EffectiveAfter'] . ' ' . _('and effective to was') . ': ' . $_POST['EffectiveTo'],'error');
 			includes('includes/footer.inc');
 			exit;
+		} elseif($_POST['AutoIssue']==1){
+			$CheckControlledResult = DB_query("SELECT controlled FROM stockmaster WHERE stockid='" . $SelectedComponent . "'",$db);
+			$CheckControlledRow = DB_fetch_row($CheckControlledResult);
+			if ($CheckControlledRow[0]==1){
+				prnMsg(_('Only non-serialised or non-lot controlled items can be set to auto issue. These items require the lot/serial numbers of items issued to the works orders to be specified so autoissue is not an option. Auto issue has been automatically set to off for this component'),'warn');
+			}
 		}
 
 		$EffectiveAfterSQL = FormatDateForSQL($_POST['EffectiveAfter']);
@@ -221,7 +242,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 						loccode='" . $_POST['LocCode'] . "',
 						effectiveafter='" . $EffectiveAfterSQL . "',
 						effectiveto='" . $EffectiveToSQL . "',
-						quantity= " . $_POST['Quantity'] . "
+						quantity= " . $_POST['Quantity'] . ",
+						autoissue=" . $_POST['AutoIssue'] . "
 					WHERE bom.parent='" . $SelectedParent . "'
 					AND bom.component='" . $SelectedComponent . "'";
 
@@ -260,14 +282,16 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 								loccode,
 								quantity,
 								effectiveafter,
-								effectiveto)
+								effectiveto,
+								autoissue)
 							VALUES ('$SelectedParent',
 								'" . $_POST['Component'] . "',
 								'" . $_POST['WorkCentreAdded'] . "',
 								'" . $_POST['LocCode'] . "',
 								" . $_POST['Quantity'] . ",
 								'" . $EffectiveAfterSQL . "',
-								'" . $EffectiveToSQL . "')";
+								'" . $EffectiveToSQL . "',
+								" . $_POST['autoissue'] . ")";
 
 					$ErrMsg = _('Could not insert the BOM component because');
 					$DbgMsg = _('The SQL used to insert the component was');
@@ -314,11 +338,11 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	if(isset($_GET['ReSelect'])) {
 		$SelectedParent = $_GET['ReSelect'];
 	}
-	
+
 	//DisplayBOMItems($SelectedParent, $db);
 	$sql = "SELECT stockmaster.description,
 			stockmaster.mbflag
-		FROM stockmaster 
+		FROM stockmaster
 		WHERE stockmaster.stockid='" . $SelectedParent . "'";
 
 	$ErrMsg = _('Could not retrieve the description of the parent part because');
@@ -326,37 +350,37 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	$result=DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 	$myrow=DB_fetch_row($result);
-	
+
 	$ParentMBflag = $myrow[1];
-	
+
 	switch ($ParentMBflag){
-		case 'A': 
-			$MBdesc = _('Assembly'); 
+		case 'A':
+			$MBdesc = _('Assembly');
 			break;
-		case 'B': 
-			$MBdesc = _('Purchased'); 
+		case 'B':
+			$MBdesc = _('Purchased');
 			break;
-		case 'M': 
-			$MBdesc = _('Manufactured'); 
+		case 'M':
+			$MBdesc = _('Manufactured');
 			break;
-		case 'K': 
-			$MBdesc = _('Kit Set'); 
+		case 'K':
+			$MBdesc = _('Kit Set');
 			break;
 	}
-	
+
 	echo "<BR><FONT COLOR=BLUE SIZE=3><B> $SelectedParent - " . $myrow[0] . ' ('. $MBdesc. ') </FONT></B>';
-	
+
 	echo '<BR><A HREF=' . $_SERVER['PHP_SELF'] . '?' . SID . '>' . _('Select a Different BOM') . '</A></CENTER>';
 
 	if (isset($SelectedParent)) {
 		echo "<Center><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "Select=$SelectedParent'>" . _('Review Components') . '</a></Center>';
 	}
 ?>
-<?php  
+<?php
 	// Display Manufatured Parent Items
 	$sql = "SELECT bom.parent, stockmaster.description, stockmaster.mbflag
-		FROM bom, stockmaster 
-		WHERE bom.component='".$SelectedParent."' 
+		FROM bom, stockmaster
+		WHERE bom.component='".$SelectedParent."'
 		AND stockmaster.stockid=bom.parent
 		AND stockmaster.mbflag='M'";
 
@@ -377,8 +401,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	}
 	// Display Assembly Parent Items
 	$sql = "SELECT bom.parent, stockmaster.description, stockmaster.mbflag
-		FROM bom, stockmaster 
-		WHERE bom.component='".$SelectedParent."' 
+		FROM bom, stockmaster
+		WHERE bom.component='".$SelectedParent."'
 		AND stockmaster.stockid=bom.parent
 		AND stockmaster.mbflag='A'";
 
@@ -397,8 +421,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	}
 	// Display Kit Sets
 	$sql = "SELECT bom.parent, stockmaster.description, stockmaster.mbflag
-		FROM bom, stockmaster 
-		WHERE bom.component='".$SelectedParent."' 
+		FROM bom, stockmaster
+		WHERE bom.component='".$SelectedParent."'
 		AND stockmaster.stockid=bom.parent
 		AND stockmaster.mbflag='K'";
 
@@ -436,6 +460,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			<td class=tableheader>' . _('Quantity') . '</td>
 			<td class=tableheader>' . _('Effective After') . '</td>
 			<td class=tableheader>' . _('Effective To') . '</td>
+			<td class=tableheader>' . _('Auto Issue') . '</td>
 			</tr>';
 	echo $TableHeader;
 	if(count($matrice) == 0) {
@@ -481,7 +506,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 					effectiveafter,
 					effectiveto,
 					workcentreadded,
-					quantity
+					quantity,
+					autoissue
 				FROM bom
 				WHERE parent='$SelectedParent'
 				AND component='$SelectedComponent'";
@@ -508,29 +534,29 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			echo '<CENTER><TABLE><TR><TD>' . _('Component code') . ':</TD><TD>';
 			echo "<SELECT name='Component'>";
 
-			
+
 			if ($ParentMBflag=='A'){ /*Its an assembly */
-				$sql = "SELECT stockmaster.stockid, 
-						stockmaster.description 
-					FROM stockmaster 
-					WHERE stockmaster.mbflag !='D' 
-					AND stockmaster.mbflag !='K' 
-					AND stockmaster.mbflag !='A' 
-					AND stockmaster.controlled = 0 
-					AND stockmaster.stockid != '$SelectedParent' 
+				$sql = "SELECT stockmaster.stockid,
+						stockmaster.description
+					FROM stockmaster
+					WHERE stockmaster.mbflag !='D'
+					AND stockmaster.mbflag !='K'
+					AND stockmaster.mbflag !='A'
+					AND stockmaster.controlled = 0
+					AND stockmaster.stockid != '$SelectedParent'
 					ORDER BY stockmaster.stockid";
-			
+
 			} else { /*Its either a normal manufac item or a kitset - controlled items ok */
-				$sql = "SELECT stockmaster.stockid, 
-						stockmaster.description 
-					FROM stockmaster 
-					WHERE stockmaster.mbflag !='D' 
-					AND stockmaster.mbflag !='K' 
-					AND stockmaster.mbflag !='A' 
-					AND stockmaster.stockid != '$SelectedParent' 
+				$sql = "SELECT stockmaster.stockid,
+						stockmaster.description
+					FROM stockmaster
+					WHERE stockmaster.mbflag !='D'
+					AND stockmaster.mbflag !='K'
+					AND stockmaster.mbflag !='A'
+					AND stockmaster.stockid != '$SelectedParent'
 					ORDER BY stockmaster.stockid";
 			}
-					
+
 			$ErrMsg = _('Could not retrieve the list of potential components because');
 			$DbgMsg = _('The SQL used to retrieve the list of potential components part was');
 			$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
@@ -631,8 +657,29 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		<TD>
 		<INPUT TYPE="Text" name="EffectiveTo" SIZE=11 MAXLENGTH=11 VALUE="<?php echo $_POST['EffectiveTo']; ?>">
 		</TD></TR>
+		<?php
+		if ($ParentMBflag=='M'){
+			echo '<TR><TD>' . _('Auto Issue this Component to Work Orders') . ':</TD>
+				<TD>
+				<SELECT name="AutoIssue">';
+
+			if (!isset($_POST['AutoIssue'])){
+				$_POST['AutoIssue'] = $_SESSION['autoissue'];
+			}
+			if ($_POST['AutoIssue']==0) {
+				echo '<OPTION SELECTED VALUE=0>' . _('No');
+				echo '<OPTION VALUE=1>' . _('Yes');
+			} else {
+				echo '<OPTION SELECTED VALUE=1>' . _('Yes');
+				echo '<OPTION VALUE=0>' . _('No');
+			}
 
 
+			echo '</SELECT></TD></TR>';
+		} else {
+			$_POST['AutoIssue']=0;
+		}
+		?>
 		</TABLE>
 
 		<CENTER><input type="Submit" name="Submit" value="<?php echo _('Enter Information'); ?>">
