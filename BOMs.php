@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 9;
 
@@ -87,19 +87,24 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 				stockmaster.description,
 				locations.locationname,
 				workcentres.description,
-				quantity,
-				effectiveafter,
-				effectiveto,
-				mbflag,
+				bom.quantity,
+				bom.effectiveafter,
+				bom.effectiveto,
+				stockmaster.mbflag,
 				bom.autoissue,
-				stockmaster.controlled
+				stockmaster.controlled,
+				locstock.quantity AS qoh,
+				stockmaster.decimalplaces
 			FROM bom,
 				stockmaster,
 				locations,
-				workcentres
+				workcentres,
+				locstock
 			WHERE bom.component='$Component'
 			AND bom.parent = '$Parent'
 			AND bom.loccode = locations.loccode
+			AND bom.loccode = locstock.loccode
+			AND bom.component = locstock.stockid
 			AND bom.workcentreadded=workcentres.code
 			AND stockmaster.stockid=bom.component";
 
@@ -140,6 +145,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
+				<td align=right>%s</td>
 				<td><a href=\"%s&Select=%s&SelectedComponent=%s\">" . _('Edit') . "</a></td>
 				<td>".$DrillText."</a></td>
 				 <td><a href=\"%s&Select=%s&SelectedComponent=%s&delete=1&ReSelect=%s\">" . _('Delete') . "</a></td>
@@ -153,6 +159,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 				ConvertSQLDate($myrow[5]),
 				ConvertSQLDate($myrow[6]),
 				$AutoIssue,
+				number_format($myrow[10],$myrow[11]),
 				$_SERVER['PHP_SELF'] . '?' . SID,
 				$Parent,
 				$myrow[0],
@@ -461,6 +468,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			<td class=tableheader>' . _('Effective After') . '</td>
 			<td class=tableheader>' . _('Effective To') . '</td>
 			<td class=tableheader>' . _('Auto Issue') . '</td>
+			<td class=tableheader>' . _('Qty On Hand') . '</td>
 			</tr>';
 	echo $TableHeader;
 	if(count($matrice) == 0) {

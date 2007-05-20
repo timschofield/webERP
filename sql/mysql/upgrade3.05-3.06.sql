@@ -59,3 +59,4 @@ ALTER TABLE `worequirements`
 ALTER TABLE `bom` ADD `autoissue` TINYINT DEFAULT '0' NOT NULL ;
 
 INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('autoissue', '1');
+ALTER TABLE `www_users` ADD `salesmancode` CHAR( 3 ) DEFAULT '' NOT NULL ;

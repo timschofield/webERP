@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity = 2;
 
@@ -35,7 +35,8 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	}
 	If (($_POST['Keywords']=="") AND ($_POST['CustCode']=="") AND ($_POST['CustPhone']=="")) {
 		//$msg=_('At least one Customer Name keyword OR an extract of a Customer Code or Customer Phone must be entered for the search');
-		$SQL= "SELECT debtorsmaster.debtorno,
+		if ($_SESSION['SalesmanLogin']==''){
+			$SQL= "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
 					custbranch.brname,
 					custbranch.contactname,
@@ -44,6 +45,18 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 				FROM debtorsmaster LEFT JOIN custbranch
 					ON debtorsmaster.debtorno = custbranch.debtorno
 					ORDER BY debtorsmaster.debtorno";
+		} else {
+			$SQL= "SELECT debtorsmaster.debtorno,
+					debtorsmaster.name,
+					custbranch.brname,
+					custbranch.contactname,
+					custbranch.phoneno,
+					custbranch.faxno
+				FROM debtorsmaster LEFT JOIN custbranch
+					ON debtorsmaster.debtorno = custbranch.debtorno
+				WHERE custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'
+					ORDER BY debtorsmaster.debtorno";
+		}
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 
@@ -59,7 +72,8 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 				$i=strpos($_POST['Keywords']," ",$i) +1;
 			}
 			$SearchString = $SearchString . substr($_POST['Keywords'],$i)."%";
-			$SQL = "SELECT debtorsmaster.debtorno,
+			if ($_SESSION['SalesmanLogin']==''){
+				$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
 					custbranch.brname,
 					custbranch.contactname,
@@ -67,14 +81,28 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					custbranch.faxno
 				FROM debtorsmaster LEFT JOIN custbranch
 					ON debtorsmaster.debtorno = custbranch.debtorno
-				WHERE debtorsmaster.name " . LIKE . " '$SearchString' 
+				WHERE debtorsmaster.name " . LIKE . " '$SearchString'
 				ORDER BY debtorsmaster.debtorno";
+			} else {
+					$SQL = "SELECT debtorsmaster.debtorno,
+					debtorsmaster.name,
+					custbranch.brname,
+					custbranch.contactname,
+					custbranch.phoneno,
+					custbranch.faxno
+				FROM debtorsmaster LEFT JOIN custbranch
+					ON debtorsmaster.debtorno = custbranch.debtorno
+				WHERE debtorsmaster.name " . LIKE . " '$SearchString'
+				AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'
+				ORDER BY debtorsmaster.debtorno";
+
+			}
 
 		} elseif (strlen($_POST['CustCode'])>0){
 
 			$_POST['CustCode'] = strtoupper(trim($_POST['CustCode']));
-
-			$SQL = "SELECT debtorsmaster.debtorno,
+			if ($_SESSION['SalesmanLogin']==''){
+				$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
 					custbranch.brname,
 					custbranch.contactname,
@@ -84,9 +112,22 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					ON debtorsmaster.debtorno = custbranch.debtorno
 				WHERE debtorsmaster.debtorno " . LIKE  . " '%" . $_POST['CustCode'] . "%'
 				ORDER BY debtorsmaster.debtorno";
+			} else {
+					$SQL = "SELECT debtorsmaster.debtorno,
+					debtorsmaster.name,
+					custbranch.brname,
+					custbranch.contactname,
+					custbranch.phoneno,
+					custbranch.faxno
+				FROM debtorsmaster LEFT JOIN custbranch
+					ON debtorsmaster.debtorno = custbranch.debtorno
+				WHERE debtorsmaster.debtorno " . LIKE  . " '%" . $_POST['CustCode'] . "%'
+				AND  custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'
+				ORDER BY debtorsmaster.debtorno";
+			}
 		} elseif (strlen($_POST['CustPhone'])>0){
-
-			$SQL = "SELECT debtorsmaster.debtorno,
+			if ($_SESSION['SalesmanLogin']==''){
+				$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
 					custbranch.brname,
 					custbranch.contactname,
@@ -96,6 +137,21 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					ON debtorsmaster.debtorno = custbranch.debtorno
 				WHERE custbranch.phoneno " . LIKE  . " '%" . $_POST['CustPhone'] . "%'
 				ORDER BY custbranch.debtorno";
+			} else {
+				$SQL = "SELECT debtorsmaster.debtorno,
+					debtorsmaster.name,
+					custbranch.brname,
+					custbranch.contactname,
+					custbranch.phoneno,
+					custbranch.faxno
+				FROM debtorsmaster LEFT JOIN custbranch
+					ON debtorsmaster.debtorno = custbranch.debtorno
+				WHERE custbranch.phoneno " . LIKE  . " '%" . $_POST['CustPhone'] . "%'
+				AND  custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'
+				ORDER BY custbranch.debtorno";
+
+
+			}
 		}
 	} //one of keywords or custcode or custphone was more than a zero length string
 	$ErrMsg = _('The searched customer records requested cannot be retrieved because');
@@ -116,10 +172,10 @@ If (!isset($_POST['Select'])){
 
 echo '<BR>';
 
-If ($_POST['Select']!="" OR 
-	($_SESSION['CustomerID']!="" 
-	AND !isset($_POST['Keywords']) 
-	AND !isset($_POST['CustCode']) 
+If ($_POST['Select']!="" OR
+	($_SESSION['CustomerID']!=""
+	AND !isset($_POST['Keywords'])
+	AND !isset($_POST['CustCode'])
 	AND !isset($_POST['CustPhone']))) {
 
 	If ($_POST['Select']!=""){
@@ -142,36 +198,37 @@ If ($_POST['Select']!="" OR
 
 	echo "<TABLE BORDER=2 CELLPADDING=4><TR><TD class='tableheader'>" . _('Customer Inquiries') . "</TD>
 			<TD class='tableheader'>" . _('Customer Maintenance') . "</TD></TR>";
-			
+
 	echo '<TR><TD WIDTH=50%>';
-	
+
 	/* Customer Inquiry Options */
 	echo '<a href="' . $rootpath . '/CustomerInquiry.php?CustomerID=' . $_SESSION['CustomerID'] . '">' . _('Customer Transaction Inquiries') . '</a><BR>';
 	echo '<a href="' . $rootpath . '/SelectSalesOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Modify Outstanding Sales Orders') . '</a><BR>';
 	echo '<a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Order Inquiries') . '</a><BR>';
 
 	wikiLink('Customer', $_SESSION['CustomerID']);
-	
+
 	echo '</TD><TD WIDTH=50%>';
-	
+
         echo '<a href="' . $rootpath . '/Customers.php?">' . _('Add a New Customer') . '</a><br>';
 	echo '<a href="' . $rootpath . '/Customers.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Modify Customer Details') . '</a><BR>';
 	echo '<a href="' . $rootpath . '/CustomerBranches.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add/Modify/Delete Customer Branches') . '</a><BR>';
-	
+
 	echo '<a href="' . $rootpath . '/SelectProduct.php">' . _('Special Customer Prices') . '</a><BR>';
 	echo '<a href="' . $rootpath . '/CustEDISetup.php">' . _('Customer EDI Configuration') . '</a>';
 
-	
+
 	echo '</TD></TR></TABLE><BR></CENTER>';
 } else {
 	echo "<CENTER><TABLE WIDTH=50% BORDER=2><TR><TD class='tableheader'>" . _('Customer Inquiries') . "</TD>
 			<TD class='tableheader'>" . _('Customer Maintenance') . "</TD></TR>";
-			
+
 	echo '<TR><TD WIDTH=50%>';
-	
+
 	echo '</TD><TD WIDTH=50%>';
-	
-  echo '<a href="' . $rootpath . '/Customers.php?">' . _('Add a New Customer') . '</a><br>';
+  	if ($_SESSION['SalesmanLogin']==''){
+    	echo '<a href="' . $rootpath . '/Customers.php?">' . _('Add a New Customer') . '</a><br>';
+    }
 	echo '</TD></TR></TABLE><BR></CENTER>';
 }
 
@@ -234,6 +291,9 @@ if (isset($_POST['CustPhone'])) {
 
 
 <?php
+if ($_SESSION['SalesmanLogin']!=''){
+	prnMsg(_('Your account enables you to see only customers allocated to you'),'warn',_('Note: Sales-person Login'));
+}
 
 If (isset($result)) {
   $ListCount=DB_num_rows($result);
@@ -253,9 +313,9 @@ If (isset($result)) {
 
  if ($ListPageMax >1) {
 	echo "<P>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
-	
+
 	echo '<SELECT NAME="PageOffset">';
-	
+
 	$ListPage=1;
 	while($ListPage <= $ListPageMax) {
 		if ($ListPage == $_POST['PageOffset']) {
@@ -271,7 +331,7 @@ If (isset($result)) {
 		<INPUT TYPE=SUBMIT NAME="Next" VALUE="' . _('Next') . '">';
  	echo '<P>';
 }
- 
+
 
 	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>';
 	$TableHeader = '<TR>
@@ -332,9 +392,9 @@ If (isset($result)) {
 //end if results to show
 if ($ListPageMax >1) {
 	echo "<P>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
-	
+
 	echo '<SELECT NAME="PageOffset">';
-	
+
 	$ListPage=1;
 	while($ListPage <= $ListPageMax) {
 		if ($ListPage == $_POST['PageOffset']) {

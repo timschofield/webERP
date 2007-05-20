@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity = 2;
 
@@ -213,7 +213,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	} elseif (!isset($_POST['StockCode']) AND !isset($_POST['Keywords'])) {
 		if ($_POST['StockCat'] == 'All'){
 			$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description, 
+					stockmaster.description,
 					stockmaster.mbflag,
 					SUM(locstock.quantity) AS qoh,
 					stockmaster.units
@@ -246,7 +246,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	$ErrMsg = _('No stock items were returned by the SQL because');
 	$Dbgmsg = _('The SQL that returned an error was');
 	$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
-	
+
 	if (DB_num_rows($result)==0){
 		prnMsg(_('No stock items were returned by this search please re-enter alternative criteria to try again'),'info');
 	} elseif (DB_num_rows($result)==1){ /*autoselect it to avoid user hitting another keystroke */
@@ -261,11 +261,11 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 // display list if there is more than one record
 
 if (isset($result) AND !isset($_POST['Select'])) {
-	
+
 	$ListCount = DB_num_rows($result);
 	if ($ListCount > 0) {
 	// If the user hit the search button and there is more than one item to show
-				
+
 		$ListPageMax=ceil($ListCount/$_SESSION['DisplayRecordsMax']);
 
 		if (isset($_POST['Next'])) {
@@ -279,15 +279,15 @@ if (isset($result) AND !isset($_POST['Select'])) {
 				$_POST['PageOffset'] = $_POST['PageOffset'] - 1;
 			}
 		}
-	
+
 		if ($_POST['PageOffset']>$ListPageMax){
 			$_POST['PageOffset'] = $ListPageMax;
 		}
 		if ($ListPageMax >1) {
 			echo "<P>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
-			
+
 			echo '<SELECT NAME="PageOffset">';
-			
+
 			$ListPage=1;
 			while($ListPage <= $ListPageMax) {
 				if ($ListPage == $_POST['PageOffset']) {
@@ -303,7 +303,7 @@ if (isset($result) AND !isset($_POST['Select'])) {
 				<INPUT TYPE=SUBMIT NAME="Next" VALUE="' . _('Next') . '">';
 			echo '<P>';
 		}
-	
+
 		echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
 		$tableheader = '<TR>
 					<TD class="tableheader">' . _('Code') . '</TD>
@@ -312,19 +312,19 @@ if (isset($result) AND !isset($_POST['Select'])) {
 					<TD class="tableheader">' . _('Units') . '</TD>
 				</TR>';
 		echo $tableheader;
-	
+
 		$j = 1;
-	
+
 		$k = 0; //row counter to determine background colour
-	
+
 	$RowIndex = 0;
-	
+
 	if (DB_num_rows($result)<>0){
 		DB_data_seek($result, ($_POST['PageOffset']-1)*$_SESSION['DisplayRecordsMax']);
 	}
-	
+
 		while (($myrow=DB_fetch_array($result)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
-	
+
 			if ($k==1){
 				echo '<tr bgcolor="#CCCCCC">';
 				$k=0;
@@ -332,40 +332,40 @@ if (isset($result) AND !isset($_POST['Select'])) {
 				echo '<tr bgcolor="#EEEEEE">';
 				$k++;
 			}
-	
+
 			if ($myrow['mbflag']=='D') {
 				$qoh = 'N/A';
 			} else {
 				$qoh = number_format($myrow["qoh"],1);
 			}
-	
+
 			printf("<td><INPUT TYPE=SUBMIT NAME='Select' VALUE='%s'</td>
 				<td>%s</td>
 				<td ALIGN=RIGHT>%s</td>
 				<td>%s</td>
-				</tr>", 
-				$myrow['stockid'], 
-				$myrow['description'], 
-				$qoh, 
+				</tr>",
+				$myrow['stockid'],
+				$myrow['description'],
+				$qoh,
 				$myrow['units']);
-	
+
 			$j++;
 			If ($j == 20 AND ($RowIndex+1 != $_SESSION['DisplayRecordsMax'])){
 				$j=1;
 				echo $tableheader;
-	
+
 			}
 	$RowIndex = $RowIndex + 1;
 	//end of page full new headings if
 		}
 	//end of while loop
-	
+
 		echo '</TABLE>';
 		if ($ListPageMax >1) {
 			echo "<P>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
-			
+
 			echo '<SELECT NAME="PageOffset">';
-			
+
 			$ListPage=1;
 			while($ListPage <= $ListPageMax) {
 				if ($ListPage == $_POST['PageOffset']) {
@@ -397,32 +397,210 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		$StockID = $_SESSION['SelectedStockItem'];
 	}
 
-	$result = DB_query("SELECT stockmaster.description, stockmaster.mbflag FROM stockmaster WHERE stockid='" . $StockID . "'",$db);
-	$myrow = DB_fetch_row($result);
+	$result = DB_query("SELECT stockmaster.description,
+							stockmaster.mbflag,
+							stockmaster.units,
+							stockmaster.decimalplaces,
+							stockmaster.controlled,
+							stockmaster.serialised,
+							stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS cost,
+							stockmaster.discontinued,
+							stockmaster.eoq,
+							stockmaster.volume,
+							stockmaster.kgs
+							FROM stockmaster WHERE stockid='" . $StockID . "'",$db);
+	$myrow = DB_fetch_array($result);
 
 	$Its_A_Kitset_Assembly_Or_Dummy=False;
 	$Its_A_Dummy=False;
 	$Its_A_Kitset=False;
 
-	echo '<br><FONT SIZE=3>' . _('Stock code') . ' <B>' . $StockID . ' - ' . $myrow[0] . ' </B> ' . _('is currently selected') . '. <br>' . _('Select one of the links below to operate using this item') . '.</FONT><BR><BR>';
-	if ($myrow[1]=='A' OR $myrow[1]=='K' OR $myrow[1]=='D'){
-		$Its_A_Kitset_Assembly_Or_Dummy=True;
+	echo '<TABLE BORDER=1><TR><TD colspan=3 class="tableheader"><font size=4>' . $StockID . ' - ' . $myrow['description'] . ' </font></TD></TR>';
+
+	echo '<TR><TD WIDTH="40%">
+			<TABLE>'; //nested table
+
+	echo '<TR><TD align=right class="tableheader">' . _('Item type:') . '</TD><TD>';
+
+	switch ($myrow['mbflag']) {
+		case 'A':
+			echo _('Assembly Item');
+			$Its_A_Kitset_Assembly_Or_Dummy=True;
+			break;
+		case 'K':
+			echo _('Kitset Item');
+			$Its_A_Kitset_Assembly_Or_Dummy=True;
+			$Its_A_Kitset=True;
+			break;
+		case 'D':
+			echo _('Service Item');
+			$Its_A_Kitset_Assembly_Or_Dummy=True;
+			$Its_A_Dummy=True;
+			break;
+		case 'B':
+			echo _('Purchased Item');
+			break;
+		default:
+			echo _('Manufactured Item');
+			break;
 	}
-	if ($myrow[1]=='K'){
-		$Its_A_Kitset=True;
+	echo '</TD><TD align=right class="tableheader">' . _('Control Level:') .'</TD><TD>';
+	if ($myrow['serialised']==1){
+		echo _('serialised');
+	} elseif ($myrow['controlled']==1){
+		echo _('Batchs/Lots');
+	} else {
+		echo _('N/A');
 	}
-	if ($myrow[1]=='D'){
-		$Its_A_Dummy=True;
+	echo '</TD><TD align=right class="tableheader">' . _('Units') . ':</TD><TD>' . $myrow['units'] . '</TD></TR>';
+	echo '<TR><TD align=right class="tableheader">' . _('Volume') . ':</TD><TD align=right>' . number_format($myrow['volume'],3) . '</TD>
+			<TD align=right class="tableheader">' . _('Weight') . ':</TD><TD align=right>' . number_format($myrow['kgs'],3) . '</TD>
+			<TD align=right class="tableheader">' . _('EOQ') . ':</TD><TD align=right>' . number_format($myrow['eoq'],$myrow['decimalplaces']) . '</TD></TR>';
+
+	echo '<TR><TD class="tableheader">' . _('Sell Price') . ':</TD><TD align=right>';
+
+	$PriceResult = DB_query("SELECT price FROM prices
+								WHERE currabrev ='" . $_SESSION['CompanyRecord']['defaultcurrency'] . "'
+								AND typeabbrev = '" . $SESSION['DefaultPriceList'] . "'
+								AND debtorno=''
+								AND branchcode=''",
+								$db);
+	if (DB_num_rows($PriceResult)==0){
+			echo _('No Price Set');
+			$Price =0;
+	} else {
+			$PriceRow = DB_fetch_row($PriceResult);
+			$Price = $PriceRow[0];
+			echo number_format($Price,2);
+	}
+	if ($myrow['mbflag']=='K' OR $myrow['mbflag']=='A'){
+		$CostResult = DB_query("SELECT SUM(bom.quantity*
+						(stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) AS cost
+					FROM bom INNER JOIN
+						stockmaster
+					ON bom.component=stockmaster.stockid
+					WHERE bom.parent='" . $StockID . "'
+					AND bom.effectiveto > '" . Date("Y-m-d") . "'
+					AND bom.effectiveafter < '" . Date("Y-m-d") . "'",
+					$db);
+		$CostRow = DB_fetch_row($CostResult);
+		$Cost = $CostRow[0];
+	} else {
+		$Cost = $myrow['cost'];
+	}
+	echo '<TD align=right class="tableheader">' . _('Cost') . '</TD><TD align=right>' . number_format($Cost,3) . '</TD>
+			<TD align=right class="tableheader">' . _('Gross Profit') . '</TD><TD align=right>';
+
+	if ($Price >0) {
+		$GP = number_format(($Price - $Cost)/$Price,3);
+	} else {
+		$GP=_('N/A');
+	}
+	echo $GP . '</TD></TR>';
+
+	echo '</TD></TR>
+		</TABLE>'; //end of first nested table
+
+	echo '<TD WIDTH="15%">
+			<TABLE>'; //nested table to show QOH/orders
+
+
+	$QOH=0;
+	switch ($myrow['mbflag']) {
+		case 'A':
+ 		case 'D':
+		case 'K':
+			$QOH=_('N/A');
+			$QOO =_('N/A');
+			break;
+		case 'M':
+		case 'B':
+			$QOHResult = DB_query("SELECT sum(quantity)
+                            			FROM locstock
+                        				WHERE stockid = '" . $StockID . "'",
+                        				$db);
+            $QOHRow = DB_fetch_row($QOHResult);
+            $QOH = number_format($QOHRow[0],$myrow['decimalplaces']);
+
+            $QOOResult = DB_query("SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd)
+                   					FROM purchorderdetails
+                   					WHERE purchorderdetails.itemcode='" . $StockID . "'",
+                   					$db);
+			if (DB_num_rows($QOOResult)==0){
+				$QOO=0;
+			} else {
+				$QOORow = DB_fetch_row($QOOResult);
+				$QOO = number_format($QOORow[0],$myrow['decimalplaces']);
+			}
+			break;
+	}
+	$Demand =0;
+	$DemResult = DB_query("SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
+                 					FROM salesorderdetails INNER JOIN salesorders
+                 					ON salesorders.orderno = salesorderdetails.orderno
+                 					WHERE salesorderdetails.completed=0
+		 							AND salesorders.quotation=0
+                 					AND salesorderdetails.stkcode='" . $StockID . "'",
+                 			$db);
+
+    $DemRow = DB_fetch_row($DemResult);
+    $Demand = $DemRow[0];
+	$DemAsComponentResult =	DB_query("SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
+                 						FROM salesorderdetails,
+	                  						salesorders,
+    						                bom,
+                      						stockmaster
+                 						WHERE salesorderdetails.stkcode=bom.parent AND
+                       						salesorders.orderno = salesorderdetails.orderno AND
+                                            salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0 AND
+                       						bom.component='" . $StockID . "' AND stockmaster.stockid=bom.parent AND
+                       						stockmaster.mbflag='A'
+		       								AND salesorders.quotation=0",
+		       							$db);
+	$DemAsComponentRow = DB_fetch_row($DemAsComponentResult);
+	$Demand += $DemAsComponentRow[0];
+
+	echo '<TR><TD align=right width="15%" class="tableheader">' . _('Quantity On Hand') . ':</TD><TD width="17%" align=right>' . $QOH . '</TD></TR>';
+	echo '<TR><TD align=right width="15%" class="tableheader">' . _('Quantity Demand') . ':</TD><TD width="17%" align=right>' . number_format($Demand,$myrow['decimalplaces']) . '</TD></TR>';
+	echo '<TR><TD align=right width="15%" class="tableheader">' . _('Quantity On Order') . ':</TD><TD width="17%" align=right>' . $QOO . '</TD></TR>
+				</TABLE>';//end of nested table
+
+    echo '</TD>'; //end cell of master table
+    if ($myrow['mbflag']=='B'){
+		echo '<TD WIDTH="40%" VALIGN="TOP"><TABLE>
+			<TR><TD width="50%" class="tableheader">' . _('Supplier') . '</TD>
+				<TD width="20%" class="tableheader">' . _('Cost') . '</TD>
+				<TD width="10%" class="tableheader">' . _('Currency') . '</TD>
+				<TD width="20%" class="tableheader">' . _('Lead Time') . '</TD></TR>';
+
+		$SuppResult = DB_query("SELECT  suppliers.suppname,
+								purchdata.price,
+								suppliers.currcode,
+								purchdata.leadtime,
+								purchdata.conversionfactor,
+								purchdata.preferred
+						FROM purchdata INNER JOIN suppliers
+						ON purchdata.supplierno=suppliers.supplierid
+						WHERE purchdata.stockid = '" . $StockID . "'",
+						$db);
+		while ($SuppRow = DB_fetch_array($SuppResult)){
+			echo '<TR><TD>' . $SuppRow['suppname'] . '</TD>
+						<TD align=right>' . number_format($SuppRow['price']/$SuppRow['conversionfactor'],2) . '</TD>
+						<TD>' . $SuppRow['currcode'] . '</TD>
+						<TD>' . $SuppRow['leadtime'] . '</TD></TR>';
+
+		}
+		echo '</TR></TABLE></TD>';
 	}
 
-  // options (links) to pages. This requires stock id also to be passed.
-	echo '<CENTER><TABLE WIDTH=90% COLSPAN=2 BORDER=2 CELLPADDING=4>';
-	echo '<TR>
+	echo '</TR></TABLE><HR>'; // end first item details table
+
+	echo '<TABLE WIDTH="100%" BORDER=1><TR>
 		<TD WIDTH=33% class="tableheader">' . _('Item Inquiries') . '</TD>
 		<TD WIDTH=33% class="tableheader">' . _('Item Transactions') . '</TD>
 		<TD WIDTH=33% class="tableheader">' . _('Item Maintenance') . '</TD>
 	</TR>';
-	echo '<TR><TD>';
+	echo '<TR><TD valign="top">';
 
 	/*Stock Inquiry Options */
 
@@ -447,7 +625,7 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 
 	wikiLink('Product', $StockID);
 
-	echo '</TD><TD>';
+	echo '</TD><TD valign="top">';
 
 	/* Stock Transactions */
 	if ($Its_A_Kitset_Assembly_Or_Dummy==False){
@@ -455,7 +633,7 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
         echo '<A HREF="' . $rootpath . '/StockTransfers.php?' . SID . '&StockID=' . $StockID . '">' . _('Location Transfers') . '</A><BR>';
 	}
 
-	echo '</TD><TD>';
+	echo '</TD><TD valign="top">';
 
 	/*Stock Maintenance Options */
 
@@ -497,10 +675,9 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 
   echo '<A HREF="' . $rootpath . '/Stocks.php?">' . _('Add Inventory Items') . '</A><BR>';
 
-	echo '</TD></TR></TABLE>';
-}
+echo '</TD></TR></TABLE>';
 
-// end displaying item options if there is one and only one record
+}// end displaying item options if there is one and only one record
 
 ?>
 </CENTER>

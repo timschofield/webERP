@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 
 $PageSecurity = 2;
@@ -145,25 +145,20 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		<TD>' . _('Freight Cost') . ':</TD>
 		<TD><FONT COLOR=BLUE><B>' . $FreightCost . '</FONT></B></TD>
 	</TR>';
-	
+
 	echo '</TABLE>';
-	$invoices = preg_split("/(Inv \n*)/", $_SESSION['Items']->Comments);
-	foreach($invoices as $inv){
-		if (trim($inv)!=''){
-			echo '<A HREF="' . $rootpath. '/PrintCustTrans.php?FromTransNo=' . $inv . '&InvOrCredit=Invoice&PrintPDF=Yes" target=_blank>' . _('Inv') . '# '. $inv . '</A><BR>';
-		}
-	}
-
-	foreach($invoices as $inv){
-                if (trim($inv)!=''){
-                        if ($_SESSION['InvoicePortraitFormat']==0){
-                                echo '<A HREF="' . $rootpath. '/PrintCustTrans.php?FromTransNo=' . $inv . '&InvOrCredit=Invoice&PrintPDF=Yes" target=_blank>' . _('Inv') . '# ' . $inv . '</A><BR>';
-                        } else {
-                                echo '<A HREF="' . $rootpath . '/PrintCustTransPortrait.php?FromTransNo=' . $inv . '&InvOrCredit=Invoice&PrintPDF=Yes" target=_blank>' . _('Inv') . '# ' . $inv . '</A><BR>';
-                        }
-                }
-        }
-
+/*
+	$invoices = preg_split("/" . _('Inv') . " \n*)/", $_SESSION['Items']->Comments );
+	foreach( $invoices  as $inv){
+	        if (trim($inv)!=''){
+    	         if ($_SESSION['InvoicePortraitFormat']==0){
+        	         echo '<A HREF="' . $rootpath. '/PrintCustTrans.php?FromTransNo=' . $inv . '&InvOrCredit=Invoice&PrintPDF=Yes" target=_blank>' . _('Inv') . '# ' . $inv . '</A><BR>';
+            	  } else {
+                	 echo '<A HREF="' . $rootpath . '/PrintCustTransPortrait.php?FromTransNo=' . $inv . '&InvOrCredit=Invoice&PrintPDF=Yes" target=_blank>' . _('Inv') . '# ' . $inv . '</A><BR>';
+	              }
+    	    }
+    }
+*/
 	echo _('Comments:').' '.$_SESSION['Items']->Comments . '<BR></CENTER>';
 
 /*Now get the line items */

@@ -5,18 +5,18 @@
 if($ForceConfigReload==TRUE OR !isset($_SESSION['CompanyDefaultsLoaded'])) {
 	$sql = 'SELECT confname, confvalue FROM config'; // dont care about the order by
 	$ConfigResult = DB_query($sql,$db);
-	while( $myrow = DB_fetch_row($ConfigResult) ) { 
+	while( $myrow = DB_fetch_row($ConfigResult) ) {
 		if (is_numeric($myrow[1])){
 			//the variable name is given by $myrow[0]
 			$_SESSION[$myrow[0]] = (double) $myrow[1];
 		} else {
 			$_SESSION[$myrow[0]] =  $myrow[1];
 		}
-		
+
 	} //end loop through all config variables
 	$_SESSION['CompanyDefaultsLoaded'] = true;
 	DB_free_result($ConfigResult); // no longer needed
-	
+
 /* Also reads all the company data set up in the company record and returns an array */
 
 	$sql=	"SELECT
@@ -59,15 +59,13 @@ if($ForceConfigReload==TRUE OR !isset($_SESSION['CompanyDefaultsLoaded'])) {
 	}
 } //end if force reload or not set already
 
-	/*	
-		
-		
+	/*
+
+
 Stay in config.php
 $DefaultLanguage = en_GB
 $allow_demo_mode = 1
 
-these fields still to go in SystemParameters.php - Danie ... please
-Also ... why wouldn't the rest of the company set up go in the same table?
 
 
 $EDIHeaderMsgId = D:01B:UN:EAN010

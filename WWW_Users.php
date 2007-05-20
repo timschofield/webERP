@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity=15;
 
@@ -116,7 +116,8 @@ if (isset($_POST['submit'])) {
 						language ='" . $_POST['Language'] . "',
 						defaultlocation='" . $_POST['DefaultLocation'] ."',
 						modulesallowed='" . $ModulesAllowed . "',
-						blocked=" . $_POST['Blocked'] . "
+						blocked=" . $_POST['Blocked'] . ",
+						salesmancode='" . $_POST['Salesperson'] . "'
 					WHERE userid = '$SelectedUser'";
 
 		$msg = _('The selected user record has been updated');
@@ -135,7 +136,8 @@ if (isset($_POST['submit'])) {
 						modulesallowed,
 						displayrecordsmax,
 						theme,
-						language)
+						language,
+						salesmancode)
 					VALUES ('" . $_POST['UserID'] . "',
 						'" . DB_escape_string($_POST['RealName']) ."',
 						'" . DB_escape_string($_POST['Cust']) ."',
@@ -149,7 +151,8 @@ if (isset($_POST['submit'])) {
 						'" . $ModulesAllowed . "',
 						" . $_SESSION['DefaultDisplayRecordsMax'] . ",
 						'" . $_POST['Theme'] . "',
-						'". $_POST['Language'] ."')";
+						'". $_POST['Language'] ."',
+						'" . $_POST['Salesperson'] . "')";
 		$msg = _('A new user record has been inserted');
 	}
 
@@ -173,6 +176,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Blocked']);
 		unset($_POST['Theme']);
 		unset($_POST['Language']);
+		unset($_POST['Salesperson']);
 		unset($SelectedUser);
 	}
 
@@ -300,7 +304,8 @@ if (isset($SelectedUser)) {
 			modulesallowed,
 			blocked,
 			theme,
-			language
+			language,
+			salesmancode
 		FROM www_users
 		WHERE userid='" . $SelectedUser . "'";
 
@@ -320,6 +325,7 @@ if (isset($SelectedUser)) {
 	$_POST['theme'] = $myrow['theme'];
 	$_POST['language'] = $myrow['language'];
 	$_POST['Blocked'] = $myrow['blocked'];
+	$_POST['Salesperson'] = $myrow['salesmancode'];
 
 	echo "<INPUT TYPE=HIDDEN NAME='SelectedUser' VALUE='" . $SelectedUser . "'>";
 	echo "<INPUT TYPE=HIDDEN NAME='UserID' VALUE='" . $_POST['UserID'] . "'>";
@@ -331,8 +337,8 @@ if (isset($SelectedUser)) {
 } else { //end of if $SelectedUser only do the else when a new record is being entered
 
 	echo '<CENTER><TABLE><TR><TD>' . _('User Login') . ":</TD><TD><input type='Text' name='UserID' SIZE=22 MAXLENGTH=20 Value='" . $_POST['UserID'] . "'></TD></TR>";
-	
-	/*set the default modules to show to all 
+
+	/*set the default modules to show to all
 	this had trapped a few people previously*/
 	$i=0;
 	foreach($ModuleList as $ModuleName){
@@ -390,6 +396,30 @@ echo '<TR><TD>' . _('Customer Code') . ":</TD>
 
 echo '<TR><TD>' . _('Branch Code') . ":</TD>
 	<TD><INPUT TYPE='Text' name='BranchCode' SIZE=10 MAXLENGTH=8 VALUE='" . $_POST['BranchCode'] ."'></TD></TR>";
+
+
+$sql = "SELECT salesmanname, salesmancode FROM salesman";
+
+$result = DB_query($sql,$db);
+
+echo '<TR><TD>'._('Salesperson').':</TD>';
+echo '<TD><SELECT name="Salesperson">';
+
+if (!isset($_POST['Salesperson'])){
+		echo '<OPTION SELECTED VALUE="">' . _('All Sales People');
+} else {
+		echo '<OPTION VALUE="">' .  _('All Sales People');
+}
+while ($myrow = DB_fetch_array($result)) {
+		if ($myrow['salesmancode']==$_POST['Salesperson']) {
+			echo '<OPTION SELECTED VALUE=';
+		} else {
+			echo '<OPTION VALUE=';
+		}
+		echo $myrow['salesmancode'] . '>' . $myrow['salesmanname'];
+} //end while loop
+
+echo '</SELECT></TD></TR>';
 
 
 echo '<TR><TD>' . _('Reports Page Size') .":</TD>
@@ -468,9 +498,9 @@ $LangDirHandle = dir('locale/');
 
 
 while (false != ($LanguageEntry = $LangDirHandle->read())){
-	
+
 	if (is_dir('locale/' . $LanguageEntry) AND $LanguageEntry != '..' AND $LanguageEntry != 'CVS' AND $LanguageEntry!='.'){
-	
+
 		if ($_SESSION['Language'] == $LanguageEntry){
 			echo "<OPTION SELECTED VALUE='$LanguageEntry'>$LanguageEntry";
 		} else {
@@ -478,7 +508,7 @@ while (false != ($LanguageEntry = $LangDirHandle->read())){
 		}
 	}
 }
-	
+
 echo '</SELECT></TD></TR>';
 
 

@@ -108,7 +108,7 @@ if( isset($_GET['notextbg']) ) {
 
 
 
-// Extention requirements and Stock ID Issolation
+// Extension requirements and Stock ID Isolation
 if($stockid == '') {
 	$stockid = $defaultimage;
 	$blanktext = true;
@@ -157,9 +157,9 @@ if( !$automake && !isset($filename) ) {
 /*
 	$title = _('Stock Image Retrieval ....');
 	include('includes/header.inc');
-	echo 'The image ' . $filename . ' using functype ' . $functype 
+	echo 'The image ' . $filename . ' using functype ' . $functype
 	 	. '<BR> The tmpfilename = ' . $tmpfilename . '<BR> The temppath = ' . $filepath . '<BR>The stockid = ' . $stockid . '<BR> filepath . stockid .jpg = ' . $filepath . $stockid .'.jpg<BR> The result of file_exists($filepath . $stockid .jpg) =' . file_exists($filepath . $stockid .'.jpg')
-		. '<BR>filepath = ' . $filepath 
+		. '<BR>filepath = ' . $filepath
 		. '<BR>rootpath = ' . $rootpath;
 	include('includes/footer.inc');
 	exit;
@@ -181,10 +181,10 @@ if( $automake && !isset($filename) || $useblank ) {
 	else
 		$bgcolor = DecodeBgColor( '#7F7F7F' );
 	if( !isset($bgcolor['alpha']) ) {
-		$ixbgcolor = imagecolorallocate($im, 
+		$ixbgcolor = imagecolorallocate($im,
 			$bgcolor['red'],$bgcolor['green'],$bgcolor['blue']);
 	} else {
-		$ixbgcolor = imagecolorallocatealpha($im, 
+		$ixbgcolor = imagecolorallocatealpha($im,
 			$bgcolor['red'],$bgcolor['green'],$bgcolor['blue'],$bgcolor['alpha']);
 	}
 	// Have we got a text color
@@ -193,10 +193,10 @@ if( $automake && !isset($filename) || $useblank ) {
 	else
 		$textcolor = DecodeBgColor( '#000000' );
 	if( !isset($textcolor['alpha']) ) {
-		$ixtextcolor = imagecolorallocate($im, 
+		$ixtextcolor = imagecolorallocate($im,
 			$textcolor['red'],$textcolor['green'],$textcolor['blue']);
 	} else {
-		$ixtextcolor = imagecolorallocatealpha($im, 
+		$ixtextcolor = imagecolorallocatealpha($im,
 			$textcolor['red'],$textcolor['green'],$textcolor['blue'],$textcolor['alpha']);
 	}
 	// Have we got transparency requirements
@@ -204,22 +204,22 @@ if( $automake && !isset($filename) || $useblank ) {
 		$transcolor = DecodeBgColor( $transcolor );
 		if( $transcolor != $bgcolor ) {
 			if( !isset($textcolor['alpha']) ) {
-				$ixtranscolor = imagecolorallocate($im, 
+				$ixtranscolor = imagecolorallocate($im,
 					$transcolor['red'],$transcolor['green'],$transcolor['blue']);
 			} else {
-				$ixtranscolor = imagecolorallocatealpha($im, 
+				$ixtranscolor = imagecolorallocatealpha($im,
 					$transcolor['red'],$transcolor['green'],$transcolor['blue'],$transcolor['alpha']);
 			}
 		} else {
 			$ixtranscolor = $ixbgcolor;
 		}
-	}	
+	}
 	imagefill($im, 0, 0, $ixbgcolor );
 
 	if( $doTrans ) {
 		imagecolortransparent($im, $ixtranscolor);
 	}
-	
+
 	if(!isset($text))
 		$text = $stockid;
 	if(strlen($text) > 0 ) {
@@ -247,10 +247,10 @@ if( $automake && !isset($filename) || $useblank ) {
 	else
 		$bgcolor = DecodeBgColor( '#7F7F7F' );
 	if( !isset($bgcolor['alpha']) ) {
-		$ixbgcolor = imagecolorallocate($im, 
+		$ixbgcolor = imagecolorallocate($im,
 			$bgcolor['red'],$bgcolor['green'],$bgcolor['blue']);
 	} else {
-		$ixbgcolor = imagecolorallocatealpha($im, 
+		$ixbgcolor = imagecolorallocatealpha($im,
 			$bgcolor['red'],$bgcolor['green'],$bgcolor['blue'],$bgcolor['alpha']);
 	}
 	// Have we got a text color
@@ -259,10 +259,10 @@ if( $automake && !isset($filename) || $useblank ) {
 	else
 		$textcolor = DecodeBgColor( '#000000' );
 	if( !isset($textcolor['alpha']) ) {
-		$ixtextcolor = imagecolorallocate($im, 
+		$ixtextcolor = imagecolorallocate($im,
 			$textcolor['red'],$textcolor['green'],$textcolor['blue']);
 	} else {
-		$ixtextcolor = imagecolorallocatealpha($im, 
+		$ixtextcolor = imagecolorallocatealpha($im,
 			$textcolor['red'],$textcolor['green'],$textcolor['blue'],$textcolor['alpha']);
 	}
 	$sw = imagesx($im);
@@ -280,17 +280,17 @@ if( $automake && !isset($filename) || $useblank ) {
 		unset($tmpim);
 
 		if( !isset($bgcolor['alpha']) ) {
-			$ixbgcolor = imagecolorallocate($im, 
+			$ixbgcolor = imagecolorallocate($im,
 				$bgcolor['red'],$bgcolor['green'],$bgcolor['blue']);
 		} else {
-			$ixbgcolor = imagecolorallocatealpha($im, 
+			$ixbgcolor = imagecolorallocatealpha($im,
 				$bgcolor['red'],$bgcolor['green'],$bgcolor['blue'],$bgcolor['alpha']);
 		}
 		if( !isset($textcolor['alpha']) ) {
-			$ixtextcolor = imagecolorallocate($im, 
+			$ixtextcolor = imagecolorallocate($im,
 				$textcolor['red'],$textcolor['green'],$textcolor['blue']);
 		} else {
-			$ixtextcolor = imagecolorallocatealpha($im, 
+			$ixtextcolor = imagecolorallocatealpha($im,
 				$textcolor['red'],$textcolor['green'],$textcolor['blue'],$textcolor['alpha']);
 		}
 		//imagealphablending ( $im, false);
@@ -300,10 +300,10 @@ if( $automake && !isset($filename) || $useblank ) {
 		$transcolor = DecodeBgColor( $transcolor );
 		if( $transcolor != $bgcolor ) {
 			if( !isset($textcolor['alpha']) ) {
-				$ixtranscolor = imagecolorallocate($im, 
+				$ixtranscolor = imagecolorallocate($im,
 					$transcolor['red'],$transcolor['green'],$transcolor['blue']);
 			} else {
-				$ixtranscolor = imagecolorallocatealpha($im, 
+				$ixtranscolor = imagecolorallocatealpha($im,
 					$transcolor['red'],$transcolor['green'],$transcolor['blue'],$transcolor['alpha']);
 			}
 		} else {
@@ -315,9 +315,9 @@ if( $automake && !isset($filename) || $useblank ) {
 	}
 	if( $doTrans )
 		$ixtextbgcolor = $ixtranscolor;
-	else 
+	else
 	    $ixtextbgcolor = $ixbgcolor;
-//	$ixtextbgcolor = imagecolorallocatealpha($im, 
+//	$ixtextbgcolor = imagecolorallocatealpha($im,
 //		0,0,0,0);
 	if(!isset($text))
 		$text = $stockid;

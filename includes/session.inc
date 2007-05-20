@@ -1,6 +1,6 @@
 <?php
-/* $Revision: 1.48 $ */
- 
+/* $Revision: 1.49 $ */
+
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
 }
@@ -13,13 +13,13 @@ if (isset($SessionSavePath)){
 
 ini_set('session.gc_Maxlifetime',$SessionLifeTime);
 ini_set('max_execution_time',$MaximumExecutionTime);
- 
+
 session_start();
 
 include($PathPrefix . 'includes/LanguageSetup.php');
 include($PathPrefix . 'includes/ConnectDB.inc');
 include($PathPrefix . 'includes/DateFunctions.inc');
-   
+
 // Un comment to turn off attempts counter
 //$_SESSION['AttemptsCounter'] = 0;
 
@@ -32,9 +32,9 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 
 	if (!isset($_SESSION['AccessLevel']) OR $_SESSION['AccessLevel'] == '' OR
 		(isset($_POST['UserNameEntryField']) AND $_POST['UserNameEntryField'] != '')) {
-	
+
 	/* if not logged in */
-	
+
 		$_SESSION['AccessLevel'] = '';
 		$_SESSION['CustomerID'] = '';
 		$_SESSION['UserBranch'] = '';
@@ -42,8 +42,8 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 		$_SESSION['PageSize'] = '';
 		$_SESSION['UserStockLocation'] = '';
 		$_SESSION['AttemptsCounter']++;
-	
-		
+
+
 		$theme = 'professional';
 
 		// Show login screen
@@ -51,8 +51,8 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 			include($PathPrefix . 'includes/Login.php');
 			exit;
 		}
-		
-			
+
+
 		$sql = "SELECT www_users.fullaccess,
 				www_users.customerid,
 				www_users.lastvisitdate,
@@ -65,16 +65,17 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 				www_users.theme,
 				www_users.displayrecordsmax,
 				www_users.userid,
-				www_users.language
+				www_users.language,
+				www_users.salesmancode
 			FROM www_users
-			WHERE www_users.userid='" . DB_escape_string($_POST['UserNameEntryField']) . "' 
+			WHERE www_users.userid='" . DB_escape_string($_POST['UserNameEntryField']) . "'
 			AND (www_users.password='" . CryptPass(DB_escape_string($_POST['Password'])) . "'
 			OR  www_users.password='" . DB_escape_string($_POST['Password']) . "')";
 		$Auth_Result = DB_query($sql, $db);
-		
+
 		// Populate session variables with data base results
 		if (DB_num_rows($Auth_Result) > 0) {
-			 
+
 			$myrow = DB_fetch_row($Auth_Result);
 			if ($myrow[7]==1){
 			//the account is blocked
@@ -92,23 +93,24 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 			$_SESSION['Theme'] = $myrow[9];
 			$_SESSION['UserID'] = $myrow[11];
 			$_SESSION['Language'] = $myrow[12];
-				
+			$_SESSION['SalesmanLogin'] = $myrow[13];
+
 			if ($myrow[10] > 0) {
 				$_SESSION['DisplayRecordsMax'] = $myrow[10];
 			} else {
 				$_SESSION['DisplayRecordsMax'] = $_SESSION['DefaultDisplayRecordsMax'];  // default comes from config.php
 			}
-	
-			$sql = "UPDATE www_users SET lastvisitdate='". date("Y-m-d H:i:s") ."' 
-					WHERE www_users.userid='" . DB_escape_string($_POST['UserNameEntryField']) . "' 
+
+			$sql = "UPDATE www_users SET lastvisitdate='". date("Y-m-d H:i:s") ."'
+					WHERE www_users.userid='" . DB_escape_string($_POST['UserNameEntryField']) . "'
 					AND www_users.password='" . CryptPass(DB_escape_string($_POST['Password'])) ."'";
 			$Auth_Result = DB_query($sql, $db);
-			
+
 			/*get the security tokens that the user has access to */
 			$sql = 'SELECT tokenid FROM securitygroups
 					WHERE secroleid =  ' . $_SESSION['AccessLevel'];
 			$Sec_Result = DB_query($sql, $db);
-					
+
 			$_SESSION['AllowedPageSecurityTokens'] = array();
 			if (DB_num_rows($Sec_Result)==0){
 				$title = _('Account Error Report');
@@ -124,7 +126,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 					$i++;
 				}
 			}
-	
+
 			echo "<META HTTP-EQUIV='refresh' CONTENT='0; URL=" . $_SERVER['PHP_SELF'] . "?" . SID . "'>";
 			exit;
 		} else {     // Incorrect password
@@ -133,8 +135,8 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 				$_SESSION['AttemptsCounter'] = 0;
 			} elseif ($_SESSION['AttemptsCounter'] >= 5 AND isset($_POST['UserNameEntryField'])) {
 				/*User blocked from future accesses until sysadmin releases */
-				$sql = "UPDATE www_users 
-						SET blocked=1 
+				$sql = "UPDATE www_users
+						SET blocked=1
 					WHERE www_users.userid='" . $_POST['UserNameEntryField'] . "'";
 				$Auth_Result = DB_query($sql, $db);
 				die(include($PathPrefix . 'includes/FailedLogin.php'));
@@ -148,16 +150,16 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 /*User is logged in so get configuration parameters  - save in session*/
 include($PathPrefix . 'includes/GetConfig.php');
 
-if(isset($_SESSION['DB_Maintenance'])){ 
-	if ($_SESSION['DB_Maintenance']!=0)  {	
+if(isset($_SESSION['DB_Maintenance'])){
+	if ($_SESSION['DB_Maintenance']!=0)  {
 		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
 				ConvertSQLDate($_SESSION['DB_Maintenance_LastRun'])
 				,'d')	> 	$_SESSION['DB_Maintenance']){
-			
+
 			/*Do the DB maintenance routing for the DB_type selected */
 			DB_Maintenance($db);
 			$_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');
-		}	
+		}
 	}
 }
 
@@ -167,7 +169,7 @@ If (isset($_POST['Theme'])) {
 } elseif (!isset($_SESSION['Theme'])) {
 	$theme = $_SESSION['DefaultTheme'];
 	$_SESSION['Theme'] = $_SESSION['DefaultTheme'];
-	
+
 } else {
 	$theme = $_SESSION['Theme'];
 }
@@ -210,19 +212,19 @@ if (!isset($AllowAnyone)){
 				<TABLE WIDTH="100%" CLASS="table_index">
 					<TR><TD CLASS="menu_group_item">';
 		echo '<B><FONT SIZE="+1"><CENTER>' . _('The security settings on your account do not permit you to access this function') . '</FONT></B></CENTER>';
-	
+
 		echo '</TD>
 		</TR>
 		</TABLE>
 		</TD>';
-	
+
 		include($PathPrefix . 'includes/footer.inc');
 		exit;
 	}
 
-	
+
  }
-    
+
 function CryptPass( $Password ) {
     	global $CryptFunction;
     	if ( $CryptFunction == 'sha1' ) {
