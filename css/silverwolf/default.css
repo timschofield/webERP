@@ -17,10 +17,10 @@
 
 body {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 14px;
-	background-color: #CCCCDD;
-	margin-left: 5px;
-	margin-top: 5px;
+	font-size: 10px;
+	background-color: #fff;
+	margin-left: 0px;
+	margin-top: 0px;
 	margin-bottom: 0px;
 	margin-right: 0px;
 	padding: 0px;
@@ -30,44 +30,53 @@ body {
 a {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
-	font-weight: bold;
+	font-weight: normal;
 	text-decoration: none;
-	color: black;
+	color: #0000FF;
 }
 
 /*links on any screen when mouse is hovering over them */
 a:hover {
-	color: #2D8628;
+	color: #0000AA;
 	text-decoration: underline;
 }
 
 table {
-  background-color: #587BA6;
+  background-color: #fff;
 }
 
 /*table detail items default format */
 td {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
-
 }
+
+input {
+	font-family: Verdana, Arial, Helvetica;
+	font-size: 12px;
+}
+
+select {
+	font-family: Verdana, Arial, Helvetica;
+	font-size: 12px;
+}
+
 
 #topMenu {
 	width: 100%;
 	color: black;
-	background-color: #E2E9EB;
+	background-color: white;
 	border: none;
-	border-bottom: 1px solid #999999;
 }
 
 #trim {
-	background: "#CCCCCC";
+	background: "white";
 }
 
 #page {
 	width: 100%;
 	color: black;
-	font-size: 12px;
+	font-size: 10px;
 	white-space: nowrap;
 	border: none;
 }
@@ -82,7 +91,7 @@ td {
 #mainMenu {
 	width: 100%;
 	color: black;
-	background-color: #E3EBE2;
+	background-color: white;
 	border: none;
 	margin: 0px;
 	padding: 0px;
@@ -122,45 +131,47 @@ td {
 
 /* Main page heading with quick menu within */
 .quick_menu {
-	background-color: #588BB6;
+	background-color: #ccc;
 	border: none;
 	margin: 0px;
 	padding: 0px;
- 	color: black;
-	border-top: 2px #AAAAAA solid;
-	border-left: 2px #AAAAAA solid;
-	border-right: 2px white solid;
-	border-bottom: 4px white solid;
+ 	color: #fff;
+	border: none;
 	text-align: right;
 	/* position: relative;
 	top: 3px; */
 }
 
+#quick_menu{
+	background: #ccc url(images/menu_bg_grey.png) 0px 0px repeat-x;
+	border-bottom: solid 1px #aaa;
+}
 /*The main page heading left part before quick menu */
 .quick_menu_left {
+	background: none;
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
 	font-weight: bold;
-	border: 0px;
+	border: none;
 	white-space: nowrap;
-	margin: 2px;
-	padding: 2px;
-	color: white;
-  text-align: left;
+	margin: 0px;
+	padding-left: 5px;
+	color: #777;
 }
 
 /*the Select Customer / Item / Supplier Menu tabs */
-.quick_menu_tabs {
-	background-color: white;
+.quick_menu_tabs{
+	background:none;
+	border-collapse:collapse;
+	height:28pt;
 	white-space: nowrap;
-	border: none;
-	margin: 0px;
+	border: 0px;
 	padding: 0px;
 	text-align: right;
 }
 
 .quick_menu_tab{
-	background: white;
+	background: #ccc url(images/button_bg.png) 0px -1px repeat-x;
 	height:28pt;
 	white-space: nowrap;
 	border-left: solid 1px #aaa;
@@ -169,6 +180,7 @@ td {
 	padding-right: 10px;
 	text-align: right;
 }
+
 
 /*the Select Customer / Item / Supplier Menu tabs */
 .system_menu_tabs {
@@ -185,60 +197,68 @@ td {
 
 .system_menu_tabs a {
 	font-size: 12px;
-	color: black;
+   color: black;
 }
 
 .system_menu_tabs a:hover {
 	font-size: 12px;
-  color: black;
+	color: black;
 }
 
 .main_area {
-	border: 2px inset white;
+	border: none;
 	width: 100%;
 	background-color: white;
 }
 
 .main_menu {
-	background-color: #40FC40;
-	font-size: 14px;
-	border-top: 1px #AAAAAA solid;
-	border-bottom: 1px #AAAAAA solid;
-	font-weight: normal;
-	width: 100%;
+	border: 0px;
 }
 
 .main_menu table {
+	margin-top:5px;
 	border: 0px;
+	border-collapse: collapse;
 	width: 100%;
-	margin-top: 2px;
-	margin-bottom: 2px;
 }
 
 .main_menu_unselected {
-	background-color: #40fc40;
-	border-left: 1px #AAAAAA solid;
-	border-right: 1px #AAAAAA solid;
-	border-bottom: 0px;
-	font-weight: normal;
-	position: relative;
-	top: 3px;
+	background: #aaa url(images/menu_bg.png) 0px -10px repeat-x;
+	border: 1px solid #777;
+/*	position: relative; */
 	text-align: center;
 	white-space: nowrap;
+	height: 16pt;
+}
 
+.main_menu_unselected:hover{
+	background: #aaa url(images/menu_bg_dblue.png) 0px -10px repeat-x;
+}
+
+.main_menu_unselected a{
+	color: #fff;
+}
+
+.main_menu_unselected a:hover{
+	color: #0df;
+	text-decoration: none;
 }
 
 .main_menu_selected {
-	background-color: white;
-	border-top: 1px #AAAAAA solid;
-	border-left: 1px #AAAAAA solid;
-	border-right: 1px #AAAAAA solid;
-	border-bottom: 0px;
-	font-weight: normal;
-	position: relative;
-	top: 3px;
+	background: #aaa url(images/menu_bg_blue.png) 0px -10px repeat-x;
+	border: 1px solid #888;
+/*	position: relative; */ 
 	text-align: center;
 	white-space: nowrap;
+}
+
+.main_menu_selected a{
+	color: #fff;
+}
+
+.main_menu_selected a:hover{
+	color: #0df;
+	text-decoration: none;
 }
 
 span.main_menu_nolink {
@@ -248,18 +268,6 @@ span.main_menu_nolink {
 	color: #777777;
 	text-decoration: none;
 	white-space: nowrap;
-}
-
-.main_menu a {
-	color: black;
-	font-weight: bold;
-	text-decoration: none;
-	white-space: nowrap;
-}
-
-.main_menu a:hover {
-	color: black;
-	text-decoration: underline;
 }
 
 .menu_group_img {
@@ -276,12 +284,7 @@ span.main_menu_nolink {
 }
 
 .menu_group_area {
-	font-family: Verdana, Arial, Helvetica;
-	font-size: 14px;
-  border: 2px inset white;
-	color: #cc6600;
-	background-color: #CCCCCC;
-	font-weight: bold;
+  border: none
 }
 
 .blank_area table {
@@ -290,29 +293,29 @@ span.main_menu_nolink {
 }
 
 .menu_group_headers {
-  border: 2px outset #AAAAAA;
+  background: #aaa url(images/menu_bg_white.png) 0px -3px repeat-x;
   width: 25%;
+}
+
+.menu_group_headers table{
+  background: #aaa url(images/menu_bg_white.png) 0px -3px repeat-x;
 }
 
 .menu_group_headers_text {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
 	font-weight: bold;
-	color: white;
+	color: black;
 }
 
 .menu_group_items {
-	background-color: white;
-	font-weight: bold;
-	padding: 15px;
-	border-top: 1px #AAAAAA solid;
-	border-left: 1px #AAAAAA solid;
-	border-right: 1px white solid;
-	border-bottom: 1px white solid;
+	vertical-align: top;
+	border: none;
+	padding: 10px;
 }
 
 .menu_group_item {
-	background-color: white;
+	
 	padding-top: 2px;
 	padding-bottom: 2px;
 }
@@ -334,15 +337,18 @@ span.menu_group_nolink {
 }
 
 #footer {
+	border-top: solid 1px #aaa;
+	border-bottom: solid 1px #aaa;
+	background: #ccc url(images/menu_bg_grey.png) 0px 0px repeat-x;
 	position: relative;
 	bottom: -3px;
 }
 
 .footer {
 	font-family: Verdana, Arial, Helvetica;
-	color: #CCCCCC;
+	color: black;
 	font-weight: normal;
-	font-size: 9px;
+	font-size: 8px;
 }
 .legal {
 	font-family: Arial, Helvetica, sans-serif;
@@ -365,16 +371,17 @@ span.menu_group_nolink {
 	font-family: "Times New Roman", Times, serif;
 	font-size: 9px;
 	color: white;
-	background-color: #336699;
+  	background-color: #336699;
 }
 
 .dingbat {
 	font-family: Arial, Helvetica, sans-serif;
 	background-color: #99CC99;
-	color: #006666;
+  color: #006666;
 	font-weight: bolder;
 	font-size: medium;
 }
+
 
 input.big {
 	width: 100px;
@@ -386,15 +393,15 @@ input.small {
 
 .tableheader {
 	font-weight: normal;
-	background-color: #800000;
-	color: white;
+	background-color: #cccce5;
+	color: #330000;
 }
 
-.HelpTableheader {
+.HelpTableHeader {
 	font-weight: bold;
-	background-color: #800000;
-	font-size: 14px;
-	color: white;
+	background-color: #cccce5;
+	font-size: 18px;
+	color: #330000;
 }
 
 .OsRow {

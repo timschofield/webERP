@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 	echo '<BR><BR>';
 	echo '</TD>';
@@ -9,15 +9,13 @@
 
 	echo '</TD>';
 /*Do the borders */
-	echo '<TD BGCOLOR="#555555" COLSPAN="3"></TD></TR>';
-	echo '<TR BGCOLOR="#555555"><TD  COLSPAN="3"></TD></TR>';
-	echo '<TR BGCOLOR="#555555"><TD COLSPAN="5"><FONT SIZE="1">&nbsp;</FONT></TD></TR>';
 	
 	echo '</TABLE>';
 	
 	echo '<p style="text-align:right">'.(strftime('%A')).', '.(date($_SESSION['DefaultDateFormat']).' | '.(strftime(($DefaultClock==12) ? '%I:%M %p' : '%H:%M'))).'</p>';
-
-	echo '<TABLE ALIGN="center" ID="footer">';
+	
+	
+	echo '<TABLE width="100%" ALIGN="center" ID="footer">';
 	
 	echo '<TR>';
 	echo '<TD ALIGN="center">';

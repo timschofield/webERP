@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.54 $ */
+/* $Revision: 1.55 $ */
 
 
 $PageSecurity = 1;
@@ -26,7 +26,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 	
 		<tr>
 		<td class="menu_group_items">  <!-- Orders transaction options -->
-		<table width="100%" class="table_index">
+		<table class="table_index">
 			<tr>
 			<td class="menu_group_item">
 				<?php echo "<A HREF='" . $rootpath . '/CustomerInquiry.php?' .SID . '&CustomerID=' . $_SESSION['CustomerID'] . "'><LI>" . _('Account Status') . '</LI></A>'; ?>
@@ -50,10 +50,10 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 } else {  /* Security settings DO allow seeing the main menu */
 
 ?>
-		<table border="0" width="100%">
+		<table class="main_menu" width="100%" cellspacing="0" cellpadding="0" border="0">
 			<tr>
 			<td class="main_menu">
-				<table class="main_menu" cellspacing='0'>
+				<table class="main_menu">
 					<tr>
 
 	<?php
@@ -84,12 +84,6 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 	?>
 					</tr>
 				</table>
-			</td>
-			</tr>
-		</table>
-		<table class="blank_area">
-			<tr>
-			<td>
 			</td>
 			</tr>
 		</table>
@@ -597,11 +591,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<A HREF='" . $rootpath . '/Stocks.php?' . SID . "'><LI>" . _('Add Item') . '</LI></A>'; ?>
-							</td>
-							</tr>
-							<td class="menu_group_item">
-								<?php echo "<A HREF='" . $rootpath . '/SelectProduct.php?' . SID . "'><LI>" . _('Select Item') . '</LI></A>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SelectProduct.php?' . SID . "'><LI>" . _('Items') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -701,7 +691,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table>
 							<tr>
 							<td>
-								<?php echo '<img src="'.$rootpath.'/css/'.$theme.'/images/company.gif" TITLE="' . _('General Setup Options') . '" ALT="">'; ?>
+								<?php echo '<img src="'.$rootpath.'/css/'.$theme.'/images/company.png" TITLE="' . _('General Setup Options') . '" ALT="">'; ?>
 							</td>
 							<td class="menu_group_headers_text">
 								<?php echo _('General'); ?>
@@ -713,7 +703,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table>
 							<tr>
 							<td>
-								<?php echo '<img src="'.$rootpath.'/css/'.$theme.'/images/ar.gif" TITLE="' . _('Receivables/Payables Setup') . '" ALT="">'; ?>
+								<?php echo '<img src="'.$rootpath.'/css/'.$theme.'/images/ar.png" TITLE="' . _('Receivables/Payables Setup') . '" ALT="">'; ?>
 							</td>
 							<td class="menu_group_headers_text">
 								<?php echo _('Receivables/Payables'); ?>
@@ -726,7 +716,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table>
 							<tr>
 							<td>
-								<?php echo '<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.gif" TITLE="' . _('Inventory Setup') . '" ALT="">'; ?>
+								<?php echo '<img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" TITLE="' . _('Inventory Setup') . '" ALT="">'; ?>
 							</td>
 							<td class="menu_group_headers_text">
 								<?php echo _('Inventory Setup'); ?>
@@ -1025,7 +1015,7 @@ global $rootpath, $theme;
 		<table>
 			<tr>
 			<td>
-				<?php echo '<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.gif" TITLE="' . _('Transactions') . '" ALT="">'; ?>
+				<?php echo '<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.png" TITLE="' . _('Transactions') . '" ALT="">'; ?>
 			</td>
 			<td class="menu_group_headers_text">
 				<?php echo _('Transactions'); ?>
@@ -1037,7 +1027,7 @@ global $rootpath, $theme;
 		<table>
 			<tr>
 			<td>
-				<?php echo '<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.gif" TITLE="' . _('Inquiries and Reports') . '" ALT="">'; ?>
+				<?php echo '<img src="'.$rootpath.'/css/'.$theme.'/images/reports.png" TITLE="' . _('Inquiries and Reports') . '" ALT="">'; ?>
 			</td>
 			<td class="menu_group_headers_text">
 				<?php echo _('Inquiries and Reports'); ?>
@@ -1049,7 +1039,7 @@ global $rootpath, $theme;
 		<table>
 			<tr>
 			<td>
-				<?php echo '<img src="'.$rootpath.'/css/'.$theme.'/images/transactions.gif" TITLE="' . _('Maintenance') . '" ALT="">'; ?>
+				<?php echo '<img src="'.$rootpath.'/css/'.$theme.'/images/maintenance.png" TITLE="' . _('Maintenance') . '" ALT="">'; ?>
 			</td>
 			<td class="menu_group_headers_text">
 				<?php echo _('Maintenance'); ?>

@@ -167,6 +167,16 @@ select {
 	text-align: right;
 }
 
+.quick_menu_tab{
+	background: #B4BB86;
+	height:28pt;
+	white-space: nowrap;
+	border-left: solid 1px #aaa;
+	border-right: solid 1px #aaa;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-align: right;
+}
 
 /*the Select Customer / Item / Supplier Menu tabs */
 .system_menu_tabs {
@@ -367,12 +377,7 @@ input.small {
 	color: white;
 }
 
-.HelpTableHeader {
-	font-weight: bold;
-	background-color: #777C59;
-	font-size: 18px;
-	color: #330000;
-}
+
 
 .OsRow {
 	background-color: #234567;
