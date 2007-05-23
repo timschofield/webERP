@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 /*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances
 and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen
@@ -120,13 +120,14 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 		FROM chartmaster INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname
 			INNER JOIN chartdetails ON chartmaster.accountcode= chartdetails.accountcode
 		GROUP BY accountgroups.groupname,
-				accountgroups.parentgroupname
+				accountgroups.parentgroupname,
 				accountgroups.pandl,
 				accountgroups.sequenceintb,
 				chartdetails.accountcode,
 				chartmaster.accountname
 		ORDER BY accountgroups.pandl desc,
 			accountgroups.sequenceintb,
+			accountgroups.groupname,
 			chartdetails.accountcode';
 
 	$AccountsResult = DB_query($SQL,$db);
@@ -145,12 +146,15 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 	include('includes/PDFTrialBalancePageHeader.inc');
 	
 	$j = 1;
+	$Level = 0;
 	$ActGrp = '';
+	$ParentGrp = '';
+	$ParentGroups = array();
 
-	$GrpActual = 0;
-	$GrpBudget = 0;
-	$GrpPrdActual = 0;
-	$GrpPrdBudget = 0;
+	$GrpActual =array(0);
+	$GrpBudget = array(0);
+	$GrpPrdActual = array(0);
+	$GrpPrdBudget = array(0);
 
 	while ($myrow=DB_fetch_array($AccountsResult)) {
 		
@@ -161,29 +165,34 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 				include('includes/PDFTrialBalancePageHeader.inc');
 				$YPos -= (2 * $line_height);
 			}
-
-			// Print total at end of each account group
-			if ($ActGrp != ''){
-				$YPos -= (.5 * $line_height);
-				$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);  
-				$pdf->selectFont('./fonts/Helvetica-Bold.afm');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ActGrp);
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual,2),'right');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpBudget,2),'right');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdActual,2),'right');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget,2),'right');
-				$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
-				$YPos -= (2 * $line_height);
-				$pdf->selectFont('./fonts/Helvetica.afm');
-			} else {
-				$YPos -= (2 * $line_height);			
-			}
 			
-			$GrpActual = 0;
-			$GrpBudget = 0;
-			$GrpPrdActual = 0;
-			$GrpPrdBudget = 0;
+			if ($myrow['parentgroupname']==$ActGrp){
+				$Level++;
+				$ParentGroups[$Level]=$myrow['parentgroupname'];
+				$YPos -= (2 * $line_height);	
+			} else {
+				while ($myrow['parentgroupname']!=$ParentGroups[$Level] AND $Level>0) {
+						
+					$YPos -= (.5 * $line_height);
+					$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);  
+					$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ParentGroups[$Level]);
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual[$Level],2),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpBudget[$Level],2),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdActual[$Level],2),'right');
+					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget[$Level],2),'right');
+					$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
+					$YPos -= (2 * $line_height);
+					$pdf->selectFont('./fonts/Helvetica.afm');
+					$ParentGroups[$Level]='';
+					$GrpActual[$Level] =0;
+					$GrpBudget[$Level] =0;
+					$GrpPrdActual[$Level] =0;
+					$GrpPrdBduget[$Level] =0;
+					$Level--;
+				}
+			}
 
 			// Print account group name
 			$pdf->selectFont('./fonts/Helvetica-Bold.afm');
@@ -217,11 +226,12 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 			}
 
 		}
-
-		$GrpActual +=$myrow['monthactual'];
-		$GrpBudget +=$myrow['monthbudget'];
-		$GrpPrdActual +=$AccountPeriodActual;
-		$GrpPrdBudget +=$AccountPeriodBudget;
+		for ($i=0;$i<=$Level;$i++){
+			$GrpActual[$i] +=$myrow['monthactual'];
+			$GrpBudget[$i] +=$myrow['monthbudget'];
+			$GrpPrdActual[$i] +=$AccountPeriodActual;
+			$GrpPrdBudget[$i] +=$AccountPeriodBudget;
+		}
 
 		$CheckMonth += $myrow['monthactual'];
 		$CheckBudgetMonth += $myrow['monthbudget'];
@@ -245,16 +255,28 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 		
 	}  //end of while loop
 	
-	$YPos -= (.5 * $line_height);
-	$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);  
-	$pdf->selectFont('./fonts/Helvetica-Bold.afm');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ActGrp);
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual,2),'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpBudget,2),'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdActual,2),'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget,2),'right');
-	$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  
+	
+	while ($myrow['parentgroupname']!=$ParentGroups[$Level] AND $Level>0) {
+						
+		$YPos -= (.5 * $line_height);
+		$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);  
+		$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ParentGroups[$Level]);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual[$Level],2),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpBudget[$Level],2),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdActual[$Level],2),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget[$Level],2),'right');
+		$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
+		$YPos -= (2 * $line_height);
+		$ParentGroups[$Level]='';
+		$GrpActual[$Level] =0;
+		$GrpBudget[$Level] =0;
+		$GrpPrdActual[$Level] =0;
+		$GrpPrdBduget[$Level] =0;
+		$Level--;
+	}
+
 	
 	$YPos -= (2 * $line_height);
 	$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);  
@@ -327,6 +349,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 			accountgroups.groupname,
 			chartdetails.accountcode';
 
+
 	$AccountsResult = DB_query($SQL,
 				$db,
 				 _('No general ledger accounts were returned by the SQL because'),
@@ -351,96 +374,91 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 	$j = 1;
 	$k=0; //row colour counter
 	$ActGrp ='';
-	$SubActGrp ='';
-
-	$GrpActual =0;
-	$GrpBudget =0;
-	$GrpPrdActual =0;
-	$GrpPrdBudget =0;
-	
-	$SubGrpActual =0;
-	$SubGrpBudget =0;
-	$SubGrpPrdActual =0;
-	$SubGrpPrdBudget =0;
+	$ParentGroups = array();
+	$Level =1; //level of nested sub-groups
+	$ParentGroups[$Level]='';
+	$GrpActual =array(0);
+	$GrpBudget =array(0);
+	$GrpPrdActual =array(0);
+	$GrpPrdBudget =array(0);
+		
 
 	while ($myrow=DB_fetch_array($AccountsResult)) {
 
-		if ($myrow['parentgroupname']!='' AND $myrow['groupname']!= $SubActGrp ){
-			if ($SubGrpActual+$SubGrpBudget+$SubGrpPrdActual+$SubGrpPrdBudget !=0 AND $SubActGrp!=''){
-				
-				printf('<TR>
-					<td COLSPAN=2><FONT SIZE=2><I>%s ' . _('Total') . '</I></FONT></td>
-					<td ALIGN=RIGHT><I>%s</I></td>
-					<td ALIGN=RIGHT><I>%s</I></td>
-					<td ALIGN=RIGHT><I>%s</I></td>
-					<td ALIGN=RIGHT><I>%s</I></td>
-					</tr>',
-					$SubActGrp,
-					number_format($SubGrpActual,2),
-					number_format($SubGrpBudget,2),
-					number_format($SubGrpPrdActual,2),
-					number_format($SubGrpPrdBudget,2));
-			}
-			$SubGrpActual =0;
-			$SubGrpBudget =0;
-			$SubGrpPrdActual =0;
-			$SubGrpPrdBudget =0;
-
-			$SubActGrp = $myrow['groupname'];
-			printf('<TR>
-				<td COLSPAN=6><FONT SIZE=2 COLOR=GREEN><B>%s</B></FONT></TD>
-				</TR>',
-				$myrow['groupname']);
-			$j++;
-
-		}
-
-		if ($myrow['parentgroupname']=='' AND $myrow['groupname']!= $ActGrp ){
+		if ($myrow['groupname']!= $ActGrp ){
+			if ($ActGrp !=''){ //so its not the first account group of the first account displayed
+				if ($myrow['parentgroupname']==$ActGrp){
+					$Level++;
+					$ParentGroups[$Level]=$myrow['groupname'];
+				} elseif ($ParentGroups[$Level]==$myrow['parentgroupname']) {
+					printf('<TR>
+						<td COLSPAN=2><FONT SIZE=2><I>%s ' . _('Total') . ' </I></FONT></td>
+						<td ALIGN=RIGHT><I>%s</I></td>
+						<td ALIGN=RIGHT><I>%s</I></td>
+						<td ALIGN=RIGHT><I>%s</I></td>
+						<td ALIGN=RIGHT><I>%s</I></td>
+						</tr>',
+						$ParentGroups[$Level],
+						number_format($GrpActual[$Level],2),
+						number_format($GrpBudget[$Level],2),
+						number_format($GrpPrdActual[$Level],2),
+						number_format($GrpPrdBudget[$Level],2));
 			
-			if ($SubGrpActual+$SubGrpBudget+$SubGrpPrdActual+$SubGrpPrdBudget !=0 AND $SubActGrp!=''){
-				
-				printf('<TR>
-					<td COLSPAN=2><FONT COLOR=GREEN SIZE=2><I>%s ' . _('Total') . '</I></FONT></td>
-					<td ALIGN=RIGHT><I>%s</I></td>
-					<td ALIGN=RIGHT><I>%s</I></td>
-					<td ALIGN=RIGHT><I>%s</I></td>
-					<td ALIGN=RIGHT><I>%s</I></td>
-					</tr>',
-					$SubActGrp,
-					number_format($SubGrpActual,2),
-					number_format($SubGrpBudget,2),
-					number_format($SubGrpPrdActual,2),
-					number_format($SubGrpPrdBudget,2));
-			}
-
-			if ($GrpActual+$GrpBudget+$GrpPrdActual+$GrpPrdBudget !=0){
-				echo '<TR>
-					<TD COLSPAN=2></TD>
-					<TD COLSPAN=4><HR></TD>
-				</TR>';
-				printf('<TR>
-					<td COLSPAN=2><FONT SIZE=4>%s ' . _('Total') . '</FONT></td>
-					<td ALIGN=RIGHT>%s</td>
-					<td ALIGN=RIGHT>%s</td>
-					<td ALIGN=RIGHT>%s</td>
-					<td ALIGN=RIGHT>%s</td>
-					</tr>',
-					$ActGrp,
-					number_format($GrpActual,2),
-					number_format($GrpBudget,2),
-					number_format($GrpPrdActual,2),
-					number_format($GrpPrdBudget,2));
-			}
-			$GrpActual =0;
-			$GrpBudget =0;
-			$GrpPrdActual =0;
-			$GrpPrdBudget =0;
+					$GrpActual[$Level] =0;
+					$GrpBudget[$Level] =0;
+					$GrpPrdActual[$Level] =0;
+					$GrpPrdBudget[$Level] =0;
+					$ParentGroups[$Level]=$myrow['groupname'];
+				} else {
+					do {
+						printf('<TR>
+							<td COLSPAN=2><FONT SIZE=2><I>%s ' . _('Total') . ' </I></FONT></td>
+							<td ALIGN=RIGHT><I>%s</I></td>
+							<td ALIGN=RIGHT><I>%s</I></td>
+							<td ALIGN=RIGHT><I>%s</I></td>
+							<td ALIGN=RIGHT><I>%s</I></td>
+							</tr>',
+							$ParentGroups[$Level],
+							number_format($GrpActual[$Level],2),
+							number_format($GrpBudget[$Level],2),
+							number_format($GrpPrdActual[$Level],2),
+							number_format($GrpPrdBudget[$Level],2));
 			
-			$SubGrpActual =0;
-			$SubGrpBudget =0;
-			$SubGrpPrdActual =0;
-			$SubGrpPrdBudget =0;
+						$GrpActual[$Level] =0;
+						$GrpBudget[$Level] =0;
+						$GrpPrdActual[$Level] =0;
+						$GrpPrdBudget[$Level] =0;
+						$ParentGroups[$Level]='';
+						$Level--;
+						
+						$j++;
+					} while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0);
+					
+					if ($Level >0){	
+						printf('<TR>
+						<td COLSPAN=2><FONT SIZE=2><I>%s ' . _('Total') . ' </I></FONT></td>
+						<td ALIGN=RIGHT><I>%s</I></td>
+						<td ALIGN=RIGHT><I>%s</I></td>
+						<td ALIGN=RIGHT><I>%s</I></td>
+						<td ALIGN=RIGHT><I>%s</I></td>
+						</tr>',
+						$ParentGroups[$Level],
+						number_format($GrpActual[$Level],2),
+						number_format($GrpBudget[$Level],2),
+						number_format($GrpPrdActual[$Level],2),
+						number_format($GrpPrdBudget[$Level],2));
 			
+						$GrpActual[$Level] =0;
+						$GrpBudget[$Level] =0;
+						$GrpPrdActual[$Level] =0;
+						$GrpPrdBudget[$Level] =0;
+						$ParentGroups[$Level]='';
+					} else {
+						$Level =1;
+					}
+				}
+			}
+			$ParentGroups[$Level]=$myrow['groupname'];
 			$ActGrp = $myrow['groupname'];
 			printf('<TR>
 				<td COLSPAN=6><FONT SIZE=4 COLOR=BLUE><B>%s</B></FONT></TD>
@@ -481,15 +499,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 		}
 
 
-		$GrpActual +=$myrow['monthactual'];
-		$GrpBudget +=$myrow['monthbudget'];
-		$GrpPrdActual +=$AccountPeriodActual;
-		$GrpPrdBudget +=$AccountPeriodBudget;
-
-		$SubGrpActual +=$myrow['monthactual'];
-		$SubGrpBudget +=$myrow['monthbudget'];
-		$SubGrpPrdActual +=$AccountPeriodActual;
-		$SubGrpPrdBudget +=$AccountPeriodBudget;
+		$GrpActual[$Level] +=$myrow['monthactual'];
+		$GrpBudget[$Level] +=$myrow['monthbudget'];
+		$GrpPrdActual[$Level] +=$AccountPeriodActual;
+		$GrpPrdBudget[$Level] +=$AccountPeriodBudget;
 
 		$CheckMonth += $myrow['monthactual'];
 		$CheckBudgetMonth += $myrow['monthbudget'];
@@ -519,6 +532,83 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 		}
 	}
 	//end of while loop
+
+
+	if ($ActGrp !=''){ //so its not the first account group of the first account displayed
+		if ($myrow['parentgroupname']==$ActGrp){
+			$Level++;
+			$ParentGroups[$Level]=$myrow['groupname'];
+		} elseif ($ParentGroups[$Level]==$myrow['parentgroupname']) {
+			printf('<TR>
+				<td COLSPAN=2><FONT SIZE=2><I>%s ' . _('Total') . ' </I></FONT></td>
+				<td ALIGN=RIGHT><I>%s</I></td>
+				<td ALIGN=RIGHT><I>%s</I></td>
+				<td ALIGN=RIGHT><I>%s</I></td>
+				<td ALIGN=RIGHT><I>%s</I></td>
+				</tr>',
+				$ParentGroups[$Level],
+				number_format($GrpActual[$Level],2),
+				number_format($GrpBudget[$Level],2),
+				number_format($GrpPrdActual[$Level],2),
+				number_format($GrpPrdBudget[$Level],2));
+	
+			$GrpActual[$Level] =0;
+			$GrpBudget[$Level] =0;
+			$GrpPrdActual[$Level] =0;
+			$GrpPrdBudget[$Level] =0;
+			$ParentGroups[$Level]=$myrow['groupname'];
+		} else {
+			do {
+				printf('<TR>
+					<td COLSPAN=2><FONT SIZE=2><I>%s ' . _('Total') . ' </I></FONT></td>
+					<td ALIGN=RIGHT><I>%s</I></td>
+					<td ALIGN=RIGHT><I>%s</I></td>
+					<td ALIGN=RIGHT><I>%s</I></td>
+					<td ALIGN=RIGHT><I>%s</I></td>
+					</tr>',
+					$ParentGroups[$Level],
+					number_format($GrpActual[$Level],2),
+					number_format($GrpBudget[$Level],2),
+					number_format($GrpPrdActual[$Level],2),
+					number_format($GrpPrdBudget[$Level],2));
+	
+				$GrpActual[$Level] =0;
+				$GrpBudget[$Level] =0;
+				$GrpPrdActual[$Level] =0;
+				$GrpPrdBudget[$Level] =0;
+				$ParentGroups[$Level]='';
+				$Level--;
+				
+				$j++;
+			} while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0);
+			
+			if ($Level >0){	
+				printf('<TR>
+				<td COLSPAN=2><FONT SIZE=2><I>%s ' . _('Total') . ' </I></FONT></td>
+				<td ALIGN=RIGHT><I>%s</I></td>
+				<td ALIGN=RIGHT><I>%s</I></td>
+				<td ALIGN=RIGHT><I>%s</I></td>
+				<td ALIGN=RIGHT><I>%s</I></td>
+				</tr>',
+				$ParentGroups[$Level],
+				number_format($GrpActual[$Level],2),
+				number_format($GrpBudget[$Level],2),
+				number_format($GrpPrdActual[$Level],2),
+				number_format($GrpPrdBudget[$Level],2));
+	
+				$GrpActual[$Level] =0;
+				$GrpBudget[$Level] =0;
+				$GrpPrdActual[$Level] =0;
+				$GrpPrdBudget[$Level] =0;
+				$ParentGroups[$Level]='';
+			} else {
+				$Level =1;
+			}
+		}
+	}
+
+
+
 	printf('<tr bgcolor="#ffffff">
 			<td COLSPAN=2><FONT COLOR=BLUE><B>' . _('Check Totals') . '</B></FONT></td>
 			<td ALIGN=RIGHT>%s</td>

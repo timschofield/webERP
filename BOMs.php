@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity = 9;
 
@@ -298,7 +298,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 								" . $_POST['Quantity'] . ",
 								'" . $EffectiveAfterSQL . "',
 								'" . $EffectiveToSQL . "',
-								" . $_POST['autoissue'] . ")";
+								" . $_POST['AutoIssue'] . ")";
 
 					$ErrMsg = _('Could not insert the BOM component because');
 					$DbgMsg = _('The SQL used to insert the component was');
@@ -685,7 +685,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 			echo '</SELECT></TD></TR>';
 		} else {
-			$_POST['AutoIssue']=0;
+			echo '<INPUT TYPE=HIDDEN NAME="AutoIssue" VALUE=0>';
 		}
 		?>
 		</TABLE>
