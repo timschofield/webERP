@@ -28,6 +28,6 @@
 
 	$YPos -= (2 * $line_height);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,$BalanceDate,'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,'Last Year','right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,_('Last Year'),'right');
 	$YPos -= (2 * $line_height);
 ?>

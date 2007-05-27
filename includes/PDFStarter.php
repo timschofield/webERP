@@ -1,48 +1,12 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 /*this class is an extension to the fpdf class using a syntax that the original reports were written in
 (the R &OS pdf.php class) - due to limitation of this class for foreign character support this wrapper class
 was written to allow the same code base to use the more functional fpdf.class by Olivier Plathey */
-if (isset($SessionSavePath)){
-	session_save_path($SessionSavePath);
-}
-session_start();
-include('includes/GetConfig.php');
+
 
 include ('includes/class.pdf.php');
-
-
-If (isset($_POST['Theme'])) {
-	$_SESSION['Theme'] = $_POST['Theme'];
-	$theme = $_POST['Theme'];
-} elseif (!isset($_SESSION['Theme'])) {
-	$theme = $_SESSION['DefaultTheme'];
-	$_SESSION['Theme'] = $_SESSION['DefaultTheme'];
-	
-} else {
-	$theme = $_SESSION['Theme'];
-}
-
-if ($_SESSION['HTTPS_Only']==1){
-	if ($_SERVER['HTTPS']!='on'){
-		prnMsg('webERP is configured to allow only secure socket connections. Pages must be called with https:// ....','error');
-		exit;
-	}
-}
-
-include('includes/LanguageSetup.php');
-
-/* Standard PDF file creation header stuff */
-
-/*check security - $PageSecurity set in files where this script is included from */
-if (! in_array($PageSecurity,$_SESSION['AllowedPageSecurityTokens']) OR !isset($PageSecurity)){
-	$title = _('Permission Denied Report');
-	include('includes/header.inc');
-	echo '<BR><BR><BR><BR><BR><BR><BR><CENTER><FONT COLOR=RED SIZE=4><B>' . _('The security settings on your account do not permit you to access this function') . '</B></FONT>';
-	include('includes/footer.inc');
-	exit;
-}
 
 
 if (!isset($PaperSize)){

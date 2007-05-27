@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 /*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances
 and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen
@@ -146,11 +146,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 	include('includes/PDFTrialBalancePageHeader.inc');
 	
 	$j = 1;
-	$Level = 0;
+	$Level = 1;
 	$ActGrp = '';
-	$ParentGrp = '';
 	$ParentGroups = array();
-
+	$ParentGroups[$Level]='';
 	$GrpActual =array(0);
 	$GrpBudget = array(0);
 	$GrpPrdActual = array(0);
@@ -158,21 +157,18 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 
 	while ($myrow=DB_fetch_array($AccountsResult)) {
 		
-		if ($myrow['groupname']!= $ActGrp){	
-			
-			// Print heading if at end of page
-			if ($YPos < ($Bottom_Margin)){
-				include('includes/PDFTrialBalancePageHeader.inc');
-				$YPos -= (2 * $line_height);
-			}
-			
-			if ($myrow['parentgroupname']==$ActGrp){
-				$Level++;
-				$ParentGroups[$Level]=$myrow['parentgroupname'];
-				$YPos -= (2 * $line_height);	
-			} else {
-				while ($myrow['parentgroupname']!=$ParentGroups[$Level] AND $Level>0) {
-						
+		if ($myrow['groupname']!= $ActGrp){
+
+			if ($ActGrp !=''){	
+				
+				// Print heading if at end of page
+				if ($YPos < ($Bottom_Margin+ (2 * $line_height))) {
+					include('includes/PDFTrialBalancePageHeader.inc');
+				}
+				if ($myrow['parentgroupname']==$ActGrp){
+					$Level++;
+					$ParentGroups[$Level]=$myrow['groupname'];
+				}elseif ($myrow['parentgroupname']==$ParentGroups[$Level]){
 					$YPos -= (.5 * $line_height);
 					$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);  
 					$pdf->selectFont('./fonts/Helvetica-Bold.afm');
@@ -185,25 +181,66 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 					$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
 					$YPos -= (2 * $line_height);
 					$pdf->selectFont('./fonts/Helvetica.afm');
-					$ParentGroups[$Level]='';
+					$ParentGroups[$Level]=$myrow['groupname'];
 					$GrpActual[$Level] =0;
 					$GrpBudget[$Level] =0;
 					$GrpPrdActual[$Level] =0;
 					$GrpPrdBduget[$Level] =0;
-					$Level--;
+					
+				} else {
+					do{
+						$YPos -= $line_height;
+						$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);  
+						$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ParentGroups[$Level]);
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual[$Level],2),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpBudget[$Level],2),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdActual[$Level],2),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget[$Level],2),'right');
+						$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
+						$YPos -= (2 * $line_height);
+						$pdf->selectFont('./fonts/Helvetica.afm');
+						$ParentGroups[$Level]='';
+						$GrpActual[$Level] =0;
+						$GrpBudget[$Level] =0;
+						$GrpPrdActual[$Level] =0;
+						$GrpPrdBduget[$Level] =0;
+						$Level--;
+					}while ($myrow['parentgroupname']!=$ParentGroups[$Level] AND $Level>0);
+
+					if ($Level>0){
+						$YPos -= $line_height;
+						$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);  
+						$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+60, $YPos, 190, $FontSize, $ParentGroups[$Level]);
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,number_format($GrpActual[$Level],2),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,number_format($GrpBudget[$Level],2),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,number_format($GrpPrdActual[$Level],2),'right');
+						$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,number_format($GrpPrdBudget[$Level],2),'right');
+						$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
+						$YPos -= (2 * $line_height);
+						$pdf->selectFont('./fonts/Helvetica.afm');
+						$GrpActual[$Level] =0;
+						$GrpBudget[$Level] =0;
+						$GrpPrdActual[$Level] =0;
+						$GrpPrdBduget[$Level] =0;
+					} else {
+						$Level =1;
+					}
 				}
 			}
-
-			// Print account group name
+			$YPos -= (2 * $line_height);
+				// Print account group name
 			$pdf->selectFont('./fonts/Helvetica-Bold.afm');
 			$ActGrp = $myrow['groupname'];
+			$ParentGroups[$Level]=$myrow['groupname'];
 			$FontSize = 10;
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$myrow['groupname']);
 			$FontSize = 8;
 			$pdf->selectFont('./fonts/Helvetica.afm');
 			$YPos -= (2 * $line_height);
-			$j++;
-
 		}
 
 		if ($myrow['pandl']==1){
@@ -241,7 +278,6 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 		// Print heading if at end of page
 		if ($YPos < ($Bottom_Margin)){
 			include('includes/PDFTrialBalancePageHeader.inc');
-			$YPos -= (2 * $line_height);
 		}
 
 		// Print total for each account

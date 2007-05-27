@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
 
@@ -86,6 +86,7 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 
 	$SQL = 'SELECT accountgroups.sectioninaccounts, 
 			accountgroups.groupname,
+			accountgroups.parentgroupname,
 			chartdetails.accountcode ,
 			chartmaster.accountname,
 			Sum(CASE WHEN chartdetails.period=' . $_POST['BalancePeriodEnd'] . ' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS balancecfwd,
@@ -100,7 +101,8 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 			accountgroups.sequenceintb,
 			accountgroups.sectioninaccounts
 		ORDER BY accountgroups.sectioninaccounts, 
-			accountgroups.sequenceintb, 
+			accountgroups.sequenceintb,
+			accountgroups.groupname,
 			chartdetails.accountcode';
 
 	$AccountsResult = DB_query($SQL,$db);
@@ -127,9 +129,11 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 	$CheckTotal = 0;
 
 	$ActGrp ='';
-
-	$GroupTotal = 0;
-	$LYGroupTotal = 0;
+	$Level =0;
+	$ParentGroups = array();
+	$ParentGroups[$Level]='';
+	$GroupTotal = array(0);
+	$LYGroupTotal = array(0);
 
 	while ($myrow=DB_fetch_array($AccountsResult)) {
 
@@ -140,19 +144,29 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 			$AccountBalance += $AccumProfitRow['accumprofitbfwd'];
 			$LYAccountBalance += $AccumProfitRow['lyaccumprofitbfwd'];
 		}
-
-		if ($myrow['groupname']!= $ActGrp AND $_POST['Detail']=='Summary' AND $ActGrp != '') {
+		if ($myrow['parentgroupname']!=$ActGrp){
+			while ($myrow['groupname']!= $ParentGroups[$Level] AND $ActGrp != '') {
+				$YPos -= (2 * $line_height);
+				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$ParentGroups[$Level]);
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($GroupTotal[$Level]),'right');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($LYGroupTotal[$Level]),'right');
+				$ParentGroups[$Level]='';
+				$GroupTotal[$Level]=0;
+				$LYGroupTotal[$Level]=0;
+				$Level--;
+			}
 			$YPos -= (2 * $line_height);
-			$FontSize = 8;
-			$pdf->selectFont('./fonts/Helvetica.afm');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$ActGrp);
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($GroupTotal),'right');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($LYGroupTotal),'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$ParentGroups[$Level]);
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($GroupTotal[$Level]),'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($LYGroupTotal[$Level]),'right');
+			$ParentGroups[$Level]='';
+			$GroupTotal[$Level]=0;
+			$LYGroupTotal[$Level]=0;
 			$YPos -= $line_height;
 		}
 		if ($myrow['sectioninaccounts']!= $Section){
 
-			if ($SectionBalanceLY+$SectionBalance !=0){
+			if ($Section !=''){
 				$FontSize = 8;
 				$pdf->selectFont('./fonts/Helvetica-Bold.afm');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+10,$YPos,200,$FontSize,$Sections[$Section]);
@@ -173,32 +187,32 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 		}
 
 		if ($myrow['groupname']!= $ActGrp){
-
+			if ($myrow['parentgroupname']==$ActGrp AND $ActGrp!=''){
+				$Level++;
+			}
+			$ActGrp = $myrow['groupname'];
+			$ParentGroups[$Level] = $ActGrp;
 			if ($_POST['Detail']=='Detailed'){
-				$ActGrp = $myrow['groupname'];
-				$FontSize = 8;
-				$pdf->selectFont('./fonts/Helvetica.afm');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$myrow['groupname']);
 				$YPos -= $line_height;
 			}
-			$GroupTotal=0;
-			$LYGroupTotal=0;
-			$ActGrp = $myrow['groupname'];
+			$GroupTotal[$Level]=0;
+			$LYGroupTotal[$Level]=0;
 		}
 
 		$SectionBalanceLY +=	$LYAccountBalance;
 		$SectionBalance	  +=	$AccountBalance;
 
-		$LYGroupTotal	  +=	$LYAccountBalance;
-		$GroupTotal	  +=	$AccountBalance;
-
+		for ($i=0;$i<=$Level;$i++){
+			$LYGroupTotal[$i]  +=	$LYAccountBalance;
+			$GroupTotal[$i]	  +=	$AccountBalance;
+		}
 		$LYCheckTotal 	  +=	$LYAccountBalance;
 		$CheckTotal  	  +=	$AccountBalance;
 
 
 		if ($_POST['Detail']=='Detailed'){
-			$FontSize = 8;
-			$pdf->selectFont('./fonts/Helvetica.afm');
+			
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,$myrow['accountcode']);
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+55,$YPos,200,$FontSize,$myrow['accountname']);
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($AccountBalance),'right');
@@ -213,26 +227,23 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 	if ($SectionBalanceLY+$SectionBalance !=0){
 		if ($_POST['Detail']=='Summary'){
 			$YPos -= (2 * $line_height);
-			$FontSize = 8;
-			$pdf->selectFont('./fonts/Helvetica.afm');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$ActGrp);
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($GroupTotal),'right');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($LYGroupTotal),'right');
+			
+			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$ParentGroups[$Level]);
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($GroupTotal[$Level]),'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($LYGroupTotal[$Level]),'right');
 			$YPos -= $line_height;
 		}
 
-			$FontSize = 8;
-			$pdf->selectFont('./fonts/Helvetica-Bold.afm');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+10,$YPos,200,$FontSize,$Sections[$Section]);
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($SectionBalance),'right');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($SectionBalanceLY),'right');
-			$YPos -= $line_height;
+			
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+10,$YPos,200,$FontSize,$Sections[$Section]);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($SectionBalance),'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($SectionBalanceLY),'right');
+		$YPos -= $line_height;
 	}
 	
 	$YPos -= $line_height;
-	$FontSize = 8;
-	$pdf->selectFont('./fonts/Helvetica.afm');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,'Check Total');
+	
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Check Total'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($CheckTotal),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($LYCheckTotal),'right');
 
@@ -248,15 +259,14 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 		include('includes/footer.inc');
 		exit;
 	} else {
+
 		header('Content-type: application/pdf');
 		header('Content-Length: ' . $len);
-		header('Content-Disposition: inline; filename=CustomerList.pdf');
+		header('Content-Disposition: inline; filename=BalanceSheet.pdf');
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Pragma: public');
-
-		$pdf->Stream();
-
+		$pdf->stream;
 	}
 	exit;
 } else {
@@ -286,7 +296,8 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 
 	$SQL = 'SELECT accountgroups.sectioninaccounts, 
 			accountgroups.groupname,
-			chartdetails.accountcode ,
+			accountgroups.parentgroupname,
+			chartdetails.accountcode,
 			chartmaster.accountname,
 			Sum(CASE WHEN chartdetails.period=' . $_POST['BalancePeriodEnd'] . ' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS balancecfwd,
 			Sum(CASE WHEN chartdetails.period=' . ($_POST['BalancePeriodEnd'] - 12) . ' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lybalancecfwd
@@ -299,8 +310,9 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 			chartmaster.accountname,
 			accountgroups.sequenceintb,
 			accountgroups.sectioninaccounts
-		ORDER BY accountgroups.sectioninaccounts, 
-			accountgroups.sequenceintb, 
+		ORDER BY accountgroups.sectioninaccounts,
+			accountgroups.sequenceintb,
+			accountgroups.groupname,
 			chartdetails.accountcode';
 
 	$AccountsResult = DB_query($SQL,$db,_('No general ledger accounts were returned by the SQL because'));
@@ -334,9 +346,14 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 	$CheckTotal = 0;
 
 	$ActGrp ='';
+	$Level=0;
+	$ParentGroups=array();
+	$ParentGroups[$Level]='';
+	$GroupTotal = array(0);
+	$LYGroupTotal = array(0);
 
-	$GroupTotal = 0;
-	$LYGroupTotal = 0;
+	echo $TableHeader;
+	$j=0; //row counter
 
 	while ($myrow=DB_fetch_array($AccountsResult)) {
 
@@ -348,26 +365,65 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 			$LYAccountBalance += $AccumProfitRow['lyaccumprofitbfwd'];
 		}
 
-		if ($myrow['groupname']!= $ActGrp AND $_POST['Detail']=='Summary' AND $ActGrp != '') {
+		if ($myrow['groupname']!= $ActGrp AND $ActGrp != '') {
+			if ($myrow['parentgroupname']!=$ActGrp){
+				while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0){
+					if ($_POST['Detail']=='Detailed'){
+						echo '<TR>
+							<TD COLSPAN=2></TD>
+      							<TD><HR></TD>
+							<TD></TD>
+							<TD><HR></TD>
+							<TD></TD>
+							</TR>';
+					}
+					printf('<td COLSPAN=2><I>%s</I></td>
+						<td ALIGN=RIGHT>%s</td>
+						<TD></TD>
+						<td ALIGN=RIGHT>%s</td>
+						</tr>',
+						$ParentGroups[$Level],
+						number_format($GroupTotal[$Level]),
+						number_format($LYGroupTotal[$Level])
+						);
+					$GroupTotal[$Level] = 0;
+					$LYGroupTotal[$Level] = 0;
+					$ParentGroups[$Level]='';
+					$Level--;
+					$j++;
+				}
+				if ($_POST['Detail']=='Detailed'){
+					echo '<TR>
+						<TD COLSPAN=2></TD>
+						<TD><HR></TD>
+						<TD></TD>
+						<TD><HR></TD>
+						<TD></TD>
+						</TR>';
+				}
 
-			printf('<td COLSPAN=3>%s</td>
-			<td ALIGN=RIGHT>%s</td>
-			<TD></TD>
-			<td ALIGN=RIGHT>%s</td>
-			</tr>',
-			$ActGrp,
-			number_format($GroupTotal),
-			number_format($LYGroupTotal)
-			);
-
+				printf('<td COLSPAN=2>%s</td>
+					<td ALIGN=RIGHT>%s</td>
+					<TD></TD>
+					<td ALIGN=RIGHT>%s</td>
+					</tr>',
+					$ParentGroups[$Level],
+					number_format($GroupTotal[$Level]),
+					number_format($LYGroupTotal[$Level])
+					);
+				$GroupTotal[$Level] = 0;
+				$LYGroupTotal[$Level] = 0;
+				$ParentGroups[$Level]='';
+				$j++;
+			}
 		}
-		if ($myrow['sectioninaccounts']!= $Section){
+		if ($myrow['sectioninaccounts']!= $Section ){
 
-			if ($SectionBalanceLY+$SectionBalance !=0){
+			if ($Section!=''){
 				if ($_POST['Detail']=='Detailed'){
 					echo '<TR>
 					<TD COLSPAN=2></TD>
-      					<TD><HR></TD>
+					<TD><HR></TD>
 					<TD></TD>
 					<TD><HR></TD>
 					<TD></TD>
@@ -375,12 +431,12 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 				} else {
 					echo '<TR>
 					<TD COLSPAN=3></TD>
-      					<TD><HR></TD>
+					<TD><HR></TD>
 					<TD></TD>
 					<TD><HR></TD>
 					</TR>';
 				}
-
+	
 				printf('<TR>
 					<TD COLSPAN=3><FONT SIZE=4>%s</FONT></td>
 					<TD ALIGN=RIGHT>%s</TD>
@@ -390,11 +446,12 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 				$Sections[$Section],
 				number_format($SectionBalance),
 				number_format($SectionBalanceLY));
+				$j++;
 			}
 			$SectionBalanceLY = 0;
 			$SectionBalance = 0;
-
 			$Section = $myrow['sectioninaccounts'];
+			
 
 			if ($_POST['Detail']=='Detailed'){
 				printf('<TR>
@@ -406,6 +463,10 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 
 		if ($myrow['groupname']!= $ActGrp){
 
+			if ($ActGrp!='' AND $myrow['parentgroupname']==$ActGrp){
+				$Level++;
+			}
+		
 			if ($_POST['Detail']=='Detailed'){
 				$ActGrp = $myrow['groupname'];
 				printf('<TR>
@@ -414,18 +475,20 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 				$myrow['groupname']);
 				echo $TableHeader;
 			}
-			$GroupTotal=0;
-			$LYGroupTotal=0;
-			$ActGrp = $myrow["groupname"];
+			$GroupTotal[$Level]=0;
+			$LYGroupTotal[$Level]=0;
+			$ActGrp = $myrow['groupname'];
+			$ParentGroups[$Level]=$myrow['groupname'];
+			$j++;
 		}
 
 		$SectionBalanceLY +=	$LYAccountBalance;
 		$SectionBalance	  +=	$AccountBalance;
-
-		$LYGroupTotal	  +=	$LYAccountBalance;
-		$GroupTotal	  +=	$AccountBalance;
-
-		$LYCheckTotal 	  +=	$LYAccountBalance;
+		for ($i=0;$i<=$Level;$i++){
+			$LYGroupTotal[$i] += $LYAccountBalance;
+			$GroupTotal[$i] += $AccountBalance;
+		}
+		$LYCheckTotal	  +=	$LYAccountBalance;
 		$CheckTotal  	  +=	$AccountBalance;
 
 
@@ -455,42 +518,93 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 				number_format($AccountBalance),
 				number_format($LYAccountBalance)
 				);
-
+			$j++;
+			
 		}
+		
 	}
 	//end of loop
 
 
-	if ($SectionBalanceLY+$SectionBalance !=0){
-		if ($_POST['Detail']=='Summary'){
-			printf('<td COLSPAN=3>%s</td>
-				<td ALIGN=RIGHT>%s</td>
+	
+
+	while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0){
+		if ($_POST['Detail']=='Detailed'){
+			echo '<TR>
+				<TD COLSPAN=2></TD>
+				<TD><HR></TD>
 				<TD></TD>
-				<td ALIGN=RIGHT>%s</td>
-				</tr>',
-			$ActGrp,
-			number_format($GroupTotal),
-			number_format($LYGroupTotal)
-			);
+				<TD><HR></TD>
+				<TD></TD>
+				</TR>';
 		}
-		echo "<TR>
-			<TD COLSPAN=3></TD>
-      			<TD><HR></TD>
+		printf('<td COLSPAN=2><I>%s</I></td>
+			<td ALIGN=RIGHT>%s</td>
+			<TD></TD>
+			<td ALIGN=RIGHT>%s</td>
+			</tr>',
+			$ParentGroups[$Level],
+			number_format($GroupTotal[$Level]),
+			number_format($LYGroupTotal[$Level])
+			);
+		$Level--;
+	}
+	if ($_POST['Detail']=='Detailed'){
+		echo '<TR>
+			<TD COLSPAN=2></TD>
+			<TD><HR></TD>
 			<TD></TD>
 			<TD><HR></TD>
-			</TR>";
-
-		printf('<TR>
-			<TD COLSPAN=3><FONT SIZE=4>%s</FONT></td>
-			<TD ALIGN=RIGHT>%s</TD>
 			<TD></TD>
-			<TD ALIGN=RIGHT>%s</TD>
-			</TR>',
-			$Sections[$Section],
-			number_format($SectionBalance),
-			number_format($SectionBalanceLY));
+			</TR>';
 	}
 
+	printf('<td COLSPAN=2>%s</td>
+		<td ALIGN=RIGHT>%s</td>
+		<TD></TD>
+		<td ALIGN=RIGHT>%s</td>
+		</tr>',
+		$ParentGroups[$Level],
+		number_format($GroupTotal[$Level]),
+		number_format($LYGroupTotal[$Level])
+		);
+	
+	if ($_POST['Detail']=='Detailed'){
+		echo '<TR>
+		<TD COLSPAN=2></TD>
+		<TD><HR></TD>
+		<TD></TD>
+		<TD><HR></TD>
+		<TD></TD>
+		</TR>';
+	} else {
+		echo '<TR>
+		<TD COLSPAN=3></TD>
+		<TD><HR></TD>
+		<TD></TD>
+		<TD><HR></TD>
+		</TR>';
+	}
+
+	printf('<TR>
+		<TD COLSPAN=3><FONT SIZE=4>%s</FONT></td>
+		<TD ALIGN=RIGHT>%s</TD>
+		<TD></TD>
+		<TD ALIGN=RIGHT>%s</TD>
+	</TR>',
+	$Sections[$Section],
+	number_format($SectionBalance),
+	number_format($SectionBalanceLY));
+	
+	$Section = $myrow['sectioninaccounts'];
+	
+	if ($_POST['Detail']=='Detailed'){
+		printf('<TR>
+			<TD COLSPAN=6><FONT SIZE=4 COLOR=BLUE><B>%s</B></FONT></TD>
+			</TR>',
+			$Sections[$myrow['sectioninaccounts']]);
+	}
+	
 	echo '<TR>
 		<TD COLSPAN=3></TD>
       		<TD><HR></TD>

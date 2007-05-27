@@ -30,5 +30,6 @@
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,_('Month Budget'),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,_('Period Actual'),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,_('Period Budget'),'right');
-	$pdf->selectFont('./fonts/Helvetica.afm');  
+	$pdf->selectFont('./fonts/Helvetica.afm');
+	$YPos -= (2 * $line_height);
 ?>
