@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
 
@@ -84,7 +84,7 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 
 	$AccumProfitRow = DB_fetch_array($AccumProfitResult); /*should only be one row returned */
 
-	$SQL = 'SELECT accountgroups.sectioninaccounts, 
+	$SQL = 'SELECT accountgroups.sectioninaccounts,
 			accountgroups.groupname,
 			accountgroups.parentgroupname,
 			chartdetails.accountcode ,
@@ -100,7 +100,7 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 			chartmaster.accountname,
 			accountgroups.sequenceintb,
 			accountgroups.sectioninaccounts
-		ORDER BY accountgroups.sectioninaccounts, 
+		ORDER BY accountgroups.sectioninaccounts,
 			accountgroups.sequenceintb,
 			accountgroups.groupname,
 			chartdetails.accountcode';
@@ -119,7 +119,7 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 	}
 
 	include('includes/PDFBalanceSheetPageHeader.inc');
-	
+
 	$k=0; //row colour counter
 	$Section='';
 	$SectionBalance = 0;
@@ -144,32 +144,36 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 			$AccountBalance += $AccumProfitRow['accumprofitbfwd'];
 			$LYAccountBalance += $AccumProfitRow['lyaccumprofitbfwd'];
 		}
-		if ($myrow['parentgroupname']!=$ActGrp){
-			while ($myrow['groupname']!= $ParentGroups[$Level] AND $ActGrp != '') {
-				$YPos -= (2 * $line_height);
-				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$ParentGroups[$Level]);
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($GroupTotal[$Level]),'right');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($LYGroupTotal[$Level]),'right');
-				$ParentGroups[$Level]='';
-				$GroupTotal[$Level]=0;
-				$LYGroupTotal[$Level]=0;
-				$Level--;
-			}
-			$YPos -= (2 * $line_height);
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$ParentGroups[$Level]);
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($GroupTotal[$Level]),'right');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($LYGroupTotal[$Level]),'right');
-			$ParentGroups[$Level]='';
-			$GroupTotal[$Level]=0;
-			$LYGroupTotal[$Level]=0;
-			$YPos -= $line_height;
-		}
+		if ($ActGrp !=''){
+        		if ($myrow['groupname']!=$ActGrp){
+				$FontSize = 8;
+				$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+        			while ($myrow['groupname']!= $ParentGroups[$Level] AND $Level>0) {
+        				$YPos -= $line_height;
+        				$LeftOvers = $pdf->addTextWrap($Left_Margin+(10 * ($Level+1)),$YPos,200,$FontSize,_('Total') . ' ' . $ParentGroups[$Level]);
+        				$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($GroupTotal[$Level]),'right');
+        				$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($LYGroupTotal[$Level]),'right');
+        				$ParentGroups[$Level]='';
+        				$GroupTotal[$Level]=0;
+        				$LYGroupTotal[$Level]=0;
+        				$Level--;
+        			}
+        			$YPos -= $line_height;
+        			$LeftOvers = $pdf->addTextWrap($Left_Margin+(10 * ($Level+1)),$YPos,200,$FontSize,_('Total') . ' ' . $ParentGroups[$Level]);
+        			$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($GroupTotal[$Level]),'right');
+        			$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($LYGroupTotal[$Level]),'right');
+        			$ParentGroups[$Level]='';
+        			$GroupTotal[$Level]=0;
+        			$LYGroupTotal[$Level]=0;
+        			$YPos -= $line_height;
+        		}
+                }
 		if ($myrow['sectioninaccounts']!= $Section){
 
 			if ($Section !=''){
 				$FontSize = 8;
 				$pdf->selectFont('./fonts/Helvetica-Bold.afm');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+10,$YPos,200,$FontSize,$Sections[$Section]);
+				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$Sections[$Section]);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($SectionBalance),'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($SectionBalanceLY),'right');
 				$YPos -= (2 * $line_height);
@@ -187,6 +191,8 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 		}
 
 		if ($myrow['groupname']!= $ActGrp){
+                        $FontSize =8;
+                        $pdf->selectFont('./fonts/Helvetica-Bold.afm');
 			if ($myrow['parentgroupname']==$ActGrp AND $ActGrp!=''){
 				$Level++;
 			}
@@ -212,7 +218,8 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 
 
 		if ($_POST['Detail']=='Detailed'){
-			
+		        $FontSize =8;
+			$pdf->selectFont('./fonts/Helvetica.afm');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,$myrow['accountcode']);
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+55,$YPos,200,$FontSize,$myrow['accountname']);
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($AccountBalance),'right');
@@ -223,33 +230,45 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 			include('includes/PDFBalanceSheetPageHeader.inc');
 		}
 	}//end of loop
+        $FontSize = 8;
+	$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+	while ($Level>0) {
+        	$YPos -= $line_height;
+        	$LeftOvers = $pdf->addTextWrap($Left_Margin+(10 * ($Level+1)),$YPos,200,$FontSize,_('Total') . ' ' . $ParentGroups[$Level]);
+        	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($GroupTotal[$Level]),'right');
+        	$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($LYGroupTotal[$Level]),'right');
+        	$ParentGroups[$Level]='';
+        	$GroupTotal[$Level]=0;
+        	$LYGroupTotal[$Level]=0;
+        	$Level--;
+        }
+        $YPos -= $line_height;
+        $LeftOvers = $pdf->addTextWrap($Left_Margin+(10 * ($Level+1)),$YPos,200,$FontSize,_('Total') . ' ' . $ParentGroups[$Level]);
+        $LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($GroupTotal[$Level]),'right');
+        $LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($LYGroupTotal[$Level]),'right');
+        $ParentGroups[$Level]='';
+        $GroupTotal[$Level]=0;
+        $LYGroupTotal[$Level]=0;
+        $YPos -= $line_height;
 
-	if ($SectionBalanceLY+$SectionBalance !=0){
-		if ($_POST['Detail']=='Summary'){
-			$YPos -= (2 * $line_height);
-			
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$ParentGroups[$Level]);
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($GroupTotal[$Level]),'right');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($LYGroupTotal[$Level]),'right');
-			$YPos -= $line_height;
-		}
-
-			
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+10,$YPos,200,$FontSize,$Sections[$Section]);
+        if ($SectionBalanceLY+$SectionBalance !=0){
+	        $FontSize =8;
+		$pdf->selectFont('./fonts/Helvetica-Bold.afm');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$Sections[$Section]);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($SectionBalance),'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($SectionBalanceLY),'right');
 		$YPos -= $line_height;
 	}
-	
+
 	$YPos -= $line_height;
-	
+
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Check Total'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($CheckTotal),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($LYCheckTotal),'right');
 
 	$pdfcode = $pdf->output();
 	$len = strlen($pdfcode);
-	
+
 	if ($len<=20){
 		$title = _('Print Balance Sheet Error');
 		include('includes/header.inc');
@@ -259,14 +278,13 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 		include('includes/footer.inc');
 		exit;
 	} else {
-
-		header('Content-type: application/pdf');
+	        header('Content-type: application/pdf');
 		header('Content-Length: ' . $len);
 		header('Content-Disposition: inline; filename=BalanceSheet.pdf');
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Pragma: public');
-		$pdf->stream;
+		$pdf->Stream();
 	}
 	exit;
 } else {

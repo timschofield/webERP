@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 10;
 
@@ -13,9 +13,9 @@ include('includes/header.inc');
 function clearData()
 {
 	global $EditingExisting;
-	unset($_POST['WORef']);
+	unset($_POST['WO']);
 	unset($_POST['Quantity']);
-	unset($_POST['RequDate']);
+	unset($_POST['RequiredBy']);
 	unset($_POST['ReleasedDate']);
 	unset($_POST['StockLocation']);
 	unset($_POST['Cost']);
@@ -28,223 +28,147 @@ function clearData()
 	$EditingExisting = false;
 }
 
-if (isset($_GET['ModifyOrderNumber']) AND $_GET['ModifyOrderNumber']!=''){
-	$_POST['ModifyOrderNumber'] = $_GET['ModifyOrderNumber'];
-}
-
-if ($_POST['ModifyOrderNumber'] !='') {
-	$EditingExisting = true;
-	$_POST['WORef'] = $_POST['ModifyOrderNumber'];
+if (isset($_REQUEST['WO'] AND $_REQUEST['WO']!='')){
+	$_POST['WO'] = $_REQUEST['WO'];
+        $EditingExisting = true;
 } else {
 	$EditingExisting = false;
 }
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 
-	$input_error = false;
-
-	if (strlen($_POST['WORef']) > 20 OR strlen($_POST['WORef'])==0) {
-		$InputError = 1;
-		echo '<BR>' . _('The work order reference must be entered and be less than 20 characters long');
-		$input_error = true;
-	} elseif (!is_numeric($_POST['Quantity'])){
-		echo '<BR>' . _('The quantity entered must be numeric');
-		$input_error = true;
-	} elseif ($_POST['Quantity']<=0){
-		echo '<BR>' . _('The quantity entered must be a positive number greater than zero');
-		$input_error = true;
-	} elseif (!Is_Date($_POST['RequDate'])){
-		echo '<BR>' . _('The date entered is in an invalid format');
-		$input_error = true;
+	$Input_Error = false; //hope for the best
+        for ($i=0;$i<$_POST['NumberOfOutputs'];$i++){
+        	if (!is_numeric($_POST['OutputQty'.$i])){
+	        	prnMsg(_('The quantity entered must be numeric'),'error');
+		        $Input_Error = true;
+                } elseif ($_POST['OutputQty'.$i]<=0){
+		         prnMsg(_('The quantity entered must be a positive number greater than zero'),'error');
+		         $Input_Error = true;
+                }
+         }
+        if (!Is_Date($_POST['RequiredBy'])){
+	    prnMsg(_('The required by date entered is in an invalid format'),'error');
+	    $Input_Error = true;
 	}
 
-	// check for unique reference - better to default to new number - auto_increment column ??
-	if (($EditingExisting == false) AND ($input_error == false)) {
-		$sql= "SELECT count(*) FROM worksorders WHERE woref='" . $_POST['WORef'] . "'";
-		$result = DB_query($sql,$db);
-		$myrow = DB_fetch_row($result);
-		if ($myrow[0]>0) {
-    		echo '<BR>' . _('The entered work order reference is already in use') . '. ' . _('Please re-enter');
-    		$input_error = true;
-		}
-	}
-
-	if ($input_error == false) {
-		$SQL_ReqDate = FormatDateForSQL($_POST['RequDate']);
-		$SQL_ReleasedDate= FormatDateForSQL($_POST['ReleasedDate']);
+	if ($Input_Error == false) {
+		$SQL_ReqDate = FormatDateForSQL($_POST['RequiredBy']);
 
 		if ($EditingExisting == false) {
 
-    		$sql = "INSERT INTO worksorders (woref, loccode, unitsreqd, stockid, stdcost, requiredby, closed, released, releaseddate)
-    			VALUES ('" . $_POST['WORef'] . "', '" .
-    			$_POST['StockLocation']	. "', '" .
-    			$_POST['Quantity'] . "', '" .
-    			$_POST['StockID'] . "', '"	.
-    			$_POST['Cost'] .	"', '" .
-    			$SQL_ReqDate .	"', '" .
-    			'0' . "', '" .
-    			'0' . "', '" .
-    			$SQL_ReleasedDate. "')";
+    		        $sql[] = "INSERT INTO workorders (wo,
+                                                        loccode,
+                                                        requiredby,
+                                                        startdate)
+                                        VALUES (" . $_POST['WO'] . "',
+                                                '" . DB_escape_string($_POST['StockLocation']) . "',
+                                                " . DB_escape_string($_POST['Quantity']) . ",
+                                                '" . $SQL_ReqDate . "',
+                                                '" . Date('Y-m-d'). "')";
+
+    			for ($i=0;$i<$NumberOfOutputs;$i++){
+    			      $CostResult = DB_query("SELECT SUM(materialcost+labourcost+overheadcost) AS cost
+                                                        FROM stockmaster INNER JOIN bom
+                                                        ON stockmaster.stockid=bom.component
+                                                        WHERE bom.parent='" . $_POST['OutputItem'.$i] . "'
+                                                        AND bom.loccode='" . $_POST['StockLocation'] . "'",
+                                                        $db);
+                              $CostRow = DB_fetch_row($CostResult);
+
+    			      $sql[] = "INSERT INTO woitems (wo,
+    			                                     stockid,
+    			                                     qtyreqd,
+    			                                     stdcost,
+    			                                     nextlotsnref)
+    			                        VALUES ( " . $_POST['WO'] . ",
+                                                        '" . DB_escape_string($_POST['OutputItem' .$i]) . "',
+                                                         " . $CostRow[0] . ",
+                                                         " . DB_escape_string($_POST['OutputQty' . $i]) . ",
+                                                        '" . DB_escape_string($_POST['OutputNextRef'.$i]) ."')";
+                               $sql[] = "INSERT INTO worequirements (wo,
+                                                                    parentstockid,
+                                                                    stockid,
+                                                                    qtypu
+                                                                    stdcost)
+                                                  SELECT " . $_POST['WO'] . ",
+                                                        bom.parent,
+                                                        bom.component,
+                                                        bom.quantity,
+                                                        materialcost+labourcost+overheadcost
+                                                        FROM bom INNER JOIN stockmaster
+                                                        ON bom.component=stockmaster.stockid
+                                                        WHERE parent='" . DB_escape_string($_POST['OutputItem'.$i]) . "'
+                                                        AND loccode ='" . DB_escape_string($_POST['StockLocation']) . "'";
+                        }
     			$msg = _('The work order been added');
 		} else {
-			$sql = "UPDATE worksorders SET loccode='" . $_POST['StockLocation'] .
-			"', unitsreqd='" . $_POST['Quantity'] .
-			"', stockid='" . $_POST['StockID'] .
-			"', stdcost='" . $_POST['Cost'] .
-			"', requiredby='" . $SQL_ReqDate .
-			"' WHERE woref = '" . $_POST['WORef'] . "'";
-
+			$sql[] = "UPDATE workorders SET requiredby='" . $SQL_ReqDate . "'
+			                            WHERE wo=" . $_POST['WO'];
+    			for ($i=0;$i<$_POST['NumberOfOutputs'];$i++){
+    			      		      $sql[] = "UPDATE woitems SET qtyreqd =  ". DB_escape_string($_POST['OutputQty' . $i]) . ",
+    			                                              nextlotsnref = '". DB_escape_string($_POST['OutputNextRef'.$i]) ."'
+    			                                WHERE wo=" . $_POST['WO'] . "
+                                                        AND stockid='" . DB_escape_string($_POST['OutputItem'.$i]) . "'";
+                        }
 			$msg = _('The work order has been updated');
 		}
 
-    	//run the SQL from either of the above possibilites
-    	$result = DB_query($sql,$db);
-    	if (DB_error_no($db) !=0) {
-    		echo '<BR>' . _('The work order could not be added/updated');
-		if ($debug==1){
-			echo '<BR>' . _('The SQL statement that failed was') . "<BR>$sql";
-		}
-    	} else {
-    		echo "<CENTER><BR>$msg<BR>";
-   			clearData();
-			echo "<BR><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "'>" . _('Enter a new work order') . "</A>";
-			echo "<BR><A HREF='" . $rootpath . "/OutstandingWorkOrders.php?" . SID . "'>" . _('Select an existing outstanding work order') . "</A>";
-			echo "<BR><BR>";
-			exit;
-    	}
+        	//run the SQL from either of the above possibilites
+         	foreach ($sql as $sql_stmt){
+                   $result = DB_query($sql_stmt,$db);
+                   if (DB_error_no($db) !=0){
+          		prnMsg(_('The work order could not be added/updated'),'error');
+      		        if ($debug==1){
+      			   prnMsg(_('The SQL statement that failed was') . "<BR>$sql_stmt",'error');
+      		        }
+    	            }
+                }
+	        echo "<CENTER><BR>$msg<BR>";
+                       	for ($i=0;$i<$_POST['NumberOfOutputs'];$i++){
+                       	     unset($_POST['OutputItem'.$i]);
+                             unset($_POST['OutputQty'.$i]);
+                       	}
+		echo "<BR><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "'>" . _('Enter a new work order') . "</A>";
+		echo "<BR><A HREF='" . $rootpath . "/OutstandingWorkOrders.php?" . SID . "'>" . _('Select an existing outstanding work order') . "</A>";
+		echo "<BR><BR>";
+		exit;
 	}
 } elseif (isset($_POST['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
-	$CancelDelete=false;
+	$CancelDelete=false; //always assume the best
 
 	// can't delete it there are open work issues
-	if (hasWOIssues($_POST['WORef'])){
-		echo '<BR>' . _('This work order cannot be deleted because it has work issues related to it');
+	$HasTransResult = DB_query("SELECT * FROM stockmoves
+                                    WHERE (stockmoves.type= 26 OR stockmoves.type=26)
+                                          AND reference LIKE '" . $_POST['WO'] . "'",$db);
+	if (DB_num_rows($HasTransResult)>0){
+		prnMsg(_('This work order cannot be deleted because it has work issues or receipts related to it'),'error');
 		$CancelDelete=true;
 	}
-	// can't delete if it's closed
 
-	if ($CancelDelete==false) { //ie not cancelled the delete as a result of above tests
+	if ($CancelDelete==false) { //ie all tests proved ok to delete
 		// delete the work order requirements
-    		$sql="DELETE FROM worequirements WHERE woref='" . $_POST['WORef'] . "'";
-    		$result = DB_query($sql,$db);
-    		if (DB_error_no($db) !=0) {
-    			echo '<BR>' . _('The work order requirements could not be deleted');
-			if ($debug==1){
-				echo '<BR>' . _('The sql that failed was') . " <BR>$sql";
-			}
-    		}
-
+    		$sql="DELETE FROM worequirements WHERE wo=" . $_POST['WO'];
+		$ErrMsg=_('The work order requirements could not be deleted');
+    		$result = DB_query($sql,$db,$ErrMsg);
+                //delete the items on the work order
+		$sql = "DELETE FROM woitems WHERE wo=" . $_POST['WO'];
+                $result = DB_query($sql,$db,$ErrMsg);
 		// delete the actual work order
-		$sql="DELETE FROM worksorders WHERE woref='" . $_POST['WORef'] . "'";
-		$result = DB_query($sql,$db);
-    	if (DB_error_no($db) !=0) {
-    		echo '<BR>' . _('The work order could not be deleted');
-		if ($debug==1){
-			echo '<BR>' . _('The SQL that failed was') . "<BR>$sql";
-		}
-    	} else {
-			echo '<CENTER><BR>' . _('The work order has been deleted') . '<BR><BR>';
-			echo "<A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "'>" . _('Enter a new work order') . "</A>";
-			echo "<A HREF='" . $rootpath . "OutstandingWorkOrders.php?" . SID . "'>" . _('Select an existing outstanding work order') . "</A>";
-			echo '<BR><BR>';
+		$sql="DELETE FROM worksorders WHERE wo=" . $_POST['WO'];
+    		$ErrMsg=_('The work order could not be deleted');
+		$result = DB_query($sql,$db,$ErrMsg);
+		prnMsg(_('The work order has been deleted'),'success');
+		echo "<A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "'>" . _('Enter a new work order') . "</A>";
+		echo "<A HREF='" . $rootpath . "OutstandingWorkOrders.php?" . SID . "'>" . _('Select an existing outstanding work order') . "</A>";
     	}
-		exit;
-	}
-}elseif (isset($_POST['release'])) {
-
-	$input_error = false;
-
-	// make sure has not been released before
-	if (isReleased($_POST['WORef'])) {
-		displayError(_('This Work Order has already been released'));
-		$input_error = true;
-	}
-
-	// make sure stock item has components - only if it's just been released
-	if (!hasBOM($_POST['StockID'])) {
-		displayError(_('This Work Order cannot be released') . '. ' . _('The selected item to manufacture does not have a BOM'));
-		$input_error = true;
-	}
-
-	if ($input_error == false) {
-
-    	$sql = 'Begin';
-    	$result = DB_query($sql,$db);
-
-		$_POST['ReleasedDate'] = Date($_SESSION['DefaultDateFormat']);
-		$SQL_ReleasedDate= FormatDateForSQL($_POST['ReleasedDate']);
-
-		// update the released date in the work order
-    	$sql = "UPDATE worksorders SET releaseddate='" . $SQL_ReleasedDate.
-    			"', released='" . '1' .
-    			"' WHERE woref = '" . $_POST['WORef'] . "'";
-    	$result = DB_query($sql,$db);
-    	if (DB_error_no($db) !=0) {
-    		echo '<BR>' . _('The work order could not be updated with the accumulated value issued');
-		if ($debug==1){
-			echo '<BR>' . _('The SQL that failed was') . "<BR>$sql";
-		}
-    		$SQL = 'rollback';
-    		$Result = DB_query($SQL,$db);
-    		exit;
-    	}
-
-		// create Work Order Requirements based on the BOM
-		$BOMResult = getBOM($_POST['StockID']);
-
-		$TotalCost = 0;
-
-		while ($myrow=DB_fetch_array($BOMResult)) {
-
-			$sql = "INSERT INTO worequirements (woref, stockid, wrkcentre, unitsreq, stdcost, resourcetype)
-				VALUES ('" . $_POST['WORef'] . "', '" .
-				$myrow['component'] . "', '"	.
-				$myrow['workcentreadded'] . "', '"	.
-				$myrow['quantity'] . "', '"	.
-				$myrow['standardcost'] . "', '"	.
-				$myrow['resourcetype'] . "')";
-
-		$result = DB_query($sql,$db);
-        	if (DB_error_no($db) !=0) {
-        		echo '<BR>' . _('The work order requirements could not be added');
-			if ($debug==1){
-				echo '<BR>' . _('The SQL that failed was') . "<BR>$sql";
-			}
-
-        		$SQL = 'rollback';
-        		$Result = DB_query($SQL,$db);
-        		exit;
-        	}
-
-			$TotalCost += $myrow['componentcost'];
-		}
-
-		$_POST['Cost'] = $TotalCost;
-
-    	$sql='Commit';
-    	$result = DB_query($sql,$db);
-    	if (DB_error_no($db) !=0) {
-    		echo '<BR>' . _('This work order cannot be released');
-		if ($debug==1){
-			echo '<BR>' . _('The SQL that failed was') . "<BR>$sql";
-		}
-
-    		exit;
-    	} else {
-    		echo '<BR>' . _('This work order has been successfully released to manufacturing');
-    		unset($_POST['release']);
-    	}
-
-	}
 }
 
 echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . ">";
 
 echo '<CENTER><TABLE>';
-
-echo "<INPUT TYPE=HIDDEN NAME=ReleasedDate VALUE=" . $_POST['ReleasedDate'] . '>';
 
 if (!isset($_POST['FromStockLocation'])){
 	if (isset($_SESSION['UserStockLocation'])){
@@ -253,64 +177,58 @@ if (!isset($_POST['FromStockLocation'])){
 }
 
 if ($EditingExisting == false) {
-	echo '<TR><TD>' . _('Work Order Reference') . ":</TD><TD><INPUT TYPE=TEXT NAME='WORef' VALUE=" . $_POST['WORef'] . ' SIZE=20 MAXLENTH=20></TD</TR>';
-
+        $_POST['WO'] = GetNextTrans(30,$db);
+	echo '<tr><td>' . _('Work Order Reference') . ':</td>
+                  <td>' . $_POST['WO'] . '<input type=hidden name="WO" VALUE=' . $_POST['WO'] . '></td>
+              </tr>';
 } else {
+	$sql="SELECT workorders.loccode,
+	             locations.locationname,
+                     requiredby,
+                     startdate,
+                     costissued,
+                     closed
+                FROM workorders INNER JOIN locations
+                ON workorders.loccode=locations.loccode
+                WHERE workorders.wo=" . $_POST['WO'];
 
-	$sql="SELECT * FROM worksorders WHERE worksorders.woref='" . $_POST['WORef'] . "'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_array($result);
-	if (strlen($myrow[0])==0) {
-		echo '<BR>' . _('The order number entered is not valid');
-		exit;
-	}
 
-	$_POST['Quantity'] = $myrow['unitsreqd'];
-	$_POST['StockLocation'] = $myrow['loccode'];
-	$_POST['Cost'] = $myrow['stdcost'];
-	$_POST['Released'] = $myrow['released'];
+
+	$_POST['StartDate'] = $myrow['startdate'];
+	$_POST['CostIssued'] = $myrow['costissued'];
 	$_POST['Closed'] = $myrow['closed'];
-	$_POST['StockID'] = $myrow['stockid'];
-	$_POST['RequDate'] = ConvertSQLDate($myrow['requiredby']);
-	$_POST['ReleasedDate'] = ConvertSQLDate($myrow['releaseddate']);
-	$_POST['AlreadyReleased'] = $_POST['Released'];
+	$_POST['RequiredBy'] = ConvertSQLDate($myrow['requiredby']);
 
-	echo "<INPUT TYPE=HIDDEN NAME='WORef' VALUE=" .$_POST['WORef'] . '>';
-	echo "<INPUT TYPE=HIDDEN NAME='ModifyOrderNumber' VALUE=" .$_POST['ModifyOrderNumber'] . '>';
-	echo '<TR><TD>' . _('Work Order Reference') . ':</TD><TD>' . $_POST['WORef'] . '</TD></TR>';
+	echo "<input type=hidden name='WO' value=" .$_POST['WO'] . '>';
+	echo "<input type=hidden name='StockLocation' value='" .$myrow['loccode'] . "'>";
+	echo '<tr><td class="tableheader">' . _('Work Order Reference') . ':</td><td>' . $_POST['WO'] . '</td></tr>';
+        echo '<tr><td class="tableheader">' . _('Factory at') . ':</td><td>' . $myrow['locationname'] . '</td></tr>';
+        echo '<tr><td class="tableheader">' . _('Start Date') . ':</td><td>' . ConvertSQLDate($myrow['startdate']) . '</td></tr>';
+        echo '<tr><td class="tableheader">' . _('Required By') . ':</td><td><input type=TEXTBOX name="RequiredBy" size=10 maxlength=10 value="' . ConvertSQLDate($myrow['requiredby']) . '"></td></tr>';
+        echo '<tr><td class="tableheader">' . _('Accumulated Costs') . ':</td><td>' . number_format($myrow['costissued'],2) . '</td></tr>';
 }
 
-if ($_POST['AlreadyReleased']==true) {
-	echo "<INPUT TYPE=HIDDEN NAME=StockID VALUE=" .$_POST['StockID'] . '>';
-	echo "<INPUT TYPE=HIDDEN NAME=StockLocation VALUE=" .$_POST['StockLocation'] . '>';
-	echo '<TR><TD>' . _('Work Centre') . ':</TD><TD>' . $_POST['StockLocation'] . '</TD></TR>';
-	echo '<TR><TD>' . _('Item to Manufacture') . ':</TD><TD>' . $_POST['StockID'] . '</TD></TR>';
-} else {
-	workCenterList_TableRow(_('Work Centre') . ' ' , $db, 'StockLocation', $_POST['StockLocation']);
-	stockBOMItemsList_TableRow(_('Item to Manufacture') . ' ' , $db, 'StockID', $_POST['StockID']);
-}
 
-if (!isset($_POST['Quantity']) OR $_POST['Quantity']=='' OR $_POST['Quantity']==0) {
-	$_POST['Quantity'] = 1;
-}
-echo '<TR><TD>' ._('Quantity Required') . ":</TD><TD><INPUT TYPE=TEXT NAME='Quantity' VALUE=" . $_POST['Quantity'] . ' SIZE=12 MAXLENGTH=12></TD</TR>';
+echo '<tr><td>' ._('Quantity Required') . ":</td><td><input type=text name='Quantity' VALUE=" . $_POST['Quantity'] . ' size=12 maxlength=12></td</tr>';
 
-if (!$_POST['RequDate'] OR !IsDate($_POST['RequDate'])){
-   $_POST['RequDate'] = Date($_SESSION['DefaultDateFormat']);
+if (!$_POST['RequiredBy'] OR !IsDate($_POST['RequiredBy'])){
+   $_POST['RequiredBy'] = Date($_SESSION['DefaultDateFormat']);
 }
-echo '<TR><TD>' . _('Date Required By') . " ($_SESSION['DefaultDateFormat']):</TD><TD><INPUT TYPE=TEXT NAME='RequDate' VALUE=" . $_POST['RequDate'] . ' SIZE=12 MAXLENGTH=12></TD</TR>';
+echo '<TR><TD>' . _('Date Required By') . ' (' . $_SESSION['DefaultDateFormat'] . "):</TD><TD><INPUT TYPE=TEXT NAME='RequiredBy' VALUE=" . $_POST['RequiredBy'] . ' SIZE=12 MAXLENGTH=12></TD</TR>';
 
 echo "<INPUT TYPE=HIDDEN NAME='Released' VALUE=" .$_POST['Released'] . '>';
 echo "<INPUT TYPE=HIDDEN NAME='ReleasedDate' VALUE=" .$_POST['ReleasedDate'] . '>';
 
 if ($_POST['AlreadyReleased']==true) {
-	echo '<TR><TD>' . _('Released On') . ':</TD><TD>' . $_POST['ReleasedDate'] . '</TD></TR>';
+	echo '<tr><td>' . _('Released On') . ':</TD><TD>' . $_POST['ReleasedDate'] . '</TD></TR>';
 }
 
-echo '</TABLE>';
+echo '</table>';
 
-echo '<CENTER>';
-echo "<INPUT TYPE=SUBMIT NAME='submit' VALUE='Add/Update'>";
+echo '<center>';
+echo '<input type=submit name="submit" value="' . _('Add/Update') . '">';
 
 if ($EditingExisting == true) {
 	echo '<BR><BR><TABLE><TR>';
@@ -337,10 +255,10 @@ if (($EditingExisting == true)){
 	} else {
 		echo '<table><tr><td>';
 		displayHeading2(_('Work Order Requirements'));
-		displayWORequirements($_POST['WORef'], $_POST['Quantity']);
+		displayWORequirements($_POST['WO'], $_POST['Quantity']);
 		echo '</td><td>';
 		displayHeading2(_('Issues against this Work Order'));
-		displayWOIssues($_POST['WORef']);
+		displayWOIssues($_POST['WO']);
 		echo '</tr></table>';
 	}
 }
