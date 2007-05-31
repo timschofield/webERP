@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 10;
 
@@ -9,26 +9,9 @@ include('includes/session.inc');
 $title = _('Work Order Entry');
 
 include('includes/header.inc');
+include('includes/SQL_CommonFunctions.inc');
 
-function clearData()
-{
-	global $EditingExisting;
-	unset($_POST['WO']);
-	unset($_POST['Quantity']);
-	unset($_POST['RequiredBy']);
-	unset($_POST['ReleasedDate']);
-	unset($_POST['StockLocation']);
-	unset($_POST['Cost']);
-	unset($_POST['Released']);
-	unset($_POST['Closed']);
-	unset($_POST['StockID']);
-	unset($_GET['ModifyOrderNumber']);
-	unset($_POST['ModifyOrderNumber']);
-	unset($_POST['submit']);
-	$EditingExisting = false;
-}
-
-if (isset($_REQUEST['WO'] AND $_REQUEST['WO']!='')){
+if (isset($_REQUEST['WO']) AND $_REQUEST['WO']!=''){
 	$_POST['WO'] = $_REQUEST['WO'];
         $EditingExisting = true;
 } else {
@@ -67,7 +50,7 @@ if (isset($_POST['submit'])) {
                                                 '" . $SQL_ReqDate . "',
                                                 '" . Date('Y-m-d'). "')";
 
-    			for ($i=0;$i<$NumberOfOutputs;$i++){
+    			for ($i=0;$i<$_POST['NumberOfOutputs'];$i++){
     			      $CostResult = DB_query("SELECT SUM(materialcost+labourcost+overheadcost) AS cost
                                                         FROM stockmaster INNER JOIN bom
                                                         ON stockmaster.stockid=bom.component
@@ -177,14 +160,10 @@ if (!isset($_POST['FromStockLocation'])){
 }
 
 if ($EditingExisting == false) {
-        $_POST['WO'] = GetNextTrans(30,$db);
-	echo '<tr><td>' . _('Work Order Reference') . ':</td>
-                  <td>' . $_POST['WO'] . '<input type=hidden name="WO" VALUE=' . $_POST['WO'] . '></td>
-              </tr>';
+        $_POST['WO'] = GetNextTransNo(30,$db);
 } else {
 	$sql="SELECT workorders.loccode,
-	             locations.locationname,
-                     requiredby,
+	             requiredby,
                      startdate,
                      costissued,
                      closed
@@ -192,38 +171,61 @@ if ($EditingExisting == false) {
                 ON workorders.loccode=locations.loccode
                 WHERE workorders.wo=" . $_POST['WO'];
 
-	$result = DB_query($sql,$db);
-	$myrow = DB_fetch_array($result);
+	$WOResult = DB_query($sql,$db);
+	if (DB_num_rows($WOResult)==1){
+		$myrow = DB_fetch_array($result);
+		$_POST['StartDate'] = ConvertSQLDate($myrow['startdate']);
+		$_POST['CostIssued'] = $myrow['costissued'];
+		$_POST['Closed'] = $myrow['closed'];
+		$_POST['RequiredBy'] = ConvertSQLDate($myrow['requiredby']);
+		$_POST['StockLocation'] = $myrow['loccode'];
+	}
+}
+echo "<input type=hidden name='WO' value=" .$_POST['WO'] . '>';
+echo '<tr><td class="label">' . _('Work Order Reference') . ':</td><td>' . $_POST['WO'] . '</td></tr>';
+echo '<tr><td class="label">' . _('Factory Location') .'</td>
+	<td><select name="StockLocation">';
+$LocResult = DB_query('SELECT loccode,locationname FROM locations',$db);
+while ($LocRow = DB_fetch_array($LocResult)){
+	if ($_POST['StockLocation']==$LocRow['loccode']){
+		echo '<option selected value="' . $LocRow['loccode'] .'">' . $LocRow['locationname'] . '</option>';
+	} else {
+		echo '<option value="' . $LocRow['loccode'] .'">' . $LocRow['locationname'] . '</option>';
+	}
+}
+echo '</select></td></tr>';
+if (!isset($_POST['StartDate'])){
+	$_POST['StartDate'] = Date($DefaultDateFormat);
+}
 
+echo '<input type="hidden" name="StartDate" value="' . $_POST['StartDate'] . '">';
 
-	$_POST['StartDate'] = $myrow['startdate'];
-	$_POST['CostIssued'] = $myrow['costissued'];
-	$_POST['Closed'] = $myrow['closed'];
-	$_POST['RequiredBy'] = ConvertSQLDate($myrow['requiredby']);
+echo '<tr><td class="label">' . _('Start Date') . ':</td><td>' . $_POST['StartDate'] . '</td></tr>';
 
-	echo "<input type=hidden name='WO' value=" .$_POST['WO'] . '>';
-	echo "<input type=hidden name='StockLocation' value='" .$myrow['loccode'] . "'>";
-	echo '<tr><td class="tableheader">' . _('Work Order Reference') . ':</td><td>' . $_POST['WO'] . '</td></tr>';
-        echo '<tr><td class="tableheader">' . _('Factory at') . ':</td><td>' . $myrow['locationname'] . '</td></tr>';
-        echo '<tr><td class="tableheader">' . _('Start Date') . ':</td><td>' . ConvertSQLDate($myrow['startdate']) . '</td></tr>';
-        echo '<tr><td class="tableheader">' . _('Required By') . ':</td><td><input type=TEXTBOX name="RequiredBy" size=10 maxlength=10 value="' . ConvertSQLDate($myrow['requiredby']) . '"></td></tr>';
-        echo '<tr><td class="tableheader">' . _('Accumulated Costs') . ':</td><td>' . number_format($myrow['costissued'],2) . '</td></tr>';
+if (!isset($_POST['RequiredBy'])){
+	$_POST['RequiredBy'] = Date($DefaultDateFormat);
+}
+
+echo '<tr><td class="label">' . _('Required By') . ':</td><td><input type="textbox" name="RequiredBy" size=12 maxlength=12 value="' . $_POST['RequiredBy'] . '"></td></tr>';
+
+if (DB_num_rows($WOResult)==1){
+	echo '<tr><td class="label">' . _('Accumulated Costs') . ':</td><td>' . number_format($myrow['costissued'],2) . '</td></tr>';
+}
+
+echo '<tr><td class="tableheader">' . _('Output Item') . '</td>
+		  <td class="tableheader">' . _('Qty Required') . '</td>
+		  <td class="tableheader">' . _('Qty Received') . '</td>
+		  <td class="tableheader">' . _('Balance Remaining') . '</td></tr>';
+if (isset($_POST['NumberOfOutputs'])){
+	for ($i=1;$i<$_POST['NumberOfOutputs'];$i++){
+		echo '<tr><td align="right"><input type="textbox" name="OutputQty' . $i . ' value=' . $_POST['OutputQty' . $i] . '></td>
+		  <td align="right"><input type="hidden name="RecQty"' . $i . ' value=' . $_POST['RecQty' .$i] . '>' . $_POST['RecQty' .$i] .'</td>
+		  <td align="right">' . ($_POST['OutputQty' . $i] - $_POST['RecQty' .$i]) . '</td></tr>';
+	}
+	echo '<input type=hidden name="NumberOfOutputs" value=' . $i .'>';
 }
 
 
-echo '<tr><td>' ._('Quantity Required') . ":</td><td><input type=text name='Quantity' VALUE=" . $_POST['Quantity'] . ' size=12 maxlength=12></td</tr>';
-
-if (!$_POST['RequiredBy'] OR !IsDate($_POST['RequiredBy'])){
-   $_POST['RequiredBy'] = Date($_SESSION['DefaultDateFormat']);
-}
-echo '<TR><TD>' . _('Date Required By') . ' (' . $_SESSION['DefaultDateFormat'] . "):</TD><TD><INPUT TYPE=TEXT NAME='RequiredBy' VALUE=" . $_POST['RequiredBy'] . ' SIZE=12 MAXLENGTH=12></TD</TR>';
-
-echo "<INPUT TYPE=HIDDEN NAME='Released' VALUE=" .$_POST['Released'] . '>';
-echo "<INPUT TYPE=HIDDEN NAME='ReleasedDate' VALUE=" .$_POST['ReleasedDate'] . '>';
-
-if ($_POST['AlreadyReleased']==true) {
-	echo '<tr><td>' . _('Released On') . ':</TD><TD>' . $_POST['ReleasedDate'] . '</TD></TR>';
-}
 
 echo '</table>';
 
