@@ -9,17 +9,17 @@ Note that in some countries the word "Vendor" is used instead of "Supplier" - pl
 <font size="+2"><b>Features</b></font>
 <br><br>
 <ul>
-<li>Suppliers aging report that takes into account the actual terms applicable to the supplier, and is supported by detailed inquiry of actual invoices due.
-<li>Full on-screen inquiry on a supplier's account, complete with a general ledger breakdown of how each invoice and debit note (Supplier credit note) was posted. Inquiries on payments made will show how a payment was allocated to invoices and the difference on exchange attributable to each invoice.
-<li>Open item - full analysis of the outstanding balance is maintained
-<li>Retrospective - de-allocation and re-allocation of payments and/or debit notes with re-calculation of differences on exchange and corresponding general ledger journals
-<li>Any number of supplier contacts can be maintained against the supplier
-<li>Fully integrated to stock - whereby purchase order receipts of stock can be selected for entry against a supplier invoice.
-<li>Full standard costing price variances between standard cost of stock received against the invoiced actual cost at invoiced exchange rate is recorded and posted to the general ledger
-<li>Purchase invoices and debit notes can be entered directly to multiple general ledger accounts with charges divided up at invoice entry time
-<li>Purchase invoices and debit notes can be entered as shipment costs - to accumulate against the cost of a shipment for costing of the stock items on the shipment
-<li>Nominal purchase order items received can be selected for invoicing in the same way as stock items. Purchase price variance from the order cost are taken to the general ledger account that the order item was coded to
-<li>Supplier payment run will create system entries to record payments for all suppliers with due amounts. Facilities allow for holding disputed invoices from being included in the payment run, but still recording costs in the general ledger.
+<li>Suppliers aging report that takes into account the actual terms applicable to the supplier, and is supported by detailed inquiry of actual invoices due.</li>
+<li>Full on-screen inquiry on a supplier's account, complete with a general ledger breakdown of how each invoice and debit note (Supplier credit note) was posted. Inquiries on payments made will show how a payment was allocated to invoices and the difference on exchange attributable to each invoice.</li>
+<li>Open item - full analysis of the outstanding balance is maintained</li>
+<li>Retrospective - de-allocation and re-allocation of payments and/or debit notes with re-calculation of differences on exchange and corresponding general ledger journals</li>
+<li>Any number of supplier contacts can be maintained against the supplier</li>
+<li>Fully integrated to stock - whereby purchase order receipts of stock can be selected for entry against a supplier invoice.</li>
+<li>Full standard costing price variances between standard cost of stock received against the invoiced actual cost at invoiced exchange rate is recorded and posted to the general ledger</li>
+<li>Purchase invoices and debit notes can be entered directly to multiple general ledger accounts with charges divided up at invoice entry time</li>
+<li>Purchase invoices and debit notes can be entered as shipment costs - to accumulate against the cost of a shipment for costing of the stock items on the shipment</li>
+<li>Nominal purchase order items received can be selected for invoicing in the same way as stock items. Purchase price variance from the order cost are taken to the general ledger account that the order item was coded to</li>
+<li>Supplier payment run will create system entries to record payments for all suppliers with due amounts. Facilities allow for holding disputed invoices from being included in the payment run, but still recording costs in the general ledger.</li>
 </ul>
 
 <!-- Help Begin: Suppliers -->
@@ -189,7 +189,19 @@ If the automatic calculations above do not work out the tax amounts can be enter
 <BR><BR>
 Clicking on "Enter Invoice" immediately processes the invoice against the supplier's account, creates the necessary general ledger transactions, updates the GRNs and the purchase orders for quantities invoiced and creates shipment charges records as required. Zero charge purchase invoices cannot be entered - the system checks to ensure there are at least some charges on the invoice. It also checks to ensure a reference and date is entered. As with all transaction entry in webERP there is no subsequent processing required for all the information to be fully up to date it is all done at the time of clicking this button.
 <BR><BR>
-
+<font size="+1"><b>General Ledger Postings On Purchase Invoices</B></FONT>
+<BR><BR>
+This section might be a little complex. However, understanding what is happening in the general ledger and implications of purchase invoice entries in the general ledger is necessary inorder to understand how to reconcile the various accounts.
+<BR><BR>
+Each of the three types of entries in a purchase invoice are posted to the general ledger in different ways:
+<UL>
+<LI>General Ledger Charges - starting with the easiest - the net amounts of these entries are posted to the debit of the general ledger account selected</LI>
+<LI>Shipment Charges - these are posted to the debit of the goods received clearing account as defined in the company record. The rationale for this is that the shipment charges relate to the cost of the stock coming in on shipments and they will be apportioned between the various items on the shipment. As such they together with the invoices cost of the stock make up the total cost of the item for comparison to the standard or weighted average cost of the item. When shipments are closed the system calculates the total purchase price variances using shipment charges posted here - together with the invoices entered for the goods.</LI>
+<LI>Entry of invoices against stock/inventory received. webERP insists on matching purchase invoices against goods received notes (GRNs) created at the time the stock is received against purchase orders. The reason is to ensure suppliers do not over-deliver and that invoices can only be entered against goods received and the business does not pay for items not received! The general ledger treatment is slightly different depending on whether the goods are on a shipment or not. 
+<UL><LI>If NO shipment costing is involved then the purchase price at the currency/rate entered in the invoice is compared against the standard or average cost of the item at the time it was received. When the goods were received - the system enters a debit to stock at the standard/average cost and a credit to the goods received clearing account defined in the company record. So the entry of the invoice needs to clear this entry - by crediting the goods received clearing account at the standard/average cost at the time of receiving the item. The difference between this and the cost of the item as invoiced and converted at the days (or covered) exchange rate as entered on the invoice is taken to either the purchase price variance account - as defined in the stock category record under standard costing OR in the event that weighted average standard costing is used the variance is written back to the stock account - again from the stock category record. If weighted average costing is used this also triggers a stock cost update based on this variance divided by the total quantity still in stock. If there is less than the quantity being invoiced in stock still -perhaps some were sold before the purchase invoice was entered - then the variance relating to the quantity left is taken to the stock account and the balance is written off to the purchase price varaince account - hey I told you it was complex!</LI>
+<LI>With Shipment costing - the total amount of the charge is posted to the debit of the goods received clearing account - variances are taken up only once all shipment charges are in and the user explicity "closes" the shipment</LI>
+</UL></LI>
+</UL>
 <!-- Help End: SupplierInvoices -->
 
 <!-- Help Start: SupplierPayments -->

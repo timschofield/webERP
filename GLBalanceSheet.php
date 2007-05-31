@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
 
@@ -44,7 +44,7 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 	/*Now do the posting while the user is thinking about the period to select */
 	include ('includes/GLPostings.inc');
 
-} else if (isset($_POST['PrintPDF'])) {
+} elseif (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
 	$PageNumber = 0;
@@ -106,6 +106,7 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 			chartdetails.accountcode';
 
 	$AccountsResult = DB_query($SQL,$db);
+
 	if (DB_error_no($db) !=0) {
 		$title = _('Balance Sheet') . ' - ' . _('Problem Report') . '....';
 		include('includes/header.inc');
@@ -135,6 +136,7 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 	$GroupTotal = array(0);
 	$LYGroupTotal = array(0);
 
+	
 	while ($myrow=DB_fetch_array($AccountsResult)) {
 
 		$AccountBalance = $myrow['balancecfwd'];
@@ -168,6 +170,7 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
         			$YPos -= $line_height;
         		}
                 }
+
 		if ($myrow['sectioninaccounts']!= $Section){
 
 			if ($Section !=''){
@@ -183,10 +186,10 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 
 			$Section = $myrow['sectioninaccounts'];
 			if ($_POST['Detail']=='Detailed'){
-				$FontSize = 10;
-				$pdf->selectFont('./fonts/Helvetica.afm');
+				
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$Sections[$myrow['sectioninaccounts']]);
 				$YPos -= (2 * $line_height);
+
 			}
 		}
 
@@ -230,6 +233,7 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 			include('includes/PDFBalanceSheetPageHeader.inc');
 		}
 	}//end of loop
+
         $FontSize = 8;
 	$pdf->selectFont('./fonts/Helvetica-Bold.afm');
 	while ($Level>0) {
@@ -266,6 +270,9 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,number_format($CheckTotal),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,number_format($LYCheckTotal),'right');
 
+	
+
+
 	$pdfcode = $pdf->output();
 	$len = strlen($pdfcode);
 
@@ -280,7 +287,7 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 	} else {
 	        header('Content-type: application/pdf');
 		header('Content-Length: ' . $len);
-		header('Content-Disposition: inline; filename=BalanceSheet.pdf');
+		header('Content-Disposition: inline; filename="BalanceSheet.pdf"');
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Pragma: public');

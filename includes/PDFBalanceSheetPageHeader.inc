@@ -16,12 +16,10 @@
 
 	$YPos -= $line_height;
 	$FontSize =10;
-	$pdf->selectFont('./fonts/Helvetica-Bold.afm');
 	$Heading = _('Balance Sheet as at ') . $BalanceDate;
 	$pdf->addText($Left_Margin, $YPos, $FontSize, $Heading);
 
 	$FontSize = 8;
-	$pdf->selectFont('./fonts/Helvetica.afm');
 	$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize,
 		_('Printed'). ': ' . Date($_SESSION['DefaultDateFormat'])
 		. '   '. _('Page'). ' ' . $PageNumber);
