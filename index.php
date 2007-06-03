@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.55 $ */
+/* $Revision: 1.56 $ */
 
 
 $PageSecurity = 1;
@@ -23,7 +23,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 
 /* if there is only one security access and its 1 (it has to be 1 for this page came up at all)- it must be a customer log on need to limit the menu to show only the customer accessible stuff this is what the page looks like for customers logging in */
 ?>
-	
+
 		<tr>
 		<td class="menu_group_items">  <!-- Orders transaction options -->
 		<table class="table_index">
@@ -101,8 +101,8 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 				<table width="100%" >
 
 					<?php
-  					// displays the main area headings 
-					  OptionHeadings(); 
+  					// displays the main area headings
+					  OptionHeadings();
 					?>
 
 					<tr>
@@ -249,9 +249,9 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php 
+								<?php
 									if ($_SESSION['InvoicePortraitFormat']==0){
-										echo "<A HREF='" . $rootpath . '/PrintCustTrans.php?' . SID . "'><LI>" . _('Print Invoices or Credit Notes') . '</LI></A>'; 
+										echo "<A HREF='" . $rootpath . '/PrintCustTrans.php?' . SID . "'><LI>" . _('Print Invoices or Credit Notes') . '</LI></A>';
 									} else {
 										echo "<A HREF='". $rootpath . "/PrintCustTransPortrait.php?" . SID . "'><LI>" . _('Print Invoices or Credit Notes') . '</LI></A>';
 									}
@@ -316,7 +316,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 								<?php echo "<A HREF='" . $rootpath . '/SelectCustomer.php?' . SID . "'><LI>" . _('Customers') . '</LI></A>'; ?>
 							</td>
 							</tr>
-							
+
 						</table>
 					</td>
 					</tr>
@@ -623,11 +623,12 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 
 					<tr>
 					<td class="menu_group_items">
-						<table width="100%">
+						<table width="100%" class="table_index">
 							<tr>
-							  <td>&nbsp;
-								  
-								</td>
+							  <td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/WorkOrderEntry.php?' . SID . "'><LI>" . _('Work Order Enty') . '</LI></A>'; ?>
+							</td>
+							</tr>
 							</tr>
 						</table>
 					</td>
@@ -1054,19 +1055,19 @@ global $rootpath, $theme;
 }
 
 function GetRptLinks($GroupID) {
-/* 
+/*
 This function retrieves the reports given a certain group id as defined in /reports/admin/defaults.php
-in the acssociative array $ReportGroups[]. It will fetch the reports belonging solely to the group 
+in the acssociative array $ReportGroups[]. It will fetch the reports belonging solely to the group
 specified to create a list of links for insertion into a table to choose a report. Two table sections will
 be generated, one for standard reports and the other for custom reports.
 */
 	global $db, $rootpath;
 	require_once('reportwriter/languages/en_US/reports.php');
 	require_once('reportwriter/admin/defaults.php');
-	
+
 	$Title= array(_('Custom Reports'), _('Standard Reports and Forms'));
 
-	$sql= "SELECT id, reporttype, defaultreport, groupname, reportname 
+	$sql= "SELECT id, reporttype, defaultreport, groupname, reportname
 		FROM reports ORDER BY groupname, reportname";
 	$Result=DB_query($sql,$db,'','',false,true);
 	$ReportList = '';
@@ -1089,14 +1090,14 @@ be generated, one for standard reports and the other for custom reports.
 			$NoForms = true;
 			foreach ($ReportList as $Report) {
 				$Group=explode(':',$Report['groupname']); // break into main group and form group array
-				if ($NoForms AND $Group[0]==$GroupID AND $Report['reporttype']=='frm' AND $Report['defaultreport']==$Def) { 
+				if ($NoForms AND $Group[0]==$GroupID AND $Report['reporttype']=='frm' AND $Report['defaultreport']==$Def) {
 					$RptLinks .= '<tr><td class="menu_group_item">';
 					$RptLinks .= '<img src="'.$rootpath.'/css/'.$_SESSION['Theme'].'/images/folders.gif" width="16" height="13">&nbsp;';
 					$RptLinks .= '<A HREF="'.$rootpath.'/reportwriter/FormMaker.php?id='.$Report['groupname'].'">';
 					$RptLinks .= $FormGroups[$Report['groupname']].'</A>';
 					$RptLinks .= '</td></tr>';
 					$NoForms = false;
-					$NoEntries = false; 
+					$NoEntries = false;
 				}
 			}
 		}
