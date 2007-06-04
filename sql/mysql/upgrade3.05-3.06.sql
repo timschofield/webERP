@@ -27,7 +27,6 @@ CREATE TABLE `woitems` (
   qtyreqd double NOT NULL DEFAULT 1,
   qtyrecd double NOT NULL DEFAULT 0,
   stdcost double NOT NULL,
-  costrecd double NOT NULL DEFAULT 0,
   nextlotsnref varchar(20) DEFAULT '',
   PRIMARY KEY  (`wo`, `stockid`),
   KEY `stockid` (`stockid`)
@@ -45,7 +44,8 @@ CREATE TABLE `worequirements` (
   stockid varchar(20) NOT NULL,
   qtypu double NOT NULL DEFAULT 1,
   stdcost double NOT NULL DEFAULT 0,
-   PRIMARY KEY  (`wo`, `stockid`),
+  autoissue tinyint NOT NULL DEFAULT 0,
+   PRIMARY KEY  (`wo`, `parentstockid`),
   KEY `stockid` (`stockid`)
  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

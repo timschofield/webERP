@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 10;
 
@@ -181,7 +181,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 
 
  	  if ($InputError==false){
-      	$CostResult = DB_query("SELECT SUM(materialcost+labourcost+overheadcost) AS cost
+      	$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
                                                         FROM stockmaster INNER JOIN bom
                                                         ON stockmaster.stockid=bom.component
                                                         WHERE bom.parent='" . DB_escape_string($NewItem) . "'

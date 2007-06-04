@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 $PageSecurity = 2;
 
@@ -322,7 +322,7 @@ If (isset($StockItemsResult)) {
 		}
 
 		$ModifyPage = $rootpath . "/WorkOrderEntry.php?" . SID . '&WO=' . $myrow['wo'];
-		$Receive_WO = $rootpath . '/WorkOrderReceive.php?' . SID . '&WO=' .$myrow['wo'];
+		$Receive_WO = $rootpath . '/WorkOrderReceive.php?' . SID . '&WO=' .$myrow['wo'] . '&StockID=' . $myrow['stockid'];
 
 		$FormatedRequiredByDate = ConvertSQLDate($myrow['requiredby']);
 

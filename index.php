@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.56 $ */
+/* $Revision: 1.57 $ */
 
 
 $PageSecurity = 1;
@@ -629,11 +629,20 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 								<?php echo "<A HREF='" . $rootpath . '/WorkOrderEntry.php?' . SID . "'><LI>" . _('Work Order Enty') . '</LI></A>'; ?>
 							</td>
 							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/SelectWorkOrder.php?' . SID . "'><LI>" . _('Select A Work Order') . '</LI></A>'; ?>
+							</td>
 							</tr>
 						</table>
 					</td>
 					<td class="menu_group_items">
 						<table width="100%" class="table_index">
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/SelectWorkOrder.php?' . SID . "'><LI>" . _('Select A Work Order') . '</LI></A>'; ?>
+							</td>
+							</tr>
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<A HREF='" . $rootpath . '/BOMInquiry.php?' . SID . "'><LI>" . _('Costed Bill Of Material Inquiry') . '</LI></A>'; ?>

@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 3;
 include ('includes/session.inc');
@@ -21,7 +21,7 @@ if (isset($_POST['ToDate']) AND !Is_Date($_POST['ToDate'])){
 }
 
 if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
-     
+
      $title = _('Order Status Report');
      include ('includes/header.inc');
 
@@ -194,11 +194,9 @@ if (DB_error_no($db)!=0){
 	include ('includes/footer.inc');
 	exit;
 } elseif (DB_num_rows($Result)==0){
+	$title=_('Order Status Report - No Data');
   	include('includes/header.inc');
-	echo '<BR>' . _('There were no orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' '. $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range');
-	if ($debug==1) {
-		echo _('The SQL that returned no rows was') . '<BR>' . $sql;
-	}
+	prnMsg(_('There were no orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' '. $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'),'info');
 	include('includes/footer.inc');
 	exit;
 }
