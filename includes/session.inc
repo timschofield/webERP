@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.50 $ */
+/* $Revision: 1.51 $ */
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -162,8 +162,7 @@ if(isset($_SESSION['DB_Maintenance'])){
 		}
 	}
 }
-
-If (isset($_POST['Theme'])) {
+If (isset($_POST['Theme']) && ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
 	$_SESSION['Theme'] = $_POST['Theme'];
 	$theme = $_POST['Theme'];
 } elseif (!isset($_SESSION['Theme'])) {
