@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 10;
 
@@ -31,6 +31,11 @@ if (isset($_GET['NewItem'])){
 	$NewItem = $_GET['NewItem'];
 }
 
+if (!isset($_POST['StockLocation'])){
+	if (isset($_SESSION['UserStockLocation'])){
+		$_POST['StockLocation']=$_SESSION['UserStockLocation'];
+	}
+}
 
 if (isset($_POST['Search'])){
 
@@ -234,7 +239,8 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 } //adding a new item to the work order
 
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['submit'])) { //The update button has been clicked
+
 	$Input_Error = false; //hope for the best
      for ($i=1;$i<=$_POST['NumberOfOutputs'];$i++){
        	if (!is_numeric($_POST['OutputQty'.$i])){
@@ -251,28 +257,29 @@ if (isset($_POST['submit'])) {
 	 }
 
 	if ($Input_Error == false) {
+
 		$SQL_ReqDate = FormatDateForSQL($_POST['RequiredBy']);
-
-
 		$QtyRecd=0;
+
 		for ($i=1;$i<=$_POST['NumberOfOutputs'];$i++){
-				$QtyRecd+=$_POST['QtyRecd'.$i];
+				$QtyRecd+=$_POST['RecdQty'.$i];
 		}
+
 		if ($QtyRecd==0){ //can only change factory location if Qty Recd is 0
 				$sql[] = "UPDATE workorders SET requiredby='" . $SQL_ReqDate . "',
 												loccode='" . DB_escape_string($_POST['StockLocation']) . "'
 			        	    WHERE wo=" . $_POST['WO'];
 		} else {
 				prnMsg(_('The factory where this work order is made can only be updated if the quantity received on all output items is 0'),'warn');
-				$sql[] = "UPDATE workorders SET requiredby='" . $SQL_ReqDate . "',
+				$sql[] = "UPDATE workorders SET requiredby='" . $SQL_ReqDate . "'
 							WHERE wo=" . $_POST['WO'];
 		}
-    	for ($i=1;$i<=$_POST['NumberOfOutputs'];$i++){
 
+    	for ($i=1;$i<=$_POST['NumberOfOutputs'];$i++){
     			if ($_POST['QtyRecd'.$i]>$_POST['OutputQty'.$i]){
     					$_POST['OutputQty'.$i]=$_POST['QtyRecd'.$i]; //OutputQty must be >= Qty already reced
     			}
-    			if ($_POST['QtyRecd'.$i]==0){ // can only change location cost if QtyRecd=0
+    			if ($_POST['RecdQty'.$i]==0){ // can only change location cost if QtyRecd=0
 	    				$CostResult = DB_query("SELECT SUM(materialcost+labourcost+overheadcost) AS cost
                                                         FROM stockmaster INNER JOIN bom
                                                         ON stockmaster.stockid=bom.component
@@ -293,7 +300,7 @@ if (isset($_POST['submit'])) {
                                   AND stockid='" . DB_escape_string($_POST['OutputItem'.$i]) . "'";
       			} else {
     			    	$sql[] = "UPDATE woitems SET qtyreqd =  ". DB_escape_string($_POST['OutputQty' . $i]) . ",
-    			                                 nextlotsnref = '". DB_escape_string($_POST['NextLotSNRef'.$i]) ."',
+    			                                 nextlotsnref = '". DB_escape_string($_POST['NextLotSNRef'.$i]) ."'
     			                  WHERE wo=" . $_POST['WO'] . "
                                   AND stockid='" . DB_escape_string($_POST['OutputItem'.$i]) . "'";
                 }
@@ -316,7 +323,7 @@ if (isset($_POST['submit'])) {
                  unset($_POST['NetLotSNRef'.$i]);
         }
 		echo "<BR><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "'>" . _('Enter a new work order') . "</A>";
-		echo "<BR><A HREF='" . $rootpath . "/OutstandingWorkOrders.php?" . SID . "'>" . _('Select an existing outstanding work order') . "</A>";
+		echo "<BR><A HREF='" . $rootpath . "/SelectWorkOrder.php?" . SID . "'>" . _('Select an existing work order') . "</A>";
 		echo "<BR><BR>";
 	}
 } elseif (isset($_POST['delete'])) {
@@ -327,9 +334,9 @@ if (isset($_POST['submit'])) {
 	// can't delete it there are open work issues
 	$HasTransResult = DB_query("SELECT * FROM stockmoves
                                     WHERE (stockmoves.type= 26 OR stockmoves.type=28)
-                                          AND reference LIKE '" . $_POST['WO'] . "'",$db);
+                                          AND reference LIKE '%" . $_POST['WO'] . "%'",$db);
 	if (DB_num_rows($HasTransResult)>0){
-		prnMsg(_('This work order cannot be deleted because it has work issues or receipts related to it'),'error');
+		prnMsg(_('This work order cannot be deleted because it has issues or receipts related to it'),'error');
 		$CancelDelete=true;
 	}
 
@@ -347,7 +354,7 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$db,$ErrMsg);
 		prnMsg(_('The work order has been deleted'),'success');
 
-		echo "<P><A HREF='" . $rootpath . "OutstandingWorkOrders.php?" . SID . "'>" . _('Select an existing outstanding work order') . "</A>";
+		echo "<P><A HREF='" . $rootpath . "/SelectWorkOrder.php?" . SID . "'>" . _('Select an existing outstanding work order') . "</A>";
 		unset($_POST['WO']);
 		for ($i=1;$i<=$_POST['NumberOfOutputs'];$i++){
           	     unset($_POST['OutputItem'.$i]);
@@ -364,11 +371,6 @@ echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . ">";
 
 echo '<CENTER><TABLE>';
 
-if (!isset($_POST['FromStockLocation'])){
-	if (isset($_SESSION['UserStockLocation'])){
-		$_POST['FromStockLocation']=$_SESSION['UserStockLocation'];
-	}
-}
 
 $sql="SELECT workorders.loccode,
 	             requiredby,
@@ -389,6 +391,7 @@ if (DB_num_rows($WOResult)==1){
 	$_POST['StockLocation'] = $myrow['loccode'];
 	$ErrMsg =_('Could not get the work order items');
 	$WOItemsResult = DB_query('SELECT woitems.stockid,
+										stockmaster.description,
 										qtyreqd,
 										qtyrecd,
 										stdcost,
@@ -403,6 +406,7 @@ if (DB_num_rows($WOResult)==1){
 	$i=1;
 	while ($WOItem=DB_fetch_array($WOItemsResult)){
 				$_POST['OutputItem' . $i]=$WOItem['stockid'];
+				$_POST['OutputItemDesc'.$i]=$WOItem['description'];
 				$_POST['OutputQty' . $i]= $WOItem['qtyreqd'];
 		  		$_POST['RecdQty' .$i] =$WOItem['qtyrecd'];
 		  		$_POST['NextLotSNRef' .$i]=$WOItem['nextlotsnref'];
@@ -414,7 +418,7 @@ if (DB_num_rows($WOResult)==1){
 
 echo "<input type=hidden name='WO' value=" .$_POST['WO'] . '>';
 echo '<tr><td class="label">' . _('Work Order Reference') . ':</td><td>' . $_POST['WO'] . '</td></tr>';
-echo '<tr><td class="label">' . _('Factory Location') .'</td>
+echo '<tr><td class="label">' . _('Factory Location') .':</td>
 	<td><select name="StockLocation">';
 $LocResult = DB_query('SELECT loccode,locationname FROM locations',$db);
 while ($LocRow = DB_fetch_array($LocResult)){
@@ -444,16 +448,19 @@ if (isset($WOResult)){
 	echo '<tr><td class="label">' . _('Accumulated Costs') . ':</td>
 			  <td>' . number_format($myrow['costissued'],2) . '</td></tr>';
 }
-
+echo '</table>
+		<P><table>';
 echo '<tr><td class="tableheader">' . _('Output Item') . '</td>
 		  <td class="tableheader">' . _('Qty Required') . '</td>
 		  <td class="tableheader">' . _('Qty Received') . '</td>
 		  <td class="tableheader">' . _('Balance Remaining') . '</td>
 		  <td class="tableheader">' . _('Next Lot/SN Ref') . '</td>
 		  </tr>';
+
+
 if (isset($NumberOfOutputs)){
 	for ($i=1;$i<=$NumberOfOutputs;$i++){
-		echo '<tr><td><input type="hidden" name="OutputItem' . $i . '" value="' . $_POST['OutputItem' .$i] . '">' . $_POST['OutputItem' . $i] . '</td>
+		echo '<tr><td><input type="hidden" name="OutputItem' . $i . '" value="' . $_POST['OutputItem' .$i] . '">' . $_POST['OutputItem' . $i] . ' - ' . $_POST['OutputItemDesc' .$i] . '</td>
 		  		<td><input type="textbox" name="OutputQty' . $i . '" value=' . $_POST['OutputQty' . $i] . ' size=10 maxlength=10></td>
 		  		<td align="right"><input type="hidden" name="RecdQty' . $i . '" value=' . $_POST['RecdQty' .$i] . '>' . $_POST['RecdQty' .$i] .'</td>
 		  		<td align="right">' . ($_POST['OutputQty' . $i] - $_POST['RecdQty' .$i]) . '</td>';

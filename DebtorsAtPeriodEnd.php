@@ -1,8 +1,8 @@
 <?php
 $PageSecurity = 2;
 
-/* $Revision: 1.9 $ */
-
+/* $Revision: 1.10 $ */
+include('includes/session.inc');
 
 If (isset($_POST['PrintPDF'])
 	AND isset($_POST['FromCriteria'])
@@ -10,11 +10,9 @@ If (isset($_POST['PrintPDF'])
 	AND isset($_POST['ToCriteria'])
 	AND strlen($_POST['ToCriteria'])>=1){
 
-	include('config.php');
 	include('includes/PDFStarter.php');
-	include('includes/ConnectDB.inc');
-	include('includes/DateFunctions.inc');
-	
+
+
 	$FontSize=12;
 	$pdf->addinfo('Title',_('Customer Balance Listing'));
 	$pdf->addinfo('Subject',_('Customer Balances'));
@@ -38,7 +36,7 @@ If (isset($_POST['PrintPDF'])
 			SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) AS fxbalance,
 			SUM(CASE WHEN debtortrans.prd > ' . $_POST['PeriodEnd'] . ' THEN
 			(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount)/debtortrans.rate ELSE 0 END) AS afterdatetrans,
-			SUM(CASE WHEN debtortrans.prd > ' . $_POST['PeriodEnd'] . ' 
+			SUM(CASE WHEN debtortrans.prd > ' . $_POST['PeriodEnd'] . '
 				AND (debtortrans.type=11 OR debtortrans.type=12) THEN
 				debtortrans.diffonexch ELSE 0 END) AS afterdatediffonexch,
 			SUM(CASE WHEN debtortrans.prd > ' . $_POST['PeriodEnd'] . " THEN
@@ -51,8 +49,8 @@ If (isset($_POST['PrintPDF'])
 			AND debtorsmaster.debtorno = debtortrans.debtorno
 			AND debtorsmaster.debtorno >= '" . $_POST['FromCriteria'] . "'
 			AND debtorsmaster.debtorno <= '" . $_POST['ToCriteria'] . "'
-			GROUP BY debtorsmaster.debtorno, 
-				debtorsmaster.name, 
+			GROUP BY debtorsmaster.debtorno,
+				debtorsmaster.name,
 				currencies.currency";
 
 	$CustomerResult = DB_query($SQL,$db,'','',false,false);
@@ -122,7 +120,6 @@ If (isset($_POST['PrintPDF'])
 
 } else { /*The option to print PDF was not hit */
 
-	include('includes/session.inc');
 	$title=_('Debtor Balances');
 	include('includes/header.inc');
 

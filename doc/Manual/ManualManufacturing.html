@@ -1,0 +1,41 @@
+<!-- Help Begin: Manufacturing -->
+
+<br><br>
+<a name="Manufacturing"><font size="+3"><b>Manufacturing</b></font></a>
+<br><br>
+Manufacturing - simply the combination of items to make other items can be implemented effective from webERP version 3.06 an on.
+<br>It has been possible to build bills of material for manufactured items for some time but the functionality that allows the materials to be issued from stock and manufactured items received into stock was introduced with 3.06. This is the purpose of the work order.
+<br><br>
+Bills of material now allow components to be defined as "auto-issue". Components set up to auto-issue, automatically create the issue transactions against the work order based on the bill of material quantities on the entry of receipts of a finished item against the work order. This decreases the administration of work orders for those components with relatively low value and limited possibility for any usage variance. It is not recommended that this feature be used on components where the final requirement for it could vary with for example yield differences between work orders. Work orders take the value of components and materials issued and divide this total cost between the output items to arrive at a cost per unit for all output items. The process for performing this calculation is called "closing" the work order.
+<br><br>
+The sequence of events in manufacturing an item is as follows:
+<ul>
+<li>Enter a Work Order - selecting all the output items required to be included in the work order costing. To ensure accurate costing it is recommended that work orders be created for single items wherever possible. The quantity required of the item and the date the items are required to be completed by must also be specified. If the output item is a controlled item - either serialised or lot/batch controlled - then there is also an option to enter the next serial number or batch reference which will be retrieved when entering the manufactured items received.</li>
+<li>Receive Items against the work order. When manufactured items are completed they can be 'received' against the work order. Auto-issue components are automatically issued. On the first receipt of manufactured items against a work order, the cost of the item is recalculated by rolling up the cost from the bill of material. A cost adjustment is performed if the cost changes.</li>
+<li>Issue components and raw materials to the work order</li>
+<li>Once all components and raw materials are issued to the work order and no more manufactured items can be received against the work order it can be closed. The closing process recalculates the cost of the items manufactured on the work order and if weighted average costing is used a cost update will be processed.</li>
+</ul>
+<br><br>
+<font size="+1"><b>General Ledger Integration Issues</b></font>
+<br><br>
+When the "Create GL entries for stock transactions (at standard cost)" option in the company preferences form is set to "Yes", then GL journals are created as a result of work order transactions. When a work order is created there is no GL impact. The ways the GL is impacted as a result of manufacturing processes are as follows:
+<ul>
+<li>Receiving Manufactured Items - the stock of finished goods - as per the stock category record of the item being manufactured is debited with the recaclulated (rolled up) cost of the item - as at the time of the first receipt against the work order and credited against the work in progress account of the item (from its stock category record). Subsequent receipts of manufactured stock against the work order are debited to the stock account at the same cost as the first entry. Also, auto-issue components that get issued at the time of the receipt of the manufactured item also create GL entries to debit the work in progress account of the manufactured item's stock category WIP account. The credit goes against the stock account of the component's stock category.</li>
+<li>Issuing components to the work order - the same entries as for auto-issue components above. i.e. debit the manufactured output item's WIP account and credit the component item's stock account</li>
+<li>Closing the work order - compares the quantity of components issued against the bill of material at the time of the first receipt of the manufactured items - the volume differences are evaluated at the standard cost (as at the time of the first receipt of manufactured item) to come up with the usage variance posted to the debit or credit of the manufactured item's stock category record's usage variance account. Then the cost of the items issued to the work order are compared against the cost as at the time the first receipt of the manufactured item was entered - differences here are taken to the price variances account in the manufactured item's stock category record. It is the closing of the work order that ensures that the costs received from the work order in the form of manufacturing output equals the cost of the inputs - the various components and materials issued to the work order</li>
+</ul>
+<br><br>
+<font size="+1"><b>Work Order Entry</b></font>
+<br><br>
+The Work Order is the medium for issuing components/raw materials to. A running total of the costs issued to the work order is maintained. Work orders can be created that have any number of output items. Output items are restricted to only "manufactured" items as defined in the item entry form. The work order tracks the quantity of the output items received against the work order and checks that no more than the work order quantity originally set up, with an allowance including the over-receive proportion as defined for purchase orders, is received.
+<br><br>
+
+<font size="+1"><b>Status Description</b></font>
+<br><br>
+This field is used in look ups both in the customers amendment/entry and also in the customer selection screen. This is a text field up to 30 characters long.
+<br><br>
+<font size="+1"><b>Disallow Invoices</b></font>
+<br><br>
+For all credit ratings set up, this field indicates whether or not the rating is serious enough to prohibit future invoicing to customers set up with this credit rating.
+
+<!-- Help End: Manufacturing -->
