@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 $PageSecurity = 9;
 
@@ -9,50 +9,39 @@ $title = _('Multi-Level Bill Of Materials Maintenance');
 
 include('includes/header.inc');
 
-// *** POPAD&T
-function display_children($parent, $level, &$arbore) {
+// *** POPAD&T - didn't work though had to rewrite ... Phil
+function display_children($parent, $level, &$BOMTree) {
 
 	global $db;
 	// retrive all children of parent
 	$c_result = DB_query("SELECT parent,
 					component
-				FROM bom WHERE parent='" . $parent. "'",$db);
+				FROM bom WHERE parent='" . $parent. "'"
+				 ,$db);
 	if (DB_num_rows($c_result) > 0) {
 		echo ("<UL>\n");
 		// display each child
+		$i =0;
 		while ($row = DB_fetch_array($c_result)) {
 			if (!($parent == $row['component'])) {
 				// indent and display the title of this child
 				$ID1 = $row["component"];
-				$arbore[] = $level; 		// Level
+				$BOMTree[$i]['Level'] = $level; 		// Level
 				if ($level > 15) {
 					prnMsg(_('A maximum of 15 levels of bill of materials only can be displayed'),'error');
 					exit;
 				}
-				$arbore[] = $parent;		// Assemble
-				$arbore[] = $row['component'];	// Component
+				$BOMTree[$i]['Parent'] = $parent;		// Assemble
+				$BOMTree[$i]['Component'] = $row['component'];	// Component
 				// call this function again to display this
 				// child's children
-				display_children($row['component'], $level + 1, $arbore);
+				$i++;
+				display_children($row['component'], $level + 1, $BOMTree);
 			}
 		}
 	}
 }
 
-function conversie($arbore, &$matrice){
-	$j = 0;
-	if(!isset($matrice))
-		$matrice = array();
-	//
-	for($i = 0; $i < count($arbore); $i = $i + 3){
-		$matrice[$j][0] = $arbore[$i];
-		$matrice[$j][1] = $arbore[$i+1];
-		$matrice[$j][2] = $arbore[$i+2];
-		$j++;
-	}
-	$maxj = $j;
-}
-// *** end POPAD&T
 
 function CheckForRecursiveBOM ($UltimateParent, $ComponentToCheck, $db) {
 
@@ -102,8 +91,9 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 				locstock
 			WHERE bom.component='$Component'
 			AND bom.parent = '$Parent'
+			AND bom.component=stockmaster.stockid
 			AND bom.loccode = locations.loccode
-			AND bom.loccode = locstock.loccode
+			AND locstock.loccode=bom.loccode
 			AND bom.component = locstock.stockid
 			AND bom.workcentreadded=workcentres.code
 			AND stockmaster.stockid=bom.component";
@@ -232,10 +222,12 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			includes('includes/footer.inc');
 			exit;
 		} elseif($_POST['AutoIssue']==1){
-			$CheckControlledResult = DB_query("SELECT controlled FROM stockmaster WHERE stockid='" . $SelectedComponent . "'",$db);
+			$sql = "SELECT controlled FROM stockmaster WHERE stockid='" . $_POST['Component'] . "'";
+			$CheckControlledResult = DB_query($sql,$db);
 			$CheckControlledRow = DB_fetch_row($CheckControlledResult);
 			if ($CheckControlledRow[0]==1){
 				prnMsg(_('Only non-serialised or non-lot controlled items can be set to auto issue. These items require the lot/serial numbers of items issued to the works orders to be specified so autoissue is not an option. Auto issue has been automatically set to off for this component'),'warn');
+				$_POST['AutoIssue']=0;
 			}
 		}
 
@@ -451,37 +443,34 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	<CENTER><table border=1>
 
 <?php // *** POPAD&T
-	$arbore = array();
-	/*$arbore[] = 1;					// Level
-	$arbore[] = $SelectedParent;	// Ansemble
-	$arbore[] = $SelectedParent;	// Component */
-	display_children($SelectedParent, 1, $arbore);
-	conversie($arbore, $matrice);
+	$BOMTree = array();
+	//has three elements - Level, Parent, Component
+	display_children($SelectedParent, 1, $BOMTree);
 
-	$TableHeader =  '<tr BGCOLOR =#800000>
-			<td class=tableheader>' . _('Level') . '</td>
-			<td class=tableheader>' . _('Code') . '</td>
-			<td class=tableheader>' . _('Description') . '</td>
-			<td class=tableheader>' . _('Location') . '</td>
-			<td class=tableheader>' . _('Work Centre') . '</td>
-			<td class=tableheader>' . _('Quantity') . '</td>
-			<td class=tableheader>' . _('Effective After') . '</td>
-			<td class=tableheader>' . _('Effective To') . '</td>
-			<td class=tableheader>' . _('Auto Issue') . '</td>
-			<td class=tableheader>' . _('Qty On Hand') . '</td>
+	$TableHeader =  '<tr>
+			<td class="tableheader">' . _('Level') . '</td>
+			<td class="tableheader">' . _('Code') . '</td>
+			<td class="tableheader">' . _('Description') . '</td>
+			<td class="tableheader">' . _('Location') . '</td>
+			<td class="tableheader">' . _('Work Centre') . '</td>
+			<td class="tableheader">' . _('Quantity') . '</td>
+			<td class="tableheader">' . _('Effective After') . '</td>
+			<td class="tableheader">' . _('Effective To') . '</td>
+			<td class="tableheader">' . _('Auto Issue') . '</td>
+			<td class="tableheader">' . _('Qty On Hand') . '</td>
 			</tr>';
 	echo $TableHeader;
-	if(count($matrice) == 0) {
+	if(count($BOMTree) == 0) {
 		echo '<tr bgcolor="#EEEEEE"><td colspan="8">'._('No materials found.').'</td></tr>';
 	} else {
 		$UltimateParent = $SelectedParent;
 		$k = 0;
 		$RowCounter = 1;
 
-		foreach($matrice as $elem){
-			$Level = $elem[0];
-			$Parent = $elem[1];
-			$Component = $elem[2];
+		foreach($BOMTree as $BOMItem){
+			$Level = $BOMItem['Level'];
+			$Parent = $BOMItem['Parent'];
+			$Component = $BOMItem['Component'];
 			if ($k==1){
 				echo "<tr bgcolor='#CCCCCC'>";
 				$k=0;
@@ -489,7 +478,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				echo "<tr bgcolor='#EEEEEE'>";
 				$k++;
 			}
-			DisplayBOMItems($UltimateParent, $Parent,$Component,$Level,$db);
+			DisplayBOMItems($UltimateParent, $Parent, $Component, $Level, $db);
 			$RowCounter++;
 			if ($RowCounter==20){
 				echo $TableHeader;
@@ -528,6 +517,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$_POST['EffectiveTo'] = ConvertSQLDate($myrow['effectiveto']);
 			$_POST['WorkCentreAdded']  = $myrow['workcentreadded'];
 			$_POST['Quantity'] = $myrow['quantity'];
+			$_POST['AutoIssue'] = $myrow['autoissue'];
 
 			prnMsg(_('Edit the details of the selected component in the fields below') . '. <BR>' . _('Click on the Enter Information button to update the component details'),'info');
 			echo "<INPUT TYPE=HIDDEN NAME='SelectedParent' VALUE='$SelectedParent'>";
@@ -571,7 +561,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 
 			while ($myrow = DB_fetch_array($result)) {
-				echo "<OPTION VALUE=".$myrow["stockid"].'>' . str_pad($myrow['stockid'],21, '_', STR_PAD_RIGHT) . $myrow['description'];
+				echo "<OPTION VALUE=".$myrow['stockid'].'>' . str_pad($myrow['stockid'],21, '_', STR_PAD_RIGHT) . $myrow['description'];
 			} //end while loop
 
 			echo '</SELECT></TD></TR>';
@@ -672,7 +662,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				<SELECT name="AutoIssue">';
 
 			if (!isset($_POST['AutoIssue'])){
-				$_POST['AutoIssue'] = $_SESSION['autoissue'];
+				$_POST['AutoIssue'] = $_SESSION['AutoIssue'];
 			}
 			if ($_POST['AutoIssue']==0) {
 				echo '<OPTION SELECTED VALUE=0>' . _('No');

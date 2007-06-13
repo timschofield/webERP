@@ -1,7 +1,8 @@
 <?php
-/* $Revision: 1.7 $ */
-
+/* $Revision: 1.8 $ */
 $PageSecurity = 2;
+include('includes/session.inc');
+
 
 If (isset($_POST['PrintPDF'])
 	AND isset($_POST['FromCriteria'])
@@ -9,10 +10,9 @@ If (isset($_POST['PrintPDF'])
 	AND isset($_POST['ToCriteria'])
 	AND strlen($_POST['ToCriteria'])>=1){
 
-	include('config.php');
+	
 	include('includes/PDFStarter.php');
-	include('includes/ConnectDB.inc');
-	include('includes/DateFunctions.inc');
+	
 
 	$FontSize=12;
 	$pdf->addinfo('Title',_('Bill Of Material Listing'));
@@ -121,7 +121,6 @@ If (isset($_POST['PrintPDF'])
 
 } else { /*The option to print PDF was not hit */
 
-	include('includes/session.inc');
 	$title=_('Bill Of Material Listing');
 	include('includes/header.inc');
 

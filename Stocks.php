@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 
 $PageSecurity = 11;
@@ -393,6 +393,9 @@ if (isset($_POST['submit'])) {
 			/*Deletes LocStock records*/
 			$sql ="DELETE FROM locstock WHERE stockid='$StockID'";
 			$result=DB_query($sql,$db,_('Could not delete the location stock records because'),'',true);
+			/*Deletes Price records*/
+			$sql ="DELETE FROM prices WHERE stockid='$StockID'";
+			$result=DB_query($sql,$db,_('Could not delete the prices for this stock record because'),'',true);
 			/*and cascade deletes in PurchData */
 			$sql ="DELETE FROM purchdata WHERE stockid='$StockID'";
 			$result=DB_query($sql,$db,_('Could not delete the purchasing data because'),'',true);
@@ -408,6 +411,7 @@ if (isset($_POST['submit'])) {
 		'<BR>. . ' . _('and all the location stock records set up for the part') .
 		'<BR>. . .' . _('and any bill of material that may have been set up for the part') . 
 		'<BR> . . . .' . _('and any purchasing data that may have been set up for the part'),'success');
+		'<BR> . . . . .' . _('and any prices that may have been set up for the part'),'success');
 		unset($_POST['LongDescription']);
 		unset($_POST['Description']);
 		unset($_POST['EOQ']);

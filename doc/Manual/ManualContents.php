@@ -589,6 +589,29 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
 <?php
   if (!isset($_POST['Submit'])) {
 ?>  
+              <input type="checkbox" name="SelectManufacturing">
+              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=Manufacturing'; ?>">Manufacturing</A>
+<?php
+  } else {
+?>
+              <A HREF="#Manufacturing">General Ledger</A>
+<?php	
+  }
+?>
+              <UL>
+                <LI>Manufacturing Overview</LI>
+                <LI>General Ledger Implications</LI>
+                <LI>Work Order Entry</LI>
+                <LI>Work Order Receipts</LI>
+                <LI>Work Order Issues</LI>
+                <LI>Closing Work Orders</LI>
+              </UL>
+              <BR>
+            </LI>
+            <LI>
+<?php
+  if (!isset($_POST['Submit'])) {
+?>  
               <input type="checkbox" name="SelectGeneralLedger">
               <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=GeneralLedger'; ?>">General Ledger</A>
 <?php
@@ -855,6 +878,9 @@ if ($_GET['ViewTopic'] == 'Shipments' OR isset($_POST['SelectShipments'])) {
 
 if ($_GET['ViewTopic'] == 'GeneralLedger' OR isset($_POST['SelectGeneralLedger'])) {
   include('ManualGeneralLedger.html');
+}
+if ($_GET['ViewTopic'] == 'Manufacturing' OR isset($_POST['SelectManufacturing'])) {
+  include('ManualManufacturing.html');
 }
 if ($_GET['ViewTopic'] == 'ReportBuilder' OR isset($_POST['SelectReportBuilder'])) {
   include('ManualReportBuilder.html');

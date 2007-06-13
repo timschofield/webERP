@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 $PageSecurity=15;
 
@@ -322,8 +322,8 @@ if (isset($SelectedUser)) {
 	$_POST['Access'] = $myrow['fullaccess'];
 	$_POST['DefaultLocation'] = $myrow['defaultlocation'];
 	$_POST['ModulesAllowed'] = $myrow['modulesallowed'];
-	$_POST['theme'] = $myrow['theme'];
-	$_POST['language'] = $myrow['language'];
+	$_POST['Theme'] = $myrow['theme'];
+	$_POST['Language'] = $myrow['language'];
 	$_POST['Blocked'] = $myrow['blocked'];
 	$_POST['Salesperson'] = $myrow['salesmancode'];
 
@@ -479,7 +479,7 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 
 	if (is_dir("css/$ThemeName") AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != 'CVS'){
 
-		if ($_SESSION['Theme'] == $ThemeName){
+		if ($_POST['Theme'] == $ThemeName){
 			echo "<OPTION SELECTED VALUE='$ThemeName'>$ThemeName";
 		} else {
 			echo "<OPTION VALUE='$ThemeName'>$ThemeName";
@@ -501,7 +501,7 @@ while (false != ($LanguageEntry = $LangDirHandle->read())){
 
 	if (is_dir('locale/' . $LanguageEntry) AND $LanguageEntry != '..' AND $LanguageEntry != 'CVS' AND $LanguageEntry!='.'){
 
-		if ($_SESSION['Language'] == $LanguageEntry){
+		if ($_POST['Language'] == $LanguageEntry){
 			echo "<OPTION SELECTED VALUE='$LanguageEntry'>$LanguageEntry";
 		} else {
 			echo "<OPTION VALUE='$LanguageEntry'>$LanguageEntry";

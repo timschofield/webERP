@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 2; /*viewing possible with inquiries but not mods */
 
@@ -38,22 +38,19 @@ if (isset($_POST['UpdateData'])){
                     labourcost,
                     overheadcost,
                     mbflag";
-    $oldresult = DB_query($sql,$db);
+    $ErrMsg = _('The entered item code does not exist');
+    $oldresult = DB_query($sql,$db,$ErrMsg);
     $oldrow = DB_fetch_array($oldresult);
-    if( !$oldrow ) {
-        prnMsg (_('The entered item code does not exist'),'error',_('Non-existent Item'));
+    $_POST['QOH'] = $oldrow['totalqoh'];
+    $_POST['OldMaterialCost'] = $oldrow['materialcost'];
+    if ($oldrow['mbflag']=='M') {
+        $_POST['OldLabourCost'] = $oldrow['labourcost'];
+        $_POST['OldOverheadCost'] = $oldrow['overheadcost'];
     } else {
-        $_POST['QOH'] = $oldrow['totalqoh'];
-        $_POST['OldMaterialCost'] = $oldrow['materialcost'];
-        if ($OldRow['mbflag']=='M') {
-            $_POST['OldLabourCost'] = $oldrow['materialcost'];
-            $_POST['OldOverheadCost'] = $oldrow['materialcost'];
-        } else {
-            $_POST['OldLabourCost'] = 0;
-            $_POST['OldOverheadCost'] = 0;
-            $_POST['LabourCost'] = 0;
-            $_POST['OverheadCost'] = 0;
-        }
+        $_POST['OldLabourCost'] = 0;
+        $_POST['OldOverheadCost'] = 0;
+        $_POST['LabourCost'] = 0;
+        $_POST['OverheadCost'] = 0;
     }
     DB_free_result($oldresult);
 

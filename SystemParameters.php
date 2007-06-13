@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 $PageSecurity =15;
 
@@ -218,13 +218,16 @@ if (isset($_POST['submit'])) {
 			$sql = 'UPDATE config SET confvalue=' . $_POST['X_AutoIssue'] . " WHERE confname='AutoIssue'";
 		}
 		$ErrMsg =  _('The system configuration could not be updated because');
-		if (sizeof($sql) > 0 ) {
+		if (sizeof($sql) > 1 ) {
 			$result = DB_query('BEGIN',$db,$ErrMsg);
-			foreach ( $sql as $line ) {
+			foreach ($sql as $line) {
 				$result = DB_query($line,$db,$ErrMsg);
 			}
 			$result = DB_query('COMMIT',$db,$ErrMsg);
+		} elseif(sizeof($sql)==1) {
+			$result = DB_query($sql,$db,$ErrMsg);
 		}
+
 		prnMsg( _('System configuration updated'),'success');
 
 		$ForceConfigReload = True; // Required to force a load even if stored in the session vars

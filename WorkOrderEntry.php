@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 10;
 
@@ -158,41 +158,41 @@ if (isset($_POST['Search'])){
 
 if (isset($NewItem) AND isset($_POST['WO'])){
       $InputError=false;
- 	  $CheckItemResult = DB_query("SELECT mbflag,
- 	  										eoq
- 	  								FROM stockmaster
- 	  								WHERE stockid='" . $NewItem . "'",
- 	  								$db);
- 	  if (DB_num_rows($CheckItemResult)==1){
- 	  		$CheckItemRow = DB_fetch_array($CheckItemResult);
- 	  		$EOQ = $CheckItemRow['eoq'];
- 	  		if ($CheckItemRow['mbflag']!='M'){
- 	  			prnMsg(_('The item selected cannot be addded to a work order because it is not a manufactured item'),'warn');
- 	  			$InputError=true;
- 	  		}
- 	  } else {
- 	  		prnMsg(_('The item selected cannot be found in the database'),'error');
- 	  		$InputError = true;
- 	  }
- 	  $CheckItemResult = DB_query("SELECT stockid
- 	  								FROM woitems
- 	  								WHERE stockid='" . $NewItem . "'
- 	  								AND wo=" .$_POST['WO'],
- 	  								$db);
- 	  if(DB_num_rows($CheckItemResult)==1){
- 	  		prnMsg(_('This item is already on the work order and cannot be added again'),'warn');
- 	  		$InputError=true;
- 	  }
+	  $CheckItemResult = DB_query("SELECT mbflag,
+						eoq
+					FROM stockmaster
+					WHERE stockid='" . $NewItem . "'",
+					$db);
+	  if (DB_num_rows($CheckItemResult)==1){
+	  		$CheckItemRow = DB_fetch_array($CheckItemResult);
+	  		$EOQ = $CheckItemRow['eoq'];
+	  		if ($CheckItemRow['mbflag']!='M'){
+	  			prnMsg(_('The item selected cannot be addded to a work order because it is not a manufactured item'),'warn');
+	  			$InputError=true;
+	  		}
+	  } else {
+	  		prnMsg(_('The item selected cannot be found in the database'),'error');
+	  		$InputError = true;
+	  }
+	  $CheckItemResult = DB_query("SELECT stockid
+					FROM woitems
+					WHERE stockid='" . $NewItem . "'
+					AND wo=" .$_POST['WO'],
+					$db);
+	  if(DB_num_rows($CheckItemResult)==1){
+	  		prnMsg(_('This item is already on the work order and cannot be added again'),'warn');
+	  		$InputError=true;
+	  }
 
 
- 	  if ($InputError==false){
-      	$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
+	  if ($InputError==false){
+		$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
                                                         FROM stockmaster INNER JOIN bom
                                                         ON stockmaster.stockid=bom.component
                                                         WHERE bom.parent='" . DB_escape_string($NewItem) . "'
                                                         AND bom.loccode='" . DB_escape_string($_POST['StockLocation']) . "'",
                              $db);
-        $CostRow = DB_fetch_row($CostResult);
+        	$CostRow = DB_fetch_row($CostResult);
 		if (is_null($CostRow[0]) OR $CostRow[0]==0){
 				$Cost =0;
 				prnMsg(_('The cost of this item as accumulated from the sum of the component costs is nil. This could be because there is no bill of material set up ... you may wish to double check this'),'warn');
@@ -202,17 +202,17 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 		if (!isset($EOQ) OR $EOQ==0){
 			$EOQ=1;
 		}
-      	$sql[] = "INSERT INTO woitems (wo,
-    	                             stockid,
-    	                             qtyreqd,
-    	                             stdcost)
-    	         VALUES ( " . $_POST['WO'] . ",
+		$sql[] = "INSERT INTO woitems (wo,
+	                             stockid,
+	                             qtyreqd,
+	                             stdcost)
+	         VALUES ( " . $_POST['WO'] . ",
                          '" . DB_escape_string($NewItem) . "',
                          " . $EOQ . ",
                           " . $Cost . "
                           )";
 
-      	$sql[] = "INSERT INTO worequirements (wo,
+		$sql[] = "INSERT INTO worequirements (wo,
                                             parentstockid,
                                             stockid,
                                             qtypu,
