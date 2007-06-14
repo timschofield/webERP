@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 11;
 
@@ -87,7 +87,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 			controlled,
 			serialised
 		FROM stockmaster 
-		WHERE stockid='" .$_POST['IssuedItem'] . "'";
+		WHERE stockid='" .$_POST['IssueItem'] . "'";
 	$Result = DB_query($SQL,$db);
 	$IssueItemRow = DB_fetch_array($Result);
 	
@@ -178,7 +178,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 				/* 	We need to add the StockSerialItem record and
 					The StockSerialMoves as well */
 				//need to test if the serialised item exists first already
-					if (trim($SerialNo]) != ""){
+					if (trim($SerialNo) != ""){
 						
 						$SQL = "INSERT INTO stockserialitems (stockid,
 											loccode,
@@ -279,13 +279,13 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 							account,
 							narrative,
 							amount)
-					VALUES (26,
+					VALUES (28,
 						" . $WOIssueNo . ",
 						'" . Date('Y-m-d') . "',
 						" . $PeriodNo . ",
 						" . $WORow['wipact'] . ",
-						'" . DB_escape_string($_POST['WO']) . " " . DB_escape_string($_POST['IssueItem']) . ' x ' . DB_escape_string($QuantityIssued) . " @ " . number_format($IssuedItem['cost'],2) . "',
-						" . ($IssuedItem['cost'] * $QuantityIssued) . ")";
+						'" . DB_escape_string($_POST['WO']) . " " . DB_escape_string($_POST['IssueItem']) . ' x ' . DB_escape_string($QuantityIssued) . " @ " . number_format($IssueItemRow['cost'],2) . "',
+						" . ($IssueItemRow['cost'] * $QuantityIssued) . ")";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The issue of the item to the work order GL posting could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the work order issue GLTrans record was used');
@@ -299,13 +299,13 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 							account,
 							narrative,
 							amount)
-					VALUES (26,
+					VALUES (28,
 						" . $WOIssueNo . ",
 						'" . Date('Y-m-d') . "',
 						" . $PeriodNo . ",
 						" . $StockGLCode['stockact'] . ",
-						'" . DB_escape_string($_POST['WO']) . " " . DB_escape_string($_POST['IssueItem']) . ' x ' . DB_escape_string($QuantityIssued) . " @ " . number_format($IssuedItem['cost'],2) . "',
-						" . -($IssuedItem['cost'] * $QuantityIssued) . ")";
+						'" . DB_escape_string($_POST['WO']) . " " . DB_escape_string($_POST['IssueItem']) . ' x ' . DB_escape_string($QuantityIssued) . " @ " . number_format($IssueItemRow['cost'],2) . "',
+						" . -($IssueItemRow['cost'] * $QuantityIssued) . ")";
 
 			$ErrMsg =   _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock account credit on the issue of items to a work order GL posting could not be inserted because');
 			$DbgMsg =  _('The following SQL to insert the stock GLTrans record was used');
@@ -317,10 +317,9 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 		//update the wo with the new qtyrecd
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' ._('Could not update the work order cost issued to the work order because');
 		$DbgMsg = _('The following SQL was used to update the work ordeer');
-		$UpdateWOResult =DB_query("UPDATE woitems
-						SET costissued=costissued+" . ($QuantityIssued*$IssuedItem['cost']) . "
-						WHERE wo=" . $_POST['WO'] . "
-						AND stockid='" . $_POST['StockID'] . "'",
+		$UpdateWOResult =DB_query("UPDATE workorders
+						SET costissued=costissued+" . ($QuantityIssued*$IssueItemRow['cost']) . "
+						WHERE wo=" . $_POST['WO'],
 					$db,$ErrMsg,$DbgMsg,true);
 
 
