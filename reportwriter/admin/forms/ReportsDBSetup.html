@@ -28,31 +28,31 @@
       <td><?php echo RPT_SECOND; ?></td>
       <td><select name="Table2"><OPTION Value=""><?php echo RPT_SELECT; ?>
 	  	<?php if ($myrow['table1']) echo CreateTableList($ReportID,2); ?></select></td>
-      <td><input name="Table2Criteria" type="text" value="<? echo $myrow['table2criteria']; ?>" size="76" maxlength="75"><td>
+      <td><input name="Table2Criteria" type="text" value="<?php echo $myrow['table2criteria']; ?>" size="76" maxlength="75"><td>
     </tr>
     <tr>
       <td><?php echo RPT_THIRD; ?></td>
       <td><select name="Table3"><OPTION Value=""><?php echo RPT_SELECT; ?>
 	  	<?php if ($myrow['table2']) echo CreateTableList($ReportID,3); ?></select></td>
-      <td><input name="Table3Criteria" type="text" value="<? echo $myrow['table3criteria']; ?>" size="76" maxlength="75"><td>
+      <td><input name="Table3Criteria" type="text" value="<?php echo $myrow['table3criteria']; ?>" size="76" maxlength="75"><td>
     </tr>
     <tr>
       <td><?php echo RPT_FOURTH; ?></td>
       <td><select name="Table4"><OPTION Value=""><?php echo RPT_SELECT; ?>
 	  	<?php if ($myrow['table3']) echo CreateTableList($ReportID,4); ?></select></td>
-      <td><input name="Table4Criteria" type="text" value="<? echo $myrow['table4criteria']; ?>" size="76" maxlength="75"><td>
+      <td><input name="Table4Criteria" type="text" value="<?php echo $myrow['table4criteria']; ?>" size="76" maxlength="75"><td>
     </tr>
     <tr>
       <td><?php echo RPT_FIFTH; ?></td>
       <td><select name="Table5"><OPTION Value=""><?php echo RPT_SELECT; ?>
 	  	<?php if ($myrow['table4']) echo CreateTableList($ReportID,5); ?></select></td>
-      <td><input name="Table5Criteria" type="text" value="<? echo $myrow['table5criteria']; ?>" size="76" maxlength="75"><td>
+      <td><input name="Table5Criteria" type="text" value="<?php echo $myrow['table5criteria']; ?>" size="76" maxlength="75"><td>
     </tr>
     <tr>
       <td><?php echo RPT_SIXTH; ?></td>
       <td><select name="Table6"><OPTION Value=""><?php echo RPT_SELECT; ?>
 	  	<?php if ($myrow['table5']) echo CreateTableList($ReportID,6); ?></select></td>
-      <td><input name="Table6Criteria" type="text" value="<? echo $myrow['table6criteria']; ?>" size="76" maxlength="75"><td>
+      <td><input name="Table6Criteria" type="text" value="<?php echo $myrow['table6criteria']; ?>" size="76" maxlength="75"><td>
     </tr>
   </table>
 </form>
