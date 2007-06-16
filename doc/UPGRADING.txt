@@ -2,9 +2,9 @@ UPGRADING FROM PREVIOUS VERSIONS OF WEBERP
 
 From version 3.05 an upgrade script will be provided that applies the database modifications automatically and does any data conversions required for the new scripts to work.
 
-The upgrade script to convert a 3.04 database to work with 3.05 scripts is:
+The upgrade script to convert a 3.05 database to work with 3.06 scripts is:
 
-Z_Upgrade_3.04-3.05.php
+Z_Upgrade_3.05-3.06.php
 
 Once the new scripts have been loaded onto the web-server and a backup of the old database taken this script should be opened in a URL - there are no links to this URL so it will need to be typed manually into the browser.
 

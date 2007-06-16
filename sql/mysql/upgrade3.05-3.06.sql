@@ -45,7 +45,7 @@ CREATE TABLE `worequirements` (
   qtypu double NOT NULL DEFAULT 1,
   stdcost double NOT NULL DEFAULT 0,
   autoissue tinyint NOT NULL DEFAULT 0,
-   PRIMARY KEY  (`wo`, `parentstockid`,`stockid`),
+   PRIMARY KEY  (`wo`, `parentstockid`,`stockid`)
  ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 ALTER TABLE `worequirements`

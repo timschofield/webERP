@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 $PageSecurity = 2;
 
@@ -530,8 +530,22 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 				$QOO=0;
 			} else {
 				$QOORow = DB_fetch_row($QOOResult);
-				$QOO = number_format($QOORow[0],$myrow['decimalplaces']);
+				$QOO = $QOORow[0];
 			}
+			//Also the on work order quantities
+			$sql = "SELECT SUM(woitems.qtyreqd-woitems.qtyrecd) AS qtywo
+				FROM woitems INNER JOIN workorders
+				ON woitems.wo=workorders.wo
+				WHERE workorders.closed=0
+				AND woitems.stockid='" . $StockID . "'";
+			$ErrMsg = _('The quantity on work orders for this product cannot be retrieved because');
+			$QOOResult = DB_query($sql,$db,$ErrMsg);
+
+			if (DB_num_rows($QOOResult)==1){
+				$QOORow = DB_fetch_row($QOOResult);
+				$QOO +=  $QOORow[0];
+			}
+			$QOO = number_format($QOO,$myrow['decimalplaces']);
 			break;
 	}
 	$Demand =0;
@@ -559,6 +573,24 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		       							$db);
 	$DemAsComponentRow = DB_fetch_row($DemAsComponentResult);
 	$Demand += $DemAsComponentRow[0];
+	//Also the demand for the item as a component of works orders
+
+	$sql = "SELECT SUM(qtypu*(woitems.qtyreqd - woitems.qtyrecd)) AS woqtydemo
+				FROM woitems INNER JOIN worequirements
+				ON woitems.stockid=worequirements.parentstockid
+				INNER JOIN workorders
+				ON woitems.wo=workorders.wo
+				AND woitems.wo=worequirements.wo
+				WHERE  worequirements.stockid='" . $StockID . "'
+				AND workorders.closed=0";
+
+	$ErrMsg = _('The workorder component demand for this product cannot be retrieved because');
+	$DemandResult = DB_query($sql,$db,$ErrMsg);
+
+	if (DB_num_rows($DemandResult)==1){
+		$DemandRow = DB_fetch_row($DemandResult);
+		$Demand += $DemandRow[0];
+	}
 
 	echo '<TR><TD align=right width="15%" class="tableheader">' . _('Quantity On Hand') . ':</TD><TD width="17%" align=right>' . $QOH . '</TD></TR>';
 	echo '<TR><TD align=right width="15%" class="tableheader">' . _('Quantity Demand') . ':</TD><TD width="17%" align=right>' . number_format($Demand,$myrow['decimalplaces']) . '</TD></TR>';

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.58 $ */
+/* $Revision: 1.59 $ */
 
 
 $PageSecurity = 1;
@@ -976,7 +976,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<A HREF='" . $rootpath . '/Tax.php?' . SID . "'><LI>" . _('GST Reports') . '</LI></A>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/Tax.php?' . SID . "'><LI>" . _('Tax Reports') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>

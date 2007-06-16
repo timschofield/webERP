@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 
 $PageSecurity = 2;
@@ -19,17 +19,17 @@ if (isset($_GET['StockID'])){
 
 echo "<A HREF='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</A><BR>';
 
-$result = DB_query("SELECT description, 
-                           units, 
-                           mbflag, 
-                           decimalplaces, 
-                           serialised, 
-                           controlled 
-                    FROM 
-                           stockmaster 
-                    WHERE 
+$result = DB_query("SELECT description,
+                           units,
+                           mbflag,
+                           decimalplaces,
+                           serialised,
+                           controlled
+                    FROM
+                           stockmaster
+                    WHERE
                            stockid='$StockID'",
-                           $db, 
+                           $db,
                            _('Could not retrieve the requested item'),
                            _('The SQL used to retrieve the items was'));
 
@@ -143,6 +143,26 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 		$DemandQty += $DemandRow[0];
 	}
 
+	//Also the demand for the item as a component of works orders
+
+	$sql = "SELECT SUM(qtypu*(woitems.qtyreqd - woitems.qtyrecd)) AS woqtydemo
+				FROM woitems INNER JOIN worequirements
+				ON woitems.stockid=worequirements.parentstockid
+				INNER JOIN workorders
+				ON woitems.wo=workorders.wo
+				AND woitems.wo=worequirements.wo
+				WHERE workorders.loccode='" . $myrow['loccode'] . "'
+				AND worequirements.stockid='" . $StockID . "'
+				AND workorders.closed=0";
+
+	$ErrMsg = _('The workorder component demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
+	$DemandResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+
+	if (DB_num_rows($DemandResult)==1){
+		$DemandRow = DB_fetch_row($DemandResult);
+		$DemandQty += $DemandRow[0];
+	}
+
 	if ($Its_A_KitSet_Assembly_Or_Dummy == False){
 
 		$sql = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) AS qoo
@@ -157,11 +177,26 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 			$QOORow = DB_fetch_row($QOOResult);
 			$QOO =  $QOORow[0];
 		} else {
-			$QOOQty = 0;
+			$QOO = 0;
+		}
+
+		//Also the on work order quantities
+		$sql = "SELECT SUM(woitems.qtyreqd-woitems.qtyrecd) AS qtywo
+				FROM woitems INNER JOIN workorders
+				ON woitems.wo=workorders.wo
+				WHERE workorders.closed=0
+				AND workorders.loccode='" . $myrow['loccode'] . "'
+				AND woitems.stockid='" . $StockID . "'";
+		$ErrMsg = _('The quantity on work orders for this product to be received into') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because');
+		$QOOResult = DB_query($sql,$db,$ErrMsg, $DbgMsg);
+
+		if (DB_num_rows($QOOResult)==1){
+			$QOORow = DB_fetch_row($QOOResult);
+			$QOO +=  $QOORow[0];
 		}
 
 		echo '<TD>' . $myrow['locationname'] . '</TD>';
-				
+
 		printf("<td ALIGN=RIGHT>%s</td>
 			<td ALIGN=RIGHT>%s</td>
 			<td ALIGN=RIGHT>%s</td>
@@ -217,18 +252,18 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 				stockmoves.discountpercent
 			FROM stockmoves
 			WHERE stockmoves.debtorno='" . $DebtorNo . "'
-				AND stockmoves.type=10 
+				AND stockmoves.type=10
 				AND stockmoves.stockid = '" . $StockID . "'
 				AND stockmoves.hidemovt=0
 			ORDER BY stockmoves.trandate DESC";
-	
+
 	/* only show pricing history for sales invoices - type=10 */
-	
+
 	$ErrMsg = _('The stock movements for the selected criteria could not be retrieved because') . ' - ';
 	$DbgMsg = _('The SQL that failed was') . ' ';
-	
+
 	$MovtsResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
-	
+
 	$k=1;
 	while ($myrow=DB_fetch_array($MovtsResult)) {
 	  if ($LastPrice != $myrow['price'] or $LastDiscount != $myrow['discount']) { /* consolidate price history for records with same price/discount */
@@ -242,7 +277,7 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	    	if ($k > 9) break; /* 10 price records is enough to display */
 	    	if ($myrow['trandate'] < FormatDateForSQL(time() - 366*86400))
 	    	  break; /* stop displaying pirce history more than a year old once we have at least one  to display */
-	    }	
+	    }
 		$LastPrice = $myrow['price'];
 		$LastDiscount = $myrow['discount'];
 	    $ToDate = $myrow['trandate'];
@@ -267,17 +302,17 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 			<TD CLASS='tableheader'>" . _('Price') . "</TD>
 			<TD CLASS='tableheader'>" . _('Discount') . "</TD>
 			</TR>";
-	
+
 	  $j = 0;
 	  $k = 0; //row colour counter
-	
+
 	  foreach($PriceHistory as $ph) {
 		$j--;
 		If ($j < 0 ){
 			$j = 11;
 			echo $tableheader;
 		}
-	
+
 		if ($k==1){
 			echo "<TR BGCOLOR='#CCCCCC'>";
 			$k=0;
@@ -285,7 +320,7 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 			echo "<TR BGCOLOR='#EEEEEE'>";
 			$k=1;
 		}
-	
+
 			printf("<TD>%s</TD>
 			<TD ALIGN=RIGHT>%s</TD>
 			<TD ALIGN=RIGHT>%s</TD>
@@ -303,7 +338,7 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	else {
 	  echo '<p>'._('No history of sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo;
 	}
-} 
+}
 //end of displaying price history for a debtor
 echo '<hr>';
 

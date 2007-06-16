@@ -27,6 +27,8 @@ http://sourceforge.net/project/showfiles.php?group_id=70949
 
 Translators should read the document http://www.weberp.org/wikidocs/HowToTranslate which describes how to translate webERP.
 
+Translations must be installed under the webERP/locale directory and the locale must be available on the web-server.
+
 LEGAL
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License
