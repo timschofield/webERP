@@ -99,6 +99,7 @@ CREATE TABLE `bom` (
   `effectiveafter` date NOT NULL default '0000-00-00',
   `effectiveto` date NOT NULL default '9999-12-31',
   `quantity` double NOT NULL default '1',
+  `autoissue` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`parent`,`component`,`workcentreadded`,`loccode`),
   KEY `Component` (`component`),
   KEY `EffectiveAfter` (`effectiveafter`),
@@ -1194,7 +1195,7 @@ CREATE TABLE `salesorderdetails` (
   `discountpercent` double NOT NULL default '0',
   `actualdispatchdate` datetime NOT NULL default '0000-00-00 00:00:00',
   `completed` tinyint(1) NOT NULL default '0',
-  `narrative` text NOT NULL,
+  `narrative` text,
   PRIMARY KEY  (`orderlineno`,`orderno`),
   KEY `OrderNo` (`orderno`),
   KEY `StkCode` (`stkcode`),
@@ -1468,7 +1469,7 @@ CREATE TABLE `stockmoves` (
   `show_on_inv_crds` tinyint(4) NOT NULL default '1',
   `newqoh` double NOT NULL default '0',
   `hidemovt` tinyint(4) NOT NULL default '0',
-  `narrative` text NOT NULL,
+  `narrative` text,
   PRIMARY KEY  (`stkmoveno`),
   KEY `DebtorNo` (`debtorno`),
   KEY `LocCode` (`loccode`),
@@ -1764,6 +1765,42 @@ CREATE TABLE `unitsofmeasure` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Table structure for table `woitems`
+--
+
+CREATE TABLE `woitems` (
+  `wo` int(11) NOT NULL,
+  `stockid` char(20) NOT NULL default '',
+  `qtyreqd` double NOT NULL default '1',
+  `qtyrecd` double NOT NULL default '0',
+  `stdcost` double NOT NULL,
+  `nextlotsnref` varchar(20) default '',
+  PRIMARY KEY  (`wo`,`stockid`),
+  KEY `stockid` (`stockid`),
+  CONSTRAINT `woitems_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
+  CONSTRAINT `woitems_ibfk_2` FOREIGN KEY (`wo`) REFERENCES `workorders` (`wo`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `worequirements`
+--
+
+CREATE TABLE `worequirements` (
+  `wo` int(11) NOT NULL,
+  `parentstockid` varchar(20) NOT NULL,
+  `stockid` varchar(20) NOT NULL,
+  `qtypu` double NOT NULL default '1',
+  `stdcost` double NOT NULL default '0',
+  `autoissue` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`wo`,`parentstockid`,`stockid`),
+  KEY `stockid` (`stockid`),
+  KEY `worequirements_ibfk_3` (`parentstockid`),
+  CONSTRAINT `worequirements_ibfk_1` FOREIGN KEY (`wo`) REFERENCES `workorders` (`wo`),
+  CONSTRAINT `worequirements_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
+  CONSTRAINT `worequirements_ibfk_3` FOREIGN KEY (`parentstockid`) REFERENCES `woitems` (`stockid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
 -- Table structure for table `workcentres`
 --
 
@@ -1782,30 +1819,21 @@ CREATE TABLE `workcentres` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `worksorders`
+-- Table structure for table `workorders`
 --
 
-CREATE TABLE `worksorders` (
-  `woref` char(20) NOT NULL default '',
+CREATE TABLE `workorders` (
+  `wo` int(11) NOT NULL,
   `loccode` char(5) NOT NULL default '',
-  `unitsreqd` smallint(6) NOT NULL default '1',
-  `unitsrecd` double NOT NULL default '0',
-  `stockid` char(20) NOT NULL default '',
-  `stdcost` decimal(20,4) NOT NULL default '0.0000',
   `requiredby` date NOT NULL default '0000-00-00',
-  `releaseddate` date NOT NULL default '1800-01-01',
-  `accumvalueissued` decimal(20,4) NOT NULL default '0.0000',
-  `accumvaluetrfd` decimal(20,4) NOT NULL default '0.0000',
+  `startdate` date NOT NULL default '0000-00-00',
+  `costissued` double NOT NULL default '0',
   `closed` tinyint(4) NOT NULL default '0',
-  `released` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`woref`),
-  KEY `StockID` (`stockid`),
+  PRIMARY KEY  (`wo`),
   KEY `LocCode` (`loccode`),
-  KEY `ReleasedDate` (`releaseddate`),
+  KEY `StartDate` (`startdate`),
   KEY `RequiredBy` (`requiredby`),
-  KEY `WORef` (`woref`,`loccode`),
-  CONSTRAINT `worksorders_ibfk_1` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
-  CONSTRAINT `worksorders_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
+  CONSTRAINT `worksorders_ibfk_1` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1829,6 +1857,7 @@ CREATE TABLE `www_users` (
   `displayrecordsmax` int(11) NOT NULL default '0',
   `theme` varchar(30) NOT NULL default 'fresh',
   `language` varchar(5) NOT NULL default 'en_GB',
+  `salesmancode` char(3) NOT NULL default '',
   PRIMARY KEY  (`userid`),
   KEY `CustomerID` (`customerid`),
   KEY `DefaultLocation` (`defaultlocation`),
@@ -2033,7 +2062,7 @@ INSERT INTO `chartmaster` VALUES (9100,'Income Tax Provision','Income Tax');
 -- Dumping data for table `companies`
 --
 
-INSERT INTO `companies` VALUES (1,'Demo System\'s Inc','not entered yet','','PO Box 1000','The White House','Washnington DC','USA','','','','','info@weberp.org','USD',1100,4900,2100,2400,2150,4200,5200,3500,1,1,1,5600);
+INSERT INTO `companies` VALUES (1,'webERP\'s Demo Company Inc','not entered yet','','123 Web Way','PO Box 123','Queen Street','Melbourne','Victoria 3043','Australia','+61 3 4567 8901','+61 3 4567 8902','weberp@weberpdemo.com','AUD',1100,4900,2100,2400,2150,4200,5200,3500,1,1,1,5600);
 
 --
 -- Dumping data for table `cogsglpostings`
@@ -2046,6 +2075,7 @@ INSERT INTO `cogsglpostings` VALUES (3,'AN','ANY',5000,'AN');
 --
 
 INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',1.7);
+INSERT INTO `currencies` VALUES ('Swiss Francs','CHF','Swizerland','centimes',1);
 INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',0.8);
 INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',1);
 
@@ -2061,8 +2091,8 @@ INSERT INTO `holdreasons` VALUES (51,'In liquidation',1);
 -- Dumping data for table `locations`
 --
 
-INSERT INTO `locations` VALUES ('DEN','Denver','532-536 Wentworth Street','Denver','Colorado','','','','233 5532 216','233 5532 215','g.bovert@weberp.com','Graham Bouvert',1,0);
-INSERT INTO `locations` VALUES ('TOR','Toronto Distribution Centre','Level 100 ','CN Tower','Toronto','','','','','','','Clive Contrary',1,1);
+INSERT INTO `locations` VALUES ('MEL','Melbourne','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','+61 3 56789012','+61 3 56789013','jacko@webdemo.com','Jack Roberts',1,0);
+INSERT INTO `locations` VALUES ('TOR','Toronto','Level 100 ','CN Tower','Toronto','','','','','','','Clive Contrary',1,1);
 
 --
 -- Dumping data for table `paymentterms`
@@ -2088,22 +2118,22 @@ INSERT INTO `systypes` VALUES (0,'Journal - GL',2);
 INSERT INTO `systypes` VALUES (1,'Payment - GL',1);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',10);
-INSERT INTO `systypes` VALUES (11,'Credit Note',5);
-INSERT INTO `systypes` VALUES (12,'Receipt',3);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',0);
+INSERT INTO `systypes` VALUES (11,'Credit Note',0);
+INSERT INTO `systypes` VALUES (12,'Receipt',0);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',5);
-INSERT INTO `systypes` VALUES (17,'Stock Adjustment',8);
+INSERT INTO `systypes` VALUES (17,'Stock Adjustment',16);
 INSERT INTO `systypes` VALUES (18,'Purchase Order',0);
 INSERT INTO `systypes` VALUES (20,'Purchase Invoice',17);
 INSERT INTO `systypes` VALUES (21,'Debit Note',3);
-INSERT INTO `systypes` VALUES (22,'Creditors Payment',3);
+INSERT INTO `systypes` VALUES (22,'Creditors Payment',4);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
-INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',15);
+INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',17);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',0);
-INSERT INTO `systypes` VALUES (28,'Work Order Issue',0);
+INSERT INTO `systypes` VALUES (28,'Work Order Issue',1);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',0);
-INSERT INTO `systypes` VALUES (30,'Sales Order',0);
+INSERT INTO `systypes` VALUES (30,'Sales Order',3);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',26);
 INSERT INTO `systypes` VALUES (35,'Cost Update',2);
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
@@ -2166,7 +2196,7 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','DEN',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_US');
+INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','MEL',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'silverwolf','en_GB','');
 
 --
 -- Dumping data for table `edi_orders_segs`
@@ -2318,20 +2348,21 @@ INSERT INTO `edi_orders_seg_groups` VALUES (50,1,0);
 INSERT INTO `config` VALUES ('AllowOrderLineItemNarrative','0');
 INSERT INTO `config` VALUES ('AllowSalesOfZeroCostItems','0');
 INSERT INTO `config` VALUES ('AutoDebtorNo','0');
-INSERT INTO `config` VALUES ('CheckCreditLimits','0');
+INSERT INTO `config` VALUES ('AutoIssue','1');
+INSERT INTO `config` VALUES ('CheckCreditLimits','1');
 INSERT INTO `config` VALUES ('Check_Price_Charged_vs_Order_Price','1');
 INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
-INSERT INTO `config` VALUES ('CountryOfOperation','USD');
+INSERT INTO `config` VALUES ('CountryOfOperation','AUD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
-INSERT INTO `config` VALUES ('DB_Maintenance','0');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2006-07-10');
+INSERT INTO `config` VALUES ('DB_Maintenance','30');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2007-06-13');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
 INSERT INTO `config` VALUES ('DefaultDisplayRecordsMax','50');
 INSERT INTO `config` VALUES ('DefaultPriceList','DE');
 INSERT INTO `config` VALUES ('DefaultTaxCategory','1');
-INSERT INTO `config` VALUES ('DefaultTheme','fresh');
+INSERT INTO `config` VALUES ('DefaultTheme','silverwolf');
 INSERT INTO `config` VALUES ('Default_Shipper','1');
 INSERT INTO `config` VALUES ('DispatchCutOffTime','14');
 INSERT INTO `config` VALUES ('DoFreightCalc','0');
@@ -2343,7 +2374,7 @@ INSERT INTO `config` VALUES ('EDI_MsgSent','companies/weberp/EDI_Sent');
 INSERT INTO `config` VALUES ('FreightChargeAppliesIfLessThan','1000');
 INSERT INTO `config` VALUES ('FreightTaxCategory','1');
 INSERT INTO `config` VALUES ('HTTPS_Only','0');
-INSERT INTO `config` VALUES ('InvoicePortraitFormat','0');
+INSERT INTO `config` VALUES ('InvoicePortraitFormat','1');
 INSERT INTO `config` VALUES ('MaxImageSize','300');
 INSERT INTO `config` VALUES ('NumberOfPeriodsOfStockUsage','12');
 INSERT INTO `config` VALUES ('OverChargeProportion','30');
@@ -2355,7 +2386,7 @@ INSERT INTO `config` VALUES ('PastDueDays1','30');
 INSERT INTO `config` VALUES ('PastDueDays2','60');
 INSERT INTO `config` VALUES ('PO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('ProhibitJournalsToControlAccounts','1');
-INSERT INTO `config` VALUES ('ProhibitPostingsBefore','2005-09-30');
+INSERT INTO `config` VALUES ('ProhibitPostingsBefore','2007-06-30');
 INSERT INTO `config` VALUES ('QuickEntries','10');
 INSERT INTO `config` VALUES ('RadioBeaconFileCounter','/home/RadioBeacon/FileCounter');
 INSERT INTO `config` VALUES ('RadioBeaconFTP_user_name','RadioBeacon ftp server user name');
@@ -2371,7 +2402,7 @@ INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','Tax Ref');
 INSERT INTO `config` VALUES ('vtiger_integration','0');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','1');
-INSERT INTO `config` VALUES ('WikiApp','WackoWiki');
+INSERT INTO `config` VALUES ('WikiApp','Disabled');
 INSERT INTO `config` VALUES ('WikiPath','wiki');
 INSERT INTO `config` VALUES ('YearEnd','3');
 

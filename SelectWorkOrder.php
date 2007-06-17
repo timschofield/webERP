@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 2;
 
@@ -301,6 +301,7 @@ If (isset($StockItemsResult)) {
 				<TD class='tableheader'>" . _('Modify') . "</TD>
 				<TD class='tableheader'>" . _('Receive') . "</TD>
 				<TD class='tableheader'>" . _('Issue To') . "</TD>
+				<TD class='tableheader'>" . _('Costing') . "</TD>
 				<TD class='tableheader'>" . _('Item') . "</TD>
 				<TD class='tableheader'>" . _('Quantity Required') . "</TD>
 				<TD class='tableheader'>" . _('Quantity Received') . "</TD>
@@ -325,6 +326,7 @@ If (isset($StockItemsResult)) {
 		$ModifyPage = $rootpath . "/WorkOrderEntry.php?" . SID . '&WO=' . $myrow['wo'];
 		$Receive_WO = $rootpath . '/WorkOrderReceive.php?' . SID . '&WO=' .$myrow['wo'] . '&StockID=' . $myrow['stockid'];
 		$Issue_WO = $rootpath . '/WorkOrderIssue.php?' . SID . '&WO=' .$myrow['wo'] . '&StockID=' . $myrow['stockid'];
+		$Costing_WO =$rootpath . '/WorkOrderCosting.php?' . SID . '&WO=' .$myrow['wo'];
 
 		$FormatedRequiredByDate = ConvertSQLDate($myrow['requiredby']);
 
@@ -332,6 +334,7 @@ If (isset($StockItemsResult)) {
 		printf("<td><A HREF='%s'>%s</A></td>
 				<td><A HREF='%s'>" . _('Receive') . "</A></td>
 				<td><A HREF='%s'>" . _('Issue To') . "</A></td>
+				<td><A HREF='%s'>" . _('Costing') . "</A></td>
 				<td>%s - %s</td>
 				<td align=right>%s</td>
 				<td align=right>%s</td>
@@ -342,6 +345,7 @@ If (isset($StockItemsResult)) {
 				$myrow['wo'],
 				$Receive_WO,
 				$Issue_WO,
+				$Costing_WO,
 				$myrow['stockid'],
 				$myrow['description'],
 				$myrow['qtyreqd'],
