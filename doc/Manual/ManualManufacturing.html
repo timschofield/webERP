@@ -29,13 +29,13 @@ When the "Create GL entries for stock transactions (at standard cost)" option in
 <br><br>
 The Work Order is the medium for issuing components/raw materials to. A running total of the costs issued to the work order is maintained. Work orders can be created that have any number of output items. Output items are restricted to only "manufactured" items as defined in the item entry form. The work order tracks the quantity of the output items received against the work order and checks that no more than the work order quantity originally set up, with an allowance including the over-receive proportion as defined for purchase orders, is received.
 <br><br>
-
-<font size="+1"><b>Status Description</b></font>
+Setting up a work order is performed from the Manufacuting tab -> transaction entry -> Work Order Entry. The work order number is automatically maintained and defaulted for new work orders as is the start date defaulted to the date the work order was created. Other data required includes:
+<ul>
+<li>Factory location - this is the inventory location which is used to retrieve the bill of materials for the items being manufactured on the work order - it is possible to have different bills of material for the same item depending on the inventory location. This inventory location is also used as the default location where materials for the work order are issued from and the default location where manufactured items are received into. It is possible to modify this during the issuing and receive processes.</li>
+<li>Required By - this is the date when the manufacturing must be completed by</li>
+</ul>
+With the above information completed then the items to be manufactured on the work order need to be selected. Normally this should just be a single item but it is possible to have multiple outputs against a single work order which is useful for by-products or processes with several output products. There are search facilities in the work order entry screen - only items flagged as manufactured in the item definition screen (Stocks.php) will show for selection. For each item selected the quantity required defaults to the EOQ - (Economic Order Quantity) defined in the item definition (Stocks.php) screen. If no EOQ is defined for th item then the quantity defaults to 0 and must be entered manually. The quantity required can be over-ridden and changed at any stage.
 <br><br>
-This field is used in look ups both in the customers amendment/entry and also in the customer selection screen. This is a text field up to 30 characters long.
-<br><br>
-<font size="+1"><b>Disallow Invoices</b></font>
-<br><br>
-For all credit ratings set up, this field indicates whether or not the rating is serious enough to prohibit future invoicing to customers set up with this credit rating.
+The quantity received of the item is maintained automatically against the work order items. The balance of the work order yet to be manufactured and received shows as "on order" in the stock status inquiry. Similarly the quantity required of components as extended by the bill of material for work order items is shown as quantity demanded against component items stock status inquiries.
 
 <!-- Help End: Manufacturing -->

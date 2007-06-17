@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity = 11;
 
@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
 		} else {
 			$_POST['Managed'] = 0;
 		}
-		
+
 		/*SelectedLocation is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Location form */
 
 		$sql = "INSERT INTO locations (
@@ -174,26 +174,26 @@ if (isset($_POST['submit'])) {
 	$DispTaxProvincesResult = DB_query('SELECT taxprovinceid FROM locations',$db);
 	$TaxCatsResult = DB_query('SELECT taxcatid FROM taxcategories',$db);
 	if (DB_num_rows($TaxCatsResult) > 0 ) { // This will only work if there are levels else we get an error on seek.
-		
+
 		while ($myrow=DB_fetch_row($DispTaxProvincesResult)){
 			/*Check to see there are TaxAuthRates records set up for this TaxProvince */
 			$NoTaxRates = DB_query('SELECT taxauthority FROM taxauthrates WHERE dispatchtaxprovince=' . $myrow[0], $db);
-	
+
 			if (DB_num_rows($NoTaxRates) < $NoTaxAuths[0]){
-	
+
 				/*First off delete any tax authoritylevels already existing */
 				$DelTaxAuths = DB_query('DELETE FROM taxauthrates WHERE dispatchtaxprovince=' . $myrow[0],$db);
-	
+
 				/*Now add the new TaxAuthRates required */
 				while ($CatRow = DB_fetch_row($TaxCatsResult)){
-					$sql = 'INSERT INTO taxauthrates (taxauthority, 
-										dispatchtaxprovince, 
-										taxcatid) 
+					$sql = 'INSERT INTO taxauthrates (taxauthority,
+										dispatchtaxprovince,
+										taxcatid)
 							SELECT taxid,
-								' . $myrow[0] . ', 
-								' . $CatRow[0] . ' 
+								' . $myrow[0] . ',
+								' . $CatRow[0] . '
 							FROM taxauthorities';
-	
+
 					$InsTaxAuthRates = DB_query($sql,$db);
 				}
 				DB_data_seek($TaxCatsResult,0);
@@ -223,7 +223,7 @@ if (isset($_POST['submit'])) {
 			$CancelDelete = 1;
 			prnMsg( _('Cannot delete this location because stock movements have been created using this location'),'warn');
 			echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('stock movements with this Location code');
-	
+
 		} else {
 			$sql= "SELECT COUNT(*) FROM locstock WHERE locstock.loccode='$SelectedLocation' AND locstock.quantity !=0";
 			$result = DB_query($sql,$db);
@@ -257,13 +257,22 @@ if (isset($_POST['submit'])) {
 							prnMsg( _('Cannot delete this location because it is used by some work centre records'),'warn');
 							echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('works centres using this location');
 						} else {
-							$sql= "SELECT COUNT(*) FROM custbranch WHERE custbranch.defaultlocation='$SelectedLocation'";
+							$sql= "SELECT COUNT(*) FROM workorders WHERE workorders.loccode='$SelectedLocation'";
 							$result = DB_query($sql,$db);
 							$myrow = DB_fetch_row($result);
 							if ($myrow[0]>0) {
 								$CancelDelete = 1;
-								prnMsg(_('Cannot delete this location because it is used by some branch records as the default location to deliver from'),'warn');
-								echo '<BR> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches set up to use this location by default');
+								prnMsg( _('Cannot delete this location because it is used by some work order records'),'warn');
+								echo '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('work orders using this location');
+							}else {
+								$sql= "SELECT COUNT(*) FROM custbranch WHERE custbranch.defaultlocation='$SelectedLocation'";
+								$result = DB_query($sql,$db);
+								$myrow = DB_fetch_row($result);
+								if ($myrow[0]>0) {
+									$CancelDelete = 1;
+									prnMsg(_('Cannot delete this location because it is used by some branch records as the default location to deliver from'),'warn');
+									echo '<BR> ' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches set up to use this location by default');
+								}
 							}
 						}
 					}
@@ -302,11 +311,11 @@ or deletion of the records*/
 
 	$sql = "SELECT loccode,
 			locationname,
-			taxprovinces.taxprovincename as description, 
+			taxprovinces.taxprovincename as description,
 			managed
 		FROM locations INNER JOIN taxprovinces ON locations.taxprovinceid=taxprovinces.taxprovinceid";
 	$result = DB_query($sql,$db);
-	
+
 	if (DB_num_rows($result)==0){
 		prnMsg (_('There are no locations that match up with a tax province record to display. Check that tax provinces are set up for all dispatch locations'),'error');
 	}
@@ -333,7 +342,7 @@ while ($myrow = DB_fetch_array($result)) {
 	}  else {
 		$myrow['managed'] = _('No');
 	}
-	
+
 	printf("<TD>%s</TD>
 		<TD>%s</TD>
 		<TD>%s</TD>
@@ -413,7 +422,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['Email'] = $myrow['email'];
 		$_POST['TaxProvince'] = $myrow['taxprovinceid'];
 		$_POST['Managed'] = $myrow['managed'];
-		
+
 
 		echo "<INPUT TYPE=HIDDEN NAME=SelectedLocation VALUE=" . $SelectedLocation . '>';
 		echo "<INPUT TYPE=HIDDEN NAME=LocCode VALUE=" . $_POST['LocCode'] . '>';
