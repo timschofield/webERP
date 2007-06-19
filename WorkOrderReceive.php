@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity = 11;
 
@@ -146,22 +146,22 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 											AND parentstockid='" . DB_escape_string($_POST['StockID']) . "'",
 											$db);
 			$InsWORequirments = DB_query("INSERT INTO worequirements (wo,
-												parentstockid,
-												stockid,
-												qtypu,
-												stdcost,
-												autoissue)
-											SELECT " . $_POST['WO'] . ",
-												bom.parent,
-												bom.component,
-												bom.quantity,
-												materialcost+labourcost+overheadcost,
-												bom.autoissue
-											FROM bom INNER JOIN stockmaster
-											ON bom.component=stockmaster.stockid
-											WHERE parent='" . DB_escape_string($_POST['StockID']) . "'
-											AND loccode ='" . DB_escape_string($WORow['loccode']) . "'",
-									 $db);
+										parentstockid,
+										stockid,
+										qtypu,
+										stdcost,
+										autoissue)
+									SELECT " . $_POST['WO'] . ",
+										bom.parent,
+										bom.component,
+										bom.quantity,
+										materialcost+labourcost+overheadcost,
+										bom.autoissue
+									FROM bom INNER JOIN stockmaster
+									ON bom.component=stockmaster.stockid
+									WHERE parent='" . DB_escape_string($_POST['StockID']) . "'
+									AND loccode ='" . DB_escape_string($WORow['loccode']) . "'",
+								$db);
 
 			//Need to check this against the current standard cost and do a cost update if necessary
 

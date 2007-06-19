@@ -24,7 +24,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 	}
 		
 	$ScriptFileEntries = sizeof($SQLScriptFile);
-	$ErrMsg = _('The script to create upgrade the database failed because');
+	$ErrMsg = _('The script to upgrade the database failed because');
 	$SQL ='';
 	$InAFunction = false;
 	

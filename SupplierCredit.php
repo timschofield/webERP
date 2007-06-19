@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 /*This page is very largely the same as the SupplierInvoice.php script
 the same result could have been acheived by using if statements in that script and just having the one
@@ -527,7 +527,7 @@ then do the updates and inserts to process the credit note entered */
 				$SQL = 'INSERT INTO gltrans (type,
 								typeno,
 								trandate,
-								periodo,
+								periodno,
 								account,
 								narrative,
 								amount)
@@ -619,7 +619,7 @@ then do the updates and inserts to process the credit note entered */
 					/*then its a purchase order item on a shipment - whole charge amount to GRN suspense pending closure of the shipment	when the variance is calculated and the GRN act cleared up for the shipment */
 
 					$SQL = 'INSERT INTO gltrans (type,
-									typeNo,
+									typeno,
 									trandate,
 									periodno,
 									account,
@@ -695,7 +695,7 @@ then do the updates and inserts to process the credit note entered */
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction for the control total could not be added because');
 			$DbgMsg = _('The following SQL to insert the GL transaction was used');
-			$Result = DB_query($SQL, $db, $ErrMSg, $DbgMsg, True);
+			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 
 		} /*Thats the end of the GL postings */
 

@@ -1,5 +1,4 @@
-CREATE DATABASE weberp;
-USE weberp;
+
 SET FOREIGN_KEY_CHECKS = 0;
 -- MySQL dump 10.9
 --
@@ -1476,13 +1475,13 @@ CREATE TABLE `stockmoves` (
   KEY `DebtorNo` (`debtorno`),
   KEY `LocCode` (`loccode`),
   KEY `Prd` (`prd`),
-  KEY `StockID` (`stockid`,`loccode`),
   KEY `StockID_2` (`stockid`),
   KEY `TranDate` (`trandate`),
   KEY `TransNo` (`transno`),
   KEY `Type` (`type`),
   KEY `Show_On_Inv_Crds` (`show_on_inv_crds`),
   KEY `Hide` (`hidemovt`),
+  KEY `reference` (`reference`),
   CONSTRAINT `stockmoves_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
   CONSTRAINT `stockmoves_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `stockmoves_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
@@ -2709,6 +2708,20 @@ INSERT INTO `edi_orders_segs` VALUES (95,'UNT',50,1);
 
 INSERT INTO `gltrans` VALUES (3,26,1,0,'2007-06-14',2,1460,'3 DVD-DHWV x 2 @ 5.25',10.5,1,'');
 INSERT INTO `gltrans` VALUES (4,26,1,0,'2007-06-14',2,1460,'3 DVD-DHWV x 2 @ 5.25',-10.5,1,'');
+INSERT INTO `gltrans` VALUES (5,28,2,0,'2007-06-18',2,1460,'3 DVD-TOPGUN x 1 @ 6.50',6.5,1,'');
+INSERT INTO `gltrans` VALUES (6,28,2,0,'2007-06-18',2,1460,'3 DVD-TOPGUN x 1 @ 6.50',-6.5,1,'');
+INSERT INTO `gltrans` VALUES (7,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION Component: DVD-DHWV - 10 x 1 @ 5.25',52.5,1,'');
+INSERT INTO `gltrans` VALUES (8,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION -> DVD-DHWV - 10 x 1 @ 5.25',-52.5,1,'');
+INSERT INTO `gltrans` VALUES (9,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION Component: DVD-LTWP - 10 x 1 @ 2.85',28.5,1,'');
+INSERT INTO `gltrans` VALUES (10,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION -> DVD-LTWP - 10 x 1 @ 2.85',-28.5,1,'');
+INSERT INTO `gltrans` VALUES (11,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION Component: DVD-UNSG - 10 x 1 @ 5.00',50,1,'');
+INSERT INTO `gltrans` VALUES (12,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION -> DVD-UNSG - 10 x 1 @ 5.00',-50,1,'');
+INSERT INTO `gltrans` VALUES (13,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION Component: DVD-UNSG2 - 10 x 1 @ 5.00',50,1,'');
+INSERT INTO `gltrans` VALUES (14,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION -> DVD-UNSG2 - 10 x 1 @ 5.00',-50,1,'');
+INSERT INTO `gltrans` VALUES (15,26,2,0,'2007-06-18',2,1460,'3 DVD_ACTION - Action Series Bundle x 10 @ 18.40',184,1,'');
+INSERT INTO `gltrans` VALUES (16,26,2,0,'2007-06-18',2,1460,'3 DVD_ACTION - Action Series Bundle x 10 @ 18.40',-184,1,'');
+INSERT INTO `gltrans` VALUES (17,29,1,0,'2007-06-18',2,1460,'3 - DVD_ACTION share of variance',5,1,'');
+INSERT INTO `gltrans` VALUES (18,29,1,0,'2007-06-18',2,1460,'3 - DVD_ACTION share of variance',-5,1,'');
 
 --
 -- Dumping data for table `grns`
@@ -2740,11 +2753,12 @@ INSERT INTO `locations` VALUES ('TOR','Toronto','Level 100 ','CN Tower','Toronto
 --
 
 INSERT INTO `locstock` VALUES ('MEL','DVD-CASE',0,0);
-INSERT INTO `locstock` VALUES ('MEL','DVD-DHWV',-2,0);
-INSERT INTO `locstock` VALUES ('MEL','DVD-LTWP',0,0);
-INSERT INTO `locstock` VALUES ('MEL','DVD-UNSG',0,0);
-INSERT INTO `locstock` VALUES ('MEL','DVD-UNSG2',0,0);
-INSERT INTO `locstock` VALUES ('MEL','DVD_ACTION',0,0);
+INSERT INTO `locstock` VALUES ('MEL','DVD-DHWV',-12,0);
+INSERT INTO `locstock` VALUES ('MEL','DVD-LTWP',-10,0);
+INSERT INTO `locstock` VALUES ('MEL','DVD-TOPGUN',-1,0);
+INSERT INTO `locstock` VALUES ('MEL','DVD-UNSG',-10,0);
+INSERT INTO `locstock` VALUES ('MEL','DVD-UNSG2',-10,0);
+INSERT INTO `locstock` VALUES ('MEL','DVD_ACTION',10,0);
 INSERT INTO `locstock` VALUES ('MEL','FUJI990101',0,0);
 INSERT INTO `locstock` VALUES ('MEL','FUJI990102',0,0);
 INSERT INTO `locstock` VALUES ('MEL','FUJI9901ASS',0,0);
@@ -2753,6 +2767,7 @@ INSERT INTO `locstock` VALUES ('MEL','HIT3043-5',0,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-CASE',0,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-DHWV',0,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-LTWP',0,0);
+INSERT INTO `locstock` VALUES ('TOR','DVD-TOPGUN',0,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-UNSG',0,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-UNSG2',0,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD_ACTION',0,0);
@@ -3424,7 +3439,7 @@ INSERT INTO `shippers` VALUES (10,'Not Specified',0);
 --
 
 INSERT INTO `stockcategory` VALUES ('AIRCON','Air Conditioning','F',1460,5700,5200,5100,1440);
-INSERT INTO `stockcategory` VALUES ('DVD','DVDs','F',1460,5700,5000,5200,1460);
+INSERT INTO `stockcategory` VALUES ('DVD','DVDs','F',1460,5700,5000,5200,1440);
 INSERT INTO `stockcategory` VALUES ('SERV','InstallationServices','D',1010,1,1,1,1010);
 INSERT INTO `stockcategory` VALUES ('TTT','TTT Units','F',1460,5700,5900,5700,1440);
 
@@ -3445,9 +3460,10 @@ INSERT INTO `stockcategory` VALUES ('TTT','TTT Units','F',1460,5700,5900,5700,14
 INSERT INTO `stockmaster` VALUES ('DVD-CASE','DVD','webERP Demo DVD Case','webERP Demo DVD Case','each','B','1800-01-01','0.0000','0.0000','0.3000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,1,0,'');
 INSERT INTO `stockmaster` VALUES ('DVD-DHWV','DVD','Die Hard With A Vengeance Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). <br />Languages: English, Deutsch. <br />Subtitles: English, Deutsch, Spanish. <br />Audio: Dolby Surround 5.1. <br />Picture Format: 16:9 Wide-Screen. <br />Length: (approx) 122 minutes. <br />Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','0.0000','5.2500','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,0,'');
 INSERT INTO `stockmaster` VALUES ('DVD-LTWP','DVD','Lethal Weapon Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r\n<br />\r\nLanguages: English, Deutsch.\r\n<br />\r\nSubtitles: English, Deutsch, Spanish.\r\n<br />\r\nAudio: Dolby Surround 5.1.\r\n<br />\r\nPicture Format: 16:9 Wide-Screen.\r\n<br />\r\nLength: (approx) 100 minutes.\r\n<br />\r\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','0.0000','2.8500','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,0,'');
+INSERT INTO `stockmaster` VALUES ('DVD-TOPGUN','DVD','Top Gun DVD','Top Gun DVD','each','B','1800-01-01','0.0000','0.0000','6.5000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,0,'');
 INSERT INTO `stockmaster` VALUES ('DVD-UNSG','DVD','Under Siege Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). <br />Languages: English, Deutsch. <br />Subtitles: English, Deutsch, Spanish. <br />Audio: Dolby Surround 5.1. <br />Picture Format: 16:9 Wide-Screen. <br />Length: (approx) 98 minutes. <br />Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','0.0000','5.0000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,0,'');
 INSERT INTO `stockmaster` VALUES ('DVD-UNSG2','DVD','Under Siege 2 - Dark Territory','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r<br />\nLanguages: English, Deutsch.\r<br />\nSubtitles: English, Deutsch, Spanish.\r<br />\nAudio: Dolby Surround 5.1.\r<br />\nPicture Format: 16:9 Wide-Screen.\r<br />\nLength: (approx) 98 minutes.\r<br />\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','0.0000','5.0000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,0,'');
-INSERT INTO `stockmaster` VALUES ('DVD_ACTION','DVD','Action Series Bundle','Under Seige I and Under Seige II\r\n','each','M','1800-01-01','0.0000','0.0000','0.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,0,'');
+INSERT INTO `stockmaster` VALUES ('DVD_ACTION','DVD','Action Series Bundle','Under Seige I and Under Seige II\r\n','each','M','1800-01-01','0.0000','0.0000','19.3000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,0,'');
 INSERT INTO `stockmaster` VALUES ('FUJI990101','AIRCON','Fujitsu 990101 Split type Indoor Unit 3.5kw','Fujitsu 990101 Split type Indoor Unit 3.5kw Heat Pump with mounting screws and isolating switch','each','B','1800-01-01','0.0000','995.7138','1015.6105','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,4,'');
 INSERT INTO `stockmaster` VALUES ('FUJI990102','AIRCON','Fujitsu 990102 split type A/C Outdoor unit 3.5kw','Fujitsu 990102 split type A/C Outdoor unit 3.5kw with 5m piping & insulation','each','B','1800-01-01','0.0000','0.0000','633.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,0,'');
 INSERT INTO `stockmaster` VALUES ('FUJI9901ASS','AIRCON','Fujitsu 990101 Split type A/C 3.5kw complete','Fujitsu 990101 Split type A/C 3.5kw complete with indoor and outdoor units 5m pipe and insulation isolating switch. 5 year warranty','each','A','1800-01-01','0.0000','0.0000','0.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,0,'');
@@ -3459,6 +3475,12 @@ INSERT INTO `stockmaster` VALUES ('HIT3043-5','AIRCON','Hitachi Aircond Rev Cycl
 --
 
 INSERT INTO `stockmoves` VALUES (2,'DVD-DHWV',28,1,'MEL','2007-06-14','','','5.2500',2,'3',-2,0,5.25,1,-2,0,NULL);
+INSERT INTO `stockmoves` VALUES (3,'DVD-TOPGUN',28,2,'MEL','2007-06-18','','','6.5000',2,'3',-1,0,6.5,1,-1,0,NULL);
+INSERT INTO `stockmoves` VALUES (4,'DVD-DHWV',28,3,'MEL','2007-06-18','','','0.0000',2,'3',-10,0,5.25,1,-12,0,NULL);
+INSERT INTO `stockmoves` VALUES (5,'DVD-LTWP',28,3,'MEL','2007-06-18','','','0.0000',2,'3',-10,0,2.85,1,-10,0,NULL);
+INSERT INTO `stockmoves` VALUES (6,'DVD-UNSG',28,3,'MEL','2007-06-18','','','0.0000',2,'3',-10,0,5,1,-10,0,NULL);
+INSERT INTO `stockmoves` VALUES (7,'DVD-UNSG2',28,3,'MEL','2007-06-18','','','0.0000',2,'3',-10,0,5,1,-10,0,NULL);
+INSERT INTO `stockmoves` VALUES (8,'DVD_ACTION',26,2,'MEL','2007-06-18','','','18.4000',2,'3',10,0,18.4,1,10,0,NULL);
 
 --
 -- Dumping data for table `stockmovestaxes`
@@ -3469,11 +3491,13 @@ INSERT INTO `stockmoves` VALUES (2,'DVD-DHWV',28,1,'MEL','2007-06-14','','','5.2
 -- Dumping data for table `stockserialitems`
 --
 
+INSERT INTO `stockserialitems` VALUES ('DVD-TOPGUN','MEL','23',-1);
 
 --
 -- Dumping data for table `stockserialmoves`
 --
 
+INSERT INTO `stockserialmoves` VALUES (1,3,'DVD-TOPGUN','23',1);
 
 --
 -- Dumping data for table `suppallocs`
@@ -3526,9 +3550,9 @@ INSERT INTO `systypes` VALUES (21,'Debit Note',3);
 INSERT INTO `systypes` VALUES (22,'Creditors Payment',4);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
 INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',17);
-INSERT INTO `systypes` VALUES (26,'Work Order Receipt',0);
-INSERT INTO `systypes` VALUES (28,'Work Order Issue',1);
-INSERT INTO `systypes` VALUES (29,'Work Order Variance',0);
+INSERT INTO `systypes` VALUES (26,'Work Order Receipt',2);
+INSERT INTO `systypes` VALUES (28,'Work Order Issue',3);
+INSERT INTO `systypes` VALUES (29,'Work Order Variance',1);
 INSERT INTO `systypes` VALUES (30,'Sales Order',3);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',26);
 INSERT INTO `systypes` VALUES (35,'Cost Update',2);
@@ -3613,7 +3637,7 @@ INSERT INTO `unitsofmeasure` VALUES (6,'pack');
 -- Dumping data for table `woitems`
 --
 
-INSERT INTO `woitems` VALUES (3,'DVD_ACTION',10,0,18.4,'');
+INSERT INTO `woitems` VALUES (3,'DVD_ACTION',10,10,18.4,'');
 
 --
 -- Dumping data for table `worequirements`
@@ -3635,7 +3659,7 @@ INSERT INTO `workcentres` VALUES ('ASS','TOR','Assembly',1,'50',560000,'0');
 -- Dumping data for table `workorders`
 --
 
-INSERT INTO `workorders` VALUES (3,'MEL','2007-06-13','2007-06-13',10.5,0);
+INSERT INTO `workorders` VALUES (3,'MEL','2007-06-13','2007-06-13',198,1);
 
 --
 -- Dumping data for table `www_users`

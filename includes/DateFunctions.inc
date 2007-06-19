@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 /*
 date validation and parsing functions
@@ -544,7 +544,7 @@ Function GetPeriod ($TransDate, &$db) {
 if the date entered is out of range monthly periods are inserted as necessary and
 the correct, newly inserted period returned
 
-Dates are parsed using the DefaultDateFormat string */
+Dates are parsed using the $_SESSION['DefaultDateFormat'] string */
 
 	if (strpos($TransDate,'/')){
 		$Date_array = explode('/', $TransDate);

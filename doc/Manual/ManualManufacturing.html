@@ -38,4 +38,12 @@ With the above information completed then the items to be manufactured on the wo
 <br><br>
 The quantity received of the item is maintained automatically against the work order items. The balance of the work order yet to be manufactured and received shows as "on order" in the stock status inquiry. Similarly the quantity required of components as extended by the bill of material for work order items is shown as quantity demanded against component items stock status inquiries.
 
+<font size="+1"><b>Closing Work Orders</b></font>
+<br><br>
+The selection of work orders allows the costing to be viewed. The work order costing shows all the issues of materials and components against the work order as compared against the bill of material requirments - as they were when the first reciept of manufactured stock was received against the work order. The variances on the work order in terms of the usage of components and the expected cost of materials/components issued to the work order are displayed. Closing the work order takes these variances and if general ledger integration to inventory is enabled then journals are created to write back the work in progress balance. Of course if there are several manufactured output items on the work order then the variances are apportioned between the items based on the quantity of the item received multipled by the expected cost as a proportion of the total expected cost of all items received on the work order. The detail of how the postings created depends on whether weighted average costing is used or standard costing.
+<ul>
+<li><b>Standard Costing:</b> Under standard costing the entire variances are taken to the profit and loss account.  The usage variance is taken to the general ledger account specified in the manufactured item's stock category record. The cost variance is taken to the item's purchase price variance account on the stock category record.</li>
+<li><b>Weighted Average Costing:</b> If not all the stock manufactured on the work order remains on hand - perhaps some is sold - then the variance relating to the proportion that is left on hand is taken to the value of stock e.g. a negative variance increases the value of stock. A stock cost adjustment is also created (irrespective of whether the GL integration is enabled).
+
+
 <!-- Help End: Manufacturing -->

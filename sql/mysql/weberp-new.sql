@@ -1474,13 +1474,13 @@ CREATE TABLE `stockmoves` (
   KEY `DebtorNo` (`debtorno`),
   KEY `LocCode` (`loccode`),
   KEY `Prd` (`prd`),
-  KEY `StockID` (`stockid`,`loccode`),
   KEY `StockID_2` (`stockid`),
   KEY `TranDate` (`trandate`),
   KEY `TransNo` (`transno`),
   KEY `Type` (`type`),
   KEY `Show_On_Inv_Crds` (`show_on_inv_crds`),
   KEY `Hide` (`hidemovt`),
+  KEY `reference` (`reference`),
   CONSTRAINT `stockmoves_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
   CONSTRAINT `stockmoves_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `stockmoves_ibfk_3` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`),
@@ -2130,9 +2130,9 @@ INSERT INTO `systypes` VALUES (21,'Debit Note',3);
 INSERT INTO `systypes` VALUES (22,'Creditors Payment',4);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
 INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',17);
-INSERT INTO `systypes` VALUES (26,'Work Order Receipt',0);
-INSERT INTO `systypes` VALUES (28,'Work Order Issue',1);
-INSERT INTO `systypes` VALUES (29,'Work Order Variance',0);
+INSERT INTO `systypes` VALUES (26,'Work Order Receipt',2);
+INSERT INTO `systypes` VALUES (28,'Work Order Issue',3);
+INSERT INTO `systypes` VALUES (29,'Work Order Variance',1);
 INSERT INTO `systypes` VALUES (30,'Sales Order',3);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',26);
 INSERT INTO `systypes` VALUES (35,'Cost Update',2);
