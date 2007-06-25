@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 $PageSecurity = 2;
 
@@ -34,29 +34,17 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		$msg=_('Customer code has been used in preference to the customer phone entered') . '.';
 	}
 	If (($_POST['Keywords']=="") AND ($_POST['CustCode']=="") AND ($_POST['CustPhone']=="")) {
-		//$msg=_('At least one Customer Name keyword OR an extract of a Customer Code or Customer Phone must be entered for the search');
-		if ($_SESSION['SalesmanLogin']==''){
-			$SQL= "SELECT debtorsmaster.debtorno,
-					debtorsmaster.name,
-					custbranch.brname,
-					custbranch.contactname,
-					custbranch.phoneno,
-					custbranch.faxno
-				FROM debtorsmaster LEFT JOIN custbranch
-					ON debtorsmaster.debtorno = custbranch.debtorno
-					ORDER BY debtorsmaster.debtorno";
-		} else {
-			$SQL= "SELECT debtorsmaster.debtorno,
-					debtorsmaster.name,
-					custbranch.brname,
-					custbranch.contactname,
-					custbranch.phoneno,
-					custbranch.faxno
-				FROM debtorsmaster LEFT JOIN custbranch
-					ON debtorsmaster.debtorno = custbranch.debtorno
-				WHERE custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'
-					ORDER BY debtorsmaster.debtorno";
-		}
+			
+		$SQL= "SELECT debtorsmaster.debtorno,
+				debtorsmaster.name,
+				custbranch.brname,
+				custbranch.contactname,
+				custbranch.phoneno,
+				custbranch.faxno
+			FROM debtorsmaster LEFT JOIN custbranch
+				ON debtorsmaster.debtorno = custbranch.debtorno
+			ORDER BY debtorsmaster.debtorno";
+		
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 
@@ -72,86 +60,42 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 				$i=strpos($_POST['Keywords']," ",$i) +1;
 			}
 			$SearchString = $SearchString . substr($_POST['Keywords'],$i)."%";
-			if ($_SESSION['SalesmanLogin']==''){
+	
 				$SQL = "SELECT debtorsmaster.debtorno,
-					debtorsmaster.name,
-					custbranch.brname,
-					custbranch.contactname,
-					custbranch.phoneno,
-					custbranch.faxno
-				FROM debtorsmaster LEFT JOIN custbranch
-					ON debtorsmaster.debtorno = custbranch.debtorno
-				WHERE debtorsmaster.name " . LIKE . " '$SearchString'
-				ORDER BY debtorsmaster.debtorno";
-			} else {
-					$SQL = "SELECT debtorsmaster.debtorno,
-					debtorsmaster.name,
-					custbranch.brname,
-					custbranch.contactname,
-					custbranch.phoneno,
-					custbranch.faxno
-				FROM debtorsmaster LEFT JOIN custbranch
-					ON debtorsmaster.debtorno = custbranch.debtorno
-				WHERE debtorsmaster.name " . LIKE . " '$SearchString'
-				AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'
-				ORDER BY debtorsmaster.debtorno";
-
-			}
+				debtorsmaster.name,
+				custbranch.brname,
+				custbranch.contactname,
+				custbranch.phoneno,
+				custbranch.faxno
+			FROM debtorsmaster LEFT JOIN custbranch
+				ON debtorsmaster.debtorno = custbranch.debtorno
+			WHERE debtorsmaster.name " . LIKE . " '$SearchString'
+			ORDER BY debtorsmaster.debtorno";
 
 		} elseif (strlen($_POST['CustCode'])>0){
 
 			$_POST['CustCode'] = strtoupper(trim($_POST['CustCode']));
-			if ($_SESSION['SalesmanLogin']==''){
 				$SQL = "SELECT debtorsmaster.debtorno,
-					debtorsmaster.name,
-					custbranch.brname,
-					custbranch.contactname,
-					custbranch.phoneno,
-					custbranch.faxno
-				FROM debtorsmaster LEFT JOIN custbranch
-					ON debtorsmaster.debtorno = custbranch.debtorno
-				WHERE debtorsmaster.debtorno " . LIKE  . " '%" . $_POST['CustCode'] . "%'
-				ORDER BY debtorsmaster.debtorno";
-			} else {
-					$SQL = "SELECT debtorsmaster.debtorno,
-					debtorsmaster.name,
-					custbranch.brname,
-					custbranch.contactname,
-					custbranch.phoneno,
-					custbranch.faxno
-				FROM debtorsmaster LEFT JOIN custbranch
-					ON debtorsmaster.debtorno = custbranch.debtorno
-				WHERE debtorsmaster.debtorno " . LIKE  . " '%" . $_POST['CustCode'] . "%'
-				AND  custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'
-				ORDER BY debtorsmaster.debtorno";
-			}
+				debtorsmaster.name,
+				custbranch.brname,
+				custbranch.contactname,
+				custbranch.phoneno,
+				custbranch.faxno
+			FROM debtorsmaster LEFT JOIN custbranch
+				ON debtorsmaster.debtorno = custbranch.debtorno
+			WHERE debtorsmaster.debtorno " . LIKE  . " '%" . $_POST['CustCode'] . "%'
+			ORDER BY debtorsmaster.debtorno";
 		} elseif (strlen($_POST['CustPhone'])>0){
-			if ($_SESSION['SalesmanLogin']==''){
-				$SQL = "SELECT debtorsmaster.debtorno,
-					debtorsmaster.name,
-					custbranch.brname,
-					custbranch.contactname,
-					custbranch.phoneno,
-					custbranch.faxno
-				FROM debtorsmaster LEFT JOIN custbranch
-					ON debtorsmaster.debtorno = custbranch.debtorno
-				WHERE custbranch.phoneno " . LIKE  . " '%" . $_POST['CustPhone'] . "%'
-				ORDER BY custbranch.debtorno";
-			} else {
-				$SQL = "SELECT debtorsmaster.debtorno,
-					debtorsmaster.name,
-					custbranch.brname,
-					custbranch.contactname,
-					custbranch.phoneno,
-					custbranch.faxno
-				FROM debtorsmaster LEFT JOIN custbranch
-					ON debtorsmaster.debtorno = custbranch.debtorno
-				WHERE custbranch.phoneno " . LIKE  . " '%" . $_POST['CustPhone'] . "%'
-				AND  custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'
-				ORDER BY custbranch.debtorno";
-
-
-			}
+			$SQL = "SELECT debtorsmaster.debtorno,
+				debtorsmaster.name,
+				custbranch.brname,
+				custbranch.contactname,
+				custbranch.phoneno,
+				custbranch.faxno
+			FROM debtorsmaster LEFT JOIN custbranch
+				ON debtorsmaster.debtorno = custbranch.debtorno
+			WHERE custbranch.phoneno " . LIKE  . " '%" . $_POST['CustPhone'] . "%'
+			ORDER BY custbranch.debtorno";
 		}
 	} //one of keywords or custcode or custphone was more than a zero length string
 	$ErrMsg = _('The searched customer records requested cannot be retrieved because');
@@ -285,9 +229,8 @@ if (isset($_POST['CustPhone'])) {
 </TD>
 </TR>
 </TABLE>
-<INPUT TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Show All'); ?>">
 <INPUT TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Search Now'); ?>">
-<INPUT TYPE=SUBMIT ACTION=RESET VALUE="<?php echo _('Reset'); ?>"></CENTER>
+</CENTER>
 
 
 <?php

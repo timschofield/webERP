@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.51 $ */
+/* $Revision: 1.52 $ */
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -65,8 +65,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 				www_users.theme,
 				www_users.displayrecordsmax,
 				www_users.userid,
-				www_users.language,
-				www_users.salesmancode
+				www_users.language
 			FROM www_users
 			WHERE www_users.userid='" . DB_escape_string($_POST['UserNameEntryField']) . "'
 			AND (www_users.password='" . CryptPass(DB_escape_string($_POST['Password'])) . "'
@@ -93,8 +92,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 			$_SESSION['Theme'] = $myrow[9];
 			$_SESSION['UserID'] = $myrow[11];
 			$_SESSION['Language'] = $myrow[12];
-			$_SESSION['SalesmanLogin'] = $myrow[13];
-
+			
 			if ($myrow[10] > 0) {
 				$_SESSION['DisplayRecordsMax'] = $myrow[10];
 			} else {

@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 11;
 
@@ -149,10 +149,10 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 
 	/* Update location stock records - NB  a PO cannot be entered for a dummy/assembly/kit parts */
 	/*Need to get the current location quantity will need it later for the stock movement */
-		$SQL="SELECT locstock.quantity
+		$SQL="SELECT quantity
 			FROM locstock
-			WHERE locstock.stockid='" . $GRN['itemcode'] . "'
-			AND locstock.loccode= '" . $GRN['intostocklocation'] . "'";
+			WHERE stockid='" . $GRN['itemcode'] . "'
+			AND loccode= '" . $GRN['intostocklocation'] . "'";
 			
 		$Result = DB_query($SQL, $db, _('Could not get the quantity on hand of the item before the reversal was processed'),_('The SQL that failed was'),true);
 		if (DB_num_rows($Result)==1){
@@ -164,9 +164,9 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 		}
 
 		$SQL = "UPDATE locstock
-			SET locstock.quantity = locstock.quantity - " . $QtyToReverse . "
-			WHERE locstock.stockid = '" . $GRN['itemcode'] . "'
-			AND locstock.loccode = '" . $GRN['intostocklocation'] . "'";
+			SET quantity = quantity - " . $QtyToReverse . "
+			WHERE stockid = '" . $GRN['itemcode'] . "'
+			AND loccode = '" . $GRN['intostocklocation'] . "'";
 
   		$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
 		$DbgMsg = _('The following SQL to update the location stock record was used');

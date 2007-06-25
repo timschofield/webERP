@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity = 2;
 
@@ -33,10 +33,6 @@ If (isset($_POST['Select'])) { /*User has hit the button selecting a supplier */
 
 
 if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])){
-
-	if (isset($_POST['SearchNow'])){
-		$_POST['PageOffset'] = 1;
-	}
 
 	If ($_POST['Keywords'] AND $_POST['SupplierCode']) {
 		$msg='<BR>' . _('Supplier name keywords have been used in preference to the Supplier code extract entered');
@@ -204,7 +200,6 @@ echo "</TD>
 </TR>
 </TABLE>
 <CENTER>
-<INPUT TYPE=SUBMIT NAME='Search' VALUE='" . _('Show All') . "'>
 <INPUT TYPE=SUBMIT NAME='Search' VALUE='" . _('Search Now') . "'>
 </CENTER>";
 

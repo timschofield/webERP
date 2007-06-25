@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 11;
 
@@ -326,7 +326,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 		$SQL='COMMIT';
 		$Result = DB_query($SQL,$db);
 
-		prnMsg(_('The issue of') . ' ' . $QuantityIssued . ' ' . _('of')  . $_POST['IssueItem'] . ' ' . _('against work order') . ' '. $_POST['WO'] . ' ' . _('has been processed'),'info');
+		prnMsg(_('The issue of') . ' ' . $QuantityIssued . ' ' . _('of')  . ' ' . $_POST['IssueItem'] . ' ' . _('against work order') . ' '. $_POST['WO'] . ' ' . _('has been processed'),'info');
 		echo "<A HREF='$rootpath/SelectWorkOrder.php?" . SID . "'>" . _('Select a different work order for issuing materials and components against'). '</A>';
 		unset($_POST['WO']);
 		unset($_POST['StockID']);
@@ -551,10 +551,16 @@ echo '</td></tr>
 
 if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 	//set up options for selection of the item to be issued to the WO
-	echo '<tr><td colspan=2 class="tableheader">' . _('Material Requirements For this Work Order') . '</td></tr>';
+	echo '<tr><td colspan=5 class="tableheader">' . _('Material Requirements For this Work Order') . '</td></tr>';
+	echo '<tr><td colspan=2 class="tableheader">' . _('Item') . '</td>
+		<td class="tableheader">' . _('Qty Required') . '</td>
+		<td class="tableheader">' . _('Qty Issued') . '</td></tr>';
+
 	$RequirmentsResult = DB_query("SELECT worequirements.stockid,
 						stockmaster.description,
-						autoissue
+						stockmaster.decimalplaces,
+						autoissue,
+						qtypu
 					FROM worequirements INNER JOIN stockmaster
 					ON worequirements.stockid=stockmaster.stockid
 					WHERE wo=" . $_POST['WO'],
@@ -563,10 +569,19 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 	while ($RequirementsRow = DB_fetch_array($RequirmentsResult)){
 		if ($RequirementsRow['autoissue']==0){
 			echo '<tr><td><input type="submit" name="IssueItem" value="' .$RequirementsRow['stockid'] . '"></td>
-			<td>' . $RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description'] . '</td></tr>';
+			<td>' . $RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description'] . '</td>';
 		} else {
-			echo '<tr><td class="notavailable">' . _('Auto Issue') . '<td class="notavailable">' .$RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description'] .'</td></tr>';
+			echo '<tr><td class="notavailable">' . _('Auto Issue') . '<td class="notavailable">' .$RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description'] .'</td>';
 		}
+		$IssuedAlreadyResult = DB_query("SELECT SUM(-qty) FROM stockmoves
+							WHERE stockmoves.type=28
+							AND stockid='" . $RequirementsRow['stockid'] . "'
+							AND reference='" . DB_escape_string($_POST['WO']) . "'",
+						$db);
+		$IssuedAlreadyRow = DB_fetch_row($IssuedAlreadyResult);
+		
+		echo '<td align="right">' . number_format($WORow['qtyreqd']*$RequirementsRow['qtypu'],$RequirementsRow['decimalplaces']) . '</td>
+			<td align="right">' . number_format($IssuedAlreadyRow[0],$RequirementsRow['decimalplaces']) . '</td></tr>';
 	}
 
 	echo '</table>';

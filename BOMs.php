@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity = 9;
 
@@ -9,23 +9,25 @@ $title = _('Multi-Level Bill Of Materials Maintenance');
 
 include('includes/header.inc');
 
-// *** POPAD&T - didn't work though had to rewrite ... Phil
+// *** POPAD&T -  ... Phil modified to english variables
 function display_children($parent, $level, &$BOMTree) {
 
 	global $db;
+	global $i;
+	
 	// retrive all children of parent
 	$c_result = DB_query("SELECT parent,
 					component
 				FROM bom WHERE parent='" . $parent. "'"
 				 ,$db);
 	if (DB_num_rows($c_result) > 0) {
-		echo ("<UL>\n");
-		// display each child
-		$i =0;
+		//echo ("<UL>\n");
+		
+		
 		while ($row = DB_fetch_array($c_result)) {
-			if (!($parent == $row['component'])) {
+			//echo '<BR>Parent: ' . $parent . ' Level: ' . $level . ' row[component]: ' . $row['component'] .'<BR>';
+			if ($parent != $row['component']) {
 				// indent and display the title of this child
-				$ID1 = $row["component"];
 				$BOMTree[$i]['Level'] = $level; 		// Level
 				if ($level > 15) {
 					prnMsg(_('A maximum of 15 levels of bill of materials only can be displayed'),'error');
@@ -176,6 +178,9 @@ if (isset($_GET['SelectedParent'])){
 }else if (isset($_POST['SelectedParent'])){
 	$SelectedParent = $_POST['SelectedParent'];
 }
+
+
+
 /* SelectedComponent could also come from a post or a get */
 if (isset($_GET['SelectedComponent'])){
 	$SelectedComponent = $_GET['SelectedComponent'];
@@ -327,12 +332,15 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		prnMsg(_('The component part') . ' - ' . $SelectedComponent . ' - ' . _('has been deleted from this BOM'),'success');
 		// Now reselect
 
-	} elseif (isset($SelectedParent) AND !isset($SelectedComponent) AND ! isset($_POST['submit'])) {
+	} elseif (isset($SelectedParent) 
+		AND !isset($SelectedComponent) 
+		AND ! isset($_POST['submit'])) {
 
 	/* It could still be the second time the page has been run and a record has been selected	for modification - SelectedParent will exist because it was sent with the new call. If		its the first time the page has been displayed with no parameters then none of the above		are true and the list of components will be displayed with links to delete or edit each.		These will call the same page again and allow update/input or deletion of the records*/
 		//DisplayBOMItems($SelectedParent, $db);
 
 	} //BOM editing/insertion ifs
+
 
 	if(isset($_GET['ReSelect'])) {
 		$SelectedParent = $_GET['ReSelect'];
@@ -377,7 +385,9 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 ?>
 <?php
 	// Display Manufatured Parent Items
-	$sql = "SELECT bom.parent, stockmaster.description, stockmaster.mbflag
+	$sql = "SELECT bom.parent, 
+			stockmaster.description, 
+			stockmaster.mbflag
 		FROM bom, stockmaster
 		WHERE bom.component='".$SelectedParent."'
 		AND stockmaster.stockid=bom.parent
@@ -444,7 +454,9 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 <?php // *** POPAD&T
 	$BOMTree = array();
-	//has three elements - Level, Parent, Component
+	//BOMTree is a 2 dimensional array with three elements for each item in the array - Level, Parent, Component
+	//display children populates the BOM_Tree from the selected parent
+	$i =0;
 	display_children($SelectedParent, 1, $BOMTree);
 
 	$TableHeader =  '<tr>

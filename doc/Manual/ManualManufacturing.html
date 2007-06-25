@@ -3,7 +3,9 @@
 <br><br>
 <a name="Manufacturing"><font size="+3"><b>Manufacturing</b></font></a>
 <br><br>
-Manufacturing - simply the combination of items to make other items can be implemented effective from webERP version 3.06 an on.
+<font size="+1"><b>Overview</b></font>
+<br><br>
+Manufacturing - simply the combination of items to make other items can be implemented effective from webERP version 3.06.
 <br>It has been possible to build bills of material for manufactured items for some time but the functionality that allows the materials to be issued from stock and manufactured items received into stock was introduced with 3.06. This is the purpose of the work order.
 <br><br>
 Bills of material now allow components to be defined as "auto-issue". Components set up to auto-issue, automatically create the issue transactions against the work order based on the bill of material quantities on the entry of receipts of a finished item against the work order. This decreases the administration of work orders for those components with relatively low value and limited possibility for any usage variance. It is not recommended that this feature be used on components where the final requirement for it could vary with for example yield differences between work orders. Work orders take the value of components and materials issued and divide this total cost between the output items to arrive at a cost per unit for all output items. The process for performing this calculation is called "closing" the work order.
@@ -37,7 +39,7 @@ Setting up a work order is performed from the Manufacuting tab -> transaction en
 With the above information completed then the items to be manufactured on the work order need to be selected. Normally this should just be a single item but it is possible to have multiple outputs against a single work order which is useful for by-products or processes with several output products. There are search facilities in the work order entry screen - only items flagged as manufactured in the item definition screen (Stocks.php) will show for selection. For each item selected the quantity required defaults to the EOQ - (Economic Order Quantity) defined in the item definition (Stocks.php) screen. If no EOQ is defined for th item then the quantity defaults to 0 and must be entered manually. The quantity required can be over-ridden and changed at any stage.
 <br><br>
 The quantity received of the item is maintained automatically against the work order items. The balance of the work order yet to be manufactured and received shows as "on order" in the stock status inquiry. Similarly the quantity required of components as extended by the bill of material for work order items is shown as quantity demanded against component items stock status inquiries.
-
+<br><br>
 <font size="+1"><b>Closing Work Orders</b></font>
 <br><br>
 The selection of work orders allows the costing to be viewed. The work order costing shows all the issues of materials and components against the work order as compared against the bill of material requirments - as they were when the first reciept of manufactured stock was received against the work order. The variances on the work order in terms of the usage of components and the expected cost of materials/components issued to the work order are displayed. Closing the work order takes these variances and if general ledger integration to inventory is enabled then journals are created to write back the work in progress balance. Of course if there are several manufactured output items on the work order then the variances are apportioned between the items based on the quantity of the item received multipled by the expected cost as a proportion of the total expected cost of all items received on the work order. The detail of how the postings created depends on whether weighted average costing is used or standard costing.
