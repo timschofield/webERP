@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 /* Script to delete all supplier payments entered or created from a payment run on a specified day
  */
@@ -15,45 +15,45 @@ if (isset($_POST['RevPayts']) AND Is_Date($_POST['PaytDate'])==1){
 
 	$SQLTranDate = FormatDateForSQL($_POST['PaytDate']);
 
-	$SQL = "SELECT TransNo,
-			SupplierNo,
-			OvAmount,
-			SuppReference,
-			Rate
-		FROM SuppTrans
-		WHERE Type = 22
-		AND TranDate = '" . $SQLTranDate . "'";
+	$SQL = "SELECT transno,
+			supplierno,
+			ovamount,
+			suppreference,
+			rate
+		FROM supptrans
+		WHERE type = 22
+		AND trandate = '" . $SQLTranDate . "'";
 
 	$Result = DB_query($SQL,$db);
 	prnMsg(_('The number of payments that will be deleted is') . ' :' . DB_num_rows($Result),'info');
 
 	while ($Payment = DB_fetch_array($Result)){
-		prnMsg(_('Deleting payment number') . ' ' . $Payment['TransNo'] . ' ' . _('to supplier code') . ' ' . $Payment['SupplierNo'] . ' ' . _('for an amount of') . ' ' . $Payment['OvAmount'],'info');
+		prnMsg(_('Deleting payment number') . ' ' . $Payment['transno'] . ' ' . _('to supplier code') . ' ' . $Payment['supplierno'] . ' ' . _('for an amount of') . ' ' . $Payment['ovamount'],'info');
 
-		$SQL = 'DELETE FROM SuppTrans
-			WHERE Type=22
-			AND TransNo=' . $Payment['TransNo'] . "
-			AND TranDate='" . $SQLTranDate . "'";
+		$SQL = 'DELETE FROM supptrans
+			WHERE type=22
+			AND transno=' . $Payment['transno'] . "
+			AND trandate='" . $SQLTranDate . "'";
 
 		$DelResult = DB_query($SQL,$db);
 		prnMsg(_('Deleted the SuppTran record'),'success');
 
 
-		$SQL = "SELECT TransNo,
-				TypeNo,
-				Amt
-			FROM SuppAllocs
-			WHERE PaytNo = " .  $Payment['TransNo'] . '
-			AND PaytTypeNo=22';
+		$SQL = "SELECT transno,
+				typeno,
+				amt
+			FROM suppallocs
+			WHERE paytno = " .  $Payment['transno'] . '
+			AND payttypeno=22';
 
 		$AllocsResult = DB_query($SQL,$db);
 		while ($Alloc = DB_fetch_array($AllocsResult)){
 
-			$SQL= 'UPDATE SuppTrans SET Settled=0,
-							Alloc=Alloc-' . $Alloc['Amt'] . ',
-							DiffOnExch = DiffOnExch - ((' . $Alloc['Amt'] . '/Rate ) - ' . $Alloc['Amt']/$Payment['Rate'] . ')
-				WHERE Type=' . $Alloc['TypeNo'] . '
-				AND TransNo=' . $Alloc['TransNo'];
+			$SQL= 'UPDATE supptrans SET settled=0,
+							alloc=alloc-' . $Alloc['amt'] . ',
+							diffonexch = diffonexch - ((' . $Alloc['Amt'] . '/rate ) - ' . $Alloc['amt']/$Payment['rate'] . ')
+				WHERE type=' . $Alloc['typeno'] . '
+				AND transno=' . $Alloc['transno'];
 
 			$ErrMsg =_('The update to the suppliers charges that were settled by the payment failed because');
 			$UpdResult = DB_query($SQL,$db,$ErrMsg);
@@ -61,20 +61,19 @@ if (isset($_POST['RevPayts']) AND Is_Date($_POST['PaytDate'])==1){
 		}
 
 		prnMsg(' ... ' . _('reversed the allocations'),'info');
-		$SQL= 'Delete FROM SuppAllocs W
-			HERE PaytNo=' . $Payment['TransNo'] . '
-			AND PaytTypeNo=22';
+		$SQL= 'DELETE FROM suppallocs WHERE paytno=' . $Payment['transno'] . '
+			AND payttypeno=22';
 		$DelResult = DB_query($SQL,$db);
 		prnMsg(' ... ' . _('deleted the SuppAllocs records'),'info');
 
-		$SQL= 'Delete FROM GLTrans WHERE TypeNo=' . $Payment['TransNo'] . ' AND Type=22';
+		$SQL= 'DELETE FROM gltrans WHERE typeno=' . $Payment['transno'] . ' AND type=22';
 		$DelResult = DB_query($SQL,$db);
 		prnMsg(' .... ' . _('the GLTrans records (if any)'),'info');
 
-		$SQL= "Delete FROM BankTrans
-				WHERE Ref='" . $Payment['SuppReference'] . ' ' . $Payment['SupplierNo'] . "'
-				AND Amount=" . $Payment['OvAmount'] . "
-				AND TransDate = '" . $SQLTranDate . "'";
+		$SQL= "DELETE FROM banktrans
+				WHERE ref='" . $Payment['suppreference'] . ' ' . $Payment['supplierno'] . "'
+				AND amount=" . $Payment['ovamount'] . "
+				AND transdate = '" . $SQLTranDate . "'";
 		$DelResult = DB_query($SQL,$db);
 		prnMsg(' .... ' . _('and the BankTrans record'),'info');
 
