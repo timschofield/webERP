@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 2;
 
@@ -15,10 +15,10 @@ include('includes/header.inc');
 
 if (isset($_GET['FromGRNNo'])){
 
-	$SQL= "SELECT purchorderdetails.orderno  
+	$SQL= "SELECT purchorderdetails.orderno
 		FROM purchorderdetails,
 			grns
-		WHERE purchorderdetails.podetailitem=grns.podetailitem 
+		WHERE purchorderdetails.podetailitem=grns.podetailitem
 		AND grns.grnno=" . $_GET['FromGRNNo'];
 
 	$ErrMsg = _('The search of the GRNs was unsucessful') . ' - ' . _('the SQL statement returned the error');
@@ -43,11 +43,11 @@ if (!isset($_GET['OrderNo'])) {
 }
 
 $ErrMsg = _('The order requested could not be retrieved') . ' - ' . _('the SQL returned the following error');
-$OrderHeaderSQL = "SELECT purchorders.*, 
-			suppliers.supplierid, 
-			suppliers.suppname, 
+$OrderHeaderSQL = "SELECT purchorders.*,
+			suppliers.supplierid,
+			suppliers.suppname,
 			suppliers.currcode
-		FROM purchorders, 
+		FROM purchorders,
 			suppliers
 		WHERE purchorders.supplierno = suppliers.supplierid
 		AND purchorders.orderno = " . $_GET['OrderNo'];
@@ -80,7 +80,7 @@ echo '<TR><TD class="tableheader">' . _('Supplier Code'). '</TD><TD>' . $myrow['
 	<TD class="tableheader">' . _('Supplier Name'). '</TD><TD>' . $myrow['suppname'] . '</TD></TR>';
 
 echo '<TR><TD class="tableheader">' . _('Ordered On'). '</TD><TD>' . ConvertSQLDate($myrow['orddate']) . '</TD>
-	<TD class="tableheader">' . _('Delivery Address 1'). '</TD><TD>' . $$myrow['deladd1'] . '</TD></TR>';
+	<TD class="tableheader">' . _('Delivery Address 1'). '</TD><TD>' . $myrow['deladd1'] . '</TD></TR>';
 
 echo '<TR><TD class="tableheader">' . _('Order Currency'). '</TD><TD>' . $myrow['currcode'] . '</TD>
 	<TD class="tableheader">' . _('Delivery Address 2'). '</TD><TD>' . $myrow['deladd2'] . '</TD></TR>';

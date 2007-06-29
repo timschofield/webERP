@@ -1,12 +1,9 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity =1;
-
-include('config.php');
+include('includes/session.inc');
 include('includes/PDFStarter.php');
-include('includes/ConnectDB.inc');
-include('includes/DateFunctions.inc');
 $title = _('Negative Stock Listing Error');
 
 $FontSize=10;

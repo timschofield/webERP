@@ -1,15 +1,12 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 2;
+include('includes/session.inc');
 
 if (isset($_POST['PrintPDF'])){
 
-	include('config.php');
 	include('includes/PDFStarter.php');
-	include('includes/ConnectDB.inc');
-	include('includes/DateFunctions.inc');
-
 
 	if ($_POST['Activity']!='All'){
 		if (!is_numeric($_POST['ActivityAmount'])){
@@ -381,7 +378,6 @@ if (isset($_POST['PrintPDF'])){
 
 } else {
 
-	include('includes/session.inc');
 	$title = _('Customer Details Listing');
 	include('includes/header.inc');
 

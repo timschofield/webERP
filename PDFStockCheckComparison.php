@@ -1,14 +1,13 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $PageSecurity = 2;
+include('includes/session.inc');
 
 If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
-	include('config.php');
 	include('includes/PDFStarter.php');
-	include('includes/ConnectDB.inc');
 	include('includes/SQL_CommonFunctions.inc');
-	include('includes/DateFunctions.inc');
+
 
 /*First off do the Inventory Comparison file stuff */
 	if ($_POST['ReportOrClose']=='ReportAndClose'){
@@ -188,8 +187,8 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 				ON stockcheckfreeze.loccode=locations.loccode
 			INNER JOIN stockcategory
 				ON stockmaster.categoryid=stockcategory.categoryid
-			ORDER BY stockcheckfreeze.loccode, 
-				stockmaster.categoryid, 
+			ORDER BY stockcheckfreeze.loccode,
+				stockmaster.categoryid,
 				stockcheckfreeze.stockid";
 
 	$CheckedItems = DB_query($sql,$db, $ErrMsg, $DbgMsg);
@@ -340,7 +339,6 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 } else { /*The option to print PDF was not hit */
 
-	include('includes/session.inc');
 	$title= _('Inventory Comparison Comparison Report');
 	include('includes/header.inc');
 

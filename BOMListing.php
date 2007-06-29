@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -10,9 +10,7 @@ If (isset($_POST['PrintPDF'])
 	AND isset($_POST['ToCriteria'])
 	AND strlen($_POST['ToCriteria'])>=1){
 
-	
 	include('includes/PDFStarter.php');
-	
 
 	$FontSize=12;
 	$pdf->addinfo('Title',_('Bill Of Material Listing'));

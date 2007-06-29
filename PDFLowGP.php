@@ -1,30 +1,28 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
-include('config.php');
+$PageSecurity = 2;
+include('includes/session.inc');
 
 if (!isset($_POST['FromCat'])  OR $_POST['FromCat']=='') {
 	$title=_('Low Gross Profit Sales');
 }
 
-$PageSecurity = 2;
-
 if (isset($_POST['PrintPDF'])) {
-	
+
 	include('includes/PDFStarter.php');
-	include('includes/ConnectDB.inc');
-	include('includes/DateFunctions.inc');
-	
+
+
 	$title = _('Low GP sales') . ' - ' . _('Problem Report');
-	
+
 	if (! Is_Date($_POST['FromDate']) OR ! Is_Date($_POST['ToDate'])){
 		include('includes/header.inc');
 		prnMsg(_('The dates entered must be in the format') . ' '  . $_SESSION['DefaultDateFormat'],'error');
 		include('includes/footer.inc');
 		exit;
 	}
-	
+
 	$FontSize=10;
 	$pdf->addinfo('Title',_('Low Gross Profit Sales'));
 	$pdf->addinfo('Subject',_('Low Gross Profit Sales'));
@@ -33,31 +31,31 @@ if (isset($_POST['PrintPDF'])) {
 	$line_height=12;
 
       /*Now figure out the data to report for the category range under review */
-	$SQL = "SELECT stockmaster.categoryid, 
-                       stockmaster.stockid, 
-                       stockmoves.transno, 
-                       stockmoves.trandate, 
-                       systypes.typename, 
-                       stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost as unitcost, 
-                       stockmoves.qty, 
-                       stockmoves.debtorno, 
-                       stockmoves.branchcode, 
-                       stockmoves.price*(1-stockmoves.discountpercent) as sellingprice, 
-                       (stockmoves.price*(1-stockmoves.discountpercent)) - (stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS gp 
-                FROM stockmaster, 
+	$SQL = "SELECT stockmaster.categoryid,
+                       stockmaster.stockid,
+                       stockmoves.transno,
+                       stockmoves.trandate,
+                       systypes.typename,
+                       stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost as unitcost,
+                       stockmoves.qty,
+                       stockmoves.debtorno,
+                       stockmoves.branchcode,
+                       stockmoves.price*(1-stockmoves.discountpercent) as sellingprice,
+                       (stockmoves.price*(1-stockmoves.discountpercent)) - (stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS gp
+                FROM stockmaster,
                        stockmoves,
-                       systypes 
-                WHERE stockmoves.type=systypes.typeid 
-                AND stockmaster.stockid=stockmoves.stockid 
-                AND stockmoves.trandate >= '" . FormatDateForSQL($_POST['FromDate']) . "' 
-                AND stockmoves.trandate <= '" . FormatDateForSQL($_POST['ToDate']) . "' 
-                AND ((stockmoves.price*(1-stockmoves.discountpercent)) - (stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost))/(stockmoves.price*(1-stockmoves.discountpercent)) <=" . ($_POST['GPMin']/100) . " 
+                       systypes
+                WHERE stockmoves.type=systypes.typeid
+                AND stockmaster.stockid=stockmoves.stockid
+                AND stockmoves.trandate >= '" . FormatDateForSQL($_POST['FromDate']) . "'
+                AND stockmoves.trandate <= '" . FormatDateForSQL($_POST['ToDate']) . "'
+                AND ((stockmoves.price*(1-stockmoves.discountpercent)) - (stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost))/(stockmoves.price*(1-stockmoves.discountpercent)) <=" . ($_POST['GPMin']/100) . "
                 ORDER BY stockmaster.stockid";
 
 	$LowGPSalesResult = DB_query($SQL,$db,'','',false,false);
 
 	if (DB_error_no($db) !=0) {
-	  
+
 	  include('includes/header.inc');
 	   prnMsg(_('The low GP items could not be retrieved by the SQL because') . ' - ' . DB_error_msg($db),'error');
 	   echo "<BR><A HREF='" .$rootpath ."/index.php?" . SID . "'>" . _('Back to the menu') . '</A>';
@@ -125,9 +123,8 @@ if (isset($_POST['PrintPDF'])) {
 	}
 } else { /*The option to print PDF was not hit */
 
-	include('includes/session.inc');
 	include('includes/header.inc');
-	
+
 	if (strlen($_POST['FromDate'])<1 OR strlen($_POST['ToDate'])<1) {
 
 	/*if $FromDate is not set then show a form to allow input */

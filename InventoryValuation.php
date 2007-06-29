@@ -1,6 +1,7 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 $PageSecurity = 2;
+include('includes/session.inc');
 
 If (isset($_POST['PrintPDF'])
 	AND isset($_POST['FromCriteria'])
@@ -8,9 +9,8 @@ If (isset($_POST['PrintPDF'])
 	AND isset($_POST['ToCriteria'])
 	AND strlen($_POST['ToCriteria'])>=1){
 
-	include('config.php');
+
 	include('includes/PDFStarter.php');
-	include('includes/ConnectDB.inc');
 
 	$FontSize=9;
 	$pdf->addinfo('Title',_('Inventory Valuation Report'));
@@ -78,12 +78,12 @@ If (isset($_POST['PrintPDF'])
 	}
 
 	include ('includes/PDFInventoryValnPageHeader.inc');
-	
+
         $Tot_Val=0;
 	$Category = '';
 	$CatTot_Val=0;
         $CatTot_Qty=0;
-        
+
 	While ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
 
 		if ($Category!=$InventoryValn['categoryid']){
@@ -135,7 +135,7 @@ If (isset($_POST['PrintPDF'])
 		$Tot_Val += $InventoryValn['itemtotal'];
 		$CatTot_Val += $InventoryValn['itemtotal'];
                 $CatTot_Qty += $InventoryValn['qtyonhand'];
-                
+
 		if ($YPos < $Bottom_Margin + $line_height){
 		   include('includes/PDFInventoryValnPageHeader.inc');
 		}
@@ -158,7 +158,7 @@ If (isset($_POST['PrintPDF'])
 		$YPos -= ($line_height);
 		$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
 	}
-	
+
 	$YPos -= (2*$line_height);
 
 	if ($YPos < $Bottom_Margin + $line_height){
@@ -168,7 +168,7 @@ If (isset($_POST['PrintPDF'])
 	$LeftOvers = $pdf->addTextWrap(80,$YPos,260-$Left_Margin,$FontSize,_('Grand Total Value'), 'right');
 	$DisplayTotalVal = number_format($Tot_Val,2);
         $LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
-	
+
 	$pdfcode = $pdf->output();
 	$len = strlen($pdfcode);
 
@@ -192,7 +192,6 @@ If (isset($_POST['PrintPDF'])
 	}
 } else { /*The option to print PDF was not hit */
 
-	include('includes/session.inc');
 	$title=_('Inventory Valuation Reporting');
 	include('includes/header.inc');
 

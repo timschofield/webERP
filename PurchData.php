@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 4;
 
@@ -172,7 +172,7 @@ if (!isset($_GET['Edit'])){
 			purchdata.supplierdescription,
 			purchdata.leadtime,
 			purchdata.preferred
-			FROM purchdata INNER JOIN suppliers 
+			FROM purchdata INNER JOIN suppliers
 				ON purchdata.supplierno=suppliers.supplierid
 			WHERE purchdata.stockid = '" . $StockID . "'";
 
@@ -224,7 +224,7 @@ if (!isset($_GET['Edit'])){
 		<TD><A HREF='%s?%s&StockID=%s&SupplierID=%s&Delete=1' onclick=\"return confirm('" . _('Are you sure you wish to delete this suppliers price?') . "');\">" . _('Delete') . "</a></TD>
 		</tr>",
 		$myrow['suppname'],
-		number_format($myrow['price'],2),
+		number_format($myrow['price'],3),
 		$myrow['currcode'],
 		$myrow['suppliersuom'],
 		$myrow['leadtime'],
@@ -271,7 +271,7 @@ if (isset($_GET['Edit'])){
 				purchdata.leadtime,
 				purchdata.conversionfactor,
 				purchdata.preferred
-		FROM purchdata INNER JOIN suppliers 
+		FROM purchdata INNER JOIN suppliers
 			ON purchdata.supplierno=suppliers.supplierid
 		WHERE purchdata.supplierno='$SupplierID'
 		AND purchdata.stockid='$StockID'";

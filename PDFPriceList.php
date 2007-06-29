@@ -1,7 +1,8 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 2;
+include('includes/session.inc');
 
 If (isset($_POST['PrintPDF'])
 	AND isset($_POST['FromCriteria'])
@@ -9,9 +10,7 @@ If (isset($_POST['PrintPDF'])
 	AND isset($_POST['ToCriteria'])
 		 AND strlen($_POST['ToCriteria'])>=1){
 
-	include('config.php');
 	include('includes/PDFStarter.php');
-	include('includes/ConnectDB.inc');
 
 	$FontSize=10;
 	$pdf->addinfo('Title', _('Price Listing Report') );
@@ -24,6 +23,7 @@ If (isset($_POST['PrintPDF'])
 	if ($_POST['CustomerSpecials']==_('Customer Special Prices Only')){
 
 		if ($_SESSION['CustomerID']==''){
+			$title = _('Special price List - No Customer Selected');
 			include('includes/header.inc');
 			echo '<BR>';
 			prnMsg( _('The customer must first be selected from the select customer link') . '. ' . _('Re-run the price list once the customer has been selected') );
@@ -31,9 +31,9 @@ If (isset($_POST['PrintPDF'])
 			exit;
 		}
 
-		$SQL = "SELECT debtorsmaster.name, 
-				debtorsmaster.salestype 
-			FROM debtorsmaster 
+		$SQL = "SELECT debtorsmaster.name,
+				debtorsmaster.salestype
+			FROM debtorsmaster
 			WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
 		$CustNameResult = DB_query($SQL,$db);
 		$CustNameRow = DB_fetch_row($CustNameResult);
@@ -51,8 +51,8 @@ If (isset($_POST['PrintPDF'])
 			prices.debtorno,
 			prices.branchcode,
 			custbranch.brname
-			FROM stockmaster, 
-				stockcategory, 
+			FROM stockmaster,
+				stockcategory,
 				prices LEFT JOIN custbranch
 			ON prices.debtorno=custbranch.debtorno
 			AND prices.branchcode=custbranch.branchcode
@@ -195,10 +195,9 @@ If (isset($_POST['PrintPDF'])
 	}
 } else { /*The option to print PDF was not hit */
 
-	include('includes/session.inc');
 	$title= _('Price Listing');
 	include('includes/header.inc');
-	
+
 	if (strlen($_POST['FromCriteria'])<1 || strlen($_POST['ToCriteria'])<1) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
