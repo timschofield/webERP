@@ -1,6 +1,7 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $PageSecurity = 2;
+include('includes/session.inc');
 
 If (isset($_POST['PrintPDF'])
 	AND isset($_POST['FromCriteria'])
@@ -8,9 +9,7 @@ If (isset($_POST['PrintPDF'])
 	AND isset($_POST['ToCriteria'])
 	AND strlen($_POST['ToCriteria'])>=1){
 
-	include('config.php');
 	include('includes/PDFStarter.php');
-	include('includes/ConnectDB.inc');
 
 
 	$FontSize=10;
@@ -153,7 +152,6 @@ If (isset($_POST['PrintPDF'])
 	}
 } else { /*The option to print PDF was not hit */
 
-	include('includes/session.inc');
 	$title=_('Outstanding GRNs Report');
 	include('includes/header.inc');
 
