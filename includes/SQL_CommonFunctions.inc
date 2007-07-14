@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 /* Common SQL Functions */
 
@@ -57,10 +57,10 @@ Function GetTaxRate ($TaxAuthority, $DispatchTaxProvince, $TaxCategory, &$db){
 
 /*Gets the Tax rate applicable to an item from the TaxAuthority of the branch and TaxLevel of the item */
 
-	$QuerySQL = "SELECT taxrate 
-			FROM taxauthrates 
-			WHERE taxauthority=" . $TaxAuthority . " 
-			AND dispatchtaxprovince=" . $DispatchTaxProvince . " 
+	$QuerySQL = "SELECT taxrate
+			FROM taxauthrates
+			WHERE taxauthority=" . $TaxAuthority . "
+			AND dispatchtaxprovince=" . $DispatchTaxProvince . "
 			AND taxcatid = " . $TaxCategory;
 
 	$ErrMsg = _('The tax rate for this item could not be retreived because');
@@ -88,8 +88,8 @@ Function GetTaxes ($TaxGroup, $DispatchTaxProvince, $TaxCategory, &$db) {
 				taxauthrates.taxauthority=taxgrouptaxes.taxauthid
 				INNER JOIN taxauthorities ON
 				taxauthrates.taxauthority=taxauthorities.taxid
-			WHERE taxgrouptaxes.taxgroupid=" . $TaxGroup . " 
-			AND taxauthrates.dispatchtaxprovince=" . $DispatchTaxProvince . " 
+			WHERE taxgrouptaxes.taxgroupid=" . $TaxGroup . "
+			AND taxauthrates.dispatchtaxprovince=" . $DispatchTaxProvince . "
 			AND taxauthrates.taxcatid = " . $TaxCategory . "
 			ORDER BY taxgrouptaxes.calculationorder";
 
@@ -107,42 +107,27 @@ Function GetTaxes ($TaxGroup, $DispatchTaxProvince, $TaxCategory, &$db) {
 
 
 
-Function ContainsIllegalCharacters ($CheckVariable) {
-
-	if (strstr($CheckVariable,"'") 
-		OR strstr($CheckVariable,'+') 
-		OR strstr($CheckVariable,"\"") 
-		OR strstr($CheckVariable,'&') 
-		OR strstr($CheckVariable,"\\") 
-		OR strstr($CheckVariable,'"')){
-		
-		return true;
-	} else {
-		return false;
-	}
-}
-
 Function GetCreditAvailable($DebtorNo,&$db) {
 
-	$sql = "SELECT debtorsmaster.debtorno, 
+	$sql = "SELECT debtorsmaster.debtorno,
 			debtorsmaster.creditlimit,
 			SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) as balance
-		FROM debtorsmaster INNER JOIN debtortrans 
+		FROM debtorsmaster INNER JOIN debtortrans
 			ON debtorsmaster.debtorno=debtortrans.debtorno
 		WHERE debtorsmaster.debtorno='" . $DebtorNo . "'
 		GROUP BY debtorsmaster.debtorno,
 			debtorsmaster.creditlimit";
-		
+
 	$ErrMsg =  _('The current account balance of the customer could not be retrieved because');
 	$GetAccountBalanceResult = DB_query($sql, $db, $ErrMsg);
-	
+
 	if (DB_num_rows($GetAccountBalanceResult)==1){
-		
+
 		$myrow = DB_fetch_array($GetAccountBalanceResult);
 		$CreditAvailable = $myrow['creditlimit'] - $myrow['balance'];
 	} else {
 		$sql = "SELECT creditlimit
-				FROM debtorsmaster 
+				FROM debtorsmaster
 				WHERE debtorno='" . $DebtorNo . "'";
 		$GetAccountBalanceResult = DB_query($sql, $db, $ErrMsg);
 		$myrow = DB_fetch_array($GetAccountBalanceResult);
@@ -158,15 +143,15 @@ Function GetCreditAvailable($DebtorNo,&$db) {
 				AND salesorders.debtorno = '" . $DebtorNo . "'
 				AND salesorderdetails.completed = 0
 				AND salesorders.quotation = 0";
-	
+
 	$ErrMsg =  _('The value of outstanding orders for the customer could not be retrieved because');
 	$GetOSOrdersResult = DB_query($sql, $db, $ErrMsg);
-	
+
 	$myrow = DB_fetch_array($GetOSOrdersResult);
 	$CreditAvailable -= $myrow['ordervalue'];
-	
+
 	Return $CreditAvailable;
-	
+
 }
 
 ?>

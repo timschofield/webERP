@@ -53,9 +53,26 @@ function IsEmailAddress($TestEmailAddress){
 	}
 }
 
+
+Function ContainsIllegalCharacters ($CheckVariable) {
+
+	if (strstr($CheckVariable,"'")
+		OR strstr($CheckVariable,'+')
+		OR strstr($CheckVariable,"\"")
+		OR strstr($CheckVariable,'&')
+		OR strstr($CheckVariable,"\\")
+		OR strstr($CheckVariable,'"')){
+
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
 function pre_var_dump(&$var){
-	echo "<div align=left><pre>"; 
-	var_dump($var); 
+	echo "<div align=left><pre>";
+	var_dump($var);
 	echo "</pre></div>";
 }
 
