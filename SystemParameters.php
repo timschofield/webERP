@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.31 $ */
+/* $Revision: 1.32 $ */
 
 $PageSecurity =15;
 
@@ -215,7 +215,7 @@ if (isset($_POST['submit'])) {
 			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_WeightedAverageCosting']."' WHERE confname = 'WeightedAverageCosting'";
 		}
 		if ($_SESSION['AutoIssue'] != $_POST['X_AutoIssue']){
-			$sql = 'UPDATE config SET confvalue=' . $_POST['X_AutoIssue'] . " WHERE confname='AutoIssue'";
+			$sql[] = 'UPDATE config SET confvalue=' . $_POST['X_AutoIssue'] . " WHERE confname='AutoIssue'";
 		}
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 1 ) {
