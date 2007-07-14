@@ -1,9 +1,10 @@
 <?php
 
 $PageSecurity = 2;
+include('includes/session.inc');
 
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 If (isset($_POST['PrintPDF']) 
 	AND isset($_POST['FromCriteria']) 
@@ -11,10 +12,7 @@ If (isset($_POST['PrintPDF'])
 	AND isset($_POST['ToCriteria']) 
 	AND strlen($_POST['ToCriteria'])>=1){
 
-	include('config.php');
 	include('includes/PDFStarter.php');
-	include('includes/ConnectDB.inc');
-	include('includes/DateFunctions.inc');
 
 	$FontSize=12;
 	$pdf->addinfo('Title',_('Supplier Balance Listing'));
@@ -119,7 +117,6 @@ If (isset($_POST['PrintPDF'])
 
 } else { /*The option to print PDF was not hit */
 
-	include('includes/session.inc');
 	$title=_('Creditor Balances At A Period End');
 	include('includes/header.inc');
 	

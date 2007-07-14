@@ -1,18 +1,16 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 2;
+include('includes/session.inc');
 
 If (isset($_POST['TaxAuthority']) AND 
 	isset($_POST['PrintPDF']) AND 
 	isset($_POST['NoOfPeriods']) AND 
 	isset($_POST['ToPeriod'])){
 
-	include('config.php');
 	include('includes/PDFStarter.php');
-	include('includes/ConnectDB.inc');
-	include('includes/DateFunctions.inc');
 	
 	$sql = 'SELECT lastdate_in_period 
 		FROM periods 
@@ -277,7 +275,6 @@ If (isset($_POST['TaxAuthority']) AND
 
 } else { /*The option to print PDF was not hit */
 
-	include('includes/session.inc');
 	$title=_('Tax Reporting');
 	include('includes/header.inc');
 

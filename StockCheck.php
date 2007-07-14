@@ -1,6 +1,7 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $PageSecurity = 2;
+include('includes/session.inc');
 
 
 If (isset($_POST['PrintPDF'])
@@ -9,10 +10,7 @@ If (isset($_POST['PrintPDF'])
 		AND isset($_POST['ToCriteria'])
 		AND strlen($_POST['ToCriteria'])>=1){
 
-	include('config.php');
 	include('includes/PDFStarter.php');
-	include('includes/ConnectDB.inc');
-	include('includes/DateFunctions.inc');
 
 
 /*First off do the stock check file stuff */
@@ -270,7 +268,6 @@ if (DB_error_no($db) !=0) {
 
 } else { /*The option to print PDF was not hit */
 
-	include('includes/session.inc');
 	$title=_('Stock Check Sheets');
 	include('includes/header.inc');
 
