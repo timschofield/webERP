@@ -59,7 +59,7 @@ ALTER TABLE `worequirements`
 
 ALTER TABLE `bom` ADD `autoissue` TINYINT DEFAULT '0' NOT NULL ;
 
-INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('autoissue', '1');
+INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('AutoIssue', '1');
 ALTER TABLE `stockmoves` DROP INDEX `StockID`;
 ALTER TABLE `stockmoves` ADD INDEX ( `reference` );
 ALTER TABLE `recurrsalesorderdetails` DROP PRIMARY KEY; 
