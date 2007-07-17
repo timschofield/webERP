@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity = 2;
 
@@ -460,8 +460,8 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	echo '<TR><TD class="tableheader">' . _('Sell Price') . ':</TD><TD align=right>';
 
 	$PriceResult = DB_query("SELECT price FROM prices
-								WHERE currabrev ='" . $_SESSION['CompanyRecord']['defaultcurrency'] . "'
-								AND typeabbrev = '" . $SESSION['DefaultPriceList'] . "'
+								WHERE currabrev ='" . $_SESSION['CompanyRecord']['currencydefault'] . "'
+								AND typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'
 								AND debtorno=''
 								AND branchcode=''",
 								$db);
