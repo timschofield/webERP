@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 2; /*viewing possible with inquiries but not mods */
 
@@ -19,8 +19,33 @@ if (isset($_GET['StockID'])){
 
 echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><BR>';
 
+/* Calculates the material cost of a bill of materials, given parent code*/
+function BomMaterialCost($parent, $db) {
+	$SQL = "SELECT Sum(stockmaster.materialcost*bom.quantity) AS SumOfmaterialcost 
+	   					FROM bom LEFT JOIN stockmaster 
+							 ON bom.component = stockmaster.stockid 
+							 WHERE bom.parent='".$parent."'";
+	$result = DB_query($SQL,$db);
+	$MyRow = DB_fetch_row($result);
+	$MaterialCost = $MyRow[0];
+	return $MaterialCost;	
+}
+
+/*Iterates through the levels of the bom, recalculating each bom it meets*/
+function UpdateCost($db, $item) {
+	$SQL = "SELECT parent FROM bom where component = '".$item."'";
+	$result = DB_query($SQL, $db);
+	while ($MyRow=DB_fetch_array($result)){
+		$NewParent = $MyRow['parent'];
+		$MaterialCost = BomMaterialCost($NewParent, $db);
+		$SQL = "UPDATE stockmaster SET materialcost=".$MaterialCost." WHERE stockid='".$NewParent."'";
+		$result1 = DB_query($SQL,$db);
+		UpdateCost($db, $NewParent);
+	}
+}
 
 if (isset($_POST['UpdateData'])){
+	
 
     $sql = "SELECT  materialcost,
                     labourcost,
@@ -124,6 +149,7 @@ if (isset($_POST['UpdateData'])){
 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 		$Result = DB_query('COMMIT',$db);
+		UpdateCost($db, $StockID); //Update any affected BOMs
 
    	}
 }
@@ -188,9 +214,11 @@ echo '<TR><TD>' . _('Last Cost') .':</TD><TD ALIGN=RIGHT>' . number_format($myro
 if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens']) OR !isset($UpdateSecurity)){
 	echo '<TR><TD>' . _('Cost') . ':</TD><TD ALIGN=RIGHT>' . number_format($myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'],2) . '</TD></TR></TABLE>';
 } else {
-	echo '<TR><TD>' . _('Standard Material Cost Per Unit') .':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME=MaterialCost VALUE=' . $myrow['materialcost'] . '></TD></TR>';
+	if ($myrow['mbflag']!='M') {
+	echo '<TR><TD>' . _('Standard Material Cost Per Unit') .':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME=MaterialCost VALUE=' . $myrow['materialcost'] . '></TD></TR>';}
 
 	if ($myrow['mbflag']=='M'){
+		echo '<TR><TD>' . _('Standard Material Cost Per Unit') .':</TD><TD ALIGN=LEFT>' . number_format($myrow['materialcost'],4) . '</TD></TR>';
 		echo '<TR><TD>' . _('Standard Labour Cost Per Unit') . ':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME=LabourCost VALUE=' . $myrow['labourcost'] . '></TD></TR>';
 		echo '<TR><TD>' . _('Standard Overhead Cost Per Unit') . ':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME=OverheadCost VALUE=' . $myrow['overheadcost'] . '></TD></TR>';
 	} else {
