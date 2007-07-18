@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 $PageSecurity = 2;
 
@@ -463,7 +463,8 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 								WHERE currabrev ='" . $_SESSION['CompanyRecord']['currencydefault'] . "'
 								AND typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'
 								AND debtorno=''
-								AND branchcode=''",
+								AND branchcode=''
+								AND stockid='".$StockID."'",
 								$db);
 	if (DB_num_rows($PriceResult)==0){
 			echo _('No Price Set');
@@ -492,11 +493,11 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			<TD align=right class="tableheader">' . _('Gross Profit') . '</TD><TD align=right>';
 
 	if ($Price >0) {
-		$GP = number_format(($Price - $Cost)/$Price,3);
+		$GP = number_format(($Price - $Cost)*100/$Price,2);
 	} else {
 		$GP=_('N/A');
 	}
-	echo $GP . '</TD></TR>';
+	echo $GP.'%'. '</TD></TR>';
 
 	echo '</TD></TR>
 		</TABLE>'; //end of first nested table
