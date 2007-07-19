@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 $PageSecurity = 9;
 
@@ -8,6 +8,31 @@ include('includes/session.inc');
 $title = _('Multi-Level Bill Of Materials Maintenance');
 
 include('includes/header.inc');
+
+/* Calculates the material cost of a bill of materials, given parent code*/
+function BomMaterialCost($parent, $db) {
+	$SQL = "SELECT Sum(stockmaster.materialcost*bom.quantity) AS SumOfmaterialcost 
+	   					FROM bom LEFT JOIN stockmaster 
+							 ON bom.component = stockmaster.stockid 
+							 WHERE bom.parent='".$parent."'";
+	$result = DB_query($SQL,$db);
+	$MyRow = DB_fetch_row($result);
+	$MaterialCost = $MyRow[0];
+	return $MaterialCost;	
+}
+
+/*Iterates through the levels of the bom, recalculating each bom it meets*/
+function UpdateCost($db, $item) {
+	$SQL = "SELECT parent FROM bom where component = '".$item."'";
+	$result = DB_query($SQL, $db);
+	while ($MyRow=DB_fetch_array($result)){
+		$NewParent = $MyRow['parent'];
+		$MaterialCost = BomMaterialCost($NewParent, $db);
+		$SQL = "UPDATE stockmaster SET materialcost=".$MaterialCost." WHERE stockid='".$NewParent."'";
+		$result1 = DB_query($SQL,$db);
+		UpdateCost($db, $NewParent);
+	}
+}
 
 // *** POPAD&T -  ... Phil modified to english variables
 function display_children($parent, $level, &$BOMTree) {
@@ -198,7 +223,6 @@ if (isset($_GET['Select'])){
 $msg='';
 
 if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Component
-
 	$SelectedParent = $Select;
 	unset($Select);// = NULL;
 
@@ -256,6 +280,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 			$msg = _('Details for') . ' - ' . $SelectedComponent . ' ' . _('have been updated') . '.';
+			UpdateCost($db, $SelectedComponent);
 
 		} elseIf ($InputError !=1 AND ! isset($SelectedComponent) AND isset($SelectedParent)) {
 
