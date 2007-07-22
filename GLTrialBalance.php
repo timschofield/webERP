@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 /*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances
 and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen
@@ -406,7 +406,6 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 			<TD class="tableheader">' . _('Period Budget') .'</TD>
 			</TR>';
 
-	echo $TableHeader;
 	$j = 1;
 	$k=0; //row colour counter
 	$ActGrp ='';
@@ -500,6 +499,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 				<td COLSPAN=6><FONT SIZE=4 COLOR=BLUE><B>%s</B></FONT></TD>
 				</TR>',
 				$myrow['groupname']);
+			echo $TableHeader;
 			$j++;
 		}
 
@@ -562,10 +562,6 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 			number_format($AccountPeriodBudget,2));
 
 		$j++;
-		If ($j == 18){
-			$j=1;
-			echo $TableHeader;
-		}
 	}
 	//end of while loop
 
