@@ -937,7 +937,6 @@ CREATE TABLE `recurrsalesorderdetails` (
   `quantity` double NOT NULL default '0',
   `discountpercent` double NOT NULL default '0',
   `narrative` text NOT NULL,
-  PRIMARY KEY  (`recurrorderno`,`stkcode`),
   KEY `orderno` (`recurrorderno`),
   KEY `stkcode` (`stkcode`),
   CONSTRAINT `recurrsalesorderdetails_ibfk_1` FOREIGN KEY (`recurrorderno`) REFERENCES `recurringsalesorders` (`recurrorderno`),
@@ -1857,7 +1856,6 @@ CREATE TABLE `www_users` (
   `displayrecordsmax` int(11) NOT NULL default '0',
   `theme` varchar(30) NOT NULL default 'fresh',
   `language` varchar(5) NOT NULL default 'en_GB',
-  `salesmancode` char(3) NOT NULL default '',
   PRIMARY KEY  (`userid`),
   KEY `CustomerID` (`customerid`),
   KEY `DefaultLocation` (`defaultlocation`),
@@ -2118,7 +2116,7 @@ INSERT INTO `systypes` VALUES (0,'Journal - GL',2);
 INSERT INTO `systypes` VALUES (1,'Payment - GL',1);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',0);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',1);
 INSERT INTO `systypes` VALUES (11,'Credit Note',0);
 INSERT INTO `systypes` VALUES (12,'Receipt',0);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
@@ -2131,9 +2129,9 @@ INSERT INTO `systypes` VALUES (22,'Creditors Payment',4);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
 INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',17);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',2);
-INSERT INTO `systypes` VALUES (28,'Work Order Issue',3);
+INSERT INTO `systypes` VALUES (28,'Work Order Issue',4);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',1);
-INSERT INTO `systypes` VALUES (30,'Sales Order',3);
+INSERT INTO `systypes` VALUES (30,'Sales Order',6);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',26);
 INSERT INTO `systypes` VALUES (35,'Cost Update',2);
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
@@ -2196,7 +2194,7 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','MEL',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'silverwolf','en_GB','');
+INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','MEL',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'silverwolf','en_GB');
 
 --
 -- Dumping data for table `edi_orders_segs`
@@ -2355,7 +2353,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','AUD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','30');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2007-06-13');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2007-07-15');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');

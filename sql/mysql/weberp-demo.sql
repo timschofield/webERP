@@ -1,4 +1,5 @@
-
+CREATE DATABASE weberp;
+USE weberp;
 SET FOREIGN_KEY_CHECKS = 0;
 -- MySQL dump 10.9
 --
@@ -938,7 +939,6 @@ CREATE TABLE `recurrsalesorderdetails` (
   `quantity` double NOT NULL default '0',
   `discountpercent` double NOT NULL default '0',
   `narrative` text NOT NULL,
-  PRIMARY KEY  (`recurrorderno`,`stkcode`),
   KEY `orderno` (`recurrorderno`),
   KEY `stkcode` (`stkcode`),
   CONSTRAINT `recurrsalesorderdetails_ibfk_1` FOREIGN KEY (`recurrorderno`) REFERENCES `recurringsalesorders` (`recurrorderno`),
@@ -1858,7 +1858,6 @@ CREATE TABLE `www_users` (
   `displayrecordsmax` int(11) NOT NULL default '0',
   `theme` varchar(30) NOT NULL default 'fresh',
   `language` varchar(5) NOT NULL default 'en_GB',
-  `salesmancode` char(3) NOT NULL default '',
   PRIMARY KEY  (`userid`),
   KEY `CustomerID` (`customerid`),
   KEY `DefaultLocation` (`defaultlocation`),
@@ -1916,9 +1915,8 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 -- Dumping data for table `areas`
 --
 
+INSERT INTO `areas` VALUES ('DE','Default');
 INSERT INTO `areas` VALUES ('FL','Florida');
-INSERT INTO `areas` VALUES ('INT','Internet');
-INSERT INTO `areas` VALUES ('MI','Michigan');
 INSERT INTO `areas` VALUES ('TR','Toronto');
 
 --
@@ -1937,6 +1935,9 @@ INSERT INTO `bankaccounts` VALUES (1040,'Savings Account','','');
 -- Dumping data for table `bom`
 --
 
+INSERT INTO `bom` VALUES ('BREAD','FLOUR','ASS','MEL','2007-06-19','2037-06-20',1,0);
+INSERT INTO `bom` VALUES ('BREAD','SALT','ASS','MEL','2007-06-19','2037-06-20',0.025,1);
+INSERT INTO `bom` VALUES ('BREAD','YEAST','ASS','MEL','2007-06-19','2037-06-20',0.1,0);
 INSERT INTO `bom` VALUES ('DVD_ACTION','DVD-CASE','ASS','MEL','2007-06-12','2037-06-13',4,0);
 INSERT INTO `bom` VALUES ('DVD_ACTION','DVD-DHWV','ASS','MEL','2007-06-12','2037-06-13',1,1);
 INSERT INTO `bom` VALUES ('DVD_ACTION','DVD-LTWP','ASS','MEL','2007-06-12','2037-06-13',1,1);
@@ -1944,6 +1945,7 @@ INSERT INTO `bom` VALUES ('DVD_ACTION','DVD-UNSG','ASS','MEL','2007-06-12','2037
 INSERT INTO `bom` VALUES ('DVD_ACTION','DVD-UNSG2','ASS','MEL','2007-06-12','2037-06-13',1,1);
 INSERT INTO `bom` VALUES ('FUJI9901ASS','FUJI990101','ASS','MEL','2005-06-04','2035-06-05',1,0);
 INSERT INTO `bom` VALUES ('FUJI9901ASS','FUJI990102','ASS','MEL','2005-02-12','2037-06-13',1,0);
+INSERT INTO `bom` VALUES ('SLICE','BREAD','ASS','MEL','2007-06-19','2037-06-20',0.1,1);
 
 --
 -- Dumping data for table `buckets`
@@ -2427,7 +2429,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','AUD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','30');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2007-06-13');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2007-07-15');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
@@ -2533,11 +2535,13 @@ INSERT INTO `debtorsmaster` VALUES ('QUICK','Quick Brown PLC','Fox Street','Jump
 -- Dumping data for table `debtortrans`
 --
 
+INSERT INTO `debtortrans` VALUES (1,1,10,'QUARTER','QUARTER','2007-06-26 00:00:00',2,0,'','DE',1,1,46.4,0,0,0,0,0,'Some narrative for testing the output on the printed invoice','1',0,'');
 
 --
 -- Dumping data for table `debtortranstaxes`
 --
 
+INSERT INTO `debtortranstaxes` VALUES (1,13,0);
 
 --
 -- Dumping data for table `discountmatrix`
@@ -2722,6 +2726,15 @@ INSERT INTO `gltrans` VALUES (15,26,2,0,'2007-06-18',2,1460,'3 DVD_ACTION - Acti
 INSERT INTO `gltrans` VALUES (16,26,2,0,'2007-06-18',2,1460,'3 DVD_ACTION - Action Series Bundle x 10 @ 18.40',-184,1,'');
 INSERT INTO `gltrans` VALUES (17,29,1,0,'2007-06-18',2,1460,'3 - DVD_ACTION share of variance',5,1,'');
 INSERT INTO `gltrans` VALUES (18,29,1,0,'2007-06-18',2,1460,'3 - DVD_ACTION share of variance',-5,1,'');
+INSERT INTO `gltrans` VALUES (19,28,4,0,'2007-06-21',2,1440,'5 FLOUR x 4 @ 3.89',15.56,0,'');
+INSERT INTO `gltrans` VALUES (20,28,4,0,'2007-06-21',2,1460,'5 FLOUR x 4 @ 3.89',-15.56,0,'');
+INSERT INTO `gltrans` VALUES (21,10,1,0,'2007-06-26',2,5000,'QUARTER - DVD-DHWV x 2 @ 5.2500',10.5,0,'');
+INSERT INTO `gltrans` VALUES (22,10,1,0,'2007-06-26',2,1460,'QUARTER - DVD-DHWV x 2 @ 5.2500',-10.5,0,'');
+INSERT INTO `gltrans` VALUES (23,10,1,0,'2007-06-26',2,4100,'QUARTER - DVD-DHWV x 2 @ 15.95',-31.9,0,'');
+INSERT INTO `gltrans` VALUES (24,10,1,0,'2007-06-26',2,5000,'QUARTER - DVD-LTWP x 1 @ 2.8500',2.85,0,'');
+INSERT INTO `gltrans` VALUES (25,10,1,0,'2007-06-26',2,1460,'QUARTER - DVD-LTWP x 1 @ 2.8500',-2.85,0,'');
+INSERT INTO `gltrans` VALUES (26,10,1,0,'2007-06-26',2,4100,'QUARTER - DVD-LTWP x 1 @ 14.5',-14.5,0,'');
+INSERT INTO `gltrans` VALUES (27,10,1,0,'2007-06-26',2,1100,'QUARTER',46.4,0,'');
 
 --
 -- Dumping data for table `grns`
@@ -2752,6 +2765,7 @@ INSERT INTO `locations` VALUES ('TOR','Toronto','Level 100 ','CN Tower','Toronto
 -- Dumping data for table `locstock`
 --
 
+INSERT INTO `locstock` VALUES ('MEL','BREAD',0,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-CASE',0,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-DHWV',-12,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-LTWP',-10,0);
@@ -2759,23 +2773,32 @@ INSERT INTO `locstock` VALUES ('MEL','DVD-TOPGUN',-1,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-UNSG',-10,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD-UNSG2',-10,0);
 INSERT INTO `locstock` VALUES ('MEL','DVD_ACTION',10,0);
+INSERT INTO `locstock` VALUES ('MEL','FLOUR',-4,0);
 INSERT INTO `locstock` VALUES ('MEL','FUJI990101',0,0);
 INSERT INTO `locstock` VALUES ('MEL','FUJI990102',0,0);
 INSERT INTO `locstock` VALUES ('MEL','FUJI9901ASS',0,0);
 INSERT INTO `locstock` VALUES ('MEL','HIT3042-4',0,0);
 INSERT INTO `locstock` VALUES ('MEL','HIT3043-5',0,0);
+INSERT INTO `locstock` VALUES ('MEL','SALT',0,0);
+INSERT INTO `locstock` VALUES ('MEL','SLICE',0,0);
+INSERT INTO `locstock` VALUES ('MEL','YEAST',0,0);
+INSERT INTO `locstock` VALUES ('TOR','BREAD',0,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-CASE',0,0);
-INSERT INTO `locstock` VALUES ('TOR','DVD-DHWV',0,0);
-INSERT INTO `locstock` VALUES ('TOR','DVD-LTWP',0,0);
+INSERT INTO `locstock` VALUES ('TOR','DVD-DHWV',-2,0);
+INSERT INTO `locstock` VALUES ('TOR','DVD-LTWP',-1,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-TOPGUN',0,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-UNSG',0,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD-UNSG2',0,0);
 INSERT INTO `locstock` VALUES ('TOR','DVD_ACTION',0,0);
+INSERT INTO `locstock` VALUES ('TOR','FLOUR',0,0);
 INSERT INTO `locstock` VALUES ('TOR','FUJI990101',0,0);
 INSERT INTO `locstock` VALUES ('TOR','FUJI990102',0,0);
 INSERT INTO `locstock` VALUES ('TOR','FUJI9901ASS',0,0);
 INSERT INTO `locstock` VALUES ('TOR','HIT3042-4',0,0);
 INSERT INTO `locstock` VALUES ('TOR','HIT3043-5',0,0);
+INSERT INTO `locstock` VALUES ('TOR','SALT',0,0);
+INSERT INTO `locstock` VALUES ('TOR','SLICE',0,0);
+INSERT INTO `locstock` VALUES ('TOR','YEAST',0,0);
 
 --
 -- Dumping data for table `loctransfers`
@@ -2828,11 +2851,14 @@ INSERT INTO `purchdata` VALUES ('CRUISE','DVD-UNSG2','200.0000','10 Pack',10,'',
 -- Dumping data for table `purchorderdetails`
 --
 
+INSERT INTO `purchorderdetails` VALUES (1,1,'DVD-CASE','2007-06-25','webERP Demo DVD Case',1460,0,0.23,0,0,45,0,0,'',0);
+INSERT INTO `purchorderdetails` VALUES (2,1,'DVD-LTWP','2007-06-25','Lethal Weapon Linked',1460,0,2.98,0,0,7,0,0,'',0);
 
 --
 -- Dumping data for table `purchorders`
 --
 
+INSERT INTO `purchorders` VALUES (1,'CAMPBELL','','2007-06-25 00:00:00',1,'2007-06-25 00:00:00',0,'','','MEL','1234 Collins Street','Melbourne','Victoria 2345','','','Australia','');
 
 --
 -- Dumping data for table `recurringsalesorders`
@@ -3120,6 +3146,8 @@ INSERT INTO `reports` VALUES (135,'Currency Price List','rpt','inv','1','A4:210:
 -- Dumping data for table `salesanalysis`
 --
 
+INSERT INTO `salesanalysis` VALUES ('DE',2,31.9,10.5,'QUARTER','QUARTER',2,0,'DVD-DHWV','FL',1,'ERI','DVD',1);
+INSERT INTO `salesanalysis` VALUES ('DE',2,14.5,2.85,'QUARTER','QUARTER',1,0,'DVD-LTWP','FL',1,'ERI','DVD',2);
 
 --
 -- Dumping data for table `salescat`
@@ -3142,6 +3170,7 @@ INSERT INTO `salesglpostings` VALUES (2,'AN','AIRCON',5000,4800,'DE');
 -- Dumping data for table `salesman`
 --
 
+INSERT INTO `salesman` VALUES ('DE','Default Sales person','','',0,'0',0);
 INSERT INTO `salesman` VALUES ('ERI','Eric Browlee','','',0,'0',0);
 INSERT INTO `salesman` VALUES ('INT','Internet Shop','','',0,'0',0);
 INSERT INTO `salesman` VALUES ('PHO','Phone Contact','','',0,'0',0);
@@ -3150,11 +3179,17 @@ INSERT INTO `salesman` VALUES ('PHO','Phone Contact','','',0,'0',0);
 -- Dumping data for table `salesorderdetails`
 --
 
+INSERT INTO `salesorderdetails` VALUES (0,1,'DVD-DHWV',2,15.95,2,0,0,'2007-06-26 00:00:00',1,'');
+INSERT INTO `salesorderdetails` VALUES (0,2,'DVD-LTWP',0,5.4,2,0,0,'0000-00-00 00:00:00',0,'');
+INSERT INTO `salesorderdetails` VALUES (1,1,'DVD-LTWP',1,14.5,1,0,0,'2007-06-26 00:00:00',1,'');
+INSERT INTO `salesorderdetails` VALUES (1,2,'DVD-TOPGUN',0,5.25,1,0,0,'0000-00-00 00:00:00',0,'');
 
 --
 -- Dumping data for table `salesorders`
 --
 
+INSERT INTO `salesorders` VALUES (1,'QUARTER','QUARTER','',NULL,' Inv 1','2007-06-25','DE',1,'1356 Union Drive','Holborn','England','','','','123456','','Quarter Back to Back',1,0,'TOR','2007-06-26',0,'0000-00-00',0,0);
+INSERT INTO `salesorders` VALUES (2,'QUARTER','QUARTER','',NULL,'','2007-06-27','DE',1,'1356 Union Drive','Holborn','England','','','','123456','','Quarter Back to Back',1,0,'TOR','2007-06-28',0,'0000-00-00',0,0);
 
 --
 -- Dumping data for table `salestypes`
@@ -3439,9 +3474,9 @@ INSERT INTO `shippers` VALUES (10,'Not Specified',0);
 --
 
 INSERT INTO `stockcategory` VALUES ('AIRCON','Air Conditioning','F',1460,5700,5200,5100,1440);
+INSERT INTO `stockcategory` VALUES ('BAKE','Baking Ingredients','F',1460,5700,5200,5000,1440);
 INSERT INTO `stockcategory` VALUES ('DVD','DVDs','F',1460,5700,5000,5200,1440);
-INSERT INTO `stockcategory` VALUES ('SERV','InstallationServices','D',1010,1,1,1,1010);
-INSERT INTO `stockcategory` VALUES ('TTT','TTT Units','F',1460,5700,5900,5700,1440);
+INSERT INTO `stockcategory` VALUES ('FOOD','Food','F',1460,5700,5200,5000,1440);
 
 --
 -- Dumping data for table `stockcheckfreeze`
@@ -3457,6 +3492,7 @@ INSERT INTO `stockcategory` VALUES ('TTT','TTT Units','F',1460,5700,5900,5700,14
 -- Dumping data for table `stockmaster`
 --
 
+INSERT INTO `stockmaster` VALUES ('BREAD','FOOD','Bread','Bread','each','M','1800-01-01','0.0000','0.0000','0.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,0,'');
 INSERT INTO `stockmaster` VALUES ('DVD-CASE','DVD','webERP Demo DVD Case','webERP Demo DVD Case','each','B','1800-01-01','0.0000','0.0000','0.3000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,1,0,'');
 INSERT INTO `stockmaster` VALUES ('DVD-DHWV','DVD','Die Hard With A Vengeance Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). <br />Languages: English, Deutsch. <br />Subtitles: English, Deutsch, Spanish. <br />Audio: Dolby Surround 5.1. <br />Picture Format: 16:9 Wide-Screen. <br />Length: (approx) 122 minutes. <br />Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','0.0000','5.2500','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,0,'');
 INSERT INTO `stockmaster` VALUES ('DVD-LTWP','DVD','Lethal Weapon Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r\n<br />\r\nLanguages: English, Deutsch.\r\n<br />\r\nSubtitles: English, Deutsch, Spanish.\r\n<br />\r\nAudio: Dolby Surround 5.1.\r\n<br />\r\nPicture Format: 16:9 Wide-Screen.\r\n<br />\r\nLength: (approx) 100 minutes.\r\n<br />\r\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','0.0000','2.8500','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,0,'');
@@ -3464,11 +3500,15 @@ INSERT INTO `stockmaster` VALUES ('DVD-TOPGUN','DVD','Top Gun DVD','Top Gun DVD'
 INSERT INTO `stockmaster` VALUES ('DVD-UNSG','DVD','Under Siege Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). <br />Languages: English, Deutsch. <br />Subtitles: English, Deutsch, Spanish. <br />Audio: Dolby Surround 5.1. <br />Picture Format: 16:9 Wide-Screen. <br />Length: (approx) 98 minutes. <br />Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','0.0000','5.0000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,0,'');
 INSERT INTO `stockmaster` VALUES ('DVD-UNSG2','DVD','Under Siege 2 - Dark Territory','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r<br />\nLanguages: English, Deutsch.\r<br />\nSubtitles: English, Deutsch, Spanish.\r<br />\nAudio: Dolby Surround 5.1.\r<br />\nPicture Format: 16:9 Wide-Screen.\r<br />\nLength: (approx) 98 minutes.\r<br />\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','0.0000','5.0000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,0,'');
 INSERT INTO `stockmaster` VALUES ('DVD_ACTION','DVD','Action Series Bundle','Under Seige I and Under Seige II\r\n','each','M','1800-01-01','0.0000','0.0000','19.3000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,0,'');
+INSERT INTO `stockmaster` VALUES ('FLOUR','AIRCON','High Grade Flour','High Grade Flour','kgs','B','1800-01-01','0.0000','0.0000','3.8900','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,1,'');
 INSERT INTO `stockmaster` VALUES ('FUJI990101','AIRCON','Fujitsu 990101 Split type Indoor Unit 3.5kw','Fujitsu 990101 Split type Indoor Unit 3.5kw Heat Pump with mounting screws and isolating switch','each','B','1800-01-01','0.0000','995.7138','1015.6105','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,4,'');
 INSERT INTO `stockmaster` VALUES ('FUJI990102','AIRCON','Fujitsu 990102 split type A/C Outdoor unit 3.5kw','Fujitsu 990102 split type A/C Outdoor unit 3.5kw with 5m piping & insulation','each','B','1800-01-01','0.0000','0.0000','633.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,0,'');
 INSERT INTO `stockmaster` VALUES ('FUJI9901ASS','AIRCON','Fujitsu 990101 Split type A/C 3.5kw complete','Fujitsu 990101 Split type A/C 3.5kw complete with indoor and outdoor units 5m pipe and insulation isolating switch. 5 year warranty','each','A','1800-01-01','0.0000','0.0000','0.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,0,'');
 INSERT INTO `stockmaster` VALUES ('HIT3042-4','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor Unit - wall hung complete with brackets and screws. 220V-240V AC\r\n5 year guaranttee','each','M','1800-01-01','0.0000','0.0000','853.0000','0.0000','0.0000',0,0,1,5,'0.4000','7.8000','','',1,1,0,'');
 INSERT INTO `stockmaster` VALUES ('HIT3043-5','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor unit - including 5m piping for fitting to HIT3042-4 indoor unit\r\n5 year guaranttee','each','B','1800-01-01','0.0000','0.0000','1235.0000','0.0000','0.0000',0,0,1,5,'0.8500','16.0000','','',1,1,0,'');
+INSERT INTO `stockmaster` VALUES ('SALT','BAKE','Salt','Salt','kgs','B','1800-01-01','0.0000','1.2000','2.5000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,3,'');
+INSERT INTO `stockmaster` VALUES ('SLICE','FOOD','Slice Of Bread','Slice Of Bread','each','M','1800-01-01','0.0000','0.0000','0.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,0,'');
+INSERT INTO `stockmaster` VALUES ('YEAST','BAKE','Yeast','Yeast','kgs','B','1800-01-01','0.0000','3.8500','5.0000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,3,'');
 
 --
 -- Dumping data for table `stockmoves`
@@ -3481,23 +3521,30 @@ INSERT INTO `stockmoves` VALUES (5,'DVD-LTWP',28,3,'MEL','2007-06-18','','','0.0
 INSERT INTO `stockmoves` VALUES (6,'DVD-UNSG',28,3,'MEL','2007-06-18','','','0.0000',2,'3',-10,0,5,1,-10,0,NULL);
 INSERT INTO `stockmoves` VALUES (7,'DVD-UNSG2',28,3,'MEL','2007-06-18','','','0.0000',2,'3',-10,0,5,1,-10,0,NULL);
 INSERT INTO `stockmoves` VALUES (8,'DVD_ACTION',26,2,'MEL','2007-06-18','','','18.4000',2,'3',10,0,18.4,1,10,0,NULL);
+INSERT INTO `stockmoves` VALUES (9,'FLOUR',28,4,'MEL','2007-06-21','','','3.8900',2,'5',-4,0,3.89,1,-4,0,NULL);
+INSERT INTO `stockmoves` VALUES (10,'DVD-DHWV',10,1,'TOR','2007-06-26','QUARTER','QUARTER','15.9500',2,'1',-2,0,5.25,1,-2,0,'');
+INSERT INTO `stockmoves` VALUES (11,'DVD-LTWP',10,1,'TOR','2007-06-26','QUARTER','QUARTER','14.5000',2,'1',-1,0,2.85,1,-1,0,'');
 
 --
 -- Dumping data for table `stockmovestaxes`
 --
 
+INSERT INTO `stockmovestaxes` VALUES (10,13,0,0,0);
+INSERT INTO `stockmovestaxes` VALUES (11,13,0,0,0);
 
 --
 -- Dumping data for table `stockserialitems`
 --
 
 INSERT INTO `stockserialitems` VALUES ('DVD-TOPGUN','MEL','23',-1);
+INSERT INTO `stockserialitems` VALUES ('FLOUR','MEL','5433',-4);
 
 --
 -- Dumping data for table `stockserialmoves`
 --
 
 INSERT INTO `stockserialmoves` VALUES (1,3,'DVD-TOPGUN','23',1);
+INSERT INTO `stockserialmoves` VALUES (2,9,'FLOUR','5433',4);
 
 --
 -- Dumping data for table `suppallocs`
@@ -3538,7 +3585,7 @@ INSERT INTO `systypes` VALUES (0,'Journal - GL',2);
 INSERT INTO `systypes` VALUES (1,'Payment - GL',1);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
-INSERT INTO `systypes` VALUES (10,'Sales Invoice',0);
+INSERT INTO `systypes` VALUES (10,'Sales Invoice',1);
 INSERT INTO `systypes` VALUES (11,'Credit Note',0);
 INSERT INTO `systypes` VALUES (12,'Receipt',0);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
@@ -3551,9 +3598,9 @@ INSERT INTO `systypes` VALUES (22,'Creditors Payment',4);
 INSERT INTO `systypes` VALUES (23,'Creditors Journal',0);
 INSERT INTO `systypes` VALUES (25,'Purchase Order Delivery',17);
 INSERT INTO `systypes` VALUES (26,'Work Order Receipt',2);
-INSERT INTO `systypes` VALUES (28,'Work Order Issue',3);
+INSERT INTO `systypes` VALUES (28,'Work Order Issue',4);
 INSERT INTO `systypes` VALUES (29,'Work Order Variance',1);
-INSERT INTO `systypes` VALUES (30,'Sales Order',3);
+INSERT INTO `systypes` VALUES (30,'Sales Order',6);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',26);
 INSERT INTO `systypes` VALUES (35,'Cost Update',2);
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
@@ -3638,6 +3685,8 @@ INSERT INTO `unitsofmeasure` VALUES (6,'pack');
 --
 
 INSERT INTO `woitems` VALUES (3,'DVD_ACTION',10,10,18.4,'');
+INSERT INTO `woitems` VALUES (4,'SLICE',100,0,0,'');
+INSERT INTO `woitems` VALUES (5,'BREAD',12,0,11.39,'');
 
 --
 -- Dumping data for table `worequirements`
@@ -3648,6 +3697,10 @@ INSERT INTO `worequirements` VALUES (3,'DVD_ACTION','DVD-DHWV',1,5.25,1);
 INSERT INTO `worequirements` VALUES (3,'DVD_ACTION','DVD-LTWP',1,2.85,1);
 INSERT INTO `worequirements` VALUES (3,'DVD_ACTION','DVD-UNSG',1,5,1);
 INSERT INTO `worequirements` VALUES (3,'DVD_ACTION','DVD-UNSG2',1,5,1);
+INSERT INTO `worequirements` VALUES (4,'SLICE','BREAD',0.1,0,1);
+INSERT INTO `worequirements` VALUES (5,'BREAD','FLOUR',1,3.89,0);
+INSERT INTO `worequirements` VALUES (5,'BREAD','SALT',0.025,2.5,1);
+INSERT INTO `worequirements` VALUES (5,'BREAD','YEAST',0.1,5,0);
 
 --
 -- Dumping data for table `workcentres`
@@ -3660,12 +3713,15 @@ INSERT INTO `workcentres` VALUES ('ASS','TOR','Assembly',1,'50',560000,'0');
 --
 
 INSERT INTO `workorders` VALUES (3,'MEL','2007-06-13','2007-06-13',198,1);
+INSERT INTO `workorders` VALUES (4,'MEL','2007-06-21','2007-06-21',0,0);
+INSERT INTO `workorders` VALUES (5,'MEL','2007-06-21','2007-06-21',15.56,0);
+INSERT INTO `workorders` VALUES (6,'MEL','2007-07-15','2007-07-15',0,0);
 
 --
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','MEL',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'silverwolf','en_GB','');
+INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','MEL',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'silverwolf','en_GB');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

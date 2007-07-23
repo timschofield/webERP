@@ -1,19 +1,28 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity=15;
 
 include('includes/session.inc');
 
-$ModuleList = array(_('Orders'), _('Receivables'), _('Payables'), _('Purchasing'), _('Inventory'), _('Manufacturing'), _('General Ledger'), _('Setup'));
+$ModuleList = array(_('Orders'), 
+			_('Receivables'), 
+			_('Payables'), 
+			_('Purchasing'), 
+			_('Inventory'), 
+			_('Manufacturing'), 
+			_('General Ledger'), 
+			_('Setup'));
 
 $title = _('User Maintenance');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 // Make an array of the security roles
-$sql = 'SELECT secroleid, secrolename FROM securityroles ORDER BY secroleid';
+$sql = 'SELECT secroleid, 
+		secrolename 
+	FROM securityroles ORDER BY secroleid';
 $Sec_Result = DB_query($sql, $db);
 $SecurityRoles = array();
 // Now load it into an a ray using Key/Value pairs
@@ -116,8 +125,7 @@ if (isset($_POST['submit'])) {
 						language ='" . $_POST['Language'] . "',
 						defaultlocation='" . $_POST['DefaultLocation'] ."',
 						modulesallowed='" . $ModulesAllowed . "',
-						blocked=" . $_POST['Blocked'] . ",
-						salesmancode='" . $_POST['Salesperson'] . "'
+						blocked=" . $_POST['Blocked'] . "
 					WHERE userid = '$SelectedUser'";
 
 		$msg = _('The selected user record has been updated');
@@ -136,8 +144,7 @@ if (isset($_POST['submit'])) {
 						modulesallowed,
 						displayrecordsmax,
 						theme,
-						language,
-						salesmancode)
+						language)
 					VALUES ('" . $_POST['UserID'] . "',
 						'" . DB_escape_string($_POST['RealName']) ."',
 						'" . DB_escape_string($_POST['Cust']) ."',
@@ -151,8 +158,7 @@ if (isset($_POST['submit'])) {
 						'" . $ModulesAllowed . "',
 						" . $_SESSION['DefaultDisplayRecordsMax'] . ",
 						'" . $_POST['Theme'] . "',
-						'". $_POST['Language'] ."',
-						'" . $_POST['Salesperson'] . "')";
+						'". $_POST['Language'] ."')";
 		$msg = _('A new user record has been inserted');
 	}
 
@@ -176,7 +182,6 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Blocked']);
 		unset($_POST['Theme']);
 		unset($_POST['Language']);
-		unset($_POST['Salesperson']);
 		unset($SelectedUser);
 	}
 
@@ -304,8 +309,7 @@ if (isset($SelectedUser)) {
 			modulesallowed,
 			blocked,
 			theme,
-			language,
-			salesmancode
+			language		
 		FROM www_users
 		WHERE userid='" . $SelectedUser . "'";
 
@@ -325,8 +329,7 @@ if (isset($SelectedUser)) {
 	$_POST['Theme'] = $myrow['theme'];
 	$_POST['Language'] = $myrow['language'];
 	$_POST['Blocked'] = $myrow['blocked'];
-	$_POST['Salesperson'] = $myrow['salesmancode'];
-
+	
 	echo "<INPUT TYPE=HIDDEN NAME='SelectedUser' VALUE='" . $SelectedUser . "'>";
 	echo "<INPUT TYPE=HIDDEN NAME='UserID' VALUE='" . $_POST['UserID'] . "'>";
 	echo "<INPUT TYPE=HIDDEN NAME='ModulesAllowed' VALUE='" . $_POST['ModulesAllowed'] . "'>";
@@ -397,29 +400,6 @@ echo '<TR><TD>' . _('Customer Code') . ":</TD>
 echo '<TR><TD>' . _('Branch Code') . ":</TD>
 	<TD><INPUT TYPE='Text' name='BranchCode' SIZE=10 MAXLENGTH=8 VALUE='" . $_POST['BranchCode'] ."'></TD></TR>";
 
-
-$sql = "SELECT salesmanname, salesmancode FROM salesman";
-
-$result = DB_query($sql,$db);
-
-echo '<TR><TD>'._('Salesperson').':</TD>';
-echo '<TD><SELECT name="Salesperson">';
-
-if (!isset($_POST['Salesperson'])){
-		echo '<OPTION SELECTED VALUE="">' . _('All Sales People');
-} else {
-		echo '<OPTION VALUE="">' .  _('All Sales People');
-}
-while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['salesmancode']==$_POST['Salesperson']) {
-			echo '<OPTION SELECTED VALUE=';
-		} else {
-			echo '<OPTION VALUE=';
-		}
-		echo $myrow['salesmancode'] . '>' . $myrow['salesmanname'];
-} //end while loop
-
-echo '</SELECT></TD></TR>';
 
 
 echo '<TR><TD>' . _('Reports Page Size') .":</TD>

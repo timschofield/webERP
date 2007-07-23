@@ -50,7 +50,7 @@ function DecodeBgColor( $colorstr ) {
 if (!function_exists('imagecreatefrompng')){
 	$title = _('Image Manipulation Script Problem');
 	include('includes/header.inc');
-	echo '<P>' . _('This script requires the gd image functions to be available to php - this needs to be enabled in your server php version before this script can be used');
+	prnMsg(_('This script requires the gd image functions to be available to php - this needs to be enabled in your server php version before this script can be used'),'error');
 	include('includes/footer.inc');
 	exit;
 }
@@ -59,12 +59,12 @@ $defaultimage = 'webERPsmall.png';
 // FOR APACHE
 if ( $_SERVER['PATH_TRANSLATED'][0] == '/' OR $_SERVER['PATH_TRANSLATED'][0]=='') {
 	//*nix
-	$pathsep = "/";
+	$pathsep = '/';
 } else {
 	//Windows
 	$pathsep = "\\";
 }
-$filepath = $_SERVER['DOCUMENT_ROOT'] . $rootpath . $pathsep . $_SESSION['part_pics_dir'] . $pathsep;
+$filepath =  $_SESSION['part_pics_dir'] . $pathsep;
 
 $stockid = trim(strtoupper($_GET['StockID']));
 if( isset($_GET['bgcolor']) )
