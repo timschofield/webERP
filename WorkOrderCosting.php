@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 11;
 
@@ -113,12 +113,12 @@ $RequirementsResult = DB_query("SELECT worequirements.stockid,
 				stockmaster.description,
 				stockmaster.decimalplaces,
 				worequirements.stdcost,
-				SUM(qtypu*woitems.qtyrecd) AS requiredqty,
-				SUM(worequirements.stdcost*woitems.qtyrecd*worequirements.qtypu) AS expectedcost
+				SUM(worequirements.qtypu*woitems.qtyreqd) AS requiredqty,
+				SUM(worequirements.stdcost*woitems.qtyreqd*worequirements.qtypu) AS expectedcost
 			FROM worequirements INNER JOIN stockmaster
 			ON worequirements.stockid=stockmaster.stockid
 			INNER JOIN woitems ON woitems.stockid=worequirements.parentstockid
-			WHERE worequirements.wo=" . $_POST['WO'] . "
+			WHERE worequirements.wo=" . $_POST['WO'] . " and woitems.wo=" . $_POST['WO'] . "
 			GROUP BY worequirements.stockid,
 				worequirements.stdcost,
 				stockmaster.description,
