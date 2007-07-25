@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 /* Common SQL Functions */
 
@@ -152,6 +152,92 @@ Function GetCreditAvailable($DebtorNo,&$db) {
 
 	Return $CreditAvailable;
 
+}
+
+function UpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
+
+		if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $_POST['QOH']!=0){
+
+			$CostUpdateNo = GetNextTransNo(35, $db);
+			$PeriodNo = GetPeriod(Date("d/m/Y"), $db);
+			$StockGLCode = GetStockGLCode($StockID,$db);
+
+			$ValueOfChange = $QOH * ($NewCost - $OldCost);
+
+			$SQL = "INSERT INTO gltrans (type,
+							typeno,
+							trandate,
+							periodno,
+							account,
+							narrative,
+							amount)
+						VALUES (35,
+							" . $CostUpdateNo . ",
+							'" . Date('Y-m-d') . "',
+							" . $PeriodNo . ",
+							" . $StockGLCode['adjglact'] . ",
+							'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' ' . $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
+							" . (-$ValueOfChange) . ")";
+
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL credit for the stock cost adjustment posting could not be inserted because');
+			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
+			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+
+			$SQL = "INSERT INTO gltrans (type,
+							typeno,
+							trandate,
+							periodno,
+							account,
+							narrative,
+							amount)
+						VALUES (35,
+							" . $CostUpdateNo . ",
+							'" . Date('Y-m-d') . "',
+							" . $PeriodNo . ",
+							" . $StockGLCode['stockact'] . ",
+							'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') .' ' . $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
+							" . $ValueOfChange . ")";
+
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL debit for stock cost adjustment posting could not be inserted because');
+			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
+			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
+		}
+}
+
+/* Calculates the material cost of a bill of materials, given parent code*/
+function BomMaterialCost($parent, $db) {
+	$SQL = "SELECT materialcost from stockmaster where stockid='".$parent."'";
+	$result1 = DB_query($SQL,$db);
+	$MyRow1 = DB_fetch_row($result1);
+	$OldCost = $MyRow1[0];
+	$SQL = "SELECT sum(quantity) as qoh from locstock where stockid='".$parent."'";
+	$result1 = DB_query($SQL,$db);
+	$MyRow1 = DB_fetch_row($result1);
+	$QOH = $MyRow1[0];
+	$SQL = "SELECT Sum(stockmaster.materialcost*bom.quantity) AS SumOfmaterialcost 
+	   					FROM bom LEFT JOIN stockmaster 
+							 ON bom.component = stockmaster.stockid 
+							 WHERE bom.parent='".$parent."'";
+	$result = DB_query($SQL,$db);
+	$MyRow = DB_fetch_row($result);
+	$MaterialCost = $MyRow[0];
+	$Result = DB_query('BEGIN',$db);
+	UpdateGL($db, $parent, $MaterialCost, $OldCost, $QOH);
+	$Result = DB_query('COMMIT',$db);
+	return $MaterialCost;	
+}
+
+/*Iterates through the levels of the bom, recalculating each bom it meets*/
+function UpdateCost($db, $item) {
+	$SQL = "SELECT parent FROM bom where component = '".$item."'";
+	$result = DB_query($SQL, $db);
+	while ($MyRow=DB_fetch_array($result)){
+		$NewParent = $MyRow['parent'];
+		$MaterialCost = BomMaterialCost($NewParent, $db);
+		$SQL = "UPDATE stockmaster SET materialcost=".$MaterialCost." WHERE stockid='".$NewParent."'";
+		$result1 = DB_query($SQL,$db);
+		UpdateCost($db, $NewParent);
+	}
 }
 
 ?>

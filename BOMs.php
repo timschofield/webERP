@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 $PageSecurity = 9;
 
@@ -8,31 +8,8 @@ include('includes/session.inc');
 $title = _('Multi-Level Bill Of Materials Maintenance');
 
 include('includes/header.inc');
+include('includes/SQL_CommonFunctions.inc');
 
-/* Calculates the material cost of a bill of materials, given parent code*/
-function BomMaterialCost($parent, $db) {
-	$SQL = "SELECT Sum(stockmaster.materialcost*bom.quantity) AS SumOfmaterialcost 
-	   					FROM bom LEFT JOIN stockmaster 
-							 ON bom.component = stockmaster.stockid 
-							 WHERE bom.parent='".$parent."'";
-	$result = DB_query($SQL,$db);
-	$MyRow = DB_fetch_row($result);
-	$MaterialCost = $MyRow[0];
-	return $MaterialCost;	
-}
-
-/*Iterates through the levels of the bom, recalculating each bom it meets*/
-function UpdateCost($db, $item) {
-	$SQL = "SELECT parent FROM bom where component = '".$item."'";
-	$result = DB_query($SQL, $db);
-	while ($MyRow=DB_fetch_array($result)){
-		$NewParent = $MyRow['parent'];
-		$MaterialCost = BomMaterialCost($NewParent, $db);
-		$SQL = "UPDATE stockmaster SET materialcost=".$MaterialCost." WHERE stockid='".$NewParent."'";
-		$result1 = DB_query($SQL,$db);
-		UpdateCost($db, $NewParent);
-	}
-}
 
 // *** POPAD&T -  ... Phil modified to english variables
 function display_children($parent, $level, &$BOMTree) {

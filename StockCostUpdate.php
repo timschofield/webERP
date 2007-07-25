@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 2; /*viewing possible with inquiries but not mods */
 
@@ -18,31 +18,6 @@ if (isset($_GET['StockID'])){
 }
 
 echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><BR>';
-
-/* Calculates the material cost of a bill of materials, given parent code*/
-function BomMaterialCost($parent, $db) {
-	$SQL = "SELECT Sum(stockmaster.materialcost*bom.quantity) AS SumOfmaterialcost 
-	   					FROM bom LEFT JOIN stockmaster 
-							 ON bom.component = stockmaster.stockid 
-							 WHERE bom.parent='".$parent."'";
-	$result = DB_query($SQL,$db);
-	$MyRow = DB_fetch_row($result);
-	$MaterialCost = $MyRow[0];
-	return $MaterialCost;	
-}
-
-/*Iterates through the levels of the bom, recalculating each bom it meets*/
-function UpdateCost($db, $item) {
-	$SQL = "SELECT parent FROM bom where component = '".$item."'";
-	$result = DB_query($SQL, $db);
-	while ($MyRow=DB_fetch_array($result)){
-		$NewParent = $MyRow['parent'];
-		$MaterialCost = BomMaterialCost($NewParent, $db);
-		$SQL = "UPDATE stockmaster SET materialcost=".$MaterialCost." WHERE stockid='".$NewParent."'";
-		$result1 = DB_query($SQL,$db);
-		UpdateCost($db, $NewParent);
-	}
-}
 
 if (isset($_POST['UpdateData'])){
 	
@@ -88,54 +63,9 @@ if (isset($_POST['UpdateData'])){
 		prnMsg (_('The entered item code does not exist'),'error',_('Non-existent Item'));
 	} elseif ($OldCost != $NewCost){
 
-		$Result = DB_query('BEGIN',$db);
+	$Result = DB_query('BEGIN',$db);
+	UpdateGL($db, $StockID, $NewCost, $OldCost, $_POST['QOH']);
 
-		if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $_POST['QOH']!=0){
-
-			$CostUpdateNo = GetNextTransNo(35, $db);
-			$PeriodNo = GetPeriod(Date("d/m/Y"), $db);
-			$StockGLCode = GetStockGLCode($StockID,$db);
-
-			$ValueOfChange = $_POST['QOH'] * ($NewCost - $OldCost);
-
-			$SQL = "INSERT INTO gltrans (type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount)
-						VALUES (35,
-							" . $CostUpdateNo . ",
-							'" . Date('Y-m-d') . "',
-							" . $PeriodNo . ",
-							" . $StockGLCode['adjglact'] . ",
-							'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' ' . $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $_POST['QOH'] . "',
-							" . (-$ValueOfChange) . ")";
-
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL credit for the stock cost adjustment posting could not be inserted because');
-			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-
-			$SQL = "INSERT INTO gltrans (type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount)
-						VALUES (35,
-							" . $CostUpdateNo . ",
-							'" . Date('Y-m-d') . "',
-							" . $PeriodNo . ",
-							" . $StockGLCode['stockact'] . ",
-							'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') .' ' . $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $_POST['QOH'] . "',
-							" . $ValueOfChange . ")";
-
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL debit for stock cost adjustment posting could not be inserted because');
-			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-			$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-		}
 
 		$SQL = "UPDATE stockmaster SET
 					materialcost=" . $_POST['MaterialCost'] . ",
