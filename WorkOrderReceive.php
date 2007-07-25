@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 11;
 
@@ -621,7 +621,7 @@ $WOResult = DB_query("SELECT workorders.loccode,
 					ON workorders.wo=woitems.wo
 					INNER JOIN stockmaster
 					ON woitems.stockid=stockmaster.stockid
-					WHERE woitems.stockid='" . DB_escape_string($_POST['StockID']) . "' and workorders.wo='".$_POST["WO"]."'",
+					WHERE woitems.stockid='" . DB_escape_string($_POST['StockID']) . "' and workorders.wo=".$_POST["WO"],
 					$db,
 					$ErrMsg);
 
