@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 /* Common SQL Functions */
 
@@ -156,7 +156,7 @@ Function GetCreditAvailable($DebtorNo,&$db) {
 
 function UpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
 
-		if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $_POST['QOH']!=0){
+		if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $QOH!=0){
 
 			$CostUpdateNo = GetNextTransNo(35, $db);
 			$PeriodNo = GetPeriod(Date("d/m/Y"), $db);
