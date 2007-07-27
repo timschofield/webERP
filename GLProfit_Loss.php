@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 8;
 
@@ -562,7 +562,6 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 	}
 
 
-	echo $TableHeader;
 	$j = 1;
 	$k=0; //row colour counter
 	$Section='';
@@ -584,7 +583,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 
 		if ($myrow['groupname']!= $ActGrp){
 			if ($myrow['parentgroupname']!=$ActGrp AND $ActGrp!=''){
-				while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
+					while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
 					if ($_POST['Detail']=='Detailed'){
 						echo '<TR>
 							<TD COLSPAN=2></TD>
@@ -594,7 +593,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 					} else {
 						$ActGrpLabel = str_repeat('___',$Level) . $ParentGroups[$Level];
 					}
-					if ($Section ==1){ /*Income */
+				if ($Section ==1){ /*Income */
 						printf('<TR>
 							<TD COLSPAN=2><FONT SIZE=2><I>%s </I></FONT></td>
 							<TD></TD>
@@ -813,6 +812,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 					<td COLSPAN=6><FONT SIZE=2 COLOR=BLUE><B>%s</B></FONT></TD>
 					</TR>',
 					$myrow['groupname']);
+					echo $TableHeader;
 			}
 		}
 
@@ -877,10 +877,6 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 			}
 
 			$j++;
-			If ($j == 18){
-				$j=1;
-				echo $TableHeader;
-			}
 		}
 	}
 	//end of loop
