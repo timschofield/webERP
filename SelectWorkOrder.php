@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 2;
 
@@ -299,6 +299,7 @@ If (isset($StockItemsResult)) {
 
 	$tableheader = "<TR>
 				<TD class='tableheader'>" . _('Modify') . "</TD>
+				<TD class='tableheader'>" . _('Status') . "</TD>
 				<TD class='tableheader'>" . _('Receive') . "</TD>
 				<TD class='tableheader'>" . _('Issue To') . "</TD>
 				<TD class='tableheader'>" . _('Costing') . "</TD>
@@ -324,6 +325,7 @@ If (isset($StockItemsResult)) {
 		}
 
 		$ModifyPage = $rootpath . "/WorkOrderEntry.php?" . SID . '&WO=' . $myrow['wo'];
+		$Status_WO = $rootpath . '/WorkOrderStatus.php?' . SID . '&WO=' .$myrow['wo'] . '&StockID=' . $myrow['stockid'];
 		$Receive_WO = $rootpath . '/WorkOrderReceive.php?' . SID . '&WO=' .$myrow['wo'] . '&StockID=' . $myrow['stockid'];
 		$Issue_WO = $rootpath . '/WorkOrderIssue.php?' . SID . '&WO=' .$myrow['wo'] . '&StockID=' . $myrow['stockid'];
 		$Costing_WO =$rootpath . '/WorkOrderCosting.php?' . SID . '&WO=' .$myrow['wo'];
@@ -332,6 +334,7 @@ If (isset($StockItemsResult)) {
 
 
 		printf("<td><A HREF='%s'>%s</A></td>
+				<td><A HREF='%s'>" . _('Status') . "</A></td>
 				<td><A HREF='%s'>" . _('Receive') . "</A></td>
 				<td><A HREF='%s'>" . _('Issue To') . "</A></td>
 				<td><A HREF='%s'>" . _('Costing') . "</A></td>
@@ -343,6 +346,7 @@ If (isset($StockItemsResult)) {
 				</tr>",
 				$ModifyPage,
 				$myrow['wo'],
+				$Status_WO,
 				$Receive_WO,
 				$Issue_WO,
 				$Costing_WO,
