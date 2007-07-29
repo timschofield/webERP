@@ -1,12 +1,29 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
 <p>
+<p>29/7/07 Tim Schofield : Amend SelectWorkOrder.php to allow work order status inquiry.
+<p>29/7/07 Tim Schofield : Create WorkOrderStatus.php.
+<p>27/7/07 Tim Schofield : Alter GLProfit_Loss.php to show headings correctly.
+<p>26/7/07 Tim Schofield : Correction  to sql/SQL_CommonFunctions.inc to move stock rollup functions into inc file, and show gl transactions when bom structure alters material cost
+<p>25/7/07 Tim Schofield : Correct syntax of sql in WorkOrderReceive.php.
+<p>25/7/07 Tim Schofield : Correct BOMs.php and StockCostUpdate.php to correctly show gl transactions, on Standard Cost roll up.
+<p>25/7/07 Tim Schofield : Change WorkOrderCosting.php so that requirements are shown correctly.
+<p>25/7/07 Tim Schofield : Change WorkOrderReceive.php to enable a works order to be viewed when previous works order with sames product has been closed.
+<p>
 <p>23/7/07 Lindsay GetStockImage.php changed $filepath = $_SESSION['part_pics_dir'] . $pathsep;
 <p>23/7/07 salesmancode selections removed from wwww_users.php 
 <p>
+<p>22/7/07 Tim Schofield : Alter GLTrialBalance.php to show headings correctly.
+<p>19/7/07 Tim Schofield : Addition to BOMs.php to roll up standard material costs into the parent items when a BOM structure is altered.
+<p>19/7/07 Tim Schofield : Addition to StockCostUpdate.php to roll up standard material costs into the parent items when a material cost is altered.
+<p>19/7/07 Tim Schofield : No StockID being selected in SelectProduct.php
 <p>
 <P><B>Version 3.06rc2
 <P>18 July 2007</B>
+<p>
+<p>18/7/07 Tim Schofield : Correct error in SelectProduct.php, and sql/upgrade3.05-3.06.sql preventing sales price from being displayed.
+<p>15/7/07 Tim Schofield : Correct includes error in OutstandinfGRGs.php, StockCheck.php, SupplierBalsAtPeriodEnd.php, and Tax.php
+<p>14/7/07 Tim Schofield : Correct bug in SystemParameters.php preventing config updates in.
 <P>
 <P>23/6/07 PriceLists and several other pdf reports failed to include session.inc in the script
 <P>23/6/07 Lindsay Harris $$ error in PO_DetailItems.php
