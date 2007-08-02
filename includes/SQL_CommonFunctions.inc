@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 /* Common SQL Functions */
 
@@ -154,12 +154,12 @@ Function GetCreditAvailable($DebtorNo,&$db) {
 
 }
 
-function UpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
+function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
 
 		if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $QOH!=0){
 
 			$CostUpdateNo = GetNextTransNo(35, $db);
-			$PeriodNo = GetPeriod(Date("d/m/Y"), $db);
+			$PeriodNo = GetPeriod(Date('d/m/Y'), $db);
 			$StockGLCode = GetStockGLCode($StockID,$db);
 
 			$ValueOfChange = $QOH * ($NewCost - $OldCost);
@@ -205,36 +205,36 @@ function UpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
 }
 
 /* Calculates the material cost of a bill of materials, given parent code*/
-function BomMaterialCost($parent, $db) {
-	$SQL = "SELECT materialcost from stockmaster where stockid='".$parent."'";
+function BomMaterialCost($Parent, $db) {
+	$SQL = "SELECT materialcost from stockmaster where stockid='".$Parent."'";
 	$result1 = DB_query($SQL,$db);
 	$MyRow1 = DB_fetch_row($result1);
 	$OldCost = $MyRow1[0];
-	$SQL = "SELECT sum(quantity) as qoh from locstock where stockid='".$parent."'";
+	$SQL = "SELECT sum(quantity) as qoh from locstock where stockid='".$Parent."'";
 	$result1 = DB_query($SQL,$db);
 	$MyRow1 = DB_fetch_row($result1);
 	$QOH = $MyRow1[0];
 	$SQL = "SELECT Sum(stockmaster.materialcost*bom.quantity) AS SumOfmaterialcost 
 	   					FROM bom LEFT JOIN stockmaster 
 							 ON bom.component = stockmaster.stockid 
-							 WHERE bom.parent='".$parent."'";
+							 WHERE bom.parent='". $Parent . "'";
 	$result = DB_query($SQL,$db);
 	$MyRow = DB_fetch_row($result);
 	$MaterialCost = $MyRow[0];
 	$Result = DB_query('BEGIN',$db);
-	UpdateGL($db, $parent, $MaterialCost, $OldCost, $QOH);
+	ItemCostUpdateGL($db, $parent, $MaterialCost, $OldCost, $QOH);
 	$Result = DB_query('COMMIT',$db);
 	return $MaterialCost;	
 }
 
 /*Iterates through the levels of the bom, recalculating each bom it meets*/
 function UpdateCost($db, $item) {
-	$SQL = "SELECT parent FROM bom where component = '".$item."'";
+	$SQL = "SELECT parent FROM bom where component = '" . $item . "'";
 	$result = DB_query($SQL, $db);
 	while ($MyRow=DB_fetch_array($result)){
 		$NewParent = $MyRow['parent'];
 		$MaterialCost = BomMaterialCost($NewParent, $db);
-		$SQL = "UPDATE stockmaster SET materialcost=".$MaterialCost." WHERE stockid='".$NewParent."'";
+		$SQL = 'UPDATE stockmaster SET materialcost=' . $MaterialCost . " WHERE stockid='" . $NewParent . "'";
 		$result1 = DB_query($SQL,$db);
 		UpdateCost($db, $NewParent);
 	}

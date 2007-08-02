@@ -2117,7 +2117,7 @@ INSERT INTO `systypes` VALUES (1,'Payment - GL',1);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
 INSERT INTO `systypes` VALUES (10,'Sales Invoice',1);
-INSERT INTO `systypes` VALUES (11,'Credit Note',0);
+INSERT INTO `systypes` VALUES (11,'Credit Note',1);
 INSERT INTO `systypes` VALUES (12,'Receipt',0);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',5);
