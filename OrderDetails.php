@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 
 $PageSecurity = 2;
@@ -159,7 +159,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
     	    }
     }
 */
-	echo _('Comments:').' '.$_SESSION['Items']->Comments . '<BR></CENTER>';
+	echo _('Comments'). ': ' . $_SESSION['Items']->Comments . '<BR></CENTER>';
 
 /*Now get the line items */
 
