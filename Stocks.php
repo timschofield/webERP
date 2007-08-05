@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.35 $ */
+/* $Revision: 1.36 $ */
 
 
 $PageSecurity = 11;
@@ -21,12 +21,12 @@ if (isset($_GET['StockID'])){
 }
 
 if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
-	
+
 	$result    = $_FILES['ItemPicture']['error'];
  	$UploadTheFile = 'Yes'; //Assume all is well to start off with
 	$filename = $_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg';
-	
-	 //But check for the worst 
+
+	 //But check for the worst
 	if (strtoupper(substr(trim($_FILES['ItemPicture']['name']),strlen($_FILES['ItemPicture']['name'])-3))!='JPG'){
 		prnMsg(_('Only jpg files are supported - a file extension of .jpg is expected'),'warn');
 		$UploadTheFile ='No';
@@ -44,7 +44,7 @@ if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 			$UploadTheFile ='No';
 		}
 	}
-	
+
 	if ($UploadTheFile=='Yes'){
 		$result  =  move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $filename);
 		$message = ($result)?_('File url') ."<a href='". $filename ."'>" .  $filename . '</a>' : _('Something is wrong with uploading a file');
@@ -112,18 +112,19 @@ if (isset($_POST['submit'])) {
 	}
 
 	if ($InputError !=1){
-
 		if ($_POST['Serialised']==1){ /*Not appropriate to have several dp on serial items */
 			$_POST['DecimalPlaces']=0;
 		}
-
 		if (!isset($_POST['New'])) { /*so its an existing one */
 
 			/*first check on the changes being made we must disallow:
 			- changes from manufactured or purchased to Service, Assembly or Kitset if there is stock			- changes from manufactured, kitset or assembly where a BOM exists
 			*/
 
-			$sql = "SELECT mbflag, controlled, serialised FROM stockmaster WHERE stockid = '$StockID'";
+			$sql = "SELECT mbflag,
+							controlled,
+							serialised
+					FROM stockmaster WHERE stockid = '$StockID'";
 			$MBFlagResult = DB_query($sql,$db);
 			$myrow = DB_fetch_row($MBFlagResult);
 			$OldMBFlag = $myrow[0];
@@ -148,11 +149,11 @@ if (isset($_POST['submit'])) {
 				}
 				/*now check that if the item is being changed to a kitset, there are no items on order sales or purchase orders*/
 				if ($_POST['MBFlag']=='K') {
-					$sql = "SELECT quantity-qtyinvoiced 
-						FROM salesorderdetails 
-						WHERE stkcode = '$StockID' 
+					$sql = "SELECT quantity-qtyinvoiced
+						FROM salesorderdetails
+						WHERE stkcode = '$StockID'
 						AND completed=0";
-						
+
 					$result = DB_query($sql,$db);
 					$ChkSalesOrds = DB_fetch_row($result);
 					if ($ChkSalesOrds[0]!=0){
@@ -163,11 +164,11 @@ if (isset($_POST['submit'])) {
 				/*now check that if it is to be a kitset or assembly or dummy there is no quantity on purchase orders outstanding*/
 				if ($_POST['MBFlag']=='K' OR $_POST['MBFlag']=='A' OR $_POST['MBFlag']=='D') {
 
-					$sql = "SELECT quantityord-quantityrecd 
-						FROM purchorderdetails 
-						WHERE itemcode = '$StockID' 
+					$sql = "SELECT quantityord-quantityrecd
+						FROM purchorderdetails
+						WHERE itemcode = '$StockID'
 						AND completed=0";
-						
+
 					$result = DB_query($sql,$db);
 					$ChkPurchOrds = DB_fetch_row($result);
 					if ($ChkPurchOrds[0]!=0){
@@ -236,6 +237,29 @@ if (isset($_POST['submit'])) {
 				$DbgMsg = _('The SQL that was used to update the stock item and failed was');
 				$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
+				//delete any properties for the item no longer relevant with the change of category
+				$result = DB_query("DELETE FROM stockitemproperties
+										WHERE stockid ='" . $StockID . "'",
+									$db);
+
+				//now insert any item properties
+				for ($i=0;$i<$_POST['PropertyCounter'];$i++){
+
+					if ($_POST['PropType' . $i] ==2){
+						if ($_POST['PropValue' . $i]=='on'){
+							$_POST['PropValue' . $i]=1;
+						} else {
+							$_POST['PropValue' . $i]=0;
+						}
+					}
+					$result = DB_query("INSERT INTO stockitemproperties (stockid,
+																			stkcatpropid,
+																			value)
+														VALUES ('" . $StockID . "',
+																" . $_POST['PropID' . $i] . ",
+																'" . $_POST['PropValue' . $i] . "')",
+										$db);
+				} //end of loop around properties defined for the category
 				prnMsg( _('Stock Item') . ' ' . $StockID . ' ' . _('has been updated'), 'success');
 			}
 
@@ -281,22 +305,22 @@ if (isset($_POST['submit'])) {
 							" . $_POST['TaxCat'] . ",
 							" . $_POST['DecimalPlaces']. "
 							)";
-	
+
 				$ErrMsg =  _('The item could not be added because');
 				$DbgMsg = _('The SQL that was used to add the item failed was');
 				$result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 				if (DB_error_no($db) ==0) {
-	
+
 					$sql = "INSERT INTO locstock (loccode,
-									stockid)
-							SELECT locations.loccode,
-								'" . $StockID . "'
-							FROM locations";
-	
+													stockid)
+										SELECT locations.loccode,
+										'" . $StockID . "'
+										FROM locations";
+
 					$ErrMsg =  _('The locations for the item') . ' ' . $myrow[0] .  ' ' . _('could not be added because');
 					$DbgMsg = _('NB Locations records can be added by opening the utility page') . ' <i>Z_MakeStockLocns.php</i> ' . _('The SQL that was used to add the location records that failed was');
 					$InsResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-	
+
 					if (DB_error_no($db) ==0) {
 						prnMsg( _('New Item') .' ' . $StockID  . ' '. _('has been added to the database'),'success');
 						unset($_POST['LongDescription']);
@@ -315,8 +339,8 @@ if (isset($_POST['submit'])) {
 						unset($_POST['DiscountCategory']);
 						unset($_POST['DecimalPlaces']);
 						unset($StockID);
-					}//ALL WORKED WELL RESET THE FORM VARIABLES 
-				}//THE INSERT OF THE NEW CODE WORKED SO BANG IN THE STOCK LOCATION RECORDS TOO 
+					}//ALL WORKED SO RESET THE FORM VARIABLES
+				}//THE INSERT OF THE NEW CODE WORKED SO BANG IN THE STOCK LOCATION RECORDS TOO
 			}//END CHECK FOR ALREADY EXISTING ITEM OF THE SAME CODE
 		}
 
@@ -407,9 +431,9 @@ if (isset($_POST['submit'])) {
 
 		$result = DB_query('COMMIT', $db);
 
-		prnMsg(_('Deleted the stock master record for') . ' ' . $StockID . '....' . 
+		prnMsg(_('Deleted the stock master record for') . ' ' . $StockID . '....' .
 		'<BR>. . ' . _('and all the location stock records set up for the part') .
-		'<BR>. . .' . _('and any bill of material that may have been set up for the part') . 
+		'<BR>. . .' . _('and any bill of material that may have been set up for the part') .
 		'<BR> . . . .' . _('and any purchasing data that may have been set up for the part') .
 		'<BR> . . . . .' . _('and any prices that may have been set up for the part'),'success');
 		unset($_POST['LongDescription']);
@@ -440,13 +464,14 @@ if (isset($_POST['submit'])) {
 echo '<FORM ENCTYPE="MULTIPART/FORM-DATA" METHOD="POST" ACTION="' . $_SERVER['PHP_SELF'] . '?' .SID .'"><CENTER><TABLE>
 	<TR><TD><TABLE>'; //Nested table
 
-if (!isset($StockID) OR isset($_POST['New'])) {
+if (!isset($StockID)) {
 
 /*If the page was called without $StockID passed to page then assume a new stock item is to be entered show a form with a part Code field other wise the form showing the fields with the existing entries against the part will show for editing with only a hidden StockID field. New is set to flag that the page may have called itself and still be entering a new part, in which case the page needs to know not to go looking up details for an existing part*/
 
-	echo '<INPUT TYPE="HIDDEN" NAME="New" VALUE="Yes">';
+	$New = true;
+	echo '<input type="hidden" name="New" value="1">';
 
-	echo '<TR><TD>'. _('Item Code'). ':</TD><TD><INPUT TYPE="TEXT" NAME="StockID" SIZE=21 MAXLENGTH=20 Value="'.$StockID.'"></TD></TR>';
+	echo '<TR><TD>'. _('Item Code'). ':</TD><TD><INPUT TYPE="TEXT" NAME="StockID" SIZE=21 MAXLENGTH=20></TD></TR>';
 
 } elseif (!isset($_POST['submit'])) { // Must be modifying an existing item and no changes made yet
 
@@ -490,12 +515,12 @@ if (!isset($StockID) OR isset($_POST['New'])) {
 
 	echo '<TR><TD>' . _('Item Code') . ':</TD><TD>'.$StockID.'</TD></TR>';
 	echo "<input type='Hidden' name='StockID' value='$StockID'>";
-	
+
 } else { // some changes were made to the data so don't re-set form variables to DB ie the code above
 	echo '<TR><TD>' . _('Item Code') . ':</TD><TD>'.$StockID.'</TD></TR>';
 	echo "<input type='Hidden' name='StockID' value='$StockID'>";
 }
-	
+
 
 echo '<TR><TD>' . _('Part Description') . ' (' . _('short') . '):</TD><TD><input type="Text" name="Description" SIZE=52 MAXLENGTH=50 value="' . htmlentities($_POST['Description'],ENT_QUOTES,_('ISO-8859-1')) . '"></TD></TR>';
 
@@ -653,7 +678,7 @@ $result = DB_query($sql, $db);
 if (!isset($_POST['TaxCat'])){
 	$_POST['TaxCat'] = $_SESSION['DefaultTaxCategory'];
 }
-	
+
 while ($myrow = DB_fetch_array($result)) {
 	if ($_POST['TaxCat'] == $myrow['taxcatid']){
 		echo '<OPTION SELECTED VALUE=' . $myrow['taxcatid'] . '>' . $myrow['taxcatname'];
@@ -679,15 +704,75 @@ echo '</SELECT></TD></TR>';
 	}
 }
 
-echo '</TABLE></TD><TD><CENTER>' . _('Image') . '<BR>'.$StockImgLink . '</CENTER></TD></TR></TABLE><CENTER>';
+echo '</table></td><td><center>' . _('Image') . '<br>'.$StockImgLink . '</center></td></tr></table><center>';
 
 
-if (isset($_POST['New']) OR $_POST['New']!="") {
+if ($New) {
 	echo '<input type="Submit" name="submit" value="' . _('Insert New Item') . '">';
 
 } else {
 
-	echo '<input type="Submit" name="submit" value="' . _('Update') . '">';
+	// Now the form to enter the item properties
+	echo '<table><tr><td class="tableheader" colspan="2">' . _('Item Category Properties') . '</td></tr>';
+	$sql = "SELECT stkcatpropid,
+					label,
+					controltype,
+					defaultvalue
+			FROM stockcatproperties
+			WHERE categoryid ='" . DB_escape_string($_POST['CategoryID']) . "'
+			AND reqatsalesorder =0
+			ORDER BY stkcatpropid";
+
+	$PropertiesResult = DB_query($sql,$db);
+	$PropertyCounter = 0;
+	$PropertyWidth = array();
+
+	while ($PropertyRow=DB_fetch_array($PropertiesResult)){
+
+		$PropValResult = DB_query("SELECT value FROM
+										stockitemproperties
+										WHERE stockid='" . $StockID . "'
+										AND stkcatpropid =" . $PropertyRow['stkcatpropid'],
+									$db);
+		$PropValRow = DB_fetch_row($PropValResult);
+		$PropertyValue = $PropValRow[0];
+
+		echo '<input type="hidden" name="PropID' . $PropertyCounter . '" value=' .$PropertyRow['stkcatpropid'] .'>';
+
+		echo '<tr><td>' . $PropertyRow['label'] . '</td>
+				<td>';
+		switch ($PropertyRow['controltype']) {
+		 	case 0; //textbox
+		 		echo '<input type="textbox" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . $PropertyValue . '">';
+		 		break;
+		 	case 1; //select box
+		 		$OptionValues = explode(',',$PropertyRow['defaultvalue']);
+				echo '<select name="PropValue' . $PropertyCounter . '">';
+				foreach ($OptionValues as $PropertyOptionValue){
+					if ($PropertyOptionValue == $PropertyValue){
+						echo '<option selected value="' . $PropertyOptionValue . '">' . $PropertyOptionValue . '</option>';
+					} else {
+						echo '<option value="' . $PropertyOptionValue . '">' . $PropertyOptionValue . '</option>';
+					}
+				}
+				echo '</select>';
+				break;
+			case 2; //checkbox
+				echo '<input type="checkbox" name="PropValue' . $PropertyCounter . '"';
+				if ($PropertyValue==1){
+					echo '"checked"';
+				}
+				echo '>';
+				break;
+		} //end switch
+		echo '<input type="hidden" name="PropType' . $PropertyCounter .'" value=' . $PropertyRow['controltype'] . '>';
+		echo '</td></tr>';
+		$PropertyCounter++;
+	} //end loop round properties for the item category
+	echo '</table>';
+	echo '<input type="hidden" name="PropertyCounter" value=' . $PropertyCounter . '>';
+
+	echo '<input type="submit" name="submit" value="' . _('Update') . '">';
 	echo '<P>';
 	prnMsg( _('Only click the Delete button if you are sure you wish to delete the item!') .  _('Checks will be made to ensure that there are no stock movements, sales analysis records, sales order items or purchase order items for the item') . '. ' . _('No deletions will be allowed if they exist'), 'warn', _('WARNING'));
 	echo '<P><input type="Submit" name="delete" value="' . _('Delete This Item') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 11;
 
@@ -13,6 +13,16 @@ if (isset($_GET['SelectedCategory'])){
 	$SelectedCategory = strtoupper($_GET['SelectedCategory']);
 } else if (isset($_POST['SelectedCategory'])){
 	$SelectedCategory = strtoupper($_POST['SelectedCategory']);
+}
+
+if (isset($_GET['DeleteProperty'])){
+
+	$ErrMsg = _('Could not delete the property') . ' ' . $_GET['DeleteProperty'] . ' ' . _('because');
+	$sql = "DELETE FROM stockitemproperties WHERE stkcatpropid=" . DB_escape_string($_GET['DeleteProperty']);
+	$result = DB_query($sql,$db,$ErrMsg);
+	$sql = "DELETE FROM stockcatproperties WHERE stkcatpropid=" . DB_escape_string($_GET['DeleteProperty']);
+	$result = DB_query($sql,$db,$ErrMsg);
+	prnMsg(_('Deleted the property') . ' ' . $_GET['DeleteProperty'],'success');
 }
 
 if (isset($_POST['submit'])) {
@@ -56,7 +66,43 @@ if (isset($_POST['submit'])) {
                                      wipact = " . $_POST['WIPAct'] . "
                                      WHERE
                                      categoryid = '$SelectedCategory'";
-		$msg = _('The stock category record has been updated');
+        $ErrMsg = _('Could not update the stock category') . DB_escape_string($_POST['CategoryDescription']) . _('because');
+        $result = DB_query($sql,$db,$ErrMsg);
+
+        for ($i=0;$i<=$_POST['PropertyCounter'];$i++){
+
+        	if ($_POST['PropReqSO' .$i] == true){
+        			$_POST['PropReqSO' .$i] =1;
+        	} else {
+        			$_POST['PropReqSO' .$i] =0;
+        	}
+        	if ($_POST['PropID' .$i] =='NewProperty' AND strlen($_POST['PropLabel'.$i])>0){
+        		$sql = "INSERT INTO stockcatproperties (categoryid,
+        												label,
+        												controltype,
+        												defaultvalue,
+        												reqatsalesorder)
+        									VALUES ('" . $SelectedCategory . "',
+        											'" . DB_escape_string($_POST['PropLabel' . $i]) . "',
+        											" . $_POST['PropControlType' . $i] . ",
+        											'" . DB_escape_string($_POST['PropDefault' .$i]) . "',
+        											" . $_POST['PropReqSO' .$i] . ')';
+        		$ErrMsg = _('Could not insert a new category property for') . $_POST['PropLabel' . $i];
+        		$result = DB_query($sql,$db,$ErrMsg);
+        	} elseif ($_POST['PropID' .$i] !='NewProperty') { //we could be amending existing properties
+        		$sql = "UPDATE stockcatproperties SET label ='" . DB_escape_string($_POST['PropLabel' . $i]) . "',
+        											  controltype = " . $_POST['PropControlType' . $i] . ",
+        											  defaultvalue = '"	. DB_escape_string($_POST['PropDefault' .$i]) . "',
+        											  reqatsalesorder = " . $_POST['PropReqSO' .$i] . "
+        				WHERE stkcatpropid =" . $_POST['PropID' .$i];
+        		$ErrMsg = _('Updated the stock category property for') . ' ' . $_POST['PropLabel' . $i];
+        		$result = DB_query($sql,$db,$ErrMsg);
+        	}
+
+        } //end of loop round properties
+
+        prnMsg(_('Updated the stock category record for') . ' ' . DB_escape_string($_POST['CategoryDescription']),'success');
+
 	} elseif ($InputError !=1) {
 
 	/*Selected category is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new stock category form */
@@ -78,12 +124,13 @@ if (isset($_POST['submit'])) {
                                        " . $_POST['PurchPriceVarAct'] . ",
                                        " . $_POST['MaterialUseageVarAc'] . ",
                                        " . $_POST['WIPAct'] . ")";
-		$msg = _('A new stock category record has been added');
+        $ErrMsg = _('Could not insert the new stock category') . DB_escape_string($_POST['CategoryDescription']) . _('because');
+        $result = DB_query($sql,$db,$ErrMsg);
+		prnMsg(_('A new stock category record has been added for') . ' ' . DB_escape_string($_POST['CategoryDescription']),'success');
+
 	}
 	//run the SQL from either of the above possibilites
-	$result = DB_query($sql,$db);
-	unset ($SelectedCategory);
-	unset($_POST['CategoryID']);
+
 	unset($_POST['StockType']);
 	unset($_POST['CategoryDescription']);
 	unset($_POST['StockAct']);
@@ -91,7 +138,7 @@ if (isset($_POST['submit'])) {
 	unset($_POST['PurchPriceVarAct']);
 	unset($_POST['MaterialUseageVarAc']);
 	unset($_POST['WIPAct']);
-	prnMsg($msg,'success');
+
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
@@ -166,7 +213,7 @@ or deletion of the records*/
             		<td ALIGN=RIGHT>%s</td>
             		<td ALIGN=RIGHT>%s</td>
             		<td><a href=\"%sSelectedCategory=%s\">" . _('Edit') . "</td>
-            		<td><a href=\"%sSelectedCategory=%s&delete=yes\">" . _('Delete') . "</td>
+            		<td><a href=\"%sSelectedCategory=%s&delete=yes\" onclick=\"return confirm('" . _('Are you sure you wish to delete this stock category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . "');\">" . _('Delete') . "</td>
             		</tr>",
             		$myrow[0],
             		$myrow[1],
@@ -229,14 +276,14 @@ if (! isset($_GET['delete'])) {
 		$_POST['MaterialUseageVarAc']  = $myrow['materialuseagevarac'];
 		$_POST['WIPAct']  = $myrow['wipact'];
 
-		echo '<INPUT TYPE=HIDDEN NAME="SelectedCategory" VALUE="' . $SelectedCategory . '">';
-		echo '<INPUT TYPE=HIDDEN NAME="CategoryID" VALUE="' . $_POST['CategoryID'] . '">';
-		echo '<CENTER><TABLE><TR><TD>' . _('Category Code') . ':</TD><TD>' . $_POST['CategoryID'] . '</TD></TR>';
+		echo '<input type=hidden name="SelectedCategory" value="' . $SelectedCategory . '">';
+		echo '<input type=hidden name="CategoryID" value="' . $_POST['CategoryID'] . '">';
+		echo '<center><table><tr><td>' . _('Category Code') . ':</td><td>' . $_POST['CategoryID'] . '</td></tr>';
 
 	} else { //end of if $SelectedCategory only do the else when a new record is being entered
 
-		echo '<CENTER><TABLE><TR><TD>' . _('Category Code') . ':</TD>
-                             <TD><input type="Text" name="CategoryID" SIZE=7 MAXLENGTH=6 value="' . $_POST['CategoryID'] . '"></TD></TR>';
+		echo '<center><table><tr><td>' . _('Category Code') . ':</td>
+                             <TD><input type="Text" name="CategoryID" size=7 maxlength=6 value="' . $_POST['CategoryID'] . '"></td></tr>';
 	}
 
 	//SQL to poulate account selection boxes
@@ -250,60 +297,60 @@ if (! isset($_GET['delete'])) {
 
 	$result = DB_query($sql,$db);
 
-	echo '<TR><TD>' . _('Category Description') . ':</TD>
-            <TD><input type="Text" name="CategoryDescription" SIZE=22 MAXLENGTH=20 value="' . $_POST['CategoryDescription'] . '"></TD></TR>';
+	echo '<tr><td>' . _('Category Description') . ':</td>
+            <td><input type="Text" name="CategoryDescription" size=22 maxlength=20 value="' . $_POST['CategoryDescription'] . '"></td></tr>';
 
-	echo '<TR><TD>' . _('Stock Type') . ':</TD>
-            <TD><SELECT name="StockType">';
+	echo '<tr><td>' . _('Stock Type') . ':</td>
+            <td><select name="StockType">';
 		if ($_POST['StockType']=='F') {
-			echo '<OPTION SELECTED VALUE="F">' . _('Finished Goods');
+			echo '<option selected value="F">' . _('Finished Goods');
 		} else {
-			echo '<OPTION VALUE="F">' . _('Finished Goods');
+			echo '<option value="F">' . _('Finished Goods');
 		}
 		if ($_POST['StockType']=='M') {
-			echo '<OPTION SELECTED VALUE="M">' . _('Raw Materials');
+			echo '<option selected value="M">' . _('Raw Materials');
 		} else {
-			echo '<OPTION VALUE="M">' . _('Raw Materials');
+			echo '<option value="M">' . _('Raw Materials');
 		}
 		if ($_POST['StockType']=='D') {
-			echo '<OPTION SELECTED VALUE="D">' . _('Dummy Item - (No Movements)');
+			echo '<option selected value="D">' . _('Dummy Item - (No Movements)');
 		} else {
-			echo '<OPTION VALUE="D">' . _('Dummy Item - (No Movements)');
+			echo '<option value="D">' . _('Dummy Item - (No Movements)');
 		}
 		if ($_POST['StockType']=='L') {
-			echo '<OPTION SELECTED VALUE="L">' . _('Labour');
+			echo '<option selected value="L">' . _('Labour');
 		} else {
-			echo '<OPTION VALUE="L">' . _('Labour');
+			echo '<option value="L">' . _('Labour');
 		}
 
-	echo '</SELECT></TD></TR>';
+	echo '</select></td></tr>';
 
 
-	echo '<TR><TD>' . _('Stock GL Code') . ':</TD><TD><SELECT name="StockAct">';
+	echo '<tr><td>' . _('Stock GL Code') . ':</td><td><select name="StockAct">';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['accountcode']==$_POST['StockAct']) {
-			echo '<OPTION SELECTED VALUE=';
+			echo '<option selected value=';
 		} else {
-			echo '<OPTION VALUE=';
+			echo '<option value=';
 		}
 		echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
 	} //end while loop
 	DB_data_seek($result,0);
-	echo '</SELECT></TD></TR>';
+	echo '</select></td></tr>';
 
-	echo '<TR><TD>' . _('WIP GL Code') . ':</TD><TD><SELECT name="WIPAct">';
+	echo '<tr><td>' . _('WIP GL Code') . ':</td><td><select name="WIPAct">';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['accountcode']==$_POST['WIPAct']) {
-			echo '<OPTION SELECTED VALUE=';
+			echo '<option selected value=';
 		} else {
-			echo '<OPTION VALUE=';
+			echo '<option value=';
 		}
 		echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
 
 	} //end while loop
-	echo '</SELECT></TD></TR>';
+	echo '</select></td></tr>';
 
 	$sql = "SELECT accountcode,
                  accountname
@@ -315,52 +362,133 @@ if (! isset($_GET['delete'])) {
 
 	$result1 = DB_query($sql,$db);
 
-	echo '<TR><TD>' . _('Stock Adjustments GL Code') . ':</TD>
-            <TD><SELECT name="AdjGLAct">';
+	echo '<tr><td>' . _('Stock Adjustments GL Code') . ':</td>
+            <td><select name="AdjGLAct">';
 
 	while ($myrow = DB_fetch_array($result1)) {
 		if ($myrow['accountcode']==$_POST['AdjGLAct']) {
-			echo '<OPTION SELECTED VALUE=';
+			echo '<option selected value=';
 		} else {
-			echo '<OPTION VALUE=';
+			echo '<option value=';
 		}
 		echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
 
 	} //end while loop
 	DB_data_seek($result1,0);
-	echo '</SELECT></TD></TR>';
+	echo '</select></td></tr>';
 
-	echo '<TR><TD>' . _('Price Variance GL Code') . ':</TD>
-            <TD><SELECT name="PurchPriceVarAct">';
+	echo '<tr><td>' . _('Price Variance GL Code') . ':</td>
+            <td><select name="PurchPriceVarAct">';
 
 	while ($myrow = DB_fetch_array($result1)) {
 		if ($myrow['accountcode']==$_POST['PurchPriceVarAct']) {
-			echo '<OPTION SELECTED VALUE=';
+			echo '<option selected value=';
 		} else {
-			echo '<OPTION VALUE=';
+			echo '<option value=';
 		}
 		echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
 
 	} //end while loop
 	DB_data_seek($result1,0);
 
-	echo '</SELECT></TD></TR>';
+	echo '</select></td></tr>';
 
-	echo '<TR><TD>' . _('Usage Variance GL Code') . ':</TD><TD><SELECT name="MaterialUseageVarAc">';
+	echo '<tr><td>' . _('Usage Variance GL Code') . ':</td><td><select name="MaterialUseageVarAc">';
 
 	while ($myrow = DB_fetch_array($result1)) {
 		if ($myrow['accountcode']==$_POST['MaterialUseageVarAc']) {
-			echo '<OPTION SELECTED VALUE=';
+			echo '<option selected value=';
 		} else {
-			echo '<OPTION VALUE=';
+			echo '<option value=';
 		}
 		echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
 
 	} //end while loop
 	DB_free_result($result1);
-	echo '</SELECT></TD></TR></TABLE>';
+	echo '</select></td></tr>
+			</table>';
 
-	echo '<CENTER><input type="Submit" name="submit" value="' . _('Enter Information') . '">';
+
+	if (isset($SelectedCategory)) {
+		//editing an existing stock category
+
+		$sql = "SELECT stkcatpropid,
+						label,
+						controltype,
+						defaultvalue,
+						reqatsalesorder
+                   FROM stockcatproperties
+                   WHERE categoryid='" . DB_escape_string($SelectedCategory) . "'
+                   ORDER BY stkcatpropid";
+
+		$result = DB_query($sql, $db);
+
+/*		echo '<br>Number of rows returned by the sql = ' . DB_num_rows($result) .
+			'<br>The SQL was:<br>' . $sql;
+*/
+		echo '<hr><table>';
+		$TableHeader = '<tr><td class="tableheader">' . _('Property Label') . '</td>
+						<td class="tableheader">' . _('Control Type') . '</td>
+						<td class="tableheader">' . _('Default Value') . '</td>
+						<td class="tableheader">' . _('Require in SO') . '</td>
+					</tr>';
+		echo $TableHeader;
+		$PropertyCounter =0;
+		$HeadingCounter =0;
+		while ($myrow = DB_fetch_array($result)) {
+			if ($HeadingCounter>15){
+				echo $TableHeader;
+				$HeadingCounter=0;
+			} else {
+				$HeadingCounter++;
+			}
+			echo '<input type="hidden" name="PropID' . $PropertyCounter .'" value=' . $myrow['stkcatpropid'] . '>';
+			echo '<tr><td><input type="textbox" name="PropLabel' . $PropertyCounter . '" size="50" maxlength="100" value="' . $myrow['label'] . '"></td>
+						<td><select name="PropControlType' . $PropertyCounter . '">';
+			if ($myrow['controltype']==0){
+				echo '<option selected value=0>' . _('Text Box') . '</option>';
+			} else {
+				echo '<option value=0>' . _('Text Box') . '</option';
+			}
+			if ($myrow['controltype']==1){
+				echo '<option selected value=1>' . _('Select Box') . '</option>';
+			} else {
+				echo '<option value=1>' . _('Select Box') . '</option';
+			}
+			if ($myrow['controltype']==2){
+				echo '<option selected value=2>' . _('Check Box') . '</option>';
+			} else {
+				echo '<option value=2>' . _('Check Box') . '</option>';
+			}
+
+			echo '</select></td>
+					<td><input type="textbox" name="PropDefault' . $PropertyCounter . '" value="' . $myrow['defaultvalue'] . '"></td>
+					<td align="center"><input type="checkbox" name="PropReqSO' . $PropertyCounter .'"';
+			if ($myrow['reqatsalesorder']==1){
+					echo '"checked"';
+			}
+			echo '></td>
+					<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&DeleteProperty=' . $myrow['stkcatpropid'] .'&SelectedCategory=' . $SelectedCategory . '" onclick=\'return confirm("' . _('Are you sure you wish to delete this property? All properties of this type set up for stock items will also be deleted.') . '");\'>' . _('Delete') . '</td></tr>';
+
+			$PropertyCounter++;
+		} //end loop around defined properties for this category
+		echo '<input type="hidden" name="PropID' . $PropertyCounter .'" value="NewProperty">';
+		echo '<tr><td><input type="textbox" name="PropLabel' . $PropertyCounter . '" size="50" maxlength="100"></td>
+					<td><select name="PropControlType' . $PropertyCounter . '">';
+		echo '<option selected value=0>' . _('Text Box') . '</option>';
+		echo '<option value=1>' . _('Select Box') . '</option>';
+		echo '<option value=2>' . _('Check Box') . '</option>';
+		echo '</select></td>
+				<td><input type="textbox" name="PropDefault' . $PropertyCounter . '"></td>
+				<td align="center"><input type="checkbox" name="PropReqSO' . $PropertyCounter .'"></td></tr>';
+		echo '</table>';
+		echo '<input type=hidden name="PropertyCounter" value=' . $PropertyCounter . '>';
+
+		echo '<CENTER><input type="Submit" name="submit" value="' . _('Enter Information') . '">';
+	} /* end if there is a category selected */
+
+
+
 
 	echo '</FORM>';
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 10;
 include('includes/session.inc');
@@ -77,7 +77,7 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'ChartDetails'
 
-	
+
 
 	$sql= "SELECT COUNT(*) FROM chartdetails WHERE chartdetails.accountcode = $SelectedAccount AND chartdetails.actual <>0";
 	$result = DB_query($sql,$db);
@@ -103,14 +103,14 @@ if (isset($_POST['submit'])) {
 
 		} else {
 			//PREVENT DELETES IF Company default accounts set up to this account
-			$sql= "SELECT COUNT(*) FROM companies 
-				WHERE debtorsact=$SelectedAccount 
-				OR pytdiscountact=$SelectedAccount 
-				OR creditorsact=$SelectedAccount 
-				OR payrollact=$SelectedAccount 
-				OR grnact=$SelectedAccount 
-				OR exchangediffact=$SelectedAccount 
-				OR purchasesexchangediffact=$SelectedAccount 
+			$sql= "SELECT COUNT(*) FROM companies
+				WHERE debtorsact=$SelectedAccount
+				OR pytdiscountact=$SelectedAccount
+				OR creditorsact=$SelectedAccount
+				OR payrollact=$SelectedAccount
+				OR grnact=$SelectedAccount
+				OR exchangediffact=$SelectedAccount
+				OR purchasesexchangediffact=$SelectedAccount
 				OR retainedearnings=$SelectedAccount";
 
 
@@ -125,8 +125,8 @@ if (isset($_POST['submit'])) {
 
 			} else  {
 				//PREVENT DELETES IF Company default accounts set up to this account
-				$sql= "SELECT COUNT(*) FROM taxauthorities 
-					WHERE taxglcode=$SelectedAccount 
+				$sql= "SELECT COUNT(*) FROM taxauthorities
+					WHERE taxglcode=$SelectedAccount
 					OR purchtaxglaccount =$SelectedAccount";
 
 				$ErrMsg = _('Could not test for tax authority GL codes because');
@@ -138,8 +138,8 @@ if (isset($_POST['submit'])) {
 					prnMsg( _('Cannot delete this account because it is used as one of the tax authority accounts'),'warn');
 				} else {
 //PREVENT DELETES IF SALES POSTINGS USE THE GL ACCOUNT
-					$sql= "SELECT COUNT(*) FROM salesglpostings 
-						WHERE salesglcode=$SelectedAccount 
+					$sql= "SELECT COUNT(*) FROM salesglpostings
+						WHERE salesglcode=$SelectedAccount
 						OR discountglcode=$SelectedAccount";
 
 					$ErrMsg = _('Could not test for existing sales interface GL codes because');
@@ -165,11 +165,11 @@ if (isset($_POST['submit'])) {
 
 						} else {
 //PREVENT DELETES IF STOCK POSTINGS USE THE GL ACCOUNT
-							$sql= "SELECT COUNT(*) FROM stockcategory 
-								WHERE stockact=$SelectedAccount 
-								OR adjglact=$SelectedAccount 
-								OR purchpricevaract=$SelectedAccount 
-								OR materialuseagevarac=$SelectedAccount 
+							$sql= "SELECT COUNT(*) FROM stockcategory
+								WHERE stockact=$SelectedAccount
+								OR adjglact=$SelectedAccount
+								OR purchpricevaract=$SelectedAccount
+								OR materialuseagevarac=$SelectedAccount
 								OR wipact=$SelectedAccount";
 
 							$Errmsg = _('Could not test for existing stock GL codes because');
@@ -182,7 +182,7 @@ if (isset($_POST['submit'])) {
 								prnMsg( _('Cannot delete this account because it is used by one of the stock GL posting interface records'),'warn');
 							} else {
 //PREVENT DELETES IF STOCK POSTINGS USE THE GL ACCOUNT
-								$sql= "SELECT COUNT(*) FROM bankaccounts 
+								$sql= "SELECT COUNT(*) FROM bankaccounts
 								WHERE accountcode=$SelectedAccount";
 								$ErrMsg = _('Could not test for existing bank account GL codes because');
 
@@ -307,7 +307,7 @@ or deletion of the records*/
 		<td>%s</td>
 		<td>%s</td>
 		<td><a href=\"%s&SelectedAccount=%s\">" . _('Edit') . "</td>
-		<td><a href=\"%s&SelectedAccount=%s&delete=1\">" . _('Delete') . "</td>
+		<td><a href=\"%s&SelectedAccount=%s&delete=1\" onclick=\"return confirm('" . _('Are you sure you wish to delete this account? Additional checks will be performed in any event to ensure data integrity is not compromised.') . "');\">" . _('Delete') . "</td>
 		</tr>",
 		$myrow[0],
 		$myrow[1],
