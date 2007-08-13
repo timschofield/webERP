@@ -1,13 +1,29 @@
 <?php
 
-/* $Revision: 1.36 $ */
-
+/* $Revision: 1.37 $ */
 
 $PageSecurity = 11;
 
 include('includes/session.inc');
 $title = _('Item Maintenance');
 include('includes/header.inc');
+
+?>
+
+<script type="text/javascript">
+	function ReloadForm () 
+	{
+		document.getElementById("submit").value = "TEST"
+		var stockid=document.getElementById("StockID").value
+		if (stockid.length > 1) 
+		{
+			document.getElementById("submit").value = "TEST"
+			document.getElementById("ItemForm").submit()
+		}
+	}
+</script>
+
+<?php
 
 echo "<A HREF='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</A><BR>';
 
@@ -461,8 +477,8 @@ if (isset($_POST['submit'])) {
 }
 
 
-echo '<FORM ENCTYPE="MULTIPART/FORM-DATA" METHOD="POST" ACTION="' . $_SERVER['PHP_SELF'] . '?' .SID .'"><CENTER><TABLE>
-	<TR><TD><TABLE>'; //Nested table
+echo '<form name="ItemForm" enctype="multipart/form-data" method="post" action="' . $_SERVER['PHP_SELF'] . '?' .SID .'"><center><table>
+	<tr><td><table>'; //Nested table
 
 if (!isset($StockID)) {
 
@@ -527,10 +543,10 @@ echo '<TR><TD>' . _('Part Description') . ' (' . _('short') . '):</TD><TD><input
 echo '<TR><TD>' . _('Part Description') . ' (' . _('long') . '):</TD><TD><textarea name="LongDescription" cols=40 rows=4>' . htmlentities($_POST['LongDescription'],ENT_QUOTES,_('ISO-8859-1')) . '</textarea></TD></TR>';
 
 // Add image upload for New Item  - by Ori
-echo '<TR><TD>'. _('Image File (.jpg)') . ':</TD><TD><input type="file" id="ItemPicture" name="ItemPicture"></TD></TR>';
+echo '<tr><td>'. _('Image File (.jpg)') . ':</td><td><input type="file" id="ItemPicture" name="ItemPicture"></td></tr>';
 // EOR Add Image upload for New Item  - by Ori
 
-echo '<TR><TD>' . _('Category') . ':</TD><TD><SELECT name=CategoryID>';
+echo '<tr><td>' . _('Category') . ':</td><td><select name="CategoryID" onChange="ReloadForm();">';
 
 $sql = "SELECT categoryid, categorydescription FROM stockcategory";
 $ErrMsg = _('The stock categories could not be retrieved because');
@@ -545,7 +561,7 @@ while ($myrow=DB_fetch_array($result)){
 	}
 }
 
-echo '</SELECT><a target="_blank" href="'. $rootpath . '/StockCategories.php?' . SID . '">' . _('Add or Modify Stock Categories') . '</a></TD></TR>';
+echo '</select><a target="_blank" href="'. $rootpath . '/StockCategories.php?' . SID . '">' . _('Add or Modify Stock Categories') . '</a></td></tr>';
 
 
 if ($_POST['EOQ']=='' or !isset($_POST['EOQ'])){

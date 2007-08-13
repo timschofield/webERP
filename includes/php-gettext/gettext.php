@@ -305,7 +305,7 @@ class gettext_reader {
     $plural = 0;
 
     eval("$string");
-    if ($plural >= $total) $plural = 0;
+    if ($plural >= $total) $plural = $total - 1;
     return $plural;
   }
 

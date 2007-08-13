@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 /* Common SQL Functions */
 
@@ -15,7 +15,6 @@ Also updates the transaction number
 12 sales receipt
 
 */
-
 	$SQL = "SELECT typeno FROM systypes WHERE typeid = " . $TransType;
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': <BR>' . _('The next transaction number could not be retrieved from the database because');
@@ -151,7 +150,6 @@ Function GetCreditAvailable($DebtorNo,&$db) {
 	$CreditAvailable -= $myrow['ordervalue'];
 
 	Return $CreditAvailable;
-
 }
 
 function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
@@ -222,7 +220,7 @@ function BomMaterialCost($Parent, $db) {
 	$MyRow = DB_fetch_row($result);
 	$MaterialCost = $MyRow[0];
 	$Result = DB_query('BEGIN',$db);
-	ItemCostUpdateGL($db, $parent, $MaterialCost, $OldCost, $QOH);
+	ItemCostUpdateGL($db, $Parent, $MaterialCost, $OldCost, $QOH);
 	$Result = DB_query('COMMIT',$db);
 	return $MaterialCost;	
 }

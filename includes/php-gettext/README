@@ -1,6 +1,6 @@
 PHP-gettext 1.0
 
-Copyright 2003, 2005 -- Danilo "angry with PHP[1]" Segan
+Copyright 2003, 2006 -- Danilo "angry with PHP[1]" Segan
 Licensed under GPLv2 (or any later version, see COPYING)
 
 [1] PHP is actually cyrillic, and translates roughly to 
@@ -115,6 +115,19 @@ Usage
     example/pigs.php for how do I do it, which means it's probably a
     bad way).
 
+
+Usage with gettext.inc (standard gettext interfaces emulation)
+
+    Check example in examples/pig_dropin.php, basically you include 
+    gettext.inc and use all the standard gettext interfaces as 
+    documented on:
+
+       http://www.php.net/gettext
+
+    The only catch is that you can check return value of setlocale()
+    to see if your locale is system supported or not.
+
+
 Example
 
     See in examples/ subdirectory. There are a couple of files.
@@ -130,10 +143,6 @@ Interesting TODO:
     rules. This won't be easy.
 
 Boring TODO:
-
-  o Create compatibility layer so these functions could replace
-    standard gettext library completely, and as straightforward as
-    possible (drop-in replacement).
 
   o Learn PHP and fix bugs, slowness and other stuff resulting from
     my lack of knowledge (but *maybe*, it's not my knowledge that is

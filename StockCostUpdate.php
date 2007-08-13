@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 2; /*viewing possible with inquiries but not mods */
 
@@ -64,7 +64,7 @@ if (isset($_POST['UpdateData'])){
 	} elseif ($OldCost != $NewCost){
 
 	$Result = DB_query('BEGIN',$db);
-	UpdateGL($db, $StockID, $NewCost, $OldCost, $_POST['QOH']);
+	ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $_POST['QOH']);
 
 
 		$SQL = "UPDATE stockmaster SET
@@ -145,9 +145,11 @@ if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens']) OR !isset
 	echo '<TR><TD>' . _('Cost') . ':</TD><TD ALIGN=RIGHT>' . number_format($myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'],2) . '</TD></TR></TABLE>';
 } else {
 	if ($myrow['mbflag']!='M') {
-	echo '<TR><TD>' . _('Standard Material Cost Per Unit') .':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME=MaterialCost VALUE=' . $myrow['materialcost'] . '></TD></TR>';}
+		echo '<TR><TD>' . _('Standard Material Cost Per Unit') .':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME="MaterialCost" VALUE=' . $myrow['materialcost'] . '></TD></TR>';
+	}
 
 	if ($myrow['mbflag']=='M'){
+		echo '<INPUT TYPE=HIDDEN NAME="MaterialCost" VALUE=' . $myrow['materialcost'] . '>';
 		echo '<TR><TD>' . _('Standard Material Cost Per Unit') .':</TD><TD ALIGN=LEFT>' . number_format($myrow['materialcost'],4) . '</TD></TR>';
 		echo '<TR><TD>' . _('Standard Labour Cost Per Unit') . ':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME=LabourCost VALUE=' . $myrow['labourcost'] . '></TD></TR>';
 		echo '<TR><TD>' . _('Standard Overhead Cost Per Unit') . ':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME=OverheadCost VALUE=' . $myrow['overheadcost'] . '></TD></TR>';

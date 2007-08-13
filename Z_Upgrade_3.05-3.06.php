@@ -1,11 +1,11 @@
 <?php
 $PageSecurity = 15;
 include('includes/session.inc');
-$title = _('Upgrade webERP 3.05 - 3.06');
+$title = _('Upgrade webERP 3.06 - 3.07');
 include('includes/header.inc');
 
 
-prnMsg(_('This script will run perform any modifications to the database since v 3.05 required to allow the additional functionality in version 3.06 scripts'),'info');
+prnMsg(_('This script will run perform any modifications to the database since v 3.06 required to allow the additional functionality in version 3.07 scripts'),'info');
 
 echo "<P><FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 echo '<INPUT TYPE=SUBMIT NAME=DoUpgrade VALUE="' . _('Perform Upgrade') . '">';
@@ -13,7 +13,7 @@ echo '</FORM>';
 
 if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 
-	$SQLScriptFile = file('./sql/mysql/upgrade3.05-3.06.sql');
+	$SQLScriptFile = file('./sql/mysql/upgrade3.06-3.07.sql');
 
 	$ScriptFileEntries = sizeof($SQLScriptFile);
 	$ErrMsg = _('The script to upgrade the database failed because');

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 11;
 
@@ -484,10 +484,10 @@ if (! isset($_GET['delete'])) {
 		echo '</table>';
 		echo '<input type=hidden name="PropertyCounter" value=' . $PropertyCounter . '>';
 
-		echo '<CENTER><input type="Submit" name="submit" value="' . _('Enter Information') . '">';
 	} /* end if there is a category selected */
 
 
+	echo '<CENTER><input type="Submit" name="submit" value="' . _('Enter Information') . '">';
 
 
 	echo '</FORM>';

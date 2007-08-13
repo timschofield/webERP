@@ -1,3 +1,55 @@
+2006-02-07  Danilo Šegan  <danilo@gnome.org>
+
+	* examples/pigs_dropin.php: comment-out bind_textdomain_codeset
+
+	* gettext.inc (T_bind_textdomain_codeset): bind_textdomain_codeset
+	is available only in PHP 4.2.0+ (thanks to Jens A. Tkotz).
+
+	* Makefile: Include gettext.inc in DIST_FILES, VERSION up to
+	1.0.7.
+
+2006-02-03  Danilo Šegan  <danilo@gnome.org>
+
+	Added setlocale() emulation as well.
+	
+	* examples/pigs_dropin.php: Use T_setlocale() and locale_emulation().
+	* examples/pigs_fallback.php: Use T_setlocale() and locale_emulation().
+
+	* gettext.inc: 	Added globals $EMULATEGETTEXT and $CURRENTLOCALE.
+	(locale_emulation): Whether emulation is active.
+	(_check_locale): Rewrite.
+	(_setlocale): Added emulated setlocale function.
+	(T_setlocale): Wrapper around _setlocale.
+	(_get_reader): Use variables and _setlocale.
+
+2006-02-02  Danilo Šegan  <danilo@gnome.org>
+
+	Fix bug #12192.
+
+	* examples/locale/sr_CS/LC_MESSAGES/messages.po: Correct grammar.
+	* examples/locale/sr_CS/LC_MESSAGES/messages.mo: Rebuild.
+
+2006-02-02  Danilo Šegan  <danilo@gnome.org>
+
+	Fix bug #15419.
+	
+	* streams.php: Support for PHP 5.1.1 fread() which reads most 8kb.
+	(Fix by Piotr Szotkowski <shot@hot.pl>)
+
+2006-02-02  Danilo Šegan  <danilo@gnome.org>
+
+	Merge Steven Armstrong's changes, supporting standard gettext
+	interfaces: 
+
+	* examples/*: Restructured examples.
+	* gettext.inc: Added.
+	* AUTHORS: Added Steven.
+	* Makefile (VERSION): Up to 1.0.6.
+	
+2006-01-28  Nico Kaiser  <nico@siriux.net>
+
+	* gettext.php (select_string): Fix "true" <-> 1 difference of PHP
+
 2005-07-29  Danilo Šegan  <danilo@gnome.org>
 
 	* Makefile (VERSION): Up to 1.0.5.

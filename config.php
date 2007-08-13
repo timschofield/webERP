@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.79 $ */
+/* $Revision: 1.80 $ */
 
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
@@ -22,7 +22,7 @@ $allow_demo_mode = True;
 
 // webERP version
 
-$Version = '3.06';
+$Version = '3.071';
 
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time
