@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 define ('LIKE','LIKE');
 
@@ -135,10 +135,10 @@ function DB_Maintenance($Conn){
 	while ($myrow = DB_fetch_row($TablesResult)){
 		$Result = DB_query('OPTIMIZE TABLE ' . $myrow[0],$Conn);
 	}
-	
-	$Result = DB_query('UPDATE config 
-				SET confvalue="' . Date('Y-m-d') . '" 
-				WHERE confname="DB_Maintenance_LastRun"',
+
+	$Result = DB_query("UPDATE config 
+				SET confvalue='" . Date('Y-m-d') . "' 
+				WHERE confname='DB_Maintenance_LastRun'",
 				$Conn);
 }
 
