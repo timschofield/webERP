@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 15;
 
@@ -77,7 +77,30 @@ if (isset($_POST['submit'])) {
 	if ( $InputError !=1) {
 	//run the SQL from either of the above possibilites
 		$result = DB_query($sql,$db);
-	
+		
+
+	// Fetch the default price list.
+		$sql = "SELECT confvalue 
+					FROM config
+					WHERE confname='DefaultPriceList'";
+		$result = DB_query($sql,$db);
+		$DefaultPriceList = DB_fetch_row($checkresult);
+		
+	// Does it exist
+		$checkSql = "SELECT count(*) 
+			     FROM salestypes
+			     WHERE typeabbrev = '" . $DefaultPriceList . "'";
+		$checkresult = DB_query($checkSql,$db);
+		$checkrow = DB_fetch_row($checkresult);
+		
+	// If it doesnt then update config with newly created one.
+		if ($checkrow[0] == 0) {
+			$sql = "UPDATE config 
+					SET confvalue='".$_POST['TypeAbbrev']."' 
+					WHERE confname='DefaultPriceList'";
+			$result = DB_query($sql,$db);
+		}
+		
 		prnMsg($msg,'success');
 	
 		unset($SelectedType);
