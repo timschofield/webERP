@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 15;
 
@@ -84,7 +84,8 @@ if (isset($_POST['submit'])) {
 					FROM config
 					WHERE confname='DefaultPriceList'";
 		$result = DB_query($sql,$db);
-		$DefaultPriceList = DB_fetch_row($checkresult);
+		$PriceListRow = DB_fetch_row($result);
+		$DefaultPriceList = $PriceListRow[0];
 		
 	// Does it exist
 		$checkSql = "SELECT count(*) 
