@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing 
@@ -663,7 +663,7 @@ then do the updates and inserts to process the invoice entered */
 								The cost of these items - $EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate
 								*/
 								
-								$sql ='SELECT SUM(quantity) FROM locstock WHERE stockid="' . $EnteredGRN->ItemCode . '"';
+								$sql ="SELECT SUM(quantity) FROM locstock WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 								$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity on hand could not be retrieved from the database');
 								$DbgMsg = _('The following SQL to retrieve the total stock quantity was used');
 								$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
@@ -745,12 +745,12 @@ then do the updates and inserts to process the invoice entered */
 									
 									$CostIncrement = ($PurchPriceVar - $WriteOffToVariances) / $TotalQuantityOnHand;
 
-									$sql = 'UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost, 
-									materialcost=materialcost+' . $CostIncrement . ' WHERE stockid="' . $EnteredGRN->ItemCode . '"';
+									$sql = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost, 
+									materialcost=materialcost+" . $CostIncrement . " WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 									$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
 								} else {
-									$sql = 'UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
-									materialcost=' . ($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) . ' WHERE stockid="' . $EnteredGRN->ItemCode . '"';
+									$sql = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
+									materialcost=" . ($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) . " WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 									$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, True);
 								}
 								/* End of Weighted Average Costing Code */
