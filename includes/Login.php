@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 // Display demo user name and password within login form if $allow_demo_mode is true
 include ('includes/LanguageSetup.php');
 
@@ -61,8 +61,7 @@ if (get_magic_quotes_gpc()){
     <script language="JavaScript" type="text/javascript">
     //<![CDATA[
             <!--
-            document.forms[0].CompanyNameField.select();
-            document.forms[0].CompanyNameField.focus();
+                  document.loginform.UserNameEntryField.focus();
             //-->
     //]]>
     </script>
