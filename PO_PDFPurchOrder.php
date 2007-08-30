@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -113,7 +113,7 @@ if (isset($OrderNo) && $OrderNo != "" && $OrderNo > 0){
 			  	'<LI><A HREF="'. $rootpath .'/PO_SelectPurchOrder.php?' . SID . '">'.
 				_('Select another order'). '</A>'.
 			  	'<LI><A HREF="' . $rootpath . '/index.php?' . SID . '">'. _('Back to the menu').'</A>';
-			  echo '</BODY</HTML>';
+			  echo '</BODY></HTML>';
 			  include('includes/footer.inc');
 			  exit;
 		   }//AllowedToPrint
