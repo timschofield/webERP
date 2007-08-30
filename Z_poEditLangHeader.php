@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 /* Steve Kitchen */
 
@@ -56,8 +56,14 @@ if (isset($_POST['submit'])) {
 /* Done writing, now move the original file to a .old */
 /* and the new one to the default */
 
-	$Result = rename($PathToLanguage, $PathToLanguage . '.old');
-	$Result = rename($PathToNewLanguage, $PathToLanguage);
+		if (file_exists($PathToLanguage . '.old')) {
+			$Result = rename($PathToLanguage . '.old', $PathToLanguage . '.bak');
+		}
+		$Result = rename($PathToLanguage, $PathToLanguage . '.old');
+		$Result = rename($PathToNewLanguage, $PathToLanguage);
+		if (file_exists($PathToLanguage . '.bak')) {
+			$Result = unlink($PathToLanguage . '.bak');
+		}
 
 	prnMsg (_('Done') . '<BR>', 'info', ' ');
 
@@ -69,6 +75,11 @@ if (isset($_POST['submit'])) {
 
 	$Result = fclose($fpIn);
 
+if (!is_writable('./locale/' . $_SESSION['Language'])) {
+	prnMsg(_('You do not have write access to the required files please contact your system administrator'),'error');
+}
+else
+{
   echo '<BR><BR>&nbsp;' . _('To change language click on the user name at the top left, change to language desired and click Modify');
   echo '<BR>&nbsp;' . _('Make sure you have selected the correct language to translate!');
   echo '<BR>&nbsp;' . _('When finished modifying you must click on Modify at the bottom in order to save changes');
@@ -96,7 +107,7 @@ if (isset($_POST['submit'])) {
 	echo '</FORM>';
 	echo '</CENTER>';
 }
-
+}
 include('includes/footer.inc');
 
 ?>

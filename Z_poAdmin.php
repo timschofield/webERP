@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 /* Steve Kitchen */
 /* Up front menu for language file maintenance */
 
@@ -18,10 +18,16 @@ if (!function_exists('gettext')){
 	exit;
 }
 
-echo '<P><A HREF="' . $rootpath . '/Z_poRebuildDefault.php?' . SID . '">'.  _('Rebuild the System Default Language File') . '</A>';
-echo '<P><A HREF="' . $rootpath . '/Z_poAddLanguage.php?' . SID . '">' . _('Add a New Language to the System') .'</A>';
-echo '<P><A HREF="' . $rootpath . '/Z_poEditLangHeader.php?' . SID . '">'. _('Edit a Language File Header') . '</A>';
-echo '<P><A HREF="' . $rootpath . '/Z_poEditLangModule.php?' . SID . '">'. _('Edit a Language File Module') . '</A>';
+if (!is_writable('./locale/' . $_SESSION['Language'])) {
+	prnMsg(_('You do not have write access to the required files please contact your system administrator'),'error');
+}
+else
+{
+	echo '<P><A HREF="' . $rootpath . '/Z_poRebuildDefault.php?' . SID . '">'.  _('Rebuild the System Default Language File') . '</A>';
+	echo '<P><A HREF="' . $rootpath . '/Z_poAddLanguage.php?' . SID . '">' . _('Add a New Language to the System') .'</A>';
+	echo '<P><A HREF="' . $rootpath . '/Z_poEditLangHeader.php?' . SID . '">'. _('Edit a Language File Header') . '</A>';
+	echo '<P><A HREF="' . $rootpath . '/Z_poEditLangModule.php?' . SID . '">'. _('Edit a Language File Module') . '</A>';
+}
 
 include('includes/footer.inc');
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 /* Steve Kitchen */
 
@@ -80,8 +80,14 @@ if (isset($_POST['module'])) {
     /* Done writing, now move the original file to a .old */
     /* and the new one to the default */
 
+		if (file_exists($PathToLanguage . '.old')) {
+			$Result = rename($PathToLanguage . '.old', $PathToLanguage . '.bak');
+		}
 		$Result = rename($PathToLanguage, $PathToLanguage . '.old');
 		$Result = rename($PathToNewLanguage, $PathToLanguage);
+		if (file_exists($PathToLanguage . '.bak')) {
+			$Result = unlink($PathToLanguage . '.bak');
+		}
 		
     /*now need to create the .mo file from the .po file */
 		$msgfmtCommand = 'msgfmt ' . $PathToLanguage . ' -o ' . $PathToLanguage_mo;
@@ -177,16 +183,35 @@ if (isset($_POST['module'])) {
 /* $ListDirCmd should probably be defined in config.php as a global value */
 /* You'll need to change it if you are running a Windows server - sorry !! */
 
-	$ListDirCmd = '/bin/ls';
-
-	$PathToModules = $ListDirCmd . ' *.php includes/*.php includes/*.inc';
-	$fpIn = popen($PathToModules, 'r');
-	while (!feof($fpIn)) {
-		$AvailableModules[] = fgets($fpIn);
+	if ($handle = opendir('.')) {
+    	$i=0;
+    	while (false !== ($file = readdir($handle))) {
+        if ((substr($file, 0, 1) != ".") && (!is_dir($file))) {
+          $AvailableModules[$i] = $file;
+        	$i += 1;
+        }
+    	}
+  	  closedir($handle);
 	}
-	$NumberOfModules = sizeof($AvailableModules) - 1;
-	$Result = pclose($fpIn);
 
+	if ($handle = opendir(".//includes")) {
+    	while (false !== ($file = readdir($handle))) {
+        if ((substr($file, 0, 1) != ".") && (!is_dir($file))) {
+          $AvailableModules[$i] = $file;
+        	$i += 1;
+        }
+    	}
+  	  closedir($handle);
+	}
+	
+	sort($AvailableModules);
+	$NumberOfModules = sizeof($AvailableModules) - 1;
+
+if (!is_writable('./locale/' . $_SESSION['Language'])) {
+	prnMsg(_('You do not have write access to the required files please contact your system administrator'),'error');
+}
+else
+{
 	echo '<CENTER>';
 	echo '<BR><TABLE><TR><TD>';
 	echo '<FORM METHOD="post" ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
@@ -209,7 +234,7 @@ if (isset($_POST['module'])) {
 	echo '</FORM>';
 	echo '</TD></TR></TABLE>';
 	echo '</CENTER>';
-
+}
 }
 
 include('includes/footer.inc');
