@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -52,6 +52,8 @@ Class Cart {
 	Var $TaxGroup;
 	Var $DispatchTaxProvince;
 	VAR $vtigerProductID;
+	Var $DefaultPOLine;
+	Var $DeliveryDays;
 
 	function Cart(){
 	/*Constructor function initialises a new shopping cart */
@@ -84,19 +86,21 @@ Class Cart {
 				$UpdateDB='No',
 				$LineNumber=-1,
 				$TaxCategory=0,
-				$vtigerProductID=''){
-		
-				
+				$vtigerProductID='',
+				$ItemDue,
+				$POLine){
+
+
 		if (isset($StockID) AND $StockID!="" AND $Qty>0 AND isset($Qty)){
 
 			if ($Price<0){ /*madness check - use a credit note to give money away!*/
 				$Price=0;
 			}
-			
+
 			if ($LineNumber==-1){
 				$LineNumber = $this->LineCounter;
 			}
-			
+
 			$this->LineItems[$LineNumber] = new LineDetails($LineNumber,
 									$StockID,
 									$Descr,
@@ -115,9 +119,11 @@ Class Cart {
 									$Serialised,
 									$DecimalPlaces,
 									$Narrative,
-									$TaxCategory);
+									$TaxCategory,
+									$ItemDue,
+									$POLine);
 			$this->ItemsOrdered++;
-			
+
 			if ($UpdateDB=='Yes'){
 				/*ExistingOrder !=0 set means that an order is selected or created for entry
 				of items - ExistingOrder is set to 0 in scripts that should not allow
@@ -133,25 +139,29 @@ Class Cart {
 									stkcode,
 									quantity,
 									unitprice,
-									discountpercent)
+									discountpercent,
+									itemdue,
+									poline)
 								VALUES(" . $this->LineCounter . ",
 									" . $_SESSION['ExistingOrder'] . ",
 									'" . trim(strtoupper($StockID)) ."',
 									" . $Qty . ",
 									" . $Price . ",
-									" . $Disc . ")";
+									" . $Disc . ",
+									" . $ItemDue . ",
++									" . $POLine . ")";
 				$result = DB_query($sql,
 							$db ,
 							_('The order line for') . ' ' . strtoupper($StockID) . ' ' ._('could not be inserted'));
 			}
-			
+
 			$this->LineCounter = $LineNumber + 1;
 			Return 1;
 		}
 		Return 0;
 	}
 
-	function update_cart_item( $UpdateLineNumber, $Qty, $Price, $Disc, $Narrative, $UpdateDB='No'){
+	function update_cart_item( $UpdateLineNumber, $Qty, $Price, $Disc, $Narrative, $UpdateDB='No', $ItemDue, $POLine){
 
 		if ($Qty>0){
 			$this->LineItems[$UpdateLineNumber]->Quantity = $Qty;
@@ -159,6 +169,8 @@ Class Cart {
 		$this->LineItems[$UpdateLineNumber]->Price = $Price;
 		$this->LineItems[$UpdateLineNumber]->DiscountPercent = $Disc;
 		$this->LineItems[$UpdateLineNumber]->Narrative = $Narrative;
+		$this->LineItems[$UpdateLineNumber]->ItemDue = $ItemDue;
+		$this->LineItems[$UpdateLineNumber]->POLine = $POLine;
 
 		if ($UpdateDB=='Yes'){
 			global $db;
@@ -166,7 +178,9 @@ Class Cart {
 						SET quantity=" . $Qty . ",
 						unitprice=" . $Price . ",
 						discountpercent=" . $Disc . ",
-						narrative ='" . $Narrative . "'
+						narrative ='" . DB_escape_string($Narrative) . "',
+						itemdue = '" . $ItemDue . "',
+						poline = '" . DB_escape_string($POLine) . "'
 					WHERE orderno=" . $_SESSION['ExistingOrder'] . "
 					AND orderlineno=" . $UpdateLineNumber
 				, $db
@@ -175,7 +189,7 @@ Class Cart {
 	}
 
 	function remove_from_cart($LineNumber, $UpdateDB='No'){
-		
+
 		if (!isset($LineNumber) || $LineNumber=='' || $LineNumber < 0){ /* over check it */
 			prnMsg(_('No Line Number passed to remove_from_cart, so nothing has been removed.'), 'error');
 			return;
@@ -193,7 +207,7 @@ Class Cart {
 				prnMsg( _('Deleted Line Number'). ' ' . $LineNumber . ' ' . _('from existing Order Number').' ' . $_SESSION['ExistingOrder'], 'success');
 			} else {
 				/* something has been delivered. Clear the remaining Qty and Mark Completed */
-				$result = DB_query("UPDATE salesorderdetails SET quantity=qtyinvoiced, completed=1 
+				$result = DB_query("UPDATE salesorderdetails SET quantity=qtyinvoiced, completed=1
 									WHERE orderno=".$_SESSION['ExistingOrder']." AND orderlineno=" . $LineNumber ,
 									$db,
 								   _('The order line could not be updated as completed because')
@@ -204,7 +218,7 @@ Class Cart {
 		/* Since we need to check the LineItem above and might affect the DB, don't unset until after DB is updates occur */
 		unset($this->LineItems[$LineNumber]);
 		$this->ItemsOrdered--;
-		
+
 	}//remove_from_cart()
 
 	function Get_StockID_List(){
@@ -241,7 +255,7 @@ Class Cart {
 		}
 		return 0;
 	}
-	
+
 	function AllDummyLineItems(){
 		foreach ($this->LineItems as $StockItem) {
 			if($StockItem->MBflag !='D'){
@@ -250,17 +264,17 @@ Class Cart {
 		}
 		return true;
 	}
-	
+
 	function GetExistingTaxes($LineNumber, $stkmoveno){
-	
+
 		global $db;
-		
-		/*Gets the Taxes and rates applicable to this line from the TaxGroup of the branch and TaxCategory of the item 
+
+		/*Gets the Taxes and rates applicable to this line from the TaxGroup of the branch and TaxCategory of the item
 		and the taxprovince of the dispatch location */
 
-		$sql = 'SELECT stockmovestaxes.taxauthid, 
+		$sql = 'SELECT stockmovestaxes.taxauthid,
 				taxauthorities.description,
-				taxauthorities.taxglcode, 
+				taxauthorities.taxglcode,
 				stockmovestaxes.taxcalculationorder,
 				stockmovestaxes.taxontax,
 				stockmovestaxes.taxrate
@@ -271,9 +285,9 @@ Class Cart {
 
 		$ErrMsg = _('The taxes and rates for this item could not be retreived because');
 		$GetTaxRatesResult = DB_query($sql,$db,$ErrMsg);
-		
+
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
-		
+
 			$this->LineItems[$LineNumber]->Taxes[$myrow['taxcalculationorder']] =
 								  new Tax($myrow['taxcalculationorder'],
 										$myrow['taxauthid'],
@@ -282,13 +296,13 @@ Class Cart {
 										$myrow['taxontax'],
 										$myrow['taxglcode']);
 		}
-	} //end method GetExistingTaxes		
-	
+	} //end method GetExistingTaxes
+
 	function GetTaxes($LineNumber){
-	
+
 		global $db;
-		
-		/*Gets the Taxes and rates applicable to this line from the TaxGroup of the branch and TaxCategory of the item 
+
+		/*Gets the Taxes and rates applicable to this line from the TaxGroup of the branch and TaxCategory of the item
 		and the taxprovince of the dispatch location */
 
 		$SQL = "SELECT taxgrouptaxes.calculationorder,
@@ -301,16 +315,16 @@ Class Cart {
 				taxauthrates.taxauthority=taxgrouptaxes.taxauthid
 				INNER JOIN taxauthorities ON
 				taxauthrates.taxauthority=taxauthorities.taxid
-			WHERE taxgrouptaxes.taxgroupid=" . $this->TaxGroup . " 
-			AND taxauthrates.dispatchtaxprovince=" . $this->DispatchTaxProvince . " 
+			WHERE taxgrouptaxes.taxgroupid=" . $this->TaxGroup . "
+			AND taxauthrates.dispatchtaxprovince=" . $this->DispatchTaxProvince . "
 			AND taxauthrates.taxcatid = " . $this->LineItems[$LineNumber]->TaxCategory . "
 			ORDER BY taxgrouptaxes.calculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retreived because');
 		$GetTaxRatesResult = DB_query($SQL,$db,$ErrMsg);
-		
+
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
-		
+
 			$this->LineItems[$LineNumber]->Taxes[$myrow['calculationorder']] = new Tax($myrow['calculationorder'],
 													$myrow['taxauthid'],
 													$myrow['description'],
@@ -321,9 +335,9 @@ Class Cart {
 	} //end method GetTaxes
 
 	function GetFreightTaxes () {
-		
+
 		global $db;
-		
+
 		/*Gets the Taxes and rates applicable to the freight based on the tax group of the branch combined with the tax category for this particular freight
 		and SESSION['FreightTaxCategory'] the taxprovince of the dispatch location */
 
@@ -336,7 +350,7 @@ Class Cart {
   		  prnMsg( _('Cannot find tax category Freight which must always be defined'),'error');
 		  exit();
 		}
-		
+
 		$SQL = "SELECT taxgrouptaxes.calculationorder,
 					taxauthorities.description,
 					taxgrouptaxes.taxauthid,
@@ -347,16 +361,16 @@ Class Cart {
 				taxauthrates.taxauthority=taxgrouptaxes.taxauthid
 				INNER JOIN taxauthorities ON
 				taxauthrates.taxauthority=taxauthorities.taxid
-			WHERE taxgrouptaxes.taxgroupid=" . $this->TaxGroup . " 
-			AND taxauthrates.dispatchtaxprovince=" . $this->DispatchTaxProvince . " 
-			AND taxauthrates.taxcatid = " . $TaxCatID . "  
+			WHERE taxgrouptaxes.taxgroupid=" . $this->TaxGroup . "
+			AND taxauthrates.dispatchtaxprovince=" . $this->DispatchTaxProvince . "
+			AND taxauthrates.taxcatid = " . $TaxCatID . "
 			ORDER BY taxgrouptaxes.calculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retreived because');
 		$GetTaxRatesResult = DB_query($SQL,$db,$ErrMsg);
-		
+
 		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
-		
+
 			$this->FreightTaxes[$myrow['calculationorder']] = new Tax($myrow['calculationorder'],
 											$myrow['taxauthid'],
 											$myrow['description'],
@@ -365,7 +379,7 @@ Class Cart {
 											$myrow['taxglcode']);
 		}
 	} //end method GetFreightTaxes()
-	
+
 } /* end of cart class defintion */
 
 Class LineDetails {
@@ -393,6 +407,8 @@ Class LineDetails {
 	Var $TaxCategory;
 	Var $Taxes;
 	Var $WorkOrderNo;
+	Var $ItemDue;
+	Var $POLine;
 
 	function LineDetails ($LineNumber,
 				$StockItem,
@@ -412,7 +428,9 @@ Class LineDetails {
 				$Serialised,
 				$DecimalPlaces,
 				$Narrative,
-				$TaxCategory){
+				$TaxCategory,
+				$ItemDue,
+				$POLine	){
 
 /* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNumber = $LineNumber;
@@ -442,8 +460,10 @@ Class LineDetails {
 		$this->Taxes = array();
 		$this->TaxCategory = $TaxCategory;
 		$this->WorkOrderNo = 0;
-	} //end constructor function for LineDetails		
-		
+		$this->ItemDue = $ItemDue;
+		$this->POLine = $POLine;
+	} //end constructor function for LineDetails
+
 }
 
 Class Tax {
@@ -453,14 +473,14 @@ Class Tax {
 	Var $TaxRate;
 	Var $TaxOnTax;
 	var $TaxGLCode;
-		
-	function Tax ($TaxCalculationOrder, 
-			$TaxAuthID, 
-			$TaxAuthDescription, 
-			$TaxRate, 
-			$TaxOnTax, 
+
+	function Tax ($TaxCalculationOrder,
+			$TaxAuthID,
+			$TaxAuthDescription,
+			$TaxRate,
+			$TaxOnTax,
 			$TaxGLCode){
-			
+
 		$this->TaxCalculationOrder = $TaxCalculationOrder;
 		$this->TaxAuthID = $TaxAuthID;
 		$this->TaxAuthDescription = $TaxAuthDescription;

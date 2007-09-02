@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -45,10 +45,10 @@ If (isset($_POST['ProcessOrder']) OR isset($_POST['MakeRecurringOrder'])) {
 
 }
 
-If (isset($_POST['Update']) 
-	OR isset($_POST['BackToLineDetails']) 
+If (isset($_POST['Update'])
+	OR isset($_POST['BackToLineDetails'])
 	OR isset($_POST['MakeRecurringOrder']))   {
-	
+
 	$InputErrors =0;
 	If (strlen($_POST['DeliverTo'])<=1){
 		$InputErrors =1;
@@ -169,7 +169,7 @@ If (isset($_POST['Update'])
 
 
 if(isset($_POST['MakeRecurringOrder']) AND ! $InputErrors){
-	
+
 	echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . '/RecurringSalesOrders.php?' . SID . "&NewRecurringOrder=Yes'>";
 	prnMsg(_('You should automatically be forwarded to the entry of recurring order details page') . '. ' . _('If this does not happen') . '(' . _('if the browser does not support META Refresh') . ') ' ."<a href='" . $rootpath . '/RecurringOrders.php?' . SID . "&NewRecurringOrder=Yes'>". _('click here') .'</a> '. _('to continue'),'info');
 	include('includes/footer.inc');
@@ -288,7 +288,9 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 						unitprice,
 						quantity,
 						discountpercent,
-						narrative)
+						narrative,
+						poline,
+						itemdue)
 					VALUES (";
 
 	foreach ($_SESSION['Items']->LineItems as $StockItem) {
@@ -300,32 +302,34 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 					". $StockItem->Price . ",
 					" . $StockItem->Quantity . ",
 					" . floatval($StockItem->DiscountPercent) . ",
-					'" . DB_escape_string($StockItem->Narrative) . "'
+					'" . DB_escape_string($StockItem->Narrative) . "',
+					'" . DB_escape_string($StockItem->POLine) . "',
+					'" . FormatDateForSQL($StockItem->ItemDue) . "'
 				)";
 		$Ins_LineItemResult = DB_query($LineItemsSQL,$db);
 	} /* inserted line items into sales order details */
 
-		
+
 	if ($_SESSION['Items']->Quotation==1){
 		prnMsg(_('Quotation Number') . ' ' . $OrderNo . ' ' . _('has been entered'),'success');
 	} else {
 		prnMsg(_('Order Number') . ' ' . $OrderNo . ' ' . _('has been entered'),'success');
 	}
-	
+
 	if (count($_SESSION['AllowedPageSecurityTokens'])>1){
 		/* Only allow print of packing slip for internal staff - customer logon's cannot go here */
-		
+
 		if ($_POST['Quotation']==0) { /*then its not a quotation its a real order */
-		
+
 			echo "<P><A  target='_blank' HREF='$rootpath/PrintCustOrder.php?" . SID . '&TransNo=' . $OrderNo . "'>". _('Print packing slip') . ' (' . _('Preprinted stationery') . ')' .'</A>';
 			echo "<P><A  target='_blank' HREF='$rootpath/PrintCustOrder_generic.php?" . SID . '&TransNo=' . $OrderNo . "'>". _('Print packing slip') . ' (' . _('Laser') . ')' .'</A>';
 
 			echo "<P><A HREF='$rootpath/ConfirmDispatch_Invoice.php?" . SID . "&OrderNumber=$OrderNo'>". _('Confirm Order Delivery Quantities and Produce Invoice') ."</A>";
-			
+
 		} else {
 			/*link to print the quotation */
 			echo "<P><A HREF='$rootpath/PDFQuotation.php?" . SID . "&QuotationNo=$OrderNo'>". _('Print Quotation') ."</A>";
-			
+
 		}
 		echo "<P><A HREF='$rootpath/SelectOrderItems.php?" . SID . "&NewOrder=Yes'>". _('Add Sales Order') .'</A>';
 	} else {
@@ -385,11 +389,13 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 			$Completed = 0;
 		}
 
-		$LineItemsSQL = "UPDATE salesorderdetails SET unitprice="  . $StockItem->Price . ', 
-								quantity=' . $StockItem->Quantity . ', 
-								discountpercent=' . floatval($StockItem->DiscountPercent) . ', 
-								completed=' . $Completed . ' 
-					WHERE salesorderdetails.orderno=' . $_SESSION['ExistingOrder'] . " 
+		$LineItemsSQL = "UPDATE salesorderdetails SET unitprice="  . $StockItem->Price . ',
+								quantity=' . $StockItem->Quantity . ',
+								discountpercent=' . floatval($StockItem->DiscountPercent) . ',
+								completed=' . $Completed . ",
+								poline='" . DB_escape_string($StockItem->POLine) . "',
+								itemdue='" . FormatDateForSQL($StockItem->ItemDue) . "'
+					WHERE salesorderdetails.orderno=" . $_SESSION['ExistingOrder'] . "
 					AND salesorderdetails.orderlineno='" . $StockItem->LineNumber . "'";
 
 		$ErrMsg = _('The updated order line cannot be modified because');
@@ -403,7 +409,7 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 	unset($_SESSION['Items']);
 
 	prnMsg(_('Order number') .' ' . $_SESSION['ExistingOrder'] . ' ' . _('has been updated'),'success');
-	
+
 	echo "<BR><A HREF='$rootpath/PrintCustOrder.php?" . SID . '&TransNo=' . $_SESSION['ExistingOrder'] . "'>". _('Print packing slip - pre-printed stationery') .'</A>';
 	echo "<P><A HREF='$rootpath/ConfirmDispatch_Invoice.php?" . SID . '&OrderNumber=' . $_SESSION['ExistingOrder'] . "'>". _('Confirm Order Delivery Quantities and Produce Invoice') ."</A>";
 	echo "<BR><A  target='_blank' HREF='$rootpath/PrintCustOrder_generic.php?" . SID . '&TransNo=' . $_SESSION['ExistingOrder'] . "'>". _('Print packing slip') . ' (' . _('Laser') . ')' .'</A>';
@@ -414,7 +420,7 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 
 
 if ($_SESSION['Items']->SpecialInstructions) {
-  prnMsg($_SESSION['Items']->SpecialInstructions,'warn');
+  prnMsg($_SESSION['Items']->SpecialInstructions,'info');
 }
 echo '<CENTER><FONT SIZE=4><B>' . _('Customer No.') . ': ' . $_SESSION['Items']->DebtorNo;
 echo '&nbsp;&nbsp;' . _('Customer Name') . ' : ' . $_SESSION['Items']->CustomerName . '</B></FONT></CENTER>';
@@ -426,7 +432,7 @@ echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . $SID . "' METHOD=POST>";
 if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
 	echo '<CENTER><B>';
-	
+
 	if ($_SESSION['Items']->Quotation==1){
 		echo _('Quotation Summary');
 	} else {
@@ -657,7 +663,7 @@ echo '<TR>
             }
             switch ($p) {
                 case 2:
-                    echo _('Hide Company Details/Logo'); 
+                    echo _('Hide Company Details/Logo');
 		    break;
                 default:
                     echo _('Show Company Details/Logo');
@@ -665,7 +671,7 @@ echo '<TR>
             }
         }
     echo '</SELECT></TD></TR>';
-    
+
 if ($_SESSION['PrintedPackingSlip']==1){
 
     echo '<TR>

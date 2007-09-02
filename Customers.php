@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 $PageSecurity = 3;
 
@@ -19,7 +19,7 @@ if ($_POST['submit']) {
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
- 	
+
 	//first off validate inputs sensible
 
 	$_POST['DebtorNo'] = strtoupper($_POST['DebtorNo']);
@@ -75,10 +75,10 @@ if ($_POST['submit']) {
 	} elseif (((double) $_POST['Discount']> 100) OR ((double) $_POST['Discount'] <0)) {
 		$InputError = 1;
 		prnMsg( _('The discount is expected to be less than 100% and greater than or equal to 0'),'error');
-	} 
+	}
 
 	if ($InputError !=1){
-		
+
 		$SQL_ClientSince = FormatDateForSQL($_POST['ClientSince']);
 
 		if (!isset($_POST['New'])) {
@@ -101,7 +101,8 @@ if ($_POST['submit']) {
 					creditlimit=" . $_POST['CreditLimit'] . ",
 					salestype = '" . $_POST['SalesType'] . "',
 					invaddrbranch='" . $_POST['AddrInvBranch'] . "',
-					taxref='" . DB_escape_string($_POST['TaxRef']) . "'
+					taxref='" . DB_escape_string($_POST['TaxRef']) . "',
+					customerpoline='" . $_POST['CustomerPOLine'] . "'
 				WHERE debtorno = '" . $_POST['DebtorNo'] . "'";
 
 			$ErrMsg = _('The customer could not be updated because');
@@ -117,7 +118,7 @@ if ($_POST['submit']) {
 					$_POST['DebtorNo'] = GetNextTransNo(500, $db);
 				}
 			}
-			
+
 			$sql = "INSERT INTO debtorsmaster (
 							debtorno,
 							name,
@@ -137,7 +138,8 @@ if ($_POST['submit']) {
 							creditlimit,
 							salestype,
 							invaddrbranch,
-							taxref)
+							taxref,
+							customerpoline)
 				VALUES ('" . $_POST['DebtorNo'] ."',
 					'" . DB_escape_string($_POST['CustName']) ."',
 					'" . DB_escape_string($_POST['Address1']) ."',
@@ -156,20 +158,21 @@ if ($_POST['submit']) {
 					" . $_POST['CreditLimit'] . ",
 					'" . $_POST['SalesType'] . "',
 					'" . $_POST['AddrInvBranch'] . "',
-					'" . DB_escape_string($_POST['TaxRef']) . "'
+					'" . DB_escape_string($_POST['TaxRef']) . "',
+					'" . $_POST['CustomerPOLine'] . "'
 					)";
 
 			$ErrMsg = _('This customer could not be added because');
 			$result = DB_query($sql,$db,$ErrMsg);
 
 			$BranchCode = substr($_POST['DebtorNo'],0,4);
-			
+
 			echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath ."/CustomerBranches.php?" . SID . "&DebtorNo=" . $_POST['DebtorNo'] ."&BrName=" . $_POST['CustName'] .'&BranchCode=' . $BranchCode . '&BrAddress1=' . $_POST['Address1'] . '&BrAddress2=' . $_POST['Address2'] . '&BrAddress3=' . $_POST['Address3'] . '&BrAddress4=' . $_POST['Address4'] . '&BrAddress5=' . $_POST['Address5'] . '&BrAddress6=' . $_POST['Address6'] . "'>";
-			
+
 			echo '<P>' . _('You should automatically be forwarded to the entry of a new Customer Branch page') .
 			'. ' . _('If this does not happen') .' (' . _('if the browser does not support META Refresh') . ') ' .
 			"<A HREF='" . $rootpath . "/CustomerBranches.php?" . SID . "&DebtorNo=" . $_POST['DebtorNo'] ."&BrName=" . $_POST['CustName'] .'&BranchCode=' . $BranchCode . '&BrAddress1=' . $_POST['Address1'] . '&BrAddress2=' . $_POST['Address2'] . '&BrAddress3=' . $_POST['Address3'] . '&BrAddress4=' . $_POST['Address4'] . '&BrAddress5=' . $_POST['Address5'] . '&BrAddress6=' . $_POST['Address6'] . "'>" . _('click here') . '</a> ' . _('to continue') . '.<BR>';
-		
+
 			include('includes/footer.inc');
 			exit;
 		}
@@ -249,6 +252,7 @@ if($reset){
 	unset($_POST['DebtorNo']);
 	unset($_POST['InvAddrBranch']);
 	unset($_POST['TaxRef']);
+	unset($_POST['CustomerPOLine']);
 }
 
 /*DebtorNo could be set from a post or a get when passed as a parameter to this page */
@@ -268,17 +272,17 @@ if (!isset($DebtorNo)) {
 	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '>';
 
 	echo "<input type='Hidden' name='New' value='Yes'>";
-	
-	$DataError =0;  
-	
+
+	$DataError =0;
+
 	echo '<CENTER><TABLE BORDER=2 CELLSPACING=4><TR><TD><TABLE>';
-		
+
 	/* if $AutoDebtorNo in config.php has not been set or if it has been set to a number less than one,
 	then provide an input box for the DebtorNo to manually assigned */
 	if ($_SESSION['AutoDebtorNo']==0)  {
 		echo '<TR><TD>' . _('Customer Code') . ":</TD><TD><input type='Text' name='DebtorNo' SIZE=11 MAXLENGTH=10></TD></TR>";
 	}
-	
+
 	echo '<TR><TD>' . _('Customer Name') . ":</TD>
 		<TD><input type='Text' name='CustName' SIZE=42 MAXLENGTH=40></TD></TR>";
 	echo '<TR><TD>' . _('Address Line 1') . ":</TD>
@@ -295,7 +299,7 @@ if (!isset($DebtorNo)) {
 		<TD><input type='Text' name='Address6' SIZE=17 MAXLENGTH=15></TD></TR>";
 
   echo '</TABLE></TD><TD><TABLE>';
-	
+
 	$result=DB_query('SELECT typeabbrev, sales_type FROM salestypes ',$db);
 	if (DB_num_rows($result)==0){
 		$DataError =1;
@@ -328,7 +332,7 @@ if (!isset($DebtorNo)) {
 		$DataError =1;
 		echo '<TR><TD COLSPAN=2>' . prnMsg(_('There are no payment terms currently defined - go to the setup tab of the main menu and set at least one up first'),'error') . '</TD></TR>';
 	} else {
-	
+
 		echo '<TR><TD>' . _('Payment Terms') . ":</TD>
 			<TD><SELECT name='PaymentTerms'>";
 
@@ -338,7 +342,7 @@ if (!isset($DebtorNo)) {
 		DB_data_seek($result,0);
 
 		echo '</SELECT></TD></TR>';
-	}	
+	}
 	echo '<TR><TD>' . _('Credit Status') . ":</TD><TD><SELECT name='HoldReason'>";
 
 	$result=DB_query('SELECT reasoncode, reasondescription FROM holdreasons',$db);
@@ -352,7 +356,7 @@ if (!isset($DebtorNo)) {
 		DB_data_seek($result,0);
 		echo '</SELECT></TD></TR>';
 	}
-		
+
 	$result=DB_query('SELECT currency, currabrev FROM currencies',$db);
 	if (DB_num_rows($result)==0){
 		$DataError =1;
@@ -375,6 +379,12 @@ if (!isset($DebtorNo)) {
 
 		echo '</SELECT></TD></TR>';
 	}
+
+	/*added line 8/23/2007 by Morris Kelly to set po line parameter Y/N*/
+	echo '<tr><td>' . _('Customer PO Line on SO') . ":</td><td><select name='CustomerPOLine'>";
+		echo '<option selected value=0>' . _('No');
+		echo '<option value=1>' . _('Yes');
+	echo '</select></td></tr>';
 
 	echo '<TR><TD>' . _('Invoice Addressing') . ":</TD><TD><SELECT NAME='AddrInvBranch'>";
 		echo '<OPTION SELECTED VALUE=0>' . _('Address to HO');
@@ -413,8 +423,9 @@ if (!isset($DebtorNo)) {
 				pymtdiscount,
 				creditlimit,
 				invaddrbranch,
-				taxref
-			FROM debtorsmaster
+				taxref,
+				customerpoline
+				FROM debtorsmaster
 			WHERE debtorno = '" . $DebtorNo . "'";
 
 		$ErrMsg = _('The customer details could not be retrieved because');
@@ -447,13 +458,14 @@ if (!isset($DebtorNo)) {
 		$_POST['CreditLimit']	= $myrow['creditlimit'];
 		$_POST['InvAddrBranch'] = $myrow['invaddrbranch'];
 		$_POST['TaxRef'] = $myrow['taxref'];
-		
+		$_POST['CustomerPOLine'] = $myrow['customerpoline'];
+
 		echo "<INPUT TYPE=HIDDEN NAME='DebtorNo' VALUE='" . $DebtorNo . "'>";
 
 	} else {
 	// its a new customer being added
 		echo "<INPUT TYPE=HIDDEN NAME='New' VALUE='Yes'>";
-		
+
 		/* if $AutoDebtorNo in config.php has not been set or if it has been set to a number less than one,
 		then provide an input box for the DebtorNo to manually assigned */
 		if ($_SESSION['AutoDebtorNo']== 0 )  {
@@ -536,18 +548,30 @@ if (!isset($DebtorNo)) {
 
 	$result=DB_query('SELECT currency, currabrev FROM currencies',$db);
 
-	echo '</SELECT></TD></TR>
-		<TR><TD>' . _('Customers Currency') . ":</TD>
-		<TD><SELECT name='CurrCode'>";
+	echo '</select></td></tr>
+		<tr><td>' . _('Customers Currency') . ":</td>
+		<td><select name='CurrCode'>";
 	while ($myrow = DB_fetch_array($result)) {
 		if ($_POST['CurrCode']==$myrow['currabrev']){
-			echo '<OPTION SELECTED VALUE='. $myrow['currabrev'] . '>' . $myrow['currency'];
+			echo '<option selected value='. $myrow['currabrev'] . '>' . $myrow['currency'];
 		} else {
-			echo '<OPTION VALUE='. $myrow['currabrev'] . '>' . $myrow['currency'];
+			echo '<option value='. $myrow['currabrev'] . '>' . $myrow['currency'];
 		}
 	} //end while loop
 	DB_data_seek($result,0);
-	echo '</SELECT>';
+	echo '</select></td></tr>';
+
+	/*added lines 8/23/2007 by Morris Kelly to get po line parameter Y/N*/
+	echo '<tr><td>' . _('Require Customer PO Line on SO') . ":</TD>
+		<TD><SELECT NAME='CustomerPOLine'>";
+	if ($_POST['CustomerPOLine']==0){
+		echo '<option selected value=0>' . _('No');
+		echo '<option value=1>' . _('Yes');
+	} else {
+		echo '<option value=0>' . _('No');
+		echo '<option selected value=1>' . _('Yes');
+	}
+	echo '</select></td></tr>';
 
 	echo '<TR><TD>' . _('Invoice Addressing') . ":</TD>
 		<TD><SELECT NAME='AddrInvBranch'>";
