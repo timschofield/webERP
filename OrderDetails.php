@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 
 $PageSecurity = 2;
@@ -150,14 +150,14 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 /*
 	$invoices = preg_split("/" . _('Inv') . " \n*)/", $_SESSION['Items']->Comments );
 	foreach( $invoices  as $inv){
-	        if (trim($inv)!=''){
-    	         if ($_SESSION['InvoicePortraitFormat']==0){
-        	         echo '<A HREF="' . $rootpath. '/PrintCustTrans.php?FromTransNo=' . $inv . '&InvOrCredit=Invoice&PrintPDF=Yes" target=_blank>' . _('Inv') . '# ' . $inv . '</A><BR>';
-            	  } else {
-                	 echo '<A HREF="' . $rootpath . '/PrintCustTransPortrait.php?FromTransNo=' . $inv . '&InvOrCredit=Invoice&PrintPDF=Yes" target=_blank>' . _('Inv') . '# ' . $inv . '</A><BR>';
-	              }
-    	    }
-    }
+	if (trim($inv)!=''){
+		if ($_SESSION['InvoicePortraitFormat']==0){
+			echo '<A HREF="' . $rootpath. '/PrintCustTrans.php?FromTransNo=' . $inv . '&InvOrCredit=Invoice&PrintPDF=Yes" target=_blank>' . _('Inv') . '# ' . $inv . '</A><BR>';
+			} else {
+			echo '<A HREF="' . $rootpath . '/PrintCustTransPortrait.php?FromTransNo=' . $inv . '&InvOrCredit=Invoice&PrintPDF=Yes" target=_blank>' . _('Inv') . '# ' . $inv . '</A><BR>';
+			}
+		}
+	}
 */
 	echo _('Comments'). ': ' . $_SESSION['Items']->Comments . '<BR></CENTER>';
 
@@ -185,7 +185,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 	$ErrMsg =  _('The line items of the order cannot be retrieved because');
 	$DbgMsg =  _('The SQL used to retrieve the line items, that failed was');
 	$LineItemsResult = db_query($LineItemsSQL,$db, $ErrMsg, $DbgMsg);
-
+                                                                                                              																																
 	if (db_num_rows($LineItemsResult)>0) {
 
 		while ($myrow=db_fetch_array($LineItemsResult)) {
