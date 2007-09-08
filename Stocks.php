@@ -1,32 +1,12 @@
 <?php
 
-/* $Revision: 1.37 $ */
+/* $Revision: 1.38 $ */
 
 $PageSecurity = 11;
 
 include('includes/session.inc');
 $title = _('Item Maintenance');
 include('includes/header.inc');
-
-?>
-
-<script type="text/javascript">
-	function ReloadForm () 
-	{
-		document.getElementById("submit").value = "TEST"
-		var stockid=document.getElementById("StockID").value
-		if (stockid.length > 1) 
-		{
-			document.getElementById("submit").value = "TEST"
-			document.getElementById("ItemForm").submit()
-		}
-	}
-</script>
-
-<?php
-
-echo "<A HREF='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</A><BR>';
-
 
 /*If this form is called with the StockID then it is assumed that the stock item is to be modified */
 
@@ -35,6 +15,18 @@ if (isset($_GET['StockID'])){
 } elseif (isset($_POST['StockID'])){
 	$StockID =trim(strtoupper($_POST['StockID']));
 }
+?>
+
+<script LANGUAGE="JavaScript">
+	function ReloadForm ()
+	{
+		document.ItemForm.submit.click();
+	}
+</script>
+
+<?php
+echo "<A HREF='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</A><BR>';
+
 
 if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 
@@ -546,7 +538,7 @@ echo '<TR><TD>' . _('Part Description') . ' (' . _('long') . '):</TD><TD><textar
 echo '<tr><td>'. _('Image File (.jpg)') . ':</td><td><input type="file" id="ItemPicture" name="ItemPicture"></td></tr>';
 // EOR Add Image upload for New Item  - by Ori
 
-echo '<tr><td>' . _('Category') . ':</td><td><select name="CategoryID" onChange="ReloadForm();">';
+echo '<tr><td>' . _('Category') . ':</td><td><select name="CategoryID" onChange="ReloadForm()">';
 
 $sql = "SELECT categoryid, categorydescription FROM stockcategory";
 $ErrMsg = _('The stock categories could not be retrieved because');
