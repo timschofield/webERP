@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.56 $ */
+/* $Revision: 1.57 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -1144,7 +1144,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$LineDueDate = $OrderLine->ItemDue;
 			if (!Is_Date($OrderLine->ItemDue)){
 				$LineDueDate = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items']->DeliveryDays);
-				$_SESSION['Items']->LineItems[$OrderLine->LineNumber]['ItemDue']= $LineDueDate;
+				$_SESSION['Items']->LineItems[$OrderLine->LineNumber]->ItemDue= $LineDueDate;
 			}
 
 			echo '<TD><INPUT TYPE=TEXT NAME="ItemDue_' . $OrderLine->LineNumber . '" SIZE=10 MAXLENGTH=10 VALUE=' . $LineDueDate . '></TD>';
