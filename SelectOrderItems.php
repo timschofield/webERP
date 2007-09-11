@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.57 $ */
+/* $Revision: 1.58 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -102,7 +102,7 @@ if (isset($_GET['ModifyOrderNumber'])
 			WHERE salesorders.ordertype=salestypes.typeabbrev
 			AND salesorders.debtorno = debtorsmaster.debtorno
 			AND salesorders.debtorno = custbranch.debtorno
-			AND salesorder.branchcode = custbranch.branchcode
+			AND salesorders.branchcode = custbranch.branchcode
 			AND salesorders.orderno = ' . $_GET['ModifyOrderNumber'];
 
 	} else {
@@ -141,7 +141,7 @@ if (isset($_GET['ModifyOrderNumber'])
 			WHERE salesorders.ordertype=salestypes.typeabbrev
 			AND salesorders.debtorno = debtorsmaster.debtorno
 			AND salesorders.debtorno = custbranch.debtorno
-			AND salesorder.branchcode = custbranch.branchcode
+			AND salesorders.branchcode = custbranch.branchcode
 			AND salesorders.orderno = ' . $_GET['ModifyOrderNumber'];
 	}
 
@@ -268,6 +268,8 @@ if (isset($_GET['ModifyOrderNumber'])
 								$myrow['narrative'],
 								'No', /* Update DB */
 								$myrow['orderlineno'],
+								0,
+								'',
 								$myrow['itemdue'],
 								$myrow['poline']
 								);
