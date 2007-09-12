@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.52 $ */
+/* $Revision: 1.53 $ */
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -143,6 +143,14 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 			die(include($PathPrefix . 'includes/Login.php'));
 		}
 	}		// End of userid/password check
+	// Run with debugging messages for the system administrator(s) but not anyone else
+
+	if (in_array(15, $_SESSION['AllowedPageSecurityTokens'])) {
+		$debug = 1;
+	} else {
+		$debug = 0;
+	}
+
 } /* only do security checks if AllowAnyone is not true */
 
 /*User is logged in so get configuration parameters  - save in session*/
@@ -179,12 +187,6 @@ if ($_SESSION['HTTPS_Only']==1){
 }
 
 
-// Run with debugging messages for the system administrator(s) but not anyone else
-if (in_array(15, $_SESSION['AllowedPageSecurityTokens'])) {
-	$debug = 1;
-} else {
-	$debug = 0;
-}
 
 // Now check that the user as logged in has access to the page being called. The $PageSecurity
 // value must be set in the script before header.inc is included. $SecurityGroups is an array of
