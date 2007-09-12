@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 /*This page is very largely the same as the SupplierInvoice.php script
 the same result could have been acheived by using if statements in that script and just having the one
@@ -350,9 +350,9 @@ echo "<TR><TD COLSPAN=2><INPUT TYPE=Submit NAME='ToggleTaxMethod' VALUE='" . _('
 	  "'></TD><TD><SELECT NAME='OverRideTax'>";
 
 if ($_POST['OverRideTax']=='Man'){
-	echo "<OPTION VALUE='Auto'>" . _('Automatic') . "<OPTION SELECTED VALUE='Man'>" . _('Manual');
+	echo "<OPTION VALUE='Auto'>" . _('Automatic') . "<OPTION SELECTED VALUE='Man'>" . _('Manual Entry');
 } else {
-	echo "<OPTION SELECTED VALUE='Auto'>" . _('Automatic') . "<OPTION VALUE='Man'>" . _('Manual');
+	echo "<OPTION SELECTED VALUE='Auto'>" . _('Automatic') . "<OPTION VALUE='Man'>" . _('Manual Entry');
 }
 
 echo '</SELECT></TD></TR>';

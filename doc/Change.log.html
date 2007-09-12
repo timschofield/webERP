@@ -1,6 +1,7 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
-<P><P>23/8/07 Mo Kelly : Modify Customer.php to add parameter to determine if customer PO lines  are collected during quick entry of sales oreders
+<P>12/9/07 report_runner.php MailSalesReport.php and MailSalesCSV.php now added DatabaseName variable 
+<P>23/8/07 Mo Kelly : Modify Customer.php to add parameter to determine if customer PO lines  are collected during quick entry of sales oreders
 <P>23/8/07 Mo Kelly : Modify DefineCartClass.php to incule PO line data and line item due dates.
 <P>23/8/07 Mo Kelly : Modify SelectOrderItems.php to allow the entry of due dates and corresponding customer PO Line by sales order line if parameter is set in the debtormaster to collect this field. Also to caluculate and use default delivery date by line item.
 <P>23/8/07 Mo Kelly : Modify SelectOrderItems_IntoCart.inc to include PO line data and line item due dates
@@ -13,14 +14,14 @@
 <P>13 August 2007</B>
 <p>
 <P>
-<P>13/8/07 Phil Daintree : StockCostUpdate.php added input type=hidden MaterialCost to allow MaterialCost for Manufacturing items to be correctly defaulted on update of labour and overhead costs
-<P>13/8/07 Phil Daintree : StockCategories.php moved the submit enter button outside of the code for if a category is selected. Button was not shown and prevented adding a new stock category. A show stopper bug!
+<P>13/8/07 StockCostUpdate.php added input type=hidden MaterialCost to allow MaterialCost for Manufacturing items to be correctly defaulted on update of labour and overhead costs
+<P>13/8/07 StockCategories.php moved the submit enter button outside of the code for if a category is selected. Button was not shown and prevented adding a new stock category. A show stopper bug!
 <P>
 <P><B>Version 3.07
 <P>2 August 2007</B>
 <p>
-<p>8/8/07 Phil Daintree : StockCostUpdate.php changed function call to match function in SQL_CommonFunctions.inc for GL update and the cost roll up parent changed to Parent
-<p>5/8/07 Phil Daintree : Added new tables stockcatproperties and stockitemproperties and modified Stocks.php and StockCategories.php to allow setup of category properties. These properties create input options against the stock item in Stocks.php for recording specific information relating to the category of items.
+<p>8/8/07 StockCostUpdate.php changed function call to match function in SQL_CommonFunctions.inc for GL update and the cost roll up parent changed to Parent
+<p>5/8/07 Added new tables stockcatproperties and stockitemproperties and modified Stocks.php and StockCategories.php to allow setup of category properties. These properties create input options against the stock item in Stocks.php for recording specific information relating to the category of items.
 <P>
 <P><B>Version 3.06
 <P>2 August 2007</B>

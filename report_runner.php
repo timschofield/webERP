@@ -23,6 +23,7 @@ $usage="USAGE\n".$argv[0].":\n".
        "     -r reportnumber (the number of the weberp report)\n".
        "     -n reportname   (the name you want to give the report)\n".
        "     -e emailaddress[;emailaddress;emailaddres...] (who you want to send it to)\n".
+       "     -d database name (the mysql db to use for the data for the report)\n".
        "     [-t reporttext ]  (some words you want to send with the report-optional)\n".
        "     [ -H weberpHOME]  (the home directory for weberp - or edit the php file)\n";
 	
@@ -34,23 +35,27 @@ for ($i=1;$i<$argc;$i++){
         switch($argv[$i]) {
         case '-r':
                 $i++;
-                $reportnumber=$argv[$i];  
+                $reportnumber=$argv[$i];
              break;
         case '-n':
                 $i++;
-                $reportname=$argv[$i];  
+                $reportname=$argv[$i];
              break;
         case '-e':
                 $i++;
-                $emailaddresses=$argv[$i];  
+                $emailaddresses=$argv[$i];
+             break;
+	case '-d':
+                $i++;
+                $DatabaseName=$argv[$i];
              break;
         case '-H':
                 $i++;
-                $WEBERPHOME=$argv[$i];  
+                $WEBERPHOME=$argv[$i];
              break;
         case '-t':
                 $i++;
-                $mailtext=$argv[$i];  
+                $mailtext=$argv[$i];
              break;
          default:
              echo "unknown option".$argv[$i]."\n";
@@ -89,7 +94,6 @@ for ($i=0;$i<count($Recipients); $i++) {
 $AllowAnyone = true;
 include('includes/session.inc');
 
-
 include ('includes/ConstructSQLForUserDefinedSalesReport.inc');
 include ('includes/PDFSalesAnalysis.inc');
 
@@ -106,7 +110,7 @@ if ($Counter >0){ /* the number of lines of the sales report is more than 0  ie 
 	$mail->setText($mailtext."\nPlease find herewith ".$reportname."  report");
 	$mail->setSubject($reportname." Report");
 	$mail->addAttachment($attachment, $reportname, 'application/pdf');
-	$mail->setFrom("<donotreply@aquadux.com.au>");
+	$mail->setFrom("");
 	$result = $mail->send($Recipients);
 
 } else {
@@ -117,5 +121,3 @@ if ($Counter >0){ /* the number of lines of the sales report is more than 0  ie 
 }
 
 ?>
-
-
