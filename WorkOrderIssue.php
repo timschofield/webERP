@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 11;
 
@@ -728,14 +728,14 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 
 			$SerialNoResult = DB_query("SELECT serialno
 							FROM stockserialitems
-							WHERE stockid='" . $_POST['StockID'] . "'
+							WHERE stockid='" . $_POST['IssueItem'] . "'
 							AND loccode='" . $_POST['FromLocation'] . "'",
 						$db,_('Could not retrieve the serial numbers available at the location specified because'));
 			if (DB_num_rows($SerialNoResult)==0){
 				echo '<tr><td>' . _('There are no serial numbers at this location to issue') . '</td></tr>';
 				echo '<tr><td align="center"><input type=submit name="Retry" value="' . _('Reselect Location or Issued Item') . '"></td></tr>';
 			} else {
-				echo '<tr><td><select name="SerialNos"[] multiple>';
+				echo '<tr><td><select name="SerialNos[]" multiple>';
 				while ($SerialNoRow = DB_fetch_array($SerialNoResult)){
 					if (in_array($SerialNoRow['serialno'],$_POST['SerialNos'])){
 						echo '<option selected value="' . $SerialNoRow['serialno'] . '">' . $SerialNoRow['serialno'] . '</option>';
