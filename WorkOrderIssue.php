@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 11;
 
@@ -180,14 +180,10 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 				//need to test if the serialised item exists first already
 					if (trim($SerialNo) != ""){
 
-						$SQL = "INSERT INTO stockserialitems (stockid,
-											loccode,
-											serialno,
-											quantity)
-										VALUES ('" . DB_escape_string($_POST['IssueItem']) . "',
-												'" . DB_escape_string($_POST['FromLocation']) . "',
-												'" . DB_escape_string($SerialNo) . "',
-												-1)";
+						$SQL = "UPDATE stockserialitems set quantity=0
+										WHERE (stockid= '" . DB_escape_string($_POST['IssueItem']) . "') 
+										AND (loccode = '" . DB_escape_string($_POST['FromLocation']) . "') 
+										AND (serialno = '" . DB_escape_string($SerialNo) . "')";
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
 						$DbgMsg =  _('The following SQL to insert the serial stock item records was used');
 						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -373,7 +369,7 @@ if (isset($_POST['Search'])){
 					FROM stockmaster,
 					stockcategory
 					WHERE stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='M)
+					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='M')
 					AND stockmaster.description " . LIKE . " '$SearchString'
 					AND stockmaster.discontinued=0
 					AND (mbflag='B' OR mbflag='M' OR mbflag='D')
@@ -384,7 +380,7 @@ if (isset($_POST['Search'])){
 					stockmaster.units
 					FROM stockmaster, stockcategory
 					WHERE  stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='M)
+					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='M')
 					AND stockmaster.discontinued=0
 					AND stockmaster.description " . LIKE . " '" . $SearchString . "'
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
@@ -414,7 +410,7 @@ if (isset($_POST['Search'])){
 					stockmaster.units
 					FROM stockmaster, stockcategory
 					WHERE stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='M)
+					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='M')
 					AND stockmaster.stockid " . LIKE . " '" . $SearchString . "'
 					AND stockmaster.discontinued=0
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
@@ -428,7 +424,7 @@ if (isset($_POST['Search'])){
 					stockmaster.units
 					FROM stockmaster, stockcategory
 					WHERE  stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='M)
+					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='M')
 					AND stockmaster.discontinued=0
 					AND (mbflag='B' OR mbflag='M' OR mbflag='D')
 					ORDER BY stockmaster.stockid";
@@ -438,7 +434,7 @@ if (isset($_POST['Search'])){
 					stockmaster.units
 					FROM stockmaster, stockcategory
 					WHERE stockmaster.categoryid=stockcategory.categoryid
-					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='M)
+					AND (stockcategory.stocktype='F' OR stockcategory.stocktype='D' OR stockcategory.stocktype='M')
 					AND stockmaster.discontinued=0
 					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 					AND (mbflag='B' OR mbflag='M' OR mbflag='D')
