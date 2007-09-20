@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 $PageSecurity =15;
 
@@ -258,6 +258,7 @@ echo '<TR><TD>' . _('DefaultDateFormat') . ' (' . _('for input and to appear on 
 	<TD><SELECT Name="X_DefaultDateFormat">
 	<OPTION '.(($_SESSION['DefaultDateFormat']=='d/m/Y')?'SELECTED ':'').'Value="d/m/Y">d/m/Y
 	<OPTION '.(($_SESSION['DefaultDateFormat']=='m/d/Y')?'SELECTED ':'').'Value="m/d/Y">m/d/Y
+	<OPTION '.(($_SESSION['DefaultDateFormat']=='Y/m/d')?'SELECTED ':'').'Value="Y/m/d">Y/m/d
 	</SELECT></TD>
 	<TD>' . _('The default date format for entry of dates and display use d/m/Y for England/Australia/NZ or m/d/Y for US and Canada') . '</TD></TR>';
 
