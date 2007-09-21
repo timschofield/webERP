@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 2;
 
@@ -105,7 +105,7 @@ If (isset($_POST['PrintPDF']) && isset($_POST['FromCust']) && $_POST['FromCust']
 					ON (debtortrans.id=custallocns.transid_allocfrom
 						OR debtortrans.id=custallocns.transid_allocto)
 				WHERE custallocns.datealloc >='" .
-					Date('Y-m-d',Mktime(0,0,0,Date('m')-1,Date('d'),Date('y'))) . "'
+					FormatDateForSQL(Mktime(0,0,0,Date('m')-1,Date('d'),Date('y'))) . "'
 				AND debtortrans.debtorno='" . $StmtHeader['debtorno'] . "' 
 				AND debtortrans.settled=1
 				ORDER BY debtortrans.id";
