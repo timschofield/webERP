@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 $PageSecurity = 11;
 
@@ -66,7 +66,7 @@ $k=0; //row colour counter
 
 if (count($_SESSION['PO']->LineItems)>0){
 	foreach ($_SESSION['PO']->LineItems as $LnItm) {
-		
+
 		if ($k==1){
 			echo '<tr bgcolor="#CCCCCC">';
 			$k=0;
@@ -75,8 +75,8 @@ if (count($_SESSION['PO']->LineItems)>0){
 			$k=1;
 		}
 
-	/*	  if ($LnItm->ReceiveQty==0){   /*If no quantites yet input default the balance to be received
-		$LnItm->ReceiveQty = $LnItm->QuantityOrd - $LnItm->QtyReceived;
+	/*  if ($LnItm->ReceiveQty==0){   /*If no quantites yet input default the balance to be received
+			$LnItm->ReceiveQty = $LnItm->QuantityOrd - $LnItm->QtyReceived;
 		}
 	*/
 
@@ -106,15 +106,13 @@ if (count($_SESSION['PO']->LineItems)>0){
 			echo '<input type=hidden name="RecvQty_' . $LnItm->LineNo . '" value="' . $LnItm->ReceiveQty . '"><a href="GoodsReceivedControlled.php?' . SID . '&LineNo=' . $LnItm->LineNo . '">' . number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '</a></TD>';
 
 		} else {
-
 			echo '<input type=text name="RecvQty_' . $LnItm->LineNo . '" maxlength=10 SIZE=10 value="' . $LnItm->ReceiveQty . '"></TD>';
-
 		}
 
 		echo '<TD ALIGN=RIGHT><FONT size=2>' . $DisplayPrice . '</TD>';
 		echo '<TD ALIGN=RIGHT><FONT size=2>' . $DisplayLineTotal . '</FONT></TD>';
 
-				
+
 		if ($LnItm->Controlled == 1) {
 			if ($LnItm->Serialised==1){
 				echo '<TD><a href="GoodsReceivedControlled.php?' . SID . '&LineNo=' . $LnItm->LineNo . '">'.
@@ -124,9 +122,7 @@ if (count($_SESSION['PO']->LineItems)>0){
 					_('Enter Batches'). '</a></TD>';
 			}
 		}
-
 		echo '</TR>';
-
 	}//foreach(LineItem)
 }//If count(LineItems) > 0
 
@@ -150,7 +146,7 @@ if (count($_SESSION['PO']->LineItems)>0){
 (+ overreceive allowance) */
 
 $DeliveryQuantityTooLarge = 0;
-
+$NegativesFound = false;
 $InputError = false;
 
 if (count($_SESSION['PO']->LineItems)>0){
@@ -161,26 +157,46 @@ if (count($_SESSION['PO']->LineItems)>0){
 		$DeliveryQuantityTooLarge =1;
 		$InputError = true;
 	  }
-	 
+	  if ($OrderLine->ReceiveQty < 0 AND $_SESSION['ProhibitNegativeStock']==1){
+
+		  	$SQL = "SELECT locstock.quantity FROM
+		  			locstock WHERE locstock.stockid='" . DB_escape_string($OrderLine->StockID) . "'
+					AND loccode= '" . DB_escape_string($_SESSION['PO']->Location) . "'";
+			$CheckNegResult = DB_query($SQL,$db);
+			$CheckNegRow = DB_fetch_row($CheckNegResult);
+			if ($CheckNegRow[0]+$OrderLine->ReceiveQty<0){
+				$NegativesFound=true;
+				prnMsg(_('Receiving a negative quantity that results in negative stock is prohibited by the parameter settings. This delivery of stock cannot be processed until the stock of the item is corrected.'),'error',$OrderLine->StockID . ' Cannot Go Negative');
+			}
+	  }
+
    }
 }
 
 if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then dont bother proceeding cos nothing to do ! */
 
 	prnMsg(_('There is nothing to process') . '. ' . _('Please enter valid quantities greater than zero'),'warn');
+	echo '<CENTER><INPUT TYPE=SUBMIT NAME=Update Value=' . _('Update') . '>';
 
-} elseif ($DeliveryQuantityTooLarge==1 AND isset($_POST['ProcessGoodsReceived'])){
+} elseif ($NegativesFound){
+
+	prnMsg(_('Negative stocks would result by processing a negative delivery - quantities must be changed or the stock quantity of the item going negative corrected before this delivery will be processed.'),'error');
+
+	echo '<CENTER><INPUT TYPE=SUBMIT NAME=Update Value=' . _('Update') . '>';
+
+}elseif ($DeliveryQuantityTooLarge==1 AND isset($_POST['ProcessGoodsReceived'])){
 
 	prnMsg(_('Entered quantities cannot be greater than the quantity entered on the purchase invoice including the allowed over-receive percentage'). ' ' . '(' . $_SESSION['OverReceiveProportion'] .'%)','error');
 	echo '<BR>';
 	prnMsg(_('Modify the ordered items on the purchase invoice if you wish to increase the quantities'),'info');
+	echo '<CENTER><INPUT TYPE=SUBMIT NAME=Update Value=' . _('Update') . '>';
 
 }  elseif (isset($_POST['ProcessGoodsReceived']) AND $SomethingReceived==1 AND $InputError == false){
 
 /* SQL to process the postings for goods received... */
 /* Company record set at login for information on GL Links and debtors GL account*/
 
-	
+
 	if ($_SESSION['CompanyRecord']==0){
 		/*The company data and preferences could not be retrieved for some reason */
 		prnMsg(_('The company infomation and preferences could not be retrieved') . ' - ' . _('see your system administrator') , 'error');
@@ -296,7 +312,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 				}
 				$CurrentStandardCost = $myrow[0];
 
-				/*Set the purchase order line stdcostunit = weighted average standard cost used for all receipts of this line 
+				/*Set the purchase order line stdcostunit = weighted average standard cost used for all receipts of this line
                                 This assures that the quantity received against the purchase order line multiplied by the weighted average of standard
                                 costs received = the total of standard cost posted to GRN suspense*/
 				$_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost = (($CurrentStandardCost * $OrderLine->ReceiveQty) + ($_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost *$OrderLine->QtyReceived)) / ($OrderLine->ReceiveQty + $OrderLine->QtyReceived);
@@ -428,9 +444,9 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 						We need to add the StockSerialItem record and
 						The StockSerialMoves as well */
 						 //need to test if the controlled item exists first already
-							$SQL = "SELECT COUNT(*) FROM stockserialitems 
-									WHERE stockid='" . DB_escape_string($OrderLine->StockID) . "' 
-									AND loccode = '" . DB_escape_string($_SESSION['PO']->Location) . "' 
+							$SQL = "SELECT COUNT(*) FROM stockserialitems
+									WHERE stockid='" . DB_escape_string($OrderLine->StockID) . "'
+									AND loccode = '" . DB_escape_string($_SESSION['PO']->Location) . "'
 									AND serialno = '" . DB_escape_string($Item->BundleRef) . "'";
 							$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not check if a batch or lot stock item already exists because');
 							$DbgMsg =  _('The following SQL to test for an already existing controlled but not serialised stock item was used');
@@ -443,8 +459,8 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 									} else {
 										$SQL = 'UPDATE stockserialitems SET quantity = quantity + ' . $Item->BundleQty . ' ';
 									}
-									$SQL .= "WHERE stockid='" . DB_escape_string($OrderLine->StockID) . "' 
-											 AND loccode = '" . DB_escape_string($_SESSION['PO']->Location) . "' 
+									$SQL .= "WHERE stockid='" . DB_escape_string($OrderLine->StockID) . "'
+											 AND loccode = '" . DB_escape_string($_SESSION['PO']->Location) . "'
 											 AND serialno = '" . DB_escape_string($Item->BundleRef) . "'";
 								} else {
 									$SQL = "INSERT INTO stockserialitems (stockid,
@@ -456,13 +472,13 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 												'" . DB_escape_string($Item->BundleRef) . "',
 												" . $Item->BundleQty . ")";
 								}
-							
+
 							$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
 							$DbgMsg =  _('The following SQL to insert the serial stock item records was used');
-							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);	
- 
+							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
+
 						/** end of handle stockserialitems records */
-					
+
 						/** now insert the serial stock movement **/
 						$SQL = "INSERT INTO stockserialmoves (stockmoveno,
 											stockid,
@@ -482,7 +498,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 
 /* If GLLink_Stock then insert GLTrans to debit the GL Code  and credit GRN Suspense account at standard cost*/
 			if ($_SESSION['PO']->GLLink==1 AND $OrderLine->GLCode !=0){ /*GLCode is set to 0 when the GLLink is not activated this covers a situation where the GLLink is now active but it wasn't when this PO was entered */
-				
+
 /*first the debit using the GLCode in the PO detail record entry*/
 
 				$SQL = "INSERT INTO gltrans (type,
@@ -506,7 +522,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 
 				/* If the CurrentStandardCost != UnitCost (the standard at the time the first delivery was booked in,  and its a stock item, then the difference needs to be booked in against the purchase price variance account */
 
-				
+
 	/*now the GRN suspense entry*/
 				$SQL = "INSERT INTO gltrans (type,
 								typeno,

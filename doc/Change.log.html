@@ -1,6 +1,13 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
-<P>12/9/07 report_runner.php MailSalesReport.php and MailSalesCSV.php now added DatabaseName variable 
+<P>25/9/07 SystemParameters.php now has new parameter to ProhibitNegativeStocks - new config added to DB.
+<P>25/9/07 ConfirmDispatch_Invoice.php now checks stock balances after the order invoiced before processing it and reports back nasty message if stock will go negative.
+<P>25/9/07 GoodsReceived.php now checks stock balances after the receipt of stock is processed for negative receipts of stock and it reports back a nasty message if stock will go negative.
+<P>25/9/07 StockAdjustment.php now checks the stock balance after the adjustment to see if it would go negative, if so it reports back a nasty message and prevents the adjustment.
+<P>25/9/07 WorkOrderIssue.php now checks the stock balance after the issue to see if it would go negative, if so it reports back a nasty message and prevents the issue.
+
+<P>20/9/07 Tim Schofield : DateFunctions.inc now allows Date Format option Y-m-d as required by Scandanavian countries
+<P>12/9/07 report_runner.php MailSalesReport.php and MailSalesCSV.php now added DatabaseName variable
 <P>23/8/07 Mo Kelly : Modify Customer.php to add parameter to determine if customer PO lines  are collected during quick entry of sales oreders
 <P>23/8/07 Mo Kelly : Modify DefineCartClass.php to incule PO line data and line item due dates.
 <P>23/8/07 Mo Kelly : Modify SelectOrderItems.php to allow the entry of due dates and corresponding customer PO Line by sales order line if parameter is set in the debtormaster to collect this field. Also to caluculate and use default delivery date by line item.

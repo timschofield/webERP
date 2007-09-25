@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 $PageSecurity =15;
 
@@ -216,6 +216,9 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['AutoIssue'] != $_POST['X_AutoIssue']){
 			$sql[] = 'UPDATE config SET confvalue=' . $_POST['X_AutoIssue'] . " WHERE confname='AutoIssue'";
+		}
+		if ($_SESSION['ProhibitNegativeStock'] != $_POST['X_ProhibitNegativeStock']){
+			$sql[] = 'UPDATE config SET confvalue=' . $_POST['X_ProhibitNegativeStock'] . " WHERE confname='ProhibitNegativeStock'";
 		}
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 1 ) {
@@ -671,7 +674,7 @@ $WikiApplications = array( _('Disabled'),
 					_('WackoWiki'),
 					_('MediaWiki') );
 
-echo '<TR><TD>' . _('Wiki application:') . ':</TD>
+echo '<TR><TD>' . _('Wiki application') . ':</TD>
 	<TD><SELECT Name="X_WikiApp">';
 for ($i=0; $i < sizeof($WikiApplications); $i++ ) {
 	echo '<OPTION '.($_SESSION['WikiApp'] == $WikiApplications[$i] ? 'SELECTED ' : '').'VALUE="'.$WikiApplications[$i].'">'.$WikiApplications[$i];
@@ -683,6 +686,10 @@ echo '<TR><TD>' . _('Wiki Path') . ':</TD>
 	<TD><input type="Text" Name="X_WikiPath" SIZE=40 MAXLENGTH=40 value="' . $_SESSION['WikiPath'] . '"></TD>
 	<TD>' . _('The path to the wiki installation to form the basis of wiki URLs - this should be the directory on the web-server where the wiki is installed. The wiki must be installed on the same web-server as webERP') .'</TD></TR>';
 
+/*
+
+Not implemented ... yet - any offers?
+
 echo '<TR><TD>' . _('vtiger Integration:') . ':</TD>
 	<TD><SELECT Name="X_vtiger_integration">';
 	echo '<OPTION ' . ($_SESSION['vtiger_integration'] == '0' ? 'SELECTED ' : '') . 'VALUE="0">' . _('No Integration');
@@ -690,7 +697,7 @@ echo '<TR><TD>' . _('vtiger Integration:') . ':</TD>
 
 echo '</SELECT></TD>
 	<TD>' . _('This feature makes webERP create entries in vtiger tables in the same database as webERP to allow an instance of vtiger to be integrated with webERP data') .'</TD></TR>';
-
+*/
 
 
 echo '<TR><TD>' . _('Prohibit GL Journals to Control Accounts') . ':</TD>
@@ -744,6 +751,20 @@ if ($_SESSION['AutoIssue']==0) {
 	echo '<OPTION VALUE=0>' . _('No');
 	}
 echo '</SELECT></TD><TD>' . _('When items are manufactured it is possible for the components of the item to be automatically decremented from stock in accordance with the Bill of Material setting') . '</TD></TR>' ;
+
+echo '<TR><TD>' . _('Prohibit Negative Stock') . ':</TD>
+		<TD>
+		<SELECT name="X_ProhibitNegativeStock">';
+if ($_SESSION['ProhibitNegativeStock']==0) {
+	echo '<OPTION SELECTED VALUE=0>' . _('No');
+	echo '<OPTION VALUE=1>' . _('Yes');
+} else {
+	echo '<OPTION SELECTED VALUE=1>' . _('Yes');
+	echo '<OPTION VALUE=0>' . _('No');
+	}
+echo '</SELECT></TD><TD>' . _('Setting this parameter to Yes prevents invoicing and the issue of stock if this would result in negative stock. The stock problem must be corrected before the invoice or issue is allowed to be processed.') . '</TD></TR>' ;
+
+
 
 echo '</TABLE><input type="Submit" Name="submit" value="' . _('Update') . '"></CENTER></FORM>';
 

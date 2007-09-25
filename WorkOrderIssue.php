@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 11;
 
@@ -96,6 +96,19 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 		$InputError=1;
 	}
 
+	if ($_SESSION['ProhibitNegativeStock']==1){
+
+		$SQL = "SELECT quantity FROM locstock
+				WHERE stockid ='" . DB_escape_string($_POST['IssueItem']) . "'
+				AND loccode ='" . DB_escape_string($_POST['FromLocation']) . "'";
+		$CheckNegResult = DB_query($SQL,$db);
+		$CheckNegRow = DB_fetch_row($CheckNegResult);
+		if ($CheckNegRow[0]<$QuantityIssued){
+			$InputError = true;
+			prnMsg(_('This issue cannot be processed because the system parameter is set to prohibit negative stock and this issue would result in stock going into negative. Please correct the stock first before attempting another issue'),'error');
+		}
+
+	}
 
 	if ($InputError==false){
 
@@ -181,8 +194,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 					if (trim($SerialNo) != ""){
 
 						$SQL = "UPDATE stockserialitems set quantity=0
-										WHERE (stockid= '" . DB_escape_string($_POST['IssueItem']) . "') 
-										AND (loccode = '" . DB_escape_string($_POST['FromLocation']) . "') 
+										WHERE (stockid= '" . DB_escape_string($_POST['IssueItem']) . "')
+										AND (loccode = '" . DB_escape_string($_POST['FromLocation']) . "')
 										AND (serialno = '" . DB_escape_string($SerialNo) . "')";
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
 						$DbgMsg =  _('The following SQL to insert the serial stock item records was used');
@@ -575,7 +588,7 @@ if (!isset($_POST['IssueItem'])){ //no item selected to issue yet
 							AND reference='" . DB_escape_string($_POST['WO']) . "'",
 						$db);
 		$IssuedAlreadyRow = DB_fetch_row($IssuedAlreadyResult);
-		
+
 		echo '<td align="right">' . number_format($WORow['qtyreqd']*$RequirementsRow['qtypu'],$RequirementsRow['decimalplaces']) . '</td>
 			<td align="right">' . number_format($IssuedAlreadyRow[0],$RequirementsRow['decimalplaces']) . '</td></tr>';
 	}
