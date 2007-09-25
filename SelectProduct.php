@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 $PageSecurity = 2;
 
@@ -501,6 +501,69 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 
 	echo '</TD></TR>
 		</TABLE>'; //end of first nested table
+   // Item Category Property mod: display the item properties
+       echo '<table>';
+       $CatValResult = DB_query("SELECT categoryid FROM
+                                                                               stockmaster
+                                                                               WHERE stockid='" . $StockID . "'", $db);
+               $CatValRow = DB_fetch_row($CatValResult);
+               $CatValue = $CatValRow[0];
+
+       $sql = "SELECT stkcatpropid,
+                                       label,
+                                       controltype,
+                                       defaultvalue
+                       FROM stockcatproperties
+                       WHERE categoryid ='" . $CatValue . "'
+                       AND reqatsalesorder =0
+                       ORDER BY stkcatpropid";
+
+       $PropertiesResult = DB_query($sql,$db);
+       $PropertyCounter = 0;
+       $PropertyWidth = array();
+
+       while ($PropertyRow=DB_fetch_array($PropertiesResult)){
+
+               $PropValResult = DB_query("SELECT value FROM
+                                                                               stockitemproperties
+                                                                               WHERE stockid='" . $StockID . "'
+                                                                               AND stkcatpropid =" . $PropertyRow['stkcatpropid'],
+                                                                       $db);
+               $PropValRow = DB_fetch_row($PropValResult);
+               $PropertyValue = $PropValRow[0];
+
+               echo '<tr><td class="tableheader" align="right">' . $PropertyRow['label']
+. ':</td>';
+               switch ($PropertyRow['controltype']) {
+                       case 0; //textbox
+                               echo '<td align=right width=60>' . $PropertyValue;
+                               break;
+                       case 1; //select box
+                               $OptionValues = explode(',',$PropertyRow['defaultvalue']);
+                               echo '<select name="PropValue' . $PropertyCounter . '">';
+                               foreach ($OptionValues as $PropertyOptionValue){
+                                       if ($PropertyOptionValue == $PropertyValue){
+                                               echo '<option selected value="' . $PropertyOptionValue . '">' .
+$PropertyOptionValue . '</option>';
+                                       } else {
+                                               echo '<option value="' . $PropertyOptionValue . '">' .
+$PropertyOptionValue . '</option>';
+                                       }
+                               }
+                               echo '</select>';
+                               break;
+                       case 2; //checkbox
+                               echo '<input type="checkbox" name="PropValue' . $PropertyCounter . '"';
+                               if ($PropertyValue==1){
+                                       echo '"checked"';
+                               }
+                               echo '>';
+                               break;
+               } //end switch
+               echo '</td></tr>';
+               $PropertyCounter++;
+       } //end loop round properties for the item category
+       echo '</table>'; //end of Item Category Property mod
 
 	echo '<TD WIDTH="15%">
 			<TABLE>'; //nested table to show QOH/orders
