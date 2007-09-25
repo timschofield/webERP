@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.38 $ */
+/* $Revision: 1.39 $ */
 
 $PageSecurity = 11;
 
@@ -18,9 +18,11 @@ if (isset($_GET['StockID'])){
 ?>
 
 <script LANGUAGE="JavaScript">
-	function ReloadForm ()
+	function ReloadForm(form)
 	{
 		document.ItemForm.submit.click();
+		//var val=ItemForm.StockID.value;
+		self.location='Stocks.php?&StockID=' + ItemForm.StockID.value;
 	}
 </script>
 
@@ -538,7 +540,7 @@ echo '<TR><TD>' . _('Part Description') . ' (' . _('long') . '):</TD><TD><textar
 echo '<tr><td>'. _('Image File (.jpg)') . ':</td><td><input type="file" id="ItemPicture" name="ItemPicture"></td></tr>';
 // EOR Add Image upload for New Item  - by Ori
 
-echo '<tr><td>' . _('Category') . ':</td><td><select name="CategoryID" onChange="ReloadForm()">';
+echo '<tr><td>' . _('Category') . ':</td><td><select name="CategoryID" onChange="ReloadForm(this.form)">';
 
 $sql = "SELECT categoryid, categorydescription FROM stockcategory";
 $ErrMsg = _('The stock categories could not be retrieved because');
