@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 /* Script to delete all supplier payments entered or created from a payment run on a specified day
  */
@@ -15,7 +15,8 @@ if (isset($_POST['RevPayts']) AND Is_Date($_POST['PaytDate'])==1){
 
 	$SQLTranDate = FormatDateForSQL($_POST['PaytDate']);
 
-	$SQL = "SELECT transno,
+	$SQL = "SELECT id,
+			transno,
 			supplierno,
 			ovamount,
 			suppreference,
@@ -39,12 +40,12 @@ if (isset($_POST['RevPayts']) AND Is_Date($_POST['PaytDate'])==1){
 		prnMsg(_('Deleted the SuppTran record'),'success');
 
 
-		$SQL = "SELECT transno,
-				typeno,
-				amt
-			FROM suppallocs
-			WHERE paytno = " .  $Payment['transno'] . '
-			AND payttypeno=22';
+		$SQL = "SELECT supptrans.transno,
+				supptrans.type,
+				suppallocs.amt
+			FROM supptrans INNER JOIN suppallocs
+			ON supptrans.id=suppallocs.transid_allocto
+			WHERE suppallocs.transid_allocfrom = " .  $Payment['id'];
 
 		$AllocsResult = DB_query($SQL,$db);
 		while ($Alloc = DB_fetch_array($AllocsResult)){
@@ -61,8 +62,7 @@ if (isset($_POST['RevPayts']) AND Is_Date($_POST['PaytDate'])==1){
 		}
 
 		prnMsg(' ... ' . _('reversed the allocations'),'info');
-		$SQL= 'DELETE FROM suppallocs WHERE paytno=' . $Payment['transno'] . '
-			AND payttypeno=22';
+		$SQL= 'DELETE FROM suppallocs WHERE transid_allocfrom=' . $Payment['id'];
 		$DelResult = DB_query($SQL,$db);
 		prnMsg(' ... ' . _('deleted the SuppAllocs records'),'info');
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 11;
 
@@ -50,7 +50,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 				ON woitems.stockid=stockmaster.stockid
 				INNER JOIN stockcategory
 				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE woitems.stockid='" . DB_escape_string($_POST['StockID']) . "'",
+				WHERE woitems.stockid='" . DB_escape_string($_POST['StockID']) . "'
+				AND woitems.wo=" . DB_escape_string($_POST['WO']),
 				$db,
 				$ErrMsg);
 
