@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 10;
 
@@ -222,7 +222,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
         	                           bom.parent,
                                        bom.component,
                                        bom.quantity,
-                                       materialcost+labourcost+overheadcost,
+                                       (materialcost+labourcost+overheadcost)*bom.quantity,
                                        autoissue
                          FROM bom INNER JOIN stockmaster
                          ON bom.component=stockmaster.stockid
@@ -280,7 +280,7 @@ if (isset($_POST['submit'])) { //The update button has been clicked
     					$_POST['OutputQty'.$i]=$_POST['QtyRecd'.$i]; //OutputQty must be >= Qty already reced
     			}
     			if ($_POST['RecdQty'.$i]==0){ // can only change location cost if QtyRecd=0
-	    				$CostResult = DB_query("SELECT SUM(materialcost+labourcost+overheadcost) AS cost
+	    				$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
                                                         FROM stockmaster INNER JOIN bom
                                                         ON stockmaster.stockid=bom.component
                                                         WHERE bom.parent='" . DB_escape_string($_POST['OutputItem'.$i]) . "'

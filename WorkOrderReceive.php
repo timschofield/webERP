@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 11;
 
@@ -56,7 +56,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 					ON woitems.stockid=stockmaster.stockid
 					INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
-					WHERE woitems.stockid='" . DB_escape_string($_POST['StockID']) . "'",
+					WHERE woitems.stockid='" . DB_escape_string($_POST['StockID']) . "'
+					AND workorders.wo=".$_POST['WO'],
 					$db,
 					$ErrMsg);
 
