@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 11;
 
@@ -635,7 +635,7 @@ $WORow = DB_fetch_array($WOResult);
 
 if ($WORow['closed']==1){
 	prnMsg(_('The selected work order has been closed and variances calculated and posted. No more receipts of manufactured items can be received against this work order. You should make up a new work order to receive this item against.'),'info');
-	include('includes/footer.in');
+	include('includes/footer.inc');
 	exit;
 }
 
