@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 11;
 
@@ -63,7 +63,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
 	if (DB_num_rows($WOResult)==0){
 		prnMsg(_('The selected work order item cannot be retrieved from the database'),'info');
-		include('includes/footer.in');
+		include('includes/footer.inc');
 		exit;
 	}
 	$WORow = DB_fetch_array($WOResult);
@@ -628,7 +628,7 @@ $WOResult = DB_query("SELECT workorders.loccode,
 
 if (DB_num_rows($WOResult)==0){
 	prnMsg(_('The selected work order item cannot be retrieved from the database'),'info');
-	include('includes/footer.in');
+	include('includes/footer.inc');
 	exit;
 }
 $WORow = DB_fetch_array($WOResult);
