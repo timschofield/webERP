@@ -132,6 +132,7 @@ select {
 
 /* Main page heading with quick menu within */
 .quick_menu {
+	width: 100%;
 	background-color: #ffffff;
 	border: none;
 	margin: 0px;

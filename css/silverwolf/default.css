@@ -143,6 +143,7 @@ select {
 }
 
 #quick_menu{
+	width: 100%;
 	background: #ccc url(images/menu_bg_grey.png) 0px 0px repeat-x;
 	border-bottom: solid 1px #aaa;
 }
