@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 
 $PageSecurity = 2;
@@ -141,20 +141,21 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		$OrderTotalVolume = 0;
 		$OrderTotalWeight = 0;
 
+		echo '</BR><CENTER><B>' . _('Line Details') . '</B>
+			<TABLE CELLPADDING=2 COLSPAN=9 BORDER=1>
+			<TR>
+			<TD class="tableheader">' . _('Item Code') . '</TD>
+			<TD class="tableheader">' . _('Item Description') . '</TD>
+			<TD class="tableheader">' . _('Quantity') . '</TD>
+			<TD class="tableheader">' . _('Unit') . '</TD>
+			<TD class="tableheader">' . _('Price') . '</TD>
+			<TD class="tableheader">' . _('Discount') . '</TD>
+			<TD class="tableheader">' . _('Total') . '</TD>
+			<TD class="tableheader">' . _('Qty Del') . '</TD>
+			<TD class="tableheader">' . _('Last Del') . '</TD>
+			</TR>';
+
 		while ($myrow=db_fetch_array($LineItemsResult)) {
-			echo '</BR><CENTER><B>' . _('Line Details') . '</B>
-				<TABLE CELLPADDING=2 COLSPAN=9 BORDER=1>
-				<TR>
-				<TD class="tableheader">' . _('Item Code') . '</TD>
-				<TD class="tableheader">' . _('Item Description') . '</TD>
-				<TD class="tableheader">' . _('Quantity') . '</TD>
-				<TD class="tableheader">' . _('Unit') . '</TD>
-				<TD class="tableheader">' . _('Price') . '</TD>
-				<TD class="tableheader">' . _('Discount') . '</TD>
-				<TD class="tableheader">' . _('Total') . '</TD>
-				<TD class="tableheader">' . _('Qty Del') . '</TD>
-				<TD class="tableheader">' . _('Last Del') . '</TD>
-				</TR>';
 
 			if ($k==1){
 				echo '<tr bgcolor="#CCCCCC">';
