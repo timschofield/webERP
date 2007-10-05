@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.31 $ */
+/* $Revision: 1.32 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -147,9 +147,9 @@ Class Cart {
 									'" . trim(strtoupper($StockID)) ."',
 									" . $Qty . ",
 									" . $Price . ",
-									" . $Disc . ",
-									" . $ItemDue . ",
-+									" . $POLine . ")";
+									" . $Disc . ",'
+									" . $ItemDue . "','
+									" . $POLine . "')";
 				$result = DB_query($sql,
 							$db ,
 							_('The order line for') . ' ' . strtoupper($StockID) . ' ' ._('could not be inserted'));
