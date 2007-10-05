@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 3;
 include ('includes/session.inc');
@@ -188,7 +188,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
                      ON salesorders.orderno = salesorderdetails.orderno
                      INNER JOIN stockmaster
                      ON salesorderdetails.stkcode = stockmaster.stockid
-                WHERE STOCKMASTER.CATEGORYID ='" . $_POST['CategoryID'] . "'
+                WHERE stockmaster.categoryid ='" . $_POST['CategoryID'] . "'
                       AND salesorders.fromstkloc ='" . $_POST['Location'] . "'
                       AND orddate >='" . FormatDateForSQL($_POST['FromDate']) . "'
                       AND orddate <='" . FormatDateForSQL($_POST['ToDate']) . "'
