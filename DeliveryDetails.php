@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -103,6 +103,12 @@ If (isset($_POST['Update'])
 
 	If ($InputErrors==0){
 
+		if ($_SESSION['DoFreightCalc']==True){
+		      list ($_POST['FreightCost'], $BestShipper) = CalcFreightCost($_SESSION['Items']->total, $_POST['BrAdd2'], $_POST['BrAdd3'], $_SESSION['Items']->totalVolume, $_SESSION['Items']->totalWeight, $_SESSION['Items']->Location, $db);
+ 		      $_POST['FreightCost'] = round($_POST['FreightCost'],2);
+		      $_POST['ShipVia'] = $BestShipper;
+		}
+
 		$_SESSION['Items']->DeliverTo = $_POST['DeliverTo'];
 		$_SESSION['Items']->DeliveryDate = $_POST['DeliveryDate'];
 		$_SESSION['Items']->DelAdd1 = $_POST['BrAdd1'];
@@ -123,11 +129,6 @@ If (isset($_POST['Update'])
 
 		/*$_SESSION['DoFreightCalc'] is a setting in the config.php file that the user can set to false to turn off freight calculations if necessary */
 
-		if ($_SESSION['DoFreightCalc']==True){
-		      list ($_POST['FreightCost'], $BestShipper) = round(CalcFreightCost($_SESSION['Items']->total, $_POST['BrAdd2'], $_POST['BrAdd3'], $_SESSION['Items']->totalVolume, $_SESSION['Items']->totalWeight, $_SESSION['Items']->Location, $db),2);
- 		      $_POST['FreightCost'] = round($_POST['FreightCost'],2);
-		      $_POST['ShipVia'] = $BestShipper;
-		}
 
 		/* What to do if the shipper is not calculated using the system
 		- first check that the default shipper defined in config.php is in the database
