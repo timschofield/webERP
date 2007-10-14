@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -87,8 +87,8 @@ Class Cart {
 				$LineNumber=-1,
 				$TaxCategory=0,
 				$vtigerProductID='',
-				$ItemDue,
-				$POLine){
+				$ItemDue = '',
+				$POLine=''){
 
 
 		if (isset($StockID) AND $StockID!="" AND $Qty>0 AND isset($Qty)){
