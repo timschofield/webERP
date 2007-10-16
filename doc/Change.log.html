@@ -1,14 +1,39 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
 <P>9/10/07 DefineCartClass - now defaults poline='' and itemdue = '' for credit notes
+<p>7/10/07 Tim Schofield : Bug fixes in Freight cost calculation. 
+<p>5/10/07 Tim Schofield : Amend table headers in OrderDetails.php
+<p>5/10/07 Bjorn Paulsen : Bug fix in PDFOrdersInvoiced.php
+<p>5/10/07 Tim Schofield : Remove CartClass references
+<p>1/10/07 Tim Schofield : include errors in WorkOrderReceive.php
+<p>29/9/07 Tim Schofield : Correct calculation of costs for GL entries
+<p>25/9/07 Anthony C : Show additional item properties in Select Item mode
+<p>25/9/07 Jan Hendrik Rust : Update javascript for product category changes
 <P>25/9/07 SystemParameters.php now has new parameter to ProhibitNegativeStocks - new config added to DB.
 <P>25/9/07 ConfirmDispatch_Invoice.php now checks stock balances after the order invoiced before processing it and reports back nasty message if stock will go negative.
 <P>25/9/07 GoodsReceived.php now checks stock balances after the receipt of stock is processed for negative receipts of stock and it reports back a nasty message if stock will go negative.
 <P>25/9/07 StockAdjustment.php now checks the stock balance after the adjustment to see if it would go negative, if so it reports back a nasty message and prevents the adjustment.
 <P>25/9/07 WorkOrderIssue.php now checks the stock balance after the issue to see if it would go negative, if so it reports back a nasty message and prevents the issue.
 
+<p>21/9/07 Tim Schofield : Correct date conversion for statements with only settled items on.
+<p>20/9/07 Tim Schofield : Changes to SystemParameters.php for Y-M-D date format
 <P>20/9/07 Tim Schofield : DateFunctions.inc now allows Date Format option Y-m-d as required by Scandanavian countries
+<p>14/9/07 Tim Schofield : Alter sql for serial item issues, and sql bug fixes
+<p>13/9/07 Tim Schofield : Correct bugs in the issuing of serialised components
 <P>12/9/07 report_runner.php MailSalesReport.php and MailSalesCSV.php now added DatabaseName variable
+<p>11/9/07 Tim Schofield : Various bug fixes in SelectOrderItems.php
+<p>10/9/07 Tim Schofield : Bug fixes in SelectOrderItems.php
+<p>08/9/07 Tim Schofield : Update Stocks.php for javascript update of stock category changes
+<p>07/9/07 Tim Schofield : Update Z_poAdmin.php for new options
+<p>07/9/07 Tim Schofield : Improvements to translation scripts
+<p>06/9/07 Tim Schofield : Remove non ascii characters in OrderDetails.php
+<p>30/8/07 Tim Schofield : Corrections to language scripts
+<p>30/8/07 sunshine33777 : Fix HTML error in PO_PDFPurchOrder.php
+<p>27/8/07 Tim Schofield : Correct javascript in login.php
+<p>25/8/07 Tim Schofield : Replace corrupted .mo file
+<p>25/8/07 Tim Schofield : Correct sql in SupplierInvoice.php to agree with ansi standard
+<p>23/8/07 Tim Schofield : Bug fix in SalesTypes.php
+<p>23/8/07 Tim Schofield : If default price list doesnt exist, then update config for it
 <P>23/8/07 Mo Kelly : Modify Customer.php to add parameter to determine if customer PO lines  are collected during quick entry of sales oreders
 <P>23/8/07 Mo Kelly : Modify DefineCartClass.php to incule PO line data and line item due dates.
 <P>23/8/07 Mo Kelly : Modify SelectOrderItems.php to allow the entry of due dates and corresponding customer PO Line by sales order line if parameter is set in the debtormaster to collect this field. Also to caluculate and use default delivery date by line item.
