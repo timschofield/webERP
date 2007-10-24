@@ -411,6 +411,7 @@ CREATE TABLE `debtorsmaster` (
   `ediserveruser` varchar(20) NOT NULL default '',
   `ediserverpwd` varchar(20) NOT NULL default '',
   `taxref` varchar(20) NOT NULL default '',
+  `customerpoline` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`debtorno`),
   KEY `Currency` (`currcode`),
   KEY `HoldReason` (`holdreason`),
@@ -1195,6 +1196,8 @@ CREATE TABLE `salesorderdetails` (
   `actualdispatchdate` datetime NOT NULL default '0000-00-00 00:00:00',
   `completed` tinyint(1) NOT NULL default '0',
   `narrative` text,
+  `itemdue` date default NULL COMMENT 'Due date for line item.  Some customers require \r\nacknowledgements with due dates by line item',
+  `poline` varchar(10) default NULL COMMENT 'Some Customers require acknowledgements with a PO line number for each sales line',
   PRIMARY KEY  (`orderlineno`,`orderno`),
   KEY `OrderNo` (`orderno`),
   KEY `StkCode` (`stkcode`),
@@ -2222,7 +2225,7 @@ INSERT INTO `taxprovinces` VALUES (1,'Default Tax province');
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','MEL',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'silverwolf','en_GB');
+INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','MEL',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
 
 --
 -- Dumping data for table `edi_orders_segs`
@@ -2381,7 +2384,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','AUD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','30');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2007-07-15');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2007-09-26');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
