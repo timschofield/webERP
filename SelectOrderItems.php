@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.59 $ */
+/* $Revision: 1.60 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -1340,7 +1340,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				printf("<TD><FONT SIZE=1>%s</FONT></TD>
 					<TD><FONT SIZE=1>%s</FONT></TD>
 					<TD><FONT SIZE=1>%s</FONT></TD>
-					<TD><FONT SIZE=1><input type='textbox' size=2 name='itm[".$myrow['stockid']."]' value=0>"
+					<TD><FONT SIZE=1><input type='textbox' size=6 name='itm[".$myrow['stockid']."]' value=0>"
 					. '</FONT></TD>
 					</TR>',
 					$myrow['stockid'],
