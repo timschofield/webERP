@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.58 $ */
+/* $Revision: 1.59 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -22,7 +22,18 @@ if (isset($_POST['QuickEntry'])){
    unset($_POST['PartSearch']);
 }
 
+if ($_POST['order_items']){
+	foreach($_POST['itm'] as $key => $value)
+	{
+		$NewItem_array[$key] = trim($value);
+	}	
+	
+}
+
+
 if (isset($_GET['NewItem'])){
+	
+	
 	$NewItem = trim($_GET['NewItem']);
 }
 
@@ -1033,6 +1044,56 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	} /*end of if its a new item */
 
+	If (isset($NewItem_array) && isset($_POST['order_items'])){
+/* get the item details from the database and hold them in the cart object make the quantity 1 by default then add it to the cart */
+/*Now figure out if the item is a kit set - the field MBFlag='K'*/
+		foreach($NewItem_array as $NewItem => $NewItemQty)
+		{
+				if($NewItemQty > 0)
+				{
+					$sql = "SELECT stockmaster.mbflag
+							FROM stockmaster
+							WHERE stockmaster.stockid='". $NewItem ."'";
+			
+					$ErrMsg =  _('Could not determine if the part being ordered was a kitset or not because');
+			
+					$KitResult = DB_query($sql, $db,$ErrMsg);
+			
+					//$NewItemQty = 1; /*By Default */
+					$Discount = 0; /*By default - can change later or discount category overide */
+					
+					if ($myrow=DB_fetch_array($KitResult)){
+						if ($myrow['mbflag']=='K'){	/*It is a kit set item */
+							$sql = "SELECT bom.component,
+								bom.quantity
+								FROM bom
+								WHERE bom.parent='" . $NewItem . "'
+								AND bom.effectiveto > '" . Date('Y-m-d') . "'
+								AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+			
+							$ErrMsg = _('Could not retrieve kitset components from the database because');
+							$KitResult = DB_query($sql,$db,$ErrMsg);
+			
+							$ParentQty = $NewItemQty;
+							while ($KitParts = DB_fetch_array($KitResult,$db)){
+								$NewItem = $KitParts['component'];
+								$NewItemQty = $KitParts['quantity'] * $ParentQty;
+								include('includes/SelectOrderItems_IntoCart.inc');
+							}
+			
+						} else { /*Its not a kit set item*/
+							
+						include('includes/SelectOrderItems_IntoCart.inc');
+						}
+			
+					} /* end of if its a new item */
+					
+				} /*end of if its a new item */
+				
+		}
+		
+	}
+	
 
 	/* Run through each line of the order and work out the appropriate discount from the discount matrix */
 	$DiscCatsDone = array();
@@ -1185,7 +1246,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 /* Now show the stock item selection search stuff below */
 
-	 if (isset($_POST['PartSearch']) && $_POST['PartSearch']!=''){
+	 if (isset($_POST['PartSearch']) && $_POST['PartSearch']!='' || !isset($_POST['QuickEntry'])){
 
 		echo '<input type="hidden" name="PartSearch" value="' .  _('Yes Please') . '">';
 
@@ -1245,10 +1306,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		if (isset($SearchResult)) {
 
-			echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
+			echo '<CENTER><form name="orderform"><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
 			$TableHeader = '<TR><TD class="tableheader">' . _('Code') . '</TD>
                           			<TD class="tableheader">' . _('Description') . '</TD>
-                          			<TD class="tableheader">' . _('Units') . '</TD></TR>';
+                          			<TD class="tableheader">' . _('Units') . '</TD>
+                          			<TD class="tableheader">' . _('Quantity') . '</TD></TR>';
 			echo $TableHeader;
 			$j = 1;
 			$k=0; //row colour counter
@@ -1278,9 +1340,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				printf("<TD><FONT SIZE=1>%s</FONT></TD>
 					<TD><FONT SIZE=1>%s</FONT></TD>
 					<TD><FONT SIZE=1>%s</FONT></TD>
-					<TD>%s</TD>
-					<TD><FONT SIZE=1><A HREF='%s/SelectOrderItems.php?%s&NewItem=%s'>"
-					. _('Order some') . '</A></FONT></TD>
+					<TD><FONT SIZE=1><input type='textbox' size=2 name='itm[".$myrow['stockid']."]' value=0>"
+					. '</FONT></TD>
 					</TR>',
 					$myrow['stockid'],
 					$myrow['description'],
@@ -1298,7 +1359,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	#end of page full new headings if
 			}
 	#end of while loop
-			echo '</TABLE>';
+			echo '<tr><td align=center colspan=5><input type="hidden" name="order_items" value=1><input type="submit" value="Order"></td></tr>';
+			echo '</TABLE></form>';
 
 		}#end if SearchResults to show
 	} /*end of PartSearch options to be displayed */
