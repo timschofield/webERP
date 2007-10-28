@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 /* This file contains the code to post GL transactions.
 
@@ -33,8 +33,8 @@ $CreateFrom = $FirstPeriodRow[0];
 
 if (is_null($FirstPeriodRow[0])){
 	//There are no periods defined
-	$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (0,'" . Date('Y-m-d',mktime(0,0,0,Date('m'),0,Date('Y'))) . "')",$db,_('Could not insert first period'));
-	$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (1,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y'))) . "')",$db,_('Could not insert second period'));
+	$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (0,'" . Date('Y-m-d',mktime(0,0,0,Date('m'),1,Date('Y'))) . "')",$db,_('Could not insert first period'));
+	$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (1,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+1,1,Date('Y'))) . "')",$db,_('Could not insert second period'));
 	$CreateFrom=0;
 }
 
