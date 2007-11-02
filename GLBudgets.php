@@ -52,27 +52,35 @@ if ($SelectedAccount != '') {
 		$ErrMsg = _('Cannot update GL budgets');
 		$DbgMsg = _('The SQL that failed to update the GL budgets was');
 		for ($i=1; $i<=12; $i++) {
-			$SQL='UPDATE chartdetails SET budget='.Round($_POST[$i."this"],2)." WHERE period=".
-			  ($CurrentYearEndPeriod-(12-$i)) ." AND  accountcode = '" . $SelectedAccount."'";
+			$SQL='UPDATE chartdetails SET budget='.Round($_POST[$i.'this'],2). ' 
+					WHERE period=' . ($CurrentYearEndPeriod-(12-$i)) ." 
+					AND  accountcode = '" . $SelectedAccount."'";
 			$result=DB_query($SQL,$db,$ErrMsg,$DbgMsg);
-			$SQL='UPDATE chartdetails SET budget='.Round($_POST[$i."next"],2)." WHERE period=".
-			  ($CurrentYearEndPeriod+$i) ." AND  accountcode = '" . $SelectedAccount."'";
+			$SQL='UPDATE chartdetails SET budget='.Round($_POST[$i.'next'],2).' 
+					WHERE period=' .  ($CurrentYearEndPeriod+$i) ." 
+					AND  accountcode = '" . $SelectedAccount."'";
 			$result=DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 		}
 	}
 // End of update
 	
-	$YearEndYear=Date("Y", YearEndDate($_SESSION['YearEnd'],0));
+	$YearEndYear=Date('Y', YearEndDate($_SESSION['YearEnd'],0));
 
-// If the periods dont exist then create them - There must be a better way of doing this
+/* If the periods dont exist then create them - There must be a better way of doing this 
+*/
 	for ($i=1; $i <=36; $i++) {
 		$MonthEnd=mktime(0,0,0,$_SESSION['YearEnd']+1+$i,0,$YearEndYear-2);
 		$period=GetPeriod(Date($_SESSION['DefaultDateFormat'],$MonthEnd),$db);
-		$PeriodEnd[$period]=Date("M Y",$MonthEnd);
+		$PeriodEnd[$period]=Date('M Y',$MonthEnd);
 	}
 // End of create periods
 	
-	$SQL='SELECT period, budget, actual FROM chartdetails WHERE accountcode='.$SelectedAccount;
+	$SQL='SELECT period, 
+					budget, 
+					actual 
+				FROM chartdetails 
+				WHERE accountcode=' . $SelectedAccount;
+				
 	$result=DB_query($SQL,$db);
 	while ($myrow=DB_fetch_array($result)){
 		$budget[$myrow['period']]=$myrow['budget'];

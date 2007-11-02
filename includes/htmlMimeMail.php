@@ -1,10 +1,10 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /**
 * Filename.......: class.html.mime.mail.inc
 * Project........: HTML Mime mail class
-* Last Modified..: $Date: 2005-06-30 10:07:17 $
-* CVS Revision...: $Revision: 1.5 $
+* Last Modified..: $Date: 2007-11-02 21:39:47 $
+* CVS Revision...: $Revision: 1.6 $
 * Copyright......: 2001, 2002 Richard Heyes
 */
 
@@ -71,14 +71,14 @@ class htmlMimeMail
 	* @var boolean
 	*/
 	var $is_built;
-	
+
 	/**
     * The return path address. If not set the From:
 	* address is used instead
 	* @var string
     */
 	var $return_path;
-	
+
 	/**
     * Array of information needed for smtp sending
 	* @var array
@@ -351,7 +351,7 @@ class htmlMimeMail
 			// If duplicate images are embedded, they may show up as attachments, so remove them.
 			$html_images = array_unique($html_images);
 			sort($html_images);
-	
+
 			for ($i=0; $i<count($html_images); $i++) {
 				if ($image = $this->getFile($images_dir.$html_images[$i])) {
 					$ext = substr($html_images[$i], strrpos($html_images[$i], '.') + 1);
@@ -393,7 +393,7 @@ class htmlMimeMail
 /**
 * Adds a text subpart to a mime_part object
 */
-	function &_addTextPart(&$obj, $text)
+	function _addTextPart(&$obj, $text) // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
 	{
 		$params['content_type'] = 'text/plain';
 		$params['encoding']     = $this->build_params['text_encoding'];
@@ -408,7 +408,7 @@ class htmlMimeMail
 /**
 * Adds a html subpart to a mime_part object
 */
-	function &_addHtmlPart(&$obj)
+	function _addHtmlPart(&$obj) // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
 	{
 		$params['content_type'] = 'text/html';
 		$params['encoding']     = $this->build_params['html_encoding'];
@@ -423,7 +423,7 @@ class htmlMimeMail
 /**
 * Starts a message with a mixed part
 */
-	function &_addMixedPart()
+	function _addMixedPart() // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
 	{
 		$params['content_type'] = 'multipart/mixed';
 		return new Mail_mimePart('', $params);
@@ -432,7 +432,7 @@ class htmlMimeMail
 /**
 * Adds an alternative part to a mime_part object
 */
-	function &_addAlternativePart(&$obj)
+	function _addAlternativePart(&$obj) // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
 	{
 		$params['content_type'] = 'multipart/alternative';
 		if (is_object($obj)) {
@@ -445,7 +445,7 @@ class htmlMimeMail
 /**
 * Adds a html subpart to a mime_part object
 */
-	function &_addRelatedPart(&$obj)
+	function _addRelatedPart(&$obj) // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
 	{
 		$params['content_type'] = 'multipart/related';
 		if (is_object($obj)) {
@@ -458,7 +458,7 @@ class htmlMimeMail
 /**
 * Adds an html image subpart to a mime_part object
 */
-	function &_addHtmlImagePart(&$obj, $value)
+	function _addHtmlImagePart(&$obj, $value) // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
 	{
 		$params['content_type'] = $value['c_type'];
 		$params['encoding']     = 'base64';
@@ -471,7 +471,7 @@ class htmlMimeMail
 /**
 * Adds an attachment subpart to a mime_part object
 */
-	function &_addAttachmentPart(&$obj, $value)
+	function _addAttachmentPart(&$obj, $value) // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
 	{
 		$params['content_type'] = $value['c_type'];
 		$params['encoding']     = $value['encoding'];
@@ -630,7 +630,7 @@ class htmlMimeMail
 			$replacement = preg_replace('/([\x80-\xFF])/e', '"=" . strtoupper(dechex(ord("\1")))', $value);
 			$input = str_replace($value, '=?' . $charset . '?Q?' . $replacement . '?=', $input);
 		}
-		
+
 		return $input;
 	}
 
@@ -671,12 +671,12 @@ class htmlMimeMail
 				} else {
 					$result = mail($to, $subject, $this->output, implode(CRLF, $headers));
 				}
-				
+
 				// Reset the subject in case mail is resent
 				if ($subject !== '') {
 					$this->headers['Subject'] = $subject;
 				}
-				
+
 				// Return
 				return $result;
 				break;
@@ -685,7 +685,7 @@ class htmlMimeMail
 				require_once(dirname(__FILE__) . '/smtp.php');
 				require_once(dirname(__FILE__) . '/RFC822.php');
 				$smtp = &smtp::connect($this->smtp_params);
-				
+
 				// Parse recipients argument for internet addresses
 				foreach ($recipients as $recipient) {
 					$addresses = Mail_RFC822::parseAddressList($recipient, $this->smtp_params['helo'], null, false);
@@ -712,7 +712,7 @@ class htmlMimeMail
 				}
 				// Add To header based on $recipients argument
 				$headers[] = 'To: ' . $this->_encodeHeader(implode(', ', $recipients), $this->build_params['head_charset']);
-				
+
 				// Add headers to send_params
 				$send_params['headers']    = $headers;
 				$send_params['recipients'] = array_values(array_unique($smtp_recipients));
