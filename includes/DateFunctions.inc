@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 /*
 date validation and parsing functions
@@ -108,6 +108,19 @@ function DayOfWeekFromSQLDate($DateEntry) {
 
 }
 
+
+// Returns the timestamp for the financial year end. To find other year ends,
+// use $YearIncrement to move back and fgorward. in -1 gives last year end, 1 
+// gives next year end.
+
+function YearEndDate($MonthNo, $YearIncrement) {
+	if (Date("m") > $MonthNo) {
+		$Year = Date("Y")+1+$YearIncrement;
+	} else {
+		$Year = Date("Y")+$YearIncrement;
+	}
+	Return mktime(0,0,0,$MonthNo+1,0,$Year);	
+}
 
 function ConvertSQLDate($DateEntry) {
 
@@ -479,7 +492,7 @@ function CalcDueDate($TranDate, $DayInFollowingMonth, $DaysBeforeDue){
 
 }
 
-Function DateAdd ($DateToAddTo,$PeriodString,$NumberPeriods){
+function DateAdd ($DateToAddTo,$PeriodString,$NumberPeriods){
 
 	$Date_array = explode('/', trim($DateToAddTo));
 	if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
@@ -587,7 +600,7 @@ provided that both dates are after 1970. Also only works for dates up to the yea
 }
 
 
-Function CalcEarliestDispatchDate (){
+function CalcEarliestDispatchDate (){
 
 /*This function will need to be modified depending on the business - many businesses run 24x7
 The default assumes no delivery on Sat and Sun*/
@@ -615,7 +628,7 @@ The default assumes no delivery on Sat and Sun*/
 }
 
 
-Function GetPeriod ($TransDate, &$db) {
+function GetPeriod ($TransDate, &$db) {
 
 /*Gets the period for a transaction from the date entered from the period table -
 if the date entered is out of range monthly periods are inserted as necessary and
@@ -648,7 +661,7 @@ Dates are parsed using the $_SESSION['DefaultDateFormat'] string */
 	
 	if (!Is_Date($_SESSION['ProhibitPostingsBefore'])){
 		//set a suitable default - 1 year ago
-		$_SESSION['ProhibitPostingsBefore'] = Date('Y-m-d',mktime(0,0,0,Date('m'),0,Date('Y')-1));
+		$_SESSION['ProhibitPostingsBefore'] = Date('Y-m-d',mktime(0,0,0,Date('m'),0,Date('Y')-2));
 		$result = DB_query("UPDATE config SET confvalue='" . $_SESSION['ProhibitPostingsBefore'] . "' WHERE confname='ProhibitPostingsBefore'",$db);
 	}
 	if (strpos($_SESSION['ProhibitPostingsBefore'],'/')) {
@@ -730,7 +743,7 @@ Need to insert some new periods */
 							IN ( SELECT chartdetails.accountcode, chartdetails.period FROM chartdetails )';
 							
 				$InsNewChartDetails = DB_query($sql,$db,'','','',false); /*dont trap errors - chart details records created only as required - duplicate messages ignored */
-
+;
 			}
 			return $LastPeriodNo;
 
