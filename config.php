@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.81 $ */
+/* $Revision: 1.82 $ */
 
 	/*--------------------------------------------------\
 	| 		|               | config.php        |
@@ -41,6 +41,7 @@ $host = 'localhost';
 $dbType = 'mysql';
 //$dbType = 'postgres' - DEPRECIATED;
 //$dbType = 'mysql';
+//$dbType = 'mysqli'; for PHP 5 and mysql > 4.1
 
 // sql user & password
 $dbuser = 'weberp_db_user';
