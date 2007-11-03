@@ -15,13 +15,23 @@ if (isset($_POST['SelectedAccount'])){
 	$SelectedAccount = $_GET['SelectedAccount'];
 }
 
+if (isset($_POST['Previous'])) {
+	$SelectedAccount = $_POST['PrevAccount'];
+} elseif (isset($_POST['Next'])) {
+	$SelectedAccount = $_POST['NextAccount'];
+}
+
 //If an account hasn't been selected then select one here.
 echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . ' METHOD=POST>';
 echo '<CENTER><TABLE>';
 
 echo '</BR><TR><TD>'.  _('Select GL Account').  ":</TD><TD><SELECT name='SelectedAccount'>";
 
-$SQL = 'SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode';
+$SQL = 'SELECT accountcode, 
+						accountname
+					FROM chartmaster 
+					ORDER BY accountcode';
+						
 $result=DB_query($SQL,$db);
 if (DB_num_rows($result)==0){
 	echo '</SELECT></TD></TR>';
@@ -31,14 +41,25 @@ if (DB_num_rows($result)==0){
 		$account = $myrow['accountcode'] . ' - ' . $myrow['accountname'];
 		if ($SelectedAccount==$myrow['accountcode']){
 			echo '<OPTION SELECTED value=' . $myrow['accountcode'] . '>' . $account;
+			$PrevCode=$LastCode;
 		} else {
 			echo '<OPTION value=' . $myrow['accountcode'] . '>' . $account;
+			if ($SelectedAccount == $LastCode) {
+				$NextCode=$myrow['accountcode'];
+			}
 		}
+		$LastCode=$myrow['accountcode'];
 	}
 	echo '</SELECT></TD></TR>';
 }
+echo '<INPUT TYPE=HIDDEN NAME=PrevAccount VALUE='.$PrevCode.'>';
+echo '<INPUT TYPE=HIDDEN NAME=NextAccount VALUE='.$NextCode.'>';
+echo '</TABLE>';
+echo "<TABLE><TR><TD><INPUT TYPE=SUBMIT name=Previous value='" . _('Prev Account') . "'></TD>";
+echo "<TD><INPUT TYPE=SUBMIT name=Select value='" . _('Select Account') . "'></TD>";
+echo "<TD><INPUT TYPE=SUBMIT name=Next value='" . _('Next Account') . "'></TD></TR>";
 echo '</TABLE></BR>';
-echo "<INPUT TYPE=SUBMIT name=Select value='" . _('Select Account') . "'></CENTER></FORM>";
+echo '</CENTER></FORM>';
 
 // End of account selection
 
@@ -165,7 +186,14 @@ if ($SelectedAccount != '') {
 	$LastPeriod=$MyRow[0];
 
 	for ($i=$FirstPeriod;$i<=$LastPeriod;$i++) {
-		$sql='SELECT accountcode, period, budget, actual, bfwd, bfwdbudget FROM chartdetails WHERE period ='. $i . ' AND  accountcode = ' . $SelectedAccount;
+		$sql='SELECT accountcode, 
+							period, 
+							budget, 
+							actual, 
+							bfwd, 
+							bfwdbudget 
+						FROM chartdetails 
+						WHERE period ='. $i . ' AND  accountcode = ' . $SelectedAccount;
 
 		$ErrMsg = _('Could not retrieve the ChartDetail records becaue');
 		$result = DB_query($sql,$db,$ErrMsg);
