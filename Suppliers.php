@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 5;
 
@@ -344,8 +344,21 @@ if (isset($_POST['submit'])) {
 		$SQL_SupplierSince = FormatDateForSQL($_POST['SupplierSince']);
 
 		if (!isset($_POST['New'])) {
+			
+			$supptranssql = "SELECT COUNT(supplierno)
+													FROM supptrans 
+													WHERE supplierno='".$SupplierID ."'"; 
+			$suppresult = DB_query($supptranssql, $db);
+			$supptrans = DB_fetch_row($suppresult);
 
-			$sql = "UPDATE suppliers SET suppname='" . DB_escape_string($_POST['SuppName']) . "', 
+			$suppcurrssql = "SELECT currcode
+													FROM suppliers 
+													WHERE supplierid='".$SupplierID ."'"; 
+			$currresult = DB_query($suppcurrssql, $db);
+			$suppcurr = DB_fetch_row($currresult);
+			
+			if ($supptrans == 0) {
+				$sql = "UPDATE suppliers SET suppname='" . DB_escape_string($_POST['SuppName']) . "', 
 							address1='" . DB_escape_string($_POST['Address1']) . "', 
 							address2='" . DB_escape_string($_POST['Address2']) . "', 
 							address3='" . DB_escape_string($_POST['Address3']) . "', 
@@ -359,7 +372,25 @@ if (isset($_POST['submit'])) {
 							remittance=" . $_POST['Remittance'] . ", 
 							taxgroupid=" . $_POST['TaxGroup'] . " 
 						WHERE supplierid = '$SupplierID'";
-
+			} else {
+				if ($suppcurr[0] != $_POST['CurrCode']) {
+					prnMsg( _('Cannot change currency code as transactions already exist'), info);
+				}
+				$sql = "UPDATE suppliers SET suppname='" . DB_escape_string($_POST['SuppName']) . "', 
+							address1='" . DB_escape_string($_POST['Address1']) . "', 
+							address2='" . DB_escape_string($_POST['Address2']) . "', 
+							address3='" . DB_escape_string($_POST['Address3']) . "', 
+							address4='" . DB_escape_string($_POST['Address4']) . "', 
+							suppliersince='$SQL_SupplierSince',  
+							paymentterms='" . $_POST['PaymentTerms'] . "', 
+							bankpartics='" .DB_escape_string( $_POST['BankPartics']) . "', 
+							bankref='" . DB_escape_string($_POST['BankRef']) . "', 
+					 		bankact='" . $_POST['BankAct'] . "', 
+							remittance=" . $_POST['Remittance'] . ", 
+							taxgroupid=" . $_POST['TaxGroup'] . " 
+						WHERE supplierid = '$SupplierID'";
+			}
+			
 			$ErrMsg = _('The supplier could not be updated because');
 			$DbgMsg = _('The SQL that was used to update the supplier but failed was');
 
