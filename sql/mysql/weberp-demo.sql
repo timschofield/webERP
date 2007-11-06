@@ -1961,6 +1961,7 @@ INSERT INTO `bankaccounts` VALUES (1040,'Savings Account','','');
 -- Dumping data for table `banktrans`
 --
 
+INSERT INTO `banktrans` VALUES (1,12,1,1030,'',0,1,'2007-10-23','Cheque',150,'AUD');
 
 --
 -- Dumping data for table `bom`
@@ -2932,7 +2933,7 @@ INSERT INTO `config` VALUES ('PastDueDays1','30');
 INSERT INTO `config` VALUES ('PastDueDays2','60');
 INSERT INTO `config` VALUES ('PO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('ProhibitJournalsToControlAccounts','1');
-INSERT INTO `config` VALUES ('ProhibitPostingsBefore','2007-06-30');
+INSERT INTO `config` VALUES ('ProhibitPostingsBefore','2006-09-30');
 INSERT INTO `config` VALUES ('QuickEntries','10');
 INSERT INTO `config` VALUES ('RadioBeaconFileCounter','/home/RadioBeacon/FileCounter');
 INSERT INTO `config` VALUES ('RadioBeaconFTP_user_name','RadioBeacon ftp server user name');
@@ -3238,6 +3239,8 @@ INSERT INTO `gltrans` VALUES (52,35,13,0,'2007-08-09',3,5700,'DVD-DHWV cost was 
 INSERT INTO `gltrans` VALUES (53,35,13,0,'2007-08-09',3,1460,'DVD-DHWV cost was 5.5 changed to 2.32 x Quantity on hand of -13',41.34,1,'');
 INSERT INTO `gltrans` VALUES (54,35,14,0,'2007-08-09',3,5700,'DVD_ACTION cost was 19.4000 changed to 16.22 x Quantity on hand of 10',31.8,1,'');
 INSERT INTO `gltrans` VALUES (55,35,14,0,'2007-08-09',3,1460,'DVD_ACTION cost was 19.4000 changed to 16.22 x Quantity on hand of 10',-31.8,1,'');
+INSERT INTO `gltrans` VALUES (56,12,1,0,'2007-10-23',5,6100,'test',-150,0,'');
+INSERT INTO `gltrans` VALUES (57,12,1,0,'2007-10-23',5,1030,'',150,0,'');
 
 --
 -- Dumping data for table `grns`
@@ -4109,7 +4112,7 @@ INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
 INSERT INTO `systypes` VALUES (10,'Sales Invoice',1);
 INSERT INTO `systypes` VALUES (11,'Credit Note',1);
-INSERT INTO `systypes` VALUES (12,'Receipt',0);
+INSERT INTO `systypes` VALUES (12,'Receipt',1);
 INSERT INTO `systypes` VALUES (15,'Journal - Debtors',0);
 INSERT INTO `systypes` VALUES (16,'Location Transfer',5);
 INSERT INTO `systypes` VALUES (17,'Stock Adjustment',16);
@@ -4243,7 +4246,7 @@ INSERT INTO `workorders` VALUES (6,'MEL','2007-07-15','2007-07-15',0,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','MEL',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_GB');
+INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','MEL',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'professional','en_US');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
