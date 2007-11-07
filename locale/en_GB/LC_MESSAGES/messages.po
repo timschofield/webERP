@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-11-06 20:52+1300\n"
+"POT-Creation-Date: 2007-11-06 21:42+1300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: AccountGroups.php:8 index.php:998
+#: AccountGroups.php:8 index.php:1003
 msgid "Account Groups"
 msgstr ""
 
@@ -32,9 +32,8 @@ msgstr ""
 msgid "The account group name cannot contain the character"
 msgstr ""
 
-#: AccountGroups.php:51 AccountSections.php:56 GLBudget.php:330
-#: PaymentMethods.php:30 TaxCategories.php:30 TaxProvinces.php:30
-#: UnitsOfMeasure.php:30
+#: AccountGroups.php:51 AccountSections.php:56 PaymentMethods.php:30
+#: TaxCategories.php:30 TaxProvinces.php:30 UnitsOfMeasure.php:30
 msgid "or the character"
 msgstr ""
 
@@ -58,13 +57,11 @@ msgstr ""
 msgid "The sequence in the TB must be less than"
 msgstr ""
 
-#: AccountGroups.php:98 AccountSections.php:70 GLBudget.php:344
-#: PaymentMethods.php:76
+#: AccountGroups.php:98 AccountSections.php:70 PaymentMethods.php:76
 msgid "Record Updated"
 msgstr ""
 
-#: AccountGroups.php:116 AccountSections.php:82 GLBudget.php:356
-#: PaymentMethods.php:98
+#: AccountGroups.php:116 AccountSections.php:82 PaymentMethods.php:98
 msgid "Record inserted"
 msgstr ""
 
@@ -83,13 +80,12 @@ msgstr ""
 #: PaymentMethods.php:130 PaymentTerms.php:117 PaymentTerms.php:124
 #: SalesCategories.php:125 SalesCategories.php:133 SalesPeople.php:130
 #: SalesPeople.php:137 SalesTypes.php:126 SalesTypes.php:136 Shippers.php:74
-#: Shippers.php:86 StockCategories.php:153 StocksDMF.php:437 StocksDMF.php:446
-#: StocksDMF.php:454 StocksDMF.php:462 StocksDMF.php:470 StocksDMF.php:478
-#: Stocks.php:375 Stocks.php:384 Stocks.php:392 Stocks.php:400 Stocks.php:408
-#: Stocks.php:416 Suppliers.php:445 Suppliers.php:454 Suppliers.php:462
-#: TaxCategories.php:130 TaxGroups.php:126 TaxGroups.php:133
-#: TaxProvinces.php:125 UnitsOfMeasure.php:140 UnitsOfMeasure.php:147
-#: WorkCentres.php:89 WorkCentres.php:95 WWW_Access.php:84
+#: Shippers.php:86 StockCategories.php:153 Stocks.php:375 Stocks.php:384
+#: Stocks.php:392 Stocks.php:400 Stocks.php:408 Stocks.php:416
+#: Suppliers.php:476 Suppliers.php:485 Suppliers.php:493 TaxCategories.php:130
+#: TaxGroups.php:126 TaxGroups.php:133 TaxProvinces.php:125
+#: UnitsOfMeasure.php:140 UnitsOfMeasure.php:147 WorkCentres.php:89
+#: WorkCentres.php:95 WWW_Access.php:84
 msgid "There are"
 msgstr ""
 
@@ -151,14 +147,13 @@ msgstr ""
 #: SalesAnalReptCols.php:278 SalesAnalReptCols.php:383
 #: SalesAnalReptCols.php:386 SalesAnalRepts.php:400 SalesAnalRepts.php:403
 #: SalesAnalRepts.php:418 SalesAnalRepts.php:421 SalesAnalRepts.php:436
-#: SalesAnalRepts.php:439 ShipmentCosting.php:628 StocksDMF.php:742
-#: StocksDMF.php:744 Stocks.php:672 Stocks.php:674 SystemParameters.php:313
-#: SystemParameters.php:376 SystemParameters.php:384 SystemParameters.php:424
-#: SystemParameters.php:497 SystemParameters.php:505 SystemParameters.php:523
-#: SystemParameters.php:530 SystemParameters.php:639 SystemParameters.php:748
-#: SystemParameters.php:750 SystemParameters.php:760 SystemParameters.php:762
-#: TaxGroups.php:291 TaxGroups.php:360 TaxGroups.php:363 WWW_Users.php:504
-#: WWW_Users.php:506
+#: SalesAnalRepts.php:439 ShipmentCosting.php:628 Stocks.php:672
+#: Stocks.php:674 SystemParameters.php:313 SystemParameters.php:376
+#: SystemParameters.php:384 SystemParameters.php:424 SystemParameters.php:497
+#: SystemParameters.php:505 SystemParameters.php:523 SystemParameters.php:530
+#: SystemParameters.php:639 SystemParameters.php:748 SystemParameters.php:750
+#: SystemParameters.php:760 SystemParameters.php:762 TaxGroups.php:291
+#: TaxGroups.php:360 TaxGroups.php:363 WWW_Users.php:504 WWW_Users.php:506
 msgid "Yes"
 msgstr ""
 
@@ -178,14 +173,14 @@ msgstr ""
 #: SalesAnalReptCols.php:384 SalesAnalReptCols.php:387 SalesAnalRepts.php:399
 #: SalesAnalRepts.php:402 SalesAnalRepts.php:417 SalesAnalRepts.php:420
 #: SalesAnalRepts.php:435 SalesAnalRepts.php:438 ShipmentCosting.php:629
-#: StocksDMF.php:737 StocksDMF.php:739 Stocks.php:667 Stocks.php:669
-#: SystemParameters.php:314 SystemParameters.php:377 SystemParameters.php:385
-#: SystemParameters.php:425 SystemParameters.php:498 SystemParameters.php:506
-#: SystemParameters.php:524 SystemParameters.php:531 SystemParameters.php:640
-#: SystemParameters.php:747 SystemParameters.php:751 SystemParameters.php:759
-#: SystemParameters.php:763 TaxGroups.php:293 TaxGroups.php:361
-#: TaxGroups.php:364 WWW_Users.php:503 WWW_Users.php:507
-#: includes/PDFLowGPPageHeader.inc:31 includes/PDFTaxPageHeader.inc:34
+#: Stocks.php:667 Stocks.php:669 SystemParameters.php:314
+#: SystemParameters.php:377 SystemParameters.php:385 SystemParameters.php:425
+#: SystemParameters.php:498 SystemParameters.php:506 SystemParameters.php:524
+#: SystemParameters.php:531 SystemParameters.php:640 SystemParameters.php:747
+#: SystemParameters.php:751 SystemParameters.php:759 SystemParameters.php:763
+#: TaxGroups.php:293 TaxGroups.php:361 TaxGroups.php:364 WWW_Users.php:503
+#: WWW_Users.php:507 includes/PDFLowGPPageHeader.inc:31
+#: includes/PDFTaxPageHeader.inc:34
 msgid "No"
 msgstr ""
 
@@ -261,15 +256,15 @@ msgstr ""
 msgid "Enter Information"
 msgstr ""
 
-#: AccountSections.php:8 index.php:1003
+#: AccountSections.php:8 index.php:1008
 msgid "Account Sections"
 msgstr ""
 
-#: AccountSections.php:56 GLBudget.php:330
+#: AccountSections.php:56
 msgid "The account section name cannot contain the character"
 msgstr ""
 
-#: AccountSections.php:59 GLBudget.php:333
+#: AccountSections.php:59
 msgid "The section number must be an integer"
 msgstr ""
 
@@ -389,7 +384,7 @@ msgid "The details of outstanding transactions for customer"
 msgstr ""
 
 #: AgedDebtors.php:364 AgedSuppliers.php:186 GLAccountInquiry.php:104
-#: GLBudget.php:94 PO_Items.php:355 PO_Items.php:480 PO_Items.php:639
+#: PO_Items.php:355 PO_Items.php:480 PO_Items.php:639
 #: SalesAnalReptCols.php:349 SpecialOrder.php:369
 #: StockLocTransferReceive.php:369 StockQuantityByDate.php:103
 #: includes/SelectOrderItems_IntoCart.inc:49
@@ -417,7 +412,8 @@ msgstr ""
 #: includes/PDFPaymentRun_PymtFooter.php:118
 #: includes/PDFPaymentRun_PymtFooter.php:157
 #: includes/PDFPaymentRun_PymtFooter.php:190
-#: includes/PDFPaymentRun_PymtFooter.php:223 includes/ConnectDB_mysql.inc:38
+#: includes/PDFPaymentRun_PymtFooter.php:223 includes/ConnectDB_mysqli.inc:53
+#: includes/ConnectDB_mysql.inc:38
 msgid "The SQL that failed was"
 msgstr ""
 
@@ -558,7 +554,7 @@ msgstr ""
 
 #: Areas.php:52 DeliveryDetails.php:412 PO_Items.php:206
 #: SalesAnalReptCols.php:128 SalesPeople.php:82 SalesTypes.php:47
-#: StocksDMF.php:335 Stocks.php:273 Suppliers.php:368
+#: Stocks.php:273 Suppliers.php:399
 msgid "has been updated"
 msgstr ""
 
@@ -596,7 +592,7 @@ msgstr ""
 
 #: Areas.php:110 Customers.php:231 GLAccounts.php:201 Locations.php:298
 #: SalesAnalReptCols.php:214 SalesCategories.php:137 SalesTypes.php:142
-#: StockCategories.php:170 Suppliers.php:471 Z_DeleteInvoice.php:125
+#: StockCategories.php:170 Suppliers.php:502 Z_DeleteInvoice.php:125
 msgid "has been deleted"
 msgstr ""
 
@@ -1027,8 +1023,7 @@ msgstr ""
 #: PrintCustTransPortrait.php:945 RecurringSalesOrders.php:309
 #: ReverseGRN.php:328 SalesGraph.php:155 SelectCreditItems.php:663
 #: SelectOrderItems.php:1140 StockLocMovements.php:76 StockLocTransfer.php:169
-#: StockLocTransferReceive.php:421 StockQuantityByDate.php:88
-#: StocksDMF.php:546 StocksDMF.php:588 StocksDMF.php:592 Stocks.php:484
+#: StockLocTransferReceive.php:421 StockQuantityByDate.php:88 Stocks.php:484
 #: Stocks.php:526 Stocks.php:530 SuppCreditGRNs.php:70 SuppCreditGRNs.php:142
 #: SuppInvGRNs.php:104 SuppInvGRNs.php:262 SupplierCredit.php:245
 #: SupplierInvoice.php:233 includes/PDFOrderPageHeader_generic.inc:91
@@ -1302,18 +1297,16 @@ msgid "The SQL used to retrieve description of the parent part was"
 msgstr ""
 
 #: BOMs.php:367 ConfirmDispatch_Invoice.php:948 Credit_Invoice.php:738
-#: Credit_Invoice.php:767 SelectCreditItems.php:1436 StocksDMF.php:679
-#: StocksDMF.php:681 Stocks.php:609 Stocks.php:611
+#: Credit_Invoice.php:767 SelectCreditItems.php:1436 Stocks.php:609
+#: Stocks.php:611
 msgid "Assembly"
 msgstr ""
 
-#: BOMs.php:370 StocksDMF.php:694 StocksDMF.php:696 Stocks.php:624
-#: Stocks.php:626
+#: BOMs.php:370 Stocks.php:624 Stocks.php:626
 msgid "Purchased"
 msgstr ""
 
-#: BOMs.php:373 StocksDMF.php:689 StocksDMF.php:691 Stocks.php:619
-#: Stocks.php:621
+#: BOMs.php:373 Stocks.php:619 Stocks.php:621
 msgid "Manufactured"
 msgstr ""
 
@@ -1650,12 +1643,12 @@ msgstr ""
 msgid "Company preferences updated"
 msgstr ""
 
-#: CompanyPreferences.php:95 Customers.php:180 Suppliers.php:427
+#: CompanyPreferences.php:95 Customers.php:180 Suppliers.php:458
 #: SystemParameters.php:240
 msgid "Validation failed"
 msgstr ""
 
-#: CompanyPreferences.php:95 Suppliers.php:427 SystemParameters.php:240
+#: CompanyPreferences.php:95 Suppliers.php:458 SystemParameters.php:240
 msgid "no updates or deletes took place"
 msgstr ""
 
@@ -1684,22 +1677,22 @@ msgid "Tax Authority Reference"
 msgstr ""
 
 #: CompanyPreferences.php:179 Customers.php:288 Customers.php:479
-#: Suppliers.php:489 Suppliers.php:602
+#: Suppliers.php:520 Suppliers.php:633
 msgid "Address Line 1"
 msgstr ""
 
 #: CompanyPreferences.php:183 Customers.php:290 Customers.php:481
-#: Suppliers.php:490 Suppliers.php:603
+#: Suppliers.php:521 Suppliers.php:634
 msgid "Address Line 2"
 msgstr ""
 
 #: CompanyPreferences.php:187 Customers.php:292 Customers.php:483
-#: Suppliers.php:491 Suppliers.php:604
+#: Suppliers.php:522 Suppliers.php:635
 msgid "Address Line 3"
 msgstr ""
 
 #: CompanyPreferences.php:191 Customers.php:294 Customers.php:485
-#: Suppliers.php:492 Suppliers.php:605
+#: Suppliers.php:523 Suppliers.php:636
 msgid "Address Line 4"
 msgstr ""
 
@@ -1780,12 +1773,11 @@ msgid "at standard cost"
 msgstr ""
 
 #: CompanyPreferences.php:410 ConfirmDispatch_Invoice.php:578
-#: ConfirmDispatch_Invoice.php:1439 Credit_Invoice.php:1488
+#: ConfirmDispatch_Invoice.php:1439 Credit_Invoice.php:1488 GLBudgets.php:176
 #: GoodsReceived.php:179 GoodsReceived.php:185 GoodsReceived.php:192
 #: GoodsReceived.php:572 PurchData.php:342 SelectCreditItems.php:910
-#: StockCostUpdate.php:161 StockReorderLevel.php:92 StocksDMF.php:867
-#: Stocks.php:785 SystemParameters.php:769 TaxAuthorityRates.php:55
-#: WorkOrderEntry.php:479
+#: StockCostUpdate.php:161 StockReorderLevel.php:92 Stocks.php:785
+#: SystemParameters.php:769 TaxAuthorityRates.php:55 WorkOrderEntry.php:479
 msgid "Update"
 msgstr ""
 
@@ -1853,11 +1845,10 @@ msgstr ""
 #: PDFDeliveryDifferences.php:277 PDFDIFOT.php:167 PDFDIFOT.php:180
 #: PDFDIFOT.php:293 PDFOrdersInvoiced.php:221 PDFOrdersInvoiced.php:232
 #: PDFOrderStatus.php:199 PDFOrderStatus.php:208 PO_PDFPurchOrder.php:277
-#: PrintCustStatements.php:23 PrintCustStatements_Wayne.php:40
-#: PrintCustTrans.php:79 PrintCustTrans.php:82 PrintCustTransPortrait.php:63
-#: PrintCustTransPortrait.php:66 SalesGraph.php:184 SalesGraph.php:213
-#: SalesGraph.php:217 StockLocTransferReceive.php:306
-#: StockLocTransferReceive.php:412 StocksDMF.php:214 StocksDMF.php:219
+#: PrintCustStatements.php:23 PrintCustTrans.php:79 PrintCustTrans.php:82
+#: PrintCustTransPortrait.php:63 PrintCustTransPortrait.php:66
+#: SalesGraph.php:184 SalesGraph.php:213 SalesGraph.php:217
+#: StockLocTransferReceive.php:306 StockLocTransferReceive.php:412
 #: Stocks.php:152 Stocks.php:157 StockStatus.php:297 StockStatus.php:339
 #: StockTransfers.php:376 includes/PDFAgedDebtorsPageHeader.inc:18
 #: includes/PDFAgedSuppliersPageHeader.inc:17
@@ -1992,17 +1983,18 @@ msgstr ""
 #: CustomerAllocations.php:515 CustomerAllocations.php:584
 #: CustomerInquiry.php:185 DeliveryDetails.php:451 DeliveryDetails.php:515
 #: GLBalanceSheet.php:155 GLBalanceSheet.php:164 GLBalanceSheet.php:241
-#: GLBalanceSheet.php:250 GLTrialBalance.php:175 GLTrialBalance.php:195
-#: GLTrialBalance.php:216 GLTrialBalance.php:300 GLTrialBalance.php:430
-#: GLTrialBalance.php:450 GLTrialBalance.php:474 GLTrialBalance.php:575
-#: GLTrialBalance.php:595 GLTrialBalance.php:619 OrderDetails.php:153
-#: PDFOrdersInvoiced.php:327 PO_Items.php:717 RecurringSalesOrders.php:315
-#: SelectCreditItems.php:670 SelectCreditItems.php:674
-#: SelectOrderItems.php:1147 SuppInvGLAnalysis.php:81
-#: SupplierAllocations.php:465 SupplierAllocations.php:576
-#: SupplierAllocations.php:652 SupplierCredit.php:335 SupplierInquiry.php:195
-#: SupplierInvoice.php:288 SupplierInvoice.php:323 SuppShiptChgs.php:92
-#: SuppTransGLAnalysis.php:118 includes/PDFQuotationPageHeader.inc:101
+#: GLBalanceSheet.php:250 GLBudgets.php:165 GLTrialBalance.php:175
+#: GLTrialBalance.php:195 GLTrialBalance.php:216 GLTrialBalance.php:300
+#: GLTrialBalance.php:430 GLTrialBalance.php:450 GLTrialBalance.php:474
+#: GLTrialBalance.php:575 GLTrialBalance.php:595 GLTrialBalance.php:619
+#: OrderDetails.php:153 PDFOrdersInvoiced.php:327 PO_Items.php:717
+#: RecurringSalesOrders.php:315 SelectCreditItems.php:670
+#: SelectCreditItems.php:674 SelectOrderItems.php:1147
+#: SuppInvGLAnalysis.php:81 SupplierAllocations.php:465
+#: SupplierAllocations.php:576 SupplierAllocations.php:652
+#: SupplierCredit.php:335 SupplierInquiry.php:195 SupplierInvoice.php:288
+#: SupplierInvoice.php:323 SuppShiptChgs.php:92 SuppTransGLAnalysis.php:118
+#: includes/PDFQuotationPageHeader.inc:101
 #: includes/PO_PDFOrderPageHeader.inc:148
 #, php-format
 msgid "Total"
@@ -2434,8 +2426,8 @@ msgstr ""
 msgid "The following SQL to insert the order delivery differences record was used"
 msgstr ""
 
-#: ConfirmDispatch_Invoice.php:865 SalesAnalReptCols.php:318 StocksDMF.php:869
-#: Stocks.php:787 Suppliers.php:673 includes/MiscFunctions.php:23
+#: ConfirmDispatch_Invoice.php:865 SalesAnalReptCols.php:318 Stocks.php:787
+#: Suppliers.php:704 includes/MiscFunctions.php:23
 msgid "WARNING"
 msgstr ""
 
@@ -3070,8 +3062,8 @@ msgstr ""
 msgid "The currency code cannot contain any of the following characters"
 msgstr ""
 
-#: Currencies.php:53 CustEDISetup.php:28 Customers.php:35 StocksDMF.php:149
-#: Stocks.php:87 Suppliers.php:324 WorkCentres.php:34 WWW_Users.php:54
+#: Currencies.php:53 CustEDISetup.php:28 Customers.php:35 Stocks.php:87
+#: Suppliers.php:324 WorkCentres.php:34 WWW_Users.php:54
 #: Z_ChangeBranchCode.php:30
 msgid "or a space"
 msgstr ""
@@ -3550,10 +3542,9 @@ msgstr ""
 msgid "Could not update vtiger"
 msgstr ""
 
-#: CustomerBranches.php:258 StocksDMF.php:392 Stocks.php:330
-#: SupplierCredit.php:543 SupplierCredit.php:783 SupplierCredit.php:805
-#: SupplierInvoice.php:600 SupplierInvoice.php:984 SupplierInvoice.php:1008
-#: Suppliers.php:401
+#: CustomerBranches.php:258 Stocks.php:330 SupplierCredit.php:543
+#: SupplierCredit.php:783 SupplierCredit.php:805 SupplierInvoice.php:600
+#: SupplierInvoice.php:984 SupplierInvoice.php:1008 Suppliers.php:432
 msgid "could not be added because"
 msgstr ""
 
@@ -3684,7 +3675,7 @@ msgid "Email"
 msgstr ""
 
 #: CustomerBranches.php:434 CustomerBranches.php:739 SupplierCredit.php:205
-#: Suppliers.php:533 Suppliers.php:650 TaxGroups.php:163 TaxGroups.php:220
+#: Suppliers.php:564 Suppliers.php:681 TaxGroups.php:163 TaxGroups.php:220
 msgid "Tax Group"
 msgstr ""
 
@@ -3895,13 +3886,12 @@ msgid "ACCOUNT ON HOLD"
 msgstr ""
 
 #: CustomerInquiry.php:126 CustomerReceipt.php:667 PrintCustStatements.php:342
-#: PrintCustStatements_Wayne.php:362 SupplierInquiry.php:137
+#: SupplierInquiry.php:137
 msgid "Total Balance"
 msgstr ""
 
 #: CustomerInquiry.php:127 CustomerReceipt.php:668 PrintCustStatements.php:338
-#: PrintCustStatements_Wayne.php:358 Shipments.php:385 StocksDMF.php:709
-#: StocksDMF.php:711 Stocks.php:639 Stocks.php:641 SupplierInquiry.php:138
+#: Shipments.php:385 Stocks.php:639 Stocks.php:641 SupplierInquiry.php:138
 #: includes/PDFAgedDebtorsPageHeader.inc:50
 #: includes/PDFAgedSuppliersPageHeader.inc:36
 msgid "Current"
@@ -3917,7 +3907,7 @@ msgid "Days Overdue"
 msgstr ""
 
 #: CustomerInquiry.php:130 CustomerReceipt.php:671 PrintCustStatements.php:341
-#: PrintCustStatements_Wayne.php:361 SupplierInquiry.php:142
+#: SupplierInquiry.php:142
 msgid "Over"
 msgstr ""
 
@@ -4233,7 +4223,7 @@ msgstr ""
 msgid "General Ledger Receipt Entry"
 msgstr ""
 
-#: CustomerReceipt.php:702 GLJournal.php:245 Payments.php:634
+#: CustomerReceipt.php:702 GLBudgets.php:38 GLJournal.php:245 Payments.php:634
 msgid "No General ledger accounts have been set up yet"
 msgstr ""
 
@@ -4462,7 +4452,7 @@ msgid "There are no payment terms currently defined - go to the setup tab of the
 msgstr ""
 
 #: Customers.php:336 Customers.php:522 index.php:827 PrintCustTrans.php:388
-#: PrintCustTransPortrait.php:412 Suppliers.php:502 Suppliers.php:614
+#: PrintCustTransPortrait.php:412 Suppliers.php:533 Suppliers.php:645
 msgid "Payment Terms"
 msgstr ""
 
@@ -4519,8 +4509,8 @@ msgstr ""
 msgid "Delete Customer"
 msgstr ""
 
-#: Customers.php:591 SelectOrderItems.php:1215 StocksDMF.php:870
-#: Stocks.php:788 WorkOrderCosting.php:485 WorkOrderEntry.php:481
+#: Customers.php:591 SelectOrderItems.php:1215 Stocks.php:788
+#: WorkOrderCosting.php:485 WorkOrderEntry.php:481
 msgid "Are You Sure?"
 msgstr ""
 
@@ -4708,7 +4698,7 @@ msgstr ""
 msgid "You must select the type of packlist to print"
 msgstr ""
 
-#: DeliveryDetails.php:92 PrintCustStatements_Wayne.php:12
+#: DeliveryDetails.php:92
 msgid "An invalid date entry was made"
 msgstr ""
 
@@ -5011,8 +5001,7 @@ msgstr ""
 msgid "Discount Category Code"
 msgstr ""
 
-#: DiscountCategories.php:98 DiscountMatrix.php:80 StocksDMF.php:752
-#: Stocks.php:682
+#: DiscountCategories.php:98 DiscountMatrix.php:80 Stocks.php:682
 msgid "Discount Category"
 msgstr ""
 
@@ -5821,9 +5810,8 @@ msgstr ""
 #: PO_PDFPurchOrder.php:53 PO_PDFPurchOrder.php:139
 #: PrintCustOrder_generic.php:25 PrintCustOrder_generic.php:127
 #: PrintCustOrder.php:26 PrintCustOrder.php:105 PrintCustStatements.php:75
-#: PrintCustStatements.php:93 PrintCustStatements_Wayne.php:92
-#: PrintCustStatements_Wayne.php:111 PrintCustTrans.php:223
-#: PrintCustTrans.php:273 PrintCustTrans.php:644 PrintCustTrans.php:782
+#: PrintCustStatements.php:93 PrintCustTrans.php:223 PrintCustTrans.php:273
+#: PrintCustTrans.php:644 PrintCustTrans.php:782
 #: PrintCustTransPortrait.php:207 PrintCustTransPortrait.php:268
 #: PrintCustTransPortrait.php:668 PrintCustTransPortrait.php:807
 msgid "from the database"
@@ -5918,27 +5906,27 @@ msgid "General Ledger Account Inquiry"
 msgstr ""
 
 #: GLAccountInquiry.php:32 GLAccounts.php:201 GLBalanceSheet.php:351
-#: GLBudget.php:31 GLProfit_Loss.php:549 GLTransInquiry.php:70
-#: GLTrialBalance.php:401 SuppInvGLAnalysis.php:48 SuppInvGLAnalysis.php:72
-#: SupplierCredit.php:307 SupplierInvoice.php:297 SuppTransGLAnalysis.php:88
+#: GLProfit_Loss.php:549 GLTransInquiry.php:70 GLTrialBalance.php:401
+#: SuppInvGLAnalysis.php:48 SuppInvGLAnalysis.php:72 SupplierCredit.php:307
+#: SupplierInvoice.php:297 SuppTransGLAnalysis.php:88
 #: includes/PDFProfitAndLossPageHeader.inc:30
 #: includes/PDFTrialBalancePageHeader.inc:27
 msgid "Account"
 msgstr ""
 
-#: GLAccountInquiry.php:45 GLBudget.php:44
+#: GLAccountInquiry.php:45
 msgid "For Period range"
 msgstr ""
 
-#: GLAccountInquiry.php:63 GLBudget.php:62
+#: GLAccountInquiry.php:63
 msgid "Show Account Transactions"
 msgstr ""
 
-#: GLAccountInquiry.php:70 GLBudget.php:69
+#: GLAccountInquiry.php:70
 msgid "A period or range of periods must be selected from the list box"
 msgstr ""
 
-#: GLAccountInquiry.php:104 GLBudget.php:94
+#: GLAccountInquiry.php:104
 msgid "The transactions for account"
 msgstr ""
 
@@ -5946,48 +5934,45 @@ msgstr ""
 msgid "Debit"
 msgstr ""
 
-#: GLAccountInquiry.php:131 GLAccountInquiry.php:171 GLBudget.php:121
-#: GLBudget.php:177
+#: GLAccountInquiry.php:131 GLAccountInquiry.php:171
 msgid "The chart details for account"
 msgstr ""
 
-#: GLAccountInquiry.php:131 GLAccountInquiry.php:171 GLBudget.php:121
-#: GLBudget.php:177 GLBudget.php:246 GLTransInquiry.php:21
+#: GLAccountInquiry.php:131 GLAccountInquiry.php:171 GLTransInquiry.php:21
 #: GLTransInquiry.php:55 SelectOrderItems.php:474
 msgid "could not be retrieved"
 msgstr ""
 
-#: GLAccountInquiry.php:139 GLAccountInquiry.php:146 GLBudget.php:131
-#: GLBudget.php:138
+#: GLAccountInquiry.php:139 GLAccountInquiry.php:146
 msgid "Brought Forward Balance"
 msgstr ""
 
-#: GLAccountInquiry.php:176 GLBudget.php:182
+#: GLAccountInquiry.php:176
 msgid "Total for period"
 msgstr ""
 
-#: GLAccountInquiry.php:187 GLBudget.php:193 GLTransInquiry.php:69
+#: GLAccountInquiry.php:187 GLBudgets.php:135 GLTransInquiry.php:69
 #: Z_CheckGLTransBalance.php:14 Z_UpdateChartDetailsBFwd.php:74
 msgid "Period"
 msgstr ""
 
-#: GLAccountInquiry.php:187 GLBudget.php:193
+#: GLAccountInquiry.php:187
 msgid "Account movement per transaction"
 msgstr ""
 
-#: GLAccountInquiry.php:187 GLBudget.php:193
+#: GLAccountInquiry.php:187
 msgid "Movement per ChartDetails record"
 msgstr ""
 
-#: GLAccountInquiry.php:187 GLBudget.php:193
+#: GLAccountInquiry.php:187
 msgid "Period difference"
 msgstr ""
 
-#: GLAccountInquiry.php:245 GLBudget.php:280
+#: GLAccountInquiry.php:245
 msgid "Total Period Movement"
 msgstr ""
 
-#: GLAccountInquiry.php:247 GLBudget.php:282
+#: GLAccountInquiry.php:247
 msgid "Balance C/Fwd"
 msgstr ""
 
@@ -6185,55 +6170,70 @@ msgstr ""
 msgid "Select A Different Balance Date"
 msgstr ""
 
-#: GLBudget.php:8
-msgid "General Ledger Budget Entry"
+#: GLBudgets.php:8
+msgid "Create GL Budgets"
 msgstr ""
 
-#: GLBudget.php:101 SalesGraph.php:236 StockUsageGraph.php:10
-#: StockUsage.php:128
-msgid "Month"
+#: GLBudgets.php:28 GLJournal.php:240 Payments.php:627
+msgid "Select GL Account"
 msgstr ""
 
-#: GLBudget.php:102 SalesAnalReptCols.php:271 SalesAnalReptCols.php:400
+#: GLBudgets.php:38
+msgid "budgets cannot be allocated until the GL accounts are set up"
+msgstr ""
+
+#: GLBudgets.php:58
+msgid "Prev Account"
+msgstr ""
+
+#: GLBudgets.php:59
+msgid "Select Account"
+msgstr ""
+
+#: GLBudgets.php:60
+msgid "Next Account"
+msgstr ""
+
+#: GLBudgets.php:73
+msgid "Cannot update GL budgets"
+msgstr ""
+
+#: GLBudgets.php:74
+msgid "The SQL that failed to update the GL budgets was"
+msgstr ""
+
+#: GLBudgets.php:122
+msgid "Last Financial Year"
+msgstr ""
+
+#: GLBudgets.php:123
+msgid "This Financial Year"
+msgstr ""
+
+#: GLBudgets.php:124
+msgid "Next Financial Year"
+msgstr ""
+
+#: GLBudgets.php:126 GLBudgets.php:128 GLBudgets.php:130
+msgid "Year ended"
+msgstr ""
+
+#: GLBudgets.php:135 SalesAnalReptCols.php:271 SalesAnalReptCols.php:400
 #: SalesAnalReptCols.php:403 SalesGraph.php:281
 msgid "Actual"
 msgstr ""
 
-#: GLBudget.php:103 SalesAnalReptCols.php:259 SalesAnalReptCols.php:273
+#: GLBudgets.php:136 SalesAnalReptCols.php:259 SalesAnalReptCols.php:273
 #: SalesAnalReptCols.php:399 SalesAnalReptCols.php:402 SalesGraph.php:281
 msgid "Budget"
 msgstr ""
 
-#: GLBudget.php:104 ShipmentCosting.php:141
-msgid "Variance"
+#: GLBudgets.php:198 Z_UpdateChartDetailsBFwd.php:66
+msgid "Could not retrieve the ChartDetail records becaue"
 msgstr ""
 
-#: GLBudget.php:105 GLProfit_Loss.php:551 GLProfit_Loss.php:558
-#: GLTrialBalance.php:405 includes/PDFProfitAndLossPageHeader.inc:32
-#: includes/PDFTrialBalancePageHeader.inc:31
-msgid "Period Actual"
-msgstr ""
-
-#: GLBudget.php:106 GLProfit_Loss.php:552 GLProfit_Loss.php:559
-#: GLTrialBalance.php:406 includes/PDFProfitAndLossPageHeader.inc:33
-#: includes/PDFTrialBalancePageHeader.inc:32
-msgid "Period Budget"
-msgstr ""
-
-#: GLBudget.php:107
-msgid "Revised Budget"
-msgstr ""
-
-#: GLBudget.php:147 GLBudget.php:154
-msgid "Brought Forward Budget Balance"
-msgstr ""
-
-#: GLBudget.php:246
-msgid "The Period dates"
-msgstr ""
-
-#: GLBudget.php:302 includes/MiscFunctions.php:27
-msgid "SUCCESS"
+#: GLBudgets.php:206 Z_UpdateChartDetailsBFwd.php:78
+msgid "Could not update the chartdetails record because"
 msgstr ""
 
 #: GLCodesInquiry.php:8
@@ -6326,10 +6326,6 @@ msgstr ""
 
 #: GLJournal.php:238 Payments.php:625
 msgid "Enter GL Account Manually"
-msgstr ""
-
-#: GLJournal.php:240 Payments.php:627
-msgid "Select GL Account"
 msgstr ""
 
 #: GLJournal.php:245 Payments.php:634
@@ -6428,6 +6424,18 @@ msgstr ""
 
 #: GLProfit_Loss.php:540 Tax.php:29
 msgid "months to"
+msgstr ""
+
+#: GLProfit_Loss.php:551 GLProfit_Loss.php:558 GLTrialBalance.php:405
+#: includes/PDFProfitAndLossPageHeader.inc:32
+#: includes/PDFTrialBalancePageHeader.inc:31
+msgid "Period Actual"
+msgstr ""
+
+#: GLProfit_Loss.php:552 GLProfit_Loss.php:559 GLTrialBalance.php:406
+#: includes/PDFProfitAndLossPageHeader.inc:33
+#: includes/PDFTrialBalancePageHeader.inc:32
+msgid "Period Budget"
 msgstr ""
 
 #: GLProfit_Loss.php:1125 GLTrialBalance.php:20 GLTrialBalance.php:23
@@ -7292,7 +7300,7 @@ msgstr ""
 msgid "Discount Category Maintenance"
 msgstr ""
 
-#: index.php:892 StocksDMF.php:661 Stocks.php:591 UnitsOfMeasure.php:184
+#: index.php:892 Stocks.php:591 UnitsOfMeasure.php:184
 msgid "Units of Measure"
 msgstr ""
 
@@ -7332,31 +7340,35 @@ msgstr ""
 msgid "Tax Reports"
 msgstr ""
 
-#: index.php:1033 index.php:1036
+#: index.php:998
+msgid "GL Budgets"
+msgstr ""
+
+#: index.php:1038 index.php:1041
 msgid "Transactions"
 msgstr ""
 
-#: index.php:1045 index.php:1048
+#: index.php:1050 index.php:1053
 msgid "Inquiries and Reports"
 msgstr ""
 
-#: index.php:1057 index.php:1060
+#: index.php:1062 index.php:1065
 msgid "Maintenance"
 msgstr ""
 
-#: index.php:1082
+#: index.php:1087
 msgid "Custom Reports"
 msgstr ""
 
-#: index.php:1082
+#: index.php:1087
 msgid "Standard Reports and Forms"
 msgstr ""
 
-#: index.php:1098
+#: index.php:1103
 msgid "reportname"
 msgstr ""
 
-#: index.php:1118
+#: index.php:1123
 msgid "There are no reports to show!"
 msgstr ""
 
@@ -7634,9 +7646,8 @@ msgstr ""
 
 #: Logout.php:11 SalesCategories.php:171 SalesCategories.php:183
 #: SalesCategories.php:382 SalesCategories.php:384 SalesCategories.php:431
-#: SalesCategories.php:432 StocksDMF.php:597 StocksDMF.php:599 Stocks.php:535
-#: Stocks.php:537 includes/Login.php:17 includes/header.inc:10
-#: includes/header.inc:18
+#: SalesCategories.php:432 Stocks.php:535 Stocks.php:537 includes/Login.php:17
+#: includes/header.inc:10 includes/header.inc:18
 msgid "ISO-8859-1"
 msgstr ""
 
@@ -7789,7 +7800,6 @@ msgstr ""
 
 #: PaymentAllocations.php:72 PaymentAllocations.php:73 Payments.php:389
 #: Payments.php:492 PrintCustStatements.php:365
-#: PrintCustStatements_Wayne.php:385
 msgid "Payment"
 msgstr ""
 
@@ -8095,8 +8105,7 @@ msgid "th"
 msgstr ""
 
 #: PaymentTerms.php:165 PrintCustStatements.php:340
-#: PrintCustStatements.php:341 PrintCustStatements_Wayne.php:360
-#: PrintCustStatements_Wayne.php:361 PurchData.php:221
+#: PrintCustStatements.php:341 PurchData.php:221
 #, php-format
 msgid "days"
 msgstr ""
@@ -8524,7 +8533,8 @@ msgid "An error occurred getting the orders details"
 msgstr ""
 
 #: PDFOrdersInvoiced.php:213 PDFOrdersInvoiced.php:215
-#: PDFOrdersInvoiced.php:223 includes/ConnectDB_mysql.inc:45
+#: PDFOrdersInvoiced.php:223 includes/ConnectDB_mysqli.inc:60
+#: includes/ConnectDB_mysql.inc:45
 msgid "Database Error"
 msgstr ""
 
@@ -9049,7 +9059,7 @@ msgid "Enter text extract in the supplier code"
 msgstr ""
 
 #: PO_Header.php:229 PO_OrderDetails.php:80 PurchData.php:422
-#: SelectSupplier.php:255 Suppliers.php:488 Suppliers.php:601
+#: SelectSupplier.php:255 Suppliers.php:519 Suppliers.php:632
 msgid "Supplier Name"
 msgstr ""
 
@@ -9494,9 +9504,8 @@ msgstr ""
 msgid "Enter extract of the Stock Code"
 msgstr ""
 
-#: PO_Items.php:905 SelectCreditItems.php:977 StocksDMF.php:789
-#: StocksDMF.php:794 Stocks.php:713 WorkOrderEntry.php:556
-#: WorkOrderIssue.php:673
+#: PO_Items.php:905 SelectCreditItems.php:977 Stocks.php:713
+#: WorkOrderEntry.php:556 WorkOrderIssue.php:673
 msgid "No Image"
 msgstr ""
 
@@ -9570,7 +9579,7 @@ msgid "the SQL returned either several purchase orders"
 msgstr ""
 
 #: PO_OrderDetails.php:79 PurchData.php:298 PurchData.php:301
-#: Suppliers.php:487 Suppliers.php:598
+#: Suppliers.php:518 Suppliers.php:629
 msgid "Supplier Code"
 msgstr ""
 
@@ -9968,7 +9977,7 @@ msgid "Item Prices"
 msgstr ""
 
 #: Prices.php:31 PurchData.php:25 StockCostUpdate.php:20 StockMovements.php:19
-#: StockReorderLevel.php:19 StocksDMF.php:28 Stocks.php:30 StockStatus.php:20
+#: StockReorderLevel.php:19 Stocks.php:30 StockStatus.php:20
 #: WhereUsedInquiry.php:17
 msgid "Back to Items"
 msgstr ""
@@ -10038,7 +10047,7 @@ msgstr ""
 msgid "Amend Price"
 msgstr ""
 
-#: PrintCheque.php:60 PrintCheque.php:74 Suppliers.php:527 Suppliers.php:637
+#: PrintCheque.php:60 PrintCheque.php:74 Suppliers.php:558 Suppliers.php:668
 #: includes/PDFStatementPageHeader.inc:27
 msgid "Remittance Advice"
 msgstr ""
@@ -10163,102 +10172,88 @@ msgstr ""
 msgid "There were no oustanding items on the order to deliver. A dispatch note cannot be printed"
 msgstr ""
 
-#: PrintCustStatements.php:22 PrintCustStatements_Wayne.php:39
+#: PrintCustStatements.php:22
 msgid "Customer Statements"
 msgstr ""
 
-#: PrintCustStatements.php:23 PrintCustStatements_Wayne.php:40
+#: PrintCustStatements.php:23
 msgid "Statements from"
 msgstr ""
 
-#: PrintCustStatements.php:32 PrintCustStatements_Wayne.php:49
+#: PrintCustStatements.php:32
 msgid "There was a problem settling the old transactions."
 msgstr ""
 
-#: PrintCustStatements.php:33 PrintCustStatements_Wayne.php:50
+#: PrintCustStatements.php:33
 msgid "The SQL used to settle outstanding transactions was"
 msgstr ""
 
-#: PrintCustStatements.php:39 PrintCustStatements_Wayne.php:56
+#: PrintCustStatements.php:39
 msgid "There was a problem retrieving the customer information for the statements from the database"
 msgstr ""
 
 #: PrintCustStatements.php:62 PrintCustStatements.php:389
-#: PrintCustStatements_Wayne.php:79 PrintCustStatements_Wayne.php:409
 msgid "Print Statments"
 msgstr ""
 
-#: PrintCustStatements.php:62 PrintCustStatements_Wayne.php:79
+#: PrintCustStatements.php:62
 msgid "No Customers Found"
 msgstr ""
 
-#: PrintCustStatements.php:65 PrintCustStatements_Wayne.php:82
+#: PrintCustStatements.php:65
 msgid "There were no Customers matching your selection of "
 msgstr ""
 
-#: PrintCustStatements.php:75 PrintCustStatements_Wayne.php:92
+#: PrintCustStatements.php:75
 msgid "There was a problem retrieving the outstanding transactions for"
 msgstr ""
 
-#: PrintCustStatements.php:93 PrintCustStatements_Wayne.php:111
+#: PrintCustStatements.php:93
 msgid "There was a problem retrieving the transactions that were settled over the course of the last month for"
 msgstr ""
 
-#: PrintCustStatements.php:137 PrintCustStatements_Wayne.php:157
+#: PrintCustStatements.php:137
 msgid "Settled Transactions"
 msgstr ""
 
-#: PrintCustStatements.php:191 PrintCustStatements_Wayne.php:211
+#: PrintCustStatements.php:191
 msgid "Outstanding Transactions"
 msgstr ""
 
-#: PrintCustStatements.php:339 PrintCustStatements_Wayne.php:359
+#: PrintCustStatements.php:339
 msgid "Past Due"
 msgstr ""
 
-#: PrintCustStatements.php:359 PrintCustStatements_Wayne.php:379
+#: PrintCustStatements.php:359
 msgid "Last payment received"
 msgstr ""
 
-#: PrintCustStatements.php:359 PrintCustStatements_Wayne.php:379
+#: PrintCustStatements.php:359
 msgid "Amount received was"
 msgstr ""
 
-#: PrintCustStatements.php:389 PrintCustStatements_Wayne.php:409
+#: PrintCustStatements.php:389
 msgid "No Statements Found"
 msgstr ""
 
-#: PrintCustStatements.php:391 PrintCustStatements_Wayne.php:411
+#: PrintCustStatements.php:391
 msgid "There were no statments to print"
 msgstr ""
 
-#: PrintCustStatements.php:398 PrintCustStatements_Wayne.php:418
+#: PrintCustStatements.php:398
 msgid "Select Statements to Print"
 msgstr ""
 
-#: PrintCustStatements.php:407 PrintCustStatements_Wayne.php:427
+#: PrintCustStatements.php:407
 msgid "Starting Customer statement to print (Customer code)"
 msgstr ""
 
-#: PrintCustStatements.php:409 PrintCustStatements_Wayne.php:429
+#: PrintCustStatements.php:409
 msgid "Ending Customer statement to print (Customer code)"
 msgstr ""
 
-#: PrintCustStatements.php:413 PrintCustStatements_Wayne.php:435
+#: PrintCustStatements.php:413
 msgid "Print All Statements in the Range Selected"
-msgstr ""
-
-#: PrintCustStatements_Wayne.php:12
-msgid "The date entry for the Customer Statement As At date must be in the format"
-msgstr ""
-
-#: PrintCustStatements_Wayne.php:40 includes/PDFDebtorBalsPageHeader.inc:17
-#: includes/PDFSupplierBalsPageHeader.inc:17
-msgid "as at"
-msgstr ""
-
-#: PrintCustStatements_Wayne.php:431
-msgid "As at Date for Statements"
 msgstr ""
 
 #: PrintCustTrans.php:78 PrintCustTransPortrait.php:62
@@ -10641,7 +10636,7 @@ msgstr ""
 msgid "In Units of"
 msgstr ""
 
-#: PurchData.php:156 StocksDMF.php:335 Stocks.php:273
+#: PurchData.php:156 Stocks.php:273
 msgid "Stock Item"
 msgstr ""
 
@@ -11245,8 +11240,7 @@ msgstr ""
 msgid "The SQL used to add the column to the report was"
 msgstr ""
 
-#: SalesAnalReptCols.php:185 StocksDMF.php:397 Stocks.php:335
-#: Suppliers.php:406
+#: SalesAnalReptCols.php:185 Stocks.php:335 Suppliers.php:437
 msgid "has been added to the database"
 msgstr ""
 
@@ -11673,33 +11667,27 @@ msgstr ""
 msgid "You should automatically be forwarded to the CSV Sales Analysis file when it is ready"
 msgstr ""
 
-#: SalesCategories.php:43 StocksDMF.php:39 StocksDMF.php:71 Stocks.php:41
-#: Z_MakeNewCompany.php:50
+#: SalesCategories.php:43 Stocks.php:41 Z_MakeNewCompany.php:50
 msgid "Only jpg files are supported - a file extension of .jpg is expected"
 msgstr ""
 
-#: SalesCategories.php:46 StocksDMF.php:42 StocksDMF.php:74 StocksDMF.php:106
-#: Stocks.php:44 Z_MakeNewCompany.php:53
+#: SalesCategories.php:46 Stocks.php:44 Z_MakeNewCompany.php:53
 msgid "The file size is over the maximum allowed. The maximum size allowed in KB is"
 msgstr ""
 
-#: SalesCategories.php:49 StocksDMF.php:45 StocksDMF.php:77 Stocks.php:47
-#: Z_MakeNewCompany.php:56
+#: SalesCategories.php:49 Stocks.php:47 Z_MakeNewCompany.php:56
 msgid "Only graphics files can be uploaded"
 msgstr ""
 
-#: SalesCategories.php:52 StocksDMF.php:48 StocksDMF.php:80 StocksDMF.php:112
-#: Stocks.php:50 Z_MakeNewCompany.php:59
+#: SalesCategories.php:52 Stocks.php:50 Z_MakeNewCompany.php:59
 msgid "Attempting to overwrite an existing item image"
 msgstr ""
 
-#: SalesCategories.php:55 StocksDMF.php:51 StocksDMF.php:83 StocksDMF.php:115
-#: Stocks.php:53 Z_MakeNewCompany.php:62
+#: SalesCategories.php:55 Stocks.php:53 Z_MakeNewCompany.php:62
 msgid "The existing image could not be removed"
 msgstr ""
 
-#: SalesCategories.php:62 StocksDMF.php:58 StocksDMF.php:90 StocksDMF.php:122
-#: Stocks.php:60 Z_MakeNewCompany.php:140
+#: SalesCategories.php:62 Stocks.php:60 Z_MakeNewCompany.php:143
 msgid "File url"
 msgstr ""
 
@@ -11935,6 +11923,10 @@ msgstr ""
 
 #: SalesGraph.php:217
 msgid "For Items from"
+msgstr ""
+
+#: SalesGraph.php:236 StockUsageGraph.php:10 StockUsage.php:128
+msgid "Month"
 msgstr ""
 
 #: SalesGraph.php:259
@@ -12878,7 +12870,7 @@ msgstr ""
 msgid "Item Transactions"
 msgstr ""
 
-#: SelectProduct.php:697 SelectProduct.php:758 StocksDMF.php:8 Stocks.php:8
+#: SelectProduct.php:697 SelectProduct.php:758 Stocks.php:8
 msgid "Item Maintenance"
 msgstr ""
 
@@ -13262,6 +13254,10 @@ msgstr ""
 
 #: ShipmentCosting.php:140
 msgid "Standard"
+msgstr ""
+
+#: ShipmentCosting.php:141
+msgid "Variance"
 msgstr ""
 
 #: ShipmentCosting.php:235 SupplierInvoice.php:667
@@ -13807,18 +13803,18 @@ msgstr ""
 msgid "Total Price"
 msgstr ""
 
-#: SpecialOrder.php:596 StocksDMF.php:613 Stocks.php:543 Z_PriceChanges.php:34
+#: SpecialOrder.php:596 Stocks.php:543 Z_PriceChanges.php:34
 #: includes/PDFInventoryValnPageHeader.inc:32
 #: includes/PDFInventoryValnPageHeader.inc:37
 #: includes/PDFPriceListPageHeader.inc:38
 msgid "Category"
 msgstr ""
 
-#: SpecialOrder.php:599 StocksDMF.php:616 Stocks.php:546 Z_PriceChanges.php:39
+#: SpecialOrder.php:599 Stocks.php:546 Z_PriceChanges.php:39
 msgid "The stock categories could not be retrieved because"
 msgstr ""
 
-#: SpecialOrder.php:600 StocksDMF.php:617 Stocks.php:547 Z_PriceChanges.php:40
+#: SpecialOrder.php:600 Stocks.php:547 Z_PriceChanges.php:40
 msgid "The SQL used to retrieve stock categories and failed was"
 msgstr ""
 
@@ -14781,444 +14777,6 @@ msgstr ""
 msgid "Show Re-Order Levels"
 msgstr ""
 
-#: StocksDMF.php:58 StocksDMF.php:90 StocksDMF.php:122 Stocks.php:60
-#: Z_MakeNewCompany.php:140
-msgid "Something is wrong with uploading a file"
-msgstr ""
-
-#: StocksDMF.php:103
-msgid "Only .mov quicktime movie files are supported - a file extension of .mov is expected"
-msgstr ""
-
-#: StocksDMF.php:109
-msgid "Only movie files can be uploaded"
-msgstr ""
-
-#: StocksDMF.php:140 Stocks.php:78
-msgid "The stock item description must be entered and be fifty characters or less long"
-msgstr ""
-
-#: StocksDMF.php:140 Stocks.php:78
-msgid "It cannot be a zero length string either"
-msgstr ""
-
-#: StocksDMF.php:140 Stocks.php:78
-msgid "a description is required"
-msgstr ""
-
-#: StocksDMF.php:143 Stocks.php:81
-msgid "The stock item description cannot be a zero length string"
-msgstr ""
-
-#: StocksDMF.php:143 Stocks.php:81
-msgid "a long description is required"
-msgstr ""
-
-#: StocksDMF.php:146 Stocks.php:84
-msgid "The Stock Item code cannot be empty"
-msgstr ""
-
-#: StocksDMF.php:149 Stocks.php:87
-msgid "The stock item code cannot contain any of the following characters"
-msgstr ""
-
-#: StocksDMF.php:153 Stocks.php:91
-msgid "The unit of measure must be 20 characters or less long"
-msgstr ""
-
-#: StocksDMF.php:156 Stocks.php:94
-msgid "The barcode must be 20 characters or less long"
-msgstr ""
-
-#: StocksDMF.php:159 Stocks.php:97
-msgid "The volume of the packaged item in cubic metres must be numeric"
-msgstr ""
-
-#: StocksDMF.php:162 Stocks.php:100
-msgid "The volume of the packaged item must be a positive number"
-msgstr ""
-
-#: StocksDMF.php:165 Stocks.php:103
-msgid "The weight of the packaged item in KGs must be numeric"
-msgstr ""
-
-#: StocksDMF.php:168 Stocks.php:106
-msgid "The weight of the packaged item must be a positive number"
-msgstr ""
-
-#: StocksDMF.php:171 Stocks.php:109
-msgid "The economic order quantity must be numeric"
-msgstr ""
-
-#: StocksDMF.php:174 Stocks.php:112
-msgid "The economic order quantity must be a positive number"
-msgstr ""
-
-#: StocksDMF.php:177 Stocks.php:115
-msgid "The item can only be serialised if there is lot control enabled already"
-msgstr ""
-
-#: StocksDMF.php:177 Stocks.php:115
-msgid "Batch control"
-msgstr ""
-
-#: StocksDMF.php:177 Stocks.php:115
-msgid "with any number of items in a lot/bundle/roll is enabled when controlled is enabled"
-msgstr ""
-
-#: StocksDMF.php:177 Stocks.php:115
-msgid "Serialised control requires that only one item is in the batch"
-msgstr ""
-
-#: StocksDMF.php:177 Stocks.php:115
-msgid "For serialised control"
-msgstr ""
-
-#: StocksDMF.php:177 Stocks.php:115
-msgid "both controlled and serialised must be enabled"
-msgstr ""
-
-#: StocksDMF.php:180 Stocks.php:118
-msgid "Assembly/Kitset/Service items cannot also be controlled items"
-msgstr ""
-
-#: StocksDMF.php:180 Stocks.php:118
-msgid "Assemblies/Dummies and Kitsets are not physical items and batch/serial control is therefore not appropriate"
-msgstr ""
-
-#: StocksDMF.php:183 Stocks.php:121
-msgid "There are no inventory categories defined. All inventory items must belong to a valid inventory category,"
-msgstr ""
-
-#: StocksDMF.php:214 StocksDMF.php:219 Stocks.php:152 Stocks.php:157
-msgid "The make or buy flag cannot be changed from"
-msgstr ""
-
-#: StocksDMF.php:214 Stocks.php:152
-msgid "where there is a quantity of stock on hand at any location"
-msgstr ""
-
-#: StocksDMF.php:214 StocksDMF.php:233 StocksDMF.php:248 Stocks.php:152
-#: Stocks.php:171 Stocks.php:186
-msgid "Currently there are"
-msgstr ""
-
-#: StocksDMF.php:214 Stocks.php:152
-msgid "on hand"
-msgstr ""
-
-#: StocksDMF.php:219 Stocks.php:157
-msgid "where the item is to be lot controlled"
-msgstr ""
-
-#: StocksDMF.php:219 Stocks.php:157
-msgid "Kitset, dummy and assembly items cannot be lot controlled"
-msgstr ""
-
-#: StocksDMF.php:233 Stocks.php:171
-msgid "The make or buy flag cannot be changed to a kitset where there is a quantity outstanding to be delivered on sales orders"
-msgstr ""
-
-#: StocksDMF.php:233 Stocks.php:171
-msgid "outstanding"
-msgstr ""
-
-#: StocksDMF.php:248 Stocks.php:186
-msgid "The make or buy flag cannot be changed to"
-msgstr ""
-
-#: StocksDMF.php:248 Stocks.php:186
-msgid "where there is a quantity outstanding to be received on purchase orders"
-msgstr ""
-
-#: StocksDMF.php:248 Stocks.php:186
-msgid "yet to be received"
-msgstr ""
-
-#: StocksDMF.php:259 Stocks.php:197
-msgid "The make or buy flag cannot be changed from manufactured, kitset or assembly to"
-msgstr ""
-
-#: StocksDMF.php:259 Stocks.php:197
-msgid "where there is a bill of material set up for the item"
-msgstr ""
-
-#: StocksDMF.php:259 Stocks.php:197
-msgid "Bills of material are not appropriate for purchased or dummy items"
-msgstr ""
-
-#: StocksDMF.php:270 Stocks.php:208
-msgid "The make or buy flag cannot be changed from manufactured, purchased or dummy to a kitset or assembly where the item is a component in a bill of material"
-msgstr ""
-
-#: StocksDMF.php:270 Stocks.php:208
-msgid "Assembly and kitset items are not appropriate as componennts in a bill of materials"
-msgstr ""
-
-#: StocksDMF.php:279 Stocks.php:217
-msgid "You can not change a Non-Controlled Item to Controlled (or back from Controlled to non-controlled when there is currently stock on hand for the item"
-msgstr ""
-
-#: StocksDMF.php:284 Stocks.php:222
-msgid "You can not change a Serialised Item to Non-Serialised (or visa-versa) when there is a quantity on hand for the item"
-msgstr ""
-
-#: StocksDMF.php:308 Stocks.php:246
-msgid "The stock item could not be updated because"
-msgstr ""
-
-#: StocksDMF.php:309 Stocks.php:247
-msgid "The SQL that was used to update the stock item and failed was"
-msgstr ""
-
-#: StocksDMF.php:343 Stocks.php:281
-msgid "The stock code entered is actually already in the database - duplicate stock codes are prohibited by the system. Try choosing an alternative stock code"
-msgstr ""
-
-#: StocksDMF.php:381 Stocks.php:319
-msgid "The item could not be added because"
-msgstr ""
-
-#: StocksDMF.php:382 Stocks.php:320
-msgid "The SQL that was used to add the item failed was"
-msgstr ""
-
-#: StocksDMF.php:392 Stocks.php:330
-msgid "The locations for the item"
-msgstr ""
-
-#: StocksDMF.php:393 Stocks.php:331
-msgid "NB Locations records can be added by opening the utility page"
-msgstr ""
-
-#: StocksDMF.php:393 Stocks.php:331
-msgid "The SQL that was used to add the location records that failed was"
-msgstr ""
-
-#: StocksDMF.php:397 Stocks.php:335
-msgid "New Item"
-msgstr ""
-
-#: StocksDMF.php:421 Stocks.php:359
-msgid "Validation failed, no updates or deletes took place"
-msgstr ""
-
-#: StocksDMF.php:436 Stocks.php:374
-msgid "Cannot delete this stock item because there are stock movements that refer to this item"
-msgstr ""
-
-#: StocksDMF.php:437 Stocks.php:375
-msgid "stock movements that refer to this item"
-msgstr ""
-
-#: StocksDMF.php:445 Stocks.php:383
-msgid "Cannot delete this item record because there are bills of material that require this part as a component"
-msgstr ""
-
-#: StocksDMF.php:446 Stocks.php:384
-msgid "bills of material that require this part as a component"
-msgstr ""
-
-#: StocksDMF.php:453 Stocks.php:391
-msgid "Cannot delete this item record because there are existing sales orders for this part"
-msgstr ""
-
-#: StocksDMF.php:454 Stocks.php:392
-msgid "sales order items against this part"
-msgstr ""
-
-#: StocksDMF.php:461 Stocks.php:399
-msgid "Cannot delete this item because sales analysis records exist for it"
-msgstr ""
-
-#: StocksDMF.php:462 Stocks.php:400
-msgid "sales analysis records against this part"
-msgstr ""
-
-#: StocksDMF.php:469 Stocks.php:407
-msgid "Cannot delete this item because there are existing purchase order items for it"
-msgstr ""
-
-#: StocksDMF.php:470 Stocks.php:408
-msgid "purchase order item record relating to this part"
-msgstr ""
-
-#: StocksDMF.php:477 Stocks.php:415
-msgid "Cannot delete this item because there is currently some stock on hand"
-msgstr ""
-
-#: StocksDMF.php:478 Stocks.php:416
-msgid "on hand for this part"
-msgstr ""
-
-#: StocksDMF.php:491 Stocks.php:429
-msgid "Could not delete the location stock records because"
-msgstr ""
-
-#: StocksDMF.php:494 Stocks.php:432
-msgid "Could not delete the prices for this stock record because"
-msgstr ""
-
-#: StocksDMF.php:497 Stocks.php:435
-msgid "Could not delete the purchasing data because"
-msgstr ""
-
-#: StocksDMF.php:500 Stocks.php:438
-msgid "Could not delete the bill of material because"
-msgstr ""
-
-#: StocksDMF.php:502 Stocks.php:440
-msgid "Could not delete the item record"
-msgstr ""
-
-#: StocksDMF.php:506 Stocks.php:444
-msgid "Deleted the stock master record for"
-msgstr ""
-
-#: StocksDMF.php:507 Stocks.php:445
-msgid "and all the location stock records set up for the part"
-msgstr ""
-
-#: StocksDMF.php:508 Stocks.php:446
-msgid "and any bill of material that may have been set up for the part"
-msgstr ""
-
-#: StocksDMF.php:509 Stocks.php:447
-msgid "and any purchasing data that may have been set up for the part"
-msgstr ""
-
-#: StocksDMF.php:510 Stocks.php:448
-msgid "and any prices that may have been set up for the part"
-msgstr ""
-
-#: StocksDMF.php:597 StocksDMF.php:599 Stocks.php:535 Stocks.php:537
-msgid "Part Description"
-msgstr ""
-
-#: StocksDMF.php:597 Stocks.php:535
-msgid "short"
-msgstr ""
-
-#: StocksDMF.php:599 Stocks.php:537
-msgid "long"
-msgstr ""
-
-#: StocksDMF.php:602
-msgid "Image File 1 (.jpg)"
-msgstr ""
-
-#: StocksDMF.php:606
-msgid "Image File 2 (.jpg)"
-msgstr ""
-
-#: StocksDMF.php:609
-msgid "Movie File (.mov)"
-msgstr ""
-
-#: StocksDMF.php:628 Stocks.php:558
-msgid "Add or Modify Stock Categories"
-msgstr ""
-
-#: StocksDMF.php:655 Stocks.php:585
-msgid "Economic Order Quantity"
-msgstr ""
-
-#: StocksDMF.php:657 Stocks.php:587
-msgid "Packaged Volume (metres cubed)"
-msgstr ""
-
-#: StocksDMF.php:659 Stocks.php:589
-msgid "Packaged Weight (KGs)"
-msgstr ""
-
-#: StocksDMF.php:677 Stocks.php:607
-msgid "Make, Buy, Kit, Assembly or Service Part"
-msgstr ""
-
-#: StocksDMF.php:684 StocksDMF.php:686 Stocks.php:614 Stocks.php:616
-msgid "Kit"
-msgstr ""
-
-#: StocksDMF.php:700 StocksDMF.php:702 Stocks.php:630 Stocks.php:632
-msgid "Service"
-msgstr ""
-
-#: StocksDMF.php:707 Stocks.php:637
-msgid "Current or Obsolete"
-msgstr ""
-
-#: StocksDMF.php:714 StocksDMF.php:716 Stocks.php:644 Stocks.php:646
-msgid "Obsolete"
-msgstr ""
-
-#: StocksDMF.php:720 Stocks.php:650
-msgid "Batch, Serial or Lot Control"
-msgstr ""
-
-#: StocksDMF.php:723 StocksDMF.php:725 Stocks.php:653 Stocks.php:655
-msgid "No Control"
-msgstr ""
-
-#: StocksDMF.php:728 StocksDMF.php:730 Stocks.php:658 Stocks.php:660
-msgid "Controlled"
-msgstr ""
-
-#: StocksDMF.php:734 Stocks.php:664
-msgid "Serialised"
-msgstr ""
-
-#: StocksDMF.php:746 Stocks.php:676
-msgid "Note"
-msgstr ""
-
-#: StocksDMF.php:746 Stocks.php:676
-msgid "this has no effect if the item is not Controlled"
-msgstr ""
-
-#: StocksDMF.php:748 Stocks.php:678
-msgid "Decimal Places to Display"
-msgstr ""
-
-#: StocksDMF.php:750 Stocks.php:680
-msgid "Bar Code"
-msgstr ""
-
-#: StocksDMF.php:754 Stocks.php:684 TaxAuthorityRates.php:81
-msgid "Tax Category"
-msgstr ""
-
-#: StocksDMF.php:798
-msgid "Image 1"
-msgstr ""
-
-#: StocksDMF.php:799
-msgid "Image 2"
-msgstr ""
-
-#: StocksDMF.php:803 Stocks.php:721
-msgid "Insert New Item"
-msgstr ""
-
-#: StocksDMF.php:808 Stocks.php:726
-msgid "Item Category Properties"
-msgstr ""
-
-#: StocksDMF.php:869 Stocks.php:787
-msgid "Only click the Delete button if you are sure you wish to delete the item!"
-msgstr ""
-
-#: StocksDMF.php:869 Stocks.php:787
-msgid "Checks will be made to ensure that there are no stock movements, sales analysis records, sales order items or purchase order items for the item"
-msgstr ""
-
-#: StocksDMF.php:869 Stocks.php:787
-msgid "No deletions will be allowed if they exist"
-msgstr ""
-
-#: StocksDMF.php:870 Stocks.php:788
-msgid "Delete This Item"
-msgstr ""
-
 #: StockSerialItemResearch.php:7
 msgid "Serial Item Research"
 msgstr ""
@@ -15324,8 +14882,416 @@ msgstr ""
 msgid "Total quantity"
 msgstr ""
 
+#: Stocks.php:60 Z_MakeNewCompany.php:143
+msgid "Something is wrong with uploading a file"
+msgstr ""
+
+#: Stocks.php:78
+msgid "The stock item description must be entered and be fifty characters or less long"
+msgstr ""
+
+#: Stocks.php:78
+msgid "It cannot be a zero length string either"
+msgstr ""
+
+#: Stocks.php:78
+msgid "a description is required"
+msgstr ""
+
+#: Stocks.php:81
+msgid "The stock item description cannot be a zero length string"
+msgstr ""
+
+#: Stocks.php:81
+msgid "a long description is required"
+msgstr ""
+
+#: Stocks.php:84
+msgid "The Stock Item code cannot be empty"
+msgstr ""
+
+#: Stocks.php:87
+msgid "The stock item code cannot contain any of the following characters"
+msgstr ""
+
+#: Stocks.php:91
+msgid "The unit of measure must be 20 characters or less long"
+msgstr ""
+
+#: Stocks.php:94
+msgid "The barcode must be 20 characters or less long"
+msgstr ""
+
+#: Stocks.php:97
+msgid "The volume of the packaged item in cubic metres must be numeric"
+msgstr ""
+
+#: Stocks.php:100
+msgid "The volume of the packaged item must be a positive number"
+msgstr ""
+
+#: Stocks.php:103
+msgid "The weight of the packaged item in KGs must be numeric"
+msgstr ""
+
+#: Stocks.php:106
+msgid "The weight of the packaged item must be a positive number"
+msgstr ""
+
+#: Stocks.php:109
+msgid "The economic order quantity must be numeric"
+msgstr ""
+
+#: Stocks.php:112
+msgid "The economic order quantity must be a positive number"
+msgstr ""
+
+#: Stocks.php:115
+msgid "The item can only be serialised if there is lot control enabled already"
+msgstr ""
+
+#: Stocks.php:115
+msgid "Batch control"
+msgstr ""
+
+#: Stocks.php:115
+msgid "with any number of items in a lot/bundle/roll is enabled when controlled is enabled"
+msgstr ""
+
+#: Stocks.php:115
+msgid "Serialised control requires that only one item is in the batch"
+msgstr ""
+
+#: Stocks.php:115
+msgid "For serialised control"
+msgstr ""
+
+#: Stocks.php:115
+msgid "both controlled and serialised must be enabled"
+msgstr ""
+
+#: Stocks.php:118
+msgid "Assembly/Kitset/Service items cannot also be controlled items"
+msgstr ""
+
+#: Stocks.php:118
+msgid "Assemblies/Dummies and Kitsets are not physical items and batch/serial control is therefore not appropriate"
+msgstr ""
+
+#: Stocks.php:121
+msgid "There are no inventory categories defined. All inventory items must belong to a valid inventory category,"
+msgstr ""
+
+#: Stocks.php:152 Stocks.php:157
+msgid "The make or buy flag cannot be changed from"
+msgstr ""
+
+#: Stocks.php:152
+msgid "where there is a quantity of stock on hand at any location"
+msgstr ""
+
+#: Stocks.php:152 Stocks.php:171 Stocks.php:186
+msgid "Currently there are"
+msgstr ""
+
+#: Stocks.php:152
+msgid "on hand"
+msgstr ""
+
+#: Stocks.php:157
+msgid "where the item is to be lot controlled"
+msgstr ""
+
+#: Stocks.php:157
+msgid "Kitset, dummy and assembly items cannot be lot controlled"
+msgstr ""
+
+#: Stocks.php:171
+msgid "The make or buy flag cannot be changed to a kitset where there is a quantity outstanding to be delivered on sales orders"
+msgstr ""
+
+#: Stocks.php:171
+msgid "outstanding"
+msgstr ""
+
+#: Stocks.php:186
+msgid "The make or buy flag cannot be changed to"
+msgstr ""
+
+#: Stocks.php:186
+msgid "where there is a quantity outstanding to be received on purchase orders"
+msgstr ""
+
+#: Stocks.php:186
+msgid "yet to be received"
+msgstr ""
+
+#: Stocks.php:197
+msgid "The make or buy flag cannot be changed from manufactured, kitset or assembly to"
+msgstr ""
+
+#: Stocks.php:197
+msgid "where there is a bill of material set up for the item"
+msgstr ""
+
+#: Stocks.php:197
+msgid "Bills of material are not appropriate for purchased or dummy items"
+msgstr ""
+
+#: Stocks.php:208
+msgid "The make or buy flag cannot be changed from manufactured, purchased or dummy to a kitset or assembly where the item is a component in a bill of material"
+msgstr ""
+
+#: Stocks.php:208
+msgid "Assembly and kitset items are not appropriate as componennts in a bill of materials"
+msgstr ""
+
+#: Stocks.php:217
+msgid "You can not change a Non-Controlled Item to Controlled (or back from Controlled to non-controlled when there is currently stock on hand for the item"
+msgstr ""
+
+#: Stocks.php:222
+msgid "You can not change a Serialised Item to Non-Serialised (or visa-versa) when there is a quantity on hand for the item"
+msgstr ""
+
+#: Stocks.php:246
+msgid "The stock item could not be updated because"
+msgstr ""
+
+#: Stocks.php:247
+msgid "The SQL that was used to update the stock item and failed was"
+msgstr ""
+
+#: Stocks.php:281
+msgid "The stock code entered is actually already in the database - duplicate stock codes are prohibited by the system. Try choosing an alternative stock code"
+msgstr ""
+
+#: Stocks.php:319
+msgid "The item could not be added because"
+msgstr ""
+
+#: Stocks.php:320
+msgid "The SQL that was used to add the item failed was"
+msgstr ""
+
+#: Stocks.php:330
+msgid "The locations for the item"
+msgstr ""
+
+#: Stocks.php:331
+msgid "NB Locations records can be added by opening the utility page"
+msgstr ""
+
+#: Stocks.php:331
+msgid "The SQL that was used to add the location records that failed was"
+msgstr ""
+
+#: Stocks.php:335
+msgid "New Item"
+msgstr ""
+
+#: Stocks.php:359
+msgid "Validation failed, no updates or deletes took place"
+msgstr ""
+
+#: Stocks.php:374
+msgid "Cannot delete this stock item because there are stock movements that refer to this item"
+msgstr ""
+
+#: Stocks.php:375
+msgid "stock movements that refer to this item"
+msgstr ""
+
+#: Stocks.php:383
+msgid "Cannot delete this item record because there are bills of material that require this part as a component"
+msgstr ""
+
+#: Stocks.php:384
+msgid "bills of material that require this part as a component"
+msgstr ""
+
+#: Stocks.php:391
+msgid "Cannot delete this item record because there are existing sales orders for this part"
+msgstr ""
+
+#: Stocks.php:392
+msgid "sales order items against this part"
+msgstr ""
+
+#: Stocks.php:399
+msgid "Cannot delete this item because sales analysis records exist for it"
+msgstr ""
+
+#: Stocks.php:400
+msgid "sales analysis records against this part"
+msgstr ""
+
+#: Stocks.php:407
+msgid "Cannot delete this item because there are existing purchase order items for it"
+msgstr ""
+
+#: Stocks.php:408
+msgid "purchase order item record relating to this part"
+msgstr ""
+
+#: Stocks.php:415
+msgid "Cannot delete this item because there is currently some stock on hand"
+msgstr ""
+
+#: Stocks.php:416
+msgid "on hand for this part"
+msgstr ""
+
+#: Stocks.php:429
+msgid "Could not delete the location stock records because"
+msgstr ""
+
+#: Stocks.php:432
+msgid "Could not delete the prices for this stock record because"
+msgstr ""
+
+#: Stocks.php:435
+msgid "Could not delete the purchasing data because"
+msgstr ""
+
+#: Stocks.php:438
+msgid "Could not delete the bill of material because"
+msgstr ""
+
+#: Stocks.php:440
+msgid "Could not delete the item record"
+msgstr ""
+
+#: Stocks.php:444
+msgid "Deleted the stock master record for"
+msgstr ""
+
+#: Stocks.php:445
+msgid "and all the location stock records set up for the part"
+msgstr ""
+
+#: Stocks.php:446
+msgid "and any bill of material that may have been set up for the part"
+msgstr ""
+
+#: Stocks.php:447
+msgid "and any purchasing data that may have been set up for the part"
+msgstr ""
+
+#: Stocks.php:448
+msgid "and any prices that may have been set up for the part"
+msgstr ""
+
+#: Stocks.php:535 Stocks.php:537
+msgid "Part Description"
+msgstr ""
+
+#: Stocks.php:535
+msgid "short"
+msgstr ""
+
+#: Stocks.php:537
+msgid "long"
+msgstr ""
+
+#: Stocks.php:558
+msgid "Add or Modify Stock Categories"
+msgstr ""
+
+#: Stocks.php:585
+msgid "Economic Order Quantity"
+msgstr ""
+
+#: Stocks.php:587
+msgid "Packaged Volume (metres cubed)"
+msgstr ""
+
+#: Stocks.php:589
+msgid "Packaged Weight (KGs)"
+msgstr ""
+
+#: Stocks.php:607
+msgid "Make, Buy, Kit, Assembly or Service Part"
+msgstr ""
+
+#: Stocks.php:614 Stocks.php:616
+msgid "Kit"
+msgstr ""
+
+#: Stocks.php:630 Stocks.php:632
+msgid "Service"
+msgstr ""
+
+#: Stocks.php:637
+msgid "Current or Obsolete"
+msgstr ""
+
+#: Stocks.php:644 Stocks.php:646
+msgid "Obsolete"
+msgstr ""
+
+#: Stocks.php:650
+msgid "Batch, Serial or Lot Control"
+msgstr ""
+
+#: Stocks.php:653 Stocks.php:655
+msgid "No Control"
+msgstr ""
+
+#: Stocks.php:658 Stocks.php:660
+msgid "Controlled"
+msgstr ""
+
+#: Stocks.php:664
+msgid "Serialised"
+msgstr ""
+
+#: Stocks.php:676
+msgid "Note"
+msgstr ""
+
+#: Stocks.php:676
+msgid "this has no effect if the item is not Controlled"
+msgstr ""
+
+#: Stocks.php:678
+msgid "Decimal Places to Display"
+msgstr ""
+
+#: Stocks.php:680
+msgid "Bar Code"
+msgstr ""
+
+#: Stocks.php:684 TaxAuthorityRates.php:81
+msgid "Tax Category"
+msgstr ""
+
 #: Stocks.php:717
 msgid "Image"
+msgstr ""
+
+#: Stocks.php:721
+msgid "Insert New Item"
+msgstr ""
+
+#: Stocks.php:726
+msgid "Item Category Properties"
+msgstr ""
+
+#: Stocks.php:787
+msgid "Only click the Delete button if you are sure you wish to delete the item!"
+msgstr ""
+
+#: Stocks.php:787
+msgid "Checks will be made to ensure that there are no stock movements, sales analysis records, sales order items or purchase order items for the item"
+msgstr ""
+
+#: Stocks.php:787
+msgid "No deletions will be allowed if they exist"
+msgstr ""
+
+#: Stocks.php:788
+msgid "Delete This Item"
 msgstr ""
 
 #: StockStatus.php:10
@@ -16535,123 +16501,127 @@ msgstr ""
 msgid "The supplier since field must be a date in the format"
 msgstr ""
 
-#: Suppliers.php:363
+#: Suppliers.php:377
+msgid "Cannot change currency code as transactions already exist"
+msgstr ""
+
+#: Suppliers.php:394
 msgid "The supplier could not be updated because"
 msgstr ""
 
-#: Suppliers.php:364
+#: Suppliers.php:395
 msgid "The SQL that was used to update the supplier but failed was"
 msgstr ""
 
-#: Suppliers.php:368
+#: Suppliers.php:399
 msgid "The supplier master record for"
 msgstr ""
 
-#: Suppliers.php:401
+#: Suppliers.php:432
 msgid "The supplier"
 msgstr ""
 
-#: Suppliers.php:402
+#: Suppliers.php:433
 msgid "The SQL that was used to insert the supplier but failed was"
 msgstr ""
 
-#: Suppliers.php:406
+#: Suppliers.php:437
 msgid "A new supplier for"
 msgstr ""
 
-#: Suppliers.php:444
+#: Suppliers.php:475
 msgid "Cannot delete this supplier because there are transactions that refer to this supplier"
 msgstr ""
 
-#: Suppliers.php:445
+#: Suppliers.php:476
 msgid "transactions against this supplier"
 msgstr ""
 
-#: Suppliers.php:453
+#: Suppliers.php:484
 msgid "Cannot delete the supplier record because purchase orders have been created against this supplier"
 msgstr ""
 
-#: Suppliers.php:454
+#: Suppliers.php:485
 msgid "orders against this supplier"
 msgstr ""
 
-#: Suppliers.php:461
+#: Suppliers.php:492
 msgid "Cannot delete this supplier because there are supplier contacts set up against it"
 msgstr ""
 
-#: Suppliers.php:461
+#: Suppliers.php:492
 msgid "delete these first"
 msgstr ""
 
-#: Suppliers.php:462
+#: Suppliers.php:493
 msgid "supplier contacts relating to this supplier"
 msgstr ""
 
-#: Suppliers.php:471
+#: Suppliers.php:502
 msgid "Supplier record for"
 msgstr ""
 
-#: Suppliers.php:495 Suppliers.php:607
+#: Suppliers.php:526 Suppliers.php:638
 msgid "Supplier Since"
 msgstr ""
 
-#: Suppliers.php:496 Suppliers.php:608
+#: Suppliers.php:527 Suppliers.php:639
 msgid "Bank Particulars"
 msgstr ""
 
-#: Suppliers.php:497
+#: Suppliers.php:528
 msgid "Bank reference"
 msgstr ""
 
-#: Suppliers.php:498 Suppliers.php:610
+#: Suppliers.php:529 Suppliers.php:641
 msgid "Bank Account No"
 msgstr ""
 
-#: Suppliers.php:517 Suppliers.php:627
+#: Suppliers.php:548 Suppliers.php:658
 msgid "Supplier Currency"
 msgstr ""
 
-#: Suppliers.php:528 Suppliers.php:640 Suppliers.php:643
+#: Suppliers.php:559 Suppliers.php:671 Suppliers.php:674
 msgid "Not Required"
 msgstr ""
 
-#: Suppliers.php:529 Suppliers.php:641 Suppliers.php:644
+#: Suppliers.php:560 Suppliers.php:672 Suppliers.php:675
 msgid "Required"
 msgstr ""
 
-#: Suppliers.php:548
+#: Suppliers.php:579
 msgid "Insert New Supplier"
 msgstr ""
 
-#: Suppliers.php:609
+#: Suppliers.php:640
 msgid "Bank Reference"
 msgstr ""
 
-#: Suppliers.php:670
+#: Suppliers.php:701
 msgid "Add These New Supplier Details"
 msgstr ""
 
-#: Suppliers.php:672
+#: Suppliers.php:703
 msgid "Update Supplier"
 msgstr ""
 
-#: Suppliers.php:673
+#: Suppliers.php:704
 msgid "There is no second warning if you hit the delete button below"
 msgstr ""
 
-#: Suppliers.php:673
+#: Suppliers.php:704
 msgid "However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed"
 msgstr ""
 
-#: Suppliers.php:674
+#: Suppliers.php:705
 msgid "Delete Supplier"
 msgstr ""
 
-#: Suppliers.php:674
+#: Suppliers.php:705
 msgid "Are you sure you wish to delete this supplier?"
 msgstr ""
 
-#: Suppliers.php:675
+#: Suppliers.php:706
 msgid "Review Contact Details"
 msgstr ""
 
@@ -20058,93 +20028,93 @@ msgstr ""
 msgid "Company abbreviations must not contain spaces, \\& or \" or '"
 msgstr ""
 
-#: Z_MakeNewCompany.php:95
+#: Z_MakeNewCompany.php:98
 msgid "The script to create the new company database failed because"
 msgstr ""
 
-#: Z_MakeNewCompany.php:128
+#: Z_MakeNewCompany.php:131
 msgid "Attempting to create the new company directories"
 msgstr ""
 
-#: Z_MakeNewCompany.php:144
+#: Z_MakeNewCompany.php:147
 msgid "This company cannot be added because either it already exists or no logo is being uploaded!"
 msgstr ""
 
-#: Z_MakeNewCompany.php:146
+#: Z_MakeNewCompany.php:149
 msgid "Files LogoFile is set ok"
 msgstr ""
 
-#: Z_MakeNewCompany.php:148
+#: Z_MakeNewCompany.php:151
 msgid "is not set"
 msgstr ""
 
-#: Z_MakeNewCompany.php:151
+#: Z_MakeNewCompany.php:154
 msgid "is not blank"
 msgstr ""
 
-#: Z_MakeNewCompany.php:153
+#: Z_MakeNewCompany.php:156
 msgid "is blank"
 msgstr ""
 
-#: Z_MakeNewCompany.php:184
+#: Z_MakeNewCompany.php:187
 msgid "The new company database has been created for"
 msgstr ""
 
-#: Z_MakeNewCompany.php:184
+#: Z_MakeNewCompany.php:187
 msgid " "
 msgstr ""
 
-#: Z_MakeNewCompany.php:184
+#: Z_MakeNewCompany.php:187
 msgid "NewCompany"
 msgstr ""
 
-#: Z_MakeNewCompany.php:184
+#: Z_MakeNewCompany.php:187
 msgid ". "
 msgstr ""
 
-#: Z_MakeNewCompany.php:184
+#: Z_MakeNewCompany.php:187
 msgid "The company details and parameters should now be set up for the new company. NB: Only a single user \"demo\" is defined with the password \"weberp\" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately."
 msgstr ""
 
-#: Z_MakeNewCompany.php:186
+#: Z_MakeNewCompany.php:189
 msgid "Set Up New Company Details"
 msgstr ""
 
-#: Z_MakeNewCompany.php:187
+#: Z_MakeNewCompany.php:190
 msgid "Set Up Configuration Details"
 msgstr ""
 
-#: Z_MakeNewCompany.php:188
+#: Z_MakeNewCompany.php:191
 msgid "Set Up User Accounts"
 msgstr ""
 
-#: Z_MakeNewCompany.php:201
+#: Z_MakeNewCompany.php:204
 msgid "This utility will create a new company"
 msgstr ""
 
-#: Z_MakeNewCompany.php:202
+#: Z_MakeNewCompany.php:205
 msgid "If the company name already exists then you cannot recreate it"
 msgstr ""
 
-#: Z_MakeNewCompany.php:202 Z_poAddLanguage.php:83 Z_poEditLangHeader.php:89
+#: Z_MakeNewCompany.php:205 Z_poAddLanguage.php:83 Z_poEditLangHeader.php:89
 #: Z_poEditLangModule.php:127 Z_poEditLangRemaining.php:104
 #: Z_poRebuildDefault.php:50
 msgid "PLEASE NOTE"
 msgstr ""
 
-#: Z_MakeNewCompany.php:207
+#: Z_MakeNewCompany.php:210
 msgid "Enter up to 32 character lower case character abbreviation for the company"
 msgstr ""
 
-#: Z_MakeNewCompany.php:209
+#: Z_MakeNewCompany.php:212
 msgid "Logo Image File (.jpg)"
 msgstr ""
 
-#: Z_MakeNewCompany.php:210
+#: Z_MakeNewCompany.php:213
 msgid "Create Database?"
 msgstr ""
 
-#: Z_MakeNewCompany.php:213 Z_poAddLanguage.php:92 Z_poEditLangModule.php:231
+#: Z_MakeNewCompany.php:216 Z_poAddLanguage.php:92 Z_poEditLangModule.php:231
 #: Z_poRebuildDefault.php:54
 msgid "Proceed"
 msgstr ""
@@ -20618,14 +20588,6 @@ msgstr ""
 msgid "Please re-select the reporting period"
 msgstr ""
 
-#: Z_UpdateChartDetailsBFwd.php:66
-msgid "Could not retrieve the ChartDetail records becaue"
-msgstr ""
-
-#: Z_UpdateChartDetailsBFwd.php:78
-msgid "Could not update the chartdetails record because"
-msgstr ""
-
 #: Z_Upgrade_3.01-3.02.php:5
 msgid "Upgrade webERP 3.01 - 3.02"
 msgstr ""
@@ -21004,6 +20966,10 @@ msgid "Message Report"
 msgstr ""
 
 #: includes/MiscFunctions.php:27
+msgid "SUCCESS"
+msgstr ""
+
+#: includes/MiscFunctions.php:27
 msgid "Report"
 msgstr ""
 
@@ -21066,31 +21032,32 @@ msgstr ""
 msgid "The company name entered is not configured for use with this installation of webERP. The company name abbreviation entered at login must also have a company directory defined. See your system administrator"
 msgstr ""
 
-#: includes/ConnectDB_mysql.inc:10
+#: includes/ConnectDB_mysqli.inc:21 includes/ConnectDB_mysql.inc:10
 msgid "The configuration in the file config.php for the database user name and password do not provide the information required to connect to the database server"
 msgstr ""
 
-#: includes/ConnectDB_mysql.inc:15
+#: includes/ConnectDB_mysqli.inc:26 includes/ConnectDB_mysql.inc:15
 msgid "The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name"
 msgstr ""
 
-#: includes/ConnectDB_mysql.inc:16 includes/ConnectDB_postgres.inc:28
+#: includes/ConnectDB_mysqli.inc:27 includes/ConnectDB_mysql.inc:16
+#: includes/ConnectDB_postgres.inc:28
 msgid "Back to login page"
 msgstr ""
 
-#: includes/ConnectDB_mysql.inc:47
+#: includes/ConnectDB_mysqli.inc:62 includes/ConnectDB_mysql.inc:47
 msgid "Database SQL Failure"
 msgstr ""
 
-#: includes/ConnectDB_mysql.inc:53
+#: includes/ConnectDB_mysqli.inc:68 includes/ConnectDB_mysql.inc:53
 msgid "Error Rolling Back Transaction"
 msgstr ""
 
-#: includes/ConnectDB_mysql.inc:53
+#: includes/ConnectDB_mysqli.inc:68 includes/ConnectDB_mysql.inc:53
 msgid "Database Rollback Error"
 msgstr ""
 
-#: includes/ConnectDB_mysql.inc:132
+#: includes/ConnectDB_mysqli.inc:155 includes/ConnectDB_mysql.inc:132
 msgid "The system has just run the regular database administration and optimisation routine."
 msgstr ""
 
@@ -21192,31 +21159,31 @@ msgstr ""
 msgid "Nothing To Report"
 msgstr ""
 
-#: includes/DateFunctions.inc:631
+#: includes/DateFunctions.inc:644
 msgid "Dates must be entered in the format"
 msgstr ""
 
-#: includes/DateFunctions.inc:673
+#: includes/DateFunctions.inc:686
 msgid "No postings are allowed before"
 msgstr ""
 
-#: includes/DateFunctions.inc:673
+#: includes/DateFunctions.inc:686
 msgid "This transaction will be posted in the period following as all previous periods are closed"
 msgstr ""
 
-#: includes/DateFunctions.inc:681
+#: includes/DateFunctions.inc:694
 msgid "An error occurred in retrieving the period number"
 msgstr ""
 
-#: includes/DateFunctions.inc:722
+#: includes/DateFunctions.inc:735
 msgid "An error occurred in adding a new period number"
 msgstr ""
 
-#: includes/DateFunctions.inc:741
+#: includes/DateFunctions.inc:754
 msgid "An error occurred in getting the first period number in the database"
 msgstr ""
 
-#: includes/DateFunctions.inc:759
+#: includes/DateFunctions.inc:772
 msgid "An error occurred in inserting periods before the first period to accomodate back dated transactions"
 msgstr ""
 
@@ -21427,6 +21394,11 @@ msgstr ""
 
 #: includes/PDFDebtorBalsPageHeader.inc:17
 msgid "Customer Balances For Customers between"
+msgstr ""
+
+#: includes/PDFDebtorBalsPageHeader.inc:17
+#: includes/PDFSupplierBalsPageHeader.inc:17
+msgid "as at"
 msgstr ""
 
 #: includes/PDFDebtorBalsPageHeader.inc:35

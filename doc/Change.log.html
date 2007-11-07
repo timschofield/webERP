@@ -1,5 +1,8 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 <P>
+<P><B>Version 3.08
+<P>7 November 2007</B>
+<P>
 <P>3/11/07 Peter Moulding: mysqli support new/(i)mporved mysql db functions for mysql >4.1 -  can now have $dbtype='mysqli'; in config.php provided appropriate mysqli library available to php
 <P>3/11/07 Tim: GLBudgets.php added to allow development/review and entry of GL budgets.
 <P>3/11/07 Renier du Plessis: Witih certain versions of PHP or PEAR in debug mode I have experienced the following error notices: "Only variable references should be returned by reference" I recommend the atached FIX for htmlMimeMail.php
@@ -19,7 +22,6 @@
 <P>25/9/07 GoodsReceived.php now checks stock balances after the receipt of stock is processed for negative receipts of stock and it reports back a nasty message if stock will go negative.
 <P>25/9/07 StockAdjustment.php now checks the stock balance after the adjustment to see if it would go negative, if so it reports back a nasty message and prevents the adjustment.
 <P>25/9/07 WorkOrderIssue.php now checks the stock balance after the issue to see if it would go negative, if so it reports back a nasty message and prevents the issue.
-
 <p>21/9/07 Tim Schofield : Correct date conversion for statements with only settled items on.
 <p>20/9/07 Tim Schofield : Changes to SystemParameters.php for Y-M-D date format
 <P>20/9/07 Tim Schofield : DateFunctions.inc now allows Date Format option Y-m-d as required by Scandanavian countries
@@ -43,7 +45,7 @@
 <P>23/8/07 Mo Kelly : Modify DefineCartClass.php to incule PO line data and line item due dates.
 <P>23/8/07 Mo Kelly : Modify SelectOrderItems.php to allow the entry of due dates and corresponding customer PO Line by sales order line if parameter is set in the debtormaster to collect this field. Also to caluculate and use default delivery date by line item.
 <P>23/8/07 Mo Kelly : Modify SelectOrderItems_IntoCart.inc to include PO line data and line item due dates
-<P>23/8/20 Mo Kelly : Modify PDFDIFOT.php to calculate on time deliveries using the line item due date when available
+<P>23/8/07 Mo Kelly : Modify PDFDIFOT.php to calculate on time deliveries using the line item due date when available
 <P>
 <P>
 <P>
