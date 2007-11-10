@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 /* PeterMoulding.com
 20071102 Change from mysql to mysqli;
@@ -73,7 +73,7 @@ function DB_query ($SQL,
 			exit;
 		}
 	}
-	AuditTrail($Conn, $SQL, $_SESSION['UserID']);
+//	AuditTrail($Conn, $SQL, $_SESSION['UserID']);
 	return $result;
 
 }
