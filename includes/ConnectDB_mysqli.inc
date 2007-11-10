@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 /* PeterMoulding.com
 20071102 Change from mysql to mysqli;
@@ -48,7 +48,7 @@ function DB_query ($SQL,
 	$result=mysql_query($SQL,$Conn);
 */
 	$result=mysqli_query($Conn, $SQL);
-	
+		
 	if ($DebugMessage == '') {
 		$DebugMessage = _('The SQL that failed was');
 	}
@@ -73,6 +73,7 @@ function DB_query ($SQL,
 			exit;
 		}
 	}
+	AuditTrail($Conn, $SQL, $_SESSION['UserID']);
 	return $result;
 
 }
@@ -159,9 +160,9 @@ function DB_Maintenance($Conn){
 		$Result = DB_query('OPTIMIZE TABLE ' . $myrow[0],$Conn);
 	}
 	
-	$Result = DB_query('UPDATE config 
-				SET confvalue="' . Date('Y-m-d') . '" 
-				WHERE confname="DB_Maintenance_LastRun"',
+	$Result = DB_query("UPDATE config 
+				SET confvalue='" . Date('Y-m-d') . "' 
+				WHERE confname='DB_Maintenance_LastRun'",
 				$Conn);
 }
 
