@@ -11,6 +11,31 @@ function prnMsg($msg,$type='info', $prefix=''){
 
 }//prnMsg
 
+function AuditTrail($conn, $sql, $user) {
+	$sqlarray = explode(" ", $sql);
+
+	if (($sqlarray[0] == "INSERT") || ($sqlarray[0] == "UPDATE") || ($sqlarray[0] == "DELETE")) {
+		if ($dbType == 'mysqli') {
+			$query = mysqli_real_escape_string($conn, $sql);
+		} else {
+			$query = mysql_real_escape_string($sql);
+		}
+		$auditsql = "INSERT INTO audittrail
+													(transactiondate,
+													userid,
+													querystring)
+													VALUES('".
+															Date("Y-m-d H:i:s")."',
+															'".trim($user)."','".
+																$query.	"')";
+		if ($dbType == 'mysqli') {
+			$auditresult = mysqli_query($conn, $auditsql);
+		} else {
+			$auditresult = mysql_query($auditsql, $conn);
+		}
+	}
+}
+
 function getMsg($msg,$type='info',$prefix=''){
 	$Colour='';
 	switch($type){

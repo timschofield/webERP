@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.61 $ */
+/* $Revision: 1.62 $ */
 
 
 $PageSecurity = 1;
@@ -805,6 +805,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo '<A HREF="' . $rootpath . '/reportwriter/admin/ReportCreator.php"><LI>' . _('Report Builder Tool') . '</LI></A>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo '<A HREF="' . $rootpath . '/AuditTrail.php"><LI>' . _('View Audit Trail') . '</LI></A>'; ?>
 							</td>
 							</tr>
 						</table>

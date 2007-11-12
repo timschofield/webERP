@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 define ('LIKE','LIKE');
 
@@ -58,6 +58,7 @@ function DB_query ($SQL,
 			exit;
 		}
 	}
+	AuditTrail($Conn, $SQL, $_SESSION['UserID']);
 	return $result;
 
 }
