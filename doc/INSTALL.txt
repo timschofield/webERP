@@ -1,10 +1,10 @@
 WEB-ERP Installation
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 Upgrading
 
-A php upgrade script is provided for versions from 3.05 that applies the database changes required to move from the previous version to the newer version - this script also updates any data as required to work with the new version scripts.
+A php upgrade script is provided for versions from 3.05 that applies the database changes required to move from the previous version to the newer version - this script also updates any data as required to work with the new version scripts. Simply point your browser to Z_Upgrade3.06-3.07.php (for an upgrade between 3.06 and 3.07 - similar naming convention applies to subsequent releases) and follow the prompts.
 
 If the database must be updated manually (as it must for versions prior to 3.05), the SQL scripts are included under webERP/sql/mysql/ to update an existing mysql webERP database to the current version. The upgrade script no longer assumes the weberp database is called webERP. The script must be edited to enter the name of the database to upgrade.
 
@@ -12,7 +12,7 @@ It is recommended not to use phpMyAdmin to run the upgrade script. The upgrade s
 
 mysql --user=weberp_db_user --password='some_pass' < /webERP/sql/upgradescriptname.sql
 
-the upgrade script name will be of the format upgrade(old version number)-(new version number).sql
+the sql upgrade script names will be of the format upgrade(old version number)-(new version number).sql
 
 The old scripts should be deleted and the new scripts extracted to the webERP installation directory under the web-server root directory. config.php will require modification for your database username and password and company specific details.
 
@@ -37,7 +37,7 @@ One more issue with php setup - by default the setting session.use_cookies is se
 
 There are a number of traps with PHP installation depending on the web-server - see http://www.weberp.org/wikidocs/FrequentlyAskedQuestionsInstallation
 
-The system is developed using MySQL. webERP was also tested up to version 3.05 with the Postgres database server. Postgres is no longer supported due to other developer priorities. Instructions here are for mysql.
+The system is developed using MySQL. webERP was also tested up to version 3.05 with the Postgres database server. Postgres is no longer supported due to lack of support for testing with postgres and writing upgrade scripts. Instructions here are for mysql.
 
 
 The installation consists of:
@@ -90,13 +90,14 @@ this will create the webERP directory under the web server root directory and pu
 
 The installation steps for MySQL is described here - similar steps are required with Postgres.
 
-MySQL version 4.x or above is required - Foreign Keys are implemented in the database as from version 2.8 these only became an option in MySQL version 3.23.51. 
+MySQL version 4.1 or above is required - Foreign Keys are implemented in the database as from version 2.8 these only became an option in MySQL version 3.23.51. 
 
-INNODB TABLES MUST BE ENABLED IN THE MYSQL SERVER. 
-These tables allow database transactions and foreign key support, both of which are critical components of ERP software. 
+INNODB TABLES MUST BE ENABLED IN THE MYSQL SERVER.
+
+Innodb tables allow database transactions and foreign key support, both of which are critical components of ERP software.
 Innodb tables require some parameters to be set up in my.cnf - there are some examples in the MySQL manual under table types - Innodb tables.
 
-When using mysql both windows and *nix have the mysql command line client. The command line client is run in a DOS window under Windows. Open a DOS window using Start, Run, cmd ENTER for Windows XP and 2000. Normally the mysql client mysql.exe file is under C:\mysql\bin\mysql.exe by default if this path is not in the default path then commands referred to below as mysql will need to be prefixed by C:\mysql\bin
+When using mysql both windows and *nix have the mysql command line client. The command line client is run in a DOS window under Windows. Open a DOS/command window using Start, Run, cmd ENTER for Windows XP and 2000. Normally the mysql client mysql.exe file is under C:\mysql\bin\mysql.exe by default if this path is not in the default path then commands referred to below as mysql will need to be prefixed by C:\mysql\bin
 
 You need to know the user name and password for the MySQL server. If you have not set these up the default is
 
@@ -139,10 +140,10 @@ Note: The scripts provided are created using mysqldump and contain comments. Unf
 Two scripts are provided:
 
 1. weberp-demo.sql  This has a minimal amount of demonstration data in a bogus company set up so that transactions can be tried to see how the system works.
-2. weberp-new.sql This script has only the basic data necessary to start a new company system off. If you wish to set up your company on webERP then this is the script to use.
+2. weberp-new.sql This script has only the basic data necessary to start a new company system off. If you wish to set up your company on webERP then this is the script to use. Using weberp-new.sql you will need to create a database first (using phpMyAdmin for example) or add the following sql commands to this script CREATE database yourdbname; USE yourdbname;
 
 This creates a weberp database and populates it with only the very basic data to start off.
-The files weberp-demo.sql and weberp-new.sql should be in webERP/sql/mysql and the webERP/sql/pg directories.
+The files weberp-demo.sql and weberp-new.sql should be in webERP/sql/mysql directory.
 
 shell > mysql --user=weberp_db_user --password='some_pass' < /path_to_the_sql_script/weberp-demo.sql
 
@@ -152,13 +153,11 @@ shell > mysql --user=weberp_db_user --password='some_pass' < /path_to_the_sql_sc
 
 as required.
 
-An important consideration for lanugage encodings other ISO-8859-1 was contributed by Chan Wai Lun with postgres we may modify the PostgreSQL config file postgresql.conf to add a key "client_encoding=big5" or using "createdb -E EUC_TW" to create a database with suitable encoding. MySQL may have a similar configuration parameter.
-
 3. Editing config.php
 
 config.php contains a series of user defined variables that determine how the system behaves. Critically it contains the user and password of the database connection and the type of database server being used. There is no going forward without the system being provided with this data. It is important to ensure there are no trailing characters at the end of this file - this is a common installation pitfall since some editors add a character at the end of the file.
 
-The file appears as follows for reference purposes. The actual file config.php under the webERP directory with all the other scripts must be edited and saved. As you can see the file is well commented, the critical items are the computer $host, the $dbType, the $dbuser and the $dbpassword - other variables can in most cases be left at their defaults. Note that the sha1 encryption requires the PHP version 4.3 or greater - if you are using a prior version of php - not recommended - you could try md5 encryption. Lines commencing with // are comments and not interpreted by PHP
+The file appears as follows for reference purposes. The actual file config.php under the webERP directory with all the other scripts must be edited and saved. As you can see the file is well commented, the critical items are the computer $host, the $dbType, the $dbuser and the $dbpassword - other variables can in most cases be left at their defaults. Note that the sha1 encryption requires the PHP version 4.3 or greater - if you are using a prior version of php - not recommended - you could try md5 encryption. Lines commencing with // are comments and not interpreted by PHP. (Note: In prior versions a variable $DatabaseName used to be required in config.php this is no longer required as the webERP database names available are derived from the directory names under webERP/companies/ - when you create a new database using weberp-new.sql you must also copy the directory structure for the company weberp to another directory under webERP/companies with the same name as the database created. If you are using the demo data and the webERP/sql/mysql/weberp-demo.sql script then the database is created as weberp and the company directory weberp already exists under webERP/companies)
 
 
 // User configurable variables
@@ -190,8 +189,6 @@ $host = 'localhost';
 $dbType = 'mysql';
 //$dbType = 'postgres'; /*now depreciated */
 //$dbType = 'mysql';
-
-$DatabaseName = 'weberp';
 
 // sql user & password
 $dbuser = 'weberp_db_user';

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 /*
 date validation and parsing functions
@@ -42,6 +42,7 @@ function Is_Date($DateEntry) {
 
 	if (is_long((int)$Date_Array[0]) AND is_long((int)$Date_Array[1]) AND is_long((int)$Date_Array[2])) {
 		if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
+
 			if (checkdate((int)$Date_Array[1],(int)$Date_Array[0],(int)$Date_Array[2])){
 				Return 1;
 			} else {

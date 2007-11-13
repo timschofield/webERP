@@ -5,58 +5,33 @@
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
 /********************************************/
 
-function prnMsg($msg,$type='info', $prefix=''){
+function prnMsg($Msg,$Type='info', $Prefix=''){
 
-	echo '<P>' . getMsg($msg, $type, $prefix) . '</P>';
+	echo '<P>' . getMsg($Msg, $Type, $Prefix) . '</P>';
 
 }//prnMsg
 
-function AuditTrail($conn, $sql, $user) {
-	$sqlarray = explode(" ", $sql);
-
-	if (($sqlarray[0] == "INSERT") || ($sqlarray[0] == "UPDATE") || ($sqlarray[0] == "DELETE")) {
-		if ($dbType == 'mysqli') {
-			$query = mysqli_real_escape_string($conn, $sql);
-		} else {
-			$query = mysql_real_escape_string($sql);
-		}
-		$auditsql = "INSERT INTO audittrail
-													(transactiondate,
-													userid,
-													querystring)
-													VALUES('".
-															Date("Y-m-d H:i:s")."',
-															'".trim($user)."','".
-																$query.	"')";
-		if ($dbType == 'mysqli') {
-			$auditresult = mysqli_query($conn, $auditsql);
-		} else {
-			$auditresult = mysql_query($auditsql, $conn);
-		}
-	}
-}
-
-function getMsg($msg,$type='info',$prefix=''){
+function getMsg($Msg,$Type='info',$Prefix=''){
 	$Colour='';
-	switch($type){
+	switch($Type){
 		case 'error':
 			$Colour='red';
-			$prefix = $prefix ? $prefix : _('ERROR') . ' ' ._('Message Report');
+			$Prefix = $Prefix ? $Prefix : _('ERROR') . ' ' ._('Message Report');
 			break;
 		case 'warn':
 			$Colour='maroon';
-			$prefix = $prefix ? $prefix : _('WARNING') . ' ' . _('Message Report');
+			$Prefix = $Prefix ? $Prefix : _('WARNING') . ' ' . _('Message Report');
 			break;
 		case 'success':
 			$Colour='darkgreen';
-			$prefix = $prefix ? $prefix : _('SUCCESS') . ' ' . _('Report');
+			$Prefix = $Prefix ? $Prefix : _('SUCCESS') . ' ' . _('Report');
 			break;
 		case 'info':
 		default:
-			$prefix = $prefix ? $prefix : _('INFORMATION') . ' ' ._('Message');
+			$Prefix = $Prefix ? $Prefix : _('INFORMATION') . ' ' ._('Message');
 			$Colour='navy';
 	}
-	return '<FONT COLOR="' . $Colour . '"><B>' . $prefix . '</B> : ' .$msg . '</FONT>';
+	return '<FONT COLOR="' . $Colour . '"><B>' . $Prefix . '</B> : ' .$Msg . '</FONT>';
 }//getMsg
 
 function IsEmailAddress($TestEmailAddress){

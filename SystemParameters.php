@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 
 $PageSecurity =15;
 
@@ -61,6 +61,10 @@ if (isset($_POST['submit'])) {
 		$_POST['X_PageLength'] < 1 ) {
 		$InputError = 1;
 		prnMsg(_('Lines per page must be greater than 1'),'error');
+	} elseif (strlen($_POST['X_MonthsAuditTrail']) > 2 || !is_numeric($_POST['X_MonthsAuditTrail']) ||
+		$_POST['X_MonthsAuditTrail'] < 0 ) {
+		$InputError = 1;
+		prnMsg(_('The number of months of audit trail to keep must be zero or a positive number less than 100 months'),'error');
 	}elseif (strlen($_POST['X_DefaultTaxCategory']) > 1 || !is_numeric($_POST['X_DefaultTaxCategory']) ||
 		$_POST['X_DefaultTaxCategory'] < 1 ) {
 		$InputError = 1;
@@ -219,6 +223,9 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['ProhibitNegativeStock'] != $_POST['X_ProhibitNegativeStock']){
 			$sql[] = 'UPDATE config SET confvalue=' . $_POST['X_ProhibitNegativeStock'] . " WHERE confname='ProhibitNegativeStock'";
+		}
+		if ($_SESSION['MonthsAuditTrail'] != $_POST['X_MonthsAuditTrail']){
+			$sql[] = 'UPDATE config SET confvalue=' . $_POST['X_MonthsAuditTrail'] . " WHERE confname='MonthsAuditTrail'";
 		}
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 1 ) {
@@ -764,6 +771,10 @@ if ($_SESSION['ProhibitNegativeStock']==0) {
 	}
 echo '</SELECT></TD><TD>' . _('Setting this parameter to Yes prevents invoicing and the issue of stock if this would result in negative stock. The stock problem must be corrected before the invoice or issue is allowed to be processed.') . '</TD></TR>' ;
 
+//Months of Audit Trail to Keep
+echo '<TR><TD>' . _('Months of Audit Trail to Retain') . ':</TD>
+	<TD><input type="Text" Name="X_MonthsAuditTrail" SIZE=3 MAXLENGTH=2 value="' . $_SESSION['MonthsAuditTrail'] . '"></TD><TD>&nbsp;</TD>
+</TR>';
 
 
 echo '</TABLE><input type="Submit" Name="submit" value="' . _('Update') . '"></CENTER></FORM>';

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.53 $ */
+/* $Revision: 1.54 $ */
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -124,6 +124,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 					$i++;
 				}
 			}
+			
 
 			echo "<META HTTP-EQUIV='refresh' CONTENT='0; URL=" . $_SERVER['PHP_SELF'] . "?" . SID . "'>";
 			exit;
@@ -164,10 +165,18 @@ if(isset($_SESSION['DB_Maintenance'])){
 
 			/*Do the DB maintenance routing for the DB_type selected */
 			DB_Maintenance($db);
+			//purge the audit trail if necessary
+			if (isset($_SESSION['MonthsAuditTrail'])){
+				 $sql = "DELETE FROM audittrail 
+						WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
+				$ErrMsg = _('There was a problem deleting expired audit-trail history');
+				$result = DB_query($sql,$db);
+			}
 			$_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');
 		}
 	}
 }
+
 If (isset($_POST['Theme']) && ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
 	$_SESSION['Theme'] = $_POST['Theme'];
 	$theme = $_POST['Theme'];

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 /* PeterMoulding.com
 20071102 Change from mysql to mysqli;
@@ -72,8 +72,26 @@ function DB_query ($SQL,
 			include($PathPrefix . 'includes/footer.inc');
 			exit;
 		}
+	} elseif (DB_error_no($Conn)==0 AND $_SESSION['MonthsAuditTrail']>0){
+		
+		$SQLArray = explode(' ', $SQL);
+	
+		if (($SQLArray[0] == 'INSERT') 
+			OR ($SQLArray[0] == 'UPDATE') 
+			OR ($SQLArray[0] == 'DELETE')) {
+			
+			if ($SQLArray[2]!='audittrail'){ // to ensure the auto delete of audit trail history is not logged
+				$AuditSQL = "INSERT INTO audittrail (transactiondate,
+									userid,
+									querystring)
+						VALUES('" . Date('Y-m-d H:i:s') . "',
+							'" . trim($_SESSION['UserID']) . "',
+							'" . DB_escape_string($SQL) . "')";
+
+				$AuditResult = mysqli_query($AuditSQL,$Conn);
+			}
+		}
 	}
-	AuditTrail($Conn, $SQL, $_SESSION['UserID']);
 	return $result;
 
 }
