@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -26,6 +26,7 @@ If (isset($_POST['PrintPDF'])
 				stockmaster.stockid,
 				stockmaster.description,
 				SUM(locstock.quantity) AS qtyonhand,
+				stockmaster.units,
 				stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
 				SUM(locstock.quantity) *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
 			FROM stockmaster,
@@ -48,6 +49,7 @@ If (isset($_POST['PrintPDF'])
 				stockcategory.categorydescription,
 				stockmaster.stockid,
 				stockmaster.description,
+				stockmaster.units,
 				locstock.quantity AS qtyonhand,
 				stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
 				locstock.quantity *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
@@ -130,6 +132,7 @@ If (isset($_POST['PrintPDF'])
 			$LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,$DisplayQtyOnHand,'right');
 			$LeftOvers = $pdf->addTextWrap(440,$YPos,60,$FontSize,$DisplayUnitCost, 'right');
 			$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayItemTotal, 'right');
+			$LeftOvers = $pdf->addTextWrap(400,$YPos,60,$FontSize,$InventoryValn['units'],'right');
 
 		}
 		$Tot_Val += $InventoryValn['itemtotal'];
