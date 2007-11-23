@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockAdjustment.php');
 
@@ -30,7 +30,7 @@ $LineItem = &$_SESSION['Adjustment'];
 
 //Make sure this item is really controlled
 if ( $LineItem->Controlled != 1 ){
-	echo '<CENTER><A HREF="' . $rootpath . '/StockAdjustment.php?' . SID . '&NewAdjustment=Yes">'._('Enter A Stock Adjustment').'</A></CENTER>';
+	echo '<CENTER><A HREF="' . $rootpath . '/StockAdjustments.php?' . SID . '&NewAdjustment=Yes">'._('Enter A Stock Adjustment').'</A></CENTER>';
 	prnMsg('<BR>'. _('Notice') . ' - ' . _('The adjusted item must be defined as controlled to require input of the batch numbers or serial numbers being adjusted'),'error');
 	include('includes/footer.inc');
 	exit;
