@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockAdjustment.php');
 
@@ -13,7 +13,7 @@ include('includes/header.inc');
 
 if (!isset($_SESSION['Adjustment'])) {
 	/* This page can only be called when a stock adjustment is pending */
-	echo '<CENTER><A HREF="' . $rootpath . '/StockAdjustment.php?' . SID . '&NewAdjustment=Yes">'. _('Enter A Stock Adjustment'). '</A><br>';
+	echo '<CENTER><A HREF="' . $rootpath . '/StockAdjustments.php?' . SID . '&NewAdjustment=Yes">'. _('Enter A Stock Adjustment'). '</A><br>';
 	prnMsg( _('This page can only be opened if a stock adjustment for a controlled item has been entered').'<BR>','error');
 	echo '</CENTER>';
 	include('includes/footer.inc');
