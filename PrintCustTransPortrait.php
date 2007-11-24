@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 1;
 
@@ -1030,7 +1030,6 @@ function PrintLinesToBottom () {
 
 	$pdf->line($Left_Margin+640, $TopOfColHeadings+12,$Left_Margin+640,$Bottom_Margin);
 
-	$pdf->newPage();
 	$PageNumber++;
 
 }
