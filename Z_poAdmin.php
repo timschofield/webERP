@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /* Steve Kitchen */
 /* Up front menu for language file maintenance */
 
@@ -27,7 +27,7 @@ else
 	echo '<P><A HREF="' . $rootpath . '/Z_poAddLanguage.php?' . SID . '">' . _('Add a New Language to the System') .'</A>';
 	echo '<P><A HREF="' . $rootpath . '/Z_poEditLangHeader.php?' . SID . '">'. _('Edit a Language File Header') . '</A>';
 	echo '<P><A HREF="' . $rootpath . '/Z_poEditLangModule.php?' . SID . '">'. _('Edit a Language File Module') . '</A>';
-	echo '<P><A HREF="' . $rootpath . '/Z_poEditLangREmaining.php?' . SID . '">'. _('Edit Remaining Strings For This Language') . '</A>';
+	echo '<P><A HREF="' . $rootpath . '/Z_poEditLangRemaining.php?' . SID . '">'. _('Edit Remaining Strings For This Language') . '</A>';
 	echo '<P><A HREF="' . $rootpath . '/locale/'.$_SESSION['Language'].'/LC_MESSAGES/messages.po' . SID . '">'. _('Download messages.po file') . '</A>';
 	echo '<P><A HREF="' . $rootpath . '/locale/'.$_SESSION['Language'].'/LC_MESSAGES/messages.mo' . SID . '">'. _('Download messages.mo file') . '</A>';
 }
