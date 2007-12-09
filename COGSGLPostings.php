@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 10;
 
@@ -225,14 +225,11 @@ if (!isset($SelectedCOGSPostingID)) {
 }
 //end of ifs and buts!
 
-if (isset($SelectedCOGSPostingID)) {  ?>
-	<Center><a href="<?php echo $_SERVER['PHP_SELF'];?>"><?php echo _('Show all cost of sales posting records'); ?></a></Center>
-<?php } ?>
+if (isset($SelectedCOGSPostingID)) {  
+	echo "<Center><a href=" . $_SERVER['PHP_SELF'] .">" . _('Show all cost of sales posting records') . "</a></Center>";
+}
 
-<P>
-
-
-<?php
+echo "<P>";
 
 if (!isset($_GET['delete'])) {
 
@@ -266,14 +263,7 @@ if (!isset($_GET['delete'])) {
 		FROM areas";
 	$result = DB_query($sql,$db);
 
-	?>
-
-	<CENTER><TABLE>
-	<TR><TD><?php echo _('Area'); ?>:</TD>
-	<TD><SELECT name="Area">
-	<OPTION VALUE="AN"><?php echo _('Any Other'); ?>
-
-	<?php
+	echo "<CENTER><TABLE><TR><TD>" . _('Area') . ":</TD><TD><SELECT name='Area'><OPTION VALUE='AN'>" . _('Any Other');
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['areacode']==$_POST['Area']) {
@@ -289,14 +279,8 @@ if (!isset($_GET['delete'])) {
 	$sql = 'SELECT categoryid, categorydescription FROM stockcategory';
 	$result = DB_query($sql,$db);
 
-	?>
-
-	</SELECT></TD></TR>
-
-	<TR><TD><?php echo _('Stock Category'); ?>:</TD>
-	<TD><SELECT name="StkCat">
-	<OPTION VALUE="ANY"><?php echo _('Any Other'); ?>
-	<?php
+	echo "</SELECT></TD></TR><TR><TD>" . _('Stock Category') . ":</TD><TD><SELECT name='StkCat'>
+			<OPTION VALUE='ANY'>" . _('Any Other');
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow["categoryid"]==$_POST['StkCat']) {
@@ -313,14 +297,8 @@ if (!isset($_GET['delete'])) {
 	$sql = 'SELECT typeabbrev, sales_type FROM salestypes';
 	$result = DB_query($sql,$db);
 
-	?>
-
-	</SELECT></TD></TR>
-
-	<TR><TD><?php echo _('Sales Type') . ' / ' . _('Price List'); ?>:</TD>
-	<TD><SELECT name="SalesType">
-	<OPTION VALUE="AN"><?php echo _('Any Other'); ?>
-	<?php
+	echo "</SELECT></TD></TR><TR><TD>" . _('Sales Type') . " / " . _('Price List') . ":</TD>
+		<TD><SELECT name='SalesType'><OPTION VALUE='AN'>" . _('Any Other');
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['typeabbrev']==$_POST['SalesType']) {
@@ -332,15 +310,8 @@ if (!isset($_GET['delete'])) {
 
 	} //end while loop
 
-	?>
+	echo "</SELECT></TD></TR><TR><TD>" . _('Post to GL account') . ":</TD><TD><SELECT name='GLCode'>";
 
-	</SELECT></TD></TR>
-
-	<TR><TD><?php echo _('Post to GL account'); ?>:</TD>
-	<TD>
-	<SELECT name="GLCode">
-
-	<?php
 	DB_free_result($result);
 	$sql = "SELECT chartmaster.accountcode,
 			chartmaster.accountname
@@ -364,17 +335,10 @@ if (!isset($_GET['delete'])) {
 	} //end while loop
 
 	DB_free_result($result);
-	?>
 
-	</SELECT>
-	</TD></TR>
-	</TABLE>
+	echo "</SELECT></TD></TR></TABLE><input type='Submit' name='submit' value=" . _('Enter Information') . "></FORM></CENTER>";
 
-	<input type="Submit" name="submit" value="<?php echo _('Enter Information'); ?>">
-
-	</FORM></CENTER>
-
-<?php } //end if record deleted no point displaying form to add record
+} //end if record deleted no point displaying form to add record
 
 include('includes/footer.inc');
 ?>
