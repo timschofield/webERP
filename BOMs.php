@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 $PageSecurity = 9;
 
@@ -384,8 +384,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	if (isset($SelectedParent)) {
 		echo "<Center><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . "Select=$SelectedParent'>" . _('Review Components') . '</a></Center>';
 	}
-?>
-<?php
+
 	// Display Manufatured Parent Items
 	$sql = "SELECT bom.parent, 
 			stockmaster.description, 
@@ -451,10 +450,9 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	 	echo '</CENTER>';
 	}
 
-?>
-	<CENTER><table border=1>
+	echo "<CENTER><table border=1>";
 
-<?php // *** POPAD&T
+    // *** POPAD&T
 	$BOMTree = array();
 	//BOMTree is a 2 dimensional array with three elements for each item in the array - Level, Parent, Component
 	//display children populates the BOM_Tree from the selected parent
@@ -501,10 +499,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		}
 	}
 	// *** end POPAD&T
-?>
-	</table></CENTER>
-
-	<?php
+	echo "</table></CENTER>";
 
 	if (! isset($_GET['delete'])) {
 
@@ -580,13 +575,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 			echo '</SELECT></TD></TR>';
 		}
-		?>
 
-		<TR><TD><?php echo _('Location') . ':'; ?></TD>
-		<TD>
-		<SELECT name="LocCode">
-
-		<?php
+		echo "<TR><TD>" . _('Location') . ": </TD><TD><SELECT name='LocCode'>";
 
 		DB_free_result($result);
 		$sql = 'SELECT locationname, loccode FROM locations';
@@ -604,15 +594,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		DB_free_result($result);
 
-		?>
-		</SELECT>
-		</TD></TR>
-
-		<TR><TD><?php echo _('Work Centre Added') . ':'; ?></TD>
-		<TD>
-		<SELECT name="WorkCentreAdded">
-
-		<?php
+		echo "</SELECT></TD></TR><TR><TD>" . _('Work Centre Added') . ": </TD><TD>";
+		echo "<SELECT name='WorkCentreAdded'>";
 
 		$sql = 'SELECT code, description FROM workcentres';
 		$result = DB_query($sql,$db);
@@ -634,24 +617,17 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		} //end while loop
 
 		DB_free_result($result);
-		?>
 
-		</SELECT>
-		</TD></TR>
-
-		<TR><TD><?php echo _('Quantity') . ':'; ?></TD>
-		<TD>
-		<INPUT TYPE="Text" name="Quantity" SIZE=10 MAXLENGTH=8 VALUE=
-		<?php
+		echo "</SELECT></TD></TR><TR><TD>" . _('Quantity') . ": </TD><TD>
+		    <INPUT TYPE='Text' name='Quantity' SIZE=10 MAXLENGTH=8 VALUE=";
 		if ($_POST['Quantity']){
 			echo $_POST['Quantity'];
 		} else {
 			echo 1;
-		}?>>
+		}
 
-		</TD></TR>
+		echo "></TD></TR>";
 
-		<?php
 		if (!isset($_POST['EffectiveTo']) OR $_POST['EffectiveTo']=='') {
 			$_POST['EffectiveTo'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'),Date('d'),(Date('y')+30)));
 		}
@@ -659,17 +635,11 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$_POST['EffectiveAfter'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'),Date('d')-1,Date('y')));
 		}
 
-		?>
-
-		<TR><TD><?php echo _('Effective After') . ' (' . $_SESSION['DefaultDateFormat'] . '):'; ?></TD>
-		<TD>
-		<INPUT TYPE="Text" name="EffectiveAfter" SIZE=11 MAXLENGTH=11 VALUE="<?php echo $_POST['EffectiveAfter']; ?>">
-		</TD></TR>
-		<TR><TD><?php echo _('Effective To') . ' (' . $_SESSION['DefaultDateFormat'] . '):'; ?></TD>
-		<TD>
-		<INPUT TYPE="Text" name="EffectiveTo" SIZE=11 MAXLENGTH=11 VALUE="<?php echo $_POST['EffectiveTo']; ?>">
-		</TD></TR>
-		<?php
+		echo "<TR><TD>" . _('Effective After') . " (" . $_SESSION['DefaultDateFormat'] . "):</TD>
+		  <TD><INPUT TYPE='Text' name='EffectiveAfter' SIZE=11 MAXLENGTH=11 VALUE=" . $_POST['EffectiveAfter'] .">
+		  </TD></TR><TR><TD>" . _('Effective To') . " (" . $_SESSION['DefaultDateFormat'] . "):</TD><TD>
+		  <INPUT TYPE='Text' name='EffectiveTo' SIZE=11 MAXLENGTH=11 VALUE=" . $_POST['EffectiveTo'] ."></TD></TR>";
+		
 		if ($ParentMBflag=='M'){
 			echo '<TR><TD>' . _('Auto Issue this Component to Work Orders') . ':</TD>
 				<TD>
@@ -691,14 +661,9 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		} else {
 			echo '<INPUT TYPE=HIDDEN NAME="AutoIssue" VALUE=0>';
 		}
-		?>
-		</TABLE>
 
-		<CENTER><input type="Submit" name="Submit" value="<?php echo _('Enter Information'); ?>">
+		echo "</TABLE><CENTER><input type='Submit' name='Submit' value=" . _('Enter Information') . "></FORM>";
 
-		</FORM>
-
-		<?php
 	} //end if record deleted no point displaying form to add record
 
 	// end of BOM maintenance code - look at the parent selection form if not relevant
@@ -772,26 +737,17 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 } //end of if search
 
 if (!isset($SelectedParent)) {
-?>
 
-<FORM ACTION='<?php echo $_SERVER['PHP_SELF'] . '?' . SID; ?>' METHOD=POST>
-<B><BR><?php echo $msg; ?></B>
-<?php echo _('Select a manufactured part') . ' (' . _('or Assembly or Kit part') . ') ' . _('to maintain the bill of material for using the options below') . '.'; ?>
-<BR><FONT SIZE=1><?php echo _('Parts must be defined in the stock item entry') . '/' . _('modification screen as manufactured') . ', ' . _('kits or assemblies to be available for construction of a bill of material'); ?></FONT>
-<TABLE CELLPADDING=3 COLSPAN=4>
-<TR>
-<TD><FONT SIZE=1><?php echo _('Enter text extracts in the') . ' <B>' . _('description'); ?></B>:</FONT></TD>
-<TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25></TD>
-<TD><FONT SIZE=3><B><?php echo _('OR'); ?></B></FONT></TD>
-<TD><FONT SIZE=1><?php echo _('Enter extract of the') . ' <B>' . _('Stock Code'); ?></B>:</FONT></TD>
-<TD><INPUT TYPE="Text" NAME="StockCode" SIZE=15 MAXLENGTH=18></TD>
-</TR>
-</TABLE>
-<CENTER><INPUT TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Search Now'); ?>">
-</CENTER>
-
-
-<?php
+	echo "<FORM ACTION=" . $_SERVER['PHP_SELF'] . "?" . SID ." METHOD=POST><B><BR>" . $msg ."</B>" .
+	 _('Select a manufactured part') . " (" . _('or Assembly or Kit part') . ") " .
+	 _('to maintain the bill of material for using the options below') . "." . "<BR><FONT SIZE=1>" .
+	 _('Parts must be defined in the stock item entry') . "/" . _('modification screen as manufactured') . 
+     ", " . _('kits or assemblies to be available for construction of a bill of material') .
+     "</FONT><TABLE CELLPADDING=3 COLSPAN=4><TR><TD><FONT SIZE=1>" . _('Enter text extracts in the') . 
+	 " <B>" . _('description') . "</B>:</FONT></TD><TD><INPUT TYPE='Text' NAME='Keywords' SIZE=20 MAXLENGTH=25></TD>
+	 <TD><FONT SIZE=3><B>" . _('OR') . "</B></FONT></TD><TD><FONT SIZE=1>" . _('Enter extract of the') . 
+     " <B>" . _('Stock Code') . "</B>:</FONT></TD><TD><INPUT TYPE='Text' NAME='StockCode' SIZE=15 MAXLENGTH=18></TD>
+	 </TR></TABLE><CENTER><INPUT TYPE=SUBMIT NAME='Search' VALUE=" . _('Search Now') . "></CENTER>";
 
 If (isset($result) AND !isset($SelectedParent)) {
 
@@ -843,11 +799,9 @@ If (isset($result) AND !isset($SelectedParent)) {
 }
 //end if results to show
 
-?>
+echo "</FORM>";
 
-</FORM>
-
-<?php } //end StockID already selected
+} //end StockID already selected
 
 include('includes/footer.inc');
 ?>
