@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 7;
 
@@ -24,9 +24,18 @@ include('includes/header.inc');
 if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
 	for ($Counter=1;$Counter <= $_POST['RowCounter']; $Counter++){
 		if ($_POST["Clear_" . $Counter]==True){
-			/*Update the banktrans recoord to match it off */
-			$sql = "UPDATE banktrans SET amountcleared=(amount/exrate)
+			/*Get amount to be cleared */
+			$sql = "SELECT amount, 
+						exrate 
+					FROM banktrans
 					WHERE banktransid=" . $_POST["BankTrans_" . $Counter];
+			$ErrMsg =  _('Could not retrieve transaction information');
+			$result = DB_query($sql,$db,$ErrMsg);
+			$myrow=DB_fetch_array($result);
+			$AmountCleared = round($myrow[0] / $myrow[1],2);
+			/*Update the banktrans recoord to match it off */
+			$sql = "UPDATE banktrans SET amountcleared= ". $AmountCleared .
+					"WHERE banktransid=" . $_POST["BankTrans_" . $Counter];
 			$ErrMsg =  _('Could not match off this payment beacause');
 			$result = DB_query($sql,$db,$ErrMsg);
 
