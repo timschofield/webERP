@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 /* Common SQL Functions */
 
@@ -15,6 +15,10 @@ Also updates the transaction number
 12 sales receipt
 
 */
+
+	$sql = "LOCK TABLES systypes WRITE;";
+	DB_query($sql,$db,'','');
+	
 	$SQL = "SELECT typeno FROM systypes WHERE typeid = " . $TransType;
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': <BR>' . _('The next transaction number could not be retrieved from the database because');
@@ -27,6 +31,8 @@ Also updates the transaction number
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The transaction number could not be incremented');
 	$DbgMsg =  _('The following SQL to increment the transaction number was used');
 	$UpdTransNoResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
+	
+	DB_query("UNLOCK TABLES",$db,'','',true); 
 
 	return $myrow[0] + 1;
 }
