@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.62 $ */
+/* $Revision: 1.63 $ */
 
 
 $PageSecurity = 1;
@@ -387,6 +387,11 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							<tr>
 							<td class="menu_group_item">
 								<?php echo "<A HREF='" . $rootpath . '/Suppliers.php?' . SID . "'><LI>" . _('Add Supplier') . '</LI></A>'; ?>
+							</td>
+							</tr>
+							<tr>
+							<td class="menu_group_item">
+								<?php echo "<A HREF='" . $rootpath . '/Factors.php?' . SID . "'><LI>" . _('Maintain Factor Companies') . '</LI></A>'; ?>
 							</td>
 							</tr>
 						</table>
