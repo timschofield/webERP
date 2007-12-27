@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 5;
 
@@ -370,7 +370,8 @@ if (isset($_POST['submit'])) {
 							bankref='" . DB_escape_string($_POST['BankRef']) . "', 
 					 		bankact='" . $_POST['BankAct'] . "', 
 							remittance=" . $_POST['Remittance'] . ", 
-							taxgroupid=" . $_POST['TaxGroup'] . " 
+							taxgroupid=" . $_POST['TaxGroup'] . ",
+							factorcompanyid=" . $_POST['FactorID'] ."
 						WHERE supplierid = '$SupplierID'";
 			} else {
 				if ($suppcurr[0] != $_POST['CurrCode']) {
@@ -387,7 +388,8 @@ if (isset($_POST['submit'])) {
 							bankref='" . DB_escape_string($_POST['BankRef']) . "', 
 					 		bankact='" . $_POST['BankAct'] . "', 
 							remittance=" . $_POST['Remittance'] . ", 
-							taxgroupid=" . $_POST['TaxGroup'] . " 
+							taxgroupid=" . $_POST['TaxGroup'] . ",
+							factorcompanyid=" . $_POST['FactorID'] ." 
 						WHERE supplierid = '$SupplierID'";
 			}
 			
@@ -413,7 +415,8 @@ if (isset($_POST['submit'])) {
 							bankref, 
 							bankact, 
 							remittance, 
-							taxgroupid) 
+							taxgroupid,
+							factorcompanyid) 
 					 VALUES ('$SupplierID', 
 					 	'" .DB_escape_string($_POST['SuppName']) . "', 
 						'" . DB_escape_string($_POST['Address1']) . "', 
@@ -427,7 +430,8 @@ if (isset($_POST['submit'])) {
 						'" . DB_escape_string($_POST['BankRef']) . "', 
 						'" . $_POST['BankAct'] . "', 
 						" .  $_POST['Remittance'] . ", 
-						" . $_POST['TaxGroup'] . ")";
+						" . $_POST['TaxGroup'] . ",
+						" . $_POST['FactorID'] . ")";
 
 			$ErrMsg = _('The supplier') . ' ' . $_POST['SuppName'] . ' ' . _('could not be added because');
 			$DbgMsg = _('The SQL that was used to insert the supplier but failed was');
@@ -450,6 +454,7 @@ if (isset($_POST['submit'])) {
 			unset($_POST['BankAct']);
 			unset($_POST['Remittance']);
 			unset($_POST['TaxGroup']);
+			unset($_POST['FactorID']);
 
 		}
 		
@@ -538,6 +543,20 @@ if (!isset($SupplierID)) {
 	DB_data_seek($result, 0);
 	echo '</SELECT></TD></TR>';
 
+	$result=DB_query('SELECT id, coyname FROM factorcompanies', $db);
+
+	echo '<TR><TD>' . _('Factor Comapny') . ":</TD><TD><SELECT NAME='FactorID'>";
+
+	while ($myrow = DB_fetch_array($result)) {
+		if ($_POST['FactorID'] == $myrow['id']){
+		echo '<OPTION SELECTED VALUE=' . $myrow['id'] . '>' . $myrow['coyname'];
+		} else {
+		echo '<OPTION VALUE=' . $myrow['id'] . '>' . $myrow['coyname'];
+		}
+	} //end while loop
+	DB_data_seek($result, 0);
+	echo '</SELECT></TD></TR>';
+
 	$result=DB_query('SELECT currency, currabrev FROM currencies', $db);
 	if (!isset($_POST['CurrCode'])){
 		$CurrResult = DB_query('SELECT currencydefault FROM companies WHERE coycode=1', $db);
@@ -600,7 +619,8 @@ if (!isset($SupplierID)) {
 				bankref, 
 				bankact, 
 				remittance, 
-				taxgroupid 
+				taxgroupid,
+				factorcompanyid 
 			FROM suppliers 
 			WHERE supplierid = '$SupplierID'";
 				  
@@ -620,6 +640,7 @@ if (!isset($SupplierID)) {
 		$_POST['BankRef']  = $myrow['bankref'];
 		$_POST['BankAct']  = $myrow['bankact'];
 		$_POST['TaxGroup'] = $myrow['taxgroupid'];
+		$_POST['FactorID'] = $myrow['factorcompanyid'];
 
 		echo "<INPUT TYPE=HIDDEN NAME='SupplierID' VALUE='$SupplierID'>";
 
@@ -649,6 +670,19 @@ if (!isset($SupplierID)) {
 		echo '<OPTION SELECTED VALUE=' . $myrow['termsindicator'] . '>' . $myrow['terms'];
 		} else {
 		echo '<OPTION VALUE=' . $myrow['termsindicator'] . '>' . $myrow['terms'];
+		}
+	} //end while loop
+	DB_data_seek($result, 0);
+
+	$result=DB_query('SELECT id, coyname FROM factorcompanies', $db);
+
+	echo '<TR><TD>' . _('Factor Comapny') . ":</TD><TD><SELECT NAME='FactorID'>";
+
+	while ($myrow = DB_fetch_array($result)) {
+		if ($_POST['FactorID'] == $myrow['id']){
+		echo '<OPTION SELECTED VALUE=' . $myrow['id'] . '>' . $myrow['coyname'];
+		} else {
+		echo '<OPTION VALUE=' . $myrow['id'] . '>' . $myrow['coyname'];
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
