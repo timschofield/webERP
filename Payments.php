@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 5;
 
@@ -47,7 +47,8 @@ if (isset($_GET['SupplierID'])){
 			address4,
 			address5,
 			address6,
-			currcode
+			currcode,
+			factorcompanyid
 		FROM suppliers
 		WHERE supplierid='" . $_GET['SupplierID'] . "'";
 
@@ -58,15 +59,39 @@ if (isset($_GET['SupplierID'])){
 		exit;
 	} else {
 		$myrow = DB_fetch_array($Result);
-		$_SESSION['PaymentDetail']->SuppName = $myrow['suppname'];
-		$_SESSION['PaymentDetail']->Address1 = $myrow['address1'];
-		$_SESSION['PaymentDetail']->Address2 = $myrow['address2'];
-		$_SESSION['PaymentDetail']->Address3 = $myrow['address3'];
-		$_SESSION['PaymentDetail']->Address4 = $myrow['address4'];
-		$_SESSION['PaymentDetail']->Address5 = $myrow['address5'];
-		$_SESSION['PaymentDetail']->Address6 = $myrow['address6'];
-		$_SESSION['PaymentDetail']->SupplierID = $_GET['SupplierID'];
-		$_SESSION['PaymentDetail']->Currency = $myrow['currcode'];
+		if ($myrow['factorcompanyid'] == 1) {
+			$_SESSION['PaymentDetail']->SuppName = $myrow['suppname'];
+			$_SESSION['PaymentDetail']->Address1 = $myrow['address1'];
+			$_SESSION['PaymentDetail']->Address2 = $myrow['address2'];
+			$_SESSION['PaymentDetail']->Address3 = $myrow['address3'];
+			$_SESSION['PaymentDetail']->Address4 = $myrow['address4'];
+			$_SESSION['PaymentDetail']->Address5 = $myrow['address5'];
+			$_SESSION['PaymentDetail']->Address6 = $myrow['address6'];
+			$_SESSION['PaymentDetail']->SupplierID = $_GET['SupplierID'];
+			$_SESSION['PaymentDetail']->Currency = $myrow['currcode'];
+		} else {
+			$factorsql= "SELECT coyname,
+			 address1,
+			 address2,
+			 address3,
+			 address4,
+			 address5,
+			 address6
+			FROM factorcompanies
+			WHERE id='" . $myrow['factorcompanyid'] . "'";
+			
+			$FactorResult = DB_query($factorsql, $db);
+			$myfactorrow = DB_fetch_array($FactorResult);
+			$_SESSION['PaymentDetail']->SuppName = $myrow['suppname'] . _(' care of ') . $myfactorrow['coyname'];
+			$_SESSION['PaymentDetail']->Address1 = $myfactorrow['address1'];
+			$_SESSION['PaymentDetail']->Address2 = $myfactorrow['address2'];
+			$_SESSION['PaymentDetail']->Address3 = $myfactorrow['address3'];
+			$_SESSION['PaymentDetail']->Address4 = $myfactorrow['address4'];
+			$_SESSION['PaymentDetail']->Address5 = $myfactorrow['address5'];
+			$_SESSION['PaymentDetail']->Address6 = $myfactorrow['address6'];
+			$_SESSION['PaymentDetail']->SupplierID = $_GET['SupplierID'];
+			$_SESSION['PaymentDetail']->Currency = $myrow['currcode'];			
+		}
 	}
 }
 
