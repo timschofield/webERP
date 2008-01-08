@@ -12,11 +12,11 @@ The demonstration system has bogus data already entered so that the features of 
 <br><br>
 <font size="+2"><b>The Company Logo</b></font>
 <br><br>
-For the company logo to appear on the each screen, it must be saved in the format of a .jpg file and be copied to the file logo.jpg in the companies/Your Company Name/ directory. webERP allows for multiple companies to be accessed using the same scripts which each company's configuration stored in the database. The name of the company database has a directory under the directory companies under the webERP root directory. The logo needs to have read permissions for the user that the web server is running as normally "nobody" for apache on linux. Permissions issues are of course a none issue under windows installations.
+For the company logo to appear on the each screen, it must be saved in the format of a .jpg file and be copied to the file logo.jpg in the companies/Your Company Name/ directory. webERP allows for multiple companies to be accessed using the same scripts which each company's configuration stored in the database. The name of the company database has a directory under the directory companies under the webERP root directory. The logo needs to have read permissions for the user that the web server is running as (often the user "nobody" for apache on linux). Permissions issues are of course a none issue under windows installations.
 <br><br>
 <font size="+2"><b>The Chart Of Accounts</b></font>
 <br><br>
-A default chart of accounts is set up. However, in most cases the company will wish to adopt the chart of accounts it has used traditionally. Chart of accounts maintenance - deletion of accounts and adding of new accounts is done from the General Ledger tab. This would be a starting point for data input of a new system. Where the GL integration features are to be used, setting up the chart of accounts will be a necessary first step. Once a general ledger account has a posting to it then it will not be allowed to be deleted. 
+A default chart of accounts is set up. However, in most cases the company will wish to adopt the chart of accounts it has used traditionally. Chart of accounts maintenance - deletion of accounts and adding of new accounts is done from the General Ledger tab. This would be a starting point for data input of a new system. Where the GL integration features are to be used, setting up the chart of accounts will be a necessary first step. Once a general ledger account has a posting to it then it will not be allowed to be deleted.
 <br><br>
 In the General Ledger there is a hierarchy of Account Section > Account Group > GL Account. General ledger accounts - the chart of accounts, Account Groups and Account Sections can be added or modified from General Ledger - Maintenance. It is important to get the chart of accounts right before entries are made which make it difficult to modify the chart. You can't delete accounts with postings made to them.
 <br><br>
@@ -28,14 +28,14 @@ The company record also provides a convenient place to store default GL codes fo
 <br><br>
 <ul>
 <li>Debtors Control GL Account:
-<li>Creditors Control GL Account: 
+<li>Creditors Control GL Account:
 <li>Payroll Net Pay Clearing GL Account:
 <li>Goods Received Clearing GL Account:
-<li>Retained Earning Clearing GL Account: 
-<li>Freight Re-charged GL Account: 
-<li>Exchange Variances GL Account: 
+<li>Retained Earning Clearing GL Account:
+<li>Freight Re-charged GL Account:
+<li>Exchange Variances GL Account:
 <li>Sales Exchange Variances GL Account:
-<li>Purchases Exchange Variances GL Account: 
+<li>Purchases Exchange Variances GL Account:
 <li>Payment Discount GL Account:
 </ul>
 <br><br>
@@ -44,7 +44,7 @@ The company record also records the GL integration set up:
 <ul>
 <li>Create GL entries for accounts receivable transactions
 <li>Create GL entries for accounts payable transactions:
-<li>Create GL entries for stock transactions (at standard cost): 
+<li>Create GL entries for stock transactions (at standard cost):
 </ul>
 Notice that the stock GL integration is a separate flag. If GL integration of accounts receivable is set to yes, then GL journals are created for invoices and credits to sales and debtors but not for cost of sales and stock. For the later integration this requires that the GL entries for stock transactions be set to yes also.
 <br><br>
@@ -210,22 +210,24 @@ If appropriate GL codes are not specified the system will automatically create a
 <TD>Uses the function DB_Maintenance defined in ConnectDB_XXXX.inc to perform database maintenance tasks, to run at regular intervals - checked at each and every user login. This is most useful for those databases that require regular re-indexing such as postgres. Mysql/innodb is less demanding of database administration. It is recommended to use cron or scheduled jobs for database maintenance outside of normal work hours where possible as this can delay a users login on larger databases.</TD>
 </TR>
 <TR>
-<TD>Enable Wacko Wiki Integration</TD>
-<TD>Wiki is the generic name for web-application that allow for the creation of an interlinked free form notes system. Integration of such a system with webERP is a powerful combination. Notes against a customer, supplier or item can be made and retrieved from within webERP. The wiki application selected for integration was the "wacko wiki" - its a minimal download and has several translations. To make the integration work this settings must be set to "Enabled"</TD>
+<TD>Enable Wiki Integration</TD>
+<TD>Wiki is the generic name for web-application that allow for the creation of an interlinked free form notes system. Integration of such a system with webERP is a powerful combination. Notes against a customer, supplier or item can be made and retrieved from within webERP. The wiki application selected for integration was the "wacko wiki" - its a minimal download and has several translations. 
+However, wacko wiki was a fork of the wakka wiki and any fork of the orginal 
+wakka wiki should work. To make the integration work this settings must be set to "Enabled"</TD>
 </TR>
 <TR>
 <TD>Wiki Path</TD>
-<TD>The wacko wiki install must be on the same web-server and be one directory up from the webERP tree ie not under the webERP tree but along side it - the name of the web-server directory where it is installed is required to be entered here so that links to the wiki pages can be created by webERP. The integration at the moment is limited to the supplier, product and customer menus - after one has been selected. The links only show if "Enable Wacko Wiki Integration" is enabled. If the wiki page does not currently exist then wacko wiki asks if you wish to create a new page - otherwise the page displays. New pages linked 
-off these pages can be created - showing uploaded images or links to other files appropriate to the product/customer/supplier. The wiki would also make 
-a good place to keep the company processes and policies documentation. Wacko wiki allows pages to be secured from alteration if necessary. An entire 
-business knowlege base and intranet can be built up from the cumulative knowlege of the whole team. Since wacko wiki also allows creation of links to any other web pages particularly webERP pointers to specific information can be provided in the wiki that takes the reviewer of the wiki directly to the information in 
-webERP  or the webERP manual. 
+<TD>The wacko wiki install must be on the same web-server and be one directory up from the webERP tree ie not under the webERP tree but along side it - the name of the web-server directory where it is installed is required to be entered here so that links to the wiki pages can be created by webERP. The integration at the moment is limited to the supplier, product and customer menus - after one has been selected. The links only show if "Enable Wacko Wiki Integration" is enabled. If the wiki page does not currently exist then wacko wiki asks if you wish to create a new page - otherwise the page displays. New pages linked
+off these pages can be created - showing uploaded images or links to other files appropriate to the product/customer/supplier. The wiki would also make
+a good place to keep the company processes and policies documentation. Wacko wiki allows pages to be secured from alteration if necessary. An entire
+business knowlege base and intranet can be built up from the cumulative knowlege of the whole team. Since wacko wiki also allows creation of links to any other web pages particularly webERP pointers to specific information can be provided in the wiki that takes the reviewer of the wiki directly to the information in
+webERP  or the webERP manual.
 <P>the Product "wiki" could include information such as:
 <ul>
-<li>Product development notes</li>
-<li>Product instructions</li>
-<li>Product warranty</li>
-<li>technical information</li>
+<li>Product Development Notes</li>
+<li>Product Instructions</li>
+<li>Product Warranty</li>
+<li>Product Technical Information</li>
 </ul>
 <P>The Customer wiki:
 <ul>
@@ -238,14 +240,14 @@ webERP  or the webERP manual.
 <P>The supplier wiki:
 <ul>
 <li>Key personnel</li>
-<li>RElationship notes</li>
+<li>Relationship notes</li>
 <li>Payment issues</li>
 <li>Contract documents</li>
 </ul>
-<P>Wikis are a valuable business advantage for a dispersed company. However, they make no sense for a 5 man operation all in the same 
-office - that's why wacko wiki is not bundled with webERP - it is simply not appropriate accross all the businesses that might be using webERP. 
+<P>Wikis are a valuable business advantage for a dispersed company. However, they make no sense for a 5 man operation all in the same
+office - that's why wacko wiki is not bundled with webERP - it is simply not appropriate accross all the businesses that might be using webERP.
 <P>
-<A HREF="http://wackowiki.com/WackoDownload/InEnglish?v=xlv">Get Wacko Wiki</A>
+<A HREF="http://wackowiki.com/files/wacko.r4.2.zip">Get Wacko Wiki</A>
 <P>
 
 </TD>
@@ -296,21 +298,21 @@ Inventory Items can be created for non-physical stocks such as labour time for t
 <br><br>
 <font size="+1"><b>Entering Inventory Balances</b></font>
 <br><br>
-Once information about stock items is all entered and by implication the base data required first (preferably all in advance), the stock balance at each stock location must be entered as stock adjustments. 
+Once information about stock items is all entered and by implication the base data required first (preferably all in advance), the stock balance at each stock location must be entered as stock adjustments.
 <br><br>
-The stock/general ledger interface should be disabled in the company preferences screen until the stock balance in the general ledger (which would be set up using a manual journal in the general ledger) is reconciled to the standard cost of all stock items entered into the system, per the stock valuation report. This reconciliation requires that the standard cost for each stock item entered be correct as well as the total units held in all locations. 
+The stock/general ledger interface should be disabled in the company preferences screen until the stock balance in the general ledger (which would be set up using a manual journal in the general ledger) is reconciled to the standard cost of all stock items entered into the system, per the stock valuation report. This reconciliation requires that the standard cost for each stock item entered be correct as well as the total units held in all locations.
 <br><br>
 <font size="+1"><b>Inventory Integration to General Ledger Issues</b></font>
 <br><br>
 Once the reconciliation of the stock accounts in the financials module agrees to the stock valuation report, the stock general ledger integration flag can then be re-enabled from the company preferences form. Movements in stock will then be reflected with general ledger journals. The balance of the stock accounts should then always agree to the stock valuation report provided there are no manual journals entered to these accounts.
 <br><br>
-It is important to understand the two levels of General Ledger integration available. 
+It is important to understand the two levels of General Ledger integration available.
 <br><br>
-Firstly, sales integration allows integration of invoices, credits and receipts to sales and debtors control accounts. This level does not produce any general ledger journals for the cost of stock sold. The system has flexible configuration allowing many ways to configure the accounts to which invoices and credits are posted to the sales accounts. 
+Firstly, sales integration allows integration of invoices, credits and receipts to sales and debtors control accounts. This level does not produce any general ledger journals for the cost of stock sold. The system has flexible configuration allowing many ways to configure the accounts to which invoices and credits are posted to the sales accounts.
 <br><br>
 Secondly, stock integration enables the automatic creation of general ledger journals for the cost of sales and the stock accounts. Also, stock movements from purchase order arrivals and sales of stock are also documented as general ledger journals.
 <br><br>
-It is not necessary to use the stock integration to the general ledger although a fully standard costing based accounting system with full general ledger integration, will arguably provide the fastest and most informative financial reporting system for manufacturers. 
+It is not necessary to use the stock integration to the general ledger although a fully standard costing based accounting system with full general ledger integration, will arguably provide the fastest and most informative financial reporting system for manufacturers.
 <br><br>
 <font size="+1"><b>Sales Ledger - Accounts Receivable Integration to General Ledger Issues</b></font>
 <br><br>
