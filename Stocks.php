@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.40 $ */
+/* $Revision: 1.41 $ */
 
 $PageSecurity = 11;
 
@@ -230,6 +230,7 @@ if (isset($_POST['submit'])) {
 							discontinued=" . $_POST['Discontinued'] . ",
 							controlled=" . $_POST['Controlled'] . ",
 							serialised=" . $_POST['Serialised'].",
+							perishable=" . $_POST['Perishable'].",
 							categoryid='" . $_POST['CategoryID'] . "',
 							units='" . DB_escape_string($_POST['Units']) . "',
 							mbflag='" . $_POST['MBFlag'] . "',
@@ -292,6 +293,7 @@ if (isset($_POST['submit'])) {
 							discontinued,
 							controlled,
 							serialised,
+							perishable,
 							volume,
 							kgs,
 							barcode,
@@ -308,6 +310,7 @@ if (isset($_POST['submit'])) {
 							" . $_POST['Discontinued'] . ",
 							" . $_POST['Controlled'] . ",
 							" . $_POST['Serialised']. ",
+							" . $_POST['Perishable']. ",
 							" . $_POST['Volume'] . ",
 							" . $_POST['KGS'] . ",
 							'" . $_POST['BarCode'] . "',
@@ -342,6 +345,7 @@ if (isset($_POST['submit'])) {
 						unset($_POST['Discontinued']);
 						unset($_POST['Controlled']);
 						unset($_POST['Serialised']);
+						unset($_POST['Perishable']);
 						unset($_POST['Volume']);
 						unset($_POST['KGS']);
 						unset($_POST['BarCode']);
@@ -455,6 +459,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Discontinued']);
 		unset($_POST['Controlled']);
 		unset($_POST['Serialised']);
+		unset($_POST['Perishable']);
 		unset($_POST['Volume']);
 		unset($_POST['KGS']);
 		unset($_POST['BarCode']);
@@ -494,6 +499,7 @@ if (!isset($StockID)) {
 			discontinued,
 			controlled,
 			serialised,
+			perishable,
 			eoq,
 			volume,
 			kgs,
@@ -516,6 +522,7 @@ if (!isset($StockID)) {
 	$_POST['Discontinued']  = $myrow['discontinued'];
 	$_POST['Controlled']  = $myrow['controlled'];
 	$_POST['Serialised']  = $myrow['serialised'];
+	$_POST['Perishable']  = $myrow['perishable'];
 	$_POST['Volume']  = $myrow['volume'];
 	$_POST['KGS']  = $myrow['kgs'];
 	$_POST['BarCode']  = $myrow['barcode'];
@@ -675,6 +682,20 @@ if ($_POST['Serialised']==1){
         echo '<OPTION VALUE=1>' . _('Yes');
 }
 echo '</SELECT><i>' . _('Note') . ', ' . _('this has no effect if the item is not Controlled') . '</i></TD></TR>';
+
+echo '<TR><TD>' . _('Perishable') . ':</TD><TD><SELECT name="Perishable">';
+
+if ($_POST['Perishable']==0){
+        echo '<OPTION SELECTED VALUE=0>' . _('No');
+} else {
+        echo '<OPTION VALUE=0>' . _('No');
+}
+if ($_POST['Perishable']==1){
+        echo '<OPTION SELECTED VALUE=1>' . _('Yes');
+} else {
+        echo '<OPTION VALUE=1>' . _('Yes');
+}
+echo '</SELECT></TD></TR>';
 
 echo '<TR><TD>' . _('Decimal Places to Display') . ':</TD><TD><input type="Text" name="DecimalPlaces" SIZE=1 MAXLENGTH=1 value="' . $_POST['DecimalPlaces'] . '"><TD></TR>';
 
