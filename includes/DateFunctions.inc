@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 /*
 date validation and parsing functions
@@ -571,8 +571,8 @@ provided that both dates are after 1970. Also only works for dates up to the yea
 		$Date1_Stamp = mktime(0,0,0, (int)$Date1_array[0],(int)$Date1_array[1],(int)$Date1_array[2]);
 		$Date2_Stamp = mktime(0,0,0, (int)$Date2_array[0],(int)$Date2_array[1],(int)$Date2_array[2]);
 	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d'){
-		$Date1_Stamp = mktime(0,0,0, (int)$Date1_array[2],(int)$Date1_array[0],(int)$Date1_array[1]);
-		$Date2_Stamp = mktime(0,0,0, (int)$Date2_array[2],(int)$Date2_array[0],(int)$Date2_array[1]);
+		$Date1_Stamp = mktime(0,0,0, (int)$Date1_array[1],(int)$Date1_array[2],(int)$Date1_array[0]);//Changeorder of entries to match Y/M/D format
+		$Date2_Stamp = mktime(0,0,0, (int)$Date2_array[1],(int)$Date2_array[2],(int)$Date2_array[0]); //Changeorder of entries to match Y/M/D format
 	}
 	$Difference = $Date1_Stamp - $Date2_Stamp;
 
