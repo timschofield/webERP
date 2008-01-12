@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -15,6 +15,7 @@ include('includes/session.inc');
 $title = _('Order Delivery Details');
 include('includes/header.inc');
 include('includes/FreightCalculation.inc');
+include('includes/SQL_CommonFunctions.inc');
 
 echo '<A HREF="'. $rootpath . '/SelectSalesOrder.php?' . SID . '">'. _('Back to Sales Orders'). '</A><BR>';
 
@@ -281,7 +282,7 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 	$ErrMsg = _('The order cannot be added because');
 	$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg);
 
-	$OrderNo = DB_Last_Insert_ID($db,'salesorders','orderno');
+	$OrderNo = GetNextTransNo(30, &$db);
 	$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (
 						orderlineno,
 						orderno,
