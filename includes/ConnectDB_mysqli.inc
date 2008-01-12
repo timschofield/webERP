@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 /* PeterMoulding.com
 20071102 Change from mysql to mysqli;
@@ -88,7 +88,7 @@ function DB_query ($SQL,
 							'" . trim($_SESSION['UserID']) . "',
 							'" . DB_escape_string($SQL) . "')";
 
-				$AuditResult = mysqli_query($AuditSQL,$Conn);
+				$AuditResult = mysqli_query($Conn, $AuditSQL);
 			}
 		}
 	}
