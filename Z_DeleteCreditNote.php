@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 /* Script to delete a credit note - it expects and credit note number to delete
 not included on any menu for obvious reasons
@@ -53,7 +53,7 @@ $Result = DB_query('BEGIN',$db); /* commence a database transaction */
 /*Now delete the DebtorTrans */
 
 $SQL = 'DELETE FROM debtortrans
-               WHERE TransNo =' . $_GET['CreditNoteNo'] . ' AND Type=11';
+               WHERE transno =' . $_GET['CreditNoteNo'] . ' AND Type=11';
 $DbgMsg = _('The SQL that failed was');
 $ErrMsg = _('A problem was encountered trying to delete the Debtor transaction record');
 $Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);

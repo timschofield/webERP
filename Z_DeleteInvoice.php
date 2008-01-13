@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 /* Script to delete an invoice expects and invoice number to delete
 not included on any menu for obvious reasons
@@ -21,7 +21,7 @@ if (!isset($_GET['InvoiceNo'])){
 
 $SQL = 'SELECT order_
                FROM debtortrans
-        WHERE type = 10	and transno = ' . $_GET['InvoiceNo'];
+        WHERE debtortrans.type = 10	and transno = ' . $_GET['InvoiceNo'];
 
 $Result = DB_query($SQL,$db);
 $myrow = DB_fetch_row($Result);
@@ -30,14 +30,23 @@ $ProcessingOrder = $myrow[0];
 
 /*Now get the stock movements that were invoiced into an array */
 
-$SQL = 'SELECT stockid,
-               loccode,
-               bundle,
-               debtorno,
-               branchcode,
-               prd,
-               qty,
-               mbflag
+//$SQL = 'SELECT stockid,
+//               loccode,
+//               bundle, <-- This column does not exist
+//               debtorno,
+//               branchcode,
+//               prd,
+//               qty,
+//               mbflag
+
+// We now use fully qualified column names
+$SQL = 'SELECT stockmoves.stockid,
+               stockmoves.loccode,
+               stockmoves.debtorno,
+               stockmoves.branchcode,
+               stockmoves.prd,
+               stockmoves.qty,
+               stockmaster.mbflag
         FROM stockmoves INNER JOIN stockmaster
              ON stockmoves.stockid = stockmaster.stockid
         WHERE transno =' .$_GET['InvoiceNo'] . ' AND type=10';
@@ -70,7 +79,7 @@ prnMsg(_('Any order delivery differences records have been deleted'),'info');
 
 $SQL = 'DELETE FROM debtortrans
                WHERE transno =' . $_GET['InvoiceNo'] . '
-               AND type=10';
+               AND debtortrans.type=10';
 $DbgMsg = _('The SQL that failed was');
 $ErrMsg = _('The debtorTrans record could not be deleted') . ' - ' . _('the sql server returned the following error');
 $Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -89,15 +98,14 @@ foreach ($StockMovement as $OrderLine) {
 
 	$ErrMsg = _('The SQL to reverse the update of the sales order detail records failed because');
 	$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-        prnMsg(_('The sales order records have been updated as not invoiced'),'info');
+    prnMsg(_('The sales order records have been updated as not invoiced'),'info');
 /*reverse the update to LocStock */
-        if ($OrderLine['mbflag']!='A' AND $OrderLine['mbflag']!='D'){
+    if ($OrderLine['mbflag']!='A' AND $OrderLine['mbflag']!='D'){
 
         	$ErrMsg = _('The SQL to reverse update to the location stock records failed because');
-
 	        $Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
-                prnMsg(_('Reversed the location stock quantities for items that decreased'),'info');
-        }
+             prnMsg(_('Reversed the location stock quantities for items that decreased'),'info');
+    }
 
 /*This is a problem - should only update sales analysis what happens where there
 have been previous sales to the same customer/branch for the same item
@@ -122,7 +130,16 @@ $ErrMsg = _('The SQL to delete the stock movement records failed because');
 $Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
 prnMsg(_('The stock movement records associated with the invoice have been deleted'),'info');
 echo '<BR><BR>';
-prnMsg(_('Invoice number') . ' ' . $_GET['InvoiceNo'] . ' ' . _('has been deleted'),'info');
+
 /* Delete any GL Transaction records*/
+$SQL = 'DELETE FROM gltrans WHERE type=10 AND transno=' . $_GET['InvoiceNo'];
+$ErrMsg = _('The SQL to delete the general ledger journal records failed because');
+$Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
+prnMsg(_('The GL journal records associated with the invoice have been deleted'),'info');
+
+$result = DB_query('COMMIT',$db);
+
+prnMsg(_('Invoice number') . ' ' . $_GET['InvoiceNo'] . ' ' . _('has been deleted'),'info');
+
 include('includes/footer.inc');
 ?>
