@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 /* PeterMoulding.com
 20071102 Change from mysql to mysqli;
@@ -48,6 +48,8 @@ function DB_query ($SQL,
 	$result=mysql_query($SQL,$Conn);
 */
 	$result=mysqli_query($Conn, $SQL);
+	$_SESSION['LastInsertId'] = mysqli_insert_id($Conn);
+	
 		
 	if ($DebugMessage == '') {
 		$DebugMessage = _('The SQL that failed was');
@@ -145,7 +147,14 @@ function DB_error_msg(&$Conn){
 }
 
 function DB_Last_Insert_ID(&$Conn,$table, $fieldname){
-	return mysqli_insert_id($Conn);
+//	return mysqli_insert_id($Conn);
+	if (isset($_SESSION['LastInsertId'])) {
+		$Last_Insert_ID = $_SESSION['LastInsertId'];
+	} else {
+		$Last_Insert_ID = 0;
+	}
+	unset($_SESSION['LastInsertId']);
+	return $Last_Insert_ID;
 }
 
 function DB_escape_string($String){

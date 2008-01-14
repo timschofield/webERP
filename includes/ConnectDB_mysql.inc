@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 define ('LIKE','LIKE');
 
@@ -33,6 +33,7 @@ function DB_query ($SQL,
 	global $PathPrefix;
 	
 	$result=mysql_query($SQL,$Conn);
+	$_SESSION['LastInsertId'] = mysql_insert_id($Conn);
 	
 	if ($DebugMessage == '') {
 		$DebugMessage = _('The SQL that failed was');
@@ -125,7 +126,14 @@ function DB_error_msg(&$Conn){
 }
 
 function DB_Last_Insert_ID(&$Conn,$table, $fieldname){
-	return mysql_insert_id($Conn);
+//	return mysql_insert_id($Conn);
+	if (isset($_SESSION['LastInsertId'])) {
+		$Last_Insert_ID = $_SESSION['LastInsertId'];
+	} else {
+		$Last_Insert_ID = 0;
+	}
+	unset($_SESSION['LastInsertId']);
+	return $Last_Insert_ID;
 }
 
 function DB_escape_string($String){
