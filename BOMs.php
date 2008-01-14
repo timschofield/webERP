@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 $PageSecurity = 9;
 
@@ -304,6 +304,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 					$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
+					UpdateCost($db, $_POST['Component']);
 					$msg = _('A new component part') . ' ' . $_POST['Component'] . ' ' . _('has been added to the bill of material for part') . ' - ' . $SelectedParent . '.';
 
 
