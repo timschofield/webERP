@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 $PageSecurity = 9;
 
@@ -331,6 +331,11 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		$ErrMsg = _('Could not delete this BOM components because');
 		$DbgMsg = _('The SQL used to delete the BOM was');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		
+		$ComponentSQL = 'SELECT component from bom where parent="' . $SelectedParent .'"';
+		$ComponentResult = DB_query($ComponentSQL,$db);
+		$ComponentArray = DB_fetch_row($ComponentResult);
+		UpdateCost($db, $ComponentArray[0]);
 
 		prnMsg(_('The component part') . ' - ' . $SelectedComponent . ' - ' . _('has been deleted from this BOM'),'success');
 		// Now reselect
