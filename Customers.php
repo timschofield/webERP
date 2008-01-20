@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 $PageSecurity = 3;
 
@@ -33,9 +33,9 @@ if ($_POST['submit']) {
 	} elseif ($_SESSION['AutoDebtorNo']==0 AND ContainsIllegalCharacters($_POST['DebtorNo'])) {
 		$InputError = 1;
 		prnMsg( _('The customer code cannot contain any of the following characters') . " . - ' & + \" " . _('or a space'),'error');
-	} elseif (ContainsIllegalCharacters($_POST['Address1']) OR ContainsIllegalCharacters($_POST['Address2'])) {
-		$InputError = 1;
-		prnMsg( _('Lines of the address  must not contain illegal characters'),'error');
+//	} elseif (ContainsIllegalCharacters($_POST['Address1']) OR ContainsIllegalCharacters($_POST['Address2'])) {
+//		$InputError = 1;
+//		prnMsg( _('Lines of the address  must not contain illegal characters'),'error');
 	} elseif (strlen($_POST['Address1']) >40) {
 		$InputError = 1;
 		prnMsg( _('The Line 1 of the address must be forty characters or less long'),'error');
@@ -142,7 +142,7 @@ if ($_POST['submit']) {
 				  WHERE debtorno = '" . $_POST['DebtorNo'] . "'";				
 
 			  if ($OldCurrency != $_POST['CurrCode']) {
-			  	prnMsg( _('The currency code cannot be updated as there are already transactions for this customer'),'error');
+			  	prnMsg( _('The currency code cannot be updated as there are already transactions for this customer'),'info');
 			  }
 			}
 
@@ -515,20 +515,20 @@ if (!isset($DebtorNo)) {
 		}
 	}
 
-	echo '<TR><TD>' . _('Customer Name') . ":</TD>
-		<TD><input type='Text' name='CustName' value='" . $_POST['CustName'] . "' SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 1') . ":</TD>
-		<TD><input type='Text' name='Address1' SIZE=42 MAXLENGTH=40 value='" . $_POST['Address1'] . "'></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 2') . ":</TD>
-		<TD><input type='Text' name='Address2' SIZE=42 MAXLENGTH=40 value='" . $_POST['Address2'] . "'></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 3') . ":</TD>
-		<TD><input type='Text' name='Address3' SIZE=42 MAXLENGTH=40 value='" . $_POST['Address3'] . "'></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 4') . ":</TD>
-		<TD><input type='Text' name='Address4' SIZE=42 MAXLENGTH=40 value='" . $_POST['Address4'] . "'></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 5') . ":</TD>
-		<TD><input type='Text' name='Address5' SIZE=22 MAXLENGTH=20 value='" . $_POST['Address5'] . "'></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 6') . ":</TD>
-		<TD><input type='Text' name='Address6' SIZE=17 MAXLENGTH=15 value='" . $_POST['Address6'] . "'></TD></TR>";
+	echo '<TR><TD>' . _('Customer Name') . ':</TD>
+		<TD><input type="Text" name="CustName" value="' . $_POST['CustName'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
+	echo '<TR><TD>' . _('Address Line 1') . ':</TD>
+		<TD><input type="Text" name="Address1" SIZE=42 MAXLENGTH=40 value="' . $_POST['Address1'] . '"></TD></TR>';
+	echo '<TR><TD>' . _('Address Line 2') . ':</TD>
+		<TD><input type="Text" name="Address2" SIZE=42 MAXLENGTH=40 value="' . $_POST['Address2'] . '"></TD></TR>';
+	echo '<TR><TD>' . _('Address Line 3') . ':</TD>
+		<TD><input type="Text" name="Address3" SIZE=42 MAXLENGTH=40 value="' . $_POST['Address3'] . '"></TD></TR>';
+	echo '<TR><TD>' . _('Address Line 4') . ':</TD>
+		<TD><input type="Text" name="Address4" SIZE=42 MAXLENGTH=40 value="' . $_POST['Address4'] . '"></TD></TR>';
+	echo '<TR><TD>' . _('Address Line 5') . ':</TD>
+		<TD><input type="Text" name="Address5" SIZE=42 MAXLENGTH=40 value="' . $_POST['Address5'] . '"></TD></TR>';
+	echo '<TR><TD>' . _('Address Line 6') . ':</TD>
+		<TD><input type="Text" name="Address6" SIZE=42 MAXLENGTH=40 value="' . $_POST['Address6'] . '"></TD></TR>';
   echo '</TABLE></TD><TD><TABLE>';
 
 	$result=DB_query('SELECT typeabbrev, sales_type FROM salestypes ',$db);
