@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity = 3;
 
@@ -82,8 +82,15 @@ if ($_POST['submit']) {
 		$SQL_ClientSince = FormatDateForSQL($_POST['ClientSince']);
 
 		if (!isset($_POST['New'])) {
-
-			$sql = "UPDATE debtorsmaster SET
+			
+			$sql = "SELECT count(id) 
+					  FROM debtortrans 
+					where debtorno = '" . $_POST['DebtorNo'] . "'";
+			$result = DB_query($sql,$db);
+			$myrow = DB_fetch_array($result);
+			
+			if ($myrow[0] == 0) {
+			  $sql = "UPDATE debtorsmaster SET
 					name='" . DB_escape_string($_POST['CustName']) . "',
 					address1='" . DB_escape_string($_POST['Address1']) . "',
 					address2='" . DB_escape_string($_POST['Address2']) . "',
@@ -103,7 +110,41 @@ if ($_POST['submit']) {
 					invaddrbranch='" . $_POST['AddrInvBranch'] . "',
 					taxref='" . DB_escape_string($_POST['TaxRef']) . "',
 					customerpoline='" . $_POST['CustomerPOLine'] . "'
-				WHERE debtorno = '" . $_POST['DebtorNo'] . "'";
+				  WHERE debtorno = '" . $_POST['DebtorNo'] . "'";
+			} else {
+
+			  $currsql = "SELECT currcode 
+					  		FROM debtorsmaster 
+							where debtorno = '" . $_POST['DebtorNo'] . "'";
+			  $currresult = DB_query($currsql,$db);
+			  $currrow = DB_fetch_array($currresult);
+			  $OldCurrency = $currrow[0];
+
+			  $sql = "UPDATE debtorsmaster SET
+					name='" . DB_escape_string($_POST['CustName']) . "',
+					address1='" . DB_escape_string($_POST['Address1']) . "',
+					address2='" . DB_escape_string($_POST['Address2']) . "',
+					address3='" . DB_escape_string($_POST['Address3']) ."',
+					address4='" . DB_escape_string($_POST['Address4']) . "',
+					address5='" . DB_escape_string($_POST['Address5']) . "',
+					address6='" . DB_escape_string($_POST['Address6']) . "',
+					clientsince='$SQL_ClientSince',
+					holdreason='" . $_POST['HoldReason'] . "',
+					paymentterms='" . $_POST['PaymentTerms'] . "',
+					discount=" . ($_POST['Discount'])/100 . ",
+					discountcode='" . $_POST['DiscountCode'] . "',
+					pymtdiscount=" . ($_POST['PymtDiscount'])/100 . ",
+					creditlimit=" . $_POST['CreditLimit'] . ",
+					salestype = '" . $_POST['SalesType'] . "',
+					invaddrbranch='" . $_POST['AddrInvBranch'] . "',
+					taxref='" . DB_escape_string($_POST['TaxRef']) . "',
+					customerpoline='" . $_POST['CustomerPOLine'] . "'
+				  WHERE debtorno = '" . $_POST['DebtorNo'] . "'";				
+
+			  if ($OldCurrency != $_POST['CurrCode']) {
+			  	prnMsg( _('The currency code cannot be updated as there are already transactions for this customer'),'error');
+			  }
+			}
 
 			$ErrMsg = _('The customer could not be updated because');
 			$result = DB_query($sql,$db,$ErrMsg);
