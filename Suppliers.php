@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity = 5;
 
@@ -650,11 +650,11 @@ if (!isset($SupplierID)) {
 		echo '<TR><TD>' . _('Supplier Code') . ":</TD><TD><INPUT TYPE='text' NAME='SupplierID' VALUE='$SupplierID' SIZE=12 MAXLENGTH=10></TD></TR>";
 	}
 
-	echo '<TR><TD>' . _('Supplier Name') . ":</TD><TD><INPUT TYPE='text' NAME='SuppName' VALUE='" . $_POST['SuppName'] . "' SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 1') . ":</TD><TD><INPUT TYPE='text' NAME='Address1' VALUE='" . $_POST['Address1'] . "' SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 2') . ":</TD><TD><INPUT TYPE='text' NAME='Address2' VALUE='" . $_POST['Address2'] . "' SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 3') . ":</TD><TD><INPUT TYPE='text' NAME='Address3' VALUE='" . $_POST['Address3'] . "' SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 4') . ":</TD><TD><INPUT TYPE='Text' NAME='Address4' VALUE='" . $_POST['Address4'] . "' SIZE=42 MAXLENGTH=40></TD></TR>";
+	echo '<TR><TD>' . _('Supplier Name') . ':</TD><TD><INPUT TYPE="text" NAME="SuppName" VALUE="' . $_POST['SuppName'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
+	echo '<TR><TD>' . _('Address Line 1') . ':</TD><TD><INPUT TYPE="text" NAME="Address1" VALUE="' . $_POST['Address1'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
+	echo '<TR><TD>' . _('Address Line 2') . ':</TD><TD><INPUT TYPE="text" NAME="Address2" VALUE="' . $_POST['Address2'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
+	echo '<TR><TD>' . _('Address Line 3') . ':</TD><TD><INPUT TYPE="text" NAME="Address3" VALUE="' . $_POST['Address3'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
+	echo '<TR><TD>' . _('Address Line 4') . ':</TD><TD><INPUT TYPE="text" NAME="Address4" VALUE="' . $_POST['Address4'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
 
 	echo '<TR><TD>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] ."):</TD><TD><INPUT TYPE='text' NAME='SupplierSince' VALUE=" . $_POST['SupplierSince'] . " SIZE=12 MAXLENGTH=10></TD></TR>";
 	echo '<TR><TD>' . _('Bank Particulars') . ":</TD><TD><INPUT TYPE='text' NAME='BankPartics' SIZE=13 MAXLENGTH=12 VALUE='" . $_POST['BankPartics'] . "'></TD></TR>";
