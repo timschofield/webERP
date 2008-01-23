@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.60 $ */
+/* $Revision: 1.61 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -292,6 +292,13 @@ if (isset($_GET['ModifyOrderNumber'])
 		} //end of checks on returned data set
 	}
 }
+		
+$locsql = "SELECT locationname
+		   FROM locations
+		   WHERE loccode='" . $_SESSION['Items']->Location ."'";
+$locresult = db_query($locsql, $db);
+$locrow = db_fetch_array($locresult);
+$location = $locrow[0];
 
 if (!isset($_SESSION['Items'])){
 	/* It must be a new order being created $_SESSION['Items'] would be set up from the order
@@ -626,18 +633,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	</script>
 	<?php
 
-
-
 	If (isset($result_CustSelect)) {
 
 		echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>';
 
 		$TableHeader = '<TR>
-				<TD class="tableheader">' . _('Code') . '</TD>
-				<TD class="tableheader">' . _('Branch') . '</TD>
-				<TD class="tableheader">' . _('Contact') . '</TD>
-				<TD class="tableheader">' . _('Phone') . '</TD>
-				<TD class="tableheader">' . _('Fax') . '</TD>
+				<TH>' . _('Code') . '</TH>
+				<TH>' . _('Branch') . '</TH>
+				<TH>' . _('Contact') . '</TH>
+				<TH>' . _('Phone') . '</TH>
+				<TH>' . _('Fax') . '</TH>
 				</TR>';
 		echo $TableHeader;
 
@@ -745,7 +750,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo _('Customer No.') . ': ' . $_SESSION['Items']->DebtorNo;
 		echo '&nbsp;&nbsp;' . _('Customer Name') . ' : ' . $_SESSION['Items']->CustomerName;
 		echo '<BR>' . _('Deliver To') . ': ' . $_SESSION['Items']->DeliverTo;
-		echo '&nbsp;&nbsp;' . _('Sales Type') . '/' . _('Price List') . ': ' . $_SESSION['Items']->SalesTypeName;
+		echo '&nbsp;&nbsp;' . _('From Location') . ': ' . $location;
+		echo '<BR>' . _('Sales Type') . '/' . _('Price List') . ': ' . $_SESSION['Items']->SalesTypeName;
 		echo '</B></FONT></CENTER>';
 	}
 
@@ -1135,17 +1141,17 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>
 			<TR BGCOLOR=#800000>';
 		if($_SESSION['Items']->DefaultPOLine == 1){
-			echo '<TD class="tableheader">' . _('PO Line') . '</TD>';
+			echo '<TH>' . _('PO Line') . '</TH>';
 		}
-		echo '<TD class="tableheader">' . _('Item Code') . '</TD>
-			<TD class="tableheader">' . _('Item Description') . '</TD>
-			<TD class="tableheader">' . _('Quantity') . '</TD>
-			<TD class="tableheader">' . _('QOH') . '</TD>
-			<TD class="tableheader">' . _('Unit') . '</TD>
-			<TD class="tableheader">' . _('Price') . '</TD>
-			<TD class="tableheader">' . _('Discount') . '</TD>
-			<TD class="tableheader">' . _('Total') . '</TD>
-			<TD class="tableheader">' . _('Due Date') . '</TD></TR>';
+		echo '<TH>' . _('Item Code') . '</TH>
+			<TH>' . _('Item Description') . '</TH>
+			<TH>' . _('Quantity') . '</TH>
+			<TH>' . _('QOH') . '</TH>
+			<TH>' . _('Unit') . '</TH>
+			<TH>' . _('Price') . '</TH>
+			<TH>' . _('Discount') . '</TH>
+			<TH>' . _('Total') . '</TH>
+			<TH>' . _('Due Date') . '</TH></TR>';
 
 		$_SESSION['Items']->total = 0;
 		$_SESSION['Items']->totalVolume = 0;
@@ -1297,6 +1303,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		</script>
 
 		<?php
+		
 		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 			echo '<INPUT TYPE=SUBMIT Name="ChangeCustomer" VALUE="' . _('Change Customer') . '">';
 			echo '<BR><BR><a target="_blank" href="' . $rootpath . '/Stocks.php?' . SID . '"><B>' . _('Add a New Stock Item') . '</B></a>';
@@ -1307,10 +1314,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if (isset($SearchResult)) {
 
 			echo '<CENTER><form name="orderform"><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
-			$TableHeader = '<TR><TD class="tableheader">' . _('Code') . '</TD>
-                          			<TD class="tableheader">' . _('Description') . '</TD>
-                          			<TD class="tableheader">' . _('Units') . '</TD>
-                          			<TD class="tableheader">' . _('Quantity') . '</TD></TR>';
+			$TableHeader = '<TR><TH>' . _('Code') . '</TH>
+                          			<TH>' . _('Description') . '</TH>
+                          			<TH>' . _('Units') . '</TH>
+                          			<TH>' . _('On Hand') . '</TH>
+                          			<TH>' . _('On Demand') . '</TH>
+                          			<TH>' . _('On Order') . '</TH>
+                          			<TH>' . _('Available') . '</TH>
+                          			<TH>' . _('Quantity') . '</TH></TR>';
 			echo $TableHeader;
 			$j = 1;
 			$k=0; //row colour counter
@@ -1329,6 +1340,66 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				}
 
 */
+				// Find the quantity in stock at location
+				$qohsql = "SELECT sum(quantity)
+						   FROM locstock 
+						   WHERE stockid='" .$myrow['stockid'] . "' AND 
+						   loccode = '" . $_SESSION['Items']->Location . "'";
+				$qohresult =  DB_query($qohsql,$db);
+				$qohrow = DB_fetch_row($qohresult);
+				$qoh = $qohrow[0];
+
+				// Find the quantity on outstanding sales orders
+				$sql = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
+            			     FROM salesorderdetails,
+                      			salesorders
+			                 WHERE salesorders.orderno = salesorderdetails.orderno AND
+            			     salesorders.fromstkloc='" . $_SESSION['Items']->Location . "' AND
+ 			                salesorderdetails.completed=0 AND
+		 					salesorders.quotation=0 AND
+                 			salesorderdetails.stkcode='" . $myrow['stockid'] . "'";
+
+				$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items']->Location . ' ' .
+				     _('cannot be retrieved because');
+				$DemandResult = DB_query($sql,$db,$ErrMsg);
+
+				$DemandRow = DB_fetch_row($DemandResult);
+				if ($DemandRow[0] != null){
+				  $DemandQty =  $DemandRow[0];
+				} else {
+				  $DemandQty = 0;
+				}
+				
+				// Find the quantity on purchase orders
+				$sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS dem
+            			     FROM purchorderdetails
+			                 WHERE purchorderdetails.completed=0 AND
+                			purchorderdetails.itemcode='" . $myrow['stockid'] . "'";
+
+				$ErrMsg = _('The order details for this product cannot be retrieved because');
+				$PurchResult = db_query($sql,$db,$ErrMsg);
+
+				$PurchRow = db_fetch_row($PurchResult);
+				if ($PurchRow[0]!=null){
+				  $PurchQty =  $PurchRow[0];
+				} else {
+				  $PurchQty = 0;
+				}
+
+				// Find the quantity on works orders				
+				$sql = "SELECT SUM(woitems.qtyreqd - woitems.qtyrecd) AS dedm
+				       FROM woitems
+				       WHERE stockid='" . $myrow['stockid'] ."'";
+				$ErrMsg = _('The order details for this product cannot be retrieved because');
+				$WoResult = db_query($sql,$db,$ErrMsg);
+
+				$WoRow = db_fetch_row($WoResult);
+				if ($WoRow[0]!=null){
+				  $WoQty =  $WoRow[0];
+				} else {
+				  $WoQty = 0;
+				}
+				
 				if ($k==1){
 					echo '<tr bgcolor="#CCCCCC">';
 					$k=0;
@@ -1336,16 +1407,27 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					echo '<tr bgcolor="#EEEEEE">';
 					$k=1;
 				}
+				$OnOrder = $PurchQty + $WoQty;
+				
+				$Available = $qoh - $DemandQty + $OnOrder;
 
 				printf("<TD><FONT SIZE=1>%s</FONT></TD>
 					<TD><FONT SIZE=1>%s</FONT></TD>
 					<TD><FONT SIZE=1>%s</FONT></TD>
+					<TD style='text-align:center'><FONT SIZE=1>%s</FONT></TD>
+					<TD style='text-align:center'><FONT SIZE=1>%s</FONT></TD>
+					<TD style='text-align:center'><FONT SIZE=1>%s</FONT></TD>
+					<TD style='text-align:center'><FONT SIZE=1>%s</FONT></TD>
 					<TD><FONT SIZE=1><input type='textbox' size=6 name='itm[".$myrow['stockid']."]' value=0>"
 					. '</FONT></TD>
 					</TR>',
 					$myrow['stockid'],
 					$myrow['description'],
 					$myrow['units'],
+					$qoh,
+					$DemandQty,
+					$OnOrder,
+					$Available,
 					$ImageSource,
 					$rootpath,
 					SID,
@@ -1359,7 +1441,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	#end of page full new headings if
 			}
 	#end of while loop
-			echo '<tr><td align=center colspan=5><input type="hidden" name="order_items" value=1><input type="submit" value="Order"></td></tr>';
+			echo '<tr><td align=center colspan=8><input type="hidden" name="order_items" value=1><input type="submit" value="Order"></td></tr>';
 			echo '</TABLE></form>';
 
 		}#end if SearchResults to show
@@ -1371,11 +1453,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<tr>';
 			/*do not display colum unless customer requires po line number by sales order line*/
 		 	if($_SESSION['Items']->DefaultPOLine ==1){
-				echo	'<td class="tableheader">' . _('PO Line') . '</td>';
+				echo	'<TH>' . _('PO Line') . '</td>';
 			}
-			echo '<td class="tableheader">' . _('Part Code') . '</td>
-				<td class="tableheader">' . _('Quantity') . '</td>
-				<td class="tableheader">' . _('Due Date') . '</td>
+			echo '<TH>' . _('Part Code') . '</TH>
+				<TH>' . _('Quantity') . '</TH>
+				<TH>' . _('Due Date') . '</TH>
 			</tr>';
 			$DefaultDeliveryDate = DateAdd(Date($_SESSION['DefaultDateFormat']),'d',$_SESSION['Items']->DeliveryDays);
 	    	for ($i=1;$i<=$_SESSION['QuickEntries'];$i++){
