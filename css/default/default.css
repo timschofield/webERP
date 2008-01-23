@@ -52,6 +52,12 @@ td {
 
 }
 
+th {
+	font-weight: normal;
+	background-color: #800000;
+	color: white;
+}
+
 #topMenu {
 	width: 100%;
 	color: black;
