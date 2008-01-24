@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.41 $ */
+/* $Revision: 1.42 $ */
 
 $PageSecurity = 11;
 
@@ -20,9 +20,9 @@ if (isset($_GET['StockID'])){
 <script LANGUAGE="JavaScript">
 	function ReloadForm(form)
 	{
-		document.ItemForm.submit.click();
+		document.ItemForm.UpdateCategories.click();
 		//var val=ItemForm.StockID.value;
-		self.location='Stocks.php?&StockID=' + ItemForm.StockID.value;
+		//self.location='Stocks.php?&StockID=' + ItemForm.StockID.value;
 	}
 </script>
 
@@ -242,7 +242,6 @@ if (isset($_POST['submit'])) {
 							taxcatid=" . $_POST['TaxCat'] . ",
 							decimalplaces=" . $_POST['DecimalPlaces'] . "
 					WHERE stockid='$StockID'";
-
 
 				$ErrMsg = _('The stock item could not be updated because');
 				$DbgMsg = _('The SQL that was used to update the stock item and failed was');
@@ -488,7 +487,7 @@ if (!isset($StockID)) {
 
 	echo '<TR><TD>'. _('Item Code'). ':</TD><TD><INPUT TYPE="TEXT" NAME="StockID" SIZE=21 MAXLENGTH=20></TD></TR>';
 
-} elseif (!isset($_POST['submit'])) { // Must be modifying an existing item and no changes made yet
+} elseif (!isset($_POST['UpdateCategories'])) { // Must be modifying an existing item and no changes made yet
 
 	$sql = "SELECT stockid,
 			description,
@@ -547,8 +546,8 @@ echo '<TR><TD>' . _('Part Description') . ' (' . _('long') . '):</TD><TD><textar
 echo '<tr><td>'. _('Image File (.jpg)') . ':</td><td><input type="file" id="ItemPicture" name="ItemPicture"></td></tr>';
 // EOR Add Image upload for New Item  - by Ori
 
-// echo '<tr><td>' . _('Category') . ':</td><td><select name="CategoryID" onChange="ReloadForm(this.form)">';
-echo '<tr><td>' . _('Category') . ':</td><td><select name="CategoryID"">';
+ echo '<tr><td>' . _('Category') . ':</td><td><select name="CategoryID" onChange="ReloadForm(this.form)">';
+// echo '<tr><td>' . _('Category') . ':</td><td><select name="CategoryID"">';
 
 $sql = "SELECT categoryid, categorydescription FROM stockcategory";
 $ErrMsg = _('The stock categories could not be retrieved because');
@@ -741,6 +740,7 @@ echo '</table></td><td><center>' . _('Image') . '<br>'.$StockImgLink . '</center
 
 if ($New) {
 	echo '<input type="Submit" name="submit" value="' . _('Insert New Item') . '">';
+	echo '<input type="submit" name="UpdateCategories" style="visibility:hidden" value="' . _('Categories') . '">';
 
 } else {
 
@@ -805,6 +805,7 @@ if ($New) {
 	echo '<input type="hidden" name="PropertyCounter" value=' . $PropertyCounter . '>';
 
 	echo '<input type="submit" name="submit" value="' . _('Update') . '">';
+	echo '<input type="submit" name="UpdateCategories" style="visibility:hidden" value="' . _('Categories') . '">';
 	echo '<P>';
 	prnMsg( _('Only click the Delete button if you are sure you wish to delete the item!') .  _('Checks will be made to ensure that there are no stock movements, sales analysis records, sales order items or purchase order items for the item') . '. ' . _('No deletions will be allowed if they exist'), 'warn', _('WARNING'));
 	echo '<P><input type="Submit" name="delete" value="' . _('Delete This Item') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';
