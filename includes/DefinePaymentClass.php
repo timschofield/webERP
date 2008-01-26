@@ -1,15 +1,17 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /* definition of the Payment class */
 
 Class Payment {
 
 	var $GLItems; /*array of objects of Payment class - id is the pointer */
 	var $Account; /*Bank account GL Code Paid from */
+	var $AccountCurrency; /*Bank account currency */
 	var $BankAccountName; /*Bank account name */
 	var $DatePaid; /*Date the batch of Payments was Paid */
-	var $ExRate; /*Exchange rate applicable to all Payments in the batch seperate batch required for different currencies*/
-	var $Currency; /*Currency being Paid - defaulted to company functional */
+	var $ExRate; /*Exchange rate between the payment and the account currency*/
+	var $FunctionalExRate; /*Ex rate between the account currency and functional currency */
+	var $Currency; /*Currency being Paid - defaulted to bank account currency */
 	var $SupplierID; /* supplier code */
 	var $SuppName;
 	var $Address1;

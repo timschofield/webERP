@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 $PageSecurity = 9;
 
 include('includes/session.inc');
@@ -86,6 +86,11 @@ if (isset($_POST['submit'])) {
     	prnMsg( $msg,'success');
     }
     unset($SelectedCurrency);
+    unset($_POST['CurrencyName']);
+    unset($_POST['Country']);
+    unset($_POST['HundredsName']);
+    unset($_POST['ExchangeRate']);
+    unset($_POST['Abbreviation']);
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button

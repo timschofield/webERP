@@ -50,7 +50,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 
 
 	/*Now run the data conversions required. */
-	//none required for 3.06
+	$result = DB_query("UPDATE bankaccounts SET currcode='" . $_SESSION['CompanyRecord']['currencydefault'] . "'",$db);
 
 } /*Dont do upgrade */
 

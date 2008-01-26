@@ -4,10 +4,10 @@ $PaytTypes    = array();
 $ReceiptTypes = array();
 
 $sql = 'SELECT paymentname, 
-		paymenttype, 
-		receipttype 
-	FROM paymentmethods 
-	ORDER by paymentname';
+			paymenttype, 
+			receipttype 
+			FROM paymentmethods 
+			ORDER by paymentname';
 $PMResult = DB_query($sql,$db);
 while( $PMrow = DB_fetch_array($PMResult) ) {
 	if ($PMrow['paymenttype']==1)

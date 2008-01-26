@@ -32,3 +32,7 @@ ALTER TABLE `suppliers` ADD CONSTRAINT `suppliers_ibfk_4` FOREIGN KEY (`factorco
 
 ALTER TABLE `stockmaster` ADD COLUMN  `perishable` tinyint(1) NOT NULL default 0 AFTER `serialised`;
 ALTER TABLE `stockserialitems` ADD COLUMN  `expirationdate` datetime NOT NULL default '0000-00-00' AFTER `serialno`;
+ALTER TABLE `bankaccounts` ADD `currcode` CHAR( 3 ) NOT NULL AFTER `accountcode` ;
+ALTER TABLE `bankaccounts` ADD INDEX ( `currcode` ) ;
+ALTER TABLE `banktrans` CHANGE `exrate` `exrate` DOUBLE NOT NULL DEFAULT '1' COMMENT 'From bank account currency to payment currency';
+ALTER TABLE `banktrans` ADD `functionalexrate` DOUBLE NOT NULL DEFAULT '1' COMMENT 'Account currency to functional currency';

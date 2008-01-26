@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 10;
 
@@ -41,12 +41,26 @@ if (isset($_POST['submit'])) {
 	}
 
 	if (isset($SelectedBankAccount) AND $InputError !=1) {
-
-		$sql = "UPDATE bankaccounts
+		
+		/*Check if there are already transactions against this account - cant allow change currency if there are*/
+		
+		$sql = 'SELECT * FROM banktrans WHERE bankact=' . $SelectedBankAccount;
+		$BankTransResult = DB_query($sql,$db);
+		if (DB_num_rows($BankTransResult)>0) {
+			$sql = "UPDATE bankaccounts
 				SET bankaccountname='" . $_POST['BankAccountName'] . "',
 				bankaccountnumber='" . $_POST['BankAccountNumber'] . "',
 				bankaddress='" . $_POST['BankAddress'] . "'
 			WHERE accountcode = '" . $SelectedBankAccount . "'";
+			prnMsg(_('Note that it is not possible to change the currency of the account once there are transactions against it'),'warn');
+		} else {
+			$sql = "UPDATE bankaccounts
+				SET bankaccountname='" . $_POST['BankAccountName'] . "',
+				bankaccountnumber='" . $_POST['BankAccountNumber'] . "',
+				bankaddress='" . $_POST['BankAddress'] . "',
+				currcode ='" . $_POST['CurrCode'] . "'
+				WHERE accountcode = '" . $SelectedBankAccount . "'";
+		}
 
 		$msg = _('The bank account details have been updated');
 	} elseif ($InputError !=1) {
@@ -57,11 +71,13 @@ if (isset($_POST['submit'])) {
 						accountcode,
 						bankaccountname,
 						bankaccountnumber,
-						bankaddress)
+						bankaddress,
+						currcode)
 				VALUES ('" . $_POST['AccountCode'] . "',
 					'" . $_POST['BankAccountName'] . "',
 					'" . $_POST['BankAccountNumber'] . "',
-					'" . $_POST['BankAddress'] . "'
+					'" . $_POST['BankAddress'] . "' 
+					'" . $_POST['CurrCode'] . "'
 					)";
 		$msg = _('The new bank account has been entered');
 	}
@@ -77,6 +93,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['BankAccountName']);
 		unset($_POST['BankAccountNumber']);
 		unset($_POST['BankAddress']);
+		unset($_POST['CurrCode']);
 		unset($SelectedBankAccount);
 	}
 	
@@ -113,7 +130,8 @@ If (!isset($SelectedBankAccount)) {
 			chartmaster.accountname,
 			bankaccountname,
 			bankaccountnumber,
-			bankaddress
+			bankaddress,
+			currcode
 		FROM bankaccounts,
 			chartmaster
 		WHERE bankaccounts.accountcode = chartmaster.accountcode";
@@ -128,6 +146,7 @@ If (!isset($SelectedBankAccount)) {
 		<td class='tableheader'>" . _('Account Name') . "</td>
 		<td class='tableheader'>" . _('Account Number') . "</td>
 		<td class='tableheader'>" . _('Bank Address') . "</td>
+		<td class='tableheader'>" . _('Currency') . "</td>
 	</tr>";
 	
 	$k=0; //row colour counter
@@ -144,6 +163,7 @@ If (!isset($SelectedBankAccount)) {
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
+		<td>%s</td>
 		<td><a href=\"%s?SelectedBankAccount=%s\">" . _('Edit') . "</td>
 		<td><a href=\"%s?SelectedBankAccount=%s&delete=1\">" . _('Delete') . "</td>
 		</tr>",
@@ -152,6 +172,7 @@ If (!isset($SelectedBankAccount)) {
 		$myrow[2],
 		$myrow[3],
 		$myrow[4],
+		$myrow[5],
 		$_SERVER['PHP_SELF'],
 		$myrow[0],
 		$_SERVER['PHP_SELF'],
@@ -178,7 +199,8 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 	$sql = "SELECT accountcode,
 			bankaccountname,
 			bankaccountnumber,
-			bankaddress
+			bankaddress,
+			currcode
 		FROM bankaccounts
 		WHERE bankaccounts.accountcode='$SelectedBankAccount'";
 
@@ -189,6 +211,7 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 	$_POST['BankAccountName']  = $myrow['bankaccountname'];
 	$_POST['BankAccountNumber'] = $myrow['bankaccountnumber'];
 	$_POST['BankAddress'] = $myrow['bankaddress'];
+	$_POST['CurrCode'] = $myrow['currcode'];
 
 	echo '<INPUT TYPE=HIDDEN NAME=SelectedBankAccount VALUE=' . $SelectedBankAccount . '>';
 	echo '<INPUT TYPE=HIDDEN NAME=AccountCode VALUE=' . $_POST['AccountCode'] . '>';
@@ -218,20 +241,33 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 
 	echo '</SELECT></TD></TR>';
 }
-?>
 
-<TR><TD><?php echo _('Bank Account Name') . ':'; ?></TD>
-<TD><input type="Text" name="BankAccountName" value="<?php echo $_POST['BankAccountName']; ?>" SIZE=40 MAXLENGTH=50></TD></TR>
-<TR><TD><?php echo _('Bank Account Number') . ':'; ?></TD>
-<TD><input type="Text" name="BankAccountNumber" value="<?php echo $_POST['BankAccountNumber']; ?>" SIZE=40 MAXLENGTH=50></TD></TR>
-<TR><TD><?php echo _('Bank Address') . ':'; ?></TD>
-<TD><input type="Text" name="BankAddress" value="<?php echo $_POST['BankAddress']; ?>" SIZE=40 MAXLENGTH=50></TD></TR>
-</TABLE>
+echo '<TR><TD>' . _('Bank Account Name') . ': </TD>
+			<TD><input type="Text" name="BankAccountName" value="' . $_POST['BankAccountName'] . '" SIZE=40 MAXLENGTH=50></TD></TR>
+		<TR><TD>' . _('Bank Account Number') . ': </TD>
+			<TD><input type="Text" name="BankAccountNumber" value="' . $_POST['BankAccountNumber'] . '" SIZE=40 MAXLENGTH=50></TD></TR>
+		<TR><TD>' . _('Bank Address') . ': </TD>
+			<TD><input type="Text" name="BankAddress" value="' . $_POST['BankAddress'] . '" SIZE=40 MAXLENGTH=50></TD></TR>
+		<TR><TD>' . _('Currency Of Account') . ': </TD><TD><select name="CurrCode">';
 
-<CENTER><input type="Submit" name="submit" value="<?php echo _('Enter Information'); ?>">
+if (!isset($_POST['CurrCode']) OR $_POST['CurrCode']==''){
+	$_POST['CurrCode'] = $_SESSION['CompanyRecord']['currencydefault'];
+}
+$result = DB_query('SELECT currabrev, currency FROM currencies',$db);
+while ($myrow = DB_fetch_array($result)) {
+	if ($myrow['currabrev']==$_POST['CurrCode']) {
+		echo '<OPTION SELECTED VALUE=';
+	} else {
+		echo '<OPTION VALUE=';
+	}
+	echo $myrow['currabrev'] . '>' . $myrow['currabrev'];
+} //end while loop
 
-</FORM>
+echo '</SELECT></TD></TR>';
 
-<?php
-	include('includes/footer.inc');
+echo '</TABLE>
+		<CENTER><input type="Submit" name="submit" value="'. _('Enter Information') .'"></CENTER>';
+
+echo '</FORM>';
+include('includes/footer.inc');
 ?>
