@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 2;
 
@@ -208,7 +208,7 @@ if ($InputError ==0){
 		prnMsg(_('There are no prices set up for this part'),'warn');
 	}
 
-	if ($_GET['Edit']==1){
+	if (isset($_GET['Edit'])){
 		echo '<INPUT TYPE=HIDDEN NAME="OldTypeAbbrev" VALUE="' . $_GET['TypeAbbrev'] .'">';
 		echo '<INPUT TYPE=HIDDEN NAME="OldCurrAbrev" VALUE="' . $_GET['CurrAbrev'] . '">';
 		$_POST['CurrAbrev'] = $_GET['CurrAbrev'];
@@ -254,7 +254,8 @@ if ($InputError ==0){
 
 	<TR><TD><?php echo _('Price'); ?>:</TD>
 	<TD>
-	<input type="Text" name="Price" SIZE=12 MAXLENGTH=11 value=<?php echo $_POST['Price'];?>>
+	<input type="Text" name="Price" SIZE=12 MAXLENGTH=11 value=
+	<?php if(isset($_POST['Price'])) {echo $_POST['Price'];}?>>
 
 	</TD></TR>
 
