@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 $PageSecurity = 2;
 
@@ -420,7 +420,7 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	echo '<TR><TD WIDTH="40%">
 			<TABLE>'; //nested table
 
-	echo '<TR><TD align=right class="tableheader">' . _('Item type:') . '</TD><TD>';
+	echo '<TR><TD align=right class="tableheader">' . _('Item type:') . '</TD><TD COLSPAN=2>';
 
 	switch ($myrow['mbflag']) {
 		case 'A':
@@ -453,26 +453,62 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		echo _('N/A');
 	}
 	echo '</TD><TD align=right class="tableheader">' . _('Units') . ':</TD><TD>' . $myrow['units'] . '</TD></TR>';
-	echo '<TR><TD align=right class="tableheader">' . _('Volume') . ':</TD><TD align=right>' . number_format($myrow['volume'],3) . '</TD>
+	echo '<TR><TD align=right class="tableheader">' . _('Volume') . ':</TD><TD align=right COLSPAN=2>' . number_format($myrow['volume'],3) . '</TD>
 			<TD align=right class="tableheader">' . _('Weight') . ':</TD><TD align=right>' . number_format($myrow['kgs'],3) . '</TD>
 			<TD align=right class="tableheader">' . _('EOQ') . ':</TD><TD align=right>' . number_format($myrow['eoq'],$myrow['decimalplaces']) . '</TD></TR>';
 
-	echo '<TR><TD class="tableheader">' . _('Sell Price') . ':</TD><TD align=right>';
+	echo '<TR><TD class="tableheader">' . _('Sell Price') . ':</TD><TH>';
 
-	$PriceResult = DB_query("SELECT price FROM prices
-								WHERE currabrev ='" . $_SESSION['CompanyRecord']['currencydefault'] . "'
-								AND typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'
-								AND debtorno=''
-								AND branchcode=''
-								AND stockid='".$StockID."'",
+	$PriceResult = DB_query("SELECT typeabbrev, price FROM prices "
+//								WHERE currabrev ='" . $_SESSION['CompanyRecord']['currencydefault'] . "'
+//								AND typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'
+//								AND debtorno=''
+//								AND branchcode=''
+								."WHERE stockid='".$StockID."'",
 								$db);
-	if (DB_num_rows($PriceResult)==0){
-			echo _('No Price Set');
-			$Price =0;
+	if ($myrow['mbflag']=='K' OR $myrow['mbflag']=='A'){
+		$CostResult = DB_query("SELECT SUM(bom.quantity*
+						(stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) AS cost
+					FROM bom INNER JOIN
+						stockmaster
+					ON bom.component=stockmaster.stockid
+					WHERE bom.parent='" . $StockID . "'
+					AND bom.effectiveto > '" . Date("Y-m-d") . "'
+					AND bom.effectiveafter < '" . Date("Y-m-d") . "'",
+					$db);
+		$CostRow = DB_fetch_row($CostResult);
+		$Cost = $CostRow[0];
 	} else {
-			$PriceRow = DB_fetch_row($PriceResult);
-			$Price = $PriceRow[0];
-			echo number_format($Price,2);
+		$Cost = $myrow['cost'];
+	}
+	
+	if (DB_num_rows($PriceResult)==0){
+		echo _('No Price Set');
+		$Price =0;
+	} else {
+		$PriceRow = DB_fetch_row($PriceResult);
+		$Price = $PriceRow[1];
+		echo $PriceRow[0].'</TH><TD align=right>'.number_format($Price,2).'</TD>
+			<TD align=right class="tableheader">' . _('Gross Profit') . '</TD><TD align=right>';
+			if ($Price >0) {
+				$GP = number_format(($Price - $Cost)*100/$Price,2);
+			} else {
+				$GP=_('N/A');
+			}
+			echo $GP.'%'. '</TD></TR>';
+			echo '</TD></TR>';
+		while ($PriceRow = DB_fetch_row($PriceResult)) {
+			$Price = $PriceRow[1];
+			echo '<TR><TD></TD><TH>'.$PriceRow[0].'</TH><TD align=right>'.number_format($Price,2).'</TD>
+			<TD align=right class="tableheader">' . _('Gross Profit') . '</TD><TD align=right>';
+			if ($Price >0) {
+				$GP = number_format(($Price - $Cost)*100/$Price,2);
+			} else {
+				$GP=_('N/A');
+			}
+			echo $GP.'%'. '</TD></TR>';
+			echo '</TD></TR>';
+		}
 	}
 	if ($myrow['mbflag']=='K' OR $myrow['mbflag']=='A'){
 		$CostResult = DB_query("SELECT SUM(bom.quantity*
@@ -489,18 +525,9 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	} else {
 		$Cost = $myrow['cost'];
 	}
-	echo '<TD align=right class="tableheader">' . _('Cost') . '</TD><TD align=right>' . number_format($Cost,3) . '</TD>
-			<TD align=right class="tableheader">' . _('Gross Profit') . '</TD><TD align=right>';
+	echo '<TD align=right class="tableheader">' . _('Cost') . '</TD><TD align=right colspan=2>' . number_format($Cost,3) . '</TD>';
 
-	if ($Price >0) {
-		$GP = number_format(($Price - $Cost)*100/$Price,2);
-	} else {
-		$GP=_('N/A');
-	}
-	echo $GP.'%'. '</TD></TR>';
-
-	echo '</TD></TR>
-		</TABLE>'; //end of first nested table
+	echo '</TABLE>'; //end of first nested table
    // Item Category Property mod: display the item properties
        echo '<table>';
        $CatValResult = DB_query("SELECT categoryid FROM
