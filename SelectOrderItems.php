@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.61 $ */
+/* $Revision: 1.62 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -334,26 +334,26 @@ $msg='';
 
 if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
-	If (($_POST['Keywords']!='') AND (($_POST['CustCode']!='') OR ($_POST['CustPhone']!=''))) {
+	If (($_POST['CustKeywords']!='') AND (($_POST['CustCode']!='') OR ($_POST['CustPhone']!=''))) {
 		$msg= _('Customer name keywords have been used in preference to the customer code or phone entered');
 	}
 	If (($_POST['CustCode']!='') AND ($_POST['CustPhone']!='')) {
 		$msg=_('Customer code has been used in preference to the customer phone entered') . '.';
 	}
-	If (($_POST['Keywords']=='') AND ($_POST['CustCode']=='')  AND ($_POST['CustPhone']=='')) {
+	If (($_POST['CustKeywords']=='') AND ($_POST['CustCode']=='')  AND ($_POST['CustPhone']=='')) {
 		$msg=_('At least one Customer Name keyword OR an extract of a Customer Code or phone number must be entered for the search');
 	} else {
-		If (strlen($_POST['Keywords'])>0) {
+		If (strlen($_POST['CustKeywords'])>0) {
 		//insert wildcard characters in spaces
-			$_POST['Keywords'] = strtoupper(trim($_POST['Keywords']));
+			$_POST['CustKeywords'] = strtoupper(trim($_POST['CustKeywords']));
 			$i=0;
 			$SearchString = '%';
-			while (strpos($_POST['Keywords'], ' ', $i)) {
-				$wrdlen=strpos($_POST['Keywords'],' ',$i) - $i;
-				$SearchString=$SearchString . substr($_POST['Keywords'],$i,$wrdlen) . '%';
-				$i=strpos($_POST['Keywords'],' ',$i) +1;
+			while (strpos($_POST['CustKeywords'], ' ', $i)) {
+				$wrdlen=strpos($_POST['CustKeywords'],' ',$i) - $i;
+				$SearchString=$SearchString . substr($_POST['CustKeywords'],$i,$wrdlen) . '%';
+				$i=strpos($_POST['CustKeywords'],' ',$i) +1;
 			}
-			$SearchString = $SearchString. substr($_POST['Keywords'],$i).'%';
+			$SearchString = $SearchString. substr($_POST['CustKeywords'],$i).'%';
 
 			$SQL = "SELECT custbranch.brname,
 					custbranch.contactname,
@@ -611,7 +611,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	<TABLE CELLPADDING=3 COLSPAN=4>
 	<TR>
 	<TD><FONT SIZE=1><?php echo _('name'); ?>:</FONT></TD>
-	<TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20	MAXLENGTH=25></TD>
+	<TD><INPUT TYPE="Text" NAME="CustKeywords" SIZE=20	MAXLENGTH=25></TD>
 	<TD><FONT SIZE=3><B><?php echo _('OR'); ?></B></FONT></TD>
 	<TD><FONT SIZE=1><?php echo _('Part of the code'); ?>:</FONT></TD>
 	<TD><INPUT TYPE="Text" NAME="CustCode" SIZE=15	MAXLENGTH=18></TD>
