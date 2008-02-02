@@ -31,6 +31,7 @@ ALTER TABLE `suppliers` ADD COLUMN  `factorcompanyid` int(11) NOT NULL default 1
 ALTER TABLE `suppliers` ADD CONSTRAINT `suppliers_ibfk_4` FOREIGN KEY (`factorcompanyid`) REFERENCES `factorcompanies` (`id`);
 
 ALTER TABLE `stockmaster` ADD COLUMN  `perishable` tinyint(1) NOT NULL default 0 AFTER `serialised`;
+ALTER TABLE `stockmaster` ADD `appendfile` varchar(40) NOT NULL AFTER `serialised`;
 ALTER TABLE `stockserialitems` ADD COLUMN  `expirationdate` datetime NOT NULL default '0000-00-00' AFTER `serialno`;
 ALTER TABLE `bankaccounts` ADD `currcode` CHAR( 3 ) NOT NULL AFTER `accountcode` ;
 ALTER TABLE `bankaccounts` ADD INDEX ( `currcode` ) ;
