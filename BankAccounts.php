@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 10;
 
@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
 				VALUES ('" . $_POST['AccountCode'] . "',
 					'" . $_POST['BankAccountName'] . "',
 					'" . $_POST['BankAccountNumber'] . "',
-					'" . $_POST['BankAddress'] . "' 
+					'" . $_POST['BankAddress'] . "', 
 					'" . $_POST['CurrCode'] . "'
 					)";
 		$msg = _('The new bank account has been entered');

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 5;
 
@@ -40,7 +40,7 @@ if (isset($_GET['SupplierID'])){
 	$_SESSION['PaymentDetail']->GLItemCounter = 1;
 
 
-	$SQL= "select suppname,
+	$SQL= "SELECT suppname,
 			address1,
 			address2,
 			address3,
@@ -70,7 +70,7 @@ if (isset($_GET['SupplierID'])){
 			$_SESSION['PaymentDetail']->SupplierID = $_GET['SupplierID'];
 			$_SESSION['PaymentDetail']->Currency = $myrow['currcode'];
 		} else {
-			$factorsql= "select coyname,
+			$factorsql= "SELECT coyname,
 			 					address1,
 			 					address2,
 			 					address3,
@@ -90,7 +90,8 @@ if (isset($_GET['SupplierID'])){
 			$_SESSION['PaymentDetail']->Address5 = $myfactorrow['address5'];
 			$_SESSION['PaymentDetail']->Address6 = $myfactorrow['address6'];
 			$_SESSION['PaymentDetail']->SupplierID = $_GET['SupplierID'];
-			$_SESSION['PaymentDetail']->Currency = $myrow['currcode'];			
+			$_SESSION['PaymentDetail']->Currency = $myrow['currcode'];
+			$_POST['Currency'] = $_SESSION['PaymentDetail']->Currency;		
 		}
 	}
 }
@@ -98,9 +99,13 @@ if (isset($_GET['SupplierID'])){
 if ($_POST['BankAccount']!=''){
 	$_SESSION['PaymentDetail']->Account=$_POST['BankAccount'];
 	/*Get the bank account currency and set that too */
-	$result = DB_query('select currcode FROM bankaccounts WHERE accountcode =' . $_POST['BankAccount'],$db);
+	$ErrMsg = _('Could not get the currecny of the bank account');
+	$result = DB_query('SELECT currcode FROM bankaccounts WHERE accountcode =' . $_POST['BankAccount'],$db,$ErrMsg);
 	$myrow = DB_fetch_row($result);
 	$_SESSION['PaymentDetail']->AccountCurrency=$myrow[0];
+	
+} else {
+	$_SESSION['PaymentDetail']->AccountCurrency =$_SESSION['CompanyRecord']['currencydefault'];
 }
 if ($_POST['DatePaid']!='' AND Is_Date($_POST['DatePaid'])){
 	$_SESSION['PaymentDetail']->DatePaid=$_POST['DatePaid'];
@@ -114,17 +119,26 @@ if ($_POST['FunctionalExRate']!=''){
 if ($_POST['Paymenttype']!=''){
 	$_SESSION['PaymentDetail']->Paymenttype = $_POST['Paymenttype'];
 }
+
+
 if ($_POST['Currency']!=''){
 	$_SESSION['PaymentDetail']->Currency=$_POST['Currency']; //payment currency
+	/*Get the exchange rate between the functional currecny and the payment currency*/
+	$result = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['PaymentDetail']->Currency . "'",$db);
+	$myrow = DB_fetch_row($result);
+	$tableExRate = $myrow[0]; //this is the rate of exchange between the functional currency and the payment currency
+	
 	if ($_POST['Currency']==$_SESSION['PaymentDetail']->AccountCurrency){
 		$_POST['ExRate']=1;
 		$_SESSION['PaymentDetail']->ExRate=$_POST['ExRate']; //ex rate between payment currency and account currency
 		$SuggestedExRate=1;
 	}
-	if ($_POST['AccountCurrency']==$_SESSION['CompanyRecord']['currencydefault']){
+	if ($_SESSION['PaymentDetail']->AccountCurrency==$_SESSION['CompanyRecord']['currencydefault']){
 		$_POST['FunctionalExRate']=1;
 		$_SESSION['PaymentDetail']->FunctionalExRate=$_POST['FunctionalExRate'];
 		$SuggestedFunctionalExRate =1;
+		$SuggestedExRate = $tableExRate;
+		
 	} else {
 		/*To illustrate the rates required
 			Take an example functional currency NZD payment in USD from an AUD bank account 
@@ -136,7 +150,7 @@ if ($_POST['Currency']!=''){
 		*/
 		
 		/*Get suggested FunctionalExRate */	
-		$result = DB_query("select rate FROM currencies WHERE currabrev='" . $_SESSION['PaymentDetail']->AccountCurrency . "'",$db);
+		$result = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['PaymentDetail']->AccountCurrency . "'",$db);
 		$myrow = DB_fetch_row($result);
 		$SuggestedFunctionalExRate = $myrow[0];
 		
@@ -149,6 +163,8 @@ if ($_POST['Currency']!=''){
 		
 	}
 }
+
+
 if ($_POST['Narrative']!=""){
 	$_SESSION['PaymentDetail']->Narrative=$_POST['Narrative'];
 }
@@ -192,14 +208,14 @@ if (isset($_POST['CommitBatch'])){
   }
 
   if ($TotalAmount==0 AND 
-	  ($_SESSION["PaymentDetail"]->Discount + $_SESSION["PaymentDetail"]->Amount)/$_SESSION['PaymentDetail']->ExRate ==0){
+	  ($_SESSION['PaymentDetail']->Discount + $_SESSION['PaymentDetail']->Amount)/$_SESSION['PaymentDetail']->ExRate ==0){
 	  prnMsg( _('This payment has no amounts entered and will not be processed'),'warn');
 	  include('includes/footer.inc');
 	  exit;
   }
 	
   /*Make an array of the defined bank accounts */
-	$SQL = "select bankaccounts.accountcode
+	$SQL = "SELECT bankaccounts.accountcode
 			FROM bankaccounts,
 				chartmaster
 		WHERE bankaccounts.accountcode=chartmaster.accountcode";
@@ -245,6 +261,10 @@ if (isset($_POST['CommitBatch'])){
 			$TotalAmount=0;
 			foreach ($_SESSION['PaymentDetail']->GLItems as $PaymentItem) {
 
+				 /*The functional currency amount will be the 
+				 	payment currenct amount  / the bank account currency exchange rate  - to get to the bank account currency
+				 	then / the functional currency exchange rate to get to the functional currency */
+				 
 				 $SQL = 'INSERT INTO gltrans (type,
 				 				typeno,
 								trandate,
@@ -258,7 +278,7 @@ if (isset($_POST['CommitBatch'])){
 						" . $PeriodNo . ",
 						" . $PaymentItem->GLCode . ",
 						'" . $PaymentItem->Narrative . "',
-						" . ($PaymentItem->Amount/$_SESSION['PaymentDetail']->ExRate) . "
+						" . ($PaymentItem->Amount/$_SESSION['PaymentDetail']->ExRate/$_SESSION['PaymentDetail']->FunctionalExRate) . "
 						)";
 			 	$ErrMsg = _('Cannot insert a GL entry for the payment using the SQL');
 				$result = DB_query($SQL,$db,$ErrMsg,_('The SQL that failed was'),true);
@@ -275,21 +295,67 @@ if (isset($_POST['CommitBatch'])){
 
 			if (in_array($PaymentItem->GLCode, $BankAccounts)) {
 
+				/*Need to deal with the case where the payment from one bank account could be to a bank account in another currency */
+				
+				/*Get the currency and rate of the bank account transferring to*/
+				$SQL = 'SELECT currcode, rate 
+							FROM bankaccounts INNER JOIN currencies 
+							ON bankaccounts.currcode = currencies.currabrev
+							WHERE accountcode=' . $PaymentItem->GLCode;
+				$TrfToAccountResult = DB_query($SQL,$db);
+				$TrfToBankRow = DB_fetch_array($TrfToAccountResult) ;
+				$TrfToBankCurrCode = $TrfToBankRow['currcode'];
+				$TrfToBankExRate = $TrfToBankRow['rate'];
+				
+				if ($_SESSION['PaymentDetail']->AccountCurrency == $TrfToBankCurrCode){
+					/*Make sure to use the same rate if the transfer is between two bank accounts in the same currency */
+					$TrfToBankExRate = $_SESSION['PaymentDetail']->FunctionalExRate;
+				}
+				
+				/*Consider an example
+					 functional currency NZD
+					 bank account in AUD - 1 NZD = 0.90 AUD (FunctionalExRate)
+					 paying USD - 1 AUD = 0.85 USD  (ExRate)
+					 to a bank account in EUR - 1 NZD = 0.52 EUR
+					 
+					 oh yeah - now we are getting tricky! 
+					 Lets say we pay USD 100 from the AUD bank account to the EUR bank account
+					 
+					 To get the ExRate for the bank account we are transferring money to 
+					 we need to use the cross rate between the NZD-AUD/NZD-EUR
+					 and apply this to the 
+					 
+					 the payment record will read 
+					 exrate = 0.85 (1 AUD = USD 0.85)
+					 amount = 100 (USD)
+					 functionalexrate = 0.90 (1 NZD = AUD 0.90)
+					 
+					 the receipt record will read
+					 
+					 amount 100 (USD)
+					 exrate    (1 EUR =  (0.85 x 0.90)/0.52 USD)
+					 					(ExRate x FunctionalExRate) / USD Functional ExRate
+					 functionalexrate =     (1NZD = EUR 0.52)
+					 
+				*/
+				
 				$ReceiptTransNo = GetNextTransNo( 2, $db);
 				$SQL="INSERT INTO banktrans (transno,
 								type,
 								bankact,
 								ref,
 								exrate,
+								functionalexrate,
 								transdate,
 								banktranstype,
-								amount,
+								amount, 
 								currcode) ";
 				$SQL= $SQL . "VALUES (" . $ReceiptTransNo . ",
 							2,
 							" . $PaymentItem->GLCode . ", '" 
-							. _('Act Transfer') . ' - ' . $PaymentItem->Narrative . "',
-							" . $_SESSION['PaymentDetail']->ExRate . " ,
+							. _('Act Transfer From ') . $_SESSION['PaymentDetail']->Account . ' - ' . $PaymentItem->Narrative . " ',
+							" . (($_SESSION['PaymentDetail']->ExRate * $_SESSION['PaymentDetail']->FunctionalExRate)/$TrfToBankExRate). ",
+							" . $TrfToBankExRate . ",
 							'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
 							'" . $_SESSION['PaymentDetail']->Paymenttype . "',
 							" . $PaymentItem->Amount . ",
@@ -303,7 +369,7 @@ if (isset($_POST['CommitBatch'])){
    	}
   } else {
 	  /*Its a supplier payment type 22 */
-   	$CreditorTotal = (($_SESSION['PaymentDetail']->Discount + $_SESSION['PaymentDetail']->Amount)/$_SESSION['PaymentDetail']->ExRate);
+   	$CreditorTotal = (($_SESSION['PaymentDetail']->Discount + $_SESSION['PaymentDetail']->Amount)/$_SESSION['PaymentDetail']->ExRate)/$_SESSION['PaymentDetail']->FunctionalExRate;
 		
 		$TransNo = GetNextTransNo(22, $db);
 		$Transtype = 22;
@@ -322,7 +388,7 @@ if (isset($_POST['CommitBatch'])){
 					'" . $_SESSION['PaymentDetail']->SupplierID . "',
 					'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
 					'" . $_SESSION['PaymentDetail']->Paymenttype . "',
-					" . $_SESSION['PaymentDetail']->ExRate . ",
+					" . ($_SESSION['PaymentDetail']->ExRate/$_SESSION['PaymentDetail']->FunctionalExRate) . ",
 					" . (-$_SESSION['PaymentDetail']->Amount-$_SESSION['PaymentDetail']->Discount) . ",
 					'" . $_SESSION['PaymentDetail']->Narrative . "'
 				)";
@@ -368,7 +434,7 @@ if (isset($_POST['CommitBatch'])){
 			$DbgMsg = _('Cannot insert a GL transaction for the creditors account debit using the SQL');
 			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-			if ($_SESSION["PaymentDetail"]->Discount !=0){
+			if ($_SESSION['PaymentDetail']->Discount !=0){
 				/* Now credit Discount received account with discounts */
 				$SQL="INSERT INTO gltrans ( type,
 								typeno,
@@ -383,7 +449,7 @@ if (isset($_POST['CommitBatch'])){
 						" . $PeriodNo . ",
 						" . $_SESSION['CompanyRecord']["pytdiscountact"] . ",
 						'" . $_SESSION['PaymentDetail']->Narrative . "',
-						" . (-$_SESSION['PaymentDetail']->Discount/$_SESSION['PaymentDetail']->ExRate) . "
+						" . (-$_SESSION['PaymentDetail']->Discount/$_SESSION['PaymentDetail']->ExRate/$_SESSION['PaymentDetail']->FunctionalExRate) . "
 					  )";
 				$ErrMsg = _('Cannot insert a GL transaction for the payment discount credit because');
 				$DbgMsg = _('Cannot insert a GL transaction for the payment discount credit using the SQL');
@@ -392,9 +458,9 @@ if (isset($_POST['CommitBatch'])){
 		} // end if gl creditors
 	} // end if supplier
   
-	if ($_SESSION['CompanyRecord']["gllink_creditors"]==1){ /* then do the common GLTrans */
+	if ($_SESSION['CompanyRecord']['gllink_creditors']==1){ /* then do the common GLTrans */
 
-	  if ($_SESSION['PaymentDetail']->Amount/$_SESSION['PaymentDetail']->ExRate !=0){
+	  if ($_SESSION['PaymentDetail']->Amount !=0){
 		  /* Bank account entry first */
 		  $SQL = "INSERT INTO gltrans ( type,
 							typeno,
@@ -403,13 +469,13 @@ if (isset($_POST['CommitBatch'])){
 							account,
 							narrative,
 							amount) ";
-		  $SQL = $SQL . "VALUES (" . $Transtype . ",
-						" . $TransNo . ",
+		  $SQL = $SQL . 'VALUES (' . $Transtype . ',
+						' . $TransNo . ",
 						'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
 						" . $PeriodNo . ",
 						" . $_SESSION['PaymentDetail']->Account . ",
 						'" . $_SESSION['PaymentDetail']->Narrative . "',
-						" . (-$_SESSION['PaymentDetail']->Amount/$_SESSION['PaymentDetail']->ExRate) . "
+						" . (-$_SESSION['PaymentDetail']->Amount/$_SESSION['PaymentDetail']->ExRate/$_SESSION['PaymentDetail']->FunctionalExRate) . "
 					)";
 
 		  $ErrMsg =  _('Cannot insert a GL transaction for the bank account credit because');
@@ -426,6 +492,7 @@ if (isset($_POST['CommitBatch'])){
 					bankact,
 					ref,
 					exrate,
+					functionalexrate,
 					transdate,
 					banktranstype,
 					amount,
@@ -435,6 +502,7 @@ if (isset($_POST['CommitBatch'])){
 				" . $_SESSION['PaymentDetail']->Account . ",
 				'" . $_SESSION['PaymentDetail']->Narrative . "',
 				" . $_SESSION['PaymentDetail']->ExRate . " ,
+				" . $_SESSION['PaymentDetail']->FunctionalExRate . ",
 				'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
 				'" . $_SESSION['PaymentDetail']->Paymenttype . "',
 				" . -$_SESSION['PaymentDetail']->Amount . ",
@@ -523,13 +591,13 @@ if ($_POST['DatePaid']=="" OR !Is_Date($_SESSION['PaymentDetail']->DatePaid)){
 	 $_SESSION['PaymentDetail']->DatePaid = $_POST['DatePaid'];
 }
 
-if ($_SESSION['PaymentDetail']->Currency=="" AND $_SESSION['PaymentDetail']->SupplierID==""){
+if ($_SESSION['PaymentDetail']->Currency=='' AND $_SESSION['PaymentDetail']->SupplierID==''){
 	$_SESSION['PaymentDetail']->Currency=$_SESSION['CompanyRecord']['currencydefault'];
 }
 
 
 if (isset($_POST['BankAccount']) AND $_POST['BankAccount']!='') {
-	$SQL = "select bankaccountname
+	$SQL = "SELECT bankaccountname
 			FROM bankaccounts,
 				chartmaster
 		WHERE bankaccounts.accountcode= chartmaster.accountcode
@@ -567,7 +635,7 @@ echo ' ' . _('on') . ' ' . $_SESSION['PaymentDetail']->DatePaid . '</FONT>';
 
 echo '<P><table>';
 
-$SQL = "select bankaccountname,
+$SQL = "SELECT bankaccountname,
 		bankaccounts.accountcode,
 		bankaccounts.currcode
 	FROM bankaccounts,
@@ -588,6 +656,9 @@ if (DB_num_rows($AccountsResults)==0){
 } else {
 	while ($myrow=DB_fetch_array($AccountsResults)){
 	/*list the bank account names */
+		if (!isset($_POST['BankAccount']) AND $myrow['currcode']==$_SESSION['CompanyRecord']['currencydefault']){
+			$_POST['BankAccount']=$myrow['accountcode'];
+		}
 		if ($_POST['BankAccount']==$myrow['accountcode']){
 			echo '<OPTION selectED VALUE="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . ' - ' . $myrow['currcode'];
 		} else {
@@ -605,30 +676,28 @@ echo '<tr><td>' . _('Date Paid') . ':</td>
 
 if ($_SESSION['PaymentDetail']->SupplierID==''){
 	echo '<tr><td>' . _('Currency of Payment') . ':</td><td><select name="Currency">';
-	$SQL = 'select currency, currabrev, rate FROM currencies';
+	$SQL = 'SELECT currency, currabrev, rate FROM currencies';
 	$result=DB_query($SQL,$db);
 
 	if (DB_num_rows($result)==0){
 		echo '</select></td></tr>';
-		prnMsg( _('No currencies are defined yet') . '. ' . _('Payments cannot be entered until a currency is defined'),'error');
+		prnMsg( _('No currencies are defined yet. Payments cannot be entered until a currency is defined'),'error');
 	} else {
 		while ($myrow=DB_fetch_array($result)){
 		if ($_SESSION['PaymentDetail']->Currency==$myrow['currabrev']){
-			if (!isset($_POST['ExRate']) OR $_POST['ExRate']==''){
-				$_POST['ExRate'] = $myrow['rate'];
-			}
-			echo '<OPTION selectED value=' . $myrow['currabrev'] . '>' . $myrow['currency'];
+			echo '<option selected value=' . $myrow['currabrev'] . '>' . $myrow['currency'];
 		} else {
-			echo '<OPTION value=' . $myrow['currabrev'] . '>' . $myrow['currency'];
+			echo '<option value=' . $myrow['currabrev'] . '>' . $myrow['currency'];
 		}
 		}
 		echo '</select></td><td><i>' . _('The transaction currency does not need to be the same as the bank account currency') . '</i></td></tr>';
 	}
 } else { /*its a supplier payment so it must be in the suppliers currency */
 	echo '<tr><td>' . _('Supplier Currency') . ':</td><td>' . $_SESSION['PaymentDetail']->Currency . '</td></tr>';
+	echo '<input type="hidden" name="Currency" value="' . $_SESSION['PaymentDetail']->Currency . '">';
 	/*get the default rate from the currency table if it has not been set */
 	if (!isset($_POST['ExRate']) OR $_POST['ExRate']==''){
-		$SQL = "select rate FROM currencies WHERE currabrev='" . $_SESSION['PaymentDetail']->Currency ."'";
+		$SQL = "SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['PaymentDetail']->Currency ."'";
 		$Result=DB_query($SQL,$db);
 		$myrow=DB_fetch_row($Result);
 		$_POST['ExRate']=$myrow[0];
@@ -643,24 +712,32 @@ if (!isset($_POST['ExRate'])){
 if (!isset($_POST['FunctionalExRate'])){ 
 	$_POST['FunctionalExRate']=1;
 }
-if ($_SESSION['PaymentDetail']->AccountCurrency!=$_SESSION['PaymentDetail']->Currency){
+if ($_SESSION['PaymentDetail']->AccountCurrency!=$_SESSION['PaymentDetail']->Currency AND isset($_SESSION['PaymentDetail']->AccountCurrency)){
 	if (isset($SuggestedExRate)){
-		$SuggestedExRateText = '<b>' . _('Suggested rate:') . ' ' . $SuggestedExRate . '</b>';
+		$SuggestedExRateText = '<b>' . _('Suggested rate:') . ' ' . number_format($SuggestedExRate,4) . '</b>';
 	} else {
 		$SuggestedExRateText ='';
 	}
-	echo '<tr><td>' . _('Payment Exchange Rate') . ':</td><td><input type="text" name="ExRate" maxlength=10 size=12 value="' . $_POST['ExRate'] . '"></td>
-			<td>' . $SuggestedExRateText . ' <i>' . _('The exchange rate between the currency of the payment and the currency of the bank account') . '</i></td></tr>';
+	if ($_POST['ExRate']==1 AND isset($SuggestedExRate)){
+		$_POST['ExRate'] = $SuggestedExRate;
+	}
+	echo '<tr><td>' . _('Payment Exchange Rate') . ':</td>
+				<td><input type="text" name="ExRate" maxlength=10 size=12 value="' . $_POST['ExRate'] . '"></td>
+			<td>' . $SuggestedExRateText . ' <i>' . _('The exchange rate between the currency of the bank account currency and the currency of the payment') . '. 1 ' . $_SESSION['PaymentDetail']->AccountCurrency . ' = ? ' . $_SESSION['PaymentDetail']->Currency . '</i></td></tr>';
 }
-if ($_SESSION['PaymentDetails']->AccountCurrency!=$_SESSION['CompanyRecord']['currencydefault']){
+
+if ($_SESSION['PaymentDetail']->AccountCurrency!=$_SESSION['CompanyRecord']['currencydefault'] 
+												AND isset($_SESSION['PaymentDetail']->AccountCurrency)){
 	if (isset($SuggestedFunctionalExRate)){
-		$SuggestedFunctionalExRateText = '<b>' . _('Suggested rate:') . ' ' . $SuggestedFunctionalExRate . '</b>';
+		$SuggestedFunctionalExRateText = '<b>' . _('Suggested rate:') . ' ' . number_format($SuggestedFunctionalExRate,4) . '</b>';
 	} else {
 		$SuggestedFunctionalExRateText ='';
 	}
-
+	if ($_POST['FunctionalExRate']==1 AND isset($SuggestedFunctionalExRate)){
+		$_POST['FunctionalExRate'] = $SuggestedFunctionalExRate;
+	}
 	echo '<tr><td>' . _('Functional Exchange Rate') . ':</td><td><input type="text" name="FunctionalExRate" maxlength=10 size=12 value="' . $_POST['FunctionalExRate'] . '"></td>
-			<td>' . ' ' . $SuggestedFunctionalExRateText . ' <i>' . _('The exchange rate between the currency of the bank account and the functional currency') . '</i></td></tr>';
+			<td>' . ' ' . $SuggestedFunctionalExRateText . ' <i>' . _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account') .  '. 1 ' . $_SESSION['CompanyRecord']['currencydefault'] . ' = ? ' . $_SESSION['PaymentDetail']->AccountCurrency . '</i></td></tr>';
 }
 echo '<tr><td>' . _('Payment type') . ':</td><td><select name="Paymenttype">';
 
@@ -682,6 +759,9 @@ echo '<tr><td>' . _('Cheque Number') . ':</td>
 			<td><input type="text" name="ChequeNum" maxlength=8 size=10 value="' . $_POST['ChequeNum'] . '"></td></tr>';
 echo '<tr><td>' . _('Ref') . ':</td>
 			<td colspan=2><input type="text" name="Narrative" maxlength=80 size=82 value="' . $_POST['Narrative'] . '"></td></tr>';
+echo '<tr><td colspan=3><center><input type="submit" name="UpdateHeader" value="' . _('Update'). '"></center></td></tr>';
+			
+			
 echo '</table>';
 
 
