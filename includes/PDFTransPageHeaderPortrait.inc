@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 /* R&OS PHP-pdf class code to head up a new page */
 
 if (!$FirstPage){ /* only initiate a new page if its not the first */
@@ -192,7 +192,7 @@ $FontSize = 8;
 
 $pdf->addText($XPos, $YPos-8, $FontSize, _('All amounts stated in') . ' - ' . $myrow['currcode']);
 
-$BoxHeight = 560;
+$BoxHeight = $Page_Height-282;
 
 /*draw a box with nice round corner for entering line items */
 /*90 degree arc at top right of box 0 degrees starts a bottom */
