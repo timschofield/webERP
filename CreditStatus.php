@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 3;
 include('includes/session.inc');
@@ -35,23 +35,40 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedReason could also exist if submit had not been clicked this code would not run in this case cos submit is false of course	see the delete code below*/
 
-		if ($_POST['DisallowInvoices']=='on'){
-			$sql = "UPDATE holdreasons SET reasondescription='" . $_POST['ReasonDescription'] . "', dissallowinvoices=1 WHERE reasoncode = $SelectedReason";
+		if (isset($_POST['DisallowInvoices']) and $_POST['DisallowInvoices']=='on'){
+			$sql = "UPDATE holdreasons SET 
+					reasondescription='" . DB_escape_string($_POST['ReasonDescription']) . "', 
+					dissallowinvoices=1 
+					WHERE reasoncode = $SelectedReason";
 		} else {
-			$sql = "UPDATE holdreasons SET reasondescription='" . $_POST['ReasonDescription'] . "', dissallowinvoices=0 WHERE reasoncode = $SelectedReason";
+			$sql = "UPDATE holdreasons SET 
+					reasondescription='" . DB_escape_string($_POST['ReasonDescription']) . "', 
+					dissallowinvoices=0 
+					WHERE reasoncode = $SelectedReason";
 		}
-
 		$msg = _('The credit status record has been updated');
 
 	} else if ($InputError !=1) {
 
 	/*Selected Reason is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new status code form */
 
-		if ($_POST['DisallowInvoices']=='on'){
+		if (isset($_POST['DisallowInvoices']) and $_POST['DisallowInvoices']=='on'){
 
-			$sql = 'INSERT INTO holdreasons (reasoncode, reasondescription, dissallowinvoices) VALUES (' . $_POST['ReasonCode'] . ", '" . $_POST['ReasonDescription'] . "', 1)";
+			$sql = 'INSERT INTO holdreasons (
+					reasoncode, 
+					reasondescription, 
+					dissallowinvoices) 
+					VALUES (' . 
+					$_POST['ReasonCode'] . ", '" . 
+					DB_escape_string($_POST['ReasonDescription']) . "', 1)";
 		} else {
-			$sql = 'INSERT INTO holdreasons (reasoncode, reasondescription, dissallowinvoices) VALUES (' . $_POST['ReasonCode'] . ", '" . $_POST['ReasonDescription'] . "', 0)";
+			$sql = 'INSERT INTO holdreasons (
+					reasoncode, 
+					reasondescription, 
+					dissallowinvoices) 
+					VALUES (' . 
+					$_POST['ReasonCode'] . ", '" . 
+					DB_escape_string($_POST['ReasonDescription']) . "', 0)";
 		}
 
 		$msg = _('A new credit status record has been inserted');
@@ -100,9 +117,9 @@ or deletion of the records*/
 
 	echo '<CENTER><table border=1>';
 	echo "<tr>
-		<td class='tableheader'>". _('Status Code') ."</td>
-		<td class='tableheader'>". _('Description') ."</td>
-		<td class='tableheader'>". _('Disallow Invoices') .'</td>';
+		<th>". _('Status Code') ."</th>
+		<th>". _('Description') ."</th>
+		<th>". _('Disallow Invoices') .'</th>';
 
 	$k=0; //row colour counter
 	while ($myrow=DB_fetch_row($result)) {
@@ -113,10 +130,10 @@ or deletion of the records*/
 			$DissallowText = '<B>'. _('NO INVOICING') .'</B>';
 		}
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 
@@ -177,6 +194,9 @@ if (!isset($_GET['delete'])) {
 			</TR>";
 	}
 
+	if (!isset($_POST['ReasonDescription'])) {
+		$_POST['ReasonDescription'] = '';
+	}
 	echo '<TR>
 		<TD>'. _('Description') .":</TD>
 		<TD><INPUT TYPE='text' name='ReasonDescription' VALUE='". $_POST['ReasonDescription'] ."' SIZE=28 MAXLENGTH=30>
