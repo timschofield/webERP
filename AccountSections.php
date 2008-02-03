@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity = 10;
 
@@ -59,13 +59,13 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('The section number must be an integer'),'error');
 	}
 
-	if ($_POST['SelectedSectionID']!='' AND $InputError !=1) {
+	if (isset($_POST['SelectedSectionID']) and $_POST['SelectedSectionID']!='' AND $InputError !=1) {
 
 		/*SelectedSectionID could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
 		$sql = "UPDATE accountsection
-				SET sectionname='" . $_POST['SectionName'] . "'
-				WHERE sectionid = " . $_POST['SelectedSectionID'];
+				SET sectionname='" . DB_escape_string($_POST['SectionName']) . "'
+				WHERE sectionid = " . DB_escape_string($_POST['SelectedSectionID']);
 
 		$msg = _('Record Updated');
 	} elseif ($InputError !=1) {
@@ -76,8 +76,8 @@ if (isset($_POST['submit'])) {
 					sectionid,
 					sectionname )
 			VALUES (
-				" . $_POST['SectionID'] . ",
-				'" . $_POST['SectionName'] ."'
+				" . DB_escape_string($_POST['SectionID']) . ",
+				'" . DB_escape_string($_POST['SectionName']) ."'
 				)";
 		$msg = _('Record inserted');
 	}
@@ -103,10 +103,15 @@ if (isset($_POST['submit'])) {
 		echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('general ledger accounts groups that refer to this account section') . '</FONT>';
 
 	} else {
-
+		//Fetch section name
+		$sql = "SELECT sectionname FROM accountsection WHERE sectionid='".$_GET['SelectedSectionID'] . "'";
+		$result = DB_query($sql,$db);
+		$myrow = DB_fetch_row($result);
+		$SectionName = $myrow[0];
+		
 		$sql="DELETE FROM accountsection WHERE sectionid='" . $_GET['SelectedSectionID'] . "'";
 		$result = DB_query($sql,$db);
-		prnMsg( $_GET['SectionName'] . ' ' . _('section has been deleted') . '!','success');
+		prnMsg( $SectionName . ' ' . _('section has been deleted') . '!','success');
 
 	} //end if account group used in GL accounts
 	unset ($_GET['SelectedSectionID']);
@@ -136,18 +141,18 @@ if (isset($_POST['submit'])) {
 
 	echo "<center><table>
 		<tr>
-		<td class='tableheader'>" . _('Section Number') . "</td>
-		<td class='tableheader'>" . _('Section Description') . "</td>
+		<th>" . _('Section Number') . "</th>
+		<th>" . _('Section Description') . "</th>
 		</tr>";
 
 	$k=0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
 
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 
