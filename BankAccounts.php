@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 10;
 
@@ -55,9 +55,9 @@ if (isset($_POST['submit'])) {
 			prnMsg(_('Note that it is not possible to change the currency of the account once there are transactions against it'),'warn');
 		} else {
 			$sql = "UPDATE bankaccounts
-				SET bankaccountname='" . $_POST['BankAccountName'] . "',
-				bankaccountnumber='" . $_POST['BankAccountNumber'] . "',
-				bankaddress='" . $_POST['BankAddress'] . "',
+				SET bankaccountname='" . DB_escape_string($_POST['BankAccountName']) . "',
+				bankaccountnumber='" . DB_escape_string($_POST['BankAccountNumber']) . "',
+				bankaddress='" . DB_escape_string($_POST['BankAddress']) . "',
 				currcode ='" . $_POST['CurrCode'] . "'
 				WHERE accountcode = '" . $SelectedBankAccount . "'";
 		}
@@ -74,9 +74,9 @@ if (isset($_POST['submit'])) {
 						bankaddress,
 						currcode)
 				VALUES ('" . $_POST['AccountCode'] . "',
-					'" . $_POST['BankAccountName'] . "',
-					'" . $_POST['BankAccountNumber'] . "',
-					'" . $_POST['BankAddress'] . "', 
+					'" . DB_escape_string($_POST['BankAccountName']) . "',
+					'" . DB_escape_string($_POST['BankAccountNumber']) . "',
+					'" . DB_escape_string($_POST['BankAddress']) . "', 
 					'" . $_POST['CurrCode'] . "'
 					)";
 		$msg = _('The new bank account has been entered');
@@ -85,7 +85,7 @@ if (isset($_POST['submit'])) {
 	//run the SQL from either of the above possibilites
 	if( $InputError !=1 ) {
 		$ErrMsg = _('The bank account could not be inserted or modified because');
-		$Dbgmsg = _('The SQL used to insert/modify the bank account details was');
+		$DbgMsg = _('The SQL used to insert/modify the bank account details was');
 		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 	
 		prnMsg($msg,'success');
@@ -137,25 +137,25 @@ If (!isset($SelectedBankAccount)) {
 		WHERE bankaccounts.accountcode = chartmaster.accountcode";
 	
 	$ErrMsg = _('The bank accounts set up could not be retreived because');
-	$Dbgmsg = _('The SQL used to retrieve the bank account details was') . '<BR>' . $sql;
+	$DbgMsg = _('The SQL used to retrieve the bank account details was') . '<BR>' . $sql;
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 	
 	echo '<CENTER><table>';
 	
-	echo "<tr><td class='tableheader'>" . _('GL Account') . "</td>
-		<td class='tableheader'>" . _('Account Name') . "</td>
-		<td class='tableheader'>" . _('Account Number') . "</td>
-		<td class='tableheader'>" . _('Bank Address') . "</td>
-		<td class='tableheader'>" . _('Currency') . "</td>
+	echo "<tr><th>" . _('GL Account') . "</th>
+		<th>" . _('Account Name') . "</th>
+		<th>" . _('Account Number') . "</th>
+		<th>" . _('Bank Address') . "</th>
+		<th>" . _('Currency') . "</th>
 	</tr>";
 	
 	$k=0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
 	if ($k==1){
-		echo "<tr bgcolor='#CCCCCC'>";
+		echo '<tr CLASS="EvenTableRows">';
 		$k=0;
 	} else {
-		echo "<tr bgcolor='#EEEEEE'>";
+		echo '<tr CLASS="OddTableRows">';
 		$k++;
 	}
 	
@@ -230,7 +230,7 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 
 	$result = DB_query($sql,$db);
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['accountcode']==$_POST['AccountCode']) {
+		if (isset($_POST['AccountCode']) and $myrow['accountcode']==$_POST['AccountCode']) {
 			echo '<OPTION SELECTED VALUE=';
 		} else {
 			echo '<OPTION VALUE=';
@@ -241,6 +241,11 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 
 	echo '</SELECT></TD></TR>';
 }
+
+// Check if details exist, if not set some defaults
+if (!isset($_POST['BankAccountName'])) {$_POST['BankAccountName']='';}
+if (!isset($_POST['BankAccountNumber'])) {$_POST['BankAccountNumber']='';}
+if (!isset($_POST['BankAddress'])) {$_POST['BankAddress']='';}
 
 echo '<TR><TD>' . _('Bank Account Name') . ': </TD>
 			<TD><input type="Text" name="BankAccountName" value="' . $_POST['BankAccountName'] . '" SIZE=40 MAXLENGTH=50></TD></TR>
