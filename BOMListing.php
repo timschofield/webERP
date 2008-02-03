@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -33,8 +33,8 @@ If (isset($_POST['PrintPDF'])
 			stockmaster,
 			bom
 		WHERE stockmaster.stockid=bom.component
-		AND bom.parent >= '" . $_POST['FromCriteria'] . "'
-		AND bom.parent <= '" . $_POST['ToCriteria'] . "'
+		AND bom.parent >= '" . DB_escape_string($_POST['FromCriteria']) . "'
+		AND bom.parent <= '" . DB_escape_string($_POST['ToCriteria']) . "'
 		AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()
 		ORDER BY
 			bom.parent,
@@ -122,7 +122,7 @@ If (isset($_POST['PrintPDF'])
 	$title=_('Bill Of Material Listing');
 	include('includes/header.inc');
 
-	if (strlen($_POST['FromCriteria'])<1 || strlen($_POST['ToCriteria'])<1) {
+	if (!isset($_POST['FromCriteria']) || !isset($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
