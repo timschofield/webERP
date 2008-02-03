@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 $PageSecurity =3;
 
 
@@ -15,13 +15,13 @@ $title = _('Credit An Invoice');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-if (!$_GET['InvoiceNumber'] AND !$_SESSION['ProcessingCredit']) {
+if (!isset($_GET['InvoiceNumber']) AND !$_SESSION['ProcessingCredit']) {
 	/* This page can only be called with an invoice number for crediting*/
 	prnMsg(_('This page can only be opened if an invoice has been selected for crediting') . '. ' . _('Please select an invoice first') . ' - ' . _('from the customer inquiry screen click the link to credit an invoice'),'info');
 	include('includes/footer.inc');
 	exit;
 
-} elseif ($_GET['InvoiceNumber']>0) {
+} elseif (isset($_GET['InvoiceNumber'])) {
 
 	unset($_SESSION['CreditItems']->LineItems);
 	unset($_SESSION['CreditItems']);
@@ -260,18 +260,18 @@ echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 
 
 echo "<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=0><TR>
-<TD class='tableheader'>" . _('Item Code') . "</TD>
-<TD class='tableheader'>" . _('Item Description') . "</TD>
-<TD class='tableheader'>" . _('Invoiced') . "</TD>
-<TD class='tableheader'>" . _('Units') . "</TD>
-<TD class='tableheader'>" . _('Credit') . '<BR>' . _('Quantity') . "</TD>
-<TD class='tableheader'>" . _('Price') . "</TD>
-<TD class='tableheader'>" . _('Discount') . "</TD>
-<TD class='tableheader'>" . _('Total') . '<BR>' . _('Excl Tax') . "</TD>
-<TD class='tableheader'>" . _('Tax Authority') . "</TD>
-<TD class='tableheader'>" . _('Tax') . ' %' . "</TD>
-<TD class='tableheader'>" . _('Tax') . '<BR>' . _('Amount') . "</TD>
-<TD class='tableheader'>" . _('Total') . '<BR>' . _('Incl Tax') . "</TD></TR>";
+<TH>" . _('Item Code') . "</TH>
+<TH>" . _('Item Description') . "</TH>
+<TH>" . _('Invoiced') . "</TH>
+<TH>" . _('Units') . "</TH>
+<TH>" . _('Credit') . '<BR>' . _('Quantity') . "</TH>
+<TH>" . _('Price') . "</TH>
+<TH>" . _('Discount') . "</TH>
+<TH>" . _('Total') . '<BR>' . _('Excl Tax') . "</TH>
+<TH>" . _('Tax Authority') . "</TH>
+<TH'>" . _('Tax') . ' %' . "</TH>
+<TH>" . _('Tax') . '<BR>' . _('Amount') . "</TH>
+<TH>" . _('Total') . '<BR>' . _('Incl Tax') . "</TH></TR>";
 
 
 $_SESSION['CreditItems']->total = 0;
@@ -289,10 +289,10 @@ $k=0; //row colour counter
 foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 
 	if ($k==1){
-		$RowStarter = "<tr bgcolor='#CCCCCC'>";
+		$RowStarter = 'class="EvenTableRows"';
 		$k=0;
 	} else {
-		$RowStarter = "<tr bgcolor='#EEEEEE'>";
+		$RowStarter = 'class="OddTableRows"';
 		$k=1;
 	}
 
@@ -442,7 +442,7 @@ $DefaultDispatchDate = Date($_SESSION['DefaultDateFormat']);
 
 $OKToProcess = true;
 
-if ($_POST['CreditType']=='WriteOff' AND !isset($_POST['WriteOffGLCode'])){
+if ((isset($_POST['CreditType']) and$_POST['CreditType']=='WriteOff') AND !isset($_POST['WriteOffGLCode'])){
 
 	prnMsg (_('The GL code to write off the credit value to must be specified. Please select the appropriate GL code for the selection box'),'info');
 
@@ -526,7 +526,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The alteration to the invoice record to reflect the allocation of the credit note to the invoice could not be done because');
 		$DbgMsg = _('The following SQL to update the invoice allocation was used');
-		$Result = DB_query($SQL,$db,$ErrMsg,DbgMsg,true);
+		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 	}
 
 /*Now insert the Credit Note into the DebtorTrans table with the allocations as calculated above*/
@@ -558,7 +558,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 			" . -($_SESSION['CreditItems']->total) . ",
 			" . -$TaxTotal . ", " . -$_SESSION['CreditItems']->FreightCost . ",
 			" . $_SESSION['CurrencyRate'] . ",
-			'" . $_POST['CreditText'] . "',
+			'" . DB_escape_string($_POST['CreditText']) . "',
 			" . -$Allocate_amount . ",
 			" . $Settled . ")";
 
@@ -1202,7 +1202,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 /* If GLLink_Stock then insert GLTrans to credit stock and debit cost of sales at standard cost*/
 
 			if ($_SESSION['CompanyRecord']['gllink_stock']==1 
-				AND ($OrderLine->StandardCost !=0  OR $StandardCost !=0)
+				AND ($OrderLine->StandardCost !=0  OR (isset($StandardCost) and $StandardCost !=0))
 				AND $_POST['CreditType']!='ReverseOverCharge'){
 
 /*first the cost of sales entry*/
@@ -1483,6 +1483,9 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 			}
 		}
 		echo "</SELECT></TD></TR>";
+	}
+	if (!isset($_POST['CreditText'])) {
+		$_POST['CreditText'] = '';
 	}
 	echo '<TR><TD>' . _('Credit note text') . '</TD><TD><TEXTAREA NAME=CreditText COLS=31 ROWS=5>' . $_POST['CreditText'] . '</TEXTAREA></TD></TR>';
 	echo '</TABLE><CENTER><INPUT TYPE=SUBMIT NAME=Update Value=' . _('Update') . '><P>';
