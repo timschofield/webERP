@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.45 $ */
+/* $Revision: 1.46 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -23,7 +23,7 @@ if (!isset($_GET['OrderNumber']) && !isset($_SESSION['ProcessingOrder'])) {
 	prnMsg( _('This page can only be opened if an order has been selected Please select an order first from the delivery details screen click on Confirm for invoicing'), 'error' );
 	include ('includes/footer.inc');
 	exit;
-} elseif ($_GET['OrderNumber']>0) {
+} elseif (isset($_GET['OrderNumber']) and $_GET['OrderNumber']>0) {
 
 	unset($_SESSION['Items']->LineItems);
 	unset ($_SESSION['Items']);
@@ -251,19 +251,19 @@ echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
 ***************************************************************/
 echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>
 	<TR>
-		<TD class="tableheader">' . _('Item Code') . '</TD>
-		<TD class="tableheader">' . _('Item Description' ) . '</TD>
-		<TD class="tableheader">' . _('Ordered') . '</TD>
-		<TD class="tableheader">' . _('Units') . '</TD>
-		<TD class="tableheader">' . _('Already') . '<BR>' . _('Sent') . '</TD>
-		<TD class="tableheader">' . _('This Dispatch') . '</TD>
-		<TD class="tableheader">' . _('Price') . '</TD>
-		<TD class="tableheader">' . _('Discount') . '</TD>
-		<TD class="tableheader">' . _('Total') . '<BR>' . _('Excl Tax') . '</TD>
-		<TD class="tableheader">' . _('Tax Authority') . '</TD>
-		<TD class="tableheader">' . _('Tax %') . '</TD>
-		<TD class="tableheader">' . _('Tax') . '<BR>' . _('Amount') . '</TD>
-		<TD class="tableheader">' . _('Total') . '<BR>' . _('Incl Tax') . '</TD>
+		<TH>' . _('Item Code') . '</TH>
+		<TH>' . _('Item Description' ) . '</TH>
+		<TH>' . _('Ordered') . '</TH>
+		<TH>' . _('Units') . '</TH>
+		<TH>' . _('Already') . '<BR>' . _('Sent') . '</TH>
+		<TH>' . _('This Dispatch') . '</TH>
+		<TH>' . _('Price') . '</TH>
+		<TH>' . _('Discount') . '</TH>
+		<TH>' . _('Total') . '<BR>' . _('Excl Tax') . '</TH>
+		<TH>' . _('Tax Authority') . '</TH>
+		<TH>' . _('Tax %') . '</TH>
+		<TH>' . _('Tax') . '<BR>' . _('Amount') . '</TH>
+		<TH>' . _('Total') . '<BR>' . _('Incl Tax') . '</TH>
 	</TR>';
 
 $_SESSION['Items']->total = 0;
@@ -279,10 +279,10 @@ $k=0; //row colour counter
 foreach ($_SESSION['Items']->LineItems as $LnItm) {
 
 	if ($k==1){
-		$RowStarter = '<tr bgcolor="#CCCCCC">';
+		$RowStarter = '<tr class="EvenTableRows">';
 		$k=0;
 	} else {
-		$RowStarter = '<tr bgcolor="#EEEEEE">';
+		$RowStarter = '<tr class="OddTableRows">';
 		$k=1;
 	}
 
@@ -379,7 +379,7 @@ depending on the business logic required this condition may not be required.
 It seems unfair to charge the customer twice for freight if the order
 was not fully delivered the first time ?? */
 
-if ($_SESSION['Items']->AnyAlreadyDelivered==1) {
+if ($_SESSION['Items']->Any_Already_Delivered()==1) {
 	$_POST['ChargeFreightCost'] = 0;
 } elseif(!isset($_SESSION['Items']->FreightCost)) {
 	if ($_SESSION['DoFreightCalc']==True){
@@ -713,20 +713,20 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		VALUES (
 			". $InvoiceNo . ",
 			10,
-			'" . $_SESSION['Items']->DebtorNo . "',
-			'" . $_SESSION['Items']->Branch . "',
+			'" . DB_escape_string($_SESSION['Items']->DebtorNo) . "',
+			'" . DB_escape_string($_SESSION['Items']->Branch) . "',
 			'" . $DefaultDispatchDate . "',
 			" . $PeriodNo . ",
 			'',
-			'" . $_SESSION['Items']->DefaultSalesType . "',
+			'" . DB_escape_string($_SESSION['Items']->DefaultSalesType) . "',
 			" . $_SESSION['ProcessingOrder'] . ",
 			" . $_SESSION['Items']->total . ",
 			" . $TaxTotal . ",
 			" . $_POST['ChargeFreightCost'] . ",
 			" . $_SESSION['CurrencyRate'] . ",
 			'" . DB_escape_string($_POST['InvoiceText']) . "',
-			" . $_SESSION['Items']->ShipVia . ",
-			'"  . $_POST['Consignment'] . "'
+			" . DB_escape_string($_SESSION['Items']->ShipVia) . ",
+			'"  . DB_escape_string($_POST['Consignment']) . "'
 		)";
 
 	$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction record could not be inserted because');
@@ -1036,7 +1036,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						" . -$OrderLine->QtyDispatched . ",
 						" . $OrderLine->DiscountPercent . ",
 						" . $OrderLine->StandardCost . ",
-						'" . addslashes($OrderLine->Narrative) . "')";
+						'" . DB_escape_string($OrderLine->Narrative) . "')";
 			}
 
 
@@ -1416,6 +1416,14 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 
 } else { /*Process Invoice not set so allow input of invoice data */
+	
+	if (!isset($_POST['Consignment'])) {
+		$_POST['Consignment']='';
+	}
+
+	if (!isset($_POST['InvoiceText'])) {
+		$_POST['InvoiceText']='';
+	}
 
 	echo '<TABLE><TR>
 		<TD>' ._('Date Of Dispatch'). ':</TD>
