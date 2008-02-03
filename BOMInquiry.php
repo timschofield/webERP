@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -95,10 +95,10 @@ if (isset($_POST['Search'])){
 If (isset($result) AND !isset($SelectedParent)) {
 
 	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
-	$TableHeader = '<TR><TD class=tableheader>' . _('Code') . '</TD>
-				<TD class=tableheader>' . _('Description') . '</TD>
-				<TD class=tableheader>' . _('On Hand') . '</TD>
-				<TD class=tableheader>' . _('Units') . '</TD>
+	$TableHeader = '<TR><TH>' . _('Code') . '</TH>
+				<TH>' . _('Description') . '</TH>
+				<TH>' . _('On Hand') . '</TH>
+				<TH>' . _('Units') . '</TH>
 			</TR>';
 
 	echo $TableHeader;
@@ -107,10 +107,10 @@ If (isset($result) AND !isset($SelectedParent)) {
 	$k=0; //row colour counter
 	while ($myrow=DB_fetch_array($result)) {
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 		if ($myrow['mbflag']=='A' OR $myrow['mbflag']=='K'){
@@ -185,11 +185,11 @@ if (isset($StockID) and $StockID!=""){
 		while ($myrow=DB_fetch_array($BOMResult)) {
 
 			if ($k==1){
-				echo "<tr bgcolor='#CCCCCC'>";
+				echo '<tr class="EvenTableRows">';
 				$k=0;
 			} else {
-				echo "<tr bgcolor='#EEEEEE'>";
-				$k=1;
+				echo '<tr class="OddTableRows">';
+				$k++;
 			}
 
 			$ComponentLink = "<A HREF='$rootpath/SelectProduct.php?" . SID . "&StockID=" . $myrow['component'] . "'>" . $myrow['component'] . "</A>";

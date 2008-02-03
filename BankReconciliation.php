@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 7;
 
@@ -31,7 +31,7 @@ if (DB_num_rows($AccountsResults)==0){
 } else {
 	while ($myrow=DB_fetch_array($AccountsResults)){
 		/*list the bank account names */
-		if ($_POST["BankAccount"]==$myrow["accountcode"]){
+		if (isset($_POST["BankAccount"]) and $_POST["BankAccount"]==$myrow["accountcode"]){
 			echo '<OPTION SELECTED VALUE="' . $myrow["accountcode"] . '">' . $myrow["bankaccountname"];
 		} else {
 			echo '<OPTION VALUE="' . $myrow["accountcode"] . '">' . $myrow["bankaccountname"];
@@ -89,12 +89,12 @@ if (isset($_POST['ShowRec']) AND $_POST['ShowRec']!=''){
 	echo '<TR><TD COLSPAN=6><B>' . _('Add back unpresented cheques') . ':</B></TD></TR>';
 
 	$TableHeader = '<TR>
-			<TD class="tableheader">' . _('Date') . '</TD>
-			<TD class="tableheader">' . _('Type') . '</TD>
-			<TD class="tableheader">' . _('Number') . '</TD>
-			<TD class="tableheader">' . _('Reference') . '</TD>
-			<TD class="tableheader">' . _('Orig Amount') . '</TD>
-			<TD class="tableheader">' . _('Outstanding') . '</TD>
+			<TH>' . _('Date') . '</TH>
+			<TH>' . _('Type') . '</TH>
+			<TH>' . _('Number') . '</TH>
+			<TH>' . _('Reference') . '</TH>
+			<TH>' . _('Orig Amount') . '</TH>
+			<TH>' . _('Outstanding') . '</TH>
 			</TR>';
 
 	echo $TableHeader;
@@ -105,10 +105,10 @@ if (isset($_POST['ShowRec']) AND $_POST['ShowRec']!=''){
 
 	while ($myrow=DB_fetch_array($UPChequesResult)) {
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 
@@ -160,12 +160,12 @@ if (isset($_POST['ShowRec']) AND $_POST['ShowRec']!=''){
 	echo '<TR><TD COLSPAN=6><B>' . _('Less deposits not cleared') . ':</B></TD></TR>';
 
 	$TableHeader = '<TR>
-			<TD class="tableheader">' . _('Date') . '</TD>
-			<TD class="tableheader">' . _('Type') . '</TD>
-			<TD class="tableheader">' . _('Number') . '</TD>
-			<TD class="tableheader">' . _('Reference') . '</TD>
-			<TD class="tableheader">' . _('Orig Amount') . '</TD>
-			<TD class="tableheader">' . _('Outstanding') . '</TD>
+			<TH>' . _('Date') . '</TH>
+			<TH>' . _('Type') . '</TH>
+			<TH>' . _('Number') . '</TH>
+			<TH>' . _('Reference') . '</TH>
+			<TH>' . _('Orig Amount') . '</TH>
+			<TH>' . _('Outstanding') . '</TH>
 			</TR>';
 
 	echo '<TR>' . $TableHeader;
@@ -176,10 +176,10 @@ if (isset($_POST['ShowRec']) AND $_POST['ShowRec']!=''){
 
 	while ($myrow=DB_fetch_array($UPChequesResult)) {
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 
