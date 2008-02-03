@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 11;
 
@@ -47,11 +47,11 @@ if (isset($_POST['submit'])) {
         }
         $sql = 'UPDATE debtorsmaster SET ediinvoices =' . $_POST['EDIInvoices'] . ',
 					ediorders =' . $_POST['EDIOrders'] . ",
-					edireference='" . $_POST['EDIReference'] . "',
+					edireference='" . DB_escape_string($_POST['EDIReference']) . "',
 					editransport='" . $_POST['EDITransport'] . "',
-					ediaddress='" . $_POST['EDIAddress'] . "',
-					ediserveruser='" . $_POST['EDIServerUser'] . "',
-					ediserverpwd='" . $_POST['EDIServerPwd'] . "'
+					ediaddress='" . DB_escape_string($_POST['EDIAddress']) . "',
+					ediserveruser='" . DB_escape_string($_POST['EDIServerUser']) . "',
+					ediserverpwd='" . DB_escape_string($_POST['EDIServerPwd']) . "'
 			WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
 
         $ErrMsg = _('The customer EDI setup data could not be updated because');
