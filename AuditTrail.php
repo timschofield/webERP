@@ -8,6 +8,13 @@ $title = _('Audit Trail');
 
 include('includes/header.inc');
 
+if (!isset($_POST['FromDate'])){
+	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail']));
+}
+if (!isset($_POST['ToDate'])){
+	$_POST['ToDate']= Date($_SESSION['DefaultDateFormat']);
+}
+
 if ((!(Is_Date($_POST['FromDate'])) OR (!Is_Date($_POST['ToDate']))) AND (isset($_POST['View']))) {
 	prnMsg( _('Incorrerct date format used, please re-enter'), error);
 	unset($_POST['View']);
@@ -22,25 +29,17 @@ $userresult = DB_query('SELECT userid FROM www_users',$db);
 echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . ' METHOD=POST>';
 echo '<CENTER><TABLE>';
 
-if (!isset($_POST['FromDate'])){
-	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail']));
-}
-if (!isset($_POST['ToDate'])){
-	$_POST['ToDate']= Date($_SESSION['DefaultDateFormat']);
-}
-
-
 echo '<TR><TD>'. _('From Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</TD>
-	<TD><INPUT TYPE=text name="FromDate" value=' .$_POST['FromDate'].'></TD></TR>';
+	<TD><INPUT TYPE=text name="FromDate" maxlength="10" value=' .$_POST['FromDate'].'></TD></TR>';
 echo '<TR><TD>'. _('To Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</TD>
-	<TD><INPUT TYPE=text name="ToDate" value=' . $_POST['ToDate'] . '></TD></TR>';
+	<TD><INPUT TYPE=text name="ToDate" maxlength="10" value=' . $_POST['ToDate'] . '></TD></TR>';
 
 // Show user selections
 echo '<TR><TD>'. _('User ID'). '</TD>
 		<TD><SELECT name="SelectedUser">';
 echo '<OPTION value=ALL>ALL';
 while ($users = DB_fetch_row($userresult)) {
-	if ($users[0] == $_POST['SelectedUser']) {
+	if (isset($_POST['SelectedUser']) and $users[0]==$_POST['SelectedUser']) {
 		echo '<OPTION SELECTED value=' . $users[0] . '>' . $users[0];
 	} else {
 		echo '<OPTION value=' . $users[0] . '>' . $users[0];
@@ -52,7 +51,7 @@ echo '</SELECT></TD></TR>';
 echo '<TR><TD>'. _('Table '). '</TD><TD><SELECT name="SelectedTable">';
 echo '<OPTION value=ALL>ALL';
 while ($tables = DB_fetch_row($tableresult)) {
-	if ($tables[0] == $_POST['SelectedTable']) {
+	if (isset($_POST['SelectedTable']) and $tables[0]==$_POST['SelectedTable']) {
 		echo '<OPTION SELECTED value=' . $tables[0] . '>' . $tables[0];
 	} else {
 		echo '<OPTION value=' . $tables[0] . '>' . $tables[0];
@@ -134,12 +133,12 @@ if (isset($_POST['View'])) {
 	$result = DB_query($sql,$db);
 
 	echo '<CENTER><TABLE BORDER=0>';
-	echo '<TR class="tableheader"><TD>' . _('Date/Time') . '</TD>
-				<TD>' . _('User') . '</TD>
-				<TD>' . _('Type') . '</TD
-				<TD>' . _('Table') . '</TD>
-				<TD>' . _('Field Name') . '</TD>
-				<TD>' . _('Value') . '</TD></TR>';
+	echo '<TR><TH>' . _('Date/Time') . '</TH>
+				<TH>' . _('User') . '</TH>
+				<TH>' . _('Type') . '</TH>
+				<TH>' . _('Table') . '</TH>
+				<TH>' . _('Field Name') . '</TH>
+				<TH>' . _('Value') . '</TH></TR>';
 	while ($myrow = DB_fetch_row($result)) {
 		if (Query_Type($myrow[2]) == 'INSERT') {
 			InsertQueryInfo(str_replace("INSERT INTO",'',$myrow[2]));
@@ -162,7 +161,7 @@ if (isset($_POST['View'])) {
 				<TD>' . Query_Type($myrow[2]) . '</TD>
 				<TD>' . $_SESSION['SQLString']['table'] . '</TD>
 				<TD>' . $_SESSION['SQLString']['fields'][0] . '</TD>
-				<TD>' . trim(str_replace("'","",$_SESSION['SQLString']['values'][0])) . '</TD></TR>';
+				<TD>' . htmlentities(trim(str_replace("'","",$_SESSION['SQLString']['values'][0]))) . '</TD></TR>';
 			for ($i=1; $i<sizeof($_SESSION['SQLString']['fields']); $i++) {
 				if ((trim(str_replace("'","",$_SESSION['SQLString']['values'][$i])) != "") &
 		  	 (trim($_SESSION['SQLString']['fields'][$i]) != 'password') &
@@ -173,7 +172,7 @@ if (isset($_POST['View'])) {
 						<TD></TD>
 						<TD></TD>';
 					echo '<TD>'.$_SESSION['SQLString']['fields'][$i].'</TD>
-						<TD>'.trim(str_replace("'","",$_SESSION['SQLString']['values'][$i])).'</TD>';
+						<TD>'.htmlentities(trim(str_replace("'","",$_SESSION['SQLString']['values'][$i]))).'</TD>';
 					echo '</TR>';
 				}
 			}
