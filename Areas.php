@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -40,13 +40,13 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The area description may not be empty'),'error');
 	}
 	
-	if ($SelectedArea AND $InputError !=1) {
+	if (isset($SelectedArea) AND $InputError !=1) {
 
 		/*SelectedArea could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
 		$sql = "UPDATE areas SET
 				areacode='" . $_POST['AreaCode'] . "',
-				areadescription='" . $_POST['AreaDescription'] . "'
+				areadescription='" . DB_escape_string($_POST['AreaDescription']) . "'
 			WHERE areacode = '$SelectedArea'";
 
 		$msg = _('Area code') . ' ' . $SelectedArea  . ' ' . _('has been updated');
@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
 						areadescription)
 				VALUES (
 					'" . $_POST['AreaCode'] . "',
-					'" . $_POST['AreaDescription'] . "'
+					'" . DB_escape_string($_POST['AreaDescription']) . "'
 					)";
 
 		$SelectedArea =$_POST['AreaCode'];
@@ -155,7 +155,7 @@ if (!isset($_GET['delete'])) {
 
 	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
-	if ($SelectedArea) {
+	if (isset($SelectedArea)) {
 		//editing an existing area
 
 		$sql = "SELECT areacode,
@@ -174,6 +174,12 @@ if (!isset($_GET['delete'])) {
 		echo '<CENTER><TABLE><TR><TD>' . _('Area Code') . ':</TD><TD>' . $_POST['AreaCode'] . '</TD></TR>';
 
 	} else {
+		if (!isset($_POST['AreaCode'])) {
+			$_POST['AreaCode'] = '';
+		}
+		if (!isset($_POST['AreaDescription'])) {
+			$_POST['AreaDescription'] = '';
+		}
 		echo '<CENTER><TABLE>
 			<TR>
 				<TD>' . _('Area Code') . ":</TD>
