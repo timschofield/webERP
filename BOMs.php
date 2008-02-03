@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 $PageSecurity = 9;
 
@@ -57,7 +57,7 @@ ie the BOM is recursive otherwise false ie 0 */
 	$DbgMsg = _('The SQL that was used to retrieve the components of the BOM and that failed in the process was');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
-	if ($result!=0) {
+	if (DB_num_rows($result)!=0) {
 		while ($myrow=DB_fetch_row($result)){
 			if ($myrow[0]==$UltimateParent){
 				return 1;
@@ -164,11 +164,6 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 				$myrow[0],
 				$UltimateParent);
 
-			$RowCounter++;
-			if ($RowCounter==20){
-				echo $TableHeader;
-				$RowCounter=0;
-			}
 		} //END WHILE LIST LOOP
 } //end of function DisplayBOMItems
 
@@ -206,6 +201,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	If (isset($SelectedParent) AND isset($_POST['Submit'])) {
 
 		//editing a component need to do some validation of inputs
+		
+		$InputError = 0;
 
 		if (!Is_Date($_POST['EffectiveAfter'])) {
 			$InputError = 1;
@@ -243,12 +240,12 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		if (isset($SelectedParent) AND isset($SelectedComponent) AND $InputError != 1) {
 
 
-			$sql = "UPDATE bom SET workcentreadded='" . $_POST['WorkCentreAdded'] . "',
-						loccode='" . $_POST['LocCode'] . "',
-						effectiveafter='" . $EffectiveAfterSQL . "',
-						effectiveto='" . $EffectiveToSQL . "',
-						quantity= " . $_POST['Quantity'] . ",
-						autoissue=" . $_POST['AutoIssue'] . "
+			$sql = "UPDATE bom SET workcentreadded='" . DB_escape_string($_POST['WorkCentreAdded']) . "',
+						loccode='" . DB_escape_string($_POST['LocCode']) . "',
+						effectiveafter='" . DB_escape_string($EffectiveAfterSQL) . "',
+						effectiveto='" . DB_escape_string($EffectiveToSQL) . "',
+						quantity= " . DB_escape_string($_POST['Quantity']) . ",
+						autoissue=" . DB_escape_string($_POST['AutoIssue']) . "
 					WHERE bom.parent='" . $SelectedParent . "'
 					AND bom.component='" . $SelectedComponent . "'";
 
@@ -291,13 +288,13 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 								effectiveto,
 								autoissue)
 							VALUES ('$SelectedParent',
-								'" . $_POST['Component'] . "',
-								'" . $_POST['WorkCentreAdded'] . "',
-								'" . $_POST['LocCode'] . "',
-								" . $_POST['Quantity'] . ",
-								'" . $EffectiveAfterSQL . "',
-								'" . $EffectiveToSQL . "',
-								" . $_POST['AutoIssue'] . ")";
+								'" . DB_escape_string($_POST['Component']) . "',
+								'" . DB_escape_string($_POST['WorkCentreAdded']) . "',
+								'" . DB_escape_string($_POST['LocCode']) . "',
+								" . DB_escape_string($_POST['Quantity']) . ",
+								'" . DB_escape_string($EffectiveAfterSQL) . "',
+								'" . DB_escape_string($EffectiveToSQL) . "',
+								" . DB_escape_string($_POST['AutoIssue']) . ")";
 
 					$ErrMsg = _('Could not insert the BOM component because');
 					$DbgMsg = _('The SQL used to insert the component was');
@@ -466,16 +463,16 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 	display_children($SelectedParent, 1, $BOMTree);
 
 	$TableHeader =  '<tr>
-			<td class="tableheader">' . _('Level') . '</td>
-			<td class="tableheader">' . _('Code') . '</td>
-			<td class="tableheader">' . _('Description') . '</td>
-			<td class="tableheader">' . _('Location') . '</td>
-			<td class="tableheader">' . _('Work Centre') . '</td>
-			<td class="tableheader">' . _('Quantity') . '</td>
-			<td class="tableheader">' . _('Effective After') . '</td>
-			<td class="tableheader">' . _('Effective To') . '</td>
-			<td class="tableheader">' . _('Auto Issue') . '</td>
-			<td class="tableheader">' . _('Qty On Hand') . '</td>
+			<th>' . _('Level') . '</th>
+			<th>' . _('Code') . '</th>
+			<th>' . _('Description') . '</th>
+			<th>' . _('Location') . '</th>
+			<th>' . _('Work Centre') . '</th>
+			<th>' . _('Quantity') . '</th>
+			<th>' . _('Effective After') . '</th>
+			<th>' . _('Effective To') . '</th>
+			<th>' . _('Auto Issue') . '</th>
+			<th>' . _('Qty On Hand') . '</th>
 			</tr>';
 	echo $TableHeader;
 	if(count($BOMTree) == 0) {
@@ -490,10 +487,10 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			$Parent = $BOMItem['Parent'];
 			$Component = $BOMItem['Component'];
 			if ($k==1){
-				echo "<tr bgcolor='#CCCCCC'>";
+				echo '<tr class="EvenTableRows">';
 				$k=0;
 			}else {
-				echo "<tr bgcolor='#EEEEEE'>";
+				echo '<tr class="OddTableRows">';
 				$k++;
 			}
 			DisplayBOMItems($UltimateParent, $Parent, $Component, $Level, $db);
@@ -589,7 +586,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		$result = DB_query($sql,$db);
 
 		while ($myrow = DB_fetch_array($result)) {
-			if ($myrow['loccode']==$_POST['LocCode']) {
+			if (isset($_POST['LocCode']) and $myrow['loccode']==$_POST['LocCode']) {
 				echo "<OPTION SELECTED VALUE='";
 			} else {
 				echo "<OPTION VALUE='";
@@ -626,7 +623,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 		echo "</SELECT></TD></TR><TR><TD>" . _('Quantity') . ": </TD><TD>
 		    <INPUT TYPE='Text' name='Quantity' SIZE=10 MAXLENGTH=8 VALUE=";
-		if ($_POST['Quantity']){
+		if (isset($_POST['Quantity'])){
 			echo $_POST['Quantity'];
 		} else {
 			echo 1;
@@ -635,7 +632,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		echo "></TD></TR>";
 
 		if (!isset($_POST['EffectiveTo']) OR $_POST['EffectiveTo']=='') {
-			$_POST['EffectiveTo'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'),Date('d'),(Date('y')+30)));
+			$_POST['EffectiveTo'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'),Date('d'),(Date('y')+20)));
 		}
 		if (!isset($_POST['EffectiveAfter']) OR $_POST['EffectiveAfter']=='') {
 			$_POST['EffectiveAfter'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'),Date('d')-1,Date('y')));
@@ -758,10 +755,10 @@ if (!isset($SelectedParent)) {
 If (isset($result) AND !isset($SelectedParent)) {
 
 	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
-	$TableHeader = '<TR><TD class=tableheader>' . _('Code') . '</TD>
-				<TD class=tableheader>' . _('Description') . '</TD>
-				<TD class=tableheader>' . _('On Hand') . '</TD>
-				<TD class=tableheader>' . _('Units') . '</TD>
+	$TableHeader = '<TR><TH>' . _('Code') . '</TH>
+				<TH>' . _('Description') . '</TH>
+				<TH>' . _('On Hand') . '</TH>
+				<TH>' . _('Units') . '</TH>
 			</TR>';
 
 	echo $TableHeader;
@@ -770,10 +767,10 @@ If (isset($result) AND !isset($SelectedParent)) {
 	$k=0; //row colour counter
 	while ($myrow=DB_fetch_array($result)) {
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';;
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';;
 			$k++;
 		}
 		if ($myrow['mbflag']=='A' OR $myrow['mbflag']=='K'){
