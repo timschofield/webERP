@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 $PageSecurity = 9;
 
 include('includes/session.inc');
@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
     } elseif (strlen($_POST['HundredsName']) > 15) {
         $InputError = 1;
         prnMsg(_('The hundredths name must be 15 characters or less long'),'error');
-    } elseif (($FunctionalCurrency != '') and $SelectedCurrency == $FunctionalCurrency){
+    } elseif (($FunctionalCurrency != '') and (isset($SelectedCurrency) and $SelectedCurrency==$FunctionalCurrency)){
         $InputError = 1;
         prnMsg(_('The functional currency cannot be modified or deleted'),'error');
     } elseif (strstr($_POST['Abbreviation'],"'") OR strstr($_POST['Abbreviation'],'+') OR strstr($_POST['Abbreviation'],"\"") OR strstr($_POST['Abbreviation'],'&') OR strstr($_POST['Abbreviation'],' ') OR strstr($_POST['Abbreviation'],"\\") OR strstr($_POST['Abbreviation'],'.') OR strstr($_POST['Abbreviation'],'"')) {
@@ -143,21 +143,21 @@ or deletion of the records*/
     $result = DB_query($sql, $db);
 
     echo '<CENTER><table border=1>';
-    echo "<tr><td class='tableheader'>"._('Abbreviation')."</td>
-    		<td class='tableheader'>"._('Currency Name')."</td>
-		<td class='tableheader'>"._('Country')."</td>
-		<td class='tableheader'>"._('Hundredths Name')."</td>
-		<td class='tableheader'>"._('Exchange Rate')."</td></tr>";
+    echo "<tr><th>"._('Abbreviation')."</th>
+    		<th>"._('Currency Name')."</th>
+		<th>"._('Country')."</th>
+		<th>"._('Hundredths Name')."</th>
+		<th>"._('Exchange Rate')."</th></tr>";
 
     $k=0; //row colour counter
     while ($myrow = DB_fetch_row($result)) {
         if ($myrow[1]==$FunctionalCurrency){
-            echo "<tr bgcolor='#FFbbbb'>";
+            echo '<tr bgcolor=#FFbbbb>';
         } elseif ($k==1){
-            echo "<tr bgcolor='#CCCCCC'>";
+            echo '<tr class="EvenTableRows">';
             $k=0;
         } else {
-            echo "<tr bgcolor='#EEEEEE'>";
+            echo  '<tr class="OddTableRows">';;
             $k++;
         }
         if ($myrow[1]!=$FunctionalCurrency){
@@ -243,7 +243,7 @@ if (!isset($_GET['delete'])) {
         echo $_POST['Abbreviation'] . '</TD></TR>';
 
     } else { //end of if $SelectedCurrency only do the else when a new record is being entered
-
+		if (!isset($_POST['Abbreviation'])) {$_POST['Abbreviation']='';}
         echo "<CENTER><TABLE><TR>
 		<TD>"._('Currency Abbreviation').":</TD>
 		<TD><input type='Text' name='Abbreviation' value='" . $_POST['Abbreviation'] . "' SIZE=4 MAXLENGTH=3></TD></TR>";
@@ -251,18 +251,22 @@ if (!isset($_GET['delete'])) {
 
     echo '<TR><TD>'._('Currency Name').':</TD>';
     echo '<TD>';
+	if (!isset($_POST['CurrencyName'])) {$_POST['CurrencyName']='';}
     echo '<INPUT TYPE="text" name="CurrencyName" SIZE=20 MAXLENGTH=20 VALUE="' . $_POST['CurrencyName'] . '">';
     echo '</TD></TR>';
     echo '<TR><TD>'._('Country').':</TD>';
     echo '<TD>';
+	if (!isset($_POST['Country'])) {$_POST['Country']='';}
     echo '<INPUT TYPE="text" name="Country" SIZE=30 MAXLENGTH=50 VALUE="' . $_POST['Country'] . '">';
     echo '</TD></TR>';
     echo '<TR><TD>'._('Hundredths Name').':</TD>';
     echo '<TD>';
+	if (!isset($_POST['HundredsName'])) {$_POST['HundredsName']='';}
     echo '<INPUT TYPE="text" name="HundredsName" SIZE=10 MAXLENGTH=15 VALUE="'. $_POST['HundredsName'].'">';
     echo '</TD></TR>';
     echo '<TR><TD>'._('Exchange Rate').':</TD>';
     echo '<TD>';
+	if (!isset($_POST['ExchangeRate'])) {$_POST['ExchangeRate']='';}
     echo '<INPUT TYPE="text" name="ExchangeRate" SIZE=10 MAXLENGTH=9 VALUE='. $_POST['ExchangeRate'].'>';
     echo '</TD></TR>';
     echo '</TABLE>';
