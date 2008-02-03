@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.43 $ */
+/* $Revision: 1.44 $ */
 
 $PageSecurity = 11;
 
@@ -595,11 +595,7 @@ function select_files($dir, $label = '', $select_name = 'ItemPDF', $curr_val = '
 		} 
 		$mydir .= ""; 
 	}
-	if ($teller == 0) { 
-		$mydir = "No files!"; 
-	} else { 
-		return $mydir; 
-	}
+	return $mydir; 
 }
 if (!isset($_POST['ItemPDF'])) {
 	$_POST['ItemPDF'] = '';
