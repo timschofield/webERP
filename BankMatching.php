@@ -1,15 +1,15 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 7;
 
 include("includes/session.inc");
 
-if (($_GET["Type"]=='Receipts') OR ($_POST["Type"]=='Receipts')){
+if ((isset($_GET["Type"]) and $_GET["Type"]=='Receipts') OR (isset($_POST["Type"]) and $_POST["Type"]=='Receipts')){
 	$Type = 'Receipts';
 	$TypeName =_('Receipts');
 	$title = _('Bank Account Deposits Matching');
-} elseif (($_GET["Type"]=='Payments') OR ($_POST["Type"]=='Payments')) {
+} elseif ((isset($_GET["Type"]) and $_GET["Type"]=='Payments') OR (isset($_POST["Type"]) and $_POST["Type"]=='Payments')) {
 	$Type = 'Payments';
 	$TypeName =_('Payments');
 	$title = _('Bank Account Payments Matching');
@@ -23,7 +23,7 @@ include('includes/header.inc');
 
 if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
 	for ($Counter=1;$Counter <= $_POST['RowCounter']; $Counter++){
-		if ($_POST["Clear_" . $Counter]==True){
+		if (isset($_POST["Clear_" . $Counter]) and $_POST["Clear_" . $Counter]==True){
 			/*Get amount to be cleared */
 			$sql = "SELECT amount, 
 						exrate 
@@ -39,7 +39,9 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
 			$ErrMsg =  _('Could not match off this payment beacause');
 			$result = DB_query($sql,$db,$ErrMsg);
 
-		} elseif (is_numeric((float) $_POST["AmtClear_" . $Counter]) AND (($_POST["AmtClear_" . $Counter]<0 AND $Type=='Payments') OR ($Type=='Receipts' AND ($_POST["AmtClear_" . $Counter]>0)))){
+		} elseif (isset($_POST["AmtClear_" . $Counter]) and is_numeric((float) $_POST["AmtClear_" . $Counter]) AND 
+			((isset($_POST["AmtClear_" . $Counter]) and $_POST["AmtClear_" . $Counter]<0 AND $Type=='Payments') OR 
+			($Type=='Receipts' AND (isset($_POST["AmtClear_" . $Counter]) and $_POST["AmtClear_" . $Counter]>0)))){
 			/*if the amount entered was numeric and negative for a payment or positive for a receipt */
 			$sql = "UPDATE banktrans SET amountcleared=" .  $_POST["AmtClear_" . $Counter] . "
 					WHERE banktransid=" . $_POST["BankTrans_" . $Counter];
@@ -47,7 +49,7 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1){
 			$ErrMsg = _('Could not update the amount matched off this bank transaction because');
 			$result = DB_query($sql,$db,$ErrMsg);
 
-		} elseif ($_POST["Unclear_" . $Counter]==True){
+		} elseif (isset($_POST["Unclear_" . $Counter]) and $_POST["Unclear_" . $Counter]==True){
 			$sql = "UPDATE banktrans SET amountcleared = 0
 					WHERE banktransid=" . $_POST["BankTrans_" . $Counter];
 			$ErrMsg =  _('Could not unclear this bank transaction because');
@@ -69,7 +71,7 @@ echo '<TD ALIGN=RIGHT>' . _('Bank Account') . ':</TD><TD COLSPAN=3><SELECT name=
 $sql = "SELECT accountcode, bankaccountname FROM bankaccounts";
 $resultBankActs = DB_query($sql,$db);
 while ($myrow=DB_fetch_array($resultBankActs)){
-	if ($myrow["accountcode"] == $_POST['BankAccount']){
+	if (isset($_POST['BankAccount']) and $myrow["accountcode"]==$_POST['BankAccount']){
 	     echo "<OPTION SELECTED Value='" . $myrow['accountcode'] . "'>" . $myrow['bankaccountname'];
 	} else {
 	     echo "<OPTION Value='" . $myrow['accountcode'] . "'>" . $myrow['bankaccountname'];
@@ -198,12 +200,12 @@ if ($InputError !=1 AND isset($_POST["BankAccount"]) AND $_POST["BankAccount"]!=
 	$ErrMsg = _('The payments with the selected criteria could not be retrieved because');
 	$PaymentsResult = DB_query($sql, $db, $ErrMsg);
 
-	$TableHeader = '<TR><TD class="tableheader">'. _('Ref'). '</TD>
-			 <TD class="tableheader">' . $TypeName . '</TD>
-			 <TD class="tableheader">' . _('Date') . '</TD>
-			 <TD class="tableheader">' . _('Amount') . '</TD>
-			 <TD class="tableheader">' . _('Outstanding') . '</TD>
-			 <TD COLSPAN=3 ALIGN=CENTER class="tableheader">' . _('Clear') . ' / ' . _('Unclear') . '</TD>
+	$TableHeader = '<TR><TH>'. _('Ref'). '</TH>
+			 <TH>' . $TypeName . '</TH>
+			 <TH>' . _('Date') . '</TH>
+			 <TH>' . _('Amount') . '</TH>
+			 <TH>' . _('Outstanding') . '</TH>
+			 <TH COLSPAN=3 ALIGN=CENTER>' . _('Clear') . ' / ' . _('Unclear') . '</TH>
 		</TR>';
 	echo '<TABLE CELLPADDING=2 BORDER=2>' . $TableHeader;
 
@@ -239,10 +241,10 @@ if ($InputError !=1 AND isset($_POST["BankAccount"]) AND $_POST["BankAccount"]!=
 
 		} else{
 			if ($k==1){
-				echo "<tr bgcolor='#CCCCCC'>";
+				echo '<tr class="EvenTableRows">';
 				$k=0;
 			} else {
-				echo "<tr bgcolor='#EEEEEE'>";
+				echo '<tr class="OddTableRows">';
 				$k=1;
 			}
 
