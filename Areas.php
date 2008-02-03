@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -120,17 +120,17 @@ if (!isset($SelectedArea)) {
 
 	echo '<CENTER><table border=1>';
 	echo "<tr>
-		<td class='tableheader'>" . _('Area Code') . "</td>
-		<td class='tableheader'>" . _('Area Name') . '</td>';
+		<th>" . _('Area Code') . "</th>
+		<th>" . _('Area Name') . '</th>';
 
 	$k=0; //row colour counter
 
 	while ($myrow = DB_fetch_row($result)) {
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 
