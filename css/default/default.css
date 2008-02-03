@@ -52,6 +52,14 @@ td {
 
 }
 
+.EvenTableRows {
+	background-color: #CCCCCC;
+}
+
+.OddTableRows {
+	background-color: #EEEEEE;
+}
+
 th {
 	font-weight: normal;
 	background-color: #800000;
