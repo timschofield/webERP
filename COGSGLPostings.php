@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 10;
 
@@ -188,21 +188,23 @@ if (!isset($SelectedCOGSPostingID)) {
 		$result = DB_query($sql,$db);
 	
 		echo '<CENTER><table border=1>';
-		echo '<tr><td class="tableheader">' . _('Area') .
-			'</td><td class="tableheader">' . _('Stock Category') .
-			'</td><td class="tableheader">' . _('Sales Type') .
-			'</td><td class="tableheader">' . _('GL Account') .
-			'</td></tr>';
+		echo '<tr><th>' . _('Area') .
+			'</th><th>' . _('Stock Category') .
+			'</th><th>' . _('Sales Type') .
+			'</th><th>' . _('GL Account') .
+			'</th></tr>';
+
+		$k = 0;
 	
 		while ($myrow = DB_fetch_row($result)) {
-	
 			if ($k==1){
-				echo '<tr bgcolor="#CCCCCC">';
+				echo '<tr class="EvenTableRows">';
 				$k=0;
-			} else {
-				echo '<tr bgcolor="#EEEEEE">';
-				$k=1;
+			}else {
+				echo '<tr class="OddTableRows">';
+				$k++;
 			}
+		
 		printf("<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
@@ -266,7 +268,7 @@ if (!isset($_GET['delete'])) {
 	echo "<CENTER><TABLE><TR><TD>" . _('Area') . ":</TD><TD><SELECT name='Area'><OPTION VALUE='AN'>" . _('Any Other');
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['areacode']==$_POST['Area']) {
+		if (isset($_POST['Area']) and $myrow['areacode']==$_POST['Area']) {
 			echo "<OPTION SELECTED VALUE='";
 		} else {
 			echo "<OPTION VALUE='";
@@ -283,7 +285,7 @@ if (!isset($_GET['delete'])) {
 			<OPTION VALUE='ANY'>" . _('Any Other');
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow["categoryid"]==$_POST['StkCat']) {
+		if (isset($_POST['StkCat']) and $myrow["categoryid"]==$_POST['StkCat']) {
 			echo "<OPTION SELECTED VALUE='";
 		} else {
 			echo "<OPTION VALUE='";
@@ -301,7 +303,7 @@ if (!isset($_GET['delete'])) {
 		<TD><SELECT name='SalesType'><OPTION VALUE='AN'>" . _('Any Other');
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['typeabbrev']==$_POST['SalesType']) {
+		if (isset($_POST['SalesType']) and $myrow['typeabbrev']==$_POST['SalesType']) {
 			echo "<OPTION SELECTED VALUE='";
 		} else {
 			echo "<OPTION VALUE='";
@@ -325,7 +327,7 @@ if (!isset($_GET['delete'])) {
 	$result = DB_query($sql,$db);
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['accountcode']==$_POST['GLCode']) {
+		if (isset($_POST['GLCode']) and $myrow['accountcode']==$_POST['GLCode']) {
 			echo "<OPTION SELECTED VALUE='";
 		} else {
 			echo "<OPTION VALUE='";
