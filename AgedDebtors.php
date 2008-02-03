@@ -2,7 +2,7 @@
 
 $PageSecurity = 2;
 include('includes/session.inc');
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 
 If (isset($_POST['PrintPDF'])
@@ -277,7 +277,7 @@ If (isset($_POST['PrintPDF'])
 	include ('includes/PDFAgedDebtorsPageHeader.inc');
 
 	$TotBal=0;
-	$TotCur=0;
+	$TotCurr=0;
 	$TotDue=0;
 	$TotOD1=0;
 	$TotOD2=0;
@@ -452,7 +452,7 @@ If (isset($_POST['PrintPDF'])
 	$title=_('Aged Debtor Analysis');
 	include('includes/header.inc');
 
-	if (strlen($_POST['FromCriteria'])<1 || strlen($_POST['ToCriteria'])<1) {
+	if ((!isset($_POST['FromCriteria']) || !isset($_POST['ToCriteria']))) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 

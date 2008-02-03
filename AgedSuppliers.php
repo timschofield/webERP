@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -264,7 +264,7 @@ If (isset($_POST['PrintPDF'])
 	$title = _('Aged Supplier Analysis');
 	include('includes/header.inc');
 
-	if (strlen($_POST['FromCriteria'])<1 OR strlen($_POST['ToCriteria'])<1) {
+	if (!isset($_POST['FromCriteria']) OR !isset($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
