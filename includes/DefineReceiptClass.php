@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 /* definition of the ReceiptBatch class */
 
 Class Receipt_Batch {
@@ -7,9 +7,11 @@ Class Receipt_Batch {
 	var $Items; /*array of objects of Receipt class - id is the pointer */
 	var $BatchNo; /*Batch Number*/
 	var $Account; /*Bank account GL Code banked into */
+	var $AccountCurrency; /*Bank Account Currency */
 	var $BankAccountName; /*Bank account name */
 	var $DateBanked; /*Date the batch of receipts was banked */
-	var $ExRate; /*Exchange rate applicable to all receipts in the batch seperate batch required for different currencies*/
+	var $ExRate; /*Exchange rate conversion between currency received and bank account currency */
+	var $FunctionalExRate; /* Exchange Rate between Bank Account Currency and Functional(business reporting) currency */
 	var $Currency; /*Currency being banked - defaulted to company functional */
 	var $Narrative;
 	var $ReceiptType;  /*Type of receipt ie credit card/cash/cheque etc - array of types defined in config.php*/

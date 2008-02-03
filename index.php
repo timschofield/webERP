@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.63 $ */
+/* $Revision: 1.64 $ */
 
 
 $PageSecurity = 1;
@@ -224,7 +224,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<A HREF='" . $rootpath . '/CustomerReceipt.php?' . SID . "'><LI>" . _('Enter Receipts') . '</LI></A>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/CustomerReceipt.php?' . SID . "&NewReceipt=Yes'><LI>" . _('Enter Receipts') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -932,7 +932,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<A HREF='" . $rootpath . '/CustomerReceipt.php?' . SID . "'><LI>" . _('Bank Account Receipts') . '</LI></A>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/CustomerReceipt.php?' . SID . "&NewReceipt=Yes'><LI>" . _('Bank Account Receipts') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
