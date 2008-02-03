@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 10;
 
@@ -91,7 +91,7 @@ if (isset($_POST['submit'])) {
 				SET groupname='" . $_POST['GroupName'] . "',
 					sectioninaccounts=" . $_POST['SectionInAccounts'] . ",
 					pandl=" . $_POST['PandL'] . ",
-					sequenceintb=" . $_POST['SequenceInTB'] . ",
+					sequenceintb=" . DB_escape_string($_POST['SequenceInTB']) . ",
 					parentgroupname='" . $_POST['ParentGroupName'] . "'
 				WHERE groupname = '" . $_POST['SelectedAccountGroup'] . "'";
 
@@ -107,9 +107,9 @@ if (isset($_POST['submit'])) {
 					pandl,
 					parentgroupname)
 			VALUES (
-				'" . $_POST['GroupName'] . "',
+				'" . DB_escape_string($_POST['GroupName']) . "',
 				" . $_POST['SectionInAccounts'] . ",
-				" . $_POST['SequenceInTB'] . ",
+				" . DB_escape_string($_POST['SequenceInTB']) . ",
 				" . $_POST['PandL'] . ",
 				'" . $_POST['ParentGroupName'] . "'
 				)";
@@ -176,21 +176,21 @@ or deletion of the records*/
 
 	echo "<center><table>
 		<tr>
-		<td class='tableheader'>" . _('Group Name') . "</td>
-		<td class='tableheader'>" . _('Section') . "</td>
-		<td class='tableheader'>" . _('Sequence In TB') . "</td>
-		<td class='tableheader'>" . _('Profit and Loss') . "</td>
-		<td class='tableheader'>" . _('Parent Group') . "</td>
+		<th>" . _('Group Name') . "</th>
+		<th>" . _('Section') . "</th>
+		<th>" . _('Sequence In TB') . "</th>
+		<th>" . _('Profit and Loss') . "</th>
+		<th>" . _('Parent Group') . "</th>
 		</tr>";
 
 	$k=0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
 
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 
@@ -291,7 +291,7 @@ if (! isset($_GET['delete'])) {
 
 	while ( $grouprow = DB_fetch_array($groupresult) ) {
 
-		if ($_POST['ParentGroupName']==$grouprow['groupname']) {
+		if (isset($_POST['ParentGroupName']) and $_POST['ParentGroupName']==$grouprow['groupname']) {
 			echo "<OPTION SELECTED VALUE='".$grouprow['groupname']."'>" .$grouprow['groupname'];
 		} else {
 			echo "<OPTION VALUE='".$grouprow['groupname']."'>" .$grouprow['groupname'];
