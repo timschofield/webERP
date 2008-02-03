@@ -37,3 +37,5 @@ ALTER TABLE `bankaccounts` ADD `currcode` CHAR( 3 ) NOT NULL AFTER `accountcode`
 ALTER TABLE `bankaccounts` ADD INDEX ( `currcode` ) ;
 ALTER TABLE `banktrans` CHANGE `exrate` `exrate` DOUBLE NOT NULL DEFAULT '1' COMMENT 'From bank account currency to payment currency';
 ALTER TABLE `banktrans` ADD `functionalexrate` DOUBLE NOT NULL DEFAULT '1' COMMENT 'Account currency to functional currency';
+
+INSERT INTO `config` VALUES ('ProhibitNegativeStock','1');
