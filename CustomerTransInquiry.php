@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 2;
 
@@ -71,24 +71,24 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 	}
 	$sql .=  " ORDER BY id";
 
-   $TransResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
    $ErrMsg = _('The customer transactions for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db);
    $DbgMsg =  _('The SQL that failed was');
+   $TransResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
 
    echo '<TABLE CELLPADDING=2 BORDER=2>';
 
    $tableheader = "<TR>
-			<TD class='tableheader'>" . _('Type') . "</TD>
-			<TD class='tableheader'>" . _('Number') . "</TD>
-			<TD class='tableheader'>" . _('Date') . "</TD>
-			<TD class='tableheader'>" . _('Customer') . "</TD>
-			<TD class='tableheader'>" . _('Branch') . "</TD>
-			<TD class='tableheader'>" . _('Reference') . "</TD>
-			<TD class='tableheader'>" . _('Comments') . "</TD>
-			<TD class='tableheader'>" . _('Order') . "</TD>
-			<TD class='tableheader'>" . _('Ex Rate') . "</TD>
-			<TD class='tableheader'>" . _('Amount') . "</TD>
-			<TD class='tableheader'>" . _('Currency') . '</TD></TR>';
+			<TH>" . _('Type') . "</TH>
+			<TH>" . _('Number') . "</TH>
+			<TH>" . _('Date') . "</TH>
+			<TH>" . _('Customer') . "</TH>
+			<TH>" . _('Branch') . "</TH>
+			<TH>" . _('Reference') . "</TH>
+			<TH>" . _('Comments') . "</TH>
+			<TH>" . _('Order') . "</TH>
+			<TH>" . _('Ex Rate') . "</TH>
+			<TH>" . _('Amount') . "</TH>
+			<TH>" . _('Currency') . '</TH></TR>';
 	echo $tableheader;
 
 	$RowCounter = 1;
@@ -97,10 +97,10 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 	while ($myrow=DB_fetch_array($TransResult)) {
 
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 
@@ -170,12 +170,6 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 				$myrow['currcode']);
 		}
 
-		$RowCounter++;
-		If ($RowCounter == 12){
-			$RowCounter=1;
-			echo $tableheader;
-		}
-	//end of page full new headings if
 	}
 	//end of while loop
 

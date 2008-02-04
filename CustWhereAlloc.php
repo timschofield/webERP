@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -27,6 +27,7 @@ while ($myrow=DB_fetch_array($resultTypes)){
 }
 echo '</SELECT></TD>';
 
+if (!isset($_POST['TransNo'])) {$_POST['TransNo']='';}
 echo '<TD>'._('Transaction Number').":</TD>
 	<TD><INPUT TYPE=TEXT NAME='TransNo' MAXLENGTH=10 SIZE=10 VALUE=". $_POST['TransNo'] . '></TD>';
 
@@ -76,12 +77,12 @@ if (isset($_POST['ShowResults']) AND  $_POST['TransNo']!=''){
 	} else {
 		echo '<TABLE CELLPADDING=2 BORDER=2>';
 	
-		$tableheader = "<TR><TD class='tableheader'>"._('Type')."</TD>
-					<TD class='tableheader'>"._('Number')."</TD>
-					<TD class='tableheader'>"._('Reference')."</TD>
-					<TD class='tableheader'>"._('Ex Rate')."</TD>
-					<TD class='tableheader'>"._('Amount')."</TD>
-					<TD class='tableheader'>"._('Alloc').'</TD>
+		$tableheader = "<TR><TH>"._('Type')."</TH>
+					<TH>"._('Number')."</TH>
+					<TH>"._('Reference')."</TH>
+					<TH>"._('Ex Rate')."</TH>
+					<TH>"._('Amount')."</TH>
+					<TH>"._('Alloc').'</TH>
 				</TR>';
 		echo $tableheader;
 	
@@ -92,10 +93,10 @@ if (isset($_POST['ShowResults']) AND  $_POST['TransNo']!=''){
 		while ($myrow=DB_fetch_array($TransResult)) {
 	
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 	

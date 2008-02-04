@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 $PageSecurity = 3;
 
@@ -12,7 +12,7 @@ include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 
-if ($_POST['submit']) {
+if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
@@ -275,7 +275,7 @@ if ($_POST['submit']) {
 	} //end if Delete Customer
 }
 
-if($reset){
+if(isset($reset)){
 	unset($_POST['CustName']);
 	unset($_POST['Address1']);
 	unset($_POST['Address2']);
@@ -625,7 +625,7 @@ if (!isset($DebtorNo)) {
 	}
 	echo '</SELECT></TD></TR></TABLE></TD></TR></TABLE></CENTER>';
 
-	if ($_POST['New']) {
+	if (isset($_POST['New'])) {
 		echo "<CENTER><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Add New Customer') . "'><BR><INPUT TYPE=SUBMIT name='reset' VALUE='" . _('Reset') . "'></FORM>";
 	} else {
 		echo "<HR><CENTER><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Update Customer') . "'>";

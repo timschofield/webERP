@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -123,11 +123,11 @@ if ($CustomerRecord['dissallowinvoices']!=0){
 
 echo "<TABLE WIDTH=100% BORDER=1>
 	<TR>
-		<td class='tableheader'>" . _('Total Balance') . "</TD>
-		<td class='tableheader'>" . _('Current') . "</TD>
-		<td class='tableheader'>" . _('Now Due') . "</TD>
-		<td class='tableheader'>" . $_SESSION['PastDueDays1'] . "-" . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . "</TD>
-		<td class='tableheader'>" . _('Over') . ' ' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</TD></TR>';
+		<th>" . _('Total Balance') . "</th>
+		<th>" . _('Current') . "</th>
+		<th>" . _('Now Due') . "</th>
+		<th>" . $_SESSION['PastDueDays1'] . "-" . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . "</th>
+		<th>" . _('Over') . ' ' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</th></TR>';
 
 echo '<TR><TD ALIGN=RIGHT>' . number_format($CustomerRecord['balance'],2) . '</TD>
 	<TD ALIGN=RIGHT>' . number_format(($CustomerRecord['balance'] - $CustomerRecord['due']),2) . '</TD>
@@ -175,16 +175,16 @@ if (DB_num_rows($TransResult)==0){
 echo '<TABLE CELLPADDING=2 COLSPAN=7>';
 
 $tableheader = "<TR BGCOLOR =#800000>
-		<TD class='tableheader'>" . _('Type') . "</TD>
-		<TD class='tableheader'>" . _('Number') . "</TD>
-		<TD class='tableheader'>" . _('Date') . "</TD>
-		<TD class='tableheader'>" . _('Branch') . "</TD>
-		<TD class='tableheader'>" . _('Reference') . "</TD>
-		<TD class='tableheader'>" . _('Comments') . "</TD>
-		<TD class='tableheader'>" . _('Order') . "</TD>
-		<TD class='tableheader'>" . _('Total') . "</TD>
-		<TD class='tableheader'>" . _('Allocated') . "</TD>
-		<TD class='tableheader'>" . _('Balance') . "</TD></TR>";
+		<TH>" . _('Type') . "</TH>
+		<TH>" . _('Number') . "</TH>
+		<TH>" . _('Date') . "</TH>
+		<TH>" . _('Branch') . "</TH>
+		<TH>" . _('Reference') . "</TH>
+		<TH>" . _('Comments') . "</TH>
+		<TH>" . _('Order') . "</TH>
+		<TH>" . _('Total') . "</TH>
+		<TH>" . _('Allocated') . "</TH>
+		<TH>" . _('Balance') . "</TH></TR>";
 
 echo $tableheader;
 
@@ -194,10 +194,10 @@ $k=0; //row colour counter
 while ($myrow=DB_fetch_array($TransResult)) {
 
 	if ($k==1){
-		echo "<tr bgcolor='#CCCCCC'>";
+		echo '<tr class="EvenTableRows">';
 		$k=0;
 	} else {
-		echo "<tr bgcolor='#EEEEEE'>";
+		echo '<tr class="EvenTableRows">';
 		$k=1;
 	}
 
@@ -454,12 +454,6 @@ while ($myrow=DB_fetch_array($TransResult)) {
 		}
 	}
 
-	$j++;
-	If ($j == 12){
-		$j=1;
-		echo $tableheader;
-	}
-	//end of page full new headings if
 }
 //end of while loop
 
