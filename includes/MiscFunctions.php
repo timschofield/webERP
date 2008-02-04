@@ -15,23 +15,23 @@ function getMsg($Msg,$Type='info',$Prefix=''){
 	$Colour='';
 	switch($Type){
 		case 'error':
-			$Colour='red';
+			$Class = 'error';
 			$Prefix = $Prefix ? $Prefix : _('ERROR') . ' ' ._('Message Report');
 			break;
 		case 'warn':
-			$Colour='maroon';
+			$Class = 'warn';
 			$Prefix = $Prefix ? $Prefix : _('WARNING') . ' ' . _('Message Report');
 			break;
 		case 'success':
-			$Colour='darkgreen';
+			$Class = 'success';
 			$Prefix = $Prefix ? $Prefix : _('SUCCESS') . ' ' . _('Report');
 			break;
 		case 'info':
 		default:
 			$Prefix = $Prefix ? $Prefix : _('INFORMATION') . ' ' ._('Message');
-			$Colour='navy';
+			$Class = 'info';
 	}
-	return '<FONT COLOR="' . $Colour . '"><B>' . $Prefix . '</B> : ' .$Msg . '</FONT>';
+	return '<DIV class="'.$Class.'"><P><B>' . $Prefix . '</B> : ' .$Msg . '<P></DIV>';
 }//getMsg
 
 function IsEmailAddress($TestEmailAddress){

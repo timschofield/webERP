@@ -66,6 +66,30 @@ th {
 	color: #330000;
 }
 
+div.error {
+	background-color:#fddbdb;
+	color: red;
+	border: 1px solid red;
+}
+
+div.warn {
+	background-color:#f5dbfd;
+	color: maroon;
+	border: 1px solid maroon;
+}
+
+div.success {
+	background-color:#b9ecb4;
+	color: darkgreen;
+	border: 1px solid darkgreen;
+}
+
+div.info {
+	background-color:#c7ccf6;
+	color: navy;
+	border: 1px solid navy;
+}
+
 input {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
