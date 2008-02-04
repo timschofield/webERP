@@ -39,12 +39,12 @@ if (DB_num_rows($result)==0){
 } else {
 	while ($myrow=DB_fetch_array($result)){
 		$account = $myrow['accountcode'] . ' - ' . $myrow['accountname'];
-		if ($SelectedAccount==$myrow['accountcode']){
+		if (isset($SelectedAccount) and isset($LastCode) and $SelectedAccount==$myrow['accountcode']){
 			echo '<OPTION SELECTED value=' . $myrow['accountcode'] . '>' . $account;
 			$PrevCode=$LastCode;
 		} else {
 			echo '<OPTION value=' . $myrow['accountcode'] . '>' . $account;
-			if ($SelectedAccount == $LastCode) {
+			if (isset($SelectedAccount) and isset($LastCode) and $SelectedAccount == $LastCode) {
 				$NextCode=$myrow['accountcode'];
 			}
 		}
@@ -52,6 +52,10 @@ if (DB_num_rows($result)==0){
 	}
 	echo '</SELECT></TD></TR>';
 }
+
+if (!isset($PrevCode)) {$PrevCode='';}
+if (!isset($NextCode)) {$NextCode='';}
+
 echo '<INPUT TYPE=HIDDEN NAME=PrevAccount VALUE='.$PrevCode.'>';
 echo '<INPUT TYPE=HIDDEN NAME=NextAccount VALUE='.$NextCode.'>';
 echo '</TABLE>';
@@ -63,7 +67,7 @@ echo '</CENTER></FORM>';
 
 // End of account selection
 
-if ($SelectedAccount != '') {	
+if (isset($SelectedAccount) and $SelectedAccount != '') {	
 
 	$CurrentYearEndPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'],0)),$db);
 	
@@ -119,21 +123,21 @@ if ($SelectedAccount != '') {
 
 	echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . ' METHOD=POST>';
 	echo '<CENTER><TABLE>';
-	echo '<TR><TD class="tableheader" COLSPAN=3>'. _('Last Financial Year') .'</TD>';
-	echo '<TD class="tableheader" COLSPAN=3>'. _('This Financial Year') .'</TD>';
-	echo '<TD class="tableheader" COLSPAN=3>'. _('Next Financial Year') .'</TD></TR>';
+	echo '<TR><TH COLSPAN=3>'. _('Last Financial Year') .'</TH>';
+	echo '<TH COLSPAN=3>'. _('This Financial Year') .'</TH>';
+	echo '<TH COLSPAN=3>'. _('Next Financial Year') .'</TH></TR>';
 
-	echo '<TR><TD class="tableheader" COLSPAN=3>'. _('Year ended').' - '.
-	 	Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'], -1)) .'</TD>';
-	echo '<TD class="tableheader" COLSPAN=3>'. _('Year ended').' - '.
-	 	Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'],0)) .'</TD>';
-	echo '<TD class="tableheader" COLSPAN=3>'. _('Year ended').' - '.
-	 	Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'],1)) .'</TD></TR>';
+	echo '<TR><TH COLSPAN=3>'. _('Year ended').' - '.
+	 	Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'], -1)) .'</TH>';
+	echo '<TH COLSPAN=3>'. _('Year ended').' - '.
+	 	Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'],0)) .'</TH>';
+	echo '<TH COLSPAN=3>'. _('Year ended').' - '.
+	 	Date($_SESSION['DefaultDateFormat'],YearEndDate($_SESSION['YearEnd'],1)) .'</TH></TR>';
 
 	echo '<TR>';
 	for ($i=0; $i<3; $i++) {
-		echo '<TD class="tableheader">'. _('Period'). '</TD><TD class="tableheader">'. _('Actual') .
-			 '</TD><TD class="tableheader">'. _('Budget') . '</TD>';
+		echo '<TH>'. _('Period'). '</TH><TH>'. _('Actual') .
+			 '</TH><TH>'. _('Budget') . '</TH>';
 	}
 	echo '</TR>';
 	
@@ -147,10 +151,10 @@ if ($SelectedAccount != '') {
 		echo '<TD BGCOLOR="d2e5e8" ALIGN="RIGHT">'.number_format($budget[$CurrentYearEndPeriod-(24-$i)],2).'</TD>';
 		echo '<TD BGCOLOR="a9d3e7">'. $PeriodEnd[$CurrentYearEndPeriod-(12-$i)] .'</TD>';
 		echo '<TD BGCOLOR="d2e5e8" ALIGN="RIGHT">'.number_format($actual[$CurrentYearEndPeriod-(12-$i)],2).'</TD>';
-		echo '<TD><INPUT TYPE="TEXT" SIZE=8 NAME='.$i.'this'.' VALUE="'.number_format($budget[$CurrentYearEndPeriod-(12-$i)],2).'"></TD>';
+		echo '<TD><INPUT TYPE="TEXT" STYLE="text-align: right" SIZE=8 NAME='.$i.'this'.' VALUE="'.number_format($budget[$CurrentYearEndPeriod-(12-$i)],2).'"></TD>';
 		echo '<TD BGCOLOR="a9d3e7">'. $PeriodEnd[$CurrentYearEndPeriod+($i)] .'</TD>';
 		echo '<TD BGCOLOR="d2e5e8" ALIGN="RIGHT">'.number_format($actual[$CurrentYearEndPeriod+($i)],2).'</TD>';
-		echo '<TD><INPUT TYPE="TEXT" SIZE=8 NAME='.$i.'next'.' VALUE='.number_format($budget[$CurrentYearEndPeriod+($i)],2).'></TD>';
+		echo '<TD><INPUT TYPE="TEXT" STYLE="text-align: right" SIZE=8 NAME='.$i.'next'.' VALUE='.number_format($budget[$CurrentYearEndPeriod+($i)],2).'></TD>';
 		echo '</TR>';
 		$LastYearActual=$LastYearActual+$actual[$CurrentYearEndPeriod-(24-$i)];
 		$LastYearBudget=$LastYearBudget+$budget[$CurrentYearEndPeriod-(24-$i)];
@@ -162,15 +166,15 @@ if ($SelectedAccount != '') {
 	
 // Total Line	
 	
-	echo '<TR><TD class="tableheader">'. _('Total') .'</TD>';
-	echo '<TD class="tableheader" ALIGN="RIGHT">'.number_format($LastYearActual,2). '</TD>';
-	echo '<TD class="tableheader" ALIGN="RIGHT">'.number_format($LastYearBudget,2). '</TD>';
-	echo '<TD class="tableheader" ALIGN="RIGHT"></TD>';
-	echo '<TD class="tableheader" ALIGN="RIGHT">'.number_format($ThisYearActual,2). '</TD>';
-	echo '<TD class="tableheader" ALIGN="RIGHT"><INPUT TYPE="TEXT" SIZE=8 VALUE='.number_format($ThisYearBudget,2). '></TD>';
-	echo '<TD class="tableheader" ALIGN="RIGHT"></TD>';
-	echo '<TD class="tableheader" ALIGN="RIGHT">'.number_format($NextYearActual,2). '</TD>';
-	echo '<TD class="tableheader" ALIGN="RIGHT"><INPUT TYPE="TEXT" SIZE=8 VALUE='.number_format($NextYearBudget,2). '></TD></TR>';
+	echo '<TR><TH>'. _('Total') .'</TH>';
+	echo '<TH ALIGN="RIGHT">'.number_format($LastYearActual,2). '</TH>';
+	echo '<TH ALIGN="RIGHT">'.number_format($LastYearBudget,2). '</TH>';
+	echo '<TH ALIGN="RIGHT"></TH>';
+	echo '<TH ALIGN="RIGHT">'.number_format($ThisYearActual,2). '</TH>';
+	echo '<TH ALIGN="RIGHT"><INPUT TYPE="TEXT" STYLE="text-align: right" SIZE=8 VALUE='.number_format($ThisYearBudget,2). '></TH>';
+	echo '<TH ALIGN="RIGHT"></TH>';
+	echo '<TH ALIGN="RIGHT">'.number_format($NextYearActual,2). '</TH>';
+	echo '<TH ALIGN="RIGHT"><INPUT TYPE="TEXT" STYLE="text-align: right" SIZE=8 VALUE='.number_format($NextYearBudget,2). '></TH></TR>';
 	echo '</TABLE>';
 	echo '<INPUT TYPE=HIDDEN NAME="SelectedAccount" VALUE='.$SelectedAccount.'>';
 	echo '</BR><INPUT TYPE=SUBMIT name=update value="' . _('Update') . '"></CENTER></FORM>';
