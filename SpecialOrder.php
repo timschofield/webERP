@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 4;
 
@@ -15,7 +15,7 @@ include('includes/header.inc');
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 
 
-if ($_GET['NewSpecial']=='yes'){
+if (isset($_GET['NewSpecial']) and $_GET['NewSpecial']=='yes'){
 	unset($_SESSION['SPL']);
 }
 
@@ -126,8 +126,8 @@ if (!isset($_SESSION['SPL']->BranchCode)){
 
 		echo '<BR><CENTER><TABLE CELLPADDING=3 COLSPAN=2 BORDER=1>';
 
-		$tableheader = "<TR><TD class='tableheader'>" ._('Code') . "</TD>
-					<TD class='tableheader'>" . _('Branch Name') . '</TD></TR>';
+		$tableheader = "<TR><TH>" ._('Code') . "</TH>
+					<TH>" . _('Branch Name') . "</TH></TR>";
 		echo $tableheader;
 
 		$j = 1;
@@ -136,20 +136,15 @@ if (!isset($_SESSION['SPL']->BranchCode)){
 		while ($myrow=DB_fetch_array($BranchResult)) {
 
 			if ($k==1){
-				echo "<tr bgcolor='#CCCCCC'>";
+				echo '<tr class="EvenTableRows">';
 				$k=0;
 			} else {
-				echo "<tr bgcolor='#EEEEEE'>";
+				echo '<tr class="OddTableRows">';
 				$k++;
 			}
 
 			printf("<td><INPUT TYPE=SUBMIT NAME='SelectBranch' VALUE='%s'</td><td>%s</td></tr>", $myrow['branchcode'], $myrow['brname']);
 
-			$j++;
-			If ($j == 11){
-				$j=1;
-				echo $tableheader;
-			}
 //end of page full new headings if
 		}
 //end of while loop
@@ -207,7 +202,7 @@ If(isset($_POST['EnterLine'])){
 		prnMsg( _('Cannot Enter this order line') . '<BR>' . _('The cost entered must be numeric'),'warn');
 	}
 
-	if ($_POST['Price']-$_POST['Cost']<0){
+	if ((($_POST['Price']/$_SESSION['SPL']->CustCurrExRate)-($_POST['Cost']/$_SESSION['SPL']->SuppCurrExRate))<0){
 		$AllowAdd = False;
 		prnMsg( _('Cannot Enter this order line') . '<BR>' . _('The sale is at a lower price than the cost'),'warn');
 	}
@@ -218,7 +213,7 @@ If(isset($_POST['EnterLine'])){
 	}
 	If ($AllowAdd == True){
 
-		$_SESSION['SPL']->add_to_order ($_POST['LineNo'], $_POST['Qty'], $_POST["ItemDescription"], $_POST['Price'], $_POST['Cost'], $_POST['StkCat'], $_POST['ReqDelDate']);
+		$_SESSION['SPL']->add_to_order ($_POST['LineNo'], $_POST['Qty'], $_POST['ItemDescription'], $_POST['Price'], $_POST['Cost'], $_POST['StkCat'], $_POST['ReqDelDate']);
 
 		unset($_POST['Price']);
 		unset($_POST['Cost']);
@@ -229,11 +224,11 @@ If(isset($_POST['EnterLine'])){
 	}
 }
 
-$_SESSION['SPL']->StkLocation = $_POST['StkLocation'];
-$_SESSION['SPL']->Initiator = $_POST['Initiator'];
-$_SESSION['SPL']->QuotationRef = $_POST['QuotationRef'];
-$_SESSION['SPL']->Comments = $_POST['Comments'];
-$_SESSION['SPL']->CustRef = $_POST['CustRef'];
+if (isset($_POST['StkLocation'])) {$_SESSION['SPL']->StkLocation = $_POST['StkLocation'];}
+if (isset($_POST['Initiator'])) {$_SESSION['SPL']->Initiator = $_POST['Initiator'];}
+if (isset($_POST['QuotationRef'])) {$_SESSION['SPL']->QuotationRef = $_POST['QuotationRef'];}
+if (isset($_POST['Comments'])) {$_SESSION['SPL']->Comments = $_POST['Comments'];}
+if (isset($_POST['CustRef'])) {$_SESSION['SPL']->CustRef = $_POST['CustRef'];}
 
 
 if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database */
@@ -292,19 +287,19 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							VALUES(";
 
 		 $sql = $sql . "'" . $_SESSION['SPL']->SupplierID . "',
-		 		'" . $_SESSION['SPL']->Comments . "',
+		 		'" . DB_escape_string($_SESSION['SPL']->Comments) . "',
 				'" . Date("Y-m-d") . "',
 				" . $_SESSION['SPL']->SuppCurrExRate . ",
-				'" . $_SESSION['SPL']->Initiator . "',
-				'" . $_SESSION['SPL']->QuotationRef . "',
+				'" . DB_escape_string($_SESSION['SPL']->Initiator) . "',
+				'" . DB_escape_string($_SESSION['SPL']->QuotationRef) . "',
 				'" . $_SESSION['SPL']->StkLocation . "',
-				'" . $StkLocAddress['deladd1'] . "',
-				'" . $StkLocAddress['deladd2'] . "',
-				'" . $StkLocAddress['deladd3'] . "',
-				'" . $StkLocAddress['deladd4'] . "',
-				'" . $StkLocAddress['deladd5'] . "',
-				'" . $StkLocAddress['deladd6'] . "',
-				'" . $StkLocAddress['contact'] . "')";
+				'" . DB_escape_string($StkLocAddress['deladd1']) . "',
+				'" . DB_escape_string($StkLocAddress['deladd2']) . "',
+				'" . DB_escape_string($StkLocAddress['deladd3']) . "',
+				'" . DB_escape_string($StkLocAddress['deladd4']) . "',
+				'" . DB_escape_string($StkLocAddress['deladd5']) . "',
+				'" . DB_escape_string($StkLocAddress['deladd6']) . "',
+				'" . DB_escape_string($StkLocAddress['contact']) . "')";
 
 
 		$ErrMsg = _('The purchase order header record could not be inserted into the database because');
@@ -349,8 +344,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							materialcost)
 					VALUES ('" . $PartCode . "',
 						'" . $SPLLine->StkCat . "',
-						'" . $SPLLine->ItemDescription . "',
-						'" .  $SPLLine->ItemDescription . "',
+						'" . DB_escape_string($SPLLine->ItemDescription) . "',
+						'" .  DB_escape_string($SPLLine->ItemDescription) . "',
 						" . $SPLLine->Cost . ")";
 
 
@@ -386,7 +381,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			$sql = $sql . $_SESSION['SPL']->PurchOrderNo . ", 
 					'" . $PartCode . "',
 					'" . $OrderDate . "',
-					'" . $SPLLine->ItemDescription . "', 
+					'" . DB_escape_string($SPLLine->ItemDescription) . "', 
 					" . $GLCode . ",
 					" . $SPLLine->Cost . ", 
 					" . $SPLLine->Quantity . ")";
@@ -444,19 +439,19 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							deliverydate)
 					VALUES ('" . $_SESSION['SPL']->CustomerID . "',
 						'" . $_SESSION['SPL']->BranchCode . "',
-						'". $_SESSION['SPL']->CustRef ."',
+						'". DB_escape_string($_SESSION['SPL']->CustRef) ."',
 						'" . Date("Y-m-d") . "',
 						'" . $BranchDetails['salestype'] . "',
 						" . $BranchDetails['defaultshipvia'] .",
-						'" . $BranchDetails['brname'] . "',
-						'" . $BranchDetails['braddress1'] . "',
-						'" . $BranchDetails['braddress2'] . "',
-						'" . $BranchDetails['braddress3'] . "',
-						'" . $BranchDetails['braddress4'] . "',
-						'" . $BranchDetails['braddress5'] . "',
-						'" . $BranchDetails['braddress6'] . "',
-						'" . $BranchDetails['phoneno'] . "',
-						'" . $BranchDetails['email'] . "',
+						'" . DB_escape_string($BranchDetails['brname']) . "',
+						'" . DB_escape_string($BranchDetails['braddress1']) . "',
+						'" . DB_escape_string($BranchDetails['braddress2']) . "',
+						'" . DB_escape_string($BranchDetails['braddress3']) . "',
+						'" . DB_escape_string($BranchDetails['braddress4']) . "',
+						'" . DB_escape_string($BranchDetails['braddress5']) . "',
+						'" . DB_escape_string($BranchDetails['braddress6']) . "',
+						'" . DB_escape_string($BranchDetails['phoneno']) . "',
+						'" . DB_escape_string($BranchDetails['email']) . "',
 						'" . $_SESSION['SPL']->StkLocation ."',
 						'" . $OrderDate . "')";
 
@@ -535,15 +530,22 @@ if (count($_SESSION['SPL']->LineItems)>0){
 
 	echo "<CENTER><B>" . _('Special Order Summary') . "</B>";
 	echo "<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>";
+	
+	$sql = 'select currencydefault from companies';
+	$result = DB_query($sql, $db);
+	$myrow = DB_fetch_row($result);
+	$DefaultCurrency = $myrow[0];
 
 	echo "<TR>
-		<TD class='tableheader'>" . _('Item Description') . "</TD>
-		<TD class='tableheader'>" . _('Delivery') . "</TD>
-		<TD class='tableheader'>" . _('Quantity') . "</TD>
-		<TD class='tableheader'>" . _('Purchase Cost') . "</TD>
-		<TD class='tableheader'>" . _('Sell Price') . "</TD>
-		<TD class='tableheader'>" . _('Total Cost') . "</TD>
-		<TD class='tableheader'>" . _('Total Price') . "</TD>
+		<TH>" . _('Item Description') . "</TH>
+		<TH>" . _('Delivery') . "</TH>
+		<TH>" . _('Quantity') . "</TH>
+		<TH>" . _('Purchase Cost') . '<BR>' . $_SESSION['SPL']->SuppCurrCode . "</TH>
+		<TH>" . _('Sell Price') . '<BR>' . $_SESSION['SPL']->CustCurrCode . "</TH>
+		<TH>" . _('Total Cost') . '<BR>' . $_SESSION['SPL']->SuppCurrCode .  "</TH>
+		<TH>" . _('Total Price') . '<BR>' . $_SESSION['SPL']->CustCurrCode .  "</TH>
+		<TH>" . _('Total Cost') . '<BR>' . $DefaultCurrency .  "</TH>
+		<TH>" . _('Total Price') . '<BR>' . $DefaultCurrency .  "</TH>
 	</TR>";
 
 	$_SESSION['SPL']->total = 0;
@@ -554,15 +556,17 @@ if (count($_SESSION['SPL']->LineItems)>0){
 		$LineCostTotal = $SPLLine->Quantity * $SPLLine->Cost;
 		$DisplayLineTotal = number_format($LineTotal,2);
 		$DisplayLineCostTotal = number_format($LineCostTotal,2);
+		$DisplayLineTotalCurr = number_format($LineTotal/$_SESSION['SPL']->CustCurrExRate,2);
+		$DisplayLineCostTotalCurr = number_format($LineCostTotal/$_SESSION['SPL']->SuppCurrExRate,2);
 		$DisplayCost = number_format($SPLLine->Cost,2);
 		$DisplayPrice = number_format($SPLLine->Price,2);
 		$DisplayQuantity = number_format($SPLLine->Quantity,2);
 
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+				echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+				echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 		echo '<TD>' . $SPLLine->ItemDescription . '</TD>
@@ -572,14 +576,16 @@ if (count($_SESSION['SPL']->LineItems)>0){
 			<TD ALIGN=RIGHT>$DisplayPrice</TD>
 			<TD ALIGN=RIGHT>$DisplayLineCostTotal</TD>
 			<TD ALIGN=RIGHT>$DisplayLineTotal</TD>
+			<TD ALIGN=RIGHT>$DisplayLineCostTotalCurr</TD>
+			<TD ALIGN=RIGHT>$DisplayLineTotalCurr</TD>
 			<TD><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID .'&Delete=' . $SPLLine->LineNo . "'>" . _('Delete') . '</A></TD></TR>';
 
-		$_SESSION['SPL']->total = $_SESSION['SPL']->total + $LineTotal;
+		$_SESSION['SPL']->total = $_SESSION['SPL']->total + $DisplayLineTotalCurr;
 	}
 
 	$DisplayTotal = number_format($_SESSION['SPL']->total,2);
 	echo '<TR>
-		<TD COLSPAN=6 ALIGN=RIGHT>' . _('TOTAL Excl Tax') . "</TD>
+		<TD COLSPAN=8 ALIGN=RIGHT>' . _('TOTAL Excl Tax') . "</TD>
 		<TD ALIGN=RIGHT><B>$DisplayTotal</B></TD>
 	</TR></TABLE>";
 
@@ -591,7 +597,9 @@ echo "<CENTER><TABLE>";
 
 echo "<input type='hidden' name='LineNo' value=" . ($_SESSION['SPL']->LinesOnOrder + 1) .">";
 
+if (!isset($_POST['ItemDescription'])) {$_POST['ItemDescription']='';}
 echo '<TR><TD>' . _('Ordered item Description') . ":</TD><TD><INPUT TYPE=TEXT NAME='ItemDescription' SIZE=40 MAXLENGTH=40 VALUE='" . $_POST['ItemDescription'] . "'></TD></TR>";
+
 
 echo '<TR><TD>' . _('Category') . ':</TD><TD><SELECT name=StkCat>';
 
@@ -601,7 +609,7 @@ $DbgMsg = _('The SQL used to retrieve stock categories and failed was');
 $result = DB_query($sql,$db, $ErrMsg, $DbgMsg);
 
 while ($myrow=DB_fetch_array($result)){
-	if ($myrow['categoryid']==$_POST['StkCat']){
+	if (isset($_POST['StkCat']) and $myrow['categoryid']==$_POST['StkCat']){
 		echo "<OPTION SELECTED VALUE='". $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
 	} else {
 		echo "<OPTION VALUE='". $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
@@ -615,10 +623,15 @@ $_POST['Qty'] = 1;
 
 echo '<TR><TD>' . _('Order Quantity') . ":</TD>
 	<TD><input type='Text' SIZE=7 MAXLENGTH=6 name='Qty' value=" . $_POST['Qty'] . "></TD></TR>";
+
+if (!isset($_POST['Cost'])) {$_POST['Cost']='';}
 echo '<TR><TD>' . _('Unit Cost') . ":</TD>
 	<TD><input type='Text' SIZE=15 MAXLENGTH=14 name='Cost' value=" . $_POST['Cost'] . "></TD></TR>";
+
+if (!isset($_POST['Price'])) { $_POST['Price']='';}
 echo '<TR><TD>' . _('Unit Price') . ":</TD>
 	<TD><input type='Text' SIZE=15 MAXLENGTH=14 name='Price' value=" . $_POST['Price'] . "></TD></TR>";
+
 
 /*Default the required delivery date to tomorrow as a starting point */
 $_POST['ReqDelDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'),Date('d')+1,Date('y')));
