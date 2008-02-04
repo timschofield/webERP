@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 11;
 include('includes/session.inc');
@@ -114,7 +114,7 @@ if (isset($_POST['submit'])) {
 		$sql = "UPDATE freightcosts
 				SET
 					locationfrom='$LocationFrom',
-					destination='" . $_POST['Destination'] . "',
+					destination='" . DB_escape_string($_POST['Destination']) . "',
 					shipperid=$ShipperID,
 					cubrate=" . $_POST['CubRate'] . ",
 					kgrate = " . $_POST['KGRate'] . ",
@@ -142,7 +142,7 @@ if (isset($_POST['submit'])) {
 				minimumchg)
 			VALUES (
 				'$LocationFrom',
-				'" . $_POST['Destination'] . "',
+				'" . DB_escape_string($_POST['Destination']) . "',
 				$ShipperID,
 				" . $_POST['CubRate'] . ",
 				" . $_POST['KGRate'] . ",
@@ -200,13 +200,13 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 	
 	echo '<table border=1>';
 	$TableHeader = "<tr>
-				<td class='tableheader'>" . _('Destination') . "</td>
-				<td class='tableheader'>" . _('Cubic Rate') . "</td>
-				<td class='tableheader'>" . _('KG Rate') . "</td>
-				<td class='tableheader'>" . _('MAX KGs') . "</td>
-				<td class='tableheader'>" . _('MAX Volume') . "</td>
-				<td class='tableheader'>" . _('Fixed Price') . "</td>
-				<td class='tableheader'>" . _('Minimum Charge') . "</td>
+				<th>" . _('Destination') . "</th>
+				<th>" . _('Cubic Rate') . "</th>
+				<th>" . _('KG Rate') . "</th>
+				<th>" . _('MAX KGs') . "</th>
+				<th>" . _('MAX Volume') . "</th>
+				<th>" . _('Fixed Price') . "</th>
+				<th>" . _('Minimum Charge') . "</th>
 			</tr>";
 
 	echo $TableHeader;
@@ -222,10 +222,10 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 
 		}
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 
@@ -271,7 +271,7 @@ if (isset($LocationFrom) AND isset($ShipperID)) {
 
 	echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 
-	if ($SelectedFreightCost) {
+	if (isset($SelectedFreightCost)) {
 		//editing an existing freight cost item
 
 		$sql = "SELECT locationfrom,
@@ -309,7 +309,12 @@ if (isset($LocationFrom) AND isset($ShipperID)) {
 	echo "<input type=HIDDEN name='LocationFrom' value='$LocationFrom'>";
 	echo "<input type=HIDDEN name='ShipperID' value=$ShipperID>";
 
-
+	if (!isset($_POST['Destination'])) {$_POST['Destination']='';}
+	if (!isset($_POST['CubRate'])) {$_POST['CubRate']='';}
+	if (!isset($_POST['KGRate'])) {$_POST['KGRate']='';}
+	if (!isset($_POST['MAXKGs'])) {$_POST['MAXKGs']='';}
+	if (!isset($_POST['MAXCub'])) {$_POST['MAXCub']='';}
+	
 	echo '<TABLE>
 		<TR><TD>' . _('Destination') . ":</TD>
 		<TD><input type='text' maxlength=20 size=20 name='Destination' VALUE='" . $_POST['Destination'] . "'></TD></TR>";

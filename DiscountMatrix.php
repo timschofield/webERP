@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 11;
 include('includes/session.inc');
@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['QuantityBreak']);
 		unset($_POST['DiscountRate']);
 	}
-} elseif ($_GET['Delete']=='yes') {
+} elseif (isset($_GET['Delete']) and $_GET['Delete']=='yes') {
 /*the link to delete a selected record was clicked instead of the submit button */
 
 	$sql="DELETE FROM discountmatrix
@@ -76,19 +76,19 @@ $sql = 'SELECT sales_type,
 $result = DB_query($sql,$db);
 
 echo '<CENTER><table>';
-echo "<tr><td class='tableheader'>" . _('Sales Type') . "</td>
-	<td class='tableheader'>" . _('Discount Category') . "</td>
-	<td class='tableheader'>" . _('Quantity Break') . "</td>
-	<td class='tableheader'>" . _('Discount Rate') . ' %' . "</td></TR>";
+echo "<tr><th>" . _('Sales Type') . "</th>
+	<th>" . _('Discount Category') . "</th>
+	<th>" . _('Quantity Break') . "</th>
+	<th>" . _('Discount Rate') . ' %' . "</th></TR>";
 
 $k=0; //row colour counter
 
 while ($myrow = DB_fetch_array($result)) {
 	if ($k==1){
-		echo "<tr bgcolor='#CCCCCC'>";
+		echo '<tr class="EvenTableRows">';
 		$k=0;
 	} else {
-		echo "<tr bgcolor='#EEEEEE'>";
+		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
 	$DeleteURL = $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=yes&SalesType=' . $myrow['salestype'] . '&DiscountCategory=' . $myrow['discountcategory'] . '&QuantityBreak=' . $myrow['quantitybreak'];
@@ -125,7 +125,7 @@ echo '<TR><TD>' . _('Customer Price List') . ' (' . _('Sales Type') . '):</TD><T
 echo "<SELECT NAME='SalesType'>";
 
 while ($myrow = DB_fetch_array($result)){
-	if ($myrow['typeabbrev']==$_POST['SalesType']){
+	if (isset($_POST['SalesType']) and $myrow['typeabbrev']==$_POST['SalesType']){
 		echo "<OPTION SELECTED VALUE='" . $myrow['typeabbrev'] . "'>" . $myrow['sales_type'];
 	} else {
 		echo "<OPTION VALUE='" . $myrow['typeabbrev'] . "'>" . $myrow['sales_type'];
@@ -136,7 +136,7 @@ echo '</SELECT>';
 
 
 echo '<TR><TD>' . _('Discount Category Code') . ':</TD><TD>';
-
+if (!isset($_POST['DiscCat'])) {$_POST['DiscCat']='';}
 echo "<INPUT TYPE='Text' NAME='DiscountCategory' MAXLENGTH=2 SIZE=2 VALUE='" . $_POST['DiscCat'] . "'></TD></TR>";
 
 echo '<TR><TD>' . _('Quantity Break') . ":</TD><TD><input type='Text' name='QuantityBreak' SIZE=10 MAXLENGTH=10></TD></TR>";

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.36 $ */
+/* $Revision: 1.37 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -179,7 +179,7 @@ if(isset($_POST['MakeRecurringOrder']) AND ! $InputErrors){
 }
 
 
-if ($_POST['BackToLineDetails']==_('Modify Order Lines')){
+if (isset($_POST['BackToLineDetails']) and $_POST['BackToLineDetails']==_('Modify Order Lines')){
 
 	echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . '/SelectOrderItems.php?' . SID . "'>";
 	prnMsg(_('You should automatically be forwarded to the entry of the order line details page') . '. ' . _('If this does not happen') . '(' . _('if the browser does not support META Refresh') . ') ' ."<a href='" . $rootpath . '/SelectOrderItems.php?' . SID . "'>". _('click here') .'</a> '. _('to continue'),'info');
@@ -227,7 +227,7 @@ UNTIL ONLINE CREDIT CARD PROCESSING IS PERFORMED ASSUME OK TO PROCESS
 	} #end if else freight charge not altered
 } #end if process order
 
-if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
+if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 
 /* finally write the order header to the database and then the order line details - a transaction would	be good here */
 
@@ -344,7 +344,7 @@ if ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']==0){
 	include('includes/footer.inc');
 	exit;
 
-} elseif ($OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']!=0){
+} elseif (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']!=0){
 
 /* update the order header then update the old order line details and insert the new lines */
 
@@ -427,7 +427,7 @@ if ($_SESSION['Items']->SpecialInstructions) {
 echo '<CENTER><FONT SIZE=4><B>' . _('Customer No.') . ': ' . $_SESSION['Items']->DebtorNo;
 echo '&nbsp;&nbsp;' . _('Customer Name') . ' : ' . $_SESSION['Items']->CustomerName . '</B></FONT></CENTER>';
 //echo '<CENTER><FONT SIZE=4><B>'. _('Customer') .' : ' . $_SESSION['Items']->CustomerName . '</B></FONT></CENTER>';
-echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . $SID . "' METHOD=POST>";
+echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD=POST>";
 
 
 /*Display the order with or without discount depending on access level*/
@@ -443,13 +443,13 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 	echo "</B>
 	<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>
 	<TR>
-		<TD class='tableheader'>". _('Item Code') ."</TD>
-		<TD class='tableheader'>". _('Item Description') ."</TD>
-		<TD class='tableheader'>". _('Quantity') ."</TD>
-		<TD class='tableheader'>". _('Unit') ."</TD>
-		<TD class='tableheader'>". _('Price') ."</TD>
-		<TD class='tableheader'>". _('Discount') ." %</TD>
-		<TD class='tableheader'>". _('Total') ."</TD>
+		<TH>". _('Item Code') ."</TH>
+		<TH>". _('Item Description') ."</TH>
+		<TH>". _('Quantity') ."</TH>
+		<TH>". _('Unit') ."</TH>
+		<TH>". _('Price') ."</TH>
+		<TH>". _('Discount') ." %</TH>
+		<TH>". _('Total') ."</TH>
 	</TR>";
 
 	$_SESSION['Items']->total = 0;
@@ -467,10 +467,10 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
 
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 
@@ -674,7 +674,7 @@ echo '<TR>
         }
     echo '</SELECT></TD></TR>';
 
-if ($_SESSION['PrintedPackingSlip']==1){
+if (isset($_SESSION['PrintedPackingSlip']) and $_SESSION['PrintedPackingSlip']==1){
 
     echo '<TR>
     	<TD>'. _('Reprint packing slip') .":</TD>

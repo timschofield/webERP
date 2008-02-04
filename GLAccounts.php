@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 10;
 include('includes/session.inc');
@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('The account name must be fifty characters or less long'),'warn');
 	}
 
-	if ($SelectedAccount AND $InputError !=1) {
+	if (isset($SelectedAccount) AND $InputError !=1) {
 
 		$sql = "UPDATE chartmaster SET accountname='" . DB_escape_string($_POST['AccountName']) . "',
 						group_='" . $_POST['Group'] . "'
@@ -213,7 +213,7 @@ if (!isset($_GET['delete'])) {
 
 	echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] .  '?' . SID . "'>";
 
-	if ($SelectedAccount) {
+	if (isset($SelectedAccount)) {
 		//editing an existing account
 
 		$sql = "SELECT accountcode, accountname, group_ FROM chartmaster WHERE accountcode=$SelectedAccount";
@@ -233,7 +233,7 @@ if (!isset($_GET['delete'])) {
 		echo "<TR><TD>" . _('Account Code') . ":</TD><TD><INPUT TYPE=TEXT NAME='AccountCode' SIZE=11 MAXLENGTH=10></TD></TR>";
 	}
 
-
+	if (!isset($_POST['AccountName'])) {$_POST['AccountName']='';}
 	echo '<TR><TD>' . _('Account Name') . ":</TD><TD><input type='Text' SIZE=51 MAXLENGTH=50 name='AccountName' value='" . $_POST['AccountName'] . "'></TD></TR>";
 
 	$sql = 'SELECT groupname FROM accountgroups ORDER BY sequenceintb';
@@ -242,7 +242,7 @@ if (!isset($_GET['delete'])) {
 	echo '<TR><TD>' . _('Account Group') . ':</TD><TD><SELECT NAME=Group>';
 
 	while ($myrow = DB_fetch_array($result)){
-		if ($myrow[0]==$_POST['Group']){
+		if (isset($_POST['Group']) and $myrow[0]==$_POST['Group']){
 			echo "<OPTION SELECTED VALUE='";
 		} else {
 			echo "<OPTION VALUE='";
@@ -284,20 +284,20 @@ or deletion of the records*/
 
 	echo '<CENTER><table border=1>';
 	echo "<tr>
-		<td class='tableheader'>" . _('Account Code') . "</td>
-		<td class='tableheader'>" . _('Account Name') . "</td>
-		<td class='tableheader'>" . _('Account Group') . "</td>
-		<td class='tableheader'>" . _('P/L or B/S') . "</td>
+		<th>" . _('Account Code') . "</th>
+		<th>" . _('Account Name') . "</th>
+		<th>" . _('Account Group') . "</th>
+		<th>" . _('P/L or B/S') . "</th>
 	</tr>";
 
 	$k=0; //row colour counter
 
 	while ($myrow = DB_fetch_row($result)) {
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 

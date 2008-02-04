@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 
 $PageSecurity = 8;
@@ -49,7 +49,7 @@ echo '<CENTER><TABLE>
          $id=0;
          while ($myrow=DB_fetch_array($Periods,$db)){
 
-            if($myrow['periodno'] == $SelectedPeriod[$id]){
+            if(isset($SelectedPeriod[$id]) and $myrow['periodno'] == $SelectedPeriod[$id]){
               echo '<OPTION SELECTED VALUE=' . $myrow['periodno'] . '>' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period']));
             $id++;
             } else {
@@ -107,12 +107,12 @@ if (isset($_POST['Show'])){
 	echo '<table>';
 
 	$TableHeader = "<TR>
-			<TD class='tableheader'>" . _('Type') . "</TD>
-			<TD class='tableheader'>" . _('Number') . "</TD>
-			<TD class='tableheader'>" . _('Date') . "</TD>
-			<TD class='tableheader'>" . _('Debit') . "</TD>
-			<TD class='tableheader'>" . _('Credit') . "</TD>
-			<TD class='tableheader'>" . _('Narrative') . '</TD>
+			<TH>" . _('Type') . "</TH>
+			<TH>" . _('Number') . "</TH>
+			<TH>" . _('Date') . "</TH>
+			<TH>" . _('Debit') . "</TH>
+			<TH>" . _('Credit') . "</TH>
+			<TH>" . _('Narrative') . '</TH>
 			</TR>';
 
 	echo $TableHeader;
@@ -195,10 +195,10 @@ if (isset($_POST['Show'])){
 		}
 
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 
@@ -230,14 +230,7 @@ if (isset($_POST['Show'])){
 			$DebitAmount,
 			$CreditAmount,
 			$myrow['narrative']);
-
-		$j++;
-
-		If ($j == 18){
-			echo $TableHeader;
-			$j=1;
-		}
-		
+	
 	}
 
 	echo "<TR bgcolor='#FDFEEF'><TD COLSPAN=3><B>";
@@ -258,8 +251,8 @@ if (isset($_POST['Show'])){
 
 
 
-if ($ShowIntegrityReport){
-
+if (isset($ShowIntegrityReport)){
+	if (!isset($IntegrityReport)) {$IntegrityReport='';}
 	prnMsg( _('There are differences between the sum of the transactions and the recorded movements in the ChartDetails table') . '. ' . _('A log of the account differences for the periods report shows below'),'warn');
 	echo '<P>'.$IntegrityReport;
 }

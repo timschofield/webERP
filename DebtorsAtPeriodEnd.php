@@ -1,7 +1,7 @@
 <?php
 $PageSecurity = 2;
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 include('includes/session.inc');
 
 If (isset($_POST['PrintPDF'])
@@ -123,7 +123,7 @@ If (isset($_POST['PrintPDF'])
 	$title=_('Debtor Balances');
 	include('includes/header.inc');
 
-	if (strlen($_POST['FromCriteria'])<1 || strlen($_POST['ToCriteria'])<1) {
+	if (!isset($_POST['FromCriteria']) || !isset($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 

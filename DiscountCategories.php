@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 11;
 
@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
 	}
 
 
-} elseif ($_GET['Delete']=='yes') {
+} elseif (isset($_GET['Delete']) and $_GET['Delete']=='yes') {
 /*the link to delete a selected record was clicked instead of the submit button */
 
 	$sql="UPDATE stockmaster SET discountcategory='' WHERE stockid='" . trim(strtoupper($_GET['StockID'])) ."'";
@@ -95,17 +95,17 @@ if ($_POST['DiscCat']!='0'){
 
 	echo '<table border=1>';
 	echo "<tr>
-		<td class='tableheader'>". _('Discount Category') ."</td>
-		<td class='tableheader'>". _('Item') .'</td></TR>';
+		<th>". _('Discount Category') ."</th>
+		<th>". _('Item') .'</th></TR>';
 
 	$k=0; //row colour counter
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 		$DeleteURL = $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=yes&StockID=' . $myrow['stockid'] . '&DiscountCategory=' . $myrow['discountcategory'];

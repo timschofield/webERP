@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 10;
 
@@ -66,14 +66,14 @@ if (isset($_POST['submit'])) {
 	if ($InputError !=1) {
 
 		/*SelectedMessageLine could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
-
+		if (!isset($SelectedMessageLine)) {$SelectedMessageLine='';}
 		$sql = "UPDATE edimessageformat
 				SET
 					partnercode='" . $PartnerCode . "',
 					messagetype='" . $MessageType . "',
 					section='" . $_POST['Section'] . "',
 					sequenceno=" . $_POST['SequenceNo'] . ",
-					linetext='" . $_POST['LineText'] . "'
+					linetext='" . DB_escape_string($_POST['LineText']) . "'
 				WHERE id = '" . $SelectedMessageLine . "'";
 
 		$msg = _('Message line updated');
@@ -93,7 +93,7 @@ if (isset($_POST['submit'])) {
 					'" . $MessageType . "',
 					'" . $_POST['Section'] . "',
 					" . $_POST['SequenceNo'] . ",
-					'" . $_POST['LineText'] . "'
+					'" . DB_escape_string($_POST['LineText']) . "'
 					)";
 		$msg = _('Message line added');
 	}
@@ -137,9 +137,9 @@ or deletion of the records*/
 
 	echo '<center><table>';
 	$TableHeader = "<tr>
-			<td class='tableheader'>" . _('Section') . "</td>
-			<td class='tableheader'>" . _('Sequence') . "</td>
-			<td class='tableheader'>" . _('Format String') . "</td>
+			<th>" . _('Section') . "</th>
+			<th>" . _('Sequence') . "</th>
+			<th>" . _('Format String') . "</th>
 			</tr>";
 	echo $TableHeader;
 
@@ -147,10 +147,10 @@ or deletion of the records*/
 	while ($myrow = DB_fetch_row($result)) {
 
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 
@@ -224,18 +224,21 @@ if ($_POST['Section']=='Heading') {
 	echo "<OPTION VALUE='Heading'>" . _('Heading');
 }
 
-if ($_POST['Section']=='Detail') {
+if (isset($_POST['Section']) and $_POST['Section']=='Detail') {
 	echo "<OPTION SELECTED VALUE='Detail'>" . _('Detail');
 } else {
 	echo "<OPTION VALUE='Detail'>" . _('Detail');
 }
-if ($_POST['Section']=='Summary') {
+if (isset($_POST['Section']) and $_POST['Section']=='Summary') {
 	echo "<OPTION SELECTED VALUE='Summary'>" . _('Summary');
 } else {
 	echo "<OPTION VALUE='Summary'>" . _('Summary');
 }
 
 echo '</select>';
+
+if (!isset($_POST['SequenceNo'])) {$_POST['SequenceNo']='';}
+if (!isset($_POST['LineText'])) {$_POST['LineText']='';}
 
 ?>
 
