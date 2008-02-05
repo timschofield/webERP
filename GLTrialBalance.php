@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 /*Through deviousness and cunning, this system allows trial balances for any date range that recalcuates the p & l balances
 and shows the balance sheets as at the end of the period selected - so first off need to show the input of criteria screen
@@ -398,12 +398,12 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 
 	echo '<TABLE CELLPADDING=2>';
 	$TableHeader = '<TR>
-			<TD class="tableheader">' . _('Account') . '</TD>
-			<TD class="tableheader">' . _('Account Name') . '</TD>
-			<TD class="tableheader">' . _('Month Actual') . '</TD>
-			<TD class="tableheader">' . _('Month Budget') . '</TD>
-			<TD class="tableheader">' . _('Period Actual') . '</TD>
-			<TD class="tableheader">' . _('Period Budget') .'</TD>
+			<TH>' . _('Account') . '</TH>
+			<TH>' . _('Account Name') . '</TH>
+			<TH>' . _('Month Actual') . '</TH>
+			<TH>' . _('Month Budget') . '</TH>
+			<TH>' . _('Period Actual') . '</TH>
+			<TH>' . _('Period Budget') .'</TH>
 			</TR>';
 
 	$j = 1;
@@ -417,6 +417,15 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 	$GrpPrdActual =array(0);
 	$GrpPrdBudget =array(0);
 		
+	$PeriodProfitLoss = 0;
+	$PeriodBudgetProfitLoss = 0;
+	$MonthProfitLoss = 0;
+	$MonthBudgetProfitLoss = 0;
+	$BFwdProfitLoss = 0;
+	$CheckMonth = 0;
+	$CheckBudgetMonth = 0;
+	$CheckPeriodActual = 0;
+	$CheckPeriodBudget = 0;
 
 	while ($myrow=DB_fetch_array($AccountsResult)) {
 
@@ -425,6 +434,11 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 				if ($myrow['parentgroupname']==$ActGrp){
 					$Level++;
 					$ParentGroups[$Level]=$myrow['groupname'];
+					$GrpActual[$Level] =0;
+					$GrpBudget[$Level] =0;
+					$GrpPrdActual[$Level] =0;
+					$GrpPrdBudget[$Level] =0;
+					$ParentGroups[$Level]='';
 				} elseif ($ParentGroups[$Level]==$myrow['parentgroupname']) {
 					printf('<TR>
 						<td COLSPAN=2><FONT SIZE=2><I>%s ' . _('Total') . ' </I></FONT></td>
@@ -467,9 +481,9 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 						$Level--;
 						
 						$j++;
-					} while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0);
+					} while ($Level>0 and $myrow['groupname']!=$ParentGroups[$Level]);
 					
-					if ($Level >0){	
+					if ($Level>0){	
 						printf('<TR>
 						<td COLSPAN=2><FONT SIZE=2><I>%s ' . _('Total') . ' </I></FONT></td>
 						<td ALIGN=RIGHT><I>%s</I></td>
@@ -489,7 +503,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 						$GrpPrdBudget[$Level] =0;
 						$ParentGroups[$Level]='';
 					} else {
-						$Level =1;
+						$Level=1;
 					}
 				}
 			}
@@ -504,10 +518,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 		}
 
 		if ($k==1){
-			echo '<tr bgcolor="#CCCCCC">';
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo '<tr bgcolor="#EEEEEE">';
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 		/*MonthActual, MonthBudget, FirstPrdBFwd, FirstPrdBudgetBFwd, LastPrdBudgetCFwd, LastPrdCFwd */
@@ -521,7 +535,7 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 			$PeriodProfitLoss += $AccountPeriodActual;
 			$PeriodBudgetProfitLoss += $AccountPeriodBudget;
 			$MonthProfitLoss += $myrow['monthactual'];
-			$MonthBudgetProfitLoss += $myrow['budget'];
+			$MonthBudgetProfitLoss += $myrow['monthbudget'];
 			$BFwdProfitLoss += $myrow['firstprdbfwd'];
 		} else { /*PandL ==0 its a balance sheet account */
 			if ($myrow['accountcode']==$RetainedEarningsAct){
@@ -533,7 +547,6 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR $_POST['S
 			}
 
 		}
-
 
 		$GrpActual[$Level] +=$myrow['monthactual'];
 		$GrpBudget[$Level] +=$myrow['monthbudget'];

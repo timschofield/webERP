@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 
 $PageSecurity = 2;
@@ -57,54 +57,54 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 	$myrow = DB_fetch_array($GetOrdHdrResult);
 	echo '<BR><BR><CENTER><TABLE BGCOLOR="#CCCCCC">';
 	echo '<TR>
-		<TD class="tableheader">' . _('Customer Code') . ':</TD>
-		<TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B><A HREF="' . $rootpath . '/SelectCustomer.php?Select=' . $_SESSION['CustomerID'] . '">' . $_SESSION['CustomerID'] . '</A></B></TD>
-		<TD class="tableheader">' . _('Customer Name') . ':</TD><TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B>' . $myrow['name'] . '</B></TD>
+		<TH>' . _('Customer Code') . ':</TH>
+		<TD class="EvenTableRows"><FONT COLOR=BLUE><B><A HREF="' . $rootpath . '/SelectCustomer.php?Select=' . $_SESSION['CustomerID'] . '">' . $_SESSION['CustomerID'] . '</A></B></TD>
+		<TH>' . _('Customer Name') . ':</TH><TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B>' . $myrow['name'] . '</B></TD>
 	</TR>';
 	echo '<TR>
-		<TD class="tableheader">' . _('Customer Reference') . ':</TD>
-		<TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B>' . $myrow['customerref'] . '</FONT></B></TD>
-		<TD class="tableheader">' . _('Deliver To') . ':</TD><TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B>' . $myrow['deliverto'] . '</B></TD>
+		<TH>' . _('Customer Reference') . ':</TH>
+		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['customerref'] . '</FONT></B></TD>
+		<TH>' . _('Deliver To') . ':</TH><TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B>' . $myrow['deliverto'] . '</B></TD>
 	</TR>';
 	echo '<TR>
-		<TD class="tableheader">' . _('Ordered On') . ':</TD>
-		<TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B>' . ConvertSQLDate($myrow['orddate']) . '</FONT></B></TD>
-		<TD class="tableheader">' . _('Delivery Address 1') . ':</TD>
-		<TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B>' . $myrow['deladd1'] . '</FONT></B></TD>
+		<TH>' . _('Ordered On') . ':</TH>
+		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . ConvertSQLDate($myrow['orddate']) . '</FONT></B></TD>
+		<TH>' . _('Delivery Address 1') . ':</TH>
+		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['deladd1'] . '</FONT></B></TD>
 	</TR>';
 	echo '<TR>
-		<TD class="tableheader">' . _('Requested Delivery') . ':</TD>
-		<TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B>' . ConvertSQLDate($myrow['deliverydate']) . '</FONT></B></TD>
-		<TD class="tableheader">' . _('Delivery Address 2') . ':</TD>
-		<TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B>' . $myrow['deladd2'] . '</FONT></B></TD>
+		<TH>' . _('Requested Delivery') . ':</TH>
+		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . ConvertSQLDate($myrow['deliverydate']) . '</FONT></B></TD>
+		<TH>' . _('Delivery Address 2') . ':</TH>
+		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['deladd2'] . '</FONT></B></TD>
 	</TR>';
 	echo '<TR>
-		<TD class="tableheader">' . _('Order Currency') . ':</TD>
-		<TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B>' . $myrow['currcode'] . '</FONT></B></TD>
-		<TD class="tableheader">' . _('Delivery Address 3') . ':</TD>
-		<TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B>' . $myrow['deladd3'] . '</FONT></B></TD>
+		<TH>' . _('Order Currency') . ':</TH>
+		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['currcode'] . '</FONT></B></TD>
+		<TH>' . _('Delivery Address 3') . ':</TH>
+		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['deladd3'] . '</FONT></B></TD>
 	</TR>';
 	echo '<TR>
-		<TD class="tableheader">' . _('Deliver From Location') . ':</TD>
-		<TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B>' . $myrow['fromstkloc'] . '</FONT></B></TD>
-		<TD class="tableheader">' . _('Delivery Address 4') . ':</TD>
-		<TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B>' . $myrow['deladd4'] . '</FONT></B></TD>
+		<TH>' . _('Deliver From Location') . ':</TH>
+		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['fromstkloc'] . '</FONT></B></TD>
+		<TH>' . _('Delivery Address 4') . ':</TH>
+		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['deladd4'] . '</FONT></B></TD>
 	</TR>';
 	echo '<TR>
-		<TD class="tableheader">' . _('Telephone') . ':</TD>
-		<TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B>' . $myrow['contactphone'] . '</FONT></B></TD>
-		<TD class="tableheader">' . _('Delivery Address 5') . ':</TD>
-		<TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B>' . $myrow['deladd5'] . '</FONT></B></TD>
+		<TH>' . _('Telephone') . ':</TH>
+		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['contactphone'] . '</FONT></B></TD>
+		<TH>' . _('Delivery Address 5') . ':</TH>
+		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['deladd5'] . '</FONT></B></TD>
 	</TR>';
 	echo '<TR>
-		<TD class="tableheader">' . _('Email') . ':</TD>
-		<TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B><A HREF="mailto:' . $myrow['contactemail'] . '">' . $myrow['contactemail'] . '</A></FONT></B></TD>
-		<TD class="tableheader">' . _('Delivery Address 6') . ':</TD>
-		<TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B>' . $myrow['deladd6'] . '</FONT></B></TD>
+		<TH>' . _('Email') . ':</TH>
+		<TD class="EvenTableRows"><FONT COLOR=BLUE><B><A HREF="mailto:' . $myrow['contactemail'] . '">' . $myrow['contactemail'] . '</A></FONT></B></TD>
+		<TH>' . _('Delivery Address 6') . ':</TH>
+		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['deladd6'] . '</FONT></B></TD>
 	</TR>';
 	echo '<TR>
-		<TD class="tableheader">' . _('Freight Cost') . ':</TD>
-		<TD bgcolor="#CCCCCC"><FONT COLOR=BLUE><B>' . $myrow['freightcost'] . '</FONT></B></TD>
+		<TH>' . _('Freight Cost') . ':</TH>
+		<TD class="EvenTableRows"><FONT COLOR=BLUE><B>' . $myrow['freightcost'] . '</FONT></B></TD>
 	</TR>';
 	echo '</TABLE>';
 	echo _('Comments'). ': ' . $myrow['comments'] . '<BR></CENTER>';
@@ -144,31 +144,31 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		echo '</BR><CENTER><B>' . _('Line Details') . '</B>
 			<TABLE CELLPADDING=2 COLSPAN=9 BORDER=1>
 			<TR>
-			<TD class="tableheader">' . _('Item Code') . '</TD>
-			<TD class="tableheader">' . _('Item Description') . '</TD>
-			<TD class="tableheader">' . _('Quantity') . '</TD>
-			<TD class="tableheader">' . _('Unit') . '</TD>
-			<TD class="tableheader">' . _('Price') . '</TD>
-			<TD class="tableheader">' . _('Discount') . '</TD>
-			<TD class="tableheader">' . _('Total') . '</TD>
-			<TD class="tableheader">' . _('Qty Del') . '</TD>
-			<TD class="tableheader">' . _('Last Del') . '</TD>
+			<TH>' . _('Item Code') . '</TH>
+			<TH>' . _('Item Description') . '</TH>
+			<TH>' . _('Quantity') . '</TH>
+			<TH>' . _('Unit') . '</TH>
+			<TH>' . _('Price') . '</TH>
+			<TH>' . _('Discount') . '</TH>
+			<TH>' . _('Total') . '</TH>
+			<TH>' . _('Qty Del') . '</TH>
+			<TH>' . _('Last Del') . '</TH>
 			</TR>';
-
+		$k=0;
 		while ($myrow=db_fetch_array($LineItemsResult)) {
 
 			if ($k==1){
-				echo '<tr bgcolor="#CCCCCC">';
+				echo '<tr class="EvenTableRows">';
 				$k=0;
 			} else {
-				echo '<tr bgcolor="#EEEEEE">';
+				echo '<tr class="OddTableRows">';
 				$k=1;
 			}
 
-			if ($StockItem->QtyInv>0){
-			  $DisplayActualDeliveryDate = ConvertSQLDate($myrow['actualdispatchdate']);
+			if ($myrow['qtyinvoiced']>0){
+				$DisplayActualDeliveryDate = ConvertSQLDate($myrow['actualdispatchdate']);
 			} else {
-		  	$DisplayActualDeliveryDate = _('N/A');
+		  		$DisplayActualDeliveryDate = _('N/A');
 			}
 
 			echo 	'<TD>' . $myrow['stkcode'] . '</TD>

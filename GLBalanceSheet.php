@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
 
@@ -22,7 +22,7 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 	$Periods = DB_query($sql,$db);
 
 	while ($myrow=DB_fetch_array($Periods,$db)){
-		if( $_POST['BalancePeriodEnd']== $myrow['periodno']){
+		if( isset($_POST['BalancePeriodEnd']) and $_POST['BalancePeriodEnd']== $myrow['periodno']){
 			echo '<OPTION SELECTED VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period']);
 		} else {
 			echo '<OPTION VALUE=' . $myrow['periodno'] . '>' . ConvertSQLDate($myrow['lastdate_in_period']);
@@ -136,9 +136,7 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 	$GroupTotal = array(0);
 	$LYGroupTotal = array(0);
 
-	
 	while ($myrow=DB_fetch_array($AccountsResult)) {
-
 		$AccountBalance = $myrow['balancecfwd'];
 		$LYAccountBalance = $myrow['lybalancecfwd'];
 
@@ -381,7 +379,6 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 	$j=0; //row counter
 
 	while ($myrow=DB_fetch_array($AccountsResult)) {
-
 		$AccountBalance = $myrow['balancecfwd'];
 		$LYAccountBalance = $myrow['lybalancecfwd'];
 
@@ -551,8 +548,6 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 	//end of loop
 
 
-	
-
 	while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0){
 		if ($_POST['Detail']=='Detailed'){
 			echo '<TR>
@@ -622,7 +617,7 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 	number_format($SectionBalanceLY));
 	
 	$Section = $myrow['sectioninaccounts'];
-	
+
 	if ($_POST['Detail']=='Detailed'){
 		printf('<TR>
 			<TD COLSPAN=6><FONT SIZE=4 COLOR=BLUE><B>%s</B></FONT></TD>

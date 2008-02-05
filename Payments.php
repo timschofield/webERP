@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 5;
 
@@ -277,7 +277,7 @@ if (isset($_POST['CommitBatch'])){
 						'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
 						" . $PeriodNo . ",
 						" . $PaymentItem->GLCode . ",
-						'" . $PaymentItem->Narrative . "',
+						'" . DB_escape_string($PaymentItem->Narrative) . "',
 						" . ($PaymentItem->Amount/$_SESSION['PaymentDetail']->ExRate/$_SESSION['PaymentDetail']->FunctionalExRate) . "
 						)";
 			 	$ErrMsg = _('Cannot insert a GL entry for the payment using the SQL');
@@ -390,7 +390,7 @@ if (isset($_POST['CommitBatch'])){
 					'" . $_SESSION['PaymentDetail']->Paymenttype . "',
 					" . ($_SESSION['PaymentDetail']->ExRate/$_SESSION['PaymentDetail']->FunctionalExRate) . ",
 					" . (-$_SESSION['PaymentDetail']->Amount-$_SESSION['PaymentDetail']->Discount) . ",
-					'" . $_SESSION['PaymentDetail']->Narrative . "'
+					'" . DB_escape_string($_SESSION['PaymentDetail']->Narrative) . "'
 				)";
 
 		$ErrMsg =  _('Cannot insert a payment transaction against the supplier because');
@@ -427,7 +427,7 @@ if (isset($_POST['CommitBatch'])){
 						'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
 						" . $PeriodNo . ",
 						" . $_SESSION['CompanyRecord']['creditorsact'] . ",
-						'" . $_SESSION['PaymentDetail']->Narrative . "',
+						'" . DB_escape_string($_SESSION['PaymentDetail']->Narrative) . "',
 						" . $CreditorTotal . "
 					)";
 			$ErrMsg = _('Cannot insert a GL transaction for the creditors account debit because');
@@ -448,7 +448,7 @@ if (isset($_POST['CommitBatch'])){
 						'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
 						" . $PeriodNo . ",
 						" . $_SESSION['CompanyRecord']["pytdiscountact"] . ",
-						'" . $_SESSION['PaymentDetail']->Narrative . "',
+						'" . DB_escape_string($_SESSION['PaymentDetail']->Narrative) . "',
 						" . (-$_SESSION['PaymentDetail']->Discount/$_SESSION['PaymentDetail']->ExRate/$_SESSION['PaymentDetail']->FunctionalExRate) . "
 					  )";
 				$ErrMsg = _('Cannot insert a GL transaction for the payment discount credit because');
@@ -474,7 +474,7 @@ if (isset($_POST['CommitBatch'])){
 						'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
 						" . $PeriodNo . ",
 						" . $_SESSION['PaymentDetail']->Account . ",
-						'" . $_SESSION['PaymentDetail']->Narrative . "',
+						'" . DB_escape_string($_SESSION['PaymentDetail']->Narrative) . "',
 						" . (-$_SESSION['PaymentDetail']->Amount/$_SESSION['PaymentDetail']->ExRate/$_SESSION['PaymentDetail']->FunctionalExRate) . "
 					)";
 
@@ -500,7 +500,7 @@ if (isset($_POST['CommitBatch'])){
   $SQL= $SQL . "VALUES (" . $TransNo . ",
 				" . $Transtype . ",
 				" . $_SESSION['PaymentDetail']->Account . ",
-				'" . $_SESSION['PaymentDetail']->Narrative . "',
+				'" . DB_escape_string($_SESSION['PaymentDetail']->Narrative) . "',
 				" . $_SESSION['PaymentDetail']->ExRate . " ,
 				" . $_SESSION['PaymentDetail']->FunctionalExRate . ",
 				'" . FormatDateForSQL($_SESSION['PaymentDetail']->DatePaid) . "',
@@ -769,9 +769,9 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 /* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
 	echo '<table width=100% border=1><tr>
-			<td class="tableheader">' . _('Amount') . '</td>
-			<td class="tableheader">' . _('GL Account') . '</td>
-			<td class="tableheader">' . _('Narrative') . '</td>
+			<th>' . _('Amount') . '</th>
+			<th>' . _('GL Account') . '</th>
+			<th>' . _('Narrative') . '</th>
 		</tr>';
 
 	$PaymentTotal = 0;

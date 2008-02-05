@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 2;
 
@@ -23,8 +23,8 @@ $PeriodsResult = DB_query($SQL,$db,$ErrMsg);
 
 echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=2>';
 
-$TableHeader = '<TR><TD class="tableheader">' . _('Period Number') . '</TD>
-			<TD class="tableheader">' . _('Date of Last Day') . '</TD>
+$TableHeader = '<TR><TH>' . _('Period Number') . '</TH>
+			<TH>' . _('Date of Last Day') . '</TH>
 		</TR>';
 
 echo $TableHeader;
@@ -33,10 +33,10 @@ $j = 1;
 $k=0; //row colour counter
 while ($myrow=DB_fetch_array($PeriodsResult)) {
        if ($k==1){
-              echo '<tr bgcolor="#CCCCCC">';
+              echo '<tr class="EvenTableRows">';
               $k=0;
        } else {
-              echo '<tr bgcolor="#EEEEEE">';
+              echo '<tr class="OddTableRows">';
               $k++;
        }
 
@@ -47,11 +47,6 @@ while ($myrow=DB_fetch_array($PeriodsResult)) {
 		$myrow['periodno'],
 		$FormatedLastDate);
 
-       $j++;
-       If ($j == 12){
-              $j=1;
-              echo $TableHeader;
-       }
 }
 //end of while loop
 

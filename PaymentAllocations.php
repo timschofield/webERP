@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 /*
 	This page is called from SupplierInquiry.php when the 'view payments' button is selected
@@ -68,10 +68,10 @@ if (DB_num_rows($Result) == 0){
 
 echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7 WIDTH=100% BORDER=0>';
 $TableHeader = "<TR>
-<TD CLASS='tableheader'>" . _('Supplier Number') . '<BR>' . _('Reference') . "</TD>
-<TD CLASS='tableheader'>" . _('Payment') .'<BR>' . _('Reference') . "</TD>
-<TD CLASS='tableheader'>" . _('Payment') . '<BR>' . _('Date') . "</TD>
-<TD CLASS='tableheader'>" . _('Total Payment') . '<BR>' . _('Amount') .	'</TD></TR>';
+<TH>" . _('Supplier Number') . '<BR>' . _('Reference') . "</TH>
+<TH>" . _('Payment') .'<BR>' . _('Reference') . "</TH>
+<TH>" . _('Payment') . '<BR>' . _('Date') . "</TH>
+<TH>" . _('Total Payment') . '<BR>' . _('Amount') .	'</TH></TR>';
 
 echo $TableHeader;
 
@@ -79,10 +79,10 @@ $j=1;
 $k=0; //row colour counter
   while ($myrow = DB_fetch_array($Result)) {
 	if ($k == 1){
-		echo '<TR BGCOLOR="#CCCCCC">';
+		echo '<TR class="EvenTableRows">';
 		$k = 0;
 	} else {
-		echo '<TR BGCOLOR="#EEEEEE">';
+		echo '<TR class="OddTableRows">';
 		$k++;
 	}
 

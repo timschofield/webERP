@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 8;
 
@@ -10,12 +10,12 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
 
 
-if ($_POST['FromPeriod'] > $_POST['ToPeriod']){
+if (isset($_POST['FromPeriod']) and ($_POST['FromPeriod'] > $_POST['ToPeriod'])){
 	prnMsg(_('The selected period from is actually after the period to') . '! ' . _('Please reselect the reporting period'),'error');
 	$_POST['SelectADifferentPeriod']='Select A Different Period';
 }
 
-if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_POST['SelectADifferentPeriod'])){
+if ((!isset($_POST['FromPeriod']) AND !isset($_POST['ToPeriod'])) OR isset($_POST['SelectADifferentPeriod'])){
 
 	include('includes/header.inc');
 	echo "<FORM METHOD='POST' ACTION=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
@@ -546,18 +546,18 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 
 	if ($_POST['Detail']=='Detailed'){
 		$TableHeader = "<TR>
-				<TD class='tableheader'>"._('Account')."</TD>
-				<TD class='tableheader'>"._('Account Name')."</TD>
-				<TD COLSPAN=2 class='tableheader'>"._('Period Actual')."</TD>
-				<TD COLSPAN=2 class='tableheader'>"._('Period Budget')."</TD>
-				<TD COLSPAN=2 class='tableheader'>"._('Last Year').'</TD>
-				</TR>';
+				<TH>"._('Account')."</TH>
+				<TH>"._('Account Name')."</TH>
+				<TH COLSPAN=2>"._('Period Actual')."</TH>
+				<TH COLSPAN=2>"._('Period Budget')."</TH>
+				<TH COLSPAN=2>"._('Last Year')."</TH>
+				</TR>";
 	} else { /*summary */
 		$TableHeader = "<TR>
-				<TD COLSPAN=2 class='tableheader'></TD>
-				<TD COLSPAN=2 class='tableheader'>"._('Period Actual')."</TD>
-				<TD COLSPAN=2 class='tableheader'>"._('Period Budget')."</TD>
-				<TD COLSPAN=2 class='tableheader'>"._('Last Year')."</TD>
+				<TH COLSPAN=2></TH>
+				<TH COLSPAN=2>"._('Period Actual')."</TH>
+				<TH COLSPAN=2>"._('Period Budget')."</TH>
+				<TH COLSPAN=2>"._('Last Year')."</TH>
 				</TR>";
 	}
 
@@ -568,6 +568,12 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 	$SectionPrdActual= 0;
 	$SectionPrdLY 	 = 0;
 	$SectionPrdBudget= 0;
+	
+	$PeriodProfitLoss = 0;
+	$PeriodProfitLoss = 0;
+	$PeriodLYProfitLoss = 0;
+	$PeriodBudgetProfitLoss = 0;
+	
 
 	$ActGrp ='';
 	$ParentGroups = array();
@@ -835,10 +841,10 @@ if ((! isset($_POST['FromPeriod']) AND ! isset($_POST['ToPeriod'])) OR isset($_P
 		if ($_POST['Detail']==_('Detailed')){
 
 			if ($k==1){
-				echo "<tr bgcolor='#CCCCCC'>";
+				echo '<tr class="EvenTableRows">';
 				$k=0;
 			} else {
-				echo "<tr bgcolor='#EEEEEE'>";
+				echo '<tr class="OddTableRows">';
 				$k++;
 			}
 

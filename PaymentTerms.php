@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 10;
 
@@ -50,13 +50,13 @@ if (isset($_POST['submit'])) {
 
 		if ($_POST['DaysOrFoll']=='on') {
 			$sql = "UPDATE paymentterms SET
-					terms='" . $_POST['Terms'] . "',
+					terms='" . DB_escape_string($_POST['Terms']) . "',
 					dayinfollowingmonth=0,
 					daysbeforedue=" . $_POST['DayNumber'] . "
 				WHERE termsindicator = '" . $SelectedTerms . "'";
 		} else {
 			$sql = "UPDATE paymentterms SET
-					terms='" . $_POST['Terms'] . "',
+					terms='" . DB_escape_string($_POST['Terms']) . "',
 					dayinfollowingmonth=" . $_POST['DayNumber'] . ",
 					daysbeforedue=0
 				WHERE termsindicator = '" . $SelectedTerms . "'";
@@ -74,7 +74,7 @@ if (isset($_POST['submit'])) {
 								dayinfollowingmonth)
 						VALUES (
 							'" . $_POST['TermsIndicator'] . "',
-							'" . $_POST['Terms'] . "',
+							'" . DB_escape_string($_POST['Terms']) . "',
 							" . $_POST['DayNumber'] . ",
 							0
 						)";
@@ -85,7 +85,7 @@ if (isset($_POST['submit'])) {
 								dayinfollowingmonth)
 						VALUES (
 							'" . $_POST['TermsIndicator'] . "',
-							'" . $_POST['Terms'] . "',
+							'" . DB_escape_string($_POST['Terms']) . "',
 							0,
 							" . $_POST['DayNumber'] . "
 							)";
@@ -145,10 +145,10 @@ or deletion of the records*/
 	$result = DB_query($sql, $db);
 
 	echo '<CENTER><table border=1>';
-	echo '<tr><td class="tableheader">' . _('Term Code') . '</td>
-		<td class="tableheader">' . _('Description') . '</td>
-		<td class="tableheader">' . _('Following Month On') . '</td>
-		<td class="tableheader">' . _('Due After (Days)') . '</td>
+	echo '<tr><th>' . _('Term Code') . '</th>
+		<th>' . _('Description') . '</th>
+		<th>' . _('Following Month On') . '</th>
+		<th>' . _('Due After (Days)') . '</th>
 		</tr>';
 
 	while ($myrow=DB_fetch_row($result)) {
@@ -244,7 +244,7 @@ if (!isset($_GET['delete'])) {
 		<?php	if ($DaysBeforeDue !=0) {
 			echo $DaysBeforeDue;
 			} else {
-			echo $DayInFollowingMonth;
+			if (isset($DayInFollowingMonth)) {echo $DayInFollowingMonth;}
 			} ?>>
 	</TD></TR>
 

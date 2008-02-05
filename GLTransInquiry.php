@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 8;
 
@@ -16,7 +16,9 @@ if (!isset($_GET['TypeID']) OR !isset($_GET['TransNo'])) { /*Script was not pass
 }
 
 
-$SQL = "SELECT typename, typeno FROM systypes WHERE typeid=" . $_GET['TypeID'];
+$SQL = "SELECT typename, 
+		typeno FROM systypes 
+		WHERE typeid=" . $_GET['TypeID'];
 
 $ErrMsg =_('The transaction type') . ' ' . $_GET['TypeID'] . ' ' . _('could not be retrieved');
 $TypeResult = DB_query($SQL,$db,$ErrMsg);
@@ -65,12 +67,12 @@ if (DB_num_rows($TransResult)==0){
 
 echo '<CENTER><TABLE CELLPADDING=2 width=100%>';
 
-$TableHeader = '<TR><TD class="tableheader">' . _('Date') . '</TD>
-			<TD class="tableheader">' . _('Period') .'</TD>
-			<TD class="tableheader">'. _('Account') .'</TD>
-			<TD class="tableheader">'. _('Amount') .'</TD>
-			<TD class="tableheader">' . _('Narrative') .'</TD>
-			<TD class="tableheader">'. _('Posted') . '</TD></TR>';
+$TableHeader = '<TR><TH>' . _('Date') . '</TH>
+			<TH>' . _('Period') .'</TH>
+			<TH>'. _('Account') .'</TH>
+			<TH>'. _('Amount') .'</TH>
+			<TH>' . _('Narrative') .'</TH>
+			<TH>'. _('Posted') . '</TH></TR>';
 
 echo $TableHeader;
 
@@ -78,10 +80,10 @@ $j = 1;
 $k=0; //row colour counter
 while ($myrow=DB_fetch_array($TransResult)) {
        if ($k==1){
-              echo '<tr bgcolor="#CCCCCC">';
+              echo '<tr class="EvenTableRows">';
               $k=0;
        } else {
-              echo '<tr bgcolor="#EEEEEE">';
+              echo '<tr class="OddTableRows">';
               $k++;
        }
 
@@ -105,12 +107,6 @@ while ($myrow=DB_fetch_array($TransResult)) {
 		number_format($myrow['amount'],2),
 		$myrow['narrative'],
 		$Posted);
-
-       $j++;
-       If ($j == 18){
-		$j=1;
-		echo $TableHeader;
-       }
 }
 //end of while loop
 

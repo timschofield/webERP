@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 15;
 
@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
 				$myrow = DB_fetch_row($result);
 				$OldName = $myrow[0];
 				$sql = "UPDATE paymentmethods
-					SET paymentname='" . $_POST['MethodName'] . "',
+					SET paymentname='" . DB_escape_string($_POST['MethodName']) . "',
 						paymenttype = " . $_POST['ForPayment'] . ",
 						receipttype = " . $_POST['ForReceipt'] . "
 					WHERE paymentname ".LIKE." '".$OldName."'";
@@ -90,7 +90,7 @@ if (isset($_POST['submit'])) {
 						paymenttype, 
 						receipttype)
 				VALUES (
-					'" . $_POST['MethodName'] ."',
+					'" . DB_escape_string($_POST['MethodName']) ."',
 					" . $_POST['ForPayment'] . ",
 					" . $_POST['ForReceipt'] . "
 					)";
@@ -166,19 +166,19 @@ if (isset($_POST['submit'])) {
 
 	echo "<center><table>
 		<tr>
-		<td class='tableheader'>" . _('Payment Method') . "</td>
-		<td class='tableheader'>" . _('For Payments') . "</td>
-		<td class='tableheader'>" . _('For Receipts') . "</td>
+		<th>" . _('Payment Method') . "</th>
+		<th>" . _('For Payments') . "</th>
+		<th>" . _('For Receipts') . "</th>
 		</tr>";
 
 	$k=0; //row colour counter
 	while ($myrow = DB_fetch_array($result)) {
 
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 

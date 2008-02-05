@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 $PageSecurity = 11;
 
@@ -41,17 +41,17 @@ if (isset($_POST['submit'])) {
 
 		$sql = "UPDATE locations SET
 				loccode='" . $_POST['LocCode'] . "',
-				locationname='" . $_POST['LocationName'] . "',
-				deladd1='" . $_POST['DelAdd1'] . "',
-				deladd2='" . $_POST['DelAdd2'] . "',
-				deladd3='" . $_POST['DelAdd3'] . "',
-				deladd4='" . $_POST['DelAdd4'] . "',
-				deladd5='" . $_POST['DelAdd5'] . "',
-				deladd6='" . $_POST['DelAdd6'] . "',
-				tel='" . $_POST['Tel'] . "',
-				fax='" . $_POST['Fax'] . "',
-				email='" . $_POST['Email'] . "',
-				contact='" . $_POST['Contact'] . "',
+				locationname='" . DB_escape_string($_POST['LocationName']) . "',
+				deladd1='" . DB_escape_string($_POST['DelAdd1']) . "',
+				deladd2='" . DB_escape_string($_POST['DelAdd2']) . "',
+				deladd3='" . DB_escape_string($_POST['DelAdd3']) . "',
+				deladd4='" . DB_escape_string($_POST['DelAdd4']) . "',
+				deladd5='" . DB_escape_string($_POST['DelAdd5']) . "',
+				deladd6='" . DB_escape_string($_POST['DelAdd6']) . "',
+				tel='" . DB_escape_string($_POST['Tel']) . "',
+				fax='" . DB_escape_string($_POST['Fax']) . "',
+				email='" . DB_escape_string($_POST['Email']) . "',
+				contact='" . DB_escape_string($_POST['Contact']) . "',
 				taxprovinceid = " . $_POST['TaxProvince'] . ",
 				managed = " . $_POST['Managed'] . "
 			WHERE loccode = '$SelectedLocation'";
@@ -107,18 +107,18 @@ if (isset($_POST['submit'])) {
 					managed
 					)
 			VALUES (
-				'" . $_POST['LocCode'] . "',
-				'" . $_POST['LocationName'] . "',
-				'" . $_POST['DelAdd1'] ."',
-				'" . $_POST['DelAdd2'] ."',
-				'" . $_POST['DelAdd3'] . "',
-				'" . $_POST['DelAdd4'] . "',
-				'" . $_POST['DelAdd5'] . "',
-				'" . $_POST['DelAdd6'] . "',
-				'" . $_POST['Tel'] . "',
-				'" . $_POST['Fax'] . "',
-				'" . $_POST['Email'] . "',
-				'" . $_POST['Contact'] . "',
+				'" . DB_escape_string($_POST['LocCode']) . "',
+				'" . DB_escape_string($_POST['LocationName']) . "',
+				'" . DB_escape_string($_POST['DelAdd1']) ."',
+				'" . DB_escape_string($_POST['DelAdd2']) ."',
+				'" . DB_escape_string($_POST['DelAdd3']) . "',
+				'" . DB_escape_string($_POST['DelAdd4']) . "',
+				'" . DB_escape_string($_POST['DelAdd5']) . "',
+				'" . DB_escape_string($_POST['DelAdd6']) . "',
+				'" . DB_escape_string($_POST['Tel']) . "',
+				'" . DB_escape_string($_POST['Fax']) . "',
+				'" . DB_escape_string($_POST['Email']) . "',
+				'" . DB_escape_string($_POST['Contact']) . "',
 				" . $_POST['TaxProvince'] . ",
 				" . $_POST['Managed'] . "
 			)";
@@ -321,19 +321,19 @@ or deletion of the records*/
 	}
 
 	echo '<CENTER><table border=1>';
-	echo '<TR><TD class="tableheader">' . _('Location Code') . '</TD>
-			<TD class="tableheader">' . _('Location Name') . '</TD>
-			<TD class="tableheader">' . _('Tax Province') . '</TD>
-			<TD class="tableheader">' . _('Managed') . '</TD>
+	echo '<TR><TH>' . _('Location Code') . '</TH>
+			<TH>' . _('Location Name') . '</TH>
+			<TH>' . _('Tax Province') . '</TH>
+			<TH>' . _('Managed') . '</TH>
 		</TR>';
 
 $k=0; //row colour counter
 while ($myrow = DB_fetch_array($result)) {
 	if ($k==1){
-		echo "<TR bgcolor='#CCCCCC'>";
+		echo '<TR class="EvenTableRows">';
 		$k=0;
 	} else {
-		echo "<TR bgcolor='#EEEEEE'>";
+		echo '<TR class="OddTableRows">';
 		$k=1;
 	}
 
@@ -370,7 +370,7 @@ while ($myrow = DB_fetch_array($result)) {
 
 <p>
 <?php
-if ($SelectedLocation) {  ?>
+if (isset($SelectedLocation)) {  ?>
 	<Center><a href="<?php echo $_SERVER['PHP_SELF'];?>"><?php echo _('REVIEW RECORDS'); ?></a></Center>
 <?php } ?>
 
@@ -385,7 +385,7 @@ if (!isset($_GET['delete'])) {
 
 	echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 
-	if ($SelectedLocation) {
+	if (isset($SelectedLocation)) {
 		//editing an existing Location
 
 		$sql = "SELECT loccode,
@@ -429,7 +429,46 @@ if (!isset($_GET['delete'])) {
 		echo '<CENTER><TABLE> <TR><TD>' . _('Location Code') . ':</TD><TD>';
 		echo $_POST['LocCode'] . '</TD></TR>';
 	} else { //end of if $SelectedLocation only do the else when a new record is being entered
+		if (!isset($_POST['LocCode'])) {
+			$_POST['LocCode'] = '';
+		}
 		echo '<CENTER><TABLE><TR><TD>' . _('Location Code') . ':</TD><TD><input type="Text" name="LocCode" value="' . $_POST['LocCode'] . '" SIZE=5 MAXLENGTH=5></TD></TR>';
+	}
+	if (!isset($_POST['LocationName'])) {
+		$_POST['LocationName'] = '';
+	}
+	if (!isset($_POST['Contact'])) {
+		$_POST['Contact'] = '';
+	}
+	if (!isset($_POST['DelAdd1'])) {
+		$_POST['DelAdd1'] = ' ';
+	}
+	if (!isset($_POST['DelAdd2'])) {
+		$_POST['DelAdd2'] = '';
+	}
+	if (!isset($_POST['DelAdd3'])) {
+		$_POST['DelAdd3'] = '';
+	}
+	if (!isset($_POST['DelAdd4'])) {
+		$_POST['DelAdd4'] = '';
+	}
+	if (!isset($_POST['DelAdd5'])) {
+		$_POST['DelAdd5'] = '';
+	}
+	if (!isset($_POST['DelAdd6'])) {
+		$_POST['DelAdd6'] = '';
+	}
+	if (!isset($_POST['Tel'])) {
+		$_POST['Tel'] = '';
+	}
+	if (!isset($_POST['Fax'])) {
+		$_POST['Fax'] = '';
+	}
+	if (!isset($_POST['Email'])) {
+		$_POST['Email'] = '';
+	}
+	if (!isset($_POST['Managed'])) {
+		$_POST['Managed'] = 0;
 	}
 	?>
 

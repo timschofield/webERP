@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 $PageSecurity = 11;
 
@@ -47,14 +47,14 @@ echo '<CENTER><FONT SIZE=4><B><U>'. _('Receive purchase order'). ' '. $_SESSION[
 echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
 
 echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>
-<TR><TD class="tableheader">' . _('Item Code') . '</TD>
-	<TD class="tableheader">' . _('Description') . '</TD>
-	<TD class="tableheader">' . _('Quantity') . '<BR>' . _('Ordered') . '</TD>
-	<TD class="tableheader">' . _('Units') . '</TD>
-	<TD class="tableheader">' . _('Already Received') . '</TD>
-	<TD class="tableheader">' . _('This Delivery') . '<BR>' . _('Quantity') . '</TD>
-	<TD class="tableheader">' . _('Price') . '</TD>
-	<TD class="tableheader">' . _('Total Value') . '<BR>' . _('Received') . '</TD>';
+<TR><TH>' . _('Item Code') . '</TH>
+	<TH>' . _('Description') . '</TH>
+	<TH>' . _('Quantity') . '<BR>' . _('Ordered') . '</TH>
+	<TH>' . _('Units') . '</TH>
+	<TH>' . _('Already Received') . '</TH>
+	<TH>' . _('This Delivery') . '<BR>' . _('Quantity') . '</TH>
+	<TH>' . _('Price') . '</TH>
+	<TH>' . _('Total Value') . '<BR>' . _('Received') . '</TH>';
 
 
 echo '<TD>&nbsp;</TD>
@@ -68,10 +68,10 @@ if (count($_SESSION['PO']->LineItems)>0){
 	foreach ($_SESSION['PO']->LineItems as $LnItm) {
 
 		if ($k==1){
-			echo '<tr bgcolor="#CCCCCC">';
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo '<tr bgcolor="#EEEEEE">';
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 
