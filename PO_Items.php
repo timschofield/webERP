@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 
 $PageSecurity = 4;
@@ -221,7 +221,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 
 
-If ($_POST['Search']){  /*ie seach for stock items */
+If (isset($_POST['Search'])){  /*ie seach for stock items */
 
 	If ($_POST['Keywords'] AND $_POST['StockCode']) {
 		$msg=_('Stock description keywords have been used in preference to the Stock code extract entered');
@@ -747,7 +747,7 @@ if (count($_SESSION['PO']->LineItems)>0){
 # has the user requested to modify an item
 # or insert a new one and EditItem set to 1 above
 
-If ($_GET['Edit']){
+If (isset($_GET['Edit'])){
 
 	echo "<INPUT TYPE='HIDDEN' NAME='LineNo' VALUE=" . $_GET['Edit'] .">";
 
@@ -782,7 +782,15 @@ If ($_GET['Edit']){
 	echo "</TABLE><CENTER><INPUT TYPE=SUBMIT NAME='UpdateLine' VALUE='" . _('Update Line') . "'> <INPUT TYPE=SUBMIT NAME='Delete' VALUE='" . _('Delete') . "'><BR>";
 } elseif ($_SESSION['ExistingOrder']==0) { /* ITS A NEWY */
  /*show a form for putting in a new line item with or without a stock entry */
-
+	if (!isset($_POST['StockID'])) {
+		$_POST['StockID']='';
+	}
+	if (!isset($_POST['ItemDescription'])) {
+		$_POST['ItemDescription']='';
+	}
+	if (!isset($_POST['GLCode'])) {
+		$_POST['GLCode']='';
+	}
 	echo "<input type='hidden' name='LineNo' value=" . ($_SESSION['PO']->LinesOnOrder + 1) .">";
 
 	echo '<TABLE><TR><TD>' . _('Stock Code for Item Ordered') . ': <FONT SIZE=1>(' . _('Leave blank if NOT a stock order') . ")</TD>
@@ -799,6 +807,10 @@ If ($_GET['Edit']){
 	if (!isset($_POST['Qty'])){
 		$_POST['Qty'] = 1;
 	}
+	
+	if (!isset($_POST['Price'])) {
+		$_POST['Price'] = 0;
+	}
 
 	echo '<TR><TD>' . _('Order Quantity') . ":</TD>
 		<TD><input type='Text' SIZE=7 MAXLENGTH=6 name='Qty' value=" . $_POST['Qty'] . "></TD></TR>";
@@ -811,6 +823,9 @@ If ($_GET['Edit']){
 	echo '<TR><TD>' . _('Required Delivery Date') . ":</TD>
 		<TD><input type='Text' SIZE=12 MAXLENGTH=11 name='ReqDelDate' value=" . $_POST['ReqDelDate'] . '></TD></TR>';
 
+	if (!isset($_POST['ShiptRef'])) {
+		$_POST['ShiptRef']='';
+	}
 	echo '<TR><TD>' . _('Shipment Ref') . ': <FONT SIZE=1>' . _('(Leave blank if N/A)') . "</FONT></TD>
 		<TD><input type='Text' SIZE=10 MAXLENGTH=9 name='ShiptRef' value=" . $_POST['ShiptRef'] . " > <a target='_blank' href='$rootpath/ShiptsList.php?" . SID . "&SupplierID=" . $_SESSION['PO']->SupplierID . "&SupplierName=" . $_SESSION['PO']->SupplierName . "'>" . _('Show Open Shipments') . '</a></TD></TR>';
 /*	echo '<TR><TD>' . _('Contract Ref') . ': <FONT SIZE=1>' . _('(Leave blank if N/A)') . "</FONT></TD>
@@ -852,7 +867,7 @@ echo '<B>' . _('Search For Stock Items') . "</B>
 
 echo "<OPTION SELECTED VALUE='All'>" . _('All');
 while ($myrow1 = DB_fetch_array($result1)) {
-	if ($_POST['StockCat']==$myrow1['categoryid']){
+	if (isset($_POST['StockCat']) and $_POST['StockCat']==$myrow1['categoryid']){
 		echo "<OPTION SELECTED VALUE=". $myrow1['categoryid'] . '>' . $myrow1['categorydescription'];
 	} else {
 		echo "<OPTION VALUE=". $myrow1['categoryid'] . '>' . $myrow1['categorydescription'];
@@ -877,9 +892,9 @@ If ($SearchResult) {
 	echo "<CENTER><TABLE CELLPADDING=1 COLSPAN=7 BORDER=1>";
 
 	$tableheader = "<TR>
-			<TD class='tableheader'>" . _('Code')  . "</TD>
-			<TD class='tableheader'>" . _('Description') . "</TD>
-			<TD class='tableheader'>" . _('Units') . "</TD>
+			<TH>" . _('Code')  . "</TH>
+			<TH>" . _('Description') . "</TH>
+			<TH>" . _('Units') . "</TH>
 			</TR>";
 	echo $tableheader;
 
@@ -889,10 +904,10 @@ If ($SearchResult) {
 	while ($myrow=DB_fetch_array($SearchResult)) {
 
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 
