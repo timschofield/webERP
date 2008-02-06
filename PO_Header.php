@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 4;
 include('includes/DefinePOClass.php');
@@ -62,7 +62,7 @@ echo '<A HREF="'. $rootpath . '/PO_SelectOSPurchOrder.php?' . SID . '">'. _('Bac
 /*The page can be called with ModifyOrderNumber=x where x is a purchase order number
 The page then looks up the details of order x and allows these details to be modified */
 
-if ($_GET['ModifyOrderNumber']!=''){
+if (isset($_GET['ModifyOrderNumber'])){
       include ('includes/PO_ReadInOrder.inc');
 }
 
@@ -114,7 +114,7 @@ if (!isset($_SESSION['PO'])){
 	}
 }
 
-if ($_POST['ChangeSupplier']!=''){
+if (isset($_POST['ChangeSupplier'])){
 
 /* change supplier only allowed with appropriate permissions - button only displayed to modify is AccessLevel >10  (see below)*/
 	if ($_SESSION['PO']->Any_Already_Received()==0){
@@ -125,6 +125,7 @@ if ($_POST['ChangeSupplier']!=''){
 	}
 }
 
+$msg='';
 if (isset($_POST['SearchSuppliers'])){
 
 	If (strlen($_POST['Keywords'])>0 AND strlen($_POST['SuppCode'])>0) {
@@ -173,7 +174,7 @@ if (isset($_POST['SearchSuppliers'])){
 } /*end of if search for supplier codes/names */
 
 
-if ($_POST['Select']) {
+if (isset($_POST['Select'])) {
 
 /*will only be true if page called from supplier selection form or set because only one supplier record returned from a search
  so parse the $Select string into supplier code and branch code */
@@ -220,14 +221,14 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 	<CENTER><INPUT TYPE=SUBMIT NAME='SearchSuppliers' VALUE=" . _('Search Now') . ">
 	<INPUT TYPE=SUBMIT ACTION=RESET VALUE='" . _('Reset') . "'></CENTER>";
 
-	If ($result_SuppSelect) {
+	If (isset($result_SuppSelect)) {
 
 		echo '<BR><CENTER><TABLE CELLPADDING=3 COLSPAN=7 BORDER=1>';
 
 		$tableheader = "<TR>
-				<TD class='tableheader'>" . _('Code') . "</TD>
-				<TD class='tableheader'>" . _('Supplier Name') . "</TD>
-				<TD class='tableheader'>" . _('Currency') . '</TD>
+				<TH>" . _('Code') . "</TH>
+				<TH>" . _('Supplier Name') . "</TH>
+				<TH>" . _('Currency') . '</TH>
 				</TR>';
 
 		echo $tableheader;
@@ -238,10 +239,10 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 		while ($myrow=DB_fetch_array($result_SuppSelect)) {
 
 			if ($k==1){
-				echo "<tr bgcolor='#CCCCCC'>";
+				echo '<tr class="EvenTableRows">';
 				$k=0;
 			} else {
-				echo "<tr bgcolor='#EEEEEE'>";
+				echo '<tr class="OddTableRows">';
 				$k++;
 			}
 
@@ -277,7 +278,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 
 	/*Set up form for entry of order header stuff */
 
-	if(($_POST['StkLocation']=='' OR !isset($_POST['StkLocation'])) AND (isset($_SESSION['PO']->Location) AND $_SESSION['PO']->Location!='')){
+	if((!isset($_POST['StkLocation']) or $_POST['StkLocation']) AND (isset($_SESSION['PO']->Location) AND $_SESSION['PO']->Location!='')){
 	    /*The session variables are set but the form variables have been lost
 	    need to restore the form variables from the session */
 	    $_POST['StkLocation']=$_SESSION['PO']->Location;
@@ -374,14 +375,14 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 		  $_POST['DelAdd5'] = $LocnRow[4];
 		  $_POST['DelAdd6'] = $LocnRow[5];
 		  $_POST['tel'] = $LocnRow[6];
-		  $_SESSION['PO']->Location= $_POST['StkLocation'];
-		  $_SESSION['PO']->DelAdd1 = $_POST['DelAdd1'];
-		  $_SESSION['PO']->DelAdd2 = $_POST['DelAdd2'];
-		  $_SESSION['PO']->DelAdd3 = $_POST['DelAdd3'];
-		  $_SESSION['PO']->DelAdd4 = $_POST['DelAdd4'];
-		  $_SESSION['PO']->DelAdd5 = $_POST['DelAdd5'];
-		  $_SESSION['PO']->DelAdd6 = $_POST['DelAdd6'];
-		  $_SESSION['PO']->tel = $_POST['tel'];
+		  $_SESSION['PO']->Location= DB_escape_string($_POST['StkLocation']);
+		  $_SESSION['PO']->DelAdd1 = DB_escape_string($_POST['DelAdd1']);
+		  $_SESSION['PO']->DelAdd2 = DB_escape_string($_POST['DelAdd2']);
+		  $_SESSION['PO']->DelAdd3 = DB_escape_string($_POST['DelAdd3']);
+		  $_SESSION['PO']->DelAdd4 = DB_escape_string($_POST['DelAdd4']);
+		  $_SESSION['PO']->DelAdd5 = DB_escape_string($_POST['DelAdd5']);
+		  $_SESSION['PO']->DelAdd6 = DB_escape_string($_POST['DelAdd6']);
+		  $_SESSION['PO']->tel = DB_escape_string($_POST['tel']);
 	      }
 	  }
 	  echo '<TR><TD>' . _('Deliver to') . ' - ' . _('Address 1') . ":</TD>
@@ -402,6 +403,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 	  echo '<TR><TD>' . _('Deliver to') . ' - ' . _('Address 6') . ":</TD>
 	  		<TD><INPUT TYPE=text NAME=DelAdd6 SIZE=16 MAXLENGTH=15 Value='" . $_POST['DelAdd6'] . "'></TD>
 		</TR>";
+		if (!isset($_POST['tel'])) {$_POST['tel']='';}
 	  echo '<TR><TD>' . _('Deliver to') . ' - ' . _('Phone') . ":</TD>
 	  	<TD><INPUT TYPE=text NAME=tel SIZE=31 MAXLENGTH=30 Value='" . $_POST['tel'] . "'></TD>
 		</TR>";
