@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 2;
 
@@ -31,7 +31,7 @@ if (isset($_GET['SelectedSupplier'])){
 echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
 
 
-If ($_POST['ResetPart']){
+If (isset($_POST['ResetPart'])){
      unset($SelectedStockItem);
 }
 
@@ -43,16 +43,16 @@ If (isset($OrderNumber) && $OrderNumber!="") {
 		echo _('Order Number') . ' - ' . $OrderNumber;
 	}
 } else {
-	If ($SelectedSupplier) {
+	If (isset($SelectedSupplier)) {
 		echo _('For supplier') . ': ' . $SelectedSupplier . ' ' . _('and') . ' ';
 		echo '<input type=hidden name="SelectedSupplier" value=' . $SelectedSupplier . '>';
 	}
-	If ($SelectedStockItem) {
+	If (isset($SelectedStockItem)) {
 		 echo _('for the part') . ': ' . $SelectedStockItem . ' ' . _('and') . ' <input type=hidden name="SelectedStockItem" value="' . $SelectedStockItem . '">';
 	}
 }
 
-if ($_POST['SearchParts']){
+if (isset($_POST['SearchParts'])){
 
 	If ($_POST['Keywords'] AND $_POST['StockCode']) {
 		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered'),'info');
@@ -128,7 +128,7 @@ ouststanding orders
 	$OrdersAfterDate = Date("d/m/Y",Mktime(0,0,0,Date("m")-2,Date("d"),Date("Y")));
 */
 
-if ($OrderNumber=="" OR !isset($OrderNumber)){
+if (!isset($OrderNumber) or $OrderNumber==""){
 
 	echo _('order number') . ': <INPUT type=text name="OrderNumber" MAXLENGTH =8 SIZE=9> ' . _('Into Stock Location') . ':<SELECT name="StockLocation"> ';
 	$sql = "SELECT loccode, locationname FROM locations";
@@ -165,7 +165,7 @@ $result1 = DB_query($SQL,$db);
 <SELECT NAME="StockCat">
 <?php
 while ($myrow1 = DB_fetch_array($result1)) {
-	if ($myrow1['categoryid']==$_POST['StockCat']){
+	if (isset($_POST['StockCat']) and $myrow1['categoryid']==$_POST['StockCat']){
 		echo "<OPTION SELECTED VALUE='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
 	} else {
 		echo "<OPTION VALUE='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
@@ -185,14 +185,14 @@ while ($myrow1 = DB_fetch_array($result1)) {
 
 <?php
 
-If ($StockItemsResult) {
+If (isset($StockItemsResult)) {
 
 	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>';
-	$TableHeader = '<TR><TD class="tableheader">' . _('Code') . '</TD>
-				<TD class="tableheader">' . _('Description') . '</TD>
-				<TD class="tableheader">' . _('On Hand') . '</TD>
-				<TD class="tableheader">' . _('Orders') . '<BR>' . _('Outstanding') . '</TD>
-				<TD class="tableheader">' . _('Units') . '</TD>
+	$TableHeader = '<TR><TH>' . _('Code') . '</TH>
+				<TH>' . _('Description') . '</TH>
+				<TH>' . _('On Hand') . '</TH>
+				<TH>' . _('Orders') . '<BR>' . _('Outstanding') . '</TH>
+				<TH>' . _('Units') . '</TH>
 			</TR>';
 
 	echo $TableHeader;
@@ -203,10 +203,10 @@ If ($StockItemsResult) {
 	while ($myrow=DB_fetch_array($StockItemsResult)) {
 
 		if ($k==1){
-			echo '<tr bgcolor="#CCCCCC">';
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo '<tr bgcolor="#EEEEEE">';
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 
@@ -334,6 +334,9 @@ If ($StockItemsResult) {
 						purchorders.allowprint,
 						suppliers.currcode";
 			} else {
+				if (!isset($_POST['StockLocation'])) {
+					$_POST['StockLocation'] = '';
+				}
 				$SQL = "SELECT purchorders.orderno,
 						suppliers.suppname,
 						purchorders.orddate,
@@ -367,13 +370,13 @@ If ($StockItemsResult) {
 		/*show a table of the orders returned by the SQL */
 
 		echo '<TABLE CELLPADDING=2 COLSPAN=7 WIDTH=100%>';
-		$TableHeader = '<TR><TD class="tableheader">' . _('View') . '</TD>
-				<TD class="tableheader">' . _('Supplier') . '</TD>
-				<TD class="tableheader">' . _('Currency') . '</TD>
-				<TD class="tableheader">' . _('Requisition') . '</TD>
-				<TD class="tableheader">' . _('Order Date') . '</TD>
-				<TD class="tableheader">' . _('Initiator') . '</TD>
-				<TD class="tableheader">' . _('Order Total') . '</TD>
+		$TableHeader = '<TR><TH>' . _('View') . '</TH>
+				<TH>' . _('Supplier') . '</TH>
+				<TH>' . _('Currency') . '</TH>
+				<TH>' . _('Requisition') . '</TH>
+				<TH>' . _('Order Date') . '</TH>
+				<TH>' . _('Initiator') . '</TH>
+				<TH>' . _('Order Total') . '</TH>
 				</TR>';
 
 		echo $TableHeader;
@@ -384,10 +387,10 @@ If ($StockItemsResult) {
 
 
 			if ($k==1){ /*alternate bgcolour of row for highlighting */
-				echo '<tr bgcolor="#CCCCCC">';
+				echo '<tr class="EvenTableRows">';
 				$k=0;
 			} else {
-				echo '<tr bgcolor="#EEEEEE">';
+				echo '<tr class="OddTableRows">';
 				$k++;
 			}
 

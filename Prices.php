@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 2;
 
@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
 		$sql = "UPDATE prices SET
 				typeabbrev='" . $_POST['TypeAbbrev'] . "',
 				currabrev='" . $_POST['CurrAbrev'] . "',
-				price=" . $_POST['Price'] . "
+				price=" . DB_escape_string($_POST['Price']) . "
 			WHERE prices.stockid='$Item'
 			AND prices.typeabbrev='" . $_POST['OldTypeAbbrev'] . "'
 			AND prices.currabrev='" . $_POST['OldCurrAbrev'] . "'
@@ -96,7 +96,7 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['TypeAbbrev'] . "',
 					'" . $_POST['CurrAbrev'] . "',
 					'',
-					" . $_POST['Price'] . ")";
+					" . DB_escape_string($_POST['Price']) . ")";
 
 		$msg =  _('The new price has been added') . '.';
 	}
@@ -153,19 +153,19 @@ if ($InputError ==0){
 	$result = DB_query($sql,$db);
 
 	echo '<CENTER><table>';
-	echo '<tr><td class="tableheader">' . _('Currency') .
-	     '</td><td class="tableheader">' . _('Sales Type') .
-			 '</td><td class="tableheader">' . _('Price') .
-			 '</td></tr>';
+	echo '<tr><th>' . _('Currency') .
+	     '</th><th>' . _('Sales Type') .
+			 '</th><th>' . _('Price') .
+			 '</th></tr>';
 
 	$k=0; //row colour counter
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($k==1){
-			echo '<tr bgcolor="#CCCCCC">';
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo '<tr bgcolor="#EEEEEE">';
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 
