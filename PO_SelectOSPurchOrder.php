@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 2;
 
@@ -322,7 +322,7 @@ If (isset($StockItemsResult)) {
 						suppliers.currcode";
 			}
 		} else { //no supplier selected
-			if (isset($SelectedStockItem)) {
+			if (isset($SelectedStockItem) and isset($_POST['StockLocation'])) {
 				$SQL = "SELECT purchorders.orderno,
 						suppliers.suppname,
 						purchorders.orddate,
