@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 $PageSecurity = 10;
 
 include('includes/session.inc');
@@ -107,20 +107,20 @@ if (!isset($SelectedSalesPostingID)) {
 		$ShowLivePostingRecords = false;
 		prnMsg (_('The following posting records that do not have valid general ledger code specified - these records must be amended.'),'error');
 		echo '<CENTER><table border=1>';
-		echo "<tr><td class='tableheader'>" . _('Area') . "</td>
-				<td class='tableheader'>" . _('Stock Category') . "</td>
-				<td class='tableheader'>" . _('Sales Type') . "</td>
-				<td class='tableheader'>" . _('Sales Account') . "</td>
-				<td class='tableheader'>" . _('Discount Account') . "</td>
+		echo "<tr><th>" . _('Area') . "</th>
+				<th>" . _('Stock Category') . "</th>
+				<th>" . _('Sales Type') . "</th>
+				<th>" . _('Sales Account') . "</th>
+				<thr'>" . _('Discount Account') . "</th>
 			</tr>";
 		$k=0; //row colour counter
 	
 		while ($myrow = DB_fetch_row($result)) {
 			if ($k==1){
-				echo "<tr bgcolor='#CCCCCC'>";
+				echo '<tr class="EvenTableRows">';
 				$k=0;
 			} else {
-				echo "<tr bgcolor='#EEEEEE'>";
+				echo '<tr class="OddTableRows">';
 				$k=1;
 			}
 	
@@ -305,7 +305,7 @@ if (!isset($_GET['delete'])) {
 		<TD><SELECT name='Area'><OPTION VALUE='AN'>" . _('Any Other');
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['areacode']==$_POST['Area']) {
+		if (isset($_POST['Area']) and $myrow['areacode']==$_POST['Area']) {
 			echo "<OPTION SELECTED VALUE='";
 		} else {
 			echo "<OPTION VALUE='";
@@ -327,7 +327,7 @@ if (!isset($_GET['delete'])) {
 
 	while ($myrow = DB_fetch_array($result)) {
 
-		if ($myrow['categoryid']==$_POST['StkCat']) {
+		if (isset($_POST['StkCat']) and $myrow['categoryid']==$_POST['StkCat']) {
 			echo "<OPTION SELECTED VALUE='";
 		} else {
 			echo "<OPTION VALUE='";
@@ -352,7 +352,7 @@ if (!isset($_GET['delete'])) {
 	echo "<OPTION VALUE='AN'>" . _('Any Other');
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['typeabbrev']==$_POST['SalesType']) {
+		if (isset($_POST['SalesType']) and $myrow['typeabbrev']==$_POST['SalesType']) {
 			echo "<OPTION SELECTED VALUE='";
 		} else {
 			echo "<OPTION VALUE='";
@@ -379,7 +379,7 @@ if (!isset($_GET['delete'])) {
 	$result = DB_query($SQL,$db);
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['accountcode']==$_POST['SalesGLCode']) {
+		if (isset($_POST['SalesGLCode']) and $myrow['accountcode']==$_POST['SalesGLCode']) {
 			echo "<OPTION SELECTED VALUE='";
 		} else {
 			echo "<OPTION VALUE='";
@@ -395,7 +395,7 @@ if (!isset($_GET['delete'])) {
 			<TD><SELECT name='DiscountGLCode'>";
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['accountcode']==$_POST['DiscountGLCode']) {
+		if (isset($_POST['DiscountGLCode']) and $myrow['accountcode']==$_POST['DiscountGLCode']) {
 			echo "<OPTION SELECTED VALUE='";
 		} else {
 			echo "<OPTION VALUE='";

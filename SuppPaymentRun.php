@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 5;
 
@@ -251,12 +251,12 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 	echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD="POST"><CENTER><TABLE>';
 
-	if (strlen($_POST['FromCriteria'])<1){
+	if (!isset($_POST['FromCriteria']) or strlen($_POST['FromCriteria'])<1){
 		$DefaultFromCriteria = '1';
 	} else {
 		$DefaultFromCriteria = $_POST['FromCriteria'];
 	}
-	if (strlen($_POST['ToCriteria'])<1){
+	if (!isset($_POST['ToCriteria']) or strlen($_POST['ToCriteria'])<1){
 		$DefaultToCriteria = 'zzzzzzz';
 	} else {
 		$DefaultToCriteria = $_POST['ToCriteria'];
@@ -280,7 +280,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	}
 	echo '</SELECT></TD></TR>';
 
-	if (!is_numeric($_POST['ExRate'])){
+	if (!isset($_POST['ExRate']) or !is_numeric($_POST['ExRate'])){
 		$DefaultExRate = '1';
 	} else {
 		$DefaultExRate = $_POST['ExRate'];
@@ -319,7 +319,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		while ($myrow=DB_fetch_array($AccountsResults)){
 		      /*list the bank account names */
 
-			if ($_POST['BankAccount']==$myrow['accountcode']){
+			if (isset($_POST['BankAccount']) and $_POST['BankAccount']==$myrow['accountcode']){
 				echo '<OPTION SELECTED VALUE="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'];
 			} else {
 				echo '<OPTION VALUE="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'];
@@ -335,7 +335,7 @@ Payment types can be modified by editing that file */
 
 	foreach ($PaytTypes as $PaytType) {
 
-	     if ($_POST['PaytType']==$PaytType){
+	     if (isset($_POST['PaytType']) and $_POST['PaytType']==$PaytType){
 		   echo '<OPTION SELECTED Value="' . $PaytType . '">' . $PaytType;
 	     } else {
 		   echo '<OPTION Value="' . $PaytType . '">' . $PaytType;
@@ -343,10 +343,13 @@ Payment types can be modified by editing that file */
 	}
 	echo '</SELECT></TD></TR>';
 
-	if (!is_numeric($_POST['Ref'])){
+	if (!isset($_POST['Ref']) or !is_numeric($_POST['Ref'])){
 		$DefaultRef = '1';
 	} else {
 		$DefaultRef = $_POST['Ref'];
+	}
+	if (!isset($_POST['Ref'])) {
+		$_POST['Ref'] = '';
 	}
 
 	echo '<TR><TD>' . _('Starting Reference no (eg chq no)') . ':</TD>

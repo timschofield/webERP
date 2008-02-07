@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 2;
 
@@ -246,25 +246,25 @@ if (DB_num_rows($result)!=0){
 
 	$myrow = DB_fetch_array($result);
 	echo '<CENTER><B>' . $myrow['reportheading'] . "</B><BR><table border=1>\n";
-	echo '<tr><td class="tableheader">' . _('Col') . ' #</td>
-            <td class="tableheader">' . _('Heading 1') . '</td>
-            <td class="tableheader">' . _('Heading 2') . '</td>';
-	echo '<td class="tableheader">' . _('Calc') . '</td>
-        <td class="tableheader">' . _('Prd From') . '</td>
-        <td class="tableheader">' . _('Prd To') . '</td>';
-	echo '<td class="tableheader">' . _('Data') . '</td>
-        <td class="tableheader">' . _('Col') . ' #<BR><FONT SIZE=1>' . _('Numerator') . '</FONT></td>
-        <td class="tableheader">' . _('Col') . ' #<BR><FONT SIZE=1>' . _('Denominator') . '</FONT></td>';
-	echo '<td class="tableheader">' . _('Operator') . '</td>
-        <td class="tableheader">' . _('Budget') . '<BR>' . _('Or Actual') . '</td></TR>';
+	echo '<tr><th>' . _('Col') . ' #</th>
+            <th>' . _('Heading 1') . '</th>
+            <th>' . _('Heading 2') . '</th>';
+	echo '<th>' . _('Calc') . '</th>
+        <th>' . _('Prd From') . '</th>
+        <th">' . _('Prd To') . '</th>';
+	echo '<th>' . _('Data') . '</th>
+        <th>' . _('Col') . ' #<BR><FONT SIZE=1>' . _('Numerator') . '</FONT></th>
+        <th>' . _('Col') . ' #<BR><FONT SIZE=1>' . _('Denominator') . '</FONT></th>';
+	echo '<th>' . _('Operator') . '</th>
+        <th>' . _('Budget') . '<BR>' . _('Or Actual') . '</th></TR>';
 	$k=0; //row colour counter
 
 	do {
 		if ($k==1){
-			echo '<tr bgcolor="#CCCCCC">';
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo '<tr bgcolor="#EEEEEE">';
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 	if ($myrow[11]==1){

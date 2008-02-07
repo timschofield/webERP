@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 11;
 
@@ -22,7 +22,7 @@ if (!isset($_POST['SupplierID']) OR $_POST['SupplierID']==""){
 	echo '<BR>' . _('This page is expected to be called after a supplier has been selected');
 	echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . '/SelectSupplier.php?' . SID . "'>";
 	exit;
-} elseif ($_POST['SuppName']=="" OR !isset($_POST['SuppName'])) {
+} elseif (!isset($_POST['SuppName']) or $_POST['SuppName']=="") {
 	$sql = "SELECT suppname FROM suppliers WHERE supplierid='" . $_SESSION['SupplierID'] . "'";
 	$SuppResult = DB_query($sql,$db, _('Could not retrieve the supplier name for') . ' ' . $_SESSION['SupplierID']);
 	$SuppRow = DB_fetch_row($SuppResult);
@@ -324,13 +324,13 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 
 			echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>';
 			$TableHeader = '<TR>
-					<TD class="tableheader">' . _('GRN') . ' #</TD>
-					<TD class="tableheader">' . _('Item Code') . '</TD>
-					<TD class="tableheader">' . _('Description') . '</TD>
-					<TD class="tableheader">' . _('Date') . '<BR>' . _('Received') . '</TD>
-					<TD class="tableheader">' . _('Quantity') . '<BR>' . _('Received') . '</TD>
-					<TD class="tableheader">' . _('Quantity') . '<BR>' . _('Invoiced') . '</TD>
-					<TD class="tableheader">' . _('Quantity To') . '<BR>' . _('Reverse') . '</TD>
+					<TH>' . _('GRN') . ' #</TH>
+					<TH>' . _('Item Code') . '</TH>
+					<TH>' . _('Description') . '</TH>
+					<TH>' . _('Date') . '<BR>' . _('Received') . '</TH>
+					<TH>' . _('Quantity') . '<BR>' . _('Received') . '</TH>
+					<TH>' . _('Quantity') . '<BR>' . _('Invoiced') . '</TH>
+					<TH>' . _('Quantity To') . '<BR>' . _('Reverse') . '</TH>
 					</TR>';
 
 			echo $TableHeader;
@@ -339,10 +339,10 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 			$RowCounter =0;
 			while ($myrow=DB_fetch_array($result)) {
 				if ($k==1){
-					echo '<tr bgcolor="#CCCCCC">';
+					echo '<tr class="EvenTableRows">';
 					$k=0;
 				} else {
-					echo '<tr bgcolor="#EEEEEE">';
+					echo '<tr class="OddTableRows">';
 					$k=1;
 				}
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 11;
 
@@ -31,7 +31,7 @@ if (isset($_GET['EditName'])){
 	$EditName = strtoupper($_POST['EditName']);
 }
 
-if ($SelectedCategory && isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
+if (isset($SelectedCategory) AND isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 	
 	$result    = $_FILES['ItemPicture']['error'];
  	$UploadTheFile = 'Yes'; //Assume all is well to start off with
@@ -170,7 +170,10 @@ if (isset($_POST['submit'])  && $EditName == 1 ) { // Creating or updating a cat
 $CategoryPath = '<A href="'.$_SERVER['PHP_SELF'] . '?' . SID . 
 			'&ParentCategory=0">' . htmlentities(_('Main'), ENT_QUOTES, _('ISO-8859-1')) . '</A>' . "&nbsp;\\&nbsp;";
 $TempPath = '';
-$TmpParentID = $ParentCategory;
+if (isset($ParentCategory)) {
+	$TmpParentID = $ParentCategory;
+}
+
 $LastParentName = '';
 for($Buzy = (isset($TmpParentID) && ($TmpParentID <> '')); 
 		$Buzy == true;
@@ -252,6 +255,7 @@ if (DB_num_rows($result) == 0) {
 			}
 				
 		}
+		
 		printf("<td>%s</td>
             		<td><a href=\"%sParentCategory=%s\">" . _('Select') . "</td>
             		<td><a href=\"%sSelectedCategory=%s&ParentCategory=%s\">" . _('Edit') . "</td>
@@ -305,14 +309,16 @@ if (isset($SelectedCategory)) {
 
 } else { //end of if $SelectedCategory only do the else when a new record is being entered
 	$_POST['SalesCatName']  = '';
-	$_POST['ParentCategory']  = $ParentCategory;
+	if (isset($ParentCategory)) {
+		$_POST['ParentCategory']  = $ParentCategory;
+	}
 	echo '<INPUT TYPE=HIDDEN NAME="ParentCategory" VALUE="' . 
 		(isset($_POST['ParentCategory'])?($_POST['ParentCategory']):('0')) . '">';
 	$FormCaps = _('New Sub Category');
 }
 echo '<INPUT TYPE=HIDDEN NAME="EditName" VALUE="1">';
 echo '<CENTER><TABLE>';
-echo '<tr><td class="tableheader" colspan="2">' . $FormCaps . '</td></tr>';
+echo '<tr><th colspan="2">' . $FormCaps . '</th></tr>';
 echo '<TR><TD>' . _('Category Name') . ':</TD>
             <TD><input type="Text" name="SalesCatName" SIZE=20 MAXLENGTH=20 value="' . 
 			$_POST['SalesCatName'] . '"></TD></TR>';
@@ -372,7 +378,7 @@ if($result && DB_num_rows($result)) {
 	
 	echo '<CENTER>';
 	echo '<TABLE>';
-	echo '<tr><td class="tableheader" colspan="2">'._('Add Inventory to this category.').'</td></tr>';
+	echo '<tr><th colspan="2">'._('Add Inventory to this category.').'</th></tr>';
 	echo '<TR><TD>' . _('Select Inv. Item') . ':</TD><TD>';
 	echo '<select name="AddStockID">';
 	while( $myrow = DB_fetch_array($result) ) {
@@ -413,18 +419,18 @@ $result = DB_query($sql,$db);
 if($result ) {
 	if( DB_num_rows($result)) {
 		echo '<TABLE>';
-		echo '<tr><td class="tableheader" colspan="3">'._('Inventory items in this category.').'</td></tr>';
-		echo '<TR><TD class="tableheader">' . _('Stock Code') . '</TD>';
-		echo '<TD class="tableheader">' . _('Description') . '</TD></TR>';
+		echo '<tr><th colspan="3">'._('Inventory items in this category.').'</th></tr>';
+		echo '<TR><TH>' . _('Stock Code') . '</TH>';
+		echo '<TH>' . _('Description') . '</TH></TR>';
 
 		$k=0; //row colour counter
 
 		while( $myrow = DB_fetch_array($result) ) {
 			if ($k==1){
-				echo '<tr bgcolor="#CCCCCC">';
+				echo '<tr class="EvenTableRows">';
 				$k=0;
 			} else {
-				echo '<tr bgcolor="#EEEEEE">';
+				echo '<tr class="OddTableRows">';
 				$k=1;
 			}
 			

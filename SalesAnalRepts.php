@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 2;
 
@@ -131,29 +131,29 @@ if (isset($_POST['submit'])) {
 
 
 
-	if ($SelectedReport AND $InputError !=1) {
+	if (isset($SelectedReport) AND $InputError !=1) {
 
 		/*SelectedReport could also exist if submit had not been clicked this code
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
 
 		$sql = "UPDATE reportheaders SET 
-				reportheading='" . $_POST['ReportHeading'] . "', 
-				groupbydata1='" . $_POST['GroupByData1'] . "', 
-				groupbydata2='" . $_POST['GroupByData2'] . "',
-				groupbydata3='" . $_POST['GroupByData3'] . "', 
-				groupbydata4='" . $_POST['GroupByData4'] . "', 
-				newpageafter1=" . $_POST['NewPageAfter1'] . ", 
-				newpageafter2=" . $_POST['NewPageAfter2'] . ", 
-				newpageafter3=" . $_POST['NewPageAfter3'] . ", 
-				lower1='" . $_POST['Lower1'] . "', 
-				upper1='" . $_POST['Upper1'] . "', 
-				lower2='" . $_POST['Lower2'] . "', 
-				upper2='" . $_POST['Upper2'] . "', 
-				lower3='" . $_POST['Lower3'] . "', 
-				upper3='" . $_POST['Upper3'] . "', 
-				lower4='" . $_POST['Lower4'] . "', 
-				upper4='" . $_POST['Upper4'] . "' 
+				reportheading='" . DB_escape_string($_POST['ReportHeading']) . "', 
+				groupbydata1='" . DB_escape_string($_POST['GroupByData1']) . "', 
+				groupbydata2='" . DB_escape_string($_POST['GroupByData2']) . "',
+				groupbydata3='" . DB_escape_string($_POST['GroupByData3']) . "', 
+				groupbydata4='" . DB_escape_string($_POST['GroupByData4']) . "', 
+				newpageafter1=" . DB_escape_string($_POST['NewPageAfter1']) . ", 
+				newpageafter2=" . DB_escape_string($_POST['NewPageAfter2']) . ", 
+				newpageafter3=" . DB_escape_string($_POST['NewPageAfter3']) . ", 
+				lower1='" . DB_escape_string($_POST['Lower1']) . "', 
+				upper1='" . DB_escape_string($_POST['Upper1']) . "', 
+				lower2='" . DB_escape_string($_POST['Lower2']) . "', 
+				upper2='" . DB_escape_string($_POST['Upper2']) . "', 
+				lower3='" . DB_escape_string($_POST['Lower3']) . "', 
+				upper3='" . DB_escape_string($_POST['Upper3']) . "', 
+				lower4='" . DB_escape_string($_POST['Lower4']) . "', 
+				upper4='" . DB_escape_string($_POST['Upper4']) . "' 
 			WHERE reportid = " . $SelectedReport;
 
 		$ErrMsg = _('The report could not be updated because');
@@ -202,22 +202,22 @@ if (isset($_POST['submit'])) {
 						upper4
 						)
 				VALUES (
-					'" . $_POST['ReportHeading'] . "',
-					'" . $_POST['GroupByData1'] . "',
-					'" . $_POST['GroupByData2'] . "',
-					'" . $_POST['GroupByData3'] . "',
-					'" . $_POST['GroupByData4'] . "',
-					" . $_POST['NewPageAfter1'] . ",
-					" . $_POST['NewPageAfter2'] . ",
-					" . $_POST['NewPageAfter3'] . ",
-					'" . $_POST['Lower1'] . "',
-					'" . $_POST['Upper1'] . "',
-					'" . $_POST['Lower2'] . "',
-					'" . $_POST['Upper2'] . "',
-					'" . $_POST['Lower3'] . "',
-					'" . $_POST['Upper3'] . "',
-					'" . $_POST['Lower4'] . "',
-					'" . $_POST['Upper4'] . "'
+					'" . DB_escape_string($_POST['ReportHeading']) . "',
+					'" . DB_escape_string($_POST['GroupByData1']). "',
+					'" . DB_escape_string($_POST['GroupByData2']) . "',
+					'" . DB_escape_string($_POST['GroupByData3']) . "',
+					'" . DB_escape_string($_POST['GroupByData4']) . "',
+					" . DB_escape_string($_POST['NewPageAfter1']) . ",
+					" . DB_escape_string($_POST['NewPageAfter2']) . ",
+					" . DB_escape_string($_POST['NewPageAfter3']) . ",
+					'" . DB_escape_string($_POST['Lower1']) . "',
+					'" . DB_escape_string($_POST['Upper1']) . "',
+					'" . DB_escape_string($_POST['Lower2']) . "',
+					'" . DB_escape_string($_POST['Upper2']) . "',
+					'" . DB_escape_string($_POST['Lower3']) . "',
+					'" . DB_escape_string($_POST['Upper3']) . "',
+					'" . DB_escape_string($_POST['Lower4']) . "',
+					'" . DB_escape_string($_POST['Upper4']) . "'
 					)";
 
 		$ErrMsg = _('The report could not be added because');
@@ -247,7 +247,7 @@ if (isset($_POST['submit'])) {
 	}
 
 
-} elseif ($_GET['delete']) {
+} elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 	$sql="DELETE FROM reportcolumns WHERE reportid=$SelectedReport";
@@ -279,17 +279,17 @@ or deletion of the records*/
 	$result = DB_query($sql,$db);
 
 	echo '<CENTER><table border=1>';
-	echo '<tr><td class=tableheader>' . _('Report No') . '</td>
-		<td class=tableheader>' . _('Report Title') . '</td>';
+	echo '<tr><th>' . _('Report No') . '</th>
+		<th>' . _('Report Title') . '</th>';
 
 $k=0; //row colour counter
 
 while ($myrow = DB_fetch_array($result)) {
 	if ($k==1){
-		echo "<tr bgcolor='#CCCCCC'>";
+		echo '<tr class="EvenTableRows">';
 		$k=0;
 	} else {
-		echo "<tr bgcolor='#EEEEEE'>";
+		echo '<tr class="OddTableRows">';
 		$k++;
 	}
 
@@ -331,11 +331,11 @@ if (isset($SelectedReport)) {
 echo '<P>';
 
 
-if (!$_GET['delete']) {
+if (!isset($_GET['delete'])) {
 	echo "<HR></CENTER>";
 	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 
-	if ($SelectedReport) {
+	if (isset($SelectedReport)) {
 		//editing an existing Report
 
 		$sql = "SELECT reportid,
@@ -387,6 +387,10 @@ if (!$_GET['delete']) {
 	} else {
 		echo '<FONT SIZE=3 COLOR=BLUE><B>' . _('Define A New Report') . '</B></FONT>';
 	}
+	
+	if (!isset($_POST['ReportHeading'])) {
+		$_POST['ReportHeading']='';
+	}
 	echo '<CENTER><TABLE WIDTH=100% COLSPAN=4><TR><TD ALIGN=RIGHT>' . _('Report Heading') . ":</TD><TD COLSPAN=2 ALIGN=CENTER><INPUT TYPE='TEXT' size=80 maxlength=80 name=ReportHeading value='" . $_POST['ReportHeading'] . "'></TD></TR>";
 
 	echo '<TR><TD>' . _('Group By 1') . ': <SELECT name=GroupByData1>';
@@ -404,6 +408,14 @@ if (!$_GET['delete']) {
 	}
 
 	echo '</SELECT></TD>';
+	
+	if (!isset($_POST['Lower1'])) {
+		$_POST['Lower1'] = '';
+	}
+	
+	if (!isset($_POST['Upper1'])) {
+		$_POST['Upper1'] = '';
+	}
 	echo '<TD>' . _('From') . ": <INPUT TYPE='TEXT' NAME='Lower1' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Lower1'] . "'></TD>";
 	echo '<TD>' . _('To') . ": <INPUT TYPE='TEXT' NAME='Upper1' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Upper1'] . "'></TD></TR>";
 
@@ -419,6 +431,14 @@ if (!$_GET['delete']) {
 	} Else {
 	  echo '<OPTION value=0>' . _('No');
 	  echo '<OPTION SELECTED value=1>' . _('Yes');
+	}
+	
+	if (!isset($_POST['Lower2'])) {
+		$_POST['Lower2'] = '';
+	}
+	
+	if (!isset($_POST['Upper2'])) {
+		$_POST['Upper2'] = '';
 	}
 
 	echo '</SELECT></TD>';
@@ -440,6 +460,14 @@ if (!$_GET['delete']) {
 	}
 
 	echo '</SELECT></TD>';
+	
+	if (!isset($_POST['Lower3'])) {
+		$_POST['Lower3'] = '';
+	}
+	
+	if (!isset($_POST['Upper3'])) {
+		$_POST['Upper3'] = '';
+	}
 
 	echo '<TD>' . _('From') . ": <INPUT TYPE='TEXT' NAME='Lower3' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Lower3'] . "'></TD>";
 	echo '<TD>' . _('To') . ": <INPUT TYPE='TEXT' NAME='Upper3' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Upper3'] . "'></TD></TR>";
@@ -449,6 +477,14 @@ if (!$_GET['delete']) {
 	GrpByDataOptions($_POST['GroupByData4']);
 
 	echo "</SELECT></TD><TD></TD>";
+	
+	if (!isset($_POST['Lower4'])) {
+		$_POST['Lower4'] = '';
+	}
+	
+	if (!isset($_POST['Upper4'])) {
+		$_POST['Upper4'] = '';
+	}
 
 	echo '<TD>' . _('From') .": <INPUT TYPE='TEXT' NAME='Lower4' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Lower4'] . "'></TD>";
 	echo '<TD>' . _('To') . ": <INPUT TYPE='TEXT' NAME='Upper4' SIZE=10 MAXLENGTH=10 VALUE='" . $_POST['Upper4'] . "'></TD></TR>";

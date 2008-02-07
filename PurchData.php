@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 4;
 
@@ -79,14 +79,14 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 					supplierdescription,
 					leadtime,
 					preferred)
-			VALUES ('" . $SupplierID . "',
-				'" . $StockID . "',
-				" . $_POST['Price'] . ",
-				'" . $_POST['SuppliersUOM'] . "',
-				" . $_POST['ConversionFactor'] . ",
-				'" . $_POST['SupplierDescription'] . "',
-				" . $_POST['LeadTime'] . ",
-				" . $_POST['Preferred'] . ')';
+			VALUES ('" . DB_escape_string($SupplierID) . "',
+				'" . DB_escape_string($StockID) . "',
+				" . DB_escape_string($_POST['Price']) . ",
+				'" . DB_escape_string($_POST['SuppliersUOM']) . "',
+				" . DB_escape_string($_POST['ConversionFactor']) . ",
+				'" . DB_escape_string($_POST['SupplierDescription']) . "',
+				" . DB_escape_string($_POST['LeadTime']) . ",
+				" . DB_escape_string($_POST['Preferred']) . ')';
 
 	$ErrMsg = _('The supplier purchasing details could not be added to the database because');
 	$DbgMsg = _('The SQL that failed was');
@@ -98,12 +98,12 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
    if ($InputError==0 AND isset($_POST['UpdateRecord'])){
 
       $sql = "UPDATE purchdata SET
-			        price=" . $_POST['Price'] . ",
-				suppliersuom='" . $_POST['SuppliersUOM'] . "',
-				conversionfactor=" . $_POST['ConversionFactor'] . ",
-				supplierdescription='" . $_POST['SupplierDescription'] . "',
-				leadtime=" . $_POST['LeadTime'] . ",
-				preferred=" . $_POST['Preferred'] . "
+			        price=" . DB_escape_string($_POST['Price']) . ",
+				suppliersuom='" . DB_escape_string($_POST['SuppliersUOM']) . "',
+				conversionfactor=" . DB_escape_string($_POST['ConversionFactor']) . ",
+				supplierdescription='" . DB_escape_string($_POST['SupplierDescription']) . "',
+				leadtime=" . DB_escape_string($_POST['LeadTime']) . ",
+				preferred=" . DB_escape_string($_POST['Preferred']) . "
 		WHERE purchdata.stockid='$StockID'
 		AND purchdata.supplierno='$SupplierID'";
 
@@ -185,12 +185,12 @@ if (!isset($_GET['Edit'])){
    } else {
 
      echo '<TABLE CELLPADDING=2 BORDER=2>';
-     $TableHeader = '<TR><TD class="tableheader">' . _('Supplier') . '</TD>
-     			<TD class="tableheader">' . _('Price') . '</TD>
-			<TD class="tableheader">' . _('Currency') . '</TD>
-			<TD class="tableheader">' . _('Supplier Unit') . '</TD>
-			<TD class="tableheader">' . _('Lead Time') . '</TD>
-			<TD class="tableheader">' . _('Preferred') . '</TD>
+     $TableHeader = '<TR><TH>' . _('Supplier') . '</TH>
+     			<TH>' . _('Price') . '</TH>
+			<TH>' . _('Currency') . '</TH>
+			<TH>' . _('Supplier Unit') . '</TH>
+			<TH>' . _('Lead Time') . '</TH>
+			<TH>' . _('Preferred') . '</TH>
 		</TR>';
 
      echo $TableHeader;
@@ -200,12 +200,12 @@ if (!isset($_GET['Edit'])){
 
      while ($myrow=DB_fetch_array($PurchDataResult)) {
 	if ($myrow['preferred']==1){
-	     echo '<tr bgcolor="$BGColour">';
+	     echo '<tr class="EvenTableRows">';
 	} elseif ($k==1){
-		echo '<tr bgcolor="#CCCCCC">';
+		echo '<tr class="EvenTableRows">';
 		$k=0;
 	} else {
-		echo '<tr bgcolor="#EEEEEE">';
+		echo '<tr class="OddTableRows">';
 		$k++;
 	}
 	if ($myrow['preferred']==1){
@@ -239,13 +239,6 @@ if (!isset($_GET['Edit'])){
 		$myrow['supplierno']
 		);
 
-	$j++;
-	If ($j == 12){
-		$j=1;
-
-		echo $TableHeader;
-
-	} //end of page full new headings
     } //end of while loop
     echo '</TABLE>';
     if ($CountPreferreds>1){
@@ -294,6 +287,10 @@ if (isset($_GET['Edit'])){
 
 echo '<TABLE>';
 
+if (!isset($SupplierID)) {
+	$SupplierID = '';
+}
+
 if (isset($_GET['Edit'])){
     echo '<TR><TD>' . _('Supplier Code') . ':</TD>
     	<TD><INPUT TYPE=HIDDEN NAME="SupplierID" VALUE="' . $SupplierID . '">' . $SupplierID . ' - ' . $SuppName . '</TD></TR>';
@@ -306,6 +303,22 @@ if (isset($_GET['Edit'])){
 	echo $SuppName;
     }
     echo '</TD></TR>';
+}
+
+if (!isset($CurrCode)) {
+	$CurrCode = '';
+}
+
+if (!isset($_POST['Price'])) {
+	$_POST['Price'] = 0;
+}
+
+if (!isset($_POST['SuppliersUOM'])) {
+	$_POST['SuppliersUOM'] = '';
+}
+
+if (!isset($_POST['SupplierDescription'])) {
+	$_POST['SupplierDescription'] = '';
 }
 
 echo '<TR><TD>' . _('Currency') . ':</TD>
@@ -392,7 +405,7 @@ if (isset($_POST['SearchSupplier'])){
 	} //one of keywords or SupplierCode was more than a zero length string
 } //end of if search
 
-
+$msg = '';
 
 if (strlen($msg)>1){
 	 prnMsg($msg,'warn');
@@ -418,12 +431,12 @@ if (strlen($msg)>1){
 If (isset($SuppliersResult)) {
 
 	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>';
-	$TableHeader = '<TR><TD class="tableheader">' . _('Code') . '</TD>
-	                	<TD class="tableheader">' . _('Supplier Name') . '</TD>
-				<TD class="tableheader">' . _('Currency') . '</TD>
-				<TD class="tableheader">' . _('Address 1') . '</TD>
-				<TD class="tableheader">' . _('Address 2') . '</TD>
-				<TD class="tableheader">' . _('Address 3') . '</TD>
+	$TableHeader = '<TR><TH>' . _('Code') . '</TH>
+	                	<TH>' . _('Supplier Name') . '</TH>
+				<TH>' . _('Currency') . '</TH>
+				<TH>' . _('Address 1') . '</TH>
+				<TH>' . _('Address 2') . '</TH>
+				<TH>' . _('Address 3') . '</TH>
 			</TR>';
 	echo $TableHeader;
 
@@ -461,7 +474,7 @@ If (isset($SuppliersResult)) {
 //end if results to show
 
 
-if (isset($StockID) AND strlen($StockID)!=0){
+if (isset($StockLocation) and isset($StockID) AND strlen($StockID)!=0){
    echo '<BR><A HREF="' . $rootpath . '/StockStatus.php?' . SID . '&StockID=' . $StockID . '">' . _('Show Stock Status') . '</A>';
    echo '<BR><A HREF="' . $rootpath . '/StockMovements.php?' . SID . '&StockID=' . $StockID . '&StockLocation=' . $StockLocation . '">' . _('Show Stock Movements') . '</A>';
    echo '<BR><A HREF="' . $rootpath . '/SelectSalesOrder.php?' . SID . '&SelectedStockItem=' . $StockID . '&StockLocation=' . $StockLocation . '">' . _('Search Outstanding Sales Orders') . '</A>';

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 /* This is where the details specific to the recurring order are entered and the template committed to the database once the Process button is hit */
 
 include('includes/DefineCartClass.php');
@@ -306,13 +306,13 @@ echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . $SID . "' METHOD=POST>";
 echo "<CENTER>
 <TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>
 <TR>
-	<TD class='tableheader'>". _('Item Code') ."</TD>
-	<TD class='tableheader'>". _('Item Description') ."</TD>
-	<TD class='tableheader'>". _('Quantity') ."</TD>
-	<TD class='tableheader'>". _('Unit') ."</TD>
-	<TD class='tableheader'>". _('Price') ."</TD>
-	<TD class='tableheader'>". _('Discount') ." %</TD>
-	<TD class='tableheader'>". _('Total') ."</TD>
+	<TH>". _('Item Code') ."</TH>
+	<TH>". _('Item Description') ."</TH>
+	<TH>". _('Quantity') ."</TH>
+	<TH>". _('Unit') ."</TH>
+	<TH>". _('Price') ."</TH>
+	<TH>". _('Discount') ." %</TH>
+	<TH>". _('Total') ."</TH>
 </TR>";
 
 $_SESSION['Items']->total = 0;
@@ -330,10 +330,10 @@ foreach ($_SESSION['Items']->LineItems as $StockItem) {
 
 
 	if ($k==1){
-		echo "<tr bgcolor='#CCCCCC'>";
+		echo '<tr class="EvenTableRows">';
 		$k=0;
 	} else {
-		echo "<tr bgcolor='#EEEEEE'>";
+		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
 
