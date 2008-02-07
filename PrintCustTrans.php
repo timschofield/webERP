@@ -1,8 +1,10 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 $PageSecurity = 1;
+
+error_reporting (E_ALL);
 
 include('includes/session.inc');
 
@@ -41,7 +43,9 @@ If (isset($PrintPDF)
 	AND $FromTransNo!=''){
 
 	include ('includes/class.pdf.php');
-	
+	define('FPDF_FONTPATH','font/');
+	require('fpdi/fpdi.php');
+
 	/*
 	All this lot unnecessary if session.inc included at the start
 	previously it was not possible to start a session before initiating a class
@@ -67,6 +71,7 @@ If (isset($PrintPDF)
 	$Right_Margin=30;
 
 	$PageSize = array(0,0,$Page_Width,$Page_Height);
+	
 	$pdf = & new Cpdf($PageSize);
 	$pdf->selectFont('helvetica');
 	$pdf->addinfo('Author','webERP ' . $Version);
@@ -340,6 +345,7 @@ If (isset($PrintPDF)
 		if (($YPos-$Bottom_Margin)<(2*$line_height)){
 
 			PrintLinesToBottom ();
+						
 			include ('includes/PDFTransPageHeader.inc');
 
 		}
@@ -416,12 +422,17 @@ If (isset($PrintPDF)
 		$YPos+=10;
 		if ($InvOrCredit=='Invoice'){
 			$pdf->addText($Page_Width-$Right_Margin-220, $YPos - ($line_height*3)-6,$FontSize, _('TOTAL INVOICE'));
-			$FontSize=6;
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos-2,245,$FontSize,$_SESSION['RomalpaClause']);
+			$FontSize=9;
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos-4,245,$FontSize,$_SESSION['RomalpaClause']);
 			while (strlen($LeftOvers)>0 AND $YPos > $Bottom_Margin){
-				$YPos -=7;
+				$YPos-=14;
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,245,$FontSize,$LeftOvers);
 			}
+			/* Add Images for Visa / Mastercard / Paypal */
+		$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -280,$YPos-20,0,40);
+			$pdf->addText($Page_Width-$Right_Margin-472, $YPos - ($line_height*3)+32,$FontSize, _('National Bank: BSB 083337 Account 035138130'));
+			
+			
 			$FontSize=10;
 		} else {
 			$pdf->addText($Page_Width-$Right_Margin-220, $YPos-($line_height*3),$FontSize, _('TOTAL CREDIT'));
@@ -432,9 +443,77 @@ If (isset($PrintPDF)
 	    $FromTransNo++;
 	} /* end loop to print invoices */
 
-
-	$pdfcode = $pdf->output();
+	$pdfcode = $pdf->output("invoice.pdf", "F");
 	$len = strlen($pdfcode);
+	
+	
+// Start FPDI concatination to append PDF files conditionally to the invoice
+// This part taken from FPDI example page
+class concat_pdf extends FPDI { 
+	 
+	    var $files = array(); 
+	 
+	    function setFiles($files) { 
+	        $this->files = $files; 
+	    } 
+	 
+	    function concat() { 
+	        foreach($this->files AS $file) { 
+	            $pagecount = $this->setSourceFile($file); 
+	            for ($i = 1; $i <= $pagecount; $i++) { 
+	                 $tplidx = $this->ImportPage($i); 
+	                 $s = $this->getTemplatesize($tplidx); 
+	                 $this->AddPage($s['h'] > $s['w'] ? 'P' : 'L'); 
+	                 $this->useTemplate($tplidx); 
+	            } 
+	        } 
+	    } 
+	 
+	} 
+
+	$pdf =& new concat_pdf(); 
+// Have to get the TransNo again, not sure what happens if we have a series of trans nos
+if (isset($_GET['FromTransNo'])){
+	$FromTransNo = trim($_GET['FromTransNo']);
+} elseif (isset($_POST['FromTransNo'])){
+	$FromTransNo = trim($_POST['FromTransNo']);
+}
+// Check its an Invoice type again, then select appendfile filename
+//if ($InvOrCredit=='Invoice'){
+			 //$sql = 'SELECT stockmoves.stockid, stockmaster.appendfile
+				//	FROM stockmoves,
+					//stockmaster
+				//WHERE stockmoves.stockid = stockmaster.stockid
+				//AND stockmoves.type=10
+				//AND stockmoves.transno=' . $FromTransNo . '
+				//AND stockmoves.show_on_inv_crds=1';
+		//};
+		
+			 $sql = 'SELECT stockmoves.stockid, stockmaster.appendfile
+					FROM stockmoves,
+					stockmaster
+				WHERE stockmoves.stockid = stockmaster.stockid
+				AND stockmoves.type=10
+				AND stockmoves.transno=' . $FromTransNo . '
+				AND stockmoves.show_on_inv_crds=1';
+		
+$result=DB_query($sql,$db);
+// Loop the result set and add appendfile if the field is not 0
+while ($row=DB_fetch_array($result)){
+if ($row['appendfile'] !='0') {
+$pdf->setFiles(array('invoice.pdf',$row['appendfile']));
+$pdf->concat();
+$pdf->Output('newpdf.pdf','I');
+exit;
+// If the appendfile field is empty, just print the invoice without any appended pages
+} else {
+$pdf->setFiles(array('invoice.pdf'));
+$pdf->concat();
+$pdf->Output('newpdf.pdf','D');
+exit;
+}
+}
+//End FPDI Concat
 
 	if ($len <1020){
 		include('includes/header.inc');
@@ -1005,6 +1084,7 @@ function PrintLinesToBottom () {
 
 	$pdf->line($Left_Margin+640, $TopOfColHeadings+12,$Left_Margin+640,$Bottom_Margin);
 
+	$pdf->newPage();
 	$PageNumber++;
 
 }
