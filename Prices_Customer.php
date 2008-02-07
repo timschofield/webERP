@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $PageSecurity = 11;
 
 include('includes/session.inc');
@@ -69,14 +69,14 @@ if (isset($_POST['submit'])) {
 		}
 	}
 
-	if ($_POST['Editing']=='Yes' AND strlen($Item)>1 AND $InputError !=1) {
+	if ((isset($_POST['Editing']) and $_POST['Editing']=='Yes') AND strlen($Item)>1 AND $InputError !=1) {
 
 		//editing an existing price
 
 		$sql = "UPDATE prices SET typeabbrev='$SalesType',
 		                          currabrev='$CurrCode',
-					price=" . $_POST['Price'] . ",
-					branchcode ='" . $_POST['Branch'] . "'
+					price=" . DB_escape_string($_POST['Price']) . ",
+					branchcode ='" . DB_escape_string($_POST['Branch']) . "'
 				WHERE prices.stockid='$Item'
 				AND prices.typeabbrev='$SalesType'
 				AND prices.currabrev='$CurrCode'
@@ -95,8 +95,8 @@ if (isset($_POST['submit'])) {
 					'$SalesType',
 					'$CurrCode',
 					'" . $_SESSION['CustomerID'] . "',
-					" . $_POST['Price'] . ",
-					'" . $_POST['Branch'] . "'
+					" . DB_escape_string($_POST['Price']) . ",
+					'" . DB_escape_string($_POST['Branch']) . "'
 				)";
 		$msg = _('Price added') . '.';
 	}
@@ -116,7 +116,7 @@ if (isset($_POST['submit'])) {
 
 	prnMsg($msg);
 
-} elseif ($_GET['delete']) {
+} elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 	$sql="DELETE FROM prices
@@ -152,9 +152,9 @@ echo '<table>';
 if (DB_num_rows($result) == 0) {
 	echo '<TR><TD>' . _('There are no default prices set up for this part') . '</TD></TR>';
 } else {
-	echo '<tr><td class="tableheader">' . _('Normal Price') . '</td></tr>';
+	echo '<tr><th>' . _('Normal Price') . '</th></tr>';
 	while ($myrow = DB_fetch_array($result)) {
-		printf("<tr bgcolor='#EEEEEE'><td ALIGN=RIGHT>%0.2f</td></tr>", $myrow['price']);
+		printf('<tr class="EvenTableRows"><td ALIGN=RIGHT>%0.2f</td></tr>', $myrow['price']);
 	}
 }
 
@@ -183,8 +183,8 @@ if (DB_num_rows($result) == 0) {
 	echo '<TR><TD>' . _('There are no special prices set up for this part') . '</TD></TR>';
 } else {
 /*THERE IS ALREADY A spl price setup */
-	echo '<TR><TD class="tableheader">' . _('Special Price') .
-	     '</TD><TD class="tableheader">' . _('Branch') . '</TD></TR>';
+	echo '<TR><TH>' . _('Special Price') .
+	     '</TH><TH>' . _('Branch') . '</TH></TR>';
 
 	while ($myrow = DB_fetch_array($result)) {
 
@@ -222,12 +222,18 @@ if (DB_num_rows($result) == 0) {
 	echo '<FORM METHOD="post" action=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 	echo '<INPUT TYPE=HIDDEN NAME="Item" VALUE="' . $Item . '">';
 
-	if ($_GET['Edit']==1){
+	if (isset($_GET['Edit']) and $_GET['Edit']==1){
 		echo '<INPUT TYPE=HIDDEN NAME="Editing" VALUE="Yes">';
 		$_POST['Price']=$_GET['Price'];
 		$_POST['Branch']=$_GET['Branch'];
 	}
-
+	
+	if (!isset($_POST['Branch'])) {
+		$_POST['Branch']='';
+	}
+	if (!isset($_POST['Price'])) {
+		$_POST['Price']=0;
+	}
 	echo '<CENTER><TABLE><TR><TD>' . _('Branch') . ':</TD>
 	                         <TD><INPUT TYPE="Text" NAME="Branch" SIZE=11 MAXLENGTH=10 value=' . $_POST['Branch'] . '></TD>
 											 </TR>';
