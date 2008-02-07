@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 $PageSecurity = 3;
 
@@ -654,7 +654,7 @@ if (! isset($_GET['delete'])) {
 	echo '<TD><input type="Text" name="BrAddress3" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrAddress3'].'"></TD></TR>';
 	echo '<TR><TD>'._('Street Address 4').':</TD>';
 	if (!isset($_POST['BrAddress4'])) {$_POST['BrAddress4']='';}
-	echo '<TD><input type="Text" name="BrAddress4" SIZE=31 MAXLENGTH=30 value="'. $_POST['BrAddress4'].'"></TD></TR>';
+	echo '<TD><input type="Text" name="BrAddress4" SIZE=31 MAXLENGTH=40 value="'. $_POST['BrAddress4'].'"></TD></TR>';
 	echo '<TR><TD>'._('Street Address 5').':</TD>';
 	if (!isset($_POST['BrAddress5'])) {$_POST['BrAddress5']='';}
 	echo '<TD><input type="Text" name="BrAddress5" SIZE=21 MAXLENGTH=20 value="'. $_POST['BrAddress5'].'"></TD></TR>';
