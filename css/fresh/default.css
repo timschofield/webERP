@@ -411,6 +411,18 @@ input.small {
 	width: 50px;
 }
 
+input.inputerror {
+	background-color: #fddbdb;
+}
+
+textarea.texterror {
+	background-color: #fddbdb;
+}
+
+select.selecterror {
+	background-color: #fddbdb;
+}
+
 .tableheader {
 	font-weight: normal;
 	background-color: #777C59;
