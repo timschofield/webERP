@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.44 $ */
+/* $Revision: 1.45 $ */
 
 $PageSecurity = 11;
 
@@ -81,53 +81,101 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
+	if (isset($Errors)) {
+		unset($Errors);
+	}
+	$i=1;
 
-	if (strlen($_POST['Description']) > 50 OR strlen($_POST['Description'])==0) {
+	if (!isset($_POST['Description']) or strlen($_POST['Description']) > 50 OR strlen($_POST['Description'])==0) {
 		$InputError = 1;
 		prnMsg (_('The stock item description must be entered and be fifty characters or less long') . '. ' . _('It cannot be a zero length string either') . ' - ' . _('a description is required'),'error');
-	} elseif (strlen($_POST['LongDescription'])==0) {
+		$Errors[$i] = 'Description';
+		$i++;
+	} 
+	if (strlen($_POST['LongDescription'])==0) {
 		$InputError = 1;
 		prnMsg (_('The stock item description cannot be a zero length string') . ' - ' . _('a long description is required'),'error');
-	} elseif (strlen($StockID) ==0) {
+		$Errors[$i] = 'LongDescription';
+		$i++;
+	} 
+	if (strlen($StockID) ==0) {
 		$InputError = 1;
 		prnMsg (_('The Stock Item code cannot be empty'),'error');
-	}elseif (strstr($StockID,' ') OR strstr($StockID,"'") OR strstr($StockID,'+') OR strstr($StockID,"\\") OR strstr($StockID,"\"") OR strstr($StockID,'&') OR strstr($StockID,'.') OR strstr($StockID,'"')) {
+		$Errors[$i] = 'StockID';
+		$i++;
+	} 
+	if (strstr($StockID,' ') OR strstr($StockID,"'") OR strstr($StockID,'+') OR strstr($StockID,"\\") OR strstr($StockID,"\"") OR strstr($StockID,'&') OR strstr($StockID,'.') OR strstr($StockID,'"')) {
 		$InputError = 1;
 		prnMsg(_('The stock item code cannot contain any of the following characters') . " - ' & + \" \\ " . _('or a space'),'error');
-
-	} elseif (strlen($_POST['Units']) >20) {
+		$Errors[$i] = 'StockID';
+		$i++;
+		$StockID='';
+	} 
+	if (strlen($_POST['Units']) >20) {
 		$InputError = 1;
 		prnMsg(_('The unit of measure must be 20 characters or less long'),'error');
-	} elseif (strlen($_POST['BarCode']) >20) {
+		$Errors[$i] = 'Units';
+		$i++;
+	} 
+	if (strlen($_POST['BarCode']) >20) {
 		$InputError = 1;
 		prnMsg(_('The barcode must be 20 characters or less long'),'error');
-	} elseif (!is_numeric($_POST['Volume'])) {
+		$Errors[$i] = 'BarCode';
+		$i++;
+	} 
+	if (!is_numeric($_POST['Volume'])) {
 		$InputError = 1;
 		prnMsg (_('The volume of the packaged item in cubic metres must be numeric') ,'error');
-	} elseif ($_POST['Volume'] <0) {
+		$Errors[$i] = 'Volume';
+		$i++;
+	} 
+	if ($_POST['Volume'] <0) {
 		$InputError = 1;
 		prnMsg(_('The volume of the packaged item must be a positive number'),'error');
-	} elseif (!is_numeric($_POST['KGS'])) {
+		$Errors[$i] = 'Volume';
+		$i++;
+	} 
+	if (!is_numeric($_POST['KGS'])) {
 		$InputError = 1;
 		prnMsg(_('The weight of the packaged item in KGs must be numeric'),'error');
-	} elseif ($_POST['KGS'] <0) {
+		$Errors[$i] = 'KGS';
+		$i++;
+	} 
+	if ($_POST['KGS']<0) {
 		$InputError = 1;
 		prnMsg(_('The weight of the packaged item must be a positive number'),'error');
-	} elseif (!is_numeric($_POST['EOQ'])) {
+		$Errors[$i] = 'KGS';
+		$i++;
+	} 
+	if (!is_numeric($_POST['EOQ'])) {
 		$InputError = 1;
 		prnMsg(_('The economic order quantity must be numeric'),'error');
-	} elseif ($_POST['EOQ'] <0) {
+		$Errors[$i] = 'EOQ';
+		$i++;
+	} 
+	if ($_POST['EOQ'] <0) {
 		$InputError = 1;
 		prnMsg (_('The economic order quantity must be a positive number'),'error');
-	}elseif ($_POST['Controlled']==0 AND $_POST['Serialised']==1){
+		$Errors[$i] = 'EOQ';
+		$i++;
+	}
+	if ($_POST['Controlled']==0 AND $_POST['Serialised']==1){
 		$InputError = 1;
 		prnMsg(_('The item can only be serialised if there is lot control enabled already') . '. ' . _('Batch control') . ' - ' . _('with any number of items in a lot/bundle/roll is enabled when controlled is enabled') . '. ' . _('Serialised control requires that only one item is in the batch') . '. ' . _('For serialised control') . ', ' . _('both controlled and serialised must be enabled'),'error');
-	} elseif (($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K' OR $_POST['MBFlag']=='D') AND $_POST['Controlled']==1){
+		$Errors[$i] = 'Serialised';
+		$i++;
+	} 
+	if (($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K' OR $_POST['MBFlag']=='D') AND $_POST['Controlled']==1){
 		$InputError = 1;
 		prnMsg(_('Assembly/Kitset/Service items cannot also be controlled items') . '. ' . _('Assemblies/Dummies and Kitsets are not physical items and batch/serial control is therefore not appropriate'),'error');
-	} elseif (trim($_POST['CategoryID'])==''){
+		$Errors[$i] = 'Controlled';
+		$i++;
+	} 
+	if (trim($_POST['CategoryID'])==''){
 		$InputError = 1;
 		prnMsg(_('There are no inventory categories defined. All inventory items must belong to a valid inventory category,'),'error');
+		$Errors[$i] = 'CategoryID';
+		$i++;
 	}
 
 	if ($InputError !=1){
@@ -497,9 +545,9 @@ if (!isset($StockID) or $StockID=='') {
 	$New = true;
 	echo '<input type="hidden" name="New" value="1">'. "\n";
 
-	echo '<TR><TD>'. _('Item Code'). ':</TD><TD><INPUT TYPE="TEXT" NAME="StockID" SIZE=21 MAXLENGTH=20></TD></TR>'. "\n";
+	echo '<TR><TD>'. _('Item Code'). ':</TD><TD><INPUT ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  TYPE="TEXT" NAME="StockID" SIZE=21 MAXLENGTH=20></TD></TR>'. "\n";
 
-} elseif (!isset($_POST['UpdateCategories'])) { // Must be modifying an existing item and no changes made yet
+} elseif (!isset($_POST['UpdateCategories']) and $InputError!=1) { // Must be modifying an existing item and no changes made yet
 
 	$sql = "SELECT stockid,
 			description,
@@ -558,14 +606,14 @@ if (isset($_POST['Description'])) {
 } else {
 	$Description ='';
 }
-echo '<TR><TD>' . _('Part Description') . ' (' . _('short') . '):</TD><TD><input type="Text" name="Description" SIZE=52 MAXLENGTH=50 value="' . htmlentities($Description,ENT_QUOTES,_('ISO-8859-1')) . '"></TD></TR>'."\n";
+echo '<TR><TD>' . _('Part Description') . ' (' . _('short') . '):</TD><TD><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Description" SIZE=52 MAXLENGTH=50 value="' . htmlentities($Description,ENT_QUOTES,_('ISO-8859-1')) . '"></TD></TR>'."\n";
 
 if (isset($_POST['LongDescription'])) {
 	$LongDescription = $_POST['LongDescription'];
 } else {
 	$LongDescription ='';
 }
-echo '<TR><TD>' . _('Part Description') . ' (' . _('long') . '):</TD><TD><textarea name="LongDescription" cols=40 rows=4>' . htmlentities($LongDescription,ENT_QUOTES,_('ISO-8859-1')) . '</textarea></TD></TR>'."\n";
+echo '<TR><TD>' . _('Part Description') . ' (' . _('long') . '):</TD><TD><textarea ' . (in_array('LongDescription',$Errors) ?  'class="texterror"' : '' ) .'  name="LongDescription" cols=40 rows=4>' . htmlentities($LongDescription,ENT_QUOTES,_('ISO-8859-1')) . '</textarea></TD></TR>'."\n";
 
 // Generate selection drop down from pdf_append directory - by emdx, 
 // developed with examples from http://au2.php.net/manual/en/function.opendir.php
@@ -649,13 +697,13 @@ if (!isset($_POST['Discontinued']) or $_POST['Discontinued']==''){
 }
 
 
-echo '<TR><TD>' . _('Economic Order Quantity') . ':</TD><TD><input type="Text" name="EOQ" SIZE=12 MAXLENGTH=10 Value="' . $_POST['EOQ'] . '"></TD></TR>';
+echo '<TR><TD>' . _('Economic Order Quantity') . ':</TD><TD><input ' . (in_array('EOQ',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="EOQ" SIZE=12 MAXLENGTH=10 Value="' . $_POST['EOQ'] . '"></TD></TR>';
 
-echo '<TR><TD>' . _('Packaged Volume (metres cubed)') . ':</TD><TD><input type="Text" name="Volume" SIZE=12 MAXLENGTH=10 value="' . $_POST['Volume'] . '"></TD></TR>';
+echo '<TR><TD>' . _('Packaged Volume (metres cubed)') . ':</TD><TD><input ' . (in_array('Volume',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="Volume" SIZE=12 MAXLENGTH=10 value="' . $_POST['Volume'] . '"></TD></TR>';
 
-echo '<TR><TD>' . _('Packaged Weight (KGs)') . ':</TD><TD><input type="Text" name="KGS" SIZE=12 MAXLENGTH=10 value="' . $_POST['KGS'] . '"></TD></TR>';
+echo '<TR><TD>' . _('Packaged Weight (KGs)') . ':</TD><TD><input ' . (in_array('KGS',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="KGS" SIZE=12 MAXLENGTH=10 value="' . $_POST['KGS'] . '"></TD></TR>';
 
-echo '<TR><TD>' . _('Units of Measure') . ':</TD><TD><SELECT name="Units">';
+echo '<TR><TD>' . _('Units of Measure') . ':</TD><TD><SELECT ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="Units">';
 
 
 $sql = 'SELECT unitname FROM unitsofmeasure ORDER by unitname';
@@ -728,7 +776,7 @@ if ($_POST['Controlled']==1){
 }
 echo '</SELECT></TD></TR>';
 
-echo '<TR><TD>' . _('Serialised') . ':</TD><TD><SELECT name="Serialised">';
+echo '<TR><TD>' . _('Serialised') . ':</TD><TD><SELECT ' . (in_array('Serialised',$Errors) ?  'class="selecterror"' : '' ) .'  name="Serialised">';
 
 if ($_POST['Serialised']==0){
         echo '<OPTION SELECTED VALUE=0>' . _('No');
@@ -763,7 +811,7 @@ if (isset($_POST['BarCode'])) {
 } else {
 	$BarCode='';
 }
-echo '<TR><TD>' . _('Bar Code') . ':</TD><TD><input type="Text" name="BarCode" SIZE=22 MAXLENGTH=20 value="' . $BarCode . '"></TD></TR>';
+echo '<TR><TD>' . _('Bar Code') . ':</TD><TD><input ' . (in_array('BarCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="Text" name="BarCode" SIZE=22 MAXLENGTH=20 value="' . $BarCode . '"></TD></TR>';
 
 if (isset($_POST['DiscountCategory'])) {
 	$DiscountCategory = $_POST['DiscountCategory'];
