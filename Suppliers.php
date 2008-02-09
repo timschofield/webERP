@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 $PageSecurity = 5;
 
@@ -548,7 +548,7 @@ if (!isset($SupplierID)) {
 	echo '<TR><TD>' . _('Factor Comapny') . ":</TD><TD><SELECT NAME='FactorID'>";
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($_POST['FactorID'] == $myrow['id']){
+		if (isset($_POST['FactorID']) and $_POST['FactorID'] == $myrow['id']){
 		echo '<OPTION SELECTED VALUE=' . $myrow['id'] . '>' . $myrow['coyname'];
 		} else {
 		echo '<OPTION VALUE=' . $myrow['id'] . '>' . $myrow['coyname'];
@@ -588,7 +588,7 @@ if (!isset($SupplierID)) {
 	$result = DB_query($sql, $db);
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($_POST['TaxGroup'] == $myrow['taxgroupid']){
+		if (isset($_POST['TaxGroup']) and $_POST['TaxGroup'] == $myrow['taxgroupid']){
 			echo '<OPTION SELECTED VALUE=' . $myrow['taxgroupid'] . '>' . $myrow['taxgroupdescription'];
 		} else {
 			echo '<OPTION VALUE=' . $myrow['taxgroupid'] . '>' . $myrow['taxgroupdescription'];
@@ -735,7 +735,8 @@ if (!isset($SupplierID)) {
 		echo "<P><CENTER><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Add These New Supplier Details') . "'></FORM>";
 	} else {
 		echo "<P><CENTER><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Update Supplier') . "'>";
-		echo '<P><FONT COLOR=red><B>' . _('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed') . '<BR></FONT></B>';
+//		echo '<P><FONT COLOR=red><B>' . _('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed') . '<BR></FONT></B>';
+		prnMsg(_('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed'), 'Warn');
 		echo "<INPUT TYPE='Submit' NAME='delete' VALUE='" . _('Delete Supplier') . "' onclick=\"return confirm('" . _('Are you sure you wish to delete this supplier?') . "');\"></FORM>";
 		echo "<BR><CENTER><A HREF='$rootpath/SupplierContacts.php?" . SID . "SupplierID=$SupplierID'>" . _('Review Contact Details') . '</A></CENTER>';
 	}
