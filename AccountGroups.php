@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 10;
 
@@ -9,6 +9,14 @@ $title = _('Account Groups');
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
+
+foreach ($_POST as $key => $value) {
+	$_POST[$key] = DB_escape_string($value);
+}
+
+foreach ($_GET as $key => $value) {
+	$_GET[$key] = DB_escape_string($value);
+}
 
 function CheckForRecursiveGroup ($ParentGroupName, $GroupName, $db) {
 
@@ -32,6 +40,11 @@ ie the parent group results in a recursive group structure otherwise false ie 0 
 	return false;
 } //end of function CheckForRecursiveGroupName
 
+if (isset($Errors)) {
+	unset($Errors);
+}
+	
+$Errors = array();	
 
 if (isset($_POST['submit'])) {
 
@@ -43,21 +56,26 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-
-	
+	$i=1;
 
 	if (ContainsIllegalCharacters($_POST['GroupName'])) {
 		$InputError = 1;
 		prnMsg( _('The account group name cannot contain the character') . " '&' " . _('or the character') ." '",'error');
+		$Errors[$i] = 'GroupName';
+		$i++;
 	}
 	if (strlen($_POST['GroupName'])==0){
 		$InputError = 1;
 		prnMsg( _('The account group name must be at least one character long'),'error');
+		$Errors[$i] = 'GroupName';
+		$i++;
 	}
 	if ($_POST['ParentGroupName'] !=''){
 		if (CheckForRecursiveGroup($_POST['GroupName'],$_POST['ParentGroupName'],$db)) {
 			$InputError =1;
 			prnMsg(_('The parent account group selected appears to result in a recursive account structure - select an alternative parent account group or make this group a top level account group'),'error');
+			$Errors[$i] = 'ParentGroupName';
+			$i++;
 		} else {
 			$sql = "SELECT pandl, 
 				sequenceintb, 
@@ -71,15 +89,24 @@ if (isset($_POST['submit'])) {
 			$_POST['PandL'] = $ParentGroupRow['pandl'];
 			$_POST['SectionInAccounts']= $ParentGroupRow['sectioninaccounts'];
 		}
-	} elseif (!is_long((int) $_POST['SectionInAccounts'])) {
+	}
+	if (!is_long((int) $_POST['SectionInAccounts'])) {
 		$InputError = 1;
 		prnMsg( _('The section in accounts must be an integer'),'error');
-	} elseif (!is_long((int) $_POST['SequenceInTB'])) {
+		$Errors[$i] = 'SectionInAccounts';
+		$i++;
+	}
+	if (!is_long((int) $_POST['SequenceInTB'])) {
 		$InputError = 1;
 		prnMsg( _('The sequence in the trial balance must be an integer'),'error');
-	} elseif ($_POST['SequenceInTB'] > 10000) {
+		$Errors[$i] = 'SequenceInTB';
+		$i++;
+	}
+	if (!is_numeric($_POST['SequenceInTB']) or $_POST['SequenceInTB'] > 10000) {
 		$InputError = 1;
-		prnMsg( _('The sequence in the TB must be less than') . ' 10,000','error');
+		prnMsg( _('The sequence in the TB must be numeric and less than') . ' 10,000','error');
+		$Errors[$i] = 'SequenceInTB';
+		$i++;
 	} 
 
 
@@ -107,9 +134,9 @@ if (isset($_POST['submit'])) {
 					pandl,
 					parentgroupname)
 			VALUES (
-				'" . DB_escape_string($_POST['GroupName']) . "',
+				'" . $_POST['GroupName'] . "',
 				" . $_POST['SectionInAccounts'] . ",
-				" . DB_escape_string($_POST['SequenceInTB']) . ",
+				" . $_POST['SequenceInTB'] . ",
 				" . $_POST['PandL'] . ",
 				'" . $_POST['ParentGroupName'] . "'
 				)";
@@ -276,10 +303,12 @@ if (! isset($_GET['delete'])) {
 		}
 		
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedAccountGroup' VALUE='" . $_POST['SelectedAccountGroup'] . "'>";
-		echo "<CENTER><TABLE><TR><TD>" . _('Acount Group Name') . ':' . "</TD><TD><input type='Text' name='GroupName' SIZE=30 MAXLENGTH=30 value='" . $_POST['GroupName'] . "'></TD></TR>";
+		echo '<CENTER><TABLE><TR><TD>' . _('Acount Group Name') . ':' . 
+			'</TD><TD><input ' . (in_array('GroupName',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="GroupName" SIZE=30 MAXLENGTH=30 value="' .
+			 $_POST['GroupName'] . '"></TD></TR>';
 	}
 	echo '<TR><TD>' . _('Parent Group') . ':' . '</TD>
-	<TD><SELECT name="ParentGroupName">';
+	<TD><SELECT' . (in_array('ParentGroupName',$Errors) ?  'class="selecterror"' : '' ) .'  name="ParentGroupName">';
 
 	$sql = 'SELECT groupname FROM accountgroups';
 	$groupresult = DB_query($sql, $db);
@@ -301,7 +330,7 @@ if (! isset($_GET['delete'])) {
 	echo '</TD></TR>';
 
 	echo '<TR><TD>' . _('Section In Accounts') . ':' . '</TD>
-	<TD><SELECT name=SectionInAccounts>';
+	<TD><SELECT' . (in_array('SectionInAccounts',$Errors) ?  'class="selecterror"' : '' ) .'  name=SectionInAccounts>';
 
 	$sql = 'SELECT sectionid, sectionname FROM accountsection ORDER BY sectionid';
 	$secresult = DB_query($sql, $db);
@@ -332,7 +361,7 @@ if (! isset($_GET['delete'])) {
 	echo '</SELECT></TD></TR>';
 
 	echo '<TR><TD>' . _('Sequence In TB') . ':' . '</TD>';
-	echo '<TD><INPUT TYPE=Text name=SequenceInTB VALUE=' . (int) $_POST['SequenceInTB'] . '></TD></TR>';
+	echo '<TD><INPUT ' . (in_array('SequenceInTB',$Errors) ?  'class="inputerror"' : '' ) .'  TYPE=Text name=SequenceInTB VALUE=' . (int) $_POST['SequenceInTB'] . '></TD></TR>';
 
 	echo '</TABLE>';
 
