@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.45 $ */
+/* $Revision: 1.46 $ */
 
 $PageSecurity = 11;
 
@@ -85,6 +85,8 @@ if (isset($_POST['submit'])) {
 		unset($Errors);
 	}
 	$i=1;
+	
+	$Errors[0]='';
 
 	if (!isset($_POST['Description']) or strlen($_POST['Description']) > 50 OR strlen($_POST['Description'])==0) {
 		$InputError = 1;
