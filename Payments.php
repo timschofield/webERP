@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 5;
 
@@ -165,7 +165,7 @@ if ($_POST['Currency']!=''){
 }
 
 
-if ($_POST['Narrative']!=""){
+if ($_POST['Narrative']!=''){
 	$_SESSION['PaymentDetail']->Narrative=$_POST['Narrative'];
 }
 if ($_POST['Amount']!=""){
@@ -175,7 +175,7 @@ if ($_POST['Amount']!=""){
 	  $_SESSION['PaymentDetail']->Amount=0;
   }
 }
-if ($_POST['Discount']!=""){
+if ($_POST['Discount']!=''){
 	$_SESSION['PaymentDetail']->Discount=$_POST['Discount'];
 } else {
 	if (!isset($_SESSION['PaymentDetail']->Discount)) {
@@ -184,7 +184,7 @@ if ($_POST['Discount']!=""){
 }
 
 
-$msg="";
+$msg='';
 
 if (isset($_POST['CommitBatch'])){
 
@@ -215,10 +215,10 @@ if (isset($_POST['CommitBatch'])){
   }
 	
   /*Make an array of the defined bank accounts */
-	$SQL = "SELECT bankaccounts.accountcode
+	$SQL = 'SELECT bankaccounts.accountcode
 			FROM bankaccounts,
 				chartmaster
-		WHERE bankaccounts.accountcode=chartmaster.accountcode";
+		WHERE bankaccounts.accountcode=chartmaster.accountcode';
 	$result = DB_query($SQL,$db);
 	$BankAccounts = array();
 	$i=0;
@@ -340,7 +340,7 @@ if (isset($_POST['CommitBatch'])){
 				*/
 				
 				$ReceiptTransNo = GetNextTransNo( 2, $db);
-				$SQL="INSERT INTO banktrans (transno,
+				$SQL= 'INSERT INTO banktrans (transno,
 								type,
 								bankact,
 								ref,
@@ -349,10 +349,10 @@ if (isset($_POST['CommitBatch'])){
 								transdate,
 								banktranstype,
 								amount, 
-								currcode) ";
-				$SQL= $SQL . "VALUES (" . $ReceiptTransNo . ",
+								currcode) 
+						VALUES (' . $ReceiptTransNo . ',
 							2,
-							" . $PaymentItem->GLCode . ", '" 
+							' . $PaymentItem->GLCode . ", '" 
 							. _('Act Transfer From ') . $_SESSION['PaymentDetail']->Account . ' - ' . $PaymentItem->Narrative . " ',
 							" . (($_SESSION['PaymentDetail']->ExRate * $_SESSION['PaymentDetail']->FunctionalExRate)/$TrfToBankExRate). ",
 							" . $TrfToBankExRate . ",

@@ -90,6 +90,21 @@ div.info {
 	border: 1px solid navy;
 }
 
+.EvenTableRows {
+	background-color: #CCCCCC;
+}
+
+.OddTableRows {
+	background-color: #EEEEEE;
+}
+
+th {
+	font-weight: normal;
+	background-color: #cccce5;
+	font-size: 12px;
+	color: #330000;
+}
+
 input {
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;

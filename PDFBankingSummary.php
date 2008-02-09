@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 3;
 include ('includes/session.inc');
@@ -27,6 +27,7 @@ $SQL= 'SELECT bankaccountname,
 		banktranstype,
 		bankact,
 		banktrans.exrate,
+		banktrans.functionalexrate,
 		banktrans.currcode
 	FROM bankaccounts,
 		banktrans
@@ -48,6 +49,7 @@ if (DB_num_rows($Result)==0){
 /* OK get the row of receipt batch header info from the BankTrans table */
 $myrow = DB_fetch_array($Result);
 $ExRate = $myrow['exrate'];
+$FunctionalExRate = $myrow['functionalexrate'];
 $Currency = $myrow['currcode'];
 $BankTransType = $myrow['banktranstype'];
 $BankedDate =  $myrow['transdate'];
@@ -131,7 +133,7 @@ while ($myrow=DB_fetch_array($CustRecs)){
 /* Right now print out the GL receipt entries in the batch */
 while ($myrow=DB_fetch_array($GLRecs)){
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format(-$myrow['amount']*$ExRate,2), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,number_format((-$myrow['amount']*$ExRate*$FunctionalExRate),2), 'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,$myrow['narrative'], 'left');
         $YPos -= ($line_height);
         $TotalBanked = $TotalBanked + (-$myrow['amount']*$ExRate);
