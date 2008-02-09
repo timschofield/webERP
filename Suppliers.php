@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity = 5;
 
@@ -307,7 +307,11 @@ if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
-
+	
+	if (isset($Errors)) {
+		unset($Errors);
+	}
+	$i=1;
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
 
@@ -316,18 +320,32 @@ if (isset($_POST['submit'])) {
 	if (strlen($_POST['SuppName']) > 40 or strlen($_POST['SuppName']) == 0 or $_POST['SuppName'] == '') {
 		$InputError = 1;
 		prnMsg(_('The supplier name must be entered and be forty characters or less long'),'error');
-	} elseif (strlen($SupplierID) == 0) {
+		$Errors[$i]='Name';
+		$i++;
+	} 
+	if (strlen($SupplierID) == 0) {
 		$InputError = 1;
 		prnMsg(_('The Supplier Code cannot be empty'),'error');
-	} elseif (ContainsIllegalCharacters($SupplierID)) {
+		$Errors[$i]='ID';
+		$i++;
+	} 
+	if (ContainsIllegalCharacters($SupplierID)) {
 		$InputError = 1;
 		prnMsg(_('The supplier code cannot contain any of the following characters') . " - . ' & + \" \\" . ' ' ._('or a space'),'error');
-	} elseif (strlen($_POST['BankRef']) > 12) {
+		$Errors[$i]='ID';
+		$i++;
+	} 
+	if (strlen($_POST['BankRef']) > 12) {
 		$InputError = 1;
 		prnMsg(_('The bank reference text must be less than 12 characters long'),'error');
-	} elseif (!is_date($_POST['SupplierSince'])) {
+		$Errors[$i]='BankRef';
+		$i++;
+	} 
+	if (!is_date($_POST['SupplierSince'])) {
 		$InputError = 1;
 		prnMsg(_('The supplier since field must be a date in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
+		$Errors[$i]='SupplierSince';
+		$i++;
 	} 
 	
 	
@@ -627,17 +645,17 @@ if (!isset($SupplierID)) {
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
 
-		$_POST['SuppName'] = $myrow['suppname'];
-		$_POST['Address1']  = $myrow['address1'];
-		$_POST['Address2']  = $myrow['address2'];
-		$_POST['Address3']  = $myrow['address3'];
-		$_POST['Address4']  = $myrow['address4'];
-		$_POST['CurrCode']  = $myrow['currcode'];
+		$_POST['SuppName'] = stripcslashes($myrow['suppname']);
+		$_POST['Address1']  = stripcslashes($myrow['address1']);
+		$_POST['Address2']  = stripcslashes($myrow['address2']);
+		$_POST['Address3']  = stripcslashes($myrow['address3']);
+		$_POST['Address4']  = stripcslashes($myrow['address4']);
+		$_POST['CurrCode']  = stripcslashes($myrow['currcode']);
 		$_POST['SupplierSince']  = ConvertSQLDate($myrow['suppliersince']);
 		$_POST['PaymentTerms']  = $myrow['paymentterms'];
-		$_POST['BankPartics']	= $myrow['bankpartics'];
+		$_POST['BankPartics']	= stripcslashes($myrow['bankpartics']);
 		$_POST['Remittance']  = $myrow['remittance'];
-		$_POST['BankRef']  = $myrow['bankref'];
+		$_POST['BankRef']  = stripcslashes($myrow['bankref']);
 		$_POST['BankAct']  = $myrow['bankact'];
 		$_POST['TaxGroup'] = $myrow['taxgroupid'];
 		$_POST['FactorID'] = $myrow['factorcompanyid'];
@@ -650,15 +668,15 @@ if (!isset($SupplierID)) {
 		echo '<TR><TD>' . _('Supplier Code') . ":</TD><TD><INPUT TYPE='text' NAME='SupplierID' VALUE='$SupplierID' SIZE=12 MAXLENGTH=10></TD></TR>";
 	}
 
-	echo '<TR><TD>' . _('Supplier Name') . ':</TD><TD><INPUT TYPE="text" NAME="SuppName" VALUE="' . $_POST['SuppName'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
+	echo '<TR><TD>' . _('Supplier Name') . ':</TD><TD><INPUT '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' TYPE="text" NAME="SuppName" VALUE="' . $_POST['SuppName'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
 	echo '<TR><TD>' . _('Address Line 1') . ':</TD><TD><INPUT TYPE="text" NAME="Address1" VALUE="' . $_POST['Address1'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
 	echo '<TR><TD>' . _('Address Line 2') . ':</TD><TD><INPUT TYPE="text" NAME="Address2" VALUE="' . $_POST['Address2'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
 	echo '<TR><TD>' . _('Address Line 3') . ':</TD><TD><INPUT TYPE="text" NAME="Address3" VALUE="' . $_POST['Address3'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
 	echo '<TR><TD>' . _('Address Line 4') . ':</TD><TD><INPUT TYPE="text" NAME="Address4" VALUE="' . $_POST['Address4'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
 
-	echo '<TR><TD>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] ."):</TD><TD><INPUT TYPE='text' NAME='SupplierSince' VALUE=" . $_POST['SupplierSince'] . " SIZE=12 MAXLENGTH=10></TD></TR>";
+	echo '<TR><TD>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] .'):</TD><TD><INPUT '.(in_array('SupplierSince',$Errors) ? 'class="inputerror"' : '').'  SIZE=12 MAXLENGTH=10 TYPE="text" NAME="SupplierSince" VALUE=' . $_POST['SupplierSince'] . '></TD></TR>';
 	echo '<TR><TD>' . _('Bank Particulars') . ":</TD><TD><INPUT TYPE='text' NAME='BankPartics' SIZE=13 MAXLENGTH=12 VALUE='" . $_POST['BankPartics'] . "'></TD></TR>";
-	echo '<TR><TD>' . _('Bank Reference') . ":</TD><TD><INPUT TYPE='text' NAME='BankRef' SIZE=13 MAXLENGTH=12 VALUE='" . $_POST['BankRef'] . "'></TD></TR>";
+	echo '<TR><TD>' . _('Bank Reference') . ':</TD><TD><INPUT '.(in_array('BankRef',$Errors) ? 'class="inputerror"' : '').'  TYPE="text" NAME="BankRef" SIZE=13 MAXLENGTH=12 VALUE="' . $_POST['BankRef'] . '"></TD></TR>';
 	echo '<TR><TD>' . _('Bank Account No') . ":</TD><TD><INPUT TYPE='text' NAME='BankAct' SIZE=17 MAXLENGTH=16 VALUE='" . $_POST['BankAct'] . "'></TD></TR>";
 
 	$result=DB_query('SELECT terms, termsindicator FROM paymentterms', $db);
