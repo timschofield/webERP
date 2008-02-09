@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.54 $ */
+/* $Revision: 1.55 $ */
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -27,6 +27,13 @@ if (!isset($_SESSION['AttemptsCounter'])){
 	$_SESSION['AttemptsCounter'] = 0;
 }
 
+foreach ($_POST as $key => $value) {
+	$_POST[$key] = DB_escape_string($value);
+}
+
+foreach ($_GET as $key => $value) {
+	$_GET[$key] = DB_escape_string($value);
+}
 
 if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
 
