@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 $PageSecurity = 5;
 
@@ -311,6 +311,7 @@ if (isset($_POST['submit'])) {
 	if (isset($Errors)) {
 		unset($Errors);
 	}
+	$Errors=Array();
 	$i=1;
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
