@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
@@ -190,7 +190,7 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 						WHERE
 						stockid='" . $_SESSION['Adjustment']->StockID . "'
 						AND loccode='" . $_SESSION['Adjustment']->StockLocation . "'
-						AND serialno='" . $Item->BundleRef . "'";
+						AND serialno='" . DB_escape_string($Item->BundleRef) . "'";
 
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
 					$DbgMsg =  _('The following SQL to update the serial stock item record was used');
@@ -203,7 +203,7 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 									quantity)
 						VALUES ('" . $_SESSION['Adjustment']->StockID . "',
 						'" . $_SESSION['Adjustment']->StockLocation . "',
-						'" . $Item->BundleRef . "',
+						'" . DB_escape_string($Item->BundleRef) . "',
 						" . $Item->BundleQty . ")";
 
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
@@ -220,7 +220,7 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 									moveqty)
 						VALUES (" . $StkMoveNo . ",
 							'" . $_SESSION['Adjustment']->StockID . "',
-							'" . $Item->BundleRef . "',
+							'" . DB_escape_string($Item->BundleRef) . "',
 							" . $Item->BundleQty . ")";
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 				$DbgMsg =  _('The following SQL to insert the serial stock movement records was used');
@@ -295,10 +295,18 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 
 echo '<FORM ACTION="'. $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
 
+if (!isset($_SESSION['Adjustment'])) {
+	$StockID='';
+	$Controlled= 0;
+	$Quantity = 0;
+} else {
+	$StockID = $_SESSION['Adjustment']->StockID;
+	$Controlled = $_SESSION['Adjustment']->Controlled;
+	$Quantity = $_SESSION['Adjustment']->Quantity;
+}
+echo '<CENTER><TABLE><TR><TD>'. _('Stock Code'). ':</TD><TD><input type=text name="StockID" size=21 value="' . $StockID . '" maxlength=20> <INPUT TYPE=SUBMIT NAME="CheckCode" VALUE="'._('Check Part').'"></TD></TR>';
 
-echo '<CENTER><TABLE><TR><TD>'. _('Stock Code'). ':</TD><TD><input type=text name="StockID" size=21 value="' . $_SESSION['Adjustment']->StockID . '" maxlength=20> <INPUT TYPE=SUBMIT NAME="CheckCode" VALUE="'._('Check Part').'"></TD></TR>';
-
-if (strlen($_SESSION['Adjustment']->ItemDescription)>1){
+if (isset($_SESSION['Adjustment']) and strlen($_SESSION['Adjustment']->ItemDescription)>1){
 	echo '<TR><TD COLSPAN=3><FONT COLOR=BLUE SIZE=3>' . $_SESSION['Adjustment']->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Adjustment']->PartUnit . ' ) - ' . _('Unit Cost').' = ' . $_SESSION['Adjustment']->StandardCost . '</FONT></TD></TR>';
 }
 
@@ -322,6 +330,9 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 }
 
 echo '</SELECT></TD></TR>';
+if (!isset($_SESSION['Adjustment']->Narrative)) {
+	$_SESSION['Adjustment']->Narrative = '';
+}
 
 echo '<TR><TD>'. _('Comments On Why').':</TD>
 	<TD><input type=text name="Narrative" size=32 maxlength=30 value="' . $_SESSION['Adjustment']->Narrative . '"></TD></TR>';
@@ -329,7 +340,7 @@ echo '<TR><TD>'. _('Comments On Why').':</TD>
 echo '<TR><TD>'._('Adjustment Quantity').':</TD>';
 
 echo '<TD>';
-if ($_SESSION['Adjustment']->Controlled==1){
+if ($Controlled==1){
 		if ($_SESSION['Adjustment']->StockLocation != ''){
 			echo '<INPUT TYPE="HIDDEN" NAME="Quantity" Value="' . $_SESSION['Adjustment']->Quantity . '">
 				'.$_SESSION['Adjustment']->Quantity.' &nbsp; &nbsp; &nbsp; &nbsp;
@@ -339,7 +350,7 @@ if ($_SESSION['Adjustment']->Controlled==1){
 			prnMsg( _('Please select a location and press') . ' "' . _('Enter Stock Adjustment') . '" ' . _('below to enter Controlled Items'), 'info');
 		}
 } else {
-	echo '<INPUT TYPE=TEXT NAME="Quantity" SIZE=12 MAXLENGTH=12 Value="' . $_SESSION['Adjustment']->Quantity . '">';
+	echo '<INPUT TYPE=TEXT NAME="Quantity" SIZE=12 MAXLENGTH=12 Value="' . $Quantity . '">';
 }
 echo '</TD></TR>';
 
@@ -347,11 +358,11 @@ echo '</TABLE><BR><INPUT TYPE=SUBMIT NAME="EnterAdjustment" VALUE="'. _('Enter S
 echo '<HR>';
 
 
-echo '<A HREF="'. $rootpath. '/StockStatus.php?' . SID . '&StockID='. $_SESSION['Adjustment']->StockID . '">'._('Show Stock Status').'</A>';
-echo '<BR><A HREF="'.$rootpath.'/StockMovements.php?' . SID . '&StockID=' . $_SESSION['Adjustment']->StockID . '">'._('Show Movements').'</A>';
-echo '<BR><A HREF="'.$rootpath.'/StockUsage.php?' . SID . '&StockID=' . $_SESSION['Adjustment']->StockID . '&StockLocation=' . $_POST['StockLocation'] . '">'._('Show Stock Usage').'</A>';
-echo '<BR><A HREF="'.$rootpath.'/SelectSalesOrder.php?' . SID . '&SelectedStockItem='. $_SESSION['Adjustment']->StockID .'&StockLocation=' . $_POST['StockLocation'] . '">'. _('Search Outstanding Sales Orders').'</A>';
-echo '<BR><A HREF="'.$rootpath.'/SelectCompletedOrder.php?' . SID . '&SelectedStockItem=' . $_SESSION['Adjustment']->StockID .'">'._('Search Completed Sales Orders').'</A>';
+echo '<A HREF="'. $rootpath. '/StockStatus.php?' . SID . '&StockID='. $StockID . '">'._('Show Stock Status').'</A>';
+echo '<BR><A HREF="'.$rootpath.'/StockMovements.php?' . SID . '&StockID=' . $StockID . '">'._('Show Movements').'</A>';
+echo '<BR><A HREF="'.$rootpath.'/StockUsage.php?' . SID . '&StockID=' . $StockID . '&StockLocation=' . $_POST['StockLocation'] . '">'._('Show Stock Usage').'</A>';
+echo '<BR><A HREF="'.$rootpath.'/SelectSalesOrder.php?' . SID . '&SelectedStockItem='. $StockID .'&StockLocation=' . $_POST['StockLocation'] . '">'. _('Search Outstanding Sales Orders').'</A>';
+echo '<BR><A HREF="'.$rootpath.'/SelectCompletedOrder.php?' . SID . '&SelectedStockItem=' . $StockID .'">'._('Search Completed Sales Orders').'</A>';
 
 echo '</FORM>';
 include('includes/footer.inc');
