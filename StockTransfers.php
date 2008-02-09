@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
@@ -26,7 +26,7 @@ if (isset($_GET['StockID'])){	/*carry the stockid through to the form for additi
 
 } elseif (isset($_POST['StockID'])){	/* initiate a new transfer only if the StockID is different to the previous entry */
 
-	if ($_POST['StockID'] != $_SESSION['Transfer']->TransferItem[0]->StockID){
+	if (isset($_SESSION['Transfer']) and $_POST['StockID'] != $_SESSION['Transfer']->TransferItem[0]->StockID){
 		unset($_SESSION['Transfer']);
 		$NewTransfer = true;
 	}
@@ -79,7 +79,7 @@ if ($NewTransfer){
 
 }
 
-if ($_SESSION['Transfer']->TransferItem[0]->Controlled==0){
+if (isset($_POST['Quantity']) and isset($_SESSION['Transfer']->TransferItem[0]->Controlled) and $_SESSION['Transfer']->TransferItem[0]->Controlled==0){
 	$_SESSION['Transfer']->TransferItem[0]->Quantity = $_POST['Quantity'];
 }
 if ( isset($_POST['StockLocationFrom']) && $_POST['StockLocationFrom']!= $_SESSION['Transfer']->StockLocationFrom ){
@@ -156,7 +156,7 @@ if ( isset($_POST['EnterTransfer']) ){
 					qty,
 					newqoh)
 			VALUES ('" .
-					$_SESSION['Transfer']->TransferItem[0]->StockID . "',
+					DB_escape_string($_SESSION['Transfer']->TransferItem[0]->StockID) . "',
 					16,
 					" . $TransferNumber . ",
 					'" . $_SESSION['Transfer']->StockLocationFrom . "',
@@ -359,7 +359,7 @@ if ( isset($_POST['EnterTransfer']) ){
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
 		$DbgMsg = _('The following SQL to update the location stock record was used');
-		$Result = DB_query($SQL,$db,$Errmsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 		$SQL = "UPDATE locstock
 			SET quantity = quantity + " . $_SESSION['Transfer']->TransferItem[0]->Quantity . "
@@ -381,6 +381,15 @@ if ( isset($_POST['EnterTransfer']) ){
 
 }
 
+if (!isset($_SESSION['Transfer']->TransferItem[0]->StockID)) {
+	$_SESSION['Transfer']->TransferItem[0]->StockID = '';
+}
+if (!isset($_SESSION['Transfer']->TransferItem[0]->ItemDescription)) {
+	$_SESSION['Transfer']->TransferItem[0]->ItemDescription = '';
+}
+if (!isset($_SESSION['Transfer']->TransferItem[0]->Controlled)) {
+	$_SESSION['Transfer']->TransferItem[0]->Controlled = '';
+}
 
 echo '<FORM ACTION="'. $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
 
@@ -441,8 +450,11 @@ echo '</SELECT></TD></TR>';
 
 echo '<TR><TD>'._('Transfer Quantity').':</TD>';
 
-if ($_SESSION['Transfer']->TransferItem[0]->Controlled==1){
+if (!isset($_SESSION['Transfer']->TransferItem[0]->Quantity)) {
+	$_SESSION['Transfer']->TransferItem[0]->Quantity=0;
+}
 
+if ($_SESSION['Transfer']->TransferItem[0]->Controlled==1){
 	echo '<TD ALIGN=RIGHT><INPUT TYPE=HIDDEN NAME="Quantity" VALUE=' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '><A HREF="' . $rootpath .'/StockTransferControlled.php?' . SID . '">' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '</A></TD></TR>';
 } else {
 	echo '<TD><INPUT TYPE=TEXT NAME="Quantity" SIZE=12 MAXLENGTH=12 Value=' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '></TD></TR>';
