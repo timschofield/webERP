@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 $PageSecurity=1;
 
@@ -149,6 +149,12 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 	}
 }
 
+if (!isset($_POST['passcheck'])) {
+	$_POST['passcheck']='';
+}
+if (!isset($_POST['pass'])) {
+	$_POST['pass']='';
+}
 echo '</SELECT></TD></TR>
 	<TR><TD>' . _('New Password') . ":</TD>
 	<TD><input type='password' name='pass' size=20 value='" .  $_POST['pass'] . "'></TD></TR>
