@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 
 $PageSecurity = 2;
@@ -69,6 +69,7 @@ $sql = "SELECT locstock.loccode,
                ORDER BY locstock.loccode";
 
 $ErrMsg = _('The stock held at each location cannot be retrieved because');
+$DbgMsg = _('The SQL that was used to update the stock item and failed was');
 $LocStockResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 echo '<TABLE CELLPADDING=2 BORDER=0>';
@@ -226,11 +227,6 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 			number_format($DemandQty, $DecimalPlaces)
 			);
 	}
-	$j++;
-	If ($j == 12){
-		$j=1;
-		echo $tableheader;
-	}
 //end of page full new headings if
 }
 //end of while loop
@@ -286,21 +282,21 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	  $qty += $myrow['qty'];
 	  $FromDate = $myrow['trandate'];
 	}
-	if ($qty) {
+	if (isset($qty)) {
 		$DateRange = ConvertSQLDate($FromDate);
 		if ($FromDate != $ToDate) {
 	   		$DateRange .= ' - '.ConvertSQLDate($ToDate);
 		}
 		$PriceHistory[] = array($DateRange, $qty, $LastPrice, $LastDiscount);
 	}
-	if ($PriceHistory) {
+	if (isset($PriceHistory)) {
 	  echo '<p>' . _('Pricing history for sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo;
 	  echo '<TABLE CELLPADDING=2 BORDER=0>';
 	  $tableheader = "<TR>
-			<TD CLASS='tableheader'>" . _('Date Range') . "</TD>
-			<TD CLASS='tableheader'>" . _('Quantity') . "</TD>
-			<TD CLASS='tableheader'>" . _('Price') . "</TD>
-			<TD CLASS='tableheader'>" . _('Discount') . "</TD>
+			<TH>" . _('Date Range') . "</TH>
+			<TH>" . _('Quantity') . "</TH>
+			<TH>" . _('Price') . "</TH>
+			<TH>" . _('Discount') . "</TH>
 			</TR>";
 
 	  $j = 0;
@@ -314,10 +310,10 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 		}
 
 		if ($k==1){
-			echo "<TR BGCOLOR='#CCCCCC'>";
+			echo '<TR CLASS="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<TR BGCOLOR='#EEEEEE'>";
+			echo '<TR CLASS="OddTableRows">';
 			$k=1;
 		}
 
