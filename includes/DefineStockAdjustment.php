@@ -14,8 +14,16 @@ class StockAdjustment {
 
         //Constructor
         function StockAdjustment(){
-                $this->SerialItems = array();
-                $Quantity =0;
+        	$this->StockID = '';
+        	$this->StockLocation = '';
+        	$this->Controlled = '';
+        	$this->Serialised = '';
+        	$this->ItemDescription = '';
+        	$this->PartUnit = '';
+        	$this->StandardCost = 0;
+        	$this->DecimalPlaces = 0;
+            $this->SerialItems = array();
+            $Quantity =0;
         }
 }
 
