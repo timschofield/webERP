@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 /*
 date validation and parsing functions
@@ -32,6 +32,10 @@ function Is_Date($DateEntry) {
 		$Date_Array[0]= substr($DateEntry,0,2);
 		$Date_Array[1]= substr($DateEntry,2,2);
 		$Date_Array[2]= substr($DateEntry,4,4);
+	}
+	
+	if (!isset($Date_Array) or sizeof($Date_Array)<3) {
+		return 0;
 	}
 
 
