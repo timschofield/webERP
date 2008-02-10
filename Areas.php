@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -15,29 +15,51 @@ if (isset($_GET['SelectedArea'])){
 	$SelectedArea = strtoupper($_POST['SelectedArea']);
 }
 
+if (isset($Errors)) {
+	unset($Errors);
+}
+$Errors = array();
+
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
+	$i=1;
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
 	$_POST['AreaCode'] = strtoupper($_POST['AreaCode']);
+	$sql = 'SELECT count(areacode) from areas WHERE areacode="'.$_POST['AreaCode'].'"';
+	$result = DB_query($sql, $db);
+	$myrow = DB_fetch_row($result);
 	// mod to handle 3 char area codes
 	if (strlen($_POST['AreaCode']) > 3) {
 		$InputError = 1;
 		prnMsg(_('The area code must be three characters or less long'),'error');
+		$Errors[$i] = 'AreaCode';
+		$i++;
+	} elseif ($myrow[0]>0){
+		$InputError = 1;
+		prnMsg(_('The area code enterd already exists'),'error');		
+		$Errors[$i] = 'AreaCode';
+		$i++;
 	} elseif (strlen($_POST['AreaDescription']) >25) {
 		$InputError = 1;
 		prnMsg(_('The area description must be twenty five characters or less long'),'error');
+		$Errors[$i] = 'AreaDescription';
+		$i++;
 	} elseif ( trim($_POST['AreaCode']) == '' ) {
 		$InputError = 1;
 		prnMsg(_('The area code may not be empty'),'error');
+		$Errors[$i] = 'AreaCode';
+		$i++;
 	} elseif ( trim($_POST['AreaDescription']) == '' ) {
 		$InputError = 1;
 		prnMsg(_('The area description may not be empty'),'error');
+		$Errors[$i] = 'AreaDescription';
+		$i++;
 	}
 	
 	if (isset($SelectedArea) AND $InputError !=1) {
@@ -64,20 +86,21 @@ if (isset($_POST['submit'])) {
 
 		$SelectedArea =$_POST['AreaCode'];
 		$msg = _('New area code') . ' ' . $_POST['AreaCode'] . ' ' . _('has been inserted');
+	} else {
+		$msg='';
 	}
 
 	//run the SQL from either of the above possibilites
-	$ErrMsg = _('The area could not be added or updated because');
-	$DbgMsg = _('The SQL that failed was');
-	$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 	if ($InputError !=1) {
+		$ErrMsg = _('The area could not be added or updated because');
+		$DbgMsg = _('The SQL that failed was');
+		$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 		unset($SelectedArea);
 		unset($_POST['AreaCode']);
 		unset($_POST['AreaDescription']);
+		prnMsg($msg,'success');
 	}
 	
-	prnMsg($msg,'success');
-
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
@@ -169,7 +192,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['AreaCode'] = $myrow['areacode'];
 		$_POST['AreaDescription']  = $myrow['areadescription'];
 
-		echo "<INPUT TYPE=HIDDEN NAME=SelectedArea VALUE=" . $SelectedArea . '>';
+		echo '<INPUT TYPE=HIDDEN NAME=SelectedArea VALUE=' . $SelectedArea . '>';
 		echo '<INPUT TYPE=HIDDEN NAME=AreaCode VALUE=' .$_POST['AreaCode'] . '>';
 		echo '<CENTER><TABLE><TR><TD>' . _('Area Code') . ':</TD><TD>' . $_POST['AreaCode'] . '</TD></TR>';
 
@@ -182,15 +205,15 @@ if (!isset($_GET['delete'])) {
 		}
 		echo '<CENTER><TABLE>
 			<TR>
-				<TD>' . _('Area Code') . ":</TD>
-				<TD><input type='Text' name='AreaCode' value='" . $_POST['AreaCode'] . "' SIZE=3 MAXLENGTH=3></TD>
-			</TR>";
+				<TD>' . _('Area Code') . ':</TD>
+				<TD><input ' . (in_array('AreaCode',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="AreaCode" value="' . $_POST['AreaCode'] . '" SIZE=3 MAXLENGTH=3></TD>
+			</TR>';
 	}
 
-	echo '<TR><TD>' . _('Area Name') . ":</TD>
-		<TD><input type='Text' name='AreaDescription' value='" . $_POST['AreaDescription'] ."' SIZE=26 MAXLENGTH=25></TD>
+	echo '<TR><TD>' . _('Area Name') . ':</TD>
+		<TD><input ' . (in_array('AreaCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="Text" name="AreaDescription" value="' . $_POST['AreaDescription'] .'" SIZE=26 MAXLENGTH=25></TD>
 		</TR>
-	</TABLE>";
+	</TABLE>';
 
 	echo "<CENTER><input type='Submit' name='submit' value=" . _('Enter Information') .">
 		</FORM>";
