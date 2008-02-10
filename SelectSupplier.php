@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 $PageSecurity = 2;
 
@@ -34,10 +34,10 @@ If (isset($_POST['Select'])) { /*User has hit the button selecting a supplier */
 
 if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])){
 
-	If ($_POST['Keywords'] AND $_POST['SupplierCode']) {
+	If (isset($_POST['Keywords']) and $_POST['Keywords'] AND $_POST['SupplierCode']) {
 		$msg='<BR>' . _('Supplier name keywords have been used in preference to the Supplier code extract entered');
 	}
-	If ($_POST['Keywords']=='' AND $_POST['SupplierCode']=='') {
+	If (!isset($_POST['Keywords']) AND !isset($_POST['SupplierCode'])) {
 		//$msg='<BR>' . _('At least one Supplier Name keyword OR an extract of a Supplier Code must be entered for the search');
 		$SQL = "SELECT supplierid,
 					suppname,
@@ -250,14 +250,14 @@ If (isset($result) AND !isset($SingleSupplierReturned)) {
   	echo '<br><br>';
 
   	echo '<BR><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
-  	$tableheader = "<TR class='tableheader'>
-  		<TD class='tableheader'>" . _('Code') . "</TD>
-		<TD class='tableheader'>" . _('Supplier Name') . "</TD>
-		<TD class='tableheader'>" . _('Currency') . "</TD>
-		<TD class='tableheader'>" . _('Address 1') . "</TD>
-		<TD class='tableheader'>" . _('Address 2') . "</TD>
-		<TD class='tableheader'>" . _('Address 3') . "</TD>
-		<TD class='tableheader'>" . _('Address 4') . "</TD>
+  	$tableheader = "<TR>
+  		<TH>" . _('Code') . "</TH>
+		<TH>" . _('Supplier Name') . "</TH>
+		<TH>" . _('Currency') . "</TH>
+		<TH>" . _('Address 1') . "</TH>
+		<TH>" . _('Address 2') . "</TH>
+		<TH>" . _('Address 3') . "</TH>
+		<TH>" . _('Address 4') . "</TH>
 		</TR>";
 	echo $tableheader;
 
@@ -288,11 +288,6 @@ If (isset($result) AND !isset($SingleSupplierReturned)) {
 			$myrow['address3'],
 			$myrow['address4']);
 
-		$j++;
-		If ($j == 11 AND ($RowIndex+1 != $_SESSION['DisplayRecordsMax'])){
-			$j=1;
-			echo $tableheader;
-		}
     $RowIndex = $RowIndex + 1;
 //end of page full new headings if
 	}
@@ -304,7 +299,7 @@ If (isset($result) AND !isset($SingleSupplierReturned)) {
 //end if results to show
 
 
-if ($ListPageMax >1) {
+if (isset($ListPageMax) and $ListPageMax >1) {
 	echo "<P>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 	
 	echo '<SELECT NAME="PageOffset">';

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 2;
 
@@ -114,7 +114,7 @@ if (!isset($StockID)) {
 	$OrdersAfterDate = Date('d/m/Y',Mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
      */
 
-	if ($_REQUEST['OrderNumber']=='' OR !$_REQUEST['OrderNumber']){
+	if (!isset($_REQUEST['OrderNumber']) or $_REQUEST['OrderNumber']==''){
 
 		echo _('Order number') . ": <INPUT type=text name='OrderNumber' MAXLENGTH =8 SIZE=9>&nbsp " . _('From Stock Location') . ":<SELECT name='StockLocation'> ";
 		
@@ -189,10 +189,10 @@ If (isset($StockItemsResult)) {
 
 	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>';
 	$TableHeader = "<TR>
-				<TD class='tableheader'>" . _('Code') . "</TD>
-				<TD class='tableheader'>" . _('Description') . "</TD>
-				<TD class='tableheader'>" . _('On Hand') . "</TD>
-				<TD class='tableheader'>" . _('Units') . "</TD>
+				<TH>" . _('Code') . "</TH>
+				<TH>" . _('Description') . "</TH>
+				<TH>" . _('On Hand') . "</TH>
+				<TH>" . _('Units') . "</TH>
 			</TR>";
 	echo $TableHeader;
 
@@ -202,10 +202,10 @@ If (isset($StockItemsResult)) {
 	while ($myrow=DB_fetch_array($StockItemsResult)) {
 
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 
@@ -235,10 +235,13 @@ If (isset($StockItemsResult)) {
   else {
 
 	//figure out the SQL required from the inputs available
-	if ($_POST['Quotations']=='Orders_Only'){
+	if (isset($_POST['Quotations']) and $_POST['Quotations']=='Orders_Only'){
 		$Quotations = 0;
 	} else {
 		$Quotations =1;
+	}
+	if(!isset($_POST['StockLocation'])) {
+		$_POST['StockLocation'] = '';
 	}
 	if (isset($_REQUEST['OrderNumber']) && $_REQUEST['OrderNumber'] !='') {
 			$SQL = "SELECT salesorders.orderno,
@@ -406,29 +409,29 @@ If (isset($StockItemsResult)) {
 
 	echo '<TABLE CELLPADDING=2 COLSPAN=7 WIDTH=100%>';
 
-	if ($_POST['Quotations']=='Orders_Only'){
+	if (isset($_POST['Quotations']) and $_POST['Quotations']=='Orders_Only'){
 		$tableheader = "<TR>
-				<TD class='tableheader'>" . _('Modify') . "</TD>
-				<TD class='tableheader'>" . _('Invoice') . "</TD>
-				<TD class='tableheader'>" . _('Disp. Note') . "</TD>
-				<TD class='tableheader'>" . _('Customer') . "</TD>
-				<TD class='tableheader'>" . _('Branch') . "</TD>
-				<TD class='tableheader'>" . _('Cust Order') . " #</TD>
-				<TD class='tableheader'>" . _('Order Date') . "</TD>
-				<TD class='tableheader'>" . _('Req Del Date') . "</TD>
-				<TD class='tableheader'>" . _('Delivery To') . "</TD>
-				<TD class='tableheader'>" . _('Order Total') . "</TD></TR>";
+				<TH>" . _('Modify') . "</TH>
+				<TH>" . _('Invoice') . "</TH>
+				<TH>" . _('Disp. Note') . "</TH>
+				<TH>" . _('Customer') . "</TH>
+				<TH>" . _('Branch') . "</TH>
+				<TH>" . _('Cust Order') . " #</TH>
+				<TH>" . _('Order Date') . "</TH>
+				<TH>" . _('Req Del Date') . "</TH>
+				<TH>" . _('Delivery To') . "</TH>
+				<TH>" . _('Order Total') . "</TH></TR>";
 	} else {
 		$tableheader = "<TR>
-				<TD class='tableheader'>" . _('Modify') . "</TD>
-				<TD class='tableheader'>" . _('Print Quote') . "</TD>
-				<TD class='tableheader'>" . _('Customer') . "</TD>
-				<TD class='tableheader'>" . _('Branch') . "</TD>
-				<TD class='tableheader'>" . _('Cust Ref') . " #</TD>
-				<TD class='tableheader'>" . _('Quote Date') . "</TD>
-				<TD class='tableheader'>" . _('Req Del Date') . "</TD>
-				<TD class='tableheader'>" . _('Delivery To') . "</TD>
-				<TD class='tableheader'>" . _('Quote Total') . "</TD></TR>";
+				<TH>" . _('Modify') . "</TH>
+				<TH>" . _('Print Quote') . "</TH>
+				<TH>" . _('Customer') . "</TH>
+				<TH>" . _('Branch') . "</TH>
+				<TH>" . _('Cust Ref') . " #</TH>
+				<TH>" . _('Quote Date') . "</TH>
+				<TH>" . _('Req Del Date') . "</TH>
+				<TH>" . _('Delivery To') . "</TH>
+				<TH>" . _('Quote Total') . "</TH></TR>";
 	}
 	
 	echo $tableheader;
@@ -439,10 +442,10 @@ If (isset($StockItemsResult)) {
 
 
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 

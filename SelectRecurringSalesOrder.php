@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -73,14 +73,14 @@ if (isset($_POST['SearchRecurringOrders'])){
 	echo '<TABLE CELLPADDING=2 COLSPAN=7 WIDTH=100%>';
 	
 	$tableheader = "<TR>
-			<TD class='tableheader'>" . _('Modify') . "</TD>
-			<TD class='tableheader'>" . _('Customer') . "</TD>
-			<TD class='tableheader'>" . _('Branch') . "</TD>
-			<TD class='tableheader'>" . _('Cust Order') . " #</TD>
-			<TD class='tableheader'>" . _('Last Recurrence') . "</TD>
-			<TD class='tableheader'>" . _('End Date') . "</TD>
-			<TD class='tableheader'>" . _('Times p.a.') . "</TD>
-			<TD class='tableheader'>" . _('Order Total') . "</TD>
+			<TH>" . _('Modify') . "</TH>
+			<TH>" . _('Customer') . "</TH>
+			<TH>" . _('Branch') . "</TH>
+			<TH>" . _('Cust Order') . " #</TH>
+			<TH>" . _('Last Recurrence') . "</TH>
+			<TH>" . _('End Date') . "</TH>
+			<TH>" . _('Times p.a.') . "</TH>
+			<TH>" . _('Order Total') . "</TH>
 			</TR>";
 		
 	echo $tableheader;
@@ -91,10 +91,10 @@ if (isset($_POST['SearchRecurringOrders'])){
 	
 	
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';;
 			$k++;
 		}
 	

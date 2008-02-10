@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 /*SelectOrderItems_IntoCart.inc
 
@@ -85,7 +85,7 @@ if ($AlreadyOnThisOrder!=1){
 				$NewLineNo = -1; /* this is ok b/c CartClass will change to the correct line no */
 			}
 
-			if ( $myItemRow['discountcategory'] != "" ){
+			if (isset($StockItem) and $myItemRow['discountcategory'] != "" ){
 				$DiscCatsDone[$Counter]=$StockItem->DiscCat;
 				$QuantityOfDiscCat =0;
 				$result = DB_query("SELECT MAX(discountrate) AS discount
@@ -107,7 +107,7 @@ if ($AlreadyOnThisOrder!=1){
 
 			$WithinCreditLimit = true;
 
-			if (!$WarnOnce and $_SESSION['Items']->SpecialInstructions) {
+			if (!isset($WarnOnce) and $_SESSION['Items']->SpecialInstructions) {
 			  	prnMsg($_SESSION['Items']->SpecialInstructions,'warn');
 		        	$WarnOnce=1;
                   	}

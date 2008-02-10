@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.62 $ */
+/* $Revision: 1.63 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -22,18 +22,15 @@ if (isset($_POST['QuickEntry'])){
    unset($_POST['PartSearch']);
 }
 
-if ($_POST['order_items']){
-	foreach($_POST['itm'] as $key => $value)
-	{
-		$NewItem_array[$key] = trim($value);
-	}	
-	
+if (isset($_POST['order_items'])){
+	foreach ($_POST as $key => $value) {
+		if (strstr($key,"itm")) {
+			$NewItem_array[substr($key,3)] = trim($value);
+		}
+	}
 }
 
-
 if (isset($_GET['NewItem'])){
-	
-	
 	$NewItem = trim($_GET['NewItem']);
 }
 
@@ -536,8 +533,12 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 		FROM debtorsmaster, holdreasons
 		WHERE debtorsmaster.holdreason=holdreasons.reasoncode
 		AND debtorsmaster.debtorno = '" . $_SESSION['Items']->DebtorNo . "'";
-
-	$ErrMsg = _('The details for the customer selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');
+	
+	if (isset($_POST['Select'])) {
+		$ErrMsg = _('The details for the customer selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');
+	} else {
+		$ErrMsg = '';
+	}
 	$DbgMsg = _('SQL used to retrieve the customer details was') . ':<BR>' . $sql;
 	$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
@@ -574,7 +575,11 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 			WHERE custbranch.branchcode='" . $_SESSION['Items']->Branch . "'
 			AND custbranch.debtorno = '" . $_SESSION['Items']->DebtorNo . "'";
 
-		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');
+		if (isset($_POST['Select'])) {
+			$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');
+		} else {
+			$ErrMsg = '';
+		}
 		$DbgMsg = _('SQL used to retrieve the branch details was');
 		$result =DB_query($sql,$db,$ErrMsg, $DbgMsg);
 
@@ -610,7 +615,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	<B><?php echo '<BR>' . $msg; ?></B>
 	<TABLE CELLPADDING=3 COLSPAN=4>
 	<TR>
-	<TD><FONT SIZE=1><?php echo _('name'); ?>:</FONT></TD>
+	<TD><FONT SIZE=1><?php echo _('Name'); ?>:</FONT></TD>
 	<TD><INPUT TYPE="Text" NAME="CustKeywords" SIZE=20	MAXLENGTH=25></TD>
 	<TD><FONT SIZE=3><B><?php echo _('OR'); ?></B></FONT></TD>
 	<TD><FONT SIZE=1><?php echo _('Part of the code'); ?>:</FONT></TD>
@@ -757,10 +762,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	If (isset($_POST['Search'])){
 
-		If ($_POST['Keywords'] AND $_POST['StockCode']) {
+		If (isset($_POST['Keywords']) AND isset($_POST['StockCode'])) {
 			$msg='<BR>' . _('Stock description keywords have been used in preference to the Stock code extract entered') . '.';
 		}
-		If (strlen($_POST['Keywords'])>0) {
+		If (isset($_POST['Keywords']) AND strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
 			$_POST['Keywords'] = strtoupper($_POST['Keywords']);
 
@@ -875,7 +880,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	/*Process Quick Entry */
 
-	 If (isset($_POST['QuickEntry']) or isset($_POST['Recalculate'])){ // if enter is pressed on the quick entry screen, the default button may be Recalculate
+	 If (isset($_POST['order_items']) or isset($_POST['QuickEntry']) or isset($_POST['Recalculate'])){ // if enter is pressed on the quick entry screen, the default button may be Recalculate
 	     /* get the item details from the database and hold them in the cart object */
 
 	     /*Discount can only be set later on  -- after quick entry -- so default discount to 0 in the first place */
@@ -890,12 +895,24 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			$i++;
 
-			$NewItem = strtoupper($_POST[$QuickEntryCode]);
-			$NewItemQty = $_POST[$QuickEntryQty];
-			$NewItemDue = $_POST[$QuickEntryItemDue];
--			$NewPOLine = $_POST[$QuickEntryPOLine];
+			if (isset($_POST[$QuickEntryCode])) {
+				$NewItem = strtoupper($_POST[$QuickEntryCode]);
+			}
+			if (isset($_POST[$QuickEntryQty])) {
+				$NewItemQty = $_POST[$QuickEntryQty];
+			}
+			if (isset($_POST[$QuickEntryItemDue])) {
+				$NewItemDue = $_POST[$QuickEntryItemDue];
+			} else {
+				$NewItemDue = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items']->DeliveryDays);				
+			}
+			if (isset($_POST[$QuickEntryPOLine])) {
+				$NewPOLine = $_POST[$QuickEntryPOLine];
+			} else {
+				$NewPOLine = 0;
+			}
 
-			if (strlen($NewItem)==0){
+			if (!isset($NewItem)){
 				unset($NewItem);
 				break;    /* break out of the loop if nothing in the quick entry fields*/
 			}
@@ -965,9 +982,17 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$Quantity = $_POST['Quantity_' . $OrderLine->LineNumber];
 				$Price = $_POST['Price_' . $OrderLine->LineNumber];
 				$DiscountPercentage = $_POST['Discount_' . $OrderLine->LineNumber];
-				$Narrative = $_POST['Narrative_' . $OrderLine->LineNumber];
+				if ($_SESSION['AllowOrderLineItemNarrative'] == 1) {
+					$Narrative = $_POST['Narrative_' . $OrderLine->LineNumber];
+				} else {
+					$Narrative = '';
+				}
 				$ItemDue = $_POST['ItemDue_' . $OrderLine->LineNumber];
--				$POLine = $_POST['POLine_' . $OrderLine->LineNumber];
+				$POLine = $_POST['POLine_' . $OrderLine->LineNumber];
+
+				if (!isset($OrderLine->Disc)) {
+					$OrderLine->Disc = 0;
+				}
 
 				if(!Is_Date($ItemDue)) {
 					prnMsg(_('An invalid date entry was made for ') . ' ' . $NewItem . ' ' . _('The date entry') . ' ' . $ItemDue . ' ' . ('must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
@@ -987,7 +1012,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				} elseif ($_SESSION['Items']->LineItems[$OrderLine->LineNumber]->QtyInv > $Quantity){
 					prnMsg( _('You are attempting to make the quantity ordered a quantity less than has already been invoiced') . '. ' . _('The quantity delivered and invoiced cannot be modified retrospectively'),'warn');
-				} elseif ($OrderLine->Quantity !=$Quantity OR $OrderLine->Price != $Price OR ABS($OrderLine->Disc -$DiscountPercentage/100) >0.001 OR $OrderLine->Narrative != $Narrative OR $OrderLine->ItemDue != $ItemDue OR $Orderline->POLine != $POLine) {
+				} elseif ($OrderLine->Quantity !=$Quantity OR $OrderLine->Price != $Price OR ABS($OrderLine->Disc -$DiscountPercentage/100) >0.001 OR $OrderLine->Narrative != $Narrative OR $OrderLine->ItemDue != $ItemDue OR $OrderLine->POLine != $POLine) {
 					$_SESSION['Items']->update_cart_item($OrderLine->LineNumber,
 										$Quantity,
 										$Price,
@@ -1107,7 +1132,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	foreach ($_SESSION['Items']->LineItems as $OrderLine) {
 
 		if ($OrderLine->DiscCat !="" AND ! in_array($OrderLine->DiscCat,$DiscCatsDone)){
-			$DiscCatsDone[$Counter]=$OrderLine->DiscCat;
+			$DiscCatsDone[$counter]=$OrderLine->DiscCat;
 			$QuantityOfDiscCat =0;
 
 			foreach ($_SESSION['Items']->LineItems as $StkItems_2) {
@@ -1219,7 +1244,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<TD><INPUT TYPE=TEXT NAME="ItemDue_' . $OrderLine->LineNumber . '" SIZE=10 MAXLENGTH=10 VALUE=' . $LineDueDate . '></TD>';
 
 			echo '<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . $RemTxt . '</A></TD></TR>';
-
+echo $_SESSION['AllowOrderLineItemNarrative'];
 			if ($_SESSION['AllowOrderLineItemNarrative'] == 1){
 				echo $RowStarter;
 				echo '<TD COLSPAN=7><TEXTAREA  NAME="Narrative_' . $OrderLine->LineNumber . '" cols=100% rows=1>' . $OrderLine->Narrative . '</TEXTAREA><BR><HR></TD></TR>';
@@ -1313,7 +1338,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		if (isset($SearchResult)) {
 
-			echo '<CENTER><form name="orderform"><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
+			echo '<CENTER><form name="orderform"><TABLE CELLPADDING=2 COLSPAN=7 >';
 			$TableHeader = '<TR><TH>' . _('Code') . '</TH>
                           			<TH>' . _('Description') . '</TH>
                           			<TH>' . _('Units') . '</TH>
@@ -1327,6 +1352,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$k=0; //row colour counter
 
 			while ($myrow=DB_fetch_array($SearchResult)) {
+// This code needs sorting out, but until then :
+				$ImageSource = _('No Image');
 
 /*
 				if (function_exists('imagecreatefrompng') ){
@@ -1401,25 +1428,25 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				}
 				
 				if ($k==1){
-					echo '<tr bgcolor="#CCCCCC">';
+					echo '<tr class="EvenTableRows">';
 					$k=0;
 				} else {
-					echo '<tr bgcolor="#EEEEEE">';
+					echo '<tr class="OddTableRows">';
 					$k=1;
 				}
 				$OnOrder = $PurchQty + $WoQty;
 				
 				$Available = $qoh - $DemandQty + $OnOrder;
 
-				printf("<TD><FONT SIZE=1>%s</FONT></TD>
+				printf('<TD><FONT SIZE=1>%s</FONT></TD>
 					<TD><FONT SIZE=1>%s</FONT></TD>
 					<TD><FONT SIZE=1>%s</FONT></TD>
-					<TD style='text-align:center'><FONT SIZE=1>%s</FONT></TD>
-					<TD style='text-align:center'><FONT SIZE=1>%s</FONT></TD>
-					<TD style='text-align:center'><FONT SIZE=1>%s</FONT></TD>
-					<TD style='text-align:center'><FONT SIZE=1>%s</FONT></TD>
-					<TD><FONT SIZE=1><input type='textbox' size=6 name='itm[".$myrow['stockid']."]' value=0>"
-					. '</FONT></TD>
+					<TD style="text-align:center"><FONT SIZE=1>%s</FONT></TD>
+					<TD style="text-align:center"><FONT SIZE=1>%s</FONT></TD>
+					<TD style="text-align:center"><FONT SIZE=1>%s</FONT></TD>
+					<TD style="text-align:center"><FONT SIZE=1>%s</FONT></TD>
+					<TD><FONT SIZE=1><input type="textbox" size=6 name="itm'.$myrow['stockid'].'" value=0>
+					</FONT></TD>
 					</TR>',
 					$myrow['stockid'],
 					$myrow['description'],
@@ -1433,11 +1460,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					SID,
 					$myrow['stockid']);
 
-				$j++;
-				If ($j == 25){
-					$j=1;
-					echo $TableHeader;
-				}
 	#end of page full new headings if
 			}
 	#end of while loop

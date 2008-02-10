@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 1;
 
@@ -33,19 +33,19 @@ if (isset($_GET['SelectedCustomer'])){
 	$SelectedCustomer = $_POST['SelectedCustomer'];
 }
 
-if ($SelectedStockItem==''){
+if (isset($SelectedStockItem) and $SelectedStockItem==''){
 	unset($SelectedStockItem);
 }
-if ($OrderNumber==''){
+if (isset($OrderNumber) and $OrderNumber==''){
 	unset($OrderNumber);
 }
-if ($CustomerRef==''){
+if (isset($CustomerRef) and $CustomerRef==''){
 	unset($CustomerRef);
 }
-if ($SelectedCustomer==''){
+if (isset($SelectedCustomer) and $SelectedCustomer==''){
 	unset($SelectedCustomer);
 }
-If ($_POST['ResetPart']){
+If (isset($_POST['ResetPart'])) {
 		unset($SelectedStockItem);
 }
 
@@ -67,7 +67,7 @@ If (isset($OrderNumber)) {
 }
 
 
-if ($_POST['SearchParts']!=''){
+if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 
 	If ($_POST['Keywords']!='' AND $_POST['StockCode']!='') {
 		echo _('Stock description keywords have been used in preference to the Stock code extract entered');
@@ -348,7 +348,7 @@ if (!isset($_POST['OrdersAfterDate']) OR $_POST['OrdersAfterDate'] == '' OR ! Is
 	$_POST['OrdersAfterDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
 }
 echo "<TABLE>";
-if ($OrderNumber=='' OR !isset($OrderNumber)){
+if (!isset($OrderNumber) or $OrderNumber==''){
 	echo '<TR><TD>' . _('Order Number') . ':</TD><TD>' . "<INPUT type=text name='OrderNumber' MAXLENGTH =8 SIZE=9></TD><TD rowspan=2>" . _('for all orders placed after') .
 			": </TD><TD rowspan=2><INPUT type=text name='OrdersAfterDate' MAXLENGTH =10 SIZE=11 value=" . $_POST['OrdersAfterDate'] . "></td><td rowspan=2>" .
 			"<INPUT TYPE=SUBMIT NAME='SearchOrders' VALUE='" . _('Search Orders') . "'></TD></TR>";
@@ -372,7 +372,7 @@ if (!isset($SelectedStockItem)) {
    echo '<SELECT NAME="StockCat">';
 
 	while ($myrow1 = DB_fetch_array($result1)) {
-		if ($myrow1['categoryid'] == $_POST['StockCat']){
+		if (isset($_POST['StockCat']) and $myrow1['categoryid'] == $_POST['StockCat']){
 			echo "<OPTION SELECTED VALUE='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
 		} else {
 			echo "<OPTION VALUE='". $myrow1['categoryid'] . "'>" . $myrow1['categorydescription'];
@@ -396,12 +396,12 @@ If (isset($StockItemsResult)) {
 
 	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>';
 
-	$TableHeadings = "<TR><TD class='tableheader'>" . _('Code') . "</TD>" .
-				"<TD class='tableheader'>" . _('Description') . "</TD>" .
-				"<TD class='tableheader'>" . _('On Hand') . '</TD>' .
-				"<TD class='tableheader'>" . _('Purchase Orders') . '</TD>' .
-				"<TD class='tableheader'>" . _('Sales Orders') . "</TD>" .
-				"<TD class='tableheader'>" . _('Units') . '</TD></TR>';
+	$TableHeadings = "<TR><TH>" . _('Code') . "</TH>" .
+				"<TH>" . _('Description') . "</TH>" .
+				"<TH>" . _('On Hand') . '</TH>' .
+				"<TH>" . _('Purchase Orders') . '</TH>' .
+				"<TH>" . _('Sales Orders') . "</TH>" .
+				"<TH>" . _('Units') . '</TH></TR>';
 
 	echo $TableHeadings;
 
@@ -411,10 +411,10 @@ If (isset($StockItemsResult)) {
 	while ($myrow=DB_fetch_array($StockItemsResult)) {
 
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 
@@ -431,11 +431,6 @@ If (isset($StockItemsResult)) {
 			$myrow['qdem'],
 			$myrow['units']);
 
-		$j++;
-		If ($j == 12){
-			$j=1;
-			echo $TableHeadings;
-		}
 //end of page full new headings if
 	}
 //end of while loop
@@ -445,20 +440,20 @@ If (isset($StockItemsResult)) {
 }
 //end if stock search results to show
 
-If ($SalesOrdersResult) {
+If (isset($SalesOrdersResult)) {
 
 /*show a table of the orders returned by the SQL */
 
 	echo '<TABLE CELLPADDING=2 COLSPAN=6 WIDTH=100%>';
 
-	$tableheader = "<TR><TD class='tableheader'>" . _('Order') . " #</TD>
-			<TD class='tableheader'>" . _('Customer') . "</TD>
-			<TD class='tableheader'>" . _('Branch') . "</TD>
-			<TD class='tableheader'>" . _('Cust Order') . " #</TD>
-			<TD class='tableheader'>" . _('Order Date') . "</TD>
-			<TD class='tableheader'>" . _('Req Del Date') . "</TD>
-			<TD class='tableheader'>" . _('Delivery To') . "</TD>
-			<TD class='tableheader'>" . _('Order Total') . "</TD></TR>";
+	$tableheader = "<TR><TH>" . _('Order') . " #</TH>
+			<TH>" . _('Customer') . "</TH>
+			<TH>" . _('Branch') . "</TH>
+			<TH>" . _('Cust Order') . " #</TH>
+			<TH>" . _('Order Date') . "</TH>
+			<TH>" . _('Req Del Date') . "</TH>
+			<TH>" . _('Delivery To') . "</TH>
+			<TH>" . _('Order Total') . "</TH></TR>";
 
 	echo $tableheader;
 
@@ -468,10 +463,10 @@ If ($SalesOrdersResult) {
 
 
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 
@@ -499,11 +494,6 @@ If ($SalesOrdersResult) {
 			$myrow['deliverto'], 
 			$FormatedOrderValue);
 
-		$j++;
-		If ($j == 12){
-			$j=1;
-			echo $tableheader;
-		}
 //end of page full new headings if
 	}
 //end of while loop

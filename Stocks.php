@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.46 $ */
+/* $Revision: 1.47 $ */
 
 $PageSecurity = 11;
 
@@ -71,6 +71,10 @@ if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
  /* EOR Add Image upload for New Item  - by Ori */
 }
 
+if (isset($Errors)) {
+	unset($Errors);
+}
+$Errors = array();
 
 if (isset($_POST['submit'])) {
 
@@ -81,12 +85,8 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	if (isset($Errors)) {
-		unset($Errors);
-	}
 	$i=1;
 	
-	$Errors[0]='';
 
 	if (!isset($_POST['Description']) or strlen($_POST['Description']) > 50 OR strlen($_POST['Description'])==0) {
 		$InputError = 1;
@@ -549,7 +549,7 @@ if (!isset($StockID) or $StockID=='') {
 
 	echo '<TR><TD>'. _('Item Code'). ':</TD><TD><INPUT ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  TYPE="TEXT" NAME="StockID" SIZE=21 MAXLENGTH=20></TD></TR>'. "\n";
 
-} elseif (!isset($_POST['UpdateCategories']) and $InputError!=1) { // Must be modifying an existing item and no changes made yet
+} elseif (isset($InputError) and !isset($_POST['UpdateCategories']) and $InputError!=1) { // Must be modifying an existing item and no changes made yet
 
 	$sql = "SELECT stockid,
 			description,
