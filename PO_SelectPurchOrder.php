@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 2;
 
@@ -45,7 +45,7 @@ If (isset($OrderNumber) && $OrderNumber!="") {
 } else {
 	If (isset($SelectedSupplier)) {
 		echo _('For supplier') . ': ' . $SelectedSupplier . ' ' . _('and') . ' ';
-		echo '<input type=hidden name="SelectedSupplier" value=' . $SelectedSupplier . '>';
+		echo '<input type=hidden name="SelectedSupplier" value="' . $SelectedSupplier . '">';
 	}
 	If (isset($SelectedStockItem)) {
 		 echo _('for the part') . ': ' . $SelectedStockItem . ' ' . _('and') . ' <input type=hidden name="SelectedStockItem" value="' . $SelectedStockItem . '">';

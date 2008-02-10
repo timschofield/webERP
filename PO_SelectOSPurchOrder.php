@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 2;
 
@@ -9,7 +9,6 @@ include('includes/session.inc');
 $title = _('Search Outstanding Purchase Orders');
 
 include('includes/header.inc');
-
 
 if (isset($_GET['SelectedStockItem'])){
 	$SelectedStockItem=trim($_GET['SelectedStockItem']);
@@ -46,7 +45,7 @@ If (isset($OrderNumber) && $OrderNumber!='') {
 } else {
 	If (isset($SelectedSupplier)) {
 		echo _('For supplier') . ': ' . $SelectedSupplier . ' ' . _('and') . ' ';
-		echo '<input type=hidden name="SelectedSupplier" value=' . $SelectedSupplier . '>';
+		echo '<input type=hidden name="SelectedSupplier" value="' . $SelectedSupplier . '">';
 	}
 	If (isset($SelectedStockItem)) {
 		 echo _('for the part') . ': ' . $SelectedStockItem . ' ' . _('and') . ' <input type=hidden name="SelectedStockItem" value="' . $SelectedStockItem . '">';
@@ -194,11 +193,11 @@ while ($myrow1 = DB_fetch_array($result1)) {
 If (isset($StockItemsResult)) {
 
 	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>';
-	$TableHeader = 	'<TR><TD class="tableheader">' . _('Code') . '</TD>
-			<TD class="tableheader">' . _('Description') . '</TD>
-			<TD class="tableheader">' . _('On Hand') . '</TD>
-			<TD class="tableheader">' . _('Orders') . '<BR>' . _('Outstanding') . '</TD>
-			<TD class="tableheader">' . _('Units') . '</TD>
+	$TableHeader = 	'<TR><TH>' . _('Code') . '</TH>
+			<TH>' . _('Description') . '</TH>
+			<TH>' . _('On Hand') . '</TH>
+			<TH>' . _('Orders') . '<BR>' . _('Outstanding') . '</TH>
+			<TH>' . _('Units') . '</TH>
 			</TR>';
 	echo $TableHeader;
 	$j = 1;
@@ -207,10 +206,10 @@ If (isset($StockItemsResult)) {
 	while ($myrow=DB_fetch_array($StockItemsResult)) {
 
 		if ($k==1){
-			echo '<tr bgcolor="#CCCCCC">';
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo '<tr bgcolor="#EEEEEE">';
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 
