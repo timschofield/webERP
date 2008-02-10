@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	} elseif ($myrow[0]>0){
 		$InputError = 1;
-		prnMsg(_('The area code enterd already exists'),'error');		
+		prnMsg(_('The area code entered already exists'),'error');		
 		$Errors[$i] = 'AreaCode';
 		$i++;
 	} elseif (strlen($_POST['AreaDescription']) >25) {
