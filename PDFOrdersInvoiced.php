@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 3;
 include ('includes/session.inc');
@@ -19,7 +19,7 @@ if (isset($_POST['ToDate']) AND !Is_Date($_POST['ToDate'])){
 	$InputError=1;
 	unset($_POST['ToDate']);
 }
-if (Date1GreaterThanDate2($_POST['FromDate'], $_POST['ToDate'])){
+if (isset($_POST['FromDate']) and isset($_POST['ToDate']) and Date1GreaterThanDate2($_POST['FromDate'], $_POST['ToDate'])){
 	$msg = _('The date to must be after the date from');
 	$InputError=1;
 	unset($_POST['ToDate']);
@@ -33,9 +33,9 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	}
 
      echo "<FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
-     echo '<CENTER><TABLE><TR><TD>' . _('Enter the date from which orders are to be listed') . ":</TD><TD><INPUT TYPE=text NAME='FromDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($DefaultDateFormat, Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . "'></TD></TR>";
+     echo '<CENTER><TABLE><TR><TD>' . _('Enter the date from which orders are to be listed') . ":</TD><TD><INPUT TYPE=text NAME='FromDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . "'></TD></TR>";
      echo '<TR><TD>' . _('Enter the date to which orders are to be listed') . ":</TD>
-     		<TD><INPUT TYPE=text NAME='ToDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($DefaultDateFormat) . "'></TD></TR>";
+     		<TD><INPUT TYPE=text NAME='ToDate' MAXLENGTH=10 SIZE=10 VALUE='" . Date($_SESSION['DefaultDateFormat']) . "'></TD></TR>";
      echo '<TR><TD>' . _('Inventory Category') . '</TD><TD>';
 
      $sql = "SELECT categorydescription, categoryid FROM stockcategory WHERE stocktype<>'D' AND stocktype<>'L'";
@@ -271,9 +271,10 @@ while ($myrow=DB_fetch_array($Result)){
 	        $LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,80,$FontSize,ConvertSQLDate($myrow['orddate']), 'left');
         	$LeftOvers = $pdf->addTextWrap($Left_Margin+380,$YPos,20,$FontSize,$myrow['fromstkloc'], 'left');
 
-
-        	$LeftOvers = $pdf->addTextWrap($Left_Margin+400,$YPos,100,$FontSize,$PackingSlipPrinted, 'left');
-
+			if (isset($PackingSlipPrinted)) {
+        		$LeftOvers = $pdf->addTextWrap($Left_Margin+400,$YPos,100,$FontSize,$PackingSlipPrinted, 'left');
+			}
+			
 	  	$YPos -= ($line_height);
 
                 $OrderNo = $myrow['orderno'];

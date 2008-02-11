@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 3;
 include ('includes/session.inc');
@@ -42,16 +42,16 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
      echo "<OPTION SELECTED VALUE='All'>" . _('Over All Categories');
 
      while ($myrow=DB_fetch_array($result)){
-	echo '<OPTION VALUE=' . $myrow['categoryid'] . '>' . $myrow['categorydescription'];
+		echo '<OPTION VALUE=' . $myrow['categoryid'] . '>' . $myrow['categorydescription'];
      }
      echo '</SELECT></TD></TR>';
 
-     echo '<TR><TD>' . _('Inventory Location') . ":</TD><TD><SELECT NAME='Location'>";
-     echo "<OPTION SELECTED VALUE='All'>" . _('All Locations');
+     echo '<TR><TD>' . _('Inventory Location') . ':</TD><TD><SELECT NAME="Location">';
+     echo '<OPTION SELECTED VALUE="All">' . _('All Locations');
 
      $result= DB_query('SELECT loccode, locationname FROM locations',$db);
      while ($myrow=DB_fetch_array($result)){
-	echo "<OPTION VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
+		echo "<OPTION VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
      }
      echo '</SELECT></TD></TR>';
 
