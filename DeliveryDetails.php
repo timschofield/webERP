@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.37 $ */
+/* $Revision: 1.38 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -138,7 +138,7 @@ If (isset($_POST['Update'])
 		and show a link to set them up
 		- if shippers defined but the default shipper is bogus then use the first shipper defined
 		*/
-		if (($BestShipper==''|| !isset($BestShipper)) AND ($_POST['ShipVia']=='' || !isset($_POST['ShipVia']))){
+		if ((!isset($BestShipper) and $BestShipper=='') AND ($_POST['ShipVia']=='' || !isset($_POST['ShipVia']))){
 			$SQL =  "SELECT shipper_id FROM shippers WHERE shipper_id=" . $_SESSION['Default_Shipper'];
 			$ErrMsg = _('There was a problem testing for the default shipper');
 			$TestShipperExists = DB_query($SQL,$db,$ErrMsg);

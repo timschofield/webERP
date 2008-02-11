@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity = 2;
 
@@ -140,8 +140,8 @@ If ($_POST['Select']!="" OR
 
 	$_POST['Select'] = NULL;
 
-	echo "<TABLE BORDER=2 CELLPADDING=4><TR><TD class='tableheader'>" . _('Customer Inquiries') . "</TD>
-			<TD class='tableheader'>" . _('Customer Maintenance') . "</TD></TR>";
+	echo "<TABLE BORDER=2 CELLPADDING=4><TR><TH>" . _('Customer Inquiries') . "</TH>
+			<TH>" . _('Customer Maintenance') . "</TH></TR>";
 
 	echo '<TR><TD WIDTH=50%>';
 
@@ -164,13 +164,13 @@ If ($_POST['Select']!="" OR
 
 	echo '</TD></TR></TABLE><BR></CENTER>';
 } else {
-	echo "<CENTER><TABLE WIDTH=50% BORDER=2><TR><TD class='tableheader'>" . _('Customer Inquiries') . "</TD>
-			<TD class='tableheader'>" . _('Customer Maintenance') . "</TD></TR>";
+	echo "<CENTER><TABLE WIDTH=50% BORDER=2><TR><TH>" . _('Customer Inquiries') . "</TH>
+			<TH>" . _('Customer Maintenance') . "</TH></TR>";
 
 	echo '<TR><TD WIDTH=50%>';
 
 	echo '</TD><TD WIDTH=50%>';
-  	if ($_SESSION['SalesmanLogin']==''){
+  	if (!isset($_SESSION['SalesmanLogin']) or $_SESSION['SalesmanLogin']==''){
     	echo '<a href="' . $rootpath . '/Customers.php?">' . _('Add a New Customer') . '</a><br>';
     }
 	echo '</TD></TR></TABLE><BR></CENTER>';
@@ -234,7 +234,7 @@ if (isset($_POST['CustPhone'])) {
 
 
 <?php
-if ($_SESSION['SalesmanLogin']!=''){
+if (isset($_SESSION['SalesmanLogin']) and $_SESSION['SalesmanLogin']!=''){
 	prnMsg(_('Your account enables you to see only customers allocated to you'),'warn',_('Note: Sales-person Login'));
 }
 
@@ -278,12 +278,12 @@ If (isset($result)) {
 
 	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>';
 	$TableHeader = '<TR>
-				<TD Class="tableheader">' . _('Code') . '</TD>
-				<TD Class="tableheader">' . _('Customer Name') . '</TD>
-				<TD Class="tableheader">' . _('Branch') . '</TD>
-				<TD Class="tableheader">' . _('Contact') . '</TD>
-				<TD Class="tableheader">' . _('Phone') . '</TD>
-				<TD Class="tableheader">' . _('Fax') . '</TD>
+				<TH>' . _('Code') . '</TH>
+				<TH>' . _('Customer Name') . '</TH>
+				<TH>' . _('Branch') . '</TH>
+				<TH>' . _('Contact') . '</TH>
+				<TH>' . _('Phone') . '</TH>
+				<TH>' . _('Fax') . '</TH>
 			</TR>';
 
 	echo $TableHeader;
@@ -298,10 +298,10 @@ If (isset($result)) {
 	while (($myrow=DB_fetch_array($result)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 
 		if ($k==1){
-			echo '<tr bgcolor="#CCCCCC">';
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo '<tr bgcolor="#EEEEEE">';
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 
@@ -333,7 +333,7 @@ If (isset($result)) {
 
 }
 //end if results to show
-if ($ListPageMax >1) {
+if (isset($ListPageMax) and $ListPageMax>1) {
 	echo "<P>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 
 	echo '<SELECT NAME="PageOffset">';
@@ -354,16 +354,6 @@ if ($ListPageMax >1) {
 }
 //end if results to show
 echo '</FORM></CENTER>';
-
-
-
-
-
-
-
-
-
-
 
 include('includes/footer.inc');
 ?>

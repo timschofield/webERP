@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 1;
 
@@ -87,12 +87,15 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 		$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description, 
 				SUM(locstock.quantity) AS qoh,  
+				SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo,  
 				stockmaster.units, 
 				SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qdem 
 			FROM stockmaster, 
 				locstock, 
-				salesorderdetails 
+				salesorderdetails,
+				purchorderdetails 
 			WHERE stockmaster.stockid=locstock.stockid 
+			AND stockmaster.stockid=purchorderdetails.itemcode 
 			AND stockmaster.stockid = salesorderdetails.stkcode 
 			AND salesorderdetails.completed =0 
 			AND stockmaster.description " . LIKE . "'$SearchString' 
@@ -107,12 +110,15 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 		$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description, 
 				SUM(locstock.quantity) AS qoh, 
+				SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo,  
 				SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qdem, 
 				stockmaster.units 
 			FROM stockmaster, 
 				locstock, 
-				salesorderdetails 
+				salesorderdetails,
+				purchorderdetails 
 			WHERE stockmaster.stockid=locstock.stockid 
+			AND stockmaster.stockid=purchorderdetails.itemcode 
 			AND stockmaster.stockid = salesorderdetails.stkcode 
 			AND salesorderdetails.completed =0 
 			AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%' 
@@ -127,12 +133,15 @@ if (isset($_POST['SearchParts']) and $_POST['SearchParts']!=''){
 		$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description, 
 				SUM(locstock.quantity) AS qoh, 
+				SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qoo,  
 				SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qdem, 
 				stockmaster.units 
 			FROM stockmaster, 
 				locstock, 
-				salesorderdetails 
+				salesorderdetails,
+				purchorderdetails 
 			WHERE stockmaster.stockid=locstock.stockid 
+			AND stockmaster.stockid=purchorderdetails.itemcode 
 			AND stockmaster.stockid = salesorderdetails.stkcode 
 			AND salesorderdetails.completed =0 
 			AND stockmaster.categoryid='" . $_POST['StockCat'] . "' 

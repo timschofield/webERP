@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 /*The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
@@ -62,15 +62,15 @@ if (isset($_POST['CancelCredit'])) {
 
 if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1){
 
-	 If ($_POST['Keywords'] AND $_POST['CustCode']) {
+	 if ($_POST['Keywords'] AND $_POST['CustCode']) {
 		  $msg=_('Customer name keywords have been used in preference to the customer code extract entered');
 	 }
-	 If ($_POST['Keywords']=='' AND $_POST['CustCode']=='') {
+	 if ($_POST['Keywords']=='' AND $_POST['CustCode']=='') {
 		  $msg=_('At least one Customer Name keyword OR an extract of a Customer Code must be entered for the search');
 	 } else {
 		  If (strlen($_POST['Keywords'])>0) {
 		  //insert wildcard characters in spaces
-
+			   $msg='';	
 			   $i=0;
 			   $SearchString = '%';
 			   while (strpos($_POST['Keywords'], ' ', $i)) {
@@ -93,6 +93,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1){
 				AND custbranch.disabletrans=0";
 
 		  } elseif (strlen($_POST['CustCode'])>0){
+			   $msg='';	
 			   $SQL = 'SELECT
 			   		custbranch.debtorno,
 					custbranch.brname,
@@ -205,7 +206,9 @@ will be booked back into. */
 if ($_SESSION['RequireCustomerSelection'] ==1
 	OR !isset($_SESSION['CreditItems']->DebtorNo)
 	OR $_SESSION['CreditItems']->DebtorNo=='' ) {
-
+	if (!isset($msg)) {
+		$msg = '';
+	}
 	echo '<FONT SIZE=3><B> - ' . _('Customer Selection') . '</B></FONT><BR>';
 	echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
 	echo '<B><BR>' . $msg . '</B>';
@@ -220,16 +223,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	echo '</TABLE>';
 	echo '<CENTER><INPUT TYPE=SUBMIT NAME="SearchCust" VALUE="' . _('Search Now') . '"></CENTER>';
 
-	if ($result_CustSelect) {
+	if (isset($result_CustSelect)) {
 
 		  echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
 
 		  $TableHeader = '<TR>
-		  	<TD class="tableheader">' . _('Code') . '</TD>
-				<TD class="tableheader">' . _('Branch') . '</TD>
-				<TD class="tableheader">' . _('Contact') . '</TD>
-				<TD class="tableheader">' . _('Phone') . '</TD>
-				<TD class="tableheader">' . _('Fax') . '</TD>
+		  	<TH>' . _('Code') . '</TH>
+				<TH>' . _('Branch') . '</TH>
+				<TH>' . _('Contact') . '</TH>
+				<TH>' . _('Phone') . '</TH>
+				<TH>' . _('Fax') . '</TH>
 				</TR>';
 
 		  echo $TableHeader;
@@ -240,10 +243,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		  while ($myrow=DB_fetch_array($result_CustSelect)) {
 
 			   if ($k==1){
-				    echo '<tr bgcolor="#CCCCCC">';
+				    echo '<tr class="EvenTableRows">';
 				    $k=0;
 			   } else {
-				    echo '<tr bgcolor="#EEEEEE">';
+				    echo '<tr class="OddTableRows">';
 				    $k=1;
 			   }
 
@@ -260,11 +263,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$myrow['phoneno'],
 				$myrow['faxno']);
 
-			   $j++;
-			   If ($j == 11){
-				$j=1;
-				echo $TableHeader;
-			   }
 //end of page full new headings if
 		  }
 //end of while loop
@@ -660,18 +658,18 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		  echo '<CENTER>
 		  <TABLE CELLPADDING=2 COLSPAN=7>
 		  <TR>
-		  <TD class="tableheader">' . _('Item Code') . '</TD>
-		  <TD class="tableheader">' . _('Item Description') . '</TD>
-		  <TD class="tableheader">' . _('Quantity') . '</TD>
-		  <TD class="tableheader">' . _('Unit') . '</TD>
-		  <TD class="tableheader">' . _('Price') . '</TD>
-		  <TD class="tableheader">' . _('Gross') . '</TD>
-		  <TD class="tableheader">' . _('Discount') . '</TD>
-		  <TD class="tableheader">' . _('Total') . '<BR>' . _('Excl Tax') . '</TD>
-		  <TD class="tableheader">' . _('Tax Authority') . '</TD>
-		  <TD class="tableheader">' . _('Tax') . '<BR>' . _('Rate') . '</TD>
-		  <TD class="tableheader">' . _('Tax') . '<BR>' . _('Amount') . '</TD>
-		  <TD class="tableheader">' . _('Total') . '<BR>' . _('Incl Tax') . '</TD>
+		  <TH>' . _('Item Code') . '</TH>
+		  <TH>' . _('Item Description') . '</TH>
+		  <TH>' . _('Quantity') . '</TH>
+		  <TH>' . _('Unit') . '</TH>
+		  <TH>' . _('Price') . '</TH>
+		  <TH>' . _('Gross') . '</TH>
+		  <TH>' . _('Discount') . '</TH>
+		  <TH>' . _('Total') . '<BR>' . _('Excl Tax') . '</TH>
+		  <TH>' . _('Tax Authority') . '</TH>
+		  <TH>' . _('Tax') . '<BR>' . _('Rate') . '</TH>
+		  <TH>' . _('Tax') . '<BR>' . _('Amount') . '</TH>
+		  <TH">' . _('Total') . '<BR>' . _('Incl Tax') . '</TH>
 		  </TR>';
 
 		  $_SESSION['CreditItems']->total = 0;
@@ -689,9 +687,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			   $DisplayLineTotal = number_format($LineTotal,2);
 
 			   if ($k==1){
-				$RowStarter = '<tr bgcolor="#EEAABB">';
+				$RowStarter = '<tr class="EvenTableRows">';
 			   } elseif ($k==1){
-				$RowStarter = '<tr bgcolor="#CCCCCC">';
+				$RowStarter = '<tr class="OddTableRows">';
 				$k=0;
 			   } else {
 				$RowStarter = '<tr bgcolor="#EEEEEE">';
@@ -935,7 +933,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		 echo '<OPTION SELECTED VALUE="All">' . _('All');
 		 while ($myrow1 = DB_fetch_array($result1)) {
-			  if ($_POST['StockCat']==$myrow1['categoryid']){
+			  if (isset($_POST['StockCat']) and $_POST['StockCat']==$myrow1['categoryid']){
 				   echo '<OPTION SELECTED VALUE=' . $myrow1['categoryid'] . '>' . $myrow1['categorydescription'];
 			  } else {
 				   echo '<OPTION VALUE=' . $myrow1['categoryid'] . '>' . $myrow1['categorydescription'];
@@ -943,7 +941,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		 }
 
 		 echo '</SELECT>';
-
+		 if (!isset($_POST['Keywords'])) {
+		 	$_POST['Keywords'] = '';
+		 }
+		 if (!isset($_POST['StockCode'])) {
+		 	$_POST['StockCode'] = '';
+		 }
 		 echo '<TD><FONT SIZE=2>' . _('Enter text extracts in the description') . ':</FONT></TD>';
 		 echo '<TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25 VALUE="' . $_POST['Keywords'] . '"></TD></TR>';
 		 echo '<TR><TD></TD>';
@@ -960,9 +963,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		 if (isset($SearchResult)) {
 
 			  echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
-			  $TableHeader = '<TR><TD class="tableheader">' . _('Code') . '</TD>
-			  			<TD class="tableheader">' . _('Description') . '</TD>
-						<TD class="tableheader">' . _('Units') .'</TD></TR>';
+			  $TableHeader = '<TR><TH>' . _('Code') . '</TH>
+			  			<TH>' . _('Description') . '</TH>
+						<TH>' . _('Units') .'</TH></TR>';
 			  echo $TableHeader;
 
 			  $j = 1;
@@ -979,10 +982,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				   /* $_SESSION['part_pics_dir'] is a user defined variable in config.php */
 
 				   if ($k==1){
-					    echo '<tr bgcolor="#CCCCCC">';
+					    echo '<tr class="EvenTableRows">';
 					    $k=0;
 				   } else {
-					    echo '<tr bgcolor="#EEEEEE">';
+					    echo '<tr class="OddTableRows">';
 					    $k++;
 				   }
 
@@ -995,11 +998,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
                    				$myrow['units'],
                    				$ImageSource);
 
-				   $j++;
-				   If ($j == 20){
-					    $j=1;
-					    echo $TableHeader;
-				   }
 	#end of page full new headings if
 			  }
 	#end of while loop
@@ -1010,13 +1008,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 /*FORM VARIABLES TO POST TO THE CREDIT NOTE 10 AT A TIME WITH PART CODE AND QUANTITY */
 	     echo '<FONT SIZE=4 COLOR=BLUE><B>' . _('Quick Entry') . '</B></FONT><BR><CENTER><TABLE BORDER=1>
 	     	<TR>
-             	<TD class="tableheader">' . _('Part Code') . '</TD>
-             	<TD class="tableheader">' . _('Quantity') . '</TD>
+             	<TH>' . _('Part Code') . '</TH>
+             	<TH>' . _('Quantity') . '</TH>
              	</TR>';
 
 	      for ($i=1;$i<=$_SESSION['QuickEntries'];$i++){
 
-	     	echo '<tr bgcolor="#CCCCCC"><TD><INPUT TYPE="text" name="part_' . $i . '" size=21 maxlength=20></TD>
+	     	echo '<tr class="OddTableRows"><TD><INPUT TYPE="text" name="part_' . $i . '" size=21 maxlength=20></TD>
 			<TD><INPUT TYPE="text" name="qty_' . $i . '" size=6 maxlength=6></TD></TR>';
 	     }
 
