@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -134,12 +134,12 @@ if (isset($_GET['HoldType']) AND isset($_GET['HoldTrans'])){
 
 }
 
-echo "<TABLE WIDTH=100% BORDER=1><TR><TD CLASS='tableheader'>" . _('Total Balance') . 
-	  "</TD><TD CLASS='tableheader'>" . _('Current') . 
-	  "</TD><TD CLASS='tableheader'>" . _('Now Due') . 
-	  "</TD><TD CLASS='tableheader'>" . $_SESSION['PastDueDays1'] . '-' . $_SESSION['PastDueDays2'] . 
+echo "<TABLE WIDTH=100% BORDER=1><TR><TH>" . _('Total Balance') . 
+	  "</TH><TH>" . _('Current') . 
+	  "</TH><TH>" . _('Now Due') . 
+	  "</TH><TH>" . $_SESSION['PastDueDays1'] . '-' . $_SESSION['PastDueDays2'] . 
 	  ' ' . _('Days Overdue') . 
-	  "</TD><TD CLASS='tableheader'>" . _('Over') . ' ' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</TD></TR>';
+	  "</TH><TH>" . _('Over') . ' ' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</TH></TR>';
 
 echo '<TR><TD ALIGN=RIGHT>' . number_format($SupplierRecord['balance'],2) . 
 	  '</TD><TD ALIGN=RIGHT>' . number_format(($SupplierRecord['balance'] - $SupplierRecord['due']),2) . 
@@ -188,14 +188,14 @@ if (DB_num_rows($TransResult) == 0){
 
 
 echo '<TABLE CELLPADDING=2 COLSPAN=7>';
-$TableHeader = "<TR><TD CLASS='tableheader'>" . _('Trans') . ' #' . 
-		"</TD><TD CLASS='tableheader'>" . _('Type') . 
-		"</TD><TD CLASS='tableheader'>" . _('Supplier Ref') . ' #' . 
-		"</TD><TD CLASS='tableheader'>" . _('Date') . 
-		"</TD><TD CLASS='tableheader'>" . _('Total') . 
-		"</TD><TD CLASS='tableheader'>" . _('Allocated') . 
-		"</TD><TD CLASS='tableheader'>" . _('Balance') . 
-		"</TD><TD CLASS='tableheader'>" . _('Comments') . '</TD></TR>';
+$TableHeader = "<TR><TH>" . _('Trans') . ' #' . 
+		"</TH><TH>" . _('Type') . 
+		"</TH><TH>" . _('Supplier Ref') . ' #' . 
+		"</TH><TH>" . _('Date') . 
+		"</TH><TH>" . _('Total') . 
+		"</TH><TH>" . _('Allocated') . 
+		"</TH><TH>" . _('Balance') . 
+		"</TH><TH>" . _('Comments') . '</TD></TR>';
 
 echo $TableHeader;
 
@@ -213,10 +213,10 @@ while ($myrow=DB_fetch_array($TransResult)) {
 	if ($myrow['hold'] == 1){
 		echo "<TR BGCOLOR='#DD99BB'>";
 	}elseif ($k == 1){
-		echo "<TR BGCOLOR='#CCCCCC'>";
+		echo '<TR CLASS="EvenTableRows">';
 		$k = 0;
 	} else {
-		echo "<TR BGCOLOR='#EEEEEE'>";
+		echo '<TR CLASS="OddTableRows">';
 		$k = 1;
 	}
 
@@ -408,11 +408,6 @@ while ($myrow=DB_fetch_array($TransResult)) {
 		}
 	}
 
-	$j++;
-	if ($j == 12){
-		$j = 1;
-		echo $TableHeader;
-	}
 
 //end of page full new headings if
 
