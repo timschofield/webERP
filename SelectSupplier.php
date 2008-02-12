@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity = 2;
 
@@ -120,9 +120,9 @@ if (isset($_SESSION['SupplierID'])){
 
 	echo '<CENTER><TABLE WIDTH=90% COLSPAN=2 BORDER=2 CELLPADDING=4>';
 	echo "<TR>
-		<TD WIDTH=33% class='tableheader'>" . _('Supplier Inquiries') . "</TD>
-		<TD WIDTH=33% class='tableheader'>". _('Supplier Transactions') . "</TD>
-		<TD WIDTH=33% class='tableheader'>" . _('Supplier Maintenance') . "</TD>
+		<TH WIDTH=33%>" . _('Supplier Inquiries') . "</TH>
+		<TH WIDTH=33%>". _('Supplier Transactions') . "</TH>
+		<TH WIDTH=33%>" . _('Supplier Maintenance') . "</TH>
 	</TR>";
 
 	echo '<TR><TD VALIGN=TOP>';    /* Inquiry Options */
