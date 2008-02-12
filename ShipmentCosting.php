@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 11;
 
@@ -10,7 +10,7 @@ $title = _('Shipment Costing');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-if ($_GET['NewShipment']=='Yes'){
+if (isset($_GET['NewShipment']) and $_GET['NewShipment']=='Yes'){
 	unset($_SESSION['Shipment']->LineItems);
 	unset($_SESSION['Shipment']);
 }
@@ -131,15 +131,15 @@ if (db_num_rows($LineItemsResult) > 0) {
 
         echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>';
 
-	$TableHeader = '<TR>	<TD class="tableheader">'. _('Item'). '</TD>
-				<TD class="tableheader">'. _('Quantity'). '<BR>'. _('Invoiced'). '</TD>
-				<TD class="tableheader">'. _('Quantity'). '<BR>'. _('Received'). '</TD>
-				<TD class="tableheader">'. _('Inovoiced'). '<BR>'. _('Charges'). '</TD>
-				<TD class="tableheader">'. _('Shipment'). '<BR>'. _('Charges'). '</TD>
-				<TD class="tableheader">'. _('Shipment'). '<BR>'. _('Cost'). '</TD>
-				<TD class="tableheader">'. _('Standard'). '<BR>'. _('Cost'). '</TD>
-				<TD class="tableheader">'. _('Variance'). '</TD>
-				<TD class="tableheader">%</TD></TR>';
+	$TableHeader = '<TR>	<TH>'. _('Item'). '</TH>
+				<TH>'. _('Quantity'). '<BR>'. _('Invoiced'). '</TH>
+				<TH>'. _('Quantity'). '<BR>'. _('Received'). '</TH>
+				<TH>'. _('Inovoiced'). '<BR>'. _('Charges'). '</TH>
+				<TH>'. _('Shipment'). '<BR>'. _('Charges'). '</TH>
+				<TH>'. _('Shipment'). '<BR>'. _('Cost'). '</TH>
+				<TH>'. _('Standard'). '<BR>'. _('Cost'). '</TH>
+				<TH>'. _('Variance'). '</TH>
+				<TH>%</TH></TR>';
 	echo  $TableHeader;
 
 	/*show the line items on the shipment with the value invoiced and shipt cost */
@@ -150,16 +150,11 @@ if (db_num_rows($LineItemsResult) > 0) {
 
 	while ($myrow=DB_fetch_array($LineItemsResult)) {
 
-		if ($RowCounter==15){
-			echo $TableHeader;
-			$RowCounter =0;
-		}
-		$RowCounter++;
 		if ($k==1){
-			echo '<tr bgcolor="#CCCCCC">';
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo '<tr bgcolor="#EEEEEE">';
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 
@@ -493,12 +488,12 @@ echo '<FONT COLOR=BLUE SIZE=2>' . _('Shipment Charges Against Products'). '</FON
 echo '<TABLE CELLPADDING=2 COLSPAN=6 BORDER=0>';
 
 $TableHeader = '<TR>
-		<TD class="tableheader">'. _('Supplier'). '</TD>
-		<TD class="tableheader">'. _('Type'). '</TD>
-		<TD class="tableheader">'. _('Ref'). '</TD>
-		<TD class="tableheader">'. _('Date'). '</TD>
-		<TD class="tableheader">'. _('Item'). '</TD>
-		<TD class="tableheader">'. _('Local Amount'). '<BR>'. _('Charged'). '</TD></TR>';
+		<TH>'. _('Supplier'). '</TH>
+		<TH>'. _('Type'). '</TH>
+		<TH>'. _('Ref'). '</TH>
+		<TH>'. _('Date'). '</TH>
+		<TH>'. _('Item'). '</TH>
+		<TH>'. _('Local Amount'). '<BR>'. _('Charged'). '</TH></TR>';
 
 echo  $TableHeader;
 
@@ -510,17 +505,12 @@ $TotalItemShipmentChgs =0;
 
 while ($myrow=db_fetch_array($ChargesResult)) {
 
-	if ($RowCounter==15){
-		echo $TableHeader;
-		$RowCounter =0;
-	}
-	$RowCounter++;
 
 	if ($k==1){
-		echo '<tr bgcolor="#CCCCCC">';
+		echo '<tr class="EvenTableRows">';
 		$k=0;
 	} else {
-		echo '<tr bgcolor="#EEEEEE">';
+		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
 
@@ -569,11 +559,11 @@ echo '<FONT COLOR=BLUE SIZE=2>'._('General Shipment Charges').'</FONT>';
 echo '<TABLE CELLPADDING=2 COLSPAN=5 BORDER=0>';
 
 $TableHeader = '<TR>
-		<TD class="tableheader">'. _('Supplier'). '</TD>
-		<TD class="tableheader">'. _('Type'). '</TD>
-		<TD class="tableheader">'. _('Ref'). '</TD>
-		<TD class="tableheader">'. _('Date'). '</TD>
-		<TD class="tableheader">'. _('Local Amount'). '<BR>'. _('Charged'). '</TD></TR>';
+		<TH>'. _('Supplier'). '</TH>
+		<TH>'. _('Type'). '</TH>
+		<TH>'. _('Ref'). '</TH>
+		<TH>'. _('Date'). '</TH>
+		<TH>'. _('Local Amount'). '<BR>'. _('Charged'). '</TH></TR>';
 
 echo  $TableHeader;
 
@@ -585,17 +575,11 @@ $TotalGeneralShipmentChgs =0;
 
 while ($myrow=db_fetch_array($ChargesResult)) {
 
-	if ($RowCounter==15){
-		echo $TableHeader;
-		$RowCounter =0;
-	}
-	$RowCounter++;
-
 	if ($k==1){
-		echo '<tr bgcolor="#CCCCCC">';
+		echo '<tr class="EvenTableRows">';
 		$k=0;
 	} else {
-		echo '<tr bgcolor="#EEEEEE">';
+		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
 

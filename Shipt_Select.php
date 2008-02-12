@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 11;
 
@@ -29,7 +29,7 @@ if (isset($_GET['SelectedSupplier'])){
 echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
 
 
-If ($_POST['ResetPart']){
+If (isset($_POST['ResetPart'])) {
      unset($SelectedStockItem);
 }
 
@@ -43,16 +43,16 @@ If (isset($ShiptRef) && $ShiptRef!="") {
 	}
 } else {
 	If ($SelectedSupplier) {
-		echo _('For supplier'). ': '. $SelectedSupplier . ' ' . _('and'). ' ';
+		echo '<BR>' ._('For supplier'). ': '. $SelectedSupplier . ' ' . _('and'). ' ';
 		echo '<input type=hidden name="SelectedSupplier" value="'. $SelectedSupplier. '">';
 	}
-	If ($SelectedStockItem) {
+	If (isset($SelectedStockItem)) {
 		 echo _('for the part'). ': ' . $SelectedStockItem . '.';
 		echo '<input type=hidden name="SelectedStockItem" value="'. $SelectedStockItem. '">';
 	}
 }
 
-if ($_POST['SearchParts']){
+if (isset($_POST['SearchParts'])) {
 
 	If ($_POST['Keywords'] AND $_POST['StockCode']) {
 		echo '<BR>';
@@ -108,7 +108,7 @@ if ($_POST['SearchParts']){
 }
 
 
-if ($ShiptRef=="" OR !isset($ShiptRef)){
+if (!isset($ShiptRef) or $ShiptRef==""){
 
 	echo _('Shipment Number'). ': <INPUT type=text name="ShiptRef" MAXLENGTH =10 SIZE=10> '.
 		_('Into Stock Location').' :<SELECT name="StockLocation"> ';
@@ -163,7 +163,7 @@ $result1 = DB_query($SQL,$db);
 <SELECT NAME="StockCat">
 <?php
 while ($myrow1 = DB_fetch_array($result1)) {
-	if ($myrow1['categoryid']==$_POST['StockCat']){
+	if (isset($_POST['StockCat']) and $myrow1['categoryid']==$_POST['StockCat']){
 		echo '<OPTION SELECTED VALUE="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
 	} else {
 		echo '<OPTION VALUE="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
@@ -187,11 +187,11 @@ If (isset($StockItemsResult)) {
 
 	echo "<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>";
 	$TableHeader = '<TR>
-			<TD class="tableheader">'. _('Code').'</TD>
-			<TD class="tableheader">'. _('Description').'</TD>
-			<TD class="tableheader">'. _('On Hand').'</TD>
-			<TD class="tableheader">'. _('Orders') . '<BR>' . _('Outstanding').'</TD>
-			<TD class="tableheader">'. _('Units').'</TD>
+			<TH>'. _('Code').'</TH>
+			<TH>'. _('Description').'</TH>
+			<TH>'. _('On Hand').'</TH>
+			<TH>'. _('Orders') . '<BR>' . _('Outstanding').'</TH>
+			<TH>'. _('Units').'</TH>
 			</TR>';
 
 	echo $TableHeader;
@@ -202,10 +202,10 @@ If (isset($StockItemsResult)) {
 	while ($myrow=DB_fetch_array($StockItemsResult)) {
 
 		if ($k==1){
-			echo '<tr bgcolor="#CCCCCC">';
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo '<tr bgcolor="#EEEEEE">';
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 /*
@@ -288,11 +288,11 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 
 		echo '<TABLE CELLPADDING=2 COLSPAN=7 WIDTH=100%>';
 		$TableHeader = '<TR>
-				<TD class="tableheader">'. _('Shipment'). '</TD>
-				<TD class="tableheader">'. _('Supplier'). '</TD>
-				<TD class="tableheader">'. _('Vessel'). '</TD>
-				<TD class="tableheader">'. _('Voyage'). '</TD>
-				<TD class="tableheader">'. _('Expected Arrival'). '</TD>
+				<TH>'. _('Shipment'). '</TH>
+				<TH>'. _('Supplier'). '</TH>
+				<TH>'. _('Vessel'). '</TH>
+				<TH>'. _('Voyage'). '</TH>
+				<TH>'. _('Expected Arrival'). '</TH>
 				</TR>';
 
 		echo $TableHeader;
@@ -303,10 +303,10 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 
 
 			if ($k==1){ /*alternate bgcolour of row for highlighting */
-				echo '<tr bgcolor="#CCCCCC">';
+				echo '<tr class="EvenTableRows">';
 				$k=0;
 			} else {
-				echo '<tr bgcolor="#EEEEEE">';
+				echo '<tr class="OddTableRows">';
 				$k++;
 			}
 
@@ -332,7 +332,7 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 					$myrow['shiptref'], 
 					$myrow['suppname'], 
 					$myrow['vessel'], 
-					$myrow['voyage'],
+					$myrow['voyageref'],
 					$FormatedETA, 
 					$URL_View_Shipment, 
 					$URL_Modify_Shipment,
