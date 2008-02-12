@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity=9;
 
@@ -120,11 +120,11 @@ or deletion of the records*/
 	$result = DB_query($sql,$db);
 
 	echo "<CENTER><table border=1>
-		<tr BGCOLOR =#800000><td class='tableheader'>" . _('WC Code') . "</td>
-				<td class='tableheader'>" . _('Description') . "</td>
-				<td class='tableheader'>" . _('Location') . "</td>
-				<td class='tableheader'>" . _('Overhead GL Account') . "</td>
-				<td class='tableheader'>" . _('Overhead Per Hour') . "</td>
+		<tr BGCOLOR =#800000><th>" . _('WC Code') . "</th>
+				<th>" . _('Description') . "</th>
+				<th>" . _('Location') . "</th>
+				<th>" . _('Overhead GL Account') . "</th>
+				<th>" . _('Overhead Per Hour') . "</th>
 		</tr></FONT>";
 
 	while ($myrow = DB_fetch_row($result)) {
@@ -159,7 +159,7 @@ if (isset($SelectedWC)) {
 
 echo "<P><FORM METHOD='post' action='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 
-if ($SelectedWC) {
+if (isset($SelectedWC)) {
 	//editing an existing work centre
 
 	$sql = "SELECT code,
@@ -184,7 +184,9 @@ if ($SelectedWC) {
 	echo '<CENTER><TABLE><TR><TD>' ._('Work Centre Code') . ':</TD><TD>' . $_POST['Code'] . '</TD></TR>';
 
 } else { //end of if $SelectedWC only do the else when a new record is being entered
-
+	if (!isset($_POST['Code'])) {
+		$_POST['Code'] = '';
+	}
 	echo '<CENTER><TABLE><TR>
 			<TD>' . _('Work Centre Code') . ":</TD>
 			<TD><input type='Text' name='Code' SIZE=6 MAXLENGTH=5 value='" . $_POST['Code'] . "'></TD>
@@ -196,6 +198,9 @@ $SQL = 'SELECT locationname,
 	FROM locations';
 $result = DB_query($SQL,$db);
 
+if (!isset($_POST['Description'])) {
+	$_POST['Description'] = '';
+}
 
 echo '<TR><TD>' . _('Work Centre Description') . ":</TD>
 	<TD><input type='Text' name='Description' SIZE=21 MAXLENGTH=20 value='" . $_POST['Description'] . "'></TD>
@@ -204,7 +209,7 @@ echo '<TR><TD>' . _('Work Centre Description') . ":</TD>
 		<TD><SELECT name='Location'>";
 
 while ($myrow = DB_fetch_array($result)) {
-	if ($myrow['loccode']==$_POST['Location']) {
+	if (isset($_POST['Location']) and $myrow['loccode']==$_POST['Location']) {
 		echo "<OPTION SELECTED VALUE='";
 	} else {
 		echo "<OPTION VALUE='";
@@ -231,7 +236,7 @@ $SQL = 'SELECT accountcode,
 $result = DB_query($SQL,$db);
 
 while ($myrow = DB_fetch_array($result)) {
-	if ($myrow['accountcode']==$_POST['OverheadRecoveryAct']) {
+	if (isset($_POST['OverheadRecoveryAct']) and $myrow['accountcode']==$_POST['OverheadRecoveryAct']) {
 		echo '<OPTION SELECTED VALUE=';
 	} else {
 		echo '<OPTION VALUE=';
@@ -240,6 +245,10 @@ while ($myrow = DB_fetch_array($result)) {
 
 } //end while loop
 DB_free_result($result);
+
+if (!isset($_POST['OverheadPerHour'])) {
+	$_POST['OverheadPerHour']=0;
+}
 
 echo '</TD></TR>';
 echo '<TR><TD>' . _('Overhead Per Hour') . ":</TD>

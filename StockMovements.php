@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 2;
 
@@ -13,6 +13,8 @@ if (isset($_GET['StockID'])){
 	$StockID = trim(strtoupper($_GET['StockID']));
 } elseif (isset($_POST['StockID'])){
 	$StockID = trim(strtoupper($_POST['StockID']));
+} else {
+	$StockID = '';
 }
 
 
@@ -91,11 +93,11 @@ $MovtsResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 echo '<TABLE CELLPADDING=2 BORDER=0>';
 $tableheader = "<TR>
-		<TD CLASS='tableheader'>" . _('Type') . "</TD><TD CLASS='tableheader'>" . _('Number') . "</TD>
-		<TD CLASS='tableheader'>" . _('Date') . "</TD><TD CLASS='tableheader'>" . _('Customer') . "</TD>
-		<TD CLASS='tableheader'>" . _('Branch') . "</TD><TD CLASS='tableheader'>" . _('Quantity') . "</TD>
-		<TD CLASS='tableheader'>" . _('Reference') . "</TD><TD CLASS='tableheader'>" . _('Price') . "</TD>
-		<TD CLASS='tableheader'>" . _('Discount') . "</TD><TD CLASS='tableheader'>" . _('New Qty') . "</TD>
+		<TH>" . _('Type') . "</TH><TH>" . _('Number') . "</TH>
+		<TH>" . _('Date') . "</TH><TH>" . _('Customer') . "</TH>
+		<TH>" . _('Branch') . "</TH><TH>" . _('Quantity') . "</TH>
+		<TH>" . _('Reference') . "</TH><TH>" . _('Price') . "</TH>
+		<TH>" . _('Discount') . "</TH><TH>" . _('New Qty') . "</TH>
 		</TR>";
 
 echo $tableheader;
@@ -106,10 +108,10 @@ $k=0; //row colour counter
 while ($myrow=DB_fetch_array($MovtsResult)) {
 
 	if ($k==1){
-		echo "<TR BGCOLOR='#CCCCCC'>";
+		echo '<TR class="EvenTableRows">';
 		$k=0;
 	} else {
-		echo "<TR BGCOLOR='#EEEEEE'>";
+		echo '<TR class="OddTableRows">';
 		$k=1;
 	}
 
@@ -192,11 +194,6 @@ while ($myrow=DB_fetch_array($MovtsResult)) {
 			number_format($myrow['price'],2),
 			number_format($myrow['discountpercent']*100,2),
 			number_format($myrow['newqoh'],$myrow['decimalplaces']));
-	}
-	$j++;
-	If ($j == 12){
-		$j=1;
-		echo $tableheader;
 	}
 //end of page full new headings if
 }

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity = 3;
 
@@ -13,6 +13,8 @@ if (isset($_POST['serialno'])) {
 	$SN = trim($_POST['serialno']);
 } elseif(isset($_GET['serialno'])) {
 	$SN = trim($_GET['serialno']);
+} else {
+	$SN = '';
 }
 $SN = DB_escape_string($SN);
 

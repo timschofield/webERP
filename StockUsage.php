@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 2;
 
@@ -12,6 +12,8 @@ if (isset($_GET['StockID'])){
 	$StockID = trim(strtoupper($_GET['StockID']));
 } elseif (isset($_POST['StockID'])){
 	$StockID = trim(strtoupper($_POST['StockID']));
+} else {
+	$StockID = '';
 }
 
 if (isset($_POST['ShowGraphUsage'])) {
@@ -125,7 +127,7 @@ if (isset($_POST['ShowUsage'])){
 	}
 	
 	echo '<TABLE CELLPADDING=2 BORDER=0>';
-	$tableheader = "<TR><TD class='tableheader'>" . _('Month') . "</TD><TD class='tableheader'>" . _('Usage') . '</TD></TR>';
+	$tableheader = "<TR><TH>" . _('Month') . "</TH><TH>" . _('Usage') . '</TH></TR>';
 	echo $tableheader;
 	
 	$j = 1;
@@ -137,10 +139,10 @@ if (isset($_POST['ShowUsage'])){
 	while ($myrow=DB_fetch_array($MovtsResult)) {
 	
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 	
@@ -150,11 +152,6 @@ if (isset($_POST['ShowUsage'])){
 		$PeriodsCounter++;
 		printf('<td>%s</td><td ALIGN=RIGHT>%s</td></tr>', $DisplayDate, number_format($myrow['qtyused'],$DecimalPlaces));
 	
-		$j++;
-		If ($j == 12){
-			$j=1;
-			echo $tableheader;
-		}
 	//end of page full new headings if
 	}
 	//end of while loop

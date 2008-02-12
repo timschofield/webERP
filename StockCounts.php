@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 2;
 
@@ -13,18 +13,21 @@ echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "' METHOD=POST>";
 
 echo "<BR>";
 
+if (!isset($_POST['Action']) and !isset($_GET['Action'])) {
+	$_GET['Action'] = 'Enter';
+}
 if (isset($_POST['Action'])) { 
 	$_GET['Action'] = $_POST['Action']; 
 }
 
-if ($_GET['Action'] != 'View' && $_GET['Action'] != 'Enter'){ 
+if ($_GET['Action']!='View' and $_GET['Action']!='Enter'){ 
 	$_GET['Action'] = 'Enter'; 
 }
 
 if ($_GET['Action']=='View'){
-	echo '<a href="' . $rootpath . '/StockCounts.php?' . PID . '&Action=Enter">' . _('Resuming Entering Counts') . '</a> <b>|</b>' . _('Viewing Entered Counts') . '<BR><BR>';
+	echo '<a href="' . $rootpath . '/StockCounts.php?' . SID . '&Action=Enter">' . _('Resuming Entering Counts') . '</a> <b>|</b>' . _('Viewing Entered Counts') . '<BR><BR>';
 } else {
-	echo _('Entering Counts') .'<b>|</b> <a href="' . $rootpath . '/StockCounts.php?' . PID . '&Action=View">' . _('View Entered Counts') . '</a><BR><BR>';
+	echo _('Entering Counts') .'<b>|</b> <a href="' . $rootpath . '/StockCounts.php?' . SID . '&Action=View">' . _('View Entered Counts') . '</a><BR><BR>';
 }
 
 if ($_GET['Action'] == 'Enter'){
@@ -77,7 +80,7 @@ if ($_GET['Action'] == 'Enter'){
 
 	while ($myrow=DB_fetch_array($result)){
 
-		if ($myrow['loccode']==$_POST['Location']){
+		if (isset($_POST['Location']) and $myrow['loccode']==$_POST['Location']){
 			echo "<OPTION SELECTED VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 		} else {
 			echo "<OPTION VALUE='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
@@ -87,9 +90,9 @@ if ($_GET['Action'] == 'Enter'){
 
 	echo '<TABLE CELLPADDING=2 BORDER=1>';
 	echo "<TR>
-		<TD class='tableheader'>" . _('Stock Code') . "</TD>
-		<TD class='tableheader'>" . _('Quantity') . "</TD>
-		<TD class='tableheader'>" . _('Reference') . '</TD></TR>';
+		<TH>" . _('Stock Code') . "</TH>
+		<TH>" . _('Quantity') . "</TH>
+		<TH>" . _('Reference') . '</TH></TR>';
 
 	for ($i=1;$i<=10;$i++){
 
@@ -118,15 +121,15 @@ if ($_GET['Action'] == 'Enter'){
 	
 	//START OF ACTION=VIEW
 	$SQL = "select * from stockcounts";
-	$result = DB_query($SQL, $db,$ErrMsg);
+	$result = DB_query($SQL, $db);
 	echo '<INPUT TYPE=HIDDEN NAME=Action Value="View">';
 	echo '<TABLE CELLPADDING=2 BORDER=1>';
 	echo "<TR>
-		<TD class='tableheader'>" . _('Stock Code') . "</TD>
-		<TD class='tableheader'>" . _('Location') . "</TD>
-		<TD class='tableheader'>" . _('Qty Counted') . "</TD>
-		<TD class='tableheader'>" . _('Reference') . "</TD>
-		<TD class='tableheader'>" . _('Delete?') . '</TD></TR>';
+		<TH>" . _('Stock Code') . "</TH>
+		<TH>" . _('Location') . "</TH>
+		<TH>" . _('Qty Counted') . "</TH>
+		<TH>" . _('Reference') . "</TH>
+		<TH>" . _('Delete?') . '</TH></TR>';
 	while ($myrow=DB_fetch_array($result)){
 		echo "<TR>
 			<TD>".$myrow['stockid']."</TD>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 /* contributed by Chris Bice */
 
 $PageSecurity = 11;
@@ -116,7 +116,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 		$Trf_ID = GetNextTransNo(16,$db);
 	}
 
-	If ($InputError==true){
+	If (isset($InputError) and $InputError==true){
 		echo '<BR>';
 		prnMsg($ErrorMessage, 'error');
 		echo '<BR>';
@@ -166,7 +166,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 
 	echo '<CENTER><TABLE>';
 
-	$tableheader = '<TR><TD class="tableheader">'. _('Item Code'). '</TD><TD class="tableheader">'. _('Quantity'). '</TD></TR>';
+	$tableheader = '<TR><TH>'. _('Item Code'). '</TH><TH>'. _('Quantity'). '</TH></TR>';
 	echo $tableheader;
 
 	$k=0; /* row counter */
@@ -190,6 +190,12 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	$z=($i + 9);
 
 	while($i < $z) {
+		if (!isset($_POST['StockID' . $i])) {
+			$_POST['StockID' . $i]='';
+		}
+		if (!isset($_POST['StockQTY' . $i])) {
+			$_POST['StockQTY' . $i]=0;
+		}
 		echo '<TR>
 			<td><input type=text name="StockID' . $i .'" size=21  maxlength=20 Value="' . $_POST['StockID' . $i] . '"></td>
 			<td><input type=text name="StockQTY' . $i .'" size=5 maxlength=4 Value="' . $_POST['StockQTY' . $i] . '"></td>

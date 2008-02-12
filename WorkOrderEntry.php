@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 10;
 
@@ -450,11 +450,11 @@ if (isset($WOResult)){
 }
 echo '</table>
 		<P><table>';
-echo '<tr><td class="tableheader">' . _('Output Item') . '</td>
-		  <td class="tableheader">' . _('Qty Required') . '</td>
-		  <td class="tableheader">' . _('Qty Received') . '</td>
-		  <td class="tableheader">' . _('Balance Remaining') . '</td>
-		  <td class="tableheader">' . _('Next Lot/SN Ref') . '</td>
+echo '<tr><th>' . _('Output Item') . '</th>
+		  <th>' . _('Qty Required') . '</th>
+		  <th>' . _('Qty Received') . '</th>
+		  <th>' . _('Balance Remaining') . '</th>
+		  <th>' . _('Next Lot/SN Ref') . '</th>
 		  </tr>';
 
 
@@ -533,9 +533,9 @@ if (isset($SearchResult)) {
 	if (DB_num_rows($SearchResult)>1){
 
 		echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
-		$TableHeader = '<TR><TD class="tableheader">' . _('Code') . '</TD>
-                   			<TD class="tableheader">' . _('Description') . '</TD>
-                   			<TD class="tableheader">' . _('Units') . '</TD></TR>';
+		$TableHeader = '<TR><TH>' . _('Code') . '</TH>
+                   			<TH>' . _('Description') . '</TH>
+                   			<TH>' . _('Units') . '</TH></TR>';
 		echo $TableHeader;
 		$j = 1;
 		$k=0; //row colour counter
@@ -558,10 +558,10 @@ if (isset($SearchResult)) {
 				}
 
 				if ($k==1){
-					echo '<tr bgcolor="#CCCCCC">';
+					echo '<tr class="EvenTableRows">';
 					$k=0;
 				} else {
-					echo '<tr bgcolor="#EEEEEE">';
+					echo '<tr class="OddTableRows">';
 					$k=1;
 				}
 

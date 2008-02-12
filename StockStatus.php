@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 
 $PageSecurity = 2;
@@ -15,6 +15,8 @@ if (isset($_GET['StockID'])){
 	$StockID = trim(strtoupper($_GET['StockID']));
 } elseif (isset($_POST['StockID'])){
 	$StockID = trim(strtoupper($_POST['StockID']));
+} else {
+	$StockID = '';
 }
 
 echo "<A HREF='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</A><BR>';
@@ -76,17 +78,17 @@ echo '<TABLE CELLPADDING=2 BORDER=0>';
 
 if ($Its_A_KitSet_Assembly_Or_Dummy == True){
 	$tableheader = '<TR>
-			<TD class="tableheader">' . _('Location') . '</TD>
-			<TD class="tableheader">' . _('Demand') . '</TD>
+			<TH>' . _('Location') . '</TH>
+			<TH>' . _('Demand') . '</TH>
 			</TR>';
 } else {
 	$tableheader = '<TR>
-			<TD class="tableheader">' . _('Location') . '</TD>
-			<TD class="tableheader">' . _('Quantity On Hand') . '</TD>
-			<TD class="tableheader">' . _('Re-Order Level') . '</FONT></TD>
-			<TD class="tableheader">' . _('Demand') . '</TD>
-			<TD class="tableheader">' . _('Available') . '</TD>
-			<TD class="tableheader">' . _('On Order') . '</TD>
+			<TH>' . _('Location') . '</TH>
+			<TH>' . _('Quantity On Hand') . '</TH>
+			<TH>' . _('Re-Order Level') . '</FONT></TH>
+			<TH>' . _('Demand') . '</TH>
+			<TH>' . _('Available') . '</TH>
+			<TH>' . _('On Order') . '</TH>
 			</TR>';
 }
 echo $tableheader;
@@ -96,10 +98,10 @@ $k=0; //row colour counter
 while ($myrow=DB_fetch_array($LocStockResult)) {
 
 	if ($k==1){
-		echo '<tr bgcolor="#CCCCCC">';
+		echo '<tr class="EvenTableRows">';
 		$k=0;
 	} else {
-		echo '<tr bgcolor="#EEEEEE">';
+		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
 
