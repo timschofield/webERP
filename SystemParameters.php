@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.35 $ */
+/* $Revision: 1.36 $ */
 
 $PageSecurity =15;
 
@@ -256,11 +256,11 @@ if (isset($_POST['submit'])) {
 echo '<FORM METHOD="post" action=' . $_SERVER['PHP_SELF'] . '>';
 echo '<CENTER><TABLE BORDER=1>';
 
-$TableHeader = '<TR><TD class="tableheader">' . _('System Variable Name') . '</TD>
-	<TD class="tableheader">' . _('Value') . '</TD>
-	<TD class="tableheader">' . _('Notes') . '</TD>';
+$TableHeader = '<TR><TH>' . _('System Variable Name') . '</TH>
+	<TH>' . _('Value') . '</TH>
+	<TH>' . _('Notes') . '</TH>';
 
-echo '<TR><TD COLSPAN=3 class="tableheader"><CENTER>' . _('General Settings') . '</CENTER></TD></TR>';
+echo '<TR><TH COLSPAN=3><CENTER>' . _('General Settings') . '</CENTER></TH></TR>';
 echo $TableHeader;
 
 // DefaultDateFormat
@@ -287,7 +287,7 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 echo '</SELECT></TD>
 	<TD>' . _('The default theme is used for new users who have not yet defined the display colour scheme theme of their choice') . '</TD></TR>';
 
-echo '<TR><TD COLSPAN=3 class="tableheader"><CENTER>' . _('Accounts Receivable/Payable Settings') . '</CENTER></TD></TR>';
+echo '<TR><TH COLSPAN=3><CENTER>' . _('Accounts Receivable/Payable Settings') . '</CENTER></TH></TR>';
 
 // PastDueDays1
 echo '<TR><TD>' . _('First Overdue Deadline in (days)') . ':</TD>
@@ -538,7 +538,7 @@ echo '<TR><TD>' . _('Sales Order Allows Same Item Multiple Times') . ':</TD>
 	<OPTION '.(!$_SESSION['SO_AllowSameItemMultipleTimes']?'SELECTED ':'').'VALUE="0">'._('No').'
 	</SELECT></TD><TD>&nbsp;</TD></TR>';
 
-echo '<TR><TD COLSPAN=3 class="tableheader"><CENTER>' . _('General Settings') . '</CENTER></TD></TR>';
+echo '<TR><TH COLSPAN=3><CENTER>' . _('General Settings') . '</CENTER></TH></TR>';
 echo $TableHeader;
 
 // YearEnd
