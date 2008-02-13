@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 $PageSecurity = 9;
 
@@ -494,11 +494,6 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				$k++;
 			}
 			DisplayBOMItems($UltimateParent, $Parent, $Component, $Level, $db);
-			$RowCounter++;
-			if ($RowCounter==20){
-				echo $TableHeader;
-				$RowCounter=0;
-			}
 		}
 	}
 	// *** end POPAD&T

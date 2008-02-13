@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 2;
 
@@ -55,24 +55,23 @@ if (isset($StockID)) {
 
     		echo '<TABLE WIDTH=100%>';
 
-    		$tableheader = "<TR><TD class='tableheader'>" . _('Used By') . "</TD>
-					<TD class='tableheader'>" . _('Work Centre') . "</TD>
-					<TD class='tableheader'>" . _('Location') . "</TD>
-					<TD class='tableheader'>" . _('Quantity Required') . "</TD>
-					<TD class='tableheader'>" . _('Effective After') . "</TD>
-					<TD class='tableheader'>" . _('Effective To') . '</TD></TR>';
+    		$tableheader = "<TR><TH>" . _('Used By') . "</TH>
+					<TH>" . _('Work Centre') . "</TH>
+					<TH>" . _('Location') . "</TH>
+					<TH>" . _('Quantity Required') . "</TH>
+					<TH>" . _('Effective After') . "</TH>
+					<TH>" . _('Effective To') . '</TH></TR>';
     		echo $tableheader;
-		$k=0;
+			$k=0;
     		while ($myrow=DB_fetch_array($result)) {
 
     			if ($k==1){
-    				echo "<tr bgcolor='#CCCCCC'>";
+    				echo '<tr class="EvenTableRows">';
     				$k=0;
     			} else {
-    				echo "<tr bgcolor='#EEEEEE'>";
+    				echo '<tr class="OddTableRows">';;
     				$k=1;
     			}
-			$k++;
 
     			echo "<td><A target='_blank' HREF='" . $rootpath . "/BOMInquiry.php?" . SID . "&StockID=" . $myrow['parent'] . "' ALT='" . _('Show Bill Of Material') . "'>" . $myrow['parent']. ' - ' . $myrow['description']. '</a></td>';
     			echo '<td>' . $myrow['workcentreadded']. '</td>';
@@ -81,12 +80,7 @@ if (isset($StockID)) {
     			echo '<td>' . ConvertSQLDate($myrow['effectiveafter']) . '</td>';
     			echo '<td>' . ConvertSQLDate($myrow['effectiveto']) . '</td>';
 
-    			$j++;
-    			If ($j == 12){
-    				$j=1;
-    				echo $tableheader;
-    			}
-    			//end of page full new headings if
+     			//end of page full new headings if
     		}
 
     		echo '</TABLE>';
