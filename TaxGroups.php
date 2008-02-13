@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -159,16 +159,16 @@ if (!isset($SelectedGroup)) {
 		echo '</CENTER>';
 	} else {
 		echo '<CENTER><table border=1>';
-		echo "<TR><TD class='tableheader'>" . _('Group No') . "</TD>
-			<TD class='tableheader'>" . _('Tax Group') . "</TD></TR>";
+		echo "<TR><TH>" . _('Group No') . "</TH>
+			<TH>" . _('Tax Group') . "</TH></TR>";
 	
 		$k=0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
 			if ($k==1){
-				echo "<tr bgcolor='#CCCCCC'>";
+				echo '<tr class="EvenTableRows">';
 				$k=0;
 			} else {
-				echo "<tr bgcolor='#EEEEEE'>";
+				echo '<tr class="OddTableRows">';
 				$k=1;
 			}
 	
@@ -217,6 +217,10 @@ if( isset($_POST['SelectedGroup'])) {
 	echo "<INPUT TYPE=HIDDEN NAME='SelectedGroup' VALUE='" . $_POST['SelectedGroup'] . "'>";
 }
 echo '<CENTER><TABLE>';
+
+if (!isset($_POST['GroupName'])) {
+	$_POST['GroupName']='';
+}
 echo '<TR><TD>' . _('Tax Group') . ":</TD>
 	<TD><INPUT TYPE='text' name='GroupName' SIZE=40 MAXLENGTH=40 VALUE='" . $_POST['GroupName'] . "'></TD></TR>";
 echo "</TABLE>
@@ -254,19 +258,19 @@ if (isset($SelectedGroup)) {
 	if (DB_num_rows($Result)>0 ) {
 		echo '<BR>';
 		echo '<CENTER><TABLE><TR>';
-		echo "<TD class='tableheader' colspan=4 ALIGN=CENTER>"._('Assigned Taxes')."</TD>";
+		echo "<TH colspan=4 ALIGN=CENTER>"._('Assigned Taxes')."</TH>";
 		echo '<TD></TD>';
-		echo "<TD class='tableheader' colspan=2 ALIGN=CENTER>"._('Available Taxes')."</TD>";
+		echo "<TH colspan=2 ALIGN=CENTER>"._('Available Taxes')."</TH>";
 		echo '</TR>';
 		echo '<TR>';
 		
-		echo "<TD class='tableheader'>" . _('Tax Auth ID') . '</TD>';
-		echo "<TD class='tableheader'>" . _('Tax Authority Name') . '</TD>';
-		echo "<TD class='tableheader'>" . _('Calculation Order') . '</TD>';
-		echo "<TD class='tableheader'>" . _('Tax on Prior Tax(es)') . '</TD>';
+		echo "<TH>" . _('Tax Auth ID') . '</TH>';
+		echo "<TH>" . _('Tax Authority Name') . '</TH>';
+		echo "<TH>" . _('Calculation Order') . '</TH>';
+		echo "<TH>" . _('Tax on Prior Tax(es)') . '</TH>';
 		echo '<TD></TD>';
-		echo "<TD class='tableheader'>" . _('Tax Auth ID') . '</TD>';
-		echo "<TD class='tableheader'>" . _('Tax Authority Name') . '</TD>';
+		echo "<TH>" . _('Tax Auth ID') . '</TH>';
+		echo "<TH>" . _('Tax Authority Name') . '</TH>';
 		echo '</TR>';
 		
 	} else {
@@ -277,10 +281,10 @@ if (isset($SelectedGroup)) {
 	while($AvailRow = DB_fetch_array($Result)) {
 				
 		if ($k==1){
-			echo "<TR bgcolor='#CCCCCC'>";
+			echo '<TR class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<TR bgcolor='#EEEEEE'>";
+			echo '<TR class="OddTableRows">';
 			$k=1;
 		}
 		$TaxAuthUsedPointer = array_search($AvailRow['taxid'],$TaxAuthsUsed);

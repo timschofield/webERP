@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 2;
 
@@ -260,6 +260,10 @@ If (isset($StockItemsResult)) {
 	      /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
 
 		if (isset($SelectedSupplier)) {
+			
+			if (!isset($_POST['StockLocation'])) {
+				$_POST['StockLocation']='';
+			}
 
 			if (isset($SelectedStockItem)) {
 				$SQL = "SELECT purchorders.orderno,

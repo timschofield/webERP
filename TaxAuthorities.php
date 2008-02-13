@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 
 $PageSecurity=15;
@@ -90,7 +90,7 @@ if (isset($_POST['submit'])) {
 			$InsertResult = DB_query($sql,$db);
 	}
 	//run the SQL from either of the above possibilites
-	if ($InputError !=1) {
+	if (isset($InputError) and $InputError !=1) {
 		unset( $_POST['TaxGLCode']);
 		unset( $_POST['PurchTaxGLCode']);
 		unset( $_POST['Description']);
@@ -141,14 +141,14 @@ if (!isset($SelectedTaxAuthID)) {
 
 	echo '<CENTER><table border=1>';
 	echo "<tr>
-		<td class='tableheader'>" . _('ID') . "</td>
-		<td class='tableheader'>" . _('Description') . "</td>
-		<td class='tableheader'>" . _('Input Tax') . '<BR>' . _('GL Account') . "</td>
-		<td class='tableheader'>" . _('Output Tax') . '<BR>' . _('GL Account') . "</td>
-		<td class='tableheader'>" . _('Bank') . "</td>
-		<td class='tableheader'>" . _('Bank Account') . "</td>
-		<td class='tableheader'>" . _('Bank Act Type') . "</td>
-		<td class='tableheader'>" . _('Bank Swift') . "</td>
+		<th>" . _('ID') . "</th>
+		<th>" . _('Description') . "</th>
+		<th>" . _('Input Tax') . '<BR>' . _('GL Account') . "</th>
+		<th>" . _('Output Tax') . '<BR>' . _('GL Account') . "</th>
+		<th>" . _('Bank') . "</th>
+		<th>" . _('Bank Account') . "</th>
+		<th>" . _('Bank Act Type') . "</th>
+		<th>" . _('Bank Swift') . "</th>
 		</tr></FONT>";
 
 	while ($myrow = DB_fetch_row($result)) {
@@ -236,6 +236,9 @@ $SQL = 'SELECT accountcode,
 	ORDER BY accountcode';
 $result = DB_query($SQL,$db);
 
+if (!isset($_POST['Description'])) {
+	$_POST['Description']='';
+}
 echo '<CENTER><TABLE>
 <TR><TD>' . _('Tax Type Description') . ":</TD>
 <TD><input type=Text name='Description' SIZE=21 MAXLENGTH=20 value='" . $_POST['Description'] . "'></TD></TR>";
@@ -245,7 +248,7 @@ echo '<TR><TD>' . _('Input tax GL Account') . ':</TD>
 	<TD><SELECT name=PurchTaxGLCode>';
 
 while ($myrow = DB_fetch_array($result)) {
-	if ($myrow['accountcode']==$_POST['PurchTaxGLCode']) {
+	if (isset($_POST['PurchTaxGLCode']) and $myrow['accountcode']==$_POST['PurchTaxGLCode']) {
 		echo '<OPTION SELECTED VALUE=';
 	} else {
 		echo '<OPTION VALUE=';
@@ -263,7 +266,7 @@ echo '<TR><TD>' . _('Output tax GL Account') . ':</TD>
 
 
 while ($myrow = DB_fetch_array($result)) {
-	if ($myrow['accountcode']==$_POST['TaxGLCode']) {
+	if (isset($_POST['TaxGLCode']) and $myrow['accountcode']==$_POST['TaxGLCode']) {
 		echo "<OPTION SELECTED VALUE='";
 	} else {
 		echo "<OPTION VALUE='";
@@ -272,7 +275,18 @@ while ($myrow = DB_fetch_array($result)) {
 
 } //end while loop
 
-
+if (!isset($_POST['Bank'])) {
+	$_POST['Bank']='';
+}
+if (!isset($_POST['BankAccType'])) {
+	$_POST['BankAccType']='';
+}
+if (!isset($_POST['BankAcc'])) {
+	$_POST['BankAcc']='';
+}
+if (!isset($_POST['BankSwift'])) {
+	$_POST['BankSwift']='';
+}
 
 echo '</SELECT></TD></TR>';
 echo '<TR><TD>' . _('Bank Name') . ':</TD>';

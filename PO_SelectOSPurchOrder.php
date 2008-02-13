@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 2;
 
@@ -44,7 +44,7 @@ If (isset($OrderNumber) && $OrderNumber!='') {
 	}
 } else {
 	If (isset($SelectedSupplier)) {
-		echo _('For supplier') . ': ' . $SelectedSupplier . ' ' . _('and') . ' ';
+		echo '<BR>' . _('For supplier') . ': ' . $SelectedSupplier . ' ' . _('and') . ' ';
 		echo '<input type=hidden name="SelectedSupplier" value="' . $SelectedSupplier . '">';
 	}
 	If (isset($SelectedStockItem)) {
@@ -269,6 +269,10 @@ If (isset($StockItemsResult)) {
 	      /* $DateAfterCriteria = FormatDateforSQL($OrdersAfterDate); */
 
 		if (isset($SelectedSupplier)) {
+			
+			if (!isset($_POST['StockLocation'])) {
+				$_POST['StockLocation']='';
+			}
 
 			if (isset($SelectedStockItem)) {
 				$SQL = "SELECT purchorders.orderno,

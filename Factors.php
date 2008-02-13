@@ -157,7 +157,7 @@ if (!isset($FactorID)) {
 		echo '<OPTION SELECTED VALUE=' . $myrow['id'] . '>' . $myrow['coyname'];
 	}
 	echo "</SELECT></TABLE><p><CENTER><INPUT TYPE='Submit' NAME='amend' VALUE='" . _('Amend Factor') . "'>";
-	echo "</SELECT></TABLE><p><CENTER><INPUT TYPE='Submit' NAME='Create' VALUE='" . _('Create New Factor') . "'>";
+	echo "<CENTER><BR><INPUT TYPE='Submit' NAME='Create' VALUE='" . _('Create New Factor') . "'>";
 	echo '</FORM>'; 
 
 } else {
@@ -165,7 +165,7 @@ if (!isset($FactorID)) {
 	echo "<FORM METHOD='post' ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "'>";
 	echo '<CENTER><TABLE>';
 
-	if ($_POST['New']=="No") {
+	if (isset($_POST['New']) and $_POST['New']=="No") {
 
 		$sql = "SELECT id, 
 				coyname, 
@@ -217,7 +217,7 @@ if (!isset($FactorID)) {
 	echo '<TR><TD>' . _('Email') . ":</TD><TD><INPUT TYPE='text' NAME='Email' VALUE='" . $_POST['Email'] . "'  SIZE=55 MAXLENGTH=55></TD></TR>";
 	echo '</FORM>';
 
-	if ($_POST['New'] == "Yes") {
+	if (isset($_POST['New']) and $_POST['New']=="Yes") {
 		echo "</TABLE><p><CENTER><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Insert New Factor') . "'>";
 	} else {
 		echo "<P></TABLE><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Update Factor') . "'>";

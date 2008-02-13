@@ -84,8 +84,10 @@ if (isset($_POST['View'])) {
 		$SQLArray = explode('VALUES', $SQLString);
 		$fieldnamearray = explode(',', $SQLArray[0]);
 		$_SESSION['SQLString']['fields'] = $fieldnamearray;
-		$FieldValueArray = explode(',', $SQLArray[1]);
-		$_SESSION['SQLString']['values'] = $FieldValueArray;
+		if (isset($SQLArray[1])) {
+			$FieldValueArray = explode(',', $SQLArray[1]);
+			$_SESSION['SQLString']['values'] = $FieldValueArray;
+		}
 	}
 
 	function UpdateQueryInfo($SQLString) {
@@ -99,7 +101,9 @@ if (isset($_POST['View'])) {
 		for ($i=0; $i<sizeof($FieldArray); $i++) {
 			$Assigment = explode('=', $FieldArray[$i]);
 			$_SESSION['SQLString']['fields'][$i] = $Assigment[0];
-			$_SESSION['SQLString']['values'][$i] = $Assigment[1];
+			if (sizeof($Assigment)>1) {
+				$_SESSION['SQLString']['values'][$i] = $Assigment[1];
+			}
 		}
 	}
 
@@ -155,6 +159,9 @@ if (isset($_POST['View'])) {
 
 		if ((trim($_SESSION['SQLString']['table']) == $_POST['SelectedTable'])  ||
 		 ($_POST['SelectedTable'] == 'ALL')) {
+		 	if (!isset($_SESSION['SQLString']['values'])) {
+		 		$_SESSION['SQLString']['values'][0]='';
+		 	}
 			echo '<TR bgcolor='.$RowColour.'>
 				<TD>' . $myrow[0] . '</TD>
 				<TD>' . $myrow[1] . '</TD>
@@ -163,7 +170,7 @@ if (isset($_POST['View'])) {
 				<TD>' . $_SESSION['SQLString']['fields'][0] . '</TD>
 				<TD>' . htmlentities(trim(str_replace("'","",$_SESSION['SQLString']['values'][0]))) . '</TD></TR>';
 			for ($i=1; $i<sizeof($_SESSION['SQLString']['fields']); $i++) {
-				if ((trim(str_replace("'","",$_SESSION['SQLString']['values'][$i])) != "") &
+				if (isset($_SESSION['SQLString']['values'][$i]) and (trim(str_replace("'","",$_SESSION['SQLString']['values'][$i])) != "") &
 		  	 (trim($_SESSION['SQLString']['fields'][$i]) != 'password') &
 		   		(trim($_SESSION['SQLString']['fields'][$i]) != "www_users.password")) {
 					echo '<TR bgcolor='.$RowColour.'>';

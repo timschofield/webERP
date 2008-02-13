@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 4;
 
@@ -155,6 +155,10 @@ if (isset($StockID)){
 	} else {
   		prnMsg( _('Stock Item') . ' - ' . $StockID . ' ' . _('is not defined in the database'), 'warn');
 	}
+}
+
+if (!isset($StockID)) {
+	$StockID='';
 }
 
 echo '<FORM ACTION="' . $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 15;
 
@@ -181,17 +181,17 @@ if (isset($_POST['submit'])) {
 
 	echo "<CENTER><TABLE>
 		<TR>
-		<TD class='tableheader'>" . _('Units of Measure') . "</TD>
+		<TH>" . _('Units of Measure') . "</TH>
 		</TR>";
 
 	$k=0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
 
 		if ($k==1){
-			echo "<TR BGCOLOR='#CCCCCC'>";
+			echo '<TR class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<TR BGCOLOR='#EEEEEE'>";
+			echo '<TR class="OddTableRows">';
 			$k++;
 		}
 

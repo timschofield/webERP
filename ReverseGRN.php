@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 11;
 
@@ -337,6 +337,7 @@ if (isset($_GET['GRNNo']) AND isset($_POST['SupplierID'])){
 
 			/* show the GRNs outstanding to be invoiced that could be reversed */
 			$RowCounter =0;
+			$k=0;
 			while ($myrow=DB_fetch_array($result)) {
 				if ($k==1){
 					echo '<tr class="EvenTableRows">';

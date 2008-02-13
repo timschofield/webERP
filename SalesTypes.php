@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 15;
 
@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
 		prnMsg (_('The sales type code cannot be AN since this is a system defined abbrevation for any sales type in general ledger interface lookups'),'error');
 	}
 
-	if ($SelectedType AND $InputError !=1) {
+	if (isset($SelectedType) AND $InputError !=1) {
 
 		$sql = "UPDATE salestypes
 			SET sales_type = '" . $_POST['Sales_Type'] . "'
@@ -165,18 +165,18 @@ or deletion of the records*/
 
 	echo '<CENTER><TABLE BORDER=1>';
 	echo "<tr>
-		<TD CLASS='tableheader'>" . _('Type Code') . "</TD>
-		<TD CLASS='tableheader'>" . _('Type Name') . "</TD>
+		<TH>" . _('Type Code') . "</TH>
+		<TH>" . _('Type Name') . "</TH>
 	</TR>";
 
 $k=0; //row colour counter
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($k==1){
-		echo "<TR BGCOLOR='#CCCCCC'>";
+		echo '<TR class="EvenTableRows">';
 		$k=0;
 	} else {
-		echo "<TR BGCOLOR='#EEEEEE'>";
+		echo '<TR class="OddTableRows">';
 		$k=1;
 	}
 
@@ -238,6 +238,9 @@ if (! isset($_GET['delete'])) {
 
 	}
 
+	if (!isset($_POST['Sales_Type'])) {
+		$_POST['Sales_Type']='';
+	}
 	echo "<TR><TD>" . _('Sales Type Name') . ":</TD><TD><input type='Text' name='Sales_Type' value='" . $_POST['Sales_Type'] . "'></TD></TR>";
 
    	echo '</TABLE>'; // close table in first column

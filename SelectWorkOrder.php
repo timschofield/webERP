@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 2;
 
@@ -112,7 +112,7 @@ if (!isset($StockID)) {
 	$OrdersAfterDate = Date('d/m/Y',Mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
      */
 
-	if ($_REQUEST['WO']=='' OR !$_REQUEST['WO']){
+	if (isset($_REQUEST['WO']) and ($_REQUEST['WO']=='' OR !$_REQUEST['WO'])){
 
 		echo _('Work Order number') . ": <INPUT type=text name='WO' MAXLENGTH =8 SIZE=9>&nbsp " . _('Processing at') . ":<SELECT name='StockLocation'> ";
 
@@ -189,10 +189,10 @@ If (isset($StockItemsResult)) {
 
 	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>';
 	$TableHeader = "<TR>
-				<TD class='tableheader'>" . _('Code') . "</TD>
-				<TD class='tableheader'>" . _('Description') . "</TD>
-				<TD class='tableheader'>" . _('On Hand') . "</TD>
-				<TD class='tableheader'>" . _('Units') . "</TD>
+				<TH>" . _('Code') . "</TH>
+				<TH>" . _('Description') . "</TH>
+				<TH>" . _('On Hand') . "</TH>
+				<TH>" . _('Units') . "</TH>
 			</TR>";
 	echo $TableHeader;
 
@@ -202,10 +202,10 @@ If (isset($StockItemsResult)) {
 	while ($myrow=DB_fetch_array($StockItemsResult)) {
 
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 
@@ -233,9 +233,13 @@ If (isset($StockItemsResult)) {
 }
 //end if stock search results to show
   else {
+  	
+  	if (!isset($_POST['StockLocation'])) {
+  		$_POST['StockLocation'] = '';
+  	}
 
 	//figure out the SQL required from the inputs available
-	if ($_POST['ClosedOrOpen']=='Open_Only'){
+	if (isset($_POST['ClosedOrOpen']) and $_POST['ClosedOrOpen']=='Open_Only'){
 		$ClosedOrOpen = 0;
 	} else {
 		$ClosedOrOpen = 1;
@@ -298,16 +302,16 @@ If (isset($StockItemsResult)) {
 
 
 	$tableheader = "<TR>
-				<TD class='tableheader'>" . _('Modify') . "</TD>
-				<TD class='tableheader'>" . _('Status') . "</TD>
-				<TD class='tableheader'>" . _('Receive') . "</TD>
-				<TD class='tableheader'>" . _('Issue To') . "</TD>
-				<TD class='tableheader'>" . _('Costing') . "</TD>
-				<TD class='tableheader'>" . _('Item') . "</TD>
-				<TD class='tableheader'>" . _('Quantity Required') . "</TD>
-				<TD class='tableheader'>" . _('Quantity Received') . "</TD>
-				<TD class='tableheader'>" . _('Quantity Outstanding') . "</TD>
-				<TD class='tableheader'>" . _('Required Date') . "</TD>
+				<TH>" . _('Modify') . "</TH>
+				<TH>" . _('Status') . "</TH>
+				<TH>" . _('Receive') . "</TH>
+				<TH>" . _('Issue To') . "</TH>
+				<TH>" . _('Costing') . "</TH>
+				<TH>" . _('Item') . "</TH>
+				<TH>" . _('Quantity Required') . "</TH>
+				<TH>" . _('Quantity Received') . "</TH>
+				<TH>" . _('Quantity Outstanding') . "</TH>
+				<TH>" . _('Required Date') . "</TH>
 				</TR>";
 
 	echo $tableheader;
@@ -317,10 +321,10 @@ If (isset($StockItemsResult)) {
 	while ($myrow=DB_fetch_array($WorkOrdersResult)) {
 
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 

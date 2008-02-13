@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 15;
 
@@ -163,17 +163,17 @@ if (isset($_POST['submit'])) {
 
 	echo "<CENTER><TABLE>
 		<TR>
-		<TD class='tableheader'>" . _('Tax Categories') . "</TD>
+		<TH>" . _('Tax Categories') . "</TH>
 		</TR>";
 
 	$k=0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
 
 		if ($k==1){
-			echo "<TR BGCOLOR='#CCCCCC'>";
+			echo '<TR class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<TR BGCOLOR='#EEEEEE'>";
+			echo '<TR class="OddTableRows">';
 			$k++;
 		}
 

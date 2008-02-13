@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing 
@@ -155,7 +155,7 @@ if the link is not active then OvAmount must be entered manually. */
 
 if (!isset($_POST['PostInvoice'])){
 	
-	if ($_POST['GRNS'] == _('Enter Against Goods Recd')){
+	if (isset($_POST['GRNS']) and $_POST['GRNS'] == _('Enter Against Goods Recd')){
 		/*This ensures that any changes in the page are stored in the session before calling the grn page */
 		echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . "/SuppInvGRNs.php?" . SID . "'>";
 		echo '<P>' . _('You should automatically be forwarded to the entry of invoices against goods received page') .
@@ -163,7 +163,7 @@ if (!isset($_POST['PostInvoice'])){
 			"<A HREF='" . $rootpath . "/SuppInvGRNs.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue') . '.<BR>';
 		exit;
 	}
-	if ($_POST['Shipts'] == _('Enter Against Shipment')){
+	if (isset($_POST['Shipts']) and $_POST['Shipts'] == _('Enter Against Shipment')){
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
 		echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . "/SuppShiptChgs.php?" . SID . "'>";
 		echo '<P>' . _('You should automatically be forwarded to the entry of invoices against shipments page') .
@@ -171,7 +171,7 @@ if (!isset($_POST['PostInvoice'])){
 			"<A HREF='" . $rootpath . "/SuppShiptChgs.php?" . SID . "'>" . _('click here') . '</a> ' . _('to continue') . '.<BR>';
 		exit;
 	}
-	if ($_POST['GL'] == _('Enter General Ledger Analysis')){
+	if (isset($_POST['GL']) and $_POST['GL'] == _('Enter General Ledger Analysis')){
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
 		echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath . "/SuppTransGLAnalysis.php?" . SID . "'>";
 		echo '<P>' . _('You should automatically be forwarded to the entry of invoices against the general ledger page') .
@@ -183,10 +183,10 @@ if (!isset($_POST['PostInvoice'])){
 	/* everything below here only do if a Supplier is selected
 	fisrt add a header to show who we are making an invoice for */
 	
-	echo "<CENTER><TABLE BORDER=2 COLSPAN=4><TR><TD CLASS='tableheader'>" . _('Supplier') .
-		"</TD><TD CLASS='tableheader'>" . _('Currency') .
-		"</TD><TD CLASS='tableheader'>" . _('Terms').
-		"</TD><TD CLASS='tableheader'>" . _('Tax Authority') . '</TD></TR>';
+	echo "<CENTER><TABLE BORDER=2 COLSPAN=4><TR><TH>" . _('Supplier') .
+		"</TH><TH>" . _('Currency') .
+		"</TH><TH>" . _('Terms').
+		"</TH><TH>" . _('Tax Authority') . '</TH></TR>';
 	
 	echo '<TR><TD><FONT COLOR=blue><B>' . $_SESSION['SuppTrans']->SupplierID . ' - ' .
 		$_SESSION['SuppTrans']->SupplierName . '</B></FONT></TD>
@@ -229,12 +229,12 @@ if (!isset($_POST['PostInvoice'])){
 		/*Show all the selected GRNs so far from the SESSION['SuppInv']->GRNs array */
 	
 		echo '<TABLE CELLPADDING=2>';
-		$tableheader = "<TR BGCOLOR=#800000><TD CLASS='tableheader'>" . _('Seq') . " #</TD>
-				<TD CLASS='tableheader'>" . _('Item Code') . "</TD>
-				<TD CLASS='tableheader'>" . _('Description') . "</TD>
-				<TD CLASS='tableheader'>" . _('Quantity Charged') . "</TD>
-				<TD CLASS='tableheader'>" . _('Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TD>
-				<TD CLASS='tableheader'>" . _('Line Total') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TD></TR>';
+		$tableheader = "<TR BGCOLOR=#800000><TH>" . _('Seq') . " #</TH>
+				<TH>" . _('Item Code') . "</TH>
+				<TH>" . _('Description') . "</TH>
+				<TH>" . _('Quantity Charged') . "</TH>
+				<TH>" . _('Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TH>
+				<TH>" . _('Line Total') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TH></TR>';
 		echo $tableheader;
 	
 		$TotalGRNValue = 0;
@@ -250,11 +250,6 @@ if (!isset($_POST['PostInvoice'])){
 	
 			$TotalGRNValue = $TotalGRNValue + ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv);
 	
-			$i++;
-			if ($i > 15){
-				$i = 0;
-				echo $tableheader;
-			}
 		}
 	
 		echo '<TR><TD COLSPAN=5 ALIGN=RIGHT><FONT COLOR=blue>' . _('Total Value of Goods Charged') . ':</FONT></TD>
@@ -265,8 +260,8 @@ if (!isset($_POST['PostInvoice'])){
 	if (count( $_SESSION['SuppTrans']->Shipts) > 0){   /*if there are any Shipment charges on the invoice*/
 	
 		echo '<TABLE CELLPADDING=2>';
-		$TableHeader = "<TR><TD CLASS='tableheader'>" . _('Shipment') . "</TD>
-				<TD CLASS='tableheader'>" . _('Amount') . '</TD></TR>';
+		$TableHeader = "<TR><TH>" . _('Shipment') . "</TH>
+				<TH>" . _('Amount') . '</TH></TR>';
 		echo $TableHeader;
 	
 		$TotalShiptValue = 0;
@@ -294,12 +289,12 @@ if (!isset($_POST['PostInvoice'])){
 	
 		if (count($_SESSION['SuppTrans']->GLCodes) > 0){
 			echo '<TABLE CELLPADDING=2>';
-			$TableHeader = "<TR><TD CLASS='tableheader'>" . _('Account') .
-					"</TD><TD CLASS='tableheader'>" . _('Name') .
-					"</TD><TD CLASS='tableheader'>" . _('Amount') . '<BR>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TD>
-					<TD CLASS='tableheader'>" . _('Shipment') ."</TD>
-					<TD CLASS='tableheader'>" . _('Job') . 	"</TD>
-					<TD class='tableheader'>" . _('Narrative') . '</TD></TR>';
+			$TableHeader = "<TR><TH>" . _('Account') .
+					"</TH><TH>" . _('Name') .
+					"</TH><TH>" . _('Amount') . '<BR>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TH>
+					<TH'>" . _('Shipment') ."</TH>
+					<TH>" . _('Job') . 	"</TH>
+					<TH>" . _('Narrative') . '</TH></TR>';
 			echo $TableHeader;
 	
 			$TotalGLValue = 0;
@@ -313,11 +308,6 @@ if (!isset($_POST['PostInvoice'])){
 	
 				$TotalGLValue = $TotalGLValue + $EnteredGLCode->Amount;
 	
-				$i++;
-				if ($i > 15){
-					$i = 0;
-					echo $TableHeader;
-				}
 			}
 	
 			echo '<TR><TD COLSPAN=2 ALIGN=RIGHT><FONT SIZE=4 COLOR=blue>' . _('Total') .  ':</FONT></TD>

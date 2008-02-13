@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 $PageSecurity = 1;
 
@@ -43,7 +43,7 @@ If (isset($PrintPDF)
 	AND $FromTransNo!=''){
 
 	include ('includes/class.pdf.php');
-	define('FPDF_FONTPATH','font/');
+//	define('FPDF_FONTPATH','font/');
 	require('fpdi/fpdi.php');
 
 	/*
