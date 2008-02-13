@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 include('includes/DefineJournalClass.php');
 
@@ -10,7 +10,7 @@ $title = _('Journal Entry');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-if ($_GET['NewJournal']=='Yes' AND isset($_SESSION['JournalDetail'])){
+if (isset($_GET['NewJournal']) and $_GET['NewJournal']=='Yes' AND isset($_SESSION['JournalDetail'])){
 	unset($_SESSION['JournalDetail']->GLEntries);
 	unset($_SESSION['JournalDetail']);
 }
@@ -45,7 +45,7 @@ if (isset($_POST['JournalType'])){
 }
 $msg='';
 
-if ($_POST['CommitBatch']==_('Accept and Process Journal')){
+if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Process Journal')){
 
  /* once the GL analysis of the journal is entered
   process all the data in the session cookie into the DB
@@ -123,7 +123,7 @@ if ($_POST['CommitBatch']==_('Accept and Process Journal')){
   /* User hit delete the line from the journal */
    $_SESSION['JournalDetail']->Remove_GLEntry($_GET['Delete']);
 
-} elseif ($_POST['Process']==_('Accept')){ //user hit submit a new GL Analysis line into the journal
+} elseif (isset($_POST['Process']) and $_POST['Process']==_('Accept')){ //user hit submit a new GL Analysis line into the journal
 
    if ($_POST['GLManualCode']!='' AND is_numeric($_POST['GLManualCode'])){
 				// If a manual code was entered need to check it exists and isnt a bank account
@@ -235,6 +235,9 @@ echo '<TD>';
 echo '<FONT SIZE=3 COLOR=BLUE>' . _('Journal Line Entry') . '</FONT><TABLE>';
 
 /*now set up a GLCode field to select from avaialble GL accounts */
+if (!isset($_POST['GLManualCode'])) {
+	$_POST['GLManualCode']='';
+}
 echo '<TR><TD>' . _('Enter GL Account Manually') . ":</TD>
 	<TD><INPUT TYPE=Text Name='GLManualCode' Maxlength=12 SIZE=12 VALUE=" . $_POST['GLManualCode'] . '></TD>';
 echo '<TD>'. _('OR') . ' ' . _('Select GL Account').  ":</TD><TD><SELECT name='GLCode'>";
@@ -245,13 +248,19 @@ if (DB_num_rows($result)==0){
 	prnMsg(_('No General ledger accounts have been set up yet') . ' - ' . _('payments cannot be analysed against GL accounts until the GL accounts are set up'),'warn');
 } else {
 	while ($myrow=DB_fetch_array($result)){
-		if ($_POST['GLCode']==$myrow['accountcode']){
+		if (isset($_POST['GLCode']) and $_POST['GLCode']==$myrow['accountcode']){
 			echo '<OPTION SELECTED value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' - ' . $myrow['accountname'];
 		} else {
 			echo '<OPTION value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' - ' . $myrow['accountname'];
 		}
 	}
 	echo '</SELECT></TD></TR>';
+}
+if (!isset($_POST['GLNarrative'])) {
+	$_POST['GLNarrative']='';
+}
+if (!isset($_POST['GLAmount'])) {
+	$_POST['GLAmount']=0;
 }
 echo '<TR><TD>'._('GL Narrative').":</TD><TD COLSPAN=3><INPUT TYPE='text' name='GLNarrative' maxlength=50 size=52 value='" . $_POST['GLNarrative'] . "'></TD></TR>";
 echo '<TR><TD>'._('Amount').":</TD><TD COLSPAN=3><INPUT TYPE=Text Name='GLAmount' Maxlength=12 SIZE=12 VALUE=" . $_POST['GLAmount'] . '></TD></TR>';
