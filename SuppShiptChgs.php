@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of Shipts objects - containing details of all shipment charges for invoicing
@@ -67,8 +67,8 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit=='Invoice'){
 echo $_SESSION['SuppTrans']->SuppReference . ' ' ._('From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 
 echo "<TABLE CELLPADDING=2>";
-$TableHeader = "<TR><TD CLASS='tableheader'>" . _('Shipment') . "</TD>
-		<TD CLASS='tableheader'>" . _('Amount') . '</TD></TR>';
+$TableHeader = "<TR><TH>" . _('Shipment') . "</TH>
+		<TH>" . _('Amount') . '</TH></TR>';
 echo $TableHeader;
 
 $TotalShiptValue = 0;
@@ -81,11 +81,6 @@ foreach ($_SESSION['SuppTrans']->Shipts as $EnteredShiptRef){
 
 	$TotalShiptValue = $TotalShiptValue + $EnteredShiptRef->Amount;
 
-	$i++;
-	if ($i>15){
-		$i = 0;
-		echo $TableHeader;
-	}
 }
 
 echo '<TR>
@@ -103,6 +98,9 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 /*Set up a form to allow input of new Shipment charges */
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 
+if (!isset($_POST['ShiptRef'])) {
+	$_POST['ShiptRef']='';
+}
 echo '<TABLE>';
 echo '<TR><TD>' . _('Shipment Reference') . ":</TD>
 	<TD><INPUT TYPE='Text' NAME='ShiptRef' SIZE=12 MAXLENGTH=11 VALUE=" .  $_POST['ShiptRef'] . '></TD></TR>';
@@ -119,7 +117,7 @@ $sql = "SELECT shiptref,
 $result = DB_query($sql, $db);
 
 while ($myrow = DB_fetch_array($result)) {
-	if ($myrow['shiptref']==$_POST['ShiptSelection']) {
+	if (isset($_POST['ShiptSelection']) and $myrow['shiptref']==$_POST['ShiptSelection']) {
 		echo '<OPTION SELECTED VALUE=';
 	} else {
 		echo '<OPTION VALUE=';
@@ -129,6 +127,9 @@ while ($myrow = DB_fetch_array($result)) {
 
 echo '</SELECT></TD></TR>';
 
+if (!isset($_POST['Amount'])) {
+	$_POST['Amount']=0;
+}
 echo '<TR><TD>' . _('Amount') . ":</TD>
 	<TD><INPUT TYPE='Text' NAME='Amount' SIZE=12 MAXLENGTH=11 VALUE=" .  $_POST['Amount'] . '></TD></TR>';
 echo '</TABLE>';
