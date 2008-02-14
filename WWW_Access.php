@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity=15;
 
@@ -68,7 +68,7 @@ if (isset($_POST['submit']) || isset($_GET['remove']) || isset($_GET['add']) ) {
 	}
 	// Need to exec the query
 	if (isset($sql) && $InputError != 1 ) {
-		$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		$result = DB_query($sql,$db,$ErrMsg);
 		if( $result ) {
 			prnMsg( $ResMsg,'success');
 		}
@@ -105,16 +105,16 @@ if (!isset($SelectedRole)) {
 	$result = DB_query($sql,$db);
 
 	echo '<CENTER><table border=1>';
-	echo "<tr><td class='tableheader'>" . _('Role') . "</td></tr>";
+	echo "<tr><th>" . _('Role') . "</th></tr>";
 
 	$k=0; //row colour counter
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 
@@ -162,6 +162,9 @@ if( isset($_POST['SelectedRole'])) {
 	echo "<INPUT TYPE=HIDDEN NAME='SelectedRole' VALUE='" . $_POST['SelectedRole'] . "'>";
 }
 echo '<CENTER><TABLE>';
+if (!isset($_POST['SecRoleName'])) {
+	$_POST['SecRoleName']='';
+}
 echo '<TR><TD>' . _('Role') . ":</TD>
 	<TD><INPUT TYPE='text' name='SecRoleName' SIZE=40 MAXLENGTH=40 VALUE='" . $_POST['SecRoleName'] . "'></TR>";
 echo "</TABLE>
@@ -187,8 +190,8 @@ if (isset($SelectedRole)) {
 	echo '<CENTER><TABLE><TR>';
 	
 	if (DB_num_rows($Result)>0 ) {
-		echo "<TD class='tableheader' colspan=3><CENTER>"._('Assigned Security Tokens')."</CENTER></TD>";
-		echo "<TD class='tableheader' colspan=3><CENTER>"._('Available Security Tokens')."</CENTER></TD>";
+		echo "<TH colspan=3><CENTER>"._('Assigned Security Tokens')."</CENTER></TH>";
+		echo "<TH colspan=3><CENTER>"._('Available Security Tokens')."</CENTER></TH>";
 	}
 	echo '</TR>';
 	
@@ -196,10 +199,10 @@ if (isset($SelectedRole)) {
 	while($AvailRow = DB_fetch_array($Result)) {
 				
 		if ($k==1){
-			echo "<TR bgcolor='#CCCCCC'>";
+			echo '<TR class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<TR bgcolor='#EEEEEE'>";
+			echo '<TR class="OddTableRows">';
 			$k=1;
 		}
 		

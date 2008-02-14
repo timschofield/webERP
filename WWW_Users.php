@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 $PageSecurity=15;
 
@@ -224,27 +224,27 @@ if (!isset($SelectedUser)) {
 	$result = DB_query($sql,$db);
 
 	echo '<CENTER><table border=1>';
-	echo "<tr><td class='tableheader'>" . _('User Login') . "</td>
-		<td class='tableheader'>" . _('Full Name') . "</td>
-		<td class='tableheader'>" . _('Telephone') . "</td>
-		<td class='tableheader'>" . _('Email') . "</td>
-		<td class='tableheader'>" . _('Customer Code') . "</td>
-		<td class='tableheader'>" . _('Branch Code') . "</td>
-		<td class='tableheader'>" . _('Last Visit') . "</td>
-		<td class='tableheader'>" . _('Security Role') ."</td>
-		<td class='tableheader'>" . _('Report Size') ."</td>
-		<td class='tableheader'>" . _('Theme') ."</td>
-		<td class='tableheader'>" . _('Language') ."</td>
+	echo "<tr><th>" . _('User Login') . "</th>
+		<th>" . _('Full Name') . "</th>
+		<th>" . _('Telephone') . "</th>
+		<th>" . _('Email') . "</th>
+		<th>" . _('Customer Code') . "</th>
+		<th>" . _('Branch Code') . "</th>
+		<th>" . _('Last Visit') . "</th>
+		<th>" . _('Security Role') ."</th>
+		<th>" . _('Report Size') ."</th>
+		<th>" . _('Theme') ."</th>
+		<th>" . _('Language') ."</th>
 	</tr>";
 
 	$k=0; //row colour counter
 
 	while ($myrow = DB_fetch_row($result)) {
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<TR class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<TR class="OddTableRows">';
 			$k=1;
 		}
 
@@ -339,11 +339,14 @@ if (isset($SelectedUser)) {
 
 } else { //end of if $SelectedUser only do the else when a new record is being entered
 
-	echo '<CENTER><TABLE><TR><TD>' . _('User Login') . ":</TD><TD><input type='Text' name='UserID' SIZE=22 MAXLENGTH=20 Value='" . $_POST['UserID'] . "'></TD></TR>";
+	echo '<CENTER><TABLE><TR><TD>' . _('User Login') . ":</TD><TD><input type='Text' name='UserID' SIZE=22 MAXLENGTH=20 ></TD></TR>";
 
 	/*set the default modules to show to all
 	this had trapped a few people previously*/
 	$i=0;
+	if (!isset($_POST['ModulesAllowed'])) {
+		$_POST['ModulesAllowed']='';
+	}
 	foreach($ModuleList as $ModuleName){
 		if ($i>0){
 			$_POST['ModulesAllowed'] .=',';
@@ -353,6 +356,18 @@ if (isset($SelectedUser)) {
 	}
 }
 
+if (!isset($_POST['Password'])) {
+	$_POST['Password']='';
+}
+if (!isset($_POST['RealName'])) {
+	$_POST['RealName']='';
+}
+if (!isset($_POST['Phone'])) {
+	$_POST['Phone']='';
+}
+if (!isset($_POST['Email'])) {
+	$_POST['Email']='';
+}
 echo '<TR><TD>' . _('Password') . ":</TD>
 	<TD><INPUT TYPE='Password' name='Password' SIZE=22 MAXLENGTH=20 VALUE='" . $_POST['Password'] . "'></TR>";
 echo '<TR><TD>' . _('Full Name') . ":</TD>
@@ -364,7 +379,7 @@ echo '<TR><TD>' . _('Email Address') .":</TD>
 echo '<TR><TD>' . _('Security Role') . ":</TD><TD><SELECT NAME='Access'>";
 
 foreach ($SecurityRoles as $SecKey => $SecVal) {
-	if ($SecKey == $_POST['Access']){
+	if (isset($_POST['Access']) and $SecKey == $_POST['Access']){
 		echo "<OPTION SELECTED VALUE=" . $SecKey . ">" . $SecVal;
 	} else {
 		echo "<OPTION VALUE=" . $SecKey . ">" . $SecVal;
@@ -381,7 +396,7 @@ $result = DB_query($sql,$db);
 
 while ($myrow=DB_fetch_array($result)){
 
-	if ($myrow['loccode'] == $_POST['DefaultLocation']){
+	if (isset($_POST['DefaultLocation']) and $myrow['loccode'] == $_POST['DefaultLocation']){
 
 		echo "<OPTION SELECTED Value='" . $myrow['loccode'] . "'>" . $myrow['locationname'];
 
@@ -393,7 +408,12 @@ while ($myrow=DB_fetch_array($result)){
 }
 
 echo '</SELECT></TD></TR>';
-
+if (!isset($_POST['Cust'])) {
+	$_POST['Cust']='';
+}
+if (!isset($_POST['BranchCode'])) {
+	$_POST['BranchCode']='';
+}
 echo '<TR><TD>' . _('Customer Code') . ":</TD>
 	<TD><INPUT TYPE='Text' name='Cust' SIZE=10 MAXLENGTH=8 VALUE='" . $_POST['Cust'] . "'></TD></TR>";
 
@@ -405,42 +425,42 @@ echo '<TR><TD>' . _('Branch Code') . ":</TD>
 echo '<TR><TD>' . _('Reports Page Size') .":</TD>
 	<TD><SELECT name='PageSize'>";
 
-if($_POST['PageSize']=='A4'){
+if(isset($_POST['PageSize']) and $_POST['PageSize']=='A4'){
 	echo "<OPTION SELECTED Value='A4'>" . _('A4');
 } else {
 	echo "<OPTION Value='A4'>A4";
 }
 
-if($_POST['PageSize']=='A3'){
+if(isset($_POST['PageSize']) and $_POST['PageSize']=='A3'){
 	echo "<OPTION SELECTED Value='A3'>" . _('A3');
 } else {
 	echo "<OPTION Value='A3'>A3";
 }
 
-if($_POST['PageSize']=='A3_landscape'){
+if(isset($_POST['PageSize']) and $_POST['PageSize']=='A3_landscape'){
 	echo "<OPTION SELECTED Value='A3_landscape'>" . _('A3') . ' ' . _('landscape');
 } else {
 	echo "<OPTION Value='A3_landscape'>" . _('A3') . ' ' . _('landscape');
 }
 
-if($_POST['PageSize']=='letter'){
+if(isset($_POST['PageSize']) and $_POST['PageSize']=='letter'){
 	echo "<OPTION SELECTED Value='letter'>" . _('Letter');
 } else {
 	echo "<OPTION Value='letter'>" . _('Letter');
 }
 
-if($_POST['PageSize']=='letter_landscape'){
+if(isset($_POST['PageSize']) and $_POST['PageSize']=='letter_landscape'){
 	echo "<OPTION SELECTED Value='letter_landscape'>" . _('Letter') . ' ' . _('landscape');
 } else {
 	echo "<OPTION Value='letter_landscape'>" . _('Letter') . ' ' . _('landscape');
 }
 
-if($_POST['PageSize']=='legal'){
+if(isset($_POST['PageSize']) and $_POST['PageSize']=='legal'){
 	echo "<OPTION SELECTED Value='legal'>" . _('Legal');
 } else {
 	echo "<OPTION Value='legal'>" . _('Legal');
 }
-if($_POST['PageSize']=='legal_landscape'){
+if(isset($_POST['PageSize']) and $_POST['PageSize']=='legal_landscape'){
 	echo "<OPTION SELECTED Value='legal_landscape'>" . _('Legal') . ' ' . _('landscape');
 } else {
 	echo "<OPTION Value='legal_landscape'>" . _('Legal') . ' ' . _('landscape');
@@ -459,7 +479,7 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 
 	if (is_dir("css/$ThemeName") AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != 'CVS'){
 
-		if ($_POST['Theme'] == $ThemeName){
+		if (isset($_POST['Theme']) and $_POST['Theme'] == $ThemeName){
 			echo "<OPTION SELECTED VALUE='$ThemeName'>$ThemeName";
 		} else {
 			echo "<OPTION VALUE='$ThemeName'>$ThemeName";
@@ -481,7 +501,7 @@ while (false != ($LanguageEntry = $LangDirHandle->read())){
 
 	if (is_dir('locale/' . $LanguageEntry) AND $LanguageEntry != '..' AND $LanguageEntry != 'CVS' AND $LanguageEntry!='.'){
 
-		if ($_POST['Language'] == $LanguageEntry){
+		if (isset($_POST['Language']) and $_POST['Language'] == $LanguageEntry){
 			echo "<OPTION SELECTED VALUE='$LanguageEntry'>$LanguageEntry";
 		} else {
 			echo "<OPTION VALUE='$LanguageEntry'>$LanguageEntry";

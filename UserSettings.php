@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 $PageSecurity=1;
 
@@ -28,6 +28,7 @@ if (isset($_POST['Modify'])) {
 		prnMsg(_('Cannot change password in the demo or others would be locked out!'),'warn');
 	}
  */
+ 	$update_pw = 'N';
 	if ($_POST['pass'] != ''){
 		if ($_POST['pass'] != $_POST['passcheck']){
 			$InputError = 1;
@@ -100,7 +101,8 @@ echo '<CENTER><TABLE><TR><TD>' . _('User ID') . ':</TD><TD>';
 echo $_SESSION['UserID'] . '</TD></TR>';
 
 echo '<TR><TD>' . _('User Name') . ':</TD><TD>';
-echo $_SESSION['UsersRealName'] . '</TD></TR>';
+echo $_SESSION['UsersRealName'] . '</TD>
+		<INPUT TYPE="hidden" NAME="RealName" VALUE="'.$_SESSION['UsersRealName'].'"<TD></TR>';
 
 echo '<TR>
 	<TD>' . _('Maximum Number of Records to Display') . ":</TD>
