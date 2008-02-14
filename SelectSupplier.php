@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 $PageSecurity = 2;
 
@@ -86,6 +86,16 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 				FROM suppliers
 				WHERE supplierid " . LIKE  . " '%" . $_POST['SupplierCode'] . "%'
 				ORDER BY supplierid";
+		} else {
+			$SQL = "SELECT supplierid,
+					suppname,
+					currcode,
+					address1,
+					address2,
+					address3,
+					address4
+				FROM suppliers
+				ORDER BY supplierid";			
 		}
 	} //one of keywords or SupplierCode was more than a zero length string
 
