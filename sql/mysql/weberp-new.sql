@@ -47,15 +47,29 @@ CREATE TABLE `areas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Table structure for table `audittrail`
+--
+
+CREATE TABLE `audittrail` (
+	`transactiondate` datetime NOT NULL default '0000-00-00',
+	`userid` varchar(20) NOT NULL default '',
+	`querystring` text,
+	KEY `UserID` (`userid`),
+  CONSTRAINT `audittrail_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `www_users` (`userid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
 -- Table structure for table `bankaccounts`
 --
 
 CREATE TABLE `bankaccounts` (
   `accountcode` int(11) NOT NULL default '0',
+  `currcode` CHAR( 3 ) NOT NULL;
   `bankaccountname` char(50) NOT NULL default '',
   `bankaccountnumber` char(50) NOT NULL default '',
   `bankaddress` char(50) default NULL,
   PRIMARY KEY  (`accountcode`),
+  INDEX ( `currcode` ) ;
   KEY `BankAccountName` (`bankaccountname`),
   KEY `BankAccountNumber` (`bankaccountnumber`),
   CONSTRAINT `bankaccounts_ibfk_1` FOREIGN KEY (`accountcode`) REFERENCES `chartmaster` (`accountcode`)
@@ -72,7 +86,8 @@ CREATE TABLE `banktrans` (
   `bankact` int(11) NOT NULL default '0',
   `ref` varchar(50) NOT NULL default '',
   `amountcleared` double NOT NULL default '0',
-  `exrate` double NOT NULL default '1',
+  `exrate` DOUBLE NOT NULL DEFAULT '1' COMMENT 'From bank account currency to payment currency';
+  `functionalexrate` DOUBLE NOT NULL DEFAULT '1' COMMENT 'Account currency to functional currency';
   `transdate` date NOT NULL default '0000-00-00',
   `banktranstype` varchar(30) NOT NULL default '',
   `amount` double NOT NULL default '0',
@@ -554,6 +569,26 @@ CREATE TABLE `edimessageformat` (
   PRIMARY KEY  (`id`),
   UNIQUE KEY `PartnerCode` (`partnercode`,`messagetype`,`sequenceno`),
   KEY `Section` (`section`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `factorcompanies`
+--
+
+CREATE TABLE `factorcompanies` (
+  `id` int(11) NOT NULL auto_increment,
+  `coyname` varchar(50) NOT NULL default '',
+  `address1` varchar(40) NOT NULL default '',
+  `address2` varchar(40) NOT NULL default '',
+  `address3` varchar(40) NOT NULL default '',
+  `address4` varchar(40) NOT NULL default '',
+  `address5` varchar(20) NOT NULL default '',
+  `address6` varchar(15) NOT NULL default '',
+  `contact` varchar(25) NOT NULL default '',
+  `telephone` varchar(25) NOT NULL default '',
+  `fax` varchar(25) NOT NULL default '',
+  `email` varchar(55) NOT NULL default '',
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1227,7 +1262,7 @@ CREATE TABLE `salesorders` (
   `deladd5` varchar(20) NOT NULL default '',
   `deladd6` varchar(15) NOT NULL default '',
   `contactphone` varchar(25) default NULL,
-  `contactemail` varchar(25) default NULL,
+  `contactemail` varchar(40) default NULL,
   `deliverto` varchar(40) NOT NULL default '',
   `deliverblind` tinyint(1) default '1',
   `freightcost` double NOT NULL default '0',
@@ -1462,6 +1497,8 @@ CREATE TABLE `stockmaster` (
   `discountcategory` char(2) NOT NULL default '',
   `taxcatid` tinyint(4) NOT NULL default '1',
   `serialised` tinyint(4) NOT NULL default '0',
+  `appendfile` varchar(40) NOT NULL default 'none';
+  `perishable` tinyint(1) NOT NULL default 0;
   `decimalplaces` tinyint(4) NOT NULL default '0',
   `vtiger_productid` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`stockid`),
@@ -1541,6 +1578,7 @@ CREATE TABLE `stockserialitems` (
   `stockid` varchar(20) NOT NULL default '',
   `loccode` varchar(5) NOT NULL default '',
   `serialno` varchar(30) NOT NULL default '',
+  `expirationdate` datetime NOT NULL default '0000-00-00';
   `quantity` double NOT NULL default '0',
   PRIMARY KEY  (`stockid`,`serialno`,`loccode`),
   KEY `StockID` (`stockid`),
@@ -1628,6 +1666,7 @@ CREATE TABLE `suppliers` (
   `bankpartics` varchar(12) NOT NULL default '',
   `remittance` tinyint(4) NOT NULL default '1',
   `taxgroupid` tinyint(4) NOT NULL default '1',
+  `factorcompanyid` int(11) NOT NULL default 1;
   PRIMARY KEY  (`supplierid`),
   KEY `CurrCode` (`currcode`),
   KEY `PaymentTerms` (`paymentterms`),
@@ -1637,6 +1676,7 @@ CREATE TABLE `suppliers` (
   CONSTRAINT `suppliers_ibfk_1` FOREIGN KEY (`currcode`) REFERENCES `currencies` (`currabrev`),
   CONSTRAINT `suppliers_ibfk_2` FOREIGN KEY (`paymentterms`) REFERENCES `paymentterms` (`termsindicator`),
   CONSTRAINT `suppliers_ibfk_3` FOREIGN KEY (`taxgroupid`) REFERENCES `taxgroups` (`taxgroupid`)
+  CONSTRAINT `suppliers_ibfk_4` FOREIGN KEY (`factorcompanyid`) REFERENCES `factorcompanies` (`id`);
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1932,8 +1972,8 @@ INSERT INTO `accountgroups` VALUES ('Sales',1,1,10,'');
 -- Dumping data for table `bankaccounts`
 --
 
-INSERT INTO `bankaccounts` VALUES (1030,'Cheque Account','','');
-INSERT INTO `bankaccounts` VALUES (1040,'Savings Account','','');
+INSERT INTO `bankaccounts` VALUES (1030,'AUD','Cheque Account','','');
+INSERT INTO `bankaccounts` VALUES (1040,'AUD','Savings Account','','');
 
 --
 -- Dumping data for table `chartmaster`
@@ -2107,6 +2147,12 @@ INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',
 INSERT INTO `currencies` VALUES ('Swiss Francs','CHF','Swizerland','centimes',1);
 INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',0.8);
 INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',1);
+
+--
+-- Dumping data for table `factorcompanies`
+--
+
+INSERT INTO `factorcompanies` ( `id` , `coyname` ) VALUES (null, 'None');
 
 --
 -- Dumping data for table `holdreasons`
@@ -2405,6 +2451,7 @@ INSERT INTO `config` VALUES ('FreightTaxCategory','1');
 INSERT INTO `config` VALUES ('HTTPS_Only','0');
 INSERT INTO `config` VALUES ('InvoicePortraitFormat','0');
 INSERT INTO `config` VALUES ('MaxImageSize','300');
+INSERT INTO `config` VALUES ('MonthsAuditTrail', '1');
 INSERT INTO `config` VALUES ('NumberOfPeriodsOfStockUsage','12');
 INSERT INTO `config` VALUES ('OverChargeProportion','30');
 INSERT INTO `config` VALUES ('OverReceiveProportion','20');
@@ -2416,6 +2463,7 @@ INSERT INTO `config` VALUES ('PastDueDays2','60');
 INSERT INTO `config` VALUES ('PO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('ProhibitJournalsToControlAccounts','1');
 INSERT INTO `config` VALUES ('ProhibitPostingsBefore','2006-09-30');
+INSERT INTO `config` VALUES ('ProhibitNegativeStock','1');
 INSERT INTO `config` VALUES ('QuickEntries','10');
 INSERT INTO `config` VALUES ('RadioBeaconFileCounter','/home/RadioBeacon/FileCounter');
 INSERT INTO `config` VALUES ('RadioBeaconFTP_user_name','RadioBeacon ftp server user name');
