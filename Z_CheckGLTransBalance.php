@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -9,10 +9,10 @@ include('includes/header.inc');
 echo '<TABLE>';
 
 $Header = "<tr>
-		<td class='tableheader'>" . _('Type') . "</td>
-		<td class='tableheader'>" . _('Number') . "</td>
-		<td class='tableheader'>" . _('Period') . "</td>
-		<td class='tableheader'>" . _('Difference') . "</td>
+		<th>" . _('Type') . "</th>
+		<th>" . _('Number') . "</th>
+		<th>" . _('Period') . "</th>
+		<th>" . _('Difference') . "</th>
 		</tr>";
 
 echo $Header;

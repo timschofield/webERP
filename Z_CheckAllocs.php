@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*This page adds the total of allocation records and compares this to the recorded allocation total in DebtorTrans table */
 
 $PageSecurity = 2;
@@ -56,12 +56,12 @@ while ($myrow = DB_fetch_array($result)){
 	echo '<TABLE CELLPADDING=2 BORDER=2>';
 
 	$tableheader = "<TR>
-				<TD class='tableheader'>" . _('Type') . "</TD>
-				<TD class='tableheader'>" . _('Number') . "</TD>
-				<TD class='tableheader'>" . _('Reference') . "</TD>
-				<TD class='tableheader'>" . _('Ex Rate') . "</TD>
-				<TD class='tableheader'>" . _('Amount') . "</TD>
-				<TD class='tableheader'>" . _('Alloc') . "</TD></TR>";
+				<TH>" . _('Type') . "</TH>
+				<TH>" . _('Number') . "</TH>
+				<TH>" . _('Reference') . "</TH>
+				<TH>" . _('Ex Rate') . "</TH>
+				<TH>" . _('Amount') . "</TH>
+				<TH>" . _('Alloc') . "</TH></TR>";
 	echo $tableheader;
 
 	$RowCounter = 1;
@@ -71,10 +71,10 @@ while ($myrow = DB_fetch_array($result)){
 	while ($myrow1=DB_fetch_array($TransResult)) {
 
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 
