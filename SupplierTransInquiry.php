@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 $PageSecurity = 2;
 
@@ -74,23 +74,23 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 	}
 	$sql .=  " ORDER BY id";
 
-   $TransResult = DB_query($sql, $db,$ErrMsg,$DbgMsg);
+   $TransResult = DB_query($sql, $db);
    $ErrMsg = _('The supplier transactions for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg($db);
    $DbgMsg =  _('The SQL that failed was');
 
    echo '<TABLE CELLPADDING=2 BORDER=2>';
 
    $tableheader = "<TR>
-			<TD class='tableheader'>" . _('Type') . "</TD>
-			<TD class='tableheader'>" . _('Number') . "</TD>
-			<TD class='tableheader'>" . _('Supp Ref') . "</TD>
-			<TD class='tableheader'>" . _('Date') . "</TD>
-			<TD class='tableheader'>" . _('Supplier') . "</TD>
-			<TD class='tableheader'>" . _('Comments') . "</TD>
-			<TD class='tableheader'>" . _('Due Date') . "</TD>
-			<TD class='tableheader'>" . _('Ex Rate') . "</TD>
-			<TD class='tableheader'>" . _('Amount') . "</TD>
-			<TD class='tableheader'>" . _('Currency') . '</TD></TR>';
+			<TH>" . _('Type') . "</TH>
+			<TH>" . _('Number') . "</TH>
+			<TH>" . _('Supp Ref') . "</TH>
+			<TH>" . _('Date') . "</TH>
+			<TH>" . _('Supplier') . "</TH>
+			<TH>" . _('Comments') . "</TH>
+			<TH>" . _('Due Date') . "</TH>
+			<TH>" . _('Ex Rate') . "</TH>
+			<TH>" . _('Amount') . "</TH>
+			<TH>" . _('Currency') . '</TH></TR>';
 	echo $tableheader;
 
 	$RowCounter = 1;
@@ -99,10 +99,10 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 	while ($myrow=DB_fetch_array($TransResult)) {
 
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';;
 			$k++;
 		}
 

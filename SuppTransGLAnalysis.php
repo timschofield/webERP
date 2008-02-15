@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice or credit note
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing/crediting and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -25,7 +25,7 @@ if (!isset($_SESSION['SuppTrans'])){
 
 /*If the user hit the Add to transaction button then process this first before showing  all GL codes on the transaction otherwise it wouldnt show the latest addition*/
 
-if ($_POST['AddGLCodeToTrans'] == _('Enter GL Line')){
+if (isset($_POST['AddGLCodeToTrans']) and $_POST['AddGLCodeToTrans'] == _('Enter GL Line')){
 
 	$InputError = False;
 	if ($_POST['GLCode'] == ''){
@@ -85,11 +85,11 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 echo '<TABLE CELLPADDING=2>';
 
 $TableHeader = "<TR>
-		<TD CLASS='tableheader'>" . _('Account') . "</TD>
-		<TD CLASS='tableheader'>" . _('Name') . "</TD>
-		<TD CLASS='tableheader'>" . _('Amount') . '<BR>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TD>
-		<TD CLASS='tableheader'>" . _('Job') . "</TD>
-		<TD CLASS='tableheader'>" . _('Narrative') . '</TD>
+		<TH>" . _('Account') . "</TH>
+		<TH>" . _('Name') . "</TH>
+		<TH>" . _('Amount') . '<BR>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TH>
+		<TH>" . _('Job') . "</TH>
+		<TH>" . _('Narrative') . '</TH>
 		</TR>';
 echo $TableHeader;
 $TotalGLValue=0;
@@ -131,6 +131,9 @@ if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 
 echo '<TABLE>';
+if (!isset($_POST['GLCode'])) {
+	$_POST['GLCode']='';
+}
 echo '<TR>
 	<TD>' . _('Account Code') . ":</TD>
 	<TD><INPUT TYPE='Text' NAME='GLCode' SIZE=12 MAXLENGTH=11 VALUE=" .  $_POST['GLCode'] . '></TD>
@@ -156,11 +159,16 @@ while ($myrow = DB_fetch_array($result)) {
 echo '</SELECT>
 	</TD>
 	</TR>';
-
+if (!isset($_POST['Amount'])) {
+	$_POST['Amount']=0;
+}
 echo '<TR>
 	<TD>' . _('Amount') . ":</TD>
 	<TD><INPUT TYPE='Text' NAME='Amount' SIZE=12 MAXLENGTH=11 VALUE=" .  $_POST['Amount'] . '></TD>
 	</TR>';
+	if (!isset($_POST['JobRef'])) {
+		$_POST['JobRef']='';
+	}
 echo '<TR>
 	<TD>' . _('Contract Ref') . ":</TD>
 	<TD><INPUT TYPE='Text' NAME='JobRef' SIZE=21 MAXLENGTH=20 VALUE=" . $_POST['JobRef'] . ">";
@@ -170,6 +178,9 @@ echo '<TR>
 	  
 echo ' </TD>
 	</TR>';
+	if (!isset($_POST['Narrative'])) {
+		$_POST['Narrative']='';
+	}
 echo '<TR>
 	<TD>' . _('Narrative') . ":</TD>
 	<TD><TEXTAREA NAME='Narrative' COLS=40 ROWS=2>" .  $_POST['Narrative'] . '</TEXTAREA></TD>
