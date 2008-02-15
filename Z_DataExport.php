@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity=15;
 
@@ -537,7 +537,7 @@ if ( isset($_POST['pricelist']) ) {
 	echo "<BR><CENTER>";
 	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 	echo '<CENTER><TABLE>';
-	echo '<TR><TD colspan=2 class="tableheader" >' . _('Price List Export') . '</TD></TR>';
+	echo '<TR><TH colspan=2>' . _('Price List Export') . '</TH></TR>';
 	$sql = 'SELECT sales_type, typeabbrev FROM salestypes';
 	$SalesTypesResult=DB_query($sql,$db);
 	echo '<TR><TD>' . _('For Sales Type/Price List') . ':</TD>';
@@ -566,7 +566,7 @@ if ( isset($_POST['pricelist']) ) {
 	// Export Stock For Location
 	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 	echo '<CENTER><TABLE>';
-	echo '<TR><TD colspan=2 class="tableheader" >' . _('Customer List Export') . '</TD></TR>';
+	echo '<TR><TH colspan=2>' . _('Customer List Export') . '</TH></TR>';
 	
 	$sql = 'SELECT loccode, locationname FROM locations';
 	$SalesTypesResult=DB_query($sql,$db);
@@ -586,7 +586,7 @@ if ( isset($_POST['pricelist']) ) {
 	// Export Stock For Location
 	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 	echo '<CENTER><TABLE>';
-	echo '<TR><TD colspan=2 class="tableheader" >' . _('Salesman List Export') . '</TD></TR>';
+	echo '<TR><TH colspan=2>' . _('Salesman List Export') . '</TH></TR>';
 	echo "</TABLE>";
 	echo "<CENTER><input type='Submit' name='salesmanlist' value='" . _('Export') . "'></CENTER>";
 	echo "</FORM></CENTER><BR>";
@@ -594,7 +594,7 @@ if ( isset($_POST['pricelist']) ) {
 	// SELECT EXPORT FOR IMAGES
 	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 	echo '<CENTER><TABLE>';
-	echo '<TR><TD colspan=2 class="tableheader" >' . _('Image List Export') . '</TD></TR>';
+	echo '<TR><TH colspan=2>' . _('Image List Export') . '</TH></TR>';
 	echo "</TABLE>";
 	echo "<CENTER><input type='Submit' name='imagelist' value='" . _('Export') . "'></CENTER>";
 	echo "</FORM></CENTER><BR>";
@@ -602,7 +602,7 @@ if ( isset($_POST['pricelist']) ) {
 	// SELECT EXPORT SECURITY TOKENS
 	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 	echo '<CENTER><TABLE>';
-	echo '<TR><TD colspan=2 class="tableheader" >' . _('Security Token List Export') . '</TD></TR>';
+	echo '<TR><TH colspan=2>' . _('Security Token List Export') . '</TH></TR>';
 	echo "</TABLE>";
 	echo "<CENTER><input type='Submit' name='sectokenlist' value='" . _('Export') . "'></CENTER>";
 	echo "</FORM></CENTER><BR>";
@@ -610,7 +610,7 @@ if ( isset($_POST['pricelist']) ) {
 	// SELECT EXPORT SECURITY ROLES
 	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 	echo '<CENTER><TABLE>';
-	echo '<TR><TD colspan=2 class="tableheader" >' . _('Security Role List Export') . '</TD></TR>';
+	echo '<TR><TH colspan=2>' . _('Security Role List Export') . '</TH></TR>';
 	echo "</TABLE>";
 	echo "<CENTER><input type='Submit' name='secrolelist' value='" . _('Export') . "'></CENTER>";
 	echo "</FORM></CENTER><BR>";
@@ -618,7 +618,7 @@ if ( isset($_POST['pricelist']) ) {
 	// SELECT EXPORT SECURITY GROUPS
 	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 	echo '<CENTER><TABLE>';
-	echo '<TR><TD colspan=2 class="tableheader" >' . _('Security Group List Export') . '</TD></TR>';
+	echo '<TR><TH colspan=2>' . _('Security Group List Export') . '</TH></TR>';
 	echo "</TABLE>";
 	echo "<CENTER><input type='Submit' name='secgrouplist' value='" . _('Export') . "'></CENTER>";
 	echo "</FORM></CENTER><BR>";
@@ -626,7 +626,7 @@ if ( isset($_POST['pricelist']) ) {
 	// SELECT EXPORT SECURITY USERS
 	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . "?" . SID . ">";
 	echo '<CENTER><TABLE>';
-	echo '<TR><TD colspan=2 class="tableheader" >' . _('Security User List Export') . '</TD></TR>';
+	echo '<TR><TH colspan=2>' . _('Security User List Export') . '</TH></TR>';
 	echo "</TABLE>";
 	echo "<CENTER><input type='Submit' name='secuserlist' value='" . _('Export') . "'></CENTER>";
 	echo "</FORM></CENTER><BR>";

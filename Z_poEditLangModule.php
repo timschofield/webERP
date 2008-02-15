@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 /* Steve Kitchen */
 
@@ -129,16 +129,16 @@ if (isset($_POST['module'])) {
 		echo '<FORM METHOD="post" ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
 		echo '<TABLE>';
-		echo '<TR><TD CLASS="tableheader" ALIGN="center">' . _('Language File for') . ' "' . $_POST['language'] . '"</TD></TR>';
+		echo '<TR><TH ALIGN="center">' . _('Language File for') . ' "' . $_POST['language'] . '"</TH></TR>';
 		echo '<TR><TD ALIGN="center">' . _('Module') . ' "' . $_POST['module'] . '"</TD></TR>';
 		echo '<TR><TD></TD></TR>';
 		echo '<TR><TD>';
 
 		echo '<TABLE WIDTH="100%">';
 		echo '<TR>';
-		echo '<TD CLASS="tableheader">' . _('Default text') . '</TD>';
-		echo '<TD CLASS="tableheader">' . _('Translation') . '</TD>';
-		echo '<TD CLASS="tableheader">' . _('Exists in') . '</TD>';
+		echo '<TH>' . _('Default text') . '</TH>';
+		echo '<TH>' . _('Translation') . '</TH>';
+		echo '<TH>' . _('Exists in') . '</TH>';
 		echo '</TR>' . "\n";
 
 		for ($i=1; $i<=$TotalLines; $i++) {
@@ -154,7 +154,7 @@ if (isset($_POST['module'])) {
 				echo '<TD VALIGN="top"><INPUT TYPE="text" SIZE="60" NAME="moduletext_' . $msgstr[$i] . '" VALUE="' . $ModuleText[$i] . '"></TD>';
 				echo '<TD VALIGN="top">' . $AlsoIn[$i] . '<INPUT TYPE="hidden" NAME="msgstr_' . $msgstr[$i] . '" VALUE="' . $msgstr[$i] . '"></TD>';
 				echo '</TR>';
-				echo '<TR><TD CLASS="tableheader" COLSPAN="3"></TD></TR>';
+				echo '<TR><TH COLSPAN="3"></TH></TR>';
 			}
 
 		}

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 /* Steve Kitchen */
 
@@ -90,7 +90,7 @@ else
 	echo '<BR>';
 	echo '<FORM METHOD="post" ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 
-	echo '<TABLE><TR><TD CLASS="tableheader" COLSPAN="2" ALIGN="center">'. _('Language File Header for') . ' "' . $_POST['language'] . '"</TD></TR>';
+	echo '<TABLE><TR><TH" COLSPAN="2" ALIGN="center">'. _('Language File Header for') . ' "' . $_POST['language'] . '"</TH></TR>';
 	echo '<TR><TD COLSPAN="2"></TD></TR>';
 
 	for ($i=1; $i<=17; $i++) {
