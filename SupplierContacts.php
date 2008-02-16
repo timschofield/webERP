@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity=5;
 
@@ -138,11 +138,11 @@ if (!isset($SelectedContact)){
 	}
 
 	echo "<TABLE BORDER=1>\n";
-	echo "<TR><TD CLASS='tableheader'>" . _('Name') . "</TD>
-			<TD CLASS='tableheader'>" . _('Position') . "</TD>
-			<TD CLASS='tableheader'>" . _('Phone No') . "</TD>
-			<TD CLASS='tableheader'>" . _('Fax No') . "</TD><TD CLASS='tableheader'>" . _('Email') .
-			"</TD></TR>\n";
+	echo "<TR><TH>" . _('Name') . "</TH>
+			<TH>" . _('Position') . "</TH>
+			<TH>" . _('Phone No') . "</TH>
+			<TH>" . _('Fax No') . "</TH><TH>" . _('Email') .
+			"</TH></TR>\n";
 
 	do {
 		printf("<TR><TD>%s</TD>
@@ -211,9 +211,26 @@ if (! isset($_GET['delete'])) {
 		echo '<CENTER><TABLE><TR><TD>' . _('Contact') . ':</TD><TD>' . $_POST['Contact'] . '</TD></TR>';
 
 	} else { //end of if $SelectedContact only do the else when a new record is being entered
-
+		if (!isset($_POST['Contact'])) {
+			$_POST['Contact']='';
+		}
 		echo '<CENTER><TABLE><TR><TD>' . _('Contact Name') . ":</TD>
 				<TD><INPUT TYPE='Text' NAME='Contact' SIZE=41 MAXLENGTH=40 VALUE='" . $_POST['Contact'] . "'></TD></TR>";
+	}
+	if (!isset($_POST['Position'])) {
+		$_POST['Position']='';
+	}
+	if (!isset($_POST['Tel'])) {
+		$_POST['Tel']='';
+	}
+	if(!isset($_POST['Fax'])) {
+		$_POST['Fax']='';
+	}
+	if (!isset($_POST['Mobile'])) {
+		$_POST['Mobile']='';
+	}
+	if (!isset($_POST['Email'])) {
+		$_POST['Email'] = '';
 	}
 
 	echo "<INPUT TYPE=hidden NAME='SupplierID' VALUE='" . $SupplierID . "'>
