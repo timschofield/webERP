@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 2;
 
@@ -74,18 +74,18 @@ echo '<CENTER><TABLE CELLPADDING=2 BORDER=0>';
 
 if ($Serialised == 1){
 	$tableheader = "<TR>
-			<TD class='tableheader'>" . _('Serial Number') . "</TD>
-			<TD class='tableheader'>" . _('Serial Number') . "</TD>
-			<TD class='tableheader'>" . _('Serial Number') . "</TD>
+			<TH>" . _('Serial Number') . "</TH>
+			<TH>" . _('Serial Number') . "</TH>
+			<TH>" . _('Serial Number') . "</TH>
 			</TR>";
 } else {
 	$tableheader = "<TR>
-			<TD class='tableheader'>" . _('Batch/Bundle Ref') . "</TD>
-			<TD class='tableheader'>" . _('Quantity On Hand') . "</TD>
-			<TD class='tableheader'>" . _('Batch/Bundle Ref') . "</TD>
-			<TD class='tableheader'>" . _('Quantity On Hand') . "</TD>
-   			<TD class='tableheader'>" . _('Batch/Bundle Ref') . "</TD>
-			<TD class='tableheader'>" . _('Quantity On Hand') . "</TD>
+			<TH>" . _('Batch/Bundle Ref') . "</TH>
+			<TH>" . _('Quantity On Hand') . "</TH>
+			<TH>" . _('Batch/Bundle Ref') . "</TH>
+			<TH>" . _('Quantity On Hand') . "</TH>
+   			<TH>" . _('Batch/Bundle Ref') . "</TH>
+			<TH>" . _('Quantity On Hand') . "</TH>
 
    			</TR>";
 }

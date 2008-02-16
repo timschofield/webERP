@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 3;
 
@@ -65,17 +65,17 @@ if ($SN!='') {
 	} else {
 		echo '<h4>'. _('Details for Serial Item').': <b>'.$SN.'</b><br>'. _('Length').'='.strlen($SN).'</h4>';
 		echo '<TABLE BORDER=1>';
-		echo "<tr><td class='tableheader'>" . _('StockID') . "</td>
-			<td class='tableheader'>" . _('CurInvQty') . "</td>
-			<td class='tableheader'>" . _('Move Qty') . "</td>
-			<td class='tableheader'>" . _('Move Type') . "</td>
-			<td class='tableheader'>" . _('Trans #') . "</td>
-			<td class='tableheader'>" . _('Location') . "</td>
-			<td class='tableheader'>" . _('Date') . "</td>
-			<td class='tableheader'>" . _('DebtorNo') . "</td>
-			<td class='tableheader'>" . _('Branch') . "</td>
-			<td class='tableheader'>" . _('Move Ref') . "</td>
-			<td class='tableheader'>" . _('Total Move Qty') . "</td>
+		echo "<tr><th>" . _('StockID') . "</th>
+			<th>" . _('CurInvQty') . "</th>
+			<th>" . _('Move Qty') . "</th>
+			<th>" . _('Move Type') . "</th>
+			<th>" . _('Trans #') . "</th>
+			<th>" . _('Location') . "</th>
+			<th>" . _('Date') . "</th>
+			<th>" . _('DebtorNo') . "</th>
+			<th>" . _('Branch') . "</th>
+			<th>" . _('Move Ref') . "</th>
+			<th>" . _('Total Move Qty') . "</th>
 			</tr>";
 		while ($myrow=DB_fetch_row($result)) {
 			printf("<tr>
