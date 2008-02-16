@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.47 $ */
+/* $Revision: 1.48 $ */
 
 $PageSecurity = 11;
 
@@ -75,11 +75,11 @@ if (isset($Errors)) {
 	unset($Errors);
 }
 $Errors = array();
+$InputError = 0;
 
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
-	$InputError = 0;
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
@@ -549,7 +549,7 @@ if (!isset($StockID) or $StockID=='') {
 
 	echo '<TR><TD>'. _('Item Code'). ':</TD><TD><INPUT ' . (in_array('StockID',$Errors) ?  'class="inputerror"' : '' ) .'  TYPE="TEXT" NAME="StockID" SIZE=21 MAXLENGTH=20></TD></TR>'. "\n";
 
-} elseif (isset($InputError) and !isset($_POST['UpdateCategories']) and $InputError!=1) { // Must be modifying an existing item and no changes made yet
+} elseif (!isset($_POST['UpdateCategories']) and $InputError!=1) { // Must be modifying an existing item and no changes made yet
 
 	$sql = "SELECT stockid,
 			description,
