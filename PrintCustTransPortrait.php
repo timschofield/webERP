@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 1;
 
@@ -813,13 +813,13 @@ If (isset($PrintPDF)
 
 				if (DB_num_rows($result)>0){
 					echo "<TABLE WIDTH=100% CELLPADDING=5>
-						<TR><TD class='tableheader'>" . _('Item Code') . "</TD>
-						<TD class='tableheader'>" . _('Item Description') . "</TD>
-						<TD class='tableheader'>" . _('Quantity') . "</TD>
-						<TD class='tableheader'>" . _('Unit') . "</TD>
-						<TD class='tableheader'>" . _('Price') . "</TD>
-						<TD class='tableheader'>" . _('Discount') . "</TD>
-						<TD class='tableheader'>" . _('Net') . '</TD></TR>';
+						<TR><TH>" . _('Item Code') . "</TH>
+						<TH>" . _('Item Description') . "</TH>
+						<TH>" . _('Quantity') . "</TH>
+						<TH>" . _('Unit') . "</TH>
+						<TH>" . _('Price') . "</TH>
+						<TH>" . _('Discount') . "</TH>
+						<TH>" . _('Net') . '</TH></TR>';
 
 					$LineCounter =17;
 					$k=0;	//row colour counter
@@ -827,10 +827,10 @@ If (isset($PrintPDF)
 					while ($myrow2=DB_fetch_array($result)){
 
 					      if ($k==1){
-						  $RowStarter = "<tr bgcolor='#BBBBBB'>";
+						  $RowStarter = '<tr class="EvenTableRows">';
 						  $k=0;
 					      } else {
-						  $RowStarter = "<tr bgcolor='#EEEEEE'>";
+						  $RowStarter = '<tr class="OddTableRows">';
 						  $k=1;
 					      }
 
@@ -897,13 +897,13 @@ If (isset($PrintPDF)
 						    echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<BR>';
 						    echo '</TD><TD ALIGN=RIGHT>' . _('Page') . ": $PageNumber</TD></TR></TABLE>";
 						    echo "<TABLE WIDTH=100% CELLPADDING=5><TR>
-						    	<TD class='tableheader'>" . _('Item Code') . "</TD>
-							<TD class='tableheader'>" . _('Item Description') . "</TD>
-							<TD class='tableheader'>" . _('Quantity') . "</TD>
-							<TD class='tableheader'>" . _('Unit') . "</TD>
-							<TD class='tableheader'>" . _('Price') . "</TD>
-							<TD class='tableheader'>" . _('Discount') . "</TD>
-							<TD class='tableheader'>" . _('Net') . "</TD></TR>";
+						    	<TH>" . _('Item Code') . "</TH>
+							<TH>" . _('Item Description') . "</TH>
+							<TH>" . _('Quantity') . "</TH>
+							<TH>" . _('Unit') . "</TH>
+							<TH>" . _('Price') . "</TH>
+							<TH>" . _('Discount') . "</TH>
+							<TH>" . _('Net') . "</TH></TR>";
 
 						    $LineCounter = 10;
 
@@ -942,13 +942,13 @@ If (isset($PrintPDF)
 					echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<BR>';
 					echo '</TD><TD ALIGN=RIGHT>' . _('Page') . ": $PageNumber</TD></TR></TABLE>";
 					echo "<TABLE WIDTH=100% CELLPADDING=5><TR>
-						<TD class='tableheader'>" . _('Item Code') . "</TD>
-						<TD class='tableheader'>" . _('Item Description') . "</TD>
-						<TD class='tableheader'>" . _('Quantity') . "</TD>
-						<TD class='tableheader'>" . _('Unit') . "</TD>
-						<TD class='tableheader'>" . _('Price') . "</TD>
-						<TD class='tableheader'>" . _('Discount') . "</TD>
-						<TD class='tableheader'>" . _('Net') . '</TD></TR>';
+						<TH>" . _('Item Code') . "</TH>
+						<TH>" . _('Item Description') . "</TH>
+						<TH>" . _('Quantity') . "</TH>
+						<TH>" . _('Unit') . "</TH>
+						<TH>" . _('Price') . "</TH>
+						<TH>" . _('Discount') . "</TH>
+						<TH>" . _('Net') . '</TH></TR>';
 
 					$LineCounter = 10;
 				}
