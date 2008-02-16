@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 $PageSecurity = 1;
 
@@ -951,13 +951,13 @@ exit;
 						    echo _('Email') . ': ' . $_SESSION['CompanyRecord']['email'] . '<BR>';
 						    echo '</TD><TD ALIGN=RIGHT>' . _('Page') . ": $PageNumber</TD></TR></TABLE>";
 						    echo "<TABLE WIDTH=100% CELLPADDING=5><TR>
-						    	<TD class='tableheader'>" . _('Item Code') . "</TD>
-							<TD class='tableheader'>" . _('Item Description') . "</TD>
-							<TD class='tableheader'>" . _('Quantity') . "</TD>
-							<TD class='tableheader'>" . _('Unit') . "</TD>
-							<TD class='tableheader'>" . _('Price') . "</TD>
-							<TD class='tableheader'>" . _('Discount') . "</TD>
-							<TD class='tableheader'>" . _('Net') . "</TD></TR>";
+						    	<TH>" . _('Item Code') . "</TH>
+							<TH>" . _('Item Description') . "</TH>
+							<TH>" . _('Quantity') . "</TH>
+							<TH>" . _('Unit') . "</TH>
+							<TH>" . _('Price') . "</TH>
+							<TH>" . _('Discount') . "</TH>
+							<TH>" . _('Net') . "</TH></TR>";
 
 						    $LineCounter = 10;
 
