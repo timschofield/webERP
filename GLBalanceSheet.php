@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 /*Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions */
 
@@ -346,16 +346,16 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 
 	if ($_POST['Detail']=='Detailed'){
 		$TableHeader = "<TR>
-				<TD class='tableheader'>"._('Account')."</TD>
-				<TD class='tableheader'>"._('Account Name')."</TD>
-				<TD COLSPAN=2 class='tableheader' ALIGN=CENTER>$BalanceDate</TD>
-				<TD COLSPAN=2 class='tableheader' ALIGN=CENTER>"._('Last Year').'</TD>
+				<TH>"._('Account')."</TD>
+				<TH>"._('Account Name')."</TD>
+				<TH COLSPAN=2 ALIGN=CENTER>$BalanceDate</TH>
+				<TH COLSPAN=2 ALIGN=CENTER>"._('Last Year').'</TH>
 				</TR>';
 	} else { /*summary */
 		$TableHeader = "<TR>
-				<TD COLSPAN=2 class='tableheader'></TD>
-				<TD COLSPAN=2 class='tableheader' ALIGN=CENTER>$BalanceDate</TD>
-				<TD COLSPAN=2 class='tableheader' ALIGN=CENTER>"._('Last Year').'</TD>
+				<TH COLSPAN=2></TH>
+				<TH COLSPAN=2 ALIGN=CENTER>$BalanceDate</TH>
+				<TH COLSPAN=2 ALIGN=CENTER>"._('Last Year').'</TH>
 				</TR>';
 	}
 
@@ -517,10 +517,10 @@ if (! isset($_POST['BalancePeriodEnd']) OR isset($_POST['SelectADifferentPeriod'
 		if ($_POST['Detail']=='Detailed'){
 
 			if ($k==1){
-				echo "<tr bgcolor='#CCCCCC'>";
+				echo '<tr class="EvenTableRows">';
 				$k=0;
 			} else {
-				echo "<tr bgcolor='#EEEEEE'>";
+				echo '<tr class="EvenTableRows">';
 				$k++;
 			}
 

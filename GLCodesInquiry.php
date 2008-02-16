@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 8;
 include ('includes/session.inc');
@@ -23,9 +23,9 @@ $AccountsResult = DB_query($SQL,$db,$ErrMsg);
 
 echo "<CENTER><TABLE CELLPADDING=2 COLSPAN=2>
 		<TR>
-			<TD class='tableheader'>"._('Group')."</FONT></TD>
-			<TD class='tableheader'>"._('Code')."</FONT></TD>
-			<TD class='tableheader'>"._('Account Name').'</FONT></TD>
+			<TH>"._('Group')."</FONT></TH>
+			<TH>"._('Code')."</FONT></TH>
+			<TH>"._('Account Name').'</FONT></TH>
 		</TR>';
 
 $j = 1;
@@ -34,10 +34,10 @@ $ActGrp ='';
 
 while ($myrow=DB_fetch_array($AccountsResult)) {
        if ($k==1){
-              echo "<tr bgcolor='#CCCCCC'>";
+              echo '<tr class="EvenTableRows">';
               $k=0;
        } else {
-              echo "<tr bgcolor='#EEEEEE'>";
+              echo '<tr class="OddTableRows">';
               $k++;
        }
 
@@ -61,9 +61,9 @@ while ($myrow=DB_fetch_array($AccountsResult)) {
        $j++;
        If ($j == 18){
               $j=1;
-              echo "<TR><TD class='tableheader'>"._('Group')."</FONT></TD>
-	      		<TD class='tableheader'>"._('Code')."</FONT></TD>
-			<TD class='tableheader'>"._('Account Name').'</FONT></TD></TR>';
+              echo "<TR><TH>"._('Group')."</FONT></TH>
+	      		<TH>"._('Code')."</FONT></TH>
+			<TH>"._('Account Name').'</FONT></TH></TR>';
        }
 }
 //end of while loop
