@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 /*
 	This page can be called with...
@@ -458,13 +458,13 @@ if (isset($_POST['AllocTrans'])){
    /*Now display the potential and existing allocations put into the array above */
 
         echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>';
-	  	  $TableHeader = "<TR><TD CLASS='tableheader'>" . _('Type') . "</TD>
-		 			<TD CLASS='tableheader'>" . _('Trans') . '<BR>' . _('Number') . "</TD>
-					<TD CLASS='tableheader'>" . _('Trans') .'<BR>' . _('Date') . "</TD>
-					<TD CLASS='tableheader'>" . _('Supp') . '<BR>' . _('Ref') . "</TD>
-					<TD CLASS='tableheader'>" . _('Total') . '<BR>' . _('Amount') .	"</TD>
-					<TD CLASS='tableheader'>" . _('Yet to') . '<BR>' . _('Allocate') . "</TD>
-					<TD CLASS='tableheader'>" . _('This') . '<BR>' . _('Allocation') . '</TD></TR>';
+	  	  $TableHeader = "<TR><TH>" . _('Type') . "</TH>
+		 			<TH>" . _('Trans') . '<BR>' . _('Number') . "</TH>
+					<TH>" . _('Trans') .'<BR>' . _('Date') . "</TH>
+					<TH>" . _('Supp') . '<BR>' . _('Ref') . "</TH>
+					<TH>" . _('Total') . '<BR>' . _('Amount') .	"</TH>
+					<TH>" . _('Yet to') . '<BR>' . _('Allocate') . "</TH>
+					<TH>" . _('This') . '<BR>' . _('Allocation') . '</TH></TR>';
         $k = 0;
 	$Counter = 0;
 	$RowCounter = 0;
@@ -475,10 +475,10 @@ if (isset($_POST['AllocTrans'])){
 	    /*Alternate the background colour for each potential allocation line */
 
 	    if ($k == 1){
-		    echo "<TR BGCOLOR='#CCCCCC'>";
+		    echo '<TR CLASS="EvenTableRows">';
 		    $k = 0;
 	    } else {
-		    echo "<TR BGCOLOR='#EEEEEE'>";
+		    echo '<TR CLASS="OddTableRows">';
 		    $k = 1;
 	    }
 	    $RowCounter++;
@@ -569,12 +569,12 @@ if (isset($_POST['AllocTrans'])){
   }
   echo '<CENTER><TABLE>';
 
-  $TableHeader = "<TR><TD CLASS='tableheader'>" . _('Trans Type') .
-		"</TD><TD CLASS='tableheader'>" . _('Supplier') .
-		"</TD><TD CLASS='tableheader'>" . _('Number') .
-		"</TD><TD CLASS='tableheader'>" . _('Date') .
-		"</TD><TD CLASS='tableheader'>" . _('Total') .
-		"</TD><TD CLASS='tableheader'>" . _('To Alloc') . "</TD></TR>\n";
+  $TableHeader = "<TR><TH>" . _('Trans Type') .
+		"</TH><TH>" . _('Supplier') .
+		"</TH><TH>" . _('Number') .
+		"</TH><TH>" . _('Date') .
+		"</TH><TH>" . _('Total') .
+		"</TH><TH>" . _('To Alloc') . "</TH></TR>\n";
 
   echo $TableHeader;
 
@@ -584,10 +584,10 @@ if (isset($_POST['AllocTrans'])){
   $k = 0; //row colour counter
   while ($myrow = DB_fetch_array($result)) {
 	if ($k == 1){
-		echo "<TR BGCOLOR='#CCCCCC'>";
+		echo '<TR CLASS="EvenTableRows">';
 		$k = 0;
 	} else {
-		echo "<TR BGCOLOR='#EEEEEE'>";
+		echo '<TR CLASS="OddTableRows">';
 		$k = 1;
 	}
 
@@ -607,12 +607,6 @@ if (isset($_POST['AllocTrans'])){
 		$myrow['total']-$myrow['alloc'],
 		$_SERVER['PHP_SELF'] . "?" . SID,
 		$myrow['id']);
-
-	$RowCounter++;
-	if ($RowCounter == 20){
-		echo $TableHeader;
-		$RowCounter = 0;
-	}
 
   }
 
@@ -645,12 +639,12 @@ if (isset($_POST['AllocTrans'])){
   $result = DB_query($sql, $db);
 
   echo '<CENTER><TABLE>';
-  $TableHeader = "<TR><TD CLASS='tableheader'>" . _('Trans Type') . "</TD>
-  		<TD CLASS='tableheader'>" . _('Supplier') . "</TD>
-  		<TD CLASS='tableheader'>" . _('Number') . "</TD>
-  		<TD CLASS='tableheader'>" . _('Date') . "</TD>
-  		<TD CLASS='tableheader'>" . _('Total') . "</TD>
-  		<TD CLASS='tableheader'>" . _('To Alloc') . "</TD></TR>\n";
+  $TableHeader = "<TR><TH>" . _('Trans Type') . "</TH>
+  		<TH>" . _('Supplier') . "</TH>
+  		<TH>" . _('Number') . "</TH>
+  		<TH>" . _('Date') . "</TH>
+  		<TH>" . _('Total') . "</TH>
+  		<TH>" . _('To Alloc') . "</TH></TR>\n";
 
   echo $TableHeader;
 
@@ -660,10 +654,10 @@ if (isset($_POST['AllocTrans'])){
   $RowCounter = 0;
   while ($myrow = DB_fetch_array($result)) {
 	if ($k == 1){
-		echo "<TR BGCOLOR='#CCCCCC'>";
+		echo '<TR CLASS="EvenTableRows">';
 		$k = 0;
 	} else {
-		echo "<TR BGCOLOR='#EEEEEE'>";
+		echo '<TR CLASS="OddTableRows">';
 		$k = 1;
 	}
 
@@ -684,11 +678,6 @@ if (isset($_POST['AllocTrans'])){
 		$_SERVER['PHP_SELF'] . "?" . SID,
 		$myrow['id']);
 
-	$RowCounter++;
-	if ($RowCounter == 20){
-		echo $TableHeader;
-		$RowCounter = 0;
-	}
 
   }  //END WHILE LIST LOOP
 
