@@ -64,12 +64,12 @@ CREATE TABLE `audittrail` (
 
 CREATE TABLE `bankaccounts` (
   `accountcode` int(11) NOT NULL default '0',
-  `currcode` CHAR( 3 ) NOT NULL;
+  `currcode` CHAR( 3 ) NOT NULL,
   `bankaccountname` char(50) NOT NULL default '',
   `bankaccountnumber` char(50) NOT NULL default '',
   `bankaddress` char(50) default NULL,
   PRIMARY KEY  (`accountcode`),
-  INDEX ( `currcode` ) ;
+  INDEX ( `currcode` ) ,
   KEY `BankAccountName` (`bankaccountname`),
   KEY `BankAccountNumber` (`bankaccountnumber`),
   CONSTRAINT `bankaccounts_ibfk_1` FOREIGN KEY (`accountcode`) REFERENCES `chartmaster` (`accountcode`)
@@ -86,8 +86,8 @@ CREATE TABLE `banktrans` (
   `bankact` int(11) NOT NULL default '0',
   `ref` varchar(50) NOT NULL default '',
   `amountcleared` double NOT NULL default '0',
-  `exrate` DOUBLE NOT NULL DEFAULT '1' COMMENT 'From bank account currency to payment currency';
-  `functionalexrate` DOUBLE NOT NULL DEFAULT '1' COMMENT 'Account currency to functional currency';
+  `exrate` DOUBLE NOT NULL DEFAULT '1' COMMENT 'From bank account currency to payment currency',
+  `functionalexrate` DOUBLE NOT NULL DEFAULT '1' COMMENT 'Account currency to functional currency',
   `transdate` date NOT NULL default '0000-00-00',
   `banktranstype` varchar(30) NOT NULL default '',
   `amount` double NOT NULL default '0',
@@ -1497,8 +1497,8 @@ CREATE TABLE `stockmaster` (
   `discountcategory` char(2) NOT NULL default '',
   `taxcatid` tinyint(4) NOT NULL default '1',
   `serialised` tinyint(4) NOT NULL default '0',
-  `appendfile` varchar(40) NOT NULL default 'none';
-  `perishable` tinyint(1) NOT NULL default 0;
+  `appendfile` varchar(40) NOT NULL default 'none',
+  `perishable` tinyint(1) NOT NULL default 0,
   `decimalplaces` tinyint(4) NOT NULL default '0',
   `vtiger_productid` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`stockid`),
@@ -1578,7 +1578,7 @@ CREATE TABLE `stockserialitems` (
   `stockid` varchar(20) NOT NULL default '',
   `loccode` varchar(5) NOT NULL default '',
   `serialno` varchar(30) NOT NULL default '',
-  `expirationdate` datetime NOT NULL default '0000-00-00';
+  `expirationdate` datetime NOT NULL default '0000-00-00',
   `quantity` double NOT NULL default '0',
   PRIMARY KEY  (`stockid`,`serialno`,`loccode`),
   KEY `StockID` (`stockid`),
@@ -1666,7 +1666,7 @@ CREATE TABLE `suppliers` (
   `bankpartics` varchar(12) NOT NULL default '',
   `remittance` tinyint(4) NOT NULL default '1',
   `taxgroupid` tinyint(4) NOT NULL default '1',
-  `factorcompanyid` int(11) NOT NULL default 1;
+  `factorcompanyid` int(11) NOT NULL default 1,
   PRIMARY KEY  (`supplierid`),
   KEY `CurrCode` (`currcode`),
   KEY `PaymentTerms` (`paymentterms`),
@@ -1675,8 +1675,8 @@ CREATE TABLE `suppliers` (
   KEY `taxgroupid` (`taxgroupid`),
   CONSTRAINT `suppliers_ibfk_1` FOREIGN KEY (`currcode`) REFERENCES `currencies` (`currabrev`),
   CONSTRAINT `suppliers_ibfk_2` FOREIGN KEY (`paymentterms`) REFERENCES `paymentterms` (`termsindicator`),
-  CONSTRAINT `suppliers_ibfk_3` FOREIGN KEY (`taxgroupid`) REFERENCES `taxgroups` (`taxgroupid`)
-  CONSTRAINT `suppliers_ibfk_4` FOREIGN KEY (`factorcompanyid`) REFERENCES `factorcompanies` (`id`);
+  CONSTRAINT `suppliers_ibfk_3` FOREIGN KEY (`taxgroupid`) REFERENCES `taxgroups` (`taxgroupid`),
+  CONSTRAINT `suppliers_ibfk_4` FOREIGN KEY (`factorcompanyid`) REFERENCES `factorcompanies` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2211,6 +2211,7 @@ INSERT INTO `systypes` VALUES (29,'Work Order Variance',1);
 INSERT INTO `systypes` VALUES (30,'Sales Order',6);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',26);
 INSERT INTO `systypes` VALUES (35,'Cost Update',14);
+INSERT INTO `systypes` VALUES ('36', 'Exchange Difference', '1');
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
 INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',0);
 
