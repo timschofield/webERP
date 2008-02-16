@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 /*This page can be called with
 
 1. A DebtorTrans ID
@@ -394,13 +394,13 @@ if (isset($_POST['AllocTrans'])){
    /*Now display the potential and existing allocations put into the array above */
 
    	$TableHeader = "<TR>
-				<TD class='tableheader'>"._('Type')."</TD>
-				<TD class='tableheader'>"._('Trans').'<BR>'._('Number')."</TD>
-				<TD class='tableheader'>"._('Trans').'<BR>'._('Date')."</TD>
-				<TD class='tableheader'>"._('Total').'<BR>'._('Amount')."</TD>
-				<TD class='tableheader'>"._('Yet to').'<BR>'._('Allocate')."</TD>
-				<TD class='tableheader'>"._('This').'<BR>'._('Allocation')."</TD>
-				<TD class='tableheader'>"._('Running').'<BR>'._('Balance')."</TD>
+				<TH>"._('Type')."</TH>
+				<TH>"._('Trans').'<BR>'._('Number')."</TH>
+				<TH>"._('Trans').'<BR>'._('Date')."</TH>
+				<TH>"._('Total').'<BR>'._('Amount')."</TH>
+				<TH>"._('Yet to').'<BR>'._('Allocate')."</TH>
+				<TH>"._('This').'<BR>'._('Allocation')."</TH>
+				<TH>"._('Running').'<BR>'._('Balance')."</TH>
 			</TR>";
 
         echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>';
@@ -420,10 +420,10 @@ if (isset($_POST['AllocTrans'])){
 
 	    /*Alternate the background colour for each potential allocation line */
 	    if ($k==1){
-		  echo "<tr bgcolor='#CCCCCC'>";
+		  echo '<tr class="EvenTableRows">';
 		  $k=0;
 	    } else {
-		  echo "<tr bgcolor='#EEEEEE'>";
+		  echo '<tr class="OddTableRows">';
 		  $k=1;
 	    }
 	    $YetToAlloc = ($AllocnItem->TransAmount - $AllocnItem->PrevAlloc);
@@ -508,12 +508,12 @@ if (isset($_POST['AllocTrans'])){
   }
   echo '<CENTER><table>';
   echo "<tr>
-  		<td class='tableheader'>"._('Trans Type')."</td>
-		<td class='tableheader'>"._('Customer')."</td>
-		<td class='tableheader'>"._('Number')."</td>
-		<td class='tableheader'>"._('Date')."</td>
-		<td class='tableheader'>"._('Total')."</td>
-		<td class='tableheader'>"._('To Alloc')."</td>
+  		<th>"._('Trans Type')."</th>
+		<th>"._('Customer')."</th>
+		<th>"._('Number')."</th>
+		<th>"._('Date')."</th>
+		<th>"._('Total')."</th>
+		<th>"._('To Alloc')."</th>
 		</tr><BR>";
   /* set up table of TransType - Customer - Trans No - Date - Total - Left to alloc  */
 
@@ -521,10 +521,10 @@ if (isset($_POST['AllocTrans'])){
 
   while ($myrow = DB_fetch_array($result)) {
 	if ($k==1){
-		echo "<tr bgcolor='#CCCCCC'>";
+		echo '<tr class="EvenTableRows">';
 		$k=0;
 	} else {
-		echo "<tr bgcolor='#EEEEEE'>";
+		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
 
@@ -576,13 +576,13 @@ if (isset($_POST['AllocTrans'])){
 
   echo '<CENTER><table>';
   echo "<tr>
-  		<td class='tableheader'>"._('Trans Type')."</td>
-		<td class='tableheader'>"._('Customer')."</td>
-	    <td class='tableheader'>"._('Cust No.')."</td>
-		<td class='tableheader'>"._('Number')."</td>
-		<td class='tableheader'>"._('Date')."</td>
-		<td class='tableheader'>"._('Total')."</td>
-		<td class='tableheader'>"._('To Alloc')."</td>
+  		<th>"._('Trans Type')."</th>
+		<th>"._('Customer')."</th>
+	    <th>"._('Cust No.')."</th>
+		<th>"._('Number')."</th>
+		<th>"._('Date')."</th>
+		<th>"._('Total')."</th>
+		<th>"._('To Alloc')."</th>
 	</tr><BR>";
   /* set up table of Tran Type - Customer - Trans No - Date - Total - Left to alloc  */
 
@@ -590,10 +590,10 @@ if (isset($_POST['AllocTrans'])){
 
   while ($myrow = DB_fetch_array($result)) {
 	if ($k==1){
-		echo "<tr bgcolor='#CCCCCC'>";
+		echo '<tr class="EvenTableRows">';
 		$k=0;
 	} else {
-		echo "<tr bgcolor='#EEEEEE'>";
+		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
 
