@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 /*This page is very largely the same as the SupplierInvoice.php script
 the same result could have been acheived by using if statements in that script and just having the one
@@ -129,6 +129,10 @@ if (isset($_POST['ExRate'])){
 	}
 
 	$_SESSION['SuppTrans']->SuppReference = $_POST['SuppReference'];
+	
+	if (!isset($_POST['OvAmount'])) {
+		$_POST['OvAmount'] = 0;
+	}
 
 	if ( $_SESSION['SuppTrans']->GLLink_Creditors == 1){
 
@@ -160,7 +164,7 @@ if the link is not active then OvAmount must be entered manually. */
 	}
 }
 
-if ($_POST['GRNS'] == _('Enter Credit Against Goods Recd')){
+if (isset($_POST['GRNS']) and $_POST['GRNS'] == _('Enter Credit Against Goods Recd')){
 
 	/*This ensures that any changes in the page are stored in the session before calling the grn page */
 
@@ -184,7 +188,7 @@ if (isset($_POST['Shipts'])){
 	include('includes/footer.inc');
 	exit;
 }
-if ($_POST['GL'] == _('Enter General Ledger Analysis')){
+if (isset($_POST['GL']) and $_POST['GL'] == _('Enter General Ledger Analysis')){
 
 	/*This ensures that any changes in the page are stored in the session before calling the shipments page */
 
@@ -199,10 +203,10 @@ if ($_POST['GL'] == _('Enter General Ledger Analysis')){
 /* everything below here only do if a Supplier is selected
    fisrt add a header to show who we are making an credit note for */
 
-echo "<CENTER><TABLE BORDER=2 COLSPAN=4><TR><TD CLASS='tableheader'>" . _('Supplier') . "</TD>
-				<TD CLASS='tableheader'>" . _('Currency') . "</TD>
-				<TD CLASS='tableheader'>" . _('Terms') . "</TD>
-				<TD CLASS='tableheader'>" . _('Tax Group') . '</TD></TR>';
+echo "<CENTER><TABLE BORDER=2 COLSPAN=4><TR><TH>" . _('Supplier') . "</TH>
+				<TH>" . _('Currency') . "</TH>
+				<TH>" . _('Terms') . "</TH>
+				<TH>" . _('Tax Group') . '</TH></TR>';
 
 echo '<TR><TD><FONT COLOR=blue><B>' . $_SESSION['SuppTrans']->SupplierID . ' - ' .
 	  $_SESSION['SuppTrans']->SupplierName . '</B></FONT></TD>
@@ -241,12 +245,12 @@ if (count($_SESSION['SuppTrans']->GRNs)>0){   /*if there are some GRNs selected 
 	Note that the class for carrying GRNs refers to quantity invoiced read credited in this context*/
 
 	echo '<TABLE CELLPADDING=2>';
-	$TableHeader = "<TR><TD CLASS='tableheader'>" . _('GRN') . "</TD>
-				<TD CLASS='tableheader'>" . _('Item Code') . "</TD>
-				<TD CLASS='tableheader'>" . _('Description') . "</TD>
-				<TD CLASS='tableheader'>" . _('Quantity') . '<BR>' . _('Credited') . "</TD>
-				<TD CLASS='tableheader'>" . _('Price Credited') . '<BR>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TD>
-				<TD CLASS='tableheader'>" . _('Line Total') . '<BR>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TD></TR>';
+	$TableHeader = "<TR><TH>" . _('GRN') . "</TH>
+				<TH>" . _('Item Code') . "</TH>
+				<TH>" . _('Description') . "</TH>
+				<TH>" . _('Quantity') . '<BR>' . _('Credited') . "</TH>
+				<TH>" . _('Price Credited') . '<BR>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TH>
+				<TH>" . _('Line Total') . '<BR>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TH></TR>';
 	echo $TableHeader;
 	$TotalGRNValue=0;
 
@@ -262,11 +266,6 @@ if (count($_SESSION['SuppTrans']->GRNs)>0){   /*if there are some GRNs selected 
 
 		$TotalGRNValue = $TotalGRNValue + ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv);
 
-		$i++;
-		if ($i>15){
-			$i=0;
-			echo $TableHeader;
-		}
 	}
 
 	echo '<TR><TD COLSPAN=5 ALIGN=RIGHT><FONT COLOR=red>' . _('Total Value of Goods Credited') . ':</FONT></TD>
@@ -276,11 +275,13 @@ if (count($_SESSION['SuppTrans']->GRNs)>0){   /*if there are some GRNs selected 
 
 if (count($_SESSION['SuppTrans']->Shipts)>0){   /*if there are any Shipment charges on the credit note*/
 
-	echo "<TABLE CELLPADDING=2><TR><TD CLASS='tableheader'>" . _('Shipment') . "</TD>
-				<TD CLASS='tableheader'>" .  _('Credit Amount') . '</B></TD></TR>';
+	echo "<TABLE CELLPADDING=2><TR><TH>" . _('Shipment') . "</TH>
+				<TH>" .  _('Credit Amount') . '</B></TH></TR>';
 
 	$TotalShiptValue=0;
-
+	
+	$i=0;
+	
 	foreach ($_SESSION['SuppTrans']->Shipts as $EnteredShiptRef){
 
 		echo '<TR><TD>' . $EnteredShiptRef->ShiptRef . '</TD><TD ALIGN=RIGHT>' .
@@ -288,12 +289,6 @@ if (count($_SESSION['SuppTrans']->Shipts)>0){   /*if there are any Shipment char
 
 		$TotalShiptValue = $TotalShiptValue + $EnteredShiptRef->Amount;
 
-		$i++;
-		if ($i>15){
-			$i=0;
-			echo "<TR><TD CLASS='tableheader'>" . _('Shipment') . "</TD><TD class='tableheader'>" .
-				  _('Credit Amount') . '</TD></TR>';
-		}
 	}
 
 	echo '<TR><TD COLSPAN=2 ALIGN=RIGHT><FONT SIZE=4 COLOR=red>' . _('Total Credited Against Shipments') .  ':</FONT></TD>
@@ -304,12 +299,12 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors ==1){
 
 	if (count($_SESSION['SuppTrans']->GLCodes)>0){
 		echo '<TABLE CELLPADDING=2>';
-		$TableHeader = "<TR><TD CLASS='tableheader'>" . _('Account') . "</TD>
-					<TD CLASS='tableheader'>" . _('Name') . "</TD>
-					<TD CLASS='tableheader'>" . _('Amount') . '<BR>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TD>
-					<TD CLASS='tableheader'>" . _('Shipment') . "</TD>
-					<TD CLASS='tableheader'>" . _('Job') . "</TD>
-					<TD CLASS='tableheader'>" . _('Narrative') . '</TD></TR>';
+		$TableHeader = "<TR><TH>" . _('Account') . "</TH>
+					<TH>" . _('Name') . "</TH>
+					<TH>" . _('Amount') . '<BR>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TH>
+					<TH>" . _('Shipment') . "</TH>
+					<TH>" . _('Job') . "</TH>
+					<TH>" . _('Narrative') . '</TH></TR>';
 		echo $TableHeader;
 
 		$TotalGLValue=0;
@@ -335,6 +330,16 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors ==1){
 		echo '<TR><TD COLSPAN=2 ALIGN=RIGHT><FONT SIZE=4 COLOR=red>' . _('Total') . ':</FONT></TD>
 			<TD ALIGN=RIGHT><FONT SIZE=4 COLOR=red><U>' . number_format($TotalGLValue,2) . '</U></FONT></TD>
 			</TR></TABLE>';
+	}
+	
+	if (!isset($TotalGRNValue)) {
+		$TotalGRNValue=0;
+	}
+	if (!isset($TotalGLValue)) {
+		$TotalGLValue=0;
+	}
+	if (!isset($TotalShiptValue)) {
+		$TotalShiptValue=0;
 	}
 
 	$_SESSION['SuppTrans']->OvAmount = round($TotalGRNValue + $TotalGLValue + $TotalShiptValue,2);
