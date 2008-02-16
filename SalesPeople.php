@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 3;
 
@@ -167,13 +167,13 @@ or deletion of the records*/
 	$result = DB_query($sql,$db);
 
 	echo '<CENTER><TABLE BORDER=1>';
-	echo "<tr><td class='tableheader'>" . _('Code') . "</td>
-		<td class='tableheader'>" . _('Name') . "</td>
-		<td class='tableheader'>" . _('Telephone') . "</td>
-		<td class='tableheader'>" . _('Facsimile') . "</td>
-		<td class='tableheader'>" . _('Comm Rate 1') . "</td>
-		<td class='tableheader'>" . _('Break') . "</td>
-		<td class='tableheader'>" . _('Comm Rate 2') . "</td></tr>";
+	echo "<tr><th>" . _('Code') . "</th>
+		<th>" . _('Name') . "</th>
+		<th>" . _('Telephone') . "</th>
+		<th>" . _('Facsimile') . "</th>
+		<th>" . _('Comm Rate 1') . "</th>
+		<th>" . _('Break') . "</th>
+		<th>" . _('Comm Rate 2') . "</th></tr>";
 
 	while ($myrow=DB_fetch_row($result)) {
 
