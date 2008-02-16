@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 /*
 date validation and parsing functions
@@ -119,10 +119,10 @@ function DayOfWeekFromSQLDate($DateEntry) {
 // gives next year end.
 
 function YearEndDate($MonthNo, $YearIncrement) {
-	if (Date("m") > $MonthNo) {
-		$Year = Date("Y")+1+$YearIncrement;
+	if (Date('m') > $MonthNo) {
+		$Year = Date('Y')+1+$YearIncrement;
 	} else {
-		$Year = Date("Y")+$YearIncrement;
+		$Year = Date('Y')+$YearIncrement;
 	}
 	Return mktime(0,0,0,$MonthNo+1,0,$Year);	
 }

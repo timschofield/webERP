@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 7;
 
@@ -14,67 +14,70 @@ echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 
 if (is_numeric($_POST['DoExchangeDifference']) AND isset($_POST['PostExchangeDifference'])){
 	
-	if (!is_numeric($_POST['BankStatementBalance'])){
+	if (!is_numeric($_POST['BankStatmentBalance'])){
 		prnMsg(_('The entry in the bank statement balance is not numeric. The balance on the bank statement should be entered. The exchange difference has not been calculated and no general ledger journal has been created'),'warn');
+		echo '<P>' . $_POST['BankStatmentBalance'];
 	} else {
 		/* Now need to get the currency of the account and the current table ex rate */
-		$SQL = 'SELECT rate 
+		$SQL = 'SELECT rate, bankaccountname 
 						FROM bankaccounts INNER JOIN currencies
 						ON bankaccounts.currcode=currencies.currabrev
 				WHERE bankaccounts.accountcode = ' . $_POST['BankAccount'];
+				
 		$ErrMsg = _('Could not retrieve the exchange rate for the selected bank account');
 		$CurrencyResult = DB_query($SQL,$db);
 		$CurrencyRow =  DB_fetch_row($CurrencyResult);
 		$ExRate = $CurrencyRow[0];
+		$BankAccountName = $CurrencyRow[1];
 		$CalculatedBalance = $_POST['DoExchangeDifference'];
 		
-		$ExchangeDifference = ($CalculatedBalance - $_POST['BankStatmentBalance'])/$ExRate;
+		$ExchangeDifference = ($CalculatedBalance - $_POST['BankStatmentBalance'])*$ExRate;
+		
+		include ('includes/SQL_CommonFunctions.inc');
+		$ExDiffTransNo = GetNextTransNo(36,$db);
+		/*Post the exchange difference to the last day of the month prior to current date*/
+		$PostingDate = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, Date('m'), 0,Date('Y')));
+		$PeriodNo = GetPeriod($PostingDate,$db);
 		$result = DB_query('BEGIN',$db);
-
-
-
-
-
 
 //yet to code the journal
 				
 		$SQL = 'INSERT INTO gltrans (type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount) 
-						  VALUES (12,
-							' . $_SESSION['ReceiptBatch']->BatchNo . ",
-							'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
-							" . $PeriodNo . ',
-							' . $ReceiptItem->GLCode . ",
-							'" . DB_escape_string($ReceiptItem->Narrative) . "',
-							" . -($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate) . ')';
-		$ErrMsg = _('Cannot insert a GL entry for the receipt because');
-		$DbgMsg = _('The SQL that failed to insert the receipt GL entry was');
+									typeno,
+									trandate,
+									periodno,
+									account,
+									narrative,
+									amount) 
+								  VALUES (36,
+									' . $ExDiffTransNo . ",
+									'" . FormatDateForSQL($PostingDate) . "',
+									" . $PeriodNo . ',
+									' . $_SESSION['CompanyRecord']['exchangediffact'] . ",
+									'" . $BankAccountName . ' ' . _('reconciliation on') . ' ' . Date($_SESSION['DefaultDateFormat']) . "'," . $ExchangeDifference . ')';
+									
+		$ErrMsg = _('Cannot insert a GL entry for the exchange difference because');
+		$DbgMsg = _('The SQL that failed to insert the exchange difference GL entry was');
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 		$SQL = 'INSERT INTO gltrans (type,
-							typeno,
-							trandate,
-							periodno,
-							account,
-							narrative,
-							amount) 
-						  VALUES (12,
-							' . $_SESSION['ReceiptBatch']->BatchNo . ",
-							'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
-							" . $PeriodNo . ',
-							' . $ReceiptItem->GLCode . ",
-							'" . DB_escape_string($ReceiptItem->Narrative) . "',
-							" . -($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate) . ')';
-		$ErrMsg = _('Cannot insert a GL entry for the receipt because');
-		$DbgMsg = _('The SQL that failed to insert the receipt GL entry was');
+									typeno,
+									trandate,
+									periodno,
+									account,
+									narrative,
+									amount) 
+								  VALUES (36,
+									' . $ExDiffTransNo . ",
+									'" . FormatDateForSQL($PostingDate) . "',
+									" . $PeriodNo . ',
+									' . $_POST['BankAccount'] . ",
+									'" . $BankAccountName . ' ' . _('reconciliation on') . ' ' . Date($_SESSION['DefaultDateFormat']) . "',
+									" . (-$ExchangeDifference) . ')';
+		
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 		
 		$result = DB_query('COMMIT',$db);					
-		
+		prnMsg(_('Exchange difference of') . ' ' . number_format($ExchangeDifference,2) . ' ' . _('has been posted'),'success');
 	} //end if the bank statment balance was numeric
 }
 
@@ -116,12 +119,11 @@ echo '</table><p><input type=submit name="ShowRec" value="' . _('Show bank recon
 if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 
 /*Get the balance of the bank account concerned */
-
+	
 	$sql = 'SELECT MAX(period) FROM chartdetails WHERE accountcode=' . $_POST['BankAccount'];
 	$PrdResult = DB_query($sql, $db);
 	$myrow = DB_fetch_row($PrdResult);
 	$LastPeriod = $myrow[0];
-
 
 	$SQL = 'SELECT bfwd+actual AS balance 
 				FROM chartdetails WHERE period=' . $LastPeriod . ' AND accountcode=' . $_POST['BankAccount'];
@@ -296,7 +298,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	}
 	//end of while loop
 	echo '<tr></tr><tr><td colspan=6>' . _('Total of all uncleared deposits') . '</td><td align=right>' . number_format($TotalUnclearedDeposits,2) . '</td></tr>';
-	$FXStatementBalance = ($Balance/$ExRate) - $TotalUnpresentedCheques -$TotalUnclearedDeposits);
+	$FXStatementBalance = ($Balance/$ExRate) - $TotalUnpresentedCheques -$TotalUnclearedDeposits;
 	echo '<tr></tr><tr><td colspan=6><b>' . _('Bank statement balance should be') . ' (' . $BankCurrCode . ')</b></td><td align=right>' . number_format($FXStatementBalance,2) . '</TD></TR>';
 	
 	if (isset($_POST['DoExchangeDifference'])){
@@ -307,13 +309,17 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 		
 	}
 
+
+
+	if ($_SESSION['CompanyRecord']['currencydefault']!=$BankCurrCode AND !isset($_POST['DoExchangeDifference'])){
+	
+		echo '<tr><td colspan=7><hr></td></tr>
+				<tr><td colspan=7>' . _('It is normal for foreign currency accounts to have exchange differences that need to be reflected as the exchange rate varies. This reconciliation is prepared using the exchange rate set up in the currencies table (see the set-up tab). This table must be maintained with the current exchange rate before running the reconciliation. If you wish to create a journal to reflect the exchange difference based on the current exchange rate to correct the reconciliation to the actual bank statment balance click below.') . '</td></tr>';
+		echo '<tr><td colspan=7 align="center"><input type=submit name="DoExchangeDifference" value="' . _('Calculate and Post Exchange Difference') . '"></td></tr>';
+	}	
 	echo '</table></center>';
 }
-if ($_SESSION['CompanyRecord']['currencydefault']!=$BankCurrCode AND !isset($_POST['DoExchangeDifference'])){
-	
-	echo '<p>' . _('It is normal for foreign currency accounts to have exchange differences that need to be reflected as the exchange rate varies. This reconciliation is prepared using the exchange rate set up in the currencies table (see the set-up tab). This table must be maintained with the current exchange rate before running the reconciliation. If you wish to create a journal to reflect the exchange difference based on the current exchange rate to correct the reconciliation to the actual bank statment balance click below.');
-	echo '<p><input type=submit name="DoExchangeDifference" value="' . _('Calculate and Post Exchange Difference') . '">';
-}	
+
 echo '<p><a href="' . $rootpath . '/BankMatching.php?' . SID . '&Type=Payments">' . _('Match off cleared payments') . '</a>';
 echo '<br><a href="' . $rootpath . '/BankMatching.php?' . SID . '&Type=Receipts">' . _('Match off cleared deposits') . '</a>';
 echo '</form>';

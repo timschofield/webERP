@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 5;
 
@@ -29,7 +29,7 @@ if (!isset($_SESSION['PaymentDetail'])){
 	$_SESSION['PaymentDetail']->GLItemCounter = 1;
 }
 
-echo "<a href='" . $rootpath . '/selectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</a><BR>';
+echo "<a href='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</a><BR>';
 
 if (isset($_GET['SupplierID'])){
 	/*The page was called with a supplierID check it is valid and default the inputs for Supplier Name and currency of payment */
@@ -575,10 +575,10 @@ if (isset($_POST['CommitBatch'])){
    }
 
    /*Make sure the same receipt is not double processed by a page refresh */
-   $Cancel = 1;
+   $_POST['Cancel'] = 1;
 }
 
-if (isset($Cancel)){
+if (isset($_POST['Cancel'])){
    unset($_POST['GLAmount']);
    unset($_POST['GLNarrative']);
    unset($_POST['GLCode']);
@@ -635,12 +635,12 @@ echo ' ' . _('on') . ' ' . $_SESSION['PaymentDetail']->DatePaid . '</FONT>';
 
 echo '<P><table>';
 
-$SQL = "SELECT bankaccountname,
+$SQL = 'SELECT bankaccountname,
 		bankaccounts.accountcode,
 		bankaccounts.currcode
-	FROM bankaccounts,
+		FROM bankaccounts,
 		chartmaster
-	WHERE bankaccounts.accountcode=chartmaster.accountcode";
+		WHERE bankaccounts.accountcode=chartmaster.accountcode';
 
 $ErrMsg = _('The bank accounts could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve the bank acconts was');
@@ -769,7 +769,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 /* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
 	echo '<table width=100% border=1><tr>
-			<th>' . _('Amount') . '</th>
+			<th>' . _('Amount') . ' (' . $_SESSION['PaymentDetail']->Currency . ')</th>
 			<th>' . _('GL Account') . '</th>
 			<th>' . _('Narrative') . '</th>
 		</tr>';
@@ -796,7 +796,11 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 	echo '<tr><td>' . _('select GL Account') . ':</td>
 		<td><select name="GLCode">';
 
-	$SQL = "select accountcode, accountname FROM chartmaster ORDER BY accountcode";
+	$SQL = 'SELECT accountcode, 
+					accountname 
+			FROM chartmaster 
+			ORDER BY accountcode';
+			
 	$result=DB_query($SQL,$db);
 	if (DB_num_rows($result)==0){
 	   echo '</select></td></tr>';
@@ -812,7 +816,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 		echo '</select></td></tr>';
 	}
 	echo '<tr><td>' . _('GL Narrative') . ':</td><td><input type="text" name="GLNarrative" maxlength=50 size=52 value="' . $_POST['GLNarrative'] . '"></td></tr>';
-	echo '<tr><td>' . _('Amount') . ':</td><td><input type=Text Name="GLAmount" Maxlength=12 SIZE=12 VALUE=' . $_POST['GLAmount'] . '></td></tr>';
+	echo '<tr><td>' . _('Amount') . ' (' . $_SESSION['PaymentDetail']->Currency . '):</td><td><input type=Text Name="GLAmount" Maxlength=12 SIZE=12 VALUE=' . $_POST['GLAmount'] . '></td></tr>';
 	echo '</table>';
 	echo '<center><input type=submit name="Process" value="' . _('Accept') . '"><input type=submit name="Cancel" value="' . _('Cancel') . '"></center>';
 
@@ -821,7 +825,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 the fields for entry of receipt amt and disc */
 
 
-	echo '<table><tr><td>' . _('Amount of Payment') . ':</td>
+	echo '<table><tr><td>' . _('Amount of Payment') . ' ' . $_SESSION['PaymentDetail']->Currency . ':</td>
 					<td><input type="text" name="Amount" maxlength=12 size=13 value=' . $_SESSION['PaymentDetail']->Amount . '></td></tr>';
 
 	if (isset($_SESSION['PaymentDetail']->SupplierID)){ /*So it is a supplier payment so show the discount entry item */
