@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -14,7 +14,7 @@ include('includes/DefineSuppTransClass.php');
 include('includes/session.inc');
 $title = _('Enter Supplier Invoice Against Goods Received');
 include('includes/header.inc');
-
+$Complete=false;
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(_('To enter a supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier invoice must be clicked on'),'info');
 	echo "<BR><A HREF='$rootpath/SelectSupplier.php?" . SID ."'>" . _('Select A Supplier to Enter a Transaction For') . '</A>';
@@ -36,6 +36,11 @@ if (isset($_POST['AddPOToTrans']) AND $_POST['AddPOToTrans']!=''){
 
 if (isset($_POST['AddGRNToTrans'])){ /*adding a GRN to the invoice */
     foreach($_SESSION['SuppTransTmp']->GRNs as $GRNTmp) {
+    	if (isset($_POST['GRNNo_' . $GRNTmp->GRNNo])) {
+    		$_POST['GRNNo_' . $GRNTmp->GRNNo] = true;
+    	} else {
+    		$_POST['GRNNo_' . $GRNTmp->GRNNo] = false;
+    	}
         $Selected = $_POST['GRNNo_' . $GRNTmp->GRNNo];
         if ($Selected==True) {
 		    $_SESSION['SuppTrans']->Copy_GRN_To_Trans($GRNTmp);
@@ -100,12 +105,12 @@ echo '<CENTER><FONT SIZE=4 COLOR=BLUE>' . _('Invoiced Goods Received Selected');
 echo '<TABLE CELLPADDING=1>';
 
 $tableheader = "<TR BGCOLOR=#800000>
-			<TD class='tableheader'>" . _('Sequence') . " #</TD>
-			<TD class='tableheader'>" . _('Item Code') . "</TD>
-			<TD class='tableheader'>" . _('Description') . "</TD>
-			<TD class='tableheader'>" . _('Quantity Charged') . "</TD>
-			<TD class='tableheader'>" . _('Price Charge in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TD>
-			<TD class='tableheader'>" . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TD></TR>';
+			<TH>" . _('Sequence') . " #</TH>
+			<TH>" . _('Item Code') . "</TH>
+			<TH>" . _('Description') . "</TH>
+			<TH>" . _('Quantity Charged') . "</TH>
+			<TH>" . _('Price Charge in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TH>
+			<TH>" . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TH></TR>';
 
 echo $tableheader;
 
@@ -212,12 +217,12 @@ if (isset($_GET['Modify'])){
 	echo '<P><FONT SIZE=4 COLOR=BLUE><B>' . _('GRN Selected For Adding To A Purchase Invoice') . '</FONT></B>';
 	echo "<TABLE>
 		<TR BGCOLOR=#800000>
-			<TD class='tableheader'>" . _('Sequence') . " #</TD>
-			<TD class='tableheader'>" . _('Item') . "</TD>
-			<TD class='tableheader'>" . _('Qty Outstanding') . "</TD>
-			<TD class='tableheader'>" . _('Qty Invoiced') . "</TD>
-			<TD class='tableheader'>" . _('Order Price in') . ' ' .  $_SESSION['SuppTrans']->CurrCode . "</TD>
-			<TD class='tableheader'>" . _('Actual Price in') . ' ' .  $_SESSION['SuppTrans']->CurrCode . "</TD>
+			<TH>" . _('Sequence') . " #</TH>
+			<TH>" . _('Item') . "</TH>
+			<TH>" . _('Qty Outstanding') . "</TH>
+			<TH>" . _('Qty Invoiced') . "</TH>
+			<TH>" . _('Order Price in') . ' ' .  $_SESSION['SuppTrans']->CurrCode . "</TH>
+			<TH>" . _('Actual Price in') . ' ' .  $_SESSION['SuppTrans']->CurrCode . "</TH>
 		</TR>";
 
 	echo '<TR>
@@ -256,16 +261,16 @@ else {
         echo '<CENTER><FONT SIZE=4 COLOR=BLUE>' . _('Goods Received Yet to be Invoiced From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
         echo "<TABLE CELLPADDING=1 COLSPAN=7>";
 
-        $tableheader = "<TR BGCOLOR=#800000><TD class='tableheader'>" . _('Select') . "</TD>
-				<TD class='tableheader'>" . _('Sequence') . " #</TD>
-				<TD  class='tableheader'>" . _('Order') . "</TD>
-				<TD  class='tableheader'>" . _('Item Code') . "</TD>
-				<TD class='tableheader'>" . _('Description') . "</TD>
-				<TD class='tableheader'>" . _('Total Qty Received') . "</TD>
-				<TD class='tableheader'>" . _('Qty Already Invoiced') . "</TD>
-				<TD class='tableheader'>" . _('Qty Yet To Invoice') . "</TD>
-				<TD class='tableheader'>" . _('Order Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TD>
-				<TD class='tableheader'>" . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TD></TR>';
+        $tableheader = "<TR BGCOLOR=#800000><TH>" . _('Select') . "</TH>
+				<TH>" . _('Sequence') . " #</TH>
+				<TH>" . _('Order') . "</TH>
+				<TH>" . _('Item Code') . "</TH>
+				<TH>" . _('Description') . "</TH>
+				<TH>" . _('Total Qty Received') . "</TH>
+				<TH>" . _('Qty Already Invoiced') . "</TH>
+				<TH>" . _('Qty Yet To Invoice') . "</TH>
+				<TH>" . _('Order Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TH>
+				<TH>" . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TH></TR>';
 
         $i = 0;
         $POs = array();
@@ -273,7 +278,7 @@ else {
 
 		$_SESSION['SuppTransTmp']->GRNs[$GRNTmp->GRNNo]->This_QuantityInv = $GRNTmp->QtyRecd - $GRNTmp->Prev_QuantityInv;	
 
-		if ($POs[$GRNTmp->PONo] != $GRNTmp->PONo) {
+		if (isset($POs[$GRNTmp->PONo]) and $POs[$GRNTmp->PONo] != $GRNTmp->PONo) {
                 	$POs[$GRNTmp->PONo] = $GRNTmp->PONo;
                 	echo "<TR><TD><INPUT TYPE=Submit Name='AddPOToTrans' Value='" . $GRNTmp->PONo . "'></TD><TD COLSPAN=3>" . _('Add Whole PO to Invoice') . '</TD></TR>';
                 	$i = 0;
