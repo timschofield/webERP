@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 $PageSecurity = 3;
 
@@ -11,11 +11,16 @@ $title = _('Customer Maintenance');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
+if (isset($Errors)) {
+	unset($Errors);
+}
+$Errors = array();
 
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
+	$i=1;
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
@@ -23,58 +28,98 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs sensible
 
 	$_POST['DebtorNo'] = strtoupper($_POST['DebtorNo']);
-
-	if (strlen($_POST['CustName']) > 40 OR strlen($_POST['CustName'])==0) {
+	
+	$sql="SELECT COUNT(debtorno) FROM debtorsmaster WHERE debtorno='".$_POST['DebtorNo']."'";
+	$result=DB_query($sql,$db);
+	$myrow=DB_fetch_row($result);
+	if ($myrow[0]>0 and isset($_POST['New'])) {
+		$InputError = 1;
+		prnMsg( _('The customer number already exists in the database'),'error');		
+		$Errors[$i] = 'DebtorNo';
+		$i++;
+	} elseif (strlen($_POST['CustName']) > 40 OR strlen($_POST['CustName'])==0) {
 		$InputError = 1;
 		prnMsg( _('The customer name must be entered and be forty characters or less long'),'error');
+		$Errors[$i] = 'CustName';
+		$i++;
 	} elseif ($_SESSION['AutoDebtorNo']==0 AND strlen($_POST['DebtorNo']) ==0) {
 		$InputError = 1;
 		prnMsg( _('The debtor code cannot be empty'),'error');
+		$Errors[$i] = 'DebtorNo';
+		$i++;
 	} elseif ($_SESSION['AutoDebtorNo']==0 AND ContainsIllegalCharacters($_POST['DebtorNo'])) {
 		$InputError = 1;
 		prnMsg( _('The customer code cannot contain any of the following characters') . " . - ' & + \" " . _('or a space'),'error');
+		$Errors[$i] = 'DebtorNo';
+		$i++;
 //	} elseif (ContainsIllegalCharacters($_POST['Address1']) OR ContainsIllegalCharacters($_POST['Address2'])) {
 //		$InputError = 1;
 //		prnMsg( _('Lines of the address  must not contain illegal characters'),'error');
 	} elseif (strlen($_POST['Address1']) >40) {
 		$InputError = 1;
 		prnMsg( _('The Line 1 of the address must be forty characters or less long'),'error');
+		$Errors[$i] = 'Address1';
+		$i++;
 	} elseif (strlen($_POST['Address2']) >40) {
 		$InputError = 1;
 		prnMsg( _('The Line 2 of the address must be forty characters or less long'),'error');
+		$Errors[$i] = 'Address2';
+		$i++;
 	} elseif (strlen($_POST['Address3']) >40) {
 		$InputError = 1;
 		prnMsg( _('The Line 3 of the address must be forty characters or less long'),'error');
+		$Errors[$i] = 'Address3';
+		$i++;
 	} elseif (strlen($_POST['Address4']) >50) {
 		$InputError = 1;
 		prnMsg( _('The Line 4 of the address must be fifty characters or less long'),'error');
+		$Errors[$i] = 'Address4';
+		$i++;
 	} elseif (strlen($_POST['Address5']) >20) {
 		$InputError = 1;
 		prnMsg( _('The Line 5 of the address must be twenty characters or less long'),'error');
+		$Errors[$i] = 'Address5';
+		$i++;
 	} elseif (strlen($_POST['Address6']) >15) {
 		$InputError = 1;
 		prnMsg( _('The Line 6 of the address must be fifteen characters or less long'),'error');
-	} elseif (!is_double((double) $_POST['CreditLimit'])) {
+		$Errors[$i] = 'Address6';
+		$i++;
+	} elseif (!is_numeric($_POST['CreditLimit'])) {
 		$InputError = 1;
 		prnMsg( _('The credit limit must be numeric'),'error');
-	} elseif (!is_double((double) $_POST['PymtDiscount'])) {
+		$Errors[$i] = 'CreditLimit';
+		$i++;
+	} elseif (!is_numeric($_POST['PymtDiscount'])) {
 		$InputError = 1;
 		prnMsg( _('The payment discount must be numeric'),'error');
+		$Errors[$i] = 'PymtDiscount';
+		$i++;
 	} elseif (!is_date($_POST['ClientSince'])) {
 		$InputError = 1;
 		prnMsg( _('The customer since field must be a date in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
-	} elseif (!is_double((double) $_POST['Discount'])) {
+		$Errors[$i] = 'ClientSince';
+		$i++;
+	} elseif (!is_numeric($_POST['Discount'])) {
 		$InputError = 1;
 		prnMsg( _('The discount percentage must be numeric'),'error');
+		$Errors[$i] = 'Discount';
+		$i++;
 	} elseif ((double) $_POST['CreditLimit'] <0) {
 		$InputError = 1;
 		prnMsg( _('The credit limit must be a positive number'),'error');
+		$Errors[$i] = 'CreditLimit';
+		$i++;
 	} elseif (((double) $_POST['PymtDiscount']> 10) OR ((double) $_POST['PymtDiscount'] <0)) {
 		$InputError = 1;
 		prnMsg( _('The payment discount is expected to be less than 10% and greater than or equal to 0'),'error');
+		$Errors[$i] = 'PymtDiscount';
+		$i++;
 	} elseif (((double) $_POST['Discount']> 100) OR ((double) $_POST['Discount'] <0)) {
 		$InputError = 1;
 		prnMsg( _('The discount is expected to be less than 100% and greater than or equal to 0'),'error');
+		$Errors[$i] = 'Discount';
+		$i++;
 	}
 
 	if ($InputError !=1){
@@ -324,20 +369,20 @@ if (!isset($DebtorNo)) {
 		echo '<TR><TD>' . _('Customer Code') . ":</TD><TD><input type='Text' name='DebtorNo' SIZE=11 MAXLENGTH=10></TD></TR>";
 	}
 
-	echo '<TR><TD>' . _('Customer Name') . ":</TD>
-		<TD><input type='Text' name='CustName' SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 1') . ":</TD>
-		<TD><input type='Text' name='Address1' SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 2') . ":</TD>
-		<TD><input type='Text' name='Address2' SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 3') . ":</TD>
-		<TD><input type='Text' name='Address3' SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 4') . ":</TD>
-		<TD><input type='Text' name='Address4' SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 5') . ":</TD>
-		<TD><input type='Text' name='Address5' SIZE=22 MAXLENGTH=20></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 6') . ":</TD>
-		<TD><input type='Text' name='Address6' SIZE=17 MAXLENGTH=15></TD></TR>";
+	echo '<TR><TD>' . _('Customer Name') . ':</TD>
+		<TD><input type="Text" name="CustName" SIZE=42 MAXLENGTH=40></TD></TR>';
+	echo '<TR><TD>' . _('Address Line 1') . ':</TD>
+		<TD><input type="Text" name="Address1" SIZE=42 MAXLENGTH=40></TD></TR>';
+	echo '<TR><TD>' . _('Address Line 2') . ':</TD>
+		<TD><input type="Text" name="Address2" SIZE=42 MAXLENGTH=40></TD></TR>';
+	echo '<TR><TD>' . _('Address Line 3') . ':</TD>
+		<TD><input type="Text" name="Address3" SIZE=42 MAXLENGTH=40></TD></TR>';
+	echo '<TR><TD>' . _('Address Line 4') . ':</TD>
+		<TD><input type="Text" name="Address4" SIZE=42 MAXLENGTH=40></TD></TR>';
+	echo '<TR><TD>' . _('Address Line 5') . ':</TD>
+		<TD><input type="Text" name="Address5" SIZE=22 MAXLENGTH=20></TD></TR>';
+	echo '<TR><TD>' . _('Address Line 6') . ':</TD>
+		<TD><input type="Text" name="Address6" SIZE=17 MAXLENGTH=15></TD></TR>';
 
   echo '</TABLE></TD><TD><TABLE>';
 
@@ -510,25 +555,25 @@ if (!isset($DebtorNo)) {
 		/* if $AutoDebtorNo in config.php has not been set or if it has been set to a number less than one,
 		then provide an input box for the DebtorNo to manually assigned */
 		if ($_SESSION['AutoDebtorNo']== 0 )  {
-			echo '<TR><TD>' . _('Customer Code') . ":</TD>
-				<TD><input type='Text' name='DebtorNo' value='" . $DebtorNo . "' SIZE=12 MAXLENGTH=10></TD></TR>";
+			echo '<TR><TD>' . _('Customer Code') . ':</TD>
+				<TD><input ' . (in_array('DebtorNo',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="DebtorNo" value="' . $DebtorNo . '" SIZE=12 MAXLENGTH=10></TD></TR>';
 		}
 	}
 
 	echo '<TR><TD>' . _('Customer Name') . ':</TD>
-		<TD><input type="Text" name="CustName" value="' . $_POST['CustName'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
+		<TD><input ' . (in_array('CustName',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="CustName" value="' . $_POST['CustName'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
 	echo '<TR><TD>' . _('Address Line 1') . ':</TD>
-		<TD><input type="Text" name="Address1" SIZE=42 MAXLENGTH=40 value="' . $_POST['Address1'] . '"></TD></TR>';
+		<TD><input ' . (in_array('Address1',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Address1" SIZE=42 MAXLENGTH=40 value="' . $_POST['Address1'] . '"></TD></TR>';
 	echo '<TR><TD>' . _('Address Line 2') . ':</TD>
-		<TD><input type="Text" name="Address2" SIZE=42 MAXLENGTH=40 value="' . $_POST['Address2'] . '"></TD></TR>';
+		<TD><input ' . (in_array('Address2',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Address2" SIZE=42 MAXLENGTH=40 value="' . $_POST['Address2'] . '"></TD></TR>';
 	echo '<TR><TD>' . _('Address Line 3') . ':</TD>
-		<TD><input type="Text" name="Address3" SIZE=42 MAXLENGTH=40 value="' . $_POST['Address3'] . '"></TD></TR>';
+		<TD><input ' . (in_array('Address3',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Address3" SIZE=42 MAXLENGTH=40 value="' . $_POST['Address3'] . '"></TD></TR>';
 	echo '<TR><TD>' . _('Address Line 4') . ':</TD>
-		<TD><input type="Text" name="Address4" SIZE=42 MAXLENGTH=40 value="' . $_POST['Address4'] . '"></TD></TR>';
+		<TD><input ' . (in_array('Address4',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Address4" SIZE=42 MAXLENGTH=40 value="' . $_POST['Address4'] . '"></TD></TR>';
 	echo '<TR><TD>' . _('Address Line 5') . ':</TD>
-		<TD><input type="Text" name="Address5" SIZE=42 MAXLENGTH=40 value="' . $_POST['Address5'] . '"></TD></TR>';
+		<TD><input ' . (in_array('Address5',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Address5" SIZE=42 MAXLENGTH=40 value="' . $_POST['Address5'] . '"></TD></TR>';
 	echo '<TR><TD>' . _('Address Line 6') . ':</TD>
-		<TD><input type="Text" name="Address6" SIZE=42 MAXLENGTH=40 value="' . $_POST['Address6'] . '"></TD></TR>';
+		<TD><input ' . (in_array('Address6',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Address6" SIZE=42 MAXLENGTH=40 value="' . $_POST['Address6'] . '"></TD></TR>';
   echo '</TABLE></TD><TD><TABLE>';
 
 	$result=DB_query('SELECT typeabbrev, sales_type FROM salestypes ',$db);
@@ -546,18 +591,18 @@ if (!isset($DebtorNo)) {
 	DB_data_seek($result,0);
 
 	echo '</SELECT></TD></TR>
-		<TR><TD>' . _('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . "):</TD>
-			<TD><input type='Text' name='ClientSince' SIZE=12 MAXLENGTH=10 value=" . $_POST['ClientSince'] . '></TD></TR>';
-	echo '<TR><TD>' . _('Discount Percent') . ":</TD>
-		<TD><input type='Text' name='Discount' SIZE=5 MAXLENGTH=4 value=" . $_POST['Discount'] . '></TD></TR>';
-	echo '<TR><TD>' . _('Discount Code') . ":</TD>
-		<TD><input type='Text' name='DiscountCode' SIZE=3 MAXLENGTH=2 value='" . $_POST['DiscountCode'] . "'></TD></TR>";
-	echo '<TR><TD>' . _('Payment Discount Percent') . ":</TD>
-		<TD><input type='Text' name='PymtDiscount' SIZE=5 MAXLENGTH=4 value=" . $_POST['PymtDiscount'] . '></TD></TR>';
-	echo '<TR><TD>' . _('Credit Limit') . ":</TD>
-		<TD><input type='Text' name='CreditLimit' SIZE=16 MAXLENGTH=14 value=" . $_POST['CreditLimit'] . '></TD></TR>';
-	echo '<TR><TD>' . _('Tax Reference') . ":</TD>
-		<TD><input type='Text' name='TaxRef' SIZE=22 MAXLENGTH=20  value='" . $_POST['TaxRef'] . "'></TD></TR>";
+		<TR><TD>' . _('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</TD>
+			<TD><input ' . (in_array('ClientSince',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="ClientSince" SIZE=12 MAXLENGTH=10 value=' . $_POST['ClientSince'] . '></TD></TR>';
+	echo '<TR><TD>' . _('Discount Percent') . ':</TD>
+		<TD><input type="Text" name="Discount" SIZE=5 MAXLENGTH=4 value=' . $_POST['Discount'] . '></TD></TR>';
+	echo '<TR><TD>' . _('Discount Code') . ':</TD>
+		<TD><input ' . (in_array('DiscountCode',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="DiscountCode" SIZE=3 MAXLENGTH=2 value="' . $_POST['DiscountCode'] . '"></TD></TR>';
+	echo '<TR><TD>' . _('Payment Discount Percent') . ':</TD>
+		<TD><input ' . (in_array('PymtDiscount',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="PymtDiscount" SIZE=5 MAXLENGTH=4 value=' . $_POST['PymtDiscount'] . '></TD></TR>';
+	echo '<TR><TD>' . _('Credit Limit') . ':</TD>
+		<TD><input ' . (in_array('CreditLimit',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="CreditLimit" SIZE=16 MAXLENGTH=14 value=' . $_POST['CreditLimit'] . '></TD></TR>';
+	echo '<TR><TD>' . _('Tax Reference') . ':</TD>
+		<TD><input type="Text" name="TaxRef" SIZE=22 MAXLENGTH=20  value="' . $_POST['TaxRef'] . '"></TD></TR>';
 	$result=DB_query('SELECT terms, termsindicator FROM paymentterms',$db);
 
 	echo '<TR><TD>' . _('Payment Terms') . ":</TD>

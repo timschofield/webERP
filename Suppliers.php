@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 $PageSecurity = 5;
 
@@ -317,7 +317,15 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-
+	$sql="SELECT COUNT(supplierid) FROM suppliers WHERE supplierid='".$SupplierID."'";
+	$result=DB_query($sql,$db);
+	$myrow=DB_fetch_row($result);
+	if ($myrow[0]>0 and isset($_POST['New'])) {
+		$InputError = 1;
+		prnMsg( _('The supplier number already exists in the database'),'error');		
+		$Errors[$i] = 'ID';
+		$i++;
+	}
 	if (strlen($_POST['SuppName']) > 40 or strlen($_POST['SuppName']) == 0 or $_POST['SuppName'] == '') {
 		$InputError = 1;
 		prnMsg(_('The supplier name must be entered and be forty characters or less long'),'error');
@@ -666,7 +674,7 @@ if (!isset($SupplierID)) {
 	} else {
 	// its a new supplier being added
 		echo "<INPUT TYPE=HIDDEN NAME='New' VALUE='Yes'>";
-		echo '<TR><TD>' . _('Supplier Code') . ":</TD><TD><INPUT TYPE='text' NAME='SupplierID' VALUE='$SupplierID' SIZE=12 MAXLENGTH=10></TD></TR>";
+		echo '<TR><TD>' . _('Supplier Code') . ':</TD><TD><INPUT '.(in_array('ID',$Errors) ? 'class="inputerror"' : '').' TYPE="text" NAME="SupplierID" VALUE="' . $SupplierID . '" SIZE=12 MAXLENGTH=10></TD></TR>';
 	}
 
 	echo '<TR><TD>' . _('Supplier Name') . ':</TD><TD><INPUT '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' TYPE="text" NAME="SuppName" VALUE="' . $_POST['SuppName'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
