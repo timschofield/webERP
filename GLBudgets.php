@@ -171,10 +171,10 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 	echo '<TH ALIGN="RIGHT">'.number_format($LastYearBudget,2). '</TH>';
 	echo '<TH ALIGN="RIGHT"></TH>';
 	echo '<TH ALIGN="RIGHT">'.number_format($ThisYearActual,2). '</TH>';
-	echo '<TH ALIGN="RIGHT"><INPUT TYPE="TEXT" STYLE="text-align: right" SIZE=8 VALUE='.number_format($ThisYearBudget,2). '></TH>';
+	echo '<TH ALIGN="RIGHT">'.number_format($ThisYearBudget,2). '</TH>';
 	echo '<TH ALIGN="RIGHT"></TH>';
 	echo '<TH ALIGN="RIGHT">'.number_format($NextYearActual,2). '</TH>';
-	echo '<TH ALIGN="RIGHT"><INPUT TYPE="TEXT" STYLE="text-align: right" SIZE=8 VALUE='.number_format($NextYearBudget,2). '></TH></TR>';
+	echo '<TH ALIGN="RIGHT">'.number_format($NextYearBudget,2). '</TH></TR>';
 	echo '</TABLE>';
 	echo '<INPUT TYPE=HIDDEN NAME="SelectedAccount" VALUE='.$SelectedAccount.'>';
 	echo '</BR><INPUT TYPE=SUBMIT name=update value="' . _('Update') . '"></CENTER></FORM>';

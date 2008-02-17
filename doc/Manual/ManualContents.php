@@ -189,6 +189,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
               <UL>
                 <LI>Overview</LI>
                 <LI>Inventory System Features</LI>
+                <LI>Inventory Categories</LI>
                 <LI>Adding Inventory Items</LI>
                 <LI>Item Code</LI>
                 <LI>Part Descriptions</LI>

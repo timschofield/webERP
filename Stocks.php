@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.48 $ */
+/* $Revision: 1.49 $ */
 
 $PageSecurity = 11;
 
@@ -627,7 +627,7 @@ function select_files($dir, $label = '', $select_name = 'ItemPDF', $curr_val = '
 		if (isset($_POST['ItemPDF'])) {
 			$curr_val = $_POST['ItemPDF'];
 		} else {
-			$curr_val .=  "none";
+			$curr_val .=  'none';
 		}
 		while (false !== ($file = readdir($handle))) 
 		{ 
@@ -638,7 +638,7 @@ function select_files($dir, $label = '', $select_name = 'ItemPDF', $curr_val = '
 		foreach ($files as $val) { 
 			if (is_file($dir.$val)) { 
 				$mydir .= '<OPTION VALUE='.$val;
-				$mydir .= ($val == $curr_val) ? ' selected>' : ">"; 
+				$mydir .= ($val == $curr_val) ? ' selected>' : '>'; 
 				$mydir .= $val."\n"; 
 				$teller++; 
 			} 
@@ -650,7 +650,7 @@ function select_files($dir, $label = '', $select_name = 'ItemPDF', $curr_val = '
 if (!isset($_POST['ItemPDF'])) {
 	$_POST['ItemPDF'] = '';
 } 
-echo '<TR><TD>' . _('PDF attachment (.pdf)') . ':' . "\n</TD><TD>" . select_files("pdf_append//",'' , "ItemPDF", $_POST['ItemPDF'], "60") . '</td></tr>'. "\n";
+echo '<TR><TD>' . _('PDF attachment (.pdf)') . ':' . "\n</TD><TD>" . select_files('companies/' . $_SESSION['DatabaseName'] .'/pdf_append//','' , 'ItemPDF', $_POST['ItemPDF'], '60') . '</td></tr>'. "\n";
 
 // Add image upload for New Item  - by Ori
 echo '<tr><td>'. _('Image File (.jpg)') . ':</td><td><input type="file" id="ItemPicture" name="ItemPicture"></td></tr>';
@@ -659,7 +659,7 @@ echo '<tr><td>'. _('Image File (.jpg)') . ':</td><td><input type="file" id="Item
  echo '<tr><td>' . _('Category') . ':</td><td><select name="CategoryID" onChange="ReloadForm(this.form)">';
 // echo '<tr><td>' . _('Category') . ':</td><td><select name="CategoryID"">';
 
-$sql = "SELECT categoryid, categorydescription FROM stockcategory";
+$sql = 'SELECT categoryid, categorydescription FROM stockcategory';
 $ErrMsg = _('The stock categories could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve stock categories and failed was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
@@ -774,7 +774,7 @@ if ($_POST['Controlled']==0){
 if ($_POST['Controlled']==1){
 	echo '<OPTION SELECTED VALUE=1>' . _('Controlled');
 } else {
-	echo "<OPTION VALUE=1>" . _('Controlled');
+	echo '<OPTION VALUE=1>' . _('Controlled');
 }
 echo '</SELECT></TD></TR>';
 

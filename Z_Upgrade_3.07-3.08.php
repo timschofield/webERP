@@ -49,9 +49,6 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 	} //end of for loop around the lines of the sql script
 
 
-	/*Now run the data conversions required. */
-	$result = DB_query("UPDATE bankaccounts SET currcode='" . $_SESSION['CompanyRecord']['currencydefault'] . "'",$db);
-
 } /*Dont do upgrade */
 
 include('includes/footer.inc');

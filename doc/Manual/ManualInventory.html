@@ -3,7 +3,7 @@
 <br><br>
 <font size="+2"><b>Overview</b></font>
 <br><br>
-In many cases due to the English background of the developer, Inventory is referred to as stock, which can be confusing to some. The word stock is used interchangeably with Inventory throughout.
+In many cases due to the English background of the developer, Inventory is referred to as "stock", which can be confusing to some. The word "stock" is used interchangeably with "inventory" throughout.
 <br><br>
 Inventories fall into clear categories particular to the business. For example a toy factory might have categories for lego, rideons, board games etc . These are referred to as stock categories and are expected to be defined by the business. The name of the category (but not its code) can be altered at any time. 
 <br><br>
@@ -13,9 +13,9 @@ Inventory invoiced using the invoicing option will decrease the stock on hand fr
 <br><br>
 A record of each stock movement is maintained, stock movements originating from sales invoices, purchase orders received, stock adjustments, sales credit notes can all be viewed using the inquiry of stock movements. Summing the stock movements provides an easy mechanism to see the historical usage and an inquiry is also available to show usage by month. 
 <br><br>
-Inventories are valued at standard cost. If general ledger stock integration is active, general ledger postings are created for stock adjustments, standard cost amendments, cost of sales and stock movements on invoicing and crediting. When stock journals are used, provided that the balance of the stock accounts agrees to the current valuation of the stock at the time when the flag is set in the company preferences page, then the value of stock held will be maintained in the general ledger, with a full trail of general ledger journals for each stock movement. This does make for a busy, but informative general ledger in a high use environment!
+Inventories can be valued at either standard cost (manually maintained costs) or weighted average cost (automatically maintained). If general ledger stock integration is active, general ledger postings are created for stock adjustments, standard cost amendments, cost of sales and stock movements on invoicing and crediting. When stock journals are used, provided that the balance of the stock accounts agrees to the current valuation of the stock at the time when the flag is set in the company preferences page, then the value of stock held will be maintained in the general ledger, with a full trail of general ledger journals for each stock movement. This does make for a busy, but informative general ledger in a high use environment!
 <br><br>
-Note: Inventory journals are optional. The sales ledger/accounts receivable interface is separate to the stock general ledger interface.
+Note: Inventory journals are optional. The sales ledger/accounts receivable interface is separate to the stock general ledger interface so it is possible to have sales posting to the general ledger but not the inventory and cost of sales aspect.
 <br><br>
 <font size="+2"><b>Inventory System Features</b></font>
 <br><br>
@@ -27,6 +27,9 @@ Note: Inventory journals are optional. The sales ledger/accounts receivable inte
 <li>Allows Dummy stock items which can be invoiced, priced, costed but with no stock record maintained for items such as labour or services.
 <li>Kit-set parts can be defined. An order for a kit-set part explodes into the components defined for the parts at the predefined quantities as extended by the number of the kit set item ordered. These component quantities are then available on the order for modification by the user.
 <li>Assembly parts can be defined in a similar way to kit sets. These parts exist only for ordering, invoicing and sales analysis. No stock balance is maintained, instead the quantities of the components are updated in proportion to the quantity defined in the assembly.
+<li>Each inventory category can have an unlimited number of properties. Each item of that category can then record its value for each property. Like additional fields depending on the type of inventory.
+<li>Inventory can be set to serialised - where each item of inventory requires its own serial number.
+<li>Inventory can be set to batch controlled - where each batch/lot of inventory of an item must refer to a batch or lot reference
 <li>Invoice and credit note inquiries are inked to stock movements so the detail of items sold on an invoice can be queried.
 <li>Standard cost maintained and valuation reports
 <li>Inventory usage by month inquiry by location and overall
@@ -36,6 +39,34 @@ Note: Inventory journals are optional. The sales ledger/accounts receivable inte
 
 <!-- Help Begin: Stocks -->
 
+<font size="+2"><b>Inventory Categories</b></font>
+<br><br>
+All items must refer to a single inventory category. Inventory categories are defined from:
+<br><br>
+Setup->Inventory Setup->Inventory Categories Maintenance
+<br><br>
+Their purpose is to group like items together and define key information once that refers to all items of the category - to maximise the efficiency of the data storage and to minimise the inputs required. The inventory category has the following fields:
+<ul>
+<li>Category code - up to 6 characters</li>
+<li>Description of the category - up to 20 characters</li>
+<li>The stock type - whether the category relates to service items, finished goods items or raw material items</li>
+<li>The general ledger code for the cost of stock of this category - each category can be maintained in a separate general ledger account if required - this of course is only useful if inventory is linked to the general ledger in the company preferences</li>
+<li>The general ledger code where the cost of stock adjustments - both quantity and cost adjustments - are posted for all items of this category</li>
+<li>The general ledger code where price varinces are posted to. Price variances are the differences between purchase cost of items and the inventory cost of an item of the category</li>
+<li>The general ledger code where material usage variances are posted to. These are the difference between what the bill of material expected the material cost of the item to be compared to the actual issued cost of materials. Material usage variances are realised and posted when manufacturing work orders are closed.</li>
+<li>The general ledger code where work in progress for the items of this category are coded to. This account is used only in manufacturing when there is a work order for an item of this category</li>
+</ul>
+The category then determines how inventory transactions are posted to the general ledger - all items in the same category are posted the same way.
+<br><br>
+In addition to the fields above, any number of "properties" can be defined for an inventory category. These can be considered like user defined fields for items setup to be part of the category. e.g. In the demo data we have a category for air-conditioners - we are interested in maintaining certain additional information about air conditioners such as:
+<ul>
+<li>Output cooling</li>
+<li>Output heating</li>
+<li>Noise dB inside unit</li>
+<li>etc .....</li>
+</ul>
+These fields are not relavent to other inventory categories. When category properties are defined - there are options to define the inputs of the fields - they can be simply a text box, a check box or a combo box with the values pre-defined as a comma separated list. When a user comes to define an item these new fields (properties) will display on the item entry page.
+<br><br>
 <font size="+2"><b>Adding Inventory Items</b></font>
 <br><br>
 Entry of new items requires the input of certain base information:
@@ -50,7 +81,7 @@ Entry of the base information is done from the menu, select the inventory tab an
 <br><br>
 <font size="+1"><b>Item Code</b></font>
 <br><br>
-A stock code is required for each stock item, this can be any combination of characters up to 20 characters long. The coding structure of stock items should be considered, to ensure that like stock items appear together. Internally the system looks at the code to order stock items in the various look up tables. A systematic approach to naming stock items can save a lot of time later. Under supplier purchasing data it is also possible to record the supplier's part number against an item.
+A stock code is required for each stock item, this can be any combination of characters up to 20 characters long. The coding structure of stock items should be considered, to ensure that like stock items appear together. Internally the system looks at the code to order stock items in the various look up tables. A systematic approach to naming stock items can save a lot of time later. However, good facilities are available to search. Under supplier purchasing data it is also possible to record the supplier's part number against an item.
 <br><br>
 There is a script that allows for stock codes to be modified retrospectively, the script goes through all the tables necessary, location stocks, bills of material, order details, purchase order details, sales analysis etc to ensure that all history for the new part code follows the change. The script together with all utility scripts is available from Z_index.php (there are no links to this utility menu - due to the dangerous nature of some of the utilities) The stock code change script itself is named, Z_ChangeStockCode.php.
 <br><br>
@@ -102,7 +133,7 @@ A kit set of other stock items that should be exploded into its components when 
 <br><br>
 A service item that has no physical stock associated with it. This if for use with service companies that are not interested in retaining stock quantities by location. However, the same sales analysis and movement history is retained - showing the amounts of the service sold/credited.
 <br><br>
-This field is relevant for MRP and production scheduling. This field can also be set to Service Inventory Item - which then disables stock quantity tracking at the locations and in total. Service stock items are used for invoicing services and labour or even physical items which do not require tracking. The stock movement records are still created and are available to recall on invoicing and credit note inquiries. Inventory adjustments are not allowed for Service Inventory Items. Assembly items can have sales analysis records created for them, but no stock quantity is maintained and stock movement records are created for the components. Assemblies would normally be used where the warehouse keeps the components of the item for several different purposes and only assembles the items as they are picked for dispatch.
+This field is relevant for MRP and production scheduling (not implemented yet). This field can also be set to Service Inventory Item - which then disables stock quantity tracking at the locations and in total. Service stock items are used for invoicing services and labour or even physical items which do not require tracking. The stock movement records are still created and are available to recall on invoicing and credit note inquiries. Inventory adjustments are not allowed for Service Inventory Items. Assembly items can have sales analysis records created for them, but no stock quantity is maintained and stock movement records are created for the components. Assemblies would normally be used where the warehouse keeps the components of the item for several different purposes and only assembles the items as they are picked for dispatch.
 <br><br>
 <font size="+1"><b>Setting Up Assembly Items</b></font>
 <br><br>
@@ -171,6 +202,8 @@ The discount category is a 2 character field and there is no error checking on e
 <font size="+1"><b>Decimal Places</b></font>
 <br><br>
 Some items of stock require a number of decimal places to be retained and displayed, others do not require any. This field is used throughout the system for invoices, orders and all places where the item quantity is displayed.
+<font size="+1"><b>Item Properties</b></font>
+<br><br>
 
 <!-- Help End: Stocks -->
 
@@ -178,9 +211,38 @@ Some items of stock require a number of decimal places to be retained and displa
 
 <!-- Help Begin: StockCostUpdate -->
 
-<font size="+2"><b>Inventory Costing</b></font>
+<font size="+4"><b>Inventory Costing</b></font>
 <br><br>
-From the menu select the inventory tab and Modify Standard Costs. The item code can be entered directly to show the current cost structure, modifications to costs in this screen are reflected in standard cost journals in the general ledger if the link is active in the Company Preferences page - (menu - System Setup tab). Alternatively, to select the stock item to modify the costs for the costing page can be called from the Select Item page - once an item has been selected - a link to the Select Item page is shown on the title bar of all pages. Maintenance and initial entry of cost data is a critical part of the system set up. Simply defining the item header is not sufficient on its own. The cost information entered here is used for both inventory valuation reports and for the general ledger integration stock journals created for the cost of sales, the cost value of stock adjustments, the value of stock received and so on. It can be omitted only if the user is not interested in the value of stock and no general ledger - stock integration is required.
+There are two schema's for costing in webERP.
+<ul>
+<li>Standard Costing</li>
+<li>Weighted Average Costing</li>
+</ul>
+<font size="+2"><b>Standard Costing</b></font>
+<br><br>
+Standard costing is used in situations where costs do vary and a middle ground standard is adopted - variances away from the standard are reported as price variances. Standard costing is particularly relevant to importers and manufacturers where exchange rate, freight and manufacturing costs and volumes vary making each item have different costs.
+<br><br>
+With standard costing - costs need to be maintained manually - where a permanent shift in an exchange rate of volumes of production dictate that the cost has permanently altered. Variances would consistently be the same direction and modification to the standard is required.
+<br><br>
+<font size="+2"><b>Weighted Average Costing</b></font>
+<br><br>
+Weighted average costing updates costs automatically based on the quantities purchased and the cost of these but taking into account the existing quantity of the item is inventory. 
+<br><br>
+The process is best described with an example - consider an item with 100 currently on hand with a value of $1 each has an influx of 10 more. When the 10 arrive and are booked into stock the system creates the goods received record for 10 at the inventory cost of $1 (the new cost is not yet known - we must wait for purchase invoices to be entered). If the general ledger is integrated to inventory, the stock account (from the stock category record) is increased by 10 units @ $1 = $10 and the goods received suspense account (from the company preferences) is credited with $10.
+<br><br>
+Now the purchase invoice is posted against the goods received record - and the items actually cost $1.50 each 10 units x $1.50 = $15 so a variance of $10 cost recorded on arrival of the good - $15 actual invoice cost = $5 is recorded. With weighted average costing (and GL integration of stock enabled) this variance is posted to the value of stock and the cost of the stock item is increased such that the $5 variance is apportioned accross the whole quantity of stock on hand - 100 already in stock plus the 10 =110 The value of $5/110 = $0.04545 is added to the existing stock value of $1 - new item cost is updated to $1.04545 as the new weighted average cost. 
+<br><br>
+Similarly when shipments are closed the cost of items on the shipment are updated in the same way.
+<br><br>
+Even with weighted average costing it is still possible to update costs where there has been a significant change in the cost of an item that is required to be reflected immediately. However, in normal circumstances it should not be necessary to modify costs manually.
+<br><br>
+<font size="+2"><b>Manufactured and Assembly Item Costs</b></font>
+<br><br>
+These items require a Bill Of Material (BOM) to be defined. All items with a bill of material have their costs updated by the system automatically (and any necessary general ledger postings are created) based on the sum of the component costs as defined in the BOM. Whilst it is also possible to update these item costs independently, any change to the BOM will over-ride modifications made and the cost will once again be the sum of all the component costs. However, changes to component costs are not automatically rolled into the cost of manufactured items at the time of a change to the component's cost, but each time a work order is created for a manufactured item the cost is rolled up and updated. Each time an assembly item is sold the cost is rolled up at the time the sale is invoiced.
+<br><br>
+<font size="+2"><b>Inventory Item Costs</b></font>
+<br><br>
+From the menu select the inventory tab and Modify Standard Costs. The item code can be entered directly to show the current cost structure, modifications to costs in this screen are reflected in standard cost journals in the general ledger if the link is active in the Company Preferences page - (menu - System Setup tab). Alternatively, to select the stock item to modify the costs for the costing page can be called from the Select Item page - once an item has been selected - a link to the Select Item page is shown on the title bar of all pages. Maintenance and initial entry of cost data is a critical part of the system set up. Simply defining the item header is not sufficient on its own. The cost information entered here is used for both inventory valuation reports and for the general ledger integration stock journals created for the cost of sales, the cost value of stock adjustments, the value of stock received and so on. It can be omitted only if the user is not interested in the value of stock and no general ledger - stock integration is required. It will only be required to be entered on the intial set up of the system if weighted average costing option is enabled from the configuration settings then the cost will be maintained automatically from then on.
 <br><br>
 <font size="+1"><b>Material Cost</b></font>
 <br><br>
