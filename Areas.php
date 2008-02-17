@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -40,7 +40,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The area code must be three characters or less long'),'error');
 		$Errors[$i] = 'AreaCode';
 		$i++;
-	} elseif ($myrow[0]>0){
+	} elseif ($myrow[0]>0 and !isset($SelectedArea)){
 		$InputError = 1;
 		prnMsg(_('The area code entered already exists'),'error');		
 		$Errors[$i] = 'AreaCode';
