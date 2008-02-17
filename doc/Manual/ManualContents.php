@@ -86,6 +86,7 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
               <UL>
                 <LI>Hardware Requirements</LI>
                 <LI>Software Requirements</LI>
+                <LI>Using webERP with a Wiki</LI>
               </UL>
               <BR>
             </LI>
