@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 
 $PageSecurity = 4;
@@ -44,9 +44,9 @@ $LocStockResult = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 echo "<CENTER><TABLE CELLPADDING=2 BORDER=2>";
 
 $TableHeader = "<TR>
-		<TD CLASS='tableheader'>" . _('Location') . "</TD>
-		<TD CLASS='tableheader'>" . _('Quantity On Hand') . "</TD>
-		<TD CLASS='tableheader'>" . _('Re-Order Level') . "</TD>
+		<TH>" . _('Location') . "</TH>
+		<TH>" . _('Quantity On Hand') . "</TH>
+		<TH>" . _('Re-Order Level') . "</TH>
 		</TR>";
 
 echo $TableHeader;
@@ -56,10 +56,10 @@ $k=0; //row colour counter
 while ($myrow=DB_fetch_array($LocStockResult)) {
 
 	if ($k==1){
-		echo "<TR BGCOLOR='#CCCCCC'>";
+		echo '<tr class="EvenTableRows">';
 		$k=0;
 	} else {
-		echo "<TR BGCOLOR='#EEEEEE'>";
+		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
 

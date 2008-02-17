@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 2;
 
@@ -93,14 +93,15 @@ echo $tableheader;
 $TotalQuantity =0;
 $j = 1;
 $Col =0;
+$BGColor ='#CCCCCC';
 while ($myrow=DB_fetch_array($LocStockResult)) {
 
 	if ($Col==0 AND $BGColor=='#EEEEEE'){
 		$BGColor ='#CCCCCC';
-		echo "<TR bgcolor=$BGColor>";
+		echo '<TR class="EvenTableRows">';
 	} elseif ($Col==0){
 		$BGColor ='#EEEEEE';
-		echo "<TR bgcolor=$BGColor>";
+		echo '<TR class="OddTableRows">';
 	}
 
 	$TotalQuantity += $myrow['quantity'];

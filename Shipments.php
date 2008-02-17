@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 11;
 include('includes/DefineShiptClass.php');
@@ -375,14 +375,14 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>';
 		
 	$TableHeader = '<TR>
-			<TD class="tableheader">'. _('Order'). '</TD>
-			<TD class="tableheader">'. _('Item'). '</TD>
-			<TD class="tableheader">'. _('Quantity'). '<BR>'. _('Ordered'). '</TD>
-			<TD class="tableheader">'. _('Units'). '</TD>
-			<TD class="tableheader">'. _('Quantity').'<BR>'. _('Received'). '</TD>
-			<TD class="tableheader">'. _('Quantity').'<BR>'. _('Invoiced'). '</TD>
-			<TD class="tableheader">'. $_SESSION['Shipment']->CurrCode .' '. _('Price') . '</TD>
-			<TD class="tableheader">'. _('Current'). '<BR>'. _('Std Cost'). '</TD></TR>';
+			<TH>'. _('Order'). '</TH>
+			<TH>'. _('Item'). '</TH>
+			<TH>'. _('Quantity'). '<BR>'. _('Ordered'). '</TH>
+			<TH>'. _('Units'). '</TH>
+			<TH>'. _('Quantity').'<BR>'. _('Received'). '</TH>
+			<TH>'. _('Quantity').'<BR>'. _('Invoiced'). '</TH>
+			<TH>'. $_SESSION['Shipment']->CurrCode .' '. _('Price') . '</TH>
+			<TH>'. _('Current'). '<BR>'. _('Std Cost'). '</TH></TR>';
 		
 	echo  $TableHeader;
 		
@@ -400,10 +400,10 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 		$RowCounter++;
 	
 		if ($k==1){
-			echo '<tr bgcolor="#CCCCCC">';
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo '<tr bgcolor="#EEEEEE">';
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 	
@@ -451,12 +451,12 @@ if (DB_num_rows($result)>0){
 	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>';
 
 	$TableHeader = '<TR>
-			<TD class="tableheader">'. _('Order').'</TD>
-			<TD class="tableheader">'. _('Item').'</TD>
-			<TD class="tableheader">'. _('Quantity').'<BR>'. _('Ordered').'</TD>
-			<TD class="tableheader">'. _('Units').'</TD>
-			<TD class="tableheader">'. _('Quantity').'<BR>'. _('Received').'</TD>
-			<TD class="tableheader">'. _('Delivery').'<BR>'. _('Date').'</TD>
+			<TH>'. _('Order').'</TH>
+			<TH>'. _('Item').'</TH>
+			<TH>'. _('Quantity').'<BR>'. _('Ordered').'</TH>
+			<TH>'. _('Units').'</TH>
+			<TH>'. _('Quantity').'<BR>'. _('Received').'</TH>
+			<TH>'. _('Delivery').'<BR>'. _('Date').'</TH>
 			</TR>';
 
 	echo  $TableHeader;
@@ -475,10 +475,10 @@ if (DB_num_rows($result)>0){
 		$RowCounter++;
 
 		if ($k==1){
-			echo '<tr bgcolor="#CCCCCC">';
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo '<tr bgcolor="#EEEEEE">';
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 
