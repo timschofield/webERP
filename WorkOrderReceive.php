@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 11;
 
@@ -683,7 +683,7 @@ if($WORow['controlled']==1){ //controlled
 	echo '<BR>The orignial Lot/SN ref : ' . $WORow['nextlotsnref'];
 	*/
 	if ($WORow['serialised']==1){ //serialised
-		echo '<tr><td colspan="5" class="tableheader">' . _('Serial Numbers Received') . '</td></tr>';
+		echo '<tr><th colspan="5">' . _('Serial Numbers Received') . '</th></tr>';
 		echo '<tr>';
 		for ($i=0;$i<60;$i++){
 			if (($i/5 -intval($i/5))==0){
@@ -698,7 +698,7 @@ if($WORow['controlled']==1){ //controlled
 		echo '</tr>';
 		echo '<tr><td align="center" colspan=5><input type=submit name="Process" value="' . _('Process Manufactured Items Received') . '"></td></tr>';
 	} else { //controlled but not serialised - just lot/batch control
-		echo '<tr><td colspan="2" class="tableheader">' . _('Batch/Lots Received') . '</td></tr>';
+		echo '<tr><th colspan="2">' . _('Batch/Lots Received') . '</th></tr>';
 		for ($i=0;$i<15;$i++){
 			echo '<tr><td><input type="textbox" name="BatchRef' . $i .'" ';
 

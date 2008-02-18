@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 $PageSecurity = 11;
 
@@ -59,10 +59,10 @@ include('includes/header.inc');
 		echo '</td></tr></table>';
 
 		//set up options for selection of the item to be issued to the WO
-		echo '<table border=1><tr><td colspan=5 class="tableheader">' . _('Material Requirements For this Work Order') . '</td></tr>';
-		echo '<tr><td colspan=2 class="tableheader">' . _('Item') . '</td>
-			<td class="tableheader">' . _('Qty Required') . '</td>
-			<td class="tableheader">' . _('Qty Issued') . '</td></tr>';
+		echo '<table border=1><tr><th colspan=5>' . _('Material Requirements For this Work Order') . '</th></tr>';
+		echo '<tr><th colspan=2>' . _('Item') . '</th>
+			<th>' . _('Qty Required') . '</th>
+			<th>' . _('Qty Issued') . '</th></tr>';
 
 		$RequirmentsResult = DB_query("SELECT worequirements.stockid,
 						stockmaster.description,

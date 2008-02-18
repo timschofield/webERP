@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 15;
 
@@ -23,10 +23,7 @@ if ( isset($_POST['submit']) ) {
 
 	//first off validate inputs sensible
 
-	if (!is_long((integer)$_POST['Shipper_ID'])) {
-		$InputError = 1;
-		prnMsg( _('The shipper must be an integer.'), 'error');
-	} elseif (strlen($_POST['ShipperName']) >40) {
+	if (strlen($_POST['ShipperName']) >40) {
 		$InputError = 1;
 		prnMsg( _("The shipper's name must be forty characters or less long"), 'error');
 	} elseif( trim($_POST['ShipperName']) == '' ) {
@@ -34,7 +31,7 @@ if ( isset($_POST['submit']) ) {
 		prnMsg( _("The shipper's name may not be empty"), 'error');
 	}
 
-	if ($SelectedShipper AND $InputError !=1) {
+	if (isset($SelectedShipper) AND $InputError !=1) {
 
 		/*SelectedShipper could also exist if submit had not been clicked this code
 		would not run in this case cos submit is false of course  see the
@@ -60,7 +57,7 @@ if ( isset($_POST['submit']) ) {
 		unset($_POST['Shipper_ID']);
 	}
 
-} elseif ($_GET['delete']) {
+} elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'SalesOrders'
@@ -117,17 +114,16 @@ or deletion of the records*/
 	$result = DB_query($sql,$db);
 
 	echo '<CENTER><table border=1>
-		<tr><td class="tableheader">'. _('Shipper ID'). '</td><td class="tableheader">'. _('Shipper Name'). '</td>
-		';
+		<tr><th>'. _('Shipper ID'). '</th><th>'. _('Shipper Name'). '</th></tr>';
 
 	$k=0; //row colour counter
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($k==1){
-			echo '<tr bgcolor="#CCCCCC">';
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo '<tr bgcolor="#EEEEEE">';
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 		printf('<td>%s</td>
@@ -174,6 +170,9 @@ if (!isset($_GET['delete'])) {
 		echo '<CENTER><TABLE><TR><TD>'. _('Shipper Code').':</TD><TD>' . $_POST['Shipper_ID'] . '</TD></TR>';
 	} else {
 		echo "<CENTER><TABLE>";
+	}
+	if (!isset($_POST['ShipperName'])) {
+		$_POST['ShipperName']='';
 	}
 	?>
 

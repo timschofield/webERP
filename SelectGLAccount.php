@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 8;
 
@@ -106,10 +106,10 @@ If (isset($result)) {
 
 	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>';
 
-	$TableHeader = '<TR><TD class="tableheader">' . _('Code') . '</TD>
-                      <TD class="tableheader">' . _('Account Name') . '</TD>
-                      <TD class="tableheader">' . _('Group') . '</TD>
-                      <TD class="tableheader">' . _('Account Type') . '</TD></TR>';
+	$TableHeader = '<TR><TH>' . _('Code') . '</TH>
+                      <TH>' . _('Account Name') . '</TH>
+                      <TH>' . _('Group') . '</TH>
+                      <TH>' . _('Account Type') . '</TH></TR>';
 
 	echo $TableHeader;
 

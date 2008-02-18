@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 $PageSecurity = 2;
 
@@ -306,10 +306,10 @@ if (isset($result) AND !isset($_POST['Select'])) {
 
 		echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
 		$tableheader = '<TR>
-					<TD class="tableheader">' . _('Code') . '</TD>
-					<TD class="tableheader">' . _('Description') . '</TD>
-					<TD class="tableheader">' . _('Total Qty On Hand') . '</TD>
-					<TD class="tableheader">' . _('Units') . '</TD>
+					<TH>' . _('Code') . '</TH>
+					<TH>' . _('Description') . '</TH>
+					<TH>' . _('Total Qty On Hand') . '</TH>
+					<TH>' . _('Units') . '</TH>
 				</TR>';
 		echo $tableheader;
 
@@ -326,10 +326,10 @@ if (isset($result) AND !isset($_POST['Select'])) {
 		while (($myrow=DB_fetch_array($result)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 
 			if ($k==1){
-				echo '<tr bgcolor="#CCCCCC">';
+				echo '<tr class="EvenTableRows">';
 				$k=0;
 			} else {
-				echo '<tr bgcolor="#EEEEEE">';
+				echo '<tr class="OddTableRows">';
 				$k++;
 			}
 
@@ -415,12 +415,12 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	$Its_A_Dummy=False;
 	$Its_A_Kitset=False;
 
-	echo '<TABLE BORDER=1><TR><TD colspan=3 class="tableheader"><font size=4>' . $StockID . ' - ' . $myrow['description'] . ' </font></TD></TR>';
+	echo '<TABLE BORDER=1><TR><TH colspan=3><font size=4>' . $StockID . ' - ' . $myrow['description'] . ' </font></TH></TR>';
 
 	echo '<TR><TD WIDTH="40%">
 			<TABLE>'; //nested table
 
-	echo '<TR><TD align=right class="tableheader">' . _('Item type:') . '</TD><TD COLSPAN=2>';
+	echo '<TR><TH align=right>' . _('Item type:') . '</TH><TD COLSPAN=2>';
 
 	switch ($myrow['mbflag']) {
 		case 'A':
@@ -444,7 +444,7 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			echo _('Manufactured Item');
 			break;
 	}
-	echo '</TD><TD align=right class="tableheader">' . _('Control Level:') .'</TD><TD>';
+	echo '</TD><TH align=right>' . _('Control Level:') .'</TH><TD>';
 	if ($myrow['serialised']==1){
 		echo _('serialised');
 	} elseif ($myrow['controlled']==1){
@@ -452,12 +452,12 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	} else {
 		echo _('N/A');
 	}
-	echo '</TD><TD align=right class="tableheader">' . _('Units') . ':</TD><TD>' . $myrow['units'] . '</TD></TR>';
-	echo '<TR><TD align=right class="tableheader">' . _('Volume') . ':</TD><TD align=right COLSPAN=2>' . number_format($myrow['volume'],3) . '</TD>
-			<TD align=right class="tableheader">' . _('Weight') . ':</TD><TD align=right>' . number_format($myrow['kgs'],3) . '</TD>
-			<TD align=right class="tableheader">' . _('EOQ') . ':</TD><TD align=right>' . number_format($myrow['eoq'],$myrow['decimalplaces']) . '</TD></TR>';
+	echo '</TD><TH align=right>' . _('Units') . ':</TH><TD>' . $myrow['units'] . '</TD></TR>';
+	echo '<TR><TH align=right>' . _('Volume') . ':</TH><TD align=right COLSPAN=2>' . number_format($myrow['volume'],3) . '</TD>
+			<TH align=right>' . _('Weight') . ':</TH><TD align=right>' . number_format($myrow['kgs'],3) . '</TD>
+			<TH align=right>' . _('EOQ') . ':</TH><TD align=right>' . number_format($myrow['eoq'],$myrow['decimalplaces']) . '</TD></TR>';
 
-	echo '<TR><TD class="tableheader">' . _('Sell Price') . ':</TD><TH>';
+	echo '<TR><TH>' . _('Sell Price') . ':</TH><TH>';
 
 	$PriceResult = DB_query("SELECT typeabbrev, price FROM prices "
 //								WHERE currabrev ='" . $_SESSION['CompanyRecord']['currencydefault'] . "'
@@ -489,7 +489,7 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		$PriceRow = DB_fetch_row($PriceResult);
 		$Price = $PriceRow[1];
 		echo $PriceRow[0].'</TH><TD align=right>'.number_format($Price,2).'</TD>
-			<TD align=right class="tableheader">' . _('Gross Profit') . '</TD><TD align=right>';
+			<TH align=right>' . _('Gross Profit') . '</TH><TD align=right>';
 			if ($Price >0) {
 				$GP = number_format(($Price - $Cost)*100/$Price,2);
 			} else {
@@ -500,7 +500,7 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		while ($PriceRow = DB_fetch_row($PriceResult)) {
 			$Price = $PriceRow[1];
 			echo '<TR><TD></TD><TH>'.$PriceRow[0].'</TH><TD align=right>'.number_format($Price,2).'</TD>
-			<TD align=right class="tableheader">' . _('Gross Profit') . '</TD><TD align=right>';
+			<TH align=right>' . _('Gross Profit') . '</TH><TD align=right>';
 			if ($Price >0) {
 				$GP = number_format(($Price - $Cost)*100/$Price,2);
 			} else {
@@ -525,7 +525,7 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	} else {
 		$Cost = $myrow['cost'];
 	}
-	echo '<TD align=right class="tableheader">' . _('Cost') . '</TD><TD align=right colspan=2>' . number_format($Cost,3) . '</TD>';
+	echo '<TH align=right>' . _('Cost') . '</TH><TD align=right colspan=2>' . number_format($Cost,3) . '</TD>';
 
 	echo '</TABLE>'; //end of first nested table
    // Item Category Property mod: display the item properties
@@ -559,8 +559,8 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
                $PropValRow = DB_fetch_row($PropValResult);
                $PropertyValue = $PropValRow[0];
 
-               echo '<tr><td class="tableheader" align="right">' . $PropertyRow['label']
-. ':</td>';
+               echo '<tr><th align="right">' . $PropertyRow['label']
+. ':</th>';
                switch ($PropertyRow['controltype']) {
                        case 0; //textbox
                                echo '<td align=right width=60>' . $PropertyValue;
@@ -683,18 +683,18 @@ $PropertyOptionValue . '</option>';
 		$Demand += $DemandRow[0];
 	}
 
-	echo '<TR><TD align=right width="15%" class="tableheader">' . _('Quantity On Hand') . ':</TD><TD width="17%" align=right>' . $QOH . '</TD></TR>';
-	echo '<TR><TD align=right width="15%" class="tableheader">' . _('Quantity Demand') . ':</TD><TD width="17%" align=right>' . number_format($Demand,$myrow['decimalplaces']) . '</TD></TR>';
-	echo '<TR><TD align=right width="15%" class="tableheader">' . _('Quantity On Order') . ':</TD><TD width="17%" align=right>' . $QOO . '</TD></TR>
+	echo '<TR><TH align=right width="15%">' . _('Quantity On Hand') . ':</TH><TD width="17%" align=right>' . $QOH . '</TD></TR>';
+	echo '<TR><TH align=right width="15%">' . _('Quantity Demand') . ':</TH><TD width="17%" align=right>' . number_format($Demand,$myrow['decimalplaces']) . '</TD></TR>';
+	echo '<TR><TH align=right width="15%">' . _('Quantity On Order') . ':</TH><TD width="17%" align=right>' . $QOO . '</TD></TR>
 				</TABLE>';//end of nested table
 
     echo '</TD>'; //end cell of master table
     if ($myrow['mbflag']=='B'){
 		echo '<TD WIDTH="40%" VALIGN="TOP"><TABLE>
-			<TR><TD width="50%" class="tableheader">' . _('Supplier') . '</TD>
-				<TD width="20%" class="tableheader">' . _('Cost') . '</TD>
-				<TD width="10%" class="tableheader">' . _('Currency') . '</TD>
-				<TD width="20%" class="tableheader">' . _('Lead Time') . '</TD></TR>';
+			<TR><TH width="50%">' . _('Supplier') . '</TH>
+				<TH width="20%">' . _('Cost') . '</TH>
+				<TH width="10%">' . _('Currency') . '</TH>
+				<TH width="20%">' . _('Lead Time') . '</TH></TR>';
 
 		$SuppResult = DB_query("SELECT  suppliers.suppname,
 								purchdata.price,
@@ -719,9 +719,9 @@ $PropertyOptionValue . '</option>';
 	echo '</TR></TABLE><HR>'; // end first item details table
 
 	echo '<TABLE WIDTH="100%" BORDER=1><TR>
-		<TD WIDTH=33% class="tableheader">' . _('Item Inquiries') . '</TD>
-		<TD WIDTH=33% class="tableheader">' . _('Item Transactions') . '</TD>
-		<TD WIDTH=33% class="tableheader">' . _('Item Maintenance') . '</TD>
+		<TH WIDTH=33%>' . _('Item Inquiries') . '</TH>
+		<TH WIDTH=33%>' . _('Item Transactions') . '</TH>
+		<TH WIDTH=33%>' . _('Item Maintenance') . '</TH>
 	</TR>';
 	echo '<TR><TD valign="top">';
 
@@ -780,9 +780,9 @@ $PropertyOptionValue . '</option>';
   // options (links) to pages. This requires stock id also to be passed.
 	echo '<CENTER><TABLE WIDTH=90% COLSPAN=2 BORDER=2 CELLPADDING=4>';
 	echo '<TR>
-		<TD WIDTH=33% class="tableheader">' . _('Item Inquiries') . '</TD>
-		<TD WIDTH=33% class="tableheader">' . _('Item Transactions') . '</TD>
-		<TD WIDTH=33% class="tableheader">' . _('Item Maintenance') . '</TD>
+		<TH WIDTH=33%>' . _('Item Inquiries') . '</TH>
+		<TH WIDTH=33%>' . _('Item Transactions') . '</TH>
+		<TH WIDTH=33%>' . _('Item Maintenance') . '</TH>
 	</TR>';
 	echo '<TR><TD>';
 

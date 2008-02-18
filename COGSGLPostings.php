@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 10;
 
@@ -84,19 +84,19 @@ if (!isset($SelectedCOGSPostingID)) {
 		$ShowLivePostingRecords = false;
 		prnMsg (_('The following cost of sales posting records that do not have valid general ledger code specified - these records must be amended.'),'error');
 		echo '<CENTER><TABLE BORDER=1>';
-		echo "<TR><TD CLASS='tableheader'>" . _('Area') . "</TD>
-				<TD CLASS='tableheader'>" . _('Stock Category') . "</TD>
-				<TD CLASS='tableheader'>" . _('Sales Type') . "</TD>
-				<TD CLASS='tableheader'>" . _('COGS Account') . "</TD>
+		echo "<TR><TH>" . _('Area') . "</TH>
+				<TH>" . _('Stock Category') . "</TH>
+				<TH>" . _('Sales Type') . "</TH>
+				<TH>" . _('COGS Account') . "</TH>
 			</TR>";
 		$k=0; //row colour counter
 	
 		while ($myrow = DB_fetch_row($result)) {
 			if ($k==1){
-				echo "<TR BGCOLOR='#CCCCCC'>";
+				echo '<TR class="EvenTableRows">';
 				$k=0;
 			} else {
-				echo "<TR BGCOLOR='#EEEEEE'>";
+				echo '<TR class="OddTableRows">';
 				$k=1;
 			}
 	

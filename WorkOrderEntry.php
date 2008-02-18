@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 10;
 
@@ -276,7 +276,10 @@ if (isset($_POST['submit'])) { //The update button has been clicked
 		}
 
     	for ($i=1;$i<=$_POST['NumberOfOutputs'];$i++){
-    			if ($_POST['QtyRecd'.$i]>$_POST['OutputQty'.$i]){
+    		if (!isset($_POST['NextLotSNRef'.$i])) {
+    			$_POST['NextLotSNRef'.$i]='';
+    		}
+    			if (isset($_POST['QtyRecd'.$i]) and $_POST['QtyRecd'.$i]>$_POST['OutputQty'.$i]){
     					$_POST['OutputQty'.$i]=$_POST['QtyRecd'.$i]; //OutputQty must be >= Qty already reced
     			}
     			if ($_POST['RecdQty'.$i]==0){ // can only change location cost if QtyRecd=0
@@ -489,7 +492,7 @@ $SQL="SELECT categoryid,
 		ORDER BY categorydescription";
 	$result1 = DB_query($SQL,$db);
 
-echo '<B>' . $msg . '</B><TABLE><TR><TD><FONT SIZE=2>' . _('Select a stock category') . ':</FONT><SELECT NAME="StockCat">';
+echo '<TABLE><TR><TD><FONT SIZE=2>' . _('Select a stock category') . ':</FONT><SELECT NAME="StockCat">';
 
 if (!isset($_POST['StockCat'])){
 	echo "<OPTION SELECTED VALUE='All'>" . _('All');

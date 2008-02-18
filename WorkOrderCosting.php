@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 11;
 
@@ -76,11 +76,11 @@ $WOItemsResult = DB_query("SELECT woitems.stockid,
 			$db,
 			$ErrMsg);
 
-echo  '<table><tr><td class="tableheader">' . _('Item') . '</td>
-		<td class="tableheader">' . _('Description') . '</td>
-		<td class="tableheader">' . _('Quantity Required') . '</td>
-		<td class="tableheader">' . _('Units') . '</td>
-		<td class="tableheader">' . _('Quantity Received') . '</td></tr>';
+echo  '<table><tr><th>' . _('Item') . '</th>
+		<th>' . _('Description') . '</th>
+		<th>' . _('Quantity Required') . '</th>
+		<th>' . _('Units') . '</th>
+		<th>' . _('Quantity Received') . '</th></tr>';
 $TotalStdValueRecd =0;
 while ($WORow = DB_fetch_array($WOItemsResult)){
 
@@ -98,15 +98,15 @@ echo '</table>
 	<table>';
 
 
-echo '<tr><td class="tableheader">' . _('Item') . '</td>
-			<td class="tableheader">' . _('Description') . '</td>
-			<td class="tableheader">' . _('Qty Reqd') . '</td>
-			<td class="tableheader">' . _('Cost Reqd') . '</td>
-			<td class="tableheader">' . _('Date Issued') . '</td>
-			<td class="tableheader">' . _('Issued Qty') . '</td>
-			<td class="tableheader">' . _('Issued Cost') . '</td>
-			<td class="tableheader">' . _('Usage Variance') . '</td>
-			<td class="tableheader">' . _('Cost Variance') . '</td>
+echo '<tr><th>' . _('Item') . '</th>
+			<th>' . _('Description') . '</th>
+			<th>' . _('Qty Reqd') . '</th>
+			<th>' . _('Cost Reqd') . '</th>
+			<th>' . _('Date Issued') . '</th>
+			<th>' . _('Issued Qty') . '</th>
+			<th>' . _('Issued Cost') . '</th>
+			<th>' . _('Usage Variance') . '</th>
+			<th>' . _('Cost Variance') . '</th>
 			</tr>';
 
 $RequirementsResult = DB_query("SELECT worequirements.stockid,
@@ -132,9 +132,9 @@ $RequiredItems =array();
 while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 	$RequiredItems[] = $RequirementsRow['stockid'];
 	if ($k==1){
-		echo '<tr bgcolor="#CCCCCC">';
+		echo '<tr class="EvenTableRows">';
 	} else {
-		echo '<tr bgcolor="#EEEEEE">';
+		echo '<tr class="OddTableRows">';
 	}
 
 	echo '<td>' .  $RequirementsRow['stockid'] . '</td>
@@ -155,9 +155,9 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 	if (DB_num_rows($IssuesResult)>0){
 		while ($IssuesRow = DB_fetch_array($IssuesResult)){
 			if ($k==1){
-				echo '<tr bgcolor="#CCCCCC">';
+				echo '<tr class="EvenTableRows">';
 			} else {
-				echo '<tr bgcolor="#EEEEEE">';
+				echo '<tr class="OddTableRows">';
 			}
 			echo '<td colspan=4></td><td>' . ConvertSQLDate($IssuesRow['trandate']) . '</td>
 				<td align="right">' . number_format(-$IssuesRow['qty'],$RequirementsRow['decimalplaces']) . '</td>
@@ -167,16 +167,16 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 
 		}
 		if ($k==1){
-			echo '<tr bgcolor="#CCCCCC">';
+			echo '<tr class="EvenTableRows">';
 		} else {
-			echo '<tr bgcolor="#EEEEEE">';
+			echo '<tr class="OddTableRows">';
 		}
 		echo '<td colspan="9"><hr></td></tr>';
 	}
 	if ($k==1){
-		echo '<tr bgcolor="#CCCCCC">';
+		echo '<tr class="EvenTableRows">';
 	} else {
-		echo '<tr bgcolor="#EEEEEE">';
+		echo '<tr class="OddTableRows">';
 	}
 
 	if ($IssueQty != 0){
@@ -226,10 +226,10 @@ $WOIssuesResult = DB_query($sql,$db,_('Could not get issues that were not requir
 if (DB_num_rows($WOIssuesResult)>0){
 	while ($WOIssuesRow = DB_fetch_array($WOIssuesResult)){
 		if ($k==1){
-			echo '<tr bgcolor="#CCCCCC">';
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo '<tr bgcolor="#EEEEEE">';
+			echo '<tr class="OddTableRows">';
 			$k++;
 		}
 
