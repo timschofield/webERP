@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 $PageSecurity = 9;
 
 include('includes/session.inc');
@@ -19,6 +19,11 @@ include('includes/GetConfig.php');
 
 $FunctionalCurrency = $_SESSION['CompanyRecord']['currencydefault'];
 
+if (isset($Errors)) {
+	unset($Errors);
+}
+
+$Errors = array();	
 
 if (isset($_POST['submit'])) {
 
@@ -29,37 +34,67 @@ if (isset($_POST['submit'])) {
     ie the page has called itself with some user input */
 
     //first off validate inputs are sensible
+	$i=1;
+	
+	$sql="SELECT count(currabrev) 
+			FROM currencies WHERE currabrev='".$_POST['Abbreviation']."'";
+	$result=DB_query($sql, $db);
+	$myrow=DB_fetch_row($result);
 
+	if ($myrow[0]!=0 and !isset($SelectedCurrency)) {
+		$InputError = 1;
+		prnMsg( _('The currency already exists in the database'),'error');
+		$Errors[$i] = 'Abbreviation';
+		$i++;		
+	}
     if (strlen($_POST['Abbreviation']) > 3) {
         $InputError = 1;
         prnMsg(_('The currency abbreviation must be 3 characters or less long'),'error');
-    } elseif (!is_numeric($_POST['ExchangeRate'])){
+		$Errors[$i] = 'Abbreviation';
+		$i++;		
+    } 
+	if (!is_numeric($_POST['ExchangeRate'])){
         $InputError = 1;
        prnMsg(_('The exchange rate must be numeric'),'error');
-    } elseif (strlen($_POST['CurrencyName']) > 20) {
+		$Errors[$i] = 'ExchangeRate';
+		$i++;		
+    } 
+    if (strlen($_POST['CurrencyName']) > 20) {
         $InputError = 1;
         prnMsg(_('The currency name must be 20 characters or less long'),'error');
-    } elseif (strlen($_POST['Country']) > 50) {
+		$Errors[$i] = 'CurrencyName';
+		$i++;		
+    } 
+    if (strlen($_POST['Country']) > 50) {
         $InputError = 1;
         prnMsg(_('The currency country must be 50 characters or less long'),'error');
-    } elseif (strlen($_POST['HundredsName']) > 15) {
+		$Errors[$i] = 'Country';
+		$i++;		
+    } 
+    if (strlen($_POST['HundredsName']) > 15) {
         $InputError = 1;
         prnMsg(_('The hundredths name must be 15 characters or less long'),'error');
-    } elseif (($FunctionalCurrency != '') and (isset($SelectedCurrency) and $SelectedCurrency==$FunctionalCurrency)){
+		$Errors[$i] = 'HundredsName';
+		$i++;		
+    } 
+    if (($FunctionalCurrency != '') and (isset($SelectedCurrency) and $SelectedCurrency==$FunctionalCurrency)){
         $InputError = 1;
         prnMsg(_('The functional currency cannot be modified or deleted'),'error');
-    } elseif (strstr($_POST['Abbreviation'],"'") OR strstr($_POST['Abbreviation'],'+') OR strstr($_POST['Abbreviation'],"\"") OR strstr($_POST['Abbreviation'],'&') OR strstr($_POST['Abbreviation'],' ') OR strstr($_POST['Abbreviation'],"\\") OR strstr($_POST['Abbreviation'],'.') OR strstr($_POST['Abbreviation'],'"')) {
+    } 
+    if (strstr($_POST['Abbreviation'],"'") OR strstr($_POST['Abbreviation'],'+') OR strstr($_POST['Abbreviation'],"\"") OR strstr($_POST['Abbreviation'],'&') OR strstr($_POST['Abbreviation'],' ') OR strstr($_POST['Abbreviation'],"\\") OR strstr($_POST['Abbreviation'],'.') OR strstr($_POST['Abbreviation'],'"')) {
 		$InputError = 1;
 		prnMsg( _('The currency code cannot contain any of the following characters') . " . - ' & + \" " . _('or a space'),'error');
+		$Errors[$i] = 'Abbreviation';
+		$i++;		
 	}
 
     if (isset($SelectedCurrency) AND $InputError !=1) {
 
         /*SelectedCurrency could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
         $sql = "UPDATE currencies SET
-			currency='" . DB_escape_string($_POST['CurrencyName']) . "',
-			country='". DB_escape_string($_POST['Country']). "',
-			hundredsname='" . DB_escape_string($_POST['HundredsName']) . "',
+			currency='" . $_POST['CurrencyName'] . "',
+			country='". $_POST['Country']. "',
+			hundredsname='" . $_POST['HundredsName'] . "',
 			rate=" .$_POST['ExchangeRate'] . "
 		WHERE currabrev = '" . $SelectedCurrency . "'";
 
@@ -72,10 +107,10 @@ if (isset($_POST['submit'])) {
 					country,
 					hundredsname,
 					rate)
-			VALUES ('" . DB_escape_string($_POST['CurrencyName']) . "',
+			VALUES ('" . $_POST['CurrencyName'] . "',
 				'" . $_POST['Abbreviation'] . "',
-				'" . DB_escape_string($_POST['Country']) . "',
-				'" . DB_escape_string($_POST['HundredsName']) .  "',
+				'" . $_POST['Country'] . "',
+				'" . $_POST['HundredsName'] .  "',
 				" . $_POST['ExchangeRate'] . ")";
 
     	$msg = _('The currency definition record has been added');
@@ -246,28 +281,28 @@ if (!isset($_GET['delete'])) {
 		if (!isset($_POST['Abbreviation'])) {$_POST['Abbreviation']='';}
         echo "<CENTER><TABLE><TR>
 		<TD>"._('Currency Abbreviation').":</TD>
-		<TD><input type='Text' name='Abbreviation' value='" . $_POST['Abbreviation'] . "' SIZE=4 MAXLENGTH=3></TD></TR>";
+		<TD><input " . (in_array('Abbreviation',$Errors) ?  'class="inputerror"' : '' ) ." type='Text' name='Abbreviation' value='" . $_POST['Abbreviation'] . "' SIZE=4 MAXLENGTH=3></TD></TR>";
     }
 
     echo '<TR><TD>'._('Currency Name').':</TD>';
     echo '<TD>';
 	if (!isset($_POST['CurrencyName'])) {$_POST['CurrencyName']='';}
-    echo '<INPUT TYPE="text" name="CurrencyName" SIZE=20 MAXLENGTH=20 VALUE="' . $_POST['CurrencyName'] . '">';
+    echo '<INPUT ' . (in_array('CurrencyName',$Errors) ?  'class="inputerror"' : '' ) .' TYPE="text" name="CurrencyName" SIZE=20 MAXLENGTH=20 VALUE="' . $_POST['CurrencyName'] . '">';
     echo '</TD></TR>';
     echo '<TR><TD>'._('Country').':</TD>';
     echo '<TD>';
 	if (!isset($_POST['Country'])) {$_POST['Country']='';}
-    echo '<INPUT TYPE="text" name="Country" SIZE=30 MAXLENGTH=50 VALUE="' . $_POST['Country'] . '">';
+    echo '<INPUT ' . (in_array('Country',$Errors) ?  'class="inputerror"' : '' ) .' TYPE="text" name="Country" SIZE=30 MAXLENGTH=50 VALUE="' . $_POST['Country'] . '">';
     echo '</TD></TR>';
     echo '<TR><TD>'._('Hundredths Name').':</TD>';
     echo '<TD>';
 	if (!isset($_POST['HundredsName'])) {$_POST['HundredsName']='';}
-    echo '<INPUT TYPE="text" name="HundredsName" SIZE=10 MAXLENGTH=15 VALUE="'. $_POST['HundredsName'].'">';
+    echo '<INPUT ' . (in_array('HundredsName',$Errors) ?  'class="inputerror"' : '' ) .' TYPE="text" name="HundredsName" SIZE=10 MAXLENGTH=15 VALUE="'. $_POST['HundredsName'].'">';
     echo '</TD></TR>';
     echo '<TR><TD>'._('Exchange Rate').':</TD>';
     echo '<TD>';
 	if (!isset($_POST['ExchangeRate'])) {$_POST['ExchangeRate']='';}
-    echo '<INPUT TYPE="text" name="ExchangeRate" SIZE=10 MAXLENGTH=9 VALUE='. $_POST['ExchangeRate'].'>';
+    echo '<INPUT ' . (in_array('ExchangeRate',$Errors) ?  'class="inputerror"' : '' ) .' TYPE="text" name="ExchangeRate" SIZE=10 MAXLENGTH=9 VALUE='. $_POST['ExchangeRate'].'>';
     echo '</TD></TR>';
     echo '</TABLE>';
 

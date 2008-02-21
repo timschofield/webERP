@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 10;
 
@@ -40,23 +40,45 @@ include('includes/header.inc');
 // DONE WITH MINIMUM TESTS	
 
 
+if (isset($Errors)) {
+	unset($Errors);
+}
+	
+$Errors = array();	
+
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 
 	$InputError = 0;
+	$i=1;
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
+	$sql="SELECT count(sectionid) 
+			FROM accountsection WHERE sectionid='".$_POST['SectionID']."'";
+	$result=DB_query($sql, $db);
+	$myrow=DB_fetch_row($result);
 
+	if ($myrow[0]!=0 and $_POST['SelectedSectionID']=='') {
+		$InputError = 1;
+		prnMsg( _('The account section already exists in the database'),'error');
+		$Errors[$i] = 'SectionID';
+		$i++;		
+	}
 	if (strpos($_POST['SectionName'],'&')>0 OR strpos($_POST['SectionName'],"'")>0) {
 		$InputError = 1;
 		prnMsg( _('The account section name cannot contain the character') . " '&' " . _('or the character') ." '",'error');
-	} elseif (isset($_POST['SectionID']) && (!is_long((int) $_POST['SectionID']))) {
+		$Errors[$i] = 'SectionName';
+		$i++;		
+	} 
+	if (isset($_POST['SectionID']) && (!is_long((int) $_POST['SectionID']))) {
 		$InputError = 1;
 		prnMsg( _('The section number must be an integer'),'error');
+		$Errors[$i] = 'SectionID';
+		$i++;		
 	}
 
 	if (isset($_POST['SelectedSectionID']) and $_POST['SelectedSectionID']!='' AND $InputError !=1) {
@@ -64,8 +86,8 @@ if (isset($_POST['submit'])) {
 		/*SelectedSectionID could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
 		$sql = "UPDATE accountsection
-				SET sectionname='" . DB_escape_string($_POST['SectionName']) . "'
-				WHERE sectionid = " . DB_escape_string($_POST['SelectedSectionID']);
+				SET sectionname='" . $_POST['SectionName'] . "'
+				WHERE sectionid = " . $_POST['SelectedSectionID'];
 
 		$msg = _('Record Updated');
 	} elseif ($InputError !=1) {
@@ -76,8 +98,8 @@ if (isset($_POST['submit'])) {
 					sectionid,
 					sectionname )
 			VALUES (
-				" . DB_escape_string($_POST['SectionID']) . ",
-				'" . DB_escape_string($_POST['SectionName']) ."'
+				" . $_POST['SectionID'] . ",
+				'" . $_POST['SectionName'] ."'
 				)";
 		$msg = _('Record inserted');
 	}
@@ -215,10 +237,10 @@ if (! isset($_GET['delete'])) {
 		echo "<CENTER><TABLE>
 			<TR>
 			<TD>" . _('Section Number') . ':' . "</TD>
-			<TD><input type='Text' name='SectionID' SIZE=4 MAXLENGTH=4 value='" . $_POST['SectionID'] . "'></TD></TR>";
+			<TD><input " . (in_array('SectionID',$Errors) ?  'class="inputerror"' : '' ) ." type='Text' name='SectionID' SIZE=4 MAXLENGTH=4 value='" . $_POST['SectionID'] . "'></TD></TR>";
 	}
 	echo "<TR><TD>" . _('Section Description') . ':' . "</TD>
-		<TD><input type='Text' name='SectionName' SIZE=30 MAXLENGTH=30 value='" . $_POST['SectionName'] . "'></TD>
+		<TD><input " . (in_array('SectionID',$Errors) ?  'class="inputerror"' : '' ) ." type='Text' name='SectionName' SIZE=30 MAXLENGTH=30 value='" . $_POST['SectionName'] . "'></TD>
 		</TR>";
 	echo '</TABLE>';
 

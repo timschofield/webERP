@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 10;
 
@@ -16,6 +16,12 @@ if (isset($_GET['SelectedBankAccount'])) {
 	$SelectedBankAccount=$_POST['SelectedBankAccount'];
 }
 
+if (isset($Errors)) {
+	unset($Errors);
+}
+	
+$Errors = array();	
+
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
@@ -25,19 +31,42 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
+	$i=1;
+	
+	$sql="SELECT count(accountcode) 
+			FROM bankaccounts WHERE accountcode='".$_POST['AccountCode']."'";
+	$result=DB_query($sql, $db);
+	$myrow=DB_fetch_row($result);
 
+	if ($myrow[0]!=0 and !isset($SelectedBankAccount)) {
+		$InputError = 1;
+		prnMsg( _('The bank account code already exists in the database'),'error');
+		$Errors[$i] = 'AccountCode';
+		$i++;		
+	}
 	if (strlen($_POST['BankAccountName']) >50) {
 		$InputError = 1;
 		prnMsg(_('The bank account name must be fifty characters or less long'),'error');
-	}  elseif ( trim($_POST['BankAccountName']) == '' ) {
+		$Errors[$i] = 'AccountName';
+		$i++;		
+	}
+	if ( trim($_POST['BankAccountName']) == '' ) {
 		$InputError = 1;
 		prnMsg(_('The bank account name may not be empty.'),'error');
-	} elseif (strlen($_POST['BankAccountNumber']) >50) {
+		$Errors[$i] = 'AccountName';
+		$i++;		
+	}
+	if (strlen($_POST['BankAccountNumber']) >50) {
 		$InputError = 1;
 		prnMsg(_('The bank account number must be fifty characters or less long'),'error');
-	}  elseif (strlen($_POST['BankAddress']) >50) {
+		$Errors[$i] = 'AccountNumber';
+		$i++;		
+	}
+	if (strlen($_POST['BankAddress']) >50) {
 		$InputError = 1;
 		prnMsg(_('The bank address must be fifty characters or less long'),'error');
+		$Errors[$i] = 'BankAddress';
+		$i++;		
 	}
 
 	if (isset($SelectedBankAccount) AND $InputError !=1) {
@@ -55,9 +84,9 @@ if (isset($_POST['submit'])) {
 			prnMsg(_('Note that it is not possible to change the currency of the account once there are transactions against it'),'warn');
 		} else {
 			$sql = "UPDATE bankaccounts
-				SET bankaccountname='" . DB_escape_string($_POST['BankAccountName']) . "',
-				bankaccountnumber='" . DB_escape_string($_POST['BankAccountNumber']) . "',
-				bankaddress='" . DB_escape_string($_POST['BankAddress']) . "',
+				SET bankaccountname='" . $_POST['BankAccountName'] . "',
+				bankaccountnumber='" . $_POST['BankAccountNumber'] . "',
+				bankaddress='" . $_POST['BankAddress'] . "',
 				currcode ='" . $_POST['CurrCode'] . "'
 				WHERE accountcode = '" . $SelectedBankAccount . "'";
 		}
@@ -74,9 +103,9 @@ if (isset($_POST['submit'])) {
 						bankaddress,
 						currcode)
 				VALUES ('" . $_POST['AccountCode'] . "',
-					'" . DB_escape_string($_POST['BankAccountName']) . "',
-					'" . DB_escape_string($_POST['BankAccountNumber']) . "',
-					'" . DB_escape_string($_POST['BankAddress']) . "', 
+					'" . $_POST['BankAccountName'] . "',
+					'" . $_POST['BankAccountNumber'] . "',
+					'" . $_POST['BankAddress'] . "', 
 					'" . $_POST['CurrCode'] . "'
 					)";
 		$msg = _('The new bank account has been entered');
@@ -218,7 +247,8 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 	echo '<CENTER><TABLE> <TR><TD>' . _('Bank Account GL Code') . ':</TD><TD>';
 	echo $_POST['AccountCode'] . '</TD></TR>';
 } else { //end of if $Selectedbank account only do the else when a new record is being entered
-	echo '<CENTER><TABLE><TR><TD>' . _('Bank Account GL Code') . ":</TD><TD><Select name='AccountCode'>";
+	echo '<CENTER><TABLE><TR><TD>' . _('Bank Account GL Code') . 
+		":</TD><TD><Select " . (in_array('AccountCode',$Errors) ?  'class="selecterror"' : '' ) ." name='AccountCode'>";
 
 	$sql = "SELECT accountcode,
 			accountname
@@ -243,16 +273,22 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 }
 
 // Check if details exist, if not set some defaults
-if (!isset($_POST['BankAccountName'])) {$_POST['BankAccountName']='';}
-if (!isset($_POST['BankAccountNumber'])) {$_POST['BankAccountNumber']='';}
-if (!isset($_POST['BankAddress'])) {$_POST['BankAddress']='';}
+if (!isset($_POST['BankAccountName'])) {
+	$_POST['BankAccountName']='';
+}
+if (!isset($_POST['BankAccountNumber'])) {
+	$_POST['BankAccountNumber']='';
+}
+if (!isset($_POST['BankAddress'])) {
+	$_POST['BankAddress']='';
+}
 
 echo '<TR><TD>' . _('Bank Account Name') . ': </TD>
-			<TD><input type="Text" name="BankAccountName" value="' . $_POST['BankAccountName'] . '" SIZE=40 MAXLENGTH=50></TD></TR>
+			<TD><input ' . (in_array('AccountName',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAccountName" value="' . $_POST['BankAccountName'] . '" SIZE=40 MAXLENGTH=50></TD></TR>
 		<TR><TD>' . _('Bank Account Number') . ': </TD>
-			<TD><input type="Text" name="BankAccountNumber" value="' . $_POST['BankAccountNumber'] . '" SIZE=40 MAXLENGTH=50></TD></TR>
+			<TD><input ' . (in_array('AccountNumber',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAccountNumber" value="' . $_POST['BankAccountNumber'] . '" SIZE=40 MAXLENGTH=50></TD></TR>
 		<TR><TD>' . _('Bank Address') . ': </TD>
-			<TD><input type="Text" name="BankAddress" value="' . $_POST['BankAddress'] . '" SIZE=40 MAXLENGTH=50></TD></TR>
+			<TD><input ' . (in_array('BankAddress',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAddress" value="' . $_POST['BankAddress'] . '" SIZE=40 MAXLENGTH=50></TD></TR>
 		<TR><TD>' . _('Currency Of Account') . ': </TD><TD><select name="CurrCode">';
 
 if (!isset($_POST['CurrCode']) OR $_POST['CurrCode']==''){

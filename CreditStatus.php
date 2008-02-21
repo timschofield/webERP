@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 3;
 include('includes/session.inc');
@@ -12,24 +12,43 @@ if (isset($_GET['SelectedReason'])){
 	$SelectedReason = $_POST['SelectedReason'];
 }
 
+if (isset($Errors)) {
+	unset($Errors);
+}
+$Errors = array();
+
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
+	$i=1;
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
 
 	//first off validate inputs are sensible
 
+	$sql="SELECT count(reasoncode) 
+			FROM holdreasons WHERE reasoncode='".$_POST['ReasonCode']."'";
+	$result=DB_query($sql, $db);
+	$myrow=DB_fetch_row($result);
+
+	if ($myrow[0]!=0 and !isset($SelectedReason)) {
+		$InputError = 1;
+		prnMsg( _('The credit status code already exists in the database'),'error');
+		$Errors[$i] = 'StatusCode';
+		$i++;		
+	}
 	if (!is_long((int)$_POST['ReasonCode'])) {
 		$InputError = 1;
 		prnMsg(_('The status code name must be an integer'),'error');
-	} elseif (strlen($_POST['ReasonDescription']) > 30) {
+	} 
+	if (strlen($_POST['ReasonDescription']) > 30) {
 		$InputError = 1;
 		prnMsg(_('The credit status description must be thirty characters or less long'),'error');
 	}
 
+	$msg='';
 
 	if (isset($SelectedReason) AND $InputError !=1) {
 
@@ -37,12 +56,12 @@ if (isset($_POST['submit'])) {
 
 		if (isset($_POST['DisallowInvoices']) and $_POST['DisallowInvoices']=='on'){
 			$sql = "UPDATE holdreasons SET 
-					reasondescription='" . DB_escape_string($_POST['ReasonDescription']) . "', 
+					reasondescription='" . $_POST['ReasonDescription'] . "', 
 					dissallowinvoices=1 
 					WHERE reasoncode = $SelectedReason";
 		} else {
 			$sql = "UPDATE holdreasons SET 
-					reasondescription='" . DB_escape_string($_POST['ReasonDescription']) . "', 
+					reasondescription='" . $_POST['ReasonDescription'] . "', 
 					dissallowinvoices=0 
 					WHERE reasoncode = $SelectedReason";
 		}
@@ -60,7 +79,7 @@ if (isset($_POST['submit'])) {
 					dissallowinvoices) 
 					VALUES (' . 
 					$_POST['ReasonCode'] . ", '" . 
-					DB_escape_string($_POST['ReasonDescription']) . "', 1)";
+					$_POST['ReasonDescription'] . "', 1)";
 		} else {
 			$sql = 'INSERT INTO holdreasons (
 					reasoncode, 
@@ -68,7 +87,7 @@ if (isset($_POST['submit'])) {
 					dissallowinvoices) 
 					VALUES (' . 
 					$_POST['ReasonCode'] . ", '" . 
-					DB_escape_string($_POST['ReasonDescription']) . "', 0)";
+					$_POST['ReasonDescription'] . "', 0)";
 		}
 
 		$msg = _('A new credit status record has been inserted');

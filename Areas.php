@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
 
 		$sql = "UPDATE areas SET
 				areacode='" . $_POST['AreaCode'] . "',
-				areadescription='" . DB_escape_string($_POST['AreaDescription']) . "'
+				areadescription='" . $_POST['AreaDescription'] . "'
 			WHERE areacode = '$SelectedArea'";
 
 		$msg = _('Area code') . ' ' . $SelectedArea  . ' ' . _('has been updated');
@@ -81,7 +81,7 @@ if (isset($_POST['submit'])) {
 						areadescription)
 				VALUES (
 					'" . $_POST['AreaCode'] . "',
-					'" . DB_escape_string($_POST['AreaDescription']) . "'
+					'" . $_POST['AreaDescription'] . "'
 					)";
 
 		$SelectedArea =$_POST['AreaCode'];

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 10;
 
@@ -9,14 +9,6 @@ $title = _('Account Groups');
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
-
-foreach ($_POST as $key => $value) {
-	$_POST[$key] = DB_escape_string($value);
-}
-
-foreach ($_GET as $key => $value) {
-	$_GET[$key] = DB_escape_string($value);
-}
 
 function CheckForRecursiveGroup ($ParentGroupName, $GroupName, $db) {
 
@@ -57,7 +49,18 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 	$i=1;
+	
+	$sql="SELECT count(groupname) 
+			FROM accountgroups WHERE groupname='".$_POST['GroupName']."'";
+	$result=DB_query($sql, $db);
+	$myrow=DB_fetch_row($result);
 
+	if ($myrow[0]!=0 and $_POST['SelectedAccountGroup']=='') {
+		$InputError = 1;
+		prnMsg( _('The account group name already exists in the database'),'error');
+		$Errors[$i] = 'GroupName';
+		$i++;		
+	}
 	if (ContainsIllegalCharacters($_POST['GroupName'])) {
 		$InputError = 1;
 		prnMsg( _('The account group name cannot contain the character') . " '&' " . _('or the character') ." '",'error');
@@ -118,7 +121,7 @@ if (isset($_POST['submit'])) {
 				SET groupname='" . $_POST['GroupName'] . "',
 					sectioninaccounts=" . $_POST['SectionInAccounts'] . ",
 					pandl=" . $_POST['PandL'] . ",
-					sequenceintb=" . DB_escape_string($_POST['SequenceInTB']) . ",
+					sequenceintb=" . $_POST['SequenceInTB'] . ",
 					parentgroupname='" . $_POST['ParentGroupName'] . "'
 				WHERE groupname = '" . $_POST['SelectedAccountGroup'] . "'";
 
