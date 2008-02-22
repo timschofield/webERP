@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 10;
 
@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedTerms could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
-		if ($_POST['DaysOrFoll']=='on') {
+		if (isset($_POST['DaysOrFoll']) and $_POST['DaysOrFoll']=='on') {
 			$sql = "UPDATE paymentterms SET
 					terms='" . DB_escape_string($_POST['Terms']) . "',
 					dayinfollowingmonth=0,

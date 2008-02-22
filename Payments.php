@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 5;
 
@@ -19,7 +19,7 @@ if (isset($_POST['PaymentCancelled'])) {
   exit();
 }
 
-if ($_GET['NewPayment']=='Yes'){
+if (isset($_GET['NewPayment']) and $_GET['NewPayment']=='Yes'){
 	unset($_SESSION['PaymentDetail']->GLItems);
 	unset($_SESSION['PaymentDetail']);
 }
@@ -96,7 +96,7 @@ if (isset($_GET['SupplierID'])){
 	}
 }
 
-if ($_POST['BankAccount']!=''){
+if (isset($_POST['BankAccount']) and $_POST['BankAccount']!=''){
 	$_SESSION['PaymentDetail']->Account=$_POST['BankAccount'];
 	/*Get the bank account currency and set that too */
 	$ErrMsg = _('Could not get the currecny of the bank account');
@@ -107,21 +107,21 @@ if ($_POST['BankAccount']!=''){
 } else {
 	$_SESSION['PaymentDetail']->AccountCurrency =$_SESSION['CompanyRecord']['currencydefault'];
 }
-if ($_POST['DatePaid']!='' AND Is_Date($_POST['DatePaid'])){
+if (isset($_POST['DatePaid']) and $_POST['DatePaid']!='' AND Is_Date($_POST['DatePaid'])){
 	$_SESSION['PaymentDetail']->DatePaid=$_POST['DatePaid'];
 }
-if ($_POST['ExRate']!=''){
+if (isset($_POST['ExRate']) and $_POST['ExRate']!=''){
 	$_SESSION['PaymentDetail']->ExRate=$_POST['ExRate']; //ex rate between payment currency and account currency
 }
-if ($_POST['FunctionalExRate']!=''){
+if (isset($_POST['FunctionalExRate']) and $_POST['FunctionalExRate']!=''){
 	$_SESSION['PaymentDetail']->FunctionalExRate=$_POST['FunctionalExRate']; //ex rate between payment currency and account currency
 }
-if ($_POST['Paymenttype']!=''){
+if (isset($_POST['Paymenttype']) and $_POST['Paymenttype']!=''){
 	$_SESSION['PaymentDetail']->Paymenttype = $_POST['Paymenttype'];
 }
 
 
-if ($_POST['Currency']!=''){
+if (isset($_POST['Currency']) and $_POST['Currency']!=''){
 	$_SESSION['PaymentDetail']->Currency=$_POST['Currency']; //payment currency
 	/*Get the exchange rate between the functional currecny and the payment currency*/
 	$result = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['PaymentDetail']->Currency . "'",$db);
@@ -165,17 +165,17 @@ if ($_POST['Currency']!=''){
 }
 
 
-if ($_POST['Narrative']!=''){
+if (isset($_POST['Narrative']) and $_POST['Narrative']!=''){
 	$_SESSION['PaymentDetail']->Narrative=$_POST['Narrative'];
 }
-if ($_POST['Amount']!=""){
+if (isset($_POST['Amount']) and $_POST['Amount']!=""){
 	$_SESSION['PaymentDetail']->Amount=$_POST['Amount'];
 } else {
 	if (!isset($_SESSION['PaymentDetail']->Amount)) {
 	  $_SESSION['PaymentDetail']->Amount=0;
   }
 }
-if ($_POST['Discount']!=''){
+if (isset($_POST['Discount']) and $_POST['Discount']!=''){
 	$_SESSION['PaymentDetail']->Discount=$_POST['Discount'];
 } else {
 	if (!isset($_SESSION['PaymentDetail']->Discount)) {
@@ -586,7 +586,7 @@ if (isset($_POST['Cancel'])){
 }
 
 /*set up the form whatever */
-if ($_POST['DatePaid']=="" OR !Is_Date($_SESSION['PaymentDetail']->DatePaid)){
+if (isset($_POST['DatePaid']) and ($_POST['DatePaid']=="" OR !Is_Date($_SESSION['PaymentDetail']->DatePaid))){
 	 $_POST['DatePaid']= Date($_SESSION['DefaultDateFormat']);
 	 $_SESSION['PaymentDetail']->DatePaid = $_POST['DatePaid'];
 }
@@ -747,7 +747,7 @@ payment methods can be modified from the setup tab of the main menu under paymen
 
 foreach ($PaytTypes as $PaytType) {
 
-	if ($_POST['Paymenttype']==$PaytType){
+	if (isset($_POST['Paymenttype']) and $_POST['Paymenttype']==$PaytType){
 		echo '<option selected value="' . $PaytType . '">' . $PaytType;
 	} else {
 		echo '<option Value="' . $PaytType . '">' . $PaytType;
@@ -755,8 +755,17 @@ foreach ($PaytTypes as $PaytType) {
 } //end foreach
 echo '</select></td></tr>';
 
+if (!isset($_POST['ChequeNum'])) {
+	$_POST['ChequeNum']='';
+}
+
 echo '<tr><td>' . _('Cheque Number') . ':</td>
 			<td><input type="text" name="ChequeNum" maxlength=8 size=10 value="' . $_POST['ChequeNum'] . '"></td></tr>';
+
+if (!isset($_POST['Narrative'])) {
+	$_POST['Narrative']='';
+}
+
 echo '<tr><td>' . _('Ref') . ':</td>
 			<td colspan=2><input type="text" name="Narrative" maxlength=80 size=82 value="' . $_POST['Narrative'] . '"></td></tr>';
 echo '<tr><td colspan=3><center><input type="submit" name="UpdateHeader" value="' . _('Update'). '"></center></td></tr>';
