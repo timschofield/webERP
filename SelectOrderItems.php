@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.63 $ */
+/* $Revision: 1.64 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -657,10 +657,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		while ($myrow=DB_fetch_array($result_CustSelect)) {
 
 			if ($k==1){
-				echo '<tr bgcolor="#CCCCCC">';
+				echo '<tr class="EvenTableRows">';
 				$k=0;
 			} else {
-				echo '<tr bgcolor="#EEEEEE">';
+				echo '<tr class="OddTableRows">';
 				$k=1;
 			}
 

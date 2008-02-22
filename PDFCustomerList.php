@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -411,7 +411,7 @@ if (isset($_POST['PrintPDF'])){
 	echo '<OPTION SELECTED VALUE="All">'. _('All customers');
 	echo '<OPTION VALUE="GreaterThan">'. _('Sales Greater Than');
 	echo '<OPTION VALUE="LessThan">'. _('Sales Less Than');
-	echo '</SELECT>';
+	echo '</SELECT></TD><TD>';
 
 	echo '<INPUT TYPE="text" NAME="ActivityAmount" SIZE=8 MAXLENGTH=8></TD></TR>';
 

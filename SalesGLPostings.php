@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 $PageSecurity = 10;
 
 include('includes/session.inc');
@@ -218,21 +218,21 @@ if (!isset($SelectedSalesPostingID)) {
 		$result = DB_query($SQL,$db);
 		
 		echo '<CENTER><table border=1>';
-		echo "<tr><td class='tableheader'>" . _('Area') . "</td>
-			<td class='tableheader'>" . _('Stock Category') . "</td>
-			<td class='tableheader'>" . _('Sales Type') . "</td>
-			<td class='tableheader'>" . _('Sales Account') . "</td>
-			<td class='tableheader'>" . _('Discount Account') . "</td>
+		echo "<tr><th>" . _('Area') . "</th>
+			<th>" . _('Stock Category') . "</th>
+			<th>" . _('Sales Type') . "</th>
+			<th>" . _('Sales Account') . "</th>
+			<th>" . _('Discount Account') . "</th>
 			</tr>";
 	
 		$k=0; //row colour counter
 	
 		while ($myrow = DB_fetch_row($result)) {
 			if ($k==1){
-				echo "<tr bgcolor='#CCCCCC'>";
+				echo '<tr class="EvenTableRows">';
 				$k=0;
 			} else {
-				echo "<tr bgcolor='#EEEEEE'>";
+				echo '<tr class="OddTableRows">';
 				$k=1;
 			}
 	
