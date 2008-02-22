@@ -1,6 +1,7 @@
 <?php
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
+require_once ($PathPrefix .'includes/MiscFunctions.php');
 if (!isset($_SESSION['DatabaseName'])){
 	if (isset($_POST['CompanyNameField'])){
 		if (is_dir('companies/' . $_POST['CompanyNameField']) AND $_POST['CompanyNameField'] != '..'){
