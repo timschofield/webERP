@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 15;
 
@@ -89,7 +89,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewCompany'])) {
 				} elseif ($dbType =='mysql') { //its a mysql db < 4.1
 					mysql_select_db($_POST['NewCompany'],$db);
 					$SQLScriptFile = file('./sql/mysql/weberp-new.sql');
-				} elseif ($dbType =='mysqli' { //its a mysql db using the >4.1 library functions
+				} elseif ($dbType =='mysqli') { //its a mysql db using the >4.1 library functions
 					mysqli_select_db($db,$_POST['NewCompany']);
 					$SQLScriptFile = file('./sql/mysql/weberp-new.sql');
 				}
