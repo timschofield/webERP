@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -197,7 +197,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 		echo '<tr class="EvenTableRows">';
 		$k=0;
 	} else {
-		echo '<tr class="EvenTableRows">';
+		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
 
