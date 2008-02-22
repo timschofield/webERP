@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.31 $ */
+/* $Revision: 1.32 $ */
 
 $PageSecurity = 1;
 
@@ -430,7 +430,7 @@ If (isset($PrintPDF)
 			}
 			/* Add Images for Visa / Mastercard / Paypal */
 		$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -280,$YPos-20,0,40);
-			$pdf->addText($Page_Width-$Right_Margin-472, $YPos - ($line_height*3)+32,$FontSize, _('National Bank: BSB 083337 Account 035138130'));
+			$pdf->addText($Page_Width-$Right_Margin-472, $YPos - ($line_height*3)+32,$FontSize, '');
 			
 			
 			$FontSize=10;
