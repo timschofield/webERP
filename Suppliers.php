@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 $PageSecurity = 5;
 
@@ -572,7 +572,7 @@ if (!isset($SupplierID)) {
 
 	$result=DB_query('SELECT id, coyname FROM factorcompanies', $db);
 
-	echo '<TR><TD>' . _('Factor Comapny') . ":</TD><TD><SELECT NAME='FactorID'>";
+	echo '<TR><TD>' . _('Factor Company') . ":</TD><TD><SELECT NAME='FactorID'>";
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['FactorID']) and $_POST['FactorID'] == $myrow['id']){
