@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.36 $ */
+/* $Revision: 1.37 $ */
 
 $PageSecurity =15;
 
@@ -773,7 +773,7 @@ echo '</SELECT></TD><TD>' . _('Setting this parameter to Yes prevents invoicing 
 
 //Months of Audit Trail to Keep
 echo '<TR><TD>' . _('Months of Audit Trail to Retain') . ':</TD>
-	<TD><input type="Text" Name="X_MonthsAuditTrail" SIZE=3 MAXLENGTH=2 value="' . $_SESSION['MonthsAuditTrail'] . '"></TD><TD>&nbsp;</TD>
+	<TD><input type="Text" Name="X_MonthsAuditTrail" SIZE=3 MAXLENGTH=2 value="' . $_SESSION['MonthsAuditTrail'] . '"></TD><TD>' . _('If this parameter is set to 0 (zero) then no audit trail is retained. An audit trail is a log of which users performed which additions updates and deletes of database records. The full SQL is retained') . '</TD>
 </TR>';
 
 
