@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.31 $ */
+/* $Revision: 1.32 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
@@ -9,7 +9,7 @@
 	if (!headers_sent()){
 		header('Content-type: text/html; charset=' . _('ISO-8859-1'));
 	}
-	echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">';
+	echo '<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">';
 	
 	
 	echo '<html><head><title>' . $title . '</title>';
@@ -17,58 +17,64 @@
 	echo '<link REL="icon" HREF="' . $rootpath.'/favicon.ico">';
 	echo '<meta http-equiv="Content-Type" content="text/html; charset=' . _('ISO-8859-1') . '">';
 	echo '<link href="'.$rootpath. '/css/'. $_SESSION['Theme'] .'/default.css" REL="stylesheet" TYPE="text/css">';
-	/*
-	echo '<script src="' . $rootpath .'/includes/num_date.js" language="JavaScript"></script>';
-	*/
-	
-	echo '</HEAD>';
+		
+	echo '</head>';
 
-	echo '<BODY>';
-	echo '<TABLE CLASS="callout_main" CELLPADDING="0" CELLSPACING="0">';
-	echo '<TR>';
-	echo '<TD COLSPAN="2" ROWSPAN="2">';
+	echo '<body>';
+	echo '<table class="callout_main" cellpadding="0" cellspacing="0">';
+	echo '<tr>';
+	echo '<td colspan="2" rowspan="2">';
 
-	echo '<TABLE CLASS="main_page" ALIGN="right" CELLPADDING="0" CELLSPACING="0">';
-	echo '<TR>';
-	echo '<TD>';
-	echo '<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0" >';
-	echo '<TR>';
-	echo '<TD>';
+	echo '<table class="main_page" align="right" cellpadding="0" cellspacing="0">';
+	echo '<tr>';
+	echo '<td>';
+	echo '<table width="100%" border="0" cellpadding="0" cellspacing="0" >';
+	echo '<tr>';
+	echo '<td>';
 
 	if ($title AND substr($title,0,4) != 'Help') {
-		echo '<TABLE CELLPADDING="0" CELLSPACING="0" BORDER="0" id="quick_menu" CLASS="quick_menu">';
-		echo '<TR>';
-		echo '<TD ALIGN="left" WIDTH="100%" CLASS="quick_menu_left">';
-		echo  $_SESSION['CompanyRecord']['coyname'] . ': <A HREF="' .  $rootpath . '/UserSettings.php?' . SID . '">' . $_SESSION['UsersRealName'] . '</A>';
+		echo '<table cellpadding="0" cellspacing="0" border="0" id="quick_menu" class="quick_menu">';
+		echo '<tr>';
+		echo '<td align="left" width="100%" class="quick_menu_left">';
+		echo  DB_escape_string($_SESSION['CompanyRecord']['coyname']) . ': <A HREF="' .  $rootpath . '/UserSettings.php?' . SID . '">' . DB_escape_string($_SESSION['UsersRealName']) . '</A>';
 		echo '<BR>' . $title . '</TD>';
 		
-		echo '<TD CLASS="quick_menu_tabs">';
-		echo '<TABLE CELLPADDING="0" CELLSPACING="0" CLASS="quick_menu_tabs"><TR>';
-		echo '<TD CLASS="quick_menu_tab" ALIGN="center"><A ACCESSKEY="1" HREF="' .  $rootpath . '/index.php?' . SID . '"><U>1</U> ' . _('Main Menu') . '</A></TD>';
+		echo '<td class="quick_menu_tabs">';
+		echo '<table cellpadding="0" cellspacing="0" class="quick_menu_tabs"><tr>';
+		echo '<td class="quick_menu_tab" align="center"><a accesskey="1" href="' .  $rootpath . '/index.php?' . SID . '"><u>1</u> ' . _('Main Menu') . '</a></td>';
 
 		if (count($_SESSION['AllowedPageSecurityTokens'])>1){
 
-			echo '<TD CLASS="quick_menu_tab" ALIGN="center"><A ACCESSKEY="2" HREF="' .  $rootpath . '/SelectCustomer.php?' . SID . '"><U>2</U> ' . _('Customers') . '</A></TD>';
+			echo '<td class="quick_menu_tab" align="center"><a accesskey="2" href="' .  $rootpath . '/SelectCustomer.php?' . SID . '"><u>2</u> ' . _('Customers') . '</a></td>';
 
-			echo '<TD CLASS="quick_menu_tab" ALIGN="center"><A ACCESSKEY="3" HREF="' .  $rootpath . '/SelectProduct.php?' . SID . '"><U>3</U> ' . _('Items') . '</A></TD>';
+			echo '<td class="quick_menu_tab" align="center"><a accesskey="3" href="' .  $rootpath . '/SelectProduct.php?' . SID . '"><u>3</u> ' . _('Items') . '</a></td>';
 
-			echo '<TD CLASS="quick_menu_tab" ALIGN="center"><A ACCESSKEY="4" HREF="' .  $rootpath . '/SelectSupplier.php?' . SID . '"><U>4</U> ' . _('Suppliers') . '</A></TD>';
-
-			echo '<TD CLASS="quick_menu_tab" ALIGN="center"><A TARGET="_blank" ACCESSKEY="8" HREF="' .  $rootpath . '/doc/Manual/ManualContents.php?' . SID . '"><U>8</U> ' . _('Manual') . '</A></TD>';
-
+			echo '<td class="quick_menu_tab" align="center"><A ACCESSKEY="4" HREF="' .  $rootpath . '/SelectSupplier.php?' . SID . '"><u>4</u> ' . _('Suppliers') . '</a></td>';
+			
+			$DefaultManualLink = '<td class="quick_menu_tab" align="center"><a target="_blank" accesskey="8" href="' .  $rootpath . '/doc/Manual/ManualContents.php?' . SID . '"><u>8</u> ' . _('Manual') . '</A></TD>';
+						
+			if (substr($_SESSION['Language'],0,2) !='en'){
+				if (file_exists('locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php')){
+					echo '<td class="quick_menu_tab" align="center"><a target="_blank" accesskey="8" href="' .  $rootpath . '/locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php' . SID . '"><u>8</u> ' . _('Manual') . '</a></td>';		
+				} else {
+					echo $DefaultManualLink;
+				}
+			} else {
+					echo $DefaultManualLink;
+			}
 		}
 
-		echo "<TD CLASS=\"quick_menu_tab\" ALIGN=\"center\"><A ACCESSKEY=\"0\" HREF=\"" . $rootpath . '/Logout.php?' . SID . "\" onclick=\"return confirm('" . _('Are you sure you wish to logout?') . "');\"><U>0</U> "  . _('Logout') . '</A></TD>'; 
+		echo "<td class=\"quick_menu_tab\" align=\"center\"><a accesskey=\"0\" href=\"" . $rootpath . '/Logout.php?' . SID . "\" onclick=\"return confirm('" . _('Are you sure you wish to logout?') . "');\"><u>0</u> "  . _('Logout') . '</a></td>'; 
 		
 		
 
-		echo '</TR></TABLE>';
-		echo '</TD></TR></TABLE>';
+		echo '</tr></table>';
+		echo '</td></tr></table>';
 
 	}
 
-echo '</TD>';
-echo '</TR>';
-echo '</TABLE>';
+echo '</td>';
+echo '</tr>';
+echo '</table>';
 
 ?>

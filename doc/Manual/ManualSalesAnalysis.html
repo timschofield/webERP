@@ -112,6 +112,38 @@ To create another column for the gross margin for January - same as above - but 
 <br><br>
 Now to run the report click on the "Maintain Report Headers" link and look down the list of defined reports to find the "Sales by Area and Rep" report and click on the link to "Make PDF Report" - the report will run and a pdf will be displayed...
 <br><br>
+=======
+It may be worth an example to create a report to show the sales value and gross profit for each sales area and each salesman that sells in this area:
+<br><br>
+Receivables ->Inquiries & Reports -> Sales Analysis Reports
+<br><br>
+Under Define a New Report - Report Heading
+<br>
+Enter a heading "Sales By Area and Rep"
+<br><br>
+Select Sales Area for "Group By 1"  then enter 0 in the "From" box - since all sales area codes will be greater than 0 and then in the "To" box enter "ZZZZZ" - hopefully the sales area codes you have defined will fall between 0 and ZZZZZ - if you just want a single area then enter the area code you want in both the "From" and the "To" boxes.
+<br><br>
+Select "Sales Person" for "Group By 2" then enter 0 in the "From" box - since all sales people codes will be greater than 0 and then in the "To" box enter "ZZZZZ" - hopefully the sales rep codes you have defined will fall between 0 and ZZZZZ - if you just want a single rep. then enter the rep code you want in both the "From" and the "To" boxes.
+<br><br>
+Click on enter information to commit this report to the database.
+<br><br>
+The list of reports will show with our new report "Sales By Area and Rep" - click on the link to define columns for this report.
+<br><br>
+Enter column 1 in the column number
+<br>Heading 1 enter - "sales value" -  this is the top row of the column heading
+<br>Heading 2  enter - "January 08" this is the second row of the column heading
+<br><br>
+Now look up the period number that January 08 is in and enter the period number in both the "From period" and the "To period"  if you wanted to show a range of periods sales value you could choose any range  - where the to period is before the from period!
+Since we want the display the sales value for January we need to Select the "Net Sales Value" in the "Data to Show" select box - the column can contain any of the data selections in that box. The Gross Value option is the sales value before on invoice discounts are taken into account - in most circumstances you will want the net sales value.
+<br><br>
+The budget or actual box needs to be changed from budget to actual. If you want to compare against budgeted amounts then the sales budgets need to be imported. (there is currently no user interface to enter budgeted manually).
+<br><br>
+Click Enter information and the single column definition will show at the top of the page and new empty fields for adding a new column.
+ <br><br>
+To create another column for the gross margin for January - same as above - but entering as column 2 and changing the heading text from Sales Value to Gross Profit - same period range. This time select "Gross Profit" in the "Data To Show" and "Actual" for the Budget or Actual field. Click Enter Information again to accept the 2nd column - the two defined columns should show on screen.
+<br><br>
+Now to run the report click on the "Maintain Report Headers" link and look down the list of defined reports to find the "Sales by Area and Rep" report and click on the link to "Make PDF Report" - the report will run and a pdf will be displayed...
+<br><br>
 <b>Calculated Fields Example</b>
 <br><br>
 To take an example where we have a column 1 that is the sales value in January 2008 and column 2 that was the sales value for January 2007 - we wish to have a 3rd column that shows the % of last year that this years sales represents.
