@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.55 $ */
+/* $Revision: 1.56 $ */
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -28,11 +28,19 @@ if (!isset($_SESSION['AttemptsCounter'])){
 }
 
 foreach ($_POST as $key => $value) {
-	$_POST[$key] = DB_escape_string($value);
+	if (gettype($value) != "array") {
+		$_POST[$key] = DB_escape_string($value);
+	} else {
+		foreach ($value as $key1 => $value1) {
+			$value[$key1] = DB_escape_string($value1);
+		}
+	}
 }
 
 foreach ($_GET as $key => $value) {
-	$_GET[$key] = DB_escape_string($value);
+	if (gettype($value) != "array") {
+		$_GET[$key] = DB_escape_string($value);
+	}
 }
 
 if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
@@ -51,7 +59,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 		$_SESSION['AttemptsCounter']++;
 
 
-		$theme = 'silverwolf';
+		$theme = 'green';
 
 		// Show login screen
 		if (!isset($_POST['UserNameEntryField']) or $_POST['UserNameEntryField'] == '') {
