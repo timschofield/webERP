@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -883,7 +883,7 @@ if (((isset($_SESSION['CustomerRecord'])
 	echo '<tr><td>' . _('Narrative') . ':</td>
 		<td><input type="text" name="Narrative" maxlength=30 size=32 value="' . $_POST['Narrative'] . '"></td></tr>';
 	echo '</table>';
-	echo '<input type="submit" name="Process" value="' . _('Accept') . '"><input type="submit" name="Cancel" value="' . _('Cancel') . '">';
+	echo '<input type="submit" name="Process" value="' . _('Accept') . '">';
 
 } elseif (isset($_SESSION['ReceiptBatch']) && !isset($_POST['GLEntry'])){
 
