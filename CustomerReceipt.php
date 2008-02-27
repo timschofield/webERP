@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -46,14 +46,14 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){ //always proc
 		$_POST['DateBanked'] = Date($_SESSION['DefaultDateFormat']);
 	}
 	$_SESSION['ReceiptBatch']->DateBanked = $_POST['DateBanked'];
-	if ($_POST['ExRate']!=''){
+	if (isset($_POST['ExRate']) and $_POST['ExRate']!=''){
 		if (is_numeric($_POST['ExRate'])){
 			$_SESSION['ReceiptBatch']->ExRate = $_POST['ExRate'];
 		} else {
 			prnMsg(_('The exchange rate entered should be numeric'),'warn');
 		}
 	}
-	if ($_POST['FunctionalExRate']!=''){
+	if (isset($_POST['FunctionalExRate']) and $_POST['FunctionalExRate']!=''){
 		if (is_numeric($_POST['FunctionalExRate'])){
 			$_SESSION['ReceiptBatch']->FunctionalExRate=$_POST['FunctionalExRate']; //ex rate between receipt currency and account currency
 		} else {
@@ -740,7 +740,9 @@ foreach ($ReceiptTypes as $RcptType) {
      }
 }
 echo '</select></td></tr>';
-
+if (!isset($_SESSION['ReceiptBatch']->BatchNarrative)) {
+	$_SESSION['ReceiptBatch']->BatchNarrative='';
+}
 echo '<tr><td>' . _('Narrative') . ':</td><td><input type="text" name="BatchNarrative" maxlength=50 size=52 value="' . $_SESSION['ReceiptBatch']->BatchNarrative . '"></td></tr>';
 echo '<tr><td colspan=3><center><input type=submit name="BatchInput" Value="' . _('Accept') . '"></center></td></tr>';
 echo '</table>
@@ -867,6 +869,18 @@ if (((isset($_SESSION['CustomerRecord'])
 			OR isset($_POST['GLEntry'])) 
 				AND isset($_SESSION['ReceiptBatch'])){
 
+	if (!isset($_POST['Amount'])) {
+		$_POST['Amount']=0;
+	}
+	if (!isset($_POST['Discount'])) {
+		$_POST['Discount']=0;
+	}
+	if (!isset($_POST['PayeeBankDetail'])) {
+		$_POST['PayeeBankDetail']='';
+	}
+	if (!isset($_POST['Narrative'])) {
+		$_POST['Narrative']='';
+	}
 	echo '<tr><td>' . _('Amount of Receipt') . ':</td>
 		<td><input type="text" name="Amount" maxlength=12 size=13 value="' . $_POST['Amount'] . '"></td>
 	</tr>';
@@ -916,7 +930,7 @@ if (((isset($_SESSION['CustomerRecord'])
 		$j = 1;
 		$k = 0; //row counter to determine background colour
 
-		while ($myrow=DB_fetch_array($result)) {
+		while ($myrow=DB_fetch_array($CustomerSearchResult)) {
 
 			if ($k==1){
 				echo '<tr class="OddTableRows">';
