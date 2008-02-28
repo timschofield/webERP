@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 $PageSecurity = 9;
 
 include('includes/session.inc');
@@ -212,7 +212,7 @@ or deletion of the records*/
 					$myrow[2],
 					$myrow[3],
 					$myrow[4],
-					$myrow[0],
+					number_format(GetCurrencyRate($myrow[1]),5),
 					$_SERVER['PHP_SELF'] . '?' . SID,
 					$myrow[1],
 					_('Edit'),

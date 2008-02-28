@@ -85,7 +85,7 @@ class XmlElement {
   var $children;
 };
 
-function currency_rates_xml_to_object() {
+function GetCurrencyRate($CurrCode) {
   $xml = file_get_contents('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml');
   $parser = xml_parser_create();
   xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
@@ -113,6 +113,18 @@ function currency_rates_xml_to_object() {
       unset($stack[count($stack) - 1]);
     }
   }
-  print_r ($elements[0]);  // the single top-level element
+ 
+  
+  $Currencies = array();
+  foreach ($elements[0]->children[2]->children[0]->children as $CurrencyDetails){
+  	$Currencies[$CurrencyDetails->attributes['currency']]= $CurrencyDetails->attributes['rate'] ;
+  }
+  
+  if (!isset($Currencies[$CurrCode])){
+  	prnMsg(_('The currency is not in the list of currencies available from the server'),'error');
+  } else {
+  	return $Currencies[$CurrCode]/$Currencies[$_SESSION['CompanyRecord']['currencydefault']];
+  }
+
 }
 ?>
