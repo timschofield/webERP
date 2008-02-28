@@ -2,7 +2,7 @@
 
 $PageSecurity = 2;
 include('includes/session.inc');
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 
 If (isset($_POST['PrintPDF'])
@@ -23,7 +23,7 @@ If (isset($_POST['PrintPDF'])
 
       /*Now figure out the aged analysis for the customer range under review */
 	if (trim($_POST['Salesman'])!=''){
-		$SalesLimit = " and debtorsmaster.debtorno in (SELECT DISTINCT debtorno FROM custbranch where salesman = ".$_POST['Salesman'].") ";
+		$SalesLimit = " and debtorsmaster.debtorno in (SELECT DISTINCT debtorno FROM custbranch where salesman = '".$_POST['Salesman']."') ";
 	} else {
 		$SalesLimit = "";
 	}
@@ -458,16 +458,16 @@ If (isset($_POST['PrintPDF'])
 
 		echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
 
-		echo '<TR><TD>' . _('From Customer Code') . ':' . "</FONT></TD><TD><input Type=text maxlength=6 size=7 name=FromCriteria value='0'></TD></TR>";
-		echo '<TR><TD>' . _('To Customer Code') . ':' . "</TD><TD><input Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></TD></TR>";
+		echo '<TR><TD>' . _('From Customer Code') . ':' . "</FONT></TD><TD><input tabindex='1' Type=text maxlength=6 size=7 name=FromCriteria value='0'></TD></TR>";
+		echo '<TR><TD>' . _('To Customer Code') . ':' . "</TD><TD><input tabindex='2' Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></TD></TR>";
 
-		echo '<TR><TD>' . _('All balances or overdues only') . ':' . "</TD><TD><SELECT name='All_Or_Overdues'>";
+		echo '<TR><TD>' . _('All balances or overdues only') . ':' . "</TD><TD><SELECT tabindex='3' name='All_Or_Overdues'>";
 		echo "<OPTION SELECTED Value='All'>" . _('All customers with balances');
 		echo "<OPTION Value='OverduesOnly'>" . _('Overdue accounts only');
 		echo "<OPTION Value='HeldOnly'>" . _('Held accounts only');
 		echo '</SELECT></TD></TR>';
 
-		echo '<TR><TD>' . _('Only Show Customers Of') . ':' . "</TD><TD><SELECT name='Salesman'>";
+		echo '<TR><TD>' . _('Only Show Customers Of') . ':' . "</TD><TD><SELECT tabindex='4' name='Salesman'>";
 
 		$sql = 'SELECT salesmancode, salesmanname FROM salesman';
 
@@ -479,7 +479,7 @@ If (isset($_POST['PrintPDF'])
 		echo '</SELECT></TD></TR>';
 
 
-		echo '<TR><TD>' . _('Only show customers trading in') . ':' . "</TD><TD><SELECT name='Currency'>";
+		echo '<TR><TD>' . _('Only show customers trading in') . ':' . "</TD><TD><SELECT tabindex='5' name='Currency'>";
 
 		$sql = 'SELECT currency, currabrev FROM currencies';
 
@@ -496,12 +496,12 @@ If (isset($_POST['PrintPDF'])
 		echo '</SELECT></TD></TR>';
 
 		echo '<TR><TD>' . _('Summary or detailed report') . ':' . "</TD>
-			<TD><SELECT name='DetailedReport'>";
+			<TD><SELECT tabindex='6' name='DetailedReport'>";
 		echo "<OPTION SELECTED Value='No'>" . _('Summary Report');
 		echo "<OPTION Value='Yes'>" . _('Detailed Report');
 		echo '</SELECT></TD></TR>';
 
-		echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') , "'></CENTER>";
+		echo "</TABLE><INPUT tabindex='7' TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') , "'></CENTER>";
 	}
 	include('includes/footer.inc');
 

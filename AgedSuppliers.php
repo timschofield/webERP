@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -271,20 +271,20 @@ If (isset($_POST['PrintPDF'])
 		echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD='POST'><CENTER><TABLE>";
 
 		echo '<TR><TD>' . _('From Supplier Code') . ":</FONT></TD>
-			<TD><input Type=text maxlength=6 size=7 name=FromCriteria value='1'></TD>
+			<TD><input tabindex='1' Type=text maxlength=6 size=7 name=FromCriteria value='1'></TD>
 		</TR>";
 		echo '<TR><TD>' . _('To Supplier Code') . ":</TD>
-			<TD><input Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></TD>
+			<TD><input tabindex='2' Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></TD>
 		</TR>";
 
 		echo '<TR><TD>' . _('All balances or overdues only') . ':' . "</TD>
-			<TD><SELECT name='All_Or_Overdues'>";
+			<TD><SELECT tabindex='3' name='All_Or_Overdues'>";
 		echo "<OPTION SELECTED Value='All'>" . _('All suppliers with balances');
 		echo "<OPTION Value='OverduesOnly'>" . _('Overdue accounts only');
 		echo '</SELECT></TD></TR>';
 
 		echo '<TR><TD>' . _('For suppliers trading in') . ':' . "</TD>
-			<TD><SELECT name='Currency'>";
+			<TD><SELECT tabindex='4' name='Currency'>";
 
 		$sql = 'SELECT currency, currabrev FROM currencies';
 		$result=DB_query($sql,$db);
@@ -299,12 +299,12 @@ If (isset($_POST['PrintPDF'])
 		echo '</SELECT></TD></TR>';
 
 		echo '<TR><TD>' . _('Summary or Detailed Report') . ':' . "</TD>
-			<TD><SELECT name='DetailedReport'>";
+			<TD><SELECT tabindex='5' name='DetailedReport'>";
 		echo "<OPTION SELECTED Value='No'>" . _('Summary Report');
 		echo "<OPTION Value='Yes'>" . _('Detailed Report');
 		echo '</SELECT></TD></TR>';
 
-		echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";
+		echo "</TABLE><INPUT tabindex='6' TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";
 	}
 	include('includes/footer.inc');
 } /*end of else not PrintPDF */

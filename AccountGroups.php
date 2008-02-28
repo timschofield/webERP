@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 10;
 
@@ -150,10 +150,10 @@ if (isset($_POST['submit'])) {
 		//run the SQL from either of the above possibilites
 		$result = DB_query($sql,$db);
 		prnMsg($msg,'success');
+		unset ($_POST['SelectedAccountGroup']);
+		unset ($_POST['GroupName']);
+		unset ($_POST['SequenceInTB']);
 	}
-	unset ($_POST['SelectedAccountGroup']);
-	unset ($_POST['GroupName']);
-	unset ($_POST['SequenceInTB']);
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
@@ -304,14 +304,15 @@ if (! isset($_GET['delete'])) {
 		if (!isset($_POST['PandL'])){
 			$_POST['PandL']='';
 		}
-		
+
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedAccountGroup' VALUE='" . $_POST['SelectedAccountGroup'] . "'>";
-		echo '<CENTER><TABLE><TR><TD>' . _('Acount Group Name') . ':' . 
-			'</TD><TD><input ' . (in_array('GroupName',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="GroupName" SIZE=30 MAXLENGTH=30 value="' .
-			 $_POST['GroupName'] . '"></TD></TR>';
+		echo '<CENTER><TABLE><TR><TD>' . _('Acount Group Name') . ':' . '</TD><TD><input tabindex="1" ' . 
+		(in_array('GroupName',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="GroupName" SIZE=30 MAXLENGTH=30 value="'
+		 . $_POST['GroupName'] . '"></TD></TR>';
 	}
 	echo '<TR><TD>' . _('Parent Group') . ':' . '</TD>
-	<TD><SELECT' . (in_array('ParentGroupName',$Errors) ?  'class="selecterror"' : '' ) .'  name="ParentGroupName">';
+	<TD><SELECT tabindex="2" ' . (in_array('ParentGroupName',$Errors) ?  'class="selecterror"' : '' ) .
+		'  name="ParentGroupName">';
 
 	$sql = 'SELECT groupname FROM accountgroups';
 	$groupresult = DB_query($sql, $db);
@@ -333,7 +334,8 @@ if (! isset($_GET['delete'])) {
 	echo '</TD></TR>';
 
 	echo '<TR><TD>' . _('Section In Accounts') . ':' . '</TD>
-	<TD><SELECT' . (in_array('SectionInAccounts',$Errors) ?  'class="selecterror"' : '' ) .'  name=SectionInAccounts>';
+	<TD><SELECT tabindex="3" ' . (in_array('SectionInAccounts',$Errors) ?  'class="selecterror"' : '' ) .
+      '  name=SectionInAccounts>';
 
 	$sql = 'SELECT sectionid, sectionname FROM accountsection ORDER BY sectionid';
 	$secresult = DB_query($sql, $db);
@@ -348,7 +350,7 @@ if (! isset($_GET['delete'])) {
 	echo '</TD></TR>';
 	
 	echo '<TR><TD>' . _('Profit and Loss') . ':' . '</TD>
-	<TD><SELECT name=PandL>';
+	<TD><SELECT tabindex="4" name=PandL>';
 
 	if ($_POST['PandL']!=0 ) {
 		echo '<OPTION SELECTED VALUE=1>' . _('Yes');
@@ -364,11 +366,12 @@ if (! isset($_GET['delete'])) {
 	echo '</SELECT></TD></TR>';
 
 	echo '<TR><TD>' . _('Sequence In TB') . ':' . '</TD>';
-	echo '<TD><INPUT ' . (in_array('SequenceInTB',$Errors) ?  'class="inputerror"' : '' ) .'  TYPE=Text name=SequenceInTB VALUE=' . (int) $_POST['SequenceInTB'] . '></TD></TR>';
+	echo '<TD><INPUT tabindex="5" ' . (in_array('SequenceInTB',$Errors) ? 'class="inputerror"' : '' ) .
+		' TYPE=Text MAXLENGTH=4 name=SequenceInTB VALUE=' . $_POST['SequenceInTB'] . '></TD></TR>';
 
 	echo '</TABLE>';
 
-	echo '<CENTER><input type=Submit name=submit value=' . _('Enter Information') . '>';
+	echo '<CENTER><input tabindex="6" type=Submit name=submit value=' . _('Enter Information') . '>';
 
 	echo '</FORM>';
 

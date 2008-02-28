@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 10;
 
@@ -57,16 +57,17 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	$sql="SELECT count(sectionid) 
+	if (isset($_POST['SectionID'])) {
+		$sql="SELECT count(sectionid) 
 			FROM accountsection WHERE sectionid='".$_POST['SectionID']."'";
-	$result=DB_query($sql, $db);
-	$myrow=DB_fetch_row($result);
-
-	if ($myrow[0]!=0 and $_POST['SelectedSectionID']=='') {
-		$InputError = 1;
-		prnMsg( _('The account section already exists in the database'),'error');
-		$Errors[$i] = 'SectionID';
-		$i++;		
+		$result=DB_query($sql, $db);
+		$myrow=DB_fetch_row($result);
+		if (($myrow[0]!=0 and !isset($_POST['SelectedSectionID']))) {
+			$InputError = 1;
+			prnMsg( _('The account section already exists in the database'),'error');
+			$Errors[$i] = 'SectionID';
+			$i++;		
+		}
 	}
 	if (strpos($_POST['SectionName'],'&')>0 OR strpos($_POST['SectionName'],"'")>0) {
 		$InputError = 1;
@@ -74,7 +75,19 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'SectionName';
 		$i++;		
 	} 
-	if (isset($_POST['SectionID']) && (!is_long((int) $_POST['SectionID']))) {
+	if (strlen($_POST['SectionName'])==0) {
+		$InputError = 1;
+		prnMsg( _('The account section name must contain at least one character') ,'error');
+		$Errors[$i] = 'SectionName';
+		$i++;		
+	}
+	if (isset($_POST['SectionID']) and (!is_numeric($_POST['SectionID']))) {
+		$InputError = 1;
+		prnMsg( _('The section number must be an integer'),'error');
+		$Errors[$i] = 'SectionID';
+		$i++;		
+	}
+	if (isset($_POST['SectionID']) and strpos($_POST['SectionID'],".")>0) {
 		$InputError = 1;
 		prnMsg( _('The section number must be an integer'),'error');
 		$Errors[$i] = 'SectionID';
@@ -108,10 +121,10 @@ if (isset($_POST['submit'])) {
 		//run the SQL from either of the above possibilites
 		$result = DB_query($sql,$db);
 		prnMsg($msg,'success');
+		unset ($_POST['SelectedSectionID']);
+		unset ($_POST['SectionID']);
+		unset ($_POST['SectionName']);
 	}
-	unset ($_POST['SelectedSectionID']);
-	unset ($_POST['SectionID']);
-	unset ($_POST['SectionName']);
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
@@ -233,18 +246,20 @@ if (! isset($_GET['delete'])) {
 		if (!isset($_POST['SectionID'])){
 			$_POST['SectionID']='';
 		}
-		$_POST['SectionName']='';
+		if (!isset($_POST['SectionName'])) {
+			$_POST['SectionName']='';
+		}
 		echo "<CENTER><TABLE>
 			<TR>
-			<TD>" . _('Section Number') . ':' . "</TD>
-			<TD><input " . (in_array('SectionID',$Errors) ?  'class="inputerror"' : '' ) ." type='Text' name='SectionID' SIZE=4 MAXLENGTH=4 value='" . $_POST['SectionID'] . "'></TD></TR>";
+			<TD>" . _('Section Number') . ':' . '</TD>
+			<TD><input tabindex="1" ' . (in_array('SectionID',$Errors) ?  'class="inputerror"' : '' ) ." type='Text' name='SectionID' SIZE=4 MAXLENGTH=4 value='" . $_POST['SectionID'] . "'></TD></TR>";
 	}
-	echo "<TR><TD>" . _('Section Description') . ':' . "</TD>
-		<TD><input " . (in_array('SectionID',$Errors) ?  'class="inputerror"' : '' ) ." type='Text' name='SectionName' SIZE=30 MAXLENGTH=30 value='" . $_POST['SectionName'] . "'></TD>
+	echo "<TR><TD>" . _('Section Description') . ':' . '</TD>
+		<TD><input tabindex="2" ' . (in_array('SectionName',$Errors) ?  'class="inputerror"' : '' ) ." type='Text' name='SectionName' SIZE=30 MAXLENGTH=30 value='" . $_POST['SectionName'] . "'></TD>
 		</TR>";
 	echo '</TABLE>';
 
-	echo '<CENTER><input type=Submit name=submit value=' . _('Enter Information') . '>';
+	echo '<CENTER><input tabindex="3" type=Submit name=submit value=' . _('Enter Information') . '>';
 
 	echo '</FORM>';
 
