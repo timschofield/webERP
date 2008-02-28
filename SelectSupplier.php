@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 $PageSecurity = 2;
 
@@ -29,17 +29,23 @@ If (isset($_POST['Select'])) { /*User has hit the button selecting a supplier */
 	unset($_POST['Select']);
 	unset($_POST['Keywords']);
 	unset($_POST['SupplierCode']);
+	unset($_POST['Search']);
+	unset($_POST['Go']);
+	unset($_POST['Next']);
+	unset($_POST['Previous']);
 }
 
 
-if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])){
+if (isset($_POST['Search'])
+		OR isset($_POST['Go'])
+		OR isset($_POST['Next'])
+		OR isset($_POST['Previous'])){
 
-	If (isset($_POST['Keywords']) and $_POST['Keywords'] AND $_POST['SupplierCode']) {
+	If ( strlen($_POST['Keywords'])>0 AND strlen($_POST['SupplierCode'])>0) {
 		$msg='<BR>' . _('Supplier name keywords have been used in preference to the Supplier code extract entered');
 	}
-	If (!isset($_POST['Keywords']) AND !isset($_POST['SupplierCode'])) {
-		//$msg='<BR>' . _('At least one Supplier Name keyword OR an extract of a Supplier Code must be entered for the search');
-		$SQL = "SELECT supplierid,
+	if ($_POST['Keywords']=='' AND $_POST['SupplierCode']=='') {
+		$SQL = 'SELECT supplierid,
 					suppname,
 					currcode,
 					address1,
@@ -47,7 +53,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 					address3,
 					address4
 				FROM suppliers
-				ORDER BY suppname";
+				ORDER BY suppname';
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 
@@ -86,19 +92,10 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 				FROM suppliers
 				WHERE supplierid " . LIKE  . " '%" . $_POST['SupplierCode'] . "%'
 				ORDER BY supplierid";
-		} else {
-			$SQL = "SELECT supplierid,
-					suppname,
-					currcode,
-					address1,
-					address2,
-					address3,
-					address4
-				FROM suppliers
-				ORDER BY supplierid";			
-		}
+		} 
+		
 	} //one of keywords or SupplierCode was more than a zero length string
-
+	
 	$result = DB_query($SQL,$db);
 	if (DB_num_rows($result)==1){
 	   $myrow = DB_fetch_row($result);

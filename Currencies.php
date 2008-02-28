@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 $PageSecurity = 9;
 
 include('includes/session.inc');
@@ -178,11 +178,13 @@ or deletion of the records*/
     $result = DB_query($sql, $db);
 
     echo '<CENTER><table border=1>';
-    echo "<tr><th>"._('Abbreviation')."</th>
-    		<th>"._('Currency Name')."</th>
-		<th>"._('Country')."</th>
-		<th>"._('Hundredths Name')."</th>
-		<th>"._('Exchange Rate')."</th></tr>";
+    echo '<tr><th>' ._('Abbreviation').'</th>
+    		<th>'._('Currency Name').'</th>
+			<th>'._('Country').'</th>
+			<th>'._('Hundredths Name').'</th>
+			<th>'._('Exchange Rate').'</th>
+			<th>' . _('Ex Rate - ECB') .'</th>
+			</tr>';
 
     $k=0; //row colour counter
     while ($myrow = DB_fetch_row($result)) {
@@ -197,24 +199,26 @@ or deletion of the records*/
         }
         if ($myrow[1]!=$FunctionalCurrency){
             printf("<td>%s</td>
-	    		<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td><a href=\"%s&SelectedCurrency=%s\">%s</a></td>
-			<td><a href=\"%s&SelectedCurrency=%s&delete=1\">%s</a></td>
-			</tr>",
-			$myrow[1],
-			$myrow[0],
-			$myrow[2],
-			$myrow[3],
-			$myrow[4],
-			$_SERVER['PHP_SELF'] . "?" . SID,
-			$myrow[1],
-			_('Edit'),
-			$_SERVER['PHP_SELF'] . '?' . SID,
-			$myrow[1],
-			_('Delete'));
+	    			<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td align=right>%s</td>
+					<td align=right>%s</td>
+					<td><a href=\"%s&SelectedCurrency=%s\">%s</a></td>
+					<td><a href=\"%s&SelectedCurrency=%s&delete=1\">%s</a></td>
+					</tr>",
+					$myrow[1],
+					$myrow[0],
+					$myrow[2],
+					$myrow[3],
+					$myrow[4],
+					$myrow[0],
+					$_SERVER['PHP_SELF'] . '?' . SID,
+					$myrow[1],
+					_('Edit'),
+					$_SERVER['PHP_SELF'] . '?' . SID,
+					$myrow[1],
+					_('Delete'));
         } else {
             printf("<td>%s</td>
 	    		<td>%s</td>
@@ -228,6 +232,7 @@ or deletion of the records*/
 			$myrow[2],
 			$myrow[3],
 			$myrow[4],
+			1,
 			_('Functional Currency'));
         }
 
