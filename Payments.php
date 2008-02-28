@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 $PageSecurity = 5;
 
@@ -586,6 +586,10 @@ if (isset($_POST['Cancel'])){
 }
 
 /*set up the form whatever */
+if (!isset($_POST['DatePaid'])) {
+	$_POST['DatePaid'] = '';
+}
+
 if (isset($_POST['DatePaid']) and ($_POST['DatePaid']=="" OR !Is_Date($_SESSION['PaymentDetail']->DatePaid))){
 	 $_POST['DatePaid']= Date($_SESSION['DefaultDateFormat']);
 	 $_SESSION['PaymentDetail']->DatePaid = $_POST['DatePaid'];
