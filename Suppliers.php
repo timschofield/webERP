@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 $PageSecurity = 5;
 
@@ -303,15 +303,15 @@ if (isset($_GET['SupplierID'])){
 
 echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</A><BR>';
 
+$InputError = 0;
+
+if (isset($Errors)) {
+	unset($Errors);
+}
+$Errors=Array();
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
-	$InputError = 0;
-	
-	if (isset($Errors)) {
-		unset($Errors);
-	}
-	$Errors=Array();
 	$i=1;
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
