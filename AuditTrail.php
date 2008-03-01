@@ -30,13 +30,13 @@ echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . '?' . SID . ' METHOD=POST>';
 echo '<CENTER><TABLE>';
 
 echo '<TR><TD>'. _('From Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</TD>
-	<TD><INPUT TYPE=text name="FromDate" maxlength="10" value=' .$_POST['FromDate'].'></TD></TR>';
+	<TD><INPUT tabindex="1" TYPE=text name="FromDate" size="11" maxlength="10" value=' .$_POST['FromDate'].'></TD></TR>';
 echo '<TR><TD>'. _('To Date') . ' ' . $_SESSION['DefaultDateFormat'] .'</TD>
-	<TD><INPUT TYPE=text name="ToDate" maxlength="10" value=' . $_POST['ToDate'] . '></TD></TR>';
+	<TD><INPUT tabindex="2" TYPE=text name="ToDate" size="11" maxlength="10" value=' . $_POST['ToDate'] . '></TD></TR>';
 
 // Show user selections
 echo '<TR><TD>'. _('User ID'). '</TD>
-		<TD><SELECT name="SelectedUser">';
+		<TD><SELECT tabindex="3" name="SelectedUser">';
 echo '<OPTION value=ALL>ALL';
 while ($users = DB_fetch_row($userresult)) {
 	if (isset($_POST['SelectedUser']) and $users[0]==$_POST['SelectedUser']) {
@@ -48,7 +48,7 @@ while ($users = DB_fetch_row($userresult)) {
 echo '</SELECT></TD></TR>';
 
 // Show table selections
-echo '<TR><TD>'. _('Table '). '</TD><TD><SELECT name="SelectedTable">';
+echo '<TR><TD>'. _('Table '). '</TD><TD><SELECT tabindex="4" name="SelectedTable">';
 echo '<OPTION value=ALL>ALL';
 while ($tables = DB_fetch_row($tableresult)) {
 	if (isset($_POST['SelectedTable']) and $tables[0]==$_POST['SelectedTable']) {
@@ -59,7 +59,7 @@ while ($tables = DB_fetch_row($tableresult)) {
 }
 echo '</SELECT></TD></TR>';
 
-echo "<TR><TD></TD><TD><INPUT TYPE=SUBMIT name=View value='" . _('View') . "'></TD></TR>";
+echo "<TR><TD></TD><TD><INPUT tabindex='5' TYPE=SUBMIT name=View value='" . _('View') . "'></TD></TR>";
 echo '</TABLE></BR>';
 echo '</CENTER></FORM>';
 
@@ -179,7 +179,7 @@ if (isset($_POST['View'])) {
 						<TD></TD>
 						<TD></TD>';
 					echo '<TD>'.$_SESSION['SQLString']['fields'][$i].'</TD>
-						<TD>'.htmlentities(trim(str_replace("'","",$_SESSION['SQLString']['values'][$i]))).'</TD>';
+						<TD>'.htmlentities(trim(str_replace("'","",$_SESSION['SQLString']['values'][$i])), ENT_QUOTES, _('ISO-8859-1')).'</TD>';
 					echo '</TR>';
 				}
 			}

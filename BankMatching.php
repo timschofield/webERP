@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 7;
 
@@ -66,7 +66,7 @@ echo "<FORM ACTION='". $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 echo "<INPUT TYPE=HIDDEN Name=Type Value=$Type>";
 
 echo '<TABLE><TR>';
-echo '<TD ALIGN=RIGHT>' . _('Bank Account') . ':</TD><TD COLSPAN=3><SELECT name="BankAccount">';
+echo '<TD ALIGN=RIGHT>' . _('Bank Account') . ':</TD><TD COLSPAN=3><SELECT tabindex="1" name="BankAccount">';
 
 $sql = "SELECT accountcode, bankaccountname FROM bankaccounts";
 $resultBankActs = DB_query($sql,$db);
@@ -88,11 +88,11 @@ if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])){
 }
 
 echo '<TR><TD>' . _('Show') . ' ' . $TypeName . ' ' . _('before') . ':</TD>
-	<TD><INPUT TYPE=TEXT NAME="BeforeDate" SIZE=12 MAXLENGTH=12 Value="' . $_POST['BeforeDate'] . '"></TD>';
+	<TD><INPUT tabindex="2" TYPE=TEXT NAME="BeforeDate" SIZE=12 MAXLENGTH=10 Value="' . $_POST['BeforeDate'] . '"></TD>';
 echo '<TD>' . _('but after') . ':</TD>
-	<TD><INPUT TYPE=TEXT NAME="AfterDate" SIZE=12 MAXLENGTH=12 Value="' . $_POST['AfterDate'] . '"></TD></TR>';
+	<TD><INPUT tabindex="3" TYPE=TEXT NAME="AfterDate" SIZE=12 MAXLENGTH=10 Value="' . $_POST['AfterDate'] . '"></TD></TR>';
 echo '<TR><TD COLSPAN=3>' . _('Choose outstanding') . ' ' . $TypeName . ' ' . _('only or all') . ' ' . $TypeName . ' ' . _('in the date range') . ':</TD>
-	<TD><SELECT NAME="Ostg_or_All">';
+	<TD><SELECT tabindex="4" NAME="Ostg_or_All">';
 
 if ($_POST["Ostg_or_All"]=='All'){
 	echo '<OPTION SELECTED Value="All">' . _('Show all') . ' ' . $TypeName . ' ' . _('in the date range');
@@ -103,7 +103,8 @@ if ($_POST["Ostg_or_All"]=='All'){
 }
 echo '</SELECT></TD></TR>';
 
-echo '<TR><TD COLSPAN=3>' . _('Choose to display only the first 20 matching') . ' ' . $TypeName . ' ' . _('or all') . ' ' . $TypeName . ' ' . _('meeting the criteria') . ':</TD><TD><SELECT NAME="First20_or_All">';
+echo '<TR><TD COLSPAN=3>' . _('Choose to display only the first 20 matching') . ' ' . $TypeName . ' ' .
+  _('or all') . ' ' . $TypeName . ' ' . _('meeting the criteria') . ':</TD><TD><SELECT tabindex="5" NAME="First20_or_All">';
 if ($_POST["First20_or_All"]=='All'){
 	echo '<OPTION SELECTED Value="All">' . _('Show all') . ' ' . $TypeName . ' ' . _('in the date range');
 	echo '<OPTION Value="First20">' . _('Show only the first 20') . ' ' . $TypeName;
@@ -114,18 +115,22 @@ if ($_POST["First20_or_All"]=='All'){
 echo '</SELECT></TD></TR>';
 
 
-echo '</TABLE><CENTER><INPUT TYPE=SUBMIT NAME="ShowTransactions" VALUE="' . _('Show selected') . ' ' . $TypeName . '">';
+echo '</TABLE><CENTER><INPUT tabindex="6" TYPE=SUBMIT NAME="ShowTransactions" VALUE="' . _('Show selected') . ' ' . $TypeName . '">';
 echo "<P><A HREF='$rootpath/BankReconciliation.php?" . SID . "'>" . _('Show reconciliation') . '</A>';
 echo '<HR>';
 
 $InputError=0;
 if (!Is_Date($_POST['BeforeDate'])){
 	$InputError =1;
-	prnMsg(_('The date entered for the field to show') . ' ' . $TypeName . ' ' . _('before') . ', ' . _('is not entered in a recognised date format') . '. ' . _('Entry is expected in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
+	prnMsg(_('The date entered for the field to show') . ' ' . $TypeName . ' ' . _('before') . ', ' .
+	 _('is not entered in a recognised date format') . '. ' . _('Entry is expected in the format') . ' ' .
+	  $_SESSION['DefaultDateFormat'],'error');
 }
 if (!Is_Date($_POST['AfterDate'])){
 	$InputError =1;
-	prnMsg( _('The date entered for the field to show') . ' ' . $Type . ' ' . _('after') . ', ' . _('is not entered in a recognised date format') . '. ' . _('Entry is expected in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
+	prnMsg( _('The date entered for the field to show') . ' ' . $Type . ' ' . _('after') . ', ' . 
+	_('is not entered in a recognised date format') . '. ' . _('Entry is expected in the format') . ' ' .
+	 $_SESSION['DefaultDateFormat'],'error');
 }
 
 if ($InputError !=1 AND isset($_POST["BankAccount"]) AND $_POST["BankAccount"]!="" AND isset($_POST["ShowTransactions"])){

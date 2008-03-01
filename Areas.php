@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -206,16 +206,16 @@ if (!isset($_GET['delete'])) {
 		echo '<CENTER><TABLE>
 			<TR>
 				<TD>' . _('Area Code') . ':</TD>
-				<TD><input ' . (in_array('AreaCode',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="AreaCode" value="' . $_POST['AreaCode'] . '" SIZE=3 MAXLENGTH=3></TD>
+				<TD><input tabindex="1" ' . (in_array('AreaCode',$Errors) ?  'class="inputerror"' : '' ) .'   type="Text" name="AreaCode" value="' . $_POST['AreaCode'] . '" SIZE=3 MAXLENGTH=3></TD>
 			</TR>';
 	}
 
 	echo '<TR><TD>' . _('Area Name') . ':</TD>
-		<TD><input ' . (in_array('AreaCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="Text" name="AreaDescription" value="' . $_POST['AreaDescription'] .'" SIZE=26 MAXLENGTH=25></TD>
+		<TD><input tabindex="2" ' . (in_array('AreaDescription',$Errors) ?  'class="inputerror"' : '' ) .'  type="Text" name="AreaDescription" value="' . $_POST['AreaDescription'] .'" SIZE=26 MAXLENGTH=25></TD>
 		</TR>
 	</TABLE>';
 
-	echo "<CENTER><input type='Submit' name='submit' value=" . _('Enter Information') .">
+	echo "<CENTER><input tabindex='3' type='Submit' name='submit' value=" . _('Enter Information') .">
 		</FORM>";
 
  } //end if record deleted no point displaying form to add record

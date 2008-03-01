@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 10;
 
@@ -54,6 +54,12 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The bank account name may not be empty.'),'error');
 		$Errors[$i] = 'AccountName';
+		$i++;		
+	}
+	if ( trim($_POST['BankAccountNumber']) == '' ) {
+		$InputError = 1;
+		prnMsg(_('The bank account number may not be empty.'),'error');
+		$Errors[$i] = 'AccountNumber';
 		$i++;		
 	}
 	if (strlen($_POST['BankAccountNumber']) >50) {
@@ -248,7 +254,7 @@ if (isset($SelectedBankAccount) AND !isset($_GET['delete'])) {
 	echo $_POST['AccountCode'] . '</TD></TR>';
 } else { //end of if $Selectedbank account only do the else when a new record is being entered
 	echo '<CENTER><TABLE><TR><TD>' . _('Bank Account GL Code') . 
-		":</TD><TD><Select " . (in_array('AccountCode',$Errors) ?  'class="selecterror"' : '' ) ." name='AccountCode'>";
+		":</TD><TD><Select tabindex='1' " . (in_array('AccountCode',$Errors) ?  'class="selecterror"' : '' ) ." name='AccountCode'>";
 
 	$sql = "SELECT accountcode,
 			accountname
@@ -284,12 +290,12 @@ if (!isset($_POST['BankAddress'])) {
 }
 
 echo '<TR><TD>' . _('Bank Account Name') . ': </TD>
-			<TD><input ' . (in_array('AccountName',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAccountName" value="' . $_POST['BankAccountName'] . '" SIZE=40 MAXLENGTH=50></TD></TR>
+			<TD><input tabindex="2" ' . (in_array('AccountName',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAccountName" value="' . $_POST['BankAccountName'] . '" SIZE=40 MAXLENGTH=50></TD></TR>
 		<TR><TD>' . _('Bank Account Number') . ': </TD>
-			<TD><input ' . (in_array('AccountNumber',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAccountNumber" value="' . $_POST['BankAccountNumber'] . '" SIZE=40 MAXLENGTH=50></TD></TR>
+			<TD><input tabindex="3" ' . (in_array('AccountNumber',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAccountNumber" value="' . $_POST['BankAccountNumber'] . '" SIZE=40 MAXLENGTH=50></TD></TR>
 		<TR><TD>' . _('Bank Address') . ': </TD>
-			<TD><input ' . (in_array('BankAddress',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAddress" value="' . $_POST['BankAddress'] . '" SIZE=40 MAXLENGTH=50></TD></TR>
-		<TR><TD>' . _('Currency Of Account') . ': </TD><TD><select name="CurrCode">';
+			<TD><input tabindex="4" ' . (in_array('BankAddress',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="BankAddress" value="' . $_POST['BankAddress'] . '" SIZE=40 MAXLENGTH=50></TD></TR>
+		<TR><TD>' . _('Currency Of Account') . ': </TD><TD><select tabindex="5" name="CurrCode">';
 
 if (!isset($_POST['CurrCode']) OR $_POST['CurrCode']==''){
 	$_POST['CurrCode'] = $_SESSION['CompanyRecord']['currencydefault'];
@@ -307,7 +313,7 @@ while ($myrow = DB_fetch_array($result)) {
 echo '</SELECT></TD></TR>';
 
 echo '</TABLE>
-		<CENTER><input type="Submit" name="submit" value="'. _('Enter Information') .'"></CENTER>';
+		<CENTER><input tabindex="6" type="Submit" name="submit" value="'. _('Enter Information') .'"></CENTER>';
 
 echo '</FORM>';
 include('includes/footer.inc');
