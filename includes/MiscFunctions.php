@@ -85,46 +85,54 @@ class XmlElement {
   var $children;
 };
 
-function GetCurrencyRate($CurrCode) {
-  $xml = file_get_contents('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml');
-  $parser = xml_parser_create();
-  xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
-  xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
-  xml_parse_into_struct($parser, $xml, $tags);
-  xml_parser_free($parser);
+function GetECBCurrencyRates () {
+/* See http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
+for detail of the European Central Bank rates - published daily */
+	  $xml = file_get_contents('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml');  
+	  $parser = xml_parser_create();
+	  xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
+	  xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
+	  xml_parse_into_struct($parser, $xml, $tags);
+	  xml_parser_free($parser);
 
-  $elements = array();  // the currently filling [child] XmlElement array
-  $stack = array();
-  foreach ($tags as $tag) {
-    $index = count($elements);
-    if ($tag['type'] == "complete" || $tag['type'] == "open") {
-      $elements[$index] = new XmlElement;
-      $elements[$index]->name = $tag['tag'];
-      $elements[$index]->attributes = $tag['attributes'];
-      $elements[$index]->content = $tag['value'];
-      if ($tag['type'] == "open") {  // push
-        $elements[$index]->children = array();
-        $stack[count($stack)] = &$elements;
-        $elements = &$elements[$index]->children;
-      }
-    }
-    if ($tag['type'] == "close") {  // pop
-      $elements = &$stack[count($stack) - 1];
-      unset($stack[count($stack) - 1]);
-    }
-  }
- 
-  
-  $Currencies = array();
-  foreach ($elements[0]->children[2]->children[0]->children as $CurrencyDetails){
-  	$Currencies[$CurrencyDetails->attributes['currency']]= $CurrencyDetails->attributes['rate'] ;
-  }
-  
-  if (!isset($Currencies[$CurrCode])){
+	  $elements = array();  // the currently filling [child] XmlElement array
+	  $stack = array();
+	  foreach ($tags as $tag) {
+		$index = count($elements);
+		if ($tag['type'] == "complete" || $tag['type'] == "open") {
+		  $elements[$index] = new XmlElement;
+		  $elements[$index]->name = $tag['tag'];
+		  $elements[$index]->attributes = $tag['attributes'];
+		  $elements[$index]->content = $tag['value'];
+		  if ($tag['type'] == "open") {  // push
+			$elements[$index]->children = array();
+			$stack[count($stack)] = &$elements;
+			$elements = &$elements[$index]->children;
+		  }
+		}
+		if ($tag['type'] == "close") {  // pop
+		  $elements = &$stack[count($stack) - 1];
+		  unset($stack[count($stack) - 1]);
+		}
+	  }
+	 
+	  
+	  $Currencies = array();
+	  foreach ($elements[0]->children[2]->children[0]->children as $CurrencyDetails){
+		$Currencies[$CurrencyDetails->attributes['currency']]= $CurrencyDetails->attributes['rate'] ;
+	  }
+	  //return an array of the currencies and rates
+	  return $Currencies;
+}	
+	
+
+function GetCurrencyRate($CurrCode,$CurrenciesArray) {
+  if (!isset($CurrenciesArray[$CurrCode]) AND $CurrCode !='EUR'){
   	prnMsg(_('The currency is not in the list of currencies available from the server'),'error');
-  } else {
-  	return $Currencies[$CurrCode]/$Currencies[$_SESSION['CompanyRecord']['currencydefault']];
+  } elseif ($CurrCode=='EUR'){
+  	return 1/$CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']];
+  }	else {
+  	return $CurrenciesArray[$CurrCode]/$CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']];
   }
-
 }
 ?>

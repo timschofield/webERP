@@ -99,7 +99,7 @@ steps:<br>
 <font size="+2"><b>Copying the PHP Scripts</b></font><br>
 <br>
 All files in the archive except the installation instructions
-in INSTALL.txt, web-erp-demo.sql and web-erp-new.sql should be copied
+in INSTALL.txt, weberp-demo.sql and weberp-new.sql should be copied
 to a directory under the web server DocumentRoot directory. This varies 
 by distribution but:<br>
 <br>
@@ -180,24 +180,24 @@ scripts.<br>
 Two scripts are provided:<br>
 <br>
 <ol>
-<li>web-erp-demo.sql This has a minimal amount of demonstration data
+<li>weberp-demo.sql This has a minimal amount of demonstration data
 with a bogus company set up so that transactions can be tried to see
 how the system works.
-</li><li>web-erp-new.sql This script has only the basic data necessary
+</li><li>weberp-new.sql This script has only the basic data necessary
 to start a new company. If you wish to set up your company
 using the webERP software, then this is the script to use. This creates
 a webERP database and populates it with only the very basic starting data. 
 </li></ol><br>
 <br>
-The files web-erp-demo.sql and web-erp-new.sql should be in
+The files weberp-demo.sql and web-erp-new.sql should be in
 the directory with all the PHP scripts. Change to the  directory 
 where the scripts are held or use the full path and enter:<br>
 <br>
-shell &gt; mysql --user=weberp --password='some_pass' &lt; /path_to_the_sql_script/web-erp-demo.sql<br>
+shell &gt; mysql --user=weberp --password='some_pass' &lt; /path_to_the_sql_script/weberp-demo.sql<br>
 <br>
 or<br>
 <br>
-shell &gt; mysql --user=weberp --password='some_pass' &lt; /path_to_the_sql_script/web-erp-new.sql<br>
+shell &gt; mysql --user=weberp --password='some_pass' &lt; /path_to_the_sql_script/weberp-new.sql<br>
 <br>
 as required. Modify the user entered here as 'weberp' to the
 user you created in MySQL for the purpose, and modify the password stated here
@@ -226,10 +226,9 @@ beginning of config.php<br>
 ============================================<br>
 &lt;?php<br>
 <br>
-/* $Revision: 1.6 $<br>
+/* $Revision: 1.7 $<br>
 config.php<br>
 Web-ERP - http://web-erp.sourceforge.net<br>
-by Logic Works Ltd<br>
 */<br>
 <br>
 // User configurable variables<br>
@@ -239,7 +238,7 @@ by Logic Works Ltd<br>
 $DefaultLanguage ='en_GB';<br>
 <br>
 // Whether to display the demo login and password or not on the login screen<br>
-$allow_demo_mode = True;<br>
+$allow_demo_mode = false;<br>
 <br>
 // webERP version<br>
 $Version = '3.04';<br>
@@ -259,8 +258,7 @@ $host = 'localhost';<br>
 <br>
 //The type of db server being used - currently only postgres or mysql<br>
 $dbType = 'mysql';<br>
-//$dbType = 'postgres';<br>
-//$dbType = 'mysql';<br>
+//$dbType = 'mysqli';<br>
 <br>
 // sql user & password<br>
 $dbuser = 'weberp_db_user';<br>
@@ -358,6 +356,7 @@ config.php file. The system parameters screen is at Main Menu &gt; Setup
 &gt; Configuration Settings.  Each of these settings should
 be reviewed in detail. Notes describing the function of each variable
 are shown along side it.<br>
+<br>There is additional information on installation in webERP/doc/INSTALL.txt
 <br>
 <font size="+2"><b>Themes and GUI Modification</b></font><br>
 <br>

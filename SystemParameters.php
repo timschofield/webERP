@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.37 $ */
+/* $Revision: 1.38 $ */
 
 $PageSecurity =15;
 
@@ -227,7 +227,14 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['MonthsAuditTrail'] != $_POST['X_MonthsAuditTrail']){
 			$sql[] = 'UPDATE config SET confvalue=' . $_POST['X_MonthsAuditTrail'] . " WHERE confname='MonthsAuditTrail'";
 		}
-		$ErrMsg =  _('The system configuration could not be updated because');
+		if ($_SESSION['UpdateCurrencyRatesDaily'] != $_POST['X_UpdateCurrencyRatesDaily']){
+			if ($_POST['X_UpdateCurrencyRatesDaily']=='Auto'){
+				$sql[] = "UPDATE config SET confvalue='" . Date('Y-m-d',mktime(0,0,0,Date('m'),Date('d')-1,Date('Y'))) . "' WHERE confname='UpdateCurrencyRatesDaily'";
+			} else {
+				$sql[] = "UPDATE config SET confvalue='0' WHERE confname='UpdateCurrencyRatesDaily'";
+			}
+		}
+			$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 1 ) {
 			$result = DB_query('BEGIN',$db,$ErrMsg);
 			foreach ($sql as $line) {
@@ -339,6 +346,14 @@ echo '<TR><TD>' . _('Order Entry allows Line Item Narrative') . ':</TD>
 	<OPTION '.($_SESSION['AllowOrderLineItemNarrative']=='0'?'SELECTED ':'').'VALUE="0">'._('No Narrative Line').'
 	</SELECT></TD>
 	<TD>' . _('Select whether or not to allow entry of narrative on order line items. This narrative will appear on invoices and packing slips. Useful mainly for service businesses.') . '</TD>
+	</TR>';
+//UpdateCurrencyRatesDaily
+echo '<TR><TD>' . _('Auto Update Exchange Rates Daily') . ':</TD>
+	<TD><SELECT Name="X_UpdateCurrencyRatesDaily">
+	<OPTION '.($_SESSION['UpdateCurrencyRatesDaily']!='0'?'SELECTED ':'').'VALUE="Auto">'._('Automatic').'
+	<OPTION '.($_SESSION['UpdateCurrencyRatesDaily']=='0'?'SELECTED ':'').'VALUE="0">'._('Manual').'
+	</SELECT></TD>
+	<TD>' . _('Automatic updates to exchange rates will retrieve the latest daily rates from the European Central Bank once per day - when the first user logs in for the day. Manual will never update the rates automatically - exchange rates will need to be maintained manually') . '</TD>
 	</TR>';
 
 //Default Packing Note Format

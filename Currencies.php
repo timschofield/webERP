@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 $PageSecurity = 9;
 
 include('includes/session.inc');
@@ -187,6 +187,9 @@ or deletion of the records*/
 			</tr>';
 
     $k=0; //row colour counter
+    /*Get published currency rates from Eurpoean Central Bank */
+    $CurrencyRatesArray = GetECBCurrencyRates();
+    
     while ($myrow = DB_fetch_row($result)) {
         if ($myrow[1]==$FunctionalCurrency){
             echo '<tr bgcolor=#FFbbbb>';
@@ -212,7 +215,7 @@ or deletion of the records*/
 					$myrow[2],
 					$myrow[3],
 					$myrow[4],
-					number_format(GetCurrencyRate($myrow[1]),5),
+					number_format(GetCurrencyRate($myrow[1],$CurrencyRatesArray),5),
 					$_SERVER['PHP_SELF'] . '?' . SID,
 					$myrow[1],
 					_('Edit'),

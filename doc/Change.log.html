@@ -1,5 +1,7 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 
+<P>1/3/08 Phil: New config variable SystemParameters.php session.inc modifications to allow exchange rates to be updated daily from the European Central Bank on the first user login of the day. The manual option is still available for those who cover exchange rate risk. Updates to the manual added a section on currency maintenance.
+<P>29/2/08 Phil: Currencies.php MiscFunctions.php now has a function to get exchange rates from ecb (European Central Bank) published  daily as XML file that is parsed to retrieve the current day's spot rates are shown against the current currencies table rates.
 <P>25/2/08 Phil/Harald Ringehahn - modified the link to the manual in header.inc such that for locales other than en_?? the manual is sought under locale/xx_XX/LC_MESSAGES/Manual/ManualContents.php - Harald's is the first translation we have of the manual into German and it can now be added to the German translation archive.
 <P>16/2/08 Phil: BankAccounts.php Payments.php and CustomerReceipt.php DefinePaymentClass DefinedReceiptClass BankReconciliation.php all modified to allow for multi-currency bank accounts ) Manual updates to Bank Accounts and Bank Payments.
 <P>01/2/08 Tim: Fix problem in SelectOrderItems.php re keywords appearing wrongly

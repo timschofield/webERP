@@ -40,3 +40,4 @@ ALTER TABLE `banktrans` ADD `functionalexrate` DOUBLE NOT NULL DEFAULT '1' COMME
 
 INSERT INTO `config` VALUES ('ProhibitNegativeStock','1');
 INSERT INTO `systypes` (`typeid` ,`typename` ,`typeno`) VALUES ('36', 'Exchange Difference', '1');
+INSERT INTO `config` (`confname`, `confvalue`) VALUES ('UpdateCurrencyRatesDaily', '0');

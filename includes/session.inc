@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.56 $ */
+/* $Revision: 1.57 $ */
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -192,6 +192,30 @@ if(isset($_SESSION['DB_Maintenance'])){
 	}
 }
 
+/*Check to see if currency rates need to be updated */
+if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
+	if ($_SESSION['UpdateCurrencyRatesDaily']!=0)  {
+		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
+				ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily'])
+				,'d')> 0){
+			
+			$CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
+			/*Loop around the defined currencies and get the rate from ECB */
+			$CurrenciesResult = DB_query('SELECT currabrev FROM currencies',$db);
+			while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
+				if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
+					$UpdateCurrRateResult = DB_query('UPDATE currencies SET 
+											rate=' . GetCurrencyRate ($CurrencyRow[0],$CurrencyRates) . "
+											WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
+				}
+			}
+			$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
+			$UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'",$db);
+		}
+	}
+}	
+	
+	
 If (isset($_POST['Theme']) && ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
 	$_SESSION['Theme'] = $_POST['Theme'];
 	$theme = $_POST['Theme'];

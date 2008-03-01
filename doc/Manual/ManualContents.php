@@ -341,6 +341,29 @@ if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
 <?php
   if (!isset($_POST['Submit'])) {
 ?>  
+              <input type="checkbox" name="SelectCurrencies">
+              <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=Currencies'; ?>">Currencies</A>
+<?php
+  } else {
+?>
+              <A HREF="#Currencies">Currencies</A>
+<?php	
+  }
+?>
+              <UL>
+                <LI>Currency Abbreviation</LI>
+                <LI>Currency Name</LI>
+                <LI>Country of Currency</LI>
+                <LI>Hundredths Name</LI>
+                <LI>Exchange Rates</LI>
+              </UL>
+              <BR>
+            </LI>
+            <LI>            
+            
+<?php
+  if (!isset($_POST['Submit'])) {
+?>  
               <input type="checkbox" name="SelectSalesTypes">
               <A HREF="<?php echo $_SERVER['PHP_SELF'] . '?ViewTopic=SalesTypes'; ?>">Sales Types / Price Lists</A>
 <?php
@@ -833,7 +856,9 @@ if ($_GET['ViewTopic'] == 'AccountsPayable' OR isset($_POST['SelectAccountsPayab
 if ($_GET['ViewTopic'] == 'SalesPeople' OR isset($_POST['SelectSalesPeople'])) {
   include('ManualSalesPeople.html');
 }
-
+if ($_GET['ViewTopic'] == 'Currencies' OR isset($_POST['Currencies'])) {
+  include('ManualCurrencies.html');
+}
 if ($_GET['ViewTopic'] == 'SalesTypes' OR isset($_POST['SelectSalesTypes'])) {
   include('ManualSalesTypes.html');
 }
