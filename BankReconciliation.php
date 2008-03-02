@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 7;
 
@@ -12,7 +12,7 @@ include('includes/header.inc');
 
 echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 
-if (is_numeric($_POST['DoExchangeDifference']) AND isset($_POST['PostExchangeDifference'])){
+if (isset($_POST['PostExchangeDifference']) and is_numeric($_POST['DoExchangeDifference'])){
 	
 	if (!is_numeric($_POST['BankStatmentBalance'])){
 		prnMsg(_('The entry in the bank statement balance is not numeric. The balance on the bank statement should be entered. The exchange difference has not been calculated and no general ledger journal has been created'),'warn');
@@ -91,7 +91,7 @@ $ErrMsg = _('The bank accounts could not be retrieved by the SQL because');
 $DbgMsg = _('The SQL used to retrieve the bank acconts was');
 $AccountsResults = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
-echo '<tr><td>' . _('Bank Account') . ':</td><td><select name="BankAccount">';
+echo '<tr><td>' . _('Bank Account') . ':</td><td><select tabindex="1" name="BankAccount">';
 
 if (DB_num_rows($AccountsResults)==0){
 	 echo '</select></td></tr></table><p>' . _('Bank Accounts have not yet been defined') . '. ' . _('You must first') . "<A HREF='" . $rootpath . "/BankAccounts.php'>" . _('define the bank accounts') . '</A>' . ' ' . _('and general ledger accounts to be affected') . '.';
@@ -113,7 +113,7 @@ if (DB_num_rows($AccountsResults)==0){
 
 include ('includes/GLPostings.inc');
 
-echo '</table><p><input type=submit name="ShowRec" value="' . _('Show bank reconciliation statement') . '"></center>';
+echo '</table><p><input type=submit tabindex="2" name="ShowRec" value="' . _('Show bank reconciliation statement') . '"></center>';
 
 
 if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
@@ -320,8 +320,8 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 	echo '</table></center>';
 }
 
-echo '<p><a href="' . $rootpath . '/BankMatching.php?' . SID . '&Type=Payments">' . _('Match off cleared payments') . '</a>';
-echo '<br><a href="' . $rootpath . '/BankMatching.php?' . SID . '&Type=Receipts">' . _('Match off cleared deposits') . '</a>';
+echo '<p><a tabindex="4" href="' . $rootpath . '/BankMatching.php?' . SID . '&Type=Payments">' . _('Match off cleared payments') . '</a>';
+echo '<br><a tabindex="5" href="' . $rootpath . '/BankMatching.php?' . SID . '&Type=Receipts">' . _('Match off cleared deposits') . '</a>';
 echo '</form>';
 include('includes/footer.inc');
 ?>
