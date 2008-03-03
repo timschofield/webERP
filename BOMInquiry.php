@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -19,24 +19,24 @@ if (!isset($_POST['StockID'])) {
 	 _('Parts must be defined in the stock item entry') . "/" . _('modification screen as manufactured') . 
      ", " . _('kits or assemblies to be available for construction of a bill of material') .
      "</FONT><TABLE CELLPADDING=3 COLSPAN=4><TR><TD><FONT SIZE=1>" . _('Enter text extracts in the') . 
-	 " <B>" . _('description') . "</B>:</FONT></TD><TD><INPUT TYPE='Text' NAME='Keywords' SIZE=20 MAXLENGTH=25></TD>
+	 " <B>" . _('description') . "</B>:</FONT></TD><TD><INPUT tabindex='1' TYPE='Text' NAME='Keywords' SIZE=20 MAXLENGTH=25></TD>
 	 <TD><FONT SIZE=3><B>" . _('OR') . "</B></FONT></TD><TD><FONT SIZE=1>" . _('Enter extract of the') . 
-     " <B>" . _('Stock Code') . "</B>:</FONT></TD><TD><INPUT TYPE='Text' NAME='StockCode' SIZE=15 MAXLENGTH=18></TD>
-	 </TR></TABLE><CENTER><INPUT TYPE=SUBMIT NAME='Search' VALUE=" . _('Search Now') . "></CENTER>";
+     " <B>" . _('Stock Code') . "</B>:</FONT></TD><TD><INPUT tabindex='2' TYPE='Text' NAME='StockCode' SIZE=15 MAXLENGTH=20></TD>
+	 </TR></TABLE><CENTER><INPUT tabindex='3' TYPE=SUBMIT NAME='Search' VALUE=" . _('Search Now') . "></CENTER>";
 }
 
 if (isset($_POST['Search'])){
 	// Work around to auto select
-	If ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
+	if ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
 		$_POST['StockCode']='%';
 	}
-	If ($_POST['Keywords'] AND $_POST['StockCode']) {
+	if ($_POST['Keywords'] AND $_POST['StockCode']) {
 		$msg=_('Stock description keywords have been used in preference to the Stock code extract entered');
 	}
-	If ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
+	if ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
 		$msg=_('At least one stock description keyword or an extract of a stock code must be entered for the search');
 	} else {
-		If (strlen($_POST['Keywords'])>0) {
+		if (strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
 
 			$i=0;
@@ -92,7 +92,7 @@ if (isset($_POST['Search'])){
 	} //one of keywords or StockCode was more than a zero length string
 } //end of if search
 
-If (isset($result) AND !isset($SelectedParent)) {
+if (isset($result) AND !isset($SelectedParent)) {
 
 	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
 	$TableHeader = '<TR><TH>' . _('Code') . '</TH>
@@ -104,7 +104,7 @@ If (isset($result) AND !isset($SelectedParent)) {
 	echo $TableHeader;
 
 	$j = 1;
-	$k=0; //row colour counter
+	$k = 0; //row colour counter
 	while ($myrow=DB_fetch_array($result)) {
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
@@ -118,7 +118,8 @@ If (isset($result) AND !isset($SelectedParent)) {
 		} else {
 			$StockOnHand = number_format($myrow['totalonhand'],2);
 		}
-		printf("<td><INPUT TYPE=SUBMIT NAME='StockID' VALUE='%s'</td>
+		$tabindex=$j+4;
+		printf("<td><INPUT tabindex='".$tabindex."' TYPE=SUBMIT NAME='StockID' VALUE='%s'</td>
 		        <td>%s</td>
 			<td ALIGN=RIGHT>%s</td>
 			<td>%s</td></tr>",
@@ -127,12 +128,7 @@ If (isset($result) AND !isset($SelectedParent)) {
 			$StockOnHand,
 			$myrow['units']
 		);
-
 		$j++;
-		If ($j == 12){
-			$j=1;
-			echo $TableHeader;
-		}
 //end of page full new headings if
 	}
 //end of while loop
@@ -211,10 +207,6 @@ if (isset($StockID) and $StockID!=""){
 			$TotalCost += $myrow['componentcost'];
 
 			$j++;
-			If ($j == 12){
-				$j=1;
-				echo $TableHeader;
-			}//end of page full new headings if}//end of while
 		}
 
 		echo '<TR>
