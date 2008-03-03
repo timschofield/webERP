@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -33,8 +33,8 @@ If (isset($_POST['PrintPDF'])
 			stockmaster,
 			bom
 		WHERE stockmaster.stockid=bom.component
-		AND bom.parent >= '" . DB_escape_string($_POST['FromCriteria']) . "'
-		AND bom.parent <= '" . DB_escape_string($_POST['ToCriteria']) . "'
+		AND bom.parent >= '" . $_POST['FromCriteria'] . "'
+		AND bom.parent <= '" . $_POST['ToCriteria'] . "'
 		AND bom.effectiveto >= NOW() AND bom.effectiveafter <= NOW()
 		ORDER BY
 			bom.parent,
@@ -65,7 +65,7 @@ If (isset($_POST['PrintPDF'])
 
 	$ParentPart = '';
 
-	While ($BOMList = DB_fetch_array($BOMResult,$db)){
+	while ($BOMList = DB_fetch_array($BOMResult,$db)){
 
 		if ($ParentPart!=$BOMList['parent']){
 
@@ -108,7 +108,7 @@ If (isset($_POST['PrintPDF'])
 	$len = strlen($buf);
 
 	header('Content-type: application/pdf');
-	header("Content-Length: $len");
+	header('Content-Length: '.$len);
 	header('Content-Disposition: inline; filename=BOMListing.pdf');
 	header('Expires: 0');
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
@@ -128,12 +128,12 @@ If (isset($_POST['PrintPDF'])
 
 		echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
 
-		echo '<TR><TD>' . _('From Inventory Part Code') . ':' . "</FONT></TD><TD><INPUT TYPE=text name=FromCriteria SIZE=20 MAXLENGTH=20 VALUE='1'></TD></TR>";
+		echo '<TR><TD>' . _('From Inventory Part Code') . ':' . "</FONT></TD><TD><INPUT tabindex='1' TYPE=text name=FromCriteria SIZE=20 MAXLENGTH=20 VALUE='1'></TD></TR>";
 
-		echo '<TR><TD>' . _('To Inventory Part Code') . ':' . "</TD><TD><INPUT TYPE=text name=ToCriteria SIZE=20 MAXLENGTH=20 VALUE='zzzzzzz'></TD></TR>";
+		echo '<TR><TD>' . _('To Inventory Part Code') . ':' . "</TD><TD><INPUT tabindex='2' TYPE=text name=ToCriteria SIZE=20 MAXLENGTH=20 VALUE='zzzzzzz'></TD></TR>";
 
 
-		echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";
+		echo "</TABLE><INPUT tabindex='3' TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";
 	}
 	include('includes/footer.inc');;
 
