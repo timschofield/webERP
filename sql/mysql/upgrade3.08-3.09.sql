@@ -37,6 +37,8 @@ ALTER TABLE `bankaccounts` ADD COLUMN `currcode` CHAR( 3 ) NOT NULL AFTER `accou
 ALTER TABLE `bankaccounts` ADD INDEX ( `currcode` ) ;
 ALTER TABLE `banktrans` CHANGE `exrate` `exrate` DOUBLE NOT NULL DEFAULT '1' COMMENT 'From bank account currency to payment currency';
 ALTER TABLE `banktrans` ADD `functionalexrate` DOUBLE NOT NULL DEFAULT '1' COMMENT 'Account currency to functional currency';
+ALTER TABLE `worequirements` DROP FOREIGN KEY `worequirements_ibfk_3`;
+ALTER TABLE `worequirements` Add CONSTRAINT `worequirements_ibfk_3` FOREIGN KEY (`wo`, `parentstockid`) REFERENCES `woitems` (`wo`, `stockid`);
 
 INSERT INTO `config` VALUES ('ProhibitNegativeStock','1');
 INSERT INTO `systypes` (`typeid` ,`typename` ,`typeno`) VALUES ('36', 'Exchange Difference', '1');
