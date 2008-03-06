@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.38 $ */
+/* $Revision: 1.39 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -233,6 +233,8 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 	$DelDate = FormatDateforSQL($_SESSION['Items']->DeliveryDate);
 
+	$Result = DB_query('BEGIN',$db);
+
 	$HeaderSQL = "INSERT INTO salesorders (
 				debtorno,
 				branchcode,
@@ -282,7 +284,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 	$ErrMsg = _('The order cannot be added because');
 	$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg);
 
-	$OrderNo = DB_Last_Insert_ID($db, '', '');
+	$OrderNo = GetNextTransNo(30, &$db);
 	$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (
 						orderlineno,
 						orderno,
