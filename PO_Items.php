@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 
 $PageSecurity = 4;
@@ -81,7 +81,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 		     /*Get the auto increment value of the order number created from the SQL above */
-		     $_SESSION['PO']->OrderNo = DB_Last_Insert_ID($db,'purchorders','orderno');
+		     $_SESSION['PO']->OrderNo =  GetNextTransNo(18, &$db);
 
 		     /*Insert the purchase order detail records */
 		     foreach ($_SESSION['PO']->LineItems as $POLine) {
