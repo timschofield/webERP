@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.46 $ */
+/* $Revision: 1.47 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -276,8 +276,9 @@ $TaxTotal =0;
 /*show the line items on the order with the quantity being dispatched available for modification */
 
 $k=0; //row colour counter
+$j=0;
 foreach ($_SESSION['Items']->LineItems as $LnItm) {
-
+	$j++;
 	if ($k==1){
 		$RowStarter = '<tr class="EvenTableRows">';
 		$k=0;
@@ -306,7 +307,7 @@ foreach ($_SESSION['Items']->LineItems as $LnItm) {
 
 	} else {
 
-		echo '<TD ALIGN=RIGHT><input type=text name="' . $LnItm->LineNumber .'_QtyDispatched" maxlength=12 SIZE=12 value="' . $LnItm->QtyDispatched . '"></TD>';
+		echo '<TD ALIGN=RIGHT><input tabindex="'.$j.'" type=text name="' . $LnItm->LineNumber .'_QtyDispatched" maxlength=12 SIZE=12 value="' . $LnItm->QtyDispatched . '"></TD>';
 
 	}
 	$DisplayDiscountPercent = number_format($LnItm->DiscountPercent*100,2) . '%';
@@ -432,9 +433,9 @@ if ($_SESSION['DoFreightCalc']==True){
 } else {
 	echo '<TD COLSPAN=3></TD>';
 }
-
+$j++;
 echo '<TD COLSPAN=2 ALIGN=RIGHT>'. _('Charge Freight Cost').'</TD>
-	<TD><INPUT TYPE=TEXT SIZE=10 MAXLENGTH=12 NAME=ChargeFreightCost VALUE=' . $_SESSION['Items']->FreightCost . '></TD>';
+	<TD><INPUT tabindex='.$j.' TYPE=TEXT SIZE=10 MAXLENGTH=12 NAME=ChargeFreightCost VALUE=' . $_SESSION['Items']->FreightCost . '></TD>';
 
 
 $FreightTaxTotal =0; //initialise tax total
@@ -550,14 +551,14 @@ invoices can have a zero amount but there must be a quantity to invoice */
 				/*Now look for assembly components that would go negative */
 				$SQL = "SELECT bom.component,
 							   stockmaster.description,
-							   locstock.quantity-(" . DB_escape_string($OrderLine->QtyDispatched)  . "*bom.quantity) AS qtyleft
+							   locstock.quantity-(" . $OrderLine->QtyDispatched  . "*bom.quantity) AS qtyleft
 						FROM bom
 						INNER JOIN locstock
 						ON bom.component=locstock.stockid
 						INNER JOIN stockmaster
 						ON stockmaster.stockid=bom.component
-						WHERE bom.parent='" . DB_escape_string($OrderLine->StockID) . "'
-						AND locstock.loccode='" . DB_escape_string($_SESSION['Items']->Location) . "'
+						WHERE bom.parent='" . $OrderLine->StockID . "'
+						AND locstock.loccode='" . $_SESSION['Items']->Location . "'
 						AND effectiveafter <'" . Date('Y-m-d') . "'
 						AND effectiveto >='" . Date('Y-m-d') . "'";
 
@@ -713,20 +714,20 @@ invoices can have a zero amount but there must be a quantity to invoice */
 		VALUES (
 			". $InvoiceNo . ",
 			10,
-			'" . DB_escape_string($_SESSION['Items']->DebtorNo) . "',
-			'" . DB_escape_string($_SESSION['Items']->Branch) . "',
+			'" . $_SESSION['Items']->DebtorNo . "',
+			'" . $_SESSION['Items']->Branch . "',
 			'" . $DefaultDispatchDate . "',
 			" . $PeriodNo . ",
 			'',
-			'" . DB_escape_string($_SESSION['Items']->DefaultSalesType) . "',
+			'" . $_SESSION['Items']->DefaultSalesType . "',
 			" . $_SESSION['ProcessingOrder'] . ",
 			" . $_SESSION['Items']->total . ",
 			" . $TaxTotal . ",
 			" . $_POST['ChargeFreightCost'] . ",
 			" . $_SESSION['CurrencyRate'] . ",
-			'" . DB_escape_string($_POST['InvoiceText']) . "',
-			" . DB_escape_string($_SESSION['Items']->ShipVia) . ",
-			'"  . DB_escape_string($_POST['Consignment']) . "'
+			'" . $_POST['InvoiceText'] . "',
+			" . $_SESSION['Items']->ShipVia . ",
+			'"  . $_POST['Consignment'] . "'
 		)";
 
 	$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction record could not be inserted because');
@@ -1005,7 +1006,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						" . $OrderLine->DiscountPercent . ",
 						" . $OrderLine->StandardCost . ",
 						" . ($QtyOnHandPrior - $OrderLine->QtyDispatched) . ",
-						'" . DB_escape_string($OrderLine->Narrative) . "' )";
+						'" . $OrderLine->Narrative . "' )";
 			} else {
             // its an assembly or dummy and assemblies/dummies always have nil stock (by definition they are made up at the time of dispatch  so new qty on hand will be nil
 				$SQL = "INSERT INTO stockmoves (
@@ -1036,7 +1037,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 						" . -$OrderLine->QtyDispatched . ",
 						" . $OrderLine->DiscountPercent . ",
 						" . $OrderLine->StandardCost . ",
-						'" . DB_escape_string($OrderLine->Narrative) . "')";
+						'" . $OrderLine->Narrative . "')";
 			}
 
 
@@ -1424,29 +1425,34 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	if (!isset($_POST['InvoiceText'])) {
 		$_POST['InvoiceText']='';
 	}
-
+	$j++;
 	echo '<TABLE><TR>
 		<TD>' ._('Date Of Dispatch'). ':</TD>
-		<TD><INPUT TYPE=text MAXLENGTH=10 SIZE=15 name=DispatchDate value="'.$DefaultDispatchDate.'"></TD>
+		<TD><INPUT tabindex='.$j.' TYPE=text MAXLENGTH=10 SIZE=15 name=DispatchDate value="'.$DefaultDispatchDate.'"></TD>
 	</TR>';
+	$j++;
 	echo '<TR>
 		<TD>' . _('Consignment Note Ref'). ':</TD>
-		<TD><INPUT TYPE=text MAXLENGTH=15 SIZE=15 name=Consignment value="' . $_POST['Consignment'] . '"></TD>
+		<TD><INPUT tabindex='.$j.' TYPE=text MAXLENGTH=15 SIZE=15 name=Consignment value="' . $_POST['Consignment'] . '"></TD>
 	</TR>';
+	$j++;
 	echo '<TR>
 		<TD>'.('Action For Balance'). ':</TD>
-		<TD><SELECT name=BOPolicy><OPTION SELECTED Value="BO">'._('Automatically put balance on back order').'<OPTION Value="CAN">'._('Cancel any quantites not delivered').'</SELECT></TD>
+		<TD><SELECT tabindex='.$j.' name=BOPolicy><OPTION SELECTED Value="BO">'._('Automatically put balance on back order').'<OPTION Value="CAN">'._('Cancel any quantites not delivered').'</SELECT></TD>
 	</TR>';
+	$j++;
 	echo '<TR>
 		<TD>' ._('Invoice Text'). ':</TD>
-		<TD><TEXTAREA NAME=InvoiceText COLS=31 ROWS=5>' . $_POST['InvoiceText'] . '</TEXTAREA></TD>
+		<TD><TEXTAREA tabindex='.$j.' NAME=InvoiceText COLS=31 ROWS=5>' . $_POST['InvoiceText'] . '</TEXTAREA></TD>
 	</TR>';
 
+	$j++;
 	echo '</TABLE>
 	<CENTER>
-	<INPUT TYPE=SUBMIT NAME=Update Value=' . _('Update'). '><BR>';
+	<INPUT TYPE=SUBMIT tabindex='.$j.' NAME=Update Value=' . _('Update'). '><BR>';
 
-	echo '<INPUT TYPE=SUBMIT NAME="ProcessInvoice" Value="'._('Process Invoice').'"</CENTER>';
+	$j++;
+	echo '<INPUT TYPE=SUBMIT tabindex='.$j.' NAME="ProcessInvoice" Value="'._('Process Invoice').'"</CENTER>';
 
 	echo '<INPUT TYPE=HIDDEN NAME="ShipVia" VALUE="' . $_SESSION['Items']->ShipVia . '">';
 }

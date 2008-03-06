@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 10;
 
@@ -253,7 +253,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['GLCode']  = $myrow['glcode'];
 		$_POST['Area']	= $myrow['area'];
 		$_POST['StkCat']  = $myrow['stkcat'];
-		$_POST['SalesType']=$myrow['salestype'];
+		$_POST['SalesType'] = $myrow['salestype'];
 
 		echo '<INPUT TYPE=HIDDEN NAME="SelectedCOGSPostingID" VALUE="' . $SelectedCOGSPostingID . '">';
 
@@ -265,7 +265,7 @@ if (!isset($_GET['delete'])) {
 		FROM areas";
 	$result = DB_query($sql,$db);
 
-	echo "<CENTER><TABLE><TR><TD>" . _('Area') . ":</TD><TD><SELECT name='Area'><OPTION VALUE='AN'>" . _('Any Other');
+	echo "<CENTER><TABLE><TR><TD>" . _('Area') . ":</TD><TD><SELECT tabindex=1 name='Area'><OPTION VALUE='AN'>" . _('Any Other');
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['Area']) and $myrow['areacode']==$_POST['Area']) {
@@ -281,7 +281,7 @@ if (!isset($_GET['delete'])) {
 	$sql = 'SELECT categoryid, categorydescription FROM stockcategory';
 	$result = DB_query($sql,$db);
 
-	echo "</SELECT></TD></TR><TR><TD>" . _('Stock Category') . ":</TD><TD><SELECT name='StkCat'>
+	echo "</SELECT></TD></TR><TR><TD>" . _('Stock Category') . ":</TD><TD><SELECT tabindex=2 name='StkCat'>
 			<OPTION VALUE='ANY'>" . _('Any Other');
 
 	while ($myrow = DB_fetch_array($result)) {
@@ -300,7 +300,7 @@ if (!isset($_GET['delete'])) {
 	$result = DB_query($sql,$db);
 
 	echo "</SELECT></TD></TR><TR><TD>" . _('Sales Type') . " / " . _('Price List') . ":</TD>
-		<TD><SELECT name='SalesType'><OPTION VALUE='AN'>" . _('Any Other');
+		<TD><SELECT tabindex=3 name='SalesType'><OPTION VALUE='AN'>" . _('Any Other');
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['SalesType']) and $myrow['typeabbrev']==$_POST['SalesType']) {
@@ -312,7 +312,7 @@ if (!isset($_GET['delete'])) {
 
 	} //end while loop
 
-	echo "</SELECT></TD></TR><TR><TD>" . _('Post to GL account') . ":</TD><TD><SELECT name='GLCode'>";
+	echo "</SELECT></TD></TR><TR><TD>" . _('Post to GL account') . ":</TD><TD><SELECT tabindex=4 name='GLCode'>";
 
 	DB_free_result($result);
 	$sql = "SELECT chartmaster.accountcode,
@@ -338,7 +338,7 @@ if (!isset($_GET['delete'])) {
 
 	DB_free_result($result);
 
-	echo "</SELECT></TD></TR></TABLE><input type='Submit' name='submit' value=" . _('Enter Information') . "></FORM></CENTER>";
+	echo "</SELECT></TD></TR></TABLE><input tabindex=5 type='Submit' name='submit' value=" . _('Enter Information') . "></FORM></CENTER>";
 
 } //end if record deleted no point displaying form to add record
 
