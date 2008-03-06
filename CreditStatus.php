@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 3;
 include('includes/session.inc');
@@ -16,11 +16,11 @@ if (isset($Errors)) {
 	unset($Errors);
 }
 $Errors = array();
+$InputError = 0;
 
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
-	$InputError = 0;
 	$i=1;
 
 	/* actions to take once the user has clicked the submit button
@@ -36,16 +36,24 @@ if (isset($_POST['submit'])) {
 	if ($myrow[0]!=0 and !isset($SelectedReason)) {
 		$InputError = 1;
 		prnMsg( _('The credit status code already exists in the database'),'error');
-		$Errors[$i] = 'StatusCode';
+		$Errors[$i] = 'ReasonCode';
 		$i++;		
 	}
-	if (!is_long((int)$_POST['ReasonCode'])) {
+	if (!is_numeric($_POST['ReasonCode'])) {
 		$InputError = 1;
 		prnMsg(_('The status code name must be an integer'),'error');
+		$Errors[$i] = 'ReasonCode';
+		$i++;		
 	} 
 	if (strlen($_POST['ReasonDescription']) > 30) {
 		$InputError = 1;
 		prnMsg(_('The credit status description must be thirty characters or less long'),'error');
+	}
+	if (strlen($_POST['ReasonDescription']) == 0) {
+		$InputError = 1;
+		prnMsg(_('The credit status description must be entered'),'error');
+		$Errors[$i] = 'ReasonDescription';
+		$i++;		
 	}
 
 	$msg='';
@@ -91,12 +99,14 @@ if (isset($_POST['submit'])) {
 		}
 
 		$msg = _('A new credit status record has been inserted');
+		unset ($SelectedReason);
+		unset ($_POST['ReasonDescription']);
 	}
 	//run the SQL from either of the above possibilites
 	$result = DB_query($sql,$db);
-	prnMsg($msg,'success');
-	unset ($SelectedReason);
-	unset ($_POST['ReasonDescription']);
+	if ($msg != '') {
+		prnMsg($msg,'success');
+	}
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
@@ -183,7 +193,7 @@ if (!isset($_GET['delete'])) {
 
 	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '>';
 
-	if (isset($SelectedReason)) {
+	if (isset($SelectedReason) and ($InputError!=1)) {
 		//editing an existing status code
 
 		$sql = "SELECT reasoncode,
@@ -205,11 +215,14 @@ if (!isset($_GET['delete'])) {
 		echo $_POST['ReasonCode'] . '</TD></TR>';
 
 	} else { //end of if $SelectedReason only do the else when a new record is being entered
-
+		if (!isset($_POST['ReasonCode'])) {
+			$_POST['ReasonCode'] = '';
+		}
 		echo '<CENTER><TABLE>
 			<TR>
 				<TD>'. _('Status Code') .":</TD>
-				<TD><input type='Text' name='ReasonCode' SIZE=3 MAXLENGTH=2></TD>
+				<TD><input " . (in_array('ReasonCode',$Errors) ? 'class="inputerror"' : '' ) .
+					" tabindex=1 type='Text' name='ReasonCode' VALUE='". $_POST['ReasonCode'] ."' SIZE=3 MAXLENGTH=2></TD>
 			</TR>";
 	}
 
@@ -218,12 +231,13 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<TR>
 		<TD>'. _('Description') .":</TD>
-		<TD><INPUT TYPE='text' name='ReasonDescription' VALUE='". $_POST['ReasonDescription'] ."' SIZE=28 MAXLENGTH=30>
+		<TD><INPUT " . (in_array('ReasonDescription',$Errors) ? 'class="inputerror"' : '' ) .
+		 " tabindex=2 TYPE='text' name='ReasonDescription' VALUE='". $_POST['ReasonDescription'] ."' SIZE=28 MAXLENGTH=30>
 	</TD></TR>
 	<TR><TD>". _('Disallow Invoices') . "</TD>
-	<TD><INPUT TYPE='checkbox' name='DisallowInvoices'></TD></TR>
+	<TD><INPUT tabindex=3 TYPE='checkbox' name='DisallowInvoices'></TD></TR>
 	</TABLE>
-	<CENTER><input type='Submit' name='submit' value='" . _('Enter Information') . "'>
+	<CENTER><input tabindex=4 type='Submit' name='submit' value='" . _('Enter Information') . "'>
 	</FORM>";
 } //end if record deleted no point displaying form to add record
 include('includes/footer.inc');
