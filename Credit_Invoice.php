@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 $PageSecurity =3;
 
 
@@ -269,7 +269,7 @@ echo "<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=0><TR>
 <TH>" . _('Discount') . "</TH>
 <TH>" . _('Total') . '<BR>' . _('Excl Tax') . "</TH>
 <TH>" . _('Tax Authority') . "</TH>
-<TH'>" . _('Tax') . ' %' . "</TH>
+<TH>" . _('Tax') . ' %' . "</TH>
 <TH>" . _('Tax') . '<BR>' . _('Amount') . "</TH>
 <TH>" . _('Total') . '<BR>' . _('Incl Tax') . "</TH></TR>";
 
@@ -285,6 +285,7 @@ $TaxTotal =0;
 /*show the line items on the invoice with the quantity to credit and price being available for modification */
 
 $k=0; //row colour counter
+$j=0; //row counter
 
 foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 
@@ -295,14 +296,14 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 		$RowStarter = 'class="OddTableRows"';
 		$k=1;
 	}
-
+	$j++;
 	$LineTotal =($LnItm->QtyDispatched * $LnItm->Price * (1 - $LnItm->DiscountPercent));
 
 	$_SESSION['CreditItems']->total = $_SESSION['CreditItems']->total + $LineTotal;
 	$_SESSION['CreditItems']->totalVolume = $_SESSION['CreditItems']->totalVolume + $LnItm->QtyDispatched * $LnItm->Volume;
 	$_SESSION['CreditItems']->totalWeight = $_SESSION['CreditItems']->totalWeight + $LnItm->QtyDispatched * $LnItm->Weight;
 
-	echo $RowStarter.'<TD>' . $LnItm->StockID . '</TD>
+	echo '<TR '.$RowStarter.'><TD>' . $LnItm->StockID . '</TD>
 			  <TD>' . $LnItm->ItemDescription . '</TD>
 			  <TD ALIGN=RIGHT>' . number_format($LnItm->Quantity,$LnItm->DecimalPlaces) . '</TD>
 			  <TD>' . $LnItm->Units . '</TD>';
@@ -313,14 +314,14 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 
 	} else {
 
-		echo "<TD><input type=text name='Quantity_" . $LnItm->LineNumber ."' maxlength=6 SIZE=6 value=" . $LnItm->QtyDispatched . "></TD>";
+		echo "<TD><input tabindex=".$j." type=text name='Quantity_" . $LnItm->LineNumber ."' maxlength=6 SIZE=6 value=" . $LnItm->QtyDispatched . "></TD>";
 
 	}
 
 	$DisplayLineTotal = number_format($LineTotal,2);
-
-	echo "<TD><INPUT TYPE=TEXT NAME='Price_" . $LnItm->LineNumber . "' MAXLENGTH=6 SIZE=6 VALUE=" . $LnItm->Price . "></TD>
-	<TD><INPUT TYPE=TEXT NAME='Discount_" . $LnItm->LineNumber . "' MAXLENGTH=3 SIZE=3 VALUE=" . ($LnItm->DiscountPercent * 100) . "></TD>
+	$j++;
+	echo "<TD><INPUT tabindex=".$j." TYPE=TEXT NAME='Price_" . $LnItm->LineNumber . "' MAXLENGTH=6 SIZE=6 VALUE=" . $LnItm->Price . "></TD>
+	<TD><INPUT tabindex=".$j." TYPE=TEXT NAME='Discount_" . $LnItm->LineNumber . "' MAXLENGTH=3 SIZE=3 VALUE=" . ($LnItm->DiscountPercent * 100) . "></TD>
 	<TD ALIGN=RIGHT>$DisplayLineTotal</TD>";
 	
 		/*Need to list the taxes applicable to this line */
@@ -369,8 +370,8 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 	      <TD ALIGN=RIGHT>' . $DisplayGrossLineTotal . "</TD>
 	<TD><A HREF='". $_SERVER['PHP_SELF'] . "?" . SID . "&Delete=" . $LnItm->LineNumber . "'>" . _('Delete') . '</A></TD></TR>';
 
-	echo $RowStarter . "<TD COLSPAN=7><TEXTAREA  NAME='Narrative_" . $LnItm->LineNumber . "' cols=100% rows=1>" . $LnItm->Narrative . "</TEXTAREA><BR><HR></TD></TR>";
-
+	echo '<TR'.$RowStarter . "><TD COLSPAN=7><TEXTAREA tabindex=".$j."  NAME='Narrative_" . $LnItm->LineNumber . "' cols=100% rows=1>" . $LnItm->Narrative . "</TEXTAREA><BR><HR></TD></TR>";
+	$j++;
 } /*end foreach loop displaying the invoice lines to credit */
 
 if (!isset($_POST['ChargeFreightCost']) AND !isset($_SESSION['CreditItems']->FreightCost)){
@@ -384,7 +385,7 @@ echo '<TR>
 	<TD ALIGN=RIGHT>' . number_format($_SESSION['Old_FreightCost'],2) . '</TD>
 	<TD></TD>
 	<TD COLSPAN=2 ALIGN=RIGHT>' . _('Credit Freight Cost') . "</TD>
-	<TD><INPUT TYPE=TEXT SIZE=6 MAXLENGTH=6 NAME='ChargeFreightCost' VALUE=" . $_SESSION['CreditItems']->FreightCost . "></TD>";
+	<TD><INPUT tabindex=".$j." TYPE=TEXT SIZE=6 MAXLENGTH=6 NAME='ChargeFreightCost' VALUE=" . $_SESSION['CreditItems']->FreightCost . "></TD>";
 
 
 $FreightTaxTotal =0; //initialise tax total
@@ -558,7 +559,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 			" . -($_SESSION['CreditItems']->total) . ",
 			" . -$TaxTotal . ", " . -$_SESSION['CreditItems']->FreightCost . ",
 			" . $_SESSION['CurrencyRate'] . ",
-			'" . DB_escape_string($_POST['CreditText']) . "',
+			'" . $_POST['CreditText'] . "',
 			" . -$Allocate_amount . ",
 			" . $Settled . ")";
 
@@ -827,7 +828,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 							" . $OrderLine->DiscountPercent . ",
 							" . $OrderLine->StandardCost . ",
 							" .  ($QtyOnHandPrior + $OrderLine->QtyDispatched) . ",
-							'" . DB_escape_string($OrderLine->Narrative) . "')";
+							'" . $OrderLine->Narrative . "')";
 				} else {
 
 					$SQL = "INSERT INTO stockmoves (
@@ -858,7 +859,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 							" . $OrderLine->QtyDispatched . ",
 							" . $OrderLine->DiscountPercent . ",
 							" . $OrderLine->StandardCost . ",
-							'" . DB_escape_string($OrderLine->Narrative) . "'
+							'" . $OrderLine->Narrative . "'
 						)";
 				}
 
@@ -948,7 +949,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 						" . $OrderLine->DiscountPercent . ",
 						" . $OrderLine->StandardCost . ",
 						" . ($QtyOnHandPrior +$OrderLine->QtyDispatched)  . ",
-						'" . DB_escape_string($OrderLine->Narrative) . "')";
+						'" . $OrderLine->Narrative . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the stock movement records was used');
@@ -987,7 +988,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 						" . $OrderLine->StandardCost . ",
 						0,
 						" . $QtyOnHandPrior . ",
-						'" . DB_escape_string($OrderLine->Narrative) . "')";
+						'" . $OrderLine->Narrative . "')";
 
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
@@ -1028,7 +1029,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 						" . $OrderLine->StandardCost . ",
 						" . $QtyOnHandPrior  . ",
 						1,
-						'" . DB_escape_string($OrderLine->Narrative) . "')";
+						'" . $OrderLine->Narrative . "')";
 
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
@@ -1422,7 +1423,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 	echo "<TABLE>";
 
-	echo '<TR><TD>' . _('Credit Note Type') . "</TD><TD><SELECT NAME=CreditType>";
+	echo '<TR><TD>' . _('Credit Note Type') . "</TD><TD><SELECT tabindex=".$j." NAME=CreditType>";
 
 	if (!isset($_POST['CreditType']) OR $_POST['CreditType']=="Return"){
 		echo "<OPTION SELECTED VALUE='Return'>" . _('Goods returned to store');
@@ -1438,13 +1439,13 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 		echo "<OPTION SELECTED VALUE='ReverseOverCharge'>" . _('Reverse overcharge');
 	}
 	echo "</SELECT></TD></TR>";
-
+	$j++;
 
 	if (!isset($_POST['CreditType']) OR $_POST['CreditType']=='Return'){
 
 /*if the credit note is a return of goods then need to know which location to receive them into */
 
-		echo '<TR><TD>' . _('Goods returned to location') . '</TD><TD><SELECT NAME=Location>';
+		echo '<TR><TD>' . _('Goods returned to location') . '</TD><TD><SELECT TABINDEX='.$j.' NAME=Location>';
 
 		$SQL="SELECT loccode, locationname FROM locations";
 		$Result = DB_query($SQL,$db);
@@ -1461,10 +1462,11 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 			}
 		}
 		echo "</SELECT></TD></TR>";
+		$j++;
 
 	} elseif($_POST['CreditType']=='WriteOff') { /* the goods are to be written off to somewhere */
 
-		echo '<TR><TD>' . _('Write off the cost of the goods to') . '</TD><TD><SELECT NAME="WriteOffGLCode">';
+		echo '<TR><TD>' . _('Write off the cost of the goods to') . '</TD><TD><SELECT TABINDEX='.$j.' NAME="WriteOffGLCode">';
 
 		$SQL='SELECT accountcode, 
 				accountname 
@@ -1487,9 +1489,11 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 	if (!isset($_POST['CreditText'])) {
 		$_POST['CreditText'] = '';
 	}
-	echo '<TR><TD>' . _('Credit note text') . '</TD><TD><TEXTAREA NAME=CreditText COLS=31 ROWS=5>' . $_POST['CreditText'] . '</TEXTAREA></TD></TR>';
-	echo '</TABLE><CENTER><INPUT TYPE=SUBMIT NAME=Update Value=' . _('Update') . '><P>';
-	echo "<INPUT TYPE=SUBMIT NAME='ProcessCredit' Value='" . _('Process Credit') ."'></CENTER>";
+	$j++;
+	echo '<TR><TD>' . _('Credit note text') . '</TD><TD><TEXTAREA TABINDEX='.$j.'  NAME=CreditText COLS=31 ROWS=5>' . $_POST['CreditText'] . '</TEXTAREA></TD></TR>';
+	echo '</TABLE><CENTER><INPUT TABINDEX='.$j.' TYPE=SUBMIT NAME=Update Value=' . _('Update') . '><P>';
+	$j++;
+	echo "<INPUT TYPE=SUBMIT TABINDEX=".$j++." NAME='ProcessCredit' Value='" . _('Process Credit') ."'></CENTER>";
 }
 
 echo "</FORM>";
