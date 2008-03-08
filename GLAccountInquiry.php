@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 
 $PageSecurity = 8;
@@ -251,7 +251,7 @@ if (isset($_POST['Show'])){
 
 
 
-if (isset($ShowIntegrityReport)){
+if ($ShowIntegrityReport==True){
 	if (!isset($IntegrityReport)) {$IntegrityReport='';}
 	prnMsg( _('There are differences between the sum of the transactions and the recorded movements in the ChartDetails table') . '. ' . _('A log of the account differences for the periods report shows below'),'warn');
 	echo '<P>'.$IntegrityReport;
