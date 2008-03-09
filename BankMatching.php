@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 7;
 
@@ -151,7 +151,7 @@ if ($InputError !=1 AND isset($_POST["BankAccount"]) AND $_POST["BankAccount"]!=
 				AND transdate >= '". $SQLAfterDate . "'
 				AND transdate <= '" . $SQLBeforeDate . "'
 				AND bankact=" .$_POST["BankAccount"] . "
-				ORDER BY banktransid";
+				ORDER BY transdate";
 
 		} else { /* Type must == Receipts */
 			$sql = "SELECT banktransid,
@@ -165,7 +165,7 @@ if ($InputError !=1 AND isset($_POST["BankAccount"]) AND $_POST["BankAccount"]!=
 				AND transdate >= '". $SQLAfterDate . "'
 				AND transdate <= '" . $SQLBeforeDate . "'
 				AND bankact=" .$_POST['BankAccount'] . "
-				ORDER BY banktransid";
+				ORDER BY transdate";
 		}
 	} else { /*it must be only the outstanding bank trans required */
 		if ($Type=='Payments'){
@@ -181,7 +181,7 @@ if ($InputError !=1 AND isset($_POST["BankAccount"]) AND $_POST["BankAccount"]!=
 				AND transdate <= '" . $SQLBeforeDate . "'
 				AND bankact=" .$_POST["BankAccount"] . "
 				AND  ABS(amountcleared - (amount / exrate)) > 0.009
-				ORDER BY banktransid";
+				ORDER BY transdate";
 		} else { /* Type must == Receipts */
 			$sql = "SELECT banktransid,
 					ref,
@@ -195,7 +195,7 @@ if ($InputError !=1 AND isset($_POST["BankAccount"]) AND $_POST["BankAccount"]!=
 				AND transdate <= '" . $SQLBeforeDate . "'
 				AND bankact=" .$_POST["BankAccount"] . "
 				AND  ABS(amountcleared - (amount / exrate)) > 0.009
-				ORDER BY banktransid";
+				ORDER BY transdate";
 		}
 	}
 	if ($_POST["First20_or_All"]!='All'){
