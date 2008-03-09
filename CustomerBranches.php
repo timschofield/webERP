@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 $PageSecurity = 3;
 
@@ -29,10 +29,17 @@ if (isset($_GET['SelectedBranch'])){
 
 echo "<A HREF='" . $rootpath . '/SelectCustomer.php?' . SID . "'>" . _('Back to Customers') . '</A><BR>';
 
+if (isset($Errors)) {
+	unset($Errors);
+}
+	
+$Errors = array();	
+
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
+	$i=1;
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
@@ -44,28 +51,41 @@ if (isset($_POST['submit'])) {
 	if (strstr($_POST['BranchCode'],"'") OR strstr($_POST['BranchCode'],'"') OR strstr($_POST['BranchCode'],'&')) {
 		$InputError = 1;
 		prnMsg(_('The Branch code cannot contain any of the following characters')." -  & \'",'error');
-	} elseif (strlen($_POST['BranchCode'])==0) {
+		$Errors[$i] = 'BranchCode';
+		$i++;		
+	} 
+	if (strlen($_POST['BranchCode'])==0) {
 		$InputError = 1;
 		prnMsg(_('The Branch code must be at least one character long'),'error');
-	} elseif (!Is_integer((int) $_POST['FwdDate'])) {
+		$Errors[$i] = 'BranchCode';
+		$i++;		
+	} 
+	if (!is_numeric($_POST['FwdDate'])) {
 		$InputError = 1;
 		prnMsg(_('The date after which invoices are charged to the following month is expected to be a number and a recognised number has not been entered'),'error');
-	} elseif ($_POST['FwdDate'] >30) {
+		$Errors[$i] = 'FwdDate';
+		$i++;		
+	} 
+	if ($_POST['FwdDate'] >30) {
 		$InputError = 1;
 		prnMsg(_('The date (in the month) after which invoices are charged to the following month should be a number less than 31'),'error');
-	} elseif (!Is_integer((int) $_POST['EstDeliveryDays'])) {
+		$Errors[$i] = 'FwdDate';
+		$i++;		
+	} 
+	if (!is_numeric($_POST['EstDeliveryDays'])) {
 		$InputError = 1;
 		prnMsg(_('The estimated delivery days is expected to be a number and a recognised number has not been entered'),'error');
-	} elseif ($_POST['EstDeliveryDays'] >60) {
+		$Errors[$i] = 'EstDeliveryDays';
+		$i++;		
+	} 
+	if ($_POST['EstDeliveryDays'] >60) {
 		$InputError = 1;
 		prnMsg(_('The estimated delivery days should be a number of days less than 60') . '. ' . _('A package can be delivered by seafreight anywhere in the world normally in less than 60 days'),'error');
+		$Errors[$i] = 'EstDeliveryDays';
+		$i++;		
 	}
-
-	if (!isset($_POST['EstDeliveryDays']) OR !is_numeric($_POST['EstDeliveryDays'])){
+	if (!isset($_POST['EstDeliveryDays'])) {
 		$_POST['EstDeliveryDays']=1;
-	}
-	if (!isset($_POST['FwdDate']) OR !is_numeric($_POST['FwdDate'])){
-		$_POST['FwdDate']=0;
 	}
 
 
@@ -73,28 +93,28 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedBranch could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the 	delete code below*/
 
-		$sql = "UPDATE custbranch SET brname = '" . DB_escape_string($_POST['BrName']) . "',
-						braddress1 = '" . DB_escape_string($_POST['BrAddress1']) . "',
-						braddress2 = '" . DB_escape_string($_POST['BrAddress2']) . "',
-						braddress3 = '" . DB_escape_string($_POST['BrAddress3']) . "',
-						braddress4 = '" . DB_escape_string($_POST['BrAddress4']) . "',
-						braddress5 = '" . DB_escape_string($_POST['BrAddress5']) . "',
-						braddress6 = '" . DB_escape_string($_POST['BrAddress6']) . "',
-						specialinstructions = '" . DB_escape_string($_POST['specialinstructions']) . "',
-						phoneno='" . DB_escape_string($_POST['PhoneNo']) . "',
-						faxno='" . DB_escape_string($_POST['FaxNo']) . "',
+		$sql = "UPDATE custbranch SET brname = '" . $_POST['BrName'] . "',
+						braddress1 = '" . $_POST['BrAddress1'] . "',
+						braddress2 = '" . $_POST['BrAddress2'] . "',
+						braddress3 = '" . $_POST['BrAddress3'] . "',
+						braddress4 = '" . $_POST['BrAddress4'] . "',
+						braddress5 = '" . $_POST['BrAddress5'] . "',
+						braddress6 = '" . $_POST['BrAddress6'] . "',
+						specialinstructions = '" . $_POST['specialinstructions'] . "',
+						phoneno='" . $_POST['PhoneNo'] . "',
+						faxno='" . $_POST['FaxNo'] . "',
 						fwddate= " . $_POST['FwdDate'] . ",
-						contactname='" . DB_escape_string($_POST['ContactName']) . "',
+						contactname='" . $_POST['ContactName'] . "',
 						salesman= '" . $_POST['Salesman'] . "',
 						area='" . $_POST['Area'] . "',
 						estdeliverydays =" . $_POST['EstDeliveryDays'] . ",
 						email='" . $_POST['Email'] . "',
 						taxgroupid=" . $_POST['TaxGroup'] . ",
 						defaultlocation='" . $_POST['DefaultLocation'] . "',
-						brpostaddr1 = '" . DB_escape_string($_POST['BrPostAddr1']) . "',
-						brpostaddr2 = '" . DB_escape_string($_POST['BrPostAddr2']) . "',
-						brpostaddr3 = '" . DB_escape_string($_POST['BrPostAddr3']) . "',
-						brpostaddr4 = '" . DB_escape_string($_POST['BrPostAddr4']) . "',
+						brpostaddr1 = '" . $_POST['BrPostAddr1'] . "',
+						brpostaddr2 = '" . $_POST['BrPostAddr2'] . "',
+						brpostaddr3 = '" . $_POST['BrPostAddr3'] . "',
+						brpostaddr4 = '" . $_POST['BrPostAddr4'] . "',
 						disabletrans=" . $_POST['DisableTrans'] . ",
 						defaultshipvia=" . $_POST['DefaultShipVia'] . ",
 						custbranchcode='" . $_POST['CustBranchCode'] ."',
@@ -146,28 +166,28 @@ if (isset($_POST['submit'])) {
 						vtiger_accountid)
 				VALUES ('" . $_POST['BranchCode'] . "',
 					'" . $DebtorNo . "',
-					'" . DB_escape_string($_POST['BrName']) . "',
-					'" . DB_escape_string($_POST['BrAddress1']) . "',
-					'" . DB_escape_string($_POST['BrAddress2']) . "',
-					'" . DB_escape_string($_POST['BrAddress3']) . "',
-					'" . DB_escape_string($_POST['BrAddress4']) . "',
-					'" . DB_escape_string($_POST['BrAddress5']) . "',
-					'" . DB_escape_string($_POST['BrAddress6']) . "',
-					'" . DB_escape_string($_POST['specialinstructions']) . "',
+					'" . $_POST['BrName'] . "',
+					'" . $_POST['BrAddress1'] . "',
+					'" . $_POST['BrAddress2'] . "',
+					'" . $_POST['BrAddress3'] . "',
+					'" . $_POST['BrAddress4'] . "',
+					'" . $_POST['BrAddress5'] . "',
+					'" . $_POST['BrAddress6'] . "',
+					'" . $_POST['specialinstructions'] . "',
 					" . $_POST['EstDeliveryDays'] . ",
 					" . $_POST['FwdDate'] . ",
 					'" . $_POST['Salesman'] . "',
-					'" . DB_escape_string($_POST['PhoneNo']) . "',
-					'" . DB_escape_string($_POST['FaxNo']) . "',
-					'" . DB_escape_string($_POST['ContactName']) . "',
+					'" . $_POST['PhoneNo'] . "',
+					'" . $_POST['FaxNo'] . "',
+					'" . $_POST['ContactName'] . "',
 					'" . $_POST['Area'] . "',
-					'" . DB_escape_string($_POST['Email']) . "',
+					'" . $_POST['Email'] . "',
 					" . $_POST['TaxGroup'] . ",
 					'" . $_POST['DefaultLocation'] . "',
-					'" . DB_escape_string($_POST['BrPostAddr1']) . "',
-					'" . DB_escape_string($_POST['BrPostAddr2']) . "',
-					'" . DB_escape_string($_POST['BrPostAddr3']) . "',
-					'" . DB_escape_string($_POST['BrPostAddr4']) . "',
+					'" . $_POST['BrPostAddr1'] . "',
+					'" . $_POST['BrPostAddr2'] . "',
+					'" . $_POST['BrPostAddr3'] . "',
+					'" . $_POST['BrPostAddr4'] . "',
 					" . $_POST['DisableTrans'] . ",
 					" . $_POST['DefaultShipVia'] . ",
 					'" . $_POST['CustBranchCode'] ."',
@@ -206,28 +226,28 @@ if (isset($_POST['submit'])) {
                        			        deliverblind)
 				VALUES ('" . $_POST['BranchCode'] . "',
 					'" . $DebtorNo . "',
-					'" . DB_escape_string($_POST['BrName']) . "',
-					'" . DB_escape_string($_POST['BrAddress1']) . "',
-					'" . DB_escape_string($_POST['BrAddress2']) . "',
-					'" . DB_escape_string($_POST['BrAddress3']) . "',
-					'" . DB_escape_string($_POST['BrAddress4']) . "',
-					'" . DB_escape_string($_POST['BrAddress5']) . "',
-					'" . DB_escape_string($_POST['BrAddress6']) . "',
-					'" . DB_escape_string($_POST['specialinstructions']) . "',
+					'" . $_POST['BrName'] . "',
+					'" . $_POST['BrAddress1'] . "',
+					'" . $_POST['BrAddress2'] . "',
+					'" . $_POST['BrAddress3'] . "',
+					'" . $_POST['BrAddress4'] . "',
+					'" . $_POST['BrAddress5'] . "',
+					'" . $_POST['BrAddress6'] . "',
+					'" . $_POST['specialinstructions'] . "',
 					" . $_POST['EstDeliveryDays'] . ",
 					" . $_POST['FwdDate'] . ",
 					'" . $_POST['Salesman'] . "',
-					'" . DB_escape_string($_POST['PhoneNo']) . "',
-					'" . DB_escape_string($_POST['FaxNo']) . "',
-					'" . DB_escape_string($_POST['ContactName']) . "',
+					'" . $_POST['PhoneNo'] . "',
+					'" . $_POST['FaxNo'] . "',
+					'" . $_POST['ContactName'] . "',
 					'" . $_POST['Area'] . "',
-					'" . DB_escape_string($_POST['Email']) . "',
+					'" . $_POST['Email'] . "',
 					" . $_POST['TaxGroup'] . ",
 					'" . $_POST['DefaultLocation'] . "',
-					'" . DB_escape_string($_POST['BrPostAddr1']) . "',
-					'" . DB_escape_string($_POST['BrPostAddr2']) . "',
-					'" . DB_escape_string($_POST['BrPostAddr3']) . "',
-					'" . DB_escape_string($_POST['BrPostAddr4']) . "',
+					'" . $_POST['BrPostAddr1'] . "',
+					'" . $_POST['BrPostAddr2'] . "',
+					'" . $_POST['BrPostAddr3'] . "',
+					'" . $_POST['BrPostAddr4'] . "',
 					" . $_POST['DisableTrans'] . ",
 					" . $_POST['DefaultShipVia'] . ",
 					'" . $_POST['CustBranchCode'] ."',
@@ -240,7 +260,9 @@ if (isset($_POST['submit'])) {
 	//run the SQL from either of the above possibilites
 
 	$ErrMsg = _('The branch record could not be inserted or updated because');
-	$result = DB_query($sql,$db, $ErrMsg);
+	if ($InputError==0) {
+		$result = DB_query($sql,$db, $ErrMsg);
+	}
 
 
 	if ($_SESSION['vtiger_integration']==1){
@@ -297,10 +319,7 @@ if (isset($_POST['submit'])) {
 		}
 	}
 
-
-
-
-	if (DB_error_no($db) ==0) {
+	if (DB_error_no($db) ==0 and $InputError==0) {
 		prnMsg($msg,'success');
 		unset($_POST['BranchCode']);
 		unset($_POST['BrName']);
@@ -551,33 +570,35 @@ if (! isset($_GET['delete'])) {
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
 
-		$_POST['BranchCode'] = $myrow['branchcode'];
-		$_POST['BrName']  = $myrow['brname'];
-		$_POST['BrAddress1']  = $myrow['braddress1'];
-		$_POST['BrAddress2']  = $myrow['braddress2'];
-		$_POST['BrAddress3']  = $myrow['braddress3'];
-		$_POST['BrAddress4']  = $myrow['braddress4'];
-		$_POST['BrAddress5']  = $myrow['braddress5'];
-		$_POST['BrAddress6']  = $myrow['braddress6'];
-		$_POST['specialinstructions']  = $myrow['specialinstructions'];
-		$_POST['BrPostAddr1']  = $myrow['brpostaddr1'];
-		$_POST['BrPostAddr2']  = $myrow['brpostaddr2'];
-		$_POST['BrPostAddr3']  = $myrow['brpostaddr3'];
-		$_POST['BrPostAddr4']  = $myrow['brpostaddr4'];
-		$_POST['EstDeliveryDays']  = $myrow['estdeliverydays'];
-		$_POST['FwdDate'] =$myrow['fwddate'];
-		$_POST['ContactName'] = $myrow['contactname'];
-		$_POST['Salesman'] =$myrow['salesman'];
-		$_POST['Area'] =$myrow['area'];
-		$_POST['PhoneNo'] =$myrow['phoneno'];
-		$_POST['FaxNo'] =$myrow['faxno'];
-		$_POST['Email'] =$myrow['email'];
-		$_POST['TaxGroup'] = $myrow['taxgroupid'];
-		$_POST['DisableTrans'] = $myrow['disabletrans'];
-		$_POST['DefaultLocation'] = $myrow['defaultlocation'];
-		$_POST['DefaultShipVia'] = $myrow['defaultshipvia'];
-		$_POST['CustBranchCode'] = $myrow['custbranchcode'];
-		$_POST['DeliverBlind'] = $myrow['deliverblind'];
+		if ($InputError==0) {
+			$_POST['BranchCode'] = $myrow['branchcode'];
+			$_POST['BrName']  = $myrow['brname'];
+			$_POST['BrAddress1']  = $myrow['braddress1'];
+			$_POST['BrAddress2']  = $myrow['braddress2'];
+			$_POST['BrAddress3']  = $myrow['braddress3'];
+			$_POST['BrAddress4']  = $myrow['braddress4'];
+			$_POST['BrAddress5']  = $myrow['braddress5'];
+			$_POST['BrAddress6']  = $myrow['braddress6'];
+			$_POST['specialinstructions']  = $myrow['specialinstructions'];
+			$_POST['BrPostAddr1']  = $myrow['brpostaddr1'];
+			$_POST['BrPostAddr2']  = $myrow['brpostaddr2'];
+			$_POST['BrPostAddr3']  = $myrow['brpostaddr3'];
+			$_POST['BrPostAddr4']  = $myrow['brpostaddr4'];
+			$_POST['EstDeliveryDays']  = $myrow['estdeliverydays'];
+			$_POST['FwdDate'] =$myrow['fwddate'];
+			$_POST['ContactName'] = $myrow['contactname'];
+			$_POST['Salesman'] =$myrow['salesman'];
+			$_POST['Area'] =$myrow['area'];
+			$_POST['PhoneNo'] =$myrow['phoneno'];
+			$_POST['FaxNo'] =$myrow['faxno'];
+			$_POST['Email'] =$myrow['email'];
+			$_POST['TaxGroup'] = $myrow['taxgroupid'];
+			$_POST['DisableTrans'] = $myrow['disabletrans'];
+			$_POST['DefaultLocation'] = $myrow['defaultlocation'];
+			$_POST['DefaultShipVia'] = $myrow['defaultshipvia'];
+			$_POST['CustBranchCode'] = $myrow['custbranchcode'];
+			$_POST['DeliverBlind'] = $myrow['deliverblind'];
+		}
 
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedBranch' VALUE='" . $SelectedBranch . "'>";
 		echo "<INPUT TYPE=HIDDEN NAME='BranchCode'  VALUE='" . $_POST['BranchCode'] . "'>";
@@ -617,7 +638,8 @@ if (! isset($_GET['delete'])) {
 		}
 		
 		echo '<CENTER><TABLE><TR><TD>'._('Branch Code').":</TD>
-				<TD><input type='Text' name='BranchCode' SIZE=12 MAXLENGTH=10 value=" . $_POST['BranchCode'] . '></TD></TR>';
+				<TD><input " .(in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) .
+				" tabindex=1 type='Text' name='BranchCode' SIZE=12 MAXLENGTH=10 value=" . $_POST['BranchCode'] . '></TD></TR>';
 		$_POST['DeliverBlind'] = $_SESSION['DefaultBlindPackNote'];
 	}
 
@@ -639,40 +661,40 @@ if (! isset($_GET['delete'])) {
 
 	echo '<TR><TD>'._('Branch Name').':</TD>';
 	if (!isset($_POST['BrName'])) {$_POST['BrName']='';}
-	echo '<TD><input type="Text" name="BrName" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrName'].'"></TD></TR>';
+	echo '<TD><input tabindex=2 type="Text" name="BrName" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrName'].'"></TD></TR>';
 	echo '<TR><TD>'._('Contact').':</TD>';
 	if (!isset($_POST['ContactName'])) {$_POST['ContactName']='';}
-	echo '<TD><input type="Text" name="ContactName" SIZE=41 MAXLENGTH=40 value="'. $_POST['ContactName'].'"></TD></TR>';
+	echo '<TD><input tabindex=3 type="Text" name="ContactName" SIZE=41 MAXLENGTH=40 value="'. $_POST['ContactName'].'"></TD></TR>';
 	echo '<TR><TD>'._('Street Address 1').':</TD>';
 	if (!isset($_POST['BrAddress1'])) {$_POST['BrAddress1']='';}
-	echo '<TD><input type="Text" name="BrAddress1" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrAddress1'].'"></TD></TR>';
+	echo '<TD><input tabindex=4 type="Text" name="BrAddress1" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrAddress1'].'"></TD></TR>';
 	echo '<TR><TD>'._('Street Address 2').':</TD>';
 	if (!isset($_POST['BrAddress2'])) {$_POST['BrAddress2']='';}
-	echo '<TD><input type="Text" name="BrAddress2" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrAddress2'].'"></TD></TR>';
+	echo '<TD><input tabindex=5 type="Text" name="BrAddress2" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrAddress2'].'"></TD></TR>';
 	echo '<TR><TD>'._('Street Address 3').':</TD>';
 	if (!isset($_POST['BrAddress3'])) {$_POST['BrAddress3']='';}
-	echo '<TD><input type="Text" name="BrAddress3" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrAddress3'].'"></TD></TR>';
+	echo '<TD><input tabindex=6 type="Text" name="BrAddress3" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrAddress3'].'"></TD></TR>';
 	echo '<TR><TD>'._('Street Address 4').':</TD>';
 	if (!isset($_POST['BrAddress4'])) {$_POST['BrAddress4']='';}
-	echo '<TD><input type="Text" name="BrAddress4" SIZE=31 MAXLENGTH=40 value="'. $_POST['BrAddress4'].'"></TD></TR>';
+	echo '<TD><input tabindex=7 type="Text" name="BrAddress4" SIZE=31 MAXLENGTH=40 value="'. $_POST['BrAddress4'].'"></TD></TR>';
 	echo '<TR><TD>'._('Street Address 5').':</TD>';
 	if (!isset($_POST['BrAddress5'])) {$_POST['BrAddress5']='';}
-	echo '<TD><input type="Text" name="BrAddress5" SIZE=21 MAXLENGTH=20 value="'. $_POST['BrAddress5'].'"></TD></TR>';
+	echo '<TD><input tabindex=8 type="Text" name="BrAddress5" SIZE=21 MAXLENGTH=20 value="'. $_POST['BrAddress5'].'"></TD></TR>';
 	echo '<TR><TD>'._('Street Address 6').':</TD>';
 	if (!isset($_POST['BrAddress6'])) {$_POST['BrAddress6']='';}
-	echo '<TD><input type="Text" name="BrAddress6" SIZE=16 MAXLENGTH=15 value="'. $_POST['BrAddress6'].'"></TD></TR>';
+	echo '<TD><input tabindex=9 type="Text" name="BrAddress6" SIZE=16 MAXLENGTH=15 value="'. $_POST['BrAddress6'].'"></TD></TR>';
 	echo '<TR><TD>'._('Special Instructions').':</TD>';
 	if (!isset($_POST['specialinstructions'])) {$_POST['specialinstructions']='';}
-	echo '<TD><input type="Text" name="specialinstructions" size=56 value="'. $_POST['specialinstructions'].'"></TD></TR>';
+	echo '<TD><input tabindex=10 type="Text" name="specialinstructions" size=56 value="'. $_POST['specialinstructions'].'"></TD></TR>';
 	echo '<TR><TD>'._('Delivery Days').':</TD>';
 	if (!isset($_POST['EstDeliveryDays'])) {$_POST['EstDeliveryDays']='';}
-	echo '<TD><input type="Text" name="EstDeliveryDays" SIZE=4 MAXLENGTH=2 value='. $_POST['EstDeliveryDays'].'></TD></TR>';
+	echo '<TD><input ' .(in_array('EstDeliveryDays',$Errors) ?  'class="inputerror"' : '' ) .' tabindex=11 type="Text" name="EstDeliveryDays" SIZE=4 MAXLENGTH=2 value='. $_POST['EstDeliveryDays'].'></TD></TR>';
 	echo '<TR><TD>'._('Forward Date After (day in month)').':</TD>';
-	if (!isset($_POST['FwdDate'])) {$_POST['FwdDate']='';}
-	echo '<TD><input type="Text" name="FwdDate" SIZE=4 MAXLENGTH=2 value='. $_POST['FwdDate'].'></TD></TR>';
+	if (!isset($_POST['FwdDate'])) {$_POST['FwdDate']=0;}
+	echo '<TD><input ' .(in_array('FwdDate',$Errors) ?  'class="inputerror"' : '' ) .' tabindex=12 type="Text" name="FwdDate" SIZE=4 MAXLENGTH=2 value='. $_POST['FwdDate'].'></TD></TR>';
 
 	echo '<TR><TD>'._('Salesperson').':</TD>';
-	echo '<TD><SELECT name="Salesman">';
+	echo '<TD><SELECT tabindex=13 name="Salesman">';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if ($myrow['salesmancode']==$_POST['Salesman']) {
@@ -699,7 +721,7 @@ if (! isset($_GET['delete'])) {
 	}
 
 	echo '<TR><TD>'._('Sales Area').':</TD>';
-	echo '<TD><SELECT name="Area">';
+	echo '<TD><SELECT tabindex=14 name="Area">';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['Area']) and $myrow['areacode']==$_POST['Area']) {
 			echo '<OPTION SELECTED VALUE=';
@@ -726,7 +748,7 @@ if (! isset($_GET['delete'])) {
 	}
 
 	echo '<TR><TD>'._('Draw Stock From').':</TD>';
-	echo '<TD><SELECT name="DefaultLocation">';
+	echo '<TD><SELECT tabindex=15 name="DefaultLocation">';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['DefaultLocation']) and $myrow['loccode']==$_POST['DefaultLocation']) {
@@ -741,19 +763,19 @@ if (! isset($_GET['delete'])) {
 	echo '</SELECT></TD></TR>';
 	echo '<TR><TD>'._('Phone Number').':</TD>';
 	if (!isset($_POST['PhoneNo'])) {$_POST['PhoneNo']='';}
-	echo '<TD><input type="Text" name="PhoneNo" SIZE=22 MAXLENGTH=20 value="'. $_POST['PhoneNo'].'"></TD></TR>';
+	echo '<TD><input tabindex=16 type="Text" name="PhoneNo" SIZE=22 MAXLENGTH=20 value="'. $_POST['PhoneNo'].'"></TD></TR>';
 
 	echo '<TR><TD>'._('Fax Number').':</TD>';
 	if (!isset($_POST['FaxNo'])) {$_POST['FaxNo']='';}
-	echo '<TD><input type="Text" name="FaxNo" SIZE=22 MAXLENGTH=20 value="'. $_POST['FaxNo'].'"></TD></TR>';
+	echo '<TD><input tabindex=17 type="Text" name="FaxNo" SIZE=22 MAXLENGTH=20 value="'. $_POST['FaxNo'].'"></TD></TR>';
 
 	if (!isset($_POST['Email'])) {$_POST['Email']='';}
 	echo '<TR><TD>'.(($_POST['Email']) ? '<a href="Mailto:'.$_POST['Email'].'">'._('Email').':</a>' : _('Email').':').'</TD>';
       //only display email link if there is an email address
-	echo '<TD><input type="Text" name="Email" SIZE=56 MAXLENGTH=55 value="'. $_POST['Email'].'"></TD></TR>';
+	echo '<TD><input tabindex=18 type="Text" name="Email" SIZE=56 MAXLENGTH=55 value="'. $_POST['Email'].'"></TD></TR>';
 
 	echo '<TR><TD>'._('Tax Group').':</TD>';
-	echo '<TD><SELECT name="TaxGroup">';
+	echo '<TD><SELECT tabindex=19 name="TaxGroup">';
 
 	DB_data_seek($result,0);
 
@@ -771,7 +793,7 @@ if (! isset($_GET['delete'])) {
 	} //end while loop
 
 	echo '</SELECT></TD></TR>';
-	echo '<TR><TD>'._('Disable transactions on this branch').":</TD><TD><SELECT NAME='DisableTrans'>";
+	echo '<TR><TD>'._('Disable transactions on this branch').":</TD><TD><SELECT tabindex=20 NAME='DisableTrans'>";
 	if ($_POST['DisableTrans']==0){
 		echo '<OPTION SELECTED VALUE=0>' . _('Enabled');
 		echo '<OPTION VALUE=1>' . _('Disabled');
@@ -782,7 +804,7 @@ if (! isset($_GET['delete'])) {
 
 	echo '	</SELECT></TD></TR>';
 
-	echo '<TR><TD>'._('Default freight company').":</TD><TD><SELECT name='DefaultShipVia'>";
+	echo '<TR><TD>'._('Default freight company').":</TD><TD><SELECT tabindex=21 name='DefaultShipVia'>";
 	$SQL = 'SELECT shipper_id, shippername FROM shippers';
 	$ShipperResults = DB_query($SQL,$db);
 	while ($myrow=DB_fetch_array($ShipperResults)){
@@ -798,7 +820,7 @@ if (! isset($_GET['delete'])) {
 	/* This field is a default value that will be used to set the value
 	on the sales order which will control whether or not to display the
 	company logo and address on the packlist */
-	echo '<TR><TD>' . _('Default Packlist') . ":</TD><TD><SELECT NAME='DeliverBlind'>";
+	echo '<TR><TD>' . _('Default Packlist') . ":</TD><TD><SELECT tabindex=22 NAME='DeliverBlind'>";
         for ($p = 1; $p <= 2; $p++) {
             echo '<OPTION VALUE=' . $p;
             if ($p == $_POST['DeliverBlind']) {
@@ -817,22 +839,22 @@ if (! isset($_GET['delete'])) {
 
 	echo '<TR><TD>'._('Postal Address 1').':</TD>';
 	if (!isset($_POST['BrPostAddr1'])) {$_POST['BrPostAddr1']='';}
-	echo '<TD><input type="Text" name="BrPostAddr1" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrPostAddr1'].'"></TD></TR>';
+	echo '<TD><input tabindex=23 type="Text" name="BrPostAddr1" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrPostAddr1'].'"></TD></TR>';
 	echo '<TR><TD>'._('Postal Address 2').':</TD>';
 	if (!isset($_POST['BrPostAddr2'])) {$_POST['BrPostAddr2']='';}
-	echo '<TD><input type="Text" name="BrPostAddr2" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrPostAddr2'].'"></TD></TR>';
+	echo '<TD><input tabindex=24 type="Text" name="BrPostAddr2" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrPostAddr2'].'"></TD></TR>';
 	echo '<TR><TD>'._('Postal Address 3').':</TD>';
 	if (!isset($_POST['BrPostAddr3'])) {$_POST['BrPostAddr3']='';}
-	echo '<TD><input type="Text" name="BrPostAddr3" SIZE=31 MAXLENGTH=30 value="'. $_POST['BrPostAddr3'].'"></TD></TR>';
+	echo '<TD><input tabindex=25 type="Text" name="BrPostAddr3" SIZE=31 MAXLENGTH=30 value="'. $_POST['BrPostAddr3'].'"></TD></TR>';
 	echo '<TR><TD>'._('Postal Address 4').':</TD>';
 	if (!isset($_POST['BrPostAddr4'])) {$_POST['BrPostAddr4']='';}
-	echo '<TD><input type="Text" name="BrPostAddr4" SIZE=21 MAXLENGTH=20 value="'. $_POST['BrPostAddr4'].'"></TD></TR>';
+	echo '<TD><input tabindex=26 type="Text" name="BrPostAddr4" SIZE=21 MAXLENGTH=20 value="'. $_POST['BrPostAddr4'].'"></TD></TR>';
 	echo '<TR><TD>'._('Customers Internal Branch Code (EDI)').':</TD>';
 	if (!isset($_POST['CustBranchCode'])) {$_POST['CustBranchCode']='';}
-	echo '<TD><input type="Text" name="CustBranchCode" SIZE=31 MAXLENGTH=30 value="'. $_POST['CustBranchCode'].'"></TD></TR>';
+	echo '<TD><input tabindex=27 type="Text" name="CustBranchCode" SIZE=31 MAXLENGTH=30 value="'. $_POST['CustBranchCode'].'"></TD></TR>';
 	echo '</TABLE>';
 
-	echo '<CENTER><input type="Submit" name="submit" value='._('Enter Information').'>';
+	echo '<CENTER><input tabindex=28 type="Submit" name="submit" value='._('Enter Information').'>';
 	echo '</FORM>';
 
 } //end if record deleted no point displaying form to add record
