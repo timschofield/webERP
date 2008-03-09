@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.64 $ */
+/* $Revision: 1.65 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -606,7 +606,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 
 if ($_SESSION['RequireCustomerSelection'] ==1
 	OR !isset($_SESSION['Items']->DebtorNo)
-	OR $_SESSION['Items']->DebtorNo=='' ) {
+	OR $_SESSION['Items']->DebtorNo=='') {
 	?>
 
 	<BR><BR><FONT SIZE=3><B><?php echo _('Customer Selection'); ?></B></FONT>
@@ -616,26 +616,17 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	<TABLE CELLPADDING=3 COLSPAN=4>
 	<TR>
 	<TD><FONT SIZE=1><?php echo _('Name'); ?>:</FONT></TD>
-	<TD><INPUT TYPE="Text" NAME="CustKeywords" SIZE=20	MAXLENGTH=25></TD>
+	<TD><INPUT TABINDEX=1 TYPE="Text" NAME="CustKeywords" SIZE=20	MAXLENGTH=25></TD>
 	<TD><FONT SIZE=3><B><?php echo _('OR'); ?></B></FONT></TD>
 	<TD><FONT SIZE=1><?php echo _('Part of the code'); ?>:</FONT></TD>
-	<TD><INPUT TYPE="Text" NAME="CustCode" SIZE=15	MAXLENGTH=18></TD>
+	<TD><INPUT TABINDEX=2 TYPE="Text" NAME="CustCode" SIZE=15	MAXLENGTH=18></TD>
 	<TD><FONT SIZE=3><B><?php echo _('OR'); ?></B></FONT></TD>
 	<TD><FONT SIZE=1><?php echo _('Part of the phone'); ?>:</FONT></TD>
-	<TD><INPUT TYPE="Text" NAME="CustPhone" SIZE=15	MAXLENGTH=18></TD>
+	<TD><INPUT TABINDEX=3 TYPE="Text" NAME="CustPhone" SIZE=15	MAXLENGTH=18></TD>
 	</TR>
 	</TABLE>
-	<CENTER><INPUT TYPE=SUBMIT NAME="SearchCust" VALUE="<?php echo _('Search Now'); ?>">
-	<INPUT TYPE=SUBMIT ACTION=RESET VALUE="<?php echo _('Reset'); ?>"></CENTER>
-
-	<script language='JavaScript' type='text/javascript'>
-    	//<![CDATA[
-            <!--
-            document.forms[0].CustCode.select();
-            document.forms[0].CustCode.focus();
-            //-->
-    	//]]>
-	</script>
+	<CENTER><INPUT TABINDEX=4 TYPE=SUBMIT NAME="SearchCust" VALUE="<?php echo _('Search Now'); ?>">
+	<INPUT TABINDEX=5 TYPE=SUBMIT ACTION=RESET VALUE="<?php echo _('Reset'); ?>"></CENTER>
 	<?php
 
 	If (isset($result_CustSelect)) {
@@ -664,7 +655,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$k=1;
 			}
 
-			printf("<td><FONT SIZE=1><INPUT TYPE=SUBMIT NAME='Select' VALUE='%s - %s'</FONT></td>
+			printf("<td><FONT SIZE=1><INPUT TABINDEX=".number_format($j+5)." TYPE=SUBMIT NAME='Select' VALUE='%s - %s'</FONT></td>
 				<td><FONT SIZE=1>%s</FONT></td>
 				<td><FONT SIZE=1>%s</FONT></td>
 				<td><FONT SIZE=1>%s</FONT></td>
@@ -678,10 +669,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$myrow['faxno']);
 
 			$j++;
-			If ($j == 11){
-				$j=1;
-				echo $TableHeader;
-			}
 //end of page full new headings if
 		}
 //end of while loop
@@ -693,6 +680,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 //end if RequireCustomerSelection
 } else { //dont require customer selection
 // everything below here only do if a customer is selected
+
  	if (isset($_POST['CancelOrder'])) {
 		$OK_to_delete=1;	//assume this in the first instance
 
@@ -760,7 +748,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '</B></FONT></CENTER>';
 	}
 
-	If (isset($_POST['Search'])){
+	If (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 
 		If (isset($_POST['Keywords']) AND isset($_POST['StockCode'])) {
 			$msg='<BR>' . _('Stock description keywords have been used in preference to the Stock code extract entered') . '.';
@@ -853,7 +841,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			  }
 		}
 
-		$SQL = $SQL . ' LIMIT ' . $_SESSION['DisplayRecordsMax'];
+		if (isset($_POST['Next'])) {
+			$Offset = $_POST['nextlist'];
+		}
+		if (isset($_POST['Prev'])) {
+			$Offset = $_POST['previous'];
+		}
+		if (!isset($Offset) or $Offset<0) {
+			$Offset=0;
+		}
+		$SQL = $SQL . ' LIMIT ' . $_SESSION['DisplayRecordsMax'].' OFFSET '.number_format($_SESSION['DisplayRecordsMax']*$Offset);
 
 		$ErrMsg = _('There is a problem selecting the part records to display because');
 		$DbgMsg = _('The SQL used to get the part selection was');
@@ -870,6 +867,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$myrow=DB_fetch_array($SearchResult);
 			$NewItem = $myrow['stockid'];
 			DB_data_seek($SearchResult,0);
+		}
+		if (DB_num_rows($SearchResult)<$_SESSION['DisplayRecordsMax']){
+			$Offset=0;
 		}
 
 	} //end of if search
@@ -1194,16 +1194,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				/*There is a stock deficiency in the stock location selected */
 				$RowStarter = '<tr bgcolor="#EEAABB">';
 			} elseif ($k==1){
-				$RowStarter = '<tr bgcolor="#CCCCCC">';
+				$RowStarter = '<tr class="OddTableRows">';
 				$k=0;
 			} else {
-				$RowStarter = '<tr bgcolor="#EEEEEE">';
+				$RowStarter = '<tr class="EvenTableRows">';
 				$k=1;
 			}
 
 			echo $RowStarter;
 			if($_SESSION['Items']->DefaultPOLine ==1){ //show the input field only if required
-				echo '<TD><INPUT TYPE=TEXT NAME="POLine_' . $OrderLine->LineNumber . '" SIZE=20 MAXLENGTH=20 VALUE=' . $OrderLine->POLine . '></TD>';
+				echo '<TD><INPUT TABINDEX=1 TYPE=TEXT NAME="POLine_' . $OrderLine->LineNumber . '" SIZE=20 MAXLENGTH=20 VALUE=' . $OrderLine->POLine . '></TD>';
 			} else {
 				echo '<input type="hidden" name="POLine_' .	 $OrderLine->LineNumber . '" value="">';
 			}
@@ -1211,7 +1211,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<TD><A target="_blank" HREF="' . $rootpath . '/StockStatus.php?' . SID . '&StockID=' . $OrderLine->StockID . '&DebtorNo=' . $_SESSION['Items']->DebtorNo . '">' . $OrderLine->StockID . '</A></TD>
 				<TD>' . $OrderLine->ItemDescription . '</TD>';
 
-			echo '<TD><INPUT TYPE=TEXT NAME="Quantity_' . $OrderLine->LineNumber . '" SIZE=6 MAXLENGTH=6 VALUE=' . $OrderLine->Quantity . '>';
+			echo '<TD><INPUT TABINDEX=2 TYPE=TEXT NAME="Quantity_' . $OrderLine->LineNumber . '" SIZE=6 MAXLENGTH=6 VALUE=' . $OrderLine->Quantity . '>';
 			if ($QtyRemain != $QtyOrdered){
 				echo '<br>'.$OrderLine->QtyInv.' of '.$OrderLine->Quantity.' invoiced';
 			}
@@ -1244,7 +1244,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<TD><INPUT TYPE=TEXT NAME="ItemDue_' . $OrderLine->LineNumber . '" SIZE=10 MAXLENGTH=10 VALUE=' . $LineDueDate . '></TD>';
 
 			echo '<TD><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . $RemTxt . '</A></TD></TR>';
-echo $_SESSION['AllowOrderLineItemNarrative'];
+
 			if ($_SESSION['AllowOrderLineItemNarrative'] == 1){
 				echo $RowStarter;
 				echo '<TD COLSPAN=7><TEXTAREA  NAME="Narrative_' . $OrderLine->LineNumber . '" cols=100% rows=1>' . $OrderLine->Narrative . '</TEXTAREA><BR><HR></TD></TR>';
@@ -1288,7 +1288,7 @@ echo $_SESSION['AllowOrderLineItemNarrative'];
 			ORDER BY categorydescription";
 		$result1 = DB_query($SQL,$db);
 
-		echo '<B>' . $msg . '</B><TABLE><TR><TD><FONT SIZE=2>' . _('Select a stock category') . ':</FONT><SELECT NAME="StockCat">';
+		echo '<B>' . $msg . '</B><TABLE><TR><TD><FONT SIZE=2>' . _('Select a stock category') . ':</FONT><SELECT TABINDEX=1 NAME="StockCat">';
 
 		if (!isset($_POST['StockCat'])){
 			echo "<OPTION SELECTED VALUE='All'>" . _('All');
@@ -1310,28 +1310,20 @@ echo $_SESSION['AllowOrderLineItemNarrative'];
 
 		</SELECT>
 		<TD><FONT SIZE=2><?php echo _('Enter text extracts in the'); ?> <B><?php echo _('description'); ?></B>:</FONT></TD>
-		<TD><INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25 VALUE="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>"></TD></TR>
+		<TD><INPUT TABINDEX=2 TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25 VALUE="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>"></TD></TR>
 		<TR><TD></TD>
 		<TD><FONT SIZE 3><B><?php echo _('OR'); ?> </B></FONT><FONT SIZE=2><?php echo _('Enter extract of the'); ?> <B><?php echo _('Stock Code'); ?></B>:</FONT></TD>
-		<TD><INPUT TYPE="Text" NAME="StockCode" SIZE=15 MAXLENGTH=18 VALUE="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>"></TD>
+		<TD><INPUT TABINDEX=3 TYPE="Text" NAME="StockCode" SIZE=15 MAXLENGTH=18 VALUE="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>"></TD>
 		</TR>
 		</TABLE>
-		<CENTER><INPUT TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Search Now'); ?>">
-		<INPUT TYPE=SUBMIT Name="QuickEntry" VALUE="<?php echo _('Use Quick Entry'); ?>">
-
-
-		<script language='JavaScript' type='text/javascript'>
-
-            	document.forms[0].StockCode.select();
-            	document.forms[0].StockCode.focus();
-
-		</script>
+		<CENTER><INPUT TABINDEX=4 TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Search Now'); ?>">
+		<INPUT TABINDEX=5 TYPE=SUBMIT Name="QuickEntry" VALUE="<?php echo _('Use Quick Entry'); ?>">
 
 		<?php
 		
 		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
-			echo '<INPUT TYPE=SUBMIT Name="ChangeCustomer" VALUE="' . _('Change Customer') . '">';
-			echo '<BR><BR><a target="_blank" href="' . $rootpath . '/Stocks.php?' . SID . '"><B>' . _('Add a New Stock Item') . '</B></a>';
+			echo '<INPUT TABINDEX=6 TYPE=SUBMIT Name="ChangeCustomer" VALUE="' . _('Change Customer') . '">';
+			echo '<BR><BR><a TABINDEX=7 target="_blank" href="' . $rootpath . '/Stocks.php?' . SID . '"><B>' . _('Add a New Stock Item') . '</B></a>';
 		}
 
 		echo '</CENTER>';
@@ -1445,7 +1437,7 @@ echo $_SESSION['AllowOrderLineItemNarrative'];
 					<TD style="text-align:center"><FONT SIZE=1>%s</FONT></TD>
 					<TD style="text-align:center"><FONT SIZE=1>%s</FONT></TD>
 					<TD style="text-align:center"><FONT SIZE=1>%s</FONT></TD>
-					<TD><FONT SIZE=1><input type="textbox" size=6 name="itm'.$myrow['stockid'].'" value=0>
+					<TD><FONT SIZE=1><input tabindex='.number_format($j+7).' type="textbox" size=6 name="itm'.$myrow['stockid'].'" value=0>
 					</FONT></TD>
 					</TR>',
 					$myrow['stockid'],
@@ -1459,11 +1451,13 @@ echo $_SESSION['AllowOrderLineItemNarrative'];
 					$rootpath,
 					SID,
 					$myrow['stockid']);
-
+				$j++;
 	#end of page full new headings if
 			}
 	#end of while loop
-			echo '<tr><td align=center colspan=8><input type="hidden" name="order_items" value=1><input type="submit" value="Order"></td></tr>';
+			echo '<tr><td align=center><input type="hidden" name="previous" value='.number_format($Offset-1).'><input tabindex='.number_format($j+7).' type="submit" name="Prev" value="Prev"></td>';
+			echo '<td align=center colspan=6><input type="hidden" name="order_items" value=1><input tabindex='.number_format($j+8).' type="submit" value="Order"></td>';
+			echo '<td align=center><input type="hidden" name="nextlist" value='.number_format($Offset+1).'><input tabindex='.number_format($j+9).' type="submit" name="Next" value="Next"></td></tr>';
 			echo '</TABLE></form>';
 
 		}#end if SearchResults to show
@@ -1484,7 +1478,7 @@ echo $_SESSION['AllowOrderLineItemNarrative'];
 			$DefaultDeliveryDate = DateAdd(Date($_SESSION['DefaultDateFormat']),'d',$_SESSION['Items']->DeliveryDays);
 	    	for ($i=1;$i<=$_SESSION['QuickEntries'];$i++){
 
-	     		echo '<tr bgcolor="#CCCCCC">';
+	     		echo '<tr class="OddTableRow">';
 	     		/* Do not display colum unless customer requires po line number by sales order line*/
 	     		if($_SESSION['Items']->DefaultPOLine > 0){
 					echo '<td><input type="text" name="poline_' . $i . '" size=21 maxlength=20></td>';
@@ -1497,22 +1491,6 @@ echo $_SESSION['AllowOrderLineItemNarrative'];
 
 	     	echo '</table><input type="submit" name="QuickEntry" value="' . _('Quick Entry') . '">
                      <input type="submit" name="PartSearch" value="' . _('Search Parts') . '">';
-
-?>
-	     <script language='JavaScript' type='text/javascript'>
-    //<![CDATA[
-            <!--
-            if ("undefined" == typeof(document.forms[0].poline_1) ) {
-            	document.forms[0].part_1.select();
-            	document.forms[0].part_1.focus();
-            } else{
-	        	document.forms[0].poline_1.select();
-				document.forms[0].poline_1.focus();
-			}
-            //-->
-    //]]>
-	    </script>
-<?php
 
 	}
 	if ($_SESSION['Items']->ItemsOrdered >=1){
