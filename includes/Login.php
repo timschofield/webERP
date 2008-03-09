@@ -1,19 +1,18 @@
 <?php
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 // Display demo user name and password within login form if $allow_demo_mode is true
-include ('includes/LanguageSetup.php');
+include ('LanguageSetup.php');
 
 if ($allow_demo_mode == True AND !isset($demo_text)) {
 	$demo_text = _('login as user') .': <i>' . _('demo') . '</i><BR>' ._('with password') . ': <i>' . _('weberp') . '</i>';
 } elseif (!isset($demo_text)) {
 	$demo_text = _('Please login here');
 }
-
 ?>
 
 <html>
 <head>
-    <title><?php echo $_SESSION['CompanyRecord']['coyname'];?></title>
+    <title>webERP Login screen</title>
     <meta http-equiv="Content-Type" content="text/html; charset=<?php echo _('ISO-8859-1'); ?>" />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/<?php echo $theme;?>/login.css" type="text/css" />
