@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 2;
 
@@ -13,7 +13,7 @@ echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "' METHOD=POST>";
 
 echo '<CENTER><TABLE CELLPADDING=2><TR>';
 
-echo '<TD>' . _('Type') . ":</TD><TD><SELECT name='TransType'> ";
+echo '<TD>' . _('Type') . ":</TD><TD><SELECT tabindex=1 name='TransType'> ";
 
 $sql = 'SELECT typeid, typename FROM systypes WHERE typeid >= 10 AND typeid <= 14';
 $resultTypes = DB_query($sql,$db);
@@ -38,10 +38,10 @@ if (!isset($_POST['FromDate'])){
 if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 }
-echo '<TD>' . _('From') . ":</TD><TD><INPUT TYPE=TEXT NAME='FromDate' MAXLENGTH=10 SIZE=11 VALUE=" . $_POST['FromDate'] . '></TD>';
-echo '<TD>' . _('To') . ":</TD><TD><INPUT TYPE=TEXT NAME='ToDate' MAXLENGTH=10 SIZE=11 VALUE=" . $_POST['ToDate'] . '></TD>';
+echo '<TD>' . _('From') . ":</TD><TD><INPUT tabindex=2 TYPE=TEXT NAME='FromDate' MAXLENGTH=10 SIZE=11 VALUE=" . $_POST['FromDate'] . '></TD>';
+echo '<TD>' . _('To') . ":</TD><TD><INPUT tabindex=3 TYPE=TEXT NAME='ToDate' MAXLENGTH=10 SIZE=11 VALUE=" . $_POST['ToDate'] . '></TD>';
 
-echo "</TR></TABLE><INPUT TYPE=SUBMIT NAME='ShowResults' VALUE='" . _('Show Transactions') . "'>";
+echo "</TR></TABLE><INPUT tabindex=4 TYPE=SUBMIT NAME='ShowResults' VALUE='" . _('Show Transactions') . "'>";
 echo '<HR>';
 
 echo '</FORM></CENTER>';

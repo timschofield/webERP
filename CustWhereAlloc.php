@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $PageSecurity = 2;
 
 include('includes/session.inc');
@@ -10,7 +10,7 @@ echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "' METHOD=POST>";
 
 echo '<CENTER><TABLE CELLPADDING=2><TR>';
 
-echo '<TD>' . _('Type') . ":</TD><TD><SELECT name='TransType'> ";
+echo '<TD>' . _('Type') . ":</TD><TD><SELECT tabindex=1 name='TransType'> ";
 
 $sql = 'SELECT typeid, typename FROM systypes WHERE typeid = 10 OR typeid=12';
 $resultTypes = DB_query($sql,$db);
@@ -29,10 +29,10 @@ echo '</SELECT></TD>';
 
 if (!isset($_POST['TransNo'])) {$_POST['TransNo']='';}
 echo '<TD>'._('Transaction Number').":</TD>
-	<TD><INPUT TYPE=TEXT NAME='TransNo' MAXLENGTH=10 SIZE=10 VALUE=". $_POST['TransNo'] . '></TD>';
+	<TD><INPUT tabindex=2 TYPE=TEXT NAME='TransNo' MAXLENGTH=10 SIZE=10 VALUE=". $_POST['TransNo'] . '></TD>';
 
 echo "</TR></TABLE>
-	<INPUT TYPE=SUBMIT NAME='ShowResults' VALUE="._('Show How Allocated').'>';
+	<INPUT tabindex=3 TYPE=SUBMIT NAME='ShowResults' VALUE="._('Show How Allocated').'>';
 echo '<HR>';
 
 if (isset($_POST['ShowResults']) AND  $_POST['TransNo']==''){
