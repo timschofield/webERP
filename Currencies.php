@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 $PageSecurity = 9;
 
 include('includes/session.inc');
@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
 	}
     if (strlen($_POST['Abbreviation']) > 3) {
         $InputError = 1;
-        prnMsg(_('The currency abbreviation must be 3 characters or less long'),'error');
+        prnMsg(_('The currency abbreviation must be 3 characters or less long and for automated currency updates to work correctly be one of the ISO4217 currency codes'),'error');
 		$Errors[$i] = 'Abbreviation';
 		$i++;		
     } 
@@ -178,11 +178,12 @@ or deletion of the records*/
     $result = DB_query($sql, $db);
 
     echo '<CENTER><table border=1>';
-    echo '<tr><th>' ._('Abbreviation').'</th>
-    		<th>'._('Currency Name').'</th>
-			<th>'._('Country').'</th>
-			<th>'._('Hundredths Name').'</th>
-			<th>'._('Exchange Rate').'</th>
+    echo '<tr><td></td>
+    		<th>' . _('ISO4217 Code') . '</th>
+    		<th>' . _('Currency Name') . '</th>
+			<th>' . _('Country') . '</th>
+			<th>' . _('Hundredths Name') . '</th>
+			<th>' . _('Exchange Rate') . '</th>
 			<th>' . _('Ex Rate - ECB') .'</th>
 			</tr>';
 
@@ -200,8 +201,16 @@ or deletion of the records*/
             echo  '<tr class="OddTableRows">';;
             $k++;
         }
+        // Lets show the country flag
+        $ImageFile = 'flags/' . strtolower(str_replace(" ", "",$myrow[2])) . '.gif';
+        
+		if(!file_exists($ImageFile)){
+			$ImageFile =  'flags/blank.gif';
+		}
+		
         if ($myrow[1]!=$FunctionalCurrency){
-            printf("<td>%s</td>
+            printf("<td><img src=\"%s\"></td>
+            		<td>%s</td>
 	    			<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -209,7 +218,9 @@ or deletion of the records*/
 					<td align=right>%s</td>
 					<td><a href=\"%s&SelectedCurrency=%s\">%s</a></td>
 					<td><a href=\"%s&SelectedCurrency=%s&delete=1\">%s</a></td>
+					<td><a href=\"%s/ExchangeRateTrend.php?%s\">" . _('Graph') . "</a></td>
 					</tr>",
+					$ImageFile,
 					$myrow[1],
 					$myrow[0],
 					$myrow[2],
@@ -221,22 +232,25 @@ or deletion of the records*/
 					_('Edit'),
 					$_SERVER['PHP_SELF'] . '?' . SID,
 					$myrow[1],
-					_('Delete'));
+					_('Delete'),
+					$rootpath,
+					SID . '&CurrencyToShow=' . $myrow[1]);
         } else {
-            printf("<td>%s</td>
-	    		<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td colspan=2>%s</td>
-			</tr>",
-			$myrow[1],
-			$myrow[0],
-			$myrow[2],
-			$myrow[3],
-			$myrow[4],
-			1,
-			_('Functional Currency'));
+            printf("<td><img src=\"%s\"></td>
+            		<td>%s</td>
+	    			<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td align=right>%s</td>
+					<td colspan=4 align=\"center\">%s</td>
+					</tr>",
+					$ImageFile,
+					$myrow[1],
+					$myrow[0],
+					$myrow[2],
+					$myrow[3],
+					1,
+					_('Functional Currency'));
         }
 
     } //END WHILE LIST LOOP
@@ -258,15 +272,15 @@ if (!isset($_GET['delete'])) {
         //editing an existing payment terms
 
         $sql = "SELECT currency,
-			currabrev,
-			country,
-			hundredsname,
-			rate
-		FROM currencies
-		WHERE currabrev='$SelectedCurrency'";
+				currabrev,
+				country,
+				hundredsname,
+				rate
+				FROM currencies
+				WHERE currabrev='" . $SelectedCurrency . "'";
 
         $ErrMsg = _('An error occurred in retrieving the currency information');;
-	$result = DB_query($sql, $db, $ErrMsg);
+		$result = DB_query($sql, $db, $ErrMsg);
 
         $myrow = DB_fetch_array($result);
 
@@ -278,18 +292,18 @@ if (!isset($_GET['delete'])) {
 
 
 
-        echo "<INPUT TYPE=HIDDEN NAME='SelectedCurrency' VALUE='" . $SelectedCurrency . "'>";
-        echo "<INPUT TYPE=HIDDEN NAME='Abbreviation' VALUE='" . $_POST['Abbreviation'] . "'>";
-        echo "<CENTER><TABLE><TR>
-			<TD>"._('Currency Abbreviation').':</TD>
-			<TD>';
-        echo $_POST['Abbreviation'] . '</TD></TR>';
+        echo '<input type="hidden" name="SelectedCurrency" VALUE="' . $SelectedCurrency . '">';
+        echo '<input type="hidden" name="Abbreviation" VALUE="' . $_POST['Abbreviation'] . '">';
+        echo '<center><table><tr>
+			<td>' . _('ISO 4217 Currency Code').':</td>
+			<td>';
+        echo $_POST['Abbreviation'] . '</td></tr>';
 
     } else { //end of if $SelectedCurrency only do the else when a new record is being entered
 		if (!isset($_POST['Abbreviation'])) {$_POST['Abbreviation']='';}
-        echo "<CENTER><TABLE><TR>
-		<TD>"._('Currency Abbreviation').":</TD>
-		<TD><input " . (in_array('Abbreviation',$Errors) ?  'class="inputerror"' : '' ) ." type='Text' name='Abbreviation' value='" . $_POST['Abbreviation'] . "' SIZE=4 MAXLENGTH=3></TD></TR>";
+        echo '<center><table><tr>
+			<td>' ._('Currency Abbreviation') . ':</td>
+			<td><input ' . (in_array('Abbreviation',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Abbreviation" value="' . $_POST['Abbreviation'] . '" size=4 maxlength=3></td></tr>';
     }
 
     echo '<TR><TD>'._('Currency Name').':</TD>';
