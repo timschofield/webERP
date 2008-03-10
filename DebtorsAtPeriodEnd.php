@@ -1,7 +1,7 @@
 <?php
 $PageSecurity = 2;
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 include('includes/session.inc');
 
 If (isset($_POST['PrintPDF'])
@@ -129,10 +129,10 @@ If (isset($_POST['PrintPDF'])
 
 		echo '<FORM ACTION=' . $_SERVER['PHP_SELF'] . " METHOD='POST'><CENTER><TABLE>";
 
-		echo '<TR><TD>' . _('From Customer Code') .":</FONT></TD><TD><input Type=text maxlength=6 size=7 name=FromCriteria value='1'></TD></TR>";
-		echo '<TR><TD>' . _('To Customer Code') . ":</TD><TD><input Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></TD></TR>";
+		echo '<TR><TD>' . _('From Customer Code') .":</FONT></TD><TD><input tabindex=1 Type=text maxlength=6 size=7 name=FromCriteria value='1'></TD></TR>";
+		echo '<TR><TD>' . _('To Customer Code') . ":</TD><TD><input tabindex=2 Type=text maxlength=6 size=7 name=ToCriteria value='zzzzzz'></TD></TR>";
 
-		echo '<TR><TD>' . _('Balances As At') . ":</TD><TD><SELECT Name='PeriodEnd'>";
+		echo '<TR><TD>' . _('Balances As At') . ":</TD><TD><SELECT tabindex=3 Name='PeriodEnd'>";
 
 		$sql = 'SELECT periodno, lastdate_in_period FROM periods';
 		$Periods = DB_query($sql,$db,_('Could not retrieve period data because'),_('The SQL that failed to get the period data was'));
@@ -147,7 +147,7 @@ If (isset($_POST['PrintPDF'])
 	echo '</SELECT></TD></TR>';
 
 
-	echo "</TABLE><INPUT TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";
+	echo "</TABLE><INPUT tabindex=5 TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";
 
 	include('includes/footer.inc');
 } /*end of else not PrintPDF */
