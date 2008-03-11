@@ -38,17 +38,17 @@ if (isset($_POST['submit'])) {
 	if ($InputError != 1){
 		//And if its not a new part then update existing one
 		if (!isset($_POST['New'])) {
-				$sql = "UPDATE factorcompanies SET coyname='" . DB_escape_string($_POST['FactorName']) . "', 
-							address1='" . DB_escape_string($_POST['Address1']) . "', 
-							address2='" . DB_escape_string($_POST['Address2']) . "', 
-							address3='" . DB_escape_string($_POST['Address3']) . "', 
-							address4='" . DB_escape_string($_POST['Address4']) . "', 
-							address5='" . DB_escape_string($_POST['Address5']) . "', 
-							address6='" . DB_escape_string($_POST['Address6']) . "', 
-							contact='" . DB_escape_string($_POST['ContactName']) . "', 
-							telephone='" . DB_escape_string($_POST['Telephone']) . "', 
-							fax='" . DB_escape_string($_POST['Fax']) . "', 
-							email='" . DB_escape_string($_POST['Email']) . "    ' 
+				$sql = "UPDATE factorcompanies SET coyname='" . $_POST['FactorName'] . "', 
+							address1='" . $_POST['Address1'] . "', 
+							address2='" . $_POST['Address2'] . "', 
+							address3='" . $_POST['Address3'] . "', 
+							address4='" . $_POST['Address4'] . "', 
+							address5='" . $_POST['Address5'] . "', 
+							address6='" . $_POST['Address6'] . "', 
+							contact='" . $_POST['ContactName'] . "', 
+							telephone='" . $_POST['Telephone'] . "', 
+							fax='" . $_POST['Fax'] . "', 
+							email='" . $_POST['Email'] . "    ' 
 						WHERE id = " .$FactorID;
 			
 			$ErrMsg = _('The factoring company could not be updated because');
@@ -74,17 +74,17 @@ if (isset($_POST['submit'])) {
 							fax, 
 							email) 
 					 VALUES (null, 
-					 	'" .DB_escape_string($_POST['FactorName']) . "', 
-						'" . DB_escape_string($_POST['Address1']) . "', 
-						'" . DB_escape_string($_POST['Address2']) . "', 
-						'" . DB_escape_string($_POST['Address3']) . "', 
-						'" . DB_escape_string($_POST['Address4']) . "', 
-						'" . DB_escape_string($_POST['Address5']) . "', 
-						'" . DB_escape_string($_POST['Address6']) . "', 
-						'" . DB_escape_string($_POST['ContactName']) . "', 
-						'" . DB_escape_string($_POST['Telephone']) . "', 
-						'" . DB_escape_string($_POST['Fax']) . "', 
-						'" . DB_escape_string($_POST['Email'])  . "')";
+					 	'" .$_POST['FactorName'] . "', 
+						'" . $_POST['Address1'] . "', 
+						'" . $_POST['Address2'] . "', 
+						'" . $_POST['Address3'] . "', 
+						'" . $_POST['Address4'] . "', 
+						'" . $_POST['Address5'] . "', 
+						'" . $_POST['Address6'] . "', 
+						'" . $_POST['ContactName'] . "', 
+						'" . $_POST['Telephone'] . "', 
+						'" . $_POST['Fax'] . "', 
+						'" . $_POST['Email']  . "')";
 
 			$ErrMsg = _('The factoring company') . ' ' . $_POST['FactorName'] . ' ' . _('could not be added because');
 			$DbgMsg = _('The SQL that was used to insert the factor but failed was');
@@ -142,8 +142,8 @@ if (isset($_POST['submit'])) {
 
 /* If it didn't come with a $FactorID it must be a completely fresh start, so choose a new $factorID or give the
   option to create a new one*/
-  
-if (!isset($FactorID)) {
+
+if (!isset($FactorID) or ($FactorID==1 and isset($_POST['amend']))) {
 
 	echo "<FORM METHOD='post' ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "'>";
 
@@ -152,12 +152,12 @@ if (!isset($FactorID)) {
 	$result=DB_query('SELECT id, coyname FROM factorcompanies', $db);
 	$myrow = DB_fetch_array($result);
 	echo '<CENTER><TABLE>';
-	echo "<SELECT NAME='FactorID'>";
+	echo "<SELECT TABINDEX=1 NAME='FactorID'>";
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<OPTION SELECTED VALUE=' . $myrow['id'] . '>' . $myrow['coyname'];
 	}
-	echo "</SELECT></TABLE><p><CENTER><INPUT TYPE='Submit' NAME='amend' VALUE='" . _('Amend Factor') . "'>";
-	echo "<CENTER><BR><INPUT TYPE='Submit' NAME='Create' VALUE='" . _('Create New Factor') . "'>";
+	echo "</SELECT></TABLE><p><CENTER><INPUT TABINDEX=2 TYPE='Submit' NAME='amend' VALUE='" . _('Amend Factor') . "'>";
+	echo "<CENTER><BR><INPUT TABINDEX=3 TYPE='Submit' NAME='Create' VALUE='" . _('Create New Factor') . "'>";
 	echo '</FORM>'; 
 
 } else {
@@ -202,27 +202,39 @@ if (!isset($FactorID)) {
 	} else {
 	// its a new factor being added
 		echo "<INPUT TYPE=HIDDEN NAME='New' VALUE='Yes'>";
+		echo '<TR><TD>' . _('Factor company Name') . ":</TD><TD><INPUT tabindex=1 TYPE='text' NAME='FactorName' SIZE=42 MAXLENGTH=40></TD></TR>";
+		echo '<TR><TD>' . _('Address Line 1') . ":</TD><TD><INPUT tabindex=2 TYPE='text' NAME='Address1' SIZE=42 MAXLENGTH=40></TD></TR>";
+		echo '<TR><TD>' . _('Address Line 2') . ":</TD><TD><INPUT tabindex=3 TYPE='text' NAME='Address2' SIZE=42 MAXLENGTH=40></TD></TR>";
+		echo '<TR><TD>' . _('Address Line 3') . ":</TD><TD><INPUT tabindex=4 TYPE='text' name='Address3' SIZE=42 MAXLENGTH=40></TD></TR>";
+		echo '<TR><TD>' . _('Address Line 4') . ":</TD><TD><INPUT tabindex=5 TYPE='text' name='Address4' SIZE=42 MAXLENGTH=40></TD></TR>";
+		echo '<TR><TD>' . _('Address Line 5') . ":</TD><TD><INPUT tabindex=6 TYPE='text' name='Address5' SIZE=42 MAXLENGTH=40></TD></TR>";
+		echo '<TR><TD>' . _('Address Line 6') . ":</TD><TD><INPUT tabindex=7 TYPE='text' name='Address6' SIZE=42 MAXLENGTH=40></TD></TR>";
+		echo '<TR><TD>' . _('Contact Name') . ":</TD><TD><INPUT tabindex=8 TYPE='text' NAME='ContactName' SIZE=13 MAXLENGTH=25></TD></TR>";
+		echo '<TR><TD>' . _('Telephone') . ":</TD><TD><INPUT tabindex=9 TYPE='text' NAME='Telephone' SIZE=13 MAXLENGTH=25></TD></TR>";
+		echo '<TR><TD>' . _('Fax') . ":</TD><TD><INPUT tabindex=10 TYPE='text' NAME='Fax' VALUE=0 SIZE=13 MAXLENGTH=25></TD></TR>";
+		echo '<TR><TD>' . _('Email') . ":</TD><TD><INPUT tabindex=11 TYPE='text' NAME='Email' SIZE=55 MAXLENGTH=55></TD></TR>";
+		echo '</FORM>';
 	}
 
-	echo '<TR><TD>' . _('Factor company Name') . ":</TD><TD><INPUT TYPE='text' NAME='FactorName' VALUE='" . $_POST['FactorName'] . "' SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 1') . ":</TD><TD><INPUT TYPE='text' NAME='Address1' VALUE='" . $_POST['Address1'] . "' ' SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 2') . ":</TD><TD><INPUT TYPE='text' NAME='Address2' VALUE='" . $_POST['Address2'] . "'  SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 3') . ":</TD><TD><INPUT TYPE='text' name='Address3' VALUE='" . $_POST['Address3'] . "'  SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 4') . ":</TD><TD><INPUT TYPE='text' name='Address4' VALUE='" . $_POST['Address4'] . "'  SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 5') . ":</TD><TD><INPUT TYPE='text' name='Address5' VALUE='" . $_POST['Address5'] . "'  SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 6') . ":</TD><TD><INPUT TYPE='text' name='Address6' VALUE='" . $_POST['Address6'] . "'  SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Contact Name') . ":</TD><TD><INPUT TYPE='text' NAME='ContactName' VALUE='" . $_POST['ContactName'] . "'  SIZE=13 MAXLENGTH=25></TD></TR>";
-	echo '<TR><TD>' . _('Telephone') . ":</TD><TD><INPUT TYPE='text' NAME='Telephone' VALUE='" . $_POST['Telephone'] . "'  SIZE=13 MAXLENGTH=25></TD></TR>";
-	echo '<TR><TD>' . _('Fax') . ":</TD><TD><INPUT TYPE='text' NAME='Fax' VALUE='" . $_POST['Fax'] . "'  VALUE=0 SIZE=13 MAXLENGTH=25></TD></TR>";
-	echo '<TR><TD>' . _('Email') . ":</TD><TD><INPUT TYPE='text' NAME='Email' VALUE='" . $_POST['Email'] . "'  SIZE=55 MAXLENGTH=55></TD></TR>";
-	echo '</FORM>';
 
 	if (isset($_POST['New']) and $_POST['New']=="Yes") {
-		echo "</TABLE><p><CENTER><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Insert New Factor') . "'>";
+		echo "</TABLE><p><CENTER><INPUT tabindex=12 TYPE='Submit' NAME='submit' VALUE='" . _('Insert New Factor') . "'>";
 	} else {
-		echo "<P></TABLE><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Update Factor') . "'>";
+		echo '<TR><TD>' . _('Factor company Name') . ":</TD><TD><INPUT tabindex=1 TYPE='text' NAME='FactorName' VALUE='" . $_POST['FactorName'] . "' SIZE=42 MAXLENGTH=40></TD></TR>";
+		echo '<TR><TD>' . _('Address Line 1') . ":</TD><TD><INPUT tabindex=2 TYPE='text' NAME='Address1' VALUE='" . $_POST['Address1'] . "' ' SIZE=42 MAXLENGTH=40></TD></TR>";
+		echo '<TR><TD>' . _('Address Line 2') . ":</TD><TD><INPUT tabindex=3 TYPE='text' NAME='Address2' VALUE='" . $_POST['Address2'] . "'  SIZE=42 MAXLENGTH=40></TD></TR>";
+		echo '<TR><TD>' . _('Address Line 3') . ":</TD><TD><INPUT tabindex=4 TYPE='text' name='Address3' VALUE='" . $_POST['Address3'] . "'  SIZE=42 MAXLENGTH=40></TD></TR>";
+		echo '<TR><TD>' . _('Address Line 4') . ":</TD><TD><INPUT tabindex=5 TYPE='text' name='Address4' VALUE='" . $_POST['Address4'] . "'  SIZE=42 MAXLENGTH=40></TD></TR>";
+		echo '<TR><TD>' . _('Address Line 5') . ":</TD><TD><INPUT tabindex=6 TYPE='text' name='Address5' VALUE='" . $_POST['Address5'] . "'  SIZE=42 MAXLENGTH=40></TD></TR>";
+		echo '<TR><TD>' . _('Address Line 6') . ":</TD><TD><INPUT tabindex=7 TYPE='text' name='Address6' VALUE='" . $_POST['Address6'] . "'  SIZE=42 MAXLENGTH=40></TD></TR>";
+		echo '<TR><TD>' . _('Contact Name') . ":</TD><TD><INPUT tabindex=8 TYPE='text' NAME='ContactName' VALUE='" . $_POST['ContactName'] . "'  SIZE=13 MAXLENGTH=25></TD></TR>";
+		echo '<TR><TD>' . _('Telephone') . ":</TD><TD><INPUT tabindex=9 TYPE='text' NAME='Telephone' VALUE='" . $_POST['Telephone'] . "'  SIZE=13 MAXLENGTH=25></TD></TR>";
+		echo '<TR><TD>' . _('Fax') . ":</TD><TD><INPUT tabindex=10 TYPE='text' NAME='Fax' VALUE='" . $_POST['Fax'] . "'  VALUE=0 SIZE=13 MAXLENGTH=25></TD></TR>";
+		echo '<TR><TD>' . _('Email') . ":</TD><TD><INPUT tabindex=11 TYPE='text' NAME='Email' VALUE='" . $_POST['Email'] . "'  SIZE=55 MAXLENGTH=55></TD></TR>";
+		echo '</FORM>';
+		echo "<P></TABLE><INPUT tabindex=13 TYPE='Submit' NAME='submit' VALUE='" . _('Update Factor') . "'>";
 		echo '<P><FONT COLOR=red><B>' . _('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no suppliers are using this factor before the deletion is processed') . '<BR></FONT></B>';
-		echo "<INPUT TYPE='Submit' NAME='delete' VALUE='" . _('Delete Factor') . "' onclick=\"return confirm('" . _('Are you sure you wish to delete this factoring company?') . "');\"></FORM></CENTER>";
+		echo "<INPUT tabindex=14 TYPE='Submit' NAME='delete' VALUE='" . _('Delete Factor') . "' onclick=\"return confirm('" . _('Are you sure you wish to delete this factoring company?') . "');\"></FORM></CENTER>";
 	}
 
 } // end of main ifs
