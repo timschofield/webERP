@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 10;
 
@@ -122,7 +122,7 @@ then none of the above are true and the list of message lines will be displayed 
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	echo '<FONT SIZE=4>' . _('Defintion of') . ' ' . $MessageType . ' ' . _('for') . ' ' . $PartnerCode;
+	echo '<FONT SIZE=4>' . _('Definition of') . ' ' . $MessageType . ' ' . _('for') . ' ' . $PartnerCode;
 
 	$sql = "SELECT id,
 			section,
@@ -172,7 +172,7 @@ or deletion of the records*/
 	} //END WHILE LIST LOOP
 	echo '</table></CENTER><p>';
 	if (DB_num_rows($result)==0){
-		echo "<CENTER><INPUT TYPE=SUBMIT NAME='NewEDIInvMsg' VALUE='" . _('Create New EDI Invoice Message From Default Template') . "'></CENTER>";
+		echo "<CENTER><INPUT tabindex=1 TYPE=SUBMIT NAME='NewEDIInvMsg' VALUE='" . _('Create New EDI Invoice Message From Default Template') . "'></CENTER>";
 	}
 } //end of ifs SelectedLine is not set
 
@@ -198,7 +198,7 @@ if (isset($SelectedMessageLine)) {
 	$_POST['SequenceNo']  = $myrow['sequenceno'];
 	$_POST['LineText']  = $myrow['linetext'];
 
-	echo '<FONT SIZE=4>' . _('Defintion of') . ' ' . $myrow['messagetype'] . ' ' . _('for') . ' ' . $myrow['partnercode'];
+	echo '<FONT SIZE=4>' . _('Definition of') . ' ' . $myrow['messagetype'] . ' ' . _('for') . ' ' . $myrow['partnercode'];
 
 	echo "<Center><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . 'MessageType=INVOIC&PartnerCode=' . $myrow['partnercode'] . "'>" . _('Review Message Lines') . '</a></Center>';
 
@@ -211,13 +211,11 @@ if (isset($SelectedMessageLine)) {
 }
 
 echo '<CENTER><TABLE>';
-?>
 
+echo '<TR><TD>Section:</TD>';
+echo '<TD>';
+echo '<SELECT TABINDEX=2 name="Section">';
 
-<TR><TD>Section:</TD>
-<TD>
-<SELECT name="Section">
-<?php
 if ($_POST['Section']=='Heading') {
 	echo "<OPTION SELECTED VALUE='Heading'>" . _('Heading');
 } else {
@@ -245,14 +243,14 @@ if (!isset($_POST['LineText'])) {$_POST['LineText']='';}
 </TD></TR>
 
 <TR><TD>Sequence Number:</TD>
-<TD><INPUT TYPE=TEXT NAME=SequenceNo SIZE=3 MAXLENGTH=3 VALUE=<?php echo $_POST['SequenceNo'] ?>>
+<TD><INPUT TABINDEX=3 TYPE=TEXT NAME=SequenceNo SIZE=3 MAXLENGTH=3 VALUE=<?php echo $_POST['SequenceNo'] ?>>
 </TD></TR>
 <TR><TD><?php echo _('Line Text') . ':'; ?></TD>
 <TD>
-<INPUT TYPE="Text" name="LineText" SIZE=50 MAXLENGTH=50 VALUE=<?php echo  $_POST['LineText']; ?>>
+<INPUT TABINDEX=4 TYPE="Text" name="LineText" SIZE=50 MAXLENGTH=50 VALUE=<?php echo  $_POST['LineText']; ?>>
 </TD></TR>
 </TABLE>
-<CENTER><input type="Submit" name="submit" value="<?php echo _('Enter Information'); ?>">
+<CENTER><input TABINDEX=5 type="Submit" name="submit" value="<?php echo _('Enter Information'); ?>">
 
 </FORM>
 
