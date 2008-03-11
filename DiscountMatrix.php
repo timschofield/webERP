@@ -1,10 +1,18 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 11;
 include('includes/session.inc');
 $title = _('Discount Matrix Maintenance');
 include('includes/header.inc');
+
+
+if (isset($Errors)) {
+	unset($Errors);
+}
+	
+$Errors = array();	
+$i=1;
 
 if (isset($_POST['submit'])) {
 
@@ -14,19 +22,27 @@ if (isset($_POST['submit'])) {
 	if (!is_numeric($_POST['QuantityBreak'])){
 		prnMsg( _('The quantity break must be entered as a positive number'),'error');
 		$InputError =1;
+		$Errors[$i] = 'QuantityBreak';
+		$i++;		
 	}
 
 	if ($_POST['QuantityBreak']<=0){
 		prnMsg( _('The quantity of all items on an order in the discount category') . ' ' . $_POST['DiscountCategory'] . ' ' . _('at which the discount will apply is 0 or less than 0') . '. ' . _('Positive numbers are expected for this entry'),'warn');
 		$InputError =1;
+		$Errors[$i] = 'QuantityBreak';
+		$i++;		
 	}
 	if (!is_numeric($_POST['DiscountRate'])){
 		prnMsg( _('The discount rate must be entered as a positive number'),'warn');
 		$InputError =1;
+		$Errors[$i] = 'DiscountRate';
+		$i++;		
 	}
 	if ($_POST['DiscountRate']<=0 OR $_POST['DiscountRate']>=70){
 		prnMsg( _('The discount rate applicable for this record is either less than 0% or greater than 70%') . '. ' . _('Numbers between 1 and 69 are expected'),'warn');
 		$InputError =1;
+		$Errors[$i] = 'DiscountRate';
+		$i++;		
 	}
 
 	/* actions to take once the user has clicked the submit button
@@ -122,7 +138,7 @@ $result = DB_query($sql, $db);
 
 echo '<TR><TD>' . _('Customer Price List') . ' (' . _('Sales Type') . '):</TD><TD>';
 
-echo "<SELECT NAME='SalesType'>";
+echo "<SELECT TABINDEX=1 NAME='SalesType'>";
 
 while ($myrow = DB_fetch_array($result)){
 	if (isset($_POST['SalesType']) and $myrow['typeabbrev']==$_POST['SalesType']){
@@ -137,14 +153,18 @@ echo '</SELECT>';
 
 echo '<TR><TD>' . _('Discount Category Code') . ':</TD><TD>';
 if (!isset($_POST['DiscCat'])) {$_POST['DiscCat']='';}
-echo "<INPUT TYPE='Text' NAME='DiscountCategory' MAXLENGTH=2 SIZE=2 VALUE='" . $_POST['DiscCat'] . "'></TD></TR>";
+echo "<INPUT TABINDEX=2 TYPE='Text' NAME='DiscountCategory' MAXLENGTH=2 SIZE=2 VALUE='" . $_POST['DiscCat'] . "'></TD></TR>";
 
-echo '<TR><TD>' . _('Quantity Break') . ":</TD><TD><input type='Text' name='QuantityBreak' SIZE=10 MAXLENGTH=10></TD></TR>";
+echo '<TR><TD>' . _('Quantity Break') . ":</TD><TD><input tabindex=3 "
+	 . (in_array('QuantityBreak',$Errors) ? "class='inputerror'" : "")
+	 ." type='Text' name='QuantityBreak' SIZE=10 MAXLENGTH=10></TD></TR>";
 
-echo '<TR><TD>' . _('Discount Rate') . " (%):</TD><TD><input type='Text' name='DiscountRate' SIZE=4 MAXLENGTH=4></TD></TR>";
+echo '<TR><TD>' . _('Discount Rate') . " (%):</TD><TD><input tabindex=4 "
+	. (in_array('DiscountRate',$Errors) ? "class='inputerror'" : "") .
+		"type='Text' name='DiscountRate' SIZE=4 MAXLENGTH=4></TD></TR>";
 echo '</TABLE>';
 
-echo "<CENTER><input type='Submit' name='submit' value='" . _('Enter Information') . "'></CENTER>";
+echo "<CENTER><input tabindex=5 type='Submit' name='submit' value='" . _('Enter Information') . "'></CENTER>";
 
 echo '</FORM>';
 
