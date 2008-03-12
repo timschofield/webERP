@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 7;
 
@@ -168,7 +168,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 				WHERE banktrans.type = systypes.typeid
 				AND banktrans.bankact=' . $_POST['BankAccount'] . '
 				AND amount < 0
-				AND ABS((amount/exrate)-amountcleared)>0.009';
+				AND ABS((amount/exrate)-amountcleared)>0.009 ORDER BY transdate';
 
 	echo '<tr></tr>'; /*Bang in a blank line */
 
@@ -239,7 +239,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])){
 			WHERE banktrans.type = systypes.typeid
 			AND banktrans.bankact=' . $_POST['BankAccount'] . '
 			AND amount > 0
-			AND ABS((amount/exrate)-amountcleared)>0.009';
+			AND ABS((amount/exrate)-amountcleared)>0.009 ORDER BY transdate';
 
 	echo '<tr></tr>'; /*Bang in a blank line */
 
