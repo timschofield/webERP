@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 $PageSecurity = 9;
 
 include('includes/session.inc');
@@ -202,7 +202,7 @@ or deletion of the records*/
             $k++;
         }
         // Lets show the country flag
-        $ImageFile = 'flags/' . strtolower(str_replace(" ", "",$myrow[2])) . '.gif';
+        $ImageFile = 'flags/' . strtoupper($myrow[1]) . '.gif';
         
 		if(!file_exists($ImageFile)){
 			$ImageFile =  'flags/blank.gif';

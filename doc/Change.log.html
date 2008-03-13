@@ -1,5 +1,8 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 
+<P>11/3/08 Renier DuPlessis/Phil: Currencies.php now has link to show a graph of recent exchange rate fluctations and spiced up with a flag of the appropriate country of the currency.
+<P>10/3/08 Tim: complete sweep of the code to replace all occurrences of <td class='tableheader'> with <tr> all hard coded odd and even line colours now use a <td class="OddRows"> and a <td class="EvenRows"> from the theme's css - various scripts now have fields highlighted showing the field where and input error was detected - stocks.php suppliers.php, customers.php etc.
+<P>10/3/08 Renier DuPlessis/Tim: Reworked CustomerAllocations.php - typos and tidy up
 <P>1/3/08 Phil: New config variable SystemParameters.php session.inc modifications to allow exchange rates to be updated daily from the European Central Bank on the first user login of the day. The manual option is still available for those who cover exchange rate risk. Updates to the manual added a section on currency maintenance.
 <P>29/2/08 Phil: Currencies.php MiscFunctions.php now has a function to get exchange rates from ecb (European Central Bank) published  daily as XML file that is parsed to retrieve the current day's spot rates are shown against the current currencies table rates.
 <P>25/2/08 Phil/Harald Ringehahn - modified the link to the manual in header.inc such that for locales other than en_?? the manual is sought under locale/xx_XX/LC_MESSAGES/Manual/ManualContents.php - Harald's is the first translation we have of the manual into German and it can now be added to the German translation archive.
