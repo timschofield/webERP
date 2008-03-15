@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.65 $ */
+/* $Revision: 1.66 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -1150,7 +1150,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			if ($myrow[0]!=0){ /* need to update the lines affected */
 				foreach ($_SESSION['Items']->LineItems as $StkItems_2) {
 					/* add up total quantity of all lines of this DiscCat */
-					if ($StkItems_2->DiscCat==$OrderLine->DiscCat AND $StkItems_2->DiscountPercent < $myrow[0]){
+					if ($StkItems_2->DiscCat==$OrderLine->DiscCat AND $StkItems_2->DiscountPercent == 0){
 						$_SESSION['Items']->LineItems[$StkItems_2->LineNumber]->DiscountPercent = $myrow[0];
 					}
 				}
