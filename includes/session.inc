@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.58 $ */
+/* $Revision: 1.59 $ */
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -27,6 +27,9 @@ if (!isset($_SESSION['AttemptsCounter'])){
 	$_SESSION['AttemptsCounter'] = 0;
 }
 
+/* iterate through all elements of the $_POST array and DB_escape_string them
+to limit possibility for SQL injection attacks and cross scripting attacks
+*/
 foreach ($_POST as $key => $value) {
 	if (gettype($value) != "array") {
 		$_POST[$key] = DB_escape_string($value);
@@ -37,6 +40,9 @@ foreach ($_POST as $key => $value) {
 	}
 }
 
+/* iterate through all elements of the $_GET array and DB_escape_string them
+to limit possibility for SQL injection attacks and cross scripting attacks
+*/
 foreach ($_GET as $key => $value) {
 	if (gettype($value) != "array") {
 		$_GET[$key] = DB_escape_string($value);
@@ -107,7 +113,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 			$_SESSION['Theme'] = $myrow[9];
 			$_SESSION['UserID'] = $myrow[11];
 			$_SESSION['Language'] = $myrow[12];
-			
+
 			if ($myrow[10] > 0) {
 				$_SESSION['DisplayRecordsMax'] = $myrow[10];
 			} else {
@@ -139,7 +145,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 					$i++;
 				}
 			}
-			
+
 
 			echo "<META HTTP-EQUIV='refresh' CONTENT='0; URL=" . $_SERVER['PHP_SELF'] . "?" . SID . "'>";
 			exit;
@@ -182,7 +188,7 @@ if(isset($_SESSION['DB_Maintenance'])){
 			DB_Maintenance($db);
 			//purge the audit trail if necessary
 			if (isset($_SESSION['MonthsAuditTrail'])){
-				 $sql = "DELETE FROM audittrail 
+				 $sql = "DELETE FROM audittrail
 						WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
 				$ErrMsg = _('There was a problem deleting expired audit-trail history');
 				$result = DB_query($sql,$db);
@@ -198,13 +204,13 @@ if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
 		if (DateDiff(Date($_SESSION['DefaultDateFormat']),
 				ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily'])
 				,'d')> 0){
-			
+
 			$CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
 			/*Loop around the defined currencies and get the rate from ECB */
 			$CurrenciesResult = DB_query('SELECT currabrev FROM currencies',$db);
 			while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
 				if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
-					$UpdateCurrRateResult = DB_query('UPDATE currencies SET 
+					$UpdateCurrRateResult = DB_query('UPDATE currencies SET
 											rate=' . GetCurrencyRate ($CurrencyRow[0],$CurrencyRates) . "
 											WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
 				}
@@ -213,9 +219,9 @@ if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
 			$UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'",$db);
 		}
 	}
-}	
-	
-	
+}
+
+
 If (isset($_POST['Theme']) && ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
 	$_SESSION['Theme'] = $_POST['Theme'];
 	$theme = $_POST['Theme'];
