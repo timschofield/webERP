@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.57 $ */
+/* $Revision: 1.58 $ */
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -59,7 +59,7 @@ if (!isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true
 		$_SESSION['AttemptsCounter']++;
 
 
-		$theme = 'green';
+		$theme = 'silverwolf';
 
 		// Show login screen
 		if (!isset($_POST['UserNameEntryField']) or $_POST['UserNameEntryField'] == '') {
