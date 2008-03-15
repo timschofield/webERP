@@ -1,5 +1,6 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 
+<P>12/3/08 Tim: to side step SQL injection and cross scripting attacks modified session.inc to DB_escape_string for all elements of $_POST and $_GET - the DB_escape_string functions are now redundant inside scripts so started to remove these in a sweep of all code.
 <P>11/3/08 Renier DuPlessis/Phil: Currencies.php now has link to show a graph of recent exchange rate fluctations and spiced up with a flag of the appropriate country of the currency.
 <P>10/3/08 Tim: complete sweep of the code to replace all occurrences of <td class='tableheader'> with <tr> all hard coded odd and even line colours now use a <td class="OddRows"> and a <td class="EvenRows"> from the theme's css - various scripts now have fields highlighted showing the field where and input error was detected - stocks.php suppliers.php, customers.php etc.
 <P>10/3/08 Renier DuPlessis/Tim: Reworked CustomerAllocations.php - typos and tidy up

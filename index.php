@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.64 $ */
+/* $Revision: 1.65 $ */
 
 
 $PageSecurity = 1;
@@ -110,12 +110,12 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<A HREF='" . $rootpath . '/SelectOrderItems.php?' .SID . "&NewOrder=Yes'><LI>" . _('Enter An Order') . '</LI></A>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SelectOrderItems.php?' .SID . "&NewOrder=Yes'><LI>" . _('Enter An Order or Quotation') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<A HREF='" . $rootpath . '/SelectSalesOrder.php?' . SID . "'><LI>" . _('Outstanding Sales Orders') . '</LI></A>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/SelectSalesOrder.php?' . SID . "'><LI>" . _('Outstanding Sales Orders/Quotations') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>

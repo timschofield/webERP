@@ -128,7 +128,8 @@ for detail of the European Central Bank rates - published daily */
 
 function GetCurrencyRate($CurrCode,$CurrenciesArray) {
   if (!isset($CurrenciesArray[$CurrCode]) AND $CurrCode !='EUR'){
-  	prnMsg(_('The currency is not in the list of currencies available from the server'),'error');
+  	prnMsg($CurrCode, ' ' . _('rates are not available from www.ecb.int'),'warn');
+  	return 0;
   } elseif ($CurrCode=='EUR'){
   	return 1/$CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']];
   }	else {
