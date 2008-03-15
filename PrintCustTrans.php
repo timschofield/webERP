@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 $PageSecurity = 1;
 
@@ -501,7 +501,7 @@ $result=DB_query($sql,$db);
 // Loop the result set and add appendfile if the field is not 0
 while ($row=DB_fetch_array($result)){
 if ($row['appendfile'] !='0') {
-$pdf->setFiles(array('invoice.pdf',$row['appendfile']));
+$pdf->setFiles(array('invoice.pdf','pdf_append/' . $row['appendfile']));
 $pdf->concat();
 $pdf->Output('newpdf.pdf','I');
 exit;
