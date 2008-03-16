@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.47 $ */
+/* $Revision: 1.48 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -434,7 +434,7 @@ if ($_SESSION['DoFreightCalc']==True){
 	echo '<TD COLSPAN=3></TD>';
 }
 $j++;
-echo '<TD COLSPAN=2 ALIGN=RIGHT>'. _('Charge Freight Cost').'</TD>
+echo '<TD COLSPAN=2 ALIGN=RIGHT>'. _('Charge Freight Cost inc Tax').'</TD>
 	<TD><INPUT tabindex='.$j.' TYPE=TEXT SIZE=10 MAXLENGTH=12 NAME=ChargeFreightCost VALUE=' . $_SESSION['Items']->FreightCost . '></TD>';
 
 
