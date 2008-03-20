@@ -1,12 +1,12 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 /*this class is an extension to the fpdf class using a syntax that the original reports were written in
 (the R &OS pdf.php class) - due to limitation of this class for foreign character support this wrapper class
 was written to allow the same code base to use the more functional fpdf.class by Olivier Plathey */
 
 
-include ('includes/class.pdf.php');
+include ('class.pdf.php');
 
 
 if (!isset($PaperSize)){
