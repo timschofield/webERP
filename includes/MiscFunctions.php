@@ -136,4 +136,10 @@ function GetCurrencyRate($CurrCode,$CurrenciesArray) {
   	return $CurrenciesArray[$CurrCode]/$CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']];
   }
 }
+
+
+function AddCarriageReturns($str) {
+	return str_replace('\r\n',chr(10),$str); 
+}
+
 ?>
