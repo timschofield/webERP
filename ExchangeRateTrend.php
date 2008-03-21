@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 $PageSecurity = 2;
 
@@ -35,16 +35,18 @@ if ( isset($_GET['CurrencyToShow']) ){
 
 		DB_data_seek($result,0);
 		while ($myrow=DB_fetch_array($result)) {
-			if ( $CurrencyToShow==$myrow['currabrev'] )	{
-				echo '<OPTION SELECTED value=' . $myrow['currabrev'] . '>' . $myrow['country'] . ' ' . $myrow['currency'] . '&nbsp;(' . $myrow['currabrev'] . ')';
-			} else {
-				echo '<OPTION value=' . $myrow['currabrev'] . '>' . $myrow['country'] . ' ' . $myrow['currency'] . '&nbsp;(' . $myrow['currabrev'] . ')';
+			if ($myrow['currabrev']!=$_SESSION['CompanyRecord']['currencydefault']){
+				if ( $CurrencyToShow==$myrow['currabrev'] )	{
+					echo '<OPTION SELECTED value=' . $myrow['currabrev'] . '>' . $myrow['country'] . ' ' . $myrow['currency'] . '&nbsp;(' . $myrow['currabrev'] . ')';
+				} else {
+					echo '<OPTION value=' . $myrow['currabrev'] . '>' . $myrow['country'] . ' ' . $myrow['currency'] . '&nbsp;(' . $myrow['currabrev'] . ')';
+				}
 			}
 		}
 		echo '</SELECT></TD></TR>';
 
    	echo '</TABLE>'; /*close off the table in the third column */
-  
+
 
 	echo '<P><INPUT TYPE=submit NAME=submit VALUE="' . _('Accept') . '"></CENTER>';
    	echo '</FORM>';
@@ -55,7 +57,7 @@ if ( isset($_GET['CurrencyToShow']) ){
 // SHOW OUR GRAPH
 // **************
 
-	
+
 	$graph = $CurrencyToShow. '/' . $FunctionalCurrency . $graph;
 	$image = 'http://www.x-rates.com/d/' . $graph;
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 $PageSecurity = 9;
 
 include('includes/session.inc');
@@ -23,7 +23,7 @@ if (isset($Errors)) {
 	unset($Errors);
 }
 
-$Errors = array();	
+$Errors = array();
 
 if (isset($_POST['submit'])) {
 
@@ -35,8 +35,8 @@ if (isset($_POST['submit'])) {
 
     //first off validate inputs are sensible
 	$i=1;
-	
-	$sql="SELECT count(currabrev) 
+
+	$sql="SELECT count(currabrev)
 			FROM currencies WHERE currabrev='".$_POST['Abbreviation']."'";
 	$result=DB_query($sql, $db);
 	$myrow=DB_fetch_row($result);
@@ -45,58 +45,58 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg( _('The currency already exists in the database'),'error');
 		$Errors[$i] = 'Abbreviation';
-		$i++;		
+		$i++;
 	}
     if (strlen($_POST['Abbreviation']) > 3) {
         $InputError = 1;
         prnMsg(_('The currency abbreviation must be 3 characters or less long and for automated currency updates to work correctly be one of the ISO4217 currency codes'),'error');
 		$Errors[$i] = 'Abbreviation';
-		$i++;		
-    } 
+		$i++;
+    }
 	if (!is_numeric($_POST['ExchangeRate'])){
         $InputError = 1;
        prnMsg(_('The exchange rate must be numeric'),'error');
 		$Errors[$i] = 'ExchangeRate';
-		$i++;		
-    } 
+		$i++;
+    }
     if (strlen($_POST['CurrencyName']) > 20) {
         $InputError = 1;
         prnMsg(_('The currency name must be 20 characters or less long'),'error');
 		$Errors[$i] = 'CurrencyName';
-		$i++;		
-    } 
+		$i++;
+    }
     if (strlen($_POST['Country']) > 50) {
         $InputError = 1;
         prnMsg(_('The currency country must be 50 characters or less long'),'error');
 		$Errors[$i] = 'Country';
-		$i++;		
-    } 
+		$i++;
+    }
     if (strlen($_POST['HundredsName']) > 15) {
         $InputError = 1;
         prnMsg(_('The hundredths name must be 15 characters or less long'),'error');
 		$Errors[$i] = 'HundredsName';
-		$i++;		
-    } 
+		$i++;
+    }
     if (($FunctionalCurrency != '') and (isset($SelectedCurrency) and $SelectedCurrency==$FunctionalCurrency)){
         $InputError = 1;
         prnMsg(_('The functional currency cannot be modified or deleted'),'error');
-    } 
+    }
     if (strstr($_POST['Abbreviation'],"'") OR strstr($_POST['Abbreviation'],'+') OR strstr($_POST['Abbreviation'],"\"") OR strstr($_POST['Abbreviation'],'&') OR strstr($_POST['Abbreviation'],' ') OR strstr($_POST['Abbreviation'],"\\") OR strstr($_POST['Abbreviation'],'.') OR strstr($_POST['Abbreviation'],'"')) {
 		$InputError = 1;
 		prnMsg( _('The currency code cannot contain any of the following characters') . " . - ' & + \" " . _('or a space'),'error');
 		$Errors[$i] = 'Abbreviation';
-		$i++;		
+		$i++;
 	}
 
     if (isset($SelectedCurrency) AND $InputError !=1) {
 
         /*SelectedCurrency could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
         $sql = "UPDATE currencies SET
-			currency='" . $_POST['CurrencyName'] . "',
-			country='". $_POST['Country']. "',
-			hundredsname='" . $_POST['HundredsName'] . "',
-			rate=" .$_POST['ExchangeRate'] . "
-		WHERE currabrev = '" . $SelectedCurrency . "'";
+					currency='" . $_POST['CurrencyName'] . "',
+					country='". $_POST['Country']. "',
+					hundredsname='" . $_POST['HundredsName'] . "',
+					rate=" .$_POST['ExchangeRate'] . "
+					WHERE currabrev = '" . $SelectedCurrency . "'";
 
         $msg = _('The currency definition record has been updated');
     } else if ($InputError !=1) {
@@ -104,14 +104,14 @@ if (isset($_POST['submit'])) {
     /*Selected currencies is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new payment terms form */
     	$sql = "INSERT INTO currencies (currency,
     					currabrev,
-					country,
-					hundredsname,
-					rate)
-			VALUES ('" . $_POST['CurrencyName'] . "',
-				'" . $_POST['Abbreviation'] . "',
-				'" . $_POST['Country'] . "',
-				'" . $_POST['HundredsName'] .  "',
-				" . $_POST['ExchangeRate'] . ")";
+						country,
+						hundredsname,
+						rate)
+				VALUES ('" . $_POST['CurrencyName'] . "',
+					'" . $_POST['Abbreviation'] . "',
+					'" . $_POST['Country'] . "',
+					'" . $_POST['HundredsName'] .  "',
+					" . $_POST['ExchangeRate'] . ")";
 
     	$msg = _('The currency definition record has been added');
     }
@@ -132,7 +132,7 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN DebtorsMaster
 
-    $sql= "SELECT COUNT(*) FROM debtorsmaster WHERE debtorsmaster.currcode = '$SelectedCurrency'";
+    $sql= "SELECT COUNT(*) FROM debtorsmaster WHERE debtorsmaster.currcode = '" . $SelectedCurrency . "'";
     $result = DB_query($sql,$db);
     $myrow = DB_fetch_row($result);
     if ($myrow[0] > 0)
@@ -148,7 +148,7 @@ if (isset($_POST['submit'])) {
             prnMsg(_('Cannot delete this currency because supplier accounts have been created referring to this currency')
              . '<BR>' . _('There are') . ' ' . $myrow[0] . ' ' . _('supplier accounts that refer to this currency'),'warn');
         } else {
-            $sql= "SELECT COUNT(*) FROM banktrans WHERE banktrans.currcode = '$SelectedCurrency'";
+            $sql= "SELECT COUNT(*) FROM banktrans WHERE banktrans.currcode = '" . $SelectedCurrency . "'";
             $result = DB_query($sql,$db);
             $myrow = DB_fetch_row($result);
             if ($myrow[0] > 0){
@@ -158,7 +158,7 @@ if (isset($_POST['submit'])) {
                 prnMsg(_('Cannot delete this currency because it is the functional currency of the company'),'warn');
             } else {
                 //only delete if used in neither customer or supplier, comp prefs, bank trans accounts
-                $sql="DELETE FROM currencies WHERE currabrev='$SelectedCurrency'";
+                $sql="DELETE FROM currencies WHERE currabrev='" . $SelectedCurrency . "'";
                 $result = DB_query($sql,$db);
                 prnMsg(_('The currency definition record has been deleted'),'success');
             }
@@ -190,7 +190,7 @@ or deletion of the records*/
     $k=0; //row colour counter
     /*Get published currency rates from Eurpoean Central Bank */
     $CurrencyRatesArray = GetECBCurrencyRates();
-    
+
     while ($myrow = DB_fetch_row($result)) {
         if ($myrow[1]==$FunctionalCurrency){
             echo '<tr bgcolor=#FFbbbb>';
@@ -203,11 +203,11 @@ or deletion of the records*/
         }
         // Lets show the country flag
         $ImageFile = 'flags/' . strtoupper($myrow[1]) . '.gif';
-        
+
 		if(!file_exists($ImageFile)){
 			$ImageFile =  'flags/blank.gif';
 		}
-		
+
         if ($myrow[1]!=$FunctionalCurrency){
             printf("<td><img src=\"%s\"></td>
             		<td>%s</td>
@@ -225,7 +225,7 @@ or deletion of the records*/
 					$myrow[0],
 					$myrow[2],
 					$myrow[3],
-					$myrow[4],
+					number_format($myrow[4],5),
 					number_format(GetCurrencyRate($myrow[1],$CurrencyRatesArray),5),
 					$_SERVER['PHP_SELF'] . '?' . SID,
 					$myrow[1],

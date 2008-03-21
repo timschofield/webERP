@@ -19,33 +19,33 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 
 /* Also reads all the company data set up in the company record and returns an array */
 
-	$sql=	"SELECT
-			coyname,
-			gstno,
-			regoffice1,
-			regoffice2,
-			regoffice3,
-			regoffice4,
-			regoffice5,
-			regoffice6,
-			telephone,
-			fax,
-			email,
-			currencydefault,
-			debtorsact,
-			pytdiscountact,
-			creditorsact,
-			payrollact,
-			grnact,
-			exchangediffact,
-			purchasesexchangediffact,
-			retainedearnings,
-			freightact,
-			gllink_debtors,
-			gllink_creditors,
-			gllink_stock
-		FROM companies
-			WHERE coycode=1";
+	$sql=	'SELECT
+				coyname,
+				gstno,
+				regoffice1,
+				regoffice2,
+				regoffice3,
+				regoffice4,
+				regoffice5,
+				regoffice6,
+				telephone,
+				fax,
+				email,
+				currencydefault,
+				debtorsact,
+				pytdiscountact,
+				creditorsact,
+				payrollact,
+				grnact,
+				exchangediffact,
+				purchasesexchangediffact,
+				retainedearnings,
+				freightact,
+				gllink_debtors,
+				gllink_creditors,
+				gllink_stock
+			FROM companies
+				WHERE coycode=1';
 
 	$ErrMsg = _('An error occurred accessing the database to retrieve the company information');
 	$ReadCoyResult = DB_query($sql,$db,$ErrMsg);
