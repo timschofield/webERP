@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity=9;
 
@@ -26,13 +26,14 @@ if (isset($_POST['submit'])) {
 	if (strlen($_POST['Code']) < 2) {
 		$InputError = 1;
 		prnMsg(_('The Work Centre code must be at least 2 characters long'),'error');
-	} elseif (strlen($_POST['Description'])<3) {
+	} 
+	if (strlen($_POST['Description'])<3) {
 		$InputError = 1;
 		prnMsg(_('The Work Centre description must be at least 3 characters long'),'error');
-	}elseif (strstr($_POST['Code'],' ') OR strstr($_POST['Code'],"'") OR strstr($_POST['Code'],'+') OR strstr($_POST['Code'],"\\") OR strstr($_POST['Code'],"\"") OR strstr($_POST['Code'],'&') OR strstr($_POST['Code'],'.') OR strstr($_POST['Code'],'"')) {
+	}
+	if (strstr($_POST['Code'],' ') OR strstr($_POST['Code'],"'") OR strstr($_POST['Code'],'+') OR strstr($_POST['Code'],"\\") OR strstr($_POST['Code'],"\"") OR strstr($_POST['Code'],'&') OR strstr($_POST['Code'],'.') OR strstr($_POST['Code'],'"')) {
 		$InputError = 1;
 		prnMsg(_('The work centre code cannot contain any of the following characters') . " - ' & + \" \\ " . _('or a space'),'error');
-
 	}
 
 	if (isset($SelectedWC) AND $InputError !=1) {
@@ -42,7 +43,7 @@ if (isset($_POST['submit'])) {
 		delete code below*/
 
 		$sql = "UPDATE workcentres SET location = '" . $_POST['Location'] . "',
-						description = '" . DB_escape_string($_POST['Description']) . "',
+						description = '" . $_POST['Description'] . "',
 						overheadrecoveryact =" . $_POST['OverheadRecoveryAct'] . ",
 						overheadperhour = " . $_POST['OverheadPerHour'] . "
 				WHERE code = '" . $SelectedWC . "'";
@@ -56,9 +57,9 @@ if (isset($_POST['submit'])) {
 						description,
 						overheadrecoveryact,
 						overheadperhour)
-					VALUES ('" . DB_escape_string($_POST['Code']) . "',
+					VALUES ('" . $_POST['Code'] . "',
 						'" . $_POST['Location'] . "',
-						'" . DB_escape_string($_POST['Description']) . "',
+						'" . $_POST['Description'] . "',
 						" . $_POST['OverheadRecoveryAct'] . ",
 						" . $_POST['OverheadPerHour'] . "
 						)";
