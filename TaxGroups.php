@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -31,7 +31,7 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	unset($sql);
 	if (isset($_POST['GroupName']) ){ // Update or Add a tax group
 		if(isset($SelectedGroup)) { // Update a tax group
-			$sql = "UPDATE taxgroups SET taxgroupdescription = '". DB_escape_string($_POST['GroupName']) ."' 
+			$sql = "UPDATE taxgroups SET taxgroupdescription = '". $_POST['GroupName'] ."' 
 					WHERE taxgroupid = ".$SelectedGroup;
 			$ErrMsg = _('The update of the tax group description failed because');
 			$SuccessMsg = _('The tax group description was updated to') . ' ' . $_POST['GroupName'];
@@ -42,7 +42,7 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 				prnMsg( _('A new tax group could not be added because a tax group already exists for') . ' ' . $_POST['GroupName'],'warn');
 				unset($sql);
 			} else {
-				$sql = "INSERT INTO taxgroups (taxgroupdescription) VALUES ('". DB_escape_string($_POST['GroupName']) . "')";
+				$sql = "INSERT INTO taxgroups (taxgroupdescription) VALUES ('". $_POST['GroupName'] . "')";
 				$ErrMsg = _('The addition of the group failed because');
 				$SuccessMsg = _('Added the new tax group') . ' ' . $_POST['GroupName'];
 			}
@@ -340,16 +340,16 @@ if (isset($SelectedGroup)) {
 		echo '<INPUT TYPE=HIDDEN NAME="SelectedGroup" VALUE="' . $SelectedGroup .'">';
 		echo '<CENTER><TABLE>';
 			
-		echo '<TR><TD class="tableheader">'._('Tax Authority').'</TD>
-			<TD class="tableheader">'._('Order').'</TD>
-			<TD class="tableheader">'._('Tax on Prior Taxes').'</TD></TR>';
+		echo '<TR><TH>'._('Tax Authority').'</TH>
+			<TH>'._('Order').'</TH>
+			<TH>'._('Tax on Prior Taxes').'</TH></TR>';
 		$k=0; //row colour counter
 		for ($i=1;$i < count($TaxAuthRow)+1;$i++) {
 			if ($k==1){
-				echo "<TR BGCOLOR='#CCCCCC'>";
+				echo '<TR class="OddTableRows">';
 				$k=0;
 			} else {
-				echo "<TR BGCOLOR='#EEEEEE'>";
+				echo '<TR class="EvenTableRows">';
 				$k=1;
 			}
 			
