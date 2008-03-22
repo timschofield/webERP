@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 10;
 
@@ -50,13 +50,13 @@ if (isset($_POST['submit'])) {
 
 		if (isset($_POST['DaysOrFoll']) and $_POST['DaysOrFoll']=='on') {
 			$sql = "UPDATE paymentterms SET
-					terms='" . DB_escape_string($_POST['Terms']) . "',
+					terms='" . $_POST['Terms'] . "',
 					dayinfollowingmonth=0,
 					daysbeforedue=" . $_POST['DayNumber'] . "
 				WHERE termsindicator = '" . $SelectedTerms . "'";
 		} else {
 			$sql = "UPDATE paymentterms SET
-					terms='" . DB_escape_string($_POST['Terms']) . "',
+					terms='" . $_POST['Terms'] . "',
 					dayinfollowingmonth=" . $_POST['DayNumber'] . ",
 					daysbeforedue=0
 				WHERE termsindicator = '" . $SelectedTerms . "'";
@@ -74,7 +74,7 @@ if (isset($_POST['submit'])) {
 								dayinfollowingmonth)
 						VALUES (
 							'" . $_POST['TermsIndicator'] . "',
-							'" . DB_escape_string($_POST['Terms']) . "',
+							'" . $_POST['Terms'] . "',
 							" . $_POST['DayNumber'] . ",
 							0
 						)";
@@ -85,7 +85,7 @@ if (isset($_POST['submit'])) {
 								dayinfollowingmonth)
 						VALUES (
 							'" . $_POST['TermsIndicator'] . "',
-							'" . DB_escape_string($_POST['Terms']) . "',
+							'" . $_POST['Terms'] . "',
 							0,
 							" . $_POST['DayNumber'] . "
 							)";

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity = 11;
 
@@ -41,17 +41,17 @@ if (isset($_POST['submit'])) {
 
 		$sql = "UPDATE locations SET
 				loccode='" . $_POST['LocCode'] . "',
-				locationname='" . DB_escape_string($_POST['LocationName']) . "',
-				deladd1='" . DB_escape_string($_POST['DelAdd1']) . "',
-				deladd2='" . DB_escape_string($_POST['DelAdd2']) . "',
-				deladd3='" . DB_escape_string($_POST['DelAdd3']) . "',
-				deladd4='" . DB_escape_string($_POST['DelAdd4']) . "',
-				deladd5='" . DB_escape_string($_POST['DelAdd5']) . "',
-				deladd6='" . DB_escape_string($_POST['DelAdd6']) . "',
-				tel='" . DB_escape_string($_POST['Tel']) . "',
-				fax='" . DB_escape_string($_POST['Fax']) . "',
-				email='" . DB_escape_string($_POST['Email']) . "',
-				contact='" . DB_escape_string($_POST['Contact']) . "',
+				locationname='" . $_POST['LocationName'] . "',
+				deladd1='" . $_POST['DelAdd1'] . "',
+				deladd2='" . $_POST['DelAdd2'] . "',
+				deladd3='" . $_POST['DelAdd3'] . "',
+				deladd4='" . $_POST['DelAdd4'] . "',
+				deladd5='" . $_POST['DelAdd5'] . "',
+				deladd6='" . $_POST['DelAdd6'] . "',
+				tel='" . $_POST['Tel'] . "',
+				fax='" . $_POST['Fax'] . "',
+				email='" . $_POST['Email'] . "',
+				contact='" . $_POST['Contact'] . "',
 				taxprovinceid = " . $_POST['TaxProvince'] . ",
 				managed = " . $_POST['Managed'] . "
 			WHERE loccode = '$SelectedLocation'";
@@ -107,18 +107,18 @@ if (isset($_POST['submit'])) {
 					managed
 					)
 			VALUES (
-				'" . DB_escape_string($_POST['LocCode']) . "',
-				'" . DB_escape_string($_POST['LocationName']) . "',
-				'" . DB_escape_string($_POST['DelAdd1']) ."',
-				'" . DB_escape_string($_POST['DelAdd2']) ."',
-				'" . DB_escape_string($_POST['DelAdd3']) . "',
-				'" . DB_escape_string($_POST['DelAdd4']) . "',
-				'" . DB_escape_string($_POST['DelAdd5']) . "',
-				'" . DB_escape_string($_POST['DelAdd6']) . "',
-				'" . DB_escape_string($_POST['Tel']) . "',
-				'" . DB_escape_string($_POST['Fax']) . "',
-				'" . DB_escape_string($_POST['Email']) . "',
-				'" . DB_escape_string($_POST['Contact']) . "',
+				'" . $_POST['LocCode'] . "',
+				'" . $_POST['LocationName'] . "',
+				'" . $_POST['DelAdd1'] ."',
+				'" . $_POST['DelAdd2'] ."',
+				'" . $_POST['DelAdd3'] . "',
+				'" . $_POST['DelAdd4'] . "',
+				'" . $_POST['DelAdd5'] . "',
+				'" . $_POST['DelAdd6'] . "',
+				'" . $_POST['Tel'] . "',
+				'" . $_POST['Fax'] . "',
+				'" . $_POST['Email'] . "',
+				'" . $_POST['Contact'] . "',
 				" . $_POST['TaxProvince'] . ",
 				" . $_POST['Managed'] . "
 			)";

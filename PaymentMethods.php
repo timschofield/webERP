@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 15;
 
@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
 				$myrow = DB_fetch_row($result);
 				$OldName = $myrow[0];
 				$sql = "UPDATE paymentmethods
-					SET paymentname='" . DB_escape_string($_POST['MethodName']) . "',
+					SET paymentname='" . $_POST['MethodName'] . "',
 						paymenttype = " . $_POST['ForPayment'] . ",
 						receipttype = " . $_POST['ForReceipt'] . "
 					WHERE paymentname ".LIKE." '".$OldName."'";
@@ -90,7 +90,7 @@ if (isset($_POST['submit'])) {
 						paymenttype, 
 						receipttype)
 				VALUES (
-					'" . DB_escape_string($_POST['MethodName']) ."',
+					'" . $_POST['MethodName'] ."',
 					" . $_POST['ForPayment'] . ",
 					" . $_POST['ForReceipt'] . "
 					)";
