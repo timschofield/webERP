@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 2;
 include ('includes/session.inc');
@@ -33,19 +33,19 @@ if (DB_num_rows($ShiptsResult)==0){
 echo '<CENTER><FONT SIZE=4 COLOR=BLUE>'. _('Open Shipments for').' ' . $_GET['SupplierName'] . '</FONT><BR>
 	<TABLE CELLPADDING=2 COLSPAN=2>';
 $TableHeader = '<TR>
-		<TD class="tableheader">'. _('Reference'). '</TD>
-		<TD class="tableheader">'. _('Vessel'). '</TD>
-		<TD class="tableheader">'. _('ETA'). '</TD></TR>';
+		<TH>'. _('Reference'). '</TH>
+		<TH>'. _('Vessel'). '</TH>
+		<TH>'. _('ETA'). '</TH></TR>';
 
 $j = 1;
 $k = 0; //row colour counter
 
 while ($myrow=DB_fetch_array($ShiptsResult)) {
        if ($k==1){
-              echo '<tr bgcolor="#CCCCCC">';
+              echo '<TR class="OddTableRows">';
               $k=0;
        } else {
-              echo '<tr bgcolor="#EEEEEE">';
+              echo '<TR class="EvenTableRows">';
               $k=1;
        }
 
