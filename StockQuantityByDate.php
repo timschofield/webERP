@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 /* Contributed by Chris Bice - gettext by Kitch*/
 
 
@@ -85,9 +85,9 @@ if(isset($_POST['ShowStatus']) AND is_date($_POST['OnHandDate']))
 	echo '<TABLE CELLPADDING=5 CELLSPACING=4 BORDER=0>';
 
 	$tableheader = "<TR>
-				<TD CLASS='tableheader'>" . _('Item Code') . "</TD>
-				<TD CLASS='tableheader'>" . _('Description') . "</TD>
-				<TD CLASS='tableheader'>" . _('Quantity On Hand') . "</TD></TR>";
+				<TH>" . _('Item Code') . "</TH>
+				<TH>" . _('Description') . "</TH>
+				<TH>" . _('Quantity On Hand') . "</TH></TR>";
 	echo $tableheader;
 
 	while ($myrows=DB_fetch_array($StockResult)) {
@@ -112,10 +112,10 @@ if(isset($_POST['ShowStatus']) AND is_date($_POST['OnHandDate']))
 		while ($LocQtyRow=DB_fetch_array($LocStockResult)) {
 
 			if ($k==1){
-				echo "<TR BGCOLOR='#CCCCCC'>";
+				echo '<TR class="OddTableRows">';
 				$k=0;
 			} else {
-				echo "<TR BGCOLOR='#EEEEEE'>";
+				echo '<TR class="EvenTableRows">';
 				$k=1;
 			}
 

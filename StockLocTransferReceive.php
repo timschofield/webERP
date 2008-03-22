@@ -418,13 +418,13 @@ if (isset($_SESSION['Transfer'])){
 	echo "<CENTER><TABLE BORDER=1>";
 
 	$tableheader = '<TR>
-			<TD class="tableheader">'. _('Item Code') . '</TD>
-			<TD class="tableheader">'. _('Item Description'). '</TD>
-			<TD class="tableheader">'. _('Quantity Dispatched'). '</TD>
-			<TD class="tableheader">'. _('Quantity Received'). '</TD>
-			<TD class="tableheader">'. _('Quantity To Receive'). '</TD>
-			<TD class="tableheader">'. _('Units'). '</TD>
-                        <TD class="tableheader">'. _('Cancel Balance') . '</TD>
+			<TH>'. _('Item Code') . '</TH>
+			<TH>'. _('Item Description'). '</TH>
+			<TH>'. _('Quantity Dispatched'). '</TH>
+			<TH>'. _('Quantity Received'). '</TH>
+			<TH>'. _('Quantity To Receive'). '</TH>
+			<TH>'. _('Units'). '</TH>
+            <TH>'. _('Cancel Balance') . '</TH>
 			</TR>';
 
 	echo $tableheader;
@@ -509,9 +509,9 @@ if (isset($_SESSION['Transfer'])){
 		echo '<CENTER><TABLE BORDER=0>';
 
 		echo '<TR>
-			<TD class="tableheader">'. _('Transfer Ref'). '</TD>
-			<TD class="tableheader">'. _('Transfer From'). '</TD>
-			<TD class="tableheader">'. _('Dispatch Date'). '</TD></TR>';
+			<TH>'. _('Transfer Ref'). '</TH>
+			<TH>'. _('Transfer From'). '</TH>
+			<TH>'. _('Dispatch Date'). '</TH></TR>';
 
 		while ($myrow=DB_fetch_array($TrfResult)){
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
@@ -45,12 +45,12 @@ if (isset($_GET['Delete'])){
 
 /*Show all the selected GLCodes so far from the SESSION['SuppInv']->GLCodes array */
 echo '<CENTER><FONT SIZE=4 COLOR=BLUE>' . _('General Ledger Analysis of Invoice From') . ' ' . $_SESSION['SuppInv']->SupplierName;
-echo '<TABLE CELLPADDING=2><TR><TD class="tableheader">' . _('Account') . '</TD>
-                               <TD class="tableheader">' . _('Name') . '</TD>
-                               <TD class="tableheader">' . _('Amount') . '<BR>' . _('in') . ' ' . $_SESSION['SuppInv']->CurrCode . '</TD>
-                               <TD class="tableheader">' . _('Shipment') . '</TD>
-                               <TD class="tableheader">' . _('Job') . '</TD>
-                               <TD class="tableheader">' . _('Narrative') . '</TD></TR>';
+echo '<TABLE CELLPADDING=2><TR><TH>' . _('Account') . '</TH>
+                               <TH>' . _('Name') . '</TH>
+                               <TH>' . _('Amount') . '<BR>' . _('in') . ' ' . $_SESSION['SuppInv']->CurrCode . '</TH>
+                               <TH>' . _('Shipment') . '</TH>
+                               <TH>' . _('Job') . '</TH>
+                               <TH>' . _('Narrative') . '</TH></TR>';
 
 $TotalGLValue=0;
 

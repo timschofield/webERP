@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the credit note
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -66,12 +66,12 @@ if (isset($_GET['Delete'])){
 
 echo '<CENTER><FONT SIZE=4 COLOR=BLUE>' . _('Credits Against Goods Received Selected');
 echo '<TABLE CELLPADDING=0>';
-$TableHeader = '<TR><TD class="tableheader">' . _('GRN') . '</TD>
-                    <TD class="tableheader">' . _('Item Code') . '</TD>
-                    <TD class="tableheader">' . _('Description') . '</TD>
-                    <TD class="tableheader">' . _('Quantity Credited') . '</TD>
-                    <TD class="tableheader">' . _('Price Credited in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TD>
-                    <TD class="tableheader">' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TD></TR>';
+$TableHeader = '<TR><TH>' . _('GRN') . '</TH>
+                    <TH>' . _('Item Code') . '</TH>
+                    <TH>' . _('Description') . '</TH>
+                    <TH>' . _('Quantity Credited') . '</TH>
+                    <TH>' . _('Price Credited in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TH>
+                    <TH>' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TH></TR>';
 
 echo $TableHeader;
 
@@ -137,16 +137,16 @@ echo '<FONT SIZE=4 COLOR=BLUE> ' . _('From') . ' ' . $_SESSION['SuppTrans']->Sup
 
 echo '<TABLE CELLPADDING=2 COLSPAN=7>';
 
-$TableHeader = '<TR><TD class="tableheader">' . _('GRN') . '</TD>
-                    <TD class="tableheader">' . _('Order') . '</TD>
-                    <TD class="tableheader">' . _('Item Code') . '</TD>
-                    <TD class="tableheader">' . _('Description') . '</TD>
-                    <TD class="tableheader">' . _('Delivered') . '</TD>
-                    <TD class="tableheader">' . _('Total Qty') . '<BR>' . _('Received') . '</TD>
-                    <TD class="tableheader">' . _('Qty Already') . '<BR>' . _('credit noted') . '</TD>
-                    <TD class="tableheader">' . _('Qty Yet') . '<BR>' . _('To credit note') . '</TD>
-                    <TD class="tableheader">' . _('Order Price') . '<BR>' . $_SESSION['SuppTrans']->CurrCode . '</TD>
-                    <TD class="tableheader">' . _('Line Value') . '<BR>' . _('In') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TD>
+$TableHeader = '<TR><TH>' . _('GRN') . '</TH>
+                    <TH>' . _('Order') . '</TH>
+                    <TH>' . _('Item Code') . '</TH>
+                    <TH>' . _('Description') . '</TH>
+                    <TH>' . _('Delivered') . '</TH>
+                    <TH>' . _('Total Qty') . '<BR>' . _('Received') . '</TH>
+                    <TH>' . _('Qty Already') . '<BR>' . _('credit noted') . '</TH>
+                    <TH>' . _('Qty Yet') . '<BR>' . _('To credit note') . '</TH>
+                    <TH>' . _('Order Price') . '<BR>' . $_SESSION['SuppTrans']->CurrCode . '</TH>
+                    <TH>' . _('Line Value') . '<BR>' . _('In') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TH>
                     </TR>';
 
 echo $TableHeader;
@@ -210,12 +210,12 @@ if (isset($_POST['GRNNo']) AND $_POST['GRNNo']!=''){
 
 	echo '<P><FONT SIZE=4 COLOR=BLUE><B>' . _('GRN Selected For Adding To A Suppliers Credit Note') . '</FONT></B>';
 
-	echo '<TABLE><TR><TD class="tableheader">' . _('GRN') . '</TD>
-                   <TD class="tableheader">' . _('Item') . '</TD>
-                   <TD class="tableheader">' . _('Quantity') . '<BR>' . _('Outstanding') . '</TD>
-                   <TD class="tableheader">' . _('Quantity') . '<BR>' . _('credited') . '</TD>
-                   <TD class="tableheader">' . _('Order') . '<BR>' . _('Price') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TD>
-                   <TD class="tableheader">' . _('Credit') . '<BR>' . _('Price') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TD>
+	echo '<TABLE><TR><TH>' . _('GRN') . '</TH>
+                   <TH>' . _('Item') . '</TH>
+                   <TH>' . _('Quantity') . '<BR>' . _('Outstanding') . '</TH>
+                   <TH>' . _('Quantity') . '<BR>' . _('credited') . '</TH>
+                   <TH>' . _('Order') . '<BR>' . _('Price') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TH>
+                   <TH>' . _('Credit') . '<BR>' . _('Price') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</TH>
                    </TR>';
 
 	echo '<TR><TD>' . $_POST['GRNNo'] . '</TD>

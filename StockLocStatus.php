@@ -131,13 +131,13 @@ if (isset($_POST['ShowStatus'])){
 	echo '<TABLE CELLPADDING=5 CELLSPACING=4 BORDER=0>';
 
 	$tableheader = '<TR>
-			<TD class="tableheader">' . _('StockID') . '</TD>
-			<TD class="tableheader">' . _('Description') . '</TD>
-			<TD class="tableheader">' . _('Quantity On Hand') . '</TD>
-			<TD class="tableheader">' . _('Re-Order Level') . '</FONT></TD>
-			<TD class="tableheader">' . _('Demand') . '</TD>
-			<TD class="tableheader">' . _('Available') . '</TD>
-			<TD class="tableheader">' . _('On Order') . '</TD>
+			<TH>' . _('StockID') . '</TH>
+			<TH>' . _('Description') . '</TH>
+			<TH>' . _('Quantity On Hand') . '</TH>
+			<TH>' . _('Re-Order Level') . '</FONT></TH>
+			<TH>' . _('Demand') . '</TH>
+			<TH>' . _('Available') . '</TH>
+			<TH>' . _('On Order') . '</TH>
 			</TR>';
 	echo $tableheader;
 	$j = 1;
@@ -146,10 +146,10 @@ if (isset($_POST['ShowStatus'])){
 	while ($myrow=DB_fetch_array($LocStockResult)) {
 
 		if ($k==1){
-			echo '<tr bgcolor="#CCCCCC">';
+			echo '<TR class="OddTableRows">';
 			$k=0;
 		} else {
-			echo '<tr bgcolor="#EEEEEE">';
+			echo '<TR class="EvenTableRows">';
 			$k=1;
 		}
 

@@ -73,15 +73,15 @@ $MovtsResult = DB_query($sql, $db,$ErrMsg);
 
 echo '<TABLE CELLPADDING=5 CELLSPACING=4 BORDER=0>';
 $tableheader = '<TR>
-		<TD class="tableheader">' . _('Item Code') . '</TD>
-		<TD class="tableheader">' . _('Type') . '</TD>
-		<TD class="tableheader">' . _('Trans No') . '</TD>
-		<TD class="tableheader">' . _('Date') . '</TD>
-		<TD class="tableheader">' . _('Customer') . '</TD>
-		<TD class="tableheader">' . _('Quantity') . '</TD>
-		<TD class="tableheader">' . _('Reference') . '</TD>
-		<TD class="tableheader">' . _('Price') . '</TD>
-		<TD class="tableheader">' . _('Discount') . '</TD>
+		<TH>' . _('Item Code') . '</TH>
+		<TH>' . _('Type') . '</TH>
+		<TH>' . _('Trans No') . '</TH>
+		<TH>' . _('Date') . '</TH>
+		<TH>' . _('Customer') . '</TH>
+		<TH>' . _('Quantity') . '</TH>
+		<TH>' . _('Reference') . '</TH>
+		<TH>' . _('Price') . '</TH>
+		<TH>' . _('Discount') . '</TH>
 		</TR>';
 echo $tableheader;
 
@@ -91,10 +91,10 @@ $k=0; //row colour counter
 while ($myrow=DB_fetch_array($MovtsResult)) {
 
 	if ($k==1){
-		echo '<tr bgcolor="#CCCCCC">';
+		echo '<TR class="OddTableRows">';
 		$k=0;
 	} else {
-		echo '<tr bgcolor="#EEEEEE">';
+		echo '<TR class="EvenTableRows">';
 		$k=1;
 	}
 
