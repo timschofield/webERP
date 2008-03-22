@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 4;
 include('includes/DefinePOClass.php');
@@ -39,7 +39,7 @@ If (isset($_POST['EnterLines'])){
 	$_SESSION['PO']->ExRate = $_POST['ExRate'];
 	$_SESSION['PO']->Comments = $_POST['Comments'];
 
-	if ($_POST['RePrint']==1){
+	if (isset($_POST['RePrint']) and $_POST['RePrint']==1){
 
 		$_SESSION['PO']->AllowPrintPO=1;
 
@@ -310,7 +310,7 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 	  $LocnResult = DB_query($sql,$db);
 
 	  while ($LocnRow=DB_fetch_array($LocnResult)){
-		 if ($_POST['StkLocation'] == $LocnRow['loccode'] OR ($_POST['StkLocation']=='' AND $LocnRow['loccode']==$_SESSION['UserStockLocation'])){
+		 if (isset($_POST['StkLocation']) and ($_POST['StkLocation'] == $LocnRow['loccode'] OR ($_POST['StkLocation']=='' AND $LocnRow['loccode']==$_SESSION['UserStockLocation']))){
 			 echo "<OPTION SELECTED Value='" . $LocnRow['loccode'] . "'>" . $LocnRow['locationname'];
 		 } else {
 			 echo "<OPTION Value='" . $LocnRow['loccode'] . "'>" . $LocnRow['locationname'];
@@ -375,14 +375,14 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 		  $_POST['DelAdd5'] = $LocnRow[4];
 		  $_POST['DelAdd6'] = $LocnRow[5];
 		  $_POST['tel'] = $LocnRow[6];
-		  $_SESSION['PO']->Location= DB_escape_string($_POST['StkLocation']);
-		  $_SESSION['PO']->DelAdd1 = DB_escape_string($_POST['DelAdd1']);
-		  $_SESSION['PO']->DelAdd2 = DB_escape_string($_POST['DelAdd2']);
-		  $_SESSION['PO']->DelAdd3 = DB_escape_string($_POST['DelAdd3']);
-		  $_SESSION['PO']->DelAdd4 = DB_escape_string($_POST['DelAdd4']);
-		  $_SESSION['PO']->DelAdd5 = DB_escape_string($_POST['DelAdd5']);
-		  $_SESSION['PO']->DelAdd6 = DB_escape_string($_POST['DelAdd6']);
-		  $_SESSION['PO']->tel = DB_escape_string($_POST['tel']);
+		  $_SESSION['PO']->Location= $_POST['StkLocation'];
+		  $_SESSION['PO']->DelAdd1 = $_POST['DelAdd1'];
+		  $_SESSION['PO']->DelAdd2 = $_POST['DelAdd2'];
+		  $_SESSION['PO']->DelAdd3 = $_POST['DelAdd3'];
+		  $_SESSION['PO']->DelAdd4 = $_POST['DelAdd4'];
+		  $_SESSION['PO']->DelAdd5 = $_POST['DelAdd5'];
+		  $_SESSION['PO']->DelAdd6 = $_POST['DelAdd6'];
+		  $_SESSION['PO']->tel = $_POST['tel'];
 	      }
 	  }
 	  echo '<TR><TD>' . _('Deliver to') . ' - ' . _('Address 1') . ":</TD>
@@ -421,9 +421,15 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 	  }
 
 	  echo '</TD></TR>';
+	  if (!isset($_POST['Initiator'])) {
+	  	$_POST['Initiator']='';
+	  }
 	  echo '<TR><TD>' . _('Initiated By') . ":</TD>
 	  		<TD><INPUT TYPE=TEXT NAME='Initiator' SIZE=11 MAXLENGTH=10 VALUE=" . $_POST['Initiator'] . "></TD>
 		</TR>";
+		if (!isset($_POST['Requisition'])) {
+			$_POST['Requisition']=0;
+		}
 	  echo '<TR><TD>' . _('Requistion Ref') . ":</TD><TD><INPUT TYPE=TEXT NAME='Requisition' SIZE=16 MAXLENGTH=15 VALUE=" . $_POST['Requisition'] . '></TD>
 	  	</TR>';
 
@@ -448,7 +454,10 @@ if ($_SESSION['RequireSupplierSelection'] ==1 OR !isset($_SESSION['PO']->Supplie
 	  echo '</TD></TR></TABLE>'; /*end of sub table */
 	  }
  	  echo '</TD></TR><TR><TD VALIGN=TOP COLSPAN=2>' . _('Comments');
-	  echo ":<textarea name='Comments' cols=70 rows=2>" . $_POST['Comments'] . '</textarea>';
+ 	  if (!isset($_POST['Comments'])) {
+ 	  	$_POST['Comments']='';
+ 	  }
+	  echo ":<textarea name='Comments' cols=70 rows=2>" . AddCarriageReturns($_POST['Comments']) . '</textarea>';
 	  echo '</TD></TR></TABLE>'; /* end of main table */
 	  echo "<INPUT TYPE=SUBMIT Name='EnterLines' VALUE='" . _('Enter Line Items') . "'><INPUT TYPE=SUBMIT Name='ChangeSupplier' VALUE='" . _('Change supplier') . "'><BR><BR><INPUT TYPE=SUBMIT NAME='CancelOrder' VALUE='" . _("Cancel and Delete The Whole Order") . "'>";
 
