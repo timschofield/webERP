@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 
 $PageSecurity = 4;
@@ -17,7 +17,7 @@ if (!isset($_SESSION['PO'])){
 }
 include('includes/header.inc');
 
-
+$Maximum_Number_Of_Parts_To_Show = 50;
 
 echo "<A HREF='$rootpath/PO_Header.php?" . SID . "'>" ._('Back To Purchase Order Header') . '</A><BR>';
 
@@ -62,18 +62,18 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							deladd6)
 				VALUES(
 				'" . $_SESSION['PO']->SupplierID . "',
-				'" . DB_escape_string($_SESSION['PO']->Comments) . "',
+				'" . $_SESSION['PO']->Comments . "',
 				'" . Date("Y-m-d") . "',
 				" . $_SESSION['PO']->ExRate . ",
 				'" . $_SESSION['PO']->Initiator . "',
 				'" . $_SESSION['PO']->RequisitionNo . "',
 				'" . $_SESSION['PO']->Location . "',
-				'" . DB_escape_string($_SESSION['PO']->DelAdd1) . "',
-				'" . DB_escape_string($_SESSION['PO']->DelAdd2) . "',
-				'" . DB_escape_string($_SESSION['PO']->DelAdd3) . "',
-				'" . DB_escape_string($_SESSION['PO']->DelAdd4) . "',
-				'" . DB_escape_string($_SESSION['PO']->DelAdd5) . "',
-				'" . DB_escape_string($_SESSION['PO']->DelAdd6) . "'
+				'" . $_SESSION['PO']->DelAdd1 . "',
+				'" . $_SESSION['PO']->DelAdd2 . "',
+				'" . $_SESSION['PO']->DelAdd3 . "',
+				'" . $_SESSION['PO']->DelAdd4 . "',
+				'" . $_SESSION['PO']->DelAdd5 . "',
+				'" . $_SESSION['PO']->DelAdd6 . "'
 				)";
 
 			$ErrMsg =  _('The purchase order header record could not be inserted into the database because');
@@ -81,7 +81,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
 		     /*Get the auto increment value of the order number created from the SQL above */
-		     $_SESSION['PO']->OrderNo =  GetNextTransNo(18, &$db);
+		     $_SESSION['PO']->OrderNo =  GetNextTransNo(18, $db);
 
 		     /*Insert the purchase order detail records */
 		     foreach ($_SESSION['PO']->LineItems as $POLine) {
@@ -101,7 +101,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							" . $_SESSION['PO']->OrderNo . ",
 							'" . $POLine->StockID . "',
 							'" . FormatDateForSQL($POLine->ReqDelDate) . "',
-							'" . DB_escape_string($POLine->ItemDescription) . "',
+							'" . $POLine->ItemDescription . "',
 							" . $POLine->GLCode . ",
 							" . $POLine->Price . ",
 							" . $POLine->Quantity . ",
@@ -121,17 +121,17 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		     /*Update the purchase order header with any changes */
 			$sql = "UPDATE purchorders SET
 		     			supplierno = '" . $_SESSION['PO']->SupplierID . "' ,
-					comments='" . DB_escape_string($_SESSION['PO']->Comments) . "',
+					comments='" . $_SESSION['PO']->Comments . "',
 					rate=" . $_SESSION['PO']->ExRate . ",
 					initiator='" . $_SESSION['PO']->Initiator . "',
 					requisitionno= '" . $_SESSION['PO']->RequisitionNo . "',
 					intostocklocation='" . $_SESSION['PO']->Location . "',
-					deladd1='" . DB_escape_string($_SESSION['PO']->DelAdd1) . "',
-					deladd2='" . DB_escape_string($_SESSION['PO']->DelAdd2) . "',
-					deladd3='" . DB_escape_string($_SESSION['PO']->DelAdd3) . "',
-					deladd4='" . DB_escape_string($_SESSION['PO']->DelAdd4) . "',
-					deladd5='" . DB_escape_string($_SESSION['PO']->DelAdd5) . "',
-					deladd6='" . DB_escape_string($_SESSION['PO']->DelAdd6) . "',
+					deladd1='" . $_SESSION['PO']->DelAdd1 . "',
+					deladd2='" . $_SESSION['PO']->DelAdd2 . "',
+					deladd3='" . $_SESSION['PO']->DelAdd3 . "',
+					deladd4='" . $_SESSION['PO']->DelAdd4 . "',
+					deladd5='" . $_SESSION['PO']->DelAdd5 . "',
+					deladd6='" . $_SESSION['PO']->DelAdd6 . "',
 					allowprint=" . $_SESSION['PO']->AllowPrintPO . "
 		     		WHERE orderno = " . $_SESSION['PO']->OrderNo;
 
@@ -164,7 +164,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 									. $_SESSION['PO']->OrderNo . ",
 									'" . $POLine->StockID . "',
 									'" . FormatDateForSQL($POLine->ReqDelDate) . "',
-									'" . DB_escape_string($POLine->ItemDescription) . "',
+									'" . $POLine->ItemDescription . "',
 									" . $POLine->GLCode . ",
 									" . $POLine->Price . ",
 									" . $POLine->Quantity . ",
@@ -176,7 +176,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 						$sql = "UPDATE purchorderdetails SET
 								itemcode='" . $POLine->StockID . "',
 								deliverydate ='" . FormatDateForSQL($POLine->ReqDelDate) . "',
-								itemdescription='" . DB_escape_string($POLine->ItemDescription) . "',
+								itemdescription='" . $POLine->ItemDescription . "',
 								glcode=" . $POLine->GLCode . ",
 								unitprice=" . $POLine->Price . ",
 								quantityord=" . $POLine->Quantity . ",
@@ -188,7 +188,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 						$sql = "UPDATE purchorderdetails SET
 								itemcode='" . $POLine->StockID . "',
 								deliverydate ='" . FormatDateForSQL($POLine->ReqDelDate) . "',
-								itemdescription='" . DB_escape_string($POLine->ItemDescription) . "',
+								itemdescription='" . $POLine->ItemDescription . "',
 								glcode=" . $POLine->GLCode . ",
 								unitprice=" . $POLine->Price . ",
 								quantityord=" . $POLine->Quantity . ",
@@ -381,7 +381,7 @@ If(isset($_POST['UpdateLine'])){
 	/*Check for existance of GL Code selected */
 		$sql = 'SELECT accountname FROM chartmaster WHERE accountcode =' .  $_POST['GLCode'];
 		$GLActResult = DB_query($sql,$db);
-		if (DB_error_no!=0 OR DB_num_rows($GLActResult)==0){
+		if (DB_error_no($db)!=0 OR DB_num_rows($GLActResult)==0){
 			 $AllowUpdate = False;
 			 prnMsg( _('The Update Could Not Be Processed') . '<BR>' . _('The GL account code selected does not exist in the database see the listing of GL Account Codes to ensure a valid account is selected'),'error');
 		} else {
@@ -392,6 +392,9 @@ If(isset($_POST['UpdateLine'])){
 
 	include ('PO_Chk_ShiptRef_JobRef.php');
 
+	if (!isset($_POST['JobRef'])) {
+		$_POST['JobRef']='';
+	}
 
 	if ($AllowUpdate == True) {
 
@@ -708,13 +711,13 @@ echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
 if (count($_SESSION['PO']->LineItems)>0){
 
    echo "<TR>
-   		<TD class='tableheader'>" . _('Item Code') . "</TD>
-		<TD class='tableheader'>" . _('Item Description') . "</TD>
-		<TD class='tableheader'>" . _('Quantity') . "</TD>
-		<TD class='tableheader'>" . _('Unit') . "</TD>
-		<TD class='tableheader'>" . _('Delivery') . "</TD>
-		<TD class='tableheader'>" . _('Price') . "</TD>
-		<TD class='tableheader'>" . _('Total') . "</TD>
+   		<TH>" . _('Item Code') . "</TH>
+		<TH>" . _('Item Description') . "</TH>
+		<TH>" . _('Quantity') . "</TH>
+		<TH>" . _('Unit') . "</TH>
+		<TH>" . _('Delivery') . "</TH>
+		<TH>" . _('Price') . "</TH>
+		<TH>" . _('Total') . "</TH>
 	</TR>";
 
    $_SESSION['PO']->total = 0;
@@ -728,10 +731,10 @@ if (count($_SESSION['PO']->LineItems)>0){
 		$DisplayQuantity = number_format($POLine->Quantity,$POLine->DecimalPlaces);
 
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<tr class="EvenTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<tr class="OddTableRows">';
 			$k=1;
 		}
 		echo "<TD>$POLine->StockID</TD><TD>$POLine->ItemDescription</TD><TD ALIGN=RIGHT>$DisplayQuantity</TD><TD>$POLine->Units</TD><TD>$POLine->ReqDelDate</TD><TD ALIGN=RIGHT>$DisplayPrice</TD><TD ALIGN=RIGHT>$DisplayLineTotal</FONT></TD><TD><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "Edit=" . $POLine->LineNo . "'>" . _('Select') . "</A></TD></TR>";
@@ -874,6 +877,14 @@ while ($myrow1 = DB_fetch_array($result1)) {
 	}
 }
 
+if (!isset($_POST['Keywords'])) {
+	$_POST['Keywords']='';
+}
+
+if (!isset($_POST['StockCode'])) {
+	$_POST['StockCode']='';
+}
+
 echo '</SELECT>
 	<TD><FONT SIZE=2>' . _('Enter text extracts in the description') . ":</FONT></TD>
 	<TD><INPUT TYPE='Text' NAME='Keywords' SIZE=20 MAXLENGTH=25 VALUE='" . $_POST['Keywords'] . "'></TD></TR>
@@ -887,7 +898,7 @@ echo '</SELECT>
 
 $PartsDisplayed =0;
 
-If ($SearchResult) {
+if (isset($SearchResult)) {
 
 	echo "<CENTER><TABLE CELLPADDING=1 COLSPAN=7 BORDER=1>";
 
@@ -938,11 +949,6 @@ If ($SearchResult) {
 		$PartsDisplayed++;
 		if ($PartsDisplayed == $Maximum_Number_Of_Parts_To_Show){
 			break;
-		}
-		$j++;
-		If ($j == 20){
-			$j=1;
-			echo $tableheader;
 		}
 #end of page full new headings if
 	}
