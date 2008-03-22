@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -19,7 +19,7 @@ if(!isset($_GET['CustomerID']) AND !isset($_SESSION['CustomerID'])){
 	exit;
 } else {
 	if (isset($_GET['CustomerID'])){
-		$_SESSION['CustomerID'] = DB_escape_string($_GET['CustomerID']);
+		$_SESSION['CustomerID'] = $_GET['CustomerID'];
 	}
 	$CustomerID = $_SESSION['CustomerID'];
 }

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 $PageSecurity = 11;
 
@@ -160,8 +160,8 @@ if (count($_SESSION['PO']->LineItems)>0){
 	  if ($OrderLine->ReceiveQty < 0 AND $_SESSION['ProhibitNegativeStock']==1){
 
 		  	$SQL = "SELECT locstock.quantity FROM
-		  			locstock WHERE locstock.stockid='" . DB_escape_string($OrderLine->StockID) . "'
-					AND loccode= '" . DB_escape_string($_SESSION['PO']->Location) . "'";
+		  			locstock WHERE locstock.stockid='" . $OrderLine->StockID . "'
+					AND loccode= '" . $_SESSION['PO']->Location . "'";
 			$CheckNegResult = DB_query($SQL,$db);
 			$CheckNegRow = DB_fetch_row($CheckNegResult);
 			if ($CheckNegRow[0]+$OrderLine->ReceiveQty<0){
@@ -300,7 +300,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 				/*Need to get the current standard cost as it is now so we can process GL jorunals later*/
 				$SQL = "SELECT materialcost + labourcost + overheadcost as stdcost
 						FROM stockmaster
-						WHERE stockid='" . DB_escape_string($OrderLine->StockID) . "'";
+						WHERE stockid='" . $OrderLine->StockID . "'";
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The standard cost of the item being received cannot be retrieved because');
 				$DbgMsg = _('The following SQL to retrieve the standard cost was used');
 				$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -366,11 +366,11 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 						stdcostunit)
 				VALUES (" . $GRN . ",
 					" . $OrderLine->PODetailRec . ",
-					'" . DB_escape_string($OrderLine->StockID) . "',
-					'" . DB_escape_string($OrderLine->ItemDescription) . "',
+					'" . $OrderLine->StockID . "',
+					'" . $OrderLine->ItemDescription . "',
 					'" . $_POST['DefaultReceivedDate'] . "',
-					" . DB_escape_string($OrderLine->ReceiveQty) . ",
-					'" . DB_escape_string($_SESSION['PO']->SupplierID) . "',
+					" . $OrderLine->ReceiveQty . ",
+					'" . $_SESSION['PO']->SupplierID . "',
 					" . $CurrentStandardCost . ')';
 
 			$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('A GRN record could not be inserted') . '. ' . _('This receipt of goods has not been processed because');
@@ -384,8 +384,8 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 /* Need to get the current location quantity will need it later for the stock movement */
 				$SQL="SELECT locstock.quantity
 					FROM locstock
-					WHERE locstock.stockid='" . DB_escape_string($OrderLine->StockID) . "'
-					AND loccode= '" . DB_escape_string($_SESSION['PO']->Location) . "'";
+					WHERE locstock.stockid='" . $OrderLine->StockID . "'
+					AND loccode= '" . $_SESSION['PO']->Location . "'";
 
 				$Result = DB_query($SQL, $db);
 				if (DB_num_rows($Result)==1){
@@ -398,8 +398,8 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 
 				$SQL = "UPDATE locstock
 					SET quantity = locstock.quantity + " . $OrderLine->ReceiveQty . "
-					WHERE locstock.stockid = '" . DB_escape_string($OrderLine->StockID) . "'
-					AND loccode = '" . DB_escape_string($_SESSION['PO']->Location) . "'";
+					WHERE locstock.stockid = '" . $OrderLine->StockID . "'
+					AND loccode = '" . $_SESSION['PO']->Location . "'";
 
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
 				$DbgMsg =  _('The following SQL to update the location stock record was used');
@@ -419,13 +419,13 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 								qty,
 								standardcost,
 								newqoh)
-					VALUES ('" . DB_escape_string($OrderLine->StockID) . "',
+					VALUES ('" . $OrderLine->StockID . "',
 						25,
-						" . $GRN . ", '" . DB_escape_string($_SESSION['PO']->Location) . "',
+						" . $GRN . ", '" . $_SESSION['PO']->Location . "',
 						'" . $_POST['DefaultReceivedDate'] . "',
 						" . $LocalCurrencyPrice . ",
 						" . $PeriodNo . ",
-						'" . DB_escape_string($_SESSION['PO']->SupplierID) . " (" . DB_escape_string($_SESSION['PO']->SupplierName) . ") - " .$_SESSION['PO']->OrderNo . "',
+						'" . $_SESSION['PO']->SupplierID . " (" . $_SESSION['PO']->SupplierName . ") - " .$_SESSION['PO']->OrderNo . "',
 						" . $OrderLine->ReceiveQty . ",
 						" . $_SESSION['PO']->LineItems[$OrderLine->LineNo]->StandardCost . ",
 						" . ($QtyOnHandPrior + $OrderLine->ReceiveQty) . ")";
@@ -445,9 +445,9 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 						The StockSerialMoves as well */
 						 //need to test if the controlled item exists first already
 							$SQL = "SELECT COUNT(*) FROM stockserialitems
-									WHERE stockid='" . DB_escape_string($OrderLine->StockID) . "'
-									AND loccode = '" . DB_escape_string($_SESSION['PO']->Location) . "'
-									AND serialno = '" . DB_escape_string($Item->BundleRef) . "'";
+									WHERE stockid='" . $OrderLine->StockID . "'
+									AND loccode = '" . $_SESSION['PO']->Location . "'
+									AND serialno = '" . $Item->BundleRef . "'";
 							$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not check if a batch or lot stock item already exists because');
 							$DbgMsg =  _('The following SQL to test for an already existing controlled but not serialised stock item was used');
 							$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -459,17 +459,17 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 									} else {
 										$SQL = 'UPDATE stockserialitems SET quantity = quantity + ' . $Item->BundleQty . ' ';
 									}
-									$SQL .= "WHERE stockid='" . DB_escape_string($OrderLine->StockID) . "'
-											 AND loccode = '" . DB_escape_string($_SESSION['PO']->Location) . "'
-											 AND serialno = '" . DB_escape_string($Item->BundleRef) . "'";
+									$SQL .= "WHERE stockid='" . $OrderLine->StockID . "'
+											 AND loccode = '" . $_SESSION['PO']->Location . "'
+											 AND serialno = '" . $Item->BundleRef . "'";
 								} else {
 									$SQL = "INSERT INTO stockserialitems (stockid,
 												loccode,
 												serialno,
 												quantity)
-											VALUES ('" . DB_escape_string($OrderLine->StockID) . "',
-												'" . DB_escape_string($_SESSION['PO']->Location) . "',
-												'" . DB_escape_string($Item->BundleRef) . "',
+											VALUES ('" . $OrderLine->StockID . "',
+												'" . $_SESSION['PO']->Location . "',
+												'" . $Item->BundleRef . "',
 												" . $Item->BundleQty . ")";
 								}
 
@@ -485,8 +485,8 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 											serialno,
 											moveqty)
 									VALUES (" . $StkMoveNo . ",
-										'" . DB_escape_string($OrderLine->StockID) . "',
-										'" . DB_escape_string($Item->BundleRef) . "',
+										'" . $OrderLine->StockID . "',
+										'" . $Item->BundleRef . "',
 										" . $Item->BundleQty . ")";
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 						$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
@@ -513,7 +513,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 							'" . $_POST['DefaultReceivedDate'] . "',
 							" . $PeriodNo . ",
 							" . $OrderLine->GLCode . ",
-							'PO: " . DB_escape_string($_SESSION['PO']->OrderNo) . " " . DB_escape_string($_SESSION['PO']->SupplierID) . " - " . DB_escape_string($OrderLine->StockID) . " - " . DB_escape_string($OrderLine->ItemDescription) . " x " . DB_escape_string($OrderLine->ReceiveQty) . " @ " . number_format($CurrentStandardCost,2) . "',
+							'PO: " . $_SESSION['PO']->OrderNo . " " . $_SESSION['PO']->SupplierID . " - " . $OrderLine->StockID . " - " . $OrderLine->ItemDescription . " x " . $OrderLine->ReceiveQty . " @ " . number_format($CurrentStandardCost,2) . "',
 							" . $CurrentStandardCost * $OrderLine->ReceiveQty . ")";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The purchase GL posting could not be inserted because');
@@ -536,7 +536,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 							'" . $_POST['DefaultReceivedDate'] . "',
 							" . $PeriodNo . ",
 							" . $_SESSION['CompanyRecord']['grnact'] . ", '" .
-							_('PO') . ': ' . $_SESSION['PO']->OrderNo . ' ' . DB_escape_string($_SESSION['PO']->SupplierID) . ' - ' . DB_escape_string($OrderLine->StockID) . ' - ' . DB_escape_string($OrderLine->ItemDescription) . ' x ' . $OrderLine->ReceiveQty . ' @ ' . number_format($UnitCost,2) . "',
+							_('PO') . ': ' . $_SESSION['PO']->OrderNo . ' ' . $_SESSION['PO']->SupplierID . ' - ' . $OrderLine->StockID . ' - ' . $OrderLine->ItemDescription . ' x ' . $OrderLine->ReceiveQty . ' @ ' . number_format($UnitCost,2) . "',
 							" . -$UnitCost * $OrderLine->ReceiveQty . ")";
 
 				$ErrMsg =   _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GRN suspense side of the GL posting could not be inserted because');

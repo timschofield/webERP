@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 include('includes/DefineJournalClass.php');
 
@@ -72,7 +72,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 					'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
 					" . $PeriodNo . ",
 					" . $JournalItem->GLCode . ",
-					'" . DB_escape_string($JournalItem->Narrative) . "',
+					'" . $JournalItem->Narrative . "',
 					" . $JournalItem->Amount . ")";
 		$ErrMsg = _('Cannot insert a GL entry for the journal line because');
 		$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
@@ -91,7 +91,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 						'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
 						" . ($PeriodNo + 1) . ",
 						" . $JournalItem->GLCode . ",
-						'Reversal - " . DB_escape_string($JournalItem->Narrative) . "',
+						'Reversal - " . $JournalItem->Narrative . "',
 						" . -($JournalItem->Amount) . ')';
 
 			$ErrMsg =_('Cannot insert a GL entry for the reversing journal because');

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -209,7 +209,7 @@ if (isset($_POST['CommitBatch'])){
 						'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
 						" . $PeriodNo . ',
 						' . $ReceiptItem->GLCode . ",
-						'" . DB_escape_string($ReceiptItem->Narrative) . "',
+						'" . $ReceiptItem->Narrative . "',
 						" . -($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate) . ')';
 			 	$ErrMsg = _('Cannot insert a GL entry for the receipt because');
 			 	$DbgMsg = _('The SQL that failed to insert the receipt GL entry was');
@@ -280,7 +280,7 @@ if (isset($_POST['CommitBatch'])){
 			      VALUES (' . $PaymentTransNo . ',
 						1,
 						' . $ReceiptItem->GLCode . ",
-						'" . _('Act Transfer') .' - ' . DB_escape_string($ReceiptItem->Narrative) . "',
+						'" . _('Act Transfer') .' - ' . $ReceiptItem->Narrative . "',
 						" . (($_SESSION['ReceiptBatch']->ExRate * $_SESSION['ReceiptBatch']->FunctionalExRate)/$TrfFromBankExRate). ',
 						' . $TrfFromBankExRate . ",
 						'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
@@ -317,7 +317,7 @@ if (isset($_POST['CommitBatch'])){
 						'',
 						'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
 						" . $PeriodNo . ",
-						'" . DB_escape_string($_SESSION['ReceiptBatch']->ReceiptType  . ' ' . $ReceiptItem->Narrative) . "',
+						'" . $_SESSION['ReceiptBatch']->ReceiptType  . ' ' . $ReceiptItem->Narrative . "',
 						'',
 						" . ($_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate) . ",
 						" . -$ReceiptItem->Amount . ",
@@ -358,7 +358,7 @@ if (isset($_POST['CommitBatch'])){
 				'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
 				" . $PeriodNo . ",
 				" . $_SESSION['ReceiptBatch']->Account . ",
-				'" . DB_escape_string($_SESSION['ReceiptBatch']->Narrative) . "',
+				'" . $_SESSION['ReceiptBatch']->Narrative . "',
 				" . $BatchReceiptsTotal . ')';
 		$DbgMsg = _('The SQL that failed to insert the GL transaction fro the bank account debit was');
 		$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
@@ -379,11 +379,11 @@ if (isset($_POST['CommitBatch'])){
                 		VALUES (12,
                       ' . $_SESSION['ReceiptBatch']->BatchNo . ',
                       		' . $_SESSION['ReceiptBatch']->Account . ",
-                      		'" . DB_escape_string($_SESSION['ReceiptBatch']->Narrative) . "',
+                      		'" . $_SESSION['ReceiptBatch']->Narrative . "',
                       		" . $_SESSION['ReceiptBatch']->ExRate . ",
                       		" . $_SESSION['ReceiptBatch']->FunctionalExRate . ",
                       		'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
-                      		'" . DB_escape_string($_SESSION['ReceiptBatch']->ReceiptType) . "',
+                      		'" . $_SESSION['ReceiptBatch']->ReceiptType . "',
                       		" . ($BatchReceiptsTotal * $_SESSION['ReceiptBatch']->FunctionalExRate * $_SESSION['ReceiptBatch']->ExRate) . ",
                       		'" . $_SESSION['ReceiptBatch']->Currency . "'
                         )";
@@ -405,7 +405,7 @@ if (isset($_POST['CommitBatch'])){
 				'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
 				" . $PeriodNo . ',
 				' . $_SESSION['CompanyRecord']['debtorsact'] . ",
-					'" . DB_escape_string($_SESSION['ReceiptBatch']->Narrative) . "',
+					'" . $_SESSION['ReceiptBatch']->Narrative . "',
 					" . -$BatchDebtorTotal . '
 				)';
 			$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
@@ -428,7 +428,7 @@ if (isset($_POST['CommitBatch'])){
 				'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
 				" . $PeriodNo . ',
 				' . $_SESSION['CompanyRecord']['pytdiscountact'] . ",
-				'" . DB_escape_string($_SESSION['ReceiptBatch']->Narrative) . "',
+				'" . $_SESSION['ReceiptBatch']->Narrative . "',
 				" . $BatchDiscount . ')';
 		$DbgMsg = _('The SQL that failed to insert the GL transaction for the payment discount debit was');
 		$ErrMsg = _('Cannot insert a GL transaction for the payment discount debit');

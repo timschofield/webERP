@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 10;
 include('includes/session.inc');
@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
 
 	if (isset($SelectedAccount) AND $InputError !=1) {
 
-		$sql = "UPDATE chartmaster SET accountname='" . DB_escape_string($_POST['AccountName']) . "',
+		$sql = "UPDATE chartmaster SET accountname='" . $_POST['AccountName'] . "',
 						group_='" . $_POST['Group'] . "'
 					WHERE accountcode = $SelectedAccount";
 
@@ -48,8 +48,8 @@ if (isset($_POST['submit'])) {
 		$sql = 'INSERT INTO chartmaster (accountcode,
 						accountname,
 						group_)
-					VALUES (' . DB_escape_string($_POST['AccountCode']) . ",
-						'" . DB_escape_string($_POST['AccountName']) . "',
+					VALUES (' . $_POST['AccountCode'] . ",
+						'" . $_POST['AccountName'] . "',
 						'" . $_POST['Group'] . "')";
 		$result = DB_query($sql,$db,$ErrMsg);
 

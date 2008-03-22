@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 11;
 include('includes/session.inc');
@@ -114,7 +114,7 @@ if (isset($_POST['submit'])) {
 		$sql = "UPDATE freightcosts
 				SET
 					locationfrom='$LocationFrom',
-					destination='" . DB_escape_string($_POST['Destination']) . "',
+					destination='" . $_POST['Destination'] . "',
 					shipperid=$ShipperID,
 					cubrate=" . $_POST['CubRate'] . ",
 					kgrate = " . $_POST['KGRate'] . ",
@@ -142,7 +142,7 @@ if (isset($_POST['submit'])) {
 				minimumchg)
 			VALUES (
 				'$LocationFrom',
-				'" . DB_escape_string($_POST['Destination']) . "',
+				'" . $_POST['Destination'] . "',
 				$ShipperID,
 				" . $_POST['CubRate'] . ",
 				" . $_POST['KGRate'] . ",

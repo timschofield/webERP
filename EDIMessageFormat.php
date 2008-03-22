@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 10;
 
@@ -73,7 +73,7 @@ if (isset($_POST['submit'])) {
 					messagetype='" . $MessageType . "',
 					section='" . $_POST['Section'] . "',
 					sequenceno=" . $_POST['SequenceNo'] . ",
-					linetext='" . DB_escape_string($_POST['LineText']) . "'
+					linetext='" . $_POST['LineText'] . "'
 				WHERE id = '" . $SelectedMessageLine . "'";
 
 		$msg = _('Message line updated');
@@ -93,7 +93,7 @@ if (isset($_POST['submit'])) {
 					'" . $MessageType . "',
 					'" . $_POST['Section'] . "',
 					" . $_POST['SequenceNo'] . ",
-					'" . DB_escape_string($_POST['LineText']) . "'
+					'" . $_POST['LineText'] . "'
 					)";
 		$msg = _('Message line added');
 	}
