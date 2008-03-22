@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 2;
 
@@ -76,29 +76,29 @@ $myrow = DB_fetch_array($GetOrdHdrResult);
 /* SHOW ALL THE ORDER INFO IN ONE PLACE */
 
 echo '<BR><CENTER><TABLE BORDER=0 CELLPADDING=2>';
-echo '<TR><TD class="tableheader">' . _('Supplier Code'). '</TD><TD>' . $myrow['supplierid'] . '</TD>
-	<TD class="tableheader">' . _('Supplier Name'). '</TD><TD>' . $myrow['suppname'] . '</TD></TR>';
+echo '<TR><TH>' . _('Supplier Code'). '</TH><TD>' . $myrow['supplierid'] . '</TD>
+	<TH>' . _('Supplier Name'). '</TH><TD>' . $myrow['suppname'] . '</TD></TR>';
 
-echo '<TR><TD class="tableheader">' . _('Ordered On'). '</TD><TD>' . ConvertSQLDate($myrow['orddate']) . '</TD>
-	<TD class="tableheader">' . _('Delivery Address 1'). '</TD><TD>' . $myrow['deladd1'] . '</TD></TR>';
+echo '<TR><TH>' . _('Ordered On'). '</TH><TD>' . ConvertSQLDate($myrow['orddate']) . '</TD>
+	<TH>' . _('Delivery Address 1'). '</TH><TD>' . $myrow['deladd1'] . '</TD></TR>';
 
-echo '<TR><TD class="tableheader">' . _('Order Currency'). '</TD><TD>' . $myrow['currcode'] . '</TD>
-	<TD class="tableheader">' . _('Delivery Address 2'). '</TD><TD>' . $myrow['deladd2'] . '</TD></TR>';
+echo '<TR><TH>' . _('Order Currency'). '</TH><TD>' . $myrow['currcode'] . '</TD>
+	<TH>' . _('Delivery Address 2'). '</TH><TD>' . $myrow['deladd2'] . '</TD></TR>';
 
-echo '<TR><TD class="tableheader">' . _('Exchange Rate'). '</TD><TD>' . $myrow['rate'] . '</TD>
-	<TD class="tableheader">' . _('Delivery Address 3'). '</TD><TD>' . $myrow['deladd3'] . '</TD></TR>';
+echo '<TR><TH>' . _('Exchange Rate'). '</TH><TD>' . $myrow['rate'] . '</TD>
+	<TH>' . _('Delivery Address 3'). '</TH><TD>' . $myrow['deladd3'] . '</TD></TR>';
 
-echo '<TR><TD class="tableheader">' . _('Deliver Into Location'). '</TD><TD>' . $myrow['intostocklocation'] . '</TD>
-	<TD class="tableheader">' . _('Delivery Address 4'). '</TD><TD>' . $myrow['deladd4'] . '</TD></TR>';
+echo '<TR><TH>' . _('Deliver Into Location'). '</TH><TD>' . $myrow['intostocklocation'] . '</TD>
+	<TH>' . _('Delivery Address 4'). '</TH><TD>' . $myrow['deladd4'] . '</TD></TR>';
 
-echo '<TR><TD class="tableheader">' . _('Initiator'). '</TD><TD>' . $myrow['initiator'] . '</TD>
-	<TD class="tableheader">' . _('Delivery Address 5'). '</TD><TD>' . $myrow['deladd5'] . '</TD></TR>';
+echo '<TR><TH>' . _('Initiator'). '</TH><TD>' . $myrow['initiator'] . '</TD>
+	<TH>' . _('Delivery Address 5'). '</TH><TD>' . $myrow['deladd5'] . '</TD></TR>';
 
-echo '<TR><TD class="tableheader">' . _('Requistion Ref'). '.</TD><TD>' . $myrow['requisitionno'] . '</TD>
-	<TD class="tableheader">' . _('Delivery Address 6'). '</TD><TD>' . $myrow['deladd6'] . '</TD></TR>';
+echo '<TR><TH>' . _('Requistion Ref'). '.</TH><TD>' . $myrow['requisitionno'] . '</TD>
+	<TH>' . _('Delivery Address 6'). '</TH><TD>' . $myrow['deladd6'] . '</TD></TR>';
 
 
-echo '<TR><TD class="tableheader">'. _('Printing') . '</TD><TD COLSPAN=3>';
+echo '<TR><TH>'. _('Printing') . '</TH><TD COLSPAN=3>';
 
 if ($myrow['dateprinted'] == ''){
 	echo '<i>'. _('Not yet printed') . '</i> &nbsp; &nbsp; ';
@@ -110,7 +110,7 @@ if ($myrow['dateprinted'] == ''){
 
 echo  '</TD></TR>';
 
-echo '<TR><TD class="tableheader">' . _('Comments'). '</TD><TD bgcolor=white COLSPAN=3>' . $myrow['comments'] . '</TD></TR>';
+echo '<TR><TH>' . _('Comments'). '</TH><TD bgcolor=white COLSPAN=3>' . $myrow['comments'] . '</TD></TR>';
 
 echo '</TABLE>';
 
@@ -127,14 +127,14 @@ echo '<CENTER><FONT SIZE=4 COLOR=BLUE>'. _('Order Line Details'). '</FONT>';
 
 echo '<TABLE COLSPAN=8 BORDER=0 CELLPADDING=0>
 	<TR>
-		<TD class="tableheader">' . _('Item Code'). '</TD>
-		<TD class="tableheader">' . _('Item Description'). '</TD>
-		<TD class="tableheader">' . _('Ord Qty'). '</TD>
-		<TD class="tableheader">' . _('Qty Recd'). '</TD>
-		<TD class="tableheader">' . _('Qty Inv'). '</TD>
-		<TD class="tableheader">' . _('Ord Price'). '</TD>
-		<TD class="tableheader">' . _('Chg Price'). '</TD>
-		<TD class="tableheader">' . _('Reqd Date'). '</TD>
+		<TH>' . _('Item Code'). '</TH>
+		<TH>' . _('Item Description'). '</TH>
+		<TH>' . _('Ord Qty'). '</TH>
+		<TH>' . _('Qty Recd'). '</TH>
+		<TH>' . _('Qty Inv'). '</TH>
+		<TH>' . _('Ord Price'). '</TH>
+		<TH>' . _('Chg Price'). '</TH>
+		<TH>' . _('Reqd Date'). '</TH>
 	</TR>';
 
 $k =0;  //row colour counter
@@ -154,10 +154,10 @@ while ($myrow=db_fetch_array($LineItemsResult)) {
     	 	echo '<tr class="OsRow">';
 	} else {
     		if ($k==1){
-    			echo '<tr bgcolor="#CCCCCC">';
+    			echo '<TR class="OddTableRows">';
     			$k=0;
     		} else {
-    			echo '<tr bgcolor="#EEEEEE">';
+    			echo '<TR class="EvenTableRows">';
     			$k=1;
 		}
 	}
