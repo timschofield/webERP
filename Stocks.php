@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.49 $ */
+/* $Revision: 1.50 $ */
 
 $PageSecurity = 11;
 
@@ -283,14 +283,14 @@ if (isset($_POST['submit'])) {
 
 			if ($InputError == 0){
 				$sql = "UPDATE stockmaster
-						SET longdescription='" . DB_escape_string($_POST['LongDescription']) . "',
-							description='" . DB_escape_string($_POST['Description']) . "',
+						SET longdescription='" . $_POST['LongDescription'] . "',
+							description='" . $_POST['Description'] . "',
 							discontinued=" . $_POST['Discontinued'] . ",
 							controlled=" . $_POST['Controlled'] . ",
 							serialised=" . $_POST['Serialised'].",
 							perishable=" . $_POST['Perishable'].",
 							categoryid='" . $_POST['CategoryID'] . "',
-							units='" . DB_escape_string($_POST['Units']) . "',
+							units='" . $_POST['Units'] . "',
 							mbflag='" . $_POST['MBFlag'] . "',
 							eoq=" . $_POST['EOQ'] . ",
 							volume=" . $_POST['Volume'] . ",
@@ -359,10 +359,10 @@ if (isset($_POST['submit'])) {
 							decimalplaces,
 							appendfile)
 						VALUES ('$StockID',
-							'" . DB_escape_string($_POST['Description']) . "',
-							'" . DB_escape_string($_POST['LongDescription']) . "',
+							'" . $_POST['Description'] . "',
+							'" . $_POST['LongDescription'] . "',
 							'" . $_POST['CategoryID'] . "',
-							'" . DB_escape_string($_POST['Units']) . "',
+							'" . $_POST['Units'] . "',
 							'" . $_POST['MBFlag'] . "',
 							" . $_POST['EOQ'] . ",
 							" . $_POST['Discontinued'] . ",
@@ -615,7 +615,7 @@ if (isset($_POST['LongDescription'])) {
 } else {
 	$LongDescription ='';
 }
-echo '<TR><TD>' . _('Part Description') . ' (' . _('long') . '):</TD><TD><textarea ' . (in_array('LongDescription',$Errors) ?  'class="texterror"' : '' ) .'  name="LongDescription" cols=40 rows=4>' . htmlentities($LongDescription,ENT_QUOTES,_('ISO-8859-1')) . '</textarea></TD></TR>'."\n";
+echo '<TR><TD>' . _('Part Description') . ' (' . _('long') . '):</TD><TD><textarea ' . (in_array('LongDescription',$Errors) ?  'class="texterror"' : '' ) .'  name="LongDescription" cols=40 rows=4>' . stripslashes($LongDescription) . '</textarea></TD></TR>'."\n";
 
 // Generate selection drop down from pdf_append directory - by emdx, 
 // developed with examples from http://au2.php.net/manual/en/function.opendir.php
@@ -866,7 +866,7 @@ $sql = "SELECT stkcatpropid,
 				controltype,
 				defaultvalue
 		FROM stockcatproperties
-		WHERE categoryid ='" . DB_escape_string($_POST['CategoryID']) . "'
+		WHERE categoryid ='" . $_POST['CategoryID'] . "'
 		AND reqatsalesorder =0
 		ORDER BY stkcatpropid";
 
