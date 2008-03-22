@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 3;
 
@@ -16,7 +16,7 @@ if (isset($_POST['serialno'])) {
 } else {
 	$SN = '';
 }
-$SN = DB_escape_string($SN);
+$SN = $SN;
 
 ?>
 <DIV ALIGN=CENTER>

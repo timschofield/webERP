@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 
 $PageSecurity = 15;
 
@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
 				$myrow = DB_fetch_row($result);
 				$OldTaxProvinceName = $myrow[0];
 				$sql = "UPDATE taxprovinces
-					SET taxprovincename='" . DB_escape_string($_POST['TaxProvinceName']) . "'
+					SET taxprovincename='" . $_POST['TaxProvinceName'] . "'
 					WHERE taxprovincename ".LIKE." '".$OldTaxProvinceName."'";
 				$ErrMsg = _('Could not update tax province');
 				$result = DB_query($sql,$db, $ErrMsg);
@@ -81,7 +81,7 @@ if (isset($_POST['submit'])) {
 			$sql = "INSERT INTO taxprovinces (
 							taxprovincename )
 				VALUES (
-					'" . DB_escape_string($_POST['TaxProvinceName']) ."'
+					'" . $_POST['TaxProvinceName'] ."'
 					)";
 			$ErrMsg = _('Could not add tax province');
 			$result = DB_query($sql,$db, $ErrMsg);
@@ -109,7 +109,7 @@ if (isset($_POST['submit'])) {
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'stockmaster'
 	// Get the original name of the tax province the ID is just a secure way to find the tax province
 	$sql = "SELECT taxprovincename FROM taxprovinces 
-		WHERE taxprovinceid = " . DB_escape_string($SelectedTaxProvince);
+		WHERE taxprovinceid = " . $SelectedTaxProvince;
 	$result = DB_query($sql,$db);
 	if ( DB_num_rows($result) == 0 ) {
 		// This is probably the safest way there is
@@ -117,7 +117,7 @@ if (isset($_POST['submit'])) {
 	} else {
 		$myrow = DB_fetch_row($result);
 		$OldTaxProvinceName = $myrow[0];
-		$sql= "SELECT COUNT(*) FROM locations WHERE taxprovinceid " . LIKE . " '" . DB_escape_string($OldTaxProvinceName) . "'";
+		$sql= "SELECT COUNT(*) FROM locations WHERE taxprovinceid " . LIKE . " '" . $OldTaxProvinceName . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
@@ -198,7 +198,7 @@ if (! isset($_GET['delete'])) {
 		$sql = "SELECT taxprovinceid,
 				taxprovincename
 				FROM taxprovinces
-				WHERE taxprovinceid=" . DB_escape_string($SelectedTaxProvince);
+				WHERE taxprovinceid=" . $SelectedTaxProvince;
 
 		$result = DB_query($sql, $db);
 		if ( DB_num_rows($result) == 0 ) {

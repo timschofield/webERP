@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 /*need to allow this script to run from Cron or windows scheduler */
 $AllowAnyone = true;
@@ -106,20 +106,20 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 			VALUES (
 				'" . $RecurrOrderRow['debtorno'] . "',
 				'" . $RecurrOrderRow['branchcode'] . "',
-				'". DB_escape_string($RecurrOrderRow['customerref']) ."',
-				'". DB_escape_string($RecurrOrderRow['comments']) ."',
+				'". $RecurrOrderRow['customerref'] ."',
+				'". $RecurrOrderRow['comments'] ."',
 				'" . $DelDate . "',
 				'" . $RecurrOrderRow['ordertype'] . "',
 				" . $RecurrOrderRow['shipvia'] .",
-				'" . DB_escape_string($RecurrOrderRow['deliverto']) . "',
-				'" . DB_escape_string($RecurrOrderRow['bradd1']) . "',
-				'" . DB_escape_string($RecurrOrderRow['bradd2']) . "',
-				'" . DB_escape_string($RecurrOrderRow['bradd3']) . "',
-				'" . DB_escape_string($RecurrOrderRow['bradd4']) . "',
-				'" . DB_escape_string($RecurrOrderRow['bradd5']) . "',
-				'" . DB_escape_string($RecurrOrderRow['bradd6']) . "',
-				'" . DB_escape_string($RecurrOrderRow['contactphone']) . "',
-				'" . DB_escape_string($RecurrOrderRow['contactemail']) . "',
+				'" . $RecurrOrderRow['deliverto'] . "',
+				'" . $RecurrOrderRow['bradd1'] . "',
+				'" . $RecurrOrderRow['bradd2'] . "',
+				'" . $RecurrOrderRow['bradd3'] . "',
+				'" . $RecurrOrderRow['bradd4'] . "',
+				'" . $RecurrOrderRow['bradd5'] . "',
+				'" . $RecurrOrderRow['bradd6'] . "',
+				'" . $RecurrOrderRow['contactphone'] . "',
+				'" . $RecurrOrderRow['contactemail'] . "',
 				" . $RecurrOrderRow['freightcost'] .",
 				'" . $RecurrOrderRow['fromstkloc'] ."',
 				'" . $DelDate . "')";
@@ -168,7 +168,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 					". $RecurrOrderLineRow['unitprice'] . ',
 					' . $RecurrOrderLineRow['quantity'] . ',
 					' . floatval($RecurrOrderLineRow['discountpercent']) . ",
-					'" . DB_escape_string($RecurrOrderLineRow['narrative']) . "')";
+					'" . $RecurrOrderLineRow['narrative'] . "')";
 
 			$Ins_LineItemResult = DB_query($LineItemsSQL,$db,_('Could not insert the order lines from the recurring order template'),true);	/*Populating a new order line items*/
 			$LineCounter ++;
@@ -340,7 +340,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 						" . -$RecurrOrderLineRow['quantity'] . ",
 						" . $RecurrOrderLineRow['discountpercent'] . ",
 						0,
-						'" . DB_escape_string($RecurrOrderLineRow['narrative']) . "')";
+						'" . $RecurrOrderLineRow['narrative'] . "')";
 				
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
 			$DbgMsg = _('The following SQL to insert the stock movement records was used');

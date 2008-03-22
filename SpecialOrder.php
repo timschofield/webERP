@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 4;
 
@@ -287,19 +287,19 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							VALUES(";
 
 		 $sql = $sql . "'" . $_SESSION['SPL']->SupplierID . "',
-		 		'" . DB_escape_string($_SESSION['SPL']->Comments) . "',
+		 		'" . $_SESSION['SPL']->Comments . "',
 				'" . Date("Y-m-d") . "',
 				" . $_SESSION['SPL']->SuppCurrExRate . ",
-				'" . DB_escape_string($_SESSION['SPL']->Initiator) . "',
-				'" . DB_escape_string($_SESSION['SPL']->QuotationRef) . "',
+				'" . $_SESSION['SPL']->Initiator . "',
+				'" . $_SESSION['SPL']->QuotationRef . "',
 				'" . $_SESSION['SPL']->StkLocation . "',
-				'" . DB_escape_string($StkLocAddress['deladd1']) . "',
-				'" . DB_escape_string($StkLocAddress['deladd2']) . "',
-				'" . DB_escape_string($StkLocAddress['deladd3']) . "',
-				'" . DB_escape_string($StkLocAddress['deladd4']) . "',
-				'" . DB_escape_string($StkLocAddress['deladd5']) . "',
-				'" . DB_escape_string($StkLocAddress['deladd6']) . "',
-				'" . DB_escape_string($StkLocAddress['contact']) . "')";
+				'" . $StkLocAddress['deladd1'] . "',
+				'" . $StkLocAddress['deladd2'] . "',
+				'" . $StkLocAddress['deladd3'] . "',
+				'" . $StkLocAddress['deladd4'] . "',
+				'" . $StkLocAddress['deladd5'] . "',
+				'" . $StkLocAddress['deladd6'] . "',
+				'" . $StkLocAddress['contact'] . "')";
 
 
 		$ErrMsg = _('The purchase order header record could not be inserted into the database because');
@@ -344,8 +344,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							materialcost)
 					VALUES ('" . $PartCode . "',
 						'" . $SPLLine->StkCat . "',
-						'" . DB_escape_string($SPLLine->ItemDescription) . "',
-						'" .  DB_escape_string($SPLLine->ItemDescription) . "',
+						'" . $SPLLine->ItemDescription . "',
+						'" .  $SPLLine->ItemDescription . "',
 						" . $SPLLine->Cost . ")";
 
 
@@ -381,7 +381,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			$sql = $sql . $_SESSION['SPL']->PurchOrderNo . ", 
 					'" . $PartCode . "',
 					'" . $OrderDate . "',
-					'" . DB_escape_string($SPLLine->ItemDescription) . "', 
+					'" . $SPLLine->ItemDescription . "', 
 					" . $GLCode . ",
 					" . $SPLLine->Cost . ", 
 					" . $SPLLine->Quantity . ")";
@@ -439,19 +439,19 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							deliverydate)
 					VALUES ('" . $_SESSION['SPL']->CustomerID . "',
 						'" . $_SESSION['SPL']->BranchCode . "',
-						'". DB_escape_string($_SESSION['SPL']->CustRef) ."',
+						'". $_SESSION['SPL']->CustRef ."',
 						'" . Date("Y-m-d") . "',
 						'" . $BranchDetails['salestype'] . "',
 						" . $BranchDetails['defaultshipvia'] .",
-						'" . DB_escape_string($BranchDetails['brname']) . "',
-						'" . DB_escape_string($BranchDetails['braddress1']) . "',
-						'" . DB_escape_string($BranchDetails['braddress2']) . "',
-						'" . DB_escape_string($BranchDetails['braddress3']) . "',
-						'" . DB_escape_string($BranchDetails['braddress4']) . "',
-						'" . DB_escape_string($BranchDetails['braddress5']) . "',
-						'" . DB_escape_string($BranchDetails['braddress6']) . "',
-						'" . DB_escape_string($BranchDetails['phoneno']) . "',
-						'" . DB_escape_string($BranchDetails['email']) . "',
+						'" . $BranchDetails['brname'] . "',
+						'" . $BranchDetails['braddress1'] . "',
+						'" . $BranchDetails['braddress2'] . "',
+						'" . $BranchDetails['braddress3'] . "',
+						'" . $BranchDetails['braddress4'] . "',
+						'" . $BranchDetails['braddress5'] . "',
+						'" . $BranchDetails['braddress6'] . "',
+						'" . $BranchDetails['phoneno'] . "',
+						'" . $BranchDetails['email'] . "',
 						'" . $_SESSION['SPL']->StkLocation ."',
 						'" . $OrderDate . "')";
 

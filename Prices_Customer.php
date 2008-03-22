@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 $PageSecurity = 11;
 
 include('includes/session.inc');
@@ -75,8 +75,8 @@ if (isset($_POST['submit'])) {
 
 		$sql = "UPDATE prices SET typeabbrev='$SalesType',
 		                          currabrev='$CurrCode',
-					price=" . DB_escape_string($_POST['Price']) . ",
-					branchcode ='" . DB_escape_string($_POST['Branch']) . "'
+					price=" . $_POST['Price'] . ",
+					branchcode ='" . $_POST['Branch'] . "'
 				WHERE prices.stockid='$Item'
 				AND prices.typeabbrev='$SalesType'
 				AND prices.currabrev='$CurrCode'
@@ -95,8 +95,8 @@ if (isset($_POST['submit'])) {
 					'$SalesType',
 					'$CurrCode',
 					'" . $_SESSION['CustomerID'] . "',
-					" . DB_escape_string($_POST['Price']) . ",
-					'" . DB_escape_string($_POST['Branch']) . "'
+					" . $_POST['Price'] . ",
+					'" . $_POST['Branch'] . "'
 				)";
 		$msg = _('Price added') . '.';
 	}

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 $PageSecurity = 5;
 
@@ -385,16 +385,16 @@ if (isset($_POST['submit'])) {
 			$suppcurr = DB_fetch_row($currresult);
 			
 			if ($supptrans == 0) {
-				$sql = "UPDATE suppliers SET suppname='" . DB_escape_string($_POST['SuppName']) . "', 
-							address1='" . DB_escape_string($_POST['Address1']) . "', 
-							address2='" . DB_escape_string($_POST['Address2']) . "', 
-							address3='" . DB_escape_string($_POST['Address3']) . "', 
-							address4='" . DB_escape_string($_POST['Address4']) . "', 
+				$sql = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "', 
+							address1='" . $_POST['Address1'] . "', 
+							address2='" . $_POST['Address2'] . "', 
+							address3='" . $_POST['Address3'] . "', 
+							address4='" . $_POST['Address4'] . "', 
 							currcode='" . $_POST['CurrCode'] . "', 
 							suppliersince='$SQL_SupplierSince',  
 							paymentterms='" . $_POST['PaymentTerms'] . "', 
-							bankpartics='" .DB_escape_string( $_POST['BankPartics']) . "', 
-							bankref='" . DB_escape_string($_POST['BankRef']) . "', 
+							bankpartics='" . $_POST['BankPartics'] . "', 
+							bankref='" . $_POST['BankRef'] . "', 
 					 		bankact='" . $_POST['BankAct'] . "', 
 							remittance=" . $_POST['Remittance'] . ", 
 							taxgroupid=" . $_POST['TaxGroup'] . ",
@@ -404,15 +404,15 @@ if (isset($_POST['submit'])) {
 				if ($suppcurr[0] != $_POST['CurrCode']) {
 					prnMsg( _('Cannot change currency code as transactions already exist'), info);
 				}
-				$sql = "UPDATE suppliers SET suppname='" . DB_escape_string($_POST['SuppName']) . "', 
-							address1='" . DB_escape_string($_POST['Address1']) . "', 
-							address2='" . DB_escape_string($_POST['Address2']) . "', 
-							address3='" . DB_escape_string($_POST['Address3']) . "', 
-							address4='" . DB_escape_string($_POST['Address4']) . "', 
+				$sql = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "', 
+							address1='" . $_POST['Address1'] . "', 
+							address2='" . $_POST['Address2'] . "', 
+							address3='" . $_POST['Address3'] . "', 
+							address4='" . $_POST['Address4'] . "', 
 							suppliersince='$SQL_SupplierSince',  
 							paymentterms='" . $_POST['PaymentTerms'] . "', 
-							bankpartics='" .DB_escape_string( $_POST['BankPartics']) . "', 
-							bankref='" . DB_escape_string($_POST['BankRef']) . "', 
+							bankpartics='" . $_POST['BankPartics'] . "', 
+							bankref='" . $_POST['BankRef'] . "', 
 					 		bankact='" . $_POST['BankAct'] . "', 
 							remittance=" . $_POST['Remittance'] . ", 
 							taxgroupid=" . $_POST['TaxGroup'] . ",
@@ -445,16 +445,16 @@ if (isset($_POST['submit'])) {
 							taxgroupid,
 							factorcompanyid) 
 					 VALUES ('$SupplierID', 
-					 	'" .DB_escape_string($_POST['SuppName']) . "', 
-						'" . DB_escape_string($_POST['Address1']) . "', 
-						'" . DB_escape_string($_POST['Address2']) . "', 
-						'" . DB_escape_string($_POST['Address3']) . "', 
-						'" . DB_escape_string($_POST['Address4']) . "', 
+					 	'" . $_POST['SuppName'] . "', 
+						'" . $_POST['Address1'] . "', 
+						'" . $_POST['Address2'] . "', 
+						'" . $_POST['Address3'] . "', 
+						'" . $_POST['Address4'] . "', 
 						'" . $_POST['CurrCode'] . "', 
 						'" . $SQL_SupplierSince . "', 
 						'" . $_POST['PaymentTerms'] . "', 
-						'" . DB_escape_string($_POST['BankPartics']) . "', 
-						'" . DB_escape_string($_POST['BankRef']) . "', 
+						'" . $_POST['BankPartics'] . "', 
+						'" . $_POST['BankRef'] . "', 
 						'" . $_POST['BankAct'] . "', 
 						" .  $_POST['Remittance'] . ", 
 						" . $_POST['TaxGroup'] . ",

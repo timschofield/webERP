@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 2;
 
@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
 		$sql = "UPDATE prices SET
 				typeabbrev='" . $_POST['TypeAbbrev'] . "',
 				currabrev='" . $_POST['CurrAbrev'] . "',
-				price=" . DB_escape_string($_POST['Price']) . "
+				price=" . $_POST['Price'] . "
 			WHERE prices.stockid='$Item'
 			AND prices.typeabbrev='" . $_POST['OldTypeAbbrev'] . "'
 			AND prices.currabrev='" . $_POST['OldCurrAbrev'] . "'
@@ -96,7 +96,7 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['TypeAbbrev'] . "',
 					'" . $_POST['CurrAbrev'] . "',
 					'',
-					" . DB_escape_string($_POST['Price']) . ")";
+					" . $_POST['Price'] . ")";
 
 		$msg =  _('The new price has been added') . '.';
 	}

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $PageSecurity = 11;
 
@@ -24,7 +24,7 @@ include('includes/header.inc');
 			ON workorders.wo=woitems.wo
 			INNER JOIN stockmaster
 			ON woitems.stockid=stockmaster.stockid
-			WHERE woitems.stockid='" . DB_escape_string($_REQUEST['StockID']) . "'
+			WHERE woitems.stockid='" . $_REQUEST['StockID'] . "'
 			AND woitems.wo =" . $_REQUEST['WO'],
 			$db,
 			$ErrMsg);
@@ -84,7 +84,7 @@ include('includes/header.inc');
 			$IssuedAlreadyResult = DB_query("SELECT SUM(-qty) FROM stockmoves
 							WHERE stockmoves.type=28
 							AND stockid='" . $RequirementsRow['stockid'] . "'
-							AND reference='" . DB_escape_string($_REQUEST['WO']) . "'",
+							AND reference='" . $_REQUEST['WO'] . "'",
 						$db);
 			$IssuedAlreadyRow = DB_fetch_row($IssuedAlreadyResult);
 		

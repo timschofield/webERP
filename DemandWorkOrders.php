@@ -94,7 +94,7 @@ while ($myrow=DB_fetch_array($StockItemsResult)) {
                                                      requiredby,
                                                      startdate)
                                      VALUES (" . $WO . ",
-                                            '" . DB_escape_string($_SESSION['UserStockLocation']) . "',
+                                            '" . $_SESSION['UserStockLocation'] . "',
                                             '" . $DemandDate . "',
                                             '" . Date('Y-m-d'). "')",
                                             $db);
@@ -123,7 +123,7 @@ while ($myrow=DB_fetch_array($StockItemsResult)) {
                          FROM bom INNER JOIN stockmaster
                          ON bom.component=stockmaster.stockid
                          WHERE parent='" . $StockId . "'
-                         AND loccode ='" . DB_escape_string($_POST['StockLocation']) . "'";
+                         AND loccode ='" . $_POST['StockLocation'] . "'";
 
 		$result = DB_query($sql2,$db,$ErrMsg);
    	echo '<tr><TD>' . $StockId  . '</TD>';

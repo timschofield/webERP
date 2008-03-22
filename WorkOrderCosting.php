@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 11;
 
@@ -34,7 +34,7 @@ $WOResult = DB_query("SELECT workorders.loccode,
 			workorders.closed
 			FROM workorders INNER JOIN locations
 			ON workorders.loccode=locations.loccode
-			WHERE workorders.wo=" . DB_escape_string($_POST['WO']),
+			WHERE workorders.wo=" . $_POST['WO'],
 		$db,
 		$ErrMsg);
 
@@ -72,7 +72,7 @@ $WOItemsResult = DB_query("SELECT woitems.stockid,
 		ON woitems.stockid=stockmaster.stockid
 		INNER JOIN stockcategory
 		ON stockmaster.categoryid=stockcategory.categoryid
-		WHERE woitems.wo=". DB_escape_string($_POST['WO']),
+		WHERE woitems.wo=". $_POST['WO'],
 			$db,
 			$ErrMsg);
 
@@ -145,7 +145,7 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 					standardcost
 				FROM stockmoves
 				WHERE stockmoves.type=28
-				AND reference = '" . DB_escape_string($_POST['WO']) . "'
+				AND reference = '" . $_POST['WO'] . "'
 				AND stockid = '" . $RequirementsRow['stockid'] . "'",
 				$db,
 				_('Could not retrieve the issues of the item because:'));
@@ -215,11 +215,11 @@ $sql = "SELECT stockmoves.stockid,
 	FROM stockmoves INNER JOIN stockmaster
 	ON stockmoves.stockid=stockmaster.stockid
 	WHERE stockmoves.type=28
-	AND reference = " . DB_escape_string($_POST['WO']) . "
+	AND reference = " . $_POST['WO'] . "
 	AND stockmoves.stockid NOT IN
 			(SELECT worequirements.stockid 
 				FROM worequirements 
-			WHERE worequirements.wo=" . DB_escape_string($_POST['WO']) . ")";
+			WHERE worequirements.wo=" . $_POST['WO'] . ")";
 
 $WOIssuesResult = DB_query($sql,$db,_('Could not get issues that were not required by the BOM because'));
 
@@ -458,7 +458,7 @@ If (isset($_POST['Close'])) {
 		} //end of standard costing section
 	} // end loop around the items on the work order
 	
-	$CloseWOResult =DB_query('UPDATE workorders SET closed=1 WHERE wo=' .DB_escape_string($_POST['WO']),
+	$CloseWOResult =DB_query('UPDATE workorders SET closed=1 WHERE wo=' .$_POST['WO'],
 				$db,
 				_('Could not update the work order to closed because:'),
 				_('The SQL used to close the work order was:'),

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 /* This is where the details specific to the recurring order are entered and the template committed to the database once the Process button is hit */
 
 include('includes/DefineCartClass.php');
@@ -226,19 +226,19 @@ If (isset($_POST['Process'])) {
 				VALUES (
 					'" . $_SESSION['Items']->DebtorNo . "',
 					'" . $_SESSION['Items']->Branch . "',
-					'". DB_escape_string($_SESSION['Items']->CustRef) ."',
-					'". DB_escape_string($_SESSION['Items']->Comments) ."',
+					'". $_SESSION['Items']->CustRef ."',
+					'". $_SESSION['Items']->Comments ."',
 					'" . Date("Y-m-d H:i") . "',
 					'" . $_SESSION['Items']->DefaultSalesType . "',
-					'" . DB_escape_string($_SESSION['Items']->DeliverTo) . "',
-					'" . DB_escape_string($_SESSION['Items']->BrAdd1) . "',
-					'" . DB_escape_string($_SESSION['Items']->BrAdd2) . "',
-					'" . DB_escape_string($_SESSION['Items']->BrAdd3) . "',
-					'" . DB_escape_string($_SESSION['Items']->BrAdd4) . "',
-					'" . DB_escape_string($_SESSION['Items']->BrAdd5) . "',
-					'" . DB_escape_string($_SESSION['Items']->BrAdd6) . "',
-					'" . DB_escape_string($_SESSION['Items']->PhoneNo) . "',
-					'" . DB_escape_string($_SESSION['Items']->Email) . "',
+					'" . $_SESSION['Items']->DeliverTo . "',
+					'" . $_SESSION['Items']->BrAdd1 . "',
+					'" . $_SESSION['Items']->BrAdd2 . "',
+					'" . $_SESSION['Items']->BrAdd3 . "',
+					'" . $_SESSION['Items']->BrAdd4 . "',
+					'" . $_SESSION['Items']->BrAdd5 . "',
+					'" . $_SESSION['Items']->BrAdd6 . "',
+					'" . $_SESSION['Items']->PhoneNo . "',
+					'" . $_SESSION['Items']->Email . "',
 					" . $_SESSION['Items']->FreightCost .",
 					'" . $_SESSION['Items']->Location ."',
 					'" . $_SESSION['Items']->ShipVia ."',
@@ -268,7 +268,7 @@ If (isset($_POST['Process'])) {
 					". $StockItem->Price . ",
 					" . $StockItem->Quantity . ",
 					" . $StockItem->DiscountPercent . ",
-					'" . DB_escape_string($StockItem->Narrative) . "'
+					'" . $StockItem->Narrative . "'
 				)";
 				$Ins_LineItemResult = DB_query($LineItemsSQL,$db);
 			} /* inserted line items into sales order details */

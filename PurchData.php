@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 4;
 
@@ -79,14 +79,14 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 					supplierdescription,
 					leadtime,
 					preferred)
-			VALUES ('" . DB_escape_string($SupplierID) . "',
-				'" . DB_escape_string($StockID) . "',
-				" . DB_escape_string($_POST['Price']) . ",
-				'" . DB_escape_string($_POST['SuppliersUOM']) . "',
-				" . DB_escape_string($_POST['ConversionFactor']) . ",
-				'" . DB_escape_string($_POST['SupplierDescription']) . "',
-				" . DB_escape_string($_POST['LeadTime']) . ",
-				" . DB_escape_string($_POST['Preferred']) . ')';
+			VALUES ('" . $SupplierID . "',
+				'" . $StockID . "',
+				" . $_POST['Price'] . ",
+				'" . $_POST['SuppliersUOM'] . "',
+				" . $_POST['ConversionFactor'] . ",
+				'" . $_POST['SupplierDescription'] . "',
+				" . $_POST['LeadTime'] . ",
+				" . $_POST['Preferred'] . ')';
 
 	$ErrMsg = _('The supplier purchasing details could not be added to the database because');
 	$DbgMsg = _('The SQL that failed was');
@@ -98,12 +98,12 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
    if ($InputError==0 AND isset($_POST['UpdateRecord'])){
 
       $sql = "UPDATE purchdata SET
-			        price=" . DB_escape_string($_POST['Price']) . ",
-				suppliersuom='" . DB_escape_string($_POST['SuppliersUOM']) . "',
-				conversionfactor=" . DB_escape_string($_POST['ConversionFactor']) . ",
-				supplierdescription='" . DB_escape_string($_POST['SupplierDescription']) . "',
-				leadtime=" . DB_escape_string($_POST['LeadTime']) . ",
-				preferred=" . DB_escape_string($_POST['Preferred']) . "
+			        price=" . $_POST['Price'] . ",
+				suppliersuom='" . $_POST['SuppliersUOM'] . "',
+				conversionfactor=" . $_POST['ConversionFactor'] . ",
+				supplierdescription='" . $_POST['SupplierDescription'] . "',
+				leadtime=" . $_POST['LeadTime'] . ",
+				preferred=" . $_POST['Preferred'] . "
 		WHERE purchdata.stockid='$StockID'
 		AND purchdata.supplierno='$SupplierID'";
 

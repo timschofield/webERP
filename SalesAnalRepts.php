@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 2;
 
@@ -138,22 +138,22 @@ if (isset($_POST['submit'])) {
 		delete code below*/
 
 		$sql = "UPDATE reportheaders SET 
-				reportheading='" . DB_escape_string($_POST['ReportHeading']) . "', 
-				groupbydata1='" . DB_escape_string($_POST['GroupByData1']) . "', 
-				groupbydata2='" . DB_escape_string($_POST['GroupByData2']) . "',
-				groupbydata3='" . DB_escape_string($_POST['GroupByData3']) . "', 
-				groupbydata4='" . DB_escape_string($_POST['GroupByData4']) . "', 
-				newpageafter1=" . DB_escape_string($_POST['NewPageAfter1']) . ", 
-				newpageafter2=" . DB_escape_string($_POST['NewPageAfter2']) . ", 
-				newpageafter3=" . DB_escape_string($_POST['NewPageAfter3']) . ", 
-				lower1='" . DB_escape_string($_POST['Lower1']) . "', 
-				upper1='" . DB_escape_string($_POST['Upper1']) . "', 
-				lower2='" . DB_escape_string($_POST['Lower2']) . "', 
-				upper2='" . DB_escape_string($_POST['Upper2']) . "', 
-				lower3='" . DB_escape_string($_POST['Lower3']) . "', 
-				upper3='" . DB_escape_string($_POST['Upper3']) . "', 
-				lower4='" . DB_escape_string($_POST['Lower4']) . "', 
-				upper4='" . DB_escape_string($_POST['Upper4']) . "' 
+				reportheading='" . $_POST['ReportHeading'] . "', 
+				groupbydata1='" . $_POST['GroupByData1'] . "', 
+				groupbydata2='" . $_POST['GroupByData2'] . "',
+				groupbydata3='" . $_POST['GroupByData3'] . "', 
+				groupbydata4='" . $_POST['GroupByData4'] . "', 
+				newpageafter1=" . $_POST['NewPageAfter1'] . ", 
+				newpageafter2=" . $_POST['NewPageAfter2'] . ", 
+				newpageafter3=" . $_POST['NewPageAfter3'] . ", 
+				lower1='" . $_POST['Lower1'] . "', 
+				upper1='" . $_POST['Upper1'] . "', 
+				lower2='" . $_POST['Lower2'] . "', 
+				upper2='" . $_POST['Upper2'] . "', 
+				lower3='" . $_POST['Lower3'] . "', 
+				upper3='" . $_POST['Upper3'] . "', 
+				lower4='" . $_POST['Lower4'] . "', 
+				upper4='" . $_POST['Upper4'] . "' 
 			WHERE reportid = " . $SelectedReport;
 
 		$ErrMsg = _('The report could not be updated because');
@@ -202,22 +202,22 @@ if (isset($_POST['submit'])) {
 						upper4
 						)
 				VALUES (
-					'" . DB_escape_string($_POST['ReportHeading']) . "',
-					'" . DB_escape_string($_POST['GroupByData1']). "',
-					'" . DB_escape_string($_POST['GroupByData2']) . "',
-					'" . DB_escape_string($_POST['GroupByData3']) . "',
-					'" . DB_escape_string($_POST['GroupByData4']) . "',
-					" . DB_escape_string($_POST['NewPageAfter1']) . ",
-					" . DB_escape_string($_POST['NewPageAfter2']) . ",
-					" . DB_escape_string($_POST['NewPageAfter3']) . ",
-					'" . DB_escape_string($_POST['Lower1']) . "',
-					'" . DB_escape_string($_POST['Upper1']) . "',
-					'" . DB_escape_string($_POST['Lower2']) . "',
-					'" . DB_escape_string($_POST['Upper2']) . "',
-					'" . DB_escape_string($_POST['Lower3']) . "',
-					'" . DB_escape_string($_POST['Upper3']) . "',
-					'" . DB_escape_string($_POST['Lower4']) . "',
-					'" . DB_escape_string($_POST['Upper4']) . "'
+					'" . $_POST['ReportHeading'] . "',
+					'" . $_POST['GroupByData1']. "',
+					'" . $_POST['GroupByData2'] . "',
+					'" . $_POST['GroupByData3'] . "',
+					'" . $_POST['GroupByData4'] . "',
+					" . $_POST['NewPageAfter1'] . ",
+					" . $_POST['NewPageAfter2'] . ",
+					" . $_POST['NewPageAfter3'] . ",
+					'" . $_POST['Lower1'] . "',
+					'" . $_POST['Upper1'] . "',
+					'" . $_POST['Lower2'] . "',
+					'" . $_POST['Upper2'] . "',
+					'" . $_POST['Lower3'] . "',
+					'" . $_POST['Upper3'] . "',
+					'" . $_POST['Lower4'] . "',
+					'" . $_POST['Upper4'] . "'
 					)";
 
 		$ErrMsg = _('The report could not be added because');

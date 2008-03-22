@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 11;
 
@@ -181,7 +181,7 @@ if (db_num_rows($LineItemsResult) > 0) {
 		               FROM grns INNER JOIN purchorderdetails
 		               ON grns.podetailitem=purchorderdetails.podetailitem
                  		WHERE purchorderdetails.shiptref=' . $_GET['SelectedShipment'] . "
-                 		AND purchorderdetails.itemcode = '" . DB_escape_string($myrow['itemcode']) . "'";
+                 		AND purchorderdetails.itemcode = '" . $myrow['itemcode'] . "'";
 
                 $StdCostResult = DB_query($sql,$db);
                 $StdCostRow = DB_fetch_row($StdCostResult);

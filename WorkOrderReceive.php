@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 11;
 
@@ -56,7 +56,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 					ON woitems.stockid=stockmaster.stockid
 					INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
-					WHERE woitems.stockid='" . DB_escape_string($_POST['StockID']) . "'
+					WHERE woitems.stockid='" . $_POST['StockID'] . "'
 					AND workorders.wo=".$_POST['WO'],
 					$db,
 					$ErrMsg);
@@ -99,9 +99,9 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
      	//need to test if the serialised item exists first already
 			if (trim($_POST['SerialNo' .$i]) != ""){
 					$SQL = "SELECT COUNT(*) FROM stockserialitems
-							WHERE stockid='" . DB_escape_string($_POST['StockID']) . "'
-							AND loccode = '" . DB_escape_string($_POST['IntoLocation']) . "'
-							AND serialno = '" . DB_escape_string($_POST['SerialNo' .$i]) . "'";
+							WHERE stockid='" . $_POST['StockID'] . "'
+							AND loccode = '" . $_POST['IntoLocation'] . "'
+							AND serialno = '" . $_POST['SerialNo' .$i] . "'";
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not check if a serial number for the stock item already exists because');
 					$DbgMsg =  _('The following SQL to test for an already existing serialised stock item was used');
 					$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -132,8 +132,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 			$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
 									FROM stockmaster INNER JOIN bom
 									ON stockmaster.stockid=bom.component
-									WHERE bom.parent='" . DB_escape_string($_POST['StockID']) . "'
-									AND bom.loccode='" . DB_escape_string($WORow['loccode']) . "'",
+									WHERE bom.parent='" . $_POST['StockID'] . "'
+									AND bom.loccode='" . $WORow['loccode'] . "'",
 									$db);
 			$CostRow = DB_fetch_row($CostResult);
 			if (is_null($CostRow[0]) OR $CostRow[0]==0){
@@ -143,8 +143,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 			}
 			//Need to refresh the worequirments with the bom components now incase they changed
 			$DelWORequirements = DB_query("DELETE FROM worequirements
-											WHERE wo=" . DB_escape_string($_POST['WO']) . "
-											AND parentstockid='" . DB_escape_string($_POST['StockID']) . "'",
+											WHERE wo=" . $_POST['WO'] . "
+											AND parentstockid='" . $_POST['StockID'] . "'",
 											$db);
 			$InsWORequirments = DB_query("INSERT INTO worequirements (wo,
 										parentstockid,
@@ -160,8 +160,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 										bom.autoissue
 									FROM bom INNER JOIN stockmaster
 									ON bom.component=stockmaster.stockid
-									WHERE parent='" . DB_escape_string($_POST['StockID']) . "'
-									AND loccode ='" . DB_escape_string($WORow['loccode']) . "'",
+									WHERE parent='" . $_POST['StockID'] . "'
+									AND loccode ='" . $WORow['loccode'] . "'",
 								$db);
 
 			//Need to check this against the current standard cost and do a cost update if necessary
@@ -170,7 +170,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 						  sum(quantity) AS totalqoh
 					FROM stockmaster INNER JOIN locstock
 						ON stockmaster.stockid=locstock.stockid
-					WHERE stockmaster.stockid='" . DB_escape_string($_POST['StockID']) . "'
+					WHERE stockmaster.stockid='" . $_POST['StockID'] . "'
 					GROUP BY
 						materialcost,
 						labourcost,
@@ -264,8 +264,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 			//Need to get the previous locstock quantity for the component at the location where the WO manuafactured
 			$CompQOHResult = DB_query("SELECT locstock.quantity
 									FROM locstock
-									WHERE locstock.stockid='" . DB_escape_string($AutoIssueCompRow['stockid']) . "'
-									AND loccode= '" . DB_escape_string($WORow['loccode']) . "'",
+									WHERE locstock.stockid='" . $AutoIssueCompRow['stockid'] . "'
+									AND loccode= '" . $WORow['loccode'] . "'",
 									$db);
 			if (DB_num_rows($CompQOHResult)==1){
 						$LocQtyRow = DB_fetch_row($CompQOHResult);
@@ -277,8 +277,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
 			$SQL = "UPDATE locstock
 						SET quantity = quantity - " . ($AutoIssueCompRow['qtypu'] * $QuantityReceived). "
-						WHERE locstock.stockid = '" . DB_escape_string($AutoIssueCompRow['stockid']) . "'
-						AND loccode = '" . DB_escape_string($WORow['loccode']) . "'";
+						WHERE locstock.stockid = '" . $AutoIssueCompRow['stockid'] . "'
+						AND loccode = '" . $WORow['loccode'] . "'";
 
 			$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated by the issue of stock to the work order from an auto issue component because');
 			$DbgMsg =  _('The following SQL to update the location stock record was used');
@@ -294,13 +294,13 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 											qty,
 											standardcost,
 											newqoh)
-						VALUES ('" . DB_escape_string($AutoIssueCompRow['stockid']) . "',
+						VALUES ('" . $AutoIssueCompRow['stockid'] . "',
 							28,
 							" . $WOIssueNo . ",
-							'" . DB_escape_string($WORow['loccode']) . "',
+							'" . $WORow['loccode'] . "',
 							'" . Date('Y-m-d') . "',
 							" . $PeriodNo . ",
-							'" . DB_escape_string($_POST['WO']) . "',
+							'" . $_POST['WO'] . "',
 							" . -($AutoIssueCompRow['qtypu'] * $QuantityReceived) . ",
 							" . $AutoIssueCompRow['cost'] . ",
 							" . ($QtyOnHandPrior - ($AutoIssueCompRow['qtypu'] * $QuantityReceived)) . ")";
@@ -332,7 +332,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								'" . Date('Y-m-d') . "',
 								" . $PeriodNo . ",
 								" . $StockGLCode['wipact'] . ",
-								'" . $_POST['WO'] . ' - ' . DB_escape_string($_POST['StockID']) . ' ' . _('Component') . ': ' . DB_escape_string($AutoIssueCompRow['stockid']) . ' - ' . DB_escape_string($QuantityReceived) . ' x ' . DB_escape_string($AutoIssueCompRow['qtypu']) . ' @ ' . number_format($AutoIssueCompRow['cost'],2) . "',
+								'" . $_POST['WO'] . ' - ' . $_POST['StockID'] . ' ' . _('Component') . ': ' . $AutoIssueCompRow['stockid'] . ' - ' . $QuantityReceived . ' x ' . $AutoIssueCompRow['qtypu'] . ' @ ' . number_format($AutoIssueCompRow['cost'],2) . "',
 								" . ($AutoIssueCompRow['qtypu'] * $QuantityReceived * $AutoIssueCompRow['cost']) . ")";
 
 					$ErrMsg =   _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The WIP side of the work order issue GL posting could not be inserted because');
@@ -345,13 +345,13 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 									periodno,
 									account,
 									narrative,
-									amount)
+									amount
 							VALUES (28,
 								" . $WOIssueNo . ",
 								'" . Date('Y-m-d') . "',
 								" . $PeriodNo . ",
 								" . $AutoIssueCompRow['stockact'] . ",
-								'" . $_POST['WO'] . ' - ' . DB_escape_string($_POST['StockID']) . ' -> ' . DB_escape_string($AutoIssueCompRow['stockid']) . ' - ' . DB_escape_string($QuantityReceived) . ' x ' . DB_escape_string($AutoIssueCompRow['qtypu']) . ' @ ' . number_format($AutoIssueCompRow['cost'],2) . "',
+								'" . $_POST['WO'] . ' - ' . $_POST['StockID'] . ' -> ' . $AutoIssueCompRow['stockid'] . ' - ' . $QuantityReceived . ' x ' . $AutoIssueCompRow['qtypu'] . ' @ ' . number_format($AutoIssueCompRow['cost'],2) . "',
 								" . -($AutoIssueCompRow['qtypu'] * $QuantityReceived * $AutoIssueCompRow['cost']) . ")";
 
 					$ErrMsg =   _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock side of the work order issue GL posting could not be inserted because');
@@ -365,8 +365,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 		/* Need to get the current location quantity will need it later for the stock movement */
 		$SQL="SELECT locstock.quantity
 			FROM locstock
-			WHERE locstock.stockid='" . DB_escape_string($_POST['StockID']) . "'
-			AND loccode= '" . DB_escape_string($_POST['IntoLocation']) . "'";
+			WHERE locstock.stockid='" . $_POST['StockID'] . "'
+			AND loccode= '" . $_POST['IntoLocation'] . "'";
 
 		$Result = DB_query($SQL, $db);
 		if (DB_num_rows($Result)==1){
@@ -379,8 +379,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
 		$SQL = "UPDATE locstock
 				SET quantity = locstock.quantity + " . $QuantityReceived . "
-				WHERE locstock.stockid = '" . DB_escape_string($_POST['StockID']) . "'
-				AND loccode = '" . DB_escape_string($_POST['IntoLocation']) . "'";
+				WHERE locstock.stockid = '" . $_POST['StockID'] . "'
+				AND loccode = '" . $_POST['IntoLocation'] . "'";
 
 		$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
 		$DbgMsg =  _('The following SQL to update the location stock record was used');
@@ -400,14 +400,14 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 										qty,
 										standardcost,
 										newqoh)
-					VALUES ('" . DB_escape_string($_POST['StockID']) . "',
+					VALUES ('" . $_POST['StockID'] . "',
 							26,
 							" . $WOReceiptNo . ",
-							'" . DB_escape_string($_POST['IntoLocation']) . "',
+							'" . $_POST['IntoLocation'] . "',
 							'" . Date('Y-m-d') . "',
 							" . $WORow['stdcost'] . ",
 							" . $PeriodNo . ",
-							'" . DB_escape_string($_POST['WO']) . "',
+							'" . $_POST['WO'] . "',
 							" . $QuantityReceived . ",
 							" . $WORow['stdcost'] . ",
 							" . ($QtyOnHandPrior + $QuantityReceived) . ")";
@@ -435,9 +435,9 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 																loccode,
 																serialno,
 																quantity)
-										VALUES ('" . DB_escape_string($_POST['StockID']) . "',
-												'" . DB_escape_string($_POST['IntoLocation']) . "',
-												'" . DB_escape_string($_POST['SerialNo' . $i]) . "',
+										VALUES ('" . $_POST['StockID'] . "',
+												'" . $_POST['IntoLocation'] . "',
+												'" . $_POST['SerialNo' . $i] . "',
 												1)";
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
 						$DbgMsg =  _('The following SQL to insert the serial stock item records was used');
@@ -451,8 +451,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 																serialno,
 																moveqty)
 									VALUES (" . $StkMoveNo . ",
-											'" . DB_escape_string($_POST['StockID']) . "',
-											'" . DB_escape_string($_POST['SerialNo' .$i]) . "',
+											'" . $_POST['StockID'] . "',
+											'" . $_POST['SerialNo' .$i] . "',
 											1)";
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 						$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
@@ -468,28 +468,28 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 					if (trim($_POST['BatchRef' .$i]) != ""){
 						$LastRef = trim($_POST['BatchRef' .$i]);
 						$SQL = "SELECT COUNT(*) FROM stockserialitems
-								WHERE stockid='" . DB_escape_string($_POST['StockID']) . "'
-								AND loccode = '" . DB_escape_string($_POST['IntoLocation']) . "'
-								AND serialno = '" . DB_escape_string($_POST['BatchRef' .$i]) . "'";
+								WHERE stockid='" . $_POST['StockID'] . "'
+								AND loccode = '" . $_POST['IntoLocation'] . "'
+								AND serialno = '" . $_POST['BatchRef' .$i] . "'";
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not check if a serial number for the stock item already exists because');
 						$DbgMsg =  _('The following SQL to test for an already existing serialised stock item was used');
 						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 						$AlreadyExistsRow = DB_fetch_row($Result);
 
 						if ($AlreadyExistsRow[0]>0){
-							$SQL = 'UPDATE stockserialitems SET quantity = quantity + ' . DB_escape_string($_POST['Qty' . $i]) . "
-										WHERE stockid='" . DB_escape_string($_POST['StockID']) . "'
-									 	AND loccode = '" . DB_escape_string($_POST['IntoLocation']) . "'
-									 	AND serialno = '" . DB_escape_string($POST['BatchRef' .$i]) . "'";
+							$SQL = 'UPDATE stockserialitems SET quantity = quantity + ' . $_POST['Qty' . $i] . "
+										WHERE stockid='" . $_POST['StockID'] . "'
+									 	AND loccode = '" . $_POST['IntoLocation'] . "'
+									 	AND serialno = '" . $POST['BatchRef' .$i] . "'";
 						} else {
 							$SQL = "INSERT INTO stockserialitems (stockid,
 																loccode,
 																serialno,
 																quantity)
-										VALUES ('" . DB_escape_string($_POST['StockID']) . "',
-												'" . DB_escape_string($_POST['IntoLocation']) . "',
-												'" . DB_escape_string($_POST['BatchRef' . $i]) . "',
-												" . DB_escape_string($_POST['Qty'.$i]) . ")";
+										VALUES ('" . $_POST['StockID'] . "',
+												'" . $_POST['IntoLocation'] . "',
+												'" . $_POST['BatchRef' . $i] . "',
+												" . $_POST['Qty'.$i] . ")";
 						}
 
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
@@ -504,9 +504,9 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 														serialno,
 														moveqty)
 									VALUES (" . $StkMoveNo . ",
-											'" . DB_escape_string($_POST['StockID']) . "',
-											'" . DB_escape_string($_POST['BatchRef'.$i] ) . "',
-											" . DB_escape_string($_POST['Qty'.$i] ) . ")";
+											'" . $_POST['StockID'] . "',
+											'" . $_POST['BatchRef'.$i]  . "',
+											" . $_POST['Qty'.$i]  . ")";
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 						$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
 						$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
@@ -536,7 +536,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								'" . Date('Y-m-d') . "',
 								" . $PeriodNo . ",
 								" . $StockGLCode['stockact'] . ",
-								'" . DB_escape_string($_POST['WO']) . " " . DB_escape_string($_POST['StockID']) . " - " . DB_escape_string($WORow['description']) . ' x ' . DB_escape_string($QuantityReceived) . " @ " . number_format($WORow['stdcost'],2) . "',
+								'" . $_POST['WO'] . " " . $_POST['StockID'] . " - " . $WORow['description'] . ' x ' . $QuantityReceived . " @ " . number_format($WORow['stdcost'],2) . "',
 								" . ($WORow['stdcost'] * $QuantityReceived) . ")";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The receipt of work order finished stock GL posting could not be inserted because');
@@ -556,7 +556,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								'" . Date('Y-m-d') . "',
 								" . $PeriodNo . ",
 								" . $StockGLCode['wipact'] . ",
-								'" . DB_escape_string($_POST['WO']) . " " . DB_escape_string($_POST['StockID']) . " - " . DB_escape_string($WORow['description']) . ' x ' . DB_escape_string($QuantityReceived) . " @ " . number_format($WORow['stdcost'],2) . "',
+								'" . $_POST['WO'] . " " . $_POST['StockID'] . " - " . $WORow['description'] . ' x ' . $QuantityReceived . " @ " . number_format($WORow['stdcost'],2) . "',
 								" . -($WORow['stdcost'] * $QuantityReceived) . ")";
 
 			$ErrMsg =   _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The WIP credit on receipt of finsihed items from a work order GL posting could not be inserted because');
@@ -622,7 +622,7 @@ $WOResult = DB_query("SELECT workorders.loccode,
 					ON workorders.wo=woitems.wo
 					INNER JOIN stockmaster
 					ON woitems.stockid=stockmaster.stockid
-					WHERE woitems.stockid='" . DB_escape_string($_POST['StockID']) . "' and workorders.wo=".$_POST["WO"],
+					WHERE woitems.stockid='" . $_POST['StockID'] . "' and workorders.wo=".$_POST["WO"],
 					$db,
 					$ErrMsg);
 

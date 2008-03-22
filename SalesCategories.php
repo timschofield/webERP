@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 11;
 
@@ -97,7 +97,7 @@ if (isset($_POST['submit'])  && $EditName == 1 ) { // Creating or updating a cat
 		$sql = "INSERT INTO salescat (salescatname,
                                        parentcatid)
                                        VALUES (
-                                       '" . DB_escape_string($_POST['SalesCatName']) . "',
+                                       '" . $_POST['SalesCatName'] . "',
                                        " . (isset($ParentCategory)?($ParentCategory):('NULL')) . ")";
 		$msg = _('A new Sales category record has been added');
 	}
@@ -146,7 +146,7 @@ if (isset($_POST['submit'])  && $EditName == 1 ) { // Creating or updating a cat
 				stockid, 
 				salescatid 
 			) VALUES (
-				'".DB_escape_string($_POST['AddStockID'])."',
+				'". $_POST['AddStockID']."',
 				".(isset($ParentCategory)?($ParentCategory):('NULL'))."
 			)";
 	$result = DB_query($sql,$db);
@@ -155,7 +155,7 @@ if (isset($_POST['submit'])  && $EditName == 1 ) { // Creating or updating a cat
 	unset($_POST['AddStockID']);
 } elseif( isset($_GET['DelStockID']) ) {
 	$sql = "DELETE FROM salescatprod WHERE 
-				stockid='".DB_escape_string($_GET['DelStockID'])."' AND
+				stockid='". $_GET['DelStockID']."' AND
 				salescatid".(isset($ParentCategory)?('='.$ParentCategory):(' IS NULL'));
 	$result = DB_query($sql,$db);
 	prnMsg(_('Stock item') . ' ' . $_GET['DelStockID'] . ' ' . _('has been removed') . 

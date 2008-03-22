@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 
 $PageSecurity = 15;
 
@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
 				$myrow = DB_fetch_row($result);
 				$OldTaxCategoryName = $myrow[0];
 				$sql = "UPDATE taxcategories
-					SET taxcatname='" . DB_escape_string($_POST['TaxCategoryName']) . "'
+					SET taxcatname='" . $_POST['TaxCategoryName'] . "'
 					WHERE taxcatname ".LIKE." '".$OldTaxCategoryName."'";
 				$ErrMsg = _('The tax category could not be updated');
 				$result = DB_query($sql,$db,$ErrMsg);
@@ -81,7 +81,7 @@ if (isset($_POST['submit'])) {
 			$sql = "INSERT INTO taxcategories (
 						taxcatname )
 				VALUES (
-					'" . DB_escape_string($_POST['TaxCategoryName']) ."'
+					'" . $_POST['TaxCategoryName'] ."'
 					)";
 			$ErrMsg = _('The new tax category could not be added');
 			$result = DB_query($sql,$db,$ErrMsg,true);
@@ -114,7 +114,7 @@ if (isset($_POST['submit'])) {
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'stockmaster'
 	// Get the original name of the tax category the ID is just a secure way to find the tax category
 	$sql = "SELECT taxcatname FROM taxcategories 
-		WHERE taxcatid = " . DB_escape_string($SelectedTaxCategory);
+		WHERE taxcatid = " . $SelectedTaxCategory;
 	$result = DB_query($sql,$db);
 	if ( DB_num_rows($result) == 0 ) {
 		// This is probably the safest way there is
@@ -122,7 +122,7 @@ if (isset($_POST['submit'])) {
 	} else {
 		$myrow = DB_fetch_row($result);
 		$OldTaxCategoryName = $myrow[0];
-		$sql= "SELECT COUNT(*) FROM stockmaster WHERE taxcatid ".LIKE." '" . DB_escape_string($OldTaxCategoryName) . "'";
+		$sql= "SELECT COUNT(*) FROM stockmaster WHERE taxcatid ".LIKE." '" . $OldTaxCategoryName . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
@@ -203,7 +203,7 @@ if (! isset($_GET['delete'])) {
 		$sql = "SELECT taxcatid,
 				taxcatname
 				FROM taxcategories
-				WHERE taxcatid=" . DB_escape_string($SelectedTaxCategory);
+				WHERE taxcatid=" . $SelectedTaxCategory;
 
 		$result = DB_query($sql, $db);
 		if ( DB_num_rows($result) == 0 ) {

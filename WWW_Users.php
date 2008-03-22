@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 $PageSecurity=15;
 
@@ -113,12 +113,12 @@ if (isset($_POST['submit'])) {
 			$UpdatePassword = "password='" . CryptPass($_POST['Password']) . "',";
 		}
 
-		$sql = "UPDATE www_users SET realname='" . DB_escape_string($_POST['RealName']) . "',
-						customerid='" . DB_escape_string($_POST['Cust']) ."',
-						phone='" . DB_escape_string($_POST['Phone']) ."',
-						email='" . DB_escape_string($_POST['Email']) ."',
+		$sql = "UPDATE www_users SET realname='" . $_POST['RealName'] . "',
+						customerid='" . $_POST['Cust'] ."',
+						phone='" . $_POST['Phone'] ."',
+						email='" . $_POST['Email'] ."',
 						".$UpdatePassword."
-						branchcode='" . DB_escape_string($_POST['BranchCode']) . "',
+						branchcode='" . $_POST['BranchCode'] . "',
 						pagesize='" . $_POST['PageSize'] . "',
 						fullaccess=" . $_POST['Access'] . ",
 						theme='" . $_POST['Theme'] . "',
@@ -146,12 +146,12 @@ if (isset($_POST['submit'])) {
 						theme,
 						language)
 					VALUES ('" . $_POST['UserID'] . "',
-						'" . DB_escape_string($_POST['RealName']) ."',
-						'" . DB_escape_string($_POST['Cust']) ."',
-						'" . DB_escape_string($_POST['BranchCode']) ."',
+						'" . $_POST['RealName'] ."',
+						'" . $_POST['Cust'] ."',
+						'" . $_POST['BranchCode'] ."',
 						'" . CryptPass($_POST['Password']) ."',
-						'" . DB_escape_string($_POST['Phone']) . "',
-						'" . DB_escape_string($_POST['Email']) ."',
+						'" . $_POST['Phone'] . "',
+						'" . $_POST['Email'] ."',
 						'" . $_POST['PageSize'] ."',
 						" . $_POST['Access'] . ",
 						'" . $_POST['DefaultLocation'] ."',

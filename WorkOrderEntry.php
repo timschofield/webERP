@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 10;
 
@@ -11,7 +11,7 @@ $title = _('Work Order Entry');
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
-if (isset($_REQUEST['WO']) AND $_REQUEST['WO']!=''){
+if ($_REQUEST['WO']!=''){
 	$_POST['WO'] = $_REQUEST['WO'];
     $EditingExisting = true;
 } else {
@@ -21,7 +21,7 @@ if (isset($_REQUEST['WO']) AND $_REQUEST['WO']!=''){
                                                      requiredby,
                                                      startdate)
                                      VALUES (" . $_POST['WO'] . ",
-                                            '" . DB_escape_string($_SESSION['UserStockLocation']) . "',
+                                            '" . $_SESSION['UserStockLocation'] . "',
                                             '" . Date('Y-m-d') . "',
                                             '" . Date('Y-m-d'). "')",
                               $db);
@@ -189,8 +189,8 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 		$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
                                                         FROM stockmaster INNER JOIN bom
                                                         ON stockmaster.stockid=bom.component
-                                                        WHERE bom.parent='" . DB_escape_string($NewItem) . "'
-                                                        AND bom.loccode='" . DB_escape_string($_POST['StockLocation']) . "'",
+                                                        WHERE bom.parent='" . $NewItem . "'
+                                                        AND bom.loccode='" . $_POST['StockLocation'] . "'",
                              $db);
         	$CostRow = DB_fetch_row($CostResult);
 		if (is_null($CostRow[0]) OR $CostRow[0]==0){
@@ -207,7 +207,7 @@ if (isset($NewItem) AND isset($_POST['WO'])){
 	                             qtyreqd,
 	                             stdcost)
 	         VALUES ( " . $_POST['WO'] . ",
-                         '" . DB_escape_string($NewItem) . "',
+                         '" . $NewItem . "',
                          " . $EOQ . ",
                           " . $Cost . "
                           )";
@@ -226,8 +226,8 @@ if (isset($NewItem) AND isset($_POST['WO'])){
                                        autoissue
                          FROM bom INNER JOIN stockmaster
                          ON bom.component=stockmaster.stockid
-                         WHERE parent='" . DB_escape_string($NewItem) . "'
-                         AND loccode ='" . DB_escape_string($_POST['StockLocation']) . "'";
+                         WHERE parent='" . $NewItem . "'
+                         AND loccode ='" . $_POST['StockLocation'] . "'";
 
          //run the SQL from either of the above possibilites
          $ErrMsg = _('The work order item could not be added');
@@ -267,7 +267,7 @@ if (isset($_POST['submit'])) { //The update button has been clicked
 
 		if ($QtyRecd==0){ //can only change factory location if Qty Recd is 0
 				$sql[] = "UPDATE workorders SET requiredby='" . $SQL_ReqDate . "',
-												loccode='" . DB_escape_string($_POST['StockLocation']) . "'
+												loccode='" . $_POST['StockLocation'] . "'
 			        	    WHERE wo=" . $_POST['WO'];
 		} else {
 				prnMsg(_('The factory where this work order is made can only be updated if the quantity received on all output items is 0'),'warn');
@@ -286,8 +286,8 @@ if (isset($_POST['submit'])) { //The update button has been clicked
 	    				$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
                                                         FROM stockmaster INNER JOIN bom
                                                         ON stockmaster.stockid=bom.component
-                                                        WHERE bom.parent='" . DB_escape_string($_POST['OutputItem'.$i]) . "'
-                                                        AND bom.loccode='" . DB_escape_string($_POST['StockLocation']) . "'",
+                                                        WHERE bom.parent='" . $_POST['OutputItem'.$i] . "'
+                                                        AND bom.loccode='" . $_POST['StockLocation'] . "'",
     		                         $db);
         				$CostRow = DB_fetch_row($CostResult);
 						if (is_null($CostRow[0])){
@@ -296,16 +296,16 @@ if (isset($_POST['submit'])) { //The update button has been clicked
 						} else {
 							$Cost = $CostRow[0];
 						}
-						$sql[] = "UPDATE woitems SET qtyreqd =  ". DB_escape_string($_POST['OutputQty' . $i]) . ",
-    			                                 nextlotsnref = '". DB_escape_string($_POST['NextLotSNRef'.$i]) ."',
+						$sql[] = "UPDATE woitems SET qtyreqd =  ". $_POST['OutputQty' . $i] . ",
+    			                                 nextlotsnref = '". $_POST['NextLotSNRef'.$i] ."',
     			                                 stdcost =" . $Cost . "
     			                  WHERE wo=" . $_POST['WO'] . "
-                                  AND stockid='" . DB_escape_string($_POST['OutputItem'.$i]) . "'";
+                                  AND stockid='" . $_POST['OutputItem'.$i] . "'";
       			} else {
-    			    	$sql[] = "UPDATE woitems SET qtyreqd =  ". DB_escape_string($_POST['OutputQty' . $i]) . ",
-    			                                 nextlotsnref = '". DB_escape_string($_POST['NextLotSNRef'.$i]) ."'
+    			    	$sql[] = "UPDATE woitems SET qtyreqd =  ". $_POST['OutputQty' . $i] . ",
+    			                                 nextlotsnref = '". $_POST['NextLotSNRef'.$i] ."'
     			                  WHERE wo=" . $_POST['WO'] . "
-                                  AND stockid='" . DB_escape_string($_POST['OutputItem'.$i]) . "'";
+                                  AND stockid='" . $_POST['OutputItem'.$i] . "'";
                 }
         }
 

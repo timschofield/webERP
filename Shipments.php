@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 11;
 include('includes/DefineShiptClass.php');
@@ -197,7 +197,7 @@ if (isset($_POST['Update']) OR (isset($_GET['Add']) AND $_SESSION['Shipment']->C
 		$sql = "SELECT shiptref FROM shipments WHERE shiptref =" . $_SESSION['Shipment']->ShiptRef;
 		$result = DB_query($sql,$db);
 		if (DB_num_rows($result)==1){
-			$sql = "UPDATE shipments SET vessel='" . DB_escape_string($_SESSION['Shipment']->Vessel) . "',
+			$sql = "UPDATE shipments SET vessel='" . $_SESSION['Shipment']->Vessel . "',
 							voyageref='".  $_SESSION['Shipment']->VoyageRef . "',
 							eta='" .  $_SESSION['Shipment']->ETA . "'
 					WHERE shiptref =" .  $_SESSION['Shipment']->ShiptRef;
@@ -210,7 +210,7 @@ if (isset($_POST['Update']) OR (isset($_GET['Add']) AND $_SESSION['Shipment']->C
 							eta,
 							supplierid)
 					VALUES (" . $_SESSION['Shipment']->ShiptRef . ",
-						'" . DB_escape_string($_SESSION['Shipment']->Vessel) . "',
+						'" . $_SESSION['Shipment']->Vessel . "',
 						'".  $_SESSION['Shipment']->VoyageRef . "',
 						'" . $_SESSION['Shipment']->ETA . "',
 						'" . $_SESSION['Shipment']->SupplierID . "')"  ;

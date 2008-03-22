@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
@@ -99,8 +99,8 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 
 	if ($_SESSION['ProhibitNegativeStock']==1){
 		$SQL = "SELECT quantity FROM locstock
-				WHERE stockid='" . DB_escape_string($_SESSION['Adjustment']->StockID) . "'
-				AND loccode='" . DB_escape_string($_SESSION['Adjustment']->StockLocation) . "'";
+				WHERE stockid='" . $_SESSION['Adjustment']->StockID . "'
+				AND loccode='" . $_SESSION['Adjustment']->StockLocation . "'";
 		$CheckNegResult=DB_query($SQL,$db);
 		$CheckNegRow = DB_fetch_array($CheckNegResult);
 		if ($CheckNegRow['quantity']+$_SESSION['Adjustment']->Quantity <0){
@@ -151,7 +151,7 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 				'" . $_SESSION['Adjustment']->StockLocation . "',
 				'" . $SQLAdjustmentDate . "',
 				" . $PeriodNo . ",
-				'" . DB_escape_string($_SESSION['Adjustment']->Narrative) ."',
+				'" . $_SESSION['Adjustment']->Narrative ."',
 				" . $_SESSION['Adjustment']->Quantity . ",
 				" . ($QtyOnHandPrior + $_SESSION['Adjustment']->Quantity) . "
 			)";
@@ -190,7 +190,7 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 						WHERE
 						stockid='" . $_SESSION['Adjustment']->StockID . "'
 						AND loccode='" . $_SESSION['Adjustment']->StockLocation . "'
-						AND serialno='" . DB_escape_string($Item->BundleRef) . "'";
+						AND serialno='" . $Item->BundleRef . "'";
 
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
 					$DbgMsg =  _('The following SQL to update the serial stock item record was used');
@@ -203,7 +203,7 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 									quantity)
 						VALUES ('" . $_SESSION['Adjustment']->StockID . "',
 						'" . $_SESSION['Adjustment']->StockLocation . "',
-						'" . DB_escape_string($Item->BundleRef) . "',
+						'" . $Item->BundleRef . "',
 						" . $Item->BundleQty . ")";
 
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
@@ -220,7 +220,7 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 									moveqty)
 						VALUES (" . $StkMoveNo . ",
 							'" . $_SESSION['Adjustment']->StockID . "',
-							'" . DB_escape_string($Item->BundleRef) . "',
+							'" . $Item->BundleRef . "',
 							" . $Item->BundleQty . ")";
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 				$DbgMsg =  _('The following SQL to insert the serial stock movement records was used');
@@ -257,7 +257,7 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 						" . $PeriodNo . ",
 						" .  $StockGLCodes['adjglact'] . ",
 						" . $_SESSION['Adjustment']->StandardCost * -($_SESSION['Adjustment']->Quantity) . ",
-						'" . $_SESSION['Adjustment']->StockID . " x " . $_SESSION['Adjustment']->Quantity . " @ " . $_SESSION['Adjustment']->StandardCost . " " . DB_escape_string($_SESSION['Adjustment']->Narrative) . "')";
+						'" . $_SESSION['Adjustment']->StockID . " x " . $_SESSION['Adjustment']->Quantity . " @ " . $_SESSION['Adjustment']->StandardCost . " " . $_SESSION['Adjustment']->Narrative . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
 			$DbgMsg = _('The following SQL to insert the GL entries was used');
@@ -276,7 +276,7 @@ if (isset($_POST['EnterAdjustment']) && $_POST['EnterAdjustment']!= ''){
 						" . $PeriodNo . ",
 						" .  $StockGLCodes['stockact'] . ",
 						" . $_SESSION['Adjustment']->StandardCost * $_SESSION['Adjustment']->Quantity . ",
-						'" . $_SESSION['Adjustment']->StockID . " x " . $_SESSION['Adjustment']->Quantity . " @ " . $_SESSION['Adjustment']->StandardCost . " " . DB_escape_string($_SESSION['Adjustment']->Narrative) . "')";
+						'" . $_SESSION['Adjustment']->StockID . " x " . $_SESSION['Adjustment']->Quantity . " @ " . $_SESSION['Adjustment']->StandardCost . " " . $_SESSION['Adjustment']->Narrative . "')";
 
 			$Errmsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
 			$DbgMsg = _('The following SQL to insert the GL entries was used');

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 15;
 
@@ -59,13 +59,13 @@ if (isset($_POST['submit'])) {
 				$OldMeasureName = $myrow[0];
 				$sql = array();
 				$sql[] = "UPDATE unitsofmeasure
-					SET unitname='" . DB_escape_string($_POST['MeasureName']) . "'
+					SET unitname='" . $_POST['MeasureName'] . "'
 					WHERE unitname ".LIKE." '".$OldMeasureName."'";
 				$sql[] = "UPDATE stockmaster
-					SET units='" . DB_escape_string($_POST['MeasureName']) . "'
+					SET units='" . $_POST['MeasureName'] . "'
 					WHERE units ".LIKE." '" . $OldMeasureName . "'";
 				$sql[] = "UPDATE contracts
-					SET units='" . DB_escape_string($_POST['MeasureName']) . "'
+					SET units='" . $_POST['MeasureName'] . "'
 					WHERE units ".LIKE." '" . $OldMeasureName . "'";
 			} else {
 				$InputError = 1;
@@ -86,7 +86,7 @@ if (isset($_POST['submit'])) {
 			$sql = "INSERT INTO unitsofmeasure (
 						unitname )
 				VALUES (
-					'" . DB_escape_string($_POST['MeasureName']) ."'
+					'" . $_POST['MeasureName'] ."'
 					)";
 		}
 		$msg = _('New unit of measure added');
@@ -124,7 +124,7 @@ if (isset($_POST['submit'])) {
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'stockmaster'
 	// Get the original name of the unit of measure the ID is just a secure way to find the unit of measure
 	$sql = "SELECT unitname FROM unitsofmeasure 
-		WHERE unitid = " . DB_escape_string($SelectedMeasureID);
+		WHERE unitid = " . $SelectedMeasureID;
 	$result = DB_query($sql,$db);
 	if ( DB_num_rows($result) == 0 ) {
 		// This is probably the safest way there is
@@ -132,21 +132,21 @@ if (isset($_POST['submit'])) {
 	} else {
 		$myrow = DB_fetch_row($result);
 		$OldMeasureName = $myrow[0];
-		$sql= "SELECT COUNT(*) FROM stockmaster WHERE units ".LIKE." '" . DB_escape_string($OldMeasureName) . "'";
+		$sql= "SELECT COUNT(*) FROM stockmaster WHERE units ".LIKE." '" . $OldMeasureName . "'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]>0) {
 			prnMsg( _('Cannot delete this unit of measure because inventory items have been created using this unit of measure'),'warn');
 			echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('inventory items that refer to this unit of measure') . '</FONT>';
 		} else {
-			$sql= "SELECT COUNT(*) FROM contracts WHERE units ".LIKE." '" . DB_escape_string($OldMeasureName) . "'";
+			$sql= "SELECT COUNT(*) FROM contracts WHERE units ".LIKE." '" . $OldMeasureName . "'";
 			$result = DB_query($sql,$db);
 			$myrow = DB_fetch_row($result);
 			if ($myrow[0]>0) {
 				prnMsg( _('Cannot delete this unit of measure because contracts have been created using this unit of measure'),'warn');
 				echo '<br>' . _('There are') . ' ' . $myrow[0] . ' ' . _('contracts that refer to this unit of measure') . '</FONT>';
 			} else {
-				$sql="DELETE FROM unitsofmeasure WHERE unitname ".LIKE."'" . DB_escape_string($OldMeasureName) . "'";
+				$sql="DELETE FROM unitsofmeasure WHERE unitname ".LIKE."'" . $OldMeasureName . "'";
 				$result = DB_query($sql,$db);
 				prnMsg( $OldMeasureName . ' ' . _('unit of measure has been deleted') . '!','success');
 			}
@@ -221,7 +221,7 @@ if (! isset($_GET['delete'])) {
 		$sql = "SELECT unitid,
 				unitname
 				FROM unitsofmeasure
-				WHERE unitid=" . DB_escape_string($SelectedMeasureID);
+				WHERE unitid=" . $SelectedMeasureID;
 
 		$result = DB_query($sql, $db);
 		if ( DB_num_rows($result) == 0 ) {

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 11;
 
@@ -18,9 +18,9 @@ if (isset($_GET['SelectedCategory'])){
 if (isset($_GET['DeleteProperty'])){
 
 	$ErrMsg = _('Could not delete the property') . ' ' . $_GET['DeleteProperty'] . ' ' . _('because');
-	$sql = "DELETE FROM stockitemproperties WHERE stkcatpropid=" . DB_escape_string($_GET['DeleteProperty']);
+	$sql = "DELETE FROM stockitemproperties WHERE stkcatpropid=" . $_GET['DeleteProperty'];
 	$result = DB_query($sql,$db,$ErrMsg);
-	$sql = "DELETE FROM stockcatproperties WHERE stkcatpropid=" . DB_escape_string($_GET['DeleteProperty']);
+	$sql = "DELETE FROM stockcatproperties WHERE stkcatpropid=" . $_GET['DeleteProperty'];
 	$result = DB_query($sql,$db,$ErrMsg);
 	prnMsg(_('Deleted the property') . ' ' . $_GET['DeleteProperty'],'success');
 }
@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
 		delete code below*/
 
 		$sql = "UPDATE stockcategory SET stocktype = '" . $_POST['StockType'] . "',
-                                     categorydescription = '" . DB_escape_string($_POST['CategoryDescription']) . "',
+                                     categorydescription = '" . $_POST['CategoryDescription'] . "',
                                      stockact = " . $_POST['StockAct'] . ",
                                      adjglact = " . $_POST['AdjGLAct'] . ",
                                      purchpricevaract = " . $_POST['PurchPriceVarAct'] . ",
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
                                      wipact = " . $_POST['WIPAct'] . "
                                      WHERE
                                      categoryid = '$SelectedCategory'";
-        $ErrMsg = _('Could not update the stock category') . DB_escape_string($_POST['CategoryDescription']) . _('because');
+        $ErrMsg = _('Could not update the stock category') . $_POST['CategoryDescription'] . _('because');
         $result = DB_query($sql,$db,$ErrMsg);
 
         for ($i=0;$i<=$_POST['PropertyCounter'];$i++){
@@ -82,20 +82,20 @@ if (isset($_POST['submit'])) {
         												controltype,
         												defaultvalue,
         												reqatsalesorder)
-        									VALUES ('" . DB_escape_string($SelectedCategory) . "',
-        											'" . DB_escape_string($_POST['PropLabel' . $i]) . "',
+        									VALUES ('" . $SelectedCategory . "',
+        											'" . $_POST['PropLabel' . $i] . "',
         											" . $_POST['PropControlType' . $i] . ",
-        											'" . DB_escape_string($_POST['PropDefault' .$i]) . "',
+        											'" . $_POST['PropDefault' .$i] . "',
         											" . $_POST['PropReqSO' .$i] . ')';
         		$ErrMsg = _('Could not insert a new category property for') . $_POST['PropLabel' . $i];
         		$result = DB_query($sql,$db,$ErrMsg);
         	} elseif ($_POST['PropID' .$i] !='NewProperty') { //we could be amending existing properties
-        		$sql = "UPDATE stockcatproperties SET label ='" . DB_escape_string($_POST['PropLabel' . $i]) . "',
+        		$sql = "UPDATE stockcatproperties SET label ='" . $_POST['PropLabel' . $i] . "',
         											  controltype = " . $_POST['PropControlType' . $i] . ",
-        											  defaultvalue = '"	. DB_escape_string($_POST['PropDefault' .$i]) . "',
+        											  defaultvalue = '"	. $_POST['PropDefault' .$i] . "',
         											  reqatsalesorder = " . $_POST['PropReqSO' .$i] . "
         				WHERE stkcatpropid =" . $_POST['PropID' .$i];
-        		$ErrMsg = _('Updated the stock category property for') . ' ' . DB_escape_string($_POST['PropLabel' . $i]);
+        		$ErrMsg = _('Updated the stock category property for') . ' ' . $_POST['PropLabel' . $i];
         		$result = DB_query($sql,$db,$ErrMsg);
         	}
 
@@ -116,9 +116,9 @@ if (isset($_POST['submit'])) {
                                        materialuseagevarac,
                                        wipact)
                                        VALUES (
-                                       '" . DB_escape_string($_POST['CategoryID']) . "',
-                                       '" . DB_escape_string($_POST['StockType']) . "',
-                                       '" . DB_escape_string($_POST['CategoryDescription']) . "',
+                                       '" . $_POST['CategoryID'] . "',
+                                       '" . $_POST['StockType'] . "',
+                                       '" . $_POST['CategoryDescription'] . "',
                                        " . $_POST['StockAct'] . ",
                                        " . $_POST['AdjGLAct'] . ",
                                        " . $_POST['PurchPriceVarAct'] . ",
@@ -424,7 +424,7 @@ if (! isset($_GET['delete'])) {
 						defaultvalue,
 						reqatsalesorder
                    FROM stockcatproperties
-                   WHERE categoryid='" . DB_escape_string($SelectedCategory) . "'
+                   WHERE categoryid='" . $SelectedCategory . "'
                    ORDER BY stkcatpropid";
 
 		$result = DB_query($sql, $db);

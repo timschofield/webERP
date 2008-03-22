@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
@@ -156,7 +156,7 @@ if ( isset($_POST['EnterTransfer']) ){
 					qty,
 					newqoh)
 			VALUES ('" .
-					DB_escape_string($_SESSION['Transfer']->TransferItem[0]->StockID) . "',
+					$_SESSION['Transfer']->TransferItem[0]->StockID . "',
 					16,
 					" . $TransferNumber . ",
 					'" . $_SESSION['Transfer']->StockLocationFrom . "',
