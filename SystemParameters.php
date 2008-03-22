@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.38 $ */
+/* $Revision: 1.39 $ */
 
 $PageSecurity =15;
 
@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
 	}elseif (strlen($_POST['X_MaxImageSize']) > 3 || !is_numeric($_POST['X_MaxImageSize']) ||
 		$_POST['X_MaxImageSize'] < 1 ) {
 		$InputError = 1;
-		prnMsg(_('The maximum size of item image files musst be between 50 and 500 (NB this figure refers to KB)'),'error');
+		prnMsg(_('The maximum size of item image files must be between 50 and 500 (NB this figure refers to KB)'),'error');
 	}
 
 	if ($InputError !=1){
@@ -84,7 +84,7 @@ if (isset($_POST['submit'])) {
 		$sql = array();
 
 		if ($_SESSION['DefaultDateFormat'] != $_POST['X_DefaultDateFormat'] ) {
-			$sql[] = "UPDATE config SET confvalue = '".DB_escape_string($_POST['X_DefaultDateFormat'])."' WHERE confname = 'DefaultDateFormat'";
+			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_DefaultDateFormat']."' WHERE confname = 'DefaultDateFormat'";
 		}
 		if ($_SESSION['DefaultTheme'] != $_POST['X_DefaultTheme'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_DefaultTheme']."' WHERE confname = 'DefaultTheme'";
@@ -102,7 +102,7 @@ if (isset($_POST['submit'])) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_Show_Settled_LastMonth']."' WHERE confname = 'Show_Settled_LastMonth'";
 		}
 		if ($_SESSION['RomalpaClause'] != $_POST['X_RomalpaClause'] ) {
-			$sql[] = "UPDATE config SET confvalue = '". DB_escape_string($_POST['X_RomalpaClause']) . "' WHERE confname = 'RomalpaClause'";
+			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_RomalpaClause'] . "' WHERE confname = 'RomalpaClause'";
 		}
 		if ($_SESSION['QuickEntries'] != $_POST['X_QuickEntries'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_QuickEntries']."' WHERE confname = 'QuickEntries'";
@@ -132,10 +132,10 @@ if (isset($_POST['submit'])) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_DefaultTaxCategory']."' WHERE confname = 'DefaultTaxCategory'";
 		}
 		if ($_SESSION['TaxAuthorityReferenceName'] != $_POST['X_TaxAuthorityReferenceName'] ) {
-			$sql[] = "UPDATE config SET confvalue = '" . DB_escape_string($_POST['X_TaxAuthorityReferenceName']) . "' WHERE confname = 'TaxAuthorityReferenceName'";
+			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_TaxAuthorityReferenceName'] . "' WHERE confname = 'TaxAuthorityReferenceName'";
 		}
 		if ($_SESSION['CountryOfOperation'] != $_POST['X_CountryOfOperation'] ) {
-			$sql[] = "UPDATE config SET confvalue = '". DB_escape_string($_POST['X_CountryOfOperation']) ."' WHERE confname = 'CountryOfOperation'";
+			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_CountryOfOperation'] ."' WHERE confname = 'CountryOfOperation'";
 		}
 		if ($_SESSION['NumberOfPeriodsOfStockUsage'] != $_POST['X_NumberOfPeriodsOfStockUsage'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_NumberOfPeriodsOfStockUsage']."' WHERE confname = 'NumberOfPeriodsOfStockUsage'";
@@ -171,10 +171,10 @@ if (isset($_POST['submit'])) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_MaxImageSize']."' WHERE confname = 'MaxImageSize'";
 		}
 		if ($_SESSION['part_pics_dir'] != $_POST['X_part_pics_dir'] ) {
-			$sql[] = "UPDATE config SET confvalue = 'companies/" . $_SESSION['DatabaseName'] . '/' . DB_escape_string($_POST['X_part_pics_dir'])."' WHERE confname = 'part_pics_dir'";
+			$sql[] = "UPDATE config SET confvalue = 'companies/" . $_SESSION['DatabaseName'] . '/' . $_POST['X_part_pics_dir']."' WHERE confname = 'part_pics_dir'";
 		}
 		if ($_SESSION['reports_dir'] != $_POST['X_reports_dir'] ) {
-			$sql[] = "UPDATE config SET confvalue = 'companies/" . $_SESSION['DatabaseName'] . '/' . DB_escape_string($_POST['X_reports_dir'])."' WHERE confname = 'reports_dir'";
+			$sql[] = "UPDATE config SET confvalue = 'companies/" . $_SESSION['DatabaseName'] . '/' . $_POST['X_reports_dir']."' WHERE confname = 'reports_dir'";
 		}
 		if ($_SESSION['AutoDebtorNo'] != $_POST['X_AutoDebtorNo'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_AutoDebtorNo'])."' WHERE confname = 'AutoDebtorNo'";
@@ -195,22 +195,22 @@ if (isset($_POST['submit'])) {
 			$sql[] = "UPDATE config SET confvalue = '". ($_POST['X_CheckCreditLimits'])."' WHERE confname = 'CheckCreditLimits'";
 		}
 		if ($_SESSION['WikiApp'] != $_POST['X_WikiApp'] ) {
-			$sql[] = "UPDATE config SET confvalue = '". DB_escape_string($_POST['X_WikiApp'])."' WHERE confname = 'WikiApp'";
+			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_WikiApp']."' WHERE confname = 'WikiApp'";
 		}
 		if ($_SESSION['WikiPath'] != $_POST['X_WikiPath'] ) {
-			$sql[] = "UPDATE config SET confvalue = '". DB_escape_string($_POST['X_WikiPath'])."' WHERE confname = 'WikiPath'";
+			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_WikiPath']."' WHERE confname = 'WikiPath'";
 		}
 		if ($_SESSION['ProhibitJournalsToControlAccounts'] != $_POST['X_ProhibitJournalsToControlAccounts'] ) {
-			$sql[] = "UPDATE config SET confvalue = '". DB_escape_string($_POST['X_ProhibitJournalsToControlAccounts'])."' WHERE confname = 'ProhibitJournalsToControlAccounts'";
+			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_ProhibitJournalsToControlAccounts']."' WHERE confname = 'ProhibitJournalsToControlAccounts'";
 		}
 		if ($_SESSION['InvoicePortraitFormat'] != $_POST['X_InvoicePortraitFormat'] ) {
-			$sql[] = "UPDATE config SET confvalue = '". DB_escape_string($_POST['X_InvoicePortraitFormat'])."' WHERE confname = 'InvoicePortraitFormat'";
+			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_InvoicePortraitFormat']."' WHERE confname = 'InvoicePortraitFormat'";
 		}
 		if ($_SESSION['AllowOrderLineItemNarrative'] != $_POST['X_AllowOrderLineItemNarrative'] ) {
-			$sql[] = "UPDATE config SET confvalue = '". DB_escape_string($_POST['X_AllowOrderLineItemNarrative'])."' WHERE confname = 'AllowOrderLineItemNarrative'";
+			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_AllowOrderLineItemNarrative']."' WHERE confname = 'AllowOrderLineItemNarrative'";
 		}
 		if ($_SESSION['vtiger_integration'] != $_POST['X_vtiger_integration'] ) {
-			$sql[] = "UPDATE config SET confvalue = '". DB_escape_string($_POST['X_vtiger_integration'])."' WHERE confname = 'vtiger_integration'";
+			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_vtiger_integration']."' WHERE confname = 'vtiger_integration'";
 		}
 		if ($_SESSION['ProhibitPostingsBefore'] != $_POST['X_ProhibitPostingsBefore'] ) {
 			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_ProhibitPostingsBefore']."' WHERE confname = 'ProhibitPostingsBefore'";
