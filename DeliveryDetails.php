@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.40 $ */
+/* $Revision: 1.41 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -260,20 +260,20 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 			VALUES (
 				'" . $_SESSION['Items']->DebtorNo . "',
 				'" . $_SESSION['Items']->Branch . "',
-				'". DB_escape_string($_SESSION['Items']->CustRef) ."',
-				'". DB_escape_string($_SESSION['Items']->Comments) ."',
+				'". $_SESSION['Items']->CustRef ."',
+				'". $_SESSION['Items']->Comments ."',
 				'" . Date("Y-m-d H:i") . "',
 				'" . $_SESSION['Items']->DefaultSalesType . "',
 				" . $_POST['ShipVia'] .",
-				'" . DB_escape_string($_SESSION['Items']->DeliverTo) . "',
-				'" . DB_escape_string($_SESSION['Items']->DelAdd1) . "',
-				'" . DB_escape_string($_SESSION['Items']->DelAdd2) . "',
-				'" . DB_escape_string($_SESSION['Items']->DelAdd3) . "',
-				'" . DB_escape_string($_SESSION['Items']->DelAdd4) . "',
-				'" . DB_escape_string($_SESSION['Items']->DelAdd5) . "',
-				'" . DB_escape_string($_SESSION['Items']->DelAdd6) . "',
-				'" . DB_escape_string($_SESSION['Items']->PhoneNo) . "',
-				'" . DB_escape_string($_SESSION['Items']->Email) . "',
+				'" . $_SESSION['Items']->DeliverTo . "',
+				'" . $_SESSION['Items']->DelAdd1 . "',
+				'" . $_SESSION['Items']->DelAdd2 . "',
+				'" . $_SESSION['Items']->DelAdd3 . "',
+				'" . $_SESSION['Items']->DelAdd4 . "',
+				'" . $_SESSION['Items']->DelAdd5 . "',
+				'" . $_SESSION['Items']->DelAdd6 . "',
+				'" . $_SESSION['Items']->PhoneNo . "',
+				'" . $_SESSION['Items']->Email . "',
 				" . $_SESSION['Items']->FreightCost .",
 				'" . $_SESSION['Items']->Location ."',
 				'" . $DelDate . "',
@@ -306,8 +306,8 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 					". $StockItem->Price . ",
 					" . $StockItem->Quantity . ",
 					" . floatval($StockItem->DiscountPercent) . ",
-					'" . DB_escape_string($StockItem->Narrative) . "',
-					'" . DB_escape_string($StockItem->POLine) . "',
+					'" . $StockItem->Narrative . "',
+					'" . $StockItem->POLine . "',
 					'" . FormatDateForSQL($StockItem->ItemDue) . "'
 				)";
 		$Ins_LineItemResult = DB_query($LineItemsSQL,$db);
@@ -357,19 +357,19 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 	$HeaderSQL = "UPDATE salesorders
 			SET debtorno = '" . $_SESSION['Items']->DebtorNo . "',
 				branchcode = '" . $_SESSION['Items']->Branch . "',
-				customerref = '". DB_escape_string($_SESSION['Items']->CustRef) ."',
-				comments = '". DB_escape_string($_SESSION['Items']->Comments) ."',
+				customerref = '". $_SESSION['Items']->CustRef ."',
+				comments = '". $_SESSION['Items']->Comments ."',
 				ordertype = '" . $_SESSION['Items']->DefaultSalesType . "',
 				shipvia = " . $_POST['ShipVia'] .",
 				deliverto = '" . $_SESSION['Items']->DeliverTo . "',
-				deladd1 = '" . DB_escape_string($_SESSION['Items']->DelAdd1) . "',
-				deladd2 = '" . DB_escape_string($_SESSION['Items']->DelAdd2) . "',
-				deladd3 = '" . DB_escape_string($_SESSION['Items']->DelAdd3) . "',
-				deladd4 = '" . DB_escape_string($_SESSION['Items']->DelAdd4) . "',
-				deladd5 = '" . DB_escape_string($_SESSION['Items']->DelAdd5) . "',
-				deladd6 = '" . DB_escape_string($_SESSION['Items']->DelAdd6) . "',
-				contactphone = '" . DB_escape_string($_SESSION['Items']->PhoneNo) . "',
-				contactemail = '" . DB_escape_string($_SESSION['Items']->Email) . "',
+				deladd1 = '" . $_SESSION['Items']->DelAdd1 . "',
+				deladd2 = '" . $_SESSION['Items']->DelAdd2 . "',
+				deladd3 = '" . $_SESSION['Items']->DelAdd3 . "',
+				deladd4 = '" . $_SESSION['Items']->DelAdd4 . "',
+				deladd5 = '" . $_SESSION['Items']->DelAdd5 . "',
+				deladd6 = '" . $_SESSION['Items']->DelAdd6 . "',
+				contactphone = '" . $_SESSION['Items']->PhoneNo . "',
+				contactemail = '" . $_SESSION['Items']->Email . "',
 				freightcost = " . $_SESSION['Items']->FreightCost .",
 				fromstkloc = '" . $_SESSION['Items']->Location ."',
 				deliverydate = '" . $DelDate . "',
@@ -397,7 +397,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 								quantity=' . $StockItem->Quantity . ',
 								discountpercent=' . floatval($StockItem->DiscountPercent) . ',
 								completed=' . $Completed . ",
-								poline='" . DB_escape_string($StockItem->POLine) . "',
+								poline='" . $StockItem->POLine . "',
 								itemdue='" . FormatDateForSQL($StockItem->ItemDue) . "'
 					WHERE salesorderdetails.orderno=" . $_SESSION['ExistingOrder'] . "
 					AND salesorderdetails.orderlineno='" . $StockItem->LineNumber . "'";
@@ -511,11 +511,11 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
 	echo '<CENTER><B>' . _('Order Summary') . "</B>
 	<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1><TR>
-		<TD class='tableheader'>". _('Item Description') ."</TD>
-		<TD class='tableheader'>". _('Quantity') ."</TD>
-		<TD class='tableheader'>". _('Unit') ."</TD>
-		<TD class='tableheader'>". _('Price') ."</TD>
-		<TD class='tableheader'>". _('Total') ."</TD>
+		<TH>". _('Item Description') ."</TH>
+		<TH>". _('Quantity') ."</TH>
+		<TH>". _('Unit') ."</TH>
+		<TH>". _('Price') ."</TH>
+		<TH>". _('Total') ."</TH>
 	</TR>";
 
 	$_SESSION['Items']->total = 0;
@@ -530,10 +530,10 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 		$DisplayQuantity = number_format($StockItem->Quantity,$StockItem->DecimalPlaces);
 
 		if ($k==1){
-			echo "<tr bgcolor='#CCCCCC'>";
+			echo '<TR class="OddTableRows">';
 			$k=0;
 		} else {
-			echo "<tr bgcolor='#EEEEEE'>";
+			echo '<TR class="EvenTableRows">';
 			$k=1;
 		}
 		echo "<TD>$StockItem->ItemDescription</TD>
