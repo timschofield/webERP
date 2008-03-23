@@ -1,5 +1,6 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 
+<P>22/3/08 Tim: Removed the default charset from the database definitions.
 <P>22/3/08 Tim: Altered the Connect_DB scripts to correctly show quotes in DB_escape_string.
 <P>22/3/08 Tim: Completed sweep of code to remove unnecessay DB_escape_strings, remove unneceassry Class="tableheader" statements, and put the row colouring into the css file.
 <P>12/3/08 Tim: to side step SQL injection and cross scripting attacks modified session.inc to DB_escape_string for all elements of $_POST and $_GET - the DB_escape_string functions are now redundant inside scripts so started to remove these in a sweep of all code.
