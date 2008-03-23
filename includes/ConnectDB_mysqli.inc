@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 /* PeterMoulding.com
 20071102 Change from mysql to mysqli;
@@ -74,7 +74,7 @@ function DB_query ($SQL,
 			include($PathPrefix . 'includes/footer.inc');
 			exit;
 		}
-	} elseif (DB_error_no($Conn)==0 AND $_SESSION['MonthsAuditTrail']>0){
+	} elseif (isset($_SESSION['MonthsAuditTrail']) and (DB_error_no($Conn)==0 AND $_SESSION['MonthsAuditTrail']>0)){
 		
 		$SQLArray = explode(' ', $SQL);
 	
@@ -159,8 +159,7 @@ function DB_Last_Insert_ID(&$Conn,$table, $fieldname){
 
 function DB_escape_string($String){
 	global $db;
-	return mysqli_real_escape_string($db, htmlentities($String));
-	
+	return mysqli_real_escape_string($db, htmlentities($String, ENT_COMPAT, _('ISO-8859-1')));	
 }
 
 function DB_show_tables(&$Conn){

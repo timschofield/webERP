@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 define ('LIKE','LIKE');
 
@@ -58,7 +58,7 @@ function DB_query ($SQL,
 			include($PathPrefix . 'includes/footer.inc');
 			exit;
 		}
-	}elseif (DB_error_no($Conn)==0 AND $_SESSION['MonthsAuditTrail']>0){
+	} elseif (isset($_SESSION['MonthsAuditTrail']) and (DB_error_no($Conn)==0 AND $_SESSION['MonthsAuditTrail']>0)){
 		
 		$SQLArray = explode(' ', $SQL);
 	
@@ -137,7 +137,7 @@ function DB_Last_Insert_ID(&$Conn,$table, $fieldname){
 }
 
 function DB_escape_string($String){
-	return mysql_real_escape_string(htmlentities($String));
+	return mysql_real_escape_string(htmlentities($String, ENT_COMPAT, _('ISO-8859-1')));
 }
 
 function DB_show_tables(&$Conn){
