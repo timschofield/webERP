@@ -4,7 +4,7 @@ CREATE TABLE `audittrail` (
 	`querystring` text,
 	KEY `UserID` (`userid`),
   CONSTRAINT `audittrail_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `www_users` (`userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 ALTER TABLE `salesorders` CHANGE `contactemail` `contactemail` VARCHAR( 40 ) DEFAULT NULL;
 INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('MonthsAuditTrail', '1');
@@ -23,7 +23,7 @@ CREATE TABLE `factorcompanies` (
   `fax` varchar(25) NOT NULL default '',
   `email` varchar(55) NOT NULL default '',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 INSERT INTO `factorcompanies` ( `id` , `coyname` ) VALUES (null, 'None');
 
