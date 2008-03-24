@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.31 $ */
+/* $Revision: 1.32 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing 
@@ -70,6 +70,7 @@ if (isset($_GET['SupplierID'])){
 	$_SESSION['SuppTrans']->ExRate = $myrow['exrate'];
 	$_SESSION['SuppTrans']->TaxGroup = $myrow['taxgroupid'];
 	$_SESSION['SuppTrans']->TaxGroupDescription = $myrow['taxgroupdescription'];
+	$_SESSION['SuppTrans']->SupplierID = $myrow['supplierid'];	
 	
 	if ($myrow['daysbeforedue'] == 0){
 		 $_SESSION['SuppTrans']->Terms = '1' . $myrow['dayinfollowingmonth'];
@@ -292,7 +293,7 @@ if (!isset($_POST['PostInvoice'])){
 			$TableHeader = "<TR><TH>" . _('Account') .
 					"</TH><TH>" . _('Name') .
 					"</TH><TH>" . _('Amount') . '<BR>' . _('in') . ' ' . $_SESSION['SuppTrans']->CurrCode . "</TH>
-					<TH'>" . _('Shipment') ."</TH>
+					<TH>" . _('Shipment') ."</TH>
 					<TH>" . _('Job') . 	"</TH>
 					<TH>" . _('Narrative') . '</TH></TR>';
 			echo $TableHeader;
@@ -1016,9 +1017,8 @@ then do the updates and inserts to process the invoice entered */
 		unset( $_SESSION['SuppTrans']->Shipts);
 		unset( $_SESSION['SuppTrans']->GLCodes);
 		unset( $_SESSION['SuppTrans']);
-
 		prnMsg(_('Supplier invoice number') . ' ' . $InvoiceNo . ' ' . _('has been processed'),'success');
-		echo "<P><A HREF='$rootpath/SelectSupplier.php'>" . _('Enter Another invoice') . '</A>';
+		echo "<P><A HREF='$rootpath/SupplierInvoice.php?&SupplierID=" .$_SESSION['SuppTrans']->SupplierID . "'>" . _('Enter another Invoice for this Supplier') . '</A>';
 	}
 
 } /*end of process invoice */
