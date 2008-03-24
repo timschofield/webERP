@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.41 $ */
+/* $Revision: 1.42 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -284,7 +284,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 	$ErrMsg = _('The order cannot be added because');
 	$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg);
 
-	$OrderNo = GetNextTransNo(30, &$db);
+	$OrderNo = GetNextTransNo(30, $db);
 	$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (
 						orderlineno,
 						orderno,
