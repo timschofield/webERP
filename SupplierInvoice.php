@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing 
@@ -1013,11 +1013,11 @@ then do the updates and inserts to process the invoice entered */
 		
 		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 
+		prnMsg(_('Supplier invoice number') . ' ' . $InvoiceNo . ' ' . _('has been processed'),'success');
 		unset( $_SESSION['SuppTrans']->GRNs);
 		unset( $_SESSION['SuppTrans']->Shipts);
 		unset( $_SESSION['SuppTrans']->GLCodes);
 		unset( $_SESSION['SuppTrans']);
-		prnMsg(_('Supplier invoice number') . ' ' . $InvoiceNo . ' ' . _('has been processed'),'success');
 		echo "<P><A HREF='$rootpath/SupplierInvoice.php?&SupplierID=" .$_SESSION['SuppTrans']->SupplierID . "'>" . _('Enter another Invoice for this Supplier') . '</A>';
 	}
 
