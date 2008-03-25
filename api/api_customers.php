@@ -285,7 +285,8 @@
 /* Insert a new customer in the webERP database. This function takes an 
    associative array called $CustomerDetails, where the keys are the
    names of the fields in the debtorsmaster table, and the values are the 
-   values to insert. The only mandatory fields are the debtorno and name 
+   values to insert. The only mandatory fields are the debtorno, name,
+   currency code, sales type, payment terms, and reason code 
    fields. If the other fields aren't set, then the database defaults
    are used. The function returns an array called $Errors. The database 
    is only updated if the $Errors is empty, else the function returns an 
