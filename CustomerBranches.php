@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 $PageSecurity = 3;
 
@@ -687,7 +687,7 @@ if (! isset($_GET['delete'])) {
 	if (!isset($_POST['specialinstructions'])) {$_POST['specialinstructions']='';}
 	echo '<TD><input tabindex=10 type="Text" name="specialinstructions" size=56 value="'. $_POST['specialinstructions'].'"></TD></TR>';
 	echo '<TR><TD>'._('Delivery Days').':</TD>';
-	if (!isset($_POST['EstDeliveryDays'])) {$_POST['EstDeliveryDays']='';}
+	if (!isset($_POST['EstDeliveryDays'])) {$_POST['EstDeliveryDays']=0;}
 	echo '<TD><input ' .(in_array('EstDeliveryDays',$Errors) ?  'class="inputerror"' : '' ) .' tabindex=11 type="Text" name="EstDeliveryDays" SIZE=4 MAXLENGTH=2 value='. $_POST['EstDeliveryDays'].'></TD></TR>';
 	echo '<TR><TD>'._('Forward Date After (day in month)').':</TD>';
 	if (!isset($_POST['FwdDate'])) {$_POST['FwdDate']=0;}
