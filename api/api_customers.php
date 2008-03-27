@@ -5,7 +5,7 @@
    miscfunctions, and datefunctions.*/
 	$AllowAnyone = true;
 	$PathPrefix=dirname(__FILE__).'/../';
-	require_once($PathPrefix.'includes/session.inc');
+	include($PathPrefix.'includes/session.inc');
 	$_SESSION['db']=$db;
 
 /* Define error codes that are returned by api functions*/	
@@ -42,12 +42,14 @@
 /* Get weberp authentication, and return a valid database
    connection */
 	function db($user, $password) {
+		$_SESSION['UserID'] = $user;
 		$sql = "SELECT userid
 			FROM www_users
 			WHERE userid='" . DB_escape_string($user) . "'
 			AND (password='" . CryptPass(DB_escape_string($password)) . "'
 			OR  password='" . DB_escape_string($password) . "')";
 		$Auth_Result = DB_query($sql, $_SESSION['db']);
+		$myrow=DB_fetch_row($Auth_Result);
 		if (DB_num_rows($Auth_Result) > 0) {
 			return $_SESSION['db'];
 		} else {
@@ -294,7 +296,7 @@
 */	
 	function InsertCustomer($CustomerDetails, $user, $password) {
 		$db = db($user, $password);
-		if ($db==NoAuthorisation) {
+		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
@@ -409,7 +411,7 @@
 */	
 	function ModifyCustomer($CustomerDetails, $user, $password) {
 		$db = db($user, $password);
-		if ($db==NoAuthorisation) {
+		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
@@ -513,6 +515,7 @@
 		$sql = substr($sql,0,-2).' WHERE debtorno="'.$CustomerDetails['debtorno'].'"';
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
+			echo DB_error_no($db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			}
@@ -526,7 +529,7 @@
 */	
 	function GetCustomer($DebtorNumber, $user, $password) {
 		$db = db($user, $password);
-		if ($db==NoAuthorisation) {
+		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
@@ -544,7 +547,7 @@
 */	
 	function SearchCustomers($Field, $Criteria, $user, $password) {
 		$db = db($user, $password);
-		if ($db==NoAuthorisation) {
+		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
@@ -559,4 +562,7 @@
 		}
 		return $DebtorList;
 	}
+	
+//	$client=new SoapServer();
+	
 ?>
