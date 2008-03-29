@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 /* PeterMoulding.com
 20071102 Change from mysql to mysqli;
@@ -23,7 +23,7 @@ if ( !$db ) {
 }
 
 if (!mysqli_select_db($db,$_SESSION['DatabaseName'])) {
-	echo '<BR>' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
+    echo '<BR>' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');	echo '<BR><A HREF="index.php">' . _('Back to login page') . '</A>';
 	echo '<BR><A HREF="index.php">' . _('Back to login page') . '</A>';
 	unset ($_SESSION['DatabaseName']);
 	exit;
