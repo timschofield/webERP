@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 8;
 
@@ -8,110 +8,177 @@ include ('includes/session.inc');
 $title = _('General Ledger Transaction Inquiry');
 include('includes/header.inc');
 
-if (!isset($_GET['TypeID']) OR !isset($_GET['TransNo'])) { /*Script was not passed the correct parameters */
+// Page Border
+echo '<table border=1 width=100%><tr><td bgcolor="#FFFFFF"><center>';
+$menuUrl = '<a href="'. $rootpath . '/index.php?&Application=GL'. SID .'">' . _('General Ledger Menu') . '</a>';
 
-	prnMsg(_('The script must be called with a valid transaction type and transaction number to review the general ledger postings for'),'warn');
-	echo "<P><A HREF='$rootpath/index.php?". SID ."'>" . _('Back to the menu') . '</A>';
-	exit;
+if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
+{
+		prnMsg(_('This page requires a valid transaction type and number'),'warn');
+		echo $menuUrl;
+} else {
+		$typeSQL = "SELECT typename,
+					typeno
+				FROM systypes
+				WHERE typeid = " . $_GET['TypeID'];
+		$TypeResult = DB_query($typeSQL,$db);
+
+		if ( DB_num_rows($TypeResult) == 0 )
+		{
+				prnMsg(_('No transaction of this type with id') . ' ' . $_GET['TypeID'],'error');
+				echo $menuUrl;
+		} else {
+				$myrow = DB_fetch_row($TypeResult);
+				DB_free_result($TypeResult);
+				$TransName = $myrow[0];
+
+				// Context Navigation and Title
+				echo '<table width=100%>
+						<td width=40% align=left>' . $menuUrl. '</td>
+						<td align=left><font size=4 color=blue><u><b>' . $TransName . ' ' . $_GET['TransNo'] . '</b></u></font></td>
+				      </table><p>';
+
+				//
+				//========[ SHOW SYNOPSYS ]===========
+				//
+				echo '<table border=1>'; //Main table
+				echo '<tr>
+						<th>' . _('Date') . '</th>
+						<th>' . _('Period') .'</th>
+						<th>'. _('GL Account') .'</th>
+						<th>'. _('--- Debits ---') .'</th>
+						<th>'. _('--- Credits ---') .'</th>
+						<th>' . _('Description') .'</th>
+						<th>'. _('Posted') . '</th>
+					</tr>';
+
+				$SQL = "SELECT gltrans.type,
+							gltrans.trandate,
+							gltrans.periodno,
+							gltrans.account,
+							gltrans.narrative,
+							gltrans.amount,
+							gltrans.posted,
+							chartmaster.accountname
+						FROM gltrans,
+							chartmaster
+						WHERE gltrans.account = chartmaster.accountcode
+						AND gltrans.type= " . $_GET['TypeID'] . "
+						AND gltrans.typeno = " . $_GET['TransNo'] . "
+						ORDER BY gltrans.counterindex";
+				$transResult = DB_query($SQL,$db);
+
+				$Posted = _('Yes');
+				$CreditTotal = $DebitTotal = 0;
+
+				while ( $transRow = DB_fetch_array($transResult) )
+				{
+					$tranDate = ConvertSQLDate($transRow["trandate"]);
+					$detailResult = false;
+
+					if ( $transRow['amount'] > 0)
+					{
+							$DebitAmount = number_format($transRow['amount'],2);
+							$DebitTotal += $transRow['amount'];
+							$CreditAmount = '&nbsp';
+					} else {
+							$CreditAmount = number_format(-$transRow['amount'],2);
+							$CreditTotal += $transRow['amount'];
+							$DebitAmount = '&nbsp';
+					}
+
+					if ( $transRow['account'] == $_SESSION['CompanyRecord']['debtorsact'] )
+					{
+							$URL = $rootpath . '/CustomerInquiry.php?' . SID . '&CustomerID=';
+							$date = '&TransAfterDate=' . $tranDate;
+
+							$detailSQL = "SELECT debtortrans.debtorno,
+											debtortrans.ovamount,
+											debtorsmaster.name
+										FROM debtortrans,
+											debtorsmaster
+										WHERE debtortrans.debtorno = debtorsmaster.debtorno
+										AND debtortrans.type = 12
+										AND debtortrans.transno = " . $_GET['TransNo'];
+							$detailResult = DB_query($detailSQL,$db);
+					}
+					elseif ( $transRow['account'] == $_SESSION['CompanyRecord']['creditorsact'] )
+					{
+							$URL = $rootpath . '/SupplierInquiry.php?' . SID . '&SupplierID=';
+							$date = '&FromDate=' . $tranDate;
+
+							$detailSQL = "SELECT supptrans.supplierno,
+											supptrans.ovamount,
+											suppliers.suppname
+										FROM supptrans,
+											suppliers
+										WHERE supptrans.supplierno = suppliers.supplierid
+										AND supptrans.type = 22
+										AND supptrans.transno = " . $_GET['TransNo'];
+							$detailResult = DB_query($detailSQL,$db);
+					} else {
+							$URL = $rootpath . '/GLAccountInquiry.php?' . SID . '&Account=' . $transRow['account'];
+
+							if( !$transRow['narrative'] )
+							{
+								$transRow['narrative'] = '&nbsp';
+							}
+							if ( !$transRow['posted'] )
+							{
+								$Posted = _('No');
+							}
+
+							echo '<tr>
+									<td>' . $tranDate . '</td>
+									<td align=right>' . $transRow['periodno'] . '</td>
+									<td><a href="' . $URL . '">' . $transRow['accountname'] . '</a></td>
+									<td align=right>' . $DebitAmount . '</td>
+									<td align=right>' . $CreditAmount . '</td>
+									<td>' . $transRow['narrative'] . '</td>
+									<td>' . $Posted . '</td>
+								</tr>';
+					}
+
+					if ($detailResult)
+					{
+						while ( $detailRow = DB_fetch_row($detailResult) )
+						{
+							if ( $transRow['amount'] > 0)
+							{
+									$Debit = number_format($detailRow[1],2);
+									$Credit = '&nbsp';
+							} else {
+									$Credit = number_format(-$detailRow[1],2);
+									$Debit = '&nbsp';
+							}
+
+							echo '<tr>
+									<td>' . $tranDate . '</td>
+									<td align=right>' . $transRow['periodno'] . '</td>
+									<td><a href="' . $URL . $detailRow[0] . $date . '">' . $transRow['accountname']  . ' - ' . $detailRow[2] . '</a></td>
+									<td align=right>' . $Debit . '</td>
+									<td align=right>' . $Credit . '</td>
+									<td>' . $transRow['narrative'] . '</td>
+									<td>' . $Posted . '</td>
+								</tr>';
+						}
+						DB_free_result($detailResult);
+					}
+				}
+				DB_free_result($transResult);
+
+				echo '<tr bgcolor="#FFFFFF">
+						<td align=right colspan=3><b>' . _('Total') . '</b></td>
+						<td align=right>' . number_format(($DebitTotal),2) . '</td>
+						<td align=right>' . number_format((-$CreditTotal),2) . '</td>
+						<td colspan=2>&nbsp</td>
+					</tr>';
+				echo '</table><p>';
+		}
+
 }
 
-
-$SQL = "SELECT typename, 
-		typeno FROM systypes 
-		WHERE typeid=" . $_GET['TypeID'];
-
-$ErrMsg =_('The transaction type') . ' ' . $_GET['TypeID'] . ' ' . _('could not be retrieved');
-$TypeResult = DB_query($SQL,$db,$ErrMsg);
-
-if (DB_num_rows($TypeResult)==0){
-        prnMsg(_('No transaction type is defined for type') . ' ' . $_GET['TypeID'],'error');
-	include('includes/footer.inc');
-	exit;
-}
-
-
-$myrow = DB_fetch_row($TypeResult);
-$TransName = $myrow[0];
-if ($myrow[1]<$_GET['TransNo']){
-	prnMsg(_('The transaction number the script was called with is requesting a') . ' ' . $TransName . ' ' . _('beyond the last one entered'),'error');
-	include('includes/footer.inc');
-	exit;
-}
-
-echo '<BR><CENTER><FONT SIZE=4 COLOR=BLUE>'.$TransName.' ' . $_GET['TransNo'] . '</FONT>';
-
-
-$SQL = "SELECT trandate,
-		account,
-		periodno,
-		accountname,
-		narrative,
-		amount,
-		posted
-	FROM gltrans INNER JOIN chartmaster
-	ON gltrans.account = chartmaster.accountcode
-	WHERE gltrans.type= " . $_GET['TypeID'] . "
-	AND gltrans.typeno = " . $_GET['TransNo'] . "
-	ORDER BY counterindex";
-
-$ErrMsg = _('The transactions for') . ' ' . $TransName . ' ' . _('number') . ' ' .  $_GET['TransNo'] . ' '. _('could not be retrieved');
-$TransResult = DB_query($SQL,$db,$ErrMsg);
-
-if (DB_num_rows($TransResult)==0){
-        prnMsg(_('No general ledger transactions have been created for') . ' ' . $TransName . ' ' . _('number') . ' ' . $_GET['TransNo'],'info');
-	include('includes/footer.inc');
-	exit;
-}
-
-/*show a table of the transactions returned by the SQL */
-
-echo '<CENTER><TABLE CELLPADDING=2 width=100%>';
-
-$TableHeader = '<TR><TH>' . _('Date') . '</TH>
-			<TH>' . _('Period') .'</TH>
-			<TH>'. _('Account') .'</TH>
-			<TH>'. _('Amount') .'</TH>
-			<TH>' . _('Narrative') .'</TH>
-			<TH>'. _('Posted') . '</TH></TR>';
-
-echo $TableHeader;
-
-$j = 1;
-$k=0; //row colour counter
-while ($myrow=DB_fetch_array($TransResult)) {
-       if ($k==1){
-              echo '<tr class="EvenTableRows">';
-              $k=0;
-       } else {
-              echo '<tr class="OddTableRows">';
-              $k++;
-       }
-
-       if ($myrow['posted']==0){
-       		$Posted = _('No');
-	} else {
-		$Posted = _('Yes');
-	}
-       $FormatedTranDate = ConvertSQLDate($myrow["trandate"]);
-       printf('<td>%s</td>
-       		<td ALIGN=RIGHT>%s</td>
-		<td>%s - %s</td>
-		<td ALIGN=RIGHT>%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		</tr>',
-		$FormatedTranDate,
-		$myrow['periodno'],
-		$myrow['account'],
-		$myrow['accountname'],
-		number_format($myrow['amount'],2),
-		$myrow['narrative'],
-		$Posted);
-}
-//end of while loop
-
-echo '</TABLE></CENTER>';
-
+echo '</center></td></tr></table>'; // end Page Border
 include('includes/footer.inc');
 
 ?>
