@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.66 $ */
+/* $Revision: 1.67 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -887,7 +887,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	     $Discount = 0;
 
 	     $i=1;
-	     do {
+	      while ($i<$_SESSION['QuickEntries'] and $_POST['part_' . $i]!='') {
 			$QuickEntryCode = 'part_' . $i;
 			$QuickEntryQty = 'qty_' . $i;
 			$QuickEntryPOLine = 'poline_' . $i;
@@ -901,7 +901,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			if (isset($_POST[$QuickEntryQty])) {
 				$NewItemQty = $_POST[$QuickEntryQty];
 			}
-			if (isset($_POST[$QuickEntryItemDue])) {
+			if (isset($_POST[$QuickEntryCode])) {
 				$NewItemDue = $_POST[$QuickEntryItemDue];
 			} else {
 				$NewItemDue = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items']->DeliveryDays);				
@@ -956,8 +956,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					include('includes/SelectOrderItems_IntoCart.inc');
 				}
 			}
-	     } while ($i<=$_SESSION['QuickEntries']); /*loop to the next quick entry record */
-
+	     }
 	     unset($NewItem);
 	 } /* end of if quick entry */
 
