@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 8;
 
@@ -46,8 +46,8 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 						<th>' . _('Date') . '</th>
 						<th>' . _('Period') .'</th>
 						<th>'. _('GL Account') .'</th>
-						<th>'. _('--- Debits ---') .'</th>
-						<th>'. _('--- Credits ---') .'</th>
+						<th>'. _('Debits') .'</th>
+						<th>'. _('Credits') .'</th>
 						<th>' . _('Description') .'</th>
 						<th>'. _('Posted') . '</th>
 					</tr>';
@@ -70,6 +70,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 
 				$Posted = _('Yes');
 				$CreditTotal = $DebitTotal = 0;
+				$j=0;
 
 				while ( $transRow = DB_fetch_array($transResult) )
 				{
@@ -128,8 +129,14 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 								$Posted = _('No');
 							}
 
-							echo '<tr>
-									<td>' . $tranDate . '</td>
+							if ($j==1) {
+								echo '<tr class="OddTableRows">';
+								$j=0;
+							} else {
+								echo '<tr class="EvenTableRows">';
+								$j++;
+							}
+							echo '	<td>' . $tranDate . '</td>
 									<td align=right>' . $transRow['periodno'] . '</td>
 									<td><a href="' . $URL . '">' . $transRow['accountname'] . '</a></td>
 									<td align=right>' . $DebitAmount . '</td>
@@ -152,8 +159,14 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 									$Debit = '&nbsp';
 							}
 
-							echo '<tr>
-									<td>' . $tranDate . '</td>
+							if ($j==1) {
+								echo '<tr class="OddTableRows">';
+								$j=0;
+							} else {
+								echo '<tr class="EvenTableRows">';
+								$j++;
+							}
+							echo '	<td>' . $tranDate . '</td>
 									<td align=right>' . $transRow['periodno'] . '</td>
 									<td><a href="' . $URL . $detailRow[0] . $date . '">' . $transRow['accountname']  . ' - ' . $detailRow[2] . '</a></td>
 									<td align=right>' . $Debit . '</td>
