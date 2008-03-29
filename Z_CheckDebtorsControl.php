@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 $PageSecurity=15;
 
 include('includes/session.inc');
@@ -84,6 +84,7 @@ include('includes/header.inc');
 
 		$curPeriod = $_POST['FromPeriod'];
 		$glOpening = $invTotal = $recTotal = $glClosing = $calcTotal = $difTotal = 0;
+		$j=0;
 
 		while ( $curPeriod <= $_POST['ToPeriod'] )
 		{
@@ -99,8 +100,14 @@ include('includes/header.inc');
 			$glOpening += $dtRow['bfwd'];
 			$glMovement = $dtRow['bfwd'] + $dtRow['actual'];
 
-			echo "<tr>
-					<td>" . $curPeriod . "</td>
+			if ($j==1) {
+				echo '<tr class="OddTableRows">';
+				$j=0;
+			} else {
+				echo '<tr class="EvenTableRows">';
+				$j++;
+			}
+			echo "<td>" . $curPeriod . "</td>
 					<td align=right>" . number_format($dtRow['bfwd'],2) . "</td>";
 
 			$SQL = "SELECT SUM((ovamount+ovgst)/rate) AS totinvnetcrds
