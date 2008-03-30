@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 $PageSecurity = 3;
 
 include('includes/session.inc');
@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 	$_POST['AreaCode'] = strtoupper($_POST['AreaCode']);
-	$sql = 'SELECT count(areacode) from areas WHERE areacode="'.$_POST['AreaCode'].'"';
+	$sql = "SELECT count(areacode) from areas WHERE areacode='".$_POST['AreaCode']."'";
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_row($result);
 	// mod to handle 3 char area codes
