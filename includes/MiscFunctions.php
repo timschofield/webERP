@@ -38,7 +38,7 @@ function IsEmailAddress($TestEmailAddress){
 
 /*thanks to Gavin Sharp for this regular expression to test validity of email addresses */
 
-	if (function_exists("preg_match")){
+	if (function_exists('preg_match')){
 		if(preg_match("/^(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6}$/", $TestEmailAddress)){
 			return true;
 		} else {
@@ -125,16 +125,27 @@ for detail of the European Central Bank rates - published daily */
 	  return $Currencies;
 }	
 	
-
 function GetCurrencyRate($CurrCode,$CurrenciesArray) {
   if (!isset($CurrenciesArray[$CurrCode]) AND $CurrCode !='EUR'){
-  	prnMsg($CurrCode, ' ' . _('rates are not available from www.ecb.int'),'warn');
-  	return 0;
+  	prnMsg($CurrCode . ' ' . _('rates are not available from www.ecb.int - using Oanda FX quotes'),'warn');
+  	return quote_oanda_currency($CurrCode);
   } elseif ($CurrCode=='EUR'){
   	return 1/$CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']];
   }	else {
   	return $CurrenciesArray[$CurrCode]/$CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']];
   }
+}
+
+function quote_oanda_currency($CurrCode) {
+	$page = file('http://www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurCode .  '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault']);
+	$match = array();
+	preg_match('/(.+),(\w{3}),([0-9.]+),([0-9.]+)/i', implode('', $page), $match);
+
+	if ( sizeof($match) > 0 ){
+      	  	return $match[3];
+	} else {
+      	   	return false;
+	}
 }
 
 
