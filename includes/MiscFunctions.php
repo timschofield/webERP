@@ -127,7 +127,6 @@ for detail of the European Central Bank rates - published daily */
 	
 function GetCurrencyRate($CurrCode,$CurrenciesArray) {
   if (!isset($CurrenciesArray[$CurrCode]) AND $CurrCode !='EUR'){
-  	prnMsg($CurrCode . ' ' . _('rates are not available from www.ecb.int - using Oanda FX quotes'),'warn');
   	return quote_oanda_currency($CurrCode);
   } elseif ($CurrCode=='EUR'){
   	return 1/$CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']];
@@ -137,7 +136,7 @@ function GetCurrencyRate($CurrCode,$CurrenciesArray) {
 }
 
 function quote_oanda_currency($CurrCode) {
-	$page = file('http://www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurCode .  '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault']);
+	$page = file('http://www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode .  '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault']);
 	$match = array();
 	preg_match('/(.+),(\w{3}),([0-9.]+),([0-9.]+)/i', implode('', $page), $match);
 
