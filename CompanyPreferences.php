@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity =10;
 
@@ -128,6 +128,21 @@ if (isset($_POST['submit'])) {
 			$ErrMsg =  _('The company preferences could not be updated because');
 			$result = DB_query($sql,$db,$ErrMsg);
 			prnMsg( _('Company preferences updated'),'success');
+			
+			/* Alter the exchange rates in the currencies table */
+			
+			/* Get default currency rate */
+			$sql='SELECT rate from currencies WHERE currabrev="'.$_POST['CurrencyDefault'].'"';
+			$result = DB_query($sql,$db);
+			$myrow = DB_fetch_row($result);
+			$NewCurrencyRate=$myrow[0];
+			
+			/* Set new rates */
+			$sql='UPDATE currencies SET rate=rate/'.$NewCurrencyRate;
+			$ErrMsg =  _('Could not update the currency rates');
+			$result = DB_query($sql,$db,$ErrMsg);
+			
+			/* End of update currencies */
 			
 			$ForceConfigReload = True; // Required to force a load even if stored in the session vars
 			include('includes/GetConfig.php');
