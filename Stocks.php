@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.51 $ */
+/* $Revision: 1.52 $ */
 
 $PageSecurity = 11;
 
@@ -19,7 +19,7 @@ if (isset($_GET['StockID'])){
 }
 
 if (isset($StockID)) {
-	$sql = 'SELECT COUNT(stockid) FROM stockmaster WHERE stockid="'.$StockID.'"';
+	$sql = "SELECT COUNT(stockid) FROM stockmaster WHERE stockid='".$StockID."'";
 	$result = DB_query($sql,$db);
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]==0) {
