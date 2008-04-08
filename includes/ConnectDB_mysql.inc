@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 define ('LIKE','LIKE');
 
@@ -131,7 +131,7 @@ function DB_Last_Insert_ID(&$Conn,$table, $fieldname){
 	} else {
 		$Last_Insert_ID = 0;
 	}
-	unset($_SESSION['LastInsertId']);
+//	unset($_SESSION['LastInsertId']);
 	return $Last_Insert_ID;
 }
 

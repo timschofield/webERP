@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 /* PeterMoulding.com
 20071102 Change from mysql to mysqli;
@@ -153,7 +153,7 @@ function DB_Last_Insert_ID(&$Conn,$table, $fieldname){
 	} else {
 		$Last_Insert_ID = 0;
 	}
-	unset($_SESSION['LastInsertId']);
+//	unset($_SESSION['LastInsertId']);
 	return $Last_Insert_ID;
 }
 
