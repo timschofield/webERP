@@ -1,5 +1,6 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 
+<P>10/4/08 Harald Ringehan: ConnectDB_mysql.inc and other db abrastraction scripts used htmlspecialchars instead of htmlentities to prevent XSS attacks inside DB_escape_string function - this leaves accented characters alone and doesn't disturb translations. Bug spotted as a result of Umlauts on command buttons failing to work.
 <P>08/4/08 Tim: Correct DB_last_insert_id bug in ConnectDB_mysql.inc and ConnectDB_mysqli.inc
 <P>06/4/08 Muz: Changes to make options clearer
 <P>06/4/08 Tim: Test whether StockID is set before seeing if part already exists. 

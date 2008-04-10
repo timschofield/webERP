@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 define ('LIKE','LIKE');
 
@@ -136,7 +136,7 @@ function DB_Last_Insert_ID(&$Conn,$table, $fieldname){
 }
 
 function DB_escape_string($String){
-	return mysql_real_escape_string(htmlentities($String, ENT_COMPAT, _('ISO-8859-1')));
+	return mysql_real_escape_string(htmlspecialchars($String, ENT_COMPAT, _('ISO-8859-1')));
 }
 
 function DB_show_tables(&$Conn){

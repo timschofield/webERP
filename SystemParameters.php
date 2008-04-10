@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.39 $ */
+/* $Revision: 1.40 $ */
 
 $PageSecurity =15;
 
@@ -667,11 +667,7 @@ echo '<TR><TD>' . _('Only allow secure socket connections') . ':</TD>
 /*Perform Database maintenance DB_Maintenance*/
 echo '<TR><TD>' . _('Perform Database Maintenance At Logon') . ':</TD>
 	<TD><SELECT Name="X_DB_Maintenance">';
-	if ($_SESSION['DB_Maintenance']=='1'){
-		echo '<OPTION SELECTED VALUE="1">'._('Daily');
-	} else {
-		echo '<OPTION VALUE="1">'._('Daily');
-	}
+	
 	if ($_SESSION['DB_Maintenance']=='7'){
 		echo '<OPTION SELECTED VALUE="7">'._('Weekly');
 	} else {
@@ -682,7 +678,7 @@ echo '<TR><TD>' . _('Perform Database Maintenance At Logon') . ':</TD>
 	} else {
 		echo '<OPTION VALUE="30">'._('Monthly');
 	}
-	if ($_SESSION['DB_Maintenance']=='0'){
+	if ($_SESSION['DB_Maintenance']!='7' AND $_SESSION['DB_Maintenance']!='30'){
 		echo '<OPTION SELECTED VALUE="0">'._('Never');
 	} else {
 		echo '<OPTION VALUE="0">'._('Never');

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 define ('LIKE','ILIKE');
 /* $PgConnStr = $PgConnStr = "host=".$host." dbname=".$_SESSION['DatabaseName']; */
@@ -121,7 +121,7 @@ function DB_Last_Insert_ID(&$Conn, $table, $fieldname) {
 }
 
 function DB_escape_string($String){
-	Return pg_escape_string($String);
+	Return pg_escape_string(htmlspecialchars($String, ENT_COMPAT, _('ISO-8859-1')));
 }
 
 function INTERVAL( $val, $Inter ) {
