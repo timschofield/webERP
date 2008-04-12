@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing 
@@ -20,7 +20,7 @@ include('includes/SQL_CommonFunctions.inc');
 
 echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</A><BR>';
 
-if (isset($_GET['SupplierID'])){
+if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 
  /*It must be a new invoice entry - clear any existing invoice details from the SuppTrans object and initiate a newy*/
 	if (isset( $_SESSION['SuppTrans'])){
@@ -1013,12 +1013,13 @@ then do the updates and inserts to process the invoice entered */
 		
 		$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, True);
 
+		$SupplierID = $_SESSION['SuppTrans']->SupplierID;
 		prnMsg(_('Supplier invoice number') . ' ' . $InvoiceNo . ' ' . _('has been processed'),'success');
 		unset( $_SESSION['SuppTrans']->GRNs);
 		unset( $_SESSION['SuppTrans']->Shipts);
 		unset( $_SESSION['SuppTrans']->GLCodes);
 		unset( $_SESSION['SuppTrans']);
-		echo "<P><A HREF='$rootpath/SupplierInvoice.php?&SupplierID=" .$_SESSION['SuppTrans']->SupplierID . "'>" . _('Enter another Invoice for this Supplier') . '</A>';
+		echo "<P><A HREF='$rootpath/SupplierInvoice.php?&SupplierID=" .$SupplierID . "'>" . _('Enter another Invoice for this Supplier') . '</A>';
 	}
 
 } /*end of process invoice */
