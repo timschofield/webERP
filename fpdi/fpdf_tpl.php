@@ -1,8 +1,8 @@
 <?php
 //
-//  fpdf_tpl - Version 1.0.2
+//  FPDF_TPL - Version 1.1.1
 //
-//    Copyright 2004,2005 Setasign - Jan Slabon
+//    Copyright 2004-2007 Setasign - Jan Slabon
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -17,9 +17,9 @@
 //  limitations under the License.
 //
 
-require_once("fpdi.php");
+require_once("fpdf.php");
 
-class fpdf_tpl extends fpdf {
+class FPDF_TPL extends FPDF {
     /**
      * Array of Tpl-Data
      * @var array
@@ -36,7 +36,7 @@ class fpdf_tpl extends fpdf {
      * "In Template"-Flag
      * @var boolean
      */
-    var $intpl = false;
+    var $_intpl = false;
     
     /**
      * Nameprefix of Templates used in Resources-Dictonary
@@ -45,17 +45,10 @@ class fpdf_tpl extends fpdf {
     var $tplprefix = "/TPL";
 
     /**
-     * Nameprefix of Fonts used in Resources-Dictonary
-     * (not realy needed, but for future versions with import-function needed)
-     * @var string
-     */
-    var $fontprefix = "/F";
-
-    /**
      * Resources used By Templates and Pages
      * @var array
      */
-    var $res = array();
+    var $_res = array();
     
     /**
      * Constructor
@@ -90,20 +83,6 @@ class fpdf_tpl extends fpdf {
         if ($this->page <= 0)
             $this->error("You have to add a page to fpdf first!");
 
-        // Save settings
-        $this->tpl++;
-        $this->tpls[$this->tpl]['o_x'] = $this->x;
-        $this->tpls[$this->tpl]['o_y'] = $this->y;
-        $this->tpls[$this->tpl]['o_AutoPageBreak'] = $this->AutoPageBreak;
-        $this->tpls[$this->tpl]['o_bMargin'] = $this->bMargin;
-        $this->tpls[$this->tpl]['o_tMargin'] = $this->tMargin;
-        $this->tpls[$this->tpl]['o_lMargin'] = $this->lMargin;
-        $this->tpls[$this->tpl]['o_rMargin'] = $this->rMargin;
-        $this->tpls[$this->tpl]['o_h'] = $this->h;
-        $this->tpls[$this->tpl]['o_w'] = $this->w;
-
-        $this->SetAutoPageBreak(false);
-        
         if ($x == null)
             $x = 0;
         if ($y == null)
@@ -113,17 +92,33 @@ class fpdf_tpl extends fpdf {
         if ($h == null)
             $h = $this->h;
 
+        // Save settings
+        $this->tpl++;
+        $tpl =& $this->tpls[$this->tpl];
+        $tpl = array(
+            'o_x' => $this->x,
+            'o_y' => $this->y,
+            'o_AutoPageBreak' => $this->AutoPageBreak,
+            'o_bMargin' => $this->bMargin,
+            'o_tMargin' => $this->tMargin,
+            'o_lMargin' => $this->lMargin,
+            'o_rMargin' => $this->rMargin,
+            'o_h' => $this->h,
+            'o_w' => $this->w,
+            'buffer' => '',
+            'x' => $x,
+            'y' => $y,
+            'w' => $w,
+            'h' => $h
+        );
+
+        $this->SetAutoPageBreak(false);
+        
         // Define own high and width to calculate possitions correct
         $this->h = $h;
         $this->w = $w;
 
-        $this->tpls[$this->tpl]['buffer'] = "";
-        $this->tpls[$this->tpl]['x'] = $x;
-        $this->tpls[$this->tpl]['y'] = $y;
-        $this->tpls[$this->tpl]['w'] = $w;
-        $this->tpls[$this->tpl]['h'] = $h;
-
-        $this->intpl = true;
+        $this->_intpl = true;
         $this->SetXY($x+$this->lMargin,$y+$this->tMargin);
         $this->SetRightMargin($this->w-$w+$this->rMargin);
 
@@ -138,15 +133,17 @@ class fpdf_tpl extends fpdf {
      * @return mixed If a template is opened, the ID is returned. If not a false is returned.
      */
     function endTemplate() {
-        if ($this->intpl) {
-            $this->intpl = false;
-            $this->SetAutoPageBreak($this->tpls[$this->tpl]['o_AutoPageBreak'],$this->tpls[$this->tpl]['o_bMargin']);
-            $this->SetXY($this->tpls[$this->tpl]['o_x'],$this->tpls[$this->tpl]['o_y']);
-            $this->tMargin = $this->tpls[$this->tpl]['o_tMargin'];
-            $this->lMargin = $this->tpls[$this->tpl]['o_lMargin'];
-            $this->rMargin = $this->tpls[$this->tpl]['o_rMargin'];
-            $this->h = $this->tpls[$this->tpl]['o_h'];
-            $this->w = $this->tpls[$this->tpl]['o_w'];
+        if ($this->_intpl) {
+            $this->_intpl = false; 
+            $tpl =& $this->tpls[$this->tpl];
+            $this->SetXY($tpl['o_x'], $tpl['o_y']);
+            $this->tMargin = $tpl['o_tMargin'];
+            $this->lMargin = $tpl['o_lMargin'];
+            $this->rMargin = $tpl['o_rMargin'];
+            $this->h = $tpl['o_h'];
+            $this->w = $tpl['o_w'];
+            $this->SetAutoPageBreak($tpl['o_AutoPageBreak'], $tpl['o_bMargin']);
+            
             return $this->tpl;
         } else {
             return false;
@@ -174,14 +171,19 @@ class fpdf_tpl extends fpdf {
         if ($this->page <= 0)
             $this->error("You have to add a page to fpdf first!");
 
-        if (!$this->tpls[$tplidx])
+        if (!isset($this->tpls[$tplidx]))
             $this->error("Template does not exist!");
             
-        if ($this->intpl) {
-            $this->res['tpl'][$this->tpl]['tpls'][$tplidx] =& $this->tpls[$tplidx];
+        if ($this->_intpl) {
+            $this->_res['tpl'][$this->tpl]['tpls'][$tplidx] =& $this->tpls[$tplidx];
         }
-        extract($this->tpls[$tplidx]);
-
+        
+        $tpl =& $this->tpls[$tplidx];
+        $x = $tpl['x'];
+        $y = $tpl['y'];
+        $w = $tpl['w'];
+        $h = $tpl['h'];
+        
         if ($_x == null)
             $_x = $x;
         if ($_y == null)
@@ -189,8 +191,8 @@ class fpdf_tpl extends fpdf {
         $wh = $this->getTemplateSize($tplidx,$_w,$_h);
         $_w = $wh['w'];
         $_h = $wh['h'];
-
-        $this->_out(sprintf("q %.4f 0 0 %.4f %.2f %.2f cm", ($_w/$w), ($_h/$h), $_x*$this->k, ($this->h-($_y+$_h))*$this->k)); // Translate
+    
+        $this->_out(sprintf("q %.4f 0 0 %.4f %.2f %.2f cm", ($_w/$w), ($_h/$h), $_x*$this->k, ($this->h-($_y+$_h))*$this->k)); // Translate 
         $this->_out($this->tplprefix.$tplidx." Do Q");
 
         return array("w" => $_w, "h" => $_h);
@@ -210,7 +212,10 @@ class fpdf_tpl extends fpdf {
         if (!$this->tpls[$tplidx])
             return false;
 
-        extract($this->tpls[$tplidx]);
+        $tpl =& $this->tpls[$tplidx];
+        $w = $tpl['w'];
+        $h = $tpl['h'];
+        
         if ($_w == 0 and $_h == 0) {
             $_w = $w;
             $_h = $h;
@@ -228,92 +233,32 @@ class fpdf_tpl extends fpdf {
      * See FPDF-Documentation ;-)
      */
     function SetFont($family,$style='',$size=0) {
-        //Select a font; size given in points
-    	global $fpdf_charwidths;
-
-    	$family=strtolower($family);
-    	if($family=='')
-    		$family=$this->FontFamily;
-    	if($family=='arial')
-    		$family='helvetica';
-    	elseif($family=='symbol' or $family=='zapfdingbats')
-    		$style='';
-    	$style=strtoupper($style);
-    	if(is_int(strpos($style,'U')))
-    	{
-    		$this->underline=true;
-    		$style=str_replace('U','',$style);
-    	}
-    	else
-    		$this->underline=false;
-    	if($style=='IB')
-    		$style='BI';
-    	if($size==0)
-    		$size=$this->FontSizePt;
-    	//Test if font is already selected
-    	if($this->FontFamily==$family and $this->FontStyle==$style and $this->FontSizePt==$size and !$this->intpl)
-            return;
-    	//Test if used for the first time
-    	$fontkey=$family.$style;
-    	if(!isset($this->fonts[$fontkey]))
-    	{
-    		//Check if one of the standard fonts
-    		if(isset($this->CoreFonts[$fontkey]))
-    		{
-    			if(!isset($fpdf_charwidths[$fontkey]))
-    			{
-    				//Load metric file
-    				$file=$family;
-    				if($family=='times' or $family=='helvetica')
-    					$file.=strtolower($style);
-    				$file.='.php';
-    				if(defined('FPDF_FONTPATH'))
-    					$file=FPDF_FONTPATH.$file;
-    				include($file);
-    				if(!isset($fpdf_charwidths[$fontkey]))
-    					$this->Error('Could not include font metric file');
-    			}
-                $i = $this->findNextAvailFont();
-                $this->fonts[$fontkey]=array('i'=>$i,'type'=>'core','name'=>$this->CoreFonts[$fontkey],'up'=>-100,'ut'=>50,'cw'=>$fpdf_charwidths[$fontkey]);
-    		}
-    		else
-    			$this->Error('Undefined font: '.$family.' '.$style);
-    	}
-    	//Select it
-    	$this->FontFamily=$family;
-    	$this->FontStyle=$style;
-    	$this->FontSizePt=$size;
-    	$this->FontSize=$size/$this->k;
-    	$this->CurrentFont=&$this->fonts[$fontkey];
-    	if($this->page>0)
-    		$this->_out(sprintf('BT '.$this->fontprefix.'%d %.2f Tf ET',$this->CurrentFont['i'],$this->FontSizePt));
-
-
-        if ($this->intpl) {
-            $this->res['tpl'][$this->tpl]['fonts'][$fontkey] =& $this->fonts[$fontkey];
+        /**
+         * force the resetting of font changes in a template
+         */
+        if ($this->_intpl)
+            $this->FontFamily = '';
+            
+        parent::SetFont($family, $style, $size);
+       
+        $fontkey = $this->FontFamily.$this->FontStyle;
+        
+        if ($this->_intpl) {
+            $this->_res['tpl'][$this->tpl]['fonts'][$fontkey] =& $this->fonts[$fontkey];
         } else {
-            $this->res['page'][$this->page]['fonts'][$fontkey] =& $this->fonts[$fontkey];
+            $this->_res['page'][$this->page]['fonts'][$fontkey] =& $this->fonts[$fontkey];
         }
     }
     
-    /**
-     * Find the next available Font-No.
-     *
-     * @return int
-     */
-    function findNextAvailFont() {
-        return count($this->fonts)+1;
-    }
-
     /**
      * See FPDF-Documentation ;-)
      */
     function Image($file,$x,$y,$w=0,$h=0,$type='',$link='') {
         parent::Image($file,$x,$y,$w,$h,$type,$link);
-        if ($this->intpl) {
-            $this->res['tpl'][$this->tpl]['images'][$file] =& $this->images[$file];
+        if ($this->_intpl) {
+            $this->_res['tpl'][$this->tpl]['images'][$file] =& $this->images[$file];
         } else {
-            $this->res['page'][$this->page]['images'][$file] =& $this->images[$file];
+            $this->_res['page'][$this->page]['images'][$file] =& $this->images[$file];
         }
     }
     
@@ -323,7 +268,7 @@ class fpdf_tpl extends fpdf {
      * AddPage is not available when you're "in" a template.
      */
     function AddPage($orientation='') {
-        if ($this->intpl)
+        if ($this->_intpl)
             $this->Error('Adding pages in templates isn\'t possible!');
         parent::AddPage($orientation);
     }
@@ -332,27 +277,27 @@ class fpdf_tpl extends fpdf {
      * Preserve adding Links in Templates ...won't work
      */
     function Link($x,$y,$w,$h,$link) {
-        if ($this->intpl)
+        if ($this->_intpl)
             $this->Error('Using links in templates aren\'t possible!');
         parent::Link($x,$y,$w,$h,$link);
     }
     
     function AddLink() {
-        if ($this->intpl)
+        if ($this->_intpl)
             $this->Error('Adding links in templates aren\'t possible!');
         return parent::AddLink();
     }
     
     function SetLink($link,$y=0,$page=-1) {
-        if ($this->intpl)
+        if ($this->_intpl)
             $this->Error('Setting links in templates aren\'t possible!');
         parent::SetLink($link,$y,$page);
     }
     
     /**
-     * Private Method that writes the Resources-Objects
+     * Private Method that writes the form xobjects
      */
-    function _puttemplates() {
+    function _putformxobjects() {
         $filter=($this->compress) ? '/Filter /FlateDecode ' : '';
 	    reset($this->tpls);
         foreach($this->tpls AS $tplidx => $tpl) {
@@ -363,25 +308,26 @@ class fpdf_tpl extends fpdf {
     		$this->_out('<<'.$filter.'/Type /XObject');
             $this->_out('/Subtype /Form');
             $this->_out('/FormType 1');
-            $this->_out(sprintf('/BBox [%.2f %.2f %.2f %.2f]',$tpl['x']*$this->k, ($tpl['h']-$tpl['y'])*$this->k, $tpl['w']*$this->k, ($tpl['h']-$tpl['y']-$tpl['h'])*$this->k));       // ($this->h-$tpl['y'])*$this->k
+            $this->_out(sprintf('/BBox [%.2f %.2f %.2f %.2f]',$tpl['x']*$this->k, ($tpl['h']-$tpl['y'])*$this->k, $tpl['w']*$this->k, ($tpl['h']-$tpl['y']-$tpl['h'])*$this->k));
             $this->_out('/Resources ');
 
             $this->_out('<</ProcSet [/PDF /Text /ImageB /ImageC /ImageI]');
-        	if (count($this->res['tpl'][$tplidx]['fonts'])) {
+        	if (isset($this->_res['tpl'][$tplidx]['fonts']) && count($this->_res['tpl'][$tplidx]['fonts'])) {
             	$this->_out('/Font <<');
-                foreach($this->res['tpl'][$tplidx]['fonts'] as $font)
-            		$this->_out($this->fontprefix.$font['i'].' '.$font['n'].' 0 R');
+                foreach($this->_res['tpl'][$tplidx]['fonts'] as $font)
+            		$this->_out('/F'.$font['i'].' '.$font['n'].' 0 R');
             	$this->_out('>>');
             }
-        	if(count($this->res['tpl'][$tplidx]['images']) || count($this->res['tpl'][$tplidx]['tpls']))
+        	if(isset($this->_res['tpl'][$tplidx]['images']) && count($this->_res['tpl'][$tplidx]['images']) || 
+        	   isset($this->_res['tpl'][$tplidx]['tpls']) && count($this->_res['tpl'][$tplidx]['tpls']))
         	{
                 $this->_out('/XObject <<');
-                if (count($this->res['tpl'][$tplidx]['images'])) {
-                    foreach($this->res['tpl'][$tplidx]['images'] as $image)
+                if (isset($this->_res['tpl'][$tplidx]['images']) && count($this->_res['tpl'][$tplidx]['images'])) {
+                    foreach($this->_res['tpl'][$tplidx]['images'] as $image)
               			$this->_out('/I'.$image['i'].' '.$image['n'].' 0 R');
                 }
-                if (count($this->res['tpl'][$tplidx]['tpls'])) {
-                    foreach($this->res['tpl'][$tplidx]['tpls'] as $i => $tpl)
+                if (isset($this->_res['tpl'][$tplidx]['tpls']) && count($this->_res['tpl'][$tplidx]['tpls'])) {
+                    foreach($this->_res['tpl'][$tplidx]['tpls'] as $i => $tpl)
                         $this->_out($this->tplprefix.$i.' '.$tpl['n'].' 0 R');
                 }
                 $this->_out('>>');
@@ -398,34 +344,27 @@ class fpdf_tpl extends fpdf {
      * Private Method
      */
     function _putresources() {
-    	$this->_putfonts();
+        $this->_putfonts();
     	$this->_putimages();
-        $this->_puttemplates();
+    	$this->_putformxobjects();
         //Resource dictionary
     	$this->offsets[2]=strlen($this->buffer);
     	$this->_out('2 0 obj');
-    	$this->_out('<</ProcSet [/PDF /Text /ImageB /ImageC /ImageI]');
-    	$this->_out('/Font <<');
-        foreach($this->fonts as $font)
-        	$this->_out($this->fontprefix.$font['i'].' '.$font['n'].' 0 R');
-    	$this->_out('>>');
-    	if(count($this->images) || count($this->tpls))
-    	{
-    		$this->_out('/XObject <<');
-            if (count($this->images)) {
-                foreach($this->images as $image)
-        			$this->_out('/I'.$image['i'].' '.$image['n'].' 0 R');
-            }
-            if (count($this->tpls)) {
-                foreach($this->tpls as $tplidx => $tpl)
-        			$this->_out($this->tplprefix.$tplidx.' '.$tpl['n'].' 0 R');
-            }
-            $this->_out('>>');
-    	}
+    	$this->_out('<<');
+    	$this->_putresourcedict();
     	$this->_out('>>');
     	$this->_out('endobj');
     }
-
+    
+    function _putxobjectdict() {
+        parent::_putxobjectdict();
+        
+        if (count($this->tpls)) {
+            foreach($this->tpls as $tplidx => $tpl) {
+                $this->_out($this->tplprefix.$tplidx.' '.$tpl['n'].' 0 R');
+            }
+        }
+    }
 
     /**
      * Private Method
@@ -433,7 +372,7 @@ class fpdf_tpl extends fpdf {
     function _out($s) {
 	   //Add a line to the document
 	   if ($this->state==2) {
-           if (!$this->intpl)
+           if (!$this->_intpl)
 	           $this->pages[$this->page].=$s."\n";
            else
                $this->tpls[$this->tpl]['buffer'] .= $s."\n";
