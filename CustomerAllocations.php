@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 /*
 Call this page with:
@@ -141,10 +141,11 @@ if (isset($_POST['UpdateDatabase'])) {
 
 		// Update the receipt or credit note
 		$SQL = 'UPDATE debtortrans
-				SET alloc = ' .  -$AllAllocations . ',
+				SET alloc = ' .  -$AllocnItem->AllocAmt . ',
 				diffonexch = ' . -$TotalDiffOnExch . ',
 				settled=' . $Settled . '
 				WHERE id = ' . $_POST['AllocTrans'];
+
 		if( !$Result = DB_query($SQL,$db) )
 		{
 			$error = 'Could not update receipt or credit note';
