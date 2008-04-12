@@ -17,7 +17,7 @@
 //  limitations under the License.
 //
 
-require_once("fpdf.php");
+require_once("includes/fpdf.php");
 
 class FPDF_TPL extends FPDF {
     /**
