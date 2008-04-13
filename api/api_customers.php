@@ -1,13 +1,5 @@
 <?php
 
-
-/* Include session.inc, to allow database connection, and access to 
-   miscfunctions, and datefunctions.*/
-	$AllowAnyone = true;
-	$PathPrefix=dirname(__FILE__).'/../';
-	include($PathPrefix.'includes/session.inc');
-	$_SESSION['db']=$db;
-
 /* Define error codes that are returned by api functions*/	
 	Define('NoAuthorisation', 1);
 	Define('IncorrectDebtorNumberLength', 1000);
@@ -76,13 +68,13 @@
 
 /* Check that the debtor number exists*/
 	function VerifyDebtorExists($DebtorNumber, $i, $Errors, $db) {
-		$Searchsql = 'SELECT count(debtorno) 
+		$Searchsql = "SELECT count(debtorno) 
 				FROM debtorsmaster
-				WHERE debtorno="'.$DebtorNumber.'"';
+				WHERE debtorno='".$DebtorNumber."'";
 		$SearchResult=DB_query($Searchsql, $db);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
-			$Errors[$i] = DebtorDoesntExists;
+		$answer = DB_fetch_array($SearchResult);
+		if ($answer[0]==0) {
+			$Errors[$i] = DebtorDoesntExist;
 		}
 		return $Errors;
 	}
@@ -295,6 +287,7 @@
    array of one to many error codes.
 */	
 	function InsertCustomer($CustomerDetails, $user, $password) {
+		$Errors = array();
 		$db = db($user, $password);
 		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
@@ -303,7 +296,6 @@
 		foreach ($CustomerDetails as $key => $value) {
 			$CustomerDetails[$key] = DB_escape_string($value);
 		}
-		$Errors = array();
 		$Errors=VerifyDebtorNo($CustomerDetails['debtorno'], sizeof($Errors), $Errors, $db);
 		$Errors=VerifyDebtorName($CustomerDetails['name'], sizeof($Errors), $Errors);
 		if (isset($CustomerDetails['address1'])){
@@ -396,6 +388,8 @@
 			$result = DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
+			} else {
+				$Errors[0]=0;
 			}
 		}
 		return $Errors;
@@ -410,6 +404,7 @@
    returns an array of one to many error codes.
 */	
 	function ModifyCustomer($CustomerDetails, $user, $password) {
+		$Errors = array();
 		$db = db($user, $password);
 		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
@@ -418,7 +413,6 @@
 		foreach ($CustomerDetails as $key => $value) {
 			$CustomerDetails[$key] = DB_escape_string($value);
 		}
-		$Errors = array();
 		if (!isset($CustomerDetails['debtorno'])) {
 			$Errors[sizeof($Errors)] = NoDebtorNumber;
 			return $Errors;
@@ -518,6 +512,8 @@
 			echo DB_error_no($db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
+			} else {
+				$Errors[0]=0;
 			}
 		}
 		return $Errors;
@@ -528,24 +524,30 @@
    then it returns an $Errors array.
 */	
 	function GetCustomer($DebtorNumber, $user, $password) {
+		$Errors = array();
 		$db = db($user, $password);
 		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		VerifyDebtorExists($DebtorNumber, sizeof($Errors), $Errors, $db);
-		if (sizeof($Errors)>0) {
+		$Errors = VerifyDebtorExists($DebtorNumber, sizeof($Errors), $Errors, $db);
+		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
 		$sql='SELECT * FROM debtorsmaster WHERE debtorno="'.$DebtorNumber.'"';
 		$result = DB_Query($sql, $db);
-		return DB_fetch_array($result);
+		if (sizeof($Errors)==0) {
+			return DB_fetch_array($result);
+		} else {
+			return $Errors;
+		}
 	}
 
 /* This function takes a field name, and a string, and then returns an
    array of debtornos that fulfill this criteria.
 */	
 	function SearchCustomers($Field, $Criteria, $user, $password) {
+		$Errors = array();
 		$db = db($user, $password);
 		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
@@ -562,7 +564,5 @@
 		}
 		return $DebtorList;
 	}
-	
-//	$client=new SoapServer();
 	
 ?>
