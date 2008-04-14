@@ -26,7 +26,7 @@
 		}
 		$sql = 'SELECT * FROM currencies WHERE currabrev="'.$currency.'"';
 		$result = DB_query($sql, $db);
-		return DB_fetch_array($result)
+		return DB_fetch_array($result);
 	}
 
 ?>
