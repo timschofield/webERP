@@ -31,24 +31,6 @@
 	Define('NoDebtorNumber', 1026);	
 	Define('DebtorDoesntExist', 1027);	
 		
-/* Get weberp authentication, and return a valid database
-   connection */
-	function db($user, $password) {
-		$_SESSION['UserID'] = $user;
-		$sql = "SELECT userid
-			FROM www_users
-			WHERE userid='" . DB_escape_string($user) . "'
-			AND (password='" . CryptPass(DB_escape_string($password)) . "'
-			OR  password='" . DB_escape_string($password) . "')";
-		$Auth_Result = DB_query($sql, $_SESSION['db']);
-		$myrow=DB_fetch_row($Auth_Result);
-		if (DB_num_rows($Auth_Result) > 0) {
-			return $_SESSION['db'];
-		} else {
-			return NoAuthorisation;
-		}
-	}
-
 /* Verify that the debtor number is valid, and doesn't already
    exist.*/
 	function VerifyDebtorNo($DebtorNumber, $i, $Errors, $db) {

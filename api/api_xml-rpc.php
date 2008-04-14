@@ -2,13 +2,8 @@
 
 /* Include session.inc, to allow database connection, and access to 
    miscfunctions, and datefunctions.*/
-    $DatabaseName='weberp';
-	$AllowAnyone = true;
-	$PathPrefix=dirname(__FILE__).'/../';
-	include($PathPrefix.'includes/session.inc');
-	$_SESSION['db']=$db;
 
-	include 'api_customers.php';
+	include 'api_php.php';
 
 	include '../xmlrpc/lib/xmlrpc.inc';
 	include '../xmlrpc/lib/xmlrpcs.inc';
@@ -37,6 +32,17 @@
 				 		$xmlrpcmsg->getParam(2)->scalarval(),
 				 			$xmlrpcmsg->getParam(3)->scalarval())));
 	}
+	
+	function xmlrpc_GetCurrencyList($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetCurrencyList($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval())));
+	}
+
+	function xmlrpc_GetCurrencyDetails($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetCurrencyList($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval(),
+				$xmlrpcmsg->getParam(2)->scalarval())));
+	}
 
 	$InsertCustomer_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
 	$InsertCustomer_doc = 'This function takes an associative array containing the details of a customer to
@@ -50,6 +56,12 @@
 	$SearchCustomers_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
 	$SearchCustomers_doc = 'This function returns an array containing the account numbers of those customers
 			that meet the criteria given. Any field in debtorsmaster can be search on.';
+	$GetCurrencyList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$GetCurrencyList_doc = 'This function returns an array containing a list of all currencies setup on webERP';
+	$GetCurrencyDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetCurrencyDetails_doc = 'This function returns an associative array containing the details of the currency
+			 sent as a parameter';
+
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
@@ -66,7 +78,15 @@
 		"weberp.xmlrpc_SearchCustomers" => array(
 			"function" => "xmlrpc_SearchCustomers",
 			"signature" => $SearchCustomers_sig,
-			"docstring" => $SearchCustomers_doc)
+			"docstring" => $SearchCustomers_doc),
+		"weberp.xmlrpc_GetCurrencyList" => array(
+			"function" => "xmlrpc_GetCurrencyList",
+			"signature" => $GetCurrencyList_sig,
+			"docstring" => $GetCurrencyList_doc),
+		"weberp.xmlrpc_GetCurrencyDetails" => array(
+			"function" => "xmlrpc_GetCurrencyDetails",
+			"signature" => $GetCurrencyDetails_sig,
+			"docstring" => $GetCurrencyDetails_doc)
 		)
 	);
 
