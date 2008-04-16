@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 $PageSecurity = 3;
 
@@ -611,31 +611,27 @@ if (! isset($_GET['delete'])) {
 			Maybe should only do this when that page is the referrer?
 	*/
 		if (isset($_GET['BranchCode'])){
+			$sql="SELECT name, 
+					address1, 
+					address2, 
+					address3,
+					address4,
+					address5,
+					address6 
+					FROM 
+					debtorsmaster 
+					WHERE debtorno='".$_GET['BranchCode']."'";
+			$result = DB_query($sql, $db);
+			$myrow = DB_fetch_array($result);
 			$_POST['BranchCode'] = $_GET['BranchCode'];
-		} else {
-			$_POST['BranchCode'] = '';
-		}
-		if (isset($_GET['BrName'])){
-			$_POST['BrName']     = $_GET['BrName'];
-		}
-		if (isset($_GET['BrAddress1'])){
-		 	$_POST['BrAddress1'] = $_GET['BrAddress1'];
-		}
-		if (isset($_GET['BrAddress2'])){
-	        	$_POST['BrAddress2'] = $_GET['BrAddress2'];
-		}
-		if (isset($_GET['BrAddress3'])){
-			$_POST['BrAddress3'] = $_GET['BrAddress3'];
-		}
-		if (isset($_GET['BrAddress4'])){
-			$_POST['BrAddress4'] = $_GET['BrAddress4'];
-		}
-		if (isset($_GET['BrAddress5'])){
-			$_POST['BrAddress5'] = $_GET['BrAddress5'];
-		}
-		if (isset($_GET['BrAddress6'])){
-			$_POST['BrAddress6'] = $_GET['BrAddress6'];
-		}
+			$_POST['BrName']     = $myrow['name'];
+		 	$_POST['BrAddress1'] = $myrow['addrsss1'];
+        	$_POST['BrAddress2'] = $myrow['addrsss2'];
+			$_POST['BrAddress3'] = $myrow['addrsss3'];
+		 	$_POST['BrAddress4'] = $myrow['addrsss4'];
+        	$_POST['BrAddress5'] = $myrow['addrsss5'];
+			$_POST['BrAddress6'] = $myrow['addrsss6'];
+		} 
 		
 		echo '<CENTER><TABLE><TR><TD>'._('Branch Code').":</TD>
 				<TD><input " .(in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) .

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 $PageSecurity = 3;
 
@@ -253,11 +253,11 @@ if (isset($_POST['submit'])) {
 
 			$BranchCode = substr($_POST['DebtorNo'],0,4);
 
-			echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath ."/CustomerBranches.php?" . SID . "&DebtorNo=" . $_POST['DebtorNo'] ."&BrName=" . $_POST['CustName'] .'&BranchCode=' . $BranchCode . '&BrAddress1=' . $_POST['Address1'] . '&BrAddress2=' . $_POST['Address2'] . '&BrAddress3=' . $_POST['Address3'] . '&BrAddress4=' . $_POST['Address4'] . '&BrAddress5=' . $_POST['Address5'] . '&BrAddress6=' . $_POST['Address6'] . "'>";
+			echo "<META HTTP-EQUIV='Refresh' CONTENT='0; URL=" . $rootpath ."/CustomerBranches.php?" . SID . "&DebtorNo=" . $_POST['DebtorNo'] . "'>";
 
 			echo '<P>' . _('You should automatically be forwarded to the entry of a new Customer Branch page') .
 			'. ' . _('If this does not happen') .' (' . _('if the browser does not support META Refresh') . ') ' .
-			"<A HREF='" . $rootpath . "/CustomerBranches.php?" . SID . "&DebtorNo=" . $_POST['DebtorNo'] ."&BrName=" . $_POST['CustName'] .'&BranchCode=' . $BranchCode . '&BrAddress1=' . $_POST['Address1'] . '&BrAddress2=' . $_POST['Address2'] . '&BrAddress3=' . $_POST['Address3'] . '&BrAddress4=' . $_POST['Address4'] . '&BrAddress5=' . $_POST['Address5'] . '&BrAddress6=' . $_POST['Address6'] . "'>" . _('click here') . '</a> ' . _('to continue') . '.<BR>';
+			"<A HREF='" . $rootpath . "/CustomerBranches.php?" . SID . "&DebtorNo=" . $_POST['DebtorNo']  . '.<BR>';
 
 			include('includes/footer.inc');
 			exit;
