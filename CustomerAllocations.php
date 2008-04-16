@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 /*
 Call this page with:
@@ -123,7 +123,7 @@ if (isset($_POST['UpdateDatabase'])) {
 					}
 				}
 				$NewAllocTotal = $AllocnItem->PrevAlloc + $AllocnItem->AllocAmt;
-				$AllAllocations = $AllAllocations + $NewAllocTotal;
+				$AllAllocations = $AllAllocations + $AllocnItem->AllocAmt;
 				$Settled = (abs($NewAllocTotal-$AllocnItem->TransAmount) < 0.005) ? 1 : 0;
 
 				$SQL = 'UPDATE debtortrans
@@ -141,7 +141,7 @@ if (isset($_POST['UpdateDatabase'])) {
 
 		// Update the receipt or credit note
 		$SQL = 'UPDATE debtortrans
-				SET alloc = ' .  -$AllocnItem->AllocAmt . ',
+				SET alloc = ' .  -$AllAllocations . ',
 				diffonexch = ' . -$TotalDiffOnExch . ',
 				settled=' . $Settled . '
 				WHERE id = ' . $_POST['AllocTrans'];
