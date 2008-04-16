@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 $PageSecurity = 1;
 
@@ -429,7 +429,9 @@ If (isset($PrintPDF)
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,245,$FontSize,$LeftOvers);
 			}
 			/* Add Images for Visa / Mastercard / Paypal */
-		$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -280,$YPos-20,0,40);
+		if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg')) {
+			$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -280,$YPos-20,0,40);
+		}
 			$pdf->addText($Page_Width-$Right_Margin-472, $YPos - ($line_height*3)+32,$FontSize, '');
 			
 			
@@ -459,13 +461,15 @@ class concat_pdf extends FPDI {
 	 
 	    function concat() { 
 	        foreach($this->files AS $file) { 
-	            $pagecount = $this->setSourceFile($file); 
-	            for ($i = 1; $i <= $pagecount; $i++) { 
-	                 $tplidx = $this->ImportPage($i); 
-	                 $s = $this->getTemplatesize($tplidx); 
-	                 $this->AddPage($s['h'] > $s['w'] ? 'P' : 'L'); 
-	                 $this->useTemplate($tplidx); 
-	            } 
+	        	if ($file != 'pdf_append/none') {
+	            	$pagecount = $this->setSourceFile($file); 
+	            	for ($i = 1; $i <= $pagecount; $i++) { 
+	                 	$tplidx = $this->ImportPage($i); 
+	                 	$s = $this->getTemplatesize($tplidx); 
+	                 	$this->AddPage($s['h'] > $s['w'] ? 'P' : 'L'); 
+	                 	$this->useTemplate($tplidx); 
+	            	}
+	        	} 
 	        } 
 	    } 
 	 
