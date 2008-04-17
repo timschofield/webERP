@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 /*
 Call this page with:
@@ -311,15 +311,15 @@ if (isset($_GET['AllocTrans'])) {
 			custallocns
 			WHERE debtortrans.type = systypes.typeid AND
 			debtortrans.id=custallocns.transid_allocto AND
-			custallocns.transid_allocto=" . $_POST['AllocTrans'] . " AND
+			custallocns.transid_allocfrom=" . $_POST['AllocTrans'] . " AND
 			debtorno='" . $_SESSION['Alloc']->DebtorNo . "'
 			ORDER BY debtortrans.trandate";
 	$Result=DB_query($SQL,$db);
+echo $_POST['AllocTrans'];
 
 	while ($myrow=DB_fetch_array($Result))
 	{
 		$DiffOnExchThisOne = ($myrow['amt']/$myrow['rate']) - ($myrow['amt']/$_SESSION['Alloc']->TransExRate);
-
 		$_SESSION['Alloc']->add_to_AllocsAllocn (
 											$myrow['id'],
 											$myrow['typename'],
