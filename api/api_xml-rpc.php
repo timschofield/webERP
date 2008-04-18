@@ -1,8 +1,5 @@
 <?php
 
-/* Include session.inc, to allow database connection, and access to 
-   miscfunctions, and datefunctions.*/
-
 	include 'api_php.php';
 
 	include '../xmlrpc/lib/xmlrpc.inc';
@@ -43,6 +40,17 @@
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
 	}
+	
+	function xmlrpc_GetSalesTypeList($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetSalesTypeList($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval())));
+	}
+
+	function xmlrpc_GetSalesTypeDetails($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetSalesTypeList($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval(),
+				$xmlrpcmsg->getParam(2)->scalarval())));
+	}
 
 	$InsertCustomer_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
 	$InsertCustomer_doc = 'This function takes an associative array containing the details of a customer to
@@ -60,6 +68,11 @@
 	$GetCurrencyList_doc = 'This function returns an array containing a list of all currencies setup on webERP';
 	$GetCurrencyDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
 	$GetCurrencyDetails_doc = 'This function returns an associative array containing the details of the currency
+			 sent as a parameter';
+	$GetSalesTypeList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$GetSalesTypeList_doc = 'This function returns an array containing a list of all sales types setup on webERP';
+	$GetSalesTypeDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetSalesTypeDetails_doc = 'This function returns an associative array containing the details of the sales type
 			 sent as a parameter';
 
 	$s = new xmlrpc_server( array(
@@ -86,7 +99,15 @@
 		"weberp.xmlrpc_GetCurrencyDetails" => array(
 			"function" => "xmlrpc_GetCurrencyDetails",
 			"signature" => $GetCurrencyDetails_sig,
-			"docstring" => $GetCurrencyDetails_doc)
+			"docstring" => $GetCurrencyDetails_doc),
+		"weberp.xmlrpc_GetSalesTypeList" => array(
+			"function" => "xmlrpc_GetSalesTypeList",
+			"signature" => $GetSalesTypeList_sig,
+			"docstring" => $GetSalesTypeList_doc),
+		"weberp.xmlrpc_GetSalesTypeDetails" => array(
+			"function" => "xmlrpc_GetSalesTypeDetails",
+			"signature" => $GetSalesTypeDetails_sig,
+			"docstring" => $GetSalesTypeDetails_doc)
 		)
 	);
 
