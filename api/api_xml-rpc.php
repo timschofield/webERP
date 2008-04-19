@@ -51,6 +51,17 @@
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
 	}
+	
+	function xmlrpc_GetHoldReasonList($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetHoldReasonList($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval())));
+	}
+
+	function xmlrpc_GetHoldReasonDetails($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetHoldReasonList($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval(),
+				$xmlrpcmsg->getParam(2)->scalarval())));
+	}
 
 	$InsertCustomer_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
 	$InsertCustomer_doc = 'This function takes an associative array containing the details of a customer to
@@ -73,6 +84,11 @@
 	$GetSalesTypeList_doc = 'This function returns an array containing a list of all sales types setup on webERP';
 	$GetSalesTypeDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
 	$GetSalesTypeDetails_doc = 'This function returns an associative array containing the details of the sales type
+			 sent as a parameter';
+	$GetHoldReasonList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$GetHoldReasonList_doc = 'This function returns an array containing a list of all hold reason codes setup on webERP';
+	$GetHoldReasonDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetHoldReasonDetails_doc = 'This function returns an associative array containing the details of the hold reason
 			 sent as a parameter';
 
 	$s = new xmlrpc_server( array(
@@ -107,7 +123,15 @@
 		"weberp.xmlrpc_GetSalesTypeDetails" => array(
 			"function" => "xmlrpc_GetSalesTypeDetails",
 			"signature" => $GetSalesTypeDetails_sig,
-			"docstring" => $GetSalesTypeDetails_doc)
+			"docstring" => $GetSalesTypeDetails_doc),
+		"weberp.xmlrpc_GetHoldReasonList" => array(
+			"function" => "xmlrpc_GetHoldReasonList",
+			"signature" => $GetHoldReasonList_sig,
+			"docstring" => $GetHoldReasonList_doc),
+		"weberp.xmlrpc_GetHoldReasonDetails" => array(
+			"function" => "xmlrpc_GetHoldReasonDetails",
+			"signature" => $GetHoldReasonDetails_sig,
+			"docstring" => $GetHoldReasonDetails_doc)
 		)
 	);
 

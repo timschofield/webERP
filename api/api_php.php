@@ -29,5 +29,6 @@
 	include 'api_customers.php';
 	include 'api_currencies.php';
 	include 'api_salestypes.php';
+	include 'api_holdreasons.php';
 
 ?>
