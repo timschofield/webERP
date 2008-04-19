@@ -1,0 +1,71 @@
+body {
+	padding: 0px;
+	margin: 0px;
+	text-align: center;
+	font: 14px "Tahoma", "Lucida Grande", "Arial", "Helvetica", "Verdana", "sans-serif";
+	background: #fff;
+	color: #777;
+	direction: rtl;
+}
+
+#container {
+	text-align: left;
+	margin-top: 0px;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+	z-index: 1000;
+	width: 300px;
+	background: #cdf;
+}
+
+#login_logo {
+	width: 200px;
+	height: 75px;
+	margin-left: 50px;
+	margin-top: 70px;
+	padding-top: 10px;
+	margin-bottom: 20px;
+	background: #fff url(../webERP.gif) repeat-x left bottom;
+}
+
+input{
+	width: 200px;
+	border: solid #e3e3e3 1px;
+	height:25px;
+/*	background:url(images/input_bg.png) repeat-x left top; */
+	padding:4px 0;
+	vertical-align:middle;
+	margin-left:50px;
+	margin-bottom:10px;
+}
+
+input:hover {
+	border: solid #aad4e3 1px;
+	background-position:left bottom;
+}
+
+input.button {
+	font-weight: bold;
+	color: #000;
+	background:#27f;
+	border: solid #e3e3e3 1px;
+	padding: 0px;
+	margin-top: 10px;
+	margin-bottom: 30px;
+}
+
+input.button:hover {
+	background: #f11;
+}
+
+label{
+	width:200px;
+	padding-top:7px;
+	padding-left:50px;
+}
+
+#demo_text{
+	margin-left:50px;
+	width:200px;
+}
