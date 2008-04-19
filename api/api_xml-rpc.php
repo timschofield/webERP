@@ -5,24 +5,41 @@
 	include '../xmlrpc/lib/xmlrpc.inc';
 	include '../xmlrpc/lib/xmlrpcs.inc';
 	
+
+	$InsertCustomer_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$InsertCustomer_doc = 'This function takes an associative array containing the details of a customer to
+			to be inserted, where the keys of the array are the field names in the table debtorsmaster. ';
+			
 	function xmlrpc_InsertCustomer($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(), 
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
-	
+			
+	$ModifyCustomer_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$ModifyCustomer_doc = 'This function takes an associative array containing the details of a customer to
+			to be updated, where the keys of the array are the field names in the table debtorsmaster. ';
+			
 	function xmlrpc_ModifyCustomer($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(ModifyCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(), 
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
+	$GetCustomer_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetCustomer_doc = 'This function returns an associative array containing the details of the customer
+			whose account number is passed to it.';
+			
 	function xmlrpc_GetCustomer($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetCustomer($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(), 
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 	
+	$SearchCustomers_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$SearchCustomers_doc = 'This function returns an array containing the account numbers of those customers
+			that meet the criteria given. Any field in debtorsmaster can be search on.';
+			
 	function xmlrpc_SearchCustomers($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(SearchCustomers($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(), 
@@ -30,67 +47,77 @@
 				 			$xmlrpcmsg->getParam(3)->scalarval())));
 	}
 	
+	$GetCurrencyList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$GetCurrencyList_doc = 'This function returns an array containing a list of all currencies setup on webERP';
+	
 	function xmlrpc_GetCurrencyList($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetCurrencyList($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval())));
 	}
 
+	$GetCurrencyDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetCurrencyDetails_doc = 'This function returns an associative array containing the details of the currency
+			 sent as a parameter';
+			 
 	function xmlrpc_GetCurrencyDetails($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetCurrencyList($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 	
+	$GetSalesTypeList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$GetSalesTypeList_doc = 'This function returns an array containing a list of all sales types setup on webERP';
+	
 	function xmlrpc_GetSalesTypeList($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetSalesTypeList($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval())));
 	}
 
+	$GetSalesTypeDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetSalesTypeDetails_doc = 'This function returns an associative array containing the details of the sales type
+			 sent as a parameter';
+			 
 	function xmlrpc_GetSalesTypeDetails($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetSalesTypeList($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 	
+	$GetHoldReasonList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$GetHoldReasonList_doc = 'This function returns an array containing a list of all hold reason codes setup on webERP';
+	
 	function xmlrpc_GetHoldReasonList($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetHoldReasonList($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval())));
 	}
+
+	$GetHoldReasonDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetHoldReasonDetails_doc = 'This function returns an associative array containing the details of the hold reason
+			 sent as a parameter';
 
 	function xmlrpc_GetHoldReasonDetails($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetHoldReasonList($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
 	}
+	
+	$GetPaymentTermsList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$GetPaymentTermsList_doc = 'This function returns an array containing a list of all payment terms setup on webERP';
+	
+	function xmlrpc_GetPaymentTermsList($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetPaymentTermsList($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval())));
+	}
 
-	$InsertCustomer_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertCustomer_doc = 'This function takes an associative array containing the details of a customer to
-			to be inserted, where the keys of the array are the field names in the table debtorsmaster. ';
-	$ModifyCustomer_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$ModifyCustomer_doc = 'This function takes an associative array containing the details of a customer to
-			to be updated, where the keys of the array are the field names in the table debtorsmaster. ';
-	$GetCustomer_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetCustomer_doc = 'This function returns an associative array containing the details of the customer
-			whose account number is passed to it.';
-	$SearchCustomers_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$SearchCustomers_doc = 'This function returns an array containing the account numbers of those customers
-			that meet the criteria given. Any field in debtorsmaster can be search on.';
-	$GetCurrencyList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetCurrencyList_doc = 'This function returns an array containing a list of all currencies setup on webERP';
-	$GetCurrencyDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetCurrencyDetails_doc = 'This function returns an associative array containing the details of the currency
-			 sent as a parameter';
-	$GetSalesTypeList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetSalesTypeList_doc = 'This function returns an array containing a list of all sales types setup on webERP';
-	$GetSalesTypeDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetSalesTypeDetails_doc = 'This function returns an associative array containing the details of the sales type
-			 sent as a parameter';
-	$GetHoldReasonList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$GetHoldReasonList_doc = 'This function returns an array containing a list of all hold reason codes setup on webERP';
-	$GetHoldReasonDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetHoldReasonDetails_doc = 'This function returns an associative array containing the details of the hold reason
+	$GetPaymentTermsDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetPaymentTermsDetails_doc = 'This function returns an associative array containing the details of the payment terms
 			 sent as a parameter';
 
+	function xmlrpc_GetPaymentTermsDetails($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetPaymentTermsList($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval(),
+				$xmlrpcmsg->getParam(2)->scalarval())));
+	}
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
@@ -131,7 +158,15 @@
 		"weberp.xmlrpc_GetHoldReasonDetails" => array(
 			"function" => "xmlrpc_GetHoldReasonDetails",
 			"signature" => $GetHoldReasonDetails_sig,
-			"docstring" => $GetHoldReasonDetails_doc)
+			"docstring" => $GetHoldReasonDetails_doc),
+		"weberp.xmlrpc_GetPaymentTermsList" => array(
+			"function" => "xmlrpc_GetPaymentTermsList",
+			"signature" => $GetPaymentTermsList_sig,
+			"docstring" => $GetPaymentTermsList_doc),
+		"weberp.xmlrpc_GetPaymentTermsDetails" => array(
+			"function" => "xmlrpc_GetPaymentTermsDetails",
+			"signature" => $GetPaymentTermsDetails_sig,
+			"docstring" => $GetPaymentTermsDetails_doc)
 		)
 	);
 
