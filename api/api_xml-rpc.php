@@ -60,7 +60,7 @@
 			 sent as a parameter';
 			 
 	function xmlrpc_GetCurrencyDetails($xmlrpcmsg) {
-		return new xmlrpcresp(php_xmlrpc_encode(GetCurrencyList($xmlrpcmsg->getParam(0)->scalarval(),
+		return new xmlrpcresp(php_xmlrpc_encode(GetCurrencyDetails($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
 	}
@@ -78,7 +78,7 @@
 			 sent as a parameter';
 			 
 	function xmlrpc_GetSalesTypeDetails($xmlrpcmsg) {
-		return new xmlrpcresp(php_xmlrpc_encode(GetSalesTypeList($xmlrpcmsg->getParam(0)->scalarval(),
+		return new xmlrpcresp(php_xmlrpc_encode(GetSalesTypeDetails($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
 	}
@@ -96,7 +96,7 @@
 			 sent as a parameter';
 
 	function xmlrpc_GetHoldReasonDetails($xmlrpcmsg) {
-		return new xmlrpcresp(php_xmlrpc_encode(GetHoldReasonList($xmlrpcmsg->getParam(0)->scalarval(),
+		return new xmlrpcresp(php_xmlrpc_encode(GetHoldReasonDetails($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
 	}
@@ -114,7 +114,7 @@
 			 sent as a parameter';
 
 	function xmlrpc_GetPaymentTermsDetails($xmlrpcmsg) {
-		return new xmlrpcresp(php_xmlrpc_encode(GetPaymentTermsList($xmlrpcmsg->getParam(0)->scalarval(),
+		return new xmlrpcresp(php_xmlrpc_encode(GetPaymentTermsDetails($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
 	}
