@@ -28,12 +28,14 @@
 	
 	function GetPaymentTermsDetails($paymentterms, $user, $password) {
 		$Errors = array();
-		$db = db($user, $password);
-		if (gettype($db)=='integer') {
-			$Errors[0]=NoAuthorisation;
-			return $Errors;
+		if (!isset($db)) {
+			$db = db($user, $password);
+			if (gettype($db)=='integer') {
+				$Errors[0]=NoAuthorisation;
+				return $Errors;
+			}
 		}
-		$sql = 'SELECT * FROM paymentterms WHERE termsindicator="'.$paymentterms.'"';
+		$sql = "SELECT * FROM paymentterms WHERE termsindicator='".$paymentterms."'";
 		$result = DB_query($sql, $db);
 		return DB_fetch_array($result);
 	}
