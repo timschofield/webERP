@@ -540,6 +540,7 @@
 			WHERE '.$Field.' LIKE "%'.$Criteria.'%"';
 		$result = DB_Query($sql, $db);
 		$i=0;
+		$DebtorList = array();
 		while ($myrow=DB_fetch_array($result)) {
 			$DebtorList[$i]=$myrow[0];
 			$i++;
