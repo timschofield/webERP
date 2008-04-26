@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -215,7 +215,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 				<td ALIGN=RIGHT>%s</td>
 				<td ALIGN=RIGHT>%s</td>";
 	$credit_invoice_str = "<td><a href='%s/Credit_Invoice.php?InvoiceNumber=%s'>" . _('Credit ') ."<IMG SRC='%s/credit.gif' TITLE='" . _('Click to credit the invoice') . "'></a></td>";
-	$preview_invoice_str = "<td><a target='_blank' href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice'>" . _('Preview ') . "<IMG SRC='%s preview.gif' TITLE='" . _('Click to preview the invoice') . "'></a></td>
+	$preview_invoice_str = "<td><a target='_blank' href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice'>" . _('Preview ') . "<IMG SRC='%s/preview.gif' TITLE='" . _('Click to preview the invoice') . "'></a></td>
 		<td><a target='_blank' href='%s/EmailCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice'>" . _('Email ') . "<IMG SRC='%s/email.gif' TITLE='" . _('Click to email the invoice') . "'></a></td>";
 	$preview_credit_str = "<td><a target='_blank' href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Credit'><IMG SRC='%s/preview.gif' TITLE='" . _('Click to preview the credit note') . "'></a></td>
 				<td><a target='_blank' href='%s/EmailCustTrans.php?FromTransNo=%s&InvOrCredit=Credit'><IMG SRC='%s/email.gif' TITLE='" . _('Click to email the credit note') . "'></a></td>";
