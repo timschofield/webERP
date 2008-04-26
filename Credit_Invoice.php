@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 $PageSecurity =3;
 
 
@@ -511,10 +511,15 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 			$Allocate_amount = $_SESSION['CreditItems']->total + $_SESSION['CreditItems']->FreightCost + $TaxTotal;
 			$Settled = 1;
-		} else { /*the balance left to allocate is less than the credit note value */
+		} else if ($myrow[0] > ($_SESSION['CreditItems']->total + $_SESSION['CreditItems']->FreightCost + $TaxTotal)) {
+			/*the balance left to allocate is less than the credit note value */
 			$Allocate_amount = $myrow[0];
 			$SettledInvoice = 1;
 			$Settled =0;
+		} else {
+			$Allocate_amount = $myrow[0];
+			$SettledInvoice = 1;
+			$Settled =1;
 		}
 
 /*Now need to update the invoice DebtorTrans record for the amount to be allocated and if the invoice is now settled*/
