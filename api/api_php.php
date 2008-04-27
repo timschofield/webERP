@@ -1,5 +1,7 @@
 <?php
 
+	include 'api_errorcodes.php';
+	
 /* Include session.inc, to allow database connection, and access to 
    miscfunctions, and datefunctions.*/
     $DatabaseName='weberp';
