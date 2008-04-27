@@ -30,5 +30,23 @@
 	Define('DatabaseUpdateFailed', 1025);
 	Define('NoDebtorNumber', 1026);	
 	Define('DebtorDoesntExist', 1027);	
+	Define('IncorrectBranchNumberLength', 1028);
+	Define('BranchNoAlreadyExists', 1029);
+	Define('IncorrectBranchNameLength', 1030);
+	Define('InvalidEstDeliveryDays', 1031);
+	Define('AreaCodeNotSetup', 1032);
+	Define('SalesmanCodeNotSetup', 1033);
+	Define('InvalidFwdDate', 1034);
+	Define('InvalidPhoneNumber', 1035);
+	Define('InvalidFaxNumber', 1036);
+	Define('InvalidContactName', 1037);
+	Define('InvalidEmailAddress', 1038);
+	Define('LocationCodeNotSetup', 1039);
+	Define('TaxGroupIdNotSetup', 1040);
+	Define('ShipperNotSetup', 1041);
+	Define('InvalidDeliverBlind', 1042);
+	Define('InvalidDisableTrans', 1043);
+	Define('InvalidSpecialInstructions', 1044);
+	Define('InvalidCustBranchCode', 1045);
 		
 ?>
