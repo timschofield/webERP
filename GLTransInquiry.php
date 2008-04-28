@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 8;
 
@@ -17,14 +17,14 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 		prnMsg(_('This page requires a valid transaction type and number'),'warn');
 		echo $menuUrl;
 } else {
-		$typeSQL = "SELECT typename,
-					typeno
-				FROM systypes
-				WHERE typeid = " . $_GET['TypeID'];
+		$typeSQL = 'SELECT typename,
+							typeno
+					FROM systypes
+					WHERE typeid = ' . $_GET['TypeID'];
+
 		$TypeResult = DB_query($typeSQL,$db);
 
-		if ( DB_num_rows($TypeResult) == 0 )
-		{
+		if ( DB_num_rows($TypeResult) == 0 ){
 				prnMsg(_('No transaction of this type with id') . ' ' . $_GET['TypeID'],'error');
 				echo $menuUrl;
 		} else {
@@ -66,69 +66,62 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 						AND gltrans.type= " . $_GET['TypeID'] . "
 						AND gltrans.typeno = " . $_GET['TransNo'] . "
 						ORDER BY gltrans.counterindex";
-				$transResult = DB_query($SQL,$db);
+				$TransResult = DB_query($SQL,$db);
 
 				$Posted = _('Yes');
 				$CreditTotal = $DebitTotal = 0;
 
-				while ( $transRow = DB_fetch_array($transResult) )
-				{
-					$tranDate = ConvertSQLDate($transRow["trandate"]);
-					$detailResult = false;
+				while ( $TransRow = DB_fetch_array($TransResult) ) {
+					$TranDate = ConvertSQLDate($TransRow['trandate']);
+					$DetailResult = false;
 
-					if ( $transRow['amount'] > 0)
-					{
-							$DebitAmount = number_format($transRow['amount'],2);
-							$DebitTotal += $transRow['amount'];
+					if ( $TransRow['amount'] > 0) {
+							$DebitAmount = number_format($TransRow['amount'],2);
+							$DebitTotal += $TransRow['amount'];
 							$CreditAmount = '&nbsp';
 					} else {
-							$CreditAmount = number_format(-$transRow['amount'],2);
-							$CreditTotal += $transRow['amount'];
+							$CreditAmount = number_format(-$TransRow['amount'],2);
+							$CreditTotal += $TransRow['amount'];
 							$DebitAmount = '&nbsp';
 					}
 
-					if ( $transRow['account'] == $_SESSION['CompanyRecord']['debtorsact'] )
-					{
+					if ( $TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact'] )	{
 							$URL = $rootpath . '/CustomerInquiry.php?' . SID . '&CustomerID=';
-							$date = '&TransAfterDate=' . $tranDate;
+							$date = '&TransAfterDate=' . $TranDate;
 
-							$detailSQL = "SELECT debtortrans.debtorno,
+							$DetailSQL = 'SELECT debtortrans.debtorno,
 											debtortrans.ovamount,
 											debtortrans.ovgst,
 											debtortrans.rate,
 											debtorsmaster.name
-										FROM debtortrans,
+											FROM debtortrans,
 											debtorsmaster
-										WHERE debtortrans.debtorno = debtorsmaster.debtorno
-										AND debtortrans.type = " . $transRow['type'] . "
-										AND debtortrans.transno = " . $_GET['TransNo'];
-							$detailResult = DB_query($detailSQL,$db);
-					}
-					elseif ( $transRow['account'] == $_SESSION['CompanyRecord']['creditorsact'] )
-					{
+											WHERE debtortrans.debtorno = debtorsmaster.debtorno
+											AND debtortrans.type = ' . $TransRow['type'] . '
+											AND debtortrans.transno = ' . $_GET['TransNo'];
+							$DetailResult = DB_query($DetailSQL,$db);
+					} elseif ( $TransRow['account'] == $_SESSION['CompanyRecord']['creditorsact'] )	{
 							$URL = $rootpath . '/SupplierInquiry.php?' . SID . '&SupplierID=';
-							$date = '&FromDate=' . $tranDate;
+							$date = '&FromDate=' . $TranDate;
 
-							$detailSQL = "SELECT supptrans.supplierno,
+							$DetailSQL = 'SELECT supptrans.supplierno,
 											supptrans.ovamount,
 											supptrans.ovgst,
 											supptrans.rate,
 											suppliers.suppname
-										FROM supptrans,
+											FROM supptrans,
 											suppliers
-										WHERE supptrans.supplierno = suppliers.supplierid
-										AND supptrans.type = " . $transRow['type'] . "
-										AND supptrans.transno = " . $_GET['TransNo'];
-							$detailResult = DB_query($detailSQL,$db);
+											WHERE supptrans.supplierno = suppliers.supplierid
+											AND supptrans.type = ' . $TransRow['type'] . '
+											AND supptrans.transno = ' . $_GET['TransNo'];
+							$DetailResult = DB_query($DetailSQL,$db);
 					} else {
-							$URL = $rootpath . '/GLAccountInquiry.php?' . SID . '&Account=' . $transRow['account'];
+							$URL = $rootpath . '/GLAccountInquiry.php?' . SID . '&Account=' . $TransRow['account'];
 
-							if( !$transRow['narrative'] )
-							{
-								$transRow['narrative'] = '&nbsp';
+							if( strlen($TransRow['narrative'])==0 ) {
+								$TransRow['narrative'] = '&nbsp';
 							}
-							if ( !$transRow['posted'] )
-							{
+							if ( $TransRow['posted']==0 )	{
 								$Posted = _('No');
 							}
 
@@ -139,27 +132,23 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 								echo '<tr class="EvenTableRows">';
 								$j++;
 							}
-							echo	'<td>' . $tranDate . '</td>
-									<td>' . $tranDate . '</td>
-									<td align=right>' . $transRow['periodno'] . '</td>
-									<td><a href="' . $URL . '">' . $transRow['accountname'] . '</a></td>
+							echo	'<td>' . $TranDate . '</td>
+									<td align=right>' . $TransRow['periodno'] . '</td>
+									<td><a href="' . $URL . '">' . $TransRow['accountname'] . '</a></td>
 									<td align=right>' . $DebitAmount . '</td>
 									<td align=right>' . $CreditAmount . '</td>
-									<td>' . $transRow['narrative'] . '</td>
+									<td>' . $TransRow['narrative'] . '</td>
 									<td>' . $Posted . '</td>
 								</tr>';
 					}
 
-					if ($detailResult)
-					{
-						while ( $detailRow = DB_fetch_row($detailResult) )
-						{
-							if ( $transRow['amount'] > 0)
-							{
-									$Debit = number_format(($detailRow[1] + $detailRow[2]) / $detailRow[3],2);
+					if ($DetailResult) {
+						while ( $DetailRow = DB_fetch_row($DetailResult) ) {
+							if ( $TransRow['amount'] > 0){
+									$Debit = number_format(($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],2);
 									$Credit = '&nbsp';
 							} else {
-									$Credit = number_format(-($detailRow[1] + $detailRow[2]) / $detailRow[3],2);
+									$Credit = number_format(-($DetailRow[1] + $DetailRow[2]) / $DetailRow[3],2);
 									$Debit = '&nbsp';
 							}
 
@@ -170,19 +159,19 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 								echo '<tr class="EvenTableRows">';
 								$j++;
 							}
-							echo	'<td>' . $tranDate . '</td>
-									<td align=right>' . $transRow['periodno'] . '</td>
-									<td><a href="' . $URL . $detailRow[0] . $date . '">' . $transRow['accountname']  . ' - ' . $detailRow[4] . '</a></td>
+							echo	'<td>' . $TranDate . '</td>
+									<td align=right>' . $TransRow['periodno'] . '</td>
+									<td><a href="' . $URL . $DetailRow[0] . $date . '">' . $TransRow['accountname']  . ' - ' . $DetailRow[4] . '</a></td>
 									<td align=right>' . $Debit . '</td>
 									<td align=right>' . $Credit . '</td>
-									<td>' . $transRow['narrative'] . '</td>
+									<td>' . $TransRow['narrative'] . '</td>
 									<td>' . $Posted . '</td>
 								</tr>';
 						}
-						DB_free_result($detailResult);
+						DB_free_result($DetailResult);
 					}
 				}
-				DB_free_result($transResult);
+				DB_free_result($TransResult);
 
 				echo '<tr bgcolor="#FFFFFF">
 						<td align=right colspan=3><b>' . _('Total') . '</b></td>

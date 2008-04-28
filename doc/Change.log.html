@@ -1,5 +1,7 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 
+<P>28/4/08 Phil: Fixed bug that showed date of GL entries twice on GLTransInquiry.php and munted format of table - attempted to put formating of the script back to webERP conventions
+<P>28/4/08 Muz: Add labels to CustomerInquiry.php links Allocation /View GL Entries etc
 <P>27/4/08 Tim: Add api for customer branches.
 <P>27/4/08 Tim: Put all api error codes in one file.
 <P>26/4/08 Muz: Correct path to preview icon in Customerinquiry.php
@@ -18,7 +20,7 @@
 <P>10/4/08 Harald Ringehan: ConnectDB_mysql.inc and other db abrastraction scripts used htmlspecialchars instead of htmlentities to prevent XSS attacks inside DB_escape_string function - this leaves accented characters alone and doesn't disturb translations. Bug spotted as a result of Umlauts on command buttons failing to work.
 <P>08/4/08 Tim: Correct DB_last_insert_id bug in ConnectDB_mysql.inc and ConnectDB_mysqli.inc
 <P>06/4/08 Muz: Changes to make options clearer
-<P>06/4/08 Tim: Test whether StockID is set before seeing if part already exists. 
+<P>06/4/08 Tim: Test whether StockID is set before seeing if part already exists.
 <P>06/4/08 Tim: Update currency exchange rates when default currency is changed.
 <P>30/3/08 Tim: Bring in the xmlrpc libraries.
 <P>29/3/08 Mo: Improve error messaging in ConnectDB.inc and ConnectDB_mysql.inc and ConnectDB_mysqli.inc
@@ -46,13 +48,13 @@
 <P>23/1/08 Tim: Improve Selectproduct.php to show more information about product state.
 <P>15/1/08 Tim: Change Customers.php and Suppliers.php to accept apostrophes and accented characters in addresses.
 <P>15/1/08 Tim: BOM Cost rollup updates to force cost rollup on insertions and deletions.
-<P>15/1/08 Tim: Change last insert functions to work with audit trail. 
+<P>15/1/08 Tim: Change last insert functions to work with audit trail.
 <P>13/1/08 Phil: Sales Analysis Manual examples and some rework for Creating a New System
 <P>12/1/08 Tim: Correct bug in Date functions.
 <P>12/11/08 Tim: Sales orders now obtain next transaction number from GetNextTransNo function changed in DeliveryDetails.php
 <P>12/11/08 Tim: New field in stockmaster for perishable available if the item is controlled - changes to Stocks.php to accomodate
 <P>10/1/08 Tim: Lock tables to avoid concurrency problems when getting next transaction numbers as reported on the list
-<P>1/1/08 Tim Schofield: New Factor company maintenance and ability to set up factor comapnies against suppliers 
+<P>1/1/08 Tim Schofield: New Factor company maintenance and ability to set up factor comapnies against suppliers
 >>>>>>> 1.143
 <P>17/11/07 Damian Lee: Improvements to Inventory valuation report bringing in the units identifier
 <P>13/11/07 Tim: AuditTrail.php script added with changes in DB_query to add records to the audit trail for all inserts, updates and deletes. The Audit Trail script allows the user to inquire on this data for a range of dates and tables being modified - with field names parsed into nice screen output.
@@ -66,7 +68,7 @@
 <P>24/10/07 rent a coder - sponsored by Chris - SelectOrderItems.php now allows entry of line items by entry of a quantity in the item browse mode
 <P>24/10/07 DateFunctions.inc GetPeriod function now checks for date format of ProhibitPostingsBefore and sets up a default of one year ago if a null date
 <P>9/10/07 DefineCartClass - now defaults poline='' and itemdue = '' for credit notes
-<p>7/10/07 Tim Schofield : Bug fixes in Freight cost calculation. 
+<p>7/10/07 Tim Schofield : Bug fixes in Freight cost calculation.
 <p>5/10/07 Tim Schofield : Amend table headers in OrderDetails.php
 <p>5/10/07 Bjorn Paulsen : Bug fix in PDFOrdersInvoiced.php
 <p>5/10/07 Tim Schofield : Remove CartClass references

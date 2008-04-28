@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -29,11 +29,11 @@ if (!isset($_POST['TransAfterDate'])) {
 	$_POST['TransAfterDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m')-6,Date('d'),Date('Y')));
 }
 
-$SQL = 'SELECT debtorsmaster.name, 
-		currencies.currency, 
+$SQL = 'SELECT debtorsmaster.name,
+		currencies.currency,
 		paymentterms.terms,
-		debtorsmaster.creditlimit, 
-		holdreasons.dissallowinvoices, 
+		debtorsmaster.creditlimit,
+		holdreasons.dissallowinvoices,
 		holdreasons.reasondescription,
 		SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount
 - debtortrans.alloc) AS balance,
@@ -41,16 +41,16 @@ $SQL = 'SELECT debtorsmaster.name,
 			CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) >= paymentterms.daysbeforedue
 			THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
 		ELSE
-			CASE WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, ' . INTERVAL('1', 'MONTH') . '), ' . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))', 'DAY') . ')) >= 0 THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END 
+			CASE WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, ' . INTERVAL('1', 'MONTH') . '), ' . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))', 'DAY') . ')) >= 0 THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
 		END) AS due,
 		SUM(CASE WHEN (paymentterms.daysbeforedue > 0) THEN
 			CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue
 			AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + ' .
-		$_SESSION['PastDueDays1'] . ') 
+		$_SESSION['PastDueDays1'] . ')
 			THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
-		ELSE 
+		ELSE
 			CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, ' . INTERVAL('1', 'MONTH') . '), ' . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . ')) >= ' . $_SESSION['PastDueDays1'] . ')
-			THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount 
+			THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount
 			- debtortrans.alloc ELSE 0 END
 		END) AS overdue1,
 		SUM(CASE WHEN (paymentterms.daysbeforedue > 0) THEN
@@ -217,8 +217,8 @@ while ($myrow=DB_fetch_array($TransResult)) {
 	$credit_invoice_str = "<td><a href='%s/Credit_Invoice.php?InvoiceNumber=%s'>" . _('Credit ') ."<IMG SRC='%s/credit.gif' TITLE='" . _('Click to credit the invoice') . "'></a></td>";
 	$preview_invoice_str = "<td><a target='_blank' href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice'>" . _('Preview ') . "<IMG SRC='%s/preview.gif' TITLE='" . _('Click to preview the invoice') . "'></a></td>
 		<td><a target='_blank' href='%s/EmailCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice'>" . _('Email ') . "<IMG SRC='%s/email.gif' TITLE='" . _('Click to email the invoice') . "'></a></td>";
-	$preview_credit_str = "<td><a target='_blank' href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Credit'><IMG SRC='%s/preview.gif' TITLE='" . _('Click to preview the credit note') . "'></a></td>
-				<td><a target='_blank' href='%s/EmailCustTrans.php?FromTransNo=%s&InvOrCredit=Credit'><IMG SRC='%s/email.gif' TITLE='" . _('Click to email the credit note') . "'></a></td>";
+	$preview_credit_str = "<td><a target='_blank' href='%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Credit'>" . _('Preview') . " <IMG SRC='%s/preview.gif' TITLE='" . _('Click to preview the credit note') . "'></a></td>
+				<td><a target='_blank' href='%s/EmailCustTrans.php?FromTransNo=%s&InvOrCredit=Credit'>" . _('Email') . " <IMG SRC='%s/email.gif' TITLE='" . _('Click to email the credit note') . "'></a></td>";
 
 	if (in_array(3,$_SESSION['AllowedPageSecurityTokens']) && $myrow['type']==10){ /*Show a link to allow an invoice to be credited */
 
@@ -226,7 +226,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 			printf($base_formatstr .
 				$credit_invoice_str .
 				$preview_invoice_str .
-				"<td><A HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Entry') . "<A></td>
+				"<td><A HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Entries') . "<A></td>
 				</tr>",
 				$myrow['typename'],
 				$myrow['transno'],
@@ -302,8 +302,8 @@ while ($myrow=DB_fetch_array($TransResult)) {
 		if ($_SESSION['CompanyRecord']['gllink_debtors']== 1 AND in_array(8,$_SESSION['AllowedPageSecurityTokens'])){
 			printf($base_formatstr .
 				$preview_credit_str .
-				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'><IMG SRC='%s/allocation.gif' TITLE='" . _('Click to allocate funds') . "'></a></td>
-				<td><A HREF='%s/GLTransInquiry.php?%sTypeID=%s&TransNo=%s'>" . _('GL') . '<A></td></tr>',
+				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'>" . _('Allocation') . "<IMG SRC='%s/allocation.gif' TITLE='" . _('Click to allocate funds') . "'></a></td>
+				<td><A HREF='%s/GLTransInquiry.php?%sTypeID=%s&TransNo=%s'>" . _('View GL Entries') . '<A></td></tr>',
 				$myrow['typename'],
 				$myrow['transno'],
 				ConvertSQLDate($myrow['trandate']),
@@ -330,7 +330,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 		} else {
 			printf($base_formatstr .
 				$preview_credit_str .
-				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'><IMG SRC='%s/allocation.gif' TITLE='" . _('Click to allocate funds') . "'></a></td>
+				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'>" . _('Allocation') . "<IMG SRC='%s/allocation.gif' TITLE='" . _('Click to allocate funds') . "'></a></td>
 				</tr>",
 				$myrow['typename'],
 				$myrow['transno'],
@@ -356,7 +356,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 		if ($_SESSION['CompanyRecord']['gllink_debtors']== 1 AND in_array(8,$_SESSION['AllowedPageSecurityTokens'])){
 			printf($base_formatstr .
 				"<td><a href='%s/CustomerAllocations.php?AllocTrans=%s'>" . _('Allocation') . "</a></td>
-				<td><A HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('Whole') . '<BR>' . _('Batch GL') . "<A></td>
+				<td><A HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Entries') . "<A></td>
 				</tr>",
 				$myrow['typename'],
 				$myrow['transno'],
@@ -394,7 +394,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 	} elseif ($myrow['type']==12 AND $myrow['totalamount']>0) { /*its a negative receipt */
 		if ($_SESSION['CompanyRecord']['gllink_debtors']== 1 AND in_array(8,$_SESSION['AllowedPageSecurityTokens'])){
 			printf($base_formatstr .
-				"<td><A HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('Whole') . '<BR>' . _('Batch GL') . '<A></td></tr>',
+				"<td><A HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Entries') . '<A></td></tr>',
 				$myrow['typename'],
 				$myrow['transno'],
 				ConvertSQLDate($myrow['trandate']),
@@ -425,7 +425,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 	} else {
 		if ($_SESSION['CompanyRecord']['gllink_debtors']== 1 AND in_array(8,$_SESSION['AllowedPageSecurityTokens'])){
 			printf($base_formatstr .
-				"<td><A HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('GL') . '<A></td></tr>',
+				"<td><A HREF='%s/GLTransInquiry.php?%s&TypeID=%s&TransNo=%s'>" . _('View GL Entries') . '<A></td></tr>',
 				$myrow['typename'],
 				$myrow['transno'],
 				ConvertSQLDate($myrow['trandate']),

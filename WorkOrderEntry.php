@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 10;
 
@@ -370,7 +370,7 @@ if (isset($_POST['submit'])) { //The update button has been clicked
     }
 }
 
-echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . ">";
+echo '<FORM METHOD="post" action="' . $_SERVER['PHP_SELF'] . '">';
 
 echo '<CENTER><TABLE>';
 
@@ -419,7 +419,7 @@ if (DB_num_rows($WOResult)==1){
 	}
 }
 
-echo "<input type=hidden name='WO' value=" .$_POST['WO'] . '>';
+echo '<input type=hidden name="WO" value=' .$_POST['WO'] . '>';
 echo '<tr><td class="label">' . _('Work Order Reference') . ':</td><td>' . $_POST['WO'] . '</td></tr>';
 echo '<tr><td class="label">' . _('Factory Location') .':</td>
 	<td><select name="StockLocation">';
@@ -495,10 +495,10 @@ $SQL="SELECT categoryid,
 echo '<TABLE><TR><TD><FONT SIZE=2>' . _('Select a stock category') . ':</FONT><SELECT NAME="StockCat">';
 
 if (!isset($_POST['StockCat'])){
-	echo "<OPTION SELECTED VALUE='All'>" . _('All');
+	echo '<OPTION SELECTED VALUE="All">' . _('All');
 	$_POST['StockCat'] ='All';
 } else {
-	echo "<OPTION VALUE='All'>" . _('All');
+	echo '<OPTION VALUE="All">' . _('All');
 }
 
 while ($myrow1 = DB_fetch_array($result1)) {
