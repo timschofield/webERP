@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 /*
 Call this page with:
@@ -315,7 +315,6 @@ if (isset($_GET['AllocTrans'])) {
 			debtorno='" . $_SESSION['Alloc']->DebtorNo . "'
 			ORDER BY debtortrans.trandate";
 	$Result=DB_query($SQL,$db);
-echo $_POST['AllocTrans'];
 
 	while ($myrow=DB_fetch_array($Result))
 	{
