@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.42 $ */
+/* $Revision: 1.43 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -109,24 +109,58 @@ If (isset($_POST['Update'])
  		      $_POST['FreightCost'] = round($_POST['FreightCost'],2);
 		      $_POST['ShipVia'] = $BestShipper;
 		}
+		$sql = "SELECT custbranch.brname,
+				custbranch.braddress1,
+				custbranch.braddress2,
+				custbranch.braddress3,
+				custbranch.braddress4,
+				custbranch.braddress5,
+				custbranch.braddress6,
+				custbranch.phoneno,
+				custbranch.email,
+				custbranch.defaultlocation,
+				custbranch.defaultshipvia,
+				custbranch.deliverblind,
+                custbranch.specialinstructions,
+                custbranch.estdeliverydays
+			FROM custbranch
+			WHERE custbranch.branchcode='" . $_SESSION['Items']->Branch . "'
+			AND custbranch.debtorno = '" . $_POST['Select'] . "'";
 
-		$_SESSION['Items']->DeliverTo = $_POST['DeliverTo'];
-		$_SESSION['Items']->DeliveryDate = $_POST['DeliveryDate'];
-		$_SESSION['Items']->DelAdd1 = $_POST['BrAdd1'];
-		$_SESSION['Items']->DelAdd2 = $_POST['BrAdd2'];
-		$_SESSION['Items']->DelAdd3 = $_POST['BrAdd3'];
-		$_SESSION['Items']->DelAdd4 = $_POST['BrAdd4'];
-		$_SESSION['Items']->DelAdd5 = $_POST['BrAdd5'];
-		$_SESSION['Items']->DelAdd6 = $_POST['BrAdd6'];
-		$_SESSION['Items']->PhoneNo =$_POST['PhoneNo'];
-		$_SESSION['Items']->Email =$_POST['Email'];
-		$_SESSION['Items']->Location = $_POST['Location'];
+		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');
+		$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
+		$result =DB_query($sql,$db,$ErrMsg,$DbgMsg);
+		if (DB_num_rows($result)==0){
+
+			prnMsg(_('The branch details for branch code') . ': ' . $_SESSION['Items']->Branch . ' ' . _('against customer code') . ': ' . $_POST['Select'] . ' ' . _('could not be retrieved') . '. ' . _('Check the set up of the customer and branch'),'error');
+
+			if ($debug==1){
+				echo '<BR>' . _('The SQL that failed to get the branch details was') . ':<BR>' . $sql;
+			}
+			include('includes/footer.inc');
+			exit;
+		}
+
+		$myrow = DB_fetch_row($result);
+		$_SESSION['Items']->DeliverTo = $myrow[0];
+		$_SESSION['Items']->DelAdd1 = $myrow[1];
+		$_SESSION['Items']->DelAdd2 = $myrow[2];
+		$_SESSION['Items']->DelAdd3 = $myrow[3];
+		$_SESSION['Items']->DelAdd4 = $myrow[4];
+		$_SESSION['Items']->DelAdd5 = $myrow[5];
+		$_SESSION['Items']->DelAdd6 = $myrow[6];
+		$_SESSION['Items']->PhoneNo = $myrow[7];
+		$_SESSION['Items']->Email = $myrow[8];
+		$_SESSION['Items']->Location = $myrow[9];
+		$_SESSION['Items']->ShipVia = $myrow[10];
+		$_SESSION['Items']->DeliverBlind = $myrow[11];
+		$_SESSION['Items']->SpecialInstructions = $myrow[12];
+		$_SESSION['Items']->DeliveryDays = $myrow[13];
+
 		$_SESSION['Items']->CustRef = $_POST['CustRef'];
 		$_SESSION['Items']->Comments = $_POST['Comments'];
 		$_SESSION['Items']->FreightCost = round($_POST['FreightCost'],2);
-		$_SESSION['Items']->ShipVia = $_POST['ShipVia'];
 		$_SESSION['Items']->Quotation = $_POST['Quotation'];
-		$_SESSION['Items']->DeliverBlind = $_POST['DeliverBlind'];
 
 		/*$_SESSION['DoFreightCalc'] is a setting in the config.php file that the user can set to false to turn off freight calculations if necessary */
 
@@ -569,9 +603,9 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 }
 
 echo '<TABLE><TR>
-	<TD>'. _('Deliver To') .":</TD>
-	<TD><input type=text size=42 max=40 name='DeliverTo' value='" . $_SESSION['Items']->DeliverTo . "'></TD>
-</TR>";
+	<TD>'. _('Deliver To') .':</TD>
+	<TD><input type=text size=42 max=40 name="DeliverTo" value="' . $_SESSION['Items']->DeliverTo . '"></TD>
+</TR>';
 
 echo '<TR>
 	<TD>'. _('Deliver from the warehouse at') .":</TD>
@@ -609,34 +643,34 @@ echo '<TR>
 	</TR>";
 
 echo '<TR>
-	<TD>'. _('Delivery Address 1') . ":</TD>
-	<TD><input type=text size=42 max=40 name='BrAdd1' value='" . $_SESSION['Items']->DelAdd1 . "'></TD>
-</TR>";
-
-echo "<TR>
-	<TD>". _('Delivery Address 2') . ":</TD>
-	<TD><input type=text size=42 max=40 name='BrAdd2' value='" . $_SESSION['Items']->DelAdd2 . "'></TD>
-</TR>";
+	<TD>'. _('Delivery Address 1') . ':</TD>
+	<TD><input type=text size=42 max=40 name="BrAdd1" value="' . $_SESSION['Items']->DelAdd1 . '"></TD>
+</TR>';
 
 echo '<TR>
-	<TD>'. _('Delivery Address 3') . ":</TD>
-	<TD><input type=text size=42 max=40 name='BrAdd3' value='" . $_SESSION['Items']->DelAdd3 . "'></TD>
-</TR>";
+	<TD>'. _('Delivery Address 2') . ':</TD>
+	<TD><input type=text size=42 max=40 name="BrAdd2" value="' . $_SESSION['Items']->DelAdd1 . '"></TD>
+</TR>';
 
-echo "<TR>
-	<TD>". _('Delivery Address 4') . ":</TD>
-	<TD><input type=text size=42 max=40 name='BrAdd4' value='" . $_SESSION['Items']->DelAdd4 . "'></TD>
-</TR>";
+echo '<TR>
+	<TD>'. _('Delivery Address 3') . ':</TD>
+	<TD><input type=text size=42 max=40 name="BrAdd3" value="' . $_SESSION['Items']->DelAdd1 . '"></TD>
+</TR>';
 
-echo "<TR>
-	<TD>". _('Delivery Address 5') . ":</TD>
-	<TD><input type=text size=22 max=20 name='BrAdd5' value='" . $_SESSION['Items']->DelAdd5 . "'></TD>
-</TR>";
+echo '<TR>
+	<TD>'. _('Delivery Address 4') . ':</TD>
+	<TD><input type=text size=42 max=40 name="BrAdd4" value="' . $_SESSION['Items']->DelAdd1 . '"></TD>
+</TR>';
 
-echo "<TR>
-	<TD>". _('Delivery Address 6') . ":</TD>
-	<TD><input type=text size=17 max=15 name='BrAdd6' value='" . $_SESSION['Items']->DelAdd6 . "'></TD>
-</TR>";
+echo '<TR>
+	<TD>'. _('Delivery Address 5') . ':</TD>
+	<TD><input type=text size=42 max=40 name="BrAdd5" value="' . $_SESSION['Items']->DelAdd1 . '"></TD>
+</TR>';
+
+echo '<TR>
+	<TD>'. _('Delivery Address 6') . ':</TD>
+	<TD><input type=text size=42 max=40 name="BrAdd6" value="' . $_SESSION['Items']->DelAdd1 . '"></TD>
+</TR>';
 
 echo '<TR>
 	<TD>'. _('Contact Phone Number') .":</TD>
