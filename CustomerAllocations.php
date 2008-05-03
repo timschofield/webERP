@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 /*
 Call this page with:
@@ -93,7 +93,7 @@ if (isset($_POST['UpdateDatabase'])) {
 		$AllAllocations = 0;
 		foreach ($_SESSION['Alloc']->Allocs as $AllocnItem)
 		{
-			  if ($AllocnItem->OrigAlloc > 0 AND ($AllocnItem->OrigAlloc != $AllocnItem->AllocAmt))
+			  if ($AllocnItem->PrevAllocRecordID != 'NA')
 			  // original allocation has changed so delete the old allocation record
 			  {
 				$SQL = 'DELETE FROM custallocns WHERE id = ' . $AllocnItem->PrevAllocRecordID;
@@ -103,8 +103,8 @@ if (isset($_POST['UpdateDatabase'])) {
 				}
 			 }
 
-			 if ($AllocnItem->OrigAlloc != $AllocnItem->AllocAmt) // has previous allocated amount changed?
-			 {
+//			 if ($AllocnItem->OrigAlloc != $AllocnItem->AllocAmt) // has previous allocated amount changed?
+//			 {
 				if ($AllocnItem->AllocAmt > 0)
 				{
 					$SQL = "INSERT INTO
@@ -135,7 +135,7 @@ if (isset($_POST['UpdateDatabase'])) {
 				{
 					$error = 'Could not update difference on exchange';
 				}
-			 }
+//			 }
 		}
 		$Settled = (abs($TotalAllocated + $_SESSION['Alloc']->TransAmt) < 0.01) ? 1 : 0;
 
