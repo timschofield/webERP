@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -771,7 +771,7 @@ if (isset($_SESSION['ReceiptBatch'])){
 	    echo '<tr>
 	    		<td align=right>' . number_format($ReceiptItem->Amount,2) . '</td>
 				<td align=right>' . number_format($ReceiptItem->Discount,2) . '</td>
-				<td>' . $ReceiptItem->CustomerName . '</td>
+				<td>' . stripslashes($ReceiptItem->CustomerName) . '</td>
 				<td>' . $ReceiptItem->GLCode . "</td>
 				<td><a href='" . $_SERVER['PHP_SELF'] . '?' . SID . '&Delete=' . $ReceiptItem->ID . "'>" . _('Delete') . '</a></td>
 			</tr>';
