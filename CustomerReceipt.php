@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -19,6 +19,10 @@ if (isset($_GET['NewReceipt'])){
 	unset($_SESSION['ReceiptBatch']);
 	unset($_SESSION['CustomerRecord']);
 	
+}
+
+if (isset($_POST['Cancel'])) {
+	$Cancel=1;
 }
 
 if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){ //always process a header update unless deleting an item
@@ -740,10 +744,10 @@ foreach ($ReceiptTypes as $RcptType) {
      }
 }
 echo '</select></td></tr>';
-if (!isset($_SESSION['ReceiptBatch']->BatchNarrative)) {
-	$_SESSION['ReceiptBatch']->BatchNarrative='';
+if (!isset($_SESSION['ReceiptBatch']->Narrative)) {
+	$_SESSION['ReceiptBatch']->Narrative='';
 }
-echo '<tr><td>' . _('Narrative') . ':</td><td><input tabindex=7 type="text" name="BatchNarrative" maxlength=50 size=52 value="' . $_SESSION['ReceiptBatch']->BatchNarrative . '"></td></tr>';
+echo '<tr><td>' . _('Narrative') . ':</td><td><input tabindex=7 type="text" name="BatchNarrative" maxlength=50 size=52 value="' . $_SESSION['ReceiptBatch']->Narrative . '"></td></tr>';
 echo '<tr><td colspan=3><center><input tabindex=8 type=submit name="BatchInput" Value="' . _('Accept') . '"></center></td></tr>';
 echo '</table>
 		<hr>';
@@ -898,6 +902,7 @@ if (((isset($_SESSION['CustomerRecord'])
 		<td><input tabindex=13 type="text" name="Narrative" maxlength=30 size=32 value="' . $_POST['Narrative'] . '"></td></tr>';
 	echo '</table>';
 	echo '<input tabindex=14 type="submit" name="Process" value="' . _('Accept') . '">';
+	echo '<input tabindex=14 type="submit" name="Cancel" value="' . _('Cancel') . '">';
 
 } elseif (isset($_SESSION['ReceiptBatch']) && !isset($_POST['GLEntry'])){
 
