@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 $PageSecurity = 2;
 
@@ -126,7 +126,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
     $_POST['PageOffset'] = 1;
 	}
 
-	If ($_POST['Keywords'] AND $_POST['StockCode']) {
+	if ($_POST['Keywords'] AND $_POST['StockCode']) {
 		$msg=_('Stock description keywords have been used in preference to the Stock code extract entered');
 	}
 	If ($_POST['Keywords']) {
@@ -361,10 +361,10 @@ if (isset($result) AND !isset($_POST['Select'])) {
 	//end of while loop
 
 		echo '</TABLE>';
-		if ($ListPageMax >1) {
+/*		if ($ListPageMax >1) {
 			echo "<P>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 
-			echo '<SELECT NAME="PageOffset">';
+			echo '<SELECT NAME="Page>';
 
 			$ListPage=1;
 			while($ListPage <= $ListPageMax) {
@@ -380,7 +380,7 @@ if (isset($result) AND !isset($_POST['Select'])) {
 				<INPUT TYPE=SUBMIT NAME="Previous" VALUE="' . _('Previous') . '">
 				<INPUT TYPE=SUBMIT NAME="Next" VALUE="' . _('Next') . '">';
 			echo '<P>';
-		}
+		} */
 	}
 }
 // end display list if there is more than one record
