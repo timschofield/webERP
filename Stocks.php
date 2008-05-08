@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.52 $ */
+/* $Revision: 1.53 $ */
 
 $PageSecurity = 11;
 
@@ -614,7 +614,7 @@ if (isset($_POST['Description'])) {
 echo '<TR><TD>' . _('Part Description') . ' (' . _('short') . '):</TD><TD><input ' . (in_array('Description',$Errors) ?  'class="inputerror"' : '' ) .' type="Text" name="Description" SIZE=52 MAXLENGTH=50 value="' . htmlentities($Description,ENT_QUOTES,_('ISO-8859-1')) . '"></TD></TR>'."\n";
 
 if (isset($_POST['LongDescription'])) {
-	$LongDescription = $_POST['LongDescription'];
+	$LongDescription = AddCarriageReturns($_POST['LongDescription']);
 } else {
 	$LongDescription ='';
 }
