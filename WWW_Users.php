@@ -1,8 +1,13 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 $PageSecurity=15;
+
+
+if ($_POST['UserID'] == $_POST['ID']) {
+	$_POST['Language'] = $_POST['UserLanguage'];
+}
 
 include('includes/session.inc');
 
@@ -122,7 +127,7 @@ if (isset($_POST['submit'])) {
 						pagesize='" . $_POST['PageSize'] . "',
 						fullaccess=" . $_POST['Access'] . ",
 						theme='" . $_POST['Theme'] . "',
-						language ='" . $_POST['Language'] . "',
+						language ='" . $_POST['UserLanguage'] . "',
 						defaultlocation='" . $_POST['DefaultLocation'] ."',
 						modulesallowed='" . $ModulesAllowed . "',
 						blocked=" . $_POST['Blocked'] . "
@@ -158,7 +163,7 @@ if (isset($_POST['submit'])) {
 						'" . $ModulesAllowed . "',
 						" . $_SESSION['DefaultDisplayRecordsMax'] . ",
 						'" . $_POST['Theme'] . "',
-						'". $_POST['Language'] ."')";
+						'". $_POST['UserLanguage'] ."')";
 		$msg = _('A new user record has been inserted');
 	}
 
@@ -181,7 +186,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['ModulesAllowed']);
 		unset($_POST['Blocked']);
 		unset($_POST['Theme']);
-		unset($_POST['Language']);
+		unset($_POST['UserLanguage']);
 		unset($SelectedUser);
 	}
 
@@ -327,7 +332,7 @@ if (isset($SelectedUser)) {
 	$_POST['DefaultLocation'] = $myrow['defaultlocation'];
 	$_POST['ModulesAllowed'] = $myrow['modulesallowed'];
 	$_POST['Theme'] = $myrow['theme'];
-	$_POST['Language'] = $myrow['language'];
+	$_POST['UserLanguage'] = $myrow['language'];
 	$_POST['Blocked'] = $myrow['blocked'];
 	
 	echo "<INPUT TYPE=HIDDEN NAME='SelectedUser' VALUE='" . $SelectedUser . "'>";
@@ -385,8 +390,8 @@ foreach ($SecurityRoles as $SecKey => $SecVal) {
 		echo "<OPTION VALUE=" . $SecKey . ">" . $SecVal;
 	}
 }
-
 echo '</SELECT></TD></TR>';
+echo "<INPUT TYPE='hidden' NAME='ID' VALUE='".$_SESSION['UserID']."'>";
 
 echo '<TR><TD>' . _('Default Location') . ":</TD>
 	<TD><SELECT name='DefaultLocation'>";
@@ -492,16 +497,16 @@ echo '</SELECT></TD></TR>';
 
 echo '<TR>
 	<TD>' . _('Language') . ":</TD>
-	<TD><SELECT name='Language'>";
+	<TD><SELECT name='UserLanguage'>";
 
-$LangDirHandle = dir('locale/');
+ $LangDirHandle = dir('locale/');
 
 
 while (false != ($LanguageEntry = $LangDirHandle->read())){
 
 	if (is_dir('locale/' . $LanguageEntry) AND $LanguageEntry != '..' AND $LanguageEntry != 'CVS' AND $LanguageEntry!='.'){
 
-		if (isset($_POST['Language']) and $_POST['Language'] == $LanguageEntry){
+		if (isset($_POST['UserLanguage']) and $_POST['UserLanguage'] == $LanguageEntry){
 			echo "<OPTION SELECTED VALUE='$LanguageEntry'>$LanguageEntry";
 		} else {
 			echo "<OPTION VALUE='$LanguageEntry'>$LanguageEntry";
