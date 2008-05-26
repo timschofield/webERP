@@ -31,6 +31,24 @@
 		return $Errors;
 	}
 
+/* Verify that the branch number exists.*/
+	function VerifyBranchNoExists($DebtorNumber, $BranchNumber, $i, $Errors, $db) {
+		if ((strlen($BranchNumber)<1) or (strlen($BranchNumber)>10)) {
+			$Errors[$i] = IncorrectBranchNumberLength;
+		}
+		$Searchsql = 'SELECT count(debtorno) 
+				FROM custbranch
+				WHERE debtorno="'.$DebtorNumber.'" AND
+				branchcode="'.$BranchNumber.'"';
+		$SearchResult=DB_query($Searchsql, $db);
+		$answer = DB_fetch_row($SearchResult);
+		if ($answer[0] == 0) {
+			$Errors[$i] = BranchNoDoesntExist;
+		}
+		return $Errors;
+	}
+
+
 /* Check that the name exists and is 40 characters or less long */		
 	function VerifyBranchName($BranchName, $i, $Errors) {
 		if ((strlen($BranchName)<1) or (strlen($BranchName)>40)) {
@@ -312,5 +330,148 @@
 		}
 		return $Errors;
 	}
+	
+		
+	function ModifyBranch($BranchDetails, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		foreach ($BranchDetails as $key => $value) {
+			$BranchDetails[$key] = DB_escape_string($value);
+		}
+		$Errors=VerifyBranchNoExists($BranchDetails['debtorno'], $BranchDetails['branchcode'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyBranchName($BranchDetails['brname'], sizeof($Errors), $Errors, $db);
+		if (isset($BranchDetails['address1'])){
+			$Errors=VerifyAddressLine($BranchDetails['address1'], 40, sizeof($Errors), $Errors, $db);
+		}
+		if (isset($BranchDetails['address2'])){
+			$Errors=VerifyAddressLine($BranchDetails['address2'], 40, sizeof($Errors), $Errors, $db);
+		}
+		if (isset($BranchDetails['address3'])){
+			$Errors=VerifyAddressLine($BranchDetails['address3'], 40, sizeof($Errors), $Errors, $db);
+		}
+		if (isset($BranchDetails['address4'])){
+			$Errors=VerifyAddressLine($BranchDetails['address4'], 50, sizeof($Errors), $Errors, $db);
+		}
+		if (isset($BranchDetails['address5'])){
+			$Errors=VerifyAddressLine($BranchDetails['address5'], 20, sizeof($Errors), $Errors, $db);
+		}
+		if (isset($BranchDetails['address6'])){
+			$Errors=VerifyAddressLine($BranchDetails['address6'], 15, sizeof($Errors), $Errors, $db);
+		}
+		if (isset($BranchDetails['estdeliverydays'])){
+			$Errors=VerifyEstDeliveryDays($BranchDetails['estdeliverydays'], sizeof($Errors), $Errors);
+		}
+		if (isset($BranchDetails['area'])){
+			$Errors=VerifyAreaCode($BranchDetails['area'], sizeof($Errors), $Errors, $db);
+		}
+		if (isset($BranchDetails['salesman'])){
+			$Errors=VerifySalesmanCode($BranchDetails['salesman'], sizeof($Errors), $Errors, $db);
+		}
+		if (isset($BranchDetails['fwddate'])){
+			$Errors=VerifyFwdDate($BranchDetails['fwddate'], sizeof($Errors), $Errors);
+		}
+		if (isset($BranchDetails['phoneno'])){
+			$Errors=VerifyPhoneNumber($BranchDetails['phoneno'], sizeof($Errors), $Errors);
+		}
+		if (isset($BranchDetails['faxno'])){
+			$Errors=VerifyFaxNumber($BranchDetails['faxno'], sizeof($Errors), $Errors);
+		}
+		if (isset($BranchDetails['contactname'])){
+			$Errors=VerifyContactName($BranchDetails['contactname'], sizeof($Errors), $Errors);
+		}
+		if (isset($BranchDetails['email'])){
+			$Errors=VerifyEmailAddress($BranchDetails['email'], sizeof($Errors), $Errors);
+		}
+		if (isset($BranchDetails['defaultlocation'])){
+			$Errors=VerifyDefaultLocation($BranchDetails['defaultlocation'], sizeof($Errors), $Errors, $db);
+		}
+		if (isset($BranchDetails['taxgroupid'])){
+			$Errors=VerifyTaxGroupId($BranchDetails['taxgroupid'], sizeof($Errors), $Errors, $db);
+		}
+		if (isset($BranchDetails['defaultshipvia'])){
+			$Errors=VerifyDefaultShipVia($BranchDetails['defaultshipvia'], sizeof($Errors), $Errors, $db);
+		}
+		if (isset($BranchDetails['deliverblind'])){
+			$Errors=VerifyDeliverBlind($BranchDetails['deliverblind'], sizeof($Errors), $Errors);
+		}
+		if (isset($BranchDetails['disabletrans'])){
+			$Errors=VerifyDisableTrans($BranchDetails['disabletrans'], sizeof($Errors), $Errors);
+		}
+		if (isset($BranchDetails['brpostaddr1'])){
+			$Errors=VerifyAddressLine($BranchDetails['brpostaddr1'], 40, sizeof($Errors), $Errors, $db);
+		}
+		if (isset($BranchDetails['brpostaddr2'])){
+			$Errors=VerifyAddressLine($BranchDetails['brpostaddr2'], 40, sizeof($Errors), $Errors, $db);
+		}
+		if (isset($BranchDetails['brpostaddr3'])){
+			$Errors=VerifyAddressLine($BranchDetails['brpostaddr3'], 30, sizeof($Errors), $Errors, $db);
+		}
+		if (isset($BranchDetails['brpostaddr4'])){
+			$Errors=VerifyAddressLine($BranchDetails['brpostaddr4'], 20, sizeof($Errors), $Errors, $db);
+		}
+		if (isset($BranchDetails['brpostaddr5'])){
+			$Errors=VerifyAddressLine($BranchDetails['brpostaddr5'], 20, sizeof($Errors), $Errors, $db);
+		}
+		if (isset($BranchDetails['brpostaddr6'])){
+			$Errors=VerifyAddressLine($BranchDetails['brpostaddr6'], 15, sizeof($Errors), $Errors, $db);
+		}
+		if (isset($BranchDetails['specialinstructions'])){
+			$Errors=VerifySpecialInstructions($BranchDetails['specialinstructions'], sizeof($Errors), $Errors);
+		}
+		if (isset($BranchDetails['custbranchcode'])){
+			$Errors=VerifyCustBranchCode($BranchDetails['custbranchcode'], sizeof($Errors), $Errors);
+		}
+		$FieldNames='';
+		$FieldValues='';
+		foreach ($BranchDetails as $key => $value) {
+			$FieldNames.=$key.', ';
+			$FieldValues.='"'.$value.'", ';
+		}
+		$sql='UPDATE custbranch SET ';
+		foreach ($BranchDetails as $key => $value) {
+			$sql .= $key.'="'.$value.'", ';
+		}
+		$sql = substr($sql,0,-2).' WHERE debtorno="'.$BranchDetails['debtorno'].'" and
+				 branchcode="'.$BranchDetails['branchcode'].'"';
+		if (sizeof($Errors)==0) {
+			$result = DB_Query($sql, $db);
+			echo DB_error_no($db);
+			if (DB_error_no($db) != 0) {
+				$Errors[0] = DatabaseUpdateFailed;
+			} else {
+				$Errors[0]=0;
+			}
+		}
+		return $Errors;
+	}
+
+/* This function takes a debtorno and branch code and returns an associative array containing
+   the database record for that branch. If the debtor/branch code doesn't exist
+   then it returns an $Errors array.
+*/	
+	function GetCustomerBranch($DebtorNumber, $BranchCode, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$Errors = VerifyBranchNoExists($DebtorNumber, $BranchCode, sizeof($Errors), $Errors, $db);
+		if (sizeof($Errors)!=0) {
+			return $Errors;
+		}
+		$sql='SELECT * FROM custbranch WHERE debtorno="'.$DebtorNumber.'" and branchcode="'.$BranchCode.'"';
+		$result = DB_Query($sql, $db);
+		if (sizeof($Errors)==0) {
+			return DB_fetch_array($result);
+		} else {
+			return $Errors;
+		}
+	}
+	
 
 ?>

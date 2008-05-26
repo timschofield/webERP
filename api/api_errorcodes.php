@@ -48,5 +48,6 @@
 	Define('InvalidDisableTrans', 1043);
 	Define('InvalidSpecialInstructions', 1044);
 	Define('InvalidCustBranchCode', 1045);
+	Define('BranchNoDoesntExist', 1046);
 		
 ?>
