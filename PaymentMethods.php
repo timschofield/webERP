@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 15;
 
@@ -14,6 +14,12 @@ if ( isset($_GET['SelectedPaymentID']) )
 elseif (isset($_POST['SelectedPaymentID']))
 	$SelectedPaymentID = $_POST['SelectedPaymentID'];
 
+if (isset($Errors)) {
+	unset($Errors);
+}
+	
+$Errors = array();	
+
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
@@ -22,16 +28,21 @@ if (isset($_POST['submit'])) {
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
+	$i=1;
 
 	//first off validate inputs sensible
 
 	if (strpos($_POST['MethodName'],'&')>0 OR strpos($_POST['MethodName'],"'")>0) {
 		$InputError = 1;
 		prnMsg( _('The payment method cannot contain the character') . " '&' " . _('or the character') ." '",'error');
+		$Errors[$i] = 'MethodName';
+		$i++;		
 	}
 	if ( trim($_POST['MethodName']) == "") {
 		$InputError = 1;
 		prnMsg( _('The payment method may not be empty.'),'error');
+		$Errors[$i] = 'MethodName';
+		$i++;		
 	}
 	if ($_POST['SelectedPaymentID']!='' AND $InputError !=1) {
 
@@ -238,7 +249,7 @@ if (! isset($_GET['delete'])) {
 	}
 	echo "<TR>
 		<TD>" . _('Payment Method') . ':' . "</TD>
-		<TD><input type='Text' name='MethodName' SIZE=30 MAXLENGTH=30 value='" . $_POST['MethodName'] . "'></TD>
+		<TD><input type='Text' ". (in_array('MethodName',$Errors) ? 'class="inputerror"' : '' ) ." name='MethodName' SIZE=30 MAXLENGTH=30 value='" . $_POST['MethodName'] . "'></TD>
 		</TR>";
 	echo "<TR>
 		<TD>" . _('Use For Payments') . ':' . "</TD>

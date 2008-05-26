@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 $PageSecurity = 15;
 
@@ -13,6 +13,12 @@ if (isset($_GET['SelectedShipper'])){
 	$SelectedShipper = $_POST['SelectedShipper'];
 }
 
+if (isset($Errors)) {
+	unset($Errors);
+}
+	
+$Errors = array();	
+
 if ( isset($_POST['submit']) ) {
 
 	//initialise no input errors assumed initially before we test
@@ -22,13 +28,18 @@ if ( isset($_POST['submit']) ) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
+	$i=1;
 
 	if (strlen($_POST['ShipperName']) >40) {
 		$InputError = 1;
 		prnMsg( _("The shipper's name must be forty characters or less long"), 'error');
+		$Errors[$i] = 'ShipperName';
+		$i++;		
 	} elseif( trim($_POST['ShipperName']) == '' ) {
 		$InputError = 1;
 		prnMsg( _("The shipper's name may not be empty"), 'error');
+		$Errors[$i] = 'ShipperName';
+		$i++;		
 	}
 
 	if (isset($SelectedShipper) AND $InputError !=1) {
@@ -174,18 +185,18 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['ShipperName'])) {
 		$_POST['ShipperName']='';
 	}
-	?>
 
-	<TR><TD><?php echo _('Shipper Name');?>:</TD>
-	<TD><input type="Text" name="ShipperName" value="<?php echo $_POST['ShipperName']; ?>" SIZE=35 MAXLENGTH=40></TD></TR>
+	echo '<TR><TD>'. _('Shipper Name') .':</TD>
+	<TD><input type="Text" name="ShipperName"'. (in_array('ShipperName',$Errors) ? 'class="inputerror"' : '' ) .
+		' value="'. $_POST['ShipperName'] .'" SIZE=35 MAXLENGTH=40></TD></TR>
 
 	</TABLE></CENTER>
 
-	<CENTER><input type="Submit" name="submit" value="<?php echo _('Enter Information');?>"></CENTER>
+	<CENTER><input type="Submit" name="submit" value="'. _('Enter Information').'"></CENTER>
 
-	</FORM>
+	</FORM>';
 
-<?php } //end if record deleted no point displaying form to add record 
+} //end if record deleted no point displaying form to add record 
 
 include('includes/footer.inc');
 ?>

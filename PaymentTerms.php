@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 10;
 
@@ -16,6 +16,12 @@ if (isset($_GET['SelectedTerms'])){
 	$SelectedTerms = $_POST['SelectedTerms'];
 }
 
+if (isset($Errors)) {
+	unset($Errors);
+}
+	
+$Errors = array();	
+
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
@@ -23,24 +29,51 @@ if (isset($_POST['submit'])) {
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
+	$i=1;
 
 	//first off validate inputs are sensible
 
+	if (strlen($_POST['TermsIndicator']) < 1) {
+		$InputError = 1;
+		prnMsg(_('The payment terms name must exist'),'error');
+		$Errors[$i] = 'TermsIndicator';
+		$i++;		
+	} 
 	if (strlen($_POST['TermsIndicator']) > 2) {
 		$InputError = 1;
 		prnMsg(_('The payment terms name must be two characters or less long'),'error');
-	} elseif (!is_long((int) $_POST['DayNumber'])){
+		$Errors[$i] = 'TermsIndicator';
+		$i++;		
+	} 
+	if (!is_long((int) $_POST['DayNumber'])){
 		$InputError = 1;
 		prnMsg( _('The number of days or the day in the following month must be numeric') ,'error');
-	} elseif (strlen($_POST['Terms']) > 40) {
+		$Errors[$i] = 'DayNumber';
+		$i++;		
+	} 
+	if (strlen($_POST['Terms']) > 40) {
 		$InputError = 1;
 		prnMsg( _('The terms description must be forty characters or less long') ,'error');
-	} elseif ($_POST['DayNumber'] > 30 AND $_POST['DaysOrFoll']==1) {
+		$Errors[$i] = 'Terms';
+		$i++;		
+	} 
+	if (isset($_POST['DayNumber'])) {
+		$InputError = 1;
+		prnMsg( _('The day number must exist') ,'error');
+		$Errors[$i] = 'DayNumber';
+		$i++;		
+	} 
+	if ($_POST['DayNumber'] > 30 AND $_POST['DaysOrFoll']==1) {
 		$InputError = 1;
 		prnMsg( _('When the check box is not checked to indicate a day in the following month is the due date') . ', ' . _('the due date cannot be a day after the 30th') . '. ' . _('A number between 1 and 30 is expected') ,'error');
-	} elseif ($_POST['DayNumber']>360 AND $_POST['DaysOrFoll'] ==0) {
+		$Errors[$i] = 'DayNumber';
+		$i++;		
+	} 
+	if ($_POST['DayNumber']>360 AND $_POST['DaysOrFoll'] ==0) {
 		$InputError = 1;
 		prnMsg( _('When the check box is checked to indicate that the term expects a number of days after which accounts are due') . ', ' . _('the number entered should be less than 361 days') ,'error');
+		$Errors[$i] = 'DayNumber';
+		$i++;		
 	}
 
 
@@ -224,37 +257,26 @@ if (!isset($_GET['delete'])) {
 		unset($DayInFollowingMonth); // Rather unset for a new record
 		if (!isset($_POST['Terms'])) $_POST['Terms']='';
 
-		echo '<CENTER><TABLE><TR><TD>' . _('Term Code') . ':</TD><TD><input type="Text" name="TermsIndicator" value="' . $_POST['TermsIndicator'] . '" SIZE=3 MAXLENGTH=2></TD></TR>';
+		echo '<CENTER><TABLE><TR><TD>' . _('Term Code') . ':</TD><TD><input type="Text" name="TermsIndicator"
+		 ' . (in_array('TermsIndicator',$Errors) ? 'class="inputerror"' : '' ) .' value="' . $_POST['TermsIndicator'] . 
+			'" SIZE=3 MAXLENGTH=2></TD></TR>';
 	}
 
-
-	?>
-
-
-	<TR><TD><?php echo _('Terms Description'); ?>:</TD>
+	echo '<TR><TD>'. _('Terms Description'). ':</TD>
 	<TD>
-	<INPUT TYPE="text" name="Terms" VALUE="<?php echo $_POST['Terms'];?>" SIZE=35 MAXLENGTH=40>
+	<INPUT TYPE="text"' . (in_array('Terms',$Errors) ? 'class="inputerror"' : '' ) .' name="Terms" VALUE="'.$_POST['Terms']. '" SIZE=35 MAXLENGTH=40>
 	</TD></TR>
-	<TR><TD><?php echo _('Due After A Given No. Of Days'); ?>:</TD>
-	<TD><INPUT TYPE="checkbox" name="DaysOrFoll" <?php if ( isset($DayInFollowingMonth) && !$DayInFollowingMonth) { echo "checked"; }?> >
-	</TD></TR>
-	<TR><TD><?php echo _('Days (Or Day In Following Month)'); ?>:</TD>
-	<TD>
-	<INPUT TYPE="Text" name="DayNumber"  SIZE=4 MAXLENGTH=3 VALUE=
-		<?php	if ($DaysBeforeDue !=0) {
+	<TR><TD>'._('Due After A Given No. Of Days').':</TD>
+	<TD><INPUT TYPE="checkbox" name="DaysOrFoll"';
+	if ( isset($DayInFollowingMonth) && !$DayInFollowingMonth) { echo "checked"; }
+	echo ' ></TD></TR><TR><TD>'._('Days (Or Day In Following Month)').':</TD><TD>
+		<INPUT TYPE="Text"' . (in_array('DayNumber',$Errors) ? 'class="inputerror"' : '' ) .' name="DayNumber"  SIZE=4 MAXLENGTH=3 VALUE=';
+	if ($DaysBeforeDue !=0) {
 			echo $DaysBeforeDue;
 			} else {
 			if (isset($DayInFollowingMonth)) {echo $DayInFollowingMonth;}
-			} ?>>
-	</TD></TR>
-
-	</TABLE>
-
-	<CENTER><input type="Submit" name="submit" value="<?php echo _('Enter Information'); ?>">
-
-	</FORM>
-
-<?php
+			} 
+	echo '></TD></TR></TABLE><CENTER><input type="Submit" name="submit" value="'._('Enter Information').'"></FORM>';
 } //end if record deleted no point displaying form to add record
 
 include('includes/footer.inc');

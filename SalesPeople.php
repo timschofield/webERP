@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 3;
 
@@ -13,6 +13,12 @@ if (isset($_GET['SelectedSaleperson'])){
 	$SelectedSaleperson =strtoupper($_POST['SelectedSaleperson']);
 }
 
+if (isset($Errors)) {
+	unset($Errors);
+}
+	
+$Errors = array();	
+
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
@@ -20,21 +26,25 @@ if (isset($_POST['submit'])) {
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
+	$i=1;
 
 	//first off validate inputs sensible
 
 	if (strlen($_POST['SalesmanCode']) > 3) {
 		$InputError = 1;
 		prnMsg(_('The salesperson code must be three characters or less long'),'error');
-
+		$Errors[$i] = 'SalesmanCode';
+		$i++;		
 	} elseif (strlen($_POST['SalesmanCode'])==0 OR $_POST['SalesmanCode']=='') {
 		$InputError = 1;
 		prnMsg(_('The salesperson code cannot be empty'),'error');
-
+		$Errors[$i] = 'SalesmanCode';
+		$i++;		
 	} elseif (strlen($_POST['SalesmanName']) > 30) {
 		$InputError = 1;
 		prnMsg(_('The salesperson name must be thity characters or less long'),'error');
-
+		$Errors[$i] = 'SalesmanName';
+		$i++;		
 	} elseif (strlen($_POST['SManTel']) > 20) {
 		$InputError = 1;
 		prnMsg(_('The salesperson telephone number must be twenty characters or less long'),'error');
@@ -102,21 +112,23 @@ if (isset($_POST['submit'])) {
 
 		$msg = _('A new salesperson record has been added for') . ' ' . $_POST['SalesmanName'];
 	}
-	//run the SQL from either of the above possibilites
-	$ErrMsg = _('The insert or update of the salesperson failed because');
-	$DbgMsg = _('The SQL that was used and failed was');
-	$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
+	if ($InputError !=1) {
+		//run the SQL from either of the above possibilites
+		$ErrMsg = _('The insert or update of the salesperson failed because');
+		$DbgMsg = _('The SQL that was used and failed was');
+		$result = DB_query($sql,$db,$ErrMsg, $DbgMsg);
 
-	prnMsg($msg , 'success');
+		prnMsg($msg , 'success');
 
-	unset($SelectedSalesperson);
-	unset($_POST['SalesmanCode']);
-	unset($_POST['SalesmanName']);
-	unset($_POST['CommissionRate1']);
-	unset($_POST['CommissionRate2']);
-	unset($_POST['Breakpoint']);
-	unset($_POST['SManFax']);
-	unset($_POST['SManTel']);
+		unset($SelectedSalesperson);
+		unset($_POST['SalesmanCode']);
+		unset($_POST['SalesmanName']);
+		unset($_POST['CommissionRate1']);
+		unset($_POST['CommissionRate2']);
+		unset($_POST['Breakpoint']);
+		unset($_POST['SManFax']);
+		unset($_POST['SManTel']);
+	}
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
@@ -246,7 +258,7 @@ if (! isset($_GET['delete'])) {
 	} else { //end of if $SelectedSaleperson only do the else when a new record is being entered
 
 		echo '<CENTER><TABLE><TR><TD>' . _('Salesperson code') . ":</TD>
-			<TD><input type='Text' name='SalesmanCode' SIZE=3 MAXLENGTH=3></TD></TR>";
+			<TD><input type='Text' ". (in_array('SalesmanCode',$Errors) ? 'class="inputerror"' : '' ) ." name='SalesmanCode' SIZE=3 MAXLENGTH=3></TD></TR>";
 	}
 	if (!isset($_POST['SalesmanName'])){
 	  $_POST['SalesmanName']='';
@@ -268,7 +280,7 @@ if (! isset($_GET['delete'])) {
 	}
 
 
-	echo '<TR><TD>' . _('Salesperson Name') . ":</TD><TD><INPUT TYPE='text' name='SalesmanName'  SIZE=30 MAXLENGTH=30 VALUE='" . $_POST['SalesmanName'] . "'></TD></TR>";
+	echo '<TR><TD>' . _('Salesperson Name') . ":</TD><TD><INPUT TYPE='text' ". (in_array('SalesmanName',$Errors) ? 'class="inputerror"' : '' ) ." name='SalesmanName'  SIZE=30 MAXLENGTH=30 VALUE='" . $_POST['SalesmanName'] . "'></TD></TR>";
 	echo '<TR><TD>' . _('Telephone No') . ":</TD><TD><INPUT TYPE='Text' name='SManTel' SIZE=20 MAXLENGTH=20 VALUE='" . $_POST['SManTel'] . "'></TD></TR>";
 	echo '<TR><TD>' . _('Facsimile No') . ":</TD><TD><INPUT TYPE='Text' name='SManFax' SIZE=20 MAXLENGTH=20 VALUE='" . $_POST['SManFax'] . "'></TD></TR>";
 	echo '<TR><TD>' . _('Commission Rate 1') . ":</TD><TD><INPUT TYPE='Text' name='CommissionRate1' SIZE=5 MAXLENGTH=5 VALUE=" . $_POST['CommissionRate1'] . '></TD></TR>';

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 15;
 
@@ -13,6 +13,11 @@ if (isset($_POST['SelectedType'])){
 	$SelectedType = strtoupper($_GET['SelectedType']);
 }
 
+if (isset($Errors)) {
+	unset($Errors);
+}
+	
+$Errors = array();	
 
 if (isset($_POST['submit'])) {
 
@@ -23,19 +28,28 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
+	$i=1;
 
 	if (strlen($_POST['TypeAbbrev']) > 2) {
 		$InputError = 1;
 		prnMsg(_('The sales type (price list) code must be two characters or less long'),'error');
+		$Errors[$i] = 'SalesType';
+		$i++;		
 	} elseif ($_POST['TypeAbbrev']=='' OR $_POST['TypeAbbrev']==' ' OR $_POST['TypeAbbrev']=='  ') {
 		$InputError = 1;
 		prnMsg('<BR>' . _('The sales type (price list) code cannot be an empty string or spaces'),'error');
+		$Errors[$i] = 'SalesType';
+		$i++;		
 	} elseif (strlen($_POST['Sales_Type']) >20) {
 		$InputError = 1;
 		echo prnMsg(_('The sales type (price list) description must be twenty characters or less long'),'error');
+		$Errors[$i] = 'SalesType';
+		$i++;		
 	} elseif ($_POST['TypeAbbrev']=='AN'){
 		$InputError = 1;
 		prnMsg (_('The sales type code cannot be AN since this is a system defined abbrevation for any sales type in general ledger interface lookups'),'error');
+		$Errors[$i] = 'SalesType';
+		$i++;		
 	}
 
 	if (isset($SelectedType) AND $InputError !=1) {
@@ -234,7 +248,8 @@ if (! isset($_GET['delete'])) {
 
 		// This is a new type so the user may volunteer a type code
 
-		echo "<CENTER><TABLE><TR><TD>" . _('Type Code') . ":</TD><TD><INPUT TYPE='Text' SIZE=3 MAXLENGTH=2 name='TypeAbbrev'></TD></TR>";
+		echo "<CENTER><TABLE><TR><TD>" . _('Type Code') . ":</TD><TD><INPUT TYPE='Text'
+				" . (in_array('SalesType',$Errors) ? 'class="inputerror"' : '' ) ." SIZE=3 MAXLENGTH=2 name='TypeAbbrev'></TD></TR>";
 
 	}
 
