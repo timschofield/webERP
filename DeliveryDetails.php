@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.43 $ */
+/* $Revision: 1.44 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -125,7 +125,7 @@ If (isset($_POST['Update'])
                 custbranch.estdeliverydays
 			FROM custbranch
 			WHERE custbranch.branchcode='" . $_SESSION['Items']->Branch . "'
-			AND custbranch.debtorno = '" . $_POST['Select'] . "'";
+			AND custbranch.debtorno = '" . $_SESSION['Items']->DebtorNo . "'";
 
 		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');
 		$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
@@ -649,27 +649,27 @@ echo '<TR>
 
 echo '<TR>
 	<TD>'. _('Delivery Address 2') . ':</TD>
-	<TD><input type=text size=42 max=40 name="BrAdd2" value="' . $_SESSION['Items']->DelAdd1 . '"></TD>
+	<TD><input type=text size=42 max=40 name="BrAdd2" value="' . $_SESSION['Items']->DelAdd2 . '"></TD>
 </TR>';
 
 echo '<TR>
 	<TD>'. _('Delivery Address 3') . ':</TD>
-	<TD><input type=text size=42 max=40 name="BrAdd3" value="' . $_SESSION['Items']->DelAdd1 . '"></TD>
+	<TD><input type=text size=42 max=40 name="BrAdd3" value="' . $_SESSION['Items']->DelAdd3 . '"></TD>
 </TR>';
 
 echo '<TR>
 	<TD>'. _('Delivery Address 4') . ':</TD>
-	<TD><input type=text size=42 max=40 name="BrAdd4" value="' . $_SESSION['Items']->DelAdd1 . '"></TD>
+	<TD><input type=text size=42 max=40 name="BrAdd4" value="' . $_SESSION['Items']->DelAdd4 . '"></TD>
 </TR>';
 
 echo '<TR>
 	<TD>'. _('Delivery Address 5') . ':</TD>
-	<TD><input type=text size=42 max=40 name="BrAdd5" value="' . $_SESSION['Items']->DelAdd1 . '"></TD>
+	<TD><input type=text size=42 max=40 name="BrAdd5" value="' . $_SESSION['Items']->DelAdd5 . '"></TD>
 </TR>';
 
 echo '<TR>
 	<TD>'. _('Delivery Address 6') . ':</TD>
-	<TD><input type=text size=42 max=40 name="BrAdd6" value="' . $_SESSION['Items']->DelAdd1 . '"></TD>
+	<TD><input type=text size=42 max=40 name="BrAdd6" value="' . $_SESSION['Items']->DelAdd6 . '"></TD>
 </TR>';
 
 echo '<TR>
