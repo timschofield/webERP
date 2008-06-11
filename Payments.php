@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 $PageSecurity = 5;
 
@@ -236,13 +236,13 @@ if (isset($_POST['CommitBatch'])){
 		  AND ($_SESSION['PaymentDetail']->Paymenttype == 'Cheque')) {
      // it is a supplier payment by cheque and haven't printed yet so print cheque 
 
-    echo '<BR><A  HREF="' . $rootpath . '/PrintCheque.php?' . SID . '&ChequeNum=' . $_POST['ChequeNum'] . '">' . _('Print Cheque') . '</A><BR><BR>';
+    echo '<BR><A  HREF="' . $rootpath . '/PrintCheque.php?' . SID . '&ChequeNum=' . $_POST['ChequeNum'] . '">' . _('Print Cheque using pre-printed stationary') . '</A><BR><BR>';
 	
 	  echo '<FORM METHOD="post" action="' . $_SERVER['PHP_SELF'] . '">';
-	  echo _('Has the cheque been printed') . '?<BR>';
+	  echo _('Has the cheque been printed') . '?<BR><BR>';
 	  echo '<input type="hidden" NAME="CommitBatch" VALUE="' . $_POST['CommitBatch'] . '">';
-	  echo '<input type="submit" NAME="ChequePrinted" VALUE="' . _('Yes') . '">&nbsp;&nbsp;';
-	  echo '<input type="submit" NAME="PaymentCancelled" VALUE="' . _('No') . '">';
+	  echo '<input type="submit" NAME="ChequePrinted" VALUE="' . _('Yes / Continue') . '">&nbsp;&nbsp;';
+	  echo '<input type="submit" NAME="PaymentCancelled" VALUE="' . _('No / Cancel Payment') . '">';
   } else {
 
   //Start a transaction to do the whole lot inside 
@@ -764,14 +764,14 @@ if (!isset($_POST['ChequeNum'])) {
 }
 
 echo '<tr><td>' . _('Cheque Number') . ':</td>
-			<td><input type="text" name="ChequeNum" maxlength=8 size=10 value="' . $_POST['ChequeNum'] . '"></td></tr>';
+			<td><input type="text" name="ChequeNum" maxlength=8 size=10 value="' . $_POST['ChequeNum'] . '"> (if using pre-printed stationary)</td></tr>';
 
 if (!isset($_POST['Narrative'])) {
 	$_POST['Narrative']='';
 }
 
-echo '<tr><td>' . _('Ref') . ':</td>
-			<td colspan=2><input type="text" name="Narrative" maxlength=80 size=82 value="' . $_POST['Narrative'] . '"></td></tr>';
+echo '<tr><td>' . _('Reference / Narrative') . ':</td>
+			<td colspan=2><input type="text" name="Narrative" maxlength=80 size=82 value="' . $_POST['Narrative'] . '"> (Max. length 80 characters)</td></tr>';
 echo '<tr><td colspan=3><center><input type="submit" name="UpdateHeader" value="' . _('Update'). '"></center></td></tr>';
 			
 			
