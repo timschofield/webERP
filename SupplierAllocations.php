@@ -1,7 +1,7 @@
 <?php
 
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 /*
 	This page can be called with...
@@ -644,7 +644,8 @@ if (isset($_POST['AllocTrans'])){
   		<TH>" . _('Number') . "</TH>
   		<TH>" . _('Date') . "</TH>
   		<TH>" . _('Total') . "</TH>
-  		<TH>" . _('To Alloc') . "</TH></TR>\n";
+  		<TH>" . _('To Alloc') . "</TH>
+		<TH>" . _('More Info') . "</TH></TR>\n";
 
   echo $TableHeader;
 

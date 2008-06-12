@@ -1,42 +1,6 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 
-<P>08/6/08 Tim: DeliveryDetails.php - Correct delivery address details and bug not allowing branch info to be returned.
-<P>26/5/08 Tim: PaymentMethods.php - Improve error handling..
-<P>26/5/08 Tim: PaymentTerms.php - Improve error handling..
-<P>26/5/08 Tim: SalesPeople.php - Improve error handling..
-<P>26/5/08 Tim: SalesTypes.php - Improve error handling..
-<P>26/5/08 Tim: Shippers.php - Improve error handling..
-<P>26/5/08 Tim: api_branches and api_errorcodes. Improvements to api.
-<P>22/5/08 Tim: WWW_Users.php: Update to only change the used language when the users own profile is being changed.
-<P>08/5/08 Tim: Selectproduct.php: Fix bug preventing page goto from working
-<P>08/5/08 Tim: Stocks.php: Correctly show line breaks in Long Description
-<P>05/5/08 Tim: Correct the display of the company name in CustomerReceipt.php when special characters have been used.
-<P>05/5/08 Tim: Correct bug in CustomerReceipt.php where batch narrative text was lost, and add in a cancel button for when customer is wrongly selected.
-<P>03/5/08 Tim: Fixed bug in CustomerAllocations that corrupted table when reallocated amount equalled originally allocated amount
-<P>30/4/08 Tim: Fixed bug in DeliveryDetails.php, to correctly show names and addresses with apostropges.
-<P>29/4/08 Tim: Fixed bug in CustomerAllocations, debug info left in from previous fix.
-<P>28/4/08 Phil: Fixed bug that showed date of GL entries twice on GLTransInquiry.php and munted format of table - attempted to put formating of the script back to webERP conventions
-<P>28/4/08 Muz: Add labels to CustomerInquiry.php links Allocation /View GL Entries etc
-<P>27/4/08 Tim: Add api for customer branches.
-<P>27/4/08 Tim: Put all api error codes in one file.
-<P>26/4/08 Muz: Correct path to preview icon in Customerinquiry.php
-<p>26/4/08 Tim: Update Credit_invoice.php to correctly mark the credit note as settled
-<P>20/4/08 Tim: Improvements to api.
-<P>18/4/08 Tim: Improvements to api.
-<P>16/4/08 Tim: Correcting problem in displaying old allocations.
-<P>16/4/08 Tim: Updated Customers.php and CustomerBranches.php to correctly show branch details when escaped characters are used.
-<P>16/4/08 Tim: Change to PrintCustTrans.php to take into account pdf attachments.
-<P>14/4/08 Tim: Add currency searches and other improvements to api
-<P>13/4/08 Tim: Added xml-rpc and php interfaces to the api.
-<P>12/4/08 Tim: Correction for CustomerAllocations.php to correctly do part allocations.
-<P>12/4/08 Tim: Update fpdf_tpl.php to the latest version.
-<P>12/4/08 Tim: Correct bug in SupplierInvoice.php preventing another supplier invoice being entered directly.
-<P>10/4/08 Tim: Add file fpdi/fpdf_tpl.php required for attaching pdf files to invoices
-<P>10/4/08 Harald Ringehan: ConnectDB_mysql.inc and other db abrastraction scripts used htmlspecialchars instead of htmlentities to prevent XSS attacks inside DB_escape_string function - this leaves accented characters alone and doesn't disturb translations. Bug spotted as a result of Umlauts on command buttons failing to work.
-<P>08/4/08 Tim: Correct DB_last_insert_id bug in ConnectDB_mysql.inc and ConnectDB_mysqli.inc
-<P>06/4/08 Muz: Changes to make options clearer
-<P>06/4/08 Tim: Test whether StockID is set before seeing if part already exists.
-<P>06/4/08 Tim: Update currency exchange rates when default currency is changed.
+<P>12/6/08 Murray: minor changes to text labels of UI.
 <P>30/3/08 Tim: Bring in the xmlrpc libraries.
 <P>29/3/08 Mo: Improve error messaging in ConnectDB.inc and ConnectDB_mysql.inc and ConnectDB_mysqli.inc
 <P>29/3/08 Renier: Improvements to Z_CheckDebtorsControl.php
@@ -63,13 +27,13 @@
 <P>23/1/08 Tim: Improve Selectproduct.php to show more information about product state.
 <P>15/1/08 Tim: Change Customers.php and Suppliers.php to accept apostrophes and accented characters in addresses.
 <P>15/1/08 Tim: BOM Cost rollup updates to force cost rollup on insertions and deletions.
-<P>15/1/08 Tim: Change last insert functions to work with audit trail.
+<P>15/1/08 Tim: Change last insert functions to work with audit trail. 
 <P>13/1/08 Phil: Sales Analysis Manual examples and some rework for Creating a New System
 <P>12/1/08 Tim: Correct bug in Date functions.
 <P>12/11/08 Tim: Sales orders now obtain next transaction number from GetNextTransNo function changed in DeliveryDetails.php
 <P>12/11/08 Tim: New field in stockmaster for perishable available if the item is controlled - changes to Stocks.php to accomodate
 <P>10/1/08 Tim: Lock tables to avoid concurrency problems when getting next transaction numbers as reported on the list
-<P>1/1/08 Tim Schofield: New Factor company maintenance and ability to set up factor comapnies against suppliers
+<P>1/1/08 Tim Schofield: New Factor company maintenance and ability to set up factor comapnies against suppliers 
 >>>>>>> 1.143
 <P>17/11/07 Damian Lee: Improvements to Inventory valuation report bringing in the units identifier
 <P>13/11/07 Tim: AuditTrail.php script added with changes in DB_query to add records to the audit trail for all inserts, updates and deletes. The Audit Trail script allows the user to inquire on this data for a range of dates and tables being modified - with field names parsed into nice screen output.
@@ -83,7 +47,7 @@
 <P>24/10/07 rent a coder - sponsored by Chris - SelectOrderItems.php now allows entry of line items by entry of a quantity in the item browse mode
 <P>24/10/07 DateFunctions.inc GetPeriod function now checks for date format of ProhibitPostingsBefore and sets up a default of one year ago if a null date
 <P>9/10/07 DefineCartClass - now defaults poline='' and itemdue = '' for credit notes
-<p>7/10/07 Tim Schofield : Bug fixes in Freight cost calculation.
+<p>7/10/07 Tim Schofield : Bug fixes in Freight cost calculation. 
 <p>5/10/07 Tim Schofield : Amend table headers in OrderDetails.php
 <p>5/10/07 Bjorn Paulsen : Bug fix in PDFOrdersInvoiced.php
 <p>5/10/07 Tim Schofield : Remove CartClass references

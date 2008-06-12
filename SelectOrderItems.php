@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.67 $ */
+/* $Revision: 1.68 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -609,19 +609,19 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	OR $_SESSION['Items']->DebtorNo=='') {
 	?>
 
-	<BR><BR><FONT SIZE=3><B><?php echo _('Customer Selection'); ?></B></FONT>
+	<BR><BR><FONT SIZE=3><B><?php echo _('Customer Selection') . "</b>" . _(' Search for the Customer.') ; ?></B></FONT>
 
 	<FORM ACTION="<?php echo $_SERVER['PHP_SELF'] . '?' .SID; ?>" METHOD=POST>
 	<B><?php echo '<BR>' . $msg; ?></B>
 	<TABLE CELLPADDING=3 COLSPAN=4>
 	<TR>
-	<TD><FONT SIZE=1><?php echo _('Name'); ?>:</FONT></TD>
+	<TD><FONT SIZE=1><?php echo _('Part of the Customer Name'); ?>:</FONT></TD>
 	<TD><INPUT TABINDEX=1 TYPE="Text" NAME="CustKeywords" SIZE=20	MAXLENGTH=25></TD>
 	<TD><FONT SIZE=3><B><?php echo _('OR'); ?></B></FONT></TD>
-	<TD><FONT SIZE=1><?php echo _('Part of the code'); ?>:</FONT></TD>
+	<TD><FONT SIZE=1><?php echo _('Part of the Customer Code'); ?>:</FONT></TD>
 	<TD><INPUT TABINDEX=2 TYPE="Text" NAME="CustCode" SIZE=15	MAXLENGTH=18></TD>
 	<TD><FONT SIZE=3><B><?php echo _('OR'); ?></B></FONT></TD>
-	<TD><FONT SIZE=1><?php echo _('Part of the phone'); ?>:</FONT></TD>
+	<TD><FONT SIZE=1><?php echo _('Part of the Phone Number'); ?>:</FONT></TD>
 	<TD><INPUT TABINDEX=3 TYPE="Text" NAME="CustPhone" SIZE=15	MAXLENGTH=18></TD>
 	</TR>
 	</TABLE>
@@ -740,12 +740,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo _('Order for') . ' ';
 		}
 
-		echo _('Customer No.') . ': ' . $_SESSION['Items']->DebtorNo;
-		echo '&nbsp;&nbsp;' . _('Customer Name') . ' : ' . $_SESSION['Items']->CustomerName;
-		echo '<BR>' . _('Deliver To') . ': ' . $_SESSION['Items']->DeliverTo;
+		echo _('Customer') . ': ' . $_SESSION['Items']->DebtorNo;
+		echo '&nbsp;&nbsp;' . _('Customer Name') . ': ' . $_SESSION['Items']->CustomerName;
+		echo '</B><BR>' . _('Deliver To') . ': ' . $_SESSION['Items']->DeliverTo;
 		echo '&nbsp;&nbsp;' . _('From Location') . ': ' . $location;
 		echo '<BR>' . _('Sales Type') . '/' . _('Price List') . ': ' . $_SESSION['Items']->SalesTypeName;
-		echo '</B></FONT></CENTER>';
+		echo '</FONT></CENTER>';
 	}
 
 	If (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){

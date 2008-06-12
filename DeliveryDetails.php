@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.44 $ */
+/* $Revision: 1.45 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -736,7 +736,7 @@ if ((!isset($_POST['ShipVia']) OR $_POST['ShipVia']=='') AND isset($_SESSION['It
 	$_POST['ShipVia'] = $_SESSION['Items']->ShipVia;
 }
 
-echo '<TR><TD>'. _('Freight Company') .":</TD><TD><SELECT name='ShipVia'>";
+echo '<TR><TD>'. _('Freight/Shipper Method') .":</TD><TD><SELECT name='ShipVia'>";
 $SQL = 'SELECT shipper_id, shippername FROM shippers';
 $ShipperResults = DB_query($SQL,$db);
 while ($myrow=DB_fetch_array($ShipperResults)){
