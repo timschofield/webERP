@@ -572,6 +572,26 @@ CREATE TABLE `edimessageformat` (
 ) ENGINE=InnoDB;
 
 --
+-- Table structure for table `factorcompanies`
+--
+
+CREATE TABLE `factorcompanies` (
+`id` int(11) NOT NULL auto_increment,
+`coyname` varchar(50) NOT NULL default '',
+`address1` varchar(40) NOT NULL default '',
+`address2` varchar(40) NOT NULL default '',
+`address3` varchar(40) NOT NULL default '',
+`address4` varchar(40) NOT NULL default '',
+`address5` varchar(20) NOT NULL default '',
+`address6` varchar(15) NOT NULL default '',
+`contact` varchar(25) NOT NULL default '',
+`telephone` varchar(25) NOT NULL default '',
+`fax` varchar(25) NOT NULL default '',
+`email` varchar(55) NOT NULL default '',
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
+--
 -- Table structure for table `freightcosts`
 --
 
@@ -3196,6 +3216,11 @@ INSERT INTO `edi_orders_segs` VALUES (95,'UNT',50,1);
 -- Dumping data for table `edimessageformat`
 --
 
+--
+-- Dumping data for table `factorcompanies`
+--
+
+INSERT INTO `factorcompanies` ( `id` , `coyname` ) VALUES (null, 'None');
 
 --
 -- Dumping data for table `freightcosts`
