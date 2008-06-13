@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 $PageSecurity = 3;
 
@@ -682,7 +682,7 @@ if (! isset($_GET['delete'])) {
 	echo '<TR><TD>'._('Special Instructions').':</TD>';
 	if (!isset($_POST['specialinstructions'])) {$_POST['specialinstructions']='';}
 	echo '<TD><input tabindex=10 type="Text" name="specialinstructions" size=56 value="'. $_POST['specialinstructions'].'"></TD></TR>';
-	echo '<TR><TD>'._('Delivery Days').':</TD>';
+	echo '<TR><TD>'._('Default days to deliver').':</TD>';
 	if (!isset($_POST['EstDeliveryDays'])) {$_POST['EstDeliveryDays']=0;}
 	echo '<TD><input ' .(in_array('EstDeliveryDays',$Errors) ?  'class="inputerror"' : '' ) .' tabindex=11 type="Text" name="EstDeliveryDays" SIZE=4 MAXLENGTH=2 value='. $_POST['EstDeliveryDays'].'></TD></TR>';
 	echo '<TR><TD>'._('Forward Date After (day in month)').':</TD>';
@@ -789,7 +789,7 @@ if (! isset($_GET['delete'])) {
 	} //end while loop
 
 	echo '</SELECT></TD></TR>';
-	echo '<TR><TD>'._('Disable transactions on this branch').":</TD><TD><SELECT tabindex=20 NAME='DisableTrans'>";
+	echo '<TR><TD>'._('Transactions on this branch').":</TD><TD><SELECT tabindex=20 NAME='DisableTrans'>";
 	if ($_POST['DisableTrans']==0){
 		echo '<OPTION SELECTED VALUE=0>' . _('Enabled');
 		echo '<OPTION VALUE=1>' . _('Disabled');
@@ -800,7 +800,7 @@ if (! isset($_GET['delete'])) {
 
 	echo '	</SELECT></TD></TR>';
 
-	echo '<TR><TD>'._('Default freight company').":</TD><TD><SELECT tabindex=21 name='DefaultShipVia'>";
+	echo '<TR><TD>'._('Default freight/shipper method').":</TD><TD><SELECT tabindex=21 name='DefaultShipVia'>";
 	$SQL = 'SELECT shipper_id, shippername FROM shippers';
 	$ShipperResults = DB_query($SQL,$db);
 	while ($myrow=DB_fetch_array($ShipperResults)){

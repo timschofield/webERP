@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 $PageSecurity = 2;
 
@@ -173,10 +173,10 @@ if (isset($_SESSION['SupplierID'])){
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD=POST>";
 echo '<B>' . $msg;
 
-echo '</B><CENTER><P>Search for Suppliers.  You can enter a partial Name or partial Supplier Code.</P>
+echo '</B><CENTER><P>' . _('Search for Suppliers:') . '</P>
 	<TABLE CELLPADDING=3 COLSPAN=4>
 	<TR>
-	<TD>' . _('NAME') . ':</FONT></TD>
+	<TD>' . _('Enter a partial Name') . ':</FONT></TD>
 	<TD>';
 
 if (isset($_POST['Keywords'])) {
@@ -190,7 +190,7 @@ if (isset($_POST['Keywords'])) {
 
 echo '</TD>
 	<TD><B>' . _('OR') . '</B></FONT></TD>
-	<TD>' . _('CODE') . ':</FONT></TD>
+	<TD>' . _('Enter a partial Code') . ':</FONT></TD>
 	<TD>';
 
 if (isset($_POST['SupplierCode'])) {

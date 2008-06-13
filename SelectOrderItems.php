@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.68 $ */
+/* $Revision: 1.69 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -1287,7 +1287,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			ORDER BY categorydescription";
 		$result1 = DB_query($SQL,$db);
 
-		echo '<B>' . $msg . '</B><TABLE><TR><TD><FONT SIZE=2>' . _('Select a stock category') . ':</FONT><SELECT TABINDEX=1 NAME="StockCat">';
+		echo '<B>' . $msg . '</B><BR><CENTER><b>' . _('Search for Order Items') . '</b><TABLE><TR><TD><FONT SIZE=2>' . _('Select a Stock Category') . ':</FONT><SELECT TABINDEX=1 NAME="StockCat">';
 
 		if (!isset($_POST['StockCat'])){
 			echo "<OPTION SELECTED VALUE='All'>" . _('All');
@@ -1308,10 +1308,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		?>
 
 		</SELECT>
-		<TD><FONT SIZE=2><?php echo _('Enter text extracts in the'); ?> <B><?php echo _('description'); ?></B>:</FONT></TD>
+		<TD><FONT SIZE=2><?php echo _('Enter partial'); ?> <?php echo _('Description'); ?>:</FONT></TD>
 		<TD><INPUT TABINDEX=2 TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25 VALUE="<?php if (isset($_POST['Keywords'])) echo $_POST['Keywords']; ?>"></TD></TR>
 		<TR><TD></TD>
-		<TD><FONT SIZE 3><B><?php echo _('OR'); ?> </B></FONT><FONT SIZE=2><?php echo _('Enter extract of the'); ?> <B><?php echo _('Stock Code'); ?></B>:</FONT></TD>
+		<TD><FONT SIZE 3><B><?php echo _('OR'); ?> </B></FONT><FONT SIZE=2><?php echo _('Enter partial'); ?> <?php echo _('Stock Code'); ?>:</FONT></TD>
 		<TD><INPUT TABINDEX=3 TYPE="Text" NAME="StockCode" SIZE=15 MAXLENGTH=18 VALUE="<?php if (isset($_POST['StockCode'])) echo $_POST['StockCode']; ?>"></TD>
 		</TR>
 		</TABLE>

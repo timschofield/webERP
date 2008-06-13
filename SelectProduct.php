@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 $PageSecurity = 2;
 
@@ -54,6 +54,7 @@ if (DB_num_rows($result1)==0){
 <CENTER>
 <FORM ACTION="<?php echo $_SERVER['PHP_SELF'] . '?' . SID; ?>" METHOD=POST>
 <B><?php echo $msg; ?></B>
+<?php echo _('Search for Inventory Items:'); ?>
 <TABLE>
 <TR>
 <TD><?php echo _('In Stock Category'); ?>:
@@ -77,7 +78,7 @@ if (DB_num_rows($result1)==0){
 ?>
 
 </SELECT>
-<TD><?php echo _('Text in the'); ?> <B><?php echo _('description'); ?></B>:</TD>
+<TD><?php echo _('Enter partial'); ?> <B><?php echo _('Description'); ?></B>:</TD>
 <TD>
 <?php
 if (isset($_POST['Keywords'])) {
@@ -93,7 +94,7 @@ if (isset($_POST['Keywords'])) {
 </TD>
 </TR>
 <TR><TD></TD>
-<TD><FONT SIZE 3><B><?php echo _('OR'); ?> </B></FONT><?php echo _('Text in the'); ?> <B><?php echo _('Stock Code'); ?></B>:</TD>
+<TD><FONT SIZE 3><B><?php echo _('OR'); ?> </B></FONT><?php echo _('Enter partial'); ?> <B><?php echo _('Stock Code'); ?></B>:</TD>
 <TD>
 <?php
 if (isset($_POST['StockCode'])) {

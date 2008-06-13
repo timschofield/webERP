@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 $PageSecurity = 2;
 
@@ -181,9 +181,10 @@ If ($_POST['Select']!="" OR
 <FORM ACTION="<?php echo $_SERVER['PHP_SELF'] . '?' . SID; ?>" METHOD=POST>
 <CENTER>
 <B><?php echo $msg; ?></B>
+<?php echo _('Search for Customers:'); ?>
 <TABLE CELLPADDING=3 COLSPAN=4>
 <TR>
-<TD><B><?php echo _('Name'); ?></B>:</TD>
+<TD><?php echo _('Enter a partial Name'); ?>:</TD>
 <TD>
 <?php
 if (isset($_POST['Keywords'])) {
@@ -198,7 +199,7 @@ if (isset($_POST['Keywords'])) {
 ?>
 </TD>
 <TD><FONT SIZE=3><B><?php echo _('OR'); ?></B></FONT></TD>
-<TD><B><?php echo _('Code'); ?></B>:</TD>
+<TD><?php echo _('Enter a partial Code'); ?>:</TD>
 <TD>
 <?php
 if (isset($_POST['CustCode'])) {
@@ -213,7 +214,7 @@ if (isset($_POST['CustCode'])) {
 ?>
 </TD>
 <TD><FONT SIZE=3><B><?php echo _('OR'); ?></B></FONT></TD>
-<TD><B><?php echo _('Phone'); ?></B>:</TD>
+<TD><?php echo _('Enter a partial Phone Number'); ?>:</TD>
 <TD>
 <?php
 if (isset($_POST['CustPhone'])) {

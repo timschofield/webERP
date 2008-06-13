@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.53 $ */
+/* $Revision: 1.54 $ */
 
 $PageSecurity = 11;
 
@@ -724,7 +724,7 @@ while( $UOMrow = DB_fetch_array($UOMResult) ) {
 
 echo '</SELECT></TD></TR>';
 
-echo '<TR><TD>' . _('Make, Buy, Kit, Assembly or Service Part') . ':</TD><TD><SELECT name="MBFlag">';
+echo '<TR><TD>' . _('Assembly, Kit, Manufactured or Service') . ':</TD><TD><SELECT name="MBFlag">';
 if ($_POST['MBFlag']=='A'){
 	echo '<OPTION SELECTED VALUE="A">' . _('Assembly');
 } else {
@@ -809,7 +809,7 @@ if (!isset($_POST['Perishable']) or $_POST['Perishable']==1){
 }
 echo '</SELECT></TD></TR>';
 
-echo '<TR><TD>' . _('Decimal Places to Display') . ':</TD><TD><input type="Text" name="DecimalPlaces" SIZE=1 MAXLENGTH=1 value="' . $_POST['DecimalPlaces'] . '"><TD></TR>';
+echo '<TR><TD>' . _('Decimal Places for display Quantity') . ':</TD><TD><input type="Text" name="DecimalPlaces" SIZE=1 MAXLENGTH=1 value="' . $_POST['DecimalPlaces'] . '"><TD></TR>';
 
 if (isset($_POST['BarCode'])) {
 	$BarCode = $_POST['BarCode'];
