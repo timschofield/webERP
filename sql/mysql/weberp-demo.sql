@@ -2959,9 +2959,9 @@ INSERT INTO `config` VALUES ('RadioBeaconFileCounter','/home/RadioBeacon/FileCou
 INSERT INTO `config` VALUES ('RadioBeaconFTP_user_name','RadioBeacon ftp server user name');
 INSERT INTO `config` VALUES ('RadioBeaconHomeDir','/home/RadioBeacon');
 INSERT INTO `config` VALUES ('RadioBeaconStockLocation','BL');
-INSERT INTO `config` VALUES ('RadioBraconFTP_server','192.168.2.2');
-INSERT INTO `config` VALUES ('RadioBreaconFilePrefix','ORDXX');
-INSERT INTO `config` VALUES ('RadionBeaconFTP_user_pass','Radio Beacon remote ftp server password');
+INSERT INTO `config` VALUES ('RadioBeaconFTP_server','192.168.2.2');
+INSERT INTO `config` VALUES ('RadioBeaconFilePrefix','ORDXX');
+INSERT INTO `config` VALUES ('RadioBeaconFTP_user_pass','Radio Beacon remote ftp server password');
 INSERT INTO `config` VALUES ('reports_dir','companies/weberp/reports');
 INSERT INTO `config` VALUES ('RomalpaClause','Ownership will not pass to the buyer until the goods have been paid for in full.');
 INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');

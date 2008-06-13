@@ -46,3 +46,16 @@ INSERT INTO `config` (`confname`, `confvalue`) VALUES ('UpdateCurrencyRatesDaily
 
 UPDATE systypes SET typeno=(SELECT max(orderno) FROM salesorders) WHERE typeid=30;
 UPDATE systypes SET typeno=(SELECT max(orderno) FROM purchorders) WHERE typeid=18;
+
+CREATE TABLE `assetmanager` (
+  `id` int(11) NOT NULL auto_increment,
+  `serialno` varchar(30) NOT NULL default '',
+  `assetglcode` int(11) NOT NULL default '0',
+  `depnglcode` int(11) NOT NULL default '0',
+  `description` varchar(30) NOT NULL default '',
+  `lifetime` int(11) NOT NULL default 0,
+  `location` varchar(15) NOT NULL default '',
+  `cost` double NOT NULL default 0.0,
+  `depn` double NOT NULL default 0.0,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB;
