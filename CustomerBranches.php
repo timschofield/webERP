@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 $PageSecurity = 3;
 
@@ -352,7 +352,7 @@ if (isset($_POST['submit'])) {
 	}
 
 
-} elseif (isset($_POST['delete'])) {
+} elseif ($_GET['delete']='yes') {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorTrans'
