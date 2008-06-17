@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.54 $ */
+/* $Revision: 1.55 $ */
 
 $PageSecurity = 11;
 
@@ -714,8 +714,11 @@ echo '<TR><TD>' . _('Units of Measure') . ':</TD><TD><SELECT ' . (in_array('Desc
 $sql = 'SELECT unitname FROM unitsofmeasure ORDER by unitname';
 $UOMResult = DB_query($sql,$db);
 
+if (!isset($_POST['Units'])) {
+	$UOMrow['unitname']='each';
+}
 while( $UOMrow = DB_fetch_array($UOMResult) ) {
-     if (!isset($_POST['Units']) or $_POST['Units']==$UOMrow['unitname']){
+     if ($_POST['Units']==$UOMrow['unitname']){
 	    echo "<OPTION SELECTED Value='" . $UOMrow['unitname'] . "'>" . $UOMrow['unitname'];
      } else {
 	    echo "<OPTION Value='" . $UOMrow['unitname'] . "'>" . $UOMrow['unitname'];
@@ -746,7 +749,7 @@ if (!isset($_POST['MBFlag']) or $_POST['MBFlag']=='B' OR !isset($_POST['MBFlag']
 	echo '<OPTION VALUE="B">' . _('Purchased');
 }
 
-if (!isset($_POST['MBFlag']) or $_POST['MBFlag']=='D'){
+if ($_POST['MBFlag']=='D'){
 	echo '<OPTION SELECTED VALUE="D">' . _('Service');
 } else {
 	echo '<OPTION VALUE="D">' . _('Service');
@@ -797,12 +800,12 @@ echo '</SELECT><i>' . _('Note') . ', ' . _('this has no effect if the item is no
 
 echo '<TR><TD>' . _('Perishable') . ':</TD><TD><SELECT name="Perishable">';
 
-if ($_POST['Perishable']==0){
+if (!isset($_POST['Perishable']) or $_POST['Perishable']==0){
         echo '<OPTION SELECTED VALUE=0>' . _('No');
 } else {
         echo '<OPTION VALUE=0>' . _('No');
 }
-if (!isset($_POST['Perishable']) or $_POST['Perishable']==1){
+if ($_POST['Perishable']==1){
         echo '<OPTION SELECTED VALUE=1>' . _('Yes');
 } else {
         echo '<OPTION VALUE=1>' . _('Yes');
