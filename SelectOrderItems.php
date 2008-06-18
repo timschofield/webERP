@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.69 $ */
+/* $Revision: 1.70 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -1246,7 +1246,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			if ($_SESSION['AllowOrderLineItemNarrative'] == 1){
 				echo $RowStarter;
-				echo '<TD COLSPAN=7><TEXTAREA  NAME="Narrative_' . $OrderLine->LineNumber . '" cols=100% rows=1>' . $OrderLine->Narrative . '</TEXTAREA><BR><HR></TD></TR>';
+				echo '<TD COLSPAN=7><TEXTAREA  NAME="Narrative_' . $OrderLine->LineNumber . '" cols=100% rows=1>' . AddCarriageReturns($OrderLine->Narrative) . '</TEXTAREA><BR><HR></TD></TR>';
 			} else {
 				echo '<INPUT TYPE=HIDDEN NAME="Narrative" VALUE="">';
 			}
