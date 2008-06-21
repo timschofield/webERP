@@ -42,6 +42,7 @@ ALTER TABLE `worequirements` Add CONSTRAINT `worequirements_ibfk_3` FOREIGN KEY 
 
 INSERT INTO `config` VALUES ('ProhibitNegativeStock','1');
 INSERT INTO `systypes` (`typeid` ,`typename` ,`typeno`) VALUES ('36', 'Exchange Difference', '1');
+INSERT INTO `systypes` (`typeid` ,`typename` ,`typeno`) VALUES ('40', 'Work Order', '1');
 INSERT INTO `config` (`confname`, `confvalue`) VALUES ('UpdateCurrencyRatesDaily', '0');
 
 UPDATE systypes SET typeno=(SELECT max(orderno) FROM salesorders) WHERE typeid=30;
