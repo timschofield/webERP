@@ -2212,6 +2212,7 @@ INSERT INTO `systypes` VALUES (30,'Sales Order',6);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',26);
 INSERT INTO `systypes` VALUES (35,'Cost Update',14);
 INSERT INTO `systypes` VALUES ('36', 'Exchange Difference', '1');
+INSERT INTO `systypes` VALUES (40, 'Work Order', '1');
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
 INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',0);
 

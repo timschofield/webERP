@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 10;
 
@@ -15,7 +15,7 @@ if ($_REQUEST['WO']!=''){
 	$_POST['WO'] = $_REQUEST['WO'];
     $EditingExisting = true;
 } else {
-    $_POST['WO'] = GetNextTransNo(30,$db);
+    $_POST['WO'] = GetNextTransNo(40,$db);
     $InsWOResult = DB_query("INSERT INTO workorders (wo,
                                                      loccode,
                                                      requiredby,

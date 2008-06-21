@@ -47,6 +47,7 @@ INSERT INTO `config` (`confname`, `confvalue`) VALUES ('UpdateCurrencyRatesDaily
 
 UPDATE systypes SET typeno=(SELECT max(orderno) FROM salesorders) WHERE typeid=30;
 UPDATE systypes SET typeno=(SELECT max(orderno) FROM purchorders) WHERE typeid=18;
+UPDATE systypes SET typeno=(SELECT max(wo) FROM workorders) WHERE typeid=40;
 
 CREATE TABLE `assetmanager` (
   `id` int(11) NOT NULL auto_increment,
