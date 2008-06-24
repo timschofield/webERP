@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 $PageSecurity = 5;
 
@@ -636,6 +636,8 @@ if ($_SESSION['PaymentDetail']->BankAccountName!=""){
 }
 
 echo ' ' . _('on') . ' ' . $_SESSION['PaymentDetail']->DatePaid . '</FONT>';
+
+echo '<br><font color=blue>' . _('Note: To enter a payment FROM ') . $_SESSION['PaymentDetail']->SuppName . _(' use a negative Payment amount.');
 
 echo '<P><table>';
 

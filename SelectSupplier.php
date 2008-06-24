@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 $PageSecurity = 2;
 
@@ -151,7 +151,7 @@ if (isset($_SESSION['SupplierID'])){
 
 	echo "<A HREF=\"$rootpath/SupplierInvoice.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Suppliers Invoice') . '</A><BR>';
 	echo "<A HREF=\"$rootpath/SupplierCredit.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Suppliers Credit Note') . '</A><BR>';
-	echo "<A HREF=\"$rootpath/Payments.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Payment to the Supplier') . '</A><BR>';
+	echo "<A HREF=\"$rootpath/Payments.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Payment to, or Receipt from the Supplier') . '</A><BR>';
 
 	echo '<BR>';
 
