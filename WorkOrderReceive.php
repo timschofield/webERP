@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 11;
 
@@ -116,6 +116,31 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 	}//end check on pre-existing serial numbered items
 
 
+	if ($_SESSION['ProhibitNegativeStock']==1){
+		/*Now look for autoissue components that would go negative */
+				$SQL = "SELECT worequirements.stockid,
+							   stockmaster.description,
+							   locstock.quantity-(" . $QuantityReceived  . "*worequirements.qtypu) AS qtyleft
+						  FROM worequirements
+						  INNER JOIN stockmaster
+							ON worequirements.stockid=stockmaster.stockid
+						  INNER JOIN locstock
+							ON worequirements.stockid=locstock.stockid
+						  WHERE worequirements.wo=" . $_POST['WO'] . "
+						  AND worequirements.parentstockid='" .$_POST['StockID'] . "'
+						  AND locstock.loccode='" . $WORow['loccode'] . "'
+						  AND worequirements.autoissue=1";
+
+		$ErrMsg = _('Could not retrieve the component quantity left at the location once the component items are issued to the work order (for the purposes of checking that stock will not go negative) because');
+		$Result = DB_query($SQL,$db,$ErrMsg);
+		while ($NegRow = DB_fetch_array($Result)){
+			if ($NegRow['qtyleft']<0){
+				prnMsg(_('Receiving the selected quantity against this work order would result in negative stock for a component. The system parameters are set to prohibit negative stocks from occurring. This manufacturing receipt cannot be created until the stock on hand is corrected.'),'error',_('Component') . ' - ' .$NegRow['component'] . ' ' . $NegRow['description'] . ' - ' . _('Negative Stock Prohibited'));
+				$InputError = true;
+			} // end if negative would result
+		} //loop around the autoissue requirements for the work order
+	}
+
 	if ($InputError==false){
 /************************ BEGIN SQL TRANSACTIONS ************************/
 
@@ -147,22 +172,22 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 											AND parentstockid='" . $_POST['StockID'] . "'",
 											$db);
 			$InsWORequirments = DB_query("INSERT INTO worequirements (wo,
-										parentstockid,
-										stockid,
-										qtypu,
-										stdcost,
-										autoissue)
-									SELECT " . $_POST['WO'] . ",
-										bom.parent,
-										bom.component,
-										bom.quantity,
-										materialcost+labourcost+overheadcost,
-										bom.autoissue
-									FROM bom INNER JOIN stockmaster
-									ON bom.component=stockmaster.stockid
-									WHERE parent='" . $_POST['StockID'] . "'
-									AND loccode ='" . $WORow['loccode'] . "'",
-								$db);
+														parentstockid,
+														stockid,
+														qtypu,
+														stdcost,
+														autoissue)
+													SELECT " . $_POST['WO'] . ",
+														bom.parent,
+														bom.component,
+														bom.quantity,
+														materialcost+labourcost+overheadcost,
+														bom.autoissue
+													FROM bom INNER JOIN stockmaster
+													ON bom.component=stockmaster.stockid
+													WHERE parent='" . $_POST['StockID'] . "'
+													AND loccode ='" . $WORow['loccode'] . "'",
+											$db);
 
 			//Need to check this against the current standard cost and do a cost update if necessary
 
@@ -345,7 +370,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 									periodno,
 									account,
 									narrative,
-									amount
+									amount)
 							VALUES (28,
 								" . $WOIssueNo . ",
 								'" . Date('Y-m-d') . "',
