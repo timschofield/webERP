@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 3.071\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-27 19:31+1200\n"
+"POT-Creation-Date: 2008-06-27 20:48+1200\n"
 "PO-Revision-Date: 2007-10-12 19:04-0500\n"
 "Last-Translator: FULL NAME <karl@xtronics.com>\n"
 "Language-Team: LANGUAGE <karl@xtronics.com>\n"
@@ -211,7 +211,7 @@ msgstr ""
 #: Currencies.php:235 CustomerBranches.php:487 CustomerReceipt.php:776
 #: DiscountCategories.php:115 DiscountMatrix.php:116 EDIMessageFormat.php:162
 #: FreightCosts.php:241 GLAccounts.php:310 GLJournal.php:282 Locations.php:351
-#: PaymentMethods.php:200 Payments.php:796 PaymentTerms.php:206
+#: PaymentMethods.php:200 Payments.php:798 PaymentTerms.php:206
 #: PO_Items.php:785 Prices_Customer.php:201 Prices.php:179 PurchData.php:228
 #: SalesAnalReptCols.php:293 SalesAnalRepts.php:303 SalesCategories.php:262
 #: SalesGLPostings.php:133 SalesGLPostings.php:245 SalesPeople.php:202
@@ -418,7 +418,7 @@ msgstr ""
 #: SupplierInquiry.php:79 SupplierInquiry.php:100 SupplierInquiry.php:131
 #: SupplierInquiry.php:177 SupplierTransInquiry.php:79 SuppPaymentRun.php:112
 #: SuppPaymentRun.php:179 SuppPaymentRun.php:211 WorkOrderCosting.php:371
-#: WorkOrderReceive.php:237 Z_ChangeBranchCode.php:108
+#: WorkOrderReceive.php:262 Z_ChangeBranchCode.php:108
 #: Z_ChangeCustomerCode.php:90 Z_DeleteCreditNote.php:57
 #: Z_DeleteInvoice.php:83 includes/PDFPaymentRun_PymtFooter.php:57
 #: includes/PDFPaymentRun_PymtFooter.php:88
@@ -767,7 +767,7 @@ msgid "The SQL used to retrieve the bank account details was"
 msgstr ""
 
 #: BankAccounts.php:180 COGSGLPostings.php:194 CustomerReceipt.php:849
-#: GLJournal.php:275 GLTransInquiry.php:48 index.php:1008 Payments.php:786
+#: GLJournal.php:275 GLTransInquiry.php:48 index.php:1008 Payments.php:788
 #: SupplierTransInquiry.php:144 TaxAuthorities.php:146 TaxAuthorities.php:147
 msgid "GL Account"
 msgstr ""
@@ -860,7 +860,7 @@ msgid "Could not unclear this bank transaction because"
 msgstr ""
 
 #: BankMatching.php:69 BankReconciliation.php:94 CustomerReceipt.php:644
-#: Payments.php:653 PDFChequeListing.php:40 TaxAuthorities.php:149
+#: Payments.php:655 PDFChequeListing.php:40 TaxAuthorities.php:149
 #: TaxAuthorities.php:296
 msgid "Bank Account"
 msgstr ""
@@ -977,8 +977,8 @@ msgstr ""
 #: BankMatching.php:211 ConfirmDispatch_Invoice.php:265 Credit_Invoice.php:273
 #: CustomerAllocations.php:384 CustomerReceipt.php:761
 #: CustomerTransInquiry.php:90 CustWhereAlloc.php:84 GLJournal.php:266
-#: GLJournal.php:274 PaymentAllocations.php:74 Payments.php:785
-#: Payments.php:832 PrintCheque.php:65 PrintCheque.php:79
+#: GLJournal.php:274 PaymentAllocations.php:74 Payments.php:787
+#: Payments.php:834 PrintCheque.php:65 PrintCheque.php:79
 #: SelectCreditItems.php:671 SuppInvGLAnalysis.php:50 SuppInvGLAnalysis.php:74
 #: SupplierAllocations.php:465 SupplierCredit.php:304 SupplierInvoice.php:265
 #: SupplierInvoice.php:295 SupplierTransInquiry.php:92 SuppShiptChgs.php:71
@@ -1046,7 +1046,7 @@ msgstr ""
 msgid "The bank accounts could not be retrieved by the SQL because"
 msgstr ""
 
-#: BankReconciliation.php:91 CustomerReceipt.php:641 Payments.php:650
+#: BankReconciliation.php:91 CustomerReceipt.php:641 Payments.php:652
 #: SuppPaymentRun.php:307
 msgid "The SQL used to retrieve the bank acconts was"
 msgstr ""
@@ -1059,12 +1059,12 @@ msgstr ""
 msgid "You must first"
 msgstr ""
 
-#: BankReconciliation.php:97 CustomerReceipt.php:649 Payments.php:657
+#: BankReconciliation.php:97 CustomerReceipt.php:649 Payments.php:659
 #: SuppPaymentRun.php:315
 msgid "define the bank accounts"
 msgstr ""
 
-#: BankReconciliation.php:97 CustomerReceipt.php:649 Payments.php:657
+#: BankReconciliation.php:97 CustomerReceipt.php:649 Payments.php:659
 #: SuppPaymentRun.php:315
 msgid "and general ledger accounts to be affected"
 msgstr ""
@@ -1336,7 +1336,8 @@ msgstr ""
 msgid "there are no components defined for it"
 msgstr ""
 
-#: BOMInquiry.php:167 BOMs.php:556 WorkOrderReceive.php:335
+#: BOMInquiry.php:167 BOMs.php:556 WorkOrderReceive.php:138
+#: WorkOrderReceive.php:360
 msgid "Component"
 msgstr ""
 
@@ -1940,7 +1941,7 @@ msgstr ""
 #: CompanyPreferences.php:469 ConfirmDispatch_Invoice.php:579
 #: ConfirmDispatch_Invoice.php:1452 Credit_Invoice.php:1499 GLBudgets.php:180
 #: GoodsReceived.php:179 GoodsReceived.php:185 GoodsReceived.php:192
-#: GoodsReceived.php:572 Payments.php:775 PurchData.php:359
+#: GoodsReceived.php:572 Payments.php:777 PurchData.php:359
 #: SelectCreditItems.php:908 StockCostUpdate.php:161 StockReorderLevel.php:92
 #: Stocks.php:936 SystemParameters.php:791 TaxAuthorityRates.php:54
 #: WorkOrderEntry.php:482
@@ -2281,6 +2282,7 @@ msgid "Invoicing the selected order would result in negative stock. The system p
 msgstr ""
 
 #: ConfirmDispatch_Invoice.php:546 ConfirmDispatch_Invoice.php:569
+#: WorkOrderReceive.php:138
 msgid "Negative Stock Prohibited"
 msgstr ""
 
@@ -2457,12 +2459,12 @@ msgstr ""
 #: WorkOrderIssue.php:179 WorkOrderIssue.php:201 WorkOrderIssue.php:216
 #: WorkOrderIssue.php:233 WorkOrderIssue.php:254 WorkOrderIssue.php:269
 #: WorkOrderIssue.php:300 WorkOrderIssue.php:320 WorkOrderIssue.php:328
-#: WorkOrderReceive.php:105 WorkOrderReceive.php:205 WorkOrderReceive.php:224
-#: WorkOrderReceive.php:283 WorkOrderReceive.php:308 WorkOrderReceive.php:316
-#: WorkOrderReceive.php:338 WorkOrderReceive.php:357 WorkOrderReceive.php:385
-#: WorkOrderReceive.php:415 WorkOrderReceive.php:442 WorkOrderReceive.php:457
-#: WorkOrderReceive.php:474 WorkOrderReceive.php:495 WorkOrderReceive.php:510
-#: WorkOrderReceive.php:542 WorkOrderReceive.php:562 WorkOrderReceive.php:570
+#: WorkOrderReceive.php:105 WorkOrderReceive.php:230 WorkOrderReceive.php:249
+#: WorkOrderReceive.php:308 WorkOrderReceive.php:333 WorkOrderReceive.php:341
+#: WorkOrderReceive.php:363 WorkOrderReceive.php:382 WorkOrderReceive.php:410
+#: WorkOrderReceive.php:440 WorkOrderReceive.php:467 WorkOrderReceive.php:482
+#: WorkOrderReceive.php:499 WorkOrderReceive.php:520 WorkOrderReceive.php:535
+#: WorkOrderReceive.php:567 WorkOrderReceive.php:587 WorkOrderReceive.php:595
 #: includes/SQL_CommonFunctions.inc:23 includes/SQL_CommonFunctions.inc:30
 #: includes/SQL_CommonFunctions.inc:185 includes/SQL_CommonFunctions.inc:204
 msgid "CRITICAL ERROR"
@@ -2549,13 +2551,13 @@ msgstr ""
 #: WorkOrderIssue.php:149 WorkOrderIssue.php:179 WorkOrderIssue.php:201
 #: WorkOrderIssue.php:216 WorkOrderIssue.php:233 WorkOrderIssue.php:254
 #: WorkOrderIssue.php:269 WorkOrderIssue.php:300 WorkOrderIssue.php:320
-#: WorkOrderIssue.php:328 WorkOrderReceive.php:105 WorkOrderReceive.php:205
-#: WorkOrderReceive.php:224 WorkOrderReceive.php:283 WorkOrderReceive.php:308
-#: WorkOrderReceive.php:316 WorkOrderReceive.php:338 WorkOrderReceive.php:357
-#: WorkOrderReceive.php:385 WorkOrderReceive.php:415 WorkOrderReceive.php:442
-#: WorkOrderReceive.php:457 WorkOrderReceive.php:474 WorkOrderReceive.php:495
-#: WorkOrderReceive.php:510 WorkOrderReceive.php:542 WorkOrderReceive.php:562
-#: WorkOrderReceive.php:570 includes/SQL_CommonFunctions.inc:23
+#: WorkOrderIssue.php:328 WorkOrderReceive.php:105 WorkOrderReceive.php:230
+#: WorkOrderReceive.php:249 WorkOrderReceive.php:308 WorkOrderReceive.php:333
+#: WorkOrderReceive.php:341 WorkOrderReceive.php:363 WorkOrderReceive.php:382
+#: WorkOrderReceive.php:410 WorkOrderReceive.php:440 WorkOrderReceive.php:467
+#: WorkOrderReceive.php:482 WorkOrderReceive.php:499 WorkOrderReceive.php:520
+#: WorkOrderReceive.php:535 WorkOrderReceive.php:567 WorkOrderReceive.php:587
+#: WorkOrderReceive.php:595 includes/SQL_CommonFunctions.inc:23
 #: includes/SQL_CommonFunctions.inc:30 includes/SQL_CommonFunctions.inc:185
 #: includes/SQL_CommonFunctions.inc:204
 msgid "NOTE DOWN THIS ERROR AND SEEK ASSISTANCE"
@@ -2622,7 +2624,7 @@ msgstr ""
 #: ConfirmDispatch_Invoice.php:883 Credit_Invoice.php:664
 #: GoodsReceived.php:405 ReverseGRN.php:172 SelectCreditItems.php:1367
 #: StockTransfers.php:361 StockTransfers.php:371 WorkOrderIssue.php:150
-#: WorkOrderReceive.php:284 WorkOrderReceive.php:386
+#: WorkOrderReceive.php:309 WorkOrderReceive.php:411
 msgid "The following SQL to update the location stock record was used"
 msgstr ""
 
@@ -2694,8 +2696,8 @@ msgstr ""
 #: ConfirmDispatch_Invoice.php:1045 Credit_Invoice.php:872
 #: Credit_Invoice.php:960 Credit_Invoice.php:1000 GoodsReceived.php:434
 #: RecurringSalesOrdersProcess.php:346 ReverseGRN.php:202
-#: SelectCreditItems.php:1261 WorkOrderIssue.php:180 WorkOrderReceive.php:309
-#: WorkOrderReceive.php:416
+#: SelectCreditItems.php:1261 WorkOrderIssue.php:180 WorkOrderReceive.php:334
+#: WorkOrderReceive.php:441
 msgid "The following SQL to insert the stock movement records was used"
 msgstr ""
 
@@ -2729,7 +2731,7 @@ msgstr ""
 #: GoodsReceived.php:491 SelectCreditItems.php:1345 StockAdjustments.php:225
 #: StockLocTransferReceive.php:171 StockLocTransferReceive.php:281
 #: StockTransfers.php:238 StockTransfers.php:347 WorkOrderIssue.php:216
-#: WorkOrderIssue.php:269 WorkOrderReceive.php:457 WorkOrderReceive.php:510
+#: WorkOrderIssue.php:269 WorkOrderReceive.php:482 WorkOrderReceive.php:535
 msgid "The serial stock movement record could not be inserted because"
 msgstr ""
 
@@ -2737,7 +2739,7 @@ msgstr ""
 #: GoodsReceived.php:492 StockAdjustments.php:226
 #: StockLocTransferReceive.php:172 StockLocTransferReceive.php:282
 #: StockTransfers.php:239 StockTransfers.php:348 WorkOrderIssue.php:217
-#: WorkOrderIssue.php:270 WorkOrderReceive.php:458 WorkOrderReceive.php:511
+#: WorkOrderIssue.php:270 WorkOrderReceive.php:483 WorkOrderReceive.php:536
 msgid "The following SQL to insert the serial stock movement records was used"
 msgstr ""
 
@@ -2777,7 +2779,7 @@ msgstr ""
 #: SupplierAllocations.php:220 SupplierAllocations.php:243
 #: WorkOrderCosting.php:316 WorkOrderCosting.php:337 WorkOrderCosting.php:356
 #: WorkOrderCosting.php:393 WorkOrderCosting.php:412 WorkOrderCosting.php:435
-#: WorkOrderCosting.php:454 WorkOrderReceive.php:206 WorkOrderReceive.php:225
+#: WorkOrderCosting.php:454 WorkOrderReceive.php:231 WorkOrderReceive.php:250
 #: includes/SQL_CommonFunctions.inc:186 includes/SQL_CommonFunctions.inc:205
 msgid "The following SQL to insert the GLTrans record was used"
 msgstr ""
@@ -3073,7 +3075,7 @@ msgid "Credit Note number"
 msgstr ""
 
 #: Credit_Invoice.php:1417 GoodsReceived.php:557 SupplierCredit.php:826
-#: SupplierInvoice.php:1016 WorkOrderIssue.php:339 WorkOrderReceive.php:583
+#: SupplierInvoice.php:1016 WorkOrderIssue.php:339 WorkOrderReceive.php:608
 msgid "has been processed"
 msgstr ""
 
@@ -3613,7 +3615,7 @@ msgid "Process Allocations"
 msgstr ""
 
 #: CustomerAllocations.php:456 CustomerReceipt.php:905 GLJournal.php:268
-#: Payments.php:834 SalesTypes.php:264 SelectCreditItems.php:909
+#: Payments.php:836 SalesTypes.php:264 SelectCreditItems.php:909
 #: Z_CheckDebtorsControl.php:66
 msgid "Cancel"
 msgstr ""
@@ -4311,7 +4313,7 @@ msgstr ""
 msgid "The customer details could not be retrieved because"
 msgstr ""
 
-#: CustomerReceipt.php:640 Payments.php:649
+#: CustomerReceipt.php:640 Payments.php:651
 msgid "The bank accounts could not be retrieved because"
 msgstr ""
 
@@ -4327,8 +4329,8 @@ msgstr ""
 msgid "Receipts cannot be entered until a currency is defined"
 msgstr ""
 
-#: CustomerReceipt.php:708 CustomerReceipt.php:723 Payments.php:721
-#: Payments.php:736
+#: CustomerReceipt.php:708 CustomerReceipt.php:723 Payments.php:723
+#: Payments.php:738
 msgid "Suggested rate:"
 msgstr ""
 
@@ -4340,11 +4342,11 @@ msgstr ""
 msgid "The exchange rate between the currency of the bank account currency and the currency of the receipt"
 msgstr ""
 
-#: CustomerReceipt.php:730 Payments.php:743
+#: CustomerReceipt.php:730 Payments.php:745
 msgid "Functional Exchange Rate"
 msgstr ""
 
-#: CustomerReceipt.php:731 Payments.php:744
+#: CustomerReceipt.php:731 Payments.php:746
 msgid "The exchange rate between the currency of the business (the functional currency) and the currency of the bank account"
 msgstr ""
 
@@ -4353,7 +4355,7 @@ msgid "Receipt Type"
 msgstr ""
 
 #: CustomerReceipt.php:750 CustomerReceipt.php:901 GLAccountInquiry.php:115
-#: GLJournal.php:276 Payments.php:787 SuppInvGLAnalysis.php:53
+#: GLJournal.php:276 Payments.php:789 SuppInvGLAnalysis.php:53
 #: SuppInvGLAnalysis.php:77 SupplierCredit.php:307 SupplierInvoice.php:298
 #: SupplierTransInquiry.php:144 SuppTransGLAnalysis.php:92
 #: SuppTransGLAnalysis.php:185 includes/PDFBankingSummaryPageHeader.inc:58
@@ -4361,7 +4363,7 @@ msgid "Narrative"
 msgstr ""
 
 #: CustomerReceipt.php:751 CustomerReceipt.php:904 ExchangeRateTrend.php:51
-#: FreightCosts.php:57 GLJournal.php:126 GLJournal.php:268 Payments.php:834
+#: FreightCosts.php:57 GLJournal.php:126 GLJournal.php:268 Payments.php:836
 #: SalesTypes.php:264 Z_CheckDebtorsControl.php:65
 msgid "Accept"
 msgstr ""
@@ -4393,7 +4395,7 @@ msgstr ""
 msgid "General Ledger Receipt Entry"
 msgstr ""
 
-#: CustomerReceipt.php:853 GLBudgets.php:38 GLJournal.php:248 Payments.php:820
+#: CustomerReceipt.php:853 GLBudgets.php:38 GLJournal.php:248 Payments.php:822
 msgid "No General ledger accounts have been set up yet"
 msgstr ""
 
@@ -4405,7 +4407,7 @@ msgstr ""
 msgid "Amount of Receipt"
 msgstr ""
 
-#: CustomerReceipt.php:893 Payments.php:845
+#: CustomerReceipt.php:893 Payments.php:847
 msgid "Amount of Discount"
 msgstr ""
 
@@ -5223,7 +5225,7 @@ msgstr ""
 #: ShipmentCosting.php:495 Shipments.php:379 Shipments.php:455
 #: SuppCreditGRNs.php:214 SuppInvGRNs.php:221 WorkOrderCosting.php:79
 #: WorkOrderCosting.php:101 WorkOrderIssue.php:522 WorkOrderIssue.php:565
-#: WorkOrderReceive.php:646 WorkOrderStatus.php:42 WorkOrderStatus.php:63
+#: WorkOrderReceive.php:671 WorkOrderStatus.php:42 WorkOrderStatus.php:63
 #: includes/PDFInventoryPlanPageHeader.inc:42
 #: includes/PDFInventoryValnPageHeader.inc:32
 #: includes/PDFLowGPPageHeader.inc:32 includes/PDFOstdgGRNsPageHeader.inc:32
@@ -6756,15 +6758,15 @@ msgstr ""
 msgid "Journal Line Entry"
 msgstr ""
 
-#: GLJournal.php:241 Payments.php:807
+#: GLJournal.php:241 Payments.php:809
 msgid "Enter GL Account Manually"
 msgstr ""
 
-#: GLJournal.php:248 Payments.php:820
+#: GLJournal.php:248 Payments.php:822
 msgid "payments cannot be analysed against GL accounts until the GL accounts are set up"
 msgstr ""
 
-#: GLJournal.php:265 Payments.php:831
+#: GLJournal.php:265 Payments.php:833
 msgid "GL Narrative"
 msgstr ""
 
@@ -7015,7 +7017,7 @@ msgstr ""
 msgid "Receive purchase order"
 msgstr ""
 
-#: GoodsReceived.php:54 WorkOrderIssue.php:525 WorkOrderReceive.php:649
+#: GoodsReceived.php:54 WorkOrderIssue.php:525 WorkOrderReceive.php:674
 #: WorkOrderStatus.php:45
 msgid "Already Received"
 msgstr ""
@@ -7151,7 +7153,7 @@ msgstr ""
 #: GoodsReceived.php:404 PDFStockCheckComparison.php:120 ReverseGRN.php:171
 #: StockAdjustments.php:238 StockLocTransferReceive.php:293
 #: StockLocTransferReceive.php:302 StockTransfers.php:360
-#: StockTransfers.php:370 WorkOrderIssue.php:149 WorkOrderReceive.php:385
+#: StockTransfers.php:370 WorkOrderIssue.php:149 WorkOrderReceive.php:410
 msgid "The location stock record could not be updated because"
 msgstr ""
 
@@ -7167,13 +7169,13 @@ msgstr ""
 msgid "The following SQL to test for an already existing controlled but not serialised stock item was used"
 msgstr ""
 
-#: GoodsReceived.php:476 WorkOrderIssue.php:201 WorkOrderReceive.php:442
-#: WorkOrderReceive.php:495
+#: GoodsReceived.php:476 WorkOrderIssue.php:201 WorkOrderReceive.php:467
+#: WorkOrderReceive.php:520
 msgid "The serial stock item record could not be inserted because"
 msgstr ""
 
-#: GoodsReceived.php:477 WorkOrderIssue.php:202 WorkOrderReceive.php:443
-#: WorkOrderReceive.php:496
+#: GoodsReceived.php:477 WorkOrderIssue.php:202 WorkOrderReceive.php:468
+#: WorkOrderReceive.php:521
 msgid "The following SQL to insert the serial stock item records was used"
 msgstr ""
 
@@ -8371,64 +8373,72 @@ msgstr ""
 msgid "from the"
 msgstr ""
 
-#: Payments.php:657 SuppPaymentRun.php:315
+#: Payments.php:640
+msgid "Note: To enter a payment FROM "
+msgstr ""
+
+#: Payments.php:640
+msgid " use a negative Payment amount."
+msgstr ""
+
+#: Payments.php:659 SuppPaymentRun.php:315
 msgid "Bank Accounts have not yet been defined. You must first"
 msgstr ""
 
-#: Payments.php:676
+#: Payments.php:678
 msgid "Date Paid"
 msgstr ""
 
-#: Payments.php:682
+#: Payments.php:684
 msgid "Currency of Payment"
 msgstr ""
 
-#: Payments.php:688
+#: Payments.php:690
 msgid "No currencies are defined yet. Payments cannot be entered until a currency is defined"
 msgstr ""
 
-#: Payments.php:697
+#: Payments.php:699
 msgid "The transaction currency does not need to be the same as the bank account currency"
 msgstr ""
 
-#: Payments.php:700 Suppliers.php:594 Suppliers.php:719
+#: Payments.php:702 Suppliers.php:594 Suppliers.php:719
 msgid "Supplier Currency"
 msgstr ""
 
-#: Payments.php:728
+#: Payments.php:730
 msgid "Payment Exchange Rate"
 msgstr ""
 
-#: Payments.php:730
+#: Payments.php:732
 msgid "The exchange rate between the currency of the bank account currency and the currency of the payment"
 msgstr ""
 
-#: Payments.php:746
+#: Payments.php:748
 msgid "Payment type"
 msgstr ""
 
-#: Payments.php:766
+#: Payments.php:768
 msgid "Cheque Number"
 msgstr ""
 
-#: Payments.php:773
+#: Payments.php:775
 msgid "Reference / Narrative"
 msgstr ""
 
-#: Payments.php:804
+#: Payments.php:806
 msgid "General Ledger Payment Analysis Entry"
 msgstr ""
 
-#: Payments.php:809
+#: Payments.php:811
 #, fuzzy
 msgid "select GL Account"
 msgstr "Shipping Re-charged GL Account"
 
-#: Payments.php:841
+#: Payments.php:843
 msgid "Amount of Payment"
 msgstr ""
 
-#: Payments.php:854
+#: Payments.php:856
 msgid "Accept and Process Payment"
 msgstr ""
 
@@ -12819,7 +12829,7 @@ msgstr ""
 
 #: SelectCustomer.php:259 SelectCustomer.php:338 SelectProduct.php:288
 #: SelectSupplier.php:234 SelectSupplier.php:310 WorkOrderIssue.php:339
-#: WorkOrderReceive.php:583 includes/Add_SerialItemsOut.php:24
+#: WorkOrderReceive.php:608 includes/Add_SerialItemsOut.php:24
 #: includes/Add_SerialItems.php:33 includes/Add_SerialItems.php:177
 #: includes/Add_SerialItems.php:274
 #: includes/PDFBankingSummaryPageHeader.inc:19
@@ -13420,7 +13430,7 @@ msgid "Enter a Suppliers Credit Note"
 msgstr ""
 
 #: SelectSupplier.php:154
-msgid "Enter a Payment to the Supplier"
+msgid "Enter a Payment to, or Receipt from the Supplier"
 msgstr ""
 
 #: SelectSupplier.php:158
@@ -13522,7 +13532,7 @@ msgid "Quantity Required"
 msgstr ""
 
 #: SelectWorkOrder.php:312 StockLocTransferReceive.php:424
-#: WorkOrderCosting.php:83 WorkOrderReceive.php:715
+#: WorkOrderCosting.php:83 WorkOrderReceive.php:740
 msgid "Quantity Received"
 msgstr ""
 
@@ -13681,14 +13691,14 @@ msgstr ""
 msgid "Shipment of"
 msgstr ""
 
-#: ShipmentCosting.php:397 ShipmentCosting.php:415 WorkOrderReceive.php:202
-#: WorkOrderReceive.php:221 includes/SQL_CommonFunctions.inc:182
+#: ShipmentCosting.php:397 ShipmentCosting.php:415 WorkOrderReceive.php:227
+#: WorkOrderReceive.php:246 includes/SQL_CommonFunctions.inc:182
 #: includes/SQL_CommonFunctions.inc:201
 msgid "cost was"
 msgstr ""
 
-#: ShipmentCosting.php:397 ShipmentCosting.php:415 WorkOrderReceive.php:202
-#: WorkOrderReceive.php:221 includes/SQL_CommonFunctions.inc:182
+#: ShipmentCosting.php:397 ShipmentCosting.php:415 WorkOrderReceive.php:227
+#: WorkOrderReceive.php:246 includes/SQL_CommonFunctions.inc:182
 #: includes/SQL_CommonFunctions.inc:201
 msgid "changed to"
 msgstr ""
@@ -13701,7 +13711,7 @@ msgstr ""
 msgid "The GL credit for the shipment stock cost adjustment posting could not be inserted because"
 msgstr ""
 
-#: ShipmentCosting.php:417 WorkOrderReceive.php:224
+#: ShipmentCosting.php:417 WorkOrderReceive.php:249
 #: includes/SQL_CommonFunctions.inc:204
 msgid "The GL debit for stock cost adjustment posting could not be inserted because"
 msgstr ""
@@ -14604,7 +14614,7 @@ msgstr ""
 msgid "Non-existent Item"
 msgstr ""
 
-#: StockCostUpdate.php:77 WorkOrderCosting.php:370 WorkOrderReceive.php:236
+#: StockCostUpdate.php:77 WorkOrderCosting.php:370 WorkOrderReceive.php:261
 msgid "The cost details for the stock item could not be updated because"
 msgstr ""
 
@@ -18678,7 +18688,7 @@ msgid "Could not retrieve the details of the selected work order"
 msgstr ""
 
 #: WorkOrderCosting.php:42 WorkOrderIssue.php:59 WorkOrderIssue.php:506
-#: WorkOrderReceive.php:65 WorkOrderReceive.php:630 WorkOrderStatus.php:33
+#: WorkOrderReceive.php:65 WorkOrderReceive.php:655 WorkOrderStatus.php:33
 msgid "The selected work order item cannot be retrieved from the database"
 msgstr ""
 
@@ -18686,13 +18696,13 @@ msgstr ""
 msgid "Work order"
 msgstr ""
 
-#: WorkOrderCosting.php:52 WorkOrderIssue.php:523 WorkOrderReceive.php:647
+#: WorkOrderCosting.php:52 WorkOrderIssue.php:523 WorkOrderReceive.php:672
 #: WorkOrderStatus.php:43
 msgid "Manufactured at"
 msgstr ""
 
 #: WorkOrderCosting.php:54 WorkOrderEntry.php:447 WorkOrderIssue.php:523
-#: WorkOrderReceive.php:647 WorkOrderStatus.php:43
+#: WorkOrderReceive.php:672 WorkOrderStatus.php:43
 msgid "Required By"
 msgstr ""
 
@@ -18930,7 +18940,7 @@ msgid "This page can only be opened if a work order has been selected. Please se
 msgstr ""
 
 #: WorkOrderIssue.php:39 WorkOrderIssue.php:483 WorkOrderReceive.php:35
-#: WorkOrderReceive.php:604 WorkOrderStatus.php:10
+#: WorkOrderReceive.php:629 WorkOrderStatus.php:10
 msgid "Could not retrieve the details of the selected work order item"
 msgstr ""
 
@@ -18994,7 +19004,7 @@ msgstr ""
 msgid "The issue of"
 msgstr ""
 
-#: WorkOrderIssue.php:339 WorkOrderReceive.php:583
+#: WorkOrderIssue.php:339 WorkOrderReceive.php:608
 msgid "against work order"
 msgstr ""
 
@@ -19010,7 +19020,7 @@ msgstr ""
 msgid "Issue to work order"
 msgstr ""
 
-#: WorkOrderIssue.php:524 WorkOrderReceive.php:648 WorkOrderStatus.php:44
+#: WorkOrderIssue.php:524 WorkOrderReceive.php:673 WorkOrderStatus.php:44
 msgid "Quantity Ordered"
 msgstr ""
 
@@ -19082,11 +19092,11 @@ msgstr ""
 msgid "The quantity received is greater than the quantity required even after allowing for the configured allowable over-receive proportion. If this is correct then the work order must be modified first."
 msgstr ""
 
-#: WorkOrderReceive.php:105 WorkOrderReceive.php:474
+#: WorkOrderReceive.php:105 WorkOrderReceive.php:499
 msgid "Could not check if a serial number for the stock item already exists because"
 msgstr ""
 
-#: WorkOrderReceive.php:106 WorkOrderReceive.php:475
+#: WorkOrderReceive.php:106 WorkOrderReceive.php:500
 msgid "The following SQL to test for an already existing serialised stock item was used"
 msgstr ""
 
@@ -19094,108 +19104,116 @@ msgstr ""
 msgid "The serial number entered already exists. Dupliate serial numbers are prohibited. The duplicate item is:"
 msgstr ""
 
-#: WorkOrderReceive.php:202 WorkOrderReceive.php:221
+#: WorkOrderReceive.php:134
+msgid "Could not retrieve the component quantity left at the location once the component items are issued to the work order (for the purposes of checking that stock will not go negative) because"
+msgstr ""
+
+#: WorkOrderReceive.php:138
+msgid "Receiving the selected quantity against this work order would result in negative stock for a component. The system parameters are set to prohibit negative stocks from occurring. This manufacturing receipt cannot be created until the stock on hand is corrected."
+msgstr ""
+
+#: WorkOrderReceive.php:227 WorkOrderReceive.php:246
 msgid "Cost roll on release of WO"
 msgstr ""
 
-#: WorkOrderReceive.php:202 WorkOrderReceive.php:221
+#: WorkOrderReceive.php:227 WorkOrderReceive.php:246
 #: includes/SQL_CommonFunctions.inc:182 includes/SQL_CommonFunctions.inc:201
 msgid "Quantity on hand of"
 msgstr ""
 
-#: WorkOrderReceive.php:205 includes/SQL_CommonFunctions.inc:185
+#: WorkOrderReceive.php:230 includes/SQL_CommonFunctions.inc:185
 msgid "The GL credit for the stock cost adjustment posting could not be inserted because"
 msgstr ""
 
-#: WorkOrderReceive.php:283
+#: WorkOrderReceive.php:308
 msgid "The location stock record could not be updated by the issue of stock to the work order from an auto issue component because"
 msgstr ""
 
-#: WorkOrderReceive.php:308
+#: WorkOrderReceive.php:333
 msgid "stock movement record could not be inserted for an auto-issue component because"
 msgstr ""
 
-#: WorkOrderReceive.php:316
+#: WorkOrderReceive.php:341
 msgid "Could not be update the work order cost for an auto-issue component because"
 msgstr ""
 
-#: WorkOrderReceive.php:317
+#: WorkOrderReceive.php:342
 msgid "The following SQL to update the work order cost was used"
 msgstr ""
 
-#: WorkOrderReceive.php:338
+#: WorkOrderReceive.php:363
 msgid "The WIP side of the work order issue GL posting could not be inserted because"
 msgstr ""
 
-#: WorkOrderReceive.php:339 WorkOrderReceive.php:358
+#: WorkOrderReceive.php:364 WorkOrderReceive.php:383
 msgid "The following SQL to insert the WO issue GLTrans record was used"
 msgstr ""
 
-#: WorkOrderReceive.php:357
+#: WorkOrderReceive.php:382
 msgid "The stock side of the work order issue GL posting could not be inserted because"
 msgstr ""
 
-#: WorkOrderReceive.php:415
+#: WorkOrderReceive.php:440
 msgid "stock movement records could not be inserted when processing the work order receipt because"
 msgstr ""
 
-#: WorkOrderReceive.php:542
+#: WorkOrderReceive.php:567
 msgid "The receipt of work order finished stock GL posting could not be inserted because"
 msgstr ""
 
-#: WorkOrderReceive.php:543
+#: WorkOrderReceive.php:568
 msgid "The following SQL to insert the work order receipt of finished items GLTrans record was used"
 msgstr ""
 
-#: WorkOrderReceive.php:562
+#: WorkOrderReceive.php:587
 msgid "The WIP credit on receipt of finsihed items from a work order GL posting could not be inserted because"
 msgstr ""
 
-#: WorkOrderReceive.php:563
+#: WorkOrderReceive.php:588
 msgid "The following SQL to insert the WIP GLTrans record was used"
 msgstr ""
 
-#: WorkOrderReceive.php:570
+#: WorkOrderReceive.php:595
 msgid "Could not update the work order item record with the total quantity received because"
 msgstr ""
 
-#: WorkOrderReceive.php:571
+#: WorkOrderReceive.php:596
 msgid "The following SQL was used to update the work ordeer"
 msgstr ""
 
-#: WorkOrderReceive.php:583
+#: WorkOrderReceive.php:608
 msgid "The receipt of"
 msgstr ""
 
-#: WorkOrderReceive.php:584
+#: WorkOrderReceive.php:609
 msgid "Select a different work order for receiving finished stock against"
 msgstr ""
 
-#: WorkOrderReceive.php:637
+#: WorkOrderReceive.php:662
 msgid "The selected work order has been closed and variances calculated and posted. No more receipts of manufactured items can be received against this work order. You should make up a new work order to receive this item against."
 msgstr ""
 
-#: WorkOrderReceive.php:646
+#: WorkOrderReceive.php:671
 msgid "Receive work order"
 msgstr ""
 
-#: WorkOrderReceive.php:650
+#: WorkOrderReceive.php:675
 msgid "Date Received"
 msgstr ""
 
-#: WorkOrderReceive.php:650
+#: WorkOrderReceive.php:675
 msgid "Received Into"
 msgstr ""
 
-#: WorkOrderReceive.php:686
+#: WorkOrderReceive.php:711
 msgid "Serial Numbers Received"
 msgstr ""
 
-#: WorkOrderReceive.php:699 WorkOrderReceive.php:711 WorkOrderReceive.php:717
+#: WorkOrderReceive.php:724 WorkOrderReceive.php:736 WorkOrderReceive.php:742
 msgid "Process Manufactured Items Received"
 msgstr ""
 
-#: WorkOrderReceive.php:701
+#: WorkOrderReceive.php:726
 msgid "Batch/Lots Received"
 msgstr ""
 
