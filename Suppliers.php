@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 $PageSecurity = 5;
 
@@ -686,7 +686,7 @@ if (!isset($SupplierID)) {
 	echo '<TR><TD>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] .'):</TD><TD><INPUT '.(in_array('SupplierSince',$Errors) ? 'class="inputerror"' : '').'  SIZE=12 MAXLENGTH=10 TYPE="text" NAME="SupplierSince" VALUE=' . $_POST['SupplierSince'] . '></TD></TR>';
 	echo '<TR><TD>' . _('Bank Particulars') . ":</TD><TD><INPUT TYPE='text' NAME='BankPartics' SIZE=13 MAXLENGTH=12 VALUE='" . $_POST['BankPartics'] . "'></TD></TR>";
 	echo '<TR><TD>' . _('Bank Reference') . ':</TD><TD><INPUT '.(in_array('BankRef',$Errors) ? 'class="inputerror"' : '').'  TYPE="text" NAME="BankRef" SIZE=13 MAXLENGTH=12 VALUE="' . $_POST['BankRef'] . '"></TD></TR>';
-	echo '<TR><TD>' . _('Bank Account No') . ":</TD><TD><INPUT TYPE='text' NAME='BankAct' SIZE=17 MAXLENGTH=16 VALUE='" . $_POST['BankAct'] . "'></TD></TR>";
+	echo '<TR><TD>' . _('Bank Account No') . ":</TD><TD><INPUT TYPE='text' NAME='BankAct' SIZE=31 MAXLENGTH=30 VALUE='" . $_POST['BankAct'] . "'></TD></TR>";
 
 	$result=DB_query('SELECT terms, termsindicator FROM paymentterms', $db);
 
