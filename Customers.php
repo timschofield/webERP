@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 $PageSecurity = 3;
 
@@ -312,9 +312,11 @@ if (isset($_POST['submit'])) {
 
 	}
 	if ($CancelDelete==0) { //ie not cancelled the delete as a result of above tests
+		$sql="DELETE FROM custcontacts WHERE debtorno='" . $_POST['DebtorNo'] . "'";
+		$result = DB_query($sql,$db);
 		$sql="DELETE FROM debtorsmaster WHERE debtorno='" . $_POST['DebtorNo'] . "'";
 		$result = DB_query($sql,$db);
-		prnMsg( _('Customer') . ' ' . $_POST['DebtorNo'] . ' ' . _('has been deleted') . ' !','success');
+		prnMsg( _('Customer') . ' ' . $_POST['DebtorNo'] . ' ' . _('has been deleted - together with all the associated contacts') . ' !','success');
 		include('includes/footer.inc');
 		exit;
 	} //end if Delete Customer
@@ -348,6 +350,28 @@ if (isset($_POST['DebtorNo'])){
 } elseif (isset($_GET['DebtorNo'])){
 	$DebtorNo = $_GET['DebtorNo'];
 }
+if (isset($_POST['ID'])){
+	$ID = $_POST['ID'];
+} elseif (isset($_GET['ID'])){
+	$ID = $_GET['ID'];
+}
+if (isset($_POST['ws'])){
+	$ws = $_POST['ws'];
+} elseif (isset($_GET['ws'])){
+	$ws = $_GET['ws'];
+}
+if (isset($_POST['Edit'])){
+	$Edit = $_POST['Edit'];
+} elseif (isset($_GET['Edit'])){
+	$Edit = $_GET['Edit'];
+}
+
+if (isset($_POST['Add'])){
+	$Add = $_POST['Add'];
+} elseif (isset($_GET['Add'])){
+	$Add = $_GET['Add'];
+}
+
 
 echo "<A HREF='" . $rootpath . '/SelectCustomer.php?' . SID . "'>" . _('Back to Customers') . '</A><BR>';
 
@@ -668,14 +692,110 @@ if (!isset($DebtorNo)) {
 		echo '<OPTION VALUE=0>' . _('Address to HO');
 		echo '<OPTION SELECTED VALUE=1>' . _('Address to Branch');
 	}
-	echo '</SELECT></TD></TR></TABLE></TD></TR></TABLE></CENTER>';
+	
+	echo '</SELECT></TD></TR></TABLE></TD></TR>';
+	echo '<TR><TD colspan=2>';
+  	
+  	$sql = 'SELECT * FROM custcontacts where debtorno="'.$DebtorNo.'" ORDER BY contid';
+	$result = DB_query($sql,$db);
+	
+	echo '<CENTER><table border=1>';
+	echo '<tr>
+			<th>' . _('Name') . '</th>
+			<th>' . _('Role') . '</th>
+			<th>' . _('Phone no') . '</th>
+			<th>' . _('Notes') . '</th>
+			<th colspan=2><INPUT TYPE="Submit" NAME="addcontact" VALUE="+"></th></tr>';
+	
+	$k=0; //row colour counter
+	
+	while ($myrow = DB_fetch_array($result)) {
+		if ($k==1){
+			echo '<tr class="OddTableRows">';
+			$k=0;
+		} else {
+			echo '<tr class="EvenTableRows">';
+			$k=1;
+		}
+	
+		printf('<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td><a href="%sID=%s&DebtorNo=%s&delete=1">'. _('Delete'). '<a></td>
+				</tr>',
+				$myrow[2],
+				$myrow[3],
+				$myrow[4],
+				$myrow[5],
+				$_SERVER['PHP_SELF'] . "?" . SID, 
+				$myrow[0],
+				$myrow[1]);	
+				
+	}//END WHILE LIST LOOP
+	echo '</CENTER></table>';
+		//	echo "<CENTER><INPUT TYPE='Submit' NAME='addcontact' VALUE='" . _('ADD Contact') . "'>";
+	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?'.SID.'&DebtorNo="'.$DebtorNo.'"&ID='.$ID.'&Edit'.$Edit.'>';
+	if (isset($Edit)) {
+		$SQLcustcontacts='SELECT * from custcontacts
+							WHERE debtorno="'.$DebtorNo.'"
+							and contid='.$ID;
+		$resultcc = DB_query($SQLcustcontacts,$db);
+		$myrowcc = DB_fetch_array($resultcc);
+		$_POST['custname']=$myrowcc['contactname'];
+		$_POST['role']=$myrowcc['role'];
+		$_POST['phoneno']=$myrowcc['phoneno'];
+		$_POST['notes']=$myrowcc['notes'];
+		echo '<CENTER><table border=1>';
+		echo "<tr>
+				<td>" . _('Name') . "</td><TD><INPUT TYPE=TEXT name='custname' value='".$_POST['custname']."'></TD></tr><tr>
+				<td>" . _('Role') . "</td><TD><INPUT TYPE=TEXT name='role' value='".$_POST['role']."'></TD></tr><tr>
+				<td>" . _('Phone no') . "</td><TD><INPUT TYPE=TEXT name='phoneno' value='".$_POST['phoneno']."'></TD></tr><tr>
+				<td>" . _('Notes') . "</td><TD><textarea name='notes'>".$_POST['notes']."</textarea></TD></tr>
+				<tr><td colspan=2 align=center><input type=submit name=update value=update></td></tr></table>
+				";
+		
+		echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?'.SID.'&DebtorNo="'.$DebtorNo.'"&ID"'.$ID.'">';
+			
+		
+	}
+	if (isset($_POST['update'])) {
+		
+			$SQLupdatecc='UPDATE custcontacts
+							SET contactname="'.$_POST['custname'].'",
+							role="'.$_POST['role'].'",
+							phoneno="'.$_POST['phoneno'].'",
+							notes="'.DB_escape_string($_POST['notes']).'"
+							Where debtorno="'.$DebtorNo.'"
+							and contid="'.$Edit.'"';
+			$resultupcc = DB_query($SQLupdatecc,$db);
+			echo '<br>'.$SQLupdatecc;
+			echo '<META HTTP-EQUIV="Refresh" CONTENT="0; URL="' . $_SERVER['PHP_SELF'] . '?'.SID.'&DebtorNo='.$DebtorNo.'&ID='.$ID.'">';
+		}	
+	if (isset($_GET['delete'])) {
+		$SQl='DELETE FROM custcontacts where debtorno="'.$DebtorNo.'"
+				and contid="'.$ID.'"';
+		$resultupcc = DB_query($SQl,$db);
+		
+		echo '<META HTTP-EQUIV="Refresh" CONTENT="0; URL=' . $_SERVER['PHP_SELF'] . '?'.SID.'&DebtorNo='.$DebtorNo.'">';
+		echo '<br>'.$SQl;
+		prnmsg('Contact Deleted','success');
+	}
+	
+	
+	echo'</TD></TR></TABLE></CENTER>';
 
-	if (isset($_POST['New'])) {
+	if ($_POST['New']) {
 		echo "<CENTER><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Add New Customer') . "'><BR><INPUT TYPE=SUBMIT name='reset' VALUE='" . _('Reset') . "'></FORM>";
 	} else {
 		echo "<HR><CENTER><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Update Customer') . "'>";
 		echo '<P><INPUT TYPE="Submit" NAME="delete" VALUE="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">';
 	}
+	if(isset($_POST['addcontact']) AND (isset($_POST['addcontact'])!=''))
+	{
+		echo '<META HTTP-EQUIV="Refresh" CONTENT="0; URL=' . $rootpath . '/AddCustomerContacts.php?' . SID . '&DebtorNo=' .$DebtorNo.'">';
+	}
+	
 } // end of main ifs
 
 include('includes/footer.inc');
