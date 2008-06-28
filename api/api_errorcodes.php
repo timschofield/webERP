@@ -49,5 +49,26 @@
 	Define('InvalidSpecialInstructions', 1044);
 	Define('InvalidCustBranchCode', 1045);
 	Define('BranchNoDoesntExist', 1046);
+	Define('StockCodeDoesntExist', 1047);
+	Define('StockCategoryDoesntExist', 1048);
+	Define('IncorrectStockDescriptionLength', 1049);
+	Define('IncorrectUnitsLength', 1050);
+	Define('IncorrectMBFlag', 1051);
+	Define('InvalidCurCostDate', 1052);
+	Define('InvalidActualCost', 1053);
+	Define('InvalidLowestLevel', 1054);
+	Define('InvalidDiscontinued', 1055);
+	Define('InvalidEOQ', 1056);
+	Define('InvalidVolume', 1057);
+	Define('InvalidKgs', 1058);
+	Define('IncorrectBarCodeLength', 1059);
+	Define('IncorrectDiscountCategory', 1060);
+	Define('TaxCategoriesDoesntExist', 1061);
+	Define('InvalidSerialised', 1062);
+	Define('IncorrectAppendFile', 1063);
+	Define('InvalidPerishable', 1064);
+	Define('InvalidDecmalPlaces', 1065);
+	Define('IncorrectLongStockDescriptionLength', 1066);
+	Define('StockCodeAlreadyExists', 1067);
 		
 ?>

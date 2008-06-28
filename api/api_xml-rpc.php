@@ -118,6 +118,48 @@
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
 	}
+
+	$InsertStockItem_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$InsertStockItem_doc = 'This function takes an associative array containing the details of a stock item to
+			to be inserted, where the keys of the array are the field names in the table stockmaster. ';
+			
+	function xmlrpc_InsertStockItem($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(InsertStockItem(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				 $xmlrpcmsg->getParam(1)->scalarval(), 
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
+	$ModifyStockItem_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$ModifyStockItem_doc = 'This function takes an associative array containing the details of a stock item to
+			to be updated, where the keys of the array are the field names in the table stockmaster. ';
+			
+	function xmlrpc_ModifyStockItem($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(ModifyStockItem(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				 $xmlrpcmsg->getParam(1)->scalarval(), 
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
+	$GetStockItem_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetStockItem_doc = 'This function returns an associative array containing the details of the item
+			whose stockid is passed to it.';
+			
+	function xmlrpc_GetStockItem($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetStockItem($xmlrpcmsg->getParam(0)->scalarval(),
+				 $xmlrpcmsg->getParam(1)->scalarval(), 
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+	
+	$SearchStockItems_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$SearchStockItems_doc = 'This function returns an array containing the account numbers of those items
+			that meet the criteria given. Any field in stockmaster can be search on.';
+			
+	function xmlrpc_SearchStockItems($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(SearchStockItems($xmlrpcmsg->getParam(0)->scalarval(),
+				 $xmlrpcmsg->getParam(1)->scalarval(), 
+				 		$xmlrpcmsg->getParam(2)->scalarval(),
+				 			$xmlrpcmsg->getParam(3)->scalarval())));
+	}
+	
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
@@ -166,7 +208,23 @@
 		"weberp.xmlrpc_GetPaymentTermsDetails" => array(
 			"function" => "xmlrpc_GetPaymentTermsDetails",
 			"signature" => $GetPaymentTermsDetails_sig,
-			"docstring" => $GetPaymentTermsDetails_doc)
+			"docstring" => $GetPaymentTermsDetails_doc),
+		"weberp.xmlrpc_InsertStockItem" => array(
+			"function" => "xmlrpc_InsertStockItem",
+			"signature" => $InsertStockItem_sig,
+			"docstring" => $InsertStockItem_doc),
+		"weberp.xmlrpc_ModifyStockItem" => array(
+			"function" => "xmlrpc_ModifyStockItem",
+			"signature" => $ModifyStockItem_sig,
+			"docstring" => $ModifyStockItem_doc),
+		"weberp.xmlrpc_GetStockItem" => array(
+			"function" => "xmlrpc_GetStockItem",
+			"signature" => $GetStockItem_sig,
+			"docstring" => $GetStockItem_doc),
+		"weberp.xmlrpc_SearchStockItems" => array(
+			"function" => "xmlrpc_SearchStockItems",
+			"signature" => $SearchStockItems_sig,
+			"docstring" => $SearchStockItems_doc)
 		)
 	);
 
