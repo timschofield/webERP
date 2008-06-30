@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 $PageSecurity = 3;
 
@@ -703,9 +703,10 @@ if (!isset($DebtorNo)) {
 	echo '<tr>
 			<th>' . _('Name') . '</th>
 			<th>' . _('Role') . '</th>
-			<th>' . _('Phone no') . '</th>
+			<th>' . _('Phone Number') . '</th>
 			<th>' . _('Notes') . '</th>
-			<th colspan=2><INPUT TYPE="Submit" NAME="addcontact" VALUE="+"></th></tr>';
+			<th>' . _('Edit') . '</th>
+			<th colspan=2><INPUT TYPE="Submit" NAME="addcontact" VALUE="Add Contact"></th></tr>';
 	
 	$k=0; //row colour counter
 	
@@ -722,12 +723,15 @@ if (!isset($DebtorNo)) {
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
-				<td><a href="%sID=%s&DebtorNo=%s&delete=1">'. _('Delete'). '<a></td>
+				<td><a href="AddCustomerContacts.php?Id=%s&DebtorNo=%s">'. _('Edit'). '</a></td>
+				<td><a href="%sID=%s&DebtorNo=%s&delete=1">'. _('Delete'). '</a></td>
 				</tr>',
 				$myrow[2],
 				$myrow[3],
 				$myrow[4],
 				$myrow[5],
+				$myrow[0],
+				$myrow[1],
 				$_SERVER['PHP_SELF'] . "?" . SID, 
 				$myrow[0],
 				$myrow[1]);	

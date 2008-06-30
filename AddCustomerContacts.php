@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 $PageSecurity = 3;
 include('includes/session.inc');
 $title = _('Customer Contacts');
@@ -136,7 +136,7 @@ if (!isset($Id)) {
 	echo '</CENTER></table>';
 }
 if (isset($Id)) {  ?>
-	<Center><a href="<?php echo $_SERVER['PHP_SELF'] . '?' . SID .'&DebtorNo='.$DebtorNo;?>"><?=_('REVIEW RECORDS')?></a></Center>
+	<Center><a href="<?php echo $_SERVER['PHP_SELF'] . '?' . SID .'&DebtorNo='.$DebtorNo;?>"><?=_('Review all contacts for this Customer')?></a></Center>
 <?php } ?>
 <P>
 
