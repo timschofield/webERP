@@ -160,6 +160,16 @@
 				 			$xmlrpcmsg->getParam(3)->scalarval())));
 	}
 	
+	$GetStockBalance_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetStockBalance_doc = 'This function returns the quantity of stock on hand a the location given';
+			
+	function xmlrpc_GetStockBalance($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetStockBalance($xmlrpcmsg->getParam(0)->scalarval(),
+				 $xmlrpcmsg->getParam(1)->scalarval(), 
+				 		$xmlrpcmsg->getParam(2)->scalarval(),
+				 			$xmlrpcmsg->getParam(3)->scalarval())));
+	}
+	
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
@@ -224,7 +234,11 @@
 		"weberp.xmlrpc_SearchStockItems" => array(
 			"function" => "xmlrpc_SearchStockItems",
 			"signature" => $SearchStockItems_sig,
-			"docstring" => $SearchStockItems_doc)
+			"docstring" => $SearchStockItems_doc),
+		"weberp.xmlrpc_GetStockBalance" => array(
+			"function" => "xmlrpc_GetStockBalance",
+			"signature" => $GetStockBalance_sig,
+			"docstring" => $GetStockBalance_doc)
 		)
 	);
 

@@ -73,9 +73,9 @@
 	
 /* Check that the las current cost date is a valid date */
 	function VerifyLastCurCostDate($CurCostDate, $i, $Errors) {
-		if (!Is_Date($CurCostDate)) {
-			$Errors[$i] = InvalidCurCostDate;
-		}
+//		if (!Is_Date($CurCostDate)) {
+//			$Errors[$i] = InvalidCurCostDate;
+//		}
 		return $Errors;
 	}
 	
@@ -323,10 +323,13 @@
 			$FieldNames.=$key.', ';
 			$FieldValues.='"'.$value.'", ';
 		}
-		$sql = 'INSERT INTO stockmaster ('.substr($FieldNames,0,-2).') '.
-		  'VALUES ('.substr($FieldValues,0,-2).') ';
 		if (sizeof($Errors)==0) {
+			$sql = 'INSERT INTO stockmaster ('.substr($FieldNames,0,-2).') '.
+		  		'VALUES ('.substr($FieldValues,0,-2).') ';
 			$result = DB_Query($sql, $db);
+			$sql = "INSERT INTO locstock (loccode,stockid)
+				SELECT locations.loccode,'" . $StockItemDetails['stockid'] . "'FROM locations";
+			$result = DB_Query($sql, $db);			
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -336,10 +339,10 @@
 		return $Errors;
 	}
 
-/* Insert a new stock item in the webERP database. This function takes an 
+/* Update a stock item in the webERP database. This function takes an 
    associative array called $StockItemDetails, where the keys are the
    names of the fields in the stockmaster table, and the values are the 
-   values to insert. The only mandatory fields are the stockid, description,
+   values to update. The only mandatory fields are the stockid, description,
    long description, category, and tax category
    fields. If the other fields aren't set, then the database defaults
    are used. The function returns an array called $Errors. The database 
@@ -494,6 +497,26 @@
 			$i++;
 		}
 		return $StockItemList;
+	}
+
+	function GetStockbalance($StockID, $Location, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+		if (sizeof($Errors)!=0) {
+			return $Errors;
+		}
+		$sql='SELECT quantity FROM lockstock WHERE stockid="'.$StockID.'" and loccode="'.$Location.'"';
+		$result = DB_Query($sql, $db);
+		if (sizeof($Errors)==0) {
+			return DB_fetch_array($result);
+		} else {
+			return $Errors;
+		}		
 	}
 
 ?>
