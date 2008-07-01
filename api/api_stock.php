@@ -510,7 +510,7 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql='SELECT quantity FROM lockstock WHERE stockid="'.$StockID.'" and loccode="'.$Location.'"';
+		$sql='SELECT quantity FROM locstock WHERE stockid="'.$StockID.'" and loccode="'.$Location.'"';
 		$result = DB_Query($sql, $db);
 		if (sizeof($Errors)==0) {
 			return DB_fetch_array($result);
