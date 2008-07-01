@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 $PageSecurity = 3;
 
@@ -255,7 +255,7 @@ if (isset($_POST['submit'])) {
 					)";
 		}
 
-		$msg = _('Customer branch').' '. $_POST['BrName'] . ' '._('has been added');
+		$msg = _('Customer branch<b>').' ' . $_POST['BranchCode'] . ': ' . $_POST['BrName'] . ' '._('</b>has been added, return to <a href=Customers.php?DebtorNo=' . $_POST['DebtorNo'] . '>Customer Setup</a>');
 	}
 	//run the SQL from either of the above possibilites
 
@@ -444,7 +444,7 @@ if (!isset($SelectedBranch)){
 		echo '<table border=1>';
 		echo "<tr><th>"._('Code')."</th>
 			<th>"._('Name')."</th>
-			<th>"._('Contact')."</th>
+			<th>"._('Branch Contact')."</th>
 			<th>"._('Salesman')."</th>
 			<th>"._('Area')."</th>
 			<th>"._('Phone No')."</th>
@@ -484,7 +484,7 @@ if (!isset($SelectedBranch)){
 				$_SERVER['PHP_SELF'],
 				$DebtorNo,
 				urlencode($myrow[1]),
-				_('Delete'));
+				_('Delete Branch'));
 			if ($myrow[11]){ $TotalDisable++; }
 			else { $TotalEnable++; }
 
@@ -633,7 +633,7 @@ if (! isset($_GET['delete'])) {
 			$_POST['BrAddress6'] = $myrow['addrsss6'];
 		} 
 		
-		echo '<CENTER><TABLE><TR><TD>'._('Branch Code').":</TD>
+		echo '<CENTER><b>Branch Details</b><br><TABLE><TR><TD>'._('Branch Code').":</TD>
 				<TD><input " .(in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) .
 				" tabindex=1 type='Text' name='BranchCode' SIZE=12 MAXLENGTH=10 value=" . $_POST['BranchCode'] . '></TD></TR>';
 		$_POST['DeliverBlind'] = $_SESSION['DefaultBlindPackNote'];
@@ -658,19 +658,19 @@ if (! isset($_GET['delete'])) {
 	echo '<TR><TD>'._('Branch Name').':</TD>';
 	if (!isset($_POST['BrName'])) {$_POST['BrName']='';}
 	echo '<TD><input tabindex=2 type="Text" name="BrName" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrName'].'"></TD></TR>';
-	echo '<TR><TD>'._('Contact').':</TD>';
+	echo '<TR><TD>'._('Branch Contact').':</TD>';
 	if (!isset($_POST['ContactName'])) {$_POST['ContactName']='';}
 	echo '<TD><input tabindex=3 type="Text" name="ContactName" SIZE=41 MAXLENGTH=40 value="'. $_POST['ContactName'].'"></TD></TR>';
-	echo '<TR><TD>'._('Street Address 1').':</TD>';
+	echo '<TR><TD>'._('Street Address 1 (Street)').':</TD>';
 	if (!isset($_POST['BrAddress1'])) {$_POST['BrAddress1']='';}
 	echo '<TD><input tabindex=4 type="Text" name="BrAddress1" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrAddress1'].'"></TD></TR>';
-	echo '<TR><TD>'._('Street Address 2').':</TD>';
+	echo '<TR><TD>'._('Street Address 2 (Suburb/City)').':</TD>';
 	if (!isset($_POST['BrAddress2'])) {$_POST['BrAddress2']='';}
 	echo '<TD><input tabindex=5 type="Text" name="BrAddress2" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrAddress2'].'"></TD></TR>';
-	echo '<TR><TD>'._('Street Address 3').':</TD>';
+	echo '<TR><TD>'._('Street Address 3 (State)').':</TD>';
 	if (!isset($_POST['BrAddress3'])) {$_POST['BrAddress3']='';}
 	echo '<TD><input tabindex=6 type="Text" name="BrAddress3" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrAddress3'].'"></TD></TR>';
-	echo '<TR><TD>'._('Street Address 4').':</TD>';
+	echo '<TR><TD>'._('Street Address 4 (Postal Code)').':</TD>';
 	if (!isset($_POST['BrAddress4'])) {$_POST['BrAddress4']='';}
 	echo '<TD><input tabindex=7 type="Text" name="BrAddress4" SIZE=31 MAXLENGTH=40 value="'. $_POST['BrAddress4'].'"></TD></TR>';
 	echo '<TR><TD>'._('Street Address 5').':</TD>';
@@ -833,16 +833,16 @@ if (! isset($_GET['delete'])) {
         }
     echo '</SELECT></TD></TR>';
 
-	echo '<TR><TD>'._('Postal Address 1').':</TD>';
+	echo '<TR><TD>'._('Postal Address 1 (Street)').':</TD>';
 	if (!isset($_POST['BrPostAddr1'])) {$_POST['BrPostAddr1']='';}
 	echo '<TD><input tabindex=23 type="Text" name="BrPostAddr1" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrPostAddr1'].'"></TD></TR>';
-	echo '<TR><TD>'._('Postal Address 2').':</TD>';
+	echo '<TR><TD>'._('Postal Address 2 (Suburb/City)').':</TD>';
 	if (!isset($_POST['BrPostAddr2'])) {$_POST['BrPostAddr2']='';}
 	echo '<TD><input tabindex=24 type="Text" name="BrPostAddr2" SIZE=41 MAXLENGTH=40 value="'. $_POST['BrPostAddr2'].'"></TD></TR>';
-	echo '<TR><TD>'._('Postal Address 3').':</TD>';
+	echo '<TR><TD>'._('Postal Address 3 (State)').':</TD>';
 	if (!isset($_POST['BrPostAddr3'])) {$_POST['BrPostAddr3']='';}
 	echo '<TD><input tabindex=25 type="Text" name="BrPostAddr3" SIZE=31 MAXLENGTH=30 value="'. $_POST['BrPostAddr3'].'"></TD></TR>';
-	echo '<TR><TD>'._('Postal Address 4').':</TD>';
+	echo '<TR><TD>'._('Postal Address 4 (Postal Code)').':</TD>';
 	if (!isset($_POST['BrPostAddr4'])) {$_POST['BrPostAddr4']='';}
 	echo '<TD><input tabindex=26 type="Text" name="BrPostAddr4" SIZE=21 MAXLENGTH=20 value="'. $_POST['BrPostAddr4'].'"></TD></TR>';
 	echo '<TR><TD>'._('Customers Internal Branch Code (EDI)').':</TD>';
@@ -850,7 +850,7 @@ if (! isset($_GET['delete'])) {
 	echo '<TD><input tabindex=27 type="Text" name="CustBranchCode" SIZE=31 MAXLENGTH=30 value="'. $_POST['CustBranchCode'].'"></TD></TR>';
 	echo '</TABLE>';
 
-	echo '<CENTER><input tabindex=28 type="Submit" name="submit" value='._('Enter Information').'>';
+	echo '<CENTER><input tabindex=28 type="Submit" name="submit" value="Enter Branch">';
 	echo '</FORM>';
 
 } //end if record deleted no point displaying form to add record

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $PageSecurity = 3;
 include('includes/session.inc');
 $title = _('Customer Contacts');
@@ -90,7 +90,7 @@ if (!isset($Id)) {
 	$SQLname='SELECT * from debtorsmaster where debtorno="'.$DebtorNo.'"';
 	$Result = DB_query($SQLname,$db);
 	$row = DB_fetch_array($Result);
-	echo '<center><h3>'.$row['name'].'</h3>';
+	echo '<center>' . _('Contacts for Customer: <b>') .$row['name'].'</b>';
 	
 	
 	$sql = "SELECT * FROM custcontacts where debtorno='".$DebtorNo."' ORDER BY contid";
