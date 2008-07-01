@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 $PageSecurity = 2;
 
@@ -15,6 +15,8 @@ if (!isset($_POST['Search'])){
 	$_POST['Search']='';
 }
 */
+
+echo '<a href=Suppliers.php>'. _('Create new supplier').'</a>';
 
 if (!isset($_POST['PageOffset'])) {
   $_POST['PageOffset'] = 1;
