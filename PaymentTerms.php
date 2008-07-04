@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 10;
 
@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'TermsIndicator';
 		$i++;		
 	} 
-	if (!is_long((int) $_POST['DayNumber'])){
+	if (!is_numeric($_POST['DayNumber'])){
 		$InputError = 1;
 		prnMsg( _('The number of days or the day in the following month must be numeric') ,'error');
 		$Errors[$i] = 'DayNumber';
@@ -57,12 +57,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'Terms';
 		$i++;		
 	} 
-	if (isset($_POST['DayNumber'])) {
-		$InputError = 1;
-		prnMsg( _('The day number must exist') ,'error');
-		$Errors[$i] = 'DayNumber';
-		$i++;		
-	} 
+	 
 	if ($_POST['DayNumber'] > 30 AND $_POST['DaysOrFoll']==1) {
 		$InputError = 1;
 		prnMsg( _('When the check box is not checked to indicate a day in the following month is the due date') . ', ' . _('the due date cannot be a day after the 30th') . '. ' . _('A number between 1 and 30 is expected') ,'error');

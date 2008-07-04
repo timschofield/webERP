@@ -543,31 +543,31 @@ msgstr ""
 
 #: Areas.php:7
 msgid "Sales Area Maintenance"
-msgstr ""
+msgstr "Sales Territory Maintenance"
 
 #: Areas.php:40
 msgid "The area code must be three characters or less long"
-msgstr ""
+msgstr "The territory code must be three characters or less long"
 
 #: Areas.php:45
 msgid "The area code entered already exists"
-msgstr ""
+msgstr "The territory code entered already exists"
 
 #: Areas.php:50
 msgid "The area description must be twenty five characters or less long"
-msgstr ""
+msgstr "The terrirory desscription must be twenty five characters or less long"
 
 #: Areas.php:55
 msgid "The area code may not be empty"
-msgstr ""
+msgstr "The territory code may not be left blank"
 
 #: Areas.php:60
 msgid "The area description may not be empty"
-msgstr ""
+msgstr "The territory description may not be left blank"
 
 #: Areas.php:74
 msgid "Area code"
-msgstr ""
+msgstr "Territory code"
 
 #: Areas.php:74 DeliveryDetails.php:449 Factors.php:59 PO_Items.php:206
 #: SalesAnalReptCols.php:128 SalesPeople.php:92 SalesTypes.php:61
@@ -577,7 +577,7 @@ msgstr ""
 
 #: Areas.php:88
 msgid "New area code"
-msgstr ""
+msgstr "New territory code"
 
 #: Areas.php:88
 msgid "has been inserted"
@@ -585,27 +585,27 @@ msgstr ""
 
 #: Areas.php:95
 msgid "The area could not be added or updated because"
-msgstr ""
+msgstr "The territory could not be added or updated because"
 
 #: Areas.php:116
 msgid "Cannot delete this area because customer branches have been created using this area"
-msgstr ""
+msgstr "Cannot delete this territory because customer branches have been created using this area"
 
 #: Areas.php:117
 msgid "branches using this area code"
-msgstr ""
+msgstr "branches using this territory code"
 
 #: Areas.php:125
 msgid "Cannot delete this area because sales analysis ecords exist that use this area"
-msgstr ""
+msgstr "Cannot delete this territory because sales analysis records exist that use this territory"
 
 #: Areas.php:126
 msgid "sales analysis records referring this area code"
-msgstr ""
+msgstr "sales analysis records referring to this territory code"
 
 #: Areas.php:133 Areas.php:146 Areas.php:197 Areas.php:208
 msgid "Area Code"
-msgstr ""
+msgstr "Territory Code"
 
 #: Areas.php:133 Customers.php:317 Factors.php:135 GLAccounts.php:201
 #: Locations.php:298 SalesAnalReptCols.php:214 SalesCategories.php:137
@@ -616,11 +616,11 @@ msgstr ""
 
 #: Areas.php:147 Areas.php:213
 msgid "Area Name"
-msgstr ""
+msgstr "Territory Name"
 
 #: Areas.php:173
 msgid "Review Areas Defined"
-msgstr ""
+msgstr "Review Territories Defined"
 
 #: AuditTrail.php:7
 msgid "Audit Trail"
@@ -7380,7 +7380,7 @@ msgstr ""
 
 #: index.php:347
 msgid "Select Supplier"
-msgstr ""
+msgstr "Select Vendor"
 
 #: index.php:351
 #, fuzzy
@@ -7401,11 +7401,11 @@ msgstr ""
 
 #: index.php:375
 msgid "Creditor Balances At A Prior Month End"
-msgstr ""
+msgstr "Vendor Balances At A Prior Month End"
 
 #: index.php:389
 msgid "Add Supplier"
-msgstr ""
+msgstr "Add Vendor"
 
 #: index.php:394
 msgid "Maintain Factor Companies"
@@ -9426,7 +9426,7 @@ msgstr ""
 
 #: PO_Header.php:124
 msgid "Cannot modify the supplier of the order once some of the order has been received"
-msgstr ""
+msgstr "Cannot modify the vendor of the order once some of the order has been received"
 
 #: PO_Header.php:132
 msgid "Supplier name keywords have been used in preference to the supplier code extract entered"
@@ -9438,20 +9438,20 @@ msgstr "At least one Vendor Name keyword OR an extract of a Vendor Code must be 
 
 #: PO_Header.php:164
 msgid "The searched supplier records requested cannot be retrieved because"
-msgstr ""
+msgstr "The searched vendor records requested cannot be retrieved because"
 
 #: PO_Header.php:171
 msgid "No supplier records contain the selected text"
-msgstr ""
+msgstr "No vendor records contain the selected text"
 
 #: PO_Header.php:189 SpecialOrder.php:55
 msgid "The supplier record of the supplier selected"
-msgstr ""
+msgstr "The vendor record of the vendor selected"
 
 #: PO_Header.php:190 SpecialOrder.php:56 SupplierCredit.php:70
 #: SupplierInvoice.php:60
 msgid "The SQL used to retrieve the supplier details and failed was"
-msgstr ""
+msgstr "The SQL used to retrieve the vendor details and failed was"
 
 #: PO_Header.php:206
 msgid "Supplier Selection"
@@ -9459,11 +9459,11 @@ msgstr "Vendor Selection"
 
 #: PO_Header.php:214
 msgid "Enter text in the supplier name"
-msgstr ""
+msgstr "Enter text in the vendor name"
 
 #: PO_Header.php:217
 msgid "Enter text extract in the supplier code"
-msgstr ""
+msgstr "Enter text extract in the vendor code"
 
 #: PO_Header.php:230 PO_OrderDetails.php:80 PurchData.php:439
 #: SelectSupplier.php:262 Suppliers.php:551 Suppliers.php:680
@@ -9560,7 +9560,7 @@ msgstr ""
 
 #: PO_Header.php:462
 msgid "Change supplier"
-msgstr ""
+msgstr "Change vendor"
 
 #: PO_Header.php:462
 msgid "Cancel and Delete The Whole Order"
@@ -9658,7 +9658,7 @@ msgstr ""
 
 #: PO_Items.php:355 PO_Items.php:642
 msgid "The supplier pricing details for"
-msgstr ""
+msgstr "The vendor pricing details for"
 
 #: PO_Items.php:356 PO_Items.php:643 includes/SelectOrderItems_IntoCart.inc:50
 msgid "The SQL used to retrieve the pricing details but failed was"
@@ -9670,7 +9670,7 @@ msgstr ""
 
 #: PO_Items.php:363
 msgid "there is no purchasing data set up for this supplier"
-msgstr ""
+msgstr "there is no purchasing data set up for this vendor"
 
 #: PO_Items.php:363
 msgid "and item"
@@ -9825,7 +9825,7 @@ msgstr ""
 
 #: PO_Items.php:766
 msgid "Stock Item Ordered"
-msgstr ""
+msgstr "Inventory Item Ordered"
 
 #: PO_Items.php:771 PO_Items.php:818 SpecialOrder.php:624
 msgid "Order Quantity"
@@ -9857,7 +9857,7 @@ msgstr ""
 
 #: PO_Items.php:799
 msgid "Stock Code for Item Ordered"
-msgstr ""
+msgstr "Inventory Code for Item Ordered"
 
 #: PO_Items.php:799
 msgid "Leave blank if NOT a stock order"
@@ -9869,7 +9869,7 @@ msgstr ""
 
 #: PO_Items.php:802
 msgid "If a stock code is entered above, its description will overide this entry"
-msgstr ""
+msgstr "If an inventory code is entered above, its description will overide this entry"
 
 #: PO_Items.php:805
 msgid "Only necessary if NOT a stock order"
@@ -13791,11 +13791,11 @@ msgstr ""
 
 #: Shipments.php:19 SpecialOrder.php:24
 msgid "the supplier must first be selected from the Select Supplier page"
-msgstr ""
+msgstr "the supplier must first be selected from the Select Vendor page"
 
 #: Shipments.php:22
 msgid "Select the Supplier"
-msgstr ""
+msgstr "Select the Vendor"
 
 #: Shipments.php:56
 msgid "Unable to locate Shipment"
@@ -16157,7 +16157,7 @@ msgstr ""
 
 #: SupplierAllocations.php:142
 msgid "The supplier allocation record for"
-msgstr ""
+msgstr "The vendor allocation record for"
 
 #: SupplierAllocations.php:143
 msgid "The following SQL to insert the allocation record was used"
@@ -16173,7 +16173,7 @@ msgstr ""
 
 #: SupplierAllocations.php:185
 msgid "The supplier payment or credit note transaction could not be modified for the new allocation and exchange difference because"
-msgstr ""
+msgstr "The vendor payment or credit note transaction could not be modified for the new allocation and exchange difference because"
 
 #: SupplierAllocations.php:187
 msgid "The following SQL to update the payment or credit note was used"
@@ -16225,11 +16225,11 @@ msgstr ""
 
 #: SupplierAllocations.php:438
 msgid "Allocation of supplier"
-msgstr ""
+msgstr "Allocation of vendor"
 
 #: SupplierAllocations.php:446 SupplierInvoice.php:331 SupplierInvoice.php:334
 msgid "Amount in supplier currency"
-msgstr ""
+msgstr "Amount in vendor currency"
 
 #: SupplierAllocations.php:453
 msgid "Transaction total"
@@ -16249,23 +16249,23 @@ msgstr ""
 
 #: SupplierBalsAtPeriodEnd.php:18
 msgid "Supplier Balance Listing"
-msgstr ""
+msgstr "Vendor Balance Listing"
 
 #: SupplierBalsAtPeriodEnd.php:19 SupplierBalsAtPeriodEnd.php:56
 msgid "Supplier Balances"
-msgstr ""
+msgstr "Vendor Balances"
 
 #: SupplierBalsAtPeriodEnd.php:120
 msgid "Creditor Balances At A Period End"
-msgstr ""
+msgstr "Vendor Balances At a Period End"
 
 #: SupplierContacts.php:8
 msgid "Supplier Contacts"
-msgstr ""
+msgstr "Vendor Contacts"
 
 #: SupplierContacts.php:23
 msgid "This page must be called with the supplier code of the supplier for whom you wish to edit the contacts"
-msgstr ""
+msgstr "This page must be called with the vendor code of the vendor for whom you wish to endit the contacts"
 
 #: SupplierContacts.php:23
 msgid "When the page is called from within the system this will always be the case"
@@ -16273,7 +16273,7 @@ msgstr ""
 
 #: SupplierContacts.php:24
 msgid "Select a supplier first, then select the link to add/edit/delete contacts"
-msgstr ""
+msgstr "Select a vendor first, then select the link to add/edit/delete contacts"
 
 #: SupplierContacts.php:48
 msgid "The contact name must be at least one character long"
@@ -16281,7 +16281,7 @@ msgstr ""
 
 #: SupplierContacts.php:63
 msgid "The supplier contact information has been updated"
-msgstr ""
+msgstr "The vendor contact information has been updated"
 
 #: SupplierContacts.php:84
 msgid "The new supplier contact has been added to the database"
@@ -16314,7 +16314,7 @@ msgstr ""
 
 #: SupplierContacts.php:180
 msgid "Show all the supplier contacts for"
-msgstr ""
+msgstr "Show all the vendor contacts for"
 
 #: SupplierContacts.php:243
 msgid "Mobile No"
@@ -16322,11 +16322,11 @@ msgstr ""
 
 #: SupplierCredit.php:29
 msgid "Supplier Credit Note"
-msgstr ""
+msgstr "Vendor Credit Note"
 
 #: SupplierCredit.php:69 SupplierInvoice.php:59
 msgid "The supplier record selected"
-msgstr ""
+msgstr "The vendor record selected"
 
 #: SupplierCredit.php:94 SupplierInvoice.php:87
 msgid "The tax province associated with your user account has not been set up in this database. Tax calculations are based on the tax group of the supplier and the tax province of the user entering the invoice. The system administrator should redefine your account with a valid default stocking location and this location should refer to a valid tax provincce"
@@ -16334,11 +16334,11 @@ msgstr ""
 
 #: SupplierCredit.php:111
 msgid "To enter a supplier credit note the supplier must first be selected from the supplier selection screen"
-msgstr ""
+msgstr "To enter a vendor credit note the vendor must first be selected from the vendor selection screen"
 
 #: SupplierCredit.php:112
 msgid "Select A Supplier to Enter an Credit Note For"
-msgstr ""
+msgstr "Select A Vendor to Enter a Credit Note For"
 
 #: SupplierCredit.php:167 SupplierCredit.php:234
 msgid "Enter Credit Against Goods Recd"
@@ -17731,7 +17731,7 @@ msgstr ""
 
 #: SystemParameters.php:587
 msgid "When pages have code to limit the number of returned records - such as select customer, select supplier and select item, then this will be the default number of records to show for a user who has not changed this for themselves in user settings."
-msgstr ""
+msgstr "When pages have code to limit the number of returned records - such as select customer, select vendor and select item, then this will be the default number of records to show for a user who has not changed this for themselves in user settings."
 
 #: SystemParameters.php:591
 msgid "Maximum Size in KB of uploaded images"
@@ -21831,7 +21831,7 @@ msgstr ""
 
 #: includes/header.inc:51
 msgid "Suppliers"
-msgstr ""
+msgstr "Vendors"
 
 #: includes/header.inc:66
 msgid "Are you sure you wish to logout?"
