@@ -7,7 +7,7 @@
 
 function prnMsg($Msg,$Type='info', $Prefix=''){
 
-	echo '<P>' . getMsg($Msg, $Type, $Prefix) . '</P>';
+	echo getMsg($Msg, $Type, $Prefix);
 
 }//prnMsg
 
@@ -31,7 +31,7 @@ function getMsg($Msg,$Type='info',$Prefix=''){
 			$Prefix = $Prefix ? $Prefix : _('INFORMATION') . ' ' ._('Message');
 			$Class = 'info';
 	}
-	return '<DIV class="'.$Class.'"><P><B>' . $Prefix . '</B> : ' .$Msg . '<P></DIV>';
+	return '<DIV class="'.$Class.'"><B>' . $Prefix . '</B> : ' .$Msg . '</DIV>';
 }//getMsg
 
 function IsEmailAddress($TestEmailAddress){
@@ -129,9 +129,17 @@ function GetCurrencyRate($CurrCode,$CurrenciesArray) {
   if (!isset($CurrenciesArray[$CurrCode]) AND $CurrCode !='EUR'){
   	return quote_oanda_currency($CurrCode);
   } elseif ($CurrCode=='EUR'){
-  	return 1/$CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']];
+  	if ($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']]==0) {
+  		return 0;
+  	} else {
+  		return 1/$CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']];
+  	}
   }	else {
-  	return $CurrenciesArray[$CurrCode]/$CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']];
+  	if ($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']]==0) {
+  		return 0;
+  	} else {
+  		return $CurrenciesArray[$CurrCode]/$CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']];
+  	}
   }
 }
 
