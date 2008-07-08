@@ -71,11 +71,33 @@
 		return $Errors;
 	}
 	
-/* Check that the las current cost date is a valid date */
-	function VerifyLastCurCostDate($CurCostDate, $i, $Errors) {
-//		if (!Is_Date($CurCostDate)) {
-//			$Errors[$i] = InvalidCurCostDate;
-//		}
+/* Check that the last current cost date is a valid date. The date 
+ * must be in the same format as the date format specified in the
+ * target webERP company */
+	function VerifyLastCurCostDate($CurCostDate, $i, $Errors, $db) {
+		$sql='select confvalue from config where confname="'.DefaultDateFormat.'"';
+		$result=DB_query($sql, $db);
+		$myrow=DB_fetch_array($result);
+		$DateFormat=$myrow[0];
+		$DateArray=explode('/',$CurCostDate);
+		if ($DateFormat=='d/m/Y') {
+			$Day=$DateArray[0];
+			$Month=$DateArray[1];
+			$Year=$DateArray[2];
+		}
+		if ($DateFormat=='m/d/Y') {
+			$Day=$DateArray[1];
+			$Month=$DateArray[0];
+			$Year=$DateArray[2];
+		}
+		if ($DateFormat=='Y/m/d') {
+			$Day=$DateArray[2];
+			$Month=$DateArray[1];
+			$Year=$DateArray[0];
+		}
+		if (!checkdate(intval($Month), intval($Day), intval($Year))) {
+			$Errors[$i] = InvalidCurCostDate;
+		}
 		return $Errors;
 	}
 	
@@ -261,7 +283,7 @@
 			$Errors=VerifyMBFlag($StockItemDetails['mbflag'], sizeof($Errors), $Errors);
 		}
 		if (isset($StockItemDetails['lastcurcostdate'])){
-			$Errors=VerifyLastCurCostDate($StockItemDetails['lascurcostdate'], sizeof($Errors), $Errors);
+			$Errors=VerifyLastCurCostDate($StockItemDetails['lastcurcostdate'], sizeof($Errors), $Errors, $db);
 		}
 		if (isset($StockItemDetails['actualcost'])){
 			$Errors=VerifyActualCost($StockItemDetails['actualcost'], sizeof($Errors), $Errors);
@@ -379,7 +401,7 @@
 			$Errors=VerifyMBFlag($StockItemDetails['mbflag'], sizeof($Errors), $Errors);
 		}
 		if (isset($StockItemDetails['lastcurcostdate'])){
-			$Errors=VerifyLastCurCostDate($StockItemDetails['lascurcostdate'], sizeof($Errors), $Errors);
+			$Errors=VerifyLastCurCostDate($StockItemDetails['lascurcostdate'], sizeof($Errors), $Errors, $db);
 		}
 		if (isset($StockItemDetails['actualcost'])){
 			$Errors=VerifyActualCost($StockItemDetails['actualcost'], sizeof($Errors), $Errors);
