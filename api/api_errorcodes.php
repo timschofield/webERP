@@ -70,5 +70,21 @@
 	Define('InvalidDecmalPlaces', 1065);
 	Define('IncorrectLongStockDescriptionLength', 1066);
 	Define('StockCodeAlreadyExists', 1067);
+	Define('TransactionNumberAlreadyExists', 1068);
+	Define('InvalidTranDate', 1069);
+	Define('InvalidSettled', 1070);
+	Define('IncorrectReference', 1071);
+	Define('IncorrectTpe', 1072);
+	Define('InvalidOrderNumbers', 1073);
+	Define('InvalidExchangeRate', 1074);
+	Define('InvalidOVAmount', 1075);
+	Define('InvalidOVGst', 1076);
+	Define('InvalidOVFreight', 1077);
+	Define('InvalidDiffOnExchange', 1078);
+	Define('InvalidAllocation', 1079);
+	Define('IncorrectInvoiceText', 1080);
+	Define('InvalidShipVia', 1081);
+	Define('InvalidEdiSent', 1082);
+	Define('InvalidConsignment', 1083);
 		
 ?>

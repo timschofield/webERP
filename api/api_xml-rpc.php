@@ -169,6 +169,24 @@
 				 		$xmlrpcmsg->getParam(2)->scalarval(),
 				 			$xmlrpcmsg->getParam(3)->scalarval())));
 	}
+
+	$InsertSalesInvoice_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$InsertSalesInvoice_doc = 'This function inserts a sales invoice into webERP';
+			
+	function xmlrpc_InsertSalesInvoice($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesInvoice(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				 $xmlrpcmsg->getParam(1)->scalarval(), 
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
+	$InsertSalesCredit_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$InsertSalesCredit_doc = 'This function inserts a sales credit note into webERP';
+			
+	function xmlrpc_InsertSalesCredit($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesCedit(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				 $xmlrpcmsg->getParam(1)->scalarval(), 
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
 	
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
@@ -238,7 +256,15 @@
 		"weberp.xmlrpc_GetStockBalance" => array(
 			"function" => "xmlrpc_GetStockBalance",
 			"signature" => $GetStockBalance_sig,
-			"docstring" => $GetStockBalance_doc)
+			"docstring" => $GetStockBalance_doc),
+		"weberp.xmlrpc_InsertSalesInvoice" => array(
+			"function" => "xmlrpc_InsertSalesInvoice",
+			"signature" => $InsertSalesInvoice_sig,
+			"docstring" => $InsertSalesInvoice_doc),
+		"weberp.xmlrpc_InsertSalesCredit" => array(
+			"function" => "xmlrpc_InsertSalesCredit",
+			"signature" => $InsertSalesCredit_sig,
+			"docstring" => $InsertSalesCredit_doc)
 		)
 	);
 

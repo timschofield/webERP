@@ -35,5 +35,5 @@
 	include 'api_holdreasons.php';
 	include 'api_paymentterms.php';
 	include 'api_stock.php';
-
+	include 'api_debtortransactions.php';
 ?>
