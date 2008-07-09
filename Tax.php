@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -148,7 +148,7 @@ If (isset($_POST['TaxAuthority']) AND
 		AND supptrans.trandate <= '" . FormatDateForSQL($PeriodEnd) . "'
 		AND (supptrans.type=20 OR supptrans.type=21)  
 		AND supptranstaxes.taxauthid = " . $_POST['TaxAuthority'] . "
-		ORDER BY supptrans.id";
+		ORDER BY supptrans.trandate";
 
 	$SuppTransResult = DB_query($SQL,$db,'','',false,false); //doint trap errors in DB_query
 
