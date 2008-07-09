@@ -15,6 +15,16 @@
 				 $xmlrpcmsg->getParam(1)->scalarval(), 
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
+
+	$InsertBranch_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$InsertBranch_doc = 'This function takes an associative array containing the details of a branch to
+			to be inserted, where the keys of the array are the field names in the table debtorsmaster. ';
+			
+	function xmlrpc_InsertBranch($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(InsertBranch(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				 $xmlrpcmsg->getParam(1)->scalarval(), 
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
 			
 	$ModifyCustomer_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
 	$ModifyCustomer_doc = 'This function takes an associative array containing the details of a customer to
@@ -22,6 +32,16 @@
 			
 	function xmlrpc_ModifyCustomer($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(ModifyCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				 $xmlrpcmsg->getParam(1)->scalarval(), 
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+			
+	$ModifyBranch_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$ModifyBranch_doc = 'This function takes an associative array containing the details of a branch to
+			to be updated, where the keys of the array are the field names in the table debtorsmaster. ';
+			
+	function xmlrpc_ModifyBranch($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(ModifyBranch(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(), 
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
@@ -264,7 +284,15 @@
 		"weberp.xmlrpc_InsertSalesCredit" => array(
 			"function" => "xmlrpc_InsertSalesCredit",
 			"signature" => $InsertSalesCredit_sig,
-			"docstring" => $InsertSalesCredit_doc)
+			"docstring" => $InsertSalesCredit_doc),
+		"weberp.xmlrpc_InsertBranch" => array(
+			"function" => "xmlrpc_InsertBranch",
+			"signature" => $InsertBranch_sig,
+			"docstring" => $InsertBranch_doc),
+		"weberp.xmlrpc_ModifyBranch" => array(
+			"function" => "xmlrpc_ModifyBranch",
+			"signature" => $ModifyBranch_sig,
+			"docstring" => $ModifyBranch_doc),
 		)
 	);
 
