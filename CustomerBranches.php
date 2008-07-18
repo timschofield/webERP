@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 $PageSecurity = 3;
 
@@ -255,7 +255,7 @@ if (isset($_POST['submit'])) {
 					)";
 		}
 
-		$msg = _('Customer branch<b>').' ' . $_POST['BranchCode'] . ': ' . $_POST['BrName'] . ' '._('</b>has been added, return to <a href=Customers.php?DebtorNo=' . $_POST['DebtorNo'] . '>Customer Setup</a>');
+		$msg = _('Customer branch<b>').' ' . $_POST['BranchCode'] . ': ' . $_POST['BrName'] . ' '._('</b>has been added, add another branch, or return to <a href=index.php>Main Menu</a>');
 	}
 	//run the SQL from either of the above possibilites
 
@@ -440,7 +440,7 @@ if (!isset($SelectedBranch)){
 	$TotalEnable = 0;
 	$TotalDisable = 0;
 	if ($myrow) {
-		echo '<BR><B>'._('Branches Defined for'). ' '. $DebtorNo . ' - ' . $myrow[0] . '</B>';
+		echo '<BR><CENTER><B>'._('Branches defined for'). ' '. $DebtorNo . ' - ' . $myrow[0] . '</B>';
 		echo '<table border=1>';
 		echo "<tr><th>"._('Code')."</th>
 			<th>"._('Name')."</th>
@@ -507,7 +507,7 @@ if (!isset($SelectedBranch)){
 
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
-		echo '<B>'._('Branches Defined for').' - '.$myrow[0].'</B>';
+		echo '<B><CENTER>'._('No Branches are defined for').' - '.$myrow[0].'</CENTER></B>';
 		$_POST['BranchCode'] = substr($DebtorNo,0,10);
 		$_POST['BrName'] = $myrow[0];
 		$_POST['BrAddress1'] = $myrow[1];
@@ -633,7 +633,7 @@ if (! isset($_GET['delete'])) {
 			$_POST['BrAddress6'] = $myrow['addrsss6'];
 		} 
 		
-		echo '<CENTER><b>Branch Details</b><br><TABLE><TR><TD>'._('Branch Code').":</TD>
+		echo '<CENTER><b>Add a Branch</b><br><TABLE><TR><TD>'._('Branch Code').":</TD>
 				<TD><input " .(in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) .
 				" tabindex=1 type='Text' name='BranchCode' SIZE=12 MAXLENGTH=10 value=" . $_POST['BranchCode'] . '></TD></TR>';
 		$_POST['DeliverBlind'] = $_SESSION['DefaultBlindPackNote'];
