@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 /* This is where the details specific to the recurring order are entered and the template committed to the database once the Process button is hit */
 
 include('includes/DefineCartClass.php');
@@ -250,7 +250,7 @@ If (isset($_POST['Process'])) {
 			$ErrMsg = _('The recurring order cannot be added because');
 			$InsertQryResult = DB_query($HeaderSQL,$db,$ErrMsg);
 
-			$RecurrOrderNo = DB_Last_Insert_ID($db,'recurringsalesorders','recurrorderno');
+			$RecurrOrderNo = GetNextTransNo(30, $db);
 			$StartOf_LineItemsSQL = "INSERT INTO recurrsalesorderdetails (
 						recurrorderno,
 						stkcode,
