@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 
 $PageSecurity = 3;
 
@@ -476,7 +476,7 @@ if (!isset($SelectedBranch)){
 				$myrow[8],
 				$myrow[8],
 				$myrow[9],
-				($myrow[11]?"No":"Yes"),
+				($myrow[11]?_('No'):_('Yes')),
 				$_SERVER['PHP_SELF'],
 				$DebtorNo,
 				urlencode($myrow[1]),
@@ -491,9 +491,9 @@ if (!isset($SelectedBranch)){
 		} while ($myrow = DB_fetch_row($result));
 		//END WHILE LIST LOOP
 		echo '</table>';
-		echo '<b>'.$TotalEnable.'</b> Branches are enabled.<br>';
-		echo '<b>'.$TotalDisable.'</b> Branches are disabled.<br>';
-		echo '<b>'.($TotalEnable+$TotalDisable). '</b> Total Branches<br>';
+		echo '<b>'.$TotalEnable.'</b> ' . _('Branches are enabled.') . '<br>';
+		echo '<b>'.$TotalDisable.'</b> ' . _('Branches are disabled.') . '<br>';
+		echo '<b>'.($TotalEnable+$TotalDisable). '</b> ' . _('Total Branches') . '<br>';
 	} else {
 		$sql = "SELECT debtorsmaster.name,
 				address1,
@@ -602,7 +602,8 @@ if (! isset($_GET['delete'])) {
 
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedBranch' VALUE='" . $SelectedBranch . "'>";
 		echo "<INPUT TYPE=HIDDEN NAME='BranchCode'  VALUE='" . $_POST['BranchCode'] . "'>";
-		echo "<CENTER><TABLE> <TR><TD>"._('Branch Code').':</TD><TD>';
+		echo "<CENTER><b>"._('Change Branch')."</b><br><TABLE> <TR><TD>"._('Branch Code').':</TD><TD>';
+		
 		echo $_POST['BranchCode'] . '</TD></TR>';
 
 	} else { //end of if $SelectedBranch only do the else when a new record is being entered
@@ -632,9 +633,8 @@ if (! isset($_GET['delete'])) {
         	$_POST['BrAddress5'] = $myrow['addrsss5'];
 			$_POST['BrAddress6'] = $myrow['addrsss6'];
 		} 
-		
-		echo '<CENTER><b>Add a Branch</b><br><TABLE><TR><TD>'._('Branch Code').":</TD>
-				<TD><input " .(in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) .
+		echo '<CENTER><b>'._('Add a Branch').'</b><br><TABLE><TR><TD>'._('Branch Code'). ':</TD>		
+					<TD><input ' .(in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) .
 				" tabindex=1 type='Text' name='BranchCode' SIZE=12 MAXLENGTH=10 value=" . $_POST['BranchCode'] . '></TD></TR>';
 		$_POST['DeliverBlind'] = $_SESSION['DefaultBlindPackNote'];
 	}
@@ -850,7 +850,7 @@ if (! isset($_GET['delete'])) {
 	echo '<TD><input tabindex=27 type="Text" name="CustBranchCode" SIZE=31 MAXLENGTH=30 value="'. $_POST['CustBranchCode'].'"></TD></TR>';
 	echo '</TABLE>';
 
-	echo '<CENTER><input tabindex=28 type="Submit" name="submit" value="Enter Branch">';
+	echo '<CENTER><input tabindex=28 type="Submit" name="submit" value="' . _('Enter Branch') . '">';
 	echo '</FORM>';
 
 } //end if record deleted no point displaying form to add record

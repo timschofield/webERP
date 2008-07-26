@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 $PageSecurity = 3;
 
@@ -706,7 +706,7 @@ if (!isset($DebtorNo)) {
 			<th>' . _('Phone Number') . '</th>
 			<th>' . _('Notes') . '</th>
 			<th>' . _('Edit') . '</th>
-			<th colspan=2><INPUT TYPE="Submit" NAME="addcontact" VALUE="Add Contact"></th></tr>';
+			<th colspan=2><INPUT TYPE="Submit" NAME="addcontact" VALUE="' . _('Add Contact') . '"></th></tr>';
 	
 	$k=0; //row colour counter
 	
