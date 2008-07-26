@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 $PageSecurity = 5;
 
@@ -456,9 +456,9 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['BankPartics'] . "', 
 						'" . $_POST['BankRef'] . "', 
 						'" . $_POST['BankAct'] . "', 
-                       '" . $_POST['Remittance'] . "',
-                       '" . $_POST['TaxGroup'] . "',
-                       '" . $_POST['FactorID'] . "')";
+                       	" . $_POST['Remittance'] . ",
+                       	" . $_POST['TaxGroup'] . ",
+                       	" . $_POST['FactorID'] . ")";
 
 			$ErrMsg = _('The supplier') . ' ' . $_POST['SuppName'] . ' ' . _('could not be added because');
 			$DbgMsg = _('The SQL that was used to insert the supplier but failed was');
