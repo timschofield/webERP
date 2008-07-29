@@ -139,7 +139,7 @@ CREATE TABLE `banktrans` (
   KEY `CurrCode` (`currcode`),
   CONSTRAINT `banktrans_ibfk_1` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `banktrans_ibfk_2` FOREIGN KEY (`bankact`) REFERENCES `bankaccounts` (`accountcode`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -473,6 +473,23 @@ CREATE TABLE `custbranch` (
 SET character_set_client = @saved_cs_client;
 
 --
+-- Table structure for table `custcontacts`
+--
+
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `custcontacts` (
+  `contid` int(11) NOT NULL auto_increment,
+  `debtorno` varchar(10) NOT NULL,
+  `contactname` varchar(40) NOT NULL,
+  `role` varchar(10) NOT NULL,
+  `phoneno` int(10) NOT NULL,
+  `notes` varchar(40) NOT NULL,
+  PRIMARY KEY  (`contid`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
 -- Table structure for table `debtorsmaster`
 --
 
@@ -754,7 +771,7 @@ CREATE TABLE `gltrans` (
   CONSTRAINT `gltrans_ibfk_1` FOREIGN KEY (`account`) REFERENCES `chartmaster` (`accountcode`),
   CONSTRAINT `gltrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `gltrans_ibfk_3` FOREIGN KEY (`periodno`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
 --
@@ -2160,9 +2177,9 @@ CREATE TABLE `worequirements` (
   PRIMARY KEY  (`wo`,`parentstockid`,`stockid`),
   KEY `stockid` (`stockid`),
   KEY `worequirements_ibfk_3` (`parentstockid`),
-  CONSTRAINT `worequirements_ibfk_3` FOREIGN KEY (`wo`, `parentstockid`) REFERENCES `woitems` (`wo`, `stockid`),
   CONSTRAINT `worequirements_ibfk_1` FOREIGN KEY (`wo`) REFERENCES `workorders` (`wo`),
-  CONSTRAINT `worequirements_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`)
+  CONSTRAINT `worequirements_ibfk_2` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),
+  CONSTRAINT `worequirements_ibfk_3` FOREIGN KEY (`wo`, `parentstockid`) REFERENCES `woitems` (`wo`, `stockid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
@@ -2244,7 +2261,7 @@ SET character_set_client = @saved_cs_client;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2008-06-27  8:48:36
+-- Dump completed on 2008-07-29  9:37:14
 -- MySQL dump 10.11
 --
 -- Host: localhost    Database: weberp
@@ -2459,6 +2476,12 @@ INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',0.8);
 INSERT INTO `currencies` VALUES ('US Dollars','USD','United States','Cents',1);
 
 --
+-- Dumping data for table `factorcompanies`
+--
+
+INSERT INTO `factorcompanies` VALUES (1,'None','','','','','','','','','','');
+
+--
 -- Dumping data for table `holdreasons`
 --
 
@@ -2480,7 +2503,7 @@ INSERT INTO `locations` VALUES ('TOR','Toronto','Level 100 ','CN Tower','Toronto
 INSERT INTO `paymentterms` VALUES ('20','Due 20th Of the Following Month',0,22);
 INSERT INTO `paymentterms` VALUES ('30','Due By End Of The Following Month',0,30);
 INSERT INTO `paymentterms` VALUES ('7','Payment due within 7 days',7,0);
-INSERT INTO `paymentterms` VALUES ('CA','Cash Only',1,0);
+INSERT INTO `paymentterms` VALUES ('CA','Cash Only',2,0);
 
 --
 -- Dumping data for table `salesglpostings`
@@ -2494,7 +2517,7 @@ INSERT INTO `salesglpostings` VALUES (2,'AN','AIRCON',5000,4800,'DE');
 --
 
 INSERT INTO `systypes` VALUES (0,'Journal - GL',2);
-INSERT INTO `systypes` VALUES (1,'Payment - GL',1);
+INSERT INTO `systypes` VALUES (1,'Payment - GL',2);
 INSERT INTO `systypes` VALUES (2,'Receipt - GL',0);
 INSERT INTO `systypes` VALUES (3,'Standing Journal',0);
 INSERT INTO `systypes` VALUES (10,'Sales Invoice',1);
@@ -2516,7 +2539,7 @@ INSERT INTO `systypes` VALUES (30,'Sales Order',2);
 INSERT INTO `systypes` VALUES (31,'Shipment Close',26);
 INSERT INTO `systypes` VALUES (35,'Cost Update',14);
 INSERT INTO `systypes` VALUES (36,'Exchange Difference',1);
-INSERT INTO `systypes` VALUES (40,'Work Order',6);
+INSERT INTO `systypes` VALUES (40,'Work Order',8);
 INSERT INTO `systypes` VALUES (50,'Opening Balance',0);
 INSERT INTO `systypes` VALUES (500,'Auto Debtor Number',0);
 
@@ -2736,7 +2759,7 @@ INSERT INTO `config` VALUES ('Check_Qty_Charged_vs_Del_Qty','1');
 INSERT INTO `config` VALUES ('CountryOfOperation','AUD');
 INSERT INTO `config` VALUES ('CreditingControlledItems_MustExist','0');
 INSERT INTO `config` VALUES ('DB_Maintenance','30');
-INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2008-06-23');
+INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2008-07-26');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
@@ -2769,7 +2792,7 @@ INSERT INTO `config` VALUES ('PastDueDays2','60');
 INSERT INTO `config` VALUES ('PO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('ProhibitJournalsToControlAccounts','1');
 INSERT INTO `config` VALUES ('ProhibitNegativeStock','1');
-INSERT INTO `config` VALUES ('ProhibitPostingsBefore','2006-05-31');
+INSERT INTO `config` VALUES ('ProhibitPostingsBefore','2006-06-30');
 INSERT INTO `config` VALUES ('QuickEntries','10');
 INSERT INTO `config` VALUES ('RadioBeaconFileCounter','/home/RadioBeacon/FileCounter');
 INSERT INTO `config` VALUES ('RadioBeaconFTP_user_name','RadioBeacon ftp server user name');
@@ -2910,7 +2933,7 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2008-06-27  8:48:36
+-- Dump completed on 2008-07-29  9:37:14
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
 INSERT INTO shippers VALUES (1,'Default Shipper',0);
