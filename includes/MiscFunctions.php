@@ -121,6 +121,7 @@ for detail of the European Central Bank rates - published daily */
 	  foreach ($elements[0]->children[2]->children[0]->children as $CurrencyDetails){
 		$Currencies[$CurrencyDetails->attributes['currency']]= $CurrencyDetails->attributes['rate'] ;
 	  }
+	  $Currencies['EUR']=1; //ECB delivers no rate for Euro
 	  //return an array of the currencies and rates
 	  return $Currencies;
 }	
