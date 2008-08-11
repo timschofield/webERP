@@ -1045,7 +1045,7 @@ function Output($name='pdf',$dest='S')
 			//Save to local file
 			$f=fopen($name,'wb');
 			if(!$f)
-				$this->Error('Unable to create output file: '.$name);
+				$this->Error('Unable to create output file, check your directory permissions and ownership, output filename: '.$name);
 			fwrite($f,$this->buffer,strlen($this->buffer));
 			fclose($f);
 			break;
