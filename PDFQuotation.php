@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 2;
 
@@ -43,6 +43,8 @@ $sql = "SELECT salesorders.customerref,
 		shippers.shippername,
 		salesorders.printedpackingslip,
 		salesorders.datepackingslipprinted,
+		salesorders.branchcode,
+		locations.taxprovinceid,
 		locations.locationname
 	FROM salesorders,
 		debtorsmaster,
@@ -70,7 +72,6 @@ if (DB_num_rows($result)==0){
 } elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
 
         $myrow = DB_fetch_array($result);
-        
 }
 
 /*retrieve the order details from the database to print */
@@ -85,7 +86,6 @@ $FontSize=12;
 $pdf->selectFont('./fonts/Helvetica.afm');
 $pdf->addinfo('Title', _('Customer Quotation') );
 $pdf->addinfo('Subject', _('Quotation') . ' ' . $_GET['QuotationNo']);
-
 
 $line_height=24;
 
@@ -102,10 +102,12 @@ $sql = "SELECT salesorderdetails.stkcode,
 		salesorderdetails.qtyinvoiced, 
 		salesorderdetails.unitprice,
 		salesorderdetails.discountpercent,
+		stockmaster.taxcatid,
 		salesorderdetails.narrative
 	FROM salesorderdetails INNER JOIN stockmaster
 		ON salesorderdetails.stkcode=stockmaster.stockid
 	WHERE salesorderdetails.orderno=" . $_GET['QuotationNo'];
+
 $result=DB_query($sql,$db, $ErrMsg);
 
 if (DB_num_rows($result)>0){
@@ -129,14 +131,40 @@ if (DB_num_rows($result)>0){
 		$DisplayPrevDel = number_format($myrow2['qtyinvoiced'],2);
 		$DisplayPrice = number_format($myrow2['unitprice'],2);
 		$DisplayDiscount = number_format($myrow2['discountpercent']*100,2) . '%';
-		$LineTotal = $myrow2['unitprice']*$myrow2['quantity']*(1-$myrow2['discountpercent']);
+		$SubTot =  $myrow2['unitprice']*$myrow2['quantity']*(1-$myrow2['discountpercent']);
+		$TaxProv = $myrow['taxprovinceid'];
+		$TaxCat = $myrow2['taxcatid'];
+		$Branch = $myrow['branchcode'];
+		$sql3 = " select taxgrouptaxes.taxauthid from taxgrouptaxes INNER JOIN custbranch ON taxgrouptaxes.taxgroupid=custbranch.taxgroupid WHERE custbranch.branchcode='" .$Branch ."'";
+		$result3=DB_query($sql3,$db, $ErrMsg);
+		while ($myrow3=DB_fetch_array($result3)){
+			$TaxAuth = $myrow3['taxauthid'];	
+		}
+ 		
+		$sql4 = "SELECT * FROM taxauthrates WHERE dispatchtaxprovince=" .$TaxProv ." AND taxcatid=" .$TaxCat ." AND taxauthority=" .$TaxAuth;
+		$result4=DB_query($sql4,$db, $ErrMsg);
+		while ($myrow4=DB_fetch_array($result4)){
+			$TaxClass = 100 * $myrow4['taxrate'];	
+		}
+
+		$DisplayTaxClass = $TaxClass . "%"; 
+		$TaxAmount =  (($SubTot/100)*(100+$TaxClass))-$SubTot;
+		$DisplayTaxAmount = number_format($TaxAmount,2);
+
+		$LineTotal = $SubTot + $TaxAmount;
 		$DisplayTotal = number_format($LineTotal,2);
+
+		$FontSize=10;
 
 		$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,100,$FontSize,$myrow2['stkcode']);
 		$LeftOvers = $pdf->addTextWrap(145,$YPos,295,$FontSize,$myrow2['description']);
-		$LeftOvers = $pdf->addTextWrap(440,$YPos,85,$FontSize,$DisplayQty,'right');
-		$LeftOvers = $pdf->addTextWrap(525,$YPos,85,$FontSize,$DisplayPrice,'right');
-		$LeftOvers = $pdf->addTextWrap(610,$YPos,85,$FontSize,$DisplayDiscount,'right');
+		$LeftOvers = $pdf->addTextWrap(420,$YPos,85,$FontSize,$DisplayQty,'right');
+		$LeftOvers = $pdf->addTextWrap(485,$YPos,85,$FontSize,$DisplayPrice,'right');
+		if ($DisplayDiscount > 0){		
+		$LeftOvers = $pdf->addTextWrap(535,$YPos,85,$FontSize,$DisplayDiscount,'right');
+		}
+		$LeftOvers = $pdf->addTextWrap(585,$YPos,85,$FontSize,$DisplayTaxClass,'right');
+		$LeftOvers = $pdf->addTextWrap(650,$YPos,85,$FontSize,$DisplayTaxAmount,'right');
 		$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,$DisplayTotal,'right');
 		if (strlen($myrow2['narrative'])>1){
 			$YPos -= 10;
@@ -147,6 +175,8 @@ if (DB_num_rows($result)>0){
 			}
 		}
 		$QuotationTotal +=$LineTotal;
+		$QuotationTotalEx +=$SubTot;
+		$TaxTotal +=$TaxAmount;
 		
 		/*increment a line down for the next line item */
 		$YPos -= ($line_height);
@@ -160,8 +190,9 @@ if (DB_num_rows($result)>0){
 			include ('includes/PDFQuotationPageHeader.inc');
 
 	} //end if need a new page headed up
-	
-	$LeftOvers = $pdf->addTextWrap($XPos,$YPos,700,10,$myrow['comments']);
+
+	$LeftOvers = $pdf->addTextWrap($XPos,$YPos-80,200,10,"Notes:");
+	$LeftOvers = $pdf->addText($XPos,$YPos-95,10,$myrow['comments']);
 
 	if (strlen($LeftOvers)>1){
 		$YPos -= 10;
@@ -180,7 +211,13 @@ if (DB_num_rows($result)>0){
 		}
 	}
 	$YPos -= ($line_height);
-	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Quotation Total Before Tax'),'right');
+	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Total Tax'),'right');
+	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,number_format($TaxTotal,2),'right');
+	$YPos -= 12;
+	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Quotation Excluding Tax'),'right');
+	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,number_format($QuotationTotalEx,2),'right');
+	$YPos -= 12;
+	$LeftOvers = $pdf->addTextWrap(40,$YPos,655,$FontSize,_('Quotation Including Tax'),'right');
 	$LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize,number_format($QuotationTotal,2),'right');
 	
 } /*end if there are line details to show on the quotation*/
@@ -205,7 +242,5 @@ if ($len<=20){
 	header('Pragma: public');
 //echo 'here';
 	$pdf->Stream();
-
 }
-
 ?>

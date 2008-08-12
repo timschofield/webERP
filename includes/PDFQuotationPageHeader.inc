@@ -1,19 +1,22 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 /* pdf-php by R&OS code to set up a new sales order page */
 if ($PageNumber>1){
 	$pdf->newPage();
 }
+// Modified 60->140 and 60->50 by Arnold on 1-8-2008 
+$XPos = $Page_Width/2 - 140;
+$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg',$XPos+20,520,0,50);
 
-$XPos = $Page_Width/2 - 60;
-$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg',$XPos+20,520,0,60);
+// Added by Arnold on 1-8-2008 to move text to right
+$XPos = $XPos + 80;
+
 $FontSize=18;
 $pdf->addText($XPos, 500,$FontSize, _('Quotation'));
-
 $FontSize=14;
 $YPos = 480;
 $pdf->addText($XPos, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
-$FontSize =8;
+$FontSize =10;
 $pdf->addText($XPos, $YPos-12,$FontSize, $_SESSION['CompanyRecord']['regoffice1']);
 $pdf->addText($XPos, $YPos-21,$FontSize, $_SESSION['CompanyRecord']['regoffice2']);
 $pdf->addText($XPos, $YPos-30,$FontSize, $_SESSION['CompanyRecord']['regoffice3'] . ' ' . $_SESSION['CompanyRecord']['regoffice4'] . ' ' . $_SESSION['CompanyRecord']['regoffice5']);
@@ -93,11 +96,14 @@ $pdf->addText(700, 560-45,$FontSize,  $PageNumber);
 $YPos -= 37;
 $XPos = 40;
 
+$FontSize=10;
 $LeftOvers = $pdf->addTextWrap($XPos+2,$YPos,127,$FontSize, _('Item Code'),'left');
 $LeftOvers = $pdf->addTextWrap(145,$YPos,250,$FontSize, _('Item Description'),'left');
-$LeftOvers = $pdf->addTextWrap(440,$YPos,85,$FontSize, _('Quantity'),'right');
-$LeftOvers = $pdf->addTextWrap(525,$YPos,85,$FontSize,_('Price'),'right');
-$LeftOvers = $pdf->addTextWrap(610,$YPos,85,$FontSize, _('Discount'),'right');
+$LeftOvers = $pdf->addTextWrap(420,$YPos,85,$FontSize, _('Quantity'),'right');
+$LeftOvers = $pdf->addTextWrap(485,$YPos,85,$FontSize,_('Price'),'right');
+$LeftOvers = $pdf->addTextWrap(535,$YPos,85,$FontSize, _('Discount'),'right');
+$LeftOvers = $pdf->addTextWrap(585,$YPos,85,$FontSize, _('Tax Class'),'right');
+$LeftOvers = $pdf->addTextWrap(650,$YPos,85,$FontSize, _('Tax Amount'),'right');
 $LeftOvers = $pdf->addTextWrap(700,$YPos,90,$FontSize, _('Total'),'right');
 
 
