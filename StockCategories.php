@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 11;
 
@@ -472,7 +472,7 @@ if (! isset($_GET['delete'])) {
 					<td align="center"><input type="checkbox" name="PropReqSO' . $PropertyCounter .'"';
 
 			if ($myrow['reqatsalesorder']==1){
-					echo '"checked"';
+					echo 'checked';
 			} else {
 				echo '';
 			}
