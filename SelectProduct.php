@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 $PageSecurity = 2;
 
@@ -568,7 +568,7 @@ If (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
                                break;
                        case 1; //select box
                                $OptionValues = explode(',',$PropertyRow['defaultvalue']);
-                               echo '<select name="PropValue' . $PropertyCounter . '">';
+ 								echo '<td align=left width=60><select name="PropValue' .$PropertyCounter . '">';                               echo '<select name="PropValue' . $PropertyCounter . '">';
                                foreach ($OptionValues as $PropertyOptionValue){
                                        if ($PropertyOptionValue == $PropertyValue){
                                                echo '<option selected value="' . $PropertyOptionValue . '">' .
@@ -581,9 +581,9 @@ $PropertyOptionValue . '</option>';
                                echo '</select>';
                                break;
                        case 2; //checkbox
-                               echo '<input type="checkbox" name="PropValue' . $PropertyCounter . '"';
+                               echo '<td align=left width=60><input type="checkbox" name="PropValue' . $PropertyCounter . '"';
                                if ($PropertyValue==1){
-                                       echo '"checked"';
+                                       echo ' checked';
                                }
                                echo '>';
                                break;
