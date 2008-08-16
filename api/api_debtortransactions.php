@@ -13,6 +13,32 @@
 		}
 		return $Errors;		
 	}
+
+function ConvertToSQLDate($DateEntry) {
+
+//for MySQL dates are in the format YYYY-mm-dd
+
+	
+	if (strpos($DateEntry,'/')) {
+		$Date_Array = explode('/',$DateEntry);
+	} elseif (strpos ($DateEntry,'-')) {
+		$Date_Array = explode('-',$DateEntry);
+	}
+
+	if (strlen($Date_Array[2])>4) {  /*chop off the time stuff */
+		$Date_Array[2]= substr($Date_Array[2],0,2);
+	}
+
+
+	if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
+		return $Date_Array[2].'-0'.$Date_Array[1].'-'.$Date_Array[0];
+	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y'){
+		return $Date_Array[1].'/'.$Date_Array[2].'/'.$Date_Array[0];
+	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d'){
+		return $Date_Array[0].'/'.$Date_Array[1].'/'.$Date_Array[2];
+	}
+
+} // end function ConvertSQLDate
 	
 /* Check that the transaction date is a valid date. The date 
  * must be in the same format as the date format specified in the
@@ -66,6 +92,10 @@
 			$Month=$DateArray[1];
 			$Year=$DateArray[0];
 		}
+		$DateArray=explode('-',$TranDate);
+		$Day=$DateArray[2];
+		$Month=$DateArray[1];
+		$Year=$DateArray[0];
 		$Date=$Year.'-'.$Month.'-'.$Day;
 		$sql='select max(periodno) from periods where lastdate_in_period<="'.$Date.'"';
 		$result=DB_query($sql, $db);
@@ -198,7 +228,7 @@
 	function GetSalesGLCode($salesarea, $partnumber, $db) {
 		$sql='select salesglcode from salesglpostings 
 			where stkcat=(select categoryid from stockmaster where stockid="'
-			.$partnumber.'") and area="'.$salesarea.'"';
+			.$partnumber.'") and id="'.$salesarea.'"';
 		$result=DB_query($sql, $db);
 		$myrow=DB_fetch_array($result);
 		return $myrow[0];
@@ -245,7 +275,7 @@
 		$Errors=VerifyBranchNoExists($InvoiceDetails['debtorno'],$InvoiceDetails['branchcode'], sizeof($Errors), $Errors, $db);
 		$Errors=VerifyTransNO($InvoiceDetails['transno'], 10, sizeof($Errors), $Errors, $db);
 		$Errors=VerifyTransactionDate($InvoiceDetails['trandate'], sizeof($Errors), $Errors, $db);
-		$InvoiceDetails['prd']=GetPeriodFromTransactionDate($InvoiceDetails['trandate'], sizeof($Errors), $Errors, $db);
+//		$InvoiceDetails['prd']=GetPeriodFromTransactionDate($InvoiceDetails['trandate'], sizeof($Errors), $Errors, $db);
 		if (isset($InvoiceDetails['settled'])){
 			$Errors=VerifySettled($InvoiceDetails['settled'], sizeof($Errors), $Errors);
 		}	
@@ -293,7 +323,8 @@
 		}	
 		$FieldNames='';
 		$FieldValues='';
-		$InvoiceDetails['trandate']=ConvertSQLDate($InvoiceDetails['trandate']);
+		$InvoiceDetails['trandate']=ConvertToSQLDate($InvoiceDetails['trandate']);
+		$InvoiceDetails['prd']=GetPeriodFromTransactionDate($InvoiceDetails['trandate'], sizeof($Errors), $Errors, $db);
 		foreach ($InvoiceDetails as $key => $value) {
 			$FieldNames.=$key.', ';
 			$FieldValues.='"'.$value.'", ';
@@ -307,12 +338,12 @@
 			$sql='insert into gltrans Values("null", 10,'.GetNextTransactionNo(10, $db).
 				',0,"'.$InvoiceDetails['trandate'].'",'.$InvoiceDetails['prd'].', '.$DebtorsGLCode.
 				',"'.'Invoice for -'.$InvoiceDetails['debtorno'].' Total - '.$InvoiceDetails['ovamount'].
-				'", '.$InvoiceDetails['ovamount'].', 1,"'.$InvoiceDetails['jobref'].'")';
+				'", '.$InvoiceDetails['ovamount'].', 0,"'.$InvoiceDetails['jobref'].'")';
 			$result = DB_Query($sql, $db);
 			$sql='insert into gltrans Values("null", 10,'.GetNextTransactionNo(10, $db).
 				',0,"'.$InvoiceDetails['trandate'].'",'.$InvoiceDetails['prd'].', '.$SalesGLCode.
 				',"'.'Invoice for -'.$InvoiceDetails['debtorno'].' Total - '.$InvoiceDetails['ovamount'].
-				'", '.-intval($InvoiceDetails['ovamount']).', 1,"'.$InvoiceDetails['jobref'].'")';
+				'", '.-intval($InvoiceDetails['ovamount']).', 0,"'.$InvoiceDetails['jobref'].'")';
 			$result = DB_Query($sql, $db);
 			$sql = 'UPDATE systypes set typeno='.GetNextTransactionNo(10, $db).' where typeid=10';
 			$result = DB_Query($sql, $db);
@@ -321,6 +352,8 @@
 			} else {
 				$Errors[0]=0;
 			}
+		} else {
+			return $Errors;
 		}
 	}
 
