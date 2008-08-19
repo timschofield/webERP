@@ -330,8 +330,11 @@ function ConvertToSQLDate($DateEntry) {
 			$FieldValues.='"'.$value.'", ';
 		}
 		if (sizeof($Errors)==0) {
+			$result = DB_query('BEGIN',$db);
 			$sql = 'INSERT INTO debtortrans ('.substr($FieldNames,0,-2).') '.
 		  		'VALUES ('.substr($FieldValues,0,-2).') ';
+			$result = DB_Query($sql, $db);
+			$sql = 'UPDATE systypes set typeno='.GetNextTransactionNo(10, $db).' where typeid=10';
 			$result = DB_Query($sql, $db);
 			$SalesGLCode=GetSalesGLCode($SalesArea, $PartCode, $db);
 			$DebtorsGLCode=GetDebtorsGLCode($db);
@@ -345,8 +348,7 @@ function ConvertToSQLDate($DateEntry) {
 				',"'.'Invoice for -'.$InvoiceDetails['debtorno'].' Total - '.$InvoiceDetails['ovamount'].
 				'", '.-intval($InvoiceDetails['ovamount']).', 0,"'.$InvoiceDetails['jobref'].'")';
 			$result = DB_Query($sql, $db);
-			$sql = 'UPDATE systypes set typeno='.GetNextTransactionNo(10, $db).' where typeid=10';
-			$result = DB_Query($sql, $db);
+			$result= DB_query('COMMIT',$db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
