@@ -36,7 +36,7 @@ function PDF() {
 	if ($_SESSION['Language']=='zh_CN'){
 		$this->AddBig5Font();
 	} elseif ($_SESSION['Language']=='zh_HK'){
-		$this->AddGBFont();
+		$this->AddCIDFont();
 	} elseif ($_SESSION['Language']=='ja_JP'){
 		$this->AddSJISFont();
 	} elseif ($_SESSION['Language']=='ko_KR'){
