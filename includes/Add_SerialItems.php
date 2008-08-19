@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*ProcessSerialItems.php takes the posted variables and adds to the SerialItems array
  in either the cartclass->LineItems->SerialItems or the POClass->LineItems->SerialItems */
 
@@ -12,7 +12,7 @@ if ( isset($_POST['AddBatches']) && $_POST['AddBatches']!='') {
 		if(strlen($_POST['SerialNo' . $i])>0){
 			if ($ItemMustExist){
 				$ExistingBundleQty = ValidBundleRef($StockID, $LocationOut, $_POST['SerialNo' . $i]);
-				if ($ExistingBundleQty >0){
+				if ($ExistingBundleQty >0 or ($ExistingBundleQty==1 and $IsCrediot=true)){
 					$AddThisBundle = true;
 					/*If the user enters a duplicate serial number the later one over-writes
 					the first entered one - no warning given though ? */

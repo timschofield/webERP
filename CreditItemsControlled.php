@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 $PageSecurity = 3;
@@ -84,6 +84,7 @@ $ItemMustExist = $_SESSION['CreditingControlledItems_MustExist'];
 $StockID = $LineItem->StockID;
 $InOutModifier=1;
 $ShowExisting = false;
+$IsCredit = true;
 include ('includes/InputSerialItems.php');
 
 echo '</TR></TABLE>';
