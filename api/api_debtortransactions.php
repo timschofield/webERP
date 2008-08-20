@@ -266,6 +266,7 @@ function ConvertToSQLDate($DateEntry) {
 			$InvoiceDetails[$key] = DB_escape_string($value);
 		}
 		$PartCode=$InvoiceDetails['partcode'];
+		$Errors=VerifyStockCodeExists($PartCode, sizeof($Errors), $Errors, $db );
 		unset($InvoiceDetails['partcode']);
 		$SalesArea=$InvoiceDetails['salesarea'];
 		unset($InvoiceDetails['salesarea']);
