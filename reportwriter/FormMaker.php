@@ -1,19 +1,18 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 
 $DirectoryLevelsDeep = 1;
 $PathPrefix = '../';
 $PageSecurity = 1; // set security level for webERP 
+require($PathPrefix . 'includes/session.inc');
 
 // TBD The followiung line needs to be replace when more translations are available
 $ReportLanguage = 'en_US';					// default language file 
 define('DBReports','reports');			// name of the databse holding the main report information (ReportID)
 define('DBRptFields','reportfields');	// name of the database holding the report fields
 define('FPDF_FONTPATH','../fonts/'); // FPDF path to fonts directory
-define('DefRptPath','languages/'.$ReportLanguage.'/');	// path to default reports
-
+define('DefRptPath',$PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/reportwriter/');	// path to default reports
 // Fetch necessary include files - Host application specific (webERP)
-require($PathPrefix . 'includes/session.inc');
 require_once($PathPrefix . 'includes/DateFunctions.inc');
 
 // Include files for ReportMaker.php
