@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 /*
  *      PO_Header.php
@@ -379,8 +379,8 @@ if ($_SESSION['RequireSupplierSelection'] == 1 OR !isset($_SESSION['PO']->Suppli
 
 	/* Set up form for entry of order header stuff */
 
-	if ((!isset($_POST['StkLocation']) or $_POST['StkLocation']) AND (isset($_SESSION['PO']->Location) AND $_SESSION['PO']->Location != '')) {
-	    /* The session variables are set but the form variables have
+    if((!isset($_POST['StkLocation']) or $_POST['StkLocation']=='') AND (isset($_SESSION['PO']->Location) AND $_SESSION['PO']->Location!='')){
+ 	    /* The session variables are set but the form variables have
 	     * been lost --
 	     * need to restore the form variables from the session */
 	    $_POST['StkLocation'] = $_SESSION['PO']->Location;
