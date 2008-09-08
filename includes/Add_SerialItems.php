@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 /*ProcessSerialItems.php takes the posted variables and adds to the SerialItems array
  in either the cartclass->LineItems->SerialItems or the POClass->LineItems->SerialItems */
 
@@ -168,14 +168,14 @@ if ($_POST['EntryType']=='FILE' && isset($_POST['ValidateFile'])){
 					/*If the user enters a duplicate serial number the later one over-writes the first entered one - no warning given though ? */
 					if ($NewQty > $ExistingBundleQty){
 							if ($LineItem->Serialised ==1){
-									echo '<BR>' . '<a href="/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> '. _('has already been sold'). '.';
+									echo '<BR>' . '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> '. _('has already been sold'). '.';
 									$AddThisBundle = false;
 								} elseif ($ExistingBundleQty==0) { /* and its a batch */
 									echo '<BR>' . _('There is none of'). ' <a href="/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> '. _('remaining') .'.';
 									$AddThisBundle = false;
 							} else {
 									echo '<BR>'. _('There is only') . ' ' . $ExistingBundleQty . ' '. _('of') . ' ' . 
-												'<a href="/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> ' . _('remaining') . '. '. 
+												'<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> ' . _('remaining') . '. '. 
 												_('The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll');
 									$NewQty = $ExistingBundleQty;
 									$AddThisBundle = true;
@@ -187,7 +187,7 @@ if ($_POST['EntryType']=='FILE' && isset($_POST['ValidateFile'])){
 			} /*end if ExistingBundleQty >0 */
 			else {
 				echo '<BR>';
-				prnMsg( '<a href="/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a>  ' . _('not available') ,'', 'Notice' );
+				prnMsg( '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a>  ' . _('not available') ,'', 'Notice' );
 			}
 			if (!$valid) $invalid_imports++;
 			// of MustExist
@@ -198,10 +198,10 @@ if ($_POST['EntryType']=='FILE' && isset($_POST['ValidateFile'])){
 			if ($LineItem->Serialised){
 				$ExistingQty = ValidBundleRef($StockID, $LocationOut, $NewSerialNo);
 				if ($NewQty == 1 && $ExistingQty != 0){
-					prnMsg( '<a href="/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a>: '. _("The Serial Number being added exists with a Quantity that is not Zero (0)!"), 'error' );
+					prnMsg( '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a>: '. _("The Serial Number being added exists with a Quantity that is not Zero (0)!"), 'error' );
 					$SerialError = true;
 				} elseif ($NewQty == -1 && $ExistingQty != 1){
-					prnMsg( '<a href="/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> : '. _("The Serial Number being removed exists with a Quantity that is not One (1)!"), 'error');
+					prnMsg( '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> : '. _("The Serial Number being removed exists with a Quantity that is not One (1)!"), 'error');
 					$SerialError = true;
 				}
 			}
@@ -265,14 +265,14 @@ if (isset($_GET['REVALIDATE']) || isset($_POST['REVALIDATE'])) {
 					/*If the user enters a duplicate serial number the later one over-writes the first entered one - no warning given though ? */
 					if ($NewQty > $ExistingBundleQty){
 							if ($LineItem->Serialised ==1){
-									echo '<BR>' . '<a href="/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> '. _('has already been sold'). '.';
+									echo '<BR>' . '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> '. _('has already been sold'). '.';
 									$AddThisBundle = false;
 								} elseif ($ExistingBundleQty==0) { /* and its a batch */
-									echo '<BR>' . _('There is none of'). ' <a href="/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> '. _('remaining') .'.';
+									echo '<BR>' . _('There is none of'). ' <a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> '. _('remaining') .'.';
 									$AddThisBundle = false;
 							} else {
 									echo '<BR>'. _('There is only') . ' ' . $ExistingBundleQty . ' '. _('of') . ' ' . 
-												'<a href="/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> ' . _('remaining') . '. '. 
+												'<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> ' . _('remaining') . '. '. 
 												_('The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll');
 									$NewQty = $ExistingBundleQty;
 									$AddThisBundle = true;
@@ -284,7 +284,7 @@ if (isset($_GET['REVALIDATE']) || isset($_POST['REVALIDATE'])) {
 			} /*end if ExistingBundleQty >0 */
 			else {
 				echo '<BR>';
-				prnMsg( '<a href="/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> ' . _('not available') . '...' ,'', 'Notice' );
+				prnMsg( '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> ' . _('not available') . '...' ,'', 'Notice' );
 			}
 			if (!$valid) $invalid_imports++;
 			// of MustExist
@@ -295,10 +295,10 @@ if (isset($_GET['REVALIDATE']) || isset($_POST['REVALIDATE'])) {
 			if ($LineItem->Serialised){
 				$ExistingQty = ValidBundleRef($StockID, $LocationOut, $NewSerialNo);
 				if ($NewQty == 1 && $ExistingQty != 0){
-					prnMsg( '<a href="/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a>: '. _("The Serial Number being added exists with a Quantity that is not Zero (0)!"), 'error' );
+					prnMsg( '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a>: '. _("The Serial Number being added exists with a Quantity that is not Zero (0)!"), 'error' );
 					$SerialError = true;
 				} elseif ($NewQty == -1 && $ExistingQty != 1){
-					prnMsg( '<a href="/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> : '. _("The Serial Number being removed exists with a Quantity that is not One (1)!"), 'error');
+					prnMsg( '<a href="'.$rootpath.'/StockSerialItemResearch.php?serialno='. $NewSerialNo . '" target=_blank>'.$NewSerialNo. '</a> : '. _("The Serial Number being removed exists with a Quantity that is not One (1)!"), 'error');
 					$SerialError = true;
 				}
 			}
