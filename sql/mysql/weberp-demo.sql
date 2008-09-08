@@ -6081,6 +6081,13 @@ INSERT INTO `workorders` VALUES (8,'MEL','2008-07-26','2008-07-26',0,0);
 --
 
 INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','MEL',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'silverwolf','en_GB');
+
+
+INSERT INTO periods VALUES (0, (SELECT LAST_DAY(NOW())));
+INSERT INTO periods VALUES (1, (SELECT LAST_DAY(DATE_ADD(NOW(), INTERVAL 1 MONTH))));
+INSERT INTO chartdetails (accountcode, period) SELECT accountcode, 0 FROM chartmaster;
+INSERT INTO chartdetails (accountcode, period) SELECT accountcode, 1 FROM chartmaster;
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

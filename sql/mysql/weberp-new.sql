@@ -2926,6 +2926,13 @@ INSERT INTO `accountsection` VALUES (10,'Fixed Assets');
 INSERT INTO `accountsection` VALUES (20,'Amounts Receivable');
 INSERT INTO `accountsection` VALUES (30,'Amounts Payable');
 INSERT INTO `accountsection` VALUES (50,'Financed By');
+
+
+INSERT INTO periods VALUES (0, (SELECT LAST_DAY(NOW())));
+INSERT INTO periods VALUES (1, (SELECT LAST_DAY(DATE_ADD(NOW(), INTERVAL 1 MONTH))));
+INSERT INTO chartdetails (accountcode, period) SELECT accountcode, 0 FROM chartmaster;
+INSERT INTO chartdetails (accountcode, period) SELECT accountcode, 1 FROM chartmaster;
+
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
