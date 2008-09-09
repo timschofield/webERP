@@ -85,7 +85,7 @@ if (isset($_POST['View'])) {
 		$fieldnamearray = explode(',', $SQLArray[0]);
 		$_SESSION['SQLString']['fields'] = $fieldnamearray;
 		if (isset($SQLArray[1])) {
-			$FieldValueArray = explode(',', $SQLArray[1]);
+			$FieldValueArray = preg_split("/[[:space:]]*('[^']*'|[[:digit:].]+),/", $SQLArray[1], 0, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 			$_SESSION['SQLString']['values'] = $FieldValueArray;
 		}
 	}
@@ -97,8 +97,7 @@ if (isset($_POST['View'])) {
 		$SQLString = str_replace('SET','',$SQLString);
 		$SQLString = str_replace('WHERE',',',$SQLString);
 		$SQLString = str_replace('AND',',',$SQLString);
-		$FieldArray = explode(',', $SQLString);
-		for ($i=0; $i<sizeof($FieldArray); $i++) {
+		$FieldArray = preg_split("/[[:space:]]*([[:alnum:].]+[[:space:]]*=[[:space:]]*(?:'[^']*'|[[:digit:].]+))[[:space:]]*,/", $SQLString, 0, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);		for ($i=0; $i<sizeof($FieldArray); $i++) {
 			$Assigment = explode('=', $FieldArray[$i]);
 			$_SESSION['SQLString']['fields'][$i] = $Assigment[0];
 			if (sizeof($Assigment)>1) {
