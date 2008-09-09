@@ -135,7 +135,7 @@ if (isset($_POST['View'])) {
 	}
 	$result = DB_query($sql,$db);
 
-	echo '<CENTER><TABLE BORDER=0>';
+	echo '<TABLE BORDER=0 width="100%">';
 	echo '<TR><TH>' . _('Date/Time') . '</TH>
 				<TH>' . _('User') . '</TH>
 				<TH>' . _('Type') . '</TH>
@@ -145,15 +145,15 @@ if (isset($_POST['View'])) {
 	while ($myrow = DB_fetch_row($result)) {
 		if (Query_Type($myrow[2]) == 'INSERT') {
 			InsertQueryInfo(str_replace("INSERT INTO",'',$myrow[2]));
-			$RowColour = 'a8ff90';
+			$RowColour = '#a8ff90';
 		}
 		if (Query_Type($myrow[2]) == 'UPDATE') {
 			UpdateQueryInfo(str_replace('UPDATE','',$myrow[2]));
-			$RowColour = 'feff90';
+			$RowColour = '#feff90';
 		}
 		if (Query_Type($myrow[2]) == 'DELETE') {
 			DeleteQueryInfo(str_replace('DELETE FROM','',$myrow[2]));
-			$RowColour = 'fe90bf';
+			$RowColour = '#fe90bf';
 		}
 
 		if ((trim($_SESSION['SQLString']['table']) == $_POST['SelectedTable'])  ||
@@ -161,7 +161,7 @@ if (isset($_POST['View'])) {
 		 	if (!isset($_SESSION['SQLString']['values'])) {
 		 		$_SESSION['SQLString']['values'][0]='';
 		 	}
-			echo '<TR bgcolor='.$RowColour.'>
+			echo '<TR style="background-color: '.$RowColour.'">
 				<TD>' . $myrow[0] . '</TD>
 				<TD>' . $myrow[1] . '</TD>
 				<TD>' . Query_Type($myrow[2]) . '</TD>
@@ -186,7 +186,7 @@ if (isset($_POST['View'])) {
 		}
 		unset($_SESSION['SQLString']);
 	}
-	echo '</TABLE></CENTER>';
+	echo '</TABLE>';
 }
 include('includes/footer.inc');
 
