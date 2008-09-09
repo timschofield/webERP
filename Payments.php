@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 $PageSecurity = 5;
 
@@ -535,7 +535,7 @@ if (isset($_POST['CommitBatch'])){
 
   /*Set up a newy in case user wishes to enter another */
 	echo '<BR><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Enter a General Ledger Payment') . '</A>';
-	echo '<BR><A HREF="' . $rootpath . '/selectSupplier.php?' . SID . '">' . _('Enter a Supplier Payment') . '</A>';
+	echo '<BR><A HREF="' . $rootpath . '/SelectSupplier.php?' . SID . '">' . _('Enter a Supplier Payment') . '</A>';
   }
 
   include('includes/footer.inc');
