@@ -12,9 +12,24 @@ $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize
 
 $YPos -=15;
 $FontSize=12;
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize, _('Transfer No').': ' . $_GET['TransferNo'] . '  '. _('From').' ' . $TransferRow['ShipLocName'] . ' to ' . $TransferRow['RecLocName'] . ' '. _('Shipped'). ' ' . ConvertSQLDate($TransferRow['ShipDate']));
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize,
+_('Transfer No').': ' . $_GET['TransferNo']);
 
-$YPos -=25;
+$YPos -=15;
+$FontSize=12;
+$LeftOvers2 = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize,
+_('Shipped'). ' ' . ConvertSQLDate($TransferRow['shipdate']));
+
+$YPos -=15;
+$FontSize=12;
+$LeftOvers2 = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize,
+_('From').' ' . $TransferRow['shiplocname']);
+
+$YPos -=15;
+$FontSize=12;
+$LeftOvers2 = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize, _('to').'
+' . $TransferRow['reclocname']);
+
 /*Draw a rectangle to put the headings in     */
 $BoxHeight =20;
 $FontSize=12;
