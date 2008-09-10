@@ -1942,6 +1942,7 @@ CREATE TABLE `suppliers` (
   `remittance` tinyint(4) NOT NULL default '1',
   `taxgroupid` tinyint(4) NOT NULL default '1',
   `factorcompanyid` int(11) NOT NULL default '1',
+  `taxref` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`supplierid`),
   KEY `CurrCode` (`currcode`),
   KEY `PaymentTerms` (`paymentterms`),

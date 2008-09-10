@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.31 $ */
+/* $Revision: 1.32 $ */
 
 $PageSecurity = 5;
 
@@ -398,7 +398,8 @@ if (isset($_POST['submit'])) {
 					 		bankact='" . $_POST['BankAct'] . "', 
 							remittance=" . $_POST['Remittance'] . ", 
 							taxgroupid=" . $_POST['TaxGroup'] . ",
-							factorcompanyid=" . $_POST['FactorID'] ."
+							factorcompanyid=" . $_POST['FactorID'] .",
+							taxref=". $_POST['TaxRef'] ."
 						WHERE supplierid = '$SupplierID'";
 			} else {
 				if ($suppcurr[0] != $_POST['CurrCode']) {
@@ -416,7 +417,8 @@ if (isset($_POST['submit'])) {
 					 		bankact='" . $_POST['BankAct'] . "', 
 							remittance=" . $_POST['Remittance'] . ", 
 							taxgroupid=" . $_POST['TaxGroup'] . ",
-							factorcompanyid=" . $_POST['FactorID'] ." 
+							factorcompanyid=" . $_POST['FactorID'] .",
+							taxref=". $_POST['TaxRef'] ." 
 						WHERE supplierid = '$SupplierID'";
 			}
 			
@@ -443,7 +445,8 @@ if (isset($_POST['submit'])) {
 							bankact, 
 							remittance, 
 							taxgroupid,
-							factorcompanyid) 
+							factorcompanyid,
+							taxref) 
 					 VALUES ('$SupplierID', 
 					 	'" . $_POST['SuppName'] . "', 
 						'" . $_POST['Address1'] . "', 
@@ -458,7 +461,8 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['BankAct'] . "', 
                        	" . $_POST['Remittance'] . ",
                        	" . $_POST['TaxGroup'] . ",
-                       	" . $_POST['FactorID'] . ")";
+                       	" . $_POST['FactorID'] . ",
+                       	" . $_POST['TaxRef'] . ")";
 
 			$ErrMsg = _('The supplier') . ' ' . $_POST['SuppName'] . ' ' . _('could not be added because');
 			$DbgMsg = _('The SQL that was used to insert the supplier but failed was');
@@ -482,6 +486,7 @@ if (isset($_POST['submit'])) {
 			unset($_POST['Remittance']);
 			unset($_POST['TaxGroup']);
 			unset($_POST['FactorID']);
+			unset($_POST['TaxRef']);
 
 		}
 		
@@ -583,6 +588,7 @@ if (!isset($SupplierID)) {
 	} //end while loop
 	DB_data_seek($result, 0);
 	echo '</SELECT></TD></TR>';
+	echo '<TR><TD>' . _('Tax Reference') . ":</TD><TD><INPUT TYPE='text' NAME='TaxRef' SIZE=21 MAXLENGTH=20></TD></TR>";
 
 	$result=DB_query('SELECT currency, currabrev FROM currencies', $db);
 	if (!isset($_POST['CurrCode'])){
@@ -647,7 +653,8 @@ if (!isset($SupplierID)) {
 				bankact, 
 				remittance, 
 				taxgroupid,
-				factorcompanyid 
+				factorcompanyid,
+				taxref 
 			FROM suppliers 
 			WHERE supplierid = '$SupplierID'";
 				  
@@ -668,6 +675,7 @@ if (!isset($SupplierID)) {
 		$_POST['BankAct']  = $myrow['bankact'];
 		$_POST['TaxGroup'] = $myrow['taxgroupid'];
 		$_POST['FactorID'] = $myrow['factorcompanyid'];
+		$_POST['TaxRef'] = $myrow['taxref'];
 
 		echo "<INPUT TYPE=HIDDEN NAME='SupplierID' VALUE='$SupplierID'>";
 
@@ -713,6 +721,7 @@ if (!isset($SupplierID)) {
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
+	echo '<TR><TD>' . _('Tax Reference') . ":</TD><TD><INPUT TYPE='text' NAME='TaxRef' SIZE=21 MAXLENGTH=20></TD></TR>";
 
 	$result=DB_query('SELECT currency, currabrev FROM currencies', $db);
 

@@ -7,3 +7,5 @@ CREATE TABLE `custcontacts` (
   `notes` varchar(255) NOT NULL,
   PRIMARY KEY  (`contid`)
 ) ENGINE=InnoDB;
+
+ALTER TABLE `suppliers` ADD COLUMN `taxref` varchar(20) NOT NULL default '' AFTER `factorcompanyid`;
