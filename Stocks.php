@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.55 $ */
+/* $Revision: 1.56 $ */
 
 $PageSecurity = 11;
 
@@ -397,8 +397,8 @@ if (isset($_POST['submit'])) {
 					$InsResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 					if (DB_error_no($db) ==0) {
-						prnMsg( _('New Item') .' ' . $StockID  . ' '. _('has been added to the database'),'success');
-						unset($_POST['LongDescription']);
+						prnMsg( _('New Item') .' ' . "<A
+							href='SelectProduct?StockID=$StockID'>$StockID</a>" . ' '. _('has been added to the database'),'success');						unset($_POST['LongDescription']);
 						unset($_POST['Description']);
 						unset($_POST['EOQ']);
 						unset($_POST['CategoryID']);
