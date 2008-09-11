@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
@@ -11,6 +11,20 @@ $title = _('Stock Transfers');
 
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
+
+if (isset($_POST['CheckCode'])) {
+	if (strlen($_POST['StockText'])>0) {
+		$sql='SELECT stockid, description from stockmaster where description like "%'.$_POST['StockText'].'%"';
+	} else {
+		$sql='SELECT stockid, description from stockmaster where stockid like "%'.$_POST['StockCode'].'%"';		
+	}
+	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
+	echo '<table><tr><th>'._('Stock Code').'</th><th>'._('Stock Description').'</th></tr>';
+	while ($myrow = DB_fetch_row($result)) {
+		echo '<tr><td>'.$myrow[0].'</td><td>'.$myrow[1].'</td><td><a href="StockTransfers.php?StockID='.$myrow[0].'&Description='.$myrow[1].'">Transfer</a></tr>';
+	}
+	echo '</table>';
+}
 
 $NewTransfer = false; /*initialise this first then determine from form inputs */
 
@@ -374,6 +388,7 @@ if ( isset($_POST['EnterTransfer']) ){
 		$Result = DB_query('COMMIT',$db);
 
 		prnMsg(_('An inventory transfer of').' ' . $_SESSION['Transfer']->TransferItem[0]->StockID . ' - ' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' '. _('has been created from').' ' . $_SESSION['Transfer']->StockLocationFrom . ' '. _('to') . ' ' . $_SESSION['Transfer']->StockLocationTo . ' '._('for a quantity of').' ' . $_SESSION['Transfer']->TransferItem[0]->Quantity,'success');
+		echo '</br><a href="PDFStockTransfer.php?TransferNo='.$TransferNumber.'">Print Transfer Note</a>';
 		unset ($_SESSION['Transfer']);
 		include ('includes/footer.inc');
 		exit;
@@ -393,13 +408,17 @@ if (!isset($_SESSION['Transfer']->TransferItem[0]->Controlled)) {
 
 echo '<FORM ACTION="'. $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
 
-echo '<CENTER>
-	<TABLE>
-	<TR>
-	<TD>'. _('Stock Code').':</TD>
-	<TD><input type=text name="StockID" size=21 value="' . $_SESSION['Transfer']->TransferItem[0]->StockID . '" maxlength=20></TD>
-	<TD><INPUT TYPE=SUBMIT NAME="CheckCode" VALUE="'._('Check Part').'"></TD>
-	</TR>';
+//echo '<CENTER>
+//	<TABLE>
+//	<TR>
+//	<TD>'. _('Stock Code').':</TD>
+//	<TD><input type=text name="StockID" size=21 value="' . $_SESSION['Transfer']->TransferItem[0]->StockID . '" maxlength=20></TD>
+//	<TD><INPUT TYPE=SUBMIT NAME="CheckCode" VALUE="'._('Check Part').'"></TD>
+//	</TR>';
+echo '<CENTER><TABLE><TR><TD>'. _('Stock Code'). ':</TD><TD><input type=text name="StockID" size=21 value="' . $_POST['StockID'] . '" maxlength=20></td></tr><tr><td>'.
+ _('Partial Description'). ':</td><td><input type=text name="StockText" size=21 value="' . $_GET['Description'] .'">'.
+ _('Partial Stock Code'). ':<input type=text name="StockCode" size=21 value="' . $_POST['StockID'] .
+  '" maxlength=20> <INPUT TYPE=SUBMIT NAME="CheckCode" VALUE="'._('Check Part').'"></TD></TR>';
 
 if (strlen($_SESSION['Transfer']->TransferItem[0]->ItemDescription)>1){
 	echo '<TR><TD COLSPAN=3><FONT COLOR=BLUE SIZE=3>' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Transfer']->TransferItem[0]->PartUnit . ' )</FONT></TD></TR>';
