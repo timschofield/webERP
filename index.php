@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.68 $ */
+/* $Revision: 1.69 $ */
 
 
 $PageSecurity = 1;
@@ -932,12 +932,12 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 						<table width="100%" class="table_index">
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<A HREF='" . $rootpath . '/Payments.php?' .SID . "&NewPayment=Yes'><LI>" . _('Bank Account Payments') . '</LI></A>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/Payments.php?' .SID . "&NewPayment=Yes'><LI>" . _('Bank Account Payments Entry') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<A HREF='" . $rootpath . '/CustomerReceipt.php?' . SID . "&NewReceipt=Yes'><LI>" . _('Bank Account Receipts') . '</LI></A>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/CustomerReceipt.php?' . SID . "&NewReceipt=Yes'><LI>" . _('Bank Account Receipts Entry') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
@@ -947,12 +947,12 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<A HREF='" . $rootpath . '/BankMatching.php?' .SID . "&Type=Receipts'><LI>" . _('Bank Deposits Matching') . '</LI></A>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/BankMatching.php?' .SID . "&Type=Payments'><LI>" . _('Bank Account Payments Matching') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<A HREF='" . $rootpath . '/BankMatching.php?' .SID . "&Type=Payments'><LI>" . _('Bank Payments Matching') . '</LI></A>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/BankMatching.php?' .SID . "&Type=Receipts'><LI>" . _('Bank Account Receipts Matching') . '</LI></A>'; ?>
 							</td>
 							</tr>
 						</table>
@@ -971,7 +971,7 @@ if (count($_SESSION['AllowedPageSecurityTokens'])==1){
 							</tr>
 							<tr>
 							<td class="menu_group_item">
-								<?php echo "<A HREF='" . $rootpath . '/BankReconciliation.php?' . SID . "'><LI>" . _('Bank Reconciliation Statement') . '</LI></A>'; ?>
+								<?php echo "<A HREF='" . $rootpath . '/BankReconciliation.php?' . SID . "'><LI>" . _('Bank Account Reconciliation Statement') . '</LI></A>'; ?>
 							</td>
 							</tr>
 							<tr>

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.70 $ */
+/* $Revision: 1.71 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -332,13 +332,13 @@ $msg='';
 if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
 	If (($_POST['CustKeywords']!='') AND (($_POST['CustCode']!='') OR ($_POST['CustPhone']!=''))) {
-		$msg= _('Customer name keywords have been used in preference to the customer code or phone entered');
+		$msg= _('Customer Branch Name keywords have been used in preference to the Customer Branch Code or Branch Phone Number entered');
 	}
 	If (($_POST['CustCode']!='') AND ($_POST['CustPhone']!='')) {
-		$msg=_('Customer code has been used in preference to the customer phone entered') . '.';
+		$msg=_('Customer Branch Code has been used in preference to the Customer Branch Phone Number entered') . '.';
 	}
 	If (($_POST['CustKeywords']=='') AND ($_POST['CustCode']=='')  AND ($_POST['CustPhone']=='')) {
-		$msg=_('At least one Customer Name keyword OR an extract of a Customer Code or phone number must be entered for the search');
+		$msg=_('At least one Customer Branch Name keyword OR an extract of a Customer Branch Code or Branch Phone Number must be entered for the search');
 	} else {
 		If (strlen($_POST['CustKeywords'])>0) {
 		//insert wildcard characters in spaces
@@ -397,7 +397,7 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1 AND
 			$myrow=DB_fetch_array($result_CustSelect);
 			$_POST['Select'] = $myrow['debtorno'] . ' - ' . $myrow['branchcode'];
 		} elseif (DB_num_rows($result_CustSelect)==0){
-			prnMsg(_('No customer records contain the selected text') . ' - ' . _('please alter your search criteria and try again'),'info');
+			prnMsg(_('No Customer Branch records contain the search criteria') . ' - ' . _('please try again') . ' - ' . _('Note a Customer Branch Name may be different to the Customer Name'),'info');
 		}
 	} /*one of keywords or custcode was more than a zero length string */
 } /*end of if search for customer codes/names */
@@ -609,19 +609,20 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	OR $_SESSION['Items']->DebtorNo=='') {
 	?>
 
-	<BR><BR><FONT SIZE=3><B><?php echo _('Customer Selection') . "</b>" . _(' Search for the Customer.') ; ?></B></FONT>
+	<BR><BR><FONT SIZE=3><B><?php echo _('Customer Branch selection') . "</b>" . _(' Search for the Customer Branch.') ; ?></B></FONT>
+	<BR><BR><FONT SIZE=1><?php echo _('Orders/Quotations are placed against the Customer Branch.  A Customer may have several Branches.') ; ?></FONT>
 
 	<FORM ACTION="<?php echo $_SERVER['PHP_SELF'] . '?' .SID; ?>" METHOD=POST>
 	<B><?php echo '<BR>' . $msg; ?></B>
 	<TABLE CELLPADDING=3 COLSPAN=4>
 	<TR>
-	<TD><FONT SIZE=1><?php echo _('Part of the Customer Name'); ?>:</FONT></TD>
+	<TD><FONT SIZE=1><?php echo _('Part of the Customer Branch Name'); ?>:</FONT></TD>
 	<TD><INPUT TABINDEX=1 TYPE="Text" NAME="CustKeywords" SIZE=20	MAXLENGTH=25></TD>
 	<TD><FONT SIZE=3><B><?php echo _('OR'); ?></B></FONT></TD>
-	<TD><FONT SIZE=1><?php echo _('Part of the Customer Code'); ?>:</FONT></TD>
+	<TD><FONT SIZE=1><?php echo _('Part of the Customer Branch Code'); ?>:</FONT></TD>
 	<TD><INPUT TABINDEX=2 TYPE="Text" NAME="CustCode" SIZE=15	MAXLENGTH=18></TD>
 	<TD><FONT SIZE=3><B><?php echo _('OR'); ?></B></FONT></TD>
-	<TD><FONT SIZE=1><?php echo _('Part of the Phone Number'); ?>:</FONT></TD>
+	<TD><FONT SIZE=1><?php echo _('Part of the Branch Phone Number'); ?>:</FONT></TD>
 	<TD><INPUT TABINDEX=3 TYPE="Text" NAME="CustPhone" SIZE=15	MAXLENGTH=18></TD>
 	</TR>
 	</TABLE>
