@@ -1,5 +1,7 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 
+<P>13/9/08 Phil: Modified BOM.php, SelectProduct.php Stocks.php StockCategories.php WorkOrderIssues.php WorkOrderReceipts.php These changes allow entry of labour type stock categories - the stock categories script now allows selection of a profit and loss account for the recovery account (was the stock account). Items created (in Stocks.php) must be service/labour items - these can then be added to BOMs in the BOM.php script. Issues of such components will credit the recovery account and debit the WIP account. These items can also be set to auto-issue on receipt of finished items from work orders.
+<P>13/9/08 Phil: SelectProduct.php now displays just the default price in the local currency. Displaying all prices could result in overload on the screen - without showing specific debtors/branches/currencies the other prices are meaningless anyway.
 <P>12/9/08 Murray: update SelectOrderItems UI to provide more helpful text labels.  Update index.php to provide more consistant UI text labels for Bank Account options.
 <P>11/9/08 Andres Amaya: Correct bug in PDFAgedDebtorsPageHeader.inc when salesman code is selected
 <P>11/9/08 Tim: Add option in StockTransfers.php to search on part code or description
@@ -41,48 +43,48 @@
 <P>21/6/08 Tim: Add systype 40 for work orders.
 <P>18/6/08 Tim: SelectOrderItems. Changed too show carriage returns correctly in line narrative
 <P>17/6/08 Tim: Correct default options on Stocks.php
-<P>17/6/08 Murray: Added first version SystemCheck.php 
-<P>13/6/08 Tim: Correct CustomerBranches.php to enable branch deletion 
-<P>13/6/08 Ap Muthu: Correct corrupt messages.mo 
+<P>17/6/08 Murray: Added first version SystemCheck.php
+<P>13/6/08 Tim: Correct CustomerBranches.php to enable branch deletion
+<P>13/6/08 Ap Muthu: Correct corrupt messages.mo
 <P>13/6/08 Ap Muthu: Correct missing table in weberp-demo.sql
 <P>13/6/08 Ap Muthu: Correct typos in weberp-new.sql,weberp-demo.sql and GetConfig.php
 <P>12/6/08 Murray: minor changes to text labels of UI.
-<P>08/6/08 Tim: DeliveryDetails.php - Correct delivery address details and bug not allowing branch info to be returned. 	 
-<P>26/5/08 Tim: PaymentMethods.php - Improve error handling.. 	 
-<P>26/5/08 Tim: PaymentTerms.php - Improve error handling.. 	 
-<P>26/5/08 Tim: SalesPeople.php - Improve error handling.. 	 
-<P>26/5/08 Tim: SalesTypes.php - Improve error handling.. 	 
-<P>26/5/08 Tim: Shippers.php - Improve error handling.. 	 
-<P>26/5/08 Tim: api_branches and api_errorcodes. Improvements to api. 	 
-<P>22/5/08 Tim: WWW_Users.php: Update to only change the used language when the users own profile is being changed. 	 
-<P>08/5/08 Tim: Selectproduct.php: Fix bug preventing page goto from working 	 
-<P>08/5/08 Tim: Stocks.php: Correctly show line breaks in Long Description 	 
-<P>05/5/08 Tim: Correct the display of the company name in CustomerReceipt.php when special characters have been used. 	 
-<P>05/5/08 Tim: Correct bug in CustomerReceipt.php where batch narrative text was lost, and add in a cancel button for when customer is wrongly selected. 	 
-<P>03/5/08 Tim: Fixed bug in CustomerAllocations that corrupted table when reallocated amount equalled originally allocated amount 	 
-<P>30/4/08 Tim: Fixed bug in DeliveryDetails.php, to correctly show names and addresses with apostropges. 	 
-<P>29/4/08 Tim: Fixed bug in CustomerAllocations, debug info left in from previous fix. 	 
-<P>28/4/08 Phil: Fixed bug that showed date of GL entries twice on GLTransInquiry.php and munted format of table - attempted to put formating of the script back to webERP conventions 	 
-<P>28/4/08 Muz: Add labels to CustomerInquiry.php links Allocation /View GL Entries etc 	 
-<P>27/4/08 Tim: Add api for customer branches. 	 
-<P>27/4/08 Tim: Put all api error codes in one file. 	 
-<P>26/4/08 Muz: Correct path to preview icon in Customerinquiry.php 	 
-<p>26/4/08 Tim: Update Credit_invoice.php to correctly mark the credit note as settled 	 
-<P>20/4/08 Tim: Improvements to api. 	 
-<P>18/4/08 Tim: Improvements to api. 	 
-<P>16/4/08 Tim: Correcting problem in displaying old allocations. 	 
-<P>16/4/08 Tim: Updated Customers.php and CustomerBranches.php to correctly show branch details when escaped characters are used. 	 
-<P>16/4/08 Tim: Change to PrintCustTrans.php to take into account pdf attachments. 	 
-<P>14/4/08 Tim: Add currency searches and other improvements to api 	 
-<P>13/4/08 Tim: Added xml-rpc and php interfaces to the api. 	 
-<P>12/4/08 Tim: Correction for CustomerAllocations.php to correctly do part allocations. 	 
-<P>12/4/08 Tim: Update fpdf_tpl.php to the latest version. 	 
-<P>12/4/08 Tim: Correct bug in SupplierInvoice.php preventing another supplier invoice being entered directly. 	 
-<P>10/4/08 Tim: Add file fpdi/fpdf_tpl.php required for attaching pdf files to invoices 	 
-<P>10/4/08 Harald Ringehan: ConnectDB_mysql.inc and other db abrastraction scripts used htmlspecialchars instead of htmlentities to prevent XSS attacks inside DB_escape_string function - this leaves accented characters alone and doesn't disturb translations. Bug spotted as a result of Umlauts on command buttons failing to work. 	 
-<P>08/4/08 Tim: Correct DB_last_insert_id bug in ConnectDB_mysql.inc and ConnectDB_mysqli.inc 	 
-<P>06/4/08 Muz: Changes to make options clearer 	 
-<P>06/4/08 Tim: Test whether StockID is set before seeing if part already exists. 	 
+<P>08/6/08 Tim: DeliveryDetails.php - Correct delivery address details and bug not allowing branch info to be returned.
+<P>26/5/08 Tim: PaymentMethods.php - Improve error handling..
+<P>26/5/08 Tim: PaymentTerms.php - Improve error handling..
+<P>26/5/08 Tim: SalesPeople.php - Improve error handling..
+<P>26/5/08 Tim: SalesTypes.php - Improve error handling..
+<P>26/5/08 Tim: Shippers.php - Improve error handling..
+<P>26/5/08 Tim: api_branches and api_errorcodes. Improvements to api.
+<P>22/5/08 Tim: WWW_Users.php: Update to only change the used language when the users own profile is being changed.
+<P>08/5/08 Tim: Selectproduct.php: Fix bug preventing page goto from working
+<P>08/5/08 Tim: Stocks.php: Correctly show line breaks in Long Description
+<P>05/5/08 Tim: Correct the display of the company name in CustomerReceipt.php when special characters have been used.
+<P>05/5/08 Tim: Correct bug in CustomerReceipt.php where batch narrative text was lost, and add in a cancel button for when customer is wrongly selected.
+<P>03/5/08 Tim: Fixed bug in CustomerAllocations that corrupted table when reallocated amount equalled originally allocated amount
+<P>30/4/08 Tim: Fixed bug in DeliveryDetails.php, to correctly show names and addresses with apostropges.
+<P>29/4/08 Tim: Fixed bug in CustomerAllocations, debug info left in from previous fix.
+<P>28/4/08 Phil: Fixed bug that showed date of GL entries twice on GLTransInquiry.php and munted format of table - attempted to put formating of the script back to webERP conventions
+<P>28/4/08 Muz: Add labels to CustomerInquiry.php links Allocation /View GL Entries etc
+<P>27/4/08 Tim: Add api for customer branches.
+<P>27/4/08 Tim: Put all api error codes in one file.
+<P>26/4/08 Muz: Correct path to preview icon in Customerinquiry.php
+<p>26/4/08 Tim: Update Credit_invoice.php to correctly mark the credit note as settled
+<P>20/4/08 Tim: Improvements to api.
+<P>18/4/08 Tim: Improvements to api.
+<P>16/4/08 Tim: Correcting problem in displaying old allocations.
+<P>16/4/08 Tim: Updated Customers.php and CustomerBranches.php to correctly show branch details when escaped characters are used.
+<P>16/4/08 Tim: Change to PrintCustTrans.php to take into account pdf attachments.
+<P>14/4/08 Tim: Add currency searches and other improvements to api
+<P>13/4/08 Tim: Added xml-rpc and php interfaces to the api.
+<P>12/4/08 Tim: Correction for CustomerAllocations.php to correctly do part allocations.
+<P>12/4/08 Tim: Update fpdf_tpl.php to the latest version.
+<P>12/4/08 Tim: Correct bug in SupplierInvoice.php preventing another supplier invoice being entered directly.
+<P>10/4/08 Tim: Add file fpdi/fpdf_tpl.php required for attaching pdf files to invoices
+<P>10/4/08 Harald Ringehan: ConnectDB_mysql.inc and other db abrastraction scripts used htmlspecialchars instead of htmlentities to prevent XSS attacks inside DB_escape_string function - this leaves accented characters alone and doesn't disturb translations. Bug spotted as a result of Umlauts on command buttons failing to work.
+<P>08/4/08 Tim: Correct DB_last_insert_id bug in ConnectDB_mysql.inc and ConnectDB_mysqli.inc
+<P>06/4/08 Muz: Changes to make options clearer
+<P>06/4/08 Tim: Test whether StockID is set before seeing if part already exists.
 <P>06/4/08 Tim: Update currency exchange rates when default currency is changed.<P>30/3/08 Tim: Bring in the xmlrpc libraries.
 <P>29/3/08 Mo: Improve error messaging in ConnectDB.inc and ConnectDB_mysql.inc and ConnectDB_mysqli.inc
 <P>29/3/08 Renier: Improvements to Z_CheckDebtorsControl.php
@@ -109,13 +111,13 @@
 <P>23/1/08 Tim: Improve Selectproduct.php to show more information about product state.
 <P>15/1/08 Tim: Change Customers.php and Suppliers.php to accept apostrophes and accented characters in addresses.
 <P>15/1/08 Tim: BOM Cost rollup updates to force cost rollup on insertions and deletions.
-<P>15/1/08 Tim: Change last insert functions to work with audit trail. 
+<P>15/1/08 Tim: Change last insert functions to work with audit trail.
 <P>13/1/08 Phil: Sales Analysis Manual examples and some rework for Creating a New System
 <P>12/1/08 Tim: Correct bug in Date functions.
 <P>12/11/08 Tim: Sales orders now obtain next transaction number from GetNextTransNo function changed in DeliveryDetails.php
 <P>12/11/08 Tim: New field in stockmaster for perishable available if the item is controlled - changes to Stocks.php to accomodate
 <P>10/1/08 Tim: Lock tables to avoid concurrency problems when getting next transaction numbers as reported on the list
-<P>1/1/08 Tim Schofield: New Factor company maintenance and ability to set up factor comapnies against suppliers 
+<P>1/1/08 Tim Schofield: New Factor company maintenance and ability to set up factor comapnies against suppliers
 >>>>>>> 1.143
 <P>17/11/07 Damian Lee: Improvements to Inventory valuation report bringing in the units identifier
 <P>13/11/07 Tim: AuditTrail.php script added with changes in DB_query to add records to the audit trail for all inserts, updates and deletes. The Audit Trail script allows the user to inquire on this data for a range of dates and tables being modified - with field names parsed into nice screen output.
@@ -129,7 +131,7 @@
 <P>24/10/07 rent a coder - sponsored by Chris - SelectOrderItems.php now allows entry of line items by entry of a quantity in the item browse mode
 <P>24/10/07 DateFunctions.inc GetPeriod function now checks for date format of ProhibitPostingsBefore and sets up a default of one year ago if a null date
 <P>9/10/07 DefineCartClass - now defaults poline='' and itemdue = '' for credit notes
-<p>7/10/07 Tim Schofield : Bug fixes in Freight cost calculation. 
+<p>7/10/07 Tim Schofield : Bug fixes in Freight cost calculation.
 <p>5/10/07 Tim Schofield : Amend table headers in OrderDetails.php
 <p>5/10/07 Bjorn Paulsen : Bug fix in PDFOrdersInvoiced.php
 <p>5/10/07 Tim Schofield : Remove CartClass references
@@ -299,82 +301,82 @@
 <P>4/7/06 SupplierInvoice.php made manual entry of taxes work correctly now takes values at time of processing the invoice previously they were not updated before posting
 <P>4/7/06 Credit_Invoice.php removed taxrate from stockmoves sql insert statement on stock write off option
 <p>27/6/06 jesse
-	- includes/Add_SerialItems.php :
-		+ changed some spacing & line breaks for readability
-		+ Added checks for Serialised items to be sure they have Qty of either 1 or 0, plus links to SerialResearchTool when there are problems
-		+ Added ReValidation option (necessary for current attempts at Manufacture Items scripts)
-	- AgedDebtors.php : added option to pull only Debtors who have a Branch assigned to the selected SalesPerson
-	- ConfirmDispatch_Invoice.php : make Tran Date field size=15 to match others and look more uniform
-	- CreditItemsControlled.php :
-		+ Ln14-19 - better checks to be sure you are returned to the proper Credit page
-		+ Ln ~66 - remove the AddBatches code - it was not necessary because it exists and is called in the Add_SerialItems code
-	- CustomerBranches.php
-		+ Display Total Enabled/Disabled Branches below list
-		+ Ln449,450 - quote the Hidden Input Values
-		+ Ln459 - add code to collect New BranceCode, Debtor Name, and Debtor Address to prepopulate when creating 1st Branch
-	- Customers.php
-		+ Ln176 - Correct text: "entry of invoice" -> "entry of customer branch"
-		+ Ln235 - typo: Custmomer -> Customer
-		+ Ln569 - Capitalization TYPe -> TYPE
-	- CustomerTransInquiry : Added feature to view ALL transactions
-	- DateFunctions.php : Remove extra line at bottom
-	- reportwriter/admin/defaults.php : Add option to have Range/All w/ Range as default.
-	- includes/DefineCartClass.php : in "remove_from_cart()", added functionality to help clear outstanding Sales Orders
-	- includes/DefineSerialItems.php : removed validation check and moved to Add_SerialItems.php
-	- DeliveryDetails.php : removed high-ascii char @ Ln124
-	- footer.inc : Ln24: make chosen time format display, Ln34 : make &copy always be current year
-	- GLTrialBalance.php : ~Ln60: make the From & To periods select something near where we are at in time
-	- GoodsReceived.php : Better handling on Serial vs Controlled items when updating/inserting
-	- GoodsReceivedControlled.php : $LocationOut should be set to the PO Location
-	- index.php : Added Link for StockSerialItemResearch.php
-	- includes/InputSerialItems.php : Quoted some Hidden Inputs, added a few onClicks() to make navigation easier, added a missing </CENTER>, and removed redundant code.
-	- includes/InputSerialItemsFile.php : Improved file handling, fixed display problems when it had to exit()
-	- includes/MiscFunctions.php : added pre_var_dump() function - very handy for in-page debugging, especially of array/objects
-	- OrderDetails.php : added code to look for Invoices for an order and create links to the Printed PDF version of it
-	- includes/PDFAgedDebtorsPageHeader.inc : additions to allow printing of AgedDebtors for a single Sales Person
-	- POItems.php :
-		+ moved header include - it would break if you hit the page with no PO in session
-		+ added code to allow PO_AllowSameItemMultipleTimes to work
-		+ added extra link back to PO_Header
-		+ when no Image, changed "n/a" to "No Image" so it can be translated
-	- PO_PDFPurchOrder.php
-		+ Added ability to print the PO with or without prices listed
-	- reportwriter/admin/RCFunctions.php: Ln610: fixed MIME type check on file so ImportReport would work
-	- reportwriter/ReportMaker.php : Ln382: defaulted "To" value to "From" value for ranges so a range can more easily cover a single entity like an Order # or PO# w/ details
-	- reportwriter/forms/ReportsList.html : added padding to list to make it look nicer
-	- SelectCompletedOrder.php : Allow search by Customer Reference
-	- SelectCreditItems.php :
-		+ Ln284: frist -> first ,
-		+ Ln441,596: getting real strict on checking equalities, even after all the strtouppers.
-		+ Ln472,626: basically same reason as 441
-		+ Ln968: fix to stop reports of missing images in webserver error logs
-	- SelectOrderItems.php
-		+ Ln123: Set the Order # since we have it
-		+ Ln201: add back in comment and standard(?) formatting
-		+ Ln295: Allow the CustCode search to check BranchCode too
-		+ Ln512: extra space in " name"
-		+ Ln832: error moved into DefineCartClass.php
-		+ Lns986 - 1029 : add options to show previous quantities delivered and links to delete/clear the line as needed (in conjunction w/ DefineCartClass.php above too)
-		+ Ln1131: fix to stop reports of missing images in webserver error logs
-	- includes/SelectOrderItems_IntoCart.inc
-		+ Around Ln75, if it was an existing order, the 2nd SQL call would overwrite the $myrow var and cause problems later. Renamed the out $myrow to $myItemRow
-		+ Ln113: removed duplicate "CreditAvailable -=" statement and another high-ascii A
-	- StockCounts.php : Added code to allow entered counts to be more easily viewed and removed.
-	- StockSerialItemResearch.php : refinements. Allow fuzzy searching (sql LIKE), display the SN b/c of that, and correct the SQL used to pull records (would display dupes when same SN had been in more than 1 warehouse)
-	+ sql/mysql/upgrade3.04-3.05.sql : put Ln319 - 324 in more natural order and added col names for config inserts
-	+ UserSettings.php : italics on the password message, made the email field display larger
-	+ reportwriter/WriteReport.inc : quotes filename in CVS download so files w/ spaces in name will work
-	- Several DB_escapes_string()s
-		+ ConfirmDispatch_Invoice.php, CustomerReceipt.php, StockAdjustments.php
+    - includes/Add_SerialItems.php :
+        + changed some spacing & line breaks for readability
+        + Added checks for Serialised items to be sure they have Qty of either 1 or 0, plus links to SerialResearchTool when there are problems
+        + Added ReValidation option (necessary for current attempts at Manufacture Items scripts)
+    - AgedDebtors.php : added option to pull only Debtors who have a Branch assigned to the selected SalesPerson
+    - ConfirmDispatch_Invoice.php : make Tran Date field size=15 to match others and look more uniform
+    - CreditItemsControlled.php :
+        + Ln14-19 - better checks to be sure you are returned to the proper Credit page
+        + Ln ~66 - remove the AddBatches code - it was not necessary because it exists and is called in the Add_SerialItems code
+    - CustomerBranches.php
+        + Display Total Enabled/Disabled Branches below list
+        + Ln449,450 - quote the Hidden Input Values
+        + Ln459 - add code to collect New BranceCode, Debtor Name, and Debtor Address to prepopulate when creating 1st Branch
+    - Customers.php
+        + Ln176 - Correct text: "entry of invoice" -> "entry of customer branch"
+        + Ln235 - typo: Custmomer -> Customer
+        + Ln569 - Capitalization TYPe -> TYPE
+    - CustomerTransInquiry : Added feature to view ALL transactions
+    - DateFunctions.php : Remove extra line at bottom
+    - reportwriter/admin/defaults.php : Add option to have Range/All w/ Range as default.
+    - includes/DefineCartClass.php : in "remove_from_cart()", added functionality to help clear outstanding Sales Orders
+    - includes/DefineSerialItems.php : removed validation check and moved to Add_SerialItems.php
+    - DeliveryDetails.php : removed high-ascii char @ Ln124
+    - footer.inc : Ln24: make chosen time format display, Ln34 : make &copy always be current year
+    - GLTrialBalance.php : ~Ln60: make the From & To periods select something near where we are at in time
+    - GoodsReceived.php : Better handling on Serial vs Controlled items when updating/inserting
+    - GoodsReceivedControlled.php : $LocationOut should be set to the PO Location
+    - index.php : Added Link for StockSerialItemResearch.php
+    - includes/InputSerialItems.php : Quoted some Hidden Inputs, added a few onClicks() to make navigation easier, added a missing </CENTER>, and removed redundant code.
+    - includes/InputSerialItemsFile.php : Improved file handling, fixed display problems when it had to exit()
+    - includes/MiscFunctions.php : added pre_var_dump() function - very handy for in-page debugging, especially of array/objects
+    - OrderDetails.php : added code to look for Invoices for an order and create links to the Printed PDF version of it
+    - includes/PDFAgedDebtorsPageHeader.inc : additions to allow printing of AgedDebtors for a single Sales Person
+    - POItems.php :
+        + moved header include - it would break if you hit the page with no PO in session
+        + added code to allow PO_AllowSameItemMultipleTimes to work
+        + added extra link back to PO_Header
+        + when no Image, changed "n/a" to "No Image" so it can be translated
+    - PO_PDFPurchOrder.php
+        + Added ability to print the PO with or without prices listed
+    - reportwriter/admin/RCFunctions.php: Ln610: fixed MIME type check on file so ImportReport would work
+    - reportwriter/ReportMaker.php : Ln382: defaulted "To" value to "From" value for ranges so a range can more easily cover a single entity like an Order # or PO# w/ details
+    - reportwriter/forms/ReportsList.html : added padding to list to make it look nicer
+    - SelectCompletedOrder.php : Allow search by Customer Reference
+    - SelectCreditItems.php :
+        + Ln284: frist -> first ,
+        + Ln441,596: getting real strict on checking equalities, even after all the strtouppers.
+        + Ln472,626: basically same reason as 441
+        + Ln968: fix to stop reports of missing images in webserver error logs
+    - SelectOrderItems.php
+        + Ln123: Set the Order # since we have it
+        + Ln201: add back in comment and standard(?) formatting
+        + Ln295: Allow the CustCode search to check BranchCode too
+        + Ln512: extra space in " name"
+        + Ln832: error moved into DefineCartClass.php
+        + Lns986 - 1029 : add options to show previous quantities delivered and links to delete/clear the line as needed (in conjunction w/ DefineCartClass.php above too)
+        + Ln1131: fix to stop reports of missing images in webserver error logs
+    - includes/SelectOrderItems_IntoCart.inc
+        + Around Ln75, if it was an existing order, the 2nd SQL call would overwrite the $myrow var and cause problems later. Renamed the out $myrow to $myItemRow
+        + Ln113: removed duplicate "CreditAvailable -=" statement and another high-ascii A
+    - StockCounts.php : Added code to allow entered counts to be more easily viewed and removed.
+    - StockSerialItemResearch.php : refinements. Allow fuzzy searching (sql LIKE), display the SN b/c of that, and correct the SQL used to pull records (would display dupes when same SN had been in more than 1 warehouse)
+    + sql/mysql/upgrade3.04-3.05.sql : put Ln319 - 324 in more natural order and added col names for config inserts
+    + UserSettings.php : italics on the password message, made the email field display larger
+    + reportwriter/WriteReport.inc : quotes filename in CVS download so files w/ spaces in name will work
+    - Several DB_escapes_string()s
+        + ConfirmDispatch_Invoice.php, CustomerReceipt.php, StockAdjustments.php
 
-	- Several trim()s & strtoupper()s on StockIds, Order #, PO #, & various Search Parameters
-		+ BOMInquiry.php, includes/DefineCartClass.php, DiscountCategories.php, GetStockImage.php, POItems.php, PO_SelectOSPurchOrder.php, PrintCustTrans.php, SelectCreditItems.php, SelectCustomers.php
-		+ SelectOrderItems.php, SelectProduct.php, SelectSalesOrder, StockAdjustments.php, StockCostUpdate.php, StockLockStatus.php, StockReorderLevel.php, StockSerialItems.php, StockTransfers.php
-		+ StockUsageGraph.php, WhereUsedInquiry.php
+    - Several trim()s & strtoupper()s on StockIds, Order #, PO #, & various Search Parameters
+        + BOMInquiry.php, includes/DefineCartClass.php, DiscountCategories.php, GetStockImage.php, POItems.php, PO_SelectOSPurchOrder.php, PrintCustTrans.php, SelectCreditItems.php, SelectCustomers.php
+        + SelectOrderItems.php, SelectProduct.php, SelectSalesOrder, StockAdjustments.php, StockCostUpdate.php, StockLockStatus.php, StockReorderLevel.php, StockSerialItems.php, StockTransfers.php
+        + StockUsageGraph.php, WhereUsedInquiry.php
 
-	- Spacing
-		+ CustomerAllocations.php, includes/PO_ReadOrderIn.php, StockAdjustments.php
-		+ sql/pg/upgrade3.04-3.05.psql (Ln322),
+    - Spacing
+        + CustomerAllocations.php, includes/PO_ReadOrderIn.php, StockAdjustments.php
+        + sql/pg/upgrade3.04-3.05.psql (Ln322),
 
 <P>20/6/06 Steve PDFSalesAnalysis lowercasing missed a few field names now corrected Cols ColNo etc. Various scripts added rounding
 <P>8/6/06 Z_ChangeBranchCode.php fixed sql for taxauthority to taxgroupid and some typos
@@ -383,25 +385,25 @@
 <P>31/5/06 index.php link to PDFDIFOT.php delivery in full on time report
 <P>31/5/06 added Steve Ks PrintCustTransPortrait.php option  added new config variable and changed the SystemParameters.php script to allow the variable to be switched. Changed all scripts that call PrintCustTrans.php to look at the new session variable before printing
 <P>30/5/06 Steve K - 'lots of changes'
-	- ConfirmDispatchInvoice changes to <BR> from <P>, format of customer name, moved link to sales orders to top.
-	- CustEDISetup.php added link to customers form
-	- CustomerAllocations.php added customer code to table display - fixed sql date format
-	- Customers.php modifications to display and wording of strings
-	- DeliveryDetails.php link back to sales order moved - wording changed to New Order
-	- FreightCosts.php now allows selection of tax category - part of improved handling of tax on freight costs
-	- GLAccounts.php removed tabindex statements
-	- index.php - changed wording of links - reduced verbosity
-	- POHeader.php has link back to outstanding purchase orders
-	- POItems.php has link at top back to header
-	- SelectOSPurchOrder.php new order link
-	- PrintCustOrder_generic.php added debtorno
-	- SelectCustomer.php now has search on phone no
-	- SelectOrderItems.php customer selection based on phone - reduced wording of links
-	- SelectProduct.php moved around submenu - changed wording of links
-	- SelectSalesOrder.php shows if printed or not and links to print if not printed
-	- SelectSupplier.php now orders by supplier name not supplier id
- 	- StockCostUpdate.php now checks for existence of the item whose cost is changed!
-	- includes/header.inc changed name of shortcut links to customers items suppliers
+    - ConfirmDispatchInvoice changes to <BR> from <P>, format of customer name, moved link to sales orders to top.
+    - CustEDISetup.php added link to customers form
+    - CustomerAllocations.php added customer code to table display - fixed sql date format
+    - Customers.php modifications to display and wording of strings
+    - DeliveryDetails.php link back to sales order moved - wording changed to New Order
+    - FreightCosts.php now allows selection of tax category - part of improved handling of tax on freight costs
+    - GLAccounts.php removed tabindex statements
+    - index.php - changed wording of links - reduced verbosity
+    - POHeader.php has link back to outstanding purchase orders
+    - POItems.php has link at top back to header
+    - SelectOSPurchOrder.php new order link
+    - PrintCustOrder_generic.php added debtorno
+    - SelectCustomer.php now has search on phone no
+    - SelectOrderItems.php customer selection based on phone - reduced wording of links
+    - SelectProduct.php moved around submenu - changed wording of links
+    - SelectSalesOrder.php shows if printed or not and links to print if not printed
+    - SelectSupplier.php now orders by supplier name not supplier id
+    - StockCostUpdate.php now checks for existence of the item whose cost is changed!
+    - includes/header.inc changed name of shortcut links to customers items suppliers
 
 <P>16/5/06 Harald Ringehahn includes/ConstructSQLForUserDefinedSalesReport.inc not using 'Not Used" rather than _('Not Used')
 <P>16/5/06 Harald Ringehahn includes/PDFSalesAnalysis.inc ColNo and colNo should be colno fixed lower casing.
@@ -673,7 +675,7 @@ consistent "look and feel"
 <P>29/9/04 New reports OrderStatus.php and OrderStatusPageHeader.inc allow reporting on orders, back orders by location and stock category for a specified date range.
 <P>29/9/04 SelectOrderItems_IntoCart.php now traps for obsolete items and a check to see if prohibit sales of items where the cost is zero if the new config.php variable $AllowSalesOfZeroCostItems is set to false.
 <P>23/9/04 gettextification - FTP_RadioBeacon.php, EmailCustTrans.php, FreightCosts.php
-<P>22/9/04 gettextification - EDIMessageFormat.php EDIProcessOrders.php	EDISendInvoices.php BOMInquiry.php BOMListing.php
+<P>22/9/04 gettextification - EDIMessageFormat.php EDIProcessOrders.php EDISendInvoices.php BOMInquiry.php BOMListing.php
 <P>22/9/04 Steve - gettextification - InventoryValuation.php Locations.php Logout.php MailInventoryValuation.php MailSalesReport.php
 <P>21/9/04 Jake - gettextification - GLJournal.php GLProfit_Loss.php GLBalanceSheet.php GLCodesInquiry.php GLTransInquiry.php
 <P>19/9/04 ConfirmDispatch_Invoice.php now checks to ensure there is a quantity to be invoiced on at least one line
@@ -744,8 +746,8 @@ consistent "look and feel"
 <P>17/5/04 StockMoves remove field BundleID
 <P>17/5/04 StockCheck.php now only prints stock sheets for items committed to the stockcheckfreeze table. Behaviour of this script was counter intuitive. Deletion of existing entries deleted all locations stock of the same range of categories - now corrected.
 <P>17/5/04 Added DecimalPlaces tinyint default 0 to StockMaster - this determines the number of decimal places to show for the stock item in all places where the item is displayed. Yet to update displaing throughout the system.
-<P>12/5/04	DeliveryDetails.php SelectOrderItems.php DefineCartClass.php - deleting lines off an existing order was not working correctly. It was possible to delete completed order lines off an order in changing an outstanding order line. Bad bug corrected.
-<P>5/5/04	Added new tables for Serialised stuff StockSerialItems StockSerialMoves. Alterations to StockMaster for Serialised and DecimalPlaces - for displaying items with different decimal places
+<P>12/5/04  DeliveryDetails.php SelectOrderItems.php DefineCartClass.php - deleting lines off an existing order was not working correctly. It was possible to delete completed order lines off an order in changing an outstanding order line. Bad bug corrected.
+<P>5/5/04   Added new tables for Serialised stuff StockSerialItems StockSerialMoves. Alterations to StockMaster for Serialised and DecimalPlaces - for displaying items with different decimal places
 <P>5/5/04  Added includes/MiscFunctions.php for Jesse. Stocks.php script modified for Serialised and DecimalPlaces
 <P>29/4/04 StockLocTransferReceive.php to receive quantities set up to transfer from StockLocTransfer.php. Deletes the temporary table data holding the transfered items on creation of the stock movements necessary.
 <P>28/4/04 RePostGL scripts added updating of ChartDetails.BFwdBudget field.
