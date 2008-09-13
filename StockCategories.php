@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 11;
 
@@ -8,6 +8,18 @@ include('includes/session.inc');
 $title = _('Stock Category Maintenance');
 
 include('includes/header.inc');
+?>
+
+<script LANGUAGE="JavaScript">
+	function ReloadForm(form)
+	{
+		document.CategoryForm.UpdateTypes.click();
+		//var val=ItemForm.StockID.value;
+		//self.location='Stocks.php?&StockID=' + ItemForm.StockID.value;
+	}
+</script>
+
+<?php
 
 if (isset($_GET['SelectedCategory'])){
 	$SelectedCategory = strtoupper($_GET['SelectedCategory']);
@@ -248,7 +260,7 @@ if (isset($SelectedCategory)) {  ?>
 
 if (! isset($_GET['delete'])) {
 
-	echo '<FORM METHOD="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
+	echo '<FORM name="CategoryForm" METHOD="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '">';
 
 	if (isset($SelectedCategory)) {
 		//editing an existing stock category
@@ -297,7 +309,17 @@ if (! isset($_GET['delete'])) {
                        accountgroups.pandl=0
                  ORDER BY accountcode";
 
-	$result = DB_query($sql,$db);
+	$BSAccountsResult = DB_query($sql,$db);
+
+	$sql = "SELECT accountcode,
+                 accountname
+                 FROM chartmaster,
+                      accountgroups
+                 WHERE chartmaster.group_=accountgroups.groupname and
+                       accountgroups.pandl!=0
+                 ORDER BY accountcode";
+
+	$PnLAccountsResult = DB_query($sql,$db);
 
 	if (!isset($_POST['CategoryDescription'])) {
 		$_POST['CategoryDescription'] = '';
@@ -306,8 +328,9 @@ if (! isset($_GET['delete'])) {
 	echo '<tr><td>' . _('Category Description') . ':</td>
             <td><input type="Text" name="CategoryDescription" size=22 maxlength=20 value="' . $_POST['CategoryDescription'] . '"></td></tr>';
 
+
 	echo '<tr><td>' . _('Stock Type') . ':</td>
-            <td><select name="StockType">';
+            <td><select name="StockType" onChange="ReloadForm(this.form)" >';
 		if (isset($_POST['StockType']) and $_POST['StockType']=='F') {
 			echo '<option selected value="F">' . _('Finished Goods');
 		} else {
@@ -330,11 +353,19 @@ if (! isset($_GET['delete'])) {
 		}
 
 	echo '</select></td></tr>';
-
-
-	echo '<tr><td>' . _('Stock GL Code') . ':</td><td><select name="StockAct">';
-
-	while ($myrow = DB_fetch_array($result)) {
+	
+	echo '<input type="submit" name="UpdateTypes" style="visibility:hidden;width:1px" value="Not Seen">';
+	if ($_POST['StockType']!='L') {
+		$Result = $BSAccountsResult;
+		echo '<tr><td>' . _('Stock GL Code');
+	} else {
+		$Result = $PnLAccountsResult;
+		echo '<tr><td>' . _('Recovery GL Code');
+	}
+	echo ':</td><td><select name="StockAct">';
+	
+	while ($myrow = DB_fetch_array($Result)){
+	
 		if (isset($_POST['StockAct']) and $myrow['accountcode']==$_POST['StockAct']) {
 			echo '<option selected value=';
 		} else {
@@ -342,12 +373,14 @@ if (! isset($_GET['delete'])) {
 		}
 		echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
 	} //end while loop
-	DB_data_seek($result,0);
+	DB_data_seek($PnLAccountsResult,0);
+	DB_data_seek($BSAccountsResult,0);
 	echo '</select></td></tr>';
 
 	echo '<tr><td>' . _('WIP GL Code') . ':</td><td><select name="WIPAct">';
 
-	while ($myrow = DB_fetch_array($result)) {
+	while ($myrow = DB_fetch_array($BSAccountsResult)) {
+	
 		if (isset($_POST['WIPAct']) and $myrow['accountcode']==$_POST['WIPAct']) {
 			echo '<option selected value=';
 		} else {
@@ -357,21 +390,12 @@ if (! isset($_GET['delete'])) {
 
 	} //end while loop
 	echo '</select></td></tr>';
-
-	$sql = "SELECT accountcode,
-                 accountname
-                 FROM chartmaster,
-                      accountgroups
-                 WHERE chartmaster.group_=accountgroups.groupname and
-                       accountgroups.pandl!=0
-                 ORDER BY accountcode";
-
-	$result1 = DB_query($sql,$db);
+	DB_data_seek($BSAccountsResult,0);
 
 	echo '<tr><td>' . _('Stock Adjustments GL Code') . ':</td>
             <td><select name="AdjGLAct">';
 
-	while ($myrow = DB_fetch_array($result1)) {
+	while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 		if (isset($_POST['AdjGLAct']) and $myrow['accountcode']==$_POST['AdjGLAct']) {
 			echo '<option selected value=';
 		} else {
@@ -380,13 +404,13 @@ if (! isset($_GET['delete'])) {
 		echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
 
 	} //end while loop
-	DB_data_seek($result1,0);
+	DB_data_seek($PnLAccountsResult,0);
 	echo '</select></td></tr>';
-
+	
 	echo '<tr><td>' . _('Price Variance GL Code') . ':</td>
             <td><select name="PurchPriceVarAct">';
 
-	while ($myrow = DB_fetch_array($result1)) {
+	while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 		if (isset($_POST['PurchPriceVarAct']) and $myrow['accountcode']==$_POST['PurchPriceVarAct']) {
 			echo '<option selected value=';
 		} else {
@@ -395,13 +419,17 @@ if (! isset($_GET['delete'])) {
 		echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
 
 	} //end while loop
-	DB_data_seek($result1,0);
+	DB_data_seek($PnLAccountsResult,0);
 
-	echo '</select></td></tr>';
+	echo '</select></td></tr><tr><td>';
+	if ($_POST['StockType']=='L') {
+		echo  _('Labour Efficiency Variance GL Code');
+	} else {
+		echo  _('Usage Variance GL Code');
+	}
+	echo ':</td><td><select name="MaterialUseageVarAc">';
 
-	echo '<tr><td>' . _('Usage Variance GL Code') . ':</td><td><select name="MaterialUseageVarAc">';
-
-	while ($myrow = DB_fetch_array($result1)) {
+	while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 		if (isset($_POST['MaterialUseageVarAc']) and $myrow['accountcode']==$_POST['MaterialUseageVarAc']) {
 			echo '<option selected value=';
 		} else {
@@ -410,7 +438,7 @@ if (! isset($_GET['delete'])) {
 		echo $myrow['accountcode'] . '>' . $myrow['accountname'] . ' ('.$myrow['accountcode'].')';
 
 	} //end while loop
-	DB_free_result($result1);
+	DB_free_result($PnLAccountsResult);
 	echo '</select></td></tr>
 			</table>';
 

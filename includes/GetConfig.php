@@ -16,7 +16,8 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 	} //end loop through all config variables
 	$_SESSION['CompanyDefaultsLoaded'] = true;
 	DB_free_result($ConfigResult); // no longer needed
-
+	/*Maybe we should check config directories exist and try to create if not */
+	
 /* Also reads all the company data set up in the company record and returns an array */
 
 	$sql=	'SELECT

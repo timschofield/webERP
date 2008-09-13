@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity = 2; /*viewing possible with inquiries but not mods */
 
@@ -88,48 +88,52 @@ $ErrMsg = _('The cost details for the stock item could not be retrieved because'
 $DbgMsg = _('The SQL that failed was');
 
 $result = DB_query("SELECT description,
-			units,
-			lastcost,
-			actualcost,
-			materialcost,
-			labourcost,
-			overheadcost,
-			mbflag,
-			sum(quantity) as totalqoh
-		FROM stockmaster INNER JOIN locstock
-			ON stockmaster.stockid=locstock.stockid
-		WHERE stockmaster.stockid='$StockID'
-		GROUP BY description,
-			units,
-			lastcost,
-			actualcost,
-			materialcost,
-			labourcost,
-			overheadcost,
-			mbflag",
-		$db,$ErrMsg,$DbgMsg);
+								units,
+								lastcost,
+								actualcost,
+								materialcost,
+								labourcost,
+								overheadcost,
+								mbflag,
+								stocktype,
+								sum(quantity) as totalqoh
+							FROM stockmaster INNER JOIN locstock
+								ON stockmaster.stockid=locstock.stockid
+								INNER JOIN stockcategory
+								ON stockmaster.categoryid = stockcategory.categoryid
+							WHERE stockmaster.stockid='" . $StockID . "'
+							GROUP BY description,
+								units,
+								lastcost,
+								actualcost,
+								materialcost,
+								labourcost,
+								overheadcost,
+								mbflag,
+								stocktype",
+							$db,$ErrMsg,$DbgMsg);
 
 
 $myrow = DB_fetch_array($result);
 echo "<BR><FONT COLOR=BLUE SIZE=3><B>" . $StockID . " - " . $myrow['description'] . '</B> - ' . _('Total Quantity On Hand') . ': ' . $myrow['totalqoh'] . " " . $myrow['units'] ."</FONT>";
 
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?". SID ."' METHOD=POST>";
-echo _('Stock Code') . ":<input type=text name='StockID' value='$StockID' 1 maxlength=20>";
+echo _('Item Code') . ":<input type=text name='StockID' value='$StockID' 1 maxlength=20>";
 
 echo " <INPUT TYPE=SUBMIT NAME='Show' VALUE='" . _('Show Cost Details') . "'><HR>";
 
-if ($myrow['mbflag']=='D' 
+if (($myrow['mbflag']=='D' AND $myrow['stocktype'] != 'L')
 	OR $myrow['mbflag']=='A' 
 	OR $myrow['mbflag']=='K'){
     echo '</FORM>'; // Close the form
    if ($myrow['mbflag']=='D'){
-        echo "<BR>$StockID " . _('is a dummy part');
+        echo "<BR>$StockID " . _('is a service item');
    } else if ($myrow['mbflag']=='A'){
         echo "<BR>$StockID " . _('is an assembly part');
    } else if ($myrow['mbflag']=='K'){
         echo "<BR>$StockID " . _('is a kit set part');
    }
-   prnMsg(_('Cost information cannot be modified for kits assemblies or dummy parts') . '. ' . _('Please select a different part'),'warn');
+   prnMsg(_('Cost information cannot be modified for kits assemblies or service items') . '. ' . _('Please select a different part'),'warn');
    include('includes/footer.inc');
    exit;
 }
@@ -144,28 +148,27 @@ echo '<TR><TD>' . _('Last Cost') .':</TD><TD ALIGN=RIGHT>' . number_format($myro
 if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens']) OR !isset($UpdateSecurity)){
 	echo '<TR><TD>' . _('Cost') . ':</TD><TD ALIGN=RIGHT>' . number_format($myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'],2) . '</TD></TR></TABLE>';
 } else {
-	if ($myrow['mbflag']!='M') {
-		echo '<TR><TD>' . _('Standard Material Cost Per Unit') .':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME="MaterialCost" VALUE=' . $myrow['materialcost'] . '></TD></TR>';
-	}
-
+			
 	if ($myrow['mbflag']=='M'){
 		echo '<INPUT TYPE=HIDDEN NAME="MaterialCost" VALUE=' . $myrow['materialcost'] . '>';
 		echo '<TR><TD>' . _('Standard Material Cost Per Unit') .':</TD><TD ALIGN=LEFT>' . number_format($myrow['materialcost'],4) . '</TD></TR>';
 		echo '<TR><TD>' . _('Standard Labour Cost Per Unit') . ':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME=LabourCost VALUE=' . $myrow['labourcost'] . '></TD></TR>';
 		echo '<TR><TD>' . _('Standard Overhead Cost Per Unit') . ':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME=OverheadCost VALUE=' . $myrow['overheadcost'] . '></TD></TR>';
-	} else {
+	} elseif ($myrow['mbflag']=='B' OR  $myrow['mbflag']=='D') {
+		echo '<TR><TD>' . _('Standard Cost') .':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME="MaterialCost" VALUE=' . $myrow['materialcost'] . '></TD></TR>';
+	} else 	{		
 		echo '<INPUT TYPE=HIDDEN NAME=LabourCost VALUE=0>';
 		echo '<INPUT TYPE=HIDDEN NAME=OverheadCost VALUE=0>';
 	}
-
     echo "</TABLE><INPUT TYPE=SUBMIT NAME='UpdateData' VALUE='" . _('Update') . "'><HR>";
 }
-echo "<A HREF='$rootpath/StockStatus.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Status') . '</A>';
-echo "<BR><A HREF='$rootpath/StockMovements.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Movements') . '</A>';
-echo "<BR><A HREF='$rootpath/StockUsage.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Usage')  .'</A>';
-echo "<BR><A HREF='$rootpath/SelectSalesOrder.php?" . SID . "&SelectedStockItem=$StockID'>" . _('Search Outstanding Sales Orders') . '</A>';
-echo "<BR><A HREF='$rootpath/SelectCompletedOrder.php?" . SID . "&SelectedStockItem=$StockID'>" . _('Search Completed Sales Orders') . '</A>';
-
+if ($myrow['mbflag']!='D'){
+	echo "<A HREF='$rootpath/StockStatus.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Status') . '</A>';
+	echo "<BR><A HREF='$rootpath/StockMovements.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Movements') . '</A>';
+	echo "<BR><A HREF='$rootpath/StockUsage.php?" . SID . "&StockID=$StockID'>" . _('Show Stock Usage')  .'</A>';
+	echo "<BR><A HREF='$rootpath/SelectSalesOrder.php?" . SID . "&SelectedStockItem=$StockID'>" . _('Search Outstanding Sales Orders') . '</A>';
+	echo "<BR><A HREF='$rootpath/SelectCompletedOrder.php?" . SID . "&SelectedStockItem=$StockID'>" . _('Search Completed Sales Orders') . '</A>';
+}
 echo '</FORM>';
 include('includes/footer.inc');
 ?>

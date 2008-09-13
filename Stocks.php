@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.56 $ */
+/* $Revision: 1.57 $ */
 
 $PageSecurity = 11;
 
@@ -172,7 +172,7 @@ if (isset($_POST['submit'])) {
 	} 
 	if (($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K' OR $_POST['MBFlag']=='D') AND $_POST['Controlled']==1){
 		$InputError = 1;
-		prnMsg(_('Assembly/Kitset/Service items cannot also be controlled items') . '. ' . _('Assemblies/Dummies and Kitsets are not physical items and batch/serial control is therefore not appropriate'),'error');
+		prnMsg(_('Assembly/Kitset/Service/Labour items cannot also be controlled items') . '. ' . _('Assemblies/Dummies and Kitsets are not physical items and batch/serial control is therefore not appropriate'),'error');
 		$Errors[$i] = 'Controlled';
 		$i++;
 	} 
@@ -727,7 +727,7 @@ while( $UOMrow = DB_fetch_array($UOMResult) ) {
 
 echo '</SELECT></TD></TR>';
 
-echo '<TR><TD>' . _('Assembly, Kit, Manufactured or Service') . ':</TD><TD><SELECT name="MBFlag">';
+echo '<TR><TD>' . _('Assembly, Kit, Manufactured or Service/Labour') . ':</TD><TD><SELECT name="MBFlag">';
 if ($_POST['MBFlag']=='A'){
 	echo '<OPTION SELECTED VALUE="A">' . _('Assembly');
 } else {
@@ -750,9 +750,9 @@ if (!isset($_POST['MBFlag']) or $_POST['MBFlag']=='B' OR !isset($_POST['MBFlag']
 }
 
 if ($_POST['MBFlag']=='D'){
-	echo '<OPTION SELECTED VALUE="D">' . _('Service');
+	echo '<OPTION SELECTED VALUE="D">' . _('Service/Labour');
 } else {
-	echo '<OPTION VALUE="D">' . _('Service');
+	echo '<OPTION VALUE="D">' . _('Service/Labour');
 }
 
 echo '</SELECT></TD></TR>';

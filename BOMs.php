@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.31 $ */
+/* $Revision: 1.32 $ */
 
 $PageSecurity = 9;
 
@@ -112,7 +112,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 		while ($myrow=DB_fetch_row($result)) {
 
 			$Level1 = str_repeat('-&nbsp;',$Level-1).$Level;
-			if( $myrow[7]=='B' || $myrow[7]=='K') {
+			if( $myrow[7]=='B' OR $myrow[7]=='K' OR $myrow[7]=='D') {
 				$DrillText = '%s%s';
 				$DrillLink = '<center>----</center>';
 				$DrillID='';
@@ -130,6 +130,12 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 			} else {
 				$AutoIssue = _('N/A');
 			}
+			
+			if ($myrow[7]=='D' OR $myrow[7]=='K' OR $myrow[7]=='A'){
+				$QuantityOnHand = _('N/A');
+			} else {
+				$QuantityOnHand = number_format($myrow[10],$myrow[11]);
+			} 
 			printf("<td>%s</td>
 				<td>%s</td>
 			    <td>%s</td>
@@ -153,7 +159,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level, $db) {
 				ConvertSQLDate($myrow[5]),
 				ConvertSQLDate($myrow[6]),
 				$AutoIssue,
-				number_format($myrow[10],$myrow[11]),
+				$QuantityOnHand,
 				$_SERVER['PHP_SELF'] . '?' . SID,
 				$Parent,
 				$myrow[0],
@@ -567,8 +573,10 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			if ($ParentMBflag=='A'){ /*Its an assembly */
 				$sql = "SELECT stockmaster.stockid,
 						stockmaster.description
-					FROM stockmaster
-					WHERE stockmaster.mbflag !='D'
+					FROM stockmaster INNER JOIN stockcategory
+						ON stockmaster.categoryid = stockcategory.categoryid
+					WHERE ((stockcategory.stocktype='L' AND stockmaster.mbflag ='D') 
+					OR stockmaster.mbflag !='D')
 					AND stockmaster.mbflag !='K'
 					AND stockmaster.mbflag !='A'
 					AND stockmaster.controlled = 0
@@ -578,8 +586,10 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			} else { /*Its either a normal manufac item or a kitset - controlled items ok */
 				$sql = "SELECT stockmaster.stockid,
 						stockmaster.description
-					FROM stockmaster
-					WHERE stockmaster.mbflag !='D'
+					FROM stockmaster INNER JOIN stockcategory
+						ON stockmaster.categoryid = stockcategory.categoryid
+					WHERE ((stockcategory.stocktype='L' AND stockmaster.mbflag ='D') 
+					OR stockmaster.mbflag !='D')
 					AND stockmaster.mbflag !='K'
 					AND stockmaster.mbflag !='A'
 					AND stockmaster.stockid != '$SelectedParent'
