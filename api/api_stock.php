@@ -331,7 +331,7 @@
 			$Errors=VerifySerialised($StockItemDetails['serialised'], sizeof($Errors), $Errors);
 		}
 		if (isset($StockItemDetails['appendfile'])){
-			$Errors=VerifyApendFile($StockItemDetails['apendfile'], sizeof($Errors), $Errors);
+			$Errors=VerifyAppendFile($StockItemDetails['apendfile'], sizeof($Errors), $Errors);
 		}
 		if (isset($StockItemDetails['perishable'])){
 			$Errors=VerifyPerishable($StockItemDetails['perishable'], sizeof($Errors), $Errors);
