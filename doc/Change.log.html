@@ -1,5 +1,6 @@
 <P><FONT SIZE=4 COLOR=BLUE><B>webERP</FONT> Change Log</B>
 
+<P>18/9/08 Tim: Z_ImportPartCodes.php to allow mass import of part codes from a csv file
 <P>18/9/08 Tim: Array of error descriptions and bug fix to api
 <P>13/9/08 Phil: Modified BOM.php, SelectProduct.php Stocks.php StockCategories.php WorkOrderIssues.php WorkOrderReceipts.php These changes allow entry of labour type stock categories - the stock categories script now allows selection of a profit and loss account for the recovery account (was the stock account). Items created (in Stocks.php) must be service/labour items - these can then be added to BOMs in the BOM.php script. Issues of such components will credit the recovery account and debit the WIP account. These items can also be set to auto-issue on receipt of finished items from work orders.
 <P>13/9/08 Phil: SelectProduct.php now displays just the default price in the local currency. Displaying all prices could result in overload on the screen - without showing specific debtors/branches/currencies the other prices are meaningless anyway.
