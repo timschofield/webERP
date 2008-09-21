@@ -1,6 +1,6 @@
 WEB-ERP Installation
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 Upgrading
 
@@ -39,7 +39,7 @@ Installing these components are well covered elsewhere - but if you need to inst
 
 PHP must have the register globals configuration parameter set to off.  This is the default (now).  This flag can be set in the php.ini on the server.  If it can't be changed, it is possibe for apache web servers to create a file called .htaccess. A .htaccess file is included in the webERP directory that ensures the register_globals flag is set to off for those web-servers that support .htaccess files.
 
-In addition the magic_quote_gpc setting must also be set to off. This is a configuration parameter in the php.ini file on the web-server. If you don't have access to the web-server's php.ini, then the webERP distribution has an .htaccess file to ensure that this is set to off for apache servers and thos other servers that look at the parameters in the .htaccess file. If magic_quotes_gpc is not set to off then this can leave annoying "\" characters in some fields otherwise webERP works as normal.
+In addition the magic_quotes_gpc setting must also be set to off. This is a configuration parameter in the php.ini file on the web-server. If you don't have access to the web-server's php.ini, then the webERP distribution has an .htaccess file to ensure that this is set to off for apache servers and thos other servers that look at the parameters in the .htaccess file. If magic_quotes_gpc is not set to off then this can leave annoying "\" characters in some fields otherwise webERP works as normal.
 
 One more issue with php setup - by default the setting session.use_cookies is set to 1, if it is set to 0 this can also cause problems.
 
