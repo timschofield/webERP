@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 11;
 
@@ -340,7 +340,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
         $Result = DB_query($SQL,$db);
 
         prnMsg(_('The issue of') . ' ' . $QuantityIssued . ' ' . _('of')  . ' ' . $_POST['IssueItem'] . ' ' . _('against work order') . ' '. $_POST['WO'] . ' ' . _('has been processed'),'info');
-        echo "<A HREF='$rootpath/SelectWorkOrder.php?" . SID . "'>" . _('Select a different work order for issuing materials and components against'). '</A>';
+        echo '<p><ul><li><A HREF="' . $rootpath . '/WorkOrderIssue.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $_POST['StockID'] . '">' . _('Issue more components to this work order') . '</a></li>';
+        echo '<li><A HREF="' . $rootpath . '/SelectWorkOrder.php?' . SID . '">' . _('Select a different work order for issuing materials and components against'). '</a></li></ul>';
         unset($_POST['WO']);
         unset($_POST['StockID']);
         unset($_POST['IssueItem']);
