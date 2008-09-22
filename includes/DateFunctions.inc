@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 /*
 date validation and parsing functions
@@ -664,11 +664,11 @@ Dates are parsed using the $_SESSION['DefaultDateFormat'] string */
 		$TransDate = mktime(0,0,0,$Date_array[1],$Date_array[2],$Date_array[0]);
 	}
 	
-	if (!Is_Date($_SESSION['ProhibitPostingsBefore'])){
-		//set a suitable default - 1 year ago
-		$_SESSION['ProhibitPostingsBefore'] = Date('Y-m-d',mktime(0,0,0,Date('m'),0,Date('Y')-2));
-		$result = DB_query("UPDATE config SET confvalue='" . $_SESSION['ProhibitPostingsBefore'] . "' WHERE confname='ProhibitPostingsBefore'",$db);
-	}
+//	if (!Is_Date($_SESSION['ProhibitPostingsBefore'])){
+//		//set a suitable default - 1 year ago
+//		$_SESSION['ProhibitPostingsBefore'] = Date('Y-m-d',mktime(0,0,0,Date('m'),0,Date('Y')-2));
+//		$result = DB_query("UPDATE config SET confvalue='" . $_SESSION['ProhibitPostingsBefore'] . "' WHERE confname='ProhibitPostingsBefore'",$db);
+//	}
 	if (strpos($_SESSION['ProhibitPostingsBefore'],'/')) {
 		$ProhibitPostingsBeforeDate_Array = explode('/',$_SESSION['ProhibitPostingsBefore']);
 	} elseif (strpos ($_SESSION['ProhibitPostingsBefore'],'-')) {
