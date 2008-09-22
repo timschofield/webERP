@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
@@ -9,10 +9,11 @@
 	if (!headers_sent()){
 		header('Content-type: text/html; charset=' . _('ISO-8859-1'));
 	}
-	echo '<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN">';
+	echo '<!doctype html public "-//W3C//DTD XHTML 1.0 Strict//EN"
+			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
 	
 	
-	echo '<html><head><title>' . $title . '</title>';
+	echo '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>' . $title . '</title>';
 	echo '<link REL="shortcut icon" HREF="'. $rootpath.'/favicon.ico">';
 	echo '<link REL="icon" HREF="' . $rootpath.'/favicon.ico">';
 	echo '<meta http-equiv="Content-Type" content="text/html; charset=' . _('ISO-8859-1') . '">';
