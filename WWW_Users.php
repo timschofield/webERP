@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 $PageSecurity=15;
 
@@ -199,15 +199,20 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The demonstration user called demo cannot be deleted'),'error');
 	} else {
 	*/
+		$sql='SELECT userid FROM audittrail where userid="'. $SelectedUser .'"';
+		$result=DB_query($sql, $db);
+		if (DB_num_rows($result)!=0) {
+			prnMsg(_('Cannot delete user as entries already exist in the audit trail'), 'warn');
+		} else {
 
-		$sql="DELETE FROM www_users WHERE userid='$SelectedUser'";
-		$ErrMsg = _('The User could not be deleted because');;
-		$result = DB_query($sql,$db,$ErrMsg);
-
+			$sql="DELETE FROM www_users WHERE userid='$SelectedUser'";
+			$ErrMsg = _('The User could not be deleted because');;
+			$result = DB_query($sql,$db,$ErrMsg);
+			prnMsg(_('User Deleted'),'info');
+		}
+		unset($SelectedUser);
 	// }
 
-	prnMsg(_('User Deleted'),'info');
-	unset($SelectedUser);
 }
 
 if (!isset($SelectedUser)) {
