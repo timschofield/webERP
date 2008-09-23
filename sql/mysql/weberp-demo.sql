@@ -6081,7 +6081,7 @@ INSERT INTO `workorders` VALUES (8,'MEL','2008-07-26','2008-07-26',0,0);
 -- Dumping data for table `www_users`
 --
 
-INSERT INTO `www_users` VALUES ('demo','weberp','Demonstration user','','','','MEL',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'silverwolf','en_GB');
+INSERT INTO `www_users` VALUES ('admin','weberp','Demonstration user','','','','MEL',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'silverwolf','en_GB');
 
 
 INSERT INTO periods VALUES (0, (SELECT LAST_DAY(NOW())));
