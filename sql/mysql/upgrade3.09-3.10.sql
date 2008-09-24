@@ -9,3 +9,11 @@ CREATE TABLE `custcontacts` (
 ) ENGINE=InnoDB;
 
 ALTER TABLE `suppliers` ADD COLUMN `taxref` varchar(20) NOT NULL default '' AFTER `factorcompanyid`;
+
+CREATE TABLE `tags` (
+`tagref` tinyint(4) NOT NULL auto_increment,
+`tagdescription` varchar(50) NOT NULL,
+PRIMARY KEY (`tagref`)
+) ENGINE=InnoDB;
+
+ALTER TABLE `gltrans` ADD COLUMN `tag` tinyint(4) NOT NULL default '0' AFTER `jobref`;

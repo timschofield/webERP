@@ -761,6 +761,7 @@ CREATE TABLE `gltrans` (
   `amount` double NOT NULL default '0',
   `posted` tinyint(4) NOT NULL default '0',
   `jobref` varchar(20) NOT NULL default '',
+  `tag` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`counterindex`),
   KEY `Account` (`account`),
   KEY `ChequeNo` (`chequeno`),
@@ -2028,6 +2029,16 @@ CREATE TABLE `systypes` (
   KEY `TypeNo` (`typeno`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `tags`
+--
+
+CREATE TABLE `tags` (
+`tagref` tinyint(4) NOT NULL auto_increment,
+`tagdescription` varchar(50) NOT NULL,
+PRIMARY KEY (`tagref`)
+) ENGINE=InnoDB;
 
 --
 -- Table structure for table `taxauthorities`
