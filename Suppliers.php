@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 $PageSecurity = 5;
 
@@ -721,7 +721,7 @@ if (!isset($SupplierID)) {
 		}
 	} //end while loop
 	DB_data_seek($result, 0);
-	echo '<TR><TD>' . _('Tax Reference') . ":</TD><TD><INPUT TYPE='text' NAME='TaxRef' SIZE=21 MAXLENGTH=20></TD></TR>";
+	echo '<TR><TD>' . _('Tax Reference') . ":</TD><TD><INPUT TYPE='text' NAME='TaxRef' SIZE=21 MAXLENGTH=20 VALUE='".$_POST['TaxRef']."'></TD></TR>";
 
 	$result=DB_query('SELECT currency, currabrev FROM currencies', $db);
 
