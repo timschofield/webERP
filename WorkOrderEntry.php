@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 10;
 
@@ -325,9 +325,10 @@ if (isset($_POST['submit'])) { //The update button has been clicked
                  unset($_POST['QtyRecd'.$i]);
                  unset($_POST['NetLotSNRef'.$i]);
         }
-		echo "<BR><A HREF='" . $_SERVER['PHP_SELF'] . "?" . SID . "'>" . _('Enter a new work order') . "</A>";
-		echo "<BR><A HREF='" . $rootpath . "/SelectWorkOrder.php?" . SID . "'>" . _('Select an existing work order') . "</A>";
-		echo "<BR><BR>";
+		echo "<br><a href='" . $_SERVER['PHP_SELF'] . "?" . SID . "'>" . _('Enter a new work order') . "</A>";
+		echo "<br><a href='" . $rootpath . "/SelectWorkOrder.php?" . SID . "'>" . _('Select an existing work order') . "</A>";
+		echo '<br><a href="'. $rootpath . '/WorkOrderCosting.php?' . SID . '&WO=' .  $_REQUEST['WO'] . '">' . _('Go to Costing'). '</A>';
+		echo "<br><br>";
 	}
 } elseif (isset($_POST['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button

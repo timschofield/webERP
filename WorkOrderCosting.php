@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 11;
 
@@ -80,7 +80,11 @@ echo  '<table><tr><th>' . _('Item') . '</th>
 		<th>' . _('Description') . '</th>
 		<th>' . _('Quantity Required') . '</th>
 		<th>' . _('Units') . '</th>
-		<th>' . _('Quantity Received') . '</th></tr>';
+        <th>' . _('Quantity Received') . '</th>
+        <th>' . _('Status') . '</th>
+        <th>' . _('Receive') . '</th>
+        <th>' . _('Issue') . '</th></tr>';
+
 $TotalStdValueRecd =0;
 while ($WORow = DB_fetch_array($WOItemsResult)){
 
@@ -89,7 +93,11 @@ while ($WORow = DB_fetch_array($WOItemsResult)){
 	 			<td align=right>' . number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
 	 			<td>' . $WORow['units'] . '</td>
 	 			<td align=right>' . number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
-	 			</tr>';
+	 			<td align=right><A HREF="'. $rootpath . '/WorkOrderStatus.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $WORow['stockid'] . '">' . _('Status') . '</a></td>
+                <td align=right><A HREF="'. $rootpath . '/WorkOrderReceive.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $WORow['stockid'] . '">' . _('Receive') . '</a></td>
+                <td align=right><A HREF="'. $rootpath . '/WorkOrderIssue.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $WORow['stockid'] . '">' . _('Issue') . '</a></td>
+ 			</tr>';
+
 	$TotalStdValueRecd +=($WORow['stdcost']*$WORow['qtyrecd']);
 
 }
