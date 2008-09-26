@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 include('includes/DefineJournalClass.php');
 
@@ -66,14 +66,16 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 						periodno,
 						account,
 						narrative,
-						amount) ';
+						amount,
+						tag) ';
 		$SQL= $SQL . 'VALUES (0,
 					' . $TransNo . ",
 					'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
 					" . $PeriodNo . ",
 					" . $JournalItem->GLCode . ",
 					'" . $JournalItem->Narrative . "',
-					" . $JournalItem->Amount . ")";
+					" . $JournalItem->Amount . 
+					",'".$JournalItem->tag."')";
 		$ErrMsg = _('Cannot insert a GL entry for the journal line because');
 		$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -85,14 +87,16 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 							periodno,
 							account,
 							narrative,
-							amount) ';
+							amount,
+							tag) ';
 			$SQL= $SQL . 'VALUES (0,
 						' . $TransNo . ",
 						'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
 						" . ($PeriodNo + 1) . ",
 						" . $JournalItem->GLCode . ",
 						'Reversal - " . $JournalItem->Narrative . "',
-						" . -($JournalItem->Amount) . ')';
+						" . -($JournalItem->Amount) . 
+					",'".$JournalItem->tag."')";
 
 			$ErrMsg =_('Cannot insert a GL entry for the reversing journal because');
 			$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
@@ -151,7 +155,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 			unset($_POST['GLManualCode']);
 		} else {
 			$myrow = DB_fetch_array($Result);
-			$_SESSION['JournalDetail']->add_to_glanalysis($_POST['GLAmount'], $_POST['GLNarrative'], $_POST['GLManualCode'], $myrow['accountname']);
+			$_SESSION['JournalDetail']->add_to_glanalysis($_POST['GLAmount'], $_POST['GLNarrative'], $_POST['GLManualCode'], $myrow['accountname'], $_POST['tag']);
 		}
 	}
    } else {
@@ -177,7 +181,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 		$SQL = 'SELECT accountname FROM chartmaster WHERE accountcode=' . $_POST['GLCode'];
 		$Result=DB_query($SQL,$db);
 		$myrow=DB_fetch_array($Result);
-   		$_SESSION['JournalDetail']->add_to_glanalysis($_POST['GLAmount'], $_POST['GLNarrative'], $_POST['GLCode'], $myrow['accountname']);
+   		$_SESSION['JournalDetail']->add_to_glanalysis($_POST['GLAmount'], $_POST['GLNarrative'], $_POST['GLCode'], $myrow['accountname'], $_POST['tag']);
 	}
    }
 
@@ -233,14 +237,41 @@ echo '<TD>';
 /* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
 echo '<FONT SIZE=3 COLOR=BLUE>' . _('Journal Line Entry') . '</FONT><TABLE>';
+	
+//Select the tag
+echo '<tr><td>' . _('Select Tag') . ':</td>
+	<td><select name="tag">';
+
+$SQL = 'SELECT tagref, 
+				tagdescription 
+		FROM tags 
+		ORDER BY tagref';
+			
+$result=DB_query($SQL,$db);
+echo '<OPTION value=0>0 - None';
+if (DB_num_rows($result)==0){
+   echo '</select></td></tr>';
+   prnMsg(_('No Tags have been set up yet') . ' - ' . _('payments cannot be analysed against a tag until the tag is set up'),'error');
+} else {
+	while ($myrow=DB_fetch_array($result)){
+	    if ($_POST['tag']==$myrow["tagref"]){
+		echo '<OPTION selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+	    } else {
+			echo '<OPTION value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+	    }
+	}
+	echo '</select></td></tr>';
+}
+// End select tag	
+
 
 /*now set up a GLCode field to select from avaialble GL accounts */
 if (!isset($_POST['GLManualCode'])) {
 	$_POST['GLManualCode']='';
 }
 echo '<TR><TD>' . _('Enter GL Account Manually') . ":</TD>
-	<TD><INPUT TYPE=Text Name='GLManualCode' Maxlength=12 SIZE=12 VALUE=" . $_POST['GLManualCode'] . '></TD>';
-echo '<TD>'. _('OR') . ' ' . _('Select GL Account').  ":</TD><TD><SELECT name='GLCode'>";
+	<TD><INPUT TYPE=Text Name='GLManualCode' Maxlength=12 SIZE=12 VALUE=" . $_POST['GLManualCode'] . '>';
+echo _('OR') . ' ' . _('Select GL Account').  ":<SELECT name='GLCode'>";
 $SQL = 'SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode';
 $result=DB_query($SQL,$db);
 if (DB_num_rows($result)==0){
