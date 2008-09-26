@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 $PageSecurity = 5;
 
@@ -399,7 +399,7 @@ if (isset($_POST['submit'])) {
 							remittance=" . $_POST['Remittance'] . ", 
 							taxgroupid=" . $_POST['TaxGroup'] . ",
 							factorcompanyid=" . $_POST['FactorID'] .",
-							taxref=". $_POST['TaxRef'] ."
+							taxref='". $_POST['TaxRef'] ."' 
 						WHERE supplierid = '$SupplierID'";
 			} else {
 				if ($suppcurr[0] != $_POST['CurrCode']) {
@@ -418,7 +418,7 @@ if (isset($_POST['submit'])) {
 							remittance=" . $_POST['Remittance'] . ", 
 							taxgroupid=" . $_POST['TaxGroup'] . ",
 							factorcompanyid=" . $_POST['FactorID'] .",
-							taxref=". $_POST['TaxRef'] ." 
+							taxref='". $_POST['TaxRef'] ."' 
 						WHERE supplierid = '$SupplierID'";
 			}
 			
@@ -462,7 +462,7 @@ if (isset($_POST['submit'])) {
                        	" . $_POST['Remittance'] . ",
                        	" . $_POST['TaxGroup'] . ",
                        	" . $_POST['FactorID'] . ",
-                       	" . $_POST['TaxRef'] . ")";
+                       	'" . $_POST['TaxRef'] . "')";
 
 			$ErrMsg = _('The supplier') . ' ' . $_POST['SuppName'] . ' ' . _('could not be added because');
 			$DbgMsg = _('The SQL that was used to insert the supplier but failed was');
