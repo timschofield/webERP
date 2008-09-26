@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -137,7 +137,8 @@ if (isset($_POST['Process'])){ //user hit submit a new entry to the receipt batc
 											$_POST['Narrative'],
 											$_POST['GLCode'], 
 											$_POST['PayeeBankDetail'], 
-											$_POST['CustomerName']);
+											$_POST['CustomerName'],
+											$_POST['tag']);
 
    /*Make sure the same receipt is not double processed by a page refresh */
    $Cancel = 1;
@@ -207,14 +208,16 @@ if (isset($_POST['CommitBatch'])){
 						periodno,
 						account,
 						narrative,
-						amount) 
+						amount,
+						tag) 
 			 		  VALUES (12,
 			 			' . $_SESSION['ReceiptBatch']->BatchNo . ",
 						'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
 						" . $PeriodNo . ',
 						' . $ReceiptItem->GLCode . ",
 						'" . $ReceiptItem->Narrative . "',
-						" . -($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate) . ')';
+						" . -($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate) . ",
+						'" . $ReceiptItem->tag . "'" . ')';
 			 	$ErrMsg = _('Cannot insert a GL entry for the receipt because');
 			 	$DbgMsg = _('The SQL that failed to insert the receipt GL entry was');
 			 	$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -844,6 +847,31 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
 /* Set up a heading for the transaction entry for a GL Receipt */
 
 	echo '<br/><center><font size=4>' . _('General Ledger Receipt Entry') . '</font><table>';
+
+	//Select the tag
+	echo '<tr><td>' . _('Select Tag') . ':</td><td><select name="tag">';
+
+	$SQL = 'SELECT tagref, 
+				tagdescription 
+		FROM tags 
+		ORDER BY tagref';
+			
+	$result=DB_query($SQL,$db);
+	echo '<OPTION value=0>0 - None';
+	if (DB_num_rows($result)==0){
+   		echo '</select></td></tr>';
+   		prnMsg(_('No Tags have been set up yet') . ' - ' . _('payments cannot be analysed against a tag until the tag is set up'),'error');
+	} else {
+		while ($myrow=DB_fetch_array($result)){
+	    	if ($_POST['tag']==$myrow["tagref"]){
+			echo '<OPTION selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+	    	} else {
+				echo '<OPTION value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+	    	}
+		}
+		echo '</select></td></tr>';
+	}
+// End select tag	
 
 	/*now set up a GLCode field to select from avaialble GL accounts */
 	echo '<tr><td>' . _('GL Account') . ':</td><TD><SELECT tabindex=8 name="GLCode">';
