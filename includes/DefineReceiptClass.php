@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /* definition of the ReceiptBatch class */
 
 Class Receipt_Batch {
@@ -25,9 +25,9 @@ Class Receipt_Batch {
 		$this->total=0;
 	}
 
-	function add_to_batch($Amount, $Customer, $Discount, $Narrative, $GLCode, $PayeeBankDetail, $CustomerName){
+	function add_to_batch($Amount, $Customer, $Discount, $Narrative, $GLCode, $PayeeBankDetail, $CustomerName, $tag){
 		if ((isset($Customer)||isset($GLCode)) && ($Amount + $Discount) !=0){
-			$this->Items[$this->ItemCounter] = new Receipt($Amount, $Customer, $Discount, $Narrative, $this->ItemCounter, $GLCode, $PayeeBankDetail, $CustomerName);
+			$this->Items[$this->ItemCounter] = new Receipt($Amount, $Customer, $Discount, $Narrative, $this->ItemCounter, $GLCode, $PayeeBankDetail, $CustomerName, $tag);
 			$this->ItemCounter++;
 			$this->total = $this->total + ($Amount + $Discount) / $this->ExRate;
 			Return 1;
@@ -53,8 +53,9 @@ Class Receipt {
 	Var $GLCode;
 	Var $PayeeBankDetail;
 	Var $ID;
+	var $tag;
 
-	function Receipt ($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName){
+	function Receipt ($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName, $tag){
 
 /* Constructor function to add a new Receipt object with passed params */
 		$this->Amount =$Amt;
@@ -65,6 +66,7 @@ Class Receipt {
 		$this->GLCode = $GLCode;
 		$this->PayeeBankDetail=$PayeeBankDetail;
 		$this->ID = $id;
+		$this->tag = $tag;
 	}
 }
 

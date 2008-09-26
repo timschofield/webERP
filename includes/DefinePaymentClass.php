@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /* definition of the Payment class */
 
 Class Payment {
@@ -40,9 +40,9 @@ Class Payment {
 
 	}
 
-	function Add_To_GLAnalysis($Amount, $Narrative, $GLCode, $GLActName){
+	function Add_To_GLAnalysis($Amount, $Narrative, $GLCode, $GLActName, $tag, $cheque){
 		if (isset($GLCode) AND $Amount!=0){
-			$this->GLItems[$this->GLItemCounter] = new PaymentGLAnalysis($Amount, $Narrative, $this->GLItemCounter, $GLCode, $GLActName);
+			$this->GLItems[$this->GLItemCounter] = new PaymentGLAnalysis($Amount, $Narrative, $this->GLItemCounter, $GLCode, $GLActName, $tag, $cheque);
 			$this->GLItemCounter++;
 			Return 1;
 		}
@@ -57,13 +57,15 @@ Class Payment {
 
 Class PaymentGLAnalysis {
 
-	Var $Amount;	/* in currency of the payment*/
-	Var $Narrative;
-	Var $GLCode;
+	var $Amount;	/* in currency of the payment*/
+	var $Narrative;
+	var $GLCode;
 	var $GLActName;
-	Var $ID;
+	var $ID;
+	var $tag;
+	var $cheque;
 
-	function PaymentGLAnalysis ($Amt, $Narr, $id, $GLCode, $GLActName){
+	function PaymentGLAnalysis ($Amt, $Narr, $id, $GLCode, $GLActName, $tag, $cheque){
 
 /* Constructor function to add a new PaymentGLAnalysis object with passed params */
 		$this->Amount =$Amt;
@@ -71,6 +73,8 @@ Class PaymentGLAnalysis {
 		$this->GLCode = $GLCode;
 		$this->GLActName = $GLActName;
 		$this->ID = $id;
+		$this->tag = $tag;
+		$this->cheque = $cheque;
 	}
 }
 
