@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 include('includes/DefineJournalClass.php');
 
@@ -238,17 +238,23 @@ echo '<TD>';
 
 echo '<FONT SIZE=3 COLOR=BLUE>' . _('Journal Line Entry') . '</FONT><TABLE>';
 
-//Select the tag
-echo '<tr><td>' . _('Select Tag') . ':</td>
-	<td><select name="tag">';
+	//Select the tag
+	echo '<tr><td>' . _('Select Tag') . ':</td><td><select name="tag">';
 
-while ($myrow=DB_fetch_array($result)){
-    if ($_POST['tag']==$myrow["tagref"]){
-	echo '<OPTION selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
-    } else {
-		echo '<OPTION value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
-    }
-}
+	$SQL = 'SELECT tagref,
+				tagdescription
+		FROM tags
+		ORDER BY tagref';
+
+	$result=DB_query($SQL,$db);
+	echo '<OPTION value=0>0 - None';
+	while ($myrow=DB_fetch_array($result)){
+    	if ($_POST['tag']==$myrow["tagref"]){
+		echo '<OPTION selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+    	} else {
+			echo '<OPTION value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+    	}
+	}
 	echo '</select></td></tr>';
 // End select tag
 

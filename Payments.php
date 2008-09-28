@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 $PageSecurity = 5;
 
@@ -79,7 +79,7 @@ if (isset($_GET['SupplierID'])){
 			 					address6
 							FROM factorcompanies
 							WHERE id='" . $myrow['factorcompanyid'] . "'";
-			
+
 			$FactorResult = DB_query($factorsql, $db);
 			$myfactorrow = DB_fetch_array($FactorResult);
 			$_SESSION['PaymentDetail']->SuppName = $myrow['suppname'] . _(' care of ') . $myfactorrow['coyname'];
@@ -91,7 +91,7 @@ if (isset($_GET['SupplierID'])){
 			$_SESSION['PaymentDetail']->Address6 = $myfactorrow['address6'];
 			$_SESSION['PaymentDetail']->SupplierID = $_GET['SupplierID'];
 			$_SESSION['PaymentDetail']->Currency = $myrow['currcode'];
-			$_POST['Currency'] = $_SESSION['PaymentDetail']->Currency;		
+			$_POST['Currency'] = $_SESSION['PaymentDetail']->Currency;
 		}
 	}
 }
@@ -103,7 +103,7 @@ if (isset($_POST['BankAccount']) and $_POST['BankAccount']!=''){
 	$result = DB_query('SELECT currcode FROM bankaccounts WHERE accountcode =' . $_POST['BankAccount'],$db,$ErrMsg);
 	$myrow = DB_fetch_row($result);
 	$_SESSION['PaymentDetail']->AccountCurrency=$myrow[0];
-	
+
 } else {
 	$_SESSION['PaymentDetail']->AccountCurrency =$_SESSION['CompanyRecord']['currencydefault'];
 }
@@ -127,7 +127,7 @@ if (isset($_POST['Currency']) and $_POST['Currency']!=''){
 	$result = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['PaymentDetail']->Currency . "'",$db);
 	$myrow = DB_fetch_row($result);
 	$tableExRate = $myrow[0]; //this is the rate of exchange between the functional currency and the payment currency
-	
+
 	if ($_POST['Currency']==$_SESSION['PaymentDetail']->AccountCurrency){
 		$_POST['ExRate']=1;
 		$_SESSION['PaymentDetail']->ExRate=$_POST['ExRate']; //ex rate between payment currency and account currency
@@ -138,29 +138,29 @@ if (isset($_POST['Currency']) and $_POST['Currency']!=''){
 		$_SESSION['PaymentDetail']->FunctionalExRate=$_POST['FunctionalExRate'];
 		$SuggestedFunctionalExRate =1;
 		$SuggestedExRate = $tableExRate;
-		
+
 	} else {
 		/*To illustrate the rates required
-			Take an example functional currency NZD payment in USD from an AUD bank account 
+			Take an example functional currency NZD payment in USD from an AUD bank account
 			1 NZD = 0.80 USD
 			1 NZD = 0.90 AUD
 			The FunctionalExRate = 0.90 - the rate between the functional currency and the bank account currency
 			The payment ex rate is the rate at which one can purchase the payment currency in the bank account currency
 			or 0.8/0.9 = 0.88889
 		*/
-		
-		/*Get suggested FunctionalExRate */	
+
+		/*Get suggested FunctionalExRate */
 		$result = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['PaymentDetail']->AccountCurrency . "'",$db);
 		$myrow = DB_fetch_row($result);
 		$SuggestedFunctionalExRate = $myrow[0];
-		
+
 		/*Get the exchange rate between the functional currecny and the payment currency*/
 		$result = DB_query("select rate FROM currencies WHERE currabrev='" . $_SESSION['PaymentDetail']->Currency . "'",$db);
 		$myrow = DB_fetch_row($result);
 		$tableExRate = $myrow[0]; //this is the rate of exchange between the functional currency and the payment currency
 		/*Calculate cross rate to suggest appropriate exchange rate between payment currency and account currency */
 		$SuggestedExRate = $tableExRate/$SuggestedFunctionalExRate;
-		
+
 	}
 }
 
@@ -207,13 +207,13 @@ if (isset($_POST['CommitBatch'])){
 	  $TotalAmount += $PaymentItem->Amount;
   }
 
-  if ($TotalAmount==0 AND 
+  if ($TotalAmount==0 AND
 	  ($_SESSION['PaymentDetail']->Discount + $_SESSION['PaymentDetail']->Amount)/$_SESSION['PaymentDetail']->ExRate ==0){
 	  prnMsg( _('This payment has no amounts entered and will not be processed'),'warn');
 	  include('includes/footer.inc');
 	  exit;
   }
-	
+
   /*Make an array of the defined bank accounts */
 	$SQL = 'SELECT bankaccounts.accountcode
 			FROM bankaccounts,
@@ -230,14 +230,14 @@ if (isset($_POST['CommitBatch'])){
 
   $PeriodNo = GetPeriod($_SESSION['PaymentDetail']->DatePaid,$db);
 
-  // first time through commit if supplier cheque then print it first 
+  // first time through commit if supplier cheque then print it first
 	if ((!isset($_POST['ChequePrinted']))
 		  AND (!isset($_POST['PaymentCancelled']))
 		  AND ($_SESSION['PaymentDetail']->Paymenttype == 'Cheque')) {
-     // it is a supplier payment by cheque and haven't printed yet so print cheque 
+     // it is a supplier payment by cheque and haven't printed yet so print cheque
 
     echo '<BR><A  HREF="' . $rootpath . '/PrintCheque.php?' . SID . '&ChequeNum=' . $_POST['ChequeNum'] . '">' . _('Print Cheque using pre-printed stationery') . '</A><BR><BR>';
-	
+
 	  echo '<FORM METHOD="post" action="' . $_SERVER['PHP_SELF'] . '">';
 	  echo _('Has the cheque been printed') . '?<BR><BR>';
 	  echo '<input type="hidden" NAME="CommitBatch" VALUE="' . $_POST['CommitBatch'] . '">';
@@ -245,14 +245,14 @@ if (isset($_POST['CommitBatch'])){
 	  echo '<input type="submit" NAME="PaymentCancelled" VALUE="' . _('No / Cancel Payment') . '">';
   } else {
 
-  //Start a transaction to do the whole lot inside 
+  //Start a transaction to do the whole lot inside
   $SQL = 'BEGIN';
   $result = DB_query($SQL,$db);
 
 
   if ($_SESSION['PaymentDetail']->SupplierID=='') {
 
-	  //its a nominal bank transaction type 1 
+	  //its a nominal bank transaction type 1
 
 	  $TransNo = GetNextTransNo( 1, $db);
 	  $Transtype = 1;
@@ -261,10 +261,10 @@ if (isset($_POST['CommitBatch'])){
 			$TotalAmount=0;
 			foreach ($_SESSION['PaymentDetail']->GLItems as $PaymentItem) {
 
-				 /*The functional currency amount will be the 
+				 /*The functional currency amount will be the
 				 	payment currenct amount  / the bank account currency exchange rate  - to get to the bank account currency
 				 	then / the functional currency exchange rate to get to the functional currency */
-				 
+
 				 $SQL = 'INSERT INTO gltrans (type,
 				 				typeno,
 								trandate,
@@ -293,56 +293,56 @@ if (isset($_POST['CommitBatch'])){
 			$_SESSION['PaymentDetail']->Discount=0;
    	}
 
-		//Run through the GL postings to check to see if there is a posting to another bank account (or the same one) if there is then a receipt needs to be created for this account too 
+		//Run through the GL postings to check to see if there is a posting to another bank account (or the same one) if there is then a receipt needs to be created for this account too
 
 		foreach ($_SESSION['PaymentDetail']->GLItems as $PaymentItem) {
 
 			if (in_array($PaymentItem->GLCode, $BankAccounts)) {
 
 				/*Need to deal with the case where the payment from one bank account could be to a bank account in another currency */
-				
+
 				/*Get the currency and rate of the bank account transferring to*/
-				$SQL = 'SELECT currcode, rate 
-							FROM bankaccounts INNER JOIN currencies 
+				$SQL = 'SELECT currcode, rate
+							FROM bankaccounts INNER JOIN currencies
 							ON bankaccounts.currcode = currencies.currabrev
 							WHERE accountcode=' . $PaymentItem->GLCode;
 				$TrfToAccountResult = DB_query($SQL,$db);
 				$TrfToBankRow = DB_fetch_array($TrfToAccountResult) ;
 				$TrfToBankCurrCode = $TrfToBankRow['currcode'];
 				$TrfToBankExRate = $TrfToBankRow['rate'];
-				
+
 				if ($_SESSION['PaymentDetail']->AccountCurrency == $TrfToBankCurrCode){
 					/*Make sure to use the same rate if the transfer is between two bank accounts in the same currency */
 					$TrfToBankExRate = $_SESSION['PaymentDetail']->FunctionalExRate;
 				}
-				
+
 				/*Consider an example
 					 functional currency NZD
 					 bank account in AUD - 1 NZD = 0.90 AUD (FunctionalExRate)
 					 paying USD - 1 AUD = 0.85 USD  (ExRate)
 					 to a bank account in EUR - 1 NZD = 0.52 EUR
-					 
-					 oh yeah - now we are getting tricky! 
+
+					 oh yeah - now we are getting tricky!
 					 Lets say we pay USD 100 from the AUD bank account to the EUR bank account
-					 
-					 To get the ExRate for the bank account we are transferring money to 
+
+					 To get the ExRate for the bank account we are transferring money to
 					 we need to use the cross rate between the NZD-AUD/NZD-EUR
-					 and apply this to the 
-					 
-					 the payment record will read 
+					 and apply this to the
+
+					 the payment record will read
 					 exrate = 0.85 (1 AUD = USD 0.85)
 					 amount = 100 (USD)
 					 functionalexrate = 0.90 (1 NZD = AUD 0.90)
-					 
+
 					 the receipt record will read
-					 
+
 					 amount 100 (USD)
 					 exrate    (1 EUR =  (0.85 x 0.90)/0.52 USD)
 					 					(ExRate x FunctionalExRate) / USD Functional ExRate
 					 functionalexrate =     (1NZD = EUR 0.52)
-					 
+
 				*/
-				
+
 				$ReceiptTransNo = GetNextTransNo( 2, $db);
 				$SQL= 'INSERT INTO banktrans (transno,
 								type,
@@ -352,11 +352,11 @@ if (isset($_POST['CommitBatch'])){
 								functionalexrate,
 								transdate,
 								banktranstype,
-								amount, 
-								currcode) 
+								amount,
+								currcode)
 						VALUES (' . $ReceiptTransNo . ',
 							2,
-							' . $PaymentItem->GLCode . ", '" 
+							' . $PaymentItem->GLCode . ", '"
 							. _('Act Transfer From ') . $_SESSION['PaymentDetail']->Account . ' - ' . $PaymentItem->Narrative . " ',
 							" . (($_SESSION['PaymentDetail']->ExRate * $_SESSION['PaymentDetail']->FunctionalExRate)/$TrfToBankExRate). ",
 							" . $TrfToBankExRate . ",
@@ -374,7 +374,7 @@ if (isset($_POST['CommitBatch'])){
   } else {
 	  /*Its a supplier payment type 22 */
    	$CreditorTotal = (($_SESSION['PaymentDetail']->Discount + $_SESSION['PaymentDetail']->Amount)/$_SESSION['PaymentDetail']->ExRate)/$_SESSION['PaymentDetail']->FunctionalExRate;
-		
+
 		$TransNo = GetNextTransNo(22, $db);
 		$Transtype = 22;
 
@@ -417,7 +417,7 @@ if (isset($_POST['CommitBatch'])){
 
 		if ($_SESSION['CompanyRecord']['gllink_creditors']==1){ /* then do the supplier control GLTrans */
 	      /* Now debit creditors account with payment + discount */
-			
+
 			$SQL="INSERT INTO gltrans ( type,
 							typeno,
 							trandate,
@@ -461,7 +461,7 @@ if (isset($_POST['CommitBatch'])){
 			} // end if discount
 		} // end if gl creditors
 	} // end if supplier
-  
+
 	if ($_SESSION['CompanyRecord']['gllink_creditors']==1){ /* then do the common GLTrans */
 
 	  if ($_SESSION['PaymentDetail']->Amount !=0){
@@ -560,12 +560,12 @@ if (isset($_POST['CommitBatch'])){
 			WHERE accountcode=" . $_POST['GLManualCode'];
 
 	$Result=DB_query($SQL,$db);
-	
+
 	if (DB_num_rows($Result)==0){
 		prnMsg( _('The manual GL code entered does not exist in the database') . ' - ' . _('so this GL analysis item could not be added'),'warn');
 		unset($_POST['GLManualCode']);
 	} else if (DB_num_rows($ChequeNoResult)!=0 and $_POST['cheque']!=''){
-		prnMsg( _('The Cheque/Voucher number has already been used') . ' - ' . _('This GL analysis item could not be added'),'error');		
+		prnMsg( _('The Cheque/Voucher number has already been used') . ' - ' . _('This GL analysis item could not be added'),'error');
 	} else {
 		$myrow = DB_fetch_array($Result);
 		$_SESSION['PaymentDetail']->add_to_glanalysis($_POST['GLAmount'],
@@ -576,7 +576,7 @@ if (isset($_POST['CommitBatch'])){
 								$_POST['cheque']);
 	}
    } else if (DB_num_rows($ChequeNoResult)!=0 and $_POST['cheque']!=''){
-		prnMsg( _('The cheque number has already been used') . ' - ' . _('This GL analysis item could not be added'),'error');		
+		prnMsg( _('The cheque number has already been used') . ' - ' . _('This GL analysis item could not be added'),'error');
    } else {
    	$SQL = "select accountname FROM chartmaster WHERE accountcode=" . $_POST['GLCode'];
 	$Result=DB_query($SQL,$db);
@@ -730,7 +730,7 @@ if (!isset($_POST['ExRate'])){
 	$_POST['ExRate']=1;
 }
 
-if (!isset($_POST['FunctionalExRate'])){ 
+if (!isset($_POST['FunctionalExRate'])){
 	$_POST['FunctionalExRate']=1;
 }
 if ($_SESSION['PaymentDetail']->AccountCurrency!=$_SESSION['PaymentDetail']->Currency AND isset($_SESSION['PaymentDetail']->AccountCurrency)){
@@ -747,7 +747,7 @@ if ($_SESSION['PaymentDetail']->AccountCurrency!=$_SESSION['PaymentDetail']->Cur
 			<td>' . $SuggestedExRateText . ' <i>' . _('The exchange rate between the currency of the bank account currency and the currency of the payment') . '. 1 ' . $_SESSION['PaymentDetail']->AccountCurrency . ' = ? ' . $_SESSION['PaymentDetail']->Currency . '</i></td></tr>';
 }
 
-if ($_SESSION['PaymentDetail']->AccountCurrency!=$_SESSION['CompanyRecord']['currencydefault'] 
+if ($_SESSION['PaymentDetail']->AccountCurrency!=$_SESSION['CompanyRecord']['currencydefault']
 												AND isset($_SESSION['PaymentDetail']->AccountCurrency)){
 	if (isset($SuggestedFunctionalExRate)){
 		$SuggestedFunctionalExRateText = '<b>' . _('Suggested rate:') . ' ' . number_format($SuggestedFunctionalExRate,4) . '</b>';
@@ -763,7 +763,7 @@ if ($_SESSION['PaymentDetail']->AccountCurrency!=$_SESSION['CompanyRecord']['cur
 echo '<tr><td>' . _('Payment type') . ':</td><td><select name="Paymenttype">';
 
 include('includes/GetPaymentMethods.php');
-/* The array Payttypes is set up in includes/GetPaymentMethods.php 
+/* The array Payttypes is set up in includes/GetPaymentMethods.php
 payment methods can be modified from the setup tab of the main menu under payment methods*/
 
 foreach ($PaytTypes as $PaytType) {
@@ -790,8 +790,8 @@ if (!isset($_POST['Narrative'])) {
 echo '<tr><td>' . _('Reference / Narrative') . ':</td>
 			<td colspan=2><input type="text" name="Narrative" maxlength=80 size=82 value="' . $_POST['Narrative'] . '"> (Max. length 80 characters)</td></tr>';
 echo '<tr><td colspan=3><center><input type="submit" name="UpdateHeader" value="' . _('Update'). '"></center></td></tr>';
-			
-			
+
+
 echo '</table>';
 
 
@@ -831,32 +831,26 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 
 
 	echo '<BR><CENTER>' . _('General Ledger Payment Analysis Entry') . '<table>';
-	
-	//Select the tag
-	echo '<tr><td>' . _('Select Tag') . ':</td>
-		<td><select name="tag">';
 
-	$SQL = 'SELECT tagref, 
-				tagdescription 
-		FROM tags 
+	//Select the tag
+	echo '<tr><td>' . _('Select Tag') . ':</td><td><select name="tag">';
+
+	$SQL = 'SELECT tagref,
+				tagdescription
+		FROM tags
 		ORDER BY tagref';
-			
+
 	$result=DB_query($SQL,$db);
 	echo '<OPTION value=0>0 - None';
-	if (DB_num_rows($result)==0){
-   		echo '</select></td></tr>';
-   		prnMsg(_('No Tags have been set up yet') . ' - ' . _('payments cannot be analysed against a tag until the tag is set up'),'error');
-	} else {
-		while ($myrow=DB_fetch_array($result)){
-	    	if ($_POST['tag']==$myrow["tagref"]){
-				echo '<OPTION selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
-	    	} else {
-				echo '<OPTION value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
-	    	}
-		}
-		echo '</select></td></tr>';
+	while ($myrow=DB_fetch_array($result)){
+    	if ($_POST['tag']==$myrow["tagref"]){
+		echo '<OPTION selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+    	} else {
+			echo '<OPTION value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+    	}
 	}
-	// End select tag	
+	echo '</select></td></tr>';
+// End select tag
 
 	/*now set up a GLCode field to select from avaialble GL accounts */
 	echo '<tr><td>' . _('Enter GL Account Manually') . ':</td>
@@ -864,11 +858,11 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 	echo '<tr><td>' . _('Select GL Account') . ':</td>
 		<td><select name="GLCode">';
 
-	$SQL = 'SELECT accountcode, 
-					accountname 
-			FROM chartmaster 
+	$SQL = 'SELECT accountcode,
+					accountname
+			FROM chartmaster
 			ORDER BY accountcode';
-			
+
 	$result=DB_query($SQL,$db);
 	if (DB_num_rows($result)==0){
 	   echo '</select></td></tr>';
@@ -883,7 +877,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors']==1 AND $_SESSION['PaymentDeta
 		}
 		echo '</select></td></tr>';
 	}
-	
+
 	echo '<tr><td>'. _('Cheque/Voucher Number') .'</td><td><input type="text" name="cheque" Maxlength=12 SIZE=12></td></tr>';
 
 	echo '<tr><td>' . _('GL Narrative') . ':</td><td><input type="text" name="GLNarrative" maxlength=50 size=52 value="' . $_POST['GLNarrative'] . '"></td></tr>';
