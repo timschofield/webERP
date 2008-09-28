@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 include('includes/DefineJournalClass.php');
 
@@ -29,7 +29,7 @@ if (!isset($_SESSION['JournalDetail'])){
 		$_SESSION['JournalDetail']->BankAccounts[$i]= $Act[0];
 		$i++;
 	}
-	
+
 }
 
 if (isset($_POST['JournalProcessDate'])){
@@ -74,7 +74,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 					" . $PeriodNo . ",
 					" . $JournalItem->GLCode . ",
 					'" . $JournalItem->Narrative . "',
-					" . $JournalItem->Amount . 
+					" . $JournalItem->Amount .
 					",'".$JournalItem->tag."')";
 		$ErrMsg = _('Cannot insert a GL entry for the journal line because');
 		$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
@@ -95,7 +95,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 						" . ($PeriodNo + 1) . ",
 						" . $JournalItem->GLCode . ",
 						'Reversal - " . $JournalItem->Narrative . "',
-						" . -($JournalItem->Amount) . 
+						" . -($JournalItem->Amount) .
 					",'".$JournalItem->tag."')";
 
 			$ErrMsg =_('Cannot insert a GL entry for the reversing journal because');
@@ -145,8 +145,8 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 	if (in_array($_POST['GLManualCode'], $_SESSION['JournalDetail']->BankAccounts)) {
 		prnMsg(_('GL Journals involving a bank account cannot be entered') . '. ' . _('Bank account general ledger entries must be entered by either a bank account receipt or a bank account payment'),'info');
 		$AllowThisPosting =false;
-	} 
-	
+	}
+
 	if ($AllowThisPosting) {
 		$SQL = 'SELECT accountname FROM chartmaster WHERE accountcode=' . $_POST['GLManualCode'];
 		$Result=DB_query($SQL,$db);
@@ -170,12 +170,12 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 			$AllowThisPosting = false;
 		}
 	}
-	
+
 	if (in_array($_POST['GLCode'], $_SESSION['JournalDetail']->BankAccounts)) {
 		prnMsg(_('GL Journals involving a bank account cannot be entered') . '. ' . _('Bank account general ledger entries must be entered by either a bank account receipt or a bank account payment'),'warn');
 		$AllowThisPosting = false;
-	} 
-	
+	}
+
 	if ($AllowThisPosting){
 
 		$SQL = 'SELECT accountname FROM chartmaster WHERE accountcode=' . $_POST['GLCode'];
@@ -237,32 +237,20 @@ echo '<TD>';
 /* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
 echo '<FONT SIZE=3 COLOR=BLUE>' . _('Journal Line Entry') . '</FONT><TABLE>';
-	
+
 //Select the tag
 echo '<tr><td>' . _('Select Tag') . ':</td>
 	<td><select name="tag">';
 
-$SQL = 'SELECT tagref, 
-				tagdescription 
-		FROM tags 
-		ORDER BY tagref';
-			
-$result=DB_query($SQL,$db);
-echo '<OPTION value=0>0 - None';
-if (DB_num_rows($result)==0){
-   echo '</select></td></tr>';
-   prnMsg(_('No Tags have been set up yet') . ' - ' . _('payments cannot be analysed against a tag until the tag is set up'),'error');
-} else {
-	while ($myrow=DB_fetch_array($result)){
-	    if ($_POST['tag']==$myrow["tagref"]){
-		echo '<OPTION selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
-	    } else {
-			echo '<OPTION value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
-	    }
-	}
-	echo '</select></td></tr>';
+while ($myrow=DB_fetch_array($result)){
+    if ($_POST['tag']==$myrow["tagref"]){
+	echo '<OPTION selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+    } else {
+		echo '<OPTION value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+    }
 }
-// End select tag	
+	echo '</select></td></tr>';
+// End select tag
 
 
 /*now set up a GLCode field to select from avaialble GL accounts */

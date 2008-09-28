@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -18,7 +18,7 @@ if (isset($_GET['NewReceipt'])){
 	unset($_SESSION['ReceiptBatch']->Items);
 	unset($_SESSION['ReceiptBatch']);
 	unset($_SESSION['CustomerRecord']);
-	
+
 }
 
 if (isset($_POST['Cancel'])) {
@@ -27,14 +27,14 @@ if (isset($_POST['Cancel'])) {
 
 if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){ //always process a header update unless deleting an item
 
-		
+
 	$_SESSION['ReceiptBatch']->Account = $_POST['BankAccount'];
 	/*Get the bank account currency and set that too */
 
 	$SQL = 'SELECT bankaccountname, currcode FROM bankaccounts WHERE accountcode=' . $_POST['BankAccount'];
 	$ErrMsg =_('The bank account name cannot be retrieved because');
 	$result= DB_query($SQL,$db,$ErrMsg);
-		
+
 	if (DB_num_rows($result)==1){
 		$myrow = DB_fetch_row($result);
 		$_SESSION['ReceiptBatch']->BankAccountName = $myrow[0];
@@ -45,7 +45,7 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){ //always proc
 		include ('includes/footer.inc');
 		exit;
 	}
-			
+
 	if (!Is_Date($_POST['DateBanked'])){
 		$_POST['DateBanked'] = Date($_SESSION['DefaultDateFormat']);
 	}
@@ -71,15 +71,15 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){ //always proc
 	}
 
 	if ($_SESSION['ReceiptBatch']->Currency!=$_POST['Currency']){
-		
+
 		$_SESSION['ReceiptBatch']->Currency=$_POST['Currency']; //receipt currency
-		/*Now customer receipts entered using the previous currency need to be ditched 
+		/*Now customer receipts entered using the previous currency need to be ditched
 		and a warning message displayed if there were some customer receipted entered */
 		if (count($_SESSION['ReceiptBatch']->Items)>0){
 			unset($_SESSION['ReceiptBatch']->Items);
 			prnMsg(_('Changing the currency of the receipt means that existing entries need to be re-done - only customers trading in the selected currency can be selected'),'warn');
-		} 
-		
+		}
+
 	}
 
 	/*Get the exchange rate between the functional currecny and the receipt currency*/
@@ -95,33 +95,33 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){ //always proc
 		$_SESSION['ReceiptBatch']->FunctionalExRate = 1;
 		$SuggestedFunctionalExRate =1;
 		$SuggestedExRate = $tableExRate;
-		
+
 	} else {
 		/*To illustrate the rates required
-			Take an example functional currency NZD receipt in USD from an AUD bank account 
+			Take an example functional currency NZD receipt in USD from an AUD bank account
 			1 NZD = 0.80 USD
 			1 NZD = 0.90 AUD
 			The FunctionalExRate = 0.90 - the rate between the functional currency and the bank account currency
 			The receipt ex rate is the rate at which one can sell the received currency and purchase the bank account currency
 			or 0.8/0.9 = 0.88889
 		*/
-		
-		/*Get suggested FunctionalExRate */	
+
+		/*Get suggested FunctionalExRate */
 		$result = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $_SESSION['ReceiptBatch']->AccountCurrency . "'",$db);
 		$myrow = DB_fetch_row($result);
 		$SuggestedFunctionalExRate = $myrow[0];
-		
+
 		/*Get the exchange rate between the functional currecny and the receipt currency*/
 		$result = DB_query("select rate FROM currencies WHERE currabrev='" . $_SESSION['ReceiptBatch']->Currency . "'",$db);
 		$myrow = DB_fetch_row($result);
 		$tableExRate = $myrow[0]; //this is the rate of exchange between the functional currency and the receipt currency
 		/*Calculate cross rate to suggest appropriate exchange rate between receipt currency and account currency */
-		$SuggestedExRate = $tableExRate/$SuggestedFunctionalExRate;	
+		$SuggestedExRate = $tableExRate/$SuggestedFunctionalExRate;
 	} //end else account currency != functional currency
 
 	$_SESSION['ReceiptBatch']->Narrative = $_POST['BatchNarrative'];
-	
-} elseif (isset($_GET['Delete'])) { 
+
+} elseif (isset($_GET['Delete'])) {
   /* User hit delete the receipt entry from the batch */
    $_SESSION['ReceiptBatch']->remove_receipt_item($_GET['Delete']);
 } else { //it must be a new receipt batch
@@ -131,12 +131,12 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch'])){ //always proc
 
 if (isset($_POST['Process'])){ //user hit submit a new entry to the receipt batch
 
-   $_SESSION['ReceiptBatch']->add_to_batch($_POST['Amount'], 
-   											$_POST['CustomerID'], 
-											$_POST['Discount'], 
+   $_SESSION['ReceiptBatch']->add_to_batch($_POST['Amount'],
+   											$_POST['CustomerID'],
+											$_POST['Discount'],
 											$_POST['Narrative'],
-											$_POST['GLCode'], 
-											$_POST['PayeeBankDetail'], 
+											$_POST['GLCode'],
+											$_POST['PayeeBankDetail'],
 											$_POST['CustomerName'],
 											$_POST['tag']);
 
@@ -188,7 +188,7 @@ if (isset($_POST['CommitBatch'])){
  		$BankAccounts[$i]= $Act[0];
 		$i++;
    }
-	
+
 	$_SESSION['ReceiptBatch']->BatchNo = GetNextTransNo(12,$db);
    /*Start a transaction to do the whole lot inside */
    $SQL = 'BEGIN';
@@ -209,7 +209,7 @@ if (isset($_POST['CommitBatch'])){
 						account,
 						narrative,
 						amount,
-						tag) 
+						tag)
 			 		  VALUES (12,
 			 			' . $_SESSION['ReceiptBatch']->BatchNo . ",
 						'" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
@@ -229,50 +229,50 @@ if (isset($_POST['CommitBatch'])){
 			if (in_array($ReceiptItem->GLCode, $BankAccounts)) {
 
 			/*Need to deal with the case where the payment from one bank account could be to a bank account in another currency */
-				
+
 				/*Get the currency and rate of the bank account transferring to*/
-				$SQL = 'SELECT currcode, rate 
-							FROM bankaccounts INNER JOIN currencies 
+				$SQL = 'SELECT currcode, rate
+							FROM bankaccounts INNER JOIN currencies
 							ON bankaccounts.currcode = currencies.currabrev
 							WHERE accountcode=' . $ReceiptItem->GLCode;
 				$TrfFromAccountResult = DB_query($SQL,$db);
 				$TrfFromBankRow = DB_fetch_array($TrfFromAccountResult) ;
 				$TrfFromBankCurrCode = $TrfFromBankRow['currcode'];
 				$TrfFromBankExRate = $TrfFromBankRow['rate'];
-				
+
 				if ($_SESSION['ReceiptBatch']->AccountCurrency == $TrfFromBankCurrCode){
 					/*Make sure to use the same rate if the transfer is between two bank accounts in the same currency */
 					$TrfFromBankExRate = $_SESSION['ReceiptBatch']->FunctionalExRate;
 				}
-				
+
 				/*Consider an example - had to be currencies I am familar with sorry so I could figure it out!!
 					 functional currency NZD
 					 bank account in AUD - 1 NZD = 0.90 AUD (FunctionalExRate)
 					 receiving USD - 1 AUD = 0.85 USD  (ExRate)
 					 from a bank account in EUR - 1 NZD = 0.52 EUR
-					 
-					 oh yeah - now we are getting tricky! 
+
+					 oh yeah - now we are getting tricky!
 					 Lets say we received USD 100 to the AUD bank account from the EUR bank account
-					 
-					 To get the ExRate for the bank account we are transferring money from 
+
+					 To get the ExRate for the bank account we are transferring money from
 					 we need to use the cross rate between the NZD-AUD/NZD-EUR
-					 and apply this to the 
-					 
-					 the receipt record will read 
+					 and apply this to the
+
+					 the receipt record will read
 					 exrate = 0.85 (1 AUD = USD 0.85)
 					 amount = 100 (USD)
 					 functionalexrate = 0.90 (1 NZD = AUD 0.90)
-					 
+
 					 the payment record will read
-					 
+
 					 amount 100 (USD)
 					 exrate    (1 EUR =  (0.85 x 0.90)/0.52 USD  ~ 1.47
 					  					(ExRate x FunctionalExRate) / USD Functional ExRate
 					 Check this is 1 EUR = 1.47 USD
 					 functionalexrate =  (1NZD = EUR 0.52)
-					 
+
 				*/
-				
+
 				$PaymentTransNo = GetNextTransNo( 1, $db);
 				$SQL='INSERT INTO banktrans (transno,
 							type,
@@ -283,7 +283,7 @@ if (isset($_POST['CommitBatch'])){
 							transdate,
 							banktranstype,
 							amount,
-							currcode) 
+							currcode)
 			      VALUES (' . $PaymentTransNo . ',
 						1,
 						' . $ReceiptItem->GLCode . ",
@@ -317,7 +317,7 @@ if (isset($_POST['CommitBatch'])){
 							rate,
 							ovamount,
 							ovdiscount,
-							invtext) 
+							invtext)
 		   			VALUES (' . $_SESSION['ReceiptBatch']->BatchNo . ",
 		   				12,
 						'" . $ReceiptItem->Customer . "',
@@ -336,9 +336,9 @@ if (isset($_POST['CommitBatch'])){
 			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
 			$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . FormatDateForSQL($_SESSION['ReceiptBatch']->DateBanked) . "',
-											lastpaid=" . $ReceiptItem->Amount ." 
+											lastpaid=" . $ReceiptItem->Amount ."
 									WHERE debtorsmaster.debtorno='" . $ReceiptItem->Customer . "'";
-					
+
 			$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
 			$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
 			$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
@@ -348,7 +348,7 @@ if (isset($_POST['CommitBatch'])){
 	    $BatchReceiptsTotal += ($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate);
 
    } /*end foreach $ReceiptItem */
-   
+
    if ($_SESSION['CompanyRecord']['gllink_debtors']==1){ /* then enter GLTrans records for discount, bank and debtors */
 
 	if ($BatchReceiptsTotal!=0){
@@ -370,7 +370,7 @@ if (isset($_POST['CommitBatch'])){
 		$DbgMsg = _('The SQL that failed to insert the GL transaction fro the bank account debit was');
 		$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
 		$result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
-                
+
                 /*now enter the BankTrans entry */
 
                 $SQL='INSERT INTO banktrans (type,
@@ -456,7 +456,7 @@ if (isset($_POST['CommitBatch'])){
    unset($_SESSION['ReceiptBatch']);
    include('includes/footer.inc');
    exit;
-   
+
 } /* End of commit batch */
 
 
@@ -540,14 +540,14 @@ customer record returned by the search - this record is then auto selected */
 			holdreasons.dissallowinvoices,
 			holdreasons.reasondescription,
 			SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) AS balance,
-			SUM(CASE WHEN paymentterms.daysbeforedue > 0  THEN 
+			SUM(CASE WHEN paymentterms.daysbeforedue > 0  THEN
 				CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) >= paymentterms.daysbeforedue  THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
-			ELSE 
+			ELSE
 				CASE WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, ' . INTERVAL('1','MONTH') . '), ' . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . ')) >= 0 THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
 			END) AS due,
 			SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
 				CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue	AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + ' . $_SESSION['PastDueDays1'] . ') THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight - debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
-			ELSE 
+			ELSE
 				CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, ' . INTERVAL('1', 'MONTH') .'), ' . INTERVAL('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))', 'DAY') . ')) >= ' . $_SESSION['PastDueDays1'] . ') THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
 			END) AS overdue1,
 			SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
@@ -577,7 +577,7 @@ customer record returned by the search - this record is then auto selected */
 				debtorsmaster.creditlimit,
 				holdreasons.dissallowinvoices,
 				holdreasons.reasondescription";
-				
+
 
 	$ErrMsg = _('The customer details could not be retrieved because');
 	$DbgMsg = _('The SQL that failed was');
@@ -614,9 +614,9 @@ customer record returned by the search - this record is then auto selected */
 	} else {
 		$NIL_BALANCE = False;
 	}
-	
-	$_SESSION['CustomerRecord'] = DB_fetch_array($CustomerResult);	
-	
+
+	$_SESSION['CustomerRecord'] = DB_fetch_array($CustomerResult);
+
 	if ($NIL_BALANCE==True){
 		$_SESSION['CustomerRecord']['balance']=0;
 		$_SESSION['CustomerRecord']['due']=0;
@@ -703,7 +703,7 @@ if (!isset($_SESSION['ReceiptBatch']->ExRate)){
 	$_SESSION['ReceiptBatch']->ExRate=1;
 }
 
-if (!isset($_SESSION['ReceiptBatch']->FunctionalExRate)){ 
+if (!isset($_SESSION['ReceiptBatch']->FunctionalExRate)){
 	$_SESSION['ReceiptBatch']->FunctionalExRate=1;
 }
 if ($_SESSION['ReceiptBatch']->AccountCurrency!=$_SESSION['ReceiptBatch']->Currency AND isset($_SESSION['ReceiptBatch']->AccountCurrency)){
@@ -720,7 +720,7 @@ if ($_SESSION['ReceiptBatch']->AccountCurrency!=$_SESSION['ReceiptBatch']->Curre
 			<td>' . $SuggestedExRateText . ' <i>' . _('The exchange rate between the currency of the bank account currency and the currency of the receipt') . '. 1 ' . $_SESSION['ReceiptBatch']->AccountCurrency . ' = ? ' . $_SESSION['ReceiptBatch']->Currency . '</i></td></tr>';
 }
 
-if ($_SESSION['ReceiptBatch']->AccountCurrency!=$_SESSION['CompanyRecord']['currencydefault'] 
+if ($_SESSION['ReceiptBatch']->AccountCurrency!=$_SESSION['CompanyRecord']['currencydefault']
 											AND isset($_SESSION['ReceiptBatch']->AccountCurrency)){
 	if (isset($SuggestedFunctionalExRate)){
 		$SuggestedFunctionalExRateText = '<b>' . _('Suggested rate:') . ' ' . number_format($SuggestedFunctionalExRate,4) . '</b>';
@@ -733,7 +733,7 @@ if ($_SESSION['ReceiptBatch']->AccountCurrency!=$_SESSION['CompanyRecord']['curr
 	echo '<tr><td>' . _('Functional Exchange Rate') . ':</td><td><input tabindex=5 type="text" name="FunctionalExRate" maxlength=10 size=12 value="' . $_SESSION['ReceiptBatch']->FunctionalExRate . '"></td>
 			<td>' . ' ' . $SuggestedFunctionalExRateText . ' <i>' . _('The exchange rate between the currency of the business (the functional currency) and the currency of the bank account') .  '. 1 ' . $_SESSION['CompanyRecord']['currencydefault'] . ' = ? ' . $_SESSION['ReceiptBatch']->AccountCurrency . '</i></td></tr>';
 }
-	
+
 echo '<tr><td>' . _('Receipt Type') . ":</td><TD><SELECT tabindex=6 name=ReceiptType>";
 
 include('includes/GetPaymentMethods.php');
@@ -797,16 +797,16 @@ Finally enter the amount */
 then set out the customers account summary */
 
 
-if (isset($_SESSION['CustomerRecord']) 
+if (isset($_SESSION['CustomerRecord'])
 		AND $_SESSION['CustomerRecord']['currcode'] != $_SESSION['ReceiptBatch']->Currency){
 	prnMsg(_('The selected customer does not trade in the currency of the receipt being entered - either the currency of the receipt needs to be changed or a different customer selected'),'warn');
 	unset($_SESSION['CustomerRecord']);
 }
 
 
-if (isset($_SESSION['CustomerRecord']) 
-		AND isset($_POST['CustomerID']) 
-		AND $_POST['CustomerID']!='' 
+if (isset($_SESSION['CustomerRecord'])
+		AND isset($_POST['CustomerID'])
+		AND $_POST['CustomerID']!=''
 		AND isset($_SESSION['ReceiptBatch'])){
 /*a customer is selected  */
 
@@ -851,27 +851,22 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
 	//Select the tag
 	echo '<tr><td>' . _('Select Tag') . ':</td><td><select name="tag">';
 
-	$SQL = 'SELECT tagref, 
-				tagdescription 
-		FROM tags 
+	$SQL = 'SELECT tagref,
+				tagdescription
+		FROM tags
 		ORDER BY tagref';
-			
+
 	$result=DB_query($SQL,$db);
 	echo '<OPTION value=0>0 - None';
-	if (DB_num_rows($result)==0){
-   		echo '</select></td></tr>';
-   		prnMsg(_('No Tags have been set up yet') . ' - ' . _('payments cannot be analysed against a tag until the tag is set up'),'error');
-	} else {
-		while ($myrow=DB_fetch_array($result)){
-	    	if ($_POST['tag']==$myrow["tagref"]){
-			echo '<OPTION selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
-	    	} else {
-				echo '<OPTION value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
-	    	}
-		}
-		echo '</select></td></tr>';
+	while ($myrow=DB_fetch_array($result)){
+    	if ($_POST['tag']==$myrow["tagref"]){
+		echo '<OPTION selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+    	} else {
+			echo '<OPTION value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+    	}
 	}
-// End select tag	
+	echo '</select></td></tr>';
+// End select tag
 
 	/*now set up a GLCode field to select from avaialble GL accounts */
 	echo '<tr><td>' . _('GL Account') . ':</td><TD><SELECT tabindex=8 name="GLCode">';
@@ -895,10 +890,10 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch'])){
 /*if either a customer is selected or its a GL Entry then set out
 the fields for entry of receipt amt, disc, payee details, narrative */
 
-if (((isset($_SESSION['CustomerRecord']) 
-		AND isset($_POST['CustomerID']) 
-		AND $_POST['CustomerID']!="") 
-			OR isset($_POST['GLEntry'])) 
+if (((isset($_SESSION['CustomerRecord'])
+		AND isset($_POST['CustomerID'])
+		AND $_POST['CustomerID']!="")
+			OR isset($_POST['GLEntry']))
 				AND isset($_SESSION['ReceiptBatch'])){
 
 	if (!isset($_POST['Amount'])) {
@@ -974,7 +969,7 @@ if (((isset($_SESSION['CustomerRecord'])
 			}
 
 			printf("<td><font size=1><input tabindex=".number_format(12+$j)." type=submit name='Select' value='%s'</font></td>
-					<td>%s</td></tr>", 
+					<td>%s</td></tr>",
 					$myrow['debtorno'],
 					$myrow['name']);
 
