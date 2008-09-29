@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.41 $ */
+/* $Revision: 1.42 $ */
 
 $PageSecurity =15;
 
@@ -733,22 +733,6 @@ if ($_SESSION['ProhibitJournalsToControlAccounts']=='1'){
 }
 echo '</SELECT></TD><TD>' . _('Setting this to prohibited prevents accidentally entering a journal to the automatically posted and reconciled control accounts for creditors (AP) and debtors (AR)') . '</TD></TR>';
 
-
-/*echo '<TR><TD>' . _('Prohibit GL Journals to Periods Prior To') . ':</TD>
-	<TD><SELECT Name="X_ProhibitPostingsBefore">';
-
-$sql = 'SELECT lastdate_in_period FROM periods ORDER BY periodno DESC';
-$ErrMsg = _('Could not load periods table');
-$result = DB_query($sql,$db,$ErrMsg);
-while ($PeriodRow = DB_fetch_row($result)){
-	if ($_SESSION['ProhibitPostingsBefore']==$PeriodRow[0]){
-		echo  '<OPTION SELECTED value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[0]);
-	} else {
-		echo  '<OPTION value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[0]);
-	}
-}
-echo '</SELECT></TD><TD>' . _('This allows all periods before the selected date to be locked from postings. All postings for transactions dated prior to this date will be posted in the period following this date.') . '</TD></TR>';
-*/
 $ProhibitPostingsBefore = explode('-', $_SESSION['ProhibitPostingsBefore']);
 echo '<TR><TD>' . _('Prohibit GL Journals to Periods Prior To') . ':</TD>
 	<TD><SELECT Name="ProhibitPostingsBeforeMonth">';
