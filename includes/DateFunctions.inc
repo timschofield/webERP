@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 /*
 date validation and parsing functions
@@ -668,12 +668,6 @@ function PeriodExists($TransDate, &$db) {
 
 function GetPeriod ($TransDate, &$db) {
 
-	/* If transaction date is in a closed period use the month end of that period */
-	if ($TransDate < $_SESSION['ProhibitPostingsBefore']) {
-		$Date_array = explode('-', $_SESSION['ProhibitPostingsBefore']);
-		$TransDate = mktime(0,0,0,$Date_array[1],$Date_array[2],$Date_array[0]);
-	}
-
 	/* Convert the transaction date into a unix time stamp.*/
 	$Date_array = explode('/', $TransDate);
 	if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
@@ -682,6 +676,14 @@ function GetPeriod ($TransDate, &$db) {
 		$TransDate = mktime(0,0,0,$Date_array[0],$Date_array[1],$Date_array[2]);
 	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d'){
 		$TransDate = mktime(0,0,0,$Date_array[1],$Date_array[2],$Date_array[0]);
+	}
+
+	$Date_array = explode('-', $_SESSION['ProhibitPostingsBefore']);
+	$ProhibitPostingsBefore=mktime(0,0,0,$Date_array[1],$Date_array[2],$Date_array[0]);
+
+	/* If transaction date is in a closed period use the month end of that period */
+	if ($TransDate < $ProhibitPostingsBefore) {
+		$TransDate = $ProhibitPostingsBefore;
 	}
 
 	/* Find the unix timestamp of the last period end date in periods table */
@@ -703,6 +705,7 @@ function GetPeriod ($TransDate, &$db) {
 	/* If the period number doesn't exist */
 	if (!PeriodExists($TransDate, $db)) {
 		/* if the transaction is after the last period */
+		echo ($TransDate > $LastPeriodEnd);
 		if ($TransDate > $LastPeriodEnd) {
 			$PeriodEnd = mktime(0,0,0,Date('m', $TransDate)+1, 0, Date('Y', $TransDate));
 			$Period = $LastPeriod + 1;
