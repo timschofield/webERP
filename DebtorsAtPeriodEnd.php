@@ -1,7 +1,7 @@
 <?php
 $PageSecurity = 2;
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 include('includes/session.inc');
 
 If (isset($_POST['PrintPDF'])
@@ -134,7 +134,7 @@ If (isset($_POST['PrintPDF'])
 
 		echo '<TR><TD>' . _('Balances As At') . ":</TD><TD><SELECT tabindex=3 Name='PeriodEnd'>";
 
-		$sql = 'SELECT periodno, lastdate_in_period FROM periods';
+		$sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC';
 		$Periods = DB_query($sql,$db,_('Could not retrieve period data because'),_('The SQL that failed to get the period data was'));
 
 		while ($myrow = DB_fetch_array($Periods,$db)){
