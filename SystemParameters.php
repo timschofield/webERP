@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.40 $ */
+/* $Revision: 1.41 $ */
 
 $PageSecurity =15;
 
@@ -23,6 +23,9 @@ if (isset($_POST['submit'])) {
 		Note: the X_ in the POST variables, the reason for this is to overcome globals=on replacing
 		the actial system/overidden variables.
 	*/
+	$_POST['X_ProhibitPostingsBefore'] = Date('Y-m-d',
+		mktime(0,0,0,$_POST['ProhibitPostingsBeforeMonth'],1,$_POST['ProhibitPostingsBeforeYear']));
+
 	if (strlen($_POST['X_PastDueDays1']) > 3 || !is_numeric($_POST['X_PastDueDays1']) ) {
 		$InputError = 1;
 		prnMsg(_('First overdue deadline days must be a number'),'error');
@@ -82,6 +85,7 @@ if (isset($_POST['submit'])) {
 	if ($InputError !=1){
 
 		$sql = array();
+		$Day=1;
 
 		if ($_SESSION['DefaultDateFormat'] != $_POST['X_DefaultDateFormat'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_DefaultDateFormat']."' WHERE confname = 'DefaultDateFormat'";
@@ -667,7 +671,7 @@ echo '<TR><TD>' . _('Only allow secure socket connections') . ':</TD>
 /*Perform Database maintenance DB_Maintenance*/
 echo '<TR><TD>' . _('Perform Database Maintenance At Logon') . ':</TD>
 	<TD><SELECT Name="X_DB_Maintenance">';
-	
+
 	if ($_SESSION['DB_Maintenance']=='7'){
 		echo '<OPTION SELECTED VALUE="7">'._('Weekly');
 	} else {
@@ -730,7 +734,7 @@ if ($_SESSION['ProhibitJournalsToControlAccounts']=='1'){
 echo '</SELECT></TD><TD>' . _('Setting this to prohibited prevents accidentally entering a journal to the automatically posted and reconciled control accounts for creditors (AP) and debtors (AR)') . '</TD></TR>';
 
 
-echo '<TR><TD>' . _('Prohibit GL Journals to Periods Prior To') . ':</TD>
+/*echo '<TR><TD>' . _('Prohibit GL Journals to Periods Prior To') . ':</TD>
 	<TD><SELECT Name="X_ProhibitPostingsBefore">';
 
 $sql = 'SELECT lastdate_in_period FROM periods ORDER BY periodno DESC';
@@ -741,6 +745,26 @@ while ($PeriodRow = DB_fetch_row($result)){
 		echo  '<OPTION SELECTED value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[0]);
 	} else {
 		echo  '<OPTION value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[0]);
+	}
+}
+echo '</SELECT></TD><TD>' . _('This allows all periods before the selected date to be locked from postings. All postings for transactions dated prior to this date will be posted in the period following this date.') . '</TD></TR>';
+*/
+$ProhibitPostingsBefore = explode('-', $_SESSION['ProhibitPostingsBefore']);
+echo '<TR><TD>' . _('Prohibit GL Journals to Periods Prior To') . ':</TD>
+	<TD><SELECT Name="ProhibitPostingsBeforeMonth">';
+for ($month=1; $month<=12; $month++) {
+	if ($month==$ProhibitPostingsBefore[1]) {
+		echo '<OPTION SELECTED value='.$month.'>'. Date('M', mktime(0,0,0,$month,1,2008));
+	} else {
+		echo '<OPTION value='.$month.'>'. Date('M', mktime(0,0,0,$month,1,2008));
+	}
+}
+echo '</SELECT><SELECT Name="ProhibitPostingsBeforeYear">';
+for ($year=Date('Y')-10; $year<=Date('Y'); $year++) {
+	if ($year==$ProhibitPostingsBefore[0]) {
+		echo '<OPTION SELECTED value='.$year.'>'. $year;
+	} else {
+		echo '<OPTION value='.$year.'>'. $year;
 	}
 }
 echo '</SELECT></TD><TD>' . _('This allows all periods before the selected date to be locked from postings. All postings for transactions dated prior to this date will be posted in the period following this date.') . '</TD></TR>';
