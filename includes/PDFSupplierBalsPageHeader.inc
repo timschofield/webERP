@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 /*PDF page header for aged analysis reports */
 $PageNumber++;
 if ($PageNumber>1){
@@ -14,7 +14,7 @@ $pdf->addText($Left_Margin, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname
 $YPos -=$line_height;
 
 $FontSize =10;
-$pdf->addText($Left_Margin, $YPos, $FontSize, _('Creditors Balances For Suppliers between') . ' ' . $_POST['FromCriteria'] . ' ' . _('and') . ' ' . $_POST['ToCriteria'] . ' ' . _('as at') . ' ' . ConvertSQLDate($_POST['PeriodEnd']));
+$pdf->addText($Left_Margin, $YPos, $FontSize, _('Supplier Balances For Suppliers between') . ' ' . $_POST['FromCriteria'] . ' ' . _('and') . ' ' . $_POST['ToCriteria'] . ' ' . _('as at') . ' ' . ConvertSQLDate($_POST['PeriodEnd']));
 
 $FontSize = 8;
 $pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '    ' . _('Page') . ' ' . $PageNumber);

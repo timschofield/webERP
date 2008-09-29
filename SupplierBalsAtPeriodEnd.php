@@ -4,7 +4,7 @@ $PageSecurity = 2;
 include('includes/session.inc');
 
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 If (isset($_POST['PrintPDF']) 
 	AND isset($_POST['FromCriteria']) 
@@ -117,7 +117,7 @@ If (isset($_POST['PrintPDF'])
 
 } else { /*The option to print PDF was not hit */
 
-	$title=_('Creditor Balances At A Period End');
+	$title=_('Supplier Balances At A Period End');
 	include('includes/header.inc');
 	
 	if (strlen($_POST['FromCriteria'])<1 || strlen($_POST['ToCriteria'])<1) {
@@ -134,7 +134,7 @@ If (isset($_POST['PrintPDF'])
 		echo '<TR><TD>' . _('Balances As At') . ":</TD>
 			<TD><SELECT Name='PeriodEnd'>";
 
-		$sql = 'SELECT periodno, lastdate_in_period FROM periods';
+		$sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC';
 
 		$ErrMsg = _('Could not retrieve period data because');
 		$Periods = DB_query($sql,$db,$ErrMsg);
