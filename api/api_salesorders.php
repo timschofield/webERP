@@ -353,7 +353,7 @@
 /* Create a customer sales order line in webERP. The order header must
  * already exist in webERP.
  */
-	function InsertSalesOrderHeader($OrderLine, $user, $password) {
+	function InsertSalesOrderLine($OrderLine, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
 		if (gettype($db)=='integer') {
