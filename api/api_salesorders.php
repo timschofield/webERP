@@ -1,0 +1,256 @@
+<?php
+
+/* Check that the custmerref field is 50 characters or less long */
+	function VerifyCustomerRef($customerref, $i, $Errors) {
+		if (strlen($customerref)>50) {
+			$Errors[$i] = InvalidCustomerRef;
+		}
+		return $Errors;
+	}
+
+/* Check that the buyername field is 50 characters or less long */
+	function VerifyBuyerName($buyername, $i, $Errors) {
+		if (strlen($buyername)>50) {
+			$Errors[$i] = InvalidBuyerName;
+		}
+		return $Errors;
+	}
+
+/* Check that the comments field is 256 characters or less long */
+	function VerifyComments($comments, $i, $Errors) {
+		if (strlen($comments)>256) {
+			$Errors[$i] = InvalidComments;
+		}
+		return $Errors;
+	}
+
+/* Check that the order date is a valid date. The date
+ * must be in the same format as the date format specified in the
+ * target webERP company */
+	function VerifyOrderDate($orddate, $i, $Errors, $db) {
+		$sql='select confvalue from config where confname="'.DefaultDateFormat.'"';
+		$result=DB_query($sql, $db);
+		$myrow=DB_fetch_array($result);
+		$DateFormat=$myrow[0];
+		$DateArray=explode('/',$orddate);
+		if ($DateFormat=='d/m/Y') {
+			$Day=$DateArray[0];
+			$Month=$DateArray[1];
+			$Year=$DateArray[2];
+		}
+		if ($DateFormat=='m/d/Y') {
+			$Day=$DateArray[1];
+			$Month=$DateArray[0];
+			$Year=$DateArray[2];
+		}
+		if ($DateFormat=='Y/m/d') {
+			$Day=$DateArray[2];
+			$Month=$DateArray[1];
+			$Year=$DateArray[0];
+		}
+		if (!checkdate(intval($Month), intval($Day), intval($Year))) {
+			$Errors[$i] = InvalidOrderDate;
+		}
+		return $Errors;
+	}
+
+/* Check that the order type is set up in the weberp database */
+	function VerifyOrderType($ordertype, $i, $Errors, $db) {
+		$Searchsql = 'SELECT COUNT(typeabbrev)
+					 FROM salestypes
+					  WHERE typeabbrev="'.$ordertype.'"';
+		$SearchResult=DB_query($Searchsql, $db);
+		$answer = DB_fetch_row($SearchResult);
+		if ($answer[0] == 0) {
+			$Errors[$i] = SalesTypeNotSetup;
+		}
+		return $Errors;
+	}
+
+/* Check that the shipvia type is set up in the weberp database */
+	function VerifyShipVia($shipvia, $i, $Errors, $db) {
+		$Searchsql = 'SELECT COUNT(shipper_id)
+					 FROM shippers
+					  WHERE shipper_id="'.$shipvia.'"';
+		$SearchResult=DB_query($Searchsql, $db);
+		$answer = DB_fetch_row($SearchResult);
+		if ($answer[0] == 0) {
+			$Errors[$i] = ShipperNotSetup;
+		}
+		return $Errors;
+	}
+
+/* Check that the delivery name field is 40 characters or less long */
+	function VerifyDeliverTo($delverto, $i, $Errors) {
+		if (strlen($delverto)>40) {
+			$Errors[$i] = InvalidDeliverTo;
+		}
+		return $Errors;
+	}
+
+/* Verify that the Deliver blind flag is a 1 or 0 */
+	function VerifyDeliverBlind($deliverblind, $i, $Errors) {
+		if ($deliverblind!=0 and $deliverblind!=1) {
+			$Errors[$i] = InvalidDeliverBlind;
+		}
+		return $Errors;
+	}
+
+/* Verify that the last freight cost is numeric */
+	function VerifyFreightCost($freightcost, $i, $Errors) {
+		if (!is_numeric($freightcost)) {
+			$Errors[$i] = InvalidFreightCost;
+		}
+		return $Errors;
+	}
+
+/* Check that the from stock location is set up in the weberp database */
+	function VerifyFromStockLocation($fromstkloc, $i, $Errors, $db) {
+		$Searchsql = 'SELECT COUNT(loccode)
+					 FROM locations
+					  WHERE loccode="'.$fromstkloc.'"';
+		$SearchResult=DB_query($Searchsql, $db);
+		$answer = DB_fetch_row($SearchResult);
+		if ($answer[0] == 0) {
+			$Errors[$i] = LocationCodeNotSetup;
+		}
+		return $Errors;
+	}
+
+/* Check that the delivery date is a valid date. The date
+ * must be in the same format as the date format specified in the
+ * target webERP company */
+	function VerifyDeliveryDate($deliverydate, $i, $Errors, $db) {
+		$sql='select confvalue from config where confname="'.DefaultDateFormat.'"';
+		$result=DB_query($sql, $db);
+		$myrow=DB_fetch_array($result);
+		$DateFormat=$myrow[0];
+		$DateArray=explode('/',$deliverydate);
+		if ($DateFormat=='d/m/Y') {
+			$Day=$DateArray[0];
+			$Month=$DateArray[1];
+			$Year=$DateArray[2];
+		}
+		if ($DateFormat=='m/d/Y') {
+			$Day=$DateArray[1];
+			$Month=$DateArray[0];
+			$Year=$DateArray[2];
+		}
+		if ($DateFormat=='Y/m/d') {
+			$Day=$DateArray[2];
+			$Month=$DateArray[1];
+			$Year=$DateArray[0];
+		}
+		if (!checkdate(intval($Month), intval($Day), intval($Year))) {
+			$Errors[$i] = InvalidDeliveryDate;
+		}
+		return $Errors;
+	}
+
+/* Verify that the quotation flag is a 1 or 0 */
+	function VerifyQuotation($quotation, $i, $Errors) {
+		if ($quotation!=0 and $quotation!=1) {
+			$Errors[$i] = InvalidQuotationFlag;
+		}
+		return $Errors;
+	}
+
+/* Create a customer sales order header in webERP. If successful
+ * returns $Errors[0]=0 and $Errors[1] will contain the order number.
+ */
+	function InsertSalesOrderHeader($OrderHeader, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		foreach ($OrderHeader as $key => $value) {
+			$OrderHeader[$key] = DB_escape_string($value);
+		}
+		$Errors=VerifyDebtorExists($OrderHeader['debtorno'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyBranchNoExists($OrderHeader['debtorno'],$OrderHeader['branchcode'], sizeof($Errors), $Errors, $db);
+		if (isset($OrderHeader['customerref'])){
+			$Errors=VerifyCustomerRef($OrderHeader['customerref'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['buyername'])){
+			$Errors=VerifyBuyerName($OrderHeader['buyername'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['comments'])){
+			$Errors=VerifyComments($OrderHeader['comments'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['orddate'])){
+			$Errors=VerifyOrderDate($OrderHeader['orddate'], sizeof($Errors), $Errors, $db);
+		}
+		if (isset($OrderHeader['ordertype'])){
+			$Errors=VerifyOrderType($OrderHeader['ordertype'], sizeof($Errors), $Errors, $db);
+		}
+		if (isset($OrderHeader['shipvia'])){
+			$Errors=VerifyShipVia($OrderHeader['shipvia'], sizeof($Errors), $Errors, $db);
+		}
+		if (isset($OrderHeader['deladd1'])){
+			$Errors=VerifyAddressLine($OrderHeader['deladd1'], 40, sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['deladd2'])){
+			$Errors=VerifyAddressLine($OrderHeader['deladd2'], 40, sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['deladd3'])){
+			$Errors=VerifyAddressLine($OrderHeader['deladd3'], 40, sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['deladd4'])){
+			$Errors=VerifyAddressLine($OrderHeader['deladd4'], 40, sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['deladd5'])){
+			$Errors=VerifyAddressLine($OrderHeader['deladd5'], 20, sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['deladd6'])){
+			$Errors=VerifyAddressLine($OrderHeader['deladd6'], 15, sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['contactphone'])){
+			$Errors=VerifyPhoneNumber($OrderHeader['contactphone'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['contactemail'])){
+			$Errors=VerifyEmailAddress($OrderHeader['contactemail'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['deliverto'])){
+			$Errors=VerifyDeliverTo($OrderHeader['deliverto'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['deliverblind'])){
+			$Errors=VerifyDeliverBlind($OrderHeader['deliverblind'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['freightcost'])){
+			$Errors=VerifyFreightCost($OrderHeader['freightcost'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['fromstkloc'])){
+			$Errors=VerifyFromStockLocation($OrderHeader['fromstkloc'], sizeof($Errors), $Errors, $db);
+		}
+		if (isset($OrderHeader['deliverydate'])){
+			$Errors=VerifyDeliveryDate($OrderHeader['deliverydate'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['quotation'])){
+			$Errors=VerifyQuotation($OrderHeader['quotation'], sizeof($Errors), $Errors);
+		}
+		$FieldNames='';
+		$FieldValues='';
+		foreach ($OrderHeader as $key => $value) {
+			$FieldNames.=$key.', ';
+			$FieldValues.='"'.$value.'", ';
+		}
+		$sql = 'INSERT INTO salesorders ('.substr($FieldNames,0,-2).') '.
+		  'VALUES ('.substr($FieldValues,0,-2).') ';
+		if (sizeof($Errors)==0) {
+			$result = DB_Query($sql, $db);
+			if (DB_error_no($db) != 0) {
+				$Errors[0] = DatabaseUpdateFailed;
+			} else {
+				$Errors[0]=0;
+				$sql='SELECT MAX(orderno) WHERE debtorno="'.$OrderHeader['debtorno'].'"';
+				$result = DB_Query($sql, $db);
+				$myrow=DB_fetch_row($result);
+				$OrderNo=$myrow[0];
+				$Errors[1]=$OrderNo;
+			}
+		}
+		return $Errors;
+	}
+?>

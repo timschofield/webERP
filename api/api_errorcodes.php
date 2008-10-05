@@ -1,6 +1,6 @@
 <?php
 
-/* Define error codes that are returned by api functions*/	
+/* Define error codes that are returned by api functions*/
 	Define('NoAuthorisation', 1);
 	Define('IncorrectDebtorNumberLength', 1000);
 	Define('DebtorNoAlreadyExists', 1001);
@@ -10,26 +10,26 @@
 	Define('SalesTypeNotSetup', 1005);
 	Define('InvalidClientSinceDate', 1006);
 	Define('HoldReasonNotSetup', 1007);
-	Define('PaymentTermsNotSetup', 1008);	
-	Define('InvalidDiscount', 1009);	
-	Define('InvalidPaymentDiscount', 1010);	
-	Define('InvalidLastPaid', 1011);	
-	Define('InvalidLastPaidDate', 1012);	
+	Define('PaymentTermsNotSetup', 1008);
+	Define('InvalidDiscount', 1009);
+	Define('InvalidPaymentDiscount', 1010);
+	Define('InvalidLastPaid', 1011);
+	Define('InvalidLastPaidDate', 1012);
 	Define('InvalidCreditLimit', 1013);
-	Define('InvalidInvAddrBranch', 1014);	
-	Define('InvalidDiscountCode', 1015);	
-	Define('InvalidEDIInvoices', 1016);	
-	Define('InvalidEDIOrders', 1017);	
-	Define('InvalidEDIReference', 1018);	
-	Define('InvalidEDITransport', 1019);	
-	Define('InvalidEDIAddress', 1020);	
-	Define('InvalidEDIServerUser', 1021);	
-	Define('InvalidEDIServerPassword', 1022);	
-	Define('InvalidTaxRef', 1023);	
-	Define('InvalidCustomerPOLine', 1024);	
+	Define('InvalidInvAddrBranch', 1014);
+	Define('InvalidDiscountCode', 1015);
+	Define('InvalidEDIInvoices', 1016);
+	Define('InvalidEDIOrders', 1017);
+	Define('InvalidEDIReference', 1018);
+	Define('InvalidEDITransport', 1019);
+	Define('InvalidEDIAddress', 1020);
+	Define('InvalidEDIServerUser', 1021);
+	Define('InvalidEDIServerPassword', 1022);
+	Define('InvalidTaxRef', 1023);
+	Define('InvalidCustomerPOLine', 1024);
 	Define('DatabaseUpdateFailed', 1025);
-	Define('NoDebtorNumber', 1026);	
-	Define('DebtorDoesntExist', 1027);	
+	Define('NoDebtorNumber', 1026);
+	Define('DebtorDoesntExist', 1027);
 	Define('IncorrectBranchNumberLength', 1028);
 	Define('BranchNoAlreadyExists', 1029);
 	Define('IncorrectBranchNameLength', 1030);
@@ -90,6 +90,15 @@
 	Define('InvalidMaterialCost', 1085);
 	Define('InvalidLabourCost', 1086);
 	Define('InvalidOverheadCost', 1087);
+	Define('InvalidCustomerRef', 1088);
+	Define('InvalidBuyerName', 1089);
+	Define('InvalidComments', 1090);
+	Define('InvalidOrderDate', 1091);
+	Define('InvalidDeliverTo', 1092);
+	Define('InvalidDeliverBlind', 1093);
+	Define('InvalidFreightCost', 1094);
+	Define('InvalidDeliveryDate', 1095);
+	Define('InvalidQuotationFlag', 1096);
 
 /* Array of Descriptions of errors */
 	$ErrorDescription['1'] = 'No Authorisation';
@@ -101,26 +110,26 @@
 	$ErrorDescription['1005'] = 'Sales Type Not Setup';
 	$ErrorDescription['1006'] = 'Invalid Client Since Date';
 	$ErrorDescription['1007'] = 'Hold Reason Not Setup';
-	$ErrorDescription['1008'] = 'Payment Terms Not Setup';	
-	$ErrorDescription['1009'] = 'Invalid Discount';	
-	$ErrorDescription['1010'] = 'Invalid Payment Discount';	
-	$ErrorDescription['1011'] = 'Invalid Last Paid';	
-	$ErrorDescription['1012'] = 'Invalid Last Paid Date';	
+	$ErrorDescription['1008'] = 'Payment Terms Not Setup';
+	$ErrorDescription['1009'] = 'Invalid Discount';
+	$ErrorDescription['1010'] = 'Invalid Payment Discount';
+	$ErrorDescription['1011'] = 'Invalid Last Paid';
+	$ErrorDescription['1012'] = 'Invalid Last Paid Date';
 	$ErrorDescription['1013'] = 'Invalid Credit Limit';
-	$ErrorDescription['1014'] = 'Invalid Inv Address Branch';	
-	$ErrorDescription['1015'] = 'Invalid Discount Code';	
-	$ErrorDescription['1016'] = 'Invalid EDI Invoices';	
-	$ErrorDescription['1017'] = 'Invalid EDI Orders';	
-	$ErrorDescription['1018'] = 'Invalid EDI Reference';	
-	$ErrorDescription['1019'] = 'Invalid EDI Transport';	
-	$ErrorDescription['1020'] = 'Invalid EDI Address';	
-	$ErrorDescription['1021'] = 'Invalid EDI Server User';	
-	$ErrorDescription['1022'] = 'Invalid EDI Server Password';	
-	$ErrorDescription['1023'] = 'Invalid Tax Reference';	
-	$ErrorDescription['1024'] = 'Invalid CustomerPOLine';	
+	$ErrorDescription['1014'] = 'Invalid Inv Address Branch';
+	$ErrorDescription['1015'] = 'Invalid Discount Code';
+	$ErrorDescription['1016'] = 'Invalid EDI Invoices';
+	$ErrorDescription['1017'] = 'Invalid EDI Orders';
+	$ErrorDescription['1018'] = 'Invalid EDI Reference';
+	$ErrorDescription['1019'] = 'Invalid EDI Transport';
+	$ErrorDescription['1020'] = 'Invalid EDI Address';
+	$ErrorDescription['1021'] = 'Invalid EDI Server User';
+	$ErrorDescription['1022'] = 'Invalid EDI Server Password';
+	$ErrorDescription['1023'] = 'Invalid Tax Reference';
+	$ErrorDescription['1024'] = 'Invalid CustomerPOLine';
 	$ErrorDescription['1025'] = 'Database Update Failed';
-	$ErrorDescription['1026'] = 'No Debtor Number';	
-	$ErrorDescription['1027'] = 'Debtor Doesnt Exist';	
+	$ErrorDescription['1026'] = 'No Debtor Number';
+	$ErrorDescription['1027'] = 'Debtor Doesnt Exist';
 	$ErrorDescription['1028'] = 'Incorrect Branch Number Length';
 	$ErrorDescription['1029'] = 'Branch No Already Exists';
 	$ErrorDescription['1030'] = 'Incorrect Branch Name Length';
@@ -181,5 +190,14 @@
 	$ErrorDescription['1085'] = 'Invalid Material Cost';
 	$ErrorDescription['1086'] = 'Invalid Labour Cost';
 	$ErrorDescription['1087'] = 'Invalid Overhead Cost';
-		
+	$ErrorDescription['1088'] = 'Invalid Customer Reference';
+	$ErrorDescription['1089'] = 'Invalid Buyer Name';
+	$ErrorDescription['1090'] = 'Invalid Comments';
+	$ErrorDescription['1091'] = 'Invalid Order Date';
+	$ErrorDescription['1092'] = 'Invalid Delivery Name';
+	$ErrorDescription['1093'] = 'Invalid Deliver Blind Flag';
+	$ErrorDescription['1094'] = 'Invalid Freight Cost';
+	$ErrorDescription['1095'] = 'Invalid Delivery Date';
+	$ErrorDescription['1096'] = 'Invalid Quotation Flag';
+
 ?>

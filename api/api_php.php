@@ -1,8 +1,8 @@
 <?php
 
 	include 'api_errorcodes.php';
-	
-/* Include session.inc, to allow database connection, and access to 
+
+/* Include session.inc, to allow database connection, and access to
    miscfunctions, and datefunctions.*/
     $DatabaseName='weberp';
 	$AllowAnyone = true;
@@ -36,4 +36,5 @@
 	include 'api_paymentterms.php';
 	include 'api_stock.php';
 	include 'api_debtortransactions.php';
+	include 'api_salesorders.php';
 ?>
