@@ -4785,7 +4785,7 @@ INSERT INTO `config` VALUES ('YearEnd','3');
 -- Dumping data for table `currencies`
 --
 
-INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',1.7);
+INSERT INTO `currencies` VALUES ('Australian Dollars','AUD','Australia','cents',1.0);
 INSERT INTO `currencies` VALUES ('Swiss Francs','CHF','Swizerland','centimes',1);
 INSERT INTO `currencies` VALUES ('Euro','EUR','Euroland','cents',0.44);
 INSERT INTO `currencies` VALUES ('Pounds','GBP','England','Pence',0.8);
