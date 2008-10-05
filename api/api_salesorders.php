@@ -155,6 +155,89 @@
 		return $Errors;
 	}
 
+/* Check that the order header already exists */
+	function VerifyOrderHeaderExists($orderno, $i, $Errors, $db) {
+		$Searchsql = 'SELECT COUNT(orderno)
+					 FROM salesorders
+					  WHERE orderno="'.$orderno.'"';
+		$SearchResult=DB_query($Searchsql, $db);
+		$answer = DB_fetch_row($SearchResult);
+		if ($answer[0] == 0) {
+			$Errors[$i] = OrderHeaderNotSetup;
+		}
+		return $Errors;
+	}
+
+/* Verify that the unit price is numeric */
+	function VerifyUnitPrice($unitprice, $i, $Errors) {
+		if (!is_numeric($unitprice)) {
+			$Errors[$i] = InvalidUnitPrice;
+		}
+		return $Errors;
+	}
+
+/* Verify that the quantity is numeric */
+	function VerifyQuantity($quantity, $i, $Errors) {
+		if (!is_numeric($quantity)) {
+			$Errors[$i] = InvalidQuantity;
+		}
+		return $Errors;
+	}
+
+/* Verify that the discount percent is numeric */
+	function VerifyDiscountPercent($discountpercent, $i, $Errors) {
+		if (!is_numeric($discountpercent)) {
+			$Errors[$i] = InvalidDiscountPercent;
+		}
+		return $Errors;
+	}
+
+/* Check that the narrative field is 256 characters or less long */
+	function VerifyNarrative($narrative, $i, $Errors) {
+		if (strlen($narrative)>256) {
+			$Errors[$i] = InvalidNarrative;
+		}
+		return $Errors;
+	}
+
+/* Check that the poline field is 10 characters or less long */
+	function VerifyPOLine($poline, $i, $Errors) {
+		if (strlen($poline)>10) {
+			$Errors[$i] = InvalidPOLine;
+		}
+		return $Errors;
+	}
+
+/* Check that the item due date is a valid date. The date
+ * must be in the same format as the date format specified in the
+ * target webERP company */
+	function VerifyItemDueDate($itemdue, $i, $Errors, $db) {
+		$sql='select confvalue from config where confname="'.DefaultDateFormat.'"';
+		$result=DB_query($sql, $db);
+		$myrow=DB_fetch_array($result);
+		$DateFormat=$myrow[0];
+		$DateArray=explode('/',$itemdue);
+		if ($DateFormat=='d/m/Y') {
+			$Day=$DateArray[0];
+			$Month=$DateArray[1];
+			$Year=$DateArray[2];
+		}
+		if ($DateFormat=='m/d/Y') {
+			$Day=$DateArray[1];
+			$Month=$DateArray[0];
+			$Year=$DateArray[2];
+		}
+		if ($DateFormat=='Y/m/d') {
+			$Day=$DateArray[2];
+			$Month=$DateArray[1];
+			$Year=$DateArray[0];
+		}
+		if (!checkdate(intval($Month), intval($Day), intval($Year))) {
+			$Errors[$i] = InvalidItemDueDate;
+		}
+		return $Errors;
+	}
+
 /* Create a customer sales order header in webERP. If successful
  * returns $Errors[0]=0 and $Errors[1] will contain the order number.
  */
@@ -249,6 +332,58 @@
 				$myrow=DB_fetch_row($result);
 				$OrderNo=$myrow[0];
 				$Errors[1]=$OrderNo;
+			}
+		}
+		return $Errors;
+	}
+
+/* Create a customer sales order line in webERP. The order header must
+ * already exist in webERP.
+ */
+	function InsertSalesOrderHeader($OrderLine, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		foreach ($OrderLine as $key => $value) {
+			$OrderLine[$key] = DB_escape_string($value);
+		}
+		$Errors=VerifyOrderHeaderExists($OrderLine['orderno'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyStockCodeExists($OrderLine['stkcode'], sizeof($Errors), $Errors, $db);
+		if (isset($OrderLine['unitprice'])){
+			$Errors=VerifyQuotation($OrderLine['unitprice'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderLine['quantity'])){
+			$Errors=VerifyQuantity($OrderLine['quantity'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderLine['discountpercent'])){
+			$Errors=VerifyDiscountPercent($OrderLine['discountpercent'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderLine['narrative'])){
+			$Errors=VerifyDiscountPercent($OrderLine['narrative'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderLine['itemdue'])){
+			$Errors=VerifyItemDueDate($OrderLine['itemdue'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderLine['poline'])){
+			$Errors=VerifyPOLine($OrderLine['poline'], sizeof($Errors), $Errors);
+		}
+		$FieldNames='';
+		$FieldValues='';
+		foreach ($OrderLine as $key => $value) {
+			$FieldNames.=$key.', ';
+			$FieldValues.='"'.$value.'", ';
+		}
+		$sql = 'INSERT INTO salesorderdetails ('.substr($FieldNames,0,-2).') '.
+		  'VALUES ('.substr($FieldValues,0,-2).') ';
+		if (sizeof($Errors)==0) {
+			$result = DB_Query($sql, $db);
+			if (DB_error_no($db) != 0) {
+				$Errors[0] = DatabaseUpdateFailed;
+			} else {
+				$Errors[0]=0;
 			}
 		}
 		return $Errors;

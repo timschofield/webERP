@@ -217,6 +217,15 @@
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
+	$InsertSalesOrderLine_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$InsertSalesOrderLine_doc = 'This function inserts a sales order line into webERP';
+
+	function xmlrpc_InsertSalesOrderLine($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesOrderLine(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
@@ -306,6 +315,10 @@
 			"function" => "xmlrpc_InsertSalesOrderHeader",
 			"signature" => $InsertSalesOrderHeader_sig,
 			"docstring" => $InsertSalesOrderHeader_doc),
+		"weberp.xmlrpc_InsertSalesOrderLine" => array(
+			"function" => "xmlrpc_InsertSalesOrderLine",
+			"signature" => $InsertSalesOrderLine_sig,
+			"docstring" => $InsertSalesOrderLine_doc),
 		)
 	);
 

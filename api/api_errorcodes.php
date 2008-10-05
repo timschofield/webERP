@@ -99,6 +99,13 @@
 	Define('InvalidFreightCost', 1094);
 	Define('InvalidDeliveryDate', 1095);
 	Define('InvalidQuotationFlag', 1096);
+	Define('OrderHeaderNotSetup', 1097);
+	Define('InvalidUnitPrice', 1098);
+	Define('InvalidQuantity', 1099);
+	Define('InvalidDiscountPercent', 1100);
+	Define('InvalidNarrative', 1101);
+	Define('InvalidItemDueDate', 1102);
+	Define('InvalidPOLine', 1103);
 
 /* Array of Descriptions of errors */
 	$ErrorDescription['1'] = 'No Authorisation';
@@ -199,5 +206,12 @@
 	$ErrorDescription['1094'] = 'Invalid Freight Cost';
 	$ErrorDescription['1095'] = 'Invalid Delivery Date';
 	$ErrorDescription['1096'] = 'Invalid Quotation Flag';
+	$ErrorDescription['1097'] = 'Order header not setup';
+	$ErrorDescription['1098'] = 'Invalid unit cost';
+	$ErrorDescription['1099'] = 'Invalid Quantity';
+	$ErrorDescription['1100'] = 'Invalid Discount Percent';
+	$ErrorDescription['1101'] = 'Invalid Narrative';
+	$ErrorDescription['1102'] = 'Invalid Item Due';
+	$ErrorDescription['1103'] = 'Invalid PO line';
 
 ?>
