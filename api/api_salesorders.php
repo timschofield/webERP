@@ -350,6 +350,98 @@
 		return $Errors;
 	}
 
+/* Modify a customer sales order header in webERP.
+ */
+	function ModifySalesOrderHeader($OrderHeader, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		foreach ($OrderHeader as $key => $value) {
+			$OrderHeader[$key] = DB_escape_string($value);
+		}
+		$Errors=VerifyOrderHeaderExists($OrderHeader['orderno'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyDebtorExists($OrderHeader['debtorno'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyBranchNoExists($OrderHeader['debtorno'],$OrderHeader['branchcode'], sizeof($Errors), $Errors, $db);
+		if (isset($OrderHeader['customerref'])){
+			$Errors=VerifyCustomerRef($OrderHeader['customerref'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['buyername'])){
+			$Errors=VerifyBuyerName($OrderHeader['buyername'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['comments'])){
+			$Errors=VerifyComments($OrderHeader['comments'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['orddate'])){
+			$Errors=VerifyOrderDate($OrderHeader['orddate'], sizeof($Errors), $Errors, $db);
+		}
+		if (isset($OrderHeader['ordertype'])){
+			$Errors=VerifyOrderType($OrderHeader['ordertype'], sizeof($Errors), $Errors, $db);
+		}
+		if (isset($OrderHeader['shipvia'])){
+			$Errors=VerifyShipVia($OrderHeader['shipvia'], sizeof($Errors), $Errors, $db);
+		}
+		if (isset($OrderHeader['deladd1'])){
+			$Errors=VerifyAddressLine($OrderHeader['deladd1'], 40, sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['deladd2'])){
+			$Errors=VerifyAddressLine($OrderHeader['deladd2'], 40, sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['deladd3'])){
+			$Errors=VerifyAddressLine($OrderHeader['deladd3'], 40, sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['deladd4'])){
+			$Errors=VerifyAddressLine($OrderHeader['deladd4'], 40, sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['deladd5'])){
+			$Errors=VerifyAddressLine($OrderHeader['deladd5'], 20, sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['deladd6'])){
+			$Errors=VerifyAddressLine($OrderHeader['deladd6'], 15, sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['contactphone'])){
+			$Errors=VerifyPhoneNumber($OrderHeader['contactphone'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['contactemail'])){
+			$Errors=VerifyEmailAddress($OrderHeader['contactemail'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['deliverto'])){
+			$Errors=VerifyDeliverTo($OrderHeader['deliverto'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['deliverblind'])){
+			$Errors=VerifyDeliverBlind($OrderHeader['deliverblind'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['freightcost'])){
+			$Errors=VerifyFreightCost($OrderHeader['freightcost'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['fromstkloc'])){
+			$Errors=VerifyFromStockLocation($OrderHeader['fromstkloc'], sizeof($Errors), $Errors, $db);
+		}
+		if (isset($OrderHeader['deliverydate'])){
+			$Errors=VerifyDeliveryDate($OrderHeader['deliverydate'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderHeader['quotation'])){
+			$Errors=VerifyQuotation($OrderHeader['quotation'], sizeof($Errors), $Errors);
+		}
+		$sql='UPDATE salesorders SET ';
+		foreach ($OrderHeader as $key => $value) {
+			$sql .= $key.'="'.$value.'", ';
+		}
+		$sql = substr($sql,0,-2).' WHERE orderno="'.$OrderHeader['orderno'].'"';
+		if (sizeof($Errors)==0) {
+			$result = DB_Query($sql, $db);
+			echo DB_error_no($db);
+			if (DB_error_no($db) != 0) {
+				$Errors[0] = DatabaseUpdateFailed;
+			} else {
+				$Errors[0]=0;
+			}
+		}
+		return $Errors;
+	}
+
 /* Create a customer sales order line in webERP. The order header must
  * already exist in webERP.
  */
@@ -394,6 +486,57 @@
 		  'VALUES ('.substr($FieldValues,0,-2).') ';
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
+			if (DB_error_no($db) != 0) {
+				$Errors[0] = DatabaseUpdateFailed;
+			} else {
+				$Errors[0]=0;
+			}
+		}
+		return $Errors;
+	}
+
+/* Modify a customer sales order line in webERP. The order header must
+ * already exist in webERP.
+ */
+	function ModifySalesOrderLine($OrderLine, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		foreach ($OrderLine as $key => $value) {
+			$OrderLine[$key] = DB_escape_string($value);
+		}
+		$Errors=VerifyOrderHeaderExists($OrderLine['orderno'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyStockCodeExists($OrderLine['stkcode'], sizeof($Errors), $Errors, $db);
+		if (isset($OrderLine['unitprice'])){
+			$Errors=VerifyQuotation($OrderLine['unitprice'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderLine['quantity'])){
+			$Errors=VerifyQuantity($OrderLine['quantity'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderLine['discountpercent'])){
+			$Errors=VerifyDiscountPercent($OrderLine['discountpercent'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderLine['narrative'])){
+			$Errors=VerifyDiscountPercent($OrderLine['narrative'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderLine['itemdue'])){
+			$Errors=VerifyItemDueDate($OrderLine['itemdue'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderLine['poline'])){
+			$Errors=VerifyPOLine($OrderLine['poline'], sizeof($Errors), $Errors);
+		}
+		$sql='UPDATE salesorderdetails SET ';
+		foreach ($OrderLine as $key => $value) {
+			$sql .= $key.'="'.$value.'", ';
+		}
+		$sql = substr($sql,0,-2).' WHERE orderno="'.$OrderLine['orderno'].'" and
+				" orderlineno='.$OrderLine['orderno'];
+		if (sizeof($Errors)==0) {
+			$result = DB_Query($sql, $db);
+			echo DB_error_no($db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {

@@ -217,11 +217,29 @@
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
+	$ModifySalesOrderHeader_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$ModifySalesOrderHeader_doc = 'This function modifies a sales order header already in webERP';
+
+	function xmlrpc_ModifySalesOrderHeader($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(ModifySalesOrderHeader(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
 	$InsertSalesOrderLine_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
 	$InsertSalesOrderLine_doc = 'This function inserts a sales order line into webERP';
 
 	function xmlrpc_InsertSalesOrderLine($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesOrderLine(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
+	$ModifySalesOrderLine_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$ModifySalesOrderLine_doc = 'This function modifies a sales order line in webERP';
+
+	function xmlrpc_ModifySalesOrderLine($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(ModifySalesOrderLine(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
@@ -315,10 +333,18 @@
 			"function" => "xmlrpc_InsertSalesOrderHeader",
 			"signature" => $InsertSalesOrderHeader_sig,
 			"docstring" => $InsertSalesOrderHeader_doc),
+		"weberp.xmlrpc_ModifySalesOrderHeader" => array(
+			"function" => "xmlrpc_ModifySalesOrderHeader",
+			"signature" => $ModifySalesOrderHeader_sig,
+			"docstring" => $ModifySalesOrderHeader_doc),
 		"weberp.xmlrpc_InsertSalesOrderLine" => array(
 			"function" => "xmlrpc_InsertSalesOrderLine",
 			"signature" => $InsertSalesOrderLine_sig,
 			"docstring" => $InsertSalesOrderLine_doc),
+		"weberp.xmlrpc_ModifySalesOrderLine" => array(
+			"function" => "xmlrpc_ModifySalesOrderLine",
+			"signature" => $ModifySalesOrderLine_sig,
+			"docstring" => $ModifySalesOrderLine_doc),
 		)
 	);
 
