@@ -155,6 +155,19 @@
 		return $Errors;
 	}
 
+/* Fetch the next line number */
+	function GetOrderLineNumber($orderno, $i, $Errors, $db) {
+		$linesql = 'SELECT MAX(orderlineno)
+					FROM salesorderdetails
+					 WHERE orderno='.$orderno;
+		$lineresult = DB_query($linesql, $db);
+		if ($myrow=DB_fetch_row($lineresult)) {
+			return $myrow[0] + 1;
+		} else {
+			return 1;
+		}
+	}
+
 /* Check that the order header already exists */
 	function VerifyOrderHeaderExists($orderno, $i, $Errors, $db) {
 		$Searchsql = 'SELECT COUNT(orderno)
@@ -350,6 +363,7 @@
 		foreach ($OrderLine as $key => $value) {
 			$OrderLine[$key] = DB_escape_string($value);
 		}
+		$OrderLine['orderlineno'] = GetOrderLineNumber($OrderLine['orderno'], sizeof($Errors), $Errors, $db);
 		$Errors=VerifyOrderHeaderExists($OrderLine['orderno'], sizeof($Errors), $Errors, $db);
 		$Errors=VerifyStockCodeExists($OrderLine['stkcode'], sizeof($Errors), $Errors, $db);
 		if (isset($OrderLine['unitprice'])){
