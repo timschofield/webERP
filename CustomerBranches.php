@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.35 $ */
+/* $Revision: 1.36 $ */
 
 $PageSecurity = 3;
 
@@ -32,8 +32,8 @@ echo "<A HREF='" . $rootpath . '/SelectCustomer.php?' . SID . "'>" . _('Back to 
 if (isset($Errors)) {
 	unset($Errors);
 }
-	
-$Errors = array();	
+
+$Errors = array();
 
 if (isset($_POST['submit'])) {
 
@@ -52,37 +52,37 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The Branch code cannot contain any of the following characters')." -  & \'",'error');
 		$Errors[$i] = 'BranchCode';
-		$i++;		
-	} 
+		$i++;
+	}
 	if (strlen($_POST['BranchCode'])==0) {
 		$InputError = 1;
 		prnMsg(_('The Branch code must be at least one character long'),'error');
 		$Errors[$i] = 'BranchCode';
-		$i++;		
-	} 
+		$i++;
+	}
 	if (!is_numeric($_POST['FwdDate'])) {
 		$InputError = 1;
 		prnMsg(_('The date after which invoices are charged to the following month is expected to be a number and a recognised number has not been entered'),'error');
 		$Errors[$i] = 'FwdDate';
-		$i++;		
-	} 
+		$i++;
+	}
 	if ($_POST['FwdDate'] >30) {
 		$InputError = 1;
 		prnMsg(_('The date (in the month) after which invoices are charged to the following month should be a number less than 31'),'error');
 		$Errors[$i] = 'FwdDate';
-		$i++;		
-	} 
+		$i++;
+	}
 	if (!is_numeric($_POST['EstDeliveryDays'])) {
 		$InputError = 1;
 		prnMsg(_('The estimated delivery days is expected to be a number and a recognised number has not been entered'),'error');
 		$Errors[$i] = 'EstDeliveryDays';
-		$i++;		
-	} 
+		$i++;
+	}
 	if ($_POST['EstDeliveryDays'] >60) {
 		$InputError = 1;
 		prnMsg(_('The estimated delivery days should be a number of days less than 60') . '. ' . _('A package can be delivered by seafreight anywhere in the world normally in less than 60 days'),'error');
 		$Errors[$i] = 'EstDeliveryDays';
-		$i++;		
+		$i++;
 	}
 	if (!isset($_POST['EstDeliveryDays'])) {
 		$_POST['EstDeliveryDays']=1;
@@ -127,74 +127,6 @@ if (isset($_POST['submit'])) {
 
 	/*Selected branch is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Customer Branches form */
 
-		if ($_SESSION['vtiger_integration']==1){
-		
-
-/*Gets the Product ID for VTiger */
-			$result = DB_query('SELECT id FROM crmentity_seq',$db);
-			$myrow = DB_fetch_row($result);
-			$vtiger_accountid = $myrow[0] + 1;
-			
-			$sql = "INSERT INTO custbranch (branchcode,
-						debtorno,
-						brname,
-						braddress1,
-						braddress2,
-						braddress3,
-						braddress4,
-						braddress5,
-						braddress6,
-		                                specialinstructions,
-						estdeliverydays,
-						fwddate,
-						salesman,
-						phoneno,
-						faxno,
-						contactname,
-						area,
-						email,
-						taxgroupid,
-						defaultlocation,
-						brpostaddr1,
-						brpostaddr2,
-						brpostaddr3,
-						brpostaddr4,
-						disabletrans,
-						defaultshipvia,
-						custbranchcode,
-						deliverblind,
-						vtiger_accountid)
-				VALUES ('" . $_POST['BranchCode'] . "',
-					'" . $DebtorNo . "',
-					'" . $_POST['BrName'] . "',
-					'" . $_POST['BrAddress1'] . "',
-					'" . $_POST['BrAddress2'] . "',
-					'" . $_POST['BrAddress3'] . "',
-					'" . $_POST['BrAddress4'] . "',
-					'" . $_POST['BrAddress5'] . "',
-					'" . $_POST['BrAddress6'] . "',
-					'" . $_POST['specialinstructions'] . "',
-					" . $_POST['EstDeliveryDays'] . ",
-					" . $_POST['FwdDate'] . ",
-					'" . $_POST['Salesman'] . "',
-					'" . $_POST['PhoneNo'] . "',
-					'" . $_POST['FaxNo'] . "',
-					'" . $_POST['ContactName'] . "',
-					'" . $_POST['Area'] . "',
-					'" . $_POST['Email'] . "',
-					" . $_POST['TaxGroup'] . ",
-					'" . $_POST['DefaultLocation'] . "',
-					'" . $_POST['BrPostAddr1'] . "',
-					'" . $_POST['BrPostAddr2'] . "',
-					'" . $_POST['BrPostAddr3'] . "',
-					'" . $_POST['BrPostAddr4'] . "',
-					" . $_POST['DisableTrans'] . ",
-					" . $_POST['DefaultShipVia'] . ",
-					'" . $_POST['CustBranchCode'] ."',
-					" . $_POST['DeliverBlind'] . ",
-					" . $vtiger_accountid . ")";
-		} else {
-
 
 			$sql = "INSERT INTO custbranch (branchcode,
 						debtorno,
@@ -223,7 +155,7 @@ if (isset($_POST['submit'])) {
 						disabletrans,
 						defaultshipvia,
 						custbranchcode,
-                       			        deliverblind)
+                        deliverblind)
 				VALUES ('" . $_POST['BranchCode'] . "',
 					'" . $DebtorNo . "',
 					'" . $_POST['BrName'] . "',
@@ -253,7 +185,7 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['CustBranchCode'] ."',
 					" . $_POST['DeliverBlind'] . "
 					)";
-		}
+
 
 		$msg = _('Customer branch<b>').' ' . $_POST['BranchCode'] . ': ' . $_POST['BrName'] . ' '._('</b>has been added, add another branch, or return to <a href=index.php>Main Menu</a>');
 	}
@@ -262,61 +194,6 @@ if (isset($_POST['submit'])) {
 	$ErrMsg = _('The branch record could not be inserted or updated because');
 	if ($InputError==0) {
 		$result = DB_query($sql,$db, $ErrMsg);
-	}
-
-
-	if ($_SESSION['vtiger_integration']==1){
-		if (isset($SelectedBranch) AND $InputError !=1) {
-
-		/*Gets the accountid for VTiger */
-			$result = DB_query('SELECT vtiger_accountid FROM custbranch WHERE branchcode = "'.$SelectedBranch.'" ');
-			$myrow = DB_fetch_row($result);			
-			$vtiger_accountid = $myrow[0]; // outputs current crmid
-	
-			$today = date("YmdHis");
-					
-			$sql = "UPDATE crmentity SET modifiedtime ='".$today."' WHERE crmid = '".$vtiger_accountid."'";
-	
-			$ErrMsg =  _('Could not update vtiger') . ' ' . $myrow[0] .  ' ' . _('could not be added because');
-			$DbgMsg = _('Could not update vtiger') . ' ' . _('The SQL that was used to update the vtiger CRM entity');
-			$CRMResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-
-
-		} elseif ($InputError !=1) {
-
-			$today = date("YmdHis");
-			$sql = "INSERT INTO crmentity (crmid,
-						smcreatorid,
-						smownerid,
-						setype,
-						description,
-						createdtime,
-						modifiedtime)
-					VALUES('".$vtiger_accountid."',
-						'1',
-						'1',
-						'Accounts',
-						'',
-						'".$today."',
-						'".$today."')";
-	
-			$ErrMsg =  _('The new vtiger CRM entiry could not be added because');
-			$DbgMsg = _('Could not add CRM') . ' ' . _('The SQL that was used to add the CRM entity');
-			$CRMResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-
-			$sql = "UPDATE crmentity_seq SET id = ".$vtiger_accountid."";
-			$ErrMsg =  _('CRM Sequence failed') . ' ' . $myrow[0] .  ' ' . _('could not be added');
-			$DbgMsg = _('CRM Sequence failed') . '   ' . _('The SQL that was used to add the CRM Sequence');
-			$CRMseqResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-
-			$sql = "INSERT INTO accountscf VALUES (".$vtiger_accountid.")";
-
-			$ErrMsg =  _('insert into accountscf failed') . ' ' . $myrow[0] .  ' ' . _('could not be added');
-			$DbgMsg = _('insert into accountscf failed') . ' ' . _('could not be added	');
-			$CRMseqResult = DB_query($sql,$db,$ErrMsg,$DbgMsg);
-					
-			prnMsg(_('The new CRM entity has been created in vtiger for this new branch'),'success');
-		}
 	}
 
 	if (DB_error_no($db) ==0 and $InputError==0) {
@@ -603,7 +480,7 @@ if (! isset($_GET['delete'])) {
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedBranch' VALUE='" . $SelectedBranch . "'>";
 		echo "<INPUT TYPE=HIDDEN NAME='BranchCode'  VALUE='" . $_POST['BranchCode'] . "'>";
 		echo "<CENTER><b>"._('Change Branch')."</b><br><TABLE> <TR><TD>"._('Branch Code').':</TD><TD>';
-		
+
 		echo $_POST['BranchCode'] . '</TD></TR>';
 
 	} else { //end of if $SelectedBranch only do the else when a new record is being entered
@@ -612,15 +489,15 @@ if (! isset($_GET['delete'])) {
 			Maybe should only do this when that page is the referrer?
 	*/
 		if (isset($_GET['BranchCode'])){
-			$sql="SELECT name, 
-					address1, 
-					address2, 
+			$sql="SELECT name,
+					address1,
+					address2,
 					address3,
 					address4,
 					address5,
-					address6 
-					FROM 
-					debtorsmaster 
+					address6
+					FROM
+					debtorsmaster
 					WHERE debtorno='".$_GET['BranchCode']."'";
 			$result = DB_query($sql, $db);
 			$myrow = DB_fetch_array($result);
@@ -632,8 +509,8 @@ if (! isset($_GET['delete'])) {
 		 	$_POST['BrAddress4'] = $myrow['addrsss4'];
         	$_POST['BrAddress5'] = $myrow['addrsss5'];
 			$_POST['BrAddress6'] = $myrow['addrsss6'];
-		} 
-		echo '<CENTER><b>'._('Add a Branch').'</b><br><TABLE><TR><TD>'._('Branch Code'). ':</TD>		
+		}
+		echo '<CENTER><b>'._('Add a Branch').'</b><br><TABLE><TR><TD>'._('Branch Code'). ':</TD>
 					<TD><input ' .(in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) .
 				" tabindex=1 type='Text' name='BranchCode' SIZE=12 MAXLENGTH=10 value=" . $_POST['BranchCode'] . '></TD></TR>';
 		$_POST['DeliverBlind'] = $_SESSION['DefaultBlindPackNote'];
