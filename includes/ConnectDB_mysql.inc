@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 define ('LIKE','LIKE');
 
@@ -30,14 +30,14 @@ function DB_query ($SQL,
 
 	global $debug;
 	global $PathPrefix;
-	
+
 	$result=mysql_query($SQL,$Conn);
 	$_SESSION['LastInsertId'] = mysql_insert_id($Conn);
-	
+
 	if ($DebugMessage == '') {
 		$DebugMessage = _('The SQL that failed was');
 	}
-	
+
 	if (DB_error_no($Conn) != 0 AND $TrapErrors==true){
 		if ($TrapErrors){
 			require_once($PathPrefix . 'includes/header.inc');
@@ -58,13 +58,13 @@ function DB_query ($SQL,
 			exit;
 		}
 	} elseif (isset($_SESSION['MonthsAuditTrail']) and (DB_error_no($Conn)==0 AND $_SESSION['MonthsAuditTrail']>0)){
-		
+
 		$SQLArray = explode(' ', $SQL);
-	
-		if (($SQLArray[0] == 'INSERT') 
-			OR ($SQLArray[0] == 'UPDATE') 
+
+		if (($SQLArray[0] == 'INSERT')
+			OR ($SQLArray[0] == 'UPDATE')
 			OR ($SQLArray[0] == 'DELETE')) {
-			
+
 			if ($SQLArray[2]!='audittrail'){ // to ensure the auto delete of audit trail history is not logged
 				$AuditSQL = "INSERT INTO audittrail (transactiondate,
 									userid,
@@ -77,7 +77,7 @@ function DB_query ($SQL,
 			}
 		}
 	}
-	
+
 	return $result;
 
 }
@@ -136,7 +136,7 @@ function DB_Last_Insert_ID(&$Conn,$table, $fieldname){
 }
 
 function DB_escape_string($String){
-	return mysql_real_escape_string(htmlspecialchars($String, ENT_COMPAT, _('ISO-8859-1')));
+	return mysql_real_escape_string(htmlspecialchars($String, ENT_COMPAT, _('iso-8859-1')));
 }
 
 function DB_show_tables(&$Conn){
@@ -157,14 +157,14 @@ function INTERVAL( $val, $Inter ){
 function DB_Maintenance($Conn){
 
 	prnMsg(_('The system has just run the regular database administration and optimisation routine.'),'info');
-	
+
 	$TablesResult = DB_query('SHOW TABLES',$Conn);
 	while ($myrow = DB_fetch_row($TablesResult)){
 		$Result = DB_query('OPTIMIZE TABLE ' . $myrow[0],$Conn);
 	}
 
-	$Result = DB_query("UPDATE config 
-				SET confvalue='" . Date('Y-m-d') . "' 
+	$Result = DB_query("UPDATE config
+				SET confvalue='" . Date('Y-m-d') . "'
 				WHERE confname='DB_Maintenance_LastRun'",
 				$Conn);
 }
