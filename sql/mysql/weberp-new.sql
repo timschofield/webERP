@@ -454,7 +454,6 @@ CREATE TABLE `custbranch` (
   `brpostaddr6` varchar(15) NOT NULL default '',
   `specialinstructions` text NOT NULL,
   `custbranchcode` varchar(30) NOT NULL default '',
-  `vtiger_accountid` int(11) NOT NULL,
   PRIMARY KEY  (`branchcode`,`debtorno`),
   KEY `BrName` (`brname`),
   KEY `DebtorNo` (`debtorno`),
@@ -1484,7 +1483,6 @@ CREATE TABLE `salesorders` (
   `printedpackingslip` tinyint(4) NOT NULL default '0',
   `datepackingslipprinted` date NOT NULL default '0000-00-00',
   `quotation` tinyint(4) NOT NULL default '0',
-  `vtiger_accountid` int(11) NOT NULL,
   PRIMARY KEY  (`orderno`),
   KEY `DebtorNo` (`debtorno`),
   KEY `OrdDate` (`orddate`),
@@ -1755,7 +1753,6 @@ CREATE TABLE `stockmaster` (
   `appendfile` varchar(40) NOT NULL default 'none',
   `perishable` tinyint(1) NOT NULL default '0',
   `decimalplaces` tinyint(4) NOT NULL default '0',
-  `vtiger_productid` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`stockid`),
   KEY `CategoryID` (`categoryid`),
   KEY `Description` (`description`),
@@ -2819,7 +2816,6 @@ INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('TaxAuthorityReferenceName','Tax Ref');
 INSERT INTO `config` VALUES ('UpdateCurrencyRatesDaily','0');
-INSERT INTO `config` VALUES ('vtiger_integration','0');
 INSERT INTO `config` VALUES ('WeightedAverageCosting','1');
 INSERT INTO `config` VALUES ('WikiApp','Disabled');
 INSERT INTO `config` VALUES ('WikiPath','wiki');

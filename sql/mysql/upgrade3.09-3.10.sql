@@ -17,3 +17,8 @@ PRIMARY KEY (`tagref`)
 ) ENGINE=InnoDB;
 
 ALTER TABLE `gltrans` ADD COLUMN `tag` tinyint(4) NOT NULL default '0' AFTER `jobref`;
+
+ALTER TABLE `custbranch` DROP COLUMN `vtiger_accountid`;
+ALTER TABLE `salesorders` DROP COLUMN `vtiger_accountid`;
+ALTER TABLE `stockmaster` DROP COLUMN `vtiger_productid`;
+DELETE FROM `config` WHERE `confname`='vtiger_integration';
