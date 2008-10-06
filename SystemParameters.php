@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.42 $ */
+/* $Revision: 1.43 $ */
 
 $PageSecurity =15;
 
@@ -212,9 +212,6 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['AllowOrderLineItemNarrative'] != $_POST['X_AllowOrderLineItemNarrative'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_AllowOrderLineItemNarrative']."' WHERE confname = 'AllowOrderLineItemNarrative'";
-		}
-		if ($_SESSION['vtiger_integration'] != $_POST['X_vtiger_integration'] ) {
-			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_vtiger_integration']."' WHERE confname = 'vtiger_integration'";
 		}
 		if ($_SESSION['ProhibitPostingsBefore'] != $_POST['X_ProhibitPostingsBefore'] ) {
 			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_ProhibitPostingsBefore']."' WHERE confname = 'ProhibitPostingsBefore'";
@@ -707,20 +704,6 @@ echo '</SELECT></TD>
 echo '<TR><TD>' . _('Wiki Path') . ':</TD>
 	<TD><input type="Text" Name="X_WikiPath" SIZE=40 MAXLENGTH=40 value="' . $_SESSION['WikiPath'] . '"></TD>
 	<TD>' . _('The path to the wiki installation to form the basis of wiki URLs - this should be the directory on the web-server where the wiki is installed. The wiki must be installed on the same web-server as webERP') .'</TD></TR>';
-
-/*
-
-Not implemented ... yet - any offers?
-
-echo '<TR><TD>' . _('vtiger Integration:') . ':</TD>
-	<TD><SELECT Name="X_vtiger_integration">';
-	echo '<OPTION ' . ($_SESSION['vtiger_integration'] == '0' ? 'SELECTED ' : '') . 'VALUE="0">' . _('No Integration');
-	echo '<OPTION '.($_SESSION['vtiger_integration'] == '1' ? 'SELECTED ' : '').'VALUE="1">' . _('Integration Enabled');
-
-echo '</SELECT></TD>
-	<TD>' . _('This feature makes webERP create entries in vtiger tables in the same database as webERP to allow an instance of vtiger to be integrated with webERP data') .'</TD></TR>';
-*/
-
 
 echo '<TR><TD>' . _('Prohibit GL Journals to Control Accounts') . ':</TD>
 	<TD><SELECT Name="X_ProhibitJournalsToControlAccounts">';
