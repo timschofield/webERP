@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.71 $ */
+/* $Revision: 1.72 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -73,85 +73,44 @@ if (isset($_GET['ModifyOrderNumber'])
 
 /*read in all the guff from the selected order into the Items cart  */
 
-	if ($_SESSION['vtiger_integration']==1){
-		$OrderHeaderSQL = 'SELECT salesorders.debtorno,
-				debtorsmaster.name,
-				salesorders.branchcode,
-				salesorders.vtiger_accountid,
-				salesorders.customerref,
-				salesorders.comments,
-				salesorders.orddate,
-				salesorders.ordertype,
-				salestypes.sales_type,
-				salesorders.shipvia,
-				salesorders.deliverto,
-				salesorders.deladd1,
-				salesorders.deladd2,
-				salesorders.deladd3,
-				salesorders.deladd4,
-				salesorders.deladd5,
-				salesorders.deladd6,
-				salesorders.contactphone,
-				salesorders.contactemail,
-				salesorders.freightcost,
-				salesorders.deliverydate,
-				debtorsmaster.currcode,
-				salesorders.fromstkloc,
-				salesorders.printedpackingslip,
-				salesorders.datepackingslipprinted,
-				salesorders.quotation,
-				salesorders.deliverblind,
-				debtorsmaster.customerpoline,
-				custbranch.estdeliverydays
-			FROM salesorders,
-				debtorsmaster,
-				salestypes,
-				custbranch
-			WHERE salesorders.ordertype=salestypes.typeabbrev
-			AND salesorders.debtorno = debtorsmaster.debtorno
-			AND salesorders.debtorno = custbranch.debtorno
-			AND salesorders.branchcode = custbranch.branchcode
-			AND salesorders.orderno = ' . $_GET['ModifyOrderNumber'];
+	$OrderHeaderSQL = 'SELECT salesorders.debtorno,
+		debtorsmaster.name,
+		salesorders.branchcode,
+		salesorders.customerref,
+		salesorders.comments,
+		salesorders.orddate,
+		salesorders.ordertype,
+		salestypes.sales_type,
+		salesorders.shipvia,
+		salesorders.deliverto,
+		salesorders.deladd1,
+		salesorders.deladd2,
+		salesorders.deladd3,
+		salesorders.deladd4,
+		salesorders.deladd5,
+		salesorders.deladd6,
+		salesorders.contactphone,
+		salesorders.contactemail,
+		salesorders.freightcost,
+		salesorders.deliverydate,
+		debtorsmaster.currcode,
+		salesorders.fromstkloc,
+		salesorders.printedpackingslip,
+		salesorders.datepackingslipprinted,
+		salesorders.quotation,
+		salesorders.deliverblind,
+		debtorsmaster.customerpoline,
+		custbranch.estdeliverydays
+	FROM salesorders,
+		debtorsmaster,
+		salestypes,
+		custbranch
+	WHERE salesorders.ordertype=salestypes.typeabbrev
+	AND salesorders.debtorno = debtorsmaster.debtorno
+	AND salesorders.debtorno = custbranch.debtorno
+	AND salesorders.branchcode = custbranch.branchcode
+	AND salesorders.orderno = ' . $_GET['ModifyOrderNumber'];
 
-	} else {
-		$OrderHeaderSQL = 'SELECT salesorders.debtorno,
-				debtorsmaster.name,
-				salesorders.branchcode,
-				salesorders.customerref,
-				salesorders.comments,
-				salesorders.orddate,
-				salesorders.ordertype,
-				salestypes.sales_type,
-				salesorders.shipvia,
-				salesorders.deliverto,
-				salesorders.deladd1,
-				salesorders.deladd2,
-				salesorders.deladd3,
-				salesorders.deladd4,
-				salesorders.deladd5,
-				salesorders.deladd6,
-				salesorders.contactphone,
-				salesorders.contactemail,
-				salesorders.freightcost,
-				salesorders.deliverydate,
-				debtorsmaster.currcode,
-				salesorders.fromstkloc,
-				salesorders.printedpackingslip,
-				salesorders.datepackingslipprinted,
-				salesorders.quotation,
-				salesorders.deliverblind,
-				debtorsmaster.customerpoline,
-				custbranch.estdeliverydays
-			FROM salesorders,
-				debtorsmaster,
-				salestypes,
-				custbranch
-			WHERE salesorders.ordertype=salestypes.typeabbrev
-			AND salesorders.debtorno = debtorsmaster.debtorno
-			AND salesorders.debtorno = custbranch.debtorno
-			AND salesorders.branchcode = custbranch.branchcode
-			AND salesorders.orderno = ' . $_GET['ModifyOrderNumber'];
-	}
 
 	$ErrMsg =  _('The order cannot be retrieved because');
 	$GetOrdHdrResult = DB_query($OrderHeaderSQL,$db,$ErrMsg);
@@ -194,36 +153,6 @@ if (isset($_GET['ModifyOrderNumber'])
 
 /*need to look up customer name from debtors master then populate the line items array with the sales order details records */
 
-		if ($_SESSION['vtiger_integration']==1){
-
-			$LineItemsSQL = "SELECT salesorderdetails.orderlineno,
-				salesorderdetails.stkcode,
-				stockmaster.vtiger_productid,
-				stockmaster.description,
-				stockmaster.volume,
-				stockmaster.kgs,
-				stockmaster.units,
-				salesorderdetails.unitprice,
-				salesorderdetails.quantity,
-				salesorderdetails.discountpercent,
-				salesorderdetails.actualdispatchdate,
-				salesorderdetails.qtyinvoiced,
-				salesorderdetails.narrative,
-				salesorderdetails.itemdue,
-				salesorderdetails.poline,
-				locstock.quantity as qohatloc,
-				stockmaster.mbflag,
-				stockmaster.discountcategory,
-				stockmaster.decimalplaces,
-				salesorderdetails.completed=0
-				FROM salesorderdetails INNER JOIN stockmaster
-				ON salesorderdetails.stkcode = stockmaster.stockid
-				INNER JOIN locstock ON locstock.stockid = stockmaster.stockid
-				WHERE  locstock.loccode = '" . $myrow['fromstkloc'] . "'
-				AND salesorderdetails.orderno =" . $_GET['ModifyOrderNumber'] . "
-				ORDER BY salesorderdetails.orderlineno";
-		} else {
-
 			$LineItemsSQL = "SELECT salesorderdetails.orderlineno,
 				salesorderdetails.stkcode,
 				stockmaster.description,
@@ -249,7 +178,6 @@ if (isset($_GET['ModifyOrderNumber'])
 				WHERE  locstock.loccode = '" . $myrow['fromstkloc'] . "'
 				AND salesorderdetails.orderno =" . $_GET['ModifyOrderNumber'] . "
 				ORDER BY salesorderdetails.orderlineno";
-		}
 
 		$ErrMsg = _('The line items of the order cannot be retrieved because');
 		$LineItemsResult = db_query($LineItemsSQL,$db,$ErrMsg);
@@ -289,7 +217,7 @@ if (isset($_GET['ModifyOrderNumber'])
 		} //end of checks on returned data set
 	}
 }
-		
+
 $locsql = "SELECT locationname
 		   FROM locations
 		   WHERE loccode='" . $_SESSION['Items']->Location ."'";
@@ -533,7 +461,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 		FROM debtorsmaster, holdreasons
 		WHERE debtorsmaster.holdreason=holdreasons.reasoncode
 		AND debtorsmaster.debtorno = '" . $_SESSION['Items']->DebtorNo . "'";
-	
+
 	if (isset($_POST['Select'])) {
 		$ErrMsg = _('The details for the customer selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');
 	} else {
@@ -905,7 +833,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			if (isset($_POST[$QuickEntryCode])) {
 				$NewItemDue = $_POST[$QuickEntryItemDue];
 			} else {
-				$NewItemDue = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items']->DeliveryDays);				
+				$NewItemDue = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items']->DeliveryDays);
 			}
 			if (isset($_POST[$QuickEntryPOLine])) {
 				$NewPOLine = $_POST[$QuickEntryPOLine];
@@ -1085,14 +1013,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					$sql = "SELECT stockmaster.mbflag
 							FROM stockmaster
 							WHERE stockmaster.stockid='". $NewItem ."'";
-			
+
 					$ErrMsg =  _('Could not determine if the part being ordered was a kitset or not because');
-			
+
 					$KitResult = DB_query($sql, $db,$ErrMsg);
-			
+
 					//$NewItemQty = 1; /*By Default */
 					$Discount = 0; /*By default - can change later or discount category overide */
-					
+
 					if ($myrow=DB_fetch_array($KitResult)){
 						if ($myrow['mbflag']=='K'){	/*It is a kit set item */
 							$sql = "SELECT bom.component,
@@ -1101,30 +1029,30 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 								WHERE bom.parent='" . $NewItem . "'
 								AND bom.effectiveto > '" . Date('Y-m-d') . "'
 								AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
-			
+
 							$ErrMsg = _('Could not retrieve kitset components from the database because');
 							$KitResult = DB_query($sql,$db,$ErrMsg);
-			
+
 							$ParentQty = $NewItemQty;
 							while ($KitParts = DB_fetch_array($KitResult,$db)){
 								$NewItem = $KitParts['component'];
 								$NewItemQty = $KitParts['quantity'] * $ParentQty;
 								include('includes/SelectOrderItems_IntoCart.inc');
 							}
-			
+
 						} else { /*Its not a kit set item*/
-							
+
 						include('includes/SelectOrderItems_IntoCart.inc');
 						}
-			
+
 					} /* end of if its a new item */
-					
+
 				} /*end of if its a new item */
-				
+
 		}
-		
+
 	}
-	
+
 
 	/* Run through each line of the order and work out the appropriate discount from the discount matrix */
 	$DiscCatsDone = array();
@@ -1320,7 +1248,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		<INPUT TABINDEX=5 TYPE=SUBMIT Name="QuickEntry" VALUE="<?php echo _('Use Quick Entry'); ?>">
 
 		<?php
-		
+
 		if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 			echo '<INPUT TABINDEX=6 TYPE=SUBMIT Name="ChangeCustomer" VALUE="' . _('Change Customer') . '">';
 			echo '<BR><BR><a TABINDEX=7 target="_blank" href="' . $rootpath . '/Stocks.php?' . SID . '"><B>' . _('Add a New Stock Item') . '</B></a>';
@@ -1361,8 +1289,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 */
 				// Find the quantity in stock at location
 				$qohsql = "SELECT sum(quantity)
-						   FROM locstock 
-						   WHERE stockid='" .$myrow['stockid'] . "' AND 
+						   FROM locstock
+						   WHERE stockid='" .$myrow['stockid'] . "' AND
 						   loccode = '" . $_SESSION['Items']->Location . "'";
 				$qohresult =  DB_query($qohsql,$db);
 				$qohrow = DB_fetch_row($qohresult);
@@ -1388,7 +1316,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				} else {
 				  $DemandQty = 0;
 				}
-				
+
 				// Find the quantity on purchase orders
 				$sql = "SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS dem
             			     FROM purchorderdetails
@@ -1405,7 +1333,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				  $PurchQty = 0;
 				}
 
-				// Find the quantity on works orders				
+				// Find the quantity on works orders
 				$sql = "SELECT SUM(woitems.qtyreqd - woitems.qtyrecd) AS dedm
 				       FROM woitems
 				       WHERE stockid='" . $myrow['stockid'] ."'";
@@ -1418,7 +1346,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				} else {
 				  $WoQty = 0;
 				}
-				
+
 				if ($k==1){
 					echo '<tr class="EvenTableRows">';
 					$k=0;
@@ -1427,7 +1355,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					$k=1;
 				}
 				$OnOrder = $PurchQty + $WoQty;
-				
+
 				$Available = $qoh - $DemandQty + $OnOrder;
 
 				printf('<TD><FONT SIZE=1>%s</FONT></TD>
