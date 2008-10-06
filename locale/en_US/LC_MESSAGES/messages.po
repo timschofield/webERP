@@ -776,7 +776,7 @@ msgstr ""
 #: includes/Login.php:16 includes/ConnectDB_mysqli.inc:162
 #: includes/ConnectDB_mysql.inc:139 includes/ConnectDB_postgres.inc:124
 #: includes/header.inc:10 includes/header.inc:18
-msgid "ISO-8859-1"
+msgid "iso-8859-1"
 msgstr ""
 
 #: BankAccounts.php:8
