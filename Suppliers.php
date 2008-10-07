@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 
 $PageSecurity = 5;
 
@@ -12,29 +12,29 @@ include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 Function Is_ValidAccount ($ActNo) {
-	
+
 	if (StrLen($ActNo) < 16) {
 	echo _('NZ account numbers must have 16 numeric characters in it');
 	return False;
 	}
-	
+
 	if (!Is_double((double) $ActNo)) {
 	echo _('NZ account numbers entered must use all numeric characters in it');
 	return False;
 	}
-	
+
 	$BankPrefix = substr($ActNo,0, 2);
 	$BranchNumber = (int) (substr($ActNo, 3, 4));
-	
+
 	if ($BankPrefix == '29') {
 		echo _('NZ Accounts codes with the United Bank are not verified') . ', ' . _('be careful to enter the correct account number');
 		exit;
 	}
-	
+
 	//Verify correct branch details
-	
+
 	switch ($BankPrefix) {
-	
+
 	case '01':
 		if (!(($BranchNumber >= 1 and $BranchNumber <= 999) or ($BranchNumber >= 1100 and $BranchNumber <= 1199))) {
 		echo _('ANZ branches must be between 0001 and 0999 or between 1100 and 1199') . '. ' . _('The branch number used is invalid');
@@ -55,7 +55,7 @@ Function Is_ValidAccount ($ActNo) {
 		exit;
 		}
 		break;
-	
+
 	case '06':
 		if (!(($BranchNumber >= 1 and $BranchNumber <= 999) or ($BranchNumber >= 1400 and $BranchNumber <= 1499))) {
 			echo _('National Bank branches must be between 0001 and 0999 or between 1400 and 1499') . '. ' . _('The branch number used is invalid');
@@ -63,7 +63,7 @@ Function Is_ValidAccount ($ActNo) {
 		exit;
 		}
 		break;
-	
+
 	case '08':
 	if (!($BranchNumber >= 6500 and $BranchNumber <= 6599)) {
 		echo _('National Australia branches must be between 6500 and 6599') . '. ' . _('The branch number used is invalid');
@@ -79,16 +79,16 @@ Function Is_ValidAccount ($ActNo) {
 		}
 		break;
 	case '12':
-	
+
 	//"13" "14" "15", "16", "17", "18", "19", "20", "21", "22", "23", "24":
-	
+
 	if (!($BranchNumber >= 3000 and $BranchNumber <= 4999)){
 		echo _('Trust Bank and Regional Bank branches must be between 3000 and 4999') . '. ' . _('The branch number used is invalid');
 		return False;
 		exit;
 	}
 		break;
-	
+
 	case '11':
 	if (!($BranchNumber >= 5000 and $BranchNumber <= 6499)){
 		echo _('Post Office Bank branches must be between 5000 and 6499') . '. ' . _('The branch number used is invalid');
@@ -96,7 +96,7 @@ Function Is_ValidAccount ($ActNo) {
 		exit;
 	}
 		break;
-	
+
 	case '25':
 	if (!($BranchNumber >= 2500 and $BranchNumber <= 2599)){
 		echo _('Countrywide Bank branches must be between 2500 and 2599') . '. ' . _('The branch number used is invalid');
@@ -111,7 +111,7 @@ Function Is_ValidAccount ($ActNo) {
 		exit;
 	}
 		break;
-	
+
 	case '30':
 	if (!($BranchNumber >= 2900 and $BranchNumber <= 2949)){
 		echo _('Hong Kong and Shanghai branches must be between 2900 and 2949') . '. ' . _('The branch number used is invalid');
@@ -119,7 +119,7 @@ Function Is_ValidAccount ($ActNo) {
 		exit;
 	}
 		break;
-	
+
 	case '31':
 	if (!($BranchNumber >= 2800 and $BranchNumber <= 2849)){
 		echo _('Citibank NA branches must be between 2800 and 2849') . '. ' . _('The branch number used is invalid');
@@ -127,7 +127,7 @@ Function Is_ValidAccount ($ActNo) {
 		exit;
 	}
 		break;
-	
+
 	case '33':
 	if (!($BranchNumber >= 6700 and $BranchNumber <= 6799)){
 		echo _('Rural Bank branches must be between 6700 and 6799') . '. ' . _('The branch number used is invalid');
@@ -135,19 +135,19 @@ Function Is_ValidAccount ($ActNo) {
 		exit;
 	}
 		break;
-	
+
 	default:
 	echo _('The prefix') . ' - ' . $BankPrefix . ' ' . _('is not a valid New Zealand Bank') . '.<BR>' .
 			_('If you are using webERP outside New Zealand error trapping relevant to your country should be used');
 	return False;
 	exit;
-	
+
 	} // end of first Bank prefix switch
-	
+
 	for ($i=3; $i<=14; $i++) {
-	
+
 	$DigitVal = (double)(substr($ActNo, $i, 1));
-	
+
 	switch ($i) {
 	case 3:
 		if ($BankPrefix == '08' or $BankPrefix == '09' or $BankPrefix == '25' or $BankPrefix == '33'){
@@ -156,7 +156,7 @@ Function Is_ValidAccount ($ActNo) {
 			$CheckSum = $CheckSum + ($DigitVal * 6);
 		}
 		break;
-	
+
 	case 4:
 		if ($BankPrefix == '08' or $BankPrefix == '09' or $BankPrefix == '25' or $BankPrefix == '33'){
 			$CheckSum = 0;
@@ -164,7 +164,7 @@ Function Is_ValidAccount ($ActNo) {
 			$CheckSum = $CheckSum + ($DigitVal * 3);
 		}
 		break;
-	
+
 	case 5:
 		if ($BankPrefix == '08' or $BankPrefix == '09' or $BankPrefix == '25' or $BankPrefix == '33'){
 			$CheckSum = 0;
@@ -172,7 +172,7 @@ Function Is_ValidAccount ($ActNo) {
 			$CheckSum = $CheckSum + ($DigitVal * 7);
 		}
 		break;
-	
+
 	case 6:
 		if ($BankPrefix == '08' or $BankPrefix == '09' or $BankPrefix == '25' or $BankPrefix == '33'){
 			$CheckSum = 0;
@@ -180,7 +180,7 @@ Function Is_ValidAccount ($ActNo) {
 			$CheckSum = $CheckSum + ($DigitVal * 9);
 		}
 		break;
-	
+
 	case 7:
 		if ($BankPrefix == '08') {
 			$CheckSum = $CheckSum + $DigitVal * 7;
@@ -188,7 +188,7 @@ Function Is_ValidAccount ($ActNo) {
 			$CheckSum = $CheckSum + $DigitVal * 1;
 		}
 		break;
-	
+
 	case 8:
 		if ($BankPrefix == '08'){
 			$CheckSum = $CheckSum + ($DigitVal * 6);
@@ -200,7 +200,7 @@ Function Is_ValidAccount ($ActNo) {
 			$CheckSum = $CheckSum + $DigitVal * 10;
 		}
 		break;
-	
+
 	case 9:
 		if ($BankPrefix == '09'){
 			$CheckSum = 0;
@@ -210,7 +210,7 @@ Function Is_ValidAccount ($ActNo) {
 			$CheckSum = $CheckSum + $DigitVal * 5;
 		}
 		break;
-	
+
 	case 10:
 		if ($BankPrefix == '08'){
 			$CheckSum = $CheckSum + $DigitVal * 4;
@@ -226,7 +226,7 @@ Function Is_ValidAccount ($ActNo) {
 			$CheckSum = $CheckSum + $DigitVal * 8;
 		}
 		break;
-	
+
 	case 11:
 		if ($BankPrefix == '08'){
 			$CheckSum = $CheckSum + $DigitVal * 3;
@@ -242,7 +242,7 @@ Function Is_ValidAccount ($ActNo) {
 			$CheckSum = $CheckSum + $DigitVal * 4;
 		}
 		break;
-	
+
 	case 12:
 		if ($BankPrefix == '25' or $BankPrefix == '33') {
 			$CheckSum = $CheckSum + $DigitVal * 3;
@@ -256,7 +256,7 @@ Function Is_ValidAccount ($ActNo) {
 			$CheckSum = $CheckSum + $DigitVal * 2;
 		}
 		break;
-	
+
 	case 13:
 		if ($BankPrefix == '09') {
 			If (($DigitVal * 2) > 9) {
@@ -268,16 +268,16 @@ Function Is_ValidAccount ($ActNo) {
 			$CheckSum = $CheckSum + $DigitVal;
 		}
 		break;
-	
+
 	case 14:
 		if ($BankPrefix == '09') {
 			$CheckSum = $CheckSum + $DigitVal;
 		}
 	break;
 	} //end switch
-	
+
 	} //end for loop
-	
+
 	if ($BankPrefix == '25' or $BankPrefix == '33') {
 		if ($CheckSum / 10 - (int)($CheckSum / 10) != 0) {
 			echo '<P>' . _('The account number entered does not meet the banking check sum requirement and cannot be a valid account number');
@@ -322,7 +322,7 @@ if (isset($_POST['submit'])) {
 	$myrow=DB_fetch_row($result);
 	if ($myrow[0]>0 and isset($_POST['New'])) {
 		$InputError = 1;
-		prnMsg( _('The supplier number already exists in the database'),'error');		
+		prnMsg( _('The supplier number already exists in the database'),'error');
 		$Errors[$i] = 'ID';
 		$i++;
 	}
@@ -331,33 +331,32 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The supplier name must be entered and be forty characters or less long'),'error');
 		$Errors[$i]='Name';
 		$i++;
-	} 
+	}
 	if (strlen($SupplierID) == 0) {
 		$InputError = 1;
 		prnMsg(_('The Supplier Code cannot be empty'),'error');
 		$Errors[$i]='ID';
 		$i++;
-	} 
+	}
 	if (ContainsIllegalCharacters($SupplierID)) {
 		$InputError = 1;
 		prnMsg(_('The supplier code cannot contain any of the following characters') . " - . ' & + \" \\" . ' ' ._('or a space'),'error');
 		$Errors[$i]='ID';
 		$i++;
-	} 
+	}
 	if (strlen($_POST['BankRef']) > 12) {
 		$InputError = 1;
 		prnMsg(_('The bank reference text must be less than 12 characters long'),'error');
 		$Errors[$i]='BankRef';
 		$i++;
-	} 
+	}
 	if (!is_date($_POST['SupplierSince'])) {
 		$InputError = 1;
 		prnMsg(_('The supplier since field must be a date in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 		$Errors[$i]='SupplierSince';
 		$i++;
-	} 
-	
-	
+	}
+
 	/*
 	elseif (strlen($_POST['BankAct']) > 1 ) {
 		if (!Is_ValidAccount($_POST['BankAct'])) {
@@ -370,58 +369,102 @@ if (isset($_POST['submit'])) {
 
 		$SQL_SupplierSince = FormatDateForSQL($_POST['SupplierSince']);
 
+if ($_SESSION['geocode_integration']==1 ){
+// Get the lat/long from our geocoding host
+$sql = "SELECT * FROM geocode_param WHERE 1";
+$ErrMsg = _('An error occurred in retrieving the information');
+$resultgeo = DB_query($sql, $db, $ErrMsg);
+$row = DB_fetch_array($resultgeo);
+$api_key = $row['geocode_key'];
+$map_host = $row['map_host'];
+define("MAPS_HOST", $map_host);
+define("KEY", $api_key);
+
+$address = $_POST["Address1"] . ", " . $_POST["Address2"] . ", " . $_POST["Address3"] . ", " . $_POST["Address4"];
+
+$base_url = "http://" . MAPS_HOST . "/maps/geo?output=xml" . "&key=" . KEY;
+$request_url = $base_url . "&q=" . urlencode($address);
+$xml = simplexml_load_file($request_url) or die("url not loading");
+
+      $coordinates = $xml->Response->Placemark->Point->coordinates;
+      $coordinatesSplit = split(",", $coordinates);
+      // Format: Longitude, Latitude, Altitude
+      $latitude = $coordinatesSplit[1];
+      $longitude = $coordinatesSplit[0];
+
+    $status = $xml->Response->Status->code;
+    if (strcmp($status, "200") == 0) {
+      // Successful geocode
+      $geocode_pending = false;
+      $coordinates = $xml->Response->Placemark->Point->coordinates;
+      $coordinatesSplit = split(",", $coordinates);
+      // Format: Longitude, Latitude, Altitude
+      $latitude = $coordinatesSplit[1];
+      $longitude = $coordinatesSplit[0];
+    } else {
+      // failure to geocode
+      $geocode_pending = false;
+      echo "<p>Address: " . $address . " failed to geocode.\n";
+      echo "Received status " . $status . "
+\n</p>";
+    }
+}
 		if (!isset($_POST['New'])) {
-			
+
 			$supptranssql = "SELECT COUNT(supplierno)
-													FROM supptrans 
-													WHERE supplierno='".$SupplierID ."'"; 
+													FROM supptrans
+													WHERE supplierno='".$SupplierID ."'";
 			$suppresult = DB_query($supptranssql, $db);
 			$supptrans = DB_fetch_row($suppresult);
 
 			$suppcurrssql = "SELECT currcode
-													FROM suppliers 
-													WHERE supplierid='".$SupplierID ."'"; 
+													FROM suppliers
+													WHERE supplierid='".$SupplierID ."'";
 			$currresult = DB_query($suppcurrssql, $db);
 			$suppcurr = DB_fetch_row($currresult);
-			
+
 			if ($supptrans == 0) {
-				$sql = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "', 
-							address1='" . $_POST['Address1'] . "', 
-							address2='" . $_POST['Address2'] . "', 
-							address3='" . $_POST['Address3'] . "', 
-							address4='" . $_POST['Address4'] . "', 
-							currcode='" . $_POST['CurrCode'] . "', 
-							suppliersince='$SQL_SupplierSince',  
-							paymentterms='" . $_POST['PaymentTerms'] . "', 
-							bankpartics='" . $_POST['BankPartics'] . "', 
-							bankref='" . $_POST['BankRef'] . "', 
-					 		bankact='" . $_POST['BankAct'] . "', 
-							remittance=" . $_POST['Remittance'] . ", 
+				$sql = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "',
+							address1='" . $_POST['Address1'] . "',
+							address2='" . $_POST['Address2'] . "',
+							address3='" . $_POST['Address3'] . "',
+							address4='" . $_POST['Address4'] . "',
+							currcode='" . $_POST['CurrCode'] . "',
+							suppliersince='$SQL_SupplierSince',
+							paymentterms='" . $_POST['PaymentTerms'] . "',
+							bankpartics='" . $_POST['BankPartics'] . "',
+							bankref='" . $_POST['BankRef'] . "',
+					 		bankact='" . $_POST['BankAct'] . "',
+							remittance=" . $_POST['Remittance'] . ",
 							taxgroupid=" . $_POST['TaxGroup'] . ",
 							factorcompanyid=" . $_POST['FactorID'] .",
-							taxref='". $_POST['TaxRef'] ."' 
+							lat='" . $latitude ."',
+							lng='" . $longitude ."',
+							taxref='". $_POST['TaxRef'] ."'
 						WHERE supplierid = '$SupplierID'";
 			} else {
 				if ($suppcurr[0] != $_POST['CurrCode']) {
 					prnMsg( _('Cannot change currency code as transactions already exist'), info);
 				}
-				$sql = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "', 
-							address1='" . $_POST['Address1'] . "', 
-							address2='" . $_POST['Address2'] . "', 
-							address3='" . $_POST['Address3'] . "', 
-							address4='" . $_POST['Address4'] . "', 
-							suppliersince='$SQL_SupplierSince',  
-							paymentterms='" . $_POST['PaymentTerms'] . "', 
-							bankpartics='" . $_POST['BankPartics'] . "', 
-							bankref='" . $_POST['BankRef'] . "', 
-					 		bankact='" . $_POST['BankAct'] . "', 
-							remittance=" . $_POST['Remittance'] . ", 
+				$sql = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "',
+							address1='" . $_POST['Address1'] . "',
+							address2='" . $_POST['Address2'] . "',
+							address3='" . $_POST['Address3'] . "',
+							address4='" . $_POST['Address4'] . "',
+							suppliersince='$SQL_SupplierSince',
+							paymentterms='" . $_POST['PaymentTerms'] . "',
+							bankpartics='" . $_POST['BankPartics'] . "',
+							bankref='" . $_POST['BankRef'] . "',
+					 		bankact='" . $_POST['BankAct'] . "',
+							remittance=" . $_POST['Remittance'] . ",
 							taxgroupid=" . $_POST['TaxGroup'] . ",
 							factorcompanyid=" . $_POST['FactorID'] .",
-							taxref='". $_POST['TaxRef'] ."' 
+							lat='" . $latitude ."',
+							lng='" . $longitude ."',
+							taxref='". $_POST['TaxRef'] ."'
 						WHERE supplierid = '$SupplierID'";
 			}
-			
+
 			$ErrMsg = _('The supplier could not be updated because');
 			$DbgMsg = _('The SQL that was used to update the supplier but failed was');
 
@@ -431,42 +474,46 @@ if (isset($_POST['submit'])) {
 
 		} else { //its a new supplier
 
-			$sql = "INSERT INTO suppliers (supplierid, 
-							suppname, 
-							address1, 
-							address2, 
-							address3, 
-							address4, 
-							currcode, 
-							suppliersince, 
-							paymentterms, 
-							bankpartics, 
-							bankref, 
-							bankact, 
-							remittance, 
+			$sql = "INSERT INTO suppliers (supplierid,
+							suppname,
+							address1,
+							address2,
+							address3,
+							address4,
+							currcode,
+							suppliersince,
+							paymentterms,
+							bankpartics,
+							bankref,
+							bankact,
+							remittance,
 							taxgroupid,
 							factorcompanyid,
-							taxref) 
-					 VALUES ('$SupplierID', 
-					 	'" . $_POST['SuppName'] . "', 
-						'" . $_POST['Address1'] . "', 
-						'" . $_POST['Address2'] . "', 
-						'" . $_POST['Address3'] . "', 
-						'" . $_POST['Address4'] . "', 
-						'" . $_POST['CurrCode'] . "', 
-						'" . $SQL_SupplierSince . "', 
-						'" . $_POST['PaymentTerms'] . "', 
-						'" . $_POST['BankPartics'] . "', 
-						'" . $_POST['BankRef'] . "', 
-						'" . $_POST['BankAct'] . "', 
+							lat,
+							lng,
+							taxref)
+					 VALUES ('$SupplierID',
+					 	'" . $_POST['SuppName'] . "',
+						'" . $_POST['Address1'] . "',
+						'" . $_POST['Address2'] . "',
+						'" . $_POST['Address3'] . "',
+						'" . $_POST['Address4'] . "',
+						'" . $_POST['CurrCode'] . "',
+						'" . $SQL_SupplierSince . "',
+						'" . $_POST['PaymentTerms'] . "',
+						'" . $_POST['BankPartics'] . "',
+						'" . $_POST['BankRef'] . "',
+						'" . $_POST['BankAct'] . "',
                        	" . $_POST['Remittance'] . ",
                        	" . $_POST['TaxGroup'] . ",
                        	" . $_POST['FactorID'] . ",
+                       	'" . $latitude ."',
+                       	'" . $longitude ."',
                        	'" . $_POST['TaxRef'] . "')";
 
 			$ErrMsg = _('The supplier') . ' ' . $_POST['SuppName'] . ' ' . _('could not be added because');
 			$DbgMsg = _('The SQL that was used to insert the supplier but failed was');
-			
+
 			$result = DB_query($sql, $db, $ErrMsg, $DbgMsg);
 
 			prnMsg(_('A new supplier for') . ' ' . $_POST['SuppName'] . ' ' . _('has been added to the database'),'success');
@@ -489,7 +536,7 @@ if (isset($_POST['submit'])) {
 			unset($_POST['TaxRef']);
 
 		}
-		
+
 	} else {
 
 		prnMsg(_('Validation failed') . _('no updates or deletes took place'),'warn');
@@ -554,10 +601,10 @@ if (!isset($SupplierID)) {
 	echo '<CENTER><TABLE>';
 	echo '<TR><TD>' . _('Supplier Code') . ":</TD><TD><INPUT TYPE='text' NAME='SupplierID' SIZE=11 MAXLENGTH=10></TD></TR>";
 	echo '<TR><TD>' . _('Supplier Name') . ":</TD><TD><INPUT TYPE='text' NAME='SuppName' SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 1') . ":</TD><TD><INPUT TYPE='text' NAME='Address1' SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 2') . ":</TD><TD><INPUT TYPE='text' NAME='Address2' SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 3') . ":</TD><TD><INPUT TYPE='text' name='Address3' SIZE=42 MAXLENGTH=40></TD></TR>";
-	echo '<TR><TD>' . _('Address Line 4') . ":</TD><TD><INPUT TYPE='text' name='Address4' SIZE=42 MAXLENGTH=40></TD></TR>";
+	echo '<TR><TD>' . _('Address Line 1 (Street)') . ":</TD><TD><INPUT TYPE='text' NAME='Address1' SIZE=42 MAXLENGTH=40></TD></TR>";
+	echo '<TR><TD>' . _('Address Line 2 (Suburb/City)') . ":</TD><TD><INPUT TYPE='text' NAME='Address2' SIZE=42 MAXLENGTH=40></TD></TR>";
+	echo '<TR><TD>' . _('Address Line 3 (State/Province)') . ":</TD><TD><INPUT TYPE='text' name='Address3' SIZE=42 MAXLENGTH=40></TD></TR>";
+	echo '<TR><TD>' . _('Address Line 4 (Postal Code)') . ":</TD><TD><INPUT TYPE='text' name='Address4' SIZE=42 MAXLENGTH=40></TD></TR>";
 
 	$DateString = Date($_SESSION['DefaultDateFormat']);
 	echo '<TR><TD>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] . "):</TD><TD><INPUT TYPE='text' NAME='SupplierSince' VALUE=$DateString SIZE=12 MAXLENGTH=10></TD></TR>";
@@ -639,25 +686,25 @@ if (!isset($SupplierID)) {
 	echo '<CENTER><TABLE>';
 
 	if (!isset($_POST['New'])) {
-		$sql = "SELECT supplierid, 
-				suppname, 
-				address1, 
-				address2, 
-				address3, 
-				address4, 
-				currcode, 
-				suppliersince, 
-				paymentterms, 
-				bankpartics, 
-				bankref, 
-				bankact, 
-				remittance, 
+		$sql = "SELECT supplierid,
+				suppname,
+				address1,
+				address2,
+				address3,
+				address4,
+				currcode,
+				suppliersince,
+				paymentterms,
+				bankpartics,
+				bankref,
+				bankact,
+				remittance,
 				taxgroupid,
 				factorcompanyid,
-				taxref 
-			FROM suppliers 
+				taxref
+			FROM suppliers
 			WHERE supplierid = '$SupplierID'";
-				  
+
 		$result = DB_query($sql, $db);
 		$myrow = DB_fetch_array($result);
 
@@ -686,10 +733,10 @@ if (!isset($SupplierID)) {
 	}
 
 	echo '<TR><TD>' . _('Supplier Name') . ':</TD><TD><INPUT '.(in_array('Name',$Errors) ? 'class="inputerror"' : '').' TYPE="text" NAME="SuppName" VALUE="' . $_POST['SuppName'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
-	echo '<TR><TD>' . _('Address Line 1') . ':</TD><TD><INPUT TYPE="text" NAME="Address1" VALUE="' . $_POST['Address1'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
-	echo '<TR><TD>' . _('Address Line 2') . ':</TD><TD><INPUT TYPE="text" NAME="Address2" VALUE="' . $_POST['Address2'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
-	echo '<TR><TD>' . _('Address Line 3') . ':</TD><TD><INPUT TYPE="text" NAME="Address3" VALUE="' . $_POST['Address3'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
-	echo '<TR><TD>' . _('Address Line 4') . ':</TD><TD><INPUT TYPE="text" NAME="Address4" VALUE="' . $_POST['Address4'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
+	echo '<TR><TD>' . _('Address Line 1 (Street)') . ':</TD><TD><INPUT TYPE="text" NAME="Address1" VALUE="' . $_POST['Address1'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
+	echo '<TR><TD>' . _('Address Line 2 (Suburb/City)') . ':</TD><TD><INPUT TYPE="text" NAME="Address2" VALUE="' . $_POST['Address2'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
+	echo '<TR><TD>' . _('Address Line 3 (State/Province)') . ':</TD><TD><INPUT TYPE="text" NAME="Address3" VALUE="' . $_POST['Address3'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
+	echo '<TR><TD>' . _('Address Line 4 (Postal Code)') . ':</TD><TD><INPUT TYPE="text" NAME="Address4" VALUE="' . $_POST['Address4'] . '" SIZE=42 MAXLENGTH=40></TD></TR>';
 
 	echo '<TR><TD>' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] .'):</TD><TD><INPUT '.(in_array('SupplierSince',$Errors) ? 'class="inputerror"' : '').'  SIZE=12 MAXLENGTH=10 TYPE="text" NAME="SupplierSince" VALUE=' . $_POST['SupplierSince'] . '></TD></TR>';
 	echo '<TR><TD>' . _('Bank Particulars') . ":</TD><TD><INPUT TYPE='text' NAME='BankPartics' SIZE=13 MAXLENGTH=12 VALUE='" . $_POST['BankPartics'] . "'></TD></TR>";
