@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.39 $ */
+/* $Revision: 1.40 $ */
 
 $PageSecurity = 3;
 
@@ -32,8 +32,8 @@ echo "<A HREF='" . $rootpath . '/SelectCustomer.php?' . SID . "'>" . _('Back to 
 if (isset($Errors)) {
 	unset($Errors);
 }
-	
-$Errors = array();	
+
+$Errors = array();
 
 if (isset($_POST['submit'])) {
 
@@ -52,37 +52,37 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The Branch code cannot contain any of the following characters')." -  & \'",'error');
 		$Errors[$i] = 'BranchCode';
-		$i++;		
-	} 
+		$i++;
+	}
 	if (strlen($_POST['BranchCode'])==0) {
 		$InputError = 1;
 		prnMsg(_('The Branch code must be at least one character long'),'error');
 		$Errors[$i] = 'BranchCode';
-		$i++;		
-	} 
+		$i++;
+	}
 	if (!is_numeric($_POST['FwdDate'])) {
 		$InputError = 1;
 		prnMsg(_('The date after which invoices are charged to the following month is expected to be a number and a recognised number has not been entered'),'error');
 		$Errors[$i] = 'FwdDate';
-		$i++;		
-	} 
+		$i++;
+	}
 	if ($_POST['FwdDate'] >30) {
 		$InputError = 1;
 		prnMsg(_('The date (in the month) after which invoices are charged to the following month should be a number less than 31'),'error');
 		$Errors[$i] = 'FwdDate';
-		$i++;		
-	} 
+		$i++;
+	}
 	if (!is_numeric($_POST['EstDeliveryDays'])) {
 		$InputError = 1;
 		prnMsg(_('The estimated delivery days is expected to be a number and a recognised number has not been entered'),'error');
 		$Errors[$i] = 'EstDeliveryDays';
-		$i++;		
-	} 
+		$i++;
+	}
 	if ($_POST['EstDeliveryDays'] >60) {
 		$InputError = 1;
 		prnMsg(_('The estimated delivery days should be a number of days less than 60') . '. ' . _('A package can be delivered by seafreight anywhere in the world normally in less than 60 days'),'error');
 		$Errors[$i] = 'EstDeliveryDays';
-		$i++;		
+		$i++;
 	}
 	if (!isset($_POST['EstDeliveryDays'])) {
 		$_POST['EstDeliveryDays']=1;
@@ -127,6 +127,7 @@ $xml = simplexml_load_file($request_url) or die("url not loading");
       echo "Received status " . $status . "
 \n</p>";
     }
+}
 	if (isset($SelectedBranch) AND $InputError !=1) {
 
 		/*SelectedBranch could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the 	delete code below*/
@@ -394,7 +395,7 @@ if (!isset($SelectedBranch)){
 				$myrow[8],
 				$myrow[8],
 				$myrow[9],
-				($myrow[11]?_('No'):_('Yes')),				
+				($myrow[11]?_('No'):_('Yes')),
 				$_SERVER['PHP_SELF'],
 				$DebtorNo,
 				urlencode($myrow[1]),
@@ -409,8 +410,8 @@ if (!isset($SelectedBranch)){
 		} while ($myrow = DB_fetch_row($result));
 		//END WHILE LIST LOOP
 		echo '</table>';
-		echo '<b>'.$TotalEnable.'</b> ' . _('Branches are enabled.') . '<br>';		
-		echo '<b>'.$TotalDisable.'</b> ' . _('Branches are disabled.') . '<br>';		
+		echo '<b>'.$TotalEnable.'</b> ' . _('Branches are enabled.') . '<br>';
+		echo '<b>'.$TotalDisable.'</b> ' . _('Branches are disabled.') . '<br>';
 		echo '<b>'.($TotalEnable+$TotalDisable). '</b> ' . _('Total Branches') . '<br>';
 	} else {
 		$sql = "SELECT debtorsmaster.name,
@@ -529,15 +530,15 @@ if (! isset($_GET['delete'])) {
 			Maybe should only do this when that page is the referrer?
 	*/
 		if (isset($_GET['BranchCode'])){
-			$sql="SELECT name, 
-					address1, 
-					address2, 
+			$sql="SELECT name,
+					address1,
+					address2,
 					address3,
 					address4,
 					address5,
-					address6 
-					FROM 
-					debtorsmaster 
+					address6
+					FROM
+					debtorsmaster
 					WHERE debtorno='".$_GET['BranchCode']."'";
 			$result = DB_query($sql, $db);
 			$myrow = DB_fetch_array($result);
@@ -549,7 +550,7 @@ if (! isset($_GET['delete'])) {
 		 	$_POST['BrAddress4'] = $myrow['addrsss4'];
         	$_POST['BrAddress5'] = $myrow['addrsss5'];
 			$_POST['BrAddress6'] = $myrow['addrsss6'];
-		} 
+		}
 		echo '<CENTER><b>'._('Add a Branch').'</b><br><TABLE><TR><TD>'._('Branch Code'). ':</TD>
 		<TD><input ' .(in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) .
 				" tabindex=1 type='Text' name='BranchCode' SIZE=12 MAXLENGTH=10 value=" . $_POST['BranchCode'] . '></TD></TR>';
