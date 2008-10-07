@@ -1,13 +1,62 @@
 <?php
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 $PageSecurity = 2;
 
 include('includes/session.inc');
 $title = _('Search Suppliers');
 include('includes/header.inc');
-
 include('includes/Wiki.php');
+include('includes/SQL_CommonFunctions.inc');
+
+// only get geocode information if integration is on, and supplier has been selected
+if ($_SESSION['geocode_integration']==1 AND isset($_SESSION['SupplierID'])){
+
+$sql="SELECT * FROM geocode_param WHERE 1";
+$ErrMsg = _('An error occurred in retrieving the information');;
+$result = DB_query($sql, $db, $ErrMsg);
+$myrow = DB_fetch_array($result);
+$sql = "SELECT suppliers.supplierid,suppliers.lat, suppliers.lng
+                        FROM suppliers
+                        WHERE suppliers.supplierid = '" . $_SESSION['SupplierID'] . "'
+                        ORDER BY suppliers.supplierid";
+$ErrMsg = _('An error occurred in retrieving the information');
+$result2 = DB_query($sql, $db, $ErrMsg);
+$myrow2 = DB_fetch_array($result2);
+$lat = $myrow2['lat'];
+$lng = $myrow2['lng'];
+$api_key = $myrow['geocode_key'];
+$center_long = $myrow['center_long'];
+$center_lat = $myrow['center_lat'];
+$map_height = $myrow['map_height'];
+$map_width = $myrow['map_width'];
+$map_host = $myrow['map_host'];
+
+echo '<script src="http://maps.google.com/maps?file=api&v=2&key=' . $api_key . '"';
+echo ' type="text/javascript"></script>';
+echo ' <script type="text/javascript">';
+echo '    //<![CDATA[ '; ?>
+
+    function load() {
+      if (GBrowserIsCompatible()) {
+        var map = new GMap2(document.getElementById("map"));
+        map.addControl(new GSmallMapControl());
+        map.addControl(new GMapTypeControl());
+<? echo 'map.setCenter(new GLatLng(' . $lat . ', ' . $lng . '), 11);'; ?>
+<? echo 'var marker = new GMarker(new GLatLng(' . $lat . ', ' . $lng . '));' ?>
+        map.addOverlay(marker);
+        GEvent.addListener(marker, "click", function() {
+        marker.openInfoWindowHtml(WINDOW_HTML);
+          });
+        marker.openInfoWindowHtml(WINDOW_HTML);
+      }
+    }
+    //]]>
+    </script>
+  <body onload="load()" onunload="GUnload()">
+
+<?
+}
 
 $msg='';
 /*
@@ -36,7 +85,6 @@ If (isset($_POST['Select'])) { /*User has hit the button selecting a supplier */
 	unset($_POST['Next']);
 	unset($_POST['Previous']);
 }
-
 
 if (isset($_POST['Search'])
 		OR isset($_POST['Go'])
@@ -106,7 +154,7 @@ if (isset($_POST['Search'])
 
 } //end of if search
 
-If (isset($SingleSupplierReturned)) { /*there was only one supplier returned */
+if (isset($SingleSupplierReturned)) { /*there was only one supplier returned */
 	$_SESSION['SupplierID'] = $SingleSupplierReturned;
 	unset($_POST['Keywords']);
 	unset($_POST['SupplierCode']);
@@ -211,9 +259,8 @@ echo "</TD>
 <CENTER>
 <INPUT TYPE=SUBMIT NAME='Search' VALUE='" . _('Search Now') . "'>
 </CENTER>";
-
-
-If (isset($result) AND !isset($SingleSupplierReturned)) {
+//if (isset($result) AND !isset($SingleSupplierReturned)) {
+if (isset($_POST['Search'])) {
 	$ListCount=DB_num_rows($result);
 	$ListPageMax=ceil($ListCount/$_SESSION['DisplayRecordsMax']);
 	
@@ -222,16 +269,11 @@ If (isset($result) AND !isset($SingleSupplierReturned)) {
 			$_POST['PageOffset'] = $_POST['PageOffset'] + 1;
 		}
 	}
-
 	if (isset($_POST['Previous'])) {
 		if ($_POST['PageOffset'] > 1) {
 			$_POST['PageOffset'] = $_POST['PageOffset'] - 1;
 		}
 	}
-
-  	
-
-
 	if ($ListPageMax >1) {
 		echo "<P>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 		
@@ -252,12 +294,8 @@ If (isset($result) AND !isset($SingleSupplierReturned)) {
 			<INPUT TYPE=SUBMIT NAME="Next" VALUE="' . _('Next') . '">';
 		echo '<P>';
 	}
-
-
 	echo "<INPUT TYPE=hidden NAME='Search' VALUE='" . _('Search Now') . "'>";
-
   	echo '<br><br>';
-
   	echo '<BR><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
   	$tableheader = "<TR>
   		<TH>" . _('Code') . "</TH>
@@ -269,9 +307,7 @@ If (isset($result) AND !isset($SingleSupplierReturned)) {
 		<TH>" . _('Address 4') . "</TH>
 		</TR>";
 	echo $tableheader;
-
 	$j = 1;
-
   	$RowIndex = 0;
 
   	if (DB_num_rows($result)<>0){
@@ -330,6 +366,41 @@ if (isset($ListPageMax) and $ListPageMax >1) {
 }
 
 echo '</FORM>';
+// Only display the geocode map if the integration is turned on, and there is a latitude/longitude to display
+if ($_SESSION['geocode_integration']==1 AND isset($_SESSION['SupplierID'])){
+if ($lat ==0){
+echo "<center>Map will display here, geocode is enabled, but no geocode data to display yet.<center>";
+include('includes/footer.inc');
+exit;
+}
+// Select some basic data about the supplier
+$SQL = "SELECT suppliers.suppname, suppliers.lastpaid, suppliers.lastpaiddate, suppliersince
+                FROM suppliers
+                WHERE suppliers.supplierid ='" . $_SESSION['SupplierID'] . "'";
+        $DataResult = DB_query($SQL,$db);
+        $myrow = DB_fetch_array($DataResult);
+// Select some more data about the supplier
+$SQL = "select sum(-ovamount) as total from supptrans where supplierno = '" . $_SESSION['SupplierID'] . "' and type != '20'";
+        $Total1Result = DB_query($SQL,$db);
+        $row = DB_fetch_array($Total1Result);
+echo '<CENTER><TABLE WIDTH=90% COLSPAN=2 BORDER=2 CELLPADDING=4>';
+        echo "<TR>
+                <TH WIDTH=33%>" . _('Supplier Data') . "</TH>
+                <TH WIDTH=33%>". _('Supplier Mapping') . "</TH>
+        </TR>";
+echo '<TR><TD VALIGN=TOP>';    /* Supplier Data */
+echo "Distance to this Supplier: <b>TBA</b><br>";
+echo "Last Paid: <b>" . ConvertSQLDate($myrow['lastpaiddate']) . "</b><br>";
+echo "Last Paid Amount: <b>$" . number_format($myrow['lastpaid'],2) . "</b><br>";
+echo "Supplier since: <b>" . ConvertSQLDate($myrow['suppliersince']) . "</b><br>";
+echo "Total Spend with this Supplier: <b>$" . number_format($row['total'],2) . "</b><br>";
+echo '<BR>';
+echo '<BR>';
+echo '</TD><TD VALIGN=TOP>'; /* Mapping */
+//echo 'SupplierID is:' . $_SESSION['SupplierID'];
+echo "<center>Map will display below, geocode is enabled.<center>";
+echo '<center><div align="center" id="map" style="width: 400px; height: 200px"></div></center>';
+}
 include('includes/footer.inc');
 ?>
 

@@ -1,18 +1,69 @@
 <?php
-/* $Revision: 1.24 $ */
+/* $Revision: 1.25 $ */
 
 $PageSecurity = 2;
 
 include('includes/session.inc');
 $title = _('Search Customers');
 include('includes/header.inc');
-
 include('includes/Wiki.php');
+include('includes/SQL_CommonFunctions.inc');
 
-$msg="";
+
 if (!isset($_SESSION['CustomerID'])){ //initialise if not already done
 	$_SESSION['CustomerID']="";
 }
+// only run geocode if integration is turned on and customer has been selected
+if ($_SESSION['geocode_integration']==1 AND $_SESSION['CustomerID'] <>0){
+
+$sql="SELECT * FROM geocode_param WHERE 1";
+$ErrMsg = _('An error occurred in retrieving the information');
+$result = DB_query($sql, $db, $ErrMsg);
+$myrow = DB_fetch_array($result);
+$sql = "SELECT debtorsmaster.debtorno,debtorsmaster.name,custbranch.brname,
+                                custbranch.lat, custbranch.lng
+                        FROM debtorsmaster LEFT JOIN custbranch
+                                ON debtorsmaster.debtorno = custbranch.debtorno
+                        WHERE debtorsmaster.debtorno = '" . $_SESSION['CustomerID'] . "'
+                        ORDER BY debtorsmaster.debtorno";
+$ErrMsg = _('An error occurred in retrieving the information');
+$result2 = DB_query($sql, $db, $ErrMsg);
+$myrow2 = DB_fetch_array($result2);
+$lat = $myrow2['lat'];
+$lng = $myrow2['lng'];
+$api_key = $myrow['geocode_key'];
+$center_long = $myrow['center_long'];
+$center_lat = $myrow['center_lat'];
+$map_height = $myrow['map_height'];
+$map_width = $myrow['map_width'];
+$map_host = $myrow['map_host'];
+
+echo '<script src="http://maps.google.com/maps?file=api&v=2&key=' . $api_key . '"';
+echo ' type="text/javascript"></script>';
+echo ' <script type="text/javascript">';
+echo '    //<![CDATA[ '; ?>
+	
+    function load() {
+      if (GBrowserIsCompatible()) {
+        var map = new GMap2(document.getElementById("map"));
+	map.addControl(new GSmallMapControl());
+	map.addControl(new GMapTypeControl());
+<? echo 'map.setCenter(new GLatLng(' . $lat . ', ' . $lng . '), 11);'; ?>
+<? echo 'var marker = new GMarker(new GLatLng(' . $lat . ', ' . $lng . '));' ?>
+	map.addOverlay(marker);
+	GEvent.addListener(marker, "click", function() {
+	marker.openInfoWindowHtml(WINDOW_HTML);
+	  });
+	marker.openInfoWindowHtml(WINDOW_HTML);			
+      }
+    }
+    //]]>
+    </script>
+  <body onload="load()" onunload="GUnload()">
+
+<?
+}
+$msg="";
 
 if (!isset($_POST['PageOffset'])) {
   $_POST['PageOffset'] = 1;
@@ -123,10 +174,10 @@ If ($_POST['Select']!="" OR
 	AND !isset($_POST['CustPhone']))) {
 
 	If ($_POST['Select']!=""){
-		$SQL = "SELECT name FROM debtorsmaster WHERE debtorno='" . $_POST['Select'] . "'";
+		$SQL = "SELECT brname, phoneno FROM custbranch WHERE debtorno='" . $_POST['Select'] . "'";
 		$_SESSION['CustomerID'] = $_POST['Select'];
 	} else {
-		$SQL = "SELECT name FROM debtorsmaster WHERE debtorno='" . $_SESSION['CustomerID'] . "'";
+		$SQL = "SELECT brname, phoneno FROM custbranch WHERE debtorno='" . $_SESSION['CustomerID'] . "'";
 	}
 
 	$ErrMsg = _('The customer name requested cannot be retrieved because');
@@ -134,9 +185,10 @@ If ($_POST['Select']!="" OR
 
 	if ($myrow=DB_fetch_row($result)){
 		$CustomerName = $myrow[0];
+		$phone = $myrow[1];
 	}
 	unset($result);
-	echo '<CENTER><FONT SIZE=3>' . _('Customer') . ' :<B> ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . '</B> ' . _('has been selected') . '.<BR>' . _('Select a menu option to operate using this customer') . '.</FONT><BR>';
+	echo '<CENTER><FONT SIZE=3>' . _('Customer') . ' :<B> ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . ' ' . $phone . _('</b> has been selected') . '.<BR>' . _('Select a menu option to operate using this customer') . '.</FONT><BR>';
 
 	$_POST['Select'] = NULL;
 
@@ -147,6 +199,7 @@ If ($_POST['Select']!="" OR
 
 	/* Customer Inquiry Options */
 	echo '<a href="' . $rootpath . '/CustomerInquiry.php?CustomerID=' . $_SESSION['CustomerID'] . '">' . _('Customer Transaction Inquiries') . '</a><BR>';
+	echo '<a href="' . $rootpath . '/PrintCustStatements.php?FromCust=' . $_SESSION['CustomerID'] . '&ToCust=' . $_SESSION['CustomerID'] . '&PrintPDF=Yes">' . _('Print Customer Statement') . '</a><BR>';
 	echo '<a href="' . $rootpath . '/SelectSalesOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Modify Outstanding Sales Orders') . '</a><BR>';
 	echo '<a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Order Inquiries') . '</a><BR>';
 
@@ -240,6 +293,7 @@ if (isset($_SESSION['SalesmanLogin']) and $_SESSION['SalesmanLogin']!=''){
 }
 
 If (isset($result)) {
+  unset($_SESSION['CustomerID']);
   $ListCount=DB_num_rows($result);
   $ListPageMax=ceil($ListCount/$_SESSION['DisplayRecordsMax']);
 
@@ -356,6 +410,40 @@ if (isset($ListPageMax) and $ListPageMax>1) {
 //end if results to show
 echo '</FORM></CENTER>';
 
+// Only display the geocode map if the integration is turned on, and there is a latitude/longitude to display
+if ($_SESSION['geocode_integration']==1 AND $_SESSION['CustomerID'] <>0){
+if ($lat ==0){
+echo "<center>Map will display here, geocode is enabled, but no geocode data to display yet.<center>";
+include('includes/footer.inc');
+exit;
+}
+// Select some basic data about the Customer
+$SQL = "SELECT debtorsmaster.clientsince, debtorsmaster.paymentterms, debtorsmaster.lastpaid, debtorsmaster.lastpaiddate
+                FROM debtorsmaster
+                WHERE debtorsmaster.debtorno ='" . $_SESSION['CustomerID'] . "'";
+        $DataResult = DB_query($SQL,$db);
+        $myrow = DB_fetch_array($DataResult);
+// Select some more data about the customer
+$SQL = "select sum(ovamount+ovgst) as total from debtortrans where debtorno = '" . $_SESSION['CustomerID'] . "' and type !=12";
+        $Total1Result = DB_query($SQL,$db);
+        $row = DB_fetch_array($Total1Result);
+echo '<CENTER><TABLE WIDTH=90% COLSPAN=2 BORDER=2 CELLPADDING=4>';
+        echo "<TR>
+                <TH WIDTH=33%>" . _('Customer Data') . "</TH>
+                <TH WIDTH=33%>". _('Customer Mapping') . "</TH>
+        </TR>";
+echo '<TR><TD VALIGN=TOP>';    /* Customer Data to be integrated with mapping*/
+echo "Distance to this customer: <b>TBA</b><br>";
+echo "Last Paid Date: <b>" . ConvertSQLDate($myrow['lastpaiddate']) . "</b><br>";
+echo "Last Paid Amount (inc tax): <b>$" . number_format($myrow['lastpaid'],2) . "</b><br>";
+echo "Customer since: <b>" . ConvertSQLDate($myrow['clientsince']) . "</b><br>";
+echo "Total Spend from this Customer (inc tax): <b>$" . number_format($row['total']) . "</b><br>";
+echo '<BR>';
+echo '<BR>';
+echo '</TD><TD VALIGN=TOP>'; /* Mapping */
+echo "<center>Map will display below, geocode is enabled.<center>";
+echo '<center><div align="center" id="map" style="width: 400px; height: 200px"></div></center>';
+}
 include('includes/footer.inc');
 ?>
 <script language="JavaScript" type="text/javascript">

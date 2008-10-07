@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.43 $ */
+/* $Revision: 1.44 $ */
 
 $PageSecurity =15;
 
@@ -23,9 +23,6 @@ if (isset($_POST['submit'])) {
 		Note: the X_ in the POST variables, the reason for this is to overcome globals=on replacing
 		the actial system/overidden variables.
 	*/
-	$_POST['X_ProhibitPostingsBefore'] = Date('Y-m-d',
-		mktime(0,0,0,$_POST['ProhibitPostingsBeforeMonth'],1,$_POST['ProhibitPostingsBeforeYear']));
-
 	if (strlen($_POST['X_PastDueDays1']) > 3 || !is_numeric($_POST['X_PastDueDays1']) ) {
 		$InputError = 1;
 		prnMsg(_('First overdue deadline days must be a number'),'error');
@@ -85,7 +82,6 @@ if (isset($_POST['submit'])) {
 	if ($InputError !=1){
 
 		$sql = array();
-		$Day=1;
 
 		if ($_SESSION['DefaultDateFormat'] != $_POST['X_DefaultDateFormat'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_DefaultDateFormat']."' WHERE confname = 'DefaultDateFormat'";
@@ -213,6 +209,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['AllowOrderLineItemNarrative'] != $_POST['X_AllowOrderLineItemNarrative'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_AllowOrderLineItemNarrative']."' WHERE confname = 'AllowOrderLineItemNarrative'";
 		}
+		if ($_SESSION['geocode_integration'] != $_POST['X_geocode_integration'] ) {
+			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_geocode_integration']."' WHERE confname = 'geocode_integration'";
+		}
 		if ($_SESSION['ProhibitPostingsBefore'] != $_POST['X_ProhibitPostingsBefore'] ) {
 			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_ProhibitPostingsBefore']."' WHERE confname = 'ProhibitPostingsBefore'";
 		}
@@ -255,11 +254,7 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('Validation failed') . ', ' . _('no updates or deletes took place'),'warn');
 	}
 
-
-
 } /* end of if submit */
-
-
 
 echo '<FORM METHOD="post" action=' . $_SERVER['PHP_SELF'] . '>';
 echo '<CENTER><TABLE BORDER=1>';
@@ -668,7 +663,11 @@ echo '<TR><TD>' . _('Only allow secure socket connections') . ':</TD>
 /*Perform Database maintenance DB_Maintenance*/
 echo '<TR><TD>' . _('Perform Database Maintenance At Logon') . ':</TD>
 	<TD><SELECT Name="X_DB_Maintenance">';
-
+	if ($_SESSION['DB_Maintenance']=='1'){
+		echo '<OPTION SELECTED VALUE="1">'._('Daily');
+	} else {
+		echo '<OPTION VALUE="1">'._('Daily');
+	}
 	if ($_SESSION['DB_Maintenance']=='7'){
 		echo '<OPTION SELECTED VALUE="7">'._('Weekly');
 	} else {
@@ -679,7 +678,7 @@ echo '<TR><TD>' . _('Perform Database Maintenance At Logon') . ':</TD>
 	} else {
 		echo '<OPTION VALUE="30">'._('Monthly');
 	}
-	if ($_SESSION['DB_Maintenance']!='7' AND $_SESSION['DB_Maintenance']!='30'){
+	if ($_SESSION['DB_Maintenance']=='0'){
 		echo '<OPTION SELECTED VALUE="0">'._('Never');
 	} else {
 		echo '<OPTION VALUE="0">'._('Never');
@@ -705,6 +704,19 @@ echo '<TR><TD>' . _('Wiki Path') . ':</TD>
 	<TD><input type="Text" Name="X_WikiPath" SIZE=40 MAXLENGTH=40 value="' . $_SESSION['WikiPath'] . '"></TD>
 	<TD>' . _('The path to the wiki installation to form the basis of wiki URLs - this should be the directory on the web-server where the wiki is installed. The wiki must be installed on the same web-server as webERP') .'</TD></TR>';
 
+echo '<TR><TD>' . _('Geocode Customers and Suppliers:') . ':</TD>
+        <TD><SELECT Name="X_geocode_integration">';
+if ($_SESSION['geocode_integration']==1){
+        echo  '<OPTION SELECTED value="1">' . _('Geocode Integration Enabled');
+        echo  '<OPTION value="0">' . _('Geocode Integration Disabled');
+} else {
+        echo  '<OPTION SELECTED value="0">' . _('Geocode Integration Disabled');
+        echo  '<OPTION value="1">' . _('Geocode Integration Enabled');
+}
+
+echo '</SELECT></TD>
+        <TD>' . _('This feature will give Latitude and Longtiude coordinates to customers and suppliers.  Requires access to a mapping providor.  You must setup this facility under Main Menu - Setup - Geocode Setup.  This feature is experimental.') .'</TD></TR>';
+
 echo '<TR><TD>' . _('Prohibit GL Journals to Control Accounts') . ':</TD>
 	<TD><SELECT Name="X_ProhibitJournalsToControlAccounts">';
 if ($_SESSION['ProhibitJournalsToControlAccounts']=='1'){
@@ -716,22 +728,18 @@ if ($_SESSION['ProhibitJournalsToControlAccounts']=='1'){
 }
 echo '</SELECT></TD><TD>' . _('Setting this to prohibited prevents accidentally entering a journal to the automatically posted and reconciled control accounts for creditors (AP) and debtors (AR)') . '</TD></TR>';
 
-$ProhibitPostingsBefore = explode('-', $_SESSION['ProhibitPostingsBefore']);
+
 echo '<TR><TD>' . _('Prohibit GL Journals to Periods Prior To') . ':</TD>
-	<TD><SELECT Name="ProhibitPostingsBeforeMonth">';
-for ($month=1; $month<=12; $month++) {
-	if ($month==$ProhibitPostingsBefore[1]) {
-		echo '<OPTION SELECTED value='.$month.'>'. Date('M', mktime(0,0,0,$month,1,2008));
+	<TD><SELECT Name="X_ProhibitPostingsBefore">';
+
+$sql = 'SELECT lastdate_in_period FROM periods ORDER BY periodno DESC';
+$ErrMsg = _('Could not load periods table');
+$result = DB_query($sql,$db,$ErrMsg);
+while ($PeriodRow = DB_fetch_row($result)){
+	if ($_SESSION['ProhibitPostingsBefore']==$PeriodRow[0]){
+		echo  '<OPTION SELECTED value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[0]);
 	} else {
-		echo '<OPTION value='.$month.'>'. Date('M', mktime(0,0,0,$month,1,2008));
-	}
-}
-echo '</SELECT><SELECT Name="ProhibitPostingsBeforeYear">';
-for ($year=Date('Y')-10; $year<=Date('Y'); $year++) {
-	if ($year==$ProhibitPostingsBefore[0]) {
-		echo '<OPTION SELECTED value='.$year.'>'. $year;
-	} else {
-		echo '<OPTION value='.$year.'>'. $year;
+		echo  '<OPTION value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[0]);
 	}
 }
 echo '</SELECT></TD><TD>' . _('This allows all periods before the selected date to be locked from postings. All postings for transactions dated prior to this date will be posted in the period following this date.') . '</TD></TR>';
