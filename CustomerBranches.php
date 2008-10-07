@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.38 $ */
+/* $Revision: 1.39 $ */
 
 $PageSecurity = 3;
 
@@ -127,7 +127,6 @@ $xml = simplexml_load_file($request_url) or die("url not loading");
       echo "Received status " . $status . "
 \n</p>";
     }
-}
 	if (isset($SelectedBranch) AND $InputError !=1) {
 
 		/*SelectedBranch could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the 	delete code below*/
