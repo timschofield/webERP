@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 
 $PageSecurity = 8;
@@ -40,8 +40,28 @@ echo '<CENTER><TABLE>
 		echo '<OPTION VALUE=' . $myrow['accountcode'] . '>' . $myrow['accountcode'] . ' ' . $myrow['accountname'];
 	    }
          }
-         echo '</SELECT></TD></TR>
-         <TR>
+         echo '</SELECT></TD></TR>';
+
+	//Select the tag
+	echo '<tr><td>' . _('Select Tag') . ':</td><td><select name="tag">';
+
+	$SQL = 'SELECT tagref,
+				tagdescription
+		FROM tags
+		ORDER BY tagref';
+
+	$result=DB_query($SQL,$db);
+	echo '<OPTION value=0>0 - None';
+	while ($myrow=DB_fetch_array($result)){
+    	if ($_POST['tag']==$myrow["tagref"]){
+		echo '<OPTION selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+    	} else {
+			echo '<OPTION value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
+    	}
+	}
+	echo '</select></td></tr>';
+// End select tag
+         echo '<TR>
          <TD>'._('For Period range').':</TD>
          <TD><SELECT Name=Period[] multiple>';
 	 $sql = 'SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC';
@@ -86,13 +106,15 @@ if (isset($_POST['Show'])){
 	$FirstPeriodSelected = min($SelectedPeriod);
 	$LastPeriodSelected = max($SelectedPeriod);
 
- 	$sql= "SELECT type,
+	if ($_POST['tag']=='all') {
+ 		$sql= "SELECT type,
 			typename,
 			gltrans.typeno,
 			trandate,
 			narrative,
 			amount,
-			periodno
+			periodno,
+			jobref
 		FROM gltrans, systypes
 		WHERE gltrans.account = $SelectedAccount
 		AND systypes.typeid=gltrans.type
@@ -100,6 +122,25 @@ if (isset($_POST['Show'])){
 		AND periodno>=$FirstPeriodSelected
 		AND periodno<=$LastPeriodSelected
 		ORDER BY periodno, gltrans.trandate, counterindex";
+
+	} else {
+ 		$sql= "SELECT type,
+			typename,
+			gltrans.typeno,
+			trandate,
+			narrative,
+			amount,
+			periodno,
+			jobref
+		FROM gltrans, systypes
+		WHERE gltrans.account = $SelectedAccount
+		AND systypes.typeid=gltrans.type
+		AND posted=1
+		AND periodno>=$FirstPeriodSelected
+		AND periodno<=$LastPeriodSelected
+		AND jobref='".$_POST['tag']."'
+		ORDER BY periodno, gltrans.trandate, counterindex";
+	}
 
 	$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
 	$TransResult = DB_query($sql,$db,$ErrMsg);
@@ -112,7 +153,8 @@ if (isset($_POST['Show'])){
 			<TH>" . _('Date') . "</TH>
 			<TH>" . _('Debit') . "</TH>
 			<TH>" . _('Credit') . "</TH>
-			<TH>" . _('Narrative') . '</TH>
+			<TH>" . _('Narrative') . "</TH>
+			<TH>" . _('Tag') . '</TH>
 			</TR>';
 
 	echo $TableHeader;
@@ -121,18 +163,18 @@ if (isset($_POST['Show'])){
 		$RunningTotal = 0;
 	} else {
 	       // added to fix bug with Brought Forward Balance always being zero
-					$sql = "SELECT bfwd, 
+					$sql = "SELECT bfwd,
 						actual,
-						period 
-					FROM chartdetails 
-					WHERE chartdetails.accountcode= $SelectedAccount 
-					AND chartdetails.period=" . $FirstPeriodSelected; 
-					
+						period
+					FROM chartdetails
+					WHERE chartdetails.accountcode= $SelectedAccount
+					AND chartdetails.period=" . $FirstPeriodSelected;
+
 				$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
 				$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
 				$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 				// --------------------
-				
+
 		$RunningTotal =$ChartDetailRow['bfwd'];
 		if ($RunningTotal < 0 ){ //its a credit balance b/fwd
 			echo "<TR bgcolor='#FDFEEF'>
@@ -161,17 +203,17 @@ if (isset($_POST['Show'])){
 			if ($PeriodNo!=-9999){ //ie its not the first time around
 				/*Get the ChartDetails balance b/fwd and the actual movement in the account for the period as recorded in the chart details - need to ensure integrity of transactions to the chart detail movements. Also, for a balance sheet account it is the balance carried forward that is important, not just the transactions*/
 
-				$sql = "SELECT bfwd, 
+				$sql = "SELECT bfwd,
 						actual,
-						period 
-					FROM chartdetails 
-					WHERE chartdetails.accountcode= $SelectedAccount 
-					AND chartdetails.period=" . $PeriodNo; 
-					
+						period
+					FROM chartdetails
+					WHERE chartdetails.accountcode= $SelectedAccount
+					AND chartdetails.period=" . $PeriodNo;
+
 				$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
 				$ChartDetailsResult = DB_query($sql,$db,$ErrMsg);
 				$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
-				
+
 				echo "<TR bgcolor='#FDFEEF'>
 					<TD COLSPAN=3><B>" . _('Total for period') . ' ' . $PeriodNo . '</B></TD>';
 				if ($PeriodTotal < 0 ){ //its a credit balance b/fwd
@@ -185,7 +227,7 @@ if (isset($_POST['Show'])){
 						</TR>';
 				}
 				$IntegrityReport .= '<BR>' . _('Period') . ': ' . $PeriodNo  . _('Account movement per transaction') . ': '  . number_format($PeriodTotal,2) . ' ' . _('Movement per ChartDetails record') . ': ' . number_format($ChartDetailRow['actual'],2) . ' ' . _('Period difference') . ': ' . number_format($PeriodTotal -$ChartDetailRow['actual'],3);
-				
+
 				if (ABS($PeriodTotal -$ChartDetailRow['actual'])>0.01){
 					$ShowIntegrityReport = True;
 				}
@@ -222,6 +264,7 @@ if (isset($_POST['Show'])){
 			<td ALIGN=RIGHT>%s</td>
 			<td ALIGN=RIGHT>%s</td>
 			<td>%s</td>
+			<td>%s</td>
 			</tr>",
 			$myrow['typename'],
 			$URL_to_TransDetail,
@@ -229,8 +272,9 @@ if (isset($_POST['Show'])){
 			$FormatedTranDate,
 			$DebitAmount,
 			$CreditAmount,
-			$myrow['narrative']);
-	
+			$myrow['narrative'],
+			$myrow['jobref']);
+
 	}
 
 	echo "<TR bgcolor='#FDFEEF'><TD COLSPAN=3><B>";
