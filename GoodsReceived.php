@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 $PageSecurity = 11;
 
@@ -555,6 +555,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 	unset($_POST['ProcessGoodsReceived']);
 
 	echo '<BR>'. _('GRN number'). ' '. $GRN .' '. _('has been processed').'<BR>';
+	echo '<BR><a href=PDFGrn.php?GRNNo='.$GRN .'>'. _('Print this grn').'</a><BR>'; 
 	echo "<A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . "'>" . _('Select a different purchase order for receiving goods against'). '</A>';
 /*end of process goods received entry */
 	include('includes/footer.inc');
