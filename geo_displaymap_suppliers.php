@@ -19,7 +19,7 @@ $map_height = $myrow['map_height'];
 $map_width = $myrow['map_width'];
 $map_host = $myrow['map_host'];
 
-echo '<script src="http://maps.google.com/maps?file=api&v=2&key=' . $api_key . '"';
+echo '<script src="http://' . $map_host . '/maps?file=api&v=2&key=' . $api_key . '"';
 echo ' type="text/javascript"></script>';
 echo ' <script type="text/javascript">';
 echo '    //<![CDATA[ '; ?>

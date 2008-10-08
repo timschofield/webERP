@@ -55,7 +55,8 @@ if (isset($_POST['submit'])) {
 					center_long='" . $_POST['center_long'] . "',
 					center_lat='" . $_POST['center_lat'] . "',
 					map_height='" . $_POST['map_height'] . "',
-					map_width='" . $_POST['map_width'] . "'
+					map_width='" . $_POST['map_width'] . "',
+					map_host='" . $_POST['map_host'] . "'
 					WHERE geocodeid = $SelectedParam";
 		}
 		$msg = _('The geocode status record has been updated');
@@ -72,13 +73,15 @@ if (isset($_POST['submit'])) {
 					center_long,
 					center_lat,
 					map_height,
-					map_width)
+					map_width,
+					map_host)
 					VALUES (' .
 					$_POST['geocode_key'] . ", '" .
 					$_POST['center_long'] . "', '" .
 					$_POST['center_lat'] . "', '" .
 					$_POST['map_height'] . "', '" .
-					$_POST['map_width'] . "', 1)";
+					$_POST['map_width'] . "', 1)" .
+					$_POST['map_host'] . "', 1)";
 		} else {
 			$sql = 'INSERT INTO geocode_param (
 					geocodeid,
@@ -86,14 +89,16 @@ if (isset($_POST['submit'])) {
 					center_long,
 					center_lat,
 					map_height,
-					map_width)
+					map_width,
+					map_host)
 					VALUES (' .
 					$_POST['geocodeid'] . ", '" .
 					$_POST['geocode_key'] . "', '" .
 					$_POST['center_long'] . "', '" .
 					$_POST['center_lat'] . "', '" .
 					$_POST['map_height'] . "', '" .
-					$_POST['map_width'] . "')";
+					$_POST['map_width'] . "')" .
+					$_POST['map_host'] . "')";
 		}
 
 		$msg = _('A new geocode status record has been inserted');
@@ -123,7 +128,7 @@ then none of the above are true and the list of status codes will be displayed w
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = 'SELECT geocodeid, geocode_key, center_long, center_lat, map_height, map_width FROM geocode_param';
+	$sql = 'SELECT geocodeid, geocode_key, center_long, center_lat, map_height, map_width, map_host FROM geocode_param';
 	$result = DB_query($sql, $db);
 
 	echo '<center><b><p>'. _('Setup configuration for Geocoding of Customers and Suppliers') .'</b>';
@@ -139,7 +144,8 @@ or deletion of the records*/
 		<th>". _('Center Longitude') ."</th>
 		<th>". _('Center Latitude') ."</th>
 		<th>". _('Map height (px)') ."</th>
-		<th>". _('Map width (px)') .'</th>';
+		<th>". _('Map width (px)') ."</th>
+		<th>". _('Map host') .'</th>';
 
 	$k=0; //row colour counter
 	while ($myrow=DB_fetch_row($result)) {
@@ -158,6 +164,7 @@ or deletion of the records*/
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
+		<td>%s</td>
 		<td><a href=\"%s?SelectedParam=%s\">" . _('Edit') . "</a></td>
 		<td><a href=\"%s?SelectedParam=%s&delete=%s\">". _('Delete') .'</a></td>
 		</tr>',
@@ -167,6 +174,7 @@ or deletion of the records*/
 		$myrow[3],
 		$myrow[4],
 		$myrow[5],
+		$myrow[6],
 		$_SERVER['PHP_SELF'],
 		$myrow[0],
 		$_SERVER['PHP_SELF'],
@@ -194,7 +202,8 @@ if (!isset($_GET['delete'])) {
 				center_long,
 				center_lat,
 				map_height,
-				map_width
+				map_width,
+				map_host
 			FROM geocode_param
 			WHERE geocodeid='$SelectedParam'";
 
@@ -207,6 +216,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['center_lat']  = $myrow['center_lat'];
 		$_POST['map_height']  = $myrow['map_height'];
 		$_POST['map_width']  = $myrow['map_width'];
+		$_POST['map_host']  = $myrow['map_host'];
 
 		echo "<INPUT TYPE=HIDDEN NAME='SelectedParam' VALUE='" . $SelectedParam . "'>";
 		echo "<INPUT TYPE=HIDDEN NAME='geocodeid' VALUE='" . $_POST['geocodeid'] . "'>";
@@ -246,12 +256,15 @@ if (!isset($_GET['delete'])) {
 <TR><TD>". _('Geocode Map Width') . "</TD>
         <TD><INPUT tabindex=6 TYPE='text' name='map_width' VALUE='". $_POST['map_width'] ."' SIZE=28 MAXLENGTH=300></TD></TR>
 
+<TR><TD>". _('Geocode Host') . "</TD>
+        <TD><INPUT tabindex=7 TYPE='text' name='map_host' VALUE='". $_POST['map_host'] ."' SIZE=20 MAXLENGTH=300></TD></TR>
 
 
 	</TABLE>
 	<CENTER><input tabindex=4 type='Submit' name='submit' value='" . _('Enter Information') . "'>
 	</FORM>";
-echo '<p>When ready, click on the link below to run the GeoCode process.  This will Geocode all Branch Codes.  This may take some time.</p>';
+echo '<p>When ready, click on the link below to run the GeoCode process.  This will Geocode all Branches and Suppliers.  This may take some time. Errors will be returned to the screen.</p>';
+echo '<p>Suppliers and Customer Branches are geocoded when being entered/updated.  You can rerun the geocode process from this screen at any time.</p>';
 
 echo '<a href="' . $rootpath . '/geocode.php">' . _('Run GeoCode process (may take a long time)') . '</a></Center></p>';
 echo '<a href="' . $rootpath . '/geo_displaymap_customers.php">' . _('Display Map of Customer Branches') . '</a></Center>';
