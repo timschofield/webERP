@@ -38,5 +38,4 @@ CREATE TABLE `geocode_param` (
  `map_host` varchar(50) NOT NULL default ''
 ) ENGINE=InnoDB;
 
-INSERT INTO `config` ( `confname` , `confvalue` )
-VALUES ('geocode_integration', '0');
+INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('geocode_integration', '0');

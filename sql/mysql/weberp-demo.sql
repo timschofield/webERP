@@ -435,6 +435,8 @@ CREATE TABLE `custbranch` (
   `braddress4` varchar(50) NOT NULL default '',
   `braddress5` varchar(20) NOT NULL default '',
   `braddress6` varchar(15) NOT NULL default '',
+  `lat` FLOAT( 10, 6 ) NOT NULL default 0.0,
+  `lng` FLOAT( 10, 6 ) NOT NULL default 0.0,
   `estdeliverydays` smallint(6) NOT NULL default '1',
   `area` char(3) NOT NULL,
   `salesman` varchar(4) NOT NULL default '',
@@ -741,6 +743,20 @@ CREATE TABLE `freightcosts` (
   CONSTRAINT `freightcosts_ibfk_2` FOREIGN KEY (`shipperid`) REFERENCES `shippers` (`shipper_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `geocode_param`
+--
+
+CREATE TABLE `geocode_param` (
+ `geocodeid` varchar(4) NOT NULL default '',
+ `geocode_key` varchar(200) NOT NULL default '',
+ `center_long` varchar(20) NOT NULL default '',
+ `center_lat` varchar(20) NOT NULL default '',
+ `map_height` varchar(10) NOT NULL default '',
+ `map_width` varchar(10) NOT NULL default '',
+ `map_host` varchar(50) NOT NULL default ''
+) ENGINE=InnoDB;
 
 --
 -- Table structure for table `gltrans`
@@ -1931,6 +1947,8 @@ CREATE TABLE `suppliers` (
   `address4` varchar(50) NOT NULL default '',
   `address5` varchar(20) NOT NULL default '',
   `address6` varchar(15) NOT NULL default '',
+  `lat` FLOAT( 10, 6 ) NOT NULL default 0.0,
+  `lng` FLOAT( 10, 6 ) NOT NULL default 0.0,
   `currcode` char(3) NOT NULL default '',
   `suppliersince` date NOT NULL default '0000-00-00',
   `paymentterms` char(2) NOT NULL default '',
@@ -4727,6 +4745,7 @@ INSERT INTO `config` VALUES ('EDI_MsgPending','companies/weberp/EDI_MsgPending')
 INSERT INTO `config` VALUES ('EDI_MsgSent','companies/weberp/EDI_Sent');
 INSERT INTO `config` VALUES ('FreightChargeAppliesIfLessThan','1000');
 INSERT INTO `config` VALUES ('FreightTaxCategory','1');
+INSERT INTO `config` VALUES ('geocode_integration', '0');
 INSERT INTO `config` VALUES ('HTTPS_Only','0');
 INSERT INTO `config` VALUES ('InvoicePortraitFormat','0');
 INSERT INTO `config` VALUES ('MaxImageSize','300');
