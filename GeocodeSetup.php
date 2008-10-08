@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs are sensible
 
-	$sql="SELECT count(geocodeid) 
+	$sql="SELECT count(geocodeid)
 			FROM geocode_param WHERE geocodeid='".$_POST['geocodeid']."'";
 	$result=DB_query($sql, $db);
 	$myrow=DB_fetch_row($result);
@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg( _('That geocode ID already exists in the database'),'error');
 		$Errors[$i] = 'geocodeid';
-		$i++;		
+		$i++;
 	}
 
 	$msg='';
@@ -46,11 +46,11 @@ if (isset($_POST['submit'])) {
 		/*SelectedParam could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the delete code below*/
 
 		if (isset($_POST['geocode_key']) and $_POST['geocode_key'] > 0){
-			$sql = "UPDATE geocode_param SET 
-					geocode_key='" . $_POST['geocode_key'] . "', 
+			$sql = "UPDATE geocode_param SET
+					geocode_key='" . $_POST['geocode_key'] . "',
 					WHERE geocodeid = $SelectParam";
 		} else {
-			$sql = "UPDATE geocode_param SET 
+			$sql = "UPDATE geocode_param SET
 					geocode_key='" . $_POST['geocode_key'] . "',
 					center_long='" . $_POST['center_long'] . "',
 					center_lat='" . $_POST['center_lat'] . "',
@@ -67,32 +67,32 @@ if (isset($_POST['submit'])) {
 		if (isset($_POST['geocode_key']) and $_POST['geocode_key']>0){
 
 			$sql = 'INSERT INTO geocode_param (
-					geocodeid, 
-					geocode_key, 
+					geocodeid,
+					geocode_key,
 					center_long,
 					center_lat,
 					map_height,
-					map_width) 
-					VALUES (' . 
-					$_POST['geocode_key'] . ", '" . 
-					$_POST['center_long'] . "', '" . 
-					$_POST['center_lat'] . "', '" . 
-					$_POST['map_height'] . "', '" . 
+					map_width)
+					VALUES (' .
+					$_POST['geocode_key'] . ", '" .
+					$_POST['center_long'] . "', '" .
+					$_POST['center_lat'] . "', '" .
+					$_POST['map_height'] . "', '" .
 					$_POST['map_width'] . "', 1)";
 		} else {
 			$sql = 'INSERT INTO geocode_param (
-					geocodeid, 
-					geocode_key, 
+					geocodeid,
+					geocode_key,
 					center_long,
 					center_lat,
 					map_height,
-					map_width) 
-					VALUES (' . 
-					$_POST['geocodeid'] . ", '" . 
-					$_POST['geocode_key'] . "', '" . 
-					$_POST['center_long'] . "', '" . 
-					$_POST['center_lat'] . "', '" . 
-					$_POST['map_height'] . "', '" . 
+					map_width)
+					VALUES (' .
+					$_POST['geocodeid'] . ", '" .
+					$_POST['geocode_key'] . "', '" .
+					$_POST['center_long'] . "', '" .
+					$_POST['center_lat'] . "', '" .
+					$_POST['map_height'] . "', '" .
 					$_POST['map_width'] . "')";
 		}
 
@@ -126,10 +126,12 @@ or deletion of the records*/
 	$sql = 'SELECT geocodeid, geocode_key, center_long, center_lat, map_height, map_width FROM geocode_param';
 	$result = DB_query($sql, $db);
 
-	echo '<center><b><p>Setup configuration for Geocoding of Customers and Suppliers</b>';
-	echo '<center><p>Get a google API key at http://code.google.com/apis/maps/signup.html</b>';
-	echo '<center><p>Find the lat/long for your map center point at http://www.batchgeocode.com/lookup/</b>';
-	echo '<center><p>Set the maps centre point using the Center Longitude and Center Latitude.  Set the maps screen size using the height and width in pixels (px).</b>';
+	echo '<center><b><p>'. _('Setup configuration for Geocoding of Customers and Suppliers') .'</b>';
+	echo '<center><p>'. _('Get a google API key at ') .
+		'<a href="http://code.google.com/apis/maps/signup.html" target="_blank"> http://code.google.com/apis/maps/signup.html</a></b>';
+	echo '<center><p>'. _('Find the lat/long for your map center point at ') .
+			'<a href="http://www.batchgeocode.com/lookup/" target="_blank">http://www.batchgeocode.com/lookup/</a></b>';
+	echo '<center><p>'. _('Set the maps centre point using the Center Longitude and Center Latitude.  Set the maps screen size using the height and width in pixels (px)').'</b>';
 	echo '<CENTER><table border=1>';
 	echo "<tr>
 		<th>". _('Geocode ID') ."</th>
