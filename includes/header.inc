@@ -1,22 +1,22 @@
 <?php
 
-/* $Revision: 1.35 $ */
+/* $Revision: 1.36 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
 	//  $title - should be defined in the page this file is included with
 
 	if (!headers_sent()){
-		header('Content-type: text/html; charset=' . _('ISO-8859-1'));
+		header('Content-type: text/html; charset=' . _('iso-8859-1'));
 	}
 	echo '<!doctype html public "-//W3C//DTD XHTML 1.0 Strict//EN"
 			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
-	
-	
+
+
 	echo '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>' . $title . '</title>';
 	echo '<link REL="shortcut icon" HREF="'. $rootpath.'/favicon.ico">';
 	echo '<link REL="icon" HREF="' . $rootpath.'/favicon.ico">';
-	echo '<meta http-equiv="Content-Type" content="text/html; charset=' . _('ISO-8859-1') . '">';
+	echo '<meta http-equiv="Content-Type" content="text/html; charset=' . _('iso-8859-1') . '">';
 	echo '<link href="'.$rootpath. '/css/'. $_SESSION['Theme'] .'/default.css" REL="stylesheet" TYPE="text/css">';
 	echo '</head>';
 
@@ -38,7 +38,7 @@
 		echo '<td align="left" width="100%" class="quick_menu_left">';
 		echo  stripslashes($_SESSION['CompanyRecord']['coyname']) . ': <A HREF="' .  $rootpath . '/UserSettings.php?' . SID . '">' . stripslashes($_SESSION['UsersRealName']) . '</A>';
 		echo '<BR>' . $title . '</TD>';
-		
+
 		echo '<td class="quick_menu_tabs">';
 		echo '<table cellpadding="0" cellspacing="0" class="quick_menu_tabs"><tr>';
 		echo '<td class="quick_menu_tab" align="center"><a accesskey="1" href="' .  $rootpath . '/index.php?' . SID . '"><u>1</u> ' . _('Main Menu') . '</a></td>';
@@ -50,12 +50,12 @@
 			echo '<td class="quick_menu_tab" align="center"><a accesskey="3" href="' .  $rootpath . '/SelectProduct.php?' . SID . '"><u>3</u> ' . _('Items') . '</a></td>';
 
 			echo '<td class="quick_menu_tab" align="center"><A ACCESSKEY="4" HREF="' .  $rootpath . '/SelectSupplier.php?' . SID . '"><u>4</u> ' . _('Suppliers') . '</a></td>';
-			
+
 			$DefaultManualLink = '<td class="quick_menu_tab" align="center"><a target="_blank" accesskey="8" href="' .  $rootpath . '/doc/Manual/ManualContents.php?' . SID . '"><u>8</u> ' . _('Manual') . '</A></TD>';
-						
+
 			if (substr($_SESSION['Language'],0,2) !='en'){
 				if (file_exists('locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php')){
-					echo '<td class="quick_menu_tab" align="center"><a target="_blank" accesskey="8" href="' .  $rootpath . '/locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php' . SID . '"><u>8</u> ' . _('Manual') . '</a></td>';		
+					echo '<td class="quick_menu_tab" align="center"><a target="_blank" accesskey="8" href="' .  $rootpath . '/locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php' . SID . '"><u>8</u> ' . _('Manual') . '</a></td>';
 				} else {
 					echo $DefaultManualLink;
 				}
@@ -64,9 +64,9 @@
 			}
 		}
 
-		echo "<td class=\"quick_menu_tab\" align=\"center\"><a accesskey=\"0\" href=\"" . $rootpath . '/Logout.php?' . SID . "\" onclick=\"return confirm('" . _('Are you sure you wish to logout?') . "');\"><u>0</u> "  . _('Logout') . '</a></td>'; 
-		
-		
+		echo "<td class=\"quick_menu_tab\" align=\"center\"><a accesskey=\"0\" href=\"" . $rootpath . '/Logout.php?' . SID . "\" onclick=\"return confirm('" . _('Are you sure you wish to logout?') . "');\"><u>0</u> "  . _('Logout') . '</a></td>';
+
+
 
 		echo '</tr></table>';
 		echo '</td></tr></table>';
