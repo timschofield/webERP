@@ -109,6 +109,8 @@
 	Define('GLAccountCodeAlreadyExists', 1104);
 	Define('IncorrectAccountNameLength', 1105);
 	Define('AccountGroupDoesntExist', 1106);
+	Define('GLAccountSectionAlreadyExists', 1107);
+	Define('IncorrectSectionNameLength', 1108);
 
 /* Array of Descriptions of errors */
 	$ErrorDescription['1'] = 'No Authorisation';
@@ -219,5 +221,7 @@
 	$ErrorDescription['1104'] = 'GL account code already exists';
 	$ErrorDescription['1105'] = 'GL account code name is incorrect length';
 	$ErrorDescription['1106'] = 'GL account group doesnt exist';
+	$ErrorDescription['1107'] = 'GL account section already exists';
+	$ErrorDescription['1108'] = 'GL account section name is incorrect length';
 
 ?>

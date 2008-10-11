@@ -1,7 +1,7 @@
 <?php
 
 /* Check that the account code doesn't already exist'*/
-	function VerifyStockCode($AccountCode, $i, $Errors, $db) {
+	function VerifyAccountCode($AccountCode, $i, $Errors, $db) {
 		$Searchsql = "SELECT count(accountcode)
 				FROM chartmaster
 				WHERE accountcode='".$AccountCode."'";

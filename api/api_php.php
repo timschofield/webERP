@@ -38,5 +38,6 @@
 	include 'api_debtortransactions.php';
 	include 'api_salesorders.php';
 	include 'api_glaccounts.php';
+	include 'api_glsections.php';
 
 ?>
