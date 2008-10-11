@@ -244,6 +244,15 @@
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
+	$InsertGLAccount_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$InsertGLAccount_doc = 'This function inserts a General ledger account code';
+
+	function xmlrpc_InsertGLAccount($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(InsertGLAccount(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
@@ -345,6 +354,10 @@
 			"function" => "xmlrpc_ModifySalesOrderLine",
 			"signature" => $ModifySalesOrderLine_sig,
 			"docstring" => $ModifySalesOrderLine_doc),
+		"weberp.xmlrpc_InsertGLAccount" => array(
+			"function" => "xmlrpc_InsertGLAccount",
+			"signature" => $InsertGLAccount_sig,
+			"docstring" => $InsertGLAccount_doc),
 		)
 	);
 

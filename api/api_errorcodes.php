@@ -106,6 +106,9 @@
 	Define('InvalidNarrative', 1101);
 	Define('InvalidItemDueDate', 1102);
 	Define('InvalidPOLine', 1103);
+	Define('GLAccountCodeAlreadyExists', 1104);
+	Define('IncorrectAccountNameLength', 1105);
+	Define('AccountGroupDoesntExist', 1106);
 
 /* Array of Descriptions of errors */
 	$ErrorDescription['1'] = 'No Authorisation';
@@ -213,5 +216,8 @@
 	$ErrorDescription['1101'] = 'Invalid Narrative';
 	$ErrorDescription['1102'] = 'Invalid Item Due';
 	$ErrorDescription['1103'] = 'Invalid PO line';
+	$ErrorDescription['1104'] = 'GL account code already exists';
+	$ErrorDescription['1105'] = 'GL account code name is incorrect length';
+	$ErrorDescription['1106'] = 'GL account group doesnt exist';
 
 ?>
