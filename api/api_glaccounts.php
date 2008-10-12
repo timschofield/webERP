@@ -59,12 +59,12 @@
 			$sql = 'INSERT INTO chartmaster ('.substr($FieldNames,0,-2).') '.
 		  		'VALUES ('.substr($FieldValues,0,-2).') ';
 			$result = DB_Query($sql, $db);
-			'INSERT INTO chartdetails (accountcode,
+			$sql='INSERT INTO chartdetails (accountcode,
 							period)
 				SELECT ' . $AccountDetails['accountcode'] . ',
 					periodno
 				FROM periods';
-			$result = DB_Query($sql, $db);
+			$result = DB_query($sql,$db,'','','',false);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {

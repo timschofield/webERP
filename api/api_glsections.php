@@ -14,7 +14,7 @@
 	}
 
 /* Check that the name is 256 characters or less long */
-	function VerifyAccountName($SectionName, $i, $Errors) {
+	function VerifySectionName($SectionName, $i, $Errors) {
 		if (strlen($SectionName)>256) {
 			$Errors[$i] = IncorrectSectionNameLength;
 		}
@@ -33,7 +33,7 @@
 		}
 		$Errors=VerifyAccountSection($AccountSectionDetails['sectionname'], sizeof($Errors), $Errors, $db);
 		if (isset($AccountSectionDetails['accountname'])){
-			$Errors=VerifyAccountName($AccountSectionDetails['sectionname'], sizeof($Errors), $Errors);
+			$Errors=VerifySectionName($AccountSectionDetails['sectionname'], sizeof($Errors), $Errors);
 		}
 		$FieldNames='';
 		$FieldValues='';

@@ -42,15 +42,15 @@
 		return $Errors;
 	}
 
-/* Check that the account group already exists'*/
-	function VerifyAccountGroupExists($AccountGroup, $i, $Errors, $db) {
+/* Check that the parent group exists*/
+	function VerifyParentGroupExists($AccountGroup, $i, $Errors, $db) {
 		$Searchsql = "SELECT count(groupname)
 				FROM accountgroups
 				WHERE groupname='".$AccountGroup."'";
 		$SearchResult=DB_query($Searchsql, $db);
 		$answer = DB_fetch_array($SearchResult);
 		if ($answer[0]==0 and $AccountGroup!='') {
-			$Errors[$i] = GLAccountGroupDoesntExist;
+			$Errors[$i] = AccountGroupDoesntExist;
 		}
 		return $Errors;
 	}
@@ -70,7 +70,7 @@
 		if (isset($AccountGroupDetails['pandl'])){
 			$Errors=VerifyPandL($AccountGroupDetails['pandl'], sizeof($Errors), $Errors);
 		}
-		$Errors=VerifyAccountGroupExists($AccountGroupDetails['parentgroupname'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyParentGroupExists($AccountGroupDetails['parentgroupname'], sizeof($Errors), $Errors, $db);
 		$FieldNames='';
 		$FieldValues='';
 		foreach ($AccountGroupDetails as $key => $value) {

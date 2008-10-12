@@ -67,31 +67,10 @@
 		return $Errors;
 	}
 
-/* Check that the shipvia type is set up in the weberp database */
-	function VerifyShipVia($shipvia, $i, $Errors, $db) {
-		$Searchsql = 'SELECT COUNT(shipper_id)
-					 FROM shippers
-					  WHERE shipper_id="'.$shipvia.'"';
-		$SearchResult=DB_query($Searchsql, $db);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
-			$Errors[$i] = ShipperNotSetup;
-		}
-		return $Errors;
-	}
-
 /* Check that the delivery name field is 40 characters or less long */
 	function VerifyDeliverTo($delverto, $i, $Errors) {
 		if (strlen($delverto)>40) {
 			$Errors[$i] = InvalidDeliverTo;
-		}
-		return $Errors;
-	}
-
-/* Verify that the Deliver blind flag is a 1 or 0 */
-	function VerifyDeliverBlind($deliverblind, $i, $Errors) {
-		if ($deliverblind!=0 and $deliverblind!=1) {
-			$Errors[$i] = InvalidDeliverBlind;
 		}
 		return $Errors;
 	}
