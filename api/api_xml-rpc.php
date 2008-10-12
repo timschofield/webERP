@@ -261,6 +261,14 @@
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
+	$InsertGLAccountGroup_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$InsertGLAccountGroup_doc = 'This function inserts a General ledger account Group';
+
+	function xmlrpc_InsertGLAccountGroup($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(InsertGLAccountGroup(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
 
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
@@ -371,6 +379,10 @@
 			"function" => "xmlrpc_InsertGLAccountSection",
 			"signature" => $InsertGLAccountSection_sig,
 			"docstring" => $InsertGLAccountSection_doc),
+		"weberp.xmlrpc_InsertGLAccountGroup" => array(
+			"function" => "xmlrpc_InsertGLAccountGroup",
+			"signature" => $InsertGLAccountGroup_sig,
+			"docstring" => $InsertGLAccountGroup_doc),
 		)
 	);
 

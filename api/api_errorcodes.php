@@ -111,6 +111,11 @@
 	Define('AccountGroupDoesntExist', 1106);
 	Define('GLAccountSectionAlreadyExists', 1107);
 	Define('IncorrectSectionNameLength', 1108);
+	Define('GLAccountGroupAlreadyExists', 1109);
+	Define('GLAccountSectionDoesntExist', 1110);
+	Define('InvalidPandL', 1111);
+	Define('InvalidSequenceInTB', 1112);
+	Define('GLAccountGroupDoesntExist', 1113);
 
 /* Array of Descriptions of errors */
 	$ErrorDescription['1'] = 'No Authorisation';
@@ -223,5 +228,10 @@
 	$ErrorDescription['1106'] = 'GL account group doesnt exist';
 	$ErrorDescription['1107'] = 'GL account section already exists';
 	$ErrorDescription['1108'] = 'GL account section name is incorrect length';
+	$ErrorDescription['1109'] = 'GL account group already exists';
+	$ErrorDescription['1110'] = 'GL account section doesnt exist';
+	$ErrorDescription['1111'] = 'Invalid profit and loss flag';
+	$ErrorDescription['1112'] = 'Invalid sequenceintb figure';
+	$ErrorDescription['1112'] = 'GL account group doesnt exist';
 
 ?>
