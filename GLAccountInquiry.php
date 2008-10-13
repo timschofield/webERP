@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 
 $PageSecurity = 8;
@@ -114,7 +114,7 @@ if (isset($_POST['Show'])){
 			narrative,
 			amount,
 			periodno,
-			jobref
+			tag
 		FROM gltrans, systypes
 		WHERE gltrans.account = $SelectedAccount
 		AND systypes.typeid=gltrans.type
@@ -131,14 +131,14 @@ if (isset($_POST['Show'])){
 			narrative,
 			amount,
 			periodno,
-			jobref
+			tag
 		FROM gltrans, systypes
 		WHERE gltrans.account = $SelectedAccount
 		AND systypes.typeid=gltrans.type
 		AND posted=1
 		AND periodno>=$FirstPeriodSelected
 		AND periodno<=$LastPeriodSelected
-		AND jobref='".$_POST['tag']."'
+		AND tag='".$_POST['tag']."'
 		ORDER BY periodno, gltrans.trandate, counterindex";
 	}
 
@@ -273,7 +273,7 @@ if (isset($_POST['Show'])){
 			$DebitAmount,
 			$CreditAmount,
 			$myrow['narrative'],
-			$myrow['jobref']);
+			$myrow['tag']);
 
 	}
 
