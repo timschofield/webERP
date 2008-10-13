@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 1;
 
@@ -24,7 +24,6 @@ if (isset($_GET['PrintPDF'])){
 	$PrintPDF = $_POST['PrintPDF'];
 }
 
-
 If (!isset($_POST['ToTransNo'])
 	OR trim($_POST['ToTransNo'])==''
 	OR $_POST['ToTransNo'] < $FromTransNo){
@@ -40,8 +39,9 @@ If (isset($PrintPDF)
 	AND isset($InvOrCredit)
 	AND $FromTransNo!=''){
 
-	include ('includes/class.pdf.php');
-
+        include ('includes/class.pdf.php');
+//      define('FPDF_FONTPATH','font/');
+        require('fpdi/fpdi.php');
 
         $Page_Width=595;
         $Page_Height=842;
@@ -441,11 +441,14 @@ If (isset($PrintPDF)
 		if ($InvOrCredit=='Invoice'){
 			$pdf->addText($Page_Width-$Right_Margin-220, $YPos - ($line_height*3)-6,$FontSize, _('TOTAL INVOICE'));
 			$FontSize=8;
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-58,280,$FontSize,$_SESSION['RomalpaClause']);
-			while (strlen($LeftOvers)>0 AND $YPos > $Bottom_Margin){
-				$YPos -=10;
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos,280,$FontSize,$LeftOvers);
-			}
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-48,280,$FontSize,$_SESSION['RomalpaClause']);
+//			while (strlen($LeftOvers)>0 AND $YPos > $Bottom_Margin){
+//				$YPos -=25;
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-58,280,$FontSize,$LeftOvers);
+//			}
+/* Add Images for Visa / Mastercard / Paypal */
+               $pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -60,$YPos-15,0,20);
+               $pdf->addText($Page_Width-$Right_Margin-352, $YPos - ($line_height*3)+22,$FontSize, _('Bank Code: *** Bank Account: ***'));
 			$FontSize=10;
 		} else {
 			$pdf->addText($Page_Width-$Right_Margin-220, $YPos-($line_height*3)-6,$FontSize, _('TOTAL CREDIT'));
@@ -456,9 +459,76 @@ If (isset($PrintPDF)
 	    $FromTransNo++;
 	} /* end loop to print invoices */
 
-
-	$pdfcode = $pdf->output();
+//	$pdfcode = $pdf->output();
+	$pdfcode = $pdf->output("invoice.pdf", "F");
 	$len = strlen($pdfcode);
+// Start FPDI concatination to append PDF files conditionally to the invoice
+// This part taken from FPDI example page
+class concat_pdf extends FPDI {
+
+            var $files = array();
+
+            function setFiles($files) {
+                $this->files = $files;
+            }
+
+            function concat() {
+                foreach($this->files AS $file) {
+                    $pagecount = $this->setSourceFile($file);
+                    for ($i = 1; $i <= $pagecount; $i++) {
+                         $tplidx = $this->ImportPage($i);
+                         $s = $this->getTemplatesize($tplidx);
+                         $this->AddPage($s['h'] > $s['w'] ? 'P' : 'L');
+                         $this->useTemplate($tplidx);
+                    }
+                }
+            }
+        }
+
+        $pdf =& new concat_pdf();
+// Have to get the TransNo again, not sure what happens if we have a series of trans nos
+if (isset($_GET['FromTransNo'])){
+        $FromTransNo = trim($_GET['FromTransNo']);
+} elseif (isset($_POST['FromTransNo'])){
+        $FromTransNo = trim($_POST['FromTransNo']);
+}
+// Check its an Invoice type again, then select appendfile filename
+//if ($InvOrCredit=='Invoice'){
+                         //$sql = 'SELECT stockmoves.stockid, stockmaster.appendfile
+                                //      FROM stockmoves,
+                                        //stockmaster
+                                //WHERE stockmoves.stockid = stockmaster.stockid
+                                //AND stockmoves.type=10
+                                //AND stockmoves.transno=' . $FromTransNo . '
+                                //AND stockmoves.show_on_inv_crds=1';
+                //};
+                
+                
+                         $sql = 'SELECT stockmoves.stockid, stockmaster.appendfile
+                                        FROM stockmoves,
+                                        stockmaster
+                                WHERE stockmoves.stockid = stockmaster.stockid
+                                AND stockmoves.type=10
+                                AND stockmoves.transno=' . $FromTransNo . '
+                                AND stockmoves.show_on_inv_crds=1';
+
+$result=DB_query($sql,$db);
+// Loop the result set and add appendfile if the field is not 0
+while ($row=DB_fetch_array($result)){
+if ($row['appendfile'] !='0') {
+$pdf->setFiles(array('invoice.pdf','pdf_append/' . $row['appendfile']));
+$pdf->concat();
+$pdf->Output('newpdf.pdf','I');
+exit;
+// If the appendfile field is empty, just print the invoice without any appended pages
+} else {
+$pdf->setFiles(array('invoice.pdf'));
+$pdf->concat();
+$pdf->Output('newpdf.pdf','D');
+exit;
+}
+}
+//End FPDI Concat
 
 	if ($len <1020){
 		include('includes/header.inc');
@@ -468,9 +538,7 @@ If (isset($PrintPDF)
 	}
 
 	if (isset($_GET['Email'])){ //email the invoice to address supplied
-
 		include ('includes/htmlMimeMail.php');
-
 		$mail = new htmlMimeMail();
 		$filename = $_SESSION['reports_dir'] . '/' . $InvOrCredit . $_GET['FromTransNo'] . '.pdf';
 		$fp = fopen($filename, 'wb');
