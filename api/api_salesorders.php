@@ -493,7 +493,7 @@
 		$Errors=VerifyOrderHeaderExists($OrderLine['orderno'], sizeof($Errors), $Errors, $db);
 		$Errors=VerifyStockCodeExists($OrderLine['stkcode'], sizeof($Errors), $Errors, $db);
 		if (isset($OrderLine['unitprice'])){
-			$Errors=VerifyQuotation($OrderLine['unitprice'], sizeof($Errors), $Errors);
+			$Errors=VerifyUnitPrice($OrderLine['unitprice'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderLine['quantity'])){
 			$Errors=VerifyQuantity($OrderLine['quantity'], sizeof($Errors), $Errors);
