@@ -516,7 +516,7 @@
 			$sql .= $key.'="'.$value.'", ';
 		}
 		$sql = substr($sql,0,-2).' WHERE orderno="'.$OrderLine['orderno'].'" and
-				" orderlineno='.$OrderLine['orderno'];
+				" orderlineno='.$OrderLine['orderlineno'];
 		if (sizeof($Errors)==0) {
 			$result = DB_Query($sql, $db);
 			echo DB_error_no($db);
