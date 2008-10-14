@@ -178,7 +178,7 @@
 
 /* Verify that the discount percent is numeric */
 	function VerifyDiscountPercent($discountpercent, $i, $Errors) {
-		if (!is_numeric($discountpercent)) {
+		if (!is_numeric($discountpercent) or $discountpercent>100) {
 			$Errors[$i] = InvalidDiscountPercent;
 		}
 		return $Errors;
@@ -446,6 +446,7 @@
 			$Errors=VerifyQuantity($OrderLine['quantity'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderLine['discountpercent'])){
+			$OrderLine['discountpercent'] = $OrderLine['discountpercent'] * 100;
 			$Errors=VerifyDiscountPercent($OrderLine['discountpercent'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderLine['narrative'])){
