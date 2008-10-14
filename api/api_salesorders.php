@@ -499,6 +499,7 @@
 			$Errors=VerifyQuantity($OrderLine['quantity'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderLine['discountpercent'])){
+			$OrderLine['discountpercent'] = $OrderLine['discountpercent'] * 100;
 			$Errors=VerifyDiscountPercent($OrderLine['discountpercent'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderLine['narrative'])){
