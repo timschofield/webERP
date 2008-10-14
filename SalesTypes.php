@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 15;
 
@@ -16,8 +16,8 @@ if (isset($_POST['SelectedType'])){
 if (isset($Errors)) {
 	unset($Errors);
 }
-	
-$Errors = array();	
+
+$Errors = array();
 
 if (isset($_POST['submit'])) {
 
@@ -34,22 +34,22 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The sales type (price list) code must be two characters or less long'),'error');
 		$Errors[$i] = 'SalesType';
-		$i++;		
+		$i++;
 	} elseif ($_POST['TypeAbbrev']=='' OR $_POST['TypeAbbrev']==' ' OR $_POST['TypeAbbrev']=='  ') {
 		$InputError = 1;
 		prnMsg('<BR>' . _('The sales type (price list) code cannot be an empty string or spaces'),'error');
 		$Errors[$i] = 'SalesType';
-		$i++;		
+		$i++;
 	} elseif (strlen($_POST['Sales_Type']) >20) {
 		$InputError = 1;
 		echo prnMsg(_('The sales type (price list) description must be twenty characters or less long'),'error');
 		$Errors[$i] = 'SalesType';
-		$i++;		
+		$i++;
 	} elseif ($_POST['TypeAbbrev']=='AN'){
 		$InputError = 1;
 		prnMsg (_('The sales type code cannot be AN since this is a system defined abbrevation for any sales type in general ledger interface lookups'),'error');
 		$Errors[$i] = 'SalesType';
-		$i++;		
+		$i++;
 	}
 
 	if (isset($SelectedType) AND $InputError !=1) {
@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
 
 		// First check the type is not being duplicated
 
-		$checkSql = "SELECT count(*) 
+		$checkSql = "SELECT count(*)
 			     FROM salestypes
 			     WHERE typeabbrev = '" . $_POST['TypeAbbrev'] . "'";
 
@@ -84,45 +84,50 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['Sales_Type'] . "')";
 
 			$msg = _('Customer/sales/pricelist type') . ' ' . $_POST["Sales_Type"] .  ' ' . _('has been created');
+			$checkSql = "SELECT count(typeabbrev)
+			     FROM salestypes";
+			$result = DB_query($checkSql, $db);
+			$row = DB_fetch_row($result);
 
 		}
 	}
-	
+
 	if ( $InputError !=1) {
 	//run the SQL from either of the above possibilites
 		$result = DB_query($sql,$db);
-		
+
 
 	// Fetch the default price list.
-		$sql = "SELECT confvalue 
+		$sql = "SELECT confvalue
 					FROM config
 					WHERE confname='DefaultPriceList'";
 		$result = DB_query($sql,$db);
 		$PriceListRow = DB_fetch_row($result);
 		$DefaultPriceList = $PriceListRow[0];
-		
+
 	// Does it exist
-		$checkSql = "SELECT count(*) 
+		$checkSql = "SELECT count(*)
 			     FROM salestypes
 			     WHERE typeabbrev = '" . $DefaultPriceList . "'";
 		$checkresult = DB_query($checkSql,$db);
 		$checkrow = DB_fetch_row($checkresult);
-		
+
 	// If it doesnt then update config with newly created one.
 		if ($checkrow[0] == 0) {
-			$sql = "UPDATE config 
-					SET confvalue='".$_POST['TypeAbbrev']."' 
+			$sql = "UPDATE config
+					SET confvalue='".$_POST['TypeAbbrev']."'
 					WHERE confname='DefaultPriceList'";
 			$result = DB_query($sql,$db);
+			$_SESSION['DefaultPriceList'] = $_POST['TypeAbbrev'];
 		}
-		
+
 		prnMsg($msg,'success');
-	
+
 		unset($SelectedType);
 		unset($_POST['TypeAbbrev']);
 		unset($_POST['Sales_Type']);
 	}
-	
+
 } elseif ( isset($_GET['delete']) ) {
 
 	// PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorTrans'
@@ -210,7 +215,7 @@ while ($myrow = DB_fetch_row($result)) {
 
 //end of ifs and buts!
 if (isset($SelectedType)) {
-	
+
 	echo '<CENTER><P><A HREF="' . $_SERVER['PHP_SELF'] . '?' . SID . '">' . _('Show All Sales Types Defined') . '</A></CENTER><p>';
 }
 if (! isset($_GET['delete'])) {
@@ -222,7 +227,7 @@ if (! isset($_GET['delete'])) {
 
 
 	// The user wish to EDIT an existing type
-	if ( isset($SelectedType) AND $SelectedType!='' ) 
+	if ( isset($SelectedType) AND $SelectedType!='' )
 	{
 
 		$sql = "SELECT typeabbrev,
@@ -244,7 +249,7 @@ if (! isset($_GET['delete'])) {
 
 		echo $_POST['TypeAbbrev'] . '</TD></TR>';
 
-	} else 	{ 
+	} else 	{
 
 		// This is a new type so the user may volunteer a type code
 
