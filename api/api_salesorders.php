@@ -319,7 +319,9 @@
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
-				$sql='SELECT MAX(orderno) WHERE debtorno="'.$OrderHeader['debtorno'].'"';
+				$sql='SELECT MAX(orderno)
+						FROM salesorders
+						WHERE debtorno="'.$OrderHeader['debtorno'].'"';
 				$result = DB_Query($sql, $db);
 				$myrow=DB_fetch_row($result);
 				$OrderNo=$myrow[0];
