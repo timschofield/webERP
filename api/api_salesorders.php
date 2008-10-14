@@ -449,7 +449,7 @@
 			$Errors=VerifyDiscountPercent($OrderLine['discountpercent'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderLine['narrative'])){
-			$Errors=VerifyDiscountPercent($OrderLine['narrative'], sizeof($Errors), $Errors);
+			$Errors=VerifyNarrative($OrderLine['narrative'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderLine['itemdue'])){
 			$Errors=VerifyItemDueDate($OrderLine['itemdue'], sizeof($Errors), $Errors);
