@@ -32,6 +32,7 @@
 	include 'api_branches.php';
 	include 'api_currencies.php';
 	include 'api_locations.php';
+	include 'api_shippers.php';
 	include 'api_salestypes.php';
 	include 'api_holdreasons.php';
 	include 'api_paymentterms.php';

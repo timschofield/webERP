@@ -288,6 +288,24 @@
 				$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
+	$GetShipperList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$GetShipperList_doc = 'This function returns an array containing a list of all Shippers setup on webERP';
+
+	function xmlrpc_GetShipperList($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetShipperList($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval())));
+	}
+
+	$GetShipperDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetShipperDetails_doc = 'This function returns an associative array containing the details of the Shipper
+			 sent as a parameter';
+
+	function xmlrpc_GetShipperDetails($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetShipperDetails($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval(),
+				$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
@@ -409,6 +427,14 @@
 			"function" => "xmlrpc_GetLocationDetails",
 			"signature" => $GetLocationDetails_sig,
 			"docstring" => $GetLocationDetails_doc),
+		"weberp.xmlrpc_GetShipperList" => array(
+			"function" => "xmlrpc_GetShipperList",
+			"signature" => $GetShipperList_sig,
+			"docstring" => $GetShipperList_doc),
+		"weberp.xmlrpc_GetShipperDetails" => array(
+			"function" => "xmlrpc_GetShipperDetails",
+			"signature" => $GetShipperDetails_sig,
+			"docstring" => $GetShipperDetails_doc),
 		)
 	);
 
