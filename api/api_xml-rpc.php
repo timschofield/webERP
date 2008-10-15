@@ -270,6 +270,24 @@
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
+	$GetLocationList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$GetLocationList_doc = 'This function returns an array containing a list of all locations setup on webERP';
+
+	function xmlrpc_GetLocationList($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetLocationList($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval())));
+	}
+
+	$GetLocationDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetLocationDetails_doc = 'This function returns an associative array containing the details of the Location
+			 sent as a parameter';
+
+	function xmlrpc_GetLocationDetails($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetLocationDetails($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval(),
+				$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
@@ -383,6 +401,14 @@
 			"function" => "xmlrpc_InsertGLAccountGroup",
 			"signature" => $InsertGLAccountGroup_sig,
 			"docstring" => $InsertGLAccountGroup_doc),
+		"weberp.xmlrpc_GetLocationList" => array(
+			"function" => "xmlrpc_GetLocationList",
+			"signature" => $GetLocationList_sig,
+			"docstring" => $GetLocationList_doc),
+		"weberp.xmlrpc_GetLocationDetails" => array(
+			"function" => "xmlrpc_GetLocationDetails",
+			"signature" => $GetLocationDetails_sig,
+			"docstring" => $GetLocationDetails_doc),
 		)
 	);
 
