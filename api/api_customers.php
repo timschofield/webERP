@@ -477,6 +477,9 @@
 		if (isset($CustomerDetails['customerpoline'])){
 			$Errors=VerifyCustomerPOLine($CustomerDetails['customerpoline'], sizeof($Errors), $Errors);
 		}
+		if (isset($CustomerDetails['typeid'])){
+			$Errors=VerifyCustomerType($CustomerDetails['typeid'], sizeof($Errors), $Errors, $db);
+		}
 		$sql='UPDATE debtorsmaster SET ';
 		foreach ($CustomerDetails as $key => $value) {
 			$sql .= $key.'="'.$value.'", ';
