@@ -526,6 +526,7 @@ CREATE TABLE `debtorsmaster` (
   `ediserverpwd` varchar(20) NOT NULL default '',
   `taxref` varchar(20) NOT NULL default '',
   `customerpoline` tinyint(1) NOT NULL default '0',
+  `typeid` tinyint(4) NOT NULL default '0';
   PRIMARY KEY  (`debtorno`),
   KEY `Currency` (`currcode`),
   KEY `HoldReason` (`holdreason`),
@@ -601,6 +602,19 @@ CREATE TABLE `debtortranstaxes` (
   KEY `taxauthid` (`taxauthid`),
   CONSTRAINT `debtortranstaxes_ibfk_1` FOREIGN KEY (`taxauthid`) REFERENCES `taxauthorities` (`taxid`),
   CONSTRAINT `debtortranstaxes_ibfk_2` FOREIGN KEY (`debtortransid`) REFERENCES `debtortrans` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Table structure for table `debtortype`
+--
+
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `debtortype` (
+`typeid` tinyint(4) NOT NULL auto_increment,
+`typename` varchar(100) NOT NULL,
+PRIMARY KEY (`typeid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
@@ -2789,6 +2803,7 @@ INSERT INTO `config` VALUES ('DB_Maintenance','30');
 INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2008-07-26');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
+INSERT INTO `config` VALUES ('DefaultCustomerType', '0');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
 INSERT INTO `config` VALUES ('DefaultDisplayRecordsMax','50');
 INSERT INTO `config` VALUES ('DefaultPriceList','DE');
