@@ -265,6 +265,12 @@
 		if (isset($BranchDetails['address6'])){
 			$Errors=VerifyBranchAddressLine($BranchDetails['address6'], 15, sizeof($Errors), $Errors, $db);
 		}
+		if (isset($BranchDetails['lat'])){
+			$Errors=VerifyLatitude($BranchDetails['lat'], sizeof($Errors), $Errors);
+		}
+		if (isset($BranchDetails['lng'])){
+			$Errors=VerifyLongitude($BranchDetails['lng'], sizeof($Errors), $Errors);
+		}
 		if (isset($BranchDetails['estdeliverydays'])){
 			$Errors=VerifyEstDeliveryDays($BranchDetails['estdeliverydays'], sizeof($Errors), $Errors);
 		}
@@ -377,6 +383,12 @@
 		}
 		if (isset($BranchDetails['address6'])){
 			$Errors=VerifyBranchAddressLine($BranchDetails['address6'], 15, sizeof($Errors), $Errors, $db);
+		}
+		if (isset($BranchDetails['lat'])){
+			$Errors=VerifyLatitude($BranchDetails['lat'], sizeof($Errors), $Errors);
+		}
+		if (isset($BranchDetails['lng'])){
+			$Errors=VerifyLongitude($BranchDetails['lng'], sizeof($Errors), $Errors);
 		}
 		if (isset($BranchDetails['estdeliverydays'])){
 			$Errors=VerifyEstDeliveryDays($BranchDetails['estdeliverydays'], sizeof($Errors), $Errors);
