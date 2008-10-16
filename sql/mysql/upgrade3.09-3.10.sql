@@ -38,4 +38,16 @@ CREATE TABLE `geocode_param` (
  `map_host` varchar(50) NOT NULL default ''
 ) ENGINE=InnoDB;
 
-INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('geocode_integration', '0');
+INSERT INTO `config` ( `confname` , `confvalue` )
+VALUES ('geocode_integration', '0');
+
+INSERT INTO `config` ( `confname` , `confvalue` )
+VALUES ('DefaultCustomerType', '0');
+
+ALTER TABLE `debtorsmaster` ADD `typeid` tinyint(4) NOT NULL default '0';
+
+CREATE TABLE `debtortype` (
+`typeid` tinyint(4) NOT NULL auto_increment,
+`typename` varchar(100) NOT NULL,
+PRIMARY KEY (`typeid`)
+) ENGINE=InnoDB;
