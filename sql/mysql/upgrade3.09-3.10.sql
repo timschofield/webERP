@@ -51,3 +51,6 @@ CREATE TABLE `debtortype` (
 `typename` varchar(100) NOT NULL,
 PRIMARY KEY (`typeid`)
 ) ENGINE=InnoDB;
+
+INSERT INTO `debtortype` ( `typeid` , `typename` )
+VALUES ('', 'Default');
