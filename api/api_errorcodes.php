@@ -115,6 +115,8 @@
 	Define('InvalidPandL', 1111);
 	Define('InvalidSequenceInTB', 1112);
 	Define('GLAccountGroupDoesntExist', 1113);
+	Define('InvalidLatitude', 1114);
+	Define('InvalidLongitude', 1115);
 
 /* Array of Descriptions of errors */
 	$ErrorDescription['1'] = 'No Authorisation';
@@ -230,6 +232,8 @@
 	$ErrorDescription['1110'] = 'GL account section doesnt exist';
 	$ErrorDescription['1111'] = 'Invalid profit and loss flag';
 	$ErrorDescription['1112'] = 'Invalid sequenceintb figure';
-	$ErrorDescription['1112'] = 'GL account group doesnt exist';
+	$ErrorDescription['1113'] = 'GL account group doesnt exist';
+	$ErrorDescription['1114'] = 'Invalid Latitude figure';
+	$ErrorDescription['1115'] = 'Invalid Longitude figure';
 
 ?>
