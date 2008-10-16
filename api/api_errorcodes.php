@@ -95,7 +95,6 @@
 	Define('InvalidComments', 1090);
 	Define('InvalidOrderDate', 1091);
 	Define('InvalidDeliverTo', 1092);
-	Define('InvalidDeliverBlind', 1093);
 	Define('InvalidFreightCost', 1094);
 	Define('InvalidDeliveryDate', 1095);
 	Define('InvalidQuotationFlag', 1096);
@@ -212,7 +211,6 @@
 	$ErrorDescription['1090'] = 'Invalid Comments';
 	$ErrorDescription['1091'] = 'Invalid Order Date';
 	$ErrorDescription['1092'] = 'Invalid Delivery Name';
-	$ErrorDescription['1093'] = 'Invalid Deliver Blind Flag';
 	$ErrorDescription['1094'] = 'Invalid Freight Cost';
 	$ErrorDescription['1095'] = 'Invalid Delivery Date';
 	$ErrorDescription['1096'] = 'Invalid Quotation Flag';
