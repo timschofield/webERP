@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.46 $ */
+/* $Revision: 1.47 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -364,17 +364,17 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 		if ($_POST['Quotation']==0) { /*then its not a quotation its a real order */
 
-			echo '<p><a  target="_blank" href="$rootpath/PrintCustOrder.php?' . SID . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Preprinted stationery') . ')' .'</a>';
-			echo '<p><a  target="_blank" href="$rootpath/PrintCustOrder_generic.php?' . SID . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Laser') . ')' .'</a>';
+			echo '<p><a  target="_blank" href="' . $rootpath . '/PrintCustOrder.php?' . SID . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Preprinted stationery') . ')' .'</a>';
+			echo '<p><a  target="_blank" href="' . $rootpath . '/PrintCustOrder_generic.php?' . SID . '&TransNo=' . $OrderNo . '">'. _('Print packing slip') . ' (' . _('Laser') . ')' .'</a>';
 
-			echo '<p><a href="$rootpath/ConfirmDispatch_Invoice.php?' . SID . '&OrderNumber=$OrderNo">'. _('Confirm Order Delivery Quantities and Produce Invoice') .'</a>';
+			echo '<p><a href="' . $rootpath . '/ConfirmDispatch_Invoice.php?' . SID . '&OrderNumber=' . $OrderNo .'">'. _('Confirm Order Delivery Quantities and Produce Invoice') .'</a>';
 
 		} else {
 			/*link to print the quotation */
-			echo '<p><a href="$rootpath/PDFQuotation.php?' . SID . '&QuotationNo=$OrderNo">'. _('Print Quotation') .'</a>';
+			echo '<p><a href="' . $rootpath . '/PDFQuotation.php?' . SID . '&QuotationNo=' . $OrderNo . '">'. _('Print Quotation') .'</a>';
 
 		}
-		echo '<p><a href="$rootpath/SelectOrderItems.php?' . SID . '&NewOrder=Yes">'. _('Add Sales Order') .'</a>';
+		echo '<p><a href="'. $rootpath .'/SelectOrderItems.php?' . SID . '&NewOrder=Yes">'. _('Add Sales Order') .'</a>';
 	} else {
 		/*its a customer logon so thank them */
 		prnMsg(_('Thank you for your business'),'success');
@@ -454,10 +454,10 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 	prnMsg(_('Order number') .' ' . $_SESSION['ExistingOrder'] . ' ' . _('has been updated'),'success');
 
-	echo '<br><a href="$rootpath/PrintCustOrder.php?' . SID . '&TransNo=' . $_SESSION['ExistingOrder'] . '">'. _('Print packing slip - pre-printed stationery') .'</a>';
-	echo '<p><a href="$rootpath/ConfirmDispatch_Invoice.php?' . SID . '&OrderNumber=' . $_SESSION['ExistingOrder'] . '">'. _('Confirm Order Delivery Quantities and Produce Invoice') .'</a>';
-	echo '<br><a  target="_blank" href="$rootpath/PrintCustOrder_generic.php?' . SID . '&TransNo=' . $_SESSION['ExistingOrder'] . '">'. _('Print packing slip') . ' (' . _('Laser') . ')' .'</a>';
-	echo '<p><a href="$rootpath/SelectSalesOrder.php?' . SID  . '">'. _('Select A Different Order') .'</a>';
+	echo '<br><a href="' . $rootpath . '/PrintCustOrder.php?' . SID . '&TransNo=' . $_SESSION['ExistingOrder'] . '">'. _('Print packing slip - pre-printed stationery') .'</a>';
+	echo '<p><a href="' . $rootpath .'/ConfirmDispatch_Invoice.php?' . SID . '&OrderNumber=' . $_SESSION['ExistingOrder'] . '">'. _('Confirm Order Delivery Quantities and Produce Invoice') .'</a>';
+	echo '<br><a  target="_blank" href="' . $rootpath . '/PrintCustOrder_generic.php?' . SID . '&TransNo=' . $_SESSION['ExistingOrder'] . '">'. _('Print packing slip') . ' (' . _('Laser') . ')' .'</a>';
+	echo '<p><a href="' . $rootpath .'/SelectSalesOrder.php?' . SID  . '">'. _('Select A Different Order') .'</a>';
 	include('includes/footer.inc');
 	exit;
 }
