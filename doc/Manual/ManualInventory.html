@@ -5,13 +5,13 @@
 <br><br>
 In many cases due to the English background of the developer, Inventory is referred to as "stock", which can be confusing to some. The word "stock" is used interchangeably with "inventory" throughout.
 <br><br>
-Inventories fall into clear categories particular to the business. For example a toy factory might have categories for lego, rideons, board games etc . These are referred to as stock categories and are expected to be defined by the business. The name of the category (but not its code) can be altered at any time. 
+Inventories fall into clear categories particular to the business. For example a toy factory might have categories for lego, rideons, board games etc . These are referred to as stock categories and are expected to be defined by the business. The name of the category (but not its code) can be altered at any time.
 <br><br>
 Note: Integration to the general ledger is at the stock category level. The posting to the general ledger is determined by reference to the stock category of the item together with the sales area and the sales type. Separate tables of general ledger codes for sales and cost of sales are maintained from the System Setup tab of the main menu.
 <br><br>
 Inventory invoiced using the invoicing option will decrease the stock on hand from the stock location specified in the invoice. Inventory credited using the credit note creation option will increase the stock held at the location selected in the credit note. Inventory adjustments to the quantity held are also possible and transfers between stock locations.
 <br><br>
-A record of each stock movement is maintained, stock movements originating from sales invoices, purchase orders received, stock adjustments, sales credit notes can all be viewed using the inquiry of stock movements. Summing the stock movements provides an easy mechanism to see the historical usage and an inquiry is also available to show usage by month. 
+A record of each stock movement is maintained, stock movements originating from sales invoices, purchase orders received, stock adjustments, sales credit notes can all be viewed using the inquiry of stock movements. Summing the stock movements provides an easy mechanism to see the historical usage and an inquiry is also available to show usage by month.
 <br><br>
 Inventories can be valued at either standard cost (manually maintained costs) or weighted average cost (automatically maintained). If general ledger stock integration is active, general ledger postings are created for stock adjustments, standard cost amendments, cost of sales and stock movements on invoicing and crediting. When stock journals are used, provided that the balance of the stock accounts agrees to the current valuation of the stock at the time when the flag is set in the company preferences page, then the value of stock held will be maintained in the general ledger, with a full trail of general ledger journals for each stock movement. This does make for a busy, but informative general ledger in a high use environment!
 <br><br>
@@ -23,7 +23,7 @@ Note: Inventory journals are optional. The sales ledger/accounts receivable inte
 <li>Multiple warehouses, stock quantities maintained for an unlimited number of locations.
 <li>Prices for a stock item can be set for each sales type defined in any (and all) currency (ies) allowing great pricing flexibility.
 <li>Automatic back ordering. Sales orders yet to be delivered can be automatically back ordered at the time of invoicing or the balance of the order cancelled as appropriate.
-<li>History of stock movements maintained by stock item. 
+<li>History of stock movements maintained by stock item.
 <li>Allows Dummy stock items which can be invoiced, priced, costed but with no stock record maintained for items such as labour or services.
 <li>Kit-set parts can be defined. An order for a kit-set part explodes into the components defined for the parts at the predefined quantities as extended by the number of the kit set item ordered. These component quantities are then available on the order for modification by the user.
 <li>Assembly parts can be defined in a similar way to kit sets. These parts exist only for ordering, invoicing and sales analysis. No stock balance is maintained, instead the quantities of the components are updated in proportion to the quantity defined in the assembly.
@@ -77,7 +77,7 @@ Entry of new items requires the input of certain base information:
 <li>Supplier purchasing data
 <li>Selling prices
 </ul>
-Entry of the base information is done from the menu, select the inventory tab and click "Add a New Inventory Item". 
+Entry of the base information is done from the menu, select the inventory tab and click "Add a New Inventory Item".
 <br><br>
 <font size="+1"><b>Item Code</b></font>
 <br><br>
@@ -98,7 +98,7 @@ A stock category is required for all stock items. The stock category is a text f
 <font size="+1"><b>Unit of Measurement</b></font>
 <br><br>
 This field describes how the stock is to be maintained and is self-explanatory. It is a compulsory field. The selection list is maintained in config.php as an array variable. To add or delete other units of measurement the array variable called $InventoryUnits defined in config.php must be edited by the system administrator.
-<br><br> 
+<br><br>
 <font size="+1"><b>Economic Order Quantity</b></font>
 <br><br>
 This is the quantity that new orders are made or purchased in by default. Currently this is purely for memorandum - in future this will be a critical part of the MRP calculations.
@@ -113,8 +113,7 @@ This field is required for freight calculations. It records the weight of the on
 <br><br>
 <font size="+1"><b>Units of Measure</b></font>
 <br><br>
-A select box allows the units applicable to the item to be selected from the array of $StockUnits defined in config.php. The unit of measure will show on all invoices and on stock inquiries.
-<br><br>
+This field describes how the stock is to be maintained and is self-explanatory. It is a compulsory field, and as such, some values are defined at the time of installation. System administrators may define additional values or modify existing ones via the 'Units of Measure' link found under 'Inventory Setup' on the main 'Setup' page.<br><br>
 <font size="+1"><b>Current or Obsolete</b></font>
 <br><br>
 If this field is set to obsolete, this indicates that the stock item is no longer used. However, there may be a stock history on invoices and credit notes which are required. The stock item master record is therefore still required. (Deletion is not allowed while stock movements or Sales analysis records exist for the part) However, it will not appear on searches for invoicing, stock items, in addition the item will be flagged as discontinued in stock reports.
@@ -123,7 +122,7 @@ If this field is set to obsolete, this indicates that the stock item is no longe
 <br><br>
 This field is compulsory and indicates whether the stock item is:
 <br><br>
-Manufactured - if the item is defined as manufactured it can have a bill of material - there are no traps that prevent a manufactured item from being purchased. 
+Manufactured - if the item is defined as manufactured it can have a bill of material - there are no traps that prevent a manufactured item from being purchased.
 <br><br>
 Purchased from an external supplier. Since the item is purchased it cannot also be manufactured and have a bill of material.
 <br><br>
@@ -161,7 +160,7 @@ It is important to remember that when an assembly item is credited this process 
 <br><br>
 This next point is a little confusing. The system also shows the movement of assembly items in the movement inquiry for the assembly item itself. This does have the advantage of showing to whom the assembly items have been sold at a glance. However, there are no stock status inquiries for assembly items since they are not stocking items (only the components are held and picked to make up the assembly item at the time of dispatch).
 <br><br>
-When parts are first set up - the description and stock category needs to be defined and it is at this point that the type of item is defined - from the heading on that screen titled - "Make, Buy, Kit, Assembly or Dummy Part". The choices are "purchased" - the default, "manufactured", "assembly", "kit-set" or "dummy". 
+When parts are first set up - the description and stock category needs to be defined and it is at this point that the type of item is defined - from the heading on that screen titled - "Make, Buy, Kit, Assembly or Dummy Part". The choices are "purchased" - the default, "manufactured", "assembly", "kit-set" or "dummy".
 <br><br>
 Considering the treatment of assembly items:
 <br><br>
@@ -171,7 +170,7 @@ Having set the part to be an assembly, then the part will show an option on the 
 <br><br>
 Setting up an assembly part requires setting up A Bill Of Material - BOM for the item.
 <br><br>
-From the manufacturing tab of the main menu - under the Maintenance section - click the link "Bill Of Material Maintenance". The item search fields show with the option to enter either an extract from the item description or the item code. Having entered the selection click on the "Search Now" button. Not all items will show - only those items that can have a BOM - assembly items, manufactured parts and kit-sets. If the part is not defined as an assembly item - it won't show up! 
+From the manufacturing tab of the main menu - under the Maintenance section - click the link "Bill Of Material Maintenance". The item search fields show with the option to enter either an extract from the item description or the item code. Having entered the selection click on the "Search Now" button. Not all items will show - only those items that can have a BOM - assembly items, manufactured parts and kit-sets. If the part is not defined as an assembly item - it won't show up!
 <br><br>
 Clicking the part code button will then show a screen for entering components to make up the BOM. If a BOM already exists for the item it will show the components already set up. There are two links next to each item shown in the current BOM to enable the line to be edited or deleted.
 <br><br>
@@ -226,11 +225,11 @@ With standard costing - costs need to be maintained manually - where a permanent
 <br><br>
 <font size="+2"><b>Weighted Average Costing</b></font>
 <br><br>
-Weighted average costing updates costs automatically based on the quantities purchased and the cost of these but taking into account the existing quantity of the item is inventory. 
+Weighted average costing updates costs automatically based on the quantities purchased and the cost of these but taking into account the existing quantity of the item is inventory.
 <br><br>
 The process is best described with an example - consider an item with 100 currently on hand with a value of $1 each has an influx of 10 more. When the 10 arrive and are booked into stock the system creates the goods received record for 10 at the inventory cost of $1 (the new cost is not yet known - we must wait for purchase invoices to be entered). If the general ledger is integrated to inventory, the stock account (from the stock category record) is increased by 10 units @ $1 = $10 and the goods received suspense account (from the company preferences) is credited with $10.
 <br><br>
-Now the purchase invoice is posted against the goods received record - and the items actually cost $1.50 each 10 units x $1.50 = $15 so a variance of $10 cost recorded on arrival of the good - $15 actual invoice cost = $5 is recorded. With weighted average costing (and GL integration of stock enabled) this variance is posted to the value of stock and the cost of the stock item is increased such that the $5 variance is apportioned accross the whole quantity of stock on hand - 100 already in stock plus the 10 =110 The value of $5/110 = $0.04545 is added to the existing stock value of $1 - new item cost is updated to $1.04545 as the new weighted average cost. 
+Now the purchase invoice is posted against the goods received record - and the items actually cost $1.50 each 10 units x $1.50 = $15 so a variance of $10 cost recorded on arrival of the good - $15 actual invoice cost = $5 is recorded. With weighted average costing (and GL integration of stock enabled) this variance is posted to the value of stock and the cost of the stock item is increased such that the $5 variance is apportioned accross the whole quantity of stock on hand - 100 already in stock plus the 10 =110 The value of $5/110 = $0.04545 is added to the existing stock value of $1 - new item cost is updated to $1.04545 as the new weighted average cost.
 <br><br>
 Similarly when shipments are closed the cost of items on the shipment are updated in the same way.
 <br><br>
@@ -258,7 +257,7 @@ This field should be the total overhead to be recovered on the sale of 1 unit of
 <br><br>
 <font size="+1"><b>Standard Costing Considerations</b></font>
 <br><br>
-Each time a stock item is sold, the cost of sales account (specified by the COGS GL Postings table by reference to the stock category and sales area of the branch) is updated with the total of material cost, labour cost and overhead cost, and the stock value (the account specified in the stock category record) is decreased by the total standard cost. 
+Each time a stock item is sold, the cost of sales account (specified by the COGS GL Postings table by reference to the stock category and sales area of the branch) is updated with the total of material cost, labour cost and overhead cost, and the stock value (the account specified in the stock category record) is decreased by the total standard cost.
 <br><br>
 <font size="+1"><b>Actual Cost</b></font>
 <br><br>
@@ -282,11 +281,11 @@ There is a utility available from the Z_index.php page that allows the sales ana
 <br><br>
 From all pages in the system the main title bar has links to select from the critical tables in the system. Customers, inventory and suppliers. Clicking on the "Select Item" link takes the user directly to the inventory item selection page. In addition, from the menu, the Inventory tab has a link to "Modify or Delete an Inventory Item Or Maintain Pricing". Using either method, the select item or product page will show.
 <br><br>
-The search for a particular item can be narrowed by selection of a specific stock Category - a select box allows selection of the category. Also if some element of the code is known this can be entered, alternatively if some element of the description is known this can be entered - the description keywords are used if both a code and description fields are used. Note that the text entered into these fields does not have to be the start of the code or the description. All items with the text anywhere in either the code or the description respectively will be displayed, together with the total stock on hand and the unit of measure for the item. Assembles, kit-sets and dummy parts will all show zero stock on hand. 
+The search for a particular item can be narrowed by selection of a specific stock Category - a select box allows selection of the category. Also if some element of the code is known this can be entered, alternatively if some element of the description is known this can be entered - the description keywords are used if both a code and description fields are used. Note that the text entered into these fields does not have to be the start of the code or the description. All items with the text anywhere in either the code or the description respectively will be displayed, together with the total stock on hand and the unit of measure for the item. Assembles, kit-sets and dummy parts will all show zero stock on hand.
 <br><br>
 The maximum number of resultant items can be defined by a parameter in config.php - this limits the number of records returned so that users over a lower bandwidth connection are not penalised for making too wide a selection. Downloads of significant amounts of data over a slower dial up connection would result in serious degradation in performance. By default this is set at 100 items.
 <br><br>
-Clicking on the button of the code of the item that is required will select it and links to the options applicable to the item will be displayed. 
+Clicking on the button of the code of the item that is required will select it and links to the options applicable to the item will be displayed.
 <br><br>
 Having selected an item it is possible to modify:
 <br><br>
@@ -294,7 +293,7 @@ Having selected an item it is possible to modify:
 <li>Item master information
 <li>Costs
 <li>Pricing
-<li>Reorder levels 
+<li>Reorder levels
 <li>Purchasing data
 </ul>
 It is also possible to inquire on:
@@ -327,8 +326,8 @@ At the bottom of this page, there is also a link to perform a fresh search for a
 The master information is available for amendment. The only field that cannot be altered on the main stock item page, is the code. The code is used in many tables throughout the system and modification of the stock code would require data in many other tables of information to make corresponding changes. A special utility is available that allows stock code changes to be made. The changes to the database are extensive and it is recommended that this facility be run out of normal operating hours since the load on the server for the changes could be substantial in a large database. See special utilities. The following points should be considered when altering data fields:
 <br><br>
 <font size="+1"><b>Changing a Category</b></font>
-<br><br> 
-The Category of a stock item can be altered at any time. 
+<br><br>
+The Category of a stock item can be altered at any time.
 <br><br>
 However, if the stock journals option is active (in the company preferences set up), it should be remembered that the general ledger coding set up for that category can not be amended retrospectively. In other words, general ledger journals created for invoices, credit notes and stock adjustments created using the old category general ledger codes cannot be altered. The general ledger coding could be amended with a manual journal if necessary.
 <br><br>
@@ -354,7 +353,7 @@ This is a six character text field which is the reference used internally by the
 <br><br>
 <font size="+1"><b>Inventory Category Description</b></font>
 <br><br>
-This description is used in searches for stock items and in sales analysis reports to describe the category of stock referred to. Up to 20 characters of text can be entered, although on some reports less than the full description will appear. 
+This description is used in searches for stock items and in sales analysis reports to describe the category of stock referred to. Up to 20 characters of text can be entered, although on some reports less than the full description will appear.
 <br><br>
 <font size="+1"><b>Balance Sheet Inventory GL Account</b></font>
 <br><br>
@@ -370,13 +369,13 @@ When purchase invoices are entered at a determined exchange rate for an item, th
 <br><br>
 <font size="+1"><b>Material Usage Variance Account</b></font>
 <br><br>
-NOT YET IMPLEMENTED: 
+NOT YET IMPLEMENTED:
 <br><br>
 This general ledger account is used by the works orders to post the variances between the actual material issued to a work order and the standard requirements of the work order based on the number of finished items resulting from the work order. This field will not be used if the company preferences flag for "Create GL entries for stock transactions (at standard cost)" is not enabled.
 <br><br>
 <font size="+1"><b>Type of Resource</b></font>
 <br><br>
-NOT YET IMPLEMENTED: 
+NOT YET IMPLEMENTED:
 <br><br>
 This field declares the type of resource that the stock category represents and is one of Finished Goods, Raw Materials, Labour or Dummy Inventory. This field is used to distinguish labour type stock items from other components for the purposes of calculating work centre overhead in the cost roll up. It is also used for ordering stock reports to ensure raw materials and finished goods are grouped together.
 
@@ -400,7 +399,7 @@ Note: Location codes cannot be modified retrospectively. Neither can they be del
 
 <font size="+2"><b>Inventory Adjustments</b></font>
 <br><br>
-Inventory can be written on or off for individual stock items using this option. Corrections to physical stocks and deliveries of stock can be entered using this option. Adjustments can be entered by selecting the link on the SelectProduct.php page or directly from the menu under transactions. Using the second link, the item code must be known, there is no facility to select an item code from this page. 
+Inventory can be written on or off for individual stock items using this option. Corrections to physical stocks and deliveries of stock can be entered using this option. Adjustments can be entered by selecting the link on the SelectProduct.php page or directly from the menu under transactions. Using the second link, the item code must be known, there is no facility to select an item code from this page.
 <br><br>
 If Stock GL integration is enabled from the company preferences page (under the setup tab), then the system creates the necessary journals in the general ledger to update the stock account and the profit and loss account stock adjustment account specified in the stock category record. (see Inventory Categories above and also see General Ledger Integration later)
 <br><br>
@@ -443,9 +442,9 @@ All stock inquiries are performed from the product selection form. Once a produc
 <br><br>
 Shows the detail of how much stock is held and where the stock is (i.e. how much at each location) together with the total quantity of sales orders for the part outstanding and the quantity of the item on outstanding purchase orders can also be viewed from this inquiry. Not only are outstanding sales orders for this part accumulated but all the demand for parent assembly parts as extended by the quantity required per unit of the parent. This ensures that all demand for the part is shown.
 <br><br>
-This - and all stock inquiries are called from the SelectProduct.php page - this page is linked to from every page in the system from the header links "Select Item". Once an item is selected the relevant inquiry options are displayed. As  with all web pages produced by the system most browsers have good facilities to print them. 
+This - and all stock inquiries are called from the SelectProduct.php page - this page is linked to from every page in the system from the header links "Select Item". Once an item is selected the relevant inquiry options are displayed. As  with all web pages produced by the system most browsers have good facilities to print them.
 <br><br>
-If the item selected is a controlled item then the status inquiry will also show a link to show the batches. If the item is serialised, the link will refer to the serial numbers rather than batches. 
+If the item selected is a controlled item then the status inquiry will also show a link to show the batches. If the item is serialised, the link will refer to the serial numbers rather than batches.
 
 <!-- Help End: StockStatus -->
 
@@ -461,7 +460,7 @@ This inquiry shows the movements of the stock item for a specified location with
 <br><br>
 Note: Inventory movement inquiries are possible on dummy and assembly stock items. However, since dummy items are not physical stock items, no record of the amount of stock and the location of where held (there is none held) are maintained. The location inquiry will always be zero for a dummy/assembly and kit set items. When a dummy stock item, or an assembly or kit set item is selected the link to the stock status inquiry is not available.
 <br><br>
-If the stock movement was an invoice or a credit the customer and the price in the currency invoiced or credited will show. 
+If the stock movement was an invoice or a credit the customer and the price in the currency invoiced or credited will show.
 
 <!-- Help End: StockMovements -->
 
@@ -525,7 +524,7 @@ From the main menu - inventory tab, click on the link to print out the stock che
 <br><br>
 This page allows selection of the stock location to be checked and a range of stock categories to check. Note there is a new field called:
 <br><br>
-Action for stock check freeze. 
+Action for stock check freeze.
 <br><br>
 By default this is set to list the items to be counted. Before a stock starts this must be run selecting " make a new stock check data file". This copies the quantities on hand as at the time the report is run. If the stock check sheets are run for another location and it is set again to make a new stock check data file, then the previous stock check data file is over-written and lost. If there is a stock check in progress in one location and another location wishes to initiate one too, then the second person to run the stock check sheets needs to print them with the Action for Stock Check Freeze field set to Add/update existing stock check file. Similarly if another stock category is to be added to the stock check then - Add/update existing stock check file is the correct option.
 <br><br>
@@ -539,7 +538,7 @@ The counts should be entered - the system will only accept count entries for par
 <br><br>
 <b>Step 5:</b>
 <br><br>
-Having completed the entry of the counts the Comparison report can be run. 
+Having completed the entry of the counts the Comparison report can be run.
 <br><br>
 This is run from the Inventory tab of the main menu:
 <br><br>
@@ -549,7 +548,7 @@ There are number of options for running this report. The default is to run the r
 <br><br>
 <b>Step 6:</b>
 <br><br>
-Once happy that the adjustments to be made are correct the report can be run again with the option to Report and Close the Inventory Comparison File and Process Adjustments as Necessary. 
+Once happy that the adjustments to be made are correct the report can be run again with the option to Report and Close the Inventory Comparison File and Process Adjustments as Necessary.
 <br><br>
 There is no going back on this process - if you didn't mean to process these adjustments they must all be reversed manually. Be very sure when running the comparison in this mode.
 <!-- Help End: StockCheck -->
