@@ -117,6 +117,7 @@
 	Define('GLAccountGroupDoesntExist', 1113);
 	Define('InvalidLatitude', 1114);
 	Define('InvalidLongitude', 1115);
+	Define('CustomerTypeNotSetup', 1116);
 
 /* Array of Descriptions of errors */
 	$ErrorDescription['1'] = 'No Authorisation';
@@ -235,5 +236,6 @@
 	$ErrorDescription['1113'] = 'GL account group doesnt exist';
 	$ErrorDescription['1114'] = 'Invalid Latitude figure';
 	$ErrorDescription['1115'] = 'Invalid Longitude figure';
+	$ErrorDescription['1116'] = 'Customer type not set up';
 
 ?>

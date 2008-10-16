@@ -227,6 +227,19 @@
 		return $Errors;
 	}
 
+/* Check that the customer type is set up in the weberp database */
+	function VerifyCustomerType($debtortype , $i, $Errors, $db) {
+		$Searchsql = 'SELECT COUNT(typeid)
+					 FROM debtortype
+					  WHERE typeid="'.$debtortype.'"';
+		$SearchResult=DB_query($Searchsql, $db);
+		$answer = DB_fetch_row($SearchResult);
+		if ($answer[0] == 0) {
+			$Errors[$i] = CustomerTypeNotSetup;
+		}
+		return $Errors;
+	}
+
 /* Insert a new customer in the webERP database. This function takes an
    associative array called $CustomerDetails, where the keys are the
    names of the fields in the debtorsmaster table, and the values are the
@@ -334,6 +347,9 @@
 		}
 		if (isset($CustomerDetails['customerpoline'])){
 			$Errors=VerifyCustomerPOLine($CustomerDetails['customerpoline'], sizeof($Errors), $Errors);
+		}
+		if (isset($CustomerDetails['typeid'])){
+			$Errors=VerifyCustomerType($CustomerDetails['typeid'], sizeof($Errors), $Errors, $db);
 		}
 		$FieldNames='';
 		$FieldValues='';
