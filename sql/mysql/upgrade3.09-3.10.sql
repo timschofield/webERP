@@ -38,13 +38,9 @@ CREATE TABLE `geocode_param` (
  `map_host` varchar(50) NOT NULL default ''
 ) ENGINE=InnoDB;
 
-INSERT INTO `config` ( `confname` , `confvalue` )
-VALUES ('geocode_integration', '0');
+INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('geocode_integration', '0');
 
-INSERT INTO `config` ( `confname` , `confvalue` )
-VALUES ('DefaultCustomerType', '0');
-
-ALTER TABLE `debtorsmaster` ADD `typeid` tinyint(4) NOT NULL default '0';
+INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('DefaultCustomerType', '1');
 
 CREATE TABLE `debtortype` (
 `typeid` tinyint(4) NOT NULL auto_increment,
@@ -52,5 +48,7 @@ CREATE TABLE `debtortype` (
 PRIMARY KEY (`typeid`)
 ) ENGINE=InnoDB;
 
-INSERT INTO `debtortype` ( `typeid` , `typename` )
-VALUES ('', 'Default');
+INSERT INTO `debtortype` ( `typeid` , `typename` ) VALUES ('', 'Default');
+
+ALTER TABLE `debtorsmaster` ADD `typeid` tinyint(4) NOT NULL default '1';
+ALTER TABLE `debtorsmaster` ADD CONSTRAINT `debtorsmaster_ibfk_5` FOREIGN KEY (`typeid`) REFERENCES `debtortype` (`typeid`);

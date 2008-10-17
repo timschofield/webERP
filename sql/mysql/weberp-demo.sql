@@ -528,7 +528,7 @@ CREATE TABLE `debtorsmaster` (
   `ediserverpwd` varchar(20) NOT NULL default '',
   `taxref` varchar(20) NOT NULL default '',
   `customerpoline` tinyint(1) NOT NULL default '0',
-  `typeid` tinyint(4) NOT NULL default '0';
+  `typeid` tinyint(4) NOT NULL default '1';
   PRIMARY KEY  (`debtorno`),
   KEY `Currency` (`currcode`),
   KEY `HoldReason` (`holdreason`),
@@ -540,7 +540,8 @@ CREATE TABLE `debtorsmaster` (
   CONSTRAINT `debtorsmaster_ibfk_1` FOREIGN KEY (`holdreason`) REFERENCES `holdreasons` (`reasoncode`),
   CONSTRAINT `debtorsmaster_ibfk_2` FOREIGN KEY (`currcode`) REFERENCES `currencies` (`currabrev`),
   CONSTRAINT `debtorsmaster_ibfk_3` FOREIGN KEY (`paymentterms`) REFERENCES `paymentterms` (`termsindicator`),
-  CONSTRAINT `debtorsmaster_ibfk_4` FOREIGN KEY (`salestype`) REFERENCES `salestypes` (`typeabbrev`)
+  CONSTRAINT `debtorsmaster_ibfk_4` FOREIGN KEY (`salestype`) REFERENCES `salestypes` (`typeabbrev`),
+  CONSTRAINT `debtorsmaster_ibfk_5` FOREIGN KEY (`typeid`) REFERENCES `debtortype` (`typeid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 SET character_set_client = @saved_cs_client;
 
@@ -4744,7 +4745,7 @@ INSERT INTO `config` VALUES ('DB_Maintenance','30');
 INSERT INTO `config` VALUES ('DB_Maintenance_LastRun','2008-07-26');
 INSERT INTO `config` VALUES ('DefaultBlindPackNote','1');
 INSERT INTO `config` VALUES ('DefaultCreditLimit','1000');
-INSERT INTO `config` VALUES ('DefaultCustomerType', '0');
+INSERT INTO `config` VALUES ('DefaultCustomerType', '1');
 INSERT INTO `config` VALUES ('DefaultDateFormat','d/m/Y');
 INSERT INTO `config` VALUES ('DefaultDisplayRecordsMax','50');
 INSERT INTO `config` VALUES ('DefaultPriceList','DE');
