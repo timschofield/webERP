@@ -324,6 +324,24 @@
 				$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
+	$GetSalesmanList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$GetSalesmanList_doc = 'This function returns an array containing a list of all Salesman codes setup on webERP';
+
+	function xmlrpc_GetSalesmanList($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetSalesmanList($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval())));
+	}
+
+	$GetSalesmanDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetSalesmanDetails_doc = 'This function returns an associative array containing the details of the Salesman
+			 sent as a parameter';
+
+	function xmlrpc_GetSalesmanDetails($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetSalesmanDetails($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval(),
+				$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
@@ -461,6 +479,14 @@
 			"function" => "xmlrpc_GetSalesAreaDetails",
 			"signature" => $GetSalesAreaDetails_sig,
 			"docstring" => $GetSalesAreaDetails_doc),
+		"weberp.xmlrpc_GetSalesmanList" => array(
+			"function" => "xmlrpc_GetSalesmanList",
+			"signature" => $GetSalesmanList_sig,
+			"docstring" => $GetSalesmanList_doc),
+		"weberp.xmlrpc_GetSalesmanDetails" => array(
+			"function" => "xmlrpc_GetSalesmanDetails",
+			"signature" => $GetSalesmanDetails_sig,
+			"docstring" => $GetSalesmanDetails_doc),
 		)
 	);
 

@@ -35,6 +35,7 @@
 	include 'api_shippers.php';
 	include 'api_salestypes.php';
 	include 'api_salesareas.php';
+	include 'api_salesman.php';
 	include 'api_holdreasons.php';
 	include 'api_paymentterms.php';
 	include 'api_stock.php';
