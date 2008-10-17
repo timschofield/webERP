@@ -306,6 +306,24 @@
 				$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
+	$GetSalesAreasList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$GetSalesAreasList_doc = 'This function returns an array containing a list of all Sales areas setup on webERP';
+
+	function xmlrpc_GetSalesAreasList($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetSalesAreasList($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval())));
+	}
+
+	$GetSalesAreaDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetSalesAreaDetails_doc = 'This function returns an associative array containing the details of the Sales area
+			 sent as a parameter';
+
+	function xmlrpc_GetSalesAreaDetails($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetSalesAreaDetails($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval(),
+				$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
@@ -435,6 +453,14 @@
 			"function" => "xmlrpc_GetShipperDetails",
 			"signature" => $GetShipperDetails_sig,
 			"docstring" => $GetShipperDetails_doc),
+		"weberp.xmlrpc_GetSalesAreasList" => array(
+			"function" => "xmlrpc_GetSalesAreasList",
+			"signature" => $GetSalesAreasList_sig,
+			"docstring" => $GetSalesAreasList_doc),
+		"weberp.xmlrpc_GetSalesAreaDetails" => array(
+			"function" => "xmlrpc_GetSalesAreaDetails",
+			"signature" => $GetSalesAreaDetails_sig,
+			"docstring" => $GetSalesAreaDetails_doc),
 		)
 	);
 
