@@ -39,6 +39,7 @@
 	include 'api_taxgroups.php';
 	include 'api_holdreasons.php';
 	include 'api_paymentterms.php';
+	include 'api_customertypes.php';
 	include 'api_stock.php';
 	include 'api_debtortransactions.php';
 	include 'api_salesorders.php';

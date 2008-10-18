@@ -360,6 +360,24 @@
 				$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
+	$GetCustomerTypeList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$GetCustomerTypeList_doc = 'This function returns an array containing a list of all Customer Type ids setup on webERP';
+
+	function xmlrpc_GetCustomerTypeList($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetCustomerTypeList($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval())));
+	}
+
+	$GetCustomerTypeDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetCustomerTypeDetails_doc = 'This function returns an associative array containing the details of the Customer Type
+			 sent as a parameter';
+
+	function xmlrpc_GetCustomerTypeDetails($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetCustomerTypeDetails($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval(),
+				$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
