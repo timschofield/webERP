@@ -2,7 +2,7 @@
 
 /* Check that the stock code*/
 	function VerifyStockCode($StockCode, $i, $Errors, $db) {
-		$Searchsql = "SELECT count(stockid) 
+		$Searchsql = "SELECT count(stockid)
 				FROM stockmaster
 				WHERE stockid='".$StockCode."'";
 		$SearchResult=DB_query($Searchsql, $db);
@@ -15,7 +15,7 @@
 
 /* Check that the stock code exists*/
 	function VerifyStockCodeExists($StockCode, $i, $Errors, $db) {
-		$Searchsql = "SELECT count(stockid) 
+		$Searchsql = "SELECT count(stockid)
 				FROM stockmaster
 				WHERE stockid='".$StockCode."'";
 		$SearchResult=DB_query($Searchsql, $db);
@@ -28,7 +28,7 @@
 
 /* Verify the category exists */
 	function VerifyStockCategoryExists($StockCategory, $i, $Errors, $db) {
-		$Searchsql = "SELECT count(categoryid) 
+		$Searchsql = "SELECT count(categoryid)
 				FROM stockcategory
 				WHERE categoryid='".$StockCategory."'";
 		$SearchResult=DB_query($Searchsql, $db);
@@ -39,7 +39,7 @@
 		return $Errors;
 	}
 
-/* Check that the description is 50 characters or less long */		
+/* Check that the description is 50 characters or less long */
 	function VerifyStockDescription($StockDescription, $i, $Errors) {
 		if (strlen($StockDescription)>50) {
 			$Errors[$i] = IncorrectStockDescriptionLength;
@@ -47,7 +47,7 @@
 		return $Errors;
 	}
 
-/* Check that the long description is 256 characters or less long */		
+/* Check that the long description is 256 characters or less long */
 	function VerifyStockLongDescription($StockLongDescription, $i, $Errors) {
 		if (strlen($StockLongDescription)>256) {
 			$Errors[$i] = IncorrectLongStockDescriptionLength;
@@ -55,14 +55,14 @@
 		return $Errors;
 	}
 
-/* Check that the units description is 20 characters or less long */		
+/* Check that the units description is 20 characters or less long */
 	function VerifyUnits($units, $i, $Errors) {
 		if (strlen($units)>20) {
 			$Errors[$i] = IncorrectUnitsLength;
 		}
 		return $Errors;
 	}
-	
+
 /* Check the mbflag has a valid value */
 	function VerifyMBFlag($mbflag,$i, $Errors) {
 		if ($mbflag!='M' and $mbflag!='K' and $mbflag!='A' and $mbflag!='B' and $mbflag!='D') {
@@ -70,8 +70,8 @@
 		}
 		return $Errors;
 	}
-	
-/* Check that the last current cost date is a valid date. The date 
+
+/* Check that the last current cost date is a valid date. The date
  * must be in the same format as the date format specified in the
  * target webERP company */
 	function VerifyLastCurCostDate($CurCostDate, $i, $Errors, $db) {
@@ -100,96 +100,96 @@
 		}
 		return $Errors;
 	}
-	
-/* Verify that the actual cost figure is numeric */	
+
+/* Verify that the actual cost figure is numeric */
 	function VerifyActualCost($ActualCost, $i, $Errors) {
 		if (!is_numeric($ActualCost)) {
-			$Errors[$i] = InvalidActualCost;			
-		}
-		return $Errors;
-	}
-	
-/* Verify that the last cost figure is numeric */	
-	function VerifyLastCost($LastCost, $i, $Errors) {
-		if (!is_numeric($LastCost)) {
-			$Errors[$i] = InvalidLastCost;			
-		}
-		return $Errors;
-	}
-	
-/* Verify that the material cost figure is numeric */	
-	function VerifyMaterialCost($MaterialCost, $i, $Errors) {
-		if (!is_numeric($MaterialCost)) {
-			$Errors[$i] = InvalidMaterialCost;			
-		}
-		return $Errors;
-	}
-	
-/* Verify that the labour cost figure is numeric */	
-	function VerifyLabourCost($LabourCost, $i, $Errors) {
-		if (!is_numeric($LabourCost)) {
-			$Errors[$i] = InvalidLabourCost;			
-		}
-		return $Errors;
-	}
-	
-/* Verify that the overhead cost figure is numeric */	
-	function VerifyOverheadCost($OverheadCost, $i, $Errors) {
-		if (!is_numeric($OverheadCost)) {
-			$Errors[$i] = InvalidOverheadCost;			
-		}
-		return $Errors;
-	}
-	
-/* Verify that the lowest level figure is numeric */	
-	function VerifyLowestLevel($LowestLevel, $i, $Errors) {
-		if (!is_numeric($LowestLevel)) {
-			$Errors[$i] = InvalidLowestLevel;			
-		}
-		return $Errors;
-	}
-	
-/* Verify that the Discontinued flag is a 1 or 0 */
-	function VerifyDiscontinued($Discontinued, $i, $Errors) {
-		if ($Discontinued!=0 and $Discontinued!=1) {
-			$Errors[$i] = InvalidDiscontinued;			
-		}
-		return $Errors;
-	}
-	
-/* Verify that the Controlled flag is a 1 or 0 */
-	function VerifyControlled($Controlled, $i, $Errors) {
-		if ($Controlled!=0 and $Controlled!=1) {
-			$Errors[$i] = InvalidControlled;			
-		}
-		return $Errors;
-	}
-	
-/* Verify that the eoq figure is numeric */	
-	function VerifyEOQ($eoq, $i, $Errors) {
-		if (!is_numeric($eoq)) {
-			$Errors[$i] = InvalidEOQ;			
-		}
-		return $Errors;
-	}
-	
-/* Verify that the volume figure is numeric */	
-	function VerifyVolume($volume, $i, $Errors) {
-		if (!is_numeric($volume)) {
-			$Errors[$i] = InvalidVolume;			
-		}
-		return $Errors;
-	}
-	
-/* Verify that the kgs figure is numeric */	
-	function VerifyKgs($kgs, $i, $Errors) {
-		if (!is_numeric($kgs)) {
-			$Errors[$i] = InvalidKgs;			
+			$Errors[$i] = InvalidActualCost;
 		}
 		return $Errors;
 	}
 
-/* Check that the barcode is 50 characters or less long */		
+/* Verify that the last cost figure is numeric */
+	function VerifyLastCost($LastCost, $i, $Errors) {
+		if (!is_numeric($LastCost)) {
+			$Errors[$i] = InvalidLastCost;
+		}
+		return $Errors;
+	}
+
+/* Verify that the material cost figure is numeric */
+	function VerifyMaterialCost($MaterialCost, $i, $Errors) {
+		if (!is_numeric($MaterialCost)) {
+			$Errors[$i] = InvalidMaterialCost;
+		}
+		return $Errors;
+	}
+
+/* Verify that the labour cost figure is numeric */
+	function VerifyLabourCost($LabourCost, $i, $Errors) {
+		if (!is_numeric($LabourCost)) {
+			$Errors[$i] = InvalidLabourCost;
+		}
+		return $Errors;
+	}
+
+/* Verify that the overhead cost figure is numeric */
+	function VerifyOverheadCost($OverheadCost, $i, $Errors) {
+		if (!is_numeric($OverheadCost)) {
+			$Errors[$i] = InvalidOverheadCost;
+		}
+		return $Errors;
+	}
+
+/* Verify that the lowest level figure is numeric */
+	function VerifyLowestLevel($LowestLevel, $i, $Errors) {
+		if (!is_numeric($LowestLevel)) {
+			$Errors[$i] = InvalidLowestLevel;
+		}
+		return $Errors;
+	}
+
+/* Verify that the Discontinued flag is a 1 or 0 */
+	function VerifyDiscontinued($Discontinued, $i, $Errors) {
+		if ($Discontinued!=0 and $Discontinued!=1) {
+			$Errors[$i] = InvalidDiscontinued;
+		}
+		return $Errors;
+	}
+
+/* Verify that the Controlled flag is a 1 or 0 */
+	function VerifyControlled($Controlled, $i, $Errors) {
+		if ($Controlled!=0 and $Controlled!=1) {
+			$Errors[$i] = InvalidControlled;
+		}
+		return $Errors;
+	}
+
+/* Verify that the eoq figure is numeric */
+	function VerifyEOQ($eoq, $i, $Errors) {
+		if (!is_numeric($eoq)) {
+			$Errors[$i] = InvalidEOQ;
+		}
+		return $Errors;
+	}
+
+/* Verify that the volume figure is numeric */
+	function VerifyVolume($volume, $i, $Errors) {
+		if (!is_numeric($volume)) {
+			$Errors[$i] = InvalidVolume;
+		}
+		return $Errors;
+	}
+
+/* Verify that the kgs figure is numeric */
+	function VerifyKgs($kgs, $i, $Errors) {
+		if (!is_numeric($kgs)) {
+			$Errors[$i] = InvalidKgs;
+		}
+		return $Errors;
+	}
+
+/* Check that the barcode is 50 characters or less long */
 	function VerifyBarCode($barcode, $i, $Errors) {
 		if (strlen($barcode)>50) {
 			$Errors[$i] = IncorrectBarCodeLength;
@@ -197,7 +197,7 @@
 		return $Errors;
 	}
 
-/* Check that the discount category is 2 characters or less long */		
+/* Check that the discount category is 2 characters or less long */
 	function VerifyDiscountCategory($discountcategory, $i, $Errors) {
 		if (strlen($discountcategory)>2) {
 			$Errors[$i] = IncorrectDiscountCategory;
@@ -207,7 +207,7 @@
 
 /* Check that the tax category exists*/
 	function VerifyTaxCatExists($TaxCat, $i, $Errors, $db) {
-		$Searchsql = "SELECT count(taxcatid) 
+		$Searchsql = "SELECT count(taxcatid)
 				FROM taxcategories
 				WHERE taxcatid='".$TaxCat."'";
 		$SearchResult=DB_query($Searchsql, $db);
@@ -217,49 +217,49 @@
 		}
 		return $Errors;
 	}
-	
+
 /* Verify that the Serialised flag is a 1 or 0 */
 	function VerifySerialised($Serialised, $i, $Errors) {
 		if ($Serialised!=0 and $Serialised!=1) {
-			$Errors[$i] = InvalidSerialised;			
+			$Errors[$i] = InvalidSerialised;
 		}
 		return $Errors;
 	}
 
-/* Check that the appendfile is 40 characters or less long */		
+/* Check that the appendfile is 40 characters or less long */
 	function VerifyAppendFile($appendfile, $i, $Errors) {
 		if (strlen($appendfile)>40) {
 			$Errors[$i] = IncorrectAppendFile;
 		}
 		return $Errors;
 	}
-	
+
 /* Verify that the Perishable flag is a 1 or 0 */
 	function VerifyPerishable($Perishable, $i, $Errors) {
 		if ($Perishable!=0 and $Perishable!=1) {
-			$Errors[$i] = InvalidPerishable;			
-		}
-		return $Errors;
-	}
-	
-/* Verify that the decimal places figure is numeric */	
-	function VerifyDecimalPlaces($DecimalPlaces, $i, $Errors) {
-		if (!is_numeric($DecimalPlaces)) {
-			$Errors[$i] = InvalidDecmalPlaces;			
+			$Errors[$i] = InvalidPerishable;
 		}
 		return $Errors;
 	}
 
-/* Insert a new stock item in the webERP database. This function takes an 
+/* Verify that the decimal places figure is numeric */
+	function VerifyDecimalPlaces($DecimalPlaces, $i, $Errors) {
+		if (!is_numeric($DecimalPlaces)) {
+			$Errors[$i] = InvalidDecmalPlaces;
+		}
+		return $Errors;
+	}
+
+/* Insert a new stock item in the webERP database. This function takes an
    associative array called $StockItemDetails, where the keys are the
-   names of the fields in the stockmaster table, and the values are the 
+   names of the fields in the stockmaster table, and the values are the
    values to insert. The only mandatory fields are the stockid, description,
    long description, category, and tax category
    fields. If the other fields aren't set, then the database defaults
-   are used. The function returns an array called $Errors. The database 
-   is only updated if the $Errors is empty, else the function returns an 
+   are used. The function returns an array called $Errors. The database
+   is only updated if the $Errors is empty, else the function returns an
    array of one to many error codes.
-*/	
+*/
 	function InsertStockItem($StockItemDetails, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
@@ -351,7 +351,7 @@
 			$result = DB_Query($sql, $db);
 			$sql = "INSERT INTO locstock (loccode,stockid)
 				SELECT locations.loccode,'" . $StockItemDetails['stockid'] . "'FROM locations";
-			$result = DB_Query($sql, $db);			
+			$result = DB_Query($sql, $db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -361,16 +361,16 @@
 		return $Errors;
 	}
 
-/* Update a stock item in the webERP database. This function takes an 
+/* Update a stock item in the webERP database. This function takes an
    associative array called $StockItemDetails, where the keys are the
-   names of the fields in the stockmaster table, and the values are the 
+   names of the fields in the stockmaster table, and the values are the
    values to update. The only mandatory fields are the stockid, description,
    long description, category, and tax category
    fields. If the other fields aren't set, then the database defaults
-   are used. The function returns an array called $Errors. The database 
-   is only updated if the $Errors is empty, else the function returns an 
+   are used. The function returns an array called $Errors. The database
+   is only updated if the $Errors is empty, else the function returns an
    array of one to many error codes.
-*/	
+*/
 	function ModifyStockItem($StockItemDetails, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
@@ -477,7 +477,7 @@
 /* This function takes a stock code and returns an associative array containing
    the database record for that item. If the stock item number doesn't exist
    then it returns an $Errors array.
-*/	
+*/
 	function GetStockItem($StockID, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
@@ -500,7 +500,7 @@
 
 /* This function takes a field name, and a string, and then returns an
    array of stockids that fulfill this criteria.
-*/	
+*/
 	function SearchStockItems($Field, $Criteria, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
@@ -508,8 +508,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql='SELECT stockid 
-			FROM stockmaster 
+		$sql='SELECT stockid
+			FROM stockmaster
 			WHERE '.$Field.' LIKE "%'.$Criteria.'%"';
 		$result = DB_Query($sql, $db);
 		$i=0;
@@ -538,7 +538,40 @@
 			return DB_fetch_array($result);
 		} else {
 			return $Errors;
-		}		
+		}
+	}
+
+	function SetStockPrice($StockID, $Currency, $SalesType, $Price, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyCurrencyCode($Currency, sizeof($Errors), $Errors, $db);
+		$Errors = VerifySalesType($SalesType, sizeof($Errors), $Errors, $db);
+		if (sizeof($Errors)!=0) {
+			return $Errors;
+		}
+		$sql = 'SELECT COUNT(*) FROM prices
+				 WHERE stockid="'.$StockID.'"
+				 typeabbrev="'.$SalesType.'"
+				 currabrev="'.$Currency.'"';
+		$result = DB_Query($sql, $db);
+		$myrow = DB_fetch_row($result);
+		if ($myrow[0]==0) {
+			$sql='INSERT INTO prices VALUES("'.$StockID.'", "'.
+				$SalesType.'", "'. $Currency.'", "",'. $Price .',"")';
+		} else {
+			$sql='UPDATE prices SET price='. $Price .
+			' WHERE  stockid="'.$StockID.'"
+				 typeabbrev="'.$SalesType.'"
+				 currabrev="'.$Currency.'"';
+		}
+		$result = DB_Query($sql, $db);
+		$Errors[0] = 0;
+		return $Errors;
 	}
 
 ?>
