@@ -342,6 +342,24 @@
 				$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
+	$GetTaxgroupList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$GetTaxgroupList_doc = 'This function returns an array containing a list of all Taxgroup codes setup on webERP';
+
+	function xmlrpc_GetTaxgroupList($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetTaxgroupList($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval())));
+	}
+
+	$GetTaxgroupDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetTaxgroupDetails_doc = 'This function returns an associative array containing the details of the Taxgroup
+			 sent as a parameter';
+
+	function xmlrpc_GetTaxgroupDetails($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetTaxgroupDetails($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval(),
+				$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
@@ -487,6 +505,14 @@
 			"function" => "xmlrpc_GetSalesmanDetails",
 			"signature" => $GetSalesmanDetails_sig,
 			"docstring" => $GetSalesmanDetails_doc),
+		"weberp.xmlrpc_GetTaxgroupList" => array(
+			"function" => "xmlrpc_GetTaxgroupList",
+			"signature" => $GetTaxgroupList_sig,
+			"docstring" => $GetTaxgroupList_doc),
+		"weberp.xmlrpc_GetTaxgroupDetails" => array(
+			"function" => "xmlrpc_GetTaxgroupDetails",
+			"signature" => $GetTaxgroupDetails_sig,
+			"docstring" => $GetTaxgroupDetails_doc),
 		)
 	);
 
