@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 10;
 include('includes/session.inc');
@@ -57,11 +57,13 @@ if (isset($_POST['submit'])) {
 
 		$ErrMsg = _('Could not add the chart details for the new account');
 
-		$sql = 'INSERT INTO chartdetails (accountcode,
-							period)
-				SELECT ' . $_POST['AccountCode'] . ',
-					periodno
-				FROM periods';
+		$sql = 'INSERT INTO chartdetails (accountcode, period)
+				SELECT chartmaster.accountcode, periods.periodno
+					FROM chartmaster
+						CROSS  JOIN periods
+				WHERE ( chartmaster.accountcode, periods.periodno ) NOT
+					IN ( SELECT chartdetails.accountcode, chartdetails.period FROM chartdetails )';
+
 		$result = DB_query($sql,$db,$ErrMsg);
 
 		prnMsg(_('The new general ledger account has been added'),'success');
