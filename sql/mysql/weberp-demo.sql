@@ -528,7 +528,7 @@ CREATE TABLE `debtorsmaster` (
   `ediserverpwd` varchar(20) NOT NULL default '',
   `taxref` varchar(20) NOT NULL default '',
   `customerpoline` tinyint(1) NOT NULL default '0',
-  `typeid` tinyint(4) NOT NULL default '1';
+  `typeid` tinyint(4) NOT NULL default '1',
   PRIMARY KEY  (`debtorno`),
   KEY `Currency` (`currcode`),
   KEY `HoldReason` (`holdreason`),
