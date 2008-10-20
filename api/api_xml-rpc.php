@@ -202,6 +202,17 @@
 				 					$xmlrpcmsg->getParam(5)->scalarval())));
 	}
 
+	$GetStockPrice_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetStockPrice_doc = 'This function retrieves the price for a stock item/currency/pricelist combination';
+
+	function xmlrpc_GetStockPrice($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetStockPrice($xmlrpcmsg->getParam(0)->scalarval(),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval(),
+				 			$xmlrpcmsg->getParam(3)->scalarval(),
+			 					$xmlrpcmsg->getParam(4)->scalarval())));
+	}
+
 	$InsertSalesInvoice_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
 	$InsertSalesInvoice_doc = 'This function inserts a sales invoice into webERP';
 
@@ -463,6 +474,10 @@
 			"function" => "xmlrpc_SetStockPrice",
 			"signature" => $SetStockPrice_sig,
 			"docstring" => $SetStockPrice_doc),
+		"weberp.xmlrpc_GetStockPrice" => array(
+			"function" => "xmlrpc_GetStockPrice",
+			"signature" => $GetStockPrice_sig,
+			"docstring" => $GetStockPrice_doc),
 		"weberp.xmlrpc_InsertSalesInvoice" => array(
 			"function" => "xmlrpc_InsertSalesInvoice",
 			"signature" => $InsertSalesInvoice_sig,

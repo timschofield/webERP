@@ -574,4 +574,36 @@
 		return $Errors;
 	}
 
+	function GetStockPrice($StockID, $Currency, $SalesType, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyCurrencyCode($Currency, sizeof($Errors), $Errors, $db);
+		$Errors = VerifySalesType($SalesType, sizeof($Errors), $Errors, $db);
+		if (sizeof($Errors)!=0) {
+			return $Errors;
+		}
+		$sql = 'SELECT COUNT(*) FROM prices
+				 WHERE stockid="'.$StockID.'"
+				 and typeabbrev="'.$SalesType.'"
+				 and currabrev="'.$Currency.'"';
+		$result = DB_Query($sql, $db);
+		$myrow = DB_fetch_row($result);
+		if ($myrow[0]==0) {
+			$Errors[0] = NoPricesSetup;
+			return $Errors;
+		} else {
+			$sql='SELECT price FROM prices WHERE stockid="'.$StockID.'"
+				 and typeabbrev="'.$SalesType.'"
+				 and currabrev="'.$Currency.'"';
+		}
+		$result = DB_Query($sql, $db);
+		$myrow = DB_fetch_row($result);
+		return $myrow;
+	}
+
 ?>
