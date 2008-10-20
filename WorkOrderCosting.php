@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.7 $ */
+/* $Revision: 1.8 $ */
 
 $PageSecurity = 11;
 
@@ -122,8 +122,9 @@ $RequirementsResult = DB_query("SELECT worequirements.stockid,
 				stockmaster.decimalplaces,
 				worequirements.stdcost,
 				SUM(worequirements.qtypu*woitems.qtyreqd) AS requiredqty,
-				SUM(worequirements.stdcost*woitems.qtyreqd*worequirements.qtypu) AS expectedcost
-			FROM worequirements INNER JOIN stockmaster
+				SUM(worequirements.stdcost*woitems.qtyreqd) AS expectedcost,
+				(worequirements.stdcost/worequirements.qtypu) AS costperqty
+				FROM worequirements INNER JOIN stockmaster
 			ON worequirements.stockid=stockmaster.stockid
 			INNER JOIN woitems ON woitems.stockid=worequirements.parentstockid
 			WHERE worequirements.wo=" . $_POST['WO'] . " and woitems.wo=" . $_POST['WO'] . "
@@ -192,8 +193,8 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 	} else {
 		$CostVar = 0;
 	}
-	$UsageVar =($RequirementsRow['requiredqty']-$IssueQty)*$RequirementsRow['stdcost'];
-	
+	$UsageVar =($RequirementsRow['requiredqty']-$IssueQty)*$RequirementsRow['costperqty'];
+
 	echo '<td colspan="2"></td><td align="right">'  . number_format($RequirementsRow['requiredqty'],$RequirementsRow['decimalplaces']) . '</td>
 				<td align="right">' . number_format($RequirementsRow['expectedcost'],2) . '</td>
 				<td></td>
@@ -225,8 +226,8 @@ $sql = "SELECT stockmoves.stockid,
 	WHERE stockmoves.type=28
 	AND reference = " . $_POST['WO'] . "
 	AND stockmoves.stockid NOT IN
-			(SELECT worequirements.stockid 
-				FROM worequirements 
+			(SELECT worequirements.stockid
+				FROM worequirements
 			WHERE worequirements.wo=" . $_POST['WO'] . ")";
 
 $WOIssuesResult = DB_query($sql,$db,_('Could not get issues that were not required by the BOM because'));
@@ -250,7 +251,7 @@ if (DB_num_rows($WOIssuesResult)>0){
 			<td align="right">' . number_format(-$WOIssuesRow['qty']*$WOIssuesRow['standardcost'],2)  .'</td>
 			<td align="right">' . number_format($WOIssuesRow['qty']*$WOIssuesRow['standardcost'],2)  .'</td>
 			<td align="right">0</td></tr>';
-		
+
 		$TotalUsageVar += ($WOIssuesRow['qty']*$WOIssuesRow['standardcost']);
 	}
 }
@@ -277,7 +278,7 @@ If (isset($_POST['Close'])) {
 		} else {
 			$ShareProportion = ($WORow['stdcost']*$WORow['qtyrecd'])/$TotalStdValueRecd;
 		}
- 		if ($_SESSION['WeightedAverageCosting']==1){ 
+ 		if ($_SESSION['WeightedAverageCosting']==1){
 			//we need to post the variances to stock and update the weighted average cost
 
 			/*  need to get the current total quantity on hand
@@ -286,8 +287,8 @@ If (isset($_POST['Close'])) {
 			of the variance relating to the stock still on hand should be posted to the stock value
 			*/
 
-			$TotOnHandResult =DB_query("SELECT SUM(quantity) 
-							FROM locstock 
+			$TotOnHandResult =DB_query("SELECT SUM(quantity)
+							FROM locstock
 							WHERE stockid='" . $WORow['stockid'] . "'",
 						$db);
 			$TotOnHandRow = DB_fetch_row($TotOnHandResult);
@@ -465,7 +466,7 @@ If (isset($_POST['Close'])) {
 			} //end of if gl-stock integrated and there's a cost variance
 		} //end of standard costing section
 	} // end loop around the items on the work order
-	
+
 	$CloseWOResult =DB_query('UPDATE workorders SET closed=1 WHERE wo=' .$_POST['WO'],
 				$db,
 				_('Could not update the work order to closed because:'),
@@ -475,7 +476,7 @@ If (isset($_POST['Close'])) {
 	if ($_SESSION['CompanyRecord']['gllink_stock']==1){
 		if ($_SESSION['WeightedAverageCosting']==1){
 			prnMsg(_('The item cost as calculated from the work order has been applied against the weighted average cost and the necessary GL journals created to update stock as a result of closing this work order'),'success');
-		} else { 
+		} else {
 			prnMsg(_('The work order has been closed and general ledger entries made for the variances on the work order'),'success');
 		}
 	} else {
