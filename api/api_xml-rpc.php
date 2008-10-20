@@ -190,7 +190,7 @@
 				 			$xmlrpcmsg->getParam(3)->scalarval())));
 	}
 
-	$SetStockPrice_sig = array(array($xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$SetStockPrice_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
 	$SetStockPrice_doc = 'This function sets a price for a stock item/currency/pricelist combination';
 
 	function xmlrpc_SetStockPrice($xmlrpcmsg) {

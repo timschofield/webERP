@@ -556,8 +556,8 @@
 		}
 		$sql = 'SELECT COUNT(*) FROM prices
 				 WHERE stockid="'.$StockID.'"
-				 typeabbrev="'.$SalesType.'"
-				 currabrev="'.$Currency.'"';
+				 and typeabbrev="'.$SalesType.'"
+				 and currabrev="'.$Currency.'"';
 		$result = DB_Query($sql, $db);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]==0) {
@@ -566,8 +566,8 @@
 		} else {
 			$sql='UPDATE prices SET price='. $Price .
 			' WHERE  stockid="'.$StockID.'"
-				 typeabbrev="'.$SalesType.'"
-				 currabrev="'.$Currency.'"';
+				 and typeabbrev="'.$SalesType.'"
+				 and currabrev="'.$Currency.'"';
 		}
 		$result = DB_Query($sql, $db);
 		$Errors[0] = 0;
