@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 
 $PageSecurity = 4;
@@ -19,7 +19,7 @@ include('includes/header.inc');
 
 $Maximum_Number_Of_Parts_To_Show = 50;
 
-echo '<a href="$rootpath/PO_Header.php?' . SID . '">' ._('Back To Purchase Order Header') . '</a><br>';
+echo '<a href="'.$rootpath.'/PO_Header.php?' . SID . '">' ._('Back To Purchase Order Header') . '</a><br>';
 
 if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database */
 
@@ -115,7 +115,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		     } /* end of the loop round the detail line items on the order */
 		     echo '<p>';
 		     prnMsg(_('Purchase order') . ' ' . $_SESSION['PO']->OrderNo . ' ' . _('on') . ' ' . $_SESSION['PO']->SupplierName . ' ' . _('has been created'),'success');
-		     echo '<br><a target="_blank" href="$rootpath/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $_SESSION['PO']->OrderNo . '">' . _('Print Order') . '</a>';
+		     echo '<br><a target="_blank" href="'.$rootpath.'/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $_SESSION['PO']->OrderNo . '">' . _('Print Order') . '</a>';
 		 } else { /*its an existing order need to update the old order info */
 
 		     /*Update the purchase order header with any changes */
@@ -207,7 +207,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		     echo '<br><br>';
 		     prnMsg(_('Purchase order') . ' ' . $_SESSION['PO']->OrderNo . ' ' . _('has been updated'),'success');
 		     if ($_SESSION['PO']->AllowPrintPO==1){
-			     echo '<br><a target="_blank" href="$rootpath/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $_SESSION['PO']->OrderNo . '">' . _('Re-Print Order') . '</a>';
+			     echo '<br><a target="_blank" href="'.$rootpath.'/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $_SESSION['PO']->OrderNo . '">' . _('Re-Print Order') . '</a>';
 		     }
 		 } /*end of if its a new order or an existing one */
 
@@ -215,8 +215,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		 $Result = DB_query($sql,$db);
 
 		 unset($_SESSION['PO']); /*Clear the PO data to allow a newy to be input*/
-		 echo '<br><br><a href="$rootpath/PO_Header.php?' . SID . '&NewOrder=Yes">' . _('Enter A New Purchase Order') . '</a>';
-		 echo '<br><a href="$rootpath/PO_SelectOSPurchOrder.php?' . SID . '">' . _('Select An Outstanding Purchase Order') . '</a>';
+		 echo '<br><br><a href="'.$rootpath.'/PO_Header.php?' . SID . '&NewOrder=Yes">' . _('Enter A New Purchase Order') . '</a>';
+		 echo '<br><a href="'.$rootpath.'/PO_SelectOSPurchOrder.php?' . SID . '">' . _('Select An Outstanding Purchase Order') . '</a>';
 		 exit;
 	} /*end if there were no input errors trapped */
 } /* end of the code to do transfer the PO object to the database  - user hit the place PO*/
@@ -783,7 +783,7 @@ if (count($_SESSION['PO']->LineItems)>0){
 			<td><textarea name="ItemDescription" cols=50 rows=2>' . $_POST['ItemDescription'] . '</textarea></td></tr>';
 		if ($_SESSION['PO']->GLLink==1) {
 			echo '<tr><td>' . _('GL Code') . ': <font size=1>(' . _('Only necessary if NOT a stock order') . ')</font></td>
-				<td><input type="text" size=15 maxlength=14 name="GLCode" value=' . $_POST['GLCode'] . '> <a target="_blank" href="$rootpath/GLCodesInquiry.php?' . SID . '">' . _('List GL Codes') . '</a></td></tr>';
+				<td><input type="text" size=15 maxlength=14 name="GLCode" value=' . $_POST['GLCode'] . '> <a target="_blank" href="'.$rootpath.'/GLCodesInquiry.php?' . SID . '">' . _('List GL Codes') . '</a></td></tr>';
 		}
 
 		/*default the order quantity to 1 unit */
@@ -810,7 +810,7 @@ if (count($_SESSION['PO']->LineItems)>0){
 			$_POST['ShiptRef']='';
 		}
 		echo '<tr><td>' . _('Shipment Ref') . ': <font size=1>' . _('(Leave blank if N/A)') . '</font></td>
-			<td><input type="text" size=10 maxlength=9 name="ShiptRef" value=' . $_POST['ShiptRef'] . ' > <a target="_blank" href="$rootpath/ShiptsList.php?' . SID . '&SupplierID=' . $_SESSION['PO']->SupplierID . '&SupplierName=' . $_SESSION['PO']->SupplierName . '">' . _('Show Open Shipments') . '</a></td></tr>';
+			<td><input type="text" size=10 maxlength=9 name="ShiptRef" value=' . $_POST['ShiptRef'] . ' > <a target="_blank" href="'.$rootpath.'/ShiptsList.php?' . SID . '&SupplierID=' . $_SESSION['PO']->SupplierID . '&SupplierName=' . $_SESSION['PO']->SupplierName . '">' . _('Show Open Shipments') . '</a></td></tr>';
 
 		echo '</table><center><input type=submit name="EnterLine" value="' . _('Enter Line') . '"><br><br>';
 
@@ -830,7 +830,7 @@ if (isset($_GET['Edit'])){
 	if ($_SESSION['PO']->LineItems[$_GET['Edit']]->StockID =='') { /*No stock item on this line */
 	      echo '<tr><td>' . _('Description') . ':</td><td><textarea name="ItemDescription" cols=50 rows=2>' . $_SESSION['PO']->LineItems[$_GET['Edit']]->ItemDescription . '</textarea></td></tr>';
 	      if ($_SESSION['PO']->GLLink==1) {
-		      echo '<tr><td>' . _('GL Code') . ':</td><td><input type="text" size=15 maxlength=14 name="GLCode" value=' .$_SESSION['PO']->LineItems[$_GET['Edit']]->GLCode . '> <a target="_blank" href="$rootpath/GLCodesInquiry.php">' . _('List GL Codes') . '</a></td></tr>';
+		      echo '<tr><td>' . _('GL Code') . ':</td><td><input type="text" size=15 maxlength=14 name="GLCode" value=' .$_SESSION['PO']->LineItems[$_GET['Edit']]->GLCode . '> <a target="_blank" href="'.$rootpath.'/GLCodesInquiry.php">' . _('List GL Codes') . '</a></td></tr>';
 	      } else {
 		      echo '<input type="hidden" name="GLCode" value="0">';
 	      }
@@ -848,10 +848,10 @@ if (isset($_GET['Edit'])){
 	echo '<tr><td>' . _('Required Delivery Date') . ':</td>
 		<td><input type="text" size=12 maxlength=11 name="ReqDelDate" value=' . $_SESSION['PO']->LineItems[$_GET['Edit']]->ReqDelDate . '></td></tr>';
 	echo '<tr><td>' . _('Shipment Ref') . ': <FONT SIZE=1>(' . _('Leave blank if N/A') . ')</FONT></td>
-		<td><input type="text" size=10 maxlength=9 name="ShiptRef" value=' . $_SESSION['PO']->LineItems[$_GET['Edit']]->ShiptRef . '><a target="_blank" href="$rootpath/ShiptsList.php?' . SID . 'SupplierID=' . $_SESSION['PO']->SupplierID . '&SupplierName=' . $_SESSION['PO']->SupplierName . '">' . _('Show Open Shipments') . '</a></td></tr>';
+		<td><input type="text" size=10 maxlength=9 name="ShiptRef" value=' . $_SESSION['PO']->LineItems[$_GET['Edit']]->ShiptRef . '><a target="_blank" href="'.$rootpath.'/ShiptsList.php?' . SID . 'SupplierID=' . $_SESSION['PO']->SupplierID . '&SupplierName=' . $_SESSION['PO']->SupplierName . '">' . _('Show Open Shipments') . '</a></td></tr>';
 	/*
 	echo '<tr><td>' . _('Contract Ref') . ': <FONT SIZE=1>(' . _('Leave blank if N/A') . ")</FONT></td>
-		<td><input type='text' SIZE=10 MAXLENGTH=9 name='JobRef' value=" . $_SESSION['PO']->LineItems[$_GET['Edit']]->JobRef . "> <a target='_blank' href='$rootpath/ContractsList.php?" . SID . "'>" . _('Show Contracts') . '</a></td></tr>';
+		<td><input type='text' SIZE=10 MAXLENGTH=9 name='JobRef' value=" . $_SESSION['PO']->LineItems[$_GET['Edit']]->JobRef . "> <a target='_blank' href="'.'.$rootpath.'.'/ContractsList.php?" . SID . "'>" . _('Show Contracts') . '</a></td></tr>';
 	*/
 
 	echo '</table><center><input type=submit name="UpdateLine" value="' . _('Update Line') . '"> <input type=submit name="Delete" VALUE="' . _('Delete') . '"><br>';
@@ -875,7 +875,7 @@ if (isset($_GET['Edit'])){
 		<td><textarea name="ItemDescription" cols=50 rows=2>' . $_POST['ItemDescription'] . '</textarea></td></tr>';
 	if ($_SESSION['PO']->GLLink==1) {
 		echo '<tr><td>' . _('GL Code') . ': <font size=1>(' . _('Only necessary if NOT a stock order') . ')</font></td>
-			<td><input type="text" size=15 maxlength=14 name="GLCode" value=' . $_POST['GLCode'] . '> <a target="_blank" href="$rootpath/GLCodesInquiry.php?' . SID . '">' . _('List GL Codes') . '</a></td></tr>';
+			<td><input type="text" size=15 maxlength=14 name="GLCode" value=' . $_POST['GLCode'] . '> <a target="_blank" href="'.$rootpath.'/GLCodesInquiry.php?' . SID . '">' . _('List GL Codes') . '</a></td></tr>';
 	}
 
 	/*default the order quantity to 1 unit */
@@ -903,7 +903,7 @@ if (isset($_GET['Edit'])){
 		$_POST['ShiptRef']='';
 	}
 	echo '<tr><td>' . _('Shipment Ref') . ': <FONT SIZE=1>' . _('(Leave blank if N/A)') . '</font></td>
-		<td><input type="text" size=10 maxlength=9 name="ShiptRef" value=' . $_POST['ShiptRef'] . ' > <a target="_blank" href="$rootpath/ShiptsList.php?' . SID . '&SupplierID=' . $_SESSION['PO']->SupplierID . '&SupplierName=' . $_SESSION['PO']->SupplierName . '">' . _('Show Open Shipments') . '</a></td></tr>';
+		<td><input type="text" size=10 maxlength=9 name="ShiptRef" value=' . $_POST['ShiptRef'] . ' > <a target="_blank" href="'.$rootpath.'/ShiptsList.php?' . SID . '&SupplierID=' . $_SESSION['PO']->SupplierID . '&SupplierName=' . $_SESSION['PO']->SupplierName . '">' . _('Show Open Shipments') . '</a></td></tr>';
 /*	echo '<tr><td>' . _('Contract Ref') . ': <FONT SIZE=1>' . _('(Leave blank if N/A)') . "</FONT></td>
 		<td><input type='text' SIZE=10 MAXLENGTH=9 name='JobRef' value=" . $_POST['JobRef'] . "> <a target='_blank' href='$rootpath/ContractsList.php?" . SID . "'>" . _('Show Contracts') . '</a></td></tr>';
 */
@@ -916,11 +916,11 @@ if (isset($_GET['Edit'])){
 	echo '<br><br><input type=submit name="Commit" value="' . _('Update Order') . '"></center>';
 
 	if ($_SESSION['AccessLevel']>60){ /*Allow link to receive PO */
-	    echo '<br><a href="$rootpath/GoodsReceived.php?' . SID . '&PONumber=' . $_SESSION['ExistingOrder'] . '">' . _('Receive Items On This Order') . '</a>';
+	    echo '<br><a href="'.$rootpath.'/GoodsReceived.php?' . SID . '&PONumber=' . $_SESSION['ExistingOrder'] . '">' . _('Receive Items On This Order') . '</a>';
 	}
 }
 
-echo '<br><a href="$rootpath/PO_Header.php?' . SID . '">' ._('Back To Purchase Order Header') . '</a>';
+echo '<br><a href="'.$rootpath.'/PO_Header.php?' . SID . '">' ._('Back To Purchase Order Header') . '</a>';
 
 echo '<hr>';
 
@@ -1036,7 +1036,7 @@ if (isset($SearchResult)) {
 }#end if SearchResults to show
 
 echo '<hr>';
-echo '<a target="_blank" href="$rootpath/Stocks.php?' . SID . '">' . _('Add a New Stock Item') . '</a>';
+echo '<a target="_blank" href="'.$rootpath.'/Stocks.php?' . SID . '">' . _('Add a New Stock Item') . '</a>';
 echo '</center>';
 
 echo '</form>';
