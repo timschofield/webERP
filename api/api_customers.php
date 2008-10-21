@@ -260,7 +260,7 @@
 		foreach ($CustomerDetails as $key => $value) {
 			$CustomerDetails[$key] = DB_escape_string($value);
 		}
-		$autonumbersql='SELECT confvalue FROM CONFIG
+		$autonumbersql='SELECT confvalue FROM config
 						 WHERE confname="AutoDebtorNo"';
 		$autonumberresult=DB_query($autonumbersql, $db);
 		$autonumber=DB_fetch_row($autonumberresult);
