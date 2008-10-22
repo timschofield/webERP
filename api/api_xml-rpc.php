@@ -588,6 +588,14 @@
 			"function" => "xmlrpc_GetTaxgroupDetails",
 			"signature" => $GetTaxgroupDetails_sig,
 			"docstring" => $GetTaxgroupDetails_doc),
+		"weberp.xmlrpc_GetCustomerTypeList" => array(
+			"function" => "xmlrpc_GetCustomerTypeList",
+			"signature" => $GetCustomerTypeList_sig,
+			"docstring" => $GetCustomerTypeList_doc),
+		"weberp.xmlrpc_GetCustomerTypeDetails" => array(
+			"function" => "xmlrpc_GetCustomerTypeDetails",
+			"signature" => $GetCustomerTypeDetails_sig,
+			"docstring" => $GetCustomerTypeDetails_doc),
 		)
 	);
 
