@@ -199,6 +199,15 @@
 				 			$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
+	$GetOrderedStock_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetOrderedStock_doc = 'This function returns the quantity of stock outstanding on purchase orders';
+
+	function xmlrpc_GetOrderedStock($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetOrderedStock($xmlrpcmsg->getParam(0)->scalarval(),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 			$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
 	$SetStockPrice_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
 	$SetStockPrice_doc = 'This function sets a price for a stock item/currency/pricelist combination';
 
@@ -483,6 +492,10 @@
 			"function" => "xmlrpc_GetAllocatedStock",
 			"signature" => $GetAllocatedStock_sig,
 			"docstring" => $GetAllocatedStock_doc),
+		"weberp.xmlrpc_GetOrderedStock" => array(
+			"function" => "xmlrpc_GetOrderedStock",
+			"signature" => $GetOrderedStock_sig,
+			"docstring" => $GetOrderedStock_doc),
 		"weberp.xmlrpc_SetStockPrice" => array(
 			"function" => "xmlrpc_SetStockPrice",
 			"signature" => $SetStockPrice_sig,
