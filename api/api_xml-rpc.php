@@ -190,6 +190,15 @@
 				 			$xmlrpcmsg->getParam(3)->scalarval())));
 	}
 
+	$GetAllocatedStock_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetAllocatedStock_doc = 'This function returns the quantity of stock allocated to sales orders';
+
+	function xmlrpc_GetAllocatedStock($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetAllocatedStock($xmlrpcmsg->getParam(0)->scalarval(),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 			$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
 	$SetStockPrice_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
 	$SetStockPrice_doc = 'This function sets a price for a stock item/currency/pricelist combination';
 
@@ -470,6 +479,10 @@
 			"function" => "xmlrpc_GetStockBalance",
 			"signature" => $GetStockBalance_sig,
 			"docstring" => $GetStockBalance_doc),
+		"weberp.xmlrpc_GetAllocatedStock" => array(
+			"function" => "xmlrpc_GetAllocatedStock",
+			"signature" => $GetAllocatedStock_sig,
+			"docstring" => $GetAllocatedStock_doc),
 		"weberp.xmlrpc_SetStockPrice" => array(
 			"function" => "xmlrpc_SetStockPrice",
 			"signature" => $SetStockPrice_sig,

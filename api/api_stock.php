@@ -541,6 +541,26 @@
 		}
 	}
 
+	function GetAllocatedStock($StockID, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+		if (sizeof($Errors)!=0) {
+			return $Errors;
+		}
+		$sql='SELECT sum(quantity) FROM salesorderdetails WHERE stkcode="'.$StockID.'" and completed=0';
+		$result = DB_Query($sql, $db);
+		if (sizeof($Errors)==0) {
+			return DB_fetch_array($result);
+		} else {
+			return $Errors;
+		}
+	}
+
 	function SetStockPrice($StockID, $Currency, $SalesType, $Price, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
