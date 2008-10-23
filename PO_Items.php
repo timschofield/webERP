@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 
 $PageSecurity = 4;
@@ -61,19 +61,19 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							deladd5,
 							deladd6)
 				VALUES(
-				"' . $_SESSION['PO']->SupplierID . '",
-				"' . $_SESSION['PO']->Comments . '",
-				"' . Date("Y-m-d") . '",
+				'."'" . $_SESSION['PO']->SupplierID . "'".',
+				'."'" . $_SESSION['PO']->Comments . "'".',
+				'."'" . Date("Y-m-d") . "'".',
 				' . $_SESSION['PO']->ExRate . ',
-				"' . $_SESSION['PO']->Initiator . '",
-				"' . $_SESSION['PO']->RequisitionNo . '",
-				"' . $_SESSION['PO']->Location . '",
-				"' . $_SESSION['PO']->DelAdd1 . '",
-				"' . $_SESSION['PO']->DelAdd2 . '",
-				"' . $_SESSION['PO']->DelAdd3 . '",
-				"' . $_SESSION['PO']->DelAdd4 . '",
-				"' . $_SESSION['PO']->DelAdd5 . '",
-				"' . $_SESSION['PO']->DelAdd6 . '"
+				'."'" . $_SESSION['PO']->Initiator . "'".',
+				'."'" . $_SESSION['PO']->RequisitionNo . "'".',
+				'."'" . $_SESSION['PO']->Location . "'".',
+				'."'" . $_SESSION['PO']->DelAdd1 . "'".',
+				'."'" . $_SESSION['PO']->DelAdd2 . "'".',
+				'."'" . $_SESSION['PO']->DelAdd3 . "'".',
+				'."'" . $_SESSION['PO']->DelAdd4 . "'".',
+				'."'" . $_SESSION['PO']->DelAdd5 . "'".',
+				'."'" . $_SESSION['PO']->DelAdd6 . "'".'
 				)';
 
 			$ErrMsg =  _('The purchase order header record could not be inserted into the database because');
@@ -99,14 +99,14 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							)
 						VALUES (
 							' . $_SESSION['PO']->OrderNo . ',
-							"' . $POLine->StockID . '",
-							"' . FormatDateForSQL($POLine->ReqDelDate) . '",
-							"' . $POLine->ItemDescription . '",
+							'."'" . $POLine->StockID . "'".',
+							'."'" . FormatDateForSQL($POLine->ReqDelDate) . "'".',
+							'."'" . $POLine->ItemDescription . "'".',
 							' . $POLine->GLCode . ',
 							' . $POLine->Price . ',
 							' . $POLine->Quantity . ',
-							"' . $POLine->ShiptRef . '",
-							"' . $POLine->JobRef . '"
+							'."'" . $POLine->ShiptRef . "'".',
+							'."'" . $POLine->JobRef . "'".'
 						)';
 					$ErrMsg =_('One of the purchase order detail records could not be inserted into the database because');
 					$DbgMsg =_('The SQL statement used to insert the purchase order detail record and failed was');
@@ -120,18 +120,18 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 		     /*Update the purchase order header with any changes */
 			$sql = 'UPDATE purchorders SET
-		     			supplierno = "' . $_SESSION['PO']->SupplierID . '" ,
-					comments="' . $_SESSION['PO']->Comments . '",
+		     			supplierno = '."'" . $_SESSION['PO']->SupplierID . "'".',
+					comments='."'" . $_SESSION['PO']->Comments . "'".',
 					rate=' . $_SESSION['PO']->ExRate . ',
-					initiator="' . $_SESSION['PO']->Initiator . '",
-					requisitionno= "' . $_SESSION['PO']->RequisitionNo . '",
-					intostocklocation="' . $_SESSION['PO']->Location . '",
-					deladd1="' . $_SESSION['PO']->DelAdd1 . '",
-					deladd2="' . $_SESSION['PO']->DelAdd2 . '",
-					deladd3="' . $_SESSION['PO']->DelAdd3 . '",
-					deladd4="' . $_SESSION['PO']->DelAdd4 . '",
-					deladd5="' . $_SESSION['PO']->DelAdd5 . '",
-					deladd6="' . $_SESSION['PO']->DelAdd6 . '",
+					initiator='."'" . $_SESSION['PO']->Initiator . "'".',
+					requisitionno= '."'" . $_SESSION['PO']->RequisitionNo . "'".',
+					intostocklocation='."'" . $_SESSION['PO']->Location . "'".',
+					deladd1='."'" . $_SESSION['PO']->DelAdd1 . "'".',
+					deladd2='."'" . $_SESSION['PO']->DelAdd2 . "'".',
+					deladd3='."'" . $_SESSION['PO']->DelAdd3 . "'".',
+					deladd4='."'" . $_SESSION['PO']->DelAdd4 . "'".',
+					deladd5='."'" . $_SESSION['PO']->DelAdd5 . "'".',
+					deladd6='."'" . $_SESSION['PO']->DelAdd6 . "'".',
 					allowprint=' . $_SESSION['PO']->AllowPrintPO . '
 		     		WHERE orderno = ' . $_SESSION['PO']->OrderNo;
 
@@ -164,38 +164,38 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 									)
 								VALUES ('
 									. $_SESSION['PO']->OrderNo . ',
-									"' . $POLine->StockID . '",
-									"' . FormatDateForSQL($POLine->ReqDelDate) . '",
-									"' . $POLine->ItemDescription . '",
+									'."'" . $POLine->StockID . "'".',
+									'."'" . FormatDateForSQL($POLine->ReqDelDate) . "'".',
+									'."'" . $POLine->ItemDescription . "'".',
 									' . $POLine->GLCode . ',
 									' . $POLine->Price . ',
 									' . $POLine->Quantity . ',
-									"' . $POLine->ShiptRef . '",
-									"' . $POLine->JobRef . '"
+									'."'" . $POLine->ShiptRef . "'".',
+									'."'" . $POLine->JobRef . "'".'
 								)';
 				} else {
 					if ($POLine->Quantity==$POLine->QtyReceived){
 						$sql = 'UPDATE purchorderdetails SET
-								itemcode="' . $POLine->StockID . '",
-								deliverydate ="' . FormatDateForSQL($POLine->ReqDelDate) . '",
-								itemdescription="' . $POLine->ItemDescription . '",
+								itemcode='."'" . $POLine->StockID . "'".',
+								deliverydate ='."'" . FormatDateForSQL($POLine->ReqDelDate) . "'".',
+								itemdescription='."'" . $POLine->ItemDescription . "'".',
 								glcode=' . $POLine->GLCode . ',
 								unitprice=' . $POLine->Price . ',
 								quantityord=' . $POLine->Quantity . ',
-								shiptref="' . $POLine->ShiptRef . '",
-								jobref="' . $POLine->JobRef . '",
+								shiptref='."'" . $POLine->ShiptRef . "'".',
+								jobref='."'" . $POLine->JobRef . "'".',
 								completed=1
 							WHERE podetailitem=' . $POLine->PODetailRec;
 					} else {
 						$sql = 'UPDATE purchorderdetails SET
-								itemcode="' . $POLine->StockID . '",
-								deliverydate ="' . FormatDateForSQL($POLine->ReqDelDate) . '",
-								itemdescription="' . $POLine->ItemDescription . '",
+								itemcode='."'" . $POLine->StockID . "'".',
+								deliverydate ='."'" . FormatDateForSQL($POLine->ReqDelDate) . "'".',
+								itemdescription='."'" . $POLine->ItemDescription . "'".',
 								glcode=' . $POLine->GLCode . ',
 								unitprice=' . $POLine->Price . ',
 								quantityord=' . $POLine->Quantity . ',
-								shiptref="' . $POLine->ShiptRef . '",
-								jobref="' . $POLine->JobRef . '"
+								shiptref='."'" . $POLine->ShiptRef . "'".',
+								jobref='."'" . $POLine->JobRef . "'".'
 								WHERE podetailitem=' . $POLine->PODetailRec;
 					}
 				}
@@ -246,25 +246,25 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					stockmaster.units
 				FROM stockmaster INNER JOIN stockcategory
 				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag!="D"
-				and stockmaster.mbflag!="A"
-				and stockmaster.mbflag!="K"
+				WHERE stockmaster.mbflag!='."'D'".'
+				and stockmaster.mbflag!='."'A'".'
+				and stockmaster.mbflag!='."'K'".'
 				and stockmaster.discontinued!=1
-				and stockmaster.description ' . LIKE . ' "$SearchString"
-				ORDER BY stockmaster.stockid';
+				and stockmaster.description ' . LIKE . "'$SearchString'
+				ORDER BY stockmaster.stockid";
 		} else {
 			$sql = 'SELECT stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.units
 				FROM stockmaster INNER JOIN stockcategory
 				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag!="D"
-				and stockmaster.mbflag!="A"
-				and stockmaster.mbflag!="K"
+				WHERE stockmaster.mbflag!='."'D'".'
+				and stockmaster.mbflag!='."'A'".'
+				and stockmaster.mbflag!='."'K'".'
 				and stockmaster.discontinued!=1
-				and stockmaster.description ' . LIKE . ' "$SearchString"
-				and stockmaster.categoryid="' . $_POST['StockCat'] . '"
-				ORDER BY stockmaster.stockid';
+				and stockmaster.description ' . LIKE . "'$SearchString'
+				and stockmaster.categoryid='" . $_POST['StockCat'] . "'
+				ORDER BY stockmaster.stockid";
 		}
 
 	} elseif ($_POST['StockCode']){
@@ -277,25 +277,25 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					stockmaster.units
 				FROM stockmaster INNER JOIN stockcategory
 				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag!="D"
-				and stockmaster.mbflag!="A"
-				and stockmaster.mbflag!="K"
+				WHERE stockmaster.mbflag!='."'D'".'
+				and stockmaster.mbflag!='."'A'".'
+				and stockmaster.mbflag!='."'K'".'
 				and stockmaster.discontinued!=1
-				and stockmaster.stockid ' . LIKE . ' "' . $_POST['StockCode'] . '"
-				ORDER BY stockmaster.stockid';
+				and stockmaster.stockid ' . LIKE .  " '" . $_POST['StockCode'] . "'
+				ORDER BY stockmaster.stockid";
 		} else {
 			$sql = 'SELECT stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.units
 				FROM stockmaster INNER JOIN stockcategory
 				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag!="D"
-				and stockmaster.mbflag!="A"
-				and stockmaster.mbflag!="K"
+				WHERE stockmaster.mbflag!='."'D'".'
+				and stockmaster.mbflag!='."'A'".'
+				and stockmaster.mbflag!='."'K'".'
 				and stockmaster.discontinued!=1
-				and stockmaster.stockid ' . LIKE . ' "' . $_POST['StockCode'] . '"
-				and stockmaster.categoryid="' . $_POST['StockCat'] . '"
-				ORDER BY stockmaster.stockid';
+				and stockmaster.stockid ' . LIKE . " '" . $_POST['StockCode'] . "'
+				and stockmaster.categoryid='" . $_POST['StockCat'] . "'
+				ORDER BY stockmaster.stockid";
 		}
 
 	} else {
@@ -305,9 +305,9 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					stockmaster.units
 				FROM stockmaster INNER JOIN stockcategory
 				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag!="D"
-				and stockmaster.mbflag!="A"
-				and stockmaster.mbflag!="K"
+				WHERE stockmaster.mbflag!='."'D'".'
+				and stockmaster.mbflag!='."'A'".'
+				and stockmaster.mbflag!='."'K'".'
 				and stockmaster.discontinued!=1
 				ORDER BY stockmaster.stockid';
 		} else {
@@ -316,11 +316,11 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					stockmaster.units
 				FROM stockmaster INNER JOIN stockcategory
 				ON stockmaster.categoryid=stockcategory.categoryid
-				WHERE stockmaster.mbflag!="D"
-				and stockmaster.mbflag!="A"
-				and stockmaster.mbflag!="K"
+				WHERE stockmaster.mbflag!='."'D'".'
+				and stockmaster.mbflag!='."'A'".'
+				and stockmaster.mbflag!='."'K'".'
 				and stockmaster.discontinued!=1
-				and stockmaster.categoryid="' . $_POST['StockCat'] . '"
+				and stockmaster.categoryid='."'" . $_POST['StockCat'] . "'".'
 				ORDER BY stockmaster.stockid';
 		}
 	}
@@ -358,8 +358,8 @@ if (isset($_POST['LookupPrice']) and $_POST['StockID']!=''){
 			purchdata.conversionfactor,
 			purchdata.supplierdescription
 		FROM purchdata
-		WHERE  purchdata.supplierno = "' . $_SESSION['PO']->SupplierID . '"
-		and purchdata.stockid = "'. strtoupper($_POST['StockID']) . '"';
+		WHERE  purchdata.supplierno = '."'" . $_SESSION['PO']->SupplierID .  "'".'
+		and purchdata.stockid = '."'" . strtoupper($_POST['StockID']) . "'";
 
 	$ErrMsg = _('The supplier pricing details for') . ' ' . strtoupper($_POST['StockID']) . ' ' . _('could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the pricing details but failed was');
@@ -483,14 +483,14 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 						stockmaster
 					WHERE chartmaster.accountcode = stockcategory.stockact
 					and stockcategory.categoryid = stockmaster.categoryid
-					and stockmaster.stockid = "'. strtoupper($_POST['StockID']) . '"';
+					and stockmaster.stockid = '."'". strtoupper($_POST['StockID']) . "'";
 			} else {
 				$sql = 'SELECT stockmaster.description,
 			   			stockmaster.units,
 						stockmaster.mbflag,
 						stockmaster.decimalplaces
 					FROM stockmaster
-					WHERE stockmaster.stockid = "'. strtoupper($_POST['StockID']) . '"';
+					WHERE stockmaster.stockid = '."'". strtoupper($_POST['StockID']) . "'";
 			}
 
 		$ErrMsg =  _('The stock details for') . ' ' . strtoupper($_POST['StockID']) . ' ' . _('could not be retrieved because');
@@ -651,10 +651,10 @@ if (isset($_GET['NewItem'])){ /* NewItem is set from the part selection list as 
 				chartmaster,
 				stockmaster LEFT JOIN purchdata
 				ON stockmaster.stockid = purchdata.stockid
-				and purchdata.supplierno = "' . $_SESSION['PO']->SupplierID . '"
+				and purchdata.supplierno = '."'" . $_SESSION['PO']->SupplierID . "'".'
 			WHERE chartmaster.accountcode = stockcategory.stockact
 			and stockcategory.categoryid = stockmaster.categoryid
-			and stockmaster.stockid = "'. $_GET['NewItem'] . '"';
+			and stockmaster.stockid = '."'". $_GET['NewItem'] . "'";
 
 	    $ErrMsg = _('The supplier pricing details for') . ' ' . $_GET['NewItem'] . ' ' . _('could not be retrieved because');
 	    $DbgMsg = _('The SQL used to retrieve the pricing details but failed was');
@@ -930,8 +930,8 @@ echo '<hr>';
 $sql='SELECT categoryid,
 		categorydescription
 	FROM stockcategory
-	WHERE stocktype<>"L"
-	AND stocktype<>"D"
+	WHERE stocktype<>'."'".'L'."'".'
+	AND stocktype<>'."'".'D'."'".'
 	ORDER BY categorydescription';
 $ErrMsg = _('The supplier category details could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve the category details but failed was');
