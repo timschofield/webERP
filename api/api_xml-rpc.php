@@ -46,6 +46,17 @@
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
+	$GetCustomerBranch_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetCustomerBrancg_doc = 'This function returns an associative array containing the details of the customer
+			branch whose branch and account number is passed to it.';
+
+	function xmlrpc_GetCustomerBranch($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetCustomerBranch($xmlrpcmsg->getParam(0)->scalarval(),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 	$xmlrpcmsg->getParam(2)->scalarval(),
+				 		$xmlrpcmsg->getParam(3)->scalarval())));
+	}
+
 	$GetCustomer_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
 	$GetCustomer_doc = 'This function returns an associative array containing the details of the customer
 			whose account number is passed to it.';
@@ -520,6 +531,10 @@
 			"function" => "xmlrpc_ModifyBranch",
 			"signature" => $ModifyBranch_sig,
 			"docstring" => $ModifyBranch_doc),
+		"weberp.xmlrpc_GetCustomerBranch" => array(
+			"function" => "xmlrpc_GetCustomerBranch",
+			"signature" => $GetCustomerBranch_sig,
+			"docstring" => $GetCustomerBranch_doc),
 		"weberp.xmlrpc_InsertSalesOrderHeader" => array(
 			"function" => "xmlrpc_InsertSalesOrderHeader",
 			"signature" => $InsertSalesOrderHeader_sig,
