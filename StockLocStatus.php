@@ -92,8 +92,8 @@ if (isset($_POST['ShowStatus'])){
 				stockmaster.decimalplaces,
 				stockmaster.serialised,
 				stockmaster.controlled
-			FROM locstock, 
-				stockmaster, 
+			FROM locstock,
+				stockmaster,
 				locations
 			WHERE locstock.stockid=stockmaster.stockid
 			AND locstock.loccode = '$_POST[StockLocation]'
@@ -111,8 +111,8 @@ if (isset($_POST['ShowStatus'])){
 				stockmaster.decimalplaces,
 				stockmaster.serialised,
 				stockmaster.controlled
-			FROM locstock, 
-				stockmaster, 
+			FROM locstock,
+				stockmaster,
 				locations
 			WHERE locstock.stockid=stockmaster.stockid
 			AND locstock.loccode = '$_POST[StockLocation]'
@@ -194,6 +194,20 @@ if (isset($_POST['ShowStatus'])){
 			$DemandRow = DB_fetch_row($DemandResult);
 			$DemandQty += $DemandRow[0];
 		}
+		$sql = "SELECT SUM((woitems.qtyreqd-woitems.qtyrecd)*bom.quantity) AS dem
+			FROM workorders, woitems, bom
+			WHERE woitems.wo = workorders.wo
+			AND   woitems.stockid =  bom.parent
+			AND   workorders.closed=0
+			AND   bom.component = '". $StockID . "'
+			AND   workorders.loccode='". $myrow['loccode'] ."'";
+		$DemandResult = DB_query($sql,$db, $ErrMsg);
+
+		if (DB_num_rows($DemandResult)==1){
+			$DemandRow = DB_fetch_row($DemandResult);
+			$DemandQty += $DemandRow[0];
+		}
+
 
 		$sql = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) AS qoo
                    	FROM purchorderdetails
