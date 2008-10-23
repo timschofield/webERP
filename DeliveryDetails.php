@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.47 $ */
+/* $Revision: 1.48 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -25,7 +25,7 @@ if (!isset($_SESSION['Items']) OR !isset($_SESSION['Items']->DebtorNo)){
 	exit;
 }
 
-If ($_SESSION['Items']->ItemsOrdered == 0){
+if ($_SESSION['Items']->ItemsOrdered == 0){
 	prnMsg(_('This page can only be read if an there are items on the order') . '. ' . _('To enter an order select customer transactions, then sales order entry'),'error');
 	include('includes/footer.inc');
 	exit;
@@ -35,7 +35,7 @@ If ($_SESSION['Items']->ItemsOrdered == 0){
 
 $EarliestDispatch = CalcEarliestDispatchDate();
 
-If (isset($_POST['ProcessOrder']) OR isset($_POST['MakeRecurringOrder'])) {
+if (isset($_POST['ProcessOrder']) OR isset($_POST['MakeRecurringOrder'])) {
 
 	/*need to check for input errors in any case before order processed */
 	$_POST['Update']='Yes rerun the validation checks';
@@ -46,23 +46,23 @@ If (isset($_POST['ProcessOrder']) OR isset($_POST['MakeRecurringOrder'])) {
 
 }
 
-If (isset($_POST['Update'])
-	OR isset($_POST['BackToLineDetails'])
-	OR isset($_POST['MakeRecurringOrder']))   {
+if (isset($_POST['Update'])
+	or isset($_POST['BackToLineDetails'])
+	or isset($_POST['MakeRecurringOrder']))   {
 
 	$InputErrors =0;
-	If (strlen($_POST['DeliverTo'])<=1){
+	if (strlen($_POST['DeliverTo'])<=1){
 		$InputErrors =1;
 		prnMsg(_('You must enter the person or company to whom delivery should be made'),'error');
 	}
-	If (strlen($_POST['BrAdd1'])<=1){
+	if (strlen($_POST['BrAdd1'])<=1){
 		$InputErrors =1;
 		prnMsg(_('You should enter the street address in the box provided') . '. ' . _('Orders cannot be accepted without a valid street address'),'error');
 	}
-	If (strpos($_POST['BrAdd1'],_('Box'))>0){
+	if (strpos($_POST['BrAdd1'],_('Box'))>0){
 		prnMsg(_('You have entered the word') . ' "' . _('Box') . '" ' . _('in the street address') . '. ' . _('Items cannot be delivered to') . ' ' ._('box') . ' ' . _('addresses'),'warn');
 	}
-	If (!is_numeric($_POST['FreightCost'])){
+	if (!is_numeric($_POST['FreightCost'])){
 		$InputErrors =1;
 		prnMsg( _('The freight cost entered is expected to be numeric'),'error');
 	}
@@ -70,7 +70,7 @@ If (isset($_POST['Update'])
 		$InputErrors =1;
 		prnMsg( _('A recurring order cannot be made from a quotation'),'error');
 	}
-	If (($_POST['DeliverBlind'])<=0){
+	if (($_POST['DeliverBlind'])<=0){
 		$InputErrors =1;
 		prnMsg(_('You must select the type of packlist to print'),'error');
 	}
@@ -88,7 +88,7 @@ If (isset($_POST['Update'])
 
 */
 
-	If(!Is_Date($_POST['DeliveryDate'])) {
+	if(!Is_Date($_POST['DeliveryDate'])) {
 		$InputErrors =1;
 		prnMsg(_('An invalid date entry was made') . '. ' . _('The date entry for the despatch date must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
 	}
@@ -102,7 +102,7 @@ If (isset($_POST['Update'])
 
 	*/
 
-	If ($InputErrors==0){
+	if ($InputErrors==0){
 
 		if ($_SESSION['DoFreightCalc']==True){
 		      list ($_POST['FreightCost'], $BestShipper) = CalcFreightCost($_SESSION['Items']->total, $_POST['BrAdd2'], $_POST['BrAdd3'], $_SESSION['Items']->totalVolume, $_SESSION['Items']->totalWeight, $_SESSION['Items']->Location, $db);
@@ -124,8 +124,8 @@ If (isset($_POST['Update'])
                 custbranch.specialinstructions,
                 custbranch.estdeliverydays
 			FROM custbranch
-			WHERE custbranch.branchcode="' . $_SESSION['Items']->Branch . '"
-			AND custbranch.debtorno = "' . $_SESSION['Items']->DebtorNo . '"';
+			WHERE custbranch.branchcode='."'" . $_SESSION['Items']->Branch . "'".
+			' AND custbranch.debtorno = '."'" . $_SESSION['Items']->DebtorNo . "'";
 
 		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');
 		$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
@@ -140,28 +140,48 @@ If (isset($_POST['Update'])
 			include('includes/footer.inc');
 			exit;
 		}
-
-		$myrow = DB_fetch_row($result);
-		$_SESSION['Items']->DeliverTo = $myrow[0];
-		$_SESSION['Items']->DelAdd1 = $myrow[1];
-		$_SESSION['Items']->DelAdd2 = $myrow[2];
-		$_SESSION['Items']->DelAdd3 = $myrow[3];
-		$_SESSION['Items']->DelAdd4 = $myrow[4];
-		$_SESSION['Items']->DelAdd5 = $myrow[5];
-		$_SESSION['Items']->DelAdd6 = $myrow[6];
-		$_SESSION['Items']->PhoneNo = $myrow[7];
-		$_SESSION['Items']->Email = $myrow[8];
-		$_SESSION['Items']->Location = $myrow[9];
-		$_SESSION['Items']->ShipVia = $myrow[10];
-		$_SESSION['Items']->DeliverBlind = $myrow[11];
-		$_SESSION['Items']->SpecialInstructions = $myrow[12];
-		$_SESSION['Items']->DeliveryDays = $myrow[13];
-
-		$_SESSION['Items']->CustRef = $_POST['CustRef'];
-		$_SESSION['Items']->Comments = $_POST['Comments'];
-		$_SESSION['Items']->FreightCost = round($_POST['FreightCost'],2);
-		$_SESSION['Items']->Quotation = $_POST['Quotation'];
-
+		if (!isset($_SESSION['Items'])) {
+			$myrow = DB_fetch_row($result);
+			$_SESSION['Items']->DeliverTo = $myrow[0];
+			$_SESSION['Items']->DelAdd1 = $myrow[1];
+			$_SESSION['Items']->DelAdd2 = $myrow[2];
+			$_SESSION['Items']->DelAdd3 = $myrow[3];
+			$_SESSION['Items']->DelAdd4 = $myrow[4];
+			$_SESSION['Items']->DelAdd5 = $myrow[5];
+			$_SESSION['Items']->DelAdd6 = $myrow[6];
+			$_SESSION['Items']->PhoneNo = $myrow[7];
+			$_SESSION['Items']->Email = $myrow[8];
+			$_SESSION['Items']->Location = $myrow[9];
+			$_SESSION['Items']->ShipVia = $myrow[10];
+			$_SESSION['Items']->DeliverBlind = $myrow[11];
+			$_SESSION['Items']->SpecialInstructions = $myrow[12];
+			$_SESSION['Items']->DeliveryDays = $myrow[13];
+			$_SESSION['Items']->DeliveryDate = $_POST['DeliveryDate'];
+			$_SESSION['Items']->CustRef = $_POST['CustRef'];
+			$_SESSION['Items']->Comments = $_POST['Comments'];
+			$_SESSION['Items']->FreightCost = round($_POST['FreightCost'],2);
+			$_SESSION['Items']->Quotation = $_POST['Quotation'];
+		} else {
+			$_SESSION['Items']->DeliverTo = $_SESSION['Items']->CustomerName;
+			$_SESSION['Items']->DelAdd1 = $_POST['BrAdd1'];
+			$_SESSION['Items']->DelAdd2 = $_POST['BrAdd2'];
+			$_SESSION['Items']->DelAdd3 = $_POST['BrAdd3'];
+			$_SESSION['Items']->DelAdd4 = $_POST['BrAdd4'];
+			$_SESSION['Items']->DelAdd5 = $_POST['BrAdd5'];
+			$_SESSION['Items']->DelAdd6 = $_POST['BrAdd6'];
+			$_SESSION['Items']->PhoneNo = $_POST['PhoneNo'];
+			$_SESSION['Items']->Email = $_POST['Email'];
+			$_SESSION['Items']->Location = $_POST['Location'];
+			$_SESSION['Items']->ShipVia = $_POST['ShipVia'];
+			$_SESSION['Items']->DeliverBlind = $_POST['DeliverBlind'];
+			$_SESSION['Items']->SpecialInstructions = $_POST['SpecialInstructions'];
+			$_SESSION['Items']->DeliveryDays = $_POST['DeliveryDays'];
+			$_SESSION['Items']->DeliveryDate = $_POST['DeliveryDate'];
+			$_SESSION['Items']->CustRef = $_POST['CustRef'];
+			$_SESSION['Items']->Comments = $_POST['Comments'];
+			$_SESSION['Items']->FreightCost = round($_POST['FreightCost'],2);
+			$_SESSION['Items']->Quotation = $_POST['Quotation'];
+		}
 		/*$_SESSION['DoFreightCalc'] is a setting in the config.php file that the user can set to false to turn off freight calculations if necessary */
 
 
@@ -207,7 +227,6 @@ If (isset($_POST['Update'])
 	}
 }
 
-
 if(isset($_POST['MakeRecurringOrder']) AND ! $InputErrors){
 
 	echo '<meta http-equiv="Refresh" content="0; url=' . $rootpath . '/RecurringSalesOrders.php?' . SID . '&NewRecurringOrder=Yes">';
@@ -242,7 +261,7 @@ If (isset($_POST['ProcessOrder'])) {
 			FROM debtorsmaster,
 				paymentterms
 			WHERE debtorsmaster.paymentterms=paymentterms.termsindicator
-			AND debtorsmaster.debtorno = "' . $_SESSION['Items']->DebtorNo . '"';
+			AND debtorsmaster.debtorno = '."'" . $_SESSION['Items']->DebtorNo . "'";
 
 		$ErrMsg = _('The customer terms cannot be determined') . '. ' . _('This order cannot be processed because');
 		$DbgMsg = _('SQL used to find the customer terms') . ':';
@@ -283,6 +302,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 				ordertype,
 				shipvia,
 				deliverto,
+				deliverydate,
 				deladd1,
 				deladd2,
 				deladd3,
@@ -297,25 +317,26 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 				quotation,
                 		deliverblind)
 			VALUES (
-				"' . $_SESSION['Items']->DebtorNo . '",
-				"' . $_SESSION['Items']->Branch . '",
-				"'. $_SESSION['Items']->CustRef .'",
-				"'. $_SESSION['Items']->Comments .'",
-				"' . Date("Y-m-d H:i") . '",
-				"' . $_SESSION['Items']->DefaultSalesType . '",
+				'."'" . $_SESSION['Items']->DebtorNo . "'".',
+				'."'" . $_SESSION['Items']->Branch . "'".',
+				'."'". DB_escape_string($_SESSION['Items']->CustRef) ."'".',
+				'."'". DB_escape_string($_SESSION['Items']->Comments) ."'".',
+				'."'" . Date("Y-m-d H:i") . "'".',
+				'."'" . $_SESSION['Items']->DefaultSalesType . "'".',
 				' . $_POST['ShipVia'] .',
-				"'. $_SESSION['Items']->DeliverTo . '",
-				"' . $_SESSION['Items']->DelAdd1 . '",
-				"' . $_SESSION['Items']->DelAdd2 . '",
-				"' . $_SESSION['Items']->DelAdd3 . '",
-				"' . $_SESSION['Items']->DelAdd4 . '",
-				"' . $_SESSION['Items']->DelAdd5 . '",
-				"' . $_SESSION['Items']->DelAdd6 . '",
-				"' . $_SESSION['Items']->PhoneNo . '",
-				"' . $_SESSION['Items']->Email . '",
+				'."'". DB_escape_string($_SESSION['Items']->DeliveryDate) . "'".',
+				'."'". DB_escape_string($_SESSION['Items']->DeliverTo) . "'".',
+				'."'" . DB_escape_string($_SESSION['Items']->DelAdd1) . "'".',
+				'."'" . DB_escape_string($_SESSION['Items']->DelAdd2) . "'".',
+				'."'" . DB_escape_string($_SESSION['Items']->DelAdd3) . "'".',
+				'."'" . DB_escape_string($_SESSION['Items']->DelAdd4) . "'".',
+				'."'" . DB_escape_string($_SESSION['Items']->DelAdd5) . "'".',
+				'."'" . DB_escape_string($_SESSION['Items']->DelAdd6) . "'".',
+				'."'" . $_SESSION['Items']->PhoneNo . "'".',
+				'."'" . $_SESSION['Items']->Email . "'".',
 				' . $_SESSION['Items']->FreightCost .',
-				"' . $_SESSION['Items']->Location .'",
-				"' . $DelDate . '",
+				'."'" . $_SESSION['Items']->Location ."'".',
+				'."'" . $DelDate . "'".',
 				' . $_SESSION['Items']->Quotation . ',
 				' . $_SESSION['Items']->DeliverBlind .'
                 )';
@@ -341,13 +362,13 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 		$LineItemsSQL = $StartOf_LineItemsSQL .
 					$StockItem->LineNumber . ',
 					' . $OrderNo . ',
-					"' . $StockItem->StockID . '",
+					'."'" . $StockItem->StockID . "'".',
 					'. $StockItem->Price . ',
 					' . $StockItem->Quantity . ',
 					' . floatval($StockItem->DiscountPercent) . ',
-					"' . $StockItem->Narrative . '",
-					"' . $StockItem->POLine . '",
-					"' . FormatDateForSQL($StockItem->ItemDue) . '"
+					'."'" . DB_escape_string($StockItem->Narrative) . "'".',
+					'."'" . $StockItem->POLine . "'".',
+					'."'" . FormatDateForSQL($StockItem->ItemDue) . "'".'
 				)';
 		$Ins_LineItemResult = DB_query($LineItemsSQL,$db);
 	} /* inserted line items into sales order details */
@@ -394,24 +415,25 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 	$Result = DB_query('BEGIN',$db);
 
 	$HeaderSQL = 'UPDATE salesorders
-			SET debtorno = "' . $_SESSION['Items']->DebtorNo . '",
-				branchcode = "' . $_SESSION['Items']->Branch . '",
-				customerref = "'. $_SESSION['Items']->CustRef .'",
-				comments = "'. $_SESSION['Items']->Comments .'",
-				ordertype = "' . $_SESSION['Items']->DefaultSalesType . '",
+			SET debtorno = '."'" . $_SESSION['Items']->DebtorNo . "'".',
+				branchcode = '."'" . $_SESSION['Items']->Branch . "'".',
+				customerref = '."'". DB_escape_string($_SESSION['Items']->CustRef) ."'".',
+				comments = '."'". DB_escape_string($_SESSION['Items']->Comments) ."'".',
+				ordertype = '."'" . $_SESSION['Items']->DefaultSalesType . "'".',
 				shipvia = ' . $_POST['ShipVia'] .',
-				deliverto = "' . $_SESSION['Items']->DeliverTo . '",
-				deladd1 = "' . $_SESSION['Items']->DelAdd1 . '",
-				deladd2 = "' . $_SESSION['Items']->DelAdd2 . '",
-				deladd3 = "' . $_SESSION['Items']->DelAdd3 . '",
-				deladd4 = "' . $_SESSION['Items']->DelAdd4 . '",
-				deladd5 = "' . $_SESSION['Items']->DelAdd5 . '",
-				deladd6 = "' . $_SESSION['Items']->DelAdd6 . '",
-				contactphone = "' . $_SESSION['Items']->PhoneNo . '",
-				contactemail = "' . $_SESSION['Items']->Email . '",
+				deliverydate = '."'" . DB_escape_string($_SESSION['Items']->DeliveryDate) . "'".',
+				deliverto = '."'" . DB_escape_string($_SESSION['Items']->DeliverTo) . "'".',
+				deladd1 = '."'" . DB_escape_string($_SESSION['Items']->DelAdd1) . "'".',
+				deladd2 = '."'" . DB_escape_string($_SESSION['Items']->DelAdd2) . "'".',
+				deladd3 = '."'" . DB_escape_string($_SESSION['Items']->DelAdd3) . "'".',
+				deladd4 = '."'" . DB_escape_string($_SESSION['Items']->DelAdd4) . "'".',
+				deladd5 = '."'" . DB_escape_string($_SESSION['Items']->DelAdd5) . "'".',
+				deladd6 = '."'" . DB_escape_string($_SESSION['Items']->DelAdd6) . "'".',
+				contactphone = '."'" . $_SESSION['Items']->PhoneNo . "'".',
+				contactemail = '."'" . $_SESSION['Items']->Email . "'".',
 				freightcost = ' . $_SESSION['Items']->FreightCost .',
-				fromstkloc = "' . $_SESSION['Items']->Location .'",
-				deliverydate = "' . $DelDate . '",
+				fromstkloc = '."'" . $_SESSION['Items']->Location ."'".',
+				deliverydate = '."'" . $DelDate . "'".',
 				printedpackingslip = ' . $_POST['ReprintPackingSlip'] . ',
 				quotation = ' . $_SESSION['Items']->Quotation . ',
 				deliverblind = ' . $_SESSION['Items']->DeliverBlind . '
@@ -436,10 +458,10 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 								quantity=' . $StockItem->Quantity . ',
 								discountpercent=' . floatval($StockItem->DiscountPercent) . ',
 								completed=' . $Completed . ',
-								poline="' . $StockItem->POLine . '",
-								itemdue="' . FormatDateForSQL($StockItem->ItemDue) . '"
+								poline='."'" . $StockItem->POLine . "'".',
+								itemdue='."'" . FormatDateForSQL($StockItem->ItemDue) . "'".'
 					WHERE salesorderdetails.orderno=' . $_SESSION['ExistingOrder'] . '
-					AND salesorderdetails.orderlineno="' . $StockItem->LineNumber . '"';
+					AND salesorderdetails.orderlineno='."'" . $StockItem->LineNumber . "'";
 
 		$DbgMsg = _('The SQL that was used to modify the order line and failed was');
 		$ErrMsg = _('The updated order line cannot be modified because');
@@ -690,7 +712,7 @@ echo '<tr>
 echo '<tr><td>' . _('Contact Email') . ':</td><td><input type=text size=40 max=38 name="Email" value="' . $_SESSION['Items']->Email . '"></td></tr>';
 
 echo '<tr><td>'. _('Customer Reference') .':</td>
-	<td><input type=text size=25 max=25 name="Custref" value="' . $_SESSION['Items']->Custref . '"></td>
+	<td><input type=text size=25 max=25 name="CustRef" value="' . $_SESSION['Items']->CustRef . '"></td>
 </tr>';
 
 echo '<tr>
