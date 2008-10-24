@@ -122,6 +122,11 @@
 	Define('InvalidInvoicedQuantity', 1118);
 	Define('InvalidActualDispatchDate', 1119);
 	Define('InvalidCompletedFlag', 1120);
+	Define('InvalidCategoryID', 1121);
+	Define('InvalidCategoryDescription', 1122);
+	Define('InvalidStockType', 1123);
+	Define('GLAccountCodeDoesntExists', 1124);
+	Define('StockCategoryAlreadyExists', 1125);
 
 /* Array of Descriptions of errors */
 	$ErrorDescription['1'] = 'No Authorisation';
@@ -245,5 +250,10 @@
 	$ErrorDescription['1118'] = 'Invalid invoiced quantity';
 	$ErrorDescription['1119'] = 'Invalid actual dispatch date';
 	$ErrorDescription['1120'] = 'Invalid completed flag';
+	$ErrorDescription['1121'] = 'Invalid category id';
+	$ErrorDescription['1122'] = 'Invalid category description';
+	$ErrorDescription['1123'] = 'Invalid stock type';
+	$ErrorDescription['1124'] = 'GL account code doesnt exist';
+	$ErrorDescription['1125'] = 'Stock category already exists';
 
 ?>

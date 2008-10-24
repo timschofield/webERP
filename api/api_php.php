@@ -46,5 +46,6 @@
 	include 'api_glaccounts.php';
 	include 'api_glsections.php';
 	include 'api_glgroups.php';
+	include 'api_stockcategories.php';
 
 ?>

@@ -430,6 +430,47 @@
 				$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
+	$InsertStockCategory_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$InsertStockCategory_doc = 'This function takes an associative array containing the details of a category to
+			to be inserted, where the keys of the array are the field names in the table stockcategory. ';
+
+	function xmlrpc_InsertStockCategory($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(InsertStockCategory(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
+	$ModifyStockCategory_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$ModifyStockCategory_doc = 'This function takes an associative array containing the details of a category to
+			to be Modified, where the keys of the array are the field names in the table stockcategory. ';
+
+	function xmlrpc_ModifyStockCategory($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(ModifyStockCategory(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
+	$GetStockCategory_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetStockCategory_doc = 'This function returns an associative array containing the details of the stock
+			category whose id is passed to it.';
+
+	function xmlrpc_GetStockCategory($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetStockCategory($xmlrpcmsg->getParam(0)->scalarval(),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
+	$SearchStockCategories_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$SearchStockCategories_doc = 'This function returns an array containing the stock categories
+			that meet the criteria given. Any field in stockcategory can be search on.';
+
+	function xmlrpc_SearchStockCategories($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(SearchStockCategories($xmlrpcmsg->getParam(0)->scalarval(),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval(),
+				 			$xmlrpcmsg->getParam(3)->scalarval())));
+	}
+
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
@@ -611,6 +652,22 @@
 			"function" => "xmlrpc_GetCustomerTypeDetails",
 			"signature" => $GetCustomerTypeDetails_sig,
 			"docstring" => $GetCustomerTypeDetails_doc),
+		"weberp.xmlrpc_InsertStockCategory" => array(
+			"function" => "xmlrpc_InsertStockCategory",
+			"signature" => $InsertStockCategory_sig,
+			"docstring" => $InsertStockCategory_doc),
+		"weberp.xmlrpc_ModifyStockCategory" => array(
+			"function" => "xmlrpc_ModifyStockCategory",
+			"signature" => $ModifyStockCategory_sig,
+			"docstring" => $ModifyStockCategory_doc),
+		"weberp.xmlrpc_GetStockCategory" => array(
+			"function" => "xmlrpc_GetStockCategory",
+			"signature" => $GetStockCategory_sig,
+			"docstring" => $GetStockCategory_doc),
+		"weberp.xmlrpc_SearchStockCategories" => array(
+			"function" => "xmlrpc_SearchStockCategories",
+			"signature" => $SearchStockCategories_sig,
+			"docstring" => $SearchStockCategories_doc),
 		)
 	);
 

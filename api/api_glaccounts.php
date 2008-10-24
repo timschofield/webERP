@@ -13,6 +13,19 @@
 		return $Errors;
 	}
 
+/* Check that the account code already exists'*/
+	function VerifyAccountCodeExists($AccountCode, $i, $Errors, $db) {
+		$Searchsql = "SELECT count(accountcode)
+				FROM chartmaster
+				WHERE accountcode='".$AccountCode."'";
+		$SearchResult=DB_query($Searchsql, $db);
+		$answer = DB_fetch_array($SearchResult);
+		if ($answer[0]==0) {
+			$Errors[$i] = GLAccountCodeDoesntExists;
+		}
+		return $Errors;
+	}
+
 /* Check that the name is 50 characters or less long */
 	function VerifyAccountName($AccountName, $i, $Errors) {
 		if (strlen($AccountName)>50) {
