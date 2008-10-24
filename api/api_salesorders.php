@@ -176,6 +176,14 @@
 		return $Errors;
 	}
 
+/* Verify that the quantity invoiced is numeric */
+	function VerifyQuantityInvoiced($quantity, $i, $Errors) {
+		if (!is_numeric($quantity)) {
+			$Errors[$i] = InvalidInvoicedQuantity;
+		}
+		return $Errors;
+	}
+
 /* Verify that the discount percent is numeric */
 	function VerifyDiscountPercent($discountpercent, $i, $Errors) {
 		if (!is_numeric($discountpercent) or $discountpercent>100) {
@@ -196,6 +204,36 @@
 	function VerifyPOLine($poline, $i, $Errors) {
 		if (strlen($poline)>10) {
 			$Errors[$i] = InvalidPOLine;
+		}
+		return $Errors;
+	}
+
+/* Check that the actual dispatch is a valid date. The date
+ * must be in the same format as the date format specified in the
+ * target webERP company */
+	function VerifyActualDispatchDate($dispatchdate, $i, $Errors, $db) {
+		$sql='select confvalue from config where confname="'.DefaultDateFormat.'"';
+		$result=DB_query($sql, $db);
+		$myrow=DB_fetch_array($result);
+		$DateFormat=$myrow[0];
+		$DateArray=explode('/',$dispatchdate);
+		if ($DateFormat=='d/m/Y') {
+			$Day=$DateArray[0];
+			$Month=$DateArray[1];
+			$Year=$DateArray[2];
+		}
+		if ($DateFormat=='m/d/Y') {
+			$Day=$DateArray[1];
+			$Month=$DateArray[0];
+			$Year=$DateArray[2];
+		}
+		if ($DateFormat=='Y/m/d') {
+			$Day=$DateArray[2];
+			$Month=$DateArray[1];
+			$Year=$DateArray[0];
+		}
+		if (!checkdate(intval($Month), intval($Day), intval($Year))) {
+			$Errors[$i] = InvalidActualDispatchDate;
 		}
 		return $Errors;
 	}
@@ -226,6 +264,14 @@
 		}
 		if (!checkdate(intval($Month), intval($Day), intval($Year))) {
 			$Errors[$i] = InvalidItemDueDate;
+		}
+		return $Errors;
+	}
+
+/* Verify that the completed flag is a 1 or 0 */
+	function VerifyCompleted($completed, $i, $Errors) {
+		if ($completed!=0 and $completed!=1) {
+			$Errors[$i] = InvalidCompletedFlag;
 		}
 		return $Errors;
 	}
@@ -498,6 +544,9 @@
 		if (isset($OrderLine['quantity'])){
 			$Errors=VerifyQuantity($OrderLine['quantity'], sizeof($Errors), $Errors);
 		}
+		if (isset($OrderLine['qtyinvoiced'])){
+			$Errors=VerifyQuantityInvoiced($OrderLine['qtyinvoiced'], sizeof($Errors), $Errors);
+		}
 		if (isset($OrderLine['discountpercent'])){
 			$OrderLine['discountpercent'] = $OrderLine['discountpercent'] * 100;
 			$Errors=VerifyDiscountPercent($OrderLine['discountpercent'], sizeof($Errors), $Errors);
@@ -505,8 +554,14 @@
 		if (isset($OrderLine['narrative'])){
 			$Errors=VerifyDiscountPercent($OrderLine['narrative'], sizeof($Errors), $Errors);
 		}
+		if (isset($OrderLine['actualdispatchdate'])){
+			$Errors=VerifyActualDispatchDate($OrderLine['actualdispatchdate'], sizeof($Errors), $Errors);
+		}
 		if (isset($OrderLine['itemdue'])){
 			$Errors=VerifyItemDueDate($OrderLine['itemdue'], sizeof($Errors), $Errors);
+		}
+		if (isset($OrderLine['completed'])){
+			$Errors=VerifyCompleted($OrderLine['completed'], sizeof($Errors), $Errors);
 		}
 		if (isset($OrderLine['poline'])){
 			$Errors=VerifyPOLine($OrderLine['poline'], sizeof($Errors), $Errors);

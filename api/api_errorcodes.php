@@ -119,6 +119,9 @@
 	Define('InvalidLongitude', 1115);
 	Define('CustomerTypeNotSetup', 1116);
 	Define('NoPricesSetup', 1117);
+	Define('InvalidInvoicedQuantity', 1118);
+	Define('InvalidActualDispatchDate', 1119);
+	Define('InvalidCompletedFlag', 1120);
 
 /* Array of Descriptions of errors */
 	$ErrorDescription['1'] = 'No Authorisation';
@@ -239,5 +242,8 @@
 	$ErrorDescription['1115'] = 'Invalid Longitude figure';
 	$ErrorDescription['1116'] = 'Customer type not set up';
 	$ErrorDescription['1117'] = 'No sales prices setup';
+	$ErrorDescription['1118'] = 'Invalid invoiced quantity';
+	$ErrorDescription['1119'] = 'Invalid actual dispatch date';
+	$ErrorDescription['1120'] = 'Invalid completed flag';
 
 ?>
