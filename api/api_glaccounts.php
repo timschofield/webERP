@@ -87,4 +87,42 @@
 		return $Errors;
 	}
 
+/* This function returns a list of the general ledger accounts
+ * currently setup on webERP
+ */
+
+	function GetGLAccountList($user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$sql = 'SELECT accountcode FROM chartmaster';
+		$result = DB_query($sql, $db);
+		$i=0;
+		while ($myrow=DB_fetch_array($result)) {
+			$GLAccountList[$i]=$myrow[0];
+			$i++;
+		}
+		return $GLAccountList;
+	}
+
+/* This function takes as a parameter a general ledger account code
+ * and returns an array containing the details of the selected
+ * general ledger code.
+ */
+
+	function GetGLAccountDetails($accountcode, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$sql = 'SELECT * FROM chartmaster WHERE accountcode="'.$accountcode.'"';
+		$result = DB_query($sql, $db);
+		return DB_fetch_array($result);
+	}
+
 ?>

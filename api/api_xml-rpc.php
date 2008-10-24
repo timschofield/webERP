@@ -471,6 +471,24 @@
 				 			$xmlrpcmsg->getParam(3)->scalarval())));
 	}
 
+	$GetGLAccountList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$GetGLAccountList_doc = 'This function returns an array containing a list of all general ledger accounts setup on webERP';
+
+	function xmlrpc_GetGLAccountList($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetGLAccountList($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval())));
+	}
+
+	$GetGLAccountDetails_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetGLAccountDetails_doc = 'This function returns an associative array containing the details of the GL Account
+			 sent as a parameter';
+
+	function xmlrpc_GetGLAccountDetails($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetGLAccountDetails($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval(),
+				$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
@@ -668,6 +686,14 @@
 			"function" => "xmlrpc_SearchStockCategories",
 			"signature" => $SearchStockCategories_sig,
 			"docstring" => $SearchStockCategories_doc),
+		"weberp.xmlrpc_GetGLAccountList" => array(
+			"function" => "xmlrpc_GetGLAccountList",
+			"signature" => $GetGLAccountList_sig,
+			"docstring" => $GetGLAccountList_doc),
+		"weberp.xmlrpc_GetGLAccountDetails" => array(
+			"function" => "xmlrpc_GetGLAccountDetails",
+			"signature" => $GetGLAccountDetails_sig,
+			"docstring" => $GetGLAccountDetails_doc),
 		)
 	);
 
