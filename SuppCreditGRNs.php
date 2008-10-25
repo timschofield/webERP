@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the credit note
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
@@ -51,7 +51,8 @@ if (isset($_POST['AddGRNToTrans'])){
 							$_POST['StdCostUnit'],
 							$_POST['ShiptRef'],
 							$_POST['JobRef'],
-							$_POST['GLCode']);
+							$_POST['GLCode'],
+							$_POST['PONo']);
 	}
 }
 
