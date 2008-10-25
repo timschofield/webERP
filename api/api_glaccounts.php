@@ -98,12 +98,15 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode';
+		$sql = 'select chartmaster.accountcode,chartmaster.accountname,accountgroups.pandl ' .
+				'from chartmaster left join accountgroups on ' .
+				'chartmaster.group_=accountgroups.groupname ORDER BY accountcode';
 		$result = DB_query($sql, $db);
 		$i=0;
 		while ($myrow=DB_fetch_array($result)) {
 			$GLAccountList[$i]['accountcode']=$myrow[0];
 			$GLAccountList[$i]['accountname']=$myrow[1];
+			$GLAccountList[$i]['pandl']=$myrow[2];
 			$i++;
 		}
 		return $GLAccountList;
