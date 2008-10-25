@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 /*
 Call this page with:
@@ -282,7 +282,7 @@ if (isset($_GET['AllocTrans'])) {
 		$_SESSION['Alloc']->add_to_AllocsAllocn (
 											$myrow['id'],
 											$myrow['typename'],
-											$myrow['id'],
+											$myrow['transno'],
 											ConvertSQLDate($myrow['trandate']),
 											0,
 											$myrow['total'],
@@ -322,7 +322,7 @@ if (isset($_GET['AllocTrans'])) {
 		$_SESSION['Alloc']->add_to_AllocsAllocn (
 											$myrow['id'],
 											$myrow['typename'],
-											$myrow['id'],
+											$myrow['transno'],
 											ConvertSQLDate($myrow['trandate']),
 											$myrow['amt'],
 											$myrow['total'],
@@ -503,7 +503,7 @@ if (isset($_GET['AllocTrans'])) {
 					<td align=right>" . number_format($myrow['total']-$myrow['alloc'],2) . "</td>";
 			echo '<td><a href=' . $_SERVER['PHP_SELF']. '?' . SID . '&AllocTrans=' . $myrow['id'] . '>' . _('Allocate') . '</a></td></tr>';
 		}
-		DB_free_result($Result);
+		DB_free_result($result);
 		echo '</table><p>';
 	}
 	else  // Page called with no parameters
