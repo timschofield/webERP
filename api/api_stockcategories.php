@@ -151,14 +151,15 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql='SELECT categoryid
+		$sql='SELECT categoryid, categorydescription
 			FROM stockcategory
 			WHERE '.$Field.' LIKE "%'.$Criteria.'%"';
 		$result = DB_Query($sql, $db);
 		$i=0;
 		$CategoryList = array();
 		while ($myrow=DB_fetch_array($result)) {
-			$CategoryList[$i]=$myrow[0];
+			$CategoryList[$i]['categoryid']=$myrow[0];
+			$CategoryList[$i]['categorydescription']=$myrow[1];
 			$i++;
 		}
 		return $CategoryList;
