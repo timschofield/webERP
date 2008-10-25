@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 /*
 Call this page with:
@@ -345,7 +345,7 @@ if (isset($_GET['AllocTrans'])) {
 
 	// Context Navigation and Title
 	echo '<table width=100%>
-			<td width=40% align=left><a href="'. $rootpath . '/index.php?&Application=AR'. SID .'">' . _('Back to Customers') . '</a></td>
+			<td width=40% align=left><a href="'. $rootpath . '/SelectCustomer.php?&'. SID .'">' . _('Back to Customers') . '</a></td>
 			<td align=left><font size=4 color=blue><u><b>' . _('Allocate Receipts') . '</b></u></font></td>
 	      </table><p><center>';
 
