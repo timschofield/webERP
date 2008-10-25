@@ -89,11 +89,11 @@
 		$Errors=VerifyCategoryID($CategoryDetails['categoryid'], sizeof($Errors), $Errors);
 		$Errors=VerifyCategoryDescription($CategoryDetails['categorydescription'], sizeof($Errors), $Errors);
 		$Errors=VerifyStockType($CategoryDetails['stocktype'], sizeof($Errors), $Errors);
-		$Errors=VerifyAccountCodeExists($CategoryDetails['stockact'], sizeof($Errors), $Errors);
-		$Errors=VerifyAccountCodeExists($CategoryDetails['adjglact'], sizeof($Errors), $Errors);
-		$Errors=VerifyAccountCodeExists($CategoryDetails['purchpricevaract'], sizeof($Errors), $Errors);
-		$Errors=VerifyAccountCodeExists($CategoryDetails['materialuseagevarac'], sizeof($Errors), $Errors);
-		$Errors=VerifyAccountCodeExists($CategoryDetails['wipact'], sizeof($Errors), $Errors);
+		$Errors=VerifyAccountCodeExists($CategoryDetails['stockact'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyAccountCodeExists($CategoryDetails['adjglact'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyAccountCodeExists($CategoryDetails['purchpricevaract'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyAccountCodeExists($CategoryDetails['materialuseagevarac'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifyAccountCodeExists($CategoryDetails['wipact'], sizeof($Errors), $Errors, $db);
 		$FieldNames='';
 		$FieldValues='';
 		foreach ($CategoryDetails as $key => $value) {
