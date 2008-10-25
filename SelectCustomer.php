@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 $PageSecurity = 2;
 
@@ -42,7 +42,7 @@ echo '<script src="http://maps.google.com/maps?file=api&v=2&key=' . $api_key . '
 echo ' type="text/javascript"></script>';
 echo ' <script type="text/javascript">';
 echo '    //<![CDATA[ '; ?>
-	
+
     function load() {
       if (GBrowserIsCompatible()) {
         var map = new GMap2(document.getElementById("map"));
@@ -54,7 +54,7 @@ echo '    //<![CDATA[ '; ?>
 	GEvent.addListener(marker, "click", function() {
 	marker.openInfoWindowHtml(WINDOW_HTML);
 	  });
-	marker.openInfoWindowHtml(WINDOW_HTML);			
+	marker.openInfoWindowHtml(WINDOW_HTML);
       }
     }
     //]]>
@@ -85,7 +85,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		$msg=_('Customer code has been used in preference to the customer phone entered') . '.';
 	}
 	If (($_POST['Keywords']=="") AND ($_POST['CustCode']=="") AND ($_POST['CustPhone']=="")) {
-			
+
 		$SQL= "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
 				custbranch.brname,
@@ -95,7 +95,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 			FROM debtorsmaster LEFT JOIN custbranch
 				ON debtorsmaster.debtorno = custbranch.debtorno
 			ORDER BY debtorsmaster.debtorno";
-		
+
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
 
@@ -111,7 +111,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 				$i=strpos($_POST['Keywords']," ",$i) +1;
 			}
 			$SearchString = $SearchString . substr($_POST['Keywords'],$i)."%";
-	
+
 				$SQL = "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
 				custbranch.brname,
@@ -202,6 +202,7 @@ If ($_POST['Select']!="" OR
 	echo '<a href="' . $rootpath . '/PrintCustStatements.php?FromCust=' . $_SESSION['CustomerID'] . '&ToCust=' . $_SESSION['CustomerID'] . '&PrintPDF=Yes">' . _('Print Customer Statement') . '</a><BR>';
 	echo '<a href="' . $rootpath . '/SelectSalesOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Modify Outstanding Sales Orders') . '</a><BR>';
 	echo '<a href="' . $rootpath . '/SelectCompletedOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Order Inquiries') . '</a><BR>';
+	echo '<a href="' . $rootpath . '/CustomerAllocations.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Allocate Receipts or Credit Notes') . '</a><BR>';
 
 	wikiLink('Customer', $_SESSION['CustomerID']);
 
