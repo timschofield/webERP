@@ -1,5 +1,6 @@
-CREATE DATABASE weberp;
-USE weberp;
+CREATE DATABASE weberpdemo;
+USE weberpdemo;
+
 SET FOREIGN_KEY_CHECKS = 0;
 -- MySQL dump 10.11
 --
@@ -4832,13 +4833,13 @@ INSERT INTO `custallocns` VALUES (1,'15.9500','2007-08-02',2,1);
 -- Dumping data for table `custbranch`
 --
 
-INSERT INTO `custbranch` VALUES ('ANGRY','ANGRY','Angus Rouledge - Toronto','P O Box 671','Gowerbridge','Upperton','Toronto ','Canada','',3,'TR','ERI',0,'0422 2245 2213','0422 2245 2215','Granville Thomas','graville@angry.com','TOR',2,1,1,0,'','','','','','','','',0);
-INSERT INTO `custbranch` VALUES ('ANGRYFL','ANGRY','Angus Rouledge - Florida','1821 Sunnyside','Ft Lauderdale','Florida','42554','','',3,'FL','PHO',0,'2445 2232 524','2445 2232 522','Wendy Blowers','wendy@angry.com','TOR',1,1,1,0,'','','','','','','Watch out can bite!','',0);
-INSERT INTO `custbranch` VALUES ('DUMBLE','DUMBLE','Dumbledoor McGonagal & Co','Hogwarts castle','Platform 9.75','','','','',1,'TR','ERI',0,'Owls only','Owls only','Minerva McGonagal','mmgonagal@hogwarts.edu.uk','TOR',3,10,1,0,'','','','','','','','',0);
-INSERT INTO `custbranch` VALUES ('JOLOMU','JOLOMU','Lorrima Productions Inc','3215 Great Western Highway','Blubberhouses','Yorkshire','England','','',20,'FL','PHO',0,'+44 812 211456','+44 812 211 554','Jo Lomu','jolomu@lorrima.co.uk','TOR',3,1,1,0,'','','','','','','','',0);
-INSERT INTO `custbranch` VALUES ('QUARTER','QUARTER','Quarter Back to Back','1356 Union Drive','Holborn','England','','','',5,'FL','ERI',0,'123456','1234567','','','TOR',3,1,1,0,'','','','','','','','',0);
-INSERT INTO `custbranch` VALUES ('QUIC','QUICK','Quick Brown PLC','Fox Street','Jumped Over','The Lazy Dog','','','',1,'FL','ERI',0,'','','','','TOR',1,1,1,0,'','','','','','','','',0);
-INSERT INTO `custbranch` VALUES ('SLOW','QUICK','Slow Dog','Hunstman Road','Woofton','','','','',1,'TR','ERI',0,'','','Staffordshire Terrier','','TOR',2,1,1,0,'','','','','','','','',0);
+INSERT INTO `custbranch` VALUES ('ANGRY','ANGRY','Angus Rouledge - Toronto','P O Box 671','Gowerbridge','Upperton','Toronto ','Canada','',0.0,0.0,3,'TR','ERI',0,'0422 2245 2213','0422 2245 2215','Granville Thomas','graville@angry.com','TOR',2,1,1,0,'','','','','','','','');
+INSERT INTO `custbranch` VALUES ('ANGRYFL','ANGRY','Angus Rouledge - Florida','1821 Sunnyside','Ft Lauderdale','Florida','42554','','',0.0,0.0,3,'FL','PHO',0,'2445 2232 524','2445 2232 522','Wendy Blowers','wendy@angry.com','TOR',1,1,1,0,'','','','','','','Watch out can bite!','');
+INSERT INTO `custbranch` VALUES ('DUMBLE','DUMBLE','Dumbledoor McGonagal & Co','Hogwarts castle','Platform 9.75','','','','',0.0,0.0,1,'TR','ERI',0,'Owls only','Owls only','Minerva McGonagal','mmgonagal@hogwarts.edu.uk','TOR',3,10,1,0,'','','','','','','','');
+INSERT INTO `custbranch` VALUES ('JOLOMU','JOLOMU','Lorrima Productions Inc','3215 Great Western Highway','Blubberhouses','Yorkshire','England','','',0.0,0.0,20,'FL','PHO',0,'+44 812 211456','+44 812 211 554','Jo Lomu','jolomu@lorrima.co.uk','TOR',3,1,1,0,'','','','','','','','');
+INSERT INTO `custbranch` VALUES ('QUARTER','QUARTER','Quarter Back to Back','1356 Union Drive','Holborn','England','','','',0.0,0.0,5,'FL','ERI',0,'123456','1234567','','','TOR',3,1,1,0,'','','','','','','','');
+INSERT INTO `custbranch` VALUES ('QUIC','QUICK','Quick Brown PLC','Fox Street','Jumped Over','The Lazy Dog','','','',0.0,0.0,1,'FL','ERI',0,'','','','','TOR',1,1,1,0,'','','','','','','','');
+INSERT INTO `custbranch` VALUES ('SLOW','QUICK','Slow Dog','Hunstman Road','Woofton','','','','',0.0,0.0,1,'TR','ERI',0,'','','Staffordshire Terrier','','TOR',2,1,1,0,'','','','','','','','');
 
 --
 -- Dumping data for table `custcontacts`
@@ -4853,11 +4854,11 @@ INSERT INTO `custcontacts` VALUES (5,'ANGRY','Bob (Robert) Bruce','Chairman',102
 -- Dumping data for table `debtorsmaster`
 --
 
-INSERT INTO `debtorsmaster` VALUES ('ANGRY','Angus Rouledge Younger &amp; Son','P O Box 67','Gowerbridge','Upperton','Michigan','','','USD','DE','2005-04-30 00:00:00',1,'7',0,0,5000,'2005-09-30 00:00:00',5000,0,'',0,0,'','email','','','','1344-654-112',0);
-INSERT INTO `debtorsmaster` VALUES ('DUMBLE','Dumbledoor McGonagal & Co','Hogwarts castle','Platform 9.75','','','','','GBP','DE','2005-06-18 00:00:00',1,'30',0,0,0,NULL,1000,0,'',0,0,'','email','','','','',0);
-INSERT INTO `debtorsmaster` VALUES ('JOLOMU','Lorrima Productions Inc','3215 Great Western Highway','Blubberhouses','Yorkshire','England','','','GBP','DE','2005-06-15 00:00:00',1,'30',0,0,0,NULL,1000,0,'',0,0,'','email','','','','',0);
-INSERT INTO `debtorsmaster` VALUES ('QUARTER','Quarter Back to Back','1356 Union Drive','Holborn','England','','','','CHF','DE','2005-09-03 00:00:00',1,'20',0,0,0,NULL,1000,0,'',0,0,'','email','','','','',0);
-INSERT INTO `debtorsmaster` VALUES ('QUICK','Quick Brown PLC','Fox Street','Jumped Over','The Lazy Dog','','','','USD','DE','2007-01-30 00:00:00',1,'20',0,0,0,NULL,1000,0,'',0,0,'','email','','','','',0);
+INSERT INTO `debtorsmaster` VALUES ('ANGRY','Angus Rouledge Younger &amp; Son','P O Box 67','Gowerbridge','Upperton','Michigan','','','USD','DE','2005-04-30 00:00:00',1,'7',0,0,5000,'2005-09-30 00:00:00',5000,0,'',0,0,'','email','','','','1344-654-112',0,1);
+INSERT INTO `debtorsmaster` VALUES ('DUMBLE','Dumbledoor McGonagal & Co','Hogwarts castle','Platform 9.75','','','','','GBP','DE','2005-06-18 00:00:00',1,'30',0,0,0,NULL,1000,0,'',0,0,'','email','','','','',0,1);
+INSERT INTO `debtorsmaster` VALUES ('JOLOMU','Lorrima Productions Inc','3215 Great Western Highway','Blubberhouses','Yorkshire','England','','','GBP','DE','2005-06-15 00:00:00',1,'30',0,0,0,NULL,1000,0,'',0,0,'','email','','','','',0,1);
+INSERT INTO `debtorsmaster` VALUES ('QUARTER','Quarter Back to Back','1356 Union Drive','Holborn','England','','','','CHF','DE','2005-09-03 00:00:00',1,'20',0,0,0,NULL,1000,0,'',0,0,'','email','','','','',0,1);
+INSERT INTO `debtorsmaster` VALUES ('QUICK','Quick Brown PLC','Fox Street','Jumped Over','The Lazy Dog','','','','USD','DE','2007-01-30 00:00:00',1,'20',0,0,0,NULL,1000,0,'',0,0,'','email','','','','',0,1);
 
 --
 -- Dumping data for table `debtortrans`
@@ -5046,64 +5047,64 @@ INSERT INTO `factorcompanies` VALUES (1,'None','','','','','','','','','','');
 -- Dumping data for table `gltrans`
 --
 
-INSERT INTO `gltrans` VALUES (3,26,1,0,'2007-06-14',2,1460,'3 DVD-DHWV x 2 @ 5.25',10.5,1,'');
-INSERT INTO `gltrans` VALUES (4,26,1,0,'2007-06-14',2,1460,'3 DVD-DHWV x 2 @ 5.25',-10.5,1,'');
-INSERT INTO `gltrans` VALUES (5,28,2,0,'2007-06-18',2,1460,'3 DVD-TOPGUN x 1 @ 6.50',6.5,1,'');
-INSERT INTO `gltrans` VALUES (6,28,2,0,'2007-06-18',2,1460,'3 DVD-TOPGUN x 1 @ 6.50',-6.5,1,'');
-INSERT INTO `gltrans` VALUES (7,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION Component: DVD-DHWV - 10 x 1 @ 5.25',52.5,1,'');
-INSERT INTO `gltrans` VALUES (8,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION -> DVD-DHWV - 10 x 1 @ 5.25',-52.5,1,'');
-INSERT INTO `gltrans` VALUES (9,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION Component: DVD-LTWP - 10 x 1 @ 2.85',28.5,1,'');
-INSERT INTO `gltrans` VALUES (10,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION -> DVD-LTWP - 10 x 1 @ 2.85',-28.5,1,'');
-INSERT INTO `gltrans` VALUES (11,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION Component: DVD-UNSG - 10 x 1 @ 5.00',50,1,'');
-INSERT INTO `gltrans` VALUES (12,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION -> DVD-UNSG - 10 x 1 @ 5.00',-50,1,'');
-INSERT INTO `gltrans` VALUES (13,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION Component: DVD-UNSG2 - 10 x 1 @ 5.00',50,1,'');
-INSERT INTO `gltrans` VALUES (14,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION -> DVD-UNSG2 - 10 x 1 @ 5.00',-50,1,'');
-INSERT INTO `gltrans` VALUES (15,26,2,0,'2007-06-18',2,1460,'3 DVD_ACTION - Action Series Bundle x 10 @ 18.40',184,1,'');
-INSERT INTO `gltrans` VALUES (16,26,2,0,'2007-06-18',2,1460,'3 DVD_ACTION - Action Series Bundle x 10 @ 18.40',-184,1,'');
-INSERT INTO `gltrans` VALUES (17,29,1,0,'2007-06-18',2,1460,'3 - DVD_ACTION share of variance',5,1,'');
-INSERT INTO `gltrans` VALUES (18,29,1,0,'2007-06-18',2,1460,'3 - DVD_ACTION share of variance',-5,1,'');
-INSERT INTO `gltrans` VALUES (19,28,4,0,'2007-06-21',2,1440,'5 FLOUR x 4 @ 3.89',15.56,1,'');
-INSERT INTO `gltrans` VALUES (20,28,4,0,'2007-06-21',2,1460,'5 FLOUR x 4 @ 3.89',-15.56,1,'');
-INSERT INTO `gltrans` VALUES (21,10,1,0,'2007-06-26',2,5000,'QUARTER - DVD-DHWV x 2 @ 5.2500',10.5,1,'');
-INSERT INTO `gltrans` VALUES (22,10,1,0,'2007-06-26',2,1460,'QUARTER - DVD-DHWV x 2 @ 5.2500',-10.5,1,'');
-INSERT INTO `gltrans` VALUES (23,10,1,0,'2007-06-26',2,4100,'QUARTER - DVD-DHWV x 2 @ 15.95',-31.9,1,'');
-INSERT INTO `gltrans` VALUES (24,10,1,0,'2007-06-26',2,5000,'QUARTER - DVD-LTWP x 1 @ 2.8500',2.85,1,'');
-INSERT INTO `gltrans` VALUES (25,10,1,0,'2007-06-26',2,1460,'QUARTER - DVD-LTWP x 1 @ 2.8500',-2.85,1,'');
-INSERT INTO `gltrans` VALUES (26,10,1,0,'2007-06-26',2,4100,'QUARTER - DVD-LTWP x 1 @ 14.5',-14.5,1,'');
-INSERT INTO `gltrans` VALUES (27,10,1,0,'2007-06-26',2,1100,'QUARTER',46.4,1,'');
-INSERT INTO `gltrans` VALUES (28,11,1,0,'2007-08-02',3,5000,'QUARTER - DVD-DHWV x 1 @ 5.2500',-5.25,1,'');
-INSERT INTO `gltrans` VALUES (29,11,1,0,'2007-08-02',3,1460,'QUARTER - DVD-DHWV x 1 @ 5.2500',5.25,1,'');
-INSERT INTO `gltrans` VALUES (30,11,1,0,'2007-08-02',3,4100,'QUARTER - DVD-DHWV x 1 @ 15.950',15.95,1,'');
-INSERT INTO `gltrans` VALUES (31,11,1,0,'2007-08-02',3,1100,'QUARTER',-15.95,1,'');
-INSERT INTO `gltrans` VALUES (32,35,3,0,'2007-08-08',3,5700,'DVD-LTWP cost was 2.85 changed to 2.65 x Quantity on hand of -11',-2.2,1,'');
-INSERT INTO `gltrans` VALUES (33,35,3,0,'2007-08-08',3,1460,'DVD-LTWP cost was 2.85 changed to 2.65 x Quantity on hand of -11',2.2,1,'');
-INSERT INTO `gltrans` VALUES (34,35,4,0,'2007-08-08',3,5700,'DVD-LTWP cost was 2.65 changed to 2.66 x Quantity on hand of -11',0.11,1,'');
-INSERT INTO `gltrans` VALUES (35,35,4,0,'2007-08-08',3,1460,'DVD-LTWP cost was 2.65 changed to 2.66 x Quantity on hand of -11',-0.11,1,'');
-INSERT INTO `gltrans` VALUES (36,35,5,0,'2007-08-08',3,5700,'DVD-LTWP cost was 2.66 changed to 2.7 x Quantity on hand of -11',0.44,1,'');
-INSERT INTO `gltrans` VALUES (37,35,5,0,'2007-08-08',3,1460,'DVD-LTWP cost was 2.66 changed to 2.7 x Quantity on hand of -11',-0.44,1,'');
-INSERT INTO `gltrans` VALUES (38,35,6,0,'2007-08-08',3,5700,'DVD_ACTION cost was 19.3000 changed to 19.15 x Quantity on hand of 10',1.5,1,'');
-INSERT INTO `gltrans` VALUES (39,35,6,0,'2007-08-08',3,1460,'DVD_ACTION cost was 19.3000 changed to 19.15 x Quantity on hand of 10',-1.5,1,'');
-INSERT INTO `gltrans` VALUES (40,35,7,0,'2007-08-09',3,5700,'DVD-DHWV cost was 5.25 changed to 5.3 x Quantity on hand of -13',0.65,1,'');
-INSERT INTO `gltrans` VALUES (41,35,7,0,'2007-08-09',3,1460,'DVD-DHWV cost was 5.25 changed to 5.3 x Quantity on hand of -13',-0.65,1,'');
-INSERT INTO `gltrans` VALUES (42,35,8,0,'2007-08-09',3,5700,'DVD_ACTION cost was 19.1500 changed to 19.2 x Quantity on hand of 10',-0.50000000000001,1,'');
-INSERT INTO `gltrans` VALUES (43,35,8,0,'2007-08-09',3,1460,'DVD_ACTION cost was 19.1500 changed to 19.2 x Quantity on hand of 10',0.50000000000001,1,'');
-INSERT INTO `gltrans` VALUES (44,35,9,0,'2007-08-09',3,5700,'DVD-DHWV cost was 5.3 changed to 5.35 x Quantity on hand of -13',0.65,1,'');
-INSERT INTO `gltrans` VALUES (45,35,9,0,'2007-08-09',3,1460,'DVD-DHWV cost was 5.3 changed to 5.35 x Quantity on hand of -13',-0.65,1,'');
-INSERT INTO `gltrans` VALUES (46,35,10,0,'2007-08-09',3,5700,'DVD_ACTION cost was 19.2000 changed to 19.25 x Quantity on hand of 10',-0.50000000000001,1,'');
-INSERT INTO `gltrans` VALUES (47,35,10,0,'2007-08-09',3,1460,'DVD_ACTION cost was 19.2000 changed to 19.25 x Quantity on hand of 10',0.50000000000001,1,'');
-INSERT INTO `gltrans` VALUES (48,35,11,0,'2007-08-09',3,5700,'DVD-DHWV cost was 5.35 changed to 5.5 x Quantity on hand of -13',1.95,1,'');
-INSERT INTO `gltrans` VALUES (49,35,11,0,'2007-08-09',3,1460,'DVD-DHWV cost was 5.35 changed to 5.5 x Quantity on hand of -13',-1.95,1,'');
-INSERT INTO `gltrans` VALUES (50,35,12,0,'2007-08-09',3,5700,'DVD_ACTION cost was 19.2500 changed to 19.4 x Quantity on hand of 10',-1.5,1,'');
-INSERT INTO `gltrans` VALUES (51,35,12,0,'2007-08-09',3,1460,'DVD_ACTION cost was 19.2500 changed to 19.4 x Quantity on hand of 10',1.5,1,'');
-INSERT INTO `gltrans` VALUES (52,35,13,0,'2007-08-09',3,5700,'DVD-DHWV cost was 5.5 changed to 2.32 x Quantity on hand of -13',-41.34,1,'');
-INSERT INTO `gltrans` VALUES (53,35,13,0,'2007-08-09',3,1460,'DVD-DHWV cost was 5.5 changed to 2.32 x Quantity on hand of -13',41.34,1,'');
-INSERT INTO `gltrans` VALUES (54,35,14,0,'2007-08-09',3,5700,'DVD_ACTION cost was 19.4000 changed to 16.22 x Quantity on hand of 10',31.8,1,'');
-INSERT INTO `gltrans` VALUES (55,35,14,0,'2007-08-09',3,1460,'DVD_ACTION cost was 19.4000 changed to 16.22 x Quantity on hand of 10',-31.8,1,'');
-INSERT INTO `gltrans` VALUES (56,12,1,0,'2007-10-23',5,6100,'test',-150,1,'');
-INSERT INTO `gltrans` VALUES (57,12,1,0,'2007-10-23',5,1030,'',150,1,'');
-INSERT INTO `gltrans` VALUES (58,28,5,0,'2008-06-27',13,1440,'5 - BREAD Component: SALT - 12 x 0.025 @ 2.50',0.75,1,'');
-INSERT INTO `gltrans` VALUES (59,1,2,0,'2008-07-26',14,1350,'testrg',500,1,'');
-INSERT INTO `gltrans` VALUES (60,1,2,0,'2008-07-26',14,1030,'',-500,1,'');
+INSERT INTO `gltrans` VALUES (3,26,1,0,'2007-06-14',2,1460,'3 DVD-DHWV x 2 @ 5.25',10.5,1,'',0);
+INSERT INTO `gltrans` VALUES (4,26,1,0,'2007-06-14',2,1460,'3 DVD-DHWV x 2 @ 5.25',-10.5,1,'',0);
+INSERT INTO `gltrans` VALUES (5,28,2,0,'2007-06-18',2,1460,'3 DVD-TOPGUN x 1 @ 6.50',6.5,1,'',0);
+INSERT INTO `gltrans` VALUES (6,28,2,0,'2007-06-18',2,1460,'3 DVD-TOPGUN x 1 @ 6.50',-6.5,1,'',0);
+INSERT INTO `gltrans` VALUES (7,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION Component: DVD-DHWV - 10 x 1 @ 5.25',52.5,1,'',0);
+INSERT INTO `gltrans` VALUES (8,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION -> DVD-DHWV - 10 x 1 @ 5.25',-52.5,1,'',0);
+INSERT INTO `gltrans` VALUES (9,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION Component: DVD-LTWP - 10 x 1 @ 2.85',28.5,1,'',0);
+INSERT INTO `gltrans` VALUES (10,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION -> DVD-LTWP - 10 x 1 @ 2.85',-28.5,1,'',0);
+INSERT INTO `gltrans` VALUES (11,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION Component: DVD-UNSG - 10 x 1 @ 5.00',50,1,'',0);
+INSERT INTO `gltrans` VALUES (12,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION -> DVD-UNSG - 10 x 1 @ 5.00',-50,1,'',0);
+INSERT INTO `gltrans` VALUES (13,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION Component: DVD-UNSG2 - 10 x 1 @ 5.00',50,1,'',0);
+INSERT INTO `gltrans` VALUES (14,28,3,0,'2007-06-18',2,1460,'3 - DVD_ACTION -> DVD-UNSG2 - 10 x 1 @ 5.00',-50,1,'',0);
+INSERT INTO `gltrans` VALUES (15,26,2,0,'2007-06-18',2,1460,'3 DVD_ACTION - Action Series Bundle x 10 @ 18.40',184,1,'',0);
+INSERT INTO `gltrans` VALUES (16,26,2,0,'2007-06-18',2,1460,'3 DVD_ACTION - Action Series Bundle x 10 @ 18.40',-184,1,'',0);
+INSERT INTO `gltrans` VALUES (17,29,1,0,'2007-06-18',2,1460,'3 - DVD_ACTION share of variance',5,1,'',0);
+INSERT INTO `gltrans` VALUES (18,29,1,0,'2007-06-18',2,1460,'3 - DVD_ACTION share of variance',-5,1,'',0);
+INSERT INTO `gltrans` VALUES (19,28,4,0,'2007-06-21',2,1440,'5 FLOUR x 4 @ 3.89',15.56,1,'',0);
+INSERT INTO `gltrans` VALUES (20,28,4,0,'2007-06-21',2,1460,'5 FLOUR x 4 @ 3.89',-15.56,1,'',0);
+INSERT INTO `gltrans` VALUES (21,10,1,0,'2007-06-26',2,5000,'QUARTER - DVD-DHWV x 2 @ 5.2500',10.5,1,'',0);
+INSERT INTO `gltrans` VALUES (22,10,1,0,'2007-06-26',2,1460,'QUARTER - DVD-DHWV x 2 @ 5.2500',-10.5,1,'',0);
+INSERT INTO `gltrans` VALUES (23,10,1,0,'2007-06-26',2,4100,'QUARTER - DVD-DHWV x 2 @ 15.95',-31.9,1,'',0);
+INSERT INTO `gltrans` VALUES (24,10,1,0,'2007-06-26',2,5000,'QUARTER - DVD-LTWP x 1 @ 2.8500',2.85,1,'',0);
+INSERT INTO `gltrans` VALUES (25,10,1,0,'2007-06-26',2,1460,'QUARTER - DVD-LTWP x 1 @ 2.8500',-2.85,1,'',0);
+INSERT INTO `gltrans` VALUES (26,10,1,0,'2007-06-26',2,4100,'QUARTER - DVD-LTWP x 1 @ 14.5',-14.5,1,'',0);
+INSERT INTO `gltrans` VALUES (27,10,1,0,'2007-06-26',2,1100,'QUARTER',46.4,1,'',0);
+INSERT INTO `gltrans` VALUES (28,11,1,0,'2007-08-02',3,5000,'QUARTER - DVD-DHWV x 1 @ 5.2500',-5.25,1,'',0);
+INSERT INTO `gltrans` VALUES (29,11,1,0,'2007-08-02',3,1460,'QUARTER - DVD-DHWV x 1 @ 5.2500',5.25,1,'',0);
+INSERT INTO `gltrans` VALUES (30,11,1,0,'2007-08-02',3,4100,'QUARTER - DVD-DHWV x 1 @ 15.950',15.95,1,'',0);
+INSERT INTO `gltrans` VALUES (31,11,1,0,'2007-08-02',3,1100,'QUARTER',-15.95,1,'',0);
+INSERT INTO `gltrans` VALUES (32,35,3,0,'2007-08-08',3,5700,'DVD-LTWP cost was 2.85 changed to 2.65 x Quantity on hand of -11',-2.2,1,'',0);
+INSERT INTO `gltrans` VALUES (33,35,3,0,'2007-08-08',3,1460,'DVD-LTWP cost was 2.85 changed to 2.65 x Quantity on hand of -11',2.2,1,'',0);
+INSERT INTO `gltrans` VALUES (34,35,4,0,'2007-08-08',3,5700,'DVD-LTWP cost was 2.65 changed to 2.66 x Quantity on hand of -11',0.11,1,'',0);
+INSERT INTO `gltrans` VALUES (35,35,4,0,'2007-08-08',3,1460,'DVD-LTWP cost was 2.65 changed to 2.66 x Quantity on hand of -11',-0.11,1,'',0);
+INSERT INTO `gltrans` VALUES (36,35,5,0,'2007-08-08',3,5700,'DVD-LTWP cost was 2.66 changed to 2.7 x Quantity on hand of -11',0.44,1,'',0);
+INSERT INTO `gltrans` VALUES (37,35,5,0,'2007-08-08',3,1460,'DVD-LTWP cost was 2.66 changed to 2.7 x Quantity on hand of -11',-0.44,1,'',0);
+INSERT INTO `gltrans` VALUES (38,35,6,0,'2007-08-08',3,5700,'DVD_ACTION cost was 19.3000 changed to 19.15 x Quantity on hand of 10',1.5,1,'',0);
+INSERT INTO `gltrans` VALUES (39,35,6,0,'2007-08-08',3,1460,'DVD_ACTION cost was 19.3000 changed to 19.15 x Quantity on hand of 10',-1.5,1,'',0);
+INSERT INTO `gltrans` VALUES (40,35,7,0,'2007-08-09',3,5700,'DVD-DHWV cost was 5.25 changed to 5.3 x Quantity on hand of -13',0.65,1,'',0);
+INSERT INTO `gltrans` VALUES (41,35,7,0,'2007-08-09',3,1460,'DVD-DHWV cost was 5.25 changed to 5.3 x Quantity on hand of -13',-0.65,1,'',0);
+INSERT INTO `gltrans` VALUES (42,35,8,0,'2007-08-09',3,5700,'DVD_ACTION cost was 19.1500 changed to 19.2 x Quantity on hand of 10',-0.50000000000001,1,'',0);
+INSERT INTO `gltrans` VALUES (43,35,8,0,'2007-08-09',3,1460,'DVD_ACTION cost was 19.1500 changed to 19.2 x Quantity on hand of 10',0.50000000000001,1,'',0);
+INSERT INTO `gltrans` VALUES (44,35,9,0,'2007-08-09',3,5700,'DVD-DHWV cost was 5.3 changed to 5.35 x Quantity on hand of -13',0.65,1,'',0);
+INSERT INTO `gltrans` VALUES (45,35,9,0,'2007-08-09',3,1460,'DVD-DHWV cost was 5.3 changed to 5.35 x Quantity on hand of -13',-0.65,1,'',0);
+INSERT INTO `gltrans` VALUES (46,35,10,0,'2007-08-09',3,5700,'DVD_ACTION cost was 19.2000 changed to 19.25 x Quantity on hand of 10',-0.50000000000001,1,'',0);
+INSERT INTO `gltrans` VALUES (47,35,10,0,'2007-08-09',3,1460,'DVD_ACTION cost was 19.2000 changed to 19.25 x Quantity on hand of 10',0.50000000000001,1,'',0);
+INSERT INTO `gltrans` VALUES (48,35,11,0,'2007-08-09',3,5700,'DVD-DHWV cost was 5.35 changed to 5.5 x Quantity on hand of -13',1.95,1,'',0);
+INSERT INTO `gltrans` VALUES (49,35,11,0,'2007-08-09',3,1460,'DVD-DHWV cost was 5.35 changed to 5.5 x Quantity on hand of -13',-1.95,1,'',0);
+INSERT INTO `gltrans` VALUES (50,35,12,0,'2007-08-09',3,5700,'DVD_ACTION cost was 19.2500 changed to 19.4 x Quantity on hand of 10',-1.5,1,'',0);
+INSERT INTO `gltrans` VALUES (51,35,12,0,'2007-08-09',3,1460,'DVD_ACTION cost was 19.2500 changed to 19.4 x Quantity on hand of 10',1.5,1,'',0);
+INSERT INTO `gltrans` VALUES (52,35,13,0,'2007-08-09',3,5700,'DVD-DHWV cost was 5.5 changed to 2.32 x Quantity on hand of -13',-41.34,1,'',0);
+INSERT INTO `gltrans` VALUES (53,35,13,0,'2007-08-09',3,1460,'DVD-DHWV cost was 5.5 changed to 2.32 x Quantity on hand of -13',41.34,1,'',0);
+INSERT INTO `gltrans` VALUES (54,35,14,0,'2007-08-09',3,5700,'DVD_ACTION cost was 19.4000 changed to 16.22 x Quantity on hand of 10',31.8,1,'',0);
+INSERT INTO `gltrans` VALUES (55,35,14,0,'2007-08-09',3,1460,'DVD_ACTION cost was 19.4000 changed to 16.22 x Quantity on hand of 10',-31.8,1,'',0);
+INSERT INTO `gltrans` VALUES (56,12,1,0,'2007-10-23',5,6100,'test',-150,1,'',0);
+INSERT INTO `gltrans` VALUES (57,12,1,0,'2007-10-23',5,1030,'',150,1,'',0);
+INSERT INTO `gltrans` VALUES (58,28,5,0,'2008-06-27',13,1440,'5 - BREAD Component: SALT - 12 x 0.025 @ 2.50',0.75,1,'',0);
+INSERT INTO `gltrans` VALUES (59,1,2,0,'2008-07-26',14,1350,'testrg',500,1,'',0);
+INSERT INTO `gltrans` VALUES (60,1,2,0,'2008-07-26',14,1030,'',-500,1,'',0);
 
 --
 -- Dumping data for table `grns`
@@ -5570,8 +5571,8 @@ INSERT INTO `salesorderdetails` VALUES (1,2,'DVD-TOPGUN',0,5.25,1,0,0,'0000-00-0
 -- Dumping data for table `salesorders`
 --
 
-INSERT INTO `salesorders` VALUES (1,'QUARTER','QUARTER','',NULL,' Inv 1','2007-06-25','DE',1,'1356 Union Drive','Holborn','England','','','','123456','','Quarter Back to Back',1,0,'TOR','2007-06-26',0,'0000-00-00',0,0);
-INSERT INTO `salesorders` VALUES (2,'QUARTER','QUARTER','',NULL,'','2007-06-27','DE',1,'1356 Union Drive','Holborn','England','','','','123456','','Quarter Back to Back',1,0,'TOR','2007-06-28',0,'0000-00-00',0,0);
+INSERT INTO `salesorders` VALUES (1,'QUARTER','QUARTER','',NULL,' Inv 1','2007-06-25','DE',1,'1356 Union Drive','Holborn','England','','','','123456','','Quarter Back to Back',1,0,'TOR','2007-06-26',0,'0000-00-00',0);
+INSERT INTO `salesorders` VALUES (2,'QUARTER','QUARTER','',NULL,'','2007-06-27','DE',1,'1356 Union Drive','Holborn','England','','','','123456','','Quarter Back to Back',1,0,'TOR','2007-06-28',0,'0000-00-00',0);
 
 --
 -- Dumping data for table `salestypes`
@@ -5887,23 +5888,23 @@ INSERT INTO `stockcatproperties` VALUES (3,'AIRCON','inverter',2,'',0);
 -- Dumping data for table `stockmaster`
 --
 
-INSERT INTO `stockmaster` VALUES ('BREAD','FOOD','Bread','Bread','each','M','1800-01-01','0.0000','8.8785','6.0085','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,'');
-INSERT INTO `stockmaster` VALUES ('DVD-CASE','AIRCON','webERP Demo DVD Case','webERP Demo DVD Case','each','B','1800-01-01','0.0000','0.0000','0.3000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,1,'none',0,0,'');
-INSERT INTO `stockmaster` VALUES ('DVD-DHWV','DVD','Die Hard With A Vengeance Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). <br />Languages: English, Deutsch. <br />Subtitles: English, Deutsch, Spanish. <br />Audio: Dolby Surround 5.1. <br />Picture Format: 16:9 Wide-Screen. <br />Length: (approx) 122 minutes. <br />Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','5.5000','2.3200','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0,'');
-INSERT INTO `stockmaster` VALUES ('DVD-LTWP','AIRCON','Lethal Weapon Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r\n<br />\r\nLanguages: English, Deutsch.\r\n<br />\r\nSubtitles: English, Deutsch, Spanish.\r\n<br />\r\nAudio: Dolby Surround 5.1.\r\n<br />\r\nPicture Format: 16:9 Wide-Screen.\r\n<br />\r\nLength: (approx) 100 minutes.\r\n<br />\r\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','2.6600','2.7000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0,'');
-INSERT INTO `stockmaster` VALUES ('DVD-TOPGUN','DVD','Top Gun DVD','Top Gun DVD','each','B','1800-01-01','0.0000','0.0000','6.5000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,'none',0,0,'');
-INSERT INTO `stockmaster` VALUES ('DVD-UNSG','DVD','Under Siege Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). <br />Languages: English, Deutsch. <br />Subtitles: English, Deutsch, Spanish. <br />Audio: Dolby Surround 5.1. <br />Picture Format: 16:9 Wide-Screen. <br />Length: (approx) 98 minutes. <br />Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','0.0000','5.0000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0,'');
-INSERT INTO `stockmaster` VALUES ('DVD-UNSG2','DVD','Under Siege 2 - Dark Territory','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r<br />\nLanguages: English, Deutsch.\r<br />\nSubtitles: English, Deutsch, Spanish.\r<br />\nAudio: Dolby Surround 5.1.\r<br />\nPicture Format: 16:9 Wide-Screen.\r<br />\nLength: (approx) 98 minutes.\r<br />\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','0.0000','5.0000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0,'');
-INSERT INTO `stockmaster` VALUES ('DVD_ACTION','DVD','Action Series Bundle','Under Seige I and Under Seige II\r\n','each','M','1800-01-01','0.0000','0.0000','16.2200','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,'');
-INSERT INTO `stockmaster` VALUES ('FLOUR','AIRCON','High Grade Flour','High Grade Flour','kgs','B','1800-01-01','0.0000','0.0000','3.8900','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,'none',0,1,'');
-INSERT INTO `stockmaster` VALUES ('FUJI990101','AIRCON','Fujitsu 990101 Split type Indoor Unit 3.5kw','Fujitsu 990101 Split type Indoor Unit 3.5kw Heat Pump with mounting screws and isolating switch','each','B','1800-01-01','0.0000','995.7138','1015.6105','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,4,'');
-INSERT INTO `stockmaster` VALUES ('FUJI990102','AIRCON','Fujitsu 990102 split type A/C Outdoor unit 3.5kw','Fujitsu 990102 split type A/C Outdoor unit 3.5kw with 5m piping & insulation','each','B','1800-01-01','0.0000','0.0000','633.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,'');
-INSERT INTO `stockmaster` VALUES ('FUJI9901ASS','AIRCON','Fujitsu 990101 Split type A/C 3.5kw complete','Fujitsu 990101 Split type A/C 3.5kw complete with indoor and outdoor units 5m pipe and insulation isolating switch. 5 year warranty','each','A','1800-01-01','0.0000','0.0000','0.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,'');
-INSERT INTO `stockmaster` VALUES ('HIT3042-4','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor Unit - wall hung complete with brackets and screws. 220V-240V AC\r\n5 year guaranttee','each','M','1800-01-01','0.0000','0.0000','853.0000','0.0000','0.0000',0,0,1,5,'0.4000','7.8000','','',1,1,'none',0,0,'');
-INSERT INTO `stockmaster` VALUES ('HIT3043-5','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor unit - including 5m piping for fitting to HIT3042-4 indoor unit\r\n5 year guaranttee','each','B','1800-01-01','0.0000','0.0000','1235.0000','0.0000','0.0000',0,0,1,5,'0.8500','16.0000','','',1,1,'none',0,0,'');
-INSERT INTO `stockmaster` VALUES ('SALT','BAKE','Salt','Salt','kgs','B','1800-01-01','0.0000','1.2000','2.5000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,3,'');
-INSERT INTO `stockmaster` VALUES ('SLICE','FOOD','Slice Of Bread','Slice Of Bread','each','M','1800-01-01','0.0000','0.0000','0.6009','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0,'');
-INSERT INTO `stockmaster` VALUES ('YEAST','BAKE','Yeast','Yeast','kgs','B','1800-01-01','0.0000','3.8500','5.0000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,'none',0,3,'');
+INSERT INTO `stockmaster` VALUES ('BREAD','FOOD','Bread','Bread','each','M','1800-01-01','0.0000','8.8785','6.0085','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0);
+INSERT INTO `stockmaster` VALUES ('DVD-CASE','AIRCON','webERP Demo DVD Case','webERP Demo DVD Case','each','B','1800-01-01','0.0000','0.0000','0.3000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,1,'none',0,0);
+INSERT INTO `stockmaster` VALUES ('DVD-DHWV','DVD','Die Hard With A Vengeance Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). <br />Languages: English, Deutsch. <br />Subtitles: English, Deutsch, Spanish. <br />Audio: Dolby Surround 5.1. <br />Picture Format: 16:9 Wide-Screen. <br />Length: (approx) 122 minutes. <br />Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','5.5000','2.3200','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0);
+INSERT INTO `stockmaster` VALUES ('DVD-LTWP','AIRCON','Lethal Weapon Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r\n<br />\r\nLanguages: English, Deutsch.\r\n<br />\r\nSubtitles: English, Deutsch, Spanish.\r\n<br />\r\nAudio: Dolby Surround 5.1.\r\n<br />\r\nPicture Format: 16:9 Wide-Screen.\r\n<br />\r\nLength: (approx) 100 minutes.\r\n<br />\r\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','2.6600','2.7000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0);
+INSERT INTO `stockmaster` VALUES ('DVD-TOPGUN','DVD','Top Gun DVD','Top Gun DVD','each','B','1800-01-01','0.0000','0.0000','6.5000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,'none',0,0);
+INSERT INTO `stockmaster` VALUES ('DVD-UNSG','DVD','Under Siege Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). <br />Languages: English, Deutsch. <br />Subtitles: English, Deutsch, Spanish. <br />Audio: Dolby Surround 5.1. <br />Picture Format: 16:9 Wide-Screen. <br />Length: (approx) 98 minutes. <br />Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','0.0000','5.0000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0);
+INSERT INTO `stockmaster` VALUES ('DVD-UNSG2','DVD','Under Siege 2 - Dark Territory','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r<br />\nLanguages: English, Deutsch.\r<br />\nSubtitles: English, Deutsch, Spanish.\r<br />\nAudio: Dolby Surround 5.1.\r<br />\nPicture Format: 16:9 Wide-Screen.\r<br />\nLength: (approx) 98 minutes.\r<br />\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B','1800-01-01','0.0000','0.0000','5.0000','0.0000','0.0000',0,0,0,0,'0.0000','7.0000','','',1,0,'none',0,0);
+INSERT INTO `stockmaster` VALUES ('DVD_ACTION','DVD','Action Series Bundle','Under Seige I and Under Seige II\r\n','each','M','1800-01-01','0.0000','0.0000','16.2200','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0);
+INSERT INTO `stockmaster` VALUES ('FLOUR','AIRCON','High Grade Flour','High Grade Flour','kgs','B','1800-01-01','0.0000','0.0000','3.8900','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,'none',0,1);
+INSERT INTO `stockmaster` VALUES ('FUJI990101','AIRCON','Fujitsu 990101 Split type Indoor Unit 3.5kw','Fujitsu 990101 Split type Indoor Unit 3.5kw Heat Pump with mounting screws and isolating switch','each','B','1800-01-01','0.0000','995.7138','1015.6105','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,4);
+INSERT INTO `stockmaster` VALUES ('FUJI990102','AIRCON','Fujitsu 990102 split type A/C Outdoor unit 3.5kw','Fujitsu 990102 split type A/C Outdoor unit 3.5kw with 5m piping & insulation','each','B','1800-01-01','0.0000','0.0000','633.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0);
+INSERT INTO `stockmaster` VALUES ('FUJI9901ASS','AIRCON','Fujitsu 990101 Split type A/C 3.5kw complete','Fujitsu 990101 Split type A/C 3.5kw complete with indoor and outdoor units 5m pipe and insulation isolating switch. 5 year warranty','each','A','1800-01-01','0.0000','0.0000','0.0000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0);
+INSERT INTO `stockmaster` VALUES ('HIT3042-4','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor Unit - wall hung complete with brackets and screws. 220V-240V AC\r\n5 year guaranttee','each','M','1800-01-01','0.0000','0.0000','853.0000','0.0000','0.0000',0,0,1,5,'0.4000','7.8000','','',1,1,'none',0,0);
+INSERT INTO `stockmaster` VALUES ('HIT3043-5','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor unit - including 5m piping for fitting to HIT3042-4 indoor unit\r\n5 year guaranttee','each','B','1800-01-01','0.0000','0.0000','1235.0000','0.0000','0.0000',0,0,1,5,'0.8500','16.0000','','',1,1,'none',0,0);
+INSERT INTO `stockmaster` VALUES ('SALT','BAKE','Salt','Salt','kgs','B','1800-01-01','0.0000','1.2000','2.5000','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,3);
+INSERT INTO `stockmaster` VALUES ('SLICE','FOOD','Slice Of Bread','Slice Of Bread','each','M','1800-01-01','0.0000','0.0000','0.6009','0.0000','0.0000',0,0,0,0,'0.0000','0.0000','','',1,0,'none',0,0);
+INSERT INTO `stockmaster` VALUES ('YEAST','BAKE','Yeast','Yeast','kgs','B','1800-01-01','0.0000','3.8500','5.0000','0.0000','0.0000',0,0,1,0,'0.0000','0.0000','','',1,0,'none',0,3);
 
 --
 -- Dumping data for table `stockmoves`
@@ -5959,11 +5960,11 @@ INSERT INTO `suppliercontacts` VALUES ('CRUISE','Barry Toad','Slips','92827','02
 -- Dumping data for table `suppliers`
 --
 
-INSERT INTO `suppliers` VALUES ('BINGO','Binary Green Ocean Inc','Box 3499','Gardenier','San Fransisco','California 54424','','','USD','2003-03-01','30',12,'2007-04-26 00:00:00','','0','',0,1,1);
-INSERT INTO `suppliers` VALUES ('CAMPBELL','Campbell Roberts Inc','Box 9882','Ottowa Rise','','','','','USD','2005-06-23','30',0,NULL,'','0','',0,2,1);
-INSERT INTO `suppliers` VALUES ('CRUISE','Cruise Company Inc','Box 2001','Ft Lauderdale, Florida','','','','','GBP','2005-06-23','30',0,NULL,'123456789012345678901234567890','0','',0,3,1);
-INSERT INTO `suppliers` VALUES ('GOTSTUFF','We Got the Stuff Inc','Test line 1','Test line 2','Test line 3','Test line 4 - editing','','','USD','2005-10-29','20',0,NULL,'','ok then','tell me abou',0,1,1);
-INSERT INTO `suppliers` VALUES ('REGNEW','Reg Newall Inc','P O 5432','Wichita','Wyoming','','','','USD','2005-04-30','30',0,NULL,'','0','',0,1,1);
+INSERT INTO `suppliers` VALUES ('BINGO','Binary Green Ocean Inc','Box 3499','Gardenier','San Fransisco','California 54424','','',0.0,0.0,'USD','2003-03-01','30',12,'2007-04-26 00:00:00','','0','',0,1,1,'');
+INSERT INTO `suppliers` VALUES ('CAMPBELL','Campbell Roberts Inc','Box 9882','Ottowa Rise','','','','',0.0,0.0,'USD','2005-06-23','30',0,NULL,'','0','',0,2,1,'');
+INSERT INTO `suppliers` VALUES ('CRUISE','Cruise Company Inc','Box 2001','Ft Lauderdale, Florida','','','','',0.0,0.0,'GBP','2005-06-23','30',0,NULL,'123456789012345678901234567890','0','',0,3,1,'');
+INSERT INTO `suppliers` VALUES ('GOTSTUFF','We Got the Stuff Inc','Test line 1','Test line 2','Test line 3','Test line 4 - editing','','',0.0,0.0,'USD','2005-10-29','20',0,NULL,'','ok then','tell me abou',0,1,1,'');
+INSERT INTO `suppliers` VALUES ('REGNEW','Reg Newall Inc','P O 5432','Wichita','Wyoming','','','',0.0,0.0,'USD','2005-04-30','30',0,NULL,'','0','',0,1,1,'');
 
 --
 -- Dumping data for table `supptrans`
@@ -6125,11 +6126,6 @@ INSERT INTO `workorders` VALUES (8,'MEL','2008-07-26','2008-07-26',0,0);
 
 INSERT INTO `www_users` VALUES ('admin','weberp','Demonstration user','','','','MEL',8,'2005-04-29 21:34:05','','A4','1,1,1,1,1,1,1,1,',0,50,'silverwolf','en_GB');
 
-
-INSERT INTO periods VALUES (0, (SELECT LAST_DAY(NOW())));
-INSERT INTO periods VALUES (1, (SELECT LAST_DAY(DATE_ADD(NOW(), INTERVAL 1 MONTH))));
-INSERT INTO chartdetails (accountcode, period) SELECT accountcode, 0 FROM chartmaster;
-INSERT INTO chartdetails (accountcode, period) SELECT accountcode, 1 FROM chartmaster;
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
