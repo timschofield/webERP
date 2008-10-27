@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.48 $ */
+/* $Revision: 1.49 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -302,7 +302,6 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 				ordertype,
 				shipvia,
 				deliverto,
-				deliverydate,
 				deladd1,
 				deladd2,
 				deladd3,
@@ -315,7 +314,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 				fromstkloc,
 				deliverydate,
 				quotation,
-                		deliverblind)
+                deliverblind)
 			VALUES (
 				'."'" . $_SESSION['Items']->DebtorNo . "'".',
 				'."'" . $_SESSION['Items']->Branch . "'".',
@@ -324,7 +323,6 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 				'."'" . Date("Y-m-d H:i") . "'".',
 				'."'" . $_SESSION['Items']->DefaultSalesType . "'".',
 				' . $_POST['ShipVia'] .',
-				'."'". DB_escape_string($_SESSION['Items']->DeliveryDate) . "'".',
 				'."'". DB_escape_string($_SESSION['Items']->DeliverTo) . "'".',
 				'."'" . DB_escape_string($_SESSION['Items']->DelAdd1) . "'".',
 				'."'" . DB_escape_string($_SESSION['Items']->DelAdd2) . "'".',
