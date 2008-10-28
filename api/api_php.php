@@ -4,7 +4,7 @@
 
 /* Include session.inc, to allow database connection, and access to
    miscfunctions, and datefunctions.*/
-    $DatabaseName='weberp';
+    $DatabaseName='weberpdemo';
 	$AllowAnyone = true;
 	$PathPrefix=dirname(__FILE__).'/../';
 	include($PathPrefix.'includes/session.inc');

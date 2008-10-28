@@ -489,6 +489,16 @@
 				$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
+	$GetStockTaxRate_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetStockTaxRate_doc = 'This function returns the sales tax rate for the given stock code/tax authority';
+
+	function xmlrpc_GetStockTaxRate($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetStockTaxRate($xmlrpcmsg->getParam(0)->scalarval(),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval(),
+				 			$xmlrpcmsg->getParam(3)->scalarval())));
+	}
+
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
@@ -694,6 +704,10 @@
 			"function" => "xmlrpc_GetGLAccountDetails",
 			"signature" => $GetGLAccountDetails_sig,
 			"docstring" => $GetGLAccountDetails_doc),
+		"weberp.xmlrpc_GetStockTaxRate" => array(
+			"function" => "xmlrpc_GetStockTaxRate",
+			"signature" => $GetStockTaxRate_sig,
+			"docstring" => $GetStockTaxRate_doc),
 		)
 	);
 

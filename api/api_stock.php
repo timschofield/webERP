@@ -646,4 +646,23 @@
 		return $myrow;
 	}
 
+	function GetStockTaxRate($StockID, $TaxAuth, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+		if (sizeof($Errors)!=0) {
+			return $Errors;
+		}
+		$sql='SELECT taxrate FROM taxauthrates LEFT JOIN stockmaster
+				ON taxauthrates.taxcatid=stockmaster.taxcatid
+				WHERE stockid="'.$StockID.'" and taxauthority='.$TaxAuth;
+		$result = DB_Query($sql, $db);
+		$myrow = DB_fetch_row($result);
+		return $myrow;
+	}
+
 ?>
