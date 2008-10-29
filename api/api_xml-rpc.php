@@ -5,10 +5,36 @@
 	include '../xmlrpc/lib/xmlrpc.inc';
 	include '../xmlrpc/lib/xmlrpcs.inc';
 
+	unset($Parameter);
+	unset($ReturnValue);
+	$Description = _('This function is used to insert a new customer into the webERP database.');
+	$Parameter[0]['name'] = _('Customer Details');
+	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+			._('The field names can be found ').'<a href="Z_DescribeTable.php?table=debtorsmaster">'._('here ').'</a>'
+			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
+			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.')
+			.'<p>'._('If the Create Debtor Codes Automatically flag is set, then anything sent in the debtorno field will be ignored, and the debtorno field will be set automatically.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ').
+		_('If the first element is zero then the function was successful. ').
+		_('Otherwise an array of error codes is returned and no insertion takes place. ');
 
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td><b><u>'._('Return Values').'</td></tr>';
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<tr><td></td><td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
 	$InsertCustomer_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertCustomer_doc = 'This function takes an associative array containing the details of a customer to
-			to be inserted, where the keys of the array are the field names in the table debtorsmaster. ';
+	$InsertCustomer_doc = $doc;
 
 	function xmlrpc_InsertCustomer($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -16,9 +42,35 @@
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
+	unset($Parameter);
+	unset($ReturnValue);
+	$Description = _('This function is used to insert a new customer branch into the webERP database.');
+	$Parameter[0]['name'] = _('Branch Details');
+	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+			._('The field names can be found ').'<a href="Z_DescribeTable.php?table=custbranch">'._('here ').'</a>'
+			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
+			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ').
+		_('If the first element is zero then the function was successful. ').
+		_('Otherwise an array of error codes is returned and no insertion takes place. ');
+
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td><b><u>'._('Return Values').'</td></tr>';
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<tr><td></td><td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
 	$InsertBranch_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$InsertBranch_doc = 'This function takes an associative array containing the details of a branch to
-			to be inserted, where the keys of the array are the field names in the table debtorsmaster. ';
+	$InsertBranch_doc = $doc;
 
 	function xmlrpc_InsertBranch($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertBranch(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -26,9 +78,37 @@
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
+	unset($Parameter);
+	unset($ReturnValue);
+	$Description = _('This function is used to modify a customer which is already setup in the webERP database.');
+	$Parameter[0]['name'] = _('Customer Details');
+	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+			._('The field names can be found ').'<a href="Z_DescribeTable.php?table=debtorsmaster">'._('here ').'</a>'
+			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
+			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.')
+			.'<p>'._('The debtorno must already exist in the weberp database.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ').
+		_('If the first element is zero then the function was successful. ').
+		_('Otherwise an array of error codes is returned and no insertion takes place. ');
+
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td></tr><tr><td></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td><b><u>'._('Return Value').'</td></tr>';
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<tr><td></td><td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+
 	$ModifyCustomer_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$ModifyCustomer_doc = 'This function takes an associative array containing the details of a customer to
-			to be updated, where the keys of the array are the field names in the table debtorsmaster. ';
+	$ModifyCustomer_doc = $doc;
 
 	function xmlrpc_ModifyCustomer($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(ModifyCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -36,9 +116,37 @@
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
+	unset($Parameter);
+	unset($ReturnValue);
+	$Description = _('This function is used to modify a customer branch which is already setup in the webERP database.');
+	$Parameter[0]['name'] = _('Branch Details');
+	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+			._('The field names can be found ').'<a href="Z_DescribeTable.php?table=custbranch">'._('here ').'</a>'
+			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
+			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.')
+			.'<p>'._('The branchcode/debtorno combination must already exist in the weberp database.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ').
+		_('If the first element is zero then the function was successful. ').
+		_('Otherwise an array of error codes is returned and no insertion takes place. ');
+
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td></tr><tr><td></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td><b><u>'._('Return Value').'</td></tr>';
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<tr><td></td><td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+
 	$ModifyBranch_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$ModifyBranch_doc = 'This function takes an associative array containing the details of a branch to
-			to be updated, where the keys of the array are the field names in the table debtorsmaster. ';
+	$ModifyBranch_doc = $doc;
 
 	function xmlrpc_ModifyBranch($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(ModifyBranch(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
@@ -46,9 +154,35 @@
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
+	unset($Parameter);
+	unset($ReturnValue);
+	$Description = _('This function is used to retrieve the details of a customer branch from the webERP database.');
+	$Parameter[0]['name'] = _('Debtor number');
+	$Parameter[0]['description'] = _('This is a string value. It must be a valid debtor number that is already in the webERP database.');
+	$Parameter[1]['name'] = _('Branch Code');
+	$Parameter[1]['description'] = _('This is a string value. It must be a valid branch code that is already in the webERP database, and associated with the debtorno in Parameter[0]');
+	$Parameter[2]['name'] = _('User name');
+	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[3]['name'] = _('User password');
+	$Parameter[3]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns a set of key/value pairs containing the details of this branch. ').
+		_('The key will be identical with field name from the custbranch table. All fields will be in the set regardless of whether the value was set.').'<p>'.
+		_('Otherwise an array of error codes is returned. ');
+
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td></tr><tr><td></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td><b><u>'._('Return Value').'</td></tr>';
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<tr><td></td><td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+
 	$GetCustomerBranch_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetCustomerBrancg_doc = 'This function returns an associative array containing the details of the customer
-			branch whose branch and account number is passed to it.';
+	$GetCustomerBranch_doc = $doc;
 
 	function xmlrpc_GetCustomerBranch($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetCustomerBranch($xmlrpcmsg->getParam(0)->scalarval(),
@@ -57,9 +191,33 @@
 				 		$xmlrpcmsg->getParam(3)->scalarval())));
 	}
 
+	unset($Parameter);
+	unset($ReturnValue);
+	$Description = _('This function is used to retrieve the details of a customer from the webERP database.');
+	$Parameter[0]['name'] = _('Debtor number');
+	$Parameter[0]['description'] = _('This is a string value. It must be a valid debtor number that is already in the webERP database.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns a set of key/value pairs containing the details of this customer. ').
+		_('The key will be identical with field name from the debtorsmaster table. All fields will be in the set regardless of whether the value was set.').'<p>'.
+		_('Otherwise an array of error codes is returned. ');
+
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td></tr><tr><td></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td><b><u>'._('Return Value').'</td></tr>';
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<tr><td></td><td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+
 	$GetCustomer_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
-	$GetCustomer_doc = 'This function returns an associative array containing the details of the customer
-			whose account number is passed to it.';
+	$GetCustomer_doc = $doc;
 
 	function xmlrpc_GetCustomer($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetCustomer($xmlrpcmsg->getParam(0)->scalarval(),
@@ -499,6 +657,80 @@
 				 			$xmlrpcmsg->getParam(3)->scalarval())));
 	}
 
+	unset($Parameter);
+	unset($ReturnValue);
+	$Description = _('This function is used to insert a new supplier into the webERP database.');
+	$Parameter[0]['name'] = _('Supplier Details');
+	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+			._('The field names can be found ').'<a href="Z_DescribeTable.php?table=suppliers">'._('here ').'</a>'
+			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
+			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ').
+		_('If the first element is zero then the function was successful. ').
+		_('Otherwise an array of error codes is returned and no insertion takes place. ');
+
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td><b><u>'._('Return Values').'</td></tr>';
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<tr><td></td><td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+	$InsertSupplier_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$InsertSupplier_doc = $doc;
+
+	function xmlrpc_InsertSupplier($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(InsertSupplier(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
+	unset($Parameter);
+	unset($ReturnValue);
+	$Description = _('This function is used to modify a supplier which is already setup in the webERP database.');
+	$Parameter[0]['name'] = _('Supplier Details');
+	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+			._('The field names can be found ').'<a href="Z_DescribeTable.php?table=suppliers">'._('here ').'</a>'
+			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
+			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.')
+			.'<p>'._('The supplierid must already exist in the weberp database.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ').
+		_('If the first element is zero then the function was successful. ').
+		_('Otherwise an array of error codes is returned and no modification takes place. ');
+
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td></tr><tr><td></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td><b><u>'._('Return Value').'</td></tr>';
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<tr><td></td><td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+
+	$ModifyCustomer_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$ModifyCustomer_doc = $doc;
+
+	function xmlrpc_ModifyCustomer($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(ModifyCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
@@ -708,6 +940,14 @@
 			"function" => "xmlrpc_GetStockTaxRate",
 			"signature" => $GetStockTaxRate_sig,
 			"docstring" => $GetStockTaxRate_doc),
+		"weberp.xmlrpc_InsertSupplier" => array(
+			"function" => "xmlrpc_InsertSupplier",
+			"signature" => $InsertSupplier_sig,
+			"docstring" => $InsertSupplier_doc),
+		"weberp.xmlrpc_ModifySupplier" => array(
+			"function" => "xmlrpc_ModifySupplier",
+			"signature" => $ModifySupplier_sig,
+			"docstring" => $ModifySupplier_doc),
 		)
 	);
 

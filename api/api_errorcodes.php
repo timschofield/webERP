@@ -127,6 +127,15 @@
 	Define('InvalidStockType', 1123);
 	Define('GLAccountCodeDoesntExists', 1124);
 	Define('StockCategoryAlreadyExists', 1125);
+	Define('SupplierNoAlreadyExists', 1126);
+	Define('IncorrectSupplierNameLength', 1127);
+	Define('InvalidSupplierSinceDate', 1128);
+	Define('InvalidBankAccount', 1129);
+	Define('InvalidBankReference', 1130);
+	Define('InvalidBankPartics', 1131);
+	Define('InvalidRemittanceFlag', 1132);
+	Define('FactorCompanyNotSetup', 1133);
+	Define('SupplierNoDoesntExists', 1134);
 
 /* Array of Descriptions of errors */
 	$ErrorDescription['1'] = _('No Authorisation');
@@ -255,5 +264,14 @@
 	$ErrorDescription['1123'] = _('Invalid stock type');
 	$ErrorDescription['1124'] = _('GL account code doesnt exist');
 	$ErrorDescription['1125'] = _('Stock category already exists');
+	$ErrorDescription['1126'] = _('Supplier code already exists');
+	$ErrorDescription['1127'] = _('Incorrect supplier name length, or supplier name doesnt exist');
+	$ErrorDescription['1128'] = _('Incorrect supplier since date');
+	$ErrorDescription['1129'] = _('Incorrect bank account');
+	$ErrorDescription['1130'] = _('Incorrect bank reference');
+	$ErrorDescription['1131'] = _('Incorrect bank partics');
+	$ErrorDescription['1132'] = _('Incorrect remittance flags');
+	$ErrorDescription['1133'] = _('Factor company not set up');
+	$ErrorDescription['1134'] = _('Supplier doesnt exist');
 
 ?>
