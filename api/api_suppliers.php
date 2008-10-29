@@ -321,4 +321,28 @@
 			return $Errors;
 		}
 	}
+
+/* This function takes a field name, and a string, and then returns an
+   array of supplier ids that fulfill this criteria.
+*/
+	function SearchSuppliers($Field, $Criteria, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$sql='SELECT supplierid
+			FROM suppliers
+			WHERE '.$Field.' LIKE "%'.$Criteria.'%"';
+		$result = DB_Query($sql, $db);
+		$i=0;
+		$SupplierList = array();
+		while ($myrow=DB_fetch_array($result)) {
+			$SupplierList[$i]=$myrow[0];
+			$i++;
+		}
+		return $DebtorList;
+	}
+
 ?>

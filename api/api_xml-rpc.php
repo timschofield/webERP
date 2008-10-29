@@ -766,6 +766,42 @@
 				 		$xmlrpcmsg->getParam(3)->scalarval())));
 	}
 
+	unset($Parameter);
+	unset($ReturnValue);
+	$Description = _('This function is used to retrieve the details of a customer branch from the webERP database.');
+	$Parameter[0]['name'] = _('Field name');
+	$Parameter[0]['description'] = _('This is a string value. It must be a valid field in the suppliers table. This is case sensitive');
+	$Parameter[1]['name'] = _('Criteria');
+	$Parameter[1]['description'] = _('This is a string value. It holds the string that is searched for in the given field. It will search for all or part of the field.');
+	$Parameter[2]['name'] = _('User name');
+	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[3]['name'] = _('User password');
+	$Parameter[3]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns an array of supplier ids. ').
+		_('Otherwise an array of error codes is returned. ');
+
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td></tr><tr><td></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td><b><u>'._('Return Value').'</td></tr>';
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<tr><td></td><td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+
+	$SearchSuppliers_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$SearchSuppliers_doc = $doc;
+
+	function xmlrpc_SearchSuppliers($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(SearchSuppliers($xmlrpcmsg->getParam(0)->scalarval(),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval(),
+				 			$xmlrpcmsg->getParam(3)->scalarval())));
+	}
+
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
@@ -987,6 +1023,10 @@
 			"function" => "xmlrpc_GetSupplier",
 			"signature" => $GetSupplier_sig,
 			"docstring" => $GetSupplier_doc),
+		"weberp.xmlrpc_SearchSuppliers" => array(
+			"function" => "xmlrpc_SearchSuppliers",
+			"signature" => $SearchSuppliers_sig,
+			"docstring" => $SearchSuppliers_doc),
 		)
 	);
 
