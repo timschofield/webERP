@@ -722,11 +722,11 @@
 	}
 	$doc .= '</table>';
 
-	$ModifyCustomer_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
-	$ModifyCustomer_doc = $doc;
+	$ModifySupplier_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$ModifySupplier_doc = $doc;
 
-	function xmlrpc_ModifyCustomer($xmlrpcmsg) {
-		return new xmlrpcresp(php_xmlrpc_encode(ModifyCustomer(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+	function xmlrpc_SupplierCustomer($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(ModifySupplier(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
