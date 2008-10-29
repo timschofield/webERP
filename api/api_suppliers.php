@@ -297,4 +297,28 @@
 		}
 		return $Errors;
 	}
+
+/* This function takes a supplier id and returns an associative array containing
+   the database record for that supplier. If the supplier id doesn't exist
+   then it returns an $Errors array.
+*/
+	function GetSupplier($SupplierID, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$Errors = VerifySupplierExists($SupplierID, sizeof($Errors), $Errors, $db);
+		if (sizeof($Errors)!=0) {
+			return $Errors;
+		}
+		$sql='SELECT * FROM suppliers WHERE supplierid="'.$SupplierID.'"';
+		$result = DB_Query($sql, $db);
+		if (sizeof($Errors)==0) {
+			return DB_fetch_array($result);
+		} else {
+			return $Errors;
+		}
+	}
 ?>

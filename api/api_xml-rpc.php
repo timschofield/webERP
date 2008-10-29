@@ -725,10 +725,45 @@
 	$ModifySupplier_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
 	$ModifySupplier_doc = $doc;
 
-	function xmlrpc_SupplierCustomer($xmlrpcmsg) {
+	function xmlrpc_ModifySupplier($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(ModifySupplier(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
+	unset($Parameter);
+	unset($ReturnValue);
+	$Description = _('This function is used to retrieve the details of a supplier from the webERP database.');
+	$Parameter[0]['name'] = _('Supplier ID');
+	$Parameter[0]['description'] = _('This is a string value. It must be a valid supplier id that is already in the webERP database.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns a set of key/value pairs containing the details of this supplier. ').
+		_('The key will be identical with field name from the suppliers table. All fields will be in the set regardless of whether the value was set.').'<p>'.
+		_('Otherwise an array of error codes is returned. ');
+
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td></tr><tr><td></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td><b><u>'._('Return Value').'</td></tr>';
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<tr><td></td><td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+
+	$GetSupplier_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetSupplier_doc = $doc;
+
+	function xmlrpc_GetSupplier($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetSupplier($xmlrpcmsg->getParam(0)->scalarval(),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 	$xmlrpcmsg->getParam(2)->scalarval(),
+				 		$xmlrpcmsg->getParam(3)->scalarval())));
 	}
 
 	$s = new xmlrpc_server( array(
@@ -948,6 +983,10 @@
 			"function" => "xmlrpc_ModifySupplier",
 			"signature" => $ModifySupplier_sig,
 			"docstring" => $ModifySupplier_doc),
+		"weberp.xmlrpc_GetSupplier" => array(
+			"function" => "xmlrpc_GetSupplier",
+			"signature" => $GetSupplier_sig,
+			"docstring" => $GetSupplier_doc),
 		)
 	);
 
