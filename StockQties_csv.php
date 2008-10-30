@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 5;
 
@@ -18,7 +18,20 @@ $ErrMsg = _('The SQL to get the stock quantites failed with the message');
 $sql = 'SELECT stockid, SUM(quantity) FROM locstock GROUP BY stockid HAVING SUM(quantity)<>0';
 $result = DB_query($sql, $db, $ErrMsg);
 
-$fp = fopen($_SESSION['reports_dir'] . '/StockQties.csv', "w");
+if (!file_exists($_SESSION['reports_dir'])){
+	$Result = mkdir('./' . $_SESSION['reports_dir']);
+}
+
+$filename = $_SESSION['reports_dir'] . '/StockQties.csv';
+
+$fp = fopen($filename,"w");
+
+if ($fp==FALSE){
+	
+	prnMsg(_('Could not open or create the file under') . ' ' . $_SESSION['reports_dir'] . '/StockQties.csv','error');
+	include('includes/footer.inc');
+	exit;
+}
 
 While ($myrow = DB_fetch_row($result)){
 	$line = stripcomma($myrow[0]) . ', ' . stripcomma($myrow[1]);

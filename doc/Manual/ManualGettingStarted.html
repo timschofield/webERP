@@ -226,7 +226,7 @@ beginning of config.php<br>
 ============================================<br>
 &lt;?php<br>
 <br>
-/* $Revision: 1.7 $<br>
+/* $Revision: 1.8 $<br>
 config.php<br>
 Web-ERP - http://web-erp.sourceforge.net<br>
 */<br>
@@ -267,7 +267,7 @@ $dbpassword = 'weberp_db_pwd';<br>
 //It would probably be inappropriate to allow selection of the company in a hosted environment so this option can be turned off with this parameter<br>
 $AllowCompanySelectionBox = true;<br>
 <br>
-//If $AllowCompanySelectionBox = false above then the $DefaultCompany string is entered in the login screen as a default - otherwise the user is expected to know the name of the company to log into.<br>
+//If $AllowCompanySelectionBox = false above then the $DefaultCompany string is entered in the login screen as a default - otherwise the user is expected to know the name of the company to log into and a selection is required from the company selection box which is populated from the list of directories under the companies directory. These directories are created automatically each time a company is created from the Z_MakeNewCompany.php script - this script also creates the company databases.<br>
 $DefaultCompany = 'weberp';<br>
 <br>
 //The maximum time that a login session can be idle before automatic logout<br>
@@ -344,6 +344,23 @@ NB The importance of setting a password for the root user of
 MySQL, otherwise anyone could modify WWW_Users and gain access to
 private company information.<br>
 <br>
+<font size="+2"><b>Adding New Companies</b></font><br>
+<br>
+At this point having followed all the instructions above you should be able to log into the single company database you set up above. However, you may wish to add additional companies. If you system is set up such that the user account that is running your web-server is able to write to the webERP directory then it is possible to enter the URL:
+<br>
+<br>
+http://yourdomain/webERP/Z_MakeNewCompany.php
+<br>
+<br>
+This script allows you to set up any number of additional companies - a fresh database is set up as is the directory structure required under webERP/companies. Each time you get to the login prompt the list of companies shows and you must select the company you require.
+<br>
+<br>
+This script may not work because it requires that the web-server has write permission to the scripts directory, in which case you may need to fall back to the manual method described below.
+<br>In the default install above you created a database called weberp and there is a directory under webERP/companies also called weberp. To make another company you need to copy the
+
+
+
+
 <font size="+2"><b>Configuration Parameters</b></font><br>
 <br>
 In versions prior to version 3.0, configuration

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 $PageSecurity = 2;
 include('includes/session.inc');
 
@@ -196,7 +196,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	if (DB_num_rows($CheckedItems)==0){
 		include('includes/header.inc');
 		echo '<p>';
-		prnMsg( _('There is no inventory check data to report on', 'warn') );
+		prnMsg( _('There is no inventory check data to report on'), 'warn') );
 		echo '<p>'. _('To start an inventory check first run the'). ' <a href="' . $rootpath . '/StockCheck.php?' . SID . '">'. _('inventory check sheets') . '</A> - '. _('and select the option to create new Inventory Comparison data file');
 		include('includes/footer.inc');
 		exit;
