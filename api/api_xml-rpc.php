@@ -1453,14 +1453,13 @@
 	}
 	$doc .= '</table>';
 
-	$GetSupplier_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetSupplier_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
 	$GetSupplier_doc = $doc;
 
 	function xmlrpc_GetSupplier($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetSupplier($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 	$xmlrpcmsg->getParam(2)->scalarval(),
-				 		$xmlrpcmsg->getParam(3)->scalarval())));
+				 	$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
 	unset($Parameter);

@@ -309,7 +309,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors = VerifySupplierExists($SupplierID, sizeof($Errors), $Errors, $db);
+		$Errors = VerifySupplierNoExists($SupplierID, sizeof($Errors), $Errors, $db);
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
@@ -342,7 +342,7 @@
 			$SupplierList[$i]=$myrow[0];
 			$i++;
 		}
-		return $DebtorList;
+		return $SupplierList;
 	}
 
 ?>
