@@ -541,6 +541,47 @@
 		}
 	}
 
+	function GetStockReorderLevel($StockID, $Location, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+		if (sizeof($Errors)!=0) {
+			return $Errors;
+		}
+		$sql='SELECT reorderlevel FROM locstock WHERE stockid="'.$StockID.'" and loccode="'.$Location.'"';
+		$result = DB_Query($sql, $db);
+		if (sizeof($Errors)==0) {
+			$row=DB_fetch_array($result);
+			return $row[0];
+		} else {
+			return $Errors;
+		}
+	}
+
+	function SetStockReorderLevel($StockID, $Location, $ReorderLevel, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+		if (sizeof($Errors)!=0) {
+			return $Errors;
+		}
+		$sql='UPDATE locstock SET reorderlevel='.$ReorderLevel.' WHERE stockid="'.$StockID.'" and loccode="'.$Location.'"';
+		$result = DB_Query($sql, $db);
+		if (sizeof($Errors)==0) {
+			return 0;
+		} else {
+			return $Errors;
+		}
+	}
+
 	function GetAllocatedStock($StockID, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);

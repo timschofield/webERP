@@ -566,6 +566,16 @@
 	unset($ReturnValue);
 	unset($doc);
 	unset($Description);
+	$Description='This function returns the stock balance for the given stockid in the given location.';
+	$Parameter[0]['name'] = _('Stock ID');
+	$Parameter[0]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
+	$Parameter[1]['name'] = _('Location Code');
+	$Parameter[1]['description'] = _('A string field containing a valid location code that must already be setup in the locations table. The api will check this before making the enquiry.');
+	$Parameter[2]['name'] = _('User name');
+	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[3]['name'] = _('User password');
+	$Parameter[3]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('This function returns a single numerical value for the stock balance at this location. ').
 	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
 			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
 	for ($i=0; $i<sizeof($Parameter); $i++) {
@@ -585,6 +595,79 @@
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval(),
 				 			$xmlrpcmsg->getParam(3)->scalarval())));
+	}
+
+	unset($Parameter);
+	unset($ReturnValue);
+	unset($doc);
+	unset($Description);
+	$Description='This function returns the reorder level set for the given stockid in the given location.';
+	$Parameter[0]['name'] = _('Stock ID');
+	$Parameter[0]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
+	$Parameter[1]['name'] = _('Location Code');
+	$Parameter[1]['description'] = _('A string field containing a valid location code that must already be setup in the locations table. The api will check this before making the enquiry.');
+	$Parameter[2]['name'] = _('User name');
+	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[3]['name'] = _('User password');
+	$Parameter[3]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('This function returns a single numerical value for the reorder level at this location. ').
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+	$GetStockReorderLevel_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetStockReorderLevel = $doc;
+
+	function xmlrpc_GetStockReorderLevel($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetStockReorderLevel($xmlrpcmsg->getParam(0)->scalarval(),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval(),
+				 			$xmlrpcmsg->getParam(3)->scalarval())));
+	}
+
+	unset($Parameter);
+	unset($ReturnValue);
+	unset($doc);
+	unset($Description);
+	$Description='This function sets the reorder level for the given stockid in the given location.';
+	$Parameter[0]['name'] = _('Stock ID');
+	$Parameter[0]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
+	$Parameter[1]['name'] = _('Location Code');
+	$Parameter[1]['description'] = _('A string field containing a valid location code that must already be setup in the locations table. The api will check this before making the enquiry.');
+	$Parameter[2]['name'] = _('Reorder level');
+	$Parameter[2]['description'] = _('A mumeric field containing the reorder level for this stockid/location combination.');
+	$Parameter[3]['name'] = _('User name');
+	$Parameter[3]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[4]['name'] = _('User password');
+	$Parameter[4]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('This function returns zero if the transaction was successful or an array of error codes if not. ').
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+	$SetStockReorderLevel_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$SetStockReorderLevel = $doc;
+
+	function xmlrpc_SetStockReorderLevel($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(SetStockReorderLevel($xmlrpcmsg->getParam(0)->scalarval(),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval(),
+				 			$xmlrpcmsg->getParam(3)->scalarval(),
+				 				$xmlrpcmsg->getParam(4)->scalarval())));
 	}
 
 	unset($Parameter);
@@ -1567,6 +1650,14 @@
 			"function" => "xmlrpc_GetStockBalance",
 			"signature" => $GetStockBalance_sig,
 			"docstring" => $GetStockBalance_doc),
+		"weberp.xmlrpc_GetStockReorderLevel" => array(
+			"function" => "xmlrpc_GetStockReorderLevel",
+			"signature" => $GetStockReorderLevel_sig,
+			"docstring" => $GetStockReorderLevel_doc),
+		"weberp.xmlrpc_SetStockReorderLevel" => array(
+			"function" => "xmlrpc_SetStockReorderLevel",
+			"signature" => $SetStockReorderLevel_sig,
+			"docstring" => $SetStockReorderLevel_doc),
 		"weberp.xmlrpc_GetAllocatedStock" => array(
 			"function" => "xmlrpc_GetAllocatedStock",
 			"signature" => $GetAllocatedStock_sig,
