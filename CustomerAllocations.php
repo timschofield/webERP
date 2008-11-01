@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 /*
 Call this page with:
@@ -395,7 +395,7 @@ if (isset($_GET['AllocTrans'])) {
 		{
 			$YetToAlloc = ($AllocnItem->TransAmount - $AllocnItem->PrevAlloc);
 
-			if ( $AllocnItem->TypeNo == $_POST['AllocTrans'] )
+			if ( $AllocnItem->ID == $_POST['AllocTrans'] )
 			{
 					echo '<tr class="OddTableRows">';
 					$curTrans = _('Being allocated');
@@ -446,6 +446,7 @@ if (isset($_GET['AllocTrans'])) {
 		$j++;
 		echo '<td rowspan=2>
 				<input tabindex='.$j.' type=submit name=RefreshAllocTotal value=' . _('Recalculate Total To Allocate') . '></td>';
+
 		echo '<tr>
 				<td colspan=5 align=right><b>'._('Left to allocate').'</b></td>
 				<td align=right><b>' . number_format($remaining-$TotalAllocated,2).'</b></td>
