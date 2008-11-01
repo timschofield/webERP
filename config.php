@@ -1,16 +1,6 @@
 <?php
 
-/* $Revision: 1.86 $ */
-
-	/*--------------------------------------------------\
-	| 		|               | config.php        |
-	|---------------------------------------------------|
-	| Web-ERP - http://web-erp.sourceforge.net          |
-	| by Logic Works Ltd                                |
-	|---------------------------------------------------|
-	|                                                   |
-	\--------------------------------------------------*/
-
+/* $Revision: 1.87 $ */
 // User configurable variables
 //---------------------------------------------------
 
@@ -22,7 +12,7 @@ $allow_demo_mode = True;
 
 // webERP version
 
-$Version = '3.09';
+$Version = '3.09cvs';
 
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time
