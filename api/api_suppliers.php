@@ -219,7 +219,7 @@
 		foreach ($SupplierDetails as $key => $value) {
 			$SupplierDetails[$key] = DB_escape_string($value);
 		}
-		$Errors=VerifySupplierNo($SupplierDetails['supplierid'], sizeof($Errors), $Errors, $db);
+		$Errors=VerifySupplierNoExists($SupplierDetails['supplierid'], sizeof($Errors), $Errors, $db);
 		$Errors=VerifySupplierName($SupplierDetails['suppname'], sizeof($Errors), $Errors);
 		if (isset($SupplierDetails['address1'])){
 			$Errors=VerifyAddressLine($SupplierDetails['address1'], 40, sizeof($Errors), $Errors);
@@ -334,7 +334,7 @@
 		}
 		$sql='SELECT supplierid
 			FROM suppliers
-			WHERE '.$Field.' LIKE "%'.$Criteria.'%"';
+			WHERE '.$Field.' LIKE "%'.$Criteria.'%" ORDER BY supplierid';
 		$result = DB_Query($sql, $db);
 		$i=0;
 		$SupplierList = array();
