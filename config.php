@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.88 $ */
+/* $Revision: 1.89 $ */
 // User configurable variables
 //---------------------------------------------------
 
@@ -18,8 +18,8 @@ $Version = '3.09cvs';
 // the web-server on a overseas machine but record local time
 // this is not necessary if you have your own server locally
 // putenv('TZ=Europe/London');
-// putenv('Australia/Melbourne');
-// putenv('Australia/Sydney');
+// putenv('TZ=Australia/Melbourne');
+// putenv('TZ=Australia/Sydney');
 // putenv('TZ=Pacific/Auckland');
 
 // Connection information for the database
