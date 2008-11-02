@@ -508,7 +508,7 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql='SELECT stockid
+		$sql='SELECT stockid, description
 			FROM stockmaster
 			WHERE '.$Field.' LIKE "%'.$Criteria.'%"';
 		$result = DB_Query($sql, $db);
@@ -521,7 +521,7 @@
 		return $StockItemList;
 	}
 
-	function GetStockbalance($StockID, $Location, $user, $password) {
+	function GetStockbalance($StockID, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
 		if (gettype($db)=='integer') {
@@ -532,16 +532,22 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql='SELECT quantity FROM locstock WHERE stockid="'.$StockID.'" and loccode="'.$Location.'"';
+		$sql='SELECT quantity, loccode FROM locstock WHERE stockid="'.$StockID.'"';
 		$result = DB_Query($sql, $db);
 		if (sizeof($Errors)==0) {
-			return DB_fetch_array($result);
+			$i=0;
+			while ($myrow=DB_fetch_array($result)) {
+				$answer[$i]['quantity']=$myrow['quantity'];
+				$answer[$i]['loccode']=$myrow['loccode'];
+				$i++;
+			}
+			return $answer;
 		} else {
 			return $Errors;
 		}
 	}
 
-	function GetStockReorderLevel($StockID, $Location, $user, $password) {
+	function GetStockReorderLevel($StockID, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
 		if (gettype($db)=='integer') {
@@ -552,11 +558,16 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql='SELECT reorderlevel FROM locstock WHERE stockid="'.$StockID.'" and loccode="'.$Location.'"';
+		$sql='SELECT reorderlevel, loccode FROM locstock WHERE stockid="'.$StockID.'"';
 		$result = DB_Query($sql, $db);
 		if (sizeof($Errors)==0) {
-			$row=DB_fetch_array($result);
-			return $row[0];
+			$i=0;
+			while ($myrow=DB_fetch_array($result)) {
+				$answer[$i]['reorderlevel']=$myrow['reorderlevel'];
+				$answer[$i]['loccode']=$myrow['loccode'];
+				$i++;
+			}
+			return $answer;
 		} else {
 			return $Errors;
 		}

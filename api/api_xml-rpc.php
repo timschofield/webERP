@@ -566,16 +566,14 @@
 	unset($ReturnValue);
 	unset($doc);
 	unset($Description);
-	$Description='This function returns the stock balance for the given stockid in the given location.';
+	$Description='This function returns the stock balance for the given stockidn.';
 	$Parameter[0]['name'] = _('Stock ID');
 	$Parameter[0]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
-	$Parameter[1]['name'] = _('Location Code');
-	$Parameter[1]['description'] = _('A string field containing a valid location code that must already be setup in the locations table. The api will check this before making the enquiry.');
-	$Parameter[2]['name'] = _('User name');
-	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-	$Parameter[3]['name'] = _('User password');
-	$Parameter[3]['description'] = _('The weberp password associoated with this user name. ');
-	$ReturnValue[0] = _('This function returns a single numerical value for the stock balance at this location. ').
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of stock quantities by location for this stock item. ').
 	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
 			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
 	for ($i=0; $i<sizeof($Parameter); $i++) {
@@ -587,30 +585,27 @@
 		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
 	}
 	$doc .= '</table>';
-	$GetStockBalance_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetStockBalance_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
 	$GetStockBalance_doc = $doc;
 
 	function xmlrpc_GetStockBalance($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetStockBalance($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval(),
-				 			$xmlrpcmsg->getParam(3)->scalarval())));
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
 	unset($Parameter);
 	unset($ReturnValue);
 	unset($doc);
 	unset($Description);
-	$Description='This function returns the reorder level set for the given stockid in the given location.';
+	$Description='This function returns the reorder levels by location.';
 	$Parameter[0]['name'] = _('Stock ID');
 	$Parameter[0]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
-	$Parameter[1]['name'] = _('Location Code');
-	$Parameter[1]['description'] = _('A string field containing a valid location code that must already be setup in the locations table. The api will check this before making the enquiry.');
-	$Parameter[2]['name'] = _('User name');
-	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-	$Parameter[3]['name'] = _('User password');
-	$Parameter[3]['description'] = _('The weberp password associoated with this user name. ');
-	$ReturnValue[0] = _('This function returns a single numerical value for the reorder level at this location. ').
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of stock reorder levels by location for this stock item.').
 	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
 			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
 	for ($i=0; $i<sizeof($Parameter); $i++) {
@@ -622,14 +617,13 @@
 		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
 	}
 	$doc .= '</table>';
-	$GetStockReorderLevel_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetStockReorderLevel_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
 	$GetStockReorderLevel = $doc;
 
 	function xmlrpc_GetStockReorderLevel($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(GetStockReorderLevel($xmlrpcmsg->getParam(0)->scalarval(),
 				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval(),
-				 			$xmlrpcmsg->getParam(3)->scalarval())));
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
 	unset($Parameter);
