@@ -250,6 +250,13 @@
 		return $Errors;
 	}
 
+	function GetCategoryGLCode($CategoryID, $field, $db) {
+		$sql='SELECT '.$field.' FROM stockcategory WHERE categoryid="'.$CategoryID.'"';
+		$result = DB_Query($sql, $db);
+		$myrow = DB_fetch_row($result);
+		return $myrow[0];
+	}
+
 /* Insert a new stock item in the webERP database. This function takes an
    associative array called $StockItemDetails, where the keys are the
    names of the fields in the stockmaster table, and the values are the
@@ -715,6 +722,58 @@
 		$result = DB_Query($sql, $db);
 		$myrow = DB_fetch_row($result);
 		return $myrow;
+	}
+
+	function StockAdjustment($StockID, $Location, $Quantity, $TranDate, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+		$balances=GetStockBalance($StockID, $user, $password);
+		for ($i=0; $i<sizeof($balances); $i++) {
+			if ($balances['quantity']==$Location) {
+				$balance=$balances['quantity'];
+			}
+		}
+		$newqoh = $Quantity + $balance;
+		$itemdetails = GetStockItem($StockID, $user, $password);
+		$adjglact=GetCategoryGLCode($itemdetails['categoryid'], 'adjglact', $db);
+		$stockact=GetCategoryGLCode($itemdetails['categoryid'], 'stockact', $db);
+
+		$stockmovesql='INSERT INTO stockmoves (stockid, type, transno, loccode, trandate, prd, reference, qty, newqoh)
+				VALUES ("'.$StockID.'", 17,'.GetNextTransactionNo(17, $db).',"'.$Location.'","'.$TranDate.
+				'",'.GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
+				',"api adjustment",'.$Quantity.','.$newqoh.')';
+		$locstocksql='UPDATE locstock SET quantity = quantity + '.$Quantity.' WHERE loccode="'.
+			$Location.'" AND stockid="'.$StockID.'"';
+		$glupdatesql1='INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
+						VALUES (17,'.GetNextTransactionNo(17, $db).',"'.$TranDate.
+						'",'.GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
+						','.$adjglact.','.$itemdetails['materialcost']*-$Quantity.
+						',"'.$StockID.' x '.$Quantity.' @ '.$itemdetails['materialcost'].'")';
+		$glupdatesql2='INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
+						VALUES (17,'.GetNextTransactionNo(17, $db).',"'.$TranDate.
+						'",'.GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
+						','.$stockact.','.$itemdetails['materialcost']*$Quantity.
+						',"'.$StockID.' x '.$Quantity.' @ '.$itemdetails['materialcost'].'")';
+		$systypessql = 'UPDATE systypes set typeno='.GetNextTransactionNo(17, $db).' where typeid=17';
+
+		DB_query('START TRANSACTION', $db);
+		DB_query($stockmovesql, $db);
+		DB_query($locstocksql, $db);
+		DB_query($glupdatesql1, $db);
+		DB_query($glupdatesql2, $db);
+		DB_query($systypessql, $db);
+		DB_query('COMMIT', $db);
+		if (DB_error_no($db) != 0) {
+			$Errors[0] = DatabaseUpdateFailed;
+			return $Errors;
+		} else {
+			return 0;
+		}
 	}
 
 ?>

@@ -1575,6 +1575,48 @@
 				 			$xmlrpcmsg->getParam(3)->scalarval())));
 	}
 
+	unset($Parameter);
+	unset($ReturnValue);
+	$Description = _('Adjust the stock balance for the given stock code at the given location by the maount given.');
+	$Parameter[0]['name'] = _('Stock ID');
+	$Parameter[0]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
+	$Parameter[1]['name'] = _('Location');
+	$Parameter[1]['description'] = _('A string field containing a valid location code that must already be setup in the locations table. The api will check this before making the enquiry.');
+	$Parameter[2]['name'] = _('Quantity');
+	$Parameter[2]['description'] = _('This is an integer value. It holds the amount of stock to be adjusted. Should be negative if is stock is to be reduced');
+	$Parameter[3]['name'] = _('Transaction Date');
+	$Parameter[3]['description'] = _('This is a string value. It holds the string that is searched for in the given field. It will search for all or part of the field.');
+	$Parameter[4]['name'] = _('User name');
+	$Parameter[4]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[5]['name'] = _('User password');
+	$Parameter[5]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns 0. ').
+		_('Otherwise an array of error codes is returned. ');
+
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+
+	$StockAdjustment_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString,$xmlrpcString, $xmlrpcString,  $xmlrpcString, $xmlrpcString));
+	$StockAdjustment_doc = $doc;
+
+	function xmlrpc_StockAdjustment($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(StockAdjustment($xmlrpcmsg->getParam(0)->scalarval(),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 	$xmlrpcmsg->getParam(2)->scalarval(),
+				 		$xmlrpcmsg->getParam(3)->scalarval(),
+				 			$xmlrpcmsg->getParam(4)->scalarval(),
+				 				$xmlrpcmsg->getParam(5)->scalarval())));
+	}
+
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
@@ -1808,6 +1850,10 @@
 			"function" => "xmlrpc_SearchSuppliers",
 			"signature" => $SearchSuppliers_sig,
 			"docstring" => $SearchSuppliers_doc),
+		"weberp.xmlrpc_StockAdjustment" => array(
+			"function" => "xmlrpc_StockAdjustment",
+			"signature" => $StockAdjustment_sig,
+			"docstring" => $StockAdjustment_doc),
 		)
 	);
 
