@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 $PageSecurity=2;
 
 
@@ -8,7 +8,7 @@ $title=_('Update Pricing From Costs');
 include('includes/header.inc');
 
 
-echo '<BR>' . _('This page adds new prices or pdates already existing prices for a specified sales type (price list) and currency for the stock category selected - based on a percentage mark up from cost prices or from preferred supplier cost data');
+echo '<BR>' . _('This page adds new prices or udates already existing prices for a specified sales type (price list) and currency for the stock category selected - based on a percentage mark up from cost prices or from preferred supplier cost data');
 
 echo "<FORM METHOD='POST' ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.87 $ */
+/* $Revision: 1.88 $ */
 // User configurable variables
 //---------------------------------------------------
 
@@ -41,7 +41,7 @@ $dbpassword = 'weberp_db_pwd';
 $AllowCompanySelectionBox = true;
 
 //If $AllowCompanySelectionBox = false above then the $DefaultCompany string is entered in the login screen as a default - otherwise the user is expected to know the name of the company to log into.
-$DefaultCompany = 'weberp';
+$DefaultCompany = 'weberpdemo';
 
 //The maximum time that a login session can be idle before automatic logout
 //time is in seconds  3600 seconds in an hour

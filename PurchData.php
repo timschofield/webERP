@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 4;
 
@@ -74,6 +74,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
       $sql = "INSERT INTO purchdata (supplierno,
 					stockid,
 					price,
+					effectivefrom,
 					suppliersuom,
 					conversionfactor,
 					supplierdescription,
@@ -82,6 +83,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 			VALUES ('" . $SupplierID . "',
 				'" . $StockID . "',
 				" . $_POST['Price'] . ",
+				'" . FormatDateForSQL($_POST['EffectiveFrom']) . "',
 				'" . $_POST['SuppliersUOM'] . "',
 				" . $_POST['ConversionFactor'] . ",
 				'" . $_POST['SupplierDescription'] . "',
@@ -98,7 +100,8 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
    if ($InputError==0 AND isset($_POST['UpdateRecord'])){
 
       $sql = "UPDATE purchdata SET
-			        price=" . $_POST['Price'] . ",
+			    price=" . $_POST['Price'] . ",
+			    effectivefrom='" . FormatDateForSQL($_POST['EffectiveFrom']) . "',
 				suppliersuom='" . $_POST['SuppliersUOM'] . "',
 				conversionfactor=" . $_POST['ConversionFactor'] . ",
 				supplierdescription='" . $_POST['SupplierDescription'] . "',
@@ -123,6 +126,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
       unset($_POST['Price']);
       unset($CurrCode);
       unset($_POST['SuppliersUOM']);
+      unset($_POST['EffectiveFrom']);
       unset($_POST['ConversionFactor']);
       unset($_POST['SupplierDescription']);
       unset($_POST['LeadTime']);
@@ -133,7 +137,9 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 
 if (isset($_GET['Delete'])){
 
-   $sql = "DELETE FROM purchdata WHERE purchdata.supplierno='$SupplierID' AND purchdata.stockid='$StockID'";
+   $sql = "DELETE FROM purchdata 
+   				WHERE purchdata.supplierno='$SupplierID' 
+   				AND purchdata.stockid='$StockID'";
    $ErrMsg =  _('The supplier purchasing details could not be deleted because');
    $DelResult=DB_query($sql,$db,$ErrMsg);
 
@@ -142,7 +148,11 @@ if (isset($_GET['Delete'])){
 }
 
 if (isset($StockID)){
-	$result = DB_query("SELECT stockmaster.description, stockmaster.units, stockmaster.mbflag FROM stockmaster WHERE stockmaster.stockid='$StockID'",$db);
+	$result = DB_query("SELECT stockmaster.description, 
+								stockmaster.units, 
+								stockmaster.mbflag 
+						FROM stockmaster 
+						WHERE stockmaster.stockid='$StockID'",$db);
 	$myrow = DB_fetch_row($result);
 	if (DB_num_rows($result)==1){
    		if ($myrow[2]=='D' OR $myrow[2]=='A' OR $myrow[2]=='K'){
@@ -169,13 +179,14 @@ echo '<HR><CENTER>';
 
 if (!isset($_GET['Edit'])){
    $sql = "SELECT  purchdata.supplierno,
-			suppliers.suppname,
-			purchdata.price,
-			suppliers.currcode,
-			purchdata.suppliersuom,
-			purchdata.supplierdescription,
-			purchdata.leadtime,
-			purchdata.preferred
+					suppliers.suppname,
+					purchdata.price,
+					suppliers.currcode,
+					purchdata.effectivefrom,
+					purchdata.suppliersuom,
+					purchdata.supplierdescription,
+					purchdata.leadtime,
+					purchdata.preferred
 			FROM purchdata INNER JOIN suppliers
 				ON purchdata.supplierno=suppliers.supplierid
 			WHERE purchdata.stockid = '" . $StockID . "'";
@@ -189,13 +200,14 @@ if (!isset($_GET['Edit'])){
    } else {
 
      echo '<TABLE CELLPADDING=2 BORDER=2>';
-     $TableHeader = '<TR><TH>' . _('Supplier') . '</TH>
-     			<TH>' . _('Price') . '</TH>
-			<TH>' . _('Currency') . '</TH>
-			<TH>' . _('Supplier Unit') . '</TH>
-			<TH>' . _('Lead Time') . '</TH>
-			<TH>' . _('Preferred') . '</TH>
-		</TR>';
+     $TableHeader = '<tr><th>' . _('Supplier') . '</th>
+     					<th>' . _('Price') . '</th>
+						<th>' . _('Currency') . '</th>
+						<th>' . _('Effective From') . '</th>
+						<th>' . _('Supplier Unit') . '</th>
+						<th>' . _('Lead Time') . '</th>
+						<th>' . _('Preferred') . '</th>
+					</tr>';
 
      echo $TableHeader;
 
@@ -219,29 +231,32 @@ if (!isset($_GET['Edit'])){
 	  $DisplayPreferred=_('No');
 	}
 
-	printf("<TD>%s</TD>
-	        <TD ALIGN=RIGHT>%s</TD>
-		<TD>%s</TD><TD>%s</TD>
-		<TD ALIGN=RIGHT>%s " . _('days') . "</TD>
-		<TD>%s</TD>
-		<TD><A HREF='%s?%s&StockID=%s&SupplierID=%s&Edit=1'>" . _('Edit') . "</a></TD>
-		<TD><A HREF='%s?%s&StockID=%s&SupplierID=%s&Delete=1' onclick=\"return confirm('" . _('Are you sure you wish to delete this suppliers price?') . "');\">" . _('Delete') . "</a></TD>
-		</tr>",
-		$myrow['suppname'],
-		number_format($myrow['price'],3),
-		$myrow['currcode'],
-		$myrow['suppliersuom'],
-		$myrow['leadtime'],
-		$DisplayPreferred,
-		$_SERVER['PHP_SELF'],
-		SID,
-		$StockID,
-		$myrow['supplierno'],
-		$_SERVER['PHP_SELF'],
-		SID,
-		$StockID,
-		$myrow['supplierno']
-		);
+	printf("<td>%s</td>
+	        <td align=right>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td align=right>%s " . _('days') . "</td>
+			<td>%s</td>
+			<td><a href='%s?%s&StockID=%s&SupplierID=%s&Edit=1'>" . _('Edit') . "</a></td>
+			<td><a href='%s?%s&StockID=%s&SupplierID=%s&Delete=1' onclick=\"return confirm('" . _('Are you sure you wish to delete this suppliers price?') . "');\">" . _('Delete') . "</a></td>
+			</tr>",
+			$myrow['suppname'],
+			number_format($myrow['price'],3),
+			$myrow['currcode'],
+			ConvertSQLDate($myrow['effectivefrom']),
+			$myrow['suppliersuom'],
+			$myrow['leadtime'],
+			$DisplayPreferred,
+			$_SERVER['PHP_SELF'],
+			SID,
+			$StockID,
+			$myrow['supplierno'],
+			$_SERVER['PHP_SELF'],
+			SID,
+			$StockID,
+			$myrow['supplierno']
+			);
 
     } //end of while loop
     echo '</TABLE>';
@@ -262,6 +277,7 @@ if (isset($_GET['Edit'])){
 	$sql = "SELECT purchdata.supplierno,
 				suppliers.suppname,
 				purchdata.price,
+				purchdata.effectivefrom,
 				suppliers.currcode,
 				purchdata.suppliersuom,
 				purchdata.supplierdescription,
@@ -280,6 +296,7 @@ if (isset($_GET['Edit'])){
 
 	$SuppName = $myrow['suppname'];
 	$_POST['Price'] = $myrow['price'];
+	$_POST['EffectiveFrom']=ConvertSQLDate($myrow['effectivefrom']);
 	$CurrCode = $myrow['currcode'];
 	$_POST['SuppliersUOM'] = $myrow['suppliersuom'];
 	$_POST['SupplierDescription'] = $myrow['supplierdescription'];
@@ -316,7 +333,9 @@ if (!isset($CurrCode)) {
 if (!isset($_POST['Price'])) {
 	$_POST['Price'] = 0;
 }
-
+if (!isset($_POST['EffectiveFrom'])) {
+	$_POST['EffectiveFrom'] = Date($_SESSION['DefaultDateFormat']);
+}
 if (!isset($_POST['SuppliersUOM'])) {
 	$_POST['SuppliersUOM'] = '';
 }
@@ -329,6 +348,8 @@ echo '<TR><TD>' . _('Currency') . ':</TD>
 	<TD><INPUT TYPE=HIDDEN NAME="CurrCode" . VALUE="' . $CurrCode . '">' . $CurrCode . '</TD></TR>';
 echo '<TR><TD>' . _('Price') . ' (' . _('in Supplier Currency') . '):</TD>
 	<TD><INPUT TYPE=TEXT NAME="Price" MAXLENGTH=12 SIZE=12 VALUE=' . $_POST['Price'] . '></TD></TR>';
+echo '<TR><TD>' . _('Date Updated') . ':</TD>
+	<TD><INPUT TYPE=TEXT NAME="EffectiveFrom" MAXLENGTH=10 SIZE=12 VALUE="' . $_POST['EffectiveFrom'] . '"></TD></TR>';
 echo '<TR><TD>' . _('Suppliers Unit of Measure') . ':</TD>
 	<TD><INPUT TYPE=TEXT NAME="SuppliersUOM" MAXLENGTH=50 SIZE=51 VALUE="' . $_POST['SuppliersUOM'] . '"></TD></TR>';
 if (!isset($_POST['ConversionFactor']) OR $_POST['ConversionFactor']==""){
