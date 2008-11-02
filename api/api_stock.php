@@ -733,10 +733,9 @@
 		}
 		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
 		$balances=GetStockBalance($StockID, $user, $password);
+		$balance=0;
 		for ($i=0; $i<sizeof($balances); $i++) {
-			if ($balances['quantity']==$Location) {
-				$balance=$balances['quantity'];
-			}
+			$balance=$balance+$balances[$i]['quantity'];
 		}
 		$newqoh = $Quantity + $balance;
 		$itemdetails = GetStockItem($StockID, $user, $password);
