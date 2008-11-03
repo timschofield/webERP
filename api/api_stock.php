@@ -353,12 +353,14 @@
 			$FieldValues.='"'.$value.'", ';
 		}
 		if (sizeof($Errors)==0) {
-			$sql = 'INSERT INTO stockmaster ('.substr($FieldNames,0,-2).') '.
+			$stocksql = 'INSERT INTO stockmaster ('.substr($FieldNames,0,-2).') '.
 		  		'VALUES ('.substr($FieldValues,0,-2).') ';
-			$result = DB_Query($sql, $db);
-			$sql = "INSERT INTO locstock (loccode,stockid)
+			$locsql = "INSERT INTO locstock (loccode,stockid)
 				SELECT locations.loccode,'" . $StockItemDetails['stockid'] . "'FROM locations";
-			$result = DB_Query($sql, $db);
+			DB_query('START TRANSACTION', $db);
+			$stockresult = DB_Query($stocksql, $db);
+			$locresult = DB_Query($locsql, $db);
+			DB_query('COMMIT', $db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
