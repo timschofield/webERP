@@ -136,6 +136,12 @@
 	Define('InvalidRemittanceFlag', 1132);
 	Define('FactorCompanyNotSetup', 1133);
 	Define('SupplierNoDoesntExists', 1134);
+	Define('InvalidSuppliersUOM', 1135);
+	Define('InvalidConversionFactor', 1136);
+	Define('InvalidSupplierDescription', 1137);
+	Define('InvalidLeadTime', 1138);
+	Define('InvalidPreferredFlag', 1139);
+	Define('StockSupplierLineDoesntExist', 1140);
 
 /* Array of Descriptions of errors */
 	$ErrorDescription['1'] = _('No Authorisation');
@@ -273,5 +279,11 @@
 	$ErrorDescription['1132'] = _('Incorrect remittance flags');
 	$ErrorDescription['1133'] = _('Factor company not set up');
 	$ErrorDescription['1134'] = _('Supplier doesnt exist');
+	$ErrorDescription['1135'] = _('Incorrect suppliers UOM');
+	$ErrorDescription['1136'] = _('Incorrect conversion factor');
+	$ErrorDescription['1137'] = _('Incorrect supplier description');
+	$ErrorDescription['1138'] = _('Invalid Lead time');
+	$ErrorDescription['1139'] = _('Invalid Preferred flag');
+	$ErrorDescription['1140'] = _('StockID SupplierID line doesnt exist');
 
 ?>

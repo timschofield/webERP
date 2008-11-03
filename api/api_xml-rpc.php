@@ -1617,6 +1617,78 @@
 				 				$xmlrpcmsg->getParam(5)->scalarval())));
 	}
 
+	unset($Parameter);
+	unset($ReturnValue);
+	$Description = _('This function is used to insert new purchasing data into the webERP database.');
+	$Parameter[0]['name'] = _('Purchasing data');
+	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+			._('The field names can be found ').'<a href="Z_DescribeTable.php?table=purchdata">'._('here ').'</a>'
+			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
+			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ').
+		_('If the first element is zero then the function was successful. ').
+		_('Otherwise an array of error codes is returned and no insertion takes place. ');
+
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+	$InsertPurchData_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$InsertPurchData_doc = $doc;
+
+	function xmlrpc_InsertPurchData($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(InsertPurchData(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
+	unset($Parameter);
+	unset($ReturnValue);
+	$Description = _('This function is used to modify purchasing data into the webERP database.');
+	$Parameter[0]['name'] = _('Purchasing data');
+	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+			._('The field names can be found ').'<a href="Z_DescribeTable.php?table=purchdata">'._('here ').'</a>'
+			._('and are case sensitive. ')._('The values should be of the correct type, and the api will check them before updating the database. ')
+			._('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
+	$Parameter[1]['name'] = _('User name');
+	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[2]['name'] = _('User password');
+	$Parameter[2]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('This function returns an array of integers. ').
+		_('If the first element is zero then the function was successful. ').
+		_('Otherwise an array of error codes is returned and no insertion takes place. ');
+
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+	$InsertPurchData_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$InsertPurchData_doc = $doc;
+
+	function xmlrpc_ModifyPurchData($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(ModifyPurchData(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
@@ -1854,6 +1926,14 @@
 			"function" => "xmlrpc_StockAdjustment",
 			"signature" => $StockAdjustment_sig,
 			"docstring" => $StockAdjustment_doc),
+		"weberp.xmlrpc_InsertPurchData" => array(
+			"function" => "xmlrpc_InsertPurchData",
+			"signature" => $InsertPurchData_sig,
+			"docstring" => $InsertPurchData_doc),
+		"weberp.xmlrpc_ModifyPurchData" => array(
+			"function" => "xmlrpc_ModifyPurchData",
+			"signature" => $ModifyPurchData_sig,
+			"docstring" => $ModifyPurchData_doc),
 		)
 	);
 

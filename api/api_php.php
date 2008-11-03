@@ -48,5 +48,6 @@
 	include 'api_glgroups.php';
 	include 'api_stockcategories.php';
 	include 'api_suppliers.php';
+	include 'api_purchdata.php';
 
 ?>
