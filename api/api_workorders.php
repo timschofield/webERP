@@ -169,6 +169,7 @@
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
 				$Errors[0]=0;
+				$Errors[1]=$WorkOrder['wo'];
 			}
 		}
 		return $Errors;
