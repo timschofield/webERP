@@ -1570,9 +1570,9 @@
 
 	function xmlrpc_SearchSuppliers($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(SearchSuppliers($xmlrpcmsg->getParam(0)->scalarval(),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval(),
-				 			$xmlrpcmsg->getParam(3)->scalarval())));
+				$xmlrpcmsg->getParam(1)->scalarval(),
+						$xmlrpcmsg->getParam(2)->scalarval(),
+							$xmlrpcmsg->getParam(3)->scalarval())));
 	}
 
 	unset($Parameter);
@@ -1610,11 +1610,56 @@
 
 	function xmlrpc_StockAdjustment($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(StockAdjustment($xmlrpcmsg->getParam(0)->scalarval(),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 	$xmlrpcmsg->getParam(2)->scalarval(),
-				 		$xmlrpcmsg->getParam(3)->scalarval(),
-				 			$xmlrpcmsg->getParam(4)->scalarval(),
-				 				$xmlrpcmsg->getParam(5)->scalarval())));
+				$xmlrpcmsg->getParam(1)->scalarval(),
+					$xmlrpcmsg->getParam(2)->scalarval(),
+						$xmlrpcmsg->getParam(3)->scalarval(),
+							$xmlrpcmsg->getParam(4)->scalarval(),
+								$xmlrpcmsg->getParam(5)->scalarval())));
+	}
+
+	unset($Parameter);
+	unset($ReturnValue);
+	$Description = _('Issues stock to a given work order from the given location');
+	$Parameter[0]['name'] = _('Work Order Number');
+	$Parameter[0]['description'] = _('A string field containing a valid work order number that has already been created. The api will check this before making the enquiry.');
+	$Parameter[1]['name'] = _('Stock ID');
+	$Parameter[1]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
+	$Parameter[2]['name'] = _('Location');
+	$Parameter[2]['description'] = _('A string field containing a valid location code that must already be setup in the locations table. The api will check this before making the enquiry.');
+	$Parameter[3]['name'] = _('Quantity');
+	$Parameter[3]['description'] = _('This is an integer value. It holds the amount of stock to be adjusted. Should be negative if is stock is to be reduced');
+	$Parameter[4]['name'] = _('Transaction Date');
+	$Parameter[4]['description'] = _('This is a string value. It holds the string that is searched for in the given field. It will search for all or part of the field.');
+	$Parameter[5]['name'] = _('User name');
+	$Parameter[5]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[6]['name'] = _('User password');
+	$Parameter[6]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns 0. ').
+		_('Otherwise an array of error codes is returned. ');
+
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+
+	$WorkOrderIssue_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString,$xmlrpcString, $xmlrpcString,  $xmlrpcString, $xmlrpcString));
+	$WorkOrderIssue_doc = $doc;
+
+	function xmlrpc_WorkOrderIssue($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(WorkOrderIssue($xmlrpcmsg->getParam(0)->scalarval(),
+				$xmlrpcmsg->getParam(1)->scalarval(),
+					$xmlrpcmsg->getParam(2)->scalarval(),
+						$xmlrpcmsg->getParam(3)->scalarval(),
+							$xmlrpcmsg->getParam(4)->scalarval(),
+								$xmlrpcmsg->getParam(5)->scalarval(),
+									$xmlrpcmsg->getParam(6)->scalarval())));
 	}
 
 	unset($Parameter);
@@ -1649,8 +1694,8 @@
 
 	function xmlrpc_InsertPurchData($xmlrpcmsg) {
 		return new xmlrpcresp(php_xmlrpc_encode(InsertPurchData(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
-				 $xmlrpcmsg->getParam(1)->scalarval(),
-				 		$xmlrpcmsg->getParam(2)->scalarval())));
+				$xmlrpcmsg->getParam(1)->scalarval(),
+						$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
 	unset($Parameter);
@@ -1962,6 +2007,10 @@
 			"function" => "xmlrpc_StockAdjustment",
 			"signature" => $StockAdjustment_sig,
 			"docstring" => $StockAdjustment_doc),
+		"weberp.xmlrpc_WorkOrderIssue" => array(
+			"function" => "xmlrpc_WorkOrderIssue",
+			"signature" => $WorkOrderIssue_sig,
+			"docstring" => $WorkOrderIssue_doc),
 		"weberp.xmlrpc_InsertPurchData" => array(
 			"function" => "xmlrpc_InsertPurchData",
 			"signature" => $InsertPurchData_sig,

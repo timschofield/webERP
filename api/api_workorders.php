@@ -156,9 +156,9 @@
 		}
 		if (sizeof($Errors)==0) {
 			$wosql = 'INSERT INTO workorders ('.substr($WOFieldNames,0,-2).') '.
-		  		'VALUES ('.substr($WOFieldValues,0,-2).') ';
+				'VALUES ('.substr($WOFieldValues,0,-2).') ';
 			$itemsql = 'INSERT INTO woitems ('.substr($ItemFieldNames,0,-2).') '.
-		  		'VALUES ('.substr($ItemFieldValues,0,-2).') ';
+				'VALUES ('.substr($ItemFieldValues,0,-2).') ';
 			$systypessql = 'UPDATE systypes set typeno='.GetNextTransactionNo(40, $db).' where typeid=40';
 			DB_query('START TRANSACTION', $db);
 			$woresult = DB_Query($wosql, $db);
@@ -172,6 +172,59 @@
 			}
 		}
 		return $Errors;
+	}
+
+	function WorkOrderIssue($WONumber, $StockID, $Location, $Quantity, $TranDate, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+		$balances=GetStockBalance($StockID, $user, $password);
+		$balance=0;
+		for ($i=0; $i<sizeof($balances); $i++) {
+			$balance=$balance+$balances[$i]['quantity'];
+		}
+		$newqoh = $Quantity + $balance;
+		$itemdetails = GetStockItem($StockID, $user, $password);
+		$wipglact=GetCategoryGLCode($itemdetails['categoryid'], 'wipact', $db);
+		$stockact=GetCategoryGLCode($itemdetails['categoryid'], 'stockact', $db);
+		$cost=$itemdetails['materialcost']+$itemdetails['labourcost']+$itemdetails['overheadcost'];
+
+		$stockmovesql='INSERT INTO stockmoves (stockid, type, transno, loccode, trandate, prd, reference, qty, newqoh,
+				price, standardcost)
+				VALUES ("'.$StockID.'", 28,'.GetNextTransactionNo(28, $db).',"'.$Location.'","'.$TranDate.
+				'",'.GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
+				',"'.$WONumber.'",'.$Quantity.','.$newqoh.','.$cost.','.$cost.')';
+		$locstocksql='UPDATE locstock SET quantity = quantity + '.$Quantity.' WHERE loccode="'.
+			$Location.'" AND stockid="'.$StockID.'"';
+		$glupdatesql1='INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
+						VALUES (28,'.GetNextTransactionNo(28, $db).',"'.$TranDate.
+						'",'.GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
+						','.$wipglact.','.$cost*-$Quantity.
+						',"'.$StockID.' x '.$Quantity.' @ '.$cost.'")';
+		$glupdatesql2='INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
+						VALUES (28,'.GetNextTransactionNo(28, $db).',"'.$TranDate.
+						'",'.GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
+						','.$stockact.','.$cost*$Quantity.
+						',"'.$StockID.' x '.$Quantity.' @ '.$cost.'")';
+		$systypessql = 'UPDATE systypes set typeno='.GetNextTransactionNo(28, $db).' where typeid=28';
+
+		DB_query('START TRANSACTION', $db);
+		DB_query($stockmovesql, $db);
+		DB_query($locstocksql, $db);
+		DB_query($glupdatesql1, $db);
+		DB_query($glupdatesql2, $db);
+		DB_query($systypessql, $db);
+		DB_query('COMMIT', $db);
+		if (DB_error_no($db) != 0) {
+			$Errors[0] = DatabaseUpdateFailed;
+			return $Errors;
+		} else {
+			return 0;
+		}
 	}
 
 ?>
