@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 
 $PageSecurity = 4;
@@ -855,7 +855,7 @@ if (isset($_GET['Edit'])){
 	*/
 
 	echo '</table><center><input type=submit name="UpdateLine" value="' . _('Update Line') . '"> <input type=submit name="Delete" VALUE="' . _('Delete') . '"><br>';
-} elseif ($_SESSION['ExistingOrder']==0) { /* ITS A NEWY */
+} elseif ($_SESSION['ExistingOrder']==0 and $_SESSION['PO']->LinesOnOrder==0) { /* ITS A NEWY */
  /*show a form for putting in a new line item with or without a stock entry */
 	if (!isset($_POST['StockID'])) {
 		$_POST['StockID']='';
