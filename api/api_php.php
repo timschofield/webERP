@@ -49,5 +49,6 @@
 	include 'api_stockcategories.php';
 	include 'api_suppliers.php';
 	include 'api_purchdata.php';
+	include 'api_workorders.php';
 
 ?>

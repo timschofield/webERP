@@ -142,6 +142,13 @@
 	Define('InvalidLeadTime', 1138);
 	Define('InvalidPreferredFlag', 1139);
 	Define('StockSupplierLineDoesntExist', 1140);
+	Define('InvalidRequiredByDate', 1141);
+	Define('InvalidStartDate', 1142);
+	Define('InvalidCostIssued', 1143);
+	Define('InvalidQuantityRequired', 1144);
+	Define('InvalidQuantityReceived', 1145);
+	Define('InvalidStandardCost', 1146);
+	Define('IncorrectSerialNumber', 1147);
 
 /* Array of Descriptions of errors */
 	$ErrorDescription['1'] = _('No Authorisation');
@@ -285,5 +292,12 @@
 	$ErrorDescription['1138'] = _('Invalid Lead time');
 	$ErrorDescription['1139'] = _('Invalid Preferred flag');
 	$ErrorDescription['1140'] = _('StockID SupplierID line doesnt exist');
+	$ErrorDescription['1141'] = _('Invalid Required By Date');
+	$ErrorDescription['1142'] = _('Invalid Start Date');
+	$ErrorDescription['1143'] = _('Invalid Cost Issued');
+	$ErrorDescription['1144'] = _('Invalid Quantity Required');
+	$ErrorDescription['1145'] = _('Invalid Quantity Received');
+	$ErrorDescription['1146'] = _('Invalid Standard Cost');
+	$ErrorDescription['1147'] = _('Invalid Serial Number or Lot Reference');
 
 ?>
