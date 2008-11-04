@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 $PageSecurity = 2;
 
@@ -188,14 +188,14 @@ if (isset($_SESSION['SupplierID'])){
 
 	echo '<BR>';
 
-	echo "<BR><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Receive / Outstanding Purchase Orders') . '</A>';
+	echo "<BR><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Add / Receive / View Outstanding Purchase Orders') . '</A>';
 	echo "<BR><A HREF='$rootpath/PO_SelectPurchOrder.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('View All Purchase Orders') . '</A><BR>';
 
 	wikiLink('Supplier', $_SESSION['SupplierID']);	
 	
 	echo '<BR>';
 
-	echo "<BR><A HREF='$rootpath/Shipt_Select.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Search Shipments') . '</A>';
+	echo "<BR><A HREF='$rootpath/Shipt_Select.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Search / Modify / Close Shipments') . '</A>';
 
 	echo '</TD><TD VALIGN=TOP>'; /* Supplier Transactions */
 
@@ -205,7 +205,7 @@ if (isset($_SESSION['SupplierID'])){
 
 	echo '<BR>';
 
-	echo "<BR><A HREF='$rootpath/ReverseGRN.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "'>" . _('Reverse an Outstanding GRN') . '</A>';
+	echo "<BR><A HREF='$rootpath/ReverseGRN.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "'>" . _('Reverse an Outstanding Goods Received Note (GRN)') . '</A>';
 
 	echo '</TD><TD VALIGN=TOP>'; /* Supplier Maintenance */
 

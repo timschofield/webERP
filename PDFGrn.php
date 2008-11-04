@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 
 $PageSecurity = 2;
 include('includes/session.inc');
@@ -8,7 +8,7 @@ include('includes/session.inc');
 include('includes/PDFStarter.php');
 
 $FontSize=10;
-$pdf->addinfo('Title', _('Goods received note') );
+$pdf->addinfo('Title', _('Goods Received Note') );
 
 $PageNumber=1;
 $line_height=12;
@@ -36,10 +36,10 @@ while ($myrow=DB_fetch_array($result)) {
 	$suppliermyrow=DB_fetch_array($supplierresult);
 	$Supplier=$suppliermyrow[0];
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos-(10*$counter),300-$Left_Margin,$FontSize, $StockID);
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+75,$YPos-(10*$counter),300-$Left_Margin,$FontSize, $Description);
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos-(10*$counter),70,$FontSize, $StockID);
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+75,$YPos-(10*$counter),175,$FontSize, $Description);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos-(10*$counter),300-$Left_Margin,$FontSize, $Date);
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos-(10*$counter),300-$Left_Margin,$FontSize, $Supplier);
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+315,$YPos-(10*$counter),150,$FontSize, $Supplier);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+475,$YPos-(10*$counter),300-$Left_Margin,$FontSize, $Quantity);
 	$counter = $counter + 1;
 }
