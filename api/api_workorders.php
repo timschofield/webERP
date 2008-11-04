@@ -163,7 +163,7 @@
 			DB_query('START TRANSACTION', $db);
 			$woresult = DB_Query($wosql, $db);
 			$itemresult = DB_Query($itemsql, $db);
-			$systyperesult = DB_Query($systypesql, $db);
+			$systyperesult = DB_Query($systypessql, $db);
 			DB_query('COMMIT', $db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
