@@ -6,7 +6,7 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 	$sql = 'SELECT confname, confvalue FROM config'; // dont care about the order by
 	$ConfigResult = DB_query($sql,$db);
 	while( $myrow = DB_fetch_row($ConfigResult) ) {
-		if (is_numeric($myrow[1])){
+		if (is_numeric($myrow[1]) and $myrow[0]!='DefaultPriceList'){
 			//the variable name is given by $myrow[0]
 			$_SESSION[$myrow[0]] = (double) $myrow[1];
 		} else {
@@ -17,7 +17,7 @@ if(isset($ForceConfigReload) and $ForceConfigReload==TRUE OR !isset($_SESSION['C
 	$_SESSION['CompanyDefaultsLoaded'] = true;
 	DB_free_result($ConfigResult); // no longer needed
 	/*Maybe we should check config directories exist and try to create if not */
-	
+
 /* Also reads all the company data set up in the company record and returns an array */
 
 	$sql=	'SELECT
