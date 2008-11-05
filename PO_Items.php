@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 
 $PageSecurity = 4;
@@ -115,7 +115,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		     } /* end of the loop round the detail line items on the order */
 		     echo '<p>';
 		     prnMsg(_('Purchase order') . ' ' . $_SESSION['PO']->OrderNo . ' ' . _('on') . ' ' . $_SESSION['PO']->SupplierName . ' ' . _('has been created'),'success');
-		     echo '<br><a target="_blank" href="'.$rootpath.'/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $_SESSION['PO']->OrderNo . '">' . _('Print Order') . '</a>';
+		     echo '<br><a target="_blank" href="'.$rootpath.'/PO_PDFPurchOrder.php?' . SID . '&OrderNo=' . $_SESSION['PO']->OrderNo . '">' . _('Print Purchase Order') . '</a>';
 		 } else { /*its an existing order need to update the old order info */
 
 		     /*Update the purchase order header with any changes */
@@ -760,7 +760,7 @@ if (count($_SESSION['PO']->LineItems)>0){
     }
 
     $DisplayTotal = number_format($_SESSION['PO']->total,2);
-    echo '<tr><td colspan=6 align=rifgt>' . _('TOTAL Excl Tax') . '</td><td align=right><b>$DisplayTotal</b></td></tr></table>';
+    echo '<tr><td colspan=6 align=rifgt>' . _('TOTAL Excl Tax') . '</td><td align=right><b>' . $DisplayTotal . '</b></td></tr></table>';
 
 	if (!isset($_POST['StockID']) and !isset($_GET['Edit'])) {
  	/*show a form for putting in a new line item with or without a stock entry */
@@ -998,7 +998,7 @@ if (isset($SearchResult)) {
 		$filename = $myrow['stockid'] . '.jpg';
 		if (file_exists( $_SESSION['part_pics_dir'] . '/' . $filename) ) {
 
-			$ImageSource = '<img src="'.$rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg">';
+			$ImageSource = '<img src="'.$rootpath . '/' . $_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.jpg" width="50" height="50">';
 
 		} else {
 			$ImageSource = '<i>'._('No Image').'</i>';
@@ -1008,7 +1008,7 @@ if (isset($SearchResult)) {
 			<td>%s</td>
 			<td>%s</td>
 			<td ALIGN=CENTER>%s</td>
-			<td><a href="%s/PO_Items.php?%s&NewItem=%s">' . _('Order some') . '</a></td>
+			<td><a href="%s/PO_Items.php?%s&NewItem=%s">' . _('Add to Order') . '</a></td>
 			</tr>',
 			$myrow['stockid'],
 			$myrow['description'],
