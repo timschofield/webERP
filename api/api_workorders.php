@@ -1,5 +1,66 @@
 <?php
 
+/* Check that the stock code exists*/
+	function VerifyWorkOrderExists($WorkOrder, $i, $Errors, $db) {
+		$Searchsql = "SELECT count(wo)
+				FROM workorders
+				WHERE wo='".$WorkOrder."'";
+		$SearchResult=DB_query($Searchsql, $db);
+		$answer = DB_fetch_array($SearchResult);
+		if ($answer[0]==0) {
+			$Errors[$i] = WorkOrderDoesntExist;
+		}
+		return $Errors;
+	}
+
+/* Check that the stock location is set up in the weberp database */
+	function VerifyStockLocation($location, $i, $Errors, $db) {
+		$Searchsql = 'SELECT COUNT(loccode)
+					 FROM locations
+					  WHERE loccode="'.$location.'"';
+		$SearchResult=DB_query($Searchsql, $db);
+		$answer = DB_fetch_row($SearchResult);
+		if ($answer[0] == 0) {
+			$Errors[$i] = LocationCodeNotSetup;
+		}
+		return $Errors;
+	}
+
+/* Verify that the quantity figure is numeric */
+	function VerifyIssuedQuantity($quantity, $i, $Errors) {
+		if (!is_numeric($quantity)) {
+			$Errors[$i] = InvalidIssuedQuantity;
+		}
+		return $Errors;
+	}
+
+	function VerifyTransactionDate($TransactionDate, $i, $Errors, $db) {
+		$sql='select confvalue from config where confname="'.DefaultDateFormat.'"';
+		$result=DB_query($sql, $db);
+		$myrow=DB_fetch_array($result);
+		$DateFormat=$myrow[0];
+		$DateArray=explode('/',$TransactionDate);
+		if ($DateFormat=='d/m/Y') {
+			$Day=$DateArray[0];
+			$Month=$DateArray[1];
+			$Year=$DateArray[2];
+		}
+		if ($DateFormat=='m/d/Y') {
+			$Day=$DateArray[1];
+			$Month=$DateArray[0];
+			$Year=$DateArray[2];
+		}
+		if ($DateFormat=='Y/m/d') {
+			$Day=$DateArray[2];
+			$Month=$DateArray[1];
+			$Year=$DateArray[0];
+		}
+		if (!checkdate(intval($Month), intval($Day), intval($Year))) {
+			$Errors[$i] = InvalidTransactionDate;
+		}
+		return $Errors;
+	}
+
 	function VerifyRequiredByDate($RequiredByDate, $i, $Errors, $db) {
 		$sql='select confvalue from config where confname="'.DefaultDateFormat.'"';
 		$result=DB_query($sql, $db);
@@ -183,48 +244,56 @@
 			return $Errors;
 		}
 		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
-		$balances=GetStockBalance($StockID, $user, $password);
-		$balance=0;
-		for ($i=0; $i<sizeof($balances); $i++) {
-			$balance=$balance+$balances[$i]['quantity'];
-		}
-		$newqoh = $Quantity + $balance;
-		$itemdetails = GetStockItem($StockID, $user, $password);
-		$wipglact=GetCategoryGLCode($itemdetails['categoryid'], 'wipact', $db);
-		$stockact=GetCategoryGLCode($itemdetails['categoryid'], 'stockact', $db);
-		$cost=$itemdetails['materialcost']+$itemdetails['labourcost']+$itemdetails['overheadcost'];
+		$Errors = VerifyWorkOrderExists($WONumber, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyStockLocation($Location, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyIssuedQuantity($Quantity, sizeof($Errors), $Errors);
+		$Errors = VerifyTRansactionDate($TranDate, sizeof($Errors), $Errors);
+		if (sizeof($Errors>0)) {
+			return $Errors;
+		} else {
+			$balances=GetStockBalance($StockID, $user, $password);
+			$balance=0;
+			for ($i=0; $i<sizeof($balances); $i++) {
+				$balance=$balance+$balances[$i]['quantity'];
+			}
+			$newqoh = $Quantity + $balance;
+			$itemdetails = GetStockItem($StockID, $user, $password);
+			$wipglact=GetCategoryGLCode($itemdetails['categoryid'], 'wipact', $db);
+			$stockact=GetCategoryGLCode($itemdetails['categoryid'], 'stockact', $db);
+			$cost=$itemdetails['materialcost']+$itemdetails['labourcost']+$itemdetails['overheadcost'];
 
-		$stockmovesql='INSERT INTO stockmoves (stockid, type, transno, loccode, trandate, prd, reference, qty, newqoh,
+			$stockmovesql='INSERT INTO stockmoves (stockid, type, transno, loccode, trandate, prd, reference, qty, newqoh,
 				price, standardcost)
 				VALUES ("'.$StockID.'", 28,'.GetNextTransactionNo(28, $db).',"'.$Location.'","'.$TranDate.
 				'",'.GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
 				',"'.$WONumber.'",'.$Quantity.','.$newqoh.','.$cost.','.$cost.')';
-		$locstocksql='UPDATE locstock SET quantity = quantity + '.$Quantity.' WHERE loccode="'.
-			$Location.'" AND stockid="'.$StockID.'"';
-		$glupdatesql1='INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
+			$locstocksql='UPDATE locstock SET quantity = quantity + '.$Quantity.' WHERE loccode="'.
+				$Location.'" AND stockid="'.$StockID.'"';
+			$glupdatesql1='INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
 						VALUES (28,'.GetNextTransactionNo(28, $db).',"'.$TranDate.
 						'",'.GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
 						','.$wipglact.','.$cost*-$Quantity.
 						',"'.$StockID.' x '.$Quantity.' @ '.$cost.'")';
-		$glupdatesql2='INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
+			$glupdatesql2='INSERT INTO gltrans (type, typeno, trandate, periodno, account, amount, narrative)
 						VALUES (28,'.GetNextTransactionNo(28, $db).',"'.$TranDate.
 						'",'.GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
 						','.$stockact.','.$cost*$Quantity.
 						',"'.$StockID.' x '.$Quantity.' @ '.$cost.'")';
-		$systypessql = 'UPDATE systypes set typeno='.GetNextTransactionNo(28, $db).' where typeid=28';
+			$systypessql = 'UPDATE systypes set typeno='.GetNextTransactionNo(28, $db).' where typeid=28';
 
-		DB_query('START TRANSACTION', $db);
-		DB_query($stockmovesql, $db);
-		DB_query($locstocksql, $db);
-		DB_query($glupdatesql1, $db);
-		DB_query($glupdatesql2, $db);
-		DB_query($systypessql, $db);
-		DB_query('COMMIT', $db);
-		if (DB_error_no($db) != 0) {
-			$Errors[0] = DatabaseUpdateFailed;
-			return $Errors;
-		} else {
-			return 0;
+			DB_query('START TRANSACTION', $db);
+			DB_query($stockmovesql, $db);
+			DB_query($locstocksql, $db);
+			DB_query($glupdatesql1, $db);
+			DB_query($glupdatesql2, $db);
+			DB_query($systypessql, $db);
+			DB_query('COMMIT', $db);
+			if (DB_error_no($db) != 0) {
+				$Errors[0] = DatabaseUpdateFailed;
+				return $Errors;
+			} else {
+				return 0;
+			}
 		}
 	}
 

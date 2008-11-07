@@ -149,6 +149,9 @@
 	Define('InvalidQuantityReceived', 1145);
 	Define('InvalidStandardCost', 1146);
 	Define('IncorrectSerialNumber', 1147);
+	Define('WorkOrderDoesntExist', 1148);
+	Define('InvalidIssuedQuantity', 1149);
+	Define('InvalidTransactionDate', 1150);
 
 /* Array of Descriptions of errors */
 	$ErrorDescription['1'] = _('No Authorisation');
@@ -299,5 +302,8 @@
 	$ErrorDescription['1145'] = _('Invalid Quantity Received');
 	$ErrorDescription['1146'] = _('Invalid Standard Cost');
 	$ErrorDescription['1147'] = _('Invalid Serial Number or Lot Reference');
+	$ErrorDescription['1148'] = _('Work order number doesnt exist');
+	$ErrorDescription['1149'] = _('Invalid issued quantity');
+	$ErrorDescription['1150'] = _('Invalid transaction date');
 
 ?>
