@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.2 $ */
+/* $Revision: 1.3 $ */
 $PageSecurity=2;
 
 
@@ -14,7 +14,7 @@ echo "<FORM METHOD='POST' ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "'>";
 
 $SQL = 'SELECT sales_type, typeabbrev FROM salestypes';
 
-$result = DB_query($SQL,$db);
+$PricesResult = DB_query($SQL,$db);
 
 echo '<P><CENTER><TABLE>
                         <TR>
@@ -25,7 +25,7 @@ if (!isset($_POST['PriceList'])){
 	echo '<OPTION SELECTED VALUE=0>' . _('No Price List Selected');
 }
 
-while ($PriceLists=DB_fetch_array($result)){
+while ($PriceLists=DB_fetch_array($PricesResult)){
 	echo "<OPTION VALUE='" . $PriceLists['typeabbrev'] . "'>" . $PriceLists['sales_type'];
 }
 
@@ -59,19 +59,42 @@ if ($_SESSION['WeightedAverageCosting']==1){
 	$CostingBasis = _('Standard Costs');
 }
 
-echo '<tr><td>' . _('Cost or Preferred Supplier Data') . ':</td>
+echo '<tr><td>' . _('Cost/Preferred Supplier Data Or Other Price List') . ':</td>
                 <td><select name="CostType">';
 if ($_POST['CostType']=='PreferredSupplier'){
      echo ' <option selected value="PreferredSupplier">' . _('Preferred Supplier Cost Data') . '</option>
-            <option value="StandardCost">' . $CostingBasis . '</option>';
-}else {
+            <option value="StandardCost">' . $CostingBasis . '</option>
+            <option value="OtherPriceList">' . _('Another Price List') . '</option>';
+}elseif ($_POST['CostType']=='StandardCost'){
 	 echo ' <option value="PreferredSupplier">' . _('Preferred Supplier Cost Data') . '</option>
-            <option selected value="StandardCost">' . $CostingBasis . '</option>';
+            <option selected value="StandardCost">' . $CostingBasis . '</option>
+            <option value="OtherPriceList">' . _('Another Price List') . '</option>';
+} else {
+	echo ' <option value="PreferredSupplier">' . _('Preferred Supplier Cost Data') . '</option>
+            <option value="StandardCost">' . $CostingBasis . '</option>
+            <option selected value="OtherPriceList">' . _('Another Price List') . '</option>';
 }
 echo '</select></td></tr>';
+
+DB_data_seek($PricesResult,0);
+
+if ($_POST['CostType']=='OtherPriceList'){
+     echo '<tr><td>' . _('Select the Base Price List to Use') . ':</td>
+                            <td><select name="BasePriceList">';
+
+	if (!isset($_POST['BasePriceList'])){
+		echo '<OPTION SELECTED VALUE=0>' . _('No Price List Selected');
+	}
+
+	while ($PriceLists=DB_fetch_array($PricesResult)){
+		echo "<OPTION VALUE='" . $PriceLists['typeabbrev'] . "'>" . $PriceLists['sales_type'];
+	}
+
+	echo '</SELECT></TD></TR>';
+}
                 
-echo '<TR><TD>' . _('Stock Category') . ':</TD>
-                <TD><SELECT name="StkCat">';
+echo '<TR><TD>' . _('Stock Category From') . ':</TD>
+                <TD><SELECT name="StkCatFrom">';
 
 $sql = 'SELECT categoryid, categorydescription FROM stockcategory';
 
@@ -80,13 +103,39 @@ $DbgMsg = _('The SQL used to retrieve stock categories and failed was');
 $result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 
 while ($myrow=DB_fetch_array($result)){
-	if ($myrow['categoryid']==$_POST['StkCat']){
-		echo "<OPTION SELECTED VALUE='". $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
+	if ($myrow['categoryid']==$_POST['StkCatFrom']){
+		echo "<OPTION SELECTED VALUE='". $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 	} else {
-		echo "<OPTION VALUE='". $myrow['categoryid'] . "'>" . $myrow['categorydescription'];
+		echo "<OPTION VALUE='". $myrow['categoryid'] . "'>"  . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
 	}
 }
 echo '</SELECT></TD></TR>';
+
+DB_data_seek($result,0);
+
+echo '<TR><TD>' . _('Stock Category To') . ':</TD>
+                <TD><SELECT name="StkCatTo">';
+
+while ($myrow=DB_fetch_array($result)){
+	if ($myrow['categoryid']==$_POST['StkCatTo']){
+		echo "<OPTION SELECTED VALUE='". $myrow['categoryid'] . "'>" . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+	} else {
+		echo "<OPTION VALUE='". $myrow['categoryid'] . "'>"  . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'];
+	}
+}
+echo '</select></td></tr>';
+
+echo '<tr><td>' . _('Rounding decimal places') . ':</td>
+                <td><select name="DecimalPlaces">';
+if ($_POST['DecimalPlaces']==3){                
+	echo '<option selected value=3>3</option>';
+	echo '<option value=2>2</option>';
+} else {
+	echo '<option selected value=2>2</option>';
+	echo '<option value=3>3</option>';
+}
+echo '</select></td></tr>';
+
 
 if (!isset($_POST['IncreasePercent'])){
 	$_POST['IncreasePercent']=0;
@@ -100,16 +149,21 @@ echo "<P><INPUT TYPE=SUBMIT NAME='UpdatePrices' VALUE='" . _('Update Prices') . 
 
 echo '</FORM>';
 
-if (isset($_POST['UpdatePrices']) AND isset($_POST['StkCat'])){
+if (isset($_POST['UpdatePrices']) 
+		AND isset($_POST['StkCatFrom']) AND $_POST['StkCatTo']>=$_POST['StkCatFrom']
+		AND (($_POST['CostType']=='OtherPriceList' AND $_POST['BasePriceList']>0) 
+			OR $_POST['CostType']!='OtherPriceList')){
 
 	echo '<br>' . _('So we are using a price list/sales type of') .' : ' . $_POST['PriceList'];
 	echo '<br>' . _('updating only prices in') . ' : ' . $_POST['CurrCode'];
-	echo '<br>' . _('and in the stock category of') . ' : ' . $_POST['StkCat'];
+	echo '<br>' . _('and the stock category range from') . ' : ' . $_POST['StkCatFrom'] . ' ' . _('to') . ' ' . $_POST['StkCatTo'];
 	echo '<br>' . _('and we are applying a markup percent of') . ' : ' . $_POST['IncreasePercent'];
 	echo '<br>' . _('against') . ' ';
 	
 	if ($_POST['CostType']=='PreferredSupplier'){
 		echo _('Preferred Supplier Cost Data');
+	} elseif ($_POST['CostType']=='OtherPriceList') {
+		echo _('Price List')  . ' ' . $_POST['BasePriceList'];
 	} else {
 		echo $CostingBasis;
 	} 
@@ -124,14 +178,12 @@ if (isset($_POST['UpdatePrices']) AND isset($_POST['StkCat'])){
 		include ('includes/footer.inc');
 		exit;
 	}
-	if (ABS($_POST['IncreasePercent']) < 0.5 OR ABS($_POST['IncreasePercent'])>300 OR !is_numeric($_POST['IncreasePercent'])){
-
-		echo '<BR>' . _('The increase or decrease to be applied is expected to be an integer between 1 and 300 it is not necessary to enter the % sign. The amount is assumed to be a percentage');
-		include ('includes/footer.inc');
-		exit;
-	}
-	
-	$sql = "SELECT stockid, materialcost+labourcost+overheadcost AS cost FROM stockmaster WHERE categoryid='" . $_POST['StkCat'] . "'";
+		
+	$sql = "SELECT stockid, 
+					materialcost+labourcost+overheadcost AS cost 
+			FROM stockmaster 
+			WHERE categoryid>='" . $_POST['StkCatFrom'] . "'
+			AND categoryid <='" . $_POST['StkCatTo'] . "'";
 	$PartsResult = DB_query($sql,$db);
 
 	$IncrementPercentage = $_POST['IncreasePercent']/100;
@@ -157,10 +209,25 @@ if (isset($_POST['UpdatePrices']) AND isset($_POST['StkCat'])){
 				$Cost = 0;
 			} elseif(DB_num_rows($PrefSuppResult)>1) {
 				prnMsg(_('There is more than a single preferred supplier data for the item') . ' ' . $myrow['stockid'] . ' ' . _('prices will not be updated for this item'),'warn');
-				$Cost = 0;
+				$Cost = 0;				
 			} else {
 				$PrefSuppRow = DB_fetch_row($PrefSuppResult);
 				$Cost = $PrefSuppRow[0];	
+			}
+		} elseif ($_POST['CostType']=='OtherPriceList'){
+			$sql = "SELECT price FROM
+							prices
+							WHERE typeabbrev= '" . $_POST['BasePriceList'] . "' 
+							AND currabrev='" . $_POST['CurrCode'] . "'
+							AND stockid='" . $myrow['stockid'] . "'";
+			$ErrMsg = _('Could not get the base price for the item') . ' ' . $myrow['stockid'] . _('from the price list') . ' ' . $_POST['BasePriceList'];
+			$BasePriceResult = DB_query($sql,$db,$ErrMsg);
+			if (DB_num_rows($BasePriceResult)==0){
+				prnMsg(_('There is no price defined in the base price list for the item') . ' ' . $myrow['stockid'] . ' ' . _('prices will not be updated for this item'),'warn');
+				$Cost = 0;				
+			} else {
+				$BasePriceRow = DB_fetch_row($basePriceResult);
+				$Cost = $BasePriceRow[0];	
 			}
 		} else { //Must be using standard/weighted average costs	  
 			$Cost = $myrow['cost'];
@@ -168,6 +235,18 @@ if (isset($_POST['UpdatePrices']) AND isset($_POST['StkCat'])){
 				prnMsg(_('The cost for this item is not set up or is set up as less than or equal to zero - no price changes will be made based on zero cost items. The item concerned is:') . ' ' . $myrow['stockid'],'warn');
 			}
 		}
+		
+		if ($_POST['DecimalPlaces']==3){
+			$RoundUpIncrement = 0.0005;
+		} else {
+			$RoundUpIncrement = 0.005;
+		}
+		if ($_POST['CostType']!='OtherPriceList'){
+			$RoundedPrice = round(($Cost * (1+ $IncrementPercentage)*$CurrencyRate) +$RoundUpIncrement,$_POST['DecimalPlaces']);
+		} else {
+			$RoundedPrice = round(($Cost * (1+ $IncrementPercentage)) + $RoundUpIncrement,$_POST['DecimalPlaces']);
+		}
+		
 		if ($Cost > 0) {
 			$CurrentPriceResult = DB_query("SELECT price FROM
 											prices
@@ -175,7 +254,7 @@ if (isset($_POST['UpdatePrices']) AND isset($_POST['StkCat'])){
 											AND currabrev='" . $_POST['CurrCode'] . "'
 											AND stockid='" . $myrow['stockid'] . "'",$db);
 			if (DB_num_rows($CurrentPriceResult)==1){
-				$sql = 'UPDATE prices SET price=' . $Cost . '* (1+' . $IncrementPercentage . ')*' . $CurrencyRate . " 
+				$sql = 'UPDATE prices SET price=' . $RoundedPrice . " 
 						WHERE typeabbrev='" . $_POST['PriceList'] . "' 
 						AND currabrev='" . $_POST['CurrCode'] . "'
 						AND stockid='" . $myrow['stockid'] . "'";
@@ -190,7 +269,7 @@ if (isset($_POST['UpdatePrices']) AND isset($_POST['StkCat'])){
 								VALUES ('" . $myrow['stockid'] . "',
 										'" . $_POST['PriceList'] . "',
 										'" . $_POST['CurrCode'] . "',
-								 		" . $Cost . '* (1+' . $IncrementPercentage . ')*' . $CurrencyRate . ")"; 
+								 		" . $RoundedPrice . ")"; 
 				$ErrMsg =_('Error inserting prices for') . ' ' . $myrow['stockid'] . ' ' . _('because');
 				$result = DB_query($sql,$db,$ErrMsg);
 				prnMsg(_('Inserting new price for') . ' ' . $myrow['stockid'],'info');
