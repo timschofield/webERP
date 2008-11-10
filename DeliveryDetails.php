@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.49 $ */
+/* $Revision: 1.50 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -162,7 +162,7 @@ if (isset($_POST['Update'])
 			$_SESSION['Items']->FreightCost = round($_POST['FreightCost'],2);
 			$_SESSION['Items']->Quotation = $_POST['Quotation'];
 		} else {
-			$_SESSION['Items']->DeliverTo = $_SESSION['Items']->CustomerName;
+			$_SESSION['Items']->DeliverTo = $_POST['DeliverTo'];
 			$_SESSION['Items']->DelAdd1 = $_POST['BrAdd1'];
 			$_SESSION['Items']->DelAdd2 = $_POST['BrAdd2'];
 			$_SESSION['Items']->DelAdd3 = $_POST['BrAdd3'];
