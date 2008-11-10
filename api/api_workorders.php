@@ -34,6 +34,14 @@
 		return $Errors;
 	}
 
+/* Verify that the quantity figure is numeric */
+	function VerifyReceivedQuantity($quantity, $i, $Errors) {
+		if (!is_numeric($quantity)) {
+			$Errors[$i] = InvalidReceivedQuantity;
+		}
+		return $Errors;
+	}
+
 	function VerifyTransactionDate($TransactionDate, $i, $Errors, $db) {
 		$sql='select confvalue from config where confname="'.DefaultDateFormat.'"';
 		$result=DB_query($sql, $db);
@@ -178,9 +186,9 @@
 			$Errors=VerifyCostIssued($WorkOrderDetails['costissued'], sizeof($Errors), $Errors, $db);
 			$WorkOrder['costissued']=$WorkOrderDetails['costissued'];
 		}
-		if (isset($WorkOrderDetails['completed'])){
-			$Errors=VerifyCompleted($WorkOrderDetails['completed'], sizeof($Errors), $Errors);
-			$WorkOrder['completed']=$WorkOrderDetails['completed'];
+		if (isset($WorkOrderDetails['closed'])){
+			$Errors=VerifyCompleted($WorkOrderDetails['closed'], sizeof($Errors), $Errors);
+			$WorkOrder['closed']=$WorkOrderDetails['closed'];
 		}
 		if (isset($WorkOrderDetails['stockid'])){
 			$Errors=VerifyStockCodeExists($WorkOrderDetails['stockid'], sizeof($Errors), $Errors, $db);
@@ -247,7 +255,7 @@
 		$Errors = VerifyWorkOrderExists($WONumber, sizeof($Errors), $Errors, $db);
 		$Errors = VerifyStockLocation($Location, sizeof($Errors), $Errors, $db);
 		$Errors = VerifyIssuedQuantity($Quantity, sizeof($Errors), $Errors);
-		$Errors = VerifyTRansactionDate($TranDate, sizeof($Errors), $Errors);
+		$Errors = VerifyTransactionDate($TranDate, sizeof($Errors), $Errors);
 		if (sizeof($Errors>0)) {
 			return $Errors;
 		} else {
@@ -297,4 +305,46 @@
 		}
 	}
 
+	function WorkOrderReceive($WONumber, $StockID, $Location, $Quantity, $TranDate, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyWorkOrderExists($WONumber, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyStockLocation($Location, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyReceivedQuantity($Quantity, sizeof($Errors), $Errors);
+		$Errors = VerifyTransactionDate($TranDate, sizeof($Errors), $Errors);
+		if (sizeof($Errors>0)) {
+			return $Errors;
+		} else {
+			$itemdetails = GetStockItem($StockID, $user, $password);
+			$balances=GetStockBalance($StockID, $user, $password);
+			$balance=0;
+			for ($i=0; $i<sizeof($balances); $i++) {
+				$balance=$balance+$balances[$i]['quantity'];
+			}
+			$newqoh = $Quantity + $balance;
+			$cost=$itemdetails['materialcost']+$itemdetails['labourcost']+$itemdetails['overheadcost'];
+			$stockmovesql='INSERT INTO stockmoves (stockid, type, transno, loccode, trandate, prd, reference, qty, newqoh,
+				price, standardcost)
+				VALUES ("'.$StockID.'", 26,'.GetNextTransactionNo(26, $db).',"'.$Location.'","'.$TranDate.
+				'",'.GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors, $db).
+				',"'.$WONumber.'",'.$Quantity.','.$newqoh.','.$cost.','.$cost.')';
+			$locstocksql='UPDATE locstock SET quantity = quantity + '.$Quantity.' WHERE loccode="'.
+				$Location.'" AND stockid="'.$StockID.'"';
+			DB_query('START TRANSACTION', $db);
+			DB_query($stockmovesql, $db);
+			DB_query($locstocksql, $db);
+			DB_query('COMMIT', $db);
+			if (DB_error_no($db) != 0) {
+				$Errors[0] = DatabaseUpdateFailed;
+				return $Errors;
+			} else {
+				return 0;
+			}
+		}
+	}
 ?>

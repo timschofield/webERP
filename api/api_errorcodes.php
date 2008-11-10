@@ -152,6 +152,7 @@
 	Define('WorkOrderDoesntExist', 1148);
 	Define('InvalidIssuedQuantity', 1149);
 	Define('InvalidTransactionDate', 1150);
+	Define('InvalidReceivedQuantity', 1151);
 
 /* Array of Descriptions of errors */
 	$ErrorDescription['1'] = _('No Authorisation');
@@ -305,5 +306,6 @@
 	$ErrorDescription['1148'] = _('Work order number doesnt exist');
 	$ErrorDescription['1149'] = _('Invalid issued quantity');
 	$ErrorDescription['1150'] = _('Invalid transaction date');
+	$ErrorDescription['1151'] = _('Invalid received quantity');
 
 ?>
