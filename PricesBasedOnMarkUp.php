@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity=2;
 
 
@@ -125,15 +125,33 @@ while ($myrow=DB_fetch_array($result)){
 }
 echo '</select></td></tr>';
 
-echo '<tr><td>' . _('Rounding decimal places') . ':</td>
+if (!isset($_POST['DecimalPlaces'])){
+	$_POST['DecimalPlaces']=3;
+}
+echo '<tr><td>' . _('Rounding schema') . ':</td>
                 <td><select name="DecimalPlaces">';
 if ($_POST['DecimalPlaces']==3){                
-	echo '<option selected value=3>3</option>';
-	echo '<option value=2>2</option>';
+	echo '<option selected value=3>' . _('3 decimal places') . '</option>';
+	echo '<option value=2>' . _('2 decimal places') . '</option>';
+	echo '<option value=1000>' . _('Nearest 1000') . '</option>';
+	echo '<option  value=500>' . _('Nearest 500') . '</option>';
+} elseif ($_POST['DecimalPlaces']==2){
+	echo '<option value=3>' . _('3 decimal places') . '</option>';
+	echo '<option selected value=2>' . _('2 decimal places') . '</option>';
+	echo '<option value=1000>' . _('Nearest 1000') . '</option>';
+	echo '<option  value=500>' . _('Nearest 500') . '</option>';
+} elseif ($_POST['DecimalPlaces']==1000){
+	echo '<option value=3>' . _('3 decimal places') . '</option>';
+	echo '<option value=2>' . _('2 decimal places') . '</option>';
+	echo '<option selected value=1000>' . _('Nearest 1000') . '</option>';
+	echo '<option  value=500>' . _('Nearest 500') . '</option>';
 } else {
-	echo '<option selected value=2>2</option>';
-	echo '<option value=3>3</option>';
-}
+	echo '<option value=3>' . _('3 decimal places') . '</option>';
+	echo '<option value=2>' . _('2 decimal places') . '</option>';
+	echo '<option value=1000>' . _('Nearest 1000') . '</option>';
+	echo '<option selected value=500>' . _('Nearest 500') . '</option>';
+}	
+
 echo '</select></td></tr>';
 
 
@@ -235,16 +253,30 @@ if (isset($_POST['UpdatePrices'])
 				prnMsg(_('The cost for this item is not set up or is set up as less than or equal to zero - no price changes will be made based on zero cost items. The item concerned is:') . ' ' . $myrow['stockid'],'warn');
 			}
 		}
-		
+				
 		if ($_POST['DecimalPlaces']==3){
 			$RoundUpIncrement = 0.0005;
 		} else {
 			$RoundUpIncrement = 0.005;
 		}
 		if ($_POST['CostType']!='OtherPriceList'){
-			$RoundedPrice = round(($Cost * (1+ $IncrementPercentage)*$CurrencyRate) +$RoundUpIncrement,$_POST['DecimalPlaces']);
+			if ($_POST['DecimalPlaces']>3){
+				$RoundedPrice = round(($Cost * (1+ $IncrementPercentage) * $CurrencyRate+($_POST['DecimalPlaces']/2))/$_POST['DecimalPlaces']) * $_POST['DecimalPlaces'];
+				if ($RoundedPrice <=0){
+					$RoundedPrice = $_POST['DecimalPlaces'];
+				}
+			} else {
+				$RoundedPrice = round(($Cost * (1+ $IncrementPercentage)*$CurrencyRate) +$RoundUpIncrement,$_POST['DecimalPlaces']);
+			}
 		} else {
-			$RoundedPrice = round(($Cost * (1+ $IncrementPercentage)) + $RoundUpIncrement,$_POST['DecimalPlaces']);
+			if ($_POST['DecimalPlaces']>3){
+				$RoundedPrice = round(($Cost * (1+ $IncrementPercentage)+($_POST['DecimalPlaces']/2))/$_POST['DecimalPlaces']) * $_POST['DecimalPlaces'];
+				if ($RoundedPrice <=0){
+					$RoundedPrice = $_POST['DecimalPlaces'];
+				}
+			} else {
+				$RoundedPrice = round(($Cost * (1+ $IncrementPercentage)) + $RoundUpIncrement,$_POST['DecimalPlaces']);
+			}
 		}
 		
 		if ($Cost > 0) {
@@ -260,7 +292,7 @@ if (isset($_POST['UpdatePrices'])
 						AND stockid='" . $myrow['stockid'] . "'";
 				$ErrMsg =_('Error updating prices for') . ' ' . $myrow['stockid'] . ' ' . _('because');
 				$result = DB_query($sql,$db,$ErrMsg);
-				prnMsg(_('Updating prices for') . ' ' . $myrow['stockid'],'info');
+				prnMsg(_('Updating prices for') . ' ' . $myrow['stockid'] . ' ' . _('to') . ' ' . $RoundedPrice,'info');
 			} else {
 				$sql = "INSERT INTO prices (stockid,
 											typeabbrev,
@@ -272,7 +304,7 @@ if (isset($_POST['UpdatePrices'])
 								 		" . $RoundedPrice . ")"; 
 				$ErrMsg =_('Error inserting prices for') . ' ' . $myrow['stockid'] . ' ' . _('because');
 				$result = DB_query($sql,$db,$ErrMsg);
-				prnMsg(_('Inserting new price for') . ' ' . $myrow['stockid'],'info');
+				prnMsg(_('Inserting new price for') . ' ' . $myrow['stockid'] . ' ' . _('to') . ' ' . $RoundedPrice,'info');
 			} //end if update or insert
 		}// end if cost > 0
 	}//end while loop around items in the category
