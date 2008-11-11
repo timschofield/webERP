@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.36 $ */
+/* $Revision: 1.37 $ */
 	// Titles and screen header
 	// Needs the file config.php loaded where the variables are defined for
 	//  $rootpath
@@ -18,6 +18,7 @@
 	echo '<link REL="icon" HREF="' . $rootpath.'/favicon.ico">';
 	echo '<meta http-equiv="Content-Type" content="text/html; charset=' . _('iso-8859-1') . '">';
 	echo '<link href="'.$rootpath. '/css/'. $_SESSION['Theme'] .'/default.css" REL="stylesheet" TYPE="text/css">';
+	echo "<script language='JavaScript' SRC = '".$rootpath."/javascripts/MiscFunctions.js'></script>";
 	echo '</head>';
 
 	echo '<body>';
