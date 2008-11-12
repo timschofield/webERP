@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 11;
 
@@ -146,7 +146,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
     if ($InputError==false){
 /************************ BEGIN SQL TRANSACTIONS ************************/
 
-        $Result = DB_query('BEGIN',$db);
+        $Result = DB_Txn_Begin($db);
         /*Now Get the next WOReceipt transaction type 26 - function in SQL_CommonFunctions*/
         $WOReceiptNo = GetNextTransNo(26, $db);
 
@@ -609,8 +609,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
                                     $db,$ErrMsg,$DbgMsg,true);
 
 
-        $SQL='COMMIT';
-        $Result = DB_query($SQL,$db);
+        $Result = DB_Txn_Commit($db);
 
         prnMsg(_('The receipt of') . ' ' . $QuantityReceived . ' ' . $WORow['units'] . ' ' . _('of')  . ' ' . $_POST['StockID'] . ' - ' . $WORow['description'] . ' ' . _('against work order') . ' '. $_POST['WO'] . ' ' . _('has been processed'),'info');
         echo "<A HREF='$rootpath/SelectWorkOrder.php?" . SID . "'>" . _('Select a different work order for receiving finished stock against'). '</A>';

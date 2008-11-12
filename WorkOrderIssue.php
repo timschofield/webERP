@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.20 $ */
+/* $Revision: 1.21 $ */
 
 $PageSecurity = 11;
 
@@ -119,7 +119,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 
 /************************ BEGIN SQL TRANSACTIONS ************************/
 
-        $Result = DB_query('BEGIN',$db);
+        $Result = DB_Txn_Begin($db);
         /*Now Get the next WO Issue transaction type 28 - function in SQL_CommonFunctions*/
         $WOIssueNo = GetNextTransNo(28, $db);
 
@@ -337,8 +337,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
                     $db,$ErrMsg,$DbgMsg,true);
 
 
-        $SQL='COMMIT';
-        $Result = DB_query($SQL,$db);
+        $Result = DB_Txn_Commit($db);
 
         prnMsg(_('The issue of') . ' ' . $QuantityIssued . ' ' . _('of')  . ' ' . $_POST['IssueItem'] . ' ' . _('against work order') . ' '. $_POST['WO'] . ' ' . _('has been processed'),'info');
         echo '<p><ul><li><A HREF="' . $rootpath . '/WorkOrderIssue.php?' . SID . '&WO=' . $_POST['WO'] . '&StockID=' . $_POST['StockID'] . '">' . _('Issue more components to this work order') . '</a></li>';

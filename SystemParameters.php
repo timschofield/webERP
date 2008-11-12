@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.44 $ */
+/* $Revision: 1.45 $ */
 
 $PageSecurity =15;
 
@@ -236,11 +236,11 @@ if (isset($_POST['submit'])) {
 		}
 			$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 1 ) {
-			$result = DB_query('BEGIN',$db,$ErrMsg);
+			$result = DB_Txn_Begin($db);
 			foreach ($sql as $line) {
 				$result = DB_query($line,$db,$ErrMsg);
 			}
-			$result = DB_query('COMMIT',$db,$ErrMsg);
+			$result = DB_Txn_Commit($db);
 		} elseif(sizeof($sql)==1) {
 			$result = DB_query($sql,$db,$ErrMsg);
 		}

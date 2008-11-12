@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 
 $PageSecurity = 11;
 
@@ -270,7 +270,7 @@ If (isset($_POST['Close'])) {
 	$TotalVariance = $TotalUsageVar + $TotalCostVar;
 	$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 	$WOCloseNo = GetNextTransNo(29, $db);
-	$TransResult = DB_query('BEGIN',$db);
+	$TransResult = DB_Txn_Begin($db);
 
 	while ($WORow = DB_fetch_array($WOItemsResult)){
 		if ($TotalStdValueRecd==0){
@@ -472,7 +472,7 @@ If (isset($_POST['Close'])) {
 				_('Could not update the work order to closed because:'),
 				_('The SQL used to close the work order was:'),
 				true);
-	$TransResult = DB_query('COMMIT',$db);
+	$TransResult = DB_Txn_Commt($db);
 	if ($_SESSION['CompanyRecord']['gllink_stock']==1){
 		if ($_SESSION['WeightedAverageCosting']==1){
 			prnMsg(_('The item cost as calculated from the work order has been applied against the weighted average cost and the necessary GL journals created to update stock as a result of closing this work order'),'success');

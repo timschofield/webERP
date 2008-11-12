@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 
 $PageSecurity = 15;
 
@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedMeasureID could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 		// Check the name does not clash
-		$sql = "SELECT count(*) FROM unitsofmeasure 
+		$sql = "SELECT count(*) FROM unitsofmeasure
 				WHERE unitid <> " . $SelectedMeasureID ."
 				AND unitname ".LIKE." '" . $_POST['MeasureName'] . "'";
 		$result = DB_query($sql,$db);
@@ -48,9 +48,9 @@ if (isset($_POST['submit'])) {
 			prnMsg( _('The unit of measure can not be renamed because another with the same name already exist.'),'error');
 		} else {
 			// Get the old name and check that the record still exist neet to be very carefull here
-			// idealy this is one of those sets that should be in a stored procedure simce even the checks are 
+			// idealy this is one of those sets that should be in a stored procedure simce even the checks are
 			// relavant
-			$sql = "SELECT unitname FROM unitsofmeasure 
+			$sql = "SELECT unitname FROM unitsofmeasure
 				WHERE unitid = " . $SelectedMeasureID;
 			$result = DB_query($sql,$db);
 			if ( DB_num_rows($result) != 0 ) {
@@ -75,7 +75,7 @@ if (isset($_POST['submit'])) {
 		$msg = _('Unit of measure changed');
 	} elseif ($InputError !=1) {
 		/*SelectedMeasureID is null cos no item selected on first time round so must be adding a record*/
-		$sql = "SELECT count(*) FROM unitsofmeasure 
+		$sql = "SELECT count(*) FROM unitsofmeasure
 				WHERE unitname " .LIKE. " '".$_POST['MeasureName'] ."'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
@@ -95,7 +95,7 @@ if (isset($_POST['submit'])) {
 	if ($InputError!=1){
 		//run the SQL from either of the above possibilites
 		if (is_array($sql)) {
-			$result = DB_query('BEGIN',$db);
+			$result = DB_Txn_Begin($db);
 			$tmpErr = _('Could not update unit of measure');
 			$tmpDbg = _('The sql that failed was') . ':';
 			foreach ($sql as $stmt ) {
@@ -106,9 +106,9 @@ if (isset($_POST['submit'])) {
 				}
 			}
 			if ($InputError!=1){
-				$result = DB_query('COMMIT',$db);
+				$result = DB_Txn_Commit($db);
 			} else {
-				$result = DB_query('ROLLBACK',$db);
+				$result = DB_Txn_Rollback($db);
 			}
 		} else {
 			$result = DB_query($sql,$db);
@@ -123,7 +123,7 @@ if (isset($_POST['submit'])) {
 //the link to delete a selected record was clicked instead of the submit button
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'stockmaster'
 	// Get the original name of the unit of measure the ID is just a secure way to find the unit of measure
-	$sql = "SELECT unitname FROM unitsofmeasure 
+	$sql = "SELECT unitname FROM unitsofmeasure
 		WHERE unitid = " . $SelectedMeasureID;
 	$result = DB_query($sql,$db);
 	if ( DB_num_rows($result) == 0 ) {
@@ -163,7 +163,7 @@ if (isset($_POST['submit'])) {
 
  if (!isset($SelectedMeasureID)) {
 
-/* An unit of measure could be posted when one has been edited and is being updated 
+/* An unit of measure could be posted when one has been edited and is being updated
   or GOT when selected for modification
   SelectedMeasureID will exist because it was sent with the page in a GET .
   If its the first time the page has been displayed with no parameters
