@@ -61,14 +61,14 @@ if(isset($_POST['ProcessTransfer'])){
 
 		foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
 			if ($TrfLine->Quantity >0){
-				$Result = DB_query('BEGIN',$db, _('Could not initiate a transaction') . ' - ' . _('perhaps the database does not support transactions') );
+				$Result = DB_Txn_Begin($db);
 
 				/* Need to get the current location quantity will need it later for the stock movement */
-				$SQL="SELECT locstock.quantity 
-						FROM locstock 
-						WHERE locstock.stockid='" . $TrfLine->StockID . "' 
+				$SQL="SELECT locstock.quantity
+						FROM locstock
+						WHERE locstock.stockid='" . $TrfLine->StockID . "'
 						AND loccode= '" . $_SESSION['Transfer']->StockLocationFrom . "'";
-						
+
 				$Result = DB_query($SQL, $db, _('Could not retrieve the stock quantity at the dispatch stock location prior to this transfer being processed') );
 				if (DB_num_rows($Result)==1){
 					$LocQtyRow = DB_fetch_row($Result);
@@ -270,13 +270,13 @@ if(isset($_POST['ProcessTransfer'])){
 
 						/* now insert the serial stock movement */
 
-						$SQL = "INSERT INTO stockserialmoves (stockmoveno, 
-											stockid, 
-											serialno, 
-											moveqty) 
-								VALUES (" . $StkMoveNo . ", 
-									'" . $TrfLine->StockID . "', 
-									'" . $Item->BundleRef . "', 
+						$SQL = "INSERT INTO stockserialmoves (stockmoveno,
+											stockid,
+											serialno,
+											moveqty)
+								VALUES (" . $StkMoveNo . ",
+									'" . $TrfLine->StockID . "',
+									'" . $Item->BundleRef . "',
 									" . $Item->BundleQty . ")";
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 						$DbgMsg =  _('The following SQL to insert the serial stock movement records was used');
@@ -304,17 +304,17 @@ if(isset($_POST['ProcessTransfer'])){
 				$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
 
 				prnMsg(_('A stock transfer for item code'). ' - '  . $TrfLine->StockID . ' ' . $TrfLine->ItemDescription . ' '. _('has been created from').' ' . $_SESSION['Transfer']->StockLocationFromName . ' '. _('to'). ' ' . $_SESSION['Transfer']->StockLocationToName . ' ' . _('for a quantity of'). ' '. $TrfLine->Quantity,'success');
-                                
+
                                 if ($TrfLine->CancelBalance==1){
                                       $sql = "UPDATE loctransfers SET recqty = recqty + ". $TrfLine->Quantity . ",
                                                                       shipqty = recqty + ". $TrfLine->Quantity . ",
-								recdate = '".date('Y-m-d H:i:s'). "' 
-						WHERE reference = '". $_SESSION['Transfer']->TrfID . "' 
+								recdate = '".date('Y-m-d H:i:s'). "'
+						WHERE reference = '". $_SESSION['Transfer']->TrfID . "'
 						AND stockid = '".  $TrfLine->StockID."'";
                                 } else {
                                       $sql = "UPDATE loctransfers SET recqty = recqty + ". $TrfLine->Quantity . ",
-                                                                      recdate = '".date('Y-m-d H:i:s'). "' 
-                                                WHERE reference = '". $_SESSION['Transfer']->TrfID . "' 
+                                                                      recdate = '".date('Y-m-d H:i:s'). "'
+                                                WHERE reference = '". $_SESSION['Transfer']->TrfID . "'
                                                 AND stockid = '".  $TrfLine->StockID."'";
                                 }
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to update the Location Transfer Record');
@@ -323,8 +323,8 @@ if(isset($_POST['ProcessTransfer'])){
 				unset ($_POST['Qty' . $i]);
 			} /*end if Quantity > 0 */
                         if ($TrfLine->CancelBalance==1){
-                               $sql = "UPDATE loctransfers SET shipqty = recqty 
-                                        WHERE reference = '". $_SESSION['Transfer']->TrfID . "' 
+                               $sql = "UPDATE loctransfers SET shipqty = recqty
+                                        WHERE reference = '". $_SESSION['Transfer']->TrfID . "'
 					AND stockid = '".  $TrfLine->StockID."'";
         			$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to set the quantity received to the quantity shipped to cancel the balance on this transfer line');
 				$Result = DB_query($sql, $db, $ErrMsg, $DbgMsg, true);
@@ -333,7 +333,7 @@ if(isset($_POST['ProcessTransfer'])){
 		} /*end of foreach TransferItem */
 
 		$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Unable to COMMIT the Stock Transfer transaction');
-		DB_query('COMMIT', $db, $ErrMsg);
+		DB_Txn_Commit($db);
 
 		unset($_SESSION['Transfer']->LineItem);
 		unset($_SESSION['Transfer']);

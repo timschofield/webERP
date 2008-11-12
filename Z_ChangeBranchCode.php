@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -43,7 +43,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 	}
 
 
-	$result = DB_query('BEGIN',$db);
+	$result = DB_Txn_Begin($db);
 
 	prnMsg(_('Inserting the new customer branches master record'),'info');
 	$sql = "INSERT INTO custbranch (`branchcode`,
@@ -181,7 +181,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 	$ErrMsg = _('The SQL to update contract header records failed because');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 
-	$result = DB_query("COMMIT",$db);
+	$result = DB_Txn_Commit($db);
 
 	prnMsg(_('Deleting the old customer branch record'),'info');
 	$sql = "DELETE FROM custbranch

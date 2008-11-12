@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 
 /* Script to delete a credit note - it expects and credit note number to delete
 not included on any menu for obvious reasons
@@ -49,7 +49,7 @@ While ($myrow = DB_fetch_array($Result)){
 prnMsg(_('The number of stock movements to be deleted is') . ': ' . DB_num_rows($Result),'info');
 
 
-$Result = DB_query('BEGIN',$db); /* commence a database transaction */
+$Result = DB_Txn_Begin($db); /* commence a database transaction */
 /*Now delete the DebtorTrans */
 
 $SQL = 'DELETE FROM debtortrans
@@ -102,7 +102,7 @@ $Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
 prnMsg(_('Deleted the credit note stock movements').'info');
 echo '<BR><BR>';
 
-$result = DB_query('COMMIT',$db);
+$result = DB_Txn_Commit($db);
 prnMsg(_('Credit note number') . ' ' . $_GET['CreditNoteNo'] . ' ' . _('has been completely deleted') . '. ' . _('To ensure the integrity of the general ledger transactions must be reposted from the period the credit note was created'),'info');
 
 include('includes/footer.inc');

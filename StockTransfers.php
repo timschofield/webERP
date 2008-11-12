@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
@@ -16,7 +16,7 @@ if (isset($_POST['CheckCode'])) {
 	if (strlen($_POST['StockText'])>0) {
 		$sql='SELECT stockid, description from stockmaster where description like "%'.$_POST['StockText'].'%"';
 	} else {
-		$sql='SELECT stockid, description from stockmaster where stockid like "%'.$_POST['StockCode'].'%"';		
+		$sql='SELECT stockid, description from stockmaster where stockid like "%'.$_POST['StockCode'].'%"';
 	}
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 	echo '<table><tr><th>'._('Stock Code').'</th><th>'._('Stock Description').'</th></tr>';
@@ -139,12 +139,12 @@ if ( isset($_POST['EnterTransfer']) ){
 		$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']), $db);
 		$SQLTransferDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 
-		$Result = DB_query('BEGIN',$db);
+		$Result = DB_Txn_Begin($db);
 
 		// Need to get the current location quantity will need it later for the stock movement
-		$SQL="SELECT locstock.quantity 
-			FROM locstock 
-			WHERE locstock.stockid='" . $_SESSION['Transfer']->TransferItem[0]->StockID . "' 
+		$SQL="SELECT locstock.quantity
+			FROM locstock
+			WHERE locstock.stockid='" . $_SESSION['Transfer']->TransferItem[0]->StockID . "'
 			AND loccode= '" . $_SESSION['Transfer']->StockLocationFrom . "'";
 
 		$ErrMsg =  _('Could not retrieve the QOH at the sending location because');
@@ -350,13 +350,13 @@ if ( isset($_POST['EnterTransfer']) ){
 
 				/* now insert the serial stock movement */
 
-				$SQL = "INSERT INTO stockserialmoves (stockmoveno, 
-									stockid, 
-									serialno, 
-									moveqty) 
-							VALUES (" . $StkMoveNo . ", 
-								'" . $_SESSION['Transfer']->TransferItem[0]->StockID . "', 
-								'" . $Item->BundleRef . "', 
+				$SQL = "INSERT INTO stockserialmoves (stockmoveno,
+									stockid,
+									serialno,
+									moveqty)
+							VALUES (" . $StkMoveNo . ",
+								'" . $_SESSION['Transfer']->TransferItem[0]->StockID . "',
+								'" . $Item->BundleRef . "',
 								" . $Item->BundleQty . ")";
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
@@ -385,7 +385,7 @@ if ( isset($_POST['EnterTransfer']) ){
 		$DbgMsg = _('The following SQL to update the location stock record was used');
 		$Result = DB_query($SQL,$db,$ErrMsg, $DbgMsg, true);
 
-		$Result = DB_query('COMMIT',$db);
+		$Result = DB_Txn_Commit($db);
 
 		prnMsg(_('An inventory transfer of').' ' . $_SESSION['Transfer']->TransferItem[0]->StockID . ' - ' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' '. _('has been created from').' ' . $_SESSION['Transfer']->StockLocationFrom . ' '. _('to') . ' ' . $_SESSION['Transfer']->StockLocationTo . ' '._('for a quantity of').' ' . $_SESSION['Transfer']->TransferItem[0]->Quantity,'success');
 		echo '</br><a href="PDFStockTransfer.php?TransferNo='.$TransferNumber.'">Print Transfer Note</a>';

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 5;
 
@@ -38,20 +38,20 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 	include ('includes/PDFPaymentRunPageHeader.inc');
 
-	$sql = "SELECT suppliers.supplierid, 
+	$sql = "SELECT suppliers.supplierid,
 			SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS balance
-		FROM suppliers, 
-			paymentterms, 
-			supptrans, 
+		FROM suppliers,
+			paymentterms,
+			supptrans,
 			systypes
-		WHERE systypes.typeid = supptrans.type 
-		AND suppliers.paymentterms = paymentterms.termsindicator 
+		WHERE systypes.typeid = supptrans.type
+		AND suppliers.paymentterms = paymentterms.termsindicator
 		AND suppliers.supplierid = supptrans.supplierno
 		AND supptrans.ovamount + supptrans.ovgst - supptrans.alloc !=0
-		AND supptrans.duedate <='" . FormatDateForSQL($_POST['AmountsDueBy']) . "' 
-		AND supptrans.hold=0 
+		AND supptrans.duedate <='" . FormatDateForSQL($_POST['AmountsDueBy']) . "'
+		AND supptrans.hold=0
 		AND suppliers.currcode = '" . $_POST['Currency'] . "'
-		AND supptrans.supplierNo >= '" . $_POST['FromCriteria'] . "' 
+		AND supptrans.supplierNo >= '" . $_POST['FromCriteria'] . "'
 		AND supptrans.supplierno <= '" . $_POST['ToCriteria'] . "'
 		GROUP BY suppliers.supplierid
 		HAVING SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) > 0
@@ -65,7 +65,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 
 	if (isset($_POST['PrintPDFAndProcess'])){
-		$ProcessResult = DB_query('begin',$db);
+		$ProcessResult = DB_Txn_Begin($db);
 	}
 
 	while ($SuppliersToPay = DB_fetch_array($SuppliersResult)){
@@ -178,8 +178,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 					if ($debug==1){
 						echo '<BR>' . _('The SQL that failed was') . $SQL;
 					}
-					$SQL= 'rollback';
-					$ProcessResult = DB_query($SQL,$db);
+					$ProcessResult = DB_Txn_Rollback($db);
 
 					include('includes/footer.inc');
 					exit;
@@ -201,7 +200,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 		include('includes/PDFPaymentRun_PymtFooter.php');
 
-		$ProcessResult = DB_query('COMMIT',$db,'','',false,false);
+		$ProcessResult = DB_Txn_Commit($db);
 		if (DB_error_no($db) !=0) {
 			$title = _('Payment Processing - Problem Report') . '.... ';
 			include('includes/header.inc');
@@ -210,8 +209,7 @@ If ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			if ($debug==1){
 				echo '<BR>' . _('The SQL that failed was') . $SQL;
 			}
-			$SQL= 'rollback';
-			$ProcessResult = DB_query($SQL,$db);
+			$ProcessResult = DB_Txn_Rollback($db);
 			include('includes/footer.inc');
 			exit;
 		}

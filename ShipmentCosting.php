@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 11;
 
@@ -125,7 +125,7 @@ if (db_num_rows($LineItemsResult) > 0) {
 
         if (isset($_POST['Close'])){
         /*Set up a transaction to buffer all updates or none */
-		$result = DB_query('BEGIN',$db);
+		$result = DB_Txn_Begin($db);
 		$PeriodNo = GetPeriod(Date('d/m/Y'), $db);
         }
 
@@ -412,7 +412,7 @@ if (db_num_rows($LineItemsResult) > 0) {
 							'" . Date('Y-m-d') . "',
 							" . $PeriodNo . ",
 							" . $StockGLCodes['stockact'] . ",
-							'" . _('Shipment of') . ' ' . $myrow['itemcode'] .  ' ' . _('cost was') . ' ' . $StdCostUnit . ' ' . _('changed to') . ' ' . number_format($ItemShipmentCost,2) . ' x ' . _('QOH of') . ' ' . $QOH . "', 
+							'" . _('Shipment of') . ' ' . $myrow['itemcode'] .  ' ' . _('cost was') . ' ' . $StdCostUnit . ' ' . _('changed to') . ' ' . number_format($ItemShipmentCost,2) . ' x ' . _('QOH of') . ' ' . $QOH . "',
                                                         " . $ValueOfChange . ")";
 				   $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL debit for stock cost adjustment posting could not be inserted because') .' '. DB_error_msg($db);
 
@@ -639,7 +639,7 @@ if ( isset($_POST['Close']) ){ /* OK do the shipment close journals */
                             TRUE);
 
 	$result = DB_query('UPDATE shipments SET closed=1 WHERE shiptref=' .$_GET['SelectedShipment'],$db,_('Could not update the shipment to closed'),'',TRUE);
-	$result = DB_query('COMMIT',$db);
+	$result = DB_Txn_Commit($db);
 
 	echo '<BR><BR>';
 	prnMsg( _('Shipment'). ' ' . $_GET['SelectedShipment'] . ' ' . _('has been closed') );

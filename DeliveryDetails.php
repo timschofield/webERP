@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.50 $ */
+/* $Revision: 1.51 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -291,7 +291,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 	$DelDate = FormatDateforSQL($_SESSION['Items']->DeliveryDate);
 
-	$Result = DB_query('BEGIN',$db);
+	$Result = DB_Txn_Begin($db);
 
 	$HeaderSQL = 'INSERT INTO salesorders (
 				debtorno,
@@ -410,7 +410,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 	$DelDate = FormatDateforSQL($_SESSION['Items']->DeliveryDate);
 
-	$Result = DB_query('BEGIN',$db);
+	$Result = DB_Txn_Begin($db);
 
 	$HeaderSQL = 'UPDATE salesorders
 			SET debtorno = '."'" . $_SESSION['Items']->DebtorNo . "'".',
@@ -467,7 +467,7 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 
 	} /* updated line items into sales order details */
 
-	$Result=DB_query('COMMIT',$db);
+	$Result=DB_Txn_Commit($db);
 
 	unset($_SESSION['Items']->LineItems);
 	unset($_SESSION['Items']);

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 /* Script to delete an invoice expects and invoice number to delete
 not included on any menu for obvious reasons
@@ -63,7 +63,7 @@ While ($myrow = DB_fetch_array($Result)){
 prnMsg(_('The number of stock movements to be deleted is') . ': ' . DB_num_rows($Result),'info');
 
 /*Setup a database transaction */
-$result = DB_query('BEGIN',$db);
+$result = DB_Txn_Begin($db);
 
 /*Delete any log entries */
 
@@ -137,7 +137,7 @@ $ErrMsg = _('The SQL to delete the general ledger journal records failed because
 $Result = DB_query($SQL, $db,$ErrMsg,$DbgMsg,true);
 prnMsg(_('The GL journal records associated with the invoice have been deleted'),'info');
 
-$result = DB_query('COMMIT',$db);
+$result = DB_Txn_Commit($db);
 
 prnMsg(_('Invoice number') . ' ' . $_GET['InvoiceNo'] . ' ' . _('has been deleted'),'info');
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 /* contributed by Chris Bice */
 
 $PageSecurity = 11;
@@ -74,7 +74,7 @@ If (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 if(isset($_POST['Submit']) AND $InputError==False){
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to BEGIN Location Transfer transaction');
-	DB_query('BEGIN',$db, $ErrMsg);
+	DB_Txn_Begin($db);
 	for ($i=0;$i < $_POST['LinesCounter'];$i++){
 
 		if($_POST['StockID' . $i] != ""){
@@ -95,7 +95,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 		}
 	}
         $ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to COMMIT Location Transfer transaction');
-        DB_query('BEGIN',$db, $ErrMsg);
+        DB_Txn_Commit($db);
 
 	prnMsg( _('The inventory transfer records have been created successfully'),'success');
 	echo '<P><A HREF="'.$rootpath.'/PDFStockLocTransfer.php?' . SID . 'TransferNo=' . $_POST['Trf_ID'] . '">'.

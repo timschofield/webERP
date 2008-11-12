@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.5 $ */
+/* $Revision: 1.6 $ */
 
 $PageSecurity = 15;
 
@@ -48,8 +48,8 @@ if (isset($_POST['submit'])) {
 			prnMsg( _('The tax category cannot be renamed because another with the same name already exists.'),'error');
 		} else {
 			// Get the old name and check that the record still exists
-			
-			$sql = "SELECT taxcatname FROM taxcategories 
+
+			$sql = "SELECT taxcatname FROM taxcategories
 				WHERE taxcatid = " . $SelectedTaxCategory;
 			$result = DB_query($sql,$db);
 			if ( DB_num_rows($result) != 0 ) {
@@ -69,7 +69,7 @@ if (isset($_POST['submit'])) {
 		$msg = _('Tax category name changed');
 	} elseif ($InputError !=1) {
 		/*SelectedTaxCategory is null cos no item selected on first time round so must be adding a record*/
-		$sql = "SELECT count(*) FROM taxcategories 
+		$sql = "SELECT count(*) FROM taxcategories
 				WHERE taxcatname " .LIKE. " '".$_POST['TaxCategoryName'] ."'";
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
@@ -77,7 +77,7 @@ if (isset($_POST['submit'])) {
 			$InputError = 1;
 			prnMsg( _('The tax category cannot be created because another with the same name already exists'),'error');
 		} else {
-			$result = DB_query('BEGIN',$db);
+			$result = DB_Txn_Begin($db);
 			$sql = "INSERT INTO taxcategories (
 						taxcatname )
 				VALUES (
@@ -85,19 +85,19 @@ if (isset($_POST['submit'])) {
 					)";
 			$ErrMsg = _('The new tax category could not be added');
 			$result = DB_query($sql,$db,$ErrMsg,true);
-			
+
 			$LastTaxCatID = DB_Last_Insert_ID($db, 'taxcategories','taxcatid');
-			
-			$sql = 'INSERT INTO taxauthrates (taxauthority, 
-					dispatchtaxprovince, 
+
+			$sql = 'INSERT INTO taxauthrates (taxauthority,
+					dispatchtaxprovince,
 					taxcatid)
 				SELECT taxauthorities.taxid,
  					taxprovinces.taxprovinceid,
 					' . $LastTaxCatID . '
 				FROM taxauthorities CROSS JOIN taxprovinces';
 			$result = DB_query($sql,$db,$ErrMsg,true);
-			
-			$result = DB_query('COMMIT',$db);
+
+			$result = DB_Txn_Commit($db);
 		}
 		$msg = _('New tax category added');
 	}
@@ -113,7 +113,7 @@ if (isset($_POST['submit'])) {
 //the link to delete a selected record was clicked instead of the submit button
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'stockmaster'
 	// Get the original name of the tax category the ID is just a secure way to find the tax category
-	$sql = "SELECT taxcatname FROM taxcategories 
+	$sql = "SELECT taxcatname FROM taxcategories
 		WHERE taxcatid = " . $SelectedTaxCategory;
 	$result = DB_query($sql,$db);
 	if ( DB_num_rows($result) == 0 ) {
@@ -135,7 +135,7 @@ if (isset($_POST['submit'])) {
 			$result = DB_query($sql,$db);
 			prnMsg( $OldTaxCategoryName . ' ' . _('tax category and any tax rates set for it have been deleted'),'success');
 		}
-	} //end if 
+	} //end if
 	unset ($SelectedTaxCategory);
 	unset ($_GET['SelectedTaxCategory']);
 	unset($_GET['delete']);
@@ -145,7 +145,7 @@ if (isset($_POST['submit'])) {
 
  if (!isset($SelectedTaxCategory)) {
 
-/* An tax category could be posted when one has been edited and is being updated 
+/* An tax category could be posted when one has been edited and is being updated
   or GOT when selected for modification
   SelectedTaxCategory will exist because it was sent with the page in a GET .
   If its the first time the page has been displayed with no parameters

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 4;
 
@@ -266,8 +266,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		$StkLocAddResult = DB_query($sql,$db);
 		$StkLocAddress = DB_fetch_array($StkLocAddResult);
 
-		 $sql = "BEGIN";
-		 $result = DB_query($sql,$db);
+		 $result = DB_Txn_Begin($db);
 
 		 /*Insert to purchase order header record */
 		 $sql = "INSERT INTO purchorders (supplierno,
@@ -370,20 +369,20 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 			$OrderDate = FormatDateForSQL($SPLLine->ReqDelDate);
 
-			$sql = "INSERT INTO purchorderdetails (orderno, 
-								itemcode, 
-								deliverydate, 
-								itemdescription, 
-								glcode, 
-								unitprice, 
-								quantityord) 
+			$sql = "INSERT INTO purchorderdetails (orderno,
+								itemcode,
+								deliverydate,
+								itemdescription,
+								glcode,
+								unitprice,
+								quantityord)
 					VALUES (";
-			$sql = $sql . $_SESSION['SPL']->PurchOrderNo . ", 
+			$sql = $sql . $_SESSION['SPL']->PurchOrderNo . ",
 					'" . $PartCode . "',
 					'" . $OrderDate . "',
-					'" . $SPLLine->ItemDescription . "', 
+					'" . $SPLLine->ItemDescription . "',
 					" . $GLCode . ",
-					" . $SPLLine->Cost . ", 
+					" . $SPLLine->Cost . ",
 					" . $SPLLine->Quantity . ")";
 
 			$ErrMsg = _('One of the purchase order detail records could not be inserted into the database because');
@@ -460,11 +459,11 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 		$SalesOrderNo = DB_Last_Insert_ID($db,'salesorders','orderno');
 
-		$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (orderno, 
-									stkcode, 
-									unitprice, 
+		$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (orderno,
+									stkcode,
+									unitprice,
 									quantity,
-									orderlineno) 
+									orderlineno)
 						VALUES (" .  $SalesOrderNo;
 
 		$ErrMsg = _('There was a problem inserting a line into the sales order because');
@@ -487,7 +486,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 		}
 
-		 $Result = DB_query('COMMIT',$db);
+		 $Result = DB_Txn_Commit($db);
 
 		 unset($_SESSION['SPL']); /*Clear the PO data to allow a newy to be input*/
 		 echo "<BR><BR><A HREF='$rootpath/SpecialOrder.php?" . SID . "'>" . _('Enter A New Special Order') . "</A>";
@@ -530,7 +529,7 @@ if (count($_SESSION['SPL']->LineItems)>0){
 
 	echo "<CENTER><B>" . _('Special Order Summary') . "</B>";
 	echo "<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>";
-	
+
 	$sql = 'select currencydefault from companies';
 	$result = DB_query($sql, $db);
 	$myrow = DB_fetch_row($result);

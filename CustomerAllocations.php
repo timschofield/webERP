@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 /*
 Call this page with:
@@ -89,7 +89,7 @@ if (isset($_POST['UpdateDatabase'])) {
 		//========[ START TRANSACTION ]===========
 		//
 	   	$error = '';
-		$Result=DB_query('BEGIN',$db);
+		$Result=DB_Txn_Begin($db);
 		$AllAllocations = 0;
 		foreach ($_SESSION['Alloc']->Allocs as $AllocnItem)
 		{
@@ -209,9 +209,9 @@ if (isset($_POST['UpdateDatabase'])) {
 		//
 		if ( empty($error) )
 		{
-				$Result = DB_query('COMMIT', $db);
+				$Result = DB_Txn_Commit($db);
 		} else {
-				$Result = DB_query('ROLLBACK', $db);
+				$Result = DB_Txn_Rollback($db);
 				prnMsg($error,'error');
 		}
 		unset($_SESSION['Alloc']);

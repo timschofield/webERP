@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 $PageSecurity = 2; /*viewing possible with inquiries but not mods */
 
@@ -20,7 +20,7 @@ if (isset($_GET['StockID'])){
 echo "<a href='" . $rootpath . '/SelectProduct.php?' . SID . "'>" . _('Back to Items') . '</a><BR>';
 
 if (isset($_POST['UpdateData'])){
-	
+
 
     $sql = "SELECT  materialcost,
                     labourcost,
@@ -63,7 +63,7 @@ if (isset($_POST['UpdateData'])){
 		prnMsg (_('The entered item code does not exist'),'error',_('Non-existent Item'));
 	} elseif ($OldCost != $NewCost){
 
-	$Result = DB_query('BEGIN',$db);
+	$Result = DB_Txn_Begin($db);
 	ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $_POST['QOH']);
 
 
@@ -78,7 +78,7 @@ if (isset($_POST['UpdateData'])){
 		$DbgMsg = _('The SQL that failed was');
 		$Result = DB_query($SQL,$db,$ErrMsg,$DbgMsg,true);
 
-		$Result = DB_query('COMMIT',$db);
+		$Result = DB_Txn_Commit($db);
 		UpdateCost($db, $StockID); //Update any affected BOMs
 
    	}
@@ -123,7 +123,7 @@ echo _('Item Code') . ":<input type=text name='StockID' value='$StockID' 1 maxle
 echo " <INPUT TYPE=SUBMIT NAME='Show' VALUE='" . _('Show Cost Details') . "'><HR>";
 
 if (($myrow['mbflag']=='D' AND $myrow['stocktype'] != 'L')
-	OR $myrow['mbflag']=='A' 
+	OR $myrow['mbflag']=='A'
 	OR $myrow['mbflag']=='K'){
     echo '</FORM>'; // Close the form
    if ($myrow['mbflag']=='D'){
@@ -148,7 +148,7 @@ echo '<TR><TD>' . _('Last Cost') .':</TD><TD ALIGN=RIGHT>' . number_format($myro
 if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens']) OR !isset($UpdateSecurity)){
 	echo '<TR><TD>' . _('Cost') . ':</TD><TD ALIGN=RIGHT>' . number_format($myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'],2) . '</TD></TR></TABLE>';
 } else {
-			
+
 	if ($myrow['mbflag']=='M'){
 		echo '<INPUT TYPE=HIDDEN NAME="MaterialCost" VALUE=' . $myrow['materialcost'] . '>';
 		echo '<TR><TD>' . _('Standard Material Cost Per Unit') .':</TD><TD ALIGN=LEFT>' . number_format($myrow['materialcost'],4) . '</TD></TR>';
@@ -156,7 +156,7 @@ if (! in_array($UpdateSecurity,$_SESSION['AllowedPageSecurityTokens']) OR !isset
 		echo '<TR><TD>' . _('Standard Overhead Cost Per Unit') . ':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME=OverheadCost VALUE=' . $myrow['overheadcost'] . '></TD></TR>';
 	} elseif ($myrow['mbflag']=='B' OR  $myrow['mbflag']=='D') {
 		echo '<TR><TD>' . _('Standard Cost') .':</TD><TD ALIGN=RIGHT><INPUT TYPE=TEXT NAME="MaterialCost" VALUE=' . $myrow['materialcost'] . '></TD></TR>';
-	} else 	{		
+	} else 	{
 		echo '<INPUT TYPE=HIDDEN NAME=LabourCost VALUE=0>';
 		echo '<INPUT TYPE=HIDDEN NAME=OverheadCost VALUE=0>';
 	}

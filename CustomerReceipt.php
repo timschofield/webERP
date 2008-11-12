@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -191,8 +191,7 @@ if (isset($_POST['CommitBatch'])){
 
 	$_SESSION['ReceiptBatch']->BatchNo = GetNextTransNo(12,$db);
    /*Start a transaction to do the whole lot inside */
-   $SQL = 'BEGIN';
-   $result = DB_query($SQL,$db);
+   $result = DB_Txn_Begin($db);
 
    $BatchReceiptsTotal = 0; //in functional currency
    $BatchDiscount = 0; //in functional currency
@@ -446,7 +445,7 @@ if (isset($_POST['CommitBatch'])){
 
    $ErrMsg = _('Cannot commit the changes');
    $DbgMsg = _('The SQL that failed was');
-   $result = DB_query('COMMIT',$db,$ErrMsg,$DbgMsg,true);
+   $result = DB_Txn_Commit($db);
 
    echo '<P>';
 

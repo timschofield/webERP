@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 include('includes/DefineJournalClass.php');
 
@@ -55,7 +55,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 	$PeriodNo = GetPeriod($_SESSION['JournalDetail']->JnlDate,$db);
 
      /*Start a transaction to do the whole lot inside */
-	$result = DB_query('START TRANSACTION',$db);
+	$result = DB_Txn_Begin($db);
 
 	$TransNo = GetNextTransNo( 0, $db);
 
@@ -107,7 +107,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch']==_('Accept and Proces
 
 
 	$ErrMsg = _('Cannot commit the changes');
-	$result= DB_query('COMMIT',$db,$ErrMsg,_('The commit database transaction failed'),true);
+	$result= DB_Txn_Begin($db);
 
 	prnMsg(_('Journal').' ' . $TransNo . ' '._('has been sucessfully entered'),'success');
 

@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.58 $ */
+/* $Revision: 1.59 $ */
 
 $PageSecurity = 11;
 
@@ -89,75 +89,75 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 	$i=1;
-	
+
 
 	if (!isset($_POST['Description']) or strlen($_POST['Description']) > 50 OR strlen($_POST['Description'])==0) {
 		$InputError = 1;
 		prnMsg (_('The stock item description must be entered and be fifty characters or less long') . '. ' . _('It cannot be a zero length string either') . ' - ' . _('a description is required'),'error');
 		$Errors[$i] = 'Description';
 		$i++;
-	} 
+	}
 	if (strlen($_POST['LongDescription'])==0) {
 		$InputError = 1;
 		prnMsg (_('The stock item description cannot be a zero length string') . ' - ' . _('a long description is required'),'error');
 		$Errors[$i] = 'LongDescription';
 		$i++;
-	} 
+	}
 	if (strlen($StockID) ==0) {
 		$InputError = 1;
 		prnMsg (_('The Stock Item code cannot be empty'),'error');
 		$Errors[$i] = 'StockID';
 		$i++;
-	} 
+	}
 	if (strstr($StockID,' ') OR strstr($StockID,"'") OR strstr($StockID,'+') OR strstr($StockID,"\\") OR strstr($StockID,"\"") OR strstr($StockID,'&') OR strstr($StockID,'.') OR strstr($StockID,'"')) {
 		$InputError = 1;
 		prnMsg(_('The stock item code cannot contain any of the following characters') . " - ' & + \" \\ " . _('or a space'),'error');
 		$Errors[$i] = 'StockID';
 		$i++;
 		$StockID='';
-	} 
+	}
 	if (strlen($_POST['Units']) >20) {
 		$InputError = 1;
 		prnMsg(_('The unit of measure must be 20 characters or less long'),'error');
 		$Errors[$i] = 'Units';
 		$i++;
-	} 
+	}
 	if (strlen($_POST['BarCode']) >20) {
 		$InputError = 1;
 		prnMsg(_('The barcode must be 20 characters or less long'),'error');
 		$Errors[$i] = 'BarCode';
 		$i++;
-	} 
+	}
 	if (!is_numeric($_POST['Volume'])) {
 		$InputError = 1;
 		prnMsg (_('The volume of the packaged item in cubic metres must be numeric') ,'error');
 		$Errors[$i] = 'Volume';
 		$i++;
-	} 
+	}
 	if ($_POST['Volume'] <0) {
 		$InputError = 1;
 		prnMsg(_('The volume of the packaged item must be a positive number'),'error');
 		$Errors[$i] = 'Volume';
 		$i++;
-	} 
+	}
 	if (!is_numeric($_POST['KGS'])) {
 		$InputError = 1;
 		prnMsg(_('The weight of the packaged item in KGs must be numeric'),'error');
 		$Errors[$i] = 'KGS';
 		$i++;
-	} 
+	}
 	if ($_POST['KGS']<0) {
 		$InputError = 1;
 		prnMsg(_('The weight of the packaged item must be a positive number'),'error');
 		$Errors[$i] = 'KGS';
 		$i++;
-	} 
+	}
 	if (!is_numeric($_POST['EOQ'])) {
 		$InputError = 1;
 		prnMsg(_('The economic order quantity must be numeric'),'error');
 		$Errors[$i] = 'EOQ';
 		$i++;
-	} 
+	}
 	if ($_POST['EOQ'] <0) {
 		$InputError = 1;
 		prnMsg (_('The economic order quantity must be a positive number'),'error');
@@ -169,13 +169,13 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The item can only be serialised if there is lot control enabled already') . '. ' . _('Batch control') . ' - ' . _('with any number of items in a lot/bundle/roll is enabled when controlled is enabled') . '. ' . _('Serialised control requires that only one item is in the batch') . '. ' . _('For serialised control') . ', ' . _('both controlled and serialised must be enabled'),'error');
 		$Errors[$i] = 'Serialised';
 		$i++;
-	} 
+	}
 	if (($_POST['MBFlag']=='A' OR $_POST['MBFlag']=='K' OR $_POST['MBFlag']=='D') AND $_POST['Controlled']==1){
 		$InputError = 1;
 		prnMsg(_('Assembly/Kitset/Service/Labour items cannot also be controlled items') . '. ' . _('Assemblies/Dummies and Kitsets are not physical items and batch/serial control is therefore not appropriate'),'error');
 		$Errors[$i] = 'Controlled';
 		$i++;
-	} 
+	}
 	if (trim($_POST['CategoryID'])==''){
 		$InputError = 1;
 		prnMsg(_('There are no inventory categories defined. All inventory items must belong to a valid inventory category,'),'error');
@@ -489,7 +489,7 @@ if (isset($_POST['submit'])) {
 
 	}
 	if ($CancelDelete==0) {
-		$result = DB_query('BEGIN', $db);
+		$result = DB_Txn_Begin($db);
 
 			/*Deletes LocStock records*/
 			$sql ="DELETE FROM locstock WHERE stockid='$StockID'";
@@ -506,7 +506,7 @@ if (isset($_POST['submit'])) {
 			$sql="DELETE FROM stockmaster WHERE stockid='$StockID'";
 			$result=DB_query($sql,$db, _('Could not delete the item record'),'',true);
 
-		$result = DB_query('COMMIT', $db);
+		$result = DB_Txn_Commit($db);
 
 		prnMsg(_('Deleted the stock master record for') . ' ' . $StockID . '....' .
 		'<BR>. . ' . _('and all the location stock records set up for the part') .
@@ -620,11 +620,11 @@ if (isset($_POST['LongDescription'])) {
 }
 echo '<TR><TD>' . _('Part Description') . ' (' . _('long') . '):</TD><TD><textarea ' . (in_array('LongDescription',$Errors) ?  'class="texterror"' : '' ) .'  name="LongDescription" cols=40 rows=4>' . stripslashes($LongDescription) . '</textarea></TD></TR>'."\n";
 
-// Generate selection drop down from pdf_append directory - by emdx, 
+// Generate selection drop down from pdf_append directory - by emdx,
 // developed with examples from http://au2.php.net/manual/en/function.opendir.php
-function select_files($dir, $label = '', $select_name = 'ItemPDF', $curr_val = '', $char_length = 60) { 
-	$teller = 0; 
-	if ($handle = opendir($dir)) { 
+function select_files($dir, $label = '', $select_name = 'ItemPDF', $curr_val = '', $char_length = 60) {
+	$teller = 0;
+	if ($handle = opendir($dir)) {
 		$mydir = "<select name=".$select_name.">\n";
 		$mydir .= '<OPTION VALUE=none>none';
 		if (isset($_POST['ItemPDF'])) {
@@ -632,27 +632,27 @@ function select_files($dir, $label = '', $select_name = 'ItemPDF', $curr_val = '
 		} else {
 			$curr_val .=  'none';
 		}
-		while (false !== ($file = readdir($handle))) 
-		{ 
-			$files[] = $file; 
-		} 
-		closedir($handle); 
+		while (false !== ($file = readdir($handle)))
+		{
+			$files[] = $file;
+		}
+		closedir($handle);
 		sort($files);
-		foreach ($files as $val) { 
-			if (is_file($dir.$val)) { 
+		foreach ($files as $val) {
+			if (is_file($dir.$val)) {
 				$mydir .= '<OPTION VALUE='.$val;
-				$mydir .= ($val == $curr_val) ? ' selected>' : '>'; 
-				$mydir .= $val."\n"; 
-				$teller++; 
-			} 
-		} 
-		$mydir .= ""; 
+				$mydir .= ($val == $curr_val) ? ' selected>' : '>';
+				$mydir .= $val."\n";
+				$teller++;
+			}
+		}
+		$mydir .= "";
 	}
-	return $mydir; 
+	return $mydir;
 }
 if (!isset($_POST['ItemPDF'])) {
 	$_POST['ItemPDF'] = '';
-} 
+}
 echo '<TR><TD>' . _('PDF attachment (.pdf)') . ':' . "\n</TD><TD>" . select_files('companies/' . $_SESSION['DatabaseName'] .'/pdf_append//','' , 'ItemPDF', $_POST['ItemPDF'], '60') . '</td></tr>'. "\n";
 
 // Add image upload for New Item  - by Ori

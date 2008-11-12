@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 $PageSecurity = 11;
 
@@ -282,7 +282,7 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 
 /************************ BEGIN SQL TRANSACTIONS ************************/
 
-	$Result = DB_query('BEGIN',$db);
+	$Result = DB_Txn_Begin($db);
 /*Now Get the next GRN - function in SQL_CommonFunctions*/
 	$GRN = GetNextTransNo(25, $db);
 
@@ -547,15 +547,14 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 		} /*Quantity received is != 0 */
 	} /*end of OrderLine loop */
 
-	$SQL='COMMIT';
-	$Result = DB_query($SQL,$db);
+	$Result = DB_Txn_Commit($db);
 
 	unset($_SESSION['PO']->LineItems);
 	unset($_SESSION['PO']);
 	unset($_POST['ProcessGoodsReceived']);
 
 	echo '<BR>'. _('GRN number'). ' '. $GRN .' '. _('has been processed').'<BR>';
-	echo '<BR><a href=PDFGrn.php?GRNNo='.$GRN .'>'. _('Print this Goods Received Note (GRN)').'</a><BR><BR>'; 
+	echo '<BR><a href=PDFGrn.php?GRNNo='.$GRN .'>'. _('Print this Goods Received Note (GRN)').'</a><BR><BR>';
 	echo "<A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . "'>" . _('Select a different purchase order for receiving goods against'). '</A>';
 /*end of process goods received entry */
 	include('includes/footer.inc');

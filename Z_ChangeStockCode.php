@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 /*Script to Delete all sales transactions*/
 
 $PageSecurity=15;
@@ -9,7 +9,7 @@ include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_POST['ProcessStockChange'])){
-	
+
 	$_POST['NewStockID'] = strtoupper($_POST['NewStockID']);
 
 /*First check the stock code exists */
@@ -19,7 +19,7 @@ if (isset($_POST['ProcessStockChange'])){
 		include('includes/footer.inc');
 		exit;
 	}
-	
+
 	if (ContainsIllegalCharacters($_POST['NewStockID'])){
 		prnMsg(_('The new stock code to change the old code to contains illegal characters - no changes will be made'),'error');
 		include('includes/footer.inc');
@@ -32,7 +32,7 @@ if (isset($_POST['ProcessStockChange'])){
 		exit;
 	}
 
-	
+
 /*Now check that the new code doesn't already exist */
 	$result=DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['NewStockID'] . "'",$db);
 	if (DB_num_rows($result)!=0){
@@ -41,10 +41,10 @@ if (isset($_POST['ProcessStockChange'])){
 		include('includes/footer.inc');
 		exit;
 	}
-	
 
- 
-	$result = DB_query('BEGIN',$db);
+
+
+	$result = DB_Txn_Begin($db);
 
 	echo '<BR>' . _('Adding the new stock master record');
 	$sql = "INSERT INTO stockmaster (stockid,
@@ -195,19 +195,19 @@ if (isset($_POST['ProcessStockChange'])){
 	$ErrMsg = _('The SQL to update the BOM parent records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
-	
+
 
 	echo '<BR>' . _('Changing the item properties table records') . ' - ' . _('parents');
 	$sql = "UPDATE stockitemproperties SET stockid='" . $_POST['NewStockID'] . "' WHERE stockid='" . $_POST['OldStockID'] . "'";
 	$ErrMsg = _('The SQL to update the item properties records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
-	
+
 	echo '<BR>' . _('Changing any serialised item information');
-	
+
 	$sql = 'SET FOREIGN_KEY_CHECKS=0';
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
-	
+
 	$sql = "UPDATE stockserialitems SET stockid='" . $_POST['NewStockID'] . "' WHERE stockid='" . $_POST['OldStockID'] . "'";
 	$ErrMsg = _('The SQL to update the stockserialitem records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
@@ -215,11 +215,11 @@ if (isset($_POST['ProcessStockChange'])){
 	$ErrMsg = _('The SQL to update the stockserialitem records failed');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
-	
+
 	$sql = 'SET FOREIGN_KEY_CHECKS=1';
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg,true);
-	
-	$result = DB_query('COMMIT',$db);
+
+	$result = DB_Txn_Commit($db);
 
 	echo '<BR>' . _('Deleting the old stock master record');
 	$sql = "DELETE FROM stockmaster WHERE stockid='" . $_POST['OldStockID'] . "'";
