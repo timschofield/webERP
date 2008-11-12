@@ -84,9 +84,9 @@
 		if (sizeof($Errors)==0) {
 			$sql = 'INSERT INTO purchdata ('.substr($FieldNames,0,-2).') '.
 		  		'VALUES ('.substr($FieldValues,0,-2).') ';
-			DB_query('START TRANSACTION', $db);
+			DB_Txn_Begin($db);
 			$result = DB_Query($sql, $db);
-			DB_query('COMMIT', $db);
+			DB_Txn_Commit($db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {

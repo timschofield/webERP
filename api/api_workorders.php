@@ -229,11 +229,11 @@
 			$itemsql = 'INSERT INTO woitems ('.substr($ItemFieldNames,0,-2).') '.
 				'VALUES ('.substr($ItemFieldValues,0,-2).') ';
 			$systypessql = 'UPDATE systypes set typeno='.GetNextTransactionNo(40, $db).' where typeid=40';
-			DB_query('START TRANSACTION', $db);
+			DB_Txn_Begin($db);
 			$woresult = DB_Query($wosql, $db);
 			$itemresult = DB_Query($itemsql, $db);
 			$systyperesult = DB_Query($systypessql, $db);
-			DB_query('COMMIT', $db);
+			DB_Txn_Commit($db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -289,13 +289,13 @@
 						',"'.$StockID.' x '.$Quantity.' @ '.$cost.'")';
 			$systypessql = 'UPDATE systypes set typeno='.GetNextTransactionNo(28, $db).' where typeid=28';
 
-			DB_query('START TRANSACTION', $db);
+			DB_Txn_Begin($db);
 			DB_query($stockmovesql, $db);
 			DB_query($locstocksql, $db);
 			DB_query($glupdatesql1, $db);
 			DB_query($glupdatesql2, $db);
 			DB_query($systypessql, $db);
-			DB_query('COMMIT', $db);
+			DB_Txn_Commit($db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 				return $Errors;
@@ -335,10 +335,10 @@
 				',"'.$WONumber.'",'.$Quantity.','.$newqoh.','.$cost.','.$cost.')';
 			$locstocksql='UPDATE locstock SET quantity = quantity + '.$Quantity.' WHERE loccode="'.
 				$Location.'" AND stockid="'.$StockID.'"';
-			DB_query('START TRANSACTION', $db);
+			DB_Txn_Begin($db);
 			DB_query($stockmovesql, $db);
 			DB_query($locstocksql, $db);
-			DB_query('COMMIT', $db);
+			DB_Txn_Commit($db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 				return $Errors;

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.6 $ */
+/* $Revision: 1.7 $ */
 /*Code to print footer details for each supplier being paid and process payment total for each supplier
 as necessary an include file used since the same code is used twice */
 $YPos -= (0.5*$line_height);
@@ -50,16 +50,15 @@ if (isset($_POST['PrintPDFAndProcess'])){
 	$ProcessResult = DB_query($SQL,$db,'','',false,false);
 	if (DB_error_no($db) !=0) {
 		$title = _("Payment Processing") . " - " . _("Problem Report") .".... ";
-		include("includes/header.inc");
+		include("header.inc");
 		echo _("None of the payments will be processed because the payment record for") . " " . $SupplierName . " " . _("could not be inserted because") . " - " . DB_error_msg($db);
 		echo "<BR><A HREF='$rootpath/index.php'>" . _("Back to the menu") . "</A>";
 		if ($debug==1){
 			echo "<BR>" . _("The SQL that failed was") . " $SQL";
 		}
-		$SQL= 'rollback';
-		$ProcessResult = DB_query($SQL,$db);
+		$ProcessResult = DB_Txn_Rollback($db);
 
-		include('includes/footer.inc');
+		include('footer.inc');
 		exit;
 	}
 
@@ -81,15 +80,14 @@ if (isset($_POST['PrintPDFAndProcess'])){
 		$ProcessResult = DB_query($SQL,$db);
 		if (DB_error_no($db) !=0) {
 			$title = _('Payment Processing - Problem Report') . '.... ';
-			include('includes/header.inc');
+			include('header.inc');
 			echo '<BR>' . _('None of the payments will be processed since an allocation record for') . $SupplierName . _('could not be inserted because') . ' - ' . DB_error_msg($db);
 			echo '<BR><A HREF="' . $rootpath . '/index.php">' . _('Back to the menu') . '</A>';
 			if ($debug==1){
 				echo '<BR>' . _('The SQL that failed was') . $SQL;
 			}
-			$SQL= 'rollback';
-			$ProcessResult = DB_query($SQL,$db);
-			include('includes/footer.inc');
+			$ProcessResult = DB_Txn_Rollback($db);
+			include('footer.inc');
 			exit;
 		}
 	} /*end of the loop to insert the allocation records */
@@ -111,16 +109,15 @@ if (isset($_POST['PrintPDFAndProcess'])){
 	$ProcessResult = DB_query($SQL,$db,'','',false,false);
 	if (DB_error_no($db) !=0) {
 		$title = _("Payment Processing") . " - " . _("Problem Report") . ".... ";
-		include("includes/header.inc");
+		include("header.inc");
 		echo "<BR>" . _("None of the payments will be processed because the bank account payment record for") . " " . $SupplierName . " " . _("could not be inserted because") . " - " . DB_error_msg($db);
 		echo "<BR><A HREF='$rootpath/index.php'>" . _("Back to the menu") . "</A>";
 		if ($debug==1){
 			echo "<BR>" . _("The SQL that failed was") . " $SQL";
 		}
-		$SQL= 'rollback';
-		$ProcessResult = DB_query($SQL,$db);
+		$ProcessResult = DB_Txn_Rollback($db);
 
-		include('includes/footer.inc');
+		include('footer.inc');
 		exit;
 	}
 
@@ -150,16 +147,15 @@ if (isset($_POST['PrintPDFAndProcess'])){
 		$ProcessResult = DB_query($SQL,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
 			$title = _('Payment Processing') . ' - ' . _('Problem Report') . '.... ';
-			include('includes/header.inc');
+			include('header.inc');
 			echo '<BR>' . _('None of the payments will be processed since the general ledger posting for the payment to') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg($db);
 			echo "<BR><A HREF='$rootpath/index.php'>" . _('Back to the menu') . '</A>';
 			if ($debug==1){
 				echo '<BR>' . _('The SQL that failed was') . ':<BR>' . $SQL;
 			}
-			$SQL= 'rollback';
-			$ProcessResult = DB_query($SQL,$db);
+			$ProcessResult = DB_Txn_Rollback($db);
 
-			include('includes/footer.inc');
+			include('footer.inc');
 			exit;
 		}
 
@@ -183,16 +179,15 @@ if (isset($_POST['PrintPDFAndProcess'])){
 		$ProcessResult = DB_query($SQL,$db,'','',false,false);
 		if (DB_error_no($db) !=0) {
 			$title = _('Payment Processing') . ' - ' . _('Problem Report') . '.... ';
-			include('includes/header.inc');
+			include('header.inc');
 			echo '<BR>' . _('None of the payments will be processed since the general ledger posting for the payment to') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg($db);
 			echo "<BR><A HREF='$rootpath/index.php'>" . _('Back to the menu') . '</A>';
 			if ($debug==1){
 				echo '<BR>' . _('The SQL that failed was') . ':<BR>' . $SQL;
 			}
-			$SQL= 'rollback';
-			$ProcessResult = DB_query($SQL,$db);
+			$ProcessResult = DB_Txn_Rollback($db);
 
-			include('includes/footer.inc');
+			include('footer.inc');
 			exit;
 		}
 
@@ -216,16 +211,15 @@ if (isset($_POST['PrintPDFAndProcess'])){
 			$ProcessResult = DB_query($SQL,$db,'','',false,false);
 			if (DB_error_no($db) !=0) {
 				$title = _('Payment Processing') . ' - ' . _('Problem Report') . '.... ';
-				include('includes/header.inc');
+				include('header.inc');
 				echo '<BR>' . _('None of the payments will be processed since the general ledger posting for the exchange difference on') . ' ' . $SupplierName . ' ' . _('could not be inserted because') .' - ' . DB_error_msg($db);
 				echo "<BR><A HREF='$rootpath/index.php'>" . _('Back to the menu') . '</A>';
 				if ($debug==1){
 					echo '<BR>' . _('The SQL that failed was') . " $SQL";
 				}
-				$SQL= 'rollback';
-				$ProcessResult = DB_query($SQL,$db);
+				$ProcessResult = DB_Txn_Rollback($db);
 
-				include('includes/footer.inc');
+				include('footer.inc');
 				exit;
 			}
 		}
@@ -242,7 +236,7 @@ $YPos -= $line_height;
 
 if ($YPos < $Bottom_Margin + $line_height){
 	$PageNumber++;
-	include('includes/PDFPaymentRunPageHeader.inc');
+	include('PDFPaymentRunPageHeader.inc');
 }
 
 ?>

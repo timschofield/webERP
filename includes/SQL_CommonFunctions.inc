@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 /* Common SQL Functions */
 
@@ -17,7 +17,7 @@ Also updates the transaction number
 */
 
 	DB_query("LOCK TABLES systypes WRITE",$db);
-	
+
 	$SQL = "SELECT typeno FROM systypes WHERE typeid = " . $TransType;
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': <BR>' . _('The next transaction number could not be retrieved from the database because');
@@ -30,8 +30,8 @@ Also updates the transaction number
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The transaction number could not be incremented');
 	$DbgMsg =  _('The following SQL to increment the transaction number was used');
 	$UpdTransNoResult = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
-	
-	DB_query("UNLOCK TABLES",$db); 
+
+	DB_query("UNLOCK TABLES",$db);
 
 	return $myrow[0] + 1;
 }
@@ -217,17 +217,17 @@ function BomMaterialCost($Parent, $db) {
 	$result1 = DB_query($SQL,$db);
 	$MyRow1 = DB_fetch_row($result1);
 	$QOH = $MyRow1[0];
-	$SQL = "SELECT Sum(stockmaster.materialcost*bom.quantity) AS SumOfmaterialcost 
-	   					FROM bom LEFT JOIN stockmaster 
-							 ON bom.component = stockmaster.stockid 
+	$SQL = "SELECT Sum(stockmaster.materialcost*bom.quantity) AS SumOfmaterialcost
+	   					FROM bom LEFT JOIN stockmaster
+							 ON bom.component = stockmaster.stockid
 							 WHERE bom.parent='". $Parent . "'";
 	$result = DB_query($SQL,$db);
 	$MyRow = DB_fetch_row($result);
 	$MaterialCost = $MyRow[0];
-	$Result = DB_query('BEGIN',$db);
+	$Result = DB_Txn_Begin($db);
 	ItemCostUpdateGL($db, $Parent, $MaterialCost, $OldCost, $QOH);
-	$Result = DB_query('COMMIT',$db);
-	return $MaterialCost;	
+	$Result = DB_Txn_Commit($db);
+	return $MaterialCost;
 }
 
 /*Iterates through the levels of the bom, recalculating each bom it meets*/

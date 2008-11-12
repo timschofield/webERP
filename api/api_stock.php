@@ -762,13 +762,13 @@
 						',"'.$StockID.' x '.$Quantity.' @ '.$itemdetails['materialcost'].'")';
 		$systypessql = 'UPDATE systypes set typeno='.GetNextTransactionNo(17, $db).' where typeid=17';
 
-		DB_query('START TRANSACTION', $db);
+		DB_Txn_Begin($db);
 		DB_query($stockmovesql, $db);
 		DB_query($locstocksql, $db);
 		DB_query($glupdatesql1, $db);
 		DB_query($glupdatesql2, $db);
 		DB_query($systypessql, $db);
-		DB_query('COMMIT', $db);
+		DB_Txn_Commit($db);
 		if (DB_error_no($db) != 0) {
 			$Errors[0] = DatabaseUpdateFailed;
 			return $Errors;

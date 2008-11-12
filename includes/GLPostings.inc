@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 /* This file contains the code to post GL transactions.
 
@@ -92,7 +92,7 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 
 	$UnpostedTransResult = DB_query($sql, $db);
 
-	$TransStart = DB_query('BEGIN',$db);
+	$TransStart = DB_Txn_Begin($db);
 	$CurrentAccount=0;
 	$TotalAmount=0;
 	while ($UnpostedTrans=DB_fetch_array($UnpostedTransResult)){
@@ -128,7 +128,7 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 			AND period > ' . $CurrPeriod;
 		$PostBFwds = DB_query($sql,$db);
 	}
-	$TransCommit = DB_query('COMMIT',$db);
+	$TransCommit = DB_Txn_Commit($db);
 }
 
 /* The Code below has been superseeded by Danie's above - this grouping by account then summing the total postings for an account
@@ -139,7 +139,7 @@ $sql = 'SELECT counterindex, periodno, account, amount FROM gltrans WHERE posted
 
 $UnpostedTransResult = DB_query($sql, $db);
 
-$TransStart = DB_query('BEGIN',$db);
+$TransStart = DB_Txn_Begin($db);
 
 while ($UnpostedTrans=DB_fetch_array($UnpostedTransResult)){
 	$sql = 'UPDATE chartdetails SET actual = actual + ' . $UnpostedTrans['amount'] . '
@@ -156,7 +156,7 @@ while ($UnpostedTrans=DB_fetch_array($UnpostedTransResult)){
 	$Posted = DB_query($sql,$db);
 
 }
-$TransCommit = DB_query('COMMIT',$db);
+$TransCommit = DB_Txn_Commit($db));
 */
 
 if (DB_num_rows($ChartDetailsNotSetUpResult)>0){
@@ -177,7 +177,7 @@ if (DB_num_rows($ChartDetailsNotSetUpResult)>0){
 			ORDER BY period';
 		$ChartDetails = DB_query($sql,$db);
 
-		DB_query('BEGIN',$db);
+		DB_Txn_Begin($db);
 		$myrow = DB_fetch_array($ChartDetails);
 
 		$BFwd = $myrow['bfwd'];
@@ -196,7 +196,7 @@ if (DB_num_rows($ChartDetailsNotSetUpResult)>0){
 			}
 		}
 
-		DB_query('COMMIT',$db);
+		DB_Txn_Commit($db);
 	}
 }
 
