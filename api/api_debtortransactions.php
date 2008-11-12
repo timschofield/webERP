@@ -330,7 +330,7 @@ function ConvertToSQLDate($DateEntry) {
 			$FieldValues.='"'.$value.'", ';
 		}
 		if (sizeof($Errors)==0) {
-			$result = DB_query('BEGIN',$db);
+			$result = DB_Txn_Begin($db);
 			$sql = 'INSERT INTO debtortrans ('.substr($FieldNames,0,-2).') '.
 		  		'VALUES ('.substr($FieldValues,0,-2).') ';
 			$result = DB_Query($sql, $db);
@@ -348,7 +348,7 @@ function ConvertToSQLDate($DateEntry) {
 				',"'.'Invoice for -'.$InvoiceDetails['debtorno'].' Total - '.$InvoiceDetails['ovamount'].
 				'", '.-intval($InvoiceDetails['ovamount']).', 0,"'.$InvoiceDetails['jobref'].'")';
 			$result = DB_Query($sql, $db);
-			$result= DB_query('COMMIT',$db);
+			$result= DB_Txn_Commit($db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -438,7 +438,7 @@ function ConvertToSQLDate($DateEntry) {
 			$FieldValues.='"'.$value.'", ';
 		}
 		if (sizeof($Errors)==0) {
-			$result = DB_query('BEGIN',$db);
+			$result = DB_Txn_Begin($db);
 			$sql = 'INSERT INTO debtortrans ('.substr($FieldNames,0,-2).') '.
 		  		'VALUES ('.substr($FieldValues,0,-2).') ';
 			$result = DB_Query($sql, $db);
@@ -456,7 +456,7 @@ function ConvertToSQLDate($DateEntry) {
 				',"'.'Invoice for -'.$CreditDetails['debtorno'].' Total - '.$CreditDetails['ovamount'].
 				'", '.-intval($CreditDetails['ovamount']).', 0,"'.$CreditDetails['jobref'].'")';
 			$result = DB_Query($sql, $db);
-			$result= DB_query('COMMIT',$db);
+			$result= DB_Txn_Commit($db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
