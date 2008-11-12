@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.25 $ */
+/* $Revision: 1.26 $ */
 
 define ('LIKE','LIKE');
 
@@ -168,5 +168,18 @@ function DB_Maintenance($Conn){
 				WHERE confname='DB_Maintenance_LastRun'",
 				$Conn);
 }
+
+function DB_Txn_Begin(){
+	mysql_query("START TRANSACTION");
+}
+
+function DB_Txn_Commit(){
+	mysql_query("COMMIT");
+}
+
+function DB_Txn_Rollback(){
+	mysql_query("ROLLBACK");
+}
+
 
 ?>

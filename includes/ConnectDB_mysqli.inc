@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 /* PeterMoulding.com
 20071102 Change from mysql to mysqli;
@@ -190,6 +190,18 @@ function DB_Maintenance($Conn){
 				SET confvalue='" . Date('Y-m-d') . "'
 				WHERE confname='DB_Maintenance_LastRun'",
 				$Conn);
+}
+
+function DB_Txn_Begin(){
+	mysql_query("START TRANSACTION");
+}
+
+function DB_Txn_Commit(){
+	mysql_query("COMMIT");
+}
+
+function DB_Txn_Rollback(){
+	mysql_query("ROLLBACK");
 }
 
 ?>
