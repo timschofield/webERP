@@ -66,6 +66,7 @@ function stripCharsInBag(s, bag){
 function daysInFebruary (year){
     return (((year % 4 == 0) && ( (!(year % 100 == 0)) || (year % 400 == 0))) ? 29 : 28 );
 }
+
 function DaysArray(n) {
 	for (var i = 1; i <= n; i++) {
 		this[i] = 31
@@ -124,7 +125,7 @@ function eitherOr(one, two) {
 	if (( two.value!='' )) {
 		two.value='';
 	} else if (( one.value=='NaN' )) {
-			one.value='';
-		}
+		one.value='';
 	}
 }
+
