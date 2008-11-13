@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.17 $ */
+/* $Revision: 1.18 $ */
 
 include('includes/DefineJournalClass.php');
 
@@ -244,7 +244,7 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 	echo '<tr>
 			<td colspan=5 align=center><table border=0><tr><td>'._('Date to Process Journal').":</td>
 			<td><input type='text' name='JournalProcessDate' maxlength=10 size=11" .
-					" onChange='return checkJournalDate(".'"'.$_SESSION['DefaultDateFormat'].'"'.")' value='" .
+					" onChange='return isDate(this.value, ".'"'.$_SESSION['DefaultDateFormat'].'"'.")' value='" .
 						 $_SESSION['JournalDetail']->JnlDate . "'></td>";
 	echo '<td>' . _('Type') . ':</td>
 			<td><select name=JournalType>';
@@ -301,7 +301,8 @@ echo '<font size=3 color=blue>' . _('Journal Line Entry') . '</font>';
 	if (!isset($_POST['GLManualCode'])) {
 		$_POST['GLManualCode']='';
 	}
-	echo '<td><input type=Text Name="GLManualCode" Maxlength=12 size=12 onChange="return checkCode()"' .
+	echo '<td><input type=Text Name="GLManualCode" Maxlength=12 size=12 onChange="return inArray(this.value, GLCode.options,'.
+		"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')"' .
 			' onKeyPress="return restrictToNumbers(this, event)" VALUE='. $_POST['GLManualCode'] .'  ></td>';
 
 	$sql='SELECT accountcode,
@@ -310,7 +311,7 @@ echo '<font size=3 color=blue>' . _('Journal Line Entry') . '</font>';
 			ORDER BY accountcode';
 
 	$result=DB_query($sql, $db);
-	echo '<td><select name="GLCode" onChange="return glAccount()">';
+	echo '<td><select name="GLCode" onChange="return assignComboToInput(this,'.GLManualCode.')">';
 	while ($myrow=DB_fetch_array($result)){
     	if ($_POST['tag']==$myrow['accountcode']){
 			echo '<option selected value=' . $myrow['accountcode'] . '>' . $myrow['accountcode'].' - ' .$myrow['accountname'];
@@ -330,9 +331,11 @@ echo '<font size=3 color=blue>' . _('Journal Line Entry') . '</font>';
 		$_POST['Debit'] = '';
 	}
 		echo '<td><input type=Text Name = "Debit"  onKeyPress="return restrictToNumbers(this, event)" ' .
-				'onFocus="return setStyle(this)" Maxlength=12 size=12 value=' . $_POST['Debit'] . '></td>';
+				'onChange="numberFormat(this,2); eitherOr(this, '.Credit.')"'.
+				'onFocus="return setTextAlign(this, '."'".'right'."'".')" Maxlength=12 size=12 value=' . $_POST['Debit'] . '></td>';
 		echo '<td><input type=Text Name = "Credit" onKeyPress="return restrictToNumbers(this, event)" ' .
-				'onFocus="return setStyle(this)" Maxlength=12 size=12 value=' . $_POST['Credit'] . '></td>';
+				'onChange="numberFormat(this,2); eitherOr(this, '.Debit.')"'.
+				'onFocus="return setTextAlign(this, '."'".'right'."'".')" Maxlength=12 size=12 value=' . $_POST['Credit'] . '></td>';
 
 		echo "<td><input type='text' name='GLNarrative' maxlength=100 size=48 value='" . $_POST['GLNarrative'] . "'></td>";
 
@@ -398,8 +401,13 @@ echo '<font size=3 color=blue>' . _('Journal Line Entry') . '</font>';
 			echo '<tr><td></td>
 					<td align=right><b> Total </b></td>
 					<td align=right><b>' . number_format($debittotal,2) . '</b></td>
-					<td align=right><b>' . number_format($credittotal,2) . '</b></td>
-			</tr></table>';
+					<td align=right><b>' . number_format($credittotal,2) . '</b></td>';
+			if ($debittotal!=$credittotal) {
+				echo '<td align=center style="background-color: #fddbdb"><b>Required to balance - ' .
+					number_format(abs($debittotal-$credittotal),2);
+			}
+			if ($debittotal>$credittotal) {echo ' Credit';} else if ($debittotal<$credittotal) {echo ' Debit';}
+			echo '</b></td></tr></table>';
 
 if (ABS($_SESSION['JournalDetail']->JournalTotal)<0.001 AND $_SESSION['JournalDetail']->GLItemCounter > 0){
 	echo "<br><br><input type=submit name='CommitBatch' value='"._('Accept and Process Journal')."'>";
