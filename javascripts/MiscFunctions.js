@@ -1,5 +1,9 @@
-function setStyle(myfield) {
-	myfield.style.textAlign="right";
+function setTextAlign(control, alignment) {
+	control.style.textAlign=alignment;
+}
+
+function numberFormat(control, dp) {
+	control.value=parseFloat(control.value).toFixed(dp);
 }
 
 function restrictToNumbers(myfield, e) {
@@ -22,18 +26,17 @@ function restrictToNumbers(myfield, e) {
 	}
 }
 
-function glAccount() {
-	document.form.GLManualCode.value=document.form.GLCode.value;
+function assignComboToInput(combo, input) {
+	input.value=combo.value;
 }
 
-function checkCode() {
-	for (i=0; i<document.form.GLCode.options.length; i++) {
-		if (( document.form.GLManualCode.value == document.form.GLCode.options[i].value )) {
+function inArray(value, thisArray, msg) {
+	for (i=0; i<thisArray.length; i++) {
+		if (( value == thisArray[i].value )) {
 			return true;
 		}
 	}
-	alert('The account code '+document.form.GLManualCode.value+' doesn\'t exist');
-	document.form.GLManualCode.value='';
+	alert(msg);
 	return false;
 }
 
@@ -44,19 +47,15 @@ var maxYear=2100;
 function isInteger(s){
 	var i;
     for (i = 0; i < s.length; i++){
-        // Check that current character is number.
         var c = s.charAt(i);
         if (((c < "0") || (c > "9"))) return false;
     }
-    // All characters are numbers.
     return true;
 }
 
 function stripCharsInBag(s, bag){
 	var i;
     var returnString = "";
-    // Search through string's characters one by one.
-    // If character is not in bag, append to returnString.
     for (i = 0; i < s.length; i++){
         var c = s.charAt(i);
         if (bag.indexOf(c) == -1) returnString += c;
@@ -65,8 +64,6 @@ function stripCharsInBag(s, bag){
 }
 
 function daysInFebruary (year){
-	// February has 29 days in any year evenly divisible by four,
-    // EXCEPT for centurial years which are not also divisible by 400.
     return (((year % 4 == 0) && ( (!(year % 100 == 0)) || (year % 400 == 0))) ? 29 : 28 );
 }
 function DaysArray(n) {
@@ -101,7 +98,7 @@ function isDate(dtStr, dtFormat){
 	day=parseInt(strDay)
 	year=parseInt(strYr)
 	if (pos1==-1 || pos2==-1){
-		alert("The date format should be : mm/dd/yyyy")
+		alert("The date format should be : "+dtFormat)
 		return false
 	}
 	if (strMonth.length<1 || month<1 || month>12){
@@ -123,11 +120,11 @@ function isDate(dtStr, dtFormat){
 	return true
 }
 
-function checkJournalDate(dtFormat) {
-	if (( isDate(document.form.JournalProcessDate.value, dtFormat) )) {
-		return true;
-	} else {
-		document.form.JournalProcessDate.value='';
-		return false;
+function eitherOr(one, two) {
+	if (( two.value!='' )) {
+		two.value='';
+	} else if (( one.value=='NaN' )) {
+			one.value='';
+		}
 	}
 }
