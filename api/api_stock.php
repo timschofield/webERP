@@ -777,4 +777,42 @@
 		}
 	}
 
+	function GetBatches($StockID, $Location, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
+		}
+		$Errors = VerifyStockCodeExists($StockID, sizeof($Errors), $Errors, $db);
+		$Errors = VerifyStockLocation($Location, sizeof($Errors), $Errors, $db);
+		if (sizeof($Errors)!=0) {
+			return $Errors;
+		}
+		$sql='SELECT stockserialitems.stockid,
+				loccode,
+				stockserialitems.serialno as batchno,
+				quantity,
+				t.price as itemcost
+			FROM stockserialitems JOIN (SELECT stockmoves.stockid,
+										stockmoves.price,
+										stockserialmoves.serialno
+										FROM stockmoves JOIN stockserialmoves
+										ON stockmoves.stkmoveno=stockserialmoves.stockmoveno
+										WHERE stockmoves.type=25) as t
+				ON stockserialitems.stockid=t.stockid and stockserialitems.serialno=t.serialno
+			WHERE stockid="'.$StockID.'" AND loccode="'.$Location.'"';
+		$result = DB_Query($sql, $db);
+		if (sizeof($Errors)==0) {
+			$i=0;
+			while ($myrow=DB_fetch_array($result)) {
+				$answer[$i]=$myrow;
+				$i++;
+			}
+			return $answer;
+		} else {
+			return $Errors;
+		}
+	}
+
 ?>

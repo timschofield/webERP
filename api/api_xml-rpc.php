@@ -1577,6 +1577,42 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
+	$Description = _('This function is used to retrieve the details of stock batches.');
+	$Parameter[0]['name'] = _('Stock ID');
+	$Parameter[0]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
+	$Parameter[1]['name'] = _('Criteria');
+	$Parameter[1]['description'] = _('This is a string value. It holds the string that is searched for in the given field. It will search for all or part of the field.');
+	$Parameter[2]['name'] = _('User name');
+	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[3]['name'] = _('User password');
+	$Parameter[3]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('Returns a two dimensional array of stock batch details. ').
+		_('The fields returned are stockid, loccode, batchno, quantity, itemcost. ');
+
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+
+	$GetBatches_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetBatches_doc = $doc;
+
+	function xmlrpc_GetBatches($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetBatches($xmlrpcmsg->getParam(0)->scalarval(),
+				$xmlrpcmsg->getParam(1)->scalarval(),
+						$xmlrpcmsg->getParam(2)->scalarval(),
+							$xmlrpcmsg->getParam(3)->scalarval())));
+	}
+
+	unset($Parameter);
+	unset($ReturnValue);
 	$Description = _('Adjust the stock balance for the given stock code at the given location by the maount given.');
 	$Parameter[0]['name'] = _('Stock ID');
 	$Parameter[0]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
@@ -2075,6 +2111,10 @@
 			"function" => "xmlrpc_WorkOrderReceive",
 			"signature" => $WorkOrderReceive_sig,
 			"docstring" => $WorkOrderReceive_doc),
+		"weberp.xmlrpc_GetBatches" => array(
+			"function" => "xmlrpc_GetBatches",
+			"signature" => $GetBatches_sig,
+			"docstring" => $GetBatches_doc),
 		)
 	);
 
