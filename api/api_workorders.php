@@ -158,6 +158,32 @@
 		return $Errors;
 	}
 
+	function VerifyBatch($batch, $stockid, $location, $i, $Errors, $db) {
+		$sql='SELECT controlled, serialised FROM stockmaster WHERE stockid="'.$stockid.'"';
+		$result=DB_query($sql, $db);
+		$myrow=DB_fetch_row($result);
+		if ($myrow[0]!=1) {
+			$Errors[$i] = ItemNotControlled;
+			return $Errors;
+		} else if ($myrow[1]==1) {
+			$Errors[$i] = ItemSerialised;
+			return $Errors;
+		}
+		$sql='SELECT quantity FROM stockserialitems WHERE stockid="'.$stockid.
+			'" and loccode="'.$location.'" and serialno="'.$batch.'"';
+		$result=DB_query($sql, $db);
+		if (DB_num_rows($result)==0) {
+			$Errors[$i] = BatchNumberDoesntExist;
+			return $Errors;
+		}
+		$myrow=DB_fetch_row($result);
+		if ($myrow<=0) {
+			$Errors[$i]=BatchIsEmpty;
+			return $Errors;
+		}
+		return $Errors;
+	}
+
 	function InsertWorkOrder($WorkOrderDetails, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
@@ -244,7 +270,7 @@
 		return $Errors;
 	}
 
-	function WorkOrderIssue($WONumber, $StockID, $Location, $Quantity, $TranDate, $user, $password) {
+	function WorkOrderIssue($WONumber, $StockID, $Location, $Quantity, $TranDate, $Batch, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
 		if (gettype($db)=='integer') {
@@ -256,6 +282,9 @@
 		$Errors = VerifyStockLocation($Location, sizeof($Errors), $Errors, $db);
 		$Errors = VerifyIssuedQuantity($Quantity, sizeof($Errors), $Errors);
 		$Errors = VerifyTransactionDate($TranDate, sizeof($Errors), $Errors);
+		if ($Batch!='') {
+			VerifyBatch($Batch, $StockID, $Location, sizeof($Errors), $Errors, $db);
+		}
 		if (sizeof($Errors>0)) {
 			return $Errors;
 		} else {
@@ -288,6 +317,8 @@
 						','.$stockact.','.$cost*$Quantity.
 						',"'.$StockID.' x '.$Quantity.' @ '.$cost.'")';
 			$systypessql = 'UPDATE systypes set typeno='.GetNextTransactionNo(28, $db).' where typeid=28';
+			$batchsql='UPDATE stockserialitems SET quantity=quantity-'.$Quantity.
+				' WHERE stockid="'.$StockID.'" AND loccode="'.$Location.'" AND serialno="'.$Batch.'"';
 
 			DB_Txn_Begin($db);
 			DB_query($stockmovesql, $db);
@@ -295,6 +326,9 @@
 			DB_query($glupdatesql1, $db);
 			DB_query($glupdatesql2, $db);
 			DB_query($systypessql, $db);
+			if ($Batch!='') {
+				DB_Query($batchsql, $db);
+			}
 			DB_Txn_Commit($db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;

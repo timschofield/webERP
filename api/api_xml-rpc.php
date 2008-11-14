@@ -1630,6 +1630,8 @@
 	$Parameter[3]['description'] = _('This is an integer value. It holds the amount of stock to be adjusted. Should be negative if is stock is to be reduced');
 	$Parameter[4]['name'] = _('Transaction Date');
 	$Parameter[4]['description'] = _('This is a string value. It holds the string that is searched for in the given field. It will search for all or part of the field.');
+	$Parameter[4]['name'] = _('Batch number');
+	$Parameter[4]['description'] = _('This is a string value. It holds the reference to the batch number for the product being issued. If the stockid is not batch controlled this is ignored.');
 	$Parameter[5]['name'] = _('User name');
 	$Parameter[5]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[6]['name'] = _('User password');
@@ -1649,7 +1651,7 @@
 	}
 	$doc .= '</table>';
 
-	$WorkOrderIssue_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString,$xmlrpcString, $xmlrpcString,  $xmlrpcString, $xmlrpcString));
+	$WorkOrderIssue_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString,  $xmlrpcString, $xmlrpcString));
 	$WorkOrderIssue_doc = $doc;
 
 	function xmlrpc_WorkOrderIssue($xmlrpcmsg) {
@@ -1659,7 +1661,8 @@
 						$xmlrpcmsg->getParam(3)->scalarval(),
 							$xmlrpcmsg->getParam(4)->scalarval(),
 								$xmlrpcmsg->getParam(5)->scalarval(),
-									$xmlrpcmsg->getParam(6)->scalarval())));
+									$xmlrpcmsg->getParam(6)->scalarval(),
+										$xmlrpcmsg->getParam(7)->scalarval())));
 	}
 
 	unset($Parameter);
