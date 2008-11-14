@@ -153,6 +153,10 @@
 	Define('InvalidIssuedQuantity', 1149);
 	Define('InvalidTransactionDate', 1150);
 	Define('InvalidReceivedQuantity', 1151);
+	Define('ItemNotControlled', 1152);
+	Define('ItemSerialised', 1153);
+	Define('BatchNumberDoesntExist', 1154);
+	Define('BatchIsEmpty', 1155);
 
 /* Array of Descriptions of errors */
 	$ErrorDescription['1'] = _('No Authorisation');
@@ -307,5 +311,9 @@
 	$ErrorDescription['1149'] = _('Invalid issued quantity');
 	$ErrorDescription['1150'] = _('Invalid transaction date');
 	$ErrorDescription['1151'] = _('Invalid received quantity');
+	$ErrorDescription['1152'] = _('Stock item is not controlled');
+	$ErrorDescription['1153'] = _('Stock item is serialised');
+	$ErrorDescription['1154'] = _('Batch number doesnt exist');
+	$ErrorDescription['1155'] = _('Batch is empty');
 
 ?>
