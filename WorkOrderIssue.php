@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 $PageSecurity = 11;
 
@@ -243,7 +243,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
                             $SQL = 'UPDATE stockserialitems SET quantity = quantity - ' . $_POST['Qty' . $i] . "
                                         WHERE stockid='" . $_POST['IssueItem'] . "'
                                         AND loccode = '" . $_POST['FromLocation'] . "'
-                                        AND serialno = '" . $POST['BatchRef' .$i] . "'";
+                                        AND serialno = '" . $_POST['BatchRef' .$i] . "'";
                         } else {
                             $SQL = "INSERT INTO stockserialitems (stockid,
                                                 loccode,
