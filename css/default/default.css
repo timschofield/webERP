@@ -37,6 +37,7 @@ a {
 
 /*links on any screen when mouse is hovering over them */
 a:hover {
+	background:#fff;
 	color: #2D8628;
 	text-decoration: underline;
 }

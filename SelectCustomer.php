@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 $PageSecurity = 2;
 
@@ -48,8 +48,8 @@ echo '    //<![CDATA[ '; ?>
         var map = new GMap2(document.getElementById("map"));
 	map.addControl(new GSmallMapControl());
 	map.addControl(new GMapTypeControl());
-<? echo 'map.setCenter(new GLatLng(' . $lat . ', ' . $lng . '), 11);'; ?>
-<? echo 'var marker = new GMarker(new GLatLng(' . $lat . ', ' . $lng . '));' ?>
+<?php echo 'map.setCenter(new GLatLng(' . $lat . ', ' . $lng . '), 11);'; ?>
+<?php echo 'var marker = new GMarker(new GLatLng(' . $lat . ', ' . $lng . '));' ?>
 	map.addOverlay(marker);
 	GEvent.addListener(marker, "click", function() {
 	marker.openInfoWindowHtml(WINDOW_HTML);
@@ -61,7 +61,7 @@ echo '    //<![CDATA[ '; ?>
     </script>
   <body onload="load()" onunload="GUnload()">
 
-<?
+<?php
 }
 $msg="";
 
@@ -362,17 +362,17 @@ If (isset($result)) {
 		}
 
 		printf("<td><FONT SIZE=1><INPUT TYPE=SUBMIT NAME='Select' VALUE='%s'</FONT></td>
-			<td><FONT SIZE=1>%s</FONT></td>
-			<td><FONT SIZE=1>%s</FONT></td>
-			<td><FONT SIZE=1>%s</FONT></td>
-			<td><FONT SIZE=1>%s</FONT></td>
-			<td><FONT SIZE=1>%s</FONT></td></tr>",
-			$myrow["debtorno"],
-			$myrow["name"],
-			$myrow["brname"],
-			$myrow["contactname"],
-			$myrow["phoneno"],
-			$myrow["faxno"]);
+				<td><FONT SIZE=1>%s</FONT></td>
+				<td><FONT SIZE=1>%s</FONT></td>
+				<td><FONT SIZE=1>%s</FONT></td>
+				<td><FONT SIZE=1>%s</FONT></td>
+				<td><FONT SIZE=1>%s</FONT></td></tr>",
+				$myrow['debtorno'],
+				$myrow['name'],
+				$myrow['brname'],
+				$myrow['contactname'],
+				$myrow['phoneno'],
+				$myrow['faxno']);
 
 		$j++;
 		If ($j == 11 AND ($RowIndex+1 != $_SESSION['DisplayRecordsMax'])){
@@ -413,37 +413,37 @@ echo '</FORM></CENTER>';
 
 // Only display the geocode map if the integration is turned on, and there is a latitude/longitude to display
 if ($_SESSION['geocode_integration']==1 AND $_SESSION['CustomerID'] <>0){
-if ($lat ==0){
-echo "<center>Map will display here, geocode is enabled, but no geocode data to display yet.<center>";
-include('includes/footer.inc');
-exit;
-}
-// Select some basic data about the Customer
-$SQL = "SELECT debtorsmaster.clientsince, debtorsmaster.paymentterms, debtorsmaster.lastpaid, debtorsmaster.lastpaiddate
-                FROM debtorsmaster
-                WHERE debtorsmaster.debtorno ='" . $_SESSION['CustomerID'] . "'";
-        $DataResult = DB_query($SQL,$db);
-        $myrow = DB_fetch_array($DataResult);
-// Select some more data about the customer
-$SQL = "select sum(ovamount+ovgst) as total from debtortrans where debtorno = '" . $_SESSION['CustomerID'] . "' and type !=12";
-        $Total1Result = DB_query($SQL,$db);
-        $row = DB_fetch_array($Total1Result);
-echo '<CENTER><TABLE WIDTH=90% COLSPAN=2 BORDER=2 CELLPADDING=4>';
-        echo "<TR>
-                <TH WIDTH=33%>" . _('Customer Data') . "</TH>
-                <TH WIDTH=33%>". _('Customer Mapping') . "</TH>
-        </TR>";
-echo '<TR><TD VALIGN=TOP>';    /* Customer Data to be integrated with mapping*/
-echo "Distance to this customer: <b>TBA</b><br>";
-echo "Last Paid Date: <b>" . ConvertSQLDate($myrow['lastpaiddate']) . "</b><br>";
-echo "Last Paid Amount (inc tax): <b>$" . number_format($myrow['lastpaid'],2) . "</b><br>";
-echo "Customer since: <b>" . ConvertSQLDate($myrow['clientsince']) . "</b><br>";
-echo "Total Spend from this Customer (inc tax): <b>$" . number_format($row['total']) . "</b><br>";
-echo '<BR>';
-echo '<BR>';
-echo '</TD><TD VALIGN=TOP>'; /* Mapping */
-echo "<center>Map will display below, geocode is enabled.<center>";
-echo '<center><div align="center" id="map" style="width: 400px; height: 200px"></div></center>';
+	if ($lat ==0){
+		echo "<center>Map will display here, geocode is enabled, but no geocode data to display yet.<center>";
+		include('includes/footer.inc');
+		exit;
+	}
+	// Select some basic data about the Customer
+	$SQL = "SELECT debtorsmaster.clientsince, debtorsmaster.paymentterms, debtorsmaster.lastpaid, debtorsmaster.lastpaiddate
+					FROM debtorsmaster
+					WHERE debtorsmaster.debtorno ='" . $_SESSION['CustomerID'] . "'";
+			$DataResult = DB_query($SQL,$db);
+			$myrow = DB_fetch_array($DataResult);
+	// Select some more data about the customer
+	$SQL = "select sum(ovamount+ovgst) as total from debtortrans where debtorno = '" . $_SESSION['CustomerID'] . "' and type !=12";
+			$Total1Result = DB_query($SQL,$db);
+			$row = DB_fetch_array($Total1Result);
+	echo '<CENTER><TABLE WIDTH=90% COLSPAN=2 BORDER=2 CELLPADDING=4>';
+			echo "<TR>
+					<TH WIDTH=33%>" . _('Customer Data') . "</TH>
+					<TH WIDTH=33%>". _('Customer Mapping') . "</TH>
+			</TR>";
+	echo '<TR><TD VALIGN=TOP>';    /* Customer Data to be integrated with mapping*/
+	echo "Distance to this customer: <b>TBA</b><br>";
+	echo "Last Paid Date: <b>" . ConvertSQLDate($myrow['lastpaiddate']) . "</b><br>";
+	echo "Last Paid Amount (inc tax): <b>$" . number_format($myrow['lastpaid'],2) . "</b><br>";
+	echo "Customer since: <b>" . ConvertSQLDate($myrow['clientsince']) . "</b><br>";
+	echo "Total Spend from this Customer (inc tax): <b>$" . number_format($row['total']) . "</b><br>";
+	echo '<BR>';
+	echo '<BR>';
+	echo '</TD><TD VALIGN=TOP>'; /* Mapping */
+	echo "<center>Map will display below, geocode is enabled.<center>";
+	echo '<center><div align="center" id="map" style="width: 400px; height: 200px"></div></center>';
 }
 include('includes/footer.inc');
 ?>
