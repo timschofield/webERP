@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.27 $ */
+/* $Revision: 1.28 $ */
 
 $PageSecurity = 2;
 
@@ -77,23 +77,31 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	if (isset($_POST['Search'])){
 		$_POST['PageOffset'] = 1;
 	}
-	If ($_POST['Keywords'] AND (($_POST['CustCode']) OR ($_POST['CustPhone']))) {
-		$msg=_('Customer name keywords have been used in preference to customer code or phone  entered') . '.';
+	If ($_POST['Keywords'] AND (($_POST['CustCode']) OR ($_POST['CustPhone']) OR ($_POST['CustType']))) {
+		$msg=_('Search Result: Customer Name keywords have been used in preference') . '<br>';
 		$_POST['Keywords'] = strtoupper($_POST['Keywords']);
 	}
-	If (($_POST['CustCode']) AND ($_POST['CustPhone'])) {
-		$msg=_('Customer code has been used in preference to the customer phone entered') . '.';
+	If (($_POST['CustCode']) AND ($_POST['CustPhone']) AND ($_POST['CustType'])) {
+		$msg=_('Search Result: Customer Code has been used in preference') . '<br>';
 	}
-	If (($_POST['Keywords']=="") AND ($_POST['CustCode']=="") AND ($_POST['CustPhone']=="")) {
+	If (($_POST['CustPhone']) AND ($_POST['CustType'])) {
+		$msg=_('Search Result: Customer Phone has been used in preference') . '<br>';
+	}
+	If (($_POST['CustType'])) {
+		$msg=_('Search Result: Customer Type has been used in preference') . '<br>';
+	}
+	If (($_POST['Keywords']=="") AND ($_POST['CustCode']=="") AND ($_POST['CustPhone']=="") AND ($_POST['CustType']=="")) {
 
 		$SQL= "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
 				custbranch.brname,
 				custbranch.contactname,
+				debtortype.typename,
 				custbranch.phoneno,
 				custbranch.faxno
-			FROM debtorsmaster LEFT JOIN custbranch
+			FROM debtorsmaster, debtortype LEFT JOIN custbranch
 				ON debtorsmaster.debtorno = custbranch.debtorno
+			WHERE debtorsmaster.typeid = debtortype.typeid
 			ORDER BY debtorsmaster.debtorno";
 
 	} else {
@@ -105,6 +113,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 
 			$i=0;
 			$SearchString = "%";
+
 			while (strpos($_POST['Keywords'], " ", $i)) {
 				$wrdlen=strpos($_POST['Keywords']," ",$i) - $i;
 				$SearchString=$SearchString . substr($_POST['Keywords'],$i,$wrdlen) . "%";
@@ -116,11 +125,13 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 				debtorsmaster.name,
 				custbranch.brname,
 				custbranch.contactname,
+				debtortype.typename,
 				custbranch.phoneno,
 				custbranch.faxno
-			FROM debtorsmaster LEFT JOIN custbranch
+			FROM debtorsmaster, debtortype LEFT JOIN custbranch
 				ON debtorsmaster.debtorno = custbranch.debtorno
 			WHERE debtorsmaster.name " . LIKE . " '$SearchString'
+			AND debtorsmaster.typeid = debtortype.typeid
 			ORDER BY debtorsmaster.debtorno";
 
 		} elseif (strlen($_POST['CustCode'])>0){
@@ -130,23 +141,40 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 				debtorsmaster.name,
 				custbranch.brname,
 				custbranch.contactname,
+				debtortype.typename,
 				custbranch.phoneno,
 				custbranch.faxno
-			FROM debtorsmaster LEFT JOIN custbranch
+			FROM debtorsmaster, debtortype LEFT JOIN custbranch
 				ON debtorsmaster.debtorno = custbranch.debtorno
 			WHERE debtorsmaster.debtorno " . LIKE  . " '%" . $_POST['CustCode'] . "%'
+			AND debtorsmaster.typeid = debtortype.typeid
 			ORDER BY debtorsmaster.debtorno";
 		} elseif (strlen($_POST['CustPhone'])>0){
 			$SQL = "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
 				custbranch.brname,
 				custbranch.contactname,
+				debtortype.typename,
 				custbranch.phoneno,
 				custbranch.faxno
-			FROM debtorsmaster LEFT JOIN custbranch
+			FROM debtorsmaster, debtortype LEFT JOIN custbranch
 				ON debtorsmaster.debtorno = custbranch.debtorno
 			WHERE custbranch.phoneno " . LIKE  . " '%" . $_POST['CustPhone'] . "%'
+			AND debtorsmaster.typeid = debtortype.typeid
 			ORDER BY custbranch.debtorno";
+		} elseif (strlen($_POST['CustType'])>0){
+                        $SQL = "SELECT debtorsmaster.debtorno,
+                                debtorsmaster.name,
+                                custbranch.brname,
+                                custbranch.contactname,
+                                debtortype.typename,
+                                custbranch.phoneno,
+                                custbranch.faxno
+                        FROM debtorsmaster, debtortype LEFT JOIN custbranch
+                                ON debtorsmaster.debtorno = custbranch.debtorno
+                        WHERE debtorsmaster.typeid LIKE debtortype.typeid
+                        AND debtortype.typename = '" . $_POST['CustType'] . "'
+                        ORDER BY custbranch.debtorno";
 		}
 	} //one of keywords or custcode or custphone was more than a zero length string
 	$ErrMsg = _('The searched customer records requested cannot be retrieved because');
@@ -171,6 +199,7 @@ If ($_POST['Select']!="" OR
 	($_SESSION['CustomerID']!=""
 	AND !isset($_POST['Keywords'])
 	AND !isset($_POST['CustCode'])
+	AND !isset($_POST['CustType'])
 	AND !isset($_POST['CustPhone']))) {
 
 	If ($_POST['Select']!=""){
@@ -282,11 +311,54 @@ if (isset($_POST['CustPhone'])) {
 }
 ?>
 </TD>
+
+<TD><FONT SIZE=3><B><?php echo _('OR'); ?></B></FONT></TD>
+<TD><?php echo _('Choose a Type'); ?>:</TD>
+<TD>
+
+<?php
+        if (isset($_POST['CustType'])) {
+// Show Customer Type drop down list
+        $result2=DB_query('SELECT typeid, typename FROM debtortype ',$db);
+// Error if no customer types setup
+        if (DB_num_rows($result2)==0){
+                $DataError =1;
+                echo '<TR><TD COLSPAN=2>' . prnMsg(_('No Customer types defined'),'error') . '</TD></TR>';
+        } else {
+// If OK show select box with option selected
+echo '<SELECT NAME="CustType">';
+                while ($myrow = DB_fetch_array($result2)) {
+if ($_POST['CustType']==$myrow['typename']){
+                        echo "<OPTION SELECTED VALUE='". $myrow['typename'] . "'>" . $myrow['typename'];
+                } else {
+                        echo "<OPTION VALUE='". $myrow['typename'] . "'>" . $myrow['typename'];
+                }
+                } //end while loop
+                DB_data_seek($result2,0);
+                echo '</SELECT></TD></TR>';
+}
+} else {
+// No option selected yet, so show Customer Type drop down list
+        $result2=DB_query('SELECT typeid, typename FROM debtortype ',$db);
+// Error if no customer types setup
+        if (DB_num_rows($result2)==0){
+                $DataError =1;
+                echo '<TR><TD COLSPAN=2>' . prnMsg(_('No Customer types defined'),'error') . '</TD></TR>';
+        } else {
+// if OK show select box with available options to choose
+echo '<SELECT NAME="CustType">';
+                while ($myrow = DB_fetch_array($result2)) {
+                        echo "<OPTION VALUE='". $myrow['typename'] . "'>" . $myrow['typename'];
+                } //end while loop
+                DB_data_seek($result2,0);
+                echo '</SELECT></TD></TR>';
+        }      }
+?>
+</TD>
 </TR>
 </TABLE>
 <INPUT TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Search Now'); ?>">
 </CENTER>
-
 
 <?php
 if (isset($_SESSION['SalesmanLogin']) and $_SESSION['SalesmanLogin']!=''){
@@ -338,6 +410,7 @@ If (isset($result)) {
 				<TH>' . _('Customer Name') . '</TH>
 				<TH>' . _('Branch') . '</TH>
 				<TH>' . _('Contact') . '</TH>
+				<TH>' . _('Type') . '</TH>
 				<TH>' . _('Phone') . '</TH>
 				<TH>' . _('Fax') . '</TH>
 			</TR>';
@@ -362,17 +435,19 @@ If (isset($result)) {
 		}
 
 		printf("<td><FONT SIZE=1><INPUT TYPE=SUBMIT NAME='Select' VALUE='%s'</FONT></td>
-				<td><FONT SIZE=1>%s</FONT></td>
-				<td><FONT SIZE=1>%s</FONT></td>
-				<td><FONT SIZE=1>%s</FONT></td>
-				<td><FONT SIZE=1>%s</FONT></td>
-				<td><FONT SIZE=1>%s</FONT></td></tr>",
-				$myrow['debtorno'],
-				$myrow['name'],
-				$myrow['brname'],
-				$myrow['contactname'],
-				$myrow['phoneno'],
-				$myrow['faxno']);
+			<td><FONT SIZE=1>%s</FONT></td>
+			<td><FONT SIZE=1>%s</FONT></td>
+			<td><FONT SIZE=1>%s</FONT></td>
+			<td><FONT SIZE=1>%s</FONT></td>
+			<td><FONT SIZE=1>%s</FONT></td>
+			<td><FONT SIZE=1>%s</FONT></td></tr>",
+			$myrow['debtorno'],
+			$myrow['name'],
+			$myrow['brname'],
+			$myrow['contactname'],
+			$myrow['typename'],
+			$myrow['phoneno'],
+			$myrow['faxno']);
 
 		$j++;
 		If ($j == 11 AND ($RowIndex+1 != $_SESSION['DisplayRecordsMax'])){
@@ -413,37 +488,37 @@ echo '</FORM></CENTER>';
 
 // Only display the geocode map if the integration is turned on, and there is a latitude/longitude to display
 if ($_SESSION['geocode_integration']==1 AND $_SESSION['CustomerID'] <>0){
-	if ($lat ==0){
-		echo "<center>Map will display here, geocode is enabled, but no geocode data to display yet.<center>";
-		include('includes/footer.inc');
-		exit;
-	}
-	// Select some basic data about the Customer
-	$SQL = "SELECT debtorsmaster.clientsince, debtorsmaster.paymentterms, debtorsmaster.lastpaid, debtorsmaster.lastpaiddate
-					FROM debtorsmaster
-					WHERE debtorsmaster.debtorno ='" . $_SESSION['CustomerID'] . "'";
-			$DataResult = DB_query($SQL,$db);
-			$myrow = DB_fetch_array($DataResult);
-	// Select some more data about the customer
-	$SQL = "select sum(ovamount+ovgst) as total from debtortrans where debtorno = '" . $_SESSION['CustomerID'] . "' and type !=12";
-			$Total1Result = DB_query($SQL,$db);
-			$row = DB_fetch_array($Total1Result);
-	echo '<CENTER><TABLE WIDTH=90% COLSPAN=2 BORDER=2 CELLPADDING=4>';
-			echo "<TR>
-					<TH WIDTH=33%>" . _('Customer Data') . "</TH>
-					<TH WIDTH=33%>". _('Customer Mapping') . "</TH>
-			</TR>";
-	echo '<TR><TD VALIGN=TOP>';    /* Customer Data to be integrated with mapping*/
-	echo "Distance to this customer: <b>TBA</b><br>";
-	echo "Last Paid Date: <b>" . ConvertSQLDate($myrow['lastpaiddate']) . "</b><br>";
-	echo "Last Paid Amount (inc tax): <b>$" . number_format($myrow['lastpaid'],2) . "</b><br>";
-	echo "Customer since: <b>" . ConvertSQLDate($myrow['clientsince']) . "</b><br>";
-	echo "Total Spend from this Customer (inc tax): <b>$" . number_format($row['total']) . "</b><br>";
-	echo '<BR>';
-	echo '<BR>';
-	echo '</TD><TD VALIGN=TOP>'; /* Mapping */
-	echo "<center>Map will display below, geocode is enabled.<center>";
-	echo '<center><div align="center" id="map" style="width: 400px; height: 200px"></div></center>';
+if ($lat ==0){
+echo "<center>Map will display here, geocode is enabled, but no geocode data to display yet.<center>";
+include('includes/footer.inc');
+exit;
+}
+// Select some basic data about the Customer
+$SQL = "SELECT debtorsmaster.clientsince, debtorsmaster.paymentterms, debtorsmaster.lastpaid, debtorsmaster.lastpaiddate
+                FROM debtorsmaster
+                WHERE debtorsmaster.debtorno ='" . $_SESSION['CustomerID'] . "'";
+        $DataResult = DB_query($SQL,$db);
+        $myrow = DB_fetch_array($DataResult);
+// Select some more data about the customer
+$SQL = "select sum(ovamount+ovgst) as total from debtortrans where debtorno = '" . $_SESSION['CustomerID'] . "' and type !=12";
+        $Total1Result = DB_query($SQL,$db);
+        $row = DB_fetch_array($Total1Result);
+echo '<CENTER><TABLE WIDTH=90% COLSPAN=2 BORDER=2 CELLPADDING=4>';
+        echo "<TR>
+                <TH WIDTH=33%>" . _('Customer Data') . "</TH>
+                <TH WIDTH=33%>". _('Customer Mapping') . "</TH>
+        </TR>";
+echo '<TR><TD VALIGN=TOP>';    /* Customer Data to be integrated with mapping*/
+echo "Distance to this customer: <b>TBA</b><br>";
+echo "Last Paid Date: <b>" . ConvertSQLDate($myrow['lastpaiddate']) . "</b><br>";
+echo "Last Paid Amount (inc tax): <b>$" . number_format($myrow['lastpaid'],2) . "</b><br>";
+echo "Customer since: <b>" . ConvertSQLDate($myrow['clientsince']) . "</b><br>";
+echo "Total Spend from this Customer (inc tax): <b>$" . number_format($row['total']) . "</b><br>";
+echo '<BR>';
+echo '<BR>';
+echo '</TD><TD VALIGN=TOP>'; /* Mapping */
+echo "<center>Map will display below, geocode is enabled.<center>";
+echo '<center><div align="center" id="map" style="width: 400px; height: 200px"></div></center>';
 }
 include('includes/footer.inc');
 ?>
