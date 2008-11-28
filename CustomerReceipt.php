@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 include('includes/DefineReceiptClass.php');
 
@@ -643,6 +643,7 @@ $ErrMsg = _('The bank accounts could not be retrieved because');
 $DbgMsg = _('The SQL used to retrieve the bank acconts was');
 $AccountsResults = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
+echo '<p><b>' . _('Enter customer receipts:') . '</b>' . _('To enter a payment TO a customer (ie. to pay out a credit note), enter a negative payment amount.') . '</p>';
 echo '<table><tr><td>' . _('Bank Account') . ':</td>
 				 <td><select tabindex=1 name="BankAccount">';
 
