@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.28 $ */
+/* $Revision: 1.29 $ */
 
 $PageSecurity = 2;
 
@@ -73,7 +73,7 @@ if (!isset($_POST['PageOffset'])) {
   }
 }
 
-if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])){
+if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])){
 	if (isset($_POST['Search'])){
 		$_POST['PageOffset'] = 1;
 	}
@@ -94,6 +94,10 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 
 		$SQL= "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
+				debtorsmaster.address1,
+                                debtorsmaster.address2,
+                                debtorsmaster.address3,
+                                debtorsmaster.address4,
 				custbranch.brname,
 				custbranch.contactname,
 				debtortype.typename,
@@ -102,7 +106,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 			FROM debtorsmaster, debtortype LEFT JOIN custbranch
 				ON debtorsmaster.debtorno = custbranch.debtorno
 			WHERE debtorsmaster.typeid = debtortype.typeid
-			ORDER BY debtorsmaster.debtorno";
+			ORDER BY debtorsmaster.name";
 
 	} else {
 		If (strlen($_POST['Keywords'])>0) {
@@ -123,6 +127,10 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 
 				$SQL = "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
+				debtorsmaster.address1,
+                                debtorsmaster.address2,
+                                debtorsmaster.address3,
+                                debtorsmaster.address4,
 				custbranch.brname,
 				custbranch.contactname,
 				debtortype.typename,
@@ -132,13 +140,17 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 				ON debtorsmaster.debtorno = custbranch.debtorno
 			WHERE debtorsmaster.name " . LIKE . " '$SearchString'
 			AND debtorsmaster.typeid = debtortype.typeid
-			ORDER BY debtorsmaster.debtorno";
+			ORDER BY debtorsmaster.name";
 
 		} elseif (strlen($_POST['CustCode'])>0){
 
 			$_POST['CustCode'] = strtoupper(trim($_POST['CustCode']));
 				$SQL = "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
+				debtorsmaster.address1,
+                                debtorsmaster.address2,
+                                debtorsmaster.address3,
+                                debtorsmaster.address4,
 				custbranch.brname,
 				custbranch.contactname,
 				debtortype.typename,
@@ -148,10 +160,14 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 				ON debtorsmaster.debtorno = custbranch.debtorno
 			WHERE debtorsmaster.debtorno " . LIKE  . " '%" . $_POST['CustCode'] . "%'
 			AND debtorsmaster.typeid = debtortype.typeid
-			ORDER BY debtorsmaster.debtorno";
+			ORDER BY debtorsmaster.name";
 		} elseif (strlen($_POST['CustPhone'])>0){
 			$SQL = "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
+				debtorsmaster.address1,
+                                debtorsmaster.address2,
+                                debtorsmaster.address3,
+                                debtorsmaster.address4,
 				custbranch.brname,
 				custbranch.contactname,
 				debtortype.typename,
@@ -161,10 +177,14 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 				ON debtorsmaster.debtorno = custbranch.debtorno
 			WHERE custbranch.phoneno " . LIKE  . " '%" . $_POST['CustPhone'] . "%'
 			AND debtorsmaster.typeid = debtortype.typeid
-			ORDER BY custbranch.debtorno";
+			ORDER BY debtorsmaster.name";
 		} elseif (strlen($_POST['CustType'])>0){
                         $SQL = "SELECT debtorsmaster.debtorno,
                                 debtorsmaster.name,
+                                debtorsmaster.address1,
+                                debtorsmaster.address2,
+                                debtorsmaster.address3,
+                                debtorsmaster.address4,
                                 custbranch.brname,
                                 custbranch.contactname,
                                 debtortype.typename,
@@ -174,7 +194,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
                                 ON debtorsmaster.debtorno = custbranch.debtorno
                         WHERE debtorsmaster.typeid LIKE debtortype.typeid
                         AND debtortype.typename = '" . $_POST['CustType'] . "'
-                        ORDER BY custbranch.debtorno";
+                        ORDER BY debtorsmaster.name";
 		}
 	} //one of keywords or custcode or custphone was more than a zero length string
 	$ErrMsg = _('The searched customer records requested cannot be retrieved because');
@@ -358,6 +378,7 @@ echo '<SELECT NAME="CustType">';
 </TR>
 </TABLE>
 <INPUT TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Search Now'); ?>">
+<INPUT TYPE=SUBMIT NAME="CSV" VALUE="<?php echo _('CSV Format'); ?>">
 </CENTER>
 
 <?php
@@ -369,7 +390,7 @@ If (isset($result)) {
   unset($_SESSION['CustomerID']);
   $ListCount=DB_num_rows($result);
   $ListPageMax=ceil($ListCount/$_SESSION['DisplayRecordsMax']);
-
+if (!isset($_POST['CSV'])) {
   if (isset($_POST['Next'])) {
     if ($_POST['PageOffset'] < $ListPageMax) {
 	    $_POST['PageOffset'] = $_POST['PageOffset'] + 1;
@@ -403,7 +424,6 @@ If (isset($result)) {
  	echo '<P>';
 }
 
-
 	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>';
 	$TableHeader = '<TR>
 				<TH>' . _('Code') . '</TH>
@@ -419,8 +439,36 @@ If (isset($result)) {
 	$j = 1;
 	$k = 0; //row counter to determine background colour
   $RowIndex = 0;
-
+}
   if (DB_num_rows($result)<>0){
+
+if (isset($_POST['CSV'])) {
+printf("Code, Customer Name, Address1, Address2, Address3, Address4, Contact, Type, Phone, Fax");
+while ($myrow2=DB_fetch_array($result)) {
+printf("<br><FONT SIZE=1>%s,
+                        %s,
+                        %s,
+                        %s,
+                        %s,
+                        %s,
+                        %s,
+                        %s,
+                        %s,
+                        %s</FONT>",
+                        $myrow2['debtorno'],
+                        str_replace(',', '',$myrow2['name']),
+                        str_replace(',', '',$myrow2['address1']),
+                        str_replace(',', '',$myrow2['address2']),
+			str_replace(',', '',$myrow2['address3']),
+			str_replace(',', '',$myrow2['address4']),                        
+                        str_replace(',', '',$myrow2['contactname']),
+                        str_replace(',', '',$myrow2['typename']),
+                        $myrow2['phoneno'],
+                        $myrow2['faxno']);
+
+} 
+}
+if (!isset($_POST['CSV'])) {
   	DB_data_seek($result, ($_POST['PageOffset']-1)*$_SESSION['DisplayRecordsMax']);
   }
 
@@ -459,11 +507,12 @@ If (isset($result)) {
 //end of page full new headings if
 	}
 //end of while loop
-
 	echo '</TABLE>';
-
 }
+}
+
 //end if results to show
+if (!isset($_POST['CSV'])) {
 if (isset($ListPageMax) and $ListPageMax>1) {
 	echo "<P>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 
@@ -485,6 +534,7 @@ if (isset($ListPageMax) and $ListPageMax>1) {
 }
 //end if results to show
 echo '</FORM></CENTER>';
+}
 
 // Only display the geocode map if the integration is turned on, and there is a latitude/longitude to display
 if ($_SESSION['geocode_integration']==1 AND $_SESSION['CustomerID'] <>0){
