@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 $PageSecurity = 3;
 
@@ -642,7 +642,7 @@ if (!isset($DebtorNo)) {
 	DB_data_seek($result,0);
 
 // Select Customer types for drop down list for SELECT/UPDATE
-        $result=DB_query('SELECT typeid, typename FROM debtortype ',$db);
+        $result=DB_query('SELECT typeid, typename FROM debtortype ORDER BY typename',$db);
         echo '<TR><TD>' . _('Customer Type') . ":</TD>
                 <TD><SELECT name='typeid'>";
         while ($myrow = DB_fetch_array($result)) {
