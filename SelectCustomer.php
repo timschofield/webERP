@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.29 $ */
+/* $Revision: 1.30 $ */
 
 $PageSecurity = 2;
 
@@ -103,8 +103,8 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 				debtortype.typename,
 				custbranch.phoneno,
 				custbranch.faxno
-			FROM debtorsmaster, debtortype LEFT JOIN custbranch
-				ON debtorsmaster.debtorno = custbranch.debtorno
+			FROM debtorsmaster LEFT JOIN custbranch
+				ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
 			WHERE debtorsmaster.typeid = debtortype.typeid
 			ORDER BY debtorsmaster.name";
 
@@ -136,8 +136,8 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 				debtortype.typename,
 				custbranch.phoneno,
 				custbranch.faxno
-			FROM debtorsmaster, debtortype LEFT JOIN custbranch
-				ON debtorsmaster.debtorno = custbranch.debtorno
+			FROM debtorsmaster LEFT JOIN custbranch
+				ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
 			WHERE debtorsmaster.name " . LIKE . " '$SearchString'
 			AND debtorsmaster.typeid = debtortype.typeid
 			ORDER BY debtorsmaster.name";
@@ -156,8 +156,8 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 				debtortype.typename,
 				custbranch.phoneno,
 				custbranch.faxno
-			FROM debtorsmaster, debtortype LEFT JOIN custbranch
-				ON debtorsmaster.debtorno = custbranch.debtorno
+			FROM debtorsmaster LEFT JOIN custbranch
+				ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
 			WHERE debtorsmaster.debtorno " . LIKE  . " '%" . $_POST['CustCode'] . "%'
 			AND debtorsmaster.typeid = debtortype.typeid
 			ORDER BY debtorsmaster.name";
@@ -173,8 +173,8 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 				debtortype.typename,
 				custbranch.phoneno,
 				custbranch.faxno
-			FROM debtorsmaster, debtortype LEFT JOIN custbranch
-				ON debtorsmaster.debtorno = custbranch.debtorno
+			FROM debtorsmaster LEFT JOIN custbranch
+				ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
 			WHERE custbranch.phoneno " . LIKE  . " '%" . $_POST['CustPhone'] . "%'
 			AND debtorsmaster.typeid = debtortype.typeid
 			ORDER BY debtorsmaster.name";
@@ -190,8 +190,8 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
                                 debtortype.typename,
                                 custbranch.phoneno,
                                 custbranch.faxno
-                        FROM debtorsmaster, debtortype LEFT JOIN custbranch
-                                ON debtorsmaster.debtorno = custbranch.debtorno
+                        FROM debtorsmaster LEFT JOIN custbranch
+                                ON debtorsmaster.debtorno = custbranch.debtorno, debtortype
                         WHERE debtorsmaster.typeid LIKE debtortype.typeid
                         AND debtortype.typename = '" . $_POST['CustType'] . "'
                         ORDER BY debtorsmaster.name";
