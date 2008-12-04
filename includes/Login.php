@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 // Display demo user name and password within login form if $allow_demo_mode is true
 include ('LanguageSetup.php');
 
@@ -21,7 +21,7 @@ if ($allow_demo_mode == True AND !isset($demo_text)) {
 <body>
 
 <?php
-if (get_magic_quotes_gpc()){ 
+if (get_magic_quotes_gpc()){
 	echo '<p style="background:white">';
 	echo _('Your webserver is configured to enable Magic Quotes. This may cause problems if you use punctuation (such as quotes) when doing data entry. You should contact your webmaster to disable Magic Quotes');
 	echo '</p>';
@@ -39,7 +39,11 @@ if (get_magic_quotes_gpc()){
 			$DirHandle = dir('companies/');
 			while (false != ($CompanyEntry = $DirHandle->read())){
 				if (is_dir('companies/' . $CompanyEntry) AND $CompanyEntry != '..' AND $CompanyEntry != 'CVS' AND $CompanyEntry!='.'){
-					echo "<option  value='$CompanyEntry'>$CompanyEntry";
+					if ($CompanyEntry==$DefaultCompany) {
+						echo "<option selected  value='$CompanyEntry'>$CompanyEntry";
+					} else {
+						echo "<option  value='$CompanyEntry'>$CompanyEntry";
+					}
 				}
 			}
 			echo '</select>';
