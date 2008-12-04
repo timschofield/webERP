@@ -1854,6 +1854,66 @@
 									$xmlrpcmsg->getParam(6)->scalarval())));
 	}
 
+	unset($Parameter);
+	unset($ReturnValue);
+	$Description = _('Returns the webERP default date format');
+	$Parameter[0]['name'] = _('User name');
+	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[1]['name'] = _('User password');
+	$Parameter[1]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns a string containg the default date format. ').
+		_('Otherwise an array of error codes is returned. ');
+
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+
+	$GetDefaultDateFormat_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$GetDefaultDateFormat_doc = $doc;
+
+	function xmlrpc_GetDefaultDateFormat($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetDefaultDateFormat($xmlrpcmsg->getParam(0)->scalarval(),
+				$xmlrpcmsg->getParam(1)->scalarval())));
+	}
+
+	unset($Parameter);
+	unset($ReturnValue);
+	$Description = _('Returns the webERP default location');
+	$Parameter[0]['name'] = _('User name');
+	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[1]['name'] = _('User password');
+	$Parameter[1]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns a string containg the default location. ').
+		_('Otherwise an array of error codes is returned. ');
+
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+
+	$GetDefaultLocation_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$GetDefaultLocation_doc = $doc;
+
+	function xmlrpc_GetDefaultLocation($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetDefaultLocation($xmlrpcmsg->getParam(0)->scalarval(),
+				$xmlrpcmsg->getParam(1)->scalarval())));
+	}
+
 	$s = new xmlrpc_server( array(
 		"weberp.xmlrpc_InsertCustomer" => array(
 			"function" => "xmlrpc_InsertCustomer",
@@ -2115,6 +2175,14 @@
 			"function" => "xmlrpc_GetBatches",
 			"signature" => $GetBatches_sig,
 			"docstring" => $GetBatches_doc),
+		"weberp.xmlrpc_GetDefaultDateFormat" => array(
+			"function" => "xmlrpc_GetDefaultDateFormat",
+			"signature" => $GetDefaultDateFormat_sig,
+			"docstring" => $GetDefaultDateFormat_doc),
+		"weberp.xmlrpc_GetDefaultLocation" => array(
+			"function" => "xmlrpc_GetDefaultLocation",
+			"signature" => $GetDefaultLocation_sig,
+			"docstring" => $GetDefaultLocation_doc),
 		)
 	);
 
