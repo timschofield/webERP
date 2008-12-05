@@ -501,7 +501,9 @@
 		$sql='SELECT * FROM stockmaster WHERE stockid="'.$StockID.'"';
 		$result = DB_Query($sql, $db);
 		if (sizeof($Errors)==0) {
-			return DB_fetch_array($result);
+			$Errors[0]=0;
+			$Errors[1]=DB_fetch_array($result);
+			return $Errors;
 		} else {
 			return $Errors;
 		}
@@ -527,7 +529,13 @@
 			$StockItemList[$i]=$myrow[0];
 			$i++;
 		}
-		return $StockItemList;
+		if (sizeof($Errors)==0) {
+			$Errors[0]=0;
+			$Errors[1]=$StockItemList;
+			return $Errors;
+		} else {
+			return $Errors;
+		}
 	}
 
 	function GetStockbalance($StockID, $user, $password) {
@@ -550,7 +558,9 @@
 				$answer[$i]['loccode']=$myrow['loccode'];
 				$i++;
 			}
-			return $answer;
+			$Errors[0]=0;
+			$Errors[1]=$answer;
+			return $Errors;
 		} else {
 			return $Errors;
 		}
@@ -576,7 +586,9 @@
 				$answer[$i]['loccode']=$myrow['loccode'];
 				$i++;
 			}
-			return $answer;
+			$Errors[0]=0;
+			$Errors[1]=$answer;
+			return $Errors;
 		} else {
 			return $Errors;
 		}
@@ -616,7 +628,9 @@
 		$sql='SELECT sum(quantity) FROM salesorderdetails WHERE stkcode="'.$StockID.'" and completed=0';
 		$result = DB_Query($sql, $db);
 		if (sizeof($Errors)==0) {
-			return DB_fetch_array($result);
+			$Errors[0]=0;
+			$Errors[1]=DB_fetch_array($result);
+			return $Errors;
 		} else {
 			return $Errors;
 		}
@@ -636,7 +650,9 @@
 		$sql='SELECT sum(quantityord-quantityrecd) FROM purchorderdetails WHERE itemcode="'.$StockID.'" and completed=0';
 		$result = DB_Query($sql, $db);
 		if (sizeof($Errors)==0) {
-			return DB_fetch_array($result);
+			$Errors[0]=0;
+			$Errors[1]=DB_fetch_array($result);
+			return $Errors;
 		} else {
 			return $Errors;
 		}
