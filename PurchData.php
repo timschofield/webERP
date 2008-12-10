@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 $PageSecurity = 4;
 
@@ -139,7 +139,8 @@ if (isset($_GET['Delete'])){
 
    $sql = "DELETE FROM purchdata 
    				WHERE purchdata.supplierno='$SupplierID' 
-   				AND purchdata.stockid='$StockID'";
+   				AND purchdata.stockid='$StockID'
+   				AND purchdata.effectivefrom='" . $_GET['EffectiveFrom'] . "'";
    $ErrMsg =  _('The supplier purchasing details could not be deleted because');
    $DelResult=DB_query($sql,$db,$ErrMsg);
 
@@ -238,8 +239,8 @@ if (!isset($_GET['Edit'])){
 			<td>%s</td>
 			<td align=right>%s " . _('days') . "</td>
 			<td>%s</td>
-			<td><a href='%s?%s&StockID=%s&SupplierID=%s&Edit=1'>" . _('Edit') . "</a></td>
-			<td><a href='%s?%s&StockID=%s&SupplierID=%s&Delete=1' onclick=\"return confirm('" . _('Are you sure you wish to delete this suppliers price?') . "');\">" . _('Delete') . "</a></td>
+			<td><a href='%s?%s&StockID=%s&SupplierID=%s&Edit=1&EffectiveFrom=%s'>" . _('Edit') . "</a></td>
+			<td><a href='%s?%s&StockID=%s&SupplierID=%s&Delete=1&EffectiveFrom=%s' onclick=\"return confirm('" . _('Are you sure you wish to delete this suppliers price?') . "');\">" . _('Delete') . "</a></td>
 			</tr>",
 			$myrow['suppname'],
 			number_format($myrow['price'],3),
@@ -252,10 +253,12 @@ if (!isset($_GET['Edit'])){
 			SID,
 			$StockID,
 			$myrow['supplierno'],
+			$myrow['effectivefrom'],
 			$_SERVER['PHP_SELF'],
 			SID,
 			$StockID,
-			$myrow['supplierno']
+			$myrow['supplierno'],
+			$myrow['effectivefrom']
 			);
 
     } //end of while loop
@@ -287,7 +290,8 @@ if (isset($_GET['Edit'])){
 		FROM purchdata INNER JOIN suppliers
 			ON purchdata.supplierno=suppliers.supplierid
 		WHERE purchdata.supplierno='$SupplierID'
-		AND purchdata.stockid='$StockID'";
+		AND purchdata.stockid='$StockID'
+		AND purchdata.effectivefrom='" . $_GET['EffectiveFrom'] . "'";
 
 	$ErrMsg = _('The supplier purchasing details for the selected supplier and item could not be retrieved because');
 	$EditResult = DB_query($sql, $db, $ErrMsg);

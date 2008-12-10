@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 $PageSecurity = 2;
 
@@ -423,7 +423,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 
     echo '<TABLE BORDER=1><TR><TH colspan=3><font size=4>' . $StockID . ' - ' . $myrow['description'] . ' </font></TH></TR>';
 
-    echo '<TR><TD WIDTH="44%">
+    echo '<TR><TD width="40%">
             <TABLE>'; //nested table
 
     echo '<TR><TH align=right>' . _('Item type:') . '</TH><TD COLSPAN=2>';
@@ -701,17 +701,19 @@ $PropertyOptionValue . '</option>';
 
     echo '</TD>'; //end cell of master table
     if ($myrow['mbflag'] == 'B') {
-        echo '<TD WIDTH="44%" VALIGN="TOP"><TABLE>
-            <TR><TH width="40%">' . _('Supplier') . '</TH>
-                <TH width="20%">' . _('Cost') . '</TH>
-                <TH width="15%">' . _('Currency') . '</TH>
-                <TH width="15%">' . _('Lead Time') . '</TH>
-                <TH width="10%">' . _('Prefer') . '</TH></TR>';
+        echo '<TD WIDTH="50%" VALIGN="TOP"><TABLE>
+            <TR><TH width="50%">' . _('Supplier') . '</TH>
+                <TH width="15%">' . _('Cost') . '</TH>
+                <TH width="5%">' . _('Curr') . '</TH>
+                <TH width="15%">' . _('Eff Date') . '</TH>
+                <TH width="10%">' . _('Lead Time') . '</TH>
+                <TH width="5%">' . _('Prefer') . '</TH></TR>';
 
         $SuppResult = DB_query("SELECT  suppliers.suppname,
                         suppliers.currcode,
                         suppliers.supplierid,
                         purchdata.price,
+                        purchdata.effectivefrom,
                         purchdata.leadtime,
                         purchdata.conversionfactor,
                         purchdata.preferred
@@ -723,6 +725,7 @@ $PropertyOptionValue . '</option>';
             echo '<TR><TD>' . $SuppRow['suppname'] . '</TD>
                         <TD align=right>' . number_format($SuppRow['price']/$SuppRow['conversionfactor'],2) . '</TD>
                         <TD>' . $SuppRow['currcode'] . '</TD>
+                        <TD>' . ConvertSQLDate($SuppRow['effectivefrom']) . '</TD>
                         <TD>' . $SuppRow['leadtime'] . '</TD>';
             switch ($SuppRow['preferred']) {
             /* 2008-08-19 ToPu */

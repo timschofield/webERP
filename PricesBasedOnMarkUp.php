@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.4 $ */
+/* $Revision: 1.5 $ */
 $PageSecurity=2;
 
 
@@ -125,35 +125,11 @@ while ($myrow=DB_fetch_array($result)){
 }
 echo '</select></td></tr>';
 
-if (!isset($_POST['DecimalPlaces'])){
-	$_POST['DecimalPlaces']=3;
+if (!isset($_POST['RoundingFactor'])){
+	$_POST['RoundingFactor']=1;
 }
-echo '<tr><td>' . _('Rounding schema') . ':</td>
-                <td><select name="DecimalPlaces">';
-if ($_POST['DecimalPlaces']==3){                
-	echo '<option selected value=3>' . _('3 decimal places') . '</option>';
-	echo '<option value=2>' . _('2 decimal places') . '</option>';
-	echo '<option value=1000>' . _('Nearest 1000') . '</option>';
-	echo '<option  value=500>' . _('Nearest 500') . '</option>';
-} elseif ($_POST['DecimalPlaces']==2){
-	echo '<option value=3>' . _('3 decimal places') . '</option>';
-	echo '<option selected value=2>' . _('2 decimal places') . '</option>';
-	echo '<option value=1000>' . _('Nearest 1000') . '</option>';
-	echo '<option  value=500>' . _('Nearest 500') . '</option>';
-} elseif ($_POST['DecimalPlaces']==1000){
-	echo '<option value=3>' . _('3 decimal places') . '</option>';
-	echo '<option value=2>' . _('2 decimal places') . '</option>';
-	echo '<option selected value=1000>' . _('Nearest 1000') . '</option>';
-	echo '<option  value=500>' . _('Nearest 500') . '</option>';
-} else {
-	echo '<option value=3>' . _('3 decimal places') . '</option>';
-	echo '<option value=2>' . _('2 decimal places') . '</option>';
-	echo '<option value=1000>' . _('Nearest 1000') . '</option>';
-	echo '<option selected value=500>' . _('Nearest 500') . '</option>';
-}	
-
-echo '</select></td></tr>';
-
+echo '<tr><td>' . _('Rounding Factor') . ':</td>
+                <td><input type=text name="RoundingFactor" size="6" maxlength="6" value=' . $_POST['RoundingFactor'] . '></td></tr>';
 
 if (!isset($_POST['IncreasePercent'])){
 	$_POST['IncreasePercent']=0;
@@ -254,28 +230,16 @@ if (isset($_POST['UpdatePrices'])
 			}
 		}
 				
-		if ($_POST['DecimalPlaces']==3){
-			$RoundUpIncrement = 0.0005;
-		} else {
-			$RoundUpIncrement = 0.005;
-		}
+		
 		if ($_POST['CostType']!='OtherPriceList'){
-			if ($_POST['DecimalPlaces']>3){
-				$RoundedPrice = round(($Cost * (1+ $IncrementPercentage) * $CurrencyRate+($_POST['DecimalPlaces']/2))/$_POST['DecimalPlaces']) * $_POST['DecimalPlaces'];
-				if ($RoundedPrice <=0){
-					$RoundedPrice = $_POST['DecimalPlaces'];
-				}
-			} else {
-				$RoundedPrice = round(($Cost * (1+ $IncrementPercentage)*$CurrencyRate) +$RoundUpIncrement,$_POST['DecimalPlaces']);
+			$RoundedPrice = round(($Cost * (1+ $IncrementPercentage) * $CurrencyRate+($_POST['RoundingFactor']/2))/$_POST['RoundingFactor']) * $_POST['RoundingFactor'];
+			if ($RoundedPrice <=0){
+				$RoundedPrice = $_POST['RoundingFactor'];
 			}
 		} else {
-			if ($_POST['DecimalPlaces']>3){
-				$RoundedPrice = round(($Cost * (1+ $IncrementPercentage)+($_POST['DecimalPlaces']/2))/$_POST['DecimalPlaces']) * $_POST['DecimalPlaces'];
-				if ($RoundedPrice <=0){
-					$RoundedPrice = $_POST['DecimalPlaces'];
-				}
-			} else {
-				$RoundedPrice = round(($Cost * (1+ $IncrementPercentage)) + $RoundUpIncrement,$_POST['DecimalPlaces']);
+			$RoundedPrice = round(($Cost * (1+ $IncrementPercentage)+($_POST['RoundingFactor']/2))/$_POST['RoundingFactor']) * $_POST['RoundingFactor'];
+			if ($RoundedPrice <=0){
+				$RoundedPrice = $_POST['RoundingFactor'];
 			}
 		}
 		

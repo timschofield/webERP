@@ -53,3 +53,4 @@ INSERT INTO `debtortype` ( `typeid` , `typename` ) VALUES ('', 'Default');
 ALTER TABLE `debtorsmaster` ADD `typeid` tinyint(4) NOT NULL default '1';
 ALTER TABLE `debtorsmaster` ADD CONSTRAINT `debtorsmaster_ibfk_5` FOREIGN KEY (`typeid`) REFERENCES `debtortype` (`typeid`);
 ALTER TABLE `purchdata` ADD `effectivefrom` DATE NOT NULL;
+ALTER TABLE `purchdata` DROP PRIMARY KEY , ADD PRIMARY KEY ( `supplierno` , `stockid` , `effectivefrom` ); 
