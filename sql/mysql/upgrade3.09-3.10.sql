@@ -64,4 +64,14 @@ CREATE TABLE `debtortypenotes` (
 PRIMARY KEY (`noteid`)
 ) ENGINE=InnoDB;
 
+CREATE TABLE `custnotes` (
+`noteid` tinyint(4) NOT NULL auto_increment,
+`debtorno` varchar(10) NOT NULL default '0',
+`href` varchar(100) NOT NULL,
+`note` varchar(200) NOT NULL,
+`date` date NOT NULL default '0000-00-00',
+`priority` varchar(20) NOT NULL,
+PRIMARY KEY (`noteid`)
+) ENGINE=InnoDB;
+
 INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('extended_customerinfo', '0');
