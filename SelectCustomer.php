@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.31 $ */
+/* $Revision: 1.32 $ */
 
 $PageSecurity = 2;
 
@@ -540,7 +540,8 @@ echo '</FORM></CENTER>';
 }
 
 // Only display the geocode map if the integration is turned on, and there is a latitude/longitude to display
-if ($_SESSION['geocode_integration']==1 AND $_SESSION['CustomerID'] <>0){
+If (isset($_SESSION['CustomerID'])) {
+if ($_SESSION['geocode_integration']==1){
 echo '<center><br>';
 if ($lat ==0){
 echo "<center>Map will display here, geocode is enabled, but no geocode data to display yet.<center>";
@@ -592,13 +593,15 @@ echo "Last Paid Date: <b>" . ConvertSQLDate($myrow['lastpaiddate']) . "</b><br>"
 echo "Last Paid Amount (inc tax): <b>$" . number_format($myrow['lastpaid'],2) . "</b><br>";
 echo "Customer since: <b>" . ConvertSQLDate($myrow['clientsince']) . "</b><br>";
 echo "Total Spend from this Customer (inc tax): <b>$" . number_format($row['total']) . "</b><br>";
+echo "Customer Type: <b>" . $CustomerTypeName . "</b><br>";
 echo "</th></tr></table>";
 
-echo '<br>Customer Contacts<br>';
 // Customer Contacts
 echo '<TR><TD colspan=2>';
   	$sql = 'SELECT * FROM custcontacts where debtorno="' . $_SESSION['CustomerID'] . '" ORDER BY contid';
 	$result = DB_query($sql,$db);
+if (DB_num_rows($result)<>0){
+	echo '<br><center>Customer Contacts</center><br>';
 	echo '<CENTER><table border=1 width=45%>';
 	echo '<tr>
                         <th>' . _('Name') . '</th>
@@ -636,11 +639,15 @@ echo '<TR><TD colspan=2>';
 
 	}//END WHILE LIST LOOP
 	echo '</CENTER></table>';
-echo '<br>Customer Notes<br>';
+} else {
+echo '<center><br><a href="AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">Add New Contact</a><br></center>';
+}
 // Customer Notes
 echo '<TR><TD colspan=2>';
         $sql = 'SELECT * FROM custnotes where debtorno="' . $_SESSION['CustomerID'] . '" ORDER BY date DESC';
         $result = DB_query($sql,$db);
+if (DB_num_rows($result)<>0){
+echo '<br><center>Customer Notes</center><br>';
         echo '<CENTER><table border=1 width=45%>';
         echo '<tr>
                         <th>' . _('date') . '</th>
@@ -678,12 +685,15 @@ echo '<TR><TD colspan=2>';
 
         }//END WHILE LIST LOOP
         echo '</CENTER></table>';
-
+} else {
+echo '<center><br><a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">Add New Note for this Customer</a><br></center>';
+}
 // Custome Type Notes
-echo '<br>Customer Type (Group) Notes for :' . $CustomerTypeName . '<br>';
 echo '<TR><TD colspan=2>';
         $sql = 'SELECT * FROM debtortypenotes where typeid="' . $CustomerType . '" ORDER BY date DESC';
         $result = DB_query($sql,$db);
+if (DB_num_rows($result)<>0){
+echo '<br><center>Customer Type (Group) Notes for :' . $CustomerTypeName . '</center><br>';
         echo '<CENTER><table border=1 width=45%>';
         echo '<tr>
                         <th>' . _('date') . '</th>
@@ -692,7 +702,7 @@ echo '<TR><TD colspan=2>';
                         <th>' . _('priority') . '</th>
                         <th>' . _('Edit') . '</th>
                         <th>' . _('Delete') . '</th>
-                        <th> <a href="AddCustomerTypeNotes.php?DebtorType=' . $CustomerType . '">Add New Note</a> </th></tr>';
+                        <th> <a href="AddCustomerTypeNotes.php?DebtorType=' . $CustomerType . '">Add New Group Note</a> </th></tr>';
         $k=0; //row colour counter
         while ($myrow = DB_fetch_array($result)) {
                 if ($k==1){
@@ -721,7 +731,11 @@ echo '<TR><TD colspan=2>';
 
         }//END WHILE LIST LOOP
         echo '</CENTER></table>';
+} else {
+echo '<center><br><a href="AddCustomerTypeNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">Add New Group Note</a><br></center>';
+}}
 }
+//}
 include('includes/footer.inc');
 ?>
 <script language="JavaScript" type="text/javascript">
