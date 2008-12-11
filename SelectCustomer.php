@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 $PageSecurity = 2;
 
@@ -12,6 +12,9 @@ include('includes/SQL_CommonFunctions.inc');
 
 if (!isset($_SESSION['CustomerID'])){ //initialise if not already done
 	$_SESSION['CustomerID']="";
+}
+if (!isset($_SESSION['CustomerType'])){ //initialise if not already done
+	$_SESSION['CustomerType']="";
 }
 // only run geocode if integration is turned on and customer has been selected
 if ($_SESSION['geocode_integration']==1 AND $_SESSION['CustomerID'] <>0){
@@ -538,11 +541,36 @@ echo '</FORM></CENTER>';
 
 // Only display the geocode map if the integration is turned on, and there is a latitude/longitude to display
 if ($_SESSION['geocode_integration']==1 AND $_SESSION['CustomerID'] <>0){
+echo '<center><br>';
 if ($lat ==0){
 echo "<center>Map will display here, geocode is enabled, but no geocode data to display yet.<center>";
 include('includes/footer.inc');
 exit;
 }
+echo '<TR><TD colspan=2>';
+echo '<CENTER><TABLE WIDTH=45% COLSPAN=2 BORDER=2 CELLPADDING=4>';
+echo "<TR>
+                <TH WIDTH=33%>" . _('Customer Mapping') . "</TH>
+        </TR>";
+echo '</TD><TD VALIGN=TOP>'; /* Mapping */
+echo "<center>Map will display below, geocode is enabled.<center>";
+echo '<center><div align="center" id="map" style="width: 400px; height: 200px"></div></center><br>';
+echo "</th></tr></table></center>";
+}
+// Extended Customer Info only if selected in Configuration
+if ($_SESSION['extended_customerinfo']==1){
+$sql = "SELECT debtortype.typeid, debtortype.typename
+                        FROM debtorsmaster, debtortype
+			WHERE debtorsmaster.typeid = debtortype.typeid
+			AND debtorsmaster.debtorno = '" . $_SESSION['CustomerID'] . "'
+                        ";
+$ErrMsg = _('An error occurred in retrieving the information');
+$result = DB_query($sql, $db, $ErrMsg);
+$myrow = DB_fetch_array($result);
+$CustomerType = $myrow['typeid'];
+$CustomerTypeName = $myrow['typename'];
+// Customer Data
+echo '<center><br>';
 // Select some basic data about the Customer
 $SQL = "SELECT debtorsmaster.clientsince, debtorsmaster.paymentterms, debtorsmaster.lastpaid, debtorsmaster.lastpaiddate
                 FROM debtorsmaster
@@ -553,10 +581,10 @@ $SQL = "SELECT debtorsmaster.clientsince, debtorsmaster.paymentterms, debtorsmas
 $SQL = "select sum(ovamount+ovgst) as total from debtortrans where debtorno = '" . $_SESSION['CustomerID'] . "' and type !=12";
         $Total1Result = DB_query($SQL,$db);
         $row = DB_fetch_array($Total1Result);
-echo '<CENTER><TABLE WIDTH=90% COLSPAN=2 BORDER=2 CELLPADDING=4>';
+echo '<TR><TD colspan=2>';
+echo '<CENTER><TABLE WIDTH=45% COLSPAN=2 BORDER=2 CELLPADDING=4>';
         echo "<TR>
                 <TH WIDTH=33%>" . _('Customer Data') . "</TH>
-                <TH WIDTH=33%>". _('Customer Mapping') . "</TH>
         </TR>";
 echo '<TR><TD VALIGN=TOP>';    /* Customer Data to be integrated with mapping*/
 echo "Distance to this customer: <b>TBA</b><br>";
@@ -564,11 +592,135 @@ echo "Last Paid Date: <b>" . ConvertSQLDate($myrow['lastpaiddate']) . "</b><br>"
 echo "Last Paid Amount (inc tax): <b>$" . number_format($myrow['lastpaid'],2) . "</b><br>";
 echo "Customer since: <b>" . ConvertSQLDate($myrow['clientsince']) . "</b><br>";
 echo "Total Spend from this Customer (inc tax): <b>$" . number_format($row['total']) . "</b><br>";
-echo '<BR>';
-echo '<BR>';
-echo '</TD><TD VALIGN=TOP>'; /* Mapping */
-echo "<center>Map will display below, geocode is enabled.<center>";
-echo '<center><div align="center" id="map" style="width: 400px; height: 200px"></div></center>';
+echo "</th></tr></table>";
+
+echo '<br>Customer Contacts<br>';
+// Customer Contacts
+echo '<TR><TD colspan=2>';
+  	$sql = 'SELECT * FROM custcontacts where debtorno="' . $_SESSION['CustomerID'] . '" ORDER BY contid';
+	$result = DB_query($sql,$db);
+	echo '<CENTER><table border=1 width=45%>';
+	echo '<tr>
+                        <th>' . _('Name') . '</th>
+                        <th>' . _('Role') . '</th>
+                        <th>' . _('Phone Number') . '</th>
+                        <th>' . _('Notes') . '</th>
+                        <th>' . _('Edit') . '</th>
+                        <th>' . _('Delete') . '</th>
+			<th> <a href="AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">Add New Contact</a> </th></tr>';
+        $k=0; //row colour counter
+        while ($myrow = DB_fetch_array($result)) {
+                if ($k==1){
+                        echo '<tr class="OddTableRows">';
+                        $k=0;
+                } else {
+                        echo '<tr class="EvenTableRows">';
+                        $k=1;
+                }
+                printf('<td>%s</td>
+                                <td>%s</td>
+                                <td>%s</td>
+                                <td>%s</td>
+                                <td><a href="AddCustomerContacts.php?Id=%s&DebtorNo=%s">'. _('Edit'). '</a></td>
+                                <td><a href="AddCustomerContacts.php?Id=%s&DebtorNo=%s&delete=1">'. _('Delete'). '</a></td>
+                                </tr>',
+                                $myrow[2],
+                                $myrow[3],
+                                $myrow[4],
+                                $myrow[5],
+                                $myrow[0],
+                                $myrow[1],
+                                $myrow[0],
+                                $myrow[1],
+                                $myrow[1]);
+
+	}//END WHILE LIST LOOP
+	echo '</CENTER></table>';
+echo '<br>Customer Notes<br>';
+// Customer Notes
+echo '<TR><TD colspan=2>';
+        $sql = 'SELECT * FROM custnotes where debtorno="' . $_SESSION['CustomerID'] . '" ORDER BY date DESC';
+        $result = DB_query($sql,$db);
+        echo '<CENTER><table border=1 width=45%>';
+        echo '<tr>
+                        <th>' . _('date') . '</th>
+                        <th>' . _('note') . '</th>
+                        <th>' . _('hyperlink') . '</th>
+                        <th>' . _('priority') . '</th>
+                        <th>' . _('Edit') . '</th>
+                        <th>' . _('Delete') . '</th>
+			<th> <a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">Add New Note</a> </th></tr>';
+        $k=0; //row colour counter
+        while ($myrow = DB_fetch_array($result)) {
+                if ($k==1){
+                        echo '<tr class="OddTableRows">';
+                        $k=0;
+                } else {
+                        echo '<tr class="EvenTableRows">';
+                        $k=1;
+                }
+                printf('<td>%s</td>
+                                <td>%s</td>
+                                <td>%s</td>
+                                <td>%s</td>
+                                <td><a href="AddCustomerNotes.php?Id=%s&DebtorNo=%s">'. _('Edit'). '</a></td>
+                                <td><a href="AddCustomerNotes.php?Id=%s&DebtorNo=%s&delete=1">'. _('Delete'). '</a></td>
+                                </tr>',
+                                $myrow[4],
+                                $myrow[3],
+                                $myrow[2],
+                                $myrow[5],
+                                $myrow[0],
+                                $myrow[1],
+                                $myrow[0],
+                                $myrow[1],
+                                $myrow[1]);
+
+        }//END WHILE LIST LOOP
+        echo '</CENTER></table>';
+
+// Custome Type Notes
+echo '<br>Customer Type (Group) Notes for :' . $CustomerTypeName . '<br>';
+echo '<TR><TD colspan=2>';
+        $sql = 'SELECT * FROM debtortypenotes where typeid="' . $CustomerType . '" ORDER BY date DESC';
+        $result = DB_query($sql,$db);
+        echo '<CENTER><table border=1 width=45%>';
+        echo '<tr>
+                        <th>' . _('date') . '</th>
+                        <th>' . _('note') . '</th>
+                        <th>' . _('file link / refernce / URL') . '</th>
+                        <th>' . _('priority') . '</th>
+                        <th>' . _('Edit') . '</th>
+                        <th>' . _('Delete') . '</th>
+                        <th> <a href="AddCustomerTypeNotes.php?DebtorType=' . $CustomerType . '">Add New Note</a> </th></tr>';
+        $k=0; //row colour counter
+        while ($myrow = DB_fetch_array($result)) {
+                if ($k==1){
+                        echo '<tr class="OddTableRows">';
+                        $k=0;
+                } else {
+                        echo '<tr class="EvenTableRows">';
+                        $k=1;
+                }
+                printf('<td>%s</td>
+                                <td>%s</td>
+                                <td>%s</td>
+                                <td>%s</td>
+                                <td><a href="AddCustomerTypeNotes.php?Id=%s&DebtorType=%s">'. _('Edit'). '</a></td>
+                                <td><a href="AddCustomerTypeNotes.php?Id=%s&DebtorType=%s&delete=1">'. _('Delete'). '</a></td>
+                                </tr>',
+                                $myrow[4],
+                                $myrow[3],
+                                $myrow[2],
+                                $myrow[5],
+                                $myrow[0],
+                                $myrow[1],
+                                $myrow[0],
+                                $myrow[1],
+                                $myrow[1]);
+
+        }//END WHILE LIST LOOP
+        echo '</CENTER></table>';
 }
 include('includes/footer.inc');
 ?>
