@@ -53,4 +53,15 @@ INSERT INTO `debtortype` ( `typeid` , `typename` ) VALUES ('', 'Default');
 ALTER TABLE `debtorsmaster` ADD `typeid` tinyint(4) NOT NULL default '1';
 ALTER TABLE `debtorsmaster` ADD CONSTRAINT `debtorsmaster_ibfk_5` FOREIGN KEY (`typeid`) REFERENCES `debtortype` (`typeid`);
 ALTER TABLE `purchdata` ADD `effectivefrom` DATE NOT NULL;
-ALTER TABLE `purchdata` DROP PRIMARY KEY , ADD PRIMARY KEY ( `supplierno` , `stockid` , `effectivefrom` ); 
+
+CREATE TABLE `debtortypenotes` (
+`noteid` tinyint(4) NOT NULL auto_increment,
+`typeid` tinyint(4) NOT NULL default '0',
+`href` varchar(100) NOT NULL,
+`note` varchar(200) NOT NULL,
+`date` date NOT NULL default '0000-00-00',
+`priority` varchar(20) NOT NULL,
+PRIMARY KEY (`noteid`)
+) ENGINE=InnoDB;
+
+INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('extended_customerinfo', '0');
