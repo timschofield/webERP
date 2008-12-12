@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 $PageSecurity = 2;
 
@@ -81,17 +81,17 @@ if (isset($_POST['Search']) OR isset($_POST['CSV']) OR isset($_POST['Go']) OR is
 		$_POST['PageOffset'] = 1;
 	}
 	If ($_POST['Keywords'] AND (($_POST['CustCode']) OR ($_POST['CustPhone']) OR ($_POST['CustType']))) {
-		$msg=_('Search Result: Customer Name keywords have been used in preference') . '<br>';
+		$msg=_('Search Result: Customer Name has been used in search') . '<br>';
 		$_POST['Keywords'] = strtoupper($_POST['Keywords']);
 	}
-	If (($_POST['CustCode']) AND ($_POST['CustPhone']) AND ($_POST['CustType'])) {
-		$msg=_('Search Result: Customer Code has been used in preference') . '<br>';
+	If ($_POST['CustCode'] AND $_POST['CustPhone']=="" AND isset($_POST['CustType']) AND $_POST['Keywords']=="") {
+		$msg=_('Search Result: Customer Code has been used in search') . '<br>';
 	}
 	If (($_POST['CustPhone']) AND ($_POST['CustType'])) {
-		$msg=_('Search Result: Customer Phone has been used in preference') . '<br>';
+		$msg=_('Search Result: Customer Phone has been used in search') . '<br>';
 	}
-	If (($_POST['CustType'])) {
-		$msg=_('Search Result: Customer Type has been used in preference') . '<br>';
+	If ($_POST['CustType'] AND $_POST['CustPhone']=="" AND $_POST['CustCode']=="" AND $_POST['Keywords']==""){
+		$msg=_('Search Result: Customer Type has been used in search') . '<br>';
 	}
 	If (($_POST['Keywords']=="") AND ($_POST['CustCode']=="") AND ($_POST['CustPhone']=="") AND ($_POST['CustType']=="")) {
 
@@ -560,6 +560,7 @@ echo "</th></tr></table></center>";
 }
 // Extended Customer Info only if selected in Configuration
 if ($_SESSION['extended_customerinfo']==1){
+if ($_SESSION['CustomerID']!=0){
 $sql = "SELECT debtortype.typeid, debtortype.typename
                         FROM debtorsmaster, debtortype
 			WHERE debtorsmaster.typeid = debtortype.typeid
@@ -573,7 +574,7 @@ $CustomerTypeName = $myrow['typename'];
 // Customer Data
 echo '<center><br>';
 // Select some basic data about the Customer
-$SQL = "SELECT debtorsmaster.clientsince, debtorsmaster.paymentterms, debtorsmaster.lastpaid, debtorsmaster.lastpaiddate
+$SQL = "SELECT debtorsmaster.clientsince, (TO_DAYS(date(now())) - TO_DAYS(date(debtorsmaster.clientsince))) as days, debtorsmaster.paymentterms, debtorsmaster.lastpaid, debtorsmaster.lastpaiddate
                 FROM debtorsmaster
                 WHERE debtorsmaster.debtorno ='" . $_SESSION['CustomerID'] . "'";
         $DataResult = DB_query($SQL,$db);
@@ -591,11 +592,11 @@ echo '<TR><TD VALIGN=TOP>';    /* Customer Data to be integrated with mapping*/
 echo "Distance to this customer: <b>TBA</b><br>";
 echo "Last Paid Date: <b>" . ConvertSQLDate($myrow['lastpaiddate']) . "</b><br>";
 echo "Last Paid Amount (inc tax): <b>$" . number_format($myrow['lastpaid'],2) . "</b><br>";
-echo "Customer since: <b>" . ConvertSQLDate($myrow['clientsince']) . "</b><br>";
+echo "Customer since: <b>" . ConvertSQLDate($myrow['clientsince']) . "</b> " . $myrow['days'] . " days<br>";
 echo "Total Spend from this Customer (inc tax): <b>$" . number_format($row['total']) . "</b><br>";
 echo "Customer Type: <b>" . $CustomerTypeName . "</b><br>";
 echo "</th></tr></table>";
-
+}
 // Customer Contacts
 echo '<TR><TD colspan=2>';
   	$sql = 'SELECT * FROM custcontacts where debtorno="' . $_SESSION['CustomerID'] . '" ORDER BY contid';
@@ -640,7 +641,9 @@ if (DB_num_rows($result)<>0){
 	}//END WHILE LIST LOOP
 	echo '</CENTER></table>';
 } else {
+if ($_SESSION['CustomerID']!=0){
 echo '<center><br><a href="AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">Add New Contact</a><br></center>';
+}
 }
 // Customer Notes
 echo '<TR><TD colspan=2>';
@@ -686,14 +689,16 @@ echo '<br><center>Customer Notes</center><br>';
         }//END WHILE LIST LOOP
         echo '</CENTER></table>';
 } else {
+if ($_SESSION['CustomerID']!=0){
 echo '<center><br><a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">Add New Note for this Customer</a><br></center>';
+}
 }
 // Custome Type Notes
 echo '<TR><TD colspan=2>';
         $sql = 'SELECT * FROM debtortypenotes where typeid="' . $CustomerType . '" ORDER BY date DESC';
         $result = DB_query($sql,$db);
 if (DB_num_rows($result)<>0){
-echo '<br><center>Customer Type (Group) Notes for :' . $CustomerTypeName . '</center><br>';
+echo '<br><center>Customer Type (Group) Notes for: ' . $CustomerTypeName . '</center><br>';
         echo '<CENTER><table border=1 width=45%>';
         echo '<tr>
                         <th>' . _('date') . '</th>
@@ -732,8 +737,9 @@ echo '<br><center>Customer Type (Group) Notes for :' . $CustomerTypeName . '</ce
         }//END WHILE LIST LOOP
         echo '</CENTER></table>';
 } else {
+if ($_SESSION['CustomerID']!=0){
 echo '<center><br><a href="AddCustomerTypeNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">Add New Group Note</a><br></center>';
-}}
+}}}
 }
 //}
 include('includes/footer.inc');
