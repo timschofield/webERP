@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 $PageSecurity = 3;
 include('includes/session.inc');
 $title = _('Customer Type (Group) Notes');
@@ -174,10 +174,8 @@ if (!isset($_GET['delete'])) {
 	<td><textarea name="note"><?php echo $_POST['note']; ?></textarea></td></tr>
 	<tr><td><?php echo _('href');?>:</td>
 	<td><input type="Text" name="href" value="<?php echo $_POST['href']; ?>" size=35 maxlength=100></td></tr>
-	<tr><td><? echo _('Date'). ":</td>";
-	echo "<td><input type='text' name='date' maxlength=10 size=11 onChange='return isDate(this.value, ".'"'.$_SESSION['DefaultDateFormat'].'"'.")' value='" .
-                        $_POST['date']->date . "'></td></tr>";
-	?>
+        <tr><td><?php echo _('Date');?>:</td>	
+	<td><input type="Text" name="date" value="<?php echo $_POST['date']; ?>" size=10 maxlength=10></td></tr>
 	<tr><td><?php echo _('Priority');?>:</TD>
 	<td><input type="Text" name="priority" value="<?php echo $_POST['priority']; ?>" size=1 maxlength=3></td></td>
 	</table></center>

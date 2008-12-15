@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 $PageSecurity = 2;
 
@@ -540,24 +540,22 @@ echo '</FORM></CENTER>';
 }
 
 // Only display the geocode map if the integration is turned on, and there is a latitude/longitude to display
-If (isset($_SESSION['CustomerID'])) {
+If ($_SESSION['CustomerID']!=0) {
 if ($_SESSION['geocode_integration']==1){
 echo '<center><br>';
 if ($lat ==0){
-echo "<center>Map will display here, geocode is enabled, but no geocode data to display yet.<center>";
-include('includes/footer.inc');
-exit;
-}
+echo '<center>' . _('Mapping is enabled, but no Mapping data to display for this Customer.') . '<center>';
+} else {
 echo '<TR><TD colspan=2>';
 echo '<CENTER><TABLE WIDTH=45% COLSPAN=2 BORDER=2 CELLPADDING=4>';
 echo "<TR>
                 <TH WIDTH=33%>" . _('Customer Mapping') . "</TH>
         </TR>";
 echo '</TD><TD VALIGN=TOP>'; /* Mapping */
-echo "<center>Map will display below, geocode is enabled.<center>";
+echo '<center>' . _('Mapping is enabled, Map will display below.') . '<center>';
 echo '<center><div align="center" id="map" style="width: 400px; height: 200px"></div></center><br>';
 echo "</th></tr></table></center>";
-}
+}}
 // Extended Customer Info only if selected in Configuration
 if ($_SESSION['extended_customerinfo']==1){
 if ($_SESSION['CustomerID']!=0){
@@ -574,7 +572,10 @@ $CustomerTypeName = $myrow['typename'];
 // Customer Data
 echo '<center><br>';
 // Select some basic data about the Customer
-$SQL = "SELECT debtorsmaster.clientsince, (TO_DAYS(date(now())) - TO_DAYS(date(debtorsmaster.clientsince))) as days, debtorsmaster.paymentterms, debtorsmaster.lastpaid, debtorsmaster.lastpaiddate
+$SQL = "SELECT debtorsmaster.clientsince,
+		(TO_DAYS(date(now())) - TO_DAYS(date(debtorsmaster.clientsince))) as customersincedays,
+		(TO_DAYS(date(now())) - TO_DAYS(date(debtorsmaster.lastpaiddate))) as lastpaiddays,
+		debtorsmaster.paymentterms, debtorsmaster.lastpaid, debtorsmaster.lastpaiddate
                 FROM debtorsmaster
                 WHERE debtorsmaster.debtorno ='" . $_SESSION['CustomerID'] . "'";
         $DataResult = DB_query($SQL,$db);
@@ -588,12 +589,12 @@ echo '<CENTER><TABLE WIDTH=45% COLSPAN=2 BORDER=2 CELLPADDING=4>';
         echo "<TR>
                 <TH WIDTH=33%>" . _('Customer Data') . "</TH>
         </TR>";
-echo '<TR><TD VALIGN=TOP>';    /* Customer Data to be integrated with mapping*/
-echo "Distance to this customer: <b>TBA</b><br>";
-echo "Last Paid Date: <b>" . ConvertSQLDate($myrow['lastpaiddate']) . "</b><br>";
-echo "Last Paid Amount (inc tax): <b>$" . number_format($myrow['lastpaid'],2) . "</b><br>";
-echo "Customer since: <b>" . ConvertSQLDate($myrow['clientsince']) . "</b> " . $myrow['days'] . " days<br>";
-echo "Total Spend from this Customer (inc tax): <b>$" . number_format($row['total']) . "</b><br>";
+echo '<TR><TD VALIGN=TOP>';    /* Customer Data */
+//echo _('Distance to this customer:') . '<b>TBA</b><br>';
+echo _('Last Paid Date:') . ' <b>' . ConvertSQLDate($myrow['lastpaiddate']) . '</b> ' . $myrow['lastpaiddays'] . ' ' . _('days') . '<br>';
+echo _('Last Paid Amount (inc tax):') . ' <b>' . number_format($myrow['lastpaid'],2) . '</b><br>';
+echo _('Customer since:') . ' <b>' . ConvertSQLDate($myrow['clientsince']) . '</b> ' . $myrow['customersincedays'] . ' ' .  _('days') . '<br>';
+echo "Total Spend from this Customer (inc tax): <b>" . number_format($row['total'],2) . "</b><br>";
 echo "Customer Type: <b>" . $CustomerTypeName . "</b><br>";
 echo "</th></tr></table>";
 }
@@ -611,7 +612,7 @@ if (DB_num_rows($result)<>0){
                         <th>' . _('Notes') . '</th>
                         <th>' . _('Edit') . '</th>
                         <th>' . _('Delete') . '</th>
-			<th> <a href="AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">Add New Contact</a> </th></tr>';
+			<th> <a href="AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add New Contact') . '</a> </th></tr>';
         $k=0; //row colour counter
         while ($myrow = DB_fetch_array($result)) {
                 if ($k==1){
@@ -642,7 +643,7 @@ if (DB_num_rows($result)<>0){
 	echo '</CENTER></table>';
 } else {
 if ($_SESSION['CustomerID']!=0){
-echo '<center><br><a href="AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">Add New Contact</a><br></center>';
+echo '<center><br><a href="AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add New Contact') . '</a><br></center>';
 }
 }
 // Customer Notes
@@ -659,7 +660,7 @@ echo '<br><center>Customer Notes</center><br>';
                         <th>' . _('priority') . '</th>
                         <th>' . _('Edit') . '</th>
                         <th>' . _('Delete') . '</th>
-			<th> <a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">Add New Note</a> </th></tr>';
+			<th> <a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add New Note') . '</a> </th></tr>';
         $k=0; //row colour counter
         while ($myrow = DB_fetch_array($result)) {
                 if ($k==1){
@@ -690,7 +691,7 @@ echo '<br><center>Customer Notes</center><br>';
         echo '</CENTER></table>';
 } else {
 if ($_SESSION['CustomerID']!=0){
-echo '<center><br><a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">Add New Note for this Customer</a><br></center>';
+echo '<center><br><a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add New Note for this Customer') . '</a><br></center>';
 }
 }
 // Custome Type Notes
@@ -707,7 +708,7 @@ echo '<br><center>Customer Type (Group) Notes for: ' . $CustomerTypeName . '</ce
                         <th>' . _('priority') . '</th>
                         <th>' . _('Edit') . '</th>
                         <th>' . _('Delete') . '</th>
-                        <th> <a href="AddCustomerTypeNotes.php?DebtorType=' . $CustomerType . '">Add New Group Note</a> </th></tr>';
+                        <th> <a href="AddCustomerTypeNotes.php?DebtorType=' . $CustomerType . '">' . _('Add New Group Note') . '</a> </th></tr>';
         $k=0; //row colour counter
         while ($myrow = DB_fetch_array($result)) {
                 if ($k==1){
@@ -738,7 +739,7 @@ echo '<br><center>Customer Type (Group) Notes for: ' . $CustomerTypeName . '</ce
         echo '</CENTER></table>';
 } else {
 if ($_SESSION['CustomerID']!=0){
-echo '<center><br><a href="AddCustomerTypeNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">Add New Group Note</a><br></center>';
+echo '<center><br><a href="AddCustomerTypeNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add New Group Note') . '</a><br></center>';
 }}}
 }
 //}
