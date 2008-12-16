@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.46 $ */
+/* $Revision: 1.47 $ */
 
 $PageSecurity =15;
 
@@ -212,8 +212,11 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['geocode_integration'] != $_POST['X_geocode_integration'] ) {
 			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_geocode_integration']."' WHERE confname = 'geocode_integration'";
 		}
-		if ($_SESSION['extended_customerinfo'] != $_POST['X_extended_customerinfo'] ) {
-			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_extended_customerinfo']."' WHERE confname = 'extended_customerinfo'";
+		if ($_SESSION['Extended_SupplierInfo'] != $_POST['X_Extended_SupplierInfo'] ) {
+			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_Extended_SupplierInfo']."' WHERE confname = 'Extended_SupplierInfo'";
+		}
+		if ($_SESSION['Extended_CustomerInfo'] != $_POST['X_Extended_CustomerInfo'] ) {
+			$sql[] = "UPDATE config SET confvalue = '". $_POST['X_Extended_CustomerInfo']."' WHERE confname = 'Extended_CustomerInfo'";
 		}
 		if ($_SESSION['ProhibitPostingsBefore'] != $_POST['X_ProhibitPostingsBefore'] ) {
 			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_ProhibitPostingsBefore']."' WHERE confname = 'ProhibitPostingsBefore'";
@@ -719,19 +722,29 @@ if ($_SESSION['geocode_integration']==1){
 echo '</SELECT></TD>
         <TD>' . _('This feature will give Latitude and Longtiude coordinates to customers and suppliers.  Requires access to a mapping providor.  You must setup this facility under Main Menu - Setup - Geocode Setup.  This feature is experimental.') .'</TD></TR>';
 
-echo '<TR><TD>' . _('Extended Customer Information:') . ':</TD>
-        <TD><SELECT Name="X_extended_customerinfo">';
-if ($_SESSION['extended_customerinfo']==1){
+echo '<TR><TD>' . _('Extended Customer Information') . ':</TD>
+        <TD><SELECT Name="X_Extended_CustomerInfo">';
+if ($_SESSION['Extended_CustomerInfo']==1){
         echo  '<OPTION SELECTED value="1">' . _('Extended Customer Info Enabled');
         echo  '<OPTION value="0">' . _('Extended Customer Info Disabled');
 } else {
         echo  '<OPTION SELECTED value="0">' . _('Extended Customer Info Disabled');
         echo  '<OPTION value="1">' . _('Extended Customer Info Enabled');
 }
-
 echo '</SELECT></TD>
-        <TD>' . _('This feature will give extended customer information in the Select Customer screen.') .'</TD></TR>';
+        <TD>' . _('This feature will give extended information in the Select Customer screen.') .'</TD></TR>';
 
+echo '<TR><TD>' . _('Extended Supplier Information') . ':</TD>
+        <TD><SELECT Name="X_Extended_SupplierInfo">';
+if ($_SESSION['Extended_SupplierInfo']==1){
+        echo  '<OPTION SELECTED value="1">' . _('Extended Supplier Info Enabled');
+        echo  '<OPTION value="0">' . _('Extended Supplier Info Disabled');
+} else {
+        echo  '<OPTION SELECTED value="0">' . _('Extended Supplier Info Disabled');
+        echo  '<OPTION value="1">' . _('Extended Supplier Info Enabled');
+}
+echo '</SELECT></TD>
+        <TD>' . _('This feature will give extended information in the Select Supplier screen.') .'</TD></TR>';
 
 echo '<TR><TD>' . _('Prohibit GL Journals to Control Accounts') . ':</TD>
 	<TD><SELECT Name="X_ProhibitJournalsToControlAccounts">';

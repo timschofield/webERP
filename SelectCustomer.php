@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 
 $PageSecurity = 2;
 
@@ -557,7 +557,7 @@ echo '<center><div align="center" id="map" style="width: 400px; height: 200px"><
 echo "</th></tr></table></center>";
 }}
 // Extended Customer Info only if selected in Configuration
-if ($_SESSION['extended_customerinfo']==1){
+if ($_SESSION['Extended_CustomerInfo']==1){
 if ($_SESSION['CustomerID']!=0){
 $sql = "SELECT debtortype.typeid, debtortype.typename
                         FROM debtorsmaster, debtortype
@@ -594,9 +594,9 @@ echo '<TR><TD VALIGN=TOP>';    /* Customer Data */
 echo _('Last Paid Date:') . ' <b>' . ConvertSQLDate($myrow['lastpaiddate']) . '</b> ' . $myrow['lastpaiddays'] . ' ' . _('days') . '<br>';
 echo _('Last Paid Amount (inc tax):') . ' <b>' . number_format($myrow['lastpaid'],2) . '</b><br>';
 echo _('Customer since:') . ' <b>' . ConvertSQLDate($myrow['clientsince']) . '</b> ' . $myrow['customersincedays'] . ' ' .  _('days') . '<br>';
-echo "Total Spend from this Customer (inc tax): <b>" . number_format($row['total'],2) . "</b><br>";
-echo "Customer Type: <b>" . $CustomerTypeName . "</b><br>";
-echo "</th></tr></table>";
+echo _('Total Spend from this Customer (inc tax):') . ' <b>' . number_format($row['total'],2) . '</b><br>';
+echo _('Customer Type:') . ' <b>' . $CustomerTypeName . '</b><br>';
+echo '</th></tr></table>';
 }
 // Customer Contacts
 echo '<TR><TD colspan=2>';

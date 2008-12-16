@@ -74,4 +74,5 @@ CREATE TABLE `custnotes` (
 PRIMARY KEY (`noteid`)
 ) ENGINE=InnoDB;
 
-INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('extended_customerinfo', '0');
+INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('Extended_CustomerInfo', '0');
+INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('Extended_SupplierInfo', '0');

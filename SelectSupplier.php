@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.31 $ */
+/* $Revision: 1.32 $ */
 
 $PageSecurity = 2;
 
@@ -367,40 +367,50 @@ if (isset($ListPageMax) and $ListPageMax >1) {
 
 echo '</FORM>';
 // Only display the geocode map if the integration is turned on, and there is a latitude/longitude to display
-if ($_SESSION['geocode_integration']==1 AND isset($_SESSION['SupplierID'])){
+If ($_SESSION['SupplierID']!='') {
+if ($_SESSION['geocode_integration']==1){
+echo '<center><br>';
 if ($lat ==0){
-echo "<center>Map will display here, geocode is enabled, but no geocode data to display yet.<center>";
-include('includes/footer.inc');
-exit;
-}
-// Select some basic data about the supplier
-$SQL = "SELECT suppliers.suppname, suppliers.lastpaid, suppliers.lastpaiddate, suppliersince
+echo '<center>' . _('Mapping is enabled, but no Mapping data to display for this Supplier.') . '<center>';
+} else {
+echo '<center><br>';
+echo '<TR><TD colspan=2>';
+echo '<CENTER><TABLE WIDTH=45% COLSPAN=2 BORDER=2 CELLPADDING=4>';
+echo "<TR>
+                <TH WIDTH=33%>" . _('Supplier Mapping') . "</TH>
+        </TR>";
+echo '</TD><TD VALIGN=TOP>'; /* Mapping */
+echo '<center>' . _('Mapping is enabled, Map will display below.') . '<center>';
+echo '<center><div align="center" id="map" style="width: 400px; height: 200px"></div></center><br>';
+echo "</th></tr></table></center>";
+}}
+// Extended Info only if selected in Configuration
+if ($_SESSION['Extended_SupplierInfo']==1){
+if ($_SESSION['SupplierID']!=''){
+$sql = "SELECT suppliers.suppname, suppliers.lastpaid, suppliers.lastpaiddate, suppliersince
                 FROM suppliers
                 WHERE suppliers.supplierid ='" . $_SESSION['SupplierID'] . "'";
-        $DataResult = DB_query($SQL,$db);
-        $myrow = DB_fetch_array($DataResult);
+$ErrMsg = _('An error occurred in retrieving the information');
+$DataResult = DB_query($sql, $db, $ErrMsg);
+$myrow = DB_fetch_array($DataResult);
 // Select some more data about the supplier
 $SQL = "select sum(-ovamount) as total from supptrans where supplierno = '" . $_SESSION['SupplierID'] . "' and type != '20'";
         $Total1Result = DB_query($SQL,$db);
         $row = DB_fetch_array($Total1Result);
-echo '<CENTER><TABLE WIDTH=90% COLSPAN=2 BORDER=2 CELLPADDING=4>';
+echo '<center><br>';
+echo '<TR><TD colspan=2>';
+echo '<CENTER><TABLE WIDTH=45% COLSPAN=2 BORDER=2 CELLPADDING=4>';
         echo "<TR>
                 <TH WIDTH=33%>" . _('Supplier Data') . "</TH>
-                <TH WIDTH=33%>". _('Supplier Mapping') . "</TH>
         </TR>";
 echo '<TR><TD VALIGN=TOP>';    /* Supplier Data */
-echo "Distance to this Supplier: <b>TBA</b><br>";
-echo "Last Paid: <b>" . ConvertSQLDate($myrow['lastpaiddate']) . "</b><br>";
-echo "Last Paid Amount: <b>$" . number_format($myrow['lastpaid'],2) . "</b><br>";
-echo "Supplier since: <b>" . ConvertSQLDate($myrow['suppliersince']) . "</b><br>";
-echo "Total Spend with this Supplier: <b>$" . number_format($row['total'],2) . "</b><br>";
-echo '<BR>';
-echo '<BR>';
-echo '</TD><TD VALIGN=TOP>'; /* Mapping */
-//echo 'SupplierID is:' . $_SESSION['SupplierID'];
-echo "<center>Map will display below, geocode is enabled.<center>";
-echo '<center><div align="center" id="map" style="width: 400px; height: 200px"></div></center>';
-}
+//echo "Distance to this Supplier: <b>TBA</b><br>";
+echo _('Last Paid:') . ' <b>' . ConvertSQLDate($myrow['lastpaiddate']) . '</b><br>';
+echo _('Last Paid Amount:') . ' <b>' . number_format($myrow['lastpaid'],2) . '</b><br>';
+echo _('Supplier since:') . ' <b>' . ConvertSQLDate($myrow['suppliersince']) . '</b><br>';
+echo _('Total Spend with this Supplier:') . ' <b>' . number_format($row['total'],2) . '</b><br>';
+echo '</th></tr></table>';
+}}}
 include('includes/footer.inc');
 ?>
 
