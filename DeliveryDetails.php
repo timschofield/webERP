@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.51 $ */
+/* $Revision: 1.52 $ */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
@@ -486,8 +486,8 @@ if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 && $_SESSION['ExistingOrder']=
 if ($_SESSION['Items']->SpecialInstructions) {
   prnMsg($_SESSION['Items']->SpecialInstructions,'info');
 }
-echo '<center><font size=4><b>' . _('Customer No.') . ': ' . $_SESSION['Items']->DebtorNo;
-echo '&nbsp;&nbsp;' . _('Customer Name') . ' : ' . $_SESSION['Items']->CustomerName . '</b></font></center>';
+echo '<center><font size=4>' . _('Customer Code') . ' :<B> ' . $_SESSION['Items']->DebtorNo;
+echo '</B>&nbsp;' . _('Customer Name') . ' :<B> ' . $_SESSION['Items']->CustomerName . '</B><BR></font></center>';
 //echo '<CENTER><FONT SIZE=4><B>'. _('Customer') .' : ' . $_SESSION['Items']->CustomerName . '</B></FONT></CENTER>';
 echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID . '" method=post>';
 
@@ -628,7 +628,7 @@ if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])){
 
 }
 
-echo '<table><tr>
+echo '<BR><table><tr>
 	<td>'. _('Deliver To') .':</td>
 	<td><input type=text size=42 max=40 name="DeliverTo" value="' . $_SESSION['Items']->DeliverTo . '"></td>
 </tr>';

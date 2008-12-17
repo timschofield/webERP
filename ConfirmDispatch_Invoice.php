@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.48 $ */
+/* $Revision: 1.49 $ */
 
 /* Session started in session.inc for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
@@ -239,8 +239,8 @@ set all the necessary session variables changed by the POST  */
 if ($_SESSION['Items']->SpecialInstructions) {
   prnMsg($_SESSION['Items']->SpecialInstructions,'warn');
 }
-echo '<BR><BR><CENTER><FONT SIZE=4><B>' . _('Customer No.') . ': ' . $_SESSION['Items']->DebtorNo;
-echo '&nbsp;&nbsp;' . _('Customer Name') . ' : ' . $_SESSION['Items']->CustomerName. '</B></FONT><FONT SIZE=3>';
+echo '<BR><BR><CENTER><FONT SIZE=4>' . _('Customer Code') . ':<B> ' . $_SESSION['Items']->DebtorNo;
+echo '</B>&nbsp;' . _('Customer Name') . ' :<B> ' . $_SESSION['Items']->CustomerName. '</B></FONT><FONT SIZE=3>';
 //echo '<CENTER><FONT SIZE=4><B><U>' . $_SESSION['Items']->CustomerName . '</U></B></FONT><FONT SIZE=3> - ' .
 echo '<BR>' . _('Invoice amounts stated in') . ' ' . $_SESSION['Items']->DefaultCurrency . '</CENTER>';
 
