@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.59 $ */
+/* $Revision: 1.60 $ */
 
 $PageSecurity = 11;
 
@@ -626,7 +626,7 @@ function select_files($dir, $label = '', $select_name = 'ItemPDF', $curr_val = '
 	$teller = 0;
 	if ($handle = opendir($dir)) {
 		$mydir = "<select name=".$select_name.">\n";
-		$mydir .= '<OPTION VALUE=none>none';
+		$mydir .= '<OPTION VALUE=0>none';
 		if (isset($_POST['ItemPDF'])) {
 			$curr_val = $_POST['ItemPDF'];
 		} else {
