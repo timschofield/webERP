@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.35 $ */
+/* $Revision: 1.36 $ */
 
 $PageSecurity = 2;
 
@@ -240,7 +240,7 @@ If ($_POST['Select']!="" OR
 		$phone = $myrow[1];
 	}
 	unset($result);
-	echo '<CENTER><FONT SIZE=3>' . _('Customer') . ' :<B> ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . ' ' . $phone . _('</b> has been selected') . '.<BR>' . _('Select a menu option to operate using this customer') . '.</FONT><BR>';
+	echo '<CENTER><FONT SIZE=3>' . _('Customer') . ' :<B> ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . ' ' . $phone . _('</b> has been selected') . '.<BR>' . _('Select a menu option to operate using this customer') . '.</FONT><BR><br>';
 
 	$_POST['Select'] = NULL;
 
@@ -287,7 +287,7 @@ If ($_POST['Select']!="" OR
 <FORM ACTION="<?php echo $_SERVER['PHP_SELF'] . '?' . SID; ?>" METHOD=POST>
 <CENTER>
 <B><?php echo $msg; ?></B>
-<?php echo _('Search for Customers:'); ?>
+<?php echo _('Search for Customers:') . '<br><br>'; ?>
 <TABLE CELLPADDING=3 COLSPAN=4>
 <TR>
 <TD><?php echo _('Enter a partial Name'); ?>:</TD>
