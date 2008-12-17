@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 
 $PageSecurity = 1;
 
@@ -504,7 +504,7 @@ if (isset($_GET['FromTransNo'])){
 $result=DB_query($sql,$db);
 // Loop the result set and add appendfile if the field is not 0
 while ($row=DB_fetch_array($result)){
-if ($row['appendfile'] !='0') {
+if ($row['appendfile'] !='0' AND $row['appendfile'] !=='none') {
 $pdf->setFiles(array('invoice.pdf','pdf_append/' . $row['appendfile']));
 $pdf->concat();
 $pdf->Output('newpdf.pdf','I');
