@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.73 $ */
+/* $Revision: 1.74 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -669,18 +669,22 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo _('Order for') . ' ';
 		}
 
-		echo _('Customer') . ': ' . $_SESSION['Items']->DebtorNo;
-		echo '&nbsp;&nbsp;' . _('Customer Name') . ': ' . $_SESSION['Items']->CustomerName;
-		echo '</B><BR>' . _('Deliver To') . ': ' . $_SESSION['Items']->DeliverTo;
-		echo '&nbsp;&nbsp;' . _('From Location') . ': ' . $location;
-		echo '<BR>' . _('Sales Type') . '/' . _('Price List') . ': ' . $_SESSION['Items']->SalesTypeName;
-		echo '</FONT></CENTER>';
+		echo _('Customer') . ':<B> ' . $_SESSION['Items']->DebtorNo;
+		echo '</B>&nbsp;' . _('Customer Name') . ': ' . $_SESSION['Items']->CustomerName;
+		echo '</B><BR>' . _('Deliver To') . ':<B> ' . $_SESSION['Items']->DeliverTo;
+		echo '</B>&nbsp;' . _('From Location') . ':<B> ' . $location;
+		echo '</B><BR>' . _('Sales Type') . '/' . _('Price List') . ':<B> ' . $_SESSION['Items']->SalesTypeName;
+		echo '</B><BR><BR></FONT></CENTER>';
 	}
 
 	If (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Prev'])){
 
-		If (isset($_POST['Keywords']) AND isset($_POST['StockCode'])) {
-			$msg='<BR>' . _('Stock description keywords have been used in preference to the Stock code extract entered') . '.';
+		If ($_POST['Keywords']!=='' AND $_POST['StockCode']=='') {
+			$msg='<BR><CENTER>' . _('Order Item description has been used in search') . '.<BR>';
+		} elseif ($_POST['StockCode']!=='' AND $_POST['Keywords']=='') {
+			$msg='<BR><CENTER>' . _('Stock Code has been used in search') . '.<BR>';
+		} elseif ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
+			$msg='<BR><CENTER>' . _('Stock Category has been used in search') . '.<BR>';
 		}
 		If (isset($_POST['Keywords']) AND strlen($_POST['Keywords'])>0) {
 			//insert wildcard characters in spaces
