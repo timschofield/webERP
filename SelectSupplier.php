@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 $PageSecurity = 2;
 
@@ -65,7 +65,7 @@ if (!isset($_POST['Search'])){
 }
 */
 
-echo '<a href=Suppliers.php>'. _('Create new supplier').'</a>';
+//echo '<a href=Suppliers.php>'. _('Create new supplier').'</a>';
 
 if (!isset($_POST['PageOffset'])) {
   $_POST['PageOffset'] = 1;
@@ -172,57 +172,52 @@ if (isset($_SESSION['SupplierID'])){
 	   $myrow = DB_fetch_row($SupplierNameResult);
 	   $SupplierName = $myrow[0];
 	}
-
 	echo '<FONT SIZE=3><P>' . _('Supplier') . ' <B>' . $_SESSION['SupplierID']  . "-$SupplierName</B> " . _('is currently selected') . '.<BR>' . _('Select a menu option to operate using this supplier') . '<P></FONT>';
-
 	echo '<CENTER><TABLE WIDTH=90% COLSPAN=2 BORDER=2 CELLPADDING=4>';
 	echo "<TR>
 		<TH WIDTH=33%>" . _('Supplier Inquiries') . "</TH>
 		<TH WIDTH=33%>". _('Supplier Transactions') . "</TH>
 		<TH WIDTH=33%>" . _('Supplier Maintenance') . "</TH>
 	</TR>";
-
 	echo '<TR><TD VALIGN=TOP>';    /* Inquiry Options */
-
 	echo "<A HREF=\"$rootpath/SupplierInquiry.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Supplier Account Inquiry') . '</A><BR>';
-
 	echo '<BR>';
-
 	echo "<BR><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Add / Receive / View Outstanding Purchase Orders') . '</A>';
 	echo "<BR><A HREF='$rootpath/PO_SelectPurchOrder.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('View All Purchase Orders') . '</A><BR>';
-
 	wikiLink('Supplier', $_SESSION['SupplierID']);	
-	
 	echo '<BR>';
-
 	echo "<BR><A HREF='$rootpath/Shipt_Select.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Search / Modify / Close Shipments') . '</A>';
-
 	echo '</TD><TD VALIGN=TOP>'; /* Supplier Transactions */
-
 	echo "<A HREF=\"$rootpath/SupplierInvoice.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Suppliers Invoice') . '</A><BR>';
 	echo "<A HREF=\"$rootpath/SupplierCredit.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Suppliers Credit Note') . '</A><BR>';
 	echo "<A HREF=\"$rootpath/Payments.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Payment to, or Receipt from the Supplier') . '</A><BR>';
-
 	echo '<BR>';
-
 	echo "<BR><A HREF='$rootpath/ReverseGRN.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "'>" . _('Reverse an Outstanding Goods Received Note (GRN)') . '</A>';
-
 	echo '</TD><TD VALIGN=TOP>'; /* Supplier Maintenance */
-
         echo '<a href="' . $rootpath . '/Suppliers.php?">' . _('Add a New Supplier') . '</a><br>';
 	echo "<A HREF=\"$rootpath/Suppliers.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Modify Or Delete Supplier Details') . '</A>';
 	echo "<BR><A HREF=\"$rootpath/SupplierContacts.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Add/Modify/Delete Supplier Contacts') . '</A>';
-
 	echo '<BR>';
-
 	echo "<BR><A HREF='$rootpath/Shipments.php?" . SID . "&NewShipment=Yes'>" . _('Set Up A New Shipment') . '</A>';
-
 	echo '</TD></TR></TABLE>';
+} else {
+// Supplier is not selected yet
+echo '<BR>';
+echo '<CENTER><TABLE WIDTH=90% COLSPAN=2 BORDER=2 CELLPADDING=4>';
+        echo "<TR>
+                <TH WIDTH=33%>" . _('Supplier Inquiries') . "</TH>
+                <TH WIDTH=33%>". _('Supplier Transactions') . "</TH>
+                <TH WIDTH=33%>" . _('Supplier Maintenance') . "</TH>
+		</TR>";
+echo '<TR><TD VALIGN=TOP>';    /* Inquiry Options */
+echo '</TD><TD VALIGN=TOP>'; /* Supplier Transactions */
+echo '</TD><TD VALIGN=TOP>'; /* Supplier Maintenance */
+echo '<a href="' . $rootpath . '/Suppliers.php?">' . _('Add a New Supplier') . '</a><br>';
+echo '</TD></TR></TABLE>';
 }
 
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD=POST>";
 echo '<B>' . $msg;
-
 echo '</B><CENTER><P>' . _('Search for Suppliers:') . '</P>
 	<TABLE CELLPADDING=3 COLSPAN=4>
 	<TR>
@@ -369,8 +364,8 @@ echo '</FORM>';
 // Only display the geocode map if the integration is turned on, and there is a latitude/longitude to display
 If ($_SESSION['SupplierID']!='') {
 if ($_SESSION['geocode_integration']==1){
-echo '<center><br>';
 if ($lat ==0){
+echo '<center><br>';
 echo '<center>' . _('Mapping is enabled, but no Mapping data to display for this Supplier.') . '<center>';
 } else {
 echo '<center><br>';
