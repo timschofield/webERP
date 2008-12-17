@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 $PageSecurity = 2;
 
@@ -55,7 +55,7 @@ if (DB_num_rows($result1) == 0) {
 <CENTER>
 <FORM ACTION="<?php echo $_SERVER['PHP_SELF'] . '?' . SID; ?>" METHOD=POST>
 <B><?php echo $msg; ?></B>
-<?php echo _('Search for Inventory Items:'); ?>
+<?php echo '<BR>' . _('Search for Inventory Items:'); ?>
 <TABLE>
 <TR>
 <TD><?php echo _('In Stock Category'); ?>:
@@ -287,7 +287,7 @@ if (isset($result) AND !isset($_POST['Select'])) {
             $_POST['PageOffset'] = $ListPageMax;
         }
         if ($ListPageMax > 1) {
-            echo "<P>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+            echo "<CENTER><P>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 
             echo '<SELECT NAME="PageOffset">';
 
@@ -307,7 +307,7 @@ if (isset($result) AND !isset($_POST['Select'])) {
             echo '<P>';
         }
 
-        echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
+        echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=1>';
         $tableheader = '<TR>
                     <TH>' . _('Code') . '</TH>
                     <TH>' . _('Description') . '</TH>
@@ -363,7 +363,7 @@ if (isset($result) AND !isset($_POST['Select'])) {
         }
         //end of while loop
 
-        echo '</TABLE>';
+        echo '</TABLE><BR>';
 /*      if ($ListPageMax >1) {
             echo "<P>&nbsp;&nbsp;" . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
 
@@ -421,7 +421,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
     $Its_A_Dummy = False;
     $Its_A_Kitset = False;
 
-    echo '<TABLE BORDER=1><TR><TH colspan=3><font size=4>' . $StockID . ' - ' . $myrow['description'] . ' </font></TH></TR>';
+    echo '<CENTER><TABLE BORDER=1><TR><TH colspan=3><font size=4>' . $StockID . ' - ' . $myrow['description'] . ' </font></TH></TR>';
 
     echo '<TR><TD width="40%">
             <TABLE>'; //nested table
