@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.19 $ */
+/* $Revision: 1.20 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -115,7 +115,7 @@ if ($NIL_BALANCE==True){
 	$CustomerRecord['overdue2']=0;
 }
 
-echo '<CENTER><FONT SIZE=4>' . $CustomerRecord['name'] . ' </FONT></B> - (' . _('All amounts stated in') . ' ' . $CustomerRecord['currency'] . ')</CENTER><BR><B><FONT COLOR=BLUE>' . _('Terms') . ': ' . $CustomerRecord['terms'] . '<BR>' . _('Credit Limit') . ': </B></FONT> ' . number_format($CustomerRecord['creditlimit'],0) . '  <B><FONT COLOR=BLUE>' . _('Credit Status') . ':</B></FONT> ' . $CustomerRecord['reasondescription'];
+echo '<CENTER><BR><FONT SIZE=4></B>' . _('Customer') . ' :<B> ' . $CustomerRecord['name'] . ' </FONT></B> - (' . _('All amounts stated in') . ' ' . $CustomerRecord['currency'] . ')<BR><BR>' . _('Terms') . ':<B> ' . $CustomerRecord['terms'] . '</B><BR>' . _('Credit Limit') . ': <B></FONT> ' . number_format($CustomerRecord['creditlimit'],0) . '  </B>' . _('Credit Status') . ':<B></FONT> ' . $CustomerRecord['reasondescription'] . '</B>';
 
 if ($CustomerRecord['dissallowinvoices']!=0){
 	echo '<BR><FONT COLOR=RED SIZE=4><B>' . _('ACCOUNT ON HOLD') . '</FONT></B><BR>';
@@ -137,9 +137,9 @@ echo '<TR><TD ALIGN=RIGHT>' . number_format($CustomerRecord['balance'],2) . '</T
 	</TR>
 	</TABLE>';
 
-echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "' METHOD=POST>";
+echo "<BR><CENTER><FORM ACTION='" . $_SERVER['PHP_SELF'] . "' METHOD=POST>";
 echo _('Show all transactions after') . ": <INPUT tabindex=1 type=text name='TransAfterDate' Value='" . $_POST['TransAfterDate'] . "' MAXLENGTH =10 SIZE=12>" .
-		"	<INPUT tabindex=2 TYPE=SUBMIT NAME='Refresh Inquiry' VALUE='" . _('Refresh Inquiry') . "'></FORM>";
+		"	<INPUT tabindex=2 TYPE=SUBMIT NAME='Refresh Inquiry' VALUE='" . _('Refresh Inquiry') . "'></FORM><BR>";
 
 $DateAfterCriteria = FormatDateForSQL($_POST['TransAfterDate']);
 
@@ -185,7 +185,11 @@ $tableheader = "<TR BGCOLOR =#800000>
 		<TH>" . _('Order') . "</TH>
 		<TH>" . _('Total') . "</TH>
 		<TH>" . _('Allocated') . "</TH>
-		<TH>" . _('Balance') . "</TH></TR>";
+		<TH>" . _('Balance') . "</TH>
+		<TH>" . _('More Info') . "</TH>
+		<TH>" . _('More Info') . "</TH>
+		<TH>" . _('More Info') . "</TH>
+		<TH>" . _('More Info') . "</TH></TR>";
 
 echo $tableheader;
 

@@ -1,15 +1,13 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
 $PageSecurity=2;
 
 include('includes/session.inc');
-
 $title = _('Supplier Inquiry');
-
 include('includes/header.inc');
 
 echo "<A HREF='" . $rootpath . '/SelectSupplier.php?' . SID . "'>" . _('Back to Suppliers') . '</A><BR>';
@@ -102,9 +100,7 @@ if (DB_num_rows($SupplierResult) == 0){
 	$SupplierResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 
 } else {
-
 	$NIL_BALANCE = False;
-
 }
 
 $SupplierRecord = DB_fetch_array($SupplierResult);
@@ -116,8 +112,8 @@ if ($NIL_BALANCE == True){
 	$SupplierRecord['overdue2'] = 0;
 }
 
-echo '<CENTER><FONT SIZE=4>' . $SupplierRecord['suppname'] . ' </FONT></B> - (' . _('All amounts stated in') . 
-	  ' ' . $SupplierRecord['currency'] . ')</CENTER><BR><B><FONT COLOR=BLUE>' . _('Terms') . ': ' . $SupplierRecord['terms'];
+echo '<CENTER><FONT SIZE=4>' . _('Supplier') . ' :<B> ' . $SupplierRecord['suppname'] . ' </FONT></B> - (' . _('All amounts stated in') . 
+	  ' ' . $SupplierRecord['currency'] . ')<BR><BR>' . _('Terms') . ':<B> ' . $SupplierRecord['terms'] . '</B>';
 
 if (isset($_GET['HoldType']) AND isset($_GET['HoldTrans'])){
 
@@ -129,7 +125,6 @@ if (isset($_GET['HoldType']) AND isset($_GET['HoldTrans'])){
 
 	$ErrMsg = _('The Supplier Transactions could not be updated because');
 	$DbgMsg = _('The SQL that failed was');
-
 	$UpdateResult = DB_query($SQL, $db, $ErrMsg, $DbgMsg);
 
 }
@@ -147,9 +142,9 @@ echo '<TR><TD ALIGN=RIGHT>' . number_format($SupplierRecord['balance'],2) .
 	  '</TD><TD ALIGN=RIGHT>' . number_format(($SupplierRecord['overdue1']-$SupplierRecord['overdue2']) ,2) . 
 	  '</TD><TD ALIGN=RIGHT>' . number_format($SupplierRecord['overdue2'],2) . '</TD></TR></TABLE>';
 
-echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
+echo "<BR><CENTER><FORM ACTION='" . $_SERVER['PHP_SELF'] . "?" . SID . "' METHOD=POST>";
 echo _('Show all transactions after') . ': ' ."<INPUT TYPE=text NAME='TransAfterDate' VALUE='" . 
-	  $_POST['TransAfterDate'] . "' MAXLENGTH =10 SIZE=10><INPUT TYPE=SUBMIT NAME='Refresh Inquiry' VALUE='" . _('Refresh Inquiry') . "'></FORM>";
+	  $_POST['TransAfterDate'] . "' MAXLENGTH =10 SIZE=10> <INPUT TYPE=SUBMIT NAME='Refresh Inquiry' VALUE='" . _('Refresh Inquiry') . "'></FORM><BR>";
 
 $DateAfterCriteria = FormatDateForSQL($_POST['TransAfterDate']);
 
@@ -187,8 +182,8 @@ if (DB_num_rows($TransResult) == 0){
 /*show a table of the transactions returned by the SQL */
 
 
-echo '<TABLE CELLPADDING=2 COLSPAN=7>';
-$TableHeader = "<TR><TH>" . _('Trans') . ' #' . 
+echo '<CENTER><TABLE CELLPADDING=2 COLSPAN=7>';
+$TableHeader = "<TR BGCOLOR =#800000><TH>" . _('Trans') . ' #' . 
 		"</TH><TH>" . _('Type') . 
 		"</TH><TH>" . _('Supplier Ref') . 
 		"</TH><TH>" . _('Date') . 
@@ -213,7 +208,7 @@ while ($myrow=DB_fetch_array($TransResult)) {
 		$HoldValue = _('Release');
 	}
 	if ($myrow['hold'] == 1){
-		echo "<TR BGCOLOR='#DD99BB'>";
+//		echo "<TR BGCOLOR='#DD99BB'>";
 	}elseif ($k == 1){
 		echo '<TR CLASS="EvenTableRows">';
 		$k = 0;
@@ -419,5 +414,4 @@ while ($myrow=DB_fetch_array($TransResult)) {
 
 echo '</TABLE>';
 include('includes/footer.inc');
-
 ?>
