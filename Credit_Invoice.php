@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 $PageSecurity =3;
 
 
@@ -266,13 +266,12 @@ echo "<CENTER><TABLE CELLPADDING=2 COLSPAN=7 BORDER=0><TR>
 <TH>" . _('Units') . "</TH>
 <TH>" . _('Credit') . '<BR>' . _('Quantity') . "</TH>
 <TH>" . _('Price') . "</TH>
-<TH>" . _('Discount') . "</TH>
+<TH>" . _('Discount') . ' %' . "</TH>
 <TH>" . _('Total') . '<BR>' . _('Excl Tax') . "</TH>
 <TH>" . _('Tax Authority') . "</TH>
 <TH>" . _('Tax') . ' %' . "</TH>
 <TH>" . _('Tax') . '<BR>' . _('Amount') . "</TH>
 <TH>" . _('Total') . '<BR>' . _('Incl Tax') . "</TH></TR>";
-
 
 $_SESSION['CreditItems']->total = 0;
 $_SESSION['CreditItems']->totalVolume = 0;
@@ -298,7 +297,6 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 	}
 	$j++;
 	$LineTotal =($LnItm->QtyDispatched * $LnItm->Price * (1 - $LnItm->DiscountPercent));
-
 	$_SESSION['CreditItems']->total = $_SESSION['CreditItems']->total + $LineTotal;
 	$_SESSION['CreditItems']->totalVolume = $_SESSION['CreditItems']->totalVolume + $LnItm->QtyDispatched * $LnItm->Volume;
 	$_SESSION['CreditItems']->totalWeight = $_SESSION['CreditItems']->totalWeight + $LnItm->QtyDispatched * $LnItm->Weight;
@@ -370,15 +368,13 @@ foreach ($_SESSION['CreditItems']->LineItems as $LnItm) {
 	      <TD ALIGN=RIGHT>' . $DisplayGrossLineTotal . "</TD>
 	<TD><A HREF='". $_SERVER['PHP_SELF'] . "?" . SID . "&Delete=" . $LnItm->LineNumber . "'>" . _('Delete') . '</A></TD></TR>';
 
-	echo '<TR'.$RowStarter . "><TD COLSPAN=7><TEXTAREA tabindex=".$j."  NAME='Narrative_" . $LnItm->LineNumber . "' cols=100% rows=1>" . $LnItm->Narrative . "</TEXTAREA><BR><HR></TD></TR>";
+	echo '<TR'.$RowStarter . "><TD COLSPAN=12><TEXTAREA tabindex=".$j."  NAME='Narrative_" . $LnItm->LineNumber . "' cols=100% rows=1>" . $LnItm->Narrative . "</TEXTAREA><BR><HR></TD></TR>";
 	$j++;
 } /*end foreach loop displaying the invoice lines to credit */
 
 if (!isset($_POST['ChargeFreightCost']) AND !isset($_SESSION['CreditItems']->FreightCost)){
 	$_POST['ChargeFreightCost']=0;
 }
-
-
 
 echo '<TR>
 	<TD COLSPAN=3 ALIGN=RIGHT>' . _('Freight cost charged on invoice') . '</TD>
@@ -389,7 +385,6 @@ echo '<TR>
 
 
 $FreightTaxTotal =0; //initialise tax total
-
 echo '<TD>';
 
 $i=0; // initialise the number of taxes iterated through
@@ -444,11 +439,8 @@ $DefaultDispatchDate = Date($_SESSION['DefaultDateFormat']);
 $OKToProcess = true;
 
 if ((isset($_POST['CreditType']) and$_POST['CreditType']=='WriteOff') AND !isset($_POST['WriteOffGLCode'])){
-
 	prnMsg (_('The GL code to write off the credit value to must be specified. Please select the appropriate GL code for the selection box'),'info');
-
 	$OKToProcess = false;
-
 }
 
 if (isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
