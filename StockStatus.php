@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.21 $ */
+/* $Revision: 1.22 $ */
 
 
 $PageSecurity = 2;
@@ -41,7 +41,7 @@ $DecimalPlaces = $myrow[3];
 $Serialised = $myrow[4];
 $Controlled = $myrow[5];
 
-echo '<CENTER><BR><FONT COLOR=BLUE SIZE=3><B>' . $StockID . ' - ' . $myrow[0] . ' </B>  (' . _('In units of') . ' ' . $myrow[1] . ')</FONT>';
+echo '<CENTER><BR><FONT SIZE=3>' . _('Item') . ' :<B> ' . $StockID . ' - ' . $myrow[0] . ' </B>  (' . _('in units of') . ' :<B> ' . $myrow[1] . ')</B></FONT><BR><BR>';
 $Its_A_KitSet_Assembly_Or_Dummy =False;
 if ($myrow[2]=='K'){
 	$Its_A_KitSet_Assembly_Or_Dummy =True;

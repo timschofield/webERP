@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 
 $PageSecurity = 2;
 
@@ -48,7 +48,7 @@ if (($myrow[2]=='K') OR ($myrow[2]=='A') OR ($myrow[2]=='D')) {
 
 	$StockID = '';
 } else {
-	echo "<BR><FONT COLOR=BLUE SIZE=3><B>$StockID - $myrow[0] </B> (" . _('in units of') . " $myrow[1])</FONT>";
+echo '<CENTER><BR><FONT SIZE=3>' . _('Item') . ' :<B> ' . $StockID . ' - ' . $myrow[0] . ' </B>  (' . _('in units of') . ' :<B> ' . $myrow[1] . ')</B></FONT><BR><BR>';
 }
 
 echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?'. SID ."' METHOD=POST>";
