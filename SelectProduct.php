@@ -1,22 +1,30 @@
 <?php
-/* $Revision: 1.35 $ */
+/* $Revision: 1.36 $ */
 
 $PageSecurity = 2;
+
 include('includes/session.inc');
+
 $title = _('Search Inventory Items');
+
 include('includes/header.inc');
+
 include('includes/Wiki.php');
+
 $msg = '';
+
 if (isset($_GET['StockID'])) {
     //The page is called with a StockID
     $_GET['StockID'] = trim(strtoupper($_GET['StockID']));
     $_POST['Select'] = trim(strtoupper($_GET['StockID']));
 }
+
 if (isset($_GET['NewSearch'])) {
     unset($StockID);
     unset($_SESSION['SelectedStockItem']);
     unset($_POST['Select']);
 }
+
 if (!isset($_POST['PageOffset'])) {
     $_POST['PageOffset'] = 1;
 } else {
@@ -45,6 +53,68 @@ if (DB_num_rows($result1) == 0) {
 
 ?>
 <CENTER>
+<FORM ACTION="<?php echo $_SERVER['PHP_SELF'] . '?' . SID; ?>" METHOD=POST>
+<B><?php echo $msg; ?></B>
+<?php echo '<BR>' . _('Search for Inventory Items:'); ?>
+<TABLE>
+<TR>
+<TD><?php echo _('In Stock Category'); ?>:
+<SELECT NAME="StockCat">
+<?php
+    if (!isset($_POST['StockCat'])) {
+        $_POST['StockCat'] = "";
+    }
+    if ($_POST['StockCat'] == "All") {
+        echo '<OPTION SELECTED VALUE="All">' . _('All');
+    } else {
+        echo '<OPTION VALUE="All">' . _('All');
+    }
+    while ($myrow1 = DB_fetch_array($result1)) {
+        if ($myrow1['categoryid'] == $_POST['StockCat']) {
+            echo '<OPTION SELECTED VALUE="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
+        } else {
+            echo '<OPTION VALUE="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
+        }
+    }
+?>
+
+</SELECT>
+<TD><?php echo _('Enter partial'); ?> <B><?php echo _('Description'); ?></B>:</TD>
+<TD>
+<?php
+if (isset($_POST['Keywords'])) {
+?>
+<INPUT TYPE="Text" NAME="Keywords" value="<?php echo $_POST['Keywords']?>" SIZE=20 MAXLENGTH=25>
+<?php
+} else {
+?>
+<INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25>
+<?php
+}
+?>
+</TD>
+</TR>
+<TR><TD></TD>
+<TD><FONT SIZE 3><B><?php echo _('OR'); ?> </B></FONT><?php echo _('Enter partial'); ?> <B><?php echo _('Stock Code'); ?></B>:</TD>
+<TD>
+<?php
+if (isset($_POST['StockCode'])) {
+?>
+<INPUT TYPE="Text" NAME="StockCode" value="<?php echo $_POST['StockCode']?>" SIZE=15 MAXLENGTH=18>
+<?php
+} else {
+?>
+<INPUT TYPE="Text" NAME="StockCode" SIZE=15 MAXLENGTH=18>
+<?php
+}
+?>
+</TD>
+</TR>
+</TABLE>
+<INPUT TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Search Now'); ?>"></CENTER>
+<HR>
+
+
 <?php
 
 // end of showing search facilities
@@ -351,9 +421,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
     $Its_A_Dummy = False;
     $Its_A_Kitset = False;
 
-echo '<CENTER><FONT SIZE=3><BR></B>' . _('Item') . ' :<B> ' . $StockID . ' - ' . $myrow['description'] . _('</b> has been selected') . '.<BR>' . _('Select a menu option to operate using this item') . '.</FONT><BR><br>';
-
-    echo '<CENTER><TABLE BORDER=1><TR><TH colspan=3>' . _('Item Details') . '</font></TH></TR>';
+    echo '<CENTER><TABLE BORDER=1><TR><TH colspan=3><font size=4>' . $StockID . ' - ' . $myrow['description'] . ' </font></TH></TR>';
 
     echo '<TR><TD width="40%">
             <TABLE>'; //nested table
@@ -787,66 +855,8 @@ $PropertyOptionValue . '</option>';
     echo '</TD></TR></TABLE>';
 
 }// end displaying item options if there is one and only one record
+
 ?>
-<CENTER>
-<FORM ACTION="<?php echo $_SERVER['PHP_SELF'] . '?' . SID; ?>" METHOD=POST>
-<B><?php echo $msg; ?></B>
-<?php echo '<BR>' . _('Search for Inventory Items:'); ?>
-<TABLE>
-<TR>
-<TD><?php echo _('In Stock Category'); ?>:
-<SELECT NAME="StockCat">
-<?php
-    if (!isset($_POST['StockCat'])) {
-        $_POST['StockCat'] = "";
-    }
-    if ($_POST['StockCat'] == "All") {
-        echo '<OPTION SELECTED VALUE="All">' . _('All');
-    } else {
-        echo '<OPTION VALUE="All">' . _('All');
-    }
-    while ($myrow1 = DB_fetch_array($result1)) {
-        if ($myrow1['categoryid'] == $_POST['StockCat']) {
-            echo '<OPTION SELECTED VALUE="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
-        } else {
-            echo '<OPTION VALUE="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'];
-        }
-    }
-?>
-</SELECT>
-<TD><?php echo _('Enter partial'); ?> <B><?php echo _('Description'); ?></B>:</TD>
-<TD>
-<?php
-if (isset($_POST['Keywords'])) {
-?>
-<INPUT TYPE="Text" NAME="Keywords" value="<?php echo $_POST['Keywords']?>" SIZE=20 MAXLENGTH=25>
-<?php
-} else {
-?>
-<INPUT TYPE="Text" NAME="Keywords" SIZE=20 MAXLENGTH=25>
-<?php
-}
-?>
-</TD>
-</TR>
-<TR><TD></TD>
-<TD><FONT SIZE 3><B><?php echo _('OR'); ?> </B></FONT><?php echo _('Enter partial'); ?> <B><?php echo _('Stock Code'); ?></B>:</TD>
-<TD>
-<?php
-if (isset($_POST['StockCode'])) {
-?>
-<INPUT TYPE="Text" NAME="StockCode" value="<?php echo $_POST['StockCode']?>" SIZE=15 MAXLENGTH=18>
-<?php
-} else {
-?>
-<INPUT TYPE="Text" NAME="StockCode" SIZE=15 MAXLENGTH=18>
-<?php
-}
-?>
-</TD>
-</TR>
-</TABLE>
-<INPUT TYPE=SUBMIT NAME="Search" VALUE="<?php echo _('Search Now'); ?>"></CENTER>
 </CENTER>
 </FORM>
 <script language="JavaScript" type="text/javascript">
