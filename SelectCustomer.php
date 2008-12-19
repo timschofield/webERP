@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.37 $ */
+/* $Revision: 1.38 $ */
 
 $PageSecurity = 2;
 
@@ -229,7 +229,10 @@ If ($_POST['Select']!="" OR
 		$SQL = "SELECT brname, phoneno FROM custbranch WHERE debtorno='" . $_POST['Select'] . "'";
 		$_SESSION['CustomerID'] = $_POST['Select'];
 	} else {
-		$SQL = "SELECT brname, phoneno FROM custbranch WHERE debtorno='" . $_SESSION['CustomerID'] . "'";
+		$SQL = "SELECT debtorsmaster.name, custbranch.phoneno FROM 
+		debtorsmaster, custbranch WHERE 
+		custbranch.debtorno='" . $_SESSION['CustomerID'] . "' AND 
+		debtorsmaster.debtorno = custbranch.debtorno";
 	}
 
 	$ErrMsg = _('The customer name requested cannot be retrieved because');
