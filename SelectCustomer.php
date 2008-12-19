@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.36 $ */
+/* $Revision: 1.37 $ */
 
 $PageSecurity = 2;
 
@@ -427,7 +427,7 @@ if (!isset($_POST['CSV'])) {
  	echo '<P>';
 }
 
-	echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>';
+	echo '<CENTER><BR><TABLE CELLPADDING=2 COLSPAN=7 BORDER=2>';
 	$TableHeader = '<TR>
 				<TH>' . _('Code') . '</TH>
 				<TH>' . _('Customer Name') . '</TH>

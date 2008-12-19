@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -112,7 +112,7 @@ if ($NIL_BALANCE == True){
 	$SupplierRecord['overdue2'] = 0;
 }
 
-echo '<CENTER><FONT SIZE=4>' . _('Supplier') . ' :<B> ' . $SupplierRecord['suppname'] . ' </FONT></B> - (' . _('All amounts stated in') . 
+echo '<CENTER><FONT SIZE=3>' . _('Supplier') . ' :<B> ' . $SupplierRecord['suppname'] . ' </FONT></B> - (' . _('All amounts stated in') . 
 	  ' ' . $SupplierRecord['currency'] . ')<BR><BR>' . _('Terms') . ':<B> ' . $SupplierRecord['terms'] . '</B>';
 
 if (isset($_GET['HoldType']) AND isset($_GET['HoldTrans'])){
