@@ -29,9 +29,10 @@ if (isset($_POST['update'])) {
 echo "<center><FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?' . SID . '>';
 echo '<BR><table><tr>';
 
-		
+
 echo '<td>'. _('Description') . '</td>
-		<td><input type="text" SIZE=30 MAXLENGTH=30 name="description" value="'.$description.'"></td><td>';
+		<td><input type="text" SIZE=30 MAXLENGTH=30 name="description" value="'.$description.'"></td><td>
+		<input type="hidden" name="reference" value="'.$_GET['SelectedTag'].'">';
 
 if ($_GET['Action']=='edit') {
 	echo '<CENTER><input type=Submit name=update value=' . _('Update') . '>';
@@ -51,7 +52,7 @@ $sql='SELECT tagref, tagdescription FROM tags order by tagref';
 $result= DB_query($sql,$db);
 
 while ($myrow = DB_fetch_array($result,$db)){
-	echo '<tr><td>'.$myrow[0].'</td><td>'.$myrow[1].'</td><td><A HREF="' . 
+	echo '<tr><td>'.$myrow[0].'</td><td>'.$myrow[1].'</td><td><A HREF="' .
 		$_SERVER['PHP_SELF'] . '?' . SID . '&SelectedTag=' . $myrow[0] . '&Action=edit">' . _('Edit') . '</A></td></tr>';
 }
 
