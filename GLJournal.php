@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.18 $ */
+/* $Revision: 1.19 $ */
 
 include('includes/DefineJournalClass.php');
 
@@ -230,7 +230,7 @@ echo '<form action=' . $_SERVER['PHP_SELF'] . '?' . SID . ' method=post name="fo
 
 
 echo '<p><center>
-	<table border=0>
+	<table border=0 width=100%>
 		<tr><font size=3 color=blue><b>' . _('Journal Line Entry') . '</b></font></tr>
 		<tr><hr></tr>';
 
@@ -242,9 +242,9 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 }
 
 	echo '<tr>
-			<td colspan=5 align=center><table border=0><tr><td>'._('Date to Process Journal').":</td>
+			<td colspan=5 align=center><table border=0 width=30%><tr><td>'._('Date to Process Journal').":</td>
 			<td><input type='text' name='JournalProcessDate' maxlength=10 size=11" .
-					" onChange='return isDate(this.value, ".'"'.$_SESSION['DefaultDateFormat'].'"'.")' value='" .
+					" onChange='return isDate(this, this.value, ".'"'.$_SESSION['DefaultDateFormat'].'"'.")' value='" .
 						 $_SESSION['JournalDetail']->JnlDate . "'></td>";
 	echo '<td>' . _('Type') . ':</td>
 			<td><select name=JournalType>';
@@ -263,16 +263,13 @@ if (!Is_Date($_SESSION['JournalDetail']->JnlDate)){
 	/* close off the table in the first column  */
 
 	echo '<br>';
-	echo '<table border=0 width=100%>';
+	echo '<table border=0 width=70%>';
 	/* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
 	/*now set up a GLCode field to select from avaialble GL accounts */
 	echo '<tr><th>' . _('GL Tag') . "</th>";
 	echo '<th>' . _('GL Account Code') . "</th>";
-	echo '<th>' . _('Select GL Account') . "</th>";
-	echo '<th>' . _('Debit') . "</th>";
-	echo '<th>' . _('Credit') . "</th>";
-	echo '<th>' . _('GL Narrative') . "</th></Ttr>";
+	echo '<th>' . _('Select GL Account') . "</th></tr>";
 
 /* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
@@ -301,7 +298,7 @@ echo '<font size=3 color=blue>' . _('Journal Line Entry') . '</font>';
 	if (!isset($_POST['GLManualCode'])) {
 		$_POST['GLManualCode']='';
 	}
-	echo '<td><input type=Text Name="GLManualCode" Maxlength=12 size=12 onChange="return inArray(this.value, GLCode.options,'.
+	echo '<td><input type=Text Name="GLManualCode" Maxlength=12 size=12 onChange="return inArray(this, this.value, GLCode.options,'.
 		"'".'The account code '."'".'+ this.value+ '."'".' doesnt exist'."'".')"' .
 			' onKeyPress="return restrictToNumbers(this, event)" VALUE='. $_POST['GLManualCode'] .'  ></td>';
 
@@ -330,24 +327,23 @@ echo '<font size=3 color=blue>' . _('Journal Line Entry') . '</font>';
 	if (!isset($_POST['Debit'])) {
 		$_POST['Debit'] = '';
 	}
-		echo '<td><input type=Text Name = "Debit"  onKeyPress="return restrictToNumbers(this, event)" ' .
+
+
+	echo '</tr><tr><th>' . _('Debit') . "</th>".'<td><input type=Text Name = "Debit"  onKeyPress="return restrictToNumbers(this, event)" ' .
 				'onChange="numberFormat(this,2); eitherOr(this, '.Credit.')"'.
-				'onFocus="return setTextAlign(this, '."'".'right'."'".')" Maxlength=12 size=12 value=' . $_POST['Debit'] . '></td>';
-		echo '<td><input type=Text Name = "Credit" onKeyPress="return restrictToNumbers(this, event)" ' .
+				'onFocus="return setTextAlign(this, '."'".'right'."'".')" Maxlength=12 size=10 value=' . $_POST['Debit'] . '></td>';
+	echo '</tr><tr><th>' . _('Credit') . "</th>".'<td><input type=Text Name = "Credit" onKeyPress="return restrictToNumbers(this, event)" ' .
 				'onChange="numberFormat(this,2); eitherOr(this, '.Debit.')"'.
-				'onFocus="return setTextAlign(this, '."'".'right'."'".')" Maxlength=12 size=12 value=' . $_POST['Credit'] . '></td>';
+				'onFocus="return setTextAlign(this, '."'".'right'."'".')" Maxlength=12 size=10 value=' . $_POST['Credit'] . '></td>';
+	echo '</tr><tr><th></th><th>' . _('GL Narrative') . "</th>";
 
-		echo "<td><input type='text' name='GLNarrative' maxlength=100 size=48 value='" . $_POST['GLNarrative'] . "'></td>";
+	echo "<td><input type='text' name='GLNarrative' maxlength=100 size=100 value='" . $_POST['GLNarrative'] . "'></td>";
 
-		echo "<td><input type=submit name=Process value='" . _('Accept') . "'><INPUT TYPE=SUBMIT name=Cancel value='" .
-			_('Cancel') . "'>";
-
-		echo '</td>
-			</tr>
-		</table><br><hr><br>'; /*Close the main table */
+	echo '</tr></table>'; /*Close the main table */
+	echo "<center><input type=submit name=Process value='" . _('Accept') . "'></center><br><hr><br>";
 
 
-		echo "<center>
+	echo "<center>
 				<table width=85% border=1>
 					<tr>
 						<th>"._('GL Tag')."</th>
