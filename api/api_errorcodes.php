@@ -157,6 +157,8 @@
 	Define('ItemSerialised', 1153);
 	Define('BatchNumberDoesntExist', 1154);
 	Define('BatchIsEmpty', 1155);
+	Define('NoSuchArea', 1156);
+	Define('NoSuchSalesMan', 1157);
 
 /* Array of Descriptions of errors */
 	$ErrorDescription['1'] = _('No Authorisation');
@@ -315,5 +317,7 @@
 	$ErrorDescription['1153'] = _('Stock item is serialised');
 	$ErrorDescription['1154'] = _('Batch number doesnt exist');
 	$ErrorDescription['1155'] = _('Batch is empty');
+	$ErrorDescription['1156'] = _('No such area');
+	$ErrorDescription['1157'] = _('No such salesman');
 
 ?>

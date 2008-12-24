@@ -956,6 +956,7 @@
 				 $xmlrpcmsg->getParam(1)->scalarval(),
 				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
+
 	unset($Parameter);
 	unset($ReturnValue);
 	unset($doc);
@@ -1136,6 +1137,54 @@
 		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
 	}
 	$doc .= '</table>';
+	$GetSalesAreaDetailsFromName_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetSalesAreaDetailsFromName_doc = $doc;
+
+	function xmlrpc_GetSalesAreaDetailsFromName($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetSalesAreaDetailsFromName($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval(),
+				$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
+	unset($Parameter);
+	unset($ReturnValue);
+	unset($doc);
+	unset($Description);
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+	$InsertSalesArea_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$InsertSalesArea_doc = $doc;
+
+	function xmlrpc_InsertSalesArea($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesArea(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
+	unset($Parameter);
+	unset($ReturnValue);
+	unset($doc);
+	unset($Description);
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
 	$GetSalesmanList_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString));
 	$GetSalesmanList_doc = $doc;
 
@@ -1166,6 +1215,54 @@
 		return new xmlrpcresp(php_xmlrpc_encode(GetSalesmanDetails($xmlrpcmsg->getParam(0)->scalarval(),
 			$xmlrpcmsg->getParam(1)->scalarval(),
 				$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
+	unset($Parameter);
+	unset($ReturnValue);
+	unset($doc);
+	unset($Description);
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+	$GetSalesmanDetailsFromName_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$GetSalesmanDetailsFromName_doc = $doc;
+
+	function xmlrpc_GetSalesmanDetailsFromName($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(GetSalesmanDetailsFromName($xmlrpcmsg->getParam(0)->scalarval(),
+			$xmlrpcmsg->getParam(1)->scalarval(),
+				$xmlrpcmsg->getParam(2)->scalarval())));
+	}
+
+	unset($Parameter);
+	unset($ReturnValue);
+	unset($doc);
+	unset($Description);
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+	$InsertSalesman_sig = array(array($xmlrpcStruct, $xmlrpcStruct, $xmlrpcString, $xmlrpcString));
+	$InsertSalesman_doc = $doc;
+
+	function xmlrpc_InsertSalesman($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(InsertSalesman(php_xmlrpc_decode($xmlrpcmsg->getParam(0)),
+				 $xmlrpcmsg->getParam(1)->scalarval(),
+				 		$xmlrpcmsg->getParam(2)->scalarval())));
 	}
 
 	unset($Parameter);
@@ -2135,10 +2232,18 @@
 			"function" => "xmlrpc_GetSalesAreasList",
 			"signature" => $GetSalesAreasList_sig,
 			"docstring" => $GetSalesAreasList_doc),
+		"weberp.xmlrpc_InsertSalesArea" => array(
+			"function" => "xmlrpc_InsertSalesArea",
+			"signature" => $InsertSalesArea_sig,
+			"docstring" => $InsertSalesArea_doc),
 		"weberp.xmlrpc_GetSalesAreaDetails" => array(
 			"function" => "xmlrpc_GetSalesAreaDetails",
 			"signature" => $GetSalesAreaDetails_sig,
 			"docstring" => $GetSalesAreaDetails_doc),
+		"weberp.xmlrpc_GetSalesAreaDetailsFromName" => array(
+			"function" => "xmlrpc_GetSalesAreaDetailsFromName",
+			"signature" => $GetSalesAreaDetailsFromName_sig,
+			"docstring" => $GetSalesAreaDetailsFromName_doc),
 		"weberp.xmlrpc_GetSalesmanList" => array(
 			"function" => "xmlrpc_GetSalesmanList",
 			"signature" => $GetSalesmanList_sig,
@@ -2147,6 +2252,14 @@
 			"function" => "xmlrpc_GetSalesmanDetails",
 			"signature" => $GetSalesmanDetails_sig,
 			"docstring" => $GetSalesmanDetails_doc),
+		"weberp.xmlrpc_GetSalesmanDetailsFromName" => array(
+			"function" => "xmlrpc_GetSalesmanDetailsFromName",
+			"signature" => $GetSalesmanDetailsFromName_sig,
+			"docstring" => $GetSalesmanDetailsFromName_doc),
+		"weberp.xmlrpc_InsertSalesman" => array(
+			"function" => "xmlrpc_InsertSalesman",
+			"signature" => $InsertSalesman_sig,
+			"docstring" => $InsertSalesman_doc),
 		"weberp.xmlrpc_GetTaxgroupList" => array(
 			"function" => "xmlrpc_GetTaxgroupList",
 			"signature" => $GetTaxgroupList_sig,
