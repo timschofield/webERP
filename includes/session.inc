@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.59 $ */
+/* $Revision: 1.60 $ */
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -30,22 +30,25 @@ if (!isset($_SESSION['AttemptsCounter'])){
 /* iterate through all elements of the $_POST array and DB_escape_string them
 to limit possibility for SQL injection attacks and cross scripting attacks
 */
-foreach ($_POST as $key => $value) {
-	if (gettype($value) != "array") {
-		$_POST[$key] = DB_escape_string($value);
-	} else {
-		foreach ($value as $key1 => $value1) {
-			$value[$key1] = DB_escape_string($value1);
+
+if (isset($_SESSION['DatabaseName'])){
+	foreach ($_POST as $key => $value) {
+		if (gettype($value) != "array") {
+			$_POST[$key] = DB_escape_string($value);
+		} else {
+			foreach ($value as $key1 => $value1) {
+				$value[$key1] = DB_escape_string($value1);
+			}
 		}
 	}
-}
 
-/* iterate through all elements of the $_GET array and DB_escape_string them
-to limit possibility for SQL injection attacks and cross scripting attacks
-*/
-foreach ($_GET as $key => $value) {
-	if (gettype($value) != "array") {
-		$_GET[$key] = DB_escape_string($value);
+	/* iterate through all elements of the $_GET array and DB_escape_string them
+	to limit possibility for SQL injection attacks and cross scripting attacks
+	*/
+	foreach ($_GET as $key => $value) {
+		if (gettype($value) != "array") {
+			$_GET[$key] = DB_escape_string($value);
+		}
 	}
 }
 
