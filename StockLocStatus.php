@@ -98,7 +98,6 @@ if (isset($_POST['ShowStatus'])){
 			WHERE locstock.stockid=stockmaster.stockid
 			AND locstock.loccode = '$_POST[StockLocation]'
 			AND locstock.loccode=locations.loccode
-			AND locstock.quantity > 0
 			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
 			ORDER BY locstock.stockid";
 	} else {
@@ -117,7 +116,6 @@ if (isset($_POST['ShowStatus'])){
 			WHERE locstock.stockid=stockmaster.stockid
 			AND locstock.loccode = '$_POST[StockLocation]'
 			AND locstock.loccode=locations.loccode
-			AND locstock.quantity > 0
 			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M')
 			AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
 			ORDER BY locstock.stockid";
