@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.30 $ */
+/* $Revision: 1.31 $ */
 
 
 $PageSecurity = 4;
@@ -838,6 +838,7 @@ if (isset($_GET['Edit'])){
 	      echo '<tr><td>' . _('Stock Item Ordered') . ':</td><td>' . $_SESSION['PO']->LineItems[$_GET['Edit']]->ItemDescription . '</td></tr>';
 	      echo '<input type=hidden name=ItemDescription value="' . $_SESSION['PO']->LineItems[$_GET['Edit']]->ItemDescription . '">';
 	      echo '<input type=hidden name=GLCode value=' . $_SESSION['PO']->LineItems[$_GET['Edit']]->GLCode . '>';
+	      echo '<input type=hidden name=StockID value=' . $_SESSION['PO']->LineItems[$_GET['Edit']]->StockID . '>';
 
 	}
 	echo '<tr><td>' . _('Order Quantity') . ':</td>
