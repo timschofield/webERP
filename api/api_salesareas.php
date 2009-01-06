@@ -1,5 +1,18 @@
 <?php
 
+/* Check that the area code is set up in the weberp database */
+	function VerifyAreaCodeDoesntExist($AreaCode , $i, $Errors, $db) {
+		$Searchsql = 'SELECT COUNT(areacode)
+					 FROM areas
+					  WHERE areacode="'.$AreaCode.'"';
+		$SearchResult=DB_query($Searchsql, $db);
+		$answer = DB_fetch_row($SearchResult);
+		if ($answer[0] > 0) {
+			$Errors[$i] = AreaCodeNotSetup;
+		}
+		return $Errors;
+	}
+
 /* This function returns a list of the sales areas
  * currently setup on webERP
  */
@@ -56,9 +69,9 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$Errors= VerifyAreaCode($AreaDetails['areacode'], 0, $Errors, $db);
+		$Errors= VerifyAreaCodeDoesntExist($AreaDetails['areacode'], 0, $Errors, $db);
 		if (sizeof($Errors>0)) {
-			return $Errors;
+//			return $Errors;
 		}
 		$FieldNames='';
 		$FieldValues='';
