@@ -428,6 +428,20 @@ CREATE TABLE `custcontacts` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
+-- Table structure for table `custnotes`
+--
+
+CREATE TABLE `custnotes` (
+  `noteid` tinyint(4) NOT NULL auto_increment,
+  `debtorno` varchar(10) NOT NULL default '0',
+  `href` varchar(100) NOT NULL,
+  `note` varchar(200) NOT NULL,
+  `date` date NOT NULL default '0000-00-00',
+  `priority` varchar(20) NOT NULL,
+  PRIMARY KEY  (`noteid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
 -- Table structure for table `debtorsmaster`
 --
 
@@ -543,7 +557,21 @@ CREATE TABLE `debtortype` (
   `typeid` tinyint(4) NOT NULL auto_increment,
   `typename` varchar(100) NOT NULL,
   PRIMARY KEY  (`typeid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Table structure for table `debtortypenotes`
+--
+
+CREATE TABLE `debtortypenotes` (
+  `noteid` tinyint(4) NOT NULL auto_increment,
+  `typeid` tinyint(4) NOT NULL default '0',
+  `href` varchar(100) NOT NULL,
+  `note` varchar(200) NOT NULL,
+  `date` date NOT NULL default '0000-00-00',
+  `priority` varchar(20) NOT NULL,
+  PRIMARY KEY  (`noteid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Table structure for table `discountmatrix`
@@ -916,6 +944,7 @@ CREATE TABLE `purchdata` (
   `supplierdescription` char(50) NOT NULL default '',
   `leadtime` smallint(6) NOT NULL default '1',
   `preferred` tinyint(4) NOT NULL default '0',
+  `effectivefrom` date NOT NULL,
   PRIMARY KEY  (`supplierno`,`stockid`),
   KEY `StockID` (`stockid`),
   KEY `SupplierNo` (`supplierno`),
@@ -1250,11 +1279,11 @@ CREATE TABLE `salescatprod` (
 
 CREATE TABLE `salesglpostings` (
   `id` int(11) NOT NULL auto_increment,
-  `area` char(2) NOT NULL default '',
+  `area` varchar(3) NOT NULL,
   `stkcat` varchar(6) NOT NULL default '',
   `discountglcode` int(11) NOT NULL default '0',
   `salesglcode` int(11) NOT NULL default '0',
-  `salestype` char(3) NOT NULL default 'AN',
+  `salestype` char(2) NOT NULL default 'AN',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `Area_StkCat` (`area`,`stkcat`,`salestype`),
   KEY `Area` (`area`),
@@ -2013,7 +2042,7 @@ CREATE TABLE `www_users` (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2008-11-17 22:23:34
+-- Dump completed on 2009-01-06 13:21:09
 -- MySQL dump 10.11
 --
 -- Host: localhost    Database: weberp
@@ -2522,6 +2551,8 @@ INSERT INTO `config` VALUES ('EDIReference','WEBERP');
 INSERT INTO `config` VALUES ('EDI_Incoming_Orders','companies/weberp/EDI_Incoming_Orders');
 INSERT INTO `config` VALUES ('EDI_MsgPending','companies/weberp/EDI_MsgPending');
 INSERT INTO `config` VALUES ('EDI_MsgSent','companies/weberp/EDI_Sent');
+INSERT INTO `config` VALUES ('Extended_CustomerInfo','0');
+INSERT INTO `config` VALUES ('Extended_SupplierInfo','0');
 INSERT INTO `config` VALUES ('FreightChargeAppliesIfLessThan','1000');
 INSERT INTO `config` VALUES ('FreightTaxCategory','1');
 INSERT INTO `config` VALUES ('geocode_integration','0');
@@ -2680,7 +2711,7 @@ INSERT INTO `accountsection` VALUES (50,'Financed By');
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2008-11-17 22:23:34
+-- Dump completed on 2009-01-06 13:21:10
 SET FOREIGN_KEY_CHECKS = 1;
 UPDATE systypes SET typeno=0;
 INSERT INTO shippers VALUES (1,'Default Shipper',0);
