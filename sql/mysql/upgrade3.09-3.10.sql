@@ -76,3 +76,5 @@ PRIMARY KEY (`noteid`)
 
 INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('Extended_CustomerInfo', '0');
 INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('Extended_SupplierInfo', '0');
+
+ALTER TABLE salesglpostings MODIFY COLUMN area VARCHAR(3) NOT NULL;
