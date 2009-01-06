@@ -95,4 +95,3 @@ function eitherOr(one, two) {
 		one.value='';
 	}
 }
-
