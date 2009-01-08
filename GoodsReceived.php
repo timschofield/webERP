@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 $PageSecurity = 11;
 
@@ -548,13 +548,13 @@ if ($SomethingReceived==0 AND isset($_POST['ProcessGoodsReceived'])){ /*Then don
 	} /*end of OrderLine loop */
 
 	$Result = DB_Txn_Commit($db);
-
+	$PONo = $_SESSION['PO']->OrderNo;
 	unset($_SESSION['PO']->LineItems);
 	unset($_SESSION['PO']);
 	unset($_POST['ProcessGoodsReceived']);
 
 	echo '<BR>'. _('GRN number'). ' '. $GRN .' '. _('has been processed').'<BR>';
-	echo '<BR><a href=PDFGrn.php?GRNNo='.$GRN .'>'. _('Print this Goods Received Note (GRN)').'</a><BR><BR>';
+	echo '<BR><a href=PDFGrn.php?GRNNo='.$GRN .'&PONo='.$PONo.'>'. _('Print this Goods Received Note (GRN)').'</a><BR><BR>';
 	echo "<A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . "'>" . _('Select a different purchase order for receiving goods against'). '</A>';
 /*end of process goods received entry */
 	include('includes/footer.inc');

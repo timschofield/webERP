@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 /*PDF page header for price list report */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -12,7 +12,8 @@ $pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg',$XP
 
 $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos-($line_height*1.5),550,$FontSize, _('GRN number ').' ' . $_GET['GRNNo'] );
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos-($line_height*3),140,$FontSize, _('Printed').': ' . Date($_SESSION['DefaultDateFormat']) . '   '. _('Page'). ' ' . $PageNumber);
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos-($line_height*3),550,$FontSize, _('PO number ').' ' . $_GET['PONo'] );
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos-($line_height*4.5),140,$FontSize, _('Printed').': ' . Date($_SESSION['DefaultDateFormat']) . '   '. _('Page'). ' ' . $PageNumber);
 
 $YPos -= 60;
 
