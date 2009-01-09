@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.74 $ */
+/* $Revision: 1.75 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -203,7 +203,8 @@ if (isset($_GET['ModifyOrderNumber'])
 								$myrow['decimalplaces'],
 								$myrow['narrative'],
 								'No', /* Update DB */
-								ConvertSQLDate($myrow['itemdue']),
+								$myrow['orderlineno'],
+//								ConvertSQLDate($myrow['itemdue']),
 								0,
 								'',
 								$myrow['itemdue'],
