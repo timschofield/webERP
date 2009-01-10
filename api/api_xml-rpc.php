@@ -1800,6 +1800,42 @@
 
 	unset($Parameter);
 	unset($ReturnValue);
+	$Description = _('This function is used to retrieve the details of a work order from the webERP database.');
+	$Parameter[0]['name'] = _('Field name');
+	$Parameter[0]['description'] = _('This is a string value. It must be a valid field in the workorders table. This is case sensitive');
+	$Parameter[1]['name'] = _('Criteria');
+	$Parameter[1]['description'] = _('This is a string value. It holds the string that is searched for in the given field. It will search for all or part of the field.');
+	$Parameter[2]['name'] = _('User name');
+	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
+	$Parameter[3]['name'] = _('User password');
+	$Parameter[3]['description'] = _('The weberp password associoated with this user name. ');
+	$ReturnValue[0] = _('If successful this function returns an array of work order numbers. ').
+		_('Otherwise an array of error codes is returned. ');
+
+	$doc = '<tr><td><b><u>'._('Description').'</u></b></td><td colspan=2>' .$Description.'</td></tr>
+			<tr><td valign="top"><b><u>'._('Parameters').'</u></b></td>';
+	for ($i=0; $i<sizeof($Parameter); $i++) {
+		$doc .= '<tr><td valign="top">'.$Parameter[$i]['name'].'</td><td>'.
+			$Parameter[$i]['description'].'</td></tr>';
+	}
+	$doc .= '<tr><td valign="top"><b><u>'._('Return Value');
+	for ($i=0; $i<sizeof($ReturnValue); $i++) {
+		$doc .= '<td valign="top">'.$ReturnValue[$i].'</td></tr>';
+	}
+	$doc .= '</table>';
+
+	$SearchWorkOrders_sig = array(array($xmlrpcStruct, $xmlrpcString, $xmlrpcString, $xmlrpcString, $xmlrpcString));
+	$SearchWorkOrders_doc = $doc;
+
+	function xmlrpc_SearchWorkOrders($xmlrpcmsg) {
+		return new xmlrpcresp(php_xmlrpc_encode(SearchWorkOrders($xmlrpcmsg->getParam(0)->scalarval(),
+				$xmlrpcmsg->getParam(1)->scalarval(),
+						$xmlrpcmsg->getParam(2)->scalarval(),
+							$xmlrpcmsg->getParam(3)->scalarval())));
+	}
+
+	unset($Parameter);
+	unset($ReturnValue);
 	$Description = _('This function is used to insert new purchasing data into the webERP database.');
 	$Parameter[0]['name'] = _('Purchasing data');
 	$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
@@ -2344,6 +2380,10 @@
 			"function" => "xmlrpc_WorkOrderReceive",
 			"signature" => $WorkOrderReceive_sig,
 			"docstring" => $WorkOrderReceive_doc),
+		"weberp.xmlrpc_SearchWorkOrders" => array(
+			"function" => "xmlrpc_SearchWorkOrders",
+			"signature" => $SearchWorkOrders_sig,
+			"docstring" => $SearchWorkOrders_doc),
 		"weberp.xmlrpc_GetBatches" => array(
 			"function" => "xmlrpc_GetBatches",
 			"signature" => $GetBatches_sig,

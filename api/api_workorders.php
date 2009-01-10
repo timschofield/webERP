@@ -254,11 +254,11 @@
 		$Errors = VerifyWorkOrderExists($WONumber, sizeof($Errors), $Errors, $db);
 		$Errors = VerifyStockLocation($Location, sizeof($Errors), $Errors, $db);
 		$Errors = VerifyIssuedQuantity($Quantity, sizeof($Errors), $Errors);
-		$Errors = VerifyTransactionDate($TranDate, sizeof($Errors), $Errors);
+//		$Errors = VerifyTransactionDate($TranDate, sizeof($Errors), $Errors, $db);
 		if ($Batch!='') {
 			VerifyBatch($Batch, $StockID, $Location, sizeof($Errors), $Errors, $db);
 		}
-		if (sizeof($Errors>0)) {
+		if (sizeof($Errors)!=0) {
 			return $Errors;
 		} else {
 			$balances=GetStockBalance($StockID, $user, $password);
@@ -268,9 +268,9 @@
 			}
 			$newqoh = $Quantity + $balance;
 			$itemdetails = GetStockItem($StockID, $user, $password);
-			$wipglact=GetCategoryGLCode($itemdetails['categoryid'], 'wipact', $db);
-			$stockact=GetCategoryGLCode($itemdetails['categoryid'], 'stockact', $db);
-			$cost=$itemdetails['materialcost']+$itemdetails['labourcost']+$itemdetails['overheadcost'];
+			$wipglact=GetCategoryGLCode($itemdetails[1]['categoryid'], 'wipact', $db);
+			$stockact=GetCategoryGLCode($itemdetails[1]['categoryid'], 'stockact', $db);
+			$cost=$itemdetails[1]['materialcost']+$itemdetails[1]['labourcost']+$itemdetails[1]['overheadcost'];
 			$TransactionNo=GetNextTransactionNo(28, $db);
 
 			$stockmovesql='INSERT INTO stockmoves (stockid, type, transno, loccode, trandate, prd, reference, qty, newqoh,
@@ -327,9 +327,9 @@
 		$Errors = VerifyStockLocation($Location, sizeof($Errors), $Errors, $db);
 		$Errors = VerifyReceivedQuantity($Quantity, sizeof($Errors), $Errors);
 		$Errors = VerifyTransactionDate($TranDate, sizeof($Errors), $Errors);
-		if (sizeof($Errors>0)) {
-			return $Errors;
-		} else {
+//		if (sizeof($Errors)!=0) {
+//			return $Errors;
+//		}
 			$itemdetails = GetStockItem($StockID, $user, $password);
 			$balances=GetStockBalance($StockID, $user, $password);
 			$balance=0;
@@ -371,10 +371,30 @@
 			DB_Txn_Commit($db);
 			if (DB_error_no($db) != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
-				return $Errors;
 			} else {
-				return 0;
+				$Errors[0] = 0;
 			}
+			return $Errors;
+
+	}
+
+	function SearchWorkOrders($Field, $Criteria, $user, $password) {
+		$Errors = array();
+		$db = db($user, $password);
+		if (gettype($db)=='integer') {
+			$Errors[0]=NoAuthorisation;
+			return $Errors;
 		}
+		$sql='SELECT wo
+			FROM woitems
+			WHERE '.$Field.' LIKE "%'.$Criteria.'%"';
+		$result = DB_Query($sql, $db);
+		$i=0;
+		$WOList = array();
+		while ($myrow=DB_fetch_array($result)) {
+			$WOList[$i]=$myrow[0];
+			$i++;
+		}
+		return $WOList;
 	}
 ?>
