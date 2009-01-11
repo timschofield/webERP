@@ -78,3 +78,4 @@ INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('Extended_CustomerInfo
 INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('Extended_SupplierInfo', '0');
 
 ALTER TABLE salesglpostings MODIFY COLUMN area VARCHAR(3) NOT NULL;
+ALTER TABLE salesanalysis MODIFY COLUMN area VARCHAR(3) NOT NULL;

@@ -1230,7 +1230,7 @@ CREATE TABLE `salesanalysis` (
   `qty` double NOT NULL default '0',
   `disc` double NOT NULL default '0',
   `stockid` varchar(20) NOT NULL default '',
-  `area` char(2) NOT NULL default '',
+  `area` char(3) NOT NULL default '',
   `budgetoractual` tinyint(1) NOT NULL default '0',
   `salesperson` char(3) NOT NULL default '',
   `stkcategory` varchar(6) NOT NULL default '',
