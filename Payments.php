@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.26 $ */
+/* $Revision: 1.27 $ */
 
 $PageSecurity = 5;
 
@@ -781,14 +781,14 @@ if (!isset($_POST['ChequeNum'])) {
 }
 
 echo '<tr><td>' . _('Cheque Number') . ':</td>
-		<td><input type="text" name="ChequeNum" maxlength=8 size=10 value="' . $_POST['ChequeNum'] . '"> (if using pre-printed stationery)</td></tr>';
+		<td><input type="text" name="ChequeNum" maxlength=8 size=10 value="' . $_POST['ChequeNum'] . '"> ' . _('(if using pre-printed stationery)') . '</td></tr>';
 
 if (!isset($_POST['Narrative'])) {
 	$_POST['Narrative']='';
 }
 
 echo '<tr><td>' . _('Reference / Narrative') . ':</td>
-			<td colspan=2><input type="text" name="Narrative" maxlength=80 size=82 value="' . $_POST['Narrative'] . '"> (Max. length 80 characters)</td></tr>';
+			<td colspan=2><input type="text" name="Narrative" maxlength=80 size=82 value="' . $_POST['Narrative'] . '">  ' . _('(Max. length 80 characters)') . '</td></tr>';
 echo '<tr><td colspan=3><center><input type="submit" name="UpdateHeader" value="' . _('Update'). '"></center></td></tr>';
 
 
