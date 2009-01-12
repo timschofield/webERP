@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.16 $ */
+/* $Revision: 1.17 $ */
 
 $PageSecurity =10;
 
@@ -13,10 +13,10 @@ include('includes/header.inc');
 if (isset($Errors)) {
 	unset($Errors);
 }
-	
+
 //initialise no input errors assumed initially before we test
 $InputError = 0;
-$Errors = array();	
+$Errors = array();
 $i=1;
 
 if (isset($_POST['submit'])) {
@@ -32,67 +32,67 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The company name must be entered and be fifty characters or less long'), 'error');
 		$Errors[$i] = 'CoyName';
-		$i++;		
-	} 
+		$i++;
+	}
 	if (strlen($_POST['RegOffice1']) >40) {
 		$InputError = 1;
 		prnMsg(_('The Line 1 of the address must be forty characters or less long'),'error');
 		$Errors[$i] = 'RegOffice1';
-		$i++;		
-	} 
+		$i++;
+	}
 	if (strlen($_POST['RegOffice2']) >40) {
 		$InputError = 1;
 		prnMsg(_('The Line 2 of the address must be forty characters or less long'),'error');
 		$Errors[$i] = 'RegOffice2';
-		$i++;		
+		$i++;
 	}
 	if (strlen($_POST['RegOffice3']) >40) {
 		$InputError = 1;
 		prnMsg(_('The Line 3 of the address must be forty characters or less long'),'error');
 		$Errors[$i] = 'RegOffice3';
-		$i++;		
-	} 
+		$i++;
+	}
 	if (strlen($_POST['RegOffice4']) >40) {
 		$InputError = 1;
 		prnMsg(_('The Line 4 of the address must be forty characters or less long'),'error');
 		$Errors[$i] = 'RegOffice4';
-		$i++;		
-	} 
+		$i++;
+	}
 	if (strlen($_POST['RegOffice5']) >20) {
 		$InputError = 1;
 		prnMsg(_('The Line 5 of the address must be twenty characters or less long'),'error');
 		$Errors[$i] = 'RegOffice5';
-		$i++;		
-	} 
+		$i++;
+	}
 	if (strlen($_POST['RegOffice6']) >15) {
 		$InputError = 1;
 		prnMsg(_('The Line 6 of the address must be fifteen characters or less long'),'error');
 		$Errors[$i] = 'RegOffice6';
-		$i++;		
-	} 
+		$i++;
+	}
 	if (strlen($_POST['Telephone']) >25) {
 		$InputError = 1;
 		prnMsg(_('The telephone number must be 25 characters or less long'),'error');
 		$Errors[$i] = 'Telephone';
-		$i++;		
+		$i++;
 	}
 	if (strlen($_POST['Fax']) >25) {
 		$InputError = 1;
 		prnMsg(_('The fax number must be 25 characters or less long'),'error');
 		$Errors[$i] = 'Fax';
-		$i++;		
-	} 
+		$i++;
+	}
 	if (strlen($_POST['Email']) >55) {
 		$InputError = 1;
 		prnMsg(_('The email address must be 55 characters or less long'),'error');
 		$Errors[$i] = 'Email';
-		$i++;		
+		$i++;
 	}
 	if (strlen($_POST['Email'])>0 and !IsEmailAddress($_POST['Email'])) {
 		$InputError = 1;
 		prnMsg(_('The email address is not correctly formed'),'error');
 		$Errors[$i] = 'Email';
-		$i++;		
+		$i++;
 	}
 
 	if ($InputError !=1){
@@ -111,39 +111,39 @@ if (isset($_POST['submit'])) {
 				fax='" . $_POST['Fax'] . "',
 				email='" . $_POST['Email'] . "',
 				currencydefault='" . $_POST['CurrencyDefault'] . "',
-				debtorsact=" . $_POST['DebtorsAct'] . ",
-				pytdiscountact=" . $_POST['PytDiscountAct'] . ",
-				creditorsact=" . $_POST['CreditorsAct'] . ",
-				payrollact=" . $_POST['PayrollAct'] . ",
-				grnact=" . $_POST['GRNAct'] . ",
-				exchangediffact=" . $_POST['ExchangeDiffAct'] . ",
-				purchasesexchangediffact=" . $_POST['PurchasesExchangeDiffAct'] . ",
-				retainedearnings=" . $_POST['RetainedEarnings'] . ",
-				gllink_debtors=" . $_POST['GLLink_Debtors'] . ",
-				gllink_creditors=" . $_POST['GLLink_Creditors'] . ",
-				gllink_stock=" . $_POST['GLLink_Stock'] .",
-				freightact=" . $_POST['FreightAct'] . "
+				debtorsact='" . $_POST['DebtorsAct'] . "',
+				pytdiscountact='" . $_POST['PytDiscountAct'] . "',
+				creditorsact='" . $_POST['CreditorsAct'] . "',
+				payrollact='" . $_POST['PayrollAct'] . "',
+				grnact='" . $_POST['GRNAct'] . "',
+				exchangediffact='" . $_POST['ExchangeDiffAct'] . "',
+				purchasesexchangediffact='" . $_POST['PurchasesExchangeDiffAct'] . "',
+				retainedearnings='" . $_POST['RetainedEarnings'] . "',
+				gllink_debtors='" . $_POST['GLLink_Debtors'] . "',
+				gllink_creditors='" . $_POST['GLLink_Creditors'] . "',
+				gllink_stock='" . $_POST['GLLink_Stock'] ."',
+				freightact='" . $_POST['FreightAct'] . "'
 			WHERE coycode=1";
 
 			$ErrMsg =  _('The company preferences could not be updated because');
 			$result = DB_query($sql,$db,$ErrMsg);
 			prnMsg( _('Company preferences updated'),'success');
-			
+
 			/* Alter the exchange rates in the currencies table */
-			
+
 			/* Get default currency rate */
 			$sql='SELECT rate from currencies WHERE currabrev="'.$_POST['CurrencyDefault'].'"';
 			$result = DB_query($sql,$db);
 			$myrow = DB_fetch_row($result);
 			$NewCurrencyRate=$myrow[0];
-			
+
 			/* Set new rates */
 			$sql='UPDATE currencies SET rate=rate/'.$NewCurrencyRate;
 			$ErrMsg =  _('Could not update the currency rates');
 			$result = DB_query($sql,$db,$ErrMsg);
-			
+
 			/* End of update currencies */
-			
+
 			$ForceConfigReload = True; // Required to force a load even if stored in the session vars
 			include('includes/GetConfig.php');
 			$ForceConfigReload = False;
@@ -367,12 +367,12 @@ echo '</SELECT></TD></TR>';
 
 echo '<TR><TD>' . _('Freight Re-charged GL Account') . ':</TD><TD><SELECT tabindex="19" Name=FreightAct>';
 
-$result=DB_query('SELECT accountcode, 
-			accountname 
-		FROM chartmaster, 
-			accountgroups 
-		WHERE chartmaster.group_=accountgroups.groupname 
-		AND accountgroups.pandl=1 
+$result=DB_query('SELECT accountcode,
+			accountname
+		FROM chartmaster,
+			accountgroups
+		WHERE chartmaster.group_=accountgroups.groupname
+		AND accountgroups.pandl=1
 		ORDER BY chartmaster.accountcode',$db);
 
 while ($myrow = DB_fetch_row($result)) {
