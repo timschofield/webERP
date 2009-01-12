@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.15 $ */
+/* $Revision: 1.16 $ */
 
 $PageSecurity = 10;
 
@@ -19,8 +19,8 @@ if (isset($_GET['SelectedTerms'])){
 if (isset($Errors)) {
 	unset($Errors);
 }
-	
-$Errors = array();	
+
+$Errors = array();
 
 if (isset($_POST['submit'])) {
 
@@ -37,38 +37,38 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		prnMsg(_('The payment terms name must exist'),'error');
 		$Errors[$i] = 'TermsIndicator';
-		$i++;		
-	} 
+		$i++;
+	}
 	if (strlen($_POST['TermsIndicator']) > 2) {
 		$InputError = 1;
 		prnMsg(_('The payment terms name must be two characters or less long'),'error');
 		$Errors[$i] = 'TermsIndicator';
-		$i++;		
-	} 
-	if (!is_numeric($_POST['DayNumber'])){
+		$i++;
+	}
+	if (empty($_POST['DayNumber']) OR !is_numeric($_POST['DayNumber']) OR $_POST['DayNumber'] <= 0){
 		$InputError = 1;
 		prnMsg( _('The number of days or the day in the following month must be numeric') ,'error');
 		$Errors[$i] = 'DayNumber';
-		$i++;		
-	} 
-	if (strlen($_POST['Terms']) > 40) {
+		$i++;
+	}
+	if (empty($_POST['Terms']) OR strlen($_POST['Terms']) > 40) {
 		$InputError = 1;
 		prnMsg( _('The terms description must be forty characters or less long') ,'error');
 		$Errors[$i] = 'Terms';
-		$i++;		
-	} 
-	 
-	if ($_POST['DayNumber'] > 30 AND $_POST['DaysOrFoll']==1) {
+		$i++;
+	}
+
+	if ($_POST['DayNumber'] > 30 AND empty($_POST['DaysOrFoll'])) {
 		$InputError = 1;
 		prnMsg( _('When the check box is not checked to indicate a day in the following month is the due date') . ', ' . _('the due date cannot be a day after the 30th') . '. ' . _('A number between 1 and 30 is expected') ,'error');
 		$Errors[$i] = 'DayNumber';
-		$i++;		
-	} 
-	if ($_POST['DayNumber']>360 AND $_POST['DaysOrFoll'] ==0) {
+		$i++;
+	}
+	if ($_POST['DayNumber']>360 AND !empty($_POST['DaysOrFoll'])) {
 		$InputError = 1;
 		prnMsg( _('When the check box is checked to indicate that the term expects a number of days after which accounts are due') . ', ' . _('the number entered should be less than 361 days') ,'error');
 		$Errors[$i] = 'DayNumber';
-		$i++;		
+		$i++;
 	}
 
 
@@ -253,7 +253,7 @@ if (!isset($_GET['delete'])) {
 		if (!isset($_POST['Terms'])) $_POST['Terms']='';
 
 		echo '<CENTER><TABLE><TR><TD>' . _('Term Code') . ':</TD><TD><input type="Text" name="TermsIndicator"
-		 ' . (in_array('TermsIndicator',$Errors) ? 'class="inputerror"' : '' ) .' value="' . $_POST['TermsIndicator'] . 
+		 ' . (in_array('TermsIndicator',$Errors) ? 'class="inputerror"' : '' ) .' value="' . $_POST['TermsIndicator'] .
 			'" SIZE=3 MAXLENGTH=2></TD></TR>';
 	}
 
@@ -270,7 +270,7 @@ if (!isset($_GET['delete'])) {
 			echo $DaysBeforeDue;
 			} else {
 			if (isset($DayInFollowingMonth)) {echo $DayInFollowingMonth;}
-			} 
+			}
 	echo '></TD></TR></TABLE><CENTER><input type="Submit" name="submit" value="'._('Enter Information').'"></FORM>';
 } //end if record deleted no point displaying form to add record
 
