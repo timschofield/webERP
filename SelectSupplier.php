@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.34 $ */
+/* $Revision: 1.35 $ */
 
 $PageSecurity = 2;
 
@@ -376,7 +376,7 @@ echo "<TR>
         </TR>";
 echo '</TD><TD VALIGN=TOP>'; /* Mapping */
 echo '<center>' . _('Mapping is enabled, Map will display below.') . '<center>';
-echo '<center><div align="center" id="map" style="width: 400px; height: 200px"></div></center><br>';
+echo '<center><div align="center" id="map" style="width: '. $map_width . 'px; height: ' .  $map_height  . 'px"></div></center><br>';
 echo "</th></tr></table></center>";
 }}
 // Extended Info only if selected in Configuration
