@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.32 $ */
+/* $Revision: 1.33 $ */
 
 	echo '<BR><BR>';
 	echo '</TD>';
@@ -38,12 +38,10 @@
 
 	echo '<TR><TD ALIGN="center" CLASS="footer">webERP ' . _('Copyright') . ' &copy; weberp.org - '.date('Y').'</TD></TR>';
 
-	if(isset($_SERVER['HTTPS'])){
-		if($_SERVER['HTTPS'] == 'on'){
-			echo '<TR><TD ALIGN="center"><a href="http://sourceforge.net"><img src="https://sflogo.sourceforge.net/sflogo.php?group_id=70949&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" /></a></TD></TR>';
-		} else {
-        	echo '<TR><TD ALIGN="center"><a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=70949&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" /></a></TD></TR>';
-        }
+	if($_SERVER['HTTPS'] == 'on'){
+		echo '<TR><TD ALIGN="center"><a href="http://sourceforge.net"><img src="https://sflogo.sourceforge.net/sflogo.php?group_id=70949&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" /></a></TD></TR>';
+	} else {
+       	echo '<TR><TD ALIGN="center"><a href="http://sourceforge.net"><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=70949&amp;type=1" width="88" height="31" border="0" alt="SourceForge.net Logo" /></a></TD></TR>';
 	}
 
 	echo '</TABLE>';
