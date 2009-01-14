@@ -1,19 +1,19 @@
 /*--------------------------------------------------\
-|               |               | default.css       |
+|    'gel' Stylesheet                               |
+|       v1.1                                        |
+|Pretty blue gradients with lighting.               |
 |---------------------------------------------------|
 | For use with:                                     |
 | Web-ERP - http://web-erp.sourceforge.net          |
 | by Logic Works Ltd                                |
 |---------------------------------------------------|
 | Developer:                                        |
-| Shane Barnaby                                     |
-| Steve Kaill                                       |
-| CombatWombat									|
+| CombatWombat	                                    |
+| combatwombat at combatwombat dot 7doves dot com   |
 |---------------------------------------------------|
 | Note:                                             |
 | Changes can be made to this CSS that will be      |
 | reflected throughout Web-ERP.                     |
-|
 \--------------------------------------------------*/
 
 body {
@@ -50,6 +50,7 @@ input{
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
 }
+
 input:hover{
 	background: url(images/inputh.png) #eee;
 	color:#000;
@@ -94,8 +95,8 @@ div.warn {
 
 div.success {
 	background-color:#b9ecb4;
-	color: darkgreen;
-	border: 1px solid darkgreen;
+	color: #008000;
+	border: 1px solid #008000;
 }
 
 div.info {
@@ -119,7 +120,8 @@ th {
 	color: #330000;
 }
 
-select {
+select {background:#eee;
+	color:#111;
 	font-family: Verdana, Arial, Helvetica;
 	font-size: 12px;
 }
@@ -133,7 +135,7 @@ select {
 }
 
 #trim {
-	background: "white";
+	background: white;
 }
 
 #page {
@@ -236,7 +238,7 @@ select {
 }
 
 .quick_menu_tab{
-	background: #00f url(images/gelblue.png) 0px -1px repeat-x;
+	background: #00f url(images/gelblue.png) 0px -2px repeat-x;
 	height:28px;
 	white-space: nowrap;
 	border-left: solid 0px #aaa;
@@ -248,6 +250,7 @@ select {
 
 .quick_menu_tab a{
 color:#fff;
+font-weight:bold;
 }
 .quick_menu_left a{
 color:#fff;
@@ -257,6 +260,7 @@ color:#fff;
 .quick_menu_tab a:hover{
 color:#ffc;
 text-decoration:none;
+font-weight:bold;
 }
 .quick_menu_left a:hover{
 color:#ffc;
@@ -264,7 +268,7 @@ text-decoration:none;
 }
 .quick_menu_tab:hover{
 color:#ffd;
-background: url(images/gelblueh.png) 0px -1px repeat-x;
+background: url(images/gelblueh.png) 0px -2px repeat-x;
 }
 /*the Select Customer / Item / Supplier Menu tabs */
 .system_menu_tabs {
@@ -324,11 +328,13 @@ background:none;
 
 .main_menu_unselected a{
 	color: #eee;
+    font-weight:bold;
 }
 
 .main_menu_unselected a:hover{
 	color: #fff;
 	text-decoration: none;
+    font-weight:bold;
 }
 
 .main_menu_selected {
@@ -341,6 +347,7 @@ background:none;
 
 .main_menu_selected a{
 	color: #eee;
+    font-weight:bold;
 }
 
 .main_menu_selected a:hover{
@@ -497,7 +504,7 @@ select.selecterror {
 }
 
 .notavailable {
-	font-weight:light;
+	font-weight: normal;
 	font-style:italic;
 	color:#555555;
 }
