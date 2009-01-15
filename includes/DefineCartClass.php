@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -24,6 +24,7 @@ Class Cart {
 	var $DefaultSalesType;
 	var $SalesTypeName;
 	var $DefaultCurrency;
+	var $PaymentTerms;
 	var $DeliverTo;
 	var $DelAdd1;
 	var $DelAdd2;
@@ -36,6 +37,7 @@ Class Cart {
 	var $CustRef;
 	var $Comments;
 	var $Location;
+	var $LocationName;
 	var $DebtorNo;
 	var $CustomerName;
 	var $Orig_OrderDate;

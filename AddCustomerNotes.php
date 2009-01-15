@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 $PageSecurity = 3;
 include('includes/session.inc');
 $title = _('Customer Notes');
@@ -27,7 +27,7 @@ if ( isset($_POST['submit']) ) {
 	//first off validate inputs sensible
 	if (!is_long((integer)$_POST['priority'])) {
 		$InputError = 1;
-		prnMsg( _('The Contact priority must be an integer.'), 'error');
+		prnMsg( _('The contact priority must be an integer.'), 'error');
 	} elseif (strlen($_POST['note']) >200) {
 		$InputError = 1;
 		prnMsg( _("The contact's notes must be two hundred characters or less long"), 'error');
@@ -101,7 +101,7 @@ if (!isset($Id)) {
 	echo '<tr>
 			<th>' . _('Date') . '</th>
 			<th>' . _('Note') . '</th>
-			<th>' . _('href') . '</th>
+			<th>' . _('WWW') . '</th>
 			<th>' . _('Priority') . '</th>';
 		
 	$k=0; //row colour counter
@@ -158,7 +158,7 @@ if (!isset($_GET['delete'])) {
 		
 		$_POST['noteid'] = $myrow['noteid'];
 		$_POST['note']	= $myrow['note'];
-		$_POST['href']  = $myrow['href'];
+		$_POST['WWW']  = $myrow['href'];
 		$_POST['date']  = $myrow['date'];
 		$_POST['priority']  = $myrow['priority'];
 		$_POST['debtorno']  = $myrow['debtorno'];
@@ -172,7 +172,7 @@ if (!isset($_GET['delete'])) {
 	?>
 	<tr><td><?php echo _('Contact Note');?>:</TD>
 	<td><textarea name="note"><?php echo $_POST['note']; ?></textarea></td></tr>
-	<tr><td><?php echo _('href');?>:</td>
+	<tr><td><?php echo _('WWW');?>:</td>
 	<td><input type="Text" name="href" value="<?php echo $_POST['href']; ?>" size=35 maxlength=100></td></tr>
 	<tr><td><?php echo _('Date');?>:</td>
 	<td><input type="Text" name="date" value="<?php echo $_POST['date']; ?>" size=10 maxlength=10></td></tr>

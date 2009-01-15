@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.75 $ */
+/* $Revision: 1.76 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -94,6 +94,7 @@ if (isset($_GET['ModifyOrderNumber'])
 		salesorders.freightcost,
 		salesorders.deliverydate,
 		debtorsmaster.currcode,
+		paymentterms.terms,
 		salesorders.fromstkloc,
 		salesorders.printedpackingslip,
 		salesorders.datepackingslipprinted,
@@ -104,11 +105,15 @@ if (isset($_GET['ModifyOrderNumber'])
 	FROM salesorders,
 		debtorsmaster,
 		salestypes,
-		custbranch
+		custbranch,
+		paymentterms,
+		locations
 	WHERE salesorders.ordertype=salestypes.typeabbrev
 	AND salesorders.debtorno = debtorsmaster.debtorno
 	AND salesorders.debtorno = custbranch.debtorno
 	AND salesorders.branchcode = custbranch.branchcode
+	AND debtorsmaster.paymentterms=paymentterms.termsindicator
+	AND locations.loccode=salesorders.fromstkloc
 	AND salesorders.orderno = ' . $_GET['ModifyOrderNumber'];
 
 
@@ -125,7 +130,7 @@ if (isset($_GET['ModifyOrderNumber'])
 		$_SESSION['Items']->CustomerName = $myrow['name'];
 		$_SESSION['Items']->CustRef = $myrow['customerref'];
 		$_SESSION['Items']->Comments = $myrow['comments'];
-
+		$_SESSION['Items']->PaymentTerms =$myrow['terms'];
 		$_SESSION['Items']->DefaultSalesType =$myrow['ordertype'];
 		$_SESSION['Items']->SalesTypeName =$myrow['sales_type'];
 		$_SESSION['Items']->DefaultCurrency = $myrow['currcode'];
@@ -142,6 +147,7 @@ if (isset($_GET['ModifyOrderNumber'])
 		$_SESSION['Items']->PhoneNo = $myrow['contactphone'];
 		$_SESSION['Items']->Email = $myrow['contactemail'];
 		$_SESSION['Items']->Location = $myrow['fromstkloc'];
+		$_SESSION['Items']->LocationName = $myrow['location'];
 		$_SESSION['Items']->Quotation = $myrow['quotation'];
 		$_SESSION['Items']->FreightCost = $myrow['freightcost'];
 		$_SESSION['Items']->Orig_OrderDate = $myrow['orddate'];
@@ -154,30 +160,30 @@ if (isset($_GET['ModifyOrderNumber'])
 /*need to look up customer name from debtors master then populate the line items array with the sales order details records */
 
 			$LineItemsSQL = "SELECT salesorderdetails.orderlineno,
-				salesorderdetails.stkcode,
-				stockmaster.description,
-				stockmaster.volume,
-				stockmaster.kgs,
-				stockmaster.units,
-				salesorderdetails.unitprice,
-				salesorderdetails.quantity,
-				salesorderdetails.discountpercent,
-				salesorderdetails.actualdispatchdate,
-				salesorderdetails.qtyinvoiced,
-				salesorderdetails.narrative,
-				salesorderdetails.itemdue,
-				salesorderdetails.poline,
-				locstock.quantity as qohatloc,
-				stockmaster.mbflag,
-				stockmaster.discountcategory,
-				stockmaster.decimalplaces,
-				salesorderdetails.completed
-				FROM salesorderdetails INNER JOIN stockmaster
-				ON salesorderdetails.stkcode = stockmaster.stockid
-				INNER JOIN locstock ON locstock.stockid = stockmaster.stockid
-				WHERE  locstock.loccode = '" . $myrow['fromstkloc'] . "'
-				AND salesorderdetails.orderno =" . $_GET['ModifyOrderNumber'] . "
-				ORDER BY salesorderdetails.orderlineno";
+									salesorderdetails.stkcode,
+									stockmaster.description,
+									stockmaster.volume,
+									stockmaster.kgs,
+									stockmaster.units,
+									salesorderdetails.unitprice,
+									salesorderdetails.quantity,
+									salesorderdetails.discountpercent,
+									salesorderdetails.actualdispatchdate,
+									salesorderdetails.qtyinvoiced,
+									salesorderdetails.narrative,
+									salesorderdetails.itemdue,
+									salesorderdetails.poline,
+									locstock.quantity as qohatloc,
+									stockmaster.mbflag,
+									stockmaster.discountcategory,
+									stockmaster.decimalplaces,
+									salesorderdetails.completed
+									FROM salesorderdetails INNER JOIN stockmaster
+									ON salesorderdetails.stkcode = stockmaster.stockid
+									INNER JOIN locstock ON locstock.stockid = stockmaster.stockid
+									WHERE  locstock.loccode = '" . $myrow['fromstkloc'] . "'
+									AND salesorderdetails.orderno =" . $_GET['ModifyOrderNumber'] . "
+									ORDER BY salesorderdetails.orderlineno";
 
 		$ErrMsg = _('The line items of the order cannot be retrieved because');
 		$LineItemsResult = db_query($LineItemsSQL,$db,$ErrMsg);
@@ -219,12 +225,6 @@ if (isset($_GET['ModifyOrderNumber'])
 	}
 }
 
-$locsql = "SELECT locationname
-		   FROM locations
-		   WHERE loccode='" . $_SESSION['Items']->Location ."'";
-$locresult = db_query($locsql, $db);
-$locrow = db_fetch_array($locresult);
-$location = $locrow[0];
 
 if (!isset($_SESSION['Items'])){
 	/* It must be a new order being created $_SESSION['Items'] would be set up from the order
@@ -346,12 +346,15 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 			debtorsmaster.salestype,
 			salestypes.sales_type,
 			debtorsmaster.currcode,
-			debtorsmaster.customerpoline
+			debtorsmaster.customerpoline,
+			paymentterms.terms
 		FROM debtorsmaster,
 			holdreasons,
-			salestypes
+			salestypes,
+			paymentterms
 		WHERE debtorsmaster.salestype=salestypes.typeabbrev
 		AND debtorsmaster.holdreason=holdreasons.reasoncode
+		AND debtorsmaster.paymentterms=paymentterms.termsindicator
 		AND debtorsmaster.debtorno = '" . $_POST['Select'] . "'";
 
 	$ErrMsg = _('The details of the customer selected') . ': ' .  $_POST['Select'] . ' ' . _('cannot be retrieved because');
@@ -375,6 +378,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 		$_SESSION['Items']->SalesTypeName = $myrow[3];
 		$_SESSION['Items']->DefaultCurrency = $myrow[4];
 		$_SESSION['Items']->DefaultPOLine = $myrow[5];
+		$_SESSION['Items']->PaymentTerms = $myrow[6];
 
 
 
@@ -393,8 +397,11 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 				custbranch.defaultshipvia,
 				custbranch.deliverblind,
                 custbranch.specialinstructions,
-                custbranch.estdeliverydays
+                custbranch.estdeliverydays,
+                locations.locationname
 			FROM custbranch
+			INNER JOIN locations
+			ON custbranch.defaultlocation=locations.loccode
 			WHERE custbranch.branchcode='" . $_SESSION['Items']->Branch . "'
 			AND custbranch.debtorno = '" . $_POST['Select'] . "'";
 
@@ -428,6 +435,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 		$_SESSION['Items']->DeliverBlind = $myrow[11];
 		$_SESSION['Items']->SpecialInstructions = $myrow[12];
 		$_SESSION['Items']->DeliveryDays = $myrow[13];
+		$_SESSION['Items']->LocationName = $myrow[14];
 
 		if ($_SESSION['Items']->SpecialInstructions)
 		  prnMsg($_SESSION['Items']->SpecialInstructions,'warn');
@@ -499,8 +507,10 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 			custbranch.email,
 			custbranch.defaultlocation,
 			custbranch.deliverblind,
-			custbranch.estdeliverydays
-			FROM custbranch
+			custbranch.estdeliverydays,
+			locations.locationname
+			FROM custbranch INNER JOIN locations
+			ON custbranch.defaultlocation=locations.loccode
 			WHERE custbranch.branchcode='" . $_SESSION['Items']->Branch . "'
 			AND custbranch.debtorno = '" . $_SESSION['Items']->DebtorNo . "'";
 
@@ -525,7 +535,7 @@ if (isset($_POST['Select']) AND $_POST['Select']!='') {
 		$_SESSION['Items']->Location = $myrow[9];
 		$_SESSION['Items']->DeliverBlind = $myrow[10];
 		$_SESSION['Items']->DeliveryDays = $myrow[11];
-
+		$_SESSION['Items']->LocationName = $myrow[12];
 	} else {
 		prnMsg(_('Sorry, your account has been put on hold for some reason, please contact the credit control personnel.'),'warn');
 		include('includes/footer.inc');
@@ -617,9 +627,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if($_SESSION['ExistingOrder']!=0) { //need to check that not already dispatched
 
 			$sql = "SELECT qtyinvoiced
-				FROM salesorderdetails
-				WHERE orderno=" . $_SESSION['ExistingOrder'] . "
-				AND qtyinvoiced>0";
+					FROM salesorderdetails
+					WHERE orderno=" . $_SESSION['ExistingOrder'] . "
+					AND qtyinvoiced>0";
 
 			$InvQties = DB_query($sql,$db);
 
@@ -673,8 +683,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo _('Customer') . ':<B> ' . $_SESSION['Items']->DebtorNo;
 		echo '</B>&nbsp;' . _('Customer Name') . ': ' . $_SESSION['Items']->CustomerName;
 		echo '</B><BR>' . _('Deliver To') . ':<B> ' . $_SESSION['Items']->DeliverTo;
-		echo '</B>&nbsp;' . _('From Location') . ':<B> ' . $location;
+		echo '</B>&nbsp;' . _('From Location') . ':<B> ' . $_SESSION['Items']->LocationName;
 		echo '</B><BR>' . _('Sales Type') . '/' . _('Price List') . ':<B> ' . $_SESSION['Items']->SalesTypeName;
+		echo '</B><BR>' . _('Terms') . ':<B> ' . $_SESSION['Items']->PaymentTerms;
 		echo '</B><BR><BR></FONT></CENTER>';
 	}
 

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.35 $ */
+/* $Revision: 1.36 $ */
 
 $PageSecurity = 2;
 
@@ -12,38 +12,38 @@ include('includes/SQL_CommonFunctions.inc');
 // only get geocode information if integration is on, and supplier has been selected
 if ($_SESSION['geocode_integration']==1 AND isset($_SESSION['SupplierID'])){
 
-$sql="SELECT * FROM geocode_param WHERE 1";
-$ErrMsg = _('An error occurred in retrieving the information');;
-$result = DB_query($sql, $db, $ErrMsg);
-$myrow = DB_fetch_array($result);
-$sql = "SELECT suppliers.supplierid,suppliers.lat, suppliers.lng
-                        FROM suppliers
-                        WHERE suppliers.supplierid = '" . $_SESSION['SupplierID'] . "'
-                        ORDER BY suppliers.supplierid";
-$ErrMsg = _('An error occurred in retrieving the information');
-$result2 = DB_query($sql, $db, $ErrMsg);
-$myrow2 = DB_fetch_array($result2);
-$lat = $myrow2['lat'];
-$lng = $myrow2['lng'];
-$api_key = $myrow['geocode_key'];
-$center_long = $myrow['center_long'];
-$center_lat = $myrow['center_lat'];
-$map_height = $myrow['map_height'];
-$map_width = $myrow['map_width'];
-$map_host = $myrow['map_host'];
+	$sql="SELECT * FROM geocode_param WHERE 1";
+	$ErrMsg = _('An error occurred in retrieving the information');;
+	$result = DB_query($sql, $db, $ErrMsg);
+	$myrow = DB_fetch_array($result);
+	$sql = "SELECT suppliers.supplierid,suppliers.lat, suppliers.lng
+							FROM suppliers
+							WHERE suppliers.supplierid = '" . $_SESSION['SupplierID'] . "'
+							ORDER BY suppliers.supplierid";
+	$ErrMsg = _('An error occurred in retrieving the information');
+	$result2 = DB_query($sql, $db, $ErrMsg);
+	$myrow2 = DB_fetch_array($result2);
+	$lat = $myrow2['lat'];
+	$lng = $myrow2['lng'];
+	$api_key = $myrow['geocode_key'];
+	$center_long = $myrow['center_long'];
+	$center_lat = $myrow['center_lat'];
+	$map_height = $myrow['map_height'];
+	$map_width = $myrow['map_width'];
+	$map_host = $myrow['map_host'];
 
-echo '<script src="http://maps.google.com/maps?file=api&v=2&key=' . $api_key . '"';
-echo ' type="text/javascript"></script>';
-echo ' <script type="text/javascript">';
-echo '    //<![CDATA[ '; ?>
+	echo '<script src="http://maps.google.com/maps?file=api&v=2&key=' . $api_key . '"';
+	echo ' type="text/javascript"></script>';
+	echo ' <script type="text/javascript">';
+	echo '    //<![CDATA[ '; ?>
 
     function load() {
       if (GBrowserIsCompatible()) {
         var map = new GMap2(document.getElementById("map"));
         map.addControl(new GSmallMapControl());
         map.addControl(new GMapTypeControl());
-<? echo 'map.setCenter(new GLatLng(' . $lat . ', ' . $lng . '), 11);'; ?>
-<? echo 'var marker = new GMarker(new GLatLng(' . $lat . ', ' . $lng . '));' ?>
+<?php echo 'map.setCenter(new GLatLng(' . $lat . ', ' . $lng . '), 11);'; ?>
+<?php echo 'var marker = new GMarker(new GLatLng(' . $lat . ', ' . $lng . '));' ?>
         map.addOverlay(marker);
         GEvent.addListener(marker, "click", function() {
         marker.openInfoWindowHtml(WINDOW_HTML);
@@ -55,7 +55,7 @@ echo '    //<![CDATA[ '; ?>
     </script>
   <body onload="load()" onunload="GUnload()">
 
-<?
+<?php
 }
 
 $msg='';
