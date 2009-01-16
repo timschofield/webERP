@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 11;
 
@@ -126,7 +126,7 @@ if (db_num_rows($LineItemsResult) > 0) {
         if (isset($_POST['Close'])){
         /*Set up a transaction to buffer all updates or none */
 		$result = DB_Txn_Begin($db);
-		$PeriodNo = GetPeriod(Date('d/m/Y'), $db);
+		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
         }
 
         echo '<TABLE CELLPADDING=2 COLSPAN=7 BORDER=0>';
