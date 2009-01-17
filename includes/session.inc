@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.60 $ */
+/* $Revision: 1.61 $ */
 
 if (!isset($PathPrefix)) {
 	$PathPrefix='';
@@ -234,6 +234,50 @@ If (isset($_POST['Theme']) && ($_SESSION['UsersRealName'] == $_POST['RealName'])
 
 } else {
 	$theme = $_SESSION['Theme'];
+}
+
+/* Set the logo if not yet set.
+ * will be done only once per session and each time
+ * we are not in session (i.e. before login)
+ */
+if (empty($_SESSION['LogoFile'])) {
+	/* find a logo in companies/$companydir
+	 * (nice side effect of function:
+	 * variables are local, so we will never
+	 * cause name clashes)
+	 */
+
+	function findLogoFile($companydir, $PathPrefix) {
+		$dir = $PathPrefix.'companies/' . $companydir . '/';
+		$incompanydir = scandir($dir,1);
+		if ($incompanydir !== FALSE) {
+			foreach($incompanydir as $logofilename)
+				if (strncasecmp($logofilename,'logo.',5) === 0 AND
+					is_readable($dir . $logofilename) AND
+					is_file($dir . $logofilename)) {
+					$logo = $logofilename;
+				break;
+			}
+
+			if (empty($logo)) {
+				return null;
+			} else {
+				return 'companies/' .$companydir .'/'. $logo;
+			}
+		}
+	}
+
+	/* Find a logo in companies/<company of this session> */
+	if (!empty($_SESSION['DatabaseName']))
+		$_SESSION['LogoFile'] = findLogoFile($_SESSION['DatabaseName'], $PathPrefix);
+
+	/* Find a default logo in companies/weberp */
+	if (empty($_SESSION['LogoFile']))
+		$_SESSION['LogoFile'] = findLogoFile('weberp', $PathPrefix);
+
+	/* Last fallback: take a fixed name */
+	if (empty($_SESSION['LogoFile']))
+		$_SESSION['LogoFile'] = 'weberp/logo.jpg';
 }
 
 if ($_SESSION['HTTPS_Only']==1){

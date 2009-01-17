@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 /*
 	R & OS PHP-PDF class code to set up a new page
 	a new page is implicit on the establishment of a new pdf object so
@@ -13,7 +13,7 @@ if ($PageNumber>1){
 $YPos = $Page_Height - $Top_Margin - ($line_height*2);
 
 
-$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg',$Left_Margin,$YPos,0,60);
+$pdf->addJpegFromFile($_SESSION['LogoFile'],$Left_Margin,$YPos,0,60);
 
 $FontSize=15;
 

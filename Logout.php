@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 $PageSecurity =1;
 
 include('includes/session.inc');
@@ -31,7 +31,7 @@ include('includes/session.inc');
                         </tr>
 
                         <tr>
-                            <td valign="center" align="center" class="logoBackground"><img src="<?php echo 'companies/' . $_SESSION['DatabaseName'] . '/logo.jpg'; ?>"></td>
+                            <td valign="center" align="center" class="logoBackground"><img src="<?php echo $_SESSION['LogoFile']; ?>" width="69"></td>
 
                             <td class="middleBar"><img src="<?php echo "css/spacer.gif" ?>" width="12" /></td>
 

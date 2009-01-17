@@ -1,12 +1,12 @@
 <?php
-/* $Revision: 1.9 $ */
+/* $Revision: 1.10 $ */
 /* PDFlib code to set up a new page */
 
 $Perforation = $Page_Width - $RightMargin - 160;
 
 $YPos = $Page_Height - $Top_Margin;
 
-$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg',$Page_Width/2 -70,$YPos-80,0,60);
+$pdf->addJpegFromFile($_SESSION['LogoFile'],$Page_Width/2 -70,$YPos-80,0,60);
 
 // Title
 $FontSize =15;

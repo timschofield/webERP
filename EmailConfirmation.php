@@ -217,8 +217,8 @@ IF(mail( $MailTo, $MailSubject, $MailMessage, $headers )){
 <body>
 <Table width='60%'>
 	<TR>
-		<td align='center' colspan='4'> <IMG src='/webERP/companies/weberp/logo.jpg' alt='Logo'
-                 width='500' height='100' align='center' border='0'>
+		<td align='center' colspan='4'> <?php echo "<IMG src='" . $rootpath . '/' . $_SESSION['LogoFile'] . "' alt='Logo'" .
+                 "width='500' height='100' align='center' border='0'>" ?>
       		</td>
    	</tr>
 	<TR>

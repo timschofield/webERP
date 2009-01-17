@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 	echo '<BR><BR>';
 	echo '</TD>';
@@ -19,19 +19,7 @@
 
 	echo '<TR>';
 	echo '<TD ALIGN="center">';
-	/* Find a logo in the companies directory */
-	$logo = '../weberp/logo.jpg';
-	$companydir = 'companies/' . $_SESSION['DatabaseName'] . '/';
-	$incompanydir = scandir($companydir,1);
-	if ($incompanydir !== FALSE)
-		foreach($incompanydir as $logofilename)
-			if (strncasecmp($logofilename,'logo.',5) === 0 AND
-				is_readable($companydir . $logofilename) AND
-				is_file($companydir . $logofilename)) {
-				$logo = $logofilename;
-			break;
-		}
-	echo '<A HREF="http://www.weberp.org" TARGET="_blank"><IMG SRC="'. $rootpath . '/companies/' . $_SESSION['DatabaseName'] . '/' . $logo . '" WIDTH=20% BORDER="0" ALT="" TITLE="webERP ' . _('Copyright') . ' &copy; webrp.org - ' . date('Y') . '"></A>';
+ 	echo '<A HREF="http://www.weberp.org" TARGET="_blank"><IMG SRC="'. $rootpath . '/' . $_SESSION['LogoFile'] . '" WIDTH=20% BORDER="0" ALT="" TITLE="webERP ' . _('Copyright') . ' &copy; webrp.org - ' . date('Y') . '"></A>';
  	echo '<BR>' . _('Version') . ' - ' . $Version;
 
 	echo '</TD></TR>';

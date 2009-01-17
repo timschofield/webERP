@@ -1,12 +1,12 @@
 <?php
-/* $Revision: 1.8 $ */
+/* $Revision: 1.9 $ */
 /* pdf-php by R&OS code to set up a new sales order page */
 if ($PageNumber>1){
 	$pdf->newPage();
 }
-// Modified 60->140 and 60->50 by Arnold on 1-8-2008 
+// Modified 60->140 and 60->50 by Arnold on 1-8-2008
 $XPos = $Page_Width/2 - 140;
-$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg',$XPos+20,520,0,50);
+$pdf->addJpegFromFile($_SESSION['LogoFile'],$XPos+20,520,0,60);
 
 // Added by Arnold on 1-8-2008 to move text to right
 $XPos = $XPos + 80;
