@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.36 $ */
+/* $Revision: 1.37 $ */
 
 $PageSecurity = 2;
 
@@ -17,9 +17,9 @@ if ($_SESSION['geocode_integration']==1 AND isset($_SESSION['SupplierID'])){
 	$result = DB_query($sql, $db, $ErrMsg);
 	$myrow = DB_fetch_array($result);
 	$sql = "SELECT suppliers.supplierid,suppliers.lat, suppliers.lng
-							FROM suppliers
-							WHERE suppliers.supplierid = '" . $_SESSION['SupplierID'] . "'
-							ORDER BY suppliers.supplierid";
+    			                FROM suppliers
+                      			WHERE suppliers.supplierid = '" . $_SESSION['SupplierID'] . "'
+		                        ORDER BY suppliers.supplierid";
 	$ErrMsg = _('An error occurred in retrieving the information');
 	$result2 = DB_query($sql, $db, $ErrMsg);
 	$myrow2 = DB_fetch_array($result2);
@@ -179,7 +179,7 @@ if (isset($_SESSION['SupplierID'])){
 		<TH WIDTH=33%>". _('Supplier Transactions') . "</TH>
 		<TH WIDTH=33%>" . _('Supplier Maintenance') . "</TH>
 	</TR>";
-	echo '<TR><TD VALIGN=TOP>';    /* Inquiry Options */
+	echo '<TR><TD VALIGN=TOP class="menu_group_items">';    /* Inquiry Options */
 	echo "<A HREF=\"$rootpath/SupplierInquiry.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Supplier Account Inquiry') . '</A><BR>';
 	echo '<BR>';
 	echo "<BR><A HREF='$rootpath/PO_SelectOSPurchOrder.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Add / Receive / View Outstanding Purchase Orders') . '</A>';
@@ -187,13 +187,13 @@ if (isset($_SESSION['SupplierID'])){
 	wikiLink('Supplier', $_SESSION['SupplierID']);	
 	echo '<BR>';
 	echo "<BR><A HREF='$rootpath/Shipt_Select.php?" . SID . '&SelectedSupplier=' . $_SESSION['SupplierID'] . "'>" . _('Search / Modify / Close Shipments') . '</A>';
-	echo '</TD><TD VALIGN=TOP>'; /* Supplier Transactions */
+	echo '</TD><TD VALIGN=TOP class="menu_group_items">'; /* Supplier Transactions */
 	echo "<A HREF=\"$rootpath/SupplierInvoice.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Suppliers Invoice') . '</A><BR>';
 	echo "<A HREF=\"$rootpath/SupplierCredit.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Suppliers Credit Note') . '</A><BR>';
 	echo "<A HREF=\"$rootpath/Payments.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Enter a Payment to, or Receipt from the Supplier') . '</A><BR>';
 	echo '<BR>';
 	echo "<BR><A HREF='$rootpath/ReverseGRN.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "'>" . _('Reverse an Outstanding Goods Received Note (GRN)') . '</A>';
-	echo '</TD><TD VALIGN=TOP>'; /* Supplier Maintenance */
+	echo '</TD><TD VALIGN=TOP class="menu_group_items">'; /* Supplier Maintenance */
         echo '<a href="' . $rootpath . '/Suppliers.php?">' . _('Add a New Supplier') . '</a><br>';
 	echo "<A HREF=\"$rootpath/Suppliers.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Modify Or Delete Supplier Details') . '</A>';
 	echo "<BR><A HREF=\"$rootpath/SupplierContacts.php?" . SID . '&SupplierID=' . $_SESSION['SupplierID'] . "\">" . _('Add/Modify/Delete Supplier Contacts') . '</A>';

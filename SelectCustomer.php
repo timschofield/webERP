@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.39 $ */
+/* $Revision: 1.40 $ */
 
 $PageSecurity = 2;
 
@@ -247,11 +247,10 @@ If ($_POST['Select']!="" OR
 
 	$_POST['Select'] = NULL;
 
-	echo "<TABLE BORDER=2 CELLPADDING=4><TR><TH>" . _('Customer Inquiries') . "</TH>
-			<TH>" . _('Customer Maintenance') . "</TH></TR>";
+	echo '<TABLE BORDER=2 CELLPADDING=4><TR><TH>' . _('Customer Inquiries') . '</TH>
+			<TH>' . _('Customer Maintenance') . '</TH></TR>';
 
-	echo '<TR><TD WIDTH=50%>';
-
+	echo '<TR><TD WIDTH=50% class="menu_group_items">';
 	/* Customer Inquiry Options */
 	echo '<a href="' . $rootpath . '/CustomerInquiry.php?CustomerID=' . $_SESSION['CustomerID'] . '">' . _('Customer Transaction Inquiries') . '</a><BR>';
 	echo '<a href="' . $rootpath . '/PrintCustStatements.php?FromCust=' . $_SESSION['CustomerID'] . '&ToCust=' . $_SESSION['CustomerID'] . '&PrintPDF=Yes">' . _('Print Customer Statement') . '</a><BR>';
@@ -261,7 +260,7 @@ If ($_POST['Select']!="" OR
 
 	wikiLink('Customer', $_SESSION['CustomerID']);
 
-	echo '</TD><TD WIDTH=50%>';
+	echo '</TD><TD WIDTH=50% class="menu_group_items">';
 
         echo '<a href="' . $rootpath . '/Customers.php?">' . _('Add a New Customer') . '</a><br>';
 	echo '<a href="' . $rootpath . '/Customers.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Modify Customer Details') . '</a><BR>';
@@ -606,7 +605,7 @@ echo '<TR><TD colspan=2>';
   	$sql = 'SELECT * FROM custcontacts where debtorno="' . $_SESSION['CustomerID'] . '" ORDER BY contid';
 	$result = DB_query($sql,$db);
 if (DB_num_rows($result)<>0){
-	echo '<br><center>Customer Contacts</center><br>';
+	echo '<br><center><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" TITLE="' . _('Customer Contacts') . '" ALT="">' . ' ' . _('Customer Contacts') . '</center><br>';
 	echo '<CENTER><table border=1 width=45%>';
 	echo '<tr>
                         <th>' . _('Name') . '</th>
@@ -646,7 +645,7 @@ if (DB_num_rows($result)<>0){
 	echo '</CENTER></table>';
 } else {
 if ($_SESSION['CustomerID']!=0){
-echo '<center><br><a href="AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add New Contact') . '</a><br></center>';
+echo '<center><br><img src="'.$rootpath.'/css/'.$theme.'/images/group_add.png" TITLE="' . _('Customer Contacts') . '" ALT=""><a href="AddCustomerContacts.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Contact') . '</a><br></center>';
 }
 }
 // Customer Notes
@@ -654,7 +653,7 @@ echo '<TR><TD colspan=2>';
         $sql = 'SELECT * FROM custnotes where debtorno="' . $_SESSION['CustomerID'] . '" ORDER BY date DESC';
         $result = DB_query($sql,$db);
 if (DB_num_rows($result)<>0){
-echo '<br><center>Customer Notes</center><br>';
+echo '<br><center><img src="'.$rootpath.'/css/'.$theme.'/images/note_add.png" TITLE="' . _('Customer Notes') . '" ALT="">' . ' ' . _('Customer Notes') . '</center><br>';
         echo '<CENTER><table border=1 width=45%>';
         echo '<tr>
                         <th>' . _('date') . '</th>
@@ -663,7 +662,7 @@ echo '<br><center>Customer Notes</center><br>';
                         <th>' . _('priority') . '</th>
                         <th>' . _('Edit') . '</th>
                         <th>' . _('Delete') . '</th>
-			<th> <a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add New Note') . '</a> </th></tr>';
+			<th> <a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Note') . '</a> </th></tr>';
         $k=0; //row colour counter
         while ($myrow = DB_fetch_array($result)) {
                 if ($k==1){
@@ -694,7 +693,7 @@ echo '<br><center>Customer Notes</center><br>';
         echo '</CENTER></table>';
 } else {
 if ($_SESSION['CustomerID']!=0){
-echo '<center><br><a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add New Note for this Customer') . '</a><br></center>';
+echo '<center><br><img src="'.$rootpath.'/css/'.$theme.'/images/note_add.png" TITLE="' . _('Customer Notes') . '" ALT=""><a href="AddCustomerNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Note for this Customer') . '</a><br></center>';
 }
 }
 // Custome Type Notes
@@ -702,7 +701,7 @@ echo '<TR><TD colspan=2>';
         $sql = 'SELECT * FROM debtortypenotes where typeid="' . $CustomerType . '" ORDER BY date DESC';
         $result = DB_query($sql,$db);
 if (DB_num_rows($result)<>0){
-echo '<br><center>Customer Type (Group) Notes for: ' . $CustomerTypeName . '</center><br>';
+echo '<br><center><img src="'.$rootpath.'/css/'.$theme.'/images/folder_add.png" TITLE="' . _('Customer Type (Group) Notes') . '" ALT="">' . ' ' . _('Customer Type (Group) Notes for:)' . '<b> ' . $CustomerTypeName . '</b>') . '</center><br>';
         echo '<CENTER><table border=1 width=45%>';
         echo '<tr>
                         <th>' . _('date') . '</th>
@@ -742,7 +741,7 @@ echo '<br><center>Customer Type (Group) Notes for: ' . $CustomerTypeName . '</ce
         echo '</CENTER></table>';
 } else {
 if ($_SESSION['CustomerID']!=0){
-echo '<center><br><a href="AddCustomerTypeNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . _('Add New Group Note') . '</a><br></center>';
+echo '<center><br><img src="'.$rootpath.'/css/'.$theme.'/images/folder_add.png" TITLE="' . _('Customer Group Notes') . '" ALT=""><a href="AddCustomerTypeNotes.php?DebtorNo=' . $_SESSION['CustomerID'] . '">' . ' ' . _('Add New Group Note') . '</a><br></center>';
 }}}
 }
 //}
