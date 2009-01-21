@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.11 $ */
+/* $Revision: 1.12 $ */
 
 $PageSecurity = 1;
 
@@ -448,7 +448,7 @@ If (isset($PrintPDF)
 //			}
 /* Add Images for Visa / Mastercard / Paypal */
                $pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -60,$YPos-15,0,20);
-               $pdf->addText($Page_Width-$Right_Margin-392, $YPos - ($line_height*3)+22,$FontSize, _('Bank Code:083337 Bank Account:035138130'));
+               $pdf->addText($Page_Width-$Right_Margin-392, $YPos - ($line_height*3)+22,$FontSize, _('Bank Code:****** Bank Account:*******'));
 			$FontSize=10;
 		} else {
 			$pdf->addText($Page_Width-$Right_Margin-220, $YPos-($line_height*3)-6,$FontSize, _('TOTAL CREDIT'));
@@ -752,7 +752,7 @@ exit;
 				$ExchRate = $myrow['rate'];
 				$PageNumber = 1;
 
-				echo "<TABLE WIDTH=100%><TR><TD VALIGN=TOP WIDTH=10%><img src='companies/" . $_SESSION['DatabaseName'] . "/logo.jpg'></TD><TD BGCOLOR='#BBBBBB'><B>";
+				echo "<TABLE WIDTH=100%><TR><TD VALIGN=TOP WIDTH=10%><img src='" . $_SESSION['LogoFile'] . "'></TD><TD BGCOLOR='#BBBBBB'><B>";
 
 				if ($InvOrCredit=='Invoice') {
 				   echo '<FONT SIZE=4>' . _('TAX INVOICE') . ' ';
@@ -942,8 +942,7 @@ exit;
 						/* head up a new invoice/credit note page */
 
 						   $PageNumber++;
-						   echo "</TABLE><TABLE WIDTH=100%><TR><TD VALIGN=TOP><img src='companies/" . $_SESSION['DatabaseName'] . "/logo.jpg'></TD><TD BGCOLOR='#BBBBBB'><CENTER><B>";
-
+						   echo "</TABLE><TABLE WIDTH=100%><TR><TD VALIGN=TOP><img src='" . $_SESSION['LogoFile'] . "'></TD><TD BGCOLOR='#BBBBBB'><CENTER><B>";
 						   if ($InvOrCredit=='Invoice') {
 							    echo '<FONT SIZE=4>' . _('TAX INVOICE') . ' ';
 						   } else {
@@ -988,8 +987,7 @@ exit;
 					/* head up a new invoice/credit note page */
 
 					$PageNumber++;
-					echo "<TABLE WIDTH=100%><TR><TD VALIGN=TOP><img src='companies/" . $_SESSION['DatabaseName'] . "/logo.jpg'></TD><TD BGCOLOR='#BBBBBB'><CENTER><B>";
-
+					echo "<TABLE WIDTH=100%><TR><TD VALIGN=TOP><img src='" . $_SESSION['LogoFile'] . "'></TD><TD BGCOLOR='#BBBBBB'><CENTER><B>";
 					if ($InvOrCredit=='Invoice') {
 					      echo '<FONT SIZE=4>' . _('TAX INVOICE') .' ';
 					} else {
