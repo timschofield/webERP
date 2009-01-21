@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 /* R&OS PHP-pdf class code to head up a new page */
 
 if (!$FirstPage){ /* only initiate a new page if its not the first */
@@ -111,7 +111,7 @@ if ($InvOrCredit=='Invoice') {
 
 	$pdf->addText($XPos, $YPos, $FontSize, _('Delivered To') . ':');
 	$XPos +=80;
-	$pdf->addText($XPos, $YPos, $FontSize, $myrow['deliverto']);
+	$pdf->addText($XPos, $YPos, $FontSize, htmlspecialchars_decode($myrow['deliverto']));
 	$pdf->addText($XPos, $YPos-14, $FontSize, $myrow['deladd1']);
 	$pdf->addText($XPos, $YPos-28, $FontSize, $myrow['deladd2']);
 	$pdf->addText($XPos, $YPos-42, $FontSize, $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5']);
