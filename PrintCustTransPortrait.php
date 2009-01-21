@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 1;
 
@@ -448,7 +448,7 @@ If (isset($PrintPDF)
 //			}
 /* Add Images for Visa / Mastercard / Paypal */
                $pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -60,$YPos-15,0,20);
-               $pdf->addText($Page_Width-$Right_Margin-352, $YPos - ($line_height*3)+22,$FontSize, _('Bank Code: *** Bank Account: ***'));
+               $pdf->addText($Page_Width-$Right_Margin-392, $YPos - ($line_height*3)+22,$FontSize, _('Bank Code:083337 Bank Account:035138130'));
 			$FontSize=10;
 		} else {
 			$pdf->addText($Page_Width-$Right_Margin-220, $YPos-($line_height*3)-6,$FontSize, _('TOTAL CREDIT'));
@@ -582,8 +582,8 @@ exit;
 	/*if FromTransNo is not set then show a form to allow input of either a single invoice number or a range of invoices to be printed. Also get the last invoice number created to show the user where the current range is up to */
 
 		echo "<FORM ACTION='" . $_SERVER['PHP_SELF'] . '?' . SID . "' METHOD='POST'><CENTER><TABLE>";
-
-		echo '<TR><TD>' . _('Print Invoices or Credit Notes') . '</TD><TD><SELECT name=InvOrCredit>';
+		echo '<CENTER><BR><FONT SIZE=3><img src="'.$rootpath.'/css/'.$theme.'/images/printer.png" TITLE="' . _('Print') . '" ALT="">' . ' ' . _('Print Invoices or Credit Notes') . '</FONT></B><BR>';
+		echo '<BR><TR><TD>' . _('Print Invoices or Credit Notes') . '</TD><TD><SELECT name=InvOrCredit>';
 		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)){
 
 		   echo "<OPTION SELECTED VALUE='Invoice'>" . _('Invoices');
@@ -614,7 +614,7 @@ exit;
 		echo '</SELECT></TD></TR>';
 		echo '<TR><TD>' . _('Start invoice/credit note number to print') . '</TD><TD><input Type=text max=6 size=7 name=FromTransNo></TD></TR>';
 		echo '<TR><TD>' . _('End invoice/credit note number to print') . "</TD><TD><input Type=text max=6 size=7 name='ToTransNo'></TD></TR></TABLE></CENTER>";
-		echo "<CENTER><INPUT TYPE=Submit Name='Print' Value='" . _('Print') . "'><P>";
+		echo "<CENTER><BR><INPUT TYPE=Submit Name='Print' Value='" . _('Print Preview') . "'><P>";
 		echo "<INPUT TYPE=Submit Name='PrintPDF' Value='" . _('Print PDF') . "'></CENTER>";
 
 		$sql = 'SELECT typeno FROM systypes WHERE typeid=10';
@@ -622,14 +622,14 @@ exit;
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 
-		echo '<P>' . _('The last invoice created was number') . ' ' . $myrow[0] . '<BR>' . _('If only a single invoice is required') . ', ' . _('enter the invoice number to print in the Start transaction number to print field and leave the End transaction number to print field blank') . '. ' . _('Only use the end invoice to print field if you wish to print a sequential range of invoices');
+		echo '<CENTER><TABLE WIDTH=50%><TR><TD><CENTER><B>' . _('The last invoice created was number') . ' ' . $myrow[0] . '</B><BR>' . _('If only a single invoice is required') . ', ' . _('enter the invoice number to print in the Start transaction number to print field and leave the End transaction number to print field blank') . '. ' . _('Only use the end invoice to print field if you wish to print a sequential range of invoices');
 
 		$sql = 'SELECT typeno FROM systypes WHERE typeid=11';
 
 		$result = DB_query($sql,$db);
 		$myrow = DB_fetch_row($result);
 
-		echo '<P>' . _('The last credit note created was number') . ' ' . $myrow[0] . '<BR>' . _('A sequential range can be printed using the same method as for invoices above') . '. ' . _('A single credit note can be printed by only entering a start transaction number');
+		echo '<P><B>' . _('The last credit note created was number') . ' ' . $myrow[0] . '</B><BR>' . _('A sequential range can be printed using the same method as for invoices above') . '. ' . _('A single credit note can be printed by only entering a start transaction number');
 
 	} else {
 
@@ -752,7 +752,7 @@ exit;
 				$ExchRate = $myrow['rate'];
 				$PageNumber = 1;
 
-				echo "<TABLE WIDTH=100%><TR><TD VALIGN=TOP WIDTH=10%><img src='" . $_SESSION['LogoFile'] . "'></TD><TD BGCOLOR='#BBBBBB'><B>";
+				echo "<TABLE WIDTH=100%><TR><TD VALIGN=TOP WIDTH=10%><img src='companies/" . $_SESSION['DatabaseName'] . "/logo.jpg'></TD><TD BGCOLOR='#BBBBBB'><B>";
 
 				if ($InvOrCredit=='Invoice') {
 				   echo '<FONT SIZE=4>' . _('TAX INVOICE') . ' ';
@@ -942,7 +942,7 @@ exit;
 						/* head up a new invoice/credit note page */
 
 						   $PageNumber++;
-						   echo "</TABLE><TABLE WIDTH=100%><TR><TD VALIGN=TOP><img src='" . $_SESSION['LogoFile'] . "'></TD><TD BGCOLOR='#BBBBBB'><CENTER><B>";
+						   echo "</TABLE><TABLE WIDTH=100%><TR><TD VALIGN=TOP><img src='companies/" . $_SESSION['DatabaseName'] . "/logo.jpg'></TD><TD BGCOLOR='#BBBBBB'><CENTER><B>";
 
 						   if ($InvOrCredit=='Invoice') {
 							    echo '<FONT SIZE=4>' . _('TAX INVOICE') . ' ';
@@ -988,7 +988,7 @@ exit;
 					/* head up a new invoice/credit note page */
 
 					$PageNumber++;
-					echo "<TABLE WIDTH=100%><TR><TD VALIGN=TOP><img src='" . $_SESSION['LogoFile'] . "'></TD><TD BGCOLOR='#BBBBBB'><CENTER><B>";
+					echo "<TABLE WIDTH=100%><TR><TD VALIGN=TOP><img src='companies/" . $_SESSION['DatabaseName'] . "/logo.jpg'></TD><TD BGCOLOR='#BBBBBB'><CENTER><B>";
 
 					if ($InvOrCredit=='Invoice') {
 					      echo '<FONT SIZE=4>' . _('TAX INVOICE') .' ';

@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.37 $ */
+/* $Revision: 1.38 $ */
 
 $PageSecurity = 2;
 
@@ -172,7 +172,7 @@ if (isset($_SESSION['SupplierID'])){
 	   $myrow = DB_fetch_row($SupplierNameResult);
 	   $SupplierName = $myrow[0];
 	}
-	echo '<FONT SIZE=3><P><CENTER>' . _('Supplier') . ' : <B>' . $_SESSION['SupplierID']  . " - $SupplierName</B> " . _('has been selected') . '.<BR>' . _('Select a menu option to operate using this supplier.') . '<P></FONT>';
+	echo '<FONT SIZE=3><P><CENTER><img src="'.$rootpath.'/css/'.$theme.'/images/supplier.png" TITLE="' . _('Supplier') . '" ALT="">' . ' ' . _('Supplier') . ' : <B>' . $_SESSION['SupplierID']  . " - $SupplierName</B> " . _('has been selected') . '.<BR>' . _('Select a menu option to operate using this supplier.') . '<P></FONT>';
 	echo '<CENTER><TABLE WIDTH=90% COLSPAN=2 BORDER=2 CELLPADDING=4>';
 	echo "<TR>
 		<TH WIDTH=33%>" . _('Supplier Inquiries') . "</TH>

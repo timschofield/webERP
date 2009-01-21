@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.40 $ */
+/* $Revision: 1.41 $ */
 
 $PageSecurity = 2;
 
@@ -243,7 +243,7 @@ If ($_POST['Select']!="" OR
 		$phone = $myrow[1];
 	}
 	unset($result);
-	echo '<CENTER><FONT SIZE=3>' . _('Customer') . ' :<B> ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . ' ' . $phone . _('</b> has been selected') . '.<BR>' . _('Select a menu option to operate using this customer') . '.</FONT><BR><br>';
+	echo '<CENTER><img src="'.$rootpath.'/css/'.$theme.'/images/customer.png" TITLE="' . _('Customer') . '" ALT=""><FONT SIZE=3>' . ' ' . _('Customer') . ' :<B> ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName . ' ' . $phone . _('</b> has been selected') . '.<BR>' . _('Select a menu option to operate using this customer') . '.</FONT><BR><br>';
 
 	$_POST['Select'] = NULL;
 
