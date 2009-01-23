@@ -326,10 +326,10 @@
 		$Errors = VerifyWorkOrderExists($WONumber, sizeof($Errors), $Errors, $db);
 		$Errors = VerifyStockLocation($Location, sizeof($Errors), $Errors, $db);
 		$Errors = VerifyReceivedQuantity($Quantity, sizeof($Errors), $Errors);
-		$Errors = VerifyTransactionDate($TranDate, sizeof($Errors), $Errors);
-//		if (sizeof($Errors)!=0) {
-//			return $Errors;
-//		}
+//		$Errors = VerifyTransactionDate($TranDate, sizeof($Errors), $Errors);
+		if (sizeof($Errors)!=0) {
+			return $Errors;
+		}
 			$itemdetails = GetStockItem($StockID, $user, $password);
 			$balances=GetStockBalance($StockID, $user, $password);
 			$balance=0;
