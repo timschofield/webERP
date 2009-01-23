@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.12 $ */
+/* $Revision: 1.13 $ */
 
 $PageSecurity = 1;
 
@@ -444,11 +444,13 @@ If (isset($PrintPDF)
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-48,280,$FontSize,$_SESSION['RomalpaClause']);
 //			while (strlen($LeftOvers)>0 AND $YPos > $Bottom_Margin){
 //				$YPos -=25;
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-58,280,$FontSize,$LeftOvers);
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos-58,280,$FontSize,$LeftOvers);
 //			}
 /* Add Images for Visa / Mastercard / Paypal */
-               $pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -60,$YPos-15,0,20);
-               $pdf->addText($Page_Width-$Right_Margin-392, $YPos - ($line_height*3)+22,$FontSize, _('Bank Code:****** Bank Account:*******'));
+			if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg')) {
+            	$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/payment.jpg',$Page_Width/2 -60,$YPos-15,0,20);
+			}
+            $pdf->addText($Page_Width-$Right_Margin-392, $YPos - ($line_height*3)+22,$FontSize, _('Bank Code:****** Bank Account:*******'));
 			$FontSize=10;
 		} else {
 			$pdf->addText($Page_Width-$Right_Margin-220, $YPos-($line_height*3)-6,$FontSize, _('TOTAL CREDIT'));
@@ -502,8 +504,8 @@ if (isset($_GET['FromTransNo'])){
                                 //AND stockmoves.transno=' . $FromTransNo . '
                                 //AND stockmoves.show_on_inv_crds=1';
                 //};
-                
-                
+
+
                          $sql = 'SELECT stockmoves.stockid, stockmaster.appendfile
                                         FROM stockmoves,
                                         stockmaster
