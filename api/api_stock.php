@@ -720,7 +720,9 @@
 		}
 		$result = DB_Query($sql, $db);
 		$myrow = DB_fetch_row($result);
-		return $myrow;
+		$Errors[0]=0;
+		$Errors[1]=$myrow;
+		return $Errors;
 	}
 
 	function GetStockTaxRate($StockID, $TaxAuth, $user, $password) {
@@ -739,7 +741,9 @@
 				WHERE stockid="'.$StockID.'" and taxauthority='.$TaxAuth;
 		$result = DB_Query($sql, $db);
 		$myrow = DB_fetch_row($result);
-		return $myrow;
+		$Errors[0]=0;
+		$Errors[1]=$myrow;
+		return $Errors;
 	}
 
 	function StockAdjustment($StockID, $Location, $Quantity, $TranDate, $user, $password) {
