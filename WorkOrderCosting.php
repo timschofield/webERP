@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.10 $ */
+/* $Revision: 1.11 $ */
 
 $PageSecurity = 11;
 
@@ -117,22 +117,23 @@ echo '<tr><th>' . _('Item') . '</th>
 			<th>' . _('Cost Variance') . '</th>
 			</tr>';
 
-$RequirementsResult = DB_query("SELECT worequirements.stockid,
-				stockmaster.description,
-				stockmaster.decimalplaces,
-				worequirements.stdcost,
-				SUM(worequirements.qtypu*woitems.qtyreqd) AS requiredqty,
-				SUM(worequirements.stdcost*woitems.qtyreqd) AS expectedcost,
-				(worequirements.stdcost/worequirements.qtypu) AS costperqty
-				FROM worequirements INNER JOIN stockmaster
-			ON worequirements.stockid=stockmaster.stockid
-			INNER JOIN woitems ON woitems.stockid=worequirements.parentstockid
-			WHERE worequirements.wo=" . $_POST['WO'] . " and woitems.wo=" . $_POST['WO'] . "
-			GROUP BY worequirements.stockid,
-				worequirements.stdcost,
-				stockmaster.description,
-				stockmaster.decimalplaces",
-			$db);
+$RequirementsResult = DB_query("SELECT t.stockid, t.description, t.decimalplaces,
+                                       (t.requiredqty) as requiredqty, (t.expectedcost) as expectedcost,
+                                       ((t.stdcost)/(t.qtypu)) AS costperqty
+                                FROM (SELECT worequirements.stockid,
+                                             stockmaster.description,
+                                             stockmaster.decimalplaces,
+                                             AVG(worequirements.stdcost) as stdcost,
+                                             SUM(worequirements.qtypu*woitems.qtyreqd) AS requiredqty,
+                                             SUM(worequirements.stdcost*woitems.qtyreqd) AS expectedcost,
+                                             AVG(worequirements.qtypu) as qtypu
+                                             FROM worequirements INNER JOIN stockmaster
+                                             ON worequirements.stockid=stockmaster.stockid
+                                             INNER JOIN woitems ON woitems.stockid=worequirements.parentstockid
+                                             WHERE worequirements.wo=" . $_POST['WO'] . " and woitems.wo=worequirements.wo
+                                             GROUP BY worequirements.stockid) AS t
+                                GROUP BY t.stockid", $db);
+
 $k=0;
 $TotalUsageVar =0;
 $TotalCostVar =0;
@@ -189,7 +190,7 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 	}
 
 	if ($IssueQty != 0){
-		$CostVar = $IssueQty *($RequirementsRow['stdcost'] -($IssueCost/$IssueQty));
+	  $CostVar = $IssueQty *(($RequirementsRow['costperqty']) -($IssueCost/$IssueQty));
 	} else {
 		$CostVar = 0;
 	}
