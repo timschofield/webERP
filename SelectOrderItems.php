@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.77 $ */
+/* $Revision: 1.78 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -833,7 +833,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	     $Discount = 0;
 
 	     $i=1;
-	      while ($i<$_SESSION['QuickEntries'] and $_POST['part_' . $i]!='') {
+	      while ($i<$_SESSION['QuickEntries'] and isset($_POST['part_' . $i]) and $_POST['part_' . $i]!='') {
 			$QuickEntryCode = 'part_' . $i;
 			$QuickEntryQty = 'qty_' . $i;
 			$QuickEntryPOLine = 'poline_' . $i;
