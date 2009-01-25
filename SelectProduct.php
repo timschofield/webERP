@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.36 $ */
+/* $Revision: 1.37 $ */
 
 $PageSecurity = 2;
 
@@ -246,7 +246,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
     }
 
     $ErrMsg = _('No stock items were returned by the SQL because');
-    $Dbgmsg = _('The SQL that returned an error was');
+    $DbgMsg = _('The SQL that returned an error was');
     $result = DB_query($SQL,$db,$ErrMsg,$DbgMsg);
 
     if (DB_num_rows($result) == 0) {
