@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.33 $ */
+/* $Revision: 1.34 $ */
 
 $PageSecurity = 3;
 
@@ -28,13 +28,13 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs sensible
 
 	$_POST['DebtorNo'] = strtoupper($_POST['DebtorNo']);
-	
+
 	$sql="SELECT COUNT(debtorno) FROM debtorsmaster WHERE debtorno='".$_POST['DebtorNo']."'";
 	$result=DB_query($sql,$db);
 	$myrow=DB_fetch_row($result);
 	if ($myrow[0]>0 and isset($_POST['New'])) {
 		$InputError = 1;
-		prnMsg( _('The customer number already exists in the database'),'error');		
+		prnMsg( _('The customer number already exists in the database'),'error');
 		$Errors[$i] = 'DebtorNo';
 		$i++;
 	} elseif (strlen($_POST['CustName']) > 40 OR strlen($_POST['CustName'])==0) {
@@ -127,13 +127,13 @@ if (isset($_POST['submit'])) {
 		$SQL_ClientSince = FormatDateForSQL($_POST['ClientSince']);
 
 		if (!isset($_POST['New'])) {
-			
-			$sql = "SELECT count(id) 
-					  FROM debtortrans 
+
+			$sql = "SELECT count(id)
+					  FROM debtortrans
 					where debtorno = '" . $_POST['DebtorNo'] . "'";
 			$result = DB_query($sql,$db);
 			$myrow = DB_fetch_array($result);
-			
+
 			if ($myrow[0] == 0) {
 			  $sql = "UPDATE debtorsmaster SET
 					name='" . $_POST['CustName'] . "',
@@ -159,8 +159,8 @@ if (isset($_POST['submit'])) {
 				  WHERE debtorno = '" . $_POST['DebtorNo'] . "'";
 			} else {
 
-			  $currsql = "SELECT currcode 
-					  		FROM debtorsmaster 
+			  $currsql = "SELECT currcode
+					  		FROM debtorsmaster
 							where debtorno = '" . $_POST['DebtorNo'] . "'";
 			  $currresult = DB_query($currsql,$db);
 			  $currrow = DB_fetch_array($currresult);
@@ -186,7 +186,7 @@ if (isset($_POST['submit'])) {
 					taxref='" . $_POST['TaxRef'] . "',
 					customerpoline='" . $_POST['CustomerPOLine'] . "',
 					typeid='" . $_POST['typeid'] . "'
-				  WHERE debtorno = '" . $_POST['DebtorNo'] . "'";				
+				  WHERE debtorno = '" . $_POST['DebtorNo'] . "'";
 
 			  if ($OldCurrency != $_POST['CurrCode']) {
 			  	prnMsg( _('The currency code cannot be updated as there are already transactions for this customer'),'info');
@@ -359,6 +359,8 @@ if (isset($_POST['ID'])){
 	$ID = $_POST['ID'];
 } elseif (isset($_GET['ID'])){
 	$ID = $_GET['ID'];
+} else {
+	$ID='';
 }
 if (isset($_POST['ws'])){
 	$ws = $_POST['ws'];
@@ -369,6 +371,8 @@ if (isset($_POST['Edit'])){
 	$Edit = $_POST['Edit'];
 } elseif (isset($_GET['Edit'])){
 	$Edit = $_GET['Edit'];
+} else {
+	$Edit='';
 }
 
 if (isset($_POST['Add'])){
@@ -732,13 +736,13 @@ if (!isset($DebtorNo)) {
 		echo '<OPTION VALUE=0>' . _('Address to HO');
 		echo '<OPTION SELECTED VALUE=1>' . _('Address to Branch');
 	}
-	
+
 	echo '</SELECT></TD></TR></TABLE></TD></TR>';
 	echo '<TR><TD colspan=2>';
-  	
+
   	$sql = 'SELECT * FROM custcontacts where debtorno="'.$DebtorNo.'" ORDER BY contid';
 	$result = DB_query($sql,$db);
-	
+
 	echo '<CENTER><table border=1>';
 	echo '<tr>
 			<th>' . _('Name') . '</th>
@@ -747,9 +751,9 @@ if (!isset($DebtorNo)) {
 			<th>' . _('Notes') . '</th>
 			<th>' . _('Edit') . '</th>
 			<th colspan=2><INPUT TYPE="Submit" NAME="addcontact" VALUE="Add Contact"></th></tr>';
-	
+
 	$k=0; //row colour counter
-	
+
 	while ($myrow = DB_fetch_array($result)) {
 		if ($k==1){
 			echo '<tr class="OddTableRows">';
@@ -758,7 +762,7 @@ if (!isset($DebtorNo)) {
 			echo '<tr class="EvenTableRows">';
 			$k=1;
 		}
-	
+
 		printf('<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -772,15 +776,15 @@ if (!isset($DebtorNo)) {
 				$myrow[5],
 				$myrow[0],
 				$myrow[1],
-				$_SERVER['PHP_SELF'] . "?" . SID, 
+				$_SERVER['PHP_SELF'] . "?" . SID,
 				$myrow[0],
-				$myrow[1]);	
-				
+				$myrow[1]);
+
 	}//END WHILE LIST LOOP
 	echo '</CENTER></table>';
 		//	echo "<CENTER><INPUT TYPE='Submit' NAME='addcontact' VALUE='" . _('ADD Contact') . "'>";
 	echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?'.SID.'&DebtorNo="'.$DebtorNo.'"&ID='.$ID.'&Edit'.$Edit.'>';
-	if (isset($Edit)) {
+	if (isset($Edit) and $Edit!='') {
 		$SQLcustcontacts='SELECT * from custcontacts
 							WHERE debtorno="'.$DebtorNo.'"
 							and contid='.$ID;
@@ -798,13 +802,13 @@ if (!isset($DebtorNo)) {
 				<td>" . _('Notes') . "</td><TD><textarea name='notes'>".$_POST['notes']."</textarea></TD></tr>
 				<tr><td colspan=2 align=center><input type=submit name=update value=update></td></tr></table>
 				";
-		
+
 		echo "<FORM METHOD='post' action=" . $_SERVER['PHP_SELF'] . '?'.SID.'&DebtorNo="'.$DebtorNo.'"&ID"'.$ID.'">';
-			
-		
+
+
 	}
 	if (isset($_POST['update'])) {
-		
+
 			$SQLupdatecc='UPDATE custcontacts
 							SET contactname="'.$_POST['custname'].'",
 							role="'.$_POST['role'].'",
@@ -815,21 +819,21 @@ if (!isset($DebtorNo)) {
 			$resultupcc = DB_query($SQLupdatecc,$db);
 			echo '<br>'.$SQLupdatecc;
 			echo '<META HTTP-EQUIV="Refresh" CONTENT="0; URL="' . $_SERVER['PHP_SELF'] . '?'.SID.'&DebtorNo='.$DebtorNo.'&ID='.$ID.'">';
-		}	
+		}
 	if (isset($_GET['delete'])) {
 		$SQl='DELETE FROM custcontacts where debtorno="'.$DebtorNo.'"
 				and contid="'.$ID.'"';
 		$resultupcc = DB_query($SQl,$db);
-		
+
 		echo '<META HTTP-EQUIV="Refresh" CONTENT="0; URL=' . $_SERVER['PHP_SELF'] . '?'.SID.'&DebtorNo='.$DebtorNo.'">';
 		echo '<br>'.$SQl;
 		prnmsg('Contact Deleted','success');
 	}
-	
-	
+
+
 	echo'</TD></TR></TABLE></CENTER>';
 
-	if ($_POST['New']) {
+	if (isset($_POST['New']) and $_POST['New']) {
 		echo "<CENTER><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Add New Customer') . "'><BR><INPUT TYPE=SUBMIT name='reset' VALUE='" . _('Reset') . "'></FORM>";
 	} else {
 		echo "<HR><CENTER><INPUT TYPE='Submit' NAME='submit' VALUE='" . _('Update Customer') . "'>";
@@ -839,7 +843,7 @@ if (!isset($DebtorNo)) {
 	{
 		echo '<META HTTP-EQUIV="Refresh" CONTENT="0; URL=' . $rootpath . '/AddCustomerContacts.php?' . SID . '&DebtorNo=' .$DebtorNo.'">';
 	}
-	
+
 } // end of main ifs
 
 include('includes/footer.inc');
