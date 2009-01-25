@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.14 $ */
+/* $Revision: 1.15 $ */
 
 $PageSecurity = 8;
 
@@ -124,7 +124,7 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) )
 							if ( $TransRow['posted']==0 )	{
 								$Posted = _('No');
 							}
-
+							$j=0;
 							if ($j==1) {
 								echo '<tr class="OddTableRows">';
 								$j=0;
