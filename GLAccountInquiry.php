@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.23 $ */
+/* $Revision: 1.24 $ */
 
 
 $PageSecurity = 8;
@@ -53,7 +53,7 @@ echo '<CENTER><TABLE>
 	$result=DB_query($SQL,$db);
 	echo '<OPTION value=0>0 - None';
 	while ($myrow=DB_fetch_array($result)){
-    	if ($_POST['tag']==$myrow["tagref"]){
+    	if (isset($_POST['tag']) and $_POST['tag']==$myrow["tagref"]){
 		echo '<OPTION selected value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
     	} else {
 			echo '<OPTION value=' . $myrow['tagref'] . '>' . $myrow['tagref'].' - ' .$myrow['tagdescription'];
@@ -295,7 +295,7 @@ if (isset($_POST['Show'])){
 
 
 
-if ($ShowIntegrityReport==True){
+if (isset($ShowIntegrityReport) and $ShowIntegrityReport==True){
 	if (!isset($IntegrityReport)) {$IntegrityReport='';}
 	prnMsg( _('There are differences between the sum of the transactions and the recorded movements in the ChartDetails table') . '. ' . _('A log of the account differences for the periods report shows below'),'warn');
 	echo '<P>'.$IntegrityReport;
