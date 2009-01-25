@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.41 $ */
+/* $Revision: 1.42 $ */
 
 $PageSecurity = 3;
 
@@ -33,12 +33,12 @@ if (isset($Errors)) {
 	unset($Errors);
 }
 
+	//initialise no input errors assumed initially before we test
 $Errors = array();
+$InputError = 0;
 
 if (isset($_POST['submit'])) {
 
-	//initialise no input errors assumed initially before we test
-	$InputError = 0;
 	$i=1;
 
 	/* actions to take once the user has clicked the submit button
@@ -550,6 +550,9 @@ if (! isset($_GET['delete'])) {
         	$_POST['BrAddress5'] = $myrow['addrsss5'];
 			$_POST['BrAddress6'] = $myrow['addrsss6'];
 		}
+		if (!isset($_POST['BranchCode'])) {
+			$_POST['BranchCode']='';
+		}
 		echo '<CENTER><b>'._('Add a Branch').'</b><br><TABLE><TR><TD>'._('Branch Code'). ':</TD>
 		<TD><input ' .(in_array('BranchCode',$Errors) ?  'class="inputerror"' : '' ) .
 				" tabindex=1 type='Text' name='BranchCode' SIZE=12 MAXLENGTH=10 value=" . $_POST['BranchCode'] . '></TD></TR>';
@@ -610,7 +613,7 @@ if (! isset($_GET['delete'])) {
 	echo '<TD><SELECT tabindex=13 name="Salesman">';
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['salesmancode']==$_POST['Salesman']) {
+		if (isset($_POST['Salesman']) and $myrow['salesmancode']==$_POST['Salesman']) {
 			echo '<OPTION SELECTED VALUE=';
 		} else {
 			echo '<OPTION VALUE=';
@@ -721,7 +724,7 @@ if (! isset($_GET['delete'])) {
 	$SQL = 'SELECT shipper_id, shippername FROM shippers';
 	$ShipperResults = DB_query($SQL,$db);
 	while ($myrow=DB_fetch_array($ShipperResults)){
-		if ($myrow['shipper_id']==$_POST['DefaultShipVia']){
+		if (isset($_POST['DefaultShipVia'])and $myrow['shipper_id']==$_POST['DefaultShipVia']){
 			echo '<OPTION SELECTED VALUE=' . $myrow['shipper_id'] . '>' . $myrow['shippername'];
 		}else {
 			echo '<OPTION VALUE=' . $myrow['shipper_id'] . '>' . $myrow['shippername'];
