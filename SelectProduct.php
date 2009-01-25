@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.37 $ */
+/* $Revision: 1.38 $ */
 
 $PageSecurity = 2;
 
@@ -417,9 +417,10 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
                             WHERE stockid='" . $StockID . "'",$db);
     $myrow = DB_fetch_array($result);
 
-    $Its_A_Kitset_Assembly_Or_Dummy = False;
-    $Its_A_Dummy = False;
-    $Its_A_Kitset = False;
+    $Its_A_Kitset_Assembly_Or_Dummy = false;
+    $Its_A_Dummy = false;
+    $Its_A_Kitset = false;
+    $Its_A_Labour_Item = false;
 
     echo '<CENTER><TABLE BORDER=1><TR><TH colspan=3><font size=4>' . $StockID . ' - ' . $myrow['description'] . ' </font></TH></TR>';
 
