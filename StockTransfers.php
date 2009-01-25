@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.22 $ */
+/* $Revision: 1.23 $ */
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
@@ -18,6 +18,8 @@ if (isset($_POST['CheckCode'])) {
 	} else {
 		$sql='SELECT stockid, description from stockmaster where stockid like "%'.$_POST['StockCode'].'%"';
 	}
+	$ErrMsg=_('The stock information cannot be retrieved because');
+	$DbgMsg=_('The SQL to get the stock description was');
 	$result = DB_query($sql,$db,$ErrMsg,$DbgMsg);
 	echo '<table><tr><th>'._('Stock Code').'</th><th>'._('Stock Description').'</th></tr>';
 	while ($myrow = DB_fetch_row($result)) {
@@ -415,6 +417,9 @@ echo '<FORM ACTION="'. $_SERVER['PHP_SELF'] . '?' . SID . '" METHOD=POST>';
 //	<TD><input type=text name="StockID" size=21 value="' . $_SESSION['Transfer']->TransferItem[0]->StockID . '" maxlength=20></TD>
 //	<TD><INPUT TYPE=SUBMIT NAME="CheckCode" VALUE="'._('Check Part').'"></TD>
 //	</TR>';
+if (!isset($_GET['Description'])) {
+	$_GET['Description']='';
+}
 echo '<CENTER><TABLE><TR><TD>'. _('Stock Code'). ':</TD><TD><input type=text name="StockID" size=21 value="' . $_POST['StockID'] . '" maxlength=20></td></tr><tr><td>'.
  _('Partial Description'). ':</td><td><input type=text name="StockText" size=21 value="' . $_GET['Description'] .'">'.
  _('Partial Stock Code'). ':<input type=text name="StockCode" size=21 value="' . $_POST['StockID'] .
