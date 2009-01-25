@@ -1,6 +1,6 @@
 <?php
 
-/* $Revision: 1.60 $ */
+/* $Revision: 1.61 $ */
 
 $PageSecurity = 11;
 
@@ -718,7 +718,7 @@ if (!isset($_POST['Units'])) {
 	$UOMrow['unitname']='each';
 }
 while( $UOMrow = DB_fetch_array($UOMResult) ) {
-     if ($_POST['Units']==$UOMrow['unitname']){
+     if (isset($_POST['Units']) and $_POST['Units']==$UOMrow['unitname']){
 	    echo "<OPTION SELECTED Value='" . $UOMrow['unitname'] . "'>" . $UOMrow['unitname'];
      } else {
 	    echo "<OPTION Value='" . $UOMrow['unitname'] . "'>" . $UOMrow['unitname'];
@@ -749,7 +749,7 @@ if (!isset($_POST['MBFlag']) or $_POST['MBFlag']=='B' OR !isset($_POST['MBFlag']
 	echo '<OPTION VALUE="B">' . _('Purchased');
 }
 
-if ($_POST['MBFlag']=='D'){
+if (isset($_POST['MBFlag']) and $_POST['MBFlag']=='D'){
 	echo '<OPTION SELECTED VALUE="D">' . _('Service/Labour');
 } else {
 	echo '<OPTION VALUE="D">' . _('Service/Labour');
@@ -805,7 +805,7 @@ if (!isset($_POST['Perishable']) or $_POST['Perishable']==0){
 } else {
         echo '<OPTION VALUE=0>' . _('No');
 }
-if ($_POST['Perishable']==1){
+if (isset($_POST['Perishable']) and $_POST['Perishable']==1){
         echo '<OPTION SELECTED VALUE=1>' . _('Yes');
 } else {
         echo '<OPTION VALUE=1>' . _('Yes');
