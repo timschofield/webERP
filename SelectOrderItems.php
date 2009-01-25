@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.76 $ */
+/* $Revision: 1.77 $ */
 
 include('includes/DefineCartClass.php');
 $PageSecurity = 1;
@@ -101,6 +101,7 @@ if (isset($_GET['ModifyOrderNumber'])
 		salesorders.quotation,
 		salesorders.deliverblind,
 		debtorsmaster.customerpoline,
+		locations.locationname,
 		custbranch.estdeliverydays
 	FROM salesorders,
 		debtorsmaster,
@@ -147,7 +148,7 @@ if (isset($_GET['ModifyOrderNumber'])
 		$_SESSION['Items']->PhoneNo = $myrow['contactphone'];
 		$_SESSION['Items']->Email = $myrow['contactemail'];
 		$_SESSION['Items']->Location = $myrow['fromstkloc'];
-		$_SESSION['Items']->LocationName = $myrow['location'];
+		$_SESSION['Items']->LocationName = $myrow['locationname'];
 		$_SESSION['Items']->Quotation = $myrow['quotation'];
 		$_SESSION['Items']->FreightCost = $myrow['freightcost'];
 		$_SESSION['Items']->Orig_OrderDate = $myrow['orddate'];
