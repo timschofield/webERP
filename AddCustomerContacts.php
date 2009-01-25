@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.3 $ */
+/* $Revision: 1.4 $ */
 $PageSecurity = 3;
 include('includes/session.inc');
 $title = _('Customer Contacts');
@@ -35,19 +35,19 @@ if ( isset($_POST['submit']) ) {
 		$InputError = 1;
 		prnMsg( _("The contact's name may not be empty"), 'error');
 	}
-	
+
 	if ($Id AND $InputError !=1) {
-	
-		$sql = "UPDATE custcontacts SET 
+
+		$sql = "UPDATE custcontacts SET
 				contactname='" . $_POST['conName'] . "',
 				role='" . $_POST['conRole'] . "',
 				phoneno='" . $_POST['conPhone'] . "',
 				notes='" . $_POST['conNotes'] . "'
-			WHERE debtorno ='".$DebtorNo."' 
+			WHERE debtorno ='".$DebtorNo."'
 			AND contid=".$Id;
 		$msg = _('Customer Contacts') . ' ' . $DebtorNo  . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
-			
+
 		$sql = "INSERT INTO custcontacts (debtorno,contactname,role,phoneno,notes)
 				VALUES (
 					'" . $DebtorNo. "',
@@ -58,7 +58,7 @@ if ( isset($_POST['submit']) ) {
 					)";
 		$msg = _('The contact record has been added');
 	}
-	
+
 	if ($InputError !=1) {
 		$result = DB_query($sql,$db);
 				//echo '<br>'.$sql;
@@ -69,11 +69,11 @@ if ( isset($_POST['submit']) ) {
 		unset($_POST['conName']);
 		unset($_POST['Con_ID']);
 	}
-	} elseif ($_GET['delete']) {
+	} elseif (isset($_GET['delete']) and $_GET['delete']) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'SalesOrders'
-	
+
 	$sql="DELETE FROM custcontacts WHERE contid=".$Id."
 			and debtorno='".$DebtorNo."'";
 				$result = DB_query($sql,$db);
@@ -83,16 +83,16 @@ if ( isset($_POST['submit']) ) {
 				prnMsg( _('The contact record has been deleted'), 'success');
 				unset($Id);
 				unset($_GET['delete']);
-	
+
 	}
-	
+
 if (!isset($Id)) {
 	$SQLname='SELECT * from debtorsmaster where debtorno="'.$DebtorNo.'"';
 	$Result = DB_query($SQLname,$db);
 	$row = DB_fetch_array($Result);
 	echo '<center>' . _('Contacts for Customer: <b>') .$row['name'].'</b>';
-	
-	
+
+
 	$sql = "SELECT * FROM custcontacts where debtorno='".$DebtorNo."' ORDER BY contid";
 	$result = DB_query($sql,$db);
 			//echo '<br>'.$sql;
@@ -103,7 +103,7 @@ if (!isset($Id)) {
 			<th>' . _('Role') . '</th>
 			<th>' . _('Phone no') . '</th>
 			<th>' . _('Notes') . '</th>';
-		
+
 	$k=0; //row colour counter
 
 	while ($myrow = DB_fetch_array($result)) {
@@ -124,13 +124,13 @@ if (!isset($Id)) {
 				$myrow[3],
 				$myrow[4],
 				$myrow[5],
-				$_SERVER['PHP_SELF'] . "?" . SID, 
-				$myrow[0], 
-				$myrow[1], 
-				$_SERVER['PHP_SELF'] . "?" . SID, 
+				$_SERVER['PHP_SELF'] . "?" . SID,
+				$myrow[0],
+				$myrow[1],
+				$_SERVER['PHP_SELF'] . "?" . SID,
 				$myrow[0],
 				$myrow[1]);
-			
+
 	}
 	//END WHILE LIST LOOP
 	echo '</CENTER></table>';
@@ -144,7 +144,7 @@ if (isset($Id)) {  ?>
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . $_SERVER['PHP_SELF'] . '?' . SID . '&DebtorNo='.$DebtorNo.'">';
-	
+
 	if (isset($Id)) {
 		//editing an existing Shipper
 
@@ -155,7 +155,7 @@ if (!isset($_GET['delete'])) {
 				//echo '<br>'.$sql;
 
 		$myrow = DB_fetch_array($result);
-		
+
 		$_POST['Con_ID'] = $myrow['contid'];
 		$_POST['conName']	= $myrow['contactname'];
 		$_POST['conRole']  = $myrow['role'];
@@ -182,8 +182,8 @@ if (!isset($_GET['delete'])) {
 	<center><input type="Submit" name="submit" value="<?php echo _('Enter Information');?>"></center>
 
 	</form>
-	
-	<?php } //end if record deleted no point displaying form to add record 
+
+	<?php } //end if record deleted no point displaying form to add record
 
 include('includes/footer.inc');
 ?>
