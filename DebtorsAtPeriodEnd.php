@@ -1,7 +1,7 @@
 <?php
 $PageSecurity = 2;
 
-/* $Revision: 1.13 $ */
+/* $Revision: 1.14 $ */
 include('includes/session.inc');
 
 If (isset($_POST['PrintPDF'])
@@ -110,7 +110,7 @@ If (isset($_POST['PrintPDF'])
 	$len = strlen($buf);
 
 	header('Content-type: application/pdf');
-	header("Content-Length: $len");
+	header("Content-Length: ".$len);
 	header('Content-Disposition: inline; filename=DebtorBals.pdf');
 	header('Expires: 0');
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
