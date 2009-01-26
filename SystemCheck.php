@@ -1,5 +1,5 @@
 <?php
-/* $Revision: 1.1 $ */
+/* $Revision: 1.2 $ */
 $PageSecurity =10;
 include('includes/session.inc');
 $title = _('System Check');
@@ -45,6 +45,7 @@ echo '<h3>PHP Settings</h3>';
 echo '<p>PHP version: ' . phpversion();
 echo '<p>GD Module: ' . getModuleSetting('gd','GD Version') . '</p>';
 echo '<p>MYSQL Module: ' . getModuleSetting('mysql','Client API version') . '</p>';
+echo '<p>MySQL character set: '.mysql_client_encoding();
 echo '<p>Zlib: ' . getModuleSetting('zlib','ZLib Support') . '</p>';
 echo '<p>Simple XML: ' . getModuleSetting('SimpleXML','Revision') . '</p>';
 echo '<h3>Linux System Settings</h3>';
